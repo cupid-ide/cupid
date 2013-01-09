@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="ASCII"?>
+<esmf:ESMFGriddedComponent xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:esmf="http://www.earthsystemcurator.org/cupid/esmf" xsi:schemaLocation="http://www.earthsystemcurator.org/cupid/esmf ../model/ESMF.ecore" name="Model A">
+  <method xsi:type="esmf:ESMFInitMethod" name="init"/>
+  <method xsi:type="esmf:ESMFRunMethod" name="run"/>
+  <method xsi:type="esmf:ESMFFinalizeMethod" name="finalize"/>
+</esmf:ESMFGriddedComponent>
