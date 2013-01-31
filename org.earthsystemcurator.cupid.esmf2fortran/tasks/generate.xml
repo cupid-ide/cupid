@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project default="generate" name="org.earthsystemcurator.cupid.esmf2fortran">
     <property name="ECLIPSE_HOME" value="../../../../../../../eclipse/eclipse-4.2/eclipse"/>
-    <property name="ECLIPSE_WORKSPACE" value="../.."/>
+    <property name="ECLIPSE_WORKSPACE" value="../../../../eclipse/workspace4.2-cplgen"/>
 
     <!-- The classpath with only the dependencies used by the project -->
     <path id="org.earthsystemcurator.cupid.esmf2fortran.libraryclasspath">
