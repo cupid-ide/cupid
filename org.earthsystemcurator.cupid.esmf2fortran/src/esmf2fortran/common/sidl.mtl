@@ -1,0 +1,215 @@
+[comment encoding = UTF-8 /]
+[module sidl('http://www.earthsystemcurator.org/cupid/esmf', 'http://www.earthsystemcurator.org/cupid/sidl')]
+
+
+[template public generateElement(anESMFWorkspace : ESMFWorkspace)]
+
+[/template]
+
+[comment putting sidl stuff here for now /]
+
+
+[template public genESMFComponentBody(c : ESMFGriddedComponent) ? (c.SIDLClass->notEmpty())]
+use sidl
+use sidl_BaseInterface
+use [getSIDLQualName(c.SIDLClass)/]
+
+implicit none
+
+private
+
+type([getSIDLTypeName(c.SIDLClass)/]) :: [getSIDLInstName(c.SIDLClass)/]
+type(sidl_BaseInterface_t) :: exception_sidl
+
+[comment sidl array for each field/]
+[for (f : ESMFField | c.field->select(SIDLArgument->notEmpty()))]
+type([genSIDLTypeName(f.SIDLArgument->first().type)/]) :: [f.name/]_sidl
+[/for]
+
+[for (f : ESMFField | c.field)]
+type(ESMF_Field) :: [f.name/]
+[/for]
+
+[for (g : ESMFGrid | c.grid)]
+type(ESMF_Grid) :: [g.name/]
+[/for]
+
+public register_
+
+contains
+	
+[genESMFRegisterMethod(c.registerMethod)/]
+
+[for (m : ESMFMethod | c.method) separator ('\n\n')]
+[genESMFMethod(m)/]
+[/for]
+[/template]
+
+
+[template public genESMFMethodBody(m : ESMFMethod) ? (m.SIDLMethod->notEmpty())]
+call [m.SIDLMethod.shortname/]([getSIDLInstName(m.component.SIDLClass)/], &
+	[for (a : Argument | m.SIDLMethod.argument) separator (', &\n') after (', &\n')]
+	[getESMFField(a, m.component).name/]_sidl[/for]
+	exception_sidl)
+
+if (not_null(exception_sidl)) then
+	print *, "Exception calling [m.SIDLMethod.shortname/] on object [getSIDLInstName(m.component.SIDLClass)/]"
+	rc = ESMF_FAILURE
+end if
+[/template]
+
+[template public genESMFMethodBody(m : ESMFPreInitMethodSIDL)]
+call new([getSIDLInstName(m.component.SIDLClass)/], exception_sidl)
+if (not_null(exception_sidl)) then
+	print *, "Exception when creating [getSIDLQualName(m.component.SIDLClass)/] object."
+	rc = ESMF_FAILURE
+end if
+[/template]
+
+[template public genESMFMethodDeclaration(m : ESMFPostInitMethodSIDL)]
+
+[if (isUniformLogicallyRectangular(m.component))]
+! uniform logically rectangular grid parameters
+type(sidl_int_1d) :: lb, ub 
+[/if]
+[if (isIrregularDecomposition(m.component))]
+! irregular decomposition parameters
+type(sidl_int_1d) :: decompDim1, decompDim2, decompDim3
+[/if]
+[if (isHaloedField(m.component))]
+! halo widths
+type(sidl_int_1d) :: lhw, uhw
+[/if]
+
+[/template]
+
+[template public genESMFMethodBody(m : ESMFPostInitMethodSIDL)]
+[if (isUniformLogicallyRectangular(m.component))]
+call getUniformLRGrid([getSIDLInstName(m.component.SIDLClass)/], lb, ub, exception_sidl)
+if (not_null(exception_sidl)) then
+    print *, "Exception calling [getSIDLInstName(m.component.SIDLClass)/].getUniformLRGrid"
+	rc = ESMF_FAILURE
+end if
+[/if]
+
+[if (isIrregularDecomposition(m.component))]
+call getIrregularDecomposition([getSIDLInstName(m.component.SIDLClass)/], decompDim1, decompDim2, decompDim3, exception_sidl)
+if (not_null(exception_sidl)) then
+    print *, "Exception calling [getSIDLInstName(m.component.SIDLClass)/].getIrregularDecomposition"
+	rc = ESMF_FAILURE
+end if
+[/if]
+
+[comment assume one grid/]
+[if (isIrregularDecomposition(m.component))]
+if (not_null(decompDim3)) then
+	[m.component.grid->asSequence()->first().name/] = ESMF_GridCreateNoPeriDim( &
+			countsPerDEDim1=decompDim1%d_data, &
+			countsPerDEDim2=decompDim2%d_data, &
+			countsPerDEDim3=decompDim3%d_data, &
+	        name = "[m.component.grid->asSequence()->first().name/]", &
+			indexflag=ESMF_INDEX_GLOBAL, &
+			rc=rc)
+else
+	[m.component.grid->asSequence()->first().name/] = ESMF_GridCreateNoPeriDim( &
+			countsPerDEDim1=decompDim1%d_data, &
+			countsPerDEDim2=decompDim2%d_data, &
+	        name = "[m.component.grid->asSequence()->first().name/]", &
+			indexflag=ESMF_INDEX_GLOBAL, &
+			rc=rc)
+end if
+[/if]
+
+[if (isHaloedField(m.component))]
+call getHaloWidths([getSIDLInstName(m.component.SIDLClass)/], lhw, uhw, exception_sidl)
+if (not_null(exception_sidl)) then
+	print *, "Exception calling [getSIDLInstName(m.component.SIDLClass)/].getHaloWidths"
+	rc = ESMF_FAILURE
+	return	
+end if
+[/if]
+
+[for (f : ESMFField | m.component.field)]
+[f.name/] = ESMF_FieldCreate(name="[f.name/]", 
+	grid = [m.component.grid->asSequence()->first().name/], & 
+	farrayPtr = [f.name/]_sidl%d_data, &
+    [if (isHaloedField(m.component))]
+	totalLWidth = lhw%d_data, &
+	totalUWidth = uhw%d_data, &
+	[/if]
+	rc = rc)
+
+[/for]
+
+! component import
+[for (f : ESMFField | m.component.field->select(SIDLArgument->select(mode=ModeEnum::_in or mode=ModeEnum::inout)->notEmpty()))]
+call ESMF_StateAdd(istate, (/[f.name/]/), rc=rc)
+[/for]
+
+! component export
+[for (f : ESMFField | m.component.field->select(SIDLArgument->select(mode=ModeEnum::out or mode=ModeEnum::inout)->notEmpty()))]
+call ESMF_StateAdd(ostate, (/[f.name/]/), rc=rc)
+[/for]
+
+[/template]
+
+[template public genESMFMethodBody(m : ESMFFinalizeMethodSIDL)]
+call deleteRef([getSIDLInstName(m.component.SIDLClass)/], exception_sidl)
+if (not_null(exception_sidl)) then
+	print *, "Exception when deleting [getSIDLInstName(m.component.SIDLClass)/] object."
+	rc = ESMF_FAILURE
+end if
+[/template]
+
+
+
+
+[query public isIrregularDecomposition (c : ESMFComponent) : Boolean = 
+	c.SIDLClass.parentInterface.name->includes('IrregularDecomposition')
+/]
+
+[query public isUniformLogicallyRectangular (c : ESMFComponent) : Boolean = 
+	c.SIDLClass.parentInterface.name->includes('UniformLogicallyRectangular')
+/]
+
+[query public isHaloedField (c : ESMFComponent) : Boolean = 
+	c.SIDLClass.parentInterface.name->includes('HaloedField')
+/]
+
+
+[template public genSIDLTypeName(t : SIDLType)][/template]
+
+[template public genSIDLTypeName(t : ArrayType)]
+sidl_[genSIDLTypeName(t.type)/]_[t.dim/]d
+[/template]
+
+[template public genSIDLTypeName(t : SimpleType)]
+[t.simpleType.toString()/]
+[/template]
+
+[query public getESMFField(a : Argument, c : ESMFComponent) : ESMFField = 
+	c.field->select(SIDLArgument->includes(a))->asSequence()->first()
+/]
+
+
+[query public getSIDLQualName(c : Class) : String = 
+	c._package.name + '_' + c.name 
+/]
+
+[query public getSIDLInstName(c : Class) : String = 
+	getSIDLQualName(c) + '_inst'
+/]
+
+[query public getSIDLTypeName(c : Class) : String = 
+	getSIDLQualName(c) + '_t'
+/]
+
+[query public getSIDLTypeName(t : SIDLType) : String = '' /]
+
+[query public getSIDLTypeName(t : ArrayType) : String = 
+	'sidl_' + getSIDLTypeName(t.type) + '_' + t.dim + 'd'	
+/]
+
+[query public getSIDLTypeName(t : SimpleType) : String = 
+	t.simpleType.toString()
+ /]

@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="ASCII"?>
+<esmf:ESMFGriddedComponent xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:esmf="http://www.earthsystemcurator.org/cupid/esmf" xsi:schemaLocation="http://www.earthsystemcurator.org/cupid/esmf ../../model/ESMF.ecore" name="FlowSolver">
+  <arraySpec name="fsArraySpec" typekind="ESMF_TYPEKIND_R4" rank="2"/>
+  <field name="fs_sie" grid="//@grid.0" arraySpec="//@arraySpec.0" index="ESMF_INDEX_GLOBAL">
+    <totalLWidth>1</totalLWidth>
+    <totalLWidth>1</totalLWidth>
+    <totalUWidth>1</totalUWidth>
+    <totalUWidth>1</totalUWidth>
+  </field>
+  <field name="fs_u" grid="//@grid.0" arraySpec="//@arraySpec.0" index="ESMF_INDEX_GLOBAL">
+    <totalLWidth>1</totalLWidth>
+    <totalLWidth>1</totalLWidth>
+    <totalUWidth>1</totalUWidth>
+    <totalUWidth>1</totalUWidth>
+  </field>
+  <field name="fs_v" grid="//@grid.0" arraySpec="//@arraySpec.0" index="ESMF_INDEX_GLOBAL">
+    <totalLWidth>1</totalLWidth>
+    <totalLWidth>1</totalLWidth>
+    <totalUWidth>1</totalUWidth>
+    <totalUWidth>1</totalUWidth>
+  </field>
+  <field name="fs_rho" grid="//@grid.0" arraySpec="//@arraySpec.0" index="ESMF_INDEX_GLOBAL">
+    <totalLWidth>1</totalLWidth>
+    <totalLWidth>1</totalLWidth>
+    <totalUWidth>1</totalUWidth>
+    <totalUWidth>1</totalUWidth>
+  </field>
+  <field name="fs_rhoi" grid="//@grid.0" arraySpec="//@arraySpec.0" index="ESMF_INDEX_GLOBAL">
+    <totalLWidth>1</totalLWidth>
+    <totalLWidth>1</totalLWidth>
+    <totalUWidth>1</totalUWidth>
+    <totalUWidth>1</totalUWidth>
+  </field>
+  <field name="fs_rhou" grid="//@grid.0" arraySpec="//@arraySpec.0" index="ESMF_INDEX_GLOBAL">
+    <totalLWidth>1</totalLWidth>
+    <totalLWidth>1</totalLWidth>
+    <totalUWidth>1</totalUWidth>
+    <totalUWidth>1</totalUWidth>
+  </field>
+  <field name="fs_rhov" grid="//@grid.0" arraySpec="//@arraySpec.0" index="ESMF_INDEX_GLOBAL">
+    <totalLWidth>1</totalLWidth>
+    <totalLWidth>1</totalLWidth>
+    <totalUWidth>1</totalUWidth>
+    <totalUWidth>1</totalUWidth>
+  </field>
+  <field name="fs_p" grid="//@grid.0" arraySpec="//@arraySpec.0" index="ESMF_INDEX_GLOBAL">
+    <totalLWidth>1</totalLWidth>
+    <totalLWidth>1</totalLWidth>
+    <totalUWidth>1</totalUWidth>
+    <totalUWidth>1</totalUWidth>
+  </field>
+  <field name="fs_q" grid="//@grid.0" arraySpec="//@arraySpec.0" index="ESMF_INDEX_GLOBAL">
+    <totalLWidth>1</totalLWidth>
+    <totalLWidth>1</totalLWidth>
+    <totalUWidth>1</totalUWidth>
+    <totalUWidth>1</totalUWidth>
+  </field>
+  <field name="fs_flag" grid="//@grid.0" arraySpec="//@arraySpec.0" index="ESMF_INDEX_GLOBAL">
+    <totalLWidth>1</totalLWidth>
+    <totalLWidth>1</totalLWidth>
+    <totalUWidth>1</totalUWidth>
+    <totalUWidth>1</totalUWidth>
+  </field>
+  <field name="fs_de" grid="//@grid.0" arraySpec="//@arraySpec.0" index="ESMF_INDEX_GLOBAL">
+    <totalLWidth>1</totalLWidth>
+    <totalLWidth>1</totalLWidth>
+    <totalUWidth>1</totalUWidth>
+    <totalUWidth>1</totalUWidth>
+  </field>
+  <field name="fs_omega" grid="//@grid.0" arraySpec="//@arraySpec.0" index="ESMF_INDEX_GLOBAL">
+    <totalLWidth>1</totalLWidth>
+    <totalLWidth>1</totalLWidth>
+    <totalUWidth>1</totalUWidth>
+    <totalUWidth>1</totalUWidth>
+  </field>
+  <grid name="fsGrid"/>
+  <stage xsi:type="esmf:ESMFStageInitialize" name="Flow_Init1">
+    <action xsi:type="esmf:ESMFStageActionGridInherit" grid="//@grid.0"/>
+    <action xsi:type="esmf:ESMFStageActionArraySpecCreate" arraySpec="//@arraySpec.0"/>
+    <action xsi:type="esmf:ESMFStageActionFieldCreate" field="//@field.0 //@field.1 //@field.2 //@field.3 //@field.4 //@field.5 //@field.6 //@field.7 //@field.8 //@field.9 //@field.10 //@field.11"/>
+    <action xsi:type="esmf:ESMFStageActionImportStateAdd" item="//@field.0 //@field.1 //@field.2 //@field.3 //@field.7 //@field.8 //@field.9"/>
+    <action xsi:type="esmf:ESMFStageActionExportStateAdd" item="//@field.0 //@field.1 //@field.2 //@field.3 //@field.7 //@field.8 //@field.9"/>
+  </stage>
+  <stage xsi:type="esmf:ESMFStageInitialize" name="Flow_Init2" phase="2"/>
+  <stage xsi:type="esmf:ESMFStageRun" name="FlowSolve"/>
+  <stage xsi:type="esmf:ESMFStageFinalize" name="Flow_Final">
+    <action xsi:type="esmf:ESMFStageActionFieldDestroy" field="//@field.0 //@field.1 //@field.2 //@field.3 //@field.4 //@field.5 //@field.6 //@field.7 //@field.8 //@field.9 //@field.10 //@field.11"/>
+  </stage>
+</esmf:ESMFGriddedComponent>
