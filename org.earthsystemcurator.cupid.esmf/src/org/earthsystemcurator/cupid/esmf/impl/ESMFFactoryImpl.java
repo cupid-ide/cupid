@@ -57,9 +57,23 @@ public class ESMFFactoryImpl extends EFactoryImpl implements ESMFFactory {
 	@Override
 	public EObject create(EClass eClass) {
 		switch (eClass.getClassifierID()) {
+			case ESMFPackage.ESMF_NAMED_ENTITY: return createESMFNamedEntity();
 			case ESMFPackage.ESMF_GRIDDED_COMPONENT: return createESMFGriddedComponent();
 			case ESMFPackage.ESMF_COUPLER_COMPONENT: return createESMFCouplerComponent();
 			case ESMFPackage.ESMF_SIMPLE_COUPLER_COMPONENT: return createESMFSimpleCouplerComponent();
+			case ESMFPackage.ESMF_STAGE_INITIALIZE: return createESMFStageInitialize();
+			case ESMFPackage.ESMF_STAGE_RUN: return createESMFStageRun();
+			case ESMFPackage.ESMF_STAGE_FINALIZE: return createESMFStageFinalize();
+			case ESMFPackage.ESMF_STAGE_ACTION_ARRAY_SPEC_CREATE: return createESMFStageActionArraySpecCreate();
+			case ESMFPackage.ESMF_STAGE_ACTION_COMPONENT_DESTROY: return createESMFStageActionComponentDestroy();
+			case ESMFPackage.ESMF_STAGE_ACTION_FIELD_CREATE: return createESMFStageActionFieldCreate();
+			case ESMFPackage.ESMF_STAGE_ACTION_FIELD_DESTROY: return createESMFStageActionFieldDestroy();
+			case ESMFPackage.ESMF_STAGE_ACTION_GRID_CREATE: return createESMFStageActionGridCreate();
+			case ESMFPackage.ESMF_STAGE_ACTION_GRID_INHERIT: return createESMFStageActionGridInherit();
+			case ESMFPackage.ESMF_STAGE_ACTION_IMPORT_STATE_ADD: return createESMFStageActionImportStateAdd();
+			case ESMFPackage.ESMF_STAGE_ACTION_EXPORT_STATE_ADD: return createESMFStageActionExportStateAdd();
+			case ESMFPackage.ESMF_STAGE_ACTION_STATE_CREATE: return createESMFStageActionStateCreate();
+			case ESMFPackage.ESMF_STAGE_ACTION_STATE_DESTROY: return createESMFStageActionStateDestroy();
 			case ESMFPackage.ESMF_METHOD: return createESMFMethod();
 			case ESMFPackage.ESMF_INIT_METHOD: return createESMFInitMethod();
 			case ESMFPackage.ESMF_PRE_INIT_METHOD_SIDL: return createESMFPreInitMethodSIDL();
@@ -144,7 +158,6 @@ public class ESMFFactoryImpl extends EFactoryImpl implements ESMFFactory {
 			case ESMFPackage.ESMF_CALL_CPL_COMP_SET_SERVICES: return createESMFCallCplCompSetServices();
 			case ESMFPackage.ESMF_CALL_FIELD_CREATE_SIDL: return createESMFCallFieldCreateSIDL();
 			case ESMFPackage.ESMF_CALL_SIDL_METHOD: return createESMFCallSIDLMethod();
-			case ESMFPackage.ESMF_NAMED_ENTITY: return createESMFNamedEntity();
 			default:
 				throw new IllegalArgumentException("The class '" + eClass.getName() + "' is not a valid classifier");
 		}
@@ -228,6 +241,136 @@ public class ESMFFactoryImpl extends EFactoryImpl implements ESMFFactory {
 	public ESMFSimpleCouplerComponent createESMFSimpleCouplerComponent() {
 		ESMFSimpleCouplerComponentImpl esmfSimpleCouplerComponent = new ESMFSimpleCouplerComponentImpl();
 		return esmfSimpleCouplerComponent;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public ESMFStageInitialize createESMFStageInitialize() {
+		ESMFStageInitializeImpl esmfStageInitialize = new ESMFStageInitializeImpl();
+		return esmfStageInitialize;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public ESMFStageRun createESMFStageRun() {
+		ESMFStageRunImpl esmfStageRun = new ESMFStageRunImpl();
+		return esmfStageRun;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public ESMFStageFinalize createESMFStageFinalize() {
+		ESMFStageFinalizeImpl esmfStageFinalize = new ESMFStageFinalizeImpl();
+		return esmfStageFinalize;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public ESMFStageActionFieldCreate createESMFStageActionFieldCreate() {
+		ESMFStageActionFieldCreateImpl esmfStageActionFieldCreate = new ESMFStageActionFieldCreateImpl();
+		return esmfStageActionFieldCreate;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public ESMFStageActionFieldDestroy createESMFStageActionFieldDestroy() {
+		ESMFStageActionFieldDestroyImpl esmfStageActionFieldDestroy = new ESMFStageActionFieldDestroyImpl();
+		return esmfStageActionFieldDestroy;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public ESMFStageActionGridCreate createESMFStageActionGridCreate() {
+		ESMFStageActionGridCreateImpl esmfStageActionGridCreate = new ESMFStageActionGridCreateImpl();
+		return esmfStageActionGridCreate;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public ESMFStageActionGridInherit createESMFStageActionGridInherit() {
+		ESMFStageActionGridInheritImpl esmfStageActionGridInherit = new ESMFStageActionGridInheritImpl();
+		return esmfStageActionGridInherit;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public ESMFStageActionImportStateAdd createESMFStageActionImportStateAdd() {
+		ESMFStageActionImportStateAddImpl esmfStageActionImportStateAdd = new ESMFStageActionImportStateAddImpl();
+		return esmfStageActionImportStateAdd;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public ESMFStageActionExportStateAdd createESMFStageActionExportStateAdd() {
+		ESMFStageActionExportStateAddImpl esmfStageActionExportStateAdd = new ESMFStageActionExportStateAddImpl();
+		return esmfStageActionExportStateAdd;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public ESMFStageActionStateCreate createESMFStageActionStateCreate() {
+		ESMFStageActionStateCreateImpl esmfStageActionStateCreate = new ESMFStageActionStateCreateImpl();
+		return esmfStageActionStateCreate;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public ESMFStageActionStateDestroy createESMFStageActionStateDestroy() {
+		ESMFStageActionStateDestroyImpl esmfStageActionStateDestroy = new ESMFStageActionStateDestroyImpl();
+		return esmfStageActionStateDestroy;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public ESMFStageActionArraySpecCreate createESMFStageActionArraySpecCreate() {
+		ESMFStageActionArraySpecCreateImpl esmfStageActionArraySpecCreate = new ESMFStageActionArraySpecCreateImpl();
+		return esmfStageActionArraySpecCreate;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public ESMFStageActionComponentDestroy createESMFStageActionComponentDestroy() {
+		ESMFStageActionComponentDestroyImpl esmfStageActionComponentDestroy = new ESMFStageActionComponentDestroyImpl();
+		return esmfStageActionComponentDestroy;
 	}
 
 	/**

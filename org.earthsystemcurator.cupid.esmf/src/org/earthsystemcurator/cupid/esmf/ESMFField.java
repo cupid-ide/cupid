@@ -20,6 +20,9 @@ import org.eclipse.emf.common.util.EList;
  *   <li>{@link org.earthsystemcurator.cupid.esmf.ESMFField#getStaggerLoc <em>Stagger Loc</em>}</li>
  *   <li>{@link org.earthsystemcurator.cupid.esmf.ESMFField#getArraySpec <em>Array Spec</em>}</li>
  *   <li>{@link org.earthsystemcurator.cupid.esmf.ESMFField#getSIDLArgument <em>SIDL Argument</em>}</li>
+ *   <li>{@link org.earthsystemcurator.cupid.esmf.ESMFField#getIndex <em>Index</em>}</li>
+ *   <li>{@link org.earthsystemcurator.cupid.esmf.ESMFField#getTotalLWidth <em>Total LWidth</em>}</li>
+ *   <li>{@link org.earthsystemcurator.cupid.esmf.ESMFField#getTotalUWidth <em>Total UWidth</em>}</li>
  * </ul>
  * </p>
  *
@@ -178,5 +181,66 @@ public interface ESMFField extends ESMFStateItem {
 	 * @generated
 	 */
 	EList<Argument> getSIDLArgument();
+
+	/**
+	 * Returns the value of the '<em><b>Index</b></em>' attribute.
+	 * The literals are from the enumeration {@link org.earthsystemcurator.cupid.esmf.ESMF_INDEX}.
+	 * <!-- begin-user-doc -->
+	 * <p>
+	 * If the meaning of the '<em>Index</em>' attribute isn't clear,
+	 * there really should be more of a description here...
+	 * </p>
+	 * <!-- end-user-doc -->
+	 * @return the value of the '<em>Index</em>' attribute.
+	 * @see org.earthsystemcurator.cupid.esmf.ESMF_INDEX
+	 * @see #setIndex(ESMF_INDEX)
+	 * @see org.earthsystemcurator.cupid.esmf.ESMFPackage#getESMFField_Index()
+	 * @model
+	 * @generated
+	 */
+	ESMF_INDEX getIndex();
+
+	/**
+	 * Sets the value of the '{@link org.earthsystemcurator.cupid.esmf.ESMFField#getIndex <em>Index</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @param value the new value of the '<em>Index</em>' attribute.
+	 * @see org.earthsystemcurator.cupid.esmf.ESMF_INDEX
+	 * @see #getIndex()
+	 * @generated
+	 */
+	void setIndex(ESMF_INDEX value);
+
+	/**
+	 * Returns the value of the '<em><b>Total LWidth</b></em>' attribute list.
+	 * The list contents are of type {@link java.lang.Integer}.
+	 * <!-- begin-user-doc -->
+	 * <p>
+	 * If the meaning of the '<em>Total LWidth</em>' attribute isn't clear,
+	 * there really should be more of a description here...
+	 * </p>
+	 * <!-- end-user-doc -->
+	 * @return the value of the '<em>Total LWidth</em>' attribute list.
+	 * @see org.earthsystemcurator.cupid.esmf.ESMFPackage#getESMFField_TotalLWidth()
+	 * @model unique="false"
+	 * @generated
+	 */
+	EList<Integer> getTotalLWidth();
+
+	/**
+	 * Returns the value of the '<em><b>Total UWidth</b></em>' attribute list.
+	 * The list contents are of type {@link java.lang.Integer}.
+	 * <!-- begin-user-doc -->
+	 * <p>
+	 * If the meaning of the '<em>Total UWidth</em>' attribute list isn't clear,
+	 * there really should be more of a description here...
+	 * </p>
+	 * <!-- end-user-doc -->
+	 * @return the value of the '<em>Total UWidth</em>' attribute list.
+	 * @see org.earthsystemcurator.cupid.esmf.ESMFPackage#getESMFField_TotalUWidth()
+	 * @model unique="false"
+	 * @generated
+	 */
+	EList<Integer> getTotalUWidth();
 
 } // ESMFField

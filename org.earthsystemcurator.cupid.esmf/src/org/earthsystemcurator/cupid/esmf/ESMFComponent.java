@@ -30,6 +30,7 @@ import org.eclipse.emf.common.util.EList;
  *   <li>{@link org.earthsystemcurator.cupid.esmf.ESMFComponent#getTime <em>Time</em>}</li>
  *   <li>{@link org.earthsystemcurator.cupid.esmf.ESMFComponent#getTimeInterval <em>Time Interval</em>}</li>
  *   <li>{@link org.earthsystemcurator.cupid.esmf.ESMFComponent#getSIDLClass <em>SIDL Class</em>}</li>
+ *   <li>{@link org.earthsystemcurator.cupid.esmf.ESMFComponent#getStage <em>Stage</em>}</li>
  * </ul>
  * </p>
  *
@@ -405,5 +406,23 @@ public interface ESMFComponent extends ESMFNamedEntity {
 	 * @generated
 	 */
 	void setSIDLClass(org.earthsystemcurator.cupid.sidl.Class value);
+
+	/**
+	 * Returns the value of the '<em><b>Stage</b></em>' containment reference list.
+	 * The list contents are of type {@link org.earthsystemcurator.cupid.esmf.ESMFStage}.
+	 * It is bidirectional and its opposite is '{@link org.earthsystemcurator.cupid.esmf.ESMFStage#getComponent <em>Component</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <p>
+	 * If the meaning of the '<em>Stage</em>' containment reference list isn't clear,
+	 * there really should be more of a description here...
+	 * </p>
+	 * <!-- end-user-doc -->
+	 * @return the value of the '<em>Stage</em>' containment reference list.
+	 * @see org.earthsystemcurator.cupid.esmf.ESMFPackage#getESMFComponent_Stage()
+	 * @see org.earthsystemcurator.cupid.esmf.ESMFStage#getComponent
+	 * @model opposite="component" containment="true"
+	 * @generated
+	 */
+	EList<ESMFStage> getStage();
 
 } // ESMFComponent

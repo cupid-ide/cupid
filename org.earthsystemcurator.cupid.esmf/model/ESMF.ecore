@@ -1,6 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ecore:EPackage xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
     xmlns:ecore="http://www.eclipse.org/emf/2002/Ecore" name="esmf" nsURI="http://www.earthsystemcurator.org/cupid/esmf" nsPrefix="esmf">
+  <eClassifiers xsi:type="ecore:EClass" name="ESMFNamedEntity">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="name" lowerBound="1" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+  </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="ESMFComponent" abstract="true" eSuperTypes="#//ESMFNamedEntity">
     <eStructuralFeatures xsi:type="ecore:EReference" name="method" upperBound="-1"
         eType="#//ESMFMethod" containment="true" eOpposite="#//ESMFMethod/component"/>
@@ -34,12 +37,69 @@
     <eStructuralFeatures xsi:type="ecore:EReference" name="timeInterval" upperBound="-1"
         eType="#//ESMFTimeInterval" containment="true"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="SIDLClass" eType="ecore:EClass ../../org.earthsystemcurator.cupid.sidl/model/SIDL.ecore#//Class"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="stage" upperBound="-1"
+        eType="#//ESMFStage" containment="true" eOpposite="#//ESMFStage/component"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="ESMFGriddedComponent" eSuperTypes="#//ESMFComponent"/>
   <eClassifiers xsi:type="ecore:EClass" name="ESMFCouplerComponent" eSuperTypes="#//ESMFComponent"/>
   <eClassifiers xsi:type="ecore:EClass" name="ESMFSimpleCouplerComponent" eSuperTypes="#//ESMFCouplerComponent">
     <eStructuralFeatures xsi:type="ecore:EReference" name="fieldConnection" upperBound="-1"
         eType="#//ESMFFieldConnection" containment="true" eOpposite="#//ESMFFieldConnection/component"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="ESMFStage" abstract="true" eSuperTypes="#//ESMFNamedEntity">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="component" lowerBound="1"
+        eType="#//ESMFComponent" eOpposite="#//ESMFComponent/stage"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="phase" lowerBound="1" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EInt"
+        defaultValueLiteral="1"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="action" upperBound="-1"
+        eType="#//ESMFStageAction" containment="true" eOpposite="#//ESMFStageAction/stage"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="ESMFStageInitialize" eSuperTypes="#//ESMFStage"/>
+  <eClassifiers xsi:type="ecore:EClass" name="ESMFStageRun" eSuperTypes="#//ESMFStage"/>
+  <eClassifiers xsi:type="ecore:EClass" name="ESMFStageFinalize" eSuperTypes="#//ESMFStage"/>
+  <eClassifiers xsi:type="ecore:EClass" name="ESMFStageAction" abstract="true">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="stage" lowerBound="1" eType="#//ESMFStage"
+        eOpposite="#//ESMFStage/action"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="ESMFStageActionArraySpecCreate" eSuperTypes="#//ESMFStageAction">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="arraySpec" lowerBound="1"
+        upperBound="-1" eType="#//ESMFArraySpec"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="ESMFStageActionComponentDestroy" eSuperTypes="#//ESMFStageAction">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="component" lowerBound="1"
+        upperBound="-1" eType="#//ESMFComponent"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="ESMFStageActionFieldCreate" eSuperTypes="#//ESMFStageAction">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="field" lowerBound="1" upperBound="-1"
+        eType="#//ESMFField"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="ESMFStageActionFieldDestroy" eSuperTypes="#//ESMFStageAction">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="field" lowerBound="1" upperBound="-1"
+        eType="#//ESMFField"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="ESMFStageActionGridCreate" eSuperTypes="#//ESMFStageAction">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="grid" lowerBound="1" upperBound="-1"
+        eType="#//ESMFGrid"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="ESMFStageActionGridInherit" eSuperTypes="#//ESMFStageAction">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="grid" lowerBound="1" upperBound="-1"
+        eType="#//ESMFGrid"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="ESMFStageActionImportStateAdd" eSuperTypes="#//ESMFStageAction">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="item" lowerBound="1" upperBound="-1"
+        eType="#//ESMFStateItem"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="ESMFStageActionExportStateAdd" eSuperTypes="#//ESMFStageAction">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="item" lowerBound="1" upperBound="-1"
+        eType="#//ESMFStateItem"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="ESMFStageActionStateCreate" eSuperTypes="#//ESMFStageAction">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="state" lowerBound="1" upperBound="-1"
+        eType="#//ESMFState"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="ESMFStageActionStateDestroy" eSuperTypes="#//ESMFStageAction">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="state" lowerBound="1" upperBound="-1"
+        eType="#//ESMFState"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="ESMFMethod" eSuperTypes="#//ESMFNamedEntity">
     <eStructuralFeatures xsi:type="ecore:EReference" name="component" lowerBound="1"
@@ -130,6 +190,11 @@
     <eStructuralFeatures xsi:type="ecore:EReference" name="arraySpec" eType="#//ESMFArraySpec"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="SIDLArgument" upperBound="-1"
         eType="ecore:EClass ../../org.earthsystemcurator.cupid.sidl/model/SIDL.ecore#//Argument"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="index" eType="#//ESMF_INDEX"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="totalLWidth" unique="false"
+        upperBound="-1" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EInt"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="totalUWidth" unique="false"
+        upperBound="-1" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EInt"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="ESMFFieldConnection">
     <eStructuralFeatures xsi:type="ecore:EReference" name="srcField" lowerBound="1"
@@ -158,7 +223,7 @@
     <eStructuralFeatures xsi:type="ecore:EReference" name="component" lowerBound="1"
         eType="#//ESMFComponent" eOpposite="#//ESMFComponent/routeHandle"/>
   </eClassifiers>
-  <eClassifiers xsi:type="ecore:EClass" name="ESMFArraySpec">
+  <eClassifiers xsi:type="ecore:EClass" name="ESMFArraySpec" eSuperTypes="#//ESMFNamedEntity">
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="typekind" lowerBound="1"
         eType="#//ESMFTypeKind"/>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="rank" lowerBound="1" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EInt"/>
@@ -1170,7 +1235,4 @@
         eType="ecore:EClass ../../org.earthsystemcurator.cupid.sidl/model/SIDL.ecore#//Method"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EDataType" name="ESMFUserToken" instanceClassName="java.lang.String"/>
-  <eClassifiers xsi:type="ecore:EClass" name="ESMFNamedEntity">
-    <eStructuralFeatures xsi:type="ecore:EAttribute" name="name" lowerBound="1" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
-  </eClassifiers>
 </ecore:EPackage>

@@ -33,7 +33,7 @@ import org.eclipse.emf.ecore.util.EcoreUtil;
  *
  * @generated
  */
-public class ESMFArraySpecImpl extends EObjectImpl implements ESMFArraySpec {
+public class ESMFArraySpecImpl extends ESMFNamedEntityImpl implements ESMFArraySpec {
 	/**
 	 * The default value of the '{@link #getTypekind() <em>Typekind</em>}' attribute.
 	 * <!-- begin-user-doc -->

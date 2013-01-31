@@ -13,6 +13,7 @@ import org.earthsystemcurator.cupid.esmf.ESMFPackage;
 import org.earthsystemcurator.cupid.esmf.ESMFStaggerLoc;
 import org.earthsystemcurator.cupid.esmf.ESMFWorkspace;
 
+import org.earthsystemcurator.cupid.esmf.ESMF_INDEX;
 import org.earthsystemcurator.cupid.sidl.Argument;
 
 import org.eclipse.emf.common.notify.Notification;
@@ -25,6 +26,7 @@ import org.eclipse.emf.ecore.InternalEObject;
 
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
 
+import org.eclipse.emf.ecore.util.EDataTypeEList;
 import org.eclipse.emf.ecore.util.EObjectResolvingEList;
 import org.eclipse.emf.ecore.util.EcoreUtil;
 
@@ -42,6 +44,9 @@ import org.eclipse.emf.ecore.util.EcoreUtil;
  *   <li>{@link org.earthsystemcurator.cupid.esmf.impl.ESMFFieldImpl#getStaggerLoc <em>Stagger Loc</em>}</li>
  *   <li>{@link org.earthsystemcurator.cupid.esmf.impl.ESMFFieldImpl#getArraySpec <em>Array Spec</em>}</li>
  *   <li>{@link org.earthsystemcurator.cupid.esmf.impl.ESMFFieldImpl#getSIDLArgument <em>SIDL Argument</em>}</li>
+ *   <li>{@link org.earthsystemcurator.cupid.esmf.impl.ESMFFieldImpl#getIndex <em>Index</em>}</li>
+ *   <li>{@link org.earthsystemcurator.cupid.esmf.impl.ESMFFieldImpl#getTotalLWidth <em>Total LWidth</em>}</li>
+ *   <li>{@link org.earthsystemcurator.cupid.esmf.impl.ESMFFieldImpl#getTotalUWidth <em>Total UWidth</em>}</li>
  * </ul>
  * </p>
  *
@@ -117,6 +122,46 @@ public class ESMFFieldImpl extends ESMFNamedEntityImpl implements ESMFField {
 	 * @ordered
 	 */
 	protected EList<Argument> sidlArgument;
+
+	/**
+	 * The default value of the '{@link #getIndex() <em>Index</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #getIndex()
+	 * @generated
+	 * @ordered
+	 */
+	protected static final ESMF_INDEX INDEX_EDEFAULT = ESMF_INDEX.ESMF_INDEX_DELOCAL;
+
+	/**
+	 * The cached value of the '{@link #getIndex() <em>Index</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #getIndex()
+	 * @generated
+	 * @ordered
+	 */
+	protected ESMF_INDEX index = INDEX_EDEFAULT;
+
+	/**
+	 * The cached value of the '{@link #getTotalLWidth() <em>Total LWidth</em>}' attribute list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #getTotalLWidth()
+	 * @generated
+	 * @ordered
+	 */
+	protected EList<Integer> totalLWidth;
+
+	/**
+	 * The cached value of the '{@link #getTotalUWidth() <em>Total UWidth</em>}' attribute list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #getTotalUWidth()
+	 * @generated
+	 * @ordered
+	 */
+	protected EList<Integer> totalUWidth;
 
 	/**
 	 * <!-- begin-user-doc -->
@@ -390,6 +435,51 @@ public class ESMFFieldImpl extends ESMFNamedEntityImpl implements ESMFField {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	public ESMF_INDEX getIndex() {
+		return index;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public void setIndex(ESMF_INDEX newIndex) {
+		ESMF_INDEX oldIndex = index;
+		index = newIndex == null ? INDEX_EDEFAULT : newIndex;
+		if (eNotificationRequired())
+			eNotify(new ENotificationImpl(this, Notification.SET, ESMFPackage.ESMF_FIELD__INDEX, oldIndex, index));
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EList<Integer> getTotalLWidth() {
+		if (totalLWidth == null) {
+			totalLWidth = new EDataTypeEList<Integer>(Integer.class, this, ESMFPackage.ESMF_FIELD__TOTAL_LWIDTH);
+		}
+		return totalLWidth;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EList<Integer> getTotalUWidth() {
+		if (totalUWidth == null) {
+			totalUWidth = new EDataTypeEList<Integer>(Integer.class, this, ESMFPackage.ESMF_FIELD__TOTAL_UWIDTH);
+		}
+		return totalUWidth;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
 	@Override
 	public NotificationChain eInverseAdd(InternalEObject otherEnd, int featureID, NotificationChain msgs) {
 		switch (featureID) {
@@ -461,6 +551,12 @@ public class ESMFFieldImpl extends ESMFNamedEntityImpl implements ESMFField {
 				return basicGetArraySpec();
 			case ESMFPackage.ESMF_FIELD__SIDL_ARGUMENT:
 				return getSIDLArgument();
+			case ESMFPackage.ESMF_FIELD__INDEX:
+				return getIndex();
+			case ESMFPackage.ESMF_FIELD__TOTAL_LWIDTH:
+				return getTotalLWidth();
+			case ESMFPackage.ESMF_FIELD__TOTAL_UWIDTH:
+				return getTotalUWidth();
 		}
 		return super.eGet(featureID, resolve, coreType);
 	}
@@ -496,6 +592,17 @@ public class ESMFFieldImpl extends ESMFNamedEntityImpl implements ESMFField {
 				getSIDLArgument().clear();
 				getSIDLArgument().addAll((Collection<? extends Argument>)newValue);
 				return;
+			case ESMFPackage.ESMF_FIELD__INDEX:
+				setIndex((ESMF_INDEX)newValue);
+				return;
+			case ESMFPackage.ESMF_FIELD__TOTAL_LWIDTH:
+				getTotalLWidth().clear();
+				getTotalLWidth().addAll((Collection<? extends Integer>)newValue);
+				return;
+			case ESMFPackage.ESMF_FIELD__TOTAL_UWIDTH:
+				getTotalUWidth().clear();
+				getTotalUWidth().addAll((Collection<? extends Integer>)newValue);
+				return;
 		}
 		super.eSet(featureID, newValue);
 	}
@@ -529,6 +636,15 @@ public class ESMFFieldImpl extends ESMFNamedEntityImpl implements ESMFField {
 			case ESMFPackage.ESMF_FIELD__SIDL_ARGUMENT:
 				getSIDLArgument().clear();
 				return;
+			case ESMFPackage.ESMF_FIELD__INDEX:
+				setIndex(INDEX_EDEFAULT);
+				return;
+			case ESMFPackage.ESMF_FIELD__TOTAL_LWIDTH:
+				getTotalLWidth().clear();
+				return;
+			case ESMFPackage.ESMF_FIELD__TOTAL_UWIDTH:
+				getTotalUWidth().clear();
+				return;
 		}
 		super.eUnset(featureID);
 	}
@@ -555,6 +671,12 @@ public class ESMFFieldImpl extends ESMFNamedEntityImpl implements ESMFField {
 				return arraySpec != null;
 			case ESMFPackage.ESMF_FIELD__SIDL_ARGUMENT:
 				return sidlArgument != null && !sidlArgument.isEmpty();
+			case ESMFPackage.ESMF_FIELD__INDEX:
+				return index != INDEX_EDEFAULT;
+			case ESMFPackage.ESMF_FIELD__TOTAL_LWIDTH:
+				return totalLWidth != null && !totalLWidth.isEmpty();
+			case ESMFPackage.ESMF_FIELD__TOTAL_UWIDTH:
+				return totalUWidth != null && !totalUWidth.isEmpty();
 		}
 		return super.eIsSet(featureID);
 	}
@@ -571,6 +693,12 @@ public class ESMFFieldImpl extends ESMFNamedEntityImpl implements ESMFField {
 		StringBuffer result = new StringBuffer(super.toString());
 		result.append(" (staggerLoc: ");
 		result.append(staggerLoc);
+		result.append(", index: ");
+		result.append(index);
+		result.append(", totalLWidth: ");
+		result.append(totalLWidth);
+		result.append(", totalUWidth: ");
+		result.append(totalUWidth);
 		result.append(')');
 		return result.toString();
 	}

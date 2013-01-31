@@ -90,6 +90,21 @@ import org.earthsystemcurator.cupid.esmf.ESMFRegisterMethod;
 import org.earthsystemcurator.cupid.esmf.ESMFRouteHandle;
 import org.earthsystemcurator.cupid.esmf.ESMFRunMethod;
 import org.earthsystemcurator.cupid.esmf.ESMFSimpleCouplerComponent;
+import org.earthsystemcurator.cupid.esmf.ESMFStage;
+import org.earthsystemcurator.cupid.esmf.ESMFStageAction;
+import org.earthsystemcurator.cupid.esmf.ESMFStageActionArraySpecCreate;
+import org.earthsystemcurator.cupid.esmf.ESMFStageActionComponentDestroy;
+import org.earthsystemcurator.cupid.esmf.ESMFStageActionExportStateAdd;
+import org.earthsystemcurator.cupid.esmf.ESMFStageActionFieldCreate;
+import org.earthsystemcurator.cupid.esmf.ESMFStageActionFieldDestroy;
+import org.earthsystemcurator.cupid.esmf.ESMFStageActionGridCreate;
+import org.earthsystemcurator.cupid.esmf.ESMFStageActionGridInherit;
+import org.earthsystemcurator.cupid.esmf.ESMFStageActionImportStateAdd;
+import org.earthsystemcurator.cupid.esmf.ESMFStageActionStateCreate;
+import org.earthsystemcurator.cupid.esmf.ESMFStageActionStateDestroy;
+import org.earthsystemcurator.cupid.esmf.ESMFStageFinalize;
+import org.earthsystemcurator.cupid.esmf.ESMFStageInitialize;
+import org.earthsystemcurator.cupid.esmf.ESMFStageRun;
 import org.earthsystemcurator.cupid.esmf.ESMFStaggerLoc;
 import org.earthsystemcurator.cupid.esmf.ESMFState;
 import org.earthsystemcurator.cupid.esmf.ESMFStateItem;
@@ -151,6 +166,111 @@ public class ESMFPackageImpl extends EPackageImpl implements ESMFPackage {
 	 * @generated
 	 */
 	private EClass esmfSimpleCouplerComponentEClass = null;
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	private EClass esmfStageEClass = null;
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	private EClass esmfStageInitializeEClass = null;
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	private EClass esmfStageRunEClass = null;
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	private EClass esmfStageFinalizeEClass = null;
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	private EClass esmfStageActionEClass = null;
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	private EClass esmfStageActionFieldCreateEClass = null;
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	private EClass esmfStageActionFieldDestroyEClass = null;
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	private EClass esmfStageActionGridCreateEClass = null;
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	private EClass esmfStageActionGridInheritEClass = null;
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	private EClass esmfStageActionImportStateAddEClass = null;
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	private EClass esmfStageActionExportStateAddEClass = null;
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	private EClass esmfStageActionStateCreateEClass = null;
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	private EClass esmfStageActionStateDestroyEClass = null;
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	private EClass esmfStageActionArraySpecCreateEClass = null;
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	private EClass esmfStageActionComponentDestroyEClass = null;
 
 	/**
 	 * <!-- begin-user-doc -->
@@ -1066,6 +1186,15 @@ public class ESMFPackageImpl extends EPackageImpl implements ESMFPackage {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	public EReference getESMFComponent_Stage() {
+		return (EReference)esmfComponentEClass.getEStructuralFeatures().get(18);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
 	public EClass getESMFGriddedComponent() {
 		return esmfGriddedComponentEClass;
 	}
@@ -1095,6 +1224,267 @@ public class ESMFPackageImpl extends EPackageImpl implements ESMFPackage {
 	 */
 	public EReference getESMFSimpleCouplerComponent_FieldConnection() {
 		return (EReference)esmfSimpleCouplerComponentEClass.getEStructuralFeatures().get(0);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EClass getESMFStage() {
+		return esmfStageEClass;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EReference getESMFStage_Component() {
+		return (EReference)esmfStageEClass.getEStructuralFeatures().get(0);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EAttribute getESMFStage_Phase() {
+		return (EAttribute)esmfStageEClass.getEStructuralFeatures().get(1);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EReference getESMFStage_Action() {
+		return (EReference)esmfStageEClass.getEStructuralFeatures().get(2);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EClass getESMFStageInitialize() {
+		return esmfStageInitializeEClass;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EClass getESMFStageRun() {
+		return esmfStageRunEClass;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EClass getESMFStageFinalize() {
+		return esmfStageFinalizeEClass;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EClass getESMFStageAction() {
+		return esmfStageActionEClass;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EReference getESMFStageAction_Stage() {
+		return (EReference)esmfStageActionEClass.getEStructuralFeatures().get(0);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EClass getESMFStageActionFieldCreate() {
+		return esmfStageActionFieldCreateEClass;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EReference getESMFStageActionFieldCreate_Field() {
+		return (EReference)esmfStageActionFieldCreateEClass.getEStructuralFeatures().get(0);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EClass getESMFStageActionFieldDestroy() {
+		return esmfStageActionFieldDestroyEClass;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EReference getESMFStageActionFieldDestroy_Field() {
+		return (EReference)esmfStageActionFieldDestroyEClass.getEStructuralFeatures().get(0);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EClass getESMFStageActionGridCreate() {
+		return esmfStageActionGridCreateEClass;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EReference getESMFStageActionGridCreate_Grid() {
+		return (EReference)esmfStageActionGridCreateEClass.getEStructuralFeatures().get(0);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EClass getESMFStageActionGridInherit() {
+		return esmfStageActionGridInheritEClass;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EReference getESMFStageActionGridInherit_Grid() {
+		return (EReference)esmfStageActionGridInheritEClass.getEStructuralFeatures().get(0);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EClass getESMFStageActionImportStateAdd() {
+		return esmfStageActionImportStateAddEClass;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EReference getESMFStageActionImportStateAdd_Item() {
+		return (EReference)esmfStageActionImportStateAddEClass.getEStructuralFeatures().get(0);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EClass getESMFStageActionExportStateAdd() {
+		return esmfStageActionExportStateAddEClass;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EReference getESMFStageActionExportStateAdd_Item() {
+		return (EReference)esmfStageActionExportStateAddEClass.getEStructuralFeatures().get(0);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EClass getESMFStageActionStateCreate() {
+		return esmfStageActionStateCreateEClass;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EReference getESMFStageActionStateCreate_State() {
+		return (EReference)esmfStageActionStateCreateEClass.getEStructuralFeatures().get(0);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EClass getESMFStageActionStateDestroy() {
+		return esmfStageActionStateDestroyEClass;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EReference getESMFStageActionStateDestroy_State() {
+		return (EReference)esmfStageActionStateDestroyEClass.getEStructuralFeatures().get(0);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EClass getESMFStageActionArraySpecCreate() {
+		return esmfStageActionArraySpecCreateEClass;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EReference getESMFStageActionArraySpecCreate_ArraySpec() {
+		return (EReference)esmfStageActionArraySpecCreateEClass.getEStructuralFeatures().get(0);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EClass getESMFStageActionComponentDestroy() {
+		return esmfStageActionComponentDestroyEClass;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EReference getESMFStageActionComponentDestroy_Component() {
+		return (EReference)esmfStageActionComponentDestroyEClass.getEStructuralFeatures().get(0);
 	}
 
 	/**
@@ -1509,6 +1899,33 @@ public class ESMFPackageImpl extends EPackageImpl implements ESMFPackage {
 	 */
 	public EReference getESMFField_SIDLArgument() {
 		return (EReference)esmfFieldEClass.getEStructuralFeatures().get(5);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EAttribute getESMFField_Index() {
+		return (EAttribute)esmfFieldEClass.getEStructuralFeatures().get(6);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EAttribute getESMFField_TotalLWidth() {
+		return (EAttribute)esmfFieldEClass.getEStructuralFeatures().get(7);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EAttribute getESMFField_TotalUWidth() {
+		return (EAttribute)esmfFieldEClass.getEStructuralFeatures().get(8);
 	}
 
 	/**
@@ -4068,6 +4485,9 @@ public class ESMFPackageImpl extends EPackageImpl implements ESMFPackage {
 		isCreated = true;
 
 		// Create classes and their features
+		esmfNamedEntityEClass = createEClass(ESMF_NAMED_ENTITY);
+		createEAttribute(esmfNamedEntityEClass, ESMF_NAMED_ENTITY__NAME);
+
 		esmfComponentEClass = createEClass(ESMF_COMPONENT);
 		createEReference(esmfComponentEClass, ESMF_COMPONENT__METHOD);
 		createEReference(esmfComponentEClass, ESMF_COMPONENT__REGISTER_METHOD);
@@ -4087,6 +4507,7 @@ public class ESMFPackageImpl extends EPackageImpl implements ESMFPackage {
 		createEReference(esmfComponentEClass, ESMF_COMPONENT__TIME);
 		createEReference(esmfComponentEClass, ESMF_COMPONENT__TIME_INTERVAL);
 		createEReference(esmfComponentEClass, ESMF_COMPONENT__SIDL_CLASS);
+		createEReference(esmfComponentEClass, ESMF_COMPONENT__STAGE);
 
 		esmfGriddedComponentEClass = createEClass(ESMF_GRIDDED_COMPONENT);
 
@@ -4094,6 +4515,50 @@ public class ESMFPackageImpl extends EPackageImpl implements ESMFPackage {
 
 		esmfSimpleCouplerComponentEClass = createEClass(ESMF_SIMPLE_COUPLER_COMPONENT);
 		createEReference(esmfSimpleCouplerComponentEClass, ESMF_SIMPLE_COUPLER_COMPONENT__FIELD_CONNECTION);
+
+		esmfStageEClass = createEClass(ESMF_STAGE);
+		createEReference(esmfStageEClass, ESMF_STAGE__COMPONENT);
+		createEAttribute(esmfStageEClass, ESMF_STAGE__PHASE);
+		createEReference(esmfStageEClass, ESMF_STAGE__ACTION);
+
+		esmfStageInitializeEClass = createEClass(ESMF_STAGE_INITIALIZE);
+
+		esmfStageRunEClass = createEClass(ESMF_STAGE_RUN);
+
+		esmfStageFinalizeEClass = createEClass(ESMF_STAGE_FINALIZE);
+
+		esmfStageActionEClass = createEClass(ESMF_STAGE_ACTION);
+		createEReference(esmfStageActionEClass, ESMF_STAGE_ACTION__STAGE);
+
+		esmfStageActionArraySpecCreateEClass = createEClass(ESMF_STAGE_ACTION_ARRAY_SPEC_CREATE);
+		createEReference(esmfStageActionArraySpecCreateEClass, ESMF_STAGE_ACTION_ARRAY_SPEC_CREATE__ARRAY_SPEC);
+
+		esmfStageActionComponentDestroyEClass = createEClass(ESMF_STAGE_ACTION_COMPONENT_DESTROY);
+		createEReference(esmfStageActionComponentDestroyEClass, ESMF_STAGE_ACTION_COMPONENT_DESTROY__COMPONENT);
+
+		esmfStageActionFieldCreateEClass = createEClass(ESMF_STAGE_ACTION_FIELD_CREATE);
+		createEReference(esmfStageActionFieldCreateEClass, ESMF_STAGE_ACTION_FIELD_CREATE__FIELD);
+
+		esmfStageActionFieldDestroyEClass = createEClass(ESMF_STAGE_ACTION_FIELD_DESTROY);
+		createEReference(esmfStageActionFieldDestroyEClass, ESMF_STAGE_ACTION_FIELD_DESTROY__FIELD);
+
+		esmfStageActionGridCreateEClass = createEClass(ESMF_STAGE_ACTION_GRID_CREATE);
+		createEReference(esmfStageActionGridCreateEClass, ESMF_STAGE_ACTION_GRID_CREATE__GRID);
+
+		esmfStageActionGridInheritEClass = createEClass(ESMF_STAGE_ACTION_GRID_INHERIT);
+		createEReference(esmfStageActionGridInheritEClass, ESMF_STAGE_ACTION_GRID_INHERIT__GRID);
+
+		esmfStageActionImportStateAddEClass = createEClass(ESMF_STAGE_ACTION_IMPORT_STATE_ADD);
+		createEReference(esmfStageActionImportStateAddEClass, ESMF_STAGE_ACTION_IMPORT_STATE_ADD__ITEM);
+
+		esmfStageActionExportStateAddEClass = createEClass(ESMF_STAGE_ACTION_EXPORT_STATE_ADD);
+		createEReference(esmfStageActionExportStateAddEClass, ESMF_STAGE_ACTION_EXPORT_STATE_ADD__ITEM);
+
+		esmfStageActionStateCreateEClass = createEClass(ESMF_STAGE_ACTION_STATE_CREATE);
+		createEReference(esmfStageActionStateCreateEClass, ESMF_STAGE_ACTION_STATE_CREATE__STATE);
+
+		esmfStageActionStateDestroyEClass = createEClass(ESMF_STAGE_ACTION_STATE_DESTROY);
+		createEReference(esmfStageActionStateDestroyEClass, ESMF_STAGE_ACTION_STATE_DESTROY__STATE);
 
 		esmfMethodEClass = createEClass(ESMF_METHOD);
 		createEReference(esmfMethodEClass, ESMF_METHOD__COMPONENT);
@@ -4155,6 +4620,9 @@ public class ESMFPackageImpl extends EPackageImpl implements ESMFPackage {
 		createEAttribute(esmfFieldEClass, ESMF_FIELD__STAGGER_LOC);
 		createEReference(esmfFieldEClass, ESMF_FIELD__ARRAY_SPEC);
 		createEReference(esmfFieldEClass, ESMF_FIELD__SIDL_ARGUMENT);
+		createEAttribute(esmfFieldEClass, ESMF_FIELD__INDEX);
+		createEAttribute(esmfFieldEClass, ESMF_FIELD__TOTAL_LWIDTH);
+		createEAttribute(esmfFieldEClass, ESMF_FIELD__TOTAL_UWIDTH);
 
 		esmfFieldConnectionEClass = createEClass(ESMF_FIELD_CONNECTION);
 		createEReference(esmfFieldConnectionEClass, ESMF_FIELD_CONNECTION__SRC_FIELD);
@@ -4502,9 +4970,6 @@ public class ESMFPackageImpl extends EPackageImpl implements ESMFPackage {
 		esmfCallSIDLMethodEClass = createEClass(ESMF_CALL_SIDL_METHOD);
 		createEReference(esmfCallSIDLMethodEClass, ESMF_CALL_SIDL_METHOD__SIDL_METHOD);
 
-		esmfNamedEntityEClass = createEClass(ESMF_NAMED_ENTITY);
-		createEAttribute(esmfNamedEntityEClass, ESMF_NAMED_ENTITY__NAME);
-
 		// Create enums
 		esmfCalKindEEnum = createEEnum(ESMF_CAL_KIND);
 		esmfStaggerLocEEnum = createEEnum(ESMF_STAGGER_LOC);
@@ -4551,6 +5016,20 @@ public class ESMFPackageImpl extends EPackageImpl implements ESMFPackage {
 		esmfGriddedComponentEClass.getESuperTypes().add(this.getESMFComponent());
 		esmfCouplerComponentEClass.getESuperTypes().add(this.getESMFComponent());
 		esmfSimpleCouplerComponentEClass.getESuperTypes().add(this.getESMFCouplerComponent());
+		esmfStageEClass.getESuperTypes().add(this.getESMFNamedEntity());
+		esmfStageInitializeEClass.getESuperTypes().add(this.getESMFStage());
+		esmfStageRunEClass.getESuperTypes().add(this.getESMFStage());
+		esmfStageFinalizeEClass.getESuperTypes().add(this.getESMFStage());
+		esmfStageActionArraySpecCreateEClass.getESuperTypes().add(this.getESMFStageAction());
+		esmfStageActionComponentDestroyEClass.getESuperTypes().add(this.getESMFStageAction());
+		esmfStageActionFieldCreateEClass.getESuperTypes().add(this.getESMFStageAction());
+		esmfStageActionFieldDestroyEClass.getESuperTypes().add(this.getESMFStageAction());
+		esmfStageActionGridCreateEClass.getESuperTypes().add(this.getESMFStageAction());
+		esmfStageActionGridInheritEClass.getESuperTypes().add(this.getESMFStageAction());
+		esmfStageActionImportStateAddEClass.getESuperTypes().add(this.getESMFStageAction());
+		esmfStageActionExportStateAddEClass.getESuperTypes().add(this.getESMFStageAction());
+		esmfStageActionStateCreateEClass.getESuperTypes().add(this.getESMFStageAction());
+		esmfStageActionStateDestroyEClass.getESuperTypes().add(this.getESMFStageAction());
 		esmfMethodEClass.getESuperTypes().add(this.getESMFNamedEntity());
 		esmfInitMethodEClass.getESuperTypes().add(this.getESMFMethod());
 		esmfPreInitMethodSIDLEClass.getESuperTypes().add(this.getESMFInitMethod());
@@ -4567,6 +5046,7 @@ public class ESMFPackageImpl extends EPackageImpl implements ESMFPackage {
 		esmfFieldEClass.getESuperTypes().add(this.getESMFStateItem());
 		esmfArrayEClass.getESuperTypes().add(this.getESMFStateItem());
 		esmfRouteHandleEClass.getESuperTypes().add(this.getESMFNamedEntity());
+		esmfArraySpecEClass.getESuperTypes().add(this.getESMFNamedEntity());
 		esmfGridEClass.getESuperTypes().add(this.getESMFNamedEntity());
 		esmfDistGridEClass.getESuperTypes().add(this.getESMFNamedEntity());
 		esmfActionAPIEClass.getESuperTypes().add(this.getESMFAction());
@@ -4630,6 +5110,9 @@ public class ESMFPackageImpl extends EPackageImpl implements ESMFPackage {
 		esmfCallSIDLMethodEClass.getESuperTypes().add(this.getESMFCall());
 
 		// Initialize classes and features; add operations and parameters
+		initEClass(esmfNamedEntityEClass, ESMFNamedEntity.class, "ESMFNamedEntity", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+		initEAttribute(getESMFNamedEntity_Name(), ecorePackage.getEString(), "name", null, 1, 1, ESMFNamedEntity.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+
 		initEClass(esmfComponentEClass, ESMFComponent.class, "ESMFComponent", IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 		initEReference(getESMFComponent_Method(), this.getESMFMethod(), this.getESMFMethod_Component(), "method", null, 0, -1, ESMFComponent.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEReference(getESMFComponent_RegisterMethod(), this.getESMFRegisterMethod(), this.getESMFRegisterMethod_Component(), "registerMethod", null, 1, 1, ESMFComponent.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
@@ -4649,6 +5132,7 @@ public class ESMFPackageImpl extends EPackageImpl implements ESMFPackage {
 		initEReference(getESMFComponent_Time(), this.getESMFTime(), null, "time", null, 0, -1, ESMFComponent.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEReference(getESMFComponent_TimeInterval(), this.getESMFTimeInterval(), null, "timeInterval", null, 0, -1, ESMFComponent.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEReference(getESMFComponent_SIDLClass(), theSIDLPackage.getClass_(), null, "SIDLClass", null, 0, 1, ESMFComponent.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEReference(getESMFComponent_Stage(), this.getESMFStage(), this.getESMFStage_Component(), "stage", null, 0, -1, ESMFComponent.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
 		initEClass(esmfGriddedComponentEClass, ESMFGriddedComponent.class, "ESMFGriddedComponent", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 
@@ -4656,6 +5140,50 @@ public class ESMFPackageImpl extends EPackageImpl implements ESMFPackage {
 
 		initEClass(esmfSimpleCouplerComponentEClass, ESMFSimpleCouplerComponent.class, "ESMFSimpleCouplerComponent", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 		initEReference(getESMFSimpleCouplerComponent_FieldConnection(), this.getESMFFieldConnection(), this.getESMFFieldConnection_Component(), "fieldConnection", null, 0, -1, ESMFSimpleCouplerComponent.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+
+		initEClass(esmfStageEClass, ESMFStage.class, "ESMFStage", IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+		initEReference(getESMFStage_Component(), this.getESMFComponent(), this.getESMFComponent_Stage(), "component", null, 1, 1, ESMFStage.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEAttribute(getESMFStage_Phase(), ecorePackage.getEInt(), "phase", "1", 1, 1, ESMFStage.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEReference(getESMFStage_Action(), this.getESMFStageAction(), this.getESMFStageAction_Stage(), "action", null, 0, -1, ESMFStage.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+
+		initEClass(esmfStageInitializeEClass, ESMFStageInitialize.class, "ESMFStageInitialize", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+
+		initEClass(esmfStageRunEClass, ESMFStageRun.class, "ESMFStageRun", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+
+		initEClass(esmfStageFinalizeEClass, ESMFStageFinalize.class, "ESMFStageFinalize", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+
+		initEClass(esmfStageActionEClass, ESMFStageAction.class, "ESMFStageAction", IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+		initEReference(getESMFStageAction_Stage(), this.getESMFStage(), this.getESMFStage_Action(), "stage", null, 1, 1, ESMFStageAction.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+
+		initEClass(esmfStageActionArraySpecCreateEClass, ESMFStageActionArraySpecCreate.class, "ESMFStageActionArraySpecCreate", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+		initEReference(getESMFStageActionArraySpecCreate_ArraySpec(), this.getESMFArraySpec(), null, "arraySpec", null, 1, -1, ESMFStageActionArraySpecCreate.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+
+		initEClass(esmfStageActionComponentDestroyEClass, ESMFStageActionComponentDestroy.class, "ESMFStageActionComponentDestroy", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+		initEReference(getESMFStageActionComponentDestroy_Component(), this.getESMFComponent(), null, "component", null, 1, -1, ESMFStageActionComponentDestroy.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+
+		initEClass(esmfStageActionFieldCreateEClass, ESMFStageActionFieldCreate.class, "ESMFStageActionFieldCreate", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+		initEReference(getESMFStageActionFieldCreate_Field(), this.getESMFField(), null, "field", null, 1, -1, ESMFStageActionFieldCreate.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+
+		initEClass(esmfStageActionFieldDestroyEClass, ESMFStageActionFieldDestroy.class, "ESMFStageActionFieldDestroy", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+		initEReference(getESMFStageActionFieldDestroy_Field(), this.getESMFField(), null, "field", null, 1, -1, ESMFStageActionFieldDestroy.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+
+		initEClass(esmfStageActionGridCreateEClass, ESMFStageActionGridCreate.class, "ESMFStageActionGridCreate", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+		initEReference(getESMFStageActionGridCreate_Grid(), this.getESMFGrid(), null, "grid", null, 1, -1, ESMFStageActionGridCreate.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+
+		initEClass(esmfStageActionGridInheritEClass, ESMFStageActionGridInherit.class, "ESMFStageActionGridInherit", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+		initEReference(getESMFStageActionGridInherit_Grid(), this.getESMFGrid(), null, "grid", null, 1, -1, ESMFStageActionGridInherit.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+
+		initEClass(esmfStageActionImportStateAddEClass, ESMFStageActionImportStateAdd.class, "ESMFStageActionImportStateAdd", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+		initEReference(getESMFStageActionImportStateAdd_Item(), this.getESMFStateItem(), null, "item", null, 1, -1, ESMFStageActionImportStateAdd.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+
+		initEClass(esmfStageActionExportStateAddEClass, ESMFStageActionExportStateAdd.class, "ESMFStageActionExportStateAdd", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+		initEReference(getESMFStageActionExportStateAdd_Item(), this.getESMFStateItem(), null, "item", null, 1, -1, ESMFStageActionExportStateAdd.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+
+		initEClass(esmfStageActionStateCreateEClass, ESMFStageActionStateCreate.class, "ESMFStageActionStateCreate", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+		initEReference(getESMFStageActionStateCreate_State(), this.getESMFState(), null, "state", null, 1, -1, ESMFStageActionStateCreate.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+
+		initEClass(esmfStageActionStateDestroyEClass, ESMFStageActionStateDestroy.class, "ESMFStageActionStateDestroy", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+		initEReference(getESMFStageActionStateDestroy_State(), this.getESMFState(), null, "state", null, 1, -1, ESMFStageActionStateDestroy.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
 		initEClass(esmfMethodEClass, ESMFMethod.class, "ESMFMethod", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 		initEReference(getESMFMethod_Component(), this.getESMFComponent(), this.getESMFComponent_Method(), "component", null, 1, 1, ESMFMethod.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
@@ -4722,6 +5250,9 @@ public class ESMFPackageImpl extends EPackageImpl implements ESMFPackage {
 		initEAttribute(getESMFField_StaggerLoc(), this.getESMFStaggerLoc(), "staggerLoc", null, 0, 1, ESMFField.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEReference(getESMFField_ArraySpec(), this.getESMFArraySpec(), null, "arraySpec", null, 0, 1, ESMFField.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEReference(getESMFField_SIDLArgument(), theSIDLPackage.getArgument(), null, "SIDLArgument", null, 0, -1, ESMFField.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEAttribute(getESMFField_Index(), this.getESMF_INDEX(), "index", null, 0, 1, ESMFField.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEAttribute(getESMFField_TotalLWidth(), ecorePackage.getEInt(), "totalLWidth", null, 0, -1, ESMFField.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, !IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEAttribute(getESMFField_TotalUWidth(), ecorePackage.getEInt(), "totalUWidth", null, 0, -1, ESMFField.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, !IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
 		initEClass(esmfFieldConnectionEClass, ESMFFieldConnection.class, "ESMFFieldConnection", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 		initEReference(getESMFFieldConnection_SrcField(), this.getESMFField(), null, "srcField", null, 1, 1, ESMFFieldConnection.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
@@ -5073,9 +5604,6 @@ public class ESMFPackageImpl extends EPackageImpl implements ESMFPackage {
 
 		initEClass(esmfCallSIDLMethodEClass, ESMFCallSIDLMethod.class, "ESMFCallSIDLMethod", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 		initEReference(getESMFCallSIDLMethod_SIDLMethod(), theSIDLPackage.getMethod(), null, "SIDLMethod", null, 1, 1, ESMFCallSIDLMethod.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-
-		initEClass(esmfNamedEntityEClass, ESMFNamedEntity.class, "ESMFNamedEntity", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
-		initEAttribute(getESMFNamedEntity_Name(), ecorePackage.getEString(), "name", null, 1, 1, ESMFNamedEntity.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
 		// Initialize enums and add enum literals
 		initEEnum(esmfCalKindEEnum, ESMFCalKind.class, "ESMFCalKind");

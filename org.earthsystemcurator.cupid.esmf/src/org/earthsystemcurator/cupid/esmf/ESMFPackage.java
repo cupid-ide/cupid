@@ -65,7 +65,7 @@ public interface ESMFPackage extends EPackage {
 	 * @see org.earthsystemcurator.cupid.esmf.impl.ESMFPackageImpl#getESMFNamedEntity()
 	 * @generated
 	 */
-	int ESMF_NAMED_ENTITY = 92;
+	int ESMF_NAMED_ENTITY = 0;
 
 	/**
 	 * The feature id for the '<em><b>Name</b></em>' attribute.
@@ -93,7 +93,7 @@ public interface ESMFPackage extends EPackage {
 	 * @see org.earthsystemcurator.cupid.esmf.impl.ESMFPackageImpl#getESMFComponent()
 	 * @generated
 	 */
-	int ESMF_COMPONENT = 0;
+	int ESMF_COMPONENT = 1;
 
 	/**
 	 * The feature id for the '<em><b>Name</b></em>' attribute.
@@ -267,13 +267,22 @@ public interface ESMFPackage extends EPackage {
 	int ESMF_COMPONENT__SIDL_CLASS = ESMF_NAMED_ENTITY_FEATURE_COUNT + 17;
 
 	/**
+	 * The feature id for the '<em><b>Stage</b></em>' containment reference list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int ESMF_COMPONENT__STAGE = ESMF_NAMED_ENTITY_FEATURE_COUNT + 18;
+
+	/**
 	 * The number of structural features of the '<em>Component</em>' class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int ESMF_COMPONENT_FEATURE_COUNT = ESMF_NAMED_ENTITY_FEATURE_COUNT + 18;
+	int ESMF_COMPONENT_FEATURE_COUNT = ESMF_NAMED_ENTITY_FEATURE_COUNT + 19;
 
 	/**
 	 * The meta object id for the '{@link org.earthsystemcurator.cupid.esmf.impl.ESMFGriddedComponentImpl <em>Gridded Component</em>}' class.
@@ -283,7 +292,7 @@ public interface ESMFPackage extends EPackage {
 	 * @see org.earthsystemcurator.cupid.esmf.impl.ESMFPackageImpl#getESMFGriddedComponent()
 	 * @generated
 	 */
-	int ESMF_GRIDDED_COMPONENT = 1;
+	int ESMF_GRIDDED_COMPONENT = 2;
 
 	/**
 	 * The feature id for the '<em><b>Name</b></em>' attribute.
@@ -457,6 +466,15 @@ public interface ESMFPackage extends EPackage {
 	int ESMF_GRIDDED_COMPONENT__SIDL_CLASS = ESMF_COMPONENT__SIDL_CLASS;
 
 	/**
+	 * The feature id for the '<em><b>Stage</b></em>' containment reference list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int ESMF_GRIDDED_COMPONENT__STAGE = ESMF_COMPONENT__STAGE;
+
+	/**
 	 * The number of structural features of the '<em>Gridded Component</em>' class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -473,7 +491,7 @@ public interface ESMFPackage extends EPackage {
 	 * @see org.earthsystemcurator.cupid.esmf.impl.ESMFPackageImpl#getESMFCouplerComponent()
 	 * @generated
 	 */
-	int ESMF_COUPLER_COMPONENT = 2;
+	int ESMF_COUPLER_COMPONENT = 3;
 
 	/**
 	 * The feature id for the '<em><b>Name</b></em>' attribute.
@@ -647,6 +665,15 @@ public interface ESMFPackage extends EPackage {
 	int ESMF_COUPLER_COMPONENT__SIDL_CLASS = ESMF_COMPONENT__SIDL_CLASS;
 
 	/**
+	 * The feature id for the '<em><b>Stage</b></em>' containment reference list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int ESMF_COUPLER_COMPONENT__STAGE = ESMF_COMPONENT__STAGE;
+
+	/**
 	 * The number of structural features of the '<em>Coupler Component</em>' class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -663,7 +690,7 @@ public interface ESMFPackage extends EPackage {
 	 * @see org.earthsystemcurator.cupid.esmf.impl.ESMFPackageImpl#getESMFSimpleCouplerComponent()
 	 * @generated
 	 */
-	int ESMF_SIMPLE_COUPLER_COMPONENT = 3;
+	int ESMF_SIMPLE_COUPLER_COMPONENT = 4;
 
 	/**
 	 * The feature id for the '<em><b>Name</b></em>' attribute.
@@ -837,6 +864,15 @@ public interface ESMFPackage extends EPackage {
 	int ESMF_SIMPLE_COUPLER_COMPONENT__SIDL_CLASS = ESMF_COUPLER_COMPONENT__SIDL_CLASS;
 
 	/**
+	 * The feature id for the '<em><b>Stage</b></em>' containment reference list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int ESMF_SIMPLE_COUPLER_COMPONENT__STAGE = ESMF_COUPLER_COMPONENT__STAGE;
+
+	/**
 	 * The feature id for the '<em><b>Field Connection</b></em>' containment reference list.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -855,6 +891,624 @@ public interface ESMFPackage extends EPackage {
 	int ESMF_SIMPLE_COUPLER_COMPONENT_FEATURE_COUNT = ESMF_COUPLER_COMPONENT_FEATURE_COUNT + 1;
 
 	/**
+	 * The meta object id for the '{@link org.earthsystemcurator.cupid.esmf.impl.ESMFStageImpl <em>Stage</em>}' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see org.earthsystemcurator.cupid.esmf.impl.ESMFStageImpl
+	 * @see org.earthsystemcurator.cupid.esmf.impl.ESMFPackageImpl#getESMFStage()
+	 * @generated
+	 */
+	int ESMF_STAGE = 5;
+
+	/**
+	 * The feature id for the '<em><b>Name</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int ESMF_STAGE__NAME = ESMF_NAMED_ENTITY__NAME;
+
+	/**
+	 * The feature id for the '<em><b>Component</b></em>' container reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int ESMF_STAGE__COMPONENT = ESMF_NAMED_ENTITY_FEATURE_COUNT + 0;
+
+	/**
+	 * The feature id for the '<em><b>Phase</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int ESMF_STAGE__PHASE = ESMF_NAMED_ENTITY_FEATURE_COUNT + 1;
+
+	/**
+	 * The feature id for the '<em><b>Action</b></em>' containment reference list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int ESMF_STAGE__ACTION = ESMF_NAMED_ENTITY_FEATURE_COUNT + 2;
+
+	/**
+	 * The number of structural features of the '<em>Stage</em>' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int ESMF_STAGE_FEATURE_COUNT = ESMF_NAMED_ENTITY_FEATURE_COUNT + 3;
+
+	/**
+	 * The meta object id for the '{@link org.earthsystemcurator.cupid.esmf.impl.ESMFStageInitializeImpl <em>Stage Initialize</em>}' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see org.earthsystemcurator.cupid.esmf.impl.ESMFStageInitializeImpl
+	 * @see org.earthsystemcurator.cupid.esmf.impl.ESMFPackageImpl#getESMFStageInitialize()
+	 * @generated
+	 */
+	int ESMF_STAGE_INITIALIZE = 6;
+
+	/**
+	 * The feature id for the '<em><b>Name</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int ESMF_STAGE_INITIALIZE__NAME = ESMF_STAGE__NAME;
+
+	/**
+	 * The feature id for the '<em><b>Component</b></em>' container reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int ESMF_STAGE_INITIALIZE__COMPONENT = ESMF_STAGE__COMPONENT;
+
+	/**
+	 * The feature id for the '<em><b>Phase</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int ESMF_STAGE_INITIALIZE__PHASE = ESMF_STAGE__PHASE;
+
+	/**
+	 * The feature id for the '<em><b>Action</b></em>' containment reference list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int ESMF_STAGE_INITIALIZE__ACTION = ESMF_STAGE__ACTION;
+
+	/**
+	 * The number of structural features of the '<em>Stage Initialize</em>' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int ESMF_STAGE_INITIALIZE_FEATURE_COUNT = ESMF_STAGE_FEATURE_COUNT + 0;
+
+	/**
+	 * The meta object id for the '{@link org.earthsystemcurator.cupid.esmf.impl.ESMFStageRunImpl <em>Stage Run</em>}' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see org.earthsystemcurator.cupid.esmf.impl.ESMFStageRunImpl
+	 * @see org.earthsystemcurator.cupid.esmf.impl.ESMFPackageImpl#getESMFStageRun()
+	 * @generated
+	 */
+	int ESMF_STAGE_RUN = 7;
+
+	/**
+	 * The feature id for the '<em><b>Name</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int ESMF_STAGE_RUN__NAME = ESMF_STAGE__NAME;
+
+	/**
+	 * The feature id for the '<em><b>Component</b></em>' container reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int ESMF_STAGE_RUN__COMPONENT = ESMF_STAGE__COMPONENT;
+
+	/**
+	 * The feature id for the '<em><b>Phase</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int ESMF_STAGE_RUN__PHASE = ESMF_STAGE__PHASE;
+
+	/**
+	 * The feature id for the '<em><b>Action</b></em>' containment reference list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int ESMF_STAGE_RUN__ACTION = ESMF_STAGE__ACTION;
+
+	/**
+	 * The number of structural features of the '<em>Stage Run</em>' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int ESMF_STAGE_RUN_FEATURE_COUNT = ESMF_STAGE_FEATURE_COUNT + 0;
+
+	/**
+	 * The meta object id for the '{@link org.earthsystemcurator.cupid.esmf.impl.ESMFStageFinalizeImpl <em>Stage Finalize</em>}' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see org.earthsystemcurator.cupid.esmf.impl.ESMFStageFinalizeImpl
+	 * @see org.earthsystemcurator.cupid.esmf.impl.ESMFPackageImpl#getESMFStageFinalize()
+	 * @generated
+	 */
+	int ESMF_STAGE_FINALIZE = 8;
+
+	/**
+	 * The feature id for the '<em><b>Name</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int ESMF_STAGE_FINALIZE__NAME = ESMF_STAGE__NAME;
+
+	/**
+	 * The feature id for the '<em><b>Component</b></em>' container reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int ESMF_STAGE_FINALIZE__COMPONENT = ESMF_STAGE__COMPONENT;
+
+	/**
+	 * The feature id for the '<em><b>Phase</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int ESMF_STAGE_FINALIZE__PHASE = ESMF_STAGE__PHASE;
+
+	/**
+	 * The feature id for the '<em><b>Action</b></em>' containment reference list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int ESMF_STAGE_FINALIZE__ACTION = ESMF_STAGE__ACTION;
+
+	/**
+	 * The number of structural features of the '<em>Stage Finalize</em>' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int ESMF_STAGE_FINALIZE_FEATURE_COUNT = ESMF_STAGE_FEATURE_COUNT + 0;
+
+	/**
+	 * The meta object id for the '{@link org.earthsystemcurator.cupid.esmf.impl.ESMFStageActionImpl <em>Stage Action</em>}' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see org.earthsystemcurator.cupid.esmf.impl.ESMFStageActionImpl
+	 * @see org.earthsystemcurator.cupid.esmf.impl.ESMFPackageImpl#getESMFStageAction()
+	 * @generated
+	 */
+	int ESMF_STAGE_ACTION = 9;
+
+	/**
+	 * The feature id for the '<em><b>Stage</b></em>' container reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int ESMF_STAGE_ACTION__STAGE = 0;
+
+	/**
+	 * The number of structural features of the '<em>Stage Action</em>' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int ESMF_STAGE_ACTION_FEATURE_COUNT = 1;
+
+	/**
+	 * The meta object id for the '{@link org.earthsystemcurator.cupid.esmf.impl.ESMFStageActionFieldCreateImpl <em>Stage Action Field Create</em>}' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see org.earthsystemcurator.cupid.esmf.impl.ESMFStageActionFieldCreateImpl
+	 * @see org.earthsystemcurator.cupid.esmf.impl.ESMFPackageImpl#getESMFStageActionFieldCreate()
+	 * @generated
+	 */
+	int ESMF_STAGE_ACTION_FIELD_CREATE = 12;
+
+	/**
+	 * The meta object id for the '{@link org.earthsystemcurator.cupid.esmf.impl.ESMFStageActionFieldDestroyImpl <em>Stage Action Field Destroy</em>}' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see org.earthsystemcurator.cupid.esmf.impl.ESMFStageActionFieldDestroyImpl
+	 * @see org.earthsystemcurator.cupid.esmf.impl.ESMFPackageImpl#getESMFStageActionFieldDestroy()
+	 * @generated
+	 */
+	int ESMF_STAGE_ACTION_FIELD_DESTROY = 13;
+
+	/**
+	 * The meta object id for the '{@link org.earthsystemcurator.cupid.esmf.impl.ESMFStageActionGridCreateImpl <em>Stage Action Grid Create</em>}' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see org.earthsystemcurator.cupid.esmf.impl.ESMFStageActionGridCreateImpl
+	 * @see org.earthsystemcurator.cupid.esmf.impl.ESMFPackageImpl#getESMFStageActionGridCreate()
+	 * @generated
+	 */
+	int ESMF_STAGE_ACTION_GRID_CREATE = 14;
+
+	/**
+	 * The meta object id for the '{@link org.earthsystemcurator.cupid.esmf.impl.ESMFStageActionGridInheritImpl <em>Stage Action Grid Inherit</em>}' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see org.earthsystemcurator.cupid.esmf.impl.ESMFStageActionGridInheritImpl
+	 * @see org.earthsystemcurator.cupid.esmf.impl.ESMFPackageImpl#getESMFStageActionGridInherit()
+	 * @generated
+	 */
+	int ESMF_STAGE_ACTION_GRID_INHERIT = 15;
+
+	/**
+	 * The meta object id for the '{@link org.earthsystemcurator.cupid.esmf.impl.ESMFStageActionStateDestroyImpl <em>Stage Action State Destroy</em>}' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see org.earthsystemcurator.cupid.esmf.impl.ESMFStageActionStateDestroyImpl
+	 * @see org.earthsystemcurator.cupid.esmf.impl.ESMFPackageImpl#getESMFStageActionStateDestroy()
+	 * @generated
+	 */
+	int ESMF_STAGE_ACTION_STATE_DESTROY = 19;
+
+	/**
+	 * The meta object id for the '{@link org.earthsystemcurator.cupid.esmf.impl.ESMFStageActionArraySpecCreateImpl <em>Stage Action Array Spec Create</em>}' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see org.earthsystemcurator.cupid.esmf.impl.ESMFStageActionArraySpecCreateImpl
+	 * @see org.earthsystemcurator.cupid.esmf.impl.ESMFPackageImpl#getESMFStageActionArraySpecCreate()
+	 * @generated
+	 */
+	int ESMF_STAGE_ACTION_ARRAY_SPEC_CREATE = 10;
+
+	/**
+	 * The feature id for the '<em><b>Stage</b></em>' container reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int ESMF_STAGE_ACTION_ARRAY_SPEC_CREATE__STAGE = ESMF_STAGE_ACTION__STAGE;
+
+	/**
+	 * The feature id for the '<em><b>Array Spec</b></em>' reference list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int ESMF_STAGE_ACTION_ARRAY_SPEC_CREATE__ARRAY_SPEC = ESMF_STAGE_ACTION_FEATURE_COUNT + 0;
+
+	/**
+	 * The number of structural features of the '<em>Stage Action Array Spec Create</em>' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int ESMF_STAGE_ACTION_ARRAY_SPEC_CREATE_FEATURE_COUNT = ESMF_STAGE_ACTION_FEATURE_COUNT + 1;
+
+	/**
+	 * The meta object id for the '{@link org.earthsystemcurator.cupid.esmf.impl.ESMFStageActionComponentDestroyImpl <em>Stage Action Component Destroy</em>}' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see org.earthsystemcurator.cupid.esmf.impl.ESMFStageActionComponentDestroyImpl
+	 * @see org.earthsystemcurator.cupid.esmf.impl.ESMFPackageImpl#getESMFStageActionComponentDestroy()
+	 * @generated
+	 */
+	int ESMF_STAGE_ACTION_COMPONENT_DESTROY = 11;
+
+	/**
+	 * The feature id for the '<em><b>Stage</b></em>' container reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int ESMF_STAGE_ACTION_COMPONENT_DESTROY__STAGE = ESMF_STAGE_ACTION__STAGE;
+
+	/**
+	 * The feature id for the '<em><b>Component</b></em>' reference list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int ESMF_STAGE_ACTION_COMPONENT_DESTROY__COMPONENT = ESMF_STAGE_ACTION_FEATURE_COUNT + 0;
+
+	/**
+	 * The number of structural features of the '<em>Stage Action Component Destroy</em>' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int ESMF_STAGE_ACTION_COMPONENT_DESTROY_FEATURE_COUNT = ESMF_STAGE_ACTION_FEATURE_COUNT + 1;
+
+	/**
+	 * The feature id for the '<em><b>Stage</b></em>' container reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int ESMF_STAGE_ACTION_FIELD_CREATE__STAGE = ESMF_STAGE_ACTION__STAGE;
+
+	/**
+	 * The feature id for the '<em><b>Field</b></em>' reference list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int ESMF_STAGE_ACTION_FIELD_CREATE__FIELD = ESMF_STAGE_ACTION_FEATURE_COUNT + 0;
+
+	/**
+	 * The number of structural features of the '<em>Stage Action Field Create</em>' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int ESMF_STAGE_ACTION_FIELD_CREATE_FEATURE_COUNT = ESMF_STAGE_ACTION_FEATURE_COUNT + 1;
+
+	/**
+	 * The feature id for the '<em><b>Stage</b></em>' container reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int ESMF_STAGE_ACTION_FIELD_DESTROY__STAGE = ESMF_STAGE_ACTION__STAGE;
+
+	/**
+	 * The feature id for the '<em><b>Field</b></em>' reference list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int ESMF_STAGE_ACTION_FIELD_DESTROY__FIELD = ESMF_STAGE_ACTION_FEATURE_COUNT + 0;
+
+	/**
+	 * The number of structural features of the '<em>Stage Action Field Destroy</em>' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int ESMF_STAGE_ACTION_FIELD_DESTROY_FEATURE_COUNT = ESMF_STAGE_ACTION_FEATURE_COUNT + 1;
+
+	/**
+	 * The feature id for the '<em><b>Stage</b></em>' container reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int ESMF_STAGE_ACTION_GRID_CREATE__STAGE = ESMF_STAGE_ACTION__STAGE;
+
+	/**
+	 * The feature id for the '<em><b>Grid</b></em>' reference list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int ESMF_STAGE_ACTION_GRID_CREATE__GRID = ESMF_STAGE_ACTION_FEATURE_COUNT + 0;
+
+	/**
+	 * The number of structural features of the '<em>Stage Action Grid Create</em>' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int ESMF_STAGE_ACTION_GRID_CREATE_FEATURE_COUNT = ESMF_STAGE_ACTION_FEATURE_COUNT + 1;
+
+	/**
+	 * The feature id for the '<em><b>Stage</b></em>' container reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int ESMF_STAGE_ACTION_GRID_INHERIT__STAGE = ESMF_STAGE_ACTION__STAGE;
+
+	/**
+	 * The feature id for the '<em><b>Grid</b></em>' reference list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int ESMF_STAGE_ACTION_GRID_INHERIT__GRID = ESMF_STAGE_ACTION_FEATURE_COUNT + 0;
+
+	/**
+	 * The number of structural features of the '<em>Stage Action Grid Inherit</em>' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int ESMF_STAGE_ACTION_GRID_INHERIT_FEATURE_COUNT = ESMF_STAGE_ACTION_FEATURE_COUNT + 1;
+
+	/**
+	 * The meta object id for the '{@link org.earthsystemcurator.cupid.esmf.impl.ESMFStageActionImportStateAddImpl <em>Stage Action Import State Add</em>}' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see org.earthsystemcurator.cupid.esmf.impl.ESMFStageActionImportStateAddImpl
+	 * @see org.earthsystemcurator.cupid.esmf.impl.ESMFPackageImpl#getESMFStageActionImportStateAdd()
+	 * @generated
+	 */
+	int ESMF_STAGE_ACTION_IMPORT_STATE_ADD = 16;
+
+	/**
+	 * The feature id for the '<em><b>Stage</b></em>' container reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int ESMF_STAGE_ACTION_IMPORT_STATE_ADD__STAGE = ESMF_STAGE_ACTION__STAGE;
+
+	/**
+	 * The feature id for the '<em><b>Item</b></em>' reference list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int ESMF_STAGE_ACTION_IMPORT_STATE_ADD__ITEM = ESMF_STAGE_ACTION_FEATURE_COUNT + 0;
+
+	/**
+	 * The number of structural features of the '<em>Stage Action Import State Add</em>' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int ESMF_STAGE_ACTION_IMPORT_STATE_ADD_FEATURE_COUNT = ESMF_STAGE_ACTION_FEATURE_COUNT + 1;
+
+	/**
+	 * The meta object id for the '{@link org.earthsystemcurator.cupid.esmf.impl.ESMFStageActionExportStateAddImpl <em>Stage Action Export State Add</em>}' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see org.earthsystemcurator.cupid.esmf.impl.ESMFStageActionExportStateAddImpl
+	 * @see org.earthsystemcurator.cupid.esmf.impl.ESMFPackageImpl#getESMFStageActionExportStateAdd()
+	 * @generated
+	 */
+	int ESMF_STAGE_ACTION_EXPORT_STATE_ADD = 17;
+
+	/**
+	 * The feature id for the '<em><b>Stage</b></em>' container reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int ESMF_STAGE_ACTION_EXPORT_STATE_ADD__STAGE = ESMF_STAGE_ACTION__STAGE;
+
+	/**
+	 * The feature id for the '<em><b>Item</b></em>' reference list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int ESMF_STAGE_ACTION_EXPORT_STATE_ADD__ITEM = ESMF_STAGE_ACTION_FEATURE_COUNT + 0;
+
+	/**
+	 * The number of structural features of the '<em>Stage Action Export State Add</em>' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int ESMF_STAGE_ACTION_EXPORT_STATE_ADD_FEATURE_COUNT = ESMF_STAGE_ACTION_FEATURE_COUNT + 1;
+
+	/**
+	 * The meta object id for the '{@link org.earthsystemcurator.cupid.esmf.impl.ESMFStageActionStateCreateImpl <em>Stage Action State Create</em>}' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see org.earthsystemcurator.cupid.esmf.impl.ESMFStageActionStateCreateImpl
+	 * @see org.earthsystemcurator.cupid.esmf.impl.ESMFPackageImpl#getESMFStageActionStateCreate()
+	 * @generated
+	 */
+	int ESMF_STAGE_ACTION_STATE_CREATE = 18;
+
+	/**
+	 * The feature id for the '<em><b>Stage</b></em>' container reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int ESMF_STAGE_ACTION_STATE_CREATE__STAGE = ESMF_STAGE_ACTION__STAGE;
+
+	/**
+	 * The feature id for the '<em><b>State</b></em>' reference list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int ESMF_STAGE_ACTION_STATE_CREATE__STATE = ESMF_STAGE_ACTION_FEATURE_COUNT + 0;
+
+	/**
+	 * The number of structural features of the '<em>Stage Action State Create</em>' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int ESMF_STAGE_ACTION_STATE_CREATE_FEATURE_COUNT = ESMF_STAGE_ACTION_FEATURE_COUNT + 1;
+
+	/**
+	 * The feature id for the '<em><b>Stage</b></em>' container reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int ESMF_STAGE_ACTION_STATE_DESTROY__STAGE = ESMF_STAGE_ACTION__STAGE;
+
+	/**
+	 * The feature id for the '<em><b>State</b></em>' reference list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int ESMF_STAGE_ACTION_STATE_DESTROY__STATE = ESMF_STAGE_ACTION_FEATURE_COUNT + 0;
+
+	/**
+	 * The number of structural features of the '<em>Stage Action State Destroy</em>' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int ESMF_STAGE_ACTION_STATE_DESTROY_FEATURE_COUNT = ESMF_STAGE_ACTION_FEATURE_COUNT + 1;
+
+	/**
 	 * The meta object id for the '{@link org.earthsystemcurator.cupid.esmf.impl.ESMFMethodImpl <em>Method</em>}' class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -862,7 +1516,7 @@ public interface ESMFPackage extends EPackage {
 	 * @see org.earthsystemcurator.cupid.esmf.impl.ESMFPackageImpl#getESMFMethod()
 	 * @generated
 	 */
-	int ESMF_METHOD = 4;
+	int ESMF_METHOD = 20;
 
 	/**
 	 * The feature id for the '<em><b>Name</b></em>' attribute.
@@ -953,7 +1607,7 @@ public interface ESMFPackage extends EPackage {
 	 * @see org.earthsystemcurator.cupid.esmf.impl.ESMFPackageImpl#getESMFInitMethod()
 	 * @generated
 	 */
-	int ESMF_INIT_METHOD = 5;
+	int ESMF_INIT_METHOD = 21;
 
 	/**
 	 * The feature id for the '<em><b>Name</b></em>' attribute.
@@ -1044,7 +1698,7 @@ public interface ESMFPackage extends EPackage {
 	 * @see org.earthsystemcurator.cupid.esmf.impl.ESMFPackageImpl#getESMFPreInitMethodSIDL()
 	 * @generated
 	 */
-	int ESMF_PRE_INIT_METHOD_SIDL = 6;
+	int ESMF_PRE_INIT_METHOD_SIDL = 22;
 
 	/**
 	 * The feature id for the '<em><b>Name</b></em>' attribute.
@@ -1135,7 +1789,7 @@ public interface ESMFPackage extends EPackage {
 	 * @see org.earthsystemcurator.cupid.esmf.impl.ESMFPackageImpl#getESMFPostInitMethodSIDL()
 	 * @generated
 	 */
-	int ESMF_POST_INIT_METHOD_SIDL = 7;
+	int ESMF_POST_INIT_METHOD_SIDL = 23;
 
 	/**
 	 * The feature id for the '<em><b>Name</b></em>' attribute.
@@ -1226,7 +1880,7 @@ public interface ESMFPackage extends EPackage {
 	 * @see org.earthsystemcurator.cupid.esmf.impl.ESMFPackageImpl#getESMFRunMethod()
 	 * @generated
 	 */
-	int ESMF_RUN_METHOD = 8;
+	int ESMF_RUN_METHOD = 24;
 
 	/**
 	 * The feature id for the '<em><b>Name</b></em>' attribute.
@@ -1317,7 +1971,7 @@ public interface ESMFPackage extends EPackage {
 	 * @see org.earthsystemcurator.cupid.esmf.impl.ESMFPackageImpl#getESMFFinalizeMethod()
 	 * @generated
 	 */
-	int ESMF_FINALIZE_METHOD = 9;
+	int ESMF_FINALIZE_METHOD = 25;
 
 	/**
 	 * The feature id for the '<em><b>Name</b></em>' attribute.
@@ -1408,7 +2062,7 @@ public interface ESMFPackage extends EPackage {
 	 * @see org.earthsystemcurator.cupid.esmf.impl.ESMFPackageImpl#getESMFFinalizeMethodSIDL()
 	 * @generated
 	 */
-	int ESMF_FINALIZE_METHOD_SIDL = 10;
+	int ESMF_FINALIZE_METHOD_SIDL = 26;
 
 	/**
 	 * The feature id for the '<em><b>Name</b></em>' attribute.
@@ -1499,7 +2153,7 @@ public interface ESMFPackage extends EPackage {
 	 * @see org.earthsystemcurator.cupid.esmf.impl.ESMFPackageImpl#getESMFRegisterMethod()
 	 * @generated
 	 */
-	int ESMF_REGISTER_METHOD = 11;
+	int ESMF_REGISTER_METHOD = 27;
 
 	/**
 	 * The feature id for the '<em><b>Name</b></em>' attribute.
@@ -1536,7 +2190,7 @@ public interface ESMFPackage extends EPackage {
 	 * @see org.earthsystemcurator.cupid.esmf.impl.ESMFPackageImpl#getESMFCalendar()
 	 * @generated
 	 */
-	int ESMF_CALENDAR = 12;
+	int ESMF_CALENDAR = 28;
 
 	/**
 	 * The number of structural features of the '<em>Calendar</em>' class.
@@ -1555,7 +2209,7 @@ public interface ESMFPackage extends EPackage {
 	 * @see org.earthsystemcurator.cupid.esmf.impl.ESMFPackageImpl#getESMFTimeInterval()
 	 * @generated
 	 */
-	int ESMF_TIME_INTERVAL = 13;
+	int ESMF_TIME_INTERVAL = 29;
 
 	/**
 	 * The feature id for the '<em><b>Name</b></em>' attribute.
@@ -1610,7 +2264,7 @@ public interface ESMFPackage extends EPackage {
 	 * @see org.earthsystemcurator.cupid.esmf.impl.ESMFPackageImpl#getESMFTime()
 	 * @generated
 	 */
-	int ESMF_TIME = 14;
+	int ESMF_TIME = 30;
 
 	/**
 	 * The feature id for the '<em><b>Name</b></em>' attribute.
@@ -1701,7 +2355,7 @@ public interface ESMFPackage extends EPackage {
 	 * @see org.earthsystemcurator.cupid.esmf.impl.ESMFPackageImpl#getESMFClock()
 	 * @generated
 	 */
-	int ESMF_CLOCK = 15;
+	int ESMF_CLOCK = 31;
 
 	/**
 	 * The feature id for the '<em><b>Name</b></em>' attribute.
@@ -1765,7 +2419,7 @@ public interface ESMFPackage extends EPackage {
 	 * @see org.earthsystemcurator.cupid.esmf.impl.ESMFPackageImpl#getESMFStateItem()
 	 * @generated
 	 */
-	int ESMF_STATE_ITEM = 17;
+	int ESMF_STATE_ITEM = 33;
 
 	/**
 	 * The feature id for the '<em><b>Name</b></em>' attribute.
@@ -1802,7 +2456,7 @@ public interface ESMFPackage extends EPackage {
 	 * @see org.earthsystemcurator.cupid.esmf.impl.ESMFPackageImpl#getESMFState()
 	 * @generated
 	 */
-	int ESMF_STATE = 16;
+	int ESMF_STATE = 32;
 
 	/**
 	 * The feature id for the '<em><b>Name</b></em>' attribute.
@@ -1857,7 +2511,7 @@ public interface ESMFPackage extends EPackage {
 	 * @see org.earthsystemcurator.cupid.esmf.impl.ESMFPackageImpl#getESMFField()
 	 * @generated
 	 */
-	int ESMF_FIELD = 18;
+	int ESMF_FIELD = 34;
 
 	/**
 	 * The feature id for the '<em><b>Name</b></em>' attribute.
@@ -1932,13 +2586,40 @@ public interface ESMFPackage extends EPackage {
 	int ESMF_FIELD__SIDL_ARGUMENT = ESMF_STATE_ITEM_FEATURE_COUNT + 5;
 
 	/**
+	 * The feature id for the '<em><b>Index</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int ESMF_FIELD__INDEX = ESMF_STATE_ITEM_FEATURE_COUNT + 6;
+
+	/**
+	 * The feature id for the '<em><b>Total LWidth</b></em>' attribute list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int ESMF_FIELD__TOTAL_LWIDTH = ESMF_STATE_ITEM_FEATURE_COUNT + 7;
+
+	/**
+	 * The feature id for the '<em><b>Total UWidth</b></em>' attribute list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int ESMF_FIELD__TOTAL_UWIDTH = ESMF_STATE_ITEM_FEATURE_COUNT + 8;
+
+	/**
 	 * The number of structural features of the '<em>Field</em>' class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int ESMF_FIELD_FEATURE_COUNT = ESMF_STATE_ITEM_FEATURE_COUNT + 6;
+	int ESMF_FIELD_FEATURE_COUNT = ESMF_STATE_ITEM_FEATURE_COUNT + 9;
 
 	/**
 	 * The meta object id for the '{@link org.earthsystemcurator.cupid.esmf.impl.ESMFFieldConnectionImpl <em>Field Connection</em>}' class.
@@ -1948,7 +2629,7 @@ public interface ESMFPackage extends EPackage {
 	 * @see org.earthsystemcurator.cupid.esmf.impl.ESMFPackageImpl#getESMFFieldConnection()
 	 * @generated
 	 */
-	int ESMF_FIELD_CONNECTION = 19;
+	int ESMF_FIELD_CONNECTION = 35;
 
 	/**
 	 * The feature id for the '<em><b>Src Field</b></em>' reference.
@@ -1994,7 +2675,7 @@ public interface ESMFPackage extends EPackage {
 	 * @see org.earthsystemcurator.cupid.esmf.impl.ESMFPackageImpl#getESMFArray()
 	 * @generated
 	 */
-	int ESMF_ARRAY = 20;
+	int ESMF_ARRAY = 36;
 
 	/**
 	 * The feature id for the '<em><b>Name</b></em>' attribute.
@@ -2094,7 +2775,7 @@ public interface ESMFPackage extends EPackage {
 	 * @see org.earthsystemcurator.cupid.esmf.impl.ESMFPackageImpl#getESMFRouteHandle()
 	 * @generated
 	 */
-	int ESMF_ROUTE_HANDLE = 21;
+	int ESMF_ROUTE_HANDLE = 37;
 
 	/**
 	 * The feature id for the '<em><b>Name</b></em>' attribute.
@@ -2131,7 +2812,16 @@ public interface ESMFPackage extends EPackage {
 	 * @see org.earthsystemcurator.cupid.esmf.impl.ESMFPackageImpl#getESMFArraySpec()
 	 * @generated
 	 */
-	int ESMF_ARRAY_SPEC = 22;
+	int ESMF_ARRAY_SPEC = 38;
+
+	/**
+	 * The feature id for the '<em><b>Name</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int ESMF_ARRAY_SPEC__NAME = ESMF_NAMED_ENTITY__NAME;
 
 	/**
 	 * The feature id for the '<em><b>Typekind</b></em>' attribute.
@@ -2140,7 +2830,7 @@ public interface ESMFPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int ESMF_ARRAY_SPEC__TYPEKIND = 0;
+	int ESMF_ARRAY_SPEC__TYPEKIND = ESMF_NAMED_ENTITY_FEATURE_COUNT + 0;
 
 	/**
 	 * The feature id for the '<em><b>Rank</b></em>' attribute.
@@ -2149,7 +2839,7 @@ public interface ESMFPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int ESMF_ARRAY_SPEC__RANK = 1;
+	int ESMF_ARRAY_SPEC__RANK = ESMF_NAMED_ENTITY_FEATURE_COUNT + 1;
 
 	/**
 	 * The feature id for the '<em><b>Component</b></em>' container reference.
@@ -2158,7 +2848,7 @@ public interface ESMFPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int ESMF_ARRAY_SPEC__COMPONENT = 2;
+	int ESMF_ARRAY_SPEC__COMPONENT = ESMF_NAMED_ENTITY_FEATURE_COUNT + 2;
 
 	/**
 	 * The number of structural features of the '<em>Array Spec</em>' class.
@@ -2167,7 +2857,7 @@ public interface ESMFPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int ESMF_ARRAY_SPEC_FEATURE_COUNT = 3;
+	int ESMF_ARRAY_SPEC_FEATURE_COUNT = ESMF_NAMED_ENTITY_FEATURE_COUNT + 3;
 
 	/**
 	 * The meta object id for the '{@link org.earthsystemcurator.cupid.esmf.impl.ESMFGridImpl <em>Grid</em>}' class.
@@ -2177,7 +2867,7 @@ public interface ESMFPackage extends EPackage {
 	 * @see org.earthsystemcurator.cupid.esmf.impl.ESMFPackageImpl#getESMFGrid()
 	 * @generated
 	 */
-	int ESMF_GRID = 23;
+	int ESMF_GRID = 39;
 
 	/**
 	 * The feature id for the '<em><b>Name</b></em>' attribute.
@@ -2214,7 +2904,7 @@ public interface ESMFPackage extends EPackage {
 	 * @see org.earthsystemcurator.cupid.esmf.impl.ESMFPackageImpl#getExtent()
 	 * @generated
 	 */
-	int EXTENT = 24;
+	int EXTENT = 40;
 
 	/**
 	 * The feature id for the '<em><b>Min</b></em>' attribute.
@@ -2251,7 +2941,7 @@ public interface ESMFPackage extends EPackage {
 	 * @see org.earthsystemcurator.cupid.esmf.impl.ESMFPackageImpl#getESMFDistGrid()
 	 * @generated
 	 */
-	int ESMF_DIST_GRID = 25;
+	int ESMF_DIST_GRID = 41;
 
 	/**
 	 * The feature id for the '<em><b>Name</b></em>' attribute.
@@ -2315,7 +3005,7 @@ public interface ESMFPackage extends EPackage {
 	 * @see org.earthsystemcurator.cupid.esmf.impl.ESMFPackageImpl#getESMFWorkspace()
 	 * @generated
 	 */
-	int ESMF_WORKSPACE = 26;
+	int ESMF_WORKSPACE = 42;
 
 	/**
 	 * The feature id for the '<em><b>Component</b></em>' reference list.
@@ -2415,7 +3105,7 @@ public interface ESMFPackage extends EPackage {
 	 * @see org.earthsystemcurator.cupid.esmf.impl.ESMFPackageImpl#getESMFVirtualMachine()
 	 * @generated
 	 */
-	int ESMF_VIRTUAL_MACHINE = 27;
+	int ESMF_VIRTUAL_MACHINE = 43;
 
 	/**
 	 * The feature id for the '<em><b>Name</b></em>' attribute.
@@ -2461,7 +3151,7 @@ public interface ESMFPackage extends EPackage {
 	 * @see org.earthsystemcurator.cupid.esmf.impl.ESMFPackageImpl#getESMFPersistentExecutionThread()
 	 * @generated
 	 */
-	int ESMF_PERSISTENT_EXECUTION_THREAD = 28;
+	int ESMF_PERSISTENT_EXECUTION_THREAD = 44;
 
 	/**
 	 * The feature id for the '<em><b>Id</b></em>' attribute.
@@ -2489,7 +3179,7 @@ public interface ESMFPackage extends EPackage {
 	 * @see org.earthsystemcurator.cupid.esmf.impl.ESMFPackageImpl#getESMFDELayout()
 	 * @generated
 	 */
-	int ESMF_DE_LAYOUT = 29;
+	int ESMF_DE_LAYOUT = 45;
 
 	/**
 	 * The feature id for the '<em><b>Name</b></em>' attribute.
@@ -2535,7 +3225,7 @@ public interface ESMFPackage extends EPackage {
 	 * @see org.earthsystemcurator.cupid.esmf.impl.ESMFPackageImpl#getESMFDecompositionElement()
 	 * @generated
 	 */
-	int ESMF_DECOMPOSITION_ELEMENT = 30;
+	int ESMF_DECOMPOSITION_ELEMENT = 46;
 
 	/**
 	 * The feature id for the '<em><b>Extent</b></em>' containment reference list.
@@ -2572,7 +3262,7 @@ public interface ESMFPackage extends EPackage {
 	 * @see org.earthsystemcurator.cupid.esmf.impl.ESMFPackageImpl#getESMFVirtualAddressSpace()
 	 * @generated
 	 */
-	int ESMF_VIRTUAL_ADDRESS_SPACE = 31;
+	int ESMF_VIRTUAL_ADDRESS_SPACE = 47;
 
 	/**
 	 * The number of structural features of the '<em>Virtual Address Space</em>' class.
@@ -2591,7 +3281,7 @@ public interface ESMFPackage extends EPackage {
 	 * @see org.earthsystemcurator.cupid.esmf.impl.ESMFPackageImpl#getESMFAction()
 	 * @generated
 	 */
-	int ESMF_ACTION = 32;
+	int ESMF_ACTION = 48;
 
 	/**
 	 * The feature id for the '<em><b>Context</b></em>' container reference.
@@ -2619,7 +3309,7 @@ public interface ESMFPackage extends EPackage {
 	 * @see org.earthsystemcurator.cupid.esmf.impl.ESMFPackageImpl#getESMFActionAPI()
 	 * @generated
 	 */
-	int ESMF_ACTION_API = 33;
+	int ESMF_ACTION_API = 49;
 
 	/**
 	 * The feature id for the '<em><b>Context</b></em>' container reference.
@@ -2656,7 +3346,7 @@ public interface ESMFPackage extends EPackage {
 	 * @see org.earthsystemcurator.cupid.esmf.impl.ESMFPackageImpl#getESMFActionMethodInvokePattern()
 	 * @generated
 	 */
-	int ESMF_ACTION_METHOD_INVOKE_PATTERN = 34;
+	int ESMF_ACTION_METHOD_INVOKE_PATTERN = 50;
 
 	/**
 	 * The feature id for the '<em><b>Context</b></em>' container reference.
@@ -2693,7 +3383,7 @@ public interface ESMFPackage extends EPackage {
 	 * @see org.earthsystemcurator.cupid.esmf.impl.ESMFPackageImpl#getESMFActionMethodInvokeSequence()
 	 * @generated
 	 */
-	int ESMF_ACTION_METHOD_INVOKE_SEQUENCE = 35;
+	int ESMF_ACTION_METHOD_INVOKE_SEQUENCE = 51;
 
 	/**
 	 * The feature id for the '<em><b>Context</b></em>' container reference.
@@ -2739,7 +3429,7 @@ public interface ESMFPackage extends EPackage {
 	 * @see org.earthsystemcurator.cupid.esmf.impl.ESMFPackageImpl#getESMFActionMethodInvokeIteration()
 	 * @generated
 	 */
-	int ESMF_ACTION_METHOD_INVOKE_ITERATION = 36;
+	int ESMF_ACTION_METHOD_INVOKE_ITERATION = 52;
 
 	/**
 	 * The feature id for the '<em><b>Context</b></em>' container reference.
@@ -2785,7 +3475,7 @@ public interface ESMFPackage extends EPackage {
 	 * @see org.earthsystemcurator.cupid.esmf.impl.ESMFPackageImpl#getESMFActionStateAdd()
 	 * @generated
 	 */
-	int ESMF_ACTION_STATE_ADD = 37;
+	int ESMF_ACTION_STATE_ADD = 53;
 
 	/**
 	 * The feature id for the '<em><b>Context</b></em>' container reference.
@@ -2840,7 +3530,7 @@ public interface ESMFPackage extends EPackage {
 	 * @see org.earthsystemcurator.cupid.esmf.impl.ESMFPackageImpl#getESMFActionStateCreate()
 	 * @generated
 	 */
-	int ESMF_ACTION_STATE_CREATE = 38;
+	int ESMF_ACTION_STATE_CREATE = 54;
 
 	/**
 	 * The feature id for the '<em><b>Context</b></em>' container reference.
@@ -2895,7 +3585,7 @@ public interface ESMFPackage extends EPackage {
 	 * @see org.earthsystemcurator.cupid.esmf.impl.ESMFPackageImpl#getESMFActionStateGet()
 	 * @generated
 	 */
-	int ESMF_ACTION_STATE_GET = 39;
+	int ESMF_ACTION_STATE_GET = 55;
 
 	/**
 	 * The feature id for the '<em><b>Context</b></em>' container reference.
@@ -2959,7 +3649,7 @@ public interface ESMFPackage extends EPackage {
 	 * @see org.earthsystemcurator.cupid.esmf.impl.ESMFPackageImpl#getESMFActionStateReconcile()
 	 * @generated
 	 */
-	int ESMF_ACTION_STATE_RECONCILE = 40;
+	int ESMF_ACTION_STATE_RECONCILE = 56;
 
 	/**
 	 * The feature id for the '<em><b>Context</b></em>' container reference.
@@ -3005,7 +3695,7 @@ public interface ESMFPackage extends EPackage {
 	 * @see org.earthsystemcurator.cupid.esmf.impl.ESMFPackageImpl#getESMFActionArrayCreate()
 	 * @generated
 	 */
-	int ESMF_ACTION_ARRAY_CREATE = 41;
+	int ESMF_ACTION_ARRAY_CREATE = 57;
 
 	/**
 	 * The feature id for the '<em><b>Context</b></em>' container reference.
@@ -3051,7 +3741,7 @@ public interface ESMFPackage extends EPackage {
 	 * @see org.earthsystemcurator.cupid.esmf.impl.ESMFPackageImpl#getESMFActionArrayCreateAllocateAS()
 	 * @generated
 	 */
-	int ESMF_ACTION_ARRAY_CREATE_ALLOCATE_AS = 42;
+	int ESMF_ACTION_ARRAY_CREATE_ALLOCATE_AS = 58;
 
 	/**
 	 * The feature id for the '<em><b>Context</b></em>' container reference.
@@ -3142,7 +3832,7 @@ public interface ESMFPackage extends EPackage {
 	 * @see org.earthsystemcurator.cupid.esmf.impl.ESMFPackageImpl#getESMFActionArraySpecSet()
 	 * @generated
 	 */
-	int ESMF_ACTION_ARRAY_SPEC_SET = 43;
+	int ESMF_ACTION_ARRAY_SPEC_SET = 59;
 
 	/**
 	 * The feature id for the '<em><b>Context</b></em>' container reference.
@@ -3206,7 +3896,7 @@ public interface ESMFPackage extends EPackage {
 	 * @see org.earthsystemcurator.cupid.esmf.impl.ESMFPackageImpl#getESMFActionClockCreate()
 	 * @generated
 	 */
-	int ESMF_ACTION_CLOCK_CREATE = 44;
+	int ESMF_ACTION_CLOCK_CREATE = 60;
 
 	/**
 	 * The feature id for the '<em><b>Context</b></em>' container reference.
@@ -3279,7 +3969,7 @@ public interface ESMFPackage extends EPackage {
 	 * @see org.earthsystemcurator.cupid.esmf.impl.ESMFPackageImpl#getESMFActionClockGet()
 	 * @generated
 	 */
-	int ESMF_ACTION_CLOCK_GET = 45;
+	int ESMF_ACTION_CLOCK_GET = 61;
 
 	/**
 	 * The feature id for the '<em><b>Context</b></em>' container reference.
@@ -3343,7 +4033,7 @@ public interface ESMFPackage extends EPackage {
 	 * @see org.earthsystemcurator.cupid.esmf.impl.ESMFPackageImpl#getESMFActionClockGetTimestep()
 	 * @generated
 	 */
-	int ESMF_ACTION_CLOCK_GET_TIMESTEP = 46;
+	int ESMF_ACTION_CLOCK_GET_TIMESTEP = 62;
 
 	/**
 	 * The feature id for the '<em><b>Context</b></em>' container reference.
@@ -3389,7 +4079,7 @@ public interface ESMFPackage extends EPackage {
 	 * @see org.earthsystemcurator.cupid.esmf.impl.ESMFPackageImpl#getESMFActionCplCompCreate()
 	 * @generated
 	 */
-	int ESMF_ACTION_CPL_COMP_CREATE = 47;
+	int ESMF_ACTION_CPL_COMP_CREATE = 63;
 
 	/**
 	 * The feature id for the '<em><b>Context</b></em>' container reference.
@@ -3444,7 +4134,7 @@ public interface ESMFPackage extends EPackage {
 	 * @see org.earthsystemcurator.cupid.esmf.impl.ESMFPackageImpl#getESMFActionCplCompInitialize()
 	 * @generated
 	 */
-	int ESMF_ACTION_CPL_COMP_INITIALIZE = 48;
+	int ESMF_ACTION_CPL_COMP_INITIALIZE = 64;
 
 	/**
 	 * The feature id for the '<em><b>Context</b></em>' container reference.
@@ -3526,7 +4216,7 @@ public interface ESMFPackage extends EPackage {
 	 * @see org.earthsystemcurator.cupid.esmf.impl.ESMFPackageImpl#getESMFActionCplCompRun()
 	 * @generated
 	 */
-	int ESMF_ACTION_CPL_COMP_RUN = 49;
+	int ESMF_ACTION_CPL_COMP_RUN = 65;
 
 	/**
 	 * The feature id for the '<em><b>Context</b></em>' container reference.
@@ -3608,7 +4298,7 @@ public interface ESMFPackage extends EPackage {
 	 * @see org.earthsystemcurator.cupid.esmf.impl.ESMFPackageImpl#getESMFActionCplCompFinalize()
 	 * @generated
 	 */
-	int ESMF_ACTION_CPL_COMP_FINALIZE = 50;
+	int ESMF_ACTION_CPL_COMP_FINALIZE = 66;
 
 	/**
 	 * The feature id for the '<em><b>Context</b></em>' container reference.
@@ -3690,7 +4380,7 @@ public interface ESMFPackage extends EPackage {
 	 * @see org.earthsystemcurator.cupid.esmf.impl.ESMFPackageImpl#getESMFActionCplCompSetServices()
 	 * @generated
 	 */
-	int ESMF_ACTION_CPL_COMP_SET_SERVICES = 51;
+	int ESMF_ACTION_CPL_COMP_SET_SERVICES = 67;
 
 	/**
 	 * The feature id for the '<em><b>Context</b></em>' container reference.
@@ -3754,7 +4444,7 @@ public interface ESMFPackage extends EPackage {
 	 * @see org.earthsystemcurator.cupid.esmf.impl.ESMFPackageImpl#getESMFActionDistGridCreate()
 	 * @generated
 	 */
-	int ESMF_ACTION_DIST_GRID_CREATE = 52;
+	int ESMF_ACTION_DIST_GRID_CREATE = 68;
 
 	/**
 	 * The feature id for the '<em><b>Context</b></em>' container reference.
@@ -3827,7 +4517,7 @@ public interface ESMFPackage extends EPackage {
 	 * @see org.earthsystemcurator.cupid.esmf.impl.ESMFPackageImpl#getESMFActionFieldCreate()
 	 * @generated
 	 */
-	int ESMF_ACTION_FIELD_CREATE = 53;
+	int ESMF_ACTION_FIELD_CREATE = 69;
 
 	/**
 	 * The feature id for the '<em><b>Context</b></em>' container reference.
@@ -3873,7 +4563,7 @@ public interface ESMFPackage extends EPackage {
 	 * @see org.earthsystemcurator.cupid.esmf.impl.ESMFPackageImpl#getESMFActionFieldCreateGridArray()
 	 * @generated
 	 */
-	int ESMF_ACTION_FIELD_CREATE_GRID_ARRAY = 54;
+	int ESMF_ACTION_FIELD_CREATE_GRID_ARRAY = 70;
 
 	/**
 	 * The feature id for the '<em><b>Context</b></em>' container reference.
@@ -3946,7 +4636,7 @@ public interface ESMFPackage extends EPackage {
 	 * @see org.earthsystemcurator.cupid.esmf.impl.ESMFPackageImpl#getESMFActionFieldCreateGridArraySpec()
 	 * @generated
 	 */
-	int ESMF_ACTION_FIELD_CREATE_GRID_ARRAY_SPEC = 55;
+	int ESMF_ACTION_FIELD_CREATE_GRID_ARRAY_SPEC = 71;
 
 	/**
 	 * The feature id for the '<em><b>Context</b></em>' container reference.
@@ -4046,7 +4736,7 @@ public interface ESMFPackage extends EPackage {
 	 * @see org.earthsystemcurator.cupid.esmf.impl.ESMFPackageImpl#getESMFActionFieldCreateTKR()
 	 * @generated
 	 */
-	int ESMF_ACTION_FIELD_CREATE_TKR = 56;
+	int ESMF_ACTION_FIELD_CREATE_TKR = 72;
 
 	/**
 	 * The feature id for the '<em><b>Context</b></em>' container reference.
@@ -4110,7 +4800,7 @@ public interface ESMFPackage extends EPackage {
 	 * @see org.earthsystemcurator.cupid.esmf.impl.ESMFPackageImpl#getESMFActionFieldGet()
 	 * @generated
 	 */
-	int ESMF_ACTION_FIELD_GET = 57;
+	int ESMF_ACTION_FIELD_GET = 73;
 
 	/**
 	 * The feature id for the '<em><b>Context</b></em>' container reference.
@@ -4165,7 +4855,7 @@ public interface ESMFPackage extends EPackage {
 	 * @see org.earthsystemcurator.cupid.esmf.impl.ESMFPackageImpl#getESMFActionFieldGetBounds()
 	 * @generated
 	 */
-	int ESMF_ACTION_FIELD_GET_BOUNDS = 58;
+	int ESMF_ACTION_FIELD_GET_BOUNDS = 74;
 
 	/**
 	 * The feature id for the '<em><b>Context</b></em>' container reference.
@@ -4265,7 +4955,7 @@ public interface ESMFPackage extends EPackage {
 	 * @see org.earthsystemcurator.cupid.esmf.impl.ESMFPackageImpl#getESMFActionFieldHaloStore()
 	 * @generated
 	 */
-	int ESMF_ACTION_FIELD_HALO_STORE = 59;
+	int ESMF_ACTION_FIELD_HALO_STORE = 75;
 
 	/**
 	 * The feature id for the '<em><b>Context</b></em>' container reference.
@@ -4320,7 +5010,7 @@ public interface ESMFPackage extends EPackage {
 	 * @see org.earthsystemcurator.cupid.esmf.impl.ESMFPackageImpl#getESMFActionFieldHalo()
 	 * @generated
 	 */
-	int ESMF_ACTION_FIELD_HALO = 60;
+	int ESMF_ACTION_FIELD_HALO = 76;
 
 	/**
 	 * The feature id for the '<em><b>Context</b></em>' container reference.
@@ -4375,7 +5065,7 @@ public interface ESMFPackage extends EPackage {
 	 * @see org.earthsystemcurator.cupid.esmf.impl.ESMFPackageImpl#getESMFActionFieldHaloRelease()
 	 * @generated
 	 */
-	int ESMF_ACTION_FIELD_HALO_RELEASE = 61;
+	int ESMF_ACTION_FIELD_HALO_RELEASE = 77;
 
 	/**
 	 * The feature id for the '<em><b>Context</b></em>' container reference.
@@ -4421,7 +5111,7 @@ public interface ESMFPackage extends EPackage {
 	 * @see org.earthsystemcurator.cupid.esmf.impl.ESMFPackageImpl#getESMFActionFieldRedistStore()
 	 * @generated
 	 */
-	int ESMF_ACTION_FIELD_REDIST_STORE = 62;
+	int ESMF_ACTION_FIELD_REDIST_STORE = 78;
 
 	/**
 	 * The feature id for the '<em><b>Context</b></em>' container reference.
@@ -4485,7 +5175,7 @@ public interface ESMFPackage extends EPackage {
 	 * @see org.earthsystemcurator.cupid.esmf.impl.ESMFPackageImpl#getESMFActionFieldRedist()
 	 * @generated
 	 */
-	int ESMF_ACTION_FIELD_REDIST = 63;
+	int ESMF_ACTION_FIELD_REDIST = 79;
 
 	/**
 	 * The feature id for the '<em><b>Context</b></em>' container reference.
@@ -4549,7 +5239,7 @@ public interface ESMFPackage extends EPackage {
 	 * @see org.earthsystemcurator.cupid.esmf.impl.ESMFPackageImpl#getESMFActionFieldRedistRelease()
 	 * @generated
 	 */
-	int ESMF_ACTION_FIELD_REDIST_RELEASE = 64;
+	int ESMF_ACTION_FIELD_REDIST_RELEASE = 80;
 
 	/**
 	 * The feature id for the '<em><b>Context</b></em>' container reference.
@@ -4595,7 +5285,7 @@ public interface ESMFPackage extends EPackage {
 	 * @see org.earthsystemcurator.cupid.esmf.impl.ESMFPackageImpl#getESMFActionFrameworkInit()
 	 * @generated
 	 */
-	int ESMF_ACTION_FRAMEWORK_INIT = 65;
+	int ESMF_ACTION_FRAMEWORK_INIT = 81;
 
 	/**
 	 * The feature id for the '<em><b>Context</b></em>' container reference.
@@ -4641,7 +5331,7 @@ public interface ESMFPackage extends EPackage {
 	 * @see org.earthsystemcurator.cupid.esmf.impl.ESMFPackageImpl#getESMFActionFrameworkFinalize()
 	 * @generated
 	 */
-	int ESMF_ACTION_FRAMEWORK_FINALIZE = 66;
+	int ESMF_ACTION_FRAMEWORK_FINALIZE = 82;
 
 	/**
 	 * The feature id for the '<em><b>Context</b></em>' container reference.
@@ -4678,7 +5368,7 @@ public interface ESMFPackage extends EPackage {
 	 * @see org.earthsystemcurator.cupid.esmf.impl.ESMFPackageImpl#getESMFActionGridCreate()
 	 * @generated
 	 */
-	int ESMF_ACTION_GRID_CREATE = 67;
+	int ESMF_ACTION_GRID_CREATE = 83;
 
 	/**
 	 * The feature id for the '<em><b>Context</b></em>' container reference.
@@ -4751,7 +5441,7 @@ public interface ESMFPackage extends EPackage {
 	 * @see org.earthsystemcurator.cupid.esmf.impl.ESMFPackageImpl#getESMFActionGridGet()
 	 * @generated
 	 */
-	int ESMF_ACTION_GRID_GET = 68;
+	int ESMF_ACTION_GRID_GET = 84;
 
 	/**
 	 * The feature id for the '<em><b>Context</b></em>' container reference.
@@ -4797,7 +5487,7 @@ public interface ESMFPackage extends EPackage {
 	 * @see org.earthsystemcurator.cupid.esmf.impl.ESMFPackageImpl#getESMFActionGridGetPLocalDe()
 	 * @generated
 	 */
-	int ESMF_ACTION_GRID_GET_PLOCAL_DE = 69;
+	int ESMF_ACTION_GRID_GET_PLOCAL_DE = 85;
 
 	/**
 	 * The feature id for the '<em><b>Context</b></em>' container reference.
@@ -4870,7 +5560,7 @@ public interface ESMFPackage extends EPackage {
 	 * @see org.earthsystemcurator.cupid.esmf.impl.ESMFPackageImpl#getESMFActionGridGetPLocalDePSloc()
 	 * @generated
 	 */
-	int ESMF_ACTION_GRID_GET_PLOCAL_DE_PSLOC = 70;
+	int ESMF_ACTION_GRID_GET_PLOCAL_DE_PSLOC = 86;
 
 	/**
 	 * The feature id for the '<em><b>Context</b></em>' container reference.
@@ -4988,7 +5678,7 @@ public interface ESMFPackage extends EPackage {
 	 * @see org.earthsystemcurator.cupid.esmf.impl.ESMFPackageImpl#getESMFActionGridGetCoord()
 	 * @generated
 	 */
-	int ESMF_ACTION_GRID_GET_COORD = 71;
+	int ESMF_ACTION_GRID_GET_COORD = 87;
 
 	/**
 	 * The feature id for the '<em><b>Context</b></em>' container reference.
@@ -5052,7 +5742,7 @@ public interface ESMFPackage extends EPackage {
 	 * @see org.earthsystemcurator.cupid.esmf.impl.ESMFPackageImpl#getESMFActionGridCompCreate()
 	 * @generated
 	 */
-	int ESMF_ACTION_GRID_COMP_CREATE = 72;
+	int ESMF_ACTION_GRID_COMP_CREATE = 88;
 
 	/**
 	 * The feature id for the '<em><b>Context</b></em>' container reference.
@@ -5107,7 +5797,7 @@ public interface ESMFPackage extends EPackage {
 	 * @see org.earthsystemcurator.cupid.esmf.impl.ESMFPackageImpl#getESMFActionGridCompInitialize()
 	 * @generated
 	 */
-	int ESMF_ACTION_GRID_COMP_INITIALIZE = 73;
+	int ESMF_ACTION_GRID_COMP_INITIALIZE = 89;
 
 	/**
 	 * The feature id for the '<em><b>Context</b></em>' container reference.
@@ -5189,7 +5879,7 @@ public interface ESMFPackage extends EPackage {
 	 * @see org.earthsystemcurator.cupid.esmf.impl.ESMFPackageImpl#getESMFActionGridCompRun()
 	 * @generated
 	 */
-	int ESMF_ACTION_GRID_COMP_RUN = 74;
+	int ESMF_ACTION_GRID_COMP_RUN = 90;
 
 	/**
 	 * The feature id for the '<em><b>Context</b></em>' container reference.
@@ -5271,7 +5961,7 @@ public interface ESMFPackage extends EPackage {
 	 * @see org.earthsystemcurator.cupid.esmf.impl.ESMFPackageImpl#getESMFActionGridCompFinalize()
 	 * @generated
 	 */
-	int ESMF_ACTION_GRID_COMP_FINALIZE = 75;
+	int ESMF_ACTION_GRID_COMP_FINALIZE = 91;
 
 	/**
 	 * The feature id for the '<em><b>Context</b></em>' container reference.
@@ -5353,7 +6043,7 @@ public interface ESMFPackage extends EPackage {
 	 * @see org.earthsystemcurator.cupid.esmf.impl.ESMFPackageImpl#getESMFActionGridCompSetServices()
 	 * @generated
 	 */
-	int ESMF_ACTION_GRID_COMP_SET_SERVICES = 76;
+	int ESMF_ACTION_GRID_COMP_SET_SERVICES = 92;
 
 	/**
 	 * The feature id for the '<em><b>Context</b></em>' container reference.
@@ -5417,7 +6107,7 @@ public interface ESMFPackage extends EPackage {
 	 * @see org.earthsystemcurator.cupid.esmf.impl.ESMFPackageImpl#getESMFActionMethodInvoke()
 	 * @generated
 	 */
-	int ESMF_ACTION_METHOD_INVOKE = 77;
+	int ESMF_ACTION_METHOD_INVOKE = 93;
 
 	/**
 	 * The feature id for the '<em><b>Context</b></em>' container reference.
@@ -5481,7 +6171,7 @@ public interface ESMFPackage extends EPackage {
 	 * @see org.earthsystemcurator.cupid.esmf.impl.ESMFPackageImpl#getESMFActionTimeSet()
 	 * @generated
 	 */
-	int ESMF_ACTION_TIME_SET = 78;
+	int ESMF_ACTION_TIME_SET = 94;
 
 	/**
 	 * The feature id for the '<em><b>Context</b></em>' container reference.
@@ -5581,7 +6271,7 @@ public interface ESMFPackage extends EPackage {
 	 * @see org.earthsystemcurator.cupid.esmf.impl.ESMFPackageImpl#getESMFActionTimeGet()
 	 * @generated
 	 */
-	int ESMF_ACTION_TIME_GET = 79;
+	int ESMF_ACTION_TIME_GET = 95;
 
 	/**
 	 * The feature id for the '<em><b>Context</b></em>' container reference.
@@ -5681,7 +6371,7 @@ public interface ESMFPackage extends EPackage {
 	 * @see org.earthsystemcurator.cupid.esmf.impl.ESMFPackageImpl#getESMFActionTimeIntervalSet()
 	 * @generated
 	 */
-	int ESMF_ACTION_TIME_INTERVAL_SET = 80;
+	int ESMF_ACTION_TIME_INTERVAL_SET = 96;
 
 	/**
 	 * The feature id for the '<em><b>Context</b></em>' container reference.
@@ -5754,7 +6444,7 @@ public interface ESMFPackage extends EPackage {
 	 * @see org.earthsystemcurator.cupid.esmf.impl.ESMFPackageImpl#getESMFActionTimeIntervalGet()
 	 * @generated
 	 */
-	int ESMF_ACTION_TIME_INTERVAL_GET = 81;
+	int ESMF_ACTION_TIME_INTERVAL_GET = 97;
 
 	/**
 	 * The feature id for the '<em><b>Context</b></em>' container reference.
@@ -5827,7 +6517,7 @@ public interface ESMFPackage extends EPackage {
 	 * @see org.earthsystemcurator.cupid.esmf.impl.ESMFPackageImpl#getESMFActionUserServiceInvoke()
 	 * @generated
 	 */
-	int ESMF_ACTION_USER_SERVICE_INVOKE = 82;
+	int ESMF_ACTION_USER_SERVICE_INVOKE = 98;
 
 	/**
 	 * The feature id for the '<em><b>Context</b></em>' container reference.
@@ -5882,7 +6572,7 @@ public interface ESMFPackage extends EPackage {
 	 * @see org.earthsystemcurator.cupid.esmf.impl.ESMFPackageImpl#getESMFCall()
 	 * @generated
 	 */
-	int ESMF_CALL = 83;
+	int ESMF_CALL = 99;
 
 	/**
 	 * The feature id for the '<em><b>Context</b></em>' container reference.
@@ -5910,7 +6600,7 @@ public interface ESMFPackage extends EPackage {
 	 * @see org.earthsystemcurator.cupid.esmf.impl.ESMFPackageImpl#getESMFCallGridCompCreate()
 	 * @generated
 	 */
-	int ESMF_CALL_GRID_COMP_CREATE = 84;
+	int ESMF_CALL_GRID_COMP_CREATE = 100;
 
 	/**
 	 * The feature id for the '<em><b>Context</b></em>' container reference.
@@ -5947,7 +6637,7 @@ public interface ESMFPackage extends EPackage {
 	 * @see org.earthsystemcurator.cupid.esmf.impl.ESMFPackageImpl#getESMFCallGridCompInitialize()
 	 * @generated
 	 */
-	int ESMF_CALL_GRID_COMP_INITIALIZE = 85;
+	int ESMF_CALL_GRID_COMP_INITIALIZE = 101;
 
 	/**
 	 * The feature id for the '<em><b>Context</b></em>' container reference.
@@ -5984,7 +6674,7 @@ public interface ESMFPackage extends EPackage {
 	 * @see org.earthsystemcurator.cupid.esmf.impl.ESMFPackageImpl#getESMFCallGridCompSetServices()
 	 * @generated
 	 */
-	int ESMF_CALL_GRID_COMP_SET_SERVICES = 86;
+	int ESMF_CALL_GRID_COMP_SET_SERVICES = 102;
 
 	/**
 	 * The feature id for the '<em><b>Context</b></em>' container reference.
@@ -6021,7 +6711,7 @@ public interface ESMFPackage extends EPackage {
 	 * @see org.earthsystemcurator.cupid.esmf.impl.ESMFPackageImpl#getESMFCallCplCompCreate()
 	 * @generated
 	 */
-	int ESMF_CALL_CPL_COMP_CREATE = 87;
+	int ESMF_CALL_CPL_COMP_CREATE = 103;
 
 	/**
 	 * The feature id for the '<em><b>Context</b></em>' container reference.
@@ -6058,7 +6748,7 @@ public interface ESMFPackage extends EPackage {
 	 * @see org.earthsystemcurator.cupid.esmf.impl.ESMFPackageImpl#getESMFCallCplCompInitialize()
 	 * @generated
 	 */
-	int ESMF_CALL_CPL_COMP_INITIALIZE = 88;
+	int ESMF_CALL_CPL_COMP_INITIALIZE = 104;
 
 	/**
 	 * The feature id for the '<em><b>Context</b></em>' container reference.
@@ -6095,7 +6785,7 @@ public interface ESMFPackage extends EPackage {
 	 * @see org.earthsystemcurator.cupid.esmf.impl.ESMFPackageImpl#getESMFCallCplCompSetServices()
 	 * @generated
 	 */
-	int ESMF_CALL_CPL_COMP_SET_SERVICES = 89;
+	int ESMF_CALL_CPL_COMP_SET_SERVICES = 105;
 
 	/**
 	 * The feature id for the '<em><b>Context</b></em>' container reference.
@@ -6132,7 +6822,7 @@ public interface ESMFPackage extends EPackage {
 	 * @see org.earthsystemcurator.cupid.esmf.impl.ESMFPackageImpl#getESMFCallFieldCreateSIDL()
 	 * @generated
 	 */
-	int ESMF_CALL_FIELD_CREATE_SIDL = 90;
+	int ESMF_CALL_FIELD_CREATE_SIDL = 106;
 
 	/**
 	 * The feature id for the '<em><b>Context</b></em>' container reference.
@@ -6169,7 +6859,7 @@ public interface ESMFPackage extends EPackage {
 	 * @see org.earthsystemcurator.cupid.esmf.impl.ESMFPackageImpl#getESMFCallSIDLMethod()
 	 * @generated
 	 */
-	int ESMF_CALL_SIDL_METHOD = 91;
+	int ESMF_CALL_SIDL_METHOD = 107;
 
 	/**
 	 * The feature id for the '<em><b>Context</b></em>' container reference.
@@ -6206,7 +6896,7 @@ public interface ESMFPackage extends EPackage {
 	 * @see org.earthsystemcurator.cupid.esmf.impl.ESMFPackageImpl#getESMFCalKind()
 	 * @generated
 	 */
-	int ESMF_CAL_KIND = 93;
+	int ESMF_CAL_KIND = 108;
 
 	/**
 	 * The meta object id for the '{@link org.earthsystemcurator.cupid.esmf.ESMFStaggerLoc <em>Stagger Loc</em>}' enum.
@@ -6216,7 +6906,7 @@ public interface ESMFPackage extends EPackage {
 	 * @see org.earthsystemcurator.cupid.esmf.impl.ESMFPackageImpl#getESMFStaggerLoc()
 	 * @generated
 	 */
-	int ESMF_STAGGER_LOC = 94;
+	int ESMF_STAGGER_LOC = 109;
 
 	/**
 	 * The meta object id for the '{@link org.earthsystemcurator.cupid.esmf.ESMFTypeKind <em>Type Kind</em>}' enum.
@@ -6226,7 +6916,7 @@ public interface ESMFPackage extends EPackage {
 	 * @see org.earthsystemcurator.cupid.esmf.impl.ESMFPackageImpl#getESMFTypeKind()
 	 * @generated
 	 */
-	int ESMF_TYPE_KIND = 95;
+	int ESMF_TYPE_KIND = 110;
 
 	/**
 	 * The meta object id for the '{@link org.earthsystemcurator.cupid.esmf.ESMF_INDEX <em>ESMF INDEX</em>}' enum.
@@ -6236,7 +6926,7 @@ public interface ESMFPackage extends EPackage {
 	 * @see org.earthsystemcurator.cupid.esmf.impl.ESMFPackageImpl#getESMF_INDEX()
 	 * @generated
 	 */
-	int ESMF_INDEX = 96;
+	int ESMF_INDEX = 111;
 
 	/**
 	 * The meta object id for the '<em>EInt Array</em>' data type.
@@ -6245,7 +6935,7 @@ public interface ESMFPackage extends EPackage {
 	 * @see org.earthsystemcurator.cupid.esmf.impl.ESMFPackageImpl#getEIntArray()
 	 * @generated
 	 */
-	int EINT_ARRAY = 97;
+	int EINT_ARRAY = 112;
 
 	/**
 	 * The meta object id for the '<em>User Token</em>' data type.
@@ -6255,7 +6945,7 @@ public interface ESMFPackage extends EPackage {
 	 * @see org.earthsystemcurator.cupid.esmf.impl.ESMFPackageImpl#getESMFUserToken()
 	 * @generated
 	 */
-	int ESMF_USER_TOKEN = 98;
+	int ESMF_USER_TOKEN = 113;
 
 
 	/**
@@ -6467,6 +7157,17 @@ public interface ESMFPackage extends EPackage {
 	EReference getESMFComponent_SIDLClass();
 
 	/**
+	 * Returns the meta object for the containment reference list '{@link org.earthsystemcurator.cupid.esmf.ESMFComponent#getStage <em>Stage</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the containment reference list '<em>Stage</em>'.
+	 * @see org.earthsystemcurator.cupid.esmf.ESMFComponent#getStage()
+	 * @see #getESMFComponent()
+	 * @generated
+	 */
+	EReference getESMFComponent_Stage();
+
+	/**
 	 * Returns the meta object for class '{@link org.earthsystemcurator.cupid.esmf.ESMFGriddedComponent <em>Gridded Component</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -6506,6 +7207,310 @@ public interface ESMFPackage extends EPackage {
 	 * @generated
 	 */
 	EReference getESMFSimpleCouplerComponent_FieldConnection();
+
+	/**
+	 * Returns the meta object for class '{@link org.earthsystemcurator.cupid.esmf.ESMFStage <em>Stage</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for class '<em>Stage</em>'.
+	 * @see org.earthsystemcurator.cupid.esmf.ESMFStage
+	 * @generated
+	 */
+	EClass getESMFStage();
+
+	/**
+	 * Returns the meta object for the container reference '{@link org.earthsystemcurator.cupid.esmf.ESMFStage#getComponent <em>Component</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the container reference '<em>Component</em>'.
+	 * @see org.earthsystemcurator.cupid.esmf.ESMFStage#getComponent()
+	 * @see #getESMFStage()
+	 * @generated
+	 */
+	EReference getESMFStage_Component();
+
+	/**
+	 * Returns the meta object for the attribute '{@link org.earthsystemcurator.cupid.esmf.ESMFStage#getPhase <em>Phase</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the attribute '<em>Phase</em>'.
+	 * @see org.earthsystemcurator.cupid.esmf.ESMFStage#getPhase()
+	 * @see #getESMFStage()
+	 * @generated
+	 */
+	EAttribute getESMFStage_Phase();
+
+	/**
+	 * Returns the meta object for the containment reference list '{@link org.earthsystemcurator.cupid.esmf.ESMFStage#getAction <em>Action</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the containment reference list '<em>Action</em>'.
+	 * @see org.earthsystemcurator.cupid.esmf.ESMFStage#getAction()
+	 * @see #getESMFStage()
+	 * @generated
+	 */
+	EReference getESMFStage_Action();
+
+	/**
+	 * Returns the meta object for class '{@link org.earthsystemcurator.cupid.esmf.ESMFStageInitialize <em>Stage Initialize</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for class '<em>Stage Initialize</em>'.
+	 * @see org.earthsystemcurator.cupid.esmf.ESMFStageInitialize
+	 * @generated
+	 */
+	EClass getESMFStageInitialize();
+
+	/**
+	 * Returns the meta object for class '{@link org.earthsystemcurator.cupid.esmf.ESMFStageRun <em>Stage Run</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for class '<em>Stage Run</em>'.
+	 * @see org.earthsystemcurator.cupid.esmf.ESMFStageRun
+	 * @generated
+	 */
+	EClass getESMFStageRun();
+
+	/**
+	 * Returns the meta object for class '{@link org.earthsystemcurator.cupid.esmf.ESMFStageFinalize <em>Stage Finalize</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for class '<em>Stage Finalize</em>'.
+	 * @see org.earthsystemcurator.cupid.esmf.ESMFStageFinalize
+	 * @generated
+	 */
+	EClass getESMFStageFinalize();
+
+	/**
+	 * Returns the meta object for class '{@link org.earthsystemcurator.cupid.esmf.ESMFStageAction <em>Stage Action</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for class '<em>Stage Action</em>'.
+	 * @see org.earthsystemcurator.cupid.esmf.ESMFStageAction
+	 * @generated
+	 */
+	EClass getESMFStageAction();
+
+	/**
+	 * Returns the meta object for the container reference '{@link org.earthsystemcurator.cupid.esmf.ESMFStageAction#getStage <em>Stage</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the container reference '<em>Stage</em>'.
+	 * @see org.earthsystemcurator.cupid.esmf.ESMFStageAction#getStage()
+	 * @see #getESMFStageAction()
+	 * @generated
+	 */
+	EReference getESMFStageAction_Stage();
+
+	/**
+	 * Returns the meta object for class '{@link org.earthsystemcurator.cupid.esmf.ESMFStageActionFieldCreate <em>Stage Action Field Create</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for class '<em>Stage Action Field Create</em>'.
+	 * @see org.earthsystemcurator.cupid.esmf.ESMFStageActionFieldCreate
+	 * @generated
+	 */
+	EClass getESMFStageActionFieldCreate();
+
+	/**
+	 * Returns the meta object for the reference list '{@link org.earthsystemcurator.cupid.esmf.ESMFStageActionFieldCreate#getField <em>Field</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the reference list '<em>Field</em>'.
+	 * @see org.earthsystemcurator.cupid.esmf.ESMFStageActionFieldCreate#getField()
+	 * @see #getESMFStageActionFieldCreate()
+	 * @generated
+	 */
+	EReference getESMFStageActionFieldCreate_Field();
+
+	/**
+	 * Returns the meta object for class '{@link org.earthsystemcurator.cupid.esmf.ESMFStageActionFieldDestroy <em>Stage Action Field Destroy</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for class '<em>Stage Action Field Destroy</em>'.
+	 * @see org.earthsystemcurator.cupid.esmf.ESMFStageActionFieldDestroy
+	 * @generated
+	 */
+	EClass getESMFStageActionFieldDestroy();
+
+	/**
+	 * Returns the meta object for the reference list '{@link org.earthsystemcurator.cupid.esmf.ESMFStageActionFieldDestroy#getField <em>Field</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the reference list '<em>Field</em>'.
+	 * @see org.earthsystemcurator.cupid.esmf.ESMFStageActionFieldDestroy#getField()
+	 * @see #getESMFStageActionFieldDestroy()
+	 * @generated
+	 */
+	EReference getESMFStageActionFieldDestroy_Field();
+
+	/**
+	 * Returns the meta object for class '{@link org.earthsystemcurator.cupid.esmf.ESMFStageActionGridCreate <em>Stage Action Grid Create</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for class '<em>Stage Action Grid Create</em>'.
+	 * @see org.earthsystemcurator.cupid.esmf.ESMFStageActionGridCreate
+	 * @generated
+	 */
+	EClass getESMFStageActionGridCreate();
+
+	/**
+	 * Returns the meta object for the reference list '{@link org.earthsystemcurator.cupid.esmf.ESMFStageActionGridCreate#getGrid <em>Grid</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the reference list '<em>Grid</em>'.
+	 * @see org.earthsystemcurator.cupid.esmf.ESMFStageActionGridCreate#getGrid()
+	 * @see #getESMFStageActionGridCreate()
+	 * @generated
+	 */
+	EReference getESMFStageActionGridCreate_Grid();
+
+	/**
+	 * Returns the meta object for class '{@link org.earthsystemcurator.cupid.esmf.ESMFStageActionGridInherit <em>Stage Action Grid Inherit</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for class '<em>Stage Action Grid Inherit</em>'.
+	 * @see org.earthsystemcurator.cupid.esmf.ESMFStageActionGridInherit
+	 * @generated
+	 */
+	EClass getESMFStageActionGridInherit();
+
+	/**
+	 * Returns the meta object for the reference list '{@link org.earthsystemcurator.cupid.esmf.ESMFStageActionGridInherit#getGrid <em>Grid</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the reference list '<em>Grid</em>'.
+	 * @see org.earthsystemcurator.cupid.esmf.ESMFStageActionGridInherit#getGrid()
+	 * @see #getESMFStageActionGridInherit()
+	 * @generated
+	 */
+	EReference getESMFStageActionGridInherit_Grid();
+
+	/**
+	 * Returns the meta object for class '{@link org.earthsystemcurator.cupid.esmf.ESMFStageActionImportStateAdd <em>Stage Action Import State Add</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for class '<em>Stage Action Import State Add</em>'.
+	 * @see org.earthsystemcurator.cupid.esmf.ESMFStageActionImportStateAdd
+	 * @generated
+	 */
+	EClass getESMFStageActionImportStateAdd();
+
+	/**
+	 * Returns the meta object for the reference list '{@link org.earthsystemcurator.cupid.esmf.ESMFStageActionImportStateAdd#getItem <em>Item</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the reference list '<em>Item</em>'.
+	 * @see org.earthsystemcurator.cupid.esmf.ESMFStageActionImportStateAdd#getItem()
+	 * @see #getESMFStageActionImportStateAdd()
+	 * @generated
+	 */
+	EReference getESMFStageActionImportStateAdd_Item();
+
+	/**
+	 * Returns the meta object for class '{@link org.earthsystemcurator.cupid.esmf.ESMFStageActionExportStateAdd <em>Stage Action Export State Add</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for class '<em>Stage Action Export State Add</em>'.
+	 * @see org.earthsystemcurator.cupid.esmf.ESMFStageActionExportStateAdd
+	 * @generated
+	 */
+	EClass getESMFStageActionExportStateAdd();
+
+	/**
+	 * Returns the meta object for the reference list '{@link org.earthsystemcurator.cupid.esmf.ESMFStageActionExportStateAdd#getItem <em>Item</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the reference list '<em>Item</em>'.
+	 * @see org.earthsystemcurator.cupid.esmf.ESMFStageActionExportStateAdd#getItem()
+	 * @see #getESMFStageActionExportStateAdd()
+	 * @generated
+	 */
+	EReference getESMFStageActionExportStateAdd_Item();
+
+	/**
+	 * Returns the meta object for class '{@link org.earthsystemcurator.cupid.esmf.ESMFStageActionStateCreate <em>Stage Action State Create</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for class '<em>Stage Action State Create</em>'.
+	 * @see org.earthsystemcurator.cupid.esmf.ESMFStageActionStateCreate
+	 * @generated
+	 */
+	EClass getESMFStageActionStateCreate();
+
+	/**
+	 * Returns the meta object for the reference list '{@link org.earthsystemcurator.cupid.esmf.ESMFStageActionStateCreate#getState <em>State</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the reference list '<em>State</em>'.
+	 * @see org.earthsystemcurator.cupid.esmf.ESMFStageActionStateCreate#getState()
+	 * @see #getESMFStageActionStateCreate()
+	 * @generated
+	 */
+	EReference getESMFStageActionStateCreate_State();
+
+	/**
+	 * Returns the meta object for class '{@link org.earthsystemcurator.cupid.esmf.ESMFStageActionStateDestroy <em>Stage Action State Destroy</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for class '<em>Stage Action State Destroy</em>'.
+	 * @see org.earthsystemcurator.cupid.esmf.ESMFStageActionStateDestroy
+	 * @generated
+	 */
+	EClass getESMFStageActionStateDestroy();
+
+	/**
+	 * Returns the meta object for the reference list '{@link org.earthsystemcurator.cupid.esmf.ESMFStageActionStateDestroy#getState <em>State</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the reference list '<em>State</em>'.
+	 * @see org.earthsystemcurator.cupid.esmf.ESMFStageActionStateDestroy#getState()
+	 * @see #getESMFStageActionStateDestroy()
+	 * @generated
+	 */
+	EReference getESMFStageActionStateDestroy_State();
+
+	/**
+	 * Returns the meta object for class '{@link org.earthsystemcurator.cupid.esmf.ESMFStageActionArraySpecCreate <em>Stage Action Array Spec Create</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for class '<em>Stage Action Array Spec Create</em>'.
+	 * @see org.earthsystemcurator.cupid.esmf.ESMFStageActionArraySpecCreate
+	 * @generated
+	 */
+	EClass getESMFStageActionArraySpecCreate();
+
+	/**
+	 * Returns the meta object for the reference list '{@link org.earthsystemcurator.cupid.esmf.ESMFStageActionArraySpecCreate#getArraySpec <em>Array Spec</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the reference list '<em>Array Spec</em>'.
+	 * @see org.earthsystemcurator.cupid.esmf.ESMFStageActionArraySpecCreate#getArraySpec()
+	 * @see #getESMFStageActionArraySpecCreate()
+	 * @generated
+	 */
+	EReference getESMFStageActionArraySpecCreate_ArraySpec();
+
+	/**
+	 * Returns the meta object for class '{@link org.earthsystemcurator.cupid.esmf.ESMFStageActionComponentDestroy <em>Stage Action Component Destroy</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for class '<em>Stage Action Component Destroy</em>'.
+	 * @see org.earthsystemcurator.cupid.esmf.ESMFStageActionComponentDestroy
+	 * @generated
+	 */
+	EClass getESMFStageActionComponentDestroy();
+
+	/**
+	 * Returns the meta object for the reference list '{@link org.earthsystemcurator.cupid.esmf.ESMFStageActionComponentDestroy#getComponent <em>Component</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the reference list '<em>Component</em>'.
+	 * @see org.earthsystemcurator.cupid.esmf.ESMFStageActionComponentDestroy#getComponent()
+	 * @see #getESMFStageActionComponentDestroy()
+	 * @generated
+	 */
+	EReference getESMFStageActionComponentDestroy_Component();
 
 	/**
 	 * Returns the meta object for class '{@link org.earthsystemcurator.cupid.esmf.ESMFMethod <em>Method</em>}'.
@@ -6997,6 +8002,39 @@ public interface ESMFPackage extends EPackage {
 	 * @generated
 	 */
 	EReference getESMFField_SIDLArgument();
+
+	/**
+	 * Returns the meta object for the attribute '{@link org.earthsystemcurator.cupid.esmf.ESMFField#getIndex <em>Index</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the attribute '<em>Index</em>'.
+	 * @see org.earthsystemcurator.cupid.esmf.ESMFField#getIndex()
+	 * @see #getESMFField()
+	 * @generated
+	 */
+	EAttribute getESMFField_Index();
+
+	/**
+	 * Returns the meta object for the attribute list '{@link org.earthsystemcurator.cupid.esmf.ESMFField#getTotalLWidth <em>Total LWidth</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the attribute list '<em>Total LWidth</em>'.
+	 * @see org.earthsystemcurator.cupid.esmf.ESMFField#getTotalLWidth()
+	 * @see #getESMFField()
+	 * @generated
+	 */
+	EAttribute getESMFField_TotalLWidth();
+
+	/**
+	 * Returns the meta object for the attribute list '{@link org.earthsystemcurator.cupid.esmf.ESMFField#getTotalUWidth <em>Total UWidth</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the attribute list '<em>Total UWidth</em>'.
+	 * @see org.earthsystemcurator.cupid.esmf.ESMFField#getTotalUWidth()
+	 * @see #getESMFField()
+	 * @generated
+	 */
+	EAttribute getESMFField_TotalUWidth();
 
 	/**
 	 * Returns the meta object for class '{@link org.earthsystemcurator.cupid.esmf.ESMFFieldConnection <em>Field Connection</em>}'.
@@ -10187,6 +11225,14 @@ public interface ESMFPackage extends EPackage {
 		EReference ESMF_COMPONENT__SIDL_CLASS = eINSTANCE.getESMFComponent_SIDLClass();
 
 		/**
+		 * The meta object literal for the '<em><b>Stage</b></em>' containment reference list feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EReference ESMF_COMPONENT__STAGE = eINSTANCE.getESMFComponent_Stage();
+
+		/**
 		 * The meta object literal for the '{@link org.earthsystemcurator.cupid.esmf.impl.ESMFGriddedComponentImpl <em>Gridded Component</em>}' class.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
@@ -10223,6 +11269,268 @@ public interface ESMFPackage extends EPackage {
 		 * @generated
 		 */
 		EReference ESMF_SIMPLE_COUPLER_COMPONENT__FIELD_CONNECTION = eINSTANCE.getESMFSimpleCouplerComponent_FieldConnection();
+
+		/**
+		 * The meta object literal for the '{@link org.earthsystemcurator.cupid.esmf.impl.ESMFStageImpl <em>Stage</em>}' class.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @see org.earthsystemcurator.cupid.esmf.impl.ESMFStageImpl
+		 * @see org.earthsystemcurator.cupid.esmf.impl.ESMFPackageImpl#getESMFStage()
+		 * @generated
+		 */
+		EClass ESMF_STAGE = eINSTANCE.getESMFStage();
+
+		/**
+		 * The meta object literal for the '<em><b>Component</b></em>' container reference feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EReference ESMF_STAGE__COMPONENT = eINSTANCE.getESMFStage_Component();
+
+		/**
+		 * The meta object literal for the '<em><b>Phase</b></em>' attribute feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EAttribute ESMF_STAGE__PHASE = eINSTANCE.getESMFStage_Phase();
+
+		/**
+		 * The meta object literal for the '<em><b>Action</b></em>' containment reference list feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EReference ESMF_STAGE__ACTION = eINSTANCE.getESMFStage_Action();
+
+		/**
+		 * The meta object literal for the '{@link org.earthsystemcurator.cupid.esmf.impl.ESMFStageInitializeImpl <em>Stage Initialize</em>}' class.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @see org.earthsystemcurator.cupid.esmf.impl.ESMFStageInitializeImpl
+		 * @see org.earthsystemcurator.cupid.esmf.impl.ESMFPackageImpl#getESMFStageInitialize()
+		 * @generated
+		 */
+		EClass ESMF_STAGE_INITIALIZE = eINSTANCE.getESMFStageInitialize();
+
+		/**
+		 * The meta object literal for the '{@link org.earthsystemcurator.cupid.esmf.impl.ESMFStageRunImpl <em>Stage Run</em>}' class.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @see org.earthsystemcurator.cupid.esmf.impl.ESMFStageRunImpl
+		 * @see org.earthsystemcurator.cupid.esmf.impl.ESMFPackageImpl#getESMFStageRun()
+		 * @generated
+		 */
+		EClass ESMF_STAGE_RUN = eINSTANCE.getESMFStageRun();
+
+		/**
+		 * The meta object literal for the '{@link org.earthsystemcurator.cupid.esmf.impl.ESMFStageFinalizeImpl <em>Stage Finalize</em>}' class.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @see org.earthsystemcurator.cupid.esmf.impl.ESMFStageFinalizeImpl
+		 * @see org.earthsystemcurator.cupid.esmf.impl.ESMFPackageImpl#getESMFStageFinalize()
+		 * @generated
+		 */
+		EClass ESMF_STAGE_FINALIZE = eINSTANCE.getESMFStageFinalize();
+
+		/**
+		 * The meta object literal for the '{@link org.earthsystemcurator.cupid.esmf.impl.ESMFStageActionImpl <em>Stage Action</em>}' class.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @see org.earthsystemcurator.cupid.esmf.impl.ESMFStageActionImpl
+		 * @see org.earthsystemcurator.cupid.esmf.impl.ESMFPackageImpl#getESMFStageAction()
+		 * @generated
+		 */
+		EClass ESMF_STAGE_ACTION = eINSTANCE.getESMFStageAction();
+
+		/**
+		 * The meta object literal for the '<em><b>Stage</b></em>' container reference feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EReference ESMF_STAGE_ACTION__STAGE = eINSTANCE.getESMFStageAction_Stage();
+
+		/**
+		 * The meta object literal for the '{@link org.earthsystemcurator.cupid.esmf.impl.ESMFStageActionFieldCreateImpl <em>Stage Action Field Create</em>}' class.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @see org.earthsystemcurator.cupid.esmf.impl.ESMFStageActionFieldCreateImpl
+		 * @see org.earthsystemcurator.cupid.esmf.impl.ESMFPackageImpl#getESMFStageActionFieldCreate()
+		 * @generated
+		 */
+		EClass ESMF_STAGE_ACTION_FIELD_CREATE = eINSTANCE.getESMFStageActionFieldCreate();
+
+		/**
+		 * The meta object literal for the '<em><b>Field</b></em>' reference list feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EReference ESMF_STAGE_ACTION_FIELD_CREATE__FIELD = eINSTANCE.getESMFStageActionFieldCreate_Field();
+
+		/**
+		 * The meta object literal for the '{@link org.earthsystemcurator.cupid.esmf.impl.ESMFStageActionFieldDestroyImpl <em>Stage Action Field Destroy</em>}' class.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @see org.earthsystemcurator.cupid.esmf.impl.ESMFStageActionFieldDestroyImpl
+		 * @see org.earthsystemcurator.cupid.esmf.impl.ESMFPackageImpl#getESMFStageActionFieldDestroy()
+		 * @generated
+		 */
+		EClass ESMF_STAGE_ACTION_FIELD_DESTROY = eINSTANCE.getESMFStageActionFieldDestroy();
+
+		/**
+		 * The meta object literal for the '<em><b>Field</b></em>' reference list feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EReference ESMF_STAGE_ACTION_FIELD_DESTROY__FIELD = eINSTANCE.getESMFStageActionFieldDestroy_Field();
+
+		/**
+		 * The meta object literal for the '{@link org.earthsystemcurator.cupid.esmf.impl.ESMFStageActionGridCreateImpl <em>Stage Action Grid Create</em>}' class.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @see org.earthsystemcurator.cupid.esmf.impl.ESMFStageActionGridCreateImpl
+		 * @see org.earthsystemcurator.cupid.esmf.impl.ESMFPackageImpl#getESMFStageActionGridCreate()
+		 * @generated
+		 */
+		EClass ESMF_STAGE_ACTION_GRID_CREATE = eINSTANCE.getESMFStageActionGridCreate();
+
+		/**
+		 * The meta object literal for the '<em><b>Grid</b></em>' reference list feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EReference ESMF_STAGE_ACTION_GRID_CREATE__GRID = eINSTANCE.getESMFStageActionGridCreate_Grid();
+
+		/**
+		 * The meta object literal for the '{@link org.earthsystemcurator.cupid.esmf.impl.ESMFStageActionGridInheritImpl <em>Stage Action Grid Inherit</em>}' class.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @see org.earthsystemcurator.cupid.esmf.impl.ESMFStageActionGridInheritImpl
+		 * @see org.earthsystemcurator.cupid.esmf.impl.ESMFPackageImpl#getESMFStageActionGridInherit()
+		 * @generated
+		 */
+		EClass ESMF_STAGE_ACTION_GRID_INHERIT = eINSTANCE.getESMFStageActionGridInherit();
+
+		/**
+		 * The meta object literal for the '<em><b>Grid</b></em>' reference list feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EReference ESMF_STAGE_ACTION_GRID_INHERIT__GRID = eINSTANCE.getESMFStageActionGridInherit_Grid();
+
+		/**
+		 * The meta object literal for the '{@link org.earthsystemcurator.cupid.esmf.impl.ESMFStageActionImportStateAddImpl <em>Stage Action Import State Add</em>}' class.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @see org.earthsystemcurator.cupid.esmf.impl.ESMFStageActionImportStateAddImpl
+		 * @see org.earthsystemcurator.cupid.esmf.impl.ESMFPackageImpl#getESMFStageActionImportStateAdd()
+		 * @generated
+		 */
+		EClass ESMF_STAGE_ACTION_IMPORT_STATE_ADD = eINSTANCE.getESMFStageActionImportStateAdd();
+
+		/**
+		 * The meta object literal for the '<em><b>Item</b></em>' reference list feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EReference ESMF_STAGE_ACTION_IMPORT_STATE_ADD__ITEM = eINSTANCE.getESMFStageActionImportStateAdd_Item();
+
+		/**
+		 * The meta object literal for the '{@link org.earthsystemcurator.cupid.esmf.impl.ESMFStageActionExportStateAddImpl <em>Stage Action Export State Add</em>}' class.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @see org.earthsystemcurator.cupid.esmf.impl.ESMFStageActionExportStateAddImpl
+		 * @see org.earthsystemcurator.cupid.esmf.impl.ESMFPackageImpl#getESMFStageActionExportStateAdd()
+		 * @generated
+		 */
+		EClass ESMF_STAGE_ACTION_EXPORT_STATE_ADD = eINSTANCE.getESMFStageActionExportStateAdd();
+
+		/**
+		 * The meta object literal for the '<em><b>Item</b></em>' reference list feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EReference ESMF_STAGE_ACTION_EXPORT_STATE_ADD__ITEM = eINSTANCE.getESMFStageActionExportStateAdd_Item();
+
+		/**
+		 * The meta object literal for the '{@link org.earthsystemcurator.cupid.esmf.impl.ESMFStageActionStateCreateImpl <em>Stage Action State Create</em>}' class.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @see org.earthsystemcurator.cupid.esmf.impl.ESMFStageActionStateCreateImpl
+		 * @see org.earthsystemcurator.cupid.esmf.impl.ESMFPackageImpl#getESMFStageActionStateCreate()
+		 * @generated
+		 */
+		EClass ESMF_STAGE_ACTION_STATE_CREATE = eINSTANCE.getESMFStageActionStateCreate();
+
+		/**
+		 * The meta object literal for the '<em><b>State</b></em>' reference list feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EReference ESMF_STAGE_ACTION_STATE_CREATE__STATE = eINSTANCE.getESMFStageActionStateCreate_State();
+
+		/**
+		 * The meta object literal for the '{@link org.earthsystemcurator.cupid.esmf.impl.ESMFStageActionStateDestroyImpl <em>Stage Action State Destroy</em>}' class.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @see org.earthsystemcurator.cupid.esmf.impl.ESMFStageActionStateDestroyImpl
+		 * @see org.earthsystemcurator.cupid.esmf.impl.ESMFPackageImpl#getESMFStageActionStateDestroy()
+		 * @generated
+		 */
+		EClass ESMF_STAGE_ACTION_STATE_DESTROY = eINSTANCE.getESMFStageActionStateDestroy();
+
+		/**
+		 * The meta object literal for the '<em><b>State</b></em>' reference list feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EReference ESMF_STAGE_ACTION_STATE_DESTROY__STATE = eINSTANCE.getESMFStageActionStateDestroy_State();
+
+		/**
+		 * The meta object literal for the '{@link org.earthsystemcurator.cupid.esmf.impl.ESMFStageActionArraySpecCreateImpl <em>Stage Action Array Spec Create</em>}' class.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @see org.earthsystemcurator.cupid.esmf.impl.ESMFStageActionArraySpecCreateImpl
+		 * @see org.earthsystemcurator.cupid.esmf.impl.ESMFPackageImpl#getESMFStageActionArraySpecCreate()
+		 * @generated
+		 */
+		EClass ESMF_STAGE_ACTION_ARRAY_SPEC_CREATE = eINSTANCE.getESMFStageActionArraySpecCreate();
+
+		/**
+		 * The meta object literal for the '<em><b>Array Spec</b></em>' reference list feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EReference ESMF_STAGE_ACTION_ARRAY_SPEC_CREATE__ARRAY_SPEC = eINSTANCE.getESMFStageActionArraySpecCreate_ArraySpec();
+
+		/**
+		 * The meta object literal for the '{@link org.earthsystemcurator.cupid.esmf.impl.ESMFStageActionComponentDestroyImpl <em>Stage Action Component Destroy</em>}' class.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @see org.earthsystemcurator.cupid.esmf.impl.ESMFStageActionComponentDestroyImpl
+		 * @see org.earthsystemcurator.cupid.esmf.impl.ESMFPackageImpl#getESMFStageActionComponentDestroy()
+		 * @generated
+		 */
+		EClass ESMF_STAGE_ACTION_COMPONENT_DESTROY = eINSTANCE.getESMFStageActionComponentDestroy();
+
+		/**
+		 * The meta object literal for the '<em><b>Component</b></em>' reference list feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EReference ESMF_STAGE_ACTION_COMPONENT_DESTROY__COMPONENT = eINSTANCE.getESMFStageActionComponentDestroy_Component();
 
 		/**
 		 * The meta object literal for the '{@link org.earthsystemcurator.cupid.esmf.impl.ESMFMethodImpl <em>Method</em>}' class.
@@ -10621,6 +11929,30 @@ public interface ESMFPackage extends EPackage {
 		 * @generated
 		 */
 		EReference ESMF_FIELD__SIDL_ARGUMENT = eINSTANCE.getESMFField_SIDLArgument();
+
+		/**
+		 * The meta object literal for the '<em><b>Index</b></em>' attribute feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EAttribute ESMF_FIELD__INDEX = eINSTANCE.getESMFField_Index();
+
+		/**
+		 * The meta object literal for the '<em><b>Total LWidth</b></em>' attribute list feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EAttribute ESMF_FIELD__TOTAL_LWIDTH = eINSTANCE.getESMFField_TotalLWidth();
+
+		/**
+		 * The meta object literal for the '<em><b>Total UWidth</b></em>' attribute list feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EAttribute ESMF_FIELD__TOTAL_UWIDTH = eINSTANCE.getESMFField_TotalUWidth();
 
 		/**
 		 * The meta object literal for the '{@link org.earthsystemcurator.cupid.esmf.impl.ESMFFieldConnectionImpl <em>Field Connection</em>}' class.

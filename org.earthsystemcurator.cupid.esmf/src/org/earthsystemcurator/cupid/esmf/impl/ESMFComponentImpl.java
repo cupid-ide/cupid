@@ -15,6 +15,7 @@ import org.earthsystemcurator.cupid.esmf.ESMFMethod;
 import org.earthsystemcurator.cupid.esmf.ESMFPackage;
 import org.earthsystemcurator.cupid.esmf.ESMFRegisterMethod;
 import org.earthsystemcurator.cupid.esmf.ESMFRouteHandle;
+import org.earthsystemcurator.cupid.esmf.ESMFStage;
 import org.earthsystemcurator.cupid.esmf.ESMFState;
 import org.earthsystemcurator.cupid.esmf.ESMFTime;
 import org.earthsystemcurator.cupid.esmf.ESMFTimeInterval;
@@ -59,6 +60,7 @@ import org.eclipse.emf.ecore.util.InternalEList;
  *   <li>{@link org.earthsystemcurator.cupid.esmf.impl.ESMFComponentImpl#getTime <em>Time</em>}</li>
  *   <li>{@link org.earthsystemcurator.cupid.esmf.impl.ESMFComponentImpl#getTimeInterval <em>Time Interval</em>}</li>
  *   <li>{@link org.earthsystemcurator.cupid.esmf.impl.ESMFComponentImpl#getSIDLClass <em>SIDL Class</em>}</li>
+ *   <li>{@link org.earthsystemcurator.cupid.esmf.impl.ESMFComponentImpl#getStage <em>Stage</em>}</li>
  * </ul>
  * </p>
  *
@@ -244,6 +246,16 @@ public abstract class ESMFComponentImpl extends ESMFNamedEntityImpl implements E
 	 * @ordered
 	 */
 	protected org.earthsystemcurator.cupid.sidl.Class sidlClass;
+
+	/**
+	 * The cached value of the '{@link #getStage() <em>Stage</em>}' containment reference list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #getStage()
+	 * @generated
+	 * @ordered
+	 */
+	protected EList<ESMFStage> stage;
 
 	/**
 	 * <!-- begin-user-doc -->
@@ -668,6 +680,18 @@ public abstract class ESMFComponentImpl extends ESMFNamedEntityImpl implements E
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	public EList<ESMFStage> getStage() {
+		if (stage == null) {
+			stage = new EObjectContainmentWithInverseEList<ESMFStage>(ESMFStage.class, this, ESMFPackage.ESMF_COMPONENT__STAGE, ESMFPackage.ESMF_STAGE__COMPONENT);
+		}
+		return stage;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
 	@SuppressWarnings("unchecked")
 	@Override
 	public NotificationChain eInverseAdd(InternalEObject otherEnd, int featureID, NotificationChain msgs) {
@@ -696,6 +720,8 @@ public abstract class ESMFComponentImpl extends ESMFNamedEntityImpl implements E
 				return ((InternalEList<InternalEObject>)(InternalEList<?>)getRouteHandle()).basicAdd(otherEnd, msgs);
 			case ESMFPackage.ESMF_COMPONENT__CLOCK:
 				return ((InternalEList<InternalEObject>)(InternalEList<?>)getClock()).basicAdd(otherEnd, msgs);
+			case ESMFPackage.ESMF_COMPONENT__STAGE:
+				return ((InternalEList<InternalEObject>)(InternalEList<?>)getStage()).basicAdd(otherEnd, msgs);
 		}
 		return super.eInverseAdd(otherEnd, featureID, msgs);
 	}
@@ -736,6 +762,8 @@ public abstract class ESMFComponentImpl extends ESMFNamedEntityImpl implements E
 				return ((InternalEList<?>)getTime()).basicRemove(otherEnd, msgs);
 			case ESMFPackage.ESMF_COMPONENT__TIME_INTERVAL:
 				return ((InternalEList<?>)getTimeInterval()).basicRemove(otherEnd, msgs);
+			case ESMFPackage.ESMF_COMPONENT__STAGE:
+				return ((InternalEList<?>)getStage()).basicRemove(otherEnd, msgs);
 		}
 		return super.eInverseRemove(otherEnd, featureID, msgs);
 	}
@@ -789,6 +817,8 @@ public abstract class ESMFComponentImpl extends ESMFNamedEntityImpl implements E
 			case ESMFPackage.ESMF_COMPONENT__SIDL_CLASS:
 				if (resolve) return getSIDLClass();
 				return basicGetSIDLClass();
+			case ESMFPackage.ESMF_COMPONENT__STAGE:
+				return getStage();
 		}
 		return super.eGet(featureID, resolve, coreType);
 	}
@@ -868,6 +898,10 @@ public abstract class ESMFComponentImpl extends ESMFNamedEntityImpl implements E
 			case ESMFPackage.ESMF_COMPONENT__SIDL_CLASS:
 				setSIDLClass((org.earthsystemcurator.cupid.sidl.Class)newValue);
 				return;
+			case ESMFPackage.ESMF_COMPONENT__STAGE:
+				getStage().clear();
+				getStage().addAll((Collection<? extends ESMFStage>)newValue);
+				return;
 		}
 		super.eSet(featureID, newValue);
 	}
@@ -934,6 +968,9 @@ public abstract class ESMFComponentImpl extends ESMFNamedEntityImpl implements E
 			case ESMFPackage.ESMF_COMPONENT__SIDL_CLASS:
 				setSIDLClass((org.earthsystemcurator.cupid.sidl.Class)null);
 				return;
+			case ESMFPackage.ESMF_COMPONENT__STAGE:
+				getStage().clear();
+				return;
 		}
 		super.eUnset(featureID);
 	}
@@ -982,6 +1019,8 @@ public abstract class ESMFComponentImpl extends ESMFNamedEntityImpl implements E
 				return timeInterval != null && !timeInterval.isEmpty();
 			case ESMFPackage.ESMF_COMPONENT__SIDL_CLASS:
 				return sidlClass != null;
+			case ESMFPackage.ESMF_COMPONENT__STAGE:
+				return stage != null && !stage.isEmpty();
 		}
 		return super.eIsSet(featureID);
 	}

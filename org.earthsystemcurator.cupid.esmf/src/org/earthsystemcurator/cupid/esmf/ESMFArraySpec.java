@@ -22,7 +22,7 @@ import org.eclipse.emf.ecore.EObject;
  * @model
  * @generated
  */
-public interface ESMFArraySpec extends EObject {
+public interface ESMFArraySpec extends ESMFNamedEntity {
 	/**
 	 * Returns the value of the '<em><b>Typekind</b></em>' attribute.
 	 * The literals are from the enumeration {@link org.earthsystemcurator.cupid.esmf.ESMFTypeKind}.

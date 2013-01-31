@@ -49,6 +49,123 @@ public interface ESMFFactory extends EFactory {
 	ESMFSimpleCouplerComponent createESMFSimpleCouplerComponent();
 
 	/**
+	 * Returns a new object of class '<em>Stage Initialize</em>'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return a new object of class '<em>Stage Initialize</em>'.
+	 * @generated
+	 */
+	ESMFStageInitialize createESMFStageInitialize();
+
+	/**
+	 * Returns a new object of class '<em>Stage Run</em>'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return a new object of class '<em>Stage Run</em>'.
+	 * @generated
+	 */
+	ESMFStageRun createESMFStageRun();
+
+	/**
+	 * Returns a new object of class '<em>Stage Finalize</em>'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return a new object of class '<em>Stage Finalize</em>'.
+	 * @generated
+	 */
+	ESMFStageFinalize createESMFStageFinalize();
+
+	/**
+	 * Returns a new object of class '<em>Stage Action Field Create</em>'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return a new object of class '<em>Stage Action Field Create</em>'.
+	 * @generated
+	 */
+	ESMFStageActionFieldCreate createESMFStageActionFieldCreate();
+
+	/**
+	 * Returns a new object of class '<em>Stage Action Field Destroy</em>'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return a new object of class '<em>Stage Action Field Destroy</em>'.
+	 * @generated
+	 */
+	ESMFStageActionFieldDestroy createESMFStageActionFieldDestroy();
+
+	/**
+	 * Returns a new object of class '<em>Stage Action Grid Create</em>'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return a new object of class '<em>Stage Action Grid Create</em>'.
+	 * @generated
+	 */
+	ESMFStageActionGridCreate createESMFStageActionGridCreate();
+
+	/**
+	 * Returns a new object of class '<em>Stage Action Grid Inherit</em>'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return a new object of class '<em>Stage Action Grid Inherit</em>'.
+	 * @generated
+	 */
+	ESMFStageActionGridInherit createESMFStageActionGridInherit();
+
+	/**
+	 * Returns a new object of class '<em>Stage Action Import State Add</em>'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return a new object of class '<em>Stage Action Import State Add</em>'.
+	 * @generated
+	 */
+	ESMFStageActionImportStateAdd createESMFStageActionImportStateAdd();
+
+	/**
+	 * Returns a new object of class '<em>Stage Action Export State Add</em>'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return a new object of class '<em>Stage Action Export State Add</em>'.
+	 * @generated
+	 */
+	ESMFStageActionExportStateAdd createESMFStageActionExportStateAdd();
+
+	/**
+	 * Returns a new object of class '<em>Stage Action State Create</em>'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return a new object of class '<em>Stage Action State Create</em>'.
+	 * @generated
+	 */
+	ESMFStageActionStateCreate createESMFStageActionStateCreate();
+
+	/**
+	 * Returns a new object of class '<em>Stage Action State Destroy</em>'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return a new object of class '<em>Stage Action State Destroy</em>'.
+	 * @generated
+	 */
+	ESMFStageActionStateDestroy createESMFStageActionStateDestroy();
+
+	/**
+	 * Returns a new object of class '<em>Stage Action Array Spec Create</em>'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return a new object of class '<em>Stage Action Array Spec Create</em>'.
+	 * @generated
+	 */
+	ESMFStageActionArraySpecCreate createESMFStageActionArraySpecCreate();
+
+	/**
+	 * Returns a new object of class '<em>Stage Action Component Destroy</em>'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return a new object of class '<em>Stage Action Component Destroy</em>'.
+	 * @generated
+	 */
+	ESMFStageActionComponentDestroy createESMFStageActionComponentDestroy();
+
+	/**
 	 * Returns a new object of class '<em>Method</em>'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
