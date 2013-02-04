@@ -88,6 +88,8 @@ public class ESMFValidator extends EObjectValidator {
 		switch (classifierID) {
 			case ESMFPackage.ESMF_NAMED_ENTITY:
 				return validateESMFNamedEntity((ESMFNamedEntity)value, diagnostics, context);
+			case ESMFPackage.ESMF_SCOPE:
+				return validateESMFScope((ESMFScope)value, diagnostics, context);
 			case ESMFPackage.ESMF_COMPONENT:
 				return validateESMFComponent((ESMFComponent)value, diagnostics, context);
 			case ESMFPackage.ESMF_GRIDDED_COMPONENT:
@@ -96,6 +98,8 @@ public class ESMFValidator extends EObjectValidator {
 				return validateESMFCouplerComponent((ESMFCouplerComponent)value, diagnostics, context);
 			case ESMFPackage.ESMF_SIMPLE_COUPLER_COMPONENT:
 				return validateESMFSimpleCouplerComponent((ESMFSimpleCouplerComponent)value, diagnostics, context);
+			case ESMFPackage.ESMF_DRIVER:
+				return validateESMFDriver((ESMFDriver)value, diagnostics, context);
 			case ESMFPackage.ESMF_STAGE:
 				return validateESMFStage((ESMFStage)value, diagnostics, context);
 			case ESMFPackage.ESMF_STAGE_INITIALIZE:
@@ -106,14 +110,32 @@ public class ESMFValidator extends EObjectValidator {
 				return validateESMFStageFinalize((ESMFStageFinalize)value, diagnostics, context);
 			case ESMFPackage.ESMF_STAGE_ACTION:
 				return validateESMFStageAction((ESMFStageAction)value, diagnostics, context);
+			case ESMFPackage.ESMF_STAGE_ACTION_SEQUENCE:
+				return validateESMFStageActionSequence((ESMFStageActionSequence)value, diagnostics, context);
+			case ESMFPackage.ESMF_STAGE_ACTION_ITERATE:
+				return validateESMFStageActionIterate((ESMFStageActionIterate)value, diagnostics, context);
+			case ESMFPackage.ESMF_STAGE_ACTION_ITERATE_CLOCK:
+				return validateESMFStageActionIterateClock((ESMFStageActionIterateClock)value, diagnostics, context);
 			case ESMFPackage.ESMF_STAGE_ACTION_ARRAY_SPEC_CREATE:
 				return validateESMFStageActionArraySpecCreate((ESMFStageActionArraySpecCreate)value, diagnostics, context);
+			case ESMFPackage.ESMF_STAGE_ACTION_COMPONENT_CREATE:
+				return validateESMFStageActionComponentCreate((ESMFStageActionComponentCreate)value, diagnostics, context);
 			case ESMFPackage.ESMF_STAGE_ACTION_COMPONENT_DESTROY:
 				return validateESMFStageActionComponentDestroy((ESMFStageActionComponentDestroy)value, diagnostics, context);
+			case ESMFPackage.ESMF_STAGE_ACTION_COMPONENT_SET_GRID:
+				return validateESMFStageActionComponentSetGrid((ESMFStageActionComponentSetGrid)value, diagnostics, context);
+			case ESMFPackage.ESMF_STAGE_ACTION_EXECUTE_STAGE:
+				return validateESMFStageActionExecuteStage((ESMFStageActionExecuteStage)value, diagnostics, context);
 			case ESMFPackage.ESMF_STAGE_ACTION_FIELD_CREATE:
 				return validateESMFStageActionFieldCreate((ESMFStageActionFieldCreate)value, diagnostics, context);
 			case ESMFPackage.ESMF_STAGE_ACTION_FIELD_DESTROY:
 				return validateESMFStageActionFieldDestroy((ESMFStageActionFieldDestroy)value, diagnostics, context);
+			case ESMFPackage.ESMF_STAGE_ACTION_FIELD_REDIST_STORE:
+				return validateESMFStageActionFieldRedistStore((ESMFStageActionFieldRedistStore)value, diagnostics, context);
+			case ESMFPackage.ESMF_STAGE_ACTION_FIELD_REDIST:
+				return validateESMFStageActionFieldRedist((ESMFStageActionFieldRedist)value, diagnostics, context);
+			case ESMFPackage.ESMF_STAGE_ACTION_FIELD_REDIST_RELEASE:
+				return validateESMFStageActionFieldRedistRelease((ESMFStageActionFieldRedistRelease)value, diagnostics, context);
 			case ESMFPackage.ESMF_STAGE_ACTION_GRID_CREATE:
 				return validateESMFStageActionGridCreate((ESMFStageActionGridCreate)value, diagnostics, context);
 			case ESMFPackage.ESMF_STAGE_ACTION_GRID_INHERIT:
@@ -122,6 +144,10 @@ public class ESMFValidator extends EObjectValidator {
 				return validateESMFStageActionImportStateAdd((ESMFStageActionImportStateAdd)value, diagnostics, context);
 			case ESMFPackage.ESMF_STAGE_ACTION_EXPORT_STATE_ADD:
 				return validateESMFStageActionExportStateAdd((ESMFStageActionExportStateAdd)value, diagnostics, context);
+			case ESMFPackage.ESMF_STAGE_ACTION_IMPORT_STATE_GET:
+				return validateESMFStageActionImportStateGet((ESMFStageActionImportStateGet)value, diagnostics, context);
+			case ESMFPackage.ESMF_STAGE_ACTION_EXPORT_STATE_GET:
+				return validateESMFStageActionExportStateGet((ESMFStageActionExportStateGet)value, diagnostics, context);
 			case ESMFPackage.ESMF_STAGE_ACTION_STATE_CREATE:
 				return validateESMFStageActionStateCreate((ESMFStageActionStateCreate)value, diagnostics, context);
 			case ESMFPackage.ESMF_STAGE_ACTION_STATE_DESTROY:
@@ -154,6 +180,8 @@ public class ESMFValidator extends EObjectValidator {
 				return validateESMFState((ESMFState)value, diagnostics, context);
 			case ESMFPackage.ESMF_STATE_ITEM:
 				return validateESMFStateItem((ESMFStateItem)value, diagnostics, context);
+			case ESMFPackage.ESMF_SCOPED_ITEM:
+				return validateESMFScopedItem((ESMFScopedItem)value, diagnostics, context);
 			case ESMFPackage.ESMF_FIELD:
 				return validateESMFField((ESMFField)value, diagnostics, context);
 			case ESMFPackage.ESMF_FIELD_CONNECTION:
@@ -360,6 +388,15 @@ public class ESMFValidator extends EObjectValidator {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	public boolean validateESMFDriver(ESMFDriver esmfDriver, DiagnosticChain diagnostics, Map<Object, Object> context) {
+		return validate_EveryDefaultConstraint(esmfDriver, diagnostics, context);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
 	public boolean validateESMFStage(ESMFStage esmfStage, DiagnosticChain diagnostics, Map<Object, Object> context) {
 		return validate_EveryDefaultConstraint(esmfStage, diagnostics, context);
 	}
@@ -405,6 +442,33 @@ public class ESMFValidator extends EObjectValidator {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	public boolean validateESMFStageActionSequence(ESMFStageActionSequence esmfStageActionSequence, DiagnosticChain diagnostics, Map<Object, Object> context) {
+		return validate_EveryDefaultConstraint(esmfStageActionSequence, diagnostics, context);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public boolean validateESMFStageActionIterate(ESMFStageActionIterate esmfStageActionIterate, DiagnosticChain diagnostics, Map<Object, Object> context) {
+		return validate_EveryDefaultConstraint(esmfStageActionIterate, diagnostics, context);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public boolean validateESMFStageActionIterateClock(ESMFStageActionIterateClock esmfStageActionIterateClock, DiagnosticChain diagnostics, Map<Object, Object> context) {
+		return validate_EveryDefaultConstraint(esmfStageActionIterateClock, diagnostics, context);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
 	public boolean validateESMFStageActionFieldCreate(ESMFStageActionFieldCreate esmfStageActionFieldCreate, DiagnosticChain diagnostics, Map<Object, Object> context) {
 		return validate_EveryDefaultConstraint(esmfStageActionFieldCreate, diagnostics, context);
 	}
@@ -416,6 +480,33 @@ public class ESMFValidator extends EObjectValidator {
 	 */
 	public boolean validateESMFStageActionFieldDestroy(ESMFStageActionFieldDestroy esmfStageActionFieldDestroy, DiagnosticChain diagnostics, Map<Object, Object> context) {
 		return validate_EveryDefaultConstraint(esmfStageActionFieldDestroy, diagnostics, context);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public boolean validateESMFStageActionFieldRedistStore(ESMFStageActionFieldRedistStore esmfStageActionFieldRedistStore, DiagnosticChain diagnostics, Map<Object, Object> context) {
+		return validate_EveryDefaultConstraint(esmfStageActionFieldRedistStore, diagnostics, context);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public boolean validateESMFStageActionFieldRedist(ESMFStageActionFieldRedist esmfStageActionFieldRedist, DiagnosticChain diagnostics, Map<Object, Object> context) {
+		return validate_EveryDefaultConstraint(esmfStageActionFieldRedist, diagnostics, context);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public boolean validateESMFStageActionFieldRedistRelease(ESMFStageActionFieldRedistRelease esmfStageActionFieldRedistRelease, DiagnosticChain diagnostics, Map<Object, Object> context) {
+		return validate_EveryDefaultConstraint(esmfStageActionFieldRedistRelease, diagnostics, context);
 	}
 
 	/**
@@ -459,6 +550,24 @@ public class ESMFValidator extends EObjectValidator {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	public boolean validateESMFStageActionImportStateGet(ESMFStageActionImportStateGet esmfStageActionImportStateGet, DiagnosticChain diagnostics, Map<Object, Object> context) {
+		return validate_EveryDefaultConstraint(esmfStageActionImportStateGet, diagnostics, context);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public boolean validateESMFStageActionExportStateGet(ESMFStageActionExportStateGet esmfStageActionExportStateGet, DiagnosticChain diagnostics, Map<Object, Object> context) {
+		return validate_EveryDefaultConstraint(esmfStageActionExportStateGet, diagnostics, context);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
 	public boolean validateESMFStageActionStateCreate(ESMFStageActionStateCreate esmfStageActionStateCreate, DiagnosticChain diagnostics, Map<Object, Object> context) {
 		return validate_EveryDefaultConstraint(esmfStageActionStateCreate, diagnostics, context);
 	}
@@ -486,8 +595,35 @@ public class ESMFValidator extends EObjectValidator {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	public boolean validateESMFStageActionComponentCreate(ESMFStageActionComponentCreate esmfStageActionComponentCreate, DiagnosticChain diagnostics, Map<Object, Object> context) {
+		return validate_EveryDefaultConstraint(esmfStageActionComponentCreate, diagnostics, context);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
 	public boolean validateESMFStageActionComponentDestroy(ESMFStageActionComponentDestroy esmfStageActionComponentDestroy, DiagnosticChain diagnostics, Map<Object, Object> context) {
 		return validate_EveryDefaultConstraint(esmfStageActionComponentDestroy, diagnostics, context);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public boolean validateESMFStageActionComponentSetGrid(ESMFStageActionComponentSetGrid esmfStageActionComponentSetGrid, DiagnosticChain diagnostics, Map<Object, Object> context) {
+		return validate_EveryDefaultConstraint(esmfStageActionComponentSetGrid, diagnostics, context);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public boolean validateESMFStageActionExecuteStage(ESMFStageActionExecuteStage esmfStageActionExecuteStage, DiagnosticChain diagnostics, Map<Object, Object> context) {
+		return validate_EveryDefaultConstraint(esmfStageActionExecuteStage, diagnostics, context);
 	}
 
 	/**
@@ -614,6 +750,15 @@ public class ESMFValidator extends EObjectValidator {
 	 */
 	public boolean validateESMFStateItem(ESMFStateItem esmfStateItem, DiagnosticChain diagnostics, Map<Object, Object> context) {
 		return validate_EveryDefaultConstraint(esmfStateItem, diagnostics, context);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public boolean validateESMFScopedItem(ESMFScopedItem esmfScopedItem, DiagnosticChain diagnostics, Map<Object, Object> context) {
+		return validate_EveryDefaultConstraint(esmfScopedItem, diagnostics, context);
 	}
 
 	/**
@@ -1441,6 +1586,15 @@ public class ESMFValidator extends EObjectValidator {
 	 */
 	public boolean validateESMFNamedEntity(ESMFNamedEntity esmfNamedEntity, DiagnosticChain diagnostics, Map<Object, Object> context) {
 		return validate_EveryDefaultConstraint(esmfNamedEntity, diagnostics, context);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public boolean validateESMFScope(ESMFScope esmfScope, DiagnosticChain diagnostics, Map<Object, Object> context) {
+		return validate_EveryDefaultConstraint(esmfScope, diagnostics, context);
 	}
 
 	/**

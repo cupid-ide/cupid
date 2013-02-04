@@ -72,6 +72,10 @@ public class ESMFAdapterFactory extends AdapterFactoryImpl {
 				return createESMFNamedEntityAdapter();
 			}
 			@Override
+			public Adapter caseESMFScope(ESMFScope object) {
+				return createESMFScopeAdapter();
+			}
+			@Override
 			public Adapter caseESMFComponent(ESMFComponent object) {
 				return createESMFComponentAdapter();
 			}
@@ -86,6 +90,10 @@ public class ESMFAdapterFactory extends AdapterFactoryImpl {
 			@Override
 			public Adapter caseESMFSimpleCouplerComponent(ESMFSimpleCouplerComponent object) {
 				return createESMFSimpleCouplerComponentAdapter();
+			}
+			@Override
+			public Adapter caseESMFDriver(ESMFDriver object) {
+				return createESMFDriverAdapter();
 			}
 			@Override
 			public Adapter caseESMFStage(ESMFStage object) {
@@ -108,12 +116,36 @@ public class ESMFAdapterFactory extends AdapterFactoryImpl {
 				return createESMFStageActionAdapter();
 			}
 			@Override
+			public Adapter caseESMFStageActionSequence(ESMFStageActionSequence object) {
+				return createESMFStageActionSequenceAdapter();
+			}
+			@Override
+			public Adapter caseESMFStageActionIterate(ESMFStageActionIterate object) {
+				return createESMFStageActionIterateAdapter();
+			}
+			@Override
+			public Adapter caseESMFStageActionIterateClock(ESMFStageActionIterateClock object) {
+				return createESMFStageActionIterateClockAdapter();
+			}
+			@Override
 			public Adapter caseESMFStageActionArraySpecCreate(ESMFStageActionArraySpecCreate object) {
 				return createESMFStageActionArraySpecCreateAdapter();
 			}
 			@Override
+			public Adapter caseESMFStageActionComponentCreate(ESMFStageActionComponentCreate object) {
+				return createESMFStageActionComponentCreateAdapter();
+			}
+			@Override
 			public Adapter caseESMFStageActionComponentDestroy(ESMFStageActionComponentDestroy object) {
 				return createESMFStageActionComponentDestroyAdapter();
+			}
+			@Override
+			public Adapter caseESMFStageActionComponentSetGrid(ESMFStageActionComponentSetGrid object) {
+				return createESMFStageActionComponentSetGridAdapter();
+			}
+			@Override
+			public Adapter caseESMFStageActionExecuteStage(ESMFStageActionExecuteStage object) {
+				return createESMFStageActionExecuteStageAdapter();
 			}
 			@Override
 			public Adapter caseESMFStageActionFieldCreate(ESMFStageActionFieldCreate object) {
@@ -122,6 +154,18 @@ public class ESMFAdapterFactory extends AdapterFactoryImpl {
 			@Override
 			public Adapter caseESMFStageActionFieldDestroy(ESMFStageActionFieldDestroy object) {
 				return createESMFStageActionFieldDestroyAdapter();
+			}
+			@Override
+			public Adapter caseESMFStageActionFieldRedistStore(ESMFStageActionFieldRedistStore object) {
+				return createESMFStageActionFieldRedistStoreAdapter();
+			}
+			@Override
+			public Adapter caseESMFStageActionFieldRedist(ESMFStageActionFieldRedist object) {
+				return createESMFStageActionFieldRedistAdapter();
+			}
+			@Override
+			public Adapter caseESMFStageActionFieldRedistRelease(ESMFStageActionFieldRedistRelease object) {
+				return createESMFStageActionFieldRedistReleaseAdapter();
 			}
 			@Override
 			public Adapter caseESMFStageActionGridCreate(ESMFStageActionGridCreate object) {
@@ -138,6 +182,14 @@ public class ESMFAdapterFactory extends AdapterFactoryImpl {
 			@Override
 			public Adapter caseESMFStageActionExportStateAdd(ESMFStageActionExportStateAdd object) {
 				return createESMFStageActionExportStateAddAdapter();
+			}
+			@Override
+			public Adapter caseESMFStageActionImportStateGet(ESMFStageActionImportStateGet object) {
+				return createESMFStageActionImportStateGetAdapter();
+			}
+			@Override
+			public Adapter caseESMFStageActionExportStateGet(ESMFStageActionExportStateGet object) {
+				return createESMFStageActionExportStateGetAdapter();
 			}
 			@Override
 			public Adapter caseESMFStageActionStateCreate(ESMFStageActionStateCreate object) {
@@ -202,6 +254,10 @@ public class ESMFAdapterFactory extends AdapterFactoryImpl {
 			@Override
 			public Adapter caseESMFStateItem(ESMFStateItem object) {
 				return createESMFStateItemAdapter();
+			}
+			@Override
+			public Adapter caseESMFScopedItem(ESMFScopedItem object) {
+				return createESMFScopedItemAdapter();
 			}
 			@Override
 			public Adapter caseESMFField(ESMFField object) {
@@ -576,6 +632,20 @@ public class ESMFAdapterFactory extends AdapterFactoryImpl {
 	}
 
 	/**
+	 * Creates a new adapter for an object of class '{@link org.earthsystemcurator.cupid.esmf.ESMFDriver <em>Driver</em>}'.
+	 * <!-- begin-user-doc -->
+	 * This default implementation returns null so that we can easily ignore cases;
+	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
+	 * <!-- end-user-doc -->
+	 * @return the new adapter.
+	 * @see org.earthsystemcurator.cupid.esmf.ESMFDriver
+	 * @generated
+	 */
+	public Adapter createESMFDriverAdapter() {
+		return null;
+	}
+
+	/**
 	 * Creates a new adapter for an object of class '{@link org.earthsystemcurator.cupid.esmf.ESMFStage <em>Stage</em>}'.
 	 * <!-- begin-user-doc -->
 	 * This default implementation returns null so that we can easily ignore cases;
@@ -646,6 +716,48 @@ public class ESMFAdapterFactory extends AdapterFactoryImpl {
 	}
 
 	/**
+	 * Creates a new adapter for an object of class '{@link org.earthsystemcurator.cupid.esmf.ESMFStageActionSequence <em>Stage Action Sequence</em>}'.
+	 * <!-- begin-user-doc -->
+	 * This default implementation returns null so that we can easily ignore cases;
+	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
+	 * <!-- end-user-doc -->
+	 * @return the new adapter.
+	 * @see org.earthsystemcurator.cupid.esmf.ESMFStageActionSequence
+	 * @generated
+	 */
+	public Adapter createESMFStageActionSequenceAdapter() {
+		return null;
+	}
+
+	/**
+	 * Creates a new adapter for an object of class '{@link org.earthsystemcurator.cupid.esmf.ESMFStageActionIterate <em>Stage Action Iterate</em>}'.
+	 * <!-- begin-user-doc -->
+	 * This default implementation returns null so that we can easily ignore cases;
+	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
+	 * <!-- end-user-doc -->
+	 * @return the new adapter.
+	 * @see org.earthsystemcurator.cupid.esmf.ESMFStageActionIterate
+	 * @generated
+	 */
+	public Adapter createESMFStageActionIterateAdapter() {
+		return null;
+	}
+
+	/**
+	 * Creates a new adapter for an object of class '{@link org.earthsystemcurator.cupid.esmf.ESMFStageActionIterateClock <em>Stage Action Iterate Clock</em>}'.
+	 * <!-- begin-user-doc -->
+	 * This default implementation returns null so that we can easily ignore cases;
+	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
+	 * <!-- end-user-doc -->
+	 * @return the new adapter.
+	 * @see org.earthsystemcurator.cupid.esmf.ESMFStageActionIterateClock
+	 * @generated
+	 */
+	public Adapter createESMFStageActionIterateClockAdapter() {
+		return null;
+	}
+
+	/**
 	 * Creates a new adapter for an object of class '{@link org.earthsystemcurator.cupid.esmf.ESMFStageActionFieldCreate <em>Stage Action Field Create</em>}'.
 	 * <!-- begin-user-doc -->
 	 * This default implementation returns null so that we can easily ignore cases;
@@ -670,6 +782,48 @@ public class ESMFAdapterFactory extends AdapterFactoryImpl {
 	 * @generated
 	 */
 	public Adapter createESMFStageActionFieldDestroyAdapter() {
+		return null;
+	}
+
+	/**
+	 * Creates a new adapter for an object of class '{@link org.earthsystemcurator.cupid.esmf.ESMFStageActionFieldRedistStore <em>Stage Action Field Redist Store</em>}'.
+	 * <!-- begin-user-doc -->
+	 * This default implementation returns null so that we can easily ignore cases;
+	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
+	 * <!-- end-user-doc -->
+	 * @return the new adapter.
+	 * @see org.earthsystemcurator.cupid.esmf.ESMFStageActionFieldRedistStore
+	 * @generated
+	 */
+	public Adapter createESMFStageActionFieldRedistStoreAdapter() {
+		return null;
+	}
+
+	/**
+	 * Creates a new adapter for an object of class '{@link org.earthsystemcurator.cupid.esmf.ESMFStageActionFieldRedist <em>Stage Action Field Redist</em>}'.
+	 * <!-- begin-user-doc -->
+	 * This default implementation returns null so that we can easily ignore cases;
+	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
+	 * <!-- end-user-doc -->
+	 * @return the new adapter.
+	 * @see org.earthsystemcurator.cupid.esmf.ESMFStageActionFieldRedist
+	 * @generated
+	 */
+	public Adapter createESMFStageActionFieldRedistAdapter() {
+		return null;
+	}
+
+	/**
+	 * Creates a new adapter for an object of class '{@link org.earthsystemcurator.cupid.esmf.ESMFStageActionFieldRedistRelease <em>Stage Action Field Redist Release</em>}'.
+	 * <!-- begin-user-doc -->
+	 * This default implementation returns null so that we can easily ignore cases;
+	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
+	 * <!-- end-user-doc -->
+	 * @return the new adapter.
+	 * @see org.earthsystemcurator.cupid.esmf.ESMFStageActionFieldRedistRelease
+	 * @generated
+	 */
+	public Adapter createESMFStageActionFieldRedistReleaseAdapter() {
 		return null;
 	}
 
@@ -730,6 +884,34 @@ public class ESMFAdapterFactory extends AdapterFactoryImpl {
 	}
 
 	/**
+	 * Creates a new adapter for an object of class '{@link org.earthsystemcurator.cupid.esmf.ESMFStageActionImportStateGet <em>Stage Action Import State Get</em>}'.
+	 * <!-- begin-user-doc -->
+	 * This default implementation returns null so that we can easily ignore cases;
+	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
+	 * <!-- end-user-doc -->
+	 * @return the new adapter.
+	 * @see org.earthsystemcurator.cupid.esmf.ESMFStageActionImportStateGet
+	 * @generated
+	 */
+	public Adapter createESMFStageActionImportStateGetAdapter() {
+		return null;
+	}
+
+	/**
+	 * Creates a new adapter for an object of class '{@link org.earthsystemcurator.cupid.esmf.ESMFStageActionExportStateGet <em>Stage Action Export State Get</em>}'.
+	 * <!-- begin-user-doc -->
+	 * This default implementation returns null so that we can easily ignore cases;
+	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
+	 * <!-- end-user-doc -->
+	 * @return the new adapter.
+	 * @see org.earthsystemcurator.cupid.esmf.ESMFStageActionExportStateGet
+	 * @generated
+	 */
+	public Adapter createESMFStageActionExportStateGetAdapter() {
+		return null;
+	}
+
+	/**
 	 * Creates a new adapter for an object of class '{@link org.earthsystemcurator.cupid.esmf.ESMFStageActionStateCreate <em>Stage Action State Create</em>}'.
 	 * <!-- begin-user-doc -->
 	 * This default implementation returns null so that we can easily ignore cases;
@@ -772,6 +954,20 @@ public class ESMFAdapterFactory extends AdapterFactoryImpl {
 	}
 
 	/**
+	 * Creates a new adapter for an object of class '{@link org.earthsystemcurator.cupid.esmf.ESMFStageActionComponentCreate <em>Stage Action Component Create</em>}'.
+	 * <!-- begin-user-doc -->
+	 * This default implementation returns null so that we can easily ignore cases;
+	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
+	 * <!-- end-user-doc -->
+	 * @return the new adapter.
+	 * @see org.earthsystemcurator.cupid.esmf.ESMFStageActionComponentCreate
+	 * @generated
+	 */
+	public Adapter createESMFStageActionComponentCreateAdapter() {
+		return null;
+	}
+
+	/**
 	 * Creates a new adapter for an object of class '{@link org.earthsystemcurator.cupid.esmf.ESMFStageActionComponentDestroy <em>Stage Action Component Destroy</em>}'.
 	 * <!-- begin-user-doc -->
 	 * This default implementation returns null so that we can easily ignore cases;
@@ -782,6 +978,34 @@ public class ESMFAdapterFactory extends AdapterFactoryImpl {
 	 * @generated
 	 */
 	public Adapter createESMFStageActionComponentDestroyAdapter() {
+		return null;
+	}
+
+	/**
+	 * Creates a new adapter for an object of class '{@link org.earthsystemcurator.cupid.esmf.ESMFStageActionComponentSetGrid <em>Stage Action Component Set Grid</em>}'.
+	 * <!-- begin-user-doc -->
+	 * This default implementation returns null so that we can easily ignore cases;
+	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
+	 * <!-- end-user-doc -->
+	 * @return the new adapter.
+	 * @see org.earthsystemcurator.cupid.esmf.ESMFStageActionComponentSetGrid
+	 * @generated
+	 */
+	public Adapter createESMFStageActionComponentSetGridAdapter() {
+		return null;
+	}
+
+	/**
+	 * Creates a new adapter for an object of class '{@link org.earthsystemcurator.cupid.esmf.ESMFStageActionExecuteStage <em>Stage Action Execute Stage</em>}'.
+	 * <!-- begin-user-doc -->
+	 * This default implementation returns null so that we can easily ignore cases;
+	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
+	 * <!-- end-user-doc -->
+	 * @return the new adapter.
+	 * @see org.earthsystemcurator.cupid.esmf.ESMFStageActionExecuteStage
+	 * @generated
+	 */
+	public Adapter createESMFStageActionExecuteStageAdapter() {
 		return null;
 	}
 
@@ -978,6 +1202,20 @@ public class ESMFAdapterFactory extends AdapterFactoryImpl {
 	 * @generated
 	 */
 	public Adapter createESMFStateItemAdapter() {
+		return null;
+	}
+
+	/**
+	 * Creates a new adapter for an object of class '{@link org.earthsystemcurator.cupid.esmf.ESMFScopedItem <em>Scoped Item</em>}'.
+	 * <!-- begin-user-doc -->
+	 * This default implementation returns null so that we can easily ignore cases;
+	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
+	 * <!-- end-user-doc -->
+	 * @return the new adapter.
+	 * @see org.earthsystemcurator.cupid.esmf.ESMFScopedItem
+	 * @generated
+	 */
+	public Adapter createESMFScopedItemAdapter() {
 		return null;
 	}
 
@@ -2028,6 +2266,20 @@ public class ESMFAdapterFactory extends AdapterFactoryImpl {
 	 * @generated
 	 */
 	public Adapter createESMFNamedEntityAdapter() {
+		return null;
+	}
+
+	/**
+	 * Creates a new adapter for an object of class '{@link org.earthsystemcurator.cupid.esmf.ESMFScope <em>Scope</em>}'.
+	 * <!-- begin-user-doc -->
+	 * This default implementation returns null so that we can easily ignore cases;
+	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
+	 * <!-- end-user-doc -->
+	 * @return the new adapter.
+	 * @see org.earthsystemcurator.cupid.esmf.ESMFScope
+	 * @generated
+	 */
+	public Adapter createESMFScopeAdapter() {
 		return null;
 	}
 

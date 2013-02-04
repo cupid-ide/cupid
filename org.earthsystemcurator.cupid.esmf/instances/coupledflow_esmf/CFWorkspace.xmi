@@ -9,12 +9,15 @@
       xsi:type="esmf:ESMFGriddedComponent"
       href="CoupledFlow.xmi#/"/>
   <component
-      xsi:type="esmf:ESMFCouplerComponent"
-      href="Coupler.xmi#/"/>
-  <component
       xsi:type="esmf:ESMFGriddedComponent"
       href="FlowSolver.xmi#/"/>
   <component
       xsi:type="esmf:ESMFGriddedComponent"
       href="Injector.xmi#/"/>
+  <component
+      xsi:type="esmf:ESMFDriver"
+      href="CoupledFlowDriver.xmi#/"/>
+  <component
+      xsi:type="esmf:ESMFCouplerComponent"
+      href="Coupler.xmi#/"/>
 </esmf:ESMFWorkspace>

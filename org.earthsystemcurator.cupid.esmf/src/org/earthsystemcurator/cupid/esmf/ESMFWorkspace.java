@@ -21,7 +21,6 @@ import org.eclipse.emf.ecore.EObject;
  *   <li>{@link org.earthsystemcurator.cupid.esmf.ESMFWorkspace#getVirtualMachine <em>Virtual Machine</em>}</li>
  *   <li>{@link org.earthsystemcurator.cupid.esmf.ESMFWorkspace#getPersistentExecutionThread <em>Persistent Execution Thread</em>}</li>
  *   <li>{@link org.earthsystemcurator.cupid.esmf.ESMFWorkspace#getDeLayout <em>De Layout</em>}</li>
- *   <li>{@link org.earthsystemcurator.cupid.esmf.ESMFWorkspace#getGrid <em>Grid</em>}</li>
  *   <li>{@link org.earthsystemcurator.cupid.esmf.ESMFWorkspace#getClock <em>Clock</em>}</li>
  * </ul>
  * </p>
@@ -66,7 +65,6 @@ public interface ESMFWorkspace extends EObject {
 	/**
 	 * Returns the value of the '<em><b>State Item</b></em>' reference list.
 	 * The list contents are of type {@link org.earthsystemcurator.cupid.esmf.ESMFStateItem}.
-	 * It is bidirectional and its opposite is '{@link org.earthsystemcurator.cupid.esmf.ESMFStateItem#getWorkspace <em>Workspace</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <p>
 	 * If the meaning of the '<em>State Item</em>' reference list isn't clear,
@@ -75,8 +73,7 @@ public interface ESMFWorkspace extends EObject {
 	 * <!-- end-user-doc -->
 	 * @return the value of the '<em>State Item</em>' reference list.
 	 * @see org.earthsystemcurator.cupid.esmf.ESMFPackage#getESMFWorkspace_StateItem()
-	 * @see org.earthsystemcurator.cupid.esmf.ESMFStateItem#getWorkspace
-	 * @model opposite="workspace"
+	 * @model
 	 * @generated
 	 */
 	EList<ESMFStateItem> getStateItem();
@@ -144,22 +141,6 @@ public interface ESMFWorkspace extends EObject {
 	 * @generated
 	 */
 	EList<ESMFDELayout> getDeLayout();
-
-	/**
-	 * Returns the value of the '<em><b>Grid</b></em>' reference list.
-	 * The list contents are of type {@link org.earthsystemcurator.cupid.esmf.ESMFGrid}.
-	 * <!-- begin-user-doc -->
-	 * <p>
-	 * If the meaning of the '<em>Grid</em>' reference list isn't clear,
-	 * there really should be more of a description here...
-	 * </p>
-	 * <!-- end-user-doc -->
-	 * @return the value of the '<em>Grid</em>' reference list.
-	 * @see org.earthsystemcurator.cupid.esmf.ESMFPackage#getESMFWorkspace_Grid()
-	 * @model
-	 * @generated
-	 */
-	EList<ESMFGrid> getGrid();
 
 	/**
 	 * Returns the value of the '<em><b>Clock</b></em>' reference list.

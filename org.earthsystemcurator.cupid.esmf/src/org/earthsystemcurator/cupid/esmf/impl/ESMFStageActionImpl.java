@@ -6,6 +6,7 @@ import org.earthsystemcurator.cupid.esmf.ESMFPackage;
 import org.earthsystemcurator.cupid.esmf.ESMFStage;
 import org.earthsystemcurator.cupid.esmf.ESMFStageAction;
 
+import org.earthsystemcurator.cupid.esmf.ESMFStageActionSequence;
 import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.common.notify.NotificationChain;
 import org.eclipse.emf.ecore.EClass;
@@ -22,7 +23,7 @@ import org.eclipse.emf.ecore.util.EcoreUtil;
  * <p>
  * The following features are implemented:
  * <ul>
- *   <li>{@link org.earthsystemcurator.cupid.esmf.impl.ESMFStageActionImpl#getStage <em>Stage</em>}</li>
+ *   <li>{@link org.earthsystemcurator.cupid.esmf.impl.ESMFStageActionImpl#getParent <em>Parent</em>}</li>
  * </ul>
  * </p>
  *
@@ -53,9 +54,9 @@ public abstract class ESMFStageActionImpl extends EObjectImpl implements ESMFSta
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public ESMFStage getStage() {
-		if (eContainerFeatureID() != ESMFPackage.ESMF_STAGE_ACTION__STAGE) return null;
-		return (ESMFStage)eContainer();
+	public ESMFStageActionSequence getParent() {
+		if (eContainerFeatureID() != ESMFPackage.ESMF_STAGE_ACTION__PARENT) return null;
+		return (ESMFStageActionSequence)eContainer();
 	}
 
 	/**
@@ -63,8 +64,8 @@ public abstract class ESMFStageActionImpl extends EObjectImpl implements ESMFSta
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public NotificationChain basicSetStage(ESMFStage newStage, NotificationChain msgs) {
-		msgs = eBasicSetContainer((InternalEObject)newStage, ESMFPackage.ESMF_STAGE_ACTION__STAGE, msgs);
+	public NotificationChain basicSetParent(ESMFStageActionSequence newParent, NotificationChain msgs) {
+		msgs = eBasicSetContainer((InternalEObject)newParent, ESMFPackage.ESMF_STAGE_ACTION__PARENT, msgs);
 		return msgs;
 	}
 
@@ -73,20 +74,20 @@ public abstract class ESMFStageActionImpl extends EObjectImpl implements ESMFSta
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public void setStage(ESMFStage newStage) {
-		if (newStage != eInternalContainer() || (eContainerFeatureID() != ESMFPackage.ESMF_STAGE_ACTION__STAGE && newStage != null)) {
-			if (EcoreUtil.isAncestor(this, newStage))
+	public void setParent(ESMFStageActionSequence newParent) {
+		if (newParent != eInternalContainer() || (eContainerFeatureID() != ESMFPackage.ESMF_STAGE_ACTION__PARENT && newParent != null)) {
+			if (EcoreUtil.isAncestor(this, newParent))
 				throw new IllegalArgumentException("Recursive containment not allowed for " + toString());
 			NotificationChain msgs = null;
 			if (eInternalContainer() != null)
 				msgs = eBasicRemoveFromContainer(msgs);
-			if (newStage != null)
-				msgs = ((InternalEObject)newStage).eInverseAdd(this, ESMFPackage.ESMF_STAGE__ACTION, ESMFStage.class, msgs);
-			msgs = basicSetStage(newStage, msgs);
+			if (newParent != null)
+				msgs = ((InternalEObject)newParent).eInverseAdd(this, ESMFPackage.ESMF_STAGE_ACTION_SEQUENCE__ACTION, ESMFStageActionSequence.class, msgs);
+			msgs = basicSetParent(newParent, msgs);
 			if (msgs != null) msgs.dispatch();
 		}
 		else if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, ESMFPackage.ESMF_STAGE_ACTION__STAGE, newStage, newStage));
+			eNotify(new ENotificationImpl(this, Notification.SET, ESMFPackage.ESMF_STAGE_ACTION__PARENT, newParent, newParent));
 	}
 
 	/**
@@ -97,10 +98,10 @@ public abstract class ESMFStageActionImpl extends EObjectImpl implements ESMFSta
 	@Override
 	public NotificationChain eInverseAdd(InternalEObject otherEnd, int featureID, NotificationChain msgs) {
 		switch (featureID) {
-			case ESMFPackage.ESMF_STAGE_ACTION__STAGE:
+			case ESMFPackage.ESMF_STAGE_ACTION__PARENT:
 				if (eInternalContainer() != null)
 					msgs = eBasicRemoveFromContainer(msgs);
-				return basicSetStage((ESMFStage)otherEnd, msgs);
+				return basicSetParent((ESMFStageActionSequence)otherEnd, msgs);
 		}
 		return super.eInverseAdd(otherEnd, featureID, msgs);
 	}
@@ -113,8 +114,8 @@ public abstract class ESMFStageActionImpl extends EObjectImpl implements ESMFSta
 	@Override
 	public NotificationChain eInverseRemove(InternalEObject otherEnd, int featureID, NotificationChain msgs) {
 		switch (featureID) {
-			case ESMFPackage.ESMF_STAGE_ACTION__STAGE:
-				return basicSetStage(null, msgs);
+			case ESMFPackage.ESMF_STAGE_ACTION__PARENT:
+				return basicSetParent(null, msgs);
 		}
 		return super.eInverseRemove(otherEnd, featureID, msgs);
 	}
@@ -127,8 +128,8 @@ public abstract class ESMFStageActionImpl extends EObjectImpl implements ESMFSta
 	@Override
 	public NotificationChain eBasicRemoveFromContainerFeature(NotificationChain msgs) {
 		switch (eContainerFeatureID()) {
-			case ESMFPackage.ESMF_STAGE_ACTION__STAGE:
-				return eInternalContainer().eInverseRemove(this, ESMFPackage.ESMF_STAGE__ACTION, ESMFStage.class, msgs);
+			case ESMFPackage.ESMF_STAGE_ACTION__PARENT:
+				return eInternalContainer().eInverseRemove(this, ESMFPackage.ESMF_STAGE_ACTION_SEQUENCE__ACTION, ESMFStageActionSequence.class, msgs);
 		}
 		return super.eBasicRemoveFromContainerFeature(msgs);
 	}
@@ -141,8 +142,8 @@ public abstract class ESMFStageActionImpl extends EObjectImpl implements ESMFSta
 	@Override
 	public Object eGet(int featureID, boolean resolve, boolean coreType) {
 		switch (featureID) {
-			case ESMFPackage.ESMF_STAGE_ACTION__STAGE:
-				return getStage();
+			case ESMFPackage.ESMF_STAGE_ACTION__PARENT:
+				return getParent();
 		}
 		return super.eGet(featureID, resolve, coreType);
 	}
@@ -155,8 +156,8 @@ public abstract class ESMFStageActionImpl extends EObjectImpl implements ESMFSta
 	@Override
 	public void eSet(int featureID, Object newValue) {
 		switch (featureID) {
-			case ESMFPackage.ESMF_STAGE_ACTION__STAGE:
-				setStage((ESMFStage)newValue);
+			case ESMFPackage.ESMF_STAGE_ACTION__PARENT:
+				setParent((ESMFStageActionSequence)newValue);
 				return;
 		}
 		super.eSet(featureID, newValue);
@@ -170,8 +171,8 @@ public abstract class ESMFStageActionImpl extends EObjectImpl implements ESMFSta
 	@Override
 	public void eUnset(int featureID) {
 		switch (featureID) {
-			case ESMFPackage.ESMF_STAGE_ACTION__STAGE:
-				setStage((ESMFStage)null);
+			case ESMFPackage.ESMF_STAGE_ACTION__PARENT:
+				setParent((ESMFStageActionSequence)null);
 				return;
 		}
 		super.eUnset(featureID);
@@ -185,8 +186,8 @@ public abstract class ESMFStageActionImpl extends EObjectImpl implements ESMFSta
 	@Override
 	public boolean eIsSet(int featureID) {
 		switch (featureID) {
-			case ESMFPackage.ESMF_STAGE_ACTION__STAGE:
-				return getStage() != null;
+			case ESMFPackage.ESMF_STAGE_ACTION__PARENT:
+				return getParent() != null;
 		}
 		return super.eIsSet(featureID);
 	}

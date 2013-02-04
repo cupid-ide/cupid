@@ -13,7 +13,6 @@ import org.eclipse.emf.common.util.EList;
  * The following features are supported:
  * <ul>
  *   <li>{@link org.earthsystemcurator.cupid.esmf.ESMFState#getComponent <em>Component</em>}</li>
- *   <li>{@link org.earthsystemcurator.cupid.esmf.ESMFState#getItem <em>Item</em>}</li>
  * </ul>
  * </p>
  *
@@ -21,50 +20,32 @@ import org.eclipse.emf.common.util.EList;
  * @model
  * @generated
  */
-public interface ESMFState extends ESMFStateItem {
+public interface ESMFState extends ESMFStateItem, ESMFScopedItem {
 	/**
-	 * Returns the value of the '<em><b>Component</b></em>' container reference.
-	 * It is bidirectional and its opposite is '{@link org.earthsystemcurator.cupid.esmf.ESMFComponent#getState <em>State</em>}'.
+	 * Returns the value of the '<em><b>Component</b></em>' reference.
 	 * <!-- begin-user-doc -->
 	 * <p>
 	 * If the meaning of the '<em>Component</em>' container reference isn't clear,
 	 * there really should be more of a description here...
 	 * </p>
 	 * <!-- end-user-doc -->
-	 * @return the value of the '<em>Component</em>' container reference.
+	 * @return the value of the '<em>Component</em>' reference.
 	 * @see #setComponent(ESMFComponent)
 	 * @see org.earthsystemcurator.cupid.esmf.ESMFPackage#getESMFState_Component()
-	 * @see org.earthsystemcurator.cupid.esmf.ESMFComponent#getState
-	 * @model opposite="state" transient="false"
+	 * @model
 	 * @generated
 	 */
 	ESMFComponent getComponent();
 
 	/**
-	 * Sets the value of the '{@link org.earthsystemcurator.cupid.esmf.ESMFState#getComponent <em>Component</em>}' container reference.
+	 * Sets the value of the '{@link org.earthsystemcurator.cupid.esmf.ESMFState#getComponent <em>Component</em>}' reference.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @param value the new value of the '<em>Component</em>' container reference.
+	 * @param value the new value of the '<em>Component</em>' reference.
 	 * @see #getComponent()
 	 * @generated
 	 */
 	void setComponent(ESMFComponent value);
-
-	/**
-	 * Returns the value of the '<em><b>Item</b></em>' reference list.
-	 * The list contents are of type {@link org.earthsystemcurator.cupid.esmf.ESMFStateItem}.
-	 * <!-- begin-user-doc -->
-	 * <p>
-	 * If the meaning of the '<em>Item</em>' reference list isn't clear,
-	 * there really should be more of a description here...
-	 * </p>
-	 * <!-- end-user-doc -->
-	 * @return the value of the '<em>Item</em>' reference list.
-	 * @see org.earthsystemcurator.cupid.esmf.ESMFPackage#getESMFState_Item()
-	 * @model
-	 * @generated
-	 */
-	EList<ESMFStateItem> getItem();
 
 	/**
 	 * <!-- begin-user-doc -->

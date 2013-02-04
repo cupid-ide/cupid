@@ -61,17 +61,29 @@ public class ESMFFactoryImpl extends EFactoryImpl implements ESMFFactory {
 			case ESMFPackage.ESMF_GRIDDED_COMPONENT: return createESMFGriddedComponent();
 			case ESMFPackage.ESMF_COUPLER_COMPONENT: return createESMFCouplerComponent();
 			case ESMFPackage.ESMF_SIMPLE_COUPLER_COMPONENT: return createESMFSimpleCouplerComponent();
+			case ESMFPackage.ESMF_DRIVER: return createESMFDriver();
 			case ESMFPackage.ESMF_STAGE_INITIALIZE: return createESMFStageInitialize();
 			case ESMFPackage.ESMF_STAGE_RUN: return createESMFStageRun();
 			case ESMFPackage.ESMF_STAGE_FINALIZE: return createESMFStageFinalize();
+			case ESMFPackage.ESMF_STAGE_ACTION_SEQUENCE: return createESMFStageActionSequence();
+			case ESMFPackage.ESMF_STAGE_ACTION_ITERATE: return createESMFStageActionIterate();
+			case ESMFPackage.ESMF_STAGE_ACTION_ITERATE_CLOCK: return createESMFStageActionIterateClock();
 			case ESMFPackage.ESMF_STAGE_ACTION_ARRAY_SPEC_CREATE: return createESMFStageActionArraySpecCreate();
+			case ESMFPackage.ESMF_STAGE_ACTION_COMPONENT_CREATE: return createESMFStageActionComponentCreate();
 			case ESMFPackage.ESMF_STAGE_ACTION_COMPONENT_DESTROY: return createESMFStageActionComponentDestroy();
+			case ESMFPackage.ESMF_STAGE_ACTION_COMPONENT_SET_GRID: return createESMFStageActionComponentSetGrid();
+			case ESMFPackage.ESMF_STAGE_ACTION_EXECUTE_STAGE: return createESMFStageActionExecuteStage();
 			case ESMFPackage.ESMF_STAGE_ACTION_FIELD_CREATE: return createESMFStageActionFieldCreate();
 			case ESMFPackage.ESMF_STAGE_ACTION_FIELD_DESTROY: return createESMFStageActionFieldDestroy();
+			case ESMFPackage.ESMF_STAGE_ACTION_FIELD_REDIST_STORE: return createESMFStageActionFieldRedistStore();
+			case ESMFPackage.ESMF_STAGE_ACTION_FIELD_REDIST: return createESMFStageActionFieldRedist();
+			case ESMFPackage.ESMF_STAGE_ACTION_FIELD_REDIST_RELEASE: return createESMFStageActionFieldRedistRelease();
 			case ESMFPackage.ESMF_STAGE_ACTION_GRID_CREATE: return createESMFStageActionGridCreate();
 			case ESMFPackage.ESMF_STAGE_ACTION_GRID_INHERIT: return createESMFStageActionGridInherit();
 			case ESMFPackage.ESMF_STAGE_ACTION_IMPORT_STATE_ADD: return createESMFStageActionImportStateAdd();
 			case ESMFPackage.ESMF_STAGE_ACTION_EXPORT_STATE_ADD: return createESMFStageActionExportStateAdd();
+			case ESMFPackage.ESMF_STAGE_ACTION_IMPORT_STATE_GET: return createESMFStageActionImportStateGet();
+			case ESMFPackage.ESMF_STAGE_ACTION_EXPORT_STATE_GET: return createESMFStageActionExportStateGet();
 			case ESMFPackage.ESMF_STAGE_ACTION_STATE_CREATE: return createESMFStageActionStateCreate();
 			case ESMFPackage.ESMF_STAGE_ACTION_STATE_DESTROY: return createESMFStageActionStateDestroy();
 			case ESMFPackage.ESMF_METHOD: return createESMFMethod();
@@ -248,6 +260,16 @@ public class ESMFFactoryImpl extends EFactoryImpl implements ESMFFactory {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	public ESMFDriver createESMFDriver() {
+		ESMFDriverImpl esmfDriver = new ESMFDriverImpl();
+		return esmfDriver;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
 	public ESMFStageInitialize createESMFStageInitialize() {
 		ESMFStageInitializeImpl esmfStageInitialize = new ESMFStageInitializeImpl();
 		return esmfStageInitialize;
@@ -278,6 +300,36 @@ public class ESMFFactoryImpl extends EFactoryImpl implements ESMFFactory {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	public ESMFStageActionSequence createESMFStageActionSequence() {
+		ESMFStageActionSequenceImpl esmfStageActionSequence = new ESMFStageActionSequenceImpl();
+		return esmfStageActionSequence;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public ESMFStageActionIterate createESMFStageActionIterate() {
+		ESMFStageActionIterateImpl esmfStageActionIterate = new ESMFStageActionIterateImpl();
+		return esmfStageActionIterate;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public ESMFStageActionIterateClock createESMFStageActionIterateClock() {
+		ESMFStageActionIterateClockImpl esmfStageActionIterateClock = new ESMFStageActionIterateClockImpl();
+		return esmfStageActionIterateClock;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
 	public ESMFStageActionFieldCreate createESMFStageActionFieldCreate() {
 		ESMFStageActionFieldCreateImpl esmfStageActionFieldCreate = new ESMFStageActionFieldCreateImpl();
 		return esmfStageActionFieldCreate;
@@ -291,6 +343,36 @@ public class ESMFFactoryImpl extends EFactoryImpl implements ESMFFactory {
 	public ESMFStageActionFieldDestroy createESMFStageActionFieldDestroy() {
 		ESMFStageActionFieldDestroyImpl esmfStageActionFieldDestroy = new ESMFStageActionFieldDestroyImpl();
 		return esmfStageActionFieldDestroy;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public ESMFStageActionFieldRedistStore createESMFStageActionFieldRedistStore() {
+		ESMFStageActionFieldRedistStoreImpl esmfStageActionFieldRedistStore = new ESMFStageActionFieldRedistStoreImpl();
+		return esmfStageActionFieldRedistStore;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public ESMFStageActionFieldRedist createESMFStageActionFieldRedist() {
+		ESMFStageActionFieldRedistImpl esmfStageActionFieldRedist = new ESMFStageActionFieldRedistImpl();
+		return esmfStageActionFieldRedist;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public ESMFStageActionFieldRedistRelease createESMFStageActionFieldRedistRelease() {
+		ESMFStageActionFieldRedistReleaseImpl esmfStageActionFieldRedistRelease = new ESMFStageActionFieldRedistReleaseImpl();
+		return esmfStageActionFieldRedistRelease;
 	}
 
 	/**
@@ -338,6 +420,26 @@ public class ESMFFactoryImpl extends EFactoryImpl implements ESMFFactory {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	public ESMFStageActionImportStateGet createESMFStageActionImportStateGet() {
+		ESMFStageActionImportStateGetImpl esmfStageActionImportStateGet = new ESMFStageActionImportStateGetImpl();
+		return esmfStageActionImportStateGet;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public ESMFStageActionExportStateGet createESMFStageActionExportStateGet() {
+		ESMFStageActionExportStateGetImpl esmfStageActionExportStateGet = new ESMFStageActionExportStateGetImpl();
+		return esmfStageActionExportStateGet;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
 	public ESMFStageActionStateCreate createESMFStageActionStateCreate() {
 		ESMFStageActionStateCreateImpl esmfStageActionStateCreate = new ESMFStageActionStateCreateImpl();
 		return esmfStageActionStateCreate;
@@ -368,9 +470,39 @@ public class ESMFFactoryImpl extends EFactoryImpl implements ESMFFactory {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	public ESMFStageActionComponentCreate createESMFStageActionComponentCreate() {
+		ESMFStageActionComponentCreateImpl esmfStageActionComponentCreate = new ESMFStageActionComponentCreateImpl();
+		return esmfStageActionComponentCreate;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
 	public ESMFStageActionComponentDestroy createESMFStageActionComponentDestroy() {
 		ESMFStageActionComponentDestroyImpl esmfStageActionComponentDestroy = new ESMFStageActionComponentDestroyImpl();
 		return esmfStageActionComponentDestroy;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public ESMFStageActionComponentSetGrid createESMFStageActionComponentSetGrid() {
+		ESMFStageActionComponentSetGridImpl esmfStageActionComponentSetGrid = new ESMFStageActionComponentSetGridImpl();
+		return esmfStageActionComponentSetGrid;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public ESMFStageActionExecuteStage createESMFStageActionExecuteStage() {
+		ESMFStageActionExecuteStageImpl esmfStageActionExecuteStage = new ESMFStageActionExecuteStageImpl();
+		return esmfStageActionExecuteStage;
 	}
 
 	/**

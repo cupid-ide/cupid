@@ -14,7 +14,6 @@ import org.eclipse.emf.common.util.EList;
  * <p>
  * The following features are supported:
  * <ul>
- *   <li>{@link org.earthsystemcurator.cupid.esmf.ESMFField#getComponent <em>Component</em>}</li>
  *   <li>{@link org.earthsystemcurator.cupid.esmf.ESMFField#getGrid <em>Grid</em>}</li>
  *   <li>{@link org.earthsystemcurator.cupid.esmf.ESMFField#getArray <em>Array</em>}</li>
  *   <li>{@link org.earthsystemcurator.cupid.esmf.ESMFField#getStaggerLoc <em>Stagger Loc</em>}</li>
@@ -23,6 +22,7 @@ import org.eclipse.emf.common.util.EList;
  *   <li>{@link org.earthsystemcurator.cupid.esmf.ESMFField#getIndex <em>Index</em>}</li>
  *   <li>{@link org.earthsystemcurator.cupid.esmf.ESMFField#getTotalLWidth <em>Total LWidth</em>}</li>
  *   <li>{@link org.earthsystemcurator.cupid.esmf.ESMFField#getTotalUWidth <em>Total UWidth</em>}</li>
+ *   <li>{@link org.earthsystemcurator.cupid.esmf.ESMFField#getLabel <em>Label</em>}</li>
  * </ul>
  * </p>
  *
@@ -30,35 +30,7 @@ import org.eclipse.emf.common.util.EList;
  * @model
  * @generated
  */
-public interface ESMFField extends ESMFStateItem {
-	/**
-	 * Returns the value of the '<em><b>Component</b></em>' container reference.
-	 * It is bidirectional and its opposite is '{@link org.earthsystemcurator.cupid.esmf.ESMFComponent#getField <em>Field</em>}'.
-	 * <!-- begin-user-doc -->
-	 * <p>
-	 * If the meaning of the '<em>Component</em>' container reference isn't clear,
-	 * there really should be more of a description here...
-	 * </p>
-	 * <!-- end-user-doc -->
-	 * @return the value of the '<em>Component</em>' container reference.
-	 * @see #setComponent(ESMFComponent)
-	 * @see org.earthsystemcurator.cupid.esmf.ESMFPackage#getESMFField_Component()
-	 * @see org.earthsystemcurator.cupid.esmf.ESMFComponent#getField
-	 * @model opposite="field" required="true" transient="false"
-	 * @generated
-	 */
-	ESMFComponent getComponent();
-
-	/**
-	 * Sets the value of the '{@link org.earthsystemcurator.cupid.esmf.ESMFField#getComponent <em>Component</em>}' container reference.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @param value the new value of the '<em>Component</em>' container reference.
-	 * @see #getComponent()
-	 * @generated
-	 */
-	void setComponent(ESMFComponent value);
-
+public interface ESMFField extends ESMFStateItem, ESMFScopedItem {
 	/**
 	 * Returns the value of the '<em><b>Grid</b></em>' reference.
 	 * <!-- begin-user-doc -->
@@ -242,5 +214,32 @@ public interface ESMFField extends ESMFStateItem {
 	 * @generated
 	 */
 	EList<Integer> getTotalUWidth();
+
+	/**
+	 * Returns the value of the '<em><b>Label</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <p>
+	 * If the meaning of the '<em>Label</em>' attribute isn't clear,
+	 * there really should be more of a description here...
+	 * </p>
+	 * <!-- end-user-doc -->
+	 * @return the value of the '<em>Label</em>' attribute.
+	 * @see #setLabel(String)
+	 * @see org.earthsystemcurator.cupid.esmf.ESMFPackage#getESMFField_Label()
+	 * @model required="true"
+	 *        annotation="http://www.eclipse.org/emf/2002/Ecore/OCL derivation='self.name + \'(\' + self.index + \')\''"
+	 * @generated
+	 */
+	String getLabel();
+
+	/**
+	 * Sets the value of the '{@link org.earthsystemcurator.cupid.esmf.ESMFField#getLabel <em>Label</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @param value the new value of the '<em>Label</em>' attribute.
+	 * @see #getLabel()
+	 * @generated
+	 */
+	void setLabel(String value);
 
 } // ESMFField

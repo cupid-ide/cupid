@@ -43,7 +43,6 @@ import org.eclipse.emf.ecore.util.InternalEList;
  *   <li>{@link org.earthsystemcurator.cupid.esmf.impl.ESMFWorkspaceImpl#getVirtualMachine <em>Virtual Machine</em>}</li>
  *   <li>{@link org.earthsystemcurator.cupid.esmf.impl.ESMFWorkspaceImpl#getPersistentExecutionThread <em>Persistent Execution Thread</em>}</li>
  *   <li>{@link org.earthsystemcurator.cupid.esmf.impl.ESMFWorkspaceImpl#getDeLayout <em>De Layout</em>}</li>
- *   <li>{@link org.earthsystemcurator.cupid.esmf.impl.ESMFWorkspaceImpl#getGrid <em>Grid</em>}</li>
  *   <li>{@link org.earthsystemcurator.cupid.esmf.impl.ESMFWorkspaceImpl#getClock <em>Clock</em>}</li>
  * </ul>
  * </p>
@@ -122,16 +121,6 @@ public class ESMFWorkspaceImpl extends EObjectImpl implements ESMFWorkspace {
 	protected EList<ESMFDELayout> deLayout;
 
 	/**
-	 * The cached value of the '{@link #getGrid() <em>Grid</em>}' reference list.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @see #getGrid()
-	 * @generated
-	 * @ordered
-	 */
-	protected EList<ESMFGrid> grid;
-
-	/**
 	 * The cached value of the '{@link #getClock() <em>Clock</em>}' reference list.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -191,7 +180,7 @@ public class ESMFWorkspaceImpl extends EObjectImpl implements ESMFWorkspace {
 	 */
 	public EList<ESMFStateItem> getStateItem() {
 		if (stateItem == null) {
-			stateItem = new EObjectWithInverseResolvingEList<ESMFStateItem>(ESMFStateItem.class, this, ESMFPackage.ESMF_WORKSPACE__STATE_ITEM, ESMFPackage.ESMF_STATE_ITEM__WORKSPACE);
+			stateItem = new EObjectResolvingEList<ESMFStateItem>(ESMFStateItem.class, this, ESMFPackage.ESMF_WORKSPACE__STATE_ITEM);
 		}
 		return stateItem;
 	}
@@ -249,52 +238,11 @@ public class ESMFWorkspaceImpl extends EObjectImpl implements ESMFWorkspace {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EList<ESMFGrid> getGrid() {
-		if (grid == null) {
-			grid = new EObjectResolvingEList<ESMFGrid>(ESMFGrid.class, this, ESMFPackage.ESMF_WORKSPACE__GRID);
-		}
-		return grid;
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
 	public EList<ESMFClock> getClock() {
 		if (clock == null) {
 			clock = new EObjectResolvingEList<ESMFClock>(ESMFClock.class, this, ESMFPackage.ESMF_WORKSPACE__CLOCK);
 		}
 		return clock;
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	@SuppressWarnings("unchecked")
-	@Override
-	public NotificationChain eInverseAdd(InternalEObject otherEnd, int featureID, NotificationChain msgs) {
-		switch (featureID) {
-			case ESMFPackage.ESMF_WORKSPACE__STATE_ITEM:
-				return ((InternalEList<InternalEObject>)(InternalEList<?>)getStateItem()).basicAdd(otherEnd, msgs);
-		}
-		return super.eInverseAdd(otherEnd, featureID, msgs);
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	@Override
-	public NotificationChain eInverseRemove(InternalEObject otherEnd, int featureID, NotificationChain msgs) {
-		switch (featureID) {
-			case ESMFPackage.ESMF_WORKSPACE__STATE_ITEM:
-				return ((InternalEList<?>)getStateItem()).basicRemove(otherEnd, msgs);
-		}
-		return super.eInverseRemove(otherEnd, featureID, msgs);
 	}
 
 	/**
@@ -319,8 +267,6 @@ public class ESMFWorkspaceImpl extends EObjectImpl implements ESMFWorkspace {
 				return getPersistentExecutionThread();
 			case ESMFPackage.ESMF_WORKSPACE__DE_LAYOUT:
 				return getDeLayout();
-			case ESMFPackage.ESMF_WORKSPACE__GRID:
-				return getGrid();
 			case ESMFPackage.ESMF_WORKSPACE__CLOCK:
 				return getClock();
 		}
@@ -364,10 +310,6 @@ public class ESMFWorkspaceImpl extends EObjectImpl implements ESMFWorkspace {
 				getDeLayout().clear();
 				getDeLayout().addAll((Collection<? extends ESMFDELayout>)newValue);
 				return;
-			case ESMFPackage.ESMF_WORKSPACE__GRID:
-				getGrid().clear();
-				getGrid().addAll((Collection<? extends ESMFGrid>)newValue);
-				return;
 			case ESMFPackage.ESMF_WORKSPACE__CLOCK:
 				getClock().clear();
 				getClock().addAll((Collection<? extends ESMFClock>)newValue);
@@ -405,9 +347,6 @@ public class ESMFWorkspaceImpl extends EObjectImpl implements ESMFWorkspace {
 			case ESMFPackage.ESMF_WORKSPACE__DE_LAYOUT:
 				getDeLayout().clear();
 				return;
-			case ESMFPackage.ESMF_WORKSPACE__GRID:
-				getGrid().clear();
-				return;
 			case ESMFPackage.ESMF_WORKSPACE__CLOCK:
 				getClock().clear();
 				return;
@@ -437,8 +376,6 @@ public class ESMFWorkspaceImpl extends EObjectImpl implements ESMFWorkspace {
 				return persistentExecutionThread != null && !persistentExecutionThread.isEmpty();
 			case ESMFPackage.ESMF_WORKSPACE__DE_LAYOUT:
 				return deLayout != null && !deLayout.isEmpty();
-			case ESMFPackage.ESMF_WORKSPACE__GRID:
-				return grid != null && !grid.isEmpty();
 			case ESMFPackage.ESMF_WORKSPACE__CLOCK:
 				return clock != null && !clock.isEmpty();
 		}

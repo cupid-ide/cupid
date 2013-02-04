@@ -6,6 +6,8 @@ import java.util.Collection;
 
 import org.earthsystemcurator.cupid.esmf.ESMFComponent;
 import org.earthsystemcurator.cupid.esmf.ESMFPackage;
+import org.earthsystemcurator.cupid.esmf.ESMFScope;
+import org.earthsystemcurator.cupid.esmf.ESMFScopedItem;
 import org.earthsystemcurator.cupid.esmf.ESMFState;
 import org.earthsystemcurator.cupid.esmf.ESMFStateItem;
 import org.earthsystemcurator.cupid.esmf.ESMFWorkspace;
@@ -30,9 +32,8 @@ import org.eclipse.emf.ecore.util.EcoreUtil;
  * <p>
  * The following features are implemented:
  * <ul>
- *   <li>{@link org.earthsystemcurator.cupid.esmf.impl.ESMFStateImpl#getWorkspace <em>Workspace</em>}</li>
+ *   <li>{@link org.earthsystemcurator.cupid.esmf.impl.ESMFStateImpl#getScope <em>Scope</em>}</li>
  *   <li>{@link org.earthsystemcurator.cupid.esmf.impl.ESMFStateImpl#getComponent <em>Component</em>}</li>
- *   <li>{@link org.earthsystemcurator.cupid.esmf.impl.ESMFStateImpl#getItem <em>Item</em>}</li>
  * </ul>
  * </p>
  *
@@ -40,24 +41,14 @@ import org.eclipse.emf.ecore.util.EcoreUtil;
  */
 public class ESMFStateImpl extends ESMFNamedEntityImpl implements ESMFState {
 	/**
-	 * The cached value of the '{@link #getWorkspace() <em>Workspace</em>}' reference.
+	 * The cached value of the '{@link #getComponent() <em>Component</em>}' reference.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @see #getWorkspace()
+	 * @see #getComponent()
 	 * @generated
 	 * @ordered
 	 */
-	protected ESMFWorkspace workspace;
-
-	/**
-	 * The cached value of the '{@link #getItem() <em>Item</em>}' reference list.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @see #getItem()
-	 * @generated
-	 * @ordered
-	 */
-	protected EList<ESMFStateItem> item;
+	protected ESMFComponent component;
 
 	/**
 	 * <!-- begin-user-doc -->
@@ -83,16 +74,9 @@ public class ESMFStateImpl extends ESMFNamedEntityImpl implements ESMFState {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public ESMFWorkspace getWorkspace() {
-		if (workspace != null && workspace.eIsProxy()) {
-			InternalEObject oldWorkspace = (InternalEObject)workspace;
-			workspace = (ESMFWorkspace)eResolveProxy(oldWorkspace);
-			if (workspace != oldWorkspace) {
-				if (eNotificationRequired())
-					eNotify(new ENotificationImpl(this, Notification.RESOLVE, ESMFPackage.ESMF_STATE__WORKSPACE, oldWorkspace, workspace));
-			}
-		}
-		return workspace;
+	public ESMFScope getScope() {
+		if (eContainerFeatureID() != ESMFPackage.ESMF_STATE__SCOPE) return null;
+		return (ESMFScope)eContainer();
 	}
 
 	/**
@@ -100,22 +84,8 @@ public class ESMFStateImpl extends ESMFNamedEntityImpl implements ESMFState {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public ESMFWorkspace basicGetWorkspace() {
-		return workspace;
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public NotificationChain basicSetWorkspace(ESMFWorkspace newWorkspace, NotificationChain msgs) {
-		ESMFWorkspace oldWorkspace = workspace;
-		workspace = newWorkspace;
-		if (eNotificationRequired()) {
-			ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, ESMFPackage.ESMF_STATE__WORKSPACE, oldWorkspace, newWorkspace);
-			if (msgs == null) msgs = notification; else msgs.add(notification);
-		}
+	public NotificationChain basicSetScope(ESMFScope newScope, NotificationChain msgs) {
+		msgs = eBasicSetContainer((InternalEObject)newScope, ESMFPackage.ESMF_STATE__SCOPE, msgs);
 		return msgs;
 	}
 
@@ -124,18 +94,20 @@ public class ESMFStateImpl extends ESMFNamedEntityImpl implements ESMFState {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public void setWorkspace(ESMFWorkspace newWorkspace) {
-		if (newWorkspace != workspace) {
+	public void setScope(ESMFScope newScope) {
+		if (newScope != eInternalContainer() || (eContainerFeatureID() != ESMFPackage.ESMF_STATE__SCOPE && newScope != null)) {
+			if (EcoreUtil.isAncestor(this, newScope))
+				throw new IllegalArgumentException("Recursive containment not allowed for " + toString());
 			NotificationChain msgs = null;
-			if (workspace != null)
-				msgs = ((InternalEObject)workspace).eInverseRemove(this, ESMFPackage.ESMF_WORKSPACE__STATE_ITEM, ESMFWorkspace.class, msgs);
-			if (newWorkspace != null)
-				msgs = ((InternalEObject)newWorkspace).eInverseAdd(this, ESMFPackage.ESMF_WORKSPACE__STATE_ITEM, ESMFWorkspace.class, msgs);
-			msgs = basicSetWorkspace(newWorkspace, msgs);
+			if (eInternalContainer() != null)
+				msgs = eBasicRemoveFromContainer(msgs);
+			if (newScope != null)
+				msgs = ((InternalEObject)newScope).eInverseAdd(this, ESMFPackage.ESMF_SCOPE__ITEM, ESMFScope.class, msgs);
+			msgs = basicSetScope(newScope, msgs);
 			if (msgs != null) msgs.dispatch();
 		}
 		else if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, ESMFPackage.ESMF_STATE__WORKSPACE, newWorkspace, newWorkspace));
+			eNotify(new ENotificationImpl(this, Notification.SET, ESMFPackage.ESMF_STATE__SCOPE, newScope, newScope));
 	}
 
 	/**
@@ -144,8 +116,15 @@ public class ESMFStateImpl extends ESMFNamedEntityImpl implements ESMFState {
 	 * @generated
 	 */
 	public ESMFComponent getComponent() {
-		if (eContainerFeatureID() != ESMFPackage.ESMF_STATE__COMPONENT) return null;
-		return (ESMFComponent)eContainer();
+		if (component != null && component.eIsProxy()) {
+			InternalEObject oldComponent = (InternalEObject)component;
+			component = (ESMFComponent)eResolveProxy(oldComponent);
+			if (component != oldComponent) {
+				if (eNotificationRequired())
+					eNotify(new ENotificationImpl(this, Notification.RESOLVE, ESMFPackage.ESMF_STATE__COMPONENT, oldComponent, component));
+			}
+		}
+		return component;
 	}
 
 	/**
@@ -153,9 +132,8 @@ public class ESMFStateImpl extends ESMFNamedEntityImpl implements ESMFState {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public NotificationChain basicSetComponent(ESMFComponent newComponent, NotificationChain msgs) {
-		msgs = eBasicSetContainer((InternalEObject)newComponent, ESMFPackage.ESMF_STATE__COMPONENT, msgs);
-		return msgs;
+	public ESMFComponent basicGetComponent() {
+		return component;
 	}
 
 	/**
@@ -164,31 +142,10 @@ public class ESMFStateImpl extends ESMFNamedEntityImpl implements ESMFState {
 	 * @generated
 	 */
 	public void setComponent(ESMFComponent newComponent) {
-		if (newComponent != eInternalContainer() || (eContainerFeatureID() != ESMFPackage.ESMF_STATE__COMPONENT && newComponent != null)) {
-			if (EcoreUtil.isAncestor(this, newComponent))
-				throw new IllegalArgumentException("Recursive containment not allowed for " + toString());
-			NotificationChain msgs = null;
-			if (eInternalContainer() != null)
-				msgs = eBasicRemoveFromContainer(msgs);
-			if (newComponent != null)
-				msgs = ((InternalEObject)newComponent).eInverseAdd(this, ESMFPackage.ESMF_COMPONENT__STATE, ESMFComponent.class, msgs);
-			msgs = basicSetComponent(newComponent, msgs);
-			if (msgs != null) msgs.dispatch();
-		}
-		else if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, ESMFPackage.ESMF_STATE__COMPONENT, newComponent, newComponent));
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public EList<ESMFStateItem> getItem() {
-		if (item == null) {
-			item = new EObjectResolvingEList<ESMFStateItem>(ESMFStateItem.class, this, ESMFPackage.ESMF_STATE__ITEM);
-		}
-		return item;
+		ESMFComponent oldComponent = component;
+		component = newComponent;
+		if (eNotificationRequired())
+			eNotify(new ENotificationImpl(this, Notification.SET, ESMFPackage.ESMF_STATE__COMPONENT, oldComponent, component));
 	}
 
 	/**
@@ -210,14 +167,10 @@ public class ESMFStateImpl extends ESMFNamedEntityImpl implements ESMFState {
 	@Override
 	public NotificationChain eInverseAdd(InternalEObject otherEnd, int featureID, NotificationChain msgs) {
 		switch (featureID) {
-			case ESMFPackage.ESMF_STATE__WORKSPACE:
-				if (workspace != null)
-					msgs = ((InternalEObject)workspace).eInverseRemove(this, ESMFPackage.ESMF_WORKSPACE__STATE_ITEM, ESMFWorkspace.class, msgs);
-				return basicSetWorkspace((ESMFWorkspace)otherEnd, msgs);
-			case ESMFPackage.ESMF_STATE__COMPONENT:
+			case ESMFPackage.ESMF_STATE__SCOPE:
 				if (eInternalContainer() != null)
 					msgs = eBasicRemoveFromContainer(msgs);
-				return basicSetComponent((ESMFComponent)otherEnd, msgs);
+				return basicSetScope((ESMFScope)otherEnd, msgs);
 		}
 		return super.eInverseAdd(otherEnd, featureID, msgs);
 	}
@@ -230,10 +183,8 @@ public class ESMFStateImpl extends ESMFNamedEntityImpl implements ESMFState {
 	@Override
 	public NotificationChain eInverseRemove(InternalEObject otherEnd, int featureID, NotificationChain msgs) {
 		switch (featureID) {
-			case ESMFPackage.ESMF_STATE__WORKSPACE:
-				return basicSetWorkspace(null, msgs);
-			case ESMFPackage.ESMF_STATE__COMPONENT:
-				return basicSetComponent(null, msgs);
+			case ESMFPackage.ESMF_STATE__SCOPE:
+				return basicSetScope(null, msgs);
 		}
 		return super.eInverseRemove(otherEnd, featureID, msgs);
 	}
@@ -246,8 +197,8 @@ public class ESMFStateImpl extends ESMFNamedEntityImpl implements ESMFState {
 	@Override
 	public NotificationChain eBasicRemoveFromContainerFeature(NotificationChain msgs) {
 		switch (eContainerFeatureID()) {
-			case ESMFPackage.ESMF_STATE__COMPONENT:
-				return eInternalContainer().eInverseRemove(this, ESMFPackage.ESMF_COMPONENT__STATE, ESMFComponent.class, msgs);
+			case ESMFPackage.ESMF_STATE__SCOPE:
+				return eInternalContainer().eInverseRemove(this, ESMFPackage.ESMF_SCOPE__ITEM, ESMFScope.class, msgs);
 		}
 		return super.eBasicRemoveFromContainerFeature(msgs);
 	}
@@ -260,13 +211,11 @@ public class ESMFStateImpl extends ESMFNamedEntityImpl implements ESMFState {
 	@Override
 	public Object eGet(int featureID, boolean resolve, boolean coreType) {
 		switch (featureID) {
-			case ESMFPackage.ESMF_STATE__WORKSPACE:
-				if (resolve) return getWorkspace();
-				return basicGetWorkspace();
+			case ESMFPackage.ESMF_STATE__SCOPE:
+				return getScope();
 			case ESMFPackage.ESMF_STATE__COMPONENT:
-				return getComponent();
-			case ESMFPackage.ESMF_STATE__ITEM:
-				return getItem();
+				if (resolve) return getComponent();
+				return basicGetComponent();
 		}
 		return super.eGet(featureID, resolve, coreType);
 	}
@@ -280,15 +229,11 @@ public class ESMFStateImpl extends ESMFNamedEntityImpl implements ESMFState {
 	@Override
 	public void eSet(int featureID, Object newValue) {
 		switch (featureID) {
-			case ESMFPackage.ESMF_STATE__WORKSPACE:
-				setWorkspace((ESMFWorkspace)newValue);
+			case ESMFPackage.ESMF_STATE__SCOPE:
+				setScope((ESMFScope)newValue);
 				return;
 			case ESMFPackage.ESMF_STATE__COMPONENT:
 				setComponent((ESMFComponent)newValue);
-				return;
-			case ESMFPackage.ESMF_STATE__ITEM:
-				getItem().clear();
-				getItem().addAll((Collection<? extends ESMFStateItem>)newValue);
 				return;
 		}
 		super.eSet(featureID, newValue);
@@ -302,14 +247,11 @@ public class ESMFStateImpl extends ESMFNamedEntityImpl implements ESMFState {
 	@Override
 	public void eUnset(int featureID) {
 		switch (featureID) {
-			case ESMFPackage.ESMF_STATE__WORKSPACE:
-				setWorkspace((ESMFWorkspace)null);
+			case ESMFPackage.ESMF_STATE__SCOPE:
+				setScope((ESMFScope)null);
 				return;
 			case ESMFPackage.ESMF_STATE__COMPONENT:
 				setComponent((ESMFComponent)null);
-				return;
-			case ESMFPackage.ESMF_STATE__ITEM:
-				getItem().clear();
 				return;
 		}
 		super.eUnset(featureID);
@@ -323,14 +265,44 @@ public class ESMFStateImpl extends ESMFNamedEntityImpl implements ESMFState {
 	@Override
 	public boolean eIsSet(int featureID) {
 		switch (featureID) {
-			case ESMFPackage.ESMF_STATE__WORKSPACE:
-				return workspace != null;
+			case ESMFPackage.ESMF_STATE__SCOPE:
+				return getScope() != null;
 			case ESMFPackage.ESMF_STATE__COMPONENT:
-				return getComponent() != null;
-			case ESMFPackage.ESMF_STATE__ITEM:
-				return item != null && !item.isEmpty();
+				return component != null;
 		}
 		return super.eIsSet(featureID);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	@Override
+	public int eBaseStructuralFeatureID(int derivedFeatureID, Class<?> baseClass) {
+		if (baseClass == ESMFScopedItem.class) {
+			switch (derivedFeatureID) {
+				case ESMFPackage.ESMF_STATE__SCOPE: return ESMFPackage.ESMF_SCOPED_ITEM__SCOPE;
+				default: return -1;
+			}
+		}
+		return super.eBaseStructuralFeatureID(derivedFeatureID, baseClass);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	@Override
+	public int eDerivedStructuralFeatureID(int baseFeatureID, Class<?> baseClass) {
+		if (baseClass == ESMFScopedItem.class) {
+			switch (baseFeatureID) {
+				case ESMFPackage.ESMF_SCOPED_ITEM__SCOPE: return ESMFPackage.ESMF_STATE__SCOPE;
+				default: return -1;
+			}
+		}
+		return super.eDerivedStructuralFeatureID(baseFeatureID, baseClass);
 	}
 
 } //ESMFStateImpl

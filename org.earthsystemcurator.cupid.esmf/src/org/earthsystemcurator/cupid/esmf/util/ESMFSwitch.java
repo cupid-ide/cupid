@@ -72,10 +72,17 @@ public class ESMFSwitch<T> extends Switch<T> {
 				if (result == null) result = defaultCase(theEObject);
 				return result;
 			}
+			case ESMFPackage.ESMF_SCOPE: {
+				ESMFScope esmfScope = (ESMFScope)theEObject;
+				T result = caseESMFScope(esmfScope);
+				if (result == null) result = defaultCase(theEObject);
+				return result;
+			}
 			case ESMFPackage.ESMF_COMPONENT: {
 				ESMFComponent esmfComponent = (ESMFComponent)theEObject;
 				T result = caseESMFComponent(esmfComponent);
 				if (result == null) result = caseESMFNamedEntity(esmfComponent);
+				if (result == null) result = caseESMFScope(esmfComponent);
 				if (result == null) result = defaultCase(theEObject);
 				return result;
 			}
@@ -84,6 +91,7 @@ public class ESMFSwitch<T> extends Switch<T> {
 				T result = caseESMFGriddedComponent(esmfGriddedComponent);
 				if (result == null) result = caseESMFComponent(esmfGriddedComponent);
 				if (result == null) result = caseESMFNamedEntity(esmfGriddedComponent);
+				if (result == null) result = caseESMFScope(esmfGriddedComponent);
 				if (result == null) result = defaultCase(theEObject);
 				return result;
 			}
@@ -92,6 +100,7 @@ public class ESMFSwitch<T> extends Switch<T> {
 				T result = caseESMFCouplerComponent(esmfCouplerComponent);
 				if (result == null) result = caseESMFComponent(esmfCouplerComponent);
 				if (result == null) result = caseESMFNamedEntity(esmfCouplerComponent);
+				if (result == null) result = caseESMFScope(esmfCouplerComponent);
 				if (result == null) result = defaultCase(theEObject);
 				return result;
 			}
@@ -101,6 +110,16 @@ public class ESMFSwitch<T> extends Switch<T> {
 				if (result == null) result = caseESMFCouplerComponent(esmfSimpleCouplerComponent);
 				if (result == null) result = caseESMFComponent(esmfSimpleCouplerComponent);
 				if (result == null) result = caseESMFNamedEntity(esmfSimpleCouplerComponent);
+				if (result == null) result = caseESMFScope(esmfSimpleCouplerComponent);
+				if (result == null) result = defaultCase(theEObject);
+				return result;
+			}
+			case ESMFPackage.ESMF_DRIVER: {
+				ESMFDriver esmfDriver = (ESMFDriver)theEObject;
+				T result = caseESMFDriver(esmfDriver);
+				if (result == null) result = caseESMFComponent(esmfDriver);
+				if (result == null) result = caseESMFNamedEntity(esmfDriver);
+				if (result == null) result = caseESMFScope(esmfDriver);
 				if (result == null) result = defaultCase(theEObject);
 				return result;
 			}
@@ -108,6 +127,7 @@ public class ESMFSwitch<T> extends Switch<T> {
 				ESMFStage esmfStage = (ESMFStage)theEObject;
 				T result = caseESMFStage(esmfStage);
 				if (result == null) result = caseESMFNamedEntity(esmfStage);
+				if (result == null) result = caseESMFScope(esmfStage);
 				if (result == null) result = defaultCase(theEObject);
 				return result;
 			}
@@ -116,6 +136,7 @@ public class ESMFSwitch<T> extends Switch<T> {
 				T result = caseESMFStageInitialize(esmfStageInitialize);
 				if (result == null) result = caseESMFStage(esmfStageInitialize);
 				if (result == null) result = caseESMFNamedEntity(esmfStageInitialize);
+				if (result == null) result = caseESMFScope(esmfStageInitialize);
 				if (result == null) result = defaultCase(theEObject);
 				return result;
 			}
@@ -124,6 +145,7 @@ public class ESMFSwitch<T> extends Switch<T> {
 				T result = caseESMFStageRun(esmfStageRun);
 				if (result == null) result = caseESMFStage(esmfStageRun);
 				if (result == null) result = caseESMFNamedEntity(esmfStageRun);
+				if (result == null) result = caseESMFScope(esmfStageRun);
 				if (result == null) result = defaultCase(theEObject);
 				return result;
 			}
@@ -132,12 +154,37 @@ public class ESMFSwitch<T> extends Switch<T> {
 				T result = caseESMFStageFinalize(esmfStageFinalize);
 				if (result == null) result = caseESMFStage(esmfStageFinalize);
 				if (result == null) result = caseESMFNamedEntity(esmfStageFinalize);
+				if (result == null) result = caseESMFScope(esmfStageFinalize);
 				if (result == null) result = defaultCase(theEObject);
 				return result;
 			}
 			case ESMFPackage.ESMF_STAGE_ACTION: {
 				ESMFStageAction esmfStageAction = (ESMFStageAction)theEObject;
 				T result = caseESMFStageAction(esmfStageAction);
+				if (result == null) result = defaultCase(theEObject);
+				return result;
+			}
+			case ESMFPackage.ESMF_STAGE_ACTION_SEQUENCE: {
+				ESMFStageActionSequence esmfStageActionSequence = (ESMFStageActionSequence)theEObject;
+				T result = caseESMFStageActionSequence(esmfStageActionSequence);
+				if (result == null) result = caseESMFStageAction(esmfStageActionSequence);
+				if (result == null) result = defaultCase(theEObject);
+				return result;
+			}
+			case ESMFPackage.ESMF_STAGE_ACTION_ITERATE: {
+				ESMFStageActionIterate esmfStageActionIterate = (ESMFStageActionIterate)theEObject;
+				T result = caseESMFStageActionIterate(esmfStageActionIterate);
+				if (result == null) result = caseESMFStageActionSequence(esmfStageActionIterate);
+				if (result == null) result = caseESMFStageAction(esmfStageActionIterate);
+				if (result == null) result = defaultCase(theEObject);
+				return result;
+			}
+			case ESMFPackage.ESMF_STAGE_ACTION_ITERATE_CLOCK: {
+				ESMFStageActionIterateClock esmfStageActionIterateClock = (ESMFStageActionIterateClock)theEObject;
+				T result = caseESMFStageActionIterateClock(esmfStageActionIterateClock);
+				if (result == null) result = caseESMFStageActionIterate(esmfStageActionIterateClock);
+				if (result == null) result = caseESMFStageActionSequence(esmfStageActionIterateClock);
+				if (result == null) result = caseESMFStageAction(esmfStageActionIterateClock);
 				if (result == null) result = defaultCase(theEObject);
 				return result;
 			}
@@ -148,10 +195,31 @@ public class ESMFSwitch<T> extends Switch<T> {
 				if (result == null) result = defaultCase(theEObject);
 				return result;
 			}
+			case ESMFPackage.ESMF_STAGE_ACTION_COMPONENT_CREATE: {
+				ESMFStageActionComponentCreate esmfStageActionComponentCreate = (ESMFStageActionComponentCreate)theEObject;
+				T result = caseESMFStageActionComponentCreate(esmfStageActionComponentCreate);
+				if (result == null) result = caseESMFStageAction(esmfStageActionComponentCreate);
+				if (result == null) result = defaultCase(theEObject);
+				return result;
+			}
 			case ESMFPackage.ESMF_STAGE_ACTION_COMPONENT_DESTROY: {
 				ESMFStageActionComponentDestroy esmfStageActionComponentDestroy = (ESMFStageActionComponentDestroy)theEObject;
 				T result = caseESMFStageActionComponentDestroy(esmfStageActionComponentDestroy);
 				if (result == null) result = caseESMFStageAction(esmfStageActionComponentDestroy);
+				if (result == null) result = defaultCase(theEObject);
+				return result;
+			}
+			case ESMFPackage.ESMF_STAGE_ACTION_COMPONENT_SET_GRID: {
+				ESMFStageActionComponentSetGrid esmfStageActionComponentSetGrid = (ESMFStageActionComponentSetGrid)theEObject;
+				T result = caseESMFStageActionComponentSetGrid(esmfStageActionComponentSetGrid);
+				if (result == null) result = caseESMFStageAction(esmfStageActionComponentSetGrid);
+				if (result == null) result = defaultCase(theEObject);
+				return result;
+			}
+			case ESMFPackage.ESMF_STAGE_ACTION_EXECUTE_STAGE: {
+				ESMFStageActionExecuteStage esmfStageActionExecuteStage = (ESMFStageActionExecuteStage)theEObject;
+				T result = caseESMFStageActionExecuteStage(esmfStageActionExecuteStage);
+				if (result == null) result = caseESMFStageAction(esmfStageActionExecuteStage);
 				if (result == null) result = defaultCase(theEObject);
 				return result;
 			}
@@ -166,6 +234,27 @@ public class ESMFSwitch<T> extends Switch<T> {
 				ESMFStageActionFieldDestroy esmfStageActionFieldDestroy = (ESMFStageActionFieldDestroy)theEObject;
 				T result = caseESMFStageActionFieldDestroy(esmfStageActionFieldDestroy);
 				if (result == null) result = caseESMFStageAction(esmfStageActionFieldDestroy);
+				if (result == null) result = defaultCase(theEObject);
+				return result;
+			}
+			case ESMFPackage.ESMF_STAGE_ACTION_FIELD_REDIST_STORE: {
+				ESMFStageActionFieldRedistStore esmfStageActionFieldRedistStore = (ESMFStageActionFieldRedistStore)theEObject;
+				T result = caseESMFStageActionFieldRedistStore(esmfStageActionFieldRedistStore);
+				if (result == null) result = caseESMFStageAction(esmfStageActionFieldRedistStore);
+				if (result == null) result = defaultCase(theEObject);
+				return result;
+			}
+			case ESMFPackage.ESMF_STAGE_ACTION_FIELD_REDIST: {
+				ESMFStageActionFieldRedist esmfStageActionFieldRedist = (ESMFStageActionFieldRedist)theEObject;
+				T result = caseESMFStageActionFieldRedist(esmfStageActionFieldRedist);
+				if (result == null) result = caseESMFStageAction(esmfStageActionFieldRedist);
+				if (result == null) result = defaultCase(theEObject);
+				return result;
+			}
+			case ESMFPackage.ESMF_STAGE_ACTION_FIELD_REDIST_RELEASE: {
+				ESMFStageActionFieldRedistRelease esmfStageActionFieldRedistRelease = (ESMFStageActionFieldRedistRelease)theEObject;
+				T result = caseESMFStageActionFieldRedistRelease(esmfStageActionFieldRedistRelease);
+				if (result == null) result = caseESMFStageAction(esmfStageActionFieldRedistRelease);
 				if (result == null) result = defaultCase(theEObject);
 				return result;
 			}
@@ -194,6 +283,20 @@ public class ESMFSwitch<T> extends Switch<T> {
 				ESMFStageActionExportStateAdd esmfStageActionExportStateAdd = (ESMFStageActionExportStateAdd)theEObject;
 				T result = caseESMFStageActionExportStateAdd(esmfStageActionExportStateAdd);
 				if (result == null) result = caseESMFStageAction(esmfStageActionExportStateAdd);
+				if (result == null) result = defaultCase(theEObject);
+				return result;
+			}
+			case ESMFPackage.ESMF_STAGE_ACTION_IMPORT_STATE_GET: {
+				ESMFStageActionImportStateGet esmfStageActionImportStateGet = (ESMFStageActionImportStateGet)theEObject;
+				T result = caseESMFStageActionImportStateGet(esmfStageActionImportStateGet);
+				if (result == null) result = caseESMFStageAction(esmfStageActionImportStateGet);
+				if (result == null) result = defaultCase(theEObject);
+				return result;
+			}
+			case ESMFPackage.ESMF_STAGE_ACTION_EXPORT_STATE_GET: {
+				ESMFStageActionExportStateGet esmfStageActionExportStateGet = (ESMFStageActionExportStateGet)theEObject;
+				T result = caseESMFStageActionExportStateGet(esmfStageActionExportStateGet);
+				if (result == null) result = caseESMFStageAction(esmfStageActionExportStateGet);
 				if (result == null) result = defaultCase(theEObject);
 				return result;
 			}
@@ -308,6 +411,7 @@ public class ESMFSwitch<T> extends Switch<T> {
 				T result = caseESMFState(esmfState);
 				if (result == null) result = caseESMFStateItem(esmfState);
 				if (result == null) result = caseESMFNamedEntity(esmfState);
+				if (result == null) result = caseESMFScopedItem(esmfState);
 				if (result == null) result = defaultCase(theEObject);
 				return result;
 			}
@@ -315,6 +419,13 @@ public class ESMFSwitch<T> extends Switch<T> {
 				ESMFStateItem esmfStateItem = (ESMFStateItem)theEObject;
 				T result = caseESMFStateItem(esmfStateItem);
 				if (result == null) result = caseESMFNamedEntity(esmfStateItem);
+				if (result == null) result = caseESMFScopedItem(esmfStateItem);
+				if (result == null) result = defaultCase(theEObject);
+				return result;
+			}
+			case ESMFPackage.ESMF_SCOPED_ITEM: {
+				ESMFScopedItem esmfScopedItem = (ESMFScopedItem)theEObject;
+				T result = caseESMFScopedItem(esmfScopedItem);
 				if (result == null) result = defaultCase(theEObject);
 				return result;
 			}
@@ -323,6 +434,7 @@ public class ESMFSwitch<T> extends Switch<T> {
 				T result = caseESMFField(esmfField);
 				if (result == null) result = caseESMFStateItem(esmfField);
 				if (result == null) result = caseESMFNamedEntity(esmfField);
+				if (result == null) result = caseESMFScopedItem(esmfField);
 				if (result == null) result = defaultCase(theEObject);
 				return result;
 			}
@@ -337,6 +449,7 @@ public class ESMFSwitch<T> extends Switch<T> {
 				T result = caseESMFArray(esmfArray);
 				if (result == null) result = caseESMFStateItem(esmfArray);
 				if (result == null) result = caseESMFNamedEntity(esmfArray);
+				if (result == null) result = caseESMFScopedItem(esmfArray);
 				if (result == null) result = defaultCase(theEObject);
 				return result;
 			}
@@ -344,6 +457,7 @@ public class ESMFSwitch<T> extends Switch<T> {
 				ESMFRouteHandle esmfRouteHandle = (ESMFRouteHandle)theEObject;
 				T result = caseESMFRouteHandle(esmfRouteHandle);
 				if (result == null) result = caseESMFNamedEntity(esmfRouteHandle);
+				if (result == null) result = caseESMFScopedItem(esmfRouteHandle);
 				if (result == null) result = defaultCase(theEObject);
 				return result;
 			}
@@ -351,6 +465,7 @@ public class ESMFSwitch<T> extends Switch<T> {
 				ESMFArraySpec esmfArraySpec = (ESMFArraySpec)theEObject;
 				T result = caseESMFArraySpec(esmfArraySpec);
 				if (result == null) result = caseESMFNamedEntity(esmfArraySpec);
+				if (result == null) result = caseESMFScopedItem(esmfArraySpec);
 				if (result == null) result = defaultCase(theEObject);
 				return result;
 			}
@@ -358,6 +473,7 @@ public class ESMFSwitch<T> extends Switch<T> {
 				ESMFGrid esmfGrid = (ESMFGrid)theEObject;
 				T result = caseESMFGrid(esmfGrid);
 				if (result == null) result = caseESMFNamedEntity(esmfGrid);
+				if (result == null) result = caseESMFScopedItem(esmfGrid);
 				if (result == null) result = defaultCase(theEObject);
 				return result;
 			}
@@ -371,6 +487,7 @@ public class ESMFSwitch<T> extends Switch<T> {
 				ESMFDistGrid esmfDistGrid = (ESMFDistGrid)theEObject;
 				T result = caseESMFDistGrid(esmfDistGrid);
 				if (result == null) result = caseESMFNamedEntity(esmfDistGrid);
+				if (result == null) result = caseESMFScopedItem(esmfDistGrid);
 				if (result == null) result = defaultCase(theEObject);
 				return result;
 			}
@@ -958,6 +1075,21 @@ public class ESMFSwitch<T> extends Switch<T> {
 	}
 
 	/**
+	 * Returns the result of interpreting the object as an instance of '<em>Driver</em>'.
+	 * <!-- begin-user-doc -->
+	 * This implementation returns null;
+	 * returning a non-null result will terminate the switch.
+	 * <!-- end-user-doc -->
+	 * @param object the target of the switch.
+	 * @return the result of interpreting the object as an instance of '<em>Driver</em>'.
+	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+	 * @generated
+	 */
+	public T caseESMFDriver(ESMFDriver object) {
+		return null;
+	}
+
+	/**
 	 * Returns the result of interpreting the object as an instance of '<em>Stage</em>'.
 	 * <!-- begin-user-doc -->
 	 * This implementation returns null;
@@ -1033,6 +1165,51 @@ public class ESMFSwitch<T> extends Switch<T> {
 	}
 
 	/**
+	 * Returns the result of interpreting the object as an instance of '<em>Stage Action Sequence</em>'.
+	 * <!-- begin-user-doc -->
+	 * This implementation returns null;
+	 * returning a non-null result will terminate the switch.
+	 * <!-- end-user-doc -->
+	 * @param object the target of the switch.
+	 * @return the result of interpreting the object as an instance of '<em>Stage Action Sequence</em>'.
+	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+	 * @generated
+	 */
+	public T caseESMFStageActionSequence(ESMFStageActionSequence object) {
+		return null;
+	}
+
+	/**
+	 * Returns the result of interpreting the object as an instance of '<em>Stage Action Iterate</em>'.
+	 * <!-- begin-user-doc -->
+	 * This implementation returns null;
+	 * returning a non-null result will terminate the switch.
+	 * <!-- end-user-doc -->
+	 * @param object the target of the switch.
+	 * @return the result of interpreting the object as an instance of '<em>Stage Action Iterate</em>'.
+	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+	 * @generated
+	 */
+	public T caseESMFStageActionIterate(ESMFStageActionIterate object) {
+		return null;
+	}
+
+	/**
+	 * Returns the result of interpreting the object as an instance of '<em>Stage Action Iterate Clock</em>'.
+	 * <!-- begin-user-doc -->
+	 * This implementation returns null;
+	 * returning a non-null result will terminate the switch.
+	 * <!-- end-user-doc -->
+	 * @param object the target of the switch.
+	 * @return the result of interpreting the object as an instance of '<em>Stage Action Iterate Clock</em>'.
+	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+	 * @generated
+	 */
+	public T caseESMFStageActionIterateClock(ESMFStageActionIterateClock object) {
+		return null;
+	}
+
+	/**
 	 * Returns the result of interpreting the object as an instance of '<em>Stage Action Field Create</em>'.
 	 * <!-- begin-user-doc -->
 	 * This implementation returns null;
@@ -1059,6 +1236,51 @@ public class ESMFSwitch<T> extends Switch<T> {
 	 * @generated
 	 */
 	public T caseESMFStageActionFieldDestroy(ESMFStageActionFieldDestroy object) {
+		return null;
+	}
+
+	/**
+	 * Returns the result of interpreting the object as an instance of '<em>Stage Action Field Redist Store</em>'.
+	 * <!-- begin-user-doc -->
+	 * This implementation returns null;
+	 * returning a non-null result will terminate the switch.
+	 * <!-- end-user-doc -->
+	 * @param object the target of the switch.
+	 * @return the result of interpreting the object as an instance of '<em>Stage Action Field Redist Store</em>'.
+	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+	 * @generated
+	 */
+	public T caseESMFStageActionFieldRedistStore(ESMFStageActionFieldRedistStore object) {
+		return null;
+	}
+
+	/**
+	 * Returns the result of interpreting the object as an instance of '<em>Stage Action Field Redist</em>'.
+	 * <!-- begin-user-doc -->
+	 * This implementation returns null;
+	 * returning a non-null result will terminate the switch.
+	 * <!-- end-user-doc -->
+	 * @param object the target of the switch.
+	 * @return the result of interpreting the object as an instance of '<em>Stage Action Field Redist</em>'.
+	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+	 * @generated
+	 */
+	public T caseESMFStageActionFieldRedist(ESMFStageActionFieldRedist object) {
+		return null;
+	}
+
+	/**
+	 * Returns the result of interpreting the object as an instance of '<em>Stage Action Field Redist Release</em>'.
+	 * <!-- begin-user-doc -->
+	 * This implementation returns null;
+	 * returning a non-null result will terminate the switch.
+	 * <!-- end-user-doc -->
+	 * @param object the target of the switch.
+	 * @return the result of interpreting the object as an instance of '<em>Stage Action Field Redist Release</em>'.
+	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+	 * @generated
+	 */
+	public T caseESMFStageActionFieldRedistRelease(ESMFStageActionFieldRedistRelease object) {
 		return null;
 	}
 
@@ -1123,6 +1345,36 @@ public class ESMFSwitch<T> extends Switch<T> {
 	}
 
 	/**
+	 * Returns the result of interpreting the object as an instance of '<em>Stage Action Import State Get</em>'.
+	 * <!-- begin-user-doc -->
+	 * This implementation returns null;
+	 * returning a non-null result will terminate the switch.
+	 * <!-- end-user-doc -->
+	 * @param object the target of the switch.
+	 * @return the result of interpreting the object as an instance of '<em>Stage Action Import State Get</em>'.
+	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+	 * @generated
+	 */
+	public T caseESMFStageActionImportStateGet(ESMFStageActionImportStateGet object) {
+		return null;
+	}
+
+	/**
+	 * Returns the result of interpreting the object as an instance of '<em>Stage Action Export State Get</em>'.
+	 * <!-- begin-user-doc -->
+	 * This implementation returns null;
+	 * returning a non-null result will terminate the switch.
+	 * <!-- end-user-doc -->
+	 * @param object the target of the switch.
+	 * @return the result of interpreting the object as an instance of '<em>Stage Action Export State Get</em>'.
+	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+	 * @generated
+	 */
+	public T caseESMFStageActionExportStateGet(ESMFStageActionExportStateGet object) {
+		return null;
+	}
+
+	/**
 	 * Returns the result of interpreting the object as an instance of '<em>Stage Action State Create</em>'.
 	 * <!-- begin-user-doc -->
 	 * This implementation returns null;
@@ -1168,6 +1420,21 @@ public class ESMFSwitch<T> extends Switch<T> {
 	}
 
 	/**
+	 * Returns the result of interpreting the object as an instance of '<em>Stage Action Component Create</em>'.
+	 * <!-- begin-user-doc -->
+	 * This implementation returns null;
+	 * returning a non-null result will terminate the switch.
+	 * <!-- end-user-doc -->
+	 * @param object the target of the switch.
+	 * @return the result of interpreting the object as an instance of '<em>Stage Action Component Create</em>'.
+	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+	 * @generated
+	 */
+	public T caseESMFStageActionComponentCreate(ESMFStageActionComponentCreate object) {
+		return null;
+	}
+
+	/**
 	 * Returns the result of interpreting the object as an instance of '<em>Stage Action Component Destroy</em>'.
 	 * <!-- begin-user-doc -->
 	 * This implementation returns null;
@@ -1179,6 +1446,36 @@ public class ESMFSwitch<T> extends Switch<T> {
 	 * @generated
 	 */
 	public T caseESMFStageActionComponentDestroy(ESMFStageActionComponentDestroy object) {
+		return null;
+	}
+
+	/**
+	 * Returns the result of interpreting the object as an instance of '<em>Stage Action Component Set Grid</em>'.
+	 * <!-- begin-user-doc -->
+	 * This implementation returns null;
+	 * returning a non-null result will terminate the switch.
+	 * <!-- end-user-doc -->
+	 * @param object the target of the switch.
+	 * @return the result of interpreting the object as an instance of '<em>Stage Action Component Set Grid</em>'.
+	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+	 * @generated
+	 */
+	public T caseESMFStageActionComponentSetGrid(ESMFStageActionComponentSetGrid object) {
+		return null;
+	}
+
+	/**
+	 * Returns the result of interpreting the object as an instance of '<em>Stage Action Execute Stage</em>'.
+	 * <!-- begin-user-doc -->
+	 * This implementation returns null;
+	 * returning a non-null result will terminate the switch.
+	 * <!-- end-user-doc -->
+	 * @param object the target of the switch.
+	 * @return the result of interpreting the object as an instance of '<em>Stage Action Execute Stage</em>'.
+	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+	 * @generated
+	 */
+	public T caseESMFStageActionExecuteStage(ESMFStageActionExecuteStage object) {
 		return null;
 	}
 
@@ -1389,6 +1686,21 @@ public class ESMFSwitch<T> extends Switch<T> {
 	 * @generated
 	 */
 	public T caseESMFStateItem(ESMFStateItem object) {
+		return null;
+	}
+
+	/**
+	 * Returns the result of interpreting the object as an instance of '<em>Scoped Item</em>'.
+	 * <!-- begin-user-doc -->
+	 * This implementation returns null;
+	 * returning a non-null result will terminate the switch.
+	 * <!-- end-user-doc -->
+	 * @param object the target of the switch.
+	 * @return the result of interpreting the object as an instance of '<em>Scoped Item</em>'.
+	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+	 * @generated
+	 */
+	public T caseESMFScopedItem(ESMFScopedItem object) {
 		return null;
 	}
 
@@ -2514,6 +2826,21 @@ public class ESMFSwitch<T> extends Switch<T> {
 	 * @generated
 	 */
 	public T caseESMFNamedEntity(ESMFNamedEntity object) {
+		return null;
+	}
+
+	/**
+	 * Returns the result of interpreting the object as an instance of '<em>Scope</em>'.
+	 * <!-- begin-user-doc -->
+	 * This implementation returns null;
+	 * returning a non-null result will terminate the switch.
+	 * <!-- end-user-doc -->
+	 * @param object the target of the switch.
+	 * @return the result of interpreting the object as an instance of '<em>Scope</em>'.
+	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+	 * @generated
+	 */
+	public T caseESMFScope(ESMFScope object) {
 		return null;
 	}
 

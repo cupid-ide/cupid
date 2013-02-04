@@ -14,17 +14,10 @@ import org.eclipse.emf.common.util.EList;
  * <ul>
  *   <li>{@link org.earthsystemcurator.cupid.esmf.ESMFComponent#getMethod <em>Method</em>}</li>
  *   <li>{@link org.earthsystemcurator.cupid.esmf.ESMFComponent#getRegisterMethod <em>Register Method</em>}</li>
- *   <li>{@link org.earthsystemcurator.cupid.esmf.ESMFComponent#getState <em>State</em>}</li>
  *   <li>{@link org.earthsystemcurator.cupid.esmf.ESMFComponent#getImportState <em>Import State</em>}</li>
  *   <li>{@link org.earthsystemcurator.cupid.esmf.ESMFComponent#getExportState <em>Export State</em>}</li>
  *   <li>{@link org.earthsystemcurator.cupid.esmf.ESMFComponent#getComponent <em>Component</em>}</li>
  *   <li>{@link org.earthsystemcurator.cupid.esmf.ESMFComponent#getParent <em>Parent</em>}</li>
- *   <li>{@link org.earthsystemcurator.cupid.esmf.ESMFComponent#getArraySpec <em>Array Spec</em>}</li>
- *   <li>{@link org.earthsystemcurator.cupid.esmf.ESMFComponent#getArray <em>Array</em>}</li>
- *   <li>{@link org.earthsystemcurator.cupid.esmf.ESMFComponent#getDistGrid <em>Dist Grid</em>}</li>
- *   <li>{@link org.earthsystemcurator.cupid.esmf.ESMFComponent#getField <em>Field</em>}</li>
- *   <li>{@link org.earthsystemcurator.cupid.esmf.ESMFComponent#getGrid <em>Grid</em>}</li>
- *   <li>{@link org.earthsystemcurator.cupid.esmf.ESMFComponent#getRouteHandle <em>Route Handle</em>}</li>
  *   <li>{@link org.earthsystemcurator.cupid.esmf.ESMFComponent#getClock <em>Clock</em>}</li>
  *   <li>{@link org.earthsystemcurator.cupid.esmf.ESMFComponent#getModelClock <em>Model Clock</em>}</li>
  *   <li>{@link org.earthsystemcurator.cupid.esmf.ESMFComponent#getTime <em>Time</em>}</li>
@@ -38,7 +31,7 @@ import org.eclipse.emf.common.util.EList;
  * @model abstract="true"
  * @generated
  */
-public interface ESMFComponent extends ESMFNamedEntity {
+public interface ESMFComponent extends ESMFNamedEntity, ESMFScope {
 	/**
 	 * Returns the value of the '<em><b>Method</b></em>' containment reference list.
 	 * The list contents are of type {@link org.earthsystemcurator.cupid.esmf.ESMFMethod}.
@@ -84,24 +77,6 @@ public interface ESMFComponent extends ESMFNamedEntity {
 	 * @generated
 	 */
 	void setRegisterMethod(ESMFRegisterMethod value);
-
-	/**
-	 * Returns the value of the '<em><b>State</b></em>' containment reference list.
-	 * The list contents are of type {@link org.earthsystemcurator.cupid.esmf.ESMFState}.
-	 * It is bidirectional and its opposite is '{@link org.earthsystemcurator.cupid.esmf.ESMFState#getComponent <em>Component</em>}'.
-	 * <!-- begin-user-doc -->
-	 * <p>
-	 * If the meaning of the '<em>State</em>' containment reference list isn't clear,
-	 * there really should be more of a description here...
-	 * </p>
-	 * <!-- end-user-doc -->
-	 * @return the value of the '<em>State</em>' containment reference list.
-	 * @see org.earthsystemcurator.cupid.esmf.ESMFPackage#getESMFComponent_State()
-	 * @see org.earthsystemcurator.cupid.esmf.ESMFState#getComponent
-	 * @model opposite="component" containment="true"
-	 * @generated
-	 */
-	EList<ESMFState> getState();
 
 	/**
 	 * Returns the value of the '<em><b>Import State</b></em>' reference.
@@ -200,110 +175,6 @@ public interface ESMFComponent extends ESMFNamedEntity {
 	 * @generated
 	 */
 	void setParent(ESMFComponent value);
-
-	/**
-	 * Returns the value of the '<em><b>Array Spec</b></em>' containment reference list.
-	 * The list contents are of type {@link org.earthsystemcurator.cupid.esmf.ESMFArraySpec}.
-	 * It is bidirectional and its opposite is '{@link org.earthsystemcurator.cupid.esmf.ESMFArraySpec#getComponent <em>Component</em>}'.
-	 * <!-- begin-user-doc -->
-	 * <p>
-	 * If the meaning of the '<em>Array Spec</em>' containment reference list isn't clear,
-	 * there really should be more of a description here...
-	 * </p>
-	 * <!-- end-user-doc -->
-	 * @return the value of the '<em>Array Spec</em>' containment reference list.
-	 * @see org.earthsystemcurator.cupid.esmf.ESMFPackage#getESMFComponent_ArraySpec()
-	 * @see org.earthsystemcurator.cupid.esmf.ESMFArraySpec#getComponent
-	 * @model opposite="component" containment="true"
-	 * @generated
-	 */
-	EList<ESMFArraySpec> getArraySpec();
-
-	/**
-	 * Returns the value of the '<em><b>Array</b></em>' containment reference list.
-	 * The list contents are of type {@link org.earthsystemcurator.cupid.esmf.ESMFArray}.
-	 * It is bidirectional and its opposite is '{@link org.earthsystemcurator.cupid.esmf.ESMFArray#getComponent <em>Component</em>}'.
-	 * <!-- begin-user-doc -->
-	 * <p>
-	 * If the meaning of the '<em>Array</em>' containment reference list isn't clear,
-	 * there really should be more of a description here...
-	 * </p>
-	 * <!-- end-user-doc -->
-	 * @return the value of the '<em>Array</em>' containment reference list.
-	 * @see org.earthsystemcurator.cupid.esmf.ESMFPackage#getESMFComponent_Array()
-	 * @see org.earthsystemcurator.cupid.esmf.ESMFArray#getComponent
-	 * @model opposite="component" containment="true" ordered="false"
-	 * @generated
-	 */
-	EList<ESMFArray> getArray();
-
-	/**
-	 * Returns the value of the '<em><b>Dist Grid</b></em>' containment reference list.
-	 * The list contents are of type {@link org.earthsystemcurator.cupid.esmf.ESMFDistGrid}.
-	 * <!-- begin-user-doc -->
-	 * <p>
-	 * If the meaning of the '<em>Dist Grid</em>' containment reference list isn't clear,
-	 * there really should be more of a description here...
-	 * </p>
-	 * <!-- end-user-doc -->
-	 * @return the value of the '<em>Dist Grid</em>' containment reference list.
-	 * @see org.earthsystemcurator.cupid.esmf.ESMFPackage#getESMFComponent_DistGrid()
-	 * @model containment="true" ordered="false"
-	 * @generated
-	 */
-	EList<ESMFDistGrid> getDistGrid();
-
-	/**
-	 * Returns the value of the '<em><b>Field</b></em>' containment reference list.
-	 * The list contents are of type {@link org.earthsystemcurator.cupid.esmf.ESMFField}.
-	 * It is bidirectional and its opposite is '{@link org.earthsystemcurator.cupid.esmf.ESMFField#getComponent <em>Component</em>}'.
-	 * <!-- begin-user-doc -->
-	 * <p>
-	 * If the meaning of the '<em>Field</em>' containment reference list isn't clear,
-	 * there really should be more of a description here...
-	 * </p>
-	 * <!-- end-user-doc -->
-	 * @return the value of the '<em>Field</em>' containment reference list.
-	 * @see org.earthsystemcurator.cupid.esmf.ESMFPackage#getESMFComponent_Field()
-	 * @see org.earthsystemcurator.cupid.esmf.ESMFField#getComponent
-	 * @model opposite="component" containment="true" ordered="false"
-	 * @generated
-	 */
-	EList<ESMFField> getField();
-
-	/**
-	 * Returns the value of the '<em><b>Grid</b></em>' containment reference list.
-	 * The list contents are of type {@link org.earthsystemcurator.cupid.esmf.ESMFGrid}.
-	 * <!-- begin-user-doc -->
-	 * <p>
-	 * If the meaning of the '<em>Grid</em>' containment reference list isn't clear,
-	 * there really should be more of a description here...
-	 * </p>
-	 * <!-- end-user-doc -->
-	 * @return the value of the '<em>Grid</em>' containment reference list.
-	 * @see org.earthsystemcurator.cupid.esmf.ESMFPackage#getESMFComponent_Grid()
-	 * @model containment="true" ordered="false"
-	 * @generated
-	 */
-	EList<ESMFGrid> getGrid();
-
-	/**
-	 * Returns the value of the '<em><b>Route Handle</b></em>' containment reference list.
-	 * The list contents are of type {@link org.earthsystemcurator.cupid.esmf.ESMFRouteHandle}.
-	 * It is bidirectional and its opposite is '{@link org.earthsystemcurator.cupid.esmf.ESMFRouteHandle#getComponent <em>Component</em>}'.
-	 * <!-- begin-user-doc -->
-	 * <p>
-	 * If the meaning of the '<em>Route Handle</em>' containment reference list isn't clear,
-	 * there really should be more of a description here...
-	 * </p>
-	 * <!-- end-user-doc -->
-	 * @return the value of the '<em>Route Handle</em>' containment reference list.
-	 * @see org.earthsystemcurator.cupid.esmf.ESMFPackage#getESMFComponent_RouteHandle()
-	 * @see org.earthsystemcurator.cupid.esmf.ESMFRouteHandle#getComponent
-	 * @model opposite="component" containment="true"
-	 * @generated
-	 */
-	EList<ESMFRouteHandle> getRouteHandle();
 
 	/**
 	 * Returns the value of the '<em><b>Clock</b></em>' containment reference list.

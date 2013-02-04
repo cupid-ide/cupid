@@ -10,6 +10,8 @@ import org.earthsystemcurator.cupid.esmf.ESMFComponent;
 import org.earthsystemcurator.cupid.esmf.ESMFField;
 import org.earthsystemcurator.cupid.esmf.ESMFGrid;
 import org.earthsystemcurator.cupid.esmf.ESMFPackage;
+import org.earthsystemcurator.cupid.esmf.ESMFScope;
+import org.earthsystemcurator.cupid.esmf.ESMFScopedItem;
 import org.earthsystemcurator.cupid.esmf.ESMFStaggerLoc;
 import org.earthsystemcurator.cupid.esmf.ESMFWorkspace;
 
@@ -37,8 +39,7 @@ import org.eclipse.emf.ecore.util.EcoreUtil;
  * <p>
  * The following features are implemented:
  * <ul>
- *   <li>{@link org.earthsystemcurator.cupid.esmf.impl.ESMFFieldImpl#getWorkspace <em>Workspace</em>}</li>
- *   <li>{@link org.earthsystemcurator.cupid.esmf.impl.ESMFFieldImpl#getComponent <em>Component</em>}</li>
+ *   <li>{@link org.earthsystemcurator.cupid.esmf.impl.ESMFFieldImpl#getScope <em>Scope</em>}</li>
  *   <li>{@link org.earthsystemcurator.cupid.esmf.impl.ESMFFieldImpl#getGrid <em>Grid</em>}</li>
  *   <li>{@link org.earthsystemcurator.cupid.esmf.impl.ESMFFieldImpl#getArray <em>Array</em>}</li>
  *   <li>{@link org.earthsystemcurator.cupid.esmf.impl.ESMFFieldImpl#getStaggerLoc <em>Stagger Loc</em>}</li>
@@ -47,22 +48,13 @@ import org.eclipse.emf.ecore.util.EcoreUtil;
  *   <li>{@link org.earthsystemcurator.cupid.esmf.impl.ESMFFieldImpl#getIndex <em>Index</em>}</li>
  *   <li>{@link org.earthsystemcurator.cupid.esmf.impl.ESMFFieldImpl#getTotalLWidth <em>Total LWidth</em>}</li>
  *   <li>{@link org.earthsystemcurator.cupid.esmf.impl.ESMFFieldImpl#getTotalUWidth <em>Total UWidth</em>}</li>
+ *   <li>{@link org.earthsystemcurator.cupid.esmf.impl.ESMFFieldImpl#getLabel <em>Label</em>}</li>
  * </ul>
  * </p>
  *
  * @generated
  */
 public class ESMFFieldImpl extends ESMFNamedEntityImpl implements ESMFField {
-	/**
-	 * The cached value of the '{@link #getWorkspace() <em>Workspace</em>}' reference.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @see #getWorkspace()
-	 * @generated
-	 * @ordered
-	 */
-	protected ESMFWorkspace workspace;
-
 	/**
 	 * The cached value of the '{@link #getGrid() <em>Grid</em>}' reference.
 	 * <!-- begin-user-doc -->
@@ -164,6 +156,26 @@ public class ESMFFieldImpl extends ESMFNamedEntityImpl implements ESMFField {
 	protected EList<Integer> totalUWidth;
 
 	/**
+	 * The default value of the '{@link #getLabel() <em>Label</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #getLabel()
+	 * @generated
+	 * @ordered
+	 */
+	protected static final String LABEL_EDEFAULT = null;
+
+	/**
+	 * The cached value of the '{@link #getLabel() <em>Label</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #getLabel()
+	 * @generated
+	 * @ordered
+	 */
+	protected String label = LABEL_EDEFAULT;
+
+	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
@@ -187,16 +199,9 @@ public class ESMFFieldImpl extends ESMFNamedEntityImpl implements ESMFField {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public ESMFWorkspace getWorkspace() {
-		if (workspace != null && workspace.eIsProxy()) {
-			InternalEObject oldWorkspace = (InternalEObject)workspace;
-			workspace = (ESMFWorkspace)eResolveProxy(oldWorkspace);
-			if (workspace != oldWorkspace) {
-				if (eNotificationRequired())
-					eNotify(new ENotificationImpl(this, Notification.RESOLVE, ESMFPackage.ESMF_FIELD__WORKSPACE, oldWorkspace, workspace));
-			}
-		}
-		return workspace;
+	public ESMFScope getScope() {
+		if (eContainerFeatureID() != ESMFPackage.ESMF_FIELD__SCOPE) return null;
+		return (ESMFScope)eContainer();
 	}
 
 	/**
@@ -204,22 +209,8 @@ public class ESMFFieldImpl extends ESMFNamedEntityImpl implements ESMFField {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public ESMFWorkspace basicGetWorkspace() {
-		return workspace;
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public NotificationChain basicSetWorkspace(ESMFWorkspace newWorkspace, NotificationChain msgs) {
-		ESMFWorkspace oldWorkspace = workspace;
-		workspace = newWorkspace;
-		if (eNotificationRequired()) {
-			ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, ESMFPackage.ESMF_FIELD__WORKSPACE, oldWorkspace, newWorkspace);
-			if (msgs == null) msgs = notification; else msgs.add(notification);
-		}
+	public NotificationChain basicSetScope(ESMFScope newScope, NotificationChain msgs) {
+		msgs = eBasicSetContainer((InternalEObject)newScope, ESMFPackage.ESMF_FIELD__SCOPE, msgs);
 		return msgs;
 	}
 
@@ -228,59 +219,20 @@ public class ESMFFieldImpl extends ESMFNamedEntityImpl implements ESMFField {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public void setWorkspace(ESMFWorkspace newWorkspace) {
-		if (newWorkspace != workspace) {
-			NotificationChain msgs = null;
-			if (workspace != null)
-				msgs = ((InternalEObject)workspace).eInverseRemove(this, ESMFPackage.ESMF_WORKSPACE__STATE_ITEM, ESMFWorkspace.class, msgs);
-			if (newWorkspace != null)
-				msgs = ((InternalEObject)newWorkspace).eInverseAdd(this, ESMFPackage.ESMF_WORKSPACE__STATE_ITEM, ESMFWorkspace.class, msgs);
-			msgs = basicSetWorkspace(newWorkspace, msgs);
-			if (msgs != null) msgs.dispatch();
-		}
-		else if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, ESMFPackage.ESMF_FIELD__WORKSPACE, newWorkspace, newWorkspace));
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public ESMFComponent getComponent() {
-		if (eContainerFeatureID() != ESMFPackage.ESMF_FIELD__COMPONENT) return null;
-		return (ESMFComponent)eContainer();
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public NotificationChain basicSetComponent(ESMFComponent newComponent, NotificationChain msgs) {
-		msgs = eBasicSetContainer((InternalEObject)newComponent, ESMFPackage.ESMF_FIELD__COMPONENT, msgs);
-		return msgs;
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public void setComponent(ESMFComponent newComponent) {
-		if (newComponent != eInternalContainer() || (eContainerFeatureID() != ESMFPackage.ESMF_FIELD__COMPONENT && newComponent != null)) {
-			if (EcoreUtil.isAncestor(this, newComponent))
+	public void setScope(ESMFScope newScope) {
+		if (newScope != eInternalContainer() || (eContainerFeatureID() != ESMFPackage.ESMF_FIELD__SCOPE && newScope != null)) {
+			if (EcoreUtil.isAncestor(this, newScope))
 				throw new IllegalArgumentException("Recursive containment not allowed for " + toString());
 			NotificationChain msgs = null;
 			if (eInternalContainer() != null)
 				msgs = eBasicRemoveFromContainer(msgs);
-			if (newComponent != null)
-				msgs = ((InternalEObject)newComponent).eInverseAdd(this, ESMFPackage.ESMF_COMPONENT__FIELD, ESMFComponent.class, msgs);
-			msgs = basicSetComponent(newComponent, msgs);
+			if (newScope != null)
+				msgs = ((InternalEObject)newScope).eInverseAdd(this, ESMFPackage.ESMF_SCOPE__ITEM, ESMFScope.class, msgs);
+			msgs = basicSetScope(newScope, msgs);
 			if (msgs != null) msgs.dispatch();
 		}
 		else if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, ESMFPackage.ESMF_FIELD__COMPONENT, newComponent, newComponent));
+			eNotify(new ENotificationImpl(this, Notification.SET, ESMFPackage.ESMF_FIELD__SCOPE, newScope, newScope));
 	}
 
 	/**
@@ -480,17 +432,34 @@ public class ESMFFieldImpl extends ESMFNamedEntityImpl implements ESMFField {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	public String getLabel() {
+		return label;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public void setLabel(String newLabel) {
+		String oldLabel = label;
+		label = newLabel;
+		if (eNotificationRequired())
+			eNotify(new ENotificationImpl(this, Notification.SET, ESMFPackage.ESMF_FIELD__LABEL, oldLabel, label));
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
 	@Override
 	public NotificationChain eInverseAdd(InternalEObject otherEnd, int featureID, NotificationChain msgs) {
 		switch (featureID) {
-			case ESMFPackage.ESMF_FIELD__WORKSPACE:
-				if (workspace != null)
-					msgs = ((InternalEObject)workspace).eInverseRemove(this, ESMFPackage.ESMF_WORKSPACE__STATE_ITEM, ESMFWorkspace.class, msgs);
-				return basicSetWorkspace((ESMFWorkspace)otherEnd, msgs);
-			case ESMFPackage.ESMF_FIELD__COMPONENT:
+			case ESMFPackage.ESMF_FIELD__SCOPE:
 				if (eInternalContainer() != null)
 					msgs = eBasicRemoveFromContainer(msgs);
-				return basicSetComponent((ESMFComponent)otherEnd, msgs);
+				return basicSetScope((ESMFScope)otherEnd, msgs);
 		}
 		return super.eInverseAdd(otherEnd, featureID, msgs);
 	}
@@ -503,10 +472,8 @@ public class ESMFFieldImpl extends ESMFNamedEntityImpl implements ESMFField {
 	@Override
 	public NotificationChain eInverseRemove(InternalEObject otherEnd, int featureID, NotificationChain msgs) {
 		switch (featureID) {
-			case ESMFPackage.ESMF_FIELD__WORKSPACE:
-				return basicSetWorkspace(null, msgs);
-			case ESMFPackage.ESMF_FIELD__COMPONENT:
-				return basicSetComponent(null, msgs);
+			case ESMFPackage.ESMF_FIELD__SCOPE:
+				return basicSetScope(null, msgs);
 		}
 		return super.eInverseRemove(otherEnd, featureID, msgs);
 	}
@@ -519,8 +486,8 @@ public class ESMFFieldImpl extends ESMFNamedEntityImpl implements ESMFField {
 	@Override
 	public NotificationChain eBasicRemoveFromContainerFeature(NotificationChain msgs) {
 		switch (eContainerFeatureID()) {
-			case ESMFPackage.ESMF_FIELD__COMPONENT:
-				return eInternalContainer().eInverseRemove(this, ESMFPackage.ESMF_COMPONENT__FIELD, ESMFComponent.class, msgs);
+			case ESMFPackage.ESMF_FIELD__SCOPE:
+				return eInternalContainer().eInverseRemove(this, ESMFPackage.ESMF_SCOPE__ITEM, ESMFScope.class, msgs);
 		}
 		return super.eBasicRemoveFromContainerFeature(msgs);
 	}
@@ -533,11 +500,8 @@ public class ESMFFieldImpl extends ESMFNamedEntityImpl implements ESMFField {
 	@Override
 	public Object eGet(int featureID, boolean resolve, boolean coreType) {
 		switch (featureID) {
-			case ESMFPackage.ESMF_FIELD__WORKSPACE:
-				if (resolve) return getWorkspace();
-				return basicGetWorkspace();
-			case ESMFPackage.ESMF_FIELD__COMPONENT:
-				return getComponent();
+			case ESMFPackage.ESMF_FIELD__SCOPE:
+				return getScope();
 			case ESMFPackage.ESMF_FIELD__GRID:
 				if (resolve) return getGrid();
 				return basicGetGrid();
@@ -557,6 +521,8 @@ public class ESMFFieldImpl extends ESMFNamedEntityImpl implements ESMFField {
 				return getTotalLWidth();
 			case ESMFPackage.ESMF_FIELD__TOTAL_UWIDTH:
 				return getTotalUWidth();
+			case ESMFPackage.ESMF_FIELD__LABEL:
+				return getLabel();
 		}
 		return super.eGet(featureID, resolve, coreType);
 	}
@@ -570,11 +536,8 @@ public class ESMFFieldImpl extends ESMFNamedEntityImpl implements ESMFField {
 	@Override
 	public void eSet(int featureID, Object newValue) {
 		switch (featureID) {
-			case ESMFPackage.ESMF_FIELD__WORKSPACE:
-				setWorkspace((ESMFWorkspace)newValue);
-				return;
-			case ESMFPackage.ESMF_FIELD__COMPONENT:
-				setComponent((ESMFComponent)newValue);
+			case ESMFPackage.ESMF_FIELD__SCOPE:
+				setScope((ESMFScope)newValue);
 				return;
 			case ESMFPackage.ESMF_FIELD__GRID:
 				setGrid((ESMFGrid)newValue);
@@ -603,6 +566,9 @@ public class ESMFFieldImpl extends ESMFNamedEntityImpl implements ESMFField {
 				getTotalUWidth().clear();
 				getTotalUWidth().addAll((Collection<? extends Integer>)newValue);
 				return;
+			case ESMFPackage.ESMF_FIELD__LABEL:
+				setLabel((String)newValue);
+				return;
 		}
 		super.eSet(featureID, newValue);
 	}
@@ -615,11 +581,8 @@ public class ESMFFieldImpl extends ESMFNamedEntityImpl implements ESMFField {
 	@Override
 	public void eUnset(int featureID) {
 		switch (featureID) {
-			case ESMFPackage.ESMF_FIELD__WORKSPACE:
-				setWorkspace((ESMFWorkspace)null);
-				return;
-			case ESMFPackage.ESMF_FIELD__COMPONENT:
-				setComponent((ESMFComponent)null);
+			case ESMFPackage.ESMF_FIELD__SCOPE:
+				setScope((ESMFScope)null);
 				return;
 			case ESMFPackage.ESMF_FIELD__GRID:
 				setGrid((ESMFGrid)null);
@@ -645,6 +608,9 @@ public class ESMFFieldImpl extends ESMFNamedEntityImpl implements ESMFField {
 			case ESMFPackage.ESMF_FIELD__TOTAL_UWIDTH:
 				getTotalUWidth().clear();
 				return;
+			case ESMFPackage.ESMF_FIELD__LABEL:
+				setLabel(LABEL_EDEFAULT);
+				return;
 		}
 		super.eUnset(featureID);
 	}
@@ -657,10 +623,8 @@ public class ESMFFieldImpl extends ESMFNamedEntityImpl implements ESMFField {
 	@Override
 	public boolean eIsSet(int featureID) {
 		switch (featureID) {
-			case ESMFPackage.ESMF_FIELD__WORKSPACE:
-				return workspace != null;
-			case ESMFPackage.ESMF_FIELD__COMPONENT:
-				return getComponent() != null;
+			case ESMFPackage.ESMF_FIELD__SCOPE:
+				return getScope() != null;
 			case ESMFPackage.ESMF_FIELD__GRID:
 				return grid != null;
 			case ESMFPackage.ESMF_FIELD__ARRAY:
@@ -677,8 +641,42 @@ public class ESMFFieldImpl extends ESMFNamedEntityImpl implements ESMFField {
 				return totalLWidth != null && !totalLWidth.isEmpty();
 			case ESMFPackage.ESMF_FIELD__TOTAL_UWIDTH:
 				return totalUWidth != null && !totalUWidth.isEmpty();
+			case ESMFPackage.ESMF_FIELD__LABEL:
+				return LABEL_EDEFAULT == null ? label != null : !LABEL_EDEFAULT.equals(label);
 		}
 		return super.eIsSet(featureID);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	@Override
+	public int eBaseStructuralFeatureID(int derivedFeatureID, Class<?> baseClass) {
+		if (baseClass == ESMFScopedItem.class) {
+			switch (derivedFeatureID) {
+				case ESMFPackage.ESMF_FIELD__SCOPE: return ESMFPackage.ESMF_SCOPED_ITEM__SCOPE;
+				default: return -1;
+			}
+		}
+		return super.eBaseStructuralFeatureID(derivedFeatureID, baseClass);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	@Override
+	public int eDerivedStructuralFeatureID(int baseFeatureID, Class<?> baseClass) {
+		if (baseClass == ESMFScopedItem.class) {
+			switch (baseFeatureID) {
+				case ESMFPackage.ESMF_SCOPED_ITEM__SCOPE: return ESMFPackage.ESMF_FIELD__SCOPE;
+				default: return -1;
+			}
+		}
+		return super.eDerivedStructuralFeatureID(baseFeatureID, baseClass);
 	}
 
 	/**
@@ -699,6 +697,8 @@ public class ESMFFieldImpl extends ESMFNamedEntityImpl implements ESMFField {
 		result.append(totalLWidth);
 		result.append(", totalUWidth: ");
 		result.append(totalUWidth);
+		result.append(", label: ");
+		result.append(label);
 		result.append(')');
 		return result.toString();
 	}

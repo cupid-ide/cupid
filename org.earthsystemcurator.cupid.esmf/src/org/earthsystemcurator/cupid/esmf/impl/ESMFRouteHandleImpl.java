@@ -6,6 +6,8 @@ import org.earthsystemcurator.cupid.esmf.ESMFComponent;
 import org.earthsystemcurator.cupid.esmf.ESMFPackage;
 import org.earthsystemcurator.cupid.esmf.ESMFRouteHandle;
 
+import org.earthsystemcurator.cupid.esmf.ESMFScope;
+import org.earthsystemcurator.cupid.esmf.ESMFScopedItem;
 import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.common.notify.NotificationChain;
 
@@ -23,7 +25,7 @@ import org.eclipse.emf.ecore.util.EcoreUtil;
  * <p>
  * The following features are implemented:
  * <ul>
- *   <li>{@link org.earthsystemcurator.cupid.esmf.impl.ESMFRouteHandleImpl#getComponent <em>Component</em>}</li>
+ *   <li>{@link org.earthsystemcurator.cupid.esmf.impl.ESMFRouteHandleImpl#getScope <em>Scope</em>}</li>
  * </ul>
  * </p>
  *
@@ -54,9 +56,9 @@ public class ESMFRouteHandleImpl extends ESMFNamedEntityImpl implements ESMFRout
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public ESMFComponent getComponent() {
-		if (eContainerFeatureID() != ESMFPackage.ESMF_ROUTE_HANDLE__COMPONENT) return null;
-		return (ESMFComponent)eContainer();
+	public ESMFScope getScope() {
+		if (eContainerFeatureID() != ESMFPackage.ESMF_ROUTE_HANDLE__SCOPE) return null;
+		return (ESMFScope)eContainer();
 	}
 
 	/**
@@ -64,8 +66,8 @@ public class ESMFRouteHandleImpl extends ESMFNamedEntityImpl implements ESMFRout
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public NotificationChain basicSetComponent(ESMFComponent newComponent, NotificationChain msgs) {
-		msgs = eBasicSetContainer((InternalEObject)newComponent, ESMFPackage.ESMF_ROUTE_HANDLE__COMPONENT, msgs);
+	public NotificationChain basicSetScope(ESMFScope newScope, NotificationChain msgs) {
+		msgs = eBasicSetContainer((InternalEObject)newScope, ESMFPackage.ESMF_ROUTE_HANDLE__SCOPE, msgs);
 		return msgs;
 	}
 
@@ -74,20 +76,20 @@ public class ESMFRouteHandleImpl extends ESMFNamedEntityImpl implements ESMFRout
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public void setComponent(ESMFComponent newComponent) {
-		if (newComponent != eInternalContainer() || (eContainerFeatureID() != ESMFPackage.ESMF_ROUTE_HANDLE__COMPONENT && newComponent != null)) {
-			if (EcoreUtil.isAncestor(this, newComponent))
+	public void setScope(ESMFScope newScope) {
+		if (newScope != eInternalContainer() || (eContainerFeatureID() != ESMFPackage.ESMF_ROUTE_HANDLE__SCOPE && newScope != null)) {
+			if (EcoreUtil.isAncestor(this, newScope))
 				throw new IllegalArgumentException("Recursive containment not allowed for " + toString());
 			NotificationChain msgs = null;
 			if (eInternalContainer() != null)
 				msgs = eBasicRemoveFromContainer(msgs);
-			if (newComponent != null)
-				msgs = ((InternalEObject)newComponent).eInverseAdd(this, ESMFPackage.ESMF_COMPONENT__ROUTE_HANDLE, ESMFComponent.class, msgs);
-			msgs = basicSetComponent(newComponent, msgs);
+			if (newScope != null)
+				msgs = ((InternalEObject)newScope).eInverseAdd(this, ESMFPackage.ESMF_SCOPE__ITEM, ESMFScope.class, msgs);
+			msgs = basicSetScope(newScope, msgs);
 			if (msgs != null) msgs.dispatch();
 		}
 		else if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, ESMFPackage.ESMF_ROUTE_HANDLE__COMPONENT, newComponent, newComponent));
+			eNotify(new ENotificationImpl(this, Notification.SET, ESMFPackage.ESMF_ROUTE_HANDLE__SCOPE, newScope, newScope));
 	}
 
 	/**
@@ -98,10 +100,10 @@ public class ESMFRouteHandleImpl extends ESMFNamedEntityImpl implements ESMFRout
 	@Override
 	public NotificationChain eInverseAdd(InternalEObject otherEnd, int featureID, NotificationChain msgs) {
 		switch (featureID) {
-			case ESMFPackage.ESMF_ROUTE_HANDLE__COMPONENT:
+			case ESMFPackage.ESMF_ROUTE_HANDLE__SCOPE:
 				if (eInternalContainer() != null)
 					msgs = eBasicRemoveFromContainer(msgs);
-				return basicSetComponent((ESMFComponent)otherEnd, msgs);
+				return basicSetScope((ESMFScope)otherEnd, msgs);
 		}
 		return super.eInverseAdd(otherEnd, featureID, msgs);
 	}
@@ -114,8 +116,8 @@ public class ESMFRouteHandleImpl extends ESMFNamedEntityImpl implements ESMFRout
 	@Override
 	public NotificationChain eInverseRemove(InternalEObject otherEnd, int featureID, NotificationChain msgs) {
 		switch (featureID) {
-			case ESMFPackage.ESMF_ROUTE_HANDLE__COMPONENT:
-				return basicSetComponent(null, msgs);
+			case ESMFPackage.ESMF_ROUTE_HANDLE__SCOPE:
+				return basicSetScope(null, msgs);
 		}
 		return super.eInverseRemove(otherEnd, featureID, msgs);
 	}
@@ -128,8 +130,8 @@ public class ESMFRouteHandleImpl extends ESMFNamedEntityImpl implements ESMFRout
 	@Override
 	public NotificationChain eBasicRemoveFromContainerFeature(NotificationChain msgs) {
 		switch (eContainerFeatureID()) {
-			case ESMFPackage.ESMF_ROUTE_HANDLE__COMPONENT:
-				return eInternalContainer().eInverseRemove(this, ESMFPackage.ESMF_COMPONENT__ROUTE_HANDLE, ESMFComponent.class, msgs);
+			case ESMFPackage.ESMF_ROUTE_HANDLE__SCOPE:
+				return eInternalContainer().eInverseRemove(this, ESMFPackage.ESMF_SCOPE__ITEM, ESMFScope.class, msgs);
 		}
 		return super.eBasicRemoveFromContainerFeature(msgs);
 	}
@@ -142,8 +144,8 @@ public class ESMFRouteHandleImpl extends ESMFNamedEntityImpl implements ESMFRout
 	@Override
 	public Object eGet(int featureID, boolean resolve, boolean coreType) {
 		switch (featureID) {
-			case ESMFPackage.ESMF_ROUTE_HANDLE__COMPONENT:
-				return getComponent();
+			case ESMFPackage.ESMF_ROUTE_HANDLE__SCOPE:
+				return getScope();
 		}
 		return super.eGet(featureID, resolve, coreType);
 	}
@@ -156,8 +158,8 @@ public class ESMFRouteHandleImpl extends ESMFNamedEntityImpl implements ESMFRout
 	@Override
 	public void eSet(int featureID, Object newValue) {
 		switch (featureID) {
-			case ESMFPackage.ESMF_ROUTE_HANDLE__COMPONENT:
-				setComponent((ESMFComponent)newValue);
+			case ESMFPackage.ESMF_ROUTE_HANDLE__SCOPE:
+				setScope((ESMFScope)newValue);
 				return;
 		}
 		super.eSet(featureID, newValue);
@@ -171,8 +173,8 @@ public class ESMFRouteHandleImpl extends ESMFNamedEntityImpl implements ESMFRout
 	@Override
 	public void eUnset(int featureID) {
 		switch (featureID) {
-			case ESMFPackage.ESMF_ROUTE_HANDLE__COMPONENT:
-				setComponent((ESMFComponent)null);
+			case ESMFPackage.ESMF_ROUTE_HANDLE__SCOPE:
+				setScope((ESMFScope)null);
 				return;
 		}
 		super.eUnset(featureID);
@@ -186,10 +188,42 @@ public class ESMFRouteHandleImpl extends ESMFNamedEntityImpl implements ESMFRout
 	@Override
 	public boolean eIsSet(int featureID) {
 		switch (featureID) {
-			case ESMFPackage.ESMF_ROUTE_HANDLE__COMPONENT:
-				return getComponent() != null;
+			case ESMFPackage.ESMF_ROUTE_HANDLE__SCOPE:
+				return getScope() != null;
 		}
 		return super.eIsSet(featureID);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	@Override
+	public int eBaseStructuralFeatureID(int derivedFeatureID, Class<?> baseClass) {
+		if (baseClass == ESMFScopedItem.class) {
+			switch (derivedFeatureID) {
+				case ESMFPackage.ESMF_ROUTE_HANDLE__SCOPE: return ESMFPackage.ESMF_SCOPED_ITEM__SCOPE;
+				default: return -1;
+			}
+		}
+		return super.eBaseStructuralFeatureID(derivedFeatureID, baseClass);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	@Override
+	public int eDerivedStructuralFeatureID(int baseFeatureID, Class<?> baseClass) {
+		if (baseClass == ESMFScopedItem.class) {
+			switch (baseFeatureID) {
+				case ESMFPackage.ESMF_SCOPED_ITEM__SCOPE: return ESMFPackage.ESMF_ROUTE_HANDLE__SCOPE;
+				default: return -1;
+			}
+		}
+		return super.eDerivedStructuralFeatureID(baseFeatureID, baseClass);
 	}
 
 } //ESMFRouteHandleImpl

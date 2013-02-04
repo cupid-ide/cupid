@@ -14,7 +14,6 @@ import org.eclipse.emf.ecore.EObject;
  * <ul>
  *   <li>{@link org.earthsystemcurator.cupid.esmf.ESMFArraySpec#getTypekind <em>Typekind</em>}</li>
  *   <li>{@link org.earthsystemcurator.cupid.esmf.ESMFArraySpec#getRank <em>Rank</em>}</li>
- *   <li>{@link org.earthsystemcurator.cupid.esmf.ESMFArraySpec#getComponent <em>Component</em>}</li>
  * </ul>
  * </p>
  *
@@ -22,7 +21,7 @@ import org.eclipse.emf.ecore.EObject;
  * @model
  * @generated
  */
-public interface ESMFArraySpec extends ESMFNamedEntity {
+public interface ESMFArraySpec extends ESMFNamedEntity, ESMFScopedItem {
 	/**
 	 * Returns the value of the '<em><b>Typekind</b></em>' attribute.
 	 * The literals are from the enumeration {@link org.earthsystemcurator.cupid.esmf.ESMFTypeKind}.
@@ -77,33 +76,5 @@ public interface ESMFArraySpec extends ESMFNamedEntity {
 	 * @generated
 	 */
 	void setRank(int value);
-
-	/**
-	 * Returns the value of the '<em><b>Component</b></em>' container reference.
-	 * It is bidirectional and its opposite is '{@link org.earthsystemcurator.cupid.esmf.ESMFComponent#getArraySpec <em>Array Spec</em>}'.
-	 * <!-- begin-user-doc -->
-	 * <p>
-	 * If the meaning of the '<em>Component</em>' container reference isn't clear,
-	 * there really should be more of a description here...
-	 * </p>
-	 * <!-- end-user-doc -->
-	 * @return the value of the '<em>Component</em>' container reference.
-	 * @see #setComponent(ESMFComponent)
-	 * @see org.earthsystemcurator.cupid.esmf.ESMFPackage#getESMFArraySpec_Component()
-	 * @see org.earthsystemcurator.cupid.esmf.ESMFComponent#getArraySpec
-	 * @model opposite="arraySpec" transient="false"
-	 * @generated
-	 */
-	ESMFComponent getComponent();
-
-	/**
-	 * Sets the value of the '{@link org.earthsystemcurator.cupid.esmf.ESMFArraySpec#getComponent <em>Component</em>}' container reference.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @param value the new value of the '<em>Component</em>' container reference.
-	 * @see #getComponent()
-	 * @generated
-	 */
-	void setComponent(ESMFComponent value);
 
 } // ESMFArraySpec

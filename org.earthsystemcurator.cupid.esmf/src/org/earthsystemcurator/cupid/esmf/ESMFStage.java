@@ -14,7 +14,7 @@ import org.eclipse.emf.common.util.EList;
  * <ul>
  *   <li>{@link org.earthsystemcurator.cupid.esmf.ESMFStage#getComponent <em>Component</em>}</li>
  *   <li>{@link org.earthsystemcurator.cupid.esmf.ESMFStage#getPhase <em>Phase</em>}</li>
- *   <li>{@link org.earthsystemcurator.cupid.esmf.ESMFStage#getAction <em>Action</em>}</li>
+ *   <li>{@link org.earthsystemcurator.cupid.esmf.ESMFStage#getActions <em>Actions</em>}</li>
  * </ul>
  * </p>
  *
@@ -22,7 +22,7 @@ import org.eclipse.emf.common.util.EList;
  * @model abstract="true"
  * @generated
  */
-public interface ESMFStage extends ESMFNamedEntity {
+public interface ESMFStage extends ESMFNamedEntity, ESMFScope {
 	/**
 	 * Returns the value of the '<em><b>Component</b></em>' container reference.
 	 * It is bidirectional and its opposite is '{@link org.earthsystemcurator.cupid.esmf.ESMFComponent#getStage <em>Stage</em>}'.
@@ -79,21 +79,31 @@ public interface ESMFStage extends ESMFNamedEntity {
 	void setPhase(int value);
 
 	/**
-	 * Returns the value of the '<em><b>Action</b></em>' containment reference list.
-	 * The list contents are of type {@link org.earthsystemcurator.cupid.esmf.ESMFStageAction}.
-	 * It is bidirectional and its opposite is '{@link org.earthsystemcurator.cupid.esmf.ESMFStageAction#getStage <em>Stage</em>}'.
+	 * Returns the value of the '<em><b>Actions</b></em>' containment reference.
+	 * It is bidirectional and its opposite is '{@link org.earthsystemcurator.cupid.esmf.ESMFStageActionSequence#getStage <em>Stage</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <p>
-	 * If the meaning of the '<em>Action</em>' containment reference list isn't clear,
+	 * If the meaning of the '<em>Actions</em>' reference isn't clear,
 	 * there really should be more of a description here...
 	 * </p>
 	 * <!-- end-user-doc -->
-	 * @return the value of the '<em>Action</em>' containment reference list.
-	 * @see org.earthsystemcurator.cupid.esmf.ESMFPackage#getESMFStage_Action()
-	 * @see org.earthsystemcurator.cupid.esmf.ESMFStageAction#getStage
+	 * @return the value of the '<em>Actions</em>' containment reference.
+	 * @see #setActions(ESMFStageActionSequence)
+	 * @see org.earthsystemcurator.cupid.esmf.ESMFPackage#getESMFStage_Actions()
+	 * @see org.earthsystemcurator.cupid.esmf.ESMFStageActionSequence#getStage
 	 * @model opposite="stage" containment="true"
 	 * @generated
 	 */
-	EList<ESMFStageAction> getAction();
+	ESMFStageActionSequence getActions();
+
+	/**
+	 * Sets the value of the '{@link org.earthsystemcurator.cupid.esmf.ESMFStage#getActions <em>Actions</em>}' containment reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @param value the new value of the '<em>Actions</em>' containment reference.
+	 * @see #getActions()
+	 * @generated
+	 */
+	void setActions(ESMFStageActionSequence value);
 
 } // ESMFStage

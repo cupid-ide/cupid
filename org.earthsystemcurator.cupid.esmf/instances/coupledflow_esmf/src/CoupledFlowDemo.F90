@@ -154,7 +154,7 @@
     integer :: mid, by2, quart, by4
 
     type(ESMF_Grid) :: gridTop, gridIN, gridFS
-    type(ESMF_DistGrid) :: distgridIN, distgridFS
+    !type(ESMF_DistGrid) :: distgridIN, distgridFS
 #define WRITECOORD__disable
 #ifdef WRITECOORD
     type(ESMF_Array) :: coordXa, coordYa

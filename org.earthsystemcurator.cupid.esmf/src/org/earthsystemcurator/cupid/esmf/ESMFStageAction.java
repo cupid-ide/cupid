@@ -12,7 +12,7 @@ import org.eclipse.emf.ecore.EObject;
  * <p>
  * The following features are supported:
  * <ul>
- *   <li>{@link org.earthsystemcurator.cupid.esmf.ESMFStageAction#getStage <em>Stage</em>}</li>
+ *   <li>{@link org.earthsystemcurator.cupid.esmf.ESMFStageAction#getParent <em>Parent</em>}</li>
  * </ul>
  * </p>
  *
@@ -23,30 +23,30 @@ import org.eclipse.emf.ecore.EObject;
 public interface ESMFStageAction extends EObject {
 
 	/**
-	 * Returns the value of the '<em><b>Stage</b></em>' container reference.
-	 * It is bidirectional and its opposite is '{@link org.earthsystemcurator.cupid.esmf.ESMFStage#getAction <em>Action</em>}'.
+	 * Returns the value of the '<em><b>Parent</b></em>' container reference.
+	 * It is bidirectional and its opposite is '{@link org.earthsystemcurator.cupid.esmf.ESMFStageActionSequence#getAction <em>Action</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <p>
-	 * If the meaning of the '<em>Stage</em>' container reference isn't clear,
+	 * If the meaning of the '<em>Parent</em>' reference isn't clear,
 	 * there really should be more of a description here...
 	 * </p>
 	 * <!-- end-user-doc -->
-	 * @return the value of the '<em>Stage</em>' container reference.
-	 * @see #setStage(ESMFStage)
-	 * @see org.earthsystemcurator.cupid.esmf.ESMFPackage#getESMFStageAction_Stage()
-	 * @see org.earthsystemcurator.cupid.esmf.ESMFStage#getAction
-	 * @model opposite="action" required="true" transient="false"
+	 * @return the value of the '<em>Parent</em>' container reference.
+	 * @see #setParent(ESMFStageActionSequence)
+	 * @see org.earthsystemcurator.cupid.esmf.ESMFPackage#getESMFStageAction_Parent()
+	 * @see org.earthsystemcurator.cupid.esmf.ESMFStageActionSequence#getAction
+	 * @model opposite="action" transient="false"
 	 * @generated
 	 */
-	ESMFStage getStage();
+	ESMFStageActionSequence getParent();
 
 	/**
-	 * Sets the value of the '{@link org.earthsystemcurator.cupid.esmf.ESMFStageAction#getStage <em>Stage</em>}' container reference.
+	 * Sets the value of the '{@link org.earthsystemcurator.cupid.esmf.ESMFStageAction#getParent <em>Parent</em>}' container reference.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @param value the new value of the '<em>Stage</em>' container reference.
-	 * @see #getStage()
+	 * @param value the new value of the '<em>Parent</em>' container reference.
+	 * @see #getParent()
 	 * @generated
 	 */
-	void setStage(ESMFStage value);
+	void setParent(ESMFStageActionSequence value);
 } // ESMFStageAction

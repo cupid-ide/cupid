@@ -1,7 +1,88 @@
 <?xml version="1.0" encoding="ASCII"?>
 <esmf:ESMFCouplerComponent xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:esmf="http://www.earthsystemcurator.org/cupid/esmf" xsi:schemaLocation="http://www.earthsystemcurator.org/cupid/esmf ../../model/ESMF.ecore" name="Coupler">
-  <method xsi:type="esmf:ESMFInitMethod" name="init"/>
-  <method xsi:type="esmf:ESMFRunMethod" name="run"/>
-  <method xsi:type="esmf:ESMFFinalizeMethod" name="finalize"/>
-  <registerMethod name="register"/>
+  <item xsi:type="esmf:ESMFRouteHandle" name="rhFS2Inj"/>
+  <item xsi:type="esmf:ESMFRouteHandle" name="rhInj2FS"/>
+  <parent xsi:type="esmf:ESMFGriddedComponent" href="CoupledFlow.xmi#/"/>
+  <stage xsi:type="esmf:ESMFStageInitialize" name="FS2Inj_Init">
+    <item xsi:type="esmf:ESMFField" name="cpl_srcField_fs2inj"/>
+    <item xsi:type="esmf:ESMFField" name="cpl_dstField_fs2inj"/>
+    <actions>
+      <action xsi:type="esmf:ESMFStageActionImportStateGet" itemName="fs_sie" item="//@stage.0/@item.0"/>
+      <action xsi:type="esmf:ESMFStageActionExportStateGet" itemName="inj_sie" item="//@stage.0/@item.1"/>
+      <action xsi:type="esmf:ESMFStageActionFieldRedistStore" srcField="//@stage.0/@item.0" dstField="//@stage.0/@item.1" routeHandle="//@item.0"/>
+    </actions>
+  </stage>
+  <stage xsi:type="esmf:ESMFStageInitialize" name="Inj2FS_Init" phase="2">
+    <item xsi:type="esmf:ESMFField" name="cpl_srcField_inj2fs"/>
+    <item xsi:type="esmf:ESMFField" name="cpl_dstField_inj2fs"/>
+    <actions>
+      <action xsi:type="esmf:ESMFStageActionImportStateGet" itemName="inj_sie" item="//@stage.1/@item.0"/>
+      <action xsi:type="esmf:ESMFStageActionExportStateGet" itemName="fs_sie" item="//@stage.1/@item.1"/>
+      <action xsi:type="esmf:ESMFStageActionFieldRedistStore" srcField="//@stage.1/@item.0" dstField="//@stage.1/@item.1" routeHandle="//@item.0"/>
+    </actions>
+  </stage>
+  <stage xsi:type="esmf:ESMFStageRun" name="FS2Inj_Run">
+    <item xsi:type="esmf:ESMFField" name="srcField_fs2inj_run"/>
+    <item xsi:type="esmf:ESMFField" name="dstField_fs2inj_run"/>
+    <actions>
+      <action xsi:type="esmf:ESMFStageActionImportStateGet" itemName="fs_sie" item="//@stage.2/@item.0"/>
+      <action xsi:type="esmf:ESMFStageActionExportStateGet" itemName="inj_sie" item="//@stage.2/@item.1"/>
+      <action xsi:type="esmf:ESMFStageActionFieldRedist" srcField="//@stage.2/@item.0" dstField="//@stage.2/@item.1" routeHandle="//@item.0"/>
+      <action xsi:type="esmf:ESMFStageActionImportStateGet" itemName="fs_u" item="//@stage.2/@item.0"/>
+      <action xsi:type="esmf:ESMFStageActionExportStateGet" itemName="inj_u" item="//@stage.2/@item.1"/>
+      <action xsi:type="esmf:ESMFStageActionFieldRedist" srcField="//@stage.2/@item.0" dstField="//@stage.2/@item.1" routeHandle="//@item.0"/>
+      <action xsi:type="esmf:ESMFStageActionImportStateGet" itemName="fs_v" item="//@stage.2/@item.0"/>
+      <action xsi:type="esmf:ESMFStageActionExportStateGet" itemName="inj_v" item="//@stage.2/@item.1"/>
+      <action xsi:type="esmf:ESMFStageActionFieldRedist" srcField="//@stage.2/@item.0" dstField="//@stage.2/@item.1" routeHandle="//@item.0"/>
+      <action xsi:type="esmf:ESMFStageActionImportStateGet" itemName="fs_rho" item="//@stage.2/@item.0"/>
+      <action xsi:type="esmf:ESMFStageActionExportStateGet" itemName="inj_rho" item="//@stage.2/@item.1"/>
+      <action xsi:type="esmf:ESMFStageActionFieldRedist" srcField="//@stage.2/@item.0" dstField="//@stage.2/@item.1" routeHandle="//@item.0"/>
+      <action xsi:type="esmf:ESMFStageActionImportStateGet" itemName="fs_p" item="//@stage.2/@item.0"/>
+      <action xsi:type="esmf:ESMFStageActionExportStateGet" itemName="inj_p" item="//@stage.2/@item.1"/>
+      <action xsi:type="esmf:ESMFStageActionFieldRedist" srcField="//@stage.2/@item.0" dstField="//@stage.2/@item.1" routeHandle="//@item.0"/>
+      <action xsi:type="esmf:ESMFStageActionImportStateGet" itemName="fs_q" item="//@stage.2/@item.0"/>
+      <action xsi:type="esmf:ESMFStageActionExportStateGet" itemName="inj_q" item="//@stage.2/@item.1"/>
+      <action xsi:type="esmf:ESMFStageActionFieldRedist" srcField="//@stage.2/@item.0" dstField="//@stage.2/@item.1" routeHandle="//@item.0"/>
+      <action xsi:type="esmf:ESMFStageActionImportStateGet" itemName="fs_flag" item="//@stage.2/@item.0"/>
+      <action xsi:type="esmf:ESMFStageActionExportStateGet" itemName="inj_flag" item="//@stage.2/@item.1"/>
+      <action xsi:type="esmf:ESMFStageActionFieldRedist" srcField="//@stage.2/@item.0" dstField="//@stage.2/@item.1" routeHandle="//@item.0"/>
+    </actions>
+  </stage>
+  <stage xsi:type="esmf:ESMFStageRun" name="Inj2FS_Run" phase="2">
+    <item xsi:type="esmf:ESMFField" name="srcField_inj2fs_run"/>
+    <item xsi:type="esmf:ESMFField" name="dstField_inj2fs_run"/>
+    <actions>
+      <action xsi:type="esmf:ESMFStageActionImportStateGet" itemName="inj_sie" item="//@stage.3/@item.0"/>
+      <action xsi:type="esmf:ESMFStageActionExportStateGet" itemName="fs_sie" item="//@stage.3/@item.1"/>
+      <action xsi:type="esmf:ESMFStageActionFieldRedist" srcField="//@stage.3/@item.0" dstField="//@stage.3/@item.1" routeHandle="//@item.1"/>
+      <action xsi:type="esmf:ESMFStageActionImportStateGet" itemName="fs_u" item="//@stage.2/@item.0"/>
+      <action xsi:type="esmf:ESMFStageActionExportStateGet" itemName="inj_u" item="//@stage.2/@item.1"/>
+      <action xsi:type="esmf:ESMFStageActionFieldRedist" srcField="//@stage.3/@item.0" dstField="//@stage.3/@item.1" routeHandle="//@item.1"/>
+      <action xsi:type="esmf:ESMFStageActionImportStateGet" itemName="fs_v" item="//@stage.2/@item.0"/>
+      <action xsi:type="esmf:ESMFStageActionExportStateGet" itemName="inj_v" item="//@stage.2/@item.1"/>
+      <action xsi:type="esmf:ESMFStageActionFieldRedist" srcField="//@stage.3/@item.0" dstField="//@stage.3/@item.1" routeHandle="//@item.1"/>
+      <action xsi:type="esmf:ESMFStageActionImportStateGet" itemName="fs_rho" item="//@stage.2/@item.0"/>
+      <action xsi:type="esmf:ESMFStageActionExportStateGet" itemName="inj_rho" item="//@stage.2/@item.1"/>
+      <action xsi:type="esmf:ESMFStageActionFieldRedist" srcField="//@stage.3/@item.0" dstField="//@stage.3/@item.1" routeHandle="//@item.1"/>
+      <action xsi:type="esmf:ESMFStageActionImportStateGet" itemName="fs_p" item="//@stage.2/@item.0"/>
+      <action xsi:type="esmf:ESMFStageActionExportStateGet" itemName="inj_p" item="//@stage.2/@item.1"/>
+      <action xsi:type="esmf:ESMFStageActionFieldRedist" srcField="//@stage.3/@item.0" dstField="//@stage.3/@item.1" routeHandle="//@item.1"/>
+      <action xsi:type="esmf:ESMFStageActionImportStateGet" itemName="fs_q" item="//@stage.2/@item.0"/>
+      <action xsi:type="esmf:ESMFStageActionExportStateGet" itemName="inj_q" item="//@stage.2/@item.1"/>
+      <action xsi:type="esmf:ESMFStageActionFieldRedist" srcField="//@stage.3/@item.0" dstField="//@stage.3/@item.1" routeHandle="//@item.1"/>
+      <action xsi:type="esmf:ESMFStageActionImportStateGet" itemName="fs_flag" item="//@stage.2/@item.0"/>
+      <action xsi:type="esmf:ESMFStageActionExportStateGet" itemName="inj_flag" item="//@stage.2/@item.1"/>
+      <action xsi:type="esmf:ESMFStageActionFieldRedist" srcField="//@stage.3/@item.0" dstField="//@stage.3/@item.1" routeHandle="//@item.1"/>
+    </actions>
+  </stage>
+  <stage xsi:type="esmf:ESMFStageFinalize" name="FS2Inj_Finalize">
+    <actions>
+      <action xsi:type="esmf:ESMFStageActionFieldRedistRelease" routeHandle="//@item.0"/>
+    </actions>
+  </stage>
+  <stage xsi:type="esmf:ESMFStageFinalize" name="Inj2FS_Finalize" phase="2">
+    <actions>
+      <action xsi:type="esmf:ESMFStageActionFieldRedistRelease" routeHandle="//@item.1"/>
+    </actions>
+  </stage>
 </esmf:ESMFCouplerComponent>

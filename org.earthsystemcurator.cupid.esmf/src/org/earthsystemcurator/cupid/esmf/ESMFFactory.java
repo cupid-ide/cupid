@@ -49,6 +49,15 @@ public interface ESMFFactory extends EFactory {
 	ESMFSimpleCouplerComponent createESMFSimpleCouplerComponent();
 
 	/**
+	 * Returns a new object of class '<em>Driver</em>'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return a new object of class '<em>Driver</em>'.
+	 * @generated
+	 */
+	ESMFDriver createESMFDriver();
+
+	/**
 	 * Returns a new object of class '<em>Stage Initialize</em>'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -76,6 +85,33 @@ public interface ESMFFactory extends EFactory {
 	ESMFStageFinalize createESMFStageFinalize();
 
 	/**
+	 * Returns a new object of class '<em>Stage Action Sequence</em>'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return a new object of class '<em>Stage Action Sequence</em>'.
+	 * @generated
+	 */
+	ESMFStageActionSequence createESMFStageActionSequence();
+
+	/**
+	 * Returns a new object of class '<em>Stage Action Iterate</em>'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return a new object of class '<em>Stage Action Iterate</em>'.
+	 * @generated
+	 */
+	ESMFStageActionIterate createESMFStageActionIterate();
+
+	/**
+	 * Returns a new object of class '<em>Stage Action Iterate Clock</em>'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return a new object of class '<em>Stage Action Iterate Clock</em>'.
+	 * @generated
+	 */
+	ESMFStageActionIterateClock createESMFStageActionIterateClock();
+
+	/**
 	 * Returns a new object of class '<em>Stage Action Field Create</em>'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -92,6 +128,33 @@ public interface ESMFFactory extends EFactory {
 	 * @generated
 	 */
 	ESMFStageActionFieldDestroy createESMFStageActionFieldDestroy();
+
+	/**
+	 * Returns a new object of class '<em>Stage Action Field Redist Store</em>'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return a new object of class '<em>Stage Action Field Redist Store</em>'.
+	 * @generated
+	 */
+	ESMFStageActionFieldRedistStore createESMFStageActionFieldRedistStore();
+
+	/**
+	 * Returns a new object of class '<em>Stage Action Field Redist</em>'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return a new object of class '<em>Stage Action Field Redist</em>'.
+	 * @generated
+	 */
+	ESMFStageActionFieldRedist createESMFStageActionFieldRedist();
+
+	/**
+	 * Returns a new object of class '<em>Stage Action Field Redist Release</em>'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return a new object of class '<em>Stage Action Field Redist Release</em>'.
+	 * @generated
+	 */
+	ESMFStageActionFieldRedistRelease createESMFStageActionFieldRedistRelease();
 
 	/**
 	 * Returns a new object of class '<em>Stage Action Grid Create</em>'.
@@ -130,6 +193,24 @@ public interface ESMFFactory extends EFactory {
 	ESMFStageActionExportStateAdd createESMFStageActionExportStateAdd();
 
 	/**
+	 * Returns a new object of class '<em>Stage Action Import State Get</em>'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return a new object of class '<em>Stage Action Import State Get</em>'.
+	 * @generated
+	 */
+	ESMFStageActionImportStateGet createESMFStageActionImportStateGet();
+
+	/**
+	 * Returns a new object of class '<em>Stage Action Export State Get</em>'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return a new object of class '<em>Stage Action Export State Get</em>'.
+	 * @generated
+	 */
+	ESMFStageActionExportStateGet createESMFStageActionExportStateGet();
+
+	/**
 	 * Returns a new object of class '<em>Stage Action State Create</em>'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -157,6 +238,15 @@ public interface ESMFFactory extends EFactory {
 	ESMFStageActionArraySpecCreate createESMFStageActionArraySpecCreate();
 
 	/**
+	 * Returns a new object of class '<em>Stage Action Component Create</em>'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return a new object of class '<em>Stage Action Component Create</em>'.
+	 * @generated
+	 */
+	ESMFStageActionComponentCreate createESMFStageActionComponentCreate();
+
+	/**
 	 * Returns a new object of class '<em>Stage Action Component Destroy</em>'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -164,6 +254,24 @@ public interface ESMFFactory extends EFactory {
 	 * @generated
 	 */
 	ESMFStageActionComponentDestroy createESMFStageActionComponentDestroy();
+
+	/**
+	 * Returns a new object of class '<em>Stage Action Component Set Grid</em>'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return a new object of class '<em>Stage Action Component Set Grid</em>'.
+	 * @generated
+	 */
+	ESMFStageActionComponentSetGrid createESMFStageActionComponentSetGrid();
+
+	/**
+	 * Returns a new object of class '<em>Stage Action Execute Stage</em>'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return a new object of class '<em>Stage Action Execute Stage</em>'.
+	 * @generated
+	 */
+	ESMFStageActionExecuteStage createESMFStageActionExecuteStage();
 
 	/**
 	 * Returns a new object of class '<em>Method</em>'.

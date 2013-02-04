@@ -5,10 +5,16 @@ package org.earthsystemcurator.cupid.esmf.impl;
 import java.util.Collection;
 
 import org.earthsystemcurator.cupid.esmf.ESMFComponent;
+import org.earthsystemcurator.cupid.esmf.ESMFField;
+import org.earthsystemcurator.cupid.esmf.ESMFGrid;
 import org.earthsystemcurator.cupid.esmf.ESMFPackage;
+import org.earthsystemcurator.cupid.esmf.ESMFRouteHandle;
+import org.earthsystemcurator.cupid.esmf.ESMFScope;
+import org.earthsystemcurator.cupid.esmf.ESMFScopedItem;
 import org.earthsystemcurator.cupid.esmf.ESMFStage;
 import org.earthsystemcurator.cupid.esmf.ESMFStageAction;
 
+import org.earthsystemcurator.cupid.esmf.ESMFStageActionSequence;
 import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.common.notify.NotificationChain;
 
@@ -31,15 +37,26 @@ import org.eclipse.emf.ecore.util.InternalEList;
  * <p>
  * The following features are implemented:
  * <ul>
+ *   <li>{@link org.earthsystemcurator.cupid.esmf.impl.ESMFStageImpl#getItem <em>Item</em>}</li>
  *   <li>{@link org.earthsystemcurator.cupid.esmf.impl.ESMFStageImpl#getComponent <em>Component</em>}</li>
  *   <li>{@link org.earthsystemcurator.cupid.esmf.impl.ESMFStageImpl#getPhase <em>Phase</em>}</li>
- *   <li>{@link org.earthsystemcurator.cupid.esmf.impl.ESMFStageImpl#getAction <em>Action</em>}</li>
+ *   <li>{@link org.earthsystemcurator.cupid.esmf.impl.ESMFStageImpl#getActions <em>Actions</em>}</li>
  * </ul>
  * </p>
  *
  * @generated
  */
 public abstract class ESMFStageImpl extends ESMFNamedEntityImpl implements ESMFStage {
+	/**
+	 * The cached value of the '{@link #getItem() <em>Item</em>}' containment reference list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #getItem()
+	 * @generated
+	 * @ordered
+	 */
+	protected EList<ESMFScopedItem> item;
+
 	/**
 	 * The default value of the '{@link #getPhase() <em>Phase</em>}' attribute.
 	 * <!-- begin-user-doc -->
@@ -61,14 +78,14 @@ public abstract class ESMFStageImpl extends ESMFNamedEntityImpl implements ESMFS
 	protected int phase = PHASE_EDEFAULT;
 
 	/**
-	 * The cached value of the '{@link #getAction() <em>Action</em>}' containment reference list.
+	 * The cached value of the '{@link #getActions() <em>Actions</em>}' containment reference.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @see #getAction()
+	 * @see #getActions()
 	 * @generated
 	 * @ordered
 	 */
-	protected EList<ESMFStageAction> action;
+	protected ESMFStageActionSequence actions;
 
 	/**
 	 * <!-- begin-user-doc -->
@@ -87,6 +104,18 @@ public abstract class ESMFStageImpl extends ESMFNamedEntityImpl implements ESMFS
 	@Override
 	protected EClass eStaticClass() {
 		return ESMFPackage.Literals.ESMF_STAGE;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EList<ESMFScopedItem> getItem() {
+		if (item == null) {
+			item = new EObjectContainmentWithInverseEList<ESMFScopedItem>(ESMFScopedItem.class, this, ESMFPackage.ESMF_STAGE__ITEM, ESMFPackage.ESMF_SCOPED_ITEM__SCOPE);
+		}
+		return item;
 	}
 
 	/**
@@ -156,11 +185,42 @@ public abstract class ESMFStageImpl extends ESMFNamedEntityImpl implements ESMFS
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EList<ESMFStageAction> getAction() {
-		if (action == null) {
-			action = new EObjectContainmentWithInverseEList<ESMFStageAction>(ESMFStageAction.class, this, ESMFPackage.ESMF_STAGE__ACTION, ESMFPackage.ESMF_STAGE_ACTION__STAGE);
+	public ESMFStageActionSequence getActions() {
+		return actions;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public NotificationChain basicSetActions(ESMFStageActionSequence newActions, NotificationChain msgs) {
+		ESMFStageActionSequence oldActions = actions;
+		actions = newActions;
+		if (eNotificationRequired()) {
+			ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, ESMFPackage.ESMF_STAGE__ACTIONS, oldActions, newActions);
+			if (msgs == null) msgs = notification; else msgs.add(notification);
 		}
-		return action;
+		return msgs;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public void setActions(ESMFStageActionSequence newActions) {
+		if (newActions != actions) {
+			NotificationChain msgs = null;
+			if (actions != null)
+				msgs = ((InternalEObject)actions).eInverseRemove(this, ESMFPackage.ESMF_STAGE_ACTION_SEQUENCE__STAGE, ESMFStageActionSequence.class, msgs);
+			if (newActions != null)
+				msgs = ((InternalEObject)newActions).eInverseAdd(this, ESMFPackage.ESMF_STAGE_ACTION_SEQUENCE__STAGE, ESMFStageActionSequence.class, msgs);
+			msgs = basicSetActions(newActions, msgs);
+			if (msgs != null) msgs.dispatch();
+		}
+		else if (eNotificationRequired())
+			eNotify(new ENotificationImpl(this, Notification.SET, ESMFPackage.ESMF_STAGE__ACTIONS, newActions, newActions));
 	}
 
 	/**
@@ -172,12 +232,16 @@ public abstract class ESMFStageImpl extends ESMFNamedEntityImpl implements ESMFS
 	@Override
 	public NotificationChain eInverseAdd(InternalEObject otherEnd, int featureID, NotificationChain msgs) {
 		switch (featureID) {
+			case ESMFPackage.ESMF_STAGE__ITEM:
+				return ((InternalEList<InternalEObject>)(InternalEList<?>)getItem()).basicAdd(otherEnd, msgs);
 			case ESMFPackage.ESMF_STAGE__COMPONENT:
 				if (eInternalContainer() != null)
 					msgs = eBasicRemoveFromContainer(msgs);
 				return basicSetComponent((ESMFComponent)otherEnd, msgs);
-			case ESMFPackage.ESMF_STAGE__ACTION:
-				return ((InternalEList<InternalEObject>)(InternalEList<?>)getAction()).basicAdd(otherEnd, msgs);
+			case ESMFPackage.ESMF_STAGE__ACTIONS:
+				if (actions != null)
+					msgs = ((InternalEObject)actions).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - ESMFPackage.ESMF_STAGE__ACTIONS, null, msgs);
+				return basicSetActions((ESMFStageActionSequence)otherEnd, msgs);
 		}
 		return super.eInverseAdd(otherEnd, featureID, msgs);
 	}
@@ -190,10 +254,12 @@ public abstract class ESMFStageImpl extends ESMFNamedEntityImpl implements ESMFS
 	@Override
 	public NotificationChain eInverseRemove(InternalEObject otherEnd, int featureID, NotificationChain msgs) {
 		switch (featureID) {
+			case ESMFPackage.ESMF_STAGE__ITEM:
+				return ((InternalEList<?>)getItem()).basicRemove(otherEnd, msgs);
 			case ESMFPackage.ESMF_STAGE__COMPONENT:
 				return basicSetComponent(null, msgs);
-			case ESMFPackage.ESMF_STAGE__ACTION:
-				return ((InternalEList<?>)getAction()).basicRemove(otherEnd, msgs);
+			case ESMFPackage.ESMF_STAGE__ACTIONS:
+				return basicSetActions(null, msgs);
 		}
 		return super.eInverseRemove(otherEnd, featureID, msgs);
 	}
@@ -220,12 +286,14 @@ public abstract class ESMFStageImpl extends ESMFNamedEntityImpl implements ESMFS
 	@Override
 	public Object eGet(int featureID, boolean resolve, boolean coreType) {
 		switch (featureID) {
+			case ESMFPackage.ESMF_STAGE__ITEM:
+				return getItem();
 			case ESMFPackage.ESMF_STAGE__COMPONENT:
 				return getComponent();
 			case ESMFPackage.ESMF_STAGE__PHASE:
 				return getPhase();
-			case ESMFPackage.ESMF_STAGE__ACTION:
-				return getAction();
+			case ESMFPackage.ESMF_STAGE__ACTIONS:
+				return getActions();
 		}
 		return super.eGet(featureID, resolve, coreType);
 	}
@@ -239,15 +307,18 @@ public abstract class ESMFStageImpl extends ESMFNamedEntityImpl implements ESMFS
 	@Override
 	public void eSet(int featureID, Object newValue) {
 		switch (featureID) {
+			case ESMFPackage.ESMF_STAGE__ITEM:
+				getItem().clear();
+				getItem().addAll((Collection<? extends ESMFScopedItem>)newValue);
+				return;
 			case ESMFPackage.ESMF_STAGE__COMPONENT:
 				setComponent((ESMFComponent)newValue);
 				return;
 			case ESMFPackage.ESMF_STAGE__PHASE:
 				setPhase((Integer)newValue);
 				return;
-			case ESMFPackage.ESMF_STAGE__ACTION:
-				getAction().clear();
-				getAction().addAll((Collection<? extends ESMFStageAction>)newValue);
+			case ESMFPackage.ESMF_STAGE__ACTIONS:
+				setActions((ESMFStageActionSequence)newValue);
 				return;
 		}
 		super.eSet(featureID, newValue);
@@ -261,14 +332,17 @@ public abstract class ESMFStageImpl extends ESMFNamedEntityImpl implements ESMFS
 	@Override
 	public void eUnset(int featureID) {
 		switch (featureID) {
+			case ESMFPackage.ESMF_STAGE__ITEM:
+				getItem().clear();
+				return;
 			case ESMFPackage.ESMF_STAGE__COMPONENT:
 				setComponent((ESMFComponent)null);
 				return;
 			case ESMFPackage.ESMF_STAGE__PHASE:
 				setPhase(PHASE_EDEFAULT);
 				return;
-			case ESMFPackage.ESMF_STAGE__ACTION:
-				getAction().clear();
+			case ESMFPackage.ESMF_STAGE__ACTIONS:
+				setActions((ESMFStageActionSequence)null);
 				return;
 		}
 		super.eUnset(featureID);
@@ -282,14 +356,48 @@ public abstract class ESMFStageImpl extends ESMFNamedEntityImpl implements ESMFS
 	@Override
 	public boolean eIsSet(int featureID) {
 		switch (featureID) {
+			case ESMFPackage.ESMF_STAGE__ITEM:
+				return item != null && !item.isEmpty();
 			case ESMFPackage.ESMF_STAGE__COMPONENT:
 				return getComponent() != null;
 			case ESMFPackage.ESMF_STAGE__PHASE:
 				return phase != PHASE_EDEFAULT;
-			case ESMFPackage.ESMF_STAGE__ACTION:
-				return action != null && !action.isEmpty();
+			case ESMFPackage.ESMF_STAGE__ACTIONS:
+				return actions != null;
 		}
 		return super.eIsSet(featureID);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	@Override
+	public int eBaseStructuralFeatureID(int derivedFeatureID, Class<?> baseClass) {
+		if (baseClass == ESMFScope.class) {
+			switch (derivedFeatureID) {
+				case ESMFPackage.ESMF_STAGE__ITEM: return ESMFPackage.ESMF_SCOPE__ITEM;
+				default: return -1;
+			}
+		}
+		return super.eBaseStructuralFeatureID(derivedFeatureID, baseClass);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	@Override
+	public int eDerivedStructuralFeatureID(int baseFeatureID, Class<?> baseClass) {
+		if (baseClass == ESMFScope.class) {
+			switch (baseFeatureID) {
+				case ESMFPackage.ESMF_SCOPE__ITEM: return ESMFPackage.ESMF_STAGE__ITEM;
+				default: return -1;
+			}
+		}
+		return super.eDerivedStructuralFeatureID(baseFeatureID, baseClass);
 	}
 
 	/**

@@ -1,88 +1,92 @@
 <?xml version="1.0" encoding="ASCII"?>
 <esmf:ESMFGriddedComponent xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:esmf="http://www.earthsystemcurator.org/cupid/esmf" xsi:schemaLocation="http://www.earthsystemcurator.org/cupid/esmf ../../model/ESMF.ecore" name="Injector">
-  <arraySpec name="injArraySpec" typekind="ESMF_TYPEKIND_R4" rank="2"/>
-  <field name="inj_sie" grid="//@grid.0" arraySpec="//@arraySpec.0" index="ESMF_INDEX_GLOBAL">
+  <item xsi:type="esmf:ESMFField" name="inj_sie" grid="//@item.12" arraySpec="//@item.13" index="ESMF_INDEX_GLOBAL">
     <totalLWidth>1</totalLWidth>
     <totalLWidth>1</totalLWidth>
     <totalUWidth>1</totalUWidth>
     <totalUWidth>1</totalUWidth>
-  </field>
-  <field name="inj_u" grid="//@grid.0" arraySpec="//@arraySpec.0" index="ESMF_INDEX_GLOBAL">
+  </item>
+  <item xsi:type="esmf:ESMFField" name="inj_u" grid="//@item.12" arraySpec="//@item.13" index="ESMF_INDEX_GLOBAL">
     <totalLWidth>1</totalLWidth>
     <totalLWidth>1</totalLWidth>
     <totalUWidth>1</totalUWidth>
     <totalUWidth>1</totalUWidth>
-  </field>
-  <field name="inj_v" grid="//@grid.0" arraySpec="//@arraySpec.0" index="ESMF_INDEX_GLOBAL">
+  </item>
+  <item xsi:type="esmf:ESMFField" name="inj_v" grid="//@item.12" arraySpec="//@item.13" index="ESMF_INDEX_GLOBAL">
     <totalLWidth>1</totalLWidth>
     <totalLWidth>1</totalLWidth>
     <totalUWidth>1</totalUWidth>
     <totalUWidth>1</totalUWidth>
-  </field>
-  <field name="inj_rho" grid="//@grid.0" arraySpec="//@arraySpec.0" index="ESMF_INDEX_GLOBAL">
+  </item>
+  <item xsi:type="esmf:ESMFField" name="inj_rho" grid="//@item.12" arraySpec="//@item.13" index="ESMF_INDEX_GLOBAL">
     <totalLWidth>1</totalLWidth>
     <totalLWidth>1</totalLWidth>
     <totalUWidth>1</totalUWidth>
     <totalUWidth>1</totalUWidth>
-  </field>
-  <field name="inj_rhoi" grid="//@grid.0" arraySpec="//@arraySpec.0" index="ESMF_INDEX_GLOBAL">
+  </item>
+  <item xsi:type="esmf:ESMFField" name="inj_rhoi" grid="//@item.12" arraySpec="//@item.13" index="ESMF_INDEX_GLOBAL">
     <totalLWidth>1</totalLWidth>
     <totalLWidth>1</totalLWidth>
     <totalUWidth>1</totalUWidth>
     <totalUWidth>1</totalUWidth>
-  </field>
-  <field name="inj_rhou" grid="//@grid.0" arraySpec="//@arraySpec.0" index="ESMF_INDEX_GLOBAL">
+  </item>
+  <item xsi:type="esmf:ESMFField" name="inj_rhou" grid="//@item.12" arraySpec="//@item.13" index="ESMF_INDEX_GLOBAL">
     <totalLWidth>1</totalLWidth>
     <totalLWidth>1</totalLWidth>
     <totalUWidth>1</totalUWidth>
     <totalUWidth>1</totalUWidth>
-  </field>
-  <field name="inj_rhov" grid="//@grid.0" arraySpec="//@arraySpec.0" index="ESMF_INDEX_GLOBAL">
+  </item>
+  <item xsi:type="esmf:ESMFField" name="inj_rhov" grid="//@item.12" arraySpec="//@item.13" index="ESMF_INDEX_GLOBAL">
     <totalLWidth>1</totalLWidth>
     <totalLWidth>1</totalLWidth>
     <totalUWidth>1</totalUWidth>
     <totalUWidth>1</totalUWidth>
-  </field>
-  <field name="inj_p" grid="//@grid.0" arraySpec="//@arraySpec.0" index="ESMF_INDEX_GLOBAL">
+  </item>
+  <item xsi:type="esmf:ESMFField" name="inj_p" grid="//@item.12" arraySpec="//@item.13" index="ESMF_INDEX_GLOBAL">
     <totalLWidth>1</totalLWidth>
     <totalLWidth>1</totalLWidth>
     <totalUWidth>1</totalUWidth>
     <totalUWidth>1</totalUWidth>
-  </field>
-  <field name="inj_q" grid="//@grid.0" arraySpec="//@arraySpec.0" index="ESMF_INDEX_GLOBAL">
+  </item>
+  <item xsi:type="esmf:ESMFField" name="inj_q" grid="//@item.12" arraySpec="//@item.13" index="ESMF_INDEX_GLOBAL">
     <totalLWidth>1</totalLWidth>
     <totalLWidth>1</totalLWidth>
     <totalUWidth>1</totalUWidth>
     <totalUWidth>1</totalUWidth>
-  </field>
-  <field name="inj_flag" grid="//@grid.0" arraySpec="//@arraySpec.0" index="ESMF_INDEX_GLOBAL">
+  </item>
+  <item xsi:type="esmf:ESMFField" name="inj_flag" grid="//@item.12" arraySpec="//@item.13" index="ESMF_INDEX_GLOBAL">
     <totalLWidth>1</totalLWidth>
     <totalLWidth>1</totalLWidth>
     <totalUWidth>1</totalUWidth>
     <totalUWidth>1</totalUWidth>
-  </field>
-  <field name="inj_de" grid="//@grid.0" arraySpec="//@arraySpec.0" index="ESMF_INDEX_GLOBAL">
+  </item>
+  <item xsi:type="esmf:ESMFField" name="inj_de" grid="//@item.12" arraySpec="//@item.13" index="ESMF_INDEX_GLOBAL">
     <totalLWidth>1</totalLWidth>
     <totalLWidth>1</totalLWidth>
     <totalUWidth>1</totalUWidth>
     <totalUWidth>1</totalUWidth>
-  </field>
-  <field name="inj_omega" grid="//@grid.0" arraySpec="//@arraySpec.0" index="ESMF_INDEX_GLOBAL">
+  </item>
+  <item xsi:type="esmf:ESMFField" name="inj_omega" grid="//@item.12" arraySpec="//@item.13" index="ESMF_INDEX_GLOBAL">
     <totalLWidth>1</totalLWidth>
     <totalLWidth>1</totalLWidth>
     <totalUWidth>1</totalUWidth>
     <totalUWidth>1</totalUWidth>
-  </field>
-  <grid name="injGrid"/>
+  </item>
+  <item xsi:type="esmf:ESMFGrid" name="injGrid"/>
+  <item xsi:type="esmf:ESMFArraySpec" name="injArraySpec" typekind="ESMF_TYPEKIND_R4" rank="2"/>
   <stage xsi:type="esmf:ESMFStageInitialize" name="Injector_Init">
-    <action xsi:type="esmf:ESMFStageActionGridInherit" grid="//@grid.0"/>
-    <action xsi:type="esmf:ESMFStageActionArraySpecCreate" arraySpec="//@arraySpec.0"/>
-    <action xsi:type="esmf:ESMFStageActionFieldCreate" field="//@field.0 //@field.1 //@field.2 //@field.3 //@field.4 //@field.5 //@field.6 //@field.7 //@field.8 //@field.9 //@field.10 //@field.11"/>
-    <action xsi:type="esmf:ESMFStageActionImportStateAdd" item="//@field.0 //@field.1 //@field.2 //@field.3 //@field.7 //@field.8 //@field.9"/>
-    <action xsi:type="esmf:ESMFStageActionExportStateAdd" item="//@field.0 //@field.1 //@field.2 //@field.3 //@field.7 //@field.8 //@field.9"/>
+    <actions>
+      <action xsi:type="esmf:ESMFStageActionGridInherit" grid="//@item.12"/>
+      <action xsi:type="esmf:ESMFStageActionArraySpecCreate" arraySpec="//@item.13"/>
+      <action xsi:type="esmf:ESMFStageActionFieldCreate" field="//@item.0 //@item.1 //@item.2 //@item.3 //@item.4 //@item.5 //@item.6 //@item.7 //@item.8 //@item.9 //@item.10 //@item.11"/>
+      <action xsi:type="esmf:ESMFStageActionImportStateAdd" item="//@item.0 //@item.1 //@item.2 //@item.3 //@item.7 //@item.8 //@item.9"/>
+      <action xsi:type="esmf:ESMFStageActionExportStateAdd" item="//@item.0 //@item.1 //@item.2 //@item.3 //@item.7 //@item.8 //@item.9"/>
+    </actions>
   </stage>
   <stage xsi:type="esmf:ESMFStageRun" name="Injector_Run"/>
   <stage xsi:type="esmf:ESMFStageFinalize" name="Injector_Finalize">
-    <action xsi:type="esmf:ESMFStageActionFieldDestroy" field="//@field.0 //@field.1 //@field.2 //@field.3 //@field.4 //@field.5 //@field.6 //@field.7 //@field.8 //@field.9 //@field.10 //@field.11"/>
+    <actions>
+      <action xsi:type="esmf:ESMFStageActionFieldDestroy" field="//@item.0 //@item.1 //@item.2 //@item.3 //@item.4 //@item.5 //@item.6 //@item.7 //@item.8 //@item.9 //@item.10 //@item.11"/>
+    </actions>
   </stage>
 </esmf:ESMFGriddedComponent>

@@ -68,7 +68,7 @@ public class ESMFMethodImpl extends ESMFNamedEntityImpl implements ESMFMethod {
 	protected int phase = PHASE_EDEFAULT;
 
 	/**
-	 * The cached value of the '{@link #getImportState() <em>Import State</em>}' containment reference.
+	 * The cached value of the '{@link #getImportState() <em>Import State</em>}' reference.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @see #getImportState()
@@ -78,7 +78,7 @@ public class ESMFMethodImpl extends ESMFNamedEntityImpl implements ESMFMethod {
 	protected ESMFState importState;
 
 	/**
-	 * The cached value of the '{@link #getExportState() <em>Export State</em>}' containment reference.
+	 * The cached value of the '{@link #getExportState() <em>Export State</em>}' reference.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @see #getExportState()
@@ -204,6 +204,14 @@ public class ESMFMethodImpl extends ESMFNamedEntityImpl implements ESMFMethod {
 	 * @generated
 	 */
 	public ESMFState getImportState() {
+		if (importState != null && importState.eIsProxy()) {
+			InternalEObject oldImportState = (InternalEObject)importState;
+			importState = (ESMFState)eResolveProxy(oldImportState);
+			if (importState != oldImportState) {
+				if (eNotificationRequired())
+					eNotify(new ENotificationImpl(this, Notification.RESOLVE, ESMFPackage.ESMF_METHOD__IMPORT_STATE, oldImportState, importState));
+			}
+		}
 		return importState;
 	}
 
@@ -212,14 +220,8 @@ public class ESMFMethodImpl extends ESMFNamedEntityImpl implements ESMFMethod {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public NotificationChain basicSetImportState(ESMFState newImportState, NotificationChain msgs) {
-		ESMFState oldImportState = importState;
-		importState = newImportState;
-		if (eNotificationRequired()) {
-			ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, ESMFPackage.ESMF_METHOD__IMPORT_STATE, oldImportState, newImportState);
-			if (msgs == null) msgs = notification; else msgs.add(notification);
-		}
-		return msgs;
+	public ESMFState basicGetImportState() {
+		return importState;
 	}
 
 	/**
@@ -228,17 +230,10 @@ public class ESMFMethodImpl extends ESMFNamedEntityImpl implements ESMFMethod {
 	 * @generated
 	 */
 	public void setImportState(ESMFState newImportState) {
-		if (newImportState != importState) {
-			NotificationChain msgs = null;
-			if (importState != null)
-				msgs = ((InternalEObject)importState).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - ESMFPackage.ESMF_METHOD__IMPORT_STATE, null, msgs);
-			if (newImportState != null)
-				msgs = ((InternalEObject)newImportState).eInverseAdd(this, EOPPOSITE_FEATURE_BASE - ESMFPackage.ESMF_METHOD__IMPORT_STATE, null, msgs);
-			msgs = basicSetImportState(newImportState, msgs);
-			if (msgs != null) msgs.dispatch();
-		}
-		else if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, ESMFPackage.ESMF_METHOD__IMPORT_STATE, newImportState, newImportState));
+		ESMFState oldImportState = importState;
+		importState = newImportState;
+		if (eNotificationRequired())
+			eNotify(new ENotificationImpl(this, Notification.SET, ESMFPackage.ESMF_METHOD__IMPORT_STATE, oldImportState, importState));
 	}
 
 	/**
@@ -247,6 +242,14 @@ public class ESMFMethodImpl extends ESMFNamedEntityImpl implements ESMFMethod {
 	 * @generated
 	 */
 	public ESMFState getExportState() {
+		if (exportState != null && exportState.eIsProxy()) {
+			InternalEObject oldExportState = (InternalEObject)exportState;
+			exportState = (ESMFState)eResolveProxy(oldExportState);
+			if (exportState != oldExportState) {
+				if (eNotificationRequired())
+					eNotify(new ENotificationImpl(this, Notification.RESOLVE, ESMFPackage.ESMF_METHOD__EXPORT_STATE, oldExportState, exportState));
+			}
+		}
 		return exportState;
 	}
 
@@ -255,14 +258,8 @@ public class ESMFMethodImpl extends ESMFNamedEntityImpl implements ESMFMethod {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public NotificationChain basicSetExportState(ESMFState newExportState, NotificationChain msgs) {
-		ESMFState oldExportState = exportState;
-		exportState = newExportState;
-		if (eNotificationRequired()) {
-			ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, ESMFPackage.ESMF_METHOD__EXPORT_STATE, oldExportState, newExportState);
-			if (msgs == null) msgs = notification; else msgs.add(notification);
-		}
-		return msgs;
+	public ESMFState basicGetExportState() {
+		return exportState;
 	}
 
 	/**
@@ -271,17 +268,10 @@ public class ESMFMethodImpl extends ESMFNamedEntityImpl implements ESMFMethod {
 	 * @generated
 	 */
 	public void setExportState(ESMFState newExportState) {
-		if (newExportState != exportState) {
-			NotificationChain msgs = null;
-			if (exportState != null)
-				msgs = ((InternalEObject)exportState).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - ESMFPackage.ESMF_METHOD__EXPORT_STATE, null, msgs);
-			if (newExportState != null)
-				msgs = ((InternalEObject)newExportState).eInverseAdd(this, EOPPOSITE_FEATURE_BASE - ESMFPackage.ESMF_METHOD__EXPORT_STATE, null, msgs);
-			msgs = basicSetExportState(newExportState, msgs);
-			if (msgs != null) msgs.dispatch();
-		}
-		else if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, ESMFPackage.ESMF_METHOD__EXPORT_STATE, newExportState, newExportState));
+		ESMFState oldExportState = exportState;
+		exportState = newExportState;
+		if (eNotificationRequired())
+			eNotify(new ENotificationImpl(this, Notification.SET, ESMFPackage.ESMF_METHOD__EXPORT_STATE, oldExportState, exportState));
 	}
 
 	/**
@@ -406,10 +396,6 @@ public class ESMFMethodImpl extends ESMFNamedEntityImpl implements ESMFMethod {
 		switch (featureID) {
 			case ESMFPackage.ESMF_METHOD__COMPONENT:
 				return basicSetComponent(null, msgs);
-			case ESMFPackage.ESMF_METHOD__IMPORT_STATE:
-				return basicSetImportState(null, msgs);
-			case ESMFPackage.ESMF_METHOD__EXPORT_STATE:
-				return basicSetExportState(null, msgs);
 			case ESMFPackage.ESMF_METHOD__CLOCK:
 				return basicSetClock(null, msgs);
 			case ESMFPackage.ESMF_METHOD__ACTION:
@@ -445,9 +431,11 @@ public class ESMFMethodImpl extends ESMFNamedEntityImpl implements ESMFMethod {
 			case ESMFPackage.ESMF_METHOD__PHASE:
 				return getPhase();
 			case ESMFPackage.ESMF_METHOD__IMPORT_STATE:
-				return getImportState();
+				if (resolve) return getImportState();
+				return basicGetImportState();
 			case ESMFPackage.ESMF_METHOD__EXPORT_STATE:
-				return getExportState();
+				if (resolve) return getExportState();
+				return basicGetExportState();
 			case ESMFPackage.ESMF_METHOD__CLOCK:
 				return getClock();
 			case ESMFPackage.ESMF_METHOD__ACTION:

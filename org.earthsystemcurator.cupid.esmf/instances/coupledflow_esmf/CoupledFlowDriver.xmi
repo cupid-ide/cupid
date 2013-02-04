@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="ASCII"?>
+<esmf:ESMFDriver xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:esmf="http://www.earthsystemcurator.org/cupid/esmf" xsi:schemaLocation="http://www.earthsystemcurator.org/cupid/esmf ../../model/ESMF.ecore" name="CoupledFlowDriver">
+  <item xsi:type="esmf:ESMFState" name="CFState"/>
+  <item xsi:type="esmf:ESMFGrid" name="driverGrid"/>
+  <component xsi:type="esmf:ESMFGriddedComponent" href="CoupledFlow.xmi#/"/>
+  <stage xsi:type="esmf:ESMFStageRun" name="CoupledFlowDriver_Go">
+    <actions>
+      <action xsi:type="esmf:ESMFStageActionStateCreate" state="//@item.0"/>
+      <action xsi:type="esmf:ESMFStageActionComponentCreate">
+        <component xsi:type="esmf:ESMFGriddedComponent" href="CoupledFlow.xmi#/"/>
+      </action>
+      <action xsi:type="esmf:ESMFStageActionComponentSetGrid" grid="//@item.1">
+        <component xsi:type="esmf:ESMFGriddedComponent" href="CoupledFlow.xmi#/"/>
+      </action>
+      <action xsi:type="esmf:ESMFStageActionExecuteStage" importState="//@item.0" exportState="//@item.0">
+        <stageToExecute xsi:type="esmf:ESMFStageInitialize" href="CoupledFlow.xmi#//@stage.0"/>
+      </action>
+      <action xsi:type="esmf:ESMFStageActionExecuteStage" importState="//@item.0" exportState="//@item.0">
+        <stageToExecute xsi:type="esmf:ESMFStageRun" href="CoupledFlow.xmi#//@stage.1"/>
+      </action>
+      <action xsi:type="esmf:ESMFStageActionExecuteStage" importState="//@item.0" exportState="//@item.0">
+        <stageToExecute xsi:type="esmf:ESMFStageFinalize" href="CoupledFlow.xmi#//@stage.2"/>
+      </action>
+      <action xsi:type="esmf:ESMFStageActionComponentDestroy">
+        <component xsi:type="esmf:ESMFGriddedComponent" href="CoupledFlow.xmi#/"/>
+      </action>
+      <action xsi:type="esmf:ESMFStageActionStateDestroy" state="//@item.0"/>
+    </actions>
+  </stage>
+</esmf:ESMFDriver>

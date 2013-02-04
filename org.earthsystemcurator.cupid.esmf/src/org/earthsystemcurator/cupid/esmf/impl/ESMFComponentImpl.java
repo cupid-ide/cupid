@@ -15,6 +15,8 @@ import org.earthsystemcurator.cupid.esmf.ESMFMethod;
 import org.earthsystemcurator.cupid.esmf.ESMFPackage;
 import org.earthsystemcurator.cupid.esmf.ESMFRegisterMethod;
 import org.earthsystemcurator.cupid.esmf.ESMFRouteHandle;
+import org.earthsystemcurator.cupid.esmf.ESMFScope;
+import org.earthsystemcurator.cupid.esmf.ESMFScopedItem;
 import org.earthsystemcurator.cupid.esmf.ESMFStage;
 import org.earthsystemcurator.cupid.esmf.ESMFState;
 import org.earthsystemcurator.cupid.esmf.ESMFTime;
@@ -42,19 +44,13 @@ import org.eclipse.emf.ecore.util.InternalEList;
  * <p>
  * The following features are implemented:
  * <ul>
+ *   <li>{@link org.earthsystemcurator.cupid.esmf.impl.ESMFComponentImpl#getItem <em>Item</em>}</li>
  *   <li>{@link org.earthsystemcurator.cupid.esmf.impl.ESMFComponentImpl#getMethod <em>Method</em>}</li>
  *   <li>{@link org.earthsystemcurator.cupid.esmf.impl.ESMFComponentImpl#getRegisterMethod <em>Register Method</em>}</li>
- *   <li>{@link org.earthsystemcurator.cupid.esmf.impl.ESMFComponentImpl#getState <em>State</em>}</li>
  *   <li>{@link org.earthsystemcurator.cupid.esmf.impl.ESMFComponentImpl#getImportState <em>Import State</em>}</li>
  *   <li>{@link org.earthsystemcurator.cupid.esmf.impl.ESMFComponentImpl#getExportState <em>Export State</em>}</li>
  *   <li>{@link org.earthsystemcurator.cupid.esmf.impl.ESMFComponentImpl#getComponent <em>Component</em>}</li>
  *   <li>{@link org.earthsystemcurator.cupid.esmf.impl.ESMFComponentImpl#getParent <em>Parent</em>}</li>
- *   <li>{@link org.earthsystemcurator.cupid.esmf.impl.ESMFComponentImpl#getArraySpec <em>Array Spec</em>}</li>
- *   <li>{@link org.earthsystemcurator.cupid.esmf.impl.ESMFComponentImpl#getArray <em>Array</em>}</li>
- *   <li>{@link org.earthsystemcurator.cupid.esmf.impl.ESMFComponentImpl#getDistGrid <em>Dist Grid</em>}</li>
- *   <li>{@link org.earthsystemcurator.cupid.esmf.impl.ESMFComponentImpl#getField <em>Field</em>}</li>
- *   <li>{@link org.earthsystemcurator.cupid.esmf.impl.ESMFComponentImpl#getGrid <em>Grid</em>}</li>
- *   <li>{@link org.earthsystemcurator.cupid.esmf.impl.ESMFComponentImpl#getRouteHandle <em>Route Handle</em>}</li>
  *   <li>{@link org.earthsystemcurator.cupid.esmf.impl.ESMFComponentImpl#getClock <em>Clock</em>}</li>
  *   <li>{@link org.earthsystemcurator.cupid.esmf.impl.ESMFComponentImpl#getModelClock <em>Model Clock</em>}</li>
  *   <li>{@link org.earthsystemcurator.cupid.esmf.impl.ESMFComponentImpl#getTime <em>Time</em>}</li>
@@ -67,6 +63,16 @@ import org.eclipse.emf.ecore.util.InternalEList;
  * @generated
  */
 public abstract class ESMFComponentImpl extends ESMFNamedEntityImpl implements ESMFComponent {
+	/**
+	 * The cached value of the '{@link #getItem() <em>Item</em>}' containment reference list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #getItem()
+	 * @generated
+	 * @ordered
+	 */
+	protected EList<ESMFScopedItem> item;
+
 	/**
 	 * The cached value of the '{@link #getMethod() <em>Method</em>}' containment reference list.
 	 * <!-- begin-user-doc -->
@@ -86,16 +92,6 @@ public abstract class ESMFComponentImpl extends ESMFNamedEntityImpl implements E
 	 * @ordered
 	 */
 	protected ESMFRegisterMethod registerMethod;
-
-	/**
-	 * The cached value of the '{@link #getState() <em>State</em>}' containment reference list.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @see #getState()
-	 * @generated
-	 * @ordered
-	 */
-	protected EList<ESMFState> state;
 
 	/**
 	 * The cached value of the '{@link #getImportState() <em>Import State</em>}' reference.
@@ -136,66 +132,6 @@ public abstract class ESMFComponentImpl extends ESMFNamedEntityImpl implements E
 	 * @ordered
 	 */
 	protected ESMFComponent parent;
-
-	/**
-	 * The cached value of the '{@link #getArraySpec() <em>Array Spec</em>}' containment reference list.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @see #getArraySpec()
-	 * @generated
-	 * @ordered
-	 */
-	protected EList<ESMFArraySpec> arraySpec;
-
-	/**
-	 * The cached value of the '{@link #getArray() <em>Array</em>}' containment reference list.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @see #getArray()
-	 * @generated
-	 * @ordered
-	 */
-	protected EList<ESMFArray> array;
-
-	/**
-	 * The cached value of the '{@link #getDistGrid() <em>Dist Grid</em>}' containment reference list.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @see #getDistGrid()
-	 * @generated
-	 * @ordered
-	 */
-	protected EList<ESMFDistGrid> distGrid;
-
-	/**
-	 * The cached value of the '{@link #getField() <em>Field</em>}' containment reference list.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @see #getField()
-	 * @generated
-	 * @ordered
-	 */
-	protected EList<ESMFField> field;
-
-	/**
-	 * The cached value of the '{@link #getGrid() <em>Grid</em>}' containment reference list.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @see #getGrid()
-	 * @generated
-	 * @ordered
-	 */
-	protected EList<ESMFGrid> grid;
-
-	/**
-	 * The cached value of the '{@link #getRouteHandle() <em>Route Handle</em>}' containment reference list.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @see #getRouteHandle()
-	 * @generated
-	 * @ordered
-	 */
-	protected EList<ESMFRouteHandle> routeHandle;
 
 	/**
 	 * The cached value of the '{@link #getClock() <em>Clock</em>}' containment reference list.
@@ -329,18 +265,6 @@ public abstract class ESMFComponentImpl extends ESMFNamedEntityImpl implements E
 		}
 		else if (eNotificationRequired())
 			eNotify(new ENotificationImpl(this, Notification.SET, ESMFPackage.ESMF_COMPONENT__REGISTER_METHOD, newRegisterMethod, newRegisterMethod));
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public EList<ESMFState> getState() {
-		if (state == null) {
-			state = new EObjectContainmentWithInverseEList<ESMFState>(ESMFState.class, this, ESMFPackage.ESMF_COMPONENT__STATE, ESMFPackage.ESMF_STATE__COMPONENT);
-		}
-		return state;
 	}
 
 	/**
@@ -496,71 +420,11 @@ public abstract class ESMFComponentImpl extends ESMFNamedEntityImpl implements E
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EList<ESMFArraySpec> getArraySpec() {
-		if (arraySpec == null) {
-			arraySpec = new EObjectContainmentWithInverseEList<ESMFArraySpec>(ESMFArraySpec.class, this, ESMFPackage.ESMF_COMPONENT__ARRAY_SPEC, ESMFPackage.ESMF_ARRAY_SPEC__COMPONENT);
+	public EList<ESMFScopedItem> getItem() {
+		if (item == null) {
+			item = new EObjectContainmentWithInverseEList<ESMFScopedItem>(ESMFScopedItem.class, this, ESMFPackage.ESMF_COMPONENT__ITEM, ESMFPackage.ESMF_SCOPED_ITEM__SCOPE);
 		}
-		return arraySpec;
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public EList<ESMFArray> getArray() {
-		if (array == null) {
-			array = new EObjectContainmentWithInverseEList<ESMFArray>(ESMFArray.class, this, ESMFPackage.ESMF_COMPONENT__ARRAY, ESMFPackage.ESMF_ARRAY__COMPONENT);
-		}
-		return array;
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public EList<ESMFDistGrid> getDistGrid() {
-		if (distGrid == null) {
-			distGrid = new EObjectContainmentEList<ESMFDistGrid>(ESMFDistGrid.class, this, ESMFPackage.ESMF_COMPONENT__DIST_GRID);
-		}
-		return distGrid;
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public EList<ESMFField> getField() {
-		if (field == null) {
-			field = new EObjectContainmentWithInverseEList<ESMFField>(ESMFField.class, this, ESMFPackage.ESMF_COMPONENT__FIELD, ESMFPackage.ESMF_FIELD__COMPONENT);
-		}
-		return field;
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public EList<ESMFGrid> getGrid() {
-		if (grid == null) {
-			grid = new EObjectContainmentEList<ESMFGrid>(ESMFGrid.class, this, ESMFPackage.ESMF_COMPONENT__GRID);
-		}
-		return grid;
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public EList<ESMFRouteHandle> getRouteHandle() {
-		if (routeHandle == null) {
-			routeHandle = new EObjectContainmentWithInverseEList<ESMFRouteHandle>(ESMFRouteHandle.class, this, ESMFPackage.ESMF_COMPONENT__ROUTE_HANDLE, ESMFPackage.ESMF_ROUTE_HANDLE__COMPONENT);
-		}
-		return routeHandle;
+		return item;
 	}
 
 	/**
@@ -696,28 +560,20 @@ public abstract class ESMFComponentImpl extends ESMFNamedEntityImpl implements E
 	@Override
 	public NotificationChain eInverseAdd(InternalEObject otherEnd, int featureID, NotificationChain msgs) {
 		switch (featureID) {
+			case ESMFPackage.ESMF_COMPONENT__ITEM:
+				return ((InternalEList<InternalEObject>)(InternalEList<?>)getItem()).basicAdd(otherEnd, msgs);
 			case ESMFPackage.ESMF_COMPONENT__METHOD:
 				return ((InternalEList<InternalEObject>)(InternalEList<?>)getMethod()).basicAdd(otherEnd, msgs);
 			case ESMFPackage.ESMF_COMPONENT__REGISTER_METHOD:
 				if (registerMethod != null)
 					msgs = ((InternalEObject)registerMethod).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - ESMFPackage.ESMF_COMPONENT__REGISTER_METHOD, null, msgs);
 				return basicSetRegisterMethod((ESMFRegisterMethod)otherEnd, msgs);
-			case ESMFPackage.ESMF_COMPONENT__STATE:
-				return ((InternalEList<InternalEObject>)(InternalEList<?>)getState()).basicAdd(otherEnd, msgs);
 			case ESMFPackage.ESMF_COMPONENT__COMPONENT:
 				return ((InternalEList<InternalEObject>)(InternalEList<?>)getComponent()).basicAdd(otherEnd, msgs);
 			case ESMFPackage.ESMF_COMPONENT__PARENT:
 				if (parent != null)
 					msgs = ((InternalEObject)parent).eInverseRemove(this, ESMFPackage.ESMF_COMPONENT__COMPONENT, ESMFComponent.class, msgs);
 				return basicSetParent((ESMFComponent)otherEnd, msgs);
-			case ESMFPackage.ESMF_COMPONENT__ARRAY_SPEC:
-				return ((InternalEList<InternalEObject>)(InternalEList<?>)getArraySpec()).basicAdd(otherEnd, msgs);
-			case ESMFPackage.ESMF_COMPONENT__ARRAY:
-				return ((InternalEList<InternalEObject>)(InternalEList<?>)getArray()).basicAdd(otherEnd, msgs);
-			case ESMFPackage.ESMF_COMPONENT__FIELD:
-				return ((InternalEList<InternalEObject>)(InternalEList<?>)getField()).basicAdd(otherEnd, msgs);
-			case ESMFPackage.ESMF_COMPONENT__ROUTE_HANDLE:
-				return ((InternalEList<InternalEObject>)(InternalEList<?>)getRouteHandle()).basicAdd(otherEnd, msgs);
 			case ESMFPackage.ESMF_COMPONENT__CLOCK:
 				return ((InternalEList<InternalEObject>)(InternalEList<?>)getClock()).basicAdd(otherEnd, msgs);
 			case ESMFPackage.ESMF_COMPONENT__STAGE:
@@ -734,28 +590,16 @@ public abstract class ESMFComponentImpl extends ESMFNamedEntityImpl implements E
 	@Override
 	public NotificationChain eInverseRemove(InternalEObject otherEnd, int featureID, NotificationChain msgs) {
 		switch (featureID) {
+			case ESMFPackage.ESMF_COMPONENT__ITEM:
+				return ((InternalEList<?>)getItem()).basicRemove(otherEnd, msgs);
 			case ESMFPackage.ESMF_COMPONENT__METHOD:
 				return ((InternalEList<?>)getMethod()).basicRemove(otherEnd, msgs);
 			case ESMFPackage.ESMF_COMPONENT__REGISTER_METHOD:
 				return basicSetRegisterMethod(null, msgs);
-			case ESMFPackage.ESMF_COMPONENT__STATE:
-				return ((InternalEList<?>)getState()).basicRemove(otherEnd, msgs);
 			case ESMFPackage.ESMF_COMPONENT__COMPONENT:
 				return ((InternalEList<?>)getComponent()).basicRemove(otherEnd, msgs);
 			case ESMFPackage.ESMF_COMPONENT__PARENT:
 				return basicSetParent(null, msgs);
-			case ESMFPackage.ESMF_COMPONENT__ARRAY_SPEC:
-				return ((InternalEList<?>)getArraySpec()).basicRemove(otherEnd, msgs);
-			case ESMFPackage.ESMF_COMPONENT__ARRAY:
-				return ((InternalEList<?>)getArray()).basicRemove(otherEnd, msgs);
-			case ESMFPackage.ESMF_COMPONENT__DIST_GRID:
-				return ((InternalEList<?>)getDistGrid()).basicRemove(otherEnd, msgs);
-			case ESMFPackage.ESMF_COMPONENT__FIELD:
-				return ((InternalEList<?>)getField()).basicRemove(otherEnd, msgs);
-			case ESMFPackage.ESMF_COMPONENT__GRID:
-				return ((InternalEList<?>)getGrid()).basicRemove(otherEnd, msgs);
-			case ESMFPackage.ESMF_COMPONENT__ROUTE_HANDLE:
-				return ((InternalEList<?>)getRouteHandle()).basicRemove(otherEnd, msgs);
 			case ESMFPackage.ESMF_COMPONENT__CLOCK:
 				return ((InternalEList<?>)getClock()).basicRemove(otherEnd, msgs);
 			case ESMFPackage.ESMF_COMPONENT__TIME:
@@ -776,12 +620,12 @@ public abstract class ESMFComponentImpl extends ESMFNamedEntityImpl implements E
 	@Override
 	public Object eGet(int featureID, boolean resolve, boolean coreType) {
 		switch (featureID) {
+			case ESMFPackage.ESMF_COMPONENT__ITEM:
+				return getItem();
 			case ESMFPackage.ESMF_COMPONENT__METHOD:
 				return getMethod();
 			case ESMFPackage.ESMF_COMPONENT__REGISTER_METHOD:
 				return getRegisterMethod();
-			case ESMFPackage.ESMF_COMPONENT__STATE:
-				return getState();
 			case ESMFPackage.ESMF_COMPONENT__IMPORT_STATE:
 				if (resolve) return getImportState();
 				return basicGetImportState();
@@ -793,18 +637,6 @@ public abstract class ESMFComponentImpl extends ESMFNamedEntityImpl implements E
 			case ESMFPackage.ESMF_COMPONENT__PARENT:
 				if (resolve) return getParent();
 				return basicGetParent();
-			case ESMFPackage.ESMF_COMPONENT__ARRAY_SPEC:
-				return getArraySpec();
-			case ESMFPackage.ESMF_COMPONENT__ARRAY:
-				return getArray();
-			case ESMFPackage.ESMF_COMPONENT__DIST_GRID:
-				return getDistGrid();
-			case ESMFPackage.ESMF_COMPONENT__FIELD:
-				return getField();
-			case ESMFPackage.ESMF_COMPONENT__GRID:
-				return getGrid();
-			case ESMFPackage.ESMF_COMPONENT__ROUTE_HANDLE:
-				return getRouteHandle();
 			case ESMFPackage.ESMF_COMPONENT__CLOCK:
 				return getClock();
 			case ESMFPackage.ESMF_COMPONENT__MODEL_CLOCK:
@@ -832,16 +664,16 @@ public abstract class ESMFComponentImpl extends ESMFNamedEntityImpl implements E
 	@Override
 	public void eSet(int featureID, Object newValue) {
 		switch (featureID) {
+			case ESMFPackage.ESMF_COMPONENT__ITEM:
+				getItem().clear();
+				getItem().addAll((Collection<? extends ESMFScopedItem>)newValue);
+				return;
 			case ESMFPackage.ESMF_COMPONENT__METHOD:
 				getMethod().clear();
 				getMethod().addAll((Collection<? extends ESMFMethod>)newValue);
 				return;
 			case ESMFPackage.ESMF_COMPONENT__REGISTER_METHOD:
 				setRegisterMethod((ESMFRegisterMethod)newValue);
-				return;
-			case ESMFPackage.ESMF_COMPONENT__STATE:
-				getState().clear();
-				getState().addAll((Collection<? extends ESMFState>)newValue);
 				return;
 			case ESMFPackage.ESMF_COMPONENT__IMPORT_STATE:
 				setImportState((ESMFState)newValue);
@@ -855,30 +687,6 @@ public abstract class ESMFComponentImpl extends ESMFNamedEntityImpl implements E
 				return;
 			case ESMFPackage.ESMF_COMPONENT__PARENT:
 				setParent((ESMFComponent)newValue);
-				return;
-			case ESMFPackage.ESMF_COMPONENT__ARRAY_SPEC:
-				getArraySpec().clear();
-				getArraySpec().addAll((Collection<? extends ESMFArraySpec>)newValue);
-				return;
-			case ESMFPackage.ESMF_COMPONENT__ARRAY:
-				getArray().clear();
-				getArray().addAll((Collection<? extends ESMFArray>)newValue);
-				return;
-			case ESMFPackage.ESMF_COMPONENT__DIST_GRID:
-				getDistGrid().clear();
-				getDistGrid().addAll((Collection<? extends ESMFDistGrid>)newValue);
-				return;
-			case ESMFPackage.ESMF_COMPONENT__FIELD:
-				getField().clear();
-				getField().addAll((Collection<? extends ESMFField>)newValue);
-				return;
-			case ESMFPackage.ESMF_COMPONENT__GRID:
-				getGrid().clear();
-				getGrid().addAll((Collection<? extends ESMFGrid>)newValue);
-				return;
-			case ESMFPackage.ESMF_COMPONENT__ROUTE_HANDLE:
-				getRouteHandle().clear();
-				getRouteHandle().addAll((Collection<? extends ESMFRouteHandle>)newValue);
 				return;
 			case ESMFPackage.ESMF_COMPONENT__CLOCK:
 				getClock().clear();
@@ -914,14 +722,14 @@ public abstract class ESMFComponentImpl extends ESMFNamedEntityImpl implements E
 	@Override
 	public void eUnset(int featureID) {
 		switch (featureID) {
+			case ESMFPackage.ESMF_COMPONENT__ITEM:
+				getItem().clear();
+				return;
 			case ESMFPackage.ESMF_COMPONENT__METHOD:
 				getMethod().clear();
 				return;
 			case ESMFPackage.ESMF_COMPONENT__REGISTER_METHOD:
 				setRegisterMethod((ESMFRegisterMethod)null);
-				return;
-			case ESMFPackage.ESMF_COMPONENT__STATE:
-				getState().clear();
 				return;
 			case ESMFPackage.ESMF_COMPONENT__IMPORT_STATE:
 				setImportState((ESMFState)null);
@@ -934,24 +742,6 @@ public abstract class ESMFComponentImpl extends ESMFNamedEntityImpl implements E
 				return;
 			case ESMFPackage.ESMF_COMPONENT__PARENT:
 				setParent((ESMFComponent)null);
-				return;
-			case ESMFPackage.ESMF_COMPONENT__ARRAY_SPEC:
-				getArraySpec().clear();
-				return;
-			case ESMFPackage.ESMF_COMPONENT__ARRAY:
-				getArray().clear();
-				return;
-			case ESMFPackage.ESMF_COMPONENT__DIST_GRID:
-				getDistGrid().clear();
-				return;
-			case ESMFPackage.ESMF_COMPONENT__FIELD:
-				getField().clear();
-				return;
-			case ESMFPackage.ESMF_COMPONENT__GRID:
-				getGrid().clear();
-				return;
-			case ESMFPackage.ESMF_COMPONENT__ROUTE_HANDLE:
-				getRouteHandle().clear();
 				return;
 			case ESMFPackage.ESMF_COMPONENT__CLOCK:
 				getClock().clear();
@@ -983,12 +773,12 @@ public abstract class ESMFComponentImpl extends ESMFNamedEntityImpl implements E
 	@Override
 	public boolean eIsSet(int featureID) {
 		switch (featureID) {
+			case ESMFPackage.ESMF_COMPONENT__ITEM:
+				return item != null && !item.isEmpty();
 			case ESMFPackage.ESMF_COMPONENT__METHOD:
 				return method != null && !method.isEmpty();
 			case ESMFPackage.ESMF_COMPONENT__REGISTER_METHOD:
 				return registerMethod != null;
-			case ESMFPackage.ESMF_COMPONENT__STATE:
-				return state != null && !state.isEmpty();
 			case ESMFPackage.ESMF_COMPONENT__IMPORT_STATE:
 				return importState != null;
 			case ESMFPackage.ESMF_COMPONENT__EXPORT_STATE:
@@ -997,18 +787,6 @@ public abstract class ESMFComponentImpl extends ESMFNamedEntityImpl implements E
 				return component != null && !component.isEmpty();
 			case ESMFPackage.ESMF_COMPONENT__PARENT:
 				return parent != null;
-			case ESMFPackage.ESMF_COMPONENT__ARRAY_SPEC:
-				return arraySpec != null && !arraySpec.isEmpty();
-			case ESMFPackage.ESMF_COMPONENT__ARRAY:
-				return array != null && !array.isEmpty();
-			case ESMFPackage.ESMF_COMPONENT__DIST_GRID:
-				return distGrid != null && !distGrid.isEmpty();
-			case ESMFPackage.ESMF_COMPONENT__FIELD:
-				return field != null && !field.isEmpty();
-			case ESMFPackage.ESMF_COMPONENT__GRID:
-				return grid != null && !grid.isEmpty();
-			case ESMFPackage.ESMF_COMPONENT__ROUTE_HANDLE:
-				return routeHandle != null && !routeHandle.isEmpty();
 			case ESMFPackage.ESMF_COMPONENT__CLOCK:
 				return clock != null && !clock.isEmpty();
 			case ESMFPackage.ESMF_COMPONENT__MODEL_CLOCK:
@@ -1023,6 +801,38 @@ public abstract class ESMFComponentImpl extends ESMFNamedEntityImpl implements E
 				return stage != null && !stage.isEmpty();
 		}
 		return super.eIsSet(featureID);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	@Override
+	public int eBaseStructuralFeatureID(int derivedFeatureID, Class<?> baseClass) {
+		if (baseClass == ESMFScope.class) {
+			switch (derivedFeatureID) {
+				case ESMFPackage.ESMF_COMPONENT__ITEM: return ESMFPackage.ESMF_SCOPE__ITEM;
+				default: return -1;
+			}
+		}
+		return super.eBaseStructuralFeatureID(derivedFeatureID, baseClass);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	@Override
+	public int eDerivedStructuralFeatureID(int baseFeatureID, Class<?> baseClass) {
+		if (baseClass == ESMFScope.class) {
+			switch (baseFeatureID) {
+				case ESMFPackage.ESMF_SCOPE__ITEM: return ESMFPackage.ESMF_COMPONENT__ITEM;
+				default: return -1;
+			}
+		}
+		return super.eDerivedStructuralFeatureID(baseFeatureID, baseClass);
 	}
 
 } //ESMFComponentImpl
