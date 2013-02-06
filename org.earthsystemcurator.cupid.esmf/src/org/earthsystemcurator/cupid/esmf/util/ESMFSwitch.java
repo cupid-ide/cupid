@@ -78,6 +78,20 @@ public class ESMFSwitch<T> extends Switch<T> {
 				if (result == null) result = defaultCase(theEObject);
 				return result;
 			}
+			case ESMFPackage.ESMF_SCOPED_ITEM: {
+				ESMFScopedItem esmfScopedItem = (ESMFScopedItem)theEObject;
+				T result = caseESMFScopedItem(esmfScopedItem);
+				if (result == null) result = caseESMFNamedEntity(esmfScopedItem);
+				if (result == null) result = defaultCase(theEObject);
+				return result;
+			}
+			case ESMFPackage.ESMF_WORKSPACE: {
+				ESMFWorkspace esmfWorkspace = (ESMFWorkspace)theEObject;
+				T result = caseESMFWorkspace(esmfWorkspace);
+				if (result == null) result = caseESMFNamedEntity(esmfWorkspace);
+				if (result == null) result = defaultCase(theEObject);
+				return result;
+			}
 			case ESMFPackage.ESMF_COMPONENT: {
 				ESMFComponent esmfComponent = (ESMFComponent)theEObject;
 				T result = caseESMFComponent(esmfComponent);
@@ -410,22 +424,16 @@ public class ESMFSwitch<T> extends Switch<T> {
 				ESMFState esmfState = (ESMFState)theEObject;
 				T result = caseESMFState(esmfState);
 				if (result == null) result = caseESMFStateItem(esmfState);
-				if (result == null) result = caseESMFNamedEntity(esmfState);
 				if (result == null) result = caseESMFScopedItem(esmfState);
+				if (result == null) result = caseESMFNamedEntity(esmfState);
 				if (result == null) result = defaultCase(theEObject);
 				return result;
 			}
 			case ESMFPackage.ESMF_STATE_ITEM: {
 				ESMFStateItem esmfStateItem = (ESMFStateItem)theEObject;
 				T result = caseESMFStateItem(esmfStateItem);
-				if (result == null) result = caseESMFNamedEntity(esmfStateItem);
 				if (result == null) result = caseESMFScopedItem(esmfStateItem);
-				if (result == null) result = defaultCase(theEObject);
-				return result;
-			}
-			case ESMFPackage.ESMF_SCOPED_ITEM: {
-				ESMFScopedItem esmfScopedItem = (ESMFScopedItem)theEObject;
-				T result = caseESMFScopedItem(esmfScopedItem);
+				if (result == null) result = caseESMFNamedEntity(esmfStateItem);
 				if (result == null) result = defaultCase(theEObject);
 				return result;
 			}
@@ -433,8 +441,8 @@ public class ESMFSwitch<T> extends Switch<T> {
 				ESMFField esmfField = (ESMFField)theEObject;
 				T result = caseESMFField(esmfField);
 				if (result == null) result = caseESMFStateItem(esmfField);
-				if (result == null) result = caseESMFNamedEntity(esmfField);
 				if (result == null) result = caseESMFScopedItem(esmfField);
+				if (result == null) result = caseESMFNamedEntity(esmfField);
 				if (result == null) result = defaultCase(theEObject);
 				return result;
 			}
@@ -448,32 +456,32 @@ public class ESMFSwitch<T> extends Switch<T> {
 				ESMFArray esmfArray = (ESMFArray)theEObject;
 				T result = caseESMFArray(esmfArray);
 				if (result == null) result = caseESMFStateItem(esmfArray);
-				if (result == null) result = caseESMFNamedEntity(esmfArray);
 				if (result == null) result = caseESMFScopedItem(esmfArray);
+				if (result == null) result = caseESMFNamedEntity(esmfArray);
 				if (result == null) result = defaultCase(theEObject);
 				return result;
 			}
 			case ESMFPackage.ESMF_ROUTE_HANDLE: {
 				ESMFRouteHandle esmfRouteHandle = (ESMFRouteHandle)theEObject;
 				T result = caseESMFRouteHandle(esmfRouteHandle);
-				if (result == null) result = caseESMFNamedEntity(esmfRouteHandle);
 				if (result == null) result = caseESMFScopedItem(esmfRouteHandle);
+				if (result == null) result = caseESMFNamedEntity(esmfRouteHandle);
 				if (result == null) result = defaultCase(theEObject);
 				return result;
 			}
 			case ESMFPackage.ESMF_ARRAY_SPEC: {
 				ESMFArraySpec esmfArraySpec = (ESMFArraySpec)theEObject;
 				T result = caseESMFArraySpec(esmfArraySpec);
-				if (result == null) result = caseESMFNamedEntity(esmfArraySpec);
 				if (result == null) result = caseESMFScopedItem(esmfArraySpec);
+				if (result == null) result = caseESMFNamedEntity(esmfArraySpec);
 				if (result == null) result = defaultCase(theEObject);
 				return result;
 			}
 			case ESMFPackage.ESMF_GRID: {
 				ESMFGrid esmfGrid = (ESMFGrid)theEObject;
 				T result = caseESMFGrid(esmfGrid);
-				if (result == null) result = caseESMFNamedEntity(esmfGrid);
 				if (result == null) result = caseESMFScopedItem(esmfGrid);
+				if (result == null) result = caseESMFNamedEntity(esmfGrid);
 				if (result == null) result = defaultCase(theEObject);
 				return result;
 			}
@@ -486,14 +494,8 @@ public class ESMFSwitch<T> extends Switch<T> {
 			case ESMFPackage.ESMF_DIST_GRID: {
 				ESMFDistGrid esmfDistGrid = (ESMFDistGrid)theEObject;
 				T result = caseESMFDistGrid(esmfDistGrid);
-				if (result == null) result = caseESMFNamedEntity(esmfDistGrid);
 				if (result == null) result = caseESMFScopedItem(esmfDistGrid);
-				if (result == null) result = defaultCase(theEObject);
-				return result;
-			}
-			case ESMFPackage.ESMF_WORKSPACE: {
-				ESMFWorkspace esmfWorkspace = (ESMFWorkspace)theEObject;
-				T result = caseESMFWorkspace(esmfWorkspace);
+				if (result == null) result = caseESMFNamedEntity(esmfDistGrid);
 				if (result == null) result = defaultCase(theEObject);
 				return result;
 			}

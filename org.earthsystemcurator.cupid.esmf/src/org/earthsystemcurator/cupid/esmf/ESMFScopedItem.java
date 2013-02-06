@@ -20,7 +20,7 @@ import org.eclipse.emf.ecore.EObject;
  * @model abstract="true"
  * @generated
  */
-public interface ESMFScopedItem extends EObject {
+public interface ESMFScopedItem extends ESMFNamedEntity {
 	/**
 	 * Returns the value of the '<em><b>Scope</b></em>' container reference.
 	 * It is bidirectional and its opposite is '{@link org.earthsystemcurator.cupid.esmf.ESMFScope#getItem <em>Item</em>}'.
@@ -34,7 +34,7 @@ public interface ESMFScopedItem extends EObject {
 	 * @see #setScope(ESMFScope)
 	 * @see org.earthsystemcurator.cupid.esmf.ESMFPackage#getESMFScopedItem_Scope()
 	 * @see org.earthsystemcurator.cupid.esmf.ESMFScope#getItem
-	 * @model opposite="item" required="true" transient="false"
+	 * @model opposite="item" required="true"
 	 * @generated
 	 */
 	ESMFScope getScope();

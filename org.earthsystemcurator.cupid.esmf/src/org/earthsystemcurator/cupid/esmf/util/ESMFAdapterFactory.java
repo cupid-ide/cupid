@@ -76,6 +76,14 @@ public class ESMFAdapterFactory extends AdapterFactoryImpl {
 				return createESMFScopeAdapter();
 			}
 			@Override
+			public Adapter caseESMFScopedItem(ESMFScopedItem object) {
+				return createESMFScopedItemAdapter();
+			}
+			@Override
+			public Adapter caseESMFWorkspace(ESMFWorkspace object) {
+				return createESMFWorkspaceAdapter();
+			}
+			@Override
 			public Adapter caseESMFComponent(ESMFComponent object) {
 				return createESMFComponentAdapter();
 			}
@@ -256,10 +264,6 @@ public class ESMFAdapterFactory extends AdapterFactoryImpl {
 				return createESMFStateItemAdapter();
 			}
 			@Override
-			public Adapter caseESMFScopedItem(ESMFScopedItem object) {
-				return createESMFScopedItemAdapter();
-			}
-			@Override
 			public Adapter caseESMFField(ESMFField object) {
 				return createESMFFieldAdapter();
 			}
@@ -290,10 +294,6 @@ public class ESMFAdapterFactory extends AdapterFactoryImpl {
 			@Override
 			public Adapter caseESMFDistGrid(ESMFDistGrid object) {
 				return createESMFDistGridAdapter();
-			}
-			@Override
-			public Adapter caseESMFWorkspace(ESMFWorkspace object) {
-				return createESMFWorkspaceAdapter();
 			}
 			@Override
 			public Adapter caseESMFVirtualMachine(ESMFVirtualMachine object) {

@@ -1,0 +1,776 @@
+[comment encoding = UTF-8 /]
+[module generateImplict('http://www.earthsystemcurator.org/cupid/esmf', 'http://www.earthsystemcurator.org/cupid/sidl', 'http://www.eclipse.org/emf/2002/Ecore')]
+
+
+[template public generateElement(ws : ESMFWorkspace)]
+[comment @main/]
+[for (c : ESMFComponent | ws.component->filter(ESMFGriddedComponent))]
+[genESMFComponent(c)/]
+[/for]
+[for (c : ESMFComponent | ws.component->filter(ESMFCouplerComponent))]
+[genESMFComponent(c)/]
+[/for]
+[for (c : ESMFComponent | ws.component->filter(ESMFDriver))]
+[genESMFComponent(c)/]
+[/for]
+[/template]
+
+[template public genESMFComponent(c : ESMFComponent)]
+[file (c.workspace.name.normalize() + '/' + c.name.normalize() + '.F90', false)]
+!
+! [c.name.normalize()/].F90
+! This file was generated automatically by Cupid
+!
+[comment]! Input specification: [c.workspace.eResource()/]
+![/comment]
+module [c.name/]
+
+	use ESMF
+	[for (childComp : ESMFComponent | c.component)]
+	use [childComp.name/], only:  [childComp.name/]_register => register_
+	[/for]
+
+	[genESMFComponentBody(c)/]
+
+end module
+[/file]
+[/template]
+
+[template public genESMFComponent(d : ESMFDriver)]
+[file (d.workspace.name.normalize() + '/' + d.name.normalize() + '.F90', false)]
+!
+! [d.name.normalize()/].F90
+! This file was generated automatically by Cupid
+!
+
+program [d.name/]
+
+	use ESMF
+	[for (childComp : ESMFComponent | d.component)]
+	use [childComp.name/], only:  [childComp.name/]_register => register_
+	[/for]
+
+	[genESMFDriverBody(d)/]
+
+end program
+[/file]
+[/template]
+
+[template public genESMFDriverBody(d : ESMFDriver) ]
+implicit none
+
+[for (gridComp: ESMFGriddedComponent | d.component->filter(ESMFGriddedComponent))]
+type(ESMF_GridComp) :: [gridComp.name/]
+[/for]
+
+[for (cplComp: ESMFCouplerComponent | d.component->filter(ESMFCouplerComponent))]
+type(ESMF_CplComp) :: [cplComp.name/]
+[/for]
+
+[genESMFScopeDataMembers(d)/]
+
+[genDebugInfo(d.name, '', 'driverstart')/]
+
+[for (stage : ESMFStage | d.stage) separator ('\n\n')]
+! stage [stage.name/]
+[genESMFStageAction(stage.actions)/]
+[/for]
+
+[genDebugInfo(d.name, '', 'driverend')/]
+[/template]
+
+[template public genESMFComponentBody(c : ESMFComponent)][/template]
+
+[template public genESMFComponentBody(c : ESMFGriddedComponent) ]
+implicit none
+
+private
+
+[for (gridComp: ESMFGriddedComponent | c.component->filter(ESMFGriddedComponent))]
+type(ESMF_GridComp) :: [gridComp.name/]
+type(ESMF_State) :: [gridComp.name/]_istate
+type(ESMF_State) :: [gridComp.name/]_ostate
+[/for]
+
+[for (cplComp: ESMFCouplerComponent | c.component->filter(ESMFCouplerComponent))]
+type(ESMF_CplComp) :: [cplComp.name/]
+[/for]
+
+[genESMFScopeDataMembers(c)/]
+
+public register_
+
+contains
+	
+[genESMFRegisterMethod(c)/]
+
+[genESMFInitMethod(c)/]
+
+[genESMFRunMethod(c)/]
+
+[genESMFFinalMethod(c)/]
+
+[/template]
+
+
+[template public genESMFComponentBody(c : ESMFSimpleCouplerComponent)]
+implicit none
+
+private
+
+[genESMFScopeDataMembers(c)/]
+
+[for (conn : ESMFFieldConnection | c.fieldConnection->first())]
+[if (conn.srcField.grid.distGrid.totalCells() = conn.dstField.grid.distGrid.totalCells())]
+type(ESMF_RouteHandle) :: redist_[c.srcComponent.name/]2[c.dstComponent.name/]
+type(ESMF_RouteHandle) :: redist_[c.dstComponent.name/]2[c.srcComponent.name/]
+[else]
+type(ESMF_RouteHandle) :: regrid_[c.srcComponent.name/]2[c.dstComponent.name/]
+type(ESMF_RouteHandle) :: regrid_[c.dstComponent.name/]2[c.srcComponent.name/]
+[/if]
+[/for]	
+
+public register_
+
+contains
+	
+[genESMFRegisterMethod(c)/]
+
+[genESMFInitMethod(c)/]
+
+[genESMFRunMethod(c)/]
+
+[genESMFFinalMethod(c)/]
+[/template]
+
+[template public genESMFScopeDataMembers(scope : ESMFScope) post(trim())]
+[for (state : ESMFState | scope.item->filter(ESMFState)) ]
+type(ESMF_State) :: [state.name/]
+[/for]
+[for (as : ESMFArraySpec | scope.item->filter(ESMFArraySpec))]
+type(ESMF_ArraySpec) :: [as.name/]
+[/for]
+[for (dg : ESMFDistGrid | scope.item->filter(ESMFDistGrid))]
+type(ESMF_DistGrid) :: [dg.name/]
+[/for]
+[for (g : ESMFGrid | scope.item->filter(ESMFGrid))]
+type(ESMF_Grid) :: [g.name/]
+[/for]
+[for (f : ESMFField | scope.item->filter(ESMFField))]
+type(ESMF_Field) :: [f.name/]
+[/for]
+[for (r : ESMFRouteHandle | scope.item->filter(ESMFRouteHandle))]
+type(ESMF_RouteHandle) :: [r.name/]
+[/for]
+[/template]
+
+[template public genESMFRegisterMethod(c : ESMFGriddedComponent)]
+subroutine register_(comp, rc)
+    type(ESMF_GridComp) :: comp
+    integer, intent(out) :: rc
+	[genDebugInfo(c.name, 'register_', 'enter')/]
+
+	call ESMF_GridCompSetEntryPoint(comp, ESMF_METHOD_INITIALIZE, userRoutine=init_, phase=1, rc=rc)
+	call ESMF_GridCompSetEntryPoint(comp, ESMF_METHOD_RUN, userRoutine=run_, phase=1, rc=rc)
+	call ESMF_GridCompSetEntryPoint(comp, ESMF_METHOD_FINALIZE, userRoutine=finalize_, phase=1, rc=rc)
+	
+	[genDebugInfo(c.name, 'register_', 'exit')/]
+end subroutine register_
+[/template]
+
+[template public genESMFRegisterMethod(c : ESMFSimpleCouplerComponent)]
+subroutine register_(comp, rc)
+    type(ESMF_CplComp) :: comp
+    integer, intent(out) :: rc
+	[genDebugInfo(c.name, 'register_', 'enter')/]
+
+	call ESMF_CplCompSetEntryPoint(comp, ESMF_METHOD_INITIALIZE, userRoutine=init1_, phase=1, rc=rc)
+	call ESMF_CplCompSetEntryPoint(comp, ESMF_METHOD_INITIALIZE, userRoutine=init2_, phase=2, rc=rc)
+	call ESMF_CplCompSetEntryPoint(comp, ESMF_METHOD_RUN, userRoutine=run1_, phase=1, rc=rc)
+	call ESMF_CplCompSetEntryPoint(comp, ESMF_METHOD_RUN, userRoutine=run2_, phase=2, rc=rc)
+	call ESMF_CplCompSetEntryPoint(comp, ESMF_METHOD_FINALIZE, userRoutine=finalize1_, phase=1, rc=rc)
+	call ESMF_CplCompSetEntryPoint(comp, ESMF_METHOD_FINALIZE, userRoutine=finalize2_, phase=2, rc=rc)
+
+	[genDebugInfo(c.name, 'register_', 'exit')/]
+end subroutine register_
+[/template]
+
+[template public genESMFInitMethod(c : ESMFGriddedComponent)]
+subroutine init_(comp, istate, ostate, clock, rc)	
+	[if (c.oclIsTypeOf(ESMFGriddedComponent))]
+	type(ESMF_GridComp) :: comp
+	[else]
+	type(ESMF_CplComp) :: comp
+	[/if]
+	type(ESMF_State) :: istate
+	type(ESMF_State) :: ostate
+	type(ESMF_Clock) :: clock
+	integer, intent(out) :: rc	
+		
+	rc = ESMF_SUCCESS
+	[genDebugInfo(c.name, 'init_', 'enter')/]
+		
+	[for (arraySpec : ESMFArraySpec | c.item->filter(ESMFArraySpec))]
+	call ESMF_ArraySpecSet([arraySpec.name/], rank=[arraySpec.rank/], typekind=[arraySpec.typekind/], rc=rc)
+	[/for]
+	[for (distGrid : ESMFDistGrid | c.item->filter(ESMFDistGrid))]
+	[distGrid.name/] = ESMF_DistGridCreate(minIndex=[toFortranArrayConstructor(distGrid.extent, 'min')/], maxIndex=[toFortranArrayConstructor(distGrid.extent, 'max')/], regDecomp=[toFortranArrayConstructor(distGrid.regularDecompositionSize)/], rc=rc)
+	[/for]
+	[for (grid : ESMFGrid | c.item->filter(ESMFGrid))]
+	[grid.name/] = ESMF_GridCreate(distGrid=[grid.distGrid.name/], rc=rc)
+	[/for]
+	[for (field : ESMFField | c.item->filter(ESMFField))]
+	[field.name/] = ESMF_FieldCreate(grid=[field.grid.name/], arrayspec=[field.arraySpec.name/], &
+                   indexflag=[field.index/], &
+				   totalLWidth=[toFortranArrayConstructor(field.totalLWidth)/], &
+				   totalUWidth=[toFortranArrayConstructor(field.totalUWidth)/], &
+				   name="[field.name/]", rc=rc)
+	[/for]
+
+	[if (c.item->filter(ESMFField)->notEmpty())]
+	call ESMF_StateAdd(istate, &
+        [for (f : ESMFField | c.item->filter(ESMFField)) before ('(/') separator (', ') after ('/)')][f.name/][/for], & 
+		rc=rc)  
+	[/if]
+	[if (c.item->filter(ESMFField)->notEmpty())]
+	call ESMF_StateAdd(ostate, &
+        [for (f : ESMFField | c.item->filter(ESMFField)) before ('(/') separator (', ') after ('/)')][f.name/][/for], & 
+		rc=rc)  
+	[/if]
+
+	[for (child : ESMFGriddedComponent | c.component->filter(ESMFGriddedComponent))]
+	[child.name/] = ESMF_GridCompCreate(name="[child.name/]", rc=rc)
+	call ESMF_GridCompSetServices([child.name/], [child.name/]_register, rc=rc)	
+	[child.name/]_istate = ESMF_StateCreate(name="[child.name/]_istate", rc=rc)
+	[child.name/]_ostate = ESMF_StateCreate(name="[child.name/]_ostate", rc=rc)
+	call ESMF_GridCompInitialize([child.name/], importState=[child.name/]_istate, exportState=[child.name/]_ostate, clock=clock, phase=1, rc=rc)  
+	
+	[/for]
+
+	[for (child : ESMFSimpleCouplerComponent | c.component->filter(ESMFSimpleCouplerComponent))]
+	[child.name/] = ESMF_CplCompCreate(name="[child.name/]", rc=rc)
+	call ESMF_CplCompSetServices([child.name/], [child.name/]_register, rc=rc)	
+	! initialize coupler: src --> dst
+	call ESMF_CplCompInitialize([child.name/], importState=[child.srcComponent.name/]_ostate, exportState=[child.dstComponent.name/]_istate, clock=clock, phase=1, rc=rc)  
+	! initialize coupler: dst --> src
+	call ESMF_CplCompInitialize([child.name/], importState=[child.dstComponent.name/]_ostate, exportState=[child.srcComponent.name/]_istate, clock=clock, phase=2, rc=rc)
+	[/for]
+
+	[genDebugInfo(c.name, 'init_', 'exit')/]	
+end subroutine init_
+[/template]
+
+
+[template public genESMFRunMethod(c : ESMFGriddedComponent)]
+subroutine run_(comp, istate, ostate, clock, rc)	
+	[if (c.oclIsTypeOf(ESMFGriddedComponent))]
+	type(ESMF_GridComp) :: comp
+	[else]
+	type(ESMF_CplComp) :: comp
+	[/if]
+	type(ESMF_State) :: istate
+	type(ESMF_State) :: ostate
+	type(ESMF_Clock) :: clock
+	integer, intent(out) :: rc	
+		
+	rc = ESMF_SUCCESS
+	[genDebugInfo(c.name, 'run_', 'enter')/]
+	
+	[comment][for (child : ESMFGriddedComponent | c.component->filter(ESMFGriddedComponent))]
+	call ESMF_GridCompRun([child.name/], importState=[child.name/]_istate, exportState=[child.name/]_ostate, clock=clock, phase=1, rc=rc)  
+	[/for][/comment]
+
+	! need a better model of the calling schedule
+	[for (child : ESMFSimpleCouplerComponent | c.component->filter(ESMFSimpleCouplerComponent))]
+	call ESMF_GridCompRun([child.srcComponent.name/], importState=[child.srcComponent.name/]_istate, exportState=[child.dstComponent.name/]_ostate, clock=clock, phase=1, rc=rc)
+	
+	! run coupler: src --> dst
+	call ESMF_CplCompRun([child.name/], importState=[child.srcComponent.name/]_ostate, exportState=[child.dstComponent.name/]_istate, clock=clock, phase=1, rc=rc)  
+	
+	call ESMF_GridCompRun([child.dstComponent.name/], importState=[child.dstComponent.name/]_istate, exportState=[child.dstComponent.name/]_ostate, clock=clock, phase=1, rc=rc)
+
+	! run coupler: dst --> src
+	call ESMF_CplCompRun([child.name/], importState=[child.dstComponent.name/]_ostate, exportState=[child.srcComponent.name/]_istate, clock=clock, phase=2, rc=rc)
+	[/for]
+	
+	[genDebugInfo(c.name, 'run_', 'exit')/]	
+end subroutine run_
+[/template]
+
+
+[template public genESMFFinalMethod(c : ESMFGriddedComponent)]
+subroutine finalize_(comp, istate, ostate, clock, rc)	
+	[if (c.oclIsTypeOf(ESMFGriddedComponent))]
+	type(ESMF_GridComp) :: comp
+	[else]
+	type(ESMF_CplComp) :: comp
+	[/if]
+	type(ESMF_State) :: istate
+	type(ESMF_State) :: ostate
+	type(ESMF_Clock) :: clock
+	integer, intent(out) :: rc	
+		
+	rc = ESMF_SUCCESS
+	[genDebugInfo(c.name, 'finalize_', 'enter')/]
+
+	[for (child : ESMFGriddedComponent | c.component->filter(ESMFGriddedComponent))]
+	call ESMF_GridCompFinalize([child.name/], importState=[child.name/]_istate, exportState=[child.name/]_ostate, clock=clock, phase=1, rc=rc)
+	call ESMF_GridCompDestroy([child.name/], rc=rc)  
+	[/for]
+	[for (child : ESMFSimpleCouplerComponent | c.component->filter(ESMFSimpleCouplerComponent))]
+	! finalize coupler: src --> dst
+	call ESMF_CplCompFinalize([child.name/], importState=[child.srcComponent.name/]_ostate, exportState=[child.dstComponent.name/]_istate, clock=clock, phase=1, rc=rc)
+	! finalize coupler: dst --> src
+	call ESMF_CplCompFinalize([child.name/], importState=[child.dstComponent.name/]_ostate, exportState=[child.srcComponent.name/]_istate, clock=clock, phase=1, rc=rc)
+	call ESMF_CplCompDestroy([child.name/], rc=rc)   
+	[/for]
+	[for (child : ESMFGriddedComponent | c.component->filter(ESMFGriddedComponent))]
+	call ESMF_StateDestroy([child.name/]_istate, rc=rc)
+	call ESMF_StateDestroy([child.name/]_ostate, rc=rc)
+	[/for]
+	[for (field : ESMFField | c.item->filter(ESMFField))]
+	call ESMF_FieldDestroy([field.name/], rc=rc)
+	[/for]	
+	[for (distGrid : ESMFDistGrid | c.item->filter(ESMFDistGrid))]
+	call ESMF_DistGridDestroy([distGrid.name/], rc=rc)
+	[/for]
+	[for (grid : ESMFGrid | c.item->filter(ESMFGrid))]
+	call ESMF_GridDestroy([grid.name/], rc=rc)
+	[/for]
+	
+	[genDebugInfo(c.name, 'finalize_', 'exit')/]	
+end subroutine finalize_
+[/template]
+
+
+
+[template public genESMFInitMethod(c : ESMFSimpleCouplerComponent)]
+subroutine init1_(comp, istate, ostate, clock, rc)	
+	type(ESMF_CplComp) :: comp
+	type(ESMF_State) :: istate
+	type(ESMF_State) :: ostate
+	type(ESMF_Clock) :: clock
+	integer, intent(out) :: rc	
+		
+	rc = ESMF_SUCCESS
+	[genDebugInfo(c.name, 'init1_', 'enter')/]
+	
+	type(ESMF_Field) :: srcField
+	type(ESMF_Field) :: dstField
+
+	! makes a simplifying but dangerous assumption that 
+    ! all pairs of fields can share a route handle
+	[for (conn : ESMFFieldConnection | c.fieldConnection->first())]
+	call ESMF_StateGet(istate, "[conn.srcField.name/]", srcField, rc=rc)
+	call ESMF_StateGet(ostate, "[conn.dstField.name/]", dstField, rc=rc)
+	[if (conn.srcField.grid.distGrid.totalCells() = conn.dstField.grid.distGrid.totalCells())]
+	call ESMF_FieldRedistStore(srcField, dstField, routehandle=['redist_' + c.srcComponent.name + '2' + c.dstComponent.name/], rc=rc)
+	[else]
+	call ESMF_FieldRegridStore(srcField, dstField, routehandle=['regrid_' + c.srcComponent.name + '2' + c.dstComponent.name/], rc=rc)
+	[/if]
+	
+	[/for]	
+
+	[genDebugInfo(c.name, 'init1_', 'exit')/]	
+end subroutine init1_
+
+subroutine init2_(comp, istate, ostate, clock, rc)	
+	type(ESMF_CplComp) :: comp
+	type(ESMF_State) :: istate
+	type(ESMF_State) :: ostate
+	type(ESMF_Clock) :: clock
+	integer, intent(out) :: rc	
+		
+	rc = ESMF_SUCCESS
+	[genDebugInfo(c.name, 'init2_', 'enter')/]
+	
+	type(ESMF_Field) :: srcField
+	type(ESMF_Field) :: dstField
+
+	! makes a simplifying but dangerous assumption that 
+    ! all pairs of fields can share a route handle
+	[for (conn : ESMFFieldConnection | c.fieldConnection->first())]
+	call ESMF_StateGet(istate, "[conn.dstField.name/]", srcField, rc=rc)
+	call ESMF_StateGet(ostate, "[conn.srcField.name/]", dstField, rc=rc)
+	[if (conn.srcField.grid.distGrid.totalCells() = conn.dstField.grid.distGrid.totalCells())]
+	call ESMF_FieldRedistStore(srcField, dstField, routehandle=['redist_' + c.dstComponent.name + '2' + c.srcComponent.name/], rc=rc)
+	[else]
+	call ESMF_FieldRegridStore(srcField, dstField, routehandle=['regrid_' + c.dstComponent.name + '2' + c.srcComponent.name/], rc=rc)
+	[/if]
+	
+	[/for]	
+
+	[genDebugInfo(c.name, 'init2_', 'exit')/]	
+end subroutine init2_
+[/template]
+
+
+
+[template public genESMFRunMethod(c : ESMFSimpleCouplerComponent)]
+subroutine run1_(comp, istate, ostate, clock, rc)	
+	type(ESMF_CplComp) :: comp
+	type(ESMF_State) :: istate
+	type(ESMF_State) :: ostate
+	type(ESMF_Clock) :: clock
+	integer, intent(out) :: rc	
+		
+	rc = ESMF_SUCCESS
+	[genDebugInfo(c.name, 'run1_', 'enter')/]
+	
+	! makes a simplifying but dangerous assumption that 
+    ! all pairs of fields can share a route handle
+	[for (conn : ESMFFieldConnection | c.fieldConnection)]
+	call ESMF_StateGet(istate, "[conn.srcField.name/]", srcField, rc=rc)
+	call ESMF_StateGet(ostate, "[conn.dstField.name/]", dstField, rc=rc)
+	[if (conn.srcField.grid.distGrid.totalCells() = conn.dstField.grid.distGrid.totalCells())]
+	call ESMF_FieldRedist(srcField, dstField, routehandle=['redist_' + c.srcComponent.name + '2' + c.dstComponent.name/], rc=rc)
+	[else]
+	call ESMF_FieldRegrid(srcField, dstField, routehandle=['regrid_' + c.srcComponent.name + '2' + c.dstComponent.name/], rc=rc)
+	[/if]
+	
+	[/for]	
+
+	[genDebugInfo(c.name, 'run1_', 'exit')/]	
+end subroutine run1_
+
+subroutine run2_(comp, istate, ostate, clock, rc)	
+	type(ESMF_CplComp) :: comp
+	type(ESMF_State) :: istate
+	type(ESMF_State) :: ostate
+	type(ESMF_Clock) :: clock
+	integer, intent(out) :: rc	
+		
+	rc = ESMF_SUCCESS
+	[genDebugInfo(c.name, 'run2_', 'enter')/]
+	
+	! makes a simplifying but dangerous assumption that 
+    ! all pairs of fields can share a route handle
+	[for (conn : ESMFFieldConnection | c.fieldConnection)]
+	call ESMF_StateGet(istate, "[conn.dstField.name/]", srcField, rc=rc)
+	call ESMF_StateGet(ostate, "[conn.srcField.name/]", dstField, rc=rc)
+	[if (conn.srcField.grid.distGrid.totalCells() = conn.dstField.grid.distGrid.totalCells())]
+	call ESMF_FieldRedist(srcField, dstField, routehandle=['redist_' + c.dstComponent.name + '2' + c.srcComponent.name/], rc=rc)
+	[else]
+	call ESMF_FieldRegrid(srcField, dstField, routehandle=['regrid_' + c.dstComponent.name + '2' + c.srcComponent.name/], rc=rc)
+	[/if]
+	
+	[/for]	
+
+	[genDebugInfo(c.name, 'run2_', 'exit')/]	
+end subroutine run2_
+[/template]
+
+
+[template public genESMFFinalMethod(c : ESMFSimpleCouplerComponent)]
+subroutine finalize1_(comp, istate, ostate, clock, rc)	
+	type(ESMF_CplComp) :: comp
+	type(ESMF_State) :: istate
+	type(ESMF_State) :: ostate
+	type(ESMF_Clock) :: clock
+	integer, intent(out) :: rc	
+		
+	rc = ESMF_SUCCESS
+	[genDebugInfo(c.name, 'finalize1_', 'enter')/]
+
+	[for (conn : ESMFFieldConnection | c.fieldConnection->first())]
+	[if (conn.srcField.grid.distGrid.totalCells() = conn.dstField.grid.distGrid.totalCells())]
+	call ESMF_FieldRedistRelease(['redist_' + c.srcComponent.name + '2' + c.dstComponent.name/], rc=rc)
+	[else]
+	call ESMF_FieldRegridRelease(['regrid_' + c.srcComponent.name + '2' + c.dstComponent.name/], rc=rc)
+	[/if]
+	
+	[/for]	
+	
+	[genDebugInfo(c.name, 'finalize1_', 'exit')/]	
+end subroutine finalize1_
+
+subroutine finalize2_(comp, istate, ostate, clock, rc)	
+	type(ESMF_CplComp) :: comp
+	type(ESMF_State) :: istate
+	type(ESMF_State) :: ostate
+	type(ESMF_Clock) :: clock
+	integer, intent(out) :: rc	
+		
+	rc = ESMF_SUCCESS
+	[genDebugInfo(c.name, 'finalize2_', 'enter')/]
+
+	[for (conn : ESMFFieldConnection | c.fieldConnection->first())]
+	[if (conn.srcField.grid.distGrid.totalCells() = conn.dstField.grid.distGrid.totalCells())]
+	call ESMF_FieldRedistRelease(['redist_' + c.dstComponent.name + '2' + c.srcComponent.name/], rc=rc)
+	[else]
+	call ESMF_FieldRegridRelease(['regrid_' + c.dstComponent.name + '2' + c.srcComponent.name/], rc=rc)
+	[/if]
+	
+	[/for]	
+	
+	[genDebugInfo(c.name, 'finalize2_', 'exit')/]	
+end subroutine finalize2_
+[/template]
+
+
+
+[template public genESMFMethod(stage : ESMFStage)]
+subroutine [stage.name/](comp, istate, ostate, clock, rc)	
+	[if (stage.component.oclIsTypeOf(ESMFGriddedComponent))]
+	type(ESMF_GridComp) :: comp
+	[else]
+	type(ESMF_CplComp) :: comp
+	[/if]
+	type(ESMF_State) :: istate
+	type(ESMF_State) :: ostate
+	type(ESMF_Clock) :: clock
+	integer, intent(out) :: rc	
+	
+	[genESMFScopeDataMembers(stage)/]
+	! [protected (stage.name + '_data_members')]
+			
+	! [/protected]
+	
+	rc = ESMF_SUCCESS
+	[genDebugInfo(stage.component.name, stage.name, 'enter')/]
+		
+	[genESMFMethodBody(stage)/]		
+	
+	! [protected (stage.name + '_code')]
+	
+	! [/protected]	
+
+	[genDebugInfo(stage.component.name, stage.name, 'exit')/]	
+end subroutine [stage.name/]
+[/template]
+
+
+[template public genESMFMethodBody(stage : ESMFStage)]
+[if (stage.actions->notEmpty())]
+[genESMFStageAction(stage.actions)/]
+[/if]
+[/template]
+
+[template public genESMFStageAction(action : ESMFStageAction)]
+! genESMFStageAction : [action.eClass()/]
+[/template]
+
+[template public genESMFStageAction(action : ESMFStageActionSequence)]
+[for (a : ESMFStageAction | action.action)]
+[genESMFStageAction(a)/]
+[/for]
+[/template]
+
+
+[template public genESMFStageAction(action : ESMFStageActionIterate)]
+do while (.false.)
+[for (a : ESMFStageAction | action.action)]
+	[genESMFStageAction(a)/]
+[/for]
+end do
+[/template]
+
+[template public genESMFStageAction(action : ESMFStageActionIterateClock)]
+do while (.not. ESMF_ClockIsStopTime(clock))
+[for (a : ESMFStageAction | action.action)]
+	[genESMFStageAction(a)/]
+[/for]
+	call ESMF_ClockAdvance(clock, rc=rc)	
+end do
+[/template]
+
+
+
+[template public genESMFStageAction(action : ESMFStageActionArraySpecCreate)]
+[for (arraySpec : ESMFArraySpec | action.arraySpec)]
+call ESMF_ArraySpecSet([arraySpec.name/], rank=[arraySpec.rank/], typekind=[arraySpec.typekind/], rc=rc)
+[/for]
+[/template]
+
+[template public genESMFStageAction(action : ESMFStageActionComponentCreate)]
+[for (comp : ESMFComponent | action.component)]
+[if (comp.oclIsTypeOf(ESMFGriddedComponent))]
+[comp.name/] = ESMF_GridCompCreate(name="[comp.name/]", rc=rc)
+call ESMF_GridCompSetServices([comp.name/], [comp.name/]_register, rc=rc)
+[else]
+[comp.name/] = ESMF_CplCompCreate(name="[comp.name/]", rc=rc)
+call ESMF_CplCompSetServices([comp.name/], [comp.name/]_register, rc=rc)
+[/if]
+[/for]
+[/template]
+
+[template public genESMFStageAction(action : ESMFStageActionComponentDestroy)]
+[for (comp : ESMFComponent | action.component)]
+[if (comp.oclIsTypeOf(ESMFGriddedComponent))]
+call ESMF_GridCompDestroy([comp.name/], rc=rc)
+[else]
+call ESMF_CplCompDestroy([comp.name/], rc=rc)
+[/if]
+[/for]
+[/template]
+
+[template public genESMFStageAction(action : ESMFStageActionComponentSetGrid)]
+[if (action.component.oclIsTypeOf(ESMFGriddedComponent))]
+call ESMF_GridCompSet([action.component.name/], grid=[action.grid.name/], rc=rc)
+[else]
+call ESMF_CplCompSet([action.component.name/], grid=[action.grid.name/], rc=rc)
+[/if]
+[/template]
+
+[template public genESMFStageAction(action : ESMFStageActionExecuteStage)]
+call [action.stageToExecute.getExecutionCommand()/]([action.stageToExecute.component.name/], &
+		importState=[action.importState.name/], exportState=[action.exportState.name/], &
+      	clock=clock, phase=[action.stageToExecute.phase/], rc=rc)  
+[/template]
+
+[query public getExecutionCommand(stage : ESMFStage) : String = 
+	if (stage.component.oclIsTypeOf(ESMFGriddedComponent)) then
+		if (stage.oclIsTypeOf(ESMFStageInitialize)) then
+			'ESMF_GridCompInitialize'
+		else 
+			if (stage.oclIsTypeOf(ESMFStageFinalize)) then
+			'ESMF_GridCompFinalize'
+			else
+			'ESMF_GridCompRun'
+			endif
+		endif
+	else
+		if (stage.oclIsTypeOf(ESMFStageInitialize)) then
+			'ESMF_CplCompInitialize'
+		else 
+			if (stage.oclIsTypeOf(ESMFStageFinalize)) then
+			'ESMF_CplCompFinalize'
+			else
+			'ESMF_CplCompRun'
+			endif
+		endif
+	endif
+/]
+
+
+[template public genESMFStageAction(action : ESMFStageActionGridInherit)]
+[if (action.getStage().component.oclIsTypeOf(ESMFGriddedComponent))]
+call ESMF_GridCompGet(comp, grid=[action.grid.name/], rc=rc)	
+[else]
+call ESMF_CplCompGet(comp, grid=[action.grid.name/], rc=rc)
+[/if]
+[/template]
+
+[query public getStage(a : ESMFStageAction) : ESMFStage = 
+	if (a.oclIsTypeOf(ESMFStageActionSequence) and a.oclAsType(ESMFStageActionSequence).stage->notEmpty()) then
+		a.oclAsType(ESMFStageActionSequence).stage
+	else
+		getStage(a.parent)
+	endif 
+/]
+
+
+[template public genESMFStageAction(action : ESMFStageActionFieldCreate)]
+[for (field : ESMFField | action.field)]
+[field.name/] = ESMF_FieldCreate(grid=[field.grid.name/], arrayspec=[field.arraySpec.name/], &
+                   indexflag=[field.index/], &
+				   totalLWidth=[toFortranArrayConstructor(field.totalLWidth)/], &
+				   totalUWidth=[toFortranArrayConstructor(field.totalUWidth)/], &
+				   name="[field.name/]", rc=rc)
+
+[/for]
+[/template]
+
+[template public genESMFStageAction(action : ESMFStageActionFieldDestroy)]
+[for (field : ESMFField | action.field)]
+call ESMF_FieldDestroy([field.name/] , rc=rc)
+[/for]
+[/template]
+
+[template public genESMFStageAction(action : ESMFStageActionImportStateAdd)]
+call ESMF_StateAdd(istate, &
+        [for (item : ESMFStateItem | action.item) before ('(/') separator (', ') after ('/)')][item.name/][/for], & 
+		rc=rc)      
+[/template]
+
+[template public genESMFStageAction(action : ESMFStageActionExportStateAdd)]
+call ESMF_StateAdd(ostate, &
+        [for (item : ESMFStateItem | action.item) before ('(/') separator (', ') after ('/)')][item.name/][/for], & 
+		rc=rc)      
+[/template]
+
+[template public genESMFStageAction(action : ESMFStageActionImportStateGet)]
+call ESMF_StateGet(istate, "[action.itemName/]", [action.item.name/], rc=rc)
+[/template]
+
+[template public genESMFStageAction(action : ESMFStageActionExportStateGet)]
+call ESMF_StateGet(ostate, "[action.itemName/]", [action.item.name/], rc=rc)
+[/template]
+
+[template public genESMFStageAction(action : ESMFStageActionStateCreate)]
+[for (state : ESMFState | action.state)]
+[state.name/] = ESMF_StateCreate(name="[state.name/]", rc=rc)
+[/for]
+[/template]
+
+[template public genESMFStageAction(action : ESMFStageActionStateDestroy)]
+[for (state : ESMFState | action.state)]
+call ESMF_StateDestroy([state.name/], rc=rc)
+[/for]
+[/template]
+
+[template public genESMFStageAction(action : ESMFStageActionFieldRedistStore)]
+call ESMF_FieldRedistStore([action.srcField.name/], [action.dstField.name/], routehandle=[action.routeHandle.name/], rc=rc)
+[/template]
+
+[template public genESMFStageAction(action : ESMFStageActionFieldRedist)]
+call ESMF_FieldRedist([action.srcField.name/], [action.dstField.name/], routehandle=[action.routeHandle.name/], rc=rc)
+[/template]
+
+[template public genESMFStageAction(action : ESMFStageActionFieldRedistRelease)]
+call ESMF_FieldRedistRelease([action.routeHandle.name/], rc=rc)
+[/template]
+
+
+[template public genDebugInfo(compName : String, methodName : String, action : String) post (trim())]
+[if (action.equalsIgnoreCase('enter'))]
+print "(A,T25,A)", "([compName/])", "entering [methodName/]"
+[elseif (action.equalsIgnoreCase('exit'))]
+print "(A,T25,A)", "([compName/])", "exiting [methodName/]"
+[elseif (action.equalsIgnoreCase('driverstart'))]
+print "(A,T25,A)", "([compName/])", "driver starting"
+[elseif (action.equalsIgnoreCase('driverend'))]
+print "(A,T25,A)", "([compName/])", "driver ending"
+[/if]
+[/template]
+
+
+
+[comment QUERIES ******************* /]
+
+[template public getESMFMethodType(stage : ESMFStage) post (trim())]
+[if (stage.oclIsKindOf(ESMFStageInitialize))]
+ESMF_METHOD_INITIALIZE
+[elseif (stage.oclIsKindOf(ESMFStageRun))]
+ESMF_METHOD_RUN
+[elseif (stage.oclIsKindOf(ESMFStageFinalize))]
+ESMF_METHOD_FINALIZE
+[else]
+UNKNOWN
+[/if]
+[/template]
+
+[template public toFortranArrayConstructor(intseq : Sequence(Integer)) post (trim())]
+[for (i : Integer | intseq) before ('(/') separator (', ') after ('/)')][i/][/for]
+[/template]
+
+[template public toFortranArrayConstructor(extents : OrderedSet(Extent), idx : String) post(trim())]
+[for (ext : Extent | extents) before ('(/') separator (', ') after ('/)')][ext.eGet(idx)/][/for]
+[/template]
+
+[query public normalize(s : String) : String = 
+s.replaceAll(' ', '_') 
+/]
+
+[query public totalCells(dg : ESMFDistGrid) : Integer = 
+if (dg.extent->size() = 2) then
+	(dg.extent->at(1).max - dg.extent->at(1).min) * (dg.extent->at(2).max - dg.extent->at(2).min)
+else
+	-1
+endif
+/]
+
+
+
+[comment ********************* to be removed /]
+

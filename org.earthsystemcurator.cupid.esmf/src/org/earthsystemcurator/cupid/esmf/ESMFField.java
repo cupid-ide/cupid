@@ -18,7 +18,6 @@ import org.eclipse.emf.common.util.EList;
  *   <li>{@link org.earthsystemcurator.cupid.esmf.ESMFField#getArray <em>Array</em>}</li>
  *   <li>{@link org.earthsystemcurator.cupid.esmf.ESMFField#getStaggerLoc <em>Stagger Loc</em>}</li>
  *   <li>{@link org.earthsystemcurator.cupid.esmf.ESMFField#getArraySpec <em>Array Spec</em>}</li>
- *   <li>{@link org.earthsystemcurator.cupid.esmf.ESMFField#getSIDLArgument <em>SIDL Argument</em>}</li>
  *   <li>{@link org.earthsystemcurator.cupid.esmf.ESMFField#getIndex <em>Index</em>}</li>
  *   <li>{@link org.earthsystemcurator.cupid.esmf.ESMFField#getTotalLWidth <em>Total LWidth</em>}</li>
  *   <li>{@link org.earthsystemcurator.cupid.esmf.ESMFField#getTotalUWidth <em>Total UWidth</em>}</li>
@@ -136,22 +135,6 @@ public interface ESMFField extends ESMFStateItem, ESMFScopedItem {
 	 * @generated
 	 */
 	void setArraySpec(ESMFArraySpec value);
-
-	/**
-	 * Returns the value of the '<em><b>SIDL Argument</b></em>' reference list.
-	 * The list contents are of type {@link org.earthsystemcurator.cupid.sidl.Argument}.
-	 * <!-- begin-user-doc -->
-	 * <p>
-	 * If the meaning of the '<em>SIDL Argument</em>' reference list isn't clear,
-	 * there really should be more of a description here...
-	 * </p>
-	 * <!-- end-user-doc -->
-	 * @return the value of the '<em>SIDL Argument</em>' reference list.
-	 * @see org.earthsystemcurator.cupid.esmf.ESMFPackage#getESMFField_SIDLArgument()
-	 * @model
-	 * @generated
-	 */
-	EList<Argument> getSIDLArgument();
 
 	/**
 	 * Returns the value of the '<em><b>Index</b></em>' attribute.

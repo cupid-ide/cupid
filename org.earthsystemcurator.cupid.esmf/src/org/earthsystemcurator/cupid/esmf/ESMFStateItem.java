@@ -13,6 +13,6 @@ package org.earthsystemcurator.cupid.esmf;
  * @model interface="true" abstract="true"
  * @generated
  */
-public interface ESMFStateItem extends ESMFNamedEntity, ESMFScopedItem {
+public interface ESMFStateItem extends ESMFScopedItem {
 
 } // ESMFStateItem

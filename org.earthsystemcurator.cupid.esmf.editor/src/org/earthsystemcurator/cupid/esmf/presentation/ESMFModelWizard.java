@@ -183,11 +183,12 @@ public class ESMFModelWizard extends Wizard implements INewWizard {
 	 * Returns the names of the types that can be created as the root object.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @generated
+	 * @generated NOT
 	 */
 	protected Collection<String> getInitialObjectNames() {
 		if (initialObjectNames == null) {
 			initialObjectNames = new ArrayList<String>();
+			/*
 			for (EClassifier eClassifier : esmfPackage.getEClassifiers()) {
 				if (eClassifier instanceof EClass) {
 					EClass eClass = (EClass)eClassifier;
@@ -197,6 +198,13 @@ public class ESMFModelWizard extends Wizard implements INewWizard {
 				}
 			}
 			Collections.sort(initialObjectNames, CommonPlugin.INSTANCE.getComparator());
+			*/
+			
+			initialObjectNames.add(esmfPackage.getESMFWorkspace().getName());
+			initialObjectNames.add(esmfPackage.getESMFGriddedComponent().getName());
+			initialObjectNames.add(esmfPackage.getESMFCouplerComponent().getName());
+			initialObjectNames.add(esmfPackage.getESMFDriver().getName());
+			
 		}
 		return initialObjectNames;
 	}

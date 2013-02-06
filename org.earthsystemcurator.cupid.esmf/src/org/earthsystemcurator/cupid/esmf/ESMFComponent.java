@@ -12,18 +12,12 @@ import org.eclipse.emf.common.util.EList;
  * <p>
  * The following features are supported:
  * <ul>
- *   <li>{@link org.earthsystemcurator.cupid.esmf.ESMFComponent#getMethod <em>Method</em>}</li>
- *   <li>{@link org.earthsystemcurator.cupid.esmf.ESMFComponent#getRegisterMethod <em>Register Method</em>}</li>
  *   <li>{@link org.earthsystemcurator.cupid.esmf.ESMFComponent#getImportState <em>Import State</em>}</li>
  *   <li>{@link org.earthsystemcurator.cupid.esmf.ESMFComponent#getExportState <em>Export State</em>}</li>
  *   <li>{@link org.earthsystemcurator.cupid.esmf.ESMFComponent#getComponent <em>Component</em>}</li>
  *   <li>{@link org.earthsystemcurator.cupid.esmf.ESMFComponent#getParent <em>Parent</em>}</li>
- *   <li>{@link org.earthsystemcurator.cupid.esmf.ESMFComponent#getClock <em>Clock</em>}</li>
- *   <li>{@link org.earthsystemcurator.cupid.esmf.ESMFComponent#getModelClock <em>Model Clock</em>}</li>
- *   <li>{@link org.earthsystemcurator.cupid.esmf.ESMFComponent#getTime <em>Time</em>}</li>
- *   <li>{@link org.earthsystemcurator.cupid.esmf.ESMFComponent#getTimeInterval <em>Time Interval</em>}</li>
- *   <li>{@link org.earthsystemcurator.cupid.esmf.ESMFComponent#getSIDLClass <em>SIDL Class</em>}</li>
  *   <li>{@link org.earthsystemcurator.cupid.esmf.ESMFComponent#getStage <em>Stage</em>}</li>
+ *   <li>{@link org.earthsystemcurator.cupid.esmf.ESMFComponent#getWorkspace <em>Workspace</em>}</li>
  * </ul>
  * </p>
  *
@@ -32,52 +26,6 @@ import org.eclipse.emf.common.util.EList;
  * @generated
  */
 public interface ESMFComponent extends ESMFNamedEntity, ESMFScope {
-	/**
-	 * Returns the value of the '<em><b>Method</b></em>' containment reference list.
-	 * The list contents are of type {@link org.earthsystemcurator.cupid.esmf.ESMFMethod}.
-	 * It is bidirectional and its opposite is '{@link org.earthsystemcurator.cupid.esmf.ESMFMethod#getComponent <em>Component</em>}'.
-	 * <!-- begin-user-doc -->
-	 * <p>
-	 * If the meaning of the '<em>Method</em>' containment reference list isn't clear,
-	 * there really should be more of a description here...
-	 * </p>
-	 * <!-- end-user-doc -->
-	 * @return the value of the '<em>Method</em>' containment reference list.
-	 * @see org.earthsystemcurator.cupid.esmf.ESMFPackage#getESMFComponent_Method()
-	 * @see org.earthsystemcurator.cupid.esmf.ESMFMethod#getComponent
-	 * @model opposite="component" containment="true"
-	 * @generated
-	 */
-	EList<ESMFMethod> getMethod();
-
-	/**
-	 * Returns the value of the '<em><b>Register Method</b></em>' containment reference.
-	 * It is bidirectional and its opposite is '{@link org.earthsystemcurator.cupid.esmf.ESMFRegisterMethod#getComponent <em>Component</em>}'.
-	 * <!-- begin-user-doc -->
-	 * <p>
-	 * If the meaning of the '<em>Register Method</em>' containment reference isn't clear,
-	 * there really should be more of a description here...
-	 * </p>
-	 * <!-- end-user-doc -->
-	 * @return the value of the '<em>Register Method</em>' containment reference.
-	 * @see #setRegisterMethod(ESMFRegisterMethod)
-	 * @see org.earthsystemcurator.cupid.esmf.ESMFPackage#getESMFComponent_RegisterMethod()
-	 * @see org.earthsystemcurator.cupid.esmf.ESMFRegisterMethod#getComponent
-	 * @model opposite="component" containment="true" required="true"
-	 * @generated
-	 */
-	ESMFRegisterMethod getRegisterMethod();
-
-	/**
-	 * Sets the value of the '{@link org.earthsystemcurator.cupid.esmf.ESMFComponent#getRegisterMethod <em>Register Method</em>}' containment reference.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @param value the new value of the '<em>Register Method</em>' containment reference.
-	 * @see #getRegisterMethod()
-	 * @generated
-	 */
-	void setRegisterMethod(ESMFRegisterMethod value);
-
 	/**
 	 * Returns the value of the '<em><b>Import State</b></em>' reference.
 	 * <!-- begin-user-doc -->
@@ -177,108 +125,6 @@ public interface ESMFComponent extends ESMFNamedEntity, ESMFScope {
 	void setParent(ESMFComponent value);
 
 	/**
-	 * Returns the value of the '<em><b>Clock</b></em>' containment reference list.
-	 * The list contents are of type {@link org.earthsystemcurator.cupid.esmf.ESMFClock}.
-	 * It is bidirectional and its opposite is '{@link org.earthsystemcurator.cupid.esmf.ESMFClock#getComponent <em>Component</em>}'.
-	 * <!-- begin-user-doc -->
-	 * <p>
-	 * If the meaning of the '<em>Clock</em>' containment reference list isn't clear,
-	 * there really should be more of a description here...
-	 * </p>
-	 * <!-- end-user-doc -->
-	 * @return the value of the '<em>Clock</em>' containment reference list.
-	 * @see org.earthsystemcurator.cupid.esmf.ESMFPackage#getESMFComponent_Clock()
-	 * @see org.earthsystemcurator.cupid.esmf.ESMFClock#getComponent
-	 * @model opposite="component" containment="true"
-	 * @generated
-	 */
-	EList<ESMFClock> getClock();
-
-	/**
-	 * Returns the value of the '<em><b>Model Clock</b></em>' reference.
-	 * <!-- begin-user-doc -->
-	 * <p>
-	 * If the meaning of the '<em>Model Clock</em>' reference isn't clear,
-	 * there really should be more of a description here...
-	 * </p>
-	 * <!-- end-user-doc -->
-	 * @return the value of the '<em>Model Clock</em>' reference.
-	 * @see #setModelClock(ESMFClock)
-	 * @see org.earthsystemcurator.cupid.esmf.ESMFPackage#getESMFComponent_ModelClock()
-	 * @model
-	 * @generated
-	 */
-	ESMFClock getModelClock();
-
-	/**
-	 * Sets the value of the '{@link org.earthsystemcurator.cupid.esmf.ESMFComponent#getModelClock <em>Model Clock</em>}' reference.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @param value the new value of the '<em>Model Clock</em>' reference.
-	 * @see #getModelClock()
-	 * @generated
-	 */
-	void setModelClock(ESMFClock value);
-
-	/**
-	 * Returns the value of the '<em><b>Time</b></em>' containment reference list.
-	 * The list contents are of type {@link org.earthsystemcurator.cupid.esmf.ESMFTime}.
-	 * <!-- begin-user-doc -->
-	 * <p>
-	 * If the meaning of the '<em>Time</em>' containment reference list isn't clear,
-	 * there really should be more of a description here...
-	 * </p>
-	 * <!-- end-user-doc -->
-	 * @return the value of the '<em>Time</em>' containment reference list.
-	 * @see org.earthsystemcurator.cupid.esmf.ESMFPackage#getESMFComponent_Time()
-	 * @model containment="true"
-	 * @generated
-	 */
-	EList<ESMFTime> getTime();
-
-	/**
-	 * Returns the value of the '<em><b>Time Interval</b></em>' containment reference list.
-	 * The list contents are of type {@link org.earthsystemcurator.cupid.esmf.ESMFTimeInterval}.
-	 * <!-- begin-user-doc -->
-	 * <p>
-	 * If the meaning of the '<em>Time Interval</em>' containment reference list isn't clear,
-	 * there really should be more of a description here...
-	 * </p>
-	 * <!-- end-user-doc -->
-	 * @return the value of the '<em>Time Interval</em>' containment reference list.
-	 * @see org.earthsystemcurator.cupid.esmf.ESMFPackage#getESMFComponent_TimeInterval()
-	 * @model containment="true"
-	 * @generated
-	 */
-	EList<ESMFTimeInterval> getTimeInterval();
-
-	/**
-	 * Returns the value of the '<em><b>SIDL Class</b></em>' reference.
-	 * <!-- begin-user-doc -->
-	 * <p>
-	 * If the meaning of the '<em>SIDL Class</em>' reference isn't clear,
-	 * there really should be more of a description here...
-	 * </p>
-	 * <!-- end-user-doc -->
-	 * @return the value of the '<em>SIDL Class</em>' reference.
-	 * @see #setSIDLClass(org.earthsystemcurator.cupid.sidl.Class)
-	 * @see org.earthsystemcurator.cupid.esmf.ESMFPackage#getESMFComponent_SIDLClass()
-	 * @model
-	 * @generated
-	 */
-	org.earthsystemcurator.cupid.sidl.Class getSIDLClass();
-
-	/**
-	 * Sets the value of the '{@link org.earthsystemcurator.cupid.esmf.ESMFComponent#getSIDLClass <em>SIDL Class</em>}' reference.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @param value the new value of the '<em>SIDL Class</em>' reference.
-	 * @see #getSIDLClass()
-	 * @generated
-	 */
-	void setSIDLClass(org.earthsystemcurator.cupid.sidl.Class value);
-
-	/**
 	 * Returns the value of the '<em><b>Stage</b></em>' containment reference list.
 	 * The list contents are of type {@link org.earthsystemcurator.cupid.esmf.ESMFStage}.
 	 * It is bidirectional and its opposite is '{@link org.earthsystemcurator.cupid.esmf.ESMFStage#getComponent <em>Component</em>}'.
@@ -295,5 +141,33 @@ public interface ESMFComponent extends ESMFNamedEntity, ESMFScope {
 	 * @generated
 	 */
 	EList<ESMFStage> getStage();
+
+	/**
+	 * Returns the value of the '<em><b>Workspace</b></em>' container reference.
+	 * It is bidirectional and its opposite is '{@link org.earthsystemcurator.cupid.esmf.ESMFWorkspace#getComponent <em>Component</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <p>
+	 * If the meaning of the '<em>Workspace</em>' container reference isn't clear,
+	 * there really should be more of a description here...
+	 * </p>
+	 * <!-- end-user-doc -->
+	 * @return the value of the '<em>Workspace</em>' container reference.
+	 * @see #setWorkspace(ESMFWorkspace)
+	 * @see org.earthsystemcurator.cupid.esmf.ESMFPackage#getESMFComponent_Workspace()
+	 * @see org.earthsystemcurator.cupid.esmf.ESMFWorkspace#getComponent
+	 * @model opposite="component" required="true" transient="false"
+	 * @generated
+	 */
+	ESMFWorkspace getWorkspace();
+
+	/**
+	 * Sets the value of the '{@link org.earthsystemcurator.cupid.esmf.ESMFComponent#getWorkspace <em>Workspace</em>}' container reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @param value the new value of the '<em>Workspace</em>' container reference.
+	 * @see #getWorkspace()
+	 * @generated
+	 */
+	void setWorkspace(ESMFWorkspace value);
 
 } // ESMFComponent

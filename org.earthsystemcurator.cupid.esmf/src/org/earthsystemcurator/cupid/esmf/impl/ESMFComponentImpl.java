@@ -22,6 +22,7 @@ import org.earthsystemcurator.cupid.esmf.ESMFState;
 import org.earthsystemcurator.cupid.esmf.ESMFTime;
 import org.earthsystemcurator.cupid.esmf.ESMFTimeInterval;
 
+import org.earthsystemcurator.cupid.esmf.ESMFWorkspace;
 import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.common.notify.NotificationChain;
 
@@ -35,6 +36,7 @@ import org.eclipse.emf.ecore.impl.ENotificationImpl;
 import org.eclipse.emf.ecore.util.EObjectContainmentEList;
 import org.eclipse.emf.ecore.util.EObjectContainmentWithInverseEList;
 import org.eclipse.emf.ecore.util.EObjectWithInverseResolvingEList;
+import org.eclipse.emf.ecore.util.EcoreUtil;
 import org.eclipse.emf.ecore.util.InternalEList;
 
 /**
@@ -45,18 +47,12 @@ import org.eclipse.emf.ecore.util.InternalEList;
  * The following features are implemented:
  * <ul>
  *   <li>{@link org.earthsystemcurator.cupid.esmf.impl.ESMFComponentImpl#getItem <em>Item</em>}</li>
- *   <li>{@link org.earthsystemcurator.cupid.esmf.impl.ESMFComponentImpl#getMethod <em>Method</em>}</li>
- *   <li>{@link org.earthsystemcurator.cupid.esmf.impl.ESMFComponentImpl#getRegisterMethod <em>Register Method</em>}</li>
  *   <li>{@link org.earthsystemcurator.cupid.esmf.impl.ESMFComponentImpl#getImportState <em>Import State</em>}</li>
  *   <li>{@link org.earthsystemcurator.cupid.esmf.impl.ESMFComponentImpl#getExportState <em>Export State</em>}</li>
  *   <li>{@link org.earthsystemcurator.cupid.esmf.impl.ESMFComponentImpl#getComponent <em>Component</em>}</li>
  *   <li>{@link org.earthsystemcurator.cupid.esmf.impl.ESMFComponentImpl#getParent <em>Parent</em>}</li>
- *   <li>{@link org.earthsystemcurator.cupid.esmf.impl.ESMFComponentImpl#getClock <em>Clock</em>}</li>
- *   <li>{@link org.earthsystemcurator.cupid.esmf.impl.ESMFComponentImpl#getModelClock <em>Model Clock</em>}</li>
- *   <li>{@link org.earthsystemcurator.cupid.esmf.impl.ESMFComponentImpl#getTime <em>Time</em>}</li>
- *   <li>{@link org.earthsystemcurator.cupid.esmf.impl.ESMFComponentImpl#getTimeInterval <em>Time Interval</em>}</li>
- *   <li>{@link org.earthsystemcurator.cupid.esmf.impl.ESMFComponentImpl#getSIDLClass <em>SIDL Class</em>}</li>
  *   <li>{@link org.earthsystemcurator.cupid.esmf.impl.ESMFComponentImpl#getStage <em>Stage</em>}</li>
+ *   <li>{@link org.earthsystemcurator.cupid.esmf.impl.ESMFComponentImpl#getWorkspace <em>Workspace</em>}</li>
  * </ul>
  * </p>
  *
@@ -72,26 +68,6 @@ public abstract class ESMFComponentImpl extends ESMFNamedEntityImpl implements E
 	 * @ordered
 	 */
 	protected EList<ESMFScopedItem> item;
-
-	/**
-	 * The cached value of the '{@link #getMethod() <em>Method</em>}' containment reference list.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @see #getMethod()
-	 * @generated
-	 * @ordered
-	 */
-	protected EList<ESMFMethod> method;
-
-	/**
-	 * The cached value of the '{@link #getRegisterMethod() <em>Register Method</em>}' containment reference.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @see #getRegisterMethod()
-	 * @generated
-	 * @ordered
-	 */
-	protected ESMFRegisterMethod registerMethod;
 
 	/**
 	 * The cached value of the '{@link #getImportState() <em>Import State</em>}' reference.
@@ -134,56 +110,6 @@ public abstract class ESMFComponentImpl extends ESMFNamedEntityImpl implements E
 	protected ESMFComponent parent;
 
 	/**
-	 * The cached value of the '{@link #getClock() <em>Clock</em>}' containment reference list.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @see #getClock()
-	 * @generated
-	 * @ordered
-	 */
-	protected EList<ESMFClock> clock;
-
-	/**
-	 * The cached value of the '{@link #getModelClock() <em>Model Clock</em>}' reference.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @see #getModelClock()
-	 * @generated
-	 * @ordered
-	 */
-	protected ESMFClock modelClock;
-
-	/**
-	 * The cached value of the '{@link #getTime() <em>Time</em>}' containment reference list.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @see #getTime()
-	 * @generated
-	 * @ordered
-	 */
-	protected EList<ESMFTime> time;
-
-	/**
-	 * The cached value of the '{@link #getTimeInterval() <em>Time Interval</em>}' containment reference list.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @see #getTimeInterval()
-	 * @generated
-	 * @ordered
-	 */
-	protected EList<ESMFTimeInterval> timeInterval;
-
-	/**
-	 * The cached value of the '{@link #getSIDLClass() <em>SIDL Class</em>}' reference.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @see #getSIDLClass()
-	 * @generated
-	 * @ordered
-	 */
-	protected org.earthsystemcurator.cupid.sidl.Class sidlClass;
-
-	/**
 	 * The cached value of the '{@link #getStage() <em>Stage</em>}' containment reference list.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -210,61 +136,6 @@ public abstract class ESMFComponentImpl extends ESMFNamedEntityImpl implements E
 	@Override
 	protected EClass eStaticClass() {
 		return ESMFPackage.Literals.ESMF_COMPONENT;
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public EList<ESMFMethod> getMethod() {
-		if (method == null) {
-			method = new EObjectContainmentWithInverseEList<ESMFMethod>(ESMFMethod.class, this, ESMFPackage.ESMF_COMPONENT__METHOD, ESMFPackage.ESMF_METHOD__COMPONENT);
-		}
-		return method;
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public ESMFRegisterMethod getRegisterMethod() {
-		return registerMethod;
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public NotificationChain basicSetRegisterMethod(ESMFRegisterMethod newRegisterMethod, NotificationChain msgs) {
-		ESMFRegisterMethod oldRegisterMethod = registerMethod;
-		registerMethod = newRegisterMethod;
-		if (eNotificationRequired()) {
-			ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, ESMFPackage.ESMF_COMPONENT__REGISTER_METHOD, oldRegisterMethod, newRegisterMethod);
-			if (msgs == null) msgs = notification; else msgs.add(notification);
-		}
-		return msgs;
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public void setRegisterMethod(ESMFRegisterMethod newRegisterMethod) {
-		if (newRegisterMethod != registerMethod) {
-			NotificationChain msgs = null;
-			if (registerMethod != null)
-				msgs = ((InternalEObject)registerMethod).eInverseRemove(this, ESMFPackage.ESMF_REGISTER_METHOD__COMPONENT, ESMFRegisterMethod.class, msgs);
-			if (newRegisterMethod != null)
-				msgs = ((InternalEObject)newRegisterMethod).eInverseAdd(this, ESMFPackage.ESMF_REGISTER_METHOD__COMPONENT, ESMFRegisterMethod.class, msgs);
-			msgs = basicSetRegisterMethod(newRegisterMethod, msgs);
-			if (msgs != null) msgs.dispatch();
-		}
-		else if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, ESMFPackage.ESMF_COMPONENT__REGISTER_METHOD, newRegisterMethod, newRegisterMethod));
 	}
 
 	/**
@@ -432,123 +303,52 @@ public abstract class ESMFComponentImpl extends ESMFNamedEntityImpl implements E
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EList<ESMFClock> getClock() {
-		if (clock == null) {
-			clock = new EObjectContainmentWithInverseEList<ESMFClock>(ESMFClock.class, this, ESMFPackage.ESMF_COMPONENT__CLOCK, ESMFPackage.ESMF_CLOCK__COMPONENT);
-		}
-		return clock;
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public ESMFClock getModelClock() {
-		if (modelClock != null && modelClock.eIsProxy()) {
-			InternalEObject oldModelClock = (InternalEObject)modelClock;
-			modelClock = (ESMFClock)eResolveProxy(oldModelClock);
-			if (modelClock != oldModelClock) {
-				if (eNotificationRequired())
-					eNotify(new ENotificationImpl(this, Notification.RESOLVE, ESMFPackage.ESMF_COMPONENT__MODEL_CLOCK, oldModelClock, modelClock));
-			}
-		}
-		return modelClock;
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public ESMFClock basicGetModelClock() {
-		return modelClock;
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public void setModelClock(ESMFClock newModelClock) {
-		ESMFClock oldModelClock = modelClock;
-		modelClock = newModelClock;
-		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, ESMFPackage.ESMF_COMPONENT__MODEL_CLOCK, oldModelClock, modelClock));
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public EList<ESMFTime> getTime() {
-		if (time == null) {
-			time = new EObjectContainmentEList<ESMFTime>(ESMFTime.class, this, ESMFPackage.ESMF_COMPONENT__TIME);
-		}
-		return time;
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public EList<ESMFTimeInterval> getTimeInterval() {
-		if (timeInterval == null) {
-			timeInterval = new EObjectContainmentEList<ESMFTimeInterval>(ESMFTimeInterval.class, this, ESMFPackage.ESMF_COMPONENT__TIME_INTERVAL);
-		}
-		return timeInterval;
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public org.earthsystemcurator.cupid.sidl.Class getSIDLClass() {
-		if (sidlClass != null && sidlClass.eIsProxy()) {
-			InternalEObject oldSIDLClass = (InternalEObject)sidlClass;
-			sidlClass = (org.earthsystemcurator.cupid.sidl.Class)eResolveProxy(oldSIDLClass);
-			if (sidlClass != oldSIDLClass) {
-				if (eNotificationRequired())
-					eNotify(new ENotificationImpl(this, Notification.RESOLVE, ESMFPackage.ESMF_COMPONENT__SIDL_CLASS, oldSIDLClass, sidlClass));
-			}
-		}
-		return sidlClass;
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public org.earthsystemcurator.cupid.sidl.Class basicGetSIDLClass() {
-		return sidlClass;
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public void setSIDLClass(org.earthsystemcurator.cupid.sidl.Class newSIDLClass) {
-		org.earthsystemcurator.cupid.sidl.Class oldSIDLClass = sidlClass;
-		sidlClass = newSIDLClass;
-		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, ESMFPackage.ESMF_COMPONENT__SIDL_CLASS, oldSIDLClass, sidlClass));
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
 	public EList<ESMFStage> getStage() {
 		if (stage == null) {
 			stage = new EObjectContainmentWithInverseEList<ESMFStage>(ESMFStage.class, this, ESMFPackage.ESMF_COMPONENT__STAGE, ESMFPackage.ESMF_STAGE__COMPONENT);
 		}
 		return stage;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public ESMFWorkspace getWorkspace() {
+		if (eContainerFeatureID() != ESMFPackage.ESMF_COMPONENT__WORKSPACE) return null;
+		return (ESMFWorkspace)eContainer();
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public NotificationChain basicSetWorkspace(ESMFWorkspace newWorkspace, NotificationChain msgs) {
+		msgs = eBasicSetContainer((InternalEObject)newWorkspace, ESMFPackage.ESMF_COMPONENT__WORKSPACE, msgs);
+		return msgs;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public void setWorkspace(ESMFWorkspace newWorkspace) {
+		if (newWorkspace != eInternalContainer() || (eContainerFeatureID() != ESMFPackage.ESMF_COMPONENT__WORKSPACE && newWorkspace != null)) {
+			if (EcoreUtil.isAncestor(this, newWorkspace))
+				throw new IllegalArgumentException("Recursive containment not allowed for " + toString());
+			NotificationChain msgs = null;
+			if (eInternalContainer() != null)
+				msgs = eBasicRemoveFromContainer(msgs);
+			if (newWorkspace != null)
+				msgs = ((InternalEObject)newWorkspace).eInverseAdd(this, ESMFPackage.ESMF_WORKSPACE__COMPONENT, ESMFWorkspace.class, msgs);
+			msgs = basicSetWorkspace(newWorkspace, msgs);
+			if (msgs != null) msgs.dispatch();
+		}
+		else if (eNotificationRequired())
+			eNotify(new ENotificationImpl(this, Notification.SET, ESMFPackage.ESMF_COMPONENT__WORKSPACE, newWorkspace, newWorkspace));
 	}
 
 	/**
@@ -562,22 +362,18 @@ public abstract class ESMFComponentImpl extends ESMFNamedEntityImpl implements E
 		switch (featureID) {
 			case ESMFPackage.ESMF_COMPONENT__ITEM:
 				return ((InternalEList<InternalEObject>)(InternalEList<?>)getItem()).basicAdd(otherEnd, msgs);
-			case ESMFPackage.ESMF_COMPONENT__METHOD:
-				return ((InternalEList<InternalEObject>)(InternalEList<?>)getMethod()).basicAdd(otherEnd, msgs);
-			case ESMFPackage.ESMF_COMPONENT__REGISTER_METHOD:
-				if (registerMethod != null)
-					msgs = ((InternalEObject)registerMethod).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - ESMFPackage.ESMF_COMPONENT__REGISTER_METHOD, null, msgs);
-				return basicSetRegisterMethod((ESMFRegisterMethod)otherEnd, msgs);
 			case ESMFPackage.ESMF_COMPONENT__COMPONENT:
 				return ((InternalEList<InternalEObject>)(InternalEList<?>)getComponent()).basicAdd(otherEnd, msgs);
 			case ESMFPackage.ESMF_COMPONENT__PARENT:
 				if (parent != null)
 					msgs = ((InternalEObject)parent).eInverseRemove(this, ESMFPackage.ESMF_COMPONENT__COMPONENT, ESMFComponent.class, msgs);
 				return basicSetParent((ESMFComponent)otherEnd, msgs);
-			case ESMFPackage.ESMF_COMPONENT__CLOCK:
-				return ((InternalEList<InternalEObject>)(InternalEList<?>)getClock()).basicAdd(otherEnd, msgs);
 			case ESMFPackage.ESMF_COMPONENT__STAGE:
 				return ((InternalEList<InternalEObject>)(InternalEList<?>)getStage()).basicAdd(otherEnd, msgs);
+			case ESMFPackage.ESMF_COMPONENT__WORKSPACE:
+				if (eInternalContainer() != null)
+					msgs = eBasicRemoveFromContainer(msgs);
+				return basicSetWorkspace((ESMFWorkspace)otherEnd, msgs);
 		}
 		return super.eInverseAdd(otherEnd, featureID, msgs);
 	}
@@ -592,24 +388,30 @@ public abstract class ESMFComponentImpl extends ESMFNamedEntityImpl implements E
 		switch (featureID) {
 			case ESMFPackage.ESMF_COMPONENT__ITEM:
 				return ((InternalEList<?>)getItem()).basicRemove(otherEnd, msgs);
-			case ESMFPackage.ESMF_COMPONENT__METHOD:
-				return ((InternalEList<?>)getMethod()).basicRemove(otherEnd, msgs);
-			case ESMFPackage.ESMF_COMPONENT__REGISTER_METHOD:
-				return basicSetRegisterMethod(null, msgs);
 			case ESMFPackage.ESMF_COMPONENT__COMPONENT:
 				return ((InternalEList<?>)getComponent()).basicRemove(otherEnd, msgs);
 			case ESMFPackage.ESMF_COMPONENT__PARENT:
 				return basicSetParent(null, msgs);
-			case ESMFPackage.ESMF_COMPONENT__CLOCK:
-				return ((InternalEList<?>)getClock()).basicRemove(otherEnd, msgs);
-			case ESMFPackage.ESMF_COMPONENT__TIME:
-				return ((InternalEList<?>)getTime()).basicRemove(otherEnd, msgs);
-			case ESMFPackage.ESMF_COMPONENT__TIME_INTERVAL:
-				return ((InternalEList<?>)getTimeInterval()).basicRemove(otherEnd, msgs);
 			case ESMFPackage.ESMF_COMPONENT__STAGE:
 				return ((InternalEList<?>)getStage()).basicRemove(otherEnd, msgs);
+			case ESMFPackage.ESMF_COMPONENT__WORKSPACE:
+				return basicSetWorkspace(null, msgs);
 		}
 		return super.eInverseRemove(otherEnd, featureID, msgs);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	@Override
+	public NotificationChain eBasicRemoveFromContainerFeature(NotificationChain msgs) {
+		switch (eContainerFeatureID()) {
+			case ESMFPackage.ESMF_COMPONENT__WORKSPACE:
+				return eInternalContainer().eInverseRemove(this, ESMFPackage.ESMF_WORKSPACE__COMPONENT, ESMFWorkspace.class, msgs);
+		}
+		return super.eBasicRemoveFromContainerFeature(msgs);
 	}
 
 	/**
@@ -622,10 +424,6 @@ public abstract class ESMFComponentImpl extends ESMFNamedEntityImpl implements E
 		switch (featureID) {
 			case ESMFPackage.ESMF_COMPONENT__ITEM:
 				return getItem();
-			case ESMFPackage.ESMF_COMPONENT__METHOD:
-				return getMethod();
-			case ESMFPackage.ESMF_COMPONENT__REGISTER_METHOD:
-				return getRegisterMethod();
 			case ESMFPackage.ESMF_COMPONENT__IMPORT_STATE:
 				if (resolve) return getImportState();
 				return basicGetImportState();
@@ -637,20 +435,10 @@ public abstract class ESMFComponentImpl extends ESMFNamedEntityImpl implements E
 			case ESMFPackage.ESMF_COMPONENT__PARENT:
 				if (resolve) return getParent();
 				return basicGetParent();
-			case ESMFPackage.ESMF_COMPONENT__CLOCK:
-				return getClock();
-			case ESMFPackage.ESMF_COMPONENT__MODEL_CLOCK:
-				if (resolve) return getModelClock();
-				return basicGetModelClock();
-			case ESMFPackage.ESMF_COMPONENT__TIME:
-				return getTime();
-			case ESMFPackage.ESMF_COMPONENT__TIME_INTERVAL:
-				return getTimeInterval();
-			case ESMFPackage.ESMF_COMPONENT__SIDL_CLASS:
-				if (resolve) return getSIDLClass();
-				return basicGetSIDLClass();
 			case ESMFPackage.ESMF_COMPONENT__STAGE:
 				return getStage();
+			case ESMFPackage.ESMF_COMPONENT__WORKSPACE:
+				return getWorkspace();
 		}
 		return super.eGet(featureID, resolve, coreType);
 	}
@@ -668,13 +456,6 @@ public abstract class ESMFComponentImpl extends ESMFNamedEntityImpl implements E
 				getItem().clear();
 				getItem().addAll((Collection<? extends ESMFScopedItem>)newValue);
 				return;
-			case ESMFPackage.ESMF_COMPONENT__METHOD:
-				getMethod().clear();
-				getMethod().addAll((Collection<? extends ESMFMethod>)newValue);
-				return;
-			case ESMFPackage.ESMF_COMPONENT__REGISTER_METHOD:
-				setRegisterMethod((ESMFRegisterMethod)newValue);
-				return;
 			case ESMFPackage.ESMF_COMPONENT__IMPORT_STATE:
 				setImportState((ESMFState)newValue);
 				return;
@@ -688,27 +469,12 @@ public abstract class ESMFComponentImpl extends ESMFNamedEntityImpl implements E
 			case ESMFPackage.ESMF_COMPONENT__PARENT:
 				setParent((ESMFComponent)newValue);
 				return;
-			case ESMFPackage.ESMF_COMPONENT__CLOCK:
-				getClock().clear();
-				getClock().addAll((Collection<? extends ESMFClock>)newValue);
-				return;
-			case ESMFPackage.ESMF_COMPONENT__MODEL_CLOCK:
-				setModelClock((ESMFClock)newValue);
-				return;
-			case ESMFPackage.ESMF_COMPONENT__TIME:
-				getTime().clear();
-				getTime().addAll((Collection<? extends ESMFTime>)newValue);
-				return;
-			case ESMFPackage.ESMF_COMPONENT__TIME_INTERVAL:
-				getTimeInterval().clear();
-				getTimeInterval().addAll((Collection<? extends ESMFTimeInterval>)newValue);
-				return;
-			case ESMFPackage.ESMF_COMPONENT__SIDL_CLASS:
-				setSIDLClass((org.earthsystemcurator.cupid.sidl.Class)newValue);
-				return;
 			case ESMFPackage.ESMF_COMPONENT__STAGE:
 				getStage().clear();
 				getStage().addAll((Collection<? extends ESMFStage>)newValue);
+				return;
+			case ESMFPackage.ESMF_COMPONENT__WORKSPACE:
+				setWorkspace((ESMFWorkspace)newValue);
 				return;
 		}
 		super.eSet(featureID, newValue);
@@ -725,12 +491,6 @@ public abstract class ESMFComponentImpl extends ESMFNamedEntityImpl implements E
 			case ESMFPackage.ESMF_COMPONENT__ITEM:
 				getItem().clear();
 				return;
-			case ESMFPackage.ESMF_COMPONENT__METHOD:
-				getMethod().clear();
-				return;
-			case ESMFPackage.ESMF_COMPONENT__REGISTER_METHOD:
-				setRegisterMethod((ESMFRegisterMethod)null);
-				return;
 			case ESMFPackage.ESMF_COMPONENT__IMPORT_STATE:
 				setImportState((ESMFState)null);
 				return;
@@ -743,23 +503,11 @@ public abstract class ESMFComponentImpl extends ESMFNamedEntityImpl implements E
 			case ESMFPackage.ESMF_COMPONENT__PARENT:
 				setParent((ESMFComponent)null);
 				return;
-			case ESMFPackage.ESMF_COMPONENT__CLOCK:
-				getClock().clear();
-				return;
-			case ESMFPackage.ESMF_COMPONENT__MODEL_CLOCK:
-				setModelClock((ESMFClock)null);
-				return;
-			case ESMFPackage.ESMF_COMPONENT__TIME:
-				getTime().clear();
-				return;
-			case ESMFPackage.ESMF_COMPONENT__TIME_INTERVAL:
-				getTimeInterval().clear();
-				return;
-			case ESMFPackage.ESMF_COMPONENT__SIDL_CLASS:
-				setSIDLClass((org.earthsystemcurator.cupid.sidl.Class)null);
-				return;
 			case ESMFPackage.ESMF_COMPONENT__STAGE:
 				getStage().clear();
+				return;
+			case ESMFPackage.ESMF_COMPONENT__WORKSPACE:
+				setWorkspace((ESMFWorkspace)null);
 				return;
 		}
 		super.eUnset(featureID);
@@ -775,10 +523,6 @@ public abstract class ESMFComponentImpl extends ESMFNamedEntityImpl implements E
 		switch (featureID) {
 			case ESMFPackage.ESMF_COMPONENT__ITEM:
 				return item != null && !item.isEmpty();
-			case ESMFPackage.ESMF_COMPONENT__METHOD:
-				return method != null && !method.isEmpty();
-			case ESMFPackage.ESMF_COMPONENT__REGISTER_METHOD:
-				return registerMethod != null;
 			case ESMFPackage.ESMF_COMPONENT__IMPORT_STATE:
 				return importState != null;
 			case ESMFPackage.ESMF_COMPONENT__EXPORT_STATE:
@@ -787,18 +531,10 @@ public abstract class ESMFComponentImpl extends ESMFNamedEntityImpl implements E
 				return component != null && !component.isEmpty();
 			case ESMFPackage.ESMF_COMPONENT__PARENT:
 				return parent != null;
-			case ESMFPackage.ESMF_COMPONENT__CLOCK:
-				return clock != null && !clock.isEmpty();
-			case ESMFPackage.ESMF_COMPONENT__MODEL_CLOCK:
-				return modelClock != null;
-			case ESMFPackage.ESMF_COMPONENT__TIME:
-				return time != null && !time.isEmpty();
-			case ESMFPackage.ESMF_COMPONENT__TIME_INTERVAL:
-				return timeInterval != null && !timeInterval.isEmpty();
-			case ESMFPackage.ESMF_COMPONENT__SIDL_CLASS:
-				return sidlClass != null;
 			case ESMFPackage.ESMF_COMPONENT__STAGE:
 				return stage != null && !stage.isEmpty();
+			case ESMFPackage.ESMF_COMPONENT__WORKSPACE:
+				return getWorkspace() != null;
 		}
 		return super.eIsSet(featureID);
 	}

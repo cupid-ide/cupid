@@ -90,6 +90,10 @@ public class ESMFValidator extends EObjectValidator {
 				return validateESMFNamedEntity((ESMFNamedEntity)value, diagnostics, context);
 			case ESMFPackage.ESMF_SCOPE:
 				return validateESMFScope((ESMFScope)value, diagnostics, context);
+			case ESMFPackage.ESMF_SCOPED_ITEM:
+				return validateESMFScopedItem((ESMFScopedItem)value, diagnostics, context);
+			case ESMFPackage.ESMF_WORKSPACE:
+				return validateESMFWorkspace((ESMFWorkspace)value, diagnostics, context);
 			case ESMFPackage.ESMF_COMPONENT:
 				return validateESMFComponent((ESMFComponent)value, diagnostics, context);
 			case ESMFPackage.ESMF_GRIDDED_COMPONENT:
@@ -180,8 +184,6 @@ public class ESMFValidator extends EObjectValidator {
 				return validateESMFState((ESMFState)value, diagnostics, context);
 			case ESMFPackage.ESMF_STATE_ITEM:
 				return validateESMFStateItem((ESMFStateItem)value, diagnostics, context);
-			case ESMFPackage.ESMF_SCOPED_ITEM:
-				return validateESMFScopedItem((ESMFScopedItem)value, diagnostics, context);
 			case ESMFPackage.ESMF_FIELD:
 				return validateESMFField((ESMFField)value, diagnostics, context);
 			case ESMFPackage.ESMF_FIELD_CONNECTION:
@@ -198,8 +200,6 @@ public class ESMFValidator extends EObjectValidator {
 				return validateExtent((Extent)value, diagnostics, context);
 			case ESMFPackage.ESMF_DIST_GRID:
 				return validateESMFDistGrid((ESMFDistGrid)value, diagnostics, context);
-			case ESMFPackage.ESMF_WORKSPACE:
-				return validateESMFWorkspace((ESMFWorkspace)value, diagnostics, context);
 			case ESMFPackage.ESMF_VIRTUAL_MACHINE:
 				return validateESMFVirtualMachine((ESMFVirtualMachine)value, diagnostics, context);
 			case ESMFPackage.ESMF_PERSISTENT_EXECUTION_THREAD:
@@ -353,7 +353,17 @@ public class ESMFValidator extends EObjectValidator {
 	 * @generated
 	 */
 	public boolean validateESMFComponent(ESMFComponent esmfComponent, DiagnosticChain diagnostics, Map<Object, Object> context) {
-		return validate_EveryDefaultConstraint(esmfComponent, diagnostics, context);
+		if (!validate_NoCircularContainment(esmfComponent, diagnostics, context)) return false;
+		boolean result = validate_EveryMultiplicityConforms(esmfComponent, diagnostics, context);
+		if (result || diagnostics != null) result &= validate_EveryDataValueConforms(esmfComponent, diagnostics, context);
+		if (result || diagnostics != null) result &= validate_EveryReferenceIsContained(esmfComponent, diagnostics, context);
+		if (result || diagnostics != null) result &= validate_EveryBidirectionalReferenceIsPaired(esmfComponent, diagnostics, context);
+		if (result || diagnostics != null) result &= validate_EveryProxyResolves(esmfComponent, diagnostics, context);
+		if (result || diagnostics != null) result &= validate_UniqueID(esmfComponent, diagnostics, context);
+		if (result || diagnostics != null) result &= validate_EveryKeyUnique(esmfComponent, diagnostics, context);
+		if (result || diagnostics != null) result &= validate_EveryMapEntryUnique(esmfComponent, diagnostics, context);
+		if (result || diagnostics != null) result &= validateESMFNamedEntity_nameNotEmpty(esmfComponent, diagnostics, context);
+		return result;
 	}
 
 	/**
@@ -362,7 +372,17 @@ public class ESMFValidator extends EObjectValidator {
 	 * @generated
 	 */
 	public boolean validateESMFGriddedComponent(ESMFGriddedComponent esmfGriddedComponent, DiagnosticChain diagnostics, Map<Object, Object> context) {
-		return validate_EveryDefaultConstraint(esmfGriddedComponent, diagnostics, context);
+		if (!validate_NoCircularContainment(esmfGriddedComponent, diagnostics, context)) return false;
+		boolean result = validate_EveryMultiplicityConforms(esmfGriddedComponent, diagnostics, context);
+		if (result || diagnostics != null) result &= validate_EveryDataValueConforms(esmfGriddedComponent, diagnostics, context);
+		if (result || diagnostics != null) result &= validate_EveryReferenceIsContained(esmfGriddedComponent, diagnostics, context);
+		if (result || diagnostics != null) result &= validate_EveryBidirectionalReferenceIsPaired(esmfGriddedComponent, diagnostics, context);
+		if (result || diagnostics != null) result &= validate_EveryProxyResolves(esmfGriddedComponent, diagnostics, context);
+		if (result || diagnostics != null) result &= validate_UniqueID(esmfGriddedComponent, diagnostics, context);
+		if (result || diagnostics != null) result &= validate_EveryKeyUnique(esmfGriddedComponent, diagnostics, context);
+		if (result || diagnostics != null) result &= validate_EveryMapEntryUnique(esmfGriddedComponent, diagnostics, context);
+		if (result || diagnostics != null) result &= validateESMFNamedEntity_nameNotEmpty(esmfGriddedComponent, diagnostics, context);
+		return result;
 	}
 
 	/**
@@ -371,7 +391,17 @@ public class ESMFValidator extends EObjectValidator {
 	 * @generated
 	 */
 	public boolean validateESMFCouplerComponent(ESMFCouplerComponent esmfCouplerComponent, DiagnosticChain diagnostics, Map<Object, Object> context) {
-		return validate_EveryDefaultConstraint(esmfCouplerComponent, diagnostics, context);
+		if (!validate_NoCircularContainment(esmfCouplerComponent, diagnostics, context)) return false;
+		boolean result = validate_EveryMultiplicityConforms(esmfCouplerComponent, diagnostics, context);
+		if (result || diagnostics != null) result &= validate_EveryDataValueConforms(esmfCouplerComponent, diagnostics, context);
+		if (result || diagnostics != null) result &= validate_EveryReferenceIsContained(esmfCouplerComponent, diagnostics, context);
+		if (result || diagnostics != null) result &= validate_EveryBidirectionalReferenceIsPaired(esmfCouplerComponent, diagnostics, context);
+		if (result || diagnostics != null) result &= validate_EveryProxyResolves(esmfCouplerComponent, diagnostics, context);
+		if (result || diagnostics != null) result &= validate_UniqueID(esmfCouplerComponent, diagnostics, context);
+		if (result || diagnostics != null) result &= validate_EveryKeyUnique(esmfCouplerComponent, diagnostics, context);
+		if (result || diagnostics != null) result &= validate_EveryMapEntryUnique(esmfCouplerComponent, diagnostics, context);
+		if (result || diagnostics != null) result &= validateESMFNamedEntity_nameNotEmpty(esmfCouplerComponent, diagnostics, context);
+		return result;
 	}
 
 	/**
@@ -380,7 +410,17 @@ public class ESMFValidator extends EObjectValidator {
 	 * @generated
 	 */
 	public boolean validateESMFSimpleCouplerComponent(ESMFSimpleCouplerComponent esmfSimpleCouplerComponent, DiagnosticChain diagnostics, Map<Object, Object> context) {
-		return validate_EveryDefaultConstraint(esmfSimpleCouplerComponent, diagnostics, context);
+		if (!validate_NoCircularContainment(esmfSimpleCouplerComponent, diagnostics, context)) return false;
+		boolean result = validate_EveryMultiplicityConforms(esmfSimpleCouplerComponent, diagnostics, context);
+		if (result || diagnostics != null) result &= validate_EveryDataValueConforms(esmfSimpleCouplerComponent, diagnostics, context);
+		if (result || diagnostics != null) result &= validate_EveryReferenceIsContained(esmfSimpleCouplerComponent, diagnostics, context);
+		if (result || diagnostics != null) result &= validate_EveryBidirectionalReferenceIsPaired(esmfSimpleCouplerComponent, diagnostics, context);
+		if (result || diagnostics != null) result &= validate_EveryProxyResolves(esmfSimpleCouplerComponent, diagnostics, context);
+		if (result || diagnostics != null) result &= validate_UniqueID(esmfSimpleCouplerComponent, diagnostics, context);
+		if (result || diagnostics != null) result &= validate_EveryKeyUnique(esmfSimpleCouplerComponent, diagnostics, context);
+		if (result || diagnostics != null) result &= validate_EveryMapEntryUnique(esmfSimpleCouplerComponent, diagnostics, context);
+		if (result || diagnostics != null) result &= validateESMFNamedEntity_nameNotEmpty(esmfSimpleCouplerComponent, diagnostics, context);
+		return result;
 	}
 
 	/**
@@ -389,7 +429,17 @@ public class ESMFValidator extends EObjectValidator {
 	 * @generated
 	 */
 	public boolean validateESMFDriver(ESMFDriver esmfDriver, DiagnosticChain diagnostics, Map<Object, Object> context) {
-		return validate_EveryDefaultConstraint(esmfDriver, diagnostics, context);
+		if (!validate_NoCircularContainment(esmfDriver, diagnostics, context)) return false;
+		boolean result = validate_EveryMultiplicityConforms(esmfDriver, diagnostics, context);
+		if (result || diagnostics != null) result &= validate_EveryDataValueConforms(esmfDriver, diagnostics, context);
+		if (result || diagnostics != null) result &= validate_EveryReferenceIsContained(esmfDriver, diagnostics, context);
+		if (result || diagnostics != null) result &= validate_EveryBidirectionalReferenceIsPaired(esmfDriver, diagnostics, context);
+		if (result || diagnostics != null) result &= validate_EveryProxyResolves(esmfDriver, diagnostics, context);
+		if (result || diagnostics != null) result &= validate_UniqueID(esmfDriver, diagnostics, context);
+		if (result || diagnostics != null) result &= validate_EveryKeyUnique(esmfDriver, diagnostics, context);
+		if (result || diagnostics != null) result &= validate_EveryMapEntryUnique(esmfDriver, diagnostics, context);
+		if (result || diagnostics != null) result &= validateESMFNamedEntity_nameNotEmpty(esmfDriver, diagnostics, context);
+		return result;
 	}
 
 	/**
@@ -398,7 +448,17 @@ public class ESMFValidator extends EObjectValidator {
 	 * @generated
 	 */
 	public boolean validateESMFStage(ESMFStage esmfStage, DiagnosticChain diagnostics, Map<Object, Object> context) {
-		return validate_EveryDefaultConstraint(esmfStage, diagnostics, context);
+		if (!validate_NoCircularContainment(esmfStage, diagnostics, context)) return false;
+		boolean result = validate_EveryMultiplicityConforms(esmfStage, diagnostics, context);
+		if (result || diagnostics != null) result &= validate_EveryDataValueConforms(esmfStage, diagnostics, context);
+		if (result || diagnostics != null) result &= validate_EveryReferenceIsContained(esmfStage, diagnostics, context);
+		if (result || diagnostics != null) result &= validate_EveryBidirectionalReferenceIsPaired(esmfStage, diagnostics, context);
+		if (result || diagnostics != null) result &= validate_EveryProxyResolves(esmfStage, diagnostics, context);
+		if (result || diagnostics != null) result &= validate_UniqueID(esmfStage, diagnostics, context);
+		if (result || diagnostics != null) result &= validate_EveryKeyUnique(esmfStage, diagnostics, context);
+		if (result || diagnostics != null) result &= validate_EveryMapEntryUnique(esmfStage, diagnostics, context);
+		if (result || diagnostics != null) result &= validateESMFNamedEntity_nameNotEmpty(esmfStage, diagnostics, context);
+		return result;
 	}
 
 	/**
@@ -407,7 +467,17 @@ public class ESMFValidator extends EObjectValidator {
 	 * @generated
 	 */
 	public boolean validateESMFStageInitialize(ESMFStageInitialize esmfStageInitialize, DiagnosticChain diagnostics, Map<Object, Object> context) {
-		return validate_EveryDefaultConstraint(esmfStageInitialize, diagnostics, context);
+		if (!validate_NoCircularContainment(esmfStageInitialize, diagnostics, context)) return false;
+		boolean result = validate_EveryMultiplicityConforms(esmfStageInitialize, diagnostics, context);
+		if (result || diagnostics != null) result &= validate_EveryDataValueConforms(esmfStageInitialize, diagnostics, context);
+		if (result || diagnostics != null) result &= validate_EveryReferenceIsContained(esmfStageInitialize, diagnostics, context);
+		if (result || diagnostics != null) result &= validate_EveryBidirectionalReferenceIsPaired(esmfStageInitialize, diagnostics, context);
+		if (result || diagnostics != null) result &= validate_EveryProxyResolves(esmfStageInitialize, diagnostics, context);
+		if (result || diagnostics != null) result &= validate_UniqueID(esmfStageInitialize, diagnostics, context);
+		if (result || diagnostics != null) result &= validate_EveryKeyUnique(esmfStageInitialize, diagnostics, context);
+		if (result || diagnostics != null) result &= validate_EveryMapEntryUnique(esmfStageInitialize, diagnostics, context);
+		if (result || diagnostics != null) result &= validateESMFNamedEntity_nameNotEmpty(esmfStageInitialize, diagnostics, context);
+		return result;
 	}
 
 	/**
@@ -416,7 +486,17 @@ public class ESMFValidator extends EObjectValidator {
 	 * @generated
 	 */
 	public boolean validateESMFStageRun(ESMFStageRun esmfStageRun, DiagnosticChain diagnostics, Map<Object, Object> context) {
-		return validate_EveryDefaultConstraint(esmfStageRun, diagnostics, context);
+		if (!validate_NoCircularContainment(esmfStageRun, diagnostics, context)) return false;
+		boolean result = validate_EveryMultiplicityConforms(esmfStageRun, diagnostics, context);
+		if (result || diagnostics != null) result &= validate_EveryDataValueConforms(esmfStageRun, diagnostics, context);
+		if (result || diagnostics != null) result &= validate_EveryReferenceIsContained(esmfStageRun, diagnostics, context);
+		if (result || diagnostics != null) result &= validate_EveryBidirectionalReferenceIsPaired(esmfStageRun, diagnostics, context);
+		if (result || diagnostics != null) result &= validate_EveryProxyResolves(esmfStageRun, diagnostics, context);
+		if (result || diagnostics != null) result &= validate_UniqueID(esmfStageRun, diagnostics, context);
+		if (result || diagnostics != null) result &= validate_EveryKeyUnique(esmfStageRun, diagnostics, context);
+		if (result || diagnostics != null) result &= validate_EveryMapEntryUnique(esmfStageRun, diagnostics, context);
+		if (result || diagnostics != null) result &= validateESMFNamedEntity_nameNotEmpty(esmfStageRun, diagnostics, context);
+		return result;
 	}
 
 	/**
@@ -425,7 +505,17 @@ public class ESMFValidator extends EObjectValidator {
 	 * @generated
 	 */
 	public boolean validateESMFStageFinalize(ESMFStageFinalize esmfStageFinalize, DiagnosticChain diagnostics, Map<Object, Object> context) {
-		return validate_EveryDefaultConstraint(esmfStageFinalize, diagnostics, context);
+		if (!validate_NoCircularContainment(esmfStageFinalize, diagnostics, context)) return false;
+		boolean result = validate_EveryMultiplicityConforms(esmfStageFinalize, diagnostics, context);
+		if (result || diagnostics != null) result &= validate_EveryDataValueConforms(esmfStageFinalize, diagnostics, context);
+		if (result || diagnostics != null) result &= validate_EveryReferenceIsContained(esmfStageFinalize, diagnostics, context);
+		if (result || diagnostics != null) result &= validate_EveryBidirectionalReferenceIsPaired(esmfStageFinalize, diagnostics, context);
+		if (result || diagnostics != null) result &= validate_EveryProxyResolves(esmfStageFinalize, diagnostics, context);
+		if (result || diagnostics != null) result &= validate_UniqueID(esmfStageFinalize, diagnostics, context);
+		if (result || diagnostics != null) result &= validate_EveryKeyUnique(esmfStageFinalize, diagnostics, context);
+		if (result || diagnostics != null) result &= validate_EveryMapEntryUnique(esmfStageFinalize, diagnostics, context);
+		if (result || diagnostics != null) result &= validateESMFNamedEntity_nameNotEmpty(esmfStageFinalize, diagnostics, context);
+		return result;
 	}
 
 	/**
@@ -632,7 +722,17 @@ public class ESMFValidator extends EObjectValidator {
 	 * @generated
 	 */
 	public boolean validateESMFMethod(ESMFMethod esmfMethod, DiagnosticChain diagnostics, Map<Object, Object> context) {
-		return validate_EveryDefaultConstraint(esmfMethod, diagnostics, context);
+		if (!validate_NoCircularContainment(esmfMethod, diagnostics, context)) return false;
+		boolean result = validate_EveryMultiplicityConforms(esmfMethod, diagnostics, context);
+		if (result || diagnostics != null) result &= validate_EveryDataValueConforms(esmfMethod, diagnostics, context);
+		if (result || diagnostics != null) result &= validate_EveryReferenceIsContained(esmfMethod, diagnostics, context);
+		if (result || diagnostics != null) result &= validate_EveryBidirectionalReferenceIsPaired(esmfMethod, diagnostics, context);
+		if (result || diagnostics != null) result &= validate_EveryProxyResolves(esmfMethod, diagnostics, context);
+		if (result || diagnostics != null) result &= validate_UniqueID(esmfMethod, diagnostics, context);
+		if (result || diagnostics != null) result &= validate_EveryKeyUnique(esmfMethod, diagnostics, context);
+		if (result || diagnostics != null) result &= validate_EveryMapEntryUnique(esmfMethod, diagnostics, context);
+		if (result || diagnostics != null) result &= validateESMFNamedEntity_nameNotEmpty(esmfMethod, diagnostics, context);
+		return result;
 	}
 
 	/**
@@ -641,7 +741,17 @@ public class ESMFValidator extends EObjectValidator {
 	 * @generated
 	 */
 	public boolean validateESMFInitMethod(ESMFInitMethod esmfInitMethod, DiagnosticChain diagnostics, Map<Object, Object> context) {
-		return validate_EveryDefaultConstraint(esmfInitMethod, diagnostics, context);
+		if (!validate_NoCircularContainment(esmfInitMethod, diagnostics, context)) return false;
+		boolean result = validate_EveryMultiplicityConforms(esmfInitMethod, diagnostics, context);
+		if (result || diagnostics != null) result &= validate_EveryDataValueConforms(esmfInitMethod, diagnostics, context);
+		if (result || diagnostics != null) result &= validate_EveryReferenceIsContained(esmfInitMethod, diagnostics, context);
+		if (result || diagnostics != null) result &= validate_EveryBidirectionalReferenceIsPaired(esmfInitMethod, diagnostics, context);
+		if (result || diagnostics != null) result &= validate_EveryProxyResolves(esmfInitMethod, diagnostics, context);
+		if (result || diagnostics != null) result &= validate_UniqueID(esmfInitMethod, diagnostics, context);
+		if (result || diagnostics != null) result &= validate_EveryKeyUnique(esmfInitMethod, diagnostics, context);
+		if (result || diagnostics != null) result &= validate_EveryMapEntryUnique(esmfInitMethod, diagnostics, context);
+		if (result || diagnostics != null) result &= validateESMFNamedEntity_nameNotEmpty(esmfInitMethod, diagnostics, context);
+		return result;
 	}
 
 	/**
@@ -650,7 +760,17 @@ public class ESMFValidator extends EObjectValidator {
 	 * @generated
 	 */
 	public boolean validateESMFPreInitMethodSIDL(ESMFPreInitMethodSIDL esmfPreInitMethodSIDL, DiagnosticChain diagnostics, Map<Object, Object> context) {
-		return validate_EveryDefaultConstraint(esmfPreInitMethodSIDL, diagnostics, context);
+		if (!validate_NoCircularContainment(esmfPreInitMethodSIDL, diagnostics, context)) return false;
+		boolean result = validate_EveryMultiplicityConforms(esmfPreInitMethodSIDL, diagnostics, context);
+		if (result || diagnostics != null) result &= validate_EveryDataValueConforms(esmfPreInitMethodSIDL, diagnostics, context);
+		if (result || diagnostics != null) result &= validate_EveryReferenceIsContained(esmfPreInitMethodSIDL, diagnostics, context);
+		if (result || diagnostics != null) result &= validate_EveryBidirectionalReferenceIsPaired(esmfPreInitMethodSIDL, diagnostics, context);
+		if (result || diagnostics != null) result &= validate_EveryProxyResolves(esmfPreInitMethodSIDL, diagnostics, context);
+		if (result || diagnostics != null) result &= validate_UniqueID(esmfPreInitMethodSIDL, diagnostics, context);
+		if (result || diagnostics != null) result &= validate_EveryKeyUnique(esmfPreInitMethodSIDL, diagnostics, context);
+		if (result || diagnostics != null) result &= validate_EveryMapEntryUnique(esmfPreInitMethodSIDL, diagnostics, context);
+		if (result || diagnostics != null) result &= validateESMFNamedEntity_nameNotEmpty(esmfPreInitMethodSIDL, diagnostics, context);
+		return result;
 	}
 
 	/**
@@ -659,7 +779,17 @@ public class ESMFValidator extends EObjectValidator {
 	 * @generated
 	 */
 	public boolean validateESMFPostInitMethodSIDL(ESMFPostInitMethodSIDL esmfPostInitMethodSIDL, DiagnosticChain diagnostics, Map<Object, Object> context) {
-		return validate_EveryDefaultConstraint(esmfPostInitMethodSIDL, diagnostics, context);
+		if (!validate_NoCircularContainment(esmfPostInitMethodSIDL, diagnostics, context)) return false;
+		boolean result = validate_EveryMultiplicityConforms(esmfPostInitMethodSIDL, diagnostics, context);
+		if (result || diagnostics != null) result &= validate_EveryDataValueConforms(esmfPostInitMethodSIDL, diagnostics, context);
+		if (result || diagnostics != null) result &= validate_EveryReferenceIsContained(esmfPostInitMethodSIDL, diagnostics, context);
+		if (result || diagnostics != null) result &= validate_EveryBidirectionalReferenceIsPaired(esmfPostInitMethodSIDL, diagnostics, context);
+		if (result || diagnostics != null) result &= validate_EveryProxyResolves(esmfPostInitMethodSIDL, diagnostics, context);
+		if (result || diagnostics != null) result &= validate_UniqueID(esmfPostInitMethodSIDL, diagnostics, context);
+		if (result || diagnostics != null) result &= validate_EveryKeyUnique(esmfPostInitMethodSIDL, diagnostics, context);
+		if (result || diagnostics != null) result &= validate_EveryMapEntryUnique(esmfPostInitMethodSIDL, diagnostics, context);
+		if (result || diagnostics != null) result &= validateESMFNamedEntity_nameNotEmpty(esmfPostInitMethodSIDL, diagnostics, context);
+		return result;
 	}
 
 	/**
@@ -668,7 +798,17 @@ public class ESMFValidator extends EObjectValidator {
 	 * @generated
 	 */
 	public boolean validateESMFRunMethod(ESMFRunMethod esmfRunMethod, DiagnosticChain diagnostics, Map<Object, Object> context) {
-		return validate_EveryDefaultConstraint(esmfRunMethod, diagnostics, context);
+		if (!validate_NoCircularContainment(esmfRunMethod, diagnostics, context)) return false;
+		boolean result = validate_EveryMultiplicityConforms(esmfRunMethod, diagnostics, context);
+		if (result || diagnostics != null) result &= validate_EveryDataValueConforms(esmfRunMethod, diagnostics, context);
+		if (result || diagnostics != null) result &= validate_EveryReferenceIsContained(esmfRunMethod, diagnostics, context);
+		if (result || diagnostics != null) result &= validate_EveryBidirectionalReferenceIsPaired(esmfRunMethod, diagnostics, context);
+		if (result || diagnostics != null) result &= validate_EveryProxyResolves(esmfRunMethod, diagnostics, context);
+		if (result || diagnostics != null) result &= validate_UniqueID(esmfRunMethod, diagnostics, context);
+		if (result || diagnostics != null) result &= validate_EveryKeyUnique(esmfRunMethod, diagnostics, context);
+		if (result || diagnostics != null) result &= validate_EveryMapEntryUnique(esmfRunMethod, diagnostics, context);
+		if (result || diagnostics != null) result &= validateESMFNamedEntity_nameNotEmpty(esmfRunMethod, diagnostics, context);
+		return result;
 	}
 
 	/**
@@ -677,7 +817,17 @@ public class ESMFValidator extends EObjectValidator {
 	 * @generated
 	 */
 	public boolean validateESMFFinalizeMethod(ESMFFinalizeMethod esmfFinalizeMethod, DiagnosticChain diagnostics, Map<Object, Object> context) {
-		return validate_EveryDefaultConstraint(esmfFinalizeMethod, diagnostics, context);
+		if (!validate_NoCircularContainment(esmfFinalizeMethod, diagnostics, context)) return false;
+		boolean result = validate_EveryMultiplicityConforms(esmfFinalizeMethod, diagnostics, context);
+		if (result || diagnostics != null) result &= validate_EveryDataValueConforms(esmfFinalizeMethod, diagnostics, context);
+		if (result || diagnostics != null) result &= validate_EveryReferenceIsContained(esmfFinalizeMethod, diagnostics, context);
+		if (result || diagnostics != null) result &= validate_EveryBidirectionalReferenceIsPaired(esmfFinalizeMethod, diagnostics, context);
+		if (result || diagnostics != null) result &= validate_EveryProxyResolves(esmfFinalizeMethod, diagnostics, context);
+		if (result || diagnostics != null) result &= validate_UniqueID(esmfFinalizeMethod, diagnostics, context);
+		if (result || diagnostics != null) result &= validate_EveryKeyUnique(esmfFinalizeMethod, diagnostics, context);
+		if (result || diagnostics != null) result &= validate_EveryMapEntryUnique(esmfFinalizeMethod, diagnostics, context);
+		if (result || diagnostics != null) result &= validateESMFNamedEntity_nameNotEmpty(esmfFinalizeMethod, diagnostics, context);
+		return result;
 	}
 
 	/**
@@ -686,7 +836,17 @@ public class ESMFValidator extends EObjectValidator {
 	 * @generated
 	 */
 	public boolean validateESMFFinalizeMethodSIDL(ESMFFinalizeMethodSIDL esmfFinalizeMethodSIDL, DiagnosticChain diagnostics, Map<Object, Object> context) {
-		return validate_EveryDefaultConstraint(esmfFinalizeMethodSIDL, diagnostics, context);
+		if (!validate_NoCircularContainment(esmfFinalizeMethodSIDL, diagnostics, context)) return false;
+		boolean result = validate_EveryMultiplicityConforms(esmfFinalizeMethodSIDL, diagnostics, context);
+		if (result || diagnostics != null) result &= validate_EveryDataValueConforms(esmfFinalizeMethodSIDL, diagnostics, context);
+		if (result || diagnostics != null) result &= validate_EveryReferenceIsContained(esmfFinalizeMethodSIDL, diagnostics, context);
+		if (result || diagnostics != null) result &= validate_EveryBidirectionalReferenceIsPaired(esmfFinalizeMethodSIDL, diagnostics, context);
+		if (result || diagnostics != null) result &= validate_EveryProxyResolves(esmfFinalizeMethodSIDL, diagnostics, context);
+		if (result || diagnostics != null) result &= validate_UniqueID(esmfFinalizeMethodSIDL, diagnostics, context);
+		if (result || diagnostics != null) result &= validate_EveryKeyUnique(esmfFinalizeMethodSIDL, diagnostics, context);
+		if (result || diagnostics != null) result &= validate_EveryMapEntryUnique(esmfFinalizeMethodSIDL, diagnostics, context);
+		if (result || diagnostics != null) result &= validateESMFNamedEntity_nameNotEmpty(esmfFinalizeMethodSIDL, diagnostics, context);
+		return result;
 	}
 
 	/**
@@ -695,7 +855,17 @@ public class ESMFValidator extends EObjectValidator {
 	 * @generated
 	 */
 	public boolean validateESMFRegisterMethod(ESMFRegisterMethod esmfRegisterMethod, DiagnosticChain diagnostics, Map<Object, Object> context) {
-		return validate_EveryDefaultConstraint(esmfRegisterMethod, diagnostics, context);
+		if (!validate_NoCircularContainment(esmfRegisterMethod, diagnostics, context)) return false;
+		boolean result = validate_EveryMultiplicityConforms(esmfRegisterMethod, diagnostics, context);
+		if (result || diagnostics != null) result &= validate_EveryDataValueConforms(esmfRegisterMethod, diagnostics, context);
+		if (result || diagnostics != null) result &= validate_EveryReferenceIsContained(esmfRegisterMethod, diagnostics, context);
+		if (result || diagnostics != null) result &= validate_EveryBidirectionalReferenceIsPaired(esmfRegisterMethod, diagnostics, context);
+		if (result || diagnostics != null) result &= validate_EveryProxyResolves(esmfRegisterMethod, diagnostics, context);
+		if (result || diagnostics != null) result &= validate_UniqueID(esmfRegisterMethod, diagnostics, context);
+		if (result || diagnostics != null) result &= validate_EveryKeyUnique(esmfRegisterMethod, diagnostics, context);
+		if (result || diagnostics != null) result &= validate_EveryMapEntryUnique(esmfRegisterMethod, diagnostics, context);
+		if (result || diagnostics != null) result &= validateESMFNamedEntity_nameNotEmpty(esmfRegisterMethod, diagnostics, context);
+		return result;
 	}
 
 	/**
@@ -713,7 +883,17 @@ public class ESMFValidator extends EObjectValidator {
 	 * @generated
 	 */
 	public boolean validateESMFTimeInterval(ESMFTimeInterval esmfTimeInterval, DiagnosticChain diagnostics, Map<Object, Object> context) {
-		return validate_EveryDefaultConstraint(esmfTimeInterval, diagnostics, context);
+		if (!validate_NoCircularContainment(esmfTimeInterval, diagnostics, context)) return false;
+		boolean result = validate_EveryMultiplicityConforms(esmfTimeInterval, diagnostics, context);
+		if (result || diagnostics != null) result &= validate_EveryDataValueConforms(esmfTimeInterval, diagnostics, context);
+		if (result || diagnostics != null) result &= validate_EveryReferenceIsContained(esmfTimeInterval, diagnostics, context);
+		if (result || diagnostics != null) result &= validate_EveryBidirectionalReferenceIsPaired(esmfTimeInterval, diagnostics, context);
+		if (result || diagnostics != null) result &= validate_EveryProxyResolves(esmfTimeInterval, diagnostics, context);
+		if (result || diagnostics != null) result &= validate_UniqueID(esmfTimeInterval, diagnostics, context);
+		if (result || diagnostics != null) result &= validate_EveryKeyUnique(esmfTimeInterval, diagnostics, context);
+		if (result || diagnostics != null) result &= validate_EveryMapEntryUnique(esmfTimeInterval, diagnostics, context);
+		if (result || diagnostics != null) result &= validateESMFNamedEntity_nameNotEmpty(esmfTimeInterval, diagnostics, context);
+		return result;
 	}
 
 	/**
@@ -722,7 +902,17 @@ public class ESMFValidator extends EObjectValidator {
 	 * @generated
 	 */
 	public boolean validateESMFTime(ESMFTime esmfTime, DiagnosticChain diagnostics, Map<Object, Object> context) {
-		return validate_EveryDefaultConstraint(esmfTime, diagnostics, context);
+		if (!validate_NoCircularContainment(esmfTime, diagnostics, context)) return false;
+		boolean result = validate_EveryMultiplicityConforms(esmfTime, diagnostics, context);
+		if (result || diagnostics != null) result &= validate_EveryDataValueConforms(esmfTime, diagnostics, context);
+		if (result || diagnostics != null) result &= validate_EveryReferenceIsContained(esmfTime, diagnostics, context);
+		if (result || diagnostics != null) result &= validate_EveryBidirectionalReferenceIsPaired(esmfTime, diagnostics, context);
+		if (result || diagnostics != null) result &= validate_EveryProxyResolves(esmfTime, diagnostics, context);
+		if (result || diagnostics != null) result &= validate_UniqueID(esmfTime, diagnostics, context);
+		if (result || diagnostics != null) result &= validate_EveryKeyUnique(esmfTime, diagnostics, context);
+		if (result || diagnostics != null) result &= validate_EveryMapEntryUnique(esmfTime, diagnostics, context);
+		if (result || diagnostics != null) result &= validateESMFNamedEntity_nameNotEmpty(esmfTime, diagnostics, context);
+		return result;
 	}
 
 	/**
@@ -731,7 +921,17 @@ public class ESMFValidator extends EObjectValidator {
 	 * @generated
 	 */
 	public boolean validateESMFClock(ESMFClock esmfClock, DiagnosticChain diagnostics, Map<Object, Object> context) {
-		return validate_EveryDefaultConstraint(esmfClock, diagnostics, context);
+		if (!validate_NoCircularContainment(esmfClock, diagnostics, context)) return false;
+		boolean result = validate_EveryMultiplicityConforms(esmfClock, diagnostics, context);
+		if (result || diagnostics != null) result &= validate_EveryDataValueConforms(esmfClock, diagnostics, context);
+		if (result || diagnostics != null) result &= validate_EveryReferenceIsContained(esmfClock, diagnostics, context);
+		if (result || diagnostics != null) result &= validate_EveryBidirectionalReferenceIsPaired(esmfClock, diagnostics, context);
+		if (result || diagnostics != null) result &= validate_EveryProxyResolves(esmfClock, diagnostics, context);
+		if (result || diagnostics != null) result &= validate_UniqueID(esmfClock, diagnostics, context);
+		if (result || diagnostics != null) result &= validate_EveryKeyUnique(esmfClock, diagnostics, context);
+		if (result || diagnostics != null) result &= validate_EveryMapEntryUnique(esmfClock, diagnostics, context);
+		if (result || diagnostics != null) result &= validateESMFNamedEntity_nameNotEmpty(esmfClock, diagnostics, context);
+		return result;
 	}
 
 	/**
@@ -740,7 +940,17 @@ public class ESMFValidator extends EObjectValidator {
 	 * @generated
 	 */
 	public boolean validateESMFState(ESMFState esmfState, DiagnosticChain diagnostics, Map<Object, Object> context) {
-		return validate_EveryDefaultConstraint(esmfState, diagnostics, context);
+		if (!validate_NoCircularContainment(esmfState, diagnostics, context)) return false;
+		boolean result = validate_EveryMultiplicityConforms(esmfState, diagnostics, context);
+		if (result || diagnostics != null) result &= validate_EveryDataValueConforms(esmfState, diagnostics, context);
+		if (result || diagnostics != null) result &= validate_EveryReferenceIsContained(esmfState, diagnostics, context);
+		if (result || diagnostics != null) result &= validate_EveryBidirectionalReferenceIsPaired(esmfState, diagnostics, context);
+		if (result || diagnostics != null) result &= validate_EveryProxyResolves(esmfState, diagnostics, context);
+		if (result || diagnostics != null) result &= validate_UniqueID(esmfState, diagnostics, context);
+		if (result || diagnostics != null) result &= validate_EveryKeyUnique(esmfState, diagnostics, context);
+		if (result || diagnostics != null) result &= validate_EveryMapEntryUnique(esmfState, diagnostics, context);
+		if (result || diagnostics != null) result &= validateESMFNamedEntity_nameNotEmpty(esmfState, diagnostics, context);
+		return result;
 	}
 
 	/**
@@ -749,7 +959,17 @@ public class ESMFValidator extends EObjectValidator {
 	 * @generated
 	 */
 	public boolean validateESMFStateItem(ESMFStateItem esmfStateItem, DiagnosticChain diagnostics, Map<Object, Object> context) {
-		return validate_EveryDefaultConstraint(esmfStateItem, diagnostics, context);
+		if (!validate_NoCircularContainment(esmfStateItem, diagnostics, context)) return false;
+		boolean result = validate_EveryMultiplicityConforms(esmfStateItem, diagnostics, context);
+		if (result || diagnostics != null) result &= validate_EveryDataValueConforms(esmfStateItem, diagnostics, context);
+		if (result || diagnostics != null) result &= validate_EveryReferenceIsContained(esmfStateItem, diagnostics, context);
+		if (result || diagnostics != null) result &= validate_EveryBidirectionalReferenceIsPaired(esmfStateItem, diagnostics, context);
+		if (result || diagnostics != null) result &= validate_EveryProxyResolves(esmfStateItem, diagnostics, context);
+		if (result || diagnostics != null) result &= validate_UniqueID(esmfStateItem, diagnostics, context);
+		if (result || diagnostics != null) result &= validate_EveryKeyUnique(esmfStateItem, diagnostics, context);
+		if (result || diagnostics != null) result &= validate_EveryMapEntryUnique(esmfStateItem, diagnostics, context);
+		if (result || diagnostics != null) result &= validateESMFNamedEntity_nameNotEmpty(esmfStateItem, diagnostics, context);
+		return result;
 	}
 
 	/**
@@ -758,7 +978,17 @@ public class ESMFValidator extends EObjectValidator {
 	 * @generated
 	 */
 	public boolean validateESMFScopedItem(ESMFScopedItem esmfScopedItem, DiagnosticChain diagnostics, Map<Object, Object> context) {
-		return validate_EveryDefaultConstraint(esmfScopedItem, diagnostics, context);
+		if (!validate_NoCircularContainment(esmfScopedItem, diagnostics, context)) return false;
+		boolean result = validate_EveryMultiplicityConforms(esmfScopedItem, diagnostics, context);
+		if (result || diagnostics != null) result &= validate_EveryDataValueConforms(esmfScopedItem, diagnostics, context);
+		if (result || diagnostics != null) result &= validate_EveryReferenceIsContained(esmfScopedItem, diagnostics, context);
+		if (result || diagnostics != null) result &= validate_EveryBidirectionalReferenceIsPaired(esmfScopedItem, diagnostics, context);
+		if (result || diagnostics != null) result &= validate_EveryProxyResolves(esmfScopedItem, diagnostics, context);
+		if (result || diagnostics != null) result &= validate_UniqueID(esmfScopedItem, diagnostics, context);
+		if (result || diagnostics != null) result &= validate_EveryKeyUnique(esmfScopedItem, diagnostics, context);
+		if (result || diagnostics != null) result &= validate_EveryMapEntryUnique(esmfScopedItem, diagnostics, context);
+		if (result || diagnostics != null) result &= validateESMFNamedEntity_nameNotEmpty(esmfScopedItem, diagnostics, context);
+		return result;
 	}
 
 	/**
@@ -767,7 +997,17 @@ public class ESMFValidator extends EObjectValidator {
 	 * @generated
 	 */
 	public boolean validateESMFField(ESMFField esmfField, DiagnosticChain diagnostics, Map<Object, Object> context) {
-		return validate_EveryDefaultConstraint(esmfField, diagnostics, context);
+		if (!validate_NoCircularContainment(esmfField, diagnostics, context)) return false;
+		boolean result = validate_EveryMultiplicityConforms(esmfField, diagnostics, context);
+		if (result || diagnostics != null) result &= validate_EveryDataValueConforms(esmfField, diagnostics, context);
+		if (result || diagnostics != null) result &= validate_EveryReferenceIsContained(esmfField, diagnostics, context);
+		if (result || diagnostics != null) result &= validate_EveryBidirectionalReferenceIsPaired(esmfField, diagnostics, context);
+		if (result || diagnostics != null) result &= validate_EveryProxyResolves(esmfField, diagnostics, context);
+		if (result || diagnostics != null) result &= validate_UniqueID(esmfField, diagnostics, context);
+		if (result || diagnostics != null) result &= validate_EveryKeyUnique(esmfField, diagnostics, context);
+		if (result || diagnostics != null) result &= validate_EveryMapEntryUnique(esmfField, diagnostics, context);
+		if (result || diagnostics != null) result &= validateESMFNamedEntity_nameNotEmpty(esmfField, diagnostics, context);
+		return result;
 	}
 
 	/**
@@ -785,7 +1025,17 @@ public class ESMFValidator extends EObjectValidator {
 	 * @generated
 	 */
 	public boolean validateESMFArray(ESMFArray esmfArray, DiagnosticChain diagnostics, Map<Object, Object> context) {
-		return validate_EveryDefaultConstraint(esmfArray, diagnostics, context);
+		if (!validate_NoCircularContainment(esmfArray, diagnostics, context)) return false;
+		boolean result = validate_EveryMultiplicityConforms(esmfArray, diagnostics, context);
+		if (result || diagnostics != null) result &= validate_EveryDataValueConforms(esmfArray, diagnostics, context);
+		if (result || diagnostics != null) result &= validate_EveryReferenceIsContained(esmfArray, diagnostics, context);
+		if (result || diagnostics != null) result &= validate_EveryBidirectionalReferenceIsPaired(esmfArray, diagnostics, context);
+		if (result || diagnostics != null) result &= validate_EveryProxyResolves(esmfArray, diagnostics, context);
+		if (result || diagnostics != null) result &= validate_UniqueID(esmfArray, diagnostics, context);
+		if (result || diagnostics != null) result &= validate_EveryKeyUnique(esmfArray, diagnostics, context);
+		if (result || diagnostics != null) result &= validate_EveryMapEntryUnique(esmfArray, diagnostics, context);
+		if (result || diagnostics != null) result &= validateESMFNamedEntity_nameNotEmpty(esmfArray, diagnostics, context);
+		return result;
 	}
 
 	/**
@@ -794,7 +1044,17 @@ public class ESMFValidator extends EObjectValidator {
 	 * @generated
 	 */
 	public boolean validateESMFRouteHandle(ESMFRouteHandle esmfRouteHandle, DiagnosticChain diagnostics, Map<Object, Object> context) {
-		return validate_EveryDefaultConstraint(esmfRouteHandle, diagnostics, context);
+		if (!validate_NoCircularContainment(esmfRouteHandle, diagnostics, context)) return false;
+		boolean result = validate_EveryMultiplicityConforms(esmfRouteHandle, diagnostics, context);
+		if (result || diagnostics != null) result &= validate_EveryDataValueConforms(esmfRouteHandle, diagnostics, context);
+		if (result || diagnostics != null) result &= validate_EveryReferenceIsContained(esmfRouteHandle, diagnostics, context);
+		if (result || diagnostics != null) result &= validate_EveryBidirectionalReferenceIsPaired(esmfRouteHandle, diagnostics, context);
+		if (result || diagnostics != null) result &= validate_EveryProxyResolves(esmfRouteHandle, diagnostics, context);
+		if (result || diagnostics != null) result &= validate_UniqueID(esmfRouteHandle, diagnostics, context);
+		if (result || diagnostics != null) result &= validate_EveryKeyUnique(esmfRouteHandle, diagnostics, context);
+		if (result || diagnostics != null) result &= validate_EveryMapEntryUnique(esmfRouteHandle, diagnostics, context);
+		if (result || diagnostics != null) result &= validateESMFNamedEntity_nameNotEmpty(esmfRouteHandle, diagnostics, context);
+		return result;
 	}
 
 	/**
@@ -803,7 +1063,17 @@ public class ESMFValidator extends EObjectValidator {
 	 * @generated
 	 */
 	public boolean validateESMFArraySpec(ESMFArraySpec esmfArraySpec, DiagnosticChain diagnostics, Map<Object, Object> context) {
-		return validate_EveryDefaultConstraint(esmfArraySpec, diagnostics, context);
+		if (!validate_NoCircularContainment(esmfArraySpec, diagnostics, context)) return false;
+		boolean result = validate_EveryMultiplicityConforms(esmfArraySpec, diagnostics, context);
+		if (result || diagnostics != null) result &= validate_EveryDataValueConforms(esmfArraySpec, diagnostics, context);
+		if (result || diagnostics != null) result &= validate_EveryReferenceIsContained(esmfArraySpec, diagnostics, context);
+		if (result || diagnostics != null) result &= validate_EveryBidirectionalReferenceIsPaired(esmfArraySpec, diagnostics, context);
+		if (result || diagnostics != null) result &= validate_EveryProxyResolves(esmfArraySpec, diagnostics, context);
+		if (result || diagnostics != null) result &= validate_UniqueID(esmfArraySpec, diagnostics, context);
+		if (result || diagnostics != null) result &= validate_EveryKeyUnique(esmfArraySpec, diagnostics, context);
+		if (result || diagnostics != null) result &= validate_EveryMapEntryUnique(esmfArraySpec, diagnostics, context);
+		if (result || diagnostics != null) result &= validateESMFNamedEntity_nameNotEmpty(esmfArraySpec, diagnostics, context);
+		return result;
 	}
 
 	/**
@@ -812,7 +1082,17 @@ public class ESMFValidator extends EObjectValidator {
 	 * @generated
 	 */
 	public boolean validateESMFGrid(ESMFGrid esmfGrid, DiagnosticChain diagnostics, Map<Object, Object> context) {
-		return validate_EveryDefaultConstraint(esmfGrid, diagnostics, context);
+		if (!validate_NoCircularContainment(esmfGrid, diagnostics, context)) return false;
+		boolean result = validate_EveryMultiplicityConforms(esmfGrid, diagnostics, context);
+		if (result || diagnostics != null) result &= validate_EveryDataValueConforms(esmfGrid, diagnostics, context);
+		if (result || diagnostics != null) result &= validate_EveryReferenceIsContained(esmfGrid, diagnostics, context);
+		if (result || diagnostics != null) result &= validate_EveryBidirectionalReferenceIsPaired(esmfGrid, diagnostics, context);
+		if (result || diagnostics != null) result &= validate_EveryProxyResolves(esmfGrid, diagnostics, context);
+		if (result || diagnostics != null) result &= validate_UniqueID(esmfGrid, diagnostics, context);
+		if (result || diagnostics != null) result &= validate_EveryKeyUnique(esmfGrid, diagnostics, context);
+		if (result || diagnostics != null) result &= validate_EveryMapEntryUnique(esmfGrid, diagnostics, context);
+		if (result || diagnostics != null) result &= validateESMFNamedEntity_nameNotEmpty(esmfGrid, diagnostics, context);
+		return result;
 	}
 
 	/**
@@ -868,7 +1148,17 @@ public class ESMFValidator extends EObjectValidator {
 	 * @generated
 	 */
 	public boolean validateESMFDistGrid(ESMFDistGrid esmfDistGrid, DiagnosticChain diagnostics, Map<Object, Object> context) {
-		return validate_EveryDefaultConstraint(esmfDistGrid, diagnostics, context);
+		if (!validate_NoCircularContainment(esmfDistGrid, diagnostics, context)) return false;
+		boolean result = validate_EveryMultiplicityConforms(esmfDistGrid, diagnostics, context);
+		if (result || diagnostics != null) result &= validate_EveryDataValueConforms(esmfDistGrid, diagnostics, context);
+		if (result || diagnostics != null) result &= validate_EveryReferenceIsContained(esmfDistGrid, diagnostics, context);
+		if (result || diagnostics != null) result &= validate_EveryBidirectionalReferenceIsPaired(esmfDistGrid, diagnostics, context);
+		if (result || diagnostics != null) result &= validate_EveryProxyResolves(esmfDistGrid, diagnostics, context);
+		if (result || diagnostics != null) result &= validate_UniqueID(esmfDistGrid, diagnostics, context);
+		if (result || diagnostics != null) result &= validate_EveryKeyUnique(esmfDistGrid, diagnostics, context);
+		if (result || diagnostics != null) result &= validate_EveryMapEntryUnique(esmfDistGrid, diagnostics, context);
+		if (result || diagnostics != null) result &= validateESMFNamedEntity_nameNotEmpty(esmfDistGrid, diagnostics, context);
+		return result;
 	}
 
 	/**
@@ -877,7 +1167,17 @@ public class ESMFValidator extends EObjectValidator {
 	 * @generated
 	 */
 	public boolean validateESMFWorkspace(ESMFWorkspace esmfWorkspace, DiagnosticChain diagnostics, Map<Object, Object> context) {
-		return validate_EveryDefaultConstraint(esmfWorkspace, diagnostics, context);
+		if (!validate_NoCircularContainment(esmfWorkspace, diagnostics, context)) return false;
+		boolean result = validate_EveryMultiplicityConforms(esmfWorkspace, diagnostics, context);
+		if (result || diagnostics != null) result &= validate_EveryDataValueConforms(esmfWorkspace, diagnostics, context);
+		if (result || diagnostics != null) result &= validate_EveryReferenceIsContained(esmfWorkspace, diagnostics, context);
+		if (result || diagnostics != null) result &= validate_EveryBidirectionalReferenceIsPaired(esmfWorkspace, diagnostics, context);
+		if (result || diagnostics != null) result &= validate_EveryProxyResolves(esmfWorkspace, diagnostics, context);
+		if (result || diagnostics != null) result &= validate_UniqueID(esmfWorkspace, diagnostics, context);
+		if (result || diagnostics != null) result &= validate_EveryKeyUnique(esmfWorkspace, diagnostics, context);
+		if (result || diagnostics != null) result &= validate_EveryMapEntryUnique(esmfWorkspace, diagnostics, context);
+		if (result || diagnostics != null) result &= validateESMFNamedEntity_nameNotEmpty(esmfWorkspace, diagnostics, context);
+		return result;
 	}
 
 	/**
@@ -1585,7 +1885,46 @@ public class ESMFValidator extends EObjectValidator {
 	 * @generated
 	 */
 	public boolean validateESMFNamedEntity(ESMFNamedEntity esmfNamedEntity, DiagnosticChain diagnostics, Map<Object, Object> context) {
-		return validate_EveryDefaultConstraint(esmfNamedEntity, diagnostics, context);
+		if (!validate_NoCircularContainment(esmfNamedEntity, diagnostics, context)) return false;
+		boolean result = validate_EveryMultiplicityConforms(esmfNamedEntity, diagnostics, context);
+		if (result || diagnostics != null) result &= validate_EveryDataValueConforms(esmfNamedEntity, diagnostics, context);
+		if (result || diagnostics != null) result &= validate_EveryReferenceIsContained(esmfNamedEntity, diagnostics, context);
+		if (result || diagnostics != null) result &= validate_EveryBidirectionalReferenceIsPaired(esmfNamedEntity, diagnostics, context);
+		if (result || diagnostics != null) result &= validate_EveryProxyResolves(esmfNamedEntity, diagnostics, context);
+		if (result || diagnostics != null) result &= validate_UniqueID(esmfNamedEntity, diagnostics, context);
+		if (result || diagnostics != null) result &= validate_EveryKeyUnique(esmfNamedEntity, diagnostics, context);
+		if (result || diagnostics != null) result &= validate_EveryMapEntryUnique(esmfNamedEntity, diagnostics, context);
+		if (result || diagnostics != null) result &= validateESMFNamedEntity_nameNotEmpty(esmfNamedEntity, diagnostics, context);
+		return result;
+	}
+
+	/**
+	 * The cached validation expression for the nameNotEmpty constraint of '<em>Named Entity</em>'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	protected static final String ESMF_NAMED_ENTITY__NAME_NOT_EMPTY__EEXPRESSION = "self.name.length() > 0";
+
+	/**
+	 * Validates the nameNotEmpty constraint of '<em>Named Entity</em>'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public boolean validateESMFNamedEntity_nameNotEmpty(ESMFNamedEntity esmfNamedEntity, DiagnosticChain diagnostics, Map<Object, Object> context) {
+		return
+			validate
+				(ESMFPackage.Literals.ESMF_NAMED_ENTITY,
+				 esmfNamedEntity,
+				 diagnostics,
+				 context,
+				 "http://www.eclipse.org/emf/2002/Ecore/OCL/Pivot",
+				 "nameNotEmpty",
+				 ESMF_NAMED_ENTITY__NAME_NOT_EMPTY__EEXPRESSION,
+				 Diagnostic.ERROR,
+				 DIAGNOSTIC_SOURCE,
+				 0);
 	}
 
 	/**

@@ -13,6 +13,6 @@ package org.earthsystemcurator.cupid.esmf;
  * @model
  * @generated
  */
-public interface ESMFRouteHandle extends ESMFNamedEntity, ESMFScopedItem {
+public interface ESMFRouteHandle extends ESMFScopedItem {
 
 } // ESMFRouteHandle

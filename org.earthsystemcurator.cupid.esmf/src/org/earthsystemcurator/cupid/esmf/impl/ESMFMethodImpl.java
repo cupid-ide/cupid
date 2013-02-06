@@ -48,6 +48,16 @@ import org.eclipse.emf.ecore.util.InternalEList;
  */
 public class ESMFMethodImpl extends ESMFNamedEntityImpl implements ESMFMethod {
 	/**
+	 * The cached value of the '{@link #getComponent() <em>Component</em>}' reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #getComponent()
+	 * @generated
+	 * @ordered
+	 */
+	protected ESMFComponent component;
+
+	/**
 	 * The default value of the '{@link #getPhase() <em>Phase</em>}' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -142,8 +152,15 @@ public class ESMFMethodImpl extends ESMFNamedEntityImpl implements ESMFMethod {
 	 * @generated
 	 */
 	public ESMFComponent getComponent() {
-		if (eContainerFeatureID() != ESMFPackage.ESMF_METHOD__COMPONENT) return null;
-		return (ESMFComponent)eContainer();
+		if (component != null && component.eIsProxy()) {
+			InternalEObject oldComponent = (InternalEObject)component;
+			component = (ESMFComponent)eResolveProxy(oldComponent);
+			if (component != oldComponent) {
+				if (eNotificationRequired())
+					eNotify(new ENotificationImpl(this, Notification.RESOLVE, ESMFPackage.ESMF_METHOD__COMPONENT, oldComponent, component));
+			}
+		}
+		return component;
 	}
 
 	/**
@@ -151,9 +168,8 @@ public class ESMFMethodImpl extends ESMFNamedEntityImpl implements ESMFMethod {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public NotificationChain basicSetComponent(ESMFComponent newComponent, NotificationChain msgs) {
-		msgs = eBasicSetContainer((InternalEObject)newComponent, ESMFPackage.ESMF_METHOD__COMPONENT, msgs);
-		return msgs;
+	public ESMFComponent basicGetComponent() {
+		return component;
 	}
 
 	/**
@@ -162,19 +178,10 @@ public class ESMFMethodImpl extends ESMFNamedEntityImpl implements ESMFMethod {
 	 * @generated
 	 */
 	public void setComponent(ESMFComponent newComponent) {
-		if (newComponent != eInternalContainer() || (eContainerFeatureID() != ESMFPackage.ESMF_METHOD__COMPONENT && newComponent != null)) {
-			if (EcoreUtil.isAncestor(this, newComponent))
-				throw new IllegalArgumentException("Recursive containment not allowed for " + toString());
-			NotificationChain msgs = null;
-			if (eInternalContainer() != null)
-				msgs = eBasicRemoveFromContainer(msgs);
-			if (newComponent != null)
-				msgs = ((InternalEObject)newComponent).eInverseAdd(this, ESMFPackage.ESMF_COMPONENT__METHOD, ESMFComponent.class, msgs);
-			msgs = basicSetComponent(newComponent, msgs);
-			if (msgs != null) msgs.dispatch();
-		}
-		else if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, ESMFPackage.ESMF_METHOD__COMPONENT, newComponent, newComponent));
+		ESMFComponent oldComponent = component;
+		component = newComponent;
+		if (eNotificationRequired())
+			eNotify(new ENotificationImpl(this, Notification.SET, ESMFPackage.ESMF_METHOD__COMPONENT, oldComponent, component));
 	}
 
 	/**
@@ -376,10 +383,6 @@ public class ESMFMethodImpl extends ESMFNamedEntityImpl implements ESMFMethod {
 	@Override
 	public NotificationChain eInverseAdd(InternalEObject otherEnd, int featureID, NotificationChain msgs) {
 		switch (featureID) {
-			case ESMFPackage.ESMF_METHOD__COMPONENT:
-				if (eInternalContainer() != null)
-					msgs = eBasicRemoveFromContainer(msgs);
-				return basicSetComponent((ESMFComponent)otherEnd, msgs);
 			case ESMFPackage.ESMF_METHOD__ACTION:
 				return ((InternalEList<InternalEObject>)(InternalEList<?>)getAction()).basicAdd(otherEnd, msgs);
 		}
@@ -394,8 +397,6 @@ public class ESMFMethodImpl extends ESMFNamedEntityImpl implements ESMFMethod {
 	@Override
 	public NotificationChain eInverseRemove(InternalEObject otherEnd, int featureID, NotificationChain msgs) {
 		switch (featureID) {
-			case ESMFPackage.ESMF_METHOD__COMPONENT:
-				return basicSetComponent(null, msgs);
 			case ESMFPackage.ESMF_METHOD__CLOCK:
 				return basicSetClock(null, msgs);
 			case ESMFPackage.ESMF_METHOD__ACTION:
@@ -410,24 +411,11 @@ public class ESMFMethodImpl extends ESMFNamedEntityImpl implements ESMFMethod {
 	 * @generated
 	 */
 	@Override
-	public NotificationChain eBasicRemoveFromContainerFeature(NotificationChain msgs) {
-		switch (eContainerFeatureID()) {
-			case ESMFPackage.ESMF_METHOD__COMPONENT:
-				return eInternalContainer().eInverseRemove(this, ESMFPackage.ESMF_COMPONENT__METHOD, ESMFComponent.class, msgs);
-		}
-		return super.eBasicRemoveFromContainerFeature(msgs);
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	@Override
 	public Object eGet(int featureID, boolean resolve, boolean coreType) {
 		switch (featureID) {
 			case ESMFPackage.ESMF_METHOD__COMPONENT:
-				return getComponent();
+				if (resolve) return getComponent();
+				return basicGetComponent();
 			case ESMFPackage.ESMF_METHOD__PHASE:
 				return getPhase();
 			case ESMFPackage.ESMF_METHOD__IMPORT_STATE:
@@ -524,7 +512,7 @@ public class ESMFMethodImpl extends ESMFNamedEntityImpl implements ESMFMethod {
 	public boolean eIsSet(int featureID) {
 		switch (featureID) {
 			case ESMFPackage.ESMF_METHOD__COMPONENT:
-				return getComponent() != null;
+				return component != null;
 			case ESMFPackage.ESMF_METHOD__PHASE:
 				return phase != PHASE_EDEFAULT;
 			case ESMFPackage.ESMF_METHOD__IMPORT_STATE:

@@ -57,7 +57,7 @@ public class ESMFFactoryImpl extends EFactoryImpl implements ESMFFactory {
 	@Override
 	public EObject create(EClass eClass) {
 		switch (eClass.getClassifierID()) {
-			case ESMFPackage.ESMF_NAMED_ENTITY: return createESMFNamedEntity();
+			case ESMFPackage.ESMF_WORKSPACE: return createESMFWorkspace();
 			case ESMFPackage.ESMF_GRIDDED_COMPONENT: return createESMFGriddedComponent();
 			case ESMFPackage.ESMF_COUPLER_COMPONENT: return createESMFCouplerComponent();
 			case ESMFPackage.ESMF_SIMPLE_COUPLER_COMPONENT: return createESMFSimpleCouplerComponent();
@@ -106,7 +106,6 @@ public class ESMFFactoryImpl extends EFactoryImpl implements ESMFFactory {
 			case ESMFPackage.ESMF_GRID: return createESMFGrid();
 			case ESMFPackage.EXTENT: return createExtent();
 			case ESMFPackage.ESMF_DIST_GRID: return createESMFDistGrid();
-			case ESMFPackage.ESMF_WORKSPACE: return createESMFWorkspace();
 			case ESMFPackage.ESMF_VIRTUAL_MACHINE: return createESMFVirtualMachine();
 			case ESMFPackage.ESMF_PERSISTENT_EXECUTION_THREAD: return createESMFPersistentExecutionThread();
 			case ESMFPackage.ESMF_DE_LAYOUT: return createESMFDELayout();
@@ -1343,16 +1342,6 @@ public class ESMFFactoryImpl extends EFactoryImpl implements ESMFFactory {
 	public ESMFCallSIDLMethod createESMFCallSIDLMethod() {
 		ESMFCallSIDLMethodImpl esmfCallSIDLMethod = new ESMFCallSIDLMethodImpl();
 		return esmfCallSIDLMethod;
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public ESMFNamedEntity createESMFNamedEntity() {
-		ESMFNamedEntityImpl esmfNamedEntity = new ESMFNamedEntityImpl();
-		return esmfNamedEntity;
 	}
 
 	/**

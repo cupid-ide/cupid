@@ -31,6 +31,16 @@ import org.eclipse.emf.ecore.util.EcoreUtil;
  */
 public class ESMFRegisterMethodImpl extends ESMFNamedEntityImpl implements ESMFRegisterMethod {
 	/**
+	 * The cached value of the '{@link #getComponent() <em>Component</em>}' reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #getComponent()
+	 * @generated
+	 * @ordered
+	 */
+	protected ESMFComponent component;
+
+	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
@@ -55,8 +65,15 @@ public class ESMFRegisterMethodImpl extends ESMFNamedEntityImpl implements ESMFR
 	 * @generated
 	 */
 	public ESMFComponent getComponent() {
-		if (eContainerFeatureID() != ESMFPackage.ESMF_REGISTER_METHOD__COMPONENT) return null;
-		return (ESMFComponent)eContainer();
+		if (component != null && component.eIsProxy()) {
+			InternalEObject oldComponent = (InternalEObject)component;
+			component = (ESMFComponent)eResolveProxy(oldComponent);
+			if (component != oldComponent) {
+				if (eNotificationRequired())
+					eNotify(new ENotificationImpl(this, Notification.RESOLVE, ESMFPackage.ESMF_REGISTER_METHOD__COMPONENT, oldComponent, component));
+			}
+		}
+		return component;
 	}
 
 	/**
@@ -64,9 +81,8 @@ public class ESMFRegisterMethodImpl extends ESMFNamedEntityImpl implements ESMFR
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public NotificationChain basicSetComponent(ESMFComponent newComponent, NotificationChain msgs) {
-		msgs = eBasicSetContainer((InternalEObject)newComponent, ESMFPackage.ESMF_REGISTER_METHOD__COMPONENT, msgs);
-		return msgs;
+	public ESMFComponent basicGetComponent() {
+		return component;
 	}
 
 	/**
@@ -75,63 +91,10 @@ public class ESMFRegisterMethodImpl extends ESMFNamedEntityImpl implements ESMFR
 	 * @generated
 	 */
 	public void setComponent(ESMFComponent newComponent) {
-		if (newComponent != eInternalContainer() || (eContainerFeatureID() != ESMFPackage.ESMF_REGISTER_METHOD__COMPONENT && newComponent != null)) {
-			if (EcoreUtil.isAncestor(this, newComponent))
-				throw new IllegalArgumentException("Recursive containment not allowed for " + toString());
-			NotificationChain msgs = null;
-			if (eInternalContainer() != null)
-				msgs = eBasicRemoveFromContainer(msgs);
-			if (newComponent != null)
-				msgs = ((InternalEObject)newComponent).eInverseAdd(this, ESMFPackage.ESMF_COMPONENT__REGISTER_METHOD, ESMFComponent.class, msgs);
-			msgs = basicSetComponent(newComponent, msgs);
-			if (msgs != null) msgs.dispatch();
-		}
-		else if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, ESMFPackage.ESMF_REGISTER_METHOD__COMPONENT, newComponent, newComponent));
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	@Override
-	public NotificationChain eInverseAdd(InternalEObject otherEnd, int featureID, NotificationChain msgs) {
-		switch (featureID) {
-			case ESMFPackage.ESMF_REGISTER_METHOD__COMPONENT:
-				if (eInternalContainer() != null)
-					msgs = eBasicRemoveFromContainer(msgs);
-				return basicSetComponent((ESMFComponent)otherEnd, msgs);
-		}
-		return super.eInverseAdd(otherEnd, featureID, msgs);
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	@Override
-	public NotificationChain eInverseRemove(InternalEObject otherEnd, int featureID, NotificationChain msgs) {
-		switch (featureID) {
-			case ESMFPackage.ESMF_REGISTER_METHOD__COMPONENT:
-				return basicSetComponent(null, msgs);
-		}
-		return super.eInverseRemove(otherEnd, featureID, msgs);
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	@Override
-	public NotificationChain eBasicRemoveFromContainerFeature(NotificationChain msgs) {
-		switch (eContainerFeatureID()) {
-			case ESMFPackage.ESMF_REGISTER_METHOD__COMPONENT:
-				return eInternalContainer().eInverseRemove(this, ESMFPackage.ESMF_COMPONENT__REGISTER_METHOD, ESMFComponent.class, msgs);
-		}
-		return super.eBasicRemoveFromContainerFeature(msgs);
+		ESMFComponent oldComponent = component;
+		component = newComponent;
+		if (eNotificationRequired())
+			eNotify(new ENotificationImpl(this, Notification.SET, ESMFPackage.ESMF_REGISTER_METHOD__COMPONENT, oldComponent, component));
 	}
 
 	/**
@@ -143,7 +106,8 @@ public class ESMFRegisterMethodImpl extends ESMFNamedEntityImpl implements ESMFR
 	public Object eGet(int featureID, boolean resolve, boolean coreType) {
 		switch (featureID) {
 			case ESMFPackage.ESMF_REGISTER_METHOD__COMPONENT:
-				return getComponent();
+				if (resolve) return getComponent();
+				return basicGetComponent();
 		}
 		return super.eGet(featureID, resolve, coreType);
 	}
@@ -187,7 +151,7 @@ public class ESMFRegisterMethodImpl extends ESMFNamedEntityImpl implements ESMFR
 	public boolean eIsSet(int featureID) {
 		switch (featureID) {
 			case ESMFPackage.ESMF_REGISTER_METHOD__COMPONENT:
-				return getComponent() != null;
+				return component != null;
 		}
 		return super.eIsSet(featureID);
 	}

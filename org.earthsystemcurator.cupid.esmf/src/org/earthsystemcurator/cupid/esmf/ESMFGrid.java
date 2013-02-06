@@ -19,7 +19,7 @@ package org.earthsystemcurator.cupid.esmf;
  * @model
  * @generated
  */
-public interface ESMFGrid extends ESMFNamedEntity, ESMFScopedItem {
+public interface ESMFGrid extends ESMFScopedItem {
 	/**
 	 * Returns the value of the '<em><b>Dist Grid</b></em>' reference.
 	 * <!-- begin-user-doc -->

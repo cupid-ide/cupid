@@ -25,7 +25,7 @@ import org.eclipse.emf.ecore.impl.EObjectImpl;
  *
  * @generated
  */
-public class ESMFNamedEntityImpl extends EObjectImpl implements ESMFNamedEntity {
+public abstract class ESMFNamedEntityImpl extends EObjectImpl implements ESMFNamedEntity {
 	/**
 	 * The default value of the '{@link #getName() <em>Name</em>}' attribute.
 	 * <!-- begin-user-doc -->

@@ -36,7 +36,7 @@ public interface ESMFScope extends EObject {
 	 * @return the value of the '<em>Item</em>' containment reference list.
 	 * @see org.earthsystemcurator.cupid.esmf.ESMFPackage#getESMFScope_Item()
 	 * @see org.earthsystemcurator.cupid.esmf.ESMFScopedItem#getScope
-	 * @model opposite="scope" containment="true"
+	 * @model opposite="scope" containment="true" keys="name"
 	 * @generated
 	 */
 	EList<ESMFScopedItem> getItem();

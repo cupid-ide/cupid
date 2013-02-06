@@ -1030,15 +1030,6 @@ public interface ESMFFactory extends EFactory {
 	ESMFCallSIDLMethod createESMFCallSIDLMethod();
 
 	/**
-	 * Returns a new object of class '<em>Named Entity</em>'.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @return a new object of class '<em>Named Entity</em>'.
-	 * @generated
-	 */
-	ESMFNamedEntity createESMFNamedEntity();
-
-	/**
 	 * Returns the package supported by this factory.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->

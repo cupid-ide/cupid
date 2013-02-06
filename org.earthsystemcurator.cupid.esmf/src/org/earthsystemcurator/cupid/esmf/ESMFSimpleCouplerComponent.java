@@ -13,6 +13,8 @@ import org.eclipse.emf.common.util.EList;
  * The following features are supported:
  * <ul>
  *   <li>{@link org.earthsystemcurator.cupid.esmf.ESMFSimpleCouplerComponent#getFieldConnection <em>Field Connection</em>}</li>
+ *   <li>{@link org.earthsystemcurator.cupid.esmf.ESMFSimpleCouplerComponent#getSrcComponent <em>Src Component</em>}</li>
+ *   <li>{@link org.earthsystemcurator.cupid.esmf.ESMFSimpleCouplerComponent#getDstComponent <em>Dst Component</em>}</li>
  * </ul>
  * </p>
  *
@@ -38,5 +40,57 @@ public interface ESMFSimpleCouplerComponent extends ESMFCouplerComponent {
 	 * @generated
 	 */
 	EList<ESMFFieldConnection> getFieldConnection();
+
+	/**
+	 * Returns the value of the '<em><b>Src Component</b></em>' reference.
+	 * <!-- begin-user-doc -->
+	 * <p>
+	 * If the meaning of the '<em>Src Component</em>' reference isn't clear,
+	 * there really should be more of a description here...
+	 * </p>
+	 * <!-- end-user-doc -->
+	 * @return the value of the '<em>Src Component</em>' reference.
+	 * @see #setSrcComponent(ESMFGriddedComponent)
+	 * @see org.earthsystemcurator.cupid.esmf.ESMFPackage#getESMFSimpleCouplerComponent_SrcComponent()
+	 * @model required="true"
+	 * @generated
+	 */
+	ESMFGriddedComponent getSrcComponent();
+
+	/**
+	 * Sets the value of the '{@link org.earthsystemcurator.cupid.esmf.ESMFSimpleCouplerComponent#getSrcComponent <em>Src Component</em>}' reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @param value the new value of the '<em>Src Component</em>' reference.
+	 * @see #getSrcComponent()
+	 * @generated
+	 */
+	void setSrcComponent(ESMFGriddedComponent value);
+
+	/**
+	 * Returns the value of the '<em><b>Dst Component</b></em>' reference.
+	 * <!-- begin-user-doc -->
+	 * <p>
+	 * If the meaning of the '<em>Dst Component</em>' reference isn't clear,
+	 * there really should be more of a description here...
+	 * </p>
+	 * <!-- end-user-doc -->
+	 * @return the value of the '<em>Dst Component</em>' reference.
+	 * @see #setDstComponent(ESMFGriddedComponent)
+	 * @see org.earthsystemcurator.cupid.esmf.ESMFPackage#getESMFSimpleCouplerComponent_DstComponent()
+	 * @model required="true"
+	 * @generated
+	 */
+	ESMFGriddedComponent getDstComponent();
+
+	/**
+	 * Sets the value of the '{@link org.earthsystemcurator.cupid.esmf.ESMFSimpleCouplerComponent#getDstComponent <em>Dst Component</em>}' reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @param value the new value of the '<em>Dst Component</em>' reference.
+	 * @see #getDstComponent()
+	 * @generated
+	 */
+	void setDstComponent(ESMFGriddedComponent value);
 
 } // ESMFSimpleCouplerComponent

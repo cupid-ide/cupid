@@ -39,12 +39,10 @@ import org.eclipse.emf.ecore.util.EcoreUtil;
  * <p>
  * The following features are implemented:
  * <ul>
- *   <li>{@link org.earthsystemcurator.cupid.esmf.impl.ESMFFieldImpl#getScope <em>Scope</em>}</li>
  *   <li>{@link org.earthsystemcurator.cupid.esmf.impl.ESMFFieldImpl#getGrid <em>Grid</em>}</li>
  *   <li>{@link org.earthsystemcurator.cupid.esmf.impl.ESMFFieldImpl#getArray <em>Array</em>}</li>
  *   <li>{@link org.earthsystemcurator.cupid.esmf.impl.ESMFFieldImpl#getStaggerLoc <em>Stagger Loc</em>}</li>
  *   <li>{@link org.earthsystemcurator.cupid.esmf.impl.ESMFFieldImpl#getArraySpec <em>Array Spec</em>}</li>
- *   <li>{@link org.earthsystemcurator.cupid.esmf.impl.ESMFFieldImpl#getSIDLArgument <em>SIDL Argument</em>}</li>
  *   <li>{@link org.earthsystemcurator.cupid.esmf.impl.ESMFFieldImpl#getIndex <em>Index</em>}</li>
  *   <li>{@link org.earthsystemcurator.cupid.esmf.impl.ESMFFieldImpl#getTotalLWidth <em>Total LWidth</em>}</li>
  *   <li>{@link org.earthsystemcurator.cupid.esmf.impl.ESMFFieldImpl#getTotalUWidth <em>Total UWidth</em>}</li>
@@ -53,7 +51,7 @@ import org.eclipse.emf.ecore.util.EcoreUtil;
  *
  * @generated
  */
-public class ESMFFieldImpl extends ESMFNamedEntityImpl implements ESMFField {
+public class ESMFFieldImpl extends ESMFScopedItemImpl implements ESMFField {
 	/**
 	 * The cached value of the '{@link #getGrid() <em>Grid</em>}' reference.
 	 * <!-- begin-user-doc -->
@@ -103,16 +101,6 @@ public class ESMFFieldImpl extends ESMFNamedEntityImpl implements ESMFField {
 	 * @ordered
 	 */
 	protected ESMFArraySpec arraySpec;
-
-	/**
-	 * The cached value of the '{@link #getSIDLArgument() <em>SIDL Argument</em>}' reference list.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @see #getSIDLArgument()
-	 * @generated
-	 * @ordered
-	 */
-	protected EList<Argument> sidlArgument;
 
 	/**
 	 * The default value of the '{@link #getIndex() <em>Index</em>}' attribute.
@@ -171,47 +159,6 @@ public class ESMFFieldImpl extends ESMFNamedEntityImpl implements ESMFField {
 	@Override
 	protected EClass eStaticClass() {
 		return ESMFPackage.Literals.ESMF_FIELD;
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public ESMFScope getScope() {
-		if (eContainerFeatureID() != ESMFPackage.ESMF_FIELD__SCOPE) return null;
-		return (ESMFScope)eContainer();
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public NotificationChain basicSetScope(ESMFScope newScope, NotificationChain msgs) {
-		msgs = eBasicSetContainer((InternalEObject)newScope, ESMFPackage.ESMF_FIELD__SCOPE, msgs);
-		return msgs;
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public void setScope(ESMFScope newScope) {
-		if (newScope != eInternalContainer() || (eContainerFeatureID() != ESMFPackage.ESMF_FIELD__SCOPE && newScope != null)) {
-			if (EcoreUtil.isAncestor(this, newScope))
-				throw new IllegalArgumentException("Recursive containment not allowed for " + toString());
-			NotificationChain msgs = null;
-			if (eInternalContainer() != null)
-				msgs = eBasicRemoveFromContainer(msgs);
-			if (newScope != null)
-				msgs = ((InternalEObject)newScope).eInverseAdd(this, ESMFPackage.ESMF_SCOPE__ITEM, ESMFScope.class, msgs);
-			msgs = basicSetScope(newScope, msgs);
-			if (msgs != null) msgs.dispatch();
-		}
-		else if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, ESMFPackage.ESMF_FIELD__SCOPE, newScope, newScope));
 	}
 
 	/**
@@ -354,18 +301,6 @@ public class ESMFFieldImpl extends ESMFNamedEntityImpl implements ESMFField {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EList<Argument> getSIDLArgument() {
-		if (sidlArgument == null) {
-			sidlArgument = new EObjectResolvingEList<Argument>(Argument.class, this, ESMFPackage.ESMF_FIELD__SIDL_ARGUMENT);
-		}
-		return sidlArgument;
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
 	public ESMF_INDEX getIndex() {
 		return index;
 	}
@@ -412,54 +347,8 @@ public class ESMFFieldImpl extends ESMFNamedEntityImpl implements ESMFField {
 	 * @generated
 	 */
 	@Override
-	public NotificationChain eInverseAdd(InternalEObject otherEnd, int featureID, NotificationChain msgs) {
-		switch (featureID) {
-			case ESMFPackage.ESMF_FIELD__SCOPE:
-				if (eInternalContainer() != null)
-					msgs = eBasicRemoveFromContainer(msgs);
-				return basicSetScope((ESMFScope)otherEnd, msgs);
-		}
-		return super.eInverseAdd(otherEnd, featureID, msgs);
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	@Override
-	public NotificationChain eInverseRemove(InternalEObject otherEnd, int featureID, NotificationChain msgs) {
-		switch (featureID) {
-			case ESMFPackage.ESMF_FIELD__SCOPE:
-				return basicSetScope(null, msgs);
-		}
-		return super.eInverseRemove(otherEnd, featureID, msgs);
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	@Override
-	public NotificationChain eBasicRemoveFromContainerFeature(NotificationChain msgs) {
-		switch (eContainerFeatureID()) {
-			case ESMFPackage.ESMF_FIELD__SCOPE:
-				return eInternalContainer().eInverseRemove(this, ESMFPackage.ESMF_SCOPE__ITEM, ESMFScope.class, msgs);
-		}
-		return super.eBasicRemoveFromContainerFeature(msgs);
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	@Override
 	public Object eGet(int featureID, boolean resolve, boolean coreType) {
 		switch (featureID) {
-			case ESMFPackage.ESMF_FIELD__SCOPE:
-				return getScope();
 			case ESMFPackage.ESMF_FIELD__GRID:
 				if (resolve) return getGrid();
 				return basicGetGrid();
@@ -471,8 +360,6 @@ public class ESMFFieldImpl extends ESMFNamedEntityImpl implements ESMFField {
 			case ESMFPackage.ESMF_FIELD__ARRAY_SPEC:
 				if (resolve) return getArraySpec();
 				return basicGetArraySpec();
-			case ESMFPackage.ESMF_FIELD__SIDL_ARGUMENT:
-				return getSIDLArgument();
 			case ESMFPackage.ESMF_FIELD__INDEX:
 				return getIndex();
 			case ESMFPackage.ESMF_FIELD__TOTAL_LWIDTH:
@@ -492,9 +379,6 @@ public class ESMFFieldImpl extends ESMFNamedEntityImpl implements ESMFField {
 	@Override
 	public void eSet(int featureID, Object newValue) {
 		switch (featureID) {
-			case ESMFPackage.ESMF_FIELD__SCOPE:
-				setScope((ESMFScope)newValue);
-				return;
 			case ESMFPackage.ESMF_FIELD__GRID:
 				setGrid((ESMFGrid)newValue);
 				return;
@@ -506,10 +390,6 @@ public class ESMFFieldImpl extends ESMFNamedEntityImpl implements ESMFField {
 				return;
 			case ESMFPackage.ESMF_FIELD__ARRAY_SPEC:
 				setArraySpec((ESMFArraySpec)newValue);
-				return;
-			case ESMFPackage.ESMF_FIELD__SIDL_ARGUMENT:
-				getSIDLArgument().clear();
-				getSIDLArgument().addAll((Collection<? extends Argument>)newValue);
 				return;
 			case ESMFPackage.ESMF_FIELD__INDEX:
 				setIndex((ESMF_INDEX)newValue);
@@ -534,9 +414,6 @@ public class ESMFFieldImpl extends ESMFNamedEntityImpl implements ESMFField {
 	@Override
 	public void eUnset(int featureID) {
 		switch (featureID) {
-			case ESMFPackage.ESMF_FIELD__SCOPE:
-				setScope((ESMFScope)null);
-				return;
 			case ESMFPackage.ESMF_FIELD__GRID:
 				setGrid((ESMFGrid)null);
 				return;
@@ -548,9 +425,6 @@ public class ESMFFieldImpl extends ESMFNamedEntityImpl implements ESMFField {
 				return;
 			case ESMFPackage.ESMF_FIELD__ARRAY_SPEC:
 				setArraySpec((ESMFArraySpec)null);
-				return;
-			case ESMFPackage.ESMF_FIELD__SIDL_ARGUMENT:
-				getSIDLArgument().clear();
 				return;
 			case ESMFPackage.ESMF_FIELD__INDEX:
 				setIndex(INDEX_EDEFAULT);
@@ -573,8 +447,6 @@ public class ESMFFieldImpl extends ESMFNamedEntityImpl implements ESMFField {
 	@Override
 	public boolean eIsSet(int featureID) {
 		switch (featureID) {
-			case ESMFPackage.ESMF_FIELD__SCOPE:
-				return getScope() != null;
 			case ESMFPackage.ESMF_FIELD__GRID:
 				return grid != null;
 			case ESMFPackage.ESMF_FIELD__ARRAY:
@@ -583,8 +455,6 @@ public class ESMFFieldImpl extends ESMFNamedEntityImpl implements ESMFField {
 				return staggerLoc != STAGGER_LOC_EDEFAULT;
 			case ESMFPackage.ESMF_FIELD__ARRAY_SPEC:
 				return arraySpec != null;
-			case ESMFPackage.ESMF_FIELD__SIDL_ARGUMENT:
-				return sidlArgument != null && !sidlArgument.isEmpty();
 			case ESMFPackage.ESMF_FIELD__INDEX:
 				return index != INDEX_EDEFAULT;
 			case ESMFPackage.ESMF_FIELD__TOTAL_LWIDTH:
@@ -593,38 +463,6 @@ public class ESMFFieldImpl extends ESMFNamedEntityImpl implements ESMFField {
 				return totalUWidth != null && !totalUWidth.isEmpty();
 		}
 		return super.eIsSet(featureID);
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	@Override
-	public int eBaseStructuralFeatureID(int derivedFeatureID, Class<?> baseClass) {
-		if (baseClass == ESMFScopedItem.class) {
-			switch (derivedFeatureID) {
-				case ESMFPackage.ESMF_FIELD__SCOPE: return ESMFPackage.ESMF_SCOPED_ITEM__SCOPE;
-				default: return -1;
-			}
-		}
-		return super.eBaseStructuralFeatureID(derivedFeatureID, baseClass);
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	@Override
-	public int eDerivedStructuralFeatureID(int baseFeatureID, Class<?> baseClass) {
-		if (baseClass == ESMFScopedItem.class) {
-			switch (baseFeatureID) {
-				case ESMFPackage.ESMF_SCOPED_ITEM__SCOPE: return ESMFPackage.ESMF_FIELD__SCOPE;
-				default: return -1;
-			}
-		}
-		return super.eDerivedStructuralFeatureID(baseFeatureID, baseClass);
 	}
 
 	/**

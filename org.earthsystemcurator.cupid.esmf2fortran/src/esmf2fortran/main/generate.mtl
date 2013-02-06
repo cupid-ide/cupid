@@ -16,7 +16,13 @@
 [/template]
 
 [template public genESMFComponent(c : ESMFComponent)]
-[file (c.name + '.F90', false)]
+[file (c.workspace.name.normalize() + '/' + c.name.normalize() + '.F90', false)]
+!
+! [c.name.normalize()/].F90
+! This file was generated automatically by Cupid
+!
+[comment]! Input specification: [c.workspace.eResource()/]
+![/comment]
 module [c.name/]
 
 	use ESMF
@@ -24,7 +30,7 @@ module [c.name/]
 	use [childComp.name/], only:  [childComp.name/]_register => register_
 	[/for]
 	! [protected ('use_statements')]
-			
+
 	! [/protected]
 	[genESMFComponentBody(c)/]
 
@@ -33,7 +39,12 @@ end module
 [/template]
 
 [template public genESMFComponent(d : ESMFDriver)]
-[file (d.name + '.F90', false)]
+[file (d.workspace.name.normalize() + '/' + d.name.normalize() + '.F90', false)]
+!
+! [d.name.normalize()/].F90
+! This file was generated automatically by Cupid
+!
+
 program [d.name/]
 
 	use ESMF
@@ -483,6 +494,10 @@ UNKNOWN
 [template public toFortranArrayConstructor(intseq : Sequence(Integer)) post (trim())]
 [for (i : Integer | intseq) before ('(/') separator (', ') after ('/)')][i/][/for]
 [/template]
+
+[query public normalize(s : String) : String = 
+s.replaceAll(' ', '_') 
+/]
 
 
 [comment ********************* to be removed /]

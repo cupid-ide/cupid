@@ -29,7 +29,7 @@ import org.eclipse.emf.ecore.util.EcoreUtil;
  *
  * @generated
  */
-public abstract class ESMFScopedItemImpl extends EObjectImpl implements ESMFScopedItem {
+public abstract class ESMFScopedItemImpl extends ESMFNamedEntityImpl implements ESMFScopedItem {
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->

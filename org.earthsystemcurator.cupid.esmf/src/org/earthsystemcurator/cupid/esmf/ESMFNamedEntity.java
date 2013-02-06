@@ -17,7 +17,9 @@ import org.eclipse.emf.ecore.EObject;
  * </p>
  *
  * @see org.earthsystemcurator.cupid.esmf.ESMFPackage#getESMFNamedEntity()
- * @model
+ * @model abstract="true"
+ *        annotation="http://www.eclipse.org/emf/2002/Ecore constraints='nameNotEmpty'"
+ *        annotation="http://www.eclipse.org/emf/2002/Ecore/OCL/Pivot nameNotEmpty='self.name.length() > 0'"
  * @generated
  */
 public interface ESMFNamedEntity extends EObject {
