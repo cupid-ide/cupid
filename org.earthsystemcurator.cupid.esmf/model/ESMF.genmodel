@@ -82,6 +82,10 @@
     <genClasses ecoreClass="ESMF.ecore#//ESMFStageActionComponentDestroy">
       <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference ESMF.ecore#//ESMFStageActionComponentDestroy/component"/>
     </genClasses>
+    <genClasses ecoreClass="ESMF.ecore#//ESMFStageActionComponentSetGrid">
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference ESMF.ecore#//ESMFStageActionComponentSetGrid/component"/>
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference ESMF.ecore#//ESMFStageActionComponentSetGrid/grid"/>
+    </genClasses>
     <genClasses ecoreClass="ESMF.ecore#//ESMFStageActionExecuteStage">
       <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference ESMF.ecore#//ESMFStageActionExecuteStage/stageToExecute"/>
       <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference ESMF.ecore#//ESMFStageActionExecuteStage/importState"/>
@@ -97,6 +101,14 @@
       <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference ESMF.ecore#//ESMFStageActionFieldRedistStore/srcField"/>
       <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference ESMF.ecore#//ESMFStageActionFieldRedistStore/dstField"/>
       <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference ESMF.ecore#//ESMFStageActionFieldRedistStore/routeHandle"/>
+    </genClasses>
+    <genClasses ecoreClass="ESMF.ecore#//ESMFStageActionFieldRedist">
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference ESMF.ecore#//ESMFStageActionFieldRedist/srcField"/>
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference ESMF.ecore#//ESMFStageActionFieldRedist/dstField"/>
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference ESMF.ecore#//ESMFStageActionFieldRedist/routeHandle"/>
+    </genClasses>
+    <genClasses ecoreClass="ESMF.ecore#//ESMFStageActionFieldRedistRelease">
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference ESMF.ecore#//ESMFStageActionFieldRedistRelease/routeHandle"/>
     </genClasses>
     <genClasses ecoreClass="ESMF.ecore#//ESMFStageActionGridCreate">
       <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference ESMF.ecore#//ESMFStageActionGridCreate/grid"/>
@@ -184,7 +196,6 @@
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute ESMF.ecore#//ESMFField/index"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute ESMF.ecore#//ESMFField/totalLWidth"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute ESMF.ecore#//ESMFField/totalUWidth"/>
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute ESMF.ecore#//ESMFField/label"/>
     </genClasses>
     <genClasses ecoreClass="ESMF.ecore#//ESMFFieldConnection">
       <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference ESMF.ecore#//ESMFFieldConnection/srcField"/>
@@ -219,7 +230,8 @@
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute ESMF.ecore#//ESMFDistGrid/regularDecompositionSize"/>
     </genClasses>
     <genClasses ecoreClass="ESMF.ecore#//ESMFWorkspace">
-      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference ESMF.ecore#//ESMFWorkspace/component"/>
+      <genFeatures property="None" children="true" createChild="true" propertyCategory="Children"
+          propertyDescription="Child Gridded and Coupler Components" ecoreFeature="ecore:EReference ESMF.ecore#//ESMFWorkspace/component"/>
       <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference ESMF.ecore#//ESMFWorkspace/calendar"/>
       <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference ESMF.ecore#//ESMFWorkspace/stateItem"/>
       <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference ESMF.ecore#//ESMFWorkspace/distGrid"/>

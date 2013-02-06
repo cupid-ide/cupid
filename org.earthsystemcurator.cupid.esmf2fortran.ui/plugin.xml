@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="3.2"?>
+<plugin>
+   <extension point="org.eclipse.ui.popupMenus">
+      <objectContribution
+            adaptable="true"
+            objectClass="org.eclipse.core.resources.IFile"
+            nameFilter="*.esmf"
+            id="org.earthsystemcurator.cupid.esmf2fortran.ui.popupMenus.contribution.IFile">
+         <menu id="org.eclipse.acceleo.module.menu" label="Acceleo Model to Text" path="additionsAcceleo">
+               <groupMarker name="acceleo"/> 
+         </menu>
+         <action
+               class="org.earthsystemcurator.cupid.esmf2fortran.ui.popupMenus.AcceleoGenerateESMFModeltoFortranAction"
+               enablesFor="+"
+               id="org.earthsystemcurator.cupid.esmf2fortran.ui.popupMenus.acceleoGenerateESMFModeltoFortranAction"
+               icon="icons/default.gif"
+               label="Code Generation - ESMF Model to Fortran"
+               menubarPath="org.eclipse.acceleo.module.menu/acceleo"/>
+      </objectContribution>
+   </extension>
+</plugin>

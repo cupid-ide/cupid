@@ -20,7 +20,4 @@
   <component
       xsi:type="esmf:ESMFCouplerComponent"
       href="Coupler.xmi#/"/>
-  <component
-      xsi:type="esmf:ESMFGriddedComponent"
-      name="DummyDelete"/>
 </esmf:ESMFWorkspace>

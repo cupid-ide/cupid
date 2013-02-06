@@ -22,7 +22,6 @@ import org.eclipse.emf.common.util.EList;
  *   <li>{@link org.earthsystemcurator.cupid.esmf.ESMFField#getIndex <em>Index</em>}</li>
  *   <li>{@link org.earthsystemcurator.cupid.esmf.ESMFField#getTotalLWidth <em>Total LWidth</em>}</li>
  *   <li>{@link org.earthsystemcurator.cupid.esmf.ESMFField#getTotalUWidth <em>Total UWidth</em>}</li>
- *   <li>{@link org.earthsystemcurator.cupid.esmf.ESMFField#getLabel <em>Label</em>}</li>
  * </ul>
  * </p>
  *
@@ -214,32 +213,5 @@ public interface ESMFField extends ESMFStateItem, ESMFScopedItem {
 	 * @generated
 	 */
 	EList<Integer> getTotalUWidth();
-
-	/**
-	 * Returns the value of the '<em><b>Label</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <p>
-	 * If the meaning of the '<em>Label</em>' attribute isn't clear,
-	 * there really should be more of a description here...
-	 * </p>
-	 * <!-- end-user-doc -->
-	 * @return the value of the '<em>Label</em>' attribute.
-	 * @see #setLabel(String)
-	 * @see org.earthsystemcurator.cupid.esmf.ESMFPackage#getESMFField_Label()
-	 * @model required="true"
-	 *        annotation="http://www.eclipse.org/emf/2002/Ecore/OCL derivation='self.name + \'(\' + self.index + \')\''"
-	 * @generated
-	 */
-	String getLabel();
-
-	/**
-	 * Sets the value of the '{@link org.earthsystemcurator.cupid.esmf.ESMFField#getLabel <em>Label</em>}' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @param value the new value of the '<em>Label</em>' attribute.
-	 * @see #getLabel()
-	 * @generated
-	 */
-	void setLabel(String value);
 
 } // ESMFField

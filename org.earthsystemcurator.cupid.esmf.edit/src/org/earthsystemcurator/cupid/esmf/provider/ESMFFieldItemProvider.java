@@ -66,7 +66,6 @@ public class ESMFFieldItemProvider
 			addIndexPropertyDescriptor(object);
 			addTotalLWidthPropertyDescriptor(object);
 			addTotalUWidthPropertyDescriptor(object);
-			addLabelPropertyDescriptor(object);
 		}
 		return itemPropertyDescriptors;
 	}
@@ -270,28 +269,6 @@ public class ESMFFieldItemProvider
 	}
 
 	/**
-	 * This adds a property descriptor for the Label feature.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	protected void addLabelPropertyDescriptor(Object object) {
-		itemPropertyDescriptors.add
-			(createItemPropertyDescriptor
-				(((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(),
-				 getResourceLocator(),
-				 getString("_UI_ESMFField_label_feature"),
-				 getString("_UI_PropertyDescriptor_description", "_UI_ESMFField_label_feature", "_UI_ESMFField_type"),
-				 ESMFPackage.Literals.ESMF_FIELD__LABEL,
-				 true,
-				 false,
-				 false,
-				 ItemPropertyDescriptor.GENERIC_VALUE_IMAGE,
-				 null,
-				 null));
-	}
-
-	/**
 	 * This returns ESMFField.gif.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -332,7 +309,6 @@ public class ESMFFieldItemProvider
 			case ESMFPackage.ESMF_FIELD__INDEX:
 			case ESMFPackage.ESMF_FIELD__TOTAL_LWIDTH:
 			case ESMFPackage.ESMF_FIELD__TOTAL_UWIDTH:
-			case ESMFPackage.ESMF_FIELD__LABEL:
 				fireNotifyChanged(new ViewerNotification(notification, notification.getNotifier(), false, true));
 				return;
 		}

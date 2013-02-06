@@ -3132,22 +3132,13 @@ public interface ESMFPackage extends EPackage {
 	int ESMF_FIELD__TOTAL_UWIDTH = ESMF_STATE_ITEM_FEATURE_COUNT + 7;
 
 	/**
-	 * The feature id for the '<em><b>Label</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int ESMF_FIELD__LABEL = ESMF_STATE_ITEM_FEATURE_COUNT + 8;
-
-	/**
 	 * The number of structural features of the '<em>Field</em>' class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int ESMF_FIELD_FEATURE_COUNT = ESMF_STATE_ITEM_FEATURE_COUNT + 9;
+	int ESMF_FIELD_FEATURE_COUNT = ESMF_STATE_ITEM_FEATURE_COUNT + 8;
 
 	/**
 	 * The meta object id for the '{@link org.earthsystemcurator.cupid.esmf.impl.ESMFFieldConnectionImpl <em>Field Connection</em>}' class.
@@ -8814,17 +8805,6 @@ public interface ESMFPackage extends EPackage {
 	EAttribute getESMFField_TotalUWidth();
 
 	/**
-	 * Returns the meta object for the attribute '{@link org.earthsystemcurator.cupid.esmf.ESMFField#getLabel <em>Label</em>}'.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @return the meta object for the attribute '<em>Label</em>'.
-	 * @see org.earthsystemcurator.cupid.esmf.ESMFField#getLabel()
-	 * @see #getESMFField()
-	 * @generated
-	 */
-	EAttribute getESMFField_Label();
-
-	/**
 	 * Returns the meta object for class '{@link org.earthsystemcurator.cupid.esmf.ESMFFieldConnection <em>Field Connection</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -12939,14 +12919,6 @@ public interface ESMFPackage extends EPackage {
 		 * @generated
 		 */
 		EAttribute ESMF_FIELD__TOTAL_UWIDTH = eINSTANCE.getESMFField_TotalUWidth();
-
-		/**
-		 * The meta object literal for the '<em><b>Label</b></em>' attribute feature.
-		 * <!-- begin-user-doc -->
-		 * <!-- end-user-doc -->
-		 * @generated
-		 */
-		EAttribute ESMF_FIELD__LABEL = eINSTANCE.getESMFField_Label();
 
 		/**
 		 * The meta object literal for the '{@link org.earthsystemcurator.cupid.esmf.impl.ESMFFieldConnectionImpl <em>Field Connection</em>}' class.

@@ -2252,15 +2252,6 @@ public class ESMFPackageImpl extends EPackageImpl implements ESMFPackage {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EAttribute getESMFField_Label() {
-		return (EAttribute)esmfFieldEClass.getEStructuralFeatures().get(8);
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
 	public EClass getESMFFieldConnection() {
 		return esmfFieldConnectionEClass;
 	}
@@ -4981,7 +4972,6 @@ public class ESMFPackageImpl extends EPackageImpl implements ESMFPackage {
 		createEAttribute(esmfFieldEClass, ESMF_FIELD__INDEX);
 		createEAttribute(esmfFieldEClass, ESMF_FIELD__TOTAL_LWIDTH);
 		createEAttribute(esmfFieldEClass, ESMF_FIELD__TOTAL_UWIDTH);
-		createEAttribute(esmfFieldEClass, ESMF_FIELD__LABEL);
 
 		esmfFieldConnectionEClass = createEClass(ESMF_FIELD_CONNECTION);
 		createEReference(esmfFieldConnectionEClass, ESMF_FIELD_CONNECTION__SRC_FIELD);
@@ -5670,7 +5660,6 @@ public class ESMFPackageImpl extends EPackageImpl implements ESMFPackage {
 		initEAttribute(getESMFField_Index(), this.getESMF_INDEX(), "index", null, 0, 1, ESMFField.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEAttribute(getESMFField_TotalLWidth(), ecorePackage.getEInt(), "totalLWidth", null, 0, -1, ESMFField.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, !IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEAttribute(getESMFField_TotalUWidth(), ecorePackage.getEInt(), "totalUWidth", null, 0, -1, ESMFField.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, !IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-		initEAttribute(getESMFField_Label(), ecorePackage.getEString(), "label", null, 1, 1, ESMFField.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
 		initEClass(esmfFieldConnectionEClass, ESMFFieldConnection.class, "ESMFFieldConnection", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 		initEReference(getESMFFieldConnection_SrcField(), this.getESMFField(), null, "srcField", null, 1, 1, ESMFFieldConnection.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
@@ -6078,7 +6067,7 @@ public class ESMFPackageImpl extends EPackageImpl implements ESMFPackage {
 		   source, 
 		   new String[] {
 			 "name", "ESMF_StateAdd"
-		   });												
+		   });											
 		addAnnotation
 		  (esmfActionStateAddEClass, 
 		   source, 
@@ -6342,12 +6331,6 @@ public class ESMFPackageImpl extends EPackageImpl implements ESMFPackage {
 		   source, 
 		   new String[] {
 			 "body", ""
-		   });		
-		addAnnotation
-		  (getESMFField_Label(), 
-		   source, 
-		   new String[] {
-			 "derivation", "self.name + \'(\' + self.index + \')\'"
 		   });																																																																																																																																																																																														
 	}
 
@@ -6366,7 +6349,7 @@ public class ESMFPackageImpl extends EPackageImpl implements ESMFPackage {
 			 "invocationDelegates", "http://www.eclipse.org/emf/2002/Ecore/OCL/Pivot",
 			 "settingDelegates", "http://www.eclipse.org/emf/2002/Ecore/OCL/Pivot",
 			 "validationDelegates", "http://www.eclipse.org/emf/2002/Ecore/OCL/Pivot"
-		   });					
+		   });				
 		addAnnotation
 		  (extentEClass, 
 		   source, 
@@ -6400,7 +6383,7 @@ public class ESMFPackageImpl extends EPackageImpl implements ESMFPackage {
 	 * @generated
 	 */
 	protected void createOCL_1Annotations() {
-		String source = "http://www.eclipse.org/ocl/examples/OCL";							
+		String source = "http://www.eclipse.org/ocl/examples/OCL";						
 		addAnnotation
 		  (extentEClass, 
 		   source, 
@@ -6428,7 +6411,7 @@ public class ESMFPackageImpl extends EPackageImpl implements ESMFPackage {
 	 * @generated
 	 */
 	protected void createApiparamAnnotations() {
-		String source = "http://www.earthsystemcurator.org/metapattern/apiparam";													
+		String source = "http://www.earthsystemcurator.org/metapattern/apiparam";												
 		addAnnotation
 		  (getESMFActionAPI_Rc(), 
 		   source, 
@@ -7190,7 +7173,7 @@ public class ESMFPackageImpl extends EPackageImpl implements ESMFPackage {
 	 * @generated
 	 */
 	protected void createApireturnAnnotations() {
-		String source = "http://www.earthsystemcurator.org/metapattern/apireturn";																		
+		String source = "http://www.earthsystemcurator.org/metapattern/apireturn";																	
 		addAnnotation
 		  (getESMFActionStateCreate_State(), 
 		   source, 

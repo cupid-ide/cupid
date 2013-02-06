@@ -48,7 +48,6 @@ import org.eclipse.emf.ecore.util.EcoreUtil;
  *   <li>{@link org.earthsystemcurator.cupid.esmf.impl.ESMFFieldImpl#getIndex <em>Index</em>}</li>
  *   <li>{@link org.earthsystemcurator.cupid.esmf.impl.ESMFFieldImpl#getTotalLWidth <em>Total LWidth</em>}</li>
  *   <li>{@link org.earthsystemcurator.cupid.esmf.impl.ESMFFieldImpl#getTotalUWidth <em>Total UWidth</em>}</li>
- *   <li>{@link org.earthsystemcurator.cupid.esmf.impl.ESMFFieldImpl#getLabel <em>Label</em>}</li>
  * </ul>
  * </p>
  *
@@ -154,26 +153,6 @@ public class ESMFFieldImpl extends ESMFNamedEntityImpl implements ESMFField {
 	 * @ordered
 	 */
 	protected EList<Integer> totalUWidth;
-
-	/**
-	 * The default value of the '{@link #getLabel() <em>Label</em>}' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @see #getLabel()
-	 * @generated
-	 * @ordered
-	 */
-	protected static final String LABEL_EDEFAULT = null;
-
-	/**
-	 * The cached value of the '{@link #getLabel() <em>Label</em>}' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @see #getLabel()
-	 * @generated
-	 * @ordered
-	 */
-	protected String label = LABEL_EDEFAULT;
 
 	/**
 	 * <!-- begin-user-doc -->
@@ -432,27 +411,6 @@ public class ESMFFieldImpl extends ESMFNamedEntityImpl implements ESMFField {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public String getLabel() {
-		return label;
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public void setLabel(String newLabel) {
-		String oldLabel = label;
-		label = newLabel;
-		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, ESMFPackage.ESMF_FIELD__LABEL, oldLabel, label));
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
 	@Override
 	public NotificationChain eInverseAdd(InternalEObject otherEnd, int featureID, NotificationChain msgs) {
 		switch (featureID) {
@@ -521,8 +479,6 @@ public class ESMFFieldImpl extends ESMFNamedEntityImpl implements ESMFField {
 				return getTotalLWidth();
 			case ESMFPackage.ESMF_FIELD__TOTAL_UWIDTH:
 				return getTotalUWidth();
-			case ESMFPackage.ESMF_FIELD__LABEL:
-				return getLabel();
 		}
 		return super.eGet(featureID, resolve, coreType);
 	}
@@ -566,9 +522,6 @@ public class ESMFFieldImpl extends ESMFNamedEntityImpl implements ESMFField {
 				getTotalUWidth().clear();
 				getTotalUWidth().addAll((Collection<? extends Integer>)newValue);
 				return;
-			case ESMFPackage.ESMF_FIELD__LABEL:
-				setLabel((String)newValue);
-				return;
 		}
 		super.eSet(featureID, newValue);
 	}
@@ -608,9 +561,6 @@ public class ESMFFieldImpl extends ESMFNamedEntityImpl implements ESMFField {
 			case ESMFPackage.ESMF_FIELD__TOTAL_UWIDTH:
 				getTotalUWidth().clear();
 				return;
-			case ESMFPackage.ESMF_FIELD__LABEL:
-				setLabel(LABEL_EDEFAULT);
-				return;
 		}
 		super.eUnset(featureID);
 	}
@@ -641,8 +591,6 @@ public class ESMFFieldImpl extends ESMFNamedEntityImpl implements ESMFField {
 				return totalLWidth != null && !totalLWidth.isEmpty();
 			case ESMFPackage.ESMF_FIELD__TOTAL_UWIDTH:
 				return totalUWidth != null && !totalUWidth.isEmpty();
-			case ESMFPackage.ESMF_FIELD__LABEL:
-				return LABEL_EDEFAULT == null ? label != null : !LABEL_EDEFAULT.equals(label);
 		}
 		return super.eIsSet(featureID);
 	}
@@ -697,8 +645,6 @@ public class ESMFFieldImpl extends ESMFNamedEntityImpl implements ESMFField {
 		result.append(totalLWidth);
 		result.append(", totalUWidth: ");
 		result.append(totalUWidth);
-		result.append(", label: ");
-		result.append(label);
 		result.append(')');
 		return result.toString();
 	}
