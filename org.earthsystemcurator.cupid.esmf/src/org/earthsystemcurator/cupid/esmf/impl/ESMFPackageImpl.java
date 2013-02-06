@@ -5706,7 +5706,7 @@ public class ESMFPackageImpl extends EPackageImpl implements ESMFPackage {
 		initEAttribute(getESMFDistGrid_RegularDecompositionSize(), ecorePackage.getEInt(), "regularDecompositionSize", null, 0, -1, ESMFDistGrid.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, !IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
 		initEClass(esmfWorkspaceEClass, ESMFWorkspace.class, "ESMFWorkspace", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
-		initEReference(getESMFWorkspace_Component(), this.getESMFComponent(), null, "component", null, 0, -1, ESMFWorkspace.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEReference(getESMFWorkspace_Component(), this.getESMFComponent(), null, "component", null, 0, -1, ESMFWorkspace.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEReference(getESMFWorkspace_Calendar(), this.getESMFCalendar(), null, "calendar", null, 0, -1, ESMFWorkspace.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEReference(getESMFWorkspace_StateItem(), this.getESMFStateItem(), null, "stateItem", null, 0, -1, ESMFWorkspace.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEReference(getESMFWorkspace_DistGrid(), this.getESMFDistGrid(), null, "distGrid", null, 0, -1, ESMFWorkspace.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);

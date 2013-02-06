@@ -3554,7 +3554,7 @@ public interface ESMFPackage extends EPackage {
 	int ESMF_WORKSPACE = 56;
 
 	/**
-	 * The feature id for the '<em><b>Component</b></em>' reference list.
+	 * The feature id for the '<em><b>Component</b></em>' containment reference list.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
@@ -9114,10 +9114,10 @@ public interface ESMFPackage extends EPackage {
 	EClass getESMFWorkspace();
 
 	/**
-	 * Returns the meta object for the reference list '{@link org.earthsystemcurator.cupid.esmf.ESMFWorkspace#getComponent <em>Component</em>}'.
+	 * Returns the meta object for the containment reference list '{@link org.earthsystemcurator.cupid.esmf.ESMFWorkspace#getComponent <em>Component</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @return the meta object for the reference list '<em>Component</em>'.
+	 * @return the meta object for the containment reference list '<em>Component</em>'.
 	 * @see org.earthsystemcurator.cupid.esmf.ESMFWorkspace#getComponent()
 	 * @see #getESMFWorkspace()
 	 * @generated
@@ -13181,7 +13181,7 @@ public interface ESMFPackage extends EPackage {
 		EClass ESMF_WORKSPACE = eINSTANCE.getESMFWorkspace();
 
 		/**
-		 * The meta object literal for the '<em><b>Component</b></em>' reference list feature.
+		 * The meta object literal for the '<em><b>Component</b></em>' containment reference list feature.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
 		 * @generated

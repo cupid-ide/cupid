@@ -312,7 +312,7 @@
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="ESMFWorkspace">
     <eStructuralFeatures xsi:type="ecore:EReference" name="component" upperBound="-1"
-        eType="#//ESMFComponent"/>
+        eType="#//ESMFComponent" containment="true"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="calendar" upperBound="-1"
         eType="#//ESMFCalendar"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="stateItem" upperBound="-1"

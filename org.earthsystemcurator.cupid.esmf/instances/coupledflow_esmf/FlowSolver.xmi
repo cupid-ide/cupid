@@ -72,8 +72,12 @@
     <totalUWidth>1</totalUWidth>
     <totalUWidth>1</totalUWidth>
   </item>
-  <item xsi:type="esmf:ESMFGrid" name="fsGrid"/>
+  <item xsi:type="esmf:ESMFGrid" name="fsGrid" distGrid="//@item.14"/>
   <item xsi:type="esmf:ESMFArraySpec" name="fsArraySpec" typekind="ESMF_TYPEKIND_R4" rank="2"/>
+  <item xsi:type="esmf:ESMFDistGrid" name="fsDistGrid">
+    <extent min="1" max="100"/>
+    <extent min="1" max="100"/>
+  </item>
   <stage xsi:type="esmf:ESMFStageInitialize" name="Flow_Init1">
     <actions>
       <action xsi:type="esmf:ESMFStageActionGridInherit" grid="//@item.12"/>

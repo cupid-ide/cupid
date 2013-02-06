@@ -31,7 +31,7 @@ import org.eclipse.emf.ecore.EObject;
  */
 public interface ESMFWorkspace extends EObject {
 	/**
-	 * Returns the value of the '<em><b>Component</b></em>' reference list.
+	 * Returns the value of the '<em><b>Component</b></em>' containment reference list.
 	 * The list contents are of type {@link org.earthsystemcurator.cupid.esmf.ESMFComponent}.
 	 * <!-- begin-user-doc -->
 	 * <p>
@@ -39,9 +39,9 @@ public interface ESMFWorkspace extends EObject {
 	 * there really should be more of a description here...
 	 * </p>
 	 * <!-- end-user-doc -->
-	 * @return the value of the '<em>Component</em>' reference list.
+	 * @return the value of the '<em>Component</em>' containment reference list.
 	 * @see org.earthsystemcurator.cupid.esmf.ESMFPackage#getESMFWorkspace_Component()
-	 * @model
+	 * @model containment="true"
 	 * @generated
 	 */
 	EList<ESMFComponent> getComponent();

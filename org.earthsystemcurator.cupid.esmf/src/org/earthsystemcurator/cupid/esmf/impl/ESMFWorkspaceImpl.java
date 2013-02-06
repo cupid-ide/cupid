@@ -25,6 +25,7 @@ import org.eclipse.emf.ecore.InternalEObject;
 
 import org.eclipse.emf.ecore.impl.EObjectImpl;
 
+import org.eclipse.emf.ecore.util.EObjectContainmentEList;
 import org.eclipse.emf.ecore.util.EObjectResolvingEList;
 import org.eclipse.emf.ecore.util.EObjectWithInverseResolvingEList;
 import org.eclipse.emf.ecore.util.InternalEList;
@@ -51,7 +52,7 @@ import org.eclipse.emf.ecore.util.InternalEList;
  */
 public class ESMFWorkspaceImpl extends EObjectImpl implements ESMFWorkspace {
 	/**
-	 * The cached value of the '{@link #getComponent() <em>Component</em>}' reference list.
+	 * The cached value of the '{@link #getComponent() <em>Component</em>}' containment reference list.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @see #getComponent()
@@ -156,7 +157,7 @@ public class ESMFWorkspaceImpl extends EObjectImpl implements ESMFWorkspace {
 	 */
 	public EList<ESMFComponent> getComponent() {
 		if (component == null) {
-			component = new EObjectResolvingEList<ESMFComponent>(ESMFComponent.class, this, ESMFPackage.ESMF_WORKSPACE__COMPONENT);
+			component = new EObjectContainmentEList<ESMFComponent>(ESMFComponent.class, this, ESMFPackage.ESMF_WORKSPACE__COMPONENT);
 		}
 		return component;
 	}
@@ -243,6 +244,20 @@ public class ESMFWorkspaceImpl extends EObjectImpl implements ESMFWorkspace {
 			clock = new EObjectResolvingEList<ESMFClock>(ESMFClock.class, this, ESMFPackage.ESMF_WORKSPACE__CLOCK);
 		}
 		return clock;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	@Override
+	public NotificationChain eInverseRemove(InternalEObject otherEnd, int featureID, NotificationChain msgs) {
+		switch (featureID) {
+			case ESMFPackage.ESMF_WORKSPACE__COMPONENT:
+				return ((InternalEList<?>)getComponent()).basicRemove(otherEnd, msgs);
+		}
+		return super.eInverseRemove(otherEnd, featureID, msgs);
 	}
 
 	/**
