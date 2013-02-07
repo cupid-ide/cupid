@@ -5,7 +5,7 @@
     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
     xmlns:esmf="http://www.earthsystemcurator.org/cupid/esmf"
     xsi:schemaLocation="http://www.earthsystemcurator.org/cupid/esmf ../../model/ESMF.ecore"
-    name="myName">
+    name="CFlowImplicit">
   <component
       xsi:type="esmf:ESMFGriddedComponent"
       name="FlowSolver"
@@ -314,5 +314,10 @@
   <component
       xsi:type="esmf:ESMFGriddedComponent"
       name="CoupledFlow"
-      component="//@component[name='FlowSolver'] //@component[name='Injector'] //@component[name='Coupler']"/>
+      component="//@component[name='FlowSolver'] //@component[name='Injector'] //@component[name='Coupler']"
+      parent="//@component[name='CFlowDriver']"/>
+  <component
+      xsi:type="esmf:ESMFDriver"
+      name="CFlowDriver"
+      component="//@component[name='CoupledFlow']"/>
 </esmf:ESMFWorkspace>

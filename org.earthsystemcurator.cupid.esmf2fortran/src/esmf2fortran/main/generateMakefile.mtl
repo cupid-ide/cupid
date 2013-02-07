@@ -1,0 +1,58 @@
+[comment encoding = UTF-8 /]
+[module generateMakefile('http://www.earthsystemcurator.org/cupid/esmf', 'http://www.eclipse.org/emf/2002/Ecore')/]
+
+[template public generateMakefile(ws : ESMFWorkspace)]	
+[comment @main /]
+[file (ws.name.normalize() + '/Makefile', false)]
+
+# Sample Makefile for Cupid-generated code
+
+ifneq ($(origin ESMFMKFILE), environment)
+$(error Environment variable ESMFMKFILE was not set.)
+endif
+
+include $(ESMFMKFILE)
+
+################################################################################
+################################################################################
+
+.SUFFIXES: .f90 .F90
+
+%.o : %.f90
+	$(ESMF_F90COMPILER) -c $(ESMF_F90COMPILEOPTS) $(ESMF_F90COMPILEPATHS) $(ESMF_F90COMPILEFREENOCPP) $<
+
+%.o : %.F90
+	$(ESMF_F90COMPILER) -c $(ESMF_F90COMPILEOPTS) $(ESMF_F90COMPILEPATHS) $(ESMF_F90COMPILEFREECPP) $(ESMF_F90COMPILECPPFLAGS) $<
+        
+
+# -----------------------------------------------------------------------------
+all: [ws.component->filter(ESMFDriver)->first().name.normalize()/]
+
+[for (driver : ESMFDriver | ws.component->filter(ESMFDriver))]
+[driver.name.normalize()/]: [driver.name.normalize()/].o [for (child : ESMFComponent | ws.component->reject(oclIsTypeOf(ESMFDriver))) separator (' ')][child.name.normalize()/]Mod.o[/for]
+	$(ESMF_F90LINKER) $(ESMF_F90LINKOPTS) $(ESMF_F90LINKPATHS) $(ESMF_F90LINKRPATHS) -o $@ $^ $(ESMF_F90ESMFLINKLIBS)
+[/for]
+
+# module dependencies:
+[for (comp : ESMFComponent | ws.component->filter(ESMFGriddedComponent))]
+[comp.name.normalize()/]Mod.o: [for (child : ESMFComponent | comp.component) separator (' ')][child.name.normalize()/]Mod.o[/for]
+[/for]
+[for (comp : ESMFComponent | ws.component->filter(ESMFDriver))]
+[comp.name.normalize()/].o: [for (child : ESMFComponent | comp.component) separator (' ')][child.name.normalize()/]Mod.o[/for]
+[/for]
+
+# -----------------------------------------------------------------------------
+# -----------------------------------------------------------------------------
+.PHONY: dust clean distclean
+dust:
+	rm -f PET*.ESMF_LogFile
+clean:
+	rm -f *.o *.mod [for (d : ESMFDriver | ws.component->filter(ESMFDriver)) separator (' ')][d.name.normalize()/][/for]
+distclean: dust clean
+	
+[/file]	
+[/template]
+
+[query public normalize(s : String) : String = 
+s.replaceAll(' ', '_') 
+/]

@@ -2,6 +2,7 @@
  */
 package org.earthsystemcurator.cupid.esmf.impl;
 
+import java.lang.reflect.InvocationTargetException;
 import java.util.Collection;
 
 import org.earthsystemcurator.cupid.esmf.ESMFComponent;
@@ -13,11 +14,14 @@ import org.earthsystemcurator.cupid.esmf.ESMFStateItem;
 import org.earthsystemcurator.cupid.esmf.ESMFWorkspace;
 
 import org.eclipse.emf.common.notify.Notification;
+import org.eclipse.emf.common.util.BasicEList;
 import org.eclipse.emf.common.notify.NotificationChain;
 
 import org.eclipse.emf.common.util.EList;
 
+import org.eclipse.emf.common.util.WrappedException;
 import org.eclipse.emf.ecore.EClass;
+import org.eclipse.emf.ecore.EOperation;
 import org.eclipse.emf.ecore.InternalEObject;
 
 import org.eclipse.emf.ecore.impl.ENotificationImpl;

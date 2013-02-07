@@ -1118,8 +1118,7 @@ public class ESMFPackageImpl extends EPackageImpl implements ESMFPackage {
 
   
 		// Update the registry and return the package
-		EPackage.Registry.INSTANCE.put(ESMFPackage.eNS_URI, theESMFPackage);	
-		
+		EPackage.Registry.INSTANCE.put(ESMFPackage.eNS_URI, theESMFPackage);
 		return theESMFPackage;
 	}
 
@@ -6264,7 +6263,7 @@ public class ESMFPackageImpl extends EPackageImpl implements ESMFPackage {
 		  (esmfNamedEntityEClass, 
 		   source, 
 		   new String[] {
-			 "nameNotEmpty", "self.name.length() > 0"
+			 "nameNotEmpty", "self.name->notEmpty() and self.name.size() > 0"
 		   });																																																																																																																																																																																																
 	}
 

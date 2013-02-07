@@ -16,18 +16,18 @@
 [/template]
 
 [template public genESMFComponent(c : ESMFComponent)]
-[file (c.workspace.name.normalize() + '/' + c.name.normalize() + '.F90', false)]
+[file (c.workspace.name.normalize() + '/' + c.name.normalize() + 'Mod.F90', false)]
 !
-! [c.name.normalize()/].F90
+! [c.name.normalize()/]Mod.F90
 ! This file was generated automatically by Cupid
 !
 [comment]! Input specification: [c.workspace.eResource()/]
 ![/comment]
-module [c.name/]
+module [c.name/]Mod
 
 	use ESMF
 	[for (childComp : ESMFComponent | c.component)]
-	use [childComp.name/], only:  [childComp.name/]_register => register_
+	use [childComp.name/]Mod, only:  [childComp.name/]_register => register_
 	[/for]
 
 	[genESMFComponentBody(c)/]
@@ -47,7 +47,7 @@ program [d.name/]
 
 	use ESMF
 	[for (childComp : ESMFComponent | d.component)]
-	use [childComp.name/], only:  [childComp.name/]_register => register_
+	use [childComp.name/]Mod, only:  [childComp.name/]_register => register_
 	[/for]
 
 	[genESMFDriverBody(d)/]
@@ -59,22 +59,37 @@ end program
 [template public genESMFDriverBody(d : ESMFDriver) ]
 implicit none
 
-[for (gridComp: ESMFGriddedComponent | d.component->filter(ESMFGriddedComponent))]
-type(ESMF_GridComp) :: [gridComp.name/]
+[for (child: ESMFGriddedComponent | d.component->filter(ESMFGriddedComponent))]
+type(ESMF_GridComp) :: [child.name/]
+type(ESMF_State) :: [child.name/]_istate
+type(ESMF_State) :: [child.name/]_ostate
 [/for]
 
-[for (cplComp: ESMFCouplerComponent | d.component->filter(ESMFCouplerComponent))]
-type(ESMF_CplComp) :: [cplComp.name/]
-[/for]
-
-[genESMFScopeDataMembers(d)/]
+type(ESMF_Clock) :: clock
+integer :: rc
 
 [genDebugInfo(d.name, '', 'driverstart')/]
 
-[for (stage : ESMFStage | d.stage) separator ('\n\n')]
-! stage [stage.name/]
-[genESMFStageAction(stage.actions)/]
+call ESMF_Initialize()
+
+[for (child :  ESMFGriddedComponent | d.component->filter(ESMFGriddedComponent))]
+[child.name/] = ESMF_GridCompCreate(name="[child.name/]", rc=rc)
+call ESMF_GridCompSetServices([child.name/], [child.name/]_register, rc=rc)	
+
+[child.name/]_istate = ESMF_StateCreate(name="[child.name/]_istate", rc=rc)
+[child.name/]_ostate = ESMF_StateCreate(name="[child.name/]_ostate", rc=rc)
+
+call ESMF_GridCompInitialize([child.name/], importState=[child.name/]_istate, exportState=[child.name/]_ostate, clock=clock, phase=1, rc=rc)
+call ESMF_GridCompRun([child.name/], importState=[child.name/]_istate, exportState=[child.name/]_ostate, clock=clock, phase=1, rc=rc)
+call ESMF_GridCompFinalize([child.name/], importState=[child.name/]_istate, exportState=[child.name/]_ostate, clock=clock, phase=1, rc=rc)  
+
+call ESMF_GridCompDestroy([child.name/], rc=rc)  
+
+call ESMF_StateDestroy([child.name/]_istate, rc=rc)
+call ESMF_StateDestroy([child.name/]_ostate, rc=rc)
 [/for]
+
+call ESMF_Finalize()
 
 [genDebugInfo(d.name, '', 'driverend')/]
 [/template]
@@ -321,7 +336,7 @@ subroutine finalize_(comp, istate, ostate, clock, rc)
 	! finalize coupler: src --> dst
 	call ESMF_CplCompFinalize([child.name/], importState=[child.srcComponent.name/]_ostate, exportState=[child.dstComponent.name/]_istate, clock=clock, phase=1, rc=rc)
 	! finalize coupler: dst --> src
-	call ESMF_CplCompFinalize([child.name/], importState=[child.dstComponent.name/]_ostate, exportState=[child.srcComponent.name/]_istate, clock=clock, phase=1, rc=rc)
+	call ESMF_CplCompFinalize([child.name/], importState=[child.dstComponent.name/]_ostate, exportState=[child.srcComponent.name/]_istate, clock=clock, phase=2, rc=rc)
 	call ESMF_CplCompDestroy([child.name/], rc=rc)   
 	[/for]
 	[for (child : ESMFGriddedComponent | c.component->filter(ESMFGriddedComponent))]
@@ -351,12 +366,12 @@ subroutine init1_(comp, istate, ostate, clock, rc)
 	type(ESMF_State) :: ostate
 	type(ESMF_Clock) :: clock
 	integer, intent(out) :: rc	
-		
-	rc = ESMF_SUCCESS
-	[genDebugInfo(c.name, 'init1_', 'enter')/]
 	
 	type(ESMF_Field) :: srcField
-	type(ESMF_Field) :: dstField
+	type(ESMF_Field) :: dstField	
+	
+	rc = ESMF_SUCCESS
+	[genDebugInfo(c.name, 'init1_', 'enter')/]	
 
 	! makes a simplifying but dangerous assumption that 
     ! all pairs of fields can share a route handle
@@ -380,12 +395,12 @@ subroutine init2_(comp, istate, ostate, clock, rc)
 	type(ESMF_State) :: ostate
 	type(ESMF_Clock) :: clock
 	integer, intent(out) :: rc	
+
+	type(ESMF_Field) :: srcField
+	type(ESMF_Field) :: dstField	
 		
 	rc = ESMF_SUCCESS
 	[genDebugInfo(c.name, 'init2_', 'enter')/]
-	
-	type(ESMF_Field) :: srcField
-	type(ESMF_Field) :: dstField
 
 	! makes a simplifying but dangerous assumption that 
     ! all pairs of fields can share a route handle
@@ -413,7 +428,10 @@ subroutine run1_(comp, istate, ostate, clock, rc)
 	type(ESMF_State) :: ostate
 	type(ESMF_Clock) :: clock
 	integer, intent(out) :: rc	
-		
+	
+	type(ESMF_Field) :: srcField
+	type(ESMF_Field) :: dstField	
+	
 	rc = ESMF_SUCCESS
 	[genDebugInfo(c.name, 'run1_', 'enter')/]
 	
@@ -439,6 +457,9 @@ subroutine run2_(comp, istate, ostate, clock, rc)
 	type(ESMF_State) :: ostate
 	type(ESMF_Clock) :: clock
 	integer, intent(out) :: rc	
+
+	type(ESMF_Field) :: srcField
+	type(ESMF_Field) :: dstField	
 		
 	rc = ESMF_SUCCESS
 	[genDebugInfo(c.name, 'run2_', 'enter')/]

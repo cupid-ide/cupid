@@ -17,6 +17,7 @@ import org.eclipse.emf.ecore.util.EObjectValidator;
 /**
  * <!-- begin-user-doc -->
  * The <b>Validator</b> for the model.
+ * extends org.eclipse.ocl.examples.xtext.oclinecore.validation.OCLinEcoreEObjectValidator
  * <!-- end-user-doc -->
  * @see org.earthsystemcurator.cupid.esmf.ESMFPackage
  * @generated
@@ -1904,7 +1905,7 @@ public class ESMFValidator extends EObjectValidator {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	protected static final String ESMF_NAMED_ENTITY__NAME_NOT_EMPTY__EEXPRESSION = "self.name.length() > 0";
+	protected static final String ESMF_NAMED_ENTITY__NAME_NOT_EMPTY__EEXPRESSION = "self.name->notEmpty() and self.name.size() > 0";
 
 	/**
 	 * Validates the nameNotEmpty constraint of '<em>Named Entity</em>'.
