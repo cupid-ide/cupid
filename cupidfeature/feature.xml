@@ -53,6 +53,7 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SO
       <import plugin="org.earthsystemcurator.cupid.esmf" version="1.0.0" match="greaterOrEqual"/>
       <import plugin="org.earthsystemcurator.cupid.sidl" version="1.0.0" match="greaterOrEqual"/>
       <import plugin="org.eclipse.ui"/>
+      <import feature="org.eclipse.ocl.examples" version="3.2.1.v20120919-0602"/>
    </requires>
 
    <plugin
