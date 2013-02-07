@@ -15,6 +15,7 @@ import org.eclipse.emf.common.notify.Notification;
 
 import org.eclipse.emf.ecore.EStructuralFeature;
 
+import org.eclipse.emf.edit.provider.ComposeableAdapterFactory;
 import org.eclipse.emf.edit.provider.IEditingDomainItemProvider;
 import org.eclipse.emf.edit.provider.IItemLabelProvider;
 import org.eclipse.emf.edit.provider.IItemPropertyDescriptor;
@@ -58,8 +59,54 @@ public class ESMFSimpleCouplerComponentItemProvider
 		if (itemPropertyDescriptors == null) {
 			super.getPropertyDescriptors(object);
 
+			addSrcComponentPropertyDescriptor(object);
+			addDstComponentPropertyDescriptor(object);
 		}
 		return itemPropertyDescriptors;
+	}
+
+	/**
+	 * This adds a property descriptor for the Src Component feature.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	protected void addSrcComponentPropertyDescriptor(Object object) {
+		itemPropertyDescriptors.add
+			(createItemPropertyDescriptor
+				(((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(),
+				 getResourceLocator(),
+				 getString("_UI_ESMFSimpleCouplerComponent_srcComponent_feature"),
+				 getString("_UI_PropertyDescriptor_description", "_UI_ESMFSimpleCouplerComponent_srcComponent_feature", "_UI_ESMFSimpleCouplerComponent_type"),
+				 ESMFPackage.Literals.ESMF_SIMPLE_COUPLER_COMPONENT__SRC_COMPONENT,
+				 true,
+				 false,
+				 true,
+				 null,
+				 null,
+				 null));
+	}
+
+	/**
+	 * This adds a property descriptor for the Dst Component feature.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	protected void addDstComponentPropertyDescriptor(Object object) {
+		itemPropertyDescriptors.add
+			(createItemPropertyDescriptor
+				(((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(),
+				 getResourceLocator(),
+				 getString("_UI_ESMFSimpleCouplerComponent_dstComponent_feature"),
+				 getString("_UI_PropertyDescriptor_description", "_UI_ESMFSimpleCouplerComponent_dstComponent_feature", "_UI_ESMFSimpleCouplerComponent_type"),
+				 ESMFPackage.Literals.ESMF_SIMPLE_COUPLER_COMPONENT__DST_COMPONENT,
+				 true,
+				 false,
+				 true,
+				 null,
+				 null,
+				 null));
 	}
 
 	/**

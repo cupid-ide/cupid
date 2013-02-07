@@ -3,8 +3,12 @@
    <description name="Cupid Eclipse Update Site" url="http://www.cc.gatech.edu/~rocky/cupid-update-site/">
       Eclipse update site for Cupid
    </description>
-   <feature url="features/cupidfeature_1.0.0.201302052123.jar" id="cupidfeature" version="1.0.0.201302052123">
-      <category name="Cupid"/>
+   <feature url="features/cupidfeature_1.0.0.201302071542.jar" id="cupidfeature" version="1.0.0.201302071542">
+      <category name="cupid"/>
    </feature>
-   <category-def name="Cupid" label="Cupid"/>
+   <category-def name="cupid" label="Cupid">
+      <description>
+         The Cupid IDE for Earth System Models
+      </description>
+   </category-def>
 </site>

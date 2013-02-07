@@ -29,7 +29,7 @@ import org.eclipse.emf.edit.provider.ViewerNotification;
  * @generated
  */
 public class ESMFFieldItemProvider
-	extends ESMFNamedEntityItemProvider
+	extends ESMFScopedItemItemProvider
 	implements
 		IEditingDomainItemProvider,
 		IStructuredItemContentProvider,
@@ -57,39 +57,15 @@ public class ESMFFieldItemProvider
 		if (itemPropertyDescriptors == null) {
 			super.getPropertyDescriptors(object);
 
-			addScopePropertyDescriptor(object);
 			addGridPropertyDescriptor(object);
 			addArrayPropertyDescriptor(object);
 			addStaggerLocPropertyDescriptor(object);
 			addArraySpecPropertyDescriptor(object);
-			addSIDLArgumentPropertyDescriptor(object);
 			addIndexPropertyDescriptor(object);
 			addTotalLWidthPropertyDescriptor(object);
 			addTotalUWidthPropertyDescriptor(object);
 		}
 		return itemPropertyDescriptors;
-	}
-
-	/**
-	 * This adds a property descriptor for the Scope feature.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	protected void addScopePropertyDescriptor(Object object) {
-		itemPropertyDescriptors.add
-			(createItemPropertyDescriptor
-				(((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(),
-				 getResourceLocator(),
-				 getString("_UI_ESMFScopedItem_scope_feature"),
-				 getString("_UI_PropertyDescriptor_description", "_UI_ESMFScopedItem_scope_feature", "_UI_ESMFScopedItem_type"),
-				 ESMFPackage.Literals.ESMF_SCOPED_ITEM__SCOPE,
-				 true,
-				 false,
-				 true,
-				 null,
-				 null,
-				 null));
 	}
 
 	/**
@@ -172,28 +148,6 @@ public class ESMFFieldItemProvider
 				 getString("_UI_ESMFField_arraySpec_feature"),
 				 getString("_UI_PropertyDescriptor_description", "_UI_ESMFField_arraySpec_feature", "_UI_ESMFField_type"),
 				 ESMFPackage.Literals.ESMF_FIELD__ARRAY_SPEC,
-				 true,
-				 false,
-				 true,
-				 null,
-				 null,
-				 null));
-	}
-
-	/**
-	 * This adds a property descriptor for the SIDL Argument feature.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	protected void addSIDLArgumentPropertyDescriptor(Object object) {
-		itemPropertyDescriptors.add
-			(createItemPropertyDescriptor
-				(((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(),
-				 getResourceLocator(),
-				 getString("_UI_ESMFField_SIDLArgument_feature"),
-				 getString("_UI_PropertyDescriptor_description", "_UI_ESMFField_SIDLArgument_feature", "_UI_ESMFField_type"),
-				 ESMFPackage.Literals.ESMF_FIELD__SIDL_ARGUMENT,
 				 true,
 				 false,
 				 true,

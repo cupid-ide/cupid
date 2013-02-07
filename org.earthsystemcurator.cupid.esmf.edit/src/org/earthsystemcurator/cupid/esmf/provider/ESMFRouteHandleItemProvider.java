@@ -27,7 +27,7 @@ import org.eclipse.emf.edit.provider.ITreeItemContentProvider;
  * @generated
  */
 public class ESMFRouteHandleItemProvider
-	extends ESMFNamedEntityItemProvider
+	extends ESMFScopedItemItemProvider
 	implements
 		IEditingDomainItemProvider,
 		IStructuredItemContentProvider,
@@ -55,31 +55,8 @@ public class ESMFRouteHandleItemProvider
 		if (itemPropertyDescriptors == null) {
 			super.getPropertyDescriptors(object);
 
-			addScopePropertyDescriptor(object);
 		}
 		return itemPropertyDescriptors;
-	}
-
-	/**
-	 * This adds a property descriptor for the Scope feature.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	protected void addScopePropertyDescriptor(Object object) {
-		itemPropertyDescriptors.add
-			(createItemPropertyDescriptor
-				(((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(),
-				 getResourceLocator(),
-				 getString("_UI_ESMFScopedItem_scope_feature"),
-				 getString("_UI_PropertyDescriptor_description", "_UI_ESMFScopedItem_scope_feature", "_UI_ESMFScopedItem_type"),
-				 ESMFPackage.Literals.ESMF_SCOPED_ITEM__SCOPE,
-				 true,
-				 false,
-				 true,
-				 null,
-				 null,
-				 null));
 	}
 
 	/**

@@ -72,29 +72,6 @@ public class ESMFItemProviderAdapterFactory extends ESMFAdapterFactory implement
 	}
 
 	/**
-	 * This keeps track of the one adapter used for all {@link org.earthsystemcurator.cupid.esmf.ESMFNamedEntity} instances.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	protected ESMFNamedEntityItemProvider esmfNamedEntityItemProvider;
-
-	/**
-	 * This creates an adapter for a {@link org.earthsystemcurator.cupid.esmf.ESMFNamedEntity}.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	@Override
-	public Adapter createESMFNamedEntityAdapter() {
-		if (esmfNamedEntityItemProvider == null) {
-			esmfNamedEntityItemProvider = new ESMFNamedEntityItemProvider(this);
-		}
-
-		return esmfNamedEntityItemProvider;
-	}
-
-	/**
 	 * This keeps track of the one adapter used for all {@link org.earthsystemcurator.cupid.esmf.ESMFGriddedComponent} instances.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -2769,7 +2746,7 @@ public class ESMFItemProviderAdapterFactory extends ESMFAdapterFactory implement
 	 * @generated
 	 */
 	public void dispose() {
-		if (esmfNamedEntityItemProvider != null) esmfNamedEntityItemProvider.dispose();
+		if (esmfWorkspaceItemProvider != null) esmfWorkspaceItemProvider.dispose();
 		if (esmfGriddedComponentItemProvider != null) esmfGriddedComponentItemProvider.dispose();
 		if (esmfCouplerComponentItemProvider != null) esmfCouplerComponentItemProvider.dispose();
 		if (esmfSimpleCouplerComponentItemProvider != null) esmfSimpleCouplerComponentItemProvider.dispose();
@@ -2818,7 +2795,6 @@ public class ESMFItemProviderAdapterFactory extends ESMFAdapterFactory implement
 		if (esmfGridItemProvider != null) esmfGridItemProvider.dispose();
 		if (extentItemProvider != null) extentItemProvider.dispose();
 		if (esmfDistGridItemProvider != null) esmfDistGridItemProvider.dispose();
-		if (esmfWorkspaceItemProvider != null) esmfWorkspaceItemProvider.dispose();
 		if (esmfVirtualMachineItemProvider != null) esmfVirtualMachineItemProvider.dispose();
 		if (esmfPersistentExecutionThreadItemProvider != null) esmfPersistentExecutionThreadItemProvider.dispose();
 		if (esmfdeLayoutItemProvider != null) esmfdeLayoutItemProvider.dispose();

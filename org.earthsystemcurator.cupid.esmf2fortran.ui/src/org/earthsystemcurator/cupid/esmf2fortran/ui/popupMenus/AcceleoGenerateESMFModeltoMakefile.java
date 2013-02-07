@@ -30,7 +30,7 @@ import org.eclipse.jface.viewers.ISelection;
 import org.eclipse.jface.viewers.IStructuredSelection;
 import org.earthsystemcurator.cupid.esmf2fortran.ui.Activator;
 import org.earthsystemcurator.cupid.esmf2fortran.ui.common.GenerateAll;
-import org.earthsystemcurator.cupid.esmf2fortran.ui.common.GenerateImplicit;
+import org.earthsystemcurator.cupid.esmf2fortran.ui.common.GenerateMakefile;
 import org.eclipse.ui.IActionDelegate;
 import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.actions.ActionDelegate;
@@ -38,7 +38,7 @@ import org.eclipse.ui.actions.ActionDelegate;
 /**
  * ESMF Model to Fortran code generation.
  */
-public class AcceleoGenerateESMFModeltoFortranAction extends ActionDelegate implements IActionDelegate {
+public class AcceleoGenerateESMFModeltoMakefile extends ActionDelegate implements IActionDelegate {
 	
 	/**
 	 * Selected model files.
@@ -73,7 +73,7 @@ public class AcceleoGenerateESMFModeltoFortranAction extends ActionDelegate impl
 							URI modelURI = URI.createPlatformResourceURI(model.getFullPath().toString(), true);
 							try {
 								IContainer target = model.getProject().getFolder("src-gen");
-								GenerateImplicit generator = new GenerateImplicit(modelURI, target, getArguments());
+								GenerateMakefile generator = new GenerateMakefile(modelURI, target, getArguments());
 								generator.doGenerate(monitor);
 							} catch (IOException e) {
 								IStatus status = new Status(IStatus.ERROR, Activator.PLUGIN_ID, e.getMessage(), e);

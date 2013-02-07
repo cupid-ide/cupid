@@ -63,8 +63,6 @@ public class ESMFComponentItemProvider
 			addExportStatePropertyDescriptor(object);
 			addComponentPropertyDescriptor(object);
 			addParentPropertyDescriptor(object);
-			addModelClockPropertyDescriptor(object);
-			addSIDLClassPropertyDescriptor(object);
 		}
 		return itemPropertyDescriptors;
 	}
@@ -158,50 +156,6 @@ public class ESMFComponentItemProvider
 	}
 
 	/**
-	 * This adds a property descriptor for the Model Clock feature.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	protected void addModelClockPropertyDescriptor(Object object) {
-		itemPropertyDescriptors.add
-			(createItemPropertyDescriptor
-				(((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(),
-				 getResourceLocator(),
-				 getString("_UI_ESMFComponent_modelClock_feature"),
-				 getString("_UI_PropertyDescriptor_description", "_UI_ESMFComponent_modelClock_feature", "_UI_ESMFComponent_type"),
-				 ESMFPackage.Literals.ESMF_COMPONENT__MODEL_CLOCK,
-				 true,
-				 false,
-				 true,
-				 null,
-				 null,
-				 null));
-	}
-
-	/**
-	 * This adds a property descriptor for the SIDL Class feature.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	protected void addSIDLClassPropertyDescriptor(Object object) {
-		itemPropertyDescriptors.add
-			(createItemPropertyDescriptor
-				(((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(),
-				 getResourceLocator(),
-				 getString("_UI_ESMFComponent_SIDLClass_feature"),
-				 getString("_UI_PropertyDescriptor_description", "_UI_ESMFComponent_SIDLClass_feature", "_UI_ESMFComponent_type"),
-				 ESMFPackage.Literals.ESMF_COMPONENT__SIDL_CLASS,
-				 true,
-				 false,
-				 true,
-				 null,
-				 null,
-				 null));
-	}
-
-	/**
 	 * This specifies how to implement {@link #getChildren} and is used to deduce an appropriate feature for an
 	 * {@link org.eclipse.emf.edit.command.AddCommand}, {@link org.eclipse.emf.edit.command.RemoveCommand} or
 	 * {@link org.eclipse.emf.edit.command.MoveCommand} in {@link #createCommand}.
@@ -214,11 +168,6 @@ public class ESMFComponentItemProvider
 		if (childrenFeatures == null) {
 			super.getChildrenFeatures(object);
 			childrenFeatures.add(ESMFPackage.Literals.ESMF_SCOPE__ITEM);
-			childrenFeatures.add(ESMFPackage.Literals.ESMF_COMPONENT__METHOD);
-			childrenFeatures.add(ESMFPackage.Literals.ESMF_COMPONENT__REGISTER_METHOD);
-			childrenFeatures.add(ESMFPackage.Literals.ESMF_COMPONENT__CLOCK);
-			childrenFeatures.add(ESMFPackage.Literals.ESMF_COMPONENT__TIME);
-			childrenFeatures.add(ESMFPackage.Literals.ESMF_COMPONENT__TIME_INTERVAL);
 			childrenFeatures.add(ESMFPackage.Literals.ESMF_COMPONENT__STAGE);
 		}
 		return childrenFeatures;
@@ -264,11 +213,6 @@ public class ESMFComponentItemProvider
 
 		switch (notification.getFeatureID(ESMFComponent.class)) {
 			case ESMFPackage.ESMF_COMPONENT__ITEM:
-			case ESMFPackage.ESMF_COMPONENT__METHOD:
-			case ESMFPackage.ESMF_COMPONENT__REGISTER_METHOD:
-			case ESMFPackage.ESMF_COMPONENT__CLOCK:
-			case ESMFPackage.ESMF_COMPONENT__TIME:
-			case ESMFPackage.ESMF_COMPONENT__TIME_INTERVAL:
 			case ESMFPackage.ESMF_COMPONENT__STAGE:
 				fireNotifyChanged(new ViewerNotification(notification, notification.getNotifier(), true, false));
 				return;
@@ -321,61 +265,6 @@ public class ESMFComponentItemProvider
 			(createChildParameter
 				(ESMFPackage.Literals.ESMF_SCOPE__ITEM,
 				 ESMFFactory.eINSTANCE.createESMFDistGrid()));
-
-		newChildDescriptors.add
-			(createChildParameter
-				(ESMFPackage.Literals.ESMF_COMPONENT__METHOD,
-				 ESMFFactory.eINSTANCE.createESMFMethod()));
-
-		newChildDescriptors.add
-			(createChildParameter
-				(ESMFPackage.Literals.ESMF_COMPONENT__METHOD,
-				 ESMFFactory.eINSTANCE.createESMFInitMethod()));
-
-		newChildDescriptors.add
-			(createChildParameter
-				(ESMFPackage.Literals.ESMF_COMPONENT__METHOD,
-				 ESMFFactory.eINSTANCE.createESMFPreInitMethodSIDL()));
-
-		newChildDescriptors.add
-			(createChildParameter
-				(ESMFPackage.Literals.ESMF_COMPONENT__METHOD,
-				 ESMFFactory.eINSTANCE.createESMFPostInitMethodSIDL()));
-
-		newChildDescriptors.add
-			(createChildParameter
-				(ESMFPackage.Literals.ESMF_COMPONENT__METHOD,
-				 ESMFFactory.eINSTANCE.createESMFRunMethod()));
-
-		newChildDescriptors.add
-			(createChildParameter
-				(ESMFPackage.Literals.ESMF_COMPONENT__METHOD,
-				 ESMFFactory.eINSTANCE.createESMFFinalizeMethod()));
-
-		newChildDescriptors.add
-			(createChildParameter
-				(ESMFPackage.Literals.ESMF_COMPONENT__METHOD,
-				 ESMFFactory.eINSTANCE.createESMFFinalizeMethodSIDL()));
-
-		newChildDescriptors.add
-			(createChildParameter
-				(ESMFPackage.Literals.ESMF_COMPONENT__REGISTER_METHOD,
-				 ESMFFactory.eINSTANCE.createESMFRegisterMethod()));
-
-		newChildDescriptors.add
-			(createChildParameter
-				(ESMFPackage.Literals.ESMF_COMPONENT__CLOCK,
-				 ESMFFactory.eINSTANCE.createESMFClock()));
-
-		newChildDescriptors.add
-			(createChildParameter
-				(ESMFPackage.Literals.ESMF_COMPONENT__TIME,
-				 ESMFFactory.eINSTANCE.createESMFTime()));
-
-		newChildDescriptors.add
-			(createChildParameter
-				(ESMFPackage.Literals.ESMF_COMPONENT__TIME_INTERVAL,
-				 ESMFFactory.eINSTANCE.createESMFTimeInterval()));
 
 		newChildDescriptors.add
 			(createChildParameter

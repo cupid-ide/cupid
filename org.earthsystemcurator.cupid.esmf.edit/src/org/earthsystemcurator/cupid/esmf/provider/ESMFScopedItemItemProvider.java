@@ -8,6 +8,7 @@ import java.util.List;
 
 import org.earthsystemcurator.cupid.esmf.ESMFPackage;
 
+import org.earthsystemcurator.cupid.esmf.ESMFScopedItem;
 import org.eclipse.emf.common.notify.AdapterFactory;
 import org.eclipse.emf.common.notify.Notification;
 
@@ -29,7 +30,7 @@ import org.eclipse.emf.edit.provider.ItemProviderAdapter;
  * @generated
  */
 public class ESMFScopedItemItemProvider
-	extends ItemProviderAdapter
+	extends ESMFNamedEntityItemProvider
 	implements
 		IEditingDomainItemProvider,
 		IStructuredItemContentProvider,
@@ -103,7 +104,10 @@ public class ESMFScopedItemItemProvider
 	 */
 	@Override
 	public String getText(Object object) {
-		return getString("_UI_ESMFScopedItem_type");
+		String label = ((ESMFScopedItem)object).getName();
+		return label == null || label.length() == 0 ?
+			getString("_UI_ESMFScopedItem_type") :
+			getString("_UI_ESMFScopedItem_type") + " " + label;
 	}
 
 	/**
@@ -129,17 +133,6 @@ public class ESMFScopedItemItemProvider
 	@Override
 	protected void collectNewChildDescriptors(Collection<Object> newChildDescriptors, Object object) {
 		super.collectNewChildDescriptors(newChildDescriptors, object);
-	}
-
-	/**
-	 * Return the resource locator for this item provider's resources.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	@Override
-	public ResourceLocator getResourceLocator() {
-		return ESMFEditPlugin.INSTANCE;
 	}
 
 }

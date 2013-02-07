@@ -3,6 +3,7 @@
       id="cupidfeature"
       label="Cupid"
       version="1.0.0.qualifier">
+   <install-handler handler=""/>
 
    <description url="http://www.earthsystemcog.org/projects/cupid">
       The Cupid IDE and Code Generation tool for Earth System Models
@@ -41,6 +42,17 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SO
       <import plugin="org.eclipse.emf.ecore.xmi"/>
       <import plugin="org.eclipse.emf.edit.ui"/>
       <import plugin="org.eclipse.ui.ide"/>
+      <import plugin="org.eclipse.ocl.examples.xtext.oclinecore" version="3.2.0" match="greaterOrEqual"/>
+      <import plugin="org.eclipse.ocl"/>
+      <import plugin="org.eclipse.ocl.ecore"/>
+      <import plugin="org.eclipse.acceleo.common" version="3.2.0" match="greaterOrEqual"/>
+      <import plugin="org.eclipse.acceleo.model" version="3.2.0" match="greaterOrEqual"/>
+      <import plugin="org.eclipse.acceleo.profiler" version="3.2.0" match="greaterOrEqual"/>
+      <import plugin="org.eclipse.acceleo.engine" version="3.2.0" match="greaterOrEqual"/>
+      <import plugin="com.google.guava" version="10.0.1" match="greaterOrEqual"/>
+      <import plugin="org.earthsystemcurator.cupid.esmf" version="1.0.0" match="greaterOrEqual"/>
+      <import plugin="org.earthsystemcurator.cupid.sidl" version="1.0.0" match="greaterOrEqual"/>
+      <import plugin="org.eclipse.ui"/>
    </requires>
 
    <plugin
@@ -73,6 +85,20 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SO
 
    <plugin
          id="org.earthsystemcurator.cupid.sidl.edit"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"
+         unpack="false"/>
+
+   <plugin
+         id="org.earthsystemcurator.cupid.esmf2fortran"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"
+         unpack="false"/>
+
+   <plugin
+         id="org.earthsystemcurator.cupid.esmf2fortran.ui"
          download-size="0"
          install-size="0"
          version="0.0.0"
