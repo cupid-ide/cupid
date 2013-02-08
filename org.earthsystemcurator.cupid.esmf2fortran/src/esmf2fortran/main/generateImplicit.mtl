@@ -1,5 +1,5 @@
 [comment encoding = UTF-8 /]
-[module generateImplict('http://www.earthsystemcurator.org/cupid/esmf', 'http://www.earthsystemcurator.org/cupid/sidl', 'http://www.eclipse.org/emf/2002/Ecore')]
+[module generateImplicit('http://www.earthsystemcurator.org/cupid/esmf', 'http://www.earthsystemcurator.org/cupid/sidl', 'http://www.eclipse.org/emf/2002/Ecore')]
 
 
 [template public generateElement(ws : ESMFWorkspace)]
