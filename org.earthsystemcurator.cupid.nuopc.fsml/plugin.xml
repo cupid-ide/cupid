@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="3.0"?>
+
+<!--
+-->
+
+<plugin>
+
+   <extension point="org.eclipse.emf.ecore.generated_package">
+      <package
+            uri="http://www.earthsystemcurator.org/nuopc"
+            class="org.earthsystemcurator.cupid.nuopc.fsml.nuopc.NUOPCPackage"
+            genModel="model/nuopc.genmodel"/>
+   </extension>
+   <extension
+         point="org.eclipse.ui.commands">
+      <category
+            id="org.earthsystemcurator.cupid.nuopc.fsml.commands.category"
+            name="Sample Category">
+      </category>
+      <command
+            categoryId="org.earthsystemcurator.cupid.nuopc.fsml.commands.category"
+            id="org.earthsystemcurator.cupid.nuopc.fsml.commands.sampleCommand"
+            name="Sample Command">
+      </command>
+   </extension>
+   <extension
+         point="org.eclipse.ui.handlers">
+      <handler
+            class="org.earthsystemcurator.cupid.nuopc.fsml.handlers.MappingTestHandler"
+            commandId="org.earthsystemcurator.cupid.nuopc.fsml.commands.sampleCommand">
+      </handler>
+   </extension>
+   <extension
+         point="org.eclipse.ui.bindings">
+      <key
+            commandId="org.earthsystemcurator.cupid.nuopc.fsml.commands.sampleCommand"
+            contextId="org.eclipse.ui.contexts.window"
+            schemeId="org.eclipse.ui.defaultAcceleratorConfiguration"
+            sequence="M1+6">
+      </key>
+   </extension>
+   <extension
+         point="org.eclipse.ui.menus">
+      <menuContribution
+            locationURI="menu:org.eclipse.ui.main.menu?after=additions">
+         <menu
+               id="org.earthsystemcurator.cupid.nuopc.fsml.menus.sampleMenu"
+               label="Sample Menu"
+               mnemonic="M">
+            <command
+                  commandId="org.earthsystemcurator.cupid.nuopc.fsml.commands.sampleCommand"
+                  id="org.earthsystemcurator.cupid.nuopc.fsml.menus.sampleCommand"
+                  mnemonic="S">
+            </command>
+         </menu>
+      </menuContribution>
+      <menuContribution
+            locationURI="toolbar:org.eclipse.ui.main.toolbar?after=additions">
+         <toolbar
+               id="org.earthsystemcurator.cupid.nuopc.fsml.toolbars.sampleToolbar">
+            <command
+                  commandId="org.earthsystemcurator.cupid.nuopc.fsml.commands.sampleCommand"
+                  icon="icons/sample.gif"
+                  id="org.earthsystemcurator.cupid.nuopc.fsml.toolbars.sampleCommand"
+                  tooltip="Say hello world">
+            </command>
+         </toolbar>
+      </menuContribution>
+   </extension>
+
+</plugin>

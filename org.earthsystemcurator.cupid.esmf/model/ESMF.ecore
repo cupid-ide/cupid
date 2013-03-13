@@ -43,6 +43,12 @@
   <eClassifiers xsi:type="ecore:EClass" name="ESMFGriddedComponent" eSuperTypes="#//ESMFComponent"/>
   <eClassifiers xsi:type="ecore:EClass" name="ESMFCouplerComponent" eSuperTypes="#//ESMFComponent"/>
   <eClassifiers xsi:type="ecore:EClass" name="ESMFSimpleCouplerComponent" eSuperTypes="#//ESMFCouplerComponent">
+    <eAnnotations source="http://www.eclipse.org/emf/2002/Ecore">
+      <details key="constraints" value="commonSrcAndDst"/>
+    </eAnnotations>
+    <eAnnotations source="http://www.eclipse.org/emf/2002/Ecore/OCL/Pivot">
+      <details key="commonSrcAndDst" value="self.fieldConnection->forAll(srcField.scope = self.srcComponent and dstField.scope = self.dstComponent)"/>
+    </eAnnotations>
     <eStructuralFeatures xsi:type="ecore:EReference" name="fieldConnection" upperBound="-1"
         eType="#//ESMFFieldConnection" containment="true" eOpposite="#//ESMFFieldConnection/component"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="srcComponent" lowerBound="1"
@@ -215,7 +221,7 @@
         containment="true"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="component" eType="#//ESMFComponent"/>
   </eClassifiers>
-  <eClassifiers xsi:type="ecore:EClass" name="ESMFState" eSuperTypes="#//ESMFStateItem #//ESMFScopedItem">
+  <eClassifiers xsi:type="ecore:EClass" name="ESMFState" eSuperTypes="#//ESMFStateItem">
     <eOperations name="add">
       <eAnnotations source="http://www.earthsystemcurator.org/metapattern/apimethod">
         <details key="name" value="ESMF_StateAdd"/>
@@ -231,7 +237,7 @@
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="ESMFStateItem" abstract="true" interface="true"
       eSuperTypes="#//ESMFScopedItem"/>
-  <eClassifiers xsi:type="ecore:EClass" name="ESMFField" eSuperTypes="#//ESMFStateItem #//ESMFScopedItem">
+  <eClassifiers xsi:type="ecore:EClass" name="ESMFField" eSuperTypes="#//ESMFStateItem">
     <eStructuralFeatures xsi:type="ecore:EReference" name="grid" lowerBound="1" eType="#//ESMFGrid"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="array" eType="#//ESMFArray"/>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="staggerLoc" eType="#//ESMFStaggerLoc"/>
@@ -250,7 +256,7 @@
     <eStructuralFeatures xsi:type="ecore:EReference" name="component" lowerBound="1"
         eType="#//ESMFSimpleCouplerComponent" eOpposite="#//ESMFSimpleCouplerComponent/fieldConnection"/>
   </eClassifiers>
-  <eClassifiers xsi:type="ecore:EClass" name="ESMFArray" eSuperTypes="#//ESMFStateItem #//ESMFScopedItem">
+  <eClassifiers xsi:type="ecore:EClass" name="ESMFArray" eSuperTypes="#//ESMFStateItem">
     <eStructuralFeatures xsi:type="ecore:EReference" name="component" lowerBound="1"
         eType="#//ESMFComponent"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="arraySpec" lowerBound="1"

@@ -212,11 +212,7 @@ end subroutine register_
 
 [template public genESMFInitMethod(c : ESMFGriddedComponent)]
 subroutine init_(comp, istate, ostate, clock, rc)	
-	[if (c.oclIsTypeOf(ESMFGriddedComponent))]
 	type(ESMF_GridComp) :: comp
-	[else]
-	type(ESMF_CplComp) :: comp
-	[/if]
 	type(ESMF_State) :: istate
 	type(ESMF_State) :: ostate
 	type(ESMF_Clock) :: clock
