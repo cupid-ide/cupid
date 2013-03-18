@@ -20,6 +20,13 @@ module ATM
   contains
   !-----------------------------------------------------------------------------
 
+  ! @SetServices
+  ! from Module mod, Subroutine sub
+  ! where m.containsSubroutine(sub)
+  !     and sub.hasParameter(1, 'ESMF_GridComp')
+  !     and sub.hasParameter(2, 'integer')
+  !     and sub.hasCall('ESMF_GridCompSetEntryPoint')
+  ! select sub
   subroutine SetServices(gcomp, rc)
     type(ESMF_GridComp)  :: gcomp
     integer, intent(out) :: rc

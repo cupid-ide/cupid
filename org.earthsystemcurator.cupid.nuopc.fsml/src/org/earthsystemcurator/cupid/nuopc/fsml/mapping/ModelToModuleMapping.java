@@ -5,6 +5,8 @@ import java.io.StringReader;
 import org.earthsystemcurator.cupid.nuopc.fsml.nuopc.Model;
 import org.earthsystemcurator.cupid.nuopc.fsml.nuopc.ModelDefinesSetServices;
 import org.earthsystemcurator.cupid.nuopc.fsml.nuopc.NUOPCFactory;
+import org.earthsystemcurator.cupid.nuopc.fsml.util.CodeExtraction;
+import org.eclipse.photran.core.IFortranAST;
 import org.eclipse.photran.internal.core.FortranAST;
 import org.eclipse.photran.internal.core.lexer.ASTLexerFactory;
 import org.eclipse.photran.internal.core.lexer.IAccumulatingLexer;
@@ -14,15 +16,19 @@ import org.eclipse.photran.internal.core.parser.ASTModuleNode;
 import org.eclipse.photran.internal.core.parser.ASTModuleStmtNode;
 import org.eclipse.photran.internal.core.parser.ASTSubroutineSubprogramNode;
 import org.eclipse.photran.internal.core.parser.ASTUseStmtNode;
+import org.eclipse.photran.internal.core.parser.IBodyConstruct;
+import org.eclipse.photran.internal.core.parser.IModuleBodyConstruct;
 import org.eclipse.photran.internal.core.parser.IProgramUnit;
 import org.eclipse.photran.internal.core.parser.Parser;
+import org.eclipse.photran.internal.core.reindenter.Reindenter;
+import org.eclipse.photran.internal.core.reindenter.Reindenter.Strategy;
 import org.eclipse.rephraserengine.core.vpg.refactoring.VPGRefactoring;
 
 @SuppressWarnings("restriction")
 public class ModelToModuleMapping extends Mapping<Model, ASTModuleNode> {
 	
-	public ModelToModuleMapping(Model m, ASTModuleNode astModuleNode) {
-		super(m, astModuleNode);
+	public ModelToModuleMapping(Model m, ASTModuleNode astModuleNode, IFortranAST ast) {
+		super(m, astModuleNode, ast);
 	}
 
 	@Override
@@ -53,9 +59,11 @@ public class ModelToModuleMapping extends Mapping<Model, ASTModuleNode> {
 	}
 
 	public void forwardUsesAllImports() {
-		ensureUses(astElem, "NUOPC_Model");
-		ensureUses(astElem, "NUOPC");
-		ensureUses(astElem, "ESMF");
+		if (modelElem.isUsesAllImports()) {
+			ensureUses(astElem, "NUOPC_Model");
+			ensureUses(astElem, "NUOPC");
+			ensureUses(astElem, "ESMF");
+		}
 	}
 	
 	public void ensureUses(ASTModuleNode module, String moduleToUse) {		
@@ -63,15 +71,24 @@ public class ModelToModuleMapping extends Mapping<Model, ASTModuleNode> {
 			if (usn.getName().getText().equalsIgnoreCase(moduleToUse)) return;
 		}
 		
+		//create use statement node
+		ASTUseStmtNode usn = (ASTUseStmtNode) CodeExtraction.parseLiteralStatement("use " + moduleToUse + "\n");
 		
-		//ASTUseStmtNode usn = new ASTUseStmtNode();
-		//usn.setName(new Token(null, moduleToUse));
-		//module.getModuleBody().add(0, usn);
+		//are there any existing use statements?
+		ASTUseStmtNode last = module.getModuleBody().findLast(ASTUseStmtNode.class);
+		
+		if (last != null) {
+			module.getModuleBody().insertAfter(last, usn);
+		}
+		else {
+			module.getModuleBody().add(0, usn);	
+		}
+		Reindenter.reindent(usn, ast, Strategy.REINDENT_EACH_LINE);
 	}
 	
 	
 	public ModelDefinesSetServices reverseDefinesSetServices() {
-		ModelDefinesSetServicesToSubroutineMapping map = new ModelDefinesSetServicesToSubroutineMapping(null, astElem);
+		ModelDefinesSetServicesToSubroutineMapping map = new ModelDefinesSetServicesToSubroutineMapping(null, astElem, ast);
 		return map.reverse();
 	}
 
@@ -80,7 +97,7 @@ public class ModelToModuleMapping extends Mapping<Model, ASTModuleNode> {
 		if (modelElem != null) {
 			
 			ModelDefinesSetServicesToSubroutineMapping map = 
-					new ModelDefinesSetServicesToSubroutineMapping(modelElem.getDefinesSetServices(), astElem);
+					new ModelDefinesSetServicesToSubroutineMapping(modelElem.getDefinesSetServices(), astElem, ast);
 			
 			map.forward();
 			//ModelDefinesSetServices mdss = null;
@@ -116,11 +133,9 @@ public class ModelToModuleMapping extends Mapping<Model, ASTModuleNode> {
 	
 	public void forwardName() {
 		
-		//FortranResourceRefactoring.
-		
 		if (astElem == null) {
 			//astElem = new ASTModuleNode();
-			astElem = (ASTModuleNode) parseLiteralProgramUnit("module test\nimplicit none\ncontains\nsubroutine dummy()\nend subroutine\nend module");
+			astElem = (ASTModuleNode) CodeExtraction.parseLiteralProgramUnit("module test\nimplicit none\ncontains\nsubroutine dummy()\nend subroutine\nend module");
 		}	
 		
 		if (astElem.getModuleStmt() == null)
@@ -129,26 +144,9 @@ public class ModelToModuleMapping extends Mapping<Model, ASTModuleNode> {
 		if (astElem.getModuleStmt().getModuleName() == null)
 			astElem.getModuleStmt().setModuleName(new ASTModuleNameNode());
 		
-		astElem.getModuleStmt().getModuleName().setModuleName(new Token(null, modelElem.getName()));
+		astElem.getModuleStmt().getModuleName().getModuleName().setText(modelElem.getName());
 		
-	}
-
-	protected static IProgramUnit parseLiteralProgramUnit(String string)
-    {
-        try
-        {
-            IAccumulatingLexer lexer = new ASTLexerFactory().createLexer(
-                new StringReader(string), null, "(none)");
-            Parser parser = new Parser();
-
-            FortranAST ast = new FortranAST(null, parser.parse(lexer), lexer.getTokenList());
-            return ast.getRoot().getProgramUnitList().get(0);
-        }
-        catch (Exception e)
-        {
-            throw new Error(e);
-        }
-    }
+	}	
 	
 	@Override
 	public ASTModuleNode forward() {

@@ -16,6 +16,11 @@ Require-Bundle: org.eclipse.core.runtime,
  org.eclipse.photran.core;bundle-version="8.0.0",
  org.eclipse.rephraserengine.core;bundle-version="8.0.0",
  org.eclipse.ui,
- org.eclipse.core.resources;bundle-version="3.8.1"
+ org.eclipse.core.resources;bundle-version="3.8.1",
+ org.eclipse.ltk.core.refactoring;bundle-version="3.6.0",
+ org.eclipse.text;bundle-version="3.5.200",
+ org.eclipse.jqvt;bundle-version="2.0.0",
+ org.eclipse.jqvt.runtime;bundle-version="2.0.0",
+ org.eclipse.jqvt.ui;bundle-version="2.0.0"
 Bundle-ActivationPolicy: lazy
 Import-Package: org.eclipse.emf.ecore.xmi.impl

@@ -1,0 +1,218 @@
+package org.earthsystemcurator.cupid.nuopc.fsml.qvt;
+
+import org.earthsystemcurator.cupid.nuopc.fsml.nuopc.*;
+//import org.eclipse.photran.internal.core.parser.ASTModuleNode;
+import org.eclipse.photran.internal.core.parser.*;
+import org.eclipse.photran.internal.core.lexer.Token;
+  
+transformation nuopc(source : org.eclipse.photran.internal.core.parser, target : org.earthsystemcurator.cupid.nuopc.fsml.nuopc) {
+ 
+ 	top relation Module2Model {
+ 		 	
+ 		//varName : String;	
+ 		
+ 		enforce domain source srcModule : ASTModuleNode {
+ 			moduleStmt = ms : ASTModuleStmtNode {
+ 				moduleName = modName : ASTModuleNameNode {
+ 					moduleName = modNameToken : Token {
+ 						text = modNameText : String {}
+ 					}
+ 				}		
+ 			}
+ 		}
+ 	 
+ 	 	enforce domain target tgtModel : Model {
+ 	  	 	name = modNameText;
+ 	  	 	DefinesSetServices = dss : ModelDefinesSetServices {};
+ 	 	};
+ 	 		
+ 	 	where {
+ 	 		Module2DefinesSetServices(srcModule, dss);
+ 	 	}
+ 	}
+ 
+ 	relation Module2DefinesSetServices {
+ 		
+ 		enforce domain source srcModule : ASTModuleNode {
+ 			moduleBody = mb : ASTSubroutineSubprogramNode {
+ 				subroutineStmt = ss : ASTSubroutineStmtNode {
+ 					subroutineName = sn : ASTSubroutineNameNode {
+ 						subroutineName = snToken : Token {
+ 							text = snText : String {}
+ 						}
+ 					}
+ 					//SubroutinePars = sp : ASTSubroutineParNode {}
+ 				}
+ 			}
+ 		}
+ 		 
+ 		enforce domain target tgtDSS : ModelDefinesSetServices {
+ 			callsGenericSetServices = false; 
+ 		}
+ 		
+ 		when { 			
+ 			snText.equalsIgnoreCase("SetServices");
+ 			
+ 		}
+ 		
+ 	}
+ 
+ 	/*
+	top relation ArrowSource2ArrowSource { 
+		
+		enforce domain source sourceArrow : Shapes::Arrow { 
+			source = sourceArrowSource : Shapes::Shape { 				
+			} 
+		};
+		
+		enforce domain target targetArrow : Shapes::Arrow {
+			source = targetArrowSource : Shapes::Shape { 
+			}
+		}; 
+		
+		when {
+			Source2Target(sourceArrow, targetArrow);
+			Source2Target(sourceArrowSource, targetArrowSource);
+		}   
+		 
+	}
+	
+	top relation ArrowTarget2ArrowTarget {
+		
+		enforce domain source sourceArrow : Shapes::Arrow {
+			target = sourceArrowTarget : Shapes::Shape {
+			}
+		};
+		
+		enforce domain target targetArrow : Shapes::Arrow {
+			target = targetArrowTarget : Shapes::Shape {
+			}
+		};
+		
+		when {
+			Source2Target(sourceArrow, targetArrow);
+			Source2Target(sourceArrowTarget, targetArrowTarget);
+		}
+		
+	}
+	
+	top relation ModelElementName2ModelElementName {
+		
+		varName : String;
+		
+		enforce domain source sourceModelElement : Shapes::ModelElement {
+			name = varName
+		};
+		
+		enforce domain target targetModelElement : Shapes::ModelElement {
+			name = varName
+		}; 
+		
+		when { 
+			Source2Target(sourceModelElement, targetModelElement);
+		}
+		
+	} 
+	
+	top relation ModelElementblock2ModelElementblock {
+		
+		enforce domain source sourceModelElement : Shapes::ModelElement {
+			block = sourceblock : Shapes::Block {
+			}
+		};
+				
+		
+		enforce domain target targetModelElement : Shapes::ModelElement {
+			block = targetblock : Shapes::Block {
+			}
+		};
+		
+		when { 
+			Source2Target(sourceModelElement, targetModelElement);
+			Source2Target(sourceblock, targetblock);
+		}
+		
+	}
+	
+	top relation Source2Target {
+		
+		enforce domain source s : Shapes::ModelElement {
+		};
+		
+		enforce domain target t : Shapes::ModelElement {
+		};
+		
+		where {
+			MapRootBlock(s, t) || MapBlock(s, t) || MapCircle(s, t) || MapTriangle(s, t) || MapSquare(s, t) || MapArrow(s, t);
+		} 
+		     
+	} 
+	
+	relation MapRootBlock {
+				
+		
+		enforce domain source s : Shapes::RootBlock {
+		};
+		
+		enforce domain target t : Shapes::RootBlock {
+		};
+		
+	}
+	
+	relation MapBlock {
+		
+		enforce domain source s : Shapes::Block {
+		};
+		
+		enforce domain target t : Shapes::Block {
+		};
+		
+		when { 
+			!MapRootBlock(s, t);
+		}
+		   
+	}
+	
+	relation MapCircle {
+		
+		enforce domain source s : Shapes::Circle {
+		};
+		
+		enforce domain target t : Shapes::Square { --magic
+		};
+		
+	}
+	
+	relation MapTriangle {
+		
+		enforce domain source s : Shapes::Triangle {
+		};
+		
+		enforce domain target t : Shapes::Triangle {
+		};
+		
+	}
+	
+	relation MapSquare {
+		
+		enforce domain source s : Shapes::Square {
+		};
+		
+		enforce domain target t : Shapes::Square {
+		};
+		
+	}
+	
+	relation MapArrow {
+		
+		enforce domain source s : Shapes::Arrow {
+		};
+		
+		enforce domain target t : Shapes::Arrow {
+		};
+		
+	}
+	*/
+	
+	
+}
