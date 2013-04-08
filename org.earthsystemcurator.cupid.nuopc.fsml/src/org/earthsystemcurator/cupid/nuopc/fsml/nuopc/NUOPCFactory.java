@@ -40,6 +40,15 @@ public interface NUOPCFactory extends EFactory {
 	ModelDefinesSetServices createModelDefinesSetServices();
 
 	/**
+	 * Returns a new object of class '<em>Attaches Method</em>'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return a new object of class '<em>Attaches Method</em>'.
+	 * @generated
+	 */
+	AttachesMethod createAttachesMethod();
+
+	/**
 	 * Returns the package supported by this factory.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->

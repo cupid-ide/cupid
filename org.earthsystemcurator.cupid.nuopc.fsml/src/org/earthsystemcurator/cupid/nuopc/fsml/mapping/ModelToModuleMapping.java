@@ -1,34 +1,37 @@
 package org.earthsystemcurator.cupid.nuopc.fsml.mapping;
 
-import java.io.StringReader;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
 
 import org.earthsystemcurator.cupid.nuopc.fsml.nuopc.Model;
 import org.earthsystemcurator.cupid.nuopc.fsml.nuopc.ModelDefinesSetServices;
 import org.earthsystemcurator.cupid.nuopc.fsml.nuopc.NUOPCFactory;
 import org.earthsystemcurator.cupid.nuopc.fsml.util.CodeExtraction;
+import org.earthsystemcurator.cupid.nuopc.fsml.util.CodeQuery;
 import org.eclipse.photran.core.IFortranAST;
-import org.eclipse.photran.internal.core.FortranAST;
-import org.eclipse.photran.internal.core.lexer.ASTLexerFactory;
-import org.eclipse.photran.internal.core.lexer.IAccumulatingLexer;
-import org.eclipse.photran.internal.core.lexer.Token;
 import org.eclipse.photran.internal.core.parser.ASTModuleNameNode;
 import org.eclipse.photran.internal.core.parser.ASTModuleNode;
 import org.eclipse.photran.internal.core.parser.ASTModuleStmtNode;
 import org.eclipse.photran.internal.core.parser.ASTSubroutineSubprogramNode;
 import org.eclipse.photran.internal.core.parser.ASTUseStmtNode;
-import org.eclipse.photran.internal.core.parser.IBodyConstruct;
-import org.eclipse.photran.internal.core.parser.IModuleBodyConstruct;
-import org.eclipse.photran.internal.core.parser.IProgramUnit;
-import org.eclipse.photran.internal.core.parser.Parser;
 import org.eclipse.photran.internal.core.reindenter.Reindenter;
 import org.eclipse.photran.internal.core.reindenter.Reindenter.Strategy;
-import org.eclipse.rephraserengine.core.vpg.refactoring.VPGRefactoring;
 
 @SuppressWarnings("restriction")
 public class ModelToModuleMapping extends Mapping<Model, ASTModuleNode> {
 	
-	public ModelToModuleMapping(Model m, ASTModuleNode astModuleNode, IFortranAST ast) {
+	/**
+	 * These are candidate mappings.
+	 */
+	protected List<Mapping<ModelDefinesSetServices, ASTSubroutineSubprogramNode>> mappingsDefinesSetServices;
+	
+	public ModelToModuleMapping(Model m, ASTModuleNode astModuleNode, IFortranAST ast) {		
 		super(m, astModuleNode, ast);
+		
+		mappingsDefinesSetServices = new ArrayList<Mapping<ModelDefinesSetServices, ASTSubroutineSubprogramNode>>();
 	}
 
 	@Override
@@ -37,14 +40,14 @@ public class ModelToModuleMapping extends Mapping<Model, ASTModuleNode> {
 		if (modelElem == null)
 			modelElem = NUOPCFactory.eINSTANCE.createModel();
 		
-		modelElem.setName(reverseName());
-		modelElem.setDefinesSetServices(reverseDefinesSetServices());
-		modelElem.setUsesAllImports(reverseUsesAllImports());
-		
+		reverseName();
+		reverseDefinesSetServices();
+		reverseUsesAllImports();
+			
 		return modelElem;
 	}
 
-	public boolean reverseUsesAllImports() {
+	public void reverseUsesAllImports() {
 		boolean usesESMF = false;
 		boolean usesNUOPC = false;
 		boolean usesNUOPCModel = false;
@@ -55,7 +58,7 @@ public class ModelToModuleMapping extends Mapping<Model, ASTModuleNode> {
 			if (usn.getName().getText().equalsIgnoreCase("NUOPC_Model")) usesNUOPCModel = true;
 		}
 		
-		return usesESMF && usesNUOPC && usesNUOPCModel;
+		modelElem.setUsesAllImports(usesESMF && usesNUOPC && usesNUOPCModel);
 	}
 
 	public void forwardUsesAllImports() {
@@ -87,32 +90,60 @@ public class ModelToModuleMapping extends Mapping<Model, ASTModuleNode> {
 	}
 	
 	
-	public ModelDefinesSetServices reverseDefinesSetServices() {
-		ModelDefinesSetServicesToSubroutineMapping map = new ModelDefinesSetServicesToSubroutineMapping(null, astElem, ast);
-		return map.reverse();
+	public void reverseDefinesSetServices() {
+		
+		ModelDefinesSetServicesToSubroutineMapping map;  
+		for (ASTSubroutineSubprogramNode ssn : astElem.findAll(ASTSubroutineSubprogramNode.class)) {
+			map = new ModelDefinesSetServicesToSubroutineMapping(null, ssn, ast);
+			map.reverse();
+			mappingsDefinesSetServices.add(map);			
+		}
+		
+		Collections.sort(mappingsDefinesSetServices);
+		Collections.reverse(mappingsDefinesSetServices);
+		
+		System.out.println("Sorted mappings: ");
+		for (Mapping<ModelDefinesSetServices, ASTSubroutineSubprogramNode> x : mappingsDefinesSetServices) {
+			System.out.println(x.score() + " : " + x);
+		}
+		
+		for (Mapping<ModelDefinesSetServices, ASTSubroutineSubprogramNode> x : mappingsDefinesSetServices) {
+			if (x.certain()) {
+				modelElem.setDefinesSetServices(x.modelElem);
+				return;
+			}
+		}
+		
+		//if we are here, we have to deal with candidates
 	}
 
 	public void forwardDefinesSetServices() {
 		
 		if (modelElem != null) {
 			
-			ModelDefinesSetServicesToSubroutineMapping map = 
-					new ModelDefinesSetServicesToSubroutineMapping(modelElem.getDefinesSetServices(), astElem, ast);
+			if (modelElem.getDefinesSetServices() != null) {				
+				ASTSubroutineSubprogramNode ssn = 
+						CodeQuery.findSubroutineByName(astElem, modelElem.getDefinesSetServices().getName());
+						
+				ModelDefinesSetServicesToSubroutineMapping map = 
+					new ModelDefinesSetServicesToSubroutineMapping(modelElem.getDefinesSetServices(), ssn, ast);
 			
-			map.forward();
-			//ModelDefinesSetServices mdss = null;
-			//if ((mdss = modelElem.getDefinesSetServices()) != null) {
-				//for (ASTSubroutineSubprogramNode n : astElem.findAll(ASTSubroutineSubprogramNode.class)) {
-				//ModelDefinesSetServicesToSubroutineMapping map = new ModelDefinesSetServicesToSubroutineMapping(mdss, n);
-				//return map.forward();					
-				//}
-			//}
+				ssn = map.forward();
+				System.out.println("enclosing scope = " + ssn.getEnclosingScope());
+				if (ssn.getEnclosingScope() != astElem) {
+					//System.out.println("Null parent -- adding to ast");
+					astElem.getModuleBody().add(ssn);
+					Reindenter.reindent(astElem, ast, Reindenter.Strategy.REINDENT_EACH_LINE);
+				}
+			}
+			
 		}
 		
 	}
 	
-	public String reverseName() {
-			
+	public void reverseName() {
+		
+		/*
 		if (astElem == null)
 			return null;
 				
@@ -124,11 +155,16 @@ public class ModelToModuleMapping extends Mapping<Model, ASTModuleNode> {
 		
 		//if (modelElem == null)
 		//	modelElem = NUOPCFactory.eINSTANCE.createModel();
+		 
+		 */
 		
-		//modelElem.setName(astElem.getModuleStmt().getModuleName().getModuleName().toString());
-		//return modelElem;
+		try {
+			modelElem.setName(astElem.getModuleStmt().getModuleName().getModuleName().getText());
+		}
+		catch (NullPointerException npe) {
+			modelElem.setName(null);
+		}
 		
-		return astElem.getModuleStmt().getModuleName().getModuleName().toString();
 	}
 	
 	public void forwardName() {
@@ -154,6 +190,18 @@ public class ModelToModuleMapping extends Mapping<Model, ASTModuleNode> {
 		forwardUsesAllImports();
 		forwardDefinesSetServices();
 		return astElem;
+	}
+
+	@Override
+	protected int score() {
+		return (modelElem.isUsesAllImports() ? 2 : 0) +
+				(modelElem.getDefinesSetServices() != null ? 2 : 0) +
+				(modelElem.getName() != null ? 1 : 0);
+	}
+
+	@Override
+	protected boolean certain() {		
+		return modelElem.isUsesAllImports() && modelElem.getDefinesSetServices() != null;
 	}
 
 		

@@ -5,7 +5,8 @@ import org.eclipse.photran.core.IFortranAST;
 import org.eclipse.photran.internal.core.parser.ASTNode;
 
 @SuppressWarnings("restriction")
-public abstract class Mapping<ModelType extends EObject, ASTNodeType extends ASTNode> {
+public abstract class Mapping<ModelType extends EObject, ASTNodeType extends ASTNode> 
+	implements Comparable<Mapping<ModelType, ASTNodeType>>{
 
 	protected ModelType modelElem;
 	protected ASTNodeType astElem;
@@ -19,5 +20,13 @@ public abstract class Mapping<ModelType extends EObject, ASTNodeType extends AST
 
 	public abstract ModelType reverse();
 	public abstract ASTNodeType forward();
+	
+	protected abstract int score();
+	protected abstract boolean certain();
+	
+	@Override
+	public int compareTo(Mapping<ModelType, ASTNodeType> other) {
+		return score() - other.score();
+	}
 	
 }

@@ -121,13 +121,49 @@ public interface NUOPCPackage extends EPackage {
 	int MODEL_DEFINES_SET_SERVICES__NAME = 0;
 
 	/**
+	 * The feature id for the '<em><b>Parameters</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int MODEL_DEFINES_SET_SERVICES__PARAMETERS = 1;
+
+	/**
 	 * The feature id for the '<em><b>Calls Generic Set Services</b></em>' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int MODEL_DEFINES_SET_SERVICES__CALLS_GENERIC_SET_SERVICES = 1;
+	int MODEL_DEFINES_SET_SERVICES__CALLS_GENERIC_SET_SERVICES = 2;
+
+	/**
+	 * The feature id for the '<em><b>Calls Set Entry Point Phase1</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int MODEL_DEFINES_SET_SERVICES__CALLS_SET_ENTRY_POINT_PHASE1 = 3;
+
+	/**
+	 * The feature id for the '<em><b>Calls Set Entry Point Phase2</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int MODEL_DEFINES_SET_SERVICES__CALLS_SET_ENTRY_POINT_PHASE2 = 4;
+
+	/**
+	 * The feature id for the '<em><b>Attaches Method</b></em>' containment reference list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int MODEL_DEFINES_SET_SERVICES__ATTACHES_METHOD = 5;
 
 	/**
 	 * The number of structural features of the '<em>Model Defines Set Services</em>' class.
@@ -136,7 +172,27 @@ public interface NUOPCPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int MODEL_DEFINES_SET_SERVICES_FEATURE_COUNT = 2;
+	int MODEL_DEFINES_SET_SERVICES_FEATURE_COUNT = 6;
+
+
+	/**
+	 * The meta object id for the '{@link org.earthsystemcurator.cupid.nuopc.fsml.nuopc.impl.AttachesMethodImpl <em>Attaches Method</em>}' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see org.earthsystemcurator.cupid.nuopc.fsml.nuopc.impl.AttachesMethodImpl
+	 * @see org.earthsystemcurator.cupid.nuopc.fsml.nuopc.impl.NUOPCPackageImpl#getAttachesMethod()
+	 * @generated
+	 */
+	int ATTACHES_METHOD = 2;
+
+	/**
+	 * The number of structural features of the '<em>Attaches Method</em>' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int ATTACHES_METHOD_FEATURE_COUNT = 0;
 
 
 	/**
@@ -204,6 +260,17 @@ public interface NUOPCPackage extends EPackage {
 	EAttribute getModelDefinesSetServices_Name();
 
 	/**
+	 * Returns the meta object for the attribute '{@link org.earthsystemcurator.cupid.nuopc.fsml.nuopc.ModelDefinesSetServices#isParameters <em>Parameters</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the attribute '<em>Parameters</em>'.
+	 * @see org.earthsystemcurator.cupid.nuopc.fsml.nuopc.ModelDefinesSetServices#isParameters()
+	 * @see #getModelDefinesSetServices()
+	 * @generated
+	 */
+	EAttribute getModelDefinesSetServices_Parameters();
+
+	/**
 	 * Returns the meta object for the attribute '{@link org.earthsystemcurator.cupid.nuopc.fsml.nuopc.ModelDefinesSetServices#isCallsGenericSetServices <em>Calls Generic Set Services</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -213,6 +280,49 @@ public interface NUOPCPackage extends EPackage {
 	 * @generated
 	 */
 	EAttribute getModelDefinesSetServices_CallsGenericSetServices();
+
+	/**
+	 * Returns the meta object for the attribute '{@link org.earthsystemcurator.cupid.nuopc.fsml.nuopc.ModelDefinesSetServices#isCallsSetEntryPointPhase1 <em>Calls Set Entry Point Phase1</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the attribute '<em>Calls Set Entry Point Phase1</em>'.
+	 * @see org.earthsystemcurator.cupid.nuopc.fsml.nuopc.ModelDefinesSetServices#isCallsSetEntryPointPhase1()
+	 * @see #getModelDefinesSetServices()
+	 * @generated
+	 */
+	EAttribute getModelDefinesSetServices_CallsSetEntryPointPhase1();
+
+	/**
+	 * Returns the meta object for the attribute '{@link org.earthsystemcurator.cupid.nuopc.fsml.nuopc.ModelDefinesSetServices#isCallsSetEntryPointPhase2 <em>Calls Set Entry Point Phase2</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the attribute '<em>Calls Set Entry Point Phase2</em>'.
+	 * @see org.earthsystemcurator.cupid.nuopc.fsml.nuopc.ModelDefinesSetServices#isCallsSetEntryPointPhase2()
+	 * @see #getModelDefinesSetServices()
+	 * @generated
+	 */
+	EAttribute getModelDefinesSetServices_CallsSetEntryPointPhase2();
+
+	/**
+	 * Returns the meta object for the containment reference list '{@link org.earthsystemcurator.cupid.nuopc.fsml.nuopc.ModelDefinesSetServices#getAttachesMethod <em>Attaches Method</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the containment reference list '<em>Attaches Method</em>'.
+	 * @see org.earthsystemcurator.cupid.nuopc.fsml.nuopc.ModelDefinesSetServices#getAttachesMethod()
+	 * @see #getModelDefinesSetServices()
+	 * @generated
+	 */
+	EReference getModelDefinesSetServices_AttachesMethod();
+
+	/**
+	 * Returns the meta object for class '{@link org.earthsystemcurator.cupid.nuopc.fsml.nuopc.AttachesMethod <em>Attaches Method</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for class '<em>Attaches Method</em>'.
+	 * @see org.earthsystemcurator.cupid.nuopc.fsml.nuopc.AttachesMethod
+	 * @generated
+	 */
+	EClass getAttachesMethod();
 
 	/**
 	 * Returns the factory that creates the instances of the model.
@@ -289,12 +399,54 @@ public interface NUOPCPackage extends EPackage {
 		EAttribute MODEL_DEFINES_SET_SERVICES__NAME = eINSTANCE.getModelDefinesSetServices_Name();
 
 		/**
+		 * The meta object literal for the '<em><b>Parameters</b></em>' attribute feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EAttribute MODEL_DEFINES_SET_SERVICES__PARAMETERS = eINSTANCE.getModelDefinesSetServices_Parameters();
+
+		/**
 		 * The meta object literal for the '<em><b>Calls Generic Set Services</b></em>' attribute feature.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
 		 * @generated
 		 */
 		EAttribute MODEL_DEFINES_SET_SERVICES__CALLS_GENERIC_SET_SERVICES = eINSTANCE.getModelDefinesSetServices_CallsGenericSetServices();
+
+		/**
+		 * The meta object literal for the '<em><b>Calls Set Entry Point Phase1</b></em>' attribute feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EAttribute MODEL_DEFINES_SET_SERVICES__CALLS_SET_ENTRY_POINT_PHASE1 = eINSTANCE.getModelDefinesSetServices_CallsSetEntryPointPhase1();
+
+		/**
+		 * The meta object literal for the '<em><b>Calls Set Entry Point Phase2</b></em>' attribute feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EAttribute MODEL_DEFINES_SET_SERVICES__CALLS_SET_ENTRY_POINT_PHASE2 = eINSTANCE.getModelDefinesSetServices_CallsSetEntryPointPhase2();
+
+		/**
+		 * The meta object literal for the '<em><b>Attaches Method</b></em>' containment reference list feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EReference MODEL_DEFINES_SET_SERVICES__ATTACHES_METHOD = eINSTANCE.getModelDefinesSetServices_AttachesMethod();
+
+		/**
+		 * The meta object literal for the '{@link org.earthsystemcurator.cupid.nuopc.fsml.nuopc.impl.AttachesMethodImpl <em>Attaches Method</em>}' class.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @see org.earthsystemcurator.cupid.nuopc.fsml.nuopc.impl.AttachesMethodImpl
+		 * @see org.earthsystemcurator.cupid.nuopc.fsml.nuopc.impl.NUOPCPackageImpl#getAttachesMethod()
+		 * @generated
+		 */
+		EClass ATTACHES_METHOD = eINSTANCE.getAttachesMethod();
 
 	}
 

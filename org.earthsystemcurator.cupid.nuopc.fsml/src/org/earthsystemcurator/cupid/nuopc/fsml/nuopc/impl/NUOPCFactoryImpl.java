@@ -58,6 +58,7 @@ public class NUOPCFactoryImpl extends EFactoryImpl implements NUOPCFactory {
 		switch (eClass.getClassifierID()) {
 			case NUOPCPackage.MODEL: return createModel();
 			case NUOPCPackage.MODEL_DEFINES_SET_SERVICES: return createModelDefinesSetServices();
+			case NUOPCPackage.ATTACHES_METHOD: return createAttachesMethod();
 			default:
 				throw new IllegalArgumentException("The class '" + eClass.getName() + "' is not a valid classifier");
 		}
@@ -81,6 +82,16 @@ public class NUOPCFactoryImpl extends EFactoryImpl implements NUOPCFactory {
 	public ModelDefinesSetServices createModelDefinesSetServices() {
 		ModelDefinesSetServicesImpl modelDefinesSetServices = new ModelDefinesSetServicesImpl();
 		return modelDefinesSetServices;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public AttachesMethod createAttachesMethod() {
+		AttachesMethodImpl attachesMethod = new AttachesMethodImpl();
+		return attachesMethod;
 	}
 
 	/**

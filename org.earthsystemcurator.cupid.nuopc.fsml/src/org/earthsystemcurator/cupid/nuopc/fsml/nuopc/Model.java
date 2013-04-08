@@ -2,6 +2,7 @@
  */
 package org.earthsystemcurator.cupid.nuopc.fsml.nuopc;
 
+import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.ecore.EObject;
 
 /**
@@ -86,7 +87,7 @@ public interface Model extends EObject {
 	 * @return the value of the '<em>Defines Set Services</em>' containment reference.
 	 * @see #setDefinesSetServices(ModelDefinesSetServices)
 	 * @see org.earthsystemcurator.cupid.nuopc.fsml.nuopc.NUOPCPackage#getModel_DefinesSetServices()
-	 * @model containment="true" required="true"
+	 * @model containment="true"
 	 * @generated
 	 */
 	ModelDefinesSetServices getDefinesSetServices();

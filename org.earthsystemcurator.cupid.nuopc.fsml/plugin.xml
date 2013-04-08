@@ -23,6 +23,16 @@
             id="org.earthsystemcurator.cupid.nuopc.fsml.commands.sampleCommand"
             name="Sample Command">
       </command>
+      <command
+            categoryId="org.earthsystemcurator.cupid.nuopc.fsml.commands.category"
+            id="org.earthsystemcurator.cupid.nuopc.fsml.commands.reverseCommand"
+            name="Reverse Command">
+      </command>
+      <command
+            categoryId="org.earthsystemcurator.cupid.nuopc.fsml.commands.category"
+            id="org.earthsystemcurator.cupid.nuopc.fsml.commands.forwardCommand"
+            name="Forward Command">
+      </command>
    </extension>
    <extension
          point="org.eclipse.ui.handlers">
@@ -30,15 +40,14 @@
             class="org.earthsystemcurator.cupid.nuopc.fsml.handlers.MappingTestHandler"
             commandId="org.earthsystemcurator.cupid.nuopc.fsml.commands.sampleCommand">
       </handler>
-   </extension>
-   <extension
-         point="org.eclipse.ui.bindings">
-      <key
-            commandId="org.earthsystemcurator.cupid.nuopc.fsml.commands.sampleCommand"
-            contextId="org.eclipse.ui.contexts.window"
-            schemeId="org.eclipse.ui.defaultAcceleratorConfiguration"
-            sequence="M1+6">
-      </key>
+      <handler
+            class="org.earthsystemcurator.cupid.nuopc.fsml.handlers.ReverseHandler"
+            commandId="org.earthsystemcurator.cupid.nuopc.fsml.commands.reverseCommand">
+      </handler>
+      <handler
+            class="org.earthsystemcurator.cupid.nuopc.fsml.handlers.ForwardHandler"
+            commandId="org.earthsystemcurator.cupid.nuopc.fsml.commands.forwardCommand">
+      </handler>
    </extension>
    <extension
          point="org.eclipse.ui.menus">
@@ -46,24 +55,48 @@
             locationURI="menu:org.eclipse.ui.main.menu?after=additions">
          <menu
                id="org.earthsystemcurator.cupid.nuopc.fsml.menus.sampleMenu"
-               label="Sample Menu"
+               label="Cupid"
                mnemonic="M">
             <command
                   commandId="org.earthsystemcurator.cupid.nuopc.fsml.commands.sampleCommand"
                   id="org.earthsystemcurator.cupid.nuopc.fsml.menus.sampleCommand"
                   mnemonic="S">
             </command>
+            <command
+                  commandId="org.earthsystemcurator.cupid.nuopc.fsml.commands.reverseCommand"
+                  id="org.earthsystemcurator.cupid.nuopc.fsml.menus.reverseCommand"
+                  mnemonic="S">
+            </command>
+            <command
+                  commandId="org.earthsystemcurator.cupid.nuopc.fsml.commands.forwardCommand"
+                  id="org.earthsystemcurator.cupid.nuopc.fsml.menus.forwardCommand"
+                  mnemonic="S"
+                  tooltip="Forward engineer (generate code)">
+            </command>
          </menu>
       </menuContribution>
       <menuContribution
             locationURI="toolbar:org.eclipse.ui.main.toolbar?after=additions">
          <toolbar
-               id="org.earthsystemcurator.cupid.nuopc.fsml.toolbars.sampleToolbar">
+               id="org.earthsystemcurator.cupid.nuopc.fsml.toolbars.sampleToolbar"
+               label="Cupid">
+            <command
+                  commandId="org.earthsystemcurator.cupid.nuopc.fsml.commands.reverseCommand"
+                  icon="icons/sample.gif"
+                  id="org.earthsystemcurator.cupid.nuopc.fsml.toolbars.reverseCommand"
+                  tooltip="Reverse engineer">
+            </command>
             <command
                   commandId="org.earthsystemcurator.cupid.nuopc.fsml.commands.sampleCommand"
                   icon="icons/sample.gif"
                   id="org.earthsystemcurator.cupid.nuopc.fsml.toolbars.sampleCommand"
                   tooltip="Say hello world">
+            </command>
+            <command
+                  commandId="org.earthsystemcurator.cupid.nuopc.fsml.commands.forwardCommand"
+                  icon="icons/sample.gif"
+                  id="org.earthsystemcurator.cupid.nuopc.fsml.toolbars.forwardCommand"
+                  tooltip="Forward engineer (generate code)">
             </command>
          </toolbar>
       </menuContribution>
