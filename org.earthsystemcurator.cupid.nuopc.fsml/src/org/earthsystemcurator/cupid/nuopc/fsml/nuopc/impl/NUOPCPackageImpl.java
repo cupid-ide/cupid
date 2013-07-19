@@ -172,7 +172,7 @@ public class NUOPCPackageImpl extends EPackageImpl implements NUOPCPackage {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EAttribute getModelDefinesSetServices_CallsGenericSetServices() {
+	public EAttribute getModelDefinesSetServices_ParamName_gcomp() {
 		return (EAttribute)modelDefinesSetServicesEClass.getEStructuralFeatures().get(2);
 	}
 
@@ -181,7 +181,7 @@ public class NUOPCPackageImpl extends EPackageImpl implements NUOPCPackage {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EAttribute getModelDefinesSetServices_CallsSetEntryPointPhase1() {
+	public EAttribute getModelDefinesSetServices_ParamName_rc() {
 		return (EAttribute)modelDefinesSetServicesEClass.getEStructuralFeatures().get(3);
 	}
 
@@ -190,7 +190,7 @@ public class NUOPCPackageImpl extends EPackageImpl implements NUOPCPackage {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EAttribute getModelDefinesSetServices_CallsSetEntryPointPhase2() {
+	public EAttribute getModelDefinesSetServices_CallsGenericSetServices() {
 		return (EAttribute)modelDefinesSetServicesEClass.getEStructuralFeatures().get(4);
 	}
 
@@ -199,8 +199,26 @@ public class NUOPCPackageImpl extends EPackageImpl implements NUOPCPackage {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	public EAttribute getModelDefinesSetServices_CallsSetEntryPointPhase1() {
+		return (EAttribute)modelDefinesSetServicesEClass.getEStructuralFeatures().get(5);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EAttribute getModelDefinesSetServices_CallsSetEntryPointPhase2() {
+		return (EAttribute)modelDefinesSetServicesEClass.getEStructuralFeatures().get(6);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
 	public EReference getModelDefinesSetServices_AttachesMethod() {
-		return (EReference)modelDefinesSetServicesEClass.getEStructuralFeatures().get(5);
+		return (EReference)modelDefinesSetServicesEClass.getEStructuralFeatures().get(7);
 	}
 
 	/**
@@ -248,6 +266,8 @@ public class NUOPCPackageImpl extends EPackageImpl implements NUOPCPackage {
 		modelDefinesSetServicesEClass = createEClass(MODEL_DEFINES_SET_SERVICES);
 		createEAttribute(modelDefinesSetServicesEClass, MODEL_DEFINES_SET_SERVICES__NAME);
 		createEAttribute(modelDefinesSetServicesEClass, MODEL_DEFINES_SET_SERVICES__PARAMETERS);
+		createEAttribute(modelDefinesSetServicesEClass, MODEL_DEFINES_SET_SERVICES__PARAM_NAME_GCOMP);
+		createEAttribute(modelDefinesSetServicesEClass, MODEL_DEFINES_SET_SERVICES__PARAM_NAME_RC);
 		createEAttribute(modelDefinesSetServicesEClass, MODEL_DEFINES_SET_SERVICES__CALLS_GENERIC_SET_SERVICES);
 		createEAttribute(modelDefinesSetServicesEClass, MODEL_DEFINES_SET_SERVICES__CALLS_SET_ENTRY_POINT_PHASE1);
 		createEAttribute(modelDefinesSetServicesEClass, MODEL_DEFINES_SET_SERVICES__CALLS_SET_ENTRY_POINT_PHASE2);
@@ -289,11 +309,13 @@ public class NUOPCPackageImpl extends EPackageImpl implements NUOPCPackage {
 		initEClass(modelEClass, Model.class, "Model", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 		initEAttribute(getModel_Name(), ecorePackage.getEString(), "name", null, 1, 1, Model.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEAttribute(getModel_UsesAllImports(), ecorePackage.getEBoolean(), "usesAllImports", null, 1, 1, Model.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-		initEReference(getModel_DefinesSetServices(), this.getModelDefinesSetServices(), null, "definesSetServices", null, 0, 1, Model.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEReference(getModel_DefinesSetServices(), this.getModelDefinesSetServices(), null, "definesSetServices", null, 0, 1, Model.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, !IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
 		initEClass(modelDefinesSetServicesEClass, ModelDefinesSetServices.class, "ModelDefinesSetServices", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 		initEAttribute(getModelDefinesSetServices_Name(), ecorePackage.getEString(), "name", null, 1, 1, ModelDefinesSetServices.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEAttribute(getModelDefinesSetServices_Parameters(), ecorePackage.getEBoolean(), "parameters", null, 1, 1, ModelDefinesSetServices.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEAttribute(getModelDefinesSetServices_ParamName_gcomp(), ecorePackage.getEString(), "paramName_gcomp", null, 0, 1, ModelDefinesSetServices.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEAttribute(getModelDefinesSetServices_ParamName_rc(), ecorePackage.getEString(), "paramName_rc", null, 0, 1, ModelDefinesSetServices.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEAttribute(getModelDefinesSetServices_CallsGenericSetServices(), ecorePackage.getEBoolean(), "callsGenericSetServices", null, 1, 1, ModelDefinesSetServices.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEAttribute(getModelDefinesSetServices_CallsSetEntryPointPhase1(), ecorePackage.getEBoolean(), "callsSetEntryPointPhase1", null, 1, 1, ModelDefinesSetServices.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEAttribute(getModelDefinesSetServices_CallsSetEntryPointPhase2(), ecorePackage.getEBoolean(), "callsSetEntryPointPhase2", null, 1, 1, ModelDefinesSetServices.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);

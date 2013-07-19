@@ -1,5 +1,6 @@
 package org.earthsystemcurator.cupid.nuopc.fsml.qvt;
 
+import com.google.common.base.Objects;
 import org.earthsystemcurator.cupid.nuopc.fsml.nuopc.ModelDefinesSetServices;
 import org.earthsystemcurator.cupid.nuopc.fsml.qvt.Transformation;
 import org.eclipse.photran.internal.core.lexer.Token;
@@ -7,6 +8,7 @@ import org.eclipse.photran.internal.core.parser.ASTModuleNode;
 import org.eclipse.photran.internal.core.parser.ASTSubroutineNameNode;
 import org.eclipse.photran.internal.core.parser.ASTSubroutineStmtNode;
 import org.eclipse.photran.internal.core.parser.ASTSubroutineSubprogramNode;
+import org.eclipse.xtext.xbase.lib.InputOutput;
 
 public class Module2DefinesSetServices {
   private Transformation trafo;
@@ -47,9 +49,16 @@ public class Module2DefinesSetServices {
   
   public ASTSubroutineStmtNode ss;
   
-  public boolean evaluateClause12() {
+  public boolean evaluateClause11() {
     boolean _equalsIgnoreCase = this.snText.equalsIgnoreCase("SetServices");
     return _equalsIgnoreCase;
+  }
+  
+  public boolean evaluateClause12() {
+    String _plus = ("snText = " + this.snText);
+    String _println = InputOutput.<String>println(_plus);
+    boolean _equals = Objects.equal(_println, "");
+    return _equals;
   }
   
   public boolean execute(final Transformation transformation) {
@@ -68,13 +77,16 @@ public class Module2DefinesSetServices {
     // subroutineName = snToken : Token {..}
     if (sn.getSubroutineName() == null) continue;
     snToken =  sn.getSubroutineName();
-    // text = snText : String {..}
-    if (snToken.getText() == null) continue;
+    // text = snText
     snText =  snToken.getText();
     // snText.equalsIgnoreCase("SetServices")
+    if (!evaluateClause11()) continue;
+    // println("snText = " + snText) == ""
     if (!evaluateClause12()) continue;
     // tgtDSS : ModelDefinesSetServices {..}
     if (tgtDSS==null) tgtDSS = transformation.create(ModelDefinesSetServices.class);
+    // name = snText
+    tgtDSS.setName(snText);
     result=true;
     }
     return result;

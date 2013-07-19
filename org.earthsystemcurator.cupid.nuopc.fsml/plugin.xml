@@ -26,12 +26,17 @@
       <command
             categoryId="org.earthsystemcurator.cupid.nuopc.fsml.commands.category"
             id="org.earthsystemcurator.cupid.nuopc.fsml.commands.reverseCommand"
-            name="Reverse Command">
+            name="Reverse Engineer">
       </command>
       <command
             categoryId="org.earthsystemcurator.cupid.nuopc.fsml.commands.category"
             id="org.earthsystemcurator.cupid.nuopc.fsml.commands.forwardCommand"
-            name="Forward Command">
+            name="Forward Engineer">
+      </command>
+      <command
+            categoryId="org.earthsystemcurator.cupid.nuopc.fsml.commands.category"
+            id="org.earthsystemcurator.cupid.nuopc.fsml.commands.compareCommand"
+            name="Compare">
       </command>
    </extension>
    <extension
@@ -47,6 +52,10 @@
       <handler
             class="org.earthsystemcurator.cupid.nuopc.fsml.handlers.ForwardHandler"
             commandId="org.earthsystemcurator.cupid.nuopc.fsml.commands.forwardCommand">
+      </handler>
+      <handler
+            class="org.earthsystemcurator.cupid.nuopc.fsml.handlers.CompareHandler"
+            commandId="org.earthsystemcurator.cupid.nuopc.fsml.commands.compareCommand">
       </handler>
    </extension>
    <extension
@@ -73,6 +82,12 @@
                   mnemonic="S"
                   tooltip="Forward engineer (generate code)">
             </command>
+            <command
+                  commandId="org.earthsystemcurator.cupid.nuopc.fsml.commands.compareCommand"
+                  id="org.earthsystemcurator.cupid.nuopc.fsml.menus.compareCommand"
+                  mnemonic="S"
+                  tooltip="Compare">
+            </command>
          </menu>
       </menuContribution>
       <menuContribution
@@ -97,6 +112,12 @@
                   icon="icons/sample.gif"
                   id="org.earthsystemcurator.cupid.nuopc.fsml.toolbars.forwardCommand"
                   tooltip="Forward engineer (generate code)">
+            </command>
+            <command
+                  commandId="org.earthsystemcurator.cupid.nuopc.fsml.commands.compareCommand"
+                  icon="icons/sample.gif"
+                  id="org.earthsystemcurator.cupid.nuopc.fsml.toolbars.compareCommand"
+                  tooltip="Compare">
             </command>
          </toolbar>
       </menuContribution>

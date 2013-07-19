@@ -130,13 +130,31 @@ public interface NUOPCPackage extends EPackage {
 	int MODEL_DEFINES_SET_SERVICES__PARAMETERS = 1;
 
 	/**
+	 * The feature id for the '<em><b>Param Name gcomp</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int MODEL_DEFINES_SET_SERVICES__PARAM_NAME_GCOMP = 2;
+
+	/**
+	 * The feature id for the '<em><b>Param Name rc</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int MODEL_DEFINES_SET_SERVICES__PARAM_NAME_RC = 3;
+
+	/**
 	 * The feature id for the '<em><b>Calls Generic Set Services</b></em>' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int MODEL_DEFINES_SET_SERVICES__CALLS_GENERIC_SET_SERVICES = 2;
+	int MODEL_DEFINES_SET_SERVICES__CALLS_GENERIC_SET_SERVICES = 4;
 
 	/**
 	 * The feature id for the '<em><b>Calls Set Entry Point Phase1</b></em>' attribute.
@@ -145,7 +163,7 @@ public interface NUOPCPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int MODEL_DEFINES_SET_SERVICES__CALLS_SET_ENTRY_POINT_PHASE1 = 3;
+	int MODEL_DEFINES_SET_SERVICES__CALLS_SET_ENTRY_POINT_PHASE1 = 5;
 
 	/**
 	 * The feature id for the '<em><b>Calls Set Entry Point Phase2</b></em>' attribute.
@@ -154,7 +172,7 @@ public interface NUOPCPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int MODEL_DEFINES_SET_SERVICES__CALLS_SET_ENTRY_POINT_PHASE2 = 4;
+	int MODEL_DEFINES_SET_SERVICES__CALLS_SET_ENTRY_POINT_PHASE2 = 6;
 
 	/**
 	 * The feature id for the '<em><b>Attaches Method</b></em>' containment reference list.
@@ -163,7 +181,7 @@ public interface NUOPCPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int MODEL_DEFINES_SET_SERVICES__ATTACHES_METHOD = 5;
+	int MODEL_DEFINES_SET_SERVICES__ATTACHES_METHOD = 7;
 
 	/**
 	 * The number of structural features of the '<em>Model Defines Set Services</em>' class.
@@ -172,7 +190,7 @@ public interface NUOPCPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int MODEL_DEFINES_SET_SERVICES_FEATURE_COUNT = 6;
+	int MODEL_DEFINES_SET_SERVICES_FEATURE_COUNT = 8;
 
 
 	/**
@@ -269,6 +287,28 @@ public interface NUOPCPackage extends EPackage {
 	 * @generated
 	 */
 	EAttribute getModelDefinesSetServices_Parameters();
+
+	/**
+	 * Returns the meta object for the attribute '{@link org.earthsystemcurator.cupid.nuopc.fsml.nuopc.ModelDefinesSetServices#getParamName_gcomp <em>Param Name gcomp</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the attribute '<em>Param Name gcomp</em>'.
+	 * @see org.earthsystemcurator.cupid.nuopc.fsml.nuopc.ModelDefinesSetServices#getParamName_gcomp()
+	 * @see #getModelDefinesSetServices()
+	 * @generated
+	 */
+	EAttribute getModelDefinesSetServices_ParamName_gcomp();
+
+	/**
+	 * Returns the meta object for the attribute '{@link org.earthsystemcurator.cupid.nuopc.fsml.nuopc.ModelDefinesSetServices#getParamName_rc <em>Param Name rc</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the attribute '<em>Param Name rc</em>'.
+	 * @see org.earthsystemcurator.cupid.nuopc.fsml.nuopc.ModelDefinesSetServices#getParamName_rc()
+	 * @see #getModelDefinesSetServices()
+	 * @generated
+	 */
+	EAttribute getModelDefinesSetServices_ParamName_rc();
 
 	/**
 	 * Returns the meta object for the attribute '{@link org.earthsystemcurator.cupid.nuopc.fsml.nuopc.ModelDefinesSetServices#isCallsGenericSetServices <em>Calls Generic Set Services</em>}'.
@@ -405,6 +445,22 @@ public interface NUOPCPackage extends EPackage {
 		 * @generated
 		 */
 		EAttribute MODEL_DEFINES_SET_SERVICES__PARAMETERS = eINSTANCE.getModelDefinesSetServices_Parameters();
+
+		/**
+		 * The meta object literal for the '<em><b>Param Name gcomp</b></em>' attribute feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EAttribute MODEL_DEFINES_SET_SERVICES__PARAM_NAME_GCOMP = eINSTANCE.getModelDefinesSetServices_ParamName_gcomp();
+
+		/**
+		 * The meta object literal for the '<em><b>Param Name rc</b></em>' attribute feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EAttribute MODEL_DEFINES_SET_SERVICES__PARAM_NAME_RC = eINSTANCE.getModelDefinesSetServices_ParamName_rc();
 
 		/**
 		 * The meta object literal for the '<em><b>Calls Generic Set Services</b></em>' attribute feature.

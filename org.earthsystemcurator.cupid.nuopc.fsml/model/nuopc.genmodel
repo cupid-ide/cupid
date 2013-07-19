@@ -7,13 +7,21 @@
   <genPackages prefix="NUOPC" basePackage="org.earthsystemcurator.cupid.nuopc.fsml"
       disposableProviderFactory="true" ecorePackage="nuopc.ecore#/">
     <genClasses ecoreClass="nuopc.ecore#//Model">
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute nuopc.ecore#//Model/name"/>
+      <genFeatures createChild="false" propertyDescription="name" ecoreFeature="ecore:EAttribute nuopc.ecore#//Model/name"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute nuopc.ecore#//Model/usesAllImports"/>
-      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference nuopc.ecore#//Model/definesSetServices"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference nuopc.ecore#//Model/definesSetServices"/>
     </genClasses>
     <genClasses ecoreClass="nuopc.ecore#//ModelDefinesSetServices">
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute nuopc.ecore#//ModelDefinesSetServices/name"/>
+      <genFeatures createChild="false" propertyCategory="" propertyDescription=""
+          ecoreFeature="ecore:EAttribute nuopc.ecore#//ModelDefinesSetServices/name"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute nuopc.ecore#//ModelDefinesSetServices/parameters"/>
+      <genFeatures property="None" createChild="false" ecoreFeature="ecore:EAttribute nuopc.ecore#//ModelDefinesSetServices/paramName_gcomp"/>
+      <genFeatures property="None" createChild="false" ecoreFeature="ecore:EAttribute nuopc.ecore#//ModelDefinesSetServices/paramName_rc"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute nuopc.ecore#//ModelDefinesSetServices/callsGenericSetServices"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute nuopc.ecore#//ModelDefinesSetServices/callsSetEntryPointPhase1"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute nuopc.ecore#//ModelDefinesSetServices/callsSetEntryPointPhase2"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference nuopc.ecore#//ModelDefinesSetServices/attachesMethod"/>
     </genClasses>
+    <genClasses ecoreClass="nuopc.ecore#//AttachesMethod"/>
   </genPackages>
 </genmodel:GenModel>

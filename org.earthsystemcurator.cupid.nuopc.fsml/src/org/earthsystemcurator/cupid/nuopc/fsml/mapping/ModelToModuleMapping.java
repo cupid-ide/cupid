@@ -2,8 +2,10 @@ package org.earthsystemcurator.cupid.nuopc.fsml.mapping;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 
 import org.earthsystemcurator.cupid.nuopc.fsml.nuopc.Model;
@@ -63,19 +65,35 @@ public class ModelToModuleMapping extends Mapping<Model, ASTModuleNode> {
 
 	public void forwardUsesAllImports() {
 		if (modelElem.isUsesAllImports()) {
-			ensureUses(astElem, "NUOPC_Model");
-			ensureUses(astElem, "NUOPC");
-			ensureUses(astElem, "ESMF");
+			ensureUses(astElem, "ESMF", null);
+			ensureUses(astElem, "NUOPC", null);
+			
+			Map<String,String> renameList = new HashMap<String,String>();
+			renameList.put("model_routine_SS", "routine_SetServices");
+			renameList.put("model_label_Advance", "label_Advance");
+			
+			ensureUses(astElem, "NUOPC_Model", renameList);			
+			
 		}
 	}
 	
-	public void ensureUses(ASTModuleNode module, String moduleToUse) {		
+	public void ensureUses(ASTModuleNode module, String moduleToUse, Map<String,String> renameList) {		
 		for (ASTUseStmtNode usn : module.getOrCreateBody().findAll(ASTUseStmtNode.class)) {
 			if (usn.getName().getText().equalsIgnoreCase(moduleToUse)) return;
 		}
 		
+		String toParse = "use " + moduleToUse;
+		if (renameList != null && renameList.size() > 0) {
+			toParse = toParse + ", only: &\n";
+			for (String n : renameList.keySet()) {
+				toParse = toParse + "    " + n + " => " + renameList.get(n) + ", &\n";
+			}
+			toParse = toParse.substring(0, toParse.length()-4);
+			System.out.println("toParse = " + toParse);
+		}
+				
 		//create use statement node
-		ASTUseStmtNode usn = (ASTUseStmtNode) CodeExtraction.parseLiteralStatement("use " + moduleToUse + "\n");
+		ASTUseStmtNode usn = (ASTUseStmtNode) CodeExtraction.parseLiteralStatement(toParse + "\n");
 		
 		//are there any existing use statements?
 		ASTUseStmtNode last = module.getModuleBody().findLast(ASTUseStmtNode.class);
@@ -86,7 +104,7 @@ public class ModelToModuleMapping extends Mapping<Model, ASTModuleNode> {
 		else {
 			module.getModuleBody().add(0, usn);	
 		}
-		Reindenter.reindent(usn, ast, Strategy.REINDENT_EACH_LINE);
+		Reindenter.reindent(usn, ast, Strategy.SHIFT_ENTIRE_BLOCK);
 	}
 	
 	

@@ -5,6 +5,7 @@
     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
     xmlns:nuopc="http://www.earthsystemcurator.org/nuopc"
     xsi:schemaLocation="http://www.earthsystemcurator.org/nuopc ../model/nuopc.ecore"
-    name="thisIsAnATM">
+    name="ATM"
+    usesAllImports="true">
   <definesSetServices/>
 </nuopc:Model>

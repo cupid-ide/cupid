@@ -92,7 +92,7 @@ public class CodeExtraction {
      * <p>
      * @see parseLiteralStatement
      */
-	protected static IASTListNode<IBodyConstruct> parseLiteralStatementSequence(String string)
+	public static IASTListNode<IBodyConstruct> parseLiteralStatementSequence(String string)
     {
         string = "program p\n" + string + "\nend program"; //$NON-NLS-1$ //$NON-NLS-2$
         return ((ASTMainProgramNode)parseLiteralProgramUnit(string)).getBody();

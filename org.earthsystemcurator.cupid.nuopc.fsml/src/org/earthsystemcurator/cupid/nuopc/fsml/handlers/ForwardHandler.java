@@ -44,6 +44,8 @@ import org.eclipse.ltk.core.refactoring.TextFileChange;
 @SuppressWarnings("restriction")
 public class ForwardHandler extends AbstractHandler {
 	
+	public static String assertedFile = "C:\\Users\\Rocky\\Documents\\eclipse\\runtime-nuopc\\nuopc\\Asserted.nuopc";
+	
 	/**
 	 * The constructor.
 	 */
@@ -87,7 +89,7 @@ public class ForwardHandler extends AbstractHandler {
         @SuppressWarnings("unused")
         NUOPCPackage pack = NUOPCPackage.eINSTANCE;
                 
-        URI fileURI = URI.createFileURI(new File(MappingTestHandler.mfile).getAbsolutePath());            
+        URI fileURI = URI.createFileURI(new File(assertedFile).getAbsolutePath());            
         
         Resource resource = resourceSet.getResource(fileURI, true);
         

@@ -10,6 +10,7 @@ transformation nuopc(source : org.eclipse.photran.internal.core.parser, target :
  	top relation Module2Model {
  		 	
  		//varName : String;	
+ 		//dss : ModelDefinesSetServices;
  		
  		enforce domain source srcModule : ASTModuleNode {
  			moduleStmt = ms : ASTModuleStmtNode {
@@ -33,12 +34,14 @@ transformation nuopc(source : org.eclipse.photran.internal.core.parser, target :
  
  	relation Module2DefinesSetServices {
  		
+ 		snText : String;
+ 		
  		enforce domain source srcModule : ASTModuleNode {
  			moduleBody = mb : ASTSubroutineSubprogramNode {
  				subroutineStmt = ss : ASTSubroutineStmtNode {
  					subroutineName = sn : ASTSubroutineNameNode {
  						subroutineName = snToken : Token {
- 							text = snText : String {}
+ 							text = snText;
  						}
  					}
  					//SubroutinePars = sp : ASTSubroutineParNode {}
@@ -47,12 +50,13 @@ transformation nuopc(source : org.eclipse.photran.internal.core.parser, target :
  		}
  		 
  		enforce domain target tgtDSS : ModelDefinesSetServices {
- 			callsGenericSetServices = false; 
+ 			name = snText;
+ 			//callsGenericSetServices = false; 
  		}
  		
  		when { 			
  			snText.equalsIgnoreCase("SetServices");
- 			
+ 			println("snText = " + snText) == "";
  		}
  		
  	}

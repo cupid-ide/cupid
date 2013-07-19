@@ -15,6 +15,8 @@ import org.eclipse.emf.ecore.EObject;
  * <ul>
  *   <li>{@link org.earthsystemcurator.cupid.nuopc.fsml.nuopc.ModelDefinesSetServices#getName <em>Name</em>}</li>
  *   <li>{@link org.earthsystemcurator.cupid.nuopc.fsml.nuopc.ModelDefinesSetServices#isParameters <em>Parameters</em>}</li>
+ *   <li>{@link org.earthsystemcurator.cupid.nuopc.fsml.nuopc.ModelDefinesSetServices#getParamName_gcomp <em>Param Name gcomp</em>}</li>
+ *   <li>{@link org.earthsystemcurator.cupid.nuopc.fsml.nuopc.ModelDefinesSetServices#getParamName_rc <em>Param Name rc</em>}</li>
  *   <li>{@link org.earthsystemcurator.cupid.nuopc.fsml.nuopc.ModelDefinesSetServices#isCallsGenericSetServices <em>Calls Generic Set Services</em>}</li>
  *   <li>{@link org.earthsystemcurator.cupid.nuopc.fsml.nuopc.ModelDefinesSetServices#isCallsSetEntryPointPhase1 <em>Calls Set Entry Point Phase1</em>}</li>
  *   <li>{@link org.earthsystemcurator.cupid.nuopc.fsml.nuopc.ModelDefinesSetServices#isCallsSetEntryPointPhase2 <em>Calls Set Entry Point Phase2</em>}</li>
@@ -78,6 +80,58 @@ public interface ModelDefinesSetServices extends EObject {
 	 * @generated
 	 */
 	void setParameters(boolean value);
+
+	/**
+	 * Returns the value of the '<em><b>Param Name gcomp</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <p>
+	 * If the meaning of the '<em>Param Name gcomp</em>' attribute isn't clear,
+	 * there really should be more of a description here...
+	 * </p>
+	 * <!-- end-user-doc -->
+	 * @return the value of the '<em>Param Name gcomp</em>' attribute.
+	 * @see #setParamName_gcomp(String)
+	 * @see org.earthsystemcurator.cupid.nuopc.fsml.nuopc.NUOPCPackage#getModelDefinesSetServices_ParamName_gcomp()
+	 * @model
+	 * @generated
+	 */
+	String getParamName_gcomp();
+
+	/**
+	 * Sets the value of the '{@link org.earthsystemcurator.cupid.nuopc.fsml.nuopc.ModelDefinesSetServices#getParamName_gcomp <em>Param Name gcomp</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @param value the new value of the '<em>Param Name gcomp</em>' attribute.
+	 * @see #getParamName_gcomp()
+	 * @generated
+	 */
+	void setParamName_gcomp(String value);
+
+	/**
+	 * Returns the value of the '<em><b>Param Name rc</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <p>
+	 * If the meaning of the '<em>Param Name rc</em>' attribute isn't clear,
+	 * there really should be more of a description here...
+	 * </p>
+	 * <!-- end-user-doc -->
+	 * @return the value of the '<em>Param Name rc</em>' attribute.
+	 * @see #setParamName_rc(String)
+	 * @see org.earthsystemcurator.cupid.nuopc.fsml.nuopc.NUOPCPackage#getModelDefinesSetServices_ParamName_rc()
+	 * @model
+	 * @generated
+	 */
+	String getParamName_rc();
+
+	/**
+	 * Sets the value of the '{@link org.earthsystemcurator.cupid.nuopc.fsml.nuopc.ModelDefinesSetServices#getParamName_rc <em>Param Name rc</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @param value the new value of the '<em>Param Name rc</em>' attribute.
+	 * @see #getParamName_rc()
+	 * @generated
+	 */
+	void setParamName_rc(String value);
 
 	/**
 	 * Returns the value of the '<em><b>Calls Generic Set Services</b></em>' attribute.

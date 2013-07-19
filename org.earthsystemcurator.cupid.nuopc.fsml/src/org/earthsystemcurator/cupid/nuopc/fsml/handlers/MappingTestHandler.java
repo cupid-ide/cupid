@@ -52,7 +52,7 @@ public class MappingTestHandler extends AbstractHandler {
 	//public static String ffile = "C:\\Users\\Rocky\\Documents\\git\\cupid\\org.earthsystemcurator.cupid.nuopc.fsml\\instance\\atm.F90";
 	//public static String mfile = "C:\\Users\\Rocky\\Documents\\git\\cupid\\org.earthsystemcurator.cupid.nuopc.fsml\\instance\\Model.xmi";
 	
-	public static String mfile = "C:\\Users\\Rocky\\Documents\\eclipse\\runtime-nuopc\\nuopc\\Model.xmi";
+	public static String mfile = "C:\\Users\\Rocky\\Documents\\eclipse\\runtime-nuopc\\nuopc\\Model.nuopc";
 	
 	//public static String mfile = "file:///C:\\Users\\Rocky\\Documents\\eclipse\\runtime-nuopc\\nuopc\\Model.xmi";
 	

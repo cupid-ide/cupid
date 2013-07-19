@@ -34,8 +34,6 @@ public class Module2Model {
     return true;
   }
   
-  public String varName;
-  
   public Token modNameToken;
   
   public ASTModuleStmtNode ms;
@@ -50,16 +48,15 @@ public class Module2Model {
   
   public ASTModuleNameNode modName;
   
-  public boolean evaluateClause10() {
+  public void evaluateClause10() {
     boolean _Module2DefinesSetServices = false;
     Module2DefinesSetServices _Module2DefinesSetServices_tuple;
     if (this.srcModule != null && 
-        (_Module2DefinesSetServices_tuple = trafo.relation_Module2DefinesSetServices(this.srcModule)) != null)
+        (_Module2DefinesSetServices_tuple = trafo.push_relation_Module2DefinesSetServices(this.srcModule, null)) != null)
     {
       dss =  _Module2DefinesSetServices_tuple.tgtDSS;
       _Module2DefinesSetServices = true;
     }
-    return _Module2DefinesSetServices;
   }
   
   public boolean execute(final Transformation transformation) {
@@ -77,7 +74,7 @@ public class Module2Model {
     if (modNameToken.getText() == null) return false;
     modNameText =  modNameToken.getText();
     // Module2DefinesSetServices(srcModule, dss)
-    if (!evaluateClause10()) return false;
+    evaluateClause10();
     // tgtModel : Model {..}
     tgtModel = transformation.create(Model.class);
     // name = modNameText

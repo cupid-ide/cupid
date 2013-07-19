@@ -36,7 +36,11 @@ public class CodeQuery {
 						}
 						
 					}
-				}					
+				}
+				else {
+					//no definition
+					return false;
+				}
 			}
 			
 			//have not failed, verify lengths are the same
@@ -135,6 +139,39 @@ public class CodeQuery {
 			
 		}
 		return false;
+	}
+	
+	public static Set<ASTCallStmtNode> getCallStatement(IASTNode node, final String subroutineName) {
+		
+		Set<ASTCallStmtNode> ret = new HashSet<ASTCallStmtNode>();
+		
+		for (ASTCallStmtNode csn : node.findAll(ASTCallStmtNode.class)) {
+			
+			//System.out.println("Examining subroutine: " + csn.getSubroutineName()); 
+			List<Definition> defs = csn.getSubroutineName().resolveBinding();
+			
+			//find name before rename
+			if (defs.size() > 0) {
+				
+				boolean found = defs.get(0).getType().processUsing(new TypeProcessor<Boolean>() {
+					@Override
+					public Boolean ifFunctionType(String name, FunctionType functionType) {
+						if (name.equalsIgnoreCase(subroutineName)) {
+							return true;							
+						}						
+						return false;
+					}
+				});				
+				
+				if (found) ret.add(csn);
+			}
+			// no definition - just check for match
+			else if (csn.getSubroutineName().getText().equalsIgnoreCase(subroutineName)) {
+				ret.add(csn);
+			}
+			
+		}
+		return ret;
 	}
 	
 	/*

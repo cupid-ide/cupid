@@ -44,6 +44,8 @@ import org.eclipse.ltk.core.refactoring.TextFileChange;
 @SuppressWarnings("restriction")
 public class ReverseHandler extends AbstractHandler {
 	
+	public static String reverseFile = "C:\\Users\\Rocky\\Documents\\eclipse\\runtime-nuopc\\nuopc\\Reverse.nuopc";
+	
 	/**
 	 * The constructor.
 	 */
@@ -115,7 +117,7 @@ public class ReverseHandler extends AbstractHandler {
         @SuppressWarnings("unused")
         NUOPCPackage pack = NUOPCPackage.eINSTANCE;
                 
-        URI fileURI = URI.createFileURI(new File(MappingTestHandler.mfile).getAbsolutePath());            
+        URI fileURI = URI.createFileURI(new File(reverseFile).getAbsolutePath());            
         
         Resource resource = resourceSet.getResource(fileURI, true);
         
