@@ -1,23 +1,11 @@
 package org.earthsystemcurator.cupid.nuopc.fsml.handlers;
 
-import java.io.BufferedReader;
-import java.io.File;
-import java.io.IOException;
-import java.io.InputStreamReader;
-import java.io.Reader;
-import java.lang.reflect.InvocationTargetException;
-
-import org.earthsystemcurator.cupid.nuopc.fsml.mapping.ModelToModuleMapping;
-import org.earthsystemcurator.cupid.nuopc.fsml.nuopc.Model;
 import org.earthsystemcurator.cupid.nuopc.fsml.nuopc.NUOPCPackage;
 import org.eclipse.core.commands.AbstractHandler;
 import org.eclipse.core.commands.ExecutionEvent;
 import org.eclipse.core.commands.ExecutionException;
-import org.eclipse.core.resources.IFile;
 import org.eclipse.core.resources.IResource;
-import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IAdaptable;
-import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.compare.Comparison;
 import org.eclipse.emf.compare.Diff;
@@ -33,23 +21,13 @@ import org.eclipse.emf.compare.match.impl.MatchEngineFactoryImpl;
 import org.eclipse.emf.compare.match.impl.MatchEngineFactoryRegistryImpl;
 import org.eclipse.emf.compare.scope.IComparisonScope;
 import org.eclipse.emf.compare.utils.UseIdentifiers;
-
-import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.ecore.resource.ResourceSet;
 import org.eclipse.emf.ecore.resource.impl.ResourceSetImpl;
 import org.eclipse.emf.ecore.xmi.impl.XMIResourceFactoryImpl;
-import org.eclipse.photran.core.IFortranAST;
-import org.eclipse.photran.internal.core.parser.ASTModuleNode;
-import org.eclipse.photran.internal.core.vpg.PhotranVPG;
-import org.eclipse.text.edits.ReplaceEdit;
-import org.eclipse.ui.IWorkbenchWindow;
-import org.eclipse.ui.PlatformUI;
-import org.eclipse.ui.handlers.HandlerUtil;
-import org.eclipse.jface.dialogs.MessageDialog;
-import org.eclipse.jface.operation.IRunnableWithProgress;
 import org.eclipse.jface.viewers.ISelection;
 import org.eclipse.jface.viewers.IStructuredSelection;
-import org.eclipse.ltk.core.refactoring.TextFileChange;
+import org.eclipse.ui.IWorkbenchWindow;
+import org.eclipse.ui.handlers.HandlerUtil;
 
 /**
  * Our sample handler extends AbstractHandler, an IHandler base class.
@@ -80,12 +58,27 @@ public class CompareHandler extends AbstractHandler {
 
 		Comparison comp = compare();
 		for (Match m : comp.getMatches()) {
-			System.out.println("Match: " + m.toString());			
+			System.out.println("Match: " + m.toString());
+			for (Match sm : m.getSubmatches()) {
+				System.out.println("\tSubmatch: " + sm.toString());
+			}
 		}
 		for (Diff d : comp.getDifferences()) {
-			System.out.println("Diff: " + d.toString());			
+			System.out.println("Diff: " + d.toString());
+			System.out.println("\tRelated Match: " + d.getMatch());			
 		}
 
+		System.out.println("Merging from left to right...\n");
+		
+		//IMerger.Registry registry = EMFCompareIDEPlugin.getDefault().getMergerRegistry();
+		//registry.getHighestRankingMerger(diff).copyRightToLeft(diff, new BasicMonitor());
+		//IMerger.Registry registry = IMerger.RegistryImpl.createStandaloneInstance();
+		//for (Diff d : comp.getDifferences()) {
+		//	registry.getHighestRankingMerger(d).copyRightToLeft(d, new BasicMonitor());
+		//}
+		
+		System.out.println("Merge complete!");
+		
 		return null;
 	}
 

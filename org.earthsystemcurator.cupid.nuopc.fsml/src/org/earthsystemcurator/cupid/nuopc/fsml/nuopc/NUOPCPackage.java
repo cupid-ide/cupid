@@ -204,13 +204,22 @@ public interface NUOPCPackage extends EPackage {
 	int ATTACHES_METHOD = 2;
 
 	/**
+	 * The feature id for the '<em><b>Name</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int ATTACHES_METHOD__NAME = 0;
+
+	/**
 	 * The number of structural features of the '<em>Attaches Method</em>' class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int ATTACHES_METHOD_FEATURE_COUNT = 0;
+	int ATTACHES_METHOD_FEATURE_COUNT = 1;
 
 
 	/**
@@ -365,6 +374,17 @@ public interface NUOPCPackage extends EPackage {
 	EClass getAttachesMethod();
 
 	/**
+	 * Returns the meta object for the attribute '{@link org.earthsystemcurator.cupid.nuopc.fsml.nuopc.AttachesMethod#getName <em>Name</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the attribute '<em>Name</em>'.
+	 * @see org.earthsystemcurator.cupid.nuopc.fsml.nuopc.AttachesMethod#getName()
+	 * @see #getAttachesMethod()
+	 * @generated
+	 */
+	EAttribute getAttachesMethod_Name();
+
+	/**
 	 * Returns the factory that creates the instances of the model.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -503,6 +523,14 @@ public interface NUOPCPackage extends EPackage {
 		 * @generated
 		 */
 		EClass ATTACHES_METHOD = eINSTANCE.getAttachesMethod();
+
+		/**
+		 * The meta object literal for the '<em><b>Name</b></em>' attribute feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EAttribute ATTACHES_METHOD__NAME = eINSTANCE.getAttachesMethod_Name();
 
 	}
 
