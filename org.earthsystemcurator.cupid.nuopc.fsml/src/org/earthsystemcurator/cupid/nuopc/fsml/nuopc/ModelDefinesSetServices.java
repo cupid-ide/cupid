@@ -28,7 +28,7 @@ import org.eclipse.emf.ecore.EObject;
  * @model
  * @generated
  */
-public interface ModelDefinesSetServices extends EObject {
+public interface ModelDefinesSetServices extends Candidate<ModelDefinesSetServices> {
 	/**
 	 * Returns the value of the '<em><b>Name</b></em>' attribute.
 	 * <!-- begin-user-doc -->
@@ -40,7 +40,8 @@ public interface ModelDefinesSetServices extends EObject {
 	 * @return the value of the '<em>Name</em>' attribute.
 	 * @see #setName(String)
 	 * @see org.earthsystemcurator.cupid.nuopc.fsml.nuopc.NUOPCPackage#getModelDefinesSetServices_Name()
-	 * @model required="true"
+	 * @model id="true" required="true"
+	 *        annotation="http://www.earthsystemcog.org/projects/nuopc query='subroutineName'"
 	 * @generated
 	 */
 	String getName();
@@ -145,6 +146,7 @@ public interface ModelDefinesSetServices extends EObject {
 	 * @see #setCallsGenericSetServices(boolean)
 	 * @see org.earthsystemcurator.cupid.nuopc.fsml.nuopc.NUOPCPackage#getModelDefinesSetServices_CallsGenericSetServices()
 	 * @model required="true"
+	 *        annotation="http://www.earthsystemcog.org/projects/nuopc query='calls: routine_SetServices' essential='true'"
 	 * @generated
 	 */
 	boolean isCallsGenericSetServices();
@@ -171,6 +173,7 @@ public interface ModelDefinesSetServices extends EObject {
 	 * @see #setCallsSetEntryPointPhase1(boolean)
 	 * @see org.earthsystemcurator.cupid.nuopc.fsml.nuopc.NUOPCPackage#getModelDefinesSetServices_CallsSetEntryPointPhase1()
 	 * @model required="true"
+	 *        annotation="http://www.earthsystemcog.org/projects/nuopc query='calls: ESMF_GridCompSetEntryPoint'"
 	 * @generated
 	 */
 	boolean isCallsSetEntryPointPhase1();
@@ -197,6 +200,7 @@ public interface ModelDefinesSetServices extends EObject {
 	 * @see #setCallsSetEntryPointPhase2(boolean)
 	 * @see org.earthsystemcurator.cupid.nuopc.fsml.nuopc.NUOPCPackage#getModelDefinesSetServices_CallsSetEntryPointPhase2()
 	 * @model required="true"
+	 *        annotation="http://www.earthsystemcog.org/projects/nuopc query='calls: ESMF_GridCompSetEntryPoint'"
 	 * @generated
 	 */
 	boolean isCallsSetEntryPointPhase2();

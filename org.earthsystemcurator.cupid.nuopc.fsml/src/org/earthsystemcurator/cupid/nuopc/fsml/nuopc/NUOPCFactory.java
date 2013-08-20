@@ -40,6 +40,42 @@ public interface NUOPCFactory extends EFactory {
 	ModelDefinesSetServices createModelDefinesSetServices();
 
 	/**
+	 * Returns a new object of class '<em>Model Implements Init P1</em>'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return a new object of class '<em>Model Implements Init P1</em>'.
+	 * @generated
+	 */
+	ModelImplementsInitP1 createModelImplementsInitP1();
+
+	/**
+	 * Returns a new object of class '<em>Model Implements Init P2</em>'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return a new object of class '<em>Model Implements Init P2</em>'.
+	 * @generated
+	 */
+	ModelImplementsInitP2 createModelImplementsInitP2();
+
+	/**
+	 * Returns a new object of class '<em>Advertises Import Field</em>'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return a new object of class '<em>Advertises Import Field</em>'.
+	 * @generated
+	 */
+	AdvertisesImportField createAdvertisesImportField();
+
+	/**
+	 * Returns a new object of class '<em>Advertises Export Field</em>'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return a new object of class '<em>Advertises Export Field</em>'.
+	 * @generated
+	 */
+	AdvertisesExportField createAdvertisesExportField();
+
+	/**
 	 * Returns a new object of class '<em>Attaches Method</em>'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->

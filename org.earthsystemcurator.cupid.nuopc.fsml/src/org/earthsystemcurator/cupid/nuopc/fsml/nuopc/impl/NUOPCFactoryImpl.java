@@ -27,7 +27,7 @@ public class NUOPCFactoryImpl extends EFactoryImpl implements NUOPCFactory {
 	 */
 	public static NUOPCFactory init() {
 		try {
-			NUOPCFactory theNUOPCFactory = (NUOPCFactory)EPackage.Registry.INSTANCE.getEFactory("http://www.earthsystemcurator.org/nuopc"); 
+			NUOPCFactory theNUOPCFactory = (NUOPCFactory)EPackage.Registry.INSTANCE.getEFactory(NUOPCPackage.eNS_URI);
 			if (theNUOPCFactory != null) {
 				return theNUOPCFactory;
 			}
@@ -58,6 +58,10 @@ public class NUOPCFactoryImpl extends EFactoryImpl implements NUOPCFactory {
 		switch (eClass.getClassifierID()) {
 			case NUOPCPackage.MODEL: return createModel();
 			case NUOPCPackage.MODEL_DEFINES_SET_SERVICES: return createModelDefinesSetServices();
+			case NUOPCPackage.MODEL_IMPLEMENTS_INIT_P1: return createModelImplementsInitP1();
+			case NUOPCPackage.MODEL_IMPLEMENTS_INIT_P2: return createModelImplementsInitP2();
+			case NUOPCPackage.ADVERTISES_IMPORT_FIELD: return createAdvertisesImportField();
+			case NUOPCPackage.ADVERTISES_EXPORT_FIELD: return createAdvertisesExportField();
 			case NUOPCPackage.ATTACHES_METHOD: return createAttachesMethod();
 			default:
 				throw new IllegalArgumentException("The class '" + eClass.getName() + "' is not a valid classifier");
@@ -82,6 +86,46 @@ public class NUOPCFactoryImpl extends EFactoryImpl implements NUOPCFactory {
 	public ModelDefinesSetServices createModelDefinesSetServices() {
 		ModelDefinesSetServicesImpl modelDefinesSetServices = new ModelDefinesSetServicesImpl();
 		return modelDefinesSetServices;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public ModelImplementsInitP1 createModelImplementsInitP1() {
+		ModelImplementsInitP1Impl modelImplementsInitP1 = new ModelImplementsInitP1Impl();
+		return modelImplementsInitP1;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public ModelImplementsInitP2 createModelImplementsInitP2() {
+		ModelImplementsInitP2Impl modelImplementsInitP2 = new ModelImplementsInitP2Impl();
+		return modelImplementsInitP2;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public AdvertisesImportField createAdvertisesImportField() {
+		AdvertisesImportFieldImpl advertisesImportField = new AdvertisesImportFieldImpl();
+		return advertisesImportField;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public AdvertisesExportField createAdvertisesExportField() {
+		AdvertisesExportFieldImpl advertisesExportField = new AdvertisesExportFieldImpl();
+		return advertisesExportField;
 	}
 
 	/**

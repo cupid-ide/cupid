@@ -75,12 +75,51 @@ public class NUOPCSwitch<T> extends Switch<T> {
 			case NUOPCPackage.MODEL_DEFINES_SET_SERVICES: {
 				ModelDefinesSetServices modelDefinesSetServices = (ModelDefinesSetServices)theEObject;
 				T result = caseModelDefinesSetServices(modelDefinesSetServices);
+				if (result == null) result = caseCandidate(modelDefinesSetServices);
+				if (result == null) result = caseComparable(modelDefinesSetServices);
+				if (result == null) result = defaultCase(theEObject);
+				return result;
+			}
+			case NUOPCPackage.MODEL_IMPLEMENTS_INIT_P1: {
+				ModelImplementsInitP1 modelImplementsInitP1 = (ModelImplementsInitP1)theEObject;
+				T result = caseModelImplementsInitP1(modelImplementsInitP1);
+				if (result == null) result = defaultCase(theEObject);
+				return result;
+			}
+			case NUOPCPackage.MODEL_IMPLEMENTS_INIT_P2: {
+				ModelImplementsInitP2 modelImplementsInitP2 = (ModelImplementsInitP2)theEObject;
+				T result = caseModelImplementsInitP2(modelImplementsInitP2);
+				if (result == null) result = defaultCase(theEObject);
+				return result;
+			}
+			case NUOPCPackage.ADVERTISES_IMPORT_FIELD: {
+				AdvertisesImportField advertisesImportField = (AdvertisesImportField)theEObject;
+				T result = caseAdvertisesImportField(advertisesImportField);
+				if (result == null) result = defaultCase(theEObject);
+				return result;
+			}
+			case NUOPCPackage.ADVERTISES_EXPORT_FIELD: {
+				AdvertisesExportField advertisesExportField = (AdvertisesExportField)theEObject;
+				T result = caseAdvertisesExportField(advertisesExportField);
 				if (result == null) result = defaultCase(theEObject);
 				return result;
 			}
 			case NUOPCPackage.ATTACHES_METHOD: {
 				AttachesMethod attachesMethod = (AttachesMethod)theEObject;
 				T result = caseAttachesMethod(attachesMethod);
+				if (result == null) result = defaultCase(theEObject);
+				return result;
+			}
+			case NUOPCPackage.COMPARABLE: {
+				Comparable<?> comparable = (Comparable<?>)theEObject;
+				T result = caseComparable(comparable);
+				if (result == null) result = defaultCase(theEObject);
+				return result;
+			}
+			case NUOPCPackage.CANDIDATE: {
+				Candidate<?> candidate = (Candidate<?>)theEObject;
+				T result = caseCandidate(candidate);
+				if (result == null) result = caseComparable(candidate);
 				if (result == null) result = defaultCase(theEObject);
 				return result;
 			}
@@ -119,6 +158,66 @@ public class NUOPCSwitch<T> extends Switch<T> {
 	}
 
 	/**
+	 * Returns the result of interpreting the object as an instance of '<em>Model Implements Init P1</em>'.
+	 * <!-- begin-user-doc -->
+	 * This implementation returns null;
+	 * returning a non-null result will terminate the switch.
+	 * <!-- end-user-doc -->
+	 * @param object the target of the switch.
+	 * @return the result of interpreting the object as an instance of '<em>Model Implements Init P1</em>'.
+	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+	 * @generated
+	 */
+	public T caseModelImplementsInitP1(ModelImplementsInitP1 object) {
+		return null;
+	}
+
+	/**
+	 * Returns the result of interpreting the object as an instance of '<em>Model Implements Init P2</em>'.
+	 * <!-- begin-user-doc -->
+	 * This implementation returns null;
+	 * returning a non-null result will terminate the switch.
+	 * <!-- end-user-doc -->
+	 * @param object the target of the switch.
+	 * @return the result of interpreting the object as an instance of '<em>Model Implements Init P2</em>'.
+	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+	 * @generated
+	 */
+	public T caseModelImplementsInitP2(ModelImplementsInitP2 object) {
+		return null;
+	}
+
+	/**
+	 * Returns the result of interpreting the object as an instance of '<em>Advertises Import Field</em>'.
+	 * <!-- begin-user-doc -->
+	 * This implementation returns null;
+	 * returning a non-null result will terminate the switch.
+	 * <!-- end-user-doc -->
+	 * @param object the target of the switch.
+	 * @return the result of interpreting the object as an instance of '<em>Advertises Import Field</em>'.
+	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+	 * @generated
+	 */
+	public T caseAdvertisesImportField(AdvertisesImportField object) {
+		return null;
+	}
+
+	/**
+	 * Returns the result of interpreting the object as an instance of '<em>Advertises Export Field</em>'.
+	 * <!-- begin-user-doc -->
+	 * This implementation returns null;
+	 * returning a non-null result will terminate the switch.
+	 * <!-- end-user-doc -->
+	 * @param object the target of the switch.
+	 * @return the result of interpreting the object as an instance of '<em>Advertises Export Field</em>'.
+	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+	 * @generated
+	 */
+	public T caseAdvertisesExportField(AdvertisesExportField object) {
+		return null;
+	}
+
+	/**
 	 * Returns the result of interpreting the object as an instance of '<em>Attaches Method</em>'.
 	 * <!-- begin-user-doc -->
 	 * This implementation returns null;
@@ -130,6 +229,36 @@ public class NUOPCSwitch<T> extends Switch<T> {
 	 * @generated
 	 */
 	public T caseAttachesMethod(AttachesMethod object) {
+		return null;
+	}
+
+	/**
+	 * Returns the result of interpreting the object as an instance of '<em>Comparable</em>'.
+	 * <!-- begin-user-doc -->
+	 * This implementation returns null;
+	 * returning a non-null result will terminate the switch.
+	 * <!-- end-user-doc -->
+	 * @param object the target of the switch.
+	 * @return the result of interpreting the object as an instance of '<em>Comparable</em>'.
+	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+	 * @generated
+	 */
+	public <c> T caseComparable(Comparable<c> object) {
+		return null;
+	}
+
+	/**
+	 * Returns the result of interpreting the object as an instance of '<em>Candidate</em>'.
+	 * <!-- begin-user-doc -->
+	 * This implementation returns null;
+	 * returning a non-null result will terminate the switch.
+	 * <!-- end-user-doc -->
+	 * @param object the target of the switch.
+	 * @return the result of interpreting the object as an instance of '<em>Candidate</em>'.
+	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+	 * @generated
+	 */
+	public <c> T caseCandidate(Candidate<c> object) {
 		return null;
 	}
 

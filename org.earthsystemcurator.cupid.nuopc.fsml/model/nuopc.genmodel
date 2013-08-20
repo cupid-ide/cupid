@@ -10,18 +10,40 @@
       <genFeatures createChild="false" propertyDescription="name" ecoreFeature="ecore:EAttribute nuopc.ecore#//Model/name"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute nuopc.ecore#//Model/usesAllImports"/>
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference nuopc.ecore#//Model/definesSetServices"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute nuopc.ecore#//Model/singlePublicSubroutine"/>
+      <genFeatures children="true" createChild="true" propertyCategory="" propertyDescription=""
+          propertySortChoices="true" ecoreFeature="ecore:EReference nuopc.ecore#//Model/implementsInitP1"/>
+      <genFeatures children="true" createChild="true" propertySortChoices="true" ecoreFeature="ecore:EReference nuopc.ecore#//Model/implementsInitP2"/>
     </genClasses>
     <genClasses ecoreClass="nuopc.ecore#//ModelDefinesSetServices">
       <genFeatures createChild="false" propertyCategory="" propertyDescription=""
           ecoreFeature="ecore:EAttribute nuopc.ecore#//ModelDefinesSetServices/name"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute nuopc.ecore#//ModelDefinesSetServices/parameters"/>
-      <genFeatures property="None" createChild="false" ecoreFeature="ecore:EAttribute nuopc.ecore#//ModelDefinesSetServices/paramName_gcomp"/>
-      <genFeatures property="None" createChild="false" ecoreFeature="ecore:EAttribute nuopc.ecore#//ModelDefinesSetServices/paramName_rc"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute nuopc.ecore#//ModelDefinesSetServices/paramName_gcomp"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute nuopc.ecore#//ModelDefinesSetServices/paramName_rc"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute nuopc.ecore#//ModelDefinesSetServices/callsGenericSetServices"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute nuopc.ecore#//ModelDefinesSetServices/callsSetEntryPointPhase1"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute nuopc.ecore#//ModelDefinesSetServices/callsSetEntryPointPhase2"/>
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference nuopc.ecore#//ModelDefinesSetServices/attachesMethod"/>
     </genClasses>
-    <genClasses ecoreClass="nuopc.ecore#//AttachesMethod"/>
+    <genClasses ecoreClass="nuopc.ecore#//ModelImplementsInitP1">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute nuopc.ecore#//ModelImplementsInitP1/name"/>
+    </genClasses>
+    <genClasses ecoreClass="nuopc.ecore#//ModelImplementsInitP2">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute nuopc.ecore#//ModelImplementsInitP2/name"/>
+    </genClasses>
+    <genClasses ecoreClass="nuopc.ecore#//AttachesMethod">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute nuopc.ecore#//AttachesMethod/name"/>
+    </genClasses>
+    <genClasses image="false" ecoreClass="nuopc.ecore#//Comparable">
+      <genTypeParameters ecoreTypeParameter="nuopc.ecore#//Comparable/c"/>
+      <genOperations ecoreOperation="nuopc.ecore#//Comparable/compareTo">
+        <genParameters ecoreParameter="nuopc.ecore#//Comparable/compareTo/other"/>
+      </genOperations>
+    </genClasses>
+    <genClasses ecoreClass="nuopc.ecore#//Candidate">
+      <genTypeParameters ecoreTypeParameter="nuopc.ecore#//Candidate/c"/>
+      <genOperations ecoreOperation="nuopc.ecore#//Candidate/score"/>
+    </genClasses>
   </genPackages>
 </genmodel:GenModel>

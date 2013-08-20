@@ -127,7 +127,7 @@ public class ModelToModuleMapping extends Mapping<Model, ASTModuleNode> {
 		
 		for (Mapping<ModelDefinesSetServices, ASTSubroutineSubprogramNode> x : mappingsDefinesSetServices) {
 			if (x.certain()) {
-				modelElem.setDefinesSetServices(x.modelElem);
+				modelElem.getDefinesSetServices().add(x.modelElem);
 				return;
 			}
 		}
@@ -141,10 +141,10 @@ public class ModelToModuleMapping extends Mapping<Model, ASTModuleNode> {
 			
 			if (modelElem.getDefinesSetServices() != null) {				
 				ASTSubroutineSubprogramNode ssn = 
-						CodeQuery.findSubroutineByName(astElem, modelElem.getDefinesSetServices().getName());
+						CodeQuery.findSubroutineByName(astElem, modelElem.getDefinesSetServices().get(0).getName());
 						
 				ModelDefinesSetServicesToSubroutineMapping map = 
-					new ModelDefinesSetServicesToSubroutineMapping(modelElem.getDefinesSetServices(), ssn, ast);
+					new ModelDefinesSetServicesToSubroutineMapping(modelElem.getDefinesSetServices().get(0), ssn, ast);
 			
 				ssn = map.forward();
 				System.out.println("enclosing scope = " + ssn.getEnclosingScope());
@@ -160,22 +160,7 @@ public class ModelToModuleMapping extends Mapping<Model, ASTModuleNode> {
 	}
 	
 	public void reverseName() {
-		
-		/*
-		if (astElem == null)
-			return null;
 				
-		if (astElem.getModuleStmt() == null)
-			return null;
-		
-		if (astElem.getModuleStmt().getModuleName() == null)
-			return null;				
-		
-		//if (modelElem == null)
-		//	modelElem = NUOPCFactory.eINSTANCE.createModel();
-		 
-		 */
-		
 		try {
 			modelElem.setName(astElem.getModuleStmt().getModuleName().getModuleName().getText());
 		}

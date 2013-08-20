@@ -42,10 +42,6 @@
    <extension
          point="org.eclipse.ui.handlers">
       <handler
-            class="org.earthsystemcurator.cupid.nuopc.fsml.handlers.MappingTestHandler"
-            commandId="org.earthsystemcurator.cupid.nuopc.fsml.commands.sampleCommand">
-      </handler>
-      <handler
             class="org.earthsystemcurator.cupid.nuopc.fsml.handlers.ReverseHandler"
             commandId="org.earthsystemcurator.cupid.nuopc.fsml.commands.reverseCommand">
       </handler>
@@ -66,11 +62,6 @@
                id="org.earthsystemcurator.cupid.nuopc.fsml.menus.sampleMenu"
                label="Cupid"
                mnemonic="M">
-            <command
-                  commandId="org.earthsystemcurator.cupid.nuopc.fsml.commands.sampleCommand"
-                  id="org.earthsystemcurator.cupid.nuopc.fsml.menus.sampleCommand"
-                  mnemonic="S">
-            </command>
             <command
                   commandId="org.earthsystemcurator.cupid.nuopc.fsml.commands.reverseCommand"
                   id="org.earthsystemcurator.cupid.nuopc.fsml.menus.reverseCommand"
@@ -100,12 +91,6 @@
                   icon="icons/sample.gif"
                   id="org.earthsystemcurator.cupid.nuopc.fsml.toolbars.reverseCommand"
                   tooltip="Reverse engineer">
-            </command>
-            <command
-                  commandId="org.earthsystemcurator.cupid.nuopc.fsml.commands.sampleCommand"
-                  icon="icons/sample.gif"
-                  id="org.earthsystemcurator.cupid.nuopc.fsml.toolbars.sampleCommand"
-                  tooltip="Say hello world">
             </command>
             <command
                   commandId="org.earthsystemcurator.cupid.nuopc.fsml.commands.forwardCommand"

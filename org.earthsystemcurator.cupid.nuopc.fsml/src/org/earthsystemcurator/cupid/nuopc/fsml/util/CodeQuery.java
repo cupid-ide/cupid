@@ -3,12 +3,17 @@ package org.earthsystemcurator.cupid.nuopc.fsml.util;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import org.eclipse.photran.internal.core.analysis.binding.Definition;
+import org.eclipse.photran.internal.core.analysis.types.DerivedType;
 import org.eclipse.photran.internal.core.analysis.types.FunctionType;
 import org.eclipse.photran.internal.core.analysis.types.Type;
 import org.eclipse.photran.internal.core.analysis.types.TypeProcessor;
 import org.eclipse.photran.internal.core.parser.ASTCallStmtNode;
+import org.eclipse.photran.internal.core.parser.ASTModuleNode;
+import org.eclipse.photran.internal.core.parser.ASTSubroutineArgNode;
 import org.eclipse.photran.internal.core.parser.ASTSubroutineParNode;
 import org.eclipse.photran.internal.core.parser.ASTSubroutineSubprogramNode;
 import org.eclipse.photran.internal.core.parser.IASTNode;
@@ -16,6 +21,16 @@ import org.eclipse.photran.internal.core.parser.IASTNode;
 @SuppressWarnings("restriction")
 public class CodeQuery {
 
+	public static String moduleName(ASTModuleNode node) {
+		return node.getModuleStmt().getModuleName().getModuleName().getText();
+	}
+	
+	public static String subroutineName(ASTSubroutineSubprogramNode node) {
+		return node.getNameToken().getText();		
+	}
+	
+	
+	
 	public static boolean matchesParamTypes(ASTSubroutineSubprogramNode node, Type... types) {
 		
 		int idxType = 0;
@@ -52,6 +67,114 @@ public class CodeQuery {
 			return true;				
 		}
 		return false;
+	}
+	
+	
+	public static Set<ASTSubroutineSubprogramNode> subroutine(IASTNode node, String pattern) {
+		
+		System.out.println("subroutine: " + pattern);
+		
+		Pattern p = Pattern.compile("((?:\\w+)|(?:\\*))\\(((?:(integer|logical|type\\(\\w+\\)),?\\s*)*)\\)");
+		Matcher match = p.matcher(pattern);
+		
+		if (!match.matches()) {
+			throw new RuntimeException("Illegal subroutine pattern: " + pattern);
+		}
+		
+		//for (int i=0; i <= match.groupCount(); i++) {
+		//	System.out.println("Group: " + match.group(i));
+		//}
+		
+		String subroutineName = match.group(1);
+		String[] paramTypes = match.group(2).split("\\s*,\\s*");
+		
+		for (int i=0; i < paramTypes.length; i++) {
+			System.out.println("Param = " + paramTypes[i]);
+		}
+		
+		Type[] types = new Type[paramTypes.length];
+		
+		for (int i=0; i < paramTypes.length; i++) {
+			if (paramTypes[i].equalsIgnoreCase("integer")) {
+				types[i] = Type.INTEGER;
+			}
+			else if (paramTypes[i].equalsIgnoreCase("logical")) {
+				types[i] = Type.LOGICAL;
+			}
+			//TODO: FILL IN OTHER TYPES AS NEEDED
+			else if (paramTypes[i].startsWith("type(")) {
+				types[i] = new DerivedType(paramTypes[i].substring(5, paramTypes[i].length()-1));				
+			}
+			else {
+				throw new RuntimeException("Cannot handle type: " + paramTypes[i]);
+			}
+ 				
+		}
+		
+		
+		HashSet<ASTSubroutineSubprogramNode> result = new HashSet<ASTSubroutineSubprogramNode>();
+		
+		Set<ASTSubroutineSubprogramNode> nodes = node.findAll(ASTSubroutineSubprogramNode.class);
+		ssnloop: for (ASTSubroutineSubprogramNode ssn : nodes) {
+			
+			if (!subroutineName.equals("*")) {
+				if (!ssn.getNameToken().getText().equalsIgnoreCase(subroutineName)) {
+					continue ssnloop;
+				}
+			}
+			
+			int idxType = 0;
+			
+			if (ssn.getSubroutineStmt().getSubroutinePars() != null) {
+				for (ASTSubroutineParNode spn : ssn.getSubroutineStmt().getSubroutinePars()) {
+					
+					List<Definition> defs = spn.getVariableName().resolveBinding();
+					if (defs.size() > 0) {
+						
+						if (types.length > idxType) {
+							
+							if (!defs.get(0).getType().equals(types[idxType])) {
+								continue ssnloop;
+							}
+							else {
+								idxType++;
+							}
+							
+						}
+					}					
+				}
+				
+				//have not failed, verify lengths are the same
+				if (ssn.getSubroutineStmt().getSubroutinePars().size() == types.length) {
+					result.add(ssn);
+				}
+			}
+			else if (types.length == 0) {
+				//no params				
+				result.add(ssn);				
+			}
+				
+			
+		}
+		
+		return result;
+		
+	}
+	
+	public static Set<ASTSubroutineSubprogramNode> findSubroutineByParamTypes(IASTNode node, String... stypes) {
+		Type[] types = new Type[stypes.length];
+		
+		for (int i=0; i<stypes.length; i++) {
+			if (stypes[i].equalsIgnoreCase("integer")) {
+				types[i] = Type.INTEGER;
+			}
+			//FILL IN OTHER TYPES
+			else {
+				types[i] = new DerivedType(stypes[i]);
+			}
+ 				
+		}
+		return findSubroutineByParamTypes(node, types);
 	}
 	
 	public static Set<ASTSubroutineSubprogramNode> findSubroutineByParamTypes(IASTNode node, Type... types) {
@@ -111,7 +234,23 @@ public class CodeQuery {
 		return null;
 	}
 	
-	public static boolean containsCall(IASTNode node, final String subroutineName) {
+	
+	public static String argByKeyword(ASTCallStmtNode node, String keyword) {
+		
+		for (ASTSubroutineArgNode san : node.getArgList()) {
+			if (san.getName() != null && san.getName().getText().equalsIgnoreCase(keyword)) {
+				//TODO: handle different kinds of expressions here
+				return san.getExpr().toString();						
+			}
+		}
+		
+		return null;
+	}
+	
+	public static Set<ASTCallStmtNode> call(IASTNode node, final String subroutineName) {
+		
+		HashSet<ASTCallStmtNode> result = new HashSet<ASTCallStmtNode>();
+		
 		for (ASTCallStmtNode csn : node.findAll(ASTCallStmtNode.class)) {
 			
 			//System.out.println("Examining subroutine: " + csn.getSubroutineName()); 
@@ -120,9 +259,47 @@ public class CodeQuery {
 			//find name before rename
 			if (defs.size() > 0) {
 				
+				//defs.get(0).getTokenRef().
 				boolean found = defs.get(0).getType().processUsing(new TypeProcessor<Boolean>() {
 					@Override
 					public Boolean ifFunctionType(String name, FunctionType functionType) {
+						//System.out.println("\tExamining function: " + name);
+						if (name.equalsIgnoreCase(subroutineName)) {
+							return true;							
+						}
+						return false;
+					}
+				});				
+				
+				if (found) {
+					result.add(csn);
+				}
+			}
+			// no definition - just check for match
+			else if (csn.getSubroutineName().getText().equalsIgnoreCase(subroutineName)) {
+				//System.out.println("\tNo defs found, comparing subroutine names");
+				result.add(csn);	
+			}
+			
+		}
+		return result;
+	}
+	
+	public static boolean calls(IASTNode node, final String subroutineName) {
+		
+		for (ASTCallStmtNode csn : node.findAll(ASTCallStmtNode.class)) {
+			
+			System.out.println("Examining subroutine: " + csn.getSubroutineName()); 
+			List<Definition> defs = csn.getSubroutineName().resolveBinding();
+			
+			//find name before rename
+			if (defs.size() > 0) {
+				
+				//defs.get(0).getTokenRef().
+				boolean found = defs.get(0).getType().processUsing(new TypeProcessor<Boolean>() {
+					@Override
+					public Boolean ifFunctionType(String name, FunctionType functionType) {
+						//System.out.println("\tExamining function: " + name);
 						if (name.equalsIgnoreCase(subroutineName)) {
 							return true;							
 						}
@@ -134,6 +311,7 @@ public class CodeQuery {
 			}
 			// no definition - just check for match
 			else if (csn.getSubroutineName().getText().equalsIgnoreCase(subroutineName)) {
+				//System.out.println("\tNo defs found, comparing subroutine names");
 				return true;		
 			}
 			
@@ -212,5 +390,13 @@ public class CodeQuery {
 				
 		return result;
 	}
+	
+	//testing
+	public static void main(String[] args) {
+		CodeQuery.subroutine(null, "setServices(logical,integer)");
+		CodeQuery.subroutine(null, "*(logical,integer,type(blah))");
+		CodeQuery.subroutine(null, "setServices()");
+	}
+	
 	
 }

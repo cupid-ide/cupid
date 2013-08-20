@@ -2,6 +2,7 @@
  */
 package org.earthsystemcurator.cupid.nuopc.fsml.nuopc;
 
+import java.lang.Comparable;
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.ecore.EObject;
 
@@ -16,11 +17,14 @@ import org.eclipse.emf.ecore.EObject;
  *   <li>{@link org.earthsystemcurator.cupid.nuopc.fsml.nuopc.Model#getName <em>Name</em>}</li>
  *   <li>{@link org.earthsystemcurator.cupid.nuopc.fsml.nuopc.Model#isUsesAllImports <em>Uses All Imports</em>}</li>
  *   <li>{@link org.earthsystemcurator.cupid.nuopc.fsml.nuopc.Model#getDefinesSetServices <em>Defines Set Services</em>}</li>
+ *   <li>{@link org.earthsystemcurator.cupid.nuopc.fsml.nuopc.Model#getSinglePublicSubroutine <em>Single Public Subroutine</em>}</li>
+ *   <li>{@link org.earthsystemcurator.cupid.nuopc.fsml.nuopc.Model#getImplementsInitP1 <em>Implements Init P1</em>}</li>
+ *   <li>{@link org.earthsystemcurator.cupid.nuopc.fsml.nuopc.Model#getImplementsInitP2 <em>Implements Init P2</em>}</li>
  * </ul>
  * </p>
  *
  * @see org.earthsystemcurator.cupid.nuopc.fsml.nuopc.NUOPCPackage#getModel()
- * @model
+ * @model annotation="http://www.earthsystemcog.org/projects/nuopc query='module'"
  * @generated
  */
 public interface Model extends EObject {
@@ -36,6 +40,7 @@ public interface Model extends EObject {
 	 * @see #setName(String)
 	 * @see org.earthsystemcurator.cupid.nuopc.fsml.nuopc.NUOPCPackage#getModel_Name()
 	 * @model id="true" required="true"
+	 *        annotation="http://www.earthsystemcog.org/projects/nuopc query='moduleName'"
 	 * @generated
 	 */
 	String getName();
@@ -77,29 +82,100 @@ public interface Model extends EObject {
 	void setUsesAllImports(boolean value);
 
 	/**
-	 * Returns the value of the '<em><b>Defines Set Services</b></em>' containment reference.
+	 * Returns the value of the '<em><b>Defines Set Services</b></em>' containment reference list.
+	 * The list contents are of type {@link org.earthsystemcurator.cupid.nuopc.fsml.nuopc.ModelDefinesSetServices}.
 	 * <!-- begin-user-doc -->
 	 * <p>
 	 * If the meaning of the '<em>Defines Set Services</em>' reference isn't clear,
 	 * there really should be more of a description here...
 	 * </p>
 	 * <!-- end-user-doc -->
-	 * @return the value of the '<em>Defines Set Services</em>' containment reference.
-	 * @see #setDefinesSetServices(ModelDefinesSetServices)
+	 * @return the value of the '<em>Defines Set Services</em>' containment reference list.
 	 * @see org.earthsystemcurator.cupid.nuopc.fsml.nuopc.NUOPCPackage#getModel_DefinesSetServices()
-	 * @model containment="true"
+	 * @model containment="true" keys="name"
+	 *        annotation="http://www.earthsystemcog.org/projects/nuopc query='subroutine: *(type(ESMF_GridComp), integer)'"
 	 * @generated
 	 */
-	ModelDefinesSetServices getDefinesSetServices();
+	EList<ModelDefinesSetServices> getDefinesSetServices();
 
 	/**
-	 * Sets the value of the '{@link org.earthsystemcurator.cupid.nuopc.fsml.nuopc.Model#getDefinesSetServices <em>Defines Set Services</em>}' containment reference.
+	 * Returns the value of the '<em><b>Single Public Subroutine</b></em>' attribute.
 	 * <!-- begin-user-doc -->
+	 * <p>
+	 * If the meaning of the '<em>Single Public Subroutine</em>' attribute isn't clear,
+	 * there really should be more of a description here...
+	 * </p>
 	 * <!-- end-user-doc -->
-	 * @param value the new value of the '<em>Defines Set Services</em>' containment reference.
-	 * @see #getDefinesSetServices()
+	 * @return the value of the '<em>Single Public Subroutine</em>' attribute.
+	 * @see #setSinglePublicSubroutine(String)
+	 * @see org.earthsystemcurator.cupid.nuopc.fsml.nuopc.NUOPCPackage#getModel_SinglePublicSubroutine()
+	 * @model annotation="http://www.earthsystemcog.org/projects/nuopc query='hasSinglePublicMember' transform='addPublicMember'"
 	 * @generated
 	 */
-	void setDefinesSetServices(ModelDefinesSetServices value);
+	String getSinglePublicSubroutine();
+
+	/**
+	 * Sets the value of the '{@link org.earthsystemcurator.cupid.nuopc.fsml.nuopc.Model#getSinglePublicSubroutine <em>Single Public Subroutine</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @param value the new value of the '<em>Single Public Subroutine</em>' attribute.
+	 * @see #getSinglePublicSubroutine()
+	 * @generated
+	 */
+	void setSinglePublicSubroutine(String value);
+
+	/**
+	 * Returns the value of the '<em><b>Implements Init P1</b></em>' containment reference.
+	 * <!-- begin-user-doc -->
+	 * <p>
+	 * If the meaning of the '<em>Implements Init P1</em>' reference isn't clear,
+	 * there really should be more of a description here...
+	 * </p>
+	 * <!-- end-user-doc -->
+	 * @return the value of the '<em>Implements Init P1</em>' containment reference.
+	 * @see #setImplementsInitP1(ModelImplementsInitP1)
+	 * @see org.earthsystemcurator.cupid.nuopc.fsml.nuopc.NUOPCPackage#getModel_ImplementsInitP1()
+	 * @model containment="true"
+	 *        annotation="http://www.earthsystemcog.org/projects/nuopc query='subroutine: *(type(ESMF_GridComp), type(ESMF_State), type(ESMF_State), type(ESMF_Clock), integer)'"
+	 * @generated
+	 */
+	ModelImplementsInitP1 getImplementsInitP1();
+
+	/**
+	 * Sets the value of the '{@link org.earthsystemcurator.cupid.nuopc.fsml.nuopc.Model#getImplementsInitP1 <em>Implements Init P1</em>}' containment reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @param value the new value of the '<em>Implements Init P1</em>' containment reference.
+	 * @see #getImplementsInitP1()
+	 * @generated
+	 */
+	void setImplementsInitP1(ModelImplementsInitP1 value);
+
+	/**
+	 * Returns the value of the '<em><b>Implements Init P2</b></em>' containment reference.
+	 * <!-- begin-user-doc -->
+	 * <p>
+	 * If the meaning of the '<em>Implements Init P2</em>' reference isn't clear,
+	 * there really should be more of a description here...
+	 * </p>
+	 * <!-- end-user-doc -->
+	 * @return the value of the '<em>Implements Init P2</em>' containment reference.
+	 * @see #setImplementsInitP2(ModelImplementsInitP2)
+	 * @see org.earthsystemcurator.cupid.nuopc.fsml.nuopc.NUOPCPackage#getModel_ImplementsInitP2()
+	 * @model containment="true"
+	 *        annotation="http://www.earthsystemcog.org/projects/nuopc query='subroutine: *(type(ESMF_GridComp), type(ESMF_State), type(ESMF_State), type(ESMF_Clock), integer)'"
+	 * @generated
+	 */
+	ModelImplementsInitP2 getImplementsInitP2();
+
+	/**
+	 * Sets the value of the '{@link org.earthsystemcurator.cupid.nuopc.fsml.nuopc.Model#getImplementsInitP2 <em>Implements Init P2</em>}' containment reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @param value the new value of the '<em>Implements Init P2</em>' containment reference.
+	 * @see #getImplementsInitP2()
+	 * @generated
+	 */
+	void setImplementsInitP2(ModelImplementsInitP2 value);
 
 } // Model

@@ -117,7 +117,7 @@ public class ModelDefinesSetServicesToSubroutineMapping extends Mapping<ModelDef
 	}
 	
 	protected boolean reverseCallsGenericSetServices() {
-		if (CodeQuery.containsCall(astElem, "routine_SetServices")) {
+		if (CodeQuery.calls(astElem, "routine_SetServices")) {
 			modelElem.setCallsGenericSetServices(true);
 			return true;
 		}
@@ -325,7 +325,7 @@ public class ModelDefinesSetServicesToSubroutineMapping extends Mapping<ModelDef
 		if (modelElem.isCallsGenericSetServices()) {
 			
 			/* do we need to check this -- or will it only be called when forwarding is necessary? */
-			if (!CodeQuery.containsCall(astElem, "routine_SetServices")) {
+			if (!CodeQuery.calls(astElem, "routine_SetServices")) {
 				
 				//retrieve parameter names
 				String param1 = "gcomp";

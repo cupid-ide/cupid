@@ -10,6 +10,7 @@ import java.lang.reflect.InvocationTargetException;
 import org.earthsystemcurator.cupid.nuopc.fsml.mapping.ModelToModuleMapping;
 import org.earthsystemcurator.cupid.nuopc.fsml.nuopc.Model;
 import org.earthsystemcurator.cupid.nuopc.fsml.nuopc.NUOPCPackage;
+import org.earthsystemcurator.cupid.nuopc.fsml.re.ReverseEngineer;
 import org.eclipse.core.commands.AbstractHandler;
 import org.eclipse.core.commands.ExecutionEvent;
 import org.eclipse.core.commands.ExecutionException;
@@ -124,9 +125,18 @@ public class ReverseHandler extends AbstractHandler {
         //Model m = (Model) resource.getEObject("/");
         //System.out.println("Model = " + m);
         
+        
+        ReverseEngineer re = new ReverseEngineer();
+        Model m = re.reverse(ast);
+        
+        if (m == null) return null;
+        
+        /*
         ModelToModuleMapping map = 
         		new ModelToModuleMapping(null, (ASTModuleNode) ast.getRoot().getProgramUnitList().get(0), ast);
         Model m = map.reverse();
+        */
+        
         resource.getContents().clear();
         resource.getContents().add(m);
         try {
@@ -135,6 +145,8 @@ public class ReverseHandler extends AbstractHandler {
 			System.out.println("Error saving model file: ");
 			e1.printStackTrace();
 		}
+        
+        
         
         //ModelToModuleMapping map = new ModelToModuleMapping(m, null);
         //System.out.println("Forward: " + map.forward().);

@@ -56,6 +56,26 @@ public interface NUOPCPackage extends EPackage {
 	NUOPCPackage eINSTANCE = org.earthsystemcurator.cupid.nuopc.fsml.nuopc.impl.NUOPCPackageImpl.init();
 
 	/**
+	 * The meta object id for the '{@link java.lang.Comparable <em>Comparable</em>}' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see java.lang.Comparable
+	 * @see org.earthsystemcurator.cupid.nuopc.fsml.nuopc.impl.NUOPCPackageImpl#getComparable()
+	 * @generated
+	 */
+	int COMPARABLE = 7;
+
+	/**
+	 * The meta object id for the '{@link org.earthsystemcurator.cupid.nuopc.fsml.nuopc.Candidate <em>Candidate</em>}' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see org.earthsystemcurator.cupid.nuopc.fsml.nuopc.Candidate
+	 * @see org.earthsystemcurator.cupid.nuopc.fsml.nuopc.impl.NUOPCPackageImpl#getCandidate()
+	 * @generated
+	 */
+	int CANDIDATE = 8;
+
+	/**
 	 * The meta object id for the '{@link org.earthsystemcurator.cupid.nuopc.fsml.nuopc.impl.ModelImpl <em>Model</em>}' class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -84,7 +104,7 @@ public interface NUOPCPackage extends EPackage {
 	int MODEL__USES_ALL_IMPORTS = 1;
 
 	/**
-	 * The feature id for the '<em><b>Defines Set Services</b></em>' containment reference.
+	 * The feature id for the '<em><b>Defines Set Services</b></em>' containment reference list.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
@@ -93,13 +113,58 @@ public interface NUOPCPackage extends EPackage {
 	int MODEL__DEFINES_SET_SERVICES = 2;
 
 	/**
+	 * The feature id for the '<em><b>Single Public Subroutine</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int MODEL__SINGLE_PUBLIC_SUBROUTINE = 3;
+
+	/**
+	 * The feature id for the '<em><b>Implements Init P1</b></em>' containment reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int MODEL__IMPLEMENTS_INIT_P1 = 4;
+
+	/**
+	 * The feature id for the '<em><b>Implements Init P2</b></em>' containment reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int MODEL__IMPLEMENTS_INIT_P2 = 5;
+
+	/**
 	 * The number of structural features of the '<em>Model</em>' class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int MODEL_FEATURE_COUNT = 3;
+	int MODEL_FEATURE_COUNT = 6;
+
+	/**
+	 * The number of structural features of the '<em>Comparable</em>' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int COMPARABLE_FEATURE_COUNT = 0;
+
+	/**
+	 * The number of structural features of the '<em>Candidate</em>' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int CANDIDATE_FEATURE_COUNT = COMPARABLE_FEATURE_COUNT + 0;
 
 	/**
 	 * The meta object id for the '{@link org.earthsystemcurator.cupid.nuopc.fsml.nuopc.impl.ModelDefinesSetServicesImpl <em>Model Defines Set Services</em>}' class.
@@ -118,7 +183,7 @@ public interface NUOPCPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int MODEL_DEFINES_SET_SERVICES__NAME = 0;
+	int MODEL_DEFINES_SET_SERVICES__NAME = CANDIDATE_FEATURE_COUNT + 0;
 
 	/**
 	 * The feature id for the '<em><b>Parameters</b></em>' attribute.
@@ -127,7 +192,7 @@ public interface NUOPCPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int MODEL_DEFINES_SET_SERVICES__PARAMETERS = 1;
+	int MODEL_DEFINES_SET_SERVICES__PARAMETERS = CANDIDATE_FEATURE_COUNT + 1;
 
 	/**
 	 * The feature id for the '<em><b>Param Name gcomp</b></em>' attribute.
@@ -136,7 +201,7 @@ public interface NUOPCPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int MODEL_DEFINES_SET_SERVICES__PARAM_NAME_GCOMP = 2;
+	int MODEL_DEFINES_SET_SERVICES__PARAM_NAME_GCOMP = CANDIDATE_FEATURE_COUNT + 2;
 
 	/**
 	 * The feature id for the '<em><b>Param Name rc</b></em>' attribute.
@@ -145,7 +210,7 @@ public interface NUOPCPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int MODEL_DEFINES_SET_SERVICES__PARAM_NAME_RC = 3;
+	int MODEL_DEFINES_SET_SERVICES__PARAM_NAME_RC = CANDIDATE_FEATURE_COUNT + 3;
 
 	/**
 	 * The feature id for the '<em><b>Calls Generic Set Services</b></em>' attribute.
@@ -154,7 +219,7 @@ public interface NUOPCPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int MODEL_DEFINES_SET_SERVICES__CALLS_GENERIC_SET_SERVICES = 4;
+	int MODEL_DEFINES_SET_SERVICES__CALLS_GENERIC_SET_SERVICES = CANDIDATE_FEATURE_COUNT + 4;
 
 	/**
 	 * The feature id for the '<em><b>Calls Set Entry Point Phase1</b></em>' attribute.
@@ -163,7 +228,7 @@ public interface NUOPCPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int MODEL_DEFINES_SET_SERVICES__CALLS_SET_ENTRY_POINT_PHASE1 = 5;
+	int MODEL_DEFINES_SET_SERVICES__CALLS_SET_ENTRY_POINT_PHASE1 = CANDIDATE_FEATURE_COUNT + 5;
 
 	/**
 	 * The feature id for the '<em><b>Calls Set Entry Point Phase2</b></em>' attribute.
@@ -172,7 +237,7 @@ public interface NUOPCPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int MODEL_DEFINES_SET_SERVICES__CALLS_SET_ENTRY_POINT_PHASE2 = 6;
+	int MODEL_DEFINES_SET_SERVICES__CALLS_SET_ENTRY_POINT_PHASE2 = CANDIDATE_FEATURE_COUNT + 6;
 
 	/**
 	 * The feature id for the '<em><b>Attaches Method</b></em>' containment reference list.
@@ -181,7 +246,7 @@ public interface NUOPCPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int MODEL_DEFINES_SET_SERVICES__ATTACHES_METHOD = 7;
+	int MODEL_DEFINES_SET_SERVICES__ATTACHES_METHOD = CANDIDATE_FEATURE_COUNT + 7;
 
 	/**
 	 * The number of structural features of the '<em>Model Defines Set Services</em>' class.
@@ -190,8 +255,138 @@ public interface NUOPCPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int MODEL_DEFINES_SET_SERVICES_FEATURE_COUNT = 8;
+	int MODEL_DEFINES_SET_SERVICES_FEATURE_COUNT = CANDIDATE_FEATURE_COUNT + 8;
 
+
+	/**
+	 * The meta object id for the '{@link org.earthsystemcurator.cupid.nuopc.fsml.nuopc.impl.ModelImplementsInitP1Impl <em>Model Implements Init P1</em>}' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see org.earthsystemcurator.cupid.nuopc.fsml.nuopc.impl.ModelImplementsInitP1Impl
+	 * @see org.earthsystemcurator.cupid.nuopc.fsml.nuopc.impl.NUOPCPackageImpl#getModelImplementsInitP1()
+	 * @generated
+	 */
+	int MODEL_IMPLEMENTS_INIT_P1 = 2;
+
+	/**
+	 * The feature id for the '<em><b>Name</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int MODEL_IMPLEMENTS_INIT_P1__NAME = 0;
+
+	/**
+	 * The feature id for the '<em><b>Advertises Import Field</b></em>' containment reference list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int MODEL_IMPLEMENTS_INIT_P1__ADVERTISES_IMPORT_FIELD = 1;
+
+	/**
+	 * The feature id for the '<em><b>Advertises Export Field</b></em>' containment reference list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int MODEL_IMPLEMENTS_INIT_P1__ADVERTISES_EXPORT_FIELD = 2;
+
+	/**
+	 * The number of structural features of the '<em>Model Implements Init P1</em>' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int MODEL_IMPLEMENTS_INIT_P1_FEATURE_COUNT = 3;
+
+	/**
+	 * The meta object id for the '{@link org.earthsystemcurator.cupid.nuopc.fsml.nuopc.impl.ModelImplementsInitP2Impl <em>Model Implements Init P2</em>}' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see org.earthsystemcurator.cupid.nuopc.fsml.nuopc.impl.ModelImplementsInitP2Impl
+	 * @see org.earthsystemcurator.cupid.nuopc.fsml.nuopc.impl.NUOPCPackageImpl#getModelImplementsInitP2()
+	 * @generated
+	 */
+	int MODEL_IMPLEMENTS_INIT_P2 = 3;
+
+	/**
+	 * The feature id for the '<em><b>Name</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int MODEL_IMPLEMENTS_INIT_P2__NAME = 0;
+
+	/**
+	 * The number of structural features of the '<em>Model Implements Init P2</em>' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int MODEL_IMPLEMENTS_INIT_P2_FEATURE_COUNT = 1;
+
+	/**
+	 * The meta object id for the '{@link org.earthsystemcurator.cupid.nuopc.fsml.nuopc.impl.AdvertisesImportFieldImpl <em>Advertises Import Field</em>}' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see org.earthsystemcurator.cupid.nuopc.fsml.nuopc.impl.AdvertisesImportFieldImpl
+	 * @see org.earthsystemcurator.cupid.nuopc.fsml.nuopc.impl.NUOPCPackageImpl#getAdvertisesImportField()
+	 * @generated
+	 */
+	int ADVERTISES_IMPORT_FIELD = 4;
+
+	/**
+	 * The feature id for the '<em><b>Standard Name</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int ADVERTISES_IMPORT_FIELD__STANDARD_NAME = 0;
+
+	/**
+	 * The number of structural features of the '<em>Advertises Import Field</em>' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int ADVERTISES_IMPORT_FIELD_FEATURE_COUNT = 1;
+
+	/**
+	 * The meta object id for the '{@link org.earthsystemcurator.cupid.nuopc.fsml.nuopc.impl.AdvertisesExportFieldImpl <em>Advertises Export Field</em>}' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see org.earthsystemcurator.cupid.nuopc.fsml.nuopc.impl.AdvertisesExportFieldImpl
+	 * @see org.earthsystemcurator.cupid.nuopc.fsml.nuopc.impl.NUOPCPackageImpl#getAdvertisesExportField()
+	 * @generated
+	 */
+	int ADVERTISES_EXPORT_FIELD = 5;
+
+	/**
+	 * The feature id for the '<em><b>Standard Name</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int ADVERTISES_EXPORT_FIELD__STANDARD_NAME = 0;
+
+	/**
+	 * The number of structural features of the '<em>Advertises Export Field</em>' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int ADVERTISES_EXPORT_FIELD_FEATURE_COUNT = 1;
 
 	/**
 	 * The meta object id for the '{@link org.earthsystemcurator.cupid.nuopc.fsml.nuopc.impl.AttachesMethodImpl <em>Attaches Method</em>}' class.
@@ -201,7 +396,7 @@ public interface NUOPCPackage extends EPackage {
 	 * @see org.earthsystemcurator.cupid.nuopc.fsml.nuopc.impl.NUOPCPackageImpl#getAttachesMethod()
 	 * @generated
 	 */
-	int ATTACHES_METHOD = 2;
+	int ATTACHES_METHOD = 6;
 
 	/**
 	 * The feature id for the '<em><b>Name</b></em>' attribute.
@@ -255,15 +450,48 @@ public interface NUOPCPackage extends EPackage {
 	EAttribute getModel_UsesAllImports();
 
 	/**
-	 * Returns the meta object for the containment reference '{@link org.earthsystemcurator.cupid.nuopc.fsml.nuopc.Model#getDefinesSetServices <em>Defines Set Services</em>}'.
+	 * Returns the meta object for the containment reference list '{@link org.earthsystemcurator.cupid.nuopc.fsml.nuopc.Model#getDefinesSetServices <em>Defines Set Services</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @return the meta object for the containment reference '<em>Defines Set Services</em>'.
+	 * @return the meta object for the containment reference list '<em>Defines Set Services</em>'.
 	 * @see org.earthsystemcurator.cupid.nuopc.fsml.nuopc.Model#getDefinesSetServices()
 	 * @see #getModel()
 	 * @generated
 	 */
 	EReference getModel_DefinesSetServices();
+
+	/**
+	 * Returns the meta object for the attribute '{@link org.earthsystemcurator.cupid.nuopc.fsml.nuopc.Model#getSinglePublicSubroutine <em>Single Public Subroutine</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the attribute '<em>Single Public Subroutine</em>'.
+	 * @see org.earthsystemcurator.cupid.nuopc.fsml.nuopc.Model#getSinglePublicSubroutine()
+	 * @see #getModel()
+	 * @generated
+	 */
+	EAttribute getModel_SinglePublicSubroutine();
+
+	/**
+	 * Returns the meta object for the containment reference '{@link org.earthsystemcurator.cupid.nuopc.fsml.nuopc.Model#getImplementsInitP1 <em>Implements Init P1</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the containment reference '<em>Implements Init P1</em>'.
+	 * @see org.earthsystemcurator.cupid.nuopc.fsml.nuopc.Model#getImplementsInitP1()
+	 * @see #getModel()
+	 * @generated
+	 */
+	EReference getModel_ImplementsInitP1();
+
+	/**
+	 * Returns the meta object for the containment reference '{@link org.earthsystemcurator.cupid.nuopc.fsml.nuopc.Model#getImplementsInitP2 <em>Implements Init P2</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the containment reference '<em>Implements Init P2</em>'.
+	 * @see org.earthsystemcurator.cupid.nuopc.fsml.nuopc.Model#getImplementsInitP2()
+	 * @see #getModel()
+	 * @generated
+	 */
+	EReference getModel_ImplementsInitP2();
 
 	/**
 	 * Returns the meta object for class '{@link org.earthsystemcurator.cupid.nuopc.fsml.nuopc.ModelDefinesSetServices <em>Model Defines Set Services</em>}'.
@@ -364,6 +592,112 @@ public interface NUOPCPackage extends EPackage {
 	EReference getModelDefinesSetServices_AttachesMethod();
 
 	/**
+	 * Returns the meta object for class '{@link org.earthsystemcurator.cupid.nuopc.fsml.nuopc.ModelImplementsInitP1 <em>Model Implements Init P1</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for class '<em>Model Implements Init P1</em>'.
+	 * @see org.earthsystemcurator.cupid.nuopc.fsml.nuopc.ModelImplementsInitP1
+	 * @generated
+	 */
+	EClass getModelImplementsInitP1();
+
+	/**
+	 * Returns the meta object for the attribute '{@link org.earthsystemcurator.cupid.nuopc.fsml.nuopc.ModelImplementsInitP1#getName <em>Name</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the attribute '<em>Name</em>'.
+	 * @see org.earthsystemcurator.cupid.nuopc.fsml.nuopc.ModelImplementsInitP1#getName()
+	 * @see #getModelImplementsInitP1()
+	 * @generated
+	 */
+	EAttribute getModelImplementsInitP1_Name();
+
+	/**
+	 * Returns the meta object for the containment reference list '{@link org.earthsystemcurator.cupid.nuopc.fsml.nuopc.ModelImplementsInitP1#getAdvertisesImportField <em>Advertises Import Field</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the containment reference list '<em>Advertises Import Field</em>'.
+	 * @see org.earthsystemcurator.cupid.nuopc.fsml.nuopc.ModelImplementsInitP1#getAdvertisesImportField()
+	 * @see #getModelImplementsInitP1()
+	 * @generated
+	 */
+	EReference getModelImplementsInitP1_AdvertisesImportField();
+
+	/**
+	 * Returns the meta object for the containment reference list '{@link org.earthsystemcurator.cupid.nuopc.fsml.nuopc.ModelImplementsInitP1#getAdvertisesExportField <em>Advertises Export Field</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the containment reference list '<em>Advertises Export Field</em>'.
+	 * @see org.earthsystemcurator.cupid.nuopc.fsml.nuopc.ModelImplementsInitP1#getAdvertisesExportField()
+	 * @see #getModelImplementsInitP1()
+	 * @generated
+	 */
+	EReference getModelImplementsInitP1_AdvertisesExportField();
+
+	/**
+	 * Returns the meta object for class '{@link org.earthsystemcurator.cupid.nuopc.fsml.nuopc.ModelImplementsInitP2 <em>Model Implements Init P2</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for class '<em>Model Implements Init P2</em>'.
+	 * @see org.earthsystemcurator.cupid.nuopc.fsml.nuopc.ModelImplementsInitP2
+	 * @generated
+	 */
+	EClass getModelImplementsInitP2();
+
+	/**
+	 * Returns the meta object for the attribute '{@link org.earthsystemcurator.cupid.nuopc.fsml.nuopc.ModelImplementsInitP2#getName <em>Name</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the attribute '<em>Name</em>'.
+	 * @see org.earthsystemcurator.cupid.nuopc.fsml.nuopc.ModelImplementsInitP2#getName()
+	 * @see #getModelImplementsInitP2()
+	 * @generated
+	 */
+	EAttribute getModelImplementsInitP2_Name();
+
+	/**
+	 * Returns the meta object for class '{@link org.earthsystemcurator.cupid.nuopc.fsml.nuopc.AdvertisesImportField <em>Advertises Import Field</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for class '<em>Advertises Import Field</em>'.
+	 * @see org.earthsystemcurator.cupid.nuopc.fsml.nuopc.AdvertisesImportField
+	 * @generated
+	 */
+	EClass getAdvertisesImportField();
+
+	/**
+	 * Returns the meta object for the attribute '{@link org.earthsystemcurator.cupid.nuopc.fsml.nuopc.AdvertisesImportField#getStandardName <em>Standard Name</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the attribute '<em>Standard Name</em>'.
+	 * @see org.earthsystemcurator.cupid.nuopc.fsml.nuopc.AdvertisesImportField#getStandardName()
+	 * @see #getAdvertisesImportField()
+	 * @generated
+	 */
+	EAttribute getAdvertisesImportField_StandardName();
+
+	/**
+	 * Returns the meta object for class '{@link org.earthsystemcurator.cupid.nuopc.fsml.nuopc.AdvertisesExportField <em>Advertises Export Field</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for class '<em>Advertises Export Field</em>'.
+	 * @see org.earthsystemcurator.cupid.nuopc.fsml.nuopc.AdvertisesExportField
+	 * @generated
+	 */
+	EClass getAdvertisesExportField();
+
+	/**
+	 * Returns the meta object for the attribute '{@link org.earthsystemcurator.cupid.nuopc.fsml.nuopc.AdvertisesExportField#getStandardName <em>Standard Name</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the attribute '<em>Standard Name</em>'.
+	 * @see org.earthsystemcurator.cupid.nuopc.fsml.nuopc.AdvertisesExportField#getStandardName()
+	 * @see #getAdvertisesExportField()
+	 * @generated
+	 */
+	EAttribute getAdvertisesExportField_StandardName();
+
+	/**
 	 * Returns the meta object for class '{@link org.earthsystemcurator.cupid.nuopc.fsml.nuopc.AttachesMethod <em>Attaches Method</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -383,6 +717,27 @@ public interface NUOPCPackage extends EPackage {
 	 * @generated
 	 */
 	EAttribute getAttachesMethod_Name();
+
+	/**
+	 * Returns the meta object for class '{@link java.lang.Comparable <em>Comparable</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for class '<em>Comparable</em>'.
+	 * @see java.lang.Comparable
+	 * @model instanceClass="java.lang.Comparable" typeParameters="c"
+	 * @generated
+	 */
+	EClass getComparable();
+
+	/**
+	 * Returns the meta object for class '{@link org.earthsystemcurator.cupid.nuopc.fsml.nuopc.Candidate <em>Candidate</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for class '<em>Candidate</em>'.
+	 * @see org.earthsystemcurator.cupid.nuopc.fsml.nuopc.Candidate
+	 * @generated
+	 */
+	EClass getCandidate();
 
 	/**
 	 * Returns the factory that creates the instances of the model.
@@ -433,12 +788,36 @@ public interface NUOPCPackage extends EPackage {
 		EAttribute MODEL__USES_ALL_IMPORTS = eINSTANCE.getModel_UsesAllImports();
 
 		/**
-		 * The meta object literal for the '<em><b>Defines Set Services</b></em>' containment reference feature.
+		 * The meta object literal for the '<em><b>Defines Set Services</b></em>' containment reference list feature.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
 		 * @generated
 		 */
 		EReference MODEL__DEFINES_SET_SERVICES = eINSTANCE.getModel_DefinesSetServices();
+
+		/**
+		 * The meta object literal for the '<em><b>Single Public Subroutine</b></em>' attribute feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EAttribute MODEL__SINGLE_PUBLIC_SUBROUTINE = eINSTANCE.getModel_SinglePublicSubroutine();
+
+		/**
+		 * The meta object literal for the '<em><b>Implements Init P1</b></em>' containment reference feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EReference MODEL__IMPLEMENTS_INIT_P1 = eINSTANCE.getModel_ImplementsInitP1();
+
+		/**
+		 * The meta object literal for the '<em><b>Implements Init P2</b></em>' containment reference feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EReference MODEL__IMPLEMENTS_INIT_P2 = eINSTANCE.getModel_ImplementsInitP2();
 
 		/**
 		 * The meta object literal for the '{@link org.earthsystemcurator.cupid.nuopc.fsml.nuopc.impl.ModelDefinesSetServicesImpl <em>Model Defines Set Services</em>}' class.
@@ -515,6 +894,94 @@ public interface NUOPCPackage extends EPackage {
 		EReference MODEL_DEFINES_SET_SERVICES__ATTACHES_METHOD = eINSTANCE.getModelDefinesSetServices_AttachesMethod();
 
 		/**
+		 * The meta object literal for the '{@link org.earthsystemcurator.cupid.nuopc.fsml.nuopc.impl.ModelImplementsInitP1Impl <em>Model Implements Init P1</em>}' class.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @see org.earthsystemcurator.cupid.nuopc.fsml.nuopc.impl.ModelImplementsInitP1Impl
+		 * @see org.earthsystemcurator.cupid.nuopc.fsml.nuopc.impl.NUOPCPackageImpl#getModelImplementsInitP1()
+		 * @generated
+		 */
+		EClass MODEL_IMPLEMENTS_INIT_P1 = eINSTANCE.getModelImplementsInitP1();
+
+		/**
+		 * The meta object literal for the '<em><b>Name</b></em>' attribute feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EAttribute MODEL_IMPLEMENTS_INIT_P1__NAME = eINSTANCE.getModelImplementsInitP1_Name();
+
+		/**
+		 * The meta object literal for the '<em><b>Advertises Import Field</b></em>' containment reference list feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EReference MODEL_IMPLEMENTS_INIT_P1__ADVERTISES_IMPORT_FIELD = eINSTANCE.getModelImplementsInitP1_AdvertisesImportField();
+
+		/**
+		 * The meta object literal for the '<em><b>Advertises Export Field</b></em>' containment reference list feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EReference MODEL_IMPLEMENTS_INIT_P1__ADVERTISES_EXPORT_FIELD = eINSTANCE.getModelImplementsInitP1_AdvertisesExportField();
+
+		/**
+		 * The meta object literal for the '{@link org.earthsystemcurator.cupid.nuopc.fsml.nuopc.impl.ModelImplementsInitP2Impl <em>Model Implements Init P2</em>}' class.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @see org.earthsystemcurator.cupid.nuopc.fsml.nuopc.impl.ModelImplementsInitP2Impl
+		 * @see org.earthsystemcurator.cupid.nuopc.fsml.nuopc.impl.NUOPCPackageImpl#getModelImplementsInitP2()
+		 * @generated
+		 */
+		EClass MODEL_IMPLEMENTS_INIT_P2 = eINSTANCE.getModelImplementsInitP2();
+
+		/**
+		 * The meta object literal for the '<em><b>Name</b></em>' attribute feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EAttribute MODEL_IMPLEMENTS_INIT_P2__NAME = eINSTANCE.getModelImplementsInitP2_Name();
+
+		/**
+		 * The meta object literal for the '{@link org.earthsystemcurator.cupid.nuopc.fsml.nuopc.impl.AdvertisesImportFieldImpl <em>Advertises Import Field</em>}' class.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @see org.earthsystemcurator.cupid.nuopc.fsml.nuopc.impl.AdvertisesImportFieldImpl
+		 * @see org.earthsystemcurator.cupid.nuopc.fsml.nuopc.impl.NUOPCPackageImpl#getAdvertisesImportField()
+		 * @generated
+		 */
+		EClass ADVERTISES_IMPORT_FIELD = eINSTANCE.getAdvertisesImportField();
+
+		/**
+		 * The meta object literal for the '<em><b>Standard Name</b></em>' attribute feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EAttribute ADVERTISES_IMPORT_FIELD__STANDARD_NAME = eINSTANCE.getAdvertisesImportField_StandardName();
+
+		/**
+		 * The meta object literal for the '{@link org.earthsystemcurator.cupid.nuopc.fsml.nuopc.impl.AdvertisesExportFieldImpl <em>Advertises Export Field</em>}' class.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @see org.earthsystemcurator.cupid.nuopc.fsml.nuopc.impl.AdvertisesExportFieldImpl
+		 * @see org.earthsystemcurator.cupid.nuopc.fsml.nuopc.impl.NUOPCPackageImpl#getAdvertisesExportField()
+		 * @generated
+		 */
+		EClass ADVERTISES_EXPORT_FIELD = eINSTANCE.getAdvertisesExportField();
+
+		/**
+		 * The meta object literal for the '<em><b>Standard Name</b></em>' attribute feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EAttribute ADVERTISES_EXPORT_FIELD__STANDARD_NAME = eINSTANCE.getAdvertisesExportField_StandardName();
+
+		/**
 		 * The meta object literal for the '{@link org.earthsystemcurator.cupid.nuopc.fsml.nuopc.impl.AttachesMethodImpl <em>Attaches Method</em>}' class.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
@@ -531,6 +998,26 @@ public interface NUOPCPackage extends EPackage {
 		 * @generated
 		 */
 		EAttribute ATTACHES_METHOD__NAME = eINSTANCE.getAttachesMethod_Name();
+
+		/**
+		 * The meta object literal for the '{@link java.lang.Comparable <em>Comparable</em>}' class.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @see java.lang.Comparable
+		 * @see org.earthsystemcurator.cupid.nuopc.fsml.nuopc.impl.NUOPCPackageImpl#getComparable()
+		 * @generated
+		 */
+		EClass COMPARABLE = eINSTANCE.getComparable();
+
+		/**
+		 * The meta object literal for the '{@link org.earthsystemcurator.cupid.nuopc.fsml.nuopc.Candidate <em>Candidate</em>}' class.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @see org.earthsystemcurator.cupid.nuopc.fsml.nuopc.Candidate
+		 * @see org.earthsystemcurator.cupid.nuopc.fsml.nuopc.impl.NUOPCPackageImpl#getCandidate()
+		 * @generated
+		 */
+		EClass CANDIDATE = eINSTANCE.getCandidate();
 
 	}
 

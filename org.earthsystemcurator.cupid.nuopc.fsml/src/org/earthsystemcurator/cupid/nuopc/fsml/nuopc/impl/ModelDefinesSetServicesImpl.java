@@ -371,6 +371,30 @@ public class ModelDefinesSetServicesImpl extends EObjectImpl implements ModelDef
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
+	 * @generated NOT
+	 */
+	public int score() {
+		int s = 0;
+		if (isCallsGenericSetServices()) s += 3;
+		if (isParameters()) s += 2;
+		if (isCallsSetEntryPointPhase1()) s += 1;
+		if (isCallsSetEntryPointPhase2()) s += 1;
+		if (getName().toLowerCase().contains("setservices")) s += 3;		
+		return s;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated NOT
+	 */
+	public int compareTo(ModelDefinesSetServices other) {
+		return this.score() - other.score();
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
 	 * @generated
 	 */
 	@Override
