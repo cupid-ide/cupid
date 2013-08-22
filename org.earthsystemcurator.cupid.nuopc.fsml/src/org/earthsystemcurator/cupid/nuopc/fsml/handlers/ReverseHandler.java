@@ -25,8 +25,11 @@ import org.eclipse.emf.ecore.resource.ResourceSet;
 import org.eclipse.emf.ecore.resource.impl.ResourceSetImpl;
 import org.eclipse.emf.ecore.xmi.impl.XMIResourceFactoryImpl;
 import org.eclipse.photran.core.IFortranAST;
+import org.eclipse.photran.internal.core.lexer.Token;
 import org.eclipse.photran.internal.core.parser.ASTModuleNode;
+import org.eclipse.photran.internal.core.vpg.PhotranTokenRef;
 import org.eclipse.photran.internal.core.vpg.PhotranVPG;
+import org.eclipse.rephraserengine.core.vpg.VPGEdge;
 import org.eclipse.text.edits.ReplaceEdit;
 import org.eclipse.ui.IWorkbenchWindow;
 import org.eclipse.ui.PlatformUI;
@@ -88,9 +91,33 @@ public class ReverseHandler extends AbstractHandler {
 		final IFile f = (IFile) res;
 
 		final PhotranVPG vpg = PhotranVPG.getInstance();
+				
 		final IFortranAST ast = vpg.acquireTransientAST((IFile) res);
 		
 		System.out.println("error: " + vpg.describeWhyCannotProcessFile(f));
+		
+		/*
+		System.out.println("VGP filenames:");
+		for (String fn: vpg.listAllFilenames()) {
+			System.out.println("\t" + fn);
+		}
+		
+		System.out.println("VGP filenames:");
+		for (String fn: vpg.listAllModules()) {
+			System.out.println("\t" + fn);
+		}
+		
+		Iterable<? extends VPGEdge<IFortranAST, Token, PhotranTokenRef>> edges = vpg.getAllEdgesFor("/nuopc/atm.F90");
+		System.out.println("edges.hasNext? = " + edges.iterator().hasNext());
+		for ( VPGEdge<IFortranAST, Token, PhotranTokenRef> e : edges) {
+			try {
+				//e.findSource().getTokenRef().followOutgoing(EdgeType.)
+				System.out.println("Edge: (" + vpg.describeEdgeType(e.getType()) + ") " + e.findSource() + " ==> " + e.findSink());
+			} catch (Exception e1) {
+				e1.printStackTrace();
+			}
+		}
+		*/
 		
 //		Set<ASTModuleNode> moduleNodes = ast.getRoot().findAll(ASTModuleNode.class);
 //		for (ASTModuleNode mn : moduleNodes) {

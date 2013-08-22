@@ -383,16 +383,7 @@ public class ModelDefinesSetServicesImpl extends EObjectImpl implements ModelDef
 		return s;
 	}
 
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated NOT
-	 */
-	public int compareTo(ModelDefinesSetServices other) {
-		return this.score() - other.score();
-	}
-
-	/**
+		/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated

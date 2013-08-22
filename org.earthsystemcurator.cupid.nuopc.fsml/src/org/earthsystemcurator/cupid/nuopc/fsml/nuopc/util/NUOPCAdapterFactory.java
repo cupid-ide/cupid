@@ -96,14 +96,6 @@ public class NUOPCAdapterFactory extends AdapterFactoryImpl {
 				return createAttachesMethodAdapter();
 			}
 			@Override
-			public <c> Adapter caseComparable(Comparable<c> object) {
-				return createComparableAdapter();
-			}
-			@Override
-			public <c> Adapter caseCandidate(Candidate<c> object) {
-				return createCandidateAdapter();
-			}
-			@Override
 			public Adapter defaultCase(EObject object) {
 				return createEObjectAdapter();
 			}
@@ -218,34 +210,6 @@ public class NUOPCAdapterFactory extends AdapterFactoryImpl {
 	 * @generated
 	 */
 	public Adapter createAttachesMethodAdapter() {
-		return null;
-	}
-
-	/**
-	 * Creates a new adapter for an object of class '{@link java.lang.Comparable <em>Comparable</em>}'.
-	 * <!-- begin-user-doc -->
-	 * This default implementation returns null so that we can easily ignore cases;
-	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
-	 * <!-- end-user-doc -->
-	 * @return the new adapter.
-	 * @see java.lang.Comparable
-	 * @generated
-	 */
-	public Adapter createComparableAdapter() {
-		return null;
-	}
-
-	/**
-	 * Creates a new adapter for an object of class '{@link org.earthsystemcurator.cupid.nuopc.fsml.nuopc.Candidate <em>Candidate</em>}'.
-	 * <!-- begin-user-doc -->
-	 * This default implementation returns null so that we can easily ignore cases;
-	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
-	 * <!-- end-user-doc -->
-	 * @return the new adapter.
-	 * @see org.earthsystemcurator.cupid.nuopc.fsml.nuopc.Candidate
-	 * @generated
-	 */
-	public Adapter createCandidateAdapter() {
 		return null;
 	}
 

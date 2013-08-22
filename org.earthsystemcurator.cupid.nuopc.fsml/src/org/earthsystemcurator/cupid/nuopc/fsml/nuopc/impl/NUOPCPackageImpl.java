@@ -81,20 +81,6 @@ public class NUOPCPackageImpl extends EPackageImpl implements NUOPCPackage {
 	private EClass attachesMethodEClass = null;
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	private EClass comparableEClass = null;
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	private EClass candidateEClass = null;
-
-	/**
 	 * Creates an instance of the model <b>Package</b>, registered with
 	 * {@link org.eclipse.emf.ecore.EPackage.Registry EPackage.Registry} by the package
 	 * package URI value.
@@ -340,6 +326,15 @@ public class NUOPCPackageImpl extends EPackageImpl implements NUOPCPackage {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	public EAttribute getModelImplementsInitP1_AdvertisesAtLeastOneField() {
+		return (EAttribute)modelImplementsInitP1EClass.getEStructuralFeatures().get(3);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
 	public EClass getModelImplementsInitP2() {
 		return modelImplementsInitP2EClass;
 	}
@@ -367,8 +362,17 @@ public class NUOPCPackageImpl extends EPackageImpl implements NUOPCPackage {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EAttribute getAdvertisesImportField_StandardName() {
+	public EAttribute getAdvertisesImportField_AddsToImportState() {
 		return (EAttribute)advertisesImportFieldEClass.getEStructuralFeatures().get(0);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EAttribute getAdvertisesImportField_StandardName() {
+		return (EAttribute)advertisesImportFieldEClass.getEStructuralFeatures().get(1);
 	}
 
 	/**
@@ -405,24 +409,6 @@ public class NUOPCPackageImpl extends EPackageImpl implements NUOPCPackage {
 	 */
 	public EAttribute getAttachesMethod_Name() {
 		return (EAttribute)attachesMethodEClass.getEStructuralFeatures().get(0);
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public EClass getComparable() {
-		return comparableEClass;
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public EClass getCandidate() {
-		return candidateEClass;
 	}
 
 	/**
@@ -475,11 +461,13 @@ public class NUOPCPackageImpl extends EPackageImpl implements NUOPCPackage {
 		createEAttribute(modelImplementsInitP1EClass, MODEL_IMPLEMENTS_INIT_P1__NAME);
 		createEReference(modelImplementsInitP1EClass, MODEL_IMPLEMENTS_INIT_P1__ADVERTISES_IMPORT_FIELD);
 		createEReference(modelImplementsInitP1EClass, MODEL_IMPLEMENTS_INIT_P1__ADVERTISES_EXPORT_FIELD);
+		createEAttribute(modelImplementsInitP1EClass, MODEL_IMPLEMENTS_INIT_P1__ADVERTISES_AT_LEAST_ONE_FIELD);
 
 		modelImplementsInitP2EClass = createEClass(MODEL_IMPLEMENTS_INIT_P2);
 		createEAttribute(modelImplementsInitP2EClass, MODEL_IMPLEMENTS_INIT_P2__NAME);
 
 		advertisesImportFieldEClass = createEClass(ADVERTISES_IMPORT_FIELD);
+		createEAttribute(advertisesImportFieldEClass, ADVERTISES_IMPORT_FIELD__ADDS_TO_IMPORT_STATE);
 		createEAttribute(advertisesImportFieldEClass, ADVERTISES_IMPORT_FIELD__STANDARD_NAME);
 
 		advertisesExportFieldEClass = createEClass(ADVERTISES_EXPORT_FIELD);
@@ -487,10 +475,6 @@ public class NUOPCPackageImpl extends EPackageImpl implements NUOPCPackage {
 
 		attachesMethodEClass = createEClass(ATTACHES_METHOD);
 		createEAttribute(attachesMethodEClass, ATTACHES_METHOD__NAME);
-
-		comparableEClass = createEClass(COMPARABLE);
-
-		candidateEClass = createEClass(CANDIDATE);
 	}
 
 	/**
@@ -517,20 +501,10 @@ public class NUOPCPackageImpl extends EPackageImpl implements NUOPCPackage {
 		setNsURI(eNS_URI);
 
 		// Create type parameters
-		ETypeParameter comparableEClass_c = addETypeParameter(comparableEClass, "c");
-		ETypeParameter candidateEClass_c = addETypeParameter(candidateEClass, "c");
 
 		// Set bounds for type parameters
 
 		// Add supertypes to classes
-		EGenericType g1 = createEGenericType(this.getCandidate());
-		EGenericType g2 = createEGenericType(this.getModelDefinesSetServices());
-		g1.getETypeArguments().add(g2);
-		modelDefinesSetServicesEClass.getEGenericSuperTypes().add(g1);
-		g1 = createEGenericType(this.getComparable());
-		g2 = createEGenericType(candidateEClass_c);
-		g1.getETypeArguments().add(g2);
-		candidateEClass.getEGenericSuperTypes().add(g1);
 
 		// Initialize classes and features; add operations and parameters
 		initEClass(modelEClass, Model.class, "Model", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
@@ -556,11 +530,13 @@ public class NUOPCPackageImpl extends EPackageImpl implements NUOPCPackage {
 		initEAttribute(getModelImplementsInitP1_Name(), ecorePackage.getEString(), "name", null, 1, 1, ModelImplementsInitP1.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEReference(getModelImplementsInitP1_AdvertisesImportField(), this.getAdvertisesImportField(), null, "advertisesImportField", null, 0, -1, ModelImplementsInitP1.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEReference(getModelImplementsInitP1_AdvertisesExportField(), this.getAdvertisesExportField(), null, "advertisesExportField", null, 0, -1, ModelImplementsInitP1.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEAttribute(getModelImplementsInitP1_AdvertisesAtLeastOneField(), ecorePackage.getEBoolean(), "advertisesAtLeastOneField", null, 0, 1, ModelImplementsInitP1.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, IS_DERIVED, IS_ORDERED);
 
 		initEClass(modelImplementsInitP2EClass, ModelImplementsInitP2.class, "ModelImplementsInitP2", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 		initEAttribute(getModelImplementsInitP2_Name(), ecorePackage.getEString(), "name", null, 1, 1, ModelImplementsInitP2.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
 		initEClass(advertisesImportFieldEClass, AdvertisesImportField.class, "AdvertisesImportField", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+		initEAttribute(getAdvertisesImportField_AddsToImportState(), ecorePackage.getEBoolean(), "addsToImportState", null, 0, 1, AdvertisesImportField.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEAttribute(getAdvertisesImportField_StandardName(), ecorePackage.getEString(), "standardName", null, 0, 1, AdvertisesImportField.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
 		initEClass(advertisesExportFieldEClass, AdvertisesExportField.class, "AdvertisesExportField", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
@@ -569,22 +545,34 @@ public class NUOPCPackageImpl extends EPackageImpl implements NUOPCPackage {
 		initEClass(attachesMethodEClass, AttachesMethod.class, "AttachesMethod", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 		initEAttribute(getAttachesMethod_Name(), ecorePackage.getEString(), "name", null, 1, 1, AttachesMethod.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
-		initEClass(comparableEClass, Comparable.class, "Comparable", IS_ABSTRACT, IS_INTERFACE, !IS_GENERATED_INSTANCE_CLASS);
-
-		EOperation op = addEOperation(comparableEClass, ecorePackage.getEInt(), "compareTo", 1, 1, IS_UNIQUE, IS_ORDERED);
-		g1 = createEGenericType(comparableEClass_c);
-		addEParameter(op, g1, "other", 1, 1, IS_UNIQUE, IS_ORDERED);
-
-		initEClass(candidateEClass, Candidate.class, "Candidate", IS_ABSTRACT, IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
-
-		addEOperation(candidateEClass, ecorePackage.getEInt(), "score", 1, 1, IS_UNIQUE, IS_ORDERED);
-
 		// Create resource
 		createResource(eNS_URI);
 
 		// Create annotations
+		// http://www.eclipse.org/emf/2002/Ecore
+		createEcoreAnnotations();
 		// http://www.earthsystemcog.org/projects/nuopc
 		createNuopcAnnotations();
+		// http://www.eclipse.org/emf/2002/Ecore/OCL
+		createOCLAnnotations();
+	}
+
+	/**
+	 * Initializes the annotations for <b>http://www.eclipse.org/emf/2002/Ecore</b>.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	protected void createEcoreAnnotations() {
+		String source = "http://www.eclipse.org/emf/2002/Ecore";		
+		addAnnotation
+		  (this, 
+		   source, 
+		   new String[] {
+			 "invocationDelegates", "http://www.eclipse.org/emf/2002/Ecore/OCL",
+			 "settingDelegates", "http://www.eclipse.org/emf/2002/Ecore/OCL",
+			 "validationDelegates", "http://www.eclipse.org/emf/2002/Ecore/OCL"
+		   });																			
 	}
 
 	/**
@@ -594,7 +582,7 @@ public class NUOPCPackageImpl extends EPackageImpl implements NUOPCPackage {
 	 * @generated
 	 */
 	protected void createNuopcAnnotations() {
-		String source = "http://www.earthsystemcog.org/projects/nuopc";		
+		String source = "http://www.earthsystemcog.org/projects/nuopc";			
 		addAnnotation
 		  (modelEClass, 
 		   source, 
@@ -676,10 +664,22 @@ public class NUOPCPackageImpl extends EPackageImpl implements NUOPCPackage {
 			 "query", "call: NUOPC_StateAdvertiseField"
 		   });		
 		addAnnotation
+		  (getModelImplementsInitP1_AdvertisesAtLeastOneField(), 
+		   source, 
+		   new String[] {
+			 "essential", "true"
+		   });			
+		addAnnotation
 		  (getModelImplementsInitP2_Name(), 
 		   source, 
 		   new String[] {
 			 "query", "subroutineName"
+		   });		
+		addAnnotation
+		  (getAdvertisesImportField_AddsToImportState(), 
+		   source, 
+		   new String[] {
+			 "query", "argByIndex: 1 sameAs: ../importStateParam"
 		   });		
 		addAnnotation
 		  (getAdvertisesImportField_StandardName(), 
@@ -693,6 +693,22 @@ public class NUOPCPackageImpl extends EPackageImpl implements NUOPCPackage {
 		   new String[] {
 			 "query", "argByKeyword: StandardName"
 		   });
+	}
+
+	/**
+	 * Initializes the annotations for <b>http://www.eclipse.org/emf/2002/Ecore/OCL</b>.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	protected void createOCLAnnotations() {
+		String source = "http://www.eclipse.org/emf/2002/Ecore/OCL";																	
+		addAnnotation
+		  (getModelImplementsInitP1_AdvertisesAtLeastOneField(), 
+		   source, 
+		   new String[] {
+			 "derivation", "self.advertisesExportField->size() > 0 or self.advertisesImportField->size() > 0"
+		   });				
 	}
 
 } //NUOPCPackageImpl

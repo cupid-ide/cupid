@@ -75,8 +75,6 @@ public class NUOPCSwitch<T> extends Switch<T> {
 			case NUOPCPackage.MODEL_DEFINES_SET_SERVICES: {
 				ModelDefinesSetServices modelDefinesSetServices = (ModelDefinesSetServices)theEObject;
 				T result = caseModelDefinesSetServices(modelDefinesSetServices);
-				if (result == null) result = caseCandidate(modelDefinesSetServices);
-				if (result == null) result = caseComparable(modelDefinesSetServices);
 				if (result == null) result = defaultCase(theEObject);
 				return result;
 			}
@@ -107,19 +105,6 @@ public class NUOPCSwitch<T> extends Switch<T> {
 			case NUOPCPackage.ATTACHES_METHOD: {
 				AttachesMethod attachesMethod = (AttachesMethod)theEObject;
 				T result = caseAttachesMethod(attachesMethod);
-				if (result == null) result = defaultCase(theEObject);
-				return result;
-			}
-			case NUOPCPackage.COMPARABLE: {
-				Comparable<?> comparable = (Comparable<?>)theEObject;
-				T result = caseComparable(comparable);
-				if (result == null) result = defaultCase(theEObject);
-				return result;
-			}
-			case NUOPCPackage.CANDIDATE: {
-				Candidate<?> candidate = (Candidate<?>)theEObject;
-				T result = caseCandidate(candidate);
-				if (result == null) result = caseComparable(candidate);
 				if (result == null) result = defaultCase(theEObject);
 				return result;
 			}
@@ -229,36 +214,6 @@ public class NUOPCSwitch<T> extends Switch<T> {
 	 * @generated
 	 */
 	public T caseAttachesMethod(AttachesMethod object) {
-		return null;
-	}
-
-	/**
-	 * Returns the result of interpreting the object as an instance of '<em>Comparable</em>'.
-	 * <!-- begin-user-doc -->
-	 * This implementation returns null;
-	 * returning a non-null result will terminate the switch.
-	 * <!-- end-user-doc -->
-	 * @param object the target of the switch.
-	 * @return the result of interpreting the object as an instance of '<em>Comparable</em>'.
-	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
-	 * @generated
-	 */
-	public <c> T caseComparable(Comparable<c> object) {
-		return null;
-	}
-
-	/**
-	 * Returns the result of interpreting the object as an instance of '<em>Candidate</em>'.
-	 * <!-- begin-user-doc -->
-	 * This implementation returns null;
-	 * returning a non-null result will terminate the switch.
-	 * <!-- end-user-doc -->
-	 * @param object the target of the switch.
-	 * @return the result of interpreting the object as an instance of '<em>Candidate</em>'.
-	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
-	 * @generated
-	 */
-	public <c> T caseCandidate(Candidate<c> object) {
 		return null;
 	}
 
