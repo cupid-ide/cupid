@@ -76,6 +76,24 @@ public interface NUOPCFactory extends EFactory {
 	AdvertisesExportField createAdvertisesExportField();
 
 	/**
+	 * Returns a new object of class '<em>Realizes Import Field</em>'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return a new object of class '<em>Realizes Import Field</em>'.
+	 * @generated
+	 */
+	RealizesImportField createRealizesImportField();
+
+	/**
+	 * Returns a new object of class '<em>Realizes Export Field</em>'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return a new object of class '<em>Realizes Export Field</em>'.
+	 * @generated
+	 */
+	RealizesExportField createRealizesExportField();
+
+	/**
 	 * Returns a new object of class '<em>Attaches Method</em>'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->

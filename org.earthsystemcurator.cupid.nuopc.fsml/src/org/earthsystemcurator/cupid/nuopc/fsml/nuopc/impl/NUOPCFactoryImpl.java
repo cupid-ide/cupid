@@ -62,6 +62,8 @@ public class NUOPCFactoryImpl extends EFactoryImpl implements NUOPCFactory {
 			case NUOPCPackage.MODEL_IMPLEMENTS_INIT_P2: return createModelImplementsInitP2();
 			case NUOPCPackage.ADVERTISES_IMPORT_FIELD: return createAdvertisesImportField();
 			case NUOPCPackage.ADVERTISES_EXPORT_FIELD: return createAdvertisesExportField();
+			case NUOPCPackage.REALIZES_IMPORT_FIELD: return createRealizesImportField();
+			case NUOPCPackage.REALIZES_EXPORT_FIELD: return createRealizesExportField();
 			case NUOPCPackage.ATTACHES_METHOD: return createAttachesMethod();
 			default:
 				throw new IllegalArgumentException("The class '" + eClass.getName() + "' is not a valid classifier");
@@ -126,6 +128,26 @@ public class NUOPCFactoryImpl extends EFactoryImpl implements NUOPCFactory {
 	public AdvertisesExportField createAdvertisesExportField() {
 		AdvertisesExportFieldImpl advertisesExportField = new AdvertisesExportFieldImpl();
 		return advertisesExportField;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public RealizesImportField createRealizesImportField() {
+		RealizesImportFieldImpl realizesImportField = new RealizesImportFieldImpl();
+		return realizesImportField;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public RealizesExportField createRealizesExportField() {
+		RealizesExportFieldImpl realizesExportField = new RealizesExportFieldImpl();
+		return realizesExportField;
 	}
 
 	/**

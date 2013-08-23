@@ -102,6 +102,18 @@ public class NUOPCSwitch<T> extends Switch<T> {
 				if (result == null) result = defaultCase(theEObject);
 				return result;
 			}
+			case NUOPCPackage.REALIZES_IMPORT_FIELD: {
+				RealizesImportField realizesImportField = (RealizesImportField)theEObject;
+				T result = caseRealizesImportField(realizesImportField);
+				if (result == null) result = defaultCase(theEObject);
+				return result;
+			}
+			case NUOPCPackage.REALIZES_EXPORT_FIELD: {
+				RealizesExportField realizesExportField = (RealizesExportField)theEObject;
+				T result = caseRealizesExportField(realizesExportField);
+				if (result == null) result = defaultCase(theEObject);
+				return result;
+			}
 			case NUOPCPackage.ATTACHES_METHOD: {
 				AttachesMethod attachesMethod = (AttachesMethod)theEObject;
 				T result = caseAttachesMethod(attachesMethod);
@@ -199,6 +211,36 @@ public class NUOPCSwitch<T> extends Switch<T> {
 	 * @generated
 	 */
 	public T caseAdvertisesExportField(AdvertisesExportField object) {
+		return null;
+	}
+
+	/**
+	 * Returns the result of interpreting the object as an instance of '<em>Realizes Import Field</em>'.
+	 * <!-- begin-user-doc -->
+	 * This implementation returns null;
+	 * returning a non-null result will terminate the switch.
+	 * <!-- end-user-doc -->
+	 * @param object the target of the switch.
+	 * @return the result of interpreting the object as an instance of '<em>Realizes Import Field</em>'.
+	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+	 * @generated
+	 */
+	public T caseRealizesImportField(RealizesImportField object) {
+		return null;
+	}
+
+	/**
+	 * Returns the result of interpreting the object as an instance of '<em>Realizes Export Field</em>'.
+	 * <!-- begin-user-doc -->
+	 * This implementation returns null;
+	 * returning a non-null result will terminate the switch.
+	 * <!-- end-user-doc -->
+	 * @param object the target of the switch.
+	 * @return the result of interpreting the object as an instance of '<em>Realizes Export Field</em>'.
+	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+	 * @generated
+	 */
+	public T caseRealizesExportField(RealizesExportField object) {
 		return null;
 	}
 

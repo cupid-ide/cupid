@@ -13,6 +13,7 @@ import org.eclipse.photran.internal.core.analysis.types.Type;
 import org.eclipse.photran.internal.core.analysis.types.TypeProcessor;
 import org.eclipse.photran.internal.core.parser.ASTCallStmtNode;
 import org.eclipse.photran.internal.core.parser.ASTModuleNode;
+import org.eclipse.photran.internal.core.parser.ASTStringConstNode;
 import org.eclipse.photran.internal.core.parser.ASTSubroutineArgNode;
 import org.eclipse.photran.internal.core.parser.ASTSubroutineParNode;
 import org.eclipse.photran.internal.core.parser.ASTSubroutineSubprogramNode;
@@ -161,6 +162,11 @@ public class CodeQuery {
 		
 	}
 	
+	public static String formalParam(ASTSubroutineSubprogramNode node, String index) {
+		int idx = Integer.valueOf(index) - 1;
+		return node.getSubroutineStmt().getSubroutinePars().get(idx).getVariableName().getText();		
+	}
+	
 	public static Set<ASTSubroutineSubprogramNode> findSubroutineByParamTypes(IASTNode node, String... stypes) {
 		Type[] types = new Type[stypes.length];
 		
@@ -239,12 +245,20 @@ public class CodeQuery {
 		
 		for (ASTSubroutineArgNode san : node.getArgList()) {
 			if (san.getName() != null && san.getName().getText().equalsIgnoreCase(keyword)) {
-				//TODO: handle different kinds of expressions here
+				//if (san.getExpr() instanceof ASTStringConstNode) {
+				//	
+				//}
+				//TODO handle different kinds of expressions here
 				return san.getExpr().toString();						
 			}
 		}
 		
 		return null;
+	}
+	
+	public static String argByIndex(ASTCallStmtNode node, String index) {		
+		int idx = Integer.valueOf(index);		
+		return node.getArgList().get(idx - 1).getExpr().toString();			
 	}
 	
 	public static Set<ASTCallStmtNode> call(IASTNode node, final String subroutineName) {

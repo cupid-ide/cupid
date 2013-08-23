@@ -14,6 +14,8 @@ import org.eclipse.emf.ecore.EObject;
  * The following features are supported:
  * <ul>
  *   <li>{@link org.earthsystemcurator.cupid.nuopc.fsml.nuopc.ModelImplementsInitP1#getName <em>Name</em>}</li>
+ *   <li>{@link org.earthsystemcurator.cupid.nuopc.fsml.nuopc.ModelImplementsInitP1#getImportParam <em>Import Param</em>}</li>
+ *   <li>{@link org.earthsystemcurator.cupid.nuopc.fsml.nuopc.ModelImplementsInitP1#getExportParam <em>Export Param</em>}</li>
  *   <li>{@link org.earthsystemcurator.cupid.nuopc.fsml.nuopc.ModelImplementsInitP1#getAdvertisesImportField <em>Advertises Import Field</em>}</li>
  *   <li>{@link org.earthsystemcurator.cupid.nuopc.fsml.nuopc.ModelImplementsInitP1#getAdvertisesExportField <em>Advertises Export Field</em>}</li>
  *   <li>{@link org.earthsystemcurator.cupid.nuopc.fsml.nuopc.ModelImplementsInitP1#isAdvertisesAtLeastOneField <em>Advertises At Least One Field</em>}</li>
@@ -53,8 +55,63 @@ public interface ModelImplementsInitP1 extends EObject {
 	void setName(String value);
 
 	/**
+	 * Returns the value of the '<em><b>Import Param</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <p>
+	 * If the meaning of the '<em>Import Param</em>' attribute isn't clear,
+	 * there really should be more of a description here...
+	 * </p>
+	 * <!-- end-user-doc -->
+	 * @return the value of the '<em>Import Param</em>' attribute.
+	 * @see #setImportParam(String)
+	 * @see org.earthsystemcurator.cupid.nuopc.fsml.nuopc.NUOPCPackage#getModelImplementsInitP1_ImportParam()
+	 * @model required="true"
+	 *        annotation="http://www.earthsystemcog.org/projects/nuopc query='formalParam: 2'"
+	 * @generated
+	 */
+	String getImportParam();
+
+	/**
+	 * Sets the value of the '{@link org.earthsystemcurator.cupid.nuopc.fsml.nuopc.ModelImplementsInitP1#getImportParam <em>Import Param</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @param value the new value of the '<em>Import Param</em>' attribute.
+	 * @see #getImportParam()
+	 * @generated
+	 */
+	void setImportParam(String value);
+
+	/**
+	 * Returns the value of the '<em><b>Export Param</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <p>
+	 * If the meaning of the '<em>Export Param</em>' attribute isn't clear,
+	 * there really should be more of a description here...
+	 * </p>
+	 * <!-- end-user-doc -->
+	 * @return the value of the '<em>Export Param</em>' attribute.
+	 * @see #setExportParam(String)
+	 * @see org.earthsystemcurator.cupid.nuopc.fsml.nuopc.NUOPCPackage#getModelImplementsInitP1_ExportParam()
+	 * @model required="true"
+	 *        annotation="http://www.earthsystemcog.org/projects/nuopc query='formalParam: 3'"
+	 * @generated
+	 */
+	String getExportParam();
+
+	/**
+	 * Sets the value of the '{@link org.earthsystemcurator.cupid.nuopc.fsml.nuopc.ModelImplementsInitP1#getExportParam <em>Export Param</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @param value the new value of the '<em>Export Param</em>' attribute.
+	 * @see #getExportParam()
+	 * @generated
+	 */
+	void setExportParam(String value);
+
+	/**
 	 * Returns the value of the '<em><b>Advertises Import Field</b></em>' containment reference list.
 	 * The list contents are of type {@link org.earthsystemcurator.cupid.nuopc.fsml.nuopc.AdvertisesImportField}.
+	 * It is bidirectional and its opposite is '{@link org.earthsystemcurator.cupid.nuopc.fsml.nuopc.AdvertisesImportField#getParent <em>Parent</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <p>
 	 * If the meaning of the '<em>Advertises Import Field</em>' containment reference list isn't clear,
@@ -63,7 +120,8 @@ public interface ModelImplementsInitP1 extends EObject {
 	 * <!-- end-user-doc -->
 	 * @return the value of the '<em>Advertises Import Field</em>' containment reference list.
 	 * @see org.earthsystemcurator.cupid.nuopc.fsml.nuopc.NUOPCPackage#getModelImplementsInitP1_AdvertisesImportField()
-	 * @model containment="true"
+	 * @see org.earthsystemcurator.cupid.nuopc.fsml.nuopc.AdvertisesImportField#getParent
+	 * @model opposite="parent" containment="true"
 	 *        annotation="http://www.earthsystemcog.org/projects/nuopc query='call: NUOPC_StateAdvertiseField'"
 	 * @generated
 	 */
@@ -72,6 +130,7 @@ public interface ModelImplementsInitP1 extends EObject {
 	/**
 	 * Returns the value of the '<em><b>Advertises Export Field</b></em>' containment reference list.
 	 * The list contents are of type {@link org.earthsystemcurator.cupid.nuopc.fsml.nuopc.AdvertisesExportField}.
+	 * It is bidirectional and its opposite is '{@link org.earthsystemcurator.cupid.nuopc.fsml.nuopc.AdvertisesExportField#getParent <em>Parent</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <p>
 	 * If the meaning of the '<em>Advertises Export Field</em>' containment reference list isn't clear,
@@ -80,7 +139,8 @@ public interface ModelImplementsInitP1 extends EObject {
 	 * <!-- end-user-doc -->
 	 * @return the value of the '<em>Advertises Export Field</em>' containment reference list.
 	 * @see org.earthsystemcurator.cupid.nuopc.fsml.nuopc.NUOPCPackage#getModelImplementsInitP1_AdvertisesExportField()
-	 * @model containment="true"
+	 * @see org.earthsystemcurator.cupid.nuopc.fsml.nuopc.AdvertisesExportField#getParent
+	 * @model opposite="parent" containment="true"
 	 *        annotation="http://www.earthsystemcog.org/projects/nuopc query='call: NUOPC_StateAdvertiseField'"
 	 * @generated
 	 */

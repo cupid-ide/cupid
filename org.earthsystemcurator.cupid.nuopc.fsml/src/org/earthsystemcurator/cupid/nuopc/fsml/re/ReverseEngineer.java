@@ -16,8 +16,16 @@ import org.earthsystemcurator.cupid.nuopc.fsml.util.CodeQuery;
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.ecore.EAnnotation;
 import org.eclipse.emf.ecore.EClass;
+import org.eclipse.emf.ecore.EClassifier;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EStructuralFeature;
+import org.eclipse.ocl.OCL;
+import org.eclipse.ocl.ParserException;
+import org.eclipse.ocl.Query;
+import org.eclipse.ocl.ecore.Constraint;
+import org.eclipse.ocl.ecore.EcoreEnvironmentFactory;
+import org.eclipse.ocl.expressions.OCLExpression;
+import org.eclipse.ocl.helper.OCLHelper;
 import org.eclipse.photran.core.IFortranAST;
 import org.eclipse.photran.internal.core.analysis.types.DerivedType;
 import org.eclipse.photran.internal.core.analysis.types.Type;
@@ -50,6 +58,7 @@ public class ReverseEngineer {
 		//String query = ann.getDetails().get("query");
 		//System.out.println("query = " + query);		
 		
+		//current does NOT traverse inherited structural features
 		for (EStructuralFeature sf : modelElemClass.getEStructuralFeatures()) {
 			
 			System.out.println("Stuctural feature: " + sf.getName());
@@ -62,19 +71,59 @@ public class ReverseEngineer {
 				continue;  //no code queries, cannot proceed
 			}
 			
-			String sfQuery = anot.getDetails().get("query");
-			if (sfQuery == null || sfQuery.trim().equals("")) {
-				continue;
+			
+			/*********** OCL **************/
+			/*
+			String oclQuery = anot.getDetails().get("ocl");
+			if (oclQuery != null) {
+				
+				System.out.println("Evaluating OCL expression: " + oclQuery);
+				
+				//boolean valid;
+				OCLExpression<EClassifier> oclexp = null;
+
+				try {
+				    // create an OCL instance for Ecore
+				    OCL<?, EClassifier, ?, ?, ?, ?, ?, ?, ?, Constraint, EClass, EObject> ocl;
+				    ocl = OCL.newInstance(EcoreEnvironmentFactory.INSTANCE);
+				    
+				    // create an OCL helper object
+				    OCLHelper<EClassifier, ?, ?, Constraint> helper = ocl.createOCLHelper();
+				    
+				    // set the OCL context classifier
+				    //helper.setContext(EXTLibraryPackage.Literals.WRITER);
+				    helper.setContext(modelElemClass);
+				    
+				    oclexp = helper.createQuery(oclQuery);
+				    
+				    Query<EClassifier, EClass, EObject> eval = ocl.createQuery(oclexp);
+				    Object result = eval.evaluate(modelElem);
+				    System.out.println("\tOCL result: " + result);
+				    
+				    modelElem.eSet(sf, result);
+				    
+				} catch (ParserException e) {
+				    e.printStackTrace();
+				}
+				
+				
+				
+				
 			}
+			*/
+			
+			
+			/*********** OCL **************/
+			
+			
+			String sfQuery = anot.getDetails().get("query");
+			//if (sfQuery == null || sfQuery.trim().equals("")) {
+			//	continue;
+			//}
 			
 			//System.out.println("\tquery = " + sfQuery);
 			
-			//just handles one parameter for now
-			String[] sfQuerySplit = sfQuery.split("\\s*:\\s*");
-			String methodName = sfQuerySplit[0].trim();
-			String params = null;
-			if (sfQuerySplit.length==2)
-				params = sfQuerySplit[1].trim();
+			
 			
 			//String[] params = null;
 			//if (sfQuerySplit.length == 2) {
@@ -84,79 +133,126 @@ public class ReverseEngineer {
 			//	}
 			//}
 						
-			for (Method method : CodeQuery.class.getMethods()) {
+			if (sfQuery != null) {
 				
-				if (method.getName().equals(methodName)) {
-					System.out.println("\tFound matching method: " + method);
-					//System.out.println("\t\tReturn type: " + method.getReturnType());
-					//System.out.println("\t\tGeneric return type: " + method.getGenericReturnType());
+				//just handles one parameter for now
+				String[] sfQuerySplit = sfQuery.split("\\s*:\\s*");
+				String methodName = sfQuerySplit[0].trim();
+				String params = null;
+				if (sfQuerySplit.length==2)
+					params = sfQuerySplit[1].trim();
+				
+				for (Method method : CodeQuery.class.getMethods()) {
 					
-					//try {
-						//System.out.println("\t\tGeneric return type parameter 0: " + ((ParameterizedType) method.getGenericReturnType()).getActualTypeArguments()[0]);
-					//} catch (Exception e) {}
-					
-					try {
+					if (method.getName().equals(methodName)) {
+						System.out.println("\tFound matching method: " + method);
+						//System.out.println("\t\tReturn type: " + method.getReturnType());
+						//System.out.println("\t\tGeneric return type: " + method.getGenericReturnType());
 						
-						Object result;
-						if (params != null) {
-							result = method.invoke(null, contextNode, params);
-						}
-						else {
-							result = method.invoke(null, contextNode);
-						}
+						//try {
+							//System.out.println("\t\tGeneric return type parameter 0: " + ((ParameterizedType) method.getGenericReturnType()).getActualTypeArguments()[0]);
+						//} catch (Exception e) {}
 						
-						System.out.println("\tInvocation returned: " + result);
-						
-						//if (sf.getEType().getName().equals("EString") ||
-						//	sf.getEType().getName().equals("EBoolean")) {
-						if (method.getReturnType() == String.class ||
-							method.getReturnType().isPrimitive()) {
-							modelElem.eSet(sf, result);
-						}
-						else if (method.getReturnType() == Set.class) {
-							//assume it is an EClass
-							Set<IASTNode> resultSet = (Set<IASTNode>) result;
+						try {
 							
-							for (IASTNode newContextNode : resultSet) {
+							Object result;
+							if (params != null) {
+								result = method.invoke(null, contextNode, params);
+							}
+							else {
+								result = method.invoke(null, contextNode);
+							}
+							
+							System.out.println("\tInvocation returned: " + result);
+							
+							//if (sf.getEType().getName().equals("EString") ||
+							//	sf.getEType().getName().equals("EBoolean")) {
+							if (method.getReturnType() == String.class ||
+								method.getReturnType().isPrimitive()) {
+								modelElem.eSet(sf, result);
+							}
+							else if (method.getReturnType() == Set.class) {
+								//assume it is an EClass
+								Set<IASTNode> resultSet = (Set<IASTNode>) result;
 								
-								EObject newModelElem = NUOPCFactory.eINSTANCE.create((EClass) sf.getEType());
-								
-								//recursive call
-								newModelElem = reverseContext(newContextNode, newModelElem);
-								
-								if (newModelElem != null) {
-
-									//multi-valued?
+								for (IASTNode newContextNode : resultSet) {
+									
+									EObject newModelElem = NUOPCFactory.eINSTANCE.create((EClass) sf.getEType());
+									EObject newModelElemRet = null;
+									
+									// set up parent relationship (may be removed later)									
 									if (sf.isMany()) {
 										EList el = (EList) modelElem.eGet(sf);
 										el.add(newModelElem);
 									}
 									else {
 										modelElem.eSet(sf, newModelElem);
+									}
+																	
+									//recursive call
+									newModelElemRet = reverseContext(newContextNode, newModelElem);
+									
+									// if NULL returned, then remove model element from parent
+									if (newModelElemRet == null) {
+										if (sf.isMany()) {
+											EList el = (EList) modelElem.eGet(sf);
+											el.remove(newModelElem);
+										}
+										else {
+											modelElem.eUnset(sf);
+										}
+									}
+									else if (!sf.isMany()) {
 										break; // take first one that is not null
 									}
-										
-
+									
+									/*
+									if (newModelElem != null) {
+	
+										//multi-valued?
+										if (sf.isMany()) {
+											EList el = (EList) modelElem.eGet(sf);
+											el.add(newModelElem);
+										}
+										else {
+											modelElem.eSet(sf, newModelElem);
+											break; // take first one that is not null
+										}
+											
+									}
+									*/
 								}
+								
 							}
 							
+						} catch (IllegalArgumentException e) {
+							e.printStackTrace();
+						} catch (IllegalAccessException e) {
+							e.printStackTrace();
+						} catch (InvocationTargetException e) {
+							e.printStackTrace();
 						}
 						
-						//m.eSet(sf, myName);
-					} catch (IllegalArgumentException e) {
-						e.printStackTrace();
-					} catch (IllegalAccessException e) {
-						e.printStackTrace();
-					} catch (InvocationTargetException e) {
-						e.printStackTrace();
+						break;  //from for loop
 					}
-					
-					break;  //from for loop
+				} // end for
+							
+				
+			} // end if that checks for query string
+			
+			//at this point we have set the value of the structural feature
+			//if is essential, but not present or false, the parent is no good
+			String anotEssential = anot.getDetails().get("essential");
+			if (anotEssential != null && anotEssential.trim().equalsIgnoreCase("true")) {
+				System.out.println("\tEssential feature found: " + sf);
+				if (modelElem.eGet(sf) == null || !(Boolean) modelElem.eGet(sf)) {
+					System.out.println("\tEssential feature failed: " + sf);
+					return null;
 				}
-				
-				
+		
 			}
-		}
+			
+		} // end for structural features
 		
 		
 		return modelElem;

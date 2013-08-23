@@ -241,13 +241,31 @@ public interface NUOPCPackage extends EPackage {
 	int MODEL_IMPLEMENTS_INIT_P1__NAME = 0;
 
 	/**
+	 * The feature id for the '<em><b>Import Param</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int MODEL_IMPLEMENTS_INIT_P1__IMPORT_PARAM = 1;
+
+	/**
+	 * The feature id for the '<em><b>Export Param</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int MODEL_IMPLEMENTS_INIT_P1__EXPORT_PARAM = 2;
+
+	/**
 	 * The feature id for the '<em><b>Advertises Import Field</b></em>' containment reference list.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int MODEL_IMPLEMENTS_INIT_P1__ADVERTISES_IMPORT_FIELD = 1;
+	int MODEL_IMPLEMENTS_INIT_P1__ADVERTISES_IMPORT_FIELD = 3;
 
 	/**
 	 * The feature id for the '<em><b>Advertises Export Field</b></em>' containment reference list.
@@ -256,7 +274,7 @@ public interface NUOPCPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int MODEL_IMPLEMENTS_INIT_P1__ADVERTISES_EXPORT_FIELD = 2;
+	int MODEL_IMPLEMENTS_INIT_P1__ADVERTISES_EXPORT_FIELD = 4;
 
 	/**
 	 * The feature id for the '<em><b>Advertises At Least One Field</b></em>' attribute.
@@ -265,7 +283,7 @@ public interface NUOPCPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int MODEL_IMPLEMENTS_INIT_P1__ADVERTISES_AT_LEAST_ONE_FIELD = 3;
+	int MODEL_IMPLEMENTS_INIT_P1__ADVERTISES_AT_LEAST_ONE_FIELD = 5;
 
 	/**
 	 * The number of structural features of the '<em>Model Implements Init P1</em>' class.
@@ -274,7 +292,7 @@ public interface NUOPCPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int MODEL_IMPLEMENTS_INIT_P1_FEATURE_COUNT = 4;
+	int MODEL_IMPLEMENTS_INIT_P1_FEATURE_COUNT = 6;
 
 	/**
 	 * The meta object id for the '{@link org.earthsystemcurator.cupid.nuopc.fsml.nuopc.impl.ModelImplementsInitP2Impl <em>Model Implements Init P2</em>}' class.
@@ -296,13 +314,58 @@ public interface NUOPCPackage extends EPackage {
 	int MODEL_IMPLEMENTS_INIT_P2__NAME = 0;
 
 	/**
+	 * The feature id for the '<em><b>Import Param</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int MODEL_IMPLEMENTS_INIT_P2__IMPORT_PARAM = 1;
+
+	/**
+	 * The feature id for the '<em><b>Export Param</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int MODEL_IMPLEMENTS_INIT_P2__EXPORT_PARAM = 2;
+
+	/**
+	 * The feature id for the '<em><b>Realizes Import Field</b></em>' containment reference list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int MODEL_IMPLEMENTS_INIT_P2__REALIZES_IMPORT_FIELD = 3;
+
+	/**
+	 * The feature id for the '<em><b>Realizes Export Field</b></em>' containment reference list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int MODEL_IMPLEMENTS_INIT_P2__REALIZES_EXPORT_FIELD = 4;
+
+	/**
+	 * The feature id for the '<em><b>Realizes At Least One Field</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int MODEL_IMPLEMENTS_INIT_P2__REALIZES_AT_LEAST_ONE_FIELD = 5;
+
+	/**
 	 * The number of structural features of the '<em>Model Implements Init P2</em>' class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int MODEL_IMPLEMENTS_INIT_P2_FEATURE_COUNT = 1;
+	int MODEL_IMPLEMENTS_INIT_P2_FEATURE_COUNT = 6;
 
 	/**
 	 * The meta object id for the '{@link org.earthsystemcurator.cupid.nuopc.fsml.nuopc.impl.AdvertisesImportFieldImpl <em>Advertises Import Field</em>}' class.
@@ -315,13 +378,31 @@ public interface NUOPCPackage extends EPackage {
 	int ADVERTISES_IMPORT_FIELD = 4;
 
 	/**
+	 * The feature id for the '<em><b>Parent</b></em>' container reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int ADVERTISES_IMPORT_FIELD__PARENT = 0;
+
+	/**
+	 * The feature id for the '<em><b>Adds To State</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int ADVERTISES_IMPORT_FIELD__ADDS_TO_STATE = 1;
+
+	/**
 	 * The feature id for the '<em><b>Adds To Import State</b></em>' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int ADVERTISES_IMPORT_FIELD__ADDS_TO_IMPORT_STATE = 0;
+	int ADVERTISES_IMPORT_FIELD__ADDS_TO_IMPORT_STATE = 2;
 
 	/**
 	 * The feature id for the '<em><b>Standard Name</b></em>' attribute.
@@ -330,7 +411,7 @@ public interface NUOPCPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int ADVERTISES_IMPORT_FIELD__STANDARD_NAME = 1;
+	int ADVERTISES_IMPORT_FIELD__STANDARD_NAME = 3;
 
 	/**
 	 * The number of structural features of the '<em>Advertises Import Field</em>' class.
@@ -339,7 +420,7 @@ public interface NUOPCPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int ADVERTISES_IMPORT_FIELD_FEATURE_COUNT = 2;
+	int ADVERTISES_IMPORT_FIELD_FEATURE_COUNT = 4;
 
 	/**
 	 * The meta object id for the '{@link org.earthsystemcurator.cupid.nuopc.fsml.nuopc.impl.AdvertisesExportFieldImpl <em>Advertises Export Field</em>}' class.
@@ -352,13 +433,40 @@ public interface NUOPCPackage extends EPackage {
 	int ADVERTISES_EXPORT_FIELD = 5;
 
 	/**
+	 * The feature id for the '<em><b>Parent</b></em>' container reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int ADVERTISES_EXPORT_FIELD__PARENT = 0;
+
+	/**
+	 * The feature id for the '<em><b>Adds To State</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int ADVERTISES_EXPORT_FIELD__ADDS_TO_STATE = 1;
+
+	/**
+	 * The feature id for the '<em><b>Adds To Export State</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int ADVERTISES_EXPORT_FIELD__ADDS_TO_EXPORT_STATE = 2;
+
+	/**
 	 * The feature id for the '<em><b>Standard Name</b></em>' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int ADVERTISES_EXPORT_FIELD__STANDARD_NAME = 0;
+	int ADVERTISES_EXPORT_FIELD__STANDARD_NAME = 3;
 
 	/**
 	 * The number of structural features of the '<em>Advertises Export Field</em>' class.
@@ -367,7 +475,117 @@ public interface NUOPCPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int ADVERTISES_EXPORT_FIELD_FEATURE_COUNT = 1;
+	int ADVERTISES_EXPORT_FIELD_FEATURE_COUNT = 4;
+
+	/**
+	 * The meta object id for the '{@link org.earthsystemcurator.cupid.nuopc.fsml.nuopc.impl.RealizesImportFieldImpl <em>Realizes Import Field</em>}' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see org.earthsystemcurator.cupid.nuopc.fsml.nuopc.impl.RealizesImportFieldImpl
+	 * @see org.earthsystemcurator.cupid.nuopc.fsml.nuopc.impl.NUOPCPackageImpl#getRealizesImportField()
+	 * @generated
+	 */
+	int REALIZES_IMPORT_FIELD = 6;
+
+	/**
+	 * The feature id for the '<em><b>Parent</b></em>' container reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int REALIZES_IMPORT_FIELD__PARENT = 0;
+
+	/**
+	 * The feature id for the '<em><b>Realized In State</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int REALIZES_IMPORT_FIELD__REALIZED_IN_STATE = 1;
+
+	/**
+	 * The feature id for the '<em><b>Realized In Import State</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int REALIZES_IMPORT_FIELD__REALIZED_IN_IMPORT_STATE = 2;
+
+	/**
+	 * The feature id for the '<em><b>Field</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int REALIZES_IMPORT_FIELD__FIELD = 3;
+
+	/**
+	 * The number of structural features of the '<em>Realizes Import Field</em>' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int REALIZES_IMPORT_FIELD_FEATURE_COUNT = 4;
+
+	/**
+	 * The meta object id for the '{@link org.earthsystemcurator.cupid.nuopc.fsml.nuopc.impl.RealizesExportFieldImpl <em>Realizes Export Field</em>}' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see org.earthsystemcurator.cupid.nuopc.fsml.nuopc.impl.RealizesExportFieldImpl
+	 * @see org.earthsystemcurator.cupid.nuopc.fsml.nuopc.impl.NUOPCPackageImpl#getRealizesExportField()
+	 * @generated
+	 */
+	int REALIZES_EXPORT_FIELD = 7;
+
+	/**
+	 * The feature id for the '<em><b>Parent</b></em>' container reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int REALIZES_EXPORT_FIELD__PARENT = 0;
+
+	/**
+	 * The feature id for the '<em><b>Realized In State</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int REALIZES_EXPORT_FIELD__REALIZED_IN_STATE = 1;
+
+	/**
+	 * The feature id for the '<em><b>Realized In Export State</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int REALIZES_EXPORT_FIELD__REALIZED_IN_EXPORT_STATE = 2;
+
+	/**
+	 * The feature id for the '<em><b>Field</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int REALIZES_EXPORT_FIELD__FIELD = 3;
+
+	/**
+	 * The number of structural features of the '<em>Realizes Export Field</em>' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int REALIZES_EXPORT_FIELD_FEATURE_COUNT = 4;
 
 	/**
 	 * The meta object id for the '{@link org.earthsystemcurator.cupid.nuopc.fsml.nuopc.impl.AttachesMethodImpl <em>Attaches Method</em>}' class.
@@ -377,7 +595,7 @@ public interface NUOPCPackage extends EPackage {
 	 * @see org.earthsystemcurator.cupid.nuopc.fsml.nuopc.impl.NUOPCPackageImpl#getAttachesMethod()
 	 * @generated
 	 */
-	int ATTACHES_METHOD = 6;
+	int ATTACHES_METHOD = 8;
 
 	/**
 	 * The feature id for the '<em><b>Name</b></em>' attribute.
@@ -594,6 +812,28 @@ public interface NUOPCPackage extends EPackage {
 	EAttribute getModelImplementsInitP1_Name();
 
 	/**
+	 * Returns the meta object for the attribute '{@link org.earthsystemcurator.cupid.nuopc.fsml.nuopc.ModelImplementsInitP1#getImportParam <em>Import Param</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the attribute '<em>Import Param</em>'.
+	 * @see org.earthsystemcurator.cupid.nuopc.fsml.nuopc.ModelImplementsInitP1#getImportParam()
+	 * @see #getModelImplementsInitP1()
+	 * @generated
+	 */
+	EAttribute getModelImplementsInitP1_ImportParam();
+
+	/**
+	 * Returns the meta object for the attribute '{@link org.earthsystemcurator.cupid.nuopc.fsml.nuopc.ModelImplementsInitP1#getExportParam <em>Export Param</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the attribute '<em>Export Param</em>'.
+	 * @see org.earthsystemcurator.cupid.nuopc.fsml.nuopc.ModelImplementsInitP1#getExportParam()
+	 * @see #getModelImplementsInitP1()
+	 * @generated
+	 */
+	EAttribute getModelImplementsInitP1_ExportParam();
+
+	/**
 	 * Returns the meta object for the containment reference list '{@link org.earthsystemcurator.cupid.nuopc.fsml.nuopc.ModelImplementsInitP1#getAdvertisesImportField <em>Advertises Import Field</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -648,6 +888,61 @@ public interface NUOPCPackage extends EPackage {
 	EAttribute getModelImplementsInitP2_Name();
 
 	/**
+	 * Returns the meta object for the attribute '{@link org.earthsystemcurator.cupid.nuopc.fsml.nuopc.ModelImplementsInitP2#getImportParam <em>Import Param</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the attribute '<em>Import Param</em>'.
+	 * @see org.earthsystemcurator.cupid.nuopc.fsml.nuopc.ModelImplementsInitP2#getImportParam()
+	 * @see #getModelImplementsInitP2()
+	 * @generated
+	 */
+	EAttribute getModelImplementsInitP2_ImportParam();
+
+	/**
+	 * Returns the meta object for the attribute '{@link org.earthsystemcurator.cupid.nuopc.fsml.nuopc.ModelImplementsInitP2#getExportParam <em>Export Param</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the attribute '<em>Export Param</em>'.
+	 * @see org.earthsystemcurator.cupid.nuopc.fsml.nuopc.ModelImplementsInitP2#getExportParam()
+	 * @see #getModelImplementsInitP2()
+	 * @generated
+	 */
+	EAttribute getModelImplementsInitP2_ExportParam();
+
+	/**
+	 * Returns the meta object for the containment reference list '{@link org.earthsystemcurator.cupid.nuopc.fsml.nuopc.ModelImplementsInitP2#getRealizesImportField <em>Realizes Import Field</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the containment reference list '<em>Realizes Import Field</em>'.
+	 * @see org.earthsystemcurator.cupid.nuopc.fsml.nuopc.ModelImplementsInitP2#getRealizesImportField()
+	 * @see #getModelImplementsInitP2()
+	 * @generated
+	 */
+	EReference getModelImplementsInitP2_RealizesImportField();
+
+	/**
+	 * Returns the meta object for the containment reference list '{@link org.earthsystemcurator.cupid.nuopc.fsml.nuopc.ModelImplementsInitP2#getRealizesExportField <em>Realizes Export Field</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the containment reference list '<em>Realizes Export Field</em>'.
+	 * @see org.earthsystemcurator.cupid.nuopc.fsml.nuopc.ModelImplementsInitP2#getRealizesExportField()
+	 * @see #getModelImplementsInitP2()
+	 * @generated
+	 */
+	EReference getModelImplementsInitP2_RealizesExportField();
+
+	/**
+	 * Returns the meta object for the attribute '{@link org.earthsystemcurator.cupid.nuopc.fsml.nuopc.ModelImplementsInitP2#isRealizesAtLeastOneField <em>Realizes At Least One Field</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the attribute '<em>Realizes At Least One Field</em>'.
+	 * @see org.earthsystemcurator.cupid.nuopc.fsml.nuopc.ModelImplementsInitP2#isRealizesAtLeastOneField()
+	 * @see #getModelImplementsInitP2()
+	 * @generated
+	 */
+	EAttribute getModelImplementsInitP2_RealizesAtLeastOneField();
+
+	/**
 	 * Returns the meta object for class '{@link org.earthsystemcurator.cupid.nuopc.fsml.nuopc.AdvertisesImportField <em>Advertises Import Field</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -656,6 +951,28 @@ public interface NUOPCPackage extends EPackage {
 	 * @generated
 	 */
 	EClass getAdvertisesImportField();
+
+	/**
+	 * Returns the meta object for the container reference '{@link org.earthsystemcurator.cupid.nuopc.fsml.nuopc.AdvertisesImportField#getParent <em>Parent</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the container reference '<em>Parent</em>'.
+	 * @see org.earthsystemcurator.cupid.nuopc.fsml.nuopc.AdvertisesImportField#getParent()
+	 * @see #getAdvertisesImportField()
+	 * @generated
+	 */
+	EReference getAdvertisesImportField_Parent();
+
+	/**
+	 * Returns the meta object for the attribute '{@link org.earthsystemcurator.cupid.nuopc.fsml.nuopc.AdvertisesImportField#getAddsToState <em>Adds To State</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the attribute '<em>Adds To State</em>'.
+	 * @see org.earthsystemcurator.cupid.nuopc.fsml.nuopc.AdvertisesImportField#getAddsToState()
+	 * @see #getAdvertisesImportField()
+	 * @generated
+	 */
+	EAttribute getAdvertisesImportField_AddsToState();
 
 	/**
 	 * Returns the meta object for the attribute '{@link org.earthsystemcurator.cupid.nuopc.fsml.nuopc.AdvertisesImportField#isAddsToImportState <em>Adds To Import State</em>}'.
@@ -690,6 +1007,39 @@ public interface NUOPCPackage extends EPackage {
 	EClass getAdvertisesExportField();
 
 	/**
+	 * Returns the meta object for the container reference '{@link org.earthsystemcurator.cupid.nuopc.fsml.nuopc.AdvertisesExportField#getParent <em>Parent</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the container reference '<em>Parent</em>'.
+	 * @see org.earthsystemcurator.cupid.nuopc.fsml.nuopc.AdvertisesExportField#getParent()
+	 * @see #getAdvertisesExportField()
+	 * @generated
+	 */
+	EReference getAdvertisesExportField_Parent();
+
+	/**
+	 * Returns the meta object for the attribute '{@link org.earthsystemcurator.cupid.nuopc.fsml.nuopc.AdvertisesExportField#getAddsToState <em>Adds To State</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the attribute '<em>Adds To State</em>'.
+	 * @see org.earthsystemcurator.cupid.nuopc.fsml.nuopc.AdvertisesExportField#getAddsToState()
+	 * @see #getAdvertisesExportField()
+	 * @generated
+	 */
+	EAttribute getAdvertisesExportField_AddsToState();
+
+	/**
+	 * Returns the meta object for the attribute '{@link org.earthsystemcurator.cupid.nuopc.fsml.nuopc.AdvertisesExportField#isAddsToExportState <em>Adds To Export State</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the attribute '<em>Adds To Export State</em>'.
+	 * @see org.earthsystemcurator.cupid.nuopc.fsml.nuopc.AdvertisesExportField#isAddsToExportState()
+	 * @see #getAdvertisesExportField()
+	 * @generated
+	 */
+	EAttribute getAdvertisesExportField_AddsToExportState();
+
+	/**
 	 * Returns the meta object for the attribute '{@link org.earthsystemcurator.cupid.nuopc.fsml.nuopc.AdvertisesExportField#getStandardName <em>Standard Name</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -699,6 +1049,114 @@ public interface NUOPCPackage extends EPackage {
 	 * @generated
 	 */
 	EAttribute getAdvertisesExportField_StandardName();
+
+	/**
+	 * Returns the meta object for class '{@link org.earthsystemcurator.cupid.nuopc.fsml.nuopc.RealizesImportField <em>Realizes Import Field</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for class '<em>Realizes Import Field</em>'.
+	 * @see org.earthsystemcurator.cupid.nuopc.fsml.nuopc.RealizesImportField
+	 * @generated
+	 */
+	EClass getRealizesImportField();
+
+	/**
+	 * Returns the meta object for the container reference '{@link org.earthsystemcurator.cupid.nuopc.fsml.nuopc.RealizesImportField#getParent <em>Parent</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the container reference '<em>Parent</em>'.
+	 * @see org.earthsystemcurator.cupid.nuopc.fsml.nuopc.RealizesImportField#getParent()
+	 * @see #getRealizesImportField()
+	 * @generated
+	 */
+	EReference getRealizesImportField_Parent();
+
+	/**
+	 * Returns the meta object for the attribute '{@link org.earthsystemcurator.cupid.nuopc.fsml.nuopc.RealizesImportField#getRealizedInState <em>Realized In State</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the attribute '<em>Realized In State</em>'.
+	 * @see org.earthsystemcurator.cupid.nuopc.fsml.nuopc.RealizesImportField#getRealizedInState()
+	 * @see #getRealizesImportField()
+	 * @generated
+	 */
+	EAttribute getRealizesImportField_RealizedInState();
+
+	/**
+	 * Returns the meta object for the attribute '{@link org.earthsystemcurator.cupid.nuopc.fsml.nuopc.RealizesImportField#isRealizedInImportState <em>Realized In Import State</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the attribute '<em>Realized In Import State</em>'.
+	 * @see org.earthsystemcurator.cupid.nuopc.fsml.nuopc.RealizesImportField#isRealizedInImportState()
+	 * @see #getRealizesImportField()
+	 * @generated
+	 */
+	EAttribute getRealizesImportField_RealizedInImportState();
+
+	/**
+	 * Returns the meta object for the attribute '{@link org.earthsystemcurator.cupid.nuopc.fsml.nuopc.RealizesImportField#getField <em>Field</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the attribute '<em>Field</em>'.
+	 * @see org.earthsystemcurator.cupid.nuopc.fsml.nuopc.RealizesImportField#getField()
+	 * @see #getRealizesImportField()
+	 * @generated
+	 */
+	EAttribute getRealizesImportField_Field();
+
+	/**
+	 * Returns the meta object for class '{@link org.earthsystemcurator.cupid.nuopc.fsml.nuopc.RealizesExportField <em>Realizes Export Field</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for class '<em>Realizes Export Field</em>'.
+	 * @see org.earthsystemcurator.cupid.nuopc.fsml.nuopc.RealizesExportField
+	 * @generated
+	 */
+	EClass getRealizesExportField();
+
+	/**
+	 * Returns the meta object for the container reference '{@link org.earthsystemcurator.cupid.nuopc.fsml.nuopc.RealizesExportField#getParent <em>Parent</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the container reference '<em>Parent</em>'.
+	 * @see org.earthsystemcurator.cupid.nuopc.fsml.nuopc.RealizesExportField#getParent()
+	 * @see #getRealizesExportField()
+	 * @generated
+	 */
+	EReference getRealizesExportField_Parent();
+
+	/**
+	 * Returns the meta object for the attribute '{@link org.earthsystemcurator.cupid.nuopc.fsml.nuopc.RealizesExportField#getRealizedInState <em>Realized In State</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the attribute '<em>Realized In State</em>'.
+	 * @see org.earthsystemcurator.cupid.nuopc.fsml.nuopc.RealizesExportField#getRealizedInState()
+	 * @see #getRealizesExportField()
+	 * @generated
+	 */
+	EAttribute getRealizesExportField_RealizedInState();
+
+	/**
+	 * Returns the meta object for the attribute '{@link org.earthsystemcurator.cupid.nuopc.fsml.nuopc.RealizesExportField#isRealizedInExportState <em>Realized In Export State</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the attribute '<em>Realized In Export State</em>'.
+	 * @see org.earthsystemcurator.cupid.nuopc.fsml.nuopc.RealizesExportField#isRealizedInExportState()
+	 * @see #getRealizesExportField()
+	 * @generated
+	 */
+	EAttribute getRealizesExportField_RealizedInExportState();
+
+	/**
+	 * Returns the meta object for the attribute '{@link org.earthsystemcurator.cupid.nuopc.fsml.nuopc.RealizesExportField#getField <em>Field</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the attribute '<em>Field</em>'.
+	 * @see org.earthsystemcurator.cupid.nuopc.fsml.nuopc.RealizesExportField#getField()
+	 * @see #getRealizesExportField()
+	 * @generated
+	 */
+	EAttribute getRealizesExportField_Field();
 
 	/**
 	 * Returns the meta object for class '{@link org.earthsystemcurator.cupid.nuopc.fsml.nuopc.AttachesMethod <em>Attaches Method</em>}'.
@@ -894,6 +1352,22 @@ public interface NUOPCPackage extends EPackage {
 		EAttribute MODEL_IMPLEMENTS_INIT_P1__NAME = eINSTANCE.getModelImplementsInitP1_Name();
 
 		/**
+		 * The meta object literal for the '<em><b>Import Param</b></em>' attribute feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EAttribute MODEL_IMPLEMENTS_INIT_P1__IMPORT_PARAM = eINSTANCE.getModelImplementsInitP1_ImportParam();
+
+		/**
+		 * The meta object literal for the '<em><b>Export Param</b></em>' attribute feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EAttribute MODEL_IMPLEMENTS_INIT_P1__EXPORT_PARAM = eINSTANCE.getModelImplementsInitP1_ExportParam();
+
+		/**
 		 * The meta object literal for the '<em><b>Advertises Import Field</b></em>' containment reference list feature.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
@@ -936,6 +1410,46 @@ public interface NUOPCPackage extends EPackage {
 		EAttribute MODEL_IMPLEMENTS_INIT_P2__NAME = eINSTANCE.getModelImplementsInitP2_Name();
 
 		/**
+		 * The meta object literal for the '<em><b>Import Param</b></em>' attribute feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EAttribute MODEL_IMPLEMENTS_INIT_P2__IMPORT_PARAM = eINSTANCE.getModelImplementsInitP2_ImportParam();
+
+		/**
+		 * The meta object literal for the '<em><b>Export Param</b></em>' attribute feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EAttribute MODEL_IMPLEMENTS_INIT_P2__EXPORT_PARAM = eINSTANCE.getModelImplementsInitP2_ExportParam();
+
+		/**
+		 * The meta object literal for the '<em><b>Realizes Import Field</b></em>' containment reference list feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EReference MODEL_IMPLEMENTS_INIT_P2__REALIZES_IMPORT_FIELD = eINSTANCE.getModelImplementsInitP2_RealizesImportField();
+
+		/**
+		 * The meta object literal for the '<em><b>Realizes Export Field</b></em>' containment reference list feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EReference MODEL_IMPLEMENTS_INIT_P2__REALIZES_EXPORT_FIELD = eINSTANCE.getModelImplementsInitP2_RealizesExportField();
+
+		/**
+		 * The meta object literal for the '<em><b>Realizes At Least One Field</b></em>' attribute feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EAttribute MODEL_IMPLEMENTS_INIT_P2__REALIZES_AT_LEAST_ONE_FIELD = eINSTANCE.getModelImplementsInitP2_RealizesAtLeastOneField();
+
+		/**
 		 * The meta object literal for the '{@link org.earthsystemcurator.cupid.nuopc.fsml.nuopc.impl.AdvertisesImportFieldImpl <em>Advertises Import Field</em>}' class.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
@@ -944,6 +1458,22 @@ public interface NUOPCPackage extends EPackage {
 		 * @generated
 		 */
 		EClass ADVERTISES_IMPORT_FIELD = eINSTANCE.getAdvertisesImportField();
+
+		/**
+		 * The meta object literal for the '<em><b>Parent</b></em>' container reference feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EReference ADVERTISES_IMPORT_FIELD__PARENT = eINSTANCE.getAdvertisesImportField_Parent();
+
+		/**
+		 * The meta object literal for the '<em><b>Adds To State</b></em>' attribute feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EAttribute ADVERTISES_IMPORT_FIELD__ADDS_TO_STATE = eINSTANCE.getAdvertisesImportField_AddsToState();
 
 		/**
 		 * The meta object literal for the '<em><b>Adds To Import State</b></em>' attribute feature.
@@ -972,12 +1502,120 @@ public interface NUOPCPackage extends EPackage {
 		EClass ADVERTISES_EXPORT_FIELD = eINSTANCE.getAdvertisesExportField();
 
 		/**
+		 * The meta object literal for the '<em><b>Parent</b></em>' container reference feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EReference ADVERTISES_EXPORT_FIELD__PARENT = eINSTANCE.getAdvertisesExportField_Parent();
+
+		/**
+		 * The meta object literal for the '<em><b>Adds To State</b></em>' attribute feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EAttribute ADVERTISES_EXPORT_FIELD__ADDS_TO_STATE = eINSTANCE.getAdvertisesExportField_AddsToState();
+
+		/**
+		 * The meta object literal for the '<em><b>Adds To Export State</b></em>' attribute feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EAttribute ADVERTISES_EXPORT_FIELD__ADDS_TO_EXPORT_STATE = eINSTANCE.getAdvertisesExportField_AddsToExportState();
+
+		/**
 		 * The meta object literal for the '<em><b>Standard Name</b></em>' attribute feature.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
 		 * @generated
 		 */
 		EAttribute ADVERTISES_EXPORT_FIELD__STANDARD_NAME = eINSTANCE.getAdvertisesExportField_StandardName();
+
+		/**
+		 * The meta object literal for the '{@link org.earthsystemcurator.cupid.nuopc.fsml.nuopc.impl.RealizesImportFieldImpl <em>Realizes Import Field</em>}' class.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @see org.earthsystemcurator.cupid.nuopc.fsml.nuopc.impl.RealizesImportFieldImpl
+		 * @see org.earthsystemcurator.cupid.nuopc.fsml.nuopc.impl.NUOPCPackageImpl#getRealizesImportField()
+		 * @generated
+		 */
+		EClass REALIZES_IMPORT_FIELD = eINSTANCE.getRealizesImportField();
+
+		/**
+		 * The meta object literal for the '<em><b>Parent</b></em>' container reference feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EReference REALIZES_IMPORT_FIELD__PARENT = eINSTANCE.getRealizesImportField_Parent();
+
+		/**
+		 * The meta object literal for the '<em><b>Realized In State</b></em>' attribute feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EAttribute REALIZES_IMPORT_FIELD__REALIZED_IN_STATE = eINSTANCE.getRealizesImportField_RealizedInState();
+
+		/**
+		 * The meta object literal for the '<em><b>Realized In Import State</b></em>' attribute feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EAttribute REALIZES_IMPORT_FIELD__REALIZED_IN_IMPORT_STATE = eINSTANCE.getRealizesImportField_RealizedInImportState();
+
+		/**
+		 * The meta object literal for the '<em><b>Field</b></em>' attribute feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EAttribute REALIZES_IMPORT_FIELD__FIELD = eINSTANCE.getRealizesImportField_Field();
+
+		/**
+		 * The meta object literal for the '{@link org.earthsystemcurator.cupid.nuopc.fsml.nuopc.impl.RealizesExportFieldImpl <em>Realizes Export Field</em>}' class.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @see org.earthsystemcurator.cupid.nuopc.fsml.nuopc.impl.RealizesExportFieldImpl
+		 * @see org.earthsystemcurator.cupid.nuopc.fsml.nuopc.impl.NUOPCPackageImpl#getRealizesExportField()
+		 * @generated
+		 */
+		EClass REALIZES_EXPORT_FIELD = eINSTANCE.getRealizesExportField();
+
+		/**
+		 * The meta object literal for the '<em><b>Parent</b></em>' container reference feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EReference REALIZES_EXPORT_FIELD__PARENT = eINSTANCE.getRealizesExportField_Parent();
+
+		/**
+		 * The meta object literal for the '<em><b>Realized In State</b></em>' attribute feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EAttribute REALIZES_EXPORT_FIELD__REALIZED_IN_STATE = eINSTANCE.getRealizesExportField_RealizedInState();
+
+		/**
+		 * The meta object literal for the '<em><b>Realized In Export State</b></em>' attribute feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EAttribute REALIZES_EXPORT_FIELD__REALIZED_IN_EXPORT_STATE = eINSTANCE.getRealizesExportField_RealizedInExportState();
+
+		/**
+		 * The meta object literal for the '<em><b>Field</b></em>' attribute feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EAttribute REALIZES_EXPORT_FIELD__FIELD = eINSTANCE.getRealizesExportField_Field();
 
 		/**
 		 * The meta object literal for the '{@link org.earthsystemcurator.cupid.nuopc.fsml.nuopc.impl.AttachesMethodImpl <em>Attaches Method</em>}' class.

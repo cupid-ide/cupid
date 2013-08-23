@@ -92,6 +92,14 @@ public class NUOPCAdapterFactory extends AdapterFactoryImpl {
 				return createAdvertisesExportFieldAdapter();
 			}
 			@Override
+			public Adapter caseRealizesImportField(RealizesImportField object) {
+				return createRealizesImportFieldAdapter();
+			}
+			@Override
+			public Adapter caseRealizesExportField(RealizesExportField object) {
+				return createRealizesExportFieldAdapter();
+			}
+			@Override
 			public Adapter caseAttachesMethod(AttachesMethod object) {
 				return createAttachesMethodAdapter();
 			}
@@ -196,6 +204,34 @@ public class NUOPCAdapterFactory extends AdapterFactoryImpl {
 	 * @generated
 	 */
 	public Adapter createAdvertisesExportFieldAdapter() {
+		return null;
+	}
+
+	/**
+	 * Creates a new adapter for an object of class '{@link org.earthsystemcurator.cupid.nuopc.fsml.nuopc.RealizesImportField <em>Realizes Import Field</em>}'.
+	 * <!-- begin-user-doc -->
+	 * This default implementation returns null so that we can easily ignore cases;
+	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
+	 * <!-- end-user-doc -->
+	 * @return the new adapter.
+	 * @see org.earthsystemcurator.cupid.nuopc.fsml.nuopc.RealizesImportField
+	 * @generated
+	 */
+	public Adapter createRealizesImportFieldAdapter() {
+		return null;
+	}
+
+	/**
+	 * Creates a new adapter for an object of class '{@link org.earthsystemcurator.cupid.nuopc.fsml.nuopc.RealizesExportField <em>Realizes Export Field</em>}'.
+	 * <!-- begin-user-doc -->
+	 * This default implementation returns null so that we can easily ignore cases;
+	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
+	 * <!-- end-user-doc -->
+	 * @return the new adapter.
+	 * @see org.earthsystemcurator.cupid.nuopc.fsml.nuopc.RealizesExportField
+	 * @generated
+	 */
+	public Adapter createRealizesExportFieldAdapter() {
 		return null;
 	}
 

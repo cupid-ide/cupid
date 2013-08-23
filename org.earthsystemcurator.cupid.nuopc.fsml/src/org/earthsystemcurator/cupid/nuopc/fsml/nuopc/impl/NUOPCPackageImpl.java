@@ -14,6 +14,8 @@ import org.earthsystemcurator.cupid.nuopc.fsml.nuopc.ModelImplementsInitP2;
 import org.earthsystemcurator.cupid.nuopc.fsml.nuopc.NUOPCFactory;
 import org.earthsystemcurator.cupid.nuopc.fsml.nuopc.NUOPCPackage;
 
+import org.earthsystemcurator.cupid.nuopc.fsml.nuopc.RealizesExportField;
+import org.earthsystemcurator.cupid.nuopc.fsml.nuopc.RealizesImportField;
 import org.eclipse.emf.ecore.EAttribute;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EGenericType;
@@ -72,6 +74,20 @@ public class NUOPCPackageImpl extends EPackageImpl implements NUOPCPackage {
 	 * @generated
 	 */
 	private EClass advertisesExportFieldEClass = null;
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	private EClass realizesImportFieldEClass = null;
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	private EClass realizesExportFieldEClass = null;
 
 	/**
 	 * <!-- begin-user-doc -->
@@ -308,8 +324,26 @@ public class NUOPCPackageImpl extends EPackageImpl implements NUOPCPackage {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	public EAttribute getModelImplementsInitP1_ImportParam() {
+		return (EAttribute)modelImplementsInitP1EClass.getEStructuralFeatures().get(1);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EAttribute getModelImplementsInitP1_ExportParam() {
+		return (EAttribute)modelImplementsInitP1EClass.getEStructuralFeatures().get(2);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
 	public EReference getModelImplementsInitP1_AdvertisesImportField() {
-		return (EReference)modelImplementsInitP1EClass.getEStructuralFeatures().get(1);
+		return (EReference)modelImplementsInitP1EClass.getEStructuralFeatures().get(3);
 	}
 
 	/**
@@ -318,7 +352,7 @@ public class NUOPCPackageImpl extends EPackageImpl implements NUOPCPackage {
 	 * @generated
 	 */
 	public EReference getModelImplementsInitP1_AdvertisesExportField() {
-		return (EReference)modelImplementsInitP1EClass.getEStructuralFeatures().get(2);
+		return (EReference)modelImplementsInitP1EClass.getEStructuralFeatures().get(4);
 	}
 
 	/**
@@ -327,7 +361,7 @@ public class NUOPCPackageImpl extends EPackageImpl implements NUOPCPackage {
 	 * @generated
 	 */
 	public EAttribute getModelImplementsInitP1_AdvertisesAtLeastOneField() {
-		return (EAttribute)modelImplementsInitP1EClass.getEStructuralFeatures().get(3);
+		return (EAttribute)modelImplementsInitP1EClass.getEStructuralFeatures().get(5);
 	}
 
 	/**
@@ -353,6 +387,51 @@ public class NUOPCPackageImpl extends EPackageImpl implements NUOPCPackage {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	public EAttribute getModelImplementsInitP2_ImportParam() {
+		return (EAttribute)modelImplementsInitP2EClass.getEStructuralFeatures().get(1);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EAttribute getModelImplementsInitP2_ExportParam() {
+		return (EAttribute)modelImplementsInitP2EClass.getEStructuralFeatures().get(2);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EReference getModelImplementsInitP2_RealizesImportField() {
+		return (EReference)modelImplementsInitP2EClass.getEStructuralFeatures().get(3);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EReference getModelImplementsInitP2_RealizesExportField() {
+		return (EReference)modelImplementsInitP2EClass.getEStructuralFeatures().get(4);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EAttribute getModelImplementsInitP2_RealizesAtLeastOneField() {
+		return (EAttribute)modelImplementsInitP2EClass.getEStructuralFeatures().get(5);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
 	public EClass getAdvertisesImportField() {
 		return advertisesImportFieldEClass;
 	}
@@ -362,8 +441,26 @@ public class NUOPCPackageImpl extends EPackageImpl implements NUOPCPackage {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	public EReference getAdvertisesImportField_Parent() {
+		return (EReference)advertisesImportFieldEClass.getEStructuralFeatures().get(0);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EAttribute getAdvertisesImportField_AddsToState() {
+		return (EAttribute)advertisesImportFieldEClass.getEStructuralFeatures().get(1);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
 	public EAttribute getAdvertisesImportField_AddsToImportState() {
-		return (EAttribute)advertisesImportFieldEClass.getEStructuralFeatures().get(0);
+		return (EAttribute)advertisesImportFieldEClass.getEStructuralFeatures().get(2);
 	}
 
 	/**
@@ -372,7 +469,7 @@ public class NUOPCPackageImpl extends EPackageImpl implements NUOPCPackage {
 	 * @generated
 	 */
 	public EAttribute getAdvertisesImportField_StandardName() {
-		return (EAttribute)advertisesImportFieldEClass.getEStructuralFeatures().get(1);
+		return (EAttribute)advertisesImportFieldEClass.getEStructuralFeatures().get(3);
 	}
 
 	/**
@@ -389,8 +486,125 @@ public class NUOPCPackageImpl extends EPackageImpl implements NUOPCPackage {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	public EReference getAdvertisesExportField_Parent() {
+		return (EReference)advertisesExportFieldEClass.getEStructuralFeatures().get(0);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EAttribute getAdvertisesExportField_AddsToState() {
+		return (EAttribute)advertisesExportFieldEClass.getEStructuralFeatures().get(1);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EAttribute getAdvertisesExportField_AddsToExportState() {
+		return (EAttribute)advertisesExportFieldEClass.getEStructuralFeatures().get(2);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
 	public EAttribute getAdvertisesExportField_StandardName() {
-		return (EAttribute)advertisesExportFieldEClass.getEStructuralFeatures().get(0);
+		return (EAttribute)advertisesExportFieldEClass.getEStructuralFeatures().get(3);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EClass getRealizesImportField() {
+		return realizesImportFieldEClass;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EReference getRealizesImportField_Parent() {
+		return (EReference)realizesImportFieldEClass.getEStructuralFeatures().get(0);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EAttribute getRealizesImportField_RealizedInState() {
+		return (EAttribute)realizesImportFieldEClass.getEStructuralFeatures().get(1);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EAttribute getRealizesImportField_RealizedInImportState() {
+		return (EAttribute)realizesImportFieldEClass.getEStructuralFeatures().get(2);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EAttribute getRealizesImportField_Field() {
+		return (EAttribute)realizesImportFieldEClass.getEStructuralFeatures().get(3);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EClass getRealizesExportField() {
+		return realizesExportFieldEClass;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EReference getRealizesExportField_Parent() {
+		return (EReference)realizesExportFieldEClass.getEStructuralFeatures().get(0);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EAttribute getRealizesExportField_RealizedInState() {
+		return (EAttribute)realizesExportFieldEClass.getEStructuralFeatures().get(1);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EAttribute getRealizesExportField_RealizedInExportState() {
+		return (EAttribute)realizesExportFieldEClass.getEStructuralFeatures().get(2);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EAttribute getRealizesExportField_Field() {
+		return (EAttribute)realizesExportFieldEClass.getEStructuralFeatures().get(3);
 	}
 
 	/**
@@ -459,19 +673,43 @@ public class NUOPCPackageImpl extends EPackageImpl implements NUOPCPackage {
 
 		modelImplementsInitP1EClass = createEClass(MODEL_IMPLEMENTS_INIT_P1);
 		createEAttribute(modelImplementsInitP1EClass, MODEL_IMPLEMENTS_INIT_P1__NAME);
+		createEAttribute(modelImplementsInitP1EClass, MODEL_IMPLEMENTS_INIT_P1__IMPORT_PARAM);
+		createEAttribute(modelImplementsInitP1EClass, MODEL_IMPLEMENTS_INIT_P1__EXPORT_PARAM);
 		createEReference(modelImplementsInitP1EClass, MODEL_IMPLEMENTS_INIT_P1__ADVERTISES_IMPORT_FIELD);
 		createEReference(modelImplementsInitP1EClass, MODEL_IMPLEMENTS_INIT_P1__ADVERTISES_EXPORT_FIELD);
 		createEAttribute(modelImplementsInitP1EClass, MODEL_IMPLEMENTS_INIT_P1__ADVERTISES_AT_LEAST_ONE_FIELD);
 
 		modelImplementsInitP2EClass = createEClass(MODEL_IMPLEMENTS_INIT_P2);
 		createEAttribute(modelImplementsInitP2EClass, MODEL_IMPLEMENTS_INIT_P2__NAME);
+		createEAttribute(modelImplementsInitP2EClass, MODEL_IMPLEMENTS_INIT_P2__IMPORT_PARAM);
+		createEAttribute(modelImplementsInitP2EClass, MODEL_IMPLEMENTS_INIT_P2__EXPORT_PARAM);
+		createEReference(modelImplementsInitP2EClass, MODEL_IMPLEMENTS_INIT_P2__REALIZES_IMPORT_FIELD);
+		createEReference(modelImplementsInitP2EClass, MODEL_IMPLEMENTS_INIT_P2__REALIZES_EXPORT_FIELD);
+		createEAttribute(modelImplementsInitP2EClass, MODEL_IMPLEMENTS_INIT_P2__REALIZES_AT_LEAST_ONE_FIELD);
 
 		advertisesImportFieldEClass = createEClass(ADVERTISES_IMPORT_FIELD);
+		createEReference(advertisesImportFieldEClass, ADVERTISES_IMPORT_FIELD__PARENT);
+		createEAttribute(advertisesImportFieldEClass, ADVERTISES_IMPORT_FIELD__ADDS_TO_STATE);
 		createEAttribute(advertisesImportFieldEClass, ADVERTISES_IMPORT_FIELD__ADDS_TO_IMPORT_STATE);
 		createEAttribute(advertisesImportFieldEClass, ADVERTISES_IMPORT_FIELD__STANDARD_NAME);
 
 		advertisesExportFieldEClass = createEClass(ADVERTISES_EXPORT_FIELD);
+		createEReference(advertisesExportFieldEClass, ADVERTISES_EXPORT_FIELD__PARENT);
+		createEAttribute(advertisesExportFieldEClass, ADVERTISES_EXPORT_FIELD__ADDS_TO_STATE);
+		createEAttribute(advertisesExportFieldEClass, ADVERTISES_EXPORT_FIELD__ADDS_TO_EXPORT_STATE);
 		createEAttribute(advertisesExportFieldEClass, ADVERTISES_EXPORT_FIELD__STANDARD_NAME);
+
+		realizesImportFieldEClass = createEClass(REALIZES_IMPORT_FIELD);
+		createEReference(realizesImportFieldEClass, REALIZES_IMPORT_FIELD__PARENT);
+		createEAttribute(realizesImportFieldEClass, REALIZES_IMPORT_FIELD__REALIZED_IN_STATE);
+		createEAttribute(realizesImportFieldEClass, REALIZES_IMPORT_FIELD__REALIZED_IN_IMPORT_STATE);
+		createEAttribute(realizesImportFieldEClass, REALIZES_IMPORT_FIELD__FIELD);
+
+		realizesExportFieldEClass = createEClass(REALIZES_EXPORT_FIELD);
+		createEReference(realizesExportFieldEClass, REALIZES_EXPORT_FIELD__PARENT);
+		createEAttribute(realizesExportFieldEClass, REALIZES_EXPORT_FIELD__REALIZED_IN_STATE);
+		createEAttribute(realizesExportFieldEClass, REALIZES_EXPORT_FIELD__REALIZED_IN_EXPORT_STATE);
+		createEAttribute(realizesExportFieldEClass, REALIZES_EXPORT_FIELD__FIELD);
 
 		attachesMethodEClass = createEClass(ATTACHES_METHOD);
 		createEAttribute(attachesMethodEClass, ATTACHES_METHOD__NAME);
@@ -528,19 +766,43 @@ public class NUOPCPackageImpl extends EPackageImpl implements NUOPCPackage {
 
 		initEClass(modelImplementsInitP1EClass, ModelImplementsInitP1.class, "ModelImplementsInitP1", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 		initEAttribute(getModelImplementsInitP1_Name(), ecorePackage.getEString(), "name", null, 1, 1, ModelImplementsInitP1.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-		initEReference(getModelImplementsInitP1_AdvertisesImportField(), this.getAdvertisesImportField(), null, "advertisesImportField", null, 0, -1, ModelImplementsInitP1.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-		initEReference(getModelImplementsInitP1_AdvertisesExportField(), this.getAdvertisesExportField(), null, "advertisesExportField", null, 0, -1, ModelImplementsInitP1.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEAttribute(getModelImplementsInitP1_ImportParam(), ecorePackage.getEString(), "importParam", null, 1, 1, ModelImplementsInitP1.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEAttribute(getModelImplementsInitP1_ExportParam(), ecorePackage.getEString(), "exportParam", null, 1, 1, ModelImplementsInitP1.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEReference(getModelImplementsInitP1_AdvertisesImportField(), this.getAdvertisesImportField(), this.getAdvertisesImportField_Parent(), "advertisesImportField", null, 0, -1, ModelImplementsInitP1.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEReference(getModelImplementsInitP1_AdvertisesExportField(), this.getAdvertisesExportField(), this.getAdvertisesExportField_Parent(), "advertisesExportField", null, 0, -1, ModelImplementsInitP1.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEAttribute(getModelImplementsInitP1_AdvertisesAtLeastOneField(), ecorePackage.getEBoolean(), "advertisesAtLeastOneField", null, 0, 1, ModelImplementsInitP1.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, IS_DERIVED, IS_ORDERED);
 
 		initEClass(modelImplementsInitP2EClass, ModelImplementsInitP2.class, "ModelImplementsInitP2", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 		initEAttribute(getModelImplementsInitP2_Name(), ecorePackage.getEString(), "name", null, 1, 1, ModelImplementsInitP2.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEAttribute(getModelImplementsInitP2_ImportParam(), ecorePackage.getEString(), "importParam", null, 1, 1, ModelImplementsInitP2.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEAttribute(getModelImplementsInitP2_ExportParam(), ecorePackage.getEString(), "exportParam", null, 1, 1, ModelImplementsInitP2.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEReference(getModelImplementsInitP2_RealizesImportField(), this.getRealizesImportField(), this.getRealizesImportField_Parent(), "realizesImportField", null, 0, -1, ModelImplementsInitP2.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEReference(getModelImplementsInitP2_RealizesExportField(), this.getRealizesExportField(), this.getRealizesExportField_Parent(), "realizesExportField", null, 0, -1, ModelImplementsInitP2.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEAttribute(getModelImplementsInitP2_RealizesAtLeastOneField(), ecorePackage.getEBoolean(), "realizesAtLeastOneField", null, 0, 1, ModelImplementsInitP2.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, IS_DERIVED, IS_ORDERED);
 
 		initEClass(advertisesImportFieldEClass, AdvertisesImportField.class, "AdvertisesImportField", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
-		initEAttribute(getAdvertisesImportField_AddsToImportState(), ecorePackage.getEBoolean(), "addsToImportState", null, 0, 1, AdvertisesImportField.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEReference(getAdvertisesImportField_Parent(), this.getModelImplementsInitP1(), this.getModelImplementsInitP1_AdvertisesImportField(), "parent", null, 1, 1, AdvertisesImportField.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEAttribute(getAdvertisesImportField_AddsToState(), ecorePackage.getEString(), "addsToState", null, 1, 1, AdvertisesImportField.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEAttribute(getAdvertisesImportField_AddsToImportState(), ecorePackage.getEBoolean(), "addsToImportState", null, 0, 1, AdvertisesImportField.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, IS_DERIVED, IS_ORDERED);
 		initEAttribute(getAdvertisesImportField_StandardName(), ecorePackage.getEString(), "standardName", null, 0, 1, AdvertisesImportField.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
 		initEClass(advertisesExportFieldEClass, AdvertisesExportField.class, "AdvertisesExportField", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+		initEReference(getAdvertisesExportField_Parent(), this.getModelImplementsInitP1(), this.getModelImplementsInitP1_AdvertisesExportField(), "parent", null, 1, 1, AdvertisesExportField.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEAttribute(getAdvertisesExportField_AddsToState(), ecorePackage.getEString(), "addsToState", null, 1, 1, AdvertisesExportField.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEAttribute(getAdvertisesExportField_AddsToExportState(), ecorePackage.getEBoolean(), "addsToExportState", null, 0, 1, AdvertisesExportField.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, IS_DERIVED, IS_ORDERED);
 		initEAttribute(getAdvertisesExportField_StandardName(), ecorePackage.getEString(), "standardName", null, 0, 1, AdvertisesExportField.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+
+		initEClass(realizesImportFieldEClass, RealizesImportField.class, "RealizesImportField", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+		initEReference(getRealizesImportField_Parent(), this.getModelImplementsInitP2(), this.getModelImplementsInitP2_RealizesImportField(), "parent", null, 1, 1, RealizesImportField.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEAttribute(getRealizesImportField_RealizedInState(), ecorePackage.getEString(), "realizedInState", null, 1, 1, RealizesImportField.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEAttribute(getRealizesImportField_RealizedInImportState(), ecorePackage.getEBoolean(), "realizedInImportState", null, 0, 1, RealizesImportField.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, IS_DERIVED, IS_ORDERED);
+		initEAttribute(getRealizesImportField_Field(), ecorePackage.getEString(), "field", null, 0, 1, RealizesImportField.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+
+		initEClass(realizesExportFieldEClass, RealizesExportField.class, "RealizesExportField", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+		initEReference(getRealizesExportField_Parent(), this.getModelImplementsInitP2(), this.getModelImplementsInitP2_RealizesExportField(), "parent", null, 1, 1, RealizesExportField.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEAttribute(getRealizesExportField_RealizedInState(), ecorePackage.getEString(), "realizedInState", null, 1, 1, RealizesExportField.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEAttribute(getRealizesExportField_RealizedInExportState(), ecorePackage.getEBoolean(), "realizedInExportState", null, 0, 1, RealizesExportField.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, IS_DERIVED, IS_ORDERED);
+		initEAttribute(getRealizesExportField_Field(), ecorePackage.getEString(), "field", null, 0, 1, RealizesExportField.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
 		initEClass(attachesMethodEClass, AttachesMethod.class, "AttachesMethod", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 		initEAttribute(getAttachesMethod_Name(), ecorePackage.getEString(), "name", null, 1, 1, AttachesMethod.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
@@ -572,7 +834,7 @@ public class NUOPCPackageImpl extends EPackageImpl implements NUOPCPackage {
 			 "invocationDelegates", "http://www.eclipse.org/emf/2002/Ecore/OCL",
 			 "settingDelegates", "http://www.eclipse.org/emf/2002/Ecore/OCL",
 			 "validationDelegates", "http://www.eclipse.org/emf/2002/Ecore/OCL"
-		   });																			
+		   });																																								
 	}
 
 	/**
@@ -652,6 +914,18 @@ public class NUOPCPackageImpl extends EPackageImpl implements NUOPCPackage {
 			 "query", "subroutineName"
 		   });		
 		addAnnotation
+		  (getModelImplementsInitP1_ImportParam(), 
+		   source, 
+		   new String[] {
+			 "query", "formalParam: 2"
+		   });		
+		addAnnotation
+		  (getModelImplementsInitP1_ExportParam(), 
+		   source, 
+		   new String[] {
+			 "query", "formalParam: 3"
+		   });		
+		addAnnotation
 		  (getModelImplementsInitP1_AdvertisesImportField(), 
 		   source, 
 		   new String[] {
@@ -676,11 +950,47 @@ public class NUOPCPackageImpl extends EPackageImpl implements NUOPCPackage {
 			 "query", "subroutineName"
 		   });		
 		addAnnotation
+		  (getModelImplementsInitP2_ImportParam(), 
+		   source, 
+		   new String[] {
+			 "query", "formalParam: 2"
+		   });		
+		addAnnotation
+		  (getModelImplementsInitP2_ExportParam(), 
+		   source, 
+		   new String[] {
+			 "query", "formalParam: 3"
+		   });		
+		addAnnotation
+		  (getModelImplementsInitP2_RealizesImportField(), 
+		   source, 
+		   new String[] {
+			 "query", "call: NUOPC_StateRealizeField"
+		   });		
+		addAnnotation
+		  (getModelImplementsInitP2_RealizesExportField(), 
+		   source, 
+		   new String[] {
+			 "query", "call: NUOPC_StateRealizeField"
+		   });		
+		addAnnotation
+		  (getModelImplementsInitP2_RealizesAtLeastOneField(), 
+		   source, 
+		   new String[] {
+			 "essential", "true"
+		   });			
+		addAnnotation
+		  (getAdvertisesImportField_AddsToState(), 
+		   source, 
+		   new String[] {
+			 "query", "argByIndex: 1"
+		   });		
+		addAnnotation
 		  (getAdvertisesImportField_AddsToImportState(), 
 		   source, 
 		   new String[] {
-			 "query", "argByIndex: 1 sameAs: ../importStateParam"
-		   });		
+			 "essential", "true"
+		   });			
 		addAnnotation
 		  (getAdvertisesImportField_StandardName(), 
 		   source, 
@@ -688,10 +998,58 @@ public class NUOPCPackageImpl extends EPackageImpl implements NUOPCPackage {
 			 "query", "argByKeyword: StandardName"
 		   });		
 		addAnnotation
+		  (getAdvertisesExportField_AddsToState(), 
+		   source, 
+		   new String[] {
+			 "query", "argByIndex: 1"
+		   });		
+		addAnnotation
+		  (getAdvertisesExportField_AddsToExportState(), 
+		   source, 
+		   new String[] {
+			 "essential", "true"
+		   });			
+		addAnnotation
 		  (getAdvertisesExportField_StandardName(), 
 		   source, 
 		   new String[] {
 			 "query", "argByKeyword: StandardName"
+		   });		
+		addAnnotation
+		  (getRealizesImportField_RealizedInState(), 
+		   source, 
+		   new String[] {
+			 "query", "argByIndex: 1"
+		   });		
+		addAnnotation
+		  (getRealizesImportField_RealizedInImportState(), 
+		   source, 
+		   new String[] {
+			 "essential", "true"
+		   });			
+		addAnnotation
+		  (getRealizesImportField_Field(), 
+		   source, 
+		   new String[] {
+			 "query", "argByIndex: 2"
+		   });		
+		addAnnotation
+		  (getRealizesExportField_RealizedInState(), 
+		   source, 
+		   new String[] {
+			 "query", "argByIndex: 1"
+		   });		
+		addAnnotation
+		  (getRealizesExportField_RealizedInExportState(), 
+		   source, 
+		   new String[] {
+			 "essential", "true"
+		   });			
+		addAnnotation
+		  (getRealizesExportField_Field(), 
+		   source, 
+		   new String[] {
+			 "query", "argByIndex: 2"
 		   });
 	}
 
@@ -702,13 +1060,43 @@ public class NUOPCPackageImpl extends EPackageImpl implements NUOPCPackage {
 	 * @generated
 	 */
 	protected void createOCLAnnotations() {
-		String source = "http://www.eclipse.org/emf/2002/Ecore/OCL";																	
+		String source = "http://www.eclipse.org/emf/2002/Ecore/OCL";																			
 		addAnnotation
 		  (getModelImplementsInitP1_AdvertisesAtLeastOneField(), 
 		   source, 
 		   new String[] {
 			 "derivation", "self.advertisesExportField->size() > 0 or self.advertisesImportField->size() > 0"
+		   });								
+		addAnnotation
+		  (getModelImplementsInitP2_RealizesAtLeastOneField(), 
+		   source, 
+		   new String[] {
+			 "derivation", "self.realizesImportField->size() > 0 or self.realizesExportField->size() > 0"
 		   });				
+		addAnnotation
+		  (getAdvertisesImportField_AddsToImportState(), 
+		   source, 
+		   new String[] {
+			 "derivation", "self.addsToState = self.parent.importParam"
+		   });					
+		addAnnotation
+		  (getAdvertisesExportField_AddsToExportState(), 
+		   source, 
+		   new String[] {
+			 "derivation", "self.addsToState = self.parent.exportParam"
+		   });					
+		addAnnotation
+		  (getRealizesImportField_RealizedInImportState(), 
+		   source, 
+		   new String[] {
+			 "derivation", "self.realizedInState = self.parent.importParam"
+		   });					
+		addAnnotation
+		  (getRealizesExportField_RealizedInExportState(), 
+		   source, 
+		   new String[] {
+			 "derivation", "self.realizedInState = self.parent.exportParam"
+		   });	
 	}
 
 } //NUOPCPackageImpl

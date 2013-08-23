@@ -19,6 +19,7 @@ import org.eclipse.emf.ecore.InternalEObject;
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
 import org.eclipse.emf.ecore.impl.EObjectImpl;
 import org.eclipse.emf.ecore.util.EObjectContainmentEList;
+import org.eclipse.emf.ecore.util.EObjectContainmentWithInverseEList;
 import org.eclipse.emf.ecore.util.InternalEList;
 
 /**
@@ -29,6 +30,8 @@ import org.eclipse.emf.ecore.util.InternalEList;
  * The following features are implemented:
  * <ul>
  *   <li>{@link org.earthsystemcurator.cupid.nuopc.fsml.nuopc.impl.ModelImplementsInitP1Impl#getName <em>Name</em>}</li>
+ *   <li>{@link org.earthsystemcurator.cupid.nuopc.fsml.nuopc.impl.ModelImplementsInitP1Impl#getImportParam <em>Import Param</em>}</li>
+ *   <li>{@link org.earthsystemcurator.cupid.nuopc.fsml.nuopc.impl.ModelImplementsInitP1Impl#getExportParam <em>Export Param</em>}</li>
  *   <li>{@link org.earthsystemcurator.cupid.nuopc.fsml.nuopc.impl.ModelImplementsInitP1Impl#getAdvertisesImportField <em>Advertises Import Field</em>}</li>
  *   <li>{@link org.earthsystemcurator.cupid.nuopc.fsml.nuopc.impl.ModelImplementsInitP1Impl#getAdvertisesExportField <em>Advertises Export Field</em>}</li>
  *   <li>{@link org.earthsystemcurator.cupid.nuopc.fsml.nuopc.impl.ModelImplementsInitP1Impl#isAdvertisesAtLeastOneField <em>Advertises At Least One Field</em>}</li>
@@ -57,6 +60,46 @@ public class ModelImplementsInitP1Impl extends EObjectImpl implements ModelImple
 	 * @ordered
 	 */
 	protected String name = NAME_EDEFAULT;
+
+	/**
+	 * The default value of the '{@link #getImportParam() <em>Import Param</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #getImportParam()
+	 * @generated
+	 * @ordered
+	 */
+	protected static final String IMPORT_PARAM_EDEFAULT = null;
+
+	/**
+	 * The cached value of the '{@link #getImportParam() <em>Import Param</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #getImportParam()
+	 * @generated
+	 * @ordered
+	 */
+	protected String importParam = IMPORT_PARAM_EDEFAULT;
+
+	/**
+	 * The default value of the '{@link #getExportParam() <em>Export Param</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #getExportParam()
+	 * @generated
+	 * @ordered
+	 */
+	protected static final String EXPORT_PARAM_EDEFAULT = null;
+
+	/**
+	 * The cached value of the '{@link #getExportParam() <em>Export Param</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #getExportParam()
+	 * @generated
+	 * @ordered
+	 */
+	protected String exportParam = EXPORT_PARAM_EDEFAULT;
 
 	/**
 	 * The cached value of the '{@link #getAdvertisesImportField() <em>Advertises Import Field</em>}' containment reference list.
@@ -133,9 +176,51 @@ public class ModelImplementsInitP1Impl extends EObjectImpl implements ModelImple
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	public String getImportParam() {
+		return importParam;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public void setImportParam(String newImportParam) {
+		String oldImportParam = importParam;
+		importParam = newImportParam;
+		if (eNotificationRequired())
+			eNotify(new ENotificationImpl(this, Notification.SET, NUOPCPackage.MODEL_IMPLEMENTS_INIT_P1__IMPORT_PARAM, oldImportParam, importParam));
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public String getExportParam() {
+		return exportParam;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public void setExportParam(String newExportParam) {
+		String oldExportParam = exportParam;
+		exportParam = newExportParam;
+		if (eNotificationRequired())
+			eNotify(new ENotificationImpl(this, Notification.SET, NUOPCPackage.MODEL_IMPLEMENTS_INIT_P1__EXPORT_PARAM, oldExportParam, exportParam));
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
 	public EList<AdvertisesImportField> getAdvertisesImportField() {
 		if (advertisesImportField == null) {
-			advertisesImportField = new EObjectContainmentEList<AdvertisesImportField>(AdvertisesImportField.class, this, NUOPCPackage.MODEL_IMPLEMENTS_INIT_P1__ADVERTISES_IMPORT_FIELD);
+			advertisesImportField = new EObjectContainmentWithInverseEList<AdvertisesImportField>(AdvertisesImportField.class, this, NUOPCPackage.MODEL_IMPLEMENTS_INIT_P1__ADVERTISES_IMPORT_FIELD, NUOPCPackage.ADVERTISES_IMPORT_FIELD__PARENT);
 		}
 		return advertisesImportField;
 	}
@@ -147,7 +232,7 @@ public class ModelImplementsInitP1Impl extends EObjectImpl implements ModelImple
 	 */
 	public EList<AdvertisesExportField> getAdvertisesExportField() {
 		if (advertisesExportField == null) {
-			advertisesExportField = new EObjectContainmentEList<AdvertisesExportField>(AdvertisesExportField.class, this, NUOPCPackage.MODEL_IMPLEMENTS_INIT_P1__ADVERTISES_EXPORT_FIELD);
+			advertisesExportField = new EObjectContainmentWithInverseEList<AdvertisesExportField>(AdvertisesExportField.class, this, NUOPCPackage.MODEL_IMPLEMENTS_INIT_P1__ADVERTISES_EXPORT_FIELD, NUOPCPackage.ADVERTISES_EXPORT_FIELD__PARENT);
 		}
 		return advertisesExportField;
 	}
@@ -168,6 +253,23 @@ public class ModelImplementsInitP1Impl extends EObjectImpl implements ModelImple
 	 */
 	public void setAdvertisesAtLeastOneField(boolean newAdvertisesAtLeastOneField) {
 		ADVERTISES_AT_LEAST_ONE_FIELD__ESETTING_DELEGATE.dynamicSet(this, null, 0, newAdvertisesAtLeastOneField);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	@SuppressWarnings("unchecked")
+	@Override
+	public NotificationChain eInverseAdd(InternalEObject otherEnd, int featureID, NotificationChain msgs) {
+		switch (featureID) {
+			case NUOPCPackage.MODEL_IMPLEMENTS_INIT_P1__ADVERTISES_IMPORT_FIELD:
+				return ((InternalEList<InternalEObject>)(InternalEList<?>)getAdvertisesImportField()).basicAdd(otherEnd, msgs);
+			case NUOPCPackage.MODEL_IMPLEMENTS_INIT_P1__ADVERTISES_EXPORT_FIELD:
+				return ((InternalEList<InternalEObject>)(InternalEList<?>)getAdvertisesExportField()).basicAdd(otherEnd, msgs);
+		}
+		return super.eInverseAdd(otherEnd, featureID, msgs);
 	}
 
 	/**
@@ -196,6 +298,10 @@ public class ModelImplementsInitP1Impl extends EObjectImpl implements ModelImple
 		switch (featureID) {
 			case NUOPCPackage.MODEL_IMPLEMENTS_INIT_P1__NAME:
 				return getName();
+			case NUOPCPackage.MODEL_IMPLEMENTS_INIT_P1__IMPORT_PARAM:
+				return getImportParam();
+			case NUOPCPackage.MODEL_IMPLEMENTS_INIT_P1__EXPORT_PARAM:
+				return getExportParam();
 			case NUOPCPackage.MODEL_IMPLEMENTS_INIT_P1__ADVERTISES_IMPORT_FIELD:
 				return getAdvertisesImportField();
 			case NUOPCPackage.MODEL_IMPLEMENTS_INIT_P1__ADVERTISES_EXPORT_FIELD:
@@ -217,6 +323,12 @@ public class ModelImplementsInitP1Impl extends EObjectImpl implements ModelImple
 		switch (featureID) {
 			case NUOPCPackage.MODEL_IMPLEMENTS_INIT_P1__NAME:
 				setName((String)newValue);
+				return;
+			case NUOPCPackage.MODEL_IMPLEMENTS_INIT_P1__IMPORT_PARAM:
+				setImportParam((String)newValue);
+				return;
+			case NUOPCPackage.MODEL_IMPLEMENTS_INIT_P1__EXPORT_PARAM:
+				setExportParam((String)newValue);
 				return;
 			case NUOPCPackage.MODEL_IMPLEMENTS_INIT_P1__ADVERTISES_IMPORT_FIELD:
 				getAdvertisesImportField().clear();
@@ -244,6 +356,12 @@ public class ModelImplementsInitP1Impl extends EObjectImpl implements ModelImple
 			case NUOPCPackage.MODEL_IMPLEMENTS_INIT_P1__NAME:
 				setName(NAME_EDEFAULT);
 				return;
+			case NUOPCPackage.MODEL_IMPLEMENTS_INIT_P1__IMPORT_PARAM:
+				setImportParam(IMPORT_PARAM_EDEFAULT);
+				return;
+			case NUOPCPackage.MODEL_IMPLEMENTS_INIT_P1__EXPORT_PARAM:
+				setExportParam(EXPORT_PARAM_EDEFAULT);
+				return;
 			case NUOPCPackage.MODEL_IMPLEMENTS_INIT_P1__ADVERTISES_IMPORT_FIELD:
 				getAdvertisesImportField().clear();
 				return;
@@ -267,6 +385,10 @@ public class ModelImplementsInitP1Impl extends EObjectImpl implements ModelImple
 		switch (featureID) {
 			case NUOPCPackage.MODEL_IMPLEMENTS_INIT_P1__NAME:
 				return NAME_EDEFAULT == null ? name != null : !NAME_EDEFAULT.equals(name);
+			case NUOPCPackage.MODEL_IMPLEMENTS_INIT_P1__IMPORT_PARAM:
+				return IMPORT_PARAM_EDEFAULT == null ? importParam != null : !IMPORT_PARAM_EDEFAULT.equals(importParam);
+			case NUOPCPackage.MODEL_IMPLEMENTS_INIT_P1__EXPORT_PARAM:
+				return EXPORT_PARAM_EDEFAULT == null ? exportParam != null : !EXPORT_PARAM_EDEFAULT.equals(exportParam);
 			case NUOPCPackage.MODEL_IMPLEMENTS_INIT_P1__ADVERTISES_IMPORT_FIELD:
 				return advertisesImportField != null && !advertisesImportField.isEmpty();
 			case NUOPCPackage.MODEL_IMPLEMENTS_INIT_P1__ADVERTISES_EXPORT_FIELD:
@@ -289,6 +411,10 @@ public class ModelImplementsInitP1Impl extends EObjectImpl implements ModelImple
 		StringBuffer result = new StringBuffer(super.toString());
 		result.append(" (name: ");
 		result.append(name);
+		result.append(", importParam: ");
+		result.append(importParam);
+		result.append(", exportParam: ");
+		result.append(exportParam);
 		result.append(')');
 		return result.toString();
 	}
