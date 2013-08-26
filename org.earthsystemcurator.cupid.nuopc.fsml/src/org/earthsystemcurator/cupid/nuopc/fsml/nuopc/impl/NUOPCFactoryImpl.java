@@ -57,14 +57,15 @@ public class NUOPCFactoryImpl extends EFactoryImpl implements NUOPCFactory {
 	public EObject create(EClass eClass) {
 		switch (eClass.getClassifierID()) {
 			case NUOPCPackage.MODEL: return createModel();
-			case NUOPCPackage.MODEL_DEFINES_SET_SERVICES: return createModelDefinesSetServices();
+			case NUOPCPackage.MODEL_IMPLEMENTS_SET_SERVICES: return createModelImplementsSetServices();
 			case NUOPCPackage.MODEL_IMPLEMENTS_INIT_P1: return createModelImplementsInitP1();
 			case NUOPCPackage.MODEL_IMPLEMENTS_INIT_P2: return createModelImplementsInitP2();
 			case NUOPCPackage.ADVERTISES_IMPORT_FIELD: return createAdvertisesImportField();
 			case NUOPCPackage.ADVERTISES_EXPORT_FIELD: return createAdvertisesExportField();
 			case NUOPCPackage.REALIZES_IMPORT_FIELD: return createRealizesImportField();
 			case NUOPCPackage.REALIZES_EXPORT_FIELD: return createRealizesExportField();
-			case NUOPCPackage.ATTACHES_METHOD: return createAttachesMethod();
+			case NUOPCPackage.ATTACHES_MODEL_ADVANCE: return createAttachesModelAdvance();
+			case NUOPCPackage.MODEL_ADVANCE: return createModelAdvance();
 			default:
 				throw new IllegalArgumentException("The class '" + eClass.getName() + "' is not a valid classifier");
 		}
@@ -85,9 +86,9 @@ public class NUOPCFactoryImpl extends EFactoryImpl implements NUOPCFactory {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public ModelDefinesSetServices createModelDefinesSetServices() {
-		ModelDefinesSetServicesImpl modelDefinesSetServices = new ModelDefinesSetServicesImpl();
-		return modelDefinesSetServices;
+	public ModelImplementsSetServices createModelImplementsSetServices() {
+		ModelImplementsSetServicesImpl modelImplementsSetServices = new ModelImplementsSetServicesImpl();
+		return modelImplementsSetServices;
 	}
 
 	/**
@@ -155,9 +156,19 @@ public class NUOPCFactoryImpl extends EFactoryImpl implements NUOPCFactory {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public AttachesMethod createAttachesMethod() {
-		AttachesMethodImpl attachesMethod = new AttachesMethodImpl();
-		return attachesMethod;
+	public AttachesModelAdvance createAttachesModelAdvance() {
+		AttachesModelAdvanceImpl attachesModelAdvance = new AttachesModelAdvanceImpl();
+		return attachesModelAdvance;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public ModelAdvance createModelAdvance() {
+		ModelAdvanceImpl modelAdvance = new ModelAdvanceImpl();
+		return modelAdvance;
 	}
 
 	/**

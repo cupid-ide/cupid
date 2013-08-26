@@ -48,7 +48,7 @@ import org.eclipse.ltk.core.refactoring.TextFileChange;
 @SuppressWarnings("restriction")
 public class ReverseHandler extends AbstractHandler {
 	
-	public static String reverseFile = "C:\\Users\\Rocky\\Documents\\eclipse\\runtime-nuopc\\nuopc\\Reverse.nuopc";
+	public static String reverseFile = "C:\\Users\\Rocky\\Documents\\eclipse\\runtime-nuopc\\example\\Reverse.nuopc";
 	
 	/**
 	 * The constructor.

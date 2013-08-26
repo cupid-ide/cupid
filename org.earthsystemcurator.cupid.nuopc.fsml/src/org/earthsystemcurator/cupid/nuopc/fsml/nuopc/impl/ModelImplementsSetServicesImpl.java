@@ -2,44 +2,43 @@
  */
 package org.earthsystemcurator.cupid.nuopc.fsml.nuopc.impl;
 
-import java.util.Collection;
-import org.earthsystemcurator.cupid.nuopc.fsml.nuopc.AttachesMethod;
-import org.earthsystemcurator.cupid.nuopc.fsml.nuopc.ModelDefinesSetServices;
+import org.earthsystemcurator.cupid.nuopc.fsml.nuopc.AttachesModelAdvance;
+import org.earthsystemcurator.cupid.nuopc.fsml.nuopc.Model;
+import org.earthsystemcurator.cupid.nuopc.fsml.nuopc.ModelImplementsSetServices;
 import org.earthsystemcurator.cupid.nuopc.fsml.nuopc.NUOPCPackage;
 
 import org.eclipse.emf.common.notify.Notification;
-
 import org.eclipse.emf.common.notify.NotificationChain;
-import org.eclipse.emf.common.util.EList;
-import org.eclipse.emf.ecore.EClass;
 
+import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.InternalEObject;
+
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
-import org.eclipse.emf.ecore.util.EObjectContainmentEList;
-import org.eclipse.emf.ecore.util.InternalEList;
 import org.eclipse.emf.ecore.impl.EObjectImpl;
+import org.eclipse.emf.ecore.util.EcoreUtil;
 
 /**
  * <!-- begin-user-doc -->
- * An implementation of the model object '<em><b>Model Defines Set Services</b></em>'.
+ * An implementation of the model object '<em><b>Model Implements Set Services</b></em>'.
  * <!-- end-user-doc -->
  * <p>
  * The following features are implemented:
  * <ul>
- *   <li>{@link org.earthsystemcurator.cupid.nuopc.fsml.nuopc.impl.ModelDefinesSetServicesImpl#getName <em>Name</em>}</li>
- *   <li>{@link org.earthsystemcurator.cupid.nuopc.fsml.nuopc.impl.ModelDefinesSetServicesImpl#isParameters <em>Parameters</em>}</li>
- *   <li>{@link org.earthsystemcurator.cupid.nuopc.fsml.nuopc.impl.ModelDefinesSetServicesImpl#getParamName_gcomp <em>Param Name gcomp</em>}</li>
- *   <li>{@link org.earthsystemcurator.cupid.nuopc.fsml.nuopc.impl.ModelDefinesSetServicesImpl#getParamName_rc <em>Param Name rc</em>}</li>
- *   <li>{@link org.earthsystemcurator.cupid.nuopc.fsml.nuopc.impl.ModelDefinesSetServicesImpl#isCallsGenericSetServices <em>Calls Generic Set Services</em>}</li>
- *   <li>{@link org.earthsystemcurator.cupid.nuopc.fsml.nuopc.impl.ModelDefinesSetServicesImpl#isCallsSetEntryPointPhase1 <em>Calls Set Entry Point Phase1</em>}</li>
- *   <li>{@link org.earthsystemcurator.cupid.nuopc.fsml.nuopc.impl.ModelDefinesSetServicesImpl#isCallsSetEntryPointPhase2 <em>Calls Set Entry Point Phase2</em>}</li>
- *   <li>{@link org.earthsystemcurator.cupid.nuopc.fsml.nuopc.impl.ModelDefinesSetServicesImpl#getAttachesMethod <em>Attaches Method</em>}</li>
+ *   <li>{@link org.earthsystemcurator.cupid.nuopc.fsml.nuopc.impl.ModelImplementsSetServicesImpl#getParent <em>Parent</em>}</li>
+ *   <li>{@link org.earthsystemcurator.cupid.nuopc.fsml.nuopc.impl.ModelImplementsSetServicesImpl#getName <em>Name</em>}</li>
+ *   <li>{@link org.earthsystemcurator.cupid.nuopc.fsml.nuopc.impl.ModelImplementsSetServicesImpl#isParameters <em>Parameters</em>}</li>
+ *   <li>{@link org.earthsystemcurator.cupid.nuopc.fsml.nuopc.impl.ModelImplementsSetServicesImpl#getParamName_gcomp <em>Param Name gcomp</em>}</li>
+ *   <li>{@link org.earthsystemcurator.cupid.nuopc.fsml.nuopc.impl.ModelImplementsSetServicesImpl#getParamName_rc <em>Param Name rc</em>}</li>
+ *   <li>{@link org.earthsystemcurator.cupid.nuopc.fsml.nuopc.impl.ModelImplementsSetServicesImpl#isCallsGenericSetServices <em>Calls Generic Set Services</em>}</li>
+ *   <li>{@link org.earthsystemcurator.cupid.nuopc.fsml.nuopc.impl.ModelImplementsSetServicesImpl#isCallsSetEntryPointPhase1 <em>Calls Set Entry Point Phase1</em>}</li>
+ *   <li>{@link org.earthsystemcurator.cupid.nuopc.fsml.nuopc.impl.ModelImplementsSetServicesImpl#isCallsSetEntryPointPhase2 <em>Calls Set Entry Point Phase2</em>}</li>
+ *   <li>{@link org.earthsystemcurator.cupid.nuopc.fsml.nuopc.impl.ModelImplementsSetServicesImpl#getAttachesModelAdvance <em>Attaches Model Advance</em>}</li>
  * </ul>
  * </p>
  *
  * @generated
  */
-public class ModelDefinesSetServicesImpl extends EObjectImpl implements ModelDefinesSetServices {
+public class ModelImplementsSetServicesImpl extends EObjectImpl implements ModelImplementsSetServices {
 	/**
 	 * The default value of the '{@link #getName() <em>Name</em>}' attribute.
 	 * <!-- begin-user-doc -->
@@ -181,21 +180,21 @@ public class ModelDefinesSetServicesImpl extends EObjectImpl implements ModelDef
 	protected boolean callsSetEntryPointPhase2 = CALLS_SET_ENTRY_POINT_PHASE2_EDEFAULT;
 
 	/**
-	 * The cached value of the '{@link #getAttachesMethod() <em>Attaches Method</em>}' containment reference list.
+	 * The cached value of the '{@link #getAttachesModelAdvance() <em>Attaches Model Advance</em>}' containment reference.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @see #getAttachesMethod()
+	 * @see #getAttachesModelAdvance()
 	 * @generated
 	 * @ordered
 	 */
-	protected EList<AttachesMethod> attachesMethod;
+	protected AttachesModelAdvance attachesModelAdvance;
 
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	protected ModelDefinesSetServicesImpl() {
+	protected ModelImplementsSetServicesImpl() {
 		super();
 	}
 
@@ -206,7 +205,48 @@ public class ModelDefinesSetServicesImpl extends EObjectImpl implements ModelDef
 	 */
 	@Override
 	protected EClass eStaticClass() {
-		return NUOPCPackage.Literals.MODEL_DEFINES_SET_SERVICES;
+		return NUOPCPackage.Literals.MODEL_IMPLEMENTS_SET_SERVICES;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public Model getParent() {
+		if (eContainerFeatureID() != NUOPCPackage.MODEL_IMPLEMENTS_SET_SERVICES__PARENT) return null;
+		return (Model)eInternalContainer();
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public NotificationChain basicSetParent(Model newParent, NotificationChain msgs) {
+		msgs = eBasicSetContainer((InternalEObject)newParent, NUOPCPackage.MODEL_IMPLEMENTS_SET_SERVICES__PARENT, msgs);
+		return msgs;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public void setParent(Model newParent) {
+		if (newParent != eInternalContainer() || (eContainerFeatureID() != NUOPCPackage.MODEL_IMPLEMENTS_SET_SERVICES__PARENT && newParent != null)) {
+			if (EcoreUtil.isAncestor(this, newParent))
+				throw new IllegalArgumentException("Recursive containment not allowed for " + toString());
+			NotificationChain msgs = null;
+			if (eInternalContainer() != null)
+				msgs = eBasicRemoveFromContainer(msgs);
+			if (newParent != null)
+				msgs = ((InternalEObject)newParent).eInverseAdd(this, NUOPCPackage.MODEL__IMPLEMENTS_SET_SERVICES, Model.class, msgs);
+			msgs = basicSetParent(newParent, msgs);
+			if (msgs != null) msgs.dispatch();
+		}
+		else if (eNotificationRequired())
+			eNotify(new ENotificationImpl(this, Notification.SET, NUOPCPackage.MODEL_IMPLEMENTS_SET_SERVICES__PARENT, newParent, newParent));
 	}
 
 	/**
@@ -227,7 +267,7 @@ public class ModelDefinesSetServicesImpl extends EObjectImpl implements ModelDef
 		String oldName = name;
 		name = newName;
 		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, NUOPCPackage.MODEL_DEFINES_SET_SERVICES__NAME, oldName, name));
+			eNotify(new ENotificationImpl(this, Notification.SET, NUOPCPackage.MODEL_IMPLEMENTS_SET_SERVICES__NAME, oldName, name));
 	}
 
 	/**
@@ -248,7 +288,7 @@ public class ModelDefinesSetServicesImpl extends EObjectImpl implements ModelDef
 		boolean oldParameters = parameters;
 		parameters = newParameters;
 		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, NUOPCPackage.MODEL_DEFINES_SET_SERVICES__PARAMETERS, oldParameters, parameters));
+			eNotify(new ENotificationImpl(this, Notification.SET, NUOPCPackage.MODEL_IMPLEMENTS_SET_SERVICES__PARAMETERS, oldParameters, parameters));
 	}
 
 	/**
@@ -269,7 +309,7 @@ public class ModelDefinesSetServicesImpl extends EObjectImpl implements ModelDef
 		String oldParamName_gcomp = paramName_gcomp;
 		paramName_gcomp = newParamName_gcomp;
 		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, NUOPCPackage.MODEL_DEFINES_SET_SERVICES__PARAM_NAME_GCOMP, oldParamName_gcomp, paramName_gcomp));
+			eNotify(new ENotificationImpl(this, Notification.SET, NUOPCPackage.MODEL_IMPLEMENTS_SET_SERVICES__PARAM_NAME_GCOMP, oldParamName_gcomp, paramName_gcomp));
 	}
 
 	/**
@@ -290,7 +330,7 @@ public class ModelDefinesSetServicesImpl extends EObjectImpl implements ModelDef
 		String oldParamName_rc = paramName_rc;
 		paramName_rc = newParamName_rc;
 		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, NUOPCPackage.MODEL_DEFINES_SET_SERVICES__PARAM_NAME_RC, oldParamName_rc, paramName_rc));
+			eNotify(new ENotificationImpl(this, Notification.SET, NUOPCPackage.MODEL_IMPLEMENTS_SET_SERVICES__PARAM_NAME_RC, oldParamName_rc, paramName_rc));
 	}
 
 	/**
@@ -311,7 +351,7 @@ public class ModelDefinesSetServicesImpl extends EObjectImpl implements ModelDef
 		boolean oldCallsGenericSetServices = callsGenericSetServices;
 		callsGenericSetServices = newCallsGenericSetServices;
 		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, NUOPCPackage.MODEL_DEFINES_SET_SERVICES__CALLS_GENERIC_SET_SERVICES, oldCallsGenericSetServices, callsGenericSetServices));
+			eNotify(new ENotificationImpl(this, Notification.SET, NUOPCPackage.MODEL_IMPLEMENTS_SET_SERVICES__CALLS_GENERIC_SET_SERVICES, oldCallsGenericSetServices, callsGenericSetServices));
 	}
 
 	/**
@@ -332,7 +372,7 @@ public class ModelDefinesSetServicesImpl extends EObjectImpl implements ModelDef
 		boolean oldCallsSetEntryPointPhase1 = callsSetEntryPointPhase1;
 		callsSetEntryPointPhase1 = newCallsSetEntryPointPhase1;
 		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, NUOPCPackage.MODEL_DEFINES_SET_SERVICES__CALLS_SET_ENTRY_POINT_PHASE1, oldCallsSetEntryPointPhase1, callsSetEntryPointPhase1));
+			eNotify(new ENotificationImpl(this, Notification.SET, NUOPCPackage.MODEL_IMPLEMENTS_SET_SERVICES__CALLS_SET_ENTRY_POINT_PHASE1, oldCallsSetEntryPointPhase1, callsSetEntryPointPhase1));
 	}
 
 	/**
@@ -353,7 +393,7 @@ public class ModelDefinesSetServicesImpl extends EObjectImpl implements ModelDef
 		boolean oldCallsSetEntryPointPhase2 = callsSetEntryPointPhase2;
 		callsSetEntryPointPhase2 = newCallsSetEntryPointPhase2;
 		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, NUOPCPackage.MODEL_DEFINES_SET_SERVICES__CALLS_SET_ENTRY_POINT_PHASE2, oldCallsSetEntryPointPhase2, callsSetEntryPointPhase2));
+			eNotify(new ENotificationImpl(this, Notification.SET, NUOPCPackage.MODEL_IMPLEMENTS_SET_SERVICES__CALLS_SET_ENTRY_POINT_PHASE2, oldCallsSetEntryPointPhase2, callsSetEntryPointPhase2));
 	}
 
 	/**
@@ -361,29 +401,65 @@ public class ModelDefinesSetServicesImpl extends EObjectImpl implements ModelDef
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EList<AttachesMethod> getAttachesMethod() {
-		if (attachesMethod == null) {
-			attachesMethod = new EObjectContainmentEList<AttachesMethod>(AttachesMethod.class, this, NUOPCPackage.MODEL_DEFINES_SET_SERVICES__ATTACHES_METHOD);
-		}
-		return attachesMethod;
+	public AttachesModelAdvance getAttachesModelAdvance() {
+		return attachesModelAdvance;
 	}
 
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @generated NOT
+	 * @generated
 	 */
-	public int score() {
-		int s = 0;
-		if (isCallsGenericSetServices()) s += 3;
-		if (isParameters()) s += 2;
-		if (isCallsSetEntryPointPhase1()) s += 1;
-		if (isCallsSetEntryPointPhase2()) s += 1;
-		if (getName().toLowerCase().contains("setservices")) s += 3;		
-		return s;
+	public NotificationChain basicSetAttachesModelAdvance(AttachesModelAdvance newAttachesModelAdvance, NotificationChain msgs) {
+		AttachesModelAdvance oldAttachesModelAdvance = attachesModelAdvance;
+		attachesModelAdvance = newAttachesModelAdvance;
+		if (eNotificationRequired()) {
+			ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, NUOPCPackage.MODEL_IMPLEMENTS_SET_SERVICES__ATTACHES_MODEL_ADVANCE, oldAttachesModelAdvance, newAttachesModelAdvance);
+			if (msgs == null) msgs = notification; else msgs.add(notification);
+		}
+		return msgs;
 	}
 
-		/**
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public void setAttachesModelAdvance(AttachesModelAdvance newAttachesModelAdvance) {
+		if (newAttachesModelAdvance != attachesModelAdvance) {
+			NotificationChain msgs = null;
+			if (attachesModelAdvance != null)
+				msgs = ((InternalEObject)attachesModelAdvance).eInverseRemove(this, NUOPCPackage.ATTACHES_MODEL_ADVANCE__PARENT, AttachesModelAdvance.class, msgs);
+			if (newAttachesModelAdvance != null)
+				msgs = ((InternalEObject)newAttachesModelAdvance).eInverseAdd(this, NUOPCPackage.ATTACHES_MODEL_ADVANCE__PARENT, AttachesModelAdvance.class, msgs);
+			msgs = basicSetAttachesModelAdvance(newAttachesModelAdvance, msgs);
+			if (msgs != null) msgs.dispatch();
+		}
+		else if (eNotificationRequired())
+			eNotify(new ENotificationImpl(this, Notification.SET, NUOPCPackage.MODEL_IMPLEMENTS_SET_SERVICES__ATTACHES_MODEL_ADVANCE, newAttachesModelAdvance, newAttachesModelAdvance));
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	@Override
+	public NotificationChain eInverseAdd(InternalEObject otherEnd, int featureID, NotificationChain msgs) {
+		switch (featureID) {
+			case NUOPCPackage.MODEL_IMPLEMENTS_SET_SERVICES__PARENT:
+				if (eInternalContainer() != null)
+					msgs = eBasicRemoveFromContainer(msgs);
+				return basicSetParent((Model)otherEnd, msgs);
+			case NUOPCPackage.MODEL_IMPLEMENTS_SET_SERVICES__ATTACHES_MODEL_ADVANCE:
+				if (attachesModelAdvance != null)
+					msgs = ((InternalEObject)attachesModelAdvance).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - NUOPCPackage.MODEL_IMPLEMENTS_SET_SERVICES__ATTACHES_MODEL_ADVANCE, null, msgs);
+				return basicSetAttachesModelAdvance((AttachesModelAdvance)otherEnd, msgs);
+		}
+		return super.eInverseAdd(otherEnd, featureID, msgs);
+	}
+
+	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
@@ -391,8 +467,10 @@ public class ModelDefinesSetServicesImpl extends EObjectImpl implements ModelDef
 	@Override
 	public NotificationChain eInverseRemove(InternalEObject otherEnd, int featureID, NotificationChain msgs) {
 		switch (featureID) {
-			case NUOPCPackage.MODEL_DEFINES_SET_SERVICES__ATTACHES_METHOD:
-				return ((InternalEList<?>)getAttachesMethod()).basicRemove(otherEnd, msgs);
+			case NUOPCPackage.MODEL_IMPLEMENTS_SET_SERVICES__PARENT:
+				return basicSetParent(null, msgs);
+			case NUOPCPackage.MODEL_IMPLEMENTS_SET_SERVICES__ATTACHES_MODEL_ADVANCE:
+				return basicSetAttachesModelAdvance(null, msgs);
 		}
 		return super.eInverseRemove(otherEnd, featureID, msgs);
 	}
@@ -403,24 +481,40 @@ public class ModelDefinesSetServicesImpl extends EObjectImpl implements ModelDef
 	 * @generated
 	 */
 	@Override
+	public NotificationChain eBasicRemoveFromContainerFeature(NotificationChain msgs) {
+		switch (eContainerFeatureID()) {
+			case NUOPCPackage.MODEL_IMPLEMENTS_SET_SERVICES__PARENT:
+				return eInternalContainer().eInverseRemove(this, NUOPCPackage.MODEL__IMPLEMENTS_SET_SERVICES, Model.class, msgs);
+		}
+		return super.eBasicRemoveFromContainerFeature(msgs);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	@Override
 	public Object eGet(int featureID, boolean resolve, boolean coreType) {
 		switch (featureID) {
-			case NUOPCPackage.MODEL_DEFINES_SET_SERVICES__NAME:
+			case NUOPCPackage.MODEL_IMPLEMENTS_SET_SERVICES__PARENT:
+				return getParent();
+			case NUOPCPackage.MODEL_IMPLEMENTS_SET_SERVICES__NAME:
 				return getName();
-			case NUOPCPackage.MODEL_DEFINES_SET_SERVICES__PARAMETERS:
+			case NUOPCPackage.MODEL_IMPLEMENTS_SET_SERVICES__PARAMETERS:
 				return isParameters();
-			case NUOPCPackage.MODEL_DEFINES_SET_SERVICES__PARAM_NAME_GCOMP:
+			case NUOPCPackage.MODEL_IMPLEMENTS_SET_SERVICES__PARAM_NAME_GCOMP:
 				return getParamName_gcomp();
-			case NUOPCPackage.MODEL_DEFINES_SET_SERVICES__PARAM_NAME_RC:
+			case NUOPCPackage.MODEL_IMPLEMENTS_SET_SERVICES__PARAM_NAME_RC:
 				return getParamName_rc();
-			case NUOPCPackage.MODEL_DEFINES_SET_SERVICES__CALLS_GENERIC_SET_SERVICES:
+			case NUOPCPackage.MODEL_IMPLEMENTS_SET_SERVICES__CALLS_GENERIC_SET_SERVICES:
 				return isCallsGenericSetServices();
-			case NUOPCPackage.MODEL_DEFINES_SET_SERVICES__CALLS_SET_ENTRY_POINT_PHASE1:
+			case NUOPCPackage.MODEL_IMPLEMENTS_SET_SERVICES__CALLS_SET_ENTRY_POINT_PHASE1:
 				return isCallsSetEntryPointPhase1();
-			case NUOPCPackage.MODEL_DEFINES_SET_SERVICES__CALLS_SET_ENTRY_POINT_PHASE2:
+			case NUOPCPackage.MODEL_IMPLEMENTS_SET_SERVICES__CALLS_SET_ENTRY_POINT_PHASE2:
 				return isCallsSetEntryPointPhase2();
-			case NUOPCPackage.MODEL_DEFINES_SET_SERVICES__ATTACHES_METHOD:
-				return getAttachesMethod();
+			case NUOPCPackage.MODEL_IMPLEMENTS_SET_SERVICES__ATTACHES_MODEL_ADVANCE:
+				return getAttachesModelAdvance();
 		}
 		return super.eGet(featureID, resolve, coreType);
 	}
@@ -430,34 +524,35 @@ public class ModelDefinesSetServicesImpl extends EObjectImpl implements ModelDef
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	@SuppressWarnings("unchecked")
 	@Override
 	public void eSet(int featureID, Object newValue) {
 		switch (featureID) {
-			case NUOPCPackage.MODEL_DEFINES_SET_SERVICES__NAME:
+			case NUOPCPackage.MODEL_IMPLEMENTS_SET_SERVICES__PARENT:
+				setParent((Model)newValue);
+				return;
+			case NUOPCPackage.MODEL_IMPLEMENTS_SET_SERVICES__NAME:
 				setName((String)newValue);
 				return;
-			case NUOPCPackage.MODEL_DEFINES_SET_SERVICES__PARAMETERS:
+			case NUOPCPackage.MODEL_IMPLEMENTS_SET_SERVICES__PARAMETERS:
 				setParameters((Boolean)newValue);
 				return;
-			case NUOPCPackage.MODEL_DEFINES_SET_SERVICES__PARAM_NAME_GCOMP:
+			case NUOPCPackage.MODEL_IMPLEMENTS_SET_SERVICES__PARAM_NAME_GCOMP:
 				setParamName_gcomp((String)newValue);
 				return;
-			case NUOPCPackage.MODEL_DEFINES_SET_SERVICES__PARAM_NAME_RC:
+			case NUOPCPackage.MODEL_IMPLEMENTS_SET_SERVICES__PARAM_NAME_RC:
 				setParamName_rc((String)newValue);
 				return;
-			case NUOPCPackage.MODEL_DEFINES_SET_SERVICES__CALLS_GENERIC_SET_SERVICES:
+			case NUOPCPackage.MODEL_IMPLEMENTS_SET_SERVICES__CALLS_GENERIC_SET_SERVICES:
 				setCallsGenericSetServices((Boolean)newValue);
 				return;
-			case NUOPCPackage.MODEL_DEFINES_SET_SERVICES__CALLS_SET_ENTRY_POINT_PHASE1:
+			case NUOPCPackage.MODEL_IMPLEMENTS_SET_SERVICES__CALLS_SET_ENTRY_POINT_PHASE1:
 				setCallsSetEntryPointPhase1((Boolean)newValue);
 				return;
-			case NUOPCPackage.MODEL_DEFINES_SET_SERVICES__CALLS_SET_ENTRY_POINT_PHASE2:
+			case NUOPCPackage.MODEL_IMPLEMENTS_SET_SERVICES__CALLS_SET_ENTRY_POINT_PHASE2:
 				setCallsSetEntryPointPhase2((Boolean)newValue);
 				return;
-			case NUOPCPackage.MODEL_DEFINES_SET_SERVICES__ATTACHES_METHOD:
-				getAttachesMethod().clear();
-				getAttachesMethod().addAll((Collection<? extends AttachesMethod>)newValue);
+			case NUOPCPackage.MODEL_IMPLEMENTS_SET_SERVICES__ATTACHES_MODEL_ADVANCE:
+				setAttachesModelAdvance((AttachesModelAdvance)newValue);
 				return;
 		}
 		super.eSet(featureID, newValue);
@@ -471,29 +566,32 @@ public class ModelDefinesSetServicesImpl extends EObjectImpl implements ModelDef
 	@Override
 	public void eUnset(int featureID) {
 		switch (featureID) {
-			case NUOPCPackage.MODEL_DEFINES_SET_SERVICES__NAME:
+			case NUOPCPackage.MODEL_IMPLEMENTS_SET_SERVICES__PARENT:
+				setParent((Model)null);
+				return;
+			case NUOPCPackage.MODEL_IMPLEMENTS_SET_SERVICES__NAME:
 				setName(NAME_EDEFAULT);
 				return;
-			case NUOPCPackage.MODEL_DEFINES_SET_SERVICES__PARAMETERS:
+			case NUOPCPackage.MODEL_IMPLEMENTS_SET_SERVICES__PARAMETERS:
 				setParameters(PARAMETERS_EDEFAULT);
 				return;
-			case NUOPCPackage.MODEL_DEFINES_SET_SERVICES__PARAM_NAME_GCOMP:
+			case NUOPCPackage.MODEL_IMPLEMENTS_SET_SERVICES__PARAM_NAME_GCOMP:
 				setParamName_gcomp(PARAM_NAME_GCOMP_EDEFAULT);
 				return;
-			case NUOPCPackage.MODEL_DEFINES_SET_SERVICES__PARAM_NAME_RC:
+			case NUOPCPackage.MODEL_IMPLEMENTS_SET_SERVICES__PARAM_NAME_RC:
 				setParamName_rc(PARAM_NAME_RC_EDEFAULT);
 				return;
-			case NUOPCPackage.MODEL_DEFINES_SET_SERVICES__CALLS_GENERIC_SET_SERVICES:
+			case NUOPCPackage.MODEL_IMPLEMENTS_SET_SERVICES__CALLS_GENERIC_SET_SERVICES:
 				setCallsGenericSetServices(CALLS_GENERIC_SET_SERVICES_EDEFAULT);
 				return;
-			case NUOPCPackage.MODEL_DEFINES_SET_SERVICES__CALLS_SET_ENTRY_POINT_PHASE1:
+			case NUOPCPackage.MODEL_IMPLEMENTS_SET_SERVICES__CALLS_SET_ENTRY_POINT_PHASE1:
 				setCallsSetEntryPointPhase1(CALLS_SET_ENTRY_POINT_PHASE1_EDEFAULT);
 				return;
-			case NUOPCPackage.MODEL_DEFINES_SET_SERVICES__CALLS_SET_ENTRY_POINT_PHASE2:
+			case NUOPCPackage.MODEL_IMPLEMENTS_SET_SERVICES__CALLS_SET_ENTRY_POINT_PHASE2:
 				setCallsSetEntryPointPhase2(CALLS_SET_ENTRY_POINT_PHASE2_EDEFAULT);
 				return;
-			case NUOPCPackage.MODEL_DEFINES_SET_SERVICES__ATTACHES_METHOD:
-				getAttachesMethod().clear();
+			case NUOPCPackage.MODEL_IMPLEMENTS_SET_SERVICES__ATTACHES_MODEL_ADVANCE:
+				setAttachesModelAdvance((AttachesModelAdvance)null);
 				return;
 		}
 		super.eUnset(featureID);
@@ -507,22 +605,24 @@ public class ModelDefinesSetServicesImpl extends EObjectImpl implements ModelDef
 	@Override
 	public boolean eIsSet(int featureID) {
 		switch (featureID) {
-			case NUOPCPackage.MODEL_DEFINES_SET_SERVICES__NAME:
+			case NUOPCPackage.MODEL_IMPLEMENTS_SET_SERVICES__PARENT:
+				return getParent() != null;
+			case NUOPCPackage.MODEL_IMPLEMENTS_SET_SERVICES__NAME:
 				return NAME_EDEFAULT == null ? name != null : !NAME_EDEFAULT.equals(name);
-			case NUOPCPackage.MODEL_DEFINES_SET_SERVICES__PARAMETERS:
+			case NUOPCPackage.MODEL_IMPLEMENTS_SET_SERVICES__PARAMETERS:
 				return parameters != PARAMETERS_EDEFAULT;
-			case NUOPCPackage.MODEL_DEFINES_SET_SERVICES__PARAM_NAME_GCOMP:
+			case NUOPCPackage.MODEL_IMPLEMENTS_SET_SERVICES__PARAM_NAME_GCOMP:
 				return PARAM_NAME_GCOMP_EDEFAULT == null ? paramName_gcomp != null : !PARAM_NAME_GCOMP_EDEFAULT.equals(paramName_gcomp);
-			case NUOPCPackage.MODEL_DEFINES_SET_SERVICES__PARAM_NAME_RC:
+			case NUOPCPackage.MODEL_IMPLEMENTS_SET_SERVICES__PARAM_NAME_RC:
 				return PARAM_NAME_RC_EDEFAULT == null ? paramName_rc != null : !PARAM_NAME_RC_EDEFAULT.equals(paramName_rc);
-			case NUOPCPackage.MODEL_DEFINES_SET_SERVICES__CALLS_GENERIC_SET_SERVICES:
+			case NUOPCPackage.MODEL_IMPLEMENTS_SET_SERVICES__CALLS_GENERIC_SET_SERVICES:
 				return callsGenericSetServices != CALLS_GENERIC_SET_SERVICES_EDEFAULT;
-			case NUOPCPackage.MODEL_DEFINES_SET_SERVICES__CALLS_SET_ENTRY_POINT_PHASE1:
+			case NUOPCPackage.MODEL_IMPLEMENTS_SET_SERVICES__CALLS_SET_ENTRY_POINT_PHASE1:
 				return callsSetEntryPointPhase1 != CALLS_SET_ENTRY_POINT_PHASE1_EDEFAULT;
-			case NUOPCPackage.MODEL_DEFINES_SET_SERVICES__CALLS_SET_ENTRY_POINT_PHASE2:
+			case NUOPCPackage.MODEL_IMPLEMENTS_SET_SERVICES__CALLS_SET_ENTRY_POINT_PHASE2:
 				return callsSetEntryPointPhase2 != CALLS_SET_ENTRY_POINT_PHASE2_EDEFAULT;
-			case NUOPCPackage.MODEL_DEFINES_SET_SERVICES__ATTACHES_METHOD:
-				return attachesMethod != null && !attachesMethod.isEmpty();
+			case NUOPCPackage.MODEL_IMPLEMENTS_SET_SERVICES__ATTACHES_MODEL_ADVANCE:
+				return attachesModelAdvance != null;
 		}
 		return super.eIsSet(featureID);
 	}
@@ -555,4 +655,4 @@ public class ModelDefinesSetServicesImpl extends EObjectImpl implements ModelDef
 		return result.toString();
 	}
 
-} //ModelDefinesSetServicesImpl
+} //ModelImplementsSetServicesImpl

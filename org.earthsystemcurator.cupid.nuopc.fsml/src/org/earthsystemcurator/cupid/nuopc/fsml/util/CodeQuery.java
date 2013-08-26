@@ -13,11 +13,13 @@ import org.eclipse.photran.internal.core.analysis.types.Type;
 import org.eclipse.photran.internal.core.analysis.types.TypeProcessor;
 import org.eclipse.photran.internal.core.parser.ASTCallStmtNode;
 import org.eclipse.photran.internal.core.parser.ASTModuleNode;
-import org.eclipse.photran.internal.core.parser.ASTStringConstNode;
+import org.eclipse.photran.internal.core.parser.ASTOnlyNode;
 import org.eclipse.photran.internal.core.parser.ASTSubroutineArgNode;
 import org.eclipse.photran.internal.core.parser.ASTSubroutineParNode;
 import org.eclipse.photran.internal.core.parser.ASTSubroutineSubprogramNode;
+import org.eclipse.photran.internal.core.parser.ASTVarOrFnRefNode;
 import org.eclipse.photran.internal.core.parser.IASTNode;
+import org.eclipse.photran.internal.core.parser.IExpr;
 
 @SuppressWarnings("restriction")
 public class CodeQuery {
@@ -258,7 +260,45 @@ public class CodeQuery {
 	
 	public static String argByIndex(ASTCallStmtNode node, String index) {		
 		int idx = Integer.valueOf(index);		
-		return node.getArgList().get(idx - 1).getExpr().toString();			
+		IExpr expr = node.getArgList().get(idx - 1).getExpr();
+		if (expr instanceof ASTVarOrFnRefNode) {
+			ASTVarOrFnRefNode vofrn = (ASTVarOrFnRefNode) expr;			
+			List<Definition> defs = vofrn.getName().getName().resolveBinding();
+			if (defs.size() > 0) {
+				
+				if (defs.get(0).isRenamedModuleEntity()) {
+					
+					//System.out.println(defs.get(0).describe());
+					//System.out.println(defs.get(0).describeClassification());
+					//defs.get(0).
+										
+					//Iterable<PhotranTokenRef> iter = defs.get(0).getTokenRef().followOutgoing(EdgeType.RENAMED_BINDING_EDGE_TYPE);
+					//for (PhotranTokenRef ptr : iter) {
+					//	Token t = ptr.findToken();
+					//	System.out.println(t);	
+					//}
+					
+					ASTOnlyNode aon = defs.get(0).getTokenRef().findToken().findNearestAncestor(ASTOnlyNode.class);
+					if (aon != null) {
+						return aon.getName().getText();
+					}
+				}
+				
+				//return defs.get(0).g
+				/*
+				String found = defs.get(0).getType().processUsing(new TypeProcessor<String>() {
+					
+					@Override
+					public String ifCharacter(Type type) {
+						// TODO Auto-generated method stub
+						return super.ifCharacter(type);
+					}
+					
+				});		
+				*/
+			}
+		}
+		return expr.toString();			
 	}
 	
 	public static Set<ASTCallStmtNode> call(IASTNode node, final String subroutineName) {

@@ -44,7 +44,7 @@ import org.eclipse.ltk.core.refactoring.TextFileChange;
 @SuppressWarnings("restriction")
 public class ForwardHandler extends AbstractHandler {
 	
-	public static String assertedFile = "C:\\Users\\Rocky\\Documents\\eclipse\\runtime-nuopc\\nuopc\\Asserted.nuopc";
+	public static String assertedFile = "C:\\Users\\Rocky\\Documents\\eclipse\\runtime-nuopc\\example\\Asserted.nuopc";
 	
 	/**
 	 * The constructor.

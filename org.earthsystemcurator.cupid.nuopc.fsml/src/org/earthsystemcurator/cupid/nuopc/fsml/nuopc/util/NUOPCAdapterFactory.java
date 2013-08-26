@@ -72,8 +72,8 @@ public class NUOPCAdapterFactory extends AdapterFactoryImpl {
 				return createModelAdapter();
 			}
 			@Override
-			public Adapter caseModelDefinesSetServices(ModelDefinesSetServices object) {
-				return createModelDefinesSetServicesAdapter();
+			public Adapter caseModelImplementsSetServices(ModelImplementsSetServices object) {
+				return createModelImplementsSetServicesAdapter();
 			}
 			@Override
 			public Adapter caseModelImplementsInitP1(ModelImplementsInitP1 object) {
@@ -100,8 +100,12 @@ public class NUOPCAdapterFactory extends AdapterFactoryImpl {
 				return createRealizesExportFieldAdapter();
 			}
 			@Override
-			public Adapter caseAttachesMethod(AttachesMethod object) {
-				return createAttachesMethodAdapter();
+			public Adapter caseAttachesModelAdvance(AttachesModelAdvance object) {
+				return createAttachesModelAdvanceAdapter();
+			}
+			@Override
+			public Adapter caseModelAdvance(ModelAdvance object) {
+				return createModelAdvanceAdapter();
 			}
 			@Override
 			public Adapter defaultCase(EObject object) {
@@ -138,16 +142,16 @@ public class NUOPCAdapterFactory extends AdapterFactoryImpl {
 	}
 
 	/**
-	 * Creates a new adapter for an object of class '{@link org.earthsystemcurator.cupid.nuopc.fsml.nuopc.ModelDefinesSetServices <em>Model Defines Set Services</em>}'.
+	 * Creates a new adapter for an object of class '{@link org.earthsystemcurator.cupid.nuopc.fsml.nuopc.ModelImplementsSetServices <em>Model Implements Set Services</em>}'.
 	 * <!-- begin-user-doc -->
 	 * This default implementation returns null so that we can easily ignore cases;
 	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
 	 * <!-- end-user-doc -->
 	 * @return the new adapter.
-	 * @see org.earthsystemcurator.cupid.nuopc.fsml.nuopc.ModelDefinesSetServices
+	 * @see org.earthsystemcurator.cupid.nuopc.fsml.nuopc.ModelImplementsSetServices
 	 * @generated
 	 */
-	public Adapter createModelDefinesSetServicesAdapter() {
+	public Adapter createModelImplementsSetServicesAdapter() {
 		return null;
 	}
 
@@ -236,16 +240,30 @@ public class NUOPCAdapterFactory extends AdapterFactoryImpl {
 	}
 
 	/**
-	 * Creates a new adapter for an object of class '{@link org.earthsystemcurator.cupid.nuopc.fsml.nuopc.AttachesMethod <em>Attaches Method</em>}'.
+	 * Creates a new adapter for an object of class '{@link org.earthsystemcurator.cupid.nuopc.fsml.nuopc.AttachesModelAdvance <em>Attaches Model Advance</em>}'.
 	 * <!-- begin-user-doc -->
 	 * This default implementation returns null so that we can easily ignore cases;
 	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
 	 * <!-- end-user-doc -->
 	 * @return the new adapter.
-	 * @see org.earthsystemcurator.cupid.nuopc.fsml.nuopc.AttachesMethod
+	 * @see org.earthsystemcurator.cupid.nuopc.fsml.nuopc.AttachesModelAdvance
 	 * @generated
 	 */
-	public Adapter createAttachesMethodAdapter() {
+	public Adapter createAttachesModelAdvanceAdapter() {
+		return null;
+	}
+
+	/**
+	 * Creates a new adapter for an object of class '{@link org.earthsystemcurator.cupid.nuopc.fsml.nuopc.ModelAdvance <em>Model Advance</em>}'.
+	 * <!-- begin-user-doc -->
+	 * This default implementation returns null so that we can easily ignore cases;
+	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
+	 * <!-- end-user-doc -->
+	 * @return the new adapter.
+	 * @see org.earthsystemcurator.cupid.nuopc.fsml.nuopc.ModelAdvance
+	 * @generated
+	 */
+	public Adapter createModelAdvanceAdapter() {
 		return null;
 	}
 

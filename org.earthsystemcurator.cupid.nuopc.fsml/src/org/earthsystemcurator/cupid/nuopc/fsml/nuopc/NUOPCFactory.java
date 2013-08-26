@@ -31,13 +31,13 @@ public interface NUOPCFactory extends EFactory {
 	Model createModel();
 
 	/**
-	 * Returns a new object of class '<em>Model Defines Set Services</em>'.
+	 * Returns a new object of class '<em>Model Implements Set Services</em>'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @return a new object of class '<em>Model Defines Set Services</em>'.
+	 * @return a new object of class '<em>Model Implements Set Services</em>'.
 	 * @generated
 	 */
-	ModelDefinesSetServices createModelDefinesSetServices();
+	ModelImplementsSetServices createModelImplementsSetServices();
 
 	/**
 	 * Returns a new object of class '<em>Model Implements Init P1</em>'.
@@ -94,13 +94,22 @@ public interface NUOPCFactory extends EFactory {
 	RealizesExportField createRealizesExportField();
 
 	/**
-	 * Returns a new object of class '<em>Attaches Method</em>'.
+	 * Returns a new object of class '<em>Attaches Model Advance</em>'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @return a new object of class '<em>Attaches Method</em>'.
+	 * @return a new object of class '<em>Attaches Model Advance</em>'.
 	 * @generated
 	 */
-	AttachesMethod createAttachesMethod();
+	AttachesModelAdvance createAttachesModelAdvance();
+
+	/**
+	 * Returns a new object of class '<em>Model Advance</em>'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return a new object of class '<em>Model Advance</em>'.
+	 * @generated
+	 */
+	ModelAdvance createModelAdvance();
 
 	/**
 	 * Returns the package supported by this factory.

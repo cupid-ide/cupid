@@ -9,7 +9,7 @@ import java.util.Map;
 import java.util.Set;
 
 import org.earthsystemcurator.cupid.nuopc.fsml.nuopc.Model;
-import org.earthsystemcurator.cupid.nuopc.fsml.nuopc.ModelDefinesSetServices;
+import org.earthsystemcurator.cupid.nuopc.fsml.nuopc.ModelImplementsSetServices;
 import org.earthsystemcurator.cupid.nuopc.fsml.nuopc.NUOPCFactory;
 import org.earthsystemcurator.cupid.nuopc.fsml.util.CodeExtraction;
 import org.earthsystemcurator.cupid.nuopc.fsml.util.CodeQuery;
@@ -28,12 +28,12 @@ public class ModelToModuleMapping extends Mapping<Model, ASTModuleNode> {
 	/**
 	 * These are candidate mappings.
 	 */
-	protected List<Mapping<ModelDefinesSetServices, ASTSubroutineSubprogramNode>> mappingsDefinesSetServices;
+	protected List<Mapping<ModelImplementsSetServices, ASTSubroutineSubprogramNode>> mappingsDefinesSetServices;
 	
 	public ModelToModuleMapping(Model m, ASTModuleNode astModuleNode, IFortranAST ast) {		
 		super(m, astModuleNode, ast);
 		
-		mappingsDefinesSetServices = new ArrayList<Mapping<ModelDefinesSetServices, ASTSubroutineSubprogramNode>>();
+		mappingsDefinesSetServices = new ArrayList<Mapping<ModelImplementsSetServices, ASTSubroutineSubprogramNode>>();
 	}
 
 	@Override
@@ -121,13 +121,13 @@ public class ModelToModuleMapping extends Mapping<Model, ASTModuleNode> {
 		Collections.reverse(mappingsDefinesSetServices);
 		
 		System.out.println("Sorted mappings: ");
-		for (Mapping<ModelDefinesSetServices, ASTSubroutineSubprogramNode> x : mappingsDefinesSetServices) {
+		for (Mapping<ModelImplementsSetServices, ASTSubroutineSubprogramNode> x : mappingsDefinesSetServices) {
 			System.out.println(x.score() + " : " + x);
 		}
 		
-		for (Mapping<ModelDefinesSetServices, ASTSubroutineSubprogramNode> x : mappingsDefinesSetServices) {
+		for (Mapping<ModelImplementsSetServices, ASTSubroutineSubprogramNode> x : mappingsDefinesSetServices) {
 			if (x.certain()) {
-				modelElem.getDefinesSetServices().add(x.modelElem);
+				//modelElem.getImplementsSetServices().add(x.modelElem);
 				return;
 			}
 		}
@@ -139,12 +139,12 @@ public class ModelToModuleMapping extends Mapping<Model, ASTModuleNode> {
 		
 		if (modelElem != null) {
 			
-			if (modelElem.getDefinesSetServices() != null) {				
+			if (modelElem.getImplementsSetServices() != null) {				
 				ASTSubroutineSubprogramNode ssn = 
-						CodeQuery.findSubroutineByName(astElem, modelElem.getDefinesSetServices().get(0).getName());
+						CodeQuery.findSubroutineByName(astElem, modelElem.getImplementsSetServices().getName());
 						
 				ModelDefinesSetServicesToSubroutineMapping map = 
-					new ModelDefinesSetServicesToSubroutineMapping(modelElem.getDefinesSetServices().get(0), ssn, ast);
+					new ModelDefinesSetServicesToSubroutineMapping(modelElem.getImplementsSetServices(), ssn, ast);
 			
 				ssn = map.forward();
 				System.out.println("enclosing scope = " + ssn.getEnclosingScope());
@@ -198,13 +198,13 @@ public class ModelToModuleMapping extends Mapping<Model, ASTModuleNode> {
 	@Override
 	protected int score() {
 		return (modelElem.isUsesAllImports() ? 2 : 0) +
-				(modelElem.getDefinesSetServices() != null ? 2 : 0) +
+				(modelElem.getImplementsSetServices() != null ? 2 : 0) +
 				(modelElem.getName() != null ? 1 : 0);
 	}
 
 	@Override
 	protected boolean certain() {		
-		return modelElem.isUsesAllImports() && modelElem.getDefinesSetServices() != null;
+		return modelElem.isUsesAllImports() && modelElem.getImplementsSetServices() != null;
 	}
 
 		

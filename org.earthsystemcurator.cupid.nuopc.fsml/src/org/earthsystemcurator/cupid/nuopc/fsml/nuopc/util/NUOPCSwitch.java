@@ -72,9 +72,9 @@ public class NUOPCSwitch<T> extends Switch<T> {
 				if (result == null) result = defaultCase(theEObject);
 				return result;
 			}
-			case NUOPCPackage.MODEL_DEFINES_SET_SERVICES: {
-				ModelDefinesSetServices modelDefinesSetServices = (ModelDefinesSetServices)theEObject;
-				T result = caseModelDefinesSetServices(modelDefinesSetServices);
+			case NUOPCPackage.MODEL_IMPLEMENTS_SET_SERVICES: {
+				ModelImplementsSetServices modelImplementsSetServices = (ModelImplementsSetServices)theEObject;
+				T result = caseModelImplementsSetServices(modelImplementsSetServices);
 				if (result == null) result = defaultCase(theEObject);
 				return result;
 			}
@@ -114,9 +114,15 @@ public class NUOPCSwitch<T> extends Switch<T> {
 				if (result == null) result = defaultCase(theEObject);
 				return result;
 			}
-			case NUOPCPackage.ATTACHES_METHOD: {
-				AttachesMethod attachesMethod = (AttachesMethod)theEObject;
-				T result = caseAttachesMethod(attachesMethod);
+			case NUOPCPackage.ATTACHES_MODEL_ADVANCE: {
+				AttachesModelAdvance attachesModelAdvance = (AttachesModelAdvance)theEObject;
+				T result = caseAttachesModelAdvance(attachesModelAdvance);
+				if (result == null) result = defaultCase(theEObject);
+				return result;
+			}
+			case NUOPCPackage.MODEL_ADVANCE: {
+				ModelAdvance modelAdvance = (ModelAdvance)theEObject;
+				T result = caseModelAdvance(modelAdvance);
 				if (result == null) result = defaultCase(theEObject);
 				return result;
 			}
@@ -140,17 +146,17 @@ public class NUOPCSwitch<T> extends Switch<T> {
 	}
 
 	/**
-	 * Returns the result of interpreting the object as an instance of '<em>Model Defines Set Services</em>'.
+	 * Returns the result of interpreting the object as an instance of '<em>Model Implements Set Services</em>'.
 	 * <!-- begin-user-doc -->
 	 * This implementation returns null;
 	 * returning a non-null result will terminate the switch.
 	 * <!-- end-user-doc -->
 	 * @param object the target of the switch.
-	 * @return the result of interpreting the object as an instance of '<em>Model Defines Set Services</em>'.
+	 * @return the result of interpreting the object as an instance of '<em>Model Implements Set Services</em>'.
 	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
 	 * @generated
 	 */
-	public T caseModelDefinesSetServices(ModelDefinesSetServices object) {
+	public T caseModelImplementsSetServices(ModelImplementsSetServices object) {
 		return null;
 	}
 
@@ -245,17 +251,32 @@ public class NUOPCSwitch<T> extends Switch<T> {
 	}
 
 	/**
-	 * Returns the result of interpreting the object as an instance of '<em>Attaches Method</em>'.
+	 * Returns the result of interpreting the object as an instance of '<em>Attaches Model Advance</em>'.
 	 * <!-- begin-user-doc -->
 	 * This implementation returns null;
 	 * returning a non-null result will terminate the switch.
 	 * <!-- end-user-doc -->
 	 * @param object the target of the switch.
-	 * @return the result of interpreting the object as an instance of '<em>Attaches Method</em>'.
+	 * @return the result of interpreting the object as an instance of '<em>Attaches Model Advance</em>'.
 	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
 	 * @generated
 	 */
-	public T caseAttachesMethod(AttachesMethod object) {
+	public T caseAttachesModelAdvance(AttachesModelAdvance object) {
+		return null;
+	}
+
+	/**
+	 * Returns the result of interpreting the object as an instance of '<em>Model Advance</em>'.
+	 * <!-- begin-user-doc -->
+	 * This implementation returns null;
+	 * returning a non-null result will terminate the switch.
+	 * <!-- end-user-doc -->
+	 * @param object the target of the switch.
+	 * @return the result of interpreting the object as an instance of '<em>Model Advance</em>'.
+	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+	 * @generated
+	 */
+	public T caseModelAdvance(ModelAdvance object) {
 		return null;
 	}
 

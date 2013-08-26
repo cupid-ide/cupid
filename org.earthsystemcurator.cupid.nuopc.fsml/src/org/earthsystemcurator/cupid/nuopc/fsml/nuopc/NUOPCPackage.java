@@ -85,22 +85,22 @@ public interface NUOPCPackage extends EPackage {
 	int MODEL__USES_ALL_IMPORTS = 1;
 
 	/**
-	 * The feature id for the '<em><b>Defines Set Services</b></em>' containment reference list.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int MODEL__DEFINES_SET_SERVICES = 2;
-
-	/**
 	 * The feature id for the '<em><b>Single Public Subroutine</b></em>' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int MODEL__SINGLE_PUBLIC_SUBROUTINE = 3;
+	int MODEL__SINGLE_PUBLIC_SUBROUTINE = 2;
+
+	/**
+	 * The feature id for the '<em><b>Implements Set Services</b></em>' containment reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int MODEL__IMPLEMENTS_SET_SERVICES = 3;
 
 	/**
 	 * The feature id for the '<em><b>Implements Init P1</b></em>' containment reference.
@@ -121,23 +121,41 @@ public interface NUOPCPackage extends EPackage {
 	int MODEL__IMPLEMENTS_INIT_P2 = 5;
 
 	/**
+	 * The feature id for the '<em><b>Implements Model Advance</b></em>' containment reference list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int MODEL__IMPLEMENTS_MODEL_ADVANCE = 6;
+
+	/**
 	 * The number of structural features of the '<em>Model</em>' class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int MODEL_FEATURE_COUNT = 6;
+	int MODEL_FEATURE_COUNT = 7;
 
 	/**
-	 * The meta object id for the '{@link org.earthsystemcurator.cupid.nuopc.fsml.nuopc.impl.ModelDefinesSetServicesImpl <em>Model Defines Set Services</em>}' class.
+	 * The meta object id for the '{@link org.earthsystemcurator.cupid.nuopc.fsml.nuopc.impl.ModelImplementsSetServicesImpl <em>Model Implements Set Services</em>}' class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @see org.earthsystemcurator.cupid.nuopc.fsml.nuopc.impl.ModelDefinesSetServicesImpl
-	 * @see org.earthsystemcurator.cupid.nuopc.fsml.nuopc.impl.NUOPCPackageImpl#getModelDefinesSetServices()
+	 * @see org.earthsystemcurator.cupid.nuopc.fsml.nuopc.impl.ModelImplementsSetServicesImpl
+	 * @see org.earthsystemcurator.cupid.nuopc.fsml.nuopc.impl.NUOPCPackageImpl#getModelImplementsSetServices()
 	 * @generated
 	 */
-	int MODEL_DEFINES_SET_SERVICES = 1;
+	int MODEL_IMPLEMENTS_SET_SERVICES = 1;
+
+	/**
+	 * The feature id for the '<em><b>Parent</b></em>' container reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int MODEL_IMPLEMENTS_SET_SERVICES__PARENT = 0;
 
 	/**
 	 * The feature id for the '<em><b>Name</b></em>' attribute.
@@ -146,7 +164,7 @@ public interface NUOPCPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int MODEL_DEFINES_SET_SERVICES__NAME = 0;
+	int MODEL_IMPLEMENTS_SET_SERVICES__NAME = 1;
 
 	/**
 	 * The feature id for the '<em><b>Parameters</b></em>' attribute.
@@ -155,7 +173,7 @@ public interface NUOPCPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int MODEL_DEFINES_SET_SERVICES__PARAMETERS = 1;
+	int MODEL_IMPLEMENTS_SET_SERVICES__PARAMETERS = 2;
 
 	/**
 	 * The feature id for the '<em><b>Param Name gcomp</b></em>' attribute.
@@ -164,7 +182,7 @@ public interface NUOPCPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int MODEL_DEFINES_SET_SERVICES__PARAM_NAME_GCOMP = 2;
+	int MODEL_IMPLEMENTS_SET_SERVICES__PARAM_NAME_GCOMP = 3;
 
 	/**
 	 * The feature id for the '<em><b>Param Name rc</b></em>' attribute.
@@ -173,7 +191,7 @@ public interface NUOPCPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int MODEL_DEFINES_SET_SERVICES__PARAM_NAME_RC = 3;
+	int MODEL_IMPLEMENTS_SET_SERVICES__PARAM_NAME_RC = 4;
 
 	/**
 	 * The feature id for the '<em><b>Calls Generic Set Services</b></em>' attribute.
@@ -182,7 +200,7 @@ public interface NUOPCPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int MODEL_DEFINES_SET_SERVICES__CALLS_GENERIC_SET_SERVICES = 4;
+	int MODEL_IMPLEMENTS_SET_SERVICES__CALLS_GENERIC_SET_SERVICES = 5;
 
 	/**
 	 * The feature id for the '<em><b>Calls Set Entry Point Phase1</b></em>' attribute.
@@ -191,7 +209,7 @@ public interface NUOPCPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int MODEL_DEFINES_SET_SERVICES__CALLS_SET_ENTRY_POINT_PHASE1 = 5;
+	int MODEL_IMPLEMENTS_SET_SERVICES__CALLS_SET_ENTRY_POINT_PHASE1 = 6;
 
 	/**
 	 * The feature id for the '<em><b>Calls Set Entry Point Phase2</b></em>' attribute.
@@ -200,26 +218,25 @@ public interface NUOPCPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int MODEL_DEFINES_SET_SERVICES__CALLS_SET_ENTRY_POINT_PHASE2 = 6;
+	int MODEL_IMPLEMENTS_SET_SERVICES__CALLS_SET_ENTRY_POINT_PHASE2 = 7;
 
 	/**
-	 * The feature id for the '<em><b>Attaches Method</b></em>' containment reference list.
+	 * The feature id for the '<em><b>Attaches Model Advance</b></em>' containment reference.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int MODEL_DEFINES_SET_SERVICES__ATTACHES_METHOD = 7;
+	int MODEL_IMPLEMENTS_SET_SERVICES__ATTACHES_MODEL_ADVANCE = 8;
 
 	/**
-	 * The number of structural features of the '<em>Model Defines Set Services</em>' class.
+	 * The number of structural features of the '<em>Model Implements Set Services</em>' class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int MODEL_DEFINES_SET_SERVICES_FEATURE_COUNT = 8;
-
+	int MODEL_IMPLEMENTS_SET_SERVICES_FEATURE_COUNT = 9;
 
 	/**
 	 * The meta object id for the '{@link org.earthsystemcurator.cupid.nuopc.fsml.nuopc.impl.ModelImplementsInitP1Impl <em>Model Implements Init P1</em>}' class.
@@ -588,14 +605,69 @@ public interface NUOPCPackage extends EPackage {
 	int REALIZES_EXPORT_FIELD_FEATURE_COUNT = 4;
 
 	/**
-	 * The meta object id for the '{@link org.earthsystemcurator.cupid.nuopc.fsml.nuopc.impl.AttachesMethodImpl <em>Attaches Method</em>}' class.
+	 * The meta object id for the '{@link org.earthsystemcurator.cupid.nuopc.fsml.nuopc.impl.AttachesModelAdvanceImpl <em>Attaches Model Advance</em>}' class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @see org.earthsystemcurator.cupid.nuopc.fsml.nuopc.impl.AttachesMethodImpl
-	 * @see org.earthsystemcurator.cupid.nuopc.fsml.nuopc.impl.NUOPCPackageImpl#getAttachesMethod()
+	 * @see org.earthsystemcurator.cupid.nuopc.fsml.nuopc.impl.AttachesModelAdvanceImpl
+	 * @see org.earthsystemcurator.cupid.nuopc.fsml.nuopc.impl.NUOPCPackageImpl#getAttachesModelAdvance()
 	 * @generated
 	 */
-	int ATTACHES_METHOD = 8;
+	int ATTACHES_MODEL_ADVANCE = 8;
+
+	/**
+	 * The feature id for the '<em><b>Parent</b></em>' container reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int ATTACHES_MODEL_ADVANCE__PARENT = 0;
+
+	/**
+	 * The feature id for the '<em><b>Label</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int ATTACHES_MODEL_ADVANCE__LABEL = 1;
+
+	/**
+	 * The feature id for the '<em><b>User Routine</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int ATTACHES_MODEL_ADVANCE__USER_ROUTINE = 2;
+
+	/**
+	 * The number of structural features of the '<em>Attaches Model Advance</em>' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int ATTACHES_MODEL_ADVANCE_FEATURE_COUNT = 3;
+
+	/**
+	 * The meta object id for the '{@link org.earthsystemcurator.cupid.nuopc.fsml.nuopc.impl.ModelAdvanceImpl <em>Model Advance</em>}' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see org.earthsystemcurator.cupid.nuopc.fsml.nuopc.impl.ModelAdvanceImpl
+	 * @see org.earthsystemcurator.cupid.nuopc.fsml.nuopc.impl.NUOPCPackageImpl#getModelAdvance()
+	 * @generated
+	 */
+	int MODEL_ADVANCE = 9;
+
+	/**
+	 * The feature id for the '<em><b>Parent</b></em>' container reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int MODEL_ADVANCE__PARENT = 0;
 
 	/**
 	 * The feature id for the '<em><b>Name</b></em>' attribute.
@@ -604,17 +676,25 @@ public interface NUOPCPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int ATTACHES_METHOD__NAME = 0;
+	int MODEL_ADVANCE__NAME = 1;
 
 	/**
-	 * The number of structural features of the '<em>Attaches Method</em>' class.
+	 * The feature id for the '<em><b>Attached In Set Services</b></em>' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int ATTACHES_METHOD_FEATURE_COUNT = 1;
+	int MODEL_ADVANCE__ATTACHED_IN_SET_SERVICES = 2;
 
+	/**
+	 * The number of structural features of the '<em>Model Advance</em>' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int MODEL_ADVANCE_FEATURE_COUNT = 3;
 
 	/**
 	 * Returns the meta object for class '{@link org.earthsystemcurator.cupid.nuopc.fsml.nuopc.Model <em>Model</em>}'.
@@ -649,15 +729,15 @@ public interface NUOPCPackage extends EPackage {
 	EAttribute getModel_UsesAllImports();
 
 	/**
-	 * Returns the meta object for the containment reference list '{@link org.earthsystemcurator.cupid.nuopc.fsml.nuopc.Model#getDefinesSetServices <em>Defines Set Services</em>}'.
+	 * Returns the meta object for the containment reference '{@link org.earthsystemcurator.cupid.nuopc.fsml.nuopc.Model#getImplementsSetServices <em>Implements Set Services</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @return the meta object for the containment reference list '<em>Defines Set Services</em>'.
-	 * @see org.earthsystemcurator.cupid.nuopc.fsml.nuopc.Model#getDefinesSetServices()
+	 * @return the meta object for the containment reference '<em>Implements Set Services</em>'.
+	 * @see org.earthsystemcurator.cupid.nuopc.fsml.nuopc.Model#getImplementsSetServices()
 	 * @see #getModel()
 	 * @generated
 	 */
-	EReference getModel_DefinesSetServices();
+	EReference getModel_ImplementsSetServices();
 
 	/**
 	 * Returns the meta object for the attribute '{@link org.earthsystemcurator.cupid.nuopc.fsml.nuopc.Model#getSinglePublicSubroutine <em>Single Public Subroutine</em>}'.
@@ -693,102 +773,124 @@ public interface NUOPCPackage extends EPackage {
 	EReference getModel_ImplementsInitP2();
 
 	/**
-	 * Returns the meta object for class '{@link org.earthsystemcurator.cupid.nuopc.fsml.nuopc.ModelDefinesSetServices <em>Model Defines Set Services</em>}'.
+	 * Returns the meta object for the containment reference list '{@link org.earthsystemcurator.cupid.nuopc.fsml.nuopc.Model#getImplementsModelAdvance <em>Implements Model Advance</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @return the meta object for class '<em>Model Defines Set Services</em>'.
-	 * @see org.earthsystemcurator.cupid.nuopc.fsml.nuopc.ModelDefinesSetServices
+	 * @return the meta object for the containment reference list '<em>Implements Model Advance</em>'.
+	 * @see org.earthsystemcurator.cupid.nuopc.fsml.nuopc.Model#getImplementsModelAdvance()
+	 * @see #getModel()
 	 * @generated
 	 */
-	EClass getModelDefinesSetServices();
+	EReference getModel_ImplementsModelAdvance();
 
 	/**
-	 * Returns the meta object for the attribute '{@link org.earthsystemcurator.cupid.nuopc.fsml.nuopc.ModelDefinesSetServices#getName <em>Name</em>}'.
+	 * Returns the meta object for class '{@link org.earthsystemcurator.cupid.nuopc.fsml.nuopc.ModelImplementsSetServices <em>Model Implements Set Services</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for class '<em>Model Implements Set Services</em>'.
+	 * @see org.earthsystemcurator.cupid.nuopc.fsml.nuopc.ModelImplementsSetServices
+	 * @generated
+	 */
+	EClass getModelImplementsSetServices();
+
+	/**
+	 * Returns the meta object for the container reference '{@link org.earthsystemcurator.cupid.nuopc.fsml.nuopc.ModelImplementsSetServices#getParent <em>Parent</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the container reference '<em>Parent</em>'.
+	 * @see org.earthsystemcurator.cupid.nuopc.fsml.nuopc.ModelImplementsSetServices#getParent()
+	 * @see #getModelImplementsSetServices()
+	 * @generated
+	 */
+	EReference getModelImplementsSetServices_Parent();
+
+	/**
+	 * Returns the meta object for the attribute '{@link org.earthsystemcurator.cupid.nuopc.fsml.nuopc.ModelImplementsSetServices#getName <em>Name</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @return the meta object for the attribute '<em>Name</em>'.
-	 * @see org.earthsystemcurator.cupid.nuopc.fsml.nuopc.ModelDefinesSetServices#getName()
-	 * @see #getModelDefinesSetServices()
+	 * @see org.earthsystemcurator.cupid.nuopc.fsml.nuopc.ModelImplementsSetServices#getName()
+	 * @see #getModelImplementsSetServices()
 	 * @generated
 	 */
-	EAttribute getModelDefinesSetServices_Name();
+	EAttribute getModelImplementsSetServices_Name();
 
 	/**
-	 * Returns the meta object for the attribute '{@link org.earthsystemcurator.cupid.nuopc.fsml.nuopc.ModelDefinesSetServices#isParameters <em>Parameters</em>}'.
+	 * Returns the meta object for the attribute '{@link org.earthsystemcurator.cupid.nuopc.fsml.nuopc.ModelImplementsSetServices#isParameters <em>Parameters</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @return the meta object for the attribute '<em>Parameters</em>'.
-	 * @see org.earthsystemcurator.cupid.nuopc.fsml.nuopc.ModelDefinesSetServices#isParameters()
-	 * @see #getModelDefinesSetServices()
+	 * @see org.earthsystemcurator.cupid.nuopc.fsml.nuopc.ModelImplementsSetServices#isParameters()
+	 * @see #getModelImplementsSetServices()
 	 * @generated
 	 */
-	EAttribute getModelDefinesSetServices_Parameters();
+	EAttribute getModelImplementsSetServices_Parameters();
 
 	/**
-	 * Returns the meta object for the attribute '{@link org.earthsystemcurator.cupid.nuopc.fsml.nuopc.ModelDefinesSetServices#getParamName_gcomp <em>Param Name gcomp</em>}'.
+	 * Returns the meta object for the attribute '{@link org.earthsystemcurator.cupid.nuopc.fsml.nuopc.ModelImplementsSetServices#getParamName_gcomp <em>Param Name gcomp</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @return the meta object for the attribute '<em>Param Name gcomp</em>'.
-	 * @see org.earthsystemcurator.cupid.nuopc.fsml.nuopc.ModelDefinesSetServices#getParamName_gcomp()
-	 * @see #getModelDefinesSetServices()
+	 * @see org.earthsystemcurator.cupid.nuopc.fsml.nuopc.ModelImplementsSetServices#getParamName_gcomp()
+	 * @see #getModelImplementsSetServices()
 	 * @generated
 	 */
-	EAttribute getModelDefinesSetServices_ParamName_gcomp();
+	EAttribute getModelImplementsSetServices_ParamName_gcomp();
 
 	/**
-	 * Returns the meta object for the attribute '{@link org.earthsystemcurator.cupid.nuopc.fsml.nuopc.ModelDefinesSetServices#getParamName_rc <em>Param Name rc</em>}'.
+	 * Returns the meta object for the attribute '{@link org.earthsystemcurator.cupid.nuopc.fsml.nuopc.ModelImplementsSetServices#getParamName_rc <em>Param Name rc</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @return the meta object for the attribute '<em>Param Name rc</em>'.
-	 * @see org.earthsystemcurator.cupid.nuopc.fsml.nuopc.ModelDefinesSetServices#getParamName_rc()
-	 * @see #getModelDefinesSetServices()
+	 * @see org.earthsystemcurator.cupid.nuopc.fsml.nuopc.ModelImplementsSetServices#getParamName_rc()
+	 * @see #getModelImplementsSetServices()
 	 * @generated
 	 */
-	EAttribute getModelDefinesSetServices_ParamName_rc();
+	EAttribute getModelImplementsSetServices_ParamName_rc();
 
 	/**
-	 * Returns the meta object for the attribute '{@link org.earthsystemcurator.cupid.nuopc.fsml.nuopc.ModelDefinesSetServices#isCallsGenericSetServices <em>Calls Generic Set Services</em>}'.
+	 * Returns the meta object for the attribute '{@link org.earthsystemcurator.cupid.nuopc.fsml.nuopc.ModelImplementsSetServices#isCallsGenericSetServices <em>Calls Generic Set Services</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @return the meta object for the attribute '<em>Calls Generic Set Services</em>'.
-	 * @see org.earthsystemcurator.cupid.nuopc.fsml.nuopc.ModelDefinesSetServices#isCallsGenericSetServices()
-	 * @see #getModelDefinesSetServices()
+	 * @see org.earthsystemcurator.cupid.nuopc.fsml.nuopc.ModelImplementsSetServices#isCallsGenericSetServices()
+	 * @see #getModelImplementsSetServices()
 	 * @generated
 	 */
-	EAttribute getModelDefinesSetServices_CallsGenericSetServices();
+	EAttribute getModelImplementsSetServices_CallsGenericSetServices();
 
 	/**
-	 * Returns the meta object for the attribute '{@link org.earthsystemcurator.cupid.nuopc.fsml.nuopc.ModelDefinesSetServices#isCallsSetEntryPointPhase1 <em>Calls Set Entry Point Phase1</em>}'.
+	 * Returns the meta object for the attribute '{@link org.earthsystemcurator.cupid.nuopc.fsml.nuopc.ModelImplementsSetServices#isCallsSetEntryPointPhase1 <em>Calls Set Entry Point Phase1</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @return the meta object for the attribute '<em>Calls Set Entry Point Phase1</em>'.
-	 * @see org.earthsystemcurator.cupid.nuopc.fsml.nuopc.ModelDefinesSetServices#isCallsSetEntryPointPhase1()
-	 * @see #getModelDefinesSetServices()
+	 * @see org.earthsystemcurator.cupid.nuopc.fsml.nuopc.ModelImplementsSetServices#isCallsSetEntryPointPhase1()
+	 * @see #getModelImplementsSetServices()
 	 * @generated
 	 */
-	EAttribute getModelDefinesSetServices_CallsSetEntryPointPhase1();
+	EAttribute getModelImplementsSetServices_CallsSetEntryPointPhase1();
 
 	/**
-	 * Returns the meta object for the attribute '{@link org.earthsystemcurator.cupid.nuopc.fsml.nuopc.ModelDefinesSetServices#isCallsSetEntryPointPhase2 <em>Calls Set Entry Point Phase2</em>}'.
+	 * Returns the meta object for the attribute '{@link org.earthsystemcurator.cupid.nuopc.fsml.nuopc.ModelImplementsSetServices#isCallsSetEntryPointPhase2 <em>Calls Set Entry Point Phase2</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @return the meta object for the attribute '<em>Calls Set Entry Point Phase2</em>'.
-	 * @see org.earthsystemcurator.cupid.nuopc.fsml.nuopc.ModelDefinesSetServices#isCallsSetEntryPointPhase2()
-	 * @see #getModelDefinesSetServices()
+	 * @see org.earthsystemcurator.cupid.nuopc.fsml.nuopc.ModelImplementsSetServices#isCallsSetEntryPointPhase2()
+	 * @see #getModelImplementsSetServices()
 	 * @generated
 	 */
-	EAttribute getModelDefinesSetServices_CallsSetEntryPointPhase2();
+	EAttribute getModelImplementsSetServices_CallsSetEntryPointPhase2();
 
 	/**
-	 * Returns the meta object for the containment reference list '{@link org.earthsystemcurator.cupid.nuopc.fsml.nuopc.ModelDefinesSetServices#getAttachesMethod <em>Attaches Method</em>}'.
+	 * Returns the meta object for the containment reference '{@link org.earthsystemcurator.cupid.nuopc.fsml.nuopc.ModelImplementsSetServices#getAttachesModelAdvance <em>Attaches Model Advance</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @return the meta object for the containment reference list '<em>Attaches Method</em>'.
-	 * @see org.earthsystemcurator.cupid.nuopc.fsml.nuopc.ModelDefinesSetServices#getAttachesMethod()
-	 * @see #getModelDefinesSetServices()
+	 * @return the meta object for the containment reference '<em>Attaches Model Advance</em>'.
+	 * @see org.earthsystemcurator.cupid.nuopc.fsml.nuopc.ModelImplementsSetServices#getAttachesModelAdvance()
+	 * @see #getModelImplementsSetServices()
 	 * @generated
 	 */
-	EReference getModelDefinesSetServices_AttachesMethod();
+	EReference getModelImplementsSetServices_AttachesModelAdvance();
 
 	/**
 	 * Returns the meta object for class '{@link org.earthsystemcurator.cupid.nuopc.fsml.nuopc.ModelImplementsInitP1 <em>Model Implements Init P1</em>}'.
@@ -1159,25 +1261,90 @@ public interface NUOPCPackage extends EPackage {
 	EAttribute getRealizesExportField_Field();
 
 	/**
-	 * Returns the meta object for class '{@link org.earthsystemcurator.cupid.nuopc.fsml.nuopc.AttachesMethod <em>Attaches Method</em>}'.
+	 * Returns the meta object for class '{@link org.earthsystemcurator.cupid.nuopc.fsml.nuopc.AttachesModelAdvance <em>Attaches Model Advance</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @return the meta object for class '<em>Attaches Method</em>'.
-	 * @see org.earthsystemcurator.cupid.nuopc.fsml.nuopc.AttachesMethod
+	 * @return the meta object for class '<em>Attaches Model Advance</em>'.
+	 * @see org.earthsystemcurator.cupid.nuopc.fsml.nuopc.AttachesModelAdvance
 	 * @generated
 	 */
-	EClass getAttachesMethod();
+	EClass getAttachesModelAdvance();
 
 	/**
-	 * Returns the meta object for the attribute '{@link org.earthsystemcurator.cupid.nuopc.fsml.nuopc.AttachesMethod#getName <em>Name</em>}'.
+	 * Returns the meta object for the container reference '{@link org.earthsystemcurator.cupid.nuopc.fsml.nuopc.AttachesModelAdvance#getParent <em>Parent</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the container reference '<em>Parent</em>'.
+	 * @see org.earthsystemcurator.cupid.nuopc.fsml.nuopc.AttachesModelAdvance#getParent()
+	 * @see #getAttachesModelAdvance()
+	 * @generated
+	 */
+	EReference getAttachesModelAdvance_Parent();
+
+	/**
+	 * Returns the meta object for the attribute '{@link org.earthsystemcurator.cupid.nuopc.fsml.nuopc.AttachesModelAdvance#getLabel <em>Label</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the attribute '<em>Label</em>'.
+	 * @see org.earthsystemcurator.cupid.nuopc.fsml.nuopc.AttachesModelAdvance#getLabel()
+	 * @see #getAttachesModelAdvance()
+	 * @generated
+	 */
+	EAttribute getAttachesModelAdvance_Label();
+
+	/**
+	 * Returns the meta object for the attribute '{@link org.earthsystemcurator.cupid.nuopc.fsml.nuopc.AttachesModelAdvance#getUserRoutine <em>User Routine</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the attribute '<em>User Routine</em>'.
+	 * @see org.earthsystemcurator.cupid.nuopc.fsml.nuopc.AttachesModelAdvance#getUserRoutine()
+	 * @see #getAttachesModelAdvance()
+	 * @generated
+	 */
+	EAttribute getAttachesModelAdvance_UserRoutine();
+
+	/**
+	 * Returns the meta object for class '{@link org.earthsystemcurator.cupid.nuopc.fsml.nuopc.ModelAdvance <em>Model Advance</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for class '<em>Model Advance</em>'.
+	 * @see org.earthsystemcurator.cupid.nuopc.fsml.nuopc.ModelAdvance
+	 * @generated
+	 */
+	EClass getModelAdvance();
+
+	/**
+	 * Returns the meta object for the container reference '{@link org.earthsystemcurator.cupid.nuopc.fsml.nuopc.ModelAdvance#getParent <em>Parent</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the container reference '<em>Parent</em>'.
+	 * @see org.earthsystemcurator.cupid.nuopc.fsml.nuopc.ModelAdvance#getParent()
+	 * @see #getModelAdvance()
+	 * @generated
+	 */
+	EReference getModelAdvance_Parent();
+
+	/**
+	 * Returns the meta object for the attribute '{@link org.earthsystemcurator.cupid.nuopc.fsml.nuopc.ModelAdvance#getName <em>Name</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @return the meta object for the attribute '<em>Name</em>'.
-	 * @see org.earthsystemcurator.cupid.nuopc.fsml.nuopc.AttachesMethod#getName()
-	 * @see #getAttachesMethod()
+	 * @see org.earthsystemcurator.cupid.nuopc.fsml.nuopc.ModelAdvance#getName()
+	 * @see #getModelAdvance()
 	 * @generated
 	 */
-	EAttribute getAttachesMethod_Name();
+	EAttribute getModelAdvance_Name();
+
+	/**
+	 * Returns the meta object for the attribute '{@link org.earthsystemcurator.cupid.nuopc.fsml.nuopc.ModelAdvance#isAttachedInSetServices <em>Attached In Set Services</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the attribute '<em>Attached In Set Services</em>'.
+	 * @see org.earthsystemcurator.cupid.nuopc.fsml.nuopc.ModelAdvance#isAttachedInSetServices()
+	 * @see #getModelAdvance()
+	 * @generated
+	 */
+	EAttribute getModelAdvance_AttachedInSetServices();
 
 	/**
 	 * Returns the factory that creates the instances of the model.
@@ -1228,12 +1395,12 @@ public interface NUOPCPackage extends EPackage {
 		EAttribute MODEL__USES_ALL_IMPORTS = eINSTANCE.getModel_UsesAllImports();
 
 		/**
-		 * The meta object literal for the '<em><b>Defines Set Services</b></em>' containment reference list feature.
+		 * The meta object literal for the '<em><b>Implements Set Services</b></em>' containment reference feature.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
 		 * @generated
 		 */
-		EReference MODEL__DEFINES_SET_SERVICES = eINSTANCE.getModel_DefinesSetServices();
+		EReference MODEL__IMPLEMENTS_SET_SERVICES = eINSTANCE.getModel_ImplementsSetServices();
 
 		/**
 		 * The meta object literal for the '<em><b>Single Public Subroutine</b></em>' attribute feature.
@@ -1260,14 +1427,30 @@ public interface NUOPCPackage extends EPackage {
 		EReference MODEL__IMPLEMENTS_INIT_P2 = eINSTANCE.getModel_ImplementsInitP2();
 
 		/**
-		 * The meta object literal for the '{@link org.earthsystemcurator.cupid.nuopc.fsml.nuopc.impl.ModelDefinesSetServicesImpl <em>Model Defines Set Services</em>}' class.
+		 * The meta object literal for the '<em><b>Implements Model Advance</b></em>' containment reference list feature.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
-		 * @see org.earthsystemcurator.cupid.nuopc.fsml.nuopc.impl.ModelDefinesSetServicesImpl
-		 * @see org.earthsystemcurator.cupid.nuopc.fsml.nuopc.impl.NUOPCPackageImpl#getModelDefinesSetServices()
 		 * @generated
 		 */
-		EClass MODEL_DEFINES_SET_SERVICES = eINSTANCE.getModelDefinesSetServices();
+		EReference MODEL__IMPLEMENTS_MODEL_ADVANCE = eINSTANCE.getModel_ImplementsModelAdvance();
+
+		/**
+		 * The meta object literal for the '{@link org.earthsystemcurator.cupid.nuopc.fsml.nuopc.impl.ModelImplementsSetServicesImpl <em>Model Implements Set Services</em>}' class.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @see org.earthsystemcurator.cupid.nuopc.fsml.nuopc.impl.ModelImplementsSetServicesImpl
+		 * @see org.earthsystemcurator.cupid.nuopc.fsml.nuopc.impl.NUOPCPackageImpl#getModelImplementsSetServices()
+		 * @generated
+		 */
+		EClass MODEL_IMPLEMENTS_SET_SERVICES = eINSTANCE.getModelImplementsSetServices();
+
+		/**
+		 * The meta object literal for the '<em><b>Parent</b></em>' container reference feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EReference MODEL_IMPLEMENTS_SET_SERVICES__PARENT = eINSTANCE.getModelImplementsSetServices_Parent();
 
 		/**
 		 * The meta object literal for the '<em><b>Name</b></em>' attribute feature.
@@ -1275,7 +1458,7 @@ public interface NUOPCPackage extends EPackage {
 		 * <!-- end-user-doc -->
 		 * @generated
 		 */
-		EAttribute MODEL_DEFINES_SET_SERVICES__NAME = eINSTANCE.getModelDefinesSetServices_Name();
+		EAttribute MODEL_IMPLEMENTS_SET_SERVICES__NAME = eINSTANCE.getModelImplementsSetServices_Name();
 
 		/**
 		 * The meta object literal for the '<em><b>Parameters</b></em>' attribute feature.
@@ -1283,7 +1466,7 @@ public interface NUOPCPackage extends EPackage {
 		 * <!-- end-user-doc -->
 		 * @generated
 		 */
-		EAttribute MODEL_DEFINES_SET_SERVICES__PARAMETERS = eINSTANCE.getModelDefinesSetServices_Parameters();
+		EAttribute MODEL_IMPLEMENTS_SET_SERVICES__PARAMETERS = eINSTANCE.getModelImplementsSetServices_Parameters();
 
 		/**
 		 * The meta object literal for the '<em><b>Param Name gcomp</b></em>' attribute feature.
@@ -1291,7 +1474,7 @@ public interface NUOPCPackage extends EPackage {
 		 * <!-- end-user-doc -->
 		 * @generated
 		 */
-		EAttribute MODEL_DEFINES_SET_SERVICES__PARAM_NAME_GCOMP = eINSTANCE.getModelDefinesSetServices_ParamName_gcomp();
+		EAttribute MODEL_IMPLEMENTS_SET_SERVICES__PARAM_NAME_GCOMP = eINSTANCE.getModelImplementsSetServices_ParamName_gcomp();
 
 		/**
 		 * The meta object literal for the '<em><b>Param Name rc</b></em>' attribute feature.
@@ -1299,7 +1482,7 @@ public interface NUOPCPackage extends EPackage {
 		 * <!-- end-user-doc -->
 		 * @generated
 		 */
-		EAttribute MODEL_DEFINES_SET_SERVICES__PARAM_NAME_RC = eINSTANCE.getModelDefinesSetServices_ParamName_rc();
+		EAttribute MODEL_IMPLEMENTS_SET_SERVICES__PARAM_NAME_RC = eINSTANCE.getModelImplementsSetServices_ParamName_rc();
 
 		/**
 		 * The meta object literal for the '<em><b>Calls Generic Set Services</b></em>' attribute feature.
@@ -1307,7 +1490,7 @@ public interface NUOPCPackage extends EPackage {
 		 * <!-- end-user-doc -->
 		 * @generated
 		 */
-		EAttribute MODEL_DEFINES_SET_SERVICES__CALLS_GENERIC_SET_SERVICES = eINSTANCE.getModelDefinesSetServices_CallsGenericSetServices();
+		EAttribute MODEL_IMPLEMENTS_SET_SERVICES__CALLS_GENERIC_SET_SERVICES = eINSTANCE.getModelImplementsSetServices_CallsGenericSetServices();
 
 		/**
 		 * The meta object literal for the '<em><b>Calls Set Entry Point Phase1</b></em>' attribute feature.
@@ -1315,7 +1498,7 @@ public interface NUOPCPackage extends EPackage {
 		 * <!-- end-user-doc -->
 		 * @generated
 		 */
-		EAttribute MODEL_DEFINES_SET_SERVICES__CALLS_SET_ENTRY_POINT_PHASE1 = eINSTANCE.getModelDefinesSetServices_CallsSetEntryPointPhase1();
+		EAttribute MODEL_IMPLEMENTS_SET_SERVICES__CALLS_SET_ENTRY_POINT_PHASE1 = eINSTANCE.getModelImplementsSetServices_CallsSetEntryPointPhase1();
 
 		/**
 		 * The meta object literal for the '<em><b>Calls Set Entry Point Phase2</b></em>' attribute feature.
@@ -1323,15 +1506,15 @@ public interface NUOPCPackage extends EPackage {
 		 * <!-- end-user-doc -->
 		 * @generated
 		 */
-		EAttribute MODEL_DEFINES_SET_SERVICES__CALLS_SET_ENTRY_POINT_PHASE2 = eINSTANCE.getModelDefinesSetServices_CallsSetEntryPointPhase2();
+		EAttribute MODEL_IMPLEMENTS_SET_SERVICES__CALLS_SET_ENTRY_POINT_PHASE2 = eINSTANCE.getModelImplementsSetServices_CallsSetEntryPointPhase2();
 
 		/**
-		 * The meta object literal for the '<em><b>Attaches Method</b></em>' containment reference list feature.
+		 * The meta object literal for the '<em><b>Attaches Model Advance</b></em>' containment reference feature.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
 		 * @generated
 		 */
-		EReference MODEL_DEFINES_SET_SERVICES__ATTACHES_METHOD = eINSTANCE.getModelDefinesSetServices_AttachesMethod();
+		EReference MODEL_IMPLEMENTS_SET_SERVICES__ATTACHES_MODEL_ADVANCE = eINSTANCE.getModelImplementsSetServices_AttachesModelAdvance();
 
 		/**
 		 * The meta object literal for the '{@link org.earthsystemcurator.cupid.nuopc.fsml.nuopc.impl.ModelImplementsInitP1Impl <em>Model Implements Init P1</em>}' class.
@@ -1618,14 +1801,56 @@ public interface NUOPCPackage extends EPackage {
 		EAttribute REALIZES_EXPORT_FIELD__FIELD = eINSTANCE.getRealizesExportField_Field();
 
 		/**
-		 * The meta object literal for the '{@link org.earthsystemcurator.cupid.nuopc.fsml.nuopc.impl.AttachesMethodImpl <em>Attaches Method</em>}' class.
+		 * The meta object literal for the '{@link org.earthsystemcurator.cupid.nuopc.fsml.nuopc.impl.AttachesModelAdvanceImpl <em>Attaches Model Advance</em>}' class.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
-		 * @see org.earthsystemcurator.cupid.nuopc.fsml.nuopc.impl.AttachesMethodImpl
-		 * @see org.earthsystemcurator.cupid.nuopc.fsml.nuopc.impl.NUOPCPackageImpl#getAttachesMethod()
+		 * @see org.earthsystemcurator.cupid.nuopc.fsml.nuopc.impl.AttachesModelAdvanceImpl
+		 * @see org.earthsystemcurator.cupid.nuopc.fsml.nuopc.impl.NUOPCPackageImpl#getAttachesModelAdvance()
 		 * @generated
 		 */
-		EClass ATTACHES_METHOD = eINSTANCE.getAttachesMethod();
+		EClass ATTACHES_MODEL_ADVANCE = eINSTANCE.getAttachesModelAdvance();
+
+		/**
+		 * The meta object literal for the '<em><b>Parent</b></em>' container reference feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EReference ATTACHES_MODEL_ADVANCE__PARENT = eINSTANCE.getAttachesModelAdvance_Parent();
+
+		/**
+		 * The meta object literal for the '<em><b>Label</b></em>' attribute feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EAttribute ATTACHES_MODEL_ADVANCE__LABEL = eINSTANCE.getAttachesModelAdvance_Label();
+
+		/**
+		 * The meta object literal for the '<em><b>User Routine</b></em>' attribute feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EAttribute ATTACHES_MODEL_ADVANCE__USER_ROUTINE = eINSTANCE.getAttachesModelAdvance_UserRoutine();
+
+		/**
+		 * The meta object literal for the '{@link org.earthsystemcurator.cupid.nuopc.fsml.nuopc.impl.ModelAdvanceImpl <em>Model Advance</em>}' class.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @see org.earthsystemcurator.cupid.nuopc.fsml.nuopc.impl.ModelAdvanceImpl
+		 * @see org.earthsystemcurator.cupid.nuopc.fsml.nuopc.impl.NUOPCPackageImpl#getModelAdvance()
+		 * @generated
+		 */
+		EClass MODEL_ADVANCE = eINSTANCE.getModelAdvance();
+
+		/**
+		 * The meta object literal for the '<em><b>Parent</b></em>' container reference feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EReference MODEL_ADVANCE__PARENT = eINSTANCE.getModelAdvance_Parent();
 
 		/**
 		 * The meta object literal for the '<em><b>Name</b></em>' attribute feature.
@@ -1633,7 +1858,15 @@ public interface NUOPCPackage extends EPackage {
 		 * <!-- end-user-doc -->
 		 * @generated
 		 */
-		EAttribute ATTACHES_METHOD__NAME = eINSTANCE.getAttachesMethod_Name();
+		EAttribute MODEL_ADVANCE__NAME = eINSTANCE.getModelAdvance_Name();
+
+		/**
+		 * The meta object literal for the '<em><b>Attached In Set Services</b></em>' attribute feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EAttribute MODEL_ADVANCE__ATTACHED_IN_SET_SERVICES = eINSTANCE.getModelAdvance_AttachedInSetServices();
 
 	}
 

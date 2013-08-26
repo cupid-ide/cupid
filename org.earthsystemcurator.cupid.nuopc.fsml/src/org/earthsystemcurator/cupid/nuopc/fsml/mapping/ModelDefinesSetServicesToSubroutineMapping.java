@@ -1,14 +1,12 @@
 package org.earthsystemcurator.cupid.nuopc.fsml.mapping;
 
-import java.util.List;
 import java.util.Set;
 
-import org.earthsystemcurator.cupid.nuopc.fsml.nuopc.ModelDefinesSetServices;
+import org.earthsystemcurator.cupid.nuopc.fsml.nuopc.ModelImplementsSetServices;
 import org.earthsystemcurator.cupid.nuopc.fsml.nuopc.NUOPCFactory;
 import org.earthsystemcurator.cupid.nuopc.fsml.util.CodeExtraction;
 import org.earthsystemcurator.cupid.nuopc.fsml.util.CodeQuery;
 import org.eclipse.photran.core.IFortranAST;
-import org.eclipse.photran.internal.core.analysis.binding.Definition;
 import org.eclipse.photran.internal.core.analysis.types.DerivedType;
 import org.eclipse.photran.internal.core.analysis.types.Type;
 import org.eclipse.photran.internal.core.lexer.Terminal;
@@ -16,7 +14,6 @@ import org.eclipse.photran.internal.core.lexer.Token;
 import org.eclipse.photran.internal.core.parser.ASTCallStmtNode;
 import org.eclipse.photran.internal.core.parser.ASTIntConstNode;
 import org.eclipse.photran.internal.core.parser.ASTListNode;
-import org.eclipse.photran.internal.core.parser.ASTModuleNode;
 import org.eclipse.photran.internal.core.parser.ASTSubroutineArgNode;
 import org.eclipse.photran.internal.core.parser.ASTSubroutineNameNode;
 import org.eclipse.photran.internal.core.parser.ASTSubroutineParNode;
@@ -31,19 +28,19 @@ import org.eclipse.photran.internal.core.reindenter.Reindenter.Strategy;
 
 
 @SuppressWarnings("restriction")
-public class ModelDefinesSetServicesToSubroutineMapping extends Mapping<ModelDefinesSetServices, ASTSubroutineSubprogramNode> {
+public class ModelDefinesSetServicesToSubroutineMapping extends Mapping<ModelImplementsSetServices, ASTSubroutineSubprogramNode> {
 
 	protected ModelDefinesSetServicesToSubroutineMapping(
-			ModelDefinesSetServices m, ASTSubroutineSubprogramNode a, IFortranAST ast) {
+			ModelImplementsSetServices m, ASTSubroutineSubprogramNode a, IFortranAST ast) {
 		super(m, a, ast);
 	}
 
 	@Override
-	public ModelDefinesSetServices reverse() {
+	public ModelImplementsSetServices reverse() {
 		
 		if (astElem != null) {
 			if (modelElem == null) {
-				modelElem = NUOPCFactory.eINSTANCE.createModelDefinesSetServices();
+				modelElem = NUOPCFactory.eINSTANCE.createModelImplementsSetServices();
 			}
 			
 			reverseName();

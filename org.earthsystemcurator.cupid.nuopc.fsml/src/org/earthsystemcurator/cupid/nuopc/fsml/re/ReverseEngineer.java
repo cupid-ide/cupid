@@ -9,7 +9,7 @@ import java.util.List;
 import java.util.Set;
 
 import org.earthsystemcurator.cupid.nuopc.fsml.nuopc.Model;
-import org.earthsystemcurator.cupid.nuopc.fsml.nuopc.ModelDefinesSetServices;
+import org.earthsystemcurator.cupid.nuopc.fsml.nuopc.ModelImplementsSetServices;
 import org.earthsystemcurator.cupid.nuopc.fsml.nuopc.NUOPCFactory;
 import org.earthsystemcurator.cupid.nuopc.fsml.nuopc.NUOPCPackage;
 import org.earthsystemcurator.cupid.nuopc.fsml.util.CodeQuery;
@@ -58,12 +58,13 @@ public class ReverseEngineer {
 		//String query = ann.getDetails().get("query");
 		//System.out.println("query = " + query);		
 		
-		//current does NOT traverse inherited structural features
+		//currently does NOT traverse inherited structural features
 		for (EStructuralFeature sf : modelElemClass.getEStructuralFeatures()) {
 			
 			System.out.println("Stuctural feature: " + sf.getName());
-			System.out.println("\tType = " + sf.getEType());
-			System.out.println("\tCurrent val = " + modelElem.eGet(sf));
+			
+			//System.out.println("\tType = " + sf.getEType());
+			//System.out.println("\tCurrent val = " + modelElem.eGet(sf));
 			//System.out.println("\tGeneric type = " + sf.getEGenericType());
 					
 			EAnnotation anot = sf.getEAnnotation("http://www.earthsystemcog.org/projects/nuopc");
@@ -276,12 +277,12 @@ public class ReverseEngineer {
 				super.visitASTModuleNode(node);
 				
 				// sort candidates
-				List<ModelDefinesSetServices> l = new ArrayList<ModelDefinesSetServices>(m.getDefinesSetServices());
+				//List<ModelImplementsSetServices> l = new ArrayList<ModelImplementsSetServices>(m.getImplementsSetServices());
 				//Collections.list(m.getDefinesSetServices());
 				//Collections.sort(l);
 				//Collections.reverse(l);
-				m.getDefinesSetServices().clear();
-				m.getDefinesSetServices().addAll(l);
+				//m.getImplementsSetServices().clear();
+				//m.getImplementsSetServices().addAll(l);
 				
 				System.out.println("End ==> Visited a module node: " + node.getName());
 			}
@@ -290,9 +291,9 @@ public class ReverseEngineer {
 			public void visitASTSubroutineSubprogramNode(ASTSubroutineSubprogramNode node) {
 				//System.out.println("Start ==> Visited a subroutine subprogram node: " + node.getName());		
 				
-				ModelDefinesSetServices mdss = NUOPCFactory.eINSTANCE.createModelDefinesSetServices();
+				ModelImplementsSetServices mdss = NUOPCFactory.eINSTANCE.createModelImplementsSetServices();
 				mdss.setName(node.getName());
-				m.getDefinesSetServices().add(mdss);
+				//m.getImplementsSetServices().add(mdss);
 				
 				mdss.setParameters(false);		
 				if (CodeQuery.matchesParamTypes(node, new DerivedType("ESMF_GridComp"), Type.INTEGER)) {
