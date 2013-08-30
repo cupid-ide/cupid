@@ -2,6 +2,7 @@ package org.earthsystemcurator.cupid.nuopc.fsml.util;
 
 import java.util.HashSet;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -72,9 +73,10 @@ public class CodeQuery {
 		return false;
 	}
 	
-	
-	public static Set<ASTSubroutineSubprogramNode> subroutine(IASTNode node, String pattern) {
 		
+	public static Set<ASTSubroutineSubprogramNode> subroutine(IASTNode node, Map<String, Object> params) {
+		
+		String pattern = (String) params.get("subroutine");
 		System.out.println("subroutine: " + pattern);
 		
 		Pattern p = Pattern.compile("((?:\\w+)|(?:\\*))\\(((?:(integer|logical|type\\(\\w+\\)),?\\s*)*)\\)");
@@ -164,8 +166,9 @@ public class CodeQuery {
 		
 	}
 	
-	public static String formalParam(ASTSubroutineSubprogramNode node, String index) {
-		int idx = Integer.valueOf(index) - 1;
+	public static String formalParam(ASTSubroutineSubprogramNode node, Map<String, Object> params) {
+		
+		int idx = (Integer) params.get("formalParam") - 1;
 		return node.getSubroutineStmt().getSubroutinePars().get(idx).getVariableName().getText();		
 	}
 	
@@ -243,7 +246,9 @@ public class CodeQuery {
 	}
 	
 	
-	public static String argByKeyword(ASTCallStmtNode node, String keyword) {
+	public static String argByKeyword(ASTCallStmtNode node, Map<String, Object> params) {
+		
+		String keyword = (String) params.get("argByKeyword");
 		
 		for (ASTSubroutineArgNode san : node.getArgList()) {
 			if (san.getName() != null && san.getName().getText().equalsIgnoreCase(keyword)) {
@@ -258,8 +263,11 @@ public class CodeQuery {
 		return null;
 	}
 	
-	public static String argByIndex(ASTCallStmtNode node, String index) {		
-		int idx = Integer.valueOf(index);		
+	public static String argByIndex(ASTCallStmtNode node, Map<String, Object> params) {		
+		
+		//int idx = Integer.valueOf(index);
+		int idx = (Integer) params.get("argByIndex");
+		
 		IExpr expr = node.getArgList().get(idx - 1).getExpr();
 		if (expr instanceof ASTVarOrFnRefNode) {
 			ASTVarOrFnRefNode vofrn = (ASTVarOrFnRefNode) expr;			
@@ -301,7 +309,9 @@ public class CodeQuery {
 		return expr.toString();			
 	}
 	
-	public static Set<ASTCallStmtNode> call(IASTNode node, final String subroutineName) {
+	public static Set<ASTCallStmtNode> call(IASTNode node, Map<String, Object> params) {
+		
+		final String subroutineName = (String) params.get("call");
 		
 		HashSet<ASTCallStmtNode> result = new HashSet<ASTCallStmtNode>();
 		
@@ -339,7 +349,9 @@ public class CodeQuery {
 		return result;
 	}
 	
-	public static boolean calls(IASTNode node, final String subroutineName) {
+	public static boolean calls(IASTNode node, Map<String, Object> params) {
+		
+		final String subroutineName = (String) params.get("calls");
 		
 		for (ASTCallStmtNode csn : node.findAll(ASTCallStmtNode.class)) {
 			
@@ -446,11 +458,11 @@ public class CodeQuery {
 	}
 	
 	//testing
-	public static void main(String[] args) {
-		CodeQuery.subroutine(null, "setServices(logical,integer)");
-		CodeQuery.subroutine(null, "*(logical,integer,type(blah))");
-		CodeQuery.subroutine(null, "setServices()");
-	}
+	//public static void main(String[] args) {
+	//	CodeQuery.subroutine(null, "setServices(logical,integer)");
+	//	CodeQuery.subroutine(null, "*(logical,integer,type(blah))");
+	//	CodeQuery.subroutine(null, "setServices()");
+	//}
 	
 	
 }

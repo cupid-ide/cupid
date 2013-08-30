@@ -7,8 +7,7 @@ import java.io.InputStreamReader;
 import java.io.Reader;
 import java.lang.reflect.InvocationTargetException;
 
-import org.earthsystemcurator.cupid.nuopc.fsml.mapping.ModelToModuleMapping;
-import org.earthsystemcurator.cupid.nuopc.fsml.nuopc.Model;
+import org.earthsystemcurator.cupid.nuopc.fsml.nuopc.NUOPCModel;
 import org.earthsystemcurator.cupid.nuopc.fsml.nuopc.NUOPCPackage;
 import org.earthsystemcurator.cupid.nuopc.fsml.re.ReverseEngineer;
 import org.eclipse.core.commands.AbstractHandler;
@@ -154,7 +153,7 @@ public class ReverseHandler extends AbstractHandler {
         
         
         ReverseEngineer re = new ReverseEngineer();
-        Model m = re.reverse(ast);
+        NUOPCModel m = re.reverse(ast);
         
         if (m == null) return null;
         

@@ -25,7 +25,7 @@ import org.eclipse.emf.ecore.EObject;
 public interface ModelAdvance extends EObject {
 	/**
 	 * Returns the value of the '<em><b>Parent</b></em>' container reference.
-	 * It is bidirectional and its opposite is '{@link org.earthsystemcurator.cupid.nuopc.fsml.nuopc.Model#getImplementsModelAdvance <em>Implements Model Advance</em>}'.
+	 * It is bidirectional and its opposite is '{@link org.earthsystemcurator.cupid.nuopc.fsml.nuopc.NUOPCModel#getImplementsModelAdvance <em>Implements Model Advance</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <p>
 	 * If the meaning of the '<em>Parent</em>' container reference isn't clear,
@@ -33,13 +33,13 @@ public interface ModelAdvance extends EObject {
 	 * </p>
 	 * <!-- end-user-doc -->
 	 * @return the value of the '<em>Parent</em>' container reference.
-	 * @see #setParent(Model)
+	 * @see #setParent(NUOPCModel)
 	 * @see org.earthsystemcurator.cupid.nuopc.fsml.nuopc.NUOPCPackage#getModelAdvance_Parent()
-	 * @see org.earthsystemcurator.cupid.nuopc.fsml.nuopc.Model#getImplementsModelAdvance
+	 * @see org.earthsystemcurator.cupid.nuopc.fsml.nuopc.NUOPCModel#getImplementsModelAdvance
 	 * @model opposite="implementsModelAdvance" required="true" transient="false"
 	 * @generated
 	 */
-	Model getParent();
+	NUOPCModel getParent();
 
 	/**
 	 * Sets the value of the '{@link org.earthsystemcurator.cupid.nuopc.fsml.nuopc.ModelAdvance#getParent <em>Parent</em>}' container reference.
@@ -49,7 +49,7 @@ public interface ModelAdvance extends EObject {
 	 * @see #getParent()
 	 * @generated
 	 */
-	void setParent(Model value);
+	void setParent(NUOPCModel value);
 
 	/**
 	 * Returns the value of the '<em><b>Name</b></em>' attribute.
@@ -63,7 +63,7 @@ public interface ModelAdvance extends EObject {
 	 * @see #setName(String)
 	 * @see org.earthsystemcurator.cupid.nuopc.fsml.nuopc.NUOPCPackage#getModelAdvance_Name()
 	 * @model id="true" required="true"
-	 *        annotation="http://www.earthsystemcog.org/projects/nuopc query='subroutineName'"
+	 *        annotation="http://www.earthsystemcog.org/projects/nuopc mapping='subroutineName'"
 	 * @generated
 	 */
 	String getName();

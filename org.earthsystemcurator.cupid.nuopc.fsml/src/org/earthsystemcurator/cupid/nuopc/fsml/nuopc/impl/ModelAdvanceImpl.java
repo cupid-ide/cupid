@@ -2,8 +2,8 @@
  */
 package org.earthsystemcurator.cupid.nuopc.fsml.nuopc.impl;
 
-import org.earthsystemcurator.cupid.nuopc.fsml.nuopc.Model;
 import org.earthsystemcurator.cupid.nuopc.fsml.nuopc.ModelAdvance;
+import org.earthsystemcurator.cupid.nuopc.fsml.nuopc.NUOPCModel;
 import org.earthsystemcurator.cupid.nuopc.fsml.nuopc.NUOPCPackage;
 
 import org.eclipse.emf.common.notify.Notification;
@@ -87,9 +87,9 @@ public class ModelAdvanceImpl extends EObjectImpl implements ModelAdvance {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public Model getParent() {
+	public NUOPCModel getParent() {
 		if (eContainerFeatureID() != NUOPCPackage.MODEL_ADVANCE__PARENT) return null;
-		return (Model)eInternalContainer();
+		return (NUOPCModel)eInternalContainer();
 	}
 
 	/**
@@ -97,7 +97,7 @@ public class ModelAdvanceImpl extends EObjectImpl implements ModelAdvance {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public NotificationChain basicSetParent(Model newParent, NotificationChain msgs) {
+	public NotificationChain basicSetParent(NUOPCModel newParent, NotificationChain msgs) {
 		msgs = eBasicSetContainer((InternalEObject)newParent, NUOPCPackage.MODEL_ADVANCE__PARENT, msgs);
 		return msgs;
 	}
@@ -107,7 +107,7 @@ public class ModelAdvanceImpl extends EObjectImpl implements ModelAdvance {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public void setParent(Model newParent) {
+	public void setParent(NUOPCModel newParent) {
 		if (newParent != eInternalContainer() || (eContainerFeatureID() != NUOPCPackage.MODEL_ADVANCE__PARENT && newParent != null)) {
 			if (EcoreUtil.isAncestor(this, newParent))
 				throw new IllegalArgumentException("Recursive containment not allowed for " + toString());
@@ -115,7 +115,7 @@ public class ModelAdvanceImpl extends EObjectImpl implements ModelAdvance {
 			if (eInternalContainer() != null)
 				msgs = eBasicRemoveFromContainer(msgs);
 			if (newParent != null)
-				msgs = ((InternalEObject)newParent).eInverseAdd(this, NUOPCPackage.MODEL__IMPLEMENTS_MODEL_ADVANCE, Model.class, msgs);
+				msgs = ((InternalEObject)newParent).eInverseAdd(this, NUOPCPackage.NUOPC_MODEL__IMPLEMENTS_MODEL_ADVANCE, NUOPCModel.class, msgs);
 			msgs = basicSetParent(newParent, msgs);
 			if (msgs != null) msgs.dispatch();
 		}
@@ -173,7 +173,7 @@ public class ModelAdvanceImpl extends EObjectImpl implements ModelAdvance {
 			case NUOPCPackage.MODEL_ADVANCE__PARENT:
 				if (eInternalContainer() != null)
 					msgs = eBasicRemoveFromContainer(msgs);
-				return basicSetParent((Model)otherEnd, msgs);
+				return basicSetParent((NUOPCModel)otherEnd, msgs);
 		}
 		return super.eInverseAdd(otherEnd, featureID, msgs);
 	}
@@ -201,7 +201,7 @@ public class ModelAdvanceImpl extends EObjectImpl implements ModelAdvance {
 	public NotificationChain eBasicRemoveFromContainerFeature(NotificationChain msgs) {
 		switch (eContainerFeatureID()) {
 			case NUOPCPackage.MODEL_ADVANCE__PARENT:
-				return eInternalContainer().eInverseRemove(this, NUOPCPackage.MODEL__IMPLEMENTS_MODEL_ADVANCE, Model.class, msgs);
+				return eInternalContainer().eInverseRemove(this, NUOPCPackage.NUOPC_MODEL__IMPLEMENTS_MODEL_ADVANCE, NUOPCModel.class, msgs);
 		}
 		return super.eBasicRemoveFromContainerFeature(msgs);
 	}
@@ -233,7 +233,7 @@ public class ModelAdvanceImpl extends EObjectImpl implements ModelAdvance {
 	public void eSet(int featureID, Object newValue) {
 		switch (featureID) {
 			case NUOPCPackage.MODEL_ADVANCE__PARENT:
-				setParent((Model)newValue);
+				setParent((NUOPCModel)newValue);
 				return;
 			case NUOPCPackage.MODEL_ADVANCE__NAME:
 				setName((String)newValue);
@@ -254,7 +254,7 @@ public class ModelAdvanceImpl extends EObjectImpl implements ModelAdvance {
 	public void eUnset(int featureID) {
 		switch (featureID) {
 			case NUOPCPackage.MODEL_ADVANCE__PARENT:
-				setParent((Model)null);
+				setParent((NUOPCModel)null);
 				return;
 			case NUOPCPackage.MODEL_ADVANCE__NAME:
 				setName(NAME_EDEFAULT);

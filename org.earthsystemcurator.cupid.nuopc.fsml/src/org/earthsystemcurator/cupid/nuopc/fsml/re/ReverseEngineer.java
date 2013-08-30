@@ -2,49 +2,29 @@ package org.earthsystemcurator.cupid.nuopc.fsml.re;
 
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
-import java.lang.reflect.ParameterizedType;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
+import java.util.Map;
 import java.util.Set;
 
-import org.earthsystemcurator.cupid.nuopc.fsml.nuopc.Model;
-import org.earthsystemcurator.cupid.nuopc.fsml.nuopc.ModelImplementsSetServices;
+import org.earthsystemcurator.cupid.nuopc.fsml.nuopc.NUOPCModel;
 import org.earthsystemcurator.cupid.nuopc.fsml.nuopc.NUOPCFactory;
-import org.earthsystemcurator.cupid.nuopc.fsml.nuopc.NUOPCPackage;
 import org.earthsystemcurator.cupid.nuopc.fsml.util.CodeQuery;
+import org.earthsystemcurator.cupid.nuopc.fsml.util.Regex;
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.ecore.EAnnotation;
 import org.eclipse.emf.ecore.EClass;
-import org.eclipse.emf.ecore.EClassifier;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EStructuralFeature;
-import org.eclipse.ocl.OCL;
-import org.eclipse.ocl.ParserException;
-import org.eclipse.ocl.Query;
-import org.eclipse.ocl.ecore.Constraint;
-import org.eclipse.ocl.ecore.EcoreEnvironmentFactory;
-import org.eclipse.ocl.expressions.OCLExpression;
-import org.eclipse.ocl.helper.OCLHelper;
 import org.eclipse.photran.core.IFortranAST;
-import org.eclipse.photran.internal.core.analysis.types.DerivedType;
-import org.eclipse.photran.internal.core.analysis.types.Type;
-import org.eclipse.photran.internal.core.parser.ASTCallStmtNode;
-import org.eclipse.photran.internal.core.parser.ASTIntConstNode;
 import org.eclipse.photran.internal.core.parser.ASTModuleNode;
-import org.eclipse.photran.internal.core.parser.ASTSubroutineArgNode;
-import org.eclipse.photran.internal.core.parser.ASTSubroutineSubprogramNode;
-import org.eclipse.photran.internal.core.parser.ASTVisitor;
 import org.eclipse.photran.internal.core.parser.IASTNode;
-import org.eclipse.photran.internal.core.parser.IASTVisitor;
 
 @SuppressWarnings("restriction")
 public class ReverseEngineer {
 
 	
-	public Model reverse(IFortranAST ast) {
+	public NUOPCModel reverse(IFortranAST ast) {
 		//bootstrap process
-		Model m =  NUOPCFactory.eINSTANCE.createModel();
+		NUOPCModel m =  NUOPCFactory.eINSTANCE.createNUOPCModel();
 
 		ASTModuleNode contextNode = ast.getRoot().findFirst(ASTModuleNode.class);
 		return reverseContext(contextNode, m);
@@ -115,34 +95,32 @@ public class ReverseEngineer {
 			
 			
 			/*********** OCL **************/
-			
-			
-			String sfQuery = anot.getDetails().get("query");
-			//if (sfQuery == null || sfQuery.trim().equals("")) {
-			//	continue;
-			//}
-			
-			//System.out.println("\tquery = " + sfQuery);
-			
-			
-			
-			//String[] params = null;
-			//if (sfQuerySplit.length == 2) {
-			//	params = sfQuerySplit[1].split(",");
-			//	for (int i=0; i<params.length; i++) {
-			//		params[i] = params[i].trim();
-			//	}
-			//}
 						
-			if (sfQuery != null) {
+			String sfMapping = anot.getDetails().get("mapping");
+			
+			if (sfMapping != null) {
 				
 				//just handles one parameter for now
-				String[] sfQuerySplit = sfQuery.split("\\s*:\\s*");
-				String methodName = sfQuerySplit[0].trim();
-				String params = null;
-				if (sfQuerySplit.length==2)
-					params = sfQuerySplit[1].trim();
 				
+				//String[] sfQuerySplit = sfQuery.split("\\s*:\\s*");
+				//String methodName = sfQuerySplit[0].trim();
+				//String params = null;
+				//if (sfQuerySplit.length==2)
+				//	params = sfQuerySplit[1].trim();
+				
+				Map<String, Object> keywordMap = Regex.parseMappingExpression(sfMapping);
+				String methodName = null;
+				if (keywordMap.size() > 0) {
+					//by default, first parameter keyword determines code query
+					methodName = (String) keywordMap.keySet().toArray()[0];
+				}
+				
+				//System.out.println("Query map:");
+				//for (String k : queryMap.keySet().toArray(arg0)) {
+					//if (methodName == null) methodName = k;
+					//System.out.println("\t " + k + " --> " + queryMap.get(k));
+				//}
+								
 				for (Method method : CodeQuery.class.getMethods()) {
 					
 					if (method.getName().equals(methodName)) {
@@ -157,8 +135,8 @@ public class ReverseEngineer {
 						try {
 							
 							Object result;
-							if (params != null) {
-								result = method.invoke(null, contextNode, params);
+							if (method.getParameterTypes().length == 2) {
+								result = method.invoke(null, contextNode, keywordMap);
 							}
 							else {
 								result = method.invoke(null, contextNode);
@@ -200,6 +178,7 @@ public class ReverseEngineer {
 											el.remove(newModelElem);
 										}
 										else {
+											//consider replacing with previous value
 											modelElem.eUnset(sf);
 										}
 									}
@@ -259,83 +238,5 @@ public class ReverseEngineer {
 		return modelElem;
 	}
 	
-	public Model reverse2 (IFortranAST ast) {
-		
-		final Model m =  NUOPCFactory.eINSTANCE.createModel();
-		
-		IASTVisitor revisit = new ASTVisitor() {
-						
-//			@Override
-//			public void visitASTNode(IASTNode node) {
-//				System.out.println("Visited a node: " + node);
-//			}
-			
-			@Override
-			public void visitASTModuleNode(ASTModuleNode node) {
-				System.out.println("Start ==> Visited a module node: " + node.getName());
-				m.setName(node.getName());
-				super.visitASTModuleNode(node);
-				
-				// sort candidates
-				//List<ModelImplementsSetServices> l = new ArrayList<ModelImplementsSetServices>(m.getImplementsSetServices());
-				//Collections.list(m.getDefinesSetServices());
-				//Collections.sort(l);
-				//Collections.reverse(l);
-				//m.getImplementsSetServices().clear();
-				//m.getImplementsSetServices().addAll(l);
-				
-				System.out.println("End ==> Visited a module node: " + node.getName());
-			}
-			
-			@Override
-			public void visitASTSubroutineSubprogramNode(ASTSubroutineSubprogramNode node) {
-				//System.out.println("Start ==> Visited a subroutine subprogram node: " + node.getName());		
-				
-				ModelImplementsSetServices mdss = NUOPCFactory.eINSTANCE.createModelImplementsSetServices();
-				mdss.setName(node.getName());
-				//m.getImplementsSetServices().add(mdss);
-				
-				mdss.setParameters(false);		
-				if (CodeQuery.matchesParamTypes(node, new DerivedType("ESMF_GridComp"), Type.INTEGER)) {
-					mdss.setParameters(true);
-				}
-				
-				mdss.setCallsGenericSetServices(false);		
-				if (CodeQuery.calls(node, "routine_SetServices")) {
-					mdss.setCallsGenericSetServices(true);					
-				}
-								
-				mdss.setCallsSetEntryPointPhase1(false);
-				mdss.setCallsSetEntryPointPhase2(false);
-				
-				Set<ASTCallStmtNode> calls = CodeQuery.getCallStatement(node, "ESMF_GridCompSetEntryPoint");		
-				for (ASTCallStmtNode csn : calls) {
-					for (ASTSubroutineArgNode san : csn.getArgList()) {												
-						if (san.getName() != null && san.getName().getText().equalsIgnoreCase("phase")) {
-							if (san.getExpr() != null && san.getExpr() instanceof ASTIntConstNode) {								
-							
-								if (((ASTIntConstNode) san.getExpr()).getIntConst().getText().equals("1")) {
-									mdss.setCallsSetEntryPointPhase1(true);
-								}
-								else if (((ASTIntConstNode) san.getExpr()).getIntConst().getText().equals("2")) {
-									mdss.setCallsSetEntryPointPhase2(true);
-								}
-															
-							}							
-						}						
-					}
-				}
-				
-				//super.visitASTSubroutineSubprogramNode(node);
-				//System.out.println("End ==> Visited a subroutine subprogram node: " + node.getName());	
-			}					
-			
-		};
-		
-		ast.accept(revisit);
-		
-		return m;
-		
-	}
-	
+
 }

@@ -20,7 +20,7 @@ import org.eclipse.emf.ecore.EObject;
  * </p>
  *
  * @see org.earthsystemcurator.cupid.nuopc.fsml.nuopc.NUOPCPackage#getRealizesImportField()
- * @model
+ * @model annotation="http://www.earthsystemcog.org/projects/nuopc mapping='call: NUOPC_StateRealizeField'"
  * @generated
  */
 public interface RealizesImportField extends EObject {
@@ -64,7 +64,7 @@ public interface RealizesImportField extends EObject {
 	 * @see #setRealizedInState(String)
 	 * @see org.earthsystemcurator.cupid.nuopc.fsml.nuopc.NUOPCPackage#getRealizesImportField_RealizedInState()
 	 * @model required="true"
-	 *        annotation="http://www.earthsystemcog.org/projects/nuopc query='argByIndex: 1'"
+	 *        annotation="http://www.earthsystemcog.org/projects/nuopc mapping='argByIndex: 1'"
 	 * @generated
 	 */
 	String getRealizedInState();
@@ -118,7 +118,7 @@ public interface RealizesImportField extends EObject {
 	 * @return the value of the '<em>Field</em>' attribute.
 	 * @see #setField(String)
 	 * @see org.earthsystemcurator.cupid.nuopc.fsml.nuopc.NUOPCPackage#getRealizesImportField_Field()
-	 * @model annotation="http://www.earthsystemcog.org/projects/nuopc query='argByIndex: 2'"
+	 * @model annotation="http://www.earthsystemcog.org/projects/nuopc mapping='argByIndex: 2'"
 	 * @generated
 	 */
 	String getField();

@@ -56,7 +56,7 @@ public class NUOPCFactoryImpl extends EFactoryImpl implements NUOPCFactory {
 	@Override
 	public EObject create(EClass eClass) {
 		switch (eClass.getClassifierID()) {
-			case NUOPCPackage.MODEL: return createModel();
+			case NUOPCPackage.NUOPC_MODEL: return createNUOPCModel();
 			case NUOPCPackage.MODEL_IMPLEMENTS_SET_SERVICES: return createModelImplementsSetServices();
 			case NUOPCPackage.MODEL_IMPLEMENTS_INIT_P1: return createModelImplementsInitP1();
 			case NUOPCPackage.MODEL_IMPLEMENTS_INIT_P2: return createModelImplementsInitP2();
@@ -66,6 +66,8 @@ public class NUOPCFactoryImpl extends EFactoryImpl implements NUOPCFactory {
 			case NUOPCPackage.REALIZES_EXPORT_FIELD: return createRealizesExportField();
 			case NUOPCPackage.ATTACHES_MODEL_ADVANCE: return createAttachesModelAdvance();
 			case NUOPCPackage.MODEL_ADVANCE: return createModelAdvance();
+			case NUOPCPackage.NUOPC_DRIVER: return createNUOPCDriver();
+			case NUOPCPackage.NUOPC_APPLICATION: return createNUOPCApplication();
 			default:
 				throw new IllegalArgumentException("The class '" + eClass.getName() + "' is not a valid classifier");
 		}
@@ -76,9 +78,9 @@ public class NUOPCFactoryImpl extends EFactoryImpl implements NUOPCFactory {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public Model createModel() {
-		ModelImpl model = new ModelImpl();
-		return model;
+	public NUOPCModel createNUOPCModel() {
+		NUOPCModelImpl nuopcModel = new NUOPCModelImpl();
+		return nuopcModel;
 	}
 
 	/**
@@ -169,6 +171,26 @@ public class NUOPCFactoryImpl extends EFactoryImpl implements NUOPCFactory {
 	public ModelAdvance createModelAdvance() {
 		ModelAdvanceImpl modelAdvance = new ModelAdvanceImpl();
 		return modelAdvance;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public NUOPCDriver createNUOPCDriver() {
+		NUOPCDriverImpl nuopcDriver = new NUOPCDriverImpl();
+		return nuopcDriver;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public NUOPCApplication createNUOPCApplication() {
+		NUOPCApplicationImpl nuopcApplication = new NUOPCApplicationImpl();
+		return nuopcApplication;
 	}
 
 	/**

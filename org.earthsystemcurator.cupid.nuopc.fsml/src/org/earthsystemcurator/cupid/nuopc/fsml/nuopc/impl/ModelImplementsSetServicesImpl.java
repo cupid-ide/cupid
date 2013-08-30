@@ -3,8 +3,8 @@
 package org.earthsystemcurator.cupid.nuopc.fsml.nuopc.impl;
 
 import org.earthsystemcurator.cupid.nuopc.fsml.nuopc.AttachesModelAdvance;
-import org.earthsystemcurator.cupid.nuopc.fsml.nuopc.Model;
 import org.earthsystemcurator.cupid.nuopc.fsml.nuopc.ModelImplementsSetServices;
+import org.earthsystemcurator.cupid.nuopc.fsml.nuopc.NUOPCModel;
 import org.earthsystemcurator.cupid.nuopc.fsml.nuopc.NUOPCPackage;
 
 import org.eclipse.emf.common.notify.Notification;
@@ -26,9 +26,8 @@ import org.eclipse.emf.ecore.util.EcoreUtil;
  * <ul>
  *   <li>{@link org.earthsystemcurator.cupid.nuopc.fsml.nuopc.impl.ModelImplementsSetServicesImpl#getParent <em>Parent</em>}</li>
  *   <li>{@link org.earthsystemcurator.cupid.nuopc.fsml.nuopc.impl.ModelImplementsSetServicesImpl#getName <em>Name</em>}</li>
- *   <li>{@link org.earthsystemcurator.cupid.nuopc.fsml.nuopc.impl.ModelImplementsSetServicesImpl#isParameters <em>Parameters</em>}</li>
- *   <li>{@link org.earthsystemcurator.cupid.nuopc.fsml.nuopc.impl.ModelImplementsSetServicesImpl#getParamName_gcomp <em>Param Name gcomp</em>}</li>
- *   <li>{@link org.earthsystemcurator.cupid.nuopc.fsml.nuopc.impl.ModelImplementsSetServicesImpl#getParamName_rc <em>Param Name rc</em>}</li>
+ *   <li>{@link org.earthsystemcurator.cupid.nuopc.fsml.nuopc.impl.ModelImplementsSetServicesImpl#getParam_gcomp <em>Param gcomp</em>}</li>
+ *   <li>{@link org.earthsystemcurator.cupid.nuopc.fsml.nuopc.impl.ModelImplementsSetServicesImpl#getParam_rc <em>Param rc</em>}</li>
  *   <li>{@link org.earthsystemcurator.cupid.nuopc.fsml.nuopc.impl.ModelImplementsSetServicesImpl#isCallsGenericSetServices <em>Calls Generic Set Services</em>}</li>
  *   <li>{@link org.earthsystemcurator.cupid.nuopc.fsml.nuopc.impl.ModelImplementsSetServicesImpl#isCallsSetEntryPointPhase1 <em>Calls Set Entry Point Phase1</em>}</li>
  *   <li>{@link org.earthsystemcurator.cupid.nuopc.fsml.nuopc.impl.ModelImplementsSetServicesImpl#isCallsSetEntryPointPhase2 <em>Calls Set Entry Point Phase2</em>}</li>
@@ -47,7 +46,7 @@ public class ModelImplementsSetServicesImpl extends EObjectImpl implements Model
 	 * @generated
 	 * @ordered
 	 */
-	protected static final String NAME_EDEFAULT = null;
+	protected static final String NAME_EDEFAULT = "SetServicesDefault";
 
 	/**
 	 * The cached value of the '{@link #getName() <em>Name</em>}' attribute.
@@ -60,64 +59,44 @@ public class ModelImplementsSetServicesImpl extends EObjectImpl implements Model
 	protected String name = NAME_EDEFAULT;
 
 	/**
-	 * The default value of the '{@link #isParameters() <em>Parameters</em>}' attribute.
+	 * The default value of the '{@link #getParam_gcomp() <em>Param gcomp</em>}' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @see #isParameters()
+	 * @see #getParam_gcomp()
 	 * @generated
 	 * @ordered
 	 */
-	protected static final boolean PARAMETERS_EDEFAULT = false;
+	protected static final String PARAM_GCOMP_EDEFAULT = "gcompDefault";
 
 	/**
-	 * The cached value of the '{@link #isParameters() <em>Parameters</em>}' attribute.
+	 * The cached value of the '{@link #getParam_gcomp() <em>Param gcomp</em>}' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @see #isParameters()
+	 * @see #getParam_gcomp()
 	 * @generated
 	 * @ordered
 	 */
-	protected boolean parameters = PARAMETERS_EDEFAULT;
+	protected String param_gcomp = PARAM_GCOMP_EDEFAULT;
 
 	/**
-	 * The default value of the '{@link #getParamName_gcomp() <em>Param Name gcomp</em>}' attribute.
+	 * The default value of the '{@link #getParam_rc() <em>Param rc</em>}' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @see #getParamName_gcomp()
+	 * @see #getParam_rc()
 	 * @generated
 	 * @ordered
 	 */
-	protected static final String PARAM_NAME_GCOMP_EDEFAULT = null;
+	protected static final String PARAM_RC_EDEFAULT = "rcDefault";
 
 	/**
-	 * The cached value of the '{@link #getParamName_gcomp() <em>Param Name gcomp</em>}' attribute.
+	 * The cached value of the '{@link #getParam_rc() <em>Param rc</em>}' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @see #getParamName_gcomp()
+	 * @see #getParam_rc()
 	 * @generated
 	 * @ordered
 	 */
-	protected String paramName_gcomp = PARAM_NAME_GCOMP_EDEFAULT;
-
-	/**
-	 * The default value of the '{@link #getParamName_rc() <em>Param Name rc</em>}' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @see #getParamName_rc()
-	 * @generated
-	 * @ordered
-	 */
-	protected static final String PARAM_NAME_RC_EDEFAULT = null;
-
-	/**
-	 * The cached value of the '{@link #getParamName_rc() <em>Param Name rc</em>}' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @see #getParamName_rc()
-	 * @generated
-	 * @ordered
-	 */
-	protected String paramName_rc = PARAM_NAME_RC_EDEFAULT;
+	protected String param_rc = PARAM_RC_EDEFAULT;
 
 	/**
 	 * The default value of the '{@link #isCallsGenericSetServices() <em>Calls Generic Set Services</em>}' attribute.
@@ -213,9 +192,9 @@ public class ModelImplementsSetServicesImpl extends EObjectImpl implements Model
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public Model getParent() {
+	public NUOPCModel getParent() {
 		if (eContainerFeatureID() != NUOPCPackage.MODEL_IMPLEMENTS_SET_SERVICES__PARENT) return null;
-		return (Model)eInternalContainer();
+		return (NUOPCModel)eInternalContainer();
 	}
 
 	/**
@@ -223,7 +202,7 @@ public class ModelImplementsSetServicesImpl extends EObjectImpl implements Model
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public NotificationChain basicSetParent(Model newParent, NotificationChain msgs) {
+	public NotificationChain basicSetParent(NUOPCModel newParent, NotificationChain msgs) {
 		msgs = eBasicSetContainer((InternalEObject)newParent, NUOPCPackage.MODEL_IMPLEMENTS_SET_SERVICES__PARENT, msgs);
 		return msgs;
 	}
@@ -233,7 +212,7 @@ public class ModelImplementsSetServicesImpl extends EObjectImpl implements Model
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public void setParent(Model newParent) {
+	public void setParent(NUOPCModel newParent) {
 		if (newParent != eInternalContainer() || (eContainerFeatureID() != NUOPCPackage.MODEL_IMPLEMENTS_SET_SERVICES__PARENT && newParent != null)) {
 			if (EcoreUtil.isAncestor(this, newParent))
 				throw new IllegalArgumentException("Recursive containment not allowed for " + toString());
@@ -241,7 +220,7 @@ public class ModelImplementsSetServicesImpl extends EObjectImpl implements Model
 			if (eInternalContainer() != null)
 				msgs = eBasicRemoveFromContainer(msgs);
 			if (newParent != null)
-				msgs = ((InternalEObject)newParent).eInverseAdd(this, NUOPCPackage.MODEL__IMPLEMENTS_SET_SERVICES, Model.class, msgs);
+				msgs = ((InternalEObject)newParent).eInverseAdd(this, NUOPCPackage.NUOPC_MODEL__IMPLEMENTS_SET_SERVICES, NUOPCModel.class, msgs);
 			msgs = basicSetParent(newParent, msgs);
 			if (msgs != null) msgs.dispatch();
 		}
@@ -275,8 +254,8 @@ public class ModelImplementsSetServicesImpl extends EObjectImpl implements Model
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public boolean isParameters() {
-		return parameters;
+	public String getParam_gcomp() {
+		return param_gcomp;
 	}
 
 	/**
@@ -284,11 +263,11 @@ public class ModelImplementsSetServicesImpl extends EObjectImpl implements Model
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public void setParameters(boolean newParameters) {
-		boolean oldParameters = parameters;
-		parameters = newParameters;
+	public void setParam_gcomp(String newParam_gcomp) {
+		String oldParam_gcomp = param_gcomp;
+		param_gcomp = newParam_gcomp;
 		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, NUOPCPackage.MODEL_IMPLEMENTS_SET_SERVICES__PARAMETERS, oldParameters, parameters));
+			eNotify(new ENotificationImpl(this, Notification.SET, NUOPCPackage.MODEL_IMPLEMENTS_SET_SERVICES__PARAM_GCOMP, oldParam_gcomp, param_gcomp));
 	}
 
 	/**
@@ -296,8 +275,8 @@ public class ModelImplementsSetServicesImpl extends EObjectImpl implements Model
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public String getParamName_gcomp() {
-		return paramName_gcomp;
+	public String getParam_rc() {
+		return param_rc;
 	}
 
 	/**
@@ -305,32 +284,11 @@ public class ModelImplementsSetServicesImpl extends EObjectImpl implements Model
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public void setParamName_gcomp(String newParamName_gcomp) {
-		String oldParamName_gcomp = paramName_gcomp;
-		paramName_gcomp = newParamName_gcomp;
+	public void setParam_rc(String newParam_rc) {
+		String oldParam_rc = param_rc;
+		param_rc = newParam_rc;
 		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, NUOPCPackage.MODEL_IMPLEMENTS_SET_SERVICES__PARAM_NAME_GCOMP, oldParamName_gcomp, paramName_gcomp));
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public String getParamName_rc() {
-		return paramName_rc;
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public void setParamName_rc(String newParamName_rc) {
-		String oldParamName_rc = paramName_rc;
-		paramName_rc = newParamName_rc;
-		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, NUOPCPackage.MODEL_IMPLEMENTS_SET_SERVICES__PARAM_NAME_RC, oldParamName_rc, paramName_rc));
+			eNotify(new ENotificationImpl(this, Notification.SET, NUOPCPackage.MODEL_IMPLEMENTS_SET_SERVICES__PARAM_RC, oldParam_rc, param_rc));
 	}
 
 	/**
@@ -450,7 +408,7 @@ public class ModelImplementsSetServicesImpl extends EObjectImpl implements Model
 			case NUOPCPackage.MODEL_IMPLEMENTS_SET_SERVICES__PARENT:
 				if (eInternalContainer() != null)
 					msgs = eBasicRemoveFromContainer(msgs);
-				return basicSetParent((Model)otherEnd, msgs);
+				return basicSetParent((NUOPCModel)otherEnd, msgs);
 			case NUOPCPackage.MODEL_IMPLEMENTS_SET_SERVICES__ATTACHES_MODEL_ADVANCE:
 				if (attachesModelAdvance != null)
 					msgs = ((InternalEObject)attachesModelAdvance).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - NUOPCPackage.MODEL_IMPLEMENTS_SET_SERVICES__ATTACHES_MODEL_ADVANCE, null, msgs);
@@ -484,7 +442,7 @@ public class ModelImplementsSetServicesImpl extends EObjectImpl implements Model
 	public NotificationChain eBasicRemoveFromContainerFeature(NotificationChain msgs) {
 		switch (eContainerFeatureID()) {
 			case NUOPCPackage.MODEL_IMPLEMENTS_SET_SERVICES__PARENT:
-				return eInternalContainer().eInverseRemove(this, NUOPCPackage.MODEL__IMPLEMENTS_SET_SERVICES, Model.class, msgs);
+				return eInternalContainer().eInverseRemove(this, NUOPCPackage.NUOPC_MODEL__IMPLEMENTS_SET_SERVICES, NUOPCModel.class, msgs);
 		}
 		return super.eBasicRemoveFromContainerFeature(msgs);
 	}
@@ -501,12 +459,10 @@ public class ModelImplementsSetServicesImpl extends EObjectImpl implements Model
 				return getParent();
 			case NUOPCPackage.MODEL_IMPLEMENTS_SET_SERVICES__NAME:
 				return getName();
-			case NUOPCPackage.MODEL_IMPLEMENTS_SET_SERVICES__PARAMETERS:
-				return isParameters();
-			case NUOPCPackage.MODEL_IMPLEMENTS_SET_SERVICES__PARAM_NAME_GCOMP:
-				return getParamName_gcomp();
-			case NUOPCPackage.MODEL_IMPLEMENTS_SET_SERVICES__PARAM_NAME_RC:
-				return getParamName_rc();
+			case NUOPCPackage.MODEL_IMPLEMENTS_SET_SERVICES__PARAM_GCOMP:
+				return getParam_gcomp();
+			case NUOPCPackage.MODEL_IMPLEMENTS_SET_SERVICES__PARAM_RC:
+				return getParam_rc();
 			case NUOPCPackage.MODEL_IMPLEMENTS_SET_SERVICES__CALLS_GENERIC_SET_SERVICES:
 				return isCallsGenericSetServices();
 			case NUOPCPackage.MODEL_IMPLEMENTS_SET_SERVICES__CALLS_SET_ENTRY_POINT_PHASE1:
@@ -528,19 +484,16 @@ public class ModelImplementsSetServicesImpl extends EObjectImpl implements Model
 	public void eSet(int featureID, Object newValue) {
 		switch (featureID) {
 			case NUOPCPackage.MODEL_IMPLEMENTS_SET_SERVICES__PARENT:
-				setParent((Model)newValue);
+				setParent((NUOPCModel)newValue);
 				return;
 			case NUOPCPackage.MODEL_IMPLEMENTS_SET_SERVICES__NAME:
 				setName((String)newValue);
 				return;
-			case NUOPCPackage.MODEL_IMPLEMENTS_SET_SERVICES__PARAMETERS:
-				setParameters((Boolean)newValue);
+			case NUOPCPackage.MODEL_IMPLEMENTS_SET_SERVICES__PARAM_GCOMP:
+				setParam_gcomp((String)newValue);
 				return;
-			case NUOPCPackage.MODEL_IMPLEMENTS_SET_SERVICES__PARAM_NAME_GCOMP:
-				setParamName_gcomp((String)newValue);
-				return;
-			case NUOPCPackage.MODEL_IMPLEMENTS_SET_SERVICES__PARAM_NAME_RC:
-				setParamName_rc((String)newValue);
+			case NUOPCPackage.MODEL_IMPLEMENTS_SET_SERVICES__PARAM_RC:
+				setParam_rc((String)newValue);
 				return;
 			case NUOPCPackage.MODEL_IMPLEMENTS_SET_SERVICES__CALLS_GENERIC_SET_SERVICES:
 				setCallsGenericSetServices((Boolean)newValue);
@@ -567,19 +520,16 @@ public class ModelImplementsSetServicesImpl extends EObjectImpl implements Model
 	public void eUnset(int featureID) {
 		switch (featureID) {
 			case NUOPCPackage.MODEL_IMPLEMENTS_SET_SERVICES__PARENT:
-				setParent((Model)null);
+				setParent((NUOPCModel)null);
 				return;
 			case NUOPCPackage.MODEL_IMPLEMENTS_SET_SERVICES__NAME:
 				setName(NAME_EDEFAULT);
 				return;
-			case NUOPCPackage.MODEL_IMPLEMENTS_SET_SERVICES__PARAMETERS:
-				setParameters(PARAMETERS_EDEFAULT);
+			case NUOPCPackage.MODEL_IMPLEMENTS_SET_SERVICES__PARAM_GCOMP:
+				setParam_gcomp(PARAM_GCOMP_EDEFAULT);
 				return;
-			case NUOPCPackage.MODEL_IMPLEMENTS_SET_SERVICES__PARAM_NAME_GCOMP:
-				setParamName_gcomp(PARAM_NAME_GCOMP_EDEFAULT);
-				return;
-			case NUOPCPackage.MODEL_IMPLEMENTS_SET_SERVICES__PARAM_NAME_RC:
-				setParamName_rc(PARAM_NAME_RC_EDEFAULT);
+			case NUOPCPackage.MODEL_IMPLEMENTS_SET_SERVICES__PARAM_RC:
+				setParam_rc(PARAM_RC_EDEFAULT);
 				return;
 			case NUOPCPackage.MODEL_IMPLEMENTS_SET_SERVICES__CALLS_GENERIC_SET_SERVICES:
 				setCallsGenericSetServices(CALLS_GENERIC_SET_SERVICES_EDEFAULT);
@@ -609,12 +559,10 @@ public class ModelImplementsSetServicesImpl extends EObjectImpl implements Model
 				return getParent() != null;
 			case NUOPCPackage.MODEL_IMPLEMENTS_SET_SERVICES__NAME:
 				return NAME_EDEFAULT == null ? name != null : !NAME_EDEFAULT.equals(name);
-			case NUOPCPackage.MODEL_IMPLEMENTS_SET_SERVICES__PARAMETERS:
-				return parameters != PARAMETERS_EDEFAULT;
-			case NUOPCPackage.MODEL_IMPLEMENTS_SET_SERVICES__PARAM_NAME_GCOMP:
-				return PARAM_NAME_GCOMP_EDEFAULT == null ? paramName_gcomp != null : !PARAM_NAME_GCOMP_EDEFAULT.equals(paramName_gcomp);
-			case NUOPCPackage.MODEL_IMPLEMENTS_SET_SERVICES__PARAM_NAME_RC:
-				return PARAM_NAME_RC_EDEFAULT == null ? paramName_rc != null : !PARAM_NAME_RC_EDEFAULT.equals(paramName_rc);
+			case NUOPCPackage.MODEL_IMPLEMENTS_SET_SERVICES__PARAM_GCOMP:
+				return PARAM_GCOMP_EDEFAULT == null ? param_gcomp != null : !PARAM_GCOMP_EDEFAULT.equals(param_gcomp);
+			case NUOPCPackage.MODEL_IMPLEMENTS_SET_SERVICES__PARAM_RC:
+				return PARAM_RC_EDEFAULT == null ? param_rc != null : !PARAM_RC_EDEFAULT.equals(param_rc);
 			case NUOPCPackage.MODEL_IMPLEMENTS_SET_SERVICES__CALLS_GENERIC_SET_SERVICES:
 				return callsGenericSetServices != CALLS_GENERIC_SET_SERVICES_EDEFAULT;
 			case NUOPCPackage.MODEL_IMPLEMENTS_SET_SERVICES__CALLS_SET_ENTRY_POINT_PHASE1:
@@ -639,12 +587,10 @@ public class ModelImplementsSetServicesImpl extends EObjectImpl implements Model
 		StringBuffer result = new StringBuffer(super.toString());
 		result.append(" (name: ");
 		result.append(name);
-		result.append(", parameters: ");
-		result.append(parameters);
-		result.append(", paramName_gcomp: ");
-		result.append(paramName_gcomp);
-		result.append(", paramName_rc: ");
-		result.append(paramName_rc);
+		result.append(", param_gcomp: ");
+		result.append(param_gcomp);
+		result.append(", param_rc: ");
+		result.append(param_rc);
 		result.append(", callsGenericSetServices: ");
 		result.append(callsGenericSetServices);
 		result.append(", callsSetEntryPointPhase1: ");

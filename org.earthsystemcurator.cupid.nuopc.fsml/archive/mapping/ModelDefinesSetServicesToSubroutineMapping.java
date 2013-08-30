@@ -104,24 +104,25 @@ public class ModelDefinesSetServicesToSubroutineMapping extends Mapping<ModelImp
 	
 	protected boolean reverseParameters() {
 		if (CodeQuery.matchesParamTypes(astElem, new DerivedType("ESMF_GridComp"), Type.INTEGER)) {
-			modelElem.setParameters(true);
+			//modelElem.setParameters(true);
 			return true;
 		}
 		else {
-			modelElem.setParameters(false);
+			//modelElem.setParameters(false);
 			return false;
 		}
 	}
 	
 	protected boolean reverseCallsGenericSetServices() {
-		if (CodeQuery.calls(astElem, "routine_SetServices")) {
-			modelElem.setCallsGenericSetServices(true);
-			return true;
-		}
-		else {
-			modelElem.setCallsGenericSetServices(false);
-			return false;
-		}
+		//if (CodeQuery.calls(astElem, "routine_SetServices")) {
+		//	modelElem.setCallsGenericSetServices(true);
+		//	return true;
+		//}
+		//else {
+		//	modelElem.setCallsGenericSetServices(false);
+		//	return false;
+		//}
+		return false;
 	}
 	
 	protected boolean reverseCallsSetEntryPointPhase1() {
@@ -210,15 +211,14 @@ public class ModelDefinesSetServicesToSubroutineMapping extends Mapping<ModelImp
 	
 	@Override
 	protected int score() {
-		 return (modelElem.isParameters() ? 1 : 0) +
-				(modelElem.isCallsGenericSetServices() ? 1 : 0) +
+		 return (modelElem.isCallsGenericSetServices() ? 1 : 0) +
 				(modelElem.isCallsSetEntryPointPhase1() ? 1 : 0) +
 				(modelElem.isCallsSetEntryPointPhase2() ? 1 : 0);
 	}
 	
 	@Override
 	protected boolean certain() {
-		return modelElem.isParameters() && modelElem.isCallsGenericSetServices();
+		return modelElem.isCallsGenericSetServices();
 	}
 	
 	public String toString() {
@@ -284,7 +284,7 @@ public class ModelDefinesSetServicesToSubroutineMapping extends Mapping<ModelImp
 	
 	protected void forwardParameters() {
 		
-		if (modelElem.isParameters()) {
+		if (true) {
 			
 			//ensure parameters are correct, if not change them
 			
@@ -322,7 +322,7 @@ public class ModelDefinesSetServicesToSubroutineMapping extends Mapping<ModelImp
 		if (modelElem.isCallsGenericSetServices()) {
 			
 			/* do we need to check this -- or will it only be called when forwarding is necessary? */
-			if (!CodeQuery.calls(astElem, "routine_SetServices")) {
+			if (true) {
 				
 				//retrieve parameter names
 				String param1 = "gcomp";

@@ -14,9 +14,8 @@ import org.eclipse.emf.ecore.EObject;
  * <ul>
  *   <li>{@link org.earthsystemcurator.cupid.nuopc.fsml.nuopc.ModelImplementsSetServices#getParent <em>Parent</em>}</li>
  *   <li>{@link org.earthsystemcurator.cupid.nuopc.fsml.nuopc.ModelImplementsSetServices#getName <em>Name</em>}</li>
- *   <li>{@link org.earthsystemcurator.cupid.nuopc.fsml.nuopc.ModelImplementsSetServices#isParameters <em>Parameters</em>}</li>
- *   <li>{@link org.earthsystemcurator.cupid.nuopc.fsml.nuopc.ModelImplementsSetServices#getParamName_gcomp <em>Param Name gcomp</em>}</li>
- *   <li>{@link org.earthsystemcurator.cupid.nuopc.fsml.nuopc.ModelImplementsSetServices#getParamName_rc <em>Param Name rc</em>}</li>
+ *   <li>{@link org.earthsystemcurator.cupid.nuopc.fsml.nuopc.ModelImplementsSetServices#getParam_gcomp <em>Param gcomp</em>}</li>
+ *   <li>{@link org.earthsystemcurator.cupid.nuopc.fsml.nuopc.ModelImplementsSetServices#getParam_rc <em>Param rc</em>}</li>
  *   <li>{@link org.earthsystemcurator.cupid.nuopc.fsml.nuopc.ModelImplementsSetServices#isCallsGenericSetServices <em>Calls Generic Set Services</em>}</li>
  *   <li>{@link org.earthsystemcurator.cupid.nuopc.fsml.nuopc.ModelImplementsSetServices#isCallsSetEntryPointPhase1 <em>Calls Set Entry Point Phase1</em>}</li>
  *   <li>{@link org.earthsystemcurator.cupid.nuopc.fsml.nuopc.ModelImplementsSetServices#isCallsSetEntryPointPhase2 <em>Calls Set Entry Point Phase2</em>}</li>
@@ -25,13 +24,13 @@ import org.eclipse.emf.ecore.EObject;
  * </p>
  *
  * @see org.earthsystemcurator.cupid.nuopc.fsml.nuopc.NUOPCPackage#getModelImplementsSetServices()
- * @model
+ * @model annotation="http://www.earthsystemcog.org/projects/nuopc mapping='subroutine: \"*(type(ESMF_GridComp), integer)\"'"
  * @generated
  */
 public interface ModelImplementsSetServices extends EObject {
 	/**
 	 * Returns the value of the '<em><b>Parent</b></em>' container reference.
-	 * It is bidirectional and its opposite is '{@link org.earthsystemcurator.cupid.nuopc.fsml.nuopc.Model#getImplementsSetServices <em>Implements Set Services</em>}'.
+	 * It is bidirectional and its opposite is '{@link org.earthsystemcurator.cupid.nuopc.fsml.nuopc.NUOPCModel#getImplementsSetServices <em>Implements Set Services</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <p>
 	 * If the meaning of the '<em>Parent</em>' container reference isn't clear,
@@ -39,13 +38,13 @@ public interface ModelImplementsSetServices extends EObject {
 	 * </p>
 	 * <!-- end-user-doc -->
 	 * @return the value of the '<em>Parent</em>' container reference.
-	 * @see #setParent(Model)
+	 * @see #setParent(NUOPCModel)
 	 * @see org.earthsystemcurator.cupid.nuopc.fsml.nuopc.NUOPCPackage#getModelImplementsSetServices_Parent()
-	 * @see org.earthsystemcurator.cupid.nuopc.fsml.nuopc.Model#getImplementsSetServices
+	 * @see org.earthsystemcurator.cupid.nuopc.fsml.nuopc.NUOPCModel#getImplementsSetServices
 	 * @model opposite="implementsSetServices" required="true" transient="false"
 	 * @generated
 	 */
-	Model getParent();
+	NUOPCModel getParent();
 
 	/**
 	 * Sets the value of the '{@link org.earthsystemcurator.cupid.nuopc.fsml.nuopc.ModelImplementsSetServices#getParent <em>Parent</em>}' container reference.
@@ -55,10 +54,11 @@ public interface ModelImplementsSetServices extends EObject {
 	 * @see #getParent()
 	 * @generated
 	 */
-	void setParent(Model value);
+	void setParent(NUOPCModel value);
 
 	/**
 	 * Returns the value of the '<em><b>Name</b></em>' attribute.
+	 * The default value is <code>"SetServicesDefault"</code>.
 	 * <!-- begin-user-doc -->
 	 * <p>
 	 * If the meaning of the '<em>Name</em>' attribute isn't clear,
@@ -68,8 +68,8 @@ public interface ModelImplementsSetServices extends EObject {
 	 * @return the value of the '<em>Name</em>' attribute.
 	 * @see #setName(String)
 	 * @see org.earthsystemcurator.cupid.nuopc.fsml.nuopc.NUOPCPackage#getModelImplementsSetServices_Name()
-	 * @model id="true" required="true"
-	 *        annotation="http://www.earthsystemcog.org/projects/nuopc query='subroutineName'"
+	 * @model default="SetServicesDefault" id="true" required="true"
+	 *        annotation="http://www.earthsystemcog.org/projects/nuopc mapping='subroutineName'"
 	 * @generated
 	 */
 	String getName();
@@ -85,82 +85,60 @@ public interface ModelImplementsSetServices extends EObject {
 	void setName(String value);
 
 	/**
-	 * Returns the value of the '<em><b>Parameters</b></em>' attribute.
+	 * Returns the value of the '<em><b>Param gcomp</b></em>' attribute.
+	 * The default value is <code>"gcompDefault"</code>.
 	 * <!-- begin-user-doc -->
 	 * <p>
-	 * If the meaning of the '<em>Parameters</em>' attribute isn't clear,
+	 * If the meaning of the '<em>Param gcomp</em>' attribute isn't clear,
 	 * there really should be more of a description here...
 	 * </p>
 	 * <!-- end-user-doc -->
-	 * @return the value of the '<em>Parameters</em>' attribute.
-	 * @see #setParameters(boolean)
-	 * @see org.earthsystemcurator.cupid.nuopc.fsml.nuopc.NUOPCPackage#getModelImplementsSetServices_Parameters()
-	 * @model required="true"
+	 * @return the value of the '<em>Param gcomp</em>' attribute.
+	 * @see #setParam_gcomp(String)
+	 * @see org.earthsystemcurator.cupid.nuopc.fsml.nuopc.NUOPCPackage#getModelImplementsSetServices_Param_gcomp()
+	 * @model default="gcompDefault"
+	 *        annotation="http://www.earthsystemcog.org/projects/nuopc mapping='formalParam: 1'"
 	 * @generated
 	 */
-	boolean isParameters();
+	String getParam_gcomp();
 
 	/**
-	 * Sets the value of the '{@link org.earthsystemcurator.cupid.nuopc.fsml.nuopc.ModelImplementsSetServices#isParameters <em>Parameters</em>}' attribute.
+	 * Sets the value of the '{@link org.earthsystemcurator.cupid.nuopc.fsml.nuopc.ModelImplementsSetServices#getParam_gcomp <em>Param gcomp</em>}' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @param value the new value of the '<em>Parameters</em>' attribute.
-	 * @see #isParameters()
+	 * @param value the new value of the '<em>Param gcomp</em>' attribute.
+	 * @see #getParam_gcomp()
 	 * @generated
 	 */
-	void setParameters(boolean value);
+	void setParam_gcomp(String value);
 
 	/**
-	 * Returns the value of the '<em><b>Param Name gcomp</b></em>' attribute.
+	 * Returns the value of the '<em><b>Param rc</b></em>' attribute.
+	 * The default value is <code>"rcDefault"</code>.
 	 * <!-- begin-user-doc -->
 	 * <p>
-	 * If the meaning of the '<em>Param Name gcomp</em>' attribute isn't clear,
+	 * If the meaning of the '<em>Param rc</em>' attribute isn't clear,
 	 * there really should be more of a description here...
 	 * </p>
 	 * <!-- end-user-doc -->
-	 * @return the value of the '<em>Param Name gcomp</em>' attribute.
-	 * @see #setParamName_gcomp(String)
-	 * @see org.earthsystemcurator.cupid.nuopc.fsml.nuopc.NUOPCPackage#getModelImplementsSetServices_ParamName_gcomp()
-	 * @model
+	 * @return the value of the '<em>Param rc</em>' attribute.
+	 * @see #setParam_rc(String)
+	 * @see org.earthsystemcurator.cupid.nuopc.fsml.nuopc.NUOPCPackage#getModelImplementsSetServices_Param_rc()
+	 * @model default="rcDefault"
+	 *        annotation="http://www.earthsystemcog.org/projects/nuopc mapping='formalParam: 2'"
 	 * @generated
 	 */
-	String getParamName_gcomp();
+	String getParam_rc();
 
 	/**
-	 * Sets the value of the '{@link org.earthsystemcurator.cupid.nuopc.fsml.nuopc.ModelImplementsSetServices#getParamName_gcomp <em>Param Name gcomp</em>}' attribute.
+	 * Sets the value of the '{@link org.earthsystemcurator.cupid.nuopc.fsml.nuopc.ModelImplementsSetServices#getParam_rc <em>Param rc</em>}' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @param value the new value of the '<em>Param Name gcomp</em>' attribute.
-	 * @see #getParamName_gcomp()
+	 * @param value the new value of the '<em>Param rc</em>' attribute.
+	 * @see #getParam_rc()
 	 * @generated
 	 */
-	void setParamName_gcomp(String value);
-
-	/**
-	 * Returns the value of the '<em><b>Param Name rc</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <p>
-	 * If the meaning of the '<em>Param Name rc</em>' attribute isn't clear,
-	 * there really should be more of a description here...
-	 * </p>
-	 * <!-- end-user-doc -->
-	 * @return the value of the '<em>Param Name rc</em>' attribute.
-	 * @see #setParamName_rc(String)
-	 * @see org.earthsystemcurator.cupid.nuopc.fsml.nuopc.NUOPCPackage#getModelImplementsSetServices_ParamName_rc()
-	 * @model
-	 * @generated
-	 */
-	String getParamName_rc();
-
-	/**
-	 * Sets the value of the '{@link org.earthsystemcurator.cupid.nuopc.fsml.nuopc.ModelImplementsSetServices#getParamName_rc <em>Param Name rc</em>}' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @param value the new value of the '<em>Param Name rc</em>' attribute.
-	 * @see #getParamName_rc()
-	 * @generated
-	 */
-	void setParamName_rc(String value);
+	void setParam_rc(String value);
 
 	/**
 	 * Returns the value of the '<em><b>Calls Generic Set Services</b></em>' attribute.
@@ -174,7 +152,7 @@ public interface ModelImplementsSetServices extends EObject {
 	 * @see #setCallsGenericSetServices(boolean)
 	 * @see org.earthsystemcurator.cupid.nuopc.fsml.nuopc.NUOPCPackage#getModelImplementsSetServices_CallsGenericSetServices()
 	 * @model required="true"
-	 *        annotation="http://www.earthsystemcog.org/projects/nuopc query='calls: routine_SetServices' essential='true'"
+	 *        annotation="http://www.earthsystemcog.org/projects/nuopc mapping='calls: \"routine_SetServices\"' essential='true'"
 	 * @generated
 	 */
 	boolean isCallsGenericSetServices();
@@ -201,7 +179,7 @@ public interface ModelImplementsSetServices extends EObject {
 	 * @see #setCallsSetEntryPointPhase1(boolean)
 	 * @see org.earthsystemcurator.cupid.nuopc.fsml.nuopc.NUOPCPackage#getModelImplementsSetServices_CallsSetEntryPointPhase1()
 	 * @model required="true"
-	 *        annotation="http://www.earthsystemcog.org/projects/nuopc query='calls: ESMF_GridCompSetEntryPoint'"
+	 *        annotation="http://www.earthsystemcog.org/projects/nuopc mapping='calls: \"ESMF_GridCompSetEntryPoint\"'"
 	 * @generated
 	 */
 	boolean isCallsSetEntryPointPhase1();
@@ -228,7 +206,7 @@ public interface ModelImplementsSetServices extends EObject {
 	 * @see #setCallsSetEntryPointPhase2(boolean)
 	 * @see org.earthsystemcurator.cupid.nuopc.fsml.nuopc.NUOPCPackage#getModelImplementsSetServices_CallsSetEntryPointPhase2()
 	 * @model required="true"
-	 *        annotation="http://www.earthsystemcog.org/projects/nuopc query='calls: ESMF_GridCompSetEntryPoint'"
+	 *        annotation="http://www.earthsystemcog.org/projects/nuopc mapping='calls: \"ESMF_GridCompSetEntryPoint\"'"
 	 * @generated
 	 */
 	boolean isCallsSetEntryPointPhase2();
@@ -257,7 +235,7 @@ public interface ModelImplementsSetServices extends EObject {
 	 * @see org.earthsystemcurator.cupid.nuopc.fsml.nuopc.NUOPCPackage#getModelImplementsSetServices_AttachesModelAdvance()
 	 * @see org.earthsystemcurator.cupid.nuopc.fsml.nuopc.AttachesModelAdvance#getParent
 	 * @model opposite="parent" containment="true"
-	 *        annotation="http://www.earthsystemcog.org/projects/nuopc query='call: ESMF_MethodAdd'"
+	 *        annotation="http://www.earthsystemcog.org/projects/nuopc mapping='call: \"ESMF_MethodAdd\"'"
 	 * @generated
 	 */
 	AttachesModelAdvance getAttachesModelAdvance();

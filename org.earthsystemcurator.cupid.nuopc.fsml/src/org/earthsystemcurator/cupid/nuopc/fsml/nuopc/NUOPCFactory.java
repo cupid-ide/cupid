@@ -28,7 +28,7 @@ public interface NUOPCFactory extends EFactory {
 	 * @return a new object of class '<em>Model</em>'.
 	 * @generated
 	 */
-	Model createModel();
+	NUOPCModel createNUOPCModel();
 
 	/**
 	 * Returns a new object of class '<em>Model Implements Set Services</em>'.
@@ -110,6 +110,24 @@ public interface NUOPCFactory extends EFactory {
 	 * @generated
 	 */
 	ModelAdvance createModelAdvance();
+
+	/**
+	 * Returns a new object of class '<em>Driver</em>'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return a new object of class '<em>Driver</em>'.
+	 * @generated
+	 */
+	NUOPCDriver createNUOPCDriver();
+
+	/**
+	 * Returns a new object of class '<em>Application</em>'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return a new object of class '<em>Application</em>'.
+	 * @generated
+	 */
+	NUOPCApplication createNUOPCApplication();
 
 	/**
 	 * Returns the package supported by this factory.

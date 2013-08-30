@@ -64,7 +64,7 @@ public interface AdvertisesExportField extends EObject {
 	 * @see #setAddsToState(String)
 	 * @see org.earthsystemcurator.cupid.nuopc.fsml.nuopc.NUOPCPackage#getAdvertisesExportField_AddsToState()
 	 * @model required="true"
-	 *        annotation="http://www.earthsystemcog.org/projects/nuopc query='argByIndex: 1'"
+	 *        annotation="http://www.earthsystemcog.org/projects/nuopc mapping='argByIndex: 1'"
 	 * @generated
 	 */
 	String getAddsToState();
@@ -118,7 +118,7 @@ public interface AdvertisesExportField extends EObject {
 	 * @return the value of the '<em>Standard Name</em>' attribute.
 	 * @see #setStandardName(String)
 	 * @see org.earthsystemcurator.cupid.nuopc.fsml.nuopc.NUOPCPackage#getAdvertisesExportField_StandardName()
-	 * @model annotation="http://www.earthsystemcog.org/projects/nuopc query='argByKeyword: StandardName'"
+	 * @model annotation="http://www.earthsystemcog.org/projects/nuopc mapping='argByKeyword: \"StandardName\"'"
 	 * @generated
 	 */
 	String getStandardName();

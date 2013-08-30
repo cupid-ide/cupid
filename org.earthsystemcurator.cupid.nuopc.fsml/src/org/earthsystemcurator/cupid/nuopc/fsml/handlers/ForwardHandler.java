@@ -7,8 +7,7 @@ import java.io.InputStreamReader;
 import java.io.Reader;
 import java.lang.reflect.InvocationTargetException;
 
-import org.earthsystemcurator.cupid.nuopc.fsml.mapping.ModelToModuleMapping;
-import org.earthsystemcurator.cupid.nuopc.fsml.nuopc.Model;
+import org.earthsystemcurator.cupid.nuopc.fsml.nuopc.NUOPCModel;
 import org.earthsystemcurator.cupid.nuopc.fsml.nuopc.NUOPCPackage;
 import org.eclipse.core.commands.AbstractHandler;
 import org.eclipse.core.commands.ExecutionEvent;
@@ -93,12 +92,12 @@ public class ForwardHandler extends AbstractHandler {
         
         Resource resource = resourceSet.getResource(fileURI, true);
         
-        Model m = (Model) resource.getEObject("/");
+        NUOPCModel m = (NUOPCModel) resource.getEObject("/");
         System.out.println("Model = " + m);
         
-        ModelToModuleMapping map = 
-        		new ModelToModuleMapping(m, (ASTModuleNode) ast.getRoot().getProgramUnitList().get(0), ast);
-        map.forward();
+        //ModelToModuleMapping map = 
+        //		new ModelToModuleMapping(m, (ASTModuleNode) ast.getRoot().getProgramUnitList().get(0), ast);
+        //map.forward();
         
         //Model m = map.reverse();
         //resource.getContents().clear();

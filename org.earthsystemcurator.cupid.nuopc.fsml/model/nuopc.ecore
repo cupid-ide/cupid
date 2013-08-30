@@ -6,14 +6,14 @@
     <details key="settingDelegates" value="http://www.eclipse.org/emf/2002/Ecore/OCL"/>
     <details key="validationDelegates" value="http://www.eclipse.org/emf/2002/Ecore/OCL"/>
   </eAnnotations>
-  <eClassifiers xsi:type="ecore:EClass" name="Model">
+  <eClassifiers xsi:type="ecore:EClass" name="NUOPCModel">
     <eAnnotations source="http://www.earthsystemcog.org/projects/nuopc">
-      <details key="query" value="module"/>
+      <details key="mapping" value="module"/>
     </eAnnotations>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="name" lowerBound="1" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"
-        iD="true">
+        defaultValueLiteral="ModelDefault" iD="true">
       <eAnnotations source="http://www.earthsystemcog.org/projects/nuopc">
-        <details key="query" value="moduleName"/>
+        <details key="mapping" value="moduleName"/>
       </eAnnotations>
     </eStructuralFeatures>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="usesAllImports" lowerBound="1"
@@ -21,7 +21,7 @@
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="singlePublicSubroutine"
         eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString">
       <eAnnotations source="http://www.earthsystemcog.org/projects/nuopc">
-        <details key="query" value="hasSinglePublicMember"/>
+        <details key="mapping" value="hasSinglePublicMember"/>
         <details key="transform" value="addPublicMember"/>
       </eAnnotations>
     </eStructuralFeatures>
@@ -29,69 +29,75 @@
         eType="#//ModelImplementsSetServices" containment="true" eOpposite="#//ModelImplementsSetServices/parent"
         eKeys="#//ModelImplementsSetServices/name">
       <eAnnotations source="http://www.earthsystemcog.org/projects/nuopc">
-        <details key="mapping" value="subroutine: *(type(ESMF_GridComp), integer)"/>
-        <details key="query" value="subroutine: *(type(ESMF_GridComp), integer)"/>
+        <details key="mapping" value="subroutine: &quot;*(type(ESMF_GridComp), integer)&quot;"/>
       </eAnnotations>
     </eStructuralFeatures>
     <eStructuralFeatures xsi:type="ecore:EReference" name="implementsInitP1" eType="#//ModelImplementsInitP1"
         containment="true">
       <eAnnotations source="http://www.earthsystemcog.org/projects/nuopc">
-        <details key="query" value="subroutine: *(type(ESMF_GridComp), type(ESMF_State), type(ESMF_State), type(ESMF_Clock), integer)"/>
+        <details key="mapping" value="subroutine: &quot;*(type(ESMF_GridComp), type(ESMF_State), type(ESMF_State), type(ESMF_Clock), integer)&quot;"/>
       </eAnnotations>
     </eStructuralFeatures>
     <eStructuralFeatures xsi:type="ecore:EReference" name="implementsInitP2" eType="#//ModelImplementsInitP2"
         containment="true">
       <eAnnotations source="http://www.earthsystemcog.org/projects/nuopc">
-        <details key="query" value="subroutine: *(type(ESMF_GridComp), type(ESMF_State), type(ESMF_State), type(ESMF_Clock), integer)"/>
+        <details key="mapping" value="subroutine: &quot;*(type(ESMF_GridComp), type(ESMF_State), type(ESMF_State), type(ESMF_Clock), integer)&quot;"/>
       </eAnnotations>
     </eStructuralFeatures>
     <eStructuralFeatures xsi:type="ecore:EReference" name="implementsModelAdvance"
         upperBound="-1" eType="#//ModelAdvance" containment="true" eOpposite="#//ModelAdvance/parent">
       <eAnnotations source="http://www.earthsystemcog.org/projects/nuopc">
-        <details key="query" value="subroutine: *(type(ESMF_GridComp), integer)"/>
+        <details key="mapping" value="subroutine: &quot;*(type(ESMF_GridComp), integer)&quot;"/>
       </eAnnotations>
     </eStructuralFeatures>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="ModelImplementsSetServices">
     <eAnnotations source="http://www.earthsystemcog.org/projects/nuopc">
-      <details key="mapping" value="subroutine: *(type(ESMF_GridComp), integer)"/>
+      <details key="mapping" value="subroutine: &quot;*(type(ESMF_GridComp), integer)&quot;"/>
     </eAnnotations>
     <eStructuralFeatures xsi:type="ecore:EReference" name="parent" lowerBound="1"
-        eType="#//Model" eOpposite="#//Model/implementsSetServices"/>
+        eType="#//NUOPCModel" eOpposite="#//NUOPCModel/implementsSetServices"/>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="name" lowerBound="1" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"
         defaultValueLiteral="SetServicesDefault" iD="true">
       <eAnnotations source="http://www.earthsystemcog.org/projects/nuopc">
         <details key="mapping" value="subroutineName"/>
-        <details key="query" value="subroutineName"/>
       </eAnnotations>
     </eStructuralFeatures>
-    <eStructuralFeatures xsi:type="ecore:EAttribute" name="parameters" lowerBound="1"
-        eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean"/>
-    <eStructuralFeatures xsi:type="ecore:EAttribute" name="paramName_gcomp" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
-    <eStructuralFeatures xsi:type="ecore:EAttribute" name="paramName_rc" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="param_gcomp" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"
+        defaultValueLiteral="gcompDefault">
+      <eAnnotations source="http://www.earthsystemcog.org/projects/nuopc">
+        <details key="mapping" value="formalParam: 1"/>
+      </eAnnotations>
+    </eStructuralFeatures>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="param_rc" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"
+        defaultValueLiteral="rcDefault">
+      <eAnnotations source="http://www.earthsystemcog.org/projects/nuopc">
+        <details key="mapping" value="formalParam: 2"/>
+      </eAnnotations>
+    </eStructuralFeatures>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="callsGenericSetServices"
         lowerBound="1" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean">
       <eAnnotations source="http://www.earthsystemcog.org/projects/nuopc">
-        <details key="query" value="calls: routine_SetServices"/>
+        <details key="mapping" value="calls: &quot;routine_SetServices&quot;"/>
         <details key="essential" value="true"/>
       </eAnnotations>
     </eStructuralFeatures>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="callsSetEntryPointPhase1"
         lowerBound="1" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean">
       <eAnnotations source="http://www.earthsystemcog.org/projects/nuopc">
-        <details key="query" value="calls: ESMF_GridCompSetEntryPoint"/>
+        <details key="mapping" value="calls: &quot;ESMF_GridCompSetEntryPoint&quot;"/>
       </eAnnotations>
     </eStructuralFeatures>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="callsSetEntryPointPhase2"
         lowerBound="1" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean">
       <eAnnotations source="http://www.earthsystemcog.org/projects/nuopc">
-        <details key="query" value="calls: ESMF_GridCompSetEntryPoint"/>
+        <details key="mapping" value="calls: &quot;ESMF_GridCompSetEntryPoint&quot;"/>
       </eAnnotations>
     </eStructuralFeatures>
     <eStructuralFeatures xsi:type="ecore:EReference" name="attachesModelAdvance" eType="#//AttachesModelAdvance"
         containment="true" eOpposite="#//AttachesModelAdvance/parent">
       <eAnnotations source="http://www.earthsystemcog.org/projects/nuopc">
-        <details key="query" value="call: ESMF_MethodAdd"/>
+        <details key="mapping" value="call: &quot;ESMF_MethodAdd&quot;"/>
       </eAnnotations>
     </eStructuralFeatures>
   </eClassifiers>
@@ -99,31 +105,31 @@
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="name" lowerBound="1" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"
         iD="true">
       <eAnnotations source="http://www.earthsystemcog.org/projects/nuopc">
-        <details key="query" value="subroutineName"/>
+        <details key="mapping" value="subroutineName"/>
       </eAnnotations>
     </eStructuralFeatures>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="importParam" lowerBound="1"
         eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString">
       <eAnnotations source="http://www.earthsystemcog.org/projects/nuopc">
-        <details key="query" value="formalParam: 2"/>
+        <details key="mapping" value="formalParam: 2"/>
       </eAnnotations>
     </eStructuralFeatures>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="exportParam" lowerBound="1"
         eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString">
       <eAnnotations source="http://www.earthsystemcog.org/projects/nuopc">
-        <details key="query" value="formalParam: 3"/>
+        <details key="mapping" value="formalParam: 3"/>
       </eAnnotations>
     </eStructuralFeatures>
     <eStructuralFeatures xsi:type="ecore:EReference" name="advertisesImportField"
         upperBound="-1" eType="#//AdvertisesImportField" containment="true" eOpposite="#//AdvertisesImportField/parent">
       <eAnnotations source="http://www.earthsystemcog.org/projects/nuopc">
-        <details key="query" value="call: NUOPC_StateAdvertiseField"/>
+        <details key="mapping" value="call: &quot;NUOPC_StateAdvertiseField&quot;"/>
       </eAnnotations>
     </eStructuralFeatures>
     <eStructuralFeatures xsi:type="ecore:EReference" name="advertisesExportField"
         upperBound="-1" eType="#//AdvertisesExportField" containment="true" eOpposite="#//AdvertisesExportField/parent">
       <eAnnotations source="http://www.earthsystemcog.org/projects/nuopc">
-        <details key="query" value="call: NUOPC_StateAdvertiseField"/>
+        <details key="mapping" value="call: &quot;NUOPC_StateAdvertiseField&quot;"/>
       </eAnnotations>
     </eStructuralFeatures>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="advertisesAtLeastOneField"
@@ -137,34 +143,37 @@
     </eStructuralFeatures>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="ModelImplementsInitP2">
+    <eAnnotations source="http://www.earthsystemcog.org/projects/nuopc">
+      <details key="mapping" value="subroutine: &quot;*(type(ESMF_GridComp), type(ESMF_State), type(ESMF_State), type(ESMF_Clock), integer)&quot;"/>
+    </eAnnotations>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="name" lowerBound="1" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"
         iD="true">
       <eAnnotations source="http://www.earthsystemcog.org/projects/nuopc">
-        <details key="query" value="subroutineName"/>
+        <details key="mapping" value="subroutineName"/>
       </eAnnotations>
     </eStructuralFeatures>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="importParam" lowerBound="1"
         eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString">
       <eAnnotations source="http://www.earthsystemcog.org/projects/nuopc">
-        <details key="query" value="formalParam: 2"/>
+        <details key="mapping" value="formalParam: 2"/>
       </eAnnotations>
     </eStructuralFeatures>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="exportParam" lowerBound="1"
         eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString">
       <eAnnotations source="http://www.earthsystemcog.org/projects/nuopc">
-        <details key="query" value="formalParam: 3"/>
+        <details key="mapping" value="formalParam: 3"/>
       </eAnnotations>
     </eStructuralFeatures>
     <eStructuralFeatures xsi:type="ecore:EReference" name="realizesImportField" upperBound="-1"
         eType="#//RealizesImportField" containment="true" eOpposite="#//RealizesImportField/parent">
       <eAnnotations source="http://www.earthsystemcog.org/projects/nuopc">
-        <details key="query" value="call: NUOPC_StateRealizeField"/>
+        <details key="mapping" value="call: &quot;NUOPC_StateRealizeField&quot;"/>
       </eAnnotations>
     </eStructuralFeatures>
     <eStructuralFeatures xsi:type="ecore:EReference" name="realizesExportField" upperBound="-1"
         eType="#//RealizesExportField" containment="true" eOpposite="#//RealizesExportField/parent">
       <eAnnotations source="http://www.earthsystemcog.org/projects/nuopc">
-        <details key="query" value="call: NUOPC_StateRealizeField"/>
+        <details key="mapping" value="call: &quot;NUOPC_StateRealizeField&quot;"/>
       </eAnnotations>
     </eStructuralFeatures>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="realizesAtLeastOneField"
@@ -183,7 +192,7 @@
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="addsToState" lowerBound="1"
         eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString">
       <eAnnotations source="http://www.earthsystemcog.org/projects/nuopc">
-        <details key="query" value="argByIndex: 1"/>
+        <details key="mapping" value="argByIndex: 1"/>
       </eAnnotations>
     </eStructuralFeatures>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="addsToImportState" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean"
@@ -197,7 +206,7 @@
     </eStructuralFeatures>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="standardName" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString">
       <eAnnotations source="http://www.earthsystemcog.org/projects/nuopc">
-        <details key="query" value="argByKeyword: StandardName"/>
+        <details key="mapping" value="argByKeyword: &quot;StandardName&quot;"/>
       </eAnnotations>
     </eStructuralFeatures>
   </eClassifiers>
@@ -207,7 +216,7 @@
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="addsToState" lowerBound="1"
         eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString">
       <eAnnotations source="http://www.earthsystemcog.org/projects/nuopc">
-        <details key="query" value="argByIndex: 1"/>
+        <details key="mapping" value="argByIndex: 1"/>
       </eAnnotations>
     </eStructuralFeatures>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="addsToExportState" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean"
@@ -221,17 +230,20 @@
     </eStructuralFeatures>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="standardName" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString">
       <eAnnotations source="http://www.earthsystemcog.org/projects/nuopc">
-        <details key="query" value="argByKeyword: StandardName"/>
+        <details key="mapping" value="argByKeyword: &quot;StandardName&quot;"/>
       </eAnnotations>
     </eStructuralFeatures>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="RealizesImportField">
+    <eAnnotations source="http://www.earthsystemcog.org/projects/nuopc">
+      <details key="mapping" value="call: NUOPC_StateRealizeField"/>
+    </eAnnotations>
     <eStructuralFeatures xsi:type="ecore:EReference" name="parent" lowerBound="1"
         eType="#//ModelImplementsInitP2" eOpposite="#//ModelImplementsInitP2/realizesImportField"/>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="realizedInState" lowerBound="1"
         eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString">
       <eAnnotations source="http://www.earthsystemcog.org/projects/nuopc">
-        <details key="query" value="argByIndex: 1"/>
+        <details key="mapping" value="argByIndex: 1"/>
       </eAnnotations>
     </eStructuralFeatures>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="realizedInImportState"
@@ -245,7 +257,7 @@
     </eStructuralFeatures>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="field" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString">
       <eAnnotations source="http://www.earthsystemcog.org/projects/nuopc">
-        <details key="query" value="argByIndex: 2"/>
+        <details key="mapping" value="argByIndex: 2"/>
       </eAnnotations>
     </eStructuralFeatures>
   </eClassifiers>
@@ -255,7 +267,7 @@
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="realizedInState" lowerBound="1"
         eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString">
       <eAnnotations source="http://www.earthsystemcog.org/projects/nuopc">
-        <details key="query" value="argByIndex: 1"/>
+        <details key="mapping" value="argByIndex: 1"/>
       </eAnnotations>
     </eStructuralFeatures>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="realizedInExportState"
@@ -269,7 +281,7 @@
     </eStructuralFeatures>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="field" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString">
       <eAnnotations source="http://www.earthsystemcog.org/projects/nuopc">
-        <details key="query" value="argByIndex: 2"/>
+        <details key="mapping" value="argByIndex: 2"/>
       </eAnnotations>
     </eStructuralFeatures>
   </eClassifiers>
@@ -278,22 +290,22 @@
         eType="#//ModelImplementsSetServices" eOpposite="#//ModelImplementsSetServices/attachesModelAdvance"/>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="label" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString">
       <eAnnotations source="http://www.earthsystemcog.org/projects/nuopc">
-        <details key="query" value="argByIndex: 2"/>
+        <details key="mapping" value="argByIndex: 2"/>
       </eAnnotations>
     </eStructuralFeatures>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="userRoutine" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString">
       <eAnnotations source="http://www.earthsystemcog.org/projects/nuopc">
-        <details key="query" value="argByIndex: 3"/>
+        <details key="mapping" value="argByIndex: 3"/>
       </eAnnotations>
     </eStructuralFeatures>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="ModelAdvance">
     <eStructuralFeatures xsi:type="ecore:EReference" name="parent" lowerBound="1"
-        eType="#//Model" eOpposite="#//Model/implementsModelAdvance"/>
+        eType="#//NUOPCModel" eOpposite="#//NUOPCModel/implementsModelAdvance"/>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="name" lowerBound="1" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"
         iD="true">
       <eAnnotations source="http://www.earthsystemcog.org/projects/nuopc">
-        <details key="query" value="subroutineName"/>
+        <details key="mapping" value="subroutineName"/>
       </eAnnotations>
     </eStructuralFeatures>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="attachedInSetServices"
@@ -301,6 +313,25 @@
         derived="true">
       <eAnnotations source="http://www.eclipse.org/emf/2002/Ecore/OCL">
         <details key="derivation" value="self.parent.implementsSetServices.attachesModelAdvance.userRoutine = self.name"/>
+      </eAnnotations>
+    </eStructuralFeatures>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="NUOPCDriver">
+    <eAnnotations source="http://www.earthsystemcog.org/projects/nuopc">
+      <details key="mapping" value="module"/>
+    </eAnnotations>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="NUOPCApplication">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="nuopcDriver" upperBound="-1"
+        eType="#//NUOPCDriver" containment="true">
+      <eAnnotations source="http://www.earthsystemcog.org/projects/nuopc">
+        <details key="mapping" value="module"/>
+      </eAnnotations>
+    </eStructuralFeatures>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="nuopcModel" upperBound="-1"
+        eType="#//NUOPCModel" containment="true">
+      <eAnnotations source="http://www.earthsystemcog.org/projects/nuopc">
+        <details key="mapping" value="module"/>
       </eAnnotations>
     </eStructuralFeatures>
   </eClassifiers>

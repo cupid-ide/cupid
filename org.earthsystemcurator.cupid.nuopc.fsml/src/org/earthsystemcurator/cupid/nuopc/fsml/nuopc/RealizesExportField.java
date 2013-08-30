@@ -64,7 +64,7 @@ public interface RealizesExportField extends EObject {
 	 * @see #setRealizedInState(String)
 	 * @see org.earthsystemcurator.cupid.nuopc.fsml.nuopc.NUOPCPackage#getRealizesExportField_RealizedInState()
 	 * @model required="true"
-	 *        annotation="http://www.earthsystemcog.org/projects/nuopc query='argByIndex: 1'"
+	 *        annotation="http://www.earthsystemcog.org/projects/nuopc mapping='argByIndex: 1'"
 	 * @generated
 	 */
 	String getRealizedInState();
@@ -118,7 +118,7 @@ public interface RealizesExportField extends EObject {
 	 * @return the value of the '<em>Field</em>' attribute.
 	 * @see #setField(String)
 	 * @see org.earthsystemcurator.cupid.nuopc.fsml.nuopc.NUOPCPackage#getRealizesExportField_Field()
-	 * @model annotation="http://www.earthsystemcog.org/projects/nuopc query='argByIndex: 2'"
+	 * @model annotation="http://www.earthsystemcog.org/projects/nuopc mapping='argByIndex: 2'"
 	 * @generated
 	 */
 	String getField();

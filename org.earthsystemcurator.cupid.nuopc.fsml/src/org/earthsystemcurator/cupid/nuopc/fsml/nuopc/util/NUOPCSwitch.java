@@ -66,9 +66,9 @@ public class NUOPCSwitch<T> extends Switch<T> {
 	@Override
 	protected T doSwitch(int classifierID, EObject theEObject) {
 		switch (classifierID) {
-			case NUOPCPackage.MODEL: {
-				Model model = (Model)theEObject;
-				T result = caseModel(model);
+			case NUOPCPackage.NUOPC_MODEL: {
+				NUOPCModel nuopcModel = (NUOPCModel)theEObject;
+				T result = caseNUOPCModel(nuopcModel);
 				if (result == null) result = defaultCase(theEObject);
 				return result;
 			}
@@ -126,6 +126,18 @@ public class NUOPCSwitch<T> extends Switch<T> {
 				if (result == null) result = defaultCase(theEObject);
 				return result;
 			}
+			case NUOPCPackage.NUOPC_DRIVER: {
+				NUOPCDriver nuopcDriver = (NUOPCDriver)theEObject;
+				T result = caseNUOPCDriver(nuopcDriver);
+				if (result == null) result = defaultCase(theEObject);
+				return result;
+			}
+			case NUOPCPackage.NUOPC_APPLICATION: {
+				NUOPCApplication nuopcApplication = (NUOPCApplication)theEObject;
+				T result = caseNUOPCApplication(nuopcApplication);
+				if (result == null) result = defaultCase(theEObject);
+				return result;
+			}
 			default: return defaultCase(theEObject);
 		}
 	}
@@ -141,7 +153,7 @@ public class NUOPCSwitch<T> extends Switch<T> {
 	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
 	 * @generated
 	 */
-	public T caseModel(Model object) {
+	public T caseNUOPCModel(NUOPCModel object) {
 		return null;
 	}
 
@@ -277,6 +289,36 @@ public class NUOPCSwitch<T> extends Switch<T> {
 	 * @generated
 	 */
 	public T caseModelAdvance(ModelAdvance object) {
+		return null;
+	}
+
+	/**
+	 * Returns the result of interpreting the object as an instance of '<em>Driver</em>'.
+	 * <!-- begin-user-doc -->
+	 * This implementation returns null;
+	 * returning a non-null result will terminate the switch.
+	 * <!-- end-user-doc -->
+	 * @param object the target of the switch.
+	 * @return the result of interpreting the object as an instance of '<em>Driver</em>'.
+	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+	 * @generated
+	 */
+	public T caseNUOPCDriver(NUOPCDriver object) {
+		return null;
+	}
+
+	/**
+	 * Returns the result of interpreting the object as an instance of '<em>Application</em>'.
+	 * <!-- begin-user-doc -->
+	 * This implementation returns null;
+	 * returning a non-null result will terminate the switch.
+	 * <!-- end-user-doc -->
+	 * @param object the target of the switch.
+	 * @return the result of interpreting the object as an instance of '<em>Application</em>'.
+	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+	 * @generated
+	 */
+	public T caseNUOPCApplication(NUOPCApplication object) {
 		return null;
 	}
 
