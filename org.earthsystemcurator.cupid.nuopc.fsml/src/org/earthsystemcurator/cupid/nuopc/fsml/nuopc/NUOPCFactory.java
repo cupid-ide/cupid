@@ -121,6 +121,15 @@ public interface NUOPCFactory extends EFactory {
 	NUOPCDriver createNUOPCDriver();
 
 	/**
+	 * Returns a new object of class '<em>Driver Implements Set Services</em>'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return a new object of class '<em>Driver Implements Set Services</em>'.
+	 * @generated
+	 */
+	NUOPCDriver__ImplementsSetServices createNUOPCDriver__ImplementsSetServices();
+
+	/**
 	 * Returns a new object of class '<em>Application</em>'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -128,6 +137,24 @@ public interface NUOPCFactory extends EFactory {
 	 * @generated
 	 */
 	NUOPCApplication createNUOPCApplication();
+
+	/**
+	 * Returns a new object of class '<em>Driver Atm Ocn</em>'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return a new object of class '<em>Driver Atm Ocn</em>'.
+	 * @generated
+	 */
+	NUOPCDriverAtmOcn createNUOPCDriverAtmOcn();
+
+	/**
+	 * Returns a new object of class '<em>Driver Atm Ocn Implements Set Services</em>'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return a new object of class '<em>Driver Atm Ocn Implements Set Services</em>'.
+	 * @generated
+	 */
+	NUOPCDriverAtmOcn__ImplementsSetServices createNUOPCDriverAtmOcn__ImplementsSetServices();
 
 	/**
 	 * Returns the package supported by this factory.

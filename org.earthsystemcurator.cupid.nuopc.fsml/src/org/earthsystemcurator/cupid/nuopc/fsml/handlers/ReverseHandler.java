@@ -7,6 +7,7 @@ import java.io.InputStreamReader;
 import java.io.Reader;
 import java.lang.reflect.InvocationTargetException;
 
+import org.earthsystemcurator.cupid.nuopc.fsml.nuopc.NUOPCApplication;
 import org.earthsystemcurator.cupid.nuopc.fsml.nuopc.NUOPCModel;
 import org.earthsystemcurator.cupid.nuopc.fsml.nuopc.NUOPCPackage;
 import org.earthsystemcurator.cupid.nuopc.fsml.re.ReverseEngineer;
@@ -63,12 +64,14 @@ public class ReverseHandler extends AbstractHandler {
 
 		IWorkbenchWindow window = HandlerUtil.getActiveWorkbenchWindowChecked(event);
 
+		/*
 		IResource res = extractSelection(window.getActivePage().getSelection());
 
 		if (res == null) {
 			System.out.println("res is null\n\n");
 			return null;
 		}
+		*/
 
 		//IWorkspace ws = ResourcesPlugin.getWorkspace();
 		//IProject p = ws.getRoot().getProject("nuopc");
@@ -82,6 +85,7 @@ public class ReverseHandler extends AbstractHandler {
 
 		//IFile f = ws.getRoot().getFile(location);
 
+		/*
 		if (! (res instanceof IFile)) {
 			System.out.println("res is not file\n\n");
 			return null;			
@@ -94,6 +98,8 @@ public class ReverseHandler extends AbstractHandler {
 		final IFortranAST ast = vpg.acquireTransientAST((IFile) res);
 		
 		System.out.println("error: " + vpg.describeWhyCannotProcessFile(f));
+		*/
+		
 		
 		/*
 		System.out.println("VGP filenames:");
@@ -152,10 +158,12 @@ public class ReverseHandler extends AbstractHandler {
         //System.out.println("Model = " + m);
         
         
+        PhotranVPG vpg = PhotranVPG.getInstance();
         ReverseEngineer re = new ReverseEngineer();
-        NUOPCModel m = re.reverse(ast);
+        //NUOPCModel m = re.reverse(ast);
+        NUOPCApplication a = re.reverse(vpg);
         
-        if (m == null) return null;
+        if (a == null) return null;
         
         /*
         ModelToModuleMapping map = 
@@ -164,7 +172,7 @@ public class ReverseHandler extends AbstractHandler {
         */
         
         resource.getContents().clear();
-        resource.getContents().add(m);
+        resource.getContents().add(a);
         try {
 			resource.save(null);
 		} catch (IOException e1) {

@@ -123,7 +123,7 @@ public interface NUOPCModel extends EObject {
 	 * @see org.earthsystemcurator.cupid.nuopc.fsml.nuopc.NUOPCPackage#getNUOPCModel_ImplementsSetServices()
 	 * @see org.earthsystemcurator.cupid.nuopc.fsml.nuopc.ModelImplementsSetServices#getParent
 	 * @model opposite="parent" containment="true" keys="name"
-	 *        annotation="http://www.earthsystemcog.org/projects/nuopc mapping='subroutine: \"*(type(ESMF_GridComp), integer)\"'"
+	 *        annotation="http://www.earthsystemcog.org/projects/nuopc mapping='subroutine: \"*(type(ESMF_GridComp), integer)\"' essential='true'"
 	 * @generated
 	 */
 	ModelImplementsSetServices getImplementsSetServices();

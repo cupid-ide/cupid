@@ -12,15 +12,18 @@ import org.eclipse.photran.internal.core.analysis.types.DerivedType;
 import org.eclipse.photran.internal.core.analysis.types.FunctionType;
 import org.eclipse.photran.internal.core.analysis.types.Type;
 import org.eclipse.photran.internal.core.analysis.types.TypeProcessor;
+import org.eclipse.photran.internal.core.lexer.Token;
 import org.eclipse.photran.internal.core.parser.ASTCallStmtNode;
 import org.eclipse.photran.internal.core.parser.ASTModuleNode;
 import org.eclipse.photran.internal.core.parser.ASTOnlyNode;
 import org.eclipse.photran.internal.core.parser.ASTSubroutineArgNode;
 import org.eclipse.photran.internal.core.parser.ASTSubroutineParNode;
 import org.eclipse.photran.internal.core.parser.ASTSubroutineSubprogramNode;
+import org.eclipse.photran.internal.core.parser.ASTUseStmtNode;
 import org.eclipse.photran.internal.core.parser.ASTVarOrFnRefNode;
 import org.eclipse.photran.internal.core.parser.IASTNode;
 import org.eclipse.photran.internal.core.parser.IExpr;
+import org.eclipse.photran.internal.core.vpg.PhotranTokenRef;
 
 @SuppressWarnings("restriction")
 public class CodeQuery {
@@ -73,11 +76,16 @@ public class CodeQuery {
 		return false;
 	}
 	
-		
+	public static Set<ASTModuleNode> module(IASTNode node, Map<String, Object> params) {
+		//change later to accept name as parameter
+		return node.findAll(ASTModuleNode.class);
+	}
+	
+	
 	public static Set<ASTSubroutineSubprogramNode> subroutine(IASTNode node, Map<String, Object> params) {
 		
 		String pattern = (String) params.get("subroutine");
-		System.out.println("subroutine: " + pattern);
+		//System.out.println("subroutine: " + pattern);
 		
 		Pattern p = Pattern.compile("((?:\\w+)|(?:\\*))\\(((?:(integer|logical|type\\(\\w+\\)),?\\s*)*)\\)");
 		Matcher match = p.matcher(pattern);
@@ -93,9 +101,9 @@ public class CodeQuery {
 		String subroutineName = match.group(1);
 		String[] paramTypes = match.group(2).split("\\s*,\\s*");
 		
-		for (int i=0; i < paramTypes.length; i++) {
-			System.out.println("Param = " + paramTypes[i]);
-		}
+		//for (int i=0; i < paramTypes.length; i++) {
+		//	System.out.println("Param = " + paramTypes[i]);
+		//}
 		
 		Type[] types = new Type[paramTypes.length];
 		
@@ -352,33 +360,87 @@ public class CodeQuery {
 	public static boolean calls(IASTNode node, Map<String, Object> params) {
 		
 		final String subroutineName = (String) params.get("calls");
+		final String definedInModule = (String) params.get("definedInModule");
+		
+		if (subroutineName.equals("routine_SetServices") && definedInModule != null && definedInModule.equals("NUOPC_DriverAtmOcn")) {
+			System.out.println("\there");
+		}
 		
 		for (ASTCallStmtNode csn : node.findAll(ASTCallStmtNode.class)) {
 			
-			System.out.println("Examining subroutine: " + csn.getSubroutineName()); 
+			System.out.println("Calls Examining subroutine: " + csn.getSubroutineName()); 
+			//if (csn.getSubroutineName().getText().equalsIgnoreCase("NUOPC_RunSequenceDeallocate")) {
+			//	System.out.println("\there");
+			//}
 			List<Definition> defs = csn.getSubroutineName().resolveBinding();
-			
+						
 			//find name before rename
 			if (defs.size() > 0) {
 				
 				//defs.get(0).getTokenRef().
+				//if (defs.get(0).getType() == null) {
+				//	throw new RuntimeException("calls: Definition Type is null");					
+				//}
+				
 				boolean found = defs.get(0).getType().processUsing(new TypeProcessor<Boolean>() {
+					
 					@Override
 					public Boolean ifFunctionType(String name, FunctionType functionType) {
 						//System.out.println("\tExamining function: " + name);
-						if (name.equalsIgnoreCase(subroutineName)) {
+						if (name != null && name.equalsIgnoreCase(subroutineName)) {							
 							return true;							
 						}
 						return false;
 					}
+					
+					@Override
+					public Boolean ifUnknown(Type type) {						
+						//this could be a Fortran interface -- TODO: deal with it, need to dig deeper to find actual type
+						return false;
+					}
+					
 				});				
 				
-				if (found) return true;
+				if (found) {
+					//at least name matches, see if module name matches
+					if (definedInModule != null) {
+						System.out.println("\tChecking module name for subroutine: " + subroutineName);
+						Definition def = defs.get(0);
+						ASTUseStmtNode usn = null;
+						if (def.isRenamedModuleEntity()) {
+							usn = def.getTokenRef().findToken().findNearestAncestor(ASTUseStmtNode.class);
+							if (usn.getName().getText().equalsIgnoreCase(definedInModule)) {
+								return true;
+							}
+							else {
+								return false;
+							}
+						}
+						else {
+							throw new RuntimeException("calls - definedInModule");
+						}
+					}
+					else {
+						return true;
+					}
+				}
 			}
 			// no definition - just check for match
-			else if (csn.getSubroutineName().getText().equalsIgnoreCase(subroutineName)) {
-				//System.out.println("\tNo defs found, comparing subroutine names");
-				return true;		
+			else {
+				
+				System.out.println("No defs found for: " + subroutineName);
+				
+				List<PhotranTokenRef> trefs = csn.getSubroutineName().manuallyResolveBinding();
+				for (PhotranTokenRef tf : trefs) {
+					System.out.println("\tToken Ref: " + tf.findToken());
+				}				
+				//csn.getSubroutineName()
+				
+				if (csn.getSubroutineName().getText().equalsIgnoreCase(subroutineName)) {
+			
+					//System.out.println("\tNo defs found, comparing subroutine names");
+					return true;
+				}
 			}
 			
 		}

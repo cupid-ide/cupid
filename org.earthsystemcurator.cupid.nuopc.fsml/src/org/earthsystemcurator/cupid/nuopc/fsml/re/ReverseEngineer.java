@@ -2,25 +2,50 @@ package org.earthsystemcurator.cupid.nuopc.fsml.re;
 
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
+import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
+import org.earthsystemcurator.cupid.nuopc.fsml.nuopc.NUOPCApplication;
 import org.earthsystemcurator.cupid.nuopc.fsml.nuopc.NUOPCModel;
 import org.earthsystemcurator.cupid.nuopc.fsml.nuopc.NUOPCFactory;
 import org.earthsystemcurator.cupid.nuopc.fsml.util.CodeQuery;
 import org.earthsystemcurator.cupid.nuopc.fsml.util.Regex;
+import org.eclipse.core.resources.IFile;
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.ecore.EAnnotation;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EStructuralFeature;
+import org.eclipse.emf.ecore.EcoreFactory;
 import org.eclipse.photran.core.IFortranAST;
 import org.eclipse.photran.internal.core.parser.ASTModuleNode;
 import org.eclipse.photran.internal.core.parser.IASTNode;
+import org.eclipse.photran.internal.core.vpg.PhotranVPG;
 
 @SuppressWarnings("restriction")
 public class ReverseEngineer {
 
+	public NUOPCApplication reverse(PhotranVPG vpg) {
+		NUOPCApplication a = NUOPCFactory.eINSTANCE.createNUOPCApplication();
+		
+		
+		//START HERE:
+		//Photran is not creating edges to renamed module entities....
+		
+		
+		for (String mod : vpg.listAllModules()) {
+			List<IFile> fl = vpg.findFilesThatExportModule(mod);
+			for (IFile f : fl) {			
+				//cycle through all files for now...
+				System.out.println("Module: " + mod + " (" + f.getFullPath() + ")");
+				IFortranAST ast = vpg.acquireTransientAST(f);
+				a = reverseContext(ast.getRoot(), a);
+			}
+		}
+		
+		return a;
+	}
 	
 	public NUOPCModel reverse(IFortranAST ast) {
 		//bootstrap process
@@ -30,6 +55,7 @@ public class ReverseEngineer {
 		return reverseContext(contextNode, m);
 	}
 	
+	@SuppressWarnings({ "unchecked", "rawtypes" })
 	public <ModelElem extends EObject> ModelElem reverseContext(IASTNode contextNode, ModelElem modelElem) {
 					
 			
@@ -41,7 +67,7 @@ public class ReverseEngineer {
 		//currently does NOT traverse inherited structural features
 		for (EStructuralFeature sf : modelElemClass.getEStructuralFeatures()) {
 			
-			System.out.println("Stuctural feature: " + sf.getName());
+			//System.out.println("Stuctural feature: " + sf.getName());
 			
 			//System.out.println("\tType = " + sf.getEType());
 			//System.out.println("\tCurrent val = " + modelElem.eGet(sf));
@@ -124,7 +150,7 @@ public class ReverseEngineer {
 				for (Method method : CodeQuery.class.getMethods()) {
 					
 					if (method.getName().equals(methodName)) {
-						System.out.println("\tFound matching method: " + method);
+						//System.out.println("\tFound matching method: " + method);
 						//System.out.println("\t\tReturn type: " + method.getReturnType());
 						//System.out.println("\t\tGeneric return type: " + method.getGenericReturnType());
 						
@@ -142,7 +168,7 @@ public class ReverseEngineer {
 								result = method.invoke(null, contextNode);
 							}
 							
-							System.out.println("\tInvocation returned: " + result);
+							//System.out.println("\tInvocation returned: " + result);
 							
 							//if (sf.getEType().getName().equals("EString") ||
 							//	sf.getEType().getName().equals("EBoolean")) {
@@ -224,8 +250,16 @@ public class ReverseEngineer {
 			//if is essential, but not present or false, the parent is no good
 			String anotEssential = anot.getDetails().get("essential");
 			if (anotEssential != null && anotEssential.trim().equalsIgnoreCase("true")) {
-				System.out.println("\tEssential feature found: " + sf);
-				if (modelElem.eGet(sf) == null || !(Boolean) modelElem.eGet(sf)) {
+				//System.out.println("\tEssential feature found: " + sf);
+				
+				sf.getEType().isInstance(EcoreFactory.eINSTANCE.getEcorePackage().getEBoolean());
+				
+				if (modelElem.eGet(sf) == null) {
+					System.out.println("\tEssential feature failed: " + sf);
+					return null;
+				}
+				else if (sf.getEType().equals(EcoreFactory.eINSTANCE.getEcorePackage().getEBoolean()) &&
+						! (Boolean) modelElem.eGet(sf)) {
 					System.out.println("\tEssential feature failed: " + sf);
 					return null;
 				}

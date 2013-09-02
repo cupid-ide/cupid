@@ -152,7 +152,7 @@ public interface ModelImplementsSetServices extends EObject {
 	 * @see #setCallsGenericSetServices(boolean)
 	 * @see org.earthsystemcurator.cupid.nuopc.fsml.nuopc.NUOPCPackage#getModelImplementsSetServices_CallsGenericSetServices()
 	 * @model required="true"
-	 *        annotation="http://www.earthsystemcog.org/projects/nuopc mapping='calls: \"routine_SetServices\"' essential='true'"
+	 *        annotation="http://www.earthsystemcog.org/projects/nuopc mapping='calls: \"routine_SetServices\" definedInModule: \"NUOPC_Model\"' essential='true'"
 	 * @generated
 	 */
 	boolean isCallsGenericSetServices();

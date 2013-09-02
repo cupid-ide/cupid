@@ -698,13 +698,95 @@ public interface NUOPCPackage extends EPackage {
 	int NUOPC_DRIVER = 10;
 
 	/**
+	 * The feature id for the '<em><b>Name</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int NUOPC_DRIVER__NAME = 0;
+
+	/**
+	 * The feature id for the '<em><b>Implements Set Services</b></em>' containment reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int NUOPC_DRIVER__IMPLEMENTS_SET_SERVICES = 1;
+
+	/**
 	 * The number of structural features of the '<em>Driver</em>' class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int NUOPC_DRIVER_FEATURE_COUNT = 0;
+	int NUOPC_DRIVER_FEATURE_COUNT = 2;
+
+	/**
+	 * The meta object id for the '{@link org.earthsystemcurator.cupid.nuopc.fsml.nuopc.impl.NUOPCDriver__ImplementsSetServicesImpl <em>Driver Implements Set Services</em>}' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see org.earthsystemcurator.cupid.nuopc.fsml.nuopc.impl.NUOPCDriver__ImplementsSetServicesImpl
+	 * @see org.earthsystemcurator.cupid.nuopc.fsml.nuopc.impl.NUOPCPackageImpl#getNUOPCDriver__ImplementsSetServices()
+	 * @generated
+	 */
+	int NUOPC_DRIVER_IMPLEMENTS_SET_SERVICES = 11;
+
+	/**
+	 * The feature id for the '<em><b>Parent</b></em>' container reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int NUOPC_DRIVER_IMPLEMENTS_SET_SERVICES__PARENT = 0;
+
+	/**
+	 * The feature id for the '<em><b>Name</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int NUOPC_DRIVER_IMPLEMENTS_SET_SERVICES__NAME = 1;
+
+	/**
+	 * The feature id for the '<em><b>Param gcomp</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int NUOPC_DRIVER_IMPLEMENTS_SET_SERVICES__PARAM_GCOMP = 2;
+
+	/**
+	 * The feature id for the '<em><b>Param rc</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int NUOPC_DRIVER_IMPLEMENTS_SET_SERVICES__PARAM_RC = 3;
+
+	/**
+	 * The feature id for the '<em><b>Calls Generic Set Services</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int NUOPC_DRIVER_IMPLEMENTS_SET_SERVICES__CALLS_GENERIC_SET_SERVICES = 4;
+
+	/**
+	 * The number of structural features of the '<em>Driver Implements Set Services</em>' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int NUOPC_DRIVER_IMPLEMENTS_SET_SERVICES_FEATURE_COUNT = 5;
 
 	/**
 	 * The meta object id for the '{@link org.earthsystemcurator.cupid.nuopc.fsml.nuopc.impl.NUOPCApplicationImpl <em>Application</em>}' class.
@@ -714,7 +796,7 @@ public interface NUOPCPackage extends EPackage {
 	 * @see org.earthsystemcurator.cupid.nuopc.fsml.nuopc.impl.NUOPCPackageImpl#getNUOPCApplication()
 	 * @generated
 	 */
-	int NUOPC_APPLICATION = 11;
+	int NUOPC_APPLICATION = 12;
 
 	/**
 	 * The feature id for the '<em><b>Nuopc Driver</b></em>' containment reference list.
@@ -735,13 +817,124 @@ public interface NUOPCPackage extends EPackage {
 	int NUOPC_APPLICATION__NUOPC_MODEL = 1;
 
 	/**
+	 * The feature id for the '<em><b>Nuopc Driver Atm Ocn</b></em>' containment reference list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int NUOPC_APPLICATION__NUOPC_DRIVER_ATM_OCN = 2;
+
+	/**
 	 * The number of structural features of the '<em>Application</em>' class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int NUOPC_APPLICATION_FEATURE_COUNT = 2;
+	int NUOPC_APPLICATION_FEATURE_COUNT = 3;
+
+	/**
+	 * The meta object id for the '{@link org.earthsystemcurator.cupid.nuopc.fsml.nuopc.impl.NUOPCDriverAtmOcnImpl <em>Driver Atm Ocn</em>}' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see org.earthsystemcurator.cupid.nuopc.fsml.nuopc.impl.NUOPCDriverAtmOcnImpl
+	 * @see org.earthsystemcurator.cupid.nuopc.fsml.nuopc.impl.NUOPCPackageImpl#getNUOPCDriverAtmOcn()
+	 * @generated
+	 */
+	int NUOPC_DRIVER_ATM_OCN = 13;
+
+	/**
+	 * The feature id for the '<em><b>Name</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int NUOPC_DRIVER_ATM_OCN__NAME = 0;
+
+	/**
+	 * The feature id for the '<em><b>Implements Set Services</b></em>' containment reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int NUOPC_DRIVER_ATM_OCN__IMPLEMENTS_SET_SERVICES = 1;
+
+	/**
+	 * The number of structural features of the '<em>Driver Atm Ocn</em>' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int NUOPC_DRIVER_ATM_OCN_FEATURE_COUNT = 2;
+
+	/**
+	 * The meta object id for the '{@link org.earthsystemcurator.cupid.nuopc.fsml.nuopc.impl.NUOPCDriverAtmOcn__ImplementsSetServicesImpl <em>Driver Atm Ocn Implements Set Services</em>}' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see org.earthsystemcurator.cupid.nuopc.fsml.nuopc.impl.NUOPCDriverAtmOcn__ImplementsSetServicesImpl
+	 * @see org.earthsystemcurator.cupid.nuopc.fsml.nuopc.impl.NUOPCPackageImpl#getNUOPCDriverAtmOcn__ImplementsSetServices()
+	 * @generated
+	 */
+	int NUOPC_DRIVER_ATM_OCN_IMPLEMENTS_SET_SERVICES = 14;
+
+	/**
+	 * The feature id for the '<em><b>Parent</b></em>' container reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int NUOPC_DRIVER_ATM_OCN_IMPLEMENTS_SET_SERVICES__PARENT = 0;
+
+	/**
+	 * The feature id for the '<em><b>Name</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int NUOPC_DRIVER_ATM_OCN_IMPLEMENTS_SET_SERVICES__NAME = 1;
+
+	/**
+	 * The feature id for the '<em><b>Param gcomp</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int NUOPC_DRIVER_ATM_OCN_IMPLEMENTS_SET_SERVICES__PARAM_GCOMP = 2;
+
+	/**
+	 * The feature id for the '<em><b>Param rc</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int NUOPC_DRIVER_ATM_OCN_IMPLEMENTS_SET_SERVICES__PARAM_RC = 3;
+
+	/**
+	 * The feature id for the '<em><b>Calls Generic Set Services</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int NUOPC_DRIVER_ATM_OCN_IMPLEMENTS_SET_SERVICES__CALLS_GENERIC_SET_SERVICES = 4;
+
+	/**
+	 * The number of structural features of the '<em>Driver Atm Ocn Implements Set Services</em>' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int NUOPC_DRIVER_ATM_OCN_IMPLEMENTS_SET_SERVICES_FEATURE_COUNT = 5;
+
 
 	/**
 	 * Returns the meta object for class '{@link org.earthsystemcurator.cupid.nuopc.fsml.nuopc.NUOPCModel <em>Model</em>}'.
@@ -1393,6 +1586,93 @@ public interface NUOPCPackage extends EPackage {
 	EClass getNUOPCDriver();
 
 	/**
+	 * Returns the meta object for the attribute '{@link org.earthsystemcurator.cupid.nuopc.fsml.nuopc.NUOPCDriver#getName <em>Name</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the attribute '<em>Name</em>'.
+	 * @see org.earthsystemcurator.cupid.nuopc.fsml.nuopc.NUOPCDriver#getName()
+	 * @see #getNUOPCDriver()
+	 * @generated
+	 */
+	EAttribute getNUOPCDriver_Name();
+
+	/**
+	 * Returns the meta object for the containment reference '{@link org.earthsystemcurator.cupid.nuopc.fsml.nuopc.NUOPCDriver#getImplementsSetServices <em>Implements Set Services</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the containment reference '<em>Implements Set Services</em>'.
+	 * @see org.earthsystemcurator.cupid.nuopc.fsml.nuopc.NUOPCDriver#getImplementsSetServices()
+	 * @see #getNUOPCDriver()
+	 * @generated
+	 */
+	EReference getNUOPCDriver_ImplementsSetServices();
+
+	/**
+	 * Returns the meta object for class '{@link org.earthsystemcurator.cupid.nuopc.fsml.nuopc.NUOPCDriver__ImplementsSetServices <em>Driver Implements Set Services</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for class '<em>Driver Implements Set Services</em>'.
+	 * @see org.earthsystemcurator.cupid.nuopc.fsml.nuopc.NUOPCDriver__ImplementsSetServices
+	 * @generated
+	 */
+	EClass getNUOPCDriver__ImplementsSetServices();
+
+	/**
+	 * Returns the meta object for the container reference '{@link org.earthsystemcurator.cupid.nuopc.fsml.nuopc.NUOPCDriver__ImplementsSetServices#getParent <em>Parent</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the container reference '<em>Parent</em>'.
+	 * @see org.earthsystemcurator.cupid.nuopc.fsml.nuopc.NUOPCDriver__ImplementsSetServices#getParent()
+	 * @see #getNUOPCDriver__ImplementsSetServices()
+	 * @generated
+	 */
+	EReference getNUOPCDriver__ImplementsSetServices_Parent();
+
+	/**
+	 * Returns the meta object for the attribute '{@link org.earthsystemcurator.cupid.nuopc.fsml.nuopc.NUOPCDriver__ImplementsSetServices#getName <em>Name</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the attribute '<em>Name</em>'.
+	 * @see org.earthsystemcurator.cupid.nuopc.fsml.nuopc.NUOPCDriver__ImplementsSetServices#getName()
+	 * @see #getNUOPCDriver__ImplementsSetServices()
+	 * @generated
+	 */
+	EAttribute getNUOPCDriver__ImplementsSetServices_Name();
+
+	/**
+	 * Returns the meta object for the attribute '{@link org.earthsystemcurator.cupid.nuopc.fsml.nuopc.NUOPCDriver__ImplementsSetServices#getParam_gcomp <em>Param gcomp</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the attribute '<em>Param gcomp</em>'.
+	 * @see org.earthsystemcurator.cupid.nuopc.fsml.nuopc.NUOPCDriver__ImplementsSetServices#getParam_gcomp()
+	 * @see #getNUOPCDriver__ImplementsSetServices()
+	 * @generated
+	 */
+	EAttribute getNUOPCDriver__ImplementsSetServices_Param_gcomp();
+
+	/**
+	 * Returns the meta object for the attribute '{@link org.earthsystemcurator.cupid.nuopc.fsml.nuopc.NUOPCDriver__ImplementsSetServices#getParam_rc <em>Param rc</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the attribute '<em>Param rc</em>'.
+	 * @see org.earthsystemcurator.cupid.nuopc.fsml.nuopc.NUOPCDriver__ImplementsSetServices#getParam_rc()
+	 * @see #getNUOPCDriver__ImplementsSetServices()
+	 * @generated
+	 */
+	EAttribute getNUOPCDriver__ImplementsSetServices_Param_rc();
+
+	/**
+	 * Returns the meta object for the attribute '{@link org.earthsystemcurator.cupid.nuopc.fsml.nuopc.NUOPCDriver__ImplementsSetServices#isCallsGenericSetServices <em>Calls Generic Set Services</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the attribute '<em>Calls Generic Set Services</em>'.
+	 * @see org.earthsystemcurator.cupid.nuopc.fsml.nuopc.NUOPCDriver__ImplementsSetServices#isCallsGenericSetServices()
+	 * @see #getNUOPCDriver__ImplementsSetServices()
+	 * @generated
+	 */
+	EAttribute getNUOPCDriver__ImplementsSetServices_CallsGenericSetServices();
+
+	/**
 	 * Returns the meta object for class '{@link org.earthsystemcurator.cupid.nuopc.fsml.nuopc.NUOPCApplication <em>Application</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -1423,6 +1703,114 @@ public interface NUOPCPackage extends EPackage {
 	 * @generated
 	 */
 	EReference getNUOPCApplication_NuopcModel();
+
+	/**
+	 * Returns the meta object for the containment reference list '{@link org.earthsystemcurator.cupid.nuopc.fsml.nuopc.NUOPCApplication#getNuopcDriverAtmOcn <em>Nuopc Driver Atm Ocn</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the containment reference list '<em>Nuopc Driver Atm Ocn</em>'.
+	 * @see org.earthsystemcurator.cupid.nuopc.fsml.nuopc.NUOPCApplication#getNuopcDriverAtmOcn()
+	 * @see #getNUOPCApplication()
+	 * @generated
+	 */
+	EReference getNUOPCApplication_NuopcDriverAtmOcn();
+
+	/**
+	 * Returns the meta object for class '{@link org.earthsystemcurator.cupid.nuopc.fsml.nuopc.NUOPCDriverAtmOcn <em>Driver Atm Ocn</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for class '<em>Driver Atm Ocn</em>'.
+	 * @see org.earthsystemcurator.cupid.nuopc.fsml.nuopc.NUOPCDriverAtmOcn
+	 * @generated
+	 */
+	EClass getNUOPCDriverAtmOcn();
+
+	/**
+	 * Returns the meta object for the attribute '{@link org.earthsystemcurator.cupid.nuopc.fsml.nuopc.NUOPCDriverAtmOcn#getName <em>Name</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the attribute '<em>Name</em>'.
+	 * @see org.earthsystemcurator.cupid.nuopc.fsml.nuopc.NUOPCDriverAtmOcn#getName()
+	 * @see #getNUOPCDriverAtmOcn()
+	 * @generated
+	 */
+	EAttribute getNUOPCDriverAtmOcn_Name();
+
+	/**
+	 * Returns the meta object for the containment reference '{@link org.earthsystemcurator.cupid.nuopc.fsml.nuopc.NUOPCDriverAtmOcn#getImplementsSetServices <em>Implements Set Services</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the containment reference '<em>Implements Set Services</em>'.
+	 * @see org.earthsystemcurator.cupid.nuopc.fsml.nuopc.NUOPCDriverAtmOcn#getImplementsSetServices()
+	 * @see #getNUOPCDriverAtmOcn()
+	 * @generated
+	 */
+	EReference getNUOPCDriverAtmOcn_ImplementsSetServices();
+
+	/**
+	 * Returns the meta object for class '{@link org.earthsystemcurator.cupid.nuopc.fsml.nuopc.NUOPCDriverAtmOcn__ImplementsSetServices <em>Driver Atm Ocn Implements Set Services</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for class '<em>Driver Atm Ocn Implements Set Services</em>'.
+	 * @see org.earthsystemcurator.cupid.nuopc.fsml.nuopc.NUOPCDriverAtmOcn__ImplementsSetServices
+	 * @generated
+	 */
+	EClass getNUOPCDriverAtmOcn__ImplementsSetServices();
+
+	/**
+	 * Returns the meta object for the container reference '{@link org.earthsystemcurator.cupid.nuopc.fsml.nuopc.NUOPCDriverAtmOcn__ImplementsSetServices#getParent <em>Parent</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the container reference '<em>Parent</em>'.
+	 * @see org.earthsystemcurator.cupid.nuopc.fsml.nuopc.NUOPCDriverAtmOcn__ImplementsSetServices#getParent()
+	 * @see #getNUOPCDriverAtmOcn__ImplementsSetServices()
+	 * @generated
+	 */
+	EReference getNUOPCDriverAtmOcn__ImplementsSetServices_Parent();
+
+	/**
+	 * Returns the meta object for the attribute '{@link org.earthsystemcurator.cupid.nuopc.fsml.nuopc.NUOPCDriverAtmOcn__ImplementsSetServices#getName <em>Name</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the attribute '<em>Name</em>'.
+	 * @see org.earthsystemcurator.cupid.nuopc.fsml.nuopc.NUOPCDriverAtmOcn__ImplementsSetServices#getName()
+	 * @see #getNUOPCDriverAtmOcn__ImplementsSetServices()
+	 * @generated
+	 */
+	EAttribute getNUOPCDriverAtmOcn__ImplementsSetServices_Name();
+
+	/**
+	 * Returns the meta object for the attribute '{@link org.earthsystemcurator.cupid.nuopc.fsml.nuopc.NUOPCDriverAtmOcn__ImplementsSetServices#getParam_gcomp <em>Param gcomp</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the attribute '<em>Param gcomp</em>'.
+	 * @see org.earthsystemcurator.cupid.nuopc.fsml.nuopc.NUOPCDriverAtmOcn__ImplementsSetServices#getParam_gcomp()
+	 * @see #getNUOPCDriverAtmOcn__ImplementsSetServices()
+	 * @generated
+	 */
+	EAttribute getNUOPCDriverAtmOcn__ImplementsSetServices_Param_gcomp();
+
+	/**
+	 * Returns the meta object for the attribute '{@link org.earthsystemcurator.cupid.nuopc.fsml.nuopc.NUOPCDriverAtmOcn__ImplementsSetServices#getParam_rc <em>Param rc</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the attribute '<em>Param rc</em>'.
+	 * @see org.earthsystemcurator.cupid.nuopc.fsml.nuopc.NUOPCDriverAtmOcn__ImplementsSetServices#getParam_rc()
+	 * @see #getNUOPCDriverAtmOcn__ImplementsSetServices()
+	 * @generated
+	 */
+	EAttribute getNUOPCDriverAtmOcn__ImplementsSetServices_Param_rc();
+
+	/**
+	 * Returns the meta object for the attribute '{@link org.earthsystemcurator.cupid.nuopc.fsml.nuopc.NUOPCDriverAtmOcn__ImplementsSetServices#isCallsGenericSetServices <em>Calls Generic Set Services</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the attribute '<em>Calls Generic Set Services</em>'.
+	 * @see org.earthsystemcurator.cupid.nuopc.fsml.nuopc.NUOPCDriverAtmOcn__ImplementsSetServices#isCallsGenericSetServices()
+	 * @see #getNUOPCDriverAtmOcn__ImplementsSetServices()
+	 * @generated
+	 */
+	EAttribute getNUOPCDriverAtmOcn__ImplementsSetServices_CallsGenericSetServices();
 
 	/**
 	 * Returns the factory that creates the instances of the model.
@@ -1949,6 +2337,72 @@ public interface NUOPCPackage extends EPackage {
 		EClass NUOPC_DRIVER = eINSTANCE.getNUOPCDriver();
 
 		/**
+		 * The meta object literal for the '<em><b>Name</b></em>' attribute feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EAttribute NUOPC_DRIVER__NAME = eINSTANCE.getNUOPCDriver_Name();
+
+		/**
+		 * The meta object literal for the '<em><b>Implements Set Services</b></em>' containment reference feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EReference NUOPC_DRIVER__IMPLEMENTS_SET_SERVICES = eINSTANCE.getNUOPCDriver_ImplementsSetServices();
+
+		/**
+		 * The meta object literal for the '{@link org.earthsystemcurator.cupid.nuopc.fsml.nuopc.impl.NUOPCDriver__ImplementsSetServicesImpl <em>Driver Implements Set Services</em>}' class.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @see org.earthsystemcurator.cupid.nuopc.fsml.nuopc.impl.NUOPCDriver__ImplementsSetServicesImpl
+		 * @see org.earthsystemcurator.cupid.nuopc.fsml.nuopc.impl.NUOPCPackageImpl#getNUOPCDriver__ImplementsSetServices()
+		 * @generated
+		 */
+		EClass NUOPC_DRIVER_IMPLEMENTS_SET_SERVICES = eINSTANCE.getNUOPCDriver__ImplementsSetServices();
+
+		/**
+		 * The meta object literal for the '<em><b>Parent</b></em>' container reference feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EReference NUOPC_DRIVER_IMPLEMENTS_SET_SERVICES__PARENT = eINSTANCE.getNUOPCDriver__ImplementsSetServices_Parent();
+
+		/**
+		 * The meta object literal for the '<em><b>Name</b></em>' attribute feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EAttribute NUOPC_DRIVER_IMPLEMENTS_SET_SERVICES__NAME = eINSTANCE.getNUOPCDriver__ImplementsSetServices_Name();
+
+		/**
+		 * The meta object literal for the '<em><b>Param gcomp</b></em>' attribute feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EAttribute NUOPC_DRIVER_IMPLEMENTS_SET_SERVICES__PARAM_GCOMP = eINSTANCE.getNUOPCDriver__ImplementsSetServices_Param_gcomp();
+
+		/**
+		 * The meta object literal for the '<em><b>Param rc</b></em>' attribute feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EAttribute NUOPC_DRIVER_IMPLEMENTS_SET_SERVICES__PARAM_RC = eINSTANCE.getNUOPCDriver__ImplementsSetServices_Param_rc();
+
+		/**
+		 * The meta object literal for the '<em><b>Calls Generic Set Services</b></em>' attribute feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EAttribute NUOPC_DRIVER_IMPLEMENTS_SET_SERVICES__CALLS_GENERIC_SET_SERVICES = eINSTANCE.getNUOPCDriver__ImplementsSetServices_CallsGenericSetServices();
+
+		/**
 		 * The meta object literal for the '{@link org.earthsystemcurator.cupid.nuopc.fsml.nuopc.impl.NUOPCApplicationImpl <em>Application</em>}' class.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
@@ -1973,6 +2427,90 @@ public interface NUOPCPackage extends EPackage {
 		 * @generated
 		 */
 		EReference NUOPC_APPLICATION__NUOPC_MODEL = eINSTANCE.getNUOPCApplication_NuopcModel();
+
+		/**
+		 * The meta object literal for the '<em><b>Nuopc Driver Atm Ocn</b></em>' containment reference list feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EReference NUOPC_APPLICATION__NUOPC_DRIVER_ATM_OCN = eINSTANCE.getNUOPCApplication_NuopcDriverAtmOcn();
+
+		/**
+		 * The meta object literal for the '{@link org.earthsystemcurator.cupid.nuopc.fsml.nuopc.impl.NUOPCDriverAtmOcnImpl <em>Driver Atm Ocn</em>}' class.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @see org.earthsystemcurator.cupid.nuopc.fsml.nuopc.impl.NUOPCDriverAtmOcnImpl
+		 * @see org.earthsystemcurator.cupid.nuopc.fsml.nuopc.impl.NUOPCPackageImpl#getNUOPCDriverAtmOcn()
+		 * @generated
+		 */
+		EClass NUOPC_DRIVER_ATM_OCN = eINSTANCE.getNUOPCDriverAtmOcn();
+
+		/**
+		 * The meta object literal for the '<em><b>Name</b></em>' attribute feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EAttribute NUOPC_DRIVER_ATM_OCN__NAME = eINSTANCE.getNUOPCDriverAtmOcn_Name();
+
+		/**
+		 * The meta object literal for the '<em><b>Implements Set Services</b></em>' containment reference feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EReference NUOPC_DRIVER_ATM_OCN__IMPLEMENTS_SET_SERVICES = eINSTANCE.getNUOPCDriverAtmOcn_ImplementsSetServices();
+
+		/**
+		 * The meta object literal for the '{@link org.earthsystemcurator.cupid.nuopc.fsml.nuopc.impl.NUOPCDriverAtmOcn__ImplementsSetServicesImpl <em>Driver Atm Ocn Implements Set Services</em>}' class.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @see org.earthsystemcurator.cupid.nuopc.fsml.nuopc.impl.NUOPCDriverAtmOcn__ImplementsSetServicesImpl
+		 * @see org.earthsystemcurator.cupid.nuopc.fsml.nuopc.impl.NUOPCPackageImpl#getNUOPCDriverAtmOcn__ImplementsSetServices()
+		 * @generated
+		 */
+		EClass NUOPC_DRIVER_ATM_OCN_IMPLEMENTS_SET_SERVICES = eINSTANCE.getNUOPCDriverAtmOcn__ImplementsSetServices();
+
+		/**
+		 * The meta object literal for the '<em><b>Parent</b></em>' container reference feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EReference NUOPC_DRIVER_ATM_OCN_IMPLEMENTS_SET_SERVICES__PARENT = eINSTANCE.getNUOPCDriverAtmOcn__ImplementsSetServices_Parent();
+
+		/**
+		 * The meta object literal for the '<em><b>Name</b></em>' attribute feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EAttribute NUOPC_DRIVER_ATM_OCN_IMPLEMENTS_SET_SERVICES__NAME = eINSTANCE.getNUOPCDriverAtmOcn__ImplementsSetServices_Name();
+
+		/**
+		 * The meta object literal for the '<em><b>Param gcomp</b></em>' attribute feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EAttribute NUOPC_DRIVER_ATM_OCN_IMPLEMENTS_SET_SERVICES__PARAM_GCOMP = eINSTANCE.getNUOPCDriverAtmOcn__ImplementsSetServices_Param_gcomp();
+
+		/**
+		 * The meta object literal for the '<em><b>Param rc</b></em>' attribute feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EAttribute NUOPC_DRIVER_ATM_OCN_IMPLEMENTS_SET_SERVICES__PARAM_RC = eINSTANCE.getNUOPCDriverAtmOcn__ImplementsSetServices_Param_rc();
+
+		/**
+		 * The meta object literal for the '<em><b>Calls Generic Set Services</b></em>' attribute feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EAttribute NUOPC_DRIVER_ATM_OCN_IMPLEMENTS_SET_SERVICES__CALLS_GENERIC_SET_SERVICES = eINSTANCE.getNUOPCDriverAtmOcn__ImplementsSetServices_CallsGenericSetServices();
 
 	}
 

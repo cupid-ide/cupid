@@ -9,20 +9,19 @@ public class Regex {
 
 	public static Map<String, Object> parseMappingExpression(String mapping) {
 		
-		System.out.println("parseMapping: " + mapping);
+		//System.out.println("parseMapping: " + mapping);
 		
 		LinkedHashMap<String, Object> result = new LinkedHashMap<String, Object>();
 		
-		Pattern p = Pattern.compile("(\\w+)(\\s*:\\s*(\\d+|\"[^\"]*\"))?");
-		//Pattern.
+		Pattern p = Pattern.compile("(\\w+)(\\s*:\\s*(\\d+|\"[^\"]*\"))?");	
 		Matcher match = p.matcher(mapping);
 		
 		while (match.find()) {
 			
-			System.out.println("Match:");
-			for (int i=0; i<=match.groupCount(); i++) {
-				System.out.println("\t (" + i + ") " + match.group(i));
-			}
+			//System.out.println("Match:");
+			//for (int i=0; i<=match.groupCount(); i++) {
+			//	System.out.println("\t (" + i + ") " + match.group(i));
+			//}
 			
 			String key = match.group(1);
 			String val = match.group(3);

@@ -16,6 +16,7 @@ import org.eclipse.emf.ecore.EObject;
  * <ul>
  *   <li>{@link org.earthsystemcurator.cupid.nuopc.fsml.nuopc.NUOPCApplication#getNuopcDriver <em>Nuopc Driver</em>}</li>
  *   <li>{@link org.earthsystemcurator.cupid.nuopc.fsml.nuopc.NUOPCApplication#getNuopcModel <em>Nuopc Model</em>}</li>
+ *   <li>{@link org.earthsystemcurator.cupid.nuopc.fsml.nuopc.NUOPCApplication#getNuopcDriverAtmOcn <em>Nuopc Driver Atm Ocn</em>}</li>
  * </ul>
  * </p>
  *
@@ -57,5 +58,22 @@ public interface NUOPCApplication extends EObject {
 	 * @generated
 	 */
 	EList<NUOPCModel> getNuopcModel();
+
+	/**
+	 * Returns the value of the '<em><b>Nuopc Driver Atm Ocn</b></em>' containment reference list.
+	 * The list contents are of type {@link org.earthsystemcurator.cupid.nuopc.fsml.nuopc.NUOPCDriverAtmOcn}.
+	 * <!-- begin-user-doc -->
+	 * <p>
+	 * If the meaning of the '<em>Nuopc Driver Atm Ocn</em>' reference list isn't clear,
+	 * there really should be more of a description here...
+	 * </p>
+	 * <!-- end-user-doc -->
+	 * @return the value of the '<em>Nuopc Driver Atm Ocn</em>' containment reference list.
+	 * @see org.earthsystemcurator.cupid.nuopc.fsml.nuopc.NUOPCPackage#getNUOPCApplication_NuopcDriverAtmOcn()
+	 * @model containment="true"
+	 *        annotation="http://www.earthsystemcog.org/projects/nuopc mapping='module'"
+	 * @generated
+	 */
+	EList<NUOPCDriverAtmOcn> getNuopcDriverAtmOcn();
 
 } // NUOPCApplication
