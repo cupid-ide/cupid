@@ -138,6 +138,18 @@ public class NUOPCSwitch<T> extends Switch<T> {
 				if (result == null) result = defaultCase(theEObject);
 				return result;
 			}
+			case NUOPCPackage.NUOPC_DRIVER_IMPLEMENTS_SET_MODEL_COUNT: {
+				NUOPCDriver__ImplementsSetModelCount nuopcDriver__ImplementsSetModelCount = (NUOPCDriver__ImplementsSetModelCount)theEObject;
+				T result = caseNUOPCDriver__ImplementsSetModelCount(nuopcDriver__ImplementsSetModelCount);
+				if (result == null) result = defaultCase(theEObject);
+				return result;
+			}
+			case NUOPCPackage.GETS_INTERNAL_STATE: {
+				GetsInternalState getsInternalState = (GetsInternalState)theEObject;
+				T result = caseGetsInternalState(getsInternalState);
+				if (result == null) result = defaultCase(theEObject);
+				return result;
+			}
 			case NUOPCPackage.NUOPC_APPLICATION: {
 				NUOPCApplication nuopcApplication = (NUOPCApplication)theEObject;
 				T result = caseNUOPCApplication(nuopcApplication);
@@ -337,6 +349,36 @@ public class NUOPCSwitch<T> extends Switch<T> {
 	 * @generated
 	 */
 	public T caseNUOPCDriver__ImplementsSetServices(NUOPCDriver__ImplementsSetServices object) {
+		return null;
+	}
+
+	/**
+	 * Returns the result of interpreting the object as an instance of '<em>Driver Implements Set Model Count</em>'.
+	 * <!-- begin-user-doc -->
+	 * This implementation returns null;
+	 * returning a non-null result will terminate the switch.
+	 * <!-- end-user-doc -->
+	 * @param object the target of the switch.
+	 * @return the result of interpreting the object as an instance of '<em>Driver Implements Set Model Count</em>'.
+	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+	 * @generated
+	 */
+	public T caseNUOPCDriver__ImplementsSetModelCount(NUOPCDriver__ImplementsSetModelCount object) {
+		return null;
+	}
+
+	/**
+	 * Returns the result of interpreting the object as an instance of '<em>Gets Internal State</em>'.
+	 * <!-- begin-user-doc -->
+	 * This implementation returns null;
+	 * returning a non-null result will terminate the switch.
+	 * <!-- end-user-doc -->
+	 * @param object the target of the switch.
+	 * @return the result of interpreting the object as an instance of '<em>Gets Internal State</em>'.
+	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+	 * @generated
+	 */
+	public T caseGetsInternalState(GetsInternalState object) {
 		return null;
 	}
 

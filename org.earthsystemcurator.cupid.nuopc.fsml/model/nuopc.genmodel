@@ -77,7 +77,25 @@
     </genClasses>
     <genClasses ecoreClass="nuopc.ecore#//NUOPCDriver">
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute nuopc.ecore#//NUOPCDriver/name"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute nuopc.ecore#//NUOPCDriver/importsTypeDriverIS"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference nuopc.ecore#//NUOPCDriver/implementsSetServices"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference nuopc.ecore#//NUOPCDriver/implementsSetModelCount"/>
     </genClasses>
+    <genClasses ecoreClass="nuopc.ecore#//NUOPCDriver__ImplementsSetServices">
+      <genFeatures property="None" notify="false" createChild="false" ecoreFeature="ecore:EReference nuopc.ecore#//NUOPCDriver__ImplementsSetServices/parent"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute nuopc.ecore#//NUOPCDriver__ImplementsSetServices/name"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute nuopc.ecore#//NUOPCDriver__ImplementsSetServices/param_gcomp"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute nuopc.ecore#//NUOPCDriver__ImplementsSetServices/param_rc"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute nuopc.ecore#//NUOPCDriver__ImplementsSetServices/callsGenericSetServices"/>
+    </genClasses>
+    <genClasses ecoreClass="nuopc.ecore#//NUOPCDriver__ImplementsSetModelCount">
+      <genFeatures property="None" notify="false" createChild="false" ecoreFeature="ecore:EReference nuopc.ecore#//NUOPCDriver__ImplementsSetModelCount/parent"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute nuopc.ecore#//NUOPCDriver__ImplementsSetModelCount/name"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute nuopc.ecore#//NUOPCDriver__ImplementsSetModelCount/driverInternalState"/>
+      <genFeatures notify="false" children="true" createChild="true" propertySortChoices="true"
+          ecoreFeature="ecore:EReference nuopc.ecore#//NUOPCDriver__ImplementsSetModelCount/getsInternalState"/>
+    </genClasses>
+    <genClasses ecoreClass="nuopc.ecore#//GetsInternalState"/>
     <genClasses ecoreClass="nuopc.ecore#//NUOPCApplication">
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference nuopc.ecore#//NUOPCApplication/nuopcDriver"/>
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference nuopc.ecore#//NUOPCApplication/nuopcModel"/>

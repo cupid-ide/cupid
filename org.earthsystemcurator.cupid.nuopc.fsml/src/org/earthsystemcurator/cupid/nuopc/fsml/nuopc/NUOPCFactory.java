@@ -130,6 +130,24 @@ public interface NUOPCFactory extends EFactory {
 	NUOPCDriver__ImplementsSetServices createNUOPCDriver__ImplementsSetServices();
 
 	/**
+	 * Returns a new object of class '<em>Driver Implements Set Model Count</em>'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return a new object of class '<em>Driver Implements Set Model Count</em>'.
+	 * @generated
+	 */
+	NUOPCDriver__ImplementsSetModelCount createNUOPCDriver__ImplementsSetModelCount();
+
+	/**
+	 * Returns a new object of class '<em>Gets Internal State</em>'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return a new object of class '<em>Gets Internal State</em>'.
+	 * @generated
+	 */
+	GetsInternalState createGetsInternalState();
+
+	/**
 	 * Returns a new object of class '<em>Application</em>'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->

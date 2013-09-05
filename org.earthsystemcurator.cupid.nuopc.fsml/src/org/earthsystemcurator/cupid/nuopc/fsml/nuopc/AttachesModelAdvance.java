@@ -19,7 +19,7 @@ import org.eclipse.emf.ecore.EObject;
  * </p>
  *
  * @see org.earthsystemcurator.cupid.nuopc.fsml.nuopc.NUOPCPackage#getAttachesModelAdvance()
- * @model
+ * @model annotation="http://www.earthsystemcog.org/projects/nuopc mappingX='call: \"ESMF_MethodAdd(#, #label, #userRoutine, #)\"'"
  * @generated
  */
 public interface AttachesModelAdvance extends EObject {

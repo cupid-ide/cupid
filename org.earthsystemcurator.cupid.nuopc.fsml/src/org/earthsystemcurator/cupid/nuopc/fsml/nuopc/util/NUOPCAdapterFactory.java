@@ -116,6 +116,14 @@ public class NUOPCAdapterFactory extends AdapterFactoryImpl {
 				return createNUOPCDriver__ImplementsSetServicesAdapter();
 			}
 			@Override
+			public Adapter caseNUOPCDriver__ImplementsSetModelCount(NUOPCDriver__ImplementsSetModelCount object) {
+				return createNUOPCDriver__ImplementsSetModelCountAdapter();
+			}
+			@Override
+			public Adapter caseGetsInternalState(GetsInternalState object) {
+				return createGetsInternalStateAdapter();
+			}
+			@Override
 			public Adapter caseNUOPCApplication(NUOPCApplication object) {
 				return createNUOPCApplicationAdapter();
 			}
@@ -312,6 +320,34 @@ public class NUOPCAdapterFactory extends AdapterFactoryImpl {
 	 * @generated
 	 */
 	public Adapter createNUOPCDriver__ImplementsSetServicesAdapter() {
+		return null;
+	}
+
+	/**
+	 * Creates a new adapter for an object of class '{@link org.earthsystemcurator.cupid.nuopc.fsml.nuopc.NUOPCDriver__ImplementsSetModelCount <em>Driver Implements Set Model Count</em>}'.
+	 * <!-- begin-user-doc -->
+	 * This default implementation returns null so that we can easily ignore cases;
+	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
+	 * <!-- end-user-doc -->
+	 * @return the new adapter.
+	 * @see org.earthsystemcurator.cupid.nuopc.fsml.nuopc.NUOPCDriver__ImplementsSetModelCount
+	 * @generated
+	 */
+	public Adapter createNUOPCDriver__ImplementsSetModelCountAdapter() {
+		return null;
+	}
+
+	/**
+	 * Creates a new adapter for an object of class '{@link org.earthsystemcurator.cupid.nuopc.fsml.nuopc.GetsInternalState <em>Gets Internal State</em>}'.
+	 * <!-- begin-user-doc -->
+	 * This default implementation returns null so that we can easily ignore cases;
+	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
+	 * <!-- end-user-doc -->
+	 * @return the new adapter.
+	 * @see org.earthsystemcurator.cupid.nuopc.fsml.nuopc.GetsInternalState
+	 * @generated
+	 */
+	public Adapter createGetsInternalStateAdapter() {
 		return null;
 	}
 

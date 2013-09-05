@@ -68,6 +68,8 @@ public class NUOPCFactoryImpl extends EFactoryImpl implements NUOPCFactory {
 			case NUOPCPackage.MODEL_ADVANCE: return createModelAdvance();
 			case NUOPCPackage.NUOPC_DRIVER: return createNUOPCDriver();
 			case NUOPCPackage.NUOPC_DRIVER_IMPLEMENTS_SET_SERVICES: return createNUOPCDriver__ImplementsSetServices();
+			case NUOPCPackage.NUOPC_DRIVER_IMPLEMENTS_SET_MODEL_COUNT: return createNUOPCDriver__ImplementsSetModelCount();
+			case NUOPCPackage.GETS_INTERNAL_STATE: return createGetsInternalState();
 			case NUOPCPackage.NUOPC_APPLICATION: return createNUOPCApplication();
 			case NUOPCPackage.NUOPC_DRIVER_ATM_OCN: return createNUOPCDriverAtmOcn();
 			case NUOPCPackage.NUOPC_DRIVER_ATM_OCN_IMPLEMENTS_SET_SERVICES: return createNUOPCDriverAtmOcn__ImplementsSetServices();
@@ -194,6 +196,26 @@ public class NUOPCFactoryImpl extends EFactoryImpl implements NUOPCFactory {
 	public NUOPCDriver__ImplementsSetServices createNUOPCDriver__ImplementsSetServices() {
 		NUOPCDriver__ImplementsSetServicesImpl nuopcDriver__ImplementsSetServices = new NUOPCDriver__ImplementsSetServicesImpl();
 		return nuopcDriver__ImplementsSetServices;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public NUOPCDriver__ImplementsSetModelCount createNUOPCDriver__ImplementsSetModelCount() {
+		NUOPCDriver__ImplementsSetModelCountImpl nuopcDriver__ImplementsSetModelCount = new NUOPCDriver__ImplementsSetModelCountImpl();
+		return nuopcDriver__ImplementsSetModelCount;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public GetsInternalState createGetsInternalState() {
+		GetsInternalStateImpl getsInternalState = new GetsInternalStateImpl();
+		return getsInternalState;
 	}
 
 	/**

@@ -707,13 +707,31 @@ public interface NUOPCPackage extends EPackage {
 	int NUOPC_DRIVER__NAME = 0;
 
 	/**
+	 * The feature id for the '<em><b>Imports Type Driver IS</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int NUOPC_DRIVER__IMPORTS_TYPE_DRIVER_IS = 1;
+
+	/**
 	 * The feature id for the '<em><b>Implements Set Services</b></em>' containment reference.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int NUOPC_DRIVER__IMPLEMENTS_SET_SERVICES = 1;
+	int NUOPC_DRIVER__IMPLEMENTS_SET_SERVICES = 2;
+
+	/**
+	 * The feature id for the '<em><b>Implements Set Model Count</b></em>' containment reference list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int NUOPC_DRIVER__IMPLEMENTS_SET_MODEL_COUNT = 3;
 
 	/**
 	 * The number of structural features of the '<em>Driver</em>' class.
@@ -722,7 +740,7 @@ public interface NUOPCPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int NUOPC_DRIVER_FEATURE_COUNT = 2;
+	int NUOPC_DRIVER_FEATURE_COUNT = 4;
 
 	/**
 	 * The meta object id for the '{@link org.earthsystemcurator.cupid.nuopc.fsml.nuopc.impl.NUOPCDriver__ImplementsSetServicesImpl <em>Driver Implements Set Services</em>}' class.
@@ -789,6 +807,80 @@ public interface NUOPCPackage extends EPackage {
 	int NUOPC_DRIVER_IMPLEMENTS_SET_SERVICES_FEATURE_COUNT = 5;
 
 	/**
+	 * The meta object id for the '{@link org.earthsystemcurator.cupid.nuopc.fsml.nuopc.impl.NUOPCDriver__ImplementsSetModelCountImpl <em>Driver Implements Set Model Count</em>}' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see org.earthsystemcurator.cupid.nuopc.fsml.nuopc.impl.NUOPCDriver__ImplementsSetModelCountImpl
+	 * @see org.earthsystemcurator.cupid.nuopc.fsml.nuopc.impl.NUOPCPackageImpl#getNUOPCDriver__ImplementsSetModelCount()
+	 * @generated
+	 */
+	int NUOPC_DRIVER_IMPLEMENTS_SET_MODEL_COUNT = 12;
+
+	/**
+	 * The feature id for the '<em><b>Parent</b></em>' container reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int NUOPC_DRIVER_IMPLEMENTS_SET_MODEL_COUNT__PARENT = 0;
+
+	/**
+	 * The feature id for the '<em><b>Name</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int NUOPC_DRIVER_IMPLEMENTS_SET_MODEL_COUNT__NAME = 1;
+
+	/**
+	 * The feature id for the '<em><b>Driver Internal State</b></em>' attribute list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int NUOPC_DRIVER_IMPLEMENTS_SET_MODEL_COUNT__DRIVER_INTERNAL_STATE = 2;
+
+	/**
+	 * The feature id for the '<em><b>Gets Internal State</b></em>' containment reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int NUOPC_DRIVER_IMPLEMENTS_SET_MODEL_COUNT__GETS_INTERNAL_STATE = 3;
+
+	/**
+	 * The number of structural features of the '<em>Driver Implements Set Model Count</em>' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int NUOPC_DRIVER_IMPLEMENTS_SET_MODEL_COUNT_FEATURE_COUNT = 4;
+
+	/**
+	 * The meta object id for the '{@link org.earthsystemcurator.cupid.nuopc.fsml.nuopc.impl.GetsInternalStateImpl <em>Gets Internal State</em>}' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see org.earthsystemcurator.cupid.nuopc.fsml.nuopc.impl.GetsInternalStateImpl
+	 * @see org.earthsystemcurator.cupid.nuopc.fsml.nuopc.impl.NUOPCPackageImpl#getGetsInternalState()
+	 * @generated
+	 */
+	int GETS_INTERNAL_STATE = 13;
+
+	/**
+	 * The number of structural features of the '<em>Gets Internal State</em>' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int GETS_INTERNAL_STATE_FEATURE_COUNT = 0;
+
+	/**
 	 * The meta object id for the '{@link org.earthsystemcurator.cupid.nuopc.fsml.nuopc.impl.NUOPCApplicationImpl <em>Application</em>}' class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -796,7 +888,7 @@ public interface NUOPCPackage extends EPackage {
 	 * @see org.earthsystemcurator.cupid.nuopc.fsml.nuopc.impl.NUOPCPackageImpl#getNUOPCApplication()
 	 * @generated
 	 */
-	int NUOPC_APPLICATION = 12;
+	int NUOPC_APPLICATION = 14;
 
 	/**
 	 * The feature id for the '<em><b>Nuopc Driver</b></em>' containment reference list.
@@ -842,7 +934,7 @@ public interface NUOPCPackage extends EPackage {
 	 * @see org.earthsystemcurator.cupid.nuopc.fsml.nuopc.impl.NUOPCPackageImpl#getNUOPCDriverAtmOcn()
 	 * @generated
 	 */
-	int NUOPC_DRIVER_ATM_OCN = 13;
+	int NUOPC_DRIVER_ATM_OCN = 15;
 
 	/**
 	 * The feature id for the '<em><b>Name</b></em>' attribute.
@@ -879,7 +971,7 @@ public interface NUOPCPackage extends EPackage {
 	 * @see org.earthsystemcurator.cupid.nuopc.fsml.nuopc.impl.NUOPCPackageImpl#getNUOPCDriverAtmOcn__ImplementsSetServices()
 	 * @generated
 	 */
-	int NUOPC_DRIVER_ATM_OCN_IMPLEMENTS_SET_SERVICES = 14;
+	int NUOPC_DRIVER_ATM_OCN_IMPLEMENTS_SET_SERVICES = 16;
 
 	/**
 	 * The feature id for the '<em><b>Parent</b></em>' container reference.
@@ -1597,6 +1689,17 @@ public interface NUOPCPackage extends EPackage {
 	EAttribute getNUOPCDriver_Name();
 
 	/**
+	 * Returns the meta object for the attribute '{@link org.earthsystemcurator.cupid.nuopc.fsml.nuopc.NUOPCDriver#getImportsTypeDriverIS <em>Imports Type Driver IS</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the attribute '<em>Imports Type Driver IS</em>'.
+	 * @see org.earthsystemcurator.cupid.nuopc.fsml.nuopc.NUOPCDriver#getImportsTypeDriverIS()
+	 * @see #getNUOPCDriver()
+	 * @generated
+	 */
+	EAttribute getNUOPCDriver_ImportsTypeDriverIS();
+
+	/**
 	 * Returns the meta object for the containment reference '{@link org.earthsystemcurator.cupid.nuopc.fsml.nuopc.NUOPCDriver#getImplementsSetServices <em>Implements Set Services</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -1606,6 +1709,17 @@ public interface NUOPCPackage extends EPackage {
 	 * @generated
 	 */
 	EReference getNUOPCDriver_ImplementsSetServices();
+
+	/**
+	 * Returns the meta object for the containment reference list '{@link org.earthsystemcurator.cupid.nuopc.fsml.nuopc.NUOPCDriver#getImplementsSetModelCount <em>Implements Set Model Count</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the containment reference list '<em>Implements Set Model Count</em>'.
+	 * @see org.earthsystemcurator.cupid.nuopc.fsml.nuopc.NUOPCDriver#getImplementsSetModelCount()
+	 * @see #getNUOPCDriver()
+	 * @generated
+	 */
+	EReference getNUOPCDriver_ImplementsSetModelCount();
 
 	/**
 	 * Returns the meta object for class '{@link org.earthsystemcurator.cupid.nuopc.fsml.nuopc.NUOPCDriver__ImplementsSetServices <em>Driver Implements Set Services</em>}'.
@@ -1671,6 +1785,70 @@ public interface NUOPCPackage extends EPackage {
 	 * @generated
 	 */
 	EAttribute getNUOPCDriver__ImplementsSetServices_CallsGenericSetServices();
+
+	/**
+	 * Returns the meta object for class '{@link org.earthsystemcurator.cupid.nuopc.fsml.nuopc.NUOPCDriver__ImplementsSetModelCount <em>Driver Implements Set Model Count</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for class '<em>Driver Implements Set Model Count</em>'.
+	 * @see org.earthsystemcurator.cupid.nuopc.fsml.nuopc.NUOPCDriver__ImplementsSetModelCount
+	 * @generated
+	 */
+	EClass getNUOPCDriver__ImplementsSetModelCount();
+
+	/**
+	 * Returns the meta object for the container reference '{@link org.earthsystemcurator.cupid.nuopc.fsml.nuopc.NUOPCDriver__ImplementsSetModelCount#getParent <em>Parent</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the container reference '<em>Parent</em>'.
+	 * @see org.earthsystemcurator.cupid.nuopc.fsml.nuopc.NUOPCDriver__ImplementsSetModelCount#getParent()
+	 * @see #getNUOPCDriver__ImplementsSetModelCount()
+	 * @generated
+	 */
+	EReference getNUOPCDriver__ImplementsSetModelCount_Parent();
+
+	/**
+	 * Returns the meta object for the attribute '{@link org.earthsystemcurator.cupid.nuopc.fsml.nuopc.NUOPCDriver__ImplementsSetModelCount#getName <em>Name</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the attribute '<em>Name</em>'.
+	 * @see org.earthsystemcurator.cupid.nuopc.fsml.nuopc.NUOPCDriver__ImplementsSetModelCount#getName()
+	 * @see #getNUOPCDriver__ImplementsSetModelCount()
+	 * @generated
+	 */
+	EAttribute getNUOPCDriver__ImplementsSetModelCount_Name();
+
+	/**
+	 * Returns the meta object for the attribute list '{@link org.earthsystemcurator.cupid.nuopc.fsml.nuopc.NUOPCDriver__ImplementsSetModelCount#getDriverInternalState <em>Driver Internal State</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the attribute list '<em>Driver Internal State</em>'.
+	 * @see org.earthsystemcurator.cupid.nuopc.fsml.nuopc.NUOPCDriver__ImplementsSetModelCount#getDriverInternalState()
+	 * @see #getNUOPCDriver__ImplementsSetModelCount()
+	 * @generated
+	 */
+	EAttribute getNUOPCDriver__ImplementsSetModelCount_DriverInternalState();
+
+	/**
+	 * Returns the meta object for the containment reference '{@link org.earthsystemcurator.cupid.nuopc.fsml.nuopc.NUOPCDriver__ImplementsSetModelCount#getGetsInternalState <em>Gets Internal State</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the containment reference '<em>Gets Internal State</em>'.
+	 * @see org.earthsystemcurator.cupid.nuopc.fsml.nuopc.NUOPCDriver__ImplementsSetModelCount#getGetsInternalState()
+	 * @see #getNUOPCDriver__ImplementsSetModelCount()
+	 * @generated
+	 */
+	EReference getNUOPCDriver__ImplementsSetModelCount_GetsInternalState();
+
+	/**
+	 * Returns the meta object for class '{@link org.earthsystemcurator.cupid.nuopc.fsml.nuopc.GetsInternalState <em>Gets Internal State</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for class '<em>Gets Internal State</em>'.
+	 * @see org.earthsystemcurator.cupid.nuopc.fsml.nuopc.GetsInternalState
+	 * @generated
+	 */
+	EClass getGetsInternalState();
 
 	/**
 	 * Returns the meta object for class '{@link org.earthsystemcurator.cupid.nuopc.fsml.nuopc.NUOPCApplication <em>Application</em>}'.
@@ -2345,12 +2523,28 @@ public interface NUOPCPackage extends EPackage {
 		EAttribute NUOPC_DRIVER__NAME = eINSTANCE.getNUOPCDriver_Name();
 
 		/**
+		 * The meta object literal for the '<em><b>Imports Type Driver IS</b></em>' attribute feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EAttribute NUOPC_DRIVER__IMPORTS_TYPE_DRIVER_IS = eINSTANCE.getNUOPCDriver_ImportsTypeDriverIS();
+
+		/**
 		 * The meta object literal for the '<em><b>Implements Set Services</b></em>' containment reference feature.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
 		 * @generated
 		 */
 		EReference NUOPC_DRIVER__IMPLEMENTS_SET_SERVICES = eINSTANCE.getNUOPCDriver_ImplementsSetServices();
+
+		/**
+		 * The meta object literal for the '<em><b>Implements Set Model Count</b></em>' containment reference list feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EReference NUOPC_DRIVER__IMPLEMENTS_SET_MODEL_COUNT = eINSTANCE.getNUOPCDriver_ImplementsSetModelCount();
 
 		/**
 		 * The meta object literal for the '{@link org.earthsystemcurator.cupid.nuopc.fsml.nuopc.impl.NUOPCDriver__ImplementsSetServicesImpl <em>Driver Implements Set Services</em>}' class.
@@ -2401,6 +2595,58 @@ public interface NUOPCPackage extends EPackage {
 		 * @generated
 		 */
 		EAttribute NUOPC_DRIVER_IMPLEMENTS_SET_SERVICES__CALLS_GENERIC_SET_SERVICES = eINSTANCE.getNUOPCDriver__ImplementsSetServices_CallsGenericSetServices();
+
+		/**
+		 * The meta object literal for the '{@link org.earthsystemcurator.cupid.nuopc.fsml.nuopc.impl.NUOPCDriver__ImplementsSetModelCountImpl <em>Driver Implements Set Model Count</em>}' class.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @see org.earthsystemcurator.cupid.nuopc.fsml.nuopc.impl.NUOPCDriver__ImplementsSetModelCountImpl
+		 * @see org.earthsystemcurator.cupid.nuopc.fsml.nuopc.impl.NUOPCPackageImpl#getNUOPCDriver__ImplementsSetModelCount()
+		 * @generated
+		 */
+		EClass NUOPC_DRIVER_IMPLEMENTS_SET_MODEL_COUNT = eINSTANCE.getNUOPCDriver__ImplementsSetModelCount();
+
+		/**
+		 * The meta object literal for the '<em><b>Parent</b></em>' container reference feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EReference NUOPC_DRIVER_IMPLEMENTS_SET_MODEL_COUNT__PARENT = eINSTANCE.getNUOPCDriver__ImplementsSetModelCount_Parent();
+
+		/**
+		 * The meta object literal for the '<em><b>Name</b></em>' attribute feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EAttribute NUOPC_DRIVER_IMPLEMENTS_SET_MODEL_COUNT__NAME = eINSTANCE.getNUOPCDriver__ImplementsSetModelCount_Name();
+
+		/**
+		 * The meta object literal for the '<em><b>Driver Internal State</b></em>' attribute list feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EAttribute NUOPC_DRIVER_IMPLEMENTS_SET_MODEL_COUNT__DRIVER_INTERNAL_STATE = eINSTANCE.getNUOPCDriver__ImplementsSetModelCount_DriverInternalState();
+
+		/**
+		 * The meta object literal for the '<em><b>Gets Internal State</b></em>' containment reference feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EReference NUOPC_DRIVER_IMPLEMENTS_SET_MODEL_COUNT__GETS_INTERNAL_STATE = eINSTANCE.getNUOPCDriver__ImplementsSetModelCount_GetsInternalState();
+
+		/**
+		 * The meta object literal for the '{@link org.earthsystemcurator.cupid.nuopc.fsml.nuopc.impl.GetsInternalStateImpl <em>Gets Internal State</em>}' class.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @see org.earthsystemcurator.cupid.nuopc.fsml.nuopc.impl.GetsInternalStateImpl
+		 * @see org.earthsystemcurator.cupid.nuopc.fsml.nuopc.impl.NUOPCPackageImpl#getGetsInternalState()
+		 * @generated
+		 */
+		EClass GETS_INTERNAL_STATE = eINSTANCE.getGetsInternalState();
 
 		/**
 		 * The meta object literal for the '{@link org.earthsystemcurator.cupid.nuopc.fsml.nuopc.impl.NUOPCApplicationImpl <em>Application</em>}' class.

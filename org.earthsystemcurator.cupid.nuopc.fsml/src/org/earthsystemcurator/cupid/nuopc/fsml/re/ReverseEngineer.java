@@ -167,9 +167,7 @@ public class ReverseEngineer {
 							else {
 								result = method.invoke(null, contextNode);
 							}
-							
-							//System.out.println("\tInvocation returned: " + result);
-							
+														
 							//if (sf.getEType().getName().equals("EString") ||
 							//	sf.getEType().getName().equals("EBoolean")) {
 							if (method.getReturnType() == String.class ||
@@ -177,57 +175,61 @@ public class ReverseEngineer {
 								modelElem.eSet(sf, result);
 							}
 							else if (method.getReturnType() == Set.class) {
-								//assume it is an EClass
-								Set<IASTNode> resultSet = (Set<IASTNode>) result;
-								
-								for (IASTNode newContextNode : resultSet) {
-									
-									EObject newModelElem = NUOPCFactory.eINSTANCE.create((EClass) sf.getEType());
-									EObject newModelElemRet = null;
-									
-									// set up parent relationship (may be removed later)									
-									if (sf.isMany()) {
-										EList el = (EList) modelElem.eGet(sf);
-										el.add(newModelElem);
-									}
-									else {
-										modelElem.eSet(sf, newModelElem);
-									}
-																	
-									//recursive call
-									newModelElemRet = reverseContext(newContextNode, newModelElem);
-									
-									// if NULL returned, then remove model element from parent
-									if (newModelElemRet == null) {
+														
+								//do we have a set of primitives?
+								if (sf.getEType().equals(EcoreFactory.eINSTANCE.getEcorePackage().getEString())) {
+									Set<String> resultSet = (Set<String>) result;
+									for (String res : resultSet) {
 										if (sf.isMany()) {
 											EList el = (EList) modelElem.eGet(sf);
-											el.remove(newModelElem);
+											el.add(res);
 										}
 										else {
-											//consider replacing with previous value
-											modelElem.eUnset(sf);
+											modelElem.eSet(sf, res);
+											break;  //just take first one
 										}
 									}
-									else if (!sf.isMany()) {
-										break; // take first one that is not null
-									}
+								}
+								//result is a set of objects
+								else {
 									
-									/*
-									if (newModelElem != null) {
-	
-										//multi-valued?
+									Set<IASTNode> resultSet = (Set<IASTNode>) result;
+									
+									for (IASTNode newContextNode : resultSet) {
+										
+										EObject newModelElem = NUOPCFactory.eINSTANCE.create((EClass) sf.getEType());
+										EObject newModelElemRet = null;
+										
+										// set up parent relationship for references (may be removed later)									
 										if (sf.isMany()) {
 											EList el = (EList) modelElem.eGet(sf);
 											el.add(newModelElem);
 										}
 										else {
 											modelElem.eSet(sf, newModelElem);
-											break; // take first one that is not null
 										}
-											
+																		
+										//recursive call
+										newModelElemRet = reverseContext(newContextNode, newModelElem);
+										
+										// if NULL returned, then remove model element from parent
+										if (newModelElemRet == null) {
+											if (sf.isMany()) {
+												EList el = (EList) modelElem.eGet(sf);
+												el.remove(newModelElem);
+											}
+											else {
+												//consider replacing with previous value
+												modelElem.eUnset(sf);
+											}
+										}
+										else if (!sf.isMany()) {
+											break; // take first one that is not null
+										}									
+									
 									}
-									*/
-								}
+										
+								} // end check for primitives vs. objects in results
 								
 							}
 							

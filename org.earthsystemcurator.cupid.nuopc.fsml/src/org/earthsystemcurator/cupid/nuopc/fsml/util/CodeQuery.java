@@ -8,22 +8,30 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import org.eclipse.photran.internal.core.analysis.binding.Definition;
+import org.eclipse.photran.internal.core.analysis.binding.ScopingNode;
 import org.eclipse.photran.internal.core.analysis.types.DerivedType;
 import org.eclipse.photran.internal.core.analysis.types.FunctionType;
 import org.eclipse.photran.internal.core.analysis.types.Type;
 import org.eclipse.photran.internal.core.analysis.types.TypeProcessor;
 import org.eclipse.photran.internal.core.lexer.Token;
 import org.eclipse.photran.internal.core.parser.ASTCallStmtNode;
+import org.eclipse.photran.internal.core.parser.ASTDerivedTypeStmtNode;
+import org.eclipse.photran.internal.core.parser.ASTEntityDeclNode;
 import org.eclipse.photran.internal.core.parser.ASTModuleNode;
+import org.eclipse.photran.internal.core.parser.ASTNode;
 import org.eclipse.photran.internal.core.parser.ASTOnlyNode;
 import org.eclipse.photran.internal.core.parser.ASTSubroutineArgNode;
 import org.eclipse.photran.internal.core.parser.ASTSubroutineParNode;
 import org.eclipse.photran.internal.core.parser.ASTSubroutineSubprogramNode;
+import org.eclipse.photran.internal.core.parser.ASTTypeDeclarationStmtNode;
 import org.eclipse.photran.internal.core.parser.ASTUseStmtNode;
 import org.eclipse.photran.internal.core.parser.ASTVarOrFnRefNode;
 import org.eclipse.photran.internal.core.parser.IASTNode;
+import org.eclipse.photran.internal.core.parser.IDeclarationConstruct;
 import org.eclipse.photran.internal.core.parser.IExpr;
+import org.eclipse.photran.internal.core.vpg.EdgeType;
 import org.eclipse.photran.internal.core.vpg.PhotranTokenRef;
+import org.eclipse.photran.internal.core.vpg.PhotranVPG;
 
 @SuppressWarnings("restriction")
 public class CodeQuery {
@@ -176,8 +184,350 @@ public class CodeQuery {
 	
 	public static String formalParam(ASTSubroutineSubprogramNode node, Map<String, Object> params) {
 		
+		
 		int idx = (Integer) params.get("formalParam") - 1;
 		return node.getSubroutineStmt().getSubroutinePars().get(idx).getVariableName().getText();		
+	}
+	
+	
+	public static String uses(ASTModuleNode node, Map<String, Object> params) {
+		
+		String moduleName = (String) params.get("uses");
+		String entityName = (String) params.get("entity");
+		
+		for (ASTUseStmtNode usn : node.findAll(ASTUseStmtNode.class)) {
+			if (usn.getName().getText().equalsIgnoreCase(moduleName)) {
+				for (ASTOnlyNode only : usn.getOnlyList()) {
+					if (only.getName().getText().equalsIgnoreCase(entityName)) {
+						if (only.getNewName() != null) {
+							return only.getNewName().getText();
+						}
+						else {
+							return entityName;
+						}
+					}
+				}
+			}			
+		}
+		
+		return null;
+		
+	}
+	
+	public static Definition findDefinitionOfRenamedModuleEntity(ASTModuleNode node, Definition def) {
+		
+		for (ASTUseStmtNode usn : node.findAll(ASTUseStmtNode.class)) {
+			if (usn.getOnlyList() != null) {
+				for (ASTOnlyNode on : usn.getOnlyList()) {				
+					if (on.getNewName() != null && on.getNewName().getText().equalsIgnoreCase(def.getCanonicalizedName())) {
+						//this is the renamed entity
+						//for (PhotranTokenRef ptr : on.getName().getTokenRef().followOutgoing(EdgeType.IMPORTED_INTO_SCOPE_EDGE_TYPE)) {
+						//	System.out.println("EDGE imported: " + ptr.findToken());
+						//}
+						for (PhotranTokenRef ptr : on.getName().getTokenRef().followOutgoing(EdgeType.BINDING_EDGE_TYPE)) {
+							Token t = ptr.findToken();
+							Definition d = PhotranVPG.getInstance().getDefinitionFor(ptr);
+							System.out.println("Definition = " + d);
+							//System.out.println("EDGE binding: " + ptr.findToken());
+						}
+						
+						//Definition d = PhotranVPG.getInstance().getDefinitionFor(ptr);
+						//return d;
+						//for (Definition d : PhotranVPG.getInstance().getModuleSymbolTable(usn.getName().getText())) {
+						//	if (d.getCanonicalizedName().equals(on.getName().getText().toLowerCase())) {
+						//		return d;
+						//	}
+						//}
+					}
+				}
+			}
+		}
+		
+		return null;
+		
+	}
+	
+	//recusively follows BINDING and RENAME edges until the parent AST node of the token has the type clazz
+	public static <NodeType extends ASTNode> NodeType followOutgoingTo(PhotranTokenRef ptr, Class<NodeType> clazz) {		
+		for (PhotranTokenRef ptr2 : ptr.followOutgoing(EdgeType.BINDING_EDGE_TYPE)) {
+			Token t = ptr2.findToken();
+			if (t.getParent().getClass() == clazz) {
+				return (NodeType) t.getParent();
+			}		
+			else {
+				NodeType x =  followOutgoingTo(ptr2, clazz);
+				if (x!=null) {
+					return x;
+				}				
+			}
+		}
+		for (PhotranTokenRef ptr2 : ptr.followOutgoing(EdgeType.RENAMED_BINDING_EDGE_TYPE)) {
+			Token t = ptr2.findToken();
+			if (t.getParent().getClass() == clazz) {
+				return (NodeType) t.getParent();
+			}		
+			else {
+				NodeType x =  followOutgoingTo(ptr2, clazz);
+				if (x!=null) {
+					return x;
+				}				
+			}
+		}
+		
+		return null;
+	}
+	
+	public static Set<String> localVariable(ScopingNode node, Map<String, Object> params) {
+		
+		//TODO:  this does not handle derived types that a renamed module entities
+		
+		Set<String> result = new HashSet<String>();
+		
+		final String varType = ((String) params.get("localVariable")).toLowerCase();
+		final String definedInModule = ((String) params.get("definedInModule")).toLowerCase();
+		
+		System.out.println("searching "  + node.getName() + " for localVariable type: " + varType);
+				
+		//Set<ASTTypeDeclarationStmtNode> nodes = node.findAll(ASTTypeDeclarationStmtNode.class);
+		//for (ASTTypeDeclarationStmtNode n : nodes) {
+		
+		for (final Definition def : node.getAllDefinitions()) {
+					
+			boolean toAdd = false;
+		
+			//if (varType.equals("integer") || varType.equals("character") || 
+			//	varType.equals("logical") || varType.equals("real") || 
+			//	varType.equals("double precision")) {
+			
+			if (true) {
+				
+				//intrinsic type
+				//if (def.isIntrinsic()) {
+					
+					toAdd = def.getType().processUsing(new TypeProcessor<Boolean>() {
+						
+						@Override
+						public Boolean ifDerivedType(String derivedTypeName, DerivedType type) {
+							if (varType.startsWith("type(")) {
+								
+								
+								//START HERE - definition approach is not working - revert?
+								Set<PhotranTokenRef> ptrs = def.findAllReferences(false);
+								for (PhotranTokenRef ptr : ptrs) {
+									Token t = ptr.findToken();
+									System.out.println("ptr = " + t);
+								}
+								
+								PhotranTokenRef ptr = def.getTokenRef();
+								ASTDerivedTypeStmtNode dtsn = followOutgoingTo(ptr, ASTDerivedTypeStmtNode.class);
+								if (dtsn != null && ("type(" + dtsn.getTypeName().getText() + ")").equalsIgnoreCase(varType)) {
+									System.out.println("dtsn = " + dtsn);
+									if (definedInModule != null) {
+										ScopingNode sn = dtsn.getTypeName().getEnclosingScope();
+										if (sn.isModule()) {
+											if (((ASTModuleNode) sn).getName().equalsIgnoreCase(definedInModule)) {
+												return true;
+											}
+										}
+										else {
+											throw new RuntimeException("Expecting module as scoping node....");
+										}
+									}
+									else {	
+										return true;
+									}
+								}
+								
+								
+							}
+							
+							return false;
+						}
+						
+						@Override
+						public Boolean ifInteger(Type type) {
+							return varType.equals("integer");
+						}
+						
+						@Override
+						public Boolean ifCharacter(Type type) {
+							return varType.equals("character");
+						}
+						
+						@Override
+						public Boolean ifLogical(Type type) {
+							return varType.equals("logical");
+						}
+						
+						@Override
+						public Boolean ifReal(Type type) {
+							return varType.equals("real");
+						}
+						
+						@Override
+						public Boolean ifDoublePrecision(Type type) {
+							return varType.equals("double precision");
+						}
+						
+					});
+				//}
+				
+			} // end if check for instrinsic
+				
+			
+			//if (varType.equalsIgnoreCase("integer") && n.getTypeSpec().isInteger() || 
+			//	varType.equalsIgnoreCase("character") && n.getTypeSpec().isCharacter() ||
+			//	varType.equalsIgnoreCase("logical") && n.getTypeSpec().isLogical() ||
+			//	varType.equalsIgnoreCase("real") && n.getTypeSpec().isReal() ||
+			//	varType.equalsIgnoreCase("double") && n.getTypeSpec().isDouble()) {
+			//	//TODO: add other built-in types as needed
+			//	toAdd = true;
+			//}
+			else if (varType.startsWith("type(") && def.isDerivedType()) {
+				
+				//this type name could be a renamed module entity
+				//System.out.println("\tfound declaration: " + n.getTypeSpec().getTypeName());
+				System.out.println("\tfound def: " + def);
+				
+				//PhotranTokenRef ptr = n.getTypeSpec().getTypeName().getTokenRef();
+				PhotranTokenRef ptr = def.getTokenRef();				
+				
+				ASTDerivedTypeStmtNode dtsn = followOutgoingTo(ptr, ASTDerivedTypeStmtNode.class);
+				if (dtsn != null && ("type(" + dtsn.getTypeName().getText() + ")").equalsIgnoreCase(varType)) {
+					System.out.println("dtsn = " + dtsn);
+					if (definedInModule != null) {
+						ScopingNode sn = dtsn.getTypeName().getEnclosingScope();
+						if (sn.isModule()) {
+							if (((ASTModuleNode) sn).getName().equalsIgnoreCase(definedInModule)) {
+								toAdd = true;
+							}
+						}
+						else {
+							throw new RuntimeException("Expecting module as scoping node....");
+						}
+					}
+					else {	
+						toAdd = true;
+					}
+				}
+				
+				/*
+				for (PhotranTokenRef defPtr : ptr.followOutgoing(EdgeType.BINDING_EDGE_TYPE)) {
+					Token tkn = defPtr.findToken();
+					if (tkn.getParent() instanceof ASTDerivedTypeStmtNode) {
+						ASTDerivedTypeStmtNode dtsn = (ASTDerivedTypeStmtNode) tkn.getParent();
+						dtsn.getTypeName()
+					}
+					
+					System.out.println("BINDING_EDGE_TYPE: " + ptr2);
+					//binding edge is: 
+					// - newName token of ASTOnlyNode
+					// - typeName token of ASTDrivedTypeStmtNode
+					
+				}
+				for (PhotranTokenRef ptr2 : ptr1.followOutgoing(EdgeType.IMPORTED_INTO_SCOPE_EDGE_TYPE)) {
+					Token t = ptr2.findToken();
+					System.out.println("IMPORTED_INTO_SCOPE_EDGE_TYPE: " + ptr2);
+				}
+				for (PhotranTokenRef ptr2 : ptr1.followOutgoing(EdgeType.RENAMED_BINDING_EDGE_TYPE)) {
+					Token t = ptr2.findToken();
+					System.out.println("RENAMED_BINDING_EDGE_TYPE: " + ptr2);
+				}				
+				*/
+				
+				//this will look in local scope and then parent scopes recursively
+				/*
+				List<PhotranTokenRef> ptrs = node.manuallyResolve(n.getTypeSpec().getTypeName());
+				for (PhotranTokenRef ptr : ptrs) {
+					
+					for (PhotranTokenRef ptr2 : ptr.followOutgoing(EdgeType.BINDING_EDGE_TYPE)) {
+						System.out.println("BINDING_EDGE_TYPE: " + ptr2);
+					}
+					for (PhotranTokenRef ptr2 : ptr.followOutgoing(EdgeType.IMPORTED_INTO_SCOPE_EDGE_TYPE)) {
+						System.out.println("IMPORTED_INTO_SCOPE_EDGE_TYPE: " + ptr2);
+					}
+					for (PhotranTokenRef ptr2 : ptr.followOutgoing(EdgeType.RENAMED_BINDING_EDGE_TYPE)) {
+						Token t = ptr2.findToken();
+						System.out.println("RENAMED_BINDING_EDGE_TYPE: " + ptr2);
+						//typeName of ASTDerivedTypeStmtNode
+					}
+					*/
+				
+					/*
+					Token t = ptr.findToken();
+					System.out.println("\t\t--> ftr = " + t);
+					List<Definition> defs = t.resolveBinding();
+					for (Definition d : defs) {
+						Definition d2 = findDefinitionOfRenamedModuleEntity(n.findNearestAncestor(ASTModuleNode.class), d);
+						//d.findAllReferences(true);
+						System.out.println("\t\t\t--> d: "+ d);
+						System.out.println("\t\t\t--> d2: "+ d2);
+					}
+					*/
+					
+					//System.out.println("\t\t----> " + ftr.findToken())
+				}
+												
+				// if we found the type, then add it
+				if (toAdd) {
+					result.add(def.getDeclaredName());
+					//for (ASTEntityDeclNode decl : n.getEntityDeclList()) {
+					//	result.add(decl.getObjectName().getObjectName().getText());
+					//}
+				}
+				
+			}
+		
+		
+		
+		
+		
+		  
+		 //this approach fails because def.getType() does not resolve
+		 //the type all the way back to the declaring module (e.g., in the
+		 //case of renamed module entities)
+		/*
+		List<Definition> defs = node.getAllDefinitions();
+		for (Definition def : defs) {
+			
+			
+			System.out.println("\tlocal def: " + def);
+			if (def.isLocalVariable() && def.getType() != null) {
+								
+				System.out.println(def.isRenamedModuleEntity());
+				System.out.println(def.getTokenRef().findToken());
+				
+				boolean found = def.getType().processUsing(new TypeProcessor<Boolean>() {
+					
+					@Override
+					public Boolean ifDerivedType(String derivedTypeName,
+							DerivedType type) {
+						
+						System.out.println("\t\tderivedTypeName = " + derivedTypeName);
+						System.out.println("\t\tType = " + type);						
+	
+						return false;
+					}
+					
+					@Override
+					public Boolean ifUnknown(Type type) {
+						return false;
+					}
+					
+					@Override
+					public Boolean ifInteger(Type type) {
+						return varType.equalsIgnoreCase("integer");
+					}
+					
+				});
+				if (found) {
+					result.add(def.getDeclaredName());
+				}
+			}
+		}
+		*/
+		
+		return result;
 	}
 	
 	public static Set<ASTSubroutineSubprogramNode> findSubroutineByParamTypes(IASTNode node, String... stypes) {
@@ -430,11 +780,10 @@ public class CodeQuery {
 				
 				System.out.println("No defs found for: " + subroutineName);
 				
-				List<PhotranTokenRef> trefs = csn.getSubroutineName().manuallyResolveBinding();
-				for (PhotranTokenRef tf : trefs) {
-					System.out.println("\tToken Ref: " + tf.findToken());
-				}				
-				//csn.getSubroutineName()
+				//List<PhotranTokenRef> trefs = csn.getSubroutineName().manuallyResolveBinding();
+				//for (PhotranTokenRef tf : trefs) {
+				//	System.out.println("\tToken Ref: " + tf.findToken());
+				//}				
 				
 				if (csn.getSubroutineName().getText().equalsIgnoreCase(subroutineName)) {
 			
