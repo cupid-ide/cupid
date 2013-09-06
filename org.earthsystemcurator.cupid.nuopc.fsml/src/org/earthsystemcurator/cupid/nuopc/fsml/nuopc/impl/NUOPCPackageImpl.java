@@ -905,6 +905,15 @@ public class NUOPCPackageImpl extends EPackageImpl implements NUOPCPackage {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	public EAttribute getGetsInternalState_Label() {
+		return (EAttribute)getsInternalStateEClass.getEStructuralFeatures().get(0);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
 	public EClass getNUOPCApplication() {
 		return nuopcApplicationEClass;
 	}
@@ -1134,6 +1143,7 @@ public class NUOPCPackageImpl extends EPackageImpl implements NUOPCPackage {
 		createEReference(nuopcDriver__ImplementsSetModelCountEClass, NUOPC_DRIVER_IMPLEMENTS_SET_MODEL_COUNT__GETS_INTERNAL_STATE);
 
 		getsInternalStateEClass = createEClass(GETS_INTERNAL_STATE);
+		createEAttribute(getsInternalStateEClass, GETS_INTERNAL_STATE__LABEL);
 
 		nuopcApplicationEClass = createEClass(NUOPC_APPLICATION);
 		createEReference(nuopcApplicationEClass, NUOPC_APPLICATION__NUOPC_DRIVER);
@@ -1272,6 +1282,7 @@ public class NUOPCPackageImpl extends EPackageImpl implements NUOPCPackage {
 		initEReference(getNUOPCDriver__ImplementsSetModelCount_GetsInternalState(), this.getGetsInternalState(), null, "getsInternalState", null, 0, 1, NUOPCDriver__ImplementsSetModelCount.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
 		initEClass(getsInternalStateEClass, GetsInternalState.class, "GetsInternalState", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+		initEAttribute(getGetsInternalState_Label(), ecorePackage.getEString(), "label", null, 0, 1, GetsInternalState.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
 		initEClass(nuopcApplicationEClass, NUOPCApplication.class, "NUOPCApplication", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 		initEReference(getNUOPCApplication_NuopcDriver(), this.getNUOPCDriver(), null, "nuopcDriver", null, 0, -1, NUOPCApplication.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
@@ -1316,7 +1327,7 @@ public class NUOPCPackageImpl extends EPackageImpl implements NUOPCPackage {
 			 "invocationDelegates", "http://www.eclipse.org/emf/2002/Ecore/OCL",
 			 "settingDelegates", "http://www.eclipse.org/emf/2002/Ecore/OCL",
 			 "validationDelegates", "http://www.eclipse.org/emf/2002/Ecore/OCL"
-		   });																																																																											
+		   });																																																																												
 	}
 
 	/**
@@ -1454,7 +1465,7 @@ public class NUOPCPackageImpl extends EPackageImpl implements NUOPCPackage {
 		  (getModelImplementsInitP1_AdvertisesAtLeastOneField(), 
 		   source, 
 		   new String[] {
-			 "essential", "true"
+			 "essential", "false"
 		   });			
 		addAnnotation
 		  (modelImplementsInitP2EClass, 
@@ -1672,13 +1683,19 @@ public class NUOPCPackageImpl extends EPackageImpl implements NUOPCPackage {
 		  (getNUOPCDriver__ImplementsSetModelCount_DriverInternalState(), 
 		   source, 
 		   new String[] {
-			 "mapping", "localVariable: \"type(type_InternalState)\" definedInModule: \"NUOPC_DriverX\""
+			 "mapping", "localVariable: \"type(type_InternalState)\" definedInModule: \"NUOPC_Driver\""
 		   });		
 		addAnnotation
 		  (getNUOPCDriver__ImplementsSetModelCount_GetsInternalState(), 
 		   source, 
 		   new String[] {
 			 "mapping", "call: \"ESMF_UserCompGetInternalState\""
+		   });		
+		addAnnotation
+		  (getGetsInternalState_Label(), 
+		   source, 
+		   new String[] {
+			 "mapping", "argByIndex: 2"
 		   });		
 		addAnnotation
 		  (getNUOPCApplication_NuopcDriver(), 
@@ -1793,7 +1810,7 @@ public class NUOPCPackageImpl extends EPackageImpl implements NUOPCPackage {
 		   source, 
 		   new String[] {
 			 "derivation", "self.parent.implementsSetServices.attachesModelAdvance.userRoutine = self.name"
-		   });																							
+		   });																								
 	}
 
 } //NUOPCPackageImpl

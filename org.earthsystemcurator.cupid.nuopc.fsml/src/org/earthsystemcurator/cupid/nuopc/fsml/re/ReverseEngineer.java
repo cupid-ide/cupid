@@ -241,7 +241,7 @@ public class ReverseEngineer {
 							e.printStackTrace();
 						}
 						
-						break;  //from for loop
+						break;  //from for loop because we found method
 					}
 				} // end for
 							

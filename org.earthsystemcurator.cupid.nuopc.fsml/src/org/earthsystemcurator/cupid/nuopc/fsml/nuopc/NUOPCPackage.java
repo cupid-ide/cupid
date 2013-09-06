@@ -872,13 +872,22 @@ public interface NUOPCPackage extends EPackage {
 	int GETS_INTERNAL_STATE = 13;
 
 	/**
+	 * The feature id for the '<em><b>Label</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int GETS_INTERNAL_STATE__LABEL = 0;
+
+	/**
 	 * The number of structural features of the '<em>Gets Internal State</em>' class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int GETS_INTERNAL_STATE_FEATURE_COUNT = 0;
+	int GETS_INTERNAL_STATE_FEATURE_COUNT = 1;
 
 	/**
 	 * The meta object id for the '{@link org.earthsystemcurator.cupid.nuopc.fsml.nuopc.impl.NUOPCApplicationImpl <em>Application</em>}' class.
@@ -1851,6 +1860,17 @@ public interface NUOPCPackage extends EPackage {
 	EClass getGetsInternalState();
 
 	/**
+	 * Returns the meta object for the attribute '{@link org.earthsystemcurator.cupid.nuopc.fsml.nuopc.GetsInternalState#getLabel <em>Label</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the attribute '<em>Label</em>'.
+	 * @see org.earthsystemcurator.cupid.nuopc.fsml.nuopc.GetsInternalState#getLabel()
+	 * @see #getGetsInternalState()
+	 * @generated
+	 */
+	EAttribute getGetsInternalState_Label();
+
+	/**
 	 * Returns the meta object for class '{@link org.earthsystemcurator.cupid.nuopc.fsml.nuopc.NUOPCApplication <em>Application</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -2647,6 +2667,14 @@ public interface NUOPCPackage extends EPackage {
 		 * @generated
 		 */
 		EClass GETS_INTERNAL_STATE = eINSTANCE.getGetsInternalState();
+
+		/**
+		 * The meta object literal for the '<em><b>Label</b></em>' attribute feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EAttribute GETS_INTERNAL_STATE__LABEL = eINSTANCE.getGetsInternalState_Label();
 
 		/**
 		 * The meta object literal for the '{@link org.earthsystemcurator.cupid.nuopc.fsml.nuopc.impl.NUOPCApplicationImpl <em>Application</em>}' class.

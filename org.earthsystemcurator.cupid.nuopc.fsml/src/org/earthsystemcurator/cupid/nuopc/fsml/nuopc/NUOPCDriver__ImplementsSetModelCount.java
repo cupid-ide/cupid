@@ -92,7 +92,7 @@ public interface NUOPCDriver__ImplementsSetModelCount extends EObject {
 	 * <!-- end-user-doc -->
 	 * @return the value of the '<em>Driver Internal State</em>' attribute list.
 	 * @see org.earthsystemcurator.cupid.nuopc.fsml.nuopc.NUOPCPackage#getNUOPCDriver__ImplementsSetModelCount_DriverInternalState()
-	 * @model annotation="http://www.earthsystemcog.org/projects/nuopc mapping='localVariable: \"type(type_InternalState)\" definedInModule: \"NUOPC_DriverX\"'"
+	 * @model annotation="http://www.earthsystemcog.org/projects/nuopc mapping='localVariable: \"type(type_InternalState)\" definedInModule: \"NUOPC_Driver\"'"
 	 * @generated
 	 */
 	EList<String> getDriverInternalState();
