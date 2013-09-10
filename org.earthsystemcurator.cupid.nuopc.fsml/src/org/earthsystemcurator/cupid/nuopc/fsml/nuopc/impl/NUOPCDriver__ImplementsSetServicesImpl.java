@@ -2,6 +2,8 @@
  */
 package org.earthsystemcurator.cupid.nuopc.fsml.nuopc.impl;
 
+import java.util.Collection;
+import org.earthsystemcurator.cupid.nuopc.fsml.nuopc.AttachesMethod;
 import org.earthsystemcurator.cupid.nuopc.fsml.nuopc.NUOPCDriver;
 import org.earthsystemcurator.cupid.nuopc.fsml.nuopc.NUOPCDriver__ImplementsSetServices;
 import org.earthsystemcurator.cupid.nuopc.fsml.nuopc.NUOPCPackage;
@@ -9,13 +11,16 @@ import org.earthsystemcurator.cupid.nuopc.fsml.nuopc.NUOPCPackage;
 import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.common.notify.NotificationChain;
 
+import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.InternalEObject;
 
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
 import org.eclipse.emf.ecore.impl.EObjectImpl;
 
+import org.eclipse.emf.ecore.util.EObjectContainmentEList;
 import org.eclipse.emf.ecore.util.EcoreUtil;
+import org.eclipse.emf.ecore.util.InternalEList;
 
 /**
  * <!-- begin-user-doc -->
@@ -29,6 +34,7 @@ import org.eclipse.emf.ecore.util.EcoreUtil;
  *   <li>{@link org.earthsystemcurator.cupid.nuopc.fsml.nuopc.impl.NUOPCDriver__ImplementsSetServicesImpl#getParam_gcomp <em>Param gcomp</em>}</li>
  *   <li>{@link org.earthsystemcurator.cupid.nuopc.fsml.nuopc.impl.NUOPCDriver__ImplementsSetServicesImpl#getParam_rc <em>Param rc</em>}</li>
  *   <li>{@link org.earthsystemcurator.cupid.nuopc.fsml.nuopc.impl.NUOPCDriver__ImplementsSetServicesImpl#isCallsGenericSetServices <em>Calls Generic Set Services</em>}</li>
+ *   <li>{@link org.earthsystemcurator.cupid.nuopc.fsml.nuopc.impl.NUOPCDriver__ImplementsSetServicesImpl#getAttachesMethod <em>Attaches Method</em>}</li>
  * </ul>
  * </p>
  *
@@ -114,6 +120,16 @@ public class NUOPCDriver__ImplementsSetServicesImpl extends EObjectImpl implemen
 	 * @ordered
 	 */
 	protected boolean callsGenericSetServices = CALLS_GENERIC_SET_SERVICES_EDEFAULT;
+
+	/**
+	 * The cached value of the '{@link #getAttachesMethod() <em>Attaches Method</em>}' containment reference list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #getAttachesMethod()
+	 * @generated
+	 * @ordered
+	 */
+	protected EList<AttachesMethod> attachesMethod;
 
 	/**
 	 * <!-- begin-user-doc -->
@@ -264,6 +280,18 @@ public class NUOPCDriver__ImplementsSetServicesImpl extends EObjectImpl implemen
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	public EList<AttachesMethod> getAttachesMethod() {
+		if (attachesMethod == null) {
+			attachesMethod = new EObjectContainmentEList<AttachesMethod>(AttachesMethod.class, this, NUOPCPackage.NUOPC_DRIVER_IMPLEMENTS_SET_SERVICES__ATTACHES_METHOD);
+		}
+		return attachesMethod;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
 	@Override
 	public NotificationChain eInverseAdd(InternalEObject otherEnd, int featureID, NotificationChain msgs) {
 		switch (featureID) {
@@ -285,6 +313,8 @@ public class NUOPCDriver__ImplementsSetServicesImpl extends EObjectImpl implemen
 		switch (featureID) {
 			case NUOPCPackage.NUOPC_DRIVER_IMPLEMENTS_SET_SERVICES__PARENT:
 				return basicSetParent(null, msgs);
+			case NUOPCPackage.NUOPC_DRIVER_IMPLEMENTS_SET_SERVICES__ATTACHES_METHOD:
+				return ((InternalEList<?>)getAttachesMethod()).basicRemove(otherEnd, msgs);
 		}
 		return super.eInverseRemove(otherEnd, featureID, msgs);
 	}
@@ -321,6 +351,8 @@ public class NUOPCDriver__ImplementsSetServicesImpl extends EObjectImpl implemen
 				return getParam_rc();
 			case NUOPCPackage.NUOPC_DRIVER_IMPLEMENTS_SET_SERVICES__CALLS_GENERIC_SET_SERVICES:
 				return isCallsGenericSetServices();
+			case NUOPCPackage.NUOPC_DRIVER_IMPLEMENTS_SET_SERVICES__ATTACHES_METHOD:
+				return getAttachesMethod();
 		}
 		return super.eGet(featureID, resolve, coreType);
 	}
@@ -330,6 +362,7 @@ public class NUOPCDriver__ImplementsSetServicesImpl extends EObjectImpl implemen
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@SuppressWarnings("unchecked")
 	@Override
 	public void eSet(int featureID, Object newValue) {
 		switch (featureID) {
@@ -347,6 +380,10 @@ public class NUOPCDriver__ImplementsSetServicesImpl extends EObjectImpl implemen
 				return;
 			case NUOPCPackage.NUOPC_DRIVER_IMPLEMENTS_SET_SERVICES__CALLS_GENERIC_SET_SERVICES:
 				setCallsGenericSetServices((Boolean)newValue);
+				return;
+			case NUOPCPackage.NUOPC_DRIVER_IMPLEMENTS_SET_SERVICES__ATTACHES_METHOD:
+				getAttachesMethod().clear();
+				getAttachesMethod().addAll((Collection<? extends AttachesMethod>)newValue);
 				return;
 		}
 		super.eSet(featureID, newValue);
@@ -375,6 +412,9 @@ public class NUOPCDriver__ImplementsSetServicesImpl extends EObjectImpl implemen
 			case NUOPCPackage.NUOPC_DRIVER_IMPLEMENTS_SET_SERVICES__CALLS_GENERIC_SET_SERVICES:
 				setCallsGenericSetServices(CALLS_GENERIC_SET_SERVICES_EDEFAULT);
 				return;
+			case NUOPCPackage.NUOPC_DRIVER_IMPLEMENTS_SET_SERVICES__ATTACHES_METHOD:
+				getAttachesMethod().clear();
+				return;
 		}
 		super.eUnset(featureID);
 	}
@@ -397,6 +437,8 @@ public class NUOPCDriver__ImplementsSetServicesImpl extends EObjectImpl implemen
 				return PARAM_RC_EDEFAULT == null ? param_rc != null : !PARAM_RC_EDEFAULT.equals(param_rc);
 			case NUOPCPackage.NUOPC_DRIVER_IMPLEMENTS_SET_SERVICES__CALLS_GENERIC_SET_SERVICES:
 				return callsGenericSetServices != CALLS_GENERIC_SET_SERVICES_EDEFAULT;
+			case NUOPCPackage.NUOPC_DRIVER_IMPLEMENTS_SET_SERVICES__ATTACHES_METHOD:
+				return attachesMethod != null && !attachesMethod.isEmpty();
 		}
 		return super.eIsSet(featureID);
 	}

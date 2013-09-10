@@ -2,6 +2,7 @@
  */
 package org.earthsystemcurator.cupid.nuopc.fsml.nuopc;
 
+import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.ecore.EObject;
 
 /**
@@ -17,6 +18,7 @@ import org.eclipse.emf.ecore.EObject;
  *   <li>{@link org.earthsystemcurator.cupid.nuopc.fsml.nuopc.NUOPCDriver__ImplementsSetServices#getParam_gcomp <em>Param gcomp</em>}</li>
  *   <li>{@link org.earthsystemcurator.cupid.nuopc.fsml.nuopc.NUOPCDriver__ImplementsSetServices#getParam_rc <em>Param rc</em>}</li>
  *   <li>{@link org.earthsystemcurator.cupid.nuopc.fsml.nuopc.NUOPCDriver__ImplementsSetServices#isCallsGenericSetServices <em>Calls Generic Set Services</em>}</li>
+ *   <li>{@link org.earthsystemcurator.cupid.nuopc.fsml.nuopc.NUOPCDriver__ImplementsSetServices#getAttachesMethod <em>Attaches Method</em>}</li>
  * </ul>
  * </p>
  *
@@ -163,5 +165,22 @@ public interface NUOPCDriver__ImplementsSetServices extends EObject {
 	 * @generated
 	 */
 	void setCallsGenericSetServices(boolean value);
+
+	/**
+	 * Returns the value of the '<em><b>Attaches Method</b></em>' containment reference list.
+	 * The list contents are of type {@link org.earthsystemcurator.cupid.nuopc.fsml.nuopc.AttachesMethod}.
+	 * <!-- begin-user-doc -->
+	 * <p>
+	 * If the meaning of the '<em>Attaches Method</em>' containment reference list isn't clear,
+	 * there really should be more of a description here...
+	 * </p>
+	 * <!-- end-user-doc -->
+	 * @return the value of the '<em>Attaches Method</em>' containment reference list.
+	 * @see org.earthsystemcurator.cupid.nuopc.fsml.nuopc.NUOPCPackage#getNUOPCDriver__ImplementsSetServices_AttachesMethod()
+	 * @model containment="true"
+	 *        annotation="http://www.earthsystemcog.org/projects/nuopc mapping='call: \"ESMF_MethodAdd\"'"
+	 * @generated
+	 */
+	EList<AttachesMethod> getAttachesMethod();
 
 } // NUOPCDriver__ImplementsSetServices

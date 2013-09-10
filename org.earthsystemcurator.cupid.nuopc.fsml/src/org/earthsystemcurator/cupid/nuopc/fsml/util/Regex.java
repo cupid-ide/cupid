@@ -10,10 +10,12 @@ public class Regex {
 	public static Map<String, Object> parseMappingExpression(String mapping) {
 		
 		//System.out.println("parseMapping: " + mapping);
+		if (mapping == null)
+			return null;
 		
 		LinkedHashMap<String, Object> result = new LinkedHashMap<String, Object>();
 		
-		Pattern p = Pattern.compile("(\\w+)(\\s*:\\s*(\\d+|\"[^\"]*\"))?");	
+		Pattern p = Pattern.compile("(\\w+)(\\s*:\\s*(#\\w+|\\d+|\"[^\"]*\"))?");	
 		Matcher match = p.matcher(mapping);
 		
 		while (match.find()) {
@@ -27,8 +29,12 @@ public class Regex {
 			String val = match.group(3);
 			
 			if (val != null) {
+				//metavariable
+				if (val.startsWith("#")) {
+					result.put(key, val);
+				}
 				//string type
-				if (val.startsWith("\"")) {
+				else if (val.startsWith("\"")) {
 					result.put(key, val.substring(1,val.length()-1));
 				}
 				//integer type

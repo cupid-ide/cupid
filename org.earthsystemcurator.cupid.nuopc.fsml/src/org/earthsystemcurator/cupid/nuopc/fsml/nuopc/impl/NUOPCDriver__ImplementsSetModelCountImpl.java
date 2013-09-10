@@ -31,6 +31,7 @@ import org.eclipse.emf.ecore.util.EcoreUtil;
  *   <li>{@link org.earthsystemcurator.cupid.nuopc.fsml.nuopc.impl.NUOPCDriver__ImplementsSetModelCountImpl#getName <em>Name</em>}</li>
  *   <li>{@link org.earthsystemcurator.cupid.nuopc.fsml.nuopc.impl.NUOPCDriver__ImplementsSetModelCountImpl#getDriverInternalState <em>Driver Internal State</em>}</li>
  *   <li>{@link org.earthsystemcurator.cupid.nuopc.fsml.nuopc.impl.NUOPCDriver__ImplementsSetModelCountImpl#getGetsInternalState <em>Gets Internal State</em>}</li>
+ *   <li>{@link org.earthsystemcurator.cupid.nuopc.fsml.nuopc.impl.NUOPCDriver__ImplementsSetModelCountImpl#isAssignsValue <em>Assigns Value</em>}</li>
  * </ul>
  * </p>
  *
@@ -56,14 +57,23 @@ public class NUOPCDriver__ImplementsSetModelCountImpl extends EObjectImpl implem
 	 */
 	protected String name = NAME_EDEFAULT;
 	/**
-	 * The cached value of the '{@link #getDriverInternalState() <em>Driver Internal State</em>}' attribute list.
+	 * The default value of the '{@link #getDriverInternalState() <em>Driver Internal State</em>}' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @see #getDriverInternalState()
 	 * @generated
 	 * @ordered
 	 */
-	protected EList<String> driverInternalState;
+	protected static final String DRIVER_INTERNAL_STATE_EDEFAULT = null;
+	/**
+	 * The cached value of the '{@link #getDriverInternalState() <em>Driver Internal State</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #getDriverInternalState()
+	 * @generated
+	 * @ordered
+	 */
+	protected String driverInternalState = DRIVER_INTERNAL_STATE_EDEFAULT;
 
 	/**
 	 * The cached value of the '{@link #getGetsInternalState() <em>Gets Internal State</em>}' containment reference.
@@ -74,6 +84,25 @@ public class NUOPCDriver__ImplementsSetModelCountImpl extends EObjectImpl implem
 	 * @ordered
 	 */
 	protected GetsInternalState getsInternalState;
+
+	/**
+	 * The default value of the '{@link #isAssignsValue() <em>Assigns Value</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #isAssignsValue()
+	 * @generated
+	 * @ordered
+	 */
+	protected static final boolean ASSIGNS_VALUE_EDEFAULT = false;
+	/**
+	 * The cached value of the '{@link #isAssignsValue() <em>Assigns Value</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #isAssignsValue()
+	 * @generated
+	 * @ordered
+	 */
+	protected boolean assignsValue = ASSIGNS_VALUE_EDEFAULT;
 
 	/**
 	 * <!-- begin-user-doc -->
@@ -161,11 +190,20 @@ public class NUOPCDriver__ImplementsSetModelCountImpl extends EObjectImpl implem
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EList<String> getDriverInternalState() {
-		if (driverInternalState == null) {
-			driverInternalState = new EDataTypeUniqueEList<String>(String.class, this, NUOPCPackage.NUOPC_DRIVER_IMPLEMENTS_SET_MODEL_COUNT__DRIVER_INTERNAL_STATE);
-		}
+	public String getDriverInternalState() {
 		return driverInternalState;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public void setDriverInternalState(String newDriverInternalState) {
+		String oldDriverInternalState = driverInternalState;
+		driverInternalState = newDriverInternalState;
+		if (eNotificationRequired())
+			eNotify(new ENotificationImpl(this, Notification.SET, NUOPCPackage.NUOPC_DRIVER_IMPLEMENTS_SET_MODEL_COUNT__DRIVER_INTERNAL_STATE, oldDriverInternalState, driverInternalState));
 	}
 
 	/**
@@ -209,6 +247,27 @@ public class NUOPCDriver__ImplementsSetModelCountImpl extends EObjectImpl implem
 		}
 		else if (eNotificationRequired())
 			eNotify(new ENotificationImpl(this, Notification.SET, NUOPCPackage.NUOPC_DRIVER_IMPLEMENTS_SET_MODEL_COUNT__GETS_INTERNAL_STATE, newGetsInternalState, newGetsInternalState));
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public boolean isAssignsValue() {
+		return assignsValue;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public void setAssignsValue(boolean newAssignsValue) {
+		boolean oldAssignsValue = assignsValue;
+		assignsValue = newAssignsValue;
+		if (eNotificationRequired())
+			eNotify(new ENotificationImpl(this, Notification.SET, NUOPCPackage.NUOPC_DRIVER_IMPLEMENTS_SET_MODEL_COUNT__ASSIGNS_VALUE, oldAssignsValue, assignsValue));
 	}
 
 	/**
@@ -273,6 +332,8 @@ public class NUOPCDriver__ImplementsSetModelCountImpl extends EObjectImpl implem
 				return getDriverInternalState();
 			case NUOPCPackage.NUOPC_DRIVER_IMPLEMENTS_SET_MODEL_COUNT__GETS_INTERNAL_STATE:
 				return getGetsInternalState();
+			case NUOPCPackage.NUOPC_DRIVER_IMPLEMENTS_SET_MODEL_COUNT__ASSIGNS_VALUE:
+				return isAssignsValue();
 		}
 		return super.eGet(featureID, resolve, coreType);
 	}
@@ -293,11 +354,13 @@ public class NUOPCDriver__ImplementsSetModelCountImpl extends EObjectImpl implem
 				setName((String)newValue);
 				return;
 			case NUOPCPackage.NUOPC_DRIVER_IMPLEMENTS_SET_MODEL_COUNT__DRIVER_INTERNAL_STATE:
-				getDriverInternalState().clear();
-				getDriverInternalState().addAll((Collection<? extends String>)newValue);
+				setDriverInternalState((String)newValue);
 				return;
 			case NUOPCPackage.NUOPC_DRIVER_IMPLEMENTS_SET_MODEL_COUNT__GETS_INTERNAL_STATE:
 				setGetsInternalState((GetsInternalState)newValue);
+				return;
+			case NUOPCPackage.NUOPC_DRIVER_IMPLEMENTS_SET_MODEL_COUNT__ASSIGNS_VALUE:
+				setAssignsValue((Boolean)newValue);
 				return;
 		}
 		super.eSet(featureID, newValue);
@@ -318,10 +381,13 @@ public class NUOPCDriver__ImplementsSetModelCountImpl extends EObjectImpl implem
 				setName(NAME_EDEFAULT);
 				return;
 			case NUOPCPackage.NUOPC_DRIVER_IMPLEMENTS_SET_MODEL_COUNT__DRIVER_INTERNAL_STATE:
-				getDriverInternalState().clear();
+				setDriverInternalState(DRIVER_INTERNAL_STATE_EDEFAULT);
 				return;
 			case NUOPCPackage.NUOPC_DRIVER_IMPLEMENTS_SET_MODEL_COUNT__GETS_INTERNAL_STATE:
 				setGetsInternalState((GetsInternalState)null);
+				return;
+			case NUOPCPackage.NUOPC_DRIVER_IMPLEMENTS_SET_MODEL_COUNT__ASSIGNS_VALUE:
+				setAssignsValue(ASSIGNS_VALUE_EDEFAULT);
 				return;
 		}
 		super.eUnset(featureID);
@@ -340,9 +406,11 @@ public class NUOPCDriver__ImplementsSetModelCountImpl extends EObjectImpl implem
 			case NUOPCPackage.NUOPC_DRIVER_IMPLEMENTS_SET_MODEL_COUNT__NAME:
 				return NAME_EDEFAULT == null ? name != null : !NAME_EDEFAULT.equals(name);
 			case NUOPCPackage.NUOPC_DRIVER_IMPLEMENTS_SET_MODEL_COUNT__DRIVER_INTERNAL_STATE:
-				return driverInternalState != null && !driverInternalState.isEmpty();
+				return DRIVER_INTERNAL_STATE_EDEFAULT == null ? driverInternalState != null : !DRIVER_INTERNAL_STATE_EDEFAULT.equals(driverInternalState);
 			case NUOPCPackage.NUOPC_DRIVER_IMPLEMENTS_SET_MODEL_COUNT__GETS_INTERNAL_STATE:
 				return getsInternalState != null;
+			case NUOPCPackage.NUOPC_DRIVER_IMPLEMENTS_SET_MODEL_COUNT__ASSIGNS_VALUE:
+				return assignsValue != ASSIGNS_VALUE_EDEFAULT;
 		}
 		return super.eIsSet(featureID);
 	}
@@ -361,6 +429,8 @@ public class NUOPCDriver__ImplementsSetModelCountImpl extends EObjectImpl implem
 		result.append(name);
 		result.append(", driverInternalState: ");
 		result.append(driverInternalState);
+		result.append(", assignsValue: ");
+		result.append(assignsValue);
 		result.append(')');
 		return result.toString();
 	}

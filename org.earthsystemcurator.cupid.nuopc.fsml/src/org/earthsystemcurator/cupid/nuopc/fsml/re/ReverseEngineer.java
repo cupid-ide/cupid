@@ -2,8 +2,11 @@ package org.earthsystemcurator.cupid.nuopc.fsml.re;
 
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Map.Entry;
 import java.util.Set;
 
 import org.earthsystemcurator.cupid.nuopc.fsml.nuopc.NUOPCApplication;
@@ -26,13 +29,21 @@ import org.eclipse.photran.internal.core.vpg.PhotranVPG;
 @SuppressWarnings("restriction")
 public class ReverseEngineer {
 
+	private Map<EObject, IASTNode> mappings = new HashMap<EObject, IASTNode>();
+	private Map<IFile, IFortranAST> fileMap = new HashMap<IFile, IFortranAST>();
+	
+	public Map<EObject, IASTNode> getMappings() {
+		return mappings;
+	}
+	
+	public Map<IFile, IFortranAST> getFileToASTMapping() {
+		return fileMap;
+	}
+	
 	public NUOPCApplication reverse(PhotranVPG vpg) {
+		
+		mappings.clear();
 		NUOPCApplication a = NUOPCFactory.eINSTANCE.createNUOPCApplication();
-		
-		
-		//START HERE:
-		//Photran is not creating edges to renamed module entities....
-		
 		
 		for (String mod : vpg.listAllModules()) {
 			List<IFile> fl = vpg.findFilesThatExportModule(mod);
@@ -41,12 +52,22 @@ public class ReverseEngineer {
 				System.out.println("Module: " + mod + " (" + f.getFullPath() + ")");
 				IFortranAST ast = vpg.acquireTransientAST(f);
 				a = reverseContext(ast.getRoot(), a);
+				//mappings.put(a, ast.getRoot());
+				
+				//TODO: optimize to only include updated files
+				fileMap.put(f, ast);
 			}
 		}
+		
+		//System.out.println("\n=============\nReverse mappings:");
+		//for (Entry<EObject, IASTNode> e : mappings.entrySet()) {
+		//	System.out.println(e.getKey() + " ===> " + e.getValue().getClass());
+		//}
 		
 		return a;
 	}
 	
+	/*
 	public NUOPCModel reverse(IFortranAST ast) {
 		//bootstrap process
 		NUOPCModel m =  NUOPCFactory.eINSTANCE.createNUOPCModel();
@@ -54,9 +75,10 @@ public class ReverseEngineer {
 		ASTModuleNode contextNode = ast.getRoot().findFirst(ASTModuleNode.class);
 		return reverseContext(contextNode, m);
 	}
+	*/
 	
 	@SuppressWarnings({ "unchecked", "rawtypes" })
-	public <ModelElem extends EObject> ModelElem reverseContext(IASTNode contextNode, ModelElem modelElem) {
+	protected <ModelElem extends EObject> ModelElem reverseContext(IASTNode contextNode, ModelElem modelElem) {
 					
 			
 		EClass modelElemClass = modelElem.eClass();
@@ -137,8 +159,25 @@ public class ReverseEngineer {
 				Map<String, Object> keywordMap = Regex.parseMappingExpression(sfMapping);
 				String methodName = null;
 				if (keywordMap.size() > 0) {
-					//by default, first parameter keyword determines code query
+					//by convention, first parameter keyword determines code query
 					methodName = (String) keywordMap.keySet().toArray()[0];
+					
+					//check for metavariables that can be populated
+					for (Entry<String, Object> entry : keywordMap.entrySet()) {
+						if (entry.getValue() instanceof String) {
+							String val = (String) entry.getValue();
+							if (val.startsWith("#")) {
+								//replace metavariable with value from model
+								System.out.println("Metavariable: " + val);
+								EStructuralFeature metasf = modelElem.eClass().getEStructuralFeature(val.substring(1));
+								Object metaval = modelElem.eGet(metasf);
+								if (metaval != null) {
+									System.out.println("\tMetavariable value = " + metaval);
+									entry.setValue(metaval);
+								}
+							}
+						}
+					}				
 				}
 				
 				//System.out.println("Query map:");
@@ -146,7 +185,8 @@ public class ReverseEngineer {
 					//if (methodName == null) methodName = k;
 					//System.out.println("\t " + k + " --> " + queryMap.get(k));
 				//}
-								
+				
+				//TODO: change to direct search
 				for (Method method : CodeQuery.class.getMethods()) {
 					
 					if (method.getName().equals(methodName)) {
@@ -251,26 +291,21 @@ public class ReverseEngineer {
 			//at this point we have set the value of the structural feature
 			//if is essential, but not present or false, the parent is no good
 			String anotEssential = anot.getDetails().get("essential");
-			if (anotEssential != null && anotEssential.trim().equalsIgnoreCase("true")) {
-				//System.out.println("\tEssential feature found: " + sf);
-				
-				sf.getEType().isInstance(EcoreFactory.eINSTANCE.getEcorePackage().getEBoolean());
-				
+			if (anotEssential != null && anotEssential.trim().equalsIgnoreCase("true")) {	
 				if (modelElem.eGet(sf) == null) {
-					System.out.println("\tEssential feature failed: " + sf);
+					//System.out.println("\tEssential feature failed: " + sf);
 					return null;
 				}
 				else if (sf.getEType().equals(EcoreFactory.eINSTANCE.getEcorePackage().getEBoolean()) &&
 						! (Boolean) modelElem.eGet(sf)) {
-					System.out.println("\tEssential feature failed: " + sf);
+					//System.out.println("\tEssential feature failed: " + sf);
 					return null;
-				}
-		
+				}		
 			}
 			
 		} // end for structural features
 		
-		
+		mappings.put(modelElem, contextNode);
 		return modelElem;
 	}
 	

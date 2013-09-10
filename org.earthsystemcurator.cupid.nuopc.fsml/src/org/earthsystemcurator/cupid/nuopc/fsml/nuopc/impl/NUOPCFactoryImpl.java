@@ -68,6 +68,7 @@ public class NUOPCFactoryImpl extends EFactoryImpl implements NUOPCFactory {
 			case NUOPCPackage.MODEL_ADVANCE: return createModelAdvance();
 			case NUOPCPackage.NUOPC_DRIVER: return createNUOPCDriver();
 			case NUOPCPackage.NUOPC_DRIVER_IMPLEMENTS_SET_SERVICES: return createNUOPCDriver__ImplementsSetServices();
+			case NUOPCPackage.ATTACHES_METHOD: return createAttachesMethod();
 			case NUOPCPackage.NUOPC_DRIVER_IMPLEMENTS_SET_MODEL_COUNT: return createNUOPCDriver__ImplementsSetModelCount();
 			case NUOPCPackage.GETS_INTERNAL_STATE: return createGetsInternalState();
 			case NUOPCPackage.NUOPC_APPLICATION: return createNUOPCApplication();
@@ -196,6 +197,16 @@ public class NUOPCFactoryImpl extends EFactoryImpl implements NUOPCFactory {
 	public NUOPCDriver__ImplementsSetServices createNUOPCDriver__ImplementsSetServices() {
 		NUOPCDriver__ImplementsSetServicesImpl nuopcDriver__ImplementsSetServices = new NUOPCDriver__ImplementsSetServicesImpl();
 		return nuopcDriver__ImplementsSetServices;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public AttachesMethod createAttachesMethod() {
+		AttachesMethodImpl attachesMethod = new AttachesMethodImpl();
+		return attachesMethod;
 	}
 
 	/**

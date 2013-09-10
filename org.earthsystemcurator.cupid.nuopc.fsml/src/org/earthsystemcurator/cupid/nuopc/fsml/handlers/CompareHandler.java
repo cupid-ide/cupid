@@ -128,11 +128,11 @@ public class CompareHandler extends AbstractHandler {
 			if (d instanceof ReferenceChangeSpec) {
 				System.out.println("Found ref change diff: (" + d.getKind() + ") ==> " + d);
 				ReferenceChangeSpec rcs = (ReferenceChangeSpec) d;
-				EAnnotation ann = rcs.getReference().getEType().getEAnnotation("http://www.earthsystemcog.org/projects/nuopc");
-				if (ann != null) {
-					String mapping = ann.getDetails().get("mapping");
-					System.out.println("\tMapping for diff: " + mapping);
-				}
+				//EAnnotation ann = rcs.getReference().getEType().getEAnnotation("http://www.earthsystemcog.org/projects/nuopc");
+				//if (ann != null) {
+				//	String mapping = ann.getDetails().get("mapping");
+				//	System.out.println("\tMapping for diff: " + mapping);
+				//}
 			}
 		}
 		findDiffs(m.getSubmatches());
@@ -146,7 +146,7 @@ public class CompareHandler extends AbstractHandler {
 
 	public Comparison compare(ResourceSet rs1, ResourceSet rs2) {
 		// Configure EMF Compare
-		IEObjectMatcher matcher = DefaultMatchEngine.createDefaultEObjectMatcher(UseIdentifiers.WHEN_AVAILABLE);
+		IEObjectMatcher matcher = DefaultMatchEngine.createDefaultEObjectMatcher(UseIdentifiers.NEVER);
 		IComparisonFactory comparisonFactory = new DefaultComparisonFactory(new DefaultEqualityHelperFactory());
 		IMatchEngine.Factory matchEngineFactory = new MatchEngineFactoryImpl(matcher, comparisonFactory);
 		matchEngineFactory.setRanking(20);
@@ -156,7 +156,7 @@ public class CompareHandler extends AbstractHandler {
 
 		// Compare the two models
 		IComparisonScope scope = EMFCompare.createDefaultScope(rs1, rs2);
-		
+				
 		return comparator.compare(scope);
 	}
 

@@ -17,6 +17,7 @@ import org.eclipse.emf.ecore.EObject;
  *   <li>{@link org.earthsystemcurator.cupid.nuopc.fsml.nuopc.NUOPCDriver__ImplementsSetModelCount#getName <em>Name</em>}</li>
  *   <li>{@link org.earthsystemcurator.cupid.nuopc.fsml.nuopc.NUOPCDriver__ImplementsSetModelCount#getDriverInternalState <em>Driver Internal State</em>}</li>
  *   <li>{@link org.earthsystemcurator.cupid.nuopc.fsml.nuopc.NUOPCDriver__ImplementsSetModelCount#getGetsInternalState <em>Gets Internal State</em>}</li>
+ *   <li>{@link org.earthsystemcurator.cupid.nuopc.fsml.nuopc.NUOPCDriver__ImplementsSetModelCount#isAssignsValue <em>Assigns Value</em>}</li>
  * </ul>
  * </p>
  *
@@ -82,20 +83,30 @@ public interface NUOPCDriver__ImplementsSetModelCount extends EObject {
 	void setName(String value);
 
 	/**
-	 * Returns the value of the '<em><b>Driver Internal State</b></em>' attribute list.
-	 * The list contents are of type {@link java.lang.String}.
+	 * Returns the value of the '<em><b>Driver Internal State</b></em>' attribute.
 	 * <!-- begin-user-doc -->
 	 * <p>
 	 * If the meaning of the '<em>Driver Internal State</em>' attribute isn't clear,
 	 * there really should be more of a description here...
 	 * </p>
 	 * <!-- end-user-doc -->
-	 * @return the value of the '<em>Driver Internal State</em>' attribute list.
+	 * @return the value of the '<em>Driver Internal State</em>' attribute.
+	 * @see #setDriverInternalState(String)
 	 * @see org.earthsystemcurator.cupid.nuopc.fsml.nuopc.NUOPCPackage#getNUOPCDriver__ImplementsSetModelCount_DriverInternalState()
 	 * @model annotation="http://www.earthsystemcog.org/projects/nuopc mapping='localVariable: \"type(type_InternalState)\" definedInModule: \"NUOPC_Driver\"'"
 	 * @generated
 	 */
-	EList<String> getDriverInternalState();
+	String getDriverInternalState();
+
+	/**
+	 * Sets the value of the '{@link org.earthsystemcurator.cupid.nuopc.fsml.nuopc.NUOPCDriver__ImplementsSetModelCount#getDriverInternalState <em>Driver Internal State</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @param value the new value of the '<em>Driver Internal State</em>' attribute.
+	 * @see #getDriverInternalState()
+	 * @generated
+	 */
+	void setDriverInternalState(String value);
 
 	/**
 	 * Returns the value of the '<em><b>Gets Internal State</b></em>' containment reference.
@@ -123,5 +134,31 @@ public interface NUOPCDriver__ImplementsSetModelCount extends EObject {
 	 * @generated
 	 */
 	void setGetsInternalState(GetsInternalState value);
+
+	/**
+	 * Returns the value of the '<em><b>Assigns Value</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <p>
+	 * If the meaning of the '<em>Assigns Value</em>' attribute isn't clear,
+	 * there really should be more of a description here...
+	 * </p>
+	 * <!-- end-user-doc -->
+	 * @return the value of the '<em>Assigns Value</em>' attribute.
+	 * @see #setAssignsValue(boolean)
+	 * @see org.earthsystemcurator.cupid.nuopc.fsml.nuopc.NUOPCPackage#getNUOPCDriver__ImplementsSetModelCount_AssignsValue()
+	 * @model annotation="http://www.earthsystemcog.org/projects/nuopc mapping='assigns: #driverInternalState'"
+	 * @generated
+	 */
+	boolean isAssignsValue();
+
+	/**
+	 * Sets the value of the '{@link org.earthsystemcurator.cupid.nuopc.fsml.nuopc.NUOPCDriver__ImplementsSetModelCount#isAssignsValue <em>Assigns Value</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @param value the new value of the '<em>Assigns Value</em>' attribute.
+	 * @see #isAssignsValue()
+	 * @generated
+	 */
+	void setAssignsValue(boolean value);
 
 } // NUOPCDriver__ImplementsSetModelCount

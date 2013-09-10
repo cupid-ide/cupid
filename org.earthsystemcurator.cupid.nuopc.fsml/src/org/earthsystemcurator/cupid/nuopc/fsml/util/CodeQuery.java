@@ -1,5 +1,6 @@
 package org.earthsystemcurator.cupid.nuopc.fsml.util;
 
+import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
@@ -14,10 +15,12 @@ import org.eclipse.photran.internal.core.analysis.types.FunctionType;
 import org.eclipse.photran.internal.core.analysis.types.Type;
 import org.eclipse.photran.internal.core.analysis.types.TypeProcessor;
 import org.eclipse.photran.internal.core.lexer.Token;
+import org.eclipse.photran.internal.core.parser.ASTAssignmentStmtNode;
 import org.eclipse.photran.internal.core.parser.ASTCallStmtNode;
 import org.eclipse.photran.internal.core.parser.ASTDerivedTypeStmtNode;
 import org.eclipse.photran.internal.core.parser.ASTEntityDeclNode;
 import org.eclipse.photran.internal.core.parser.ASTInitializationNode;
+import org.eclipse.photran.internal.core.parser.ASTIntConstNode;
 import org.eclipse.photran.internal.core.parser.ASTModuleNode;
 import org.eclipse.photran.internal.core.parser.ASTNode;
 import org.eclipse.photran.internal.core.parser.ASTObjectNameNode;
@@ -94,10 +97,7 @@ public class CodeQuery {
 	}
 	
 	
-	public static Set<ASTSubroutineSubprogramNode> subroutine(IASTNode node, Map<String, Object> params) {
-		
-		String pattern = (String) params.get("subroutine");
-		//System.out.println("subroutine: " + pattern);
+	public static String parseSubroutineSig(String pattern, List<Type> typesOut) {
 		
 		Pattern p = Pattern.compile("((?:\\w+)|(?:\\*))\\(((?:(integer|logical|type\\(\\w+\\)),?\\s*)*)\\)");
 		Matcher match = p.matcher(pattern);
@@ -106,10 +106,6 @@ public class CodeQuery {
 			throw new RuntimeException("Illegal subroutine pattern: " + pattern);
 		}
 		
-		//for (int i=0; i <= match.groupCount(); i++) {
-		//	System.out.println("Group: " + match.group(i));
-		//}
-		
 		String subroutineName = match.group(1);
 		String[] paramTypes = match.group(2).split("\\s*,\\s*");
 		
@@ -117,18 +113,18 @@ public class CodeQuery {
 		//	System.out.println("Param = " + paramTypes[i]);
 		//}
 		
-		Type[] types = new Type[paramTypes.length];
+		//Type[] types = new Type[paramTypes.length];
 		
 		for (int i=0; i < paramTypes.length; i++) {
 			if (paramTypes[i].equalsIgnoreCase("integer")) {
-				types[i] = Type.INTEGER;
+				typesOut.add(Type.INTEGER);
 			}
 			else if (paramTypes[i].equalsIgnoreCase("logical")) {
-				types[i] = Type.LOGICAL;
+				typesOut.add(Type.LOGICAL);
 			}
 			//TODO: FILL IN OTHER TYPES AS NEEDED
 			else if (paramTypes[i].startsWith("type(")) {
-				types[i] = new DerivedType(paramTypes[i].substring(5, paramTypes[i].length()-1));				
+				typesOut.add(new DerivedType(paramTypes[i].substring(5, paramTypes[i].length()-1)));				
 			}
 			else {
 				throw new RuntimeException("Cannot handle type: " + paramTypes[i]);
@@ -136,6 +132,16 @@ public class CodeQuery {
  				
 		}
 		
+		return subroutineName;
+		
+	}
+	
+	public static Set<ASTSubroutineSubprogramNode> subroutine(IASTNode node, Map<String, Object> params) {
+		
+		String pattern = (String) params.get("subroutine");
+		
+		List<Type> types = new ArrayList<Type>();
+		String subroutineName = parseSubroutineSig(pattern, types);
 		
 		HashSet<ASTSubroutineSubprogramNode> result = new HashSet<ASTSubroutineSubprogramNode>();
 		
@@ -156,9 +162,9 @@ public class CodeQuery {
 					List<Definition> defs = spn.getVariableName().resolveBinding();
 					if (defs.size() > 0) {
 						
-						if (types.length > idxType) {
+						if (types.size() > idxType) {
 							
-							if (!defs.get(0).getType().equals(types[idxType])) {
+							if (!defs.get(0).getType().equals(types.get(idxType))) {
 								continue ssnloop;
 							}
 							else {
@@ -170,11 +176,11 @@ public class CodeQuery {
 				}
 				
 				//have not failed, verify lengths are the same
-				if (ssn.getSubroutineStmt().getSubroutinePars().size() == types.length) {
+				if (ssn.getSubroutineStmt().getSubroutinePars().size() == types.size()) {
 					result.add(ssn);
 				}
 			}
-			else if (types.length == 0) {
+			else if (types.size() == 0) {
 				//no params				
 				result.add(ssn);				
 			}
@@ -221,6 +227,7 @@ public class CodeQuery {
 	
 	
 	//recusively follows BINDING and RENAME edges until the parent AST node of the token has the type clazz
+	@SuppressWarnings("unchecked")
 	public static <NodeType extends ASTNode> NodeType followOutgoingTo(PhotranTokenRef ptr, Class<NodeType> clazz) {		
 		for (PhotranTokenRef ptr2 : ptr.followOutgoing(EdgeType.BINDING_EDGE_TYPE)) {
 			Token t = ptr2.findToken();
@@ -248,6 +255,22 @@ public class CodeQuery {
 		}
 		
 		return null;
+	}
+	
+	//returns true if the variable with the given name appears 
+	//on the LHS of an assignment within the given scope
+	public static boolean assigns(ScopingNode node, Map<String, Object> params) {
+		
+		String varName = (String) params.get("assigns");
+		
+		for (ASTAssignmentStmtNode asn : node.findAll(ASTAssignmentStmtNode.class)) {
+			if (asn.getLhsVariable().getName().getText().equalsIgnoreCase(varName)) {
+				return true;
+			}
+		}
+		
+		return false;
+		
 	}
 	
 	public static Set<String> localVariable(ScopingNode node, Map<String, Object> params) {
@@ -520,8 +543,12 @@ public class CodeQuery {
 				onn.getParent().accept(new ASTVisitor() {
 					@Override
 					public void visitASTStringConstNode(ASTStringConstNode node) {
-						constVal[0] = (node.getStringConst().getText());						
-					}					
+						constVal[0] = node.getStringConst().getText();						
+					}
+					@Override
+					public void visitASTIntConstNode(ASTIntConstNode node) {
+						constVal[0] = node.getIntConst().getText();
+					}
 					//TODO: override for other kinds of constants
 				});
 				
@@ -605,13 +632,13 @@ public class CodeQuery {
 		final String subroutineName = (String) params.get("calls");
 		final String definedInModule = (String) params.get("definedInModule");
 		
-		if (subroutineName.equals("routine_SetServices") && definedInModule != null && definedInModule.equals("NUOPC_DriverAtmOcn")) {
-			System.out.println("\there");
-		}
+		//if (subroutineName.equals("routine_SetServices") && definedInModule != null && definedInModule.equals("NUOPC_DriverAtmOcn")) {
+		//	System.out.println("\there");
+		//}
 		
 		for (ASTCallStmtNode csn : node.findAll(ASTCallStmtNode.class)) {
 			
-			System.out.println("Calls Examining subroutine: " + csn.getSubroutineName()); 
+			//System.out.println("Calls Examining subroutine: " + csn.getSubroutineName()); 
 			//if (csn.getSubroutineName().getText().equalsIgnoreCase("NUOPC_RunSequenceDeallocate")) {
 			//	System.out.println("\there");
 			//}
@@ -647,7 +674,7 @@ public class CodeQuery {
 				if (found) {
 					//at least name matches, see if module name matches
 					if (definedInModule != null) {
-						System.out.println("\tChecking module name for subroutine: " + subroutineName);
+						//System.out.println("\tChecking module name for subroutine: " + subroutineName);
 						Definition def = defs.get(0);
 						ASTUseStmtNode usn = null;
 						if (def.isRenamedModuleEntity()) {
@@ -671,7 +698,7 @@ public class CodeQuery {
 			// no definition - just check for match
 			else {
 				
-				System.out.println("No defs found for: " + subroutineName);
+				//System.out.println("No defs found for: " + subroutineName);
 				
 				//List<PhotranTokenRef> trefs = csn.getSubroutineName().manuallyResolveBinding();
 				//for (PhotranTokenRef tf : trefs) {
@@ -733,7 +760,7 @@ public class CodeQuery {
 		for (final ASTSubroutineSubprogramNode ssn : nodes) {
 			for (ASTCallStmtNode csn : ssn.findAll(ASTCallStmtNode.class)) {
 				
-				System.out.println("Examining subroutine: " + csn.getSubroutineName()); 
+				//System.out.println("Examining subroutine: " + csn.getSubroutineName()); 
 				List<Definition> defs = csn.getSubroutineName().resolveBinding();
 				
 				//find name before rename

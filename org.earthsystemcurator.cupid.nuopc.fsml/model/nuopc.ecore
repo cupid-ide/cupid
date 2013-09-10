@@ -381,6 +381,24 @@
         <details key="essential" value="true"/>
       </eAnnotations>
     </eStructuralFeatures>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="attachesMethod" upperBound="-1"
+        eType="#//AttachesMethod" containment="true">
+      <eAnnotations source="http://www.earthsystemcog.org/projects/nuopc">
+        <details key="mapping" value="call: &quot;ESMF_MethodAdd&quot;"/>
+      </eAnnotations>
+    </eStructuralFeatures>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="AttachesMethod">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="methodLabel" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString">
+      <eAnnotations source="http://www.earthsystemcog.org/projects/nuopc">
+        <details key="mapping" value="argByIndex: 2"/>
+      </eAnnotations>
+    </eStructuralFeatures>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="userRoutine" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString">
+      <eAnnotations source="http://www.earthsystemcog.org/projects/nuopc">
+        <details key="mapping" value="argByIndex: 3"/>
+      </eAnnotations>
+    </eStructuralFeatures>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="NUOPCDriver__ImplementsSetModelCount">
     <eStructuralFeatures xsi:type="ecore:EReference" name="parent" lowerBound="1"
@@ -391,8 +409,7 @@
         <details key="mapping" value="subroutineName"/>
       </eAnnotations>
     </eStructuralFeatures>
-    <eStructuralFeatures xsi:type="ecore:EAttribute" name="driverInternalState" upperBound="-1"
-        eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="driverInternalState" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString">
       <eAnnotations source="http://www.earthsystemcog.org/projects/nuopc">
         <details key="mapping" value="localVariable: &quot;type(type_InternalState)&quot; definedInModule: &quot;NUOPC_Driver&quot;"/>
       </eAnnotations>
@@ -401,6 +418,11 @@
         containment="true">
       <eAnnotations source="http://www.earthsystemcog.org/projects/nuopc">
         <details key="mapping" value="call: &quot;ESMF_UserCompGetInternalState&quot;"/>
+      </eAnnotations>
+    </eStructuralFeatures>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="assignsValue" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean">
+      <eAnnotations source="http://www.earthsystemcog.org/projects/nuopc">
+        <details key="mapping" value="assigns: #driverInternalState"/>
       </eAnnotations>
     </eStructuralFeatures>
   </eClassifiers>
@@ -412,6 +434,8 @@
     </eStructuralFeatures>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="NUOPCApplication">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="name" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"
+        iD="true"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="nuopcDriver" upperBound="-1"
         eType="#//NUOPCDriver" containment="true">
       <eAnnotations source="http://www.earthsystemcog.org/projects/nuopc">

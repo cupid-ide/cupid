@@ -138,6 +138,12 @@ public class NUOPCSwitch<T> extends Switch<T> {
 				if (result == null) result = defaultCase(theEObject);
 				return result;
 			}
+			case NUOPCPackage.ATTACHES_METHOD: {
+				AttachesMethod attachesMethod = (AttachesMethod)theEObject;
+				T result = caseAttachesMethod(attachesMethod);
+				if (result == null) result = defaultCase(theEObject);
+				return result;
+			}
 			case NUOPCPackage.NUOPC_DRIVER_IMPLEMENTS_SET_MODEL_COUNT: {
 				NUOPCDriver__ImplementsSetModelCount nuopcDriver__ImplementsSetModelCount = (NUOPCDriver__ImplementsSetModelCount)theEObject;
 				T result = caseNUOPCDriver__ImplementsSetModelCount(nuopcDriver__ImplementsSetModelCount);
@@ -349,6 +355,21 @@ public class NUOPCSwitch<T> extends Switch<T> {
 	 * @generated
 	 */
 	public T caseNUOPCDriver__ImplementsSetServices(NUOPCDriver__ImplementsSetServices object) {
+		return null;
+	}
+
+	/**
+	 * Returns the result of interpreting the object as an instance of '<em>Attaches Method</em>'.
+	 * <!-- begin-user-doc -->
+	 * This implementation returns null;
+	 * returning a non-null result will terminate the switch.
+	 * <!-- end-user-doc -->
+	 * @param object the target of the switch.
+	 * @return the result of interpreting the object as an instance of '<em>Attaches Method</em>'.
+	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+	 * @generated
+	 */
+	public T caseAttachesMethod(AttachesMethod object) {
 		return null;
 	}
 

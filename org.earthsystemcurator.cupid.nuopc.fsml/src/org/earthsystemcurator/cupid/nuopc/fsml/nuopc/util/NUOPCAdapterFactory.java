@@ -116,6 +116,10 @@ public class NUOPCAdapterFactory extends AdapterFactoryImpl {
 				return createNUOPCDriver__ImplementsSetServicesAdapter();
 			}
 			@Override
+			public Adapter caseAttachesMethod(AttachesMethod object) {
+				return createAttachesMethodAdapter();
+			}
+			@Override
 			public Adapter caseNUOPCDriver__ImplementsSetModelCount(NUOPCDriver__ImplementsSetModelCount object) {
 				return createNUOPCDriver__ImplementsSetModelCountAdapter();
 			}
@@ -320,6 +324,20 @@ public class NUOPCAdapterFactory extends AdapterFactoryImpl {
 	 * @generated
 	 */
 	public Adapter createNUOPCDriver__ImplementsSetServicesAdapter() {
+		return null;
+	}
+
+	/**
+	 * Creates a new adapter for an object of class '{@link org.earthsystemcurator.cupid.nuopc.fsml.nuopc.AttachesMethod <em>Attaches Method</em>}'.
+	 * <!-- begin-user-doc -->
+	 * This default implementation returns null so that we can easily ignore cases;
+	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
+	 * <!-- end-user-doc -->
+	 * @return the new adapter.
+	 * @see org.earthsystemcurator.cupid.nuopc.fsml.nuopc.AttachesMethod
+	 * @generated
+	 */
+	public Adapter createAttachesMethodAdapter() {
 		return null;
 	}
 
