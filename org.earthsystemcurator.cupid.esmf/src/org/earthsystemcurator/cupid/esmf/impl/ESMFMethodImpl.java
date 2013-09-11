@@ -98,7 +98,7 @@ public class ESMFMethodImpl extends ESMFNamedEntityImpl implements ESMFMethod {
 	protected ESMFState exportState;
 
 	/**
-	 * The cached value of the '{@link #getClock() <em>Clock</em>}' containment reference.
+	 * The cached value of the '{@link #getClock() <em>Clock</em>}' reference.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @see #getClock()
@@ -287,6 +287,14 @@ public class ESMFMethodImpl extends ESMFNamedEntityImpl implements ESMFMethod {
 	 * @generated
 	 */
 	public ESMFClock getClock() {
+		if (clock != null && clock.eIsProxy()) {
+			InternalEObject oldClock = (InternalEObject)clock;
+			clock = (ESMFClock)eResolveProxy(oldClock);
+			if (clock != oldClock) {
+				if (eNotificationRequired())
+					eNotify(new ENotificationImpl(this, Notification.RESOLVE, ESMFPackage.ESMF_METHOD__CLOCK, oldClock, clock));
+			}
+		}
 		return clock;
 	}
 
@@ -295,14 +303,8 @@ public class ESMFMethodImpl extends ESMFNamedEntityImpl implements ESMFMethod {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public NotificationChain basicSetClock(ESMFClock newClock, NotificationChain msgs) {
-		ESMFClock oldClock = clock;
-		clock = newClock;
-		if (eNotificationRequired()) {
-			ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, ESMFPackage.ESMF_METHOD__CLOCK, oldClock, newClock);
-			if (msgs == null) msgs = notification; else msgs.add(notification);
-		}
-		return msgs;
+	public ESMFClock basicGetClock() {
+		return clock;
 	}
 
 	/**
@@ -311,17 +313,10 @@ public class ESMFMethodImpl extends ESMFNamedEntityImpl implements ESMFMethod {
 	 * @generated
 	 */
 	public void setClock(ESMFClock newClock) {
-		if (newClock != clock) {
-			NotificationChain msgs = null;
-			if (clock != null)
-				msgs = ((InternalEObject)clock).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - ESMFPackage.ESMF_METHOD__CLOCK, null, msgs);
-			if (newClock != null)
-				msgs = ((InternalEObject)newClock).eInverseAdd(this, EOPPOSITE_FEATURE_BASE - ESMFPackage.ESMF_METHOD__CLOCK, null, msgs);
-			msgs = basicSetClock(newClock, msgs);
-			if (msgs != null) msgs.dispatch();
-		}
-		else if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, ESMFPackage.ESMF_METHOD__CLOCK, newClock, newClock));
+		ESMFClock oldClock = clock;
+		clock = newClock;
+		if (eNotificationRequired())
+			eNotify(new ENotificationImpl(this, Notification.SET, ESMFPackage.ESMF_METHOD__CLOCK, oldClock, clock));
 	}
 
 	/**
@@ -397,8 +392,6 @@ public class ESMFMethodImpl extends ESMFNamedEntityImpl implements ESMFMethod {
 	@Override
 	public NotificationChain eInverseRemove(InternalEObject otherEnd, int featureID, NotificationChain msgs) {
 		switch (featureID) {
-			case ESMFPackage.ESMF_METHOD__CLOCK:
-				return basicSetClock(null, msgs);
 			case ESMFPackage.ESMF_METHOD__ACTION:
 				return ((InternalEList<?>)getAction()).basicRemove(otherEnd, msgs);
 		}
@@ -425,7 +418,8 @@ public class ESMFMethodImpl extends ESMFNamedEntityImpl implements ESMFMethod {
 				if (resolve) return getExportState();
 				return basicGetExportState();
 			case ESMFPackage.ESMF_METHOD__CLOCK:
-				return getClock();
+				if (resolve) return getClock();
+				return basicGetClock();
 			case ESMFPackage.ESMF_METHOD__ACTION:
 				return getAction();
 			case ESMFPackage.ESMF_METHOD__SIDL_METHOD:

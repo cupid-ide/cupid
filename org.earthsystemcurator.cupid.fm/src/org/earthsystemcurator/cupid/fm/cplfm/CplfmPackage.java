@@ -66,13 +66,22 @@ public interface CplfmPackage extends EPackage {
 	int CONSTITUENT_MODEL = 0;
 
 	/**
+	 * The feature id for the '<em><b>Name</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int CONSTITUENT_MODEL__NAME = 0;
+
+	/**
 	 * The feature id for the '<em><b>Grid</b></em>' containment reference.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int CONSTITUENT_MODEL__GRID = 0;
+	int CONSTITUENT_MODEL__GRID = 1;
 
 	/**
 	 * The feature id for the '<em><b>Parallel</b></em>' containment reference.
@@ -81,7 +90,7 @@ public interface CplfmPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int CONSTITUENT_MODEL__PARALLEL = 1;
+	int CONSTITUENT_MODEL__PARALLEL = 2;
 
 	/**
 	 * The feature id for the '<em><b>Field</b></em>' containment reference list.
@@ -90,7 +99,7 @@ public interface CplfmPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int CONSTITUENT_MODEL__FIELD = 2;
+	int CONSTITUENT_MODEL__FIELD = 3;
 
 	/**
 	 * The number of structural features of the '<em>Constituent Model</em>' class.
@@ -99,7 +108,7 @@ public interface CplfmPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int CONSTITUENT_MODEL_FEATURE_COUNT = 3;
+	int CONSTITUENT_MODEL_FEATURE_COUNT = 4;
 
 	/**
 	 * The meta object id for the '{@link org.earthsystemcurator.cupid.fm.cplfm.impl.ParallelImpl <em>Parallel</em>}' class.
@@ -431,13 +440,40 @@ public interface CplfmPackage extends EPackage {
 	int COUPLER = 14;
 
 	/**
+	 * The feature id for the '<em><b>Name</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int COUPLER__NAME = 0;
+
+	/**
 	 * The feature id for the '<em><b>Connector</b></em>' reference.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int COUPLER__CONNECTOR = 0;
+	int COUPLER__CONNECTOR = 1;
+
+	/**
+	 * The feature id for the '<em><b>Transformation</b></em>' reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int COUPLER__TRANSFORMATION = 2;
+
+	/**
+	 * The feature id for the '<em><b>Constituent Model</b></em>' reference list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int COUPLER__CONSTITUENT_MODEL = 3;
 
 	/**
 	 * The number of structural features of the '<em>Coupler</em>' class.
@@ -446,7 +482,7 @@ public interface CplfmPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int COUPLER_FEATURE_COUNT = 1;
+	int COUPLER_FEATURE_COUNT = 4;
 
 	/**
 	 * The meta object id for the '{@link org.earthsystemcurator.cupid.fm.cplfm.impl.ConnectorImpl <em>Connector</em>}' class.
@@ -705,6 +741,17 @@ public interface CplfmPackage extends EPackage {
 	 * @generated
 	 */
 	EClass getConstituentModel();
+
+	/**
+	 * Returns the meta object for the attribute '{@link org.earthsystemcurator.cupid.fm.cplfm.ConstituentModel#getName <em>Name</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the attribute '<em>Name</em>'.
+	 * @see org.earthsystemcurator.cupid.fm.cplfm.ConstituentModel#getName()
+	 * @see #getConstituentModel()
+	 * @generated
+	 */
+	EAttribute getConstituentModel_Name();
 
 	/**
 	 * Returns the meta object for the containment reference '{@link org.earthsystemcurator.cupid.fm.cplfm.ConstituentModel#getGrid <em>Grid</em>}'.
@@ -968,6 +1015,17 @@ public interface CplfmPackage extends EPackage {
 	EClass getCoupler();
 
 	/**
+	 * Returns the meta object for the attribute '{@link org.earthsystemcurator.cupid.fm.cplfm.Coupler#getName <em>Name</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the attribute '<em>Name</em>'.
+	 * @see org.earthsystemcurator.cupid.fm.cplfm.Coupler#getName()
+	 * @see #getCoupler()
+	 * @generated
+	 */
+	EAttribute getCoupler_Name();
+
+	/**
 	 * Returns the meta object for the reference '{@link org.earthsystemcurator.cupid.fm.cplfm.Coupler#getConnector <em>Connector</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -977,6 +1035,28 @@ public interface CplfmPackage extends EPackage {
 	 * @generated
 	 */
 	EReference getCoupler_Connector();
+
+	/**
+	 * Returns the meta object for the reference '{@link org.earthsystemcurator.cupid.fm.cplfm.Coupler#getTransformation <em>Transformation</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the reference '<em>Transformation</em>'.
+	 * @see org.earthsystemcurator.cupid.fm.cplfm.Coupler#getTransformation()
+	 * @see #getCoupler()
+	 * @generated
+	 */
+	EReference getCoupler_Transformation();
+
+	/**
+	 * Returns the meta object for the reference list '{@link org.earthsystemcurator.cupid.fm.cplfm.Coupler#getConstituentModel <em>Constituent Model</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the reference list '<em>Constituent Model</em>'.
+	 * @see org.earthsystemcurator.cupid.fm.cplfm.Coupler#getConstituentModel()
+	 * @see #getCoupler()
+	 * @generated
+	 */
+	EReference getCoupler_ConstituentModel();
 
 	/**
 	 * Returns the meta object for class '{@link org.earthsystemcurator.cupid.fm.cplfm.Connector <em>Connector</em>}'.
@@ -1139,6 +1219,14 @@ public interface CplfmPackage extends EPackage {
 		 * @generated
 		 */
 		EClass CONSTITUENT_MODEL = eINSTANCE.getConstituentModel();
+
+		/**
+		 * The meta object literal for the '<em><b>Name</b></em>' attribute feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EAttribute CONSTITUENT_MODEL__NAME = eINSTANCE.getConstituentModel_Name();
 
 		/**
 		 * The meta object literal for the '<em><b>Grid</b></em>' containment reference feature.
@@ -1369,12 +1457,36 @@ public interface CplfmPackage extends EPackage {
 		EClass COUPLER = eINSTANCE.getCoupler();
 
 		/**
+		 * The meta object literal for the '<em><b>Name</b></em>' attribute feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EAttribute COUPLER__NAME = eINSTANCE.getCoupler_Name();
+
+		/**
 		 * The meta object literal for the '<em><b>Connector</b></em>' reference feature.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
 		 * @generated
 		 */
 		EReference COUPLER__CONNECTOR = eINSTANCE.getCoupler_Connector();
+
+		/**
+		 * The meta object literal for the '<em><b>Transformation</b></em>' reference feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EReference COUPLER__TRANSFORMATION = eINSTANCE.getCoupler_Transformation();
+
+		/**
+		 * The meta object literal for the '<em><b>Constituent Model</b></em>' reference list feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EReference COUPLER__CONSTITUENT_MODEL = eINSTANCE.getCoupler_ConstituentModel();
 
 		/**
 		 * The meta object literal for the '{@link org.earthsystemcurator.cupid.fm.cplfm.impl.ConnectorImpl <em>Connector</em>}' class.

@@ -14,6 +14,7 @@ import org.eclipse.emf.ecore.EObject;
  * <p>
  * The following features are supported:
  * <ul>
+ *   <li>{@link org.earthsystemcurator.cupid.fm.cplfm.ConstituentModel#getName <em>Name</em>}</li>
  *   <li>{@link org.earthsystemcurator.cupid.fm.cplfm.ConstituentModel#getGrid <em>Grid</em>}</li>
  *   <li>{@link org.earthsystemcurator.cupid.fm.cplfm.ConstituentModel#getParallel <em>Parallel</em>}</li>
  *   <li>{@link org.earthsystemcurator.cupid.fm.cplfm.ConstituentModel#getField <em>Field</em>}</li>
@@ -25,6 +26,32 @@ import org.eclipse.emf.ecore.EObject;
  * @generated
  */
 public interface ConstituentModel extends EObject {
+	/**
+	 * Returns the value of the '<em><b>Name</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <p>
+	 * If the meaning of the '<em>Name</em>' attribute isn't clear,
+	 * there really should be more of a description here...
+	 * </p>
+	 * <!-- end-user-doc -->
+	 * @return the value of the '<em>Name</em>' attribute.
+	 * @see #setName(String)
+	 * @see org.earthsystemcurator.cupid.fm.cplfm.CplfmPackage#getConstituentModel_Name()
+	 * @model required="true"
+	 * @generated
+	 */
+	String getName();
+
+	/**
+	 * Sets the value of the '{@link org.earthsystemcurator.cupid.fm.cplfm.ConstituentModel#getName <em>Name</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @param value the new value of the '<em>Name</em>' attribute.
+	 * @see #getName()
+	 * @generated
+	 */
+	void setName(String value);
+
 	/**
 	 * Returns the value of the '<em><b>Grid</b></em>' containment reference.
 	 * <!-- begin-user-doc -->

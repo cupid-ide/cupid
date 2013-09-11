@@ -402,20 +402,19 @@ public class ESMFSwitch<T> extends Switch<T> {
 			case ESMFPackage.ESMF_TIME_INTERVAL: {
 				ESMFTimeInterval esmfTimeInterval = (ESMFTimeInterval)theEObject;
 				T result = caseESMFTimeInterval(esmfTimeInterval);
-				if (result == null) result = caseESMFNamedEntity(esmfTimeInterval);
 				if (result == null) result = defaultCase(theEObject);
 				return result;
 			}
 			case ESMFPackage.ESMF_TIME: {
 				ESMFTime esmfTime = (ESMFTime)theEObject;
 				T result = caseESMFTime(esmfTime);
-				if (result == null) result = caseESMFNamedEntity(esmfTime);
 				if (result == null) result = defaultCase(theEObject);
 				return result;
 			}
 			case ESMFPackage.ESMF_CLOCK: {
 				ESMFClock esmfClock = (ESMFClock)theEObject;
 				T result = caseESMFClock(esmfClock);
+				if (result == null) result = caseESMFScopedItem(esmfClock);
 				if (result == null) result = caseESMFNamedEntity(esmfClock);
 				if (result == null) result = defaultCase(theEObject);
 				return result;

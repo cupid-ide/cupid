@@ -29,7 +29,7 @@
         <pathelement location="${ECLIPSE_HOME}/plugins/org.eclipse.acceleo.engine_3.3.1.v20120831-0923.jar"/>
         <pathelement location="${ECLIPSE_HOME}/plugins/org.eclipse.emf.codegen.ecore_2.8.2.v20130125-0826.jar"/>
         <pathelement location="${ECLIPSE_HOME}/plugins/org.eclipse.emf.codegen_2.8.0.v20130125-0826.jar"/>
-        <pathelement location="${ECLIPSE_HOME}/plugins/com.google.guava_10.0.1.v201203051515.jar"/>
+        <pathelement location="${ECLIPSE_HOME}/plugins/com.google.guava_11.0.2.v201303041551.jar"/>
     </path>
 
     <path id="org.earthsystemcurator.cupid.esmf2fortran.classpath">

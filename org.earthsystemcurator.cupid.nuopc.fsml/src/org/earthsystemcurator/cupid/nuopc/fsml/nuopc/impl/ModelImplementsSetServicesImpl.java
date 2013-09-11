@@ -2,6 +2,7 @@
  */
 package org.earthsystemcurator.cupid.nuopc.fsml.nuopc.impl;
 
+import java.util.Collection;
 import org.earthsystemcurator.cupid.nuopc.fsml.nuopc.AttachesModelAdvance;
 import org.earthsystemcurator.cupid.nuopc.fsml.nuopc.ModelImplementsSetServices;
 import org.earthsystemcurator.cupid.nuopc.fsml.nuopc.NUOPCModel;
@@ -10,12 +11,15 @@ import org.earthsystemcurator.cupid.nuopc.fsml.nuopc.NUOPCPackage;
 import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.common.notify.NotificationChain;
 
+import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.InternalEObject;
 
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
 import org.eclipse.emf.ecore.impl.EObjectImpl;
+import org.eclipse.emf.ecore.util.EObjectContainmentWithInverseEList;
 import org.eclipse.emf.ecore.util.EcoreUtil;
+import org.eclipse.emf.ecore.util.InternalEList;
 
 /**
  * <!-- begin-user-doc -->
@@ -159,14 +163,14 @@ public class ModelImplementsSetServicesImpl extends EObjectImpl implements Model
 	protected boolean callsSetEntryPointPhase2 = CALLS_SET_ENTRY_POINT_PHASE2_EDEFAULT;
 
 	/**
-	 * The cached value of the '{@link #getAttachesModelAdvance() <em>Attaches Model Advance</em>}' containment reference.
+	 * The cached value of the '{@link #getAttachesModelAdvance() <em>Attaches Model Advance</em>}' containment reference list.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @see #getAttachesModelAdvance()
 	 * @generated
 	 * @ordered
 	 */
-	protected AttachesModelAdvance attachesModelAdvance;
+	protected EList<AttachesModelAdvance> attachesModelAdvance;
 
 	/**
 	 * <!-- begin-user-doc -->
@@ -359,7 +363,10 @@ public class ModelImplementsSetServicesImpl extends EObjectImpl implements Model
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public AttachesModelAdvance getAttachesModelAdvance() {
+	public EList<AttachesModelAdvance> getAttachesModelAdvance() {
+		if (attachesModelAdvance == null) {
+			attachesModelAdvance = new EObjectContainmentWithInverseEList<AttachesModelAdvance>(AttachesModelAdvance.class, this, NUOPCPackage.MODEL_IMPLEMENTS_SET_SERVICES__ATTACHES_MODEL_ADVANCE, NUOPCPackage.ATTACHES_MODEL_ADVANCE__PARENT);
+		}
 		return attachesModelAdvance;
 	}
 
@@ -368,40 +375,7 @@ public class ModelImplementsSetServicesImpl extends EObjectImpl implements Model
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public NotificationChain basicSetAttachesModelAdvance(AttachesModelAdvance newAttachesModelAdvance, NotificationChain msgs) {
-		AttachesModelAdvance oldAttachesModelAdvance = attachesModelAdvance;
-		attachesModelAdvance = newAttachesModelAdvance;
-		if (eNotificationRequired()) {
-			ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, NUOPCPackage.MODEL_IMPLEMENTS_SET_SERVICES__ATTACHES_MODEL_ADVANCE, oldAttachesModelAdvance, newAttachesModelAdvance);
-			if (msgs == null) msgs = notification; else msgs.add(notification);
-		}
-		return msgs;
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public void setAttachesModelAdvance(AttachesModelAdvance newAttachesModelAdvance) {
-		if (newAttachesModelAdvance != attachesModelAdvance) {
-			NotificationChain msgs = null;
-			if (attachesModelAdvance != null)
-				msgs = ((InternalEObject)attachesModelAdvance).eInverseRemove(this, NUOPCPackage.ATTACHES_MODEL_ADVANCE__PARENT, AttachesModelAdvance.class, msgs);
-			if (newAttachesModelAdvance != null)
-				msgs = ((InternalEObject)newAttachesModelAdvance).eInverseAdd(this, NUOPCPackage.ATTACHES_MODEL_ADVANCE__PARENT, AttachesModelAdvance.class, msgs);
-			msgs = basicSetAttachesModelAdvance(newAttachesModelAdvance, msgs);
-			if (msgs != null) msgs.dispatch();
-		}
-		else if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, NUOPCPackage.MODEL_IMPLEMENTS_SET_SERVICES__ATTACHES_MODEL_ADVANCE, newAttachesModelAdvance, newAttachesModelAdvance));
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
+	@SuppressWarnings("unchecked")
 	@Override
 	public NotificationChain eInverseAdd(InternalEObject otherEnd, int featureID, NotificationChain msgs) {
 		switch (featureID) {
@@ -410,9 +384,7 @@ public class ModelImplementsSetServicesImpl extends EObjectImpl implements Model
 					msgs = eBasicRemoveFromContainer(msgs);
 				return basicSetParent((NUOPCModel)otherEnd, msgs);
 			case NUOPCPackage.MODEL_IMPLEMENTS_SET_SERVICES__ATTACHES_MODEL_ADVANCE:
-				if (attachesModelAdvance != null)
-					msgs = ((InternalEObject)attachesModelAdvance).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - NUOPCPackage.MODEL_IMPLEMENTS_SET_SERVICES__ATTACHES_MODEL_ADVANCE, null, msgs);
-				return basicSetAttachesModelAdvance((AttachesModelAdvance)otherEnd, msgs);
+				return ((InternalEList<InternalEObject>)(InternalEList<?>)getAttachesModelAdvance()).basicAdd(otherEnd, msgs);
 		}
 		return super.eInverseAdd(otherEnd, featureID, msgs);
 	}
@@ -428,7 +400,7 @@ public class ModelImplementsSetServicesImpl extends EObjectImpl implements Model
 			case NUOPCPackage.MODEL_IMPLEMENTS_SET_SERVICES__PARENT:
 				return basicSetParent(null, msgs);
 			case NUOPCPackage.MODEL_IMPLEMENTS_SET_SERVICES__ATTACHES_MODEL_ADVANCE:
-				return basicSetAttachesModelAdvance(null, msgs);
+				return ((InternalEList<?>)getAttachesModelAdvance()).basicRemove(otherEnd, msgs);
 		}
 		return super.eInverseRemove(otherEnd, featureID, msgs);
 	}
@@ -480,6 +452,7 @@ public class ModelImplementsSetServicesImpl extends EObjectImpl implements Model
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@SuppressWarnings("unchecked")
 	@Override
 	public void eSet(int featureID, Object newValue) {
 		switch (featureID) {
@@ -505,7 +478,8 @@ public class ModelImplementsSetServicesImpl extends EObjectImpl implements Model
 				setCallsSetEntryPointPhase2((Boolean)newValue);
 				return;
 			case NUOPCPackage.MODEL_IMPLEMENTS_SET_SERVICES__ATTACHES_MODEL_ADVANCE:
-				setAttachesModelAdvance((AttachesModelAdvance)newValue);
+				getAttachesModelAdvance().clear();
+				getAttachesModelAdvance().addAll((Collection<? extends AttachesModelAdvance>)newValue);
 				return;
 		}
 		super.eSet(featureID, newValue);
@@ -541,7 +515,7 @@ public class ModelImplementsSetServicesImpl extends EObjectImpl implements Model
 				setCallsSetEntryPointPhase2(CALLS_SET_ENTRY_POINT_PHASE2_EDEFAULT);
 				return;
 			case NUOPCPackage.MODEL_IMPLEMENTS_SET_SERVICES__ATTACHES_MODEL_ADVANCE:
-				setAttachesModelAdvance((AttachesModelAdvance)null);
+				getAttachesModelAdvance().clear();
 				return;
 		}
 		super.eUnset(featureID);
@@ -570,7 +544,7 @@ public class ModelImplementsSetServicesImpl extends EObjectImpl implements Model
 			case NUOPCPackage.MODEL_IMPLEMENTS_SET_SERVICES__CALLS_SET_ENTRY_POINT_PHASE2:
 				return callsSetEntryPointPhase2 != CALLS_SET_ENTRY_POINT_PHASE2_EDEFAULT;
 			case NUOPCPackage.MODEL_IMPLEMENTS_SET_SERVICES__ATTACHES_MODEL_ADVANCE:
-				return attachesModelAdvance != null;
+				return attachesModelAdvance != null && !attachesModelAdvance.isEmpty();
 		}
 		return super.eIsSet(featureID);
 	}

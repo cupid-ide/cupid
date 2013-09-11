@@ -2,6 +2,8 @@
  */
 package org.earthsystemcurator.cupid.esmf;
 
+import org.eclipse.emf.ecore.EObject;
+
 
 /**
  * <!-- begin-user-doc -->
@@ -21,7 +23,7 @@ package org.earthsystemcurator.cupid.esmf;
  * @model
  * @generated
  */
-public interface ESMFTimeInterval extends ESMFNamedEntity {
+public interface ESMFTimeInterval extends EObject {
 	/**
 	 * Returns the value of the '<em><b>Hours</b></em>' attribute.
 	 * The default value is <code>"0"</code>.

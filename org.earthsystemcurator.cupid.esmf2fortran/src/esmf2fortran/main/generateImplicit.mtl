@@ -70,7 +70,7 @@ integer :: rc
 
 [genDebugInfo(d.name, '', 'driverstart')/]
 
-call ESMF_Initialize()
+call ESMF_Initialize(defaultCalKind=ESMF_CALKIND_GREGORIAN)
 
 [for (child :  ESMFGriddedComponent | d.component->filter(ESMFGriddedComponent))]
 [child.name/] = ESMF_GridCompCreate(name="[child.name/]", rc=rc)
@@ -110,6 +110,13 @@ type(ESMF_State) :: [gridComp.name/]_ostate
 [for (cplComp: ESMFCouplerComponent | c.component->filter(ESMFCouplerComponent))]
 type(ESMF_CplComp) :: [cplComp.name/]
 [/for]
+
+type(ESMF_Clock) :: localClock
+[if (c.item->filter(ESMFClock)->notEmpty())]
+type(ESMF_Time) :: localStartTime
+type(ESMF_Time) :: localStopTime
+type(ESMF_TimeInterval) :: localTimeStep
+[/if]
 
 [genESMFScopeDataMembers(c)/]
 
@@ -220,7 +227,20 @@ subroutine init_(comp, istate, ostate, clock, rc)
 		
 	rc = ESMF_SUCCESS
 	[genDebugInfo(c.name, 'init_', 'enter')/]
-		
+	
+	[if (c.item->filter(ESMFClock)->notEmpty())]
+	[for (clk : ESMFClock | c.item->filter(ESMFClock)->first())]
+	call ESMF_TimeSet(localStartTime, yy=[clk.startTime.year/], mm=[clk.startTime.month/], dd=[clk.startTime.day/], h=[clk.startTime.hour/], m=[clk.startTime.minute/], s=[clk.startTime.second/], rc=rc)
+	call ESMF_TimeSet(localStopTime, yy=[clk.stopTime.year/], mm=[clk.stopTime.month/], dd=[clk.stopTime.day/], h=[clk.stopTime.hour/], m=[clk.stopTime.minute/], s=[clk.stopTime.second/], rc=rc)
+	call ESMF_TimeIntervalSet(localTimeStep, h=[clk.timeStep.hours/], m=[clk.timeStep.minutes/], s=[clk.timeStep.seconds/],rc=rc)
+	localClock = ESMF_ClockCreate(timeStep=localTimeStep, startTime=localStartTime, stopTime=localStopTime, rc=rc)
+	clock = localClock		
+	[/for]
+	[else]
+	! make a copy of parent clock
+	localClock = ESMF_ClockCreate(clock, rc=rc)
+	[/if]
+	
 	[for (arraySpec : ESMFArraySpec | c.item->filter(ESMFArraySpec))]
 	call ESMF_ArraySpecSet([arraySpec.name/], rank=[arraySpec.rank/], typekind=[arraySpec.typekind/], rc=rc)
 	[/for]
@@ -287,27 +307,35 @@ subroutine run_(comp, istate, ostate, clock, rc)
 	rc = ESMF_SUCCESS
 	[genDebugInfo(c.name, 'run_', 'enter')/]
 	
-	[comment][for (child : ESMFGriddedComponent | c.component->filter(ESMFGriddedComponent))]
-	call ESMF_GridCompRun([child.name/], importState=[child.name/]_istate, exportState=[child.name/]_ostate, clock=clock, phase=1, rc=rc)  
-	[/for][/comment]
+	
+	[if (c.item->filter(ESMFClock)->notEmpty())]
+	clock = localClock	
+	do while (.not. ESMF_ClockIsStopTime(clock, rc=rc))
+		[genRunSchedule(c)/]
+		call ESMF_ClockAdvance(clock, rc=rc)
+	end do	
+	[else]
+		[genRunSchedule(c)/]
+	[/if]	
 
-	! need a better model of the calling schedule
-	[for (child : ESMFSimpleCouplerComponent | c.component->filter(ESMFSimpleCouplerComponent))]
-	call ESMF_GridCompRun([child.srcComponent.name/], importState=[child.srcComponent.name/]_istate, exportState=[child.dstComponent.name/]_ostate, clock=clock, phase=1, rc=rc)
-	
-	! run coupler: src --> dst
-	call ESMF_CplCompRun([child.name/], importState=[child.srcComponent.name/]_ostate, exportState=[child.dstComponent.name/]_istate, clock=clock, phase=1, rc=rc)  
-	
-	call ESMF_GridCompRun([child.dstComponent.name/], importState=[child.dstComponent.name/]_istate, exportState=[child.dstComponent.name/]_ostate, clock=clock, phase=1, rc=rc)
-
-	! run coupler: dst --> src
-	call ESMF_CplCompRun([child.name/], importState=[child.dstComponent.name/]_ostate, exportState=[child.srcComponent.name/]_istate, clock=clock, phase=2, rc=rc)
-	[/for]
-	
 	[genDebugInfo(c.name, 'run_', 'exit')/]	
 end subroutine run_
 [/template]
 
+
+[template public genRunSchedule(c : ESMFGriddedComponent)]
+[for (child : ESMFSimpleCouplerComponent | c.component->filter(ESMFSimpleCouplerComponent))]
+call ESMF_GridCompRun([child.srcComponent.name/], importState=[child.srcComponent.name/]_istate, exportState=[child.dstComponent.name/]_ostate, clock=clock, phase=1, rc=rc)
+
+! run coupler: src --> dst
+call ESMF_CplCompRun([child.name/], importState=[child.srcComponent.name/]_ostate, exportState=[child.dstComponent.name/]_istate, clock=clock, phase=1, rc=rc)  
+
+call ESMF_GridCompRun([child.dstComponent.name/], importState=[child.dstComponent.name/]_istate, exportState=[child.dstComponent.name/]_ostate, clock=clock, phase=1, rc=rc)
+
+! run coupler: dst --> src
+call ESMF_CplCompRun([child.name/], importState=[child.dstComponent.name/]_ostate, exportState=[child.srcComponent.name/]_istate, clock=clock, phase=2, rc=rc)
+[/for]
+[/template]
 
 [template public genESMFFinalMethod(c : ESMFGriddedComponent)]
 subroutine finalize_(comp, istate, ostate, clock, rc)	

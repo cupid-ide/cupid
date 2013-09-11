@@ -122,7 +122,7 @@ public interface NUOPCDriver extends EObject {
 	 * @return the value of the '<em>Implements Set Model Count</em>' containment reference list.
 	 * @see org.earthsystemcurator.cupid.nuopc.fsml.nuopc.NUOPCPackage#getNUOPCDriver_ImplementsSetModelCount()
 	 * @see org.earthsystemcurator.cupid.nuopc.fsml.nuopc.NUOPCDriver__ImplementsSetModelCount#getParent
-	 * @model opposite="parent" containment="true"
+	 * @model opposite="parent" containment="true" ordered="false"
 	 *        annotation="http://www.earthsystemcog.org/projects/nuopc mapping='subroutine: \"*(type(ESMF_GridComp), integer)\"'"
 	 * @generated
 	 */

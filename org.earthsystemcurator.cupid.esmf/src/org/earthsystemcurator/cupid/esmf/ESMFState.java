@@ -20,7 +20,7 @@ import org.eclipse.emf.common.util.EList;
  * @model
  * @generated
  */
-public interface ESMFState extends ESMFStateItem, ESMFScopedItem {
+public interface ESMFState extends ESMFStateItem {
 	/**
 	 * Returns the value of the '<em><b>Component</b></em>' reference.
 	 * <!-- begin-user-doc -->

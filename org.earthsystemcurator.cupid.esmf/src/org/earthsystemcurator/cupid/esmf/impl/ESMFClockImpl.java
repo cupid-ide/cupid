@@ -28,13 +28,12 @@ import org.eclipse.emf.ecore.util.EcoreUtil;
  *   <li>{@link org.earthsystemcurator.cupid.esmf.impl.ESMFClockImpl#getStartTime <em>Start Time</em>}</li>
  *   <li>{@link org.earthsystemcurator.cupid.esmf.impl.ESMFClockImpl#getStopTime <em>Stop Time</em>}</li>
  *   <li>{@link org.earthsystemcurator.cupid.esmf.impl.ESMFClockImpl#getTimeStep <em>Time Step</em>}</li>
- *   <li>{@link org.earthsystemcurator.cupid.esmf.impl.ESMFClockImpl#getComponent <em>Component</em>}</li>
  * </ul>
  * </p>
  *
  * @generated
  */
-public class ESMFClockImpl extends ESMFNamedEntityImpl implements ESMFClock {
+public class ESMFClockImpl extends ESMFScopedItemImpl implements ESMFClock {
 	/**
 	 * The cached value of the '{@link #getStartTime() <em>Start Time</em>}' containment reference.
 	 * <!-- begin-user-doc -->
@@ -64,16 +63,6 @@ public class ESMFClockImpl extends ESMFNamedEntityImpl implements ESMFClock {
 	 * @ordered
 	 */
 	protected ESMFTimeInterval timeStep;
-
-	/**
-	 * The cached value of the '{@link #getComponent() <em>Component</em>}' reference.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @see #getComponent()
-	 * @generated
-	 * @ordered
-	 */
-	protected ESMFComponent component;
 
 	/**
 	 * <!-- begin-user-doc -->
@@ -228,44 +217,6 @@ public class ESMFClockImpl extends ESMFNamedEntityImpl implements ESMFClock {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public ESMFComponent getComponent() {
-		if (component != null && component.eIsProxy()) {
-			InternalEObject oldComponent = (InternalEObject)component;
-			component = (ESMFComponent)eResolveProxy(oldComponent);
-			if (component != oldComponent) {
-				if (eNotificationRequired())
-					eNotify(new ENotificationImpl(this, Notification.RESOLVE, ESMFPackage.ESMF_CLOCK__COMPONENT, oldComponent, component));
-			}
-		}
-		return component;
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public ESMFComponent basicGetComponent() {
-		return component;
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public void setComponent(ESMFComponent newComponent) {
-		ESMFComponent oldComponent = component;
-		component = newComponent;
-		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, ESMFPackage.ESMF_CLOCK__COMPONENT, oldComponent, component));
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
 	@Override
 	public NotificationChain eInverseRemove(InternalEObject otherEnd, int featureID, NotificationChain msgs) {
 		switch (featureID) {
@@ -293,9 +244,6 @@ public class ESMFClockImpl extends ESMFNamedEntityImpl implements ESMFClock {
 				return getStopTime();
 			case ESMFPackage.ESMF_CLOCK__TIME_STEP:
 				return getTimeStep();
-			case ESMFPackage.ESMF_CLOCK__COMPONENT:
-				if (resolve) return getComponent();
-				return basicGetComponent();
 		}
 		return super.eGet(featureID, resolve, coreType);
 	}
@@ -316,9 +264,6 @@ public class ESMFClockImpl extends ESMFNamedEntityImpl implements ESMFClock {
 				return;
 			case ESMFPackage.ESMF_CLOCK__TIME_STEP:
 				setTimeStep((ESMFTimeInterval)newValue);
-				return;
-			case ESMFPackage.ESMF_CLOCK__COMPONENT:
-				setComponent((ESMFComponent)newValue);
 				return;
 		}
 		super.eSet(featureID, newValue);
@@ -341,9 +286,6 @@ public class ESMFClockImpl extends ESMFNamedEntityImpl implements ESMFClock {
 			case ESMFPackage.ESMF_CLOCK__TIME_STEP:
 				setTimeStep((ESMFTimeInterval)null);
 				return;
-			case ESMFPackage.ESMF_CLOCK__COMPONENT:
-				setComponent((ESMFComponent)null);
-				return;
 		}
 		super.eUnset(featureID);
 	}
@@ -362,8 +304,6 @@ public class ESMFClockImpl extends ESMFNamedEntityImpl implements ESMFClock {
 				return stopTime != null;
 			case ESMFPackage.ESMF_CLOCK__TIME_STEP:
 				return timeStep != null;
-			case ESMFPackage.ESMF_CLOCK__COMPONENT:
-				return component != null;
 		}
 		return super.eIsSet(featureID);
 	}

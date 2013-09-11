@@ -14,7 +14,6 @@ package org.earthsystemcurator.cupid.esmf;
  *   <li>{@link org.earthsystemcurator.cupid.esmf.ESMFClock#getStartTime <em>Start Time</em>}</li>
  *   <li>{@link org.earthsystemcurator.cupid.esmf.ESMFClock#getStopTime <em>Stop Time</em>}</li>
  *   <li>{@link org.earthsystemcurator.cupid.esmf.ESMFClock#getTimeStep <em>Time Step</em>}</li>
- *   <li>{@link org.earthsystemcurator.cupid.esmf.ESMFClock#getComponent <em>Component</em>}</li>
  * </ul>
  * </p>
  *
@@ -22,7 +21,7 @@ package org.earthsystemcurator.cupid.esmf;
  * @model
  * @generated
  */
-public interface ESMFClock extends ESMFNamedEntity {
+public interface ESMFClock extends ESMFScopedItem {
 	/**
 	 * Returns the value of the '<em><b>Start Time</b></em>' containment reference.
 	 * <!-- begin-user-doc -->
@@ -100,31 +99,5 @@ public interface ESMFClock extends ESMFNamedEntity {
 	 * @generated
 	 */
 	void setTimeStep(ESMFTimeInterval value);
-
-	/**
-	 * Returns the value of the '<em><b>Component</b></em>' reference.
-	 * <!-- begin-user-doc -->
-	 * <p>
-	 * If the meaning of the '<em>Component</em>' container reference isn't clear,
-	 * there really should be more of a description here...
-	 * </p>
-	 * <!-- end-user-doc -->
-	 * @return the value of the '<em>Component</em>' reference.
-	 * @see #setComponent(ESMFComponent)
-	 * @see org.earthsystemcurator.cupid.esmf.ESMFPackage#getESMFClock_Component()
-	 * @model
-	 * @generated
-	 */
-	ESMFComponent getComponent();
-
-	/**
-	 * Sets the value of the '{@link org.earthsystemcurator.cupid.esmf.ESMFClock#getComponent <em>Component</em>}' reference.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @param value the new value of the '<em>Component</em>' reference.
-	 * @see #getComponent()
-	 * @generated
-	 */
-	void setComponent(ESMFComponent value);
 
 } // ESMFClock

@@ -28,7 +28,7 @@ import org.eclipse.emf.common.util.EList;
  * @model
  * @generated
  */
-public interface ESMFField extends ESMFStateItem, ESMFScopedItem {
+public interface ESMFField extends ESMFStateItem {
 	/**
 	 * Returns the value of the '<em><b>Grid</b></em>' reference.
 	 * <!-- begin-user-doc -->

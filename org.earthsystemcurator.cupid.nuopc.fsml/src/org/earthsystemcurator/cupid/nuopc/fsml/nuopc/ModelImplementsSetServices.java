@@ -2,6 +2,7 @@
  */
 package org.earthsystemcurator.cupid.nuopc.fsml.nuopc;
 
+import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.ecore.EObject;
 
 /**
@@ -222,7 +223,8 @@ public interface ModelImplementsSetServices extends EObject {
 	void setCallsSetEntryPointPhase2(boolean value);
 
 	/**
-	 * Returns the value of the '<em><b>Attaches Model Advance</b></em>' containment reference.
+	 * Returns the value of the '<em><b>Attaches Model Advance</b></em>' containment reference list.
+	 * The list contents are of type {@link org.earthsystemcurator.cupid.nuopc.fsml.nuopc.AttachesModelAdvance}.
 	 * It is bidirectional and its opposite is '{@link org.earthsystemcurator.cupid.nuopc.fsml.nuopc.AttachesModelAdvance#getParent <em>Parent</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <p>
@@ -230,24 +232,13 @@ public interface ModelImplementsSetServices extends EObject {
 	 * there really should be more of a description here...
 	 * </p>
 	 * <!-- end-user-doc -->
-	 * @return the value of the '<em>Attaches Model Advance</em>' containment reference.
-	 * @see #setAttachesModelAdvance(AttachesModelAdvance)
+	 * @return the value of the '<em>Attaches Model Advance</em>' containment reference list.
 	 * @see org.earthsystemcurator.cupid.nuopc.fsml.nuopc.NUOPCPackage#getModelImplementsSetServices_AttachesModelAdvance()
 	 * @see org.earthsystemcurator.cupid.nuopc.fsml.nuopc.AttachesModelAdvance#getParent
-	 * @model opposite="parent" containment="true"
+	 * @model opposite="parent" containment="true" ordered="false"
 	 *        annotation="http://www.earthsystemcog.org/projects/nuopc mapping='call: \"ESMF_MethodAdd\"'"
 	 * @generated
 	 */
-	AttachesModelAdvance getAttachesModelAdvance();
-
-	/**
-	 * Sets the value of the '{@link org.earthsystemcurator.cupid.nuopc.fsml.nuopc.ModelImplementsSetServices#getAttachesModelAdvance <em>Attaches Model Advance</em>}' containment reference.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @param value the new value of the '<em>Attaches Model Advance</em>' containment reference.
-	 * @see #getAttachesModelAdvance()
-	 * @generated
-	 */
-	void setAttachesModelAdvance(AttachesModelAdvance value);
+	EList<AttachesModelAdvance> getAttachesModelAdvance();
 
 } // ModelImplementsSetServices

@@ -172,8 +172,7 @@
         defaultValueLiteral="1"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="importState" eType="#//ESMFState"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="exportState" eType="#//ESMFState"/>
-    <eStructuralFeatures xsi:type="ecore:EReference" name="clock" eType="#//ESMFClock"
-        containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="clock" eType="#//ESMFClock"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="action" upperBound="-1"
         eType="#//ESMFAction" containment="true" eOpposite="#//ESMFAction/context"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="SIDLMethod" eType="ecore:EClass ../../org.earthsystemcurator.cupid.sidl/model/SIDL.ecore#//Method"/>
@@ -192,7 +191,7 @@
   <eClassifiers xsi:type="ecore:EEnum" name="ESMFCalKind">
     <eLiterals name="ESMF_CALKIND_GREGORIAN"/>
   </eClassifiers>
-  <eClassifiers xsi:type="ecore:EClass" name="ESMFTimeInterval" eSuperTypes="#//ESMFNamedEntity">
+  <eClassifiers xsi:type="ecore:EClass" name="ESMFTimeInterval">
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="hours" lowerBound="1" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EInt"
         defaultValueLiteral="0"/>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="minutes" lowerBound="1"
@@ -200,7 +199,7 @@
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="seconds" lowerBound="1"
         eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EInt" defaultValueLiteral="0"/>
   </eClassifiers>
-  <eClassifiers xsi:type="ecore:EClass" name="ESMFTime" eSuperTypes="#//ESMFNamedEntity">
+  <eClassifiers xsi:type="ecore:EClass" name="ESMFTime">
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="year" lowerBound="1" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EInt"/>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="month" lowerBound="1" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EInt"/>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="day" lowerBound="1" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EInt"/>
@@ -212,14 +211,13 @@
     <eStructuralFeatures xsi:type="ecore:EReference" name="calendar" lowerBound="1"
         eType="#//ESMFCalendar"/>
   </eClassifiers>
-  <eClassifiers xsi:type="ecore:EClass" name="ESMFClock" eSuperTypes="#//ESMFNamedEntity">
+  <eClassifiers xsi:type="ecore:EClass" name="ESMFClock" eSuperTypes="#//ESMFScopedItem">
     <eStructuralFeatures xsi:type="ecore:EReference" name="startTime" eType="#//ESMFTime"
         containment="true"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="stopTime" eType="#//ESMFTime"
         containment="true"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="timeStep" eType="#//ESMFTimeInterval"
         containment="true"/>
-    <eStructuralFeatures xsi:type="ecore:EReference" name="component" eType="#//ESMFComponent"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="ESMFState" eSuperTypes="#//ESMFStateItem">
     <eOperations name="add">

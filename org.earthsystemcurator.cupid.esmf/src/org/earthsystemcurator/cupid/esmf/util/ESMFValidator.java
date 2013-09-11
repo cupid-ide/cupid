@@ -421,7 +421,37 @@ public class ESMFValidator extends EObjectValidator {
 		if (result || diagnostics != null) result &= validate_EveryKeyUnique(esmfSimpleCouplerComponent, diagnostics, context);
 		if (result || diagnostics != null) result &= validate_EveryMapEntryUnique(esmfSimpleCouplerComponent, diagnostics, context);
 		if (result || diagnostics != null) result &= validateESMFNamedEntity_nameNotEmpty(esmfSimpleCouplerComponent, diagnostics, context);
+		if (result || diagnostics != null) result &= validateESMFSimpleCouplerComponent_commonSrcAndDst(esmfSimpleCouplerComponent, diagnostics, context);
 		return result;
+	}
+
+	/**
+	 * The cached validation expression for the commonSrcAndDst constraint of '<em>Simple Coupler Component</em>'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	protected static final String ESMF_SIMPLE_COUPLER_COMPONENT__COMMON_SRC_AND_DST__EEXPRESSION = "self.fieldConnection->forAll(srcField.scope = self.srcComponent and dstField.scope = self.dstComponent)";
+
+	/**
+	 * Validates the commonSrcAndDst constraint of '<em>Simple Coupler Component</em>'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public boolean validateESMFSimpleCouplerComponent_commonSrcAndDst(ESMFSimpleCouplerComponent esmfSimpleCouplerComponent, DiagnosticChain diagnostics, Map<Object, Object> context) {
+		return
+			validate
+				(ESMFPackage.Literals.ESMF_SIMPLE_COUPLER_COMPONENT,
+				 esmfSimpleCouplerComponent,
+				 diagnostics,
+				 context,
+				 "http://www.eclipse.org/emf/2002/Ecore/OCL/Pivot",
+				 "commonSrcAndDst",
+				 ESMF_SIMPLE_COUPLER_COMPONENT__COMMON_SRC_AND_DST__EEXPRESSION,
+				 Diagnostic.ERROR,
+				 DIAGNOSTIC_SOURCE,
+				 0);
 	}
 
 	/**
@@ -884,17 +914,7 @@ public class ESMFValidator extends EObjectValidator {
 	 * @generated
 	 */
 	public boolean validateESMFTimeInterval(ESMFTimeInterval esmfTimeInterval, DiagnosticChain diagnostics, Map<Object, Object> context) {
-		if (!validate_NoCircularContainment(esmfTimeInterval, diagnostics, context)) return false;
-		boolean result = validate_EveryMultiplicityConforms(esmfTimeInterval, diagnostics, context);
-		if (result || diagnostics != null) result &= validate_EveryDataValueConforms(esmfTimeInterval, diagnostics, context);
-		if (result || diagnostics != null) result &= validate_EveryReferenceIsContained(esmfTimeInterval, diagnostics, context);
-		if (result || diagnostics != null) result &= validate_EveryBidirectionalReferenceIsPaired(esmfTimeInterval, diagnostics, context);
-		if (result || diagnostics != null) result &= validate_EveryProxyResolves(esmfTimeInterval, diagnostics, context);
-		if (result || diagnostics != null) result &= validate_UniqueID(esmfTimeInterval, diagnostics, context);
-		if (result || diagnostics != null) result &= validate_EveryKeyUnique(esmfTimeInterval, diagnostics, context);
-		if (result || diagnostics != null) result &= validate_EveryMapEntryUnique(esmfTimeInterval, diagnostics, context);
-		if (result || diagnostics != null) result &= validateESMFNamedEntity_nameNotEmpty(esmfTimeInterval, diagnostics, context);
-		return result;
+		return validate_EveryDefaultConstraint(esmfTimeInterval, diagnostics, context);
 	}
 
 	/**
@@ -903,17 +923,7 @@ public class ESMFValidator extends EObjectValidator {
 	 * @generated
 	 */
 	public boolean validateESMFTime(ESMFTime esmfTime, DiagnosticChain diagnostics, Map<Object, Object> context) {
-		if (!validate_NoCircularContainment(esmfTime, diagnostics, context)) return false;
-		boolean result = validate_EveryMultiplicityConforms(esmfTime, diagnostics, context);
-		if (result || diagnostics != null) result &= validate_EveryDataValueConforms(esmfTime, diagnostics, context);
-		if (result || diagnostics != null) result &= validate_EveryReferenceIsContained(esmfTime, diagnostics, context);
-		if (result || diagnostics != null) result &= validate_EveryBidirectionalReferenceIsPaired(esmfTime, diagnostics, context);
-		if (result || diagnostics != null) result &= validate_EveryProxyResolves(esmfTime, diagnostics, context);
-		if (result || diagnostics != null) result &= validate_UniqueID(esmfTime, diagnostics, context);
-		if (result || diagnostics != null) result &= validate_EveryKeyUnique(esmfTime, diagnostics, context);
-		if (result || diagnostics != null) result &= validate_EveryMapEntryUnique(esmfTime, diagnostics, context);
-		if (result || diagnostics != null) result &= validateESMFNamedEntity_nameNotEmpty(esmfTime, diagnostics, context);
-		return result;
+		return validate_EveryDefaultConstraint(esmfTime, diagnostics, context);
 	}
 
 	/**

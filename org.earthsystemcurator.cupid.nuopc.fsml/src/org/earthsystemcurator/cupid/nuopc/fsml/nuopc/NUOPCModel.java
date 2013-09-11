@@ -205,8 +205,8 @@ public interface NUOPCModel extends EObject {
 	 * @return the value of the '<em>Implements Model Advance</em>' containment reference list.
 	 * @see org.earthsystemcurator.cupid.nuopc.fsml.nuopc.NUOPCPackage#getNUOPCModel_ImplementsModelAdvance()
 	 * @see org.earthsystemcurator.cupid.nuopc.fsml.nuopc.ModelAdvance#getParent
-	 * @model opposite="parent" containment="true"
-	 *        annotation="http://www.earthsystemcog.org/projects/nuopc mapping='subroutine: \"*(type(ESMF_GridComp), integer)\"'"
+	 * @model opposite="parent" containment="true" ordered="false"
+	 *        annotation="http://www.earthsystemcog.org/projects/nuopc mappingX='subroutine: \"*(type(ESMF_GridComp), integer)\"'"
 	 * @generated
 	 */
 	EList<ModelAdvance> getImplementsModelAdvance();

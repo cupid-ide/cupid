@@ -1269,7 +1269,7 @@ public class NUOPCPackageImpl extends EPackageImpl implements NUOPCPackage {
 		getNUOPCModel_ImplementsSetServices().getEKeys().add(this.getModelImplementsSetServices_Name());
 		initEReference(getNUOPCModel_ImplementsInitP1(), this.getModelImplementsInitP1(), null, "implementsInitP1", null, 0, 1, NUOPCModel.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEReference(getNUOPCModel_ImplementsInitP2(), this.getModelImplementsInitP2(), null, "implementsInitP2", null, 0, 1, NUOPCModel.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-		initEReference(getNUOPCModel_ImplementsModelAdvance(), this.getModelAdvance(), this.getModelAdvance_Parent(), "implementsModelAdvance", null, 0, -1, NUOPCModel.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEReference(getNUOPCModel_ImplementsModelAdvance(), this.getModelAdvance(), this.getModelAdvance_Parent(), "implementsModelAdvance", null, 0, -1, NUOPCModel.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, !IS_ORDERED);
 
 		initEClass(modelImplementsSetServicesEClass, ModelImplementsSetServices.class, "ModelImplementsSetServices", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 		initEReference(getModelImplementsSetServices_Parent(), this.getNUOPCModel(), this.getNUOPCModel_ImplementsSetServices(), "parent", null, 1, 1, ModelImplementsSetServices.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
@@ -1279,7 +1279,7 @@ public class NUOPCPackageImpl extends EPackageImpl implements NUOPCPackage {
 		initEAttribute(getModelImplementsSetServices_CallsGenericSetServices(), ecorePackage.getEBoolean(), "callsGenericSetServices", null, 1, 1, ModelImplementsSetServices.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEAttribute(getModelImplementsSetServices_CallsSetEntryPointPhase1(), ecorePackage.getEBoolean(), "callsSetEntryPointPhase1", null, 1, 1, ModelImplementsSetServices.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEAttribute(getModelImplementsSetServices_CallsSetEntryPointPhase2(), ecorePackage.getEBoolean(), "callsSetEntryPointPhase2", null, 1, 1, ModelImplementsSetServices.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-		initEReference(getModelImplementsSetServices_AttachesModelAdvance(), this.getAttachesModelAdvance(), this.getAttachesModelAdvance_Parent(), "attachesModelAdvance", null, 0, 1, ModelImplementsSetServices.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEReference(getModelImplementsSetServices_AttachesModelAdvance(), this.getAttachesModelAdvance(), this.getAttachesModelAdvance_Parent(), "attachesModelAdvance", null, 0, -1, ModelImplementsSetServices.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, !IS_ORDERED);
 
 		initEClass(modelImplementsInitP1EClass, ModelImplementsInitP1.class, "ModelImplementsInitP1", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 		initEAttribute(getModelImplementsInitP1_Name(), ecorePackage.getEString(), "name", null, 1, 1, ModelImplementsInitP1.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
@@ -1335,7 +1335,7 @@ public class NUOPCPackageImpl extends EPackageImpl implements NUOPCPackage {
 		initEAttribute(getNUOPCDriver_Name(), ecorePackage.getEString(), "name", "ModelDefault", 1, 1, NUOPCDriver.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEAttribute(getNUOPCDriver_ImportsTypeDriverIS(), ecorePackage.getEString(), "importsTypeDriverIS", null, 0, 1, NUOPCDriver.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEReference(getNUOPCDriver_ImplementsSetServices(), this.getNUOPCDriver__ImplementsSetServices(), this.getNUOPCDriver__ImplementsSetServices_Parent(), "implementsSetServices", null, 0, 1, NUOPCDriver.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-		initEReference(getNUOPCDriver_ImplementsSetModelCount(), this.getNUOPCDriver__ImplementsSetModelCount(), this.getNUOPCDriver__ImplementsSetModelCount_Parent(), "implementsSetModelCount", null, 0, -1, NUOPCDriver.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEReference(getNUOPCDriver_ImplementsSetModelCount(), this.getNUOPCDriver__ImplementsSetModelCount(), this.getNUOPCDriver__ImplementsSetModelCount_Parent(), "implementsSetModelCount", null, 0, -1, NUOPCDriver.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, !IS_ORDERED);
 
 		initEClass(nuopcDriver__ImplementsSetServicesEClass, NUOPCDriver__ImplementsSetServices.class, "NUOPCDriver__ImplementsSetServices", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 		initEReference(getNUOPCDriver__ImplementsSetServices_Parent(), this.getNUOPCDriver(), this.getNUOPCDriver_ImplementsSetServices(), "parent", null, 1, 1, NUOPCDriver__ImplementsSetServices.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
@@ -1456,7 +1456,7 @@ public class NUOPCPackageImpl extends EPackageImpl implements NUOPCPackage {
 		  (getNUOPCModel_ImplementsModelAdvance(), 
 		   source, 
 		   new String[] {
-			 "mapping", "subroutine: \"*(type(ESMF_GridComp), integer)\""
+			 "mappingX", "subroutine: \"*(type(ESMF_GridComp), integer)\""
 		   });		
 		addAnnotation
 		  (modelImplementsSetServicesEClass, 
@@ -1541,7 +1541,7 @@ public class NUOPCPackageImpl extends EPackageImpl implements NUOPCPackage {
 		  (getModelImplementsInitP1_AdvertisesAtLeastOneField(), 
 		   source, 
 		   new String[] {
-			 "essential", "false"
+			 "essential", "true"
 		   });			
 		addAnnotation
 		  (modelImplementsInitP2EClass, 

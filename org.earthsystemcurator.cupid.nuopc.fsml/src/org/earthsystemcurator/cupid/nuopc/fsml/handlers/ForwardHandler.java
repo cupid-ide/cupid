@@ -66,19 +66,19 @@ public class ForwardHandler extends AbstractHandler {
 		
 		//IWorkbenchWindow window = HandlerUtil.getActiveWorkbenchWindowChecked(event);
 		
-		//ResourceSet resourceSet1 = new ResourceSetImpl();
+		ResourceSet resourceSet1 = new ResourceSetImpl();
 		ResourceSet resourceSet2 = new ResourceSetImpl();
-		//String xmi1 = ReverseHandler.reverseFile;
+		String xmi1 = ReverseHandler.reverseFile;
 		String xmi2 = ForwardHandler.assertedFile;
-		//Resource reversed = load(xmi1, resourceSet1);
+		Resource reversed = load(xmi1, resourceSet1);
 		Resource asserted = load(xmi2, resourceSet2);
 		
 		final PhotranVPG vpg = PhotranVPG.getInstance();
 	    ReverseEngineer re = new ReverseEngineer();
-	    NUOPCApplication reversed = re.reverse(vpg);
+	    NUOPCApplication reversed1 = re.reverse(vpg);
 		
 		ForwardEngineer fe = new ForwardEngineer();
-		fe.forward(reversed, 
+		fe.forward(reversed1,
 				   (NUOPCApplication) asserted.getContents().get(0),
 				   re.getMappings());
 		
@@ -154,12 +154,15 @@ public class ForwardHandler extends AbstractHandler {
         		//vpg.
 				
         		//TODO: see about doing this on an individual file basis
+        		//TODO: deal with project files "out of sync" with file system
 	            for (Entry<IFile, IFortranAST> entry : fileMap.entrySet()) {
 	        		IFile f = entry.getKey();
 	            	TextFileChange changeThisFile = new TextFileChange("text change " + f.getFullPath().toOSString(), f);
 		            changeThisFile.initializeValidationData(monitor);	            
 		            try {
-						changeThisFile.setEdit(new ReplaceEdit(0, countCharsIn(f), entry.getValue().getRoot().toString()));
+						int charsInFile = countCharsIn(f);
+		            	changeThisFile.setEdit(new ReplaceEdit(0, countCharsIn(f), entry.getValue().getRoot().toString()));
+						System.out.println("Processing file: " + f.getName() + " : " + charsInFile);
 						changeThisFile.perform(monitor);			
 					} catch (CoreException e) {
 						e.printStackTrace();
@@ -201,7 +204,7 @@ public class ForwardHandler extends AbstractHandler {
 		resourceSet.getResourceFactoryRegistry().getExtensionToFactoryMap().put("xmi", new XMIResourceFactoryImpl());
 		resourceSet.getResourceFactoryRegistry().getExtensionToFactoryMap().put("nuopc", new XMIResourceFactoryImpl());
 
-		// Resource will be loaded within the resource set
+		// Resource will be loaded within the resource set		
 		return resourceSet.getResource(uri, true);
 	}
 	

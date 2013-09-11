@@ -212,7 +212,7 @@ public interface NUOPCPackage extends EPackage {
 	int MODEL_IMPLEMENTS_SET_SERVICES__CALLS_SET_ENTRY_POINT_PHASE2 = 6;
 
 	/**
-	 * The feature id for the '<em><b>Attaches Model Advance</b></em>' containment reference.
+	 * The feature id for the '<em><b>Attaches Model Advance</b></em>' containment reference list.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
@@ -1276,10 +1276,10 @@ public interface NUOPCPackage extends EPackage {
 	EAttribute getModelImplementsSetServices_CallsSetEntryPointPhase2();
 
 	/**
-	 * Returns the meta object for the containment reference '{@link org.earthsystemcurator.cupid.nuopc.fsml.nuopc.ModelImplementsSetServices#getAttachesModelAdvance <em>Attaches Model Advance</em>}'.
+	 * Returns the meta object for the containment reference list '{@link org.earthsystemcurator.cupid.nuopc.fsml.nuopc.ModelImplementsSetServices#getAttachesModelAdvance <em>Attaches Model Advance</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @return the meta object for the containment reference '<em>Attaches Model Advance</em>'.
+	 * @return the meta object for the containment reference list '<em>Attaches Model Advance</em>'.
 	 * @see org.earthsystemcurator.cupid.nuopc.fsml.nuopc.ModelImplementsSetServices#getAttachesModelAdvance()
 	 * @see #getModelImplementsSetServices()
 	 * @generated
@@ -2294,7 +2294,7 @@ public interface NUOPCPackage extends EPackage {
 		EAttribute MODEL_IMPLEMENTS_SET_SERVICES__CALLS_SET_ENTRY_POINT_PHASE2 = eINSTANCE.getModelImplementsSetServices_CallsSetEntryPointPhase2();
 
 		/**
-		 * The meta object literal for the '<em><b>Attaches Model Advance</b></em>' containment reference feature.
+		 * The meta object literal for the '<em><b>Attaches Model Advance</b></em>' containment reference list feature.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
 		 * @generated

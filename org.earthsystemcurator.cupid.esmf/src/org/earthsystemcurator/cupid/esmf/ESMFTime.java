@@ -2,6 +2,8 @@
  */
 package org.earthsystemcurator.cupid.esmf;
 
+import org.eclipse.emf.ecore.EObject;
+
 
 /**
  * <!-- begin-user-doc -->
@@ -25,7 +27,7 @@ package org.earthsystemcurator.cupid.esmf;
  * @model
  * @generated
  */
-public interface ESMFTime extends ESMFNamedEntity {
+public interface ESMFTime extends EObject {
 	/**
 	 * Returns the value of the '<em><b>Year</b></em>' attribute.
 	 * <!-- begin-user-doc -->

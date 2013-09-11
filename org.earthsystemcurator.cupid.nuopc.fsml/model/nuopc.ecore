@@ -46,9 +46,10 @@
       </eAnnotations>
     </eStructuralFeatures>
     <eStructuralFeatures xsi:type="ecore:EReference" name="implementsModelAdvance"
-        upperBound="-1" eType="#//ModelAdvance" containment="true" eOpposite="#//ModelAdvance/parent">
+        ordered="false" upperBound="-1" eType="#//ModelAdvance" containment="true"
+        eOpposite="#//ModelAdvance/parent">
       <eAnnotations source="http://www.earthsystemcog.org/projects/nuopc">
-        <details key="mapping" value="subroutine: &quot;*(type(ESMF_GridComp), integer)&quot;"/>
+        <details key="mappingX" value="subroutine: &quot;*(type(ESMF_GridComp), integer)&quot;"/>
       </eAnnotations>
     </eStructuralFeatures>
   </eClassifiers>
@@ -95,8 +96,8 @@
         <details key="mapping" value="calls: &quot;ESMF_GridCompSetEntryPoint&quot;"/>
       </eAnnotations>
     </eStructuralFeatures>
-    <eStructuralFeatures xsi:type="ecore:EReference" name="attachesModelAdvance" eType="#//AttachesModelAdvance"
-        containment="true" eOpposite="#//AttachesModelAdvance/parent">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="attachesModelAdvance" ordered="false"
+        upperBound="-1" eType="#//AttachesModelAdvance" containment="true" eOpposite="#//AttachesModelAdvance/parent">
       <eAnnotations source="http://www.earthsystemcog.org/projects/nuopc">
         <details key="mapping" value="call: &quot;ESMF_MethodAdd&quot;"/>
       </eAnnotations>
@@ -136,7 +137,7 @@
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="advertisesAtLeastOneField"
         eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean" derived="true">
       <eAnnotations source="http://www.earthsystemcog.org/projects/nuopc">
-        <details key="essential" value="false"/>
+        <details key="essential" value="true"/>
       </eAnnotations>
       <eAnnotations source="http://www.eclipse.org/emf/2002/Ecore/OCL">
         <details key="derivation" value="self.advertisesExportField->size() > 0 or self.advertisesImportField->size() > 0"/>
@@ -343,8 +344,8 @@
       </eAnnotations>
     </eStructuralFeatures>
     <eStructuralFeatures xsi:type="ecore:EReference" name="implementsSetModelCount"
-        upperBound="-1" eType="#//NUOPCDriver__ImplementsSetModelCount" containment="true"
-        eOpposite="#//NUOPCDriver__ImplementsSetModelCount/parent">
+        ordered="false" upperBound="-1" eType="#//NUOPCDriver__ImplementsSetModelCount"
+        containment="true" eOpposite="#//NUOPCDriver__ImplementsSetModelCount/parent">
       <eAnnotations source="http://www.earthsystemcog.org/projects/nuopc">
         <details key="mapping" value="subroutine: &quot;*(type(ESMF_GridComp), integer)&quot;"/>
       </eAnnotations>

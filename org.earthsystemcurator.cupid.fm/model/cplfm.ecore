@@ -2,6 +2,7 @@
 <ecore:EPackage xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
     xmlns:ecore="http://www.eclipse.org/emf/2002/Ecore" name="cplfm" nsURI="http://www.earthsystemcurator.org/cplfm" nsPrefix="cplfm">
   <eClassifiers xsi:type="ecore:EClass" name="ConstituentModel">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="name" lowerBound="1" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="grid" lowerBound="1" eType="#//Grid"
         containment="true"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="parallel" eType="#//Parallel"
@@ -18,11 +19,8 @@
   <eClassifiers xsi:type="ecore:EClass" name="Grid" abstract="true"/>
   <eClassifiers xsi:type="ecore:EClass" name="StructuredGrid" abstract="true" eSuperTypes="#//Grid"/>
   <eClassifiers xsi:type="ecore:EClass" name="LogicallyRectangularGrid" eSuperTypes="#//StructuredGrid">
-    <eStructuralFeatures xsi:type="ecore:EReference" name="coordinates" eType="#//Coordinates"/>
-    <eStructuralFeatures xsi:type="ecore:EAttribute" name="minX" lowerBound="1" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EInt"/>
-    <eStructuralFeatures xsi:type="ecore:EAttribute" name="maxX" lowerBound="1" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EInt"/>
-    <eStructuralFeatures xsi:type="ecore:EAttribute" name="minY" lowerBound="1" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EInt"/>
-    <eStructuralFeatures xsi:type="ecore:EAttribute" name="maxY" lowerBound="1" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EInt"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="coordinates" eType="#//Coordinates"
+        containment="true"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="UnstructuredGrid" eSuperTypes="#//Grid"/>
   <eClassifiers xsi:type="ecore:EClass" name="Field">
@@ -36,8 +34,13 @@
   <eClassifiers xsi:type="ecore:EClass" name="SegmentDecomposition" eSuperTypes="#//DomainDecomposition"/>
   <eClassifiers xsi:type="ecore:EClass" name="BlockDecomposition" eSuperTypes="#//DomainDecomposition"/>
   <eClassifiers xsi:type="ecore:EClass" name="Coupler">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="name" lowerBound="1" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="connector" lowerBound="1"
-        eType="#//Connector"/>
+        eType="#//Connector" containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="transformation" lowerBound="1"
+        eType="#//Transformation" containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="constituentModel" upperBound="-1"
+        eType="#//ConstituentModel" containment="true"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="Connector" abstract="true"/>
   <eClassifiers xsi:type="ecore:EClass" name="MemoryToMemoryConnector" eSuperTypes="#//Connector"/>

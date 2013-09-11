@@ -318,8 +318,8 @@ public class CplfmPackageImpl extends EPackageImpl implements CplfmPackage {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EReference getConstituentModel_Grid() {
-		return (EReference)constituentModelEClass.getEStructuralFeatures().get(0);
+	public EAttribute getConstituentModel_Name() {
+		return (EAttribute)constituentModelEClass.getEStructuralFeatures().get(0);
 	}
 
 	/**
@@ -327,7 +327,7 @@ public class CplfmPackageImpl extends EPackageImpl implements CplfmPackage {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EReference getConstituentModel_Parallel() {
+	public EReference getConstituentModel_Grid() {
 		return (EReference)constituentModelEClass.getEStructuralFeatures().get(1);
 	}
 
@@ -336,8 +336,17 @@ public class CplfmPackageImpl extends EPackageImpl implements CplfmPackage {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EReference getConstituentModel_Field() {
+	public EReference getConstituentModel_Parallel() {
 		return (EReference)constituentModelEClass.getEStructuralFeatures().get(2);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EReference getConstituentModel_Field() {
+		return (EReference)constituentModelEClass.getEStructuralFeatures().get(3);
 	}
 
 	/**
@@ -543,8 +552,35 @@ public class CplfmPackageImpl extends EPackageImpl implements CplfmPackage {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	public EAttribute getCoupler_Name() {
+		return (EAttribute)couplerEClass.getEStructuralFeatures().get(0);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
 	public EReference getCoupler_Connector() {
-		return (EReference)couplerEClass.getEStructuralFeatures().get(0);
+		return (EReference)couplerEClass.getEStructuralFeatures().get(1);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EReference getCoupler_Transformation() {
+		return (EReference)couplerEClass.getEStructuralFeatures().get(2);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EReference getCoupler_ConstituentModel() {
+		return (EReference)couplerEClass.getEStructuralFeatures().get(3);
 	}
 
 	/**
@@ -693,6 +729,7 @@ public class CplfmPackageImpl extends EPackageImpl implements CplfmPackage {
 
 		// Create classes and their features
 		constituentModelEClass = createEClass(CONSTITUENT_MODEL);
+		createEAttribute(constituentModelEClass, CONSTITUENT_MODEL__NAME);
 		createEReference(constituentModelEClass, CONSTITUENT_MODEL__GRID);
 		createEReference(constituentModelEClass, CONSTITUENT_MODEL__PARALLEL);
 		createEReference(constituentModelEClass, CONSTITUENT_MODEL__FIELD);
@@ -732,7 +769,10 @@ public class CplfmPackageImpl extends EPackageImpl implements CplfmPackage {
 		blockDecompositionEClass = createEClass(BLOCK_DECOMPOSITION);
 
 		couplerEClass = createEClass(COUPLER);
+		createEAttribute(couplerEClass, COUPLER__NAME);
 		createEReference(couplerEClass, COUPLER__CONNECTOR);
+		createEReference(couplerEClass, COUPLER__TRANSFORMATION);
+		createEReference(couplerEClass, COUPLER__CONSTITUENT_MODEL);
 
 		connectorEClass = createEClass(CONNECTOR);
 
@@ -811,6 +851,7 @@ public class CplfmPackageImpl extends EPackageImpl implements CplfmPackage {
 
 		// Initialize classes and features; add operations and parameters
 		initEClass(constituentModelEClass, ConstituentModel.class, "ConstituentModel", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+		initEAttribute(getConstituentModel_Name(), ecorePackage.getEString(), "name", null, 1, 1, ConstituentModel.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEReference(getConstituentModel_Grid(), this.getGrid(), null, "grid", null, 1, 1, ConstituentModel.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEReference(getConstituentModel_Parallel(), this.getParallel(), null, "parallel", null, 0, 1, ConstituentModel.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEReference(getConstituentModel_Field(), this.getField(), null, "field", null, 0, -1, ConstituentModel.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
@@ -850,7 +891,10 @@ public class CplfmPackageImpl extends EPackageImpl implements CplfmPackage {
 		initEClass(blockDecompositionEClass, BlockDecomposition.class, "BlockDecomposition", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 
 		initEClass(couplerEClass, Coupler.class, "Coupler", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+		initEAttribute(getCoupler_Name(), ecorePackage.getEString(), "name", null, 1, 1, Coupler.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEReference(getCoupler_Connector(), this.getConnector(), null, "connector", null, 1, 1, Coupler.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEReference(getCoupler_Transformation(), this.getTransformation(), null, "transformation", null, 1, 1, Coupler.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEReference(getCoupler_ConstituentModel(), this.getConstituentModel(), null, "constituentModel", null, 0, -1, Coupler.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
 		initEClass(connectorEClass, Connector.class, "Connector", IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 

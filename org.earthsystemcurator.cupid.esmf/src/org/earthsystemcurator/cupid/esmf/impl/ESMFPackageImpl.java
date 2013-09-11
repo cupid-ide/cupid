@@ -2081,15 +2081,6 @@ public class ESMFPackageImpl extends EPackageImpl implements ESMFPackage {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EReference getESMFClock_Component() {
-		return (EReference)esmfClockEClass.getEStructuralFeatures().get(3);
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
 	public EClass getESMFState() {
 		return esmfStateEClass;
 	}
@@ -4847,7 +4838,6 @@ public class ESMFPackageImpl extends EPackageImpl implements ESMFPackage {
 		createEReference(esmfClockEClass, ESMF_CLOCK__START_TIME);
 		createEReference(esmfClockEClass, ESMF_CLOCK__STOP_TIME);
 		createEReference(esmfClockEClass, ESMF_CLOCK__TIME_STEP);
-		createEReference(esmfClockEClass, ESMF_CLOCK__COMPONENT);
 
 		esmfStateEClass = createEClass(ESMF_STATE);
 		createEReference(esmfStateEClass, ESMF_STATE__COMPONENT);
@@ -5280,16 +5270,11 @@ public class ESMFPackageImpl extends EPackageImpl implements ESMFPackage {
 		esmfFinalizeMethodEClass.getESuperTypes().add(this.getESMFMethod());
 		esmfFinalizeMethodSIDLEClass.getESuperTypes().add(this.getESMFFinalizeMethod());
 		esmfRegisterMethodEClass.getESuperTypes().add(this.getESMFNamedEntity());
-		esmfTimeIntervalEClass.getESuperTypes().add(this.getESMFNamedEntity());
-		esmfTimeEClass.getESuperTypes().add(this.getESMFNamedEntity());
-		esmfClockEClass.getESuperTypes().add(this.getESMFNamedEntity());
+		esmfClockEClass.getESuperTypes().add(this.getESMFScopedItem());
 		esmfStateEClass.getESuperTypes().add(this.getESMFStateItem());
-		esmfStateEClass.getESuperTypes().add(this.getESMFScopedItem());
 		esmfStateItemEClass.getESuperTypes().add(this.getESMFScopedItem());
 		esmfFieldEClass.getESuperTypes().add(this.getESMFStateItem());
-		esmfFieldEClass.getESuperTypes().add(this.getESMFScopedItem());
 		esmfArrayEClass.getESuperTypes().add(this.getESMFStateItem());
-		esmfArrayEClass.getESuperTypes().add(this.getESMFScopedItem());
 		esmfRouteHandleEClass.getESuperTypes().add(this.getESMFScopedItem());
 		esmfArraySpecEClass.getESuperTypes().add(this.getESMFScopedItem());
 		esmfGridEClass.getESuperTypes().add(this.getESMFScopedItem());
@@ -5478,7 +5463,7 @@ public class ESMFPackageImpl extends EPackageImpl implements ESMFPackage {
 		initEAttribute(getESMFMethod_Phase(), ecorePackage.getEInt(), "phase", "1", 1, 1, ESMFMethod.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEReference(getESMFMethod_ImportState(), this.getESMFState(), null, "importState", null, 0, 1, ESMFMethod.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEReference(getESMFMethod_ExportState(), this.getESMFState(), null, "exportState", null, 0, 1, ESMFMethod.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-		initEReference(getESMFMethod_Clock(), this.getESMFClock(), null, "clock", null, 0, 1, ESMFMethod.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEReference(getESMFMethod_Clock(), this.getESMFClock(), null, "clock", null, 0, 1, ESMFMethod.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEReference(getESMFMethod_Action(), this.getESMFAction(), this.getESMFAction_Context(), "action", null, 0, -1, ESMFMethod.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEReference(getESMFMethod_SIDLMethod(), theSIDLPackage.getMethod(), null, "SIDLMethod", null, 0, 1, ESMFMethod.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
@@ -5517,7 +5502,6 @@ public class ESMFPackageImpl extends EPackageImpl implements ESMFPackage {
 		initEReference(getESMFClock_StartTime(), this.getESMFTime(), null, "startTime", null, 0, 1, ESMFClock.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEReference(getESMFClock_StopTime(), this.getESMFTime(), null, "stopTime", null, 0, 1, ESMFClock.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEReference(getESMFClock_TimeStep(), this.getESMFTimeInterval(), null, "timeStep", null, 0, 1, ESMFClock.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-		initEReference(getESMFClock_Component(), this.getESMFComponent(), null, "component", null, 0, 1, ESMFClock.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
 		initEClass(esmfStateEClass, ESMFState.class, "ESMFState", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 		initEReference(getESMFState_Component(), this.getESMFComponent(), null, "component", null, 0, 1, ESMFState.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
@@ -5930,7 +5914,7 @@ public class ESMFPackageImpl extends EPackageImpl implements ESMFPackage {
 	 * @generated
 	 */
 	protected void createApimethodAnnotations() {
-		String source = "http://www.earthsystemcurator.org/metapattern/apimethod";					
+		String source = "http://www.earthsystemcurator.org/metapattern/apimethod";							
 		addAnnotation
 		  (esmfStateEClass.getEOperations().get(0), 
 		   source, 
@@ -6194,7 +6178,7 @@ public class ESMFPackageImpl extends EPackageImpl implements ESMFPackage {
 	 * @generated
 	 */
 	protected void createOCLAnnotations() {
-		String source = "http://www.eclipse.org/emf/2002/Ecore/OCL";						
+		String source = "http://www.eclipse.org/emf/2002/Ecore/OCL";								
 		addAnnotation
 		  (esmfStateEClass.getEOperations().get(0), 
 		   source, 
@@ -6224,6 +6208,12 @@ public class ESMFPackageImpl extends EPackageImpl implements ESMFPackage {
 		   source, 
 		   new String[] {
 			 "constraints", "nameNotEmpty"
+		   });			
+		addAnnotation
+		  (esmfSimpleCouplerComponentEClass, 
+		   source, 
+		   new String[] {
+			 "constraints", "commonSrcAndDst"
 		   });					
 		addAnnotation
 		  (extentEClass, 
@@ -6264,6 +6254,12 @@ public class ESMFPackageImpl extends EPackageImpl implements ESMFPackage {
 		   source, 
 		   new String[] {
 			 "nameNotEmpty", "self.name->notEmpty() and self.name.size() > 0"
+		   });			
+		addAnnotation
+		  (esmfSimpleCouplerComponentEClass, 
+		   source, 
+		   new String[] {
+			 "commonSrcAndDst", "self.fieldConnection->forAll(srcField.scope = self.srcComponent and dstField.scope = self.dstComponent)"
 		   });																																																																																																																																																																																																
 	}
 
@@ -6274,7 +6270,7 @@ public class ESMFPackageImpl extends EPackageImpl implements ESMFPackage {
 	 * @generated
 	 */
 	protected void createOCL_1Annotations() {
-		String source = "http://www.eclipse.org/ocl/examples/OCL";								
+		String source = "http://www.eclipse.org/ocl/examples/OCL";										
 		addAnnotation
 		  (extentEClass, 
 		   source, 
@@ -6302,7 +6298,7 @@ public class ESMFPackageImpl extends EPackageImpl implements ESMFPackage {
 	 * @generated
 	 */
 	protected void createApiparamAnnotations() {
-		String source = "http://www.earthsystemcurator.org/metapattern/apiparam";														
+		String source = "http://www.earthsystemcurator.org/metapattern/apiparam";																
 		addAnnotation
 		  (getESMFActionAPI_Rc(), 
 		   source, 
@@ -7064,7 +7060,7 @@ public class ESMFPackageImpl extends EPackageImpl implements ESMFPackage {
 	 * @generated
 	 */
 	protected void createApireturnAnnotations() {
-		String source = "http://www.earthsystemcurator.org/metapattern/apireturn";																			
+		String source = "http://www.earthsystemcurator.org/metapattern/apireturn";																					
 		addAnnotation
 		  (getESMFActionStateCreate_State(), 
 		   source, 

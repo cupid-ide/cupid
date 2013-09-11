@@ -46,16 +46,22 @@ public class ReverseEngineer {
 		NUOPCApplication a = NUOPCFactory.eINSTANCE.createNUOPCApplication();
 		
 		for (String mod : vpg.listAllModules()) {
-			List<IFile> fl = vpg.findFilesThatExportModule(mod);
-			for (IFile f : fl) {			
-				//cycle through all files for now...
-				System.out.println("Module: " + mod + " (" + f.getFullPath() + ")");
-				IFortranAST ast = vpg.acquireTransientAST(f);
-				a = reverseContext(ast.getRoot(), a);
-				//mappings.put(a, ast.getRoot());
-				
-				//TODO: optimize to only include updated files
-				fileMap.put(f, ast);
+			//TODO: fix this - need a way to configure user files
+			if (!mod.toLowerCase().startsWith("nuopc")) {
+				List<IFile> fl = vpg.findFilesThatExportModule(mod);
+				for (IFile f : fl) {			
+					//cycle through all files for now...
+					System.out.println("Module: " + mod + " (" + f.getFullPath() + ")");
+					IFortranAST ast = vpg.acquireTransientAST(f);
+					if (ast == null) {
+						System.out.println("Warning:  AST not found for file: " + f.getName());
+					}
+					a = reverseContext(ast.getRoot(), a);
+					//mappings.put(a, ast.getRoot());
+					
+					//TODO: optimize to only include updated files
+					fileMap.put(f, ast);
+				}
 			}
 		}
 		

@@ -135,26 +135,26 @@ public interface ESMFMethod extends ESMFNamedEntity {
 	void setExportState(ESMFState value);
 
 	/**
-	 * Returns the value of the '<em><b>Clock</b></em>' containment reference.
+	 * Returns the value of the '<em><b>Clock</b></em>' reference.
 	 * <!-- begin-user-doc -->
 	 * <p>
 	 * If the meaning of the '<em>Clock</em>' containment reference isn't clear,
 	 * there really should be more of a description here...
 	 * </p>
 	 * <!-- end-user-doc -->
-	 * @return the value of the '<em>Clock</em>' containment reference.
+	 * @return the value of the '<em>Clock</em>' reference.
 	 * @see #setClock(ESMFClock)
 	 * @see org.earthsystemcurator.cupid.esmf.ESMFPackage#getESMFMethod_Clock()
-	 * @model containment="true"
+	 * @model
 	 * @generated
 	 */
 	ESMFClock getClock();
 
 	/**
-	 * Sets the value of the '{@link org.earthsystemcurator.cupid.esmf.ESMFMethod#getClock <em>Clock</em>}' containment reference.
+	 * Sets the value of the '{@link org.earthsystemcurator.cupid.esmf.ESMFMethod#getClock <em>Clock</em>}' reference.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @param value the new value of the '<em>Clock</em>' containment reference.
+	 * @param value the new value of the '<em>Clock</em>' reference.
 	 * @see #getClock()
 	 * @generated
 	 */

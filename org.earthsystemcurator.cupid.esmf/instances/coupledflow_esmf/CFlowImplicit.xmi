@@ -6,8 +6,12 @@
     xmlns:esmf="http://www.earthsystemcurator.org/cupid/esmf"
     xsi:schemaLocation="http://www.earthsystemcurator.org/cupid/esmf ../../model/ESMF.ecore"
     name="CFlowImplicit">
-  <component xsi:type="esmf:ESMFGriddedComponent" name="FlowSolver" parent="//@component[name='CoupledFlow']">
-    <item xsi:type="esmf:ESMFArraySpec"  name="fsArraySpec"
+  <component
+      xsi:type="esmf:ESMFGriddedComponent"
+      name="FlowSolver"
+      parent="//@component[name='CoupledFlow']">
+    <item xsi:type="esmf:ESMFArraySpec"
+        name="fsArraySpec"
         typekind="ESMF_TYPEKIND_R4"
         rank="2"/>
     <item xsi:type="esmf:ESMFDistGrid"
@@ -311,7 +315,24 @@
       xsi:type="esmf:ESMFGriddedComponent"
       name="CoupledFlow"
       component="//@component[name='FlowSolver'] //@component[name='Injector'] //@component[name='Coupler']"
-      parent="//@component[name='CFlowDriver']"/>
+      parent="//@component[name='CFlowDriver']">
+    <item xsi:type="esmf:ESMFClock"
+        name="simClock">
+      <startTime
+          year="2000"
+          month="5"
+          day="15"
+          hour="9"/>
+      <stopTime
+          year="2000"
+          month="5"
+          day="15"
+          hour="9"
+          minute="10"/>
+      <timeStep
+          seconds="2"/>
+    </item>
+  </component>
   <component
       xsi:type="esmf:ESMFDriver"
       name="CFlowDriver"

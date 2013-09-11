@@ -12,6 +12,7 @@ import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.InternalEObject;
 
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
+import org.eclipse.emf.ecore.impl.EObjectImpl;
 
 /**
  * <!-- begin-user-doc -->
@@ -32,7 +33,7 @@ import org.eclipse.emf.ecore.impl.ENotificationImpl;
  *
  * @generated
  */
-public class ESMFTimeImpl extends ESMFNamedEntityImpl implements ESMFTime {
+public class ESMFTimeImpl extends EObjectImpl implements ESMFTime {
 	/**
 	 * The default value of the '{@link #getYear() <em>Year</em>}' attribute.
 	 * <!-- begin-user-doc -->

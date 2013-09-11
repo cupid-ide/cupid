@@ -2105,7 +2105,7 @@ public interface ESMFPackage extends EPackage {
 	int ESMF_METHOD__EXPORT_STATE = ESMF_NAMED_ENTITY_FEATURE_COUNT + 3;
 
 	/**
-	 * The feature id for the '<em><b>Clock</b></em>' containment reference.
+	 * The feature id for the '<em><b>Clock</b></em>' reference.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
@@ -2186,7 +2186,7 @@ public interface ESMFPackage extends EPackage {
 	int ESMF_INIT_METHOD__EXPORT_STATE = ESMF_METHOD__EXPORT_STATE;
 
 	/**
-	 * The feature id for the '<em><b>Clock</b></em>' containment reference.
+	 * The feature id for the '<em><b>Clock</b></em>' reference.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
@@ -2267,7 +2267,7 @@ public interface ESMFPackage extends EPackage {
 	int ESMF_PRE_INIT_METHOD_SIDL__EXPORT_STATE = ESMF_INIT_METHOD__EXPORT_STATE;
 
 	/**
-	 * The feature id for the '<em><b>Clock</b></em>' containment reference.
+	 * The feature id for the '<em><b>Clock</b></em>' reference.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
@@ -2348,7 +2348,7 @@ public interface ESMFPackage extends EPackage {
 	int ESMF_POST_INIT_METHOD_SIDL__EXPORT_STATE = ESMF_INIT_METHOD__EXPORT_STATE;
 
 	/**
-	 * The feature id for the '<em><b>Clock</b></em>' containment reference.
+	 * The feature id for the '<em><b>Clock</b></em>' reference.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
@@ -2429,7 +2429,7 @@ public interface ESMFPackage extends EPackage {
 	int ESMF_RUN_METHOD__EXPORT_STATE = ESMF_METHOD__EXPORT_STATE;
 
 	/**
-	 * The feature id for the '<em><b>Clock</b></em>' containment reference.
+	 * The feature id for the '<em><b>Clock</b></em>' reference.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
@@ -2510,7 +2510,7 @@ public interface ESMFPackage extends EPackage {
 	int ESMF_FINALIZE_METHOD__EXPORT_STATE = ESMF_METHOD__EXPORT_STATE;
 
 	/**
-	 * The feature id for the '<em><b>Clock</b></em>' containment reference.
+	 * The feature id for the '<em><b>Clock</b></em>' reference.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
@@ -2591,7 +2591,7 @@ public interface ESMFPackage extends EPackage {
 	int ESMF_FINALIZE_METHOD_SIDL__EXPORT_STATE = ESMF_FINALIZE_METHOD__EXPORT_STATE;
 
 	/**
-	 * The feature id for the '<em><b>Clock</b></em>' containment reference.
+	 * The feature id for the '<em><b>Clock</b></em>' reference.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
@@ -2663,22 +2663,13 @@ public interface ESMFPackage extends EPackage {
 	int ESMF_CALENDAR_FEATURE_COUNT = 0;
 
 	/**
-	 * The feature id for the '<em><b>Name</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int ESMF_TIME_INTERVAL__NAME = ESMF_NAMED_ENTITY__NAME;
-
-	/**
 	 * The feature id for the '<em><b>Hours</b></em>' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int ESMF_TIME_INTERVAL__HOURS = ESMF_NAMED_ENTITY_FEATURE_COUNT + 0;
+	int ESMF_TIME_INTERVAL__HOURS = 0;
 
 	/**
 	 * The feature id for the '<em><b>Minutes</b></em>' attribute.
@@ -2687,7 +2678,7 @@ public interface ESMFPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int ESMF_TIME_INTERVAL__MINUTES = ESMF_NAMED_ENTITY_FEATURE_COUNT + 1;
+	int ESMF_TIME_INTERVAL__MINUTES = 1;
 
 	/**
 	 * The feature id for the '<em><b>Seconds</b></em>' attribute.
@@ -2696,7 +2687,7 @@ public interface ESMFPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int ESMF_TIME_INTERVAL__SECONDS = ESMF_NAMED_ENTITY_FEATURE_COUNT + 2;
+	int ESMF_TIME_INTERVAL__SECONDS = 2;
 
 	/**
 	 * The number of structural features of the '<em>Time Interval</em>' class.
@@ -2705,16 +2696,7 @@ public interface ESMFPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int ESMF_TIME_INTERVAL_FEATURE_COUNT = ESMF_NAMED_ENTITY_FEATURE_COUNT + 3;
-
-	/**
-	 * The feature id for the '<em><b>Name</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int ESMF_TIME__NAME = ESMF_NAMED_ENTITY__NAME;
+	int ESMF_TIME_INTERVAL_FEATURE_COUNT = 3;
 
 	/**
 	 * The feature id for the '<em><b>Year</b></em>' attribute.
@@ -2723,7 +2705,7 @@ public interface ESMFPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int ESMF_TIME__YEAR = ESMF_NAMED_ENTITY_FEATURE_COUNT + 0;
+	int ESMF_TIME__YEAR = 0;
 
 	/**
 	 * The feature id for the '<em><b>Month</b></em>' attribute.
@@ -2732,7 +2714,7 @@ public interface ESMFPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int ESMF_TIME__MONTH = ESMF_NAMED_ENTITY_FEATURE_COUNT + 1;
+	int ESMF_TIME__MONTH = 1;
 
 	/**
 	 * The feature id for the '<em><b>Day</b></em>' attribute.
@@ -2741,7 +2723,7 @@ public interface ESMFPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int ESMF_TIME__DAY = ESMF_NAMED_ENTITY_FEATURE_COUNT + 2;
+	int ESMF_TIME__DAY = 2;
 
 	/**
 	 * The feature id for the '<em><b>Hour</b></em>' attribute.
@@ -2750,7 +2732,7 @@ public interface ESMFPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int ESMF_TIME__HOUR = ESMF_NAMED_ENTITY_FEATURE_COUNT + 3;
+	int ESMF_TIME__HOUR = 3;
 
 	/**
 	 * The feature id for the '<em><b>Minute</b></em>' attribute.
@@ -2759,7 +2741,7 @@ public interface ESMFPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int ESMF_TIME__MINUTE = ESMF_NAMED_ENTITY_FEATURE_COUNT + 4;
+	int ESMF_TIME__MINUTE = 4;
 
 	/**
 	 * The feature id for the '<em><b>Second</b></em>' attribute.
@@ -2768,7 +2750,7 @@ public interface ESMFPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int ESMF_TIME__SECOND = ESMF_NAMED_ENTITY_FEATURE_COUNT + 5;
+	int ESMF_TIME__SECOND = 5;
 
 	/**
 	 * The feature id for the '<em><b>Calendar</b></em>' reference.
@@ -2777,7 +2759,7 @@ public interface ESMFPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int ESMF_TIME__CALENDAR = ESMF_NAMED_ENTITY_FEATURE_COUNT + 6;
+	int ESMF_TIME__CALENDAR = 6;
 
 	/**
 	 * The number of structural features of the '<em>Time</em>' class.
@@ -2786,7 +2768,7 @@ public interface ESMFPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int ESMF_TIME_FEATURE_COUNT = ESMF_NAMED_ENTITY_FEATURE_COUNT + 7;
+	int ESMF_TIME_FEATURE_COUNT = 7;
 
 	/**
 	 * The feature id for the '<em><b>Name</b></em>' attribute.
@@ -2795,7 +2777,16 @@ public interface ESMFPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int ESMF_CLOCK__NAME = ESMF_NAMED_ENTITY__NAME;
+	int ESMF_CLOCK__NAME = ESMF_SCOPED_ITEM__NAME;
+
+	/**
+	 * The feature id for the '<em><b>Scope</b></em>' container reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int ESMF_CLOCK__SCOPE = ESMF_SCOPED_ITEM__SCOPE;
 
 	/**
 	 * The feature id for the '<em><b>Start Time</b></em>' containment reference.
@@ -2804,7 +2795,7 @@ public interface ESMFPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int ESMF_CLOCK__START_TIME = ESMF_NAMED_ENTITY_FEATURE_COUNT + 0;
+	int ESMF_CLOCK__START_TIME = ESMF_SCOPED_ITEM_FEATURE_COUNT + 0;
 
 	/**
 	 * The feature id for the '<em><b>Stop Time</b></em>' containment reference.
@@ -2813,7 +2804,7 @@ public interface ESMFPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int ESMF_CLOCK__STOP_TIME = ESMF_NAMED_ENTITY_FEATURE_COUNT + 1;
+	int ESMF_CLOCK__STOP_TIME = ESMF_SCOPED_ITEM_FEATURE_COUNT + 1;
 
 	/**
 	 * The feature id for the '<em><b>Time Step</b></em>' containment reference.
@@ -2822,16 +2813,7 @@ public interface ESMFPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int ESMF_CLOCK__TIME_STEP = ESMF_NAMED_ENTITY_FEATURE_COUNT + 2;
-
-	/**
-	 * The feature id for the '<em><b>Component</b></em>' reference.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int ESMF_CLOCK__COMPONENT = ESMF_NAMED_ENTITY_FEATURE_COUNT + 3;
+	int ESMF_CLOCK__TIME_STEP = ESMF_SCOPED_ITEM_FEATURE_COUNT + 2;
 
 	/**
 	 * The number of structural features of the '<em>Clock</em>' class.
@@ -2840,7 +2822,7 @@ public interface ESMFPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int ESMF_CLOCK_FEATURE_COUNT = ESMF_NAMED_ENTITY_FEATURE_COUNT + 4;
+	int ESMF_CLOCK_FEATURE_COUNT = ESMF_SCOPED_ITEM_FEATURE_COUNT + 3;
 
 	/**
 	 * The feature id for the '<em><b>Name</b></em>' attribute.
@@ -7997,10 +7979,10 @@ public interface ESMFPackage extends EPackage {
 	EReference getESMFMethod_ExportState();
 
 	/**
-	 * Returns the meta object for the containment reference '{@link org.earthsystemcurator.cupid.esmf.ESMFMethod#getClock <em>Clock</em>}'.
+	 * Returns the meta object for the reference '{@link org.earthsystemcurator.cupid.esmf.ESMFMethod#getClock <em>Clock</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @return the meta object for the containment reference '<em>Clock</em>'.
+	 * @return the meta object for the reference '<em>Clock</em>'.
 	 * @see org.earthsystemcurator.cupid.esmf.ESMFMethod#getClock()
 	 * @see #getESMFMethod()
 	 * @generated
@@ -8292,17 +8274,6 @@ public interface ESMFPackage extends EPackage {
 	 * @generated
 	 */
 	EReference getESMFClock_TimeStep();
-
-	/**
-	 * Returns the meta object for the reference '{@link org.earthsystemcurator.cupid.esmf.ESMFClock#getComponent <em>Component</em>}'.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @return the meta object for the reference '<em>Component</em>'.
-	 * @see org.earthsystemcurator.cupid.esmf.ESMFClock#getComponent()
-	 * @see #getESMFClock()
-	 * @generated
-	 */
-	EReference getESMFClock_Component();
 
 	/**
 	 * Returns the meta object for class '{@link org.earthsystemcurator.cupid.esmf.ESMFState <em>State</em>}'.
@@ -12077,7 +12048,7 @@ public interface ESMFPackage extends EPackage {
 		EReference ESMF_METHOD__EXPORT_STATE = eINSTANCE.getESMFMethod_ExportState();
 
 		/**
-		 * The meta object literal for the '<em><b>Clock</b></em>' containment reference feature.
+		 * The meta object literal for the '<em><b>Clock</b></em>' reference feature.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
 		 * @generated
@@ -12321,14 +12292,6 @@ public interface ESMFPackage extends EPackage {
 		 * @generated
 		 */
 		EReference ESMF_CLOCK__TIME_STEP = eINSTANCE.getESMFClock_TimeStep();
-
-		/**
-		 * The meta object literal for the '<em><b>Component</b></em>' reference feature.
-		 * <!-- begin-user-doc -->
-		 * <!-- end-user-doc -->
-		 * @generated
-		 */
-		EReference ESMF_CLOCK__COMPONENT = eINSTANCE.getESMFClock_Component();
 
 		/**
 		 * The meta object literal for the '{@link org.earthsystemcurator.cupid.esmf.impl.ESMFStateImpl <em>State</em>}' class.

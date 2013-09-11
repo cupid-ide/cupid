@@ -19,7 +19,8 @@ import org.eclipse.emf.common.util.EList;
  * </p>
  *
  * @see org.earthsystemcurator.cupid.esmf.ESMFPackage#getESMFSimpleCouplerComponent()
- * @model
+ * @model annotation="http://www.eclipse.org/emf/2002/Ecore constraints='commonSrcAndDst'"
+ *        annotation="http://www.eclipse.org/emf/2002/Ecore/OCL/Pivot commonSrcAndDst='self.fieldConnection->forAll(srcField.scope = self.srcComponent and dstField.scope = self.dstComponent)'"
  * @generated
  */
 public interface ESMFSimpleCouplerComponent extends ESMFCouplerComponent {
