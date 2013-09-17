@@ -1,14 +1,21 @@
 package org.earthsystemcurator.cupid.nuopc.fsml.fe;
 
 import java.io.BufferedReader;
+import java.io.ByteArrayInputStream;
 import java.io.IOException;
+import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.util.ArrayList;
+import java.util.Comparator;
+import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
+import java.util.Set;
+import java.util.TreeMap;
 
 import org.earthsystemcurator.cupid.nuopc.fsml.nuopc.NUOPCApplication;
 import org.earthsystemcurator.cupid.nuopc.fsml.nuopc.NUOPCModel;
@@ -16,7 +23,11 @@ import org.earthsystemcurator.cupid.nuopc.fsml.re.ReverseEngineer;
 import org.earthsystemcurator.cupid.nuopc.fsml.util.CodeExtraction;
 import org.earthsystemcurator.cupid.nuopc.fsml.util.CodeQuery;
 import org.earthsystemcurator.cupid.nuopc.fsml.util.Regex;
+import org.eclipse.core.resources.IContainer;
 import org.eclipse.core.resources.IFile;
+import org.eclipse.core.resources.IProject;
+import org.eclipse.core.resources.IResource;
+import org.eclipse.core.runtime.CoreException;
 import org.eclipse.emf.common.notify.Notifier;
 import org.eclipse.emf.common.util.BasicMonitor;
 import org.eclipse.emf.common.util.EList;
@@ -51,43 +62,38 @@ import org.eclipse.photran.internal.core.parser.ASTModuleNode;
 import org.eclipse.photran.internal.core.parser.ASTModuleStmtNode;
 import org.eclipse.photran.internal.core.parser.ASTSubroutineSubprogramNode;
 import org.eclipse.photran.internal.core.parser.IASTNode;
+import org.eclipse.photran.internal.core.parser.IBodyConstruct;
 import org.eclipse.photran.internal.core.reindenter.Reindenter;
+import org.eclipse.photran.internal.core.reindenter.Reindenter.Strategy;
 import org.eclipse.photran.internal.core.vpg.PhotranVPG;
 import org.stringtemplate.v4.ST;
 
 @SuppressWarnings("restriction")
 public class ForwardEngineer {
 
-	private Map<EObject, IASTNode> revMappings;
+	private Map<EObject, Object> revMappings;
 	private IMerger.Registry mergerRegistry = IMerger.RegistryImpl.createStandaloneInstance();
-			
+	private IProject container;	
+	private Set<IFortranAST> astsToReindent = new HashSet<IFortranAST>();
 	
-	public void forward(NUOPCApplication reversed, NUOPCApplication asserted, Map<EObject, IASTNode> revMappings) {
+	//private IFortranAST recentAST = null;
+	
+	public void setContainer(IProject container) {
+		this.container = container;
+	}
 
+	public void forward(NUOPCApplication reversed, NUOPCApplication asserted, Map<EObject, Object> revMappings) {
 		this.revMappings = revMappings;
-		
+		astsToReindent.clear();
 		Comparison comp = compare(reversed, asserted);
-		forwardDiffs(comp.getMatches());		
+		forwardDiffs(comp.getMatches());
 		
-//		for (NUOPCModel nm : app.getNuopcModel()) {
-//			if (nm.getName() != null) {
-//				 //List<IFile> files = vpg.findFilesThatExportModule(nm.getName());
-//				 //if (files.size() == 1) {
-//				//	 IFortranAST ast = vpg.acquirePermanentAST(files.get(0));
-//				//	 ASTModuleNode amn = (ASTModuleNode) ast.getRoot().getProgramUnitList().get(0);
-//				//	 
-//				 //}
-//				 //else {
-//				//	 throw new RuntimeException("More than one file with module: " + nm.getName() + " ... Handle this...");
-//				 //}
-//				//just start null for now				
-//				ASTModuleNode amn = (ASTModuleNode) forward(null, nm, null);
-//				System.out.println(amn);
-//			}
-//			else {
-//				throw new RuntimeException("Module with no name... Handle this...");
-//			}
-//		}
+		//do reindenting
+		for (IFortranAST ast : astsToReindent) {
+			System.out.println("Reindenting: " + ast.getFile().getName());
+			Reindenter.reindent(ast.getRoot(), ast, Strategy.REINDENT_EACH_LINE);
+		}
+		
 	}
 	
 	protected Comparison compare(Notifier left, Notifier right) {
@@ -106,15 +112,7 @@ public class ForwardEngineer {
 		return comparator.compare(scope);
 	}
 	
-	public static Map<String, Object> getMappingFromAnnotation(EStructuralFeature sf) {
-		EAnnotation ann = sf.getEAnnotation("http://www.earthsystemcog.org/projects/nuopc");
-		if (ann != null) {
-			return Regex.parseMappingExpression(ann.getDetails().get("mapping"));			
-		}
-		else {
-			return null;
-		}		
-	}
+	
 	
 	protected void forwardDiffs(Match m) {
 		
@@ -150,50 +148,47 @@ public class ForwardEngineer {
 	}
 	
 	protected void forwardDiff(ReferenceChangeSpec diff) {
-		Map<String, Object> keywordMap = getMappingFromAnnotation(diff.getReference());
+		Map<String, Object> keywordMap = Regex.getMappingFromAnnotation(diff.getReference());
 		if (keywordMap != null) {			
 			EObject addedElem = diff.getValue();
 			
-			//diff.getMatch().getLeft() could be null if 
-			//the current difference is dependent on a previous one
-			//UNLESS we copy diffs from rightToLeft as we go
-			
-			IASTNode context = null;
+			//context is one of:  IASTNode, IFortranAST, PhotranVPG
+			Object fortranElem = null;
 			EObject parentMatch = diff.getMatch().getLeft();
 			if (parentMatch == null) {
 				System.out.println("Warning: parent match on LEFT is NULL");
 			}
 			else {
-				context = revMappings.get(parentMatch);
-				if (context == null) {
+				fortranElem = revMappings.get(parentMatch);
+				if (fortranElem == null) {
 					System.out.println("Warning: no reverse mapping found for: " + diff.getMatch().getLeft());
 				}
 			}
-			
-			//SKIP actual forward add for now
-			IASTNode newNode = forwardAdd(context, addedElem, keywordMap);			
-			
-			//copy the difference from right to left?
+						
+			Object newFortranElem = forwardAdd(fortranElem, addedElem, keywordMap);			
+			if (newFortranElem instanceof IFortranAST) {
+				astsToReindent.add((IFortranAST) newFortranElem);
+			}
 			
 			//TODO:  see about reusing a monitor for efficiency sake
-			System.out.println("Before merge: (" + diff.getState() + ") --> ");
-			System.out.println("\tParent match LEFT: " + diff.getMatch().getLeft());
-			System.out.println("\tValue: " + diff.getValue());
+			//System.out.println("Before merge: (" + diff.getState() + ") --> ");
+			//System.out.println("\tParent match LEFT: " + diff.getMatch().getLeft());
+			//System.out.println("\tValue: " + diff.getValue());
 			
 			mergerRegistry.getHighestRankingMerger(diff).copyRightToLeft(diff, new BasicMonitor());
 			
-			System.out.println("After merge: (" + diff.getState() + ") --> ");
-			System.out.println("\tParent match LEFT: " + diff.getMatch().getLeft());
-			System.out.println("\tValue: " + diff.getValue());
+			//System.out.println("After merge: (" + diff.getState() + ") --> ");
+			//System.out.println("\tParent match LEFT: " + diff.getMatch().getLeft());
+			//System.out.println("\tValue: " + diff.getValue());
 			
 			//find ref to new match created after copying
 			Match m = diff.getMatch().getComparison().getMatch(addedElem);
 			
-			System.out.println("\tCopied value: " + m.getLeft());
+			//System.out.println("\tCopied value: " + m.getLeft());
 			
 			if (m.getLeft() != null) {
 				//update mappings
-				revMappings.put(m.getLeft(), newNode);
+				revMappings.put(m.getLeft(), newFortranElem);
 			}
 			else {
 				System.out.println("Warning: could not find newly created node matching: " + addedElem);
@@ -203,10 +198,8 @@ public class ForwardEngineer {
 	}
 	
 
-	
-	
-	
-	public IASTNode forwardAdd(IASTNode context, EObject modelElem, Map<String, Object> params) {
+		
+	public Object forwardAdd(Object fortranElem, EObject modelElem, Map<String, Object> params) {
 	
 		String methodName = null;
 		if (params.size() > 0) {
@@ -216,26 +209,39 @@ public class ForwardEngineer {
 		}
 		
 		//IASTNode node = null;
-		
+				
 		Method method = null;
-		try {
-			method = this.getClass().getMethod(methodName, IASTNode.class, EObject.class, Map.class);
-		} catch (SecurityException e) {
-			e.printStackTrace();
-			return null;
-		} catch (NoSuchMethodException e) {
-			//e.printStackTrace();
-			System.out.println("No forward method for mapping: " + e.getMessage());
+		for (Method m : ForwardEngineer.class.getMethods()) {
+			if (m.getName().equalsIgnoreCase(methodName)) {
+				Class<?> c = m.getParameterTypes()[0];
+				if (c.isInstance(fortranElem)) {
+					method = m;
+					break;
+				}
+			}
+		}
+		
+		if (method == null) {
+			System.out.println("Method not found: " + methodName);
 			return null;
 		}
 		
-		IASTNode newNode = null;
+//		try {
+//		
+//			method = this.getClass().getMethod(methodName, IASTNode.class, EObject.class, Map.class);
+//		} catch (SecurityException e) {
+//			e.printStackTrace();
+//			return null;
+//		} catch (NoSuchMethodException e) {
+//			//e.printStackTrace();
+//			System.out.println("No forward method for mapping: " + e.getMessage());
+//			return null;
+//		}
+//		
+		Object newFortranElem = null;
 		try {
-			newNode = (IASTNode) method.invoke(this, context, modelElem, params);
-			System.out.println(methodName + " generated new code: " + newNode);
-			//this is NOT the right modelElem to add to mapping -- should be the
-			//one copied from rightToLeft
-			//revMappings.put(modelElem, newNode);
+			newFortranElem = method.invoke(this, fortranElem, modelElem, params);
+			System.out.println(methodName + " generated new code: " + newFortranElem);
 		} catch (IllegalArgumentException e) {
 			e.printStackTrace();
 		} catch (IllegalAccessException e) {
@@ -244,7 +250,7 @@ public class ForwardEngineer {
 			e.printStackTrace();
 		}
 					
-		return newNode;
+		return newFortranElem;
 	}
 	
 	
@@ -269,14 +275,38 @@ public class ForwardEngineer {
 	*/
 	
 	
-	public IASTNode module(IASTNode context, EObject modelElem, Map<String, Object> params) {
-		String code = "module %s\nimplicit none\ncontains\nsubroutine dummy()\nend subroutine\nend module";
+	public IFortranAST module(PhotranVPG vpg, EObject modelElem, Map<String, Object> params) {
+		
+		//System.out.println("Module: vpg context = " + vpg);
+		//vpg.getVPGWriter()
+		//subroutine dummy()\nend subroutine\n
+		String code = "module %s\nimplicit none\ncontains\nend module";
 		String moduleName = findMappedValueString("moduleName", modelElem);
+		if (moduleName == null || moduleName.trim().length() == 0) {
+			moduleName = "module_name_default";
+		}
 		code = String.format(code, moduleName);
 		
-		ASTModuleNode amn = (ASTModuleNode) CodeExtraction.parseLiteralProgramUnit(code);
+		//container.
+		IFile fileToAdd = container.getFile(moduleName.toLowerCase() + ".F90");
+				
+		if (!fileToAdd.exists()) {
+		    byte[] bytes = code.getBytes();
+		    InputStream source = new ByteArrayInputStream(bytes);
+		    try {
+				fileToAdd.create(source, IResource.NONE, null);
+			} catch (CoreException e) {				
+				e.printStackTrace();
+			}
+		}
 		
-		return amn;
+		//IFortranAST ast = vpg.parse(fileToAdd.getFullPath().toOSString());
+		//vpg.
+		IFortranAST ast = vpg.acquireTransientAST(fileToAdd);
+		return ast;
+		
+		//ASTModuleNode amn = (ASTModuleNode) CodeExtraction.parseLiteralProgramUnit(code);
+			
 		//if we are adding a module, then no file exists
 		//so we need to therefore create a new file in the workspace, etc.
 	}
@@ -288,7 +318,38 @@ public class ForwardEngineer {
 		return null;
 	}
 	
-	public IASTNode subroutine(IASTNode context, EObject modelElem, Map<String, Object> params) {		
+	
+	public IASTNode call(IASTNode context, EObject modelElem, Map<String, Object> params) {		
+		
+		//call NUOPC_StateAdvertiseField(importState, StandardName="air_pressure_at_sea_level", rc=rc)
+		
+		String subroutineName = (String) params.get("call");
+		Map<Object,String> args = collectActualArguments(modelElem);
+		
+		ST code = new ST("\ncall <name>(<args; separator=\", \">)\n");
+		code.add("name", subroutineName);
+		for (Entry<Object,String> e : args.entrySet()) {
+			if (e.getKey() instanceof String) {
+				code.add("args", e.getKey() + " = " + e.getValue());
+			}
+			else {
+				code.add("args", e.getValue());
+			}
+		}
+		
+		System.out.println("Code to parse:\n" + code.render() + "\n");
+		
+		IBodyConstruct node = CodeExtraction.parseLiteralStatement(code.render());
+		
+		ASTSubroutineSubprogramNode ssn = (ASTSubroutineSubprogramNode) context;
+		ssn.getBody().add(node);
+		
+		//Reindenter.reindent(node, recentAST, Strategy.REINDENT_EACH_LINE);
+		
+		return node;
+	}	
+	
+	public IASTNode subroutine(IFortranAST context, EObject modelElem, Map<String, Object> params) {		
 		
 		String subroutineSig = (String) params.get("subroutine");
 		String subroutineName1, subroutineName2;
@@ -298,21 +359,27 @@ public class ForwardEngineer {
 		subroutineName2 = CodeQuery.parseSubroutineSig(subroutineSig, types);
 		
 		//code = String.format(code, subroutineName);
-	
-		ST code = new ST("subroutine <name>(<arg:{a|arg<i0>}; separator=\", \">)\n"
+		//TODO: get names of formal parameters from model
+		
+		ST code = new ST("\n\nsubroutine <name>(<arg:{a|arg<i0>}; separator=\", \">)\n"
 					   + "<arg:{a|    <a> :: arg<i0>}; separator=\"\n\">\n"
 					   + "end subroutine\n");
 		
 		code.add("name", coalesce(subroutineName1, subroutineName2));
 		code.add("arg", types);
-		System.out.println("Code to parse:\n" + code.render() + "\n");
+		//System.out.println("Code to parse:\n" + code.render() + "\n");
 		
 		ASTSubroutineSubprogramNode ssn = (ASTSubroutineSubprogramNode) CodeExtraction.parseLiteralProgramUnit(code.render());
 		
 		//assume it is a module for now
-		ASTModuleNode amn = (ASTModuleNode) context;
+		ASTModuleNode amn = (ASTModuleNode) context.getRoot().getProgramUnitList().get(0);
 		amn.getModuleBody().add(ssn);
-		//Reindenter.
+		
+		
+		//Reindenter.reindent(ssn, context, Strategy.REINDENT_EACH_LINE);
+		
+		//record this for later reindenting
+		//recentAST = context;
 		
 		return ssn;
 	}
@@ -338,12 +405,51 @@ public class ForwardEngineer {
 	
 	private static String findMappedValueString(String mapping, EObject parent) {		
 		for (EStructuralFeature sf : parent.eClass().getEStructuralFeatures()) {
-			Map<String, Object> keywordMap = getMappingFromAnnotation(sf);
+			Map<String, Object> keywordMap = Regex.getMappingFromAnnotation(sf);
 			if (keywordMap != null && keywordMap.keySet().toArray()[0].equals(mapping)) {
 				return (String) parent.eGet(sf);
 			}
 		}		
 		return null;		
+	}
+	
+	private static Map<Object, String> collectActualArguments(EObject parent) {
+		//sort with integer args first followed by keyword args
+		Map<Object, String> args = new TreeMap<Object, String>(new Comparator<Object>(){
+			@Override
+			public int compare(Object o1, Object o2) {
+				if (o1 instanceof Integer && o2 instanceof Integer) {
+					return (Integer) o1 - (Integer) o2;
+				}
+				else if (o1 instanceof Integer && o2 instanceof String) {
+					return -1;
+				}
+				else if (o2 instanceof Integer && o1 instanceof String) {
+					return 1;
+				}
+				else {
+					return 0;
+				}					
+			}
+		});
+		
+		//Map<String, String> keywordArgs = new HashMap<String, String>();
+		
+		for (EStructuralFeature sf : parent.eClass().getEStructuralFeatures()) {
+			Map<String, Object> keywordMap = Regex.getMappingFromAnnotation(sf);
+			if (keywordMap != null) {
+				Entry<String, Object> first = keywordMap.entrySet().iterator().next();
+				//String[] keys = null;
+				//keys = keywordMap.keySet().toArray(keys);
+				if (first.getKey().equals("argByIndex") || first.getKey().equals("argByKeyword")) {
+					args.put(first.getValue(), (String) parent.eGet(sf));
+				}
+				
+				//return (String) parent.eGet(sf);
+			}
+		}
+		
+		return args;
 	}
 	
 }

@@ -437,20 +437,20 @@
   <eClassifiers xsi:type="ecore:EClass" name="NUOPCApplication">
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="name" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"
         iD="true"/>
-    <eStructuralFeatures xsi:type="ecore:EReference" name="nuopcDriver" upperBound="-1"
-        eType="#//NUOPCDriver" containment="true">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="nuopcDriver" ordered="false"
+        upperBound="-1" eType="#//NUOPCDriver" containment="true">
       <eAnnotations source="http://www.earthsystemcog.org/projects/nuopc">
         <details key="mapping" value="module"/>
       </eAnnotations>
     </eStructuralFeatures>
-    <eStructuralFeatures xsi:type="ecore:EReference" name="nuopcModel" upperBound="-1"
-        eType="#//NUOPCModel" containment="true">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="nuopcModel" ordered="false"
+        upperBound="-1" eType="#//NUOPCModel" containment="true">
       <eAnnotations source="http://www.earthsystemcog.org/projects/nuopc">
         <details key="mapping" value="module"/>
       </eAnnotations>
     </eStructuralFeatures>
-    <eStructuralFeatures xsi:type="ecore:EReference" name="nuopcDriverAtmOcn" upperBound="-1"
-        eType="#//NUOPCDriverAtmOcn" containment="true">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="nuopcDriverAtmOcn" ordered="false"
+        upperBound="-1" eType="#//NUOPCDriverAtmOcn" containment="true">
       <eAnnotations source="http://www.earthsystemcog.org/projects/nuopc">
         <details key="mapping" value="module"/>
       </eAnnotations>

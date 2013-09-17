@@ -8,6 +8,8 @@ import java.util.Set;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import org.eclipse.core.resources.IFile;
+import org.eclipse.photran.core.IFortranAST;
 import org.eclipse.photran.internal.core.analysis.binding.Definition;
 import org.eclipse.photran.internal.core.analysis.binding.ScopingNode;
 import org.eclipse.photran.internal.core.analysis.types.DerivedType;
@@ -19,7 +21,6 @@ import org.eclipse.photran.internal.core.parser.ASTAssignmentStmtNode;
 import org.eclipse.photran.internal.core.parser.ASTCallStmtNode;
 import org.eclipse.photran.internal.core.parser.ASTDerivedTypeStmtNode;
 import org.eclipse.photran.internal.core.parser.ASTEntityDeclNode;
-import org.eclipse.photran.internal.core.parser.ASTInitializationNode;
 import org.eclipse.photran.internal.core.parser.ASTIntConstNode;
 import org.eclipse.photran.internal.core.parser.ASTModuleNode;
 import org.eclipse.photran.internal.core.parser.ASTNode;
@@ -34,7 +35,6 @@ import org.eclipse.photran.internal.core.parser.ASTUseStmtNode;
 import org.eclipse.photran.internal.core.parser.ASTVarOrFnRefNode;
 import org.eclipse.photran.internal.core.parser.ASTVisitor;
 import org.eclipse.photran.internal.core.parser.IASTNode;
-import org.eclipse.photran.internal.core.parser.IDeclarationConstruct;
 import org.eclipse.photran.internal.core.parser.IExpr;
 import org.eclipse.photran.internal.core.vpg.EdgeType;
 import org.eclipse.photran.internal.core.vpg.PhotranTokenRef;
@@ -43,11 +43,19 @@ import org.eclipse.photran.internal.core.vpg.PhotranVPG;
 @SuppressWarnings("restriction")
 public class CodeQuery {
 
-	public static String moduleName(ASTModuleNode node) {
+	
+	
+	public static String moduleName(ASTModuleNode node, Map<String, Object> params) {
 		return node.getModuleStmt().getModuleName().getModuleName().getText();
 	}
 	
-	public static String subroutineName(ASTSubroutineSubprogramNode node) {
+	public static String moduleName(IFortranAST ast, Map<String, Object> params) {
+		ASTModuleNode node = (ASTModuleNode) ast.getRoot().getProgramUnitList().get(0);
+		return moduleName(node, params);
+	}
+	
+	
+	public static String subroutineName(ASTSubroutineSubprogramNode node, Map<String, Object> params) {
 		return node.getNameToken().getText();		
 	}
 	
@@ -91,10 +99,40 @@ public class CodeQuery {
 		return false;
 	}
 	
-	public static Set<ASTModuleNode> module(IASTNode node, Map<String, Object> params) {
-		//change later to accept name as parameter
-		return node.findAll(ASTModuleNode.class);
+	//public static Set<ASTModuleNode> module(IASTNode node, Map<String, Object> params) {
+	//	//change later to accept name as parameter
+	//	return node.findAll(ASTModuleNode.class);
+	//}
+		
+	public static Set<IFortranAST> module(PhotranVPG vpg, Map<String, Object> params) {
+		Set<IFortranAST> result = new HashSet<IFortranAST>();
+		for (String mod : vpg.listAllModules()) {
+			
+			//TODO: fix this to configure which files to check...
+			if (mod.toLowerCase().startsWith("nuopc")) continue;
+			
+			List<IFile> fl = vpg.findFilesThatExportModule(mod);
+			if (fl.size() != 1) {
+				//TODO
+				System.out.println("Unexpected: zero or multiple files found for module: " + mod);
+			}
+			else {
+				IFile f = fl.get(0);
+				System.out.println("Module: " + mod + " (" + f.getFullPath() + ")");
+				IFortranAST ast = vpg.acquireTransientAST(f);					
+				if (ast == null) {
+					//TODO
+					System.out.println("Warning:  AST not found for file: " + f.getName());
+				}
+				else {
+					result.add(ast);
+				}
+				
+			}
+		}
+		return result;
 	}
+	
 	
 	
 	public static String parseSubroutineSig(String pattern, List<Type> typesOut) {
@@ -134,6 +172,10 @@ public class CodeQuery {
 		
 		return subroutineName;
 		
+	}
+	
+	public static Set<ASTSubroutineSubprogramNode> subroutine(IFortranAST ast, Map<String, Object> params) {
+		return subroutine(ast.getRoot().getProgramUnitList().get(0), params);
 	}
 	
 	public static Set<ASTSubroutineSubprogramNode> subroutine(IASTNode node, Map<String, Object> params) {
@@ -579,7 +621,7 @@ public class CodeQuery {
 	
 	public static String argByIndex(ASTCallStmtNode node, Map<String, Object> params) {			
 		int idx = (Integer) params.get("argByIndex");
-		if (idx > node.getArgList().size()) {
+		if (node.getArgList() == null || idx > node.getArgList().size()) {
 			return null;
 		}
 		else {

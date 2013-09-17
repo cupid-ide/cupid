@@ -5,8 +5,30 @@ import java.util.Map;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import org.eclipse.emf.ecore.EAnnotation;
+import org.eclipse.emf.ecore.EStructuralFeature;
+
 public class Regex {
 
+	public static Map<String, Object> getMappingFromAnnotation(EStructuralFeature sf) {
+		EAnnotation ann = sf.getEAnnotation("http://www.earthsystemcog.org/projects/nuopc");
+		if (ann != null) {
+			return parseMappingExpression(ann.getDetails().get("mapping"));			
+		}
+		else {
+			return null;
+		}		
+	}
+	
+	public static boolean getIsEssentialFromAnnotation(EStructuralFeature sf) {
+		EAnnotation ann = sf.getEAnnotation("http://www.earthsystemcog.org/projects/nuopc");
+		if (ann != null) {
+			String anotEssential = ann.getDetails().get("essential");
+			return anotEssential != null && anotEssential.trim().equalsIgnoreCase("true");
+		}
+		return false;
+	}
+	
 	public static Map<String, Object> parseMappingExpression(String mapping) {
 		
 		//System.out.println("parseMapping: " + mapping);

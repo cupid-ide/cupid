@@ -1,8 +1,10 @@
 package org.earthsystemcurator.cupid.nuopc.fsml.handlers;
 
 import java.io.BufferedReader;
+import java.io.ByteArrayInputStream;
 import java.io.File;
 import java.io.IOException;
+import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.Reader;
 import java.lang.reflect.InvocationTargetException;
@@ -18,11 +20,16 @@ import org.eclipse.core.commands.AbstractHandler;
 import org.eclipse.core.commands.ExecutionEvent;
 import org.eclipse.core.commands.ExecutionException;
 import org.eclipse.core.resources.IFile;
+import org.eclipse.core.resources.IProject;
 import org.eclipse.core.resources.IResource;
+import org.eclipse.core.resources.IWorkspace;
+import org.eclipse.core.resources.IWorkspaceRoot;
+import org.eclipse.core.resources.ResourcesPlugin;
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IAdaptable;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.emf.common.util.URI;
+import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.ecore.resource.ResourceSet;
 import org.eclipse.emf.ecore.resource.impl.ResourceSetImpl;
@@ -65,24 +72,46 @@ public class ForwardHandler extends AbstractHandler {
 		System.out.println("Executing forward engineer...");
 		
 		//IWorkbenchWindow window = HandlerUtil.getActiveWorkbenchWindowChecked(event);
+			
+//		IWorkspace workspace = ResourcesPlugin.getWorkspace();
+//		IWorkspaceRoot root = workspace.getRoot();
+//		IProject project  = root.getProject("example");
+//		
+//		//IFolder folder = project.getFolder("Folder1");
+//		IFile file = project.getFile("hello.txt");
+//		
+//		//if (!project.exists()) project.create(null);
+//		//if (!project.isOpen()) project.open(null);
+//		//if (!folder.exists()) 
+//		//   folder.create(IResource.NONE, true, null);
+//		if (!file.exists()) {
+//		    byte[] bytes = "File contents".getBytes();
+//		    InputStream source = new ByteArrayInputStream(bytes);
+//		    try {
+//				file.create(source, IResource.NONE, null);
+//			} catch (CoreException e) {				
+//				e.printStackTrace();
+//			}
+//		}
+//		
 		
-		ResourceSet resourceSet1 = new ResourceSetImpl();
-		ResourceSet resourceSet2 = new ResourceSetImpl();
-		String xmi1 = ReverseHandler.reverseFile;
-		String xmi2 = ForwardHandler.assertedFile;
-		Resource reversed = load(xmi1, resourceSet1);
-		Resource asserted = load(xmi2, resourceSet2);
+//		ResourceSet resourceSet1 = new ResourceSetImpl();
+//		ResourceSet resourceSet2 = new ResourceSetImpl();
+//		String xmi1 = ReverseHandler.reverseFile;
+//		String xmi2 = ForwardHandler.assertedFile;
+//		Resource reversed = load(xmi1, resourceSet1);
+//		Resource asserted = load(xmi2, resourceSet2);
+//		
+//		final PhotranVPG vpg = PhotranVPG.getInstance();
+//	    final ReverseEngineer re = new ReverseEngineer();
+//	    NUOPCApplication reversed1 = re.reverse(vpg);
+//		
+//		ForwardEngineer fe = new ForwardEngineer();
+//		fe.forward(reversed1,
+//				   (NUOPCApplication) asserted.getContents().get(0),
+//				   re.getMappings());
 		
-		final PhotranVPG vpg = PhotranVPG.getInstance();
-	    ReverseEngineer re = new ReverseEngineer();
-	    NUOPCApplication reversed1 = re.reverse(vpg);
-		
-		ForwardEngineer fe = new ForwardEngineer();
-		fe.forward(reversed1,
-				   (NUOPCApplication) asserted.getContents().get(0),
-				   re.getMappings());
-		
-		final Map<IFile, IFortranAST> fileMap = re.getFileToASTMapping();
+		//final Map<IFile, IFortranAST> fileMap = re.getFileToASTMapping();
 		
 //		IResource res = extractSelection(window.getActivePage().getSelection());
 //
@@ -150,25 +179,70 @@ public class ForwardHandler extends AbstractHandler {
         IRunnableWithProgress operation = new IRunnableWithProgress() {
 			
         	public void run(IProgressMonitor monitor) {
-				//vpg.commitChangesFromInMemoryASTs(monitor, 1, f);
-        		//vpg.
 				
+        		IWorkspace workspace = ResourcesPlugin.getWorkspace();
+        		IWorkspaceRoot root = workspace.getRoot();
+        		IProject project  = root.getProject("AtmOcnLndProto");
+        		
+        		//IFolder folder = project.getFolder("Folder1");
+        		//IFile file = project.getFile("hello.txt");
+        		
+        		//if (!project.exists()) project.create(null);
+        		//if (!project.isOpen()) project.open(null);
+        		//if (!folder.exists()) 
+        		//   folder.create(IResource.NONE, true, null);
+        		//if (!file.exists()) {
+        		//    byte[] bytes = "File contents".getBytes();
+        		//    InputStream source = new ByteArrayInputStream(bytes);
+        		//    try {
+        		//		file.create(source, IResource.NONE, null);
+        		//	} catch (CoreException e) {				
+        		//		e.printStackTrace();
+        		//	}
+        		//}
+        
+        		
+        		
+        		//ResourceSet resourceSet1 = new ResourceSetImpl();
+        		ResourceSet resourceSet2 = new ResourceSetImpl();
+        		//String xmi1 = ReverseHandler.reverseFile;
+        		String xmi2 = ForwardHandler.assertedFile;
+        		//Resource reversed = load(xmi1, resourceSet1);
+        		Resource asserted = load(xmi2, resourceSet2);
+        		
+        		final PhotranVPG vpg = PhotranVPG.getInstance();
+        	    final ReverseEngineer re = new ReverseEngineer();
+        	    NUOPCApplication reversed1 = re.reverse(vpg);
+        		
+        		ForwardEngineer fe = new ForwardEngineer();
+        		fe.setContainer(project);
+        		
+        		fe.forward(reversed1,
+        				   (NUOPCApplication) asserted.getContents().get(0),
+        				   re.getMappings());
+        		
+        		
         		//TODO: see about doing this on an individual file basis
         		//TODO: deal with project files "out of sync" with file system
-	            for (Entry<IFile, IFortranAST> entry : fileMap.entrySet()) {
-	        		IFile f = entry.getKey();
-	            	TextFileChange changeThisFile = new TextFileChange("text change " + f.getFullPath().toOSString(), f);
-		            changeThisFile.initializeValidationData(monitor);	            
-		            try {
-						int charsInFile = countCharsIn(f);
-		            	changeThisFile.setEdit(new ReplaceEdit(0, countCharsIn(f), entry.getValue().getRoot().toString()));
-						System.out.println("Processing file: " + f.getName() + " : " + charsInFile);
-						changeThisFile.perform(monitor);			
-					} catch (CoreException e) {
-						e.printStackTrace();
-					} catch (IOException e) {
-						e.printStackTrace();
-					}
+	            for (Entry<EObject, Object> entry : re.getMappings().entrySet()) {
+	        		if (entry.getValue() instanceof IFortranAST) {
+		            	
+	        			IFortranAST ast = (IFortranAST) entry.getValue();
+	        			IFile f = ast.getFile();
+		            	
+	        			TextFileChange changeThisFile = new TextFileChange("text change " + f.getFullPath().toOSString(), f);
+			            changeThisFile.initializeValidationData(monitor);	            
+			            try {
+							int charsInFile = countCharsIn(f);
+			            	changeThisFile.setEdit(new ReplaceEdit(0, countCharsIn(f), ast.getRoot().toString()));
+							System.out.println("Processing file: " + f.getName() + " : " + charsInFile);
+							changeThisFile.perform(monitor);			
+						} catch (CoreException e) {
+							e.printStackTrace();
+						} catch (IOException e) {
+							e.printStackTrace();
+						}
+	        		}
 	            }
 	            
 	            //vpg.ensureVPGIsUpToDate(monitor);
