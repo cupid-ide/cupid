@@ -39,7 +39,7 @@ public interface ModelImplementsInitP1 extends EObject {
 	 * @see #setName(String)
 	 * @see org.earthsystemcurator.cupid.nuopc.fsml.nuopc.NUOPCPackage#getModelImplementsInitP1_Name()
 	 * @model id="true" required="true"
-	 *        annotation="http://www.earthsystemcog.org/projects/nuopc mapping='subroutineName'"
+	 *        annotation="http://www.earthsystemcog.org/projects/nuopc mappingX='subroutineName'"
 	 * @generated
 	 */
 	String getName();
@@ -66,7 +66,7 @@ public interface ModelImplementsInitP1 extends EObject {
 	 * @see #setImportParam(String)
 	 * @see org.earthsystemcurator.cupid.nuopc.fsml.nuopc.NUOPCPackage#getModelImplementsInitP1_ImportParam()
 	 * @model required="true"
-	 *        annotation="http://www.earthsystemcog.org/projects/nuopc mapping='formalParam: 2'"
+	 *        annotation="http://www.earthsystemcog.org/projects/nuopc mappingX='formalParam: 2'"
 	 * @generated
 	 */
 	String getImportParam();
@@ -93,7 +93,7 @@ public interface ModelImplementsInitP1 extends EObject {
 	 * @see #setExportParam(String)
 	 * @see org.earthsystemcurator.cupid.nuopc.fsml.nuopc.NUOPCPackage#getModelImplementsInitP1_ExportParam()
 	 * @model required="true"
-	 *        annotation="http://www.earthsystemcog.org/projects/nuopc mapping='formalParam: 3'"
+	 *        annotation="http://www.earthsystemcog.org/projects/nuopc mappingX='formalParam: 3'"
 	 * @generated
 	 */
 	String getExportParam();
@@ -122,7 +122,7 @@ public interface ModelImplementsInitP1 extends EObject {
 	 * @see org.earthsystemcurator.cupid.nuopc.fsml.nuopc.NUOPCPackage#getModelImplementsInitP1_AdvertisesImportField()
 	 * @see org.earthsystemcurator.cupid.nuopc.fsml.nuopc.AdvertisesImportField#getParent
 	 * @model opposite="parent" containment="true"
-	 *        annotation="http://www.earthsystemcog.org/projects/nuopc mapping='call: \"NUOPC_StateAdvertiseField\"'"
+	 *        annotation="http://www.earthsystemcog.org/projects/nuopc mapping='call: \"NUOPC_StateAdvertiseField(#addsToState, StandardName=#standardName, #rc)\"'"
 	 * @generated
 	 */
 	EList<AdvertisesImportField> getAdvertisesImportField();
@@ -141,7 +141,7 @@ public interface ModelImplementsInitP1 extends EObject {
 	 * @see org.earthsystemcurator.cupid.nuopc.fsml.nuopc.NUOPCPackage#getModelImplementsInitP1_AdvertisesExportField()
 	 * @see org.earthsystemcurator.cupid.nuopc.fsml.nuopc.AdvertisesExportField#getParent
 	 * @model opposite="parent" containment="true"
-	 *        annotation="http://www.earthsystemcog.org/projects/nuopc mapping='call: \"NUOPC_StateAdvertiseField\"'"
+	 *        annotation="http://www.earthsystemcog.org/projects/nuopc mapping='call: \"NUOPC_StateAdvertiseField(#addsToState, StandardName=#standardName, #rc)\"'"
 	 * @generated
 	 */
 	EList<AdvertisesExportField> getAdvertisesExportField();

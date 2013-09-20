@@ -23,7 +23,7 @@ import org.eclipse.emf.ecore.EObject;
  * </p>
  *
  * @see org.earthsystemcurator.cupid.nuopc.fsml.nuopc.NUOPCPackage#getModelImplementsInitP2()
- * @model annotation="http://www.earthsystemcog.org/projects/nuopc mapping='subroutine: \"*(type(ESMF_GridComp), type(ESMF_State), type(ESMF_State), type(ESMF_Clock), integer)\"'"
+ * @model
  * @generated
  */
 public interface ModelImplementsInitP2 extends EObject {
@@ -39,7 +39,7 @@ public interface ModelImplementsInitP2 extends EObject {
 	 * @see #setName(String)
 	 * @see org.earthsystemcurator.cupid.nuopc.fsml.nuopc.NUOPCPackage#getModelImplementsInitP2_Name()
 	 * @model id="true" required="true"
-	 *        annotation="http://www.earthsystemcog.org/projects/nuopc mapping='subroutineName'"
+	 *        annotation="http://www.earthsystemcog.org/projects/nuopc mappingX='subroutineName'"
 	 * @generated
 	 */
 	String getName();
@@ -66,7 +66,7 @@ public interface ModelImplementsInitP2 extends EObject {
 	 * @see #setImportParam(String)
 	 * @see org.earthsystemcurator.cupid.nuopc.fsml.nuopc.NUOPCPackage#getModelImplementsInitP2_ImportParam()
 	 * @model required="true"
-	 *        annotation="http://www.earthsystemcog.org/projects/nuopc mapping='formalParam: 2'"
+	 *        annotation="http://www.earthsystemcog.org/projects/nuopc mappingX='formalParam: 2'"
 	 * @generated
 	 */
 	String getImportParam();
@@ -93,7 +93,7 @@ public interface ModelImplementsInitP2 extends EObject {
 	 * @see #setExportParam(String)
 	 * @see org.earthsystemcurator.cupid.nuopc.fsml.nuopc.NUOPCPackage#getModelImplementsInitP2_ExportParam()
 	 * @model required="true"
-	 *        annotation="http://www.earthsystemcog.org/projects/nuopc mapping='formalParam: 3'"
+	 *        annotation="http://www.earthsystemcog.org/projects/nuopc mappingX='formalParam: 3'"
 	 * @generated
 	 */
 	String getExportParam();
@@ -122,7 +122,7 @@ public interface ModelImplementsInitP2 extends EObject {
 	 * @see org.earthsystemcurator.cupid.nuopc.fsml.nuopc.NUOPCPackage#getModelImplementsInitP2_RealizesImportField()
 	 * @see org.earthsystemcurator.cupid.nuopc.fsml.nuopc.RealizesImportField#getParent
 	 * @model opposite="parent" containment="true"
-	 *        annotation="http://www.earthsystemcog.org/projects/nuopc mapping='call: \"NUOPC_StateRealizeField\"'"
+	 *        annotation="http://www.earthsystemcog.org/projects/nuopc mapping='call: \"NUOPC_StateRealizeField(#realizedInState, field=#field, rc=#rc)\"'"
 	 * @generated
 	 */
 	EList<RealizesImportField> getRealizesImportField();
@@ -141,7 +141,7 @@ public interface ModelImplementsInitP2 extends EObject {
 	 * @see org.earthsystemcurator.cupid.nuopc.fsml.nuopc.NUOPCPackage#getModelImplementsInitP2_RealizesExportField()
 	 * @see org.earthsystemcurator.cupid.nuopc.fsml.nuopc.RealizesExportField#getParent
 	 * @model opposite="parent" containment="true"
-	 *        annotation="http://www.earthsystemcog.org/projects/nuopc mapping='call: \"NUOPC_StateRealizeField\"'"
+	 *        annotation="http://www.earthsystemcog.org/projects/nuopc mapping='call: \"NUOPC_StateRealizeField(#realizedInState, field=#field, rc=#rc)\"'"
 	 * @generated
 	 */
 	EList<RealizesExportField> getRealizesExportField();

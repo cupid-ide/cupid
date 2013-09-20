@@ -64,7 +64,7 @@ public interface AdvertisesImportField extends EObject {
 	 * @see #setAddsToState(String)
 	 * @see org.earthsystemcurator.cupid.nuopc.fsml.nuopc.NUOPCPackage#getAdvertisesImportField_AddsToState()
 	 * @model required="true"
-	 *        annotation="http://www.earthsystemcog.org/projects/nuopc mapping='argByIndex: 1'"
+	 *        annotation="http://www.earthsystemcog.org/projects/nuopc mappingX='argByIndex: 1'"
 	 * @generated
 	 */
 	String getAddsToState();
@@ -118,7 +118,7 @@ public interface AdvertisesImportField extends EObject {
 	 * @return the value of the '<em>Standard Name</em>' attribute.
 	 * @see #setStandardName(String)
 	 * @see org.earthsystemcurator.cupid.nuopc.fsml.nuopc.NUOPCPackage#getAdvertisesImportField_StandardName()
-	 * @model annotation="http://www.earthsystemcog.org/projects/nuopc mapping='argByKeyword: \"StandardName\"'"
+	 * @model annotation="http://www.earthsystemcog.org/projects/nuopc mappingX='argByKeyword: \"StandardName\"'"
 	 * @generated
 	 */
 	String getStandardName();

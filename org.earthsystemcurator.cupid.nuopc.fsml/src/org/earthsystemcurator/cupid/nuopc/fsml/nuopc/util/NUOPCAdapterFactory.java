@@ -76,6 +76,10 @@ public class NUOPCAdapterFactory extends AdapterFactoryImpl {
 				return createModelImplementsSetServicesAdapter();
 			}
 			@Override
+			public Adapter caseCallsGenericSetServices(CallsGenericSetServices object) {
+				return createCallsGenericSetServicesAdapter();
+			}
+			@Override
 			public Adapter caseModelImplementsInitP1(ModelImplementsInitP1 object) {
 				return createModelImplementsInitP1Adapter();
 			}
@@ -184,6 +188,20 @@ public class NUOPCAdapterFactory extends AdapterFactoryImpl {
 	 * @generated
 	 */
 	public Adapter createModelImplementsSetServicesAdapter() {
+		return null;
+	}
+
+	/**
+	 * Creates a new adapter for an object of class '{@link org.earthsystemcurator.cupid.nuopc.fsml.nuopc.CallsGenericSetServices <em>Calls Generic Set Services</em>}'.
+	 * <!-- begin-user-doc -->
+	 * This default implementation returns null so that we can easily ignore cases;
+	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
+	 * <!-- end-user-doc -->
+	 * @return the new adapter.
+	 * @see org.earthsystemcurator.cupid.nuopc.fsml.nuopc.CallsGenericSetServices
+	 * @generated
+	 */
+	public Adapter createCallsGenericSetServicesAdapter() {
 		return null;
 	}
 

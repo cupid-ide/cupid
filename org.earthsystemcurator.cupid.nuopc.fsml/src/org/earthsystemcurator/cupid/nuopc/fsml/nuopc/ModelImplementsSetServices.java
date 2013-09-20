@@ -17,7 +17,8 @@ import org.eclipse.emf.ecore.EObject;
  *   <li>{@link org.earthsystemcurator.cupid.nuopc.fsml.nuopc.ModelImplementsSetServices#getName <em>Name</em>}</li>
  *   <li>{@link org.earthsystemcurator.cupid.nuopc.fsml.nuopc.ModelImplementsSetServices#getParam_gcomp <em>Param gcomp</em>}</li>
  *   <li>{@link org.earthsystemcurator.cupid.nuopc.fsml.nuopc.ModelImplementsSetServices#getParam_rc <em>Param rc</em>}</li>
- *   <li>{@link org.earthsystemcurator.cupid.nuopc.fsml.nuopc.ModelImplementsSetServices#isCallsGenericSetServices <em>Calls Generic Set Services</em>}</li>
+ *   <li>{@link org.earthsystemcurator.cupid.nuopc.fsml.nuopc.ModelImplementsSetServices#getCallsGenericSetServices <em>Calls Generic Set Services</em>}</li>
+ *   <li>{@link org.earthsystemcurator.cupid.nuopc.fsml.nuopc.ModelImplementsSetServices#isCallsGenericSetServices_OLD <em>Calls Generic Set Services OLD</em>}</li>
  *   <li>{@link org.earthsystemcurator.cupid.nuopc.fsml.nuopc.ModelImplementsSetServices#isCallsSetEntryPointPhase1 <em>Calls Set Entry Point Phase1</em>}</li>
  *   <li>{@link org.earthsystemcurator.cupid.nuopc.fsml.nuopc.ModelImplementsSetServices#isCallsSetEntryPointPhase2 <em>Calls Set Entry Point Phase2</em>}</li>
  *   <li>{@link org.earthsystemcurator.cupid.nuopc.fsml.nuopc.ModelImplementsSetServices#getAttachesModelAdvance <em>Attaches Model Advance</em>}</li>
@@ -25,7 +26,7 @@ import org.eclipse.emf.ecore.EObject;
  * </p>
  *
  * @see org.earthsystemcurator.cupid.nuopc.fsml.nuopc.NUOPCPackage#getModelImplementsSetServices()
- * @model annotation="http://www.earthsystemcog.org/projects/nuopc mapping='subroutine: \"*(type(ESMF_GridComp), integer)\"'"
+ * @model annotation="http://www.earthsystemcog.org/projects/nuopc mapping='subroutine: \"#name(inout type(ESMF_GridComp) #param_gcomp, out integer #param_rc)\"'"
  * @generated
  */
 public interface ModelImplementsSetServices extends EObject {
@@ -70,7 +71,7 @@ public interface ModelImplementsSetServices extends EObject {
 	 * @see #setName(String)
 	 * @see org.earthsystemcurator.cupid.nuopc.fsml.nuopc.NUOPCPackage#getModelImplementsSetServices_Name()
 	 * @model default="SetServicesDefault" id="true" required="true"
-	 *        annotation="http://www.earthsystemcog.org/projects/nuopc mapping='subroutineName'"
+	 *        annotation="http://www.earthsystemcog.org/projects/nuopc mappingX='subroutineName'"
 	 * @generated
 	 */
 	String getName();
@@ -98,7 +99,7 @@ public interface ModelImplementsSetServices extends EObject {
 	 * @see #setParam_gcomp(String)
 	 * @see org.earthsystemcurator.cupid.nuopc.fsml.nuopc.NUOPCPackage#getModelImplementsSetServices_Param_gcomp()
 	 * @model default="gcompDefault"
-	 *        annotation="http://www.earthsystemcog.org/projects/nuopc mapping='formalParam: 1'"
+	 *        annotation="http://www.earthsystemcog.org/projects/nuopc mappingX='formalParam: 1'"
 	 * @generated
 	 */
 	String getParam_gcomp();
@@ -126,7 +127,7 @@ public interface ModelImplementsSetServices extends EObject {
 	 * @see #setParam_rc(String)
 	 * @see org.earthsystemcurator.cupid.nuopc.fsml.nuopc.NUOPCPackage#getModelImplementsSetServices_Param_rc()
 	 * @model default="rcDefault"
-	 *        annotation="http://www.earthsystemcog.org/projects/nuopc mapping='formalParam: 2'"
+	 *        annotation="http://www.earthsystemcog.org/projects/nuopc mappingX='formalParam: 2'"
 	 * @generated
 	 */
 	String getParam_rc();
@@ -142,31 +143,58 @@ public interface ModelImplementsSetServices extends EObject {
 	void setParam_rc(String value);
 
 	/**
-	 * Returns the value of the '<em><b>Calls Generic Set Services</b></em>' attribute.
+	 * Returns the value of the '<em><b>Calls Generic Set Services</b></em>' containment reference.
 	 * <!-- begin-user-doc -->
 	 * <p>
-	 * If the meaning of the '<em>Calls Generic Set Services</em>' attribute isn't clear,
+	 * If the meaning of the '<em>Calls Generic Set Services</em>' containment reference isn't clear,
 	 * there really should be more of a description here...
 	 * </p>
 	 * <!-- end-user-doc -->
-	 * @return the value of the '<em>Calls Generic Set Services</em>' attribute.
-	 * @see #setCallsGenericSetServices(boolean)
+	 * @return the value of the '<em>Calls Generic Set Services</em>' containment reference.
+	 * @see #setCallsGenericSetServices(CallsGenericSetServices)
 	 * @see org.earthsystemcurator.cupid.nuopc.fsml.nuopc.NUOPCPackage#getModelImplementsSetServices_CallsGenericSetServices()
-	 * @model required="true"
-	 *        annotation="http://www.earthsystemcog.org/projects/nuopc mapping='calls: \"routine_SetServices\" definedInModule: \"NUOPC_Model\"' essential='true'"
+	 * @model containment="true"
+	 *        annotation="http://www.earthsystemcog.org/projects/nuopc mapping='call: \"#../../importsGenericSS(#gcomp, rc=#rc)\"' essential='false'"
 	 * @generated
 	 */
-	boolean isCallsGenericSetServices();
+	CallsGenericSetServices getCallsGenericSetServices();
 
 	/**
-	 * Sets the value of the '{@link org.earthsystemcurator.cupid.nuopc.fsml.nuopc.ModelImplementsSetServices#isCallsGenericSetServices <em>Calls Generic Set Services</em>}' attribute.
+	 * Sets the value of the '{@link org.earthsystemcurator.cupid.nuopc.fsml.nuopc.ModelImplementsSetServices#getCallsGenericSetServices <em>Calls Generic Set Services</em>}' containment reference.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @param value the new value of the '<em>Calls Generic Set Services</em>' attribute.
-	 * @see #isCallsGenericSetServices()
+	 * @param value the new value of the '<em>Calls Generic Set Services</em>' containment reference.
+	 * @see #getCallsGenericSetServices()
 	 * @generated
 	 */
-	void setCallsGenericSetServices(boolean value);
+	void setCallsGenericSetServices(CallsGenericSetServices value);
+
+	/**
+	 * Returns the value of the '<em><b>Calls Generic Set Services OLD</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <p>
+	 * If the meaning of the '<em>Calls Generic Set Services OLD</em>' attribute isn't clear,
+	 * there really should be more of a description here...
+	 * </p>
+	 * <!-- end-user-doc -->
+	 * @return the value of the '<em>Calls Generic Set Services OLD</em>' attribute.
+	 * @see #setCallsGenericSetServices_OLD(boolean)
+	 * @see org.earthsystemcurator.cupid.nuopc.fsml.nuopc.NUOPCPackage#getModelImplementsSetServices_CallsGenericSetServices_OLD()
+	 * @model required="true"
+	 *        annotation="http://www.earthsystemcog.org/projects/nuopc mapping='calls: \"routine_SetServices\" definedInModule: \"NUOPC_Model\"' essential='false'"
+	 * @generated
+	 */
+	boolean isCallsGenericSetServices_OLD();
+
+	/**
+	 * Sets the value of the '{@link org.earthsystemcurator.cupid.nuopc.fsml.nuopc.ModelImplementsSetServices#isCallsGenericSetServices_OLD <em>Calls Generic Set Services OLD</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @param value the new value of the '<em>Calls Generic Set Services OLD</em>' attribute.
+	 * @see #isCallsGenericSetServices_OLD()
+	 * @generated
+	 */
+	void setCallsGenericSetServices_OLD(boolean value);
 
 	/**
 	 * Returns the value of the '<em><b>Calls Set Entry Point Phase1</b></em>' attribute.
@@ -236,7 +264,7 @@ public interface ModelImplementsSetServices extends EObject {
 	 * @see org.earthsystemcurator.cupid.nuopc.fsml.nuopc.NUOPCPackage#getModelImplementsSetServices_AttachesModelAdvance()
 	 * @see org.earthsystemcurator.cupid.nuopc.fsml.nuopc.AttachesModelAdvance#getParent
 	 * @model opposite="parent" containment="true" ordered="false"
-	 *        annotation="http://www.earthsystemcog.org/projects/nuopc mapping='call: \"ESMF_MethodAdd\"'"
+	 *        annotation="http://www.earthsystemcog.org/projects/nuopc mapping='call: \"ESMF_MethodAdd(#gcomp, #label, #userRoutine, #rc)\"'"
 	 * @generated
 	 */
 	EList<AttachesModelAdvance> getAttachesModelAdvance();

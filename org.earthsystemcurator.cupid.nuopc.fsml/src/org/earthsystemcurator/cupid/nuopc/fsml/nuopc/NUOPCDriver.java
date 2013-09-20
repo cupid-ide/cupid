@@ -94,7 +94,7 @@ public interface NUOPCDriver extends EObject {
 	 * @see org.earthsystemcurator.cupid.nuopc.fsml.nuopc.NUOPCPackage#getNUOPCDriver_ImplementsSetServices()
 	 * @see org.earthsystemcurator.cupid.nuopc.fsml.nuopc.NUOPCDriver__ImplementsSetServices#getParent
 	 * @model opposite="parent" containment="true"
-	 *        annotation="http://www.earthsystemcog.org/projects/nuopc mapping='subroutine: \"*(type(ESMF_GridComp), integer)\"' essential='true'"
+	 *        annotation="http://www.earthsystemcog.org/projects/nuopc mapping='subroutine: \"#name(type(ESMF_GridComp) #param_gcomp, integer #param_rc)\"' essential='true'"
 	 * @generated
 	 */
 	NUOPCDriver__ImplementsSetServices getImplementsSetServices();

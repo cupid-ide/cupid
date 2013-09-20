@@ -15,7 +15,7 @@ import org.eclipse.emf.ecore.EObject;
  * The following features are supported:
  * <ul>
  *   <li>{@link org.earthsystemcurator.cupid.nuopc.fsml.nuopc.NUOPCModel#getName <em>Name</em>}</li>
- *   <li>{@link org.earthsystemcurator.cupid.nuopc.fsml.nuopc.NUOPCModel#isUsesAllImports <em>Uses All Imports</em>}</li>
+ *   <li>{@link org.earthsystemcurator.cupid.nuopc.fsml.nuopc.NUOPCModel#getImportsGenericSS <em>Imports Generic SS</em>}</li>
  *   <li>{@link org.earthsystemcurator.cupid.nuopc.fsml.nuopc.NUOPCModel#getSinglePublicSubroutine <em>Single Public Subroutine</em>}</li>
  *   <li>{@link org.earthsystemcurator.cupid.nuopc.fsml.nuopc.NUOPCModel#getImplementsSetServices <em>Implements Set Services</em>}</li>
  *   <li>{@link org.earthsystemcurator.cupid.nuopc.fsml.nuopc.NUOPCModel#getImplementsInitP1 <em>Implements Init P1</em>}</li>
@@ -58,30 +58,30 @@ public interface NUOPCModel extends EObject {
 	void setName(String value);
 
 	/**
-	 * Returns the value of the '<em><b>Uses All Imports</b></em>' attribute.
+	 * Returns the value of the '<em><b>Imports Generic SS</b></em>' attribute.
 	 * <!-- begin-user-doc -->
 	 * <p>
-	 * If the meaning of the '<em>Uses All Imports</em>' attribute isn't clear,
+	 * If the meaning of the '<em>Imports Generic SS</em>' attribute isn't clear,
 	 * there really should be more of a description here...
 	 * </p>
 	 * <!-- end-user-doc -->
-	 * @return the value of the '<em>Uses All Imports</em>' attribute.
-	 * @see #setUsesAllImports(boolean)
-	 * @see org.earthsystemcurator.cupid.nuopc.fsml.nuopc.NUOPCPackage#getNUOPCModel_UsesAllImports()
-	 * @model required="true"
+	 * @return the value of the '<em>Imports Generic SS</em>' attribute.
+	 * @see #setImportsGenericSS(String)
+	 * @see org.earthsystemcurator.cupid.nuopc.fsml.nuopc.NUOPCPackage#getNUOPCModel_ImportsGenericSS()
+	 * @model annotation="http://www.earthsystemcog.org/projects/nuopc mapping='uses: \"NUOPC_Model\" entity: \"routine_SetServices\"'"
 	 * @generated
 	 */
-	boolean isUsesAllImports();
+	String getImportsGenericSS();
 
 	/**
-	 * Sets the value of the '{@link org.earthsystemcurator.cupid.nuopc.fsml.nuopc.NUOPCModel#isUsesAllImports <em>Uses All Imports</em>}' attribute.
+	 * Sets the value of the '{@link org.earthsystemcurator.cupid.nuopc.fsml.nuopc.NUOPCModel#getImportsGenericSS <em>Imports Generic SS</em>}' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @param value the new value of the '<em>Uses All Imports</em>' attribute.
-	 * @see #isUsesAllImports()
+	 * @param value the new value of the '<em>Imports Generic SS</em>' attribute.
+	 * @see #getImportsGenericSS()
 	 * @generated
 	 */
-	void setUsesAllImports(boolean value);
+	void setImportsGenericSS(String value);
 
 	/**
 	 * Returns the value of the '<em><b>Single Public Subroutine</b></em>' attribute.
@@ -123,7 +123,7 @@ public interface NUOPCModel extends EObject {
 	 * @see org.earthsystemcurator.cupid.nuopc.fsml.nuopc.NUOPCPackage#getNUOPCModel_ImplementsSetServices()
 	 * @see org.earthsystemcurator.cupid.nuopc.fsml.nuopc.ModelImplementsSetServices#getParent
 	 * @model opposite="parent" containment="true" keys="name"
-	 *        annotation="http://www.earthsystemcog.org/projects/nuopc mapping='subroutine: \"*(type(ESMF_GridComp), integer)\"' essential='true'"
+	 *        annotation="http://www.earthsystemcog.org/projects/nuopc mapping='subroutine: \"#name(inout type(ESMF_GridComp) #param_gcomp, out integer #param_rc)\"' essential='true'"
 	 * @generated
 	 */
 	ModelImplementsSetServices getImplementsSetServices();
@@ -139,31 +139,21 @@ public interface NUOPCModel extends EObject {
 	void setImplementsSetServices(ModelImplementsSetServices value);
 
 	/**
-	 * Returns the value of the '<em><b>Implements Init P1</b></em>' containment reference.
+	 * Returns the value of the '<em><b>Implements Init P1</b></em>' containment reference list.
+	 * The list contents are of type {@link org.earthsystemcurator.cupid.nuopc.fsml.nuopc.ModelImplementsInitP1}.
 	 * <!-- begin-user-doc -->
 	 * <p>
 	 * If the meaning of the '<em>Implements Init P1</em>' containment reference isn't clear,
 	 * there really should be more of a description here...
 	 * </p>
 	 * <!-- end-user-doc -->
-	 * @return the value of the '<em>Implements Init P1</em>' containment reference.
-	 * @see #setImplementsInitP1(ModelImplementsInitP1)
+	 * @return the value of the '<em>Implements Init P1</em>' containment reference list.
 	 * @see org.earthsystemcurator.cupid.nuopc.fsml.nuopc.NUOPCPackage#getNUOPCModel_ImplementsInitP1()
 	 * @model containment="true"
-	 *        annotation="http://www.earthsystemcog.org/projects/nuopc mapping='subroutine: \"*(type(ESMF_GridComp), type(ESMF_State), type(ESMF_State), type(ESMF_Clock), integer)\"'"
+	 *        annotation="http://www.earthsystemcog.org/projects/nuopc mapping='subroutine: \"#name(type(ESMF_GridComp), type(ESMF_State) #importParam, type(ESMF_State) #exportParam, \ttype(ESMF_Clock), integer)\"'"
 	 * @generated
 	 */
-	ModelImplementsInitP1 getImplementsInitP1();
-
-	/**
-	 * Sets the value of the '{@link org.earthsystemcurator.cupid.nuopc.fsml.nuopc.NUOPCModel#getImplementsInitP1 <em>Implements Init P1</em>}' containment reference.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @param value the new value of the '<em>Implements Init P1</em>' containment reference.
-	 * @see #getImplementsInitP1()
-	 * @generated
-	 */
-	void setImplementsInitP1(ModelImplementsInitP1 value);
+	EList<ModelImplementsInitP1> getImplementsInitP1();
 
 	/**
 	 * Returns the value of the '<em><b>Implements Init P2</b></em>' containment reference.
@@ -177,7 +167,7 @@ public interface NUOPCModel extends EObject {
 	 * @see #setImplementsInitP2(ModelImplementsInitP2)
 	 * @see org.earthsystemcurator.cupid.nuopc.fsml.nuopc.NUOPCPackage#getNUOPCModel_ImplementsInitP2()
 	 * @model containment="true"
-	 *        annotation="http://www.earthsystemcog.org/projects/nuopc mapping='subroutine: \"*(type(ESMF_GridComp), type(ESMF_State), type(ESMF_State), type(ESMF_Clock), integer)\"'"
+	 *        annotation="http://www.earthsystemcog.org/projects/nuopc mapping='subroutine: \"#name(type(ESMF_GridComp), type(ESMF_State) #importParam, type(ESMF_State) #exportParam, type(ESMF_Clock), integer)\"'"
 	 * @generated
 	 */
 	ModelImplementsInitP2 getImplementsInitP2();

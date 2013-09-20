@@ -23,7 +23,7 @@ import org.eclipse.emf.ecore.EObject;
  * </p>
  *
  * @see org.earthsystemcurator.cupid.nuopc.fsml.nuopc.NUOPCPackage#getNUOPCDriver__ImplementsSetServices()
- * @model annotation="http://www.earthsystemcog.org/projects/nuopc mapping='subroutine: \"*(type(ESMF_GridComp), integer)\"'"
+ * @model
  * @generated
  */
 public interface NUOPCDriver__ImplementsSetServices extends EObject {
@@ -68,7 +68,7 @@ public interface NUOPCDriver__ImplementsSetServices extends EObject {
 	 * @see #setName(String)
 	 * @see org.earthsystemcurator.cupid.nuopc.fsml.nuopc.NUOPCPackage#getNUOPCDriver__ImplementsSetServices_Name()
 	 * @model default="SetServicesDefault" id="true" required="true"
-	 *        annotation="http://www.earthsystemcog.org/projects/nuopc mapping='subroutineName'"
+	 *        annotation="http://www.earthsystemcog.org/projects/nuopc mappingX='subroutineName'"
 	 * @generated
 	 */
 	String getName();
@@ -96,7 +96,7 @@ public interface NUOPCDriver__ImplementsSetServices extends EObject {
 	 * @see #setParam_gcomp(String)
 	 * @see org.earthsystemcurator.cupid.nuopc.fsml.nuopc.NUOPCPackage#getNUOPCDriver__ImplementsSetServices_Param_gcomp()
 	 * @model default="gcompDefault"
-	 *        annotation="http://www.earthsystemcog.org/projects/nuopc mapping='formalParam: 1'"
+	 *        annotation="http://www.earthsystemcog.org/projects/nuopc mappingX='formalParam: 1'"
 	 * @generated
 	 */
 	String getParam_gcomp();
@@ -124,7 +124,7 @@ public interface NUOPCDriver__ImplementsSetServices extends EObject {
 	 * @see #setParam_rc(String)
 	 * @see org.earthsystemcurator.cupid.nuopc.fsml.nuopc.NUOPCPackage#getNUOPCDriver__ImplementsSetServices_Param_rc()
 	 * @model default="rcDefault"
-	 *        annotation="http://www.earthsystemcog.org/projects/nuopc mapping='formalParam: 2'"
+	 *        annotation="http://www.earthsystemcog.org/projects/nuopc mappingX='formalParam: 2'"
 	 * @generated
 	 */
 	String getParam_rc();

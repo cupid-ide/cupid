@@ -78,6 +78,12 @@ public class NUOPCSwitch<T> extends Switch<T> {
 				if (result == null) result = defaultCase(theEObject);
 				return result;
 			}
+			case NUOPCPackage.CALLS_GENERIC_SET_SERVICES: {
+				CallsGenericSetServices callsGenericSetServices = (CallsGenericSetServices)theEObject;
+				T result = caseCallsGenericSetServices(callsGenericSetServices);
+				if (result == null) result = defaultCase(theEObject);
+				return result;
+			}
 			case NUOPCPackage.MODEL_IMPLEMENTS_INIT_P1: {
 				ModelImplementsInitP1 modelImplementsInitP1 = (ModelImplementsInitP1)theEObject;
 				T result = caseModelImplementsInitP1(modelImplementsInitP1);
@@ -205,6 +211,21 @@ public class NUOPCSwitch<T> extends Switch<T> {
 	 * @generated
 	 */
 	public T caseModelImplementsSetServices(ModelImplementsSetServices object) {
+		return null;
+	}
+
+	/**
+	 * Returns the result of interpreting the object as an instance of '<em>Calls Generic Set Services</em>'.
+	 * <!-- begin-user-doc -->
+	 * This implementation returns null;
+	 * returning a non-null result will terminate the switch.
+	 * <!-- end-user-doc -->
+	 * @param object the target of the switch.
+	 * @return the result of interpreting the object as an instance of '<em>Calls Generic Set Services</em>'.
+	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+	 * @generated
+	 */
+	public T caseCallsGenericSetServices(CallsGenericSetServices object) {
 		return null;
 	}
 

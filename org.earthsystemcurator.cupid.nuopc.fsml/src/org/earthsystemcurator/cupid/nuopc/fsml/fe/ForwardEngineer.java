@@ -22,6 +22,7 @@ import org.earthsystemcurator.cupid.nuopc.fsml.nuopc.NUOPCModel;
 import org.earthsystemcurator.cupid.nuopc.fsml.re.ReverseEngineer;
 import org.earthsystemcurator.cupid.nuopc.fsml.util.CodeExtraction;
 import org.earthsystemcurator.cupid.nuopc.fsml.util.CodeQuery;
+import org.earthsystemcurator.cupid.nuopc.fsml.util.EcoreUtils;
 import org.earthsystemcurator.cupid.nuopc.fsml.util.Regex;
 import org.eclipse.core.resources.IContainer;
 import org.eclipse.core.resources.IFile;
@@ -122,9 +123,11 @@ public class ForwardEngineer {
 		
 		for (Diff d : m.getDifferences()) {
 			//only interested in DELETEs for now (i.e., an addition to the asserted model)
-			//if (d.getKind() == DifferenceKind.DELETE) {
+			if (d.getKind() == DifferenceKind.DELETE) {
 				if (d instanceof ReferenceChangeSpec) {
 					System.out.println("\tDiff: (" + d.getKind() + ") ==> " + d + "\n");
+					forwardDiff((ReferenceChangeSpec) d);
+					/*
 					System.out.print("Process diff? ");
 					try {
 						String resp = br.readLine();
@@ -134,9 +137,9 @@ public class ForwardEngineer {
 					} catch (IOException e) {
 						return;
 					}
-					
+					*/
 				}
-			//}
+			}
 		}
 		forwardDiffs(m.getSubmatches());
 	}
@@ -323,11 +326,39 @@ public class ForwardEngineer {
 		
 		//call NUOPC_StateAdvertiseField(importState, StandardName="air_pressure_at_sea_level", rc=rc)
 		
-		String subroutineName = (String) params.get("call");
-		Map<Object,String> args = collectActualArguments(modelElem);
+		String callSig = (String) params.get("call");
 		
-		ST code = new ST("\ncall <name>(<args; separator=\", \">)\n");
+		List<String> vars = null;
+		List<String> keywords = null;
+		@SuppressWarnings("unchecked")
+		List<String> varsAndKeywords[] = new List[] {null, null};
+		
+		String subroutineName = CodeQuery.parseCallSig(callSig, varsAndKeywords);
+		vars = varsAndKeywords[0];
+		keywords = varsAndKeywords[1];
+		
+		//substitute model attributes for metavariables
+		if (subroutineName.startsWith("#")) {
+			subroutineName = EcoreUtils.eGetSFValue(subroutineName.substring(1), modelElem, null);
+		}
+		for (int i=0; i<vars.size(); i++) {
+			if (vars.get(i) == null) {
+				vars.set(i, "arg"+i);
+			}
+			else if (vars.get(i).startsWith("#")) {
+				vars.set(i, EcoreUtils.eGetSFValue(vars.get(i).substring(1), modelElem, "arg"+i));
+			}
+		}	
+		
+		
+		//Map<Object,String> args = collectActualArguments(modelElem);
+		
+		ST code = new ST("\n\n! this is a comment\ncall <name>(<vars, keys:{v,k|<if(k)><k> = <endif><v>}; separator=\", \">)\n");
 		code.add("name", subroutineName);
+		code.add("vars", vars);
+		code.add("keys", keywords);
+		
+		/*
 		for (Entry<Object,String> e : args.entrySet()) {
 			if (e.getKey() instanceof String) {
 				code.add("args", e.getKey() + " = " + e.getValue());
@@ -336,10 +367,11 @@ public class ForwardEngineer {
 				code.add("args", e.getValue());
 			}
 		}
+		*/
 		
 		System.out.println("Code to parse:\n" + code.render() + "\n");
 		
-		IBodyConstruct node = CodeExtraction.parseLiteralStatement(code.render());
+		IBodyConstruct node = CodeExtraction.parseLiteralStatement(code.render());		
 		
 		ASTSubroutineSubprogramNode ssn = (ASTSubroutineSubprogramNode) context;
 		ssn.getBody().add(node);
@@ -352,22 +384,37 @@ public class ForwardEngineer {
 	public IASTNode subroutine(IFortranAST context, EObject modelElem, Map<String, Object> params) {		
 		
 		String subroutineSig = (String) params.get("subroutine");
-		String subroutineName1, subroutineName2;
-		subroutineName1 = findMappedValueString("subroutineName", modelElem);
+		String subroutineName; // 1, subroutineName2;
+		//subroutineName1 = findMappedValueString("subroutineName", modelElem);
 		
-		List<Type> types = new ArrayList<Type>();
-		subroutineName2 = CodeQuery.parseSubroutineSig(subroutineSig, types);
+		List<String> types = new ArrayList<String>();
+		List<String> intents = new ArrayList<String>();
+		List<String> vars = new ArrayList<String>();
+		subroutineName = CodeQuery.parseSubroutineSigAsString(subroutineSig, intents, types, vars);
 		
-		//code = String.format(code, subroutineName);
-		//TODO: get names of formal parameters from model
+		//substitute model attributes for metavariables
+		if (subroutineName.startsWith("#")) {
+			subroutineName = EcoreUtils.eGetSFValue(subroutineName.substring(1), modelElem, null);
+		}
+		for (int i=0; i<vars.size(); i++) {
+			if (vars.get(i) == null) {
+				vars.set(i, "arg"+i);
+			}
+			else if (vars.get(i).startsWith("#")) {
+				vars.set(i, EcoreUtils.eGetSFValue(vars.get(i).substring(1), modelElem, vars.get(i).substring(1)));
+			}
+		}	
+			
 		
-		ST code = new ST("\n\nsubroutine <name>(<arg:{a|arg<i0>}; separator=\", \">)\n"
-					   + "<arg:{a|    <a> :: arg<i0>}; separator=\"\n\">\n"
+		ST code = new ST("\n\nsubroutine <name>(<vars:{v|<v>}; separator=\", \">)\n"
+					   + "<vars, types, intents:{v, t, i|    <t><if(i)>, intent(<i>)<endif> :: <v>}; separator=\"\n\">\n"
 					   + "end subroutine\n");
-		
-		code.add("name", coalesce(subroutineName1, subroutineName2));
-		code.add("arg", types);
-		//System.out.println("Code to parse:\n" + code.render() + "\n");
+				
+		code.add("name", subroutineName);
+		code.add("types", types);
+		code.add("intents", intents);
+		code.add("vars", vars);
+		System.out.println("Code to parse:\n" + code.render() + "\n");
 		
 		ASTSubroutineSubprogramNode ssn = (ASTSubroutineSubprogramNode) CodeExtraction.parseLiteralProgramUnit(code.render());
 		

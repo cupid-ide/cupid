@@ -1,10 +1,13 @@
 package org.earthsystemcurator.cupid.nuopc.fsml.util;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.HashSet;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
+import java.util.TreeMap;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -43,7 +46,7 @@ import org.eclipse.photran.internal.core.vpg.PhotranVPG;
 @SuppressWarnings("restriction")
 public class CodeQuery {
 
-	
+	public static Pattern P_METAVAR = Pattern.compile("#(?:../)*\\w+");	
 	
 	public static String moduleName(ASTModuleNode node, Map<String, Object> params) {
 		return node.getModuleStmt().getModuleName().getModuleName().getText();
@@ -134,64 +137,103 @@ public class CodeQuery {
 	}
 	
 	
-	
-	public static String parseSubroutineSig(String pattern, List<Type> typesOut) {
+	public static String parseSubroutineSig(String pattern, List<String> intentOut, List<Type> typeOut, List<String> varOut) {
 		
-		Pattern p = Pattern.compile("((?:\\w+)|(?:\\*))\\(((?:(integer|logical|type\\(\\w+\\)),?\\s*)*)\\)");
-		Matcher match = p.matcher(pattern);
+		List<String> paramTypes = new ArrayList<String>();
+		//List<String> paramIntents = new ArrayList<String>();
+		//List<String> paramVars = new ArrayList<String>();
 		
-		if (!match.matches()) {
-			throw new RuntimeException("Illegal subroutine pattern: " + pattern);
-		}
+		String subroutineName = parseSubroutineSigAsString(pattern, intentOut, paramTypes, varOut);				
 		
-		String subroutineName = match.group(1);
-		String[] paramTypes = match.group(2).split("\\s*,\\s*");
-		
-		//for (int i=0; i < paramTypes.length; i++) {
-		//	System.out.println("Param = " + paramTypes[i]);
-		//}
-		
-		//Type[] types = new Type[paramTypes.length];
-		
-		for (int i=0; i < paramTypes.length; i++) {
-			if (paramTypes[i].equalsIgnoreCase("integer")) {
-				typesOut.add(Type.INTEGER);
+		//convert strings to Fortran types
+		for (String t : paramTypes) {
+			if (t.equalsIgnoreCase("integer")) {
+				typeOut.add(Type.INTEGER);
 			}
-			else if (paramTypes[i].equalsIgnoreCase("logical")) {
-				typesOut.add(Type.LOGICAL);
+			else if (t.equalsIgnoreCase("logical")) {
+				typeOut.add(Type.LOGICAL);
 			}
 			//TODO: FILL IN OTHER TYPES AS NEEDED
-			else if (paramTypes[i].startsWith("type(")) {
-				typesOut.add(new DerivedType(paramTypes[i].substring(5, paramTypes[i].length()-1)));				
+			else if (t.startsWith("type(")) {
+				typeOut.add(new DerivedType(t.substring(5, t.length()-1)));					
 			}
 			else {
-				throw new RuntimeException("Cannot handle type: " + paramTypes[i]);
+				throw new RuntimeException("Cannot handle type: " + t);
 			}
  				
-		}
+		}		
 		
 		return subroutineName;
 		
 	}
 	
-	public static Set<ASTSubroutineSubprogramNode> subroutine(IFortranAST ast, Map<String, Object> params) {
+	public static Pattern P_SUBROUTINESIG = Pattern.compile("((?:#?\\w+)|(?:\\*))\\(((?:((in|out|inout)\\s+)?(integer|logical|type\\(\\w+\\))(\\s*#?\\w+)?,?\\s*)*)\\)");
+	public static Pattern P_SUBROUTINEPARAM = Pattern.compile("((in|out|inout)\\s+)?(integer|logical|type\\(\\w+\\))(\\s*(#?\\w+))?");
+	
+	public static String parseSubroutineSigAsString(String pattern, List<String> intentOut, List<String> typeOut, List<String> varOut) {
+		
+		Matcher match = P_SUBROUTINESIG.matcher(pattern);
+		
+		if (!match.matches()) {
+			throw new RuntimeException("Illegal subroutine pattern: " + pattern);
+		}
+		
+		//System.out.println("\n\nSubroutine signature:");
+		//for (int i=0; i < match.groupCount(); i++) {
+		//	System.out.println("Group (" + i + ") --> " + match.group(i));
+		//}
+		
+		String subroutineName = match.group(1);
+		//String[] paramTypes = match.group(2).split("\\s*,\\s*");
+		
+		Matcher match2 = P_SUBROUTINEPARAM.matcher(match.group(2));
+		
+		while(match2.find()) {
+			//for (int i=0; i <= match2.groupCount(); i++) {
+			//	System.out.println("Sub Group (" + i + ") --> " + match2.group(i));
+			//}
+			if (intentOut != null)	intentOut.add(match2.group(2));
+			if (typeOut != null) typeOut.add(match2.group(3));
+			if (varOut != null) varOut.add(match2.group(5));
+		}
+				
+		return subroutineName;
+		
+	}
+	
+	//public static Set<ASTSubroutineSubprogramNode> subroutine(IFortranAST ast, Map<String, Object> params) {
+	//	return subroutine(ast.getRoot().getProgramUnitList().get(0), params);
+	//}
+	
+	public static Map<ASTSubroutineSubprogramNode, Map<String, String>> subroutine(IFortranAST ast, Map<String, Object> params) {
 		return subroutine(ast.getRoot().getProgramUnitList().get(0), params);
 	}
 	
-	public static Set<ASTSubroutineSubprogramNode> subroutine(IASTNode node, Map<String, Object> params) {
+	//returns a map where:
+	// - the keys are matching subroutine nodes
+	// - the values are a map from metavariables to their matched value (if any)
+	public static Map<ASTSubroutineSubprogramNode, Map<String, String>> subroutine(IASTNode node, Map<String, Object> params) {
 		
 		String pattern = (String) params.get("subroutine");
 		
 		List<Type> types = new ArrayList<Type>();
-		String subroutineName = parseSubroutineSig(pattern, types);
+		List<String> vars = new ArrayList<String>();
+		String subroutineName = parseSubroutineSig(pattern, null, types, vars);
 		
-		HashSet<ASTSubroutineSubprogramNode> result = new HashSet<ASTSubroutineSubprogramNode>();
+		Map<ASTSubroutineSubprogramNode, Map<String, String>> result = new LinkedHashMap<ASTSubroutineSubprogramNode, Map<String, String>>();
 		
 		Set<ASTSubroutineSubprogramNode> nodes = node.findAll(ASTSubroutineSubprogramNode.class);
 		ssnloop: for (ASTSubroutineSubprogramNode ssn : nodes) {
 			
+			Map<String, String> metavariableMap = new HashMap<String, String>();
+			
 			if (!subroutineName.equals("*")) {
-				if (!ssn.getNameToken().getText().equalsIgnoreCase(subroutineName)) {
+				//subroutine name is significant
+				if (subroutineName.startsWith("#")) {
+					//match name and store in metavariable map
+					metavariableMap.put(subroutineName, ssn.getNameToken().getText());
+				}
+				else if (!ssn.getNameToken().getText().equalsIgnoreCase(subroutineName)) {
 					continue ssnloop;
 				}
 			}
@@ -205,34 +247,98 @@ public class CodeQuery {
 					if (defs.size() > 0) {
 						
 						if (types.size() > idxType) {
-							
+														
 							if (!defs.get(0).getType().equals(types.get(idxType))) {
 								continue ssnloop;
 							}
 							else {
+								if (vars.get(idxType) != null && vars.get(idxType).startsWith("#")) {
+									metavariableMap.put(vars.get(idxType), spn.getVariableName().getText());
+								}
 								idxType++;
 							}
 							
 						}
+												
 					}					
 				}
 				
 				//have not failed, verify lengths are the same
 				if (ssn.getSubroutineStmt().getSubroutinePars().size() == types.size()) {
-					result.add(ssn);
+					result.put(ssn, metavariableMap);
 				}
 			}
 			else if (types.size() == 0) {
 				//no params				
-				result.add(ssn);				
+				result.put(ssn, metavariableMap);				
 			}
 				
 			
 		}
 		
 		return result;
-		
 	}
+	
+//	public static Set<ASTSubroutineSubprogramNode> subroutine(IASTNode node, Map<String, Object> params) {
+//		
+//		String pattern = (String) params.get("subroutine");
+//		
+//		List<Type> types = new ArrayList<Type>();
+//		String subroutineName = parseSubroutineSig(pattern, null, types, null);
+//		
+//		HashSet<ASTSubroutineSubprogramNode> result = new HashSet<ASTSubroutineSubprogramNode>();
+//		
+//		Set<ASTSubroutineSubprogramNode> nodes = node.findAll(ASTSubroutineSubprogramNode.class);
+//		ssnloop: for (ASTSubroutineSubprogramNode ssn : nodes) {
+//			
+//			if (!subroutineName.equals("*")) {
+//				//subroutine name is significant
+//				//if (subroutineName.startsWith("#")) {
+//				//	
+//				//}
+//				
+//				if (!ssn.getNameToken().getText().equalsIgnoreCase(subroutineName)) {
+//					continue ssnloop;
+//				}
+//			}
+//			
+//			int idxType = 0;
+//			
+//			if (ssn.getSubroutineStmt().getSubroutinePars() != null) {
+//				for (ASTSubroutineParNode spn : ssn.getSubroutineStmt().getSubroutinePars()) {
+//					
+//					List<Definition> defs = spn.getVariableName().resolveBinding();
+//					if (defs.size() > 0) {
+//						
+//						if (types.size() > idxType) {
+//														
+//							if (!defs.get(0).getType().equals(types.get(idxType))) {
+//								continue ssnloop;
+//							}
+//							else {
+//								idxType++;
+//							}
+//							
+//						}
+//					}					
+//				}
+//				
+//				//have not failed, verify lengths are the same
+//				if (ssn.getSubroutineStmt().getSubroutinePars().size() == types.size()) {
+//					result.add(ssn);
+//				}
+//			}
+//			else if (types.size() == 0) {
+//				//no params				
+//				result.add(ssn);				
+//			}
+//				
+//			
+//		}
+//		
+//		return result;
+//		
+//	}
 	
 	public static String formalParam(ASTSubroutineSubprogramNode node, Map<String, Object> params) {
 		
@@ -241,6 +347,10 @@ public class CodeQuery {
 		return node.getSubroutineStmt().getSubroutinePars().get(idx).getVariableName().getText();		
 	}
 	
+	
+	public static String uses(IFortranAST ast, Map<String, Object> params) {
+		return uses((ASTModuleNode) ast.getRoot().getProgramUnitList().get(0), params);
+	}
 	
 	public static String uses(ASTModuleNode node, Map<String, Object> params) {
 		
@@ -259,7 +369,9 @@ public class CodeQuery {
 						}
 					}
 				}
-			}			
+				//TODO: if we get here, the entity might still be imported, 
+				//just not listed in the only clause
+			}
 		}
 		
 		return null;
@@ -629,15 +741,80 @@ public class CodeQuery {
 		}
 	}
 	
-	public static Set<ASTCallStmtNode> call(IASTNode node, Map<String, Object> params) {
+	//public static Pattern P_CALLSIG = Pattern.compile("((?:#?\\w+)|(?:\\*))(\\(((?:((\\w+)\\s*=\\s*)?(\\s*(#?\\w+))?,?\\s*)*)\\))?");
+	public static Pattern P_CALLSIG = Pattern.compile("((?:(?:#(?:../)*)?\\w+)|(?:\\*))(\\(((?:((\\w+)\\s*=\\s*)?(\\s*(#?\\w+))?,?\\s*)*)\\))?");
+	public static Pattern P_CALLARG = Pattern.compile("((\\w+)\\s*=\\s*)?(#?\\w+)");
+	
+	//out[0] --> list of vars (may be null)
+	//out[1] --> list of keywords (may be null)
+	public static String parseCallSig(String callSig, List<String> out[]) {
 		
-		final String subroutineName = (String) params.get("call");
+		Matcher match = P_CALLSIG.matcher(callSig);
 		
-		HashSet<ASTCallStmtNode> result = new HashSet<ASTCallStmtNode>();
+		if (!match.matches()) {
+			throw new RuntimeException("Illegal call signature pattern: " + callSig);
+		}
 		
-		for (ASTCallStmtNode csn : node.findAll(ASTCallStmtNode.class)) {
+//		for (int i = 0; i <= match.groupCount(); i++) {
+//			System.out.println("Group (" + i + ") --> " + match.group(i));
+//		}
+//		Group (0) --> ESMF_MethodAdd(#gcomp, #label, #userRoutine)
+//		Group (1) --> ESMF_MethodAdd
+//		Group (2) --> (#gcomp, #label, #userRoutine)
+//		Group (3) --> #gcomp, #label, #userRoutine
+//		Group (4) --> null
+//		Group (5) --> null
+//		Group (6) --> #userRoutine
+//		Group (7) --> #userRoutine
+		
+		String subroutineName = match.group(1);
+					
+		//if group 2 is null, then no argument pattern is specified
+		//so accept any number of arguments
+		if (match.group(2) != null) {
+			
+			Matcher argMatcher = P_CALLARG.matcher(match.group(3));
+		
+			out[0] = new ArrayList<String>();
+			out[1] = new ArrayList<String>();
+				
+			while (argMatcher.find()) {
+				out[1].add(argMatcher.group(2));
+				out[0].add(argMatcher.group(3));
+			}
+		}
+		
+		return subroutineName;
+		
+	}
+	
+	public static Map<ASTCallStmtNode, Map<String,String>> call(IASTNode node, Map<String, Object> params) {
+			
+		String callSig = (String) params.get("call");
+		
+		List<String> vars = null;
+		List<String> keywords = null;
+		@SuppressWarnings("unchecked")
+		List<String> varsAndKeywords[] = new List[] {null, null};
+		
+		final String subroutineName = parseCallSig(callSig, varsAndKeywords);
+		vars = varsAndKeywords[0];
+		keywords = varsAndKeywords[1];
+		
+		Map<ASTCallStmtNode, Map<String,String>> result = new HashMap<ASTCallStmtNode, Map<String, String>>();
+		
+		csnloop : for (ASTCallStmtNode csn : node.findAll(ASTCallStmtNode.class)) {
+			
+			final Map<String,String> metavariableMap = new HashMap<String, String>();			
 			
 			//System.out.println("Examining subroutine: " + csn.getSubroutineName()); 
+			//TODO: decide the semantics of this code query
+			//does it check for the literal name provided or does it try to resolve?
+			//could introduce two different queries:
+			// call: "NUOPC_Blah()" --> resolves NUOPC_Blah as far as possible
+			// callLiteral: "NUOPC_Blah()" --> looks for NUOPC_Blah in the code
+			
+			/*
 			List<Definition> defs = csn.getSubroutineName().resolveBinding();
 			
 			//find name before rename
@@ -648,23 +825,53 @@ public class CodeQuery {
 					@Override
 					public Boolean ifFunctionType(String name, FunctionType functionType) {
 						//System.out.println("\tExamining function: " + name);
-						if (name.equalsIgnoreCase(subroutineName)) {
+						if (subroutineName.equals("*")) {
+							return true;
+						}
+						else if (subroutineName.startsWith("#")) {
+							//match name as metavariable
+							metavariableMap.put(subroutineName, name);
+						}
+						else if (name.equalsIgnoreCase(subroutineName)) {
 							return true;							
 						}
 						return false;
 					}
 				});				
 				
-				if (found) {
-					result.add(csn);
+				if (!found) {
+					continue;
 				}
 			}
+			*/
 			// no definition - just check for match
-			else if (csn.getSubroutineName().getText().equalsIgnoreCase(subroutineName)) {
+			if (subroutineName.startsWith("#")) {
+				metavariableMap.put(subroutineName, csn.getSubroutineName().getText());
+			}
+			else if (!subroutineName.equals("*") && !csn.getSubroutineName().getText().equalsIgnoreCase(subroutineName)) {
 				//System.out.println("\tNo defs found, comparing subroutine names");
-				result.add(csn);	
+				continue;
 			}
 			
+			
+			//deal with arguments now
+			if (vars != null) {
+				if (vars.size() != csn.getArgList().size()) continue;
+				
+				//TODO: fix so order of keyword arguments is insignificant
+				for (int i = 0; i < csn.getArgList().size(); i++) {
+					ASTSubroutineArgNode san = csn.getArgList().get(i);
+					if (keywords.get(i) != null && (san.getName() == null || !san.getName().getText().equalsIgnoreCase(keywords.get(i)))) {
+						continue csnloop;
+					}
+					else if (vars.get(i).startsWith("#")) {
+						metavariableMap.put(vars.get(i), propagateValOrSymbol(san.getExpr()));
+					}				
+				}
+			}
+			
+			//everything matched, so add to result
+			result.put(csn, metavariableMap);
 		}
 		return result;
 	}

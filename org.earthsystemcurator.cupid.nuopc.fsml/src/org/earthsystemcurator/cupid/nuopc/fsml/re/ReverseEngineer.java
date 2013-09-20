@@ -8,11 +8,13 @@ import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Set;
+import java.util.regex.Matcher;
 
 import org.earthsystemcurator.cupid.nuopc.fsml.nuopc.NUOPCApplication;
 import org.earthsystemcurator.cupid.nuopc.fsml.nuopc.NUOPCModel;
 import org.earthsystemcurator.cupid.nuopc.fsml.nuopc.NUOPCFactory;
 import org.earthsystemcurator.cupid.nuopc.fsml.util.CodeQuery;
+import org.earthsystemcurator.cupid.nuopc.fsml.util.EcoreUtils;
 import org.earthsystemcurator.cupid.nuopc.fsml.util.Regex;
 import org.eclipse.core.resources.IFile;
 import org.eclipse.emf.common.util.EList;
@@ -137,9 +139,15 @@ public class ReverseEngineer {
 				String methodName = (String) keywordMap.keySet().toArray()[0];
 				
 				//check for metavariables that can be populated
+				
+				
+				
+							
 				for (Entry<String, Object> entry : keywordMap.entrySet()) {
 					if (entry.getValue() instanceof String) {
 						String val = (String) entry.getValue();
+						
+						/*
 						if (val.startsWith("#")) {
 							//replace metavariable with value from model
 							System.out.println("Metavariable: " + val);
@@ -150,8 +158,33 @@ public class ReverseEngineer {
 								entry.setValue(metaval);
 							}
 						}
+						*/
+						Matcher match = CodeQuery.P_METAVAR.matcher(val);
+						while (match.find()) {
+							String metavar = match.group().substring(1);  //removes the #
+							int parents = 0;
+							while (metavar.startsWith("../")) {
+								parents++;
+								metavar = metavar.substring(3);
+							}
+							if (parents >= 1) {
+								EObject elemToCheck = modelElem;
+								while (parents > 1) {
+									//elemToCheck = EcoreUtils.eGetSFValue("parent", elemToCheck, null);
+									elemToCheck = elemToCheck.eContainer();
+									parents--;
+								}
+								String replaceVal = EcoreUtils.eGetSFValue(metavar, elemToCheck, null);
+								if (replaceVal != null) {
+									System.out.println("Replacing metavariable: " + match.group() + " with val: " + replaceVal);
+									entry.setValue(val.replaceAll(match.group(), replaceVal));
+								}
+							}
+						}
+						
 					}
-				}				
+				}
+								
 											
 				//find method that implements code query
 				Method method = null;
@@ -180,7 +213,8 @@ public class ReverseEngineer {
 						method.getReturnType().isPrimitive()) {
 						modelElem.eSet(sf, result);
 					}
-					else if (method.getReturnType() == Set.class) {
+					else if (method.getReturnType() == Set.class ||
+							 method.getReturnType() == Map.class) {
 												
 						//do we have a set of primitives?
 						if (sf.getEType().equals(EcoreFactory.eINSTANCE.getEcorePackage().getEString())) {
@@ -199,12 +233,35 @@ public class ReverseEngineer {
 						//result is a set of objects - either IASTNodes or IFortranASTs
 						else {
 							
-							Set<Object> resultSet = (Set<Object>) result;
+							Set<Object> resultSet = null;
+							if (result instanceof Map) {
+								resultSet = ((Map) result).keySet();
+							}
+							else {
+								resultSet = (Set<Object>) result;
+							}
 							
 							for (Object newFortranElem : resultSet) {
 								
 								EObject newModelElem = NUOPCFactory.eINSTANCE.create((EClass) sf.getEType());
 								EObject newModelElemRet = null;
+								
+								//TODO: work on precedence between metavariables and explicit sub-mappings
+								//populate attributes based on metavariables
+								if (result instanceof Map) {
+									Map<String,String> metavariableMap = (Map<String,String>) ((Map) result).get(newFortranElem);
+									for (Entry<String,String> mve : metavariableMap.entrySet()) {
+										String attribName = mve.getKey().substring(1);
+										EStructuralFeature attribSF = newModelElem.eClass().getEStructuralFeature(attribName);
+										if (attribSF != null) {
+											System.out.println("Metavariable - setting feature: " + attribName + " to " + mve.getValue());
+											newModelElem.eSet(attribSF, mve.getValue());
+										}
+										else {
+											System.out.println("Metavariable - feature not found: " + attribName);
+										}
+									}
+								}
 								
 								// set up parent relationship for references (may be removed later)									
 								if (sf.isMany()) {

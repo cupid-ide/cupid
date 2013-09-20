@@ -6,6 +6,7 @@ import org.earthsystemcurator.cupid.nuopc.fsml.nuopc.AdvertisesExportField;
 import org.earthsystemcurator.cupid.nuopc.fsml.nuopc.AdvertisesImportField;
 import org.earthsystemcurator.cupid.nuopc.fsml.nuopc.AttachesMethod;
 import org.earthsystemcurator.cupid.nuopc.fsml.nuopc.AttachesModelAdvance;
+import org.earthsystemcurator.cupid.nuopc.fsml.nuopc.CallsGenericSetServices;
 import org.earthsystemcurator.cupid.nuopc.fsml.nuopc.GetsInternalState;
 import org.earthsystemcurator.cupid.nuopc.fsml.nuopc.ModelAdvance;
 import org.earthsystemcurator.cupid.nuopc.fsml.nuopc.ModelImplementsInitP1;
@@ -50,6 +51,13 @@ public class NUOPCPackageImpl extends EPackageImpl implements NUOPCPackage {
 	 * @generated
 	 */
 	private EClass modelImplementsSetServicesEClass = null;
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	private EClass callsGenericSetServicesEClass = null;
 
 	/**
 	 * <!-- begin-user-doc -->
@@ -247,7 +255,7 @@ public class NUOPCPackageImpl extends EPackageImpl implements NUOPCPackage {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EAttribute getNUOPCModel_UsesAllImports() {
+	public EAttribute getNUOPCModel_ImportsGenericSS() {
 		return (EAttribute)nuopcModelEClass.getEStructuralFeatures().get(1);
 	}
 
@@ -346,8 +354,8 @@ public class NUOPCPackageImpl extends EPackageImpl implements NUOPCPackage {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EAttribute getModelImplementsSetServices_CallsGenericSetServices() {
-		return (EAttribute)modelImplementsSetServicesEClass.getEStructuralFeatures().get(4);
+	public EReference getModelImplementsSetServices_CallsGenericSetServices() {
+		return (EReference)modelImplementsSetServicesEClass.getEStructuralFeatures().get(4);
 	}
 
 	/**
@@ -355,7 +363,7 @@ public class NUOPCPackageImpl extends EPackageImpl implements NUOPCPackage {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EAttribute getModelImplementsSetServices_CallsSetEntryPointPhase1() {
+	public EAttribute getModelImplementsSetServices_CallsGenericSetServices_OLD() {
 		return (EAttribute)modelImplementsSetServicesEClass.getEStructuralFeatures().get(5);
 	}
 
@@ -364,7 +372,7 @@ public class NUOPCPackageImpl extends EPackageImpl implements NUOPCPackage {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EAttribute getModelImplementsSetServices_CallsSetEntryPointPhase2() {
+	public EAttribute getModelImplementsSetServices_CallsSetEntryPointPhase1() {
 		return (EAttribute)modelImplementsSetServicesEClass.getEStructuralFeatures().get(6);
 	}
 
@@ -373,8 +381,44 @@ public class NUOPCPackageImpl extends EPackageImpl implements NUOPCPackage {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	public EAttribute getModelImplementsSetServices_CallsSetEntryPointPhase2() {
+		return (EAttribute)modelImplementsSetServicesEClass.getEStructuralFeatures().get(7);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
 	public EReference getModelImplementsSetServices_AttachesModelAdvance() {
-		return (EReference)modelImplementsSetServicesEClass.getEStructuralFeatures().get(7);
+		return (EReference)modelImplementsSetServicesEClass.getEStructuralFeatures().get(8);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EClass getCallsGenericSetServices() {
+		return callsGenericSetServicesEClass;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EAttribute getCallsGenericSetServices_Gcomp() {
+		return (EAttribute)callsGenericSetServicesEClass.getEStructuralFeatures().get(0);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EAttribute getCallsGenericSetServices_Rc() {
+		return (EAttribute)callsGenericSetServicesEClass.getEStructuralFeatures().get(1);
 	}
 
 	/**
@@ -1118,7 +1162,7 @@ public class NUOPCPackageImpl extends EPackageImpl implements NUOPCPackage {
 		// Create classes and their features
 		nuopcModelEClass = createEClass(NUOPC_MODEL);
 		createEAttribute(nuopcModelEClass, NUOPC_MODEL__NAME);
-		createEAttribute(nuopcModelEClass, NUOPC_MODEL__USES_ALL_IMPORTS);
+		createEAttribute(nuopcModelEClass, NUOPC_MODEL__IMPORTS_GENERIC_SS);
 		createEAttribute(nuopcModelEClass, NUOPC_MODEL__SINGLE_PUBLIC_SUBROUTINE);
 		createEReference(nuopcModelEClass, NUOPC_MODEL__IMPLEMENTS_SET_SERVICES);
 		createEReference(nuopcModelEClass, NUOPC_MODEL__IMPLEMENTS_INIT_P1);
@@ -1130,10 +1174,15 @@ public class NUOPCPackageImpl extends EPackageImpl implements NUOPCPackage {
 		createEAttribute(modelImplementsSetServicesEClass, MODEL_IMPLEMENTS_SET_SERVICES__NAME);
 		createEAttribute(modelImplementsSetServicesEClass, MODEL_IMPLEMENTS_SET_SERVICES__PARAM_GCOMP);
 		createEAttribute(modelImplementsSetServicesEClass, MODEL_IMPLEMENTS_SET_SERVICES__PARAM_RC);
-		createEAttribute(modelImplementsSetServicesEClass, MODEL_IMPLEMENTS_SET_SERVICES__CALLS_GENERIC_SET_SERVICES);
+		createEReference(modelImplementsSetServicesEClass, MODEL_IMPLEMENTS_SET_SERVICES__CALLS_GENERIC_SET_SERVICES);
+		createEAttribute(modelImplementsSetServicesEClass, MODEL_IMPLEMENTS_SET_SERVICES__CALLS_GENERIC_SET_SERVICES_OLD);
 		createEAttribute(modelImplementsSetServicesEClass, MODEL_IMPLEMENTS_SET_SERVICES__CALLS_SET_ENTRY_POINT_PHASE1);
 		createEAttribute(modelImplementsSetServicesEClass, MODEL_IMPLEMENTS_SET_SERVICES__CALLS_SET_ENTRY_POINT_PHASE2);
 		createEReference(modelImplementsSetServicesEClass, MODEL_IMPLEMENTS_SET_SERVICES__ATTACHES_MODEL_ADVANCE);
+
+		callsGenericSetServicesEClass = createEClass(CALLS_GENERIC_SET_SERVICES);
+		createEAttribute(callsGenericSetServicesEClass, CALLS_GENERIC_SET_SERVICES__GCOMP);
+		createEAttribute(callsGenericSetServicesEClass, CALLS_GENERIC_SET_SERVICES__RC);
 
 		modelImplementsInitP1EClass = createEClass(MODEL_IMPLEMENTS_INIT_P1);
 		createEAttribute(modelImplementsInitP1EClass, MODEL_IMPLEMENTS_INIT_P1__NAME);
@@ -1263,11 +1312,11 @@ public class NUOPCPackageImpl extends EPackageImpl implements NUOPCPackage {
 		// Initialize classes and features; add operations and parameters
 		initEClass(nuopcModelEClass, NUOPCModel.class, "NUOPCModel", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 		initEAttribute(getNUOPCModel_Name(), ecorePackage.getEString(), "name", "ModelDefault", 1, 1, NUOPCModel.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-		initEAttribute(getNUOPCModel_UsesAllImports(), ecorePackage.getEBoolean(), "usesAllImports", null, 1, 1, NUOPCModel.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEAttribute(getNUOPCModel_ImportsGenericSS(), ecorePackage.getEString(), "importsGenericSS", null, 0, 1, NUOPCModel.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEAttribute(getNUOPCModel_SinglePublicSubroutine(), ecorePackage.getEString(), "singlePublicSubroutine", null, 0, 1, NUOPCModel.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEReference(getNUOPCModel_ImplementsSetServices(), this.getModelImplementsSetServices(), this.getModelImplementsSetServices_Parent(), "implementsSetServices", null, 0, 1, NUOPCModel.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		getNUOPCModel_ImplementsSetServices().getEKeys().add(this.getModelImplementsSetServices_Name());
-		initEReference(getNUOPCModel_ImplementsInitP1(), this.getModelImplementsInitP1(), null, "implementsInitP1", null, 0, 1, NUOPCModel.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEReference(getNUOPCModel_ImplementsInitP1(), this.getModelImplementsInitP1(), null, "implementsInitP1", null, 0, -1, NUOPCModel.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEReference(getNUOPCModel_ImplementsInitP2(), this.getModelImplementsInitP2(), null, "implementsInitP2", null, 0, 1, NUOPCModel.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEReference(getNUOPCModel_ImplementsModelAdvance(), this.getModelAdvance(), this.getModelAdvance_Parent(), "implementsModelAdvance", null, 0, -1, NUOPCModel.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, !IS_ORDERED);
 
@@ -1276,10 +1325,15 @@ public class NUOPCPackageImpl extends EPackageImpl implements NUOPCPackage {
 		initEAttribute(getModelImplementsSetServices_Name(), ecorePackage.getEString(), "name", "SetServicesDefault", 1, 1, ModelImplementsSetServices.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEAttribute(getModelImplementsSetServices_Param_gcomp(), ecorePackage.getEString(), "param_gcomp", "gcompDefault", 0, 1, ModelImplementsSetServices.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEAttribute(getModelImplementsSetServices_Param_rc(), ecorePackage.getEString(), "param_rc", "rcDefault", 0, 1, ModelImplementsSetServices.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-		initEAttribute(getModelImplementsSetServices_CallsGenericSetServices(), ecorePackage.getEBoolean(), "callsGenericSetServices", null, 1, 1, ModelImplementsSetServices.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEReference(getModelImplementsSetServices_CallsGenericSetServices(), this.getCallsGenericSetServices(), null, "callsGenericSetServices", null, 0, 1, ModelImplementsSetServices.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEAttribute(getModelImplementsSetServices_CallsGenericSetServices_OLD(), ecorePackage.getEBoolean(), "callsGenericSetServices_OLD", null, 1, 1, ModelImplementsSetServices.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEAttribute(getModelImplementsSetServices_CallsSetEntryPointPhase1(), ecorePackage.getEBoolean(), "callsSetEntryPointPhase1", null, 1, 1, ModelImplementsSetServices.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEAttribute(getModelImplementsSetServices_CallsSetEntryPointPhase2(), ecorePackage.getEBoolean(), "callsSetEntryPointPhase2", null, 1, 1, ModelImplementsSetServices.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEReference(getModelImplementsSetServices_AttachesModelAdvance(), this.getAttachesModelAdvance(), this.getAttachesModelAdvance_Parent(), "attachesModelAdvance", null, 0, -1, ModelImplementsSetServices.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, !IS_ORDERED);
+
+		initEClass(callsGenericSetServicesEClass, CallsGenericSetServices.class, "CallsGenericSetServices", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+		initEAttribute(getCallsGenericSetServices_Gcomp(), ecorePackage.getEString(), "gcomp", null, 0, 1, CallsGenericSetServices.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEAttribute(getCallsGenericSetServices_Rc(), ecorePackage.getEString(), "rc", null, 0, 1, CallsGenericSetServices.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
 		initEClass(modelImplementsInitP1EClass, ModelImplementsInitP1.class, "ModelImplementsInitP1", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 		initEAttribute(getModelImplementsInitP1_Name(), ecorePackage.getEString(), "name", null, 1, 1, ModelImplementsInitP1.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
@@ -1361,9 +1415,9 @@ public class NUOPCPackageImpl extends EPackageImpl implements NUOPCPackage {
 
 		initEClass(nuopcApplicationEClass, NUOPCApplication.class, "NUOPCApplication", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 		initEAttribute(getNUOPCApplication_Name(), ecorePackage.getEString(), "name", null, 0, 1, NUOPCApplication.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-		initEReference(getNUOPCApplication_NuopcDriver(), this.getNUOPCDriver(), null, "nuopcDriver", null, 0, -1, NUOPCApplication.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-		initEReference(getNUOPCApplication_NuopcModel(), this.getNUOPCModel(), null, "nuopcModel", null, 0, -1, NUOPCApplication.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-		initEReference(getNUOPCApplication_NuopcDriverAtmOcn(), this.getNUOPCDriverAtmOcn(), null, "nuopcDriverAtmOcn", null, 0, -1, NUOPCApplication.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEReference(getNUOPCApplication_NuopcDriver(), this.getNUOPCDriver(), null, "nuopcDriver", null, 0, -1, NUOPCApplication.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, !IS_ORDERED);
+		initEReference(getNUOPCApplication_NuopcModel(), this.getNUOPCModel(), null, "nuopcModel", null, 0, -1, NUOPCApplication.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, !IS_ORDERED);
+		initEReference(getNUOPCApplication_NuopcDriverAtmOcn(), this.getNUOPCDriverAtmOcn(), null, "nuopcDriverAtmOcn", null, 0, -1, NUOPCApplication.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, !IS_ORDERED);
 
 		initEClass(nuopcDriverAtmOcnEClass, NUOPCDriverAtmOcn.class, "NUOPCDriverAtmOcn", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 		initEAttribute(getNUOPCDriverAtmOcn_Name(), ecorePackage.getEString(), "name", "ModelDefault", 1, 1, NUOPCDriverAtmOcn.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
@@ -1427,6 +1481,12 @@ public class NUOPCPackageImpl extends EPackageImpl implements NUOPCPackage {
 			 "mapping", "moduleName"
 		   });		
 		addAnnotation
+		  (getNUOPCModel_ImportsGenericSS(), 
+		   source, 
+		   new String[] {
+			 "mapping", "uses: \"NUOPC_Model\" entity: \"routine_SetServices\""
+		   });		
+		addAnnotation
 		  (getNUOPCModel_SinglePublicSubroutine(), 
 		   source, 
 		   new String[] {
@@ -1437,20 +1497,20 @@ public class NUOPCPackageImpl extends EPackageImpl implements NUOPCPackage {
 		  (getNUOPCModel_ImplementsSetServices(), 
 		   source, 
 		   new String[] {
-			 "mapping", "subroutine: \"*(type(ESMF_GridComp), integer)\"",
+			 "mapping", "subroutine: \"#name(inout type(ESMF_GridComp) #param_gcomp, out integer #param_rc)\"",
 			 "essential", "true"
 		   });		
 		addAnnotation
 		  (getNUOPCModel_ImplementsInitP1(), 
 		   source, 
 		   new String[] {
-			 "mapping", "subroutine: \"*(type(ESMF_GridComp), type(ESMF_State), type(ESMF_State), type(ESMF_Clock), integer)\""
+			 "mapping", "subroutine: \"#name(type(ESMF_GridComp), type(ESMF_State) #importParam, type(ESMF_State) #exportParam, \ttype(ESMF_Clock), integer)\""
 		   });		
 		addAnnotation
 		  (getNUOPCModel_ImplementsInitP2(), 
 		   source, 
 		   new String[] {
-			 "mapping", "subroutine: \"*(type(ESMF_GridComp), type(ESMF_State), type(ESMF_State), type(ESMF_Clock), integer)\""
+			 "mapping", "subroutine: \"#name(type(ESMF_GridComp), type(ESMF_State) #importParam, type(ESMF_State) #exportParam, type(ESMF_Clock), integer)\""
 		   });		
 		addAnnotation
 		  (getNUOPCModel_ImplementsModelAdvance(), 
@@ -1462,32 +1522,39 @@ public class NUOPCPackageImpl extends EPackageImpl implements NUOPCPackage {
 		  (modelImplementsSetServicesEClass, 
 		   source, 
 		   new String[] {
-			 "mapping", "subroutine: \"*(type(ESMF_GridComp), integer)\""
+			 "mapping", "subroutine: \"#name(inout type(ESMF_GridComp) #param_gcomp, out integer #param_rc)\""
 		   });		
 		addAnnotation
 		  (getModelImplementsSetServices_Name(), 
 		   source, 
 		   new String[] {
-			 "mapping", "subroutineName"
+			 "mappingX", "subroutineName"
 		   });		
 		addAnnotation
 		  (getModelImplementsSetServices_Param_gcomp(), 
 		   source, 
 		   new String[] {
-			 "mapping", "formalParam: 1"
+			 "mappingX", "formalParam: 1"
 		   });		
 		addAnnotation
 		  (getModelImplementsSetServices_Param_rc(), 
 		   source, 
 		   new String[] {
-			 "mapping", "formalParam: 2"
+			 "mappingX", "formalParam: 2"
 		   });		
 		addAnnotation
 		  (getModelImplementsSetServices_CallsGenericSetServices(), 
 		   source, 
 		   new String[] {
+			 "mapping", "call: \"#../../importsGenericSS(#gcomp, rc=#rc)\"",
+			 "essential", "false"
+		   });		
+		addAnnotation
+		  (getModelImplementsSetServices_CallsGenericSetServices_OLD(), 
+		   source, 
+		   new String[] {
 			 "mapping", "calls: \"routine_SetServices\" definedInModule: \"NUOPC_Model\"",
-			 "essential", "true"
+			 "essential", "false"
 		   });		
 		addAnnotation
 		  (getModelImplementsSetServices_CallsSetEntryPointPhase1(), 
@@ -1505,37 +1572,37 @@ public class NUOPCPackageImpl extends EPackageImpl implements NUOPCPackage {
 		  (getModelImplementsSetServices_AttachesModelAdvance(), 
 		   source, 
 		   new String[] {
-			 "mapping", "call: \"ESMF_MethodAdd\""
+			 "mapping", "call: \"ESMF_MethodAdd(#gcomp, #label, #userRoutine, #rc)\""
 		   });		
 		addAnnotation
 		  (getModelImplementsInitP1_Name(), 
 		   source, 
 		   new String[] {
-			 "mapping", "subroutineName"
+			 "mappingX", "subroutineName"
 		   });		
 		addAnnotation
 		  (getModelImplementsInitP1_ImportParam(), 
 		   source, 
 		   new String[] {
-			 "mapping", "formalParam: 2"
+			 "mappingX", "formalParam: 2"
 		   });		
 		addAnnotation
 		  (getModelImplementsInitP1_ExportParam(), 
 		   source, 
 		   new String[] {
-			 "mapping", "formalParam: 3"
+			 "mappingX", "formalParam: 3"
 		   });		
 		addAnnotation
 		  (getModelImplementsInitP1_AdvertisesImportField(), 
 		   source, 
 		   new String[] {
-			 "mapping", "call: \"NUOPC_StateAdvertiseField\""
+			 "mapping", "call: \"NUOPC_StateAdvertiseField(#addsToState, StandardName=#standardName, #rc)\""
 		   });		
 		addAnnotation
 		  (getModelImplementsInitP1_AdvertisesExportField(), 
 		   source, 
 		   new String[] {
-			 "mapping", "call: \"NUOPC_StateAdvertiseField\""
+			 "mapping", "call: \"NUOPC_StateAdvertiseField(#addsToState, StandardName=#standardName, #rc)\""
 		   });		
 		addAnnotation
 		  (getModelImplementsInitP1_AdvertisesAtLeastOneField(), 
@@ -1544,40 +1611,34 @@ public class NUOPCPackageImpl extends EPackageImpl implements NUOPCPackage {
 			 "essential", "true"
 		   });			
 		addAnnotation
-		  (modelImplementsInitP2EClass, 
-		   source, 
-		   new String[] {
-			 "mapping", "subroutine: \"*(type(ESMF_GridComp), type(ESMF_State), type(ESMF_State), type(ESMF_Clock), integer)\""
-		   });		
-		addAnnotation
 		  (getModelImplementsInitP2_Name(), 
 		   source, 
 		   new String[] {
-			 "mapping", "subroutineName"
+			 "mappingX", "subroutineName"
 		   });		
 		addAnnotation
 		  (getModelImplementsInitP2_ImportParam(), 
 		   source, 
 		   new String[] {
-			 "mapping", "formalParam: 2"
+			 "mappingX", "formalParam: 2"
 		   });		
 		addAnnotation
 		  (getModelImplementsInitP2_ExportParam(), 
 		   source, 
 		   new String[] {
-			 "mapping", "formalParam: 3"
+			 "mappingX", "formalParam: 3"
 		   });		
 		addAnnotation
 		  (getModelImplementsInitP2_RealizesImportField(), 
 		   source, 
 		   new String[] {
-			 "mapping", "call: \"NUOPC_StateRealizeField\""
+			 "mapping", "call: \"NUOPC_StateRealizeField(#realizedInState, field=#field, rc=#rc)\""
 		   });		
 		addAnnotation
 		  (getModelImplementsInitP2_RealizesExportField(), 
 		   source, 
 		   new String[] {
-			 "mapping", "call: \"NUOPC_StateRealizeField\""
+			 "mapping", "call: \"NUOPC_StateRealizeField(#realizedInState, field=#field, rc=#rc)\""
 		   });		
 		addAnnotation
 		  (getModelImplementsInitP2_RealizesAtLeastOneField(), 
@@ -1589,7 +1650,7 @@ public class NUOPCPackageImpl extends EPackageImpl implements NUOPCPackage {
 		  (getAdvertisesImportField_AddsToState(), 
 		   source, 
 		   new String[] {
-			 "mapping", "argByIndex: 1"
+			 "mappingX", "argByIndex: 1"
 		   });		
 		addAnnotation
 		  (getAdvertisesImportField_AddsToImportState(), 
@@ -1601,13 +1662,13 @@ public class NUOPCPackageImpl extends EPackageImpl implements NUOPCPackage {
 		  (getAdvertisesImportField_StandardName(), 
 		   source, 
 		   new String[] {
-			 "mapping", "argByKeyword: \"StandardName\""
+			 "mappingX", "argByKeyword: \"StandardName\""
 		   });		
 		addAnnotation
 		  (getAdvertisesExportField_AddsToState(), 
 		   source, 
 		   new String[] {
-			 "mapping", "argByIndex: 1"
+			 "mappingX", "argByIndex: 1"
 		   });		
 		addAnnotation
 		  (getAdvertisesExportField_AddsToExportState(), 
@@ -1619,7 +1680,7 @@ public class NUOPCPackageImpl extends EPackageImpl implements NUOPCPackage {
 		  (getAdvertisesExportField_StandardName(), 
 		   source, 
 		   new String[] {
-			 "mapping", "argByKeyword: \"StandardName\""
+			 "mappingX", "argByKeyword: \"StandardName\""
 		   });		
 		addAnnotation
 		  (realizesImportFieldEClass, 
@@ -1631,7 +1692,7 @@ public class NUOPCPackageImpl extends EPackageImpl implements NUOPCPackage {
 		  (getRealizesImportField_RealizedInState(), 
 		   source, 
 		   new String[] {
-			 "mapping", "argByIndex: 1"
+			 "mappingX", "argByIndex: 1"
 		   });		
 		addAnnotation
 		  (getRealizesImportField_RealizedInImportState(), 
@@ -1643,13 +1704,13 @@ public class NUOPCPackageImpl extends EPackageImpl implements NUOPCPackage {
 		  (getRealizesImportField_Field(), 
 		   source, 
 		   new String[] {
-			 "mapping", "argByIndex: 2"
+			 "mappingX", "argByIndex: 2"
 		   });		
 		addAnnotation
 		  (getRealizesExportField_RealizedInState(), 
 		   source, 
 		   new String[] {
-			 "mapping", "argByIndex: 1"
+			 "mappingX", "argByIndex: 1"
 		   });		
 		addAnnotation
 		  (getRealizesExportField_RealizedInExportState(), 
@@ -1661,7 +1722,7 @@ public class NUOPCPackageImpl extends EPackageImpl implements NUOPCPackage {
 		  (getRealizesExportField_Field(), 
 		   source, 
 		   new String[] {
-			 "mapping", "argByIndex: 2"
+			 "mappingX", "argByIndex: 2"
 		   });		
 		addAnnotation
 		  (attachesModelAdvanceEClass, 
@@ -1673,13 +1734,13 @@ public class NUOPCPackageImpl extends EPackageImpl implements NUOPCPackage {
 		  (getAttachesModelAdvance_Label(), 
 		   source, 
 		   new String[] {
-			 "mapping", "argByIndex: 2"
+			 "mappingX", "argByIndex: 2"
 		   });		
 		addAnnotation
 		  (getAttachesModelAdvance_UserRoutine(), 
 		   source, 
 		   new String[] {
-			 "mapping", "argByIndex: 3"
+			 "mappingX", "argByIndex: 3"
 		   });		
 		addAnnotation
 		  (getModelAdvance_Name(), 
@@ -1709,7 +1770,7 @@ public class NUOPCPackageImpl extends EPackageImpl implements NUOPCPackage {
 		  (getNUOPCDriver_ImplementsSetServices(), 
 		   source, 
 		   new String[] {
-			 "mapping", "subroutine: \"*(type(ESMF_GridComp), integer)\"",
+			 "mapping", "subroutine: \"#name(type(ESMF_GridComp) #param_gcomp, integer #param_rc)\"",
 			 "essential", "true"
 		   });		
 		addAnnotation
@@ -1719,28 +1780,22 @@ public class NUOPCPackageImpl extends EPackageImpl implements NUOPCPackage {
 			 "mapping", "subroutine: \"*(type(ESMF_GridComp), integer)\""
 		   });		
 		addAnnotation
-		  (nuopcDriver__ImplementsSetServicesEClass, 
-		   source, 
-		   new String[] {
-			 "mapping", "subroutine: \"*(type(ESMF_GridComp), integer)\""
-		   });		
-		addAnnotation
 		  (getNUOPCDriver__ImplementsSetServices_Name(), 
 		   source, 
 		   new String[] {
-			 "mapping", "subroutineName"
+			 "mappingX", "subroutineName"
 		   });		
 		addAnnotation
 		  (getNUOPCDriver__ImplementsSetServices_Param_gcomp(), 
 		   source, 
 		   new String[] {
-			 "mapping", "formalParam: 1"
+			 "mappingX", "formalParam: 1"
 		   });		
 		addAnnotation
 		  (getNUOPCDriver__ImplementsSetServices_Param_rc(), 
 		   source, 
 		   new String[] {
-			 "mapping", "formalParam: 2"
+			 "mappingX", "formalParam: 2"
 		   });		
 		addAnnotation
 		  (getNUOPCDriver__ImplementsSetServices_CallsGenericSetServices(), 
@@ -1868,13 +1923,13 @@ public class NUOPCPackageImpl extends EPackageImpl implements NUOPCPackage {
 	 * @generated
 	 */
 	protected void createOCLAnnotations() {
-		String source = "http://www.eclipse.org/emf/2002/Ecore/OCL";																								
+		String source = "http://www.eclipse.org/emf/2002/Ecore/OCL";																										
 		addAnnotation
 		  (getModelImplementsInitP1_AdvertisesAtLeastOneField(), 
 		   source, 
 		   new String[] {
 			 "derivation", "self.advertisesExportField->size() > 0 or self.advertisesImportField->size() > 0"
-		   });									
+		   });								
 		addAnnotation
 		  (getModelImplementsInitP2_RealizesAtLeastOneField(), 
 		   source, 
@@ -1910,7 +1965,7 @@ public class NUOPCPackageImpl extends EPackageImpl implements NUOPCPackage {
 		   source, 
 		   new String[] {
 			 "derivation", "self.parent.implementsSetServices.attachesModelAdvance.userRoutine = self.name"
-		   });																												
+		   });																											
 	}
 
 } //NUOPCPackageImpl

@@ -63,7 +63,7 @@ public interface NUOPCApplication extends EObject {
 	 * <!-- end-user-doc -->
 	 * @return the value of the '<em>Nuopc Driver</em>' containment reference list.
 	 * @see org.earthsystemcurator.cupid.nuopc.fsml.nuopc.NUOPCPackage#getNUOPCApplication_NuopcDriver()
-	 * @model containment="true"
+	 * @model containment="true" ordered="false"
 	 *        annotation="http://www.earthsystemcog.org/projects/nuopc mapping='module'"
 	 * @generated
 	 */
@@ -80,7 +80,7 @@ public interface NUOPCApplication extends EObject {
 	 * <!-- end-user-doc -->
 	 * @return the value of the '<em>Nuopc Model</em>' containment reference list.
 	 * @see org.earthsystemcurator.cupid.nuopc.fsml.nuopc.NUOPCPackage#getNUOPCApplication_NuopcModel()
-	 * @model containment="true"
+	 * @model containment="true" ordered="false"
 	 *        annotation="http://www.earthsystemcog.org/projects/nuopc mapping='module'"
 	 * @generated
 	 */
@@ -97,7 +97,7 @@ public interface NUOPCApplication extends EObject {
 	 * <!-- end-user-doc -->
 	 * @return the value of the '<em>Nuopc Driver Atm Ocn</em>' containment reference list.
 	 * @see org.earthsystemcurator.cupid.nuopc.fsml.nuopc.NUOPCPackage#getNUOPCApplication_NuopcDriverAtmOcn()
-	 * @model containment="true"
+	 * @model containment="true" ordered="false"
 	 *        annotation="http://www.earthsystemcog.org/projects/nuopc mapping='module'"
 	 * @generated
 	 */
