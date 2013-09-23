@@ -54,7 +54,7 @@ public class NUOPCModelImpl extends EObjectImpl implements NUOPCModel {
 	 * @generated
 	 * @ordered
 	 */
-	protected static final String NAME_EDEFAULT = "ModelDefault";
+	protected static final String NAME_EDEFAULT = "Model";
 
 	/**
 	 * The cached value of the '{@link #getName() <em>Name</em>}' attribute.
@@ -74,7 +74,7 @@ public class NUOPCModelImpl extends EObjectImpl implements NUOPCModel {
 	 * @generated
 	 * @ordered
 	 */
-	protected static final String IMPORTS_GENERIC_SS_EDEFAULT = null;
+	protected static final String IMPORTS_GENERIC_SS_EDEFAULT = "nuopcmodel_ss";
 
 	/**
 	 * The cached value of the '{@link #getImportsGenericSS() <em>Imports Generic SS</em>}' attribute.

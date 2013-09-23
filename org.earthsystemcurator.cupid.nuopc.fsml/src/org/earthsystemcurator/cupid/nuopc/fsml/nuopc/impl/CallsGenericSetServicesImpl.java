@@ -35,7 +35,7 @@ public class CallsGenericSetServicesImpl extends EObjectImpl implements CallsGen
 	 * @generated
 	 * @ordered
 	 */
-	protected static final String GCOMP_EDEFAULT = null;
+	protected static final String GCOMP_EDEFAULT = "gcomp";
 
 	/**
 	 * The cached value of the '{@link #getGcomp() <em>Gcomp</em>}' attribute.
@@ -55,7 +55,7 @@ public class CallsGenericSetServicesImpl extends EObjectImpl implements CallsGen
 	 * @generated
 	 * @ordered
 	 */
-	protected static final String RC_EDEFAULT = null;
+	protected static final String RC_EDEFAULT = "rc";
 
 	/**
 	 * The cached value of the '{@link #getRc() <em>Rc</em>}' attribute.

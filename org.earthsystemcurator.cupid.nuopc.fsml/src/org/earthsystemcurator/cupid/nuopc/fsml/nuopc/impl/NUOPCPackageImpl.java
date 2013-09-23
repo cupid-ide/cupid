@@ -1311,8 +1311,8 @@ public class NUOPCPackageImpl extends EPackageImpl implements NUOPCPackage {
 
 		// Initialize classes and features; add operations and parameters
 		initEClass(nuopcModelEClass, NUOPCModel.class, "NUOPCModel", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
-		initEAttribute(getNUOPCModel_Name(), ecorePackage.getEString(), "name", "ModelDefault", 1, 1, NUOPCModel.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-		initEAttribute(getNUOPCModel_ImportsGenericSS(), ecorePackage.getEString(), "importsGenericSS", null, 0, 1, NUOPCModel.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEAttribute(getNUOPCModel_Name(), ecorePackage.getEString(), "name", "Model", 1, 1, NUOPCModel.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEAttribute(getNUOPCModel_ImportsGenericSS(), ecorePackage.getEString(), "importsGenericSS", "nuopcmodel_ss", 0, 1, NUOPCModel.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEAttribute(getNUOPCModel_SinglePublicSubroutine(), ecorePackage.getEString(), "singlePublicSubroutine", null, 0, 1, NUOPCModel.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEReference(getNUOPCModel_ImplementsSetServices(), this.getModelImplementsSetServices(), this.getModelImplementsSetServices_Parent(), "implementsSetServices", null, 0, 1, NUOPCModel.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		getNUOPCModel_ImplementsSetServices().getEKeys().add(this.getModelImplementsSetServices_Name());
@@ -1322,9 +1322,9 @@ public class NUOPCPackageImpl extends EPackageImpl implements NUOPCPackage {
 
 		initEClass(modelImplementsSetServicesEClass, ModelImplementsSetServices.class, "ModelImplementsSetServices", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 		initEReference(getModelImplementsSetServices_Parent(), this.getNUOPCModel(), this.getNUOPCModel_ImplementsSetServices(), "parent", null, 1, 1, ModelImplementsSetServices.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-		initEAttribute(getModelImplementsSetServices_Name(), ecorePackage.getEString(), "name", "SetServicesDefault", 1, 1, ModelImplementsSetServices.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-		initEAttribute(getModelImplementsSetServices_Param_gcomp(), ecorePackage.getEString(), "param_gcomp", "gcompDefault", 0, 1, ModelImplementsSetServices.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-		initEAttribute(getModelImplementsSetServices_Param_rc(), ecorePackage.getEString(), "param_rc", "rcDefault", 0, 1, ModelImplementsSetServices.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEAttribute(getModelImplementsSetServices_Name(), ecorePackage.getEString(), "name", "SetServices", 1, 1, ModelImplementsSetServices.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEAttribute(getModelImplementsSetServices_Param_gcomp(), ecorePackage.getEString(), "param_gcomp", "gcomp", 0, 1, ModelImplementsSetServices.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEAttribute(getModelImplementsSetServices_Param_rc(), ecorePackage.getEString(), "param_rc", "rc", 0, 1, ModelImplementsSetServices.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEReference(getModelImplementsSetServices_CallsGenericSetServices(), this.getCallsGenericSetServices(), null, "callsGenericSetServices", null, 0, 1, ModelImplementsSetServices.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEAttribute(getModelImplementsSetServices_CallsGenericSetServices_OLD(), ecorePackage.getEBoolean(), "callsGenericSetServices_OLD", null, 1, 1, ModelImplementsSetServices.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEAttribute(getModelImplementsSetServices_CallsSetEntryPointPhase1(), ecorePackage.getEBoolean(), "callsSetEntryPointPhase1", null, 1, 1, ModelImplementsSetServices.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
@@ -1332,21 +1332,21 @@ public class NUOPCPackageImpl extends EPackageImpl implements NUOPCPackage {
 		initEReference(getModelImplementsSetServices_AttachesModelAdvance(), this.getAttachesModelAdvance(), this.getAttachesModelAdvance_Parent(), "attachesModelAdvance", null, 0, -1, ModelImplementsSetServices.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, !IS_ORDERED);
 
 		initEClass(callsGenericSetServicesEClass, CallsGenericSetServices.class, "CallsGenericSetServices", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
-		initEAttribute(getCallsGenericSetServices_Gcomp(), ecorePackage.getEString(), "gcomp", null, 0, 1, CallsGenericSetServices.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-		initEAttribute(getCallsGenericSetServices_Rc(), ecorePackage.getEString(), "rc", null, 0, 1, CallsGenericSetServices.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEAttribute(getCallsGenericSetServices_Gcomp(), ecorePackage.getEString(), "gcomp", "gcomp", 0, 1, CallsGenericSetServices.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEAttribute(getCallsGenericSetServices_Rc(), ecorePackage.getEString(), "rc", "rc", 0, 1, CallsGenericSetServices.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
 		initEClass(modelImplementsInitP1EClass, ModelImplementsInitP1.class, "ModelImplementsInitP1", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
-		initEAttribute(getModelImplementsInitP1_Name(), ecorePackage.getEString(), "name", null, 1, 1, ModelImplementsInitP1.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-		initEAttribute(getModelImplementsInitP1_ImportParam(), ecorePackage.getEString(), "importParam", null, 1, 1, ModelImplementsInitP1.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-		initEAttribute(getModelImplementsInitP1_ExportParam(), ecorePackage.getEString(), "exportParam", null, 1, 1, ModelImplementsInitP1.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEAttribute(getModelImplementsInitP1_Name(), ecorePackage.getEString(), "name", "InitP1", 1, 1, ModelImplementsInitP1.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEAttribute(getModelImplementsInitP1_ImportParam(), ecorePackage.getEString(), "importParam", "importState", 1, 1, ModelImplementsInitP1.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEAttribute(getModelImplementsInitP1_ExportParam(), ecorePackage.getEString(), "exportParam", "exportState", 1, 1, ModelImplementsInitP1.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEReference(getModelImplementsInitP1_AdvertisesImportField(), this.getAdvertisesImportField(), this.getAdvertisesImportField_Parent(), "advertisesImportField", null, 0, -1, ModelImplementsInitP1.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEReference(getModelImplementsInitP1_AdvertisesExportField(), this.getAdvertisesExportField(), this.getAdvertisesExportField_Parent(), "advertisesExportField", null, 0, -1, ModelImplementsInitP1.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEAttribute(getModelImplementsInitP1_AdvertisesAtLeastOneField(), ecorePackage.getEBoolean(), "advertisesAtLeastOneField", null, 0, 1, ModelImplementsInitP1.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, IS_DERIVED, IS_ORDERED);
 
 		initEClass(modelImplementsInitP2EClass, ModelImplementsInitP2.class, "ModelImplementsInitP2", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
-		initEAttribute(getModelImplementsInitP2_Name(), ecorePackage.getEString(), "name", null, 1, 1, ModelImplementsInitP2.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-		initEAttribute(getModelImplementsInitP2_ImportParam(), ecorePackage.getEString(), "importParam", null, 1, 1, ModelImplementsInitP2.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-		initEAttribute(getModelImplementsInitP2_ExportParam(), ecorePackage.getEString(), "exportParam", null, 1, 1, ModelImplementsInitP2.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEAttribute(getModelImplementsInitP2_Name(), ecorePackage.getEString(), "name", "InitP2", 1, 1, ModelImplementsInitP2.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEAttribute(getModelImplementsInitP2_ImportParam(), ecorePackage.getEString(), "importParam", "importState", 1, 1, ModelImplementsInitP2.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEAttribute(getModelImplementsInitP2_ExportParam(), ecorePackage.getEString(), "exportParam", "exportState", 1, 1, ModelImplementsInitP2.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEReference(getModelImplementsInitP2_RealizesImportField(), this.getRealizesImportField(), this.getRealizesImportField_Parent(), "realizesImportField", null, 0, -1, ModelImplementsInitP2.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEReference(getModelImplementsInitP2_RealizesExportField(), this.getRealizesExportField(), this.getRealizesExportField_Parent(), "realizesExportField", null, 0, -1, ModelImplementsInitP2.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEAttribute(getModelImplementsInitP2_RealizesAtLeastOneField(), ecorePackage.getEBoolean(), "realizesAtLeastOneField", null, 0, 1, ModelImplementsInitP2.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, IS_DERIVED, IS_ORDERED);
@@ -1547,7 +1547,7 @@ public class NUOPCPackageImpl extends EPackageImpl implements NUOPCPackage {
 		   source, 
 		   new String[] {
 			 "mapping", "call: \"#../../importsGenericSS(#gcomp, rc=#rc)\"",
-			 "essential", "false"
+			 "essential", "true"
 		   });		
 		addAnnotation
 		  (getModelImplementsSetServices_CallsGenericSetServices_OLD(), 
@@ -1572,7 +1572,7 @@ public class NUOPCPackageImpl extends EPackageImpl implements NUOPCPackage {
 		  (getModelImplementsSetServices_AttachesModelAdvance(), 
 		   source, 
 		   new String[] {
-			 "mapping", "call: \"ESMF_MethodAdd(#gcomp, #label, #userRoutine, #rc)\""
+			 "mappingX", "call: \"ESMF_MethodAdd(#gcomp, #label, #userRoutine, #rc)\""
 		   });		
 		addAnnotation
 		  (getModelImplementsInitP1_Name(), 

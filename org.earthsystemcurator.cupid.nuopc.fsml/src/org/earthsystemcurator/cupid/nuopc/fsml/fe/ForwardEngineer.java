@@ -51,6 +51,7 @@ import org.eclipse.emf.compare.merge.IMerger;
 import org.eclipse.emf.compare.scope.IComparisonScope;
 import org.eclipse.emf.compare.utils.UseIdentifiers;
 import org.eclipse.emf.ecore.EAnnotation;
+import org.eclipse.emf.ecore.EAttribute;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EReference;
@@ -62,6 +63,7 @@ import org.eclipse.photran.internal.core.parser.ASTModuleNameNode;
 import org.eclipse.photran.internal.core.parser.ASTModuleNode;
 import org.eclipse.photran.internal.core.parser.ASTModuleStmtNode;
 import org.eclipse.photran.internal.core.parser.ASTSubroutineSubprogramNode;
+import org.eclipse.photran.internal.core.parser.ASTUseStmtNode;
 import org.eclipse.photran.internal.core.parser.IASTNode;
 import org.eclipse.photran.internal.core.parser.IBodyConstruct;
 import org.eclipse.photran.internal.core.reindenter.Reindenter;
@@ -75,9 +77,13 @@ public class ForwardEngineer {
 	private Map<EObject, Object> revMappings;
 	private IMerger.Registry mergerRegistry = IMerger.RegistryImpl.createStandaloneInstance();
 	private IProject container;	
-	private Set<IFortranAST> astsToReindent = new HashSet<IFortranAST>();
+	//private Set<IFortranAST> astsToReindent = new HashSet<IFortranAST>();
 	
 	//private IFortranAST recentAST = null;
+	
+	public ForwardEngineer() {
+		//mergerRegistry.add(new CupidRefChangeMerger());
+	}
 	
 	public void setContainer(IProject container) {
 		this.container = container;
@@ -85,14 +91,21 @@ public class ForwardEngineer {
 
 	public void forward(NUOPCApplication reversed, NUOPCApplication asserted, Map<EObject, Object> revMappings) {
 		this.revMappings = revMappings;
-		astsToReindent.clear();
+		//astsToReindent.clear();
 		Comparison comp = compare(reversed, asserted);
 		forwardDiffs(comp.getMatches());
 		
-		//do reindenting
-		for (IFortranAST ast : astsToReindent) {
-			System.out.println("Reindenting: " + ast.getFile().getName());
-			Reindenter.reindent(ast.getRoot(), ast, Strategy.REINDENT_EACH_LINE);
+		//TODO: brute force do reindenting - optimize
+		//perhaps related each mapped node back to its AST
+		
+		//for (IFortranAST ast : astsToReindent) {
+		//	System.out.println("Reindenting: " + ast.getFile().getName());
+		//	Reindenter.reindent(ast.getRoot(), ast, Strategy.REINDENT_EACH_LINE);
+		//}
+		for (Object val : revMappings.values()) {
+			if (val instanceof IFortranAST) {
+				Reindenter.reindent(((IFortranAST) val).getRoot(), (IFortranAST) val, Strategy.REINDENT_EACH_LINE);
+			}
 		}
 		
 	}
@@ -117,17 +130,17 @@ public class ForwardEngineer {
 	
 	protected void forwardDiffs(Match m) {
 		
-		System.out.println("Match: " + m);
+		//System.out.println("Match: " + m);
 		
 		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
 		
 		for (Diff d : m.getDifferences()) {
 			//only interested in DELETEs for now (i.e., an addition to the asserted model)
-			if (d.getKind() == DifferenceKind.DELETE) {
+			//if (d.getKind() == DifferenceKind.DELETE) {
 				if (d instanceof ReferenceChangeSpec) {
 					System.out.println("\tDiff: (" + d.getKind() + ") ==> " + d + "\n");
-					forwardDiff((ReferenceChangeSpec) d);
-					/*
+					//forwardDiff((ReferenceChangeSpec) d);
+					
 					System.out.print("Process diff? ");
 					try {
 						String resp = br.readLine();
@@ -137,9 +150,9 @@ public class ForwardEngineer {
 					} catch (IOException e) {
 						return;
 					}
-					*/
+					
 				}
-			}
+			//}
 		}
 		forwardDiffs(m.getSubmatches());
 	}
@@ -169,16 +182,16 @@ public class ForwardEngineer {
 			}
 						
 			Object newFortranElem = forwardAdd(fortranElem, addedElem, keywordMap);			
-			if (newFortranElem instanceof IFortranAST) {
-				astsToReindent.add((IFortranAST) newFortranElem);
-			}
+			//if (newFortranElem instanceof IFortranAST) {
+			//	astsToReindent.add((IFortranAST) newFortranElem);
+			//}
 			
 			//TODO:  see about reusing a monitor for efficiency sake
 			//System.out.println("Before merge: (" + diff.getState() + ") --> ");
 			//System.out.println("\tParent match LEFT: " + diff.getMatch().getLeft());
 			//System.out.println("\tValue: " + diff.getValue());
 			
-			mergerRegistry.getHighestRankingMerger(diff).copyRightToLeft(diff, new BasicMonitor());
+			mergerRegistry.getHighestRankingMerger(diff).copyRightToLeft(diff, new BasicMonitor());			
 			
 			//System.out.println("After merge: (" + diff.getState() + ") --> ");
 			//System.out.println("\tParent match LEFT: " + diff.getMatch().getLeft());
@@ -283,21 +296,45 @@ public class ForwardEngineer {
 		//System.out.println("Module: vpg context = " + vpg);
 		//vpg.getVPGWriter()
 		//subroutine dummy()\nend subroutine\n
-		String code = "module %s\nimplicit none\ncontains\nend module";
+		ST code = new ST("module <moduleName>\n"
+				  		+ "<useModule, oldName, newName:{u,o,n|use <u>, only: <n> => <o>}; separator=\"\n\">\n"
+				  		+ "\nimplicit none\ncontains\nend module");
+		
 		String moduleName = findMappedValueString("moduleName", modelElem);
 		if (moduleName == null || moduleName.trim().length() == 0) {
 			moduleName = "module_name_default";
 		}
-		code = String.format(code, moduleName);
+		code.add("moduleName", moduleName);
+		
+		List<String> useModule = new ArrayList<String>();
+		List<String> oldName = new ArrayList<String>();
+		List<String> newName = new ArrayList<String>();
+		
+		//collect use statements
+		//this mechanism assumes that "uses" mappings are direct children
+		for (EAttribute ea : modelElem.eClass().getEAttributes()) {
+			Map<String,Object> mapping = Regex.getMappingFromAnnotation(ea);
+			if (mapping != null && mapping.size() > 0 && mapping.entrySet().iterator().next().getKey().equalsIgnoreCase("uses")) {
+				useModule.add((String) mapping.get("uses"));
+				oldName.add((String) mapping.get("entity"));
+				newName.add((String) modelElem.eGet(ea));
+			}
+		}
+		code.add("useModule", useModule);
+		code.add("oldName", oldName);
+		code.add("newName", newName);
+		
+		System.out.println("Module code template:\n" + code.render() + "\n\n");
 		
 		//container.
 		IFile fileToAdd = container.getFile(moduleName.toLowerCase() + ".F90");
 				
 		if (!fileToAdd.exists()) {
-		    byte[] bytes = code.getBytes();
+		    byte[] bytes = code.render().getBytes();
 		    InputStream source = new ByteArrayInputStream(bytes);
 		    try {
-				fileToAdd.create(source, IResource.NONE, null);
+		    	//TODO: look at fileToAdd.setContents(...)
+				fileToAdd.create(source, IResource.NONE, null);				
 			} catch (CoreException e) {				
 				e.printStackTrace();
 			}
@@ -314,13 +351,14 @@ public class ForwardEngineer {
 		//so we need to therefore create a new file in the workspace, etc.
 	}
 	
+	/*
 	private String coalesce(String...elems) {
 		for (String s : elems) {
 			if (s != null) return s;
 		}
 		return null;
 	}
-	
+	*/
 	
 	public IASTNode call(IASTNode context, EObject modelElem, Map<String, Object> params) {		
 		
@@ -339,14 +377,14 @@ public class ForwardEngineer {
 		
 		//substitute model attributes for metavariables
 		if (subroutineName.startsWith("#")) {
-			subroutineName = EcoreUtils.eGetSFValue(subroutineName.substring(1), modelElem, null);
+			subroutineName = EcoreUtils.eGetSFValue(subroutineName, modelElem, subroutineName);
 		}
 		for (int i=0; i<vars.size(); i++) {
 			if (vars.get(i) == null) {
 				vars.set(i, "arg"+i);
 			}
 			else if (vars.get(i).startsWith("#")) {
-				vars.set(i, EcoreUtils.eGetSFValue(vars.get(i).substring(1), modelElem, "arg"+i));
+				vars.set(i, EcoreUtils.eGetSFValue(vars.get(i), modelElem, "arg"+i));
 			}
 		}	
 		
@@ -431,7 +469,35 @@ public class ForwardEngineer {
 		return ssn;
 	}
 	
-	
+	/*
+	public IASTNode uses(IFortranAST context, String modelElem, Map<String, Object> params) {		
+		
+		//use NUOPC_Model, only: model_routine_SS_blah    => routine_SetServices, model_label_Advance => label_Advance
+		  
+		String usesModule = (String) params.get("uses");
+		String usesEntity = (String) params.get("entity");
+		
+		ST code = new ST("\n\nsuse <moduleName>, only: <newName> => <oldName>");
+		code.add("moduleName", usesModule);
+		code.add("newName", modelElem);
+		code.add("oldName", usesEntity);
+		
+		System.out.println("Code to parse:\n" + code.render() + "\n");
+		
+		ASTUseStmtNode usn = (ASTUseStmtNode) CodeExtraction.parseLiteralStatement(code.render());
+		
+		//assume it is a module for now
+		ASTModuleNode amn = (ASTModuleNode) context.getRoot().getProgramUnitList().get(0);
+		amn.getModuleBody().add(0, usn);
+		
+		//Reindenter.reindent(ssn, context, Strategy.REINDENT_EACH_LINE);
+		
+		//record this for later reindenting
+		//recentAST = context;
+		
+		return usn;
+	}
+	*/
 	
 	
 	

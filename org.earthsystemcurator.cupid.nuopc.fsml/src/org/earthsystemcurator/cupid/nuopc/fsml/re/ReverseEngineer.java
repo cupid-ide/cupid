@@ -161,6 +161,7 @@ public class ReverseEngineer {
 						*/
 						Matcher match = CodeQuery.P_METAVAR.matcher(val);
 						while (match.find()) {
+							/*
 							String metavar = match.group().substring(1);  //removes the #
 							int parents = 0;
 							while (metavar.startsWith("../")) {
@@ -175,6 +176,20 @@ public class ReverseEngineer {
 									parents--;
 								}
 								String replaceVal = EcoreUtils.eGetSFValue(metavar, elemToCheck, null);
+								if (replaceVal != null) {
+									System.out.println("Replacing metavariable: " + match.group() + " with val: " + replaceVal);
+									entry.setValue(val.replaceAll(match.group(), replaceVal));
+								}
+							}
+							*/
+							
+							//already at parent, so remove one leading ../
+							//can only handle this case now
+							String metavar = match.group().substring(1);
+							if (metavar.startsWith("../")) { 
+								metavar = metavar.substring(3);
+								//TODO: decide what to do about NULL_VALUE below
+								String replaceVal = EcoreUtils.eGetSFValue(metavar, modelElem, null);
 								if (replaceVal != null) {
 									System.out.println("Replacing metavariable: " + match.group() + " with val: " + replaceVal);
 									entry.setValue(val.replaceAll(match.group(), replaceVal));

@@ -24,6 +24,7 @@ import org.eclipse.emf.ecore.EObject;
 public interface CallsGenericSetServices extends EObject {
 	/**
 	 * Returns the value of the '<em><b>Gcomp</b></em>' attribute.
+	 * The default value is <code>"gcomp"</code>.
 	 * <!-- begin-user-doc -->
 	 * <p>
 	 * If the meaning of the '<em>Gcomp</em>' attribute isn't clear,
@@ -33,7 +34,7 @@ public interface CallsGenericSetServices extends EObject {
 	 * @return the value of the '<em>Gcomp</em>' attribute.
 	 * @see #setGcomp(String)
 	 * @see org.earthsystemcurator.cupid.nuopc.fsml.nuopc.NUOPCPackage#getCallsGenericSetServices_Gcomp()
-	 * @model
+	 * @model default="gcomp"
 	 * @generated
 	 */
 	String getGcomp();
@@ -50,6 +51,7 @@ public interface CallsGenericSetServices extends EObject {
 
 	/**
 	 * Returns the value of the '<em><b>Rc</b></em>' attribute.
+	 * The default value is <code>"rc"</code>.
 	 * <!-- begin-user-doc -->
 	 * <p>
 	 * If the meaning of the '<em>Rc</em>' attribute isn't clear,
@@ -59,7 +61,7 @@ public interface CallsGenericSetServices extends EObject {
 	 * @return the value of the '<em>Rc</em>' attribute.
 	 * @see #setRc(String)
 	 * @see org.earthsystemcurator.cupid.nuopc.fsml.nuopc.NUOPCPackage#getCallsGenericSetServices_Rc()
-	 * @model
+	 * @model default="rc"
 	 * @generated
 	 */
 	String getRc();

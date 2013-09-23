@@ -29,6 +29,7 @@ import org.eclipse.emf.ecore.EObject;
 public interface ModelImplementsInitP1 extends EObject {
 	/**
 	 * Returns the value of the '<em><b>Name</b></em>' attribute.
+	 * The default value is <code>"InitP1"</code>.
 	 * <!-- begin-user-doc -->
 	 * <p>
 	 * If the meaning of the '<em>Name</em>' attribute isn't clear,
@@ -38,7 +39,7 @@ public interface ModelImplementsInitP1 extends EObject {
 	 * @return the value of the '<em>Name</em>' attribute.
 	 * @see #setName(String)
 	 * @see org.earthsystemcurator.cupid.nuopc.fsml.nuopc.NUOPCPackage#getModelImplementsInitP1_Name()
-	 * @model id="true" required="true"
+	 * @model default="InitP1" id="true" required="true"
 	 *        annotation="http://www.earthsystemcog.org/projects/nuopc mappingX='subroutineName'"
 	 * @generated
 	 */
@@ -56,6 +57,7 @@ public interface ModelImplementsInitP1 extends EObject {
 
 	/**
 	 * Returns the value of the '<em><b>Import Param</b></em>' attribute.
+	 * The default value is <code>"importState"</code>.
 	 * <!-- begin-user-doc -->
 	 * <p>
 	 * If the meaning of the '<em>Import Param</em>' attribute isn't clear,
@@ -65,7 +67,7 @@ public interface ModelImplementsInitP1 extends EObject {
 	 * @return the value of the '<em>Import Param</em>' attribute.
 	 * @see #setImportParam(String)
 	 * @see org.earthsystemcurator.cupid.nuopc.fsml.nuopc.NUOPCPackage#getModelImplementsInitP1_ImportParam()
-	 * @model required="true"
+	 * @model default="importState" required="true"
 	 *        annotation="http://www.earthsystemcog.org/projects/nuopc mappingX='formalParam: 2'"
 	 * @generated
 	 */
@@ -83,6 +85,7 @@ public interface ModelImplementsInitP1 extends EObject {
 
 	/**
 	 * Returns the value of the '<em><b>Export Param</b></em>' attribute.
+	 * The default value is <code>"exportState"</code>.
 	 * <!-- begin-user-doc -->
 	 * <p>
 	 * If the meaning of the '<em>Export Param</em>' attribute isn't clear,
@@ -92,7 +95,7 @@ public interface ModelImplementsInitP1 extends EObject {
 	 * @return the value of the '<em>Export Param</em>' attribute.
 	 * @see #setExportParam(String)
 	 * @see org.earthsystemcurator.cupid.nuopc.fsml.nuopc.NUOPCPackage#getModelImplementsInitP1_ExportParam()
-	 * @model required="true"
+	 * @model default="exportState" required="true"
 	 *        annotation="http://www.earthsystemcog.org/projects/nuopc mappingX='formalParam: 3'"
 	 * @generated
 	 */

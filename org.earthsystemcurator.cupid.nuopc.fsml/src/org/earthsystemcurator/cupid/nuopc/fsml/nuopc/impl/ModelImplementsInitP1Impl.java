@@ -49,7 +49,7 @@ public class ModelImplementsInitP1Impl extends EObjectImpl implements ModelImple
 	 * @generated
 	 * @ordered
 	 */
-	protected static final String NAME_EDEFAULT = null;
+	protected static final String NAME_EDEFAULT = "InitP1";
 
 	/**
 	 * The cached value of the '{@link #getName() <em>Name</em>}' attribute.
@@ -69,7 +69,7 @@ public class ModelImplementsInitP1Impl extends EObjectImpl implements ModelImple
 	 * @generated
 	 * @ordered
 	 */
-	protected static final String IMPORT_PARAM_EDEFAULT = null;
+	protected static final String IMPORT_PARAM_EDEFAULT = "importState";
 
 	/**
 	 * The cached value of the '{@link #getImportParam() <em>Import Param</em>}' attribute.
@@ -89,7 +89,7 @@ public class ModelImplementsInitP1Impl extends EObjectImpl implements ModelImple
 	 * @generated
 	 * @ordered
 	 */
-	protected static final String EXPORT_PARAM_EDEFAULT = null;
+	protected static final String EXPORT_PARAM_EDEFAULT = "exportState";
 
 	/**
 	 * The cached value of the '{@link #getExportParam() <em>Export Param</em>}' attribute.

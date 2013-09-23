@@ -52,7 +52,7 @@ public class ModelImplementsSetServicesImpl extends EObjectImpl implements Model
 	 * @generated
 	 * @ordered
 	 */
-	protected static final String NAME_EDEFAULT = "SetServicesDefault";
+	protected static final String NAME_EDEFAULT = "SetServices";
 
 	/**
 	 * The cached value of the '{@link #getName() <em>Name</em>}' attribute.
@@ -72,7 +72,7 @@ public class ModelImplementsSetServicesImpl extends EObjectImpl implements Model
 	 * @generated
 	 * @ordered
 	 */
-	protected static final String PARAM_GCOMP_EDEFAULT = "gcompDefault";
+	protected static final String PARAM_GCOMP_EDEFAULT = "gcomp";
 
 	/**
 	 * The cached value of the '{@link #getParam_gcomp() <em>Param gcomp</em>}' attribute.
@@ -92,7 +92,7 @@ public class ModelImplementsSetServicesImpl extends EObjectImpl implements Model
 	 * @generated
 	 * @ordered
 	 */
-	protected static final String PARAM_RC_EDEFAULT = "rcDefault";
+	protected static final String PARAM_RC_EDEFAULT = "rc";
 
 	/**
 	 * The cached value of the '{@link #getParam_rc() <em>Param rc</em>}' attribute.

@@ -845,6 +845,12 @@ public class CodeQuery {
 			}
 			*/
 			// no definition - just check for match
+			if (subroutineName.startsWith("#.")) {
+				//TODO: assuming we can only populate direct attributes (not parents)
+				//could also use the semantic that only non-mapped attributes (i.e.,
+				//no mapping annotation present) can be populated
+				continue;
+			}
 			if (subroutineName.startsWith("#")) {
 				metavariableMap.put(subroutineName, csn.getSubroutineName().getText());
 			}

@@ -31,7 +31,7 @@ import org.eclipse.emf.ecore.EObject;
 public interface NUOPCModel extends EObject {
 	/**
 	 * Returns the value of the '<em><b>Name</b></em>' attribute.
-	 * The default value is <code>"ModelDefault"</code>.
+	 * The default value is <code>"Model"</code>.
 	 * <!-- begin-user-doc -->
 	 * <p>
 	 * If the meaning of the '<em>Name</em>' attribute isn't clear,
@@ -41,7 +41,7 @@ public interface NUOPCModel extends EObject {
 	 * @return the value of the '<em>Name</em>' attribute.
 	 * @see #setName(String)
 	 * @see org.earthsystemcurator.cupid.nuopc.fsml.nuopc.NUOPCPackage#getNUOPCModel_Name()
-	 * @model default="ModelDefault" id="true" required="true"
+	 * @model default="Model" id="true" required="true"
 	 *        annotation="http://www.earthsystemcog.org/projects/nuopc mapping='moduleName'"
 	 * @generated
 	 */
@@ -59,6 +59,7 @@ public interface NUOPCModel extends EObject {
 
 	/**
 	 * Returns the value of the '<em><b>Imports Generic SS</b></em>' attribute.
+	 * The default value is <code>"nuopcmodel_ss"</code>.
 	 * <!-- begin-user-doc -->
 	 * <p>
 	 * If the meaning of the '<em>Imports Generic SS</em>' attribute isn't clear,
@@ -68,7 +69,8 @@ public interface NUOPCModel extends EObject {
 	 * @return the value of the '<em>Imports Generic SS</em>' attribute.
 	 * @see #setImportsGenericSS(String)
 	 * @see org.earthsystemcurator.cupid.nuopc.fsml.nuopc.NUOPCPackage#getNUOPCModel_ImportsGenericSS()
-	 * @model annotation="http://www.earthsystemcog.org/projects/nuopc mapping='uses: \"NUOPC_Model\" entity: \"routine_SetServices\"'"
+	 * @model default="nuopcmodel_ss"
+	 *        annotation="http://www.earthsystemcog.org/projects/nuopc mapping='uses: \"NUOPC_Model\" entity: \"routine_SetServices\"'"
 	 * @generated
 	 */
 	String getImportsGenericSS();
