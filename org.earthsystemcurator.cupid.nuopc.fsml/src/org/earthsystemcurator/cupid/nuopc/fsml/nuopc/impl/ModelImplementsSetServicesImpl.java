@@ -34,7 +34,6 @@ import org.eclipse.emf.ecore.util.InternalEList;
  *   <li>{@link org.earthsystemcurator.cupid.nuopc.fsml.nuopc.impl.ModelImplementsSetServicesImpl#getParam_gcomp <em>Param gcomp</em>}</li>
  *   <li>{@link org.earthsystemcurator.cupid.nuopc.fsml.nuopc.impl.ModelImplementsSetServicesImpl#getParam_rc <em>Param rc</em>}</li>
  *   <li>{@link org.earthsystemcurator.cupid.nuopc.fsml.nuopc.impl.ModelImplementsSetServicesImpl#getCallsGenericSetServices <em>Calls Generic Set Services</em>}</li>
- *   <li>{@link org.earthsystemcurator.cupid.nuopc.fsml.nuopc.impl.ModelImplementsSetServicesImpl#isCallsGenericSetServices_OLD <em>Calls Generic Set Services OLD</em>}</li>
  *   <li>{@link org.earthsystemcurator.cupid.nuopc.fsml.nuopc.impl.ModelImplementsSetServicesImpl#isCallsSetEntryPointPhase1 <em>Calls Set Entry Point Phase1</em>}</li>
  *   <li>{@link org.earthsystemcurator.cupid.nuopc.fsml.nuopc.impl.ModelImplementsSetServicesImpl#isCallsSetEntryPointPhase2 <em>Calls Set Entry Point Phase2</em>}</li>
  *   <li>{@link org.earthsystemcurator.cupid.nuopc.fsml.nuopc.impl.ModelImplementsSetServicesImpl#getAttachesModelAdvance <em>Attaches Model Advance</em>}</li>
@@ -113,26 +112,6 @@ public class ModelImplementsSetServicesImpl extends EObjectImpl implements Model
 	 * @ordered
 	 */
 	protected CallsGenericSetServices callsGenericSetServices;
-
-	/**
-	 * The default value of the '{@link #isCallsGenericSetServices_OLD() <em>Calls Generic Set Services OLD</em>}' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @see #isCallsGenericSetServices_OLD()
-	 * @generated
-	 * @ordered
-	 */
-	protected static final boolean CALLS_GENERIC_SET_SERVICES_OLD_EDEFAULT = false;
-
-	/**
-	 * The cached value of the '{@link #isCallsGenericSetServices_OLD() <em>Calls Generic Set Services OLD</em>}' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @see #isCallsGenericSetServices_OLD()
-	 * @generated
-	 * @ordered
-	 */
-	protected boolean callsGenericSetServices_OLD = CALLS_GENERIC_SET_SERVICES_OLD_EDEFAULT;
 
 	/**
 	 * The default value of the '{@link #isCallsSetEntryPointPhase1() <em>Calls Set Entry Point Phase1</em>}' attribute.
@@ -355,27 +334,6 @@ public class ModelImplementsSetServicesImpl extends EObjectImpl implements Model
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public boolean isCallsGenericSetServices_OLD() {
-		return callsGenericSetServices_OLD;
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public void setCallsGenericSetServices_OLD(boolean newCallsGenericSetServices_OLD) {
-		boolean oldCallsGenericSetServices_OLD = callsGenericSetServices_OLD;
-		callsGenericSetServices_OLD = newCallsGenericSetServices_OLD;
-		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, NUOPCPackage.MODEL_IMPLEMENTS_SET_SERVICES__CALLS_GENERIC_SET_SERVICES_OLD, oldCallsGenericSetServices_OLD, callsGenericSetServices_OLD));
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
 	public boolean isCallsSetEntryPointPhase1() {
 		return callsSetEntryPointPhase1;
 	}
@@ -494,8 +452,6 @@ public class ModelImplementsSetServicesImpl extends EObjectImpl implements Model
 				return getParam_rc();
 			case NUOPCPackage.MODEL_IMPLEMENTS_SET_SERVICES__CALLS_GENERIC_SET_SERVICES:
 				return getCallsGenericSetServices();
-			case NUOPCPackage.MODEL_IMPLEMENTS_SET_SERVICES__CALLS_GENERIC_SET_SERVICES_OLD:
-				return isCallsGenericSetServices_OLD();
 			case NUOPCPackage.MODEL_IMPLEMENTS_SET_SERVICES__CALLS_SET_ENTRY_POINT_PHASE1:
 				return isCallsSetEntryPointPhase1();
 			case NUOPCPackage.MODEL_IMPLEMENTS_SET_SERVICES__CALLS_SET_ENTRY_POINT_PHASE2:
@@ -529,9 +485,6 @@ public class ModelImplementsSetServicesImpl extends EObjectImpl implements Model
 				return;
 			case NUOPCPackage.MODEL_IMPLEMENTS_SET_SERVICES__CALLS_GENERIC_SET_SERVICES:
 				setCallsGenericSetServices((CallsGenericSetServices)newValue);
-				return;
-			case NUOPCPackage.MODEL_IMPLEMENTS_SET_SERVICES__CALLS_GENERIC_SET_SERVICES_OLD:
-				setCallsGenericSetServices_OLD((Boolean)newValue);
 				return;
 			case NUOPCPackage.MODEL_IMPLEMENTS_SET_SERVICES__CALLS_SET_ENTRY_POINT_PHASE1:
 				setCallsSetEntryPointPhase1((Boolean)newValue);
@@ -570,9 +523,6 @@ public class ModelImplementsSetServicesImpl extends EObjectImpl implements Model
 			case NUOPCPackage.MODEL_IMPLEMENTS_SET_SERVICES__CALLS_GENERIC_SET_SERVICES:
 				setCallsGenericSetServices((CallsGenericSetServices)null);
 				return;
-			case NUOPCPackage.MODEL_IMPLEMENTS_SET_SERVICES__CALLS_GENERIC_SET_SERVICES_OLD:
-				setCallsGenericSetServices_OLD(CALLS_GENERIC_SET_SERVICES_OLD_EDEFAULT);
-				return;
 			case NUOPCPackage.MODEL_IMPLEMENTS_SET_SERVICES__CALLS_SET_ENTRY_POINT_PHASE1:
 				setCallsSetEntryPointPhase1(CALLS_SET_ENTRY_POINT_PHASE1_EDEFAULT);
 				return;
@@ -604,8 +554,6 @@ public class ModelImplementsSetServicesImpl extends EObjectImpl implements Model
 				return PARAM_RC_EDEFAULT == null ? param_rc != null : !PARAM_RC_EDEFAULT.equals(param_rc);
 			case NUOPCPackage.MODEL_IMPLEMENTS_SET_SERVICES__CALLS_GENERIC_SET_SERVICES:
 				return callsGenericSetServices != null;
-			case NUOPCPackage.MODEL_IMPLEMENTS_SET_SERVICES__CALLS_GENERIC_SET_SERVICES_OLD:
-				return callsGenericSetServices_OLD != CALLS_GENERIC_SET_SERVICES_OLD_EDEFAULT;
 			case NUOPCPackage.MODEL_IMPLEMENTS_SET_SERVICES__CALLS_SET_ENTRY_POINT_PHASE1:
 				return callsSetEntryPointPhase1 != CALLS_SET_ENTRY_POINT_PHASE1_EDEFAULT;
 			case NUOPCPackage.MODEL_IMPLEMENTS_SET_SERVICES__CALLS_SET_ENTRY_POINT_PHASE2:
@@ -632,8 +580,6 @@ public class ModelImplementsSetServicesImpl extends EObjectImpl implements Model
 		result.append(param_gcomp);
 		result.append(", param_rc: ");
 		result.append(param_rc);
-		result.append(", callsGenericSetServices_OLD: ");
-		result.append(callsGenericSetServices_OLD);
 		result.append(", callsSetEntryPointPhase1: ");
 		result.append(callsSetEntryPointPhase1);
 		result.append(", callsSetEntryPointPhase2: ");

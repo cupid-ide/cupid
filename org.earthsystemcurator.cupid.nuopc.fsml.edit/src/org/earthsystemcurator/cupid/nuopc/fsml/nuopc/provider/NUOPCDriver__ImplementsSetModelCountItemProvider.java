@@ -62,12 +62,58 @@ public class NUOPCDriver__ImplementsSetModelCountItemProvider
 		if (itemPropertyDescriptors == null) {
 			super.getPropertyDescriptors(object);
 
+			addGcompPropertyDescriptor(object);
+			addRcPropertyDescriptor(object);
 			addNamePropertyDescriptor(object);
 			addDriverInternalStatePropertyDescriptor(object);
 			addGetsInternalStatePropertyDescriptor(object);
 			addAssignsValuePropertyDescriptor(object);
 		}
 		return itemPropertyDescriptors;
+	}
+
+	/**
+	 * This adds a property descriptor for the Gcomp feature.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	protected void addGcompPropertyDescriptor(Object object) {
+		itemPropertyDescriptors.add
+			(createItemPropertyDescriptor
+				(((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(),
+				 getResourceLocator(),
+				 getString("_UI_NUOPCDriver__ImplementsSetModelCount_gcomp_feature"),
+				 getString("_UI_PropertyDescriptor_description", "_UI_NUOPCDriver__ImplementsSetModelCount_gcomp_feature", "_UI_NUOPCDriver__ImplementsSetModelCount_type"),
+				 NUOPCPackage.Literals.NUOPC_DRIVER_IMPLEMENTS_SET_MODEL_COUNT__GCOMP,
+				 true,
+				 false,
+				 false,
+				 ItemPropertyDescriptor.GENERIC_VALUE_IMAGE,
+				 null,
+				 null));
+	}
+
+	/**
+	 * This adds a property descriptor for the Rc feature.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	protected void addRcPropertyDescriptor(Object object) {
+		itemPropertyDescriptors.add
+			(createItemPropertyDescriptor
+				(((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(),
+				 getResourceLocator(),
+				 getString("_UI_NUOPCDriver__ImplementsSetModelCount_rc_feature"),
+				 getString("_UI_PropertyDescriptor_description", "_UI_NUOPCDriver__ImplementsSetModelCount_rc_feature", "_UI_NUOPCDriver__ImplementsSetModelCount_type"),
+				 NUOPCPackage.Literals.NUOPC_DRIVER_IMPLEMENTS_SET_MODEL_COUNT__RC,
+				 true,
+				 false,
+				 false,
+				 ItemPropertyDescriptor.GENERIC_VALUE_IMAGE,
+				 null,
+				 null));
 	}
 
 	/**
@@ -225,6 +271,8 @@ public class NUOPCDriver__ImplementsSetModelCountItemProvider
 		updateChildren(notification);
 
 		switch (notification.getFeatureID(NUOPCDriver__ImplementsSetModelCount.class)) {
+			case NUOPCPackage.NUOPC_DRIVER_IMPLEMENTS_SET_MODEL_COUNT__GCOMP:
+			case NUOPCPackage.NUOPC_DRIVER_IMPLEMENTS_SET_MODEL_COUNT__RC:
 			case NUOPCPackage.NUOPC_DRIVER_IMPLEMENTS_SET_MODEL_COUNT__NAME:
 			case NUOPCPackage.NUOPC_DRIVER_IMPLEMENTS_SET_MODEL_COUNT__DRIVER_INTERNAL_STATE:
 			case NUOPCPackage.NUOPC_DRIVER_IMPLEMENTS_SET_MODEL_COUNT__ASSIGNS_VALUE:

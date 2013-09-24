@@ -28,6 +28,8 @@ import org.eclipse.emf.ecore.util.EcoreUtil;
  * The following features are implemented:
  * <ul>
  *   <li>{@link org.earthsystemcurator.cupid.nuopc.fsml.nuopc.impl.NUOPCDriver__ImplementsSetModelCountImpl#getParent <em>Parent</em>}</li>
+ *   <li>{@link org.earthsystemcurator.cupid.nuopc.fsml.nuopc.impl.NUOPCDriver__ImplementsSetModelCountImpl#getGcomp <em>Gcomp</em>}</li>
+ *   <li>{@link org.earthsystemcurator.cupid.nuopc.fsml.nuopc.impl.NUOPCDriver__ImplementsSetModelCountImpl#getRc <em>Rc</em>}</li>
  *   <li>{@link org.earthsystemcurator.cupid.nuopc.fsml.nuopc.impl.NUOPCDriver__ImplementsSetModelCountImpl#getName <em>Name</em>}</li>
  *   <li>{@link org.earthsystemcurator.cupid.nuopc.fsml.nuopc.impl.NUOPCDriver__ImplementsSetModelCountImpl#getDriverInternalState <em>Driver Internal State</em>}</li>
  *   <li>{@link org.earthsystemcurator.cupid.nuopc.fsml.nuopc.impl.NUOPCDriver__ImplementsSetModelCountImpl#getGetsInternalState <em>Gets Internal State</em>}</li>
@@ -39,6 +41,42 @@ import org.eclipse.emf.ecore.util.EcoreUtil;
  */
 public class NUOPCDriver__ImplementsSetModelCountImpl extends EObjectImpl implements NUOPCDriver__ImplementsSetModelCount {
 	/**
+	 * The default value of the '{@link #getGcomp() <em>Gcomp</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #getGcomp()
+	 * @generated
+	 * @ordered
+	 */
+	protected static final String GCOMP_EDEFAULT = "gcomp";
+	/**
+	 * The cached value of the '{@link #getGcomp() <em>Gcomp</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #getGcomp()
+	 * @generated
+	 * @ordered
+	 */
+	protected String gcomp = GCOMP_EDEFAULT;
+	/**
+	 * The default value of the '{@link #getRc() <em>Rc</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #getRc()
+	 * @generated
+	 * @ordered
+	 */
+	protected static final String RC_EDEFAULT = "rc";
+	/**
+	 * The cached value of the '{@link #getRc() <em>Rc</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #getRc()
+	 * @generated
+	 * @ordered
+	 */
+	protected String rc = RC_EDEFAULT;
+	/**
 	 * The default value of the '{@link #getName() <em>Name</em>}' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -46,7 +84,7 @@ public class NUOPCDriver__ImplementsSetModelCountImpl extends EObjectImpl implem
 	 * @generated
 	 * @ordered
 	 */
-	protected static final String NAME_EDEFAULT = "SetServicesDefault";
+	protected static final String NAME_EDEFAULT = "SetModelCount";
 	/**
 	 * The cached value of the '{@link #getName() <em>Name</em>}' attribute.
 	 * <!-- begin-user-doc -->
@@ -162,6 +200,48 @@ public class NUOPCDriver__ImplementsSetModelCountImpl extends EObjectImpl implem
 		}
 		else if (eNotificationRequired())
 			eNotify(new ENotificationImpl(this, Notification.SET, NUOPCPackage.NUOPC_DRIVER_IMPLEMENTS_SET_MODEL_COUNT__PARENT, newParent, newParent));
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public String getGcomp() {
+		return gcomp;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public void setGcomp(String newGcomp) {
+		String oldGcomp = gcomp;
+		gcomp = newGcomp;
+		if (eNotificationRequired())
+			eNotify(new ENotificationImpl(this, Notification.SET, NUOPCPackage.NUOPC_DRIVER_IMPLEMENTS_SET_MODEL_COUNT__GCOMP, oldGcomp, gcomp));
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public String getRc() {
+		return rc;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public void setRc(String newRc) {
+		String oldRc = rc;
+		rc = newRc;
+		if (eNotificationRequired())
+			eNotify(new ENotificationImpl(this, Notification.SET, NUOPCPackage.NUOPC_DRIVER_IMPLEMENTS_SET_MODEL_COUNT__RC, oldRc, rc));
 	}
 
 	/**
@@ -326,6 +406,10 @@ public class NUOPCDriver__ImplementsSetModelCountImpl extends EObjectImpl implem
 		switch (featureID) {
 			case NUOPCPackage.NUOPC_DRIVER_IMPLEMENTS_SET_MODEL_COUNT__PARENT:
 				return getParent();
+			case NUOPCPackage.NUOPC_DRIVER_IMPLEMENTS_SET_MODEL_COUNT__GCOMP:
+				return getGcomp();
+			case NUOPCPackage.NUOPC_DRIVER_IMPLEMENTS_SET_MODEL_COUNT__RC:
+				return getRc();
 			case NUOPCPackage.NUOPC_DRIVER_IMPLEMENTS_SET_MODEL_COUNT__NAME:
 				return getName();
 			case NUOPCPackage.NUOPC_DRIVER_IMPLEMENTS_SET_MODEL_COUNT__DRIVER_INTERNAL_STATE:
@@ -349,6 +433,12 @@ public class NUOPCDriver__ImplementsSetModelCountImpl extends EObjectImpl implem
 		switch (featureID) {
 			case NUOPCPackage.NUOPC_DRIVER_IMPLEMENTS_SET_MODEL_COUNT__PARENT:
 				setParent((NUOPCDriver)newValue);
+				return;
+			case NUOPCPackage.NUOPC_DRIVER_IMPLEMENTS_SET_MODEL_COUNT__GCOMP:
+				setGcomp((String)newValue);
+				return;
+			case NUOPCPackage.NUOPC_DRIVER_IMPLEMENTS_SET_MODEL_COUNT__RC:
+				setRc((String)newValue);
 				return;
 			case NUOPCPackage.NUOPC_DRIVER_IMPLEMENTS_SET_MODEL_COUNT__NAME:
 				setName((String)newValue);
@@ -377,6 +467,12 @@ public class NUOPCDriver__ImplementsSetModelCountImpl extends EObjectImpl implem
 			case NUOPCPackage.NUOPC_DRIVER_IMPLEMENTS_SET_MODEL_COUNT__PARENT:
 				setParent((NUOPCDriver)null);
 				return;
+			case NUOPCPackage.NUOPC_DRIVER_IMPLEMENTS_SET_MODEL_COUNT__GCOMP:
+				setGcomp(GCOMP_EDEFAULT);
+				return;
+			case NUOPCPackage.NUOPC_DRIVER_IMPLEMENTS_SET_MODEL_COUNT__RC:
+				setRc(RC_EDEFAULT);
+				return;
 			case NUOPCPackage.NUOPC_DRIVER_IMPLEMENTS_SET_MODEL_COUNT__NAME:
 				setName(NAME_EDEFAULT);
 				return;
@@ -403,6 +499,10 @@ public class NUOPCDriver__ImplementsSetModelCountImpl extends EObjectImpl implem
 		switch (featureID) {
 			case NUOPCPackage.NUOPC_DRIVER_IMPLEMENTS_SET_MODEL_COUNT__PARENT:
 				return getParent() != null;
+			case NUOPCPackage.NUOPC_DRIVER_IMPLEMENTS_SET_MODEL_COUNT__GCOMP:
+				return GCOMP_EDEFAULT == null ? gcomp != null : !GCOMP_EDEFAULT.equals(gcomp);
+			case NUOPCPackage.NUOPC_DRIVER_IMPLEMENTS_SET_MODEL_COUNT__RC:
+				return RC_EDEFAULT == null ? rc != null : !RC_EDEFAULT.equals(rc);
 			case NUOPCPackage.NUOPC_DRIVER_IMPLEMENTS_SET_MODEL_COUNT__NAME:
 				return NAME_EDEFAULT == null ? name != null : !NAME_EDEFAULT.equals(name);
 			case NUOPCPackage.NUOPC_DRIVER_IMPLEMENTS_SET_MODEL_COUNT__DRIVER_INTERNAL_STATE:
@@ -425,7 +525,11 @@ public class NUOPCDriver__ImplementsSetModelCountImpl extends EObjectImpl implem
 		if (eIsProxy()) return super.toString();
 
 		StringBuffer result = new StringBuffer(super.toString());
-		result.append(" (name: ");
+		result.append(" (gcomp: ");
+		result.append(gcomp);
+		result.append(", rc: ");
+		result.append(rc);
+		result.append(", name: ");
 		result.append(name);
 		result.append(", driverInternalState: ");
 		result.append(driverInternalState);

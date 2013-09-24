@@ -742,8 +742,8 @@ public class CodeQuery {
 	}
 	
 	//public static Pattern P_CALLSIG = Pattern.compile("((?:#?\\w+)|(?:\\*))(\\(((?:((\\w+)\\s*=\\s*)?(\\s*(#?\\w+))?,?\\s*)*)\\))?");
-	public static Pattern P_CALLSIG = Pattern.compile("((?:(?:#(?:../)*)?\\w+)|(?:\\*))(\\(((?:((\\w+)\\s*=\\s*)?(\\s*(#?\\w+))?,?\\s*)*)\\))?");
-	public static Pattern P_CALLARG = Pattern.compile("((\\w+)\\s*=\\s*)?(#?\\w+)");
+	public static Pattern P_CALLSIG = Pattern.compile("((?:(?:#(?:../)*)?\\w+)|(?:\\*))(\\(((?:((\\w+)\\s*=\\s*)?(\\s*((?:#(?:../)*)?\\w+))?,?\\s*)*)\\))?");
+	public static Pattern P_CALLARG = Pattern.compile("((\\w+)\\s*=\\s*)?((?:#(?:../)*)?\\w+)");
 	
 	//out[0] --> list of vars (may be null)
 	//out[1] --> list of keywords (may be null)

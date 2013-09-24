@@ -57,7 +57,7 @@ public interface NUOPCDriver__ImplementsSetServices extends EObject {
 
 	/**
 	 * Returns the value of the '<em><b>Name</b></em>' attribute.
-	 * The default value is <code>"SetServicesDefault"</code>.
+	 * The default value is <code>"SetServices"</code>.
 	 * <!-- begin-user-doc -->
 	 * <p>
 	 * If the meaning of the '<em>Name</em>' attribute isn't clear,
@@ -67,7 +67,7 @@ public interface NUOPCDriver__ImplementsSetServices extends EObject {
 	 * @return the value of the '<em>Name</em>' attribute.
 	 * @see #setName(String)
 	 * @see org.earthsystemcurator.cupid.nuopc.fsml.nuopc.NUOPCPackage#getNUOPCDriver__ImplementsSetServices_Name()
-	 * @model default="SetServicesDefault" id="true" required="true"
+	 * @model default="SetServices" id="true" required="true"
 	 *        annotation="http://www.earthsystemcog.org/projects/nuopc mappingX='subroutineName'"
 	 * @generated
 	 */
@@ -85,7 +85,7 @@ public interface NUOPCDriver__ImplementsSetServices extends EObject {
 
 	/**
 	 * Returns the value of the '<em><b>Param gcomp</b></em>' attribute.
-	 * The default value is <code>"gcompDefault"</code>.
+	 * The default value is <code>"gcomp"</code>.
 	 * <!-- begin-user-doc -->
 	 * <p>
 	 * If the meaning of the '<em>Param gcomp</em>' attribute isn't clear,
@@ -95,7 +95,7 @@ public interface NUOPCDriver__ImplementsSetServices extends EObject {
 	 * @return the value of the '<em>Param gcomp</em>' attribute.
 	 * @see #setParam_gcomp(String)
 	 * @see org.earthsystemcurator.cupid.nuopc.fsml.nuopc.NUOPCPackage#getNUOPCDriver__ImplementsSetServices_Param_gcomp()
-	 * @model default="gcompDefault"
+	 * @model default="gcomp"
 	 *        annotation="http://www.earthsystemcog.org/projects/nuopc mappingX='formalParam: 1'"
 	 * @generated
 	 */
@@ -113,7 +113,7 @@ public interface NUOPCDriver__ImplementsSetServices extends EObject {
 
 	/**
 	 * Returns the value of the '<em><b>Param rc</b></em>' attribute.
-	 * The default value is <code>"rcDefault"</code>.
+	 * The default value is <code>"rc"</code>.
 	 * <!-- begin-user-doc -->
 	 * <p>
 	 * If the meaning of the '<em>Param rc</em>' attribute isn't clear,
@@ -123,7 +123,7 @@ public interface NUOPCDriver__ImplementsSetServices extends EObject {
 	 * @return the value of the '<em>Param rc</em>' attribute.
 	 * @see #setParam_rc(String)
 	 * @see org.earthsystemcurator.cupid.nuopc.fsml.nuopc.NUOPCPackage#getNUOPCDriver__ImplementsSetServices_Param_rc()
-	 * @model default="rcDefault"
+	 * @model default="rc"
 	 *        annotation="http://www.earthsystemcog.org/projects/nuopc mappingX='formalParam: 2'"
 	 * @generated
 	 */

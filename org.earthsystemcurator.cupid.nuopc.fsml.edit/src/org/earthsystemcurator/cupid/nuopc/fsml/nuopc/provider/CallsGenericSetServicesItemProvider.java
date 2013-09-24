@@ -6,16 +6,13 @@ package org.earthsystemcurator.cupid.nuopc.fsml.nuopc.provider;
 import java.util.Collection;
 import java.util.List;
 
-import org.earthsystemcurator.cupid.nuopc.fsml.nuopc.NUOPCFactory;
-import org.earthsystemcurator.cupid.nuopc.fsml.nuopc.NUOPCModel;
+import org.earthsystemcurator.cupid.nuopc.fsml.nuopc.CallsGenericSetServices;
 import org.earthsystemcurator.cupid.nuopc.fsml.nuopc.NUOPCPackage;
 
 import org.eclipse.emf.common.notify.AdapterFactory;
 import org.eclipse.emf.common.notify.Notification;
 
 import org.eclipse.emf.common.util.ResourceLocator;
-
-import org.eclipse.emf.ecore.EStructuralFeature;
 
 import org.eclipse.emf.edit.provider.ComposeableAdapterFactory;
 import org.eclipse.emf.edit.provider.IEditingDomainItemProvider;
@@ -29,12 +26,12 @@ import org.eclipse.emf.edit.provider.ItemProviderAdapter;
 import org.eclipse.emf.edit.provider.ViewerNotification;
 
 /**
- * This is the item provider adapter for a {@link org.earthsystemcurator.cupid.nuopc.fsml.nuopc.NUOPCModel} object.
+ * This is the item provider adapter for a {@link org.earthsystemcurator.cupid.nuopc.fsml.nuopc.CallsGenericSetServices} object.
  * <!-- begin-user-doc -->
  * <!-- end-user-doc -->
  * @generated
  */
-public class NUOPCModelItemProvider
+public class CallsGenericSetServicesItemProvider
 	extends ItemProviderAdapter
 	implements
 		IEditingDomainItemProvider,
@@ -48,7 +45,7 @@ public class NUOPCModelItemProvider
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public NUOPCModelItemProvider(AdapterFactory adapterFactory) {
+	public CallsGenericSetServicesItemProvider(AdapterFactory adapterFactory) {
 		super(adapterFactory);
 	}
 
@@ -63,26 +60,26 @@ public class NUOPCModelItemProvider
 		if (itemPropertyDescriptors == null) {
 			super.getPropertyDescriptors(object);
 
-			addNamePropertyDescriptor(object);
-			addImportsGenericSSPropertyDescriptor(object);
+			addGcompPropertyDescriptor(object);
+			addRcPropertyDescriptor(object);
 		}
 		return itemPropertyDescriptors;
 	}
 
 	/**
-	 * This adds a property descriptor for the Name feature.
+	 * This adds a property descriptor for the Gcomp feature.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	protected void addNamePropertyDescriptor(Object object) {
+	protected void addGcompPropertyDescriptor(Object object) {
 		itemPropertyDescriptors.add
 			(createItemPropertyDescriptor
 				(((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(),
 				 getResourceLocator(),
-				 getString("_UI_NUOPCModel_name_feature"),
-				 getString("_UI_PropertyDescriptor_description", "_UI_NUOPCModel_name_feature", "_UI_NUOPCModel_type"),
-				 NUOPCPackage.Literals.NUOPC_MODEL__NAME,
+				 getString("_UI_CallsGenericSetServices_gcomp_feature"),
+				 getString("_UI_PropertyDescriptor_description", "_UI_CallsGenericSetServices_gcomp_feature", "_UI_CallsGenericSetServices_type"),
+				 NUOPCPackage.Literals.CALLS_GENERIC_SET_SERVICES__GCOMP,
 				 true,
 				 false,
 				 false,
@@ -92,19 +89,19 @@ public class NUOPCModelItemProvider
 	}
 
 	/**
-	 * This adds a property descriptor for the Imports Generic SS feature.
+	 * This adds a property descriptor for the Rc feature.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	protected void addImportsGenericSSPropertyDescriptor(Object object) {
+	protected void addRcPropertyDescriptor(Object object) {
 		itemPropertyDescriptors.add
 			(createItemPropertyDescriptor
 				(((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(),
 				 getResourceLocator(),
-				 getString("_UI_NUOPCModel_importsGenericSS_feature"),
-				 getString("_UI_PropertyDescriptor_description", "_UI_NUOPCModel_importsGenericSS_feature", "_UI_NUOPCModel_type"),
-				 NUOPCPackage.Literals.NUOPC_MODEL__IMPORTS_GENERIC_SS,
+				 getString("_UI_CallsGenericSetServices_rc_feature"),
+				 getString("_UI_PropertyDescriptor_description", "_UI_CallsGenericSetServices_rc_feature", "_UI_CallsGenericSetServices_type"),
+				 NUOPCPackage.Literals.CALLS_GENERIC_SET_SERVICES__RC,
 				 true,
 				 false,
 				 false,
@@ -114,47 +111,14 @@ public class NUOPCModelItemProvider
 	}
 
 	/**
-	 * This specifies how to implement {@link #getChildren} and is used to deduce an appropriate feature for an
-	 * {@link org.eclipse.emf.edit.command.AddCommand}, {@link org.eclipse.emf.edit.command.RemoveCommand} or
-	 * {@link org.eclipse.emf.edit.command.MoveCommand} in {@link #createCommand}.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	@Override
-	public Collection<? extends EStructuralFeature> getChildrenFeatures(Object object) {
-		if (childrenFeatures == null) {
-			super.getChildrenFeatures(object);
-			childrenFeatures.add(NUOPCPackage.Literals.NUOPC_MODEL__IMPLEMENTS_SET_SERVICES);
-			childrenFeatures.add(NUOPCPackage.Literals.NUOPC_MODEL__IMPLEMENTS_INIT_P1);
-			childrenFeatures.add(NUOPCPackage.Literals.NUOPC_MODEL__IMPLEMENTS_INIT_P2);
-			childrenFeatures.add(NUOPCPackage.Literals.NUOPC_MODEL__IMPLEMENTS_MODEL_ADVANCE);
-		}
-		return childrenFeatures;
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	@Override
-	protected EStructuralFeature getChildFeature(Object object, Object child) {
-		// Check the type of the specified child object and return the proper feature to use for
-		// adding (see {@link AddCommand}) it as a child.
-
-		return super.getChildFeature(object, child);
-	}
-
-	/**
-	 * This returns NUOPCModel.gif.
+	 * This returns CallsGenericSetServices.gif.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
 	@Override
 	public Object getImage(Object object) {
-		return overlayImage(object, getResourceLocator().getImage("full/obj16/NUOPCModel"));
+		return overlayImage(object, getResourceLocator().getImage("full/obj16/CallsGenericSetServices"));
 	}
 
 	/**
@@ -165,10 +129,10 @@ public class NUOPCModelItemProvider
 	 */
 	@Override
 	public String getText(Object object) {
-		String label = ((NUOPCModel)object).getName();
+		String label = ((CallsGenericSetServices)object).getGcomp();
 		return label == null || label.length() == 0 ?
-			getString("_UI_NUOPCModel_type") :
-			getString("_UI_NUOPCModel_type") + " " + label;
+			getString("_UI_CallsGenericSetServices_type") :
+			getString("_UI_CallsGenericSetServices_type") + " " + label;
 	}
 
 	/**
@@ -182,16 +146,10 @@ public class NUOPCModelItemProvider
 	public void notifyChanged(Notification notification) {
 		updateChildren(notification);
 
-		switch (notification.getFeatureID(NUOPCModel.class)) {
-			case NUOPCPackage.NUOPC_MODEL__NAME:
-			case NUOPCPackage.NUOPC_MODEL__IMPORTS_GENERIC_SS:
+		switch (notification.getFeatureID(CallsGenericSetServices.class)) {
+			case NUOPCPackage.CALLS_GENERIC_SET_SERVICES__GCOMP:
+			case NUOPCPackage.CALLS_GENERIC_SET_SERVICES__RC:
 				fireNotifyChanged(new ViewerNotification(notification, notification.getNotifier(), false, true));
-				return;
-			case NUOPCPackage.NUOPC_MODEL__IMPLEMENTS_SET_SERVICES:
-			case NUOPCPackage.NUOPC_MODEL__IMPLEMENTS_INIT_P1:
-			case NUOPCPackage.NUOPC_MODEL__IMPLEMENTS_INIT_P2:
-			case NUOPCPackage.NUOPC_MODEL__IMPLEMENTS_MODEL_ADVANCE:
-				fireNotifyChanged(new ViewerNotification(notification, notification.getNotifier(), true, false));
 				return;
 		}
 		super.notifyChanged(notification);
@@ -207,26 +165,6 @@ public class NUOPCModelItemProvider
 	@Override
 	protected void collectNewChildDescriptors(Collection<Object> newChildDescriptors, Object object) {
 		super.collectNewChildDescriptors(newChildDescriptors, object);
-
-		newChildDescriptors.add
-			(createChildParameter
-				(NUOPCPackage.Literals.NUOPC_MODEL__IMPLEMENTS_SET_SERVICES,
-				 NUOPCFactory.eINSTANCE.createModelImplementsSetServices()));
-
-		newChildDescriptors.add
-			(createChildParameter
-				(NUOPCPackage.Literals.NUOPC_MODEL__IMPLEMENTS_INIT_P1,
-				 NUOPCFactory.eINSTANCE.createModelImplementsInitP1()));
-
-		newChildDescriptors.add
-			(createChildParameter
-				(NUOPCPackage.Literals.NUOPC_MODEL__IMPLEMENTS_INIT_P2,
-				 NUOPCFactory.eINSTANCE.createModelImplementsInitP2()));
-
-		newChildDescriptors.add
-			(createChildParameter
-				(NUOPCPackage.Literals.NUOPC_MODEL__IMPLEMENTS_MODEL_ADVANCE,
-				 NUOPCFactory.eINSTANCE.createModelAdvance()));
 	}
 
 	/**

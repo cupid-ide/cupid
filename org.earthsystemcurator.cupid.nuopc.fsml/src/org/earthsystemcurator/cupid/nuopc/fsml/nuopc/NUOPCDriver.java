@@ -123,7 +123,7 @@ public interface NUOPCDriver extends EObject {
 	 * @see org.earthsystemcurator.cupid.nuopc.fsml.nuopc.NUOPCPackage#getNUOPCDriver_ImplementsSetModelCount()
 	 * @see org.earthsystemcurator.cupid.nuopc.fsml.nuopc.NUOPCDriver__ImplementsSetModelCount#getParent
 	 * @model opposite="parent" containment="true" ordered="false"
-	 *        annotation="http://www.earthsystemcog.org/projects/nuopc mapping='subroutine: \"*(type(ESMF_GridComp), integer)\"'"
+	 *        annotation="http://www.earthsystemcog.org/projects/nuopc mapping='subroutine: \"#name(type(ESMF_GridComp) #gcomp, integer #rc)\"'"
 	 * @generated
 	 */
 	EList<NUOPCDriver__ImplementsSetModelCount> getImplementsSetModelCount();

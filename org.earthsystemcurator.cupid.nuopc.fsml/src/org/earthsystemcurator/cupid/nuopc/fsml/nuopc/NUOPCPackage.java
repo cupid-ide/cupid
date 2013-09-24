@@ -85,22 +85,13 @@ public interface NUOPCPackage extends EPackage {
 	int NUOPC_MODEL__IMPORTS_GENERIC_SS = 1;
 
 	/**
-	 * The feature id for the '<em><b>Single Public Subroutine</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int NUOPC_MODEL__SINGLE_PUBLIC_SUBROUTINE = 2;
-
-	/**
 	 * The feature id for the '<em><b>Implements Set Services</b></em>' containment reference.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int NUOPC_MODEL__IMPLEMENTS_SET_SERVICES = 3;
+	int NUOPC_MODEL__IMPLEMENTS_SET_SERVICES = 2;
 
 	/**
 	 * The feature id for the '<em><b>Implements Init P1</b></em>' containment reference list.
@@ -109,7 +100,7 @@ public interface NUOPCPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int NUOPC_MODEL__IMPLEMENTS_INIT_P1 = 4;
+	int NUOPC_MODEL__IMPLEMENTS_INIT_P1 = 3;
 
 	/**
 	 * The feature id for the '<em><b>Implements Init P2</b></em>' containment reference.
@@ -118,7 +109,7 @@ public interface NUOPCPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int NUOPC_MODEL__IMPLEMENTS_INIT_P2 = 5;
+	int NUOPC_MODEL__IMPLEMENTS_INIT_P2 = 4;
 
 	/**
 	 * The feature id for the '<em><b>Implements Model Advance</b></em>' containment reference list.
@@ -127,7 +118,7 @@ public interface NUOPCPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int NUOPC_MODEL__IMPLEMENTS_MODEL_ADVANCE = 6;
+	int NUOPC_MODEL__IMPLEMENTS_MODEL_ADVANCE = 5;
 
 	/**
 	 * The number of structural features of the '<em>Model</em>' class.
@@ -136,7 +127,7 @@ public interface NUOPCPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int NUOPC_MODEL_FEATURE_COUNT = 7;
+	int NUOPC_MODEL_FEATURE_COUNT = 6;
 
 	/**
 	 * The meta object id for the '{@link org.earthsystemcurator.cupid.nuopc.fsml.nuopc.impl.ModelImplementsSetServicesImpl <em>Model Implements Set Services</em>}' class.
@@ -194,22 +185,13 @@ public interface NUOPCPackage extends EPackage {
 	int MODEL_IMPLEMENTS_SET_SERVICES__CALLS_GENERIC_SET_SERVICES = 4;
 
 	/**
-	 * The feature id for the '<em><b>Calls Generic Set Services OLD</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int MODEL_IMPLEMENTS_SET_SERVICES__CALLS_GENERIC_SET_SERVICES_OLD = 5;
-
-	/**
 	 * The feature id for the '<em><b>Calls Set Entry Point Phase1</b></em>' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int MODEL_IMPLEMENTS_SET_SERVICES__CALLS_SET_ENTRY_POINT_PHASE1 = 6;
+	int MODEL_IMPLEMENTS_SET_SERVICES__CALLS_SET_ENTRY_POINT_PHASE1 = 5;
 
 	/**
 	 * The feature id for the '<em><b>Calls Set Entry Point Phase2</b></em>' attribute.
@@ -218,7 +200,7 @@ public interface NUOPCPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int MODEL_IMPLEMENTS_SET_SERVICES__CALLS_SET_ENTRY_POINT_PHASE2 = 7;
+	int MODEL_IMPLEMENTS_SET_SERVICES__CALLS_SET_ENTRY_POINT_PHASE2 = 6;
 
 	/**
 	 * The feature id for the '<em><b>Attaches Model Advance</b></em>' containment reference list.
@@ -227,7 +209,7 @@ public interface NUOPCPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int MODEL_IMPLEMENTS_SET_SERVICES__ATTACHES_MODEL_ADVANCE = 8;
+	int MODEL_IMPLEMENTS_SET_SERVICES__ATTACHES_MODEL_ADVANCE = 7;
 
 	/**
 	 * The number of structural features of the '<em>Model Implements Set Services</em>' class.
@@ -236,7 +218,7 @@ public interface NUOPCPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int MODEL_IMPLEMENTS_SET_SERVICES_FEATURE_COUNT = 9;
+	int MODEL_IMPLEMENTS_SET_SERVICES_FEATURE_COUNT = 8;
 
 	/**
 	 * The meta object id for the '{@link org.earthsystemcurator.cupid.nuopc.fsml.nuopc.impl.CallsGenericSetServicesImpl <em>Calls Generic Set Services</em>}' class.
@@ -918,13 +900,31 @@ public interface NUOPCPackage extends EPackage {
 	int NUOPC_DRIVER_IMPLEMENTS_SET_MODEL_COUNT__PARENT = 0;
 
 	/**
+	 * The feature id for the '<em><b>Gcomp</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int NUOPC_DRIVER_IMPLEMENTS_SET_MODEL_COUNT__GCOMP = 1;
+
+	/**
+	 * The feature id for the '<em><b>Rc</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int NUOPC_DRIVER_IMPLEMENTS_SET_MODEL_COUNT__RC = 2;
+
+	/**
 	 * The feature id for the '<em><b>Name</b></em>' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int NUOPC_DRIVER_IMPLEMENTS_SET_MODEL_COUNT__NAME = 1;
+	int NUOPC_DRIVER_IMPLEMENTS_SET_MODEL_COUNT__NAME = 3;
 
 	/**
 	 * The feature id for the '<em><b>Driver Internal State</b></em>' attribute.
@@ -933,7 +933,7 @@ public interface NUOPCPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int NUOPC_DRIVER_IMPLEMENTS_SET_MODEL_COUNT__DRIVER_INTERNAL_STATE = 2;
+	int NUOPC_DRIVER_IMPLEMENTS_SET_MODEL_COUNT__DRIVER_INTERNAL_STATE = 4;
 
 	/**
 	 * The feature id for the '<em><b>Gets Internal State</b></em>' containment reference.
@@ -942,7 +942,7 @@ public interface NUOPCPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int NUOPC_DRIVER_IMPLEMENTS_SET_MODEL_COUNT__GETS_INTERNAL_STATE = 3;
+	int NUOPC_DRIVER_IMPLEMENTS_SET_MODEL_COUNT__GETS_INTERNAL_STATE = 5;
 
 	/**
 	 * The feature id for the '<em><b>Assigns Value</b></em>' attribute.
@@ -951,7 +951,7 @@ public interface NUOPCPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int NUOPC_DRIVER_IMPLEMENTS_SET_MODEL_COUNT__ASSIGNS_VALUE = 4;
+	int NUOPC_DRIVER_IMPLEMENTS_SET_MODEL_COUNT__ASSIGNS_VALUE = 6;
 
 	/**
 	 * The number of structural features of the '<em>Driver Implements Set Model Count</em>' class.
@@ -960,7 +960,7 @@ public interface NUOPCPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int NUOPC_DRIVER_IMPLEMENTS_SET_MODEL_COUNT_FEATURE_COUNT = 5;
+	int NUOPC_DRIVER_IMPLEMENTS_SET_MODEL_COUNT_FEATURE_COUNT = 7;
 
 	/**
 	 * The meta object id for the '{@link org.earthsystemcurator.cupid.nuopc.fsml.nuopc.impl.GetsInternalStateImpl <em>Gets Internal State</em>}' class.
@@ -1180,17 +1180,6 @@ public interface NUOPCPackage extends EPackage {
 	EAttribute getNUOPCModel_ImportsGenericSS();
 
 	/**
-	 * Returns the meta object for the attribute '{@link org.earthsystemcurator.cupid.nuopc.fsml.nuopc.NUOPCModel#getSinglePublicSubroutine <em>Single Public Subroutine</em>}'.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @return the meta object for the attribute '<em>Single Public Subroutine</em>'.
-	 * @see org.earthsystemcurator.cupid.nuopc.fsml.nuopc.NUOPCModel#getSinglePublicSubroutine()
-	 * @see #getNUOPCModel()
-	 * @generated
-	 */
-	EAttribute getNUOPCModel_SinglePublicSubroutine();
-
-	/**
 	 * Returns the meta object for the containment reference '{@link org.earthsystemcurator.cupid.nuopc.fsml.nuopc.NUOPCModel#getImplementsSetServices <em>Implements Set Services</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -1298,17 +1287,6 @@ public interface NUOPCPackage extends EPackage {
 	 * @generated
 	 */
 	EReference getModelImplementsSetServices_CallsGenericSetServices();
-
-	/**
-	 * Returns the meta object for the attribute '{@link org.earthsystemcurator.cupid.nuopc.fsml.nuopc.ModelImplementsSetServices#isCallsGenericSetServices_OLD <em>Calls Generic Set Services OLD</em>}'.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @return the meta object for the attribute '<em>Calls Generic Set Services OLD</em>'.
-	 * @see org.earthsystemcurator.cupid.nuopc.fsml.nuopc.ModelImplementsSetServices#isCallsGenericSetServices_OLD()
-	 * @see #getModelImplementsSetServices()
-	 * @generated
-	 */
-	EAttribute getModelImplementsSetServices_CallsGenericSetServices_OLD();
 
 	/**
 	 * Returns the meta object for the attribute '{@link org.earthsystemcurator.cupid.nuopc.fsml.nuopc.ModelImplementsSetServices#isCallsSetEntryPointPhase1 <em>Calls Set Entry Point Phase1</em>}'.
@@ -2013,6 +1991,28 @@ public interface NUOPCPackage extends EPackage {
 	EReference getNUOPCDriver__ImplementsSetModelCount_Parent();
 
 	/**
+	 * Returns the meta object for the attribute '{@link org.earthsystemcurator.cupid.nuopc.fsml.nuopc.NUOPCDriver__ImplementsSetModelCount#getGcomp <em>Gcomp</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the attribute '<em>Gcomp</em>'.
+	 * @see org.earthsystemcurator.cupid.nuopc.fsml.nuopc.NUOPCDriver__ImplementsSetModelCount#getGcomp()
+	 * @see #getNUOPCDriver__ImplementsSetModelCount()
+	 * @generated
+	 */
+	EAttribute getNUOPCDriver__ImplementsSetModelCount_Gcomp();
+
+	/**
+	 * Returns the meta object for the attribute '{@link org.earthsystemcurator.cupid.nuopc.fsml.nuopc.NUOPCDriver__ImplementsSetModelCount#getRc <em>Rc</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the attribute '<em>Rc</em>'.
+	 * @see org.earthsystemcurator.cupid.nuopc.fsml.nuopc.NUOPCDriver__ImplementsSetModelCount#getRc()
+	 * @see #getNUOPCDriver__ImplementsSetModelCount()
+	 * @generated
+	 */
+	EAttribute getNUOPCDriver__ImplementsSetModelCount_Rc();
+
+	/**
 	 * Returns the meta object for the attribute '{@link org.earthsystemcurator.cupid.nuopc.fsml.nuopc.NUOPCDriver__ImplementsSetModelCount#getName <em>Name</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -2277,14 +2277,6 @@ public interface NUOPCPackage extends EPackage {
 		EAttribute NUOPC_MODEL__IMPORTS_GENERIC_SS = eINSTANCE.getNUOPCModel_ImportsGenericSS();
 
 		/**
-		 * The meta object literal for the '<em><b>Single Public Subroutine</b></em>' attribute feature.
-		 * <!-- begin-user-doc -->
-		 * <!-- end-user-doc -->
-		 * @generated
-		 */
-		EAttribute NUOPC_MODEL__SINGLE_PUBLIC_SUBROUTINE = eINSTANCE.getNUOPCModel_SinglePublicSubroutine();
-
-		/**
 		 * The meta object literal for the '<em><b>Implements Set Services</b></em>' containment reference feature.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
@@ -2365,14 +2357,6 @@ public interface NUOPCPackage extends EPackage {
 		 * @generated
 		 */
 		EReference MODEL_IMPLEMENTS_SET_SERVICES__CALLS_GENERIC_SET_SERVICES = eINSTANCE.getModelImplementsSetServices_CallsGenericSetServices();
-
-		/**
-		 * The meta object literal for the '<em><b>Calls Generic Set Services OLD</b></em>' attribute feature.
-		 * <!-- begin-user-doc -->
-		 * <!-- end-user-doc -->
-		 * @generated
-		 */
-		EAttribute MODEL_IMPLEMENTS_SET_SERVICES__CALLS_GENERIC_SET_SERVICES_OLD = eINSTANCE.getModelImplementsSetServices_CallsGenericSetServices_OLD();
 
 		/**
 		 * The meta object literal for the '<em><b>Calls Set Entry Point Phase1</b></em>' attribute feature.
@@ -2919,6 +2903,22 @@ public interface NUOPCPackage extends EPackage {
 		 * @generated
 		 */
 		EReference NUOPC_DRIVER_IMPLEMENTS_SET_MODEL_COUNT__PARENT = eINSTANCE.getNUOPCDriver__ImplementsSetModelCount_Parent();
+
+		/**
+		 * The meta object literal for the '<em><b>Gcomp</b></em>' attribute feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EAttribute NUOPC_DRIVER_IMPLEMENTS_SET_MODEL_COUNT__GCOMP = eINSTANCE.getNUOPCDriver__ImplementsSetModelCount_Gcomp();
+
+		/**
+		 * The meta object literal for the '<em><b>Rc</b></em>' attribute feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EAttribute NUOPC_DRIVER_IMPLEMENTS_SET_MODEL_COUNT__RC = eINSTANCE.getNUOPCDriver__ImplementsSetModelCount_Rc();
 
 		/**
 		 * The meta object literal for the '<em><b>Name</b></em>' attribute feature.

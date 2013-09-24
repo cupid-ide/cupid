@@ -33,7 +33,7 @@ public interface GetsInternalState extends EObject {
 	 * @return the value of the '<em>Label</em>' attribute.
 	 * @see #setLabel(String)
 	 * @see org.earthsystemcurator.cupid.nuopc.fsml.nuopc.NUOPCPackage#getGetsInternalState_Label()
-	 * @model annotation="http://www.earthsystemcog.org/projects/nuopc mapping='argByIndex: 2'"
+	 * @model annotation="http://www.earthsystemcog.org/projects/nuopc mappingX='argByIndex: 2'"
 	 * @generated
 	 */
 	String getLabel();

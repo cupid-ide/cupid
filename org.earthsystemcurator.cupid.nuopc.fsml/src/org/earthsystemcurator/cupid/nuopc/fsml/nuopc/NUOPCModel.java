@@ -16,7 +16,6 @@ import org.eclipse.emf.ecore.EObject;
  * <ul>
  *   <li>{@link org.earthsystemcurator.cupid.nuopc.fsml.nuopc.NUOPCModel#getName <em>Name</em>}</li>
  *   <li>{@link org.earthsystemcurator.cupid.nuopc.fsml.nuopc.NUOPCModel#getImportsGenericSS <em>Imports Generic SS</em>}</li>
- *   <li>{@link org.earthsystemcurator.cupid.nuopc.fsml.nuopc.NUOPCModel#getSinglePublicSubroutine <em>Single Public Subroutine</em>}</li>
  *   <li>{@link org.earthsystemcurator.cupid.nuopc.fsml.nuopc.NUOPCModel#getImplementsSetServices <em>Implements Set Services</em>}</li>
  *   <li>{@link org.earthsystemcurator.cupid.nuopc.fsml.nuopc.NUOPCModel#getImplementsInitP1 <em>Implements Init P1</em>}</li>
  *   <li>{@link org.earthsystemcurator.cupid.nuopc.fsml.nuopc.NUOPCModel#getImplementsInitP2 <em>Implements Init P2</em>}</li>
@@ -84,32 +83,6 @@ public interface NUOPCModel extends EObject {
 	 * @generated
 	 */
 	void setImportsGenericSS(String value);
-
-	/**
-	 * Returns the value of the '<em><b>Single Public Subroutine</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <p>
-	 * If the meaning of the '<em>Single Public Subroutine</em>' attribute isn't clear,
-	 * there really should be more of a description here...
-	 * </p>
-	 * <!-- end-user-doc -->
-	 * @return the value of the '<em>Single Public Subroutine</em>' attribute.
-	 * @see #setSinglePublicSubroutine(String)
-	 * @see org.earthsystemcurator.cupid.nuopc.fsml.nuopc.NUOPCPackage#getNUOPCModel_SinglePublicSubroutine()
-	 * @model annotation="http://www.earthsystemcog.org/projects/nuopc mapping='hasSinglePublicMember' transform='addPublicMember'"
-	 * @generated
-	 */
-	String getSinglePublicSubroutine();
-
-	/**
-	 * Sets the value of the '{@link org.earthsystemcurator.cupid.nuopc.fsml.nuopc.NUOPCModel#getSinglePublicSubroutine <em>Single Public Subroutine</em>}' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @param value the new value of the '<em>Single Public Subroutine</em>' attribute.
-	 * @see #getSinglePublicSubroutine()
-	 * @generated
-	 */
-	void setSinglePublicSubroutine(String value);
 
 	/**
 	 * Returns the value of the '<em><b>Implements Set Services</b></em>' containment reference.

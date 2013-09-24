@@ -18,7 +18,6 @@ import org.eclipse.emf.ecore.EObject;
  *   <li>{@link org.earthsystemcurator.cupid.nuopc.fsml.nuopc.ModelImplementsSetServices#getParam_gcomp <em>Param gcomp</em>}</li>
  *   <li>{@link org.earthsystemcurator.cupid.nuopc.fsml.nuopc.ModelImplementsSetServices#getParam_rc <em>Param rc</em>}</li>
  *   <li>{@link org.earthsystemcurator.cupid.nuopc.fsml.nuopc.ModelImplementsSetServices#getCallsGenericSetServices <em>Calls Generic Set Services</em>}</li>
- *   <li>{@link org.earthsystemcurator.cupid.nuopc.fsml.nuopc.ModelImplementsSetServices#isCallsGenericSetServices_OLD <em>Calls Generic Set Services OLD</em>}</li>
  *   <li>{@link org.earthsystemcurator.cupid.nuopc.fsml.nuopc.ModelImplementsSetServices#isCallsSetEntryPointPhase1 <em>Calls Set Entry Point Phase1</em>}</li>
  *   <li>{@link org.earthsystemcurator.cupid.nuopc.fsml.nuopc.ModelImplementsSetServices#isCallsSetEntryPointPhase2 <em>Calls Set Entry Point Phase2</em>}</li>
  *   <li>{@link org.earthsystemcurator.cupid.nuopc.fsml.nuopc.ModelImplementsSetServices#getAttachesModelAdvance <em>Attaches Model Advance</em>}</li>
@@ -168,33 +167,6 @@ public interface ModelImplementsSetServices extends EObject {
 	 * @generated
 	 */
 	void setCallsGenericSetServices(CallsGenericSetServices value);
-
-	/**
-	 * Returns the value of the '<em><b>Calls Generic Set Services OLD</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <p>
-	 * If the meaning of the '<em>Calls Generic Set Services OLD</em>' attribute isn't clear,
-	 * there really should be more of a description here...
-	 * </p>
-	 * <!-- end-user-doc -->
-	 * @return the value of the '<em>Calls Generic Set Services OLD</em>' attribute.
-	 * @see #setCallsGenericSetServices_OLD(boolean)
-	 * @see org.earthsystemcurator.cupid.nuopc.fsml.nuopc.NUOPCPackage#getModelImplementsSetServices_CallsGenericSetServices_OLD()
-	 * @model required="true"
-	 *        annotation="http://www.earthsystemcog.org/projects/nuopc mapping='calls: \"routine_SetServices\" definedInModule: \"NUOPC_Model\"' essential='false'"
-	 * @generated
-	 */
-	boolean isCallsGenericSetServices_OLD();
-
-	/**
-	 * Sets the value of the '{@link org.earthsystemcurator.cupid.nuopc.fsml.nuopc.ModelImplementsSetServices#isCallsGenericSetServices_OLD <em>Calls Generic Set Services OLD</em>}' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @param value the new value of the '<em>Calls Generic Set Services OLD</em>' attribute.
-	 * @see #isCallsGenericSetServices_OLD()
-	 * @generated
-	 */
-	void setCallsGenericSetServices_OLD(boolean value);
 
 	/**
 	 * Returns the value of the '<em><b>Calls Set Entry Point Phase1</b></em>' attribute.

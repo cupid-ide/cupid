@@ -66,7 +66,6 @@ public class ModelImplementsSetServicesItemProvider
 			addNamePropertyDescriptor(object);
 			addParam_gcompPropertyDescriptor(object);
 			addParam_rcPropertyDescriptor(object);
-			addCallsGenericSetServicesPropertyDescriptor(object);
 			addCallsSetEntryPointPhase1PropertyDescriptor(object);
 			addCallsSetEntryPointPhase2PropertyDescriptor(object);
 		}
@@ -135,28 +134,6 @@ public class ModelImplementsSetServicesItemProvider
 				 false,
 				 false,
 				 ItemPropertyDescriptor.GENERIC_VALUE_IMAGE,
-				 null,
-				 null));
-	}
-
-	/**
-	 * This adds a property descriptor for the Calls Generic Set Services feature.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	protected void addCallsGenericSetServicesPropertyDescriptor(Object object) {
-		itemPropertyDescriptors.add
-			(createItemPropertyDescriptor
-				(((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(),
-				 getResourceLocator(),
-				 getString("_UI_ModelImplementsSetServices_callsGenericSetServices_feature"),
-				 getString("_UI_PropertyDescriptor_description", "_UI_ModelImplementsSetServices_callsGenericSetServices_feature", "_UI_ModelImplementsSetServices_type"),
-				 NUOPCPackage.Literals.MODEL_IMPLEMENTS_SET_SERVICES__CALLS_GENERIC_SET_SERVICES,
-				 true,
-				 false,
-				 false,
-				 ItemPropertyDescriptor.BOOLEAN_VALUE_IMAGE,
 				 null,
 				 null));
 	}
@@ -300,6 +277,11 @@ public class ModelImplementsSetServicesItemProvider
 	@Override
 	protected void collectNewChildDescriptors(Collection<Object> newChildDescriptors, Object object) {
 		super.collectNewChildDescriptors(newChildDescriptors, object);
+
+		newChildDescriptors.add
+			(createChildParameter
+				(NUOPCPackage.Literals.MODEL_IMPLEMENTS_SET_SERVICES__CALLS_GENERIC_SET_SERVICES,
+				 NUOPCFactory.eINSTANCE.createCallsGenericSetServices()));
 
 		newChildDescriptors.add
 			(createChildParameter

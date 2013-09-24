@@ -118,6 +118,29 @@ public class NUOPCItemProviderAdapterFactory extends NUOPCAdapterFactory impleme
 	}
 
 	/**
+	 * This keeps track of the one adapter used for all {@link org.earthsystemcurator.cupid.nuopc.fsml.nuopc.CallsGenericSetServices} instances.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	protected CallsGenericSetServicesItemProvider callsGenericSetServicesItemProvider;
+
+	/**
+	 * This creates an adapter for a {@link org.earthsystemcurator.cupid.nuopc.fsml.nuopc.CallsGenericSetServices}.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	@Override
+	public Adapter createCallsGenericSetServicesAdapter() {
+		if (callsGenericSetServicesItemProvider == null) {
+			callsGenericSetServicesItemProvider = new CallsGenericSetServicesItemProvider(this);
+		}
+
+		return callsGenericSetServicesItemProvider;
+	}
+
+	/**
 	 * This keeps track of the one adapter used for all {@link org.earthsystemcurator.cupid.nuopc.fsml.nuopc.ModelImplementsInitP1} instances.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -586,6 +609,7 @@ public class NUOPCItemProviderAdapterFactory extends NUOPCAdapterFactory impleme
 	public void dispose() {
 		if (nuopcModelItemProvider != null) nuopcModelItemProvider.dispose();
 		if (modelImplementsSetServicesItemProvider != null) modelImplementsSetServicesItemProvider.dispose();
+		if (callsGenericSetServicesItemProvider != null) callsGenericSetServicesItemProvider.dispose();
 		if (modelImplementsInitP1ItemProvider != null) modelImplementsInitP1ItemProvider.dispose();
 		if (modelImplementsInitP2ItemProvider != null) modelImplementsInitP2ItemProvider.dispose();
 		if (advertisesImportFieldItemProvider != null) advertisesImportFieldItemProvider.dispose();

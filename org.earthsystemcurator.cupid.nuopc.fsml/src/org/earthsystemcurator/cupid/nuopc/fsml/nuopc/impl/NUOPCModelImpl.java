@@ -35,7 +35,6 @@ import org.eclipse.emf.ecore.util.InternalEList;
  * <ul>
  *   <li>{@link org.earthsystemcurator.cupid.nuopc.fsml.nuopc.impl.NUOPCModelImpl#getName <em>Name</em>}</li>
  *   <li>{@link org.earthsystemcurator.cupid.nuopc.fsml.nuopc.impl.NUOPCModelImpl#getImportsGenericSS <em>Imports Generic SS</em>}</li>
- *   <li>{@link org.earthsystemcurator.cupid.nuopc.fsml.nuopc.impl.NUOPCModelImpl#getSinglePublicSubroutine <em>Single Public Subroutine</em>}</li>
  *   <li>{@link org.earthsystemcurator.cupid.nuopc.fsml.nuopc.impl.NUOPCModelImpl#getImplementsSetServices <em>Implements Set Services</em>}</li>
  *   <li>{@link org.earthsystemcurator.cupid.nuopc.fsml.nuopc.impl.NUOPCModelImpl#getImplementsInitP1 <em>Implements Init P1</em>}</li>
  *   <li>{@link org.earthsystemcurator.cupid.nuopc.fsml.nuopc.impl.NUOPCModelImpl#getImplementsInitP2 <em>Implements Init P2</em>}</li>
@@ -85,26 +84,6 @@ public class NUOPCModelImpl extends EObjectImpl implements NUOPCModel {
 	 * @ordered
 	 */
 	protected String importsGenericSS = IMPORTS_GENERIC_SS_EDEFAULT;
-
-	/**
-	 * The default value of the '{@link #getSinglePublicSubroutine() <em>Single Public Subroutine</em>}' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @see #getSinglePublicSubroutine()
-	 * @generated
-	 * @ordered
-	 */
-	protected static final String SINGLE_PUBLIC_SUBROUTINE_EDEFAULT = null;
-
-	/**
-	 * The cached value of the '{@link #getSinglePublicSubroutine() <em>Single Public Subroutine</em>}' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @see #getSinglePublicSubroutine()
-	 * @generated
-	 * @ordered
-	 */
-	protected String singlePublicSubroutine = SINGLE_PUBLIC_SUBROUTINE_EDEFAULT;
 
 	/**
 	 * The cached value of the '{@link #getImplementsSetServices() <em>Implements Set Services</em>}' containment reference.
@@ -205,27 +184,6 @@ public class NUOPCModelImpl extends EObjectImpl implements NUOPCModel {
 		importsGenericSS = newImportsGenericSS;
 		if (eNotificationRequired())
 			eNotify(new ENotificationImpl(this, Notification.SET, NUOPCPackage.NUOPC_MODEL__IMPORTS_GENERIC_SS, oldImportsGenericSS, importsGenericSS));
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public String getSinglePublicSubroutine() {
-		return singlePublicSubroutine;
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public void setSinglePublicSubroutine(String newSinglePublicSubroutine) {
-		String oldSinglePublicSubroutine = singlePublicSubroutine;
-		singlePublicSubroutine = newSinglePublicSubroutine;
-		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, NUOPCPackage.NUOPC_MODEL__SINGLE_PUBLIC_SUBROUTINE, oldSinglePublicSubroutine, singlePublicSubroutine));
 	}
 
 	/**
@@ -389,8 +347,6 @@ public class NUOPCModelImpl extends EObjectImpl implements NUOPCModel {
 				return getName();
 			case NUOPCPackage.NUOPC_MODEL__IMPORTS_GENERIC_SS:
 				return getImportsGenericSS();
-			case NUOPCPackage.NUOPC_MODEL__SINGLE_PUBLIC_SUBROUTINE:
-				return getSinglePublicSubroutine();
 			case NUOPCPackage.NUOPC_MODEL__IMPLEMENTS_SET_SERVICES:
 				return getImplementsSetServices();
 			case NUOPCPackage.NUOPC_MODEL__IMPLEMENTS_INIT_P1:
@@ -417,9 +373,6 @@ public class NUOPCModelImpl extends EObjectImpl implements NUOPCModel {
 				return;
 			case NUOPCPackage.NUOPC_MODEL__IMPORTS_GENERIC_SS:
 				setImportsGenericSS((String)newValue);
-				return;
-			case NUOPCPackage.NUOPC_MODEL__SINGLE_PUBLIC_SUBROUTINE:
-				setSinglePublicSubroutine((String)newValue);
 				return;
 			case NUOPCPackage.NUOPC_MODEL__IMPLEMENTS_SET_SERVICES:
 				setImplementsSetServices((ModelImplementsSetServices)newValue);
@@ -453,9 +406,6 @@ public class NUOPCModelImpl extends EObjectImpl implements NUOPCModel {
 			case NUOPCPackage.NUOPC_MODEL__IMPORTS_GENERIC_SS:
 				setImportsGenericSS(IMPORTS_GENERIC_SS_EDEFAULT);
 				return;
-			case NUOPCPackage.NUOPC_MODEL__SINGLE_PUBLIC_SUBROUTINE:
-				setSinglePublicSubroutine(SINGLE_PUBLIC_SUBROUTINE_EDEFAULT);
-				return;
 			case NUOPCPackage.NUOPC_MODEL__IMPLEMENTS_SET_SERVICES:
 				setImplementsSetServices((ModelImplementsSetServices)null);
 				return;
@@ -484,8 +434,6 @@ public class NUOPCModelImpl extends EObjectImpl implements NUOPCModel {
 				return NAME_EDEFAULT == null ? name != null : !NAME_EDEFAULT.equals(name);
 			case NUOPCPackage.NUOPC_MODEL__IMPORTS_GENERIC_SS:
 				return IMPORTS_GENERIC_SS_EDEFAULT == null ? importsGenericSS != null : !IMPORTS_GENERIC_SS_EDEFAULT.equals(importsGenericSS);
-			case NUOPCPackage.NUOPC_MODEL__SINGLE_PUBLIC_SUBROUTINE:
-				return SINGLE_PUBLIC_SUBROUTINE_EDEFAULT == null ? singlePublicSubroutine != null : !SINGLE_PUBLIC_SUBROUTINE_EDEFAULT.equals(singlePublicSubroutine);
 			case NUOPCPackage.NUOPC_MODEL__IMPLEMENTS_SET_SERVICES:
 				return implementsSetServices != null;
 			case NUOPCPackage.NUOPC_MODEL__IMPLEMENTS_INIT_P1:
@@ -512,8 +460,6 @@ public class NUOPCModelImpl extends EObjectImpl implements NUOPCModel {
 		result.append(name);
 		result.append(", importsGenericSS: ");
 		result.append(importsGenericSS);
-		result.append(", singlePublicSubroutine: ");
-		result.append(singlePublicSubroutine);
 		result.append(')');
 		return result.toString();
 	}

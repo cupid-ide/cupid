@@ -14,6 +14,8 @@ import org.eclipse.emf.ecore.EObject;
  * The following features are supported:
  * <ul>
  *   <li>{@link org.earthsystemcurator.cupid.nuopc.fsml.nuopc.NUOPCDriver__ImplementsSetModelCount#getParent <em>Parent</em>}</li>
+ *   <li>{@link org.earthsystemcurator.cupid.nuopc.fsml.nuopc.NUOPCDriver__ImplementsSetModelCount#getGcomp <em>Gcomp</em>}</li>
+ *   <li>{@link org.earthsystemcurator.cupid.nuopc.fsml.nuopc.NUOPCDriver__ImplementsSetModelCount#getRc <em>Rc</em>}</li>
  *   <li>{@link org.earthsystemcurator.cupid.nuopc.fsml.nuopc.NUOPCDriver__ImplementsSetModelCount#getName <em>Name</em>}</li>
  *   <li>{@link org.earthsystemcurator.cupid.nuopc.fsml.nuopc.NUOPCDriver__ImplementsSetModelCount#getDriverInternalState <em>Driver Internal State</em>}</li>
  *   <li>{@link org.earthsystemcurator.cupid.nuopc.fsml.nuopc.NUOPCDriver__ImplementsSetModelCount#getGetsInternalState <em>Gets Internal State</em>}</li>
@@ -55,8 +57,62 @@ public interface NUOPCDriver__ImplementsSetModelCount extends EObject {
 	void setParent(NUOPCDriver value);
 
 	/**
+	 * Returns the value of the '<em><b>Gcomp</b></em>' attribute.
+	 * The default value is <code>"gcomp"</code>.
+	 * <!-- begin-user-doc -->
+	 * <p>
+	 * If the meaning of the '<em>Gcomp</em>' attribute isn't clear,
+	 * there really should be more of a description here...
+	 * </p>
+	 * <!-- end-user-doc -->
+	 * @return the value of the '<em>Gcomp</em>' attribute.
+	 * @see #setGcomp(String)
+	 * @see org.earthsystemcurator.cupid.nuopc.fsml.nuopc.NUOPCPackage#getNUOPCDriver__ImplementsSetModelCount_Gcomp()
+	 * @model default="gcomp"
+	 * @generated
+	 */
+	String getGcomp();
+
+	/**
+	 * Sets the value of the '{@link org.earthsystemcurator.cupid.nuopc.fsml.nuopc.NUOPCDriver__ImplementsSetModelCount#getGcomp <em>Gcomp</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @param value the new value of the '<em>Gcomp</em>' attribute.
+	 * @see #getGcomp()
+	 * @generated
+	 */
+	void setGcomp(String value);
+
+	/**
+	 * Returns the value of the '<em><b>Rc</b></em>' attribute.
+	 * The default value is <code>"rc"</code>.
+	 * <!-- begin-user-doc -->
+	 * <p>
+	 * If the meaning of the '<em>Rc</em>' attribute isn't clear,
+	 * there really should be more of a description here...
+	 * </p>
+	 * <!-- end-user-doc -->
+	 * @return the value of the '<em>Rc</em>' attribute.
+	 * @see #setRc(String)
+	 * @see org.earthsystemcurator.cupid.nuopc.fsml.nuopc.NUOPCPackage#getNUOPCDriver__ImplementsSetModelCount_Rc()
+	 * @model default="rc"
+	 * @generated
+	 */
+	String getRc();
+
+	/**
+	 * Sets the value of the '{@link org.earthsystemcurator.cupid.nuopc.fsml.nuopc.NUOPCDriver__ImplementsSetModelCount#getRc <em>Rc</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @param value the new value of the '<em>Rc</em>' attribute.
+	 * @see #getRc()
+	 * @generated
+	 */
+	void setRc(String value);
+
+	/**
 	 * Returns the value of the '<em><b>Name</b></em>' attribute.
-	 * The default value is <code>"SetServicesDefault"</code>.
+	 * The default value is <code>"SetModelCount"</code>.
 	 * <!-- begin-user-doc -->
 	 * <p>
 	 * If the meaning of the '<em>Name</em>' attribute isn't clear,
@@ -66,8 +122,8 @@ public interface NUOPCDriver__ImplementsSetModelCount extends EObject {
 	 * @return the value of the '<em>Name</em>' attribute.
 	 * @see #setName(String)
 	 * @see org.earthsystemcurator.cupid.nuopc.fsml.nuopc.NUOPCPackage#getNUOPCDriver__ImplementsSetModelCount_Name()
-	 * @model default="SetServicesDefault" id="true" required="true"
-	 *        annotation="http://www.earthsystemcog.org/projects/nuopc mapping='subroutineName'"
+	 * @model default="SetModelCount" id="true" required="true"
+	 *        annotation="http://www.earthsystemcog.org/projects/nuopc mappingX='subroutineName'"
 	 * @generated
 	 */
 	String getName();
@@ -120,7 +176,7 @@ public interface NUOPCDriver__ImplementsSetModelCount extends EObject {
 	 * @see #setGetsInternalState(GetsInternalState)
 	 * @see org.earthsystemcurator.cupid.nuopc.fsml.nuopc.NUOPCPackage#getNUOPCDriver__ImplementsSetModelCount_GetsInternalState()
 	 * @model containment="true"
-	 *        annotation="http://www.earthsystemcog.org/projects/nuopc mapping='call: \"ESMF_UserCompGetInternalState\"'"
+	 *        annotation="http://www.earthsystemcog.org/projects/nuopc mapping='call: \"ESMF_UserCompGetInternalState(#ignore, #label, #../driverInternalState, #ignore)\"'"
 	 * @generated
 	 */
 	GetsInternalState getGetsInternalState();
