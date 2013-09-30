@@ -54,6 +54,7 @@ public interface AdvertisesImportField extends EObject {
 
 	/**
 	 * Returns the value of the '<em><b>Adds To State</b></em>' attribute.
+	 * The default value is <code>"importState"</code>.
 	 * <!-- begin-user-doc -->
 	 * <p>
 	 * If the meaning of the '<em>Adds To State</em>' attribute isn't clear,
@@ -63,7 +64,7 @@ public interface AdvertisesImportField extends EObject {
 	 * @return the value of the '<em>Adds To State</em>' attribute.
 	 * @see #setAddsToState(String)
 	 * @see org.earthsystemcurator.cupid.nuopc.fsml.nuopc.NUOPCPackage#getAdvertisesImportField_AddsToState()
-	 * @model required="true"
+	 * @model default="importState" required="true"
 	 *        annotation="http://www.earthsystemcog.org/projects/nuopc mappingX='argByIndex: 1'"
 	 * @generated
 	 */

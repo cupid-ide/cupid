@@ -45,6 +45,7 @@ import org.eclipse.jface.dialogs.MessageDialog;
 import org.eclipse.jface.operation.IRunnableWithProgress;
 import org.eclipse.jface.viewers.ISelection;
 import org.eclipse.jface.viewers.IStructuredSelection;
+import org.eclipse.jface.viewers.ITreeSelection;
 import org.eclipse.ltk.core.refactoring.TextFileChange;
 
 /**
@@ -69,7 +70,7 @@ public class ForwardHandler extends AbstractHandler {
 	 */
 	public Object execute(ExecutionEvent event) throws ExecutionException {
 
-		System.out.println("Executing forward engineer...");
+		//System.out.println("Executing forward engineer...");
 		
 		//IWorkbenchWindow window = HandlerUtil.getActiveWorkbenchWindowChecked(event);
 			
@@ -175,14 +176,31 @@ public class ForwardHandler extends AbstractHandler {
         
         //System.out.println("ast: " + ast.getRoot().toString());
         
-        
+		final IProject selectedProject;
+		ISelection sel = HandlerUtil.getCurrentSelection(event);
+		if (sel instanceof ITreeSelection) {
+			Object item = ((ITreeSelection) sel).getFirstElement();
+			if (item instanceof IProject) {
+				selectedProject = (IProject) item;
+				//ystem.out.println("Selected project: " + ((IProject) item).getName());
+			}
+			else {
+				return null;
+			}			
+		}
+		else {
+			return null;
+		}
+		
+	
+		
         IRunnableWithProgress operation = new IRunnableWithProgress() {
 			
         	public void run(IProgressMonitor monitor) {
 				
-        		IWorkspace workspace = ResourcesPlugin.getWorkspace();
-        		IWorkspaceRoot root = workspace.getRoot();
-        		IProject project  = root.getProject("AtmOcnLndProto");
+        		//IWorkspace workspace = ResourcesPlugin.getWorkspace();
+        		//IWorkspaceRoot root = workspace.getRoot();
+        		//IProject project  = root.getProject("AtmOcnLndProto");
         		
         		//IFolder folder = project.getFolder("Folder1");
         		//IFile file = project.getFile("hello.txt");
@@ -206,16 +224,17 @@ public class ForwardHandler extends AbstractHandler {
         		//ResourceSet resourceSet1 = new ResourceSetImpl();
         		ResourceSet resourceSet2 = new ResourceSetImpl();
         		//String xmi1 = ReverseHandler.reverseFile;
-        		String xmi2 = ForwardHandler.assertedFile;
+        		//String xmi2 = ForwardHandler.assertedFile;
+        		String xmi2 = selectedProject.getFile("asserted.nuopc").getFullPath().toOSString();
         		//Resource reversed = load(xmi1, resourceSet1);
         		Resource asserted = load(xmi2, resourceSet2);
         		
         		final PhotranVPG vpg = PhotranVPG.getInstance();
         	    final ReverseEngineer re = new ReverseEngineer();
-        	    NUOPCApplication reversed1 = re.reverse(vpg);
+        	    NUOPCApplication reversed1 = re.reverse(selectedProject, vpg);
         		
         		ForwardEngineer fe = new ForwardEngineer();
-        		fe.setContainer(project);
+        		fe.setContainer(selectedProject);
         		
         		fe.forward(reversed1,
         				   (NUOPCApplication) asserted.getContents().get(0),

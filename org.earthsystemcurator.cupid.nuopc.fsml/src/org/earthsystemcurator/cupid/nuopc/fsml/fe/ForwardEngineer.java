@@ -136,11 +136,11 @@ public class ForwardEngineer {
 		
 		for (Diff d : m.getDifferences()) {
 			//only interested in DELETEs for now (i.e., an addition to the asserted model)
-			//if (d.getKind() == DifferenceKind.DELETE) {
+			if (d.getKind() == DifferenceKind.DELETE) {
 				if (d instanceof ReferenceChangeSpec) {
 					System.out.println("\tDiff: (" + d.getKind() + ") ==> " + d + "\n");
-					//forwardDiff((ReferenceChangeSpec) d);
-					
+					forwardDiff((ReferenceChangeSpec) d);
+					/*
 					System.out.print("Process diff? ");
 					try {
 						String resp = br.readLine();
@@ -150,9 +150,9 @@ public class ForwardEngineer {
 					} catch (IOException e) {
 						return;
 					}
-					
+					*/
 				}
-			//}
+			}
 		}
 		forwardDiffs(m.getSubmatches());
 	}
@@ -291,7 +291,8 @@ public class ForwardEngineer {
 	*/
 	
 	
-	public IFortranAST module(PhotranVPG vpg, EObject modelElem, Map<String, Object> params) {
+	//public IFortranAST module(PhotranVPG vpg, EObject modelElem, Map<String, Object> params) {
+	public IFortranAST module(Set<IFortranAST> asts, EObject modelElem, Map<String, Object> params) {
 		
 		//System.out.println("Module: vpg context = " + vpg);
 		//vpg.getVPGWriter()
@@ -340,9 +341,10 @@ public class ForwardEngineer {
 			}
 		}
 		
-		//IFortranAST ast = vpg.parse(fileToAdd.getFullPath().toOSString());
-		//vpg.
-		IFortranAST ast = vpg.acquireTransientAST(fileToAdd);
+		
+		IFortranAST ast = PhotranVPG.getInstance().acquireTransientAST(fileToAdd);
+		asts.add(ast);
+		
 		return ast;
 		
 		//ASTModuleNode amn = (ASTModuleNode) CodeExtraction.parseLiteralProgramUnit(code);
@@ -442,9 +444,11 @@ public class ForwardEngineer {
 				vars.set(i, EcoreUtils.eGetSFValue(vars.get(i).substring(1), modelElem, vars.get(i).substring(1)));
 			}
 		}	
-			
 		
-		ST code = new ST("\n\nsubroutine <name>(<vars:{v|<v>}; separator=\", \">)\n"
+		String doc = Regex.getDocFromAnnotation(modelElem.eClass());
+				
+		ST code = new ST("\n\n<if(doc)>\n!\n! <doc; wrap=\"\n! \", separator=\" \">\n!\n<endif>"
+				       + "subroutine <name>(<vars:{v|<v>}; separator=\", \">)\n"
 					   + "<vars, types, intents:{v, t, i|    <t><if(i)>, intent(<i>)<endif> :: <v>}; separator=\"\n\">\n"
 					   + "end subroutine\n");
 				
@@ -452,9 +456,13 @@ public class ForwardEngineer {
 		code.add("types", types);
 		code.add("intents", intents);
 		code.add("vars", vars);
-		System.out.println("Code to parse:\n" + code.render() + "\n");
+		if (doc != null) {
+			doc = doc.replaceAll("\n", "\n! ");
+			code.add("doc", doc.split(" "));			
+		}
+		System.out.println("Code to parse:\n" + code.render(72) + "\n");
 		
-		ASTSubroutineSubprogramNode ssn = (ASTSubroutineSubprogramNode) CodeExtraction.parseLiteralProgramUnit(code.render());
+		ASTSubroutineSubprogramNode ssn = (ASTSubroutineSubprogramNode) CodeExtraction.parseLiteralProgramUnit(code.render(72));
 		
 		//assume it is a module for now
 		ASTModuleNode amn = (ASTModuleNode) context.getRoot().getProgramUnitList().get(0);

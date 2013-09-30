@@ -33,13 +33,13 @@
     <eStructuralFeatures xsi:type="ecore:EReference" name="implementsInitP1" upperBound="-1"
         eType="#//ModelImplementsInitP1" containment="true">
       <eAnnotations source="http://www.earthsystemcog.org/projects/nuopc">
-        <details key="mapping" value="subroutine: &quot;#name(type(ESMF_GridComp), type(ESMF_State) #importParam, type(ESMF_State) #exportParam, &#x9;type(ESMF_Clock), integer)&quot;"/>
+        <details key="mapping" value="subroutine: &quot;#name(inout type(ESMF_GridComp) gcomp, inout type(ESMF_State) #importParam, inout type(ESMF_State) #exportParam, inout type(ESMF_Clock) clock, out integer rc)&quot;"/>
       </eAnnotations>
     </eStructuralFeatures>
     <eStructuralFeatures xsi:type="ecore:EReference" name="implementsInitP2" eType="#//ModelImplementsInitP2"
         containment="true">
       <eAnnotations source="http://www.earthsystemcog.org/projects/nuopc">
-        <details key="mapping" value="subroutine: &quot;#name(type(ESMF_GridComp), type(ESMF_State) #importParam, type(ESMF_State) #exportParam, type(ESMF_Clock), integer)&quot;"/>
+        <details key="mapping" value="subroutine: &quot;#name(inout type(ESMF_GridComp) gcomp, inout type(ESMF_State) #importParam, inout type(ESMF_State) #exportParam, inout type(ESMF_Clock) clock, out integer rc)&quot;"/>
       </eAnnotations>
     </eStructuralFeatures>
     <eStructuralFeatures xsi:type="ecore:EReference" name="implementsModelAdvance"
@@ -107,6 +107,10 @@
         defaultValueLiteral="rc"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="ModelImplementsInitP1">
+    <eAnnotations source="http://www.earthsystemcog.org/projects/nuopc">
+      <details key="mapping" value="subroutine: &quot;#name(inout type(ESMF_GridComp) gcomp, inout type(ESMF_State) #importParam, inout type(ESMF_State) #exportParam, inout type(ESMF_Clock) clock, out integer rc)&quot;"/>
+      <details key="doc" value="Initialize Phase Definition: IPDv01p1&#xD;&#xA;&#xD;&#xA;In this phase, models should advertise the set of import and export fields. This is the list of fields that may potentially be exchanged during coupling, although some fields may not be connected for a particular configuration."/>
+    </eAnnotations>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="name" lowerBound="1" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"
         defaultValueLiteral="InitP1" iD="true">
       <eAnnotations source="http://www.earthsystemcog.org/projects/nuopc">
@@ -148,6 +152,10 @@
     </eStructuralFeatures>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="ModelImplementsInitP2">
+    <eAnnotations source="http://www.earthsystemcog.org/projects/nuopc">
+      <details key="mapping" value="subroutine: &quot;#name(inout type(ESMF_GridComp) gcomp, inout type(ESMF_State) #importParam, inout type(ESMF_State) #exportParam, inout type(ESMF_Clock) clock, out integer rc)&quot;"/>
+      <details key="doc" value="Initialize Phase Definition: IPDv01p2&#xD;&#xA;&#xD;&#xA;In this phase, models should realize the set of import and export fields. "/>
+    </eAnnotations>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="name" lowerBound="1" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"
         defaultValueLiteral="InitP2" iD="true">
       <eAnnotations source="http://www.earthsystemcog.org/projects/nuopc">
@@ -192,7 +200,7 @@
     <eStructuralFeatures xsi:type="ecore:EReference" name="parent" lowerBound="1"
         eType="#//ModelImplementsInitP1" eOpposite="#//ModelImplementsInitP1/advertisesImportField"/>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="addsToState" lowerBound="1"
-        eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString">
+        eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString" defaultValueLiteral="importState">
       <eAnnotations source="http://www.earthsystemcog.org/projects/nuopc">
         <details key="mappingX" value="argByIndex: 1"/>
       </eAnnotations>
@@ -216,7 +224,7 @@
     <eStructuralFeatures xsi:type="ecore:EReference" name="parent" lowerBound="1"
         eType="#//ModelImplementsInitP1" eOpposite="#//ModelImplementsInitP1/advertisesExportField"/>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="addsToState" lowerBound="1"
-        eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString">
+        eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString" defaultValueLiteral="exportState">
       <eAnnotations source="http://www.earthsystemcog.org/projects/nuopc">
         <details key="mappingX" value="argByIndex: 1"/>
       </eAnnotations>
@@ -243,7 +251,7 @@
     <eStructuralFeatures xsi:type="ecore:EReference" name="parent" lowerBound="1"
         eType="#//ModelImplementsInitP2" eOpposite="#//ModelImplementsInitP2/realizesImportField"/>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="realizedInState" lowerBound="1"
-        eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString">
+        eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString" defaultValueLiteral="importState">
       <eAnnotations source="http://www.earthsystemcog.org/projects/nuopc">
         <details key="mappingX" value="argByIndex: 1"/>
       </eAnnotations>
@@ -267,7 +275,7 @@
     <eStructuralFeatures xsi:type="ecore:EReference" name="parent" lowerBound="1"
         eType="#//ModelImplementsInitP2" eOpposite="#//ModelImplementsInitP2/realizesExportField"/>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="realizedInState" lowerBound="1"
-        eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString">
+        eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString" defaultValueLiteral="exportState">
       <eAnnotations source="http://www.earthsystemcog.org/projects/nuopc">
         <details key="mappingX" value="argByIndex: 1"/>
       </eAnnotations>

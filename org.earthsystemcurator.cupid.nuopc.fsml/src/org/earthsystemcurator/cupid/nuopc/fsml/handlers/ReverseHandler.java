@@ -1,10 +1,14 @@
 package org.earthsystemcurator.cupid.nuopc.fsml.handlers;
 
+import java.io.BufferedInputStream;
 import java.io.BufferedReader;
+import java.io.ByteArrayInputStream;
 import java.io.File;
 import java.io.IOException;
+import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.Reader;
+import java.io.StringBufferInputStream;
 import java.lang.reflect.InvocationTargetException;
 
 import org.earthsystemcurator.cupid.nuopc.fsml.nuopc.NUOPCApplication;
@@ -15,6 +19,7 @@ import org.eclipse.core.commands.AbstractHandler;
 import org.eclipse.core.commands.ExecutionEvent;
 import org.eclipse.core.commands.ExecutionException;
 import org.eclipse.core.resources.IFile;
+import org.eclipse.core.resources.IProject;
 import org.eclipse.core.resources.IResource;
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IAdaptable;
@@ -38,6 +43,7 @@ import org.eclipse.jface.dialogs.MessageDialog;
 import org.eclipse.jface.operation.IRunnableWithProgress;
 import org.eclipse.jface.viewers.ISelection;
 import org.eclipse.jface.viewers.IStructuredSelection;
+import org.eclipse.jface.viewers.ITreeSelection;
 import org.eclipse.ltk.core.refactoring.TextFileChange;
 
 /**
@@ -62,8 +68,21 @@ public class ReverseHandler extends AbstractHandler {
 	 */
 	public Object execute(ExecutionEvent event) throws ExecutionException {
 
-		IWorkbenchWindow window = HandlerUtil.getActiveWorkbenchWindowChecked(event);
-
+		//IWorkbenchWindow window = HandlerUtil.getActiveWorkbenchWindowChecked(event);
+		
+		IProject selectedProject = null;
+		ISelection sel = HandlerUtil.getCurrentSelection(event);
+		if (sel instanceof ITreeSelection) {
+			Object item = ((ITreeSelection) sel).getFirstElement();
+			if (item instanceof IProject) {
+				selectedProject = (IProject) item;
+				//ystem.out.println("Selected project: " + ((IProject) item).getName());
+			}
+		}
+		
+		if (selectedProject == null) return null;
+		
+		
 		/*
 		IResource res = extractSelection(window.getActivePage().getSelection());
 
@@ -150,27 +169,29 @@ public class ReverseHandler extends AbstractHandler {
         @SuppressWarnings("unused")
         NUOPCPackage pack = NUOPCPackage.eINSTANCE;
                 
-        URI fileURI = URI.createFileURI(new File(reverseFile).getAbsolutePath());            
-        
-        Resource resource = resourceSet.getResource(fileURI, true);
-        
-        //Model m = (Model) resource.getEObject("/");
-        //System.out.println("Model = " + m);
-        
         
         PhotranVPG vpg = PhotranVPG.getInstance();
         ReverseEngineer re = new ReverseEngineer();
         //NUOPCModel m = re.reverse(ast);
-        NUOPCApplication a = re.reverse(vpg);
+        NUOPCApplication a = re.reverse(selectedProject, vpg);        
         
         if (a == null) return null;
         
+      
+        IFile revFile = selectedProject.getFile("reverse.nuopc");
         /*
-        ModelToModuleMapping map = 
-        		new ModelToModuleMapping(null, (ASTModuleNode) ast.getRoot().getProgramUnitList().get(0), ast);
-        Model m = map.reverse();
+        if (!revFile.exists()) {
+        	try {
+				revFile.create(new ByteArrayInputStream("".getBytes()), IResource.NONE, null);
+			} catch (CoreException e) {				
+				e.printStackTrace();
+				return null;
+			}
+        }
         */
-        
+        URI fileURI = URI.createFileURI(revFile.getFullPath().toOSString());            
+        Resource resource = resourceSet.createResource(fileURI); 
+               
         resource.getContents().clear();
         resource.getContents().add(a);
         try {

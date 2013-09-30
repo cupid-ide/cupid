@@ -1351,25 +1351,25 @@ public class NUOPCPackageImpl extends EPackageImpl implements NUOPCPackage {
 
 		initEClass(advertisesImportFieldEClass, AdvertisesImportField.class, "AdvertisesImportField", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 		initEReference(getAdvertisesImportField_Parent(), this.getModelImplementsInitP1(), this.getModelImplementsInitP1_AdvertisesImportField(), "parent", null, 1, 1, AdvertisesImportField.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-		initEAttribute(getAdvertisesImportField_AddsToState(), ecorePackage.getEString(), "addsToState", null, 1, 1, AdvertisesImportField.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEAttribute(getAdvertisesImportField_AddsToState(), ecorePackage.getEString(), "addsToState", "importState", 1, 1, AdvertisesImportField.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEAttribute(getAdvertisesImportField_AddsToImportState(), ecorePackage.getEBoolean(), "addsToImportState", null, 0, 1, AdvertisesImportField.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, IS_DERIVED, IS_ORDERED);
 		initEAttribute(getAdvertisesImportField_StandardName(), ecorePackage.getEString(), "standardName", null, 0, 1, AdvertisesImportField.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
 		initEClass(advertisesExportFieldEClass, AdvertisesExportField.class, "AdvertisesExportField", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 		initEReference(getAdvertisesExportField_Parent(), this.getModelImplementsInitP1(), this.getModelImplementsInitP1_AdvertisesExportField(), "parent", null, 1, 1, AdvertisesExportField.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-		initEAttribute(getAdvertisesExportField_AddsToState(), ecorePackage.getEString(), "addsToState", null, 1, 1, AdvertisesExportField.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEAttribute(getAdvertisesExportField_AddsToState(), ecorePackage.getEString(), "addsToState", "exportState", 1, 1, AdvertisesExportField.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEAttribute(getAdvertisesExportField_AddsToExportState(), ecorePackage.getEBoolean(), "addsToExportState", null, 0, 1, AdvertisesExportField.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, IS_DERIVED, IS_ORDERED);
 		initEAttribute(getAdvertisesExportField_StandardName(), ecorePackage.getEString(), "standardName", null, 0, 1, AdvertisesExportField.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
 		initEClass(realizesImportFieldEClass, RealizesImportField.class, "RealizesImportField", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 		initEReference(getRealizesImportField_Parent(), this.getModelImplementsInitP2(), this.getModelImplementsInitP2_RealizesImportField(), "parent", null, 1, 1, RealizesImportField.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-		initEAttribute(getRealizesImportField_RealizedInState(), ecorePackage.getEString(), "realizedInState", null, 1, 1, RealizesImportField.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEAttribute(getRealizesImportField_RealizedInState(), ecorePackage.getEString(), "realizedInState", "importState", 1, 1, RealizesImportField.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEAttribute(getRealizesImportField_RealizedInImportState(), ecorePackage.getEBoolean(), "realizedInImportState", null, 0, 1, RealizesImportField.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, IS_DERIVED, IS_ORDERED);
 		initEAttribute(getRealizesImportField_Field(), ecorePackage.getEString(), "field", null, 0, 1, RealizesImportField.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
 		initEClass(realizesExportFieldEClass, RealizesExportField.class, "RealizesExportField", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 		initEReference(getRealizesExportField_Parent(), this.getModelImplementsInitP2(), this.getModelImplementsInitP2_RealizesExportField(), "parent", null, 1, 1, RealizesExportField.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-		initEAttribute(getRealizesExportField_RealizedInState(), ecorePackage.getEString(), "realizedInState", null, 1, 1, RealizesExportField.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEAttribute(getRealizesExportField_RealizedInState(), ecorePackage.getEString(), "realizedInState", "exportState", 1, 1, RealizesExportField.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEAttribute(getRealizesExportField_RealizedInExportState(), ecorePackage.getEBoolean(), "realizedInExportState", null, 0, 1, RealizesExportField.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, IS_DERIVED, IS_ORDERED);
 		initEAttribute(getRealizesExportField_Field(), ecorePackage.getEString(), "field", null, 0, 1, RealizesExportField.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
@@ -1457,7 +1457,7 @@ public class NUOPCPackageImpl extends EPackageImpl implements NUOPCPackage {
 			 "invocationDelegates", "http://www.eclipse.org/emf/2002/Ecore/OCL",
 			 "settingDelegates", "http://www.eclipse.org/emf/2002/Ecore/OCL",
 			 "validationDelegates", "http://www.eclipse.org/emf/2002/Ecore/OCL"
-		   });																																																																														
+		   });																																																																																
 	}
 
 	/**
@@ -1497,13 +1497,13 @@ public class NUOPCPackageImpl extends EPackageImpl implements NUOPCPackage {
 		  (getNUOPCModel_ImplementsInitP1(), 
 		   source, 
 		   new String[] {
-			 "mapping", "subroutine: \"#name(type(ESMF_GridComp), type(ESMF_State) #importParam, type(ESMF_State) #exportParam, \ttype(ESMF_Clock), integer)\""
+			 "mapping", "subroutine: \"#name(inout type(ESMF_GridComp) gcomp, inout type(ESMF_State) #importParam, inout type(ESMF_State) #exportParam, inout type(ESMF_Clock) clock, out integer rc)\""
 		   });		
 		addAnnotation
 		  (getNUOPCModel_ImplementsInitP2(), 
 		   source, 
 		   new String[] {
-			 "mapping", "subroutine: \"#name(type(ESMF_GridComp), type(ESMF_State) #importParam, type(ESMF_State) #exportParam, type(ESMF_Clock), integer)\""
+			 "mapping", "subroutine: \"#name(inout type(ESMF_GridComp) gcomp, inout type(ESMF_State) #importParam, inout type(ESMF_State) #exportParam, inout type(ESMF_Clock) clock, out integer rc)\""
 		   });		
 		addAnnotation
 		  (getNUOPCModel_ImplementsModelAdvance(), 
@@ -1561,6 +1561,13 @@ public class NUOPCPackageImpl extends EPackageImpl implements NUOPCPackage {
 			 "mappingX", "call: \"ESMF_MethodAdd(#gcomp, #label, #userRoutine, #rc)\""
 		   });		
 		addAnnotation
+		  (modelImplementsInitP1EClass, 
+		   source, 
+		   new String[] {
+			 "mapping", "subroutine: \"#name(inout type(ESMF_GridComp) gcomp, inout type(ESMF_State) #importParam, inout type(ESMF_State) #exportParam, inout type(ESMF_Clock) clock, out integer rc)\"",
+			 "doc", "Initialize Phase Definition: IPDv01p1\r\n\r\nIn this phase, models should advertise the set of import and export fields. This is the list of fields that may potentially be exchanged during coupling, although some fields may not be connected for a particular configuration."
+		   });		
+		addAnnotation
 		  (getModelImplementsInitP1_Name(), 
 		   source, 
 		   new String[] {
@@ -1596,6 +1603,13 @@ public class NUOPCPackageImpl extends EPackageImpl implements NUOPCPackage {
 		   new String[] {
 			 "essential", "true"
 		   });			
+		addAnnotation
+		  (modelImplementsInitP2EClass, 
+		   source, 
+		   new String[] {
+			 "mapping", "subroutine: \"#name(inout type(ESMF_GridComp) gcomp, inout type(ESMF_State) #importParam, inout type(ESMF_State) #exportParam, inout type(ESMF_Clock) clock, out integer rc)\"",
+			 "doc", "Initialize Phase Definition: IPDv01p2\r\n\r\nIn this phase, models should realize the set of import and export fields. "
+		   });		
 		addAnnotation
 		  (getModelImplementsInitP2_Name(), 
 		   source, 
@@ -1909,13 +1923,13 @@ public class NUOPCPackageImpl extends EPackageImpl implements NUOPCPackage {
 	 * @generated
 	 */
 	protected void createOCLAnnotations() {
-		String source = "http://www.eclipse.org/emf/2002/Ecore/OCL";																								
+		String source = "http://www.eclipse.org/emf/2002/Ecore/OCL";																									
 		addAnnotation
 		  (getModelImplementsInitP1_AdvertisesAtLeastOneField(), 
 		   source, 
 		   new String[] {
 			 "derivation", "self.advertisesExportField->size() > 0 or self.advertisesImportField->size() > 0"
-		   });								
+		   });									
 		addAnnotation
 		  (getModelImplementsInitP2_RealizesAtLeastOneField(), 
 		   source, 

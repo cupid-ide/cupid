@@ -38,6 +38,16 @@
             id="org.earthsystemcurator.cupid.nuopc.fsml.commands.compareCommand"
             name="Compare">
       </command>
+      <category
+            id="org.earthsystemcurator.cupid.nuopc.fsml.nuopcNature.category"
+            name="NUOPC Project Nature commands">
+      </category>
+      <command
+            categoryId="org.earthsystemcurator.cupid.nuopc.fsml.nuopcNature.category"
+            defaultHandler="org.earthsystemcurator.cupid.nuopc.fsml.builder.AddRemoveNUOPCNatureHandler"
+            id="org.earthsystemcurator.cupid.nuopc.fsml.addRemoveNUOPCNature"
+            name="Add/RemoveNUOPC Project Nature">
+      </command>
    </extension>
    <extension
          point="org.eclipse.ui.handlers">
@@ -81,6 +91,7 @@
             </command>
          </menu>
       </menuContribution>
+      
       <menuContribution
             locationURI="toolbar:org.eclipse.ui.main.toolbar?after=additions">
          <toolbar
@@ -106,6 +117,144 @@
             </command>
          </toolbar>
       </menuContribution>
+      
+       <menuContribution
+            locationURI="popup:org.eclipse.ui.navigator.ProjectExplorer#PopupMenu?after=additions">
+         <command
+               commandId="org.earthsystemcurator.cupid.nuopc.fsml.commands.reverseCommand"
+               id="org.earthsystemcurator.cupid.nuopc.fsml.menus.reverseCommand">
+            <visibleWhen
+                  checkEnabled="false">
+               <with
+                     variable="selection">
+                  <iterate
+                        operator="and">
+                     <instanceof
+                           value="org.eclipse.core.resources.IProject">
+                     </instanceof>
+                  </iterate>
+               </with>
+            </visibleWhen>
+         </command>
+         <command
+               commandId="org.earthsystemcurator.cupid.nuopc.fsml.commands.forwardCommand"
+               id="org.earthsystemcurator.cupid.nuopc.fsml.menus.forwardCommand"
+               tooltip="Forward engineer (generate code)">
+            <visibleWhen
+                  checkEnabled="false">
+               <with
+                     variable="selection">
+                  <iterate
+                        operator="and">
+                     <instanceof
+                           value="org.eclipse.core.resources.IProject">
+                     </instanceof>
+                  </iterate>
+               </with>
+            </visibleWhen>
+         </command>
+      </menuContribution>
+      
+       
+      <menuContribution
+            locationURI="popup:org.eclipse.ui.projectConfigure?after=additions">
+         <command
+               commandId="org.earthsystemcurator.cupid.nuopc.fsml.addRemoveNUOPCNature"
+               label="Remove NUOPC project nature"
+               style="push">
+            <visibleWhen
+                  checkEnabled="false">
+               <with
+                     variable="selection">
+                  <count
+                        value="1">
+                  </count>
+                  <iterate>
+                     <and>
+                        <instanceof
+                              value="org.eclipse.core.resources.IProject">
+                        </instanceof>
+                        <test
+                              property="org.eclipse.core.resources.projectNature"
+                              value="org.earthsystemcurator.cupid.nuopc.fsml.nuopcNature">
+                        </test>
+                     </and>
+                  </iterate>
+               </with>
+            </visibleWhen>
+         </command>
+         <command
+               commandId="org.earthsystemcurator.cupid.nuopc.fsml.addRemoveNUOPCNature"
+               label="Add NUOPC project nature"
+               style="push">
+            <visibleWhen
+                  checkEnabled="false">
+               <with
+                     variable="selection">
+                  <count
+                        value="1">
+                  </count>
+                  <iterate>
+                     <and>
+                        <instanceof
+                              value="org.eclipse.core.resources.IProject">
+                        </instanceof>
+                        <not>
+                           <test
+                                 property="org.eclipse.core.resources.projectNature"
+                                 value="org.earthsystemcurator.cupid.nuopc.fsml.nuopcNature">
+                           </test>
+                        </not>
+                     </and>
+                  </iterate>
+               </with>
+            </visibleWhen>
+         </command>
+      </menuContribution>
+   </extension>
+   <extension
+         id="nuopcBuilder"
+         name="NUOPC Project Builder"
+         point="org.eclipse.core.resources.builders">
+      <builder
+            hasNature="true">
+         <run
+               class="org.earthsystemcurator.cupid.nuopc.fsml.builder.NUOPCBuilder">
+         </run>
+      </builder>
+   </extension>
+   <extension
+         id="nuopcNature"
+         name="NUOPC Project Nature"
+         point="org.eclipse.core.resources.natures">
+      <runtime>
+         <run
+               class="org.earthsystemcurator.cupid.nuopc.fsml.builder.NUOPCNature">
+         </run>
+      </runtime>
+      <builder
+            id="org.earthsystemcurator.cupid.nuopc.fsml.nuopcBuilder">
+      </builder>
+   </extension>
+   <extension
+         id="xmlProblem"
+         name="XML Problem"
+         point="org.eclipse.core.resources.markers">
+      <super
+            type="org.eclipse.core.resources.problemmarker">
+      </super>
+      <persistent
+            value="true">
+      </persistent>
+   </extension>
+   <extension
+         id="id1"
+         point="org.eclipse.core.resources.natures">
+      <runtime>
+         <run
+               class="org.earthsystemcurator.cupid.nuopc.fsml.ProjectNature1">
+         </run>
+      </runtime>
    </extension>
 
 </plugin>

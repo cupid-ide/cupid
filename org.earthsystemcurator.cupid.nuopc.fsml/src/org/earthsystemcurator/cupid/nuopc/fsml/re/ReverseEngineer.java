@@ -4,6 +4,7 @@ import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
@@ -17,6 +18,7 @@ import org.earthsystemcurator.cupid.nuopc.fsml.util.CodeQuery;
 import org.earthsystemcurator.cupid.nuopc.fsml.util.EcoreUtils;
 import org.earthsystemcurator.cupid.nuopc.fsml.util.Regex;
 import org.eclipse.core.resources.IFile;
+import org.eclipse.core.resources.IProject;
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.ecore.EAnnotation;
 import org.eclipse.emf.ecore.EClass;
@@ -50,73 +52,51 @@ public class ReverseEngineer {
 	//	return fileMap;
 	//}
 	
-	public NUOPCApplication reverse(PhotranVPG vpg) {
+	public NUOPCApplication reverse(IProject project, PhotranVPG vpg) {
 		
 		mappings.clear();
 		NUOPCApplication a = NUOPCFactory.eINSTANCE.createNUOPCApplication();
-		a = reverse(vpg, a);
+		a.setName(project.getName());
 		
-		System.out.println("\n=============\nReverse mappings:");
-		for (Entry<EObject, Object> e : mappings.entrySet()) {
-			System.out.println(e.getKey() + " ===> " + e.getValue().getClass());
-		}
+		//System.out.println("\n=============\nReverse mappings:");
+		//for (Entry<EObject, Object> e : mappings.entrySet()) {
+		//	System.out.println(e.getKey() + " ===> " + e.getValue().getClass());
+		//}
 		
-		return a;
-		
-		//mappings.put(a, vpg);
-		
-		/*
+		Set<IFortranAST> asts = new HashSet<IFortranAST>();		
 		for (String mod : vpg.listAllModules()) {
-			//TODO: fix this - need a way to configure user files
+			//TODO: fix this - need a way to configure user files and framework files
 			if (!mod.toLowerCase().startsWith("nuopc")) {
 				List<IFile> fl = vpg.findFilesThatExportModule(mod);
-				if (fl.size() != 1) {
-					throw new RuntimeException("Unexpected: zero or multiple files found for module: " + mod);
-				}
-				else {
-					IFile f = fl.get(0);
-					System.out.println("Module: " + mod + " (" + f.getFullPath() + ")");
-					IFortranAST ast = vpg.acquireTransientAST(f);					
-					if (ast == null) {
-						System.out.println("Warning:  AST not found for file: " + f.getName());
+				for (IFile f : fl) {					
+					//System.out.println("Module: " + mod + " (" + f.getFullPath() + ")");
+					if (f.getProject().equals(project)) {
+						IFortranAST ast = vpg.acquireTransientAST(f);					
+						if (ast == null) {
+							System.out.println("Warning:  AST not found for file: " + f.getName());
+						}
+						else {
+							asts.add(ast);
+						}
 					}
-					a = reverse(ast.getRoot(), a);
-					//mappings.put(a, ast.getRoot());
-					
-					//TODO: optimize to only include updated files
-					fileMap.put(f, ast);
 				}
 			}
 		}
-		*/
+		
+		
+		a = reverse(asts, a);
+		return a;
 		
 	}
 	
-	/*
-	public NUOPCModel reverse(IFortranAST ast) {
-		//bootstrap process
-		NUOPCModel m =  NUOPCFactory.eINSTANCE.createNUOPCModel();
-
-		ASTModuleNode contextNode = ast.getRoot().findFirst(ASTModuleNode.class);
-		return reverseContext(contextNode, m);
-	}
-	*/
-	
-	/*
-	protected <ModelElem extends EObject> ModelElem reverse(IFortranAST ast, ModelElem modelElem) {	
-		
-		return modelElem;
-	}
-	*/
 	
 	/**
 	 * Attempt to map modelElem to an IASTNode or an IFortranAST or a PhotranVPG
 	 * 
-	 * @param fortranElem an instance of IASTNode or IFortranAST or PhotranVPG
+	 * @param fortranElem an instance of IASTNode or IFortranAST or Set<IFortranAST>
 	 * @param modelElem the element we are attempting to map
 	 * @return modelElem if successful, otherwise null
 	 */
-	//@SuppressWarnings({ "unchecked", "rawtypes" })
 	@SuppressWarnings({ "unchecked", "rawtypes" })
 	protected <ModelElem extends EObject> ModelElem reverse(Object fortranElem, ModelElem modelElem) {	
 			

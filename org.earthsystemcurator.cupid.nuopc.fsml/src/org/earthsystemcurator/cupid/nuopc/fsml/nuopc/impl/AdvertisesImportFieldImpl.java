@@ -42,7 +42,7 @@ public class AdvertisesImportFieldImpl extends EObjectImpl implements Advertises
 	 * @generated
 	 * @ordered
 	 */
-	protected static final String ADDS_TO_STATE_EDEFAULT = null;
+	protected static final String ADDS_TO_STATE_EDEFAULT = "importState";
 
 	/**
 	 * The cached value of the '{@link #getAddsToState() <em>Adds To State</em>}' attribute.

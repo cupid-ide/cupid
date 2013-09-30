@@ -54,6 +54,7 @@ public interface RealizesExportField extends EObject {
 
 	/**
 	 * Returns the value of the '<em><b>Realized In State</b></em>' attribute.
+	 * The default value is <code>"exportState"</code>.
 	 * <!-- begin-user-doc -->
 	 * <p>
 	 * If the meaning of the '<em>Realized In State</em>' attribute isn't clear,
@@ -63,7 +64,7 @@ public interface RealizesExportField extends EObject {
 	 * @return the value of the '<em>Realized In State</em>' attribute.
 	 * @see #setRealizedInState(String)
 	 * @see org.earthsystemcurator.cupid.nuopc.fsml.nuopc.NUOPCPackage#getRealizesExportField_RealizedInState()
-	 * @model required="true"
+	 * @model default="exportState" required="true"
 	 *        annotation="http://www.earthsystemcog.org/projects/nuopc mappingX='argByIndex: 1'"
 	 * @generated
 	 */

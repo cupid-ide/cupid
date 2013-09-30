@@ -43,7 +43,7 @@ public class RealizesImportFieldImpl extends EObjectImpl implements RealizesImpo
 	 * @generated
 	 * @ordered
 	 */
-	protected static final String REALIZED_IN_STATE_EDEFAULT = null;
+	protected static final String REALIZED_IN_STATE_EDEFAULT = "importState";
 
 	/**
 	 * The cached value of the '{@link #getRealizedInState() <em>Realized In State</em>}' attribute.

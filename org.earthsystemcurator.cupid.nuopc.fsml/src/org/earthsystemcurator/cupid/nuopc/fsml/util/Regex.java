@@ -6,6 +6,9 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import org.eclipse.emf.ecore.EAnnotation;
+import org.eclipse.emf.ecore.EClass;
+import org.eclipse.emf.ecore.EModelElement;
+import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EStructuralFeature;
 
 public class Regex {
@@ -14,6 +17,16 @@ public class Regex {
 		EAnnotation ann = sf.getEAnnotation("http://www.earthsystemcog.org/projects/nuopc");
 		if (ann != null) {
 			return parseMappingExpression(ann.getDetails().get("mapping"));			
+		}
+		else {
+			return null;
+		}		
+	}
+	
+	public static String getDocFromAnnotation(EModelElement eme) {
+		EAnnotation ann = eme.getEAnnotation("http://www.earthsystemcog.org/projects/nuopc");
+		if (ann != null) {
+			return ann.getDetails().get("doc");			
 		}
 		else {
 			return null;

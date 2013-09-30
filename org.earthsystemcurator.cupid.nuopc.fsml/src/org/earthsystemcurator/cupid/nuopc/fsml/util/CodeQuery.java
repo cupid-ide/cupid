@@ -63,7 +63,6 @@ public class CodeQuery {
 	}
 	
 	
-	
 	public static boolean matchesParamTypes(ASTSubroutineSubprogramNode node, Type... types) {
 		
 		int idxType = 0;
@@ -106,8 +105,9 @@ public class CodeQuery {
 	//	//change later to accept name as parameter
 	//	return node.findAll(ASTModuleNode.class);
 	//}
-		
-	public static Set<IFortranAST> module(PhotranVPG vpg, Map<String, Object> params) {
+	
+	public static Set<IFortranAST> module(Set<IFortranAST> asts, Map<String, Object> params) {
+		/*
 		Set<IFortranAST> result = new HashSet<IFortranAST>();
 		for (String mod : vpg.listAllModules()) {
 			
@@ -133,8 +133,41 @@ public class CodeQuery {
 				
 			}
 		}
-		return result;
+		*/
+		//for now, assume that all asts represent modules
+		//and that there is one module per file
+		return asts;
 	}
+	
+	
+//	public static Set<IFortranAST> module(PhotranVPG vpg, Map<String, Object> params) {
+//		Set<IFortranAST> result = new HashSet<IFortranAST>();
+//		for (String mod : vpg.listAllModules()) {
+//			
+//			//TODO: fix this to configure which files to check...
+//			if (mod.toLowerCase().startsWith("nuopc")) continue;
+//			
+//			List<IFile> fl = vpg.findFilesThatExportModule(mod);
+//			if (fl.size() != 1) {
+//				//TODO
+//				System.out.println("Unexpected: zero or multiple files found for module: " + mod);
+//			}
+//			else {
+//				IFile f = fl.get(0);
+//				System.out.println("Module: " + mod + " (" + f.getFullPath() + ")");
+//				IFortranAST ast = vpg.acquireTransientAST(f);					
+//				if (ast == null) {
+//					//TODO
+//					System.out.println("Warning:  AST not found for file: " + f.getName());
+//				}
+//				else {
+//					result.add(ast);
+//				}
+//				
+//			}
+//		}
+//		return result;
+//	}
 	
 	
 	public static String parseSubroutineSig(String pattern, List<String> intentOut, List<Type> typeOut, List<String> varOut) {
@@ -707,17 +740,17 @@ public class CodeQuery {
 				});
 				
 				if (constVal[0] != null) {
-					return constVal[0];
+					return constVal[0].trim();
 				}
 				else {
-					return onn.getObjectName().getText();
+					return onn.getObjectName().getText().trim();
 				}
 								
 			}
 			
 		}
 		
-		return expr.toString();
+		return expr.toString().trim();
 		
 	}
 	
@@ -852,9 +885,9 @@ public class CodeQuery {
 				continue;
 			}
 			if (subroutineName.startsWith("#")) {
-				metavariableMap.put(subroutineName, csn.getSubroutineName().getText());
+				metavariableMap.put(subroutineName, csn.getSubroutineName().getText().trim());
 			}
-			else if (!subroutineName.equals("*") && !csn.getSubroutineName().getText().equalsIgnoreCase(subroutineName)) {
+			else if (!subroutineName.equals("*") && !csn.getSubroutineName().getText().trim().equalsIgnoreCase(subroutineName)) {
 				//System.out.println("\tNo defs found, comparing subroutine names");
 				continue;
 			}
