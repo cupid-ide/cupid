@@ -23,7 +23,7 @@ import org.eclipse.emf.ecore.EObject;
  * </p>
  *
  * @see org.earthsystemcurator.cupid.nuopc.fsml.nuopc.NUOPCPackage#getModelImplementsInitP1()
- * @model annotation="http://www.earthsystemcog.org/projects/nuopc mapping='subroutine: \"#name(inout type(ESMF_GridComp) gcomp, inout type(ESMF_State) #importParam, inout type(ESMF_State) #exportParam, inout type(ESMF_Clock) clock, out integer rc)\"' doc='Initialize Phase Definition: IPDv01p1\r\n\r\nIn this phase, models should advertise the set of import and export fields. This is the list of fields that may potentially be exchanged during coupling, although some fields may not be connected for a particular configuration.'"
+ * @model annotation="http://www.earthsystemcog.org/projects/nuopc mapping='subroutine: \"#name(inout type(ESMF_GridComp) gcomp, inout type(ESMF_State) #importParam, inout type(ESMF_State) #exportParam, inout type(ESMF_Clock) clock, out integer rc)\"' doc='Initialize Phase Definition: IPDv01p1\r\n\r\nIn this phase, models should advertise the set of import and export fields. This is the list of fields that may potentially be exchanged during coupling, although some fields may not be connected for a particular configuration.' icon='cog.png' label='Initialize Phase Definition - IPDv01p1' iconAdd='cog_add.png'"
  * @generated
  */
 public interface ModelImplementsInitP1 extends EObject {
@@ -39,7 +39,7 @@ public interface ModelImplementsInitP1 extends EObject {
 	 * @return the value of the '<em>Name</em>' attribute.
 	 * @see #setName(String)
 	 * @see org.earthsystemcurator.cupid.nuopc.fsml.nuopc.NUOPCPackage#getModelImplementsInitP1_Name()
-	 * @model default="InitP1" id="true" required="true"
+	 * @model default="InitP1" required="true"
 	 *        annotation="http://www.earthsystemcog.org/projects/nuopc mappingX='subroutineName'"
 	 * @generated
 	 */

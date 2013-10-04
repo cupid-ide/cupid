@@ -11,6 +11,7 @@ import java.lang.reflect.InvocationTargetException;
 import java.util.Map;
 import java.util.Map.Entry;
 
+import org.earthsystemcurator.cupid.nuopc.fsml.builder.NUOPCNature;
 import org.earthsystemcurator.cupid.nuopc.fsml.fe.ForwardEngineer;
 import org.earthsystemcurator.cupid.nuopc.fsml.nuopc.NUOPCApplication;
 import org.earthsystemcurator.cupid.nuopc.fsml.nuopc.NUOPCModel;
@@ -70,112 +71,6 @@ public class ForwardHandler extends AbstractHandler {
 	 */
 	public Object execute(ExecutionEvent event) throws ExecutionException {
 
-		//System.out.println("Executing forward engineer...");
-		
-		//IWorkbenchWindow window = HandlerUtil.getActiveWorkbenchWindowChecked(event);
-			
-//		IWorkspace workspace = ResourcesPlugin.getWorkspace();
-//		IWorkspaceRoot root = workspace.getRoot();
-//		IProject project  = root.getProject("example");
-//		
-//		//IFolder folder = project.getFolder("Folder1");
-//		IFile file = project.getFile("hello.txt");
-//		
-//		//if (!project.exists()) project.create(null);
-//		//if (!project.isOpen()) project.open(null);
-//		//if (!folder.exists()) 
-//		//   folder.create(IResource.NONE, true, null);
-//		if (!file.exists()) {
-//		    byte[] bytes = "File contents".getBytes();
-//		    InputStream source = new ByteArrayInputStream(bytes);
-//		    try {
-//				file.create(source, IResource.NONE, null);
-//			} catch (CoreException e) {				
-//				e.printStackTrace();
-//			}
-//		}
-//		
-		
-//		ResourceSet resourceSet1 = new ResourceSetImpl();
-//		ResourceSet resourceSet2 = new ResourceSetImpl();
-//		String xmi1 = ReverseHandler.reverseFile;
-//		String xmi2 = ForwardHandler.assertedFile;
-//		Resource reversed = load(xmi1, resourceSet1);
-//		Resource asserted = load(xmi2, resourceSet2);
-//		
-//		final PhotranVPG vpg = PhotranVPG.getInstance();
-//	    final ReverseEngineer re = new ReverseEngineer();
-//	    NUOPCApplication reversed1 = re.reverse(vpg);
-//		
-//		ForwardEngineer fe = new ForwardEngineer();
-//		fe.forward(reversed1,
-//				   (NUOPCApplication) asserted.getContents().get(0),
-//				   re.getMappings());
-		
-		//final Map<IFile, IFortranAST> fileMap = re.getFileToASTMapping();
-		
-//		IResource res = extractSelection(window.getActivePage().getSelection());
-//
-//		if (res == null) {
-//			System.out.println("res is null\n\n");
-//			return null;
-//		}
-//
-//		if (! (res instanceof IFile)) {
-//			System.out.println("res is not file\n\n");
-//			return null;			
-//		}
-//
-//		final IFile f = (IFile) res;
-//
-//		final PhotranVPG vpg = PhotranVPG.getInstance();
-//		final IFortranAST ast = vpg.acquireTransientAST((IFile) res);
-//		
-//		System.out.println("error: " + vpg.describeWhyCannotProcessFile(f));
-//		
-//
-//
-//		ResourceSet resourceSet = new ResourceSetImpl();
-//
-//        resourceSet.getResourceFactoryRegistry().getExtensionToFactoryMap().put(
-//            Resource.Factory.Registry.DEFAULT_EXTENSION, new XMIResourceFactoryImpl());
-//
-//        @SuppressWarnings("unused")
-//        NUOPCPackage pack = NUOPCPackage.eINSTANCE;
-//                
-//        URI fileURI = URI.createFileURI(new File(assertedFile).getAbsolutePath());            
-//        
-//        Resource resource = resourceSet.getResource(fileURI, true);
-//        
-//        NUOPCModel m = (NUOPCModel) resource.getEObject("/");
-//        System.out.println("Model = " + m);
-        
-        //ModelToModuleMapping map = 
-        //		new ModelToModuleMapping(m, (ASTModuleNode) ast.getRoot().getProgramUnitList().get(0), ast);
-        //map.forward();
-        
-        //Model m = map.reverse();
-        //resource.getContents().clear();
-        //resource.getContents().add(m);
-        //try {
-		//	resource.save(null);
-		//} catch (IOException e1) {
-		//	System.out.println("Error saving model file: ");
-		//	e1.printStackTrace();
-		//}
-        
-        //ModelToModuleMapping map = new ModelToModuleMapping(m, null);
-        //System.out.println("Forward: " + map.forward().);
-        
-       // ASTExecutableProgramNode epn = new ASTExecutableProgramNode();
-       // epn.setProgramUnitList(new ASTListNode<IProgramUnit>());
-       // epn.getProgramUnitList().add(map.forward());
-        //map.forward();
-        //ast.getRoot().getProgramUnitList().get(0).replaceWith(map.forward());
-        
-        
-        //System.out.println("ast: " + ast.getRoot().toString());
-        
 		final IProject selectedProject;
 		ISelection sel = HandlerUtil.getCurrentSelection(event);
 		if (sel instanceof ITreeSelection) {
@@ -192,8 +87,22 @@ public class ForwardHandler extends AbstractHandler {
 			return null;
 		}
 		
-	
+		NUOPCNature nature = null;	
+		try {
+			nature = (NUOPCNature) selectedProject.getNature(NUOPCNature.NATURE_ID);			
+		} catch (CoreException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		
+		if (nature == null) return null;
+		
+		final NUOPCApplication revApp = nature.reversedModel;
+		final Map<EObject, Object> revMap = nature.reversedMappings;;
+		final NUOPCApplication forApp = nature.forwardModel;
+		
+		if (revApp == null || revMap == null || forApp == null) return null;
+			
         IRunnableWithProgress operation = new IRunnableWithProgress() {
 			
         	public void run(IProgressMonitor monitor) {
@@ -222,28 +131,31 @@ public class ForwardHandler extends AbstractHandler {
         		
         		
         		//ResourceSet resourceSet1 = new ResourceSetImpl();
-        		ResourceSet resourceSet2 = new ResourceSetImpl();
+        		//ResourceSet resourceSet2 = new ResourceSetImpl();
         		//String xmi1 = ReverseHandler.reverseFile;
         		//String xmi2 = ForwardHandler.assertedFile;
-        		String xmi2 = selectedProject.getFile("asserted.nuopc").getFullPath().toOSString();
+        		//String xmi2 = selectedProject.getFile("asserted.nuopc").getFullPath().toOSString();
         		//Resource reversed = load(xmi1, resourceSet1);
-        		Resource asserted = load(xmi2, resourceSet2);
+        		//Resource asserted = load(xmi2, resourceSet2);
         		
-        		final PhotranVPG vpg = PhotranVPG.getInstance();
-        	    final ReverseEngineer re = new ReverseEngineer();
-        	    NUOPCApplication reversed1 = re.reverse(selectedProject, vpg);
+        		//final PhotranVPG vpg = PhotranVPG.getInstance();
+        	    //final ReverseEngineer re = new ReverseEngineer();
+        	    //NUOPCApplication reversed1 = re.reverse(selectedProject, vpg);
         		
         		ForwardEngineer fe = new ForwardEngineer();
         		fe.setContainer(selectedProject);
         		
-        		fe.forward(reversed1,
-        				   (NUOPCApplication) asserted.getContents().get(0),
-        				   re.getMappings());
+        		fe.forward(revApp, forApp, revMap);
+     		
+        		
+        		//fe.forward(reversed1,
+        		//		   (NUOPCApplication) asserted.getContents().get(0),
+        		//		   re.getMappings());
         		
         		
         		//TODO: see about doing this on an individual file basis
         		//TODO: deal with project files "out of sync" with file system
-	            for (Entry<EObject, Object> entry : re.getMappings().entrySet()) {
+	            for (Entry<EObject, Object> entry : revMap.entrySet()) {
 	        		if (entry.getValue() instanceof IFortranAST) {
 		            	
 	        			IFortranAST ast = (IFortranAST) entry.getValue();

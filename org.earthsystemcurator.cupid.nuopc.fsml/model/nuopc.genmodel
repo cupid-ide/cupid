@@ -5,7 +5,7 @@
     copyrightFields="false">
   <foreignModel>nuopc.ecore</foreignModel>
   <genPackages prefix="NUOPC" basePackage="org.earthsystemcurator.cupid.nuopc.fsml"
-      disposableProviderFactory="true" ecorePackage="nuopc.ecore#/">
+      disposableProviderFactory="true" contentTypeIdentifier="" ecorePackage="nuopc.ecore#/">
     <genClasses ecoreClass="nuopc.ecore#//NUOPCModel">
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute nuopc.ecore#//NUOPCModel/name"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute nuopc.ecore#//NUOPCModel/importsGenericSS"/>
@@ -112,8 +112,11 @@
     <genClasses ecoreClass="nuopc.ecore#//NUOPCApplication">
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute nuopc.ecore#//NUOPCApplication/name"/>
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference nuopc.ecore#//NUOPCApplication/nuopcDriver"/>
-      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference nuopc.ecore#//NUOPCApplication/nuopcModel"/>
       <genFeatures children="true" createChild="true" propertySortChoices="true" ecoreFeature="ecore:EReference nuopc.ecore#//NUOPCApplication/nuopcDriverAtmOcn"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference nuopc.ecore#//NUOPCApplication/nuopcModel"/>
+    </genClasses>
+    <genClasses ecoreClass="nuopc.ecore#//Top">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference nuopc.ecore#//Top/apps"/>
     </genClasses>
     <genClasses ecoreClass="nuopc.ecore#//NUOPCDriverAtmOcn">
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute nuopc.ecore#//NUOPCDriverAtmOcn/name"/>

@@ -25,7 +25,7 @@ import org.eclipse.emf.ecore.EObject;
  * </p>
  *
  * @see org.earthsystemcurator.cupid.nuopc.fsml.nuopc.NUOPCPackage#getModelImplementsSetServices()
- * @model annotation="http://www.earthsystemcog.org/projects/nuopc mapping='subroutine: \"#name(inout type(ESMF_GridComp) #param_gcomp, out integer #param_rc)\"'"
+ * @model annotation="http://www.earthsystemcog.org/projects/nuopc mapping='subroutine: \"#name(inout type(ESMF_GridComp) #param_gcomp, out integer #param_rc)\"' icon='cog.png' label='Implement a SetServices Method' iconAdd='cog_add.png'"
  * @generated
  */
 public interface ModelImplementsSetServices extends EObject {
@@ -69,7 +69,7 @@ public interface ModelImplementsSetServices extends EObject {
 	 * @return the value of the '<em>Name</em>' attribute.
 	 * @see #setName(String)
 	 * @see org.earthsystemcurator.cupid.nuopc.fsml.nuopc.NUOPCPackage#getModelImplementsSetServices_Name()
-	 * @model default="SetServices" id="true" required="true"
+	 * @model default="SetServices" required="true"
 	 *        annotation="http://www.earthsystemcog.org/projects/nuopc mappingX='subroutineName'"
 	 * @generated
 	 */
@@ -152,7 +152,7 @@ public interface ModelImplementsSetServices extends EObject {
 	 * @return the value of the '<em>Calls Generic Set Services</em>' containment reference.
 	 * @see #setCallsGenericSetServices(CallsGenericSetServices)
 	 * @see org.earthsystemcurator.cupid.nuopc.fsml.nuopc.NUOPCPackage#getModelImplementsSetServices_CallsGenericSetServices()
-	 * @model containment="true"
+	 * @model containment="true" required="true"
 	 *        annotation="http://www.earthsystemcog.org/projects/nuopc mapping='call: \"#../../importsGenericSS(#gcomp, rc=#rc)\"' essential='true'"
 	 * @generated
 	 */

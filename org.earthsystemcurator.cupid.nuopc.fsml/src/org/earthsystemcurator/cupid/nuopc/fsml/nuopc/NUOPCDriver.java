@@ -21,7 +21,7 @@ import org.eclipse.emf.ecore.EObject;
  * </p>
  *
  * @see org.earthsystemcurator.cupid.nuopc.fsml.nuopc.NUOPCPackage#getNUOPCDriver()
- * @model annotation="http://www.earthsystemcog.org/projects/nuopc mapping='module'"
+ * @model annotation="http://www.earthsystemcog.org/projects/nuopc mapping='module' labelPlural='NUOPC Drivers' icon='script_go.png' label='Driver' iconAdd='script_add.png'"
  * @generated
  */
 public interface NUOPCDriver extends EObject {
@@ -38,7 +38,7 @@ public interface NUOPCDriver extends EObject {
 	 * @return the value of the '<em>Name</em>' attribute.
 	 * @see #setName(String)
 	 * @see org.earthsystemcurator.cupid.nuopc.fsml.nuopc.NUOPCPackage#getNUOPCDriver_Name()
-	 * @model default="ModelDefault" id="true" required="true"
+	 * @model default="ModelDefault" required="true"
 	 *        annotation="http://www.earthsystemcog.org/projects/nuopc mapping='moduleName'"
 	 * @generated
 	 */

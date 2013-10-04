@@ -96,14 +96,14 @@ public class NUOPCModelImpl extends EObjectImpl implements NUOPCModel {
 	protected ModelImplementsSetServices implementsSetServices;
 
 	/**
-	 * The cached value of the '{@link #getImplementsInitP1() <em>Implements Init P1</em>}' containment reference list.
+	 * The cached value of the '{@link #getImplementsInitP1() <em>Implements Init P1</em>}' containment reference.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @see #getImplementsInitP1()
 	 * @generated
 	 * @ordered
 	 */
-	protected EList<ModelImplementsInitP1> implementsInitP1;
+	protected ModelImplementsInitP1 implementsInitP1;
 
 	/**
 	 * The cached value of the '{@link #getImplementsInitP2() <em>Implements Init P2</em>}' containment reference.
@@ -234,11 +234,42 @@ public class NUOPCModelImpl extends EObjectImpl implements NUOPCModel {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EList<ModelImplementsInitP1> getImplementsInitP1() {
-		if (implementsInitP1 == null) {
-			implementsInitP1 = new EObjectContainmentEList<ModelImplementsInitP1>(ModelImplementsInitP1.class, this, NUOPCPackage.NUOPC_MODEL__IMPLEMENTS_INIT_P1);
-		}
+	public ModelImplementsInitP1 getImplementsInitP1() {
 		return implementsInitP1;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public NotificationChain basicSetImplementsInitP1(ModelImplementsInitP1 newImplementsInitP1, NotificationChain msgs) {
+		ModelImplementsInitP1 oldImplementsInitP1 = implementsInitP1;
+		implementsInitP1 = newImplementsInitP1;
+		if (eNotificationRequired()) {
+			ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, NUOPCPackage.NUOPC_MODEL__IMPLEMENTS_INIT_P1, oldImplementsInitP1, newImplementsInitP1);
+			if (msgs == null) msgs = notification; else msgs.add(notification);
+		}
+		return msgs;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public void setImplementsInitP1(ModelImplementsInitP1 newImplementsInitP1) {
+		if (newImplementsInitP1 != implementsInitP1) {
+			NotificationChain msgs = null;
+			if (implementsInitP1 != null)
+				msgs = ((InternalEObject)implementsInitP1).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - NUOPCPackage.NUOPC_MODEL__IMPLEMENTS_INIT_P1, null, msgs);
+			if (newImplementsInitP1 != null)
+				msgs = ((InternalEObject)newImplementsInitP1).eInverseAdd(this, EOPPOSITE_FEATURE_BASE - NUOPCPackage.NUOPC_MODEL__IMPLEMENTS_INIT_P1, null, msgs);
+			msgs = basicSetImplementsInitP1(newImplementsInitP1, msgs);
+			if (msgs != null) msgs.dispatch();
+		}
+		else if (eNotificationRequired())
+			eNotify(new ENotificationImpl(this, Notification.SET, NUOPCPackage.NUOPC_MODEL__IMPLEMENTS_INIT_P1, newImplementsInitP1, newImplementsInitP1));
 	}
 
 	/**
@@ -326,7 +357,7 @@ public class NUOPCModelImpl extends EObjectImpl implements NUOPCModel {
 			case NUOPCPackage.NUOPC_MODEL__IMPLEMENTS_SET_SERVICES:
 				return basicSetImplementsSetServices(null, msgs);
 			case NUOPCPackage.NUOPC_MODEL__IMPLEMENTS_INIT_P1:
-				return ((InternalEList<?>)getImplementsInitP1()).basicRemove(otherEnd, msgs);
+				return basicSetImplementsInitP1(null, msgs);
 			case NUOPCPackage.NUOPC_MODEL__IMPLEMENTS_INIT_P2:
 				return basicSetImplementsInitP2(null, msgs);
 			case NUOPCPackage.NUOPC_MODEL__IMPLEMENTS_MODEL_ADVANCE:
@@ -378,8 +409,7 @@ public class NUOPCModelImpl extends EObjectImpl implements NUOPCModel {
 				setImplementsSetServices((ModelImplementsSetServices)newValue);
 				return;
 			case NUOPCPackage.NUOPC_MODEL__IMPLEMENTS_INIT_P1:
-				getImplementsInitP1().clear();
-				getImplementsInitP1().addAll((Collection<? extends ModelImplementsInitP1>)newValue);
+				setImplementsInitP1((ModelImplementsInitP1)newValue);
 				return;
 			case NUOPCPackage.NUOPC_MODEL__IMPLEMENTS_INIT_P2:
 				setImplementsInitP2((ModelImplementsInitP2)newValue);
@@ -410,7 +440,7 @@ public class NUOPCModelImpl extends EObjectImpl implements NUOPCModel {
 				setImplementsSetServices((ModelImplementsSetServices)null);
 				return;
 			case NUOPCPackage.NUOPC_MODEL__IMPLEMENTS_INIT_P1:
-				getImplementsInitP1().clear();
+				setImplementsInitP1((ModelImplementsInitP1)null);
 				return;
 			case NUOPCPackage.NUOPC_MODEL__IMPLEMENTS_INIT_P2:
 				setImplementsInitP2((ModelImplementsInitP2)null);
@@ -437,7 +467,7 @@ public class NUOPCModelImpl extends EObjectImpl implements NUOPCModel {
 			case NUOPCPackage.NUOPC_MODEL__IMPLEMENTS_SET_SERVICES:
 				return implementsSetServices != null;
 			case NUOPCPackage.NUOPC_MODEL__IMPLEMENTS_INIT_P1:
-				return implementsInitP1 != null && !implementsInitP1.isEmpty();
+				return implementsInitP1 != null;
 			case NUOPCPackage.NUOPC_MODEL__IMPLEMENTS_INIT_P2:
 				return implementsInitP2 != null;
 			case NUOPCPackage.NUOPC_MODEL__IMPLEMENTS_MODEL_ADVANCE:

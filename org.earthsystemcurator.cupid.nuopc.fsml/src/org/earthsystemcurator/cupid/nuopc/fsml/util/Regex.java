@@ -33,6 +33,17 @@ public class Regex {
 		}		
 	}
 	
+	public static String getFromAnnotation(EModelElement eme, String key) {
+		EAnnotation ann = eme.getEAnnotation("http://www.earthsystemcog.org/projects/nuopc");
+		if (ann != null) {
+			return ann.getDetails().get(key);			
+		}
+		else {
+			return null;
+		}		
+	}
+	
+	
 	public static boolean getIsEssentialFromAnnotation(EStructuralFeature sf) {
 		EAnnotation ann = sf.getEAnnotation("http://www.earthsystemcog.org/projects/nuopc");
 		if (ann != null) {

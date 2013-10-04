@@ -136,6 +136,10 @@ public class NUOPCAdapterFactory extends AdapterFactoryImpl {
 				return createNUOPCApplicationAdapter();
 			}
 			@Override
+			public Adapter caseTop(Top object) {
+				return createTopAdapter();
+			}
+			@Override
 			public Adapter caseNUOPCDriverAtmOcn(NUOPCDriverAtmOcn object) {
 				return createNUOPCDriverAtmOcnAdapter();
 			}
@@ -398,6 +402,20 @@ public class NUOPCAdapterFactory extends AdapterFactoryImpl {
 	 * @generated
 	 */
 	public Adapter createNUOPCApplicationAdapter() {
+		return null;
+	}
+
+	/**
+	 * Creates a new adapter for an object of class '{@link org.earthsystemcurator.cupid.nuopc.fsml.nuopc.Top <em>Top</em>}'.
+	 * <!-- begin-user-doc -->
+	 * This default implementation returns null so that we can easily ignore cases;
+	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
+	 * <!-- end-user-doc -->
+	 * @return the new adapter.
+	 * @see org.earthsystemcurator.cupid.nuopc.fsml.nuopc.Top
+	 * @generated
+	 */
+	public Adapter createTopAdapter() {
 		return null;
 	}
 

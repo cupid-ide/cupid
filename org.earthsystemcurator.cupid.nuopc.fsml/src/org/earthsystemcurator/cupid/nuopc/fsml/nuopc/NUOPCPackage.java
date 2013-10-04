@@ -94,7 +94,7 @@ public interface NUOPCPackage extends EPackage {
 	int NUOPC_MODEL__IMPLEMENTS_SET_SERVICES = 2;
 
 	/**
-	 * The feature id for the '<em><b>Implements Init P1</b></em>' containment reference list.
+	 * The feature id for the '<em><b>Implements Init P1</b></em>' containment reference.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
@@ -1019,22 +1019,22 @@ public interface NUOPCPackage extends EPackage {
 	int NUOPC_APPLICATION__NUOPC_DRIVER = 1;
 
 	/**
-	 * The feature id for the '<em><b>Nuopc Model</b></em>' containment reference list.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int NUOPC_APPLICATION__NUOPC_MODEL = 2;
-
-	/**
 	 * The feature id for the '<em><b>Nuopc Driver Atm Ocn</b></em>' containment reference list.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int NUOPC_APPLICATION__NUOPC_DRIVER_ATM_OCN = 3;
+	int NUOPC_APPLICATION__NUOPC_DRIVER_ATM_OCN = 2;
+
+	/**
+	 * The feature id for the '<em><b>Nuopc Model</b></em>' containment reference list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int NUOPC_APPLICATION__NUOPC_MODEL = 3;
 
 	/**
 	 * The number of structural features of the '<em>Application</em>' class.
@@ -1046,6 +1046,34 @@ public interface NUOPCPackage extends EPackage {
 	int NUOPC_APPLICATION_FEATURE_COUNT = 4;
 
 	/**
+	 * The meta object id for the '{@link org.earthsystemcurator.cupid.nuopc.fsml.nuopc.impl.TopImpl <em>Top</em>}' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see org.earthsystemcurator.cupid.nuopc.fsml.nuopc.impl.TopImpl
+	 * @see org.earthsystemcurator.cupid.nuopc.fsml.nuopc.impl.NUOPCPackageImpl#getTop()
+	 * @generated
+	 */
+	int TOP = 17;
+
+	/**
+	 * The feature id for the '<em><b>Apps</b></em>' containment reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int TOP__APPS = 0;
+
+	/**
+	 * The number of structural features of the '<em>Top</em>' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int TOP_FEATURE_COUNT = 1;
+
+	/**
 	 * The meta object id for the '{@link org.earthsystemcurator.cupid.nuopc.fsml.nuopc.impl.NUOPCDriverAtmOcnImpl <em>Driver Atm Ocn</em>}' class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -1053,7 +1081,7 @@ public interface NUOPCPackage extends EPackage {
 	 * @see org.earthsystemcurator.cupid.nuopc.fsml.nuopc.impl.NUOPCPackageImpl#getNUOPCDriverAtmOcn()
 	 * @generated
 	 */
-	int NUOPC_DRIVER_ATM_OCN = 17;
+	int NUOPC_DRIVER_ATM_OCN = 18;
 
 	/**
 	 * The feature id for the '<em><b>Name</b></em>' attribute.
@@ -1090,7 +1118,7 @@ public interface NUOPCPackage extends EPackage {
 	 * @see org.earthsystemcurator.cupid.nuopc.fsml.nuopc.impl.NUOPCPackageImpl#getNUOPCDriverAtmOcn__ImplementsSetServices()
 	 * @generated
 	 */
-	int NUOPC_DRIVER_ATM_OCN_IMPLEMENTS_SET_SERVICES = 18;
+	int NUOPC_DRIVER_ATM_OCN_IMPLEMENTS_SET_SERVICES = 19;
 
 	/**
 	 * The feature id for the '<em><b>Parent</b></em>' container reference.
@@ -1191,10 +1219,10 @@ public interface NUOPCPackage extends EPackage {
 	EReference getNUOPCModel_ImplementsSetServices();
 
 	/**
-	 * Returns the meta object for the containment reference list '{@link org.earthsystemcurator.cupid.nuopc.fsml.nuopc.NUOPCModel#getImplementsInitP1 <em>Implements Init P1</em>}'.
+	 * Returns the meta object for the containment reference '{@link org.earthsystemcurator.cupid.nuopc.fsml.nuopc.NUOPCModel#getImplementsInitP1 <em>Implements Init P1</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @return the meta object for the containment reference list '<em>Implements Init P1</em>'.
+	 * @return the meta object for the containment reference '<em>Implements Init P1</em>'.
 	 * @see org.earthsystemcurator.cupid.nuopc.fsml.nuopc.NUOPCModel#getImplementsInitP1()
 	 * @see #getNUOPCModel()
 	 * @generated
@@ -2121,6 +2149,27 @@ public interface NUOPCPackage extends EPackage {
 	EReference getNUOPCApplication_NuopcModel();
 
 	/**
+	 * Returns the meta object for class '{@link org.earthsystemcurator.cupid.nuopc.fsml.nuopc.Top <em>Top</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for class '<em>Top</em>'.
+	 * @see org.earthsystemcurator.cupid.nuopc.fsml.nuopc.Top
+	 * @generated
+	 */
+	EClass getTop();
+
+	/**
+	 * Returns the meta object for the containment reference '{@link org.earthsystemcurator.cupid.nuopc.fsml.nuopc.Top#getApps <em>Apps</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the containment reference '<em>Apps</em>'.
+	 * @see org.earthsystemcurator.cupid.nuopc.fsml.nuopc.Top#getApps()
+	 * @see #getTop()
+	 * @generated
+	 */
+	EReference getTop_Apps();
+
+	/**
 	 * Returns the meta object for the containment reference list '{@link org.earthsystemcurator.cupid.nuopc.fsml.nuopc.NUOPCApplication#getNuopcDriverAtmOcn <em>Nuopc Driver Atm Ocn</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -2285,7 +2334,7 @@ public interface NUOPCPackage extends EPackage {
 		EReference NUOPC_MODEL__IMPLEMENTS_SET_SERVICES = eINSTANCE.getNUOPCModel_ImplementsSetServices();
 
 		/**
-		 * The meta object literal for the '<em><b>Implements Init P1</b></em>' containment reference list feature.
+		 * The meta object literal for the '<em><b>Implements Init P1</b></em>' containment reference feature.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
 		 * @generated
@@ -3003,6 +3052,24 @@ public interface NUOPCPackage extends EPackage {
 		 * @generated
 		 */
 		EReference NUOPC_APPLICATION__NUOPC_MODEL = eINSTANCE.getNUOPCApplication_NuopcModel();
+
+		/**
+		 * The meta object literal for the '{@link org.earthsystemcurator.cupid.nuopc.fsml.nuopc.impl.TopImpl <em>Top</em>}' class.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @see org.earthsystemcurator.cupid.nuopc.fsml.nuopc.impl.TopImpl
+		 * @see org.earthsystemcurator.cupid.nuopc.fsml.nuopc.impl.NUOPCPackageImpl#getTop()
+		 * @generated
+		 */
+		EClass TOP = eINSTANCE.getTop();
+
+		/**
+		 * The meta object literal for the '<em><b>Apps</b></em>' containment reference feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EReference TOP__APPS = eINSTANCE.getTop_Apps();
 
 		/**
 		 * The meta object literal for the '<em><b>Nuopc Driver Atm Ocn</b></em>' containment reference list feature.

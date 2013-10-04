@@ -2,15 +2,12 @@ package org.earthsystemcurator.cupid.nuopc.fsml.fe;
 
 import java.io.BufferedReader;
 import java.io.ByteArrayInputStream;
-import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.Comparator;
-import java.util.HashMap;
-import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
@@ -18,13 +15,10 @@ import java.util.Set;
 import java.util.TreeMap;
 
 import org.earthsystemcurator.cupid.nuopc.fsml.nuopc.NUOPCApplication;
-import org.earthsystemcurator.cupid.nuopc.fsml.nuopc.NUOPCModel;
-import org.earthsystemcurator.cupid.nuopc.fsml.re.ReverseEngineer;
 import org.earthsystemcurator.cupid.nuopc.fsml.util.CodeExtraction;
 import org.earthsystemcurator.cupid.nuopc.fsml.util.CodeQuery;
 import org.earthsystemcurator.cupid.nuopc.fsml.util.EcoreUtils;
 import org.earthsystemcurator.cupid.nuopc.fsml.util.Regex;
-import org.eclipse.core.resources.IContainer;
 import org.eclipse.core.resources.IFile;
 import org.eclipse.core.resources.IProject;
 import org.eclipse.core.resources.IResource;
@@ -36,7 +30,6 @@ import org.eclipse.emf.compare.Comparison;
 import org.eclipse.emf.compare.Diff;
 import org.eclipse.emf.compare.DifferenceKind;
 import org.eclipse.emf.compare.EMFCompare;
-import org.eclipse.emf.compare.Equivalence;
 import org.eclipse.emf.compare.Match;
 import org.eclipse.emf.compare.internal.spec.ReferenceChangeSpec;
 import org.eclipse.emf.compare.match.DefaultComparisonFactory;
@@ -50,20 +43,12 @@ import org.eclipse.emf.compare.match.impl.MatchEngineFactoryRegistryImpl;
 import org.eclipse.emf.compare.merge.IMerger;
 import org.eclipse.emf.compare.scope.IComparisonScope;
 import org.eclipse.emf.compare.utils.UseIdentifiers;
-import org.eclipse.emf.ecore.EAnnotation;
 import org.eclipse.emf.ecore.EAttribute;
-import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EObject;
-import org.eclipse.emf.ecore.EReference;
 import org.eclipse.emf.ecore.EStructuralFeature;
-import org.eclipse.emf.ecore.resource.ResourceSet;
 import org.eclipse.photran.core.IFortranAST;
-import org.eclipse.photran.internal.core.analysis.types.Type;
-import org.eclipse.photran.internal.core.parser.ASTModuleNameNode;
 import org.eclipse.photran.internal.core.parser.ASTModuleNode;
-import org.eclipse.photran.internal.core.parser.ASTModuleStmtNode;
 import org.eclipse.photran.internal.core.parser.ASTSubroutineSubprogramNode;
-import org.eclipse.photran.internal.core.parser.ASTUseStmtNode;
 import org.eclipse.photran.internal.core.parser.IASTNode;
 import org.eclipse.photran.internal.core.parser.IBodyConstruct;
 import org.eclipse.photran.internal.core.reindenter.Reindenter;
@@ -238,7 +223,7 @@ public class ForwardEngineer {
 		}
 		
 		if (method == null) {
-			System.out.println("Method not found: " + methodName);
+			System.out.println("Method not found: " + methodName + " with first param type: " + fortranElem.getClass());
 			return null;
 		}
 		

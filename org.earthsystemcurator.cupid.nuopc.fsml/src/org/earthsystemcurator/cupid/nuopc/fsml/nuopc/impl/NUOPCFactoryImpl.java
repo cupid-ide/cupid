@@ -73,6 +73,7 @@ public class NUOPCFactoryImpl extends EFactoryImpl implements NUOPCFactory {
 			case NUOPCPackage.NUOPC_DRIVER_IMPLEMENTS_SET_MODEL_COUNT: return createNUOPCDriver__ImplementsSetModelCount();
 			case NUOPCPackage.GETS_INTERNAL_STATE: return createGetsInternalState();
 			case NUOPCPackage.NUOPC_APPLICATION: return createNUOPCApplication();
+			case NUOPCPackage.TOP: return createTop();
 			case NUOPCPackage.NUOPC_DRIVER_ATM_OCN: return createNUOPCDriverAtmOcn();
 			case NUOPCPackage.NUOPC_DRIVER_ATM_OCN_IMPLEMENTS_SET_SERVICES: return createNUOPCDriverAtmOcn__ImplementsSetServices();
 			default:
@@ -248,6 +249,16 @@ public class NUOPCFactoryImpl extends EFactoryImpl implements NUOPCFactory {
 	public NUOPCApplication createNUOPCApplication() {
 		NUOPCApplicationImpl nuopcApplication = new NUOPCApplicationImpl();
 		return nuopcApplication;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public Top createTop() {
+		TopImpl top = new TopImpl();
+		return top;
 	}
 
 	/**

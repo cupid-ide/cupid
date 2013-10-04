@@ -1,8 +1,8 @@
 package org.earthsystemcurator.cupid.nuopc.fsml.re;
 
+
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
@@ -12,7 +12,6 @@ import java.util.Set;
 import java.util.regex.Matcher;
 
 import org.earthsystemcurator.cupid.nuopc.fsml.nuopc.NUOPCApplication;
-import org.earthsystemcurator.cupid.nuopc.fsml.nuopc.NUOPCModel;
 import org.earthsystemcurator.cupid.nuopc.fsml.nuopc.NUOPCFactory;
 import org.earthsystemcurator.cupid.nuopc.fsml.util.CodeQuery;
 import org.earthsystemcurator.cupid.nuopc.fsml.util.EcoreUtils;
@@ -20,14 +19,11 @@ import org.earthsystemcurator.cupid.nuopc.fsml.util.Regex;
 import org.eclipse.core.resources.IFile;
 import org.eclipse.core.resources.IProject;
 import org.eclipse.emf.common.util.EList;
-import org.eclipse.emf.ecore.EAnnotation;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.ecore.EcoreFactory;
 import org.eclipse.photran.core.IFortranAST;
-import org.eclipse.photran.internal.core.parser.ASTModuleNode;
-import org.eclipse.photran.internal.core.parser.IASTNode;
 import org.eclipse.photran.internal.core.vpg.PhotranVPG;
 
 @SuppressWarnings("restriction")
@@ -42,7 +38,13 @@ public class ReverseEngineer {
 	 */
 	private Map<EObject, Object> mappings = new HashMap<EObject, Object>();
 	
+	private NUOPCApplication app = null;
+	
 	//private Map<IFile, IFortranAST> fileMap = new HashMap<IFile, IFortranAST>();
+	
+	public NUOPCApplication getLastModel() {
+		return app;
+	}
 	
 	public Map<EObject, Object> getMappings() {
 		return mappings;
@@ -85,6 +87,9 @@ public class ReverseEngineer {
 		
 		
 		a = reverse(asts, a);
+		
+		//save for later
+		this.app = a;
 		return a;
 		
 	}

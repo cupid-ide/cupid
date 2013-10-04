@@ -24,7 +24,7 @@ import org.eclipse.emf.ecore.EObject;
  * </p>
  *
  * @see org.earthsystemcurator.cupid.nuopc.fsml.nuopc.NUOPCPackage#getNUOPCModel()
- * @model annotation="http://www.earthsystemcog.org/projects/nuopc mapping='module'"
+ * @model annotation="http://www.earthsystemcog.org/projects/nuopc mapping='module' labelPlural='NUOPC Models' icon='script_gear.png' label='Model' iconAdd='script_add.png'"
  * @generated
  */
 public interface NUOPCModel extends EObject {
@@ -40,7 +40,7 @@ public interface NUOPCModel extends EObject {
 	 * @return the value of the '<em>Name</em>' attribute.
 	 * @see #setName(String)
 	 * @see org.earthsystemcurator.cupid.nuopc.fsml.nuopc.NUOPCPackage#getNUOPCModel_Name()
-	 * @model default="Model" id="true" required="true"
+	 * @model default="Model" required="true"
 	 *        annotation="http://www.earthsystemcog.org/projects/nuopc mapping='moduleName'"
 	 * @generated
 	 */
@@ -68,7 +68,7 @@ public interface NUOPCModel extends EObject {
 	 * @return the value of the '<em>Imports Generic SS</em>' attribute.
 	 * @see #setImportsGenericSS(String)
 	 * @see org.earthsystemcurator.cupid.nuopc.fsml.nuopc.NUOPCPackage#getNUOPCModel_ImportsGenericSS()
-	 * @model default="nuopcmodel_ss"
+	 * @model default="nuopcmodel_ss" required="true"
 	 *        annotation="http://www.earthsystemcog.org/projects/nuopc mapping='uses: \"NUOPC_Model\" entity: \"routine_SetServices\"'"
 	 * @generated
 	 */
@@ -97,7 +97,7 @@ public interface NUOPCModel extends EObject {
 	 * @see #setImplementsSetServices(ModelImplementsSetServices)
 	 * @see org.earthsystemcurator.cupid.nuopc.fsml.nuopc.NUOPCPackage#getNUOPCModel_ImplementsSetServices()
 	 * @see org.earthsystemcurator.cupid.nuopc.fsml.nuopc.ModelImplementsSetServices#getParent
-	 * @model opposite="parent" containment="true" keys="name"
+	 * @model opposite="parent" containment="true" keys="name" required="true"
 	 *        annotation="http://www.earthsystemcog.org/projects/nuopc mapping='subroutine: \"#name(inout type(ESMF_GridComp) #param_gcomp, out integer #param_rc)\"' essential='true'"
 	 * @generated
 	 */
@@ -114,21 +114,31 @@ public interface NUOPCModel extends EObject {
 	void setImplementsSetServices(ModelImplementsSetServices value);
 
 	/**
-	 * Returns the value of the '<em><b>Implements Init P1</b></em>' containment reference list.
-	 * The list contents are of type {@link org.earthsystemcurator.cupid.nuopc.fsml.nuopc.ModelImplementsInitP1}.
+	 * Returns the value of the '<em><b>Implements Init P1</b></em>' containment reference.
 	 * <!-- begin-user-doc -->
 	 * <p>
 	 * If the meaning of the '<em>Implements Init P1</em>' containment reference isn't clear,
 	 * there really should be more of a description here...
 	 * </p>
 	 * <!-- end-user-doc -->
-	 * @return the value of the '<em>Implements Init P1</em>' containment reference list.
+	 * @return the value of the '<em>Implements Init P1</em>' containment reference.
+	 * @see #setImplementsInitP1(ModelImplementsInitP1)
 	 * @see org.earthsystemcurator.cupid.nuopc.fsml.nuopc.NUOPCPackage#getNUOPCModel_ImplementsInitP1()
-	 * @model containment="true"
+	 * @model containment="true" keys="name" required="true"
 	 *        annotation="http://www.earthsystemcog.org/projects/nuopc mapping='subroutine: \"#name(inout type(ESMF_GridComp) gcomp, inout type(ESMF_State) #importParam, inout type(ESMF_State) #exportParam, inout type(ESMF_Clock) clock, out integer rc)\"'"
 	 * @generated
 	 */
-	EList<ModelImplementsInitP1> getImplementsInitP1();
+	ModelImplementsInitP1 getImplementsInitP1();
+
+	/**
+	 * Sets the value of the '{@link org.earthsystemcurator.cupid.nuopc.fsml.nuopc.NUOPCModel#getImplementsInitP1 <em>Implements Init P1</em>}' containment reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @param value the new value of the '<em>Implements Init P1</em>' containment reference.
+	 * @see #getImplementsInitP1()
+	 * @generated
+	 */
+	void setImplementsInitP1(ModelImplementsInitP1 value);
 
 	/**
 	 * Returns the value of the '<em><b>Implements Init P2</b></em>' containment reference.
@@ -141,7 +151,7 @@ public interface NUOPCModel extends EObject {
 	 * @return the value of the '<em>Implements Init P2</em>' containment reference.
 	 * @see #setImplementsInitP2(ModelImplementsInitP2)
 	 * @see org.earthsystemcurator.cupid.nuopc.fsml.nuopc.NUOPCPackage#getNUOPCModel_ImplementsInitP2()
-	 * @model containment="true"
+	 * @model containment="true" keys="name" required="true"
 	 *        annotation="http://www.earthsystemcog.org/projects/nuopc mapping='subroutine: \"#name(inout type(ESMF_GridComp) gcomp, inout type(ESMF_State) #importParam, inout type(ESMF_State) #exportParam, inout type(ESMF_Clock) clock, out integer rc)\"'"
 	 * @generated
 	 */

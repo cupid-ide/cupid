@@ -248,13 +248,83 @@
       </persistent>
    </extension>
    <extension
-         id="id1"
-         point="org.eclipse.core.resources.natures">
-      <runtime>
-         <run
-               class="org.earthsystemcurator.cupid.nuopc.fsml.ProjectNature1">
-         </run>
-      </runtime>
+         point="org.eclipse.ui.navigator.viewer">
+      <viewerActionBinding
+            viewerId="org.earthsystemcurator.nuopcnav">
+         <includes>
+            <actionExtension
+                  pattern="org.eclipse.ui.navigator.resources.*">
+            </actionExtension>
+         </includes>
+      </viewerActionBinding>
+      <viewerContentBinding
+            viewerId="org.eclipse.ui.navigator.ProjectExplorer">
+         <includes>
+            <contentExtension
+                  pattern="org.earthsystemcurator.cupid.nuopc.fsml.navigatorContent2">
+            </contentExtension>
+         </includes>
+      </viewerContentBinding>
+   </extension>
+   <extension
+         id="org.earthsystemcurator.nuopc_nav_content"
+         name="NUOPC Navigator Content"
+         point="org.eclipse.ui.navigator.navigatorContent">
+      <navigatorContent
+            activeByDefault="true"
+            appearsBefore="org.eclipse.cdt.ui.navigator.content"
+            contentProvider="org.earthsystemcurator.cupid.nuopc.fsml.nav.NUOPCNavContentProvider"
+            icon="icons/sample.gif"
+            id="org.earthsystemcurator.cupid.nuopc.fsml.navigatorContent2"
+            labelProvider="org.earthsystemcurator.cupid.nuopc.fsml.nav.NUOPCNavLabelProvider"
+            name="NUOPC Navigator Content"
+            priority="normal">
+         <triggerPoints>
+            <or>
+               <and>
+                  <instanceof
+                        value="org.eclipse.core.resources.IFile">
+                  </instanceof>
+                  <test
+                        property="org.eclipse.core.resources.extension"
+                        value="F90">
+                  </test>
+               </and>
+            </or>
+         </triggerPoints>
+      </navigatorContent>
+   </extension>
+   <extension
+         point="org.eclipse.ui.views">
+      <category
+            id="org.earthsystemcurator.cupid.nuopc.fsml"
+            name="NUOPC Category">
+      </category>
+      <view
+            category="org.earthsystemcurator.cupid.nuopc.fsml"
+            class="org.earthsystemcurator.cupid.nuopc.fsml.views.NUOPCView"
+            icon="icons/sample.gif"
+            id="org.earthsystemcurator.cupid.nuopc.fsml.views.NUOPCView"
+            name="NUOPC View">
+      </view>
+   </extension>
+   <extension
+         point="org.eclipse.ui.perspectiveExtensions">
+      <perspectiveExtension
+            targetID="org.eclipse.jdt.ui.JavaPerspective">
+         <view
+               id="org.earthsystemcurator.cupid.nuopc.fsml.views.NUOPCView"
+               ratio="0.5"
+               relationship="right"
+               relative="org.eclipse.ui.views.ProblemView">
+         </view>
+      </perspectiveExtension>
+   </extension>
+   <extension
+         point="org.eclipse.help.contexts">
+      <contexts
+            file="contexts.xml">
+      </contexts>
    </extension>
 
 </plugin>

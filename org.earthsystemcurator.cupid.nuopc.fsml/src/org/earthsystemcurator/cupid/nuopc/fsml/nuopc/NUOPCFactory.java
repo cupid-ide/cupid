@@ -175,6 +175,15 @@ public interface NUOPCFactory extends EFactory {
 	NUOPCApplication createNUOPCApplication();
 
 	/**
+	 * Returns a new object of class '<em>Top</em>'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return a new object of class '<em>Top</em>'.
+	 * @generated
+	 */
+	Top createTop();
+
+	/**
 	 * Returns a new object of class '<em>Driver Atm Ocn</em>'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->

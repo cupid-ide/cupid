@@ -1,18 +1,12 @@
 package org.earthsystemcurator.cupid.nuopc.fsml.handlers;
 
-import java.io.BufferedInputStream;
 import java.io.BufferedReader;
-import java.io.ByteArrayInputStream;
-import java.io.File;
 import java.io.IOException;
-import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.Reader;
-import java.io.StringBufferInputStream;
-import java.lang.reflect.InvocationTargetException;
 
+import org.earthsystemcurator.cupid.nuopc.fsml.builder.NUOPCNature;
 import org.earthsystemcurator.cupid.nuopc.fsml.nuopc.NUOPCApplication;
-import org.earthsystemcurator.cupid.nuopc.fsml.nuopc.NUOPCModel;
 import org.earthsystemcurator.cupid.nuopc.fsml.nuopc.NUOPCPackage;
 import org.earthsystemcurator.cupid.nuopc.fsml.re.ReverseEngineer;
 import org.eclipse.core.commands.AbstractHandler;
@@ -23,28 +17,16 @@ import org.eclipse.core.resources.IProject;
 import org.eclipse.core.resources.IResource;
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IAdaptable;
-import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.ecore.resource.ResourceSet;
 import org.eclipse.emf.ecore.resource.impl.ResourceSetImpl;
 import org.eclipse.emf.ecore.xmi.impl.XMIResourceFactoryImpl;
-import org.eclipse.photran.core.IFortranAST;
-import org.eclipse.photran.internal.core.lexer.Token;
-import org.eclipse.photran.internal.core.parser.ASTModuleNode;
-import org.eclipse.photran.internal.core.vpg.PhotranTokenRef;
-import org.eclipse.photran.internal.core.vpg.PhotranVPG;
-import org.eclipse.rephraserengine.core.vpg.VPGEdge;
-import org.eclipse.text.edits.ReplaceEdit;
-import org.eclipse.ui.IWorkbenchWindow;
-import org.eclipse.ui.PlatformUI;
-import org.eclipse.ui.handlers.HandlerUtil;
-import org.eclipse.jface.dialogs.MessageDialog;
-import org.eclipse.jface.operation.IRunnableWithProgress;
 import org.eclipse.jface.viewers.ISelection;
 import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.jface.viewers.ITreeSelection;
-import org.eclipse.ltk.core.refactoring.TextFileChange;
+import org.eclipse.photran.internal.core.vpg.PhotranVPG;
+import org.eclipse.ui.handlers.HandlerUtil;
 
 /**
  * Our sample handler extends AbstractHandler, an IHandler base class.
@@ -174,6 +156,18 @@ public class ReverseHandler extends AbstractHandler {
         ReverseEngineer re = new ReverseEngineer();
         //NUOPCModel m = re.reverse(ast);
         NUOPCApplication a = re.reverse(selectedProject, vpg);        
+        
+        //use project nature to store local data
+        try {
+			NUOPCNature nature = (NUOPCNature) selectedProject.getNature(NUOPCNature.NATURE_ID);
+			//nature.setReverseEngineeredModel(a);
+			//nature.setReverseEngineer(re);
+			nature.reversedModel = a;
+			nature.reversedMappings = re.getMappings();
+		} catch (CoreException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
         
         if (a == null) return null;
         

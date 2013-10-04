@@ -1330,7 +1330,7 @@ public class NUOPCEditor
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
-	 */
+	 */	
 	public IContentOutlinePage getContentOutlinePage() {
 		if (contentOutlinePage == null) {
 			// The content outline is just a tree.
