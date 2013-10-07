@@ -1445,7 +1445,7 @@ public class NUOPCPackageImpl extends EPackageImpl implements NUOPCPackage {
 		initEAttribute(getGetsInternalState_Label(), ecorePackage.getEString(), "label", null, 0, 1, GetsInternalState.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
 		initEClass(nuopcApplicationEClass, NUOPCApplication.class, "NUOPCApplication", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
-		initEAttribute(getNUOPCApplication_Name(), ecorePackage.getEString(), "name", null, 0, 1, NUOPCApplication.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEAttribute(getNUOPCApplication_Name(), ecorePackage.getEString(), "name", null, 1, 1, NUOPCApplication.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEReference(getNUOPCApplication_NuopcDriver(), this.getNUOPCDriver(), null, "nuopcDriver", null, 0, -1, NUOPCApplication.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, !IS_ORDERED);
 		initEReference(getNUOPCApplication_NuopcDriverAtmOcn(), this.getNUOPCDriverAtmOcn(), null, "nuopcDriverAtmOcn", null, 0, -1, NUOPCApplication.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, !IS_ORDERED);
 		initEReference(getNUOPCApplication_NuopcModel(), this.getNUOPCModel(), null, "nuopcModel", null, 0, -1, NUOPCApplication.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, !IS_ORDERED);
@@ -1491,7 +1491,7 @@ public class NUOPCPackageImpl extends EPackageImpl implements NUOPCPackage {
 			 "invocationDelegates", "http://www.eclipse.org/emf/2002/Ecore/OCL",
 			 "settingDelegates", "http://www.eclipse.org/emf/2002/Ecore/OCL",
 			 "validationDelegates", "http://www.eclipse.org/emf/2002/Ecore/OCL"
-		   });																																																																																		
+		   });																																																																																					
 	}
 
 	/**
@@ -1508,7 +1508,6 @@ public class NUOPCPackageImpl extends EPackageImpl implements NUOPCPackage {
 		   new String[] {
 			 "mapping", "module",
 			 "labelPlural", "NUOPC Models",
-			 "icon", "script_gear.png",
 			 "label", "Model",
 			 "iconAdd", "script_add.png"
 		   });		
@@ -1522,7 +1521,8 @@ public class NUOPCPackageImpl extends EPackageImpl implements NUOPCPackage {
 		  (getNUOPCModel_ImportsGenericSS(), 
 		   source, 
 		   new String[] {
-			 "mapping", "uses: \"NUOPC_Model\" entity: \"routine_SetServices\""
+			 "mapping", "uses: \"NUOPC_Model\" entity: \"routine_SetServices\"",
+			 "label", "Imports generic Set Services"
 		   });		
 		addAnnotation
 		  (getNUOPCModel_ImplementsSetServices(), 
@@ -1554,9 +1554,9 @@ public class NUOPCPackageImpl extends EPackageImpl implements NUOPCPackage {
 		   source, 
 		   new String[] {
 			 "mapping", "subroutine: \"#name(inout type(ESMF_GridComp) #param_gcomp, out integer #param_rc)\"",
-			 "icon", "cog.png",
-			 "label", "Implement a SetServices Method",
-			 "iconAdd", "cog_add.png"
+			 "label", "Set Services Callback",
+			 "iconAdd", "cog_add.png",
+			 "task", "Implement a Set Services Callback"
 		   });		
 		addAnnotation
 		  (getModelImplementsSetServices_Name(), 
@@ -1607,9 +1607,9 @@ public class NUOPCPackageImpl extends EPackageImpl implements NUOPCPackage {
 		   new String[] {
 			 "mapping", "subroutine: \"#name(inout type(ESMF_GridComp) gcomp, inout type(ESMF_State) #importParam, inout type(ESMF_State) #exportParam, inout type(ESMF_Clock) clock, out integer rc)\"",
 			 "doc", "Initialize Phase Definition: IPDv01p1\r\n\r\nIn this phase, models should advertise the set of import and export fields. This is the list of fields that may potentially be exchanged during coupling, although some fields may not be connected for a particular configuration.",
-			 "icon", "cog.png",
 			 "label", "Initialize Phase Definition - IPDv01p1",
-			 "iconAdd", "cog_add.png"
+			 "iconAdd", "cog_add.png",
+			 "task", "Implement Init Phase Definition (IPDv01p1)"
 		   });		
 		addAnnotation
 		  (getModelImplementsInitP1_Name(), 
@@ -1653,9 +1653,9 @@ public class NUOPCPackageImpl extends EPackageImpl implements NUOPCPackage {
 		   new String[] {
 			 "mapping", "subroutine: \"#name(inout type(ESMF_GridComp) gcomp, inout type(ESMF_State) #importParam, inout type(ESMF_State) #exportParam, inout type(ESMF_Clock) clock, out integer rc)\"",
 			 "doc", "Initialize Phase Definition: IPDv01p2\r\n\r\nIn this phase, models should realize the set of import and export fields. ",
-			 "icon", "cog.png",
 			 "label", "Initialize Phase Definition - IPDv01p2",
-			 "iconAdd", "cog_add.png"
+			 "iconAdd", "cog_add.png",
+			 "task", "Implement Init Phase Definition (IPDv01p2)"
 		   });		
 		addAnnotation
 		  (getModelImplementsInitP2_Name(), 
@@ -1694,6 +1694,13 @@ public class NUOPCPackageImpl extends EPackageImpl implements NUOPCPackage {
 			 "essential", "true"
 		   });			
 		addAnnotation
+		  (advertisesImportFieldEClass, 
+		   source, 
+		   new String[] {
+			 "label", "Advertise Import Field",
+			 "task", "Advertise Import Field"
+		   });		
+		addAnnotation
 		  (getAdvertisesImportField_AddsToState(), 
 		   source, 
 		   new String[] {
@@ -1710,6 +1717,13 @@ public class NUOPCPackageImpl extends EPackageImpl implements NUOPCPackage {
 		   source, 
 		   new String[] {
 			 "mappingX", "argByKeyword: \"StandardName\""
+		   });		
+		addAnnotation
+		  (advertisesExportFieldEClass, 
+		   source, 
+		   new String[] {
+			 "label", "Advertise Export Field",
+			 "task", "Advertise Export Field"
 		   });		
 		addAnnotation
 		  (getAdvertisesExportField_AddsToState(), 
@@ -1733,7 +1747,9 @@ public class NUOPCPackageImpl extends EPackageImpl implements NUOPCPackage {
 		  (realizesImportFieldEClass, 
 		   source, 
 		   new String[] {
-			 "mapping", "call: NUOPC_StateRealizeField"
+			 "mapping", "call: NUOPC_StateRealizeField",
+			 "label", "Realize Import Field",
+			 "task", "Realize Import Field"
 		   });		
 		addAnnotation
 		  (getRealizesImportField_RealizedInState(), 
@@ -1752,6 +1768,13 @@ public class NUOPCPackageImpl extends EPackageImpl implements NUOPCPackage {
 		   source, 
 		   new String[] {
 			 "mappingX", "argByIndex: 2"
+		   });		
+		addAnnotation
+		  (realizesExportFieldEClass, 
+		   source, 
+		   new String[] {
+			 "label", "Realize Export Field",
+			 "task", "Realize Export Field"
 		   });		
 		addAnnotation
 		  (getRealizesExportField_RealizedInState(), 
@@ -1801,7 +1824,6 @@ public class NUOPCPackageImpl extends EPackageImpl implements NUOPCPackage {
 		   new String[] {
 			 "mapping", "module",
 			 "labelPlural", "NUOPC Drivers",
-			 "icon", "script_go.png",
 			 "label", "Driver",
 			 "iconAdd", "script_add.png"
 		   });		
@@ -1934,7 +1956,6 @@ public class NUOPCPackageImpl extends EPackageImpl implements NUOPCPackage {
 		   new String[] {
 			 "mapping", "module",
 			 "labelPlural", "Atmosphere-Ocean Drivers",
-			 "icon", "script_go.png",
 			 "label", "NUOPC  Atmosphere-Ocean Driver",
 			 "iconAdd", "script_add.png"
 		   });		
@@ -2003,13 +2024,13 @@ public class NUOPCPackageImpl extends EPackageImpl implements NUOPCPackage {
 		   source, 
 		   new String[] {
 			 "derivation", "self.realizesImportField->size() > 0 or self.realizesExportField->size() > 0"
-		   });				
+		   });					
 		addAnnotation
 		  (getAdvertisesImportField_AddsToImportState(), 
 		   source, 
 		   new String[] {
 			 "derivation", "self.addsToState = self.parent.importParam"
-		   });					
+		   });						
 		addAnnotation
 		  (getAdvertisesExportField_AddsToExportState(), 
 		   source, 
@@ -2021,7 +2042,7 @@ public class NUOPCPackageImpl extends EPackageImpl implements NUOPCPackage {
 		   source, 
 		   new String[] {
 			 "derivation", "self.realizedInState = self.parent.importParam"
-		   });					
+		   });						
 		addAnnotation
 		  (getRealizesExportField_RealizedInExportState(), 
 		   source, 

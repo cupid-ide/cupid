@@ -20,7 +20,7 @@ import org.eclipse.emf.ecore.EObject;
  * </p>
  *
  * @see org.earthsystemcurator.cupid.nuopc.fsml.nuopc.NUOPCPackage#getRealizesImportField()
- * @model annotation="http://www.earthsystemcog.org/projects/nuopc mapping='call: NUOPC_StateRealizeField'"
+ * @model annotation="http://www.earthsystemcog.org/projects/nuopc mapping='call: NUOPC_StateRealizeField' label='Realize Import Field' task='Realize Import Field'"
  * @generated
  */
 public interface RealizesImportField extends EObject {

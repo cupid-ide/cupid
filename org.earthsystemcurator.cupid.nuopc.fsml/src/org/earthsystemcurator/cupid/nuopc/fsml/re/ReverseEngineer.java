@@ -254,11 +254,11 @@ public class ReverseEngineer {
 										String attribName = mve.getKey().substring(1);
 										EStructuralFeature attribSF = newModelElem.eClass().getEStructuralFeature(attribName);
 										if (attribSF != null) {
-											System.out.println("Metavariable - setting feature: " + attribName + " to " + mve.getValue());
+											//System.out.println("Metavariable - setting feature: " + attribName + " to " + mve.getValue());
 											newModelElem.eSet(attribSF, mve.getValue());
 										}
 										else {
-											System.out.println("Metavariable - feature not found: " + attribName);
+											//System.out.println("Metavariable - feature not found: " + attribName);
 										}
 									}
 								}

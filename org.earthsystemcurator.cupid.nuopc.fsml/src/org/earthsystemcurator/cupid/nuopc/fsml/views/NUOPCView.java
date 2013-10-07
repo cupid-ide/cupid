@@ -4,7 +4,9 @@ import java.util.ArrayList;
 
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.TreeColumn;
+import org.eclipse.ui.menus.IMenuService;
 import org.eclipse.ui.part.*;
+import org.eclipse.ui.services.IServiceLocator;
 import org.eclipse.jface.viewers.*;
 import org.eclipse.swt.graphics.Image;
 import org.eclipse.jface.action.*;
@@ -16,8 +18,10 @@ import org.eclipse.swt.SWT;
 import org.eclipse.core.resources.IProject;
 import org.eclipse.core.resources.IResource;
 import org.eclipse.core.runtime.IAdaptable;
+import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EObject;
+import org.eclipse.emf.ecore.EReference;
 import org.earthsystemcurator.cupid.nuopc.fsml.nuopc.NUOPCFactory;
 import org.earthsystemcurator.cupid.nuopc.fsml.views.NUOPCViewContentProvider;
 import org.earthsystemcurator.cupid.nuopc.fsml.views.NUOPCViewContentProvider.NUOPCModelElem;
@@ -61,34 +65,39 @@ public class NUOPCView extends ViewPart {
 	public NUOPCView() {
 	}
 
+	public void updateView(IProject project) {
+		viewer.setInput(project);
+		viewer.expandToLevel(2);
+	}
+	
 	/**
 	 * This is a callback that will allow us
 	 * to create the viewer and initialize it.
 	 */
 	public void createPartControl(Composite parent) {
-		viewer = new TreeViewer(parent, SWT.H_SCROLL | SWT.V_SCROLL);
+		viewer = new TreeViewer(parent, SWT.H_SCROLL | SWT.V_SCROLL | SWT.FULL_SELECTION);
 		
-		//TreeColumn tc1 = new TreeColumn(viewer.getTree(), SWT.LEFT);
-		//tc1.setAlignment(SWT.LEFT);
+		TreeColumn tc1 = new TreeColumn(viewer.getTree(), SWT.LEFT);
+		tc1.setAlignment(SWT.LEFT);
 		//tc1.setText("c1");
-		//tc1.setWidth(100);
-		//TreeColumn tc2 = new TreeColumn(viewer.getTree(), SWT.MULTI | SWT.RIGHT);
-		//tc2.setAlignment(SWT.LEFT);
-		//tc2.
+		tc1.setWidth(100);
+		tc1.setResizable(true);
+		TreeColumn tc2 = new TreeColumn(viewer.getTree(), SWT.MULTI | SWT.RIGHT);
+		tc2.setAlignment(SWT.LEFT);
 		//tc2.setText("c2");
-		//tc2.setWidth(100);
+		tc2.setWidth(100);
+		tc2.setResizable(true);
 		
-		//TreeColumnLayout tcl = new TreeColumnLayout();
-		//tcl.setColumnData(tc1, new ColumnWeightData(1));
-		//tcl.setColumnData(tc2, new ColumnWeightData(1));
-		
-		//parent.setLayout(tcl);
+		TreeColumnLayout tcl = new TreeColumnLayout();
+		tcl.setColumnData(tc1, new ColumnWeightData(1));
+		tcl.setColumnData(tc2, new ColumnWeightData(1));
+		parent.setLayout(tcl);
 		
 		
 		//TreeViewerColumn tvc1 = new TreeViewerColumn(viewer, SWT.LEFT);
 		//TreeViewerColumn tvc2 = new TreeViewerColumn(viewer, SWT.RIGHT);
-		//viewer.getTree().setHeaderVisible(true);
-		//viewer.getTree().setLinesVisible(true);
+		viewer.getTree().setHeaderVisible(true);
+		viewer.getTree().setLinesVisible(true);
 		
 		//tvc1.getColumn().setText("Name");
 		//tvc2.getColumn().setText("Column2");
@@ -101,7 +110,7 @@ public class NUOPCView extends ViewPart {
 		
 		//viewer.setInput(getViewSite());
 		
-		
+		/*
 		ISelectionListener listener = new ISelectionListener() {
 			public void selectionChanged(IWorkbenchPart part, ISelection sel) {
 				System.out.println("selectionChanged: " + part + " - " + sel);
@@ -115,6 +124,7 @@ public class NUOPCView extends ViewPart {
 		};
 		
 		this.getSite().getPage().addSelectionListener(listener);
+		*/
 		
 		doubleClickAction = new Action() {
 			public void run() {
@@ -130,8 +140,20 @@ public class NUOPCView extends ViewPart {
 			}
 		});
 		
+		//toolbar
+		//Action reverseEngineerAction = new Action();
 		
 		makeActions();
+		
+		IActionBars bars = getViewSite().getActionBars();
+		//bars.getToolBarManager().add(action1);
+		
+		
+		IServiceLocator workbench = PlatformUI.getWorkbench();
+		IMenuService menuService = (IMenuService) workbench.getService(IMenuService.class);
+		menuService.populateContributionManager((ContributionManager) bars.getToolBarManager(), "toolbar:org.earthsystemcurator.cupid.nuopc.fsml.views.NUOPCView.toolbar");
+		bars.updateActionBars();
+		
 		
 		MenuManager menuMgr = new MenuManager();
 
@@ -150,24 +172,44 @@ public class NUOPCView extends ViewPart {
                     IStructuredSelection selection = (IStructuredSelection) viewer.getSelection();
                     final NUOPCModelElem me = (NUOPCModelElem) selection.getFirstElement();
 
+                    if (me.eref != null) {
+                    	
+                    	EClass parentClass = (EClass) me.eref.getEType();
+                    	for (EReference childRef : parentClass.getEReferences()) {
+                    		if (childRef.isMany() && childRef.getUpperBound() < 0) {
+                    			Action a = new Action() {};
+                    			a.setText("Add " + childRef.getEType().getName() + "...");
+                    			manager.add(a);
+                    		}
+                    	}
+                    	
+                    }
+                    
                     if (me.elem == null) {
                     	
                     	Action action = new Action() {
                     		public void run() {
                 				
-                				
-                				if (!me.eref.isMany()) {
-                					EObject newElem = NUOPCFactory.eINSTANCE.create((EClass)me.eref.getEType());
+                				EObject newElem = NUOPCFactory.eINSTANCE.create((EClass)me.eref.getEType());
                 					//need to create all essential subfeatures (at least)
-                					me.parent.elem.eSet(me.eref, newElem);
-                					showMessage("Added element...");
+                				if (me.eref.isMany()) {
+                					EList l = (EList) me.parent.elem.eGet(me.eref);
+                					l.add(newElem);
+                				}
+                				else {
+                					me.parent.elem.eSet(me.eref, newElem);                					
                 				}
                 				
+                				showMessage("Added element: " + newElem);
+                				
+                				//START HERE WITH REFRESH
+                				viewer.refresh();
                 				
                     		}                    		
                 		};
-                		action.setText("Generate code...");
-                		action.setToolTipText("Generate code for: " + me.typeLabel);
+                		action.setText("Instantiate framework concept...");
+                		//action.setToolTipText("Generate code for: " + me.typeLabel);
+                		
                     	manager.add(action);
                     	
                     } 
@@ -250,6 +292,7 @@ public class NUOPCView extends ViewPart {
 		action2.setToolTipText("Action 2 tooltip");
 		action2.setImageDescriptor(PlatformUI.getWorkbench().getSharedImages().
 				getImageDescriptor(ISharedImages.IMG_OBJS_INFO_TSK));
+		
 		/*
 		doubleClickAction = new Action() {
 			public void run() {

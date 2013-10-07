@@ -10,7 +10,6 @@
     <eAnnotations source="http://www.earthsystemcog.org/projects/nuopc">
       <details key="mapping" value="module"/>
       <details key="labelPlural" value="NUOPC Models"/>
-      <details key="icon" value="script_gear.png"/>
       <details key="label" value="Model"/>
       <details key="iconAdd" value="script_add.png"/>
     </eAnnotations>
@@ -24,6 +23,7 @@
         eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString" defaultValueLiteral="nuopcmodel_ss">
       <eAnnotations source="http://www.earthsystemcog.org/projects/nuopc">
         <details key="mapping" value="uses: &quot;NUOPC_Model&quot; entity: &quot;routine_SetServices&quot;"/>
+        <details key="label" value="Imports generic Set Services"/>
       </eAnnotations>
     </eStructuralFeatures>
     <eStructuralFeatures xsi:type="ecore:EReference" name="implementsSetServices"
@@ -57,9 +57,9 @@
   <eClassifiers xsi:type="ecore:EClass" name="ModelImplementsSetServices">
     <eAnnotations source="http://www.earthsystemcog.org/projects/nuopc">
       <details key="mapping" value="subroutine: &quot;#name(inout type(ESMF_GridComp) #param_gcomp, out integer #param_rc)&quot;"/>
-      <details key="icon" value="cog.png"/>
-      <details key="label" value="Implement a SetServices Method"/>
+      <details key="label" value="Set Services Callback"/>
       <details key="iconAdd" value="cog_add.png"/>
+      <details key="task" value="Implement a Set Services Callback"/>
     </eAnnotations>
     <eStructuralFeatures xsi:type="ecore:EReference" name="parent" lowerBound="1"
         eType="#//NUOPCModel" eOpposite="#//NUOPCModel/implementsSetServices"/>
@@ -117,9 +117,9 @@
     <eAnnotations source="http://www.earthsystemcog.org/projects/nuopc">
       <details key="mapping" value="subroutine: &quot;#name(inout type(ESMF_GridComp) gcomp, inout type(ESMF_State) #importParam, inout type(ESMF_State) #exportParam, inout type(ESMF_Clock) clock, out integer rc)&quot;"/>
       <details key="doc" value="Initialize Phase Definition: IPDv01p1&#xD;&#xA;&#xD;&#xA;In this phase, models should advertise the set of import and export fields. This is the list of fields that may potentially be exchanged during coupling, although some fields may not be connected for a particular configuration."/>
-      <details key="icon" value="cog.png"/>
       <details key="label" value="Initialize Phase Definition - IPDv01p1"/>
       <details key="iconAdd" value="cog_add.png"/>
+      <details key="task" value="Implement Init Phase Definition (IPDv01p1)"/>
     </eAnnotations>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="name" lowerBound="1" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"
         defaultValueLiteral="InitP1">
@@ -165,9 +165,9 @@
     <eAnnotations source="http://www.earthsystemcog.org/projects/nuopc">
       <details key="mapping" value="subroutine: &quot;#name(inout type(ESMF_GridComp) gcomp, inout type(ESMF_State) #importParam, inout type(ESMF_State) #exportParam, inout type(ESMF_Clock) clock, out integer rc)&quot;"/>
       <details key="doc" value="Initialize Phase Definition: IPDv01p2&#xD;&#xA;&#xD;&#xA;In this phase, models should realize the set of import and export fields. "/>
-      <details key="icon" value="cog.png"/>
       <details key="label" value="Initialize Phase Definition - IPDv01p2"/>
       <details key="iconAdd" value="cog_add.png"/>
+      <details key="task" value="Implement Init Phase Definition (IPDv01p2)"/>
     </eAnnotations>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="name" lowerBound="1" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"
         defaultValueLiteral="InitP2">
@@ -210,6 +210,10 @@
     </eStructuralFeatures>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="AdvertisesImportField">
+    <eAnnotations source="http://www.earthsystemcog.org/projects/nuopc">
+      <details key="label" value="Advertise Import Field"/>
+      <details key="task" value="Advertise Import Field"/>
+    </eAnnotations>
     <eStructuralFeatures xsi:type="ecore:EReference" name="parent" lowerBound="1"
         eType="#//ModelImplementsInitP1" eOpposite="#//ModelImplementsInitP1/advertisesImportField"/>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="addsToState" lowerBound="1"
@@ -234,6 +238,10 @@
     </eStructuralFeatures>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="AdvertisesExportField">
+    <eAnnotations source="http://www.earthsystemcog.org/projects/nuopc">
+      <details key="label" value="Advertise Export Field"/>
+      <details key="task" value="Advertise Export Field"/>
+    </eAnnotations>
     <eStructuralFeatures xsi:type="ecore:EReference" name="parent" lowerBound="1"
         eType="#//ModelImplementsInitP1" eOpposite="#//ModelImplementsInitP1/advertisesExportField"/>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="addsToState" lowerBound="1"
@@ -260,6 +268,8 @@
   <eClassifiers xsi:type="ecore:EClass" name="RealizesImportField">
     <eAnnotations source="http://www.earthsystemcog.org/projects/nuopc">
       <details key="mapping" value="call: NUOPC_StateRealizeField"/>
+      <details key="label" value="Realize Import Field"/>
+      <details key="task" value="Realize Import Field"/>
     </eAnnotations>
     <eStructuralFeatures xsi:type="ecore:EReference" name="parent" lowerBound="1"
         eType="#//ModelImplementsInitP2" eOpposite="#//ModelImplementsInitP2/realizesImportField"/>
@@ -285,6 +295,10 @@
     </eStructuralFeatures>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="RealizesExportField">
+    <eAnnotations source="http://www.earthsystemcog.org/projects/nuopc">
+      <details key="label" value="Realize Export Field"/>
+      <details key="task" value="Realize Export Field"/>
+    </eAnnotations>
     <eStructuralFeatures xsi:type="ecore:EReference" name="parent" lowerBound="1"
         eType="#//ModelImplementsInitP2" eOpposite="#//ModelImplementsInitP2/realizesExportField"/>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="realizedInState" lowerBound="1"
@@ -346,7 +360,6 @@
     <eAnnotations source="http://www.earthsystemcog.org/projects/nuopc">
       <details key="mapping" value="module"/>
       <details key="labelPlural" value="NUOPC Drivers"/>
-      <details key="icon" value="script_go.png"/>
       <details key="label" value="Driver"/>
       <details key="iconAdd" value="script_add.png"/>
     </eAnnotations>
@@ -465,7 +478,7 @@
       <details key="label" value="NUOPC Application"/>
       <details key="icon" value="application_cascade.png"/>
     </eAnnotations>
-    <eStructuralFeatures xsi:type="ecore:EAttribute" name="name" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="name" lowerBound="1" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="nuopcDriver" ordered="false"
         upperBound="-1" eType="#//NUOPCDriver" containment="true">
       <eAnnotations source="http://www.earthsystemcog.org/projects/nuopc">
@@ -493,7 +506,6 @@
     <eAnnotations source="http://www.earthsystemcog.org/projects/nuopc">
       <details key="mapping" value="module"/>
       <details key="labelPlural" value="Atmosphere-Ocean Drivers"/>
-      <details key="icon" value="script_go.png"/>
       <details key="label" value="NUOPC  Atmosphere-Ocean Driver"/>
       <details key="iconAdd" value="script_add.png"/>
     </eAnnotations>

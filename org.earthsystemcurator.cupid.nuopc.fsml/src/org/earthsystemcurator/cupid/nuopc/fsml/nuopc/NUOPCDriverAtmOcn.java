@@ -18,7 +18,7 @@ import org.eclipse.emf.ecore.EObject;
  * </p>
  *
  * @see org.earthsystemcurator.cupid.nuopc.fsml.nuopc.NUOPCPackage#getNUOPCDriverAtmOcn()
- * @model annotation="http://www.earthsystemcog.org/projects/nuopc mapping='module' labelPlural='Atmosphere-Ocean Drivers' icon='script_go.png' label='NUOPC  Atmosphere-Ocean Driver' iconAdd='script_add.png'"
+ * @model annotation="http://www.earthsystemcog.org/projects/nuopc mapping='module' labelPlural='Atmosphere-Ocean Drivers' label='NUOPC  Atmosphere-Ocean Driver' iconAdd='script_add.png'"
  * @generated
  */
 public interface NUOPCDriverAtmOcn extends EObject {

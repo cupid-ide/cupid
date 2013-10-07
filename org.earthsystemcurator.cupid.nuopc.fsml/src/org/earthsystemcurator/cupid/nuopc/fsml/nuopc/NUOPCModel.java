@@ -24,7 +24,7 @@ import org.eclipse.emf.ecore.EObject;
  * </p>
  *
  * @see org.earthsystemcurator.cupid.nuopc.fsml.nuopc.NUOPCPackage#getNUOPCModel()
- * @model annotation="http://www.earthsystemcog.org/projects/nuopc mapping='module' labelPlural='NUOPC Models' icon='script_gear.png' label='Model' iconAdd='script_add.png'"
+ * @model annotation="http://www.earthsystemcog.org/projects/nuopc mapping='module' labelPlural='NUOPC Models' label='Model' iconAdd='script_add.png'"
  * @generated
  */
 public interface NUOPCModel extends EObject {
@@ -69,7 +69,7 @@ public interface NUOPCModel extends EObject {
 	 * @see #setImportsGenericSS(String)
 	 * @see org.earthsystemcurator.cupid.nuopc.fsml.nuopc.NUOPCPackage#getNUOPCModel_ImportsGenericSS()
 	 * @model default="nuopcmodel_ss" required="true"
-	 *        annotation="http://www.earthsystemcog.org/projects/nuopc mapping='uses: \"NUOPC_Model\" entity: \"routine_SetServices\"'"
+	 *        annotation="http://www.earthsystemcog.org/projects/nuopc mapping='uses: \"NUOPC_Model\" entity: \"routine_SetServices\"' label='Imports generic Set Services'"
 	 * @generated
 	 */
 	String getImportsGenericSS();

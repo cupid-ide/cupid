@@ -9,6 +9,8 @@ import org.earthsystemcurator.cupid.nuopc.fsml.builder.NUOPCNature;
 import org.earthsystemcurator.cupid.nuopc.fsml.nuopc.NUOPCApplication;
 import org.earthsystemcurator.cupid.nuopc.fsml.nuopc.NUOPCPackage;
 import org.earthsystemcurator.cupid.nuopc.fsml.re.ReverseEngineer;
+import org.earthsystemcurator.cupid.nuopc.fsml.views.NUOPCView;
+import org.eclipse.cdt.core.model.ITranslationUnit;
 import org.eclipse.core.commands.AbstractHandler;
 import org.eclipse.core.commands.ExecutionEvent;
 import org.eclipse.core.commands.ExecutionException;
@@ -25,7 +27,13 @@ import org.eclipse.emf.ecore.xmi.impl.XMIResourceFactoryImpl;
 import org.eclipse.jface.viewers.ISelection;
 import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.jface.viewers.ITreeSelection;
+import org.eclipse.jface.text.ITextSelection;
 import org.eclipse.photran.internal.core.vpg.PhotranVPG;
+import org.eclipse.ui.IEditorInput;
+import org.eclipse.ui.IEditorPart;
+import org.eclipse.ui.IFileEditorInput;
+import org.eclipse.ui.IViewReference;
+import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.handlers.HandlerUtil;
 
 /**
@@ -54,95 +62,32 @@ public class ReverseHandler extends AbstractHandler {
 		
 		IProject selectedProject = null;
 		ISelection sel = HandlerUtil.getCurrentSelection(event);
+		
 		if (sel instanceof ITreeSelection) {
 			Object item = ((ITreeSelection) sel).getFirstElement();
 			if (item instanceof IProject) {
 				selectedProject = (IProject) item;
 				//ystem.out.println("Selected project: " + ((IProject) item).getName());
 			}
+			else if (item instanceof ITranslationUnit) {
+				selectedProject = ((ITranslationUnit) item).getResource().getProject();
+			}			
 		}
 		
-		if (selectedProject == null) return null;
+		if (selectedProject == null) {
+			IEditorPart editor = HandlerUtil.getActiveEditor(event);
+			IEditorInput input = editor.getEditorInput();
+			if (input instanceof IFileEditorInput) {
+				selectedProject = ((IFileEditorInput) input).getFile().getProject();
+			}
+			//return null;
+		}
 		
-		
-		/*
-		IResource res = extractSelection(window.getActivePage().getSelection());
-
-		if (res == null) {
-			System.out.println("res is null\n\n");
+		if (selectedProject == null) {
+			System.out.println("Current editor input: " + sel);
 			return null;
 		}
-		*/
-
-		//IWorkspace ws = ResourcesPlugin.getWorkspace();
-		//IProject p = ws.getRoot().getProject("nuopc");
-
-		//String name = new FileDialog(window.getShell(), SWT.OPEN).open();
-		//if (name == null)
-		//   return null;
-
-		//IPath location = new Path(name);
-		//IFile f = p.getFile(location.lastSegment());
-
-		//IFile f = ws.getRoot().getFile(location);
-
-		/*
-		if (! (res instanceof IFile)) {
-			System.out.println("res is not file\n\n");
-			return null;			
-		}
-
-		final IFile f = (IFile) res;
-
-		final PhotranVPG vpg = PhotranVPG.getInstance();
-				
-		final IFortranAST ast = vpg.acquireTransientAST((IFile) res);
 		
-		System.out.println("error: " + vpg.describeWhyCannotProcessFile(f));
-		*/
-		
-		
-		/*
-		System.out.println("VGP filenames:");
-		for (String fn: vpg.listAllFilenames()) {
-			System.out.println("\t" + fn);
-		}
-		
-		System.out.println("VGP filenames:");
-		for (String fn: vpg.listAllModules()) {
-			System.out.println("\t" + fn);
-		}
-		
-		Iterable<? extends VPGEdge<IFortranAST, Token, PhotranTokenRef>> edges = vpg.getAllEdgesFor("/nuopc/atm.F90");
-		System.out.println("edges.hasNext? = " + edges.iterator().hasNext());
-		for ( VPGEdge<IFortranAST, Token, PhotranTokenRef> e : edges) {
-			try {
-				//e.findSource().getTokenRef().followOutgoing(EdgeType.)
-				System.out.println("Edge: (" + vpg.describeEdgeType(e.getType()) + ") " + e.findSource() + " ==> " + e.findSink());
-			} catch (Exception e1) {
-				e1.printStackTrace();
-			}
-		}
-		*/
-		
-//		Set<ASTModuleNode> moduleNodes = ast.getRoot().findAll(ASTModuleNode.class);
-//		for (ASTModuleNode mn : moduleNodes) {
-//			ModelToModuleMapping map = new ModelToModuleMapping(null, mn);
-//			Model m = map.reverse();
-//		//	System.out.println("Reversed model: " + m);
-//		}
-		
-		/*
-		ast.accept(new GenericASTVisitor() {
-				
-			@Override
-			public void visitASTModuleNode(ASTModuleNode node) {
-				map.forward();				
-			}
-			
-		});
-		*/
-
 		ResourceSet resourceSet = new ResourceSetImpl();
 
         resourceSet.getResourceFactoryRegistry().getExtensionToFactoryMap().put(
@@ -162,12 +107,26 @@ public class ReverseHandler extends AbstractHandler {
 			NUOPCNature nature = (NUOPCNature) selectedProject.getNature(NUOPCNature.NATURE_ID);
 			//nature.setReverseEngineeredModel(a);
 			//nature.setReverseEngineer(re);
-			nature.reversedModel = a;
-			nature.reversedMappings = re.getMappings();
+			if (nature != null) {
+				nature.reversedModel = a;
+				nature.reversedMappings = re.getMappings();
+			}
 		} catch (CoreException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+        
+        //update the view here for now
+        IViewReference viewRef = 
+        		PlatformUI.getWorkbench().getActiveWorkbenchWindow().
+        						getActivePage().findViewReference(NUOPCView.ID, null); 
+        if (viewRef != null) {
+        	NUOPCView view = (NUOPCView) viewRef.getPart(true);
+        	if (view != null) {
+        		view.updateView(selectedProject);
+        	}
+        }
+        
         
         if (a == null) return null;
         

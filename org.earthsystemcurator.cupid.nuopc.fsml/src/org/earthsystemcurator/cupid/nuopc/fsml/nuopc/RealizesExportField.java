@@ -20,7 +20,7 @@ import org.eclipse.emf.ecore.EObject;
  * </p>
  *
  * @see org.earthsystemcurator.cupid.nuopc.fsml.nuopc.NUOPCPackage#getRealizesExportField()
- * @model
+ * @model annotation="http://www.earthsystemcog.org/projects/nuopc label='Realize Export Field' task='Realize Export Field'"
  * @generated
  */
 public interface RealizesExportField extends EObject {

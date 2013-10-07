@@ -20,7 +20,7 @@ import org.eclipse.emf.ecore.EObject;
  * </p>
  *
  * @see org.earthsystemcurator.cupid.nuopc.fsml.nuopc.NUOPCPackage#getAdvertisesImportField()
- * @model
+ * @model annotation="http://www.earthsystemcog.org/projects/nuopc label='Advertise Import Field' task='Advertise Import Field'"
  * @generated
  */
 public interface AdvertisesImportField extends EObject {

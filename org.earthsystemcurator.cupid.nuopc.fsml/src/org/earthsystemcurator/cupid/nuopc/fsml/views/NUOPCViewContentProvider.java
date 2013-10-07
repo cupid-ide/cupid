@@ -11,9 +11,11 @@ import org.earthsystemcurator.cupid.nuopc.fsml.util.Regex;
 import org.eclipse.core.resources.IProject;
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.emf.common.util.EList;
+import org.eclipse.emf.ecore.EAttribute;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EReference;
+import org.eclipse.emf.ecore.EcorePackage;
 import org.eclipse.emf.ecore.util.EcoreUtil;
 import org.eclipse.jface.viewers.IStructuredContentProvider;
 import org.eclipse.jface.viewers.ITreeContentProvider;
@@ -75,7 +77,7 @@ class NUOPCViewContentProvider implements IStructuredContentProvider, ITreeConte
 	
 	public Object[] getElements(Object parent) {
 		
-		System.out.println("getElements: " + parent);
+		//System.out.println("getElements: " + parent);
 		
 		if (app == null) {
 			System.out.println("No reverse engineered model");
@@ -83,9 +85,9 @@ class NUOPCViewContentProvider implements IStructuredContentProvider, ITreeConte
 		}
 				
 				
-		//EReference er = NUOPCPackage.eINSTANCE.getTop_Apps();
+		EReference er = NUOPCPackage.eINSTANCE.getTop_Apps();
 		String labelType = Regex.getFromAnnotation(app.eClass(), "label");		
-		return new Object[] {new NUOPCModelElem(null, null, app.getName(), labelType, app)};  
+		return new Object[] {new NUOPCModelElem(null, er, app.getName(), labelType, app)};  
 			
 	}
 	
@@ -95,51 +97,107 @@ class NUOPCViewContentProvider implements IStructuredContentProvider, ITreeConte
 	}
 	
 	public Object [] getChildren(Object p) {
-		System.out.println("getChildren: " + p);
+		//System.out.println("getChildren: " + p);
 		if (p instanceof NUOPCModelElem) {
 			NUOPCModelElem parent = (NUOPCModelElem) p;
 			//EReference er = parent.eref;
-			EObject eo = parent.elem;
-			EClass ec = eo.eClass();
-			
+						
 			List<NUOPCModelElem> children = new ArrayList<NUOPCModelElem>();
+			
+			if (parent.elem != null) {
+				EObject eo = parent.elem;
+				EClass ec = eo.eClass();
 				
-			for (EReference eref : ec.getEReferences()) {
-				if (eref.isContainment()) {
+									
+				for (EAttribute eattrib : ec.getEAttributes()) {
+					
+					System.out.println("EAttrib: " + ec.getName() + "." + eattrib.getName());
 					
 					String typeLabel;
-					typeLabel = Regex.getFromAnnotation(eref.getEType(), "label");
+					typeLabel = Regex.getFromAnnotation(eattrib, "label");
+					if (typeLabel == null) {
+						typeLabel = eattrib.getName();
+					}
+					
+					String nameLabel = "(none)";
+					
+					Object val = eo.eGet(eattrib);
+					if (val instanceof EList) {
+						Object first = ((EList) val).get(0);
+						nameLabel = first.toString();
+					}
+					else if (eattrib.getEType().getName().equals("EString")) {
+						nameLabel = (String) val;
+					}
+					else if (eattrib.getEType().getName().equals("EBoolean")) {
+						nameLabel = Boolean.toString((Boolean) val);
+					}
+					
+					
+					
+					children.add(new NUOPCModelElem(parent, eattrib, nameLabel, typeLabel));
+				}
+				
+				
+				for (EReference eref : ec.getEReferences()) {
+					if (eref.isContainment()) {
+						
+						String typeLabel, taskLabel;
+						typeLabel = Regex.getFromAnnotation(eref.getEType(), "label");
+						taskLabel = Regex.getFromAnnotation(eref.getEType(), "task");
+						if (typeLabel == null) {
+							typeLabel = eref.getEType().getName();
+						}
+						
+						if (eref.isMany()) {							
+							EList<EObject> instances = (EList<EObject>) eo.eGet(eref);
+							if (instances.size() > 0) {
+								for (EObject o : instances) {
+									String nameLabel = EcoreUtils.eGetSFValue("name", o, "UKNOWN");
+									children.add(new NUOPCModelElem(parent, eref, nameLabel, typeLabel, o));
+								}
+							}
+							/*
+							else {
+								children.add(new NUOPCModelElem(parent, eref, null, typeLabel, null));
+							}
+							*/
+							
+						}
+						else {
+							EObject o = (EObject) eo.eGet(eref);
+							if (o != null) {
+								String nameLabel = EcoreUtils.eGetSFValue("name", o, "UKNOWN");
+								children.add(new NUOPCModelElem(parent, eref, nameLabel, typeLabel, o));
+							}
+							else {
+								children.add(new NUOPCModelElem(parent, eref, null, taskLabel, null));
+							}
+						}
+												
+					}
+				}
+			}
+			else {
+				//no elem eobject
+				EClass ec = (EClass) parent.eref.getEType();
+				for (EReference eref : ec.getEReferences()) {
+					
+					String typeLabel;
+					typeLabel = Regex.getFromAnnotation(eref.getEType(), "task");
 					if (typeLabel == null) {
 						typeLabel = eref.getEType().getName();
 					}
 					
-					if (eref.isMany()) {							
-						EList<EObject> instances = (EList<EObject>) eo.eGet(eref);
-						if (instances.size() > 0) {
-							for (EObject o : instances) {
-								String nameLabel = EcoreUtils.eGetSFValue("name", o, "UKNOWN");
-								children.add(new NUOPCModelElem(parent, eref, nameLabel, typeLabel, o));
-							}
-						}
-						else {
-							children.add(new NUOPCModelElem(parent, eref, null, typeLabel, null));
-						}
-						
+					if (eref.isContainment()) {
+						children.add(new NUOPCModelElem(parent, eref, null, typeLabel, null));
 					}
-					else {
-						EObject o = (EObject) eo.eGet(eref);
-						if (o != null) {
-							String nameLabel = EcoreUtils.eGetSFValue("name", o, "UKNOWN");
-							children.add(new NUOPCModelElem(parent, eref, nameLabel, typeLabel, o));
-						}
-						else {
-							children.add(new NUOPCModelElem(parent, eref, null, typeLabel, null));
-						}
-					}
-											
+					
 				}
-			}
 				
+				
+			}
+			
 						
 			return children.toArray();
 		}
@@ -222,11 +280,15 @@ class NUOPCViewContentProvider implements IStructuredContentProvider, ITreeConte
 	*/
 	
 	public boolean hasChildren(Object p) {
-		System.out.println("hasChildren: " + p);
+		//System.out.println("hasChildren: " + p);
 		if (p instanceof NUOPCModelElem) {
 			NUOPCModelElem parent = (NUOPCModelElem) p;
 			if (parent.elem != null) {
 				return parent.elem.eClass().getEReferences().size() > 0;
+			}
+			else if (parent.eref != null) {
+				//TODO: check for isMany
+				return ((EClass) parent.eref.getEType()).getEReferences().size() > 0;
 			}
 		}
 		return false;
@@ -235,11 +297,19 @@ class NUOPCViewContentProvider implements IStructuredContentProvider, ITreeConte
 	public class NUOPCModelElem {
 		public NUOPCModelElem parent;
 		public EReference eref;
+		public EAttribute eattrib;
 		public String nameLabel;
 		public String typeLabel;
 		public EObject elem;
 		//public int min;
 		//public int max;
+		
+		public NUOPCModelElem(NUOPCModelElem parent, EAttribute eattrib, String nameLabel, String typeLabel) {
+			this.parent = parent;
+			this.eattrib = eattrib;
+			this.nameLabel = nameLabel;
+			this.typeLabel = typeLabel;			
+		}
 		
 		public NUOPCModelElem(NUOPCModelElem parent, EReference eref, String nameLabel, String typeLabel, EObject elem) {
 			this.parent = parent;

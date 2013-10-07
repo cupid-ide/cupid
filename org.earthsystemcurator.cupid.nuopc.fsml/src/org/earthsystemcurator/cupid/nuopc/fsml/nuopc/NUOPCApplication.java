@@ -37,7 +37,7 @@ public interface NUOPCApplication extends EObject {
 	 * @return the value of the '<em>Name</em>' attribute.
 	 * @see #setName(String)
 	 * @see org.earthsystemcurator.cupid.nuopc.fsml.nuopc.NUOPCPackage#getNUOPCApplication_Name()
-	 * @model
+	 * @model required="true"
 	 * @generated
 	 */
 	String getName();

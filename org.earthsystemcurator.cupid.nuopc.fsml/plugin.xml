@@ -74,11 +74,13 @@
                mnemonic="M">
             <command
                   commandId="org.earthsystemcurator.cupid.nuopc.fsml.commands.reverseCommand"
+                  icon="icons/arrow_right.png"
                   id="org.earthsystemcurator.cupid.nuopc.fsml.menus.reverseCommand"
                   mnemonic="S">
             </command>
             <command
                   commandId="org.earthsystemcurator.cupid.nuopc.fsml.commands.forwardCommand"
+                  icon="icons/arrow_left.png"
                   id="org.earthsystemcurator.cupid.nuopc.fsml.menus.forwardCommand"
                   mnemonic="S"
                   tooltip="Forward engineer (generate code)">
@@ -99,13 +101,13 @@
                label="Cupid">
             <command
                   commandId="org.earthsystemcurator.cupid.nuopc.fsml.commands.reverseCommand"
-                  icon="icons/sample.gif"
+                  icon="icons/arrow_right.png"
                   id="org.earthsystemcurator.cupid.nuopc.fsml.toolbars.reverseCommand"
                   tooltip="Reverse engineer">
             </command>
             <command
                   commandId="org.earthsystemcurator.cupid.nuopc.fsml.commands.forwardCommand"
-                  icon="icons/sample.gif"
+                  icon="icons/arrow_left.png"
                   id="org.earthsystemcurator.cupid.nuopc.fsml.toolbars.forwardCommand"
                   tooltip="Forward engineer (generate code)">
             </command>
@@ -209,6 +211,21 @@
                   </iterate>
                </with>
             </visibleWhen>
+         </command>
+      </menuContribution>
+      <menuContribution
+            locationURI="toolbar:org.earthsystemcurator.cupid.nuopc.fsml.views.NUOPCView.toolbar">
+         <command
+               commandId="org.earthsystemcurator.cupid.nuopc.fsml.commands.reverseCommand"
+               icon="icons/arrow_right.png"
+               id="org.earthsystemcurator.cupid.nuopc.fsml.toolbars.reverseCommand"
+               tooltip="Reverse engineer">
+         </command>
+         <command
+               commandId="org.earthsystemcurator.cupid.nuopc.fsml.commands.forwardCommand"
+               icon="icons/arrow_left.png"
+               id="org.earthsystemcurator.cupid.nuopc.fsml.toolbars.forwardCommand"
+               tooltip="Forward engineer (generate code)">
          </command>
       </menuContribution>
    </extension>

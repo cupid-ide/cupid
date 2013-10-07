@@ -13,6 +13,16 @@ import org.eclipse.emf.ecore.EStructuralFeature;
 
 public class Regex {
 
+	public static String getMappingTypeFromAnnotation(EStructuralFeature sf) {
+		Map<String, Object> m = getMappingFromAnnotation(sf);
+		if (m != null) {
+			return (String) m.keySet().toArray()[0];
+		}
+		else {
+			return null;
+		}
+	}
+	
 	public static Map<String, Object> getMappingFromAnnotation(EStructuralFeature sf) {
 		EAnnotation ann = sf.getEAnnotation("http://www.earthsystemcog.org/projects/nuopc");
 		if (ann != null) {

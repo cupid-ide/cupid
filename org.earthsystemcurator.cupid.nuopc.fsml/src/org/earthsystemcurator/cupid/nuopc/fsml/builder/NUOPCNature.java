@@ -50,6 +50,7 @@ public class NUOPCNature implements IProjectNature {
 		project.setDescription(desc, null);
 		
 		System.out.println("Added NUOPC project nature");
+
 	}
 
 	/*
@@ -102,4 +103,5 @@ public class NUOPCNature implements IProjectNature {
 	*/
 	
 
+	
 }
