@@ -8,6 +8,7 @@ import org.eclipse.ui.menus.IMenuService;
 import org.eclipse.ui.part.*;
 import org.eclipse.ui.services.IServiceLocator;
 import org.eclipse.jface.viewers.*;
+import org.eclipse.jface.window.ToolTip;
 import org.eclipse.swt.graphics.Image;
 import org.eclipse.jface.action.*;
 import org.eclipse.jface.dialogs.MessageDialog;
@@ -107,6 +108,7 @@ public class NUOPCView extends ViewPart {
 		viewer.setContentProvider(new NUOPCViewContentProvider());
 		viewer.setLabelProvider(new NUOPCViewLabelProvider());
 		viewer.setSorter(null);
+		ColumnViewerToolTipSupport.enableFor(viewer, ToolTip.NO_RECREATE);
 		
 		//viewer.setInput(getViewSite());
 		
@@ -201,9 +203,8 @@ public class NUOPCView extends ViewPart {
                 				}
                 				
                 				showMessage("Added element: " + newElem);
-                				
-                				//START HERE WITH REFRESH
-                				viewer.refresh();
+                				                				
+                				viewer.refresh(me.parent);
                 				
                     		}                    		
                 		};

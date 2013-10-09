@@ -11,6 +11,8 @@ import org.eclipse.core.runtime.Path;
 import org.eclipse.emf.common.util.Diagnostic;
 import org.eclipse.emf.ecore.util.Diagnostician;
 import org.eclipse.jface.resource.ImageDescriptor;
+import org.eclipse.jface.viewers.DecorationOverlayIcon;
+import org.eclipse.jface.viewers.IDecoration;
 import org.eclipse.jface.viewers.ILabelProviderListener;
 import org.eclipse.jface.viewers.ITableLabelProvider;
 import org.eclipse.jface.viewers.LabelProvider;
@@ -29,9 +31,24 @@ import org.eclipse.ui.ISharedImages;
 import org.eclipse.ui.PlatformUI;
 import org.osgi.framework.Bundle;
 import org.osgi.framework.FrameworkUtil;
+import org.stringtemplate.v4.ST;
 
 class NUOPCViewLabelProvider extends StyledCellLabelProvider { //implements ITableLabelProvider {
 
+	@Override
+	public String getToolTipText(Object element) {
+		NUOPCModelElem me = (NUOPCModelElem) element;
+		if (me.eref != null) {
+			String docText = Regex.getFromAnnotation(me.eref.getEType(), "doc");
+			if (docText != null) {
+				ST text = new ST("<doc; wrap=\"\n\", separator=\" \">");
+				text.add("doc", docText.split(" "));							
+				return text.render(50);
+			}
+		}
+		return null;
+	}
+	
 	@Override
 	public void update(final ViewerCell cell) {
 	
@@ -84,14 +101,14 @@ class NUOPCViewLabelProvider extends StyledCellLabelProvider { //implements ITab
 			
 			//cell.getControl().		
 			//cell.setText(text.toString());
-			cell.setImage(getObjectImage(me));
+			cell.setImage(getFortranImage(me));
 			
 	    }
 	    else {
 	    	if (me.nameLabel != null) {
 	    		text.append(me.nameLabel);
 	    	}
-	    	cell.setImage(getValidationImage(me));
+	    	//cell.setImage(getFortranImage(me));
 	    }
 	    
 	    cell.setText(text.toString());
@@ -131,8 +148,11 @@ class NUOPCViewLabelProvider extends StyledCellLabelProvider { //implements ITab
 		}
 	}
 	
-	public Image getObjectImage(Object obj) {
+	public Image getFortranImage(Object obj) {
 		String imageKey = null;
+		String bottomOverlayKey = null;
+		String topOverlayKey = null;
+		int SWT_PROPS = 0;
 		if (obj instanceof NUOPCModelElem) {
 			NUOPCModelElem me = (NUOPCModelElem) obj;
 			
@@ -149,19 +169,46 @@ class NUOPCViewLabelProvider extends StyledCellLabelProvider { //implements ITab
 							imageKey = "subroutine.gif";
 						}
 						else if (mappingType.equalsIgnoreCase("call")) {
-							imageKey = "call.gif";
+							imageKey = "subroutine.gif";
+							topOverlayKey = "caller_overlay.gif";
 						}
 					}
 				}
-			}			
+				
+				if (me.elem == null) {
+					bottomOverlayKey = "question_overlay.gif";
+					SWT_PROPS = SWT.IMAGE_GRAY;
+				}
+				//}
+			}
+			
+			//validation to determine overlay
+			if (me.elem != null) {
+				//TODO: probably don't want to re-validate the entire tree each time
+				Diagnostic diagnostic = Diagnostician.INSTANCE.validate(me.elem);
+				if (diagnostic.getSeverity() != Diagnostic.OK) {
+			       	bottomOverlayKey = "error_overlay.gif";
+			    }
+			}
+			//else if (me.eref != null) {			
+			//	overlayKey = "question_overlay.gif";
+			//	if (me.eref.getLowerBound() > 0) {
+			//		//SWT_PROPS = SWT.IMAGE_GRAY;
+			//	}
+			//	else {
+			//		//SWT_PROPS = SWT.IMAGE_GRAY;
+			//	}
+			//}
+			
 		}
 		if (imageKey != null) {		
-			return getImageFromName(imageKey);			
+			return getImage(imageKey, topOverlayKey, bottomOverlayKey, SWT_PROPS);			
 		}
 		return null;
 	}
-	
-	public Image getValidationImage(Object obj) {
+		
+	/*
+	public ImageDescriptor getValidationImageDescriptor(Object obj) {
 		String imageKey = null;
 		if (obj instanceof NUOPCModelElem) {
 			NUOPCModelElem me = (NUOPCModelElem) obj;
@@ -169,13 +216,15 @@ class NUOPCViewLabelProvider extends StyledCellLabelProvider { //implements ITab
 			if (me.elem != null) {
 				//imageKey = Regex.getFromAnnotation(me.elem.eClass(), "icon");
 				Diagnostic diagnostic = Diagnostician.INSTANCE.validate(me.elem);
+				//diagnostic.
 			    if (diagnostic.getSeverity() == Diagnostic.OK) {
 			       	//imageKey = "tick.png";
 			    }
 			    else {
-			    	imageKey = "error.gif";
+			    	imageKey = "error_overlay.gif";
 			    }
 			}
+			
 			else if (me.eref != null) {			
 				//imageKey = Regex.getFromAnnotation(me.eref.getEType(), "iconAdd");
 				if (me.eref.getLowerBound() > 0) {
@@ -184,16 +233,18 @@ class NUOPCViewLabelProvider extends StyledCellLabelProvider { //implements ITab
 				else {
 					imageKey = "quickfix_error.gif";
 				}
-			}			
+			}
+						
 		}
-		if (imageKey != null) {		
-			return getImageFromName(imageKey);			
-		}
-		return null;
+		//if (imageKey != null) {		
+		//	return getImageFromName(imageKey);			
+		//}
+		return imageKey;
 		//else {
 		//	return PlatformUI.getWorkbench().getSharedImages().getImage(ISharedImages.IMG_OBJ_ELEMENT);
 		//}
 	}
+	*/
 	
 	//public Object getImage(String key) throws IOException {
      // URL url = new URL(getBaseURL() + "icons/" + key + extensionFor(key));
@@ -203,13 +254,51 @@ class NUOPCViewLabelProvider extends StyledCellLabelProvider { //implements ITab
      // return url;
    // }
 	
-	private static Image getImageFromName(String file) {
-	    Bundle bundle = FrameworkUtil.getBundle(NUOPCViewLabelProvider.class);
-	    URL url = FileLocator.find(bundle, new Path("icons/" + file), null);
+	//private static Image getImage(String file) {
+	//	return getImage(file, null, 0);
+	//}
+	
+	private static Bundle MY_BUNDLE = FrameworkUtil.getBundle(NUOPCViewLabelProvider.class);
+	
+	private static Image getImage(String file, String topOverlay, String bottomOverlay, int SWT_PROPS) {
+	    URL url = FileLocator.find(MY_BUNDLE, new Path("icons/" + file), null);
 	    ImageDescriptor image = ImageDescriptor.createFromURL(url);
-	    return image.createImage();
+	    if (SWT_PROPS > 0) {
+	    	image = ImageDescriptor.createWithFlags(image, SWT_PROPS);
+	    }
+	    
+	    ImageDescriptor overlayArray[] = new ImageDescriptor[5];
+	    
+	    if (topOverlay != null) {
+	    	URL overlayURL = FileLocator.find(MY_BUNDLE, new Path("icons/" + topOverlay), null);
+	    	overlayArray[0] = ImageDescriptor.createFromURL(overlayURL);
+	    }
+	    
+	    if (bottomOverlay != null) {
+	    	URL overlayURL = FileLocator.find(MY_BUNDLE, new Path("icons/" + bottomOverlay), null);
+	    	overlayArray[3] = ImageDescriptor.createFromURL(overlayURL);	    	
+	    }
+	    
+	    if (topOverlay != null || bottomOverlay != null) {
+	    	DecorationOverlayIcon decorationOverlayIcon = 
+	    			new DecorationOverlayIcon(image.createImage(), overlayArray);
+	    	return decorationOverlayIcon.createImage();	
+	    }
+	    else {
+	    	return image.createImage();
+	    }
 	  } 
 
+	/*
+	private static Image decorateImage(Image image) {
+		ImageDescriptor image = ImageDescriptor.createFromURL(url);
+		
+		DecorationOverlayIcon decorationOverlayIcon = new DecorationOverlayIcon(image,
+			      SImageRegistry.getImageDescriptor(SImageConstants.primary_key), IDecoration.TOP_LEFT);
+			    return decorationOverlayIcon.createImage();	
+	}
+	*/
+	
 	@Override
 	public void addListener(ILabelProviderListener listener) {
 		// TODO Auto-generated method stub
