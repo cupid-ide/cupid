@@ -21,7 +21,7 @@ import org.eclipse.emf.ecore.EObject;
  * </p>
  *
  * @see org.earthsystemcurator.cupid.nuopc.fsml.nuopc.NUOPCPackage#getNUOPCDriver()
- * @model annotation="http://www.earthsystemcog.org/projects/nuopc mapping='module' labelPlural='NUOPC Drivers' label='Driver' iconAdd='script_add.png'"
+ * @model annotation="http://www.earthsystemcog.org/projects/nuopc mapping='module' labelPlural='NUOPC Drivers' label='NUOPC Driver' doc='NUOPC Driver is the generic driver component. It implements a child component harness, made of State and Component objects, that follows the NUOPC Common Model Architecture. It is specialized by plugging Model, Mediator, and Connector components into the harness. Driver components can be plugged into the harness to construct component hierarchies. The generic Driver initializes its child components according to a standard Initialization Phase Definition, and drives their Run() methods according a customizable run sequence.'"
  * @generated
  */
 public interface NUOPCDriver extends EObject {

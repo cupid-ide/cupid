@@ -9,6 +9,8 @@ import org.earthsystemcurator.cupid.nuopc.fsml.views.NUOPCViewContentProvider.NU
 import org.eclipse.core.runtime.FileLocator;
 import org.eclipse.core.runtime.Path;
 import org.eclipse.emf.common.util.Diagnostic;
+import org.eclipse.emf.ecore.EObject;
+import org.eclipse.emf.ecore.EReference;
 import org.eclipse.emf.ecore.util.Diagnostician;
 import org.eclipse.jface.resource.ImageDescriptor;
 import org.eclipse.jface.viewers.DecorationOverlayIcon;
@@ -38,16 +40,31 @@ class NUOPCViewLabelProvider extends StyledCellLabelProvider { //implements ITab
 	@Override
 	public String getToolTipText(Object element) {
 		NUOPCModelElem me = (NUOPCModelElem) element;
+				
 		if (me.eref != null) {
-			String docText = Regex.getFromAnnotation(me.eref.getEType(), "doc");
-			if (docText != null) {
-				ST text = new ST("<doc; wrap=\"\n\", separator=\" \">");
-				text.add("doc", docText.split(" "));							
-				return text.render(50);
-			}
-		}
-		return null;
+			String docText = Regex.getFromAnnotation(me.eref.getEType(), "doc");			
+			if (docText != null || me.validationMessage != null) {
+				ST text = new ST("<doc; wrap=\"\n\", separator=\" \">");				
+				if (me.validationMessage != null) {
+					text.add("doc", me.validationMessage.concat("\n").split(" "));
+				}				
+				if (docText != null) {
+					text.add("doc", docText.split(" "));		
+				}
+					   
+				return text.render(65);
+			}			
+		}						
+		return null;		
 	}
+	
+	/*
+	@Override
+	public Image getToolTipImage(Object object) {
+		NUOPCModelElem me = (NUOPCModelElem) object;
+		return getFortranImageDescriptor(me.eref, me.elem, null).createImage();
+	}
+	*/
 	
 	@Override
 	public void update(final ViewerCell cell) {
@@ -71,7 +88,7 @@ class NUOPCViewLabelProvider extends StyledCellLabelProvider { //implements ITab
 		};
 	    */
 	    if (cell.getColumnIndex() == 0) {
-			if (me.eref != null && me.nameLabel == null) {
+			if (me.eref != null && me.elem == null) {
 				if (me.eref.getLowerBound() == 1 && me.eref.getUpperBound() == 1) {
 					text.append("[1] ", StyledString.COUNTER_STYLER);
 				}
@@ -101,7 +118,10 @@ class NUOPCViewLabelProvider extends StyledCellLabelProvider { //implements ITab
 			
 			//cell.getControl().		
 			//cell.setText(text.toString());
-			cell.setImage(getFortranImage(me));
+			ImageDescriptor id = getFortranImageDescriptor(me.eref, me.elem, me.validationMessage);
+			if (id != null) {
+				cell.setImage(id.createImage());
+			}
 			
 	    }
 	    else {
@@ -148,19 +168,19 @@ class NUOPCViewLabelProvider extends StyledCellLabelProvider { //implements ITab
 		}
 	}
 	
-	public Image getFortranImage(Object obj) {
+	public static ImageDescriptor getFortranImageDescriptor(EReference eref, EObject elem, String validationMessage) {
 		String imageKey = null;
 		String bottomOverlayKey = null;
 		String topOverlayKey = null;
 		int SWT_PROPS = 0;
-		if (obj instanceof NUOPCModelElem) {
-			NUOPCModelElem me = (NUOPCModelElem) obj;
+		//if (obj instanceof NUOPCModelElem) {
+			//NUOPCModelElem me = (NUOPCModelElem) obj;
 			
-			if (me.eref != null) {			
-				imageKey = Regex.getFromAnnotation(me.eref.getEType(), "icon");
+			if (eref != null) {			
+				imageKey = Regex.getFromAnnotation(eref.getEType(), "icon");
 				
 				if (imageKey == null) {
-					String mappingType = Regex.getMappingTypeFromAnnotation(me.eref);
+					String mappingType = Regex.getMappingTypeFromAnnotation(eref);
 					if (mappingType != null) {
 						if (mappingType.equalsIgnoreCase("module")) {
 							imageKey = "module.gif";
@@ -173,22 +193,34 @@ class NUOPCViewLabelProvider extends StyledCellLabelProvider { //implements ITab
 							topOverlayKey = "caller_overlay.gif";
 						}
 					}
+					else {
+						imageKey = "tree.gif";
+					}
 				}
 				
-				if (me.elem == null) {
-					bottomOverlayKey = "question_overlay.gif";
+				if (elem == null) {
+					
+					//gray indicates that it does not yet exist
 					SWT_PROPS = SWT.IMAGE_GRAY;
+					
+					if (eref.getLowerBound() > 0) {
+						bottomOverlayKey = "question_overlay.gif";						
+					}
+					else {
+						bottomOverlayKey = "add_overlay.gif";
+					}
 				}
 				//}
 			}
 			
 			//validation to determine overlay
-			if (me.elem != null) {
-				//TODO: probably don't want to re-validate the entire tree each time
-				Diagnostic diagnostic = Diagnostician.INSTANCE.validate(me.elem);
-				if (diagnostic.getSeverity() != Diagnostic.OK) {
+			if (elem != null && validationMessage != null) {
+			//	//TODO: probably don't want to re-validate the entire tree each time
+			//	Diagnostic diagnostic = Diagnostician.INSTANCE.validate(elem);
+			//	if (diagnostic.getSeverity() != Diagnostic.OK) {
 			       	bottomOverlayKey = "error_overlay.gif";
-			    }
+			  //  }
+			//	
 			}
 			//else if (me.eref != null) {			
 			//	overlayKey = "question_overlay.gif";
@@ -200,9 +232,9 @@ class NUOPCViewLabelProvider extends StyledCellLabelProvider { //implements ITab
 			//	}
 			//}
 			
-		}
+		//}
 		if (imageKey != null) {		
-			return getImage(imageKey, topOverlayKey, bottomOverlayKey, SWT_PROPS);			
+			return getImageDescriptor(imageKey, topOverlayKey, bottomOverlayKey, SWT_PROPS);			
 		}
 		return null;
 	}
@@ -260,7 +292,7 @@ class NUOPCViewLabelProvider extends StyledCellLabelProvider { //implements ITab
 	
 	private static Bundle MY_BUNDLE = FrameworkUtil.getBundle(NUOPCViewLabelProvider.class);
 	
-	private static Image getImage(String file, String topOverlay, String bottomOverlay, int SWT_PROPS) {
+	private static ImageDescriptor getImageDescriptor(String file, String topOverlay, String bottomOverlay, int SWT_PROPS) {
 	    URL url = FileLocator.find(MY_BUNDLE, new Path("icons/" + file), null);
 	    ImageDescriptor image = ImageDescriptor.createFromURL(url);
 	    if (SWT_PROPS > 0) {
@@ -282,10 +314,12 @@ class NUOPCViewLabelProvider extends StyledCellLabelProvider { //implements ITab
 	    if (topOverlay != null || bottomOverlay != null) {
 	    	DecorationOverlayIcon decorationOverlayIcon = 
 	    			new DecorationOverlayIcon(image.createImage(), overlayArray);
-	    	return decorationOverlayIcon.createImage();	
+	    	//return decorationOverlayIcon.createImage();
+	    	return decorationOverlayIcon;
 	    }
 	    else {
-	    	return image.createImage();
+	    	//return image.createImage();
+	    	return image;
 	    }
 	  } 
 

@@ -44,12 +44,16 @@ public class Regex {
 	}
 	
 	public static String getFromAnnotation(EModelElement eme, String key) {
+		return getFromAnnotation(eme, key, null);
+	}
+	
+	public static String getFromAnnotation(EModelElement eme, String key, String defaultValue) {
 		EAnnotation ann = eme.getEAnnotation("http://www.earthsystemcog.org/projects/nuopc");
 		if (ann != null) {
 			return ann.getDetails().get(key);			
 		}
 		else {
-			return null;
+			return defaultValue;
 		}		
 	}
 	

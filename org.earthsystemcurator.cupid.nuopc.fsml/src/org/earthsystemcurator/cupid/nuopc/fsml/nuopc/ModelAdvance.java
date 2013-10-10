@@ -90,7 +90,7 @@ public interface ModelAdvance extends EObject {
 	 * @see #setAttachedInSetServices(boolean)
 	 * @see org.earthsystemcurator.cupid.nuopc.fsml.nuopc.NUOPCPackage#getModelAdvance_AttachedInSetServices()
 	 * @model required="true" derived="true"
-	 *        annotation="http://www.eclipse.org/emf/2002/Ecore/OCL derivation='self.parent.implementsSetServices.attachesModelAdvance.userRoutine = self.name'"
+	 *        annotation="http://www.eclipse.org/emf/2002/Ecore/OCL_NOT derivation='self.parent.implementsSetServices.attachesModelAdvance.userRoutine = self.name'"
 	 * @generated
 	 */
 	boolean isAttachedInSetServices();

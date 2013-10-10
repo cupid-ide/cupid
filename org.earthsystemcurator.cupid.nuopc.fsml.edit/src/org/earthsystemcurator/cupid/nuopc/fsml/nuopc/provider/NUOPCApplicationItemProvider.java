@@ -126,8 +126,8 @@ public class NUOPCApplicationItemProvider
 		if (childrenFeatures == null) {
 			super.getChildrenFeatures(object);
 			childrenFeatures.add(NUOPCPackage.Literals.NUOPC_APPLICATION__NUOPC_DRIVER);
-			childrenFeatures.add(NUOPCPackage.Literals.NUOPC_APPLICATION__NUOPC_MODEL);
 			childrenFeatures.add(NUOPCPackage.Literals.NUOPC_APPLICATION__NUOPC_DRIVER_ATM_OCN);
+			childrenFeatures.add(NUOPCPackage.Literals.NUOPC_APPLICATION__NUOPC_MODEL);
 		}
 		return childrenFeatures;
 	}
@@ -186,8 +186,8 @@ public class NUOPCApplicationItemProvider
 				fireNotifyChanged(new ViewerNotification(notification, notification.getNotifier(), false, true));
 				return;
 			case NUOPCPackage.NUOPC_APPLICATION__NUOPC_DRIVER:
-			case NUOPCPackage.NUOPC_APPLICATION__NUOPC_MODEL:
 			case NUOPCPackage.NUOPC_APPLICATION__NUOPC_DRIVER_ATM_OCN:
+			case NUOPCPackage.NUOPC_APPLICATION__NUOPC_MODEL:
 				fireNotifyChanged(new ViewerNotification(notification, notification.getNotifier(), true, false));
 				return;
 		}
@@ -212,13 +212,13 @@ public class NUOPCApplicationItemProvider
 
 		newChildDescriptors.add
 			(createChildParameter
-				(NUOPCPackage.Literals.NUOPC_APPLICATION__NUOPC_MODEL,
-				 NUOPCFactory.eINSTANCE.createNUOPCModel()));
+				(NUOPCPackage.Literals.NUOPC_APPLICATION__NUOPC_DRIVER_ATM_OCN,
+				 NUOPCFactory.eINSTANCE.createNUOPCDriverAtmOcn()));
 
 		newChildDescriptors.add
 			(createChildParameter
-				(NUOPCPackage.Literals.NUOPC_APPLICATION__NUOPC_DRIVER_ATM_OCN,
-				 NUOPCFactory.eINSTANCE.createNUOPCDriverAtmOcn()));
+				(NUOPCPackage.Literals.NUOPC_APPLICATION__NUOPC_MODEL,
+				 NUOPCFactory.eINSTANCE.createNUOPCModel()));
 	}
 
 	/**

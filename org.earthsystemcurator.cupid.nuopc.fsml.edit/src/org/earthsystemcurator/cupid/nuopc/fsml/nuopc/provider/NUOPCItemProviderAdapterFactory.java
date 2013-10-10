@@ -141,6 +141,29 @@ public class NUOPCItemProviderAdapterFactory extends NUOPCAdapterFactory impleme
 	}
 
 	/**
+	 * This keeps track of the one adapter used for all {@link org.earthsystemcurator.cupid.nuopc.fsml.nuopc.Model_Init} instances.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	protected Model_InitItemProvider model_InitItemProvider;
+
+	/**
+	 * This creates an adapter for a {@link org.earthsystemcurator.cupid.nuopc.fsml.nuopc.Model_Init}.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	@Override
+	public Adapter createModel_InitAdapter() {
+		if (model_InitItemProvider == null) {
+			model_InitItemProvider = new Model_InitItemProvider(this);
+		}
+
+		return model_InitItemProvider;
+	}
+
+	/**
 	 * This keeps track of the one adapter used for all {@link org.earthsystemcurator.cupid.nuopc.fsml.nuopc.ModelImplementsInitP1} instances.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -463,6 +486,29 @@ public class NUOPCItemProviderAdapterFactory extends NUOPCAdapterFactory impleme
 	}
 
 	/**
+	 * This keeps track of the one adapter used for all {@link org.earthsystemcurator.cupid.nuopc.fsml.nuopc.Top} instances.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	protected TopItemProvider topItemProvider;
+
+	/**
+	 * This creates an adapter for a {@link org.earthsystemcurator.cupid.nuopc.fsml.nuopc.Top}.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	@Override
+	public Adapter createTopAdapter() {
+		if (topItemProvider == null) {
+			topItemProvider = new TopItemProvider(this);
+		}
+
+		return topItemProvider;
+	}
+
+	/**
 	 * This keeps track of the one adapter used for all {@link org.earthsystemcurator.cupid.nuopc.fsml.nuopc.NUOPCDriverAtmOcn} instances.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -610,6 +656,7 @@ public class NUOPCItemProviderAdapterFactory extends NUOPCAdapterFactory impleme
 		if (nuopcModelItemProvider != null) nuopcModelItemProvider.dispose();
 		if (modelImplementsSetServicesItemProvider != null) modelImplementsSetServicesItemProvider.dispose();
 		if (callsGenericSetServicesItemProvider != null) callsGenericSetServicesItemProvider.dispose();
+		if (model_InitItemProvider != null) model_InitItemProvider.dispose();
 		if (modelImplementsInitP1ItemProvider != null) modelImplementsInitP1ItemProvider.dispose();
 		if (modelImplementsInitP2ItemProvider != null) modelImplementsInitP2ItemProvider.dispose();
 		if (advertisesImportFieldItemProvider != null) advertisesImportFieldItemProvider.dispose();
@@ -624,6 +671,7 @@ public class NUOPCItemProviderAdapterFactory extends NUOPCAdapterFactory impleme
 		if (nuopcDriver__ImplementsSetModelCountItemProvider != null) nuopcDriver__ImplementsSetModelCountItemProvider.dispose();
 		if (getsInternalStateItemProvider != null) getsInternalStateItemProvider.dispose();
 		if (nuopcApplicationItemProvider != null) nuopcApplicationItemProvider.dispose();
+		if (topItemProvider != null) topItemProvider.dispose();
 		if (nuopcDriverAtmOcnItemProvider != null) nuopcDriverAtmOcnItemProvider.dispose();
 		if (nuopcDriverAtmOcn__ImplementsSetServicesItemProvider != null) nuopcDriverAtmOcn__ImplementsSetServicesItemProvider.dispose();
 	}

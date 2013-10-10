@@ -21,6 +21,7 @@ import org.eclipse.core.resources.IProject;
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EObject;
+import org.eclipse.emf.ecore.EReference;
 import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.ecore.EcoreFactory;
 import org.eclipse.photran.core.IFortranAST;
@@ -103,7 +104,9 @@ public class ReverseEngineer {
 	 * @return modelElem if successful, otherwise null
 	 */
 	@SuppressWarnings({ "unchecked", "rawtypes" })
-	protected <ModelElem extends EObject> ModelElem reverse(Object fortranElem, ModelElem modelElem) {	
+	protected <ModelElem extends EObject> ModelElem reverse(Object fortranElem, ModelElem modelElem) {
+		
+		System.out.println("Reverse: " + fortranElem.getClass().getSimpleName() + "\t==>\t" + modelElem.eClass().getName());
 			
 		EClass modelElemClass = modelElem.eClass();
 			
@@ -176,7 +179,7 @@ public class ReverseEngineer {
 								//TODO: decide what to do about NULL_VALUE below
 								String replaceVal = EcoreUtils.eGetSFValue(metavar, modelElem, null);
 								if (replaceVal != null) {
-									System.out.println("Replacing metavariable: " + match.group() + " with val: " + replaceVal);
+									//System.out.println("Replacing metavariable: " + match.group() + " with val: " + replaceVal);
 									entry.setValue(val.replaceAll(match.group(), replaceVal));
 								}
 							}
@@ -306,18 +309,48 @@ public class ReverseEngineer {
 						
 				
 			} // end if that checks for query string
+			else {
+				//this means there is no mapping defined - if it is an EReference, then we create 
+				//the target and its children determine whether the mapping holds
+				//in other words, this is just an extra layer of abstraction defined by the user
+				
+				if (sf instanceof EReference) {
+					if (((EReference) sf).isContainment()) {
+						EObject newModelElem = NUOPCFactory.eINSTANCE.create((EClass) sf.getEType());
+						if (sf.isMany()) {
+							EList el = (EList) modelElem.eGet(sf);
+							el.add(newModelElem);
+						}
+						else {
+							modelElem.eSet(sf, newModelElem);
+						}
+						EObject newModelElemRet = reverse(fortranElem, newModelElem);
+						if (newModelElemRet == null) {
+							if (sf.isMany()) {
+								EList el = (EList) modelElem.eGet(sf);
+								el.remove(newModelElem);
+							}
+							else {
+								//consider replacing with previous value
+								modelElem.eUnset(sf);
+							}
+						}
+					}
+				}
+				
+			}
 			
 			//at this point we have set the value of the structural feature
 			//if is essential, but not present or false, the parent is no good
 			//String anotEssential = anot.getDetails().get("essential");
 			if (Regex.getIsEssentialFromAnnotation(sf)) {	
 				if (modelElem.eGet(sf) == null) {
-					//System.out.println("\tEssential feature failed: " + sf);
+					System.out.println("\tEssential feature failed: " + sf);
 					return null;
 				}
 				else if (sf.getEType().equals(EcoreFactory.eINSTANCE.getEcorePackage().getEBoolean()) &&
 						! (Boolean) modelElem.eGet(sf)) {
-					//System.out.println("\tEssential feature failed: " + sf);
+					System.out.println("\tEssential feature failed: " + sf);
 					return null;
 				}		
 			}

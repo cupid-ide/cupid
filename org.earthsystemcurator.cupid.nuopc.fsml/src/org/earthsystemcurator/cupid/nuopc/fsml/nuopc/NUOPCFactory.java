@@ -49,6 +49,15 @@ public interface NUOPCFactory extends EFactory {
 	CallsGenericSetServices createCallsGenericSetServices();
 
 	/**
+	 * Returns a new object of class '<em>Model Init</em>'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return a new object of class '<em>Model Init</em>'.
+	 * @generated
+	 */
+	Model_Init createModel_Init();
+
+	/**
 	 * Returns a new object of class '<em>Model Implements Init P1</em>'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->

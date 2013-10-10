@@ -10,16 +10,19 @@ import org.earthsystemcurator.cupid.nuopc.fsml.util.EcoreUtils;
 import org.earthsystemcurator.cupid.nuopc.fsml.util.Regex;
 import org.eclipse.core.resources.IProject;
 import org.eclipse.core.runtime.CoreException;
+import org.eclipse.emf.common.util.Diagnostic;
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.ecore.EAttribute;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EReference;
 import org.eclipse.emf.ecore.EcorePackage;
+import org.eclipse.emf.ecore.util.Diagnostician;
 import org.eclipse.emf.ecore.util.EcoreUtil;
 import org.eclipse.jface.viewers.IStructuredContentProvider;
 import org.eclipse.jface.viewers.ITreeContentProvider;
 import org.eclipse.jface.viewers.Viewer;
+import org.eclipse.ocl.ecore.util.EcoreValidator;
 
 class NUOPCViewContentProvider implements IStructuredContentProvider, ITreeContentProvider {
 	
@@ -144,7 +147,7 @@ class NUOPCViewContentProvider implements IStructuredContentProvider, ITreeConte
 						
 						String typeLabel, taskLabel;
 						typeLabel = Regex.getFromAnnotation(eref.getEType(), "label");
-						taskLabel = Regex.getFromAnnotation(eref.getEType(), "task");
+						//taskLabel = Regex.getFromAnnotation(eref.getEType(), "task");
 						if (typeLabel == null) {
 							typeLabel = eref.getEType().getName();
 						}
@@ -153,8 +156,9 @@ class NUOPCViewContentProvider implements IStructuredContentProvider, ITreeConte
 							EList<EObject> instances = (EList<EObject>) eo.eGet(eref);
 							if (instances.size() > 0) {
 								for (EObject o : instances) {
-									String nameLabel = EcoreUtils.eGetSFValue("name", o, "UKNOWN");
-									children.add(new NUOPCModelElem(parent, eref, nameLabel, typeLabel, o));
+									String nameLabel = EcoreUtils.eGetSFValue("name", o, null);
+									NUOPCModelElem newElem = new NUOPCModelElem(parent, eref, nameLabel, typeLabel, o);
+									children.add(newElem);
 								}
 							}
 							/*
@@ -167,11 +171,11 @@ class NUOPCViewContentProvider implements IStructuredContentProvider, ITreeConte
 						else {
 							EObject o = (EObject) eo.eGet(eref);
 							if (o != null) {
-								String nameLabel = EcoreUtils.eGetSFValue("name", o, "UKNOWN");
+								String nameLabel = EcoreUtils.eGetSFValue("name", o, null);
 								children.add(new NUOPCModelElem(parent, eref, nameLabel, typeLabel, o));
 							}
 							else {
-								children.add(new NUOPCModelElem(parent, eref, null, taskLabel, null));
+								children.add(new NUOPCModelElem(parent, eref, null, typeLabel, null));
 							}
 						}
 												
@@ -203,6 +207,7 @@ class NUOPCViewContentProvider implements IStructuredContentProvider, ITreeConte
 		}
 		return new Object[0];
 	}
+		
 	
 	/*
 	public Object [] getChildren2(Object p) {
@@ -301,6 +306,7 @@ class NUOPCViewContentProvider implements IStructuredContentProvider, ITreeConte
 		public String nameLabel;
 		public String typeLabel;
 		public EObject elem;
+		public String validationMessage;
 		//public int min;
 		//public int max;
 		
@@ -317,9 +323,43 @@ class NUOPCViewContentProvider implements IStructuredContentProvider, ITreeConte
 			this.nameLabel = nameLabel;
 			this.typeLabel = typeLabel;
 			this.elem = elem;
+			doValidationMessage();
 			//this.min = min;
 			//this.max = max;
 		}
+		
+		private void doValidationMessage() {
+			//TODO: probably don't want to re-validate the entire tree each time
+			if (elem != null) {
+				Diagnostic diagnostic = Diagnostician.INSTANCE.validate(elem);
+				if (diagnostic.getSeverity() != Diagnostic.OK) {
+					if (diagnostic.getChildren().size() > 0) {
+						validationMessage = "";
+						for (Diagnostic d : diagnostic.getChildren()) {
+							validationMessage += getValidationMessage(d) + "\n";
+						}
+					}
+					else {
+						validationMessage = getValidationMessage(diagnostic);
+					}
+					
+				}
+			}			
+		}
+		
+		private String getValidationMessage(Diagnostic d) {
+			if (d.getCode() == EcoreValidator.EOBJECT__EVERY_MULTIPCITY_CONFORMS) {
+				if (d.getData().size() >= 2) {
+					Object o = d.getData().get(1);
+					if (o instanceof EReference) {
+						String label = Regex.getFromAnnotation(((EReference) o).getEType(), "label", ((EReference) o).getEType().getName());
+						return "! Incomplete framework concept: " + label;
+					}
+				}
+			}
+			return d.getMessage();
+		}
+		
 	}
 	
 }

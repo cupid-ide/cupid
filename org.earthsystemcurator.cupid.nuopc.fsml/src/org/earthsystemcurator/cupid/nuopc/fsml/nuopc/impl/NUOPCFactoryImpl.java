@@ -59,6 +59,7 @@ public class NUOPCFactoryImpl extends EFactoryImpl implements NUOPCFactory {
 			case NUOPCPackage.NUOPC_MODEL: return createNUOPCModel();
 			case NUOPCPackage.MODEL_IMPLEMENTS_SET_SERVICES: return createModelImplementsSetServices();
 			case NUOPCPackage.CALLS_GENERIC_SET_SERVICES: return createCallsGenericSetServices();
+			case NUOPCPackage.MODEL_INIT: return createModel_Init();
 			case NUOPCPackage.MODEL_IMPLEMENTS_INIT_P1: return createModelImplementsInitP1();
 			case NUOPCPackage.MODEL_IMPLEMENTS_INIT_P2: return createModelImplementsInitP2();
 			case NUOPCPackage.ADVERTISES_IMPORT_FIELD: return createAdvertisesImportField();
@@ -109,6 +110,16 @@ public class NUOPCFactoryImpl extends EFactoryImpl implements NUOPCFactory {
 	public CallsGenericSetServices createCallsGenericSetServices() {
 		CallsGenericSetServicesImpl callsGenericSetServices = new CallsGenericSetServicesImpl();
 		return callsGenericSetServices;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public Model_Init createModel_Init() {
+		Model_InitImpl model_Init = new Model_InitImpl();
+		return model_Init;
 	}
 
 	/**

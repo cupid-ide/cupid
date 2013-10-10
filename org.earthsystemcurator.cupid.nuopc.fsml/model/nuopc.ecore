@@ -10,8 +10,8 @@
     <eAnnotations source="http://www.earthsystemcog.org/projects/nuopc">
       <details key="mapping" value="module"/>
       <details key="labelPlural" value="NUOPC Models"/>
-      <details key="label" value="Model"/>
-      <details key="iconAdd" value="script_add.png"/>
+      <details key="label" value="NUOPC Model"/>
+      <details key="doc" value="NUOPC Model is a generic model component that wraps a model code so it is suitable to be plugged into a generic Driver component."/>
     </eAnnotations>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="name" lowerBound="1" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"
         defaultValueLiteral="Model">
@@ -34,23 +34,13 @@
         <details key="essential" value="true"/>
       </eAnnotations>
     </eStructuralFeatures>
-    <eStructuralFeatures xsi:type="ecore:EReference" name="implementsInitP1" lowerBound="1"
-        eType="#//ModelImplementsInitP1" containment="true" eKeys="#//ModelImplementsInitP1/name">
-      <eAnnotations source="http://www.earthsystemcog.org/projects/nuopc">
-        <details key="mapping" value="subroutine: &quot;#name(inout type(ESMF_GridComp) gcomp, inout type(ESMF_State) #importParam, inout type(ESMF_State) #exportParam, inout type(ESMF_Clock) clock, out integer rc)&quot;"/>
-      </eAnnotations>
-    </eStructuralFeatures>
-    <eStructuralFeatures xsi:type="ecore:EReference" name="implementsInitP2" lowerBound="1"
-        eType="#//ModelImplementsInitP2" containment="true" eKeys="#//ModelImplementsInitP2/name">
-      <eAnnotations source="http://www.earthsystemcog.org/projects/nuopc">
-        <details key="mapping" value="subroutine: &quot;#name(inout type(ESMF_GridComp) gcomp, inout type(ESMF_State) #importParam, inout type(ESMF_State) #exportParam, inout type(ESMF_Clock) clock, out integer rc)&quot;"/>
-      </eAnnotations>
-    </eStructuralFeatures>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="initialize" lowerBound="1"
+        eType="#//Model_Init" containment="true"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="implementsModelAdvance"
-        ordered="false" upperBound="-1" eType="#//ModelAdvance" containment="true"
+        ordered="false" lowerBound="1" eType="#//ModelAdvance" containment="true"
         eOpposite="#//ModelAdvance/parent">
       <eAnnotations source="http://www.earthsystemcog.org/projects/nuopc">
-        <details key="mappingX" value="subroutine: &quot;*(type(ESMF_GridComp), integer)&quot;"/>
+        <details key="mapping" value="subroutine: &quot;*(type(ESMF_GridComp), integer)&quot;"/>
       </eAnnotations>
     </eStructuralFeatures>
   </eClassifiers>
@@ -113,12 +103,28 @@
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="rc" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"
         defaultValueLiteral="rc"/>
   </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="Model_Init">
+    <eAnnotations source="http://www.earthsystemcog.org/projects/nuopc">
+      <details key="label" value="Model Initialization"/>
+    </eAnnotations>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="implementsInitP1" lowerBound="1"
+        eType="#//ModelImplementsInitP1" containment="true" eKeys="#//ModelImplementsInitP1/name">
+      <eAnnotations source="http://www.earthsystemcog.org/projects/nuopc">
+        <details key="mapping" value="subroutine: &quot;#name(inout type(ESMF_GridComp) gcomp, inout type(ESMF_State) #importParam, inout type(ESMF_State) #exportParam, inout type(ESMF_Clock) clock, out integer rc)&quot;"/>
+      </eAnnotations>
+    </eStructuralFeatures>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="implementsInitP2" lowerBound="1"
+        eType="#//ModelImplementsInitP2" containment="true" eKeys="#//ModelImplementsInitP2/name">
+      <eAnnotations source="http://www.earthsystemcog.org/projects/nuopc">
+        <details key="mapping" value="subroutine: &quot;#name(inout type(ESMF_GridComp) gcomp, inout type(ESMF_State) #importParam, inout type(ESMF_State) #exportParam, inout type(ESMF_Clock) clock, out integer rc)&quot;"/>
+      </eAnnotations>
+    </eStructuralFeatures>
+  </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="ModelImplementsInitP1">
     <eAnnotations source="http://www.earthsystemcog.org/projects/nuopc">
       <details key="mapping" value="subroutine: &quot;#name(inout type(ESMF_GridComp) gcomp, inout type(ESMF_State) #importParam, inout type(ESMF_State) #exportParam, inout type(ESMF_Clock) clock, out integer rc)&quot;"/>
       <details key="doc" value="Initialize Phase Definition: IPDv01p1&#xD;&#xA;&#xD;&#xA;In this phase, models should advertise the set of import and export fields. This is the list of fields that may potentially be exchanged during coupling, although some fields may not be connected for a particular configuration."/>
       <details key="label" value="Initialize Phase Definition - IPDv01p1"/>
-      <details key="iconAdd" value="cog_add.png"/>
       <details key="task" value="Implement Init Phase Definition (IPDv01p1)"/>
     </eAnnotations>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="name" lowerBound="1" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"
@@ -351,7 +357,7 @@
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="attachedInSetServices"
         lowerBound="1" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean"
         derived="true">
-      <eAnnotations source="http://www.eclipse.org/emf/2002/Ecore/OCL">
+      <eAnnotations source="http://www.eclipse.org/emf/2002/Ecore/OCL_NOT">
         <details key="derivation" value="self.parent.implementsSetServices.attachesModelAdvance.userRoutine = self.name"/>
       </eAnnotations>
     </eStructuralFeatures>
@@ -360,8 +366,8 @@
     <eAnnotations source="http://www.earthsystemcog.org/projects/nuopc">
       <details key="mapping" value="module"/>
       <details key="labelPlural" value="NUOPC Drivers"/>
-      <details key="label" value="Driver"/>
-      <details key="iconAdd" value="script_add.png"/>
+      <details key="label" value="NUOPC Driver"/>
+      <details key="doc" value="NUOPC Driver is the generic driver component. It implements a child component harness, made of State and Component objects, that follows the NUOPC Common Model Architecture. It is specialized by plugging Model, Mediator, and Connector components into the harness. Driver components can be plugged into the harness to construct component hierarchies. The generic Driver initializes its child components according to a standard Initialization Phase Definition, and drives their Run() methods according a customizable run sequence."/>
     </eAnnotations>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="name" lowerBound="1" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"
         defaultValueLiteral="ModelDefault">

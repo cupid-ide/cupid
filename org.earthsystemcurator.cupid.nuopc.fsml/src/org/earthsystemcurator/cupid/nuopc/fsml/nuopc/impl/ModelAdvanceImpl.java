@@ -54,14 +54,24 @@ public class ModelAdvanceImpl extends EObjectImpl implements ModelAdvance {
 	protected String name = NAME_EDEFAULT;
 
 	/**
-	 * The cached setting delegate for the '{@link #isAttachedInSetServices() <em>Attached In Set Services</em>}' attribute.
+	 * The default value of the '{@link #isAttachedInSetServices() <em>Attached In Set Services</em>}' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @see #isAttachedInSetServices()
 	 * @generated
 	 * @ordered
 	 */
-	protected EStructuralFeature.Internal.SettingDelegate ATTACHED_IN_SET_SERVICES__ESETTING_DELEGATE = ((EStructuralFeature.Internal)NUOPCPackage.Literals.MODEL_ADVANCE__ATTACHED_IN_SET_SERVICES).getSettingDelegate();
+	protected static final boolean ATTACHED_IN_SET_SERVICES_EDEFAULT = false;
+
+	/**
+	 * The cached value of the '{@link #isAttachedInSetServices() <em>Attached In Set Services</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #isAttachedInSetServices()
+	 * @generated
+	 * @ordered
+	 */
+	protected boolean attachedInSetServices = ATTACHED_IN_SET_SERVICES_EDEFAULT;
 
 	/**
 	 * <!-- begin-user-doc -->
@@ -150,7 +160,7 @@ public class ModelAdvanceImpl extends EObjectImpl implements ModelAdvance {
 	 * @generated
 	 */
 	public boolean isAttachedInSetServices() {
-		return (Boolean)ATTACHED_IN_SET_SERVICES__ESETTING_DELEGATE.dynamicGet(this, null, 0, true, false);
+		return attachedInSetServices;
 	}
 
 	/**
@@ -159,7 +169,10 @@ public class ModelAdvanceImpl extends EObjectImpl implements ModelAdvance {
 	 * @generated
 	 */
 	public void setAttachedInSetServices(boolean newAttachedInSetServices) {
-		ATTACHED_IN_SET_SERVICES__ESETTING_DELEGATE.dynamicSet(this, null, 0, newAttachedInSetServices);
+		boolean oldAttachedInSetServices = attachedInSetServices;
+		attachedInSetServices = newAttachedInSetServices;
+		if (eNotificationRequired())
+			eNotify(new ENotificationImpl(this, Notification.SET, NUOPCPackage.MODEL_ADVANCE__ATTACHED_IN_SET_SERVICES, oldAttachedInSetServices, attachedInSetServices));
 	}
 
 	/**
@@ -260,7 +273,7 @@ public class ModelAdvanceImpl extends EObjectImpl implements ModelAdvance {
 				setName(NAME_EDEFAULT);
 				return;
 			case NUOPCPackage.MODEL_ADVANCE__ATTACHED_IN_SET_SERVICES:
-				ATTACHED_IN_SET_SERVICES__ESETTING_DELEGATE.dynamicUnset(this, null, 0);
+				setAttachedInSetServices(ATTACHED_IN_SET_SERVICES_EDEFAULT);
 				return;
 		}
 		super.eUnset(featureID);
@@ -279,7 +292,7 @@ public class ModelAdvanceImpl extends EObjectImpl implements ModelAdvance {
 			case NUOPCPackage.MODEL_ADVANCE__NAME:
 				return NAME_EDEFAULT == null ? name != null : !NAME_EDEFAULT.equals(name);
 			case NUOPCPackage.MODEL_ADVANCE__ATTACHED_IN_SET_SERVICES:
-				return ATTACHED_IN_SET_SERVICES__ESETTING_DELEGATE.dynamicIsSet(this, null, 0);
+				return attachedInSetServices != ATTACHED_IN_SET_SERVICES_EDEFAULT;
 		}
 		return super.eIsSet(featureID);
 	}
@@ -296,6 +309,8 @@ public class ModelAdvanceImpl extends EObjectImpl implements ModelAdvance {
 		StringBuffer result = new StringBuffer(super.toString());
 		result.append(" (name: ");
 		result.append(name);
+		result.append(", attachedInSetServices: ");
+		result.append(attachedInSetServices);
 		result.append(')');
 		return result.toString();
 	}

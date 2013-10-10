@@ -24,6 +24,7 @@ import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EReference;
 import org.earthsystemcurator.cupid.nuopc.fsml.nuopc.NUOPCFactory;
+import org.earthsystemcurator.cupid.nuopc.fsml.util.Regex;
 import org.earthsystemcurator.cupid.nuopc.fsml.views.NUOPCViewContentProvider;
 import org.earthsystemcurator.cupid.nuopc.fsml.views.NUOPCViewContentProvider.NUOPCModelElem;
 
@@ -180,7 +181,10 @@ public class NUOPCView extends ViewPart {
                     	for (EReference childRef : parentClass.getEReferences()) {
                     		if (childRef.isMany() && childRef.getUpperBound() < 0) {
                     			Action a = new Action() {};
-                    			a.setText("Add " + childRef.getEType().getName() + "...");
+                    			String label = Regex.getFromAnnotation(childRef.getEType(), "label", childRef.getEType().getName());
+                    			a.setText("Add " + label + "...");
+                    			a.setImageDescriptor(NUOPCViewLabelProvider.getFortranImageDescriptor(childRef, null, null));
+                    			//a.setToolTipText(Regex.getFromAnnotation(childRef.getEType(), "doc"));
                     			manager.add(a);
                     		}
                     	}
@@ -208,6 +212,7 @@ public class NUOPCView extends ViewPart {
                 				
                     		}                    		
                 		};
+                		
                 		action.setText("Instantiate framework concept...");
                 		//action.setToolTipText("Generate code for: " + me.typeLabel);
                 		

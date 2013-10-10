@@ -7,8 +7,8 @@ import java.util.Collection;
 import java.util.List;
 
 import org.earthsystemcurator.cupid.nuopc.fsml.nuopc.NUOPCFactory;
-import org.earthsystemcurator.cupid.nuopc.fsml.nuopc.NUOPCModel;
 import org.earthsystemcurator.cupid.nuopc.fsml.nuopc.NUOPCPackage;
+import org.earthsystemcurator.cupid.nuopc.fsml.nuopc.Top;
 
 import org.eclipse.emf.common.notify.AdapterFactory;
 import org.eclipse.emf.common.notify.Notification;
@@ -17,24 +17,22 @@ import org.eclipse.emf.common.util.ResourceLocator;
 
 import org.eclipse.emf.ecore.EStructuralFeature;
 
-import org.eclipse.emf.edit.provider.ComposeableAdapterFactory;
 import org.eclipse.emf.edit.provider.IEditingDomainItemProvider;
 import org.eclipse.emf.edit.provider.IItemLabelProvider;
 import org.eclipse.emf.edit.provider.IItemPropertyDescriptor;
 import org.eclipse.emf.edit.provider.IItemPropertySource;
 import org.eclipse.emf.edit.provider.IStructuredItemContentProvider;
 import org.eclipse.emf.edit.provider.ITreeItemContentProvider;
-import org.eclipse.emf.edit.provider.ItemPropertyDescriptor;
 import org.eclipse.emf.edit.provider.ItemProviderAdapter;
 import org.eclipse.emf.edit.provider.ViewerNotification;
 
 /**
- * This is the item provider adapter for a {@link org.earthsystemcurator.cupid.nuopc.fsml.nuopc.NUOPCModel} object.
+ * This is the item provider adapter for a {@link org.earthsystemcurator.cupid.nuopc.fsml.nuopc.Top} object.
  * <!-- begin-user-doc -->
  * <!-- end-user-doc -->
  * @generated
  */
-public class NUOPCModelItemProvider
+public class TopItemProvider
 	extends ItemProviderAdapter
 	implements
 		IEditingDomainItemProvider,
@@ -48,7 +46,7 @@ public class NUOPCModelItemProvider
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public NUOPCModelItemProvider(AdapterFactory adapterFactory) {
+	public TopItemProvider(AdapterFactory adapterFactory) {
 		super(adapterFactory);
 	}
 
@@ -63,77 +61,8 @@ public class NUOPCModelItemProvider
 		if (itemPropertyDescriptors == null) {
 			super.getPropertyDescriptors(object);
 
-			addNamePropertyDescriptor(object);
-			addImportsGenericSSPropertyDescriptor(object);
-			addInitializePropertyDescriptor(object);
 		}
 		return itemPropertyDescriptors;
-	}
-
-	/**
-	 * This adds a property descriptor for the Name feature.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	protected void addNamePropertyDescriptor(Object object) {
-		itemPropertyDescriptors.add
-			(createItemPropertyDescriptor
-				(((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(),
-				 getResourceLocator(),
-				 getString("_UI_NUOPCModel_name_feature"),
-				 getString("_UI_PropertyDescriptor_description", "_UI_NUOPCModel_name_feature", "_UI_NUOPCModel_type"),
-				 NUOPCPackage.Literals.NUOPC_MODEL__NAME,
-				 true,
-				 false,
-				 false,
-				 ItemPropertyDescriptor.GENERIC_VALUE_IMAGE,
-				 null,
-				 null));
-	}
-
-	/**
-	 * This adds a property descriptor for the Imports Generic SS feature.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	protected void addImportsGenericSSPropertyDescriptor(Object object) {
-		itemPropertyDescriptors.add
-			(createItemPropertyDescriptor
-				(((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(),
-				 getResourceLocator(),
-				 getString("_UI_NUOPCModel_importsGenericSS_feature"),
-				 getString("_UI_PropertyDescriptor_description", "_UI_NUOPCModel_importsGenericSS_feature", "_UI_NUOPCModel_type"),
-				 NUOPCPackage.Literals.NUOPC_MODEL__IMPORTS_GENERIC_SS,
-				 true,
-				 false,
-				 false,
-				 ItemPropertyDescriptor.GENERIC_VALUE_IMAGE,
-				 null,
-				 null));
-	}
-
-	/**
-	 * This adds a property descriptor for the Initialize feature.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	protected void addInitializePropertyDescriptor(Object object) {
-		itemPropertyDescriptors.add
-			(createItemPropertyDescriptor
-				(((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(),
-				 getResourceLocator(),
-				 getString("_UI_NUOPCModel_initialize_feature"),
-				 getString("_UI_PropertyDescriptor_description", "_UI_NUOPCModel_initialize_feature", "_UI_NUOPCModel_type"),
-				 NUOPCPackage.Literals.NUOPC_MODEL__INITIALIZE,
-				 true,
-				 false,
-				 true,
-				 null,
-				 null,
-				 null));
 	}
 
 	/**
@@ -148,9 +77,7 @@ public class NUOPCModelItemProvider
 	public Collection<? extends EStructuralFeature> getChildrenFeatures(Object object) {
 		if (childrenFeatures == null) {
 			super.getChildrenFeatures(object);
-			childrenFeatures.add(NUOPCPackage.Literals.NUOPC_MODEL__IMPLEMENTS_SET_SERVICES);
-			childrenFeatures.add(NUOPCPackage.Literals.NUOPC_MODEL__INITIALIZE);
-			childrenFeatures.add(NUOPCPackage.Literals.NUOPC_MODEL__IMPLEMENTS_MODEL_ADVANCE);
+			childrenFeatures.add(NUOPCPackage.Literals.TOP__APPS);
 		}
 		return childrenFeatures;
 	}
@@ -169,14 +96,14 @@ public class NUOPCModelItemProvider
 	}
 
 	/**
-	 * This returns NUOPCModel.gif.
+	 * This returns Top.gif.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
 	@Override
 	public Object getImage(Object object) {
-		return overlayImage(object, getResourceLocator().getImage("full/obj16/NUOPCModel"));
+		return overlayImage(object, getResourceLocator().getImage("full/obj16/Top"));
 	}
 
 	/**
@@ -187,10 +114,7 @@ public class NUOPCModelItemProvider
 	 */
 	@Override
 	public String getText(Object object) {
-		String label = ((NUOPCModel)object).getName();
-		return label == null || label.length() == 0 ?
-			getString("_UI_NUOPCModel_type") :
-			getString("_UI_NUOPCModel_type") + " " + label;
+		return getString("_UI_Top_type");
 	}
 
 	/**
@@ -204,14 +128,8 @@ public class NUOPCModelItemProvider
 	public void notifyChanged(Notification notification) {
 		updateChildren(notification);
 
-		switch (notification.getFeatureID(NUOPCModel.class)) {
-			case NUOPCPackage.NUOPC_MODEL__NAME:
-			case NUOPCPackage.NUOPC_MODEL__IMPORTS_GENERIC_SS:
-				fireNotifyChanged(new ViewerNotification(notification, notification.getNotifier(), false, true));
-				return;
-			case NUOPCPackage.NUOPC_MODEL__IMPLEMENTS_SET_SERVICES:
-			case NUOPCPackage.NUOPC_MODEL__INITIALIZE:
-			case NUOPCPackage.NUOPC_MODEL__IMPLEMENTS_MODEL_ADVANCE:
+		switch (notification.getFeatureID(Top.class)) {
+			case NUOPCPackage.TOP__APPS:
 				fireNotifyChanged(new ViewerNotification(notification, notification.getNotifier(), true, false));
 				return;
 		}
@@ -231,18 +149,8 @@ public class NUOPCModelItemProvider
 
 		newChildDescriptors.add
 			(createChildParameter
-				(NUOPCPackage.Literals.NUOPC_MODEL__IMPLEMENTS_SET_SERVICES,
-				 NUOPCFactory.eINSTANCE.createModelImplementsSetServices()));
-
-		newChildDescriptors.add
-			(createChildParameter
-				(NUOPCPackage.Literals.NUOPC_MODEL__INITIALIZE,
-				 NUOPCFactory.eINSTANCE.createModel_Init()));
-
-		newChildDescriptors.add
-			(createChildParameter
-				(NUOPCPackage.Literals.NUOPC_MODEL__IMPLEMENTS_MODEL_ADVANCE,
-				 NUOPCFactory.eINSTANCE.createModelAdvance()));
+				(NUOPCPackage.Literals.TOP__APPS,
+				 NUOPCFactory.eINSTANCE.createNUOPCApplication()));
 	}
 
 	/**

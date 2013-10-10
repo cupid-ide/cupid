@@ -8,6 +8,8 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.Reader;
 import java.lang.reflect.InvocationTargetException;
+import java.util.Collections;
+import java.util.HashSet;
 import java.util.Map;
 import java.util.Map.Entry;
 
@@ -101,7 +103,7 @@ public class ForwardHandler extends AbstractHandler {
 		final Map<EObject, Object> revMap = nature.reversedMappings;;
 		final NUOPCApplication forApp = nature.forwardModel;
 		
-		if (revApp == null || revMap == null || forApp == null) return null;
+		if (revApp == null || revMap == null) return null;
 			
         IRunnableWithProgress operation = new IRunnableWithProgress() {
 			
@@ -128,15 +130,20 @@ public class ForwardHandler extends AbstractHandler {
         		//	}
         		//}
         
+        		NUOPCApplication forApp2 = forApp;
+        		if (forApp2 == null) {
+        			//use file for now
         		
-        		
-        		//ResourceSet resourceSet1 = new ResourceSetImpl();
-        		//ResourceSet resourceSet2 = new ResourceSetImpl();
-        		//String xmi1 = ReverseHandler.reverseFile;
-        		//String xmi2 = ForwardHandler.assertedFile;
-        		//String xmi2 = selectedProject.getFile("asserted.nuopc").getFullPath().toOSString();
-        		//Resource reversed = load(xmi1, resourceSet1);
-        		//Resource asserted = load(xmi2, resourceSet2);
+	        		//ResourceSet resourceSet1 = new ResourceSetImpl();
+	        		ResourceSet resourceSet2 = new ResourceSetImpl();
+	        		//String xmi1 = ReverseHandler.reverseFile;
+	        		//String xmi2 = ForwardHandler.assertedFile;
+	        		String xmi2 = selectedProject.getFile("asserted.nuopc").getFullPath().toOSString();
+	        		//Resource reversed = load(xmi1, resourceSet1);
+	        		Resource asserted = load(xmi2, resourceSet2);
+	        		forApp2 = (NUOPCApplication) asserted.getContents().get(0);
+	        		System.out.println("Loaded asserted model from file...");
+        		}
         		
         		//final PhotranVPG vpg = PhotranVPG.getInstance();
         	    //final ReverseEngineer re = new ReverseEngineer();
@@ -145,7 +152,7 @@ public class ForwardHandler extends AbstractHandler {
         		ForwardEngineer fe = new ForwardEngineer();
         		fe.setContainer(selectedProject);
         		
-        		fe.forward(revApp, forApp, revMap);
+        		fe.forward(revApp, forApp2, revMap);
      		
         		
         		//fe.forward(reversed1,
@@ -155,10 +162,11 @@ public class ForwardHandler extends AbstractHandler {
         		
         		//TODO: see about doing this on an individual file basis
         		//TODO: deal with project files "out of sync" with file system
-	            for (Entry<EObject, Object> entry : revMap.entrySet()) {
-	        		if (entry.getValue() instanceof IFortranAST) {
+	            //remove duplicates
+        		for (Object entry : new HashSet<Object>(revMap.values())) {
+	        		if (entry instanceof IFortranAST) {
 		            	
-	        			IFortranAST ast = (IFortranAST) entry.getValue();
+	        			IFortranAST ast = (IFortranAST) entry;
 	        			IFile f = ast.getFile();
 		            	
 	        			TextFileChange changeThisFile = new TextFileChange("text change " + f.getFullPath().toOSString(), f);

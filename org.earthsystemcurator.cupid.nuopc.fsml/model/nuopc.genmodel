@@ -10,9 +10,8 @@
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute nuopc.ecore#//NUOPCModel/name"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute nuopc.ecore#//NUOPCModel/importsGenericSS"/>
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference nuopc.ecore#//NUOPCModel/implementsSetServices"/>
-      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference nuopc.ecore#//NUOPCModel/implementsInitP1"/>
-      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference nuopc.ecore#//NUOPCModel/implementsInitP2"/>
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference nuopc.ecore#//NUOPCModel/implementsModelAdvance"/>
+      <genFeatures children="true" createChild="true" propertySortChoices="true" ecoreFeature="ecore:EReference nuopc.ecore#//NUOPCModel/initialize"/>
     </genClasses>
     <genClasses ecoreClass="nuopc.ecore#//ModelImplementsSetServices">
       <genFeatures property="None" notify="false" createChild="false" ecoreFeature="ecore:EReference nuopc.ecore#//ModelImplementsSetServices/parent"/>
@@ -27,6 +26,10 @@
     <genClasses ecoreClass="nuopc.ecore#//CallsGenericSetServices">
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute nuopc.ecore#//CallsGenericSetServices/gcomp"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute nuopc.ecore#//CallsGenericSetServices/rc"/>
+    </genClasses>
+    <genClasses ecoreClass="nuopc.ecore#//Model_Init">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference nuopc.ecore#//Model_Init/implementsInitP1"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference nuopc.ecore#//Model_Init/implementsInitP2"/>
     </genClasses>
     <genClasses ecoreClass="nuopc.ecore#//ModelImplementsInitP1">
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute nuopc.ecore#//ModelImplementsInitP1/name"/>
