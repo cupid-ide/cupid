@@ -46,7 +46,8 @@ import org.eclipse.photran.internal.core.vpg.PhotranVPG;
 @SuppressWarnings("restriction")
 public class CodeQuery {
 
-	public static Pattern P_METAVAR = Pattern.compile("#(?:../)*\\w+");	
+	//public static Pattern P_METAVAR = Pattern.compile("#(?:../)*\\w+");	
+	public static Pattern P_METAVAR = Pattern.compile("#((\\.\\.|\\w+)/)*\\w+");
 	
 	public static String moduleName(ASTModuleNode node, Map<String, Object> params) {
 		return node.getModuleStmt().getModuleName().getModuleName().getText();
@@ -378,6 +379,37 @@ public class CodeQuery {
 		
 		int idx = (Integer) params.get("formalParam") - 1;
 		return node.getSubroutineStmt().getSubroutinePars().get(idx).getVariableName().getText();		
+	}
+	
+	
+	
+	public static ASTUseStmtNode usesModule(ASTModuleNode node, Map<String, Object> params) {
+		String moduleName = (String) params.get("usesModule");
+		//String entityName = (String) params.get("entity");
+		
+		for (ASTUseStmtNode usn : node.findAll(ASTUseStmtNode.class)) {
+			if (usn.getName().getText().equalsIgnoreCase(moduleName)) {
+				return usn;
+			}
+		}
+		
+		return null;
+	}
+	
+	public static String usesEntity(ASTUseStmtNode node, Map<String, Object> params) {
+		String entityName = (String) params.get("usesEntity");
+		
+		for (ASTOnlyNode only : node.getOnlyList()) {
+			if (only.getName().getText().equalsIgnoreCase(entityName)) {
+				if (only.getNewName() != null) {
+					return only.getNewName().getText();
+				}
+				else {
+					return entityName;
+				}
+			}
+		}
+		return null;
 	}
 	
 	

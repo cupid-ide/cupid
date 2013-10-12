@@ -62,7 +62,6 @@ public class NUOPCDriverItemProvider
 			super.getPropertyDescriptors(object);
 
 			addNamePropertyDescriptor(object);
-			addImportsTypeDriverISPropertyDescriptor(object);
 		}
 		return itemPropertyDescriptors;
 	}
@@ -90,28 +89,6 @@ public class NUOPCDriverItemProvider
 	}
 
 	/**
-	 * This adds a property descriptor for the Imports Type Driver IS feature.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	protected void addImportsTypeDriverISPropertyDescriptor(Object object) {
-		itemPropertyDescriptors.add
-			(createItemPropertyDescriptor
-				(((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(),
-				 getResourceLocator(),
-				 getString("_UI_NUOPCDriver_importsTypeDriverIS_feature"),
-				 getString("_UI_PropertyDescriptor_description", "_UI_NUOPCDriver_importsTypeDriverIS_feature", "_UI_NUOPCDriver_type"),
-				 NUOPCPackage.Literals.NUOPC_DRIVER__IMPORTS_TYPE_DRIVER_IS,
-				 true,
-				 false,
-				 false,
-				 ItemPropertyDescriptor.GENERIC_VALUE_IMAGE,
-				 null,
-				 null));
-	}
-
-	/**
 	 * This specifies how to implement {@link #getChildren} and is used to deduce an appropriate feature for an
 	 * {@link org.eclipse.emf.edit.command.AddCommand}, {@link org.eclipse.emf.edit.command.RemoveCommand} or
 	 * {@link org.eclipse.emf.edit.command.MoveCommand} in {@link #createCommand}.
@@ -123,6 +100,7 @@ public class NUOPCDriverItemProvider
 	public Collection<? extends EStructuralFeature> getChildrenFeatures(Object object) {
 		if (childrenFeatures == null) {
 			super.getChildrenFeatures(object);
+			childrenFeatures.add(NUOPCPackage.Literals.NUOPC_DRIVER__GENERIC_IMPORTS);
 			childrenFeatures.add(NUOPCPackage.Literals.NUOPC_DRIVER__IMPLEMENTS_SET_SERVICES);
 			childrenFeatures.add(NUOPCPackage.Literals.NUOPC_DRIVER__IMPLEMENTS_SET_MODEL_COUNT);
 		}
@@ -180,9 +158,9 @@ public class NUOPCDriverItemProvider
 
 		switch (notification.getFeatureID(NUOPCDriver.class)) {
 			case NUOPCPackage.NUOPC_DRIVER__NAME:
-			case NUOPCPackage.NUOPC_DRIVER__IMPORTS_TYPE_DRIVER_IS:
 				fireNotifyChanged(new ViewerNotification(notification, notification.getNotifier(), false, true));
 				return;
+			case NUOPCPackage.NUOPC_DRIVER__GENERIC_IMPORTS:
 			case NUOPCPackage.NUOPC_DRIVER__IMPLEMENTS_SET_SERVICES:
 			case NUOPCPackage.NUOPC_DRIVER__IMPLEMENTS_SET_MODEL_COUNT:
 				fireNotifyChanged(new ViewerNotification(notification, notification.getNotifier(), true, false));
@@ -201,6 +179,11 @@ public class NUOPCDriverItemProvider
 	@Override
 	protected void collectNewChildDescriptors(Collection<Object> newChildDescriptors, Object object) {
 		super.collectNewChildDescriptors(newChildDescriptors, object);
+
+		newChildDescriptors.add
+			(createChildParameter
+				(NUOPCPackage.Literals.NUOPC_DRIVER__GENERIC_IMPORTS,
+				 NUOPCFactory.eINSTANCE.createNUOPCDriver__GenericImports()));
 
 		newChildDescriptors.add
 			(createChildParameter

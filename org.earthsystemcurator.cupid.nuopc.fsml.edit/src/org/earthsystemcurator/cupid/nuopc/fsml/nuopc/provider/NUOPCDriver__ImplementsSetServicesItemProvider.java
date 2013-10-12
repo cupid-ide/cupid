@@ -153,7 +153,7 @@ public class NUOPCDriver__ImplementsSetServicesItemProvider
 				 true,
 				 false,
 				 false,
-				 ItemPropertyDescriptor.BOOLEAN_VALUE_IMAGE,
+				 null,
 				 null,
 				 null));
 	}

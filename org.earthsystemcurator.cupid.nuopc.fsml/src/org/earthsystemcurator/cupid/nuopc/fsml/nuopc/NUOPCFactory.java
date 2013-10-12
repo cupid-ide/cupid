@@ -139,6 +139,15 @@ public interface NUOPCFactory extends EFactory {
 	NUOPCDriver createNUOPCDriver();
 
 	/**
+	 * Returns a new object of class '<em>Driver Generic Imports</em>'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return a new object of class '<em>Driver Generic Imports</em>'.
+	 * @generated
+	 */
+	NUOPCDriver__GenericImports createNUOPCDriver__GenericImports();
+
+	/**
 	 * Returns a new object of class '<em>Driver Implements Set Services</em>'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->

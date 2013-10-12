@@ -9,8 +9,10 @@ import org.earthsystemcurator.cupid.nuopc.fsml.views.NUOPCViewContentProvider.NU
 import org.eclipse.core.runtime.FileLocator;
 import org.eclipse.core.runtime.Path;
 import org.eclipse.emf.common.util.Diagnostic;
+import org.eclipse.emf.ecore.EAttribute;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EReference;
+import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.ecore.util.Diagnostician;
 import org.eclipse.jface.resource.ImageDescriptor;
 import org.eclipse.jface.viewers.DecorationOverlayIcon;
@@ -41,8 +43,15 @@ class NUOPCViewLabelProvider extends StyledCellLabelProvider { //implements ITab
 	public String getToolTipText(Object element) {
 		NUOPCModelElem me = (NUOPCModelElem) element;
 				
-		if (me.eref != null) {
-			String docText = Regex.getFromAnnotation(me.eref.getEType(), "doc");			
+		if (me.structuralFeature != null) {
+			String docText;
+			if (me.structuralFeature instanceof EReference) {
+				docText = Regex.getFromAnnotation(me.structuralFeature.getEType(), "doc");			
+			}
+			else {
+				docText = Regex.getFromAnnotation(me.structuralFeature, "doc");		
+			}
+			
 			if (docText != null || me.validationMessage != null) {
 				ST text = new ST("<doc; wrap=\"\n\", separator=\" \">");				
 				if (me.validationMessage != null) {
@@ -88,15 +97,18 @@ class NUOPCViewLabelProvider extends StyledCellLabelProvider { //implements ITab
 		};
 	    */
 	    if (cell.getColumnIndex() == 0) {
-			if (me.eref != null && me.elem == null) {
-				if (me.eref.getLowerBound() == 1 && me.eref.getUpperBound() == 1) {
+			
+	    	/*
+	    	if (me.structuralFeature != null && me.elem == null) {
+				if (me.structuralFeature.getLowerBound() == 1 && me.structuralFeature.getUpperBound() == 1) {
 					text.append("[1] ", StyledString.COUNTER_STYLER);
 				}
 				else {
-					text.append("[" + me.eref.getLowerBound() + ".." + (me.eref.getUpperBound() < 0 ? "*" : me.eref.getUpperBound()) + "] ", StyledString.COUNTER_STYLER);
+					text.append("[" + me.structuralFeature.getLowerBound() + ".." + (me.structuralFeature.getUpperBound() < 0 ? "*" : me.structuralFeature.getUpperBound()) + "] ", StyledString.COUNTER_STYLER);
 				}
 			}
-			
+			*/
+	    	
 			
 			//if (me.nameLabel != null) {
 			//	text.append(me.typeLabel + " (" + me.nameLabel + ")");
@@ -118,7 +130,7 @@ class NUOPCViewLabelProvider extends StyledCellLabelProvider { //implements ITab
 			
 			//cell.getControl().		
 			//cell.setText(text.toString());
-			ImageDescriptor id = getFortranImageDescriptor(me.eref, me.elem, me.validationMessage);
+			ImageDescriptor id = getFortranImageDescriptor(me.structuralFeature, me.elem, me.validationMessage);
 			if (id != null) {
 				cell.setImage(id.createImage());
 			}
@@ -142,6 +154,7 @@ class NUOPCViewLabelProvider extends StyledCellLabelProvider { //implements ITab
 		super.update(cell);
 	}
 	
+	/*
 	public String getText(Object obj) {
 		if (obj instanceof NUOPCModelElem) {
 			NUOPCModelElem me = (NUOPCModelElem) obj;
@@ -167,8 +180,9 @@ class NUOPCViewLabelProvider extends StyledCellLabelProvider { //implements ITab
 			return "UNKNOWN";
 		}
 	}
+	*/
 	
-	public static ImageDescriptor getFortranImageDescriptor(EReference eref, EObject elem, String validationMessage) {
+	public static ImageDescriptor getFortranImageDescriptor(EStructuralFeature sf, Object elem, String validationMessage) {
 		String imageKey = null;
 		String bottomOverlayKey = null;
 		String topOverlayKey = null;
@@ -176,11 +190,16 @@ class NUOPCViewLabelProvider extends StyledCellLabelProvider { //implements ITab
 		//if (obj instanceof NUOPCModelElem) {
 			//NUOPCModelElem me = (NUOPCModelElem) obj;
 			
-			if (eref != null) {			
-				imageKey = Regex.getFromAnnotation(eref.getEType(), "icon");
-				
+			if (sf != null) {
+				if (sf instanceof EReference) {			
+					imageKey = Regex.getFromAnnotation(sf.getEType(), "icon");
+				}
+				else if (sf instanceof EAttribute) {
+					imageKey = Regex.getFromAnnotation(sf, "icon");
+				}
+					
 				if (imageKey == null) {
-					String mappingType = Regex.getMappingTypeFromAnnotation(eref);
+					String mappingType = Regex.getMappingTypeFromAnnotation(sf);
 					if (mappingType != null) {
 						if (mappingType.equalsIgnoreCase("module")) {
 							imageKey = "module.gif";
@@ -192,26 +211,30 @@ class NUOPCViewLabelProvider extends StyledCellLabelProvider { //implements ITab
 							imageKey = "subroutine.gif";
 							topOverlayKey = "caller_overlay.gif";
 						}
+						else if (mappingType.equalsIgnoreCase("uses")) {
+							imageKey = "import_obj.gif";
+						}
 					}
-					else {
+					else if (sf instanceof EReference) {
 						imageKey = "tree.gif";
 					}
 				}
 				
-				if (elem == null) {
+				if (sf instanceof EReference && elem == null) {
 					
 					//gray indicates that it does not yet exist
 					SWT_PROPS = SWT.IMAGE_GRAY;
 					
-					if (eref.getLowerBound() > 0) {
+					if (sf.getLowerBound() > 0) {
 						bottomOverlayKey = "question_overlay.gif";						
 					}
 					else {
 						bottomOverlayKey = "add_overlay.gif";
 					}
 				}
-				//}
-			}
+			}	
+				
+					
 			
 			//validation to determine overlay
 			if (elem != null && validationMessage != null) {

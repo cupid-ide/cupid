@@ -4,6 +4,7 @@ package org.earthsystemcurator.cupid.nuopc.fsml.nuopc.impl;
 
 import java.util.Collection;
 import org.earthsystemcurator.cupid.nuopc.fsml.nuopc.NUOPCDriver;
+import org.earthsystemcurator.cupid.nuopc.fsml.nuopc.NUOPCDriver__GenericImports;
 import org.earthsystemcurator.cupid.nuopc.fsml.nuopc.NUOPCDriver__ImplementsSetModelCount;
 import org.earthsystemcurator.cupid.nuopc.fsml.nuopc.NUOPCDriver__ImplementsSetServices;
 import org.earthsystemcurator.cupid.nuopc.fsml.nuopc.NUOPCPackage;
@@ -28,7 +29,7 @@ import org.eclipse.emf.ecore.util.InternalEList;
  * The following features are implemented:
  * <ul>
  *   <li>{@link org.earthsystemcurator.cupid.nuopc.fsml.nuopc.impl.NUOPCDriverImpl#getName <em>Name</em>}</li>
- *   <li>{@link org.earthsystemcurator.cupid.nuopc.fsml.nuopc.impl.NUOPCDriverImpl#getImportsTypeDriverIS <em>Imports Type Driver IS</em>}</li>
+ *   <li>{@link org.earthsystemcurator.cupid.nuopc.fsml.nuopc.impl.NUOPCDriverImpl#getGenericImports <em>Generic Imports</em>}</li>
  *   <li>{@link org.earthsystemcurator.cupid.nuopc.fsml.nuopc.impl.NUOPCDriverImpl#getImplementsSetServices <em>Implements Set Services</em>}</li>
  *   <li>{@link org.earthsystemcurator.cupid.nuopc.fsml.nuopc.impl.NUOPCDriverImpl#getImplementsSetModelCount <em>Implements Set Model Count</em>}</li>
  * </ul>
@@ -57,23 +58,14 @@ public class NUOPCDriverImpl extends EObjectImpl implements NUOPCDriver {
 	protected String name = NAME_EDEFAULT;
 
 	/**
-	 * The default value of the '{@link #getImportsTypeDriverIS() <em>Imports Type Driver IS</em>}' attribute.
+	 * The cached value of the '{@link #getGenericImports() <em>Generic Imports</em>}' containment reference.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @see #getImportsTypeDriverIS()
+	 * @see #getGenericImports()
 	 * @generated
 	 * @ordered
 	 */
-	protected static final String IMPORTS_TYPE_DRIVER_IS_EDEFAULT = null;
-	/**
-	 * The cached value of the '{@link #getImportsTypeDriverIS() <em>Imports Type Driver IS</em>}' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @see #getImportsTypeDriverIS()
-	 * @generated
-	 * @ordered
-	 */
-	protected String importsTypeDriverIS = IMPORTS_TYPE_DRIVER_IS_EDEFAULT;
+	protected NUOPCDriver__GenericImports genericImports;
 	/**
 	 * The cached value of the '{@link #getImplementsSetServices() <em>Implements Set Services</em>}' containment reference.
 	 * <!-- begin-user-doc -->
@@ -139,8 +131,8 @@ public class NUOPCDriverImpl extends EObjectImpl implements NUOPCDriver {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public String getImportsTypeDriverIS() {
-		return importsTypeDriverIS;
+	public NUOPCDriver__GenericImports getGenericImports() {
+		return genericImports;
 	}
 
 	/**
@@ -148,11 +140,33 @@ public class NUOPCDriverImpl extends EObjectImpl implements NUOPCDriver {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public void setImportsTypeDriverIS(String newImportsTypeDriverIS) {
-		String oldImportsTypeDriverIS = importsTypeDriverIS;
-		importsTypeDriverIS = newImportsTypeDriverIS;
-		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, NUOPCPackage.NUOPC_DRIVER__IMPORTS_TYPE_DRIVER_IS, oldImportsTypeDriverIS, importsTypeDriverIS));
+	public NotificationChain basicSetGenericImports(NUOPCDriver__GenericImports newGenericImports, NotificationChain msgs) {
+		NUOPCDriver__GenericImports oldGenericImports = genericImports;
+		genericImports = newGenericImports;
+		if (eNotificationRequired()) {
+			ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, NUOPCPackage.NUOPC_DRIVER__GENERIC_IMPORTS, oldGenericImports, newGenericImports);
+			if (msgs == null) msgs = notification; else msgs.add(notification);
+		}
+		return msgs;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public void setGenericImports(NUOPCDriver__GenericImports newGenericImports) {
+		if (newGenericImports != genericImports) {
+			NotificationChain msgs = null;
+			if (genericImports != null)
+				msgs = ((InternalEObject)genericImports).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - NUOPCPackage.NUOPC_DRIVER__GENERIC_IMPORTS, null, msgs);
+			if (newGenericImports != null)
+				msgs = ((InternalEObject)newGenericImports).eInverseAdd(this, EOPPOSITE_FEATURE_BASE - NUOPCPackage.NUOPC_DRIVER__GENERIC_IMPORTS, null, msgs);
+			msgs = basicSetGenericImports(newGenericImports, msgs);
+			if (msgs != null) msgs.dispatch();
+		}
+		else if (eNotificationRequired())
+			eNotify(new ENotificationImpl(this, Notification.SET, NUOPCPackage.NUOPC_DRIVER__GENERIC_IMPORTS, newGenericImports, newGenericImports));
 	}
 
 	/**
@@ -237,6 +251,8 @@ public class NUOPCDriverImpl extends EObjectImpl implements NUOPCDriver {
 	@Override
 	public NotificationChain eInverseRemove(InternalEObject otherEnd, int featureID, NotificationChain msgs) {
 		switch (featureID) {
+			case NUOPCPackage.NUOPC_DRIVER__GENERIC_IMPORTS:
+				return basicSetGenericImports(null, msgs);
 			case NUOPCPackage.NUOPC_DRIVER__IMPLEMENTS_SET_SERVICES:
 				return basicSetImplementsSetServices(null, msgs);
 			case NUOPCPackage.NUOPC_DRIVER__IMPLEMENTS_SET_MODEL_COUNT:
@@ -255,8 +271,8 @@ public class NUOPCDriverImpl extends EObjectImpl implements NUOPCDriver {
 		switch (featureID) {
 			case NUOPCPackage.NUOPC_DRIVER__NAME:
 				return getName();
-			case NUOPCPackage.NUOPC_DRIVER__IMPORTS_TYPE_DRIVER_IS:
-				return getImportsTypeDriverIS();
+			case NUOPCPackage.NUOPC_DRIVER__GENERIC_IMPORTS:
+				return getGenericImports();
 			case NUOPCPackage.NUOPC_DRIVER__IMPLEMENTS_SET_SERVICES:
 				return getImplementsSetServices();
 			case NUOPCPackage.NUOPC_DRIVER__IMPLEMENTS_SET_MODEL_COUNT:
@@ -277,8 +293,8 @@ public class NUOPCDriverImpl extends EObjectImpl implements NUOPCDriver {
 			case NUOPCPackage.NUOPC_DRIVER__NAME:
 				setName((String)newValue);
 				return;
-			case NUOPCPackage.NUOPC_DRIVER__IMPORTS_TYPE_DRIVER_IS:
-				setImportsTypeDriverIS((String)newValue);
+			case NUOPCPackage.NUOPC_DRIVER__GENERIC_IMPORTS:
+				setGenericImports((NUOPCDriver__GenericImports)newValue);
 				return;
 			case NUOPCPackage.NUOPC_DRIVER__IMPLEMENTS_SET_SERVICES:
 				setImplementsSetServices((NUOPCDriver__ImplementsSetServices)newValue);
@@ -302,8 +318,8 @@ public class NUOPCDriverImpl extends EObjectImpl implements NUOPCDriver {
 			case NUOPCPackage.NUOPC_DRIVER__NAME:
 				setName(NAME_EDEFAULT);
 				return;
-			case NUOPCPackage.NUOPC_DRIVER__IMPORTS_TYPE_DRIVER_IS:
-				setImportsTypeDriverIS(IMPORTS_TYPE_DRIVER_IS_EDEFAULT);
+			case NUOPCPackage.NUOPC_DRIVER__GENERIC_IMPORTS:
+				setGenericImports((NUOPCDriver__GenericImports)null);
 				return;
 			case NUOPCPackage.NUOPC_DRIVER__IMPLEMENTS_SET_SERVICES:
 				setImplementsSetServices((NUOPCDriver__ImplementsSetServices)null);
@@ -325,8 +341,8 @@ public class NUOPCDriverImpl extends EObjectImpl implements NUOPCDriver {
 		switch (featureID) {
 			case NUOPCPackage.NUOPC_DRIVER__NAME:
 				return NAME_EDEFAULT == null ? name != null : !NAME_EDEFAULT.equals(name);
-			case NUOPCPackage.NUOPC_DRIVER__IMPORTS_TYPE_DRIVER_IS:
-				return IMPORTS_TYPE_DRIVER_IS_EDEFAULT == null ? importsTypeDriverIS != null : !IMPORTS_TYPE_DRIVER_IS_EDEFAULT.equals(importsTypeDriverIS);
+			case NUOPCPackage.NUOPC_DRIVER__GENERIC_IMPORTS:
+				return genericImports != null;
 			case NUOPCPackage.NUOPC_DRIVER__IMPLEMENTS_SET_SERVICES:
 				return implementsSetServices != null;
 			case NUOPCPackage.NUOPC_DRIVER__IMPLEMENTS_SET_MODEL_COUNT:
@@ -347,8 +363,6 @@ public class NUOPCDriverImpl extends EObjectImpl implements NUOPCDriver {
 		StringBuffer result = new StringBuffer(super.toString());
 		result.append(" (name: ");
 		result.append(name);
-		result.append(", importsTypeDriverIS: ");
-		result.append(importsTypeDriverIS);
 		result.append(')');
 		return result.toString();
 	}

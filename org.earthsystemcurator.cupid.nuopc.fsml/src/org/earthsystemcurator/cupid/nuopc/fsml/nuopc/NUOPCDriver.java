@@ -14,14 +14,14 @@ import org.eclipse.emf.ecore.EObject;
  * The following features are supported:
  * <ul>
  *   <li>{@link org.earthsystemcurator.cupid.nuopc.fsml.nuopc.NUOPCDriver#getName <em>Name</em>}</li>
- *   <li>{@link org.earthsystemcurator.cupid.nuopc.fsml.nuopc.NUOPCDriver#getImportsTypeDriverIS <em>Imports Type Driver IS</em>}</li>
+ *   <li>{@link org.earthsystemcurator.cupid.nuopc.fsml.nuopc.NUOPCDriver#getGenericImports <em>Generic Imports</em>}</li>
  *   <li>{@link org.earthsystemcurator.cupid.nuopc.fsml.nuopc.NUOPCDriver#getImplementsSetServices <em>Implements Set Services</em>}</li>
  *   <li>{@link org.earthsystemcurator.cupid.nuopc.fsml.nuopc.NUOPCDriver#getImplementsSetModelCount <em>Implements Set Model Count</em>}</li>
  * </ul>
  * </p>
  *
  * @see org.earthsystemcurator.cupid.nuopc.fsml.nuopc.NUOPCPackage#getNUOPCDriver()
- * @model annotation="http://www.earthsystemcog.org/projects/nuopc mapping='module' labelPlural='NUOPC Drivers' label='NUOPC Driver' doc='NUOPC Driver is the generic driver component. It implements a child component harness, made of State and Component objects, that follows the NUOPC Common Model Architecture. It is specialized by plugging Model, Mediator, and Connector components into the harness. Driver components can be plugged into the harness to construct component hierarchies. The generic Driver initializes its child components according to a standard Initialization Phase Definition, and drives their Run() methods according a customizable run sequence.'"
+ * @model annotation="http://www.earthsystemcog.org/projects/nuopc mapping='module' label='NUOPC Driver' doc='NUOPC Driver is the generic driver component. It implements a child component harness, made of State and Component objects, that follows the NUOPC Common Model Architecture. It is specialized by plugging Model, Mediator, and Connector components into the harness. Driver components can be plugged into the harness to construct component hierarchies. The generic Driver initializes its child components according to a standard Initialization Phase Definition, and drives their Run() methods according a customizable run sequence.'"
  * @generated
  */
 public interface NUOPCDriver extends EObject {
@@ -55,30 +55,30 @@ public interface NUOPCDriver extends EObject {
 	void setName(String value);
 
 	/**
-	 * Returns the value of the '<em><b>Imports Type Driver IS</b></em>' attribute.
+	 * Returns the value of the '<em><b>Generic Imports</b></em>' containment reference.
 	 * <!-- begin-user-doc -->
 	 * <p>
-	 * If the meaning of the '<em>Imports Type Driver IS</em>' attribute isn't clear,
+	 * If the meaning of the '<em>Generic Imports</em>' containment reference isn't clear,
 	 * there really should be more of a description here...
 	 * </p>
 	 * <!-- end-user-doc -->
-	 * @return the value of the '<em>Imports Type Driver IS</em>' attribute.
-	 * @see #setImportsTypeDriverIS(String)
-	 * @see org.earthsystemcurator.cupid.nuopc.fsml.nuopc.NUOPCPackage#getNUOPCDriver_ImportsTypeDriverIS()
-	 * @model annotation="http://www.earthsystemcog.org/projects/nuopc mapping='uses: \"NUOPC_Driver\" entity: \"type_InternalState\"'"
+	 * @return the value of the '<em>Generic Imports</em>' containment reference.
+	 * @see #setGenericImports(NUOPCDriver__GenericImports)
+	 * @see org.earthsystemcurator.cupid.nuopc.fsml.nuopc.NUOPCPackage#getNUOPCDriver_GenericImports()
+	 * @model containment="true" required="true"
 	 * @generated
 	 */
-	String getImportsTypeDriverIS();
+	NUOPCDriver__GenericImports getGenericImports();
 
 	/**
-	 * Sets the value of the '{@link org.earthsystemcurator.cupid.nuopc.fsml.nuopc.NUOPCDriver#getImportsTypeDriverIS <em>Imports Type Driver IS</em>}' attribute.
+	 * Sets the value of the '{@link org.earthsystemcurator.cupid.nuopc.fsml.nuopc.NUOPCDriver#getGenericImports <em>Generic Imports</em>}' containment reference.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @param value the new value of the '<em>Imports Type Driver IS</em>' attribute.
-	 * @see #getImportsTypeDriverIS()
+	 * @param value the new value of the '<em>Generic Imports</em>' containment reference.
+	 * @see #getGenericImports()
 	 * @generated
 	 */
-	void setImportsTypeDriverIS(String value);
+	void setGenericImports(NUOPCDriver__GenericImports value);
 
 	/**
 	 * Returns the value of the '<em><b>Implements Set Services</b></em>' containment reference.
@@ -93,7 +93,7 @@ public interface NUOPCDriver extends EObject {
 	 * @see #setImplementsSetServices(NUOPCDriver__ImplementsSetServices)
 	 * @see org.earthsystemcurator.cupid.nuopc.fsml.nuopc.NUOPCPackage#getNUOPCDriver_ImplementsSetServices()
 	 * @see org.earthsystemcurator.cupid.nuopc.fsml.nuopc.NUOPCDriver__ImplementsSetServices#getParent
-	 * @model opposite="parent" containment="true"
+	 * @model opposite="parent" containment="true" required="true"
 	 *        annotation="http://www.earthsystemcog.org/projects/nuopc mapping='subroutine: \"#name(type(ESMF_GridComp) #param_gcomp, integer #param_rc)\"' essential='true'"
 	 * @generated
 	 */

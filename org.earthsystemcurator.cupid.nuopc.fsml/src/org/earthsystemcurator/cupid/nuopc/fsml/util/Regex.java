@@ -50,11 +50,11 @@ public class Regex {
 	public static String getFromAnnotation(EModelElement eme, String key, String defaultValue) {
 		EAnnotation ann = eme.getEAnnotation("http://www.earthsystemcog.org/projects/nuopc");
 		if (ann != null) {
-			return ann.getDetails().get(key);			
+			if (ann.getDetails().get(key) != null) {
+				return ann.getDetails().get(key);
+			}
 		}
-		else {
-			return defaultValue;
-		}		
+		return defaultValue;		
 	}
 	
 	

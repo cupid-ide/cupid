@@ -160,7 +160,7 @@ public interface ModelImplementsInitP2 extends EObject {
 	 * @return the value of the '<em>Realizes At Least One Field</em>' attribute.
 	 * @see #setRealizesAtLeastOneField(boolean)
 	 * @see org.earthsystemcurator.cupid.nuopc.fsml.nuopc.NUOPCPackage#getModelImplementsInitP2_RealizesAtLeastOneField()
-	 * @model derived="true"
+	 * @model required="true" derived="true"
 	 *        annotation="http://www.earthsystemcog.org/projects/nuopc essential='true'"
 	 *        annotation="http://www.eclipse.org/emf/2002/Ecore/OCL derivation='self.realizesImportField->size() > 0 or self.realizesExportField->size() > 0'"
 	 * @generated

@@ -24,7 +24,7 @@ import org.eclipse.emf.ecore.EObject;
  * </p>
  *
  * @see org.earthsystemcurator.cupid.nuopc.fsml.nuopc.NUOPCPackage#getNUOPCDriver__ImplementsSetModelCount()
- * @model
+ * @model annotation="http://www.earthsystemcog.org/projects/nuopc label='Set Model Count' doc='A subroutine that sets the number of model managed by this driver.'"
  * @generated
  */
 public interface NUOPCDriver__ImplementsSetModelCount extends EObject {

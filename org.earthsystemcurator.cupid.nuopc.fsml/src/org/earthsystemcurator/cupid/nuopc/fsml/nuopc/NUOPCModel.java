@@ -23,7 +23,7 @@ import org.eclipse.emf.ecore.EObject;
  * </p>
  *
  * @see org.earthsystemcurator.cupid.nuopc.fsml.nuopc.NUOPCPackage#getNUOPCModel()
- * @model annotation="http://www.earthsystemcog.org/projects/nuopc mapping='module' labelPlural='NUOPC Models' label='NUOPC Model' doc='NUOPC Model is a generic model component that wraps a model code so it is suitable to be plugged into a generic Driver component.'"
+ * @model annotation="http://www.earthsystemcog.org/projects/nuopc mapping='module' label='NUOPC Model' doc='NUOPC Model is a generic model component that wraps a model code so it is suitable to be plugged into a generic Driver component.'"
  * @generated
  */
 public interface NUOPCModel extends EObject {
@@ -68,7 +68,7 @@ public interface NUOPCModel extends EObject {
 	 * @see #setImportsGenericSS(String)
 	 * @see org.earthsystemcurator.cupid.nuopc.fsml.nuopc.NUOPCPackage#getNUOPCModel_ImportsGenericSS()
 	 * @model default="nuopcmodel_ss" required="true"
-	 *        annotation="http://www.earthsystemcog.org/projects/nuopc mapping='uses: \"NUOPC_Model\" entity: \"routine_SetServices\"' label='Imports generic Set Services'"
+	 *        annotation="http://www.earthsystemcog.org/projects/nuopc mapping='uses: \"NUOPC_Model\" entity: \"routine_SetServices\"' label='routine_SetServices' doc='Subclasses of NUOPC Model should import the public generic Set Services subroutine \"routine_SetServices\"'"
 	 * @generated
 	 */
 	String getImportsGenericSS();

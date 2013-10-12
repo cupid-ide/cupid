@@ -11,11 +11,21 @@ public class EcoreUtils {
 		if (pathExpr.startsWith("#")) pathExpr = pathExpr.substring(1);
 		
 		EObject elemToCheck = modelElem;
-		//int parents = 0;
-		while (pathExpr.startsWith("../")) {
-			//parents++;
-			pathExpr = pathExpr.substring(3);
-			elemToCheck = elemToCheck.eContainer();
+		
+		while (pathExpr.contains("/")) {
+			
+			String pathSegment = pathExpr.substring(0, pathExpr.indexOf("/"));
+						
+			if (pathSegment.equals("..")) {
+				elemToCheck = elemToCheck.eContainer();
+			}
+			else {
+				//the segment is a structural feature name
+				EStructuralFeature segmentSF = elemToCheck.eClass().getEStructuralFeature(pathSegment);
+				elemToCheck = (EObject) elemToCheck.eGet(segmentSF);				
+			}
+			pathExpr = pathExpr.substring(pathSegment.length()+1);
+			
 		}
 		
 		EStructuralFeature attribSF = elemToCheck.eClass().getEStructuralFeature(pathExpr);

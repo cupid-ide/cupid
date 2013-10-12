@@ -4,6 +4,7 @@ package org.earthsystemcurator.cupid.nuopc.fsml.nuopc.impl;
 
 import java.util.Collection;
 import org.earthsystemcurator.cupid.nuopc.fsml.nuopc.AttachesMethod;
+import org.earthsystemcurator.cupid.nuopc.fsml.nuopc.CallsGenericSetServices;
 import org.earthsystemcurator.cupid.nuopc.fsml.nuopc.NUOPCDriver;
 import org.earthsystemcurator.cupid.nuopc.fsml.nuopc.NUOPCDriver__ImplementsSetServices;
 import org.earthsystemcurator.cupid.nuopc.fsml.nuopc.NUOPCPackage;
@@ -33,7 +34,7 @@ import org.eclipse.emf.ecore.util.InternalEList;
  *   <li>{@link org.earthsystemcurator.cupid.nuopc.fsml.nuopc.impl.NUOPCDriver__ImplementsSetServicesImpl#getName <em>Name</em>}</li>
  *   <li>{@link org.earthsystemcurator.cupid.nuopc.fsml.nuopc.impl.NUOPCDriver__ImplementsSetServicesImpl#getParam_gcomp <em>Param gcomp</em>}</li>
  *   <li>{@link org.earthsystemcurator.cupid.nuopc.fsml.nuopc.impl.NUOPCDriver__ImplementsSetServicesImpl#getParam_rc <em>Param rc</em>}</li>
- *   <li>{@link org.earthsystemcurator.cupid.nuopc.fsml.nuopc.impl.NUOPCDriver__ImplementsSetServicesImpl#isCallsGenericSetServices <em>Calls Generic Set Services</em>}</li>
+ *   <li>{@link org.earthsystemcurator.cupid.nuopc.fsml.nuopc.impl.NUOPCDriver__ImplementsSetServicesImpl#getCallsGenericSetServices <em>Calls Generic Set Services</em>}</li>
  *   <li>{@link org.earthsystemcurator.cupid.nuopc.fsml.nuopc.impl.NUOPCDriver__ImplementsSetServicesImpl#getAttachesMethod <em>Attaches Method</em>}</li>
  * </ul>
  * </p>
@@ -102,24 +103,14 @@ public class NUOPCDriver__ImplementsSetServicesImpl extends EObjectImpl implemen
 	protected String param_rc = PARAM_RC_EDEFAULT;
 
 	/**
-	 * The default value of the '{@link #isCallsGenericSetServices() <em>Calls Generic Set Services</em>}' attribute.
+	 * The cached value of the '{@link #getCallsGenericSetServices() <em>Calls Generic Set Services</em>}' containment reference.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @see #isCallsGenericSetServices()
+	 * @see #getCallsGenericSetServices()
 	 * @generated
 	 * @ordered
 	 */
-	protected static final boolean CALLS_GENERIC_SET_SERVICES_EDEFAULT = false;
-
-	/**
-	 * The cached value of the '{@link #isCallsGenericSetServices() <em>Calls Generic Set Services</em>}' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @see #isCallsGenericSetServices()
-	 * @generated
-	 * @ordered
-	 */
-	protected boolean callsGenericSetServices = CALLS_GENERIC_SET_SERVICES_EDEFAULT;
+	protected CallsGenericSetServices callsGenericSetServices;
 
 	/**
 	 * The cached value of the '{@link #getAttachesMethod() <em>Attaches Method</em>}' containment reference list.
@@ -259,7 +250,7 @@ public class NUOPCDriver__ImplementsSetServicesImpl extends EObjectImpl implemen
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public boolean isCallsGenericSetServices() {
+	public CallsGenericSetServices getCallsGenericSetServices() {
 		return callsGenericSetServices;
 	}
 
@@ -268,11 +259,33 @@ public class NUOPCDriver__ImplementsSetServicesImpl extends EObjectImpl implemen
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public void setCallsGenericSetServices(boolean newCallsGenericSetServices) {
-		boolean oldCallsGenericSetServices = callsGenericSetServices;
+	public NotificationChain basicSetCallsGenericSetServices(CallsGenericSetServices newCallsGenericSetServices, NotificationChain msgs) {
+		CallsGenericSetServices oldCallsGenericSetServices = callsGenericSetServices;
 		callsGenericSetServices = newCallsGenericSetServices;
-		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, NUOPCPackage.NUOPC_DRIVER_IMPLEMENTS_SET_SERVICES__CALLS_GENERIC_SET_SERVICES, oldCallsGenericSetServices, callsGenericSetServices));
+		if (eNotificationRequired()) {
+			ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, NUOPCPackage.NUOPC_DRIVER_IMPLEMENTS_SET_SERVICES__CALLS_GENERIC_SET_SERVICES, oldCallsGenericSetServices, newCallsGenericSetServices);
+			if (msgs == null) msgs = notification; else msgs.add(notification);
+		}
+		return msgs;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public void setCallsGenericSetServices(CallsGenericSetServices newCallsGenericSetServices) {
+		if (newCallsGenericSetServices != callsGenericSetServices) {
+			NotificationChain msgs = null;
+			if (callsGenericSetServices != null)
+				msgs = ((InternalEObject)callsGenericSetServices).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - NUOPCPackage.NUOPC_DRIVER_IMPLEMENTS_SET_SERVICES__CALLS_GENERIC_SET_SERVICES, null, msgs);
+			if (newCallsGenericSetServices != null)
+				msgs = ((InternalEObject)newCallsGenericSetServices).eInverseAdd(this, EOPPOSITE_FEATURE_BASE - NUOPCPackage.NUOPC_DRIVER_IMPLEMENTS_SET_SERVICES__CALLS_GENERIC_SET_SERVICES, null, msgs);
+			msgs = basicSetCallsGenericSetServices(newCallsGenericSetServices, msgs);
+			if (msgs != null) msgs.dispatch();
+		}
+		else if (eNotificationRequired())
+			eNotify(new ENotificationImpl(this, Notification.SET, NUOPCPackage.NUOPC_DRIVER_IMPLEMENTS_SET_SERVICES__CALLS_GENERIC_SET_SERVICES, newCallsGenericSetServices, newCallsGenericSetServices));
 	}
 
 	/**
@@ -313,6 +326,8 @@ public class NUOPCDriver__ImplementsSetServicesImpl extends EObjectImpl implemen
 		switch (featureID) {
 			case NUOPCPackage.NUOPC_DRIVER_IMPLEMENTS_SET_SERVICES__PARENT:
 				return basicSetParent(null, msgs);
+			case NUOPCPackage.NUOPC_DRIVER_IMPLEMENTS_SET_SERVICES__CALLS_GENERIC_SET_SERVICES:
+				return basicSetCallsGenericSetServices(null, msgs);
 			case NUOPCPackage.NUOPC_DRIVER_IMPLEMENTS_SET_SERVICES__ATTACHES_METHOD:
 				return ((InternalEList<?>)getAttachesMethod()).basicRemove(otherEnd, msgs);
 		}
@@ -350,7 +365,7 @@ public class NUOPCDriver__ImplementsSetServicesImpl extends EObjectImpl implemen
 			case NUOPCPackage.NUOPC_DRIVER_IMPLEMENTS_SET_SERVICES__PARAM_RC:
 				return getParam_rc();
 			case NUOPCPackage.NUOPC_DRIVER_IMPLEMENTS_SET_SERVICES__CALLS_GENERIC_SET_SERVICES:
-				return isCallsGenericSetServices();
+				return getCallsGenericSetServices();
 			case NUOPCPackage.NUOPC_DRIVER_IMPLEMENTS_SET_SERVICES__ATTACHES_METHOD:
 				return getAttachesMethod();
 		}
@@ -379,7 +394,7 @@ public class NUOPCDriver__ImplementsSetServicesImpl extends EObjectImpl implemen
 				setParam_rc((String)newValue);
 				return;
 			case NUOPCPackage.NUOPC_DRIVER_IMPLEMENTS_SET_SERVICES__CALLS_GENERIC_SET_SERVICES:
-				setCallsGenericSetServices((Boolean)newValue);
+				setCallsGenericSetServices((CallsGenericSetServices)newValue);
 				return;
 			case NUOPCPackage.NUOPC_DRIVER_IMPLEMENTS_SET_SERVICES__ATTACHES_METHOD:
 				getAttachesMethod().clear();
@@ -410,7 +425,7 @@ public class NUOPCDriver__ImplementsSetServicesImpl extends EObjectImpl implemen
 				setParam_rc(PARAM_RC_EDEFAULT);
 				return;
 			case NUOPCPackage.NUOPC_DRIVER_IMPLEMENTS_SET_SERVICES__CALLS_GENERIC_SET_SERVICES:
-				setCallsGenericSetServices(CALLS_GENERIC_SET_SERVICES_EDEFAULT);
+				setCallsGenericSetServices((CallsGenericSetServices)null);
 				return;
 			case NUOPCPackage.NUOPC_DRIVER_IMPLEMENTS_SET_SERVICES__ATTACHES_METHOD:
 				getAttachesMethod().clear();
@@ -436,7 +451,7 @@ public class NUOPCDriver__ImplementsSetServicesImpl extends EObjectImpl implemen
 			case NUOPCPackage.NUOPC_DRIVER_IMPLEMENTS_SET_SERVICES__PARAM_RC:
 				return PARAM_RC_EDEFAULT == null ? param_rc != null : !PARAM_RC_EDEFAULT.equals(param_rc);
 			case NUOPCPackage.NUOPC_DRIVER_IMPLEMENTS_SET_SERVICES__CALLS_GENERIC_SET_SERVICES:
-				return callsGenericSetServices != CALLS_GENERIC_SET_SERVICES_EDEFAULT;
+				return callsGenericSetServices != null;
 			case NUOPCPackage.NUOPC_DRIVER_IMPLEMENTS_SET_SERVICES__ATTACHES_METHOD:
 				return attachesMethod != null && !attachesMethod.isEmpty();
 		}
@@ -459,8 +474,6 @@ public class NUOPCDriver__ImplementsSetServicesImpl extends EObjectImpl implemen
 		result.append(param_gcomp);
 		result.append(", param_rc: ");
 		result.append(param_rc);
-		result.append(", callsGenericSetServices: ");
-		result.append(callsGenericSetServices);
 		result.append(')');
 		return result.toString();
 	}

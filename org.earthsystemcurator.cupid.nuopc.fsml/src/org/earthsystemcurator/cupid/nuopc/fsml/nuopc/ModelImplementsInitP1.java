@@ -160,7 +160,7 @@ public interface ModelImplementsInitP1 extends EObject {
 	 * @return the value of the '<em>Advertises At Least One Field</em>' attribute.
 	 * @see #setAdvertisesAtLeastOneField(boolean)
 	 * @see org.earthsystemcurator.cupid.nuopc.fsml.nuopc.NUOPCPackage#getModelImplementsInitP1_AdvertisesAtLeastOneField()
-	 * @model derived="true"
+	 * @model required="true" derived="true"
 	 *        annotation="http://www.earthsystemcog.org/projects/nuopc essential='true'"
 	 *        annotation="http://www.eclipse.org/emf/2002/Ecore/OCL derivation='self.advertisesExportField->size() > 0 or self.advertisesImportField->size() > 0'"
 	 * @generated

@@ -18,7 +18,7 @@ import org.eclipse.emf.ecore.EObject;
  * </p>
  *
  * @see org.earthsystemcurator.cupid.nuopc.fsml.nuopc.NUOPCPackage#getModel_Init()
- * @model annotation="http://www.earthsystemcog.org/projects/nuopc label='Model Initialization'"
+ * @model annotation="http://www.earthsystemcog.org/projects/nuopc label='Model Initialization' doc='Framework concepts related to initializing this NUOPC Model'"
  * @generated
  */
 public interface Model_Init extends EObject {

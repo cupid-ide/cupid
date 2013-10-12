@@ -120,6 +120,10 @@ public class NUOPCAdapterFactory extends AdapterFactoryImpl {
 				return createNUOPCDriverAdapter();
 			}
 			@Override
+			public Adapter caseNUOPCDriver__GenericImports(NUOPCDriver__GenericImports object) {
+				return createNUOPCDriver__GenericImportsAdapter();
+			}
+			@Override
 			public Adapter caseNUOPCDriver__ImplementsSetServices(NUOPCDriver__ImplementsSetServices object) {
 				return createNUOPCDriver__ImplementsSetServicesAdapter();
 			}
@@ -350,6 +354,20 @@ public class NUOPCAdapterFactory extends AdapterFactoryImpl {
 	 * @generated
 	 */
 	public Adapter createNUOPCDriverAdapter() {
+		return null;
+	}
+
+	/**
+	 * Creates a new adapter for an object of class '{@link org.earthsystemcurator.cupid.nuopc.fsml.nuopc.NUOPCDriver__GenericImports <em>Driver Generic Imports</em>}'.
+	 * <!-- begin-user-doc -->
+	 * This default implementation returns null so that we can easily ignore cases;
+	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
+	 * <!-- end-user-doc -->
+	 * @return the new adapter.
+	 * @see org.earthsystemcurator.cupid.nuopc.fsml.nuopc.NUOPCDriver__GenericImports
+	 * @generated
+	 */
+	public Adapter createNUOPCDriver__GenericImportsAdapter() {
 		return null;
 	}
 

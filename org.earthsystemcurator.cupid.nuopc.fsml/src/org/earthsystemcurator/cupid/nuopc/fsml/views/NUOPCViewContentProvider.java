@@ -16,6 +16,7 @@ import org.eclipse.emf.ecore.EAttribute;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EReference;
+import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.ecore.EcorePackage;
 import org.eclipse.emf.ecore.util.Diagnostician;
 import org.eclipse.emf.ecore.util.EcoreUtil;
@@ -138,7 +139,7 @@ class NUOPCViewContentProvider implements IStructuredContentProvider, ITreeConte
 					
 					
 					
-					children.add(new NUOPCModelElem(parent, eattrib, nameLabel, typeLabel));
+					children.add(new NUOPCModelElem(parent, eattrib, nameLabel, typeLabel, null));
 				}
 				
 				
@@ -182,9 +183,9 @@ class NUOPCViewContentProvider implements IStructuredContentProvider, ITreeConte
 					}
 				}
 			}
-			else {
+			else if (parent.structuralFeature instanceof EReference){
 				//no elem eobject
-				EClass ec = (EClass) parent.eref.getEType();
+				EClass ec = (EClass) parent.structuralFeature.getEType();
 				for (EReference eref : ec.getEReferences()) {
 					
 					String typeLabel;
@@ -289,11 +290,11 @@ class NUOPCViewContentProvider implements IStructuredContentProvider, ITreeConte
 		if (p instanceof NUOPCModelElem) {
 			NUOPCModelElem parent = (NUOPCModelElem) p;
 			if (parent.elem != null) {
-				return parent.elem.eClass().getEReferences().size() > 0;
+				return parent.elem.eClass().getEStructuralFeatures().size() > 0;
 			}
-			else if (parent.eref != null) {
+			else if (parent.structuralFeature instanceof EReference) {
 				//TODO: check for isMany
-				return ((EClass) parent.eref.getEType()).getEReferences().size() > 0;
+				return ((EClass) parent.structuralFeature.getEType()).getEStructuralFeatures().size() > 0;
 			}
 		}
 		return false;
@@ -301,8 +302,9 @@ class NUOPCViewContentProvider implements IStructuredContentProvider, ITreeConte
 	
 	public class NUOPCModelElem {
 		public NUOPCModelElem parent;
-		public EReference eref;
-		public EAttribute eattrib;
+		//public EReference eref;
+		//public EAttribute eattrib;
+		public EStructuralFeature structuralFeature;
 		public String nameLabel;
 		public String typeLabel;
 		public EObject elem;
@@ -310,16 +312,18 @@ class NUOPCViewContentProvider implements IStructuredContentProvider, ITreeConte
 		//public int min;
 		//public int max;
 		
+		/*
 		public NUOPCModelElem(NUOPCModelElem parent, EAttribute eattrib, String nameLabel, String typeLabel) {
 			this.parent = parent;
 			this.eattrib = eattrib;
 			this.nameLabel = nameLabel;
 			this.typeLabel = typeLabel;			
 		}
+		*/
 		
-		public NUOPCModelElem(NUOPCModelElem parent, EReference eref, String nameLabel, String typeLabel, EObject elem) {
+		public NUOPCModelElem(NUOPCModelElem parent, EStructuralFeature esf, String nameLabel, String typeLabel, EObject elem) {
 			this.parent = parent;
-			this.eref = eref;
+			this.structuralFeature = esf;
 			this.nameLabel = nameLabel;
 			this.typeLabel = typeLabel;
 			this.elem = elem;

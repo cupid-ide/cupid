@@ -17,13 +17,13 @@ import org.eclipse.emf.ecore.EObject;
  *   <li>{@link org.earthsystemcurator.cupid.nuopc.fsml.nuopc.NUOPCDriver__ImplementsSetServices#getName <em>Name</em>}</li>
  *   <li>{@link org.earthsystemcurator.cupid.nuopc.fsml.nuopc.NUOPCDriver__ImplementsSetServices#getParam_gcomp <em>Param gcomp</em>}</li>
  *   <li>{@link org.earthsystemcurator.cupid.nuopc.fsml.nuopc.NUOPCDriver__ImplementsSetServices#getParam_rc <em>Param rc</em>}</li>
- *   <li>{@link org.earthsystemcurator.cupid.nuopc.fsml.nuopc.NUOPCDriver__ImplementsSetServices#isCallsGenericSetServices <em>Calls Generic Set Services</em>}</li>
+ *   <li>{@link org.earthsystemcurator.cupid.nuopc.fsml.nuopc.NUOPCDriver__ImplementsSetServices#getCallsGenericSetServices <em>Calls Generic Set Services</em>}</li>
  *   <li>{@link org.earthsystemcurator.cupid.nuopc.fsml.nuopc.NUOPCDriver__ImplementsSetServices#getAttachesMethod <em>Attaches Method</em>}</li>
  * </ul>
  * </p>
  *
  * @see org.earthsystemcurator.cupid.nuopc.fsml.nuopc.NUOPCPackage#getNUOPCDriver__ImplementsSetServices()
- * @model
+ * @model annotation="http://www.earthsystemcog.org/projects/nuopc label='Set Services' doc='In general, a Set Services method is a public subroutine that sets entry points for the component. This subroutine should call the Set Services subroutine in the generic NUOPC Driver component.'"
  * @generated
  */
 public interface NUOPCDriver__ImplementsSetServices extends EObject {
@@ -95,7 +95,7 @@ public interface NUOPCDriver__ImplementsSetServices extends EObject {
 	 * @return the value of the '<em>Param gcomp</em>' attribute.
 	 * @see #setParam_gcomp(String)
 	 * @see org.earthsystemcurator.cupid.nuopc.fsml.nuopc.NUOPCPackage#getNUOPCDriver__ImplementsSetServices_Param_gcomp()
-	 * @model default="gcomp"
+	 * @model default="gcomp" required="true"
 	 *        annotation="http://www.earthsystemcog.org/projects/nuopc mappingX='formalParam: 1'"
 	 * @generated
 	 */
@@ -123,7 +123,7 @@ public interface NUOPCDriver__ImplementsSetServices extends EObject {
 	 * @return the value of the '<em>Param rc</em>' attribute.
 	 * @see #setParam_rc(String)
 	 * @see org.earthsystemcurator.cupid.nuopc.fsml.nuopc.NUOPCPackage#getNUOPCDriver__ImplementsSetServices_Param_rc()
-	 * @model default="rc"
+	 * @model default="rc" required="true"
 	 *        annotation="http://www.earthsystemcog.org/projects/nuopc mappingX='formalParam: 2'"
 	 * @generated
 	 */
@@ -140,31 +140,31 @@ public interface NUOPCDriver__ImplementsSetServices extends EObject {
 	void setParam_rc(String value);
 
 	/**
-	 * Returns the value of the '<em><b>Calls Generic Set Services</b></em>' attribute.
+	 * Returns the value of the '<em><b>Calls Generic Set Services</b></em>' containment reference.
 	 * <!-- begin-user-doc -->
 	 * <p>
-	 * If the meaning of the '<em>Calls Generic Set Services</em>' attribute isn't clear,
+	 * If the meaning of the '<em>Calls Generic Set Services</em>' containment reference isn't clear,
 	 * there really should be more of a description here...
 	 * </p>
 	 * <!-- end-user-doc -->
-	 * @return the value of the '<em>Calls Generic Set Services</em>' attribute.
-	 * @see #setCallsGenericSetServices(boolean)
+	 * @return the value of the '<em>Calls Generic Set Services</em>' containment reference.
+	 * @see #setCallsGenericSetServices(CallsGenericSetServices)
 	 * @see org.earthsystemcurator.cupid.nuopc.fsml.nuopc.NUOPCPackage#getNUOPCDriver__ImplementsSetServices_CallsGenericSetServices()
-	 * @model required="true"
-	 *        annotation="http://www.earthsystemcog.org/projects/nuopc mapping='calls: \"routine_SetServices\" definedInModule: \"NUOPC_Driver\"' essential='true'"
+	 * @model containment="true" required="true"
+	 *        annotation="http://www.earthsystemcog.org/projects/nuopc mapping='call: \"#../../genericImports/importsGenericSS(#param_gcomp, rc=#param_rc)\"' essential='true'"
 	 * @generated
 	 */
-	boolean isCallsGenericSetServices();
+	CallsGenericSetServices getCallsGenericSetServices();
 
 	/**
-	 * Sets the value of the '{@link org.earthsystemcurator.cupid.nuopc.fsml.nuopc.NUOPCDriver__ImplementsSetServices#isCallsGenericSetServices <em>Calls Generic Set Services</em>}' attribute.
+	 * Sets the value of the '{@link org.earthsystemcurator.cupid.nuopc.fsml.nuopc.NUOPCDriver__ImplementsSetServices#getCallsGenericSetServices <em>Calls Generic Set Services</em>}' containment reference.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @param value the new value of the '<em>Calls Generic Set Services</em>' attribute.
-	 * @see #isCallsGenericSetServices()
+	 * @param value the new value of the '<em>Calls Generic Set Services</em>' containment reference.
+	 * @see #getCallsGenericSetServices()
 	 * @generated
 	 */
-	void setCallsGenericSetServices(boolean value);
+	void setCallsGenericSetServices(CallsGenericSetServices value);
 
 	/**
 	 * Returns the value of the '<em><b>Attaches Method</b></em>' containment reference list.
@@ -178,7 +178,7 @@ public interface NUOPCDriver__ImplementsSetServices extends EObject {
 	 * @return the value of the '<em>Attaches Method</em>' containment reference list.
 	 * @see org.earthsystemcurator.cupid.nuopc.fsml.nuopc.NUOPCPackage#getNUOPCDriver__ImplementsSetServices_AttachesMethod()
 	 * @model containment="true"
-	 *        annotation="http://www.earthsystemcog.org/projects/nuopc mapping='call: \"ESMF_MethodAdd\"'"
+	 *        annotation="http://www.earthsystemcog.org/projects/nuopc mapping='call: \"ESMF_MethodAdd(#../param_gcomp, #name, #userRoutine, #ignore)\"'"
 	 * @generated
 	 */
 	EList<AttachesMethod> getAttachesMethod();

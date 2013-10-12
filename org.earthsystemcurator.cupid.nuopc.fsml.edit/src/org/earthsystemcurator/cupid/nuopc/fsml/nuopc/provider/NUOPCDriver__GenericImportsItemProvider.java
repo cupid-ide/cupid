@@ -6,7 +6,7 @@ package org.earthsystemcurator.cupid.nuopc.fsml.nuopc.provider;
 import java.util.Collection;
 import java.util.List;
 
-import org.earthsystemcurator.cupid.nuopc.fsml.nuopc.AttachesMethod;
+import org.earthsystemcurator.cupid.nuopc.fsml.nuopc.NUOPCDriver__GenericImports;
 import org.earthsystemcurator.cupid.nuopc.fsml.nuopc.NUOPCPackage;
 
 import org.eclipse.emf.common.notify.AdapterFactory;
@@ -26,12 +26,12 @@ import org.eclipse.emf.edit.provider.ItemProviderAdapter;
 import org.eclipse.emf.edit.provider.ViewerNotification;
 
 /**
- * This is the item provider adapter for a {@link org.earthsystemcurator.cupid.nuopc.fsml.nuopc.AttachesMethod} object.
+ * This is the item provider adapter for a {@link org.earthsystemcurator.cupid.nuopc.fsml.nuopc.NUOPCDriver__GenericImports} object.
  * <!-- begin-user-doc -->
  * <!-- end-user-doc -->
  * @generated
  */
-public class AttachesMethodItemProvider
+public class NUOPCDriver__GenericImportsItemProvider
 	extends ItemProviderAdapter
 	implements
 		IEditingDomainItemProvider,
@@ -45,7 +45,7 @@ public class AttachesMethodItemProvider
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public AttachesMethodItemProvider(AdapterFactory adapterFactory) {
+	public NUOPCDriver__GenericImportsItemProvider(AdapterFactory adapterFactory) {
 		super(adapterFactory);
 	}
 
@@ -60,26 +60,28 @@ public class AttachesMethodItemProvider
 		if (itemPropertyDescriptors == null) {
 			super.getPropertyDescriptors(object);
 
-			addNamePropertyDescriptor(object);
-			addUserRoutinePropertyDescriptor(object);
+			addImportsGenericSSPropertyDescriptor(object);
+			addImportsTypeDriverISPropertyDescriptor(object);
+			addImportsLabelSetModelCountPropertyDescriptor(object);
+			addImportsLabelSetModelServicesPropertyDescriptor(object);
 		}
 		return itemPropertyDescriptors;
 	}
 
 	/**
-	 * This adds a property descriptor for the Name feature.
+	 * This adds a property descriptor for the Imports Generic SS feature.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	protected void addNamePropertyDescriptor(Object object) {
+	protected void addImportsGenericSSPropertyDescriptor(Object object) {
 		itemPropertyDescriptors.add
 			(createItemPropertyDescriptor
 				(((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(),
 				 getResourceLocator(),
-				 getString("_UI_AttachesMethod_name_feature"),
-				 getString("_UI_PropertyDescriptor_description", "_UI_AttachesMethod_name_feature", "_UI_AttachesMethod_type"),
-				 NUOPCPackage.Literals.ATTACHES_METHOD__NAME,
+				 getString("_UI_NUOPCDriver__GenericImports_importsGenericSS_feature"),
+				 getString("_UI_PropertyDescriptor_description", "_UI_NUOPCDriver__GenericImports_importsGenericSS_feature", "_UI_NUOPCDriver__GenericImports_type"),
+				 NUOPCPackage.Literals.NUOPC_DRIVER_GENERIC_IMPORTS__IMPORTS_GENERIC_SS,
 				 true,
 				 false,
 				 false,
@@ -89,19 +91,19 @@ public class AttachesMethodItemProvider
 	}
 
 	/**
-	 * This adds a property descriptor for the User Routine feature.
+	 * This adds a property descriptor for the Imports Type Driver IS feature.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	protected void addUserRoutinePropertyDescriptor(Object object) {
+	protected void addImportsTypeDriverISPropertyDescriptor(Object object) {
 		itemPropertyDescriptors.add
 			(createItemPropertyDescriptor
 				(((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(),
 				 getResourceLocator(),
-				 getString("_UI_AttachesMethod_userRoutine_feature"),
-				 getString("_UI_PropertyDescriptor_description", "_UI_AttachesMethod_userRoutine_feature", "_UI_AttachesMethod_type"),
-				 NUOPCPackage.Literals.ATTACHES_METHOD__USER_ROUTINE,
+				 getString("_UI_NUOPCDriver__GenericImports_importsTypeDriverIS_feature"),
+				 getString("_UI_PropertyDescriptor_description", "_UI_NUOPCDriver__GenericImports_importsTypeDriverIS_feature", "_UI_NUOPCDriver__GenericImports_type"),
+				 NUOPCPackage.Literals.NUOPC_DRIVER_GENERIC_IMPORTS__IMPORTS_TYPE_DRIVER_IS,
 				 true,
 				 false,
 				 false,
@@ -111,14 +113,58 @@ public class AttachesMethodItemProvider
 	}
 
 	/**
-	 * This returns AttachesMethod.gif.
+	 * This adds a property descriptor for the Imports Label Set Model Count feature.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	protected void addImportsLabelSetModelCountPropertyDescriptor(Object object) {
+		itemPropertyDescriptors.add
+			(createItemPropertyDescriptor
+				(((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(),
+				 getResourceLocator(),
+				 getString("_UI_NUOPCDriver__GenericImports_importsLabelSetModelCount_feature"),
+				 getString("_UI_PropertyDescriptor_description", "_UI_NUOPCDriver__GenericImports_importsLabelSetModelCount_feature", "_UI_NUOPCDriver__GenericImports_type"),
+				 NUOPCPackage.Literals.NUOPC_DRIVER_GENERIC_IMPORTS__IMPORTS_LABEL_SET_MODEL_COUNT,
+				 true,
+				 false,
+				 false,
+				 ItemPropertyDescriptor.GENERIC_VALUE_IMAGE,
+				 null,
+				 null));
+	}
+
+	/**
+	 * This adds a property descriptor for the Imports Label Set Model Services feature.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	protected void addImportsLabelSetModelServicesPropertyDescriptor(Object object) {
+		itemPropertyDescriptors.add
+			(createItemPropertyDescriptor
+				(((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(),
+				 getResourceLocator(),
+				 getString("_UI_NUOPCDriver__GenericImports_importsLabelSetModelServices_feature"),
+				 getString("_UI_PropertyDescriptor_description", "_UI_NUOPCDriver__GenericImports_importsLabelSetModelServices_feature", "_UI_NUOPCDriver__GenericImports_type"),
+				 NUOPCPackage.Literals.NUOPC_DRIVER_GENERIC_IMPORTS__IMPORTS_LABEL_SET_MODEL_SERVICES,
+				 true,
+				 false,
+				 false,
+				 ItemPropertyDescriptor.GENERIC_VALUE_IMAGE,
+				 null,
+				 null));
+	}
+
+	/**
+	 * This returns NUOPCDriver__GenericImports.gif.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
 	@Override
 	public Object getImage(Object object) {
-		return overlayImage(object, getResourceLocator().getImage("full/obj16/AttachesMethod"));
+		return overlayImage(object, getResourceLocator().getImage("full/obj16/NUOPCDriver__GenericImports"));
 	}
 
 	/**
@@ -129,10 +175,10 @@ public class AttachesMethodItemProvider
 	 */
 	@Override
 	public String getText(Object object) {
-		String label = ((AttachesMethod)object).getName();
+		String label = ((NUOPCDriver__GenericImports)object).getImportsGenericSS();
 		return label == null || label.length() == 0 ?
-			getString("_UI_AttachesMethod_type") :
-			getString("_UI_AttachesMethod_type") + " " + label;
+			getString("_UI_NUOPCDriver__GenericImports_type") :
+			getString("_UI_NUOPCDriver__GenericImports_type") + " " + label;
 	}
 
 	/**
@@ -146,9 +192,11 @@ public class AttachesMethodItemProvider
 	public void notifyChanged(Notification notification) {
 		updateChildren(notification);
 
-		switch (notification.getFeatureID(AttachesMethod.class)) {
-			case NUOPCPackage.ATTACHES_METHOD__NAME:
-			case NUOPCPackage.ATTACHES_METHOD__USER_ROUTINE:
+		switch (notification.getFeatureID(NUOPCDriver__GenericImports.class)) {
+			case NUOPCPackage.NUOPC_DRIVER_GENERIC_IMPORTS__IMPORTS_GENERIC_SS:
+			case NUOPCPackage.NUOPC_DRIVER_GENERIC_IMPORTS__IMPORTS_TYPE_DRIVER_IS:
+			case NUOPCPackage.NUOPC_DRIVER_GENERIC_IMPORTS__IMPORTS_LABEL_SET_MODEL_COUNT:
+			case NUOPCPackage.NUOPC_DRIVER_GENERIC_IMPORTS__IMPORTS_LABEL_SET_MODEL_SERVICES:
 				fireNotifyChanged(new ViewerNotification(notification, notification.getNotifier(), false, true));
 				return;
 		}

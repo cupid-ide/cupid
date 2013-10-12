@@ -1,32 +1,41 @@
 package org.earthsystemcurator.cupid.nuopc.fsml.views;
 
-import java.util.ArrayList;
-
-import org.eclipse.swt.widgets.Composite;
-import org.eclipse.swt.widgets.TreeColumn;
-import org.eclipse.ui.menus.IMenuService;
-import org.eclipse.ui.part.*;
-import org.eclipse.ui.services.IServiceLocator;
-import org.eclipse.jface.viewers.*;
-import org.eclipse.jface.window.ToolTip;
-import org.eclipse.swt.graphics.Image;
-import org.eclipse.jface.action.*;
-import org.eclipse.jface.dialogs.MessageDialog;
-import org.eclipse.jface.layout.TreeColumnLayout;
-import org.eclipse.ui.*;
-import org.eclipse.swt.widgets.Menu;
-import org.eclipse.swt.SWT;
+import org.earthsystemcurator.cupid.nuopc.fsml.nuopc.NUOPCFactory;
+import org.earthsystemcurator.cupid.nuopc.fsml.util.Regex;
+import org.earthsystemcurator.cupid.nuopc.fsml.views.NUOPCViewContentProvider.NUOPCModelElem;
 import org.eclipse.core.resources.IProject;
-import org.eclipse.core.resources.IResource;
-import org.eclipse.core.runtime.IAdaptable;
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EReference;
-import org.earthsystemcurator.cupid.nuopc.fsml.nuopc.NUOPCFactory;
-import org.earthsystemcurator.cupid.nuopc.fsml.util.Regex;
-import org.earthsystemcurator.cupid.nuopc.fsml.views.NUOPCViewContentProvider;
-import org.earthsystemcurator.cupid.nuopc.fsml.views.NUOPCViewContentProvider.NUOPCModelElem;
+import org.eclipse.jface.action.Action;
+import org.eclipse.jface.action.ContributionManager;
+import org.eclipse.jface.action.IMenuListener;
+import org.eclipse.jface.action.IMenuManager;
+import org.eclipse.jface.action.IToolBarManager;
+import org.eclipse.jface.action.MenuManager;
+import org.eclipse.jface.action.Separator;
+import org.eclipse.jface.dialogs.MessageDialog;
+import org.eclipse.jface.layout.TreeColumnLayout;
+import org.eclipse.jface.viewers.ColumnViewerToolTipSupport;
+import org.eclipse.jface.viewers.ColumnWeightData;
+import org.eclipse.jface.viewers.DoubleClickEvent;
+import org.eclipse.jface.viewers.IDoubleClickListener;
+import org.eclipse.jface.viewers.ISelection;
+import org.eclipse.jface.viewers.IStructuredSelection;
+import org.eclipse.jface.viewers.TreeViewer;
+import org.eclipse.jface.window.ToolTip;
+import org.eclipse.swt.SWT;
+import org.eclipse.swt.widgets.Composite;
+import org.eclipse.swt.widgets.Menu;
+import org.eclipse.swt.widgets.TreeColumn;
+import org.eclipse.ui.IActionBars;
+import org.eclipse.ui.ISharedImages;
+import org.eclipse.ui.PlatformUI;
+import org.eclipse.ui.menus.IMenuService;
+import org.eclipse.ui.part.DrillDownAdapter;
+import org.eclipse.ui.part.ViewPart;
+import org.eclipse.ui.services.IServiceLocator;
 
 
 /**
@@ -59,6 +68,8 @@ public class NUOPCView extends ViewPart {
 	private Action action1;
 	private Action action2;
 	private Action doubleClickAction;
+	
+	private TreeColumn tc2;
 
 	
 	/**
@@ -70,6 +81,7 @@ public class NUOPCView extends ViewPart {
 	public void updateView(IProject project) {
 		viewer.setInput(project);
 		viewer.expandToLevel(2);
+		//tc2.setText(project.getName());
 	}
 	
 	/**
@@ -81,12 +93,13 @@ public class NUOPCView extends ViewPart {
 		
 		TreeColumn tc1 = new TreeColumn(viewer.getTree(), SWT.LEFT);
 		tc1.setAlignment(SWT.LEFT);
-		//tc1.setText("c1");
+		tc1.setText("NUOPC Definition");
 		tc1.setWidth(100);
 		tc1.setResizable(true);
-		TreeColumn tc2 = new TreeColumn(viewer.getTree(), SWT.MULTI | SWT.RIGHT);
+		
+		tc2 = new TreeColumn(viewer.getTree(), SWT.MULTI | SWT.RIGHT);
 		tc2.setAlignment(SWT.LEFT);
-		//tc2.setText("c2");
+		tc2.setText("Value");
 		tc2.setWidth(100);
 		tc2.setResizable(true);
 		
@@ -175,9 +188,9 @@ public class NUOPCView extends ViewPart {
                     IStructuredSelection selection = (IStructuredSelection) viewer.getSelection();
                     final NUOPCModelElem me = (NUOPCModelElem) selection.getFirstElement();
 
-                    if (me.eref != null) {
+                    if (me.structuralFeature != null && me.structuralFeature instanceof EReference) {
                     	
-                    	EClass parentClass = (EClass) me.eref.getEType();
+                    	EClass parentClass = (EClass) me.structuralFeature.getEType();
                     	for (EReference childRef : parentClass.getEReferences()) {
                     		if (childRef.isMany() && childRef.getUpperBound() < 0) {
                     			Action a = new Action() {};
@@ -191,19 +204,19 @@ public class NUOPCView extends ViewPart {
                     	
                     }
                     
-                    if (me.elem == null) {
+                    if (me.elem == null && me.structuralFeature instanceof EReference) {
                     	
                     	Action action = new Action() {
                     		public void run() {
                 				
-                				EObject newElem = NUOPCFactory.eINSTANCE.create((EClass)me.eref.getEType());
+                				EObject newElem = NUOPCFactory.eINSTANCE.create((EClass)me.structuralFeature.getEType());
                 					//need to create all essential subfeatures (at least)
-                				if (me.eref.isMany()) {
-                					EList l = (EList) me.parent.elem.eGet(me.eref);
+                				if (me.structuralFeature.isMany()) {
+                					EList l = (EList) me.parent.elem.eGet(me.structuralFeature);
                 					l.add(newElem);
                 				}
                 				else {
-                					me.parent.elem.eSet(me.eref, newElem);                					
+                					me.parent.elem.eSet(me.structuralFeature, newElem);                					
                 				}
                 				
                 				showMessage("Added element: " + newElem);

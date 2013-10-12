@@ -144,6 +144,12 @@ public class NUOPCSwitch<T> extends Switch<T> {
 				if (result == null) result = defaultCase(theEObject);
 				return result;
 			}
+			case NUOPCPackage.NUOPC_DRIVER_GENERIC_IMPORTS: {
+				NUOPCDriver__GenericImports nuopcDriver__GenericImports = (NUOPCDriver__GenericImports)theEObject;
+				T result = caseNUOPCDriver__GenericImports(nuopcDriver__GenericImports);
+				if (result == null) result = defaultCase(theEObject);
+				return result;
+			}
 			case NUOPCPackage.NUOPC_DRIVER_IMPLEMENTS_SET_SERVICES: {
 				NUOPCDriver__ImplementsSetServices nuopcDriver__ImplementsSetServices = (NUOPCDriver__ImplementsSetServices)theEObject;
 				T result = caseNUOPCDriver__ImplementsSetServices(nuopcDriver__ImplementsSetServices);
@@ -388,6 +394,21 @@ public class NUOPCSwitch<T> extends Switch<T> {
 	 * @generated
 	 */
 	public T caseNUOPCDriver(NUOPCDriver object) {
+		return null;
+	}
+
+	/**
+	 * Returns the result of interpreting the object as an instance of '<em>Driver Generic Imports</em>'.
+	 * <!-- begin-user-doc -->
+	 * This implementation returns null;
+	 * returning a non-null result will terminate the switch.
+	 * <!-- end-user-doc -->
+	 * @param object the target of the switch.
+	 * @return the result of interpreting the object as an instance of '<em>Driver Generic Imports</em>'.
+	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+	 * @generated
+	 */
+	public T caseNUOPCDriver__GenericImports(NUOPCDriver__GenericImports object) {
 		return null;
 	}
 
