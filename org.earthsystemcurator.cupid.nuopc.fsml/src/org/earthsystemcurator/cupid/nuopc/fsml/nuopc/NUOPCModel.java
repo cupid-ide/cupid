@@ -125,7 +125,7 @@ public interface NUOPCModel extends EObject {
 	 * @see #setImplementsModelAdvance(ModelAdvance)
 	 * @see org.earthsystemcurator.cupid.nuopc.fsml.nuopc.NUOPCPackage#getNUOPCModel_ImplementsModelAdvance()
 	 * @see org.earthsystemcurator.cupid.nuopc.fsml.nuopc.ModelAdvance#getParent
-	 * @model opposite="parent" containment="true" required="true" ordered="false"
+	 * @model opposite="parent" containment="true" required="true"
 	 *        annotation="http://www.earthsystemcog.org/projects/nuopc mapping='subroutine: \"*(type(ESMF_GridComp), integer)\"'"
 	 * @generated
 	 */
@@ -143,6 +143,7 @@ public interface NUOPCModel extends EObject {
 
 	/**
 	 * Returns the value of the '<em><b>Initialize</b></em>' containment reference.
+	 * It is bidirectional and its opposite is '{@link org.earthsystemcurator.cupid.nuopc.fsml.nuopc.Model_Init#getParent <em>Parent</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <p>
 	 * If the meaning of the '<em>Initialize</em>' reference isn't clear,
@@ -152,7 +153,8 @@ public interface NUOPCModel extends EObject {
 	 * @return the value of the '<em>Initialize</em>' containment reference.
 	 * @see #setInitialize(Model_Init)
 	 * @see org.earthsystemcurator.cupid.nuopc.fsml.nuopc.NUOPCPackage#getNUOPCModel_Initialize()
-	 * @model containment="true" required="true"
+	 * @see org.earthsystemcurator.cupid.nuopc.fsml.nuopc.Model_Init#getParent
+	 * @model opposite="parent" containment="true" required="true"
 	 * @generated
 	 */
 	Model_Init getInitialize();

@@ -141,6 +141,29 @@ public class NUOPCItemProviderAdapterFactory extends NUOPCAdapterFactory impleme
 	}
 
 	/**
+	 * This keeps track of the one adapter used for all {@link org.earthsystemcurator.cupid.nuopc.fsml.nuopc.CallsSetEntryPoint} instances.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	protected CallsSetEntryPointItemProvider callsSetEntryPointItemProvider;
+
+	/**
+	 * This creates an adapter for a {@link org.earthsystemcurator.cupid.nuopc.fsml.nuopc.CallsSetEntryPoint}.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	@Override
+	public Adapter createCallsSetEntryPointAdapter() {
+		if (callsSetEntryPointItemProvider == null) {
+			callsSetEntryPointItemProvider = new CallsSetEntryPointItemProvider(this);
+		}
+
+		return callsSetEntryPointItemProvider;
+	}
+
+	/**
 	 * This keeps track of the one adapter used for all {@link org.earthsystemcurator.cupid.nuopc.fsml.nuopc.Model_Init} instances.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -679,6 +702,7 @@ public class NUOPCItemProviderAdapterFactory extends NUOPCAdapterFactory impleme
 		if (nuopcModelItemProvider != null) nuopcModelItemProvider.dispose();
 		if (modelImplementsSetServicesItemProvider != null) modelImplementsSetServicesItemProvider.dispose();
 		if (callsGenericSetServicesItemProvider != null) callsGenericSetServicesItemProvider.dispose();
+		if (callsSetEntryPointItemProvider != null) callsSetEntryPointItemProvider.dispose();
 		if (model_InitItemProvider != null) model_InitItemProvider.dispose();
 		if (modelImplementsInitP1ItemProvider != null) modelImplementsInitP1ItemProvider.dispose();
 		if (modelImplementsInitP2ItemProvider != null) modelImplementsInitP2ItemProvider.dispose();

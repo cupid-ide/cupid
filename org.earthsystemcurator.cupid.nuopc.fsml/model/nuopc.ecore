@@ -35,20 +35,26 @@
       </eAnnotations>
     </eStructuralFeatures>
     <eStructuralFeatures xsi:type="ecore:EReference" name="initialize" lowerBound="1"
-        eType="#//Model_Init" containment="true"/>
+        eType="#//Model_Init" containment="true" eOpposite="#//Model_Init/parent"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="implementsModelAdvance"
-        ordered="false" lowerBound="1" eType="#//ModelAdvance" containment="true"
-        eOpposite="#//ModelAdvance/parent">
+        lowerBound="1" eType="#//ModelAdvance" containment="true" eOpposite="#//ModelAdvance/parent">
       <eAnnotations source="http://www.earthsystemcog.org/projects/nuopc">
         <details key="mapping" value="subroutine: &quot;*(type(ESMF_GridComp), integer)&quot;"/>
       </eAnnotations>
     </eStructuralFeatures>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="ModelImplementsSetServices">
+    <eAnnotations source="http://www.eclipse.org/emf/2002/Ecore">
+      <details key="constraints" value="registersInitP1"/>
+    </eAnnotations>
     <eAnnotations source="http://www.earthsystemcog.org/projects/nuopc">
       <details key="mapping" value="subroutine: &quot;#name(inout type(ESMF_GridComp) #param_gcomp, out integer #param_rc)&quot;"/>
       <details key="label" value="Set Services"/>
       <details key="doc" value="In general, a Set Services method is a public subroutine that sets entry points for the component. This subroutine should call the Set Services subroutine in the generic NUOPC Model component."/>
+    </eAnnotations>
+    <eAnnotations source="http://www.eclipse.org/emf/2002/Ecore/OCL">
+      <details key="registersInitP1" value="self.parent.initialize.implementsInitP1=null or self.callsSetEntryPoint->select(c|c.userRoutine=self.parent.initialize.implementsInitP1.name)->notEmpty()"/>
+      <details key="registersInitP1$message" value="'Initialize phase 1 method should be registered'"/>
     </eAnnotations>
     <eStructuralFeatures xsi:type="ecore:EReference" name="parent" lowerBound="1"
         eType="#//NUOPCModel" eOpposite="#//NUOPCModel/implementsSetServices"/>
@@ -58,14 +64,14 @@
         <details key="mappingX" value="subroutineName"/>
       </eAnnotations>
     </eStructuralFeatures>
-    <eStructuralFeatures xsi:type="ecore:EAttribute" name="param_gcomp" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"
-        defaultValueLiteral="gcomp">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="param_gcomp" lowerBound="1"
+        eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString" defaultValueLiteral="gcomp">
       <eAnnotations source="http://www.earthsystemcog.org/projects/nuopc">
         <details key="mappingX" value="formalParam: 1"/>
       </eAnnotations>
     </eStructuralFeatures>
-    <eStructuralFeatures xsi:type="ecore:EAttribute" name="param_rc" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"
-        defaultValueLiteral="rc">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="param_rc" lowerBound="1"
+        eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString" defaultValueLiteral="rc">
       <eAnnotations source="http://www.earthsystemcog.org/projects/nuopc">
         <details key="mappingX" value="formalParam: 2"/>
       </eAnnotations>
@@ -77,16 +83,10 @@
         <details key="essential" value="true"/>
       </eAnnotations>
     </eStructuralFeatures>
-    <eStructuralFeatures xsi:type="ecore:EAttribute" name="callsSetEntryPointPhase1"
-        lowerBound="1" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="callsSetEntryPoint" upperBound="-1"
+        eType="#//CallsSetEntryPoint" containment="true">
       <eAnnotations source="http://www.earthsystemcog.org/projects/nuopc">
-        <details key="mapping" value="calls: &quot;ESMF_GridCompSetEntryPoint&quot;"/>
-      </eAnnotations>
-    </eStructuralFeatures>
-    <eStructuralFeatures xsi:type="ecore:EAttribute" name="callsSetEntryPointPhase2"
-        lowerBound="1" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean">
-      <eAnnotations source="http://www.earthsystemcog.org/projects/nuopc">
-        <details key="mapping" value="calls: &quot;ESMF_GridCompSetEntryPoint&quot;"/>
+        <details key="mapping" value="call: &quot;ESMF_GridCompSetEntryPoint(#ignore, #method, userRoutine=#userRoutine, phase=#phase, rc=#ignore)&quot;"/>
       </eAnnotations>
     </eStructuralFeatures>
     <eStructuralFeatures xsi:type="ecore:EReference" name="attachesModelAdvance" ordered="false"
@@ -97,18 +97,34 @@
     </eStructuralFeatures>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="CallsGenericSetServices">
-    <eStructuralFeatures xsi:type="ecore:EAttribute" name="gcomp" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"
+    <eAnnotations source="http://www.earthsystemcog.org/projects/nuopc">
+      <details key="label" value="Calls Generic Set Services"/>
+    </eAnnotations>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="gcomp" lowerBound="1" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"
         defaultValueLiteral="gcomp"/>
-    <eStructuralFeatures xsi:type="ecore:EAttribute" name="rc" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="rc" lowerBound="1" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"
         defaultValueLiteral="rc"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="CallsSetEntryPoint">
+    <eAnnotations source="http://www.earthsystemcog.org/projects/nuopc">
+      <details key="label" value="Calls ESMF_GridCompSetEntryPoint"/>
+    </eAnnotations>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="method" lowerBound="1"
+        eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="userRoutine" lowerBound="1"
+        eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="phase" lowerBound="1" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="Model_Init">
     <eAnnotations source="http://www.earthsystemcog.org/projects/nuopc">
       <details key="label" value="Model Initialization"/>
       <details key="doc" value="Framework concepts related to initializing this NUOPC Model"/>
     </eAnnotations>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="parent" lowerBound="1"
+        eType="#//NUOPCModel" eOpposite="#//NUOPCModel/initialize"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="implementsInitP1" lowerBound="1"
-        eType="#//ModelImplementsInitP1" containment="true" eKeys="#//ModelImplementsInitP1/name">
+        eType="#//ModelImplementsInitP1" containment="true" eOpposite="#//ModelImplementsInitP1/parent"
+        eKeys="#//ModelImplementsInitP1/name">
       <eAnnotations source="http://www.earthsystemcog.org/projects/nuopc">
         <details key="mapping" value="subroutine: &quot;#name(inout type(ESMF_GridComp) gcomp, inout type(ESMF_State) #importParam, inout type(ESMF_State) #exportParam, inout type(ESMF_Clock) clock, out integer rc)&quot;"/>
       </eAnnotations>
@@ -127,6 +143,8 @@
       <details key="label" value="Initialize Phase Definition - IPDv01p1"/>
       <details key="task" value="Implement Init Phase Definition (IPDv01p1)"/>
     </eAnnotations>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="parent" lowerBound="1"
+        eType="#//Model_Init" eOpposite="#//Model_Init/implementsInitP1"/>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="name" lowerBound="1" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"
         defaultValueLiteral="InitP1">
       <eAnnotations source="http://www.earthsystemcog.org/projects/nuopc">
@@ -165,6 +183,12 @@
       </eAnnotations>
       <eAnnotations source="http://www.eclipse.org/emf/2002/Ecore/OCL">
         <details key="derivation" value="self.advertisesExportField->size() > 0 or self.advertisesImportField->size() > 0"/>
+      </eAnnotations>
+    </eStructuralFeatures>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="registeredInSetServices"
+        lowerBound="1" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean">
+      <eAnnotations source="http://www.eclipse.org/emf/2002/Ecore/OCL">
+        <details key="derivation" value="self.parent.parent.implementsSetServices.callsSetEntryPoint->select(c|c.userRoutine=self.name)->notEmpty()"/>
       </eAnnotations>
     </eStructuralFeatures>
   </eClassifiers>

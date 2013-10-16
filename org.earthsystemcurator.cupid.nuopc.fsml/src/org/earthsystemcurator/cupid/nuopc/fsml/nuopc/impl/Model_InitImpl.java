@@ -5,6 +5,7 @@ package org.earthsystemcurator.cupid.nuopc.fsml.nuopc.impl;
 import org.earthsystemcurator.cupid.nuopc.fsml.nuopc.ModelImplementsInitP1;
 import org.earthsystemcurator.cupid.nuopc.fsml.nuopc.ModelImplementsInitP2;
 import org.earthsystemcurator.cupid.nuopc.fsml.nuopc.Model_Init;
+import org.earthsystemcurator.cupid.nuopc.fsml.nuopc.NUOPCModel;
 import org.earthsystemcurator.cupid.nuopc.fsml.nuopc.NUOPCPackage;
 
 import org.eclipse.emf.common.notify.Notification;
@@ -15,6 +16,7 @@ import org.eclipse.emf.ecore.InternalEObject;
 
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
 import org.eclipse.emf.ecore.impl.EObjectImpl;
+import org.eclipse.emf.ecore.util.EcoreUtil;
 
 /**
  * <!-- begin-user-doc -->
@@ -23,6 +25,7 @@ import org.eclipse.emf.ecore.impl.EObjectImpl;
  * <p>
  * The following features are implemented:
  * <ul>
+ *   <li>{@link org.earthsystemcurator.cupid.nuopc.fsml.nuopc.impl.Model_InitImpl#getParent <em>Parent</em>}</li>
  *   <li>{@link org.earthsystemcurator.cupid.nuopc.fsml.nuopc.impl.Model_InitImpl#getImplementsInitP1 <em>Implements Init P1</em>}</li>
  *   <li>{@link org.earthsystemcurator.cupid.nuopc.fsml.nuopc.impl.Model_InitImpl#getImplementsInitP2 <em>Implements Init P2</em>}</li>
  * </ul>
@@ -75,6 +78,47 @@ public class Model_InitImpl extends EObjectImpl implements Model_Init {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	public NUOPCModel getParent() {
+		if (eContainerFeatureID() != NUOPCPackage.MODEL_INIT__PARENT) return null;
+		return (NUOPCModel)eInternalContainer();
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public NotificationChain basicSetParent(NUOPCModel newParent, NotificationChain msgs) {
+		msgs = eBasicSetContainer((InternalEObject)newParent, NUOPCPackage.MODEL_INIT__PARENT, msgs);
+		return msgs;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public void setParent(NUOPCModel newParent) {
+		if (newParent != eInternalContainer() || (eContainerFeatureID() != NUOPCPackage.MODEL_INIT__PARENT && newParent != null)) {
+			if (EcoreUtil.isAncestor(this, newParent))
+				throw new IllegalArgumentException("Recursive containment not allowed for " + toString());
+			NotificationChain msgs = null;
+			if (eInternalContainer() != null)
+				msgs = eBasicRemoveFromContainer(msgs);
+			if (newParent != null)
+				msgs = ((InternalEObject)newParent).eInverseAdd(this, NUOPCPackage.NUOPC_MODEL__INITIALIZE, NUOPCModel.class, msgs);
+			msgs = basicSetParent(newParent, msgs);
+			if (msgs != null) msgs.dispatch();
+		}
+		else if (eNotificationRequired())
+			eNotify(new ENotificationImpl(this, Notification.SET, NUOPCPackage.MODEL_INIT__PARENT, newParent, newParent));
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
 	public ModelImplementsInitP1 getImplementsInitP1() {
 		return implementsInitP1;
 	}
@@ -103,9 +147,9 @@ public class Model_InitImpl extends EObjectImpl implements Model_Init {
 		if (newImplementsInitP1 != implementsInitP1) {
 			NotificationChain msgs = null;
 			if (implementsInitP1 != null)
-				msgs = ((InternalEObject)implementsInitP1).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - NUOPCPackage.MODEL_INIT__IMPLEMENTS_INIT_P1, null, msgs);
+				msgs = ((InternalEObject)implementsInitP1).eInverseRemove(this, NUOPCPackage.MODEL_IMPLEMENTS_INIT_P1__PARENT, ModelImplementsInitP1.class, msgs);
 			if (newImplementsInitP1 != null)
-				msgs = ((InternalEObject)newImplementsInitP1).eInverseAdd(this, EOPPOSITE_FEATURE_BASE - NUOPCPackage.MODEL_INIT__IMPLEMENTS_INIT_P1, null, msgs);
+				msgs = ((InternalEObject)newImplementsInitP1).eInverseAdd(this, NUOPCPackage.MODEL_IMPLEMENTS_INIT_P1__PARENT, ModelImplementsInitP1.class, msgs);
 			msgs = basicSetImplementsInitP1(newImplementsInitP1, msgs);
 			if (msgs != null) msgs.dispatch();
 		}
@@ -162,8 +206,30 @@ public class Model_InitImpl extends EObjectImpl implements Model_Init {
 	 * @generated
 	 */
 	@Override
+	public NotificationChain eInverseAdd(InternalEObject otherEnd, int featureID, NotificationChain msgs) {
+		switch (featureID) {
+			case NUOPCPackage.MODEL_INIT__PARENT:
+				if (eInternalContainer() != null)
+					msgs = eBasicRemoveFromContainer(msgs);
+				return basicSetParent((NUOPCModel)otherEnd, msgs);
+			case NUOPCPackage.MODEL_INIT__IMPLEMENTS_INIT_P1:
+				if (implementsInitP1 != null)
+					msgs = ((InternalEObject)implementsInitP1).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - NUOPCPackage.MODEL_INIT__IMPLEMENTS_INIT_P1, null, msgs);
+				return basicSetImplementsInitP1((ModelImplementsInitP1)otherEnd, msgs);
+		}
+		return super.eInverseAdd(otherEnd, featureID, msgs);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	@Override
 	public NotificationChain eInverseRemove(InternalEObject otherEnd, int featureID, NotificationChain msgs) {
 		switch (featureID) {
+			case NUOPCPackage.MODEL_INIT__PARENT:
+				return basicSetParent(null, msgs);
 			case NUOPCPackage.MODEL_INIT__IMPLEMENTS_INIT_P1:
 				return basicSetImplementsInitP1(null, msgs);
 			case NUOPCPackage.MODEL_INIT__IMPLEMENTS_INIT_P2:
@@ -178,8 +244,24 @@ public class Model_InitImpl extends EObjectImpl implements Model_Init {
 	 * @generated
 	 */
 	@Override
+	public NotificationChain eBasicRemoveFromContainerFeature(NotificationChain msgs) {
+		switch (eContainerFeatureID()) {
+			case NUOPCPackage.MODEL_INIT__PARENT:
+				return eInternalContainer().eInverseRemove(this, NUOPCPackage.NUOPC_MODEL__INITIALIZE, NUOPCModel.class, msgs);
+		}
+		return super.eBasicRemoveFromContainerFeature(msgs);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	@Override
 	public Object eGet(int featureID, boolean resolve, boolean coreType) {
 		switch (featureID) {
+			case NUOPCPackage.MODEL_INIT__PARENT:
+				return getParent();
 			case NUOPCPackage.MODEL_INIT__IMPLEMENTS_INIT_P1:
 				return getImplementsInitP1();
 			case NUOPCPackage.MODEL_INIT__IMPLEMENTS_INIT_P2:
@@ -196,6 +278,9 @@ public class Model_InitImpl extends EObjectImpl implements Model_Init {
 	@Override
 	public void eSet(int featureID, Object newValue) {
 		switch (featureID) {
+			case NUOPCPackage.MODEL_INIT__PARENT:
+				setParent((NUOPCModel)newValue);
+				return;
 			case NUOPCPackage.MODEL_INIT__IMPLEMENTS_INIT_P1:
 				setImplementsInitP1((ModelImplementsInitP1)newValue);
 				return;
@@ -214,6 +299,9 @@ public class Model_InitImpl extends EObjectImpl implements Model_Init {
 	@Override
 	public void eUnset(int featureID) {
 		switch (featureID) {
+			case NUOPCPackage.MODEL_INIT__PARENT:
+				setParent((NUOPCModel)null);
+				return;
 			case NUOPCPackage.MODEL_INIT__IMPLEMENTS_INIT_P1:
 				setImplementsInitP1((ModelImplementsInitP1)null);
 				return;
@@ -232,6 +320,8 @@ public class Model_InitImpl extends EObjectImpl implements Model_Init {
 	@Override
 	public boolean eIsSet(int featureID) {
 		switch (featureID) {
+			case NUOPCPackage.MODEL_INIT__PARENT:
+				return getParent() != null;
 			case NUOPCPackage.MODEL_INIT__IMPLEMENTS_INIT_P1:
 				return implementsInitP1 != null;
 			case NUOPCPackage.MODEL_INIT__IMPLEMENTS_INIT_P2:

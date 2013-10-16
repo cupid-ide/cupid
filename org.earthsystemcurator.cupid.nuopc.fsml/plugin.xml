@@ -343,5 +343,12 @@
             file="contexts.xml">
       </contexts>
    </extension>
+   
+   <!--
+   <extension point = "org.eclipse.emf.ecore.validation_delegate">
+    <delegate uri = "http://www.eclipse.org/emf/2002/Ecore/OCL"
+       class = "org.earthsystemcurator.cupid.nuopc.fsml.util.OCLValidationDelegateMappingExt" />
+  </extension>
+	-->
 
 </plugin>

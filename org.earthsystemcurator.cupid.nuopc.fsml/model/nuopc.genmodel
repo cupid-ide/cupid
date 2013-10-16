@@ -2,7 +2,7 @@
 <genmodel:GenModel xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:ecore="http://www.eclipse.org/emf/2002/Ecore"
     xmlns:genmodel="http://www.eclipse.org/emf/2002/GenModel" modelDirectory="/org.earthsystemcurator.cupid.nuopc.fsml/src" modelPluginID="org.earthsystemcurator.cupid.nuopc.fsml"
     modelName="Nuopc" importerID="org.eclipse.emf.importer.ecore" complianceLevel="6.0"
-    copyrightFields="false">
+    copyrightFields="false" interfaceNamePattern="" classNamePattern="" operationReflection="true">
   <foreignModel>nuopc.ecore</foreignModel>
   <genPackages prefix="NUOPC" basePackage="org.earthsystemcurator.cupid.nuopc.fsml"
       disposableProviderFactory="true" contentTypeIdentifier="" ecorePackage="nuopc.ecore#/">
@@ -10,8 +10,8 @@
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute nuopc.ecore#//NUOPCModel/name"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute nuopc.ecore#//NUOPCModel/importsGenericSS"/>
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference nuopc.ecore#//NUOPCModel/implementsSetServices"/>
-      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference nuopc.ecore#//NUOPCModel/implementsModelAdvance"/>
       <genFeatures children="true" createChild="true" propertySortChoices="true" ecoreFeature="ecore:EReference nuopc.ecore#//NUOPCModel/initialize"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference nuopc.ecore#//NUOPCModel/implementsModelAdvance"/>
     </genClasses>
     <genClasses ecoreClass="nuopc.ecore#//ModelImplementsSetServices">
       <genFeatures property="None" notify="false" createChild="false" ecoreFeature="ecore:EReference nuopc.ecore#//ModelImplementsSetServices/parent"/>
@@ -19,25 +19,32 @@
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute nuopc.ecore#//ModelImplementsSetServices/param_gcomp"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute nuopc.ecore#//ModelImplementsSetServices/param_rc"/>
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference nuopc.ecore#//ModelImplementsSetServices/callsGenericSetServices"/>
-      <genFeatures children="true" createChild="false" ecoreFeature="ecore:EAttribute nuopc.ecore#//ModelImplementsSetServices/callsSetEntryPointPhase1"/>
-      <genFeatures children="true" createChild="false" ecoreFeature="ecore:EAttribute nuopc.ecore#//ModelImplementsSetServices/callsSetEntryPointPhase2"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference nuopc.ecore#//ModelImplementsSetServices/callsSetEntryPoint"/>
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference nuopc.ecore#//ModelImplementsSetServices/attachesModelAdvance"/>
     </genClasses>
     <genClasses ecoreClass="nuopc.ecore#//CallsGenericSetServices">
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute nuopc.ecore#//CallsGenericSetServices/gcomp"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute nuopc.ecore#//CallsGenericSetServices/rc"/>
     </genClasses>
+    <genClasses ecoreClass="nuopc.ecore#//CallsSetEntryPoint">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute nuopc.ecore#//CallsSetEntryPoint/method"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute nuopc.ecore#//CallsSetEntryPoint/userRoutine"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute nuopc.ecore#//CallsSetEntryPoint/phase"/>
+    </genClasses>
     <genClasses ecoreClass="nuopc.ecore#//Model_Init">
+      <genFeatures property="None" notify="false" createChild="false" ecoreFeature="ecore:EReference nuopc.ecore#//Model_Init/parent"/>
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference nuopc.ecore#//Model_Init/implementsInitP1"/>
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference nuopc.ecore#//Model_Init/implementsInitP2"/>
     </genClasses>
     <genClasses ecoreClass="nuopc.ecore#//ModelImplementsInitP1">
+      <genFeatures property="None" notify="false" createChild="false" ecoreFeature="ecore:EReference nuopc.ecore#//ModelImplementsInitP1/parent"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute nuopc.ecore#//ModelImplementsInitP1/name"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute nuopc.ecore#//ModelImplementsInitP1/importParam"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute nuopc.ecore#//ModelImplementsInitP1/exportParam"/>
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference nuopc.ecore#//ModelImplementsInitP1/advertisesImportField"/>
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference nuopc.ecore#//ModelImplementsInitP1/advertisesExportField"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute nuopc.ecore#//ModelImplementsInitP1/advertisesAtLeastOneField"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute nuopc.ecore#//ModelImplementsInitP1/registeredInSetServices"/>
     </genClasses>
     <genClasses ecoreClass="nuopc.ecore#//ModelImplementsInitP2">
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute nuopc.ecore#//ModelImplementsInitP2/name"/>
@@ -83,20 +90,26 @@
     </genClasses>
     <genClasses ecoreClass="nuopc.ecore#//NUOPCDriver">
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute nuopc.ecore#//NUOPCDriver/name"/>
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute nuopc.ecore#//NUOPCDriver/importsTypeDriverIS"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference nuopc.ecore#//NUOPCDriver/genericImports"/>
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference nuopc.ecore#//NUOPCDriver/implementsSetServices"/>
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference nuopc.ecore#//NUOPCDriver/implementsSetModelCount"/>
+    </genClasses>
+    <genClasses ecoreClass="nuopc.ecore#//NUOPCDriver__GenericImports">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute nuopc.ecore#//NUOPCDriver__GenericImports/importsGenericSS"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute nuopc.ecore#//NUOPCDriver__GenericImports/importsTypeDriverIS"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute nuopc.ecore#//NUOPCDriver__GenericImports/importsLabelSetModelCount"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute nuopc.ecore#//NUOPCDriver__GenericImports/importsLabelSetModelServices"/>
     </genClasses>
     <genClasses ecoreClass="nuopc.ecore#//NUOPCDriver__ImplementsSetServices">
       <genFeatures property="None" notify="false" createChild="false" ecoreFeature="ecore:EReference nuopc.ecore#//NUOPCDriver__ImplementsSetServices/parent"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute nuopc.ecore#//NUOPCDriver__ImplementsSetServices/name"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute nuopc.ecore#//NUOPCDriver__ImplementsSetServices/param_gcomp"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute nuopc.ecore#//NUOPCDriver__ImplementsSetServices/param_rc"/>
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute nuopc.ecore#//NUOPCDriver__ImplementsSetServices/callsGenericSetServices"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EReference nuopc.ecore#//NUOPCDriver__ImplementsSetServices/callsGenericSetServices"/>
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference nuopc.ecore#//NUOPCDriver__ImplementsSetServices/attachesMethod"/>
     </genClasses>
     <genClasses ecoreClass="nuopc.ecore#//AttachesMethod">
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute nuopc.ecore#//AttachesMethod/methodLabel"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute nuopc.ecore#//AttachesMethod/name"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute nuopc.ecore#//AttachesMethod/userRoutine"/>
     </genClasses>
     <genClasses ecoreClass="nuopc.ecore#//NUOPCDriver__ImplementsSetModelCount">

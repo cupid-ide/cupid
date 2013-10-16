@@ -18,14 +18,15 @@ import org.eclipse.emf.ecore.EObject;
  *   <li>{@link org.earthsystemcurator.cupid.nuopc.fsml.nuopc.ModelImplementsSetServices#getParam_gcomp <em>Param gcomp</em>}</li>
  *   <li>{@link org.earthsystemcurator.cupid.nuopc.fsml.nuopc.ModelImplementsSetServices#getParam_rc <em>Param rc</em>}</li>
  *   <li>{@link org.earthsystemcurator.cupid.nuopc.fsml.nuopc.ModelImplementsSetServices#getCallsGenericSetServices <em>Calls Generic Set Services</em>}</li>
- *   <li>{@link org.earthsystemcurator.cupid.nuopc.fsml.nuopc.ModelImplementsSetServices#isCallsSetEntryPointPhase1 <em>Calls Set Entry Point Phase1</em>}</li>
- *   <li>{@link org.earthsystemcurator.cupid.nuopc.fsml.nuopc.ModelImplementsSetServices#isCallsSetEntryPointPhase2 <em>Calls Set Entry Point Phase2</em>}</li>
+ *   <li>{@link org.earthsystemcurator.cupid.nuopc.fsml.nuopc.ModelImplementsSetServices#getCallsSetEntryPoint <em>Calls Set Entry Point</em>}</li>
  *   <li>{@link org.earthsystemcurator.cupid.nuopc.fsml.nuopc.ModelImplementsSetServices#getAttachesModelAdvance <em>Attaches Model Advance</em>}</li>
  * </ul>
  * </p>
  *
  * @see org.earthsystemcurator.cupid.nuopc.fsml.nuopc.NUOPCPackage#getModelImplementsSetServices()
- * @model annotation="http://www.earthsystemcog.org/projects/nuopc mapping='subroutine: \"#name(inout type(ESMF_GridComp) #param_gcomp, out integer #param_rc)\"' label='Set Services' doc='In general, a Set Services method is a public subroutine that sets entry points for the component. This subroutine should call the Set Services subroutine in the generic NUOPC Model component.'"
+ * @model annotation="http://www.eclipse.org/emf/2002/Ecore constraints='registersInitP1'"
+ *        annotation="http://www.earthsystemcog.org/projects/nuopc mapping='subroutine: \"#name(inout type(ESMF_GridComp) #param_gcomp, out integer #param_rc)\"' label='Set Services' doc='In general, a Set Services method is a public subroutine that sets entry points for the component. This subroutine should call the Set Services subroutine in the generic NUOPC Model component.'"
+ *        annotation="http://www.eclipse.org/emf/2002/Ecore/OCL registersInitP1='self.parent.initialize.implementsInitP1=null or self.callsSetEntryPoint->select(c|c.userRoutine=self.parent.initialize.implementsInitP1.name)->notEmpty()' registersInitP1$message='\'Initialize phase 1 method should be registered\''"
  * @generated
  */
 public interface ModelImplementsSetServices extends EObject {
@@ -97,7 +98,7 @@ public interface ModelImplementsSetServices extends EObject {
 	 * @return the value of the '<em>Param gcomp</em>' attribute.
 	 * @see #setParam_gcomp(String)
 	 * @see org.earthsystemcurator.cupid.nuopc.fsml.nuopc.NUOPCPackage#getModelImplementsSetServices_Param_gcomp()
-	 * @model default="gcomp"
+	 * @model default="gcomp" required="true"
 	 *        annotation="http://www.earthsystemcog.org/projects/nuopc mappingX='formalParam: 1'"
 	 * @generated
 	 */
@@ -125,7 +126,7 @@ public interface ModelImplementsSetServices extends EObject {
 	 * @return the value of the '<em>Param rc</em>' attribute.
 	 * @see #setParam_rc(String)
 	 * @see org.earthsystemcurator.cupid.nuopc.fsml.nuopc.NUOPCPackage#getModelImplementsSetServices_Param_rc()
-	 * @model default="rc"
+	 * @model default="rc" required="true"
 	 *        annotation="http://www.earthsystemcog.org/projects/nuopc mappingX='formalParam: 2'"
 	 * @generated
 	 */
@@ -169,58 +170,21 @@ public interface ModelImplementsSetServices extends EObject {
 	void setCallsGenericSetServices(CallsGenericSetServices value);
 
 	/**
-	 * Returns the value of the '<em><b>Calls Set Entry Point Phase1</b></em>' attribute.
+	 * Returns the value of the '<em><b>Calls Set Entry Point</b></em>' containment reference list.
+	 * The list contents are of type {@link org.earthsystemcurator.cupid.nuopc.fsml.nuopc.CallsSetEntryPoint}.
 	 * <!-- begin-user-doc -->
 	 * <p>
-	 * If the meaning of the '<em>Calls Set Entry Point Phase1</em>' attribute isn't clear,
+	 * If the meaning of the '<em>Calls Set Entry Point</em>' containment reference list isn't clear,
 	 * there really should be more of a description here...
 	 * </p>
 	 * <!-- end-user-doc -->
-	 * @return the value of the '<em>Calls Set Entry Point Phase1</em>' attribute.
-	 * @see #setCallsSetEntryPointPhase1(boolean)
-	 * @see org.earthsystemcurator.cupid.nuopc.fsml.nuopc.NUOPCPackage#getModelImplementsSetServices_CallsSetEntryPointPhase1()
-	 * @model required="true"
-	 *        annotation="http://www.earthsystemcog.org/projects/nuopc mapping='calls: \"ESMF_GridCompSetEntryPoint\"'"
+	 * @return the value of the '<em>Calls Set Entry Point</em>' containment reference list.
+	 * @see org.earthsystemcurator.cupid.nuopc.fsml.nuopc.NUOPCPackage#getModelImplementsSetServices_CallsSetEntryPoint()
+	 * @model containment="true"
+	 *        annotation="http://www.earthsystemcog.org/projects/nuopc mapping='call: \"ESMF_GridCompSetEntryPoint(#ignore, #method, userRoutine=#userRoutine, phase=#phase, rc=#ignore)\"'"
 	 * @generated
 	 */
-	boolean isCallsSetEntryPointPhase1();
-
-	/**
-	 * Sets the value of the '{@link org.earthsystemcurator.cupid.nuopc.fsml.nuopc.ModelImplementsSetServices#isCallsSetEntryPointPhase1 <em>Calls Set Entry Point Phase1</em>}' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @param value the new value of the '<em>Calls Set Entry Point Phase1</em>' attribute.
-	 * @see #isCallsSetEntryPointPhase1()
-	 * @generated
-	 */
-	void setCallsSetEntryPointPhase1(boolean value);
-
-	/**
-	 * Returns the value of the '<em><b>Calls Set Entry Point Phase2</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <p>
-	 * If the meaning of the '<em>Calls Set Entry Point Phase2</em>' attribute isn't clear,
-	 * there really should be more of a description here...
-	 * </p>
-	 * <!-- end-user-doc -->
-	 * @return the value of the '<em>Calls Set Entry Point Phase2</em>' attribute.
-	 * @see #setCallsSetEntryPointPhase2(boolean)
-	 * @see org.earthsystemcurator.cupid.nuopc.fsml.nuopc.NUOPCPackage#getModelImplementsSetServices_CallsSetEntryPointPhase2()
-	 * @model required="true"
-	 *        annotation="http://www.earthsystemcog.org/projects/nuopc mapping='calls: \"ESMF_GridCompSetEntryPoint\"'"
-	 * @generated
-	 */
-	boolean isCallsSetEntryPointPhase2();
-
-	/**
-	 * Sets the value of the '{@link org.earthsystemcurator.cupid.nuopc.fsml.nuopc.ModelImplementsSetServices#isCallsSetEntryPointPhase2 <em>Calls Set Entry Point Phase2</em>}' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @param value the new value of the '<em>Calls Set Entry Point Phase2</em>' attribute.
-	 * @see #isCallsSetEntryPointPhase2()
-	 * @generated
-	 */
-	void setCallsSetEntryPointPhase2(boolean value);
+	EList<CallsSetEntryPoint> getCallsSetEntryPoint();
 
 	/**
 	 * Returns the value of the '<em><b>Attaches Model Advance</b></em>' containment reference list.

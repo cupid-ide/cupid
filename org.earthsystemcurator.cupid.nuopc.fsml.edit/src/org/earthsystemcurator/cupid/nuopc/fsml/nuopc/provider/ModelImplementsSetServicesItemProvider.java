@@ -66,8 +66,6 @@ public class ModelImplementsSetServicesItemProvider
 			addNamePropertyDescriptor(object);
 			addParam_gcompPropertyDescriptor(object);
 			addParam_rcPropertyDescriptor(object);
-			addCallsSetEntryPointPhase1PropertyDescriptor(object);
-			addCallsSetEntryPointPhase2PropertyDescriptor(object);
 		}
 		return itemPropertyDescriptors;
 	}
@@ -139,50 +137,6 @@ public class ModelImplementsSetServicesItemProvider
 	}
 
 	/**
-	 * This adds a property descriptor for the Calls Set Entry Point Phase1 feature.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	protected void addCallsSetEntryPointPhase1PropertyDescriptor(Object object) {
-		itemPropertyDescriptors.add
-			(createItemPropertyDescriptor
-				(((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(),
-				 getResourceLocator(),
-				 getString("_UI_ModelImplementsSetServices_callsSetEntryPointPhase1_feature"),
-				 getString("_UI_PropertyDescriptor_description", "_UI_ModelImplementsSetServices_callsSetEntryPointPhase1_feature", "_UI_ModelImplementsSetServices_type"),
-				 NUOPCPackage.Literals.MODEL_IMPLEMENTS_SET_SERVICES__CALLS_SET_ENTRY_POINT_PHASE1,
-				 true,
-				 false,
-				 false,
-				 ItemPropertyDescriptor.BOOLEAN_VALUE_IMAGE,
-				 null,
-				 null));
-	}
-
-	/**
-	 * This adds a property descriptor for the Calls Set Entry Point Phase2 feature.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	protected void addCallsSetEntryPointPhase2PropertyDescriptor(Object object) {
-		itemPropertyDescriptors.add
-			(createItemPropertyDescriptor
-				(((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(),
-				 getResourceLocator(),
-				 getString("_UI_ModelImplementsSetServices_callsSetEntryPointPhase2_feature"),
-				 getString("_UI_PropertyDescriptor_description", "_UI_ModelImplementsSetServices_callsSetEntryPointPhase2_feature", "_UI_ModelImplementsSetServices_type"),
-				 NUOPCPackage.Literals.MODEL_IMPLEMENTS_SET_SERVICES__CALLS_SET_ENTRY_POINT_PHASE2,
-				 true,
-				 false,
-				 false,
-				 ItemPropertyDescriptor.BOOLEAN_VALUE_IMAGE,
-				 null,
-				 null));
-	}
-
-	/**
 	 * This specifies how to implement {@link #getChildren} and is used to deduce an appropriate feature for an
 	 * {@link org.eclipse.emf.edit.command.AddCommand}, {@link org.eclipse.emf.edit.command.RemoveCommand} or
 	 * {@link org.eclipse.emf.edit.command.MoveCommand} in {@link #createCommand}.
@@ -195,8 +149,7 @@ public class ModelImplementsSetServicesItemProvider
 		if (childrenFeatures == null) {
 			super.getChildrenFeatures(object);
 			childrenFeatures.add(NUOPCPackage.Literals.MODEL_IMPLEMENTS_SET_SERVICES__CALLS_GENERIC_SET_SERVICES);
-			childrenFeatures.add(NUOPCPackage.Literals.MODEL_IMPLEMENTS_SET_SERVICES__CALLS_SET_ENTRY_POINT_PHASE1);
-			childrenFeatures.add(NUOPCPackage.Literals.MODEL_IMPLEMENTS_SET_SERVICES__CALLS_SET_ENTRY_POINT_PHASE2);
+			childrenFeatures.add(NUOPCPackage.Literals.MODEL_IMPLEMENTS_SET_SERVICES__CALLS_SET_ENTRY_POINT);
 			childrenFeatures.add(NUOPCPackage.Literals.MODEL_IMPLEMENTS_SET_SERVICES__ATTACHES_MODEL_ADVANCE);
 		}
 		return childrenFeatures;
@@ -258,8 +211,7 @@ public class ModelImplementsSetServicesItemProvider
 				fireNotifyChanged(new ViewerNotification(notification, notification.getNotifier(), false, true));
 				return;
 			case NUOPCPackage.MODEL_IMPLEMENTS_SET_SERVICES__CALLS_GENERIC_SET_SERVICES:
-			case NUOPCPackage.MODEL_IMPLEMENTS_SET_SERVICES__CALLS_SET_ENTRY_POINT_PHASE1:
-			case NUOPCPackage.MODEL_IMPLEMENTS_SET_SERVICES__CALLS_SET_ENTRY_POINT_PHASE2:
+			case NUOPCPackage.MODEL_IMPLEMENTS_SET_SERVICES__CALLS_SET_ENTRY_POINT:
 			case NUOPCPackage.MODEL_IMPLEMENTS_SET_SERVICES__ATTACHES_MODEL_ADVANCE:
 				fireNotifyChanged(new ViewerNotification(notification, notification.getNotifier(), true, false));
 				return;
@@ -282,6 +234,11 @@ public class ModelImplementsSetServicesItemProvider
 			(createChildParameter
 				(NUOPCPackage.Literals.MODEL_IMPLEMENTS_SET_SERVICES__CALLS_GENERIC_SET_SERVICES,
 				 NUOPCFactory.eINSTANCE.createCallsGenericSetServices()));
+
+		newChildDescriptors.add
+			(createChildParameter
+				(NUOPCPackage.Literals.MODEL_IMPLEMENTS_SET_SERVICES__CALLS_SET_ENTRY_POINT,
+				 NUOPCFactory.eINSTANCE.createCallsSetEntryPoint()));
 
 		newChildDescriptors.add
 			(createChildParameter

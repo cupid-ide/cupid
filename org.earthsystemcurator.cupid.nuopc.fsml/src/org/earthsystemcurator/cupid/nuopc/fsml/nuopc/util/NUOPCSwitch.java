@@ -84,6 +84,12 @@ public class NUOPCSwitch<T> extends Switch<T> {
 				if (result == null) result = defaultCase(theEObject);
 				return result;
 			}
+			case NUOPCPackage.CALLS_SET_ENTRY_POINT: {
+				CallsSetEntryPoint callsSetEntryPoint = (CallsSetEntryPoint)theEObject;
+				T result = caseCallsSetEntryPoint(callsSetEntryPoint);
+				if (result == null) result = defaultCase(theEObject);
+				return result;
+			}
 			case NUOPCPackage.MODEL_INIT: {
 				Model_Init model_Init = (Model_Init)theEObject;
 				T result = caseModel_Init(model_Init);
@@ -244,6 +250,21 @@ public class NUOPCSwitch<T> extends Switch<T> {
 	 * @generated
 	 */
 	public T caseCallsGenericSetServices(CallsGenericSetServices object) {
+		return null;
+	}
+
+	/**
+	 * Returns the result of interpreting the object as an instance of '<em>Calls Set Entry Point</em>'.
+	 * <!-- begin-user-doc -->
+	 * This implementation returns null;
+	 * returning a non-null result will terminate the switch.
+	 * <!-- end-user-doc -->
+	 * @param object the target of the switch.
+	 * @return the result of interpreting the object as an instance of '<em>Calls Set Entry Point</em>'.
+	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+	 * @generated
+	 */
+	public T caseCallsSetEntryPoint(CallsSetEntryPoint object) {
 		return null;
 	}
 

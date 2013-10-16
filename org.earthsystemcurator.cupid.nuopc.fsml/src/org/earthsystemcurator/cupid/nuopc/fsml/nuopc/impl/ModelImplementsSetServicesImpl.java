@@ -5,6 +5,7 @@ package org.earthsystemcurator.cupid.nuopc.fsml.nuopc.impl;
 import java.util.Collection;
 import org.earthsystemcurator.cupid.nuopc.fsml.nuopc.AttachesModelAdvance;
 import org.earthsystemcurator.cupid.nuopc.fsml.nuopc.CallsGenericSetServices;
+import org.earthsystemcurator.cupid.nuopc.fsml.nuopc.CallsSetEntryPoint;
 import org.earthsystemcurator.cupid.nuopc.fsml.nuopc.ModelImplementsSetServices;
 import org.earthsystemcurator.cupid.nuopc.fsml.nuopc.NUOPCModel;
 import org.earthsystemcurator.cupid.nuopc.fsml.nuopc.NUOPCPackage;
@@ -18,6 +19,7 @@ import org.eclipse.emf.ecore.InternalEObject;
 
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
 import org.eclipse.emf.ecore.impl.EObjectImpl;
+import org.eclipse.emf.ecore.util.EObjectContainmentEList;
 import org.eclipse.emf.ecore.util.EObjectContainmentWithInverseEList;
 import org.eclipse.emf.ecore.util.EcoreUtil;
 import org.eclipse.emf.ecore.util.InternalEList;
@@ -34,8 +36,7 @@ import org.eclipse.emf.ecore.util.InternalEList;
  *   <li>{@link org.earthsystemcurator.cupid.nuopc.fsml.nuopc.impl.ModelImplementsSetServicesImpl#getParam_gcomp <em>Param gcomp</em>}</li>
  *   <li>{@link org.earthsystemcurator.cupid.nuopc.fsml.nuopc.impl.ModelImplementsSetServicesImpl#getParam_rc <em>Param rc</em>}</li>
  *   <li>{@link org.earthsystemcurator.cupid.nuopc.fsml.nuopc.impl.ModelImplementsSetServicesImpl#getCallsGenericSetServices <em>Calls Generic Set Services</em>}</li>
- *   <li>{@link org.earthsystemcurator.cupid.nuopc.fsml.nuopc.impl.ModelImplementsSetServicesImpl#isCallsSetEntryPointPhase1 <em>Calls Set Entry Point Phase1</em>}</li>
- *   <li>{@link org.earthsystemcurator.cupid.nuopc.fsml.nuopc.impl.ModelImplementsSetServicesImpl#isCallsSetEntryPointPhase2 <em>Calls Set Entry Point Phase2</em>}</li>
+ *   <li>{@link org.earthsystemcurator.cupid.nuopc.fsml.nuopc.impl.ModelImplementsSetServicesImpl#getCallsSetEntryPoint <em>Calls Set Entry Point</em>}</li>
  *   <li>{@link org.earthsystemcurator.cupid.nuopc.fsml.nuopc.impl.ModelImplementsSetServicesImpl#getAttachesModelAdvance <em>Attaches Model Advance</em>}</li>
  * </ul>
  * </p>
@@ -114,44 +115,14 @@ public class ModelImplementsSetServicesImpl extends EObjectImpl implements Model
 	protected CallsGenericSetServices callsGenericSetServices;
 
 	/**
-	 * The default value of the '{@link #isCallsSetEntryPointPhase1() <em>Calls Set Entry Point Phase1</em>}' attribute.
+	 * The cached value of the '{@link #getCallsSetEntryPoint() <em>Calls Set Entry Point</em>}' containment reference list.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @see #isCallsSetEntryPointPhase1()
+	 * @see #getCallsSetEntryPoint()
 	 * @generated
 	 * @ordered
 	 */
-	protected static final boolean CALLS_SET_ENTRY_POINT_PHASE1_EDEFAULT = false;
-
-	/**
-	 * The cached value of the '{@link #isCallsSetEntryPointPhase1() <em>Calls Set Entry Point Phase1</em>}' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @see #isCallsSetEntryPointPhase1()
-	 * @generated
-	 * @ordered
-	 */
-	protected boolean callsSetEntryPointPhase1 = CALLS_SET_ENTRY_POINT_PHASE1_EDEFAULT;
-
-	/**
-	 * The default value of the '{@link #isCallsSetEntryPointPhase2() <em>Calls Set Entry Point Phase2</em>}' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @see #isCallsSetEntryPointPhase2()
-	 * @generated
-	 * @ordered
-	 */
-	protected static final boolean CALLS_SET_ENTRY_POINT_PHASE2_EDEFAULT = false;
-
-	/**
-	 * The cached value of the '{@link #isCallsSetEntryPointPhase2() <em>Calls Set Entry Point Phase2</em>}' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @see #isCallsSetEntryPointPhase2()
-	 * @generated
-	 * @ordered
-	 */
-	protected boolean callsSetEntryPointPhase2 = CALLS_SET_ENTRY_POINT_PHASE2_EDEFAULT;
+	protected EList<CallsSetEntryPoint> callsSetEntryPoint;
 
 	/**
 	 * The cached value of the '{@link #getAttachesModelAdvance() <em>Attaches Model Advance</em>}' containment reference list.
@@ -334,41 +305,11 @@ public class ModelImplementsSetServicesImpl extends EObjectImpl implements Model
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public boolean isCallsSetEntryPointPhase1() {
-		return callsSetEntryPointPhase1;
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public void setCallsSetEntryPointPhase1(boolean newCallsSetEntryPointPhase1) {
-		boolean oldCallsSetEntryPointPhase1 = callsSetEntryPointPhase1;
-		callsSetEntryPointPhase1 = newCallsSetEntryPointPhase1;
-		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, NUOPCPackage.MODEL_IMPLEMENTS_SET_SERVICES__CALLS_SET_ENTRY_POINT_PHASE1, oldCallsSetEntryPointPhase1, callsSetEntryPointPhase1));
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public boolean isCallsSetEntryPointPhase2() {
-		return callsSetEntryPointPhase2;
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public void setCallsSetEntryPointPhase2(boolean newCallsSetEntryPointPhase2) {
-		boolean oldCallsSetEntryPointPhase2 = callsSetEntryPointPhase2;
-		callsSetEntryPointPhase2 = newCallsSetEntryPointPhase2;
-		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, NUOPCPackage.MODEL_IMPLEMENTS_SET_SERVICES__CALLS_SET_ENTRY_POINT_PHASE2, oldCallsSetEntryPointPhase2, callsSetEntryPointPhase2));
+	public EList<CallsSetEntryPoint> getCallsSetEntryPoint() {
+		if (callsSetEntryPoint == null) {
+			callsSetEntryPoint = new EObjectContainmentEList<CallsSetEntryPoint>(CallsSetEntryPoint.class, this, NUOPCPackage.MODEL_IMPLEMENTS_SET_SERVICES__CALLS_SET_ENTRY_POINT);
+		}
+		return callsSetEntryPoint;
 	}
 
 	/**
@@ -414,6 +355,8 @@ public class ModelImplementsSetServicesImpl extends EObjectImpl implements Model
 				return basicSetParent(null, msgs);
 			case NUOPCPackage.MODEL_IMPLEMENTS_SET_SERVICES__CALLS_GENERIC_SET_SERVICES:
 				return basicSetCallsGenericSetServices(null, msgs);
+			case NUOPCPackage.MODEL_IMPLEMENTS_SET_SERVICES__CALLS_SET_ENTRY_POINT:
+				return ((InternalEList<?>)getCallsSetEntryPoint()).basicRemove(otherEnd, msgs);
 			case NUOPCPackage.MODEL_IMPLEMENTS_SET_SERVICES__ATTACHES_MODEL_ADVANCE:
 				return ((InternalEList<?>)getAttachesModelAdvance()).basicRemove(otherEnd, msgs);
 		}
@@ -452,10 +395,8 @@ public class ModelImplementsSetServicesImpl extends EObjectImpl implements Model
 				return getParam_rc();
 			case NUOPCPackage.MODEL_IMPLEMENTS_SET_SERVICES__CALLS_GENERIC_SET_SERVICES:
 				return getCallsGenericSetServices();
-			case NUOPCPackage.MODEL_IMPLEMENTS_SET_SERVICES__CALLS_SET_ENTRY_POINT_PHASE1:
-				return isCallsSetEntryPointPhase1();
-			case NUOPCPackage.MODEL_IMPLEMENTS_SET_SERVICES__CALLS_SET_ENTRY_POINT_PHASE2:
-				return isCallsSetEntryPointPhase2();
+			case NUOPCPackage.MODEL_IMPLEMENTS_SET_SERVICES__CALLS_SET_ENTRY_POINT:
+				return getCallsSetEntryPoint();
 			case NUOPCPackage.MODEL_IMPLEMENTS_SET_SERVICES__ATTACHES_MODEL_ADVANCE:
 				return getAttachesModelAdvance();
 		}
@@ -486,11 +427,9 @@ public class ModelImplementsSetServicesImpl extends EObjectImpl implements Model
 			case NUOPCPackage.MODEL_IMPLEMENTS_SET_SERVICES__CALLS_GENERIC_SET_SERVICES:
 				setCallsGenericSetServices((CallsGenericSetServices)newValue);
 				return;
-			case NUOPCPackage.MODEL_IMPLEMENTS_SET_SERVICES__CALLS_SET_ENTRY_POINT_PHASE1:
-				setCallsSetEntryPointPhase1((Boolean)newValue);
-				return;
-			case NUOPCPackage.MODEL_IMPLEMENTS_SET_SERVICES__CALLS_SET_ENTRY_POINT_PHASE2:
-				setCallsSetEntryPointPhase2((Boolean)newValue);
+			case NUOPCPackage.MODEL_IMPLEMENTS_SET_SERVICES__CALLS_SET_ENTRY_POINT:
+				getCallsSetEntryPoint().clear();
+				getCallsSetEntryPoint().addAll((Collection<? extends CallsSetEntryPoint>)newValue);
 				return;
 			case NUOPCPackage.MODEL_IMPLEMENTS_SET_SERVICES__ATTACHES_MODEL_ADVANCE:
 				getAttachesModelAdvance().clear();
@@ -523,11 +462,8 @@ public class ModelImplementsSetServicesImpl extends EObjectImpl implements Model
 			case NUOPCPackage.MODEL_IMPLEMENTS_SET_SERVICES__CALLS_GENERIC_SET_SERVICES:
 				setCallsGenericSetServices((CallsGenericSetServices)null);
 				return;
-			case NUOPCPackage.MODEL_IMPLEMENTS_SET_SERVICES__CALLS_SET_ENTRY_POINT_PHASE1:
-				setCallsSetEntryPointPhase1(CALLS_SET_ENTRY_POINT_PHASE1_EDEFAULT);
-				return;
-			case NUOPCPackage.MODEL_IMPLEMENTS_SET_SERVICES__CALLS_SET_ENTRY_POINT_PHASE2:
-				setCallsSetEntryPointPhase2(CALLS_SET_ENTRY_POINT_PHASE2_EDEFAULT);
+			case NUOPCPackage.MODEL_IMPLEMENTS_SET_SERVICES__CALLS_SET_ENTRY_POINT:
+				getCallsSetEntryPoint().clear();
 				return;
 			case NUOPCPackage.MODEL_IMPLEMENTS_SET_SERVICES__ATTACHES_MODEL_ADVANCE:
 				getAttachesModelAdvance().clear();
@@ -554,10 +490,8 @@ public class ModelImplementsSetServicesImpl extends EObjectImpl implements Model
 				return PARAM_RC_EDEFAULT == null ? param_rc != null : !PARAM_RC_EDEFAULT.equals(param_rc);
 			case NUOPCPackage.MODEL_IMPLEMENTS_SET_SERVICES__CALLS_GENERIC_SET_SERVICES:
 				return callsGenericSetServices != null;
-			case NUOPCPackage.MODEL_IMPLEMENTS_SET_SERVICES__CALLS_SET_ENTRY_POINT_PHASE1:
-				return callsSetEntryPointPhase1 != CALLS_SET_ENTRY_POINT_PHASE1_EDEFAULT;
-			case NUOPCPackage.MODEL_IMPLEMENTS_SET_SERVICES__CALLS_SET_ENTRY_POINT_PHASE2:
-				return callsSetEntryPointPhase2 != CALLS_SET_ENTRY_POINT_PHASE2_EDEFAULT;
+			case NUOPCPackage.MODEL_IMPLEMENTS_SET_SERVICES__CALLS_SET_ENTRY_POINT:
+				return callsSetEntryPoint != null && !callsSetEntryPoint.isEmpty();
 			case NUOPCPackage.MODEL_IMPLEMENTS_SET_SERVICES__ATTACHES_MODEL_ADVANCE:
 				return attachesModelAdvance != null && !attachesModelAdvance.isEmpty();
 		}
@@ -580,10 +514,6 @@ public class ModelImplementsSetServicesImpl extends EObjectImpl implements Model
 		result.append(param_gcomp);
 		result.append(", param_rc: ");
 		result.append(param_rc);
-		result.append(", callsSetEntryPointPhase1: ");
-		result.append(callsSetEntryPointPhase1);
-		result.append(", callsSetEntryPointPhase2: ");
-		result.append(callsSetEntryPointPhase2);
 		result.append(')');
 		return result.toString();
 	}

@@ -6,6 +6,7 @@ import java.util.List;
 import org.earthsystemcurator.cupid.nuopc.fsml.builder.NUOPCNature;
 import org.earthsystemcurator.cupid.nuopc.fsml.nuopc.NUOPCApplication;
 import org.earthsystemcurator.cupid.nuopc.fsml.nuopc.NUOPCPackage;
+import org.earthsystemcurator.cupid.nuopc.fsml.nuopc.util.NUOPCValidator;
 import org.earthsystemcurator.cupid.nuopc.fsml.util.EcoreUtils;
 import org.earthsystemcurator.cupid.nuopc.fsml.util.Regex;
 import org.eclipse.core.resources.IProject;
@@ -17,6 +18,7 @@ import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EReference;
 import org.eclipse.emf.ecore.EStructuralFeature;
+import org.eclipse.emf.ecore.EValidator;
 import org.eclipse.emf.ecore.EcorePackage;
 import org.eclipse.emf.ecore.util.Diagnostician;
 import org.eclipse.emf.ecore.util.EcoreUtil;
@@ -24,8 +26,17 @@ import org.eclipse.jface.viewers.IStructuredContentProvider;
 import org.eclipse.jface.viewers.ITreeContentProvider;
 import org.eclipse.jface.viewers.Viewer;
 import org.eclipse.ocl.ecore.util.EcoreValidator;
+import org.eclipse.ocl.examples.xtext.oclinecore.validation.OCLinEcoreEObjectValidator;
 
 class NUOPCViewContentProvider implements IStructuredContentProvider, ITreeContentProvider {
+	
+	
+	static {
+		//necessary for custom validation messages
+		//System.out.println("Registered OCLinEcoreEObjectValidator");
+		EValidator.Registry.INSTANCE.put(null, new OCLinEcoreEObjectValidator());
+		//EValidator.Registry.INSTANCE.put(NUOPCPackage.eINSTANCE, NUOPCValidator.INSTANCE);
+	}
 	
 	private IProject project;
 	private NUOPCApplication app;
@@ -335,7 +346,11 @@ class NUOPCViewContentProvider implements IStructuredContentProvider, ITreeConte
 		private void doValidationMessage() {
 			//TODO: probably don't want to re-validate the entire tree each time
 			if (elem != null) {
+				
+				//EValidator.Registry r = EValidator.Registry.INSTANCE;
+				
 				Diagnostic diagnostic = Diagnostician.INSTANCE.validate(elem);
+								
 				if (diagnostic.getSeverity() != Diagnostic.OK) {
 					if (diagnostic.getChildren().size() > 0) {
 						validationMessage = "";

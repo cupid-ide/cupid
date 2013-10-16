@@ -80,6 +80,10 @@ public class NUOPCAdapterFactory extends AdapterFactoryImpl {
 				return createCallsGenericSetServicesAdapter();
 			}
 			@Override
+			public Adapter caseCallsSetEntryPoint(CallsSetEntryPoint object) {
+				return createCallsSetEntryPointAdapter();
+			}
+			@Override
 			public Adapter caseModel_Init(Model_Init object) {
 				return createModel_InitAdapter();
 			}
@@ -214,6 +218,20 @@ public class NUOPCAdapterFactory extends AdapterFactoryImpl {
 	 * @generated
 	 */
 	public Adapter createCallsGenericSetServicesAdapter() {
+		return null;
+	}
+
+	/**
+	 * Creates a new adapter for an object of class '{@link org.earthsystemcurator.cupid.nuopc.fsml.nuopc.CallsSetEntryPoint <em>Calls Set Entry Point</em>}'.
+	 * <!-- begin-user-doc -->
+	 * This default implementation returns null so that we can easily ignore cases;
+	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
+	 * <!-- end-user-doc -->
+	 * @return the new adapter.
+	 * @see org.earthsystemcurator.cupid.nuopc.fsml.nuopc.CallsSetEntryPoint
+	 * @generated
+	 */
+	public Adapter createCallsSetEntryPointAdapter() {
 		return null;
 	}
 

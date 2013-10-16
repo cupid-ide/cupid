@@ -295,9 +295,9 @@ public class NUOPCModelImpl extends EObjectImpl implements NUOPCModel {
 		if (newInitialize != initialize) {
 			NotificationChain msgs = null;
 			if (initialize != null)
-				msgs = ((InternalEObject)initialize).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - NUOPCPackage.NUOPC_MODEL__INITIALIZE, null, msgs);
+				msgs = ((InternalEObject)initialize).eInverseRemove(this, NUOPCPackage.MODEL_INIT__PARENT, Model_Init.class, msgs);
 			if (newInitialize != null)
-				msgs = ((InternalEObject)newInitialize).eInverseAdd(this, EOPPOSITE_FEATURE_BASE - NUOPCPackage.NUOPC_MODEL__INITIALIZE, null, msgs);
+				msgs = ((InternalEObject)newInitialize).eInverseAdd(this, NUOPCPackage.MODEL_INIT__PARENT, Model_Init.class, msgs);
 			msgs = basicSetInitialize(newInitialize, msgs);
 			if (msgs != null) msgs.dispatch();
 		}
@@ -318,6 +318,10 @@ public class NUOPCModelImpl extends EObjectImpl implements NUOPCModel {
 				if (implementsSetServices != null)
 					msgs = ((InternalEObject)implementsSetServices).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - NUOPCPackage.NUOPC_MODEL__IMPLEMENTS_SET_SERVICES, null, msgs);
 				return basicSetImplementsSetServices((ModelImplementsSetServices)otherEnd, msgs);
+			case NUOPCPackage.NUOPC_MODEL__INITIALIZE:
+				if (initialize != null)
+					msgs = ((InternalEObject)initialize).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - NUOPCPackage.NUOPC_MODEL__INITIALIZE, null, msgs);
+				return basicSetInitialize((Model_Init)otherEnd, msgs);
 			case NUOPCPackage.NUOPC_MODEL__IMPLEMENTS_MODEL_ADVANCE:
 				if (implementsModelAdvance != null)
 					msgs = ((InternalEObject)implementsModelAdvance).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - NUOPCPackage.NUOPC_MODEL__IMPLEMENTS_MODEL_ADVANCE, null, msgs);

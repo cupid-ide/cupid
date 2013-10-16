@@ -13,12 +13,14 @@ import org.eclipse.emf.ecore.EObject;
  * <p>
  * The following features are supported:
  * <ul>
+ *   <li>{@link org.earthsystemcurator.cupid.nuopc.fsml.nuopc.ModelImplementsInitP1#getParent <em>Parent</em>}</li>
  *   <li>{@link org.earthsystemcurator.cupid.nuopc.fsml.nuopc.ModelImplementsInitP1#getName <em>Name</em>}</li>
  *   <li>{@link org.earthsystemcurator.cupid.nuopc.fsml.nuopc.ModelImplementsInitP1#getImportParam <em>Import Param</em>}</li>
  *   <li>{@link org.earthsystemcurator.cupid.nuopc.fsml.nuopc.ModelImplementsInitP1#getExportParam <em>Export Param</em>}</li>
  *   <li>{@link org.earthsystemcurator.cupid.nuopc.fsml.nuopc.ModelImplementsInitP1#getAdvertisesImportField <em>Advertises Import Field</em>}</li>
  *   <li>{@link org.earthsystemcurator.cupid.nuopc.fsml.nuopc.ModelImplementsInitP1#getAdvertisesExportField <em>Advertises Export Field</em>}</li>
  *   <li>{@link org.earthsystemcurator.cupid.nuopc.fsml.nuopc.ModelImplementsInitP1#isAdvertisesAtLeastOneField <em>Advertises At Least One Field</em>}</li>
+ *   <li>{@link org.earthsystemcurator.cupid.nuopc.fsml.nuopc.ModelImplementsInitP1#isRegisteredInSetServices <em>Registered In Set Services</em>}</li>
  * </ul>
  * </p>
  *
@@ -27,6 +29,34 @@ import org.eclipse.emf.ecore.EObject;
  * @generated
  */
 public interface ModelImplementsInitP1 extends EObject {
+	/**
+	 * Returns the value of the '<em><b>Parent</b></em>' container reference.
+	 * It is bidirectional and its opposite is '{@link org.earthsystemcurator.cupid.nuopc.fsml.nuopc.Model_Init#getImplementsInitP1 <em>Implements Init P1</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <p>
+	 * If the meaning of the '<em>Parent</em>' container reference isn't clear,
+	 * there really should be more of a description here...
+	 * </p>
+	 * <!-- end-user-doc -->
+	 * @return the value of the '<em>Parent</em>' container reference.
+	 * @see #setParent(Model_Init)
+	 * @see org.earthsystemcurator.cupid.nuopc.fsml.nuopc.NUOPCPackage#getModelImplementsInitP1_Parent()
+	 * @see org.earthsystemcurator.cupid.nuopc.fsml.nuopc.Model_Init#getImplementsInitP1
+	 * @model opposite="implementsInitP1" required="true" transient="false"
+	 * @generated
+	 */
+	Model_Init getParent();
+
+	/**
+	 * Sets the value of the '{@link org.earthsystemcurator.cupid.nuopc.fsml.nuopc.ModelImplementsInitP1#getParent <em>Parent</em>}' container reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @param value the new value of the '<em>Parent</em>' container reference.
+	 * @see #getParent()
+	 * @generated
+	 */
+	void setParent(Model_Init value);
+
 	/**
 	 * Returns the value of the '<em><b>Name</b></em>' attribute.
 	 * The default value is <code>"InitP1"</code>.
@@ -176,5 +206,32 @@ public interface ModelImplementsInitP1 extends EObject {
 	 * @generated
 	 */
 	void setAdvertisesAtLeastOneField(boolean value);
+
+	/**
+	 * Returns the value of the '<em><b>Registered In Set Services</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <p>
+	 * If the meaning of the '<em>Registered In Set Services</em>' attribute isn't clear,
+	 * there really should be more of a description here...
+	 * </p>
+	 * <!-- end-user-doc -->
+	 * @return the value of the '<em>Registered In Set Services</em>' attribute.
+	 * @see #setRegisteredInSetServices(boolean)
+	 * @see org.earthsystemcurator.cupid.nuopc.fsml.nuopc.NUOPCPackage#getModelImplementsInitP1_RegisteredInSetServices()
+	 * @model required="true"
+	 *        annotation="http://www.eclipse.org/emf/2002/Ecore/OCL derivation='self.parent.parent.implementsSetServices.callsSetEntryPoint->select(c|c.userRoutine=self.name)->notEmpty()'"
+	 * @generated
+	 */
+	boolean isRegisteredInSetServices();
+
+	/**
+	 * Sets the value of the '{@link org.earthsystemcurator.cupid.nuopc.fsml.nuopc.ModelImplementsInitP1#isRegisteredInSetServices <em>Registered In Set Services</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @param value the new value of the '<em>Registered In Set Services</em>' attribute.
+	 * @see #isRegisteredInSetServices()
+	 * @generated
+	 */
+	void setRegisteredInSetServices(boolean value);
 
 } // ModelImplementsInitP1
