@@ -18,14 +18,8 @@
         <details key="mapping" value="moduleName"/>
       </eAnnotations>
     </eStructuralFeatures>
-    <eStructuralFeatures xsi:type="ecore:EAttribute" name="importsGenericSS" lowerBound="1"
-        eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString" defaultValueLiteral="nuopcmodel_ss">
-      <eAnnotations source="http://www.earthsystemcog.org/projects/nuopc">
-        <details key="mapping" value="uses: &quot;NUOPC_Model&quot; entity: &quot;routine_SetServices&quot;"/>
-        <details key="label" value="routine_SetServices"/>
-        <details key="doc" value="Subclasses of NUOPC Model should import the public generic Set Services subroutine &quot;routine_SetServices&quot;"/>
-      </eAnnotations>
-    </eStructuralFeatures>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="genericImports" lowerBound="1"
+        eType="#//NUOPCModel__GenericImports" containment="true"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="implementsSetServices"
         lowerBound="1" eType="#//ModelImplementsSetServices" containment="true" eOpposite="#//ModelImplementsSetServices/parent"
         eKeys="#//ModelImplementsSetServices/name">
@@ -37,9 +31,31 @@
     <eStructuralFeatures xsi:type="ecore:EReference" name="initialize" lowerBound="1"
         eType="#//Model_Init" containment="true" eOpposite="#//Model_Init/parent"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="implementsModelAdvance"
-        lowerBound="1" eType="#//ModelAdvance" containment="true" eOpposite="#//ModelAdvance/parent">
+        upperBound="-1" eType="#//ModelAdvance" containment="true" eOpposite="#//ModelAdvance/parent">
       <eAnnotations source="http://www.earthsystemcog.org/projects/nuopc">
         <details key="mapping" value="subroutine: &quot;*(type(ESMF_GridComp), integer)&quot;"/>
+      </eAnnotations>
+    </eStructuralFeatures>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="NUOPCModel__GenericImports">
+    <eAnnotations source="http://www.earthsystemcog.org/projects/nuopc">
+      <details key="label" value="Imports from NUOPC Model"/>
+      <details key="doc" value="Subclasses of NUOPC Model should import generic subroutines, types, and labels from NUOPC_Model."/>
+      <details key="icon" value="import.png"/>
+    </eAnnotations>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="importsGenericSS" lowerBound="1"
+        eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString" defaultValueLiteral="nuopcmodel_ss">
+      <eAnnotations source="http://www.earthsystemcog.org/projects/nuopc">
+        <details key="mapping" value="uses: &quot;NUOPC_Model&quot; entity: &quot;routine_SetServices&quot;"/>
+        <details key="label" value="routine_SetServices"/>
+        <details key="doc" value="Subclasses of NUOPC Model should import the public generic Set Services subroutine &quot;routine_SetServices&quot;"/>
+      </eAnnotations>
+    </eStructuralFeatures>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="importsLabelModelAdvance"
+        eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString">
+      <eAnnotations source="http://www.earthsystemcog.org/projects/nuopc">
+        <details key="mapping" value="uses: &quot;NUOPC_Model&quot; entity: &quot;label_Advance&quot;"/>
+        <details key="label" value="label_Advance"/>
       </eAnnotations>
     </eStructuralFeatures>
   </eClassifiers>
@@ -102,7 +118,7 @@
     <eStructuralFeatures xsi:type="ecore:EReference" name="callsGenericSetServices"
         lowerBound="1" eType="#//CallsGenericSetServices" containment="true">
       <eAnnotations source="http://www.earthsystemcog.org/projects/nuopc">
-        <details key="mapping" value="call: &quot;#../../importsGenericSS(#gcomp, rc=#rc)&quot;"/>
+        <details key="mapping" value="call: &quot;#../../genericImports/importsGenericSS(#gcomp, rc=#rc)&quot;"/>
         <details key="essential" value="true"/>
       </eAnnotations>
     </eStructuralFeatures>
@@ -112,10 +128,10 @@
         <details key="mapping" value="call: &quot;ESMF_GridCompSetEntryPoint(#ignore, #method, userRoutine=#userRoutine, phase=#phase, rc=#ignore)&quot;"/>
       </eAnnotations>
     </eStructuralFeatures>
-    <eStructuralFeatures xsi:type="ecore:EReference" name="attachesModelAdvance" ordered="false"
-        upperBound="-1" eType="#//AttachesModelAdvance" containment="true" eOpposite="#//AttachesModelAdvance/parent">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="attachesMethod" ordered="false"
+        upperBound="-1" eType="#//AttachesMethod" containment="true">
       <eAnnotations source="http://www.earthsystemcog.org/projects/nuopc">
-        <details key="mappingX" value="call: &quot;ESMF_MethodAdd(#gcomp, #label, #userRoutine, #rc)&quot;"/>
+        <details key="mapping" value="call: &quot;ESMF_MethodAdd(#ignore, #name, #userRoutine, #ignore)&quot;"/>
       </eAnnotations>
     </eStructuralFeatures>
   </eClassifiers>
@@ -356,23 +372,6 @@
       </eAnnotations>
     </eStructuralFeatures>
   </eClassifiers>
-  <eClassifiers xsi:type="ecore:EClass" name="AttachesModelAdvance">
-    <eAnnotations source="http://www.earthsystemcog.org/projects/nuopc">
-      <details key="mappingX" value="call: &quot;ESMF_MethodAdd(#, #label, #userRoutine, #)&quot;"/>
-    </eAnnotations>
-    <eStructuralFeatures xsi:type="ecore:EReference" name="parent" lowerBound="1"
-        eType="#//ModelImplementsSetServices" eOpposite="#//ModelImplementsSetServices/attachesModelAdvance"/>
-    <eStructuralFeatures xsi:type="ecore:EAttribute" name="label" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString">
-      <eAnnotations source="http://www.earthsystemcog.org/projects/nuopc">
-        <details key="mappingX" value="argByIndex: 2"/>
-      </eAnnotations>
-    </eStructuralFeatures>
-    <eStructuralFeatures xsi:type="ecore:EAttribute" name="userRoutine" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString">
-      <eAnnotations source="http://www.earthsystemcog.org/projects/nuopc">
-        <details key="mappingX" value="argByIndex: 3"/>
-      </eAnnotations>
-    </eStructuralFeatures>
-  </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="ModelAdvance">
     <eAnnotations source="http://www.earthsystemcog.org/projects/nuopc">
       <details key="label" value="Model Advance"/>
@@ -380,17 +379,16 @@
     </eAnnotations>
     <eStructuralFeatures xsi:type="ecore:EReference" name="parent" lowerBound="1"
         eType="#//NUOPCModel" eOpposite="#//NUOPCModel/implementsModelAdvance"/>
-    <eStructuralFeatures xsi:type="ecore:EAttribute" name="name" lowerBound="1" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"
-        iD="true">
-      <eAnnotations source="http://www.earthsystemcog.org/projects/nuopc">
-        <details key="mapping" value="subroutineName"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="attachedModelAdvance" lowerBound="1"
+        eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString" derived="true">
+      <eAnnotations source="http://www.eclipse.org/emf/2002/Ecore/OCL">
+        <details key="derivation" value="self.parent.implementsSetServices.attachesMethod->select(m|m.name=self.parent.genericImports.importsLabelModelAdvance).userRoutine->asSequence()->first()"/>
       </eAnnotations>
     </eStructuralFeatures>
-    <eStructuralFeatures xsi:type="ecore:EAttribute" name="attachedInSetServices"
-        lowerBound="1" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean"
-        derived="true">
-      <eAnnotations source="http://www.eclipse.org/emf/2002/Ecore/OCL_NOT">
-        <details key="derivation" value="self.parent.implementsSetServices.attachesModelAdvance.userRoutine = self.name"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="name" lowerBound="1" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString">
+      <eAnnotations source="http://www.earthsystemcog.org/projects/nuopc">
+        <details key="mapping" value="subroutineName: &quot;#../attachedModelAdvance&quot;"/>
+        <details key="essential" value="true"/>
       </eAnnotations>
     </eStructuralFeatures>
   </eClassifiers>

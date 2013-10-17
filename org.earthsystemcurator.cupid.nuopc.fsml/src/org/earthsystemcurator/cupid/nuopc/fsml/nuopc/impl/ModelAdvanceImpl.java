@@ -25,14 +25,24 @@ import org.eclipse.emf.ecore.util.EcoreUtil;
  * The following features are implemented:
  * <ul>
  *   <li>{@link org.earthsystemcurator.cupid.nuopc.fsml.nuopc.impl.ModelAdvanceImpl#getParent <em>Parent</em>}</li>
+ *   <li>{@link org.earthsystemcurator.cupid.nuopc.fsml.nuopc.impl.ModelAdvanceImpl#getAttachedModelAdvance <em>Attached Model Advance</em>}</li>
  *   <li>{@link org.earthsystemcurator.cupid.nuopc.fsml.nuopc.impl.ModelAdvanceImpl#getName <em>Name</em>}</li>
- *   <li>{@link org.earthsystemcurator.cupid.nuopc.fsml.nuopc.impl.ModelAdvanceImpl#isAttachedInSetServices <em>Attached In Set Services</em>}</li>
  * </ul>
  * </p>
  *
  * @generated
  */
 public class ModelAdvanceImpl extends EObjectImpl implements ModelAdvance {
+	/**
+	 * The cached setting delegate for the '{@link #getAttachedModelAdvance() <em>Attached Model Advance</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #getAttachedModelAdvance()
+	 * @generated
+	 * @ordered
+	 */
+	protected EStructuralFeature.Internal.SettingDelegate ATTACHED_MODEL_ADVANCE__ESETTING_DELEGATE = ((EStructuralFeature.Internal)NUOPCPackage.Literals.MODEL_ADVANCE__ATTACHED_MODEL_ADVANCE).getSettingDelegate();
+
 	/**
 	 * The default value of the '{@link #getName() <em>Name</em>}' attribute.
 	 * <!-- begin-user-doc -->
@@ -52,26 +62,6 @@ public class ModelAdvanceImpl extends EObjectImpl implements ModelAdvance {
 	 * @ordered
 	 */
 	protected String name = NAME_EDEFAULT;
-
-	/**
-	 * The default value of the '{@link #isAttachedInSetServices() <em>Attached In Set Services</em>}' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @see #isAttachedInSetServices()
-	 * @generated
-	 * @ordered
-	 */
-	protected static final boolean ATTACHED_IN_SET_SERVICES_EDEFAULT = false;
-
-	/**
-	 * The cached value of the '{@link #isAttachedInSetServices() <em>Attached In Set Services</em>}' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @see #isAttachedInSetServices()
-	 * @generated
-	 * @ordered
-	 */
-	protected boolean attachedInSetServices = ATTACHED_IN_SET_SERVICES_EDEFAULT;
 
 	/**
 	 * <!-- begin-user-doc -->
@@ -138,6 +128,24 @@ public class ModelAdvanceImpl extends EObjectImpl implements ModelAdvance {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	public String getAttachedModelAdvance() {
+		return (String)ATTACHED_MODEL_ADVANCE__ESETTING_DELEGATE.dynamicGet(this, null, 0, true, false);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public void setAttachedModelAdvance(String newAttachedModelAdvance) {
+		ATTACHED_MODEL_ADVANCE__ESETTING_DELEGATE.dynamicSet(this, null, 0, newAttachedModelAdvance);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
 	public String getName() {
 		return name;
 	}
@@ -152,27 +160,6 @@ public class ModelAdvanceImpl extends EObjectImpl implements ModelAdvance {
 		name = newName;
 		if (eNotificationRequired())
 			eNotify(new ENotificationImpl(this, Notification.SET, NUOPCPackage.MODEL_ADVANCE__NAME, oldName, name));
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public boolean isAttachedInSetServices() {
-		return attachedInSetServices;
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public void setAttachedInSetServices(boolean newAttachedInSetServices) {
-		boolean oldAttachedInSetServices = attachedInSetServices;
-		attachedInSetServices = newAttachedInSetServices;
-		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, NUOPCPackage.MODEL_ADVANCE__ATTACHED_IN_SET_SERVICES, oldAttachedInSetServices, attachedInSetServices));
 	}
 
 	/**
@@ -229,10 +216,10 @@ public class ModelAdvanceImpl extends EObjectImpl implements ModelAdvance {
 		switch (featureID) {
 			case NUOPCPackage.MODEL_ADVANCE__PARENT:
 				return getParent();
+			case NUOPCPackage.MODEL_ADVANCE__ATTACHED_MODEL_ADVANCE:
+				return getAttachedModelAdvance();
 			case NUOPCPackage.MODEL_ADVANCE__NAME:
 				return getName();
-			case NUOPCPackage.MODEL_ADVANCE__ATTACHED_IN_SET_SERVICES:
-				return isAttachedInSetServices();
 		}
 		return super.eGet(featureID, resolve, coreType);
 	}
@@ -248,11 +235,11 @@ public class ModelAdvanceImpl extends EObjectImpl implements ModelAdvance {
 			case NUOPCPackage.MODEL_ADVANCE__PARENT:
 				setParent((NUOPCModel)newValue);
 				return;
+			case NUOPCPackage.MODEL_ADVANCE__ATTACHED_MODEL_ADVANCE:
+				setAttachedModelAdvance((String)newValue);
+				return;
 			case NUOPCPackage.MODEL_ADVANCE__NAME:
 				setName((String)newValue);
-				return;
-			case NUOPCPackage.MODEL_ADVANCE__ATTACHED_IN_SET_SERVICES:
-				setAttachedInSetServices((Boolean)newValue);
 				return;
 		}
 		super.eSet(featureID, newValue);
@@ -269,11 +256,11 @@ public class ModelAdvanceImpl extends EObjectImpl implements ModelAdvance {
 			case NUOPCPackage.MODEL_ADVANCE__PARENT:
 				setParent((NUOPCModel)null);
 				return;
+			case NUOPCPackage.MODEL_ADVANCE__ATTACHED_MODEL_ADVANCE:
+				ATTACHED_MODEL_ADVANCE__ESETTING_DELEGATE.dynamicUnset(this, null, 0);
+				return;
 			case NUOPCPackage.MODEL_ADVANCE__NAME:
 				setName(NAME_EDEFAULT);
-				return;
-			case NUOPCPackage.MODEL_ADVANCE__ATTACHED_IN_SET_SERVICES:
-				setAttachedInSetServices(ATTACHED_IN_SET_SERVICES_EDEFAULT);
 				return;
 		}
 		super.eUnset(featureID);
@@ -289,10 +276,10 @@ public class ModelAdvanceImpl extends EObjectImpl implements ModelAdvance {
 		switch (featureID) {
 			case NUOPCPackage.MODEL_ADVANCE__PARENT:
 				return getParent() != null;
+			case NUOPCPackage.MODEL_ADVANCE__ATTACHED_MODEL_ADVANCE:
+				return ATTACHED_MODEL_ADVANCE__ESETTING_DELEGATE.dynamicIsSet(this, null, 0);
 			case NUOPCPackage.MODEL_ADVANCE__NAME:
 				return NAME_EDEFAULT == null ? name != null : !NAME_EDEFAULT.equals(name);
-			case NUOPCPackage.MODEL_ADVANCE__ATTACHED_IN_SET_SERVICES:
-				return attachedInSetServices != ATTACHED_IN_SET_SERVICES_EDEFAULT;
 		}
 		return super.eIsSet(featureID);
 	}
@@ -309,8 +296,6 @@ public class ModelAdvanceImpl extends EObjectImpl implements ModelAdvance {
 		StringBuffer result = new StringBuffer(super.toString());
 		result.append(" (name: ");
 		result.append(name);
-		result.append(", attachedInSetServices: ");
-		result.append(attachedInSetServices);
 		result.append(')');
 		return result.toString();
 	}

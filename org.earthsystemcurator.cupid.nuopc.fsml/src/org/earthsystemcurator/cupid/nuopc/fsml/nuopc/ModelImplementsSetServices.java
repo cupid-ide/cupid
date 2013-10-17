@@ -19,7 +19,7 @@ import org.eclipse.emf.ecore.EObject;
  *   <li>{@link org.earthsystemcurator.cupid.nuopc.fsml.nuopc.ModelImplementsSetServices#getParam_rc <em>Param rc</em>}</li>
  *   <li>{@link org.earthsystemcurator.cupid.nuopc.fsml.nuopc.ModelImplementsSetServices#getCallsGenericSetServices <em>Calls Generic Set Services</em>}</li>
  *   <li>{@link org.earthsystemcurator.cupid.nuopc.fsml.nuopc.ModelImplementsSetServices#getCallsSetEntryPoint <em>Calls Set Entry Point</em>}</li>
- *   <li>{@link org.earthsystemcurator.cupid.nuopc.fsml.nuopc.ModelImplementsSetServices#getAttachesModelAdvance <em>Attaches Model Advance</em>}</li>
+ *   <li>{@link org.earthsystemcurator.cupid.nuopc.fsml.nuopc.ModelImplementsSetServices#getAttachesMethod <em>Attaches Method</em>}</li>
  * </ul>
  * </p>
  *
@@ -154,7 +154,7 @@ public interface ModelImplementsSetServices extends EObject {
 	 * @see #setCallsGenericSetServices(CallsGenericSetServices)
 	 * @see org.earthsystemcurator.cupid.nuopc.fsml.nuopc.NUOPCPackage#getModelImplementsSetServices_CallsGenericSetServices()
 	 * @model containment="true" required="true"
-	 *        annotation="http://www.earthsystemcog.org/projects/nuopc mapping='call: \"#../../importsGenericSS(#gcomp, rc=#rc)\"' essential='true'"
+	 *        annotation="http://www.earthsystemcog.org/projects/nuopc mapping='call: \"#../../genericImports/importsGenericSS(#gcomp, rc=#rc)\"' essential='true'"
 	 * @generated
 	 */
 	CallsGenericSetServices getCallsGenericSetServices();
@@ -187,22 +187,20 @@ public interface ModelImplementsSetServices extends EObject {
 	EList<CallsSetEntryPoint> getCallsSetEntryPoint();
 
 	/**
-	 * Returns the value of the '<em><b>Attaches Model Advance</b></em>' containment reference list.
-	 * The list contents are of type {@link org.earthsystemcurator.cupid.nuopc.fsml.nuopc.AttachesModelAdvance}.
-	 * It is bidirectional and its opposite is '{@link org.earthsystemcurator.cupid.nuopc.fsml.nuopc.AttachesModelAdvance#getParent <em>Parent</em>}'.
+	 * Returns the value of the '<em><b>Attaches Method</b></em>' containment reference list.
+	 * The list contents are of type {@link org.earthsystemcurator.cupid.nuopc.fsml.nuopc.AttachesMethod}.
 	 * <!-- begin-user-doc -->
 	 * <p>
-	 * If the meaning of the '<em>Attaches Model Advance</em>' containment reference isn't clear,
+	 * If the meaning of the '<em>Attaches Method</em>' containment reference list isn't clear,
 	 * there really should be more of a description here...
 	 * </p>
 	 * <!-- end-user-doc -->
-	 * @return the value of the '<em>Attaches Model Advance</em>' containment reference list.
-	 * @see org.earthsystemcurator.cupid.nuopc.fsml.nuopc.NUOPCPackage#getModelImplementsSetServices_AttachesModelAdvance()
-	 * @see org.earthsystemcurator.cupid.nuopc.fsml.nuopc.AttachesModelAdvance#getParent
-	 * @model opposite="parent" containment="true" ordered="false"
-	 *        annotation="http://www.earthsystemcog.org/projects/nuopc mappingX='call: \"ESMF_MethodAdd(#gcomp, #label, #userRoutine, #rc)\"'"
+	 * @return the value of the '<em>Attaches Method</em>' containment reference list.
+	 * @see org.earthsystemcurator.cupid.nuopc.fsml.nuopc.NUOPCPackage#getModelImplementsSetServices_AttachesMethod()
+	 * @model containment="true" ordered="false"
+	 *        annotation="http://www.earthsystemcog.org/projects/nuopc mapping='call: \"ESMF_MethodAdd(#ignore, #name, #userRoutine, #ignore)\"'"
 	 * @generated
 	 */
-	EList<AttachesModelAdvance> getAttachesModelAdvance();
+	EList<AttachesMethod> getAttachesMethod();
 
 } // ModelImplementsSetServices

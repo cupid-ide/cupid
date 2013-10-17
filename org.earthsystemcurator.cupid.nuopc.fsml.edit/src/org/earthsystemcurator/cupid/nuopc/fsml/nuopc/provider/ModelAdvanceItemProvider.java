@@ -60,10 +60,32 @@ public class ModelAdvanceItemProvider
 		if (itemPropertyDescriptors == null) {
 			super.getPropertyDescriptors(object);
 
+			addAttachedModelAdvancePropertyDescriptor(object);
 			addNamePropertyDescriptor(object);
-			addAttachedInSetServicesPropertyDescriptor(object);
 		}
 		return itemPropertyDescriptors;
+	}
+
+	/**
+	 * This adds a property descriptor for the Attached Model Advance feature.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	protected void addAttachedModelAdvancePropertyDescriptor(Object object) {
+		itemPropertyDescriptors.add
+			(createItemPropertyDescriptor
+				(((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(),
+				 getResourceLocator(),
+				 getString("_UI_ModelAdvance_attachedModelAdvance_feature"),
+				 getString("_UI_PropertyDescriptor_description", "_UI_ModelAdvance_attachedModelAdvance_feature", "_UI_ModelAdvance_type"),
+				 NUOPCPackage.Literals.MODEL_ADVANCE__ATTACHED_MODEL_ADVANCE,
+				 true,
+				 false,
+				 false,
+				 ItemPropertyDescriptor.GENERIC_VALUE_IMAGE,
+				 null,
+				 null));
 	}
 
 	/**
@@ -84,28 +106,6 @@ public class ModelAdvanceItemProvider
 				 false,
 				 false,
 				 ItemPropertyDescriptor.GENERIC_VALUE_IMAGE,
-				 null,
-				 null));
-	}
-
-	/**
-	 * This adds a property descriptor for the Attached In Set Services feature.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	protected void addAttachedInSetServicesPropertyDescriptor(Object object) {
-		itemPropertyDescriptors.add
-			(createItemPropertyDescriptor
-				(((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(),
-				 getResourceLocator(),
-				 getString("_UI_ModelAdvance_attachedInSetServices_feature"),
-				 getString("_UI_PropertyDescriptor_description", "_UI_ModelAdvance_attachedInSetServices_feature", "_UI_ModelAdvance_type"),
-				 NUOPCPackage.Literals.MODEL_ADVANCE__ATTACHED_IN_SET_SERVICES,
-				 true,
-				 false,
-				 false,
-				 ItemPropertyDescriptor.BOOLEAN_VALUE_IMAGE,
 				 null,
 				 null));
 	}
@@ -147,8 +147,8 @@ public class ModelAdvanceItemProvider
 		updateChildren(notification);
 
 		switch (notification.getFeatureID(ModelAdvance.class)) {
+			case NUOPCPackage.MODEL_ADVANCE__ATTACHED_MODEL_ADVANCE:
 			case NUOPCPackage.MODEL_ADVANCE__NAME:
-			case NUOPCPackage.MODEL_ADVANCE__ATTACHED_IN_SET_SERVICES:
 				fireNotifyChanged(new ViewerNotification(notification, notification.getNotifier(), false, true));
 				return;
 		}

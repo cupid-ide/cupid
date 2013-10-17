@@ -150,7 +150,7 @@ public class ModelImplementsSetServicesItemProvider
 			super.getChildrenFeatures(object);
 			childrenFeatures.add(NUOPCPackage.Literals.MODEL_IMPLEMENTS_SET_SERVICES__CALLS_GENERIC_SET_SERVICES);
 			childrenFeatures.add(NUOPCPackage.Literals.MODEL_IMPLEMENTS_SET_SERVICES__CALLS_SET_ENTRY_POINT);
-			childrenFeatures.add(NUOPCPackage.Literals.MODEL_IMPLEMENTS_SET_SERVICES__ATTACHES_MODEL_ADVANCE);
+			childrenFeatures.add(NUOPCPackage.Literals.MODEL_IMPLEMENTS_SET_SERVICES__ATTACHES_METHOD);
 		}
 		return childrenFeatures;
 	}
@@ -212,7 +212,7 @@ public class ModelImplementsSetServicesItemProvider
 				return;
 			case NUOPCPackage.MODEL_IMPLEMENTS_SET_SERVICES__CALLS_GENERIC_SET_SERVICES:
 			case NUOPCPackage.MODEL_IMPLEMENTS_SET_SERVICES__CALLS_SET_ENTRY_POINT:
-			case NUOPCPackage.MODEL_IMPLEMENTS_SET_SERVICES__ATTACHES_MODEL_ADVANCE:
+			case NUOPCPackage.MODEL_IMPLEMENTS_SET_SERVICES__ATTACHES_METHOD:
 				fireNotifyChanged(new ViewerNotification(notification, notification.getNotifier(), true, false));
 				return;
 		}
@@ -242,8 +242,8 @@ public class ModelImplementsSetServicesItemProvider
 
 		newChildDescriptors.add
 			(createChildParameter
-				(NUOPCPackage.Literals.MODEL_IMPLEMENTS_SET_SERVICES__ATTACHES_MODEL_ADVANCE,
-				 NUOPCFactory.eINSTANCE.createAttachesModelAdvance()));
+				(NUOPCPackage.Literals.MODEL_IMPLEMENTS_SET_SERVICES__ATTACHES_METHOD,
+				 NUOPCFactory.eINSTANCE.createAttachesMethod()));
 	}
 
 	/**

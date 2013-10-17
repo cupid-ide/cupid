@@ -3,7 +3,7 @@
 package org.earthsystemcurator.cupid.nuopc.fsml.nuopc.impl;
 
 import java.util.Collection;
-import org.earthsystemcurator.cupid.nuopc.fsml.nuopc.AttachesModelAdvance;
+import org.earthsystemcurator.cupid.nuopc.fsml.nuopc.AttachesMethod;
 import org.earthsystemcurator.cupid.nuopc.fsml.nuopc.CallsGenericSetServices;
 import org.earthsystemcurator.cupid.nuopc.fsml.nuopc.CallsSetEntryPoint;
 import org.earthsystemcurator.cupid.nuopc.fsml.nuopc.ModelImplementsSetServices;
@@ -37,7 +37,7 @@ import org.eclipse.emf.ecore.util.InternalEList;
  *   <li>{@link org.earthsystemcurator.cupid.nuopc.fsml.nuopc.impl.ModelImplementsSetServicesImpl#getParam_rc <em>Param rc</em>}</li>
  *   <li>{@link org.earthsystemcurator.cupid.nuopc.fsml.nuopc.impl.ModelImplementsSetServicesImpl#getCallsGenericSetServices <em>Calls Generic Set Services</em>}</li>
  *   <li>{@link org.earthsystemcurator.cupid.nuopc.fsml.nuopc.impl.ModelImplementsSetServicesImpl#getCallsSetEntryPoint <em>Calls Set Entry Point</em>}</li>
- *   <li>{@link org.earthsystemcurator.cupid.nuopc.fsml.nuopc.impl.ModelImplementsSetServicesImpl#getAttachesModelAdvance <em>Attaches Model Advance</em>}</li>
+ *   <li>{@link org.earthsystemcurator.cupid.nuopc.fsml.nuopc.impl.ModelImplementsSetServicesImpl#getAttachesMethod <em>Attaches Method</em>}</li>
  * </ul>
  * </p>
  *
@@ -125,14 +125,14 @@ public class ModelImplementsSetServicesImpl extends EObjectImpl implements Model
 	protected EList<CallsSetEntryPoint> callsSetEntryPoint;
 
 	/**
-	 * The cached value of the '{@link #getAttachesModelAdvance() <em>Attaches Model Advance</em>}' containment reference list.
+	 * The cached value of the '{@link #getAttachesMethod() <em>Attaches Method</em>}' containment reference list.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @see #getAttachesModelAdvance()
+	 * @see #getAttachesMethod()
 	 * @generated
 	 * @ordered
 	 */
-	protected EList<AttachesModelAdvance> attachesModelAdvance;
+	protected EList<AttachesMethod> attachesMethod;
 
 	/**
 	 * <!-- begin-user-doc -->
@@ -317,11 +317,11 @@ public class ModelImplementsSetServicesImpl extends EObjectImpl implements Model
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EList<AttachesModelAdvance> getAttachesModelAdvance() {
-		if (attachesModelAdvance == null) {
-			attachesModelAdvance = new EObjectContainmentWithInverseEList<AttachesModelAdvance>(AttachesModelAdvance.class, this, NUOPCPackage.MODEL_IMPLEMENTS_SET_SERVICES__ATTACHES_MODEL_ADVANCE, NUOPCPackage.ATTACHES_MODEL_ADVANCE__PARENT);
+	public EList<AttachesMethod> getAttachesMethod() {
+		if (attachesMethod == null) {
+			attachesMethod = new EObjectContainmentEList<AttachesMethod>(AttachesMethod.class, this, NUOPCPackage.MODEL_IMPLEMENTS_SET_SERVICES__ATTACHES_METHOD);
 		}
-		return attachesModelAdvance;
+		return attachesMethod;
 	}
 
 	/**
@@ -337,8 +337,6 @@ public class ModelImplementsSetServicesImpl extends EObjectImpl implements Model
 				if (eInternalContainer() != null)
 					msgs = eBasicRemoveFromContainer(msgs);
 				return basicSetParent((NUOPCModel)otherEnd, msgs);
-			case NUOPCPackage.MODEL_IMPLEMENTS_SET_SERVICES__ATTACHES_MODEL_ADVANCE:
-				return ((InternalEList<InternalEObject>)(InternalEList<?>)getAttachesModelAdvance()).basicAdd(otherEnd, msgs);
 		}
 		return super.eInverseAdd(otherEnd, featureID, msgs);
 	}
@@ -357,8 +355,8 @@ public class ModelImplementsSetServicesImpl extends EObjectImpl implements Model
 				return basicSetCallsGenericSetServices(null, msgs);
 			case NUOPCPackage.MODEL_IMPLEMENTS_SET_SERVICES__CALLS_SET_ENTRY_POINT:
 				return ((InternalEList<?>)getCallsSetEntryPoint()).basicRemove(otherEnd, msgs);
-			case NUOPCPackage.MODEL_IMPLEMENTS_SET_SERVICES__ATTACHES_MODEL_ADVANCE:
-				return ((InternalEList<?>)getAttachesModelAdvance()).basicRemove(otherEnd, msgs);
+			case NUOPCPackage.MODEL_IMPLEMENTS_SET_SERVICES__ATTACHES_METHOD:
+				return ((InternalEList<?>)getAttachesMethod()).basicRemove(otherEnd, msgs);
 		}
 		return super.eInverseRemove(otherEnd, featureID, msgs);
 	}
@@ -397,8 +395,8 @@ public class ModelImplementsSetServicesImpl extends EObjectImpl implements Model
 				return getCallsGenericSetServices();
 			case NUOPCPackage.MODEL_IMPLEMENTS_SET_SERVICES__CALLS_SET_ENTRY_POINT:
 				return getCallsSetEntryPoint();
-			case NUOPCPackage.MODEL_IMPLEMENTS_SET_SERVICES__ATTACHES_MODEL_ADVANCE:
-				return getAttachesModelAdvance();
+			case NUOPCPackage.MODEL_IMPLEMENTS_SET_SERVICES__ATTACHES_METHOD:
+				return getAttachesMethod();
 		}
 		return super.eGet(featureID, resolve, coreType);
 	}
@@ -431,9 +429,9 @@ public class ModelImplementsSetServicesImpl extends EObjectImpl implements Model
 				getCallsSetEntryPoint().clear();
 				getCallsSetEntryPoint().addAll((Collection<? extends CallsSetEntryPoint>)newValue);
 				return;
-			case NUOPCPackage.MODEL_IMPLEMENTS_SET_SERVICES__ATTACHES_MODEL_ADVANCE:
-				getAttachesModelAdvance().clear();
-				getAttachesModelAdvance().addAll((Collection<? extends AttachesModelAdvance>)newValue);
+			case NUOPCPackage.MODEL_IMPLEMENTS_SET_SERVICES__ATTACHES_METHOD:
+				getAttachesMethod().clear();
+				getAttachesMethod().addAll((Collection<? extends AttachesMethod>)newValue);
 				return;
 		}
 		super.eSet(featureID, newValue);
@@ -465,8 +463,8 @@ public class ModelImplementsSetServicesImpl extends EObjectImpl implements Model
 			case NUOPCPackage.MODEL_IMPLEMENTS_SET_SERVICES__CALLS_SET_ENTRY_POINT:
 				getCallsSetEntryPoint().clear();
 				return;
-			case NUOPCPackage.MODEL_IMPLEMENTS_SET_SERVICES__ATTACHES_MODEL_ADVANCE:
-				getAttachesModelAdvance().clear();
+			case NUOPCPackage.MODEL_IMPLEMENTS_SET_SERVICES__ATTACHES_METHOD:
+				getAttachesMethod().clear();
 				return;
 		}
 		super.eUnset(featureID);
@@ -492,8 +490,8 @@ public class ModelImplementsSetServicesImpl extends EObjectImpl implements Model
 				return callsGenericSetServices != null;
 			case NUOPCPackage.MODEL_IMPLEMENTS_SET_SERVICES__CALLS_SET_ENTRY_POINT:
 				return callsSetEntryPoint != null && !callsSetEntryPoint.isEmpty();
-			case NUOPCPackage.MODEL_IMPLEMENTS_SET_SERVICES__ATTACHES_MODEL_ADVANCE:
-				return attachesModelAdvance != null && !attachesModelAdvance.isEmpty();
+			case NUOPCPackage.MODEL_IMPLEMENTS_SET_SERVICES__ATTACHES_METHOD:
+				return attachesMethod != null && !attachesMethod.isEmpty();
 		}
 		return super.eIsSet(featureID);
 	}

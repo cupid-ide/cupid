@@ -87,10 +87,10 @@ public class ReverseEngineer {
 		
 		a = reverse(asts, a);
 		
-		System.out.println("\n=============\nReverse mappings:");
-		for (Entry<Object, Object> e : mappings.entrySet()) {
-			System.out.println(e.getKey() + " ===> " + e.getValue().getClass());
-		}
+		//System.out.println("\n=============\nReverse mappings:");
+		//for (Entry<Object, Object> e : mappings.entrySet()) {
+		//	System.out.println(e.getKey() + " ===> " + e.getValue().getClass());
+		//}
 		
 		//save for later
 		this.app = a;
@@ -151,7 +151,7 @@ public class ReverseEngineer {
 								//TODO: decide what to do about NULL_VALUE below
 								String replaceVal = EcoreUtils.eGetSFValue(metavar, modelElem, null);
 								if (replaceVal != null) {
-									//System.out.println("Replacing metavariable: " + match.group() + " with val: " + replaceVal);
+									System.out.println("Replacing metavariable: " + match.group() + " with val: " + replaceVal);
 									entry.setValue(val.replaceAll(match.group(), replaceVal));
 								}
 								

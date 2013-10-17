@@ -95,6 +95,29 @@ public class NUOPCItemProviderAdapterFactory extends NUOPCAdapterFactory impleme
 	}
 
 	/**
+	 * This keeps track of the one adapter used for all {@link org.earthsystemcurator.cupid.nuopc.fsml.nuopc.NUOPCModel__GenericImports} instances.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	protected NUOPCModel__GenericImportsItemProvider nuopcModel__GenericImportsItemProvider;
+
+	/**
+	 * This creates an adapter for a {@link org.earthsystemcurator.cupid.nuopc.fsml.nuopc.NUOPCModel__GenericImports}.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	@Override
+	public Adapter createNUOPCModel__GenericImportsAdapter() {
+		if (nuopcModel__GenericImportsItemProvider == null) {
+			nuopcModel__GenericImportsItemProvider = new NUOPCModel__GenericImportsItemProvider(this);
+		}
+
+		return nuopcModel__GenericImportsItemProvider;
+	}
+
+	/**
 	 * This keeps track of the one adapter used for all {@link org.earthsystemcurator.cupid.nuopc.fsml.nuopc.ModelImplementsSetServices} instances.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -322,29 +345,6 @@ public class NUOPCItemProviderAdapterFactory extends NUOPCAdapterFactory impleme
 		}
 
 		return realizesExportFieldItemProvider;
-	}
-
-	/**
-	 * This keeps track of the one adapter used for all {@link org.earthsystemcurator.cupid.nuopc.fsml.nuopc.AttachesModelAdvance} instances.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	protected AttachesModelAdvanceItemProvider attachesModelAdvanceItemProvider;
-
-	/**
-	 * This creates an adapter for a {@link org.earthsystemcurator.cupid.nuopc.fsml.nuopc.AttachesModelAdvance}.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	@Override
-	public Adapter createAttachesModelAdvanceAdapter() {
-		if (attachesModelAdvanceItemProvider == null) {
-			attachesModelAdvanceItemProvider = new AttachesModelAdvanceItemProvider(this);
-		}
-
-		return attachesModelAdvanceItemProvider;
 	}
 
 	/**
@@ -700,17 +700,17 @@ public class NUOPCItemProviderAdapterFactory extends NUOPCAdapterFactory impleme
 	 */
 	public void dispose() {
 		if (nuopcModelItemProvider != null) nuopcModelItemProvider.dispose();
+		if (nuopcModel__GenericImportsItemProvider != null) nuopcModel__GenericImportsItemProvider.dispose();
+		if (model_InitItemProvider != null) model_InitItemProvider.dispose();
 		if (modelImplementsSetServicesItemProvider != null) modelImplementsSetServicesItemProvider.dispose();
 		if (callsGenericSetServicesItemProvider != null) callsGenericSetServicesItemProvider.dispose();
 		if (callsSetEntryPointItemProvider != null) callsSetEntryPointItemProvider.dispose();
-		if (model_InitItemProvider != null) model_InitItemProvider.dispose();
 		if (modelImplementsInitP1ItemProvider != null) modelImplementsInitP1ItemProvider.dispose();
 		if (modelImplementsInitP2ItemProvider != null) modelImplementsInitP2ItemProvider.dispose();
 		if (advertisesImportFieldItemProvider != null) advertisesImportFieldItemProvider.dispose();
 		if (advertisesExportFieldItemProvider != null) advertisesExportFieldItemProvider.dispose();
 		if (realizesImportFieldItemProvider != null) realizesImportFieldItemProvider.dispose();
 		if (realizesExportFieldItemProvider != null) realizesExportFieldItemProvider.dispose();
-		if (attachesModelAdvanceItemProvider != null) attachesModelAdvanceItemProvider.dispose();
 		if (modelAdvanceItemProvider != null) modelAdvanceItemProvider.dispose();
 		if (nuopcDriverItemProvider != null) nuopcDriverItemProvider.dispose();
 		if (nuopcDriver__GenericImportsItemProvider != null) nuopcDriver__GenericImportsItemProvider.dispose();

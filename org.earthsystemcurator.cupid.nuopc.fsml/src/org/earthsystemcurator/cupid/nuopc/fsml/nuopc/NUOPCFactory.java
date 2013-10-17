@@ -31,6 +31,15 @@ public interface NUOPCFactory extends EFactory {
 	NUOPCModel createNUOPCModel();
 
 	/**
+	 * Returns a new object of class '<em>Model Generic Imports</em>'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return a new object of class '<em>Model Generic Imports</em>'.
+	 * @generated
+	 */
+	NUOPCModel__GenericImports createNUOPCModel__GenericImports();
+
+	/**
 	 * Returns a new object of class '<em>Model Implements Set Services</em>'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -119,15 +128,6 @@ public interface NUOPCFactory extends EFactory {
 	 * @generated
 	 */
 	RealizesExportField createRealizesExportField();
-
-	/**
-	 * Returns a new object of class '<em>Attaches Model Advance</em>'.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @return a new object of class '<em>Attaches Model Advance</em>'.
-	 * @generated
-	 */
-	AttachesModelAdvance createAttachesModelAdvance();
 
 	/**
 	 * Returns a new object of class '<em>Model Advance</em>'.

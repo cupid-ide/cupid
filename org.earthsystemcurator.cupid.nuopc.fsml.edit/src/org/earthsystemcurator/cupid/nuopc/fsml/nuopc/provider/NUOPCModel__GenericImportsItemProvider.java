@@ -6,7 +6,7 @@ package org.earthsystemcurator.cupid.nuopc.fsml.nuopc.provider;
 import java.util.Collection;
 import java.util.List;
 
-import org.earthsystemcurator.cupid.nuopc.fsml.nuopc.AttachesModelAdvance;
+import org.earthsystemcurator.cupid.nuopc.fsml.nuopc.NUOPCModel__GenericImports;
 import org.earthsystemcurator.cupid.nuopc.fsml.nuopc.NUOPCPackage;
 
 import org.eclipse.emf.common.notify.AdapterFactory;
@@ -26,12 +26,12 @@ import org.eclipse.emf.edit.provider.ItemProviderAdapter;
 import org.eclipse.emf.edit.provider.ViewerNotification;
 
 /**
- * This is the item provider adapter for a {@link org.earthsystemcurator.cupid.nuopc.fsml.nuopc.AttachesModelAdvance} object.
+ * This is the item provider adapter for a {@link org.earthsystemcurator.cupid.nuopc.fsml.nuopc.NUOPCModel__GenericImports} object.
  * <!-- begin-user-doc -->
  * <!-- end-user-doc -->
  * @generated
  */
-public class AttachesModelAdvanceItemProvider
+public class NUOPCModel__GenericImportsItemProvider
 	extends ItemProviderAdapter
 	implements
 		IEditingDomainItemProvider,
@@ -45,7 +45,7 @@ public class AttachesModelAdvanceItemProvider
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public AttachesModelAdvanceItemProvider(AdapterFactory adapterFactory) {
+	public NUOPCModel__GenericImportsItemProvider(AdapterFactory adapterFactory) {
 		super(adapterFactory);
 	}
 
@@ -60,26 +60,26 @@ public class AttachesModelAdvanceItemProvider
 		if (itemPropertyDescriptors == null) {
 			super.getPropertyDescriptors(object);
 
-			addLabelPropertyDescriptor(object);
-			addUserRoutinePropertyDescriptor(object);
+			addImportsGenericSSPropertyDescriptor(object);
+			addImportsLabelModelAdvancePropertyDescriptor(object);
 		}
 		return itemPropertyDescriptors;
 	}
 
 	/**
-	 * This adds a property descriptor for the Label feature.
+	 * This adds a property descriptor for the Imports Generic SS feature.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	protected void addLabelPropertyDescriptor(Object object) {
+	protected void addImportsGenericSSPropertyDescriptor(Object object) {
 		itemPropertyDescriptors.add
 			(createItemPropertyDescriptor
 				(((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(),
 				 getResourceLocator(),
-				 getString("_UI_AttachesModelAdvance_label_feature"),
-				 getString("_UI_PropertyDescriptor_description", "_UI_AttachesModelAdvance_label_feature", "_UI_AttachesModelAdvance_type"),
-				 NUOPCPackage.Literals.ATTACHES_MODEL_ADVANCE__LABEL,
+				 getString("_UI_NUOPCModel__GenericImports_importsGenericSS_feature"),
+				 getString("_UI_PropertyDescriptor_description", "_UI_NUOPCModel__GenericImports_importsGenericSS_feature", "_UI_NUOPCModel__GenericImports_type"),
+				 NUOPCPackage.Literals.NUOPC_MODEL_GENERIC_IMPORTS__IMPORTS_GENERIC_SS,
 				 true,
 				 false,
 				 false,
@@ -89,19 +89,19 @@ public class AttachesModelAdvanceItemProvider
 	}
 
 	/**
-	 * This adds a property descriptor for the User Routine feature.
+	 * This adds a property descriptor for the Imports Label Model Advance feature.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	protected void addUserRoutinePropertyDescriptor(Object object) {
+	protected void addImportsLabelModelAdvancePropertyDescriptor(Object object) {
 		itemPropertyDescriptors.add
 			(createItemPropertyDescriptor
 				(((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(),
 				 getResourceLocator(),
-				 getString("_UI_AttachesModelAdvance_userRoutine_feature"),
-				 getString("_UI_PropertyDescriptor_description", "_UI_AttachesModelAdvance_userRoutine_feature", "_UI_AttachesModelAdvance_type"),
-				 NUOPCPackage.Literals.ATTACHES_MODEL_ADVANCE__USER_ROUTINE,
+				 getString("_UI_NUOPCModel__GenericImports_importsLabelModelAdvance_feature"),
+				 getString("_UI_PropertyDescriptor_description", "_UI_NUOPCModel__GenericImports_importsLabelModelAdvance_feature", "_UI_NUOPCModel__GenericImports_type"),
+				 NUOPCPackage.Literals.NUOPC_MODEL_GENERIC_IMPORTS__IMPORTS_LABEL_MODEL_ADVANCE,
 				 true,
 				 false,
 				 false,
@@ -111,14 +111,14 @@ public class AttachesModelAdvanceItemProvider
 	}
 
 	/**
-	 * This returns AttachesModelAdvance.gif.
+	 * This returns NUOPCModel__GenericImports.gif.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
 	@Override
 	public Object getImage(Object object) {
-		return overlayImage(object, getResourceLocator().getImage("full/obj16/AttachesModelAdvance"));
+		return overlayImage(object, getResourceLocator().getImage("full/obj16/NUOPCModel__GenericImports"));
 	}
 
 	/**
@@ -129,10 +129,10 @@ public class AttachesModelAdvanceItemProvider
 	 */
 	@Override
 	public String getText(Object object) {
-		String label = ((AttachesModelAdvance)object).getLabel();
+		String label = ((NUOPCModel__GenericImports)object).getImportsGenericSS();
 		return label == null || label.length() == 0 ?
-			getString("_UI_AttachesModelAdvance_type") :
-			getString("_UI_AttachesModelAdvance_type") + " " + label;
+			getString("_UI_NUOPCModel__GenericImports_type") :
+			getString("_UI_NUOPCModel__GenericImports_type") + " " + label;
 	}
 
 	/**
@@ -146,9 +146,9 @@ public class AttachesModelAdvanceItemProvider
 	public void notifyChanged(Notification notification) {
 		updateChildren(notification);
 
-		switch (notification.getFeatureID(AttachesModelAdvance.class)) {
-			case NUOPCPackage.ATTACHES_MODEL_ADVANCE__LABEL:
-			case NUOPCPackage.ATTACHES_MODEL_ADVANCE__USER_ROUTINE:
+		switch (notification.getFeatureID(NUOPCModel__GenericImports.class)) {
+			case NUOPCPackage.NUOPC_MODEL_GENERIC_IMPORTS__IMPORTS_GENERIC_SS:
+			case NUOPCPackage.NUOPC_MODEL_GENERIC_IMPORTS__IMPORTS_LABEL_MODEL_ADVANCE:
 				fireNotifyChanged(new ViewerNotification(notification, notification.getNotifier(), false, true));
 				return;
 		}

@@ -13,8 +13,8 @@ import org.eclipse.emf.ecore.EObject;
  * The following features are supported:
  * <ul>
  *   <li>{@link org.earthsystemcurator.cupid.nuopc.fsml.nuopc.ModelAdvance#getParent <em>Parent</em>}</li>
+ *   <li>{@link org.earthsystemcurator.cupid.nuopc.fsml.nuopc.ModelAdvance#getAttachedModelAdvance <em>Attached Model Advance</em>}</li>
  *   <li>{@link org.earthsystemcurator.cupid.nuopc.fsml.nuopc.ModelAdvance#getName <em>Name</em>}</li>
- *   <li>{@link org.earthsystemcurator.cupid.nuopc.fsml.nuopc.ModelAdvance#isAttachedInSetServices <em>Attached In Set Services</em>}</li>
  * </ul>
  * </p>
  *
@@ -52,6 +52,33 @@ public interface ModelAdvance extends EObject {
 	void setParent(NUOPCModel value);
 
 	/**
+	 * Returns the value of the '<em><b>Attached Model Advance</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <p>
+	 * If the meaning of the '<em>Attached Model Advance</em>' attribute isn't clear,
+	 * there really should be more of a description here...
+	 * </p>
+	 * <!-- end-user-doc -->
+	 * @return the value of the '<em>Attached Model Advance</em>' attribute.
+	 * @see #setAttachedModelAdvance(String)
+	 * @see org.earthsystemcurator.cupid.nuopc.fsml.nuopc.NUOPCPackage#getModelAdvance_AttachedModelAdvance()
+	 * @model required="true" derived="true"
+	 *        annotation="http://www.eclipse.org/emf/2002/Ecore/OCL derivation='self.parent.implementsSetServices.attachesMethod->select(m|m.name=self.parent.genericImports.importsLabelModelAdvance).userRoutine->asSequence()->first()'"
+	 * @generated
+	 */
+	String getAttachedModelAdvance();
+
+	/**
+	 * Sets the value of the '{@link org.earthsystemcurator.cupid.nuopc.fsml.nuopc.ModelAdvance#getAttachedModelAdvance <em>Attached Model Advance</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @param value the new value of the '<em>Attached Model Advance</em>' attribute.
+	 * @see #getAttachedModelAdvance()
+	 * @generated
+	 */
+	void setAttachedModelAdvance(String value);
+
+	/**
 	 * Returns the value of the '<em><b>Name</b></em>' attribute.
 	 * <!-- begin-user-doc -->
 	 * <p>
@@ -62,8 +89,8 @@ public interface ModelAdvance extends EObject {
 	 * @return the value of the '<em>Name</em>' attribute.
 	 * @see #setName(String)
 	 * @see org.earthsystemcurator.cupid.nuopc.fsml.nuopc.NUOPCPackage#getModelAdvance_Name()
-	 * @model id="true" required="true"
-	 *        annotation="http://www.earthsystemcog.org/projects/nuopc mapping='subroutineName'"
+	 * @model required="true"
+	 *        annotation="http://www.earthsystemcog.org/projects/nuopc mapping='subroutineName: \"#../attachedModelAdvance\"' essential='true'"
 	 * @generated
 	 */
 	String getName();
@@ -77,32 +104,5 @@ public interface ModelAdvance extends EObject {
 	 * @generated
 	 */
 	void setName(String value);
-
-	/**
-	 * Returns the value of the '<em><b>Attached In Set Services</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <p>
-	 * If the meaning of the '<em>Attached In Set Services</em>' attribute isn't clear,
-	 * there really should be more of a description here...
-	 * </p>
-	 * <!-- end-user-doc -->
-	 * @return the value of the '<em>Attached In Set Services</em>' attribute.
-	 * @see #setAttachedInSetServices(boolean)
-	 * @see org.earthsystemcurator.cupid.nuopc.fsml.nuopc.NUOPCPackage#getModelAdvance_AttachedInSetServices()
-	 * @model required="true" derived="true"
-	 *        annotation="http://www.eclipse.org/emf/2002/Ecore/OCL_NOT derivation='self.parent.implementsSetServices.attachesModelAdvance.userRoutine = self.name'"
-	 * @generated
-	 */
-	boolean isAttachedInSetServices();
-
-	/**
-	 * Sets the value of the '{@link org.earthsystemcurator.cupid.nuopc.fsml.nuopc.ModelAdvance#isAttachedInSetServices <em>Attached In Set Services</em>}' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @param value the new value of the '<em>Attached In Set Services</em>' attribute.
-	 * @see #isAttachedInSetServices()
-	 * @generated
-	 */
-	void setAttachedInSetServices(boolean value);
 
 } // ModelAdvance

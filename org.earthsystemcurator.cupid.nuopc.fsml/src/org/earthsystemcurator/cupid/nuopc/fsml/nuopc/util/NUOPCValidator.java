@@ -93,14 +93,16 @@ public class NUOPCValidator extends OCLinEcoreEObjectValidator {
 		switch (classifierID) {
 			case NUOPCPackage.NUOPC_MODEL:
 				return validateNUOPCModel((NUOPCModel)value, diagnostics, context);
+			case NUOPCPackage.NUOPC_MODEL_GENERIC_IMPORTS:
+				return validateNUOPCModel__GenericImports((NUOPCModel__GenericImports)value, diagnostics, context);
+			case NUOPCPackage.MODEL_INIT:
+				return validateModel_Init((Model_Init)value, diagnostics, context);
 			case NUOPCPackage.MODEL_IMPLEMENTS_SET_SERVICES:
 				return validateModelImplementsSetServices((ModelImplementsSetServices)value, diagnostics, context);
 			case NUOPCPackage.CALLS_GENERIC_SET_SERVICES:
 				return validateCallsGenericSetServices((CallsGenericSetServices)value, diagnostics, context);
 			case NUOPCPackage.CALLS_SET_ENTRY_POINT:
 				return validateCallsSetEntryPoint((CallsSetEntryPoint)value, diagnostics, context);
-			case NUOPCPackage.MODEL_INIT:
-				return validateModel_Init((Model_Init)value, diagnostics, context);
 			case NUOPCPackage.MODEL_IMPLEMENTS_INIT_P1:
 				return validateModelImplementsInitP1((ModelImplementsInitP1)value, diagnostics, context);
 			case NUOPCPackage.MODEL_IMPLEMENTS_INIT_P2:
@@ -113,8 +115,6 @@ public class NUOPCValidator extends OCLinEcoreEObjectValidator {
 				return validateRealizesImportField((RealizesImportField)value, diagnostics, context);
 			case NUOPCPackage.REALIZES_EXPORT_FIELD:
 				return validateRealizesExportField((RealizesExportField)value, diagnostics, context);
-			case NUOPCPackage.ATTACHES_MODEL_ADVANCE:
-				return validateAttachesModelAdvance((AttachesModelAdvance)value, diagnostics, context);
 			case NUOPCPackage.MODEL_ADVANCE:
 				return validateModelAdvance((ModelAdvance)value, diagnostics, context);
 			case NUOPCPackage.NUOPC_DRIVER:
@@ -149,6 +149,15 @@ public class NUOPCValidator extends OCLinEcoreEObjectValidator {
 	 */
 	public boolean validateNUOPCModel(NUOPCModel nuopcModel, DiagnosticChain diagnostics, Map<Object, Object> context) {
 		return validate_EveryDefaultConstraint(nuopcModel, diagnostics, context);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public boolean validateNUOPCModel__GenericImports(NUOPCModel__GenericImports nuopcModel__GenericImports, DiagnosticChain diagnostics, Map<Object, Object> context) {
+		return validate_EveryDefaultConstraint(nuopcModel__GenericImports, diagnostics, context);
 	}
 
 	/**
@@ -308,15 +317,6 @@ public class NUOPCValidator extends OCLinEcoreEObjectValidator {
 	 */
 	public boolean validateRealizesExportField(RealizesExportField realizesExportField, DiagnosticChain diagnostics, Map<Object, Object> context) {
 		return validate_EveryDefaultConstraint(realizesExportField, diagnostics, context);
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public boolean validateAttachesModelAdvance(AttachesModelAdvance attachesModelAdvance, DiagnosticChain diagnostics, Map<Object, Object> context) {
-		return validate_EveryDefaultConstraint(attachesModelAdvance, diagnostics, context);
 	}
 
 	/**

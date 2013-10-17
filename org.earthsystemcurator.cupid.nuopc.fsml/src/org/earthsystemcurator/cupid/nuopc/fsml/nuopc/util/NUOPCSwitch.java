@@ -72,6 +72,18 @@ public class NUOPCSwitch<T> extends Switch<T> {
 				if (result == null) result = defaultCase(theEObject);
 				return result;
 			}
+			case NUOPCPackage.NUOPC_MODEL_GENERIC_IMPORTS: {
+				NUOPCModel__GenericImports nuopcModel__GenericImports = (NUOPCModel__GenericImports)theEObject;
+				T result = caseNUOPCModel__GenericImports(nuopcModel__GenericImports);
+				if (result == null) result = defaultCase(theEObject);
+				return result;
+			}
+			case NUOPCPackage.MODEL_INIT: {
+				Model_Init model_Init = (Model_Init)theEObject;
+				T result = caseModel_Init(model_Init);
+				if (result == null) result = defaultCase(theEObject);
+				return result;
+			}
 			case NUOPCPackage.MODEL_IMPLEMENTS_SET_SERVICES: {
 				ModelImplementsSetServices modelImplementsSetServices = (ModelImplementsSetServices)theEObject;
 				T result = caseModelImplementsSetServices(modelImplementsSetServices);
@@ -87,12 +99,6 @@ public class NUOPCSwitch<T> extends Switch<T> {
 			case NUOPCPackage.CALLS_SET_ENTRY_POINT: {
 				CallsSetEntryPoint callsSetEntryPoint = (CallsSetEntryPoint)theEObject;
 				T result = caseCallsSetEntryPoint(callsSetEntryPoint);
-				if (result == null) result = defaultCase(theEObject);
-				return result;
-			}
-			case NUOPCPackage.MODEL_INIT: {
-				Model_Init model_Init = (Model_Init)theEObject;
-				T result = caseModel_Init(model_Init);
 				if (result == null) result = defaultCase(theEObject);
 				return result;
 			}
@@ -129,12 +135,6 @@ public class NUOPCSwitch<T> extends Switch<T> {
 			case NUOPCPackage.REALIZES_EXPORT_FIELD: {
 				RealizesExportField realizesExportField = (RealizesExportField)theEObject;
 				T result = caseRealizesExportField(realizesExportField);
-				if (result == null) result = defaultCase(theEObject);
-				return result;
-			}
-			case NUOPCPackage.ATTACHES_MODEL_ADVANCE: {
-				AttachesModelAdvance attachesModelAdvance = (AttachesModelAdvance)theEObject;
-				T result = caseAttachesModelAdvance(attachesModelAdvance);
 				if (result == null) result = defaultCase(theEObject);
 				return result;
 			}
@@ -220,6 +220,21 @@ public class NUOPCSwitch<T> extends Switch<T> {
 	 * @generated
 	 */
 	public T caseNUOPCModel(NUOPCModel object) {
+		return null;
+	}
+
+	/**
+	 * Returns the result of interpreting the object as an instance of '<em>Model Generic Imports</em>'.
+	 * <!-- begin-user-doc -->
+	 * This implementation returns null;
+	 * returning a non-null result will terminate the switch.
+	 * <!-- end-user-doc -->
+	 * @param object the target of the switch.
+	 * @return the result of interpreting the object as an instance of '<em>Model Generic Imports</em>'.
+	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+	 * @generated
+	 */
+	public T caseNUOPCModel__GenericImports(NUOPCModel__GenericImports object) {
 		return null;
 	}
 
@@ -370,21 +385,6 @@ public class NUOPCSwitch<T> extends Switch<T> {
 	 * @generated
 	 */
 	public T caseRealizesExportField(RealizesExportField object) {
-		return null;
-	}
-
-	/**
-	 * Returns the result of interpreting the object as an instance of '<em>Attaches Model Advance</em>'.
-	 * <!-- begin-user-doc -->
-	 * This implementation returns null;
-	 * returning a non-null result will terminate the switch.
-	 * <!-- end-user-doc -->
-	 * @param object the target of the switch.
-	 * @return the result of interpreting the object as an instance of '<em>Attaches Model Advance</em>'.
-	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
-	 * @generated
-	 */
-	public T caseAttachesModelAdvance(AttachesModelAdvance object) {
 		return null;
 	}
 

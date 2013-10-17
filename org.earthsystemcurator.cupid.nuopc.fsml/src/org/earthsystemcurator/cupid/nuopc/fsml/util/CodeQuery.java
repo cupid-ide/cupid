@@ -60,7 +60,14 @@ public class CodeQuery {
 	
 	
 	public static String subroutineName(ASTSubroutineSubprogramNode node, Map<String, Object> params) {
-		return node.getNameToken().getText();		
+		String subroutineName = (String) params.get("subroutineName");
+		if (subroutineName == null) {
+			return node.getNameToken().getText();
+		}
+		else if (subroutineName.equalsIgnoreCase(node.getNameToken().getText())) {
+			return node.getNameToken().getText();
+		}
+		return null;
 	}
 	
 	
@@ -790,6 +797,7 @@ public class CodeQuery {
 		String keyword = (String) params.get("argByKeyword");	
 		for (ASTSubroutineArgNode san : node.getArgList()) {
 			if (san.getName() != null && san.getName().getText().equalsIgnoreCase(keyword)) {
+				//TODO: make consistent wrt constant propagation
 				return propagateValOrSymbol(san.getExpr());						
 			}
 		}		
@@ -802,15 +810,17 @@ public class CodeQuery {
 			return null;
 		}
 		else {
+			//TODO: make consistent wrt constant propagation
 			return propagateValOrSymbol(node.getArgList().get(idx - 1).getExpr());
 		}
 	}
 	
-	//public static Pattern P_CALLSIG = Pattern.compile("((?:#?\\w+)|(?:\\*))(\\(((?:((\\w+)\\s*=\\s*)?(\\s*(#?\\w+))?,?\\s*)*)\\))?");
 	
 	//TODO: change this to match new metavar signature
 	
-	public static Pattern P_CALLSIG = Pattern.compile("((?:(?:#(?:../)*)?\\w+)|(?:\\*))(\\(((?:((\\w+)\\s*=\\s*)?(\\s*((?:#(?:../)*)?\\w+))?,?\\s*)*)\\))?");
+	//public static Pattern P_CALLSIG = Pattern.compile("((?:(?:#(?:../)*)?\\w+)|(?:\\*))(\\(((?:((\\w+)\\s*=\\s*)?(\\s*((?:#(?:../)*)?\\w+))?,?\\s*)*)\\))?");
+	
+	public static Pattern P_CALLSIG = Pattern.compile("(#?(?:(?:\\.\\.|\\w+)/)*\\w+|(?:\\*))(\\(((?:((\\w+)\\s*=\\s*)?(\\s*((?:#(?:../)*)?\\w+))?,?\\s*)*)\\))?");	
 	public static Pattern P_CALLARG = Pattern.compile("((\\w+)\\s*=\\s*)?((?:#(?:../)*)?\\w+)");
 	
 	//out[0] --> list of vars (may be null)
@@ -939,10 +949,14 @@ public class CodeQuery {
 						continue csnloop;
 					}
 					else if (vars.get(i).startsWith("#")) {
-						metavariableMap.put(vars.get(i), propagateValOrSymbol(san.getExpr()));
+						//TODO: need to determine semantics for how far to resolve variables
+						//for now, just use textual value of expression
+						//metavariableMap.put(vars.get(i), propagateValOrSymbol(san.getExpr()));						
+						metavariableMap.put(vars.get(i), san.getExpr().toString());						
 					}
-					else if (!propagateValOrSymbol(san.getExpr()).equalsIgnoreCase(vars.get(i))) {
-						//var is a literal and did not match
+					//else if (!propagateValOrSymbol(san.getExpr()).equalsIgnoreCase(vars.get(i))) {
+					else if (!san.getExpr().toString().equalsIgnoreCase(vars.get(i))) {
+					//	var is a literal and did not match
 						continue csnloop;						
 					}
 				}

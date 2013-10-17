@@ -64,7 +64,6 @@ public class NUOPCModelItemProvider
 			super.getPropertyDescriptors(object);
 
 			addNamePropertyDescriptor(object);
-			addImportsGenericSSPropertyDescriptor(object);
 			addInitializePropertyDescriptor(object);
 		}
 		return itemPropertyDescriptors;
@@ -84,28 +83,6 @@ public class NUOPCModelItemProvider
 				 getString("_UI_NUOPCModel_name_feature"),
 				 getString("_UI_PropertyDescriptor_description", "_UI_NUOPCModel_name_feature", "_UI_NUOPCModel_type"),
 				 NUOPCPackage.Literals.NUOPC_MODEL__NAME,
-				 true,
-				 false,
-				 false,
-				 ItemPropertyDescriptor.GENERIC_VALUE_IMAGE,
-				 null,
-				 null));
-	}
-
-	/**
-	 * This adds a property descriptor for the Imports Generic SS feature.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	protected void addImportsGenericSSPropertyDescriptor(Object object) {
-		itemPropertyDescriptors.add
-			(createItemPropertyDescriptor
-				(((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(),
-				 getResourceLocator(),
-				 getString("_UI_NUOPCModel_importsGenericSS_feature"),
-				 getString("_UI_PropertyDescriptor_description", "_UI_NUOPCModel_importsGenericSS_feature", "_UI_NUOPCModel_type"),
-				 NUOPCPackage.Literals.NUOPC_MODEL__IMPORTS_GENERIC_SS,
 				 true,
 				 false,
 				 false,
@@ -148,6 +125,7 @@ public class NUOPCModelItemProvider
 	public Collection<? extends EStructuralFeature> getChildrenFeatures(Object object) {
 		if (childrenFeatures == null) {
 			super.getChildrenFeatures(object);
+			childrenFeatures.add(NUOPCPackage.Literals.NUOPC_MODEL__GENERIC_IMPORTS);
 			childrenFeatures.add(NUOPCPackage.Literals.NUOPC_MODEL__IMPLEMENTS_SET_SERVICES);
 			childrenFeatures.add(NUOPCPackage.Literals.NUOPC_MODEL__INITIALIZE);
 			childrenFeatures.add(NUOPCPackage.Literals.NUOPC_MODEL__IMPLEMENTS_MODEL_ADVANCE);
@@ -206,9 +184,9 @@ public class NUOPCModelItemProvider
 
 		switch (notification.getFeatureID(NUOPCModel.class)) {
 			case NUOPCPackage.NUOPC_MODEL__NAME:
-			case NUOPCPackage.NUOPC_MODEL__IMPORTS_GENERIC_SS:
 				fireNotifyChanged(new ViewerNotification(notification, notification.getNotifier(), false, true));
 				return;
+			case NUOPCPackage.NUOPC_MODEL__GENERIC_IMPORTS:
 			case NUOPCPackage.NUOPC_MODEL__IMPLEMENTS_SET_SERVICES:
 			case NUOPCPackage.NUOPC_MODEL__INITIALIZE:
 			case NUOPCPackage.NUOPC_MODEL__IMPLEMENTS_MODEL_ADVANCE:
@@ -228,6 +206,11 @@ public class NUOPCModelItemProvider
 	@Override
 	protected void collectNewChildDescriptors(Collection<Object> newChildDescriptors, Object object) {
 		super.collectNewChildDescriptors(newChildDescriptors, object);
+
+		newChildDescriptors.add
+			(createChildParameter
+				(NUOPCPackage.Literals.NUOPC_MODEL__GENERIC_IMPORTS,
+				 NUOPCFactory.eINSTANCE.createNUOPCModel__GenericImports()));
 
 		newChildDescriptors.add
 			(createChildParameter
