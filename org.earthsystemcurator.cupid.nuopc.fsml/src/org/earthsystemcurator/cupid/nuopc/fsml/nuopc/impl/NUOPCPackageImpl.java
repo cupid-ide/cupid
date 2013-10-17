@@ -1682,7 +1682,7 @@ public class NUOPCPackageImpl extends EPackageImpl implements NUOPCPackage {
 		  (modelImplementsSetServicesEClass, 
 		   source, 
 		   new String[] {
-			 "constraints", "registersInitP1"
+			 "constraints", "registersInitP1 registersInitP2"
 		   });																																																																																												
 	}
 
@@ -2278,7 +2278,9 @@ public class NUOPCPackageImpl extends EPackageImpl implements NUOPCPackage {
 		   source, 
 		   new String[] {
 			 "registersInitP1", "self.parent.initialize.implementsInitP1=null or self.callsSetEntryPoint->select(c|c.userRoutine=self.parent.initialize.implementsInitP1.name)->notEmpty()",
-			 "registersInitP1$message", "\'Initialize phase 1 method should be registered\'"
+			 "registersInitP1$message", "\'A call is required in the Set Services method to ESMF_GridCompSetEntryPoint in order to register the initialize phase 1 method.\'",
+			 "registersInitP2", "self.parent.initialize.implementsInitP2=null or self.callsSetEntryPoint->select(c|c.userRoutine=self.parent.initialize.implementsInitP2.name)->notEmpty()",
+			 "registersInitP2$message", "\'A call is required in the Set Services method to ESMF_GridCompSetEntryPoint in order to register the initialize phase 2 method.\'"
 		   });																				
 		addAnnotation
 		  (getModelImplementsInitP1_AdvertisesAtLeastOneField(), 

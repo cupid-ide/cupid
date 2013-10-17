@@ -20,7 +20,7 @@ public class NUOPCNature implements IProjectNature {
 	private IProject project;
 	
 	public NUOPCApplication reversedModel;
-	public Map<EObject, Object> reversedMappings;
+	public Map<Object, Object> reversedMappings;
 	public NUOPCApplication forwardModel;
 	
 	//private NUOPCApplication reverseEngineeredModel;

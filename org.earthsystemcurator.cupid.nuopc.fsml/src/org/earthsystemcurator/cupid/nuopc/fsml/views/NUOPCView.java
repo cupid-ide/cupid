@@ -3,7 +3,9 @@ package org.earthsystemcurator.cupid.nuopc.fsml.views;
 import org.earthsystemcurator.cupid.nuopc.fsml.nuopc.NUOPCFactory;
 import org.earthsystemcurator.cupid.nuopc.fsml.util.Regex;
 import org.earthsystemcurator.cupid.nuopc.fsml.views.NUOPCViewContentProvider.NUOPCModelElem;
+import org.eclipse.core.resources.IMarker;
 import org.eclipse.core.resources.IProject;
+import org.eclipse.core.runtime.CoreException;
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EObject;
@@ -25,17 +27,32 @@ import org.eclipse.jface.viewers.ISelection;
 import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.jface.viewers.TreeViewer;
 import org.eclipse.jface.window.ToolTip;
+import org.eclipse.photran.core.IFortranAST;
+import org.eclipse.photran.internal.core.analysis.binding.ScopingNode;
+import org.eclipse.photran.internal.core.lexer.Token;
+import org.eclipse.photran.internal.core.parser.ASTModuleNode;
+import org.eclipse.photran.internal.core.parser.ASTModuleStmtNode;
+import org.eclipse.photran.internal.core.parser.ASTNode;
+import org.eclipse.photran.internal.core.parser.IProgramUnit;
+import org.eclipse.photran.internal.core.vpg.PhotranTokenRef;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Menu;
 import org.eclipse.swt.widgets.TreeColumn;
 import org.eclipse.ui.IActionBars;
+import org.eclipse.ui.IEditorDescriptor;
+import org.eclipse.ui.IEditorPart;
 import org.eclipse.ui.ISharedImages;
+import org.eclipse.ui.IWorkbenchPage;
+import org.eclipse.ui.PartInitException;
 import org.eclipse.ui.PlatformUI;
+import org.eclipse.ui.ide.IDE;
 import org.eclipse.ui.menus.IMenuService;
 import org.eclipse.ui.part.DrillDownAdapter;
+import org.eclipse.ui.part.FileEditorInput;
 import org.eclipse.ui.part.ViewPart;
 import org.eclipse.ui.services.IServiceLocator;
+
 
 
 /**
@@ -70,6 +87,8 @@ public class NUOPCView extends ViewPart {
 	private Action doubleClickAction;
 	
 	private TreeColumn tc2;
+	
+	private NUOPCViewContentProvider contentProvider;
 
 	
 	/**
@@ -119,7 +138,10 @@ public class NUOPCView extends ViewPart {
 		
 		
 		drillDownAdapter = new DrillDownAdapter(viewer);
-		viewer.setContentProvider(new NUOPCViewContentProvider());
+		
+		contentProvider = new NUOPCViewContentProvider();
+		viewer.setContentProvider(contentProvider);
+		
 		viewer.setLabelProvider(new NUOPCViewLabelProvider());
 		viewer.setSorter(null);
 		ColumnViewerToolTipSupport.enableFor(viewer, ToolTip.NO_RECREATE);
@@ -143,10 +165,59 @@ public class NUOPCView extends ViewPart {
 		*/
 		
 		doubleClickAction = new Action() {
+			@SuppressWarnings("restriction")
 			public void run() {
 				ISelection selection = viewer.getSelection();
 				Object obj = ((IStructuredSelection)selection).getFirstElement();
-				showMessage("Double-click detected on " + obj.toString());
+				//showMessage("Double-click detected on " + obj.toString());
+				
+				NUOPCModelElem me = (NUOPCModelElem) obj;
+				
+				IMarker marker = null;
+				
+				if (me.elem != null) {
+					Object val = contentProvider.getReverseMappings().get(me.elem);
+					if (val != null) {
+												
+						if (val instanceof ScopingNode) {
+							//PhotranTokenRef tokenRef = ((ScopingNode) val).getRepresentativeToken();
+							marker = createMarker( ((ScopingNode) val).getRepresentativeToken().findTokenOrReturnNull());							
+						}
+						else if (val instanceof IFortranAST) {
+							//try to find module statement
+							IProgramUnit ipu = ((IFortranAST)val).getRoot().getProgramUnitList().get(0);
+							if (ipu != null && ipu instanceof ASTModuleNode) {
+								ASTModuleNode ams = (ASTModuleNode) ipu;
+								marker = createMarker(ams.getNameToken());
+							}							
+						}
+						else if (val instanceof ASTNode) {
+							marker = createMarker(((ASTNode) val).findFirstToken());
+						}
+					}
+				}
+				//try to match on nameLabel using object identity 
+				else if (me.nameLabel != null) {
+					Object val = contentProvider.getReverseMappings().get(me.nameLabel);
+					if (val != null && val instanceof Token) {
+						marker = createMarker((Token) val);
+					}
+				}
+					
+				if (marker != null) {
+					IWorkbenchPage page = PlatformUI.getWorkbench().getActiveWorkbenchWindow().getActivePage();
+					try {
+						IDE.openEditor(page, marker, false);
+						marker.delete();
+					} catch (PartInitException e) {
+						e.printStackTrace();
+					} catch (CoreException e) {								
+						e.printStackTrace();
+					}
+				}
+					
+					
+				
 			}
 		};
 				
@@ -248,6 +319,37 @@ public class NUOPCView extends ViewPart {
 	//	contributeToActionBars();
 	}
 	
+	@SuppressWarnings("restriction")
+	protected IMarker createMarker(Token token) {
+        try
+        {
+        	if (token == null) return null;
+        	//Token token = photranTokenRef.findToken();
+        	//Token firstToken = findFirstTokenIn(this);
+        	//Token lastToken = findLastTokenIn(this);
+
+        	//if (firstToken == null
+        	//    || lastToken == null
+             //   || firstToken.getPhysicalFile() == null
+              //  || firstToken.getPhysicalFile().getIFile() == null)
+        	  //  return null;
+
+            int startOffset = token.getFileOffset();
+            //startOffset -= token.getWhiteBefore().length();
+
+            int endOffset = token.getFileOffset()+token.getLength();
+            //endOffset += lastToken.getWhiteAfter().length();
+
+            IMarker marker = token.getPhysicalFile().getIFile().createMarker(IMarker.TEXT);
+			marker.setAttribute(IMarker.CHAR_START, startOffset);
+			marker.setAttribute(IMarker.CHAR_END, endOffset);
+            return marker;
+        }
+        catch (CoreException e)
+        {
+            return null;
+        }
+    }
 	
 
 	private void hookContextMenu() {

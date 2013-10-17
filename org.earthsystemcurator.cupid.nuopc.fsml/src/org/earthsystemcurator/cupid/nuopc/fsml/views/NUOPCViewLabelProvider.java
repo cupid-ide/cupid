@@ -55,13 +55,16 @@ class NUOPCViewLabelProvider extends StyledCellLabelProvider { //implements ITab
 			if (docText != null || me.validationMessage != null) {
 				ST text = new ST("<doc; wrap=\"\n\", separator=\" \">");				
 				if (me.validationMessage != null) {
-					text.add("doc", me.validationMessage.concat("\n").split(" "));
-				}				
+					text.add("doc", me.validationMessage.split(" "));
+				}
+				if (me.validationMessage != null && docText != null) {
+					text.add("doc", "\n\n------------------------------------------------------------\n\n");
+				}
 				if (docText != null) {
-					text.add("doc", docText.split(" "));		
+					text.add("doc", docText.split(" "));				
 				}
 					   
-				return text.render(65);
+				return text.render(80);
 			}			
 		}						
 		return null;		

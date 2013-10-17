@@ -413,11 +413,11 @@ public class CodeQuery {
 	}
 	
 	
-	public static String uses(IFortranAST ast, Map<String, Object> params) {
+	public static Token uses(IFortranAST ast, Map<String, Object> params) {
 		return uses((ASTModuleNode) ast.getRoot().getProgramUnitList().get(0), params);
 	}
 	
-	public static String uses(ASTModuleNode node, Map<String, Object> params) {
+	public static Token uses(ASTModuleNode node, Map<String, Object> params) {
 		
 		String moduleName = (String) params.get("uses");
 		String entityName = (String) params.get("entity");
@@ -427,10 +427,10 @@ public class CodeQuery {
 				for (ASTOnlyNode only : usn.getOnlyList()) {
 					if (only.getName().getText().equalsIgnoreCase(entityName)) {
 						if (only.getNewName() != null) {
-							return only.getNewName().getText();
+							return only.getNewName();
 						}
 						else {
-							return entityName;
+							return only.getName();
 						}
 					}
 				}
@@ -807,6 +807,9 @@ public class CodeQuery {
 	}
 	
 	//public static Pattern P_CALLSIG = Pattern.compile("((?:#?\\w+)|(?:\\*))(\\(((?:((\\w+)\\s*=\\s*)?(\\s*(#?\\w+))?,?\\s*)*)\\))?");
+	
+	//TODO: change this to match new metavar signature
+	
 	public static Pattern P_CALLSIG = Pattern.compile("((?:(?:#(?:../)*)?\\w+)|(?:\\*))(\\(((?:((\\w+)\\s*=\\s*)?(\\s*((?:#(?:../)*)?\\w+))?,?\\s*)*)\\))?");
 	public static Pattern P_CALLARG = Pattern.compile("((\\w+)\\s*=\\s*)?((?:#(?:../)*)?\\w+)");
 	
@@ -937,7 +940,11 @@ public class CodeQuery {
 					}
 					else if (vars.get(i).startsWith("#")) {
 						metavariableMap.put(vars.get(i), propagateValOrSymbol(san.getExpr()));
-					}				
+					}
+					else if (!propagateValOrSymbol(san.getExpr()).equalsIgnoreCase(vars.get(i))) {
+						//var is a literal and did not match
+						continue csnloop;						
+					}
 				}
 			}
 			

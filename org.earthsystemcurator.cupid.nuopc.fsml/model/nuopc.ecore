@@ -43,9 +43,30 @@
       </eAnnotations>
     </eStructuralFeatures>
   </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="Model_Init">
+    <eAnnotations source="http://www.earthsystemcog.org/projects/nuopc">
+      <details key="label" value="Model Initialization"/>
+      <details key="doc" value="Framework concepts related to initializing this NUOPC Model"/>
+    </eAnnotations>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="parent" lowerBound="1"
+        eType="#//NUOPCModel" eOpposite="#//NUOPCModel/initialize"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="implementsInitP1" lowerBound="1"
+        eType="#//ModelImplementsInitP1" containment="true" eOpposite="#//ModelImplementsInitP1/parent"
+        eKeys="#//ModelImplementsInitP1/name">
+      <eAnnotations source="http://www.earthsystemcog.org/projects/nuopc">
+        <details key="mapping" value="subroutine: &quot;#name(inout type(ESMF_GridComp) gcomp, inout type(ESMF_State) #importParam, inout type(ESMF_State) #exportParam, inout type(ESMF_Clock) clock, out integer rc)&quot;"/>
+      </eAnnotations>
+    </eStructuralFeatures>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="implementsInitP2" lowerBound="1"
+        eType="#//ModelImplementsInitP2" containment="true" eKeys="#//ModelImplementsInitP2/name">
+      <eAnnotations source="http://www.earthsystemcog.org/projects/nuopc">
+        <details key="mapping" value="subroutine: &quot;#name(inout type(ESMF_GridComp) gcomp, inout type(ESMF_State) #importParam, inout type(ESMF_State) #exportParam, inout type(ESMF_Clock) clock, out integer rc)&quot;"/>
+      </eAnnotations>
+    </eStructuralFeatures>
+  </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="ModelImplementsSetServices">
     <eAnnotations source="http://www.eclipse.org/emf/2002/Ecore">
-      <details key="constraints" value="registersInitP1"/>
+      <details key="constraints" value="registersInitP1 registersInitP2"/>
     </eAnnotations>
     <eAnnotations source="http://www.earthsystemcog.org/projects/nuopc">
       <details key="mapping" value="subroutine: &quot;#name(inout type(ESMF_GridComp) #param_gcomp, out integer #param_rc)&quot;"/>
@@ -54,7 +75,9 @@
     </eAnnotations>
     <eAnnotations source="http://www.eclipse.org/emf/2002/Ecore/OCL">
       <details key="registersInitP1" value="self.parent.initialize.implementsInitP1=null or self.callsSetEntryPoint->select(c|c.userRoutine=self.parent.initialize.implementsInitP1.name)->notEmpty()"/>
-      <details key="registersInitP1$message" value="'Initialize phase 1 method should be registered'"/>
+      <details key="registersInitP1$message" value="'A call is required in the Set Services method to ESMF_GridCompSetEntryPoint in order to register the initialize phase 1 method.'"/>
+      <details key="registersInitP2" value="self.parent.initialize.implementsInitP2=null or self.callsSetEntryPoint->select(c|c.userRoutine=self.parent.initialize.implementsInitP2.name)->notEmpty()"/>
+      <details key="registersInitP2$message" value="'A call is required in the Set Services method to ESMF_GridCompSetEntryPoint in order to register the initialize phase 2 method.'"/>
     </eAnnotations>
     <eStructuralFeatures xsi:type="ecore:EReference" name="parent" lowerBound="1"
         eType="#//NUOPCModel" eOpposite="#//NUOPCModel/implementsSetServices"/>
@@ -114,27 +137,6 @@
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="userRoutine" lowerBound="1"
         eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="phase" lowerBound="1" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
-  </eClassifiers>
-  <eClassifiers xsi:type="ecore:EClass" name="Model_Init">
-    <eAnnotations source="http://www.earthsystemcog.org/projects/nuopc">
-      <details key="label" value="Model Initialization"/>
-      <details key="doc" value="Framework concepts related to initializing this NUOPC Model"/>
-    </eAnnotations>
-    <eStructuralFeatures xsi:type="ecore:EReference" name="parent" lowerBound="1"
-        eType="#//NUOPCModel" eOpposite="#//NUOPCModel/initialize"/>
-    <eStructuralFeatures xsi:type="ecore:EReference" name="implementsInitP1" lowerBound="1"
-        eType="#//ModelImplementsInitP1" containment="true" eOpposite="#//ModelImplementsInitP1/parent"
-        eKeys="#//ModelImplementsInitP1/name">
-      <eAnnotations source="http://www.earthsystemcog.org/projects/nuopc">
-        <details key="mapping" value="subroutine: &quot;#name(inout type(ESMF_GridComp) gcomp, inout type(ESMF_State) #importParam, inout type(ESMF_State) #exportParam, inout type(ESMF_Clock) clock, out integer rc)&quot;"/>
-      </eAnnotations>
-    </eStructuralFeatures>
-    <eStructuralFeatures xsi:type="ecore:EReference" name="implementsInitP2" lowerBound="1"
-        eType="#//ModelImplementsInitP2" containment="true" eKeys="#//ModelImplementsInitP2/name">
-      <eAnnotations source="http://www.earthsystemcog.org/projects/nuopc">
-        <details key="mapping" value="subroutine: &quot;#name(inout type(ESMF_GridComp) gcomp, inout type(ESMF_State) #importParam, inout type(ESMF_State) #exportParam, inout type(ESMF_Clock) clock, out integer rc)&quot;"/>
-      </eAnnotations>
-    </eStructuralFeatures>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="ModelImplementsInitP1">
     <eAnnotations source="http://www.earthsystemcog.org/projects/nuopc">

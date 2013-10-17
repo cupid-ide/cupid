@@ -100,7 +100,7 @@ public class ForwardHandler extends AbstractHandler {
 		if (nature == null) return null;
 		
 		final NUOPCApplication revApp = nature.reversedModel;
-		final Map<EObject, Object> revMap = nature.reversedMappings;;
+		final Map<Object, Object> revMap = nature.reversedMappings;;
 		final NUOPCApplication forApp = nature.forwardModel;
 		
 		if (revApp == null || revMap == null) return null;

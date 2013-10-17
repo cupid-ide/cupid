@@ -2,6 +2,7 @@ package org.earthsystemcurator.cupid.nuopc.fsml.views;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 import org.earthsystemcurator.cupid.nuopc.fsml.builder.NUOPCNature;
 import org.earthsystemcurator.cupid.nuopc.fsml.nuopc.NUOPCApplication;
@@ -21,6 +22,7 @@ import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.ecore.EValidator;
 import org.eclipse.emf.ecore.EcorePackage;
 import org.eclipse.emf.ecore.util.Diagnostician;
+import org.eclipse.emf.ecore.util.EObjectValidator;
 import org.eclipse.emf.ecore.util.EcoreUtil;
 import org.eclipse.jface.viewers.IStructuredContentProvider;
 import org.eclipse.jface.viewers.ITreeContentProvider;
@@ -40,6 +42,11 @@ class NUOPCViewContentProvider implements IStructuredContentProvider, ITreeConte
 	
 	private IProject project;
 	private NUOPCApplication app;
+	private Map<Object, Object> reversedMappings;
+	
+	public Map<Object, Object> getReverseMappings() {
+		return this.reversedMappings;
+	}
 	
 	public void inputChanged(Viewer v, Object oldInput, Object newInput) {
 		System.out.println("inputChanged: " + v + " " + newInput);
@@ -53,7 +60,13 @@ class NUOPCViewContentProvider implements IStructuredContentProvider, ITreeConte
 				NUOPCNature nature = (NUOPCNature) project.getNature(NUOPCNature.NATURE_ID);
 				if (nature != null) {
 					//make a deep copy
-					app = EcoreUtil.copy(nature.reversedModel);
+					//app = EcoreUtil.copy(nature.reversedModel);					
+					
+					//undoing copy for now so that the mappings are correct
+					//might need to create a utility function to duplicate both
+					app = nature.reversedModel;
+					reversedMappings = nature.reversedMappings;
+										
 					nature.forwardModel = app;
 				}
 			} catch (CoreException e) {			
@@ -126,7 +139,7 @@ class NUOPCViewContentProvider implements IStructuredContentProvider, ITreeConte
 									
 				for (EAttribute eattrib : ec.getEAttributes()) {
 					
-					System.out.println("EAttrib: " + ec.getName() + "." + eattrib.getName());
+					//System.out.println("EAttrib: " + ec.getName() + "." + eattrib.getName());
 					
 					String typeLabel;
 					typeLabel = Regex.getFromAnnotation(eattrib, "label");
@@ -355,8 +368,11 @@ class NUOPCViewContentProvider implements IStructuredContentProvider, ITreeConte
 					if (diagnostic.getChildren().size() > 0) {
 						validationMessage = "";
 						for (Diagnostic d : diagnostic.getChildren()) {
-							validationMessage += getValidationMessage(d) + "\n";
-						}
+							if (validationMessage.length() > 0) {
+								validationMessage += "\n\n";
+							}
+							validationMessage += getValidationMessage(d);
+						}						
 					}
 					else {
 						validationMessage = getValidationMessage(diagnostic);
@@ -367,16 +383,18 @@ class NUOPCViewContentProvider implements IStructuredContentProvider, ITreeConte
 		}
 		
 		private String getValidationMessage(Diagnostic d) {
-			if (d.getCode() == EcoreValidator.EOBJECT__EVERY_MULTIPCITY_CONFORMS) {
+			
+			if (d.getSource().equals(EObjectValidator.DIAGNOSTIC_SOURCE) && d.getCode() == EObjectValidator.EOBJECT__EVERY_MULTIPCITY_CONFORMS) {
 				if (d.getData().size() >= 2) {
 					Object o = d.getData().get(1);
 					if (o instanceof EReference) {
 						String label = Regex.getFromAnnotation(((EReference) o).getEType(), "label", ((EReference) o).getEType().getName());
-						return "! Incomplete framework concept: " + label;
+						return "Error: " + label + " missing";
 					}
 				}
 			}
-			return d.getMessage();
+			
+			return "Error: " + d.getMessage();
 		}
 		
 	}

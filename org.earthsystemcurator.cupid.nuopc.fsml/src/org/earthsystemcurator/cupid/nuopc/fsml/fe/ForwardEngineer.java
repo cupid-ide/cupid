@@ -59,7 +59,7 @@ import org.stringtemplate.v4.ST;
 @SuppressWarnings("restriction")
 public class ForwardEngineer {
 
-	private Map<EObject, Object> revMappings;
+	private Map<Object, Object> revMappings;
 	private IMerger.Registry mergerRegistry = IMerger.RegistryImpl.createStandaloneInstance();
 	private IProject container;	
 	//private Set<IFortranAST> astsToReindent = new HashSet<IFortranAST>();
@@ -74,8 +74,8 @@ public class ForwardEngineer {
 		this.container = container;
 	}
 
-	public void forward(NUOPCApplication reversed, NUOPCApplication asserted, Map<EObject, Object> revMappings) {
-		this.revMappings = revMappings;
+	public void forward(NUOPCApplication reversed, NUOPCApplication asserted, Map<Object, Object> revMap) {
+		this.revMappings = revMap;
 		//astsToReindent.clear();
 		Comparison comp = compare(reversed, asserted);
 		forwardDiffs(comp.getMatches());
@@ -87,7 +87,7 @@ public class ForwardEngineer {
 		//	System.out.println("Reindenting: " + ast.getFile().getName());
 		//	Reindenter.reindent(ast.getRoot(), ast, Strategy.REINDENT_EACH_LINE);
 		//}
-		for (Object val : revMappings.values()) {
+		for (Object val : revMap.values()) {
 			if (val instanceof IFortranAST) {
 				Reindenter.reindent(((IFortranAST) val).getRoot(), (IFortranAST) val, Strategy.REINDENT_EACH_LINE);
 			}

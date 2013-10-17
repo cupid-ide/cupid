@@ -5,6 +5,7 @@ import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.util.HashMap;
 import java.util.HashSet;
+import java.util.IdentityHashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
@@ -25,6 +26,7 @@ import org.eclipse.emf.ecore.EReference;
 import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.ecore.EcoreFactory;
 import org.eclipse.photran.core.IFortranAST;
+import org.eclipse.photran.internal.core.lexer.Token;
 import org.eclipse.photran.internal.core.vpg.PhotranVPG;
 
 @SuppressWarnings("restriction")
@@ -37,7 +39,7 @@ public class ReverseEngineer {
 	 *  - an IASTNode (for deeper elements)
 	 *  
 	 */
-	private Map<EObject, Object> mappings = new HashMap<EObject, Object>();
+	private Map<Object, Object> mappings = new IdentityHashMap<Object, Object>();
 	
 	private NUOPCApplication app = null;
 	
@@ -47,7 +49,7 @@ public class ReverseEngineer {
 		return app;
 	}
 	
-	public Map<EObject, Object> getMappings() {
+	public Map<Object, Object> getMappings() {
 		return mappings;
 	}
 	
@@ -61,11 +63,7 @@ public class ReverseEngineer {
 		NUOPCApplication a = NUOPCFactory.eINSTANCE.createNUOPCApplication();
 		a.setName(project.getName());
 		
-		//System.out.println("\n=============\nReverse mappings:");
-		//for (Entry<EObject, Object> e : mappings.entrySet()) {
-		//	System.out.println(e.getKey() + " ===> " + e.getValue().getClass());
-		//}
-		
+				
 		Set<IFortranAST> asts = new HashSet<IFortranAST>();		
 		for (String mod : vpg.listAllModules()) {
 			//TODO: fix this - need a way to configure user files and framework files
@@ -89,6 +87,11 @@ public class ReverseEngineer {
 		
 		a = reverse(asts, a);
 		
+		System.out.println("\n=============\nReverse mappings:");
+		for (Entry<Object, Object> e : mappings.entrySet()) {
+			System.out.println(e.getKey() + " ===> " + e.getValue().getClass());
+		}
+		
 		//save for later
 		this.app = a;
 		return a;
@@ -110,6 +113,11 @@ public class ReverseEngineer {
 			
 		EClass modelElemClass = modelElem.eClass();
 			
+		//this is required so that we can conditionally add mappings
+		//that succeeded at the end of the method when no recursive
+		//call is required (this only occurs at leaves of metamodel tree)
+		Map<Object, Object> mappingsToAdd = new IdentityHashMap<Object, Object>();
+		
 		//currently does NOT traverse inherited structural features
 		for (EStructuralFeature sf : modelElemClass.getEStructuralFeatures()) {
 			
@@ -127,50 +135,13 @@ public class ReverseEngineer {
 				String methodName = (String) keywordMap.keySet().toArray()[0];
 				
 				//check for metavariables that can be populated
-				
-				
-				
-							
+										
 				for (Entry<String, Object> entry : keywordMap.entrySet()) {
 					if (entry.getValue() instanceof String) {
 						String val = (String) entry.getValue();
 						
-						/*
-						if (val.startsWith("#")) {
-							//replace metavariable with value from model
-							System.out.println("Metavariable: " + val);
-							EStructuralFeature metasf = modelElem.eClass().getEStructuralFeature(val.substring(1));
-							Object metaval = modelElem.eGet(metasf);
-							if (metaval != null) {
-								System.out.println("\tMetavariable value = " + metaval);
-								entry.setValue(metaval);
-							}
-						}
-						*/
 						Matcher match = CodeQuery.P_METAVAR.matcher(val);
 						while (match.find()) {
-							/*
-							String metavar = match.group().substring(1);  //removes the #
-							int parents = 0;
-							while (metavar.startsWith("../")) {
-								parents++;
-								metavar = metavar.substring(3);
-							}
-							if (parents >= 1) {
-								EObject elemToCheck = modelElem;
-								while (parents > 1) {
-									//elemToCheck = EcoreUtils.eGetSFValue("parent", elemToCheck, null);
-									elemToCheck = elemToCheck.eContainer();
-									parents--;
-								}
-								String replaceVal = EcoreUtils.eGetSFValue(metavar, elemToCheck, null);
-								if (replaceVal != null) {
-									System.out.println("Replacing metavariable: " + match.group() + " with val: " + replaceVal);
-									entry.setValue(val.replaceAll(match.group(), replaceVal));
-								}
-							}
-							*/
-							
 							//already at parent, so remove one leading ../
 					
 							String metavar = match.group().substring(1);
@@ -184,15 +155,8 @@ public class ReverseEngineer {
 									entry.setValue(val.replaceAll(match.group(), replaceVal));
 								}
 								
-								
 							}
-						
-						
-						
-						
 						}
-					
-						
 					}
 				}
 								
@@ -223,6 +187,18 @@ public class ReverseEngineer {
 					if (method.getReturnType() == String.class ||
 						method.getReturnType().isPrimitive()) {
 						modelElem.eSet(sf, result);
+					}
+					else if (method.getReturnType() == Token.class) {
+						if (result != null) {
+							//String constructor required because of IdentityHashMap
+							String text = new String(((Token)result).getText());
+							modelElem.eSet(sf, text);
+							mappingsToAdd.put(text, result);
+						}
+						else {
+							//what should we do here?
+							modelElem.eSet(sf, null);
+						}
 					}
 					else if (method.getReturnType() == Set.class ||
 							 method.getReturnType() == Map.class) {
@@ -366,6 +342,8 @@ public class ReverseEngineer {
 		} // end for structural features
 		
 		mappings.put(modelElem, fortranElem);
+		mappings.putAll(mappingsToAdd);
+
 		return modelElem;
 	}
 	
