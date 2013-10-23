@@ -35,7 +35,7 @@ public class NUOPCModel__GenericImportsImpl extends EObjectImpl implements NUOPC
 	 * @generated
 	 * @ordered
 	 */
-	protected static final String IMPORTS_GENERIC_SS_EDEFAULT = "nuopcmodel_ss";
+	protected static final String IMPORTS_GENERIC_SS_EDEFAULT = "model_routine_SS";
 
 	/**
 	 * The cached value of the '{@link #getImportsGenericSS() <em>Imports Generic SS</em>}' attribute.
@@ -55,7 +55,7 @@ public class NUOPCModel__GenericImportsImpl extends EObjectImpl implements NUOPC
 	 * @generated
 	 * @ordered
 	 */
-	protected static final String IMPORTS_LABEL_MODEL_ADVANCE_EDEFAULT = null;
+	protected static final String IMPORTS_LABEL_MODEL_ADVANCE_EDEFAULT = "model_label_Advance";
 
 	/**
 	 * The cached value of the '{@link #getImportsLabelModelAdvance() <em>Imports Label Model Advance</em>}' attribute.

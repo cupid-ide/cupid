@@ -68,6 +68,7 @@ public class NUOPCDriver__ImplementsSetModelCountItemProvider
 			addDriverInternalStatePropertyDescriptor(object);
 			addGetsInternalStatePropertyDescriptor(object);
 			addAssignsValuePropertyDescriptor(object);
+			addAttachedPropertyDescriptor(object);
 		}
 		return itemPropertyDescriptors;
 	}
@@ -205,6 +206,28 @@ public class NUOPCDriver__ImplementsSetModelCountItemProvider
 	}
 
 	/**
+	 * This adds a property descriptor for the Attached feature.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	protected void addAttachedPropertyDescriptor(Object object) {
+		itemPropertyDescriptors.add
+			(createItemPropertyDescriptor
+				(((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(),
+				 getResourceLocator(),
+				 getString("_UI_NUOPCDriver__ImplementsSetModelCount_attached_feature"),
+				 getString("_UI_PropertyDescriptor_description", "_UI_NUOPCDriver__ImplementsSetModelCount_attached_feature", "_UI_NUOPCDriver__ImplementsSetModelCount_type"),
+				 NUOPCPackage.Literals.NUOPC_DRIVER_IMPLEMENTS_SET_MODEL_COUNT__ATTACHED,
+				 true,
+				 false,
+				 false,
+				 ItemPropertyDescriptor.BOOLEAN_VALUE_IMAGE,
+				 null,
+				 null));
+	}
+
+	/**
 	 * This specifies how to implement {@link #getChildren} and is used to deduce an appropriate feature for an
 	 * {@link org.eclipse.emf.edit.command.AddCommand}, {@link org.eclipse.emf.edit.command.RemoveCommand} or
 	 * {@link org.eclipse.emf.edit.command.MoveCommand} in {@link #createCommand}.
@@ -276,6 +299,7 @@ public class NUOPCDriver__ImplementsSetModelCountItemProvider
 			case NUOPCPackage.NUOPC_DRIVER_IMPLEMENTS_SET_MODEL_COUNT__NAME:
 			case NUOPCPackage.NUOPC_DRIVER_IMPLEMENTS_SET_MODEL_COUNT__DRIVER_INTERNAL_STATE:
 			case NUOPCPackage.NUOPC_DRIVER_IMPLEMENTS_SET_MODEL_COUNT__ASSIGNS_VALUE:
+			case NUOPCPackage.NUOPC_DRIVER_IMPLEMENTS_SET_MODEL_COUNT__ATTACHED:
 				fireNotifyChanged(new ViewerNotification(notification, notification.getNotifier(), false, true));
 				return;
 		}

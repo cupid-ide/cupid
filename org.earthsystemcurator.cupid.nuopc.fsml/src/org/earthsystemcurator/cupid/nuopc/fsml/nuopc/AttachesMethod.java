@@ -34,7 +34,6 @@ public interface AttachesMethod extends EObject {
 	 * @see #setName(String)
 	 * @see org.earthsystemcurator.cupid.nuopc.fsml.nuopc.NUOPCPackage#getAttachesMethod_Name()
 	 * @model required="true"
-	 *        annotation="http://www.earthsystemcog.org/projects/nuopc mappingX='argByIndex: 2'"
 	 * @generated
 	 */
 	String getName();
@@ -61,7 +60,6 @@ public interface AttachesMethod extends EObject {
 	 * @see #setUserRoutine(String)
 	 * @see org.earthsystemcurator.cupid.nuopc.fsml.nuopc.NUOPCPackage#getAttachesMethod_UserRoutine()
 	 * @model required="true"
-	 *        annotation="http://www.earthsystemcog.org/projects/nuopc mappingX='argByIndex: 3'"
 	 * @generated
 	 */
 	String getUserRoutine();

@@ -17,6 +17,7 @@ import org.eclipse.emf.ecore.EObject;
  *   <li>{@link org.earthsystemcurator.cupid.nuopc.fsml.nuopc.NUOPCDriver#getGenericImports <em>Generic Imports</em>}</li>
  *   <li>{@link org.earthsystemcurator.cupid.nuopc.fsml.nuopc.NUOPCDriver#getImplementsSetServices <em>Implements Set Services</em>}</li>
  *   <li>{@link org.earthsystemcurator.cupid.nuopc.fsml.nuopc.NUOPCDriver#getImplementsSetModelCount <em>Implements Set Model Count</em>}</li>
+ *   <li>{@link org.earthsystemcurator.cupid.nuopc.fsml.nuopc.NUOPCDriver#getImplementsSetModelServices <em>Implements Set Model Services</em>}</li>
  * </ul>
  * </p>
  *
@@ -110,8 +111,7 @@ public interface NUOPCDriver extends EObject {
 	void setImplementsSetServices(NUOPCDriver__ImplementsSetServices value);
 
 	/**
-	 * Returns the value of the '<em><b>Implements Set Model Count</b></em>' containment reference list.
-	 * The list contents are of type {@link org.earthsystemcurator.cupid.nuopc.fsml.nuopc.NUOPCDriver__ImplementsSetModelCount}.
+	 * Returns the value of the '<em><b>Implements Set Model Count</b></em>' containment reference.
 	 * It is bidirectional and its opposite is '{@link org.earthsystemcurator.cupid.nuopc.fsml.nuopc.NUOPCDriver__ImplementsSetModelCount#getParent <em>Parent</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <p>
@@ -119,12 +119,52 @@ public interface NUOPCDriver extends EObject {
 	 * there really should be more of a description here...
 	 * </p>
 	 * <!-- end-user-doc -->
-	 * @return the value of the '<em>Implements Set Model Count</em>' containment reference list.
+	 * @return the value of the '<em>Implements Set Model Count</em>' containment reference.
+	 * @see #setImplementsSetModelCount(NUOPCDriver__ImplementsSetModelCount)
 	 * @see org.earthsystemcurator.cupid.nuopc.fsml.nuopc.NUOPCPackage#getNUOPCDriver_ImplementsSetModelCount()
 	 * @see org.earthsystemcurator.cupid.nuopc.fsml.nuopc.NUOPCDriver__ImplementsSetModelCount#getParent
 	 * @model opposite="parent" containment="true" ordered="false"
 	 *        annotation="http://www.earthsystemcog.org/projects/nuopc mapping='subroutine: \"#name(type(ESMF_GridComp) #gcomp, integer #rc)\"'"
 	 * @generated
 	 */
-	EList<NUOPCDriver__ImplementsSetModelCount> getImplementsSetModelCount();
+	NUOPCDriver__ImplementsSetModelCount getImplementsSetModelCount();
+
+	/**
+	 * Sets the value of the '{@link org.earthsystemcurator.cupid.nuopc.fsml.nuopc.NUOPCDriver#getImplementsSetModelCount <em>Implements Set Model Count</em>}' containment reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @param value the new value of the '<em>Implements Set Model Count</em>' containment reference.
+	 * @see #getImplementsSetModelCount()
+	 * @generated
+	 */
+	void setImplementsSetModelCount(NUOPCDriver__ImplementsSetModelCount value);
+
+	/**
+	 * Returns the value of the '<em><b>Implements Set Model Services</b></em>' containment reference.
+	 * It is bidirectional and its opposite is '{@link org.earthsystemcurator.cupid.nuopc.fsml.nuopc.NUOPCDriver__ImplementsSetModelServices#getParent <em>Parent</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <p>
+	 * If the meaning of the '<em>Implements Set Model Services</em>' containment reference isn't clear,
+	 * there really should be more of a description here...
+	 * </p>
+	 * <!-- end-user-doc -->
+	 * @return the value of the '<em>Implements Set Model Services</em>' containment reference.
+	 * @see #setImplementsSetModelServices(NUOPCDriver__ImplementsSetModelServices)
+	 * @see org.earthsystemcurator.cupid.nuopc.fsml.nuopc.NUOPCPackage#getNUOPCDriver_ImplementsSetModelServices()
+	 * @see org.earthsystemcurator.cupid.nuopc.fsml.nuopc.NUOPCDriver__ImplementsSetModelServices#getParent
+	 * @model opposite="parent" containment="true" ordered="false"
+	 *        annotation="http://www.earthsystemcog.org/projects/nuopc mapping='subroutine: \"#name(type(ESMF_GridComp) #gcomp, integer #rc)\"'"
+	 * @generated
+	 */
+	NUOPCDriver__ImplementsSetModelServices getImplementsSetModelServices();
+
+	/**
+	 * Sets the value of the '{@link org.earthsystemcurator.cupid.nuopc.fsml.nuopc.NUOPCDriver#getImplementsSetModelServices <em>Implements Set Model Services</em>}' containment reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @param value the new value of the '<em>Implements Set Model Services</em>' containment reference.
+	 * @see #getImplementsSetModelServices()
+	 * @generated
+	 */
+	void setImplementsSetModelServices(NUOPCDriver__ImplementsSetModelServices value);
 } // NUOPCDriver

@@ -2,46 +2,43 @@
  */
 package org.earthsystemcurator.cupid.nuopc.fsml.nuopc.impl;
 
-import java.util.Collection;
 import org.earthsystemcurator.cupid.nuopc.fsml.nuopc.GetsInternalState;
 import org.earthsystemcurator.cupid.nuopc.fsml.nuopc.NUOPCDriver;
-import org.earthsystemcurator.cupid.nuopc.fsml.nuopc.NUOPCDriver__ImplementsSetModelCount;
+import org.earthsystemcurator.cupid.nuopc.fsml.nuopc.NUOPCDriver__ImplementsSetModelServices;
 import org.earthsystemcurator.cupid.nuopc.fsml.nuopc.NUOPCPackage;
 
 import org.eclipse.emf.common.notify.Notification;
-
 import org.eclipse.emf.common.notify.NotificationChain;
-import org.eclipse.emf.common.util.EList;
-import org.eclipse.emf.ecore.EClass;
 
+import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.ecore.InternalEObject;
+
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
 import org.eclipse.emf.ecore.impl.EObjectImpl;
-import org.eclipse.emf.ecore.util.EDataTypeUniqueEList;
 import org.eclipse.emf.ecore.util.EcoreUtil;
 
 /**
  * <!-- begin-user-doc -->
- * An implementation of the model object '<em><b>Driver Implements Set Model Count</b></em>'.
+ * An implementation of the model object '<em><b>Driver Implements Set Model Services</b></em>'.
  * <!-- end-user-doc -->
  * <p>
  * The following features are implemented:
  * <ul>
- *   <li>{@link org.earthsystemcurator.cupid.nuopc.fsml.nuopc.impl.NUOPCDriver__ImplementsSetModelCountImpl#getParent <em>Parent</em>}</li>
- *   <li>{@link org.earthsystemcurator.cupid.nuopc.fsml.nuopc.impl.NUOPCDriver__ImplementsSetModelCountImpl#getGcomp <em>Gcomp</em>}</li>
- *   <li>{@link org.earthsystemcurator.cupid.nuopc.fsml.nuopc.impl.NUOPCDriver__ImplementsSetModelCountImpl#getRc <em>Rc</em>}</li>
- *   <li>{@link org.earthsystemcurator.cupid.nuopc.fsml.nuopc.impl.NUOPCDriver__ImplementsSetModelCountImpl#getName <em>Name</em>}</li>
- *   <li>{@link org.earthsystemcurator.cupid.nuopc.fsml.nuopc.impl.NUOPCDriver__ImplementsSetModelCountImpl#getDriverInternalState <em>Driver Internal State</em>}</li>
- *   <li>{@link org.earthsystemcurator.cupid.nuopc.fsml.nuopc.impl.NUOPCDriver__ImplementsSetModelCountImpl#getGetsInternalState <em>Gets Internal State</em>}</li>
- *   <li>{@link org.earthsystemcurator.cupid.nuopc.fsml.nuopc.impl.NUOPCDriver__ImplementsSetModelCountImpl#isAssignsValue <em>Assigns Value</em>}</li>
- *   <li>{@link org.earthsystemcurator.cupid.nuopc.fsml.nuopc.impl.NUOPCDriver__ImplementsSetModelCountImpl#isAttached <em>Attached</em>}</li>
+ *   <li>{@link org.earthsystemcurator.cupid.nuopc.fsml.nuopc.impl.NUOPCDriver__ImplementsSetModelServicesImpl#getParent <em>Parent</em>}</li>
+ *   <li>{@link org.earthsystemcurator.cupid.nuopc.fsml.nuopc.impl.NUOPCDriver__ImplementsSetModelServicesImpl#getGcomp <em>Gcomp</em>}</li>
+ *   <li>{@link org.earthsystemcurator.cupid.nuopc.fsml.nuopc.impl.NUOPCDriver__ImplementsSetModelServicesImpl#getRc <em>Rc</em>}</li>
+ *   <li>{@link org.earthsystemcurator.cupid.nuopc.fsml.nuopc.impl.NUOPCDriver__ImplementsSetModelServicesImpl#getName <em>Name</em>}</li>
+ *   <li>{@link org.earthsystemcurator.cupid.nuopc.fsml.nuopc.impl.NUOPCDriver__ImplementsSetModelServicesImpl#getDriverInternalState <em>Driver Internal State</em>}</li>
+ *   <li>{@link org.earthsystemcurator.cupid.nuopc.fsml.nuopc.impl.NUOPCDriver__ImplementsSetModelServicesImpl#getGetsInternalState <em>Gets Internal State</em>}</li>
+ *   <li>{@link org.earthsystemcurator.cupid.nuopc.fsml.nuopc.impl.NUOPCDriver__ImplementsSetModelServicesImpl#isAssignsValue <em>Assigns Value</em>}</li>
+ *   <li>{@link org.earthsystemcurator.cupid.nuopc.fsml.nuopc.impl.NUOPCDriver__ImplementsSetModelServicesImpl#isAttached <em>Attached</em>}</li>
  * </ul>
  * </p>
  *
  * @generated
  */
-public class NUOPCDriver__ImplementsSetModelCountImpl extends EObjectImpl implements NUOPCDriver__ImplementsSetModelCount {
+public class NUOPCDriver__ImplementsSetModelServicesImpl extends EObjectImpl implements NUOPCDriver__ImplementsSetModelServices {
 	/**
 	 * The default value of the '{@link #getGcomp() <em>Gcomp</em>}' attribute.
 	 * <!-- begin-user-doc -->
@@ -51,6 +48,7 @@ public class NUOPCDriver__ImplementsSetModelCountImpl extends EObjectImpl implem
 	 * @ordered
 	 */
 	protected static final String GCOMP_EDEFAULT = "gcomp";
+
 	/**
 	 * The cached value of the '{@link #getGcomp() <em>Gcomp</em>}' attribute.
 	 * <!-- begin-user-doc -->
@@ -60,6 +58,7 @@ public class NUOPCDriver__ImplementsSetModelCountImpl extends EObjectImpl implem
 	 * @ordered
 	 */
 	protected String gcomp = GCOMP_EDEFAULT;
+
 	/**
 	 * The default value of the '{@link #getRc() <em>Rc</em>}' attribute.
 	 * <!-- begin-user-doc -->
@@ -69,6 +68,7 @@ public class NUOPCDriver__ImplementsSetModelCountImpl extends EObjectImpl implem
 	 * @ordered
 	 */
 	protected static final String RC_EDEFAULT = "rc";
+
 	/**
 	 * The cached value of the '{@link #getRc() <em>Rc</em>}' attribute.
 	 * <!-- begin-user-doc -->
@@ -78,6 +78,7 @@ public class NUOPCDriver__ImplementsSetModelCountImpl extends EObjectImpl implem
 	 * @ordered
 	 */
 	protected String rc = RC_EDEFAULT;
+
 	/**
 	 * The default value of the '{@link #getName() <em>Name</em>}' attribute.
 	 * <!-- begin-user-doc -->
@@ -86,7 +87,8 @@ public class NUOPCDriver__ImplementsSetModelCountImpl extends EObjectImpl implem
 	 * @generated
 	 * @ordered
 	 */
-	protected static final String NAME_EDEFAULT = "SetModelCount";
+	protected static final String NAME_EDEFAULT = "SetModelServices";
+
 	/**
 	 * The cached value of the '{@link #getName() <em>Name</em>}' attribute.
 	 * <!-- begin-user-doc -->
@@ -96,6 +98,7 @@ public class NUOPCDriver__ImplementsSetModelCountImpl extends EObjectImpl implem
 	 * @ordered
 	 */
 	protected String name = NAME_EDEFAULT;
+
 	/**
 	 * The default value of the '{@link #getDriverInternalState() <em>Driver Internal State</em>}' attribute.
 	 * <!-- begin-user-doc -->
@@ -105,6 +108,7 @@ public class NUOPCDriver__ImplementsSetModelCountImpl extends EObjectImpl implem
 	 * @ordered
 	 */
 	protected static final String DRIVER_INTERNAL_STATE_EDEFAULT = null;
+
 	/**
 	 * The cached value of the '{@link #getDriverInternalState() <em>Driver Internal State</em>}' attribute.
 	 * <!-- begin-user-doc -->
@@ -134,6 +138,7 @@ public class NUOPCDriver__ImplementsSetModelCountImpl extends EObjectImpl implem
 	 * @ordered
 	 */
 	protected static final boolean ASSIGNS_VALUE_EDEFAULT = false;
+
 	/**
 	 * The cached value of the '{@link #isAssignsValue() <em>Assigns Value</em>}' attribute.
 	 * <!-- begin-user-doc -->
@@ -152,14 +157,14 @@ public class NUOPCDriver__ImplementsSetModelCountImpl extends EObjectImpl implem
 	 * @generated
 	 * @ordered
 	 */
-	protected EStructuralFeature.Internal.SettingDelegate ATTACHED__ESETTING_DELEGATE = ((EStructuralFeature.Internal)NUOPCPackage.Literals.NUOPC_DRIVER_IMPLEMENTS_SET_MODEL_COUNT__ATTACHED).getSettingDelegate();
+	protected EStructuralFeature.Internal.SettingDelegate ATTACHED__ESETTING_DELEGATE = ((EStructuralFeature.Internal)NUOPCPackage.Literals.NUOPC_DRIVER_IMPLEMENTS_SET_MODEL_SERVICES__ATTACHED).getSettingDelegate();
 
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	protected NUOPCDriver__ImplementsSetModelCountImpl() {
+	protected NUOPCDriver__ImplementsSetModelServicesImpl() {
 		super();
 	}
 
@@ -170,7 +175,7 @@ public class NUOPCDriver__ImplementsSetModelCountImpl extends EObjectImpl implem
 	 */
 	@Override
 	protected EClass eStaticClass() {
-		return NUOPCPackage.Literals.NUOPC_DRIVER_IMPLEMENTS_SET_MODEL_COUNT;
+		return NUOPCPackage.Literals.NUOPC_DRIVER_IMPLEMENTS_SET_MODEL_SERVICES;
 	}
 
 	/**
@@ -179,7 +184,7 @@ public class NUOPCDriver__ImplementsSetModelCountImpl extends EObjectImpl implem
 	 * @generated
 	 */
 	public NUOPCDriver getParent() {
-		if (eContainerFeatureID() != NUOPCPackage.NUOPC_DRIVER_IMPLEMENTS_SET_MODEL_COUNT__PARENT) return null;
+		if (eContainerFeatureID() != NUOPCPackage.NUOPC_DRIVER_IMPLEMENTS_SET_MODEL_SERVICES__PARENT) return null;
 		return (NUOPCDriver)eInternalContainer();
 	}
 
@@ -189,7 +194,7 @@ public class NUOPCDriver__ImplementsSetModelCountImpl extends EObjectImpl implem
 	 * @generated
 	 */
 	public NotificationChain basicSetParent(NUOPCDriver newParent, NotificationChain msgs) {
-		msgs = eBasicSetContainer((InternalEObject)newParent, NUOPCPackage.NUOPC_DRIVER_IMPLEMENTS_SET_MODEL_COUNT__PARENT, msgs);
+		msgs = eBasicSetContainer((InternalEObject)newParent, NUOPCPackage.NUOPC_DRIVER_IMPLEMENTS_SET_MODEL_SERVICES__PARENT, msgs);
 		return msgs;
 	}
 
@@ -199,19 +204,19 @@ public class NUOPCDriver__ImplementsSetModelCountImpl extends EObjectImpl implem
 	 * @generated
 	 */
 	public void setParent(NUOPCDriver newParent) {
-		if (newParent != eInternalContainer() || (eContainerFeatureID() != NUOPCPackage.NUOPC_DRIVER_IMPLEMENTS_SET_MODEL_COUNT__PARENT && newParent != null)) {
+		if (newParent != eInternalContainer() || (eContainerFeatureID() != NUOPCPackage.NUOPC_DRIVER_IMPLEMENTS_SET_MODEL_SERVICES__PARENT && newParent != null)) {
 			if (EcoreUtil.isAncestor(this, newParent))
 				throw new IllegalArgumentException("Recursive containment not allowed for " + toString());
 			NotificationChain msgs = null;
 			if (eInternalContainer() != null)
 				msgs = eBasicRemoveFromContainer(msgs);
 			if (newParent != null)
-				msgs = ((InternalEObject)newParent).eInverseAdd(this, NUOPCPackage.NUOPC_DRIVER__IMPLEMENTS_SET_MODEL_COUNT, NUOPCDriver.class, msgs);
+				msgs = ((InternalEObject)newParent).eInverseAdd(this, NUOPCPackage.NUOPC_DRIVER__IMPLEMENTS_SET_MODEL_SERVICES, NUOPCDriver.class, msgs);
 			msgs = basicSetParent(newParent, msgs);
 			if (msgs != null) msgs.dispatch();
 		}
 		else if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, NUOPCPackage.NUOPC_DRIVER_IMPLEMENTS_SET_MODEL_COUNT__PARENT, newParent, newParent));
+			eNotify(new ENotificationImpl(this, Notification.SET, NUOPCPackage.NUOPC_DRIVER_IMPLEMENTS_SET_MODEL_SERVICES__PARENT, newParent, newParent));
 	}
 
 	/**
@@ -232,7 +237,7 @@ public class NUOPCDriver__ImplementsSetModelCountImpl extends EObjectImpl implem
 		String oldGcomp = gcomp;
 		gcomp = newGcomp;
 		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, NUOPCPackage.NUOPC_DRIVER_IMPLEMENTS_SET_MODEL_COUNT__GCOMP, oldGcomp, gcomp));
+			eNotify(new ENotificationImpl(this, Notification.SET, NUOPCPackage.NUOPC_DRIVER_IMPLEMENTS_SET_MODEL_SERVICES__GCOMP, oldGcomp, gcomp));
 	}
 
 	/**
@@ -253,7 +258,7 @@ public class NUOPCDriver__ImplementsSetModelCountImpl extends EObjectImpl implem
 		String oldRc = rc;
 		rc = newRc;
 		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, NUOPCPackage.NUOPC_DRIVER_IMPLEMENTS_SET_MODEL_COUNT__RC, oldRc, rc));
+			eNotify(new ENotificationImpl(this, Notification.SET, NUOPCPackage.NUOPC_DRIVER_IMPLEMENTS_SET_MODEL_SERVICES__RC, oldRc, rc));
 	}
 
 	/**
@@ -274,7 +279,7 @@ public class NUOPCDriver__ImplementsSetModelCountImpl extends EObjectImpl implem
 		String oldName = name;
 		name = newName;
 		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, NUOPCPackage.NUOPC_DRIVER_IMPLEMENTS_SET_MODEL_COUNT__NAME, oldName, name));
+			eNotify(new ENotificationImpl(this, Notification.SET, NUOPCPackage.NUOPC_DRIVER_IMPLEMENTS_SET_MODEL_SERVICES__NAME, oldName, name));
 	}
 
 	/**
@@ -295,7 +300,7 @@ public class NUOPCDriver__ImplementsSetModelCountImpl extends EObjectImpl implem
 		String oldDriverInternalState = driverInternalState;
 		driverInternalState = newDriverInternalState;
 		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, NUOPCPackage.NUOPC_DRIVER_IMPLEMENTS_SET_MODEL_COUNT__DRIVER_INTERNAL_STATE, oldDriverInternalState, driverInternalState));
+			eNotify(new ENotificationImpl(this, Notification.SET, NUOPCPackage.NUOPC_DRIVER_IMPLEMENTS_SET_MODEL_SERVICES__DRIVER_INTERNAL_STATE, oldDriverInternalState, driverInternalState));
 	}
 
 	/**
@@ -316,7 +321,7 @@ public class NUOPCDriver__ImplementsSetModelCountImpl extends EObjectImpl implem
 		GetsInternalState oldGetsInternalState = getsInternalState;
 		getsInternalState = newGetsInternalState;
 		if (eNotificationRequired()) {
-			ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, NUOPCPackage.NUOPC_DRIVER_IMPLEMENTS_SET_MODEL_COUNT__GETS_INTERNAL_STATE, oldGetsInternalState, newGetsInternalState);
+			ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, NUOPCPackage.NUOPC_DRIVER_IMPLEMENTS_SET_MODEL_SERVICES__GETS_INTERNAL_STATE, oldGetsInternalState, newGetsInternalState);
 			if (msgs == null) msgs = notification; else msgs.add(notification);
 		}
 		return msgs;
@@ -331,14 +336,14 @@ public class NUOPCDriver__ImplementsSetModelCountImpl extends EObjectImpl implem
 		if (newGetsInternalState != getsInternalState) {
 			NotificationChain msgs = null;
 			if (getsInternalState != null)
-				msgs = ((InternalEObject)getsInternalState).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - NUOPCPackage.NUOPC_DRIVER_IMPLEMENTS_SET_MODEL_COUNT__GETS_INTERNAL_STATE, null, msgs);
+				msgs = ((InternalEObject)getsInternalState).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - NUOPCPackage.NUOPC_DRIVER_IMPLEMENTS_SET_MODEL_SERVICES__GETS_INTERNAL_STATE, null, msgs);
 			if (newGetsInternalState != null)
-				msgs = ((InternalEObject)newGetsInternalState).eInverseAdd(this, EOPPOSITE_FEATURE_BASE - NUOPCPackage.NUOPC_DRIVER_IMPLEMENTS_SET_MODEL_COUNT__GETS_INTERNAL_STATE, null, msgs);
+				msgs = ((InternalEObject)newGetsInternalState).eInverseAdd(this, EOPPOSITE_FEATURE_BASE - NUOPCPackage.NUOPC_DRIVER_IMPLEMENTS_SET_MODEL_SERVICES__GETS_INTERNAL_STATE, null, msgs);
 			msgs = basicSetGetsInternalState(newGetsInternalState, msgs);
 			if (msgs != null) msgs.dispatch();
 		}
 		else if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, NUOPCPackage.NUOPC_DRIVER_IMPLEMENTS_SET_MODEL_COUNT__GETS_INTERNAL_STATE, newGetsInternalState, newGetsInternalState));
+			eNotify(new ENotificationImpl(this, Notification.SET, NUOPCPackage.NUOPC_DRIVER_IMPLEMENTS_SET_MODEL_SERVICES__GETS_INTERNAL_STATE, newGetsInternalState, newGetsInternalState));
 	}
 
 	/**
@@ -359,7 +364,7 @@ public class NUOPCDriver__ImplementsSetModelCountImpl extends EObjectImpl implem
 		boolean oldAssignsValue = assignsValue;
 		assignsValue = newAssignsValue;
 		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, NUOPCPackage.NUOPC_DRIVER_IMPLEMENTS_SET_MODEL_COUNT__ASSIGNS_VALUE, oldAssignsValue, assignsValue));
+			eNotify(new ENotificationImpl(this, Notification.SET, NUOPCPackage.NUOPC_DRIVER_IMPLEMENTS_SET_MODEL_SERVICES__ASSIGNS_VALUE, oldAssignsValue, assignsValue));
 	}
 
 	/**
@@ -388,7 +393,7 @@ public class NUOPCDriver__ImplementsSetModelCountImpl extends EObjectImpl implem
 	@Override
 	public NotificationChain eInverseAdd(InternalEObject otherEnd, int featureID, NotificationChain msgs) {
 		switch (featureID) {
-			case NUOPCPackage.NUOPC_DRIVER_IMPLEMENTS_SET_MODEL_COUNT__PARENT:
+			case NUOPCPackage.NUOPC_DRIVER_IMPLEMENTS_SET_MODEL_SERVICES__PARENT:
 				if (eInternalContainer() != null)
 					msgs = eBasicRemoveFromContainer(msgs);
 				return basicSetParent((NUOPCDriver)otherEnd, msgs);
@@ -404,9 +409,9 @@ public class NUOPCDriver__ImplementsSetModelCountImpl extends EObjectImpl implem
 	@Override
 	public NotificationChain eInverseRemove(InternalEObject otherEnd, int featureID, NotificationChain msgs) {
 		switch (featureID) {
-			case NUOPCPackage.NUOPC_DRIVER_IMPLEMENTS_SET_MODEL_COUNT__PARENT:
+			case NUOPCPackage.NUOPC_DRIVER_IMPLEMENTS_SET_MODEL_SERVICES__PARENT:
 				return basicSetParent(null, msgs);
-			case NUOPCPackage.NUOPC_DRIVER_IMPLEMENTS_SET_MODEL_COUNT__GETS_INTERNAL_STATE:
+			case NUOPCPackage.NUOPC_DRIVER_IMPLEMENTS_SET_MODEL_SERVICES__GETS_INTERNAL_STATE:
 				return basicSetGetsInternalState(null, msgs);
 		}
 		return super.eInverseRemove(otherEnd, featureID, msgs);
@@ -420,8 +425,8 @@ public class NUOPCDriver__ImplementsSetModelCountImpl extends EObjectImpl implem
 	@Override
 	public NotificationChain eBasicRemoveFromContainerFeature(NotificationChain msgs) {
 		switch (eContainerFeatureID()) {
-			case NUOPCPackage.NUOPC_DRIVER_IMPLEMENTS_SET_MODEL_COUNT__PARENT:
-				return eInternalContainer().eInverseRemove(this, NUOPCPackage.NUOPC_DRIVER__IMPLEMENTS_SET_MODEL_COUNT, NUOPCDriver.class, msgs);
+			case NUOPCPackage.NUOPC_DRIVER_IMPLEMENTS_SET_MODEL_SERVICES__PARENT:
+				return eInternalContainer().eInverseRemove(this, NUOPCPackage.NUOPC_DRIVER__IMPLEMENTS_SET_MODEL_SERVICES, NUOPCDriver.class, msgs);
 		}
 		return super.eBasicRemoveFromContainerFeature(msgs);
 	}
@@ -434,21 +439,21 @@ public class NUOPCDriver__ImplementsSetModelCountImpl extends EObjectImpl implem
 	@Override
 	public Object eGet(int featureID, boolean resolve, boolean coreType) {
 		switch (featureID) {
-			case NUOPCPackage.NUOPC_DRIVER_IMPLEMENTS_SET_MODEL_COUNT__PARENT:
+			case NUOPCPackage.NUOPC_DRIVER_IMPLEMENTS_SET_MODEL_SERVICES__PARENT:
 				return getParent();
-			case NUOPCPackage.NUOPC_DRIVER_IMPLEMENTS_SET_MODEL_COUNT__GCOMP:
+			case NUOPCPackage.NUOPC_DRIVER_IMPLEMENTS_SET_MODEL_SERVICES__GCOMP:
 				return getGcomp();
-			case NUOPCPackage.NUOPC_DRIVER_IMPLEMENTS_SET_MODEL_COUNT__RC:
+			case NUOPCPackage.NUOPC_DRIVER_IMPLEMENTS_SET_MODEL_SERVICES__RC:
 				return getRc();
-			case NUOPCPackage.NUOPC_DRIVER_IMPLEMENTS_SET_MODEL_COUNT__NAME:
+			case NUOPCPackage.NUOPC_DRIVER_IMPLEMENTS_SET_MODEL_SERVICES__NAME:
 				return getName();
-			case NUOPCPackage.NUOPC_DRIVER_IMPLEMENTS_SET_MODEL_COUNT__DRIVER_INTERNAL_STATE:
+			case NUOPCPackage.NUOPC_DRIVER_IMPLEMENTS_SET_MODEL_SERVICES__DRIVER_INTERNAL_STATE:
 				return getDriverInternalState();
-			case NUOPCPackage.NUOPC_DRIVER_IMPLEMENTS_SET_MODEL_COUNT__GETS_INTERNAL_STATE:
+			case NUOPCPackage.NUOPC_DRIVER_IMPLEMENTS_SET_MODEL_SERVICES__GETS_INTERNAL_STATE:
 				return getGetsInternalState();
-			case NUOPCPackage.NUOPC_DRIVER_IMPLEMENTS_SET_MODEL_COUNT__ASSIGNS_VALUE:
+			case NUOPCPackage.NUOPC_DRIVER_IMPLEMENTS_SET_MODEL_SERVICES__ASSIGNS_VALUE:
 				return isAssignsValue();
-			case NUOPCPackage.NUOPC_DRIVER_IMPLEMENTS_SET_MODEL_COUNT__ATTACHED:
+			case NUOPCPackage.NUOPC_DRIVER_IMPLEMENTS_SET_MODEL_SERVICES__ATTACHED:
 				return isAttached();
 		}
 		return super.eGet(featureID, resolve, coreType);
@@ -459,32 +464,31 @@ public class NUOPCDriver__ImplementsSetModelCountImpl extends EObjectImpl implem
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	@SuppressWarnings("unchecked")
 	@Override
 	public void eSet(int featureID, Object newValue) {
 		switch (featureID) {
-			case NUOPCPackage.NUOPC_DRIVER_IMPLEMENTS_SET_MODEL_COUNT__PARENT:
+			case NUOPCPackage.NUOPC_DRIVER_IMPLEMENTS_SET_MODEL_SERVICES__PARENT:
 				setParent((NUOPCDriver)newValue);
 				return;
-			case NUOPCPackage.NUOPC_DRIVER_IMPLEMENTS_SET_MODEL_COUNT__GCOMP:
+			case NUOPCPackage.NUOPC_DRIVER_IMPLEMENTS_SET_MODEL_SERVICES__GCOMP:
 				setGcomp((String)newValue);
 				return;
-			case NUOPCPackage.NUOPC_DRIVER_IMPLEMENTS_SET_MODEL_COUNT__RC:
+			case NUOPCPackage.NUOPC_DRIVER_IMPLEMENTS_SET_MODEL_SERVICES__RC:
 				setRc((String)newValue);
 				return;
-			case NUOPCPackage.NUOPC_DRIVER_IMPLEMENTS_SET_MODEL_COUNT__NAME:
+			case NUOPCPackage.NUOPC_DRIVER_IMPLEMENTS_SET_MODEL_SERVICES__NAME:
 				setName((String)newValue);
 				return;
-			case NUOPCPackage.NUOPC_DRIVER_IMPLEMENTS_SET_MODEL_COUNT__DRIVER_INTERNAL_STATE:
+			case NUOPCPackage.NUOPC_DRIVER_IMPLEMENTS_SET_MODEL_SERVICES__DRIVER_INTERNAL_STATE:
 				setDriverInternalState((String)newValue);
 				return;
-			case NUOPCPackage.NUOPC_DRIVER_IMPLEMENTS_SET_MODEL_COUNT__GETS_INTERNAL_STATE:
+			case NUOPCPackage.NUOPC_DRIVER_IMPLEMENTS_SET_MODEL_SERVICES__GETS_INTERNAL_STATE:
 				setGetsInternalState((GetsInternalState)newValue);
 				return;
-			case NUOPCPackage.NUOPC_DRIVER_IMPLEMENTS_SET_MODEL_COUNT__ASSIGNS_VALUE:
+			case NUOPCPackage.NUOPC_DRIVER_IMPLEMENTS_SET_MODEL_SERVICES__ASSIGNS_VALUE:
 				setAssignsValue((Boolean)newValue);
 				return;
-			case NUOPCPackage.NUOPC_DRIVER_IMPLEMENTS_SET_MODEL_COUNT__ATTACHED:
+			case NUOPCPackage.NUOPC_DRIVER_IMPLEMENTS_SET_MODEL_SERVICES__ATTACHED:
 				setAttached((Boolean)newValue);
 				return;
 		}
@@ -499,28 +503,28 @@ public class NUOPCDriver__ImplementsSetModelCountImpl extends EObjectImpl implem
 	@Override
 	public void eUnset(int featureID) {
 		switch (featureID) {
-			case NUOPCPackage.NUOPC_DRIVER_IMPLEMENTS_SET_MODEL_COUNT__PARENT:
+			case NUOPCPackage.NUOPC_DRIVER_IMPLEMENTS_SET_MODEL_SERVICES__PARENT:
 				setParent((NUOPCDriver)null);
 				return;
-			case NUOPCPackage.NUOPC_DRIVER_IMPLEMENTS_SET_MODEL_COUNT__GCOMP:
+			case NUOPCPackage.NUOPC_DRIVER_IMPLEMENTS_SET_MODEL_SERVICES__GCOMP:
 				setGcomp(GCOMP_EDEFAULT);
 				return;
-			case NUOPCPackage.NUOPC_DRIVER_IMPLEMENTS_SET_MODEL_COUNT__RC:
+			case NUOPCPackage.NUOPC_DRIVER_IMPLEMENTS_SET_MODEL_SERVICES__RC:
 				setRc(RC_EDEFAULT);
 				return;
-			case NUOPCPackage.NUOPC_DRIVER_IMPLEMENTS_SET_MODEL_COUNT__NAME:
+			case NUOPCPackage.NUOPC_DRIVER_IMPLEMENTS_SET_MODEL_SERVICES__NAME:
 				setName(NAME_EDEFAULT);
 				return;
-			case NUOPCPackage.NUOPC_DRIVER_IMPLEMENTS_SET_MODEL_COUNT__DRIVER_INTERNAL_STATE:
+			case NUOPCPackage.NUOPC_DRIVER_IMPLEMENTS_SET_MODEL_SERVICES__DRIVER_INTERNAL_STATE:
 				setDriverInternalState(DRIVER_INTERNAL_STATE_EDEFAULT);
 				return;
-			case NUOPCPackage.NUOPC_DRIVER_IMPLEMENTS_SET_MODEL_COUNT__GETS_INTERNAL_STATE:
+			case NUOPCPackage.NUOPC_DRIVER_IMPLEMENTS_SET_MODEL_SERVICES__GETS_INTERNAL_STATE:
 				setGetsInternalState((GetsInternalState)null);
 				return;
-			case NUOPCPackage.NUOPC_DRIVER_IMPLEMENTS_SET_MODEL_COUNT__ASSIGNS_VALUE:
+			case NUOPCPackage.NUOPC_DRIVER_IMPLEMENTS_SET_MODEL_SERVICES__ASSIGNS_VALUE:
 				setAssignsValue(ASSIGNS_VALUE_EDEFAULT);
 				return;
-			case NUOPCPackage.NUOPC_DRIVER_IMPLEMENTS_SET_MODEL_COUNT__ATTACHED:
+			case NUOPCPackage.NUOPC_DRIVER_IMPLEMENTS_SET_MODEL_SERVICES__ATTACHED:
 				ATTACHED__ESETTING_DELEGATE.dynamicUnset(this, null, 0);
 				return;
 		}
@@ -535,21 +539,21 @@ public class NUOPCDriver__ImplementsSetModelCountImpl extends EObjectImpl implem
 	@Override
 	public boolean eIsSet(int featureID) {
 		switch (featureID) {
-			case NUOPCPackage.NUOPC_DRIVER_IMPLEMENTS_SET_MODEL_COUNT__PARENT:
+			case NUOPCPackage.NUOPC_DRIVER_IMPLEMENTS_SET_MODEL_SERVICES__PARENT:
 				return getParent() != null;
-			case NUOPCPackage.NUOPC_DRIVER_IMPLEMENTS_SET_MODEL_COUNT__GCOMP:
+			case NUOPCPackage.NUOPC_DRIVER_IMPLEMENTS_SET_MODEL_SERVICES__GCOMP:
 				return GCOMP_EDEFAULT == null ? gcomp != null : !GCOMP_EDEFAULT.equals(gcomp);
-			case NUOPCPackage.NUOPC_DRIVER_IMPLEMENTS_SET_MODEL_COUNT__RC:
+			case NUOPCPackage.NUOPC_DRIVER_IMPLEMENTS_SET_MODEL_SERVICES__RC:
 				return RC_EDEFAULT == null ? rc != null : !RC_EDEFAULT.equals(rc);
-			case NUOPCPackage.NUOPC_DRIVER_IMPLEMENTS_SET_MODEL_COUNT__NAME:
+			case NUOPCPackage.NUOPC_DRIVER_IMPLEMENTS_SET_MODEL_SERVICES__NAME:
 				return NAME_EDEFAULT == null ? name != null : !NAME_EDEFAULT.equals(name);
-			case NUOPCPackage.NUOPC_DRIVER_IMPLEMENTS_SET_MODEL_COUNT__DRIVER_INTERNAL_STATE:
+			case NUOPCPackage.NUOPC_DRIVER_IMPLEMENTS_SET_MODEL_SERVICES__DRIVER_INTERNAL_STATE:
 				return DRIVER_INTERNAL_STATE_EDEFAULT == null ? driverInternalState != null : !DRIVER_INTERNAL_STATE_EDEFAULT.equals(driverInternalState);
-			case NUOPCPackage.NUOPC_DRIVER_IMPLEMENTS_SET_MODEL_COUNT__GETS_INTERNAL_STATE:
+			case NUOPCPackage.NUOPC_DRIVER_IMPLEMENTS_SET_MODEL_SERVICES__GETS_INTERNAL_STATE:
 				return getsInternalState != null;
-			case NUOPCPackage.NUOPC_DRIVER_IMPLEMENTS_SET_MODEL_COUNT__ASSIGNS_VALUE:
+			case NUOPCPackage.NUOPC_DRIVER_IMPLEMENTS_SET_MODEL_SERVICES__ASSIGNS_VALUE:
 				return assignsValue != ASSIGNS_VALUE_EDEFAULT;
-			case NUOPCPackage.NUOPC_DRIVER_IMPLEMENTS_SET_MODEL_COUNT__ATTACHED:
+			case NUOPCPackage.NUOPC_DRIVER_IMPLEMENTS_SET_MODEL_SERVICES__ATTACHED:
 				return ATTACHED__ESETTING_DELEGATE.dynamicIsSet(this, null, 0);
 		}
 		return super.eIsSet(featureID);
@@ -579,4 +583,4 @@ public class NUOPCDriver__ImplementsSetModelCountImpl extends EObjectImpl implem
 		return result.toString();
 	}
 
-} //NUOPCDriver__ImplementsSetModelCountImpl
+} //NUOPCDriver__ImplementsSetModelServicesImpl

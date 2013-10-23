@@ -140,6 +140,10 @@ public class NUOPCAdapterFactory extends AdapterFactoryImpl {
 				return createNUOPCDriver__ImplementsSetModelCountAdapter();
 			}
 			@Override
+			public Adapter caseNUOPCDriver__ImplementsSetModelServices(NUOPCDriver__ImplementsSetModelServices object) {
+				return createNUOPCDriver__ImplementsSetModelServicesAdapter();
+			}
+			@Override
 			public Adapter caseGetsInternalState(GetsInternalState object) {
 				return createGetsInternalStateAdapter();
 			}
@@ -428,6 +432,20 @@ public class NUOPCAdapterFactory extends AdapterFactoryImpl {
 	 * @generated
 	 */
 	public Adapter createNUOPCDriver__ImplementsSetModelCountAdapter() {
+		return null;
+	}
+
+	/**
+	 * Creates a new adapter for an object of class '{@link org.earthsystemcurator.cupid.nuopc.fsml.nuopc.NUOPCDriver__ImplementsSetModelServices <em>Driver Implements Set Model Services</em>}'.
+	 * <!-- begin-user-doc -->
+	 * This default implementation returns null so that we can easily ignore cases;
+	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
+	 * <!-- end-user-doc -->
+	 * @return the new adapter.
+	 * @see org.earthsystemcurator.cupid.nuopc.fsml.nuopc.NUOPCDriver__ImplementsSetModelServices
+	 * @generated
+	 */
+	public Adapter createNUOPCDriver__ImplementsSetModelServicesAdapter() {
 		return null;
 	}
 

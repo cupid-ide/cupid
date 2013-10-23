@@ -82,6 +82,7 @@ public interface Model_Init extends EObject {
 
 	/**
 	 * Returns the value of the '<em><b>Implements Init P2</b></em>' containment reference.
+	 * It is bidirectional and its opposite is '{@link org.earthsystemcurator.cupid.nuopc.fsml.nuopc.ModelImplementsInitP2#getParent <em>Parent</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <p>
 	 * If the meaning of the '<em>Implements Init P2</em>' containment reference isn't clear,
@@ -91,7 +92,8 @@ public interface Model_Init extends EObject {
 	 * @return the value of the '<em>Implements Init P2</em>' containment reference.
 	 * @see #setImplementsInitP2(ModelImplementsInitP2)
 	 * @see org.earthsystemcurator.cupid.nuopc.fsml.nuopc.NUOPCPackage#getModel_Init_ImplementsInitP2()
-	 * @model containment="true" keys="name" required="true"
+	 * @see org.earthsystemcurator.cupid.nuopc.fsml.nuopc.ModelImplementsInitP2#getParent
+	 * @model opposite="parent" containment="true" keys="name" required="true"
 	 *        annotation="http://www.earthsystemcog.org/projects/nuopc mapping='subroutine: \"#name(inout type(ESMF_GridComp) gcomp, inout type(ESMF_State) #importParam, inout type(ESMF_State) #exportParam, inout type(ESMF_Clock) clock, out integer rc)\"'"
 	 * @generated
 	 */

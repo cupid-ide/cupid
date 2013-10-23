@@ -6,7 +6,7 @@ package org.earthsystemcurator.cupid.nuopc.fsml.nuopc.provider;
 import java.util.Collection;
 import java.util.List;
 
-import org.earthsystemcurator.cupid.nuopc.fsml.nuopc.ModelImplementsInitP2;
+import org.earthsystemcurator.cupid.nuopc.fsml.nuopc.NUOPCDriver__ImplementsSetModelServices;
 import org.earthsystemcurator.cupid.nuopc.fsml.nuopc.NUOPCFactory;
 import org.earthsystemcurator.cupid.nuopc.fsml.nuopc.NUOPCPackage;
 
@@ -16,6 +16,7 @@ import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.common.util.ResourceLocator;
 
 import org.eclipse.emf.ecore.EStructuralFeature;
+
 import org.eclipse.emf.edit.provider.ComposeableAdapterFactory;
 import org.eclipse.emf.edit.provider.IEditingDomainItemProvider;
 import org.eclipse.emf.edit.provider.IItemLabelProvider;
@@ -28,12 +29,12 @@ import org.eclipse.emf.edit.provider.ItemProviderAdapter;
 import org.eclipse.emf.edit.provider.ViewerNotification;
 
 /**
- * This is the item provider adapter for a {@link org.earthsystemcurator.cupid.nuopc.fsml.nuopc.ModelImplementsInitP2} object.
+ * This is the item provider adapter for a {@link org.earthsystemcurator.cupid.nuopc.fsml.nuopc.NUOPCDriver__ImplementsSetModelServices} object.
  * <!-- begin-user-doc -->
  * <!-- end-user-doc -->
  * @generated
  */
-public class ModelImplementsInitP2ItemProvider
+public class NUOPCDriver__ImplementsSetModelServicesItemProvider
 	extends ItemProviderAdapter
 	implements
 		IEditingDomainItemProvider,
@@ -47,7 +48,7 @@ public class ModelImplementsInitP2ItemProvider
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public ModelImplementsInitP2ItemProvider(AdapterFactory adapterFactory) {
+	public NUOPCDriver__ImplementsSetModelServicesItemProvider(AdapterFactory adapterFactory) {
 		super(adapterFactory);
 	}
 
@@ -62,14 +63,58 @@ public class ModelImplementsInitP2ItemProvider
 		if (itemPropertyDescriptors == null) {
 			super.getPropertyDescriptors(object);
 
+			addGcompPropertyDescriptor(object);
+			addRcPropertyDescriptor(object);
 			addNamePropertyDescriptor(object);
-			addImportParamPropertyDescriptor(object);
-			addExportParamPropertyDescriptor(object);
-			addRealizesAtLeastOneFieldPropertyDescriptor(object);
-			addRegisteredInSetServicesPropertyDescriptor(object);
-			addRealizesOrRegisteredPropertyDescriptor(object);
+			addDriverInternalStatePropertyDescriptor(object);
+			addAssignsValuePropertyDescriptor(object);
+			addAttachedPropertyDescriptor(object);
 		}
 		return itemPropertyDescriptors;
+	}
+
+	/**
+	 * This adds a property descriptor for the Gcomp feature.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	protected void addGcompPropertyDescriptor(Object object) {
+		itemPropertyDescriptors.add
+			(createItemPropertyDescriptor
+				(((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(),
+				 getResourceLocator(),
+				 getString("_UI_NUOPCDriver__ImplementsSetModelServices_gcomp_feature"),
+				 getString("_UI_PropertyDescriptor_description", "_UI_NUOPCDriver__ImplementsSetModelServices_gcomp_feature", "_UI_NUOPCDriver__ImplementsSetModelServices_type"),
+				 NUOPCPackage.Literals.NUOPC_DRIVER_IMPLEMENTS_SET_MODEL_SERVICES__GCOMP,
+				 true,
+				 false,
+				 false,
+				 ItemPropertyDescriptor.GENERIC_VALUE_IMAGE,
+				 null,
+				 null));
+	}
+
+	/**
+	 * This adds a property descriptor for the Rc feature.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	protected void addRcPropertyDescriptor(Object object) {
+		itemPropertyDescriptors.add
+			(createItemPropertyDescriptor
+				(((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(),
+				 getResourceLocator(),
+				 getString("_UI_NUOPCDriver__ImplementsSetModelServices_rc_feature"),
+				 getString("_UI_PropertyDescriptor_description", "_UI_NUOPCDriver__ImplementsSetModelServices_rc_feature", "_UI_NUOPCDriver__ImplementsSetModelServices_type"),
+				 NUOPCPackage.Literals.NUOPC_DRIVER_IMPLEMENTS_SET_MODEL_SERVICES__RC,
+				 true,
+				 false,
+				 false,
+				 ItemPropertyDescriptor.GENERIC_VALUE_IMAGE,
+				 null,
+				 null));
 	}
 
 	/**
@@ -83,9 +128,9 @@ public class ModelImplementsInitP2ItemProvider
 			(createItemPropertyDescriptor
 				(((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(),
 				 getResourceLocator(),
-				 getString("_UI_ModelImplementsInitP2_name_feature"),
-				 getString("_UI_PropertyDescriptor_description", "_UI_ModelImplementsInitP2_name_feature", "_UI_ModelImplementsInitP2_type"),
-				 NUOPCPackage.Literals.MODEL_IMPLEMENTS_INIT_P2__NAME,
+				 getString("_UI_NUOPCDriver__ImplementsSetModelServices_name_feature"),
+				 getString("_UI_PropertyDescriptor_description", "_UI_NUOPCDriver__ImplementsSetModelServices_name_feature", "_UI_NUOPCDriver__ImplementsSetModelServices_type"),
+				 NUOPCPackage.Literals.NUOPC_DRIVER_IMPLEMENTS_SET_MODEL_SERVICES__NAME,
 				 true,
 				 false,
 				 false,
@@ -95,19 +140,19 @@ public class ModelImplementsInitP2ItemProvider
 	}
 
 	/**
-	 * This adds a property descriptor for the Import Param feature.
+	 * This adds a property descriptor for the Driver Internal State feature.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	protected void addImportParamPropertyDescriptor(Object object) {
+	protected void addDriverInternalStatePropertyDescriptor(Object object) {
 		itemPropertyDescriptors.add
 			(createItemPropertyDescriptor
 				(((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(),
 				 getResourceLocator(),
-				 getString("_UI_ModelImplementsInitP2_importParam_feature"),
-				 getString("_UI_PropertyDescriptor_description", "_UI_ModelImplementsInitP2_importParam_feature", "_UI_ModelImplementsInitP2_type"),
-				 NUOPCPackage.Literals.MODEL_IMPLEMENTS_INIT_P2__IMPORT_PARAM,
+				 getString("_UI_NUOPCDriver__ImplementsSetModelServices_driverInternalState_feature"),
+				 getString("_UI_PropertyDescriptor_description", "_UI_NUOPCDriver__ImplementsSetModelServices_driverInternalState_feature", "_UI_NUOPCDriver__ImplementsSetModelServices_type"),
+				 NUOPCPackage.Literals.NUOPC_DRIVER_IMPLEMENTS_SET_MODEL_SERVICES__DRIVER_INTERNAL_STATE,
 				 true,
 				 false,
 				 false,
@@ -117,41 +162,19 @@ public class ModelImplementsInitP2ItemProvider
 	}
 
 	/**
-	 * This adds a property descriptor for the Export Param feature.
+	 * This adds a property descriptor for the Assigns Value feature.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	protected void addExportParamPropertyDescriptor(Object object) {
+	protected void addAssignsValuePropertyDescriptor(Object object) {
 		itemPropertyDescriptors.add
 			(createItemPropertyDescriptor
 				(((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(),
 				 getResourceLocator(),
-				 getString("_UI_ModelImplementsInitP2_exportParam_feature"),
-				 getString("_UI_PropertyDescriptor_description", "_UI_ModelImplementsInitP2_exportParam_feature", "_UI_ModelImplementsInitP2_type"),
-				 NUOPCPackage.Literals.MODEL_IMPLEMENTS_INIT_P2__EXPORT_PARAM,
-				 true,
-				 false,
-				 false,
-				 ItemPropertyDescriptor.GENERIC_VALUE_IMAGE,
-				 null,
-				 null));
-	}
-
-	/**
-	 * This adds a property descriptor for the Realizes At Least One Field feature.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	protected void addRealizesAtLeastOneFieldPropertyDescriptor(Object object) {
-		itemPropertyDescriptors.add
-			(createItemPropertyDescriptor
-				(((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(),
-				 getResourceLocator(),
-				 getString("_UI_ModelImplementsInitP2_realizesAtLeastOneField_feature"),
-				 getString("_UI_PropertyDescriptor_description", "_UI_ModelImplementsInitP2_realizesAtLeastOneField_feature", "_UI_ModelImplementsInitP2_type"),
-				 NUOPCPackage.Literals.MODEL_IMPLEMENTS_INIT_P2__REALIZES_AT_LEAST_ONE_FIELD,
+				 getString("_UI_NUOPCDriver__ImplementsSetModelServices_assignsValue_feature"),
+				 getString("_UI_PropertyDescriptor_description", "_UI_NUOPCDriver__ImplementsSetModelServices_assignsValue_feature", "_UI_NUOPCDriver__ImplementsSetModelServices_type"),
+				 NUOPCPackage.Literals.NUOPC_DRIVER_IMPLEMENTS_SET_MODEL_SERVICES__ASSIGNS_VALUE,
 				 true,
 				 false,
 				 false,
@@ -161,41 +184,19 @@ public class ModelImplementsInitP2ItemProvider
 	}
 
 	/**
-	 * This adds a property descriptor for the Registered In Set Services feature.
+	 * This adds a property descriptor for the Attached feature.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	protected void addRegisteredInSetServicesPropertyDescriptor(Object object) {
+	protected void addAttachedPropertyDescriptor(Object object) {
 		itemPropertyDescriptors.add
 			(createItemPropertyDescriptor
 				(((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(),
 				 getResourceLocator(),
-				 getString("_UI_ModelImplementsInitP2_registeredInSetServices_feature"),
-				 getString("_UI_PropertyDescriptor_description", "_UI_ModelImplementsInitP2_registeredInSetServices_feature", "_UI_ModelImplementsInitP2_type"),
-				 NUOPCPackage.Literals.MODEL_IMPLEMENTS_INIT_P2__REGISTERED_IN_SET_SERVICES,
-				 true,
-				 false,
-				 false,
-				 ItemPropertyDescriptor.BOOLEAN_VALUE_IMAGE,
-				 null,
-				 null));
-	}
-
-	/**
-	 * This adds a property descriptor for the Realizes Or Registered feature.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	protected void addRealizesOrRegisteredPropertyDescriptor(Object object) {
-		itemPropertyDescriptors.add
-			(createItemPropertyDescriptor
-				(((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(),
-				 getResourceLocator(),
-				 getString("_UI_ModelImplementsInitP2_realizesOrRegistered_feature"),
-				 getString("_UI_PropertyDescriptor_description", "_UI_ModelImplementsInitP2_realizesOrRegistered_feature", "_UI_ModelImplementsInitP2_type"),
-				 NUOPCPackage.Literals.MODEL_IMPLEMENTS_INIT_P2__REALIZES_OR_REGISTERED,
+				 getString("_UI_NUOPCDriver__ImplementsSetModelServices_attached_feature"),
+				 getString("_UI_PropertyDescriptor_description", "_UI_NUOPCDriver__ImplementsSetModelServices_attached_feature", "_UI_NUOPCDriver__ImplementsSetModelServices_type"),
+				 NUOPCPackage.Literals.NUOPC_DRIVER_IMPLEMENTS_SET_MODEL_SERVICES__ATTACHED,
 				 true,
 				 false,
 				 false,
@@ -216,8 +217,7 @@ public class ModelImplementsInitP2ItemProvider
 	public Collection<? extends EStructuralFeature> getChildrenFeatures(Object object) {
 		if (childrenFeatures == null) {
 			super.getChildrenFeatures(object);
-			childrenFeatures.add(NUOPCPackage.Literals.MODEL_IMPLEMENTS_INIT_P2__REALIZES_IMPORT_FIELD);
-			childrenFeatures.add(NUOPCPackage.Literals.MODEL_IMPLEMENTS_INIT_P2__REALIZES_EXPORT_FIELD);
+			childrenFeatures.add(NUOPCPackage.Literals.NUOPC_DRIVER_IMPLEMENTS_SET_MODEL_SERVICES__GETS_INTERNAL_STATE);
 		}
 		return childrenFeatures;
 	}
@@ -236,14 +236,14 @@ public class ModelImplementsInitP2ItemProvider
 	}
 
 	/**
-	 * This returns ModelImplementsInitP2.gif.
+	 * This returns NUOPCDriver__ImplementsSetModelServices.gif.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
 	@Override
 	public Object getImage(Object object) {
-		return overlayImage(object, getResourceLocator().getImage("full/obj16/ModelImplementsInitP2"));
+		return overlayImage(object, getResourceLocator().getImage("full/obj16/NUOPCDriver__ImplementsSetModelServices"));
 	}
 
 	/**
@@ -254,10 +254,10 @@ public class ModelImplementsInitP2ItemProvider
 	 */
 	@Override
 	public String getText(Object object) {
-		String label = ((ModelImplementsInitP2)object).getName();
+		String label = ((NUOPCDriver__ImplementsSetModelServices)object).getName();
 		return label == null || label.length() == 0 ?
-			getString("_UI_ModelImplementsInitP2_type") :
-			getString("_UI_ModelImplementsInitP2_type") + " " + label;
+			getString("_UI_NUOPCDriver__ImplementsSetModelServices_type") :
+			getString("_UI_NUOPCDriver__ImplementsSetModelServices_type") + " " + label;
 	}
 
 	/**
@@ -271,17 +271,16 @@ public class ModelImplementsInitP2ItemProvider
 	public void notifyChanged(Notification notification) {
 		updateChildren(notification);
 
-		switch (notification.getFeatureID(ModelImplementsInitP2.class)) {
-			case NUOPCPackage.MODEL_IMPLEMENTS_INIT_P2__NAME:
-			case NUOPCPackage.MODEL_IMPLEMENTS_INIT_P2__IMPORT_PARAM:
-			case NUOPCPackage.MODEL_IMPLEMENTS_INIT_P2__EXPORT_PARAM:
-			case NUOPCPackage.MODEL_IMPLEMENTS_INIT_P2__REALIZES_AT_LEAST_ONE_FIELD:
-			case NUOPCPackage.MODEL_IMPLEMENTS_INIT_P2__REGISTERED_IN_SET_SERVICES:
-			case NUOPCPackage.MODEL_IMPLEMENTS_INIT_P2__REALIZES_OR_REGISTERED:
+		switch (notification.getFeatureID(NUOPCDriver__ImplementsSetModelServices.class)) {
+			case NUOPCPackage.NUOPC_DRIVER_IMPLEMENTS_SET_MODEL_SERVICES__GCOMP:
+			case NUOPCPackage.NUOPC_DRIVER_IMPLEMENTS_SET_MODEL_SERVICES__RC:
+			case NUOPCPackage.NUOPC_DRIVER_IMPLEMENTS_SET_MODEL_SERVICES__NAME:
+			case NUOPCPackage.NUOPC_DRIVER_IMPLEMENTS_SET_MODEL_SERVICES__DRIVER_INTERNAL_STATE:
+			case NUOPCPackage.NUOPC_DRIVER_IMPLEMENTS_SET_MODEL_SERVICES__ASSIGNS_VALUE:
+			case NUOPCPackage.NUOPC_DRIVER_IMPLEMENTS_SET_MODEL_SERVICES__ATTACHED:
 				fireNotifyChanged(new ViewerNotification(notification, notification.getNotifier(), false, true));
 				return;
-			case NUOPCPackage.MODEL_IMPLEMENTS_INIT_P2__REALIZES_IMPORT_FIELD:
-			case NUOPCPackage.MODEL_IMPLEMENTS_INIT_P2__REALIZES_EXPORT_FIELD:
+			case NUOPCPackage.NUOPC_DRIVER_IMPLEMENTS_SET_MODEL_SERVICES__GETS_INTERNAL_STATE:
 				fireNotifyChanged(new ViewerNotification(notification, notification.getNotifier(), true, false));
 				return;
 		}
@@ -301,13 +300,8 @@ public class ModelImplementsInitP2ItemProvider
 
 		newChildDescriptors.add
 			(createChildParameter
-				(NUOPCPackage.Literals.MODEL_IMPLEMENTS_INIT_P2__REALIZES_IMPORT_FIELD,
-				 NUOPCFactory.eINSTANCE.createRealizesImportField()));
-
-		newChildDescriptors.add
-			(createChildParameter
-				(NUOPCPackage.Literals.MODEL_IMPLEMENTS_INIT_P2__REALIZES_EXPORT_FIELD,
-				 NUOPCFactory.eINSTANCE.createRealizesExportField()));
+				(NUOPCPackage.Literals.NUOPC_DRIVER_IMPLEMENTS_SET_MODEL_SERVICES__GETS_INTERNAL_STATE,
+				 NUOPCFactory.eINSTANCE.createGetsInternalState()));
 	}
 
 	/**

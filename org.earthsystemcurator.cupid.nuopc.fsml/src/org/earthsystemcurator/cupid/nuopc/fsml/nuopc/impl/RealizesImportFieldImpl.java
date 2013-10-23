@@ -27,6 +27,7 @@ import org.eclipse.emf.ecore.util.EcoreUtil;
  * <ul>
  *   <li>{@link org.earthsystemcurator.cupid.nuopc.fsml.nuopc.impl.RealizesImportFieldImpl#getParent <em>Parent</em>}</li>
  *   <li>{@link org.earthsystemcurator.cupid.nuopc.fsml.nuopc.impl.RealizesImportFieldImpl#getRealizedInState <em>Realized In State</em>}</li>
+ *   <li>{@link org.earthsystemcurator.cupid.nuopc.fsml.nuopc.impl.RealizesImportFieldImpl#getRc <em>Rc</em>}</li>
  *   <li>{@link org.earthsystemcurator.cupid.nuopc.fsml.nuopc.impl.RealizesImportFieldImpl#isRealizedInImportState <em>Realized In Import State</em>}</li>
  *   <li>{@link org.earthsystemcurator.cupid.nuopc.fsml.nuopc.impl.RealizesImportFieldImpl#getField <em>Field</em>}</li>
  * </ul>
@@ -54,6 +55,26 @@ public class RealizesImportFieldImpl extends EObjectImpl implements RealizesImpo
 	 * @ordered
 	 */
 	protected String realizedInState = REALIZED_IN_STATE_EDEFAULT;
+
+	/**
+	 * The default value of the '{@link #getRc() <em>Rc</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #getRc()
+	 * @generated
+	 * @ordered
+	 */
+	protected static final String RC_EDEFAULT = "rc";
+
+	/**
+	 * The cached value of the '{@link #getRc() <em>Rc</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #getRc()
+	 * @generated
+	 * @ordered
+	 */
+	protected String rc = RC_EDEFAULT;
 
 	/**
 	 * The cached setting delegate for the '{@link #isRealizedInImportState() <em>Realized In Import State</em>}' attribute.
@@ -171,6 +192,27 @@ public class RealizesImportFieldImpl extends EObjectImpl implements RealizesImpo
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	public String getRc() {
+		return rc;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public void setRc(String newRc) {
+		String oldRc = rc;
+		rc = newRc;
+		if (eNotificationRequired())
+			eNotify(new ENotificationImpl(this, Notification.SET, NUOPCPackage.REALIZES_IMPORT_FIELD__RC, oldRc, rc));
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
 	public boolean isRealizedInImportState() {
 		return (Boolean)REALIZED_IN_IMPORT_STATE__ESETTING_DELEGATE.dynamicGet(this, null, 0, true, false);
 	}
@@ -261,6 +303,8 @@ public class RealizesImportFieldImpl extends EObjectImpl implements RealizesImpo
 				return getParent();
 			case NUOPCPackage.REALIZES_IMPORT_FIELD__REALIZED_IN_STATE:
 				return getRealizedInState();
+			case NUOPCPackage.REALIZES_IMPORT_FIELD__RC:
+				return getRc();
 			case NUOPCPackage.REALIZES_IMPORT_FIELD__REALIZED_IN_IMPORT_STATE:
 				return isRealizedInImportState();
 			case NUOPCPackage.REALIZES_IMPORT_FIELD__FIELD:
@@ -282,6 +326,9 @@ public class RealizesImportFieldImpl extends EObjectImpl implements RealizesImpo
 				return;
 			case NUOPCPackage.REALIZES_IMPORT_FIELD__REALIZED_IN_STATE:
 				setRealizedInState((String)newValue);
+				return;
+			case NUOPCPackage.REALIZES_IMPORT_FIELD__RC:
+				setRc((String)newValue);
 				return;
 			case NUOPCPackage.REALIZES_IMPORT_FIELD__REALIZED_IN_IMPORT_STATE:
 				setRealizedInImportState((Boolean)newValue);
@@ -307,6 +354,9 @@ public class RealizesImportFieldImpl extends EObjectImpl implements RealizesImpo
 			case NUOPCPackage.REALIZES_IMPORT_FIELD__REALIZED_IN_STATE:
 				setRealizedInState(REALIZED_IN_STATE_EDEFAULT);
 				return;
+			case NUOPCPackage.REALIZES_IMPORT_FIELD__RC:
+				setRc(RC_EDEFAULT);
+				return;
 			case NUOPCPackage.REALIZES_IMPORT_FIELD__REALIZED_IN_IMPORT_STATE:
 				REALIZED_IN_IMPORT_STATE__ESETTING_DELEGATE.dynamicUnset(this, null, 0);
 				return;
@@ -329,6 +379,8 @@ public class RealizesImportFieldImpl extends EObjectImpl implements RealizesImpo
 				return getParent() != null;
 			case NUOPCPackage.REALIZES_IMPORT_FIELD__REALIZED_IN_STATE:
 				return REALIZED_IN_STATE_EDEFAULT == null ? realizedInState != null : !REALIZED_IN_STATE_EDEFAULT.equals(realizedInState);
+			case NUOPCPackage.REALIZES_IMPORT_FIELD__RC:
+				return RC_EDEFAULT == null ? rc != null : !RC_EDEFAULT.equals(rc);
 			case NUOPCPackage.REALIZES_IMPORT_FIELD__REALIZED_IN_IMPORT_STATE:
 				return REALIZED_IN_IMPORT_STATE__ESETTING_DELEGATE.dynamicIsSet(this, null, 0);
 			case NUOPCPackage.REALIZES_IMPORT_FIELD__FIELD:
@@ -349,6 +401,8 @@ public class RealizesImportFieldImpl extends EObjectImpl implements RealizesImpo
 		StringBuffer result = new StringBuffer(super.toString());
 		result.append(" (realizedInState: ");
 		result.append(realizedInState);
+		result.append(", rc: ");
+		result.append(rc);
 		result.append(", field: ");
 		result.append(field);
 		result.append(')');

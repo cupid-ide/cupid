@@ -25,6 +25,7 @@ import org.eclipse.emf.ecore.util.EcoreUtil;
  * The following features are implemented:
  * <ul>
  *   <li>{@link org.earthsystemcurator.cupid.nuopc.fsml.nuopc.impl.AdvertisesExportFieldImpl#getParent <em>Parent</em>}</li>
+ *   <li>{@link org.earthsystemcurator.cupid.nuopc.fsml.nuopc.impl.AdvertisesExportFieldImpl#getRc <em>Rc</em>}</li>
  *   <li>{@link org.earthsystemcurator.cupid.nuopc.fsml.nuopc.impl.AdvertisesExportFieldImpl#getAddsToState <em>Adds To State</em>}</li>
  *   <li>{@link org.earthsystemcurator.cupid.nuopc.fsml.nuopc.impl.AdvertisesExportFieldImpl#isAddsToExportState <em>Adds To Export State</em>}</li>
  *   <li>{@link org.earthsystemcurator.cupid.nuopc.fsml.nuopc.impl.AdvertisesExportFieldImpl#getStandardName <em>Standard Name</em>}</li>
@@ -34,6 +35,26 @@ import org.eclipse.emf.ecore.util.EcoreUtil;
  * @generated
  */
 public class AdvertisesExportFieldImpl extends EObjectImpl implements AdvertisesExportField {
+	/**
+	 * The default value of the '{@link #getRc() <em>Rc</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #getRc()
+	 * @generated
+	 * @ordered
+	 */
+	protected static final String RC_EDEFAULT = "rc";
+
+	/**
+	 * The cached value of the '{@link #getRc() <em>Rc</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #getRc()
+	 * @generated
+	 * @ordered
+	 */
+	protected String rc = RC_EDEFAULT;
+
 	/**
 	 * The default value of the '{@link #getAddsToState() <em>Adds To State</em>}' attribute.
 	 * <!-- begin-user-doc -->
@@ -72,7 +93,7 @@ public class AdvertisesExportFieldImpl extends EObjectImpl implements Advertises
 	 * @generated
 	 * @ordered
 	 */
-	protected static final String STANDARD_NAME_EDEFAULT = null;
+	protected static final String STANDARD_NAME_EDEFAULT = "\"Standard_Name\"";
 
 	/**
 	 * The cached value of the '{@link #getStandardName() <em>Standard Name</em>}' attribute.
@@ -142,6 +163,27 @@ public class AdvertisesExportFieldImpl extends EObjectImpl implements Advertises
 		}
 		else if (eNotificationRequired())
 			eNotify(new ENotificationImpl(this, Notification.SET, NUOPCPackage.ADVERTISES_EXPORT_FIELD__PARENT, newParent, newParent));
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public String getRc() {
+		return rc;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public void setRc(String newRc) {
+		String oldRc = rc;
+		rc = newRc;
+		if (eNotificationRequired())
+			eNotify(new ENotificationImpl(this, Notification.SET, NUOPCPackage.ADVERTISES_EXPORT_FIELD__RC, oldRc, rc));
 	}
 
 	/**
@@ -258,6 +300,8 @@ public class AdvertisesExportFieldImpl extends EObjectImpl implements Advertises
 		switch (featureID) {
 			case NUOPCPackage.ADVERTISES_EXPORT_FIELD__PARENT:
 				return getParent();
+			case NUOPCPackage.ADVERTISES_EXPORT_FIELD__RC:
+				return getRc();
 			case NUOPCPackage.ADVERTISES_EXPORT_FIELD__ADDS_TO_STATE:
 				return getAddsToState();
 			case NUOPCPackage.ADVERTISES_EXPORT_FIELD__ADDS_TO_EXPORT_STATE:
@@ -278,6 +322,9 @@ public class AdvertisesExportFieldImpl extends EObjectImpl implements Advertises
 		switch (featureID) {
 			case NUOPCPackage.ADVERTISES_EXPORT_FIELD__PARENT:
 				setParent((ModelImplementsInitP1)newValue);
+				return;
+			case NUOPCPackage.ADVERTISES_EXPORT_FIELD__RC:
+				setRc((String)newValue);
 				return;
 			case NUOPCPackage.ADVERTISES_EXPORT_FIELD__ADDS_TO_STATE:
 				setAddsToState((String)newValue);
@@ -303,6 +350,9 @@ public class AdvertisesExportFieldImpl extends EObjectImpl implements Advertises
 			case NUOPCPackage.ADVERTISES_EXPORT_FIELD__PARENT:
 				setParent((ModelImplementsInitP1)null);
 				return;
+			case NUOPCPackage.ADVERTISES_EXPORT_FIELD__RC:
+				setRc(RC_EDEFAULT);
+				return;
 			case NUOPCPackage.ADVERTISES_EXPORT_FIELD__ADDS_TO_STATE:
 				setAddsToState(ADDS_TO_STATE_EDEFAULT);
 				return;
@@ -326,6 +376,8 @@ public class AdvertisesExportFieldImpl extends EObjectImpl implements Advertises
 		switch (featureID) {
 			case NUOPCPackage.ADVERTISES_EXPORT_FIELD__PARENT:
 				return getParent() != null;
+			case NUOPCPackage.ADVERTISES_EXPORT_FIELD__RC:
+				return RC_EDEFAULT == null ? rc != null : !RC_EDEFAULT.equals(rc);
 			case NUOPCPackage.ADVERTISES_EXPORT_FIELD__ADDS_TO_STATE:
 				return ADDS_TO_STATE_EDEFAULT == null ? addsToState != null : !ADDS_TO_STATE_EDEFAULT.equals(addsToState);
 			case NUOPCPackage.ADVERTISES_EXPORT_FIELD__ADDS_TO_EXPORT_STATE:
@@ -346,7 +398,9 @@ public class AdvertisesExportFieldImpl extends EObjectImpl implements Advertises
 		if (eIsProxy()) return super.toString();
 
 		StringBuffer result = new StringBuffer(super.toString());
-		result.append(" (addsToState: ");
+		result.append(" (rc: ");
+		result.append(rc);
+		result.append(", addsToState: ");
 		result.append(addsToState);
 		result.append(", standardName: ");
 		result.append(standardName);

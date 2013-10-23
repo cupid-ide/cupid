@@ -21,6 +21,7 @@ import org.eclipse.emf.ecore.EObject;
  *   <li>{@link org.earthsystemcurator.cupid.nuopc.fsml.nuopc.ModelImplementsInitP1#getAdvertisesExportField <em>Advertises Export Field</em>}</li>
  *   <li>{@link org.earthsystemcurator.cupid.nuopc.fsml.nuopc.ModelImplementsInitP1#isAdvertisesAtLeastOneField <em>Advertises At Least One Field</em>}</li>
  *   <li>{@link org.earthsystemcurator.cupid.nuopc.fsml.nuopc.ModelImplementsInitP1#isRegisteredInSetServices <em>Registered In Set Services</em>}</li>
+ *   <li>{@link org.earthsystemcurator.cupid.nuopc.fsml.nuopc.ModelImplementsInitP1#isAdvertisesOrRegistered <em>Advertises Or Registered</em>}</li>
  * </ul>
  * </p>
  *
@@ -191,7 +192,6 @@ public interface ModelImplementsInitP1 extends EObject {
 	 * @see #setAdvertisesAtLeastOneField(boolean)
 	 * @see org.earthsystemcurator.cupid.nuopc.fsml.nuopc.NUOPCPackage#getModelImplementsInitP1_AdvertisesAtLeastOneField()
 	 * @model required="true" derived="true"
-	 *        annotation="http://www.earthsystemcog.org/projects/nuopc essential='true'"
 	 *        annotation="http://www.eclipse.org/emf/2002/Ecore/OCL derivation='self.advertisesExportField->size() > 0 or self.advertisesImportField->size() > 0'"
 	 * @generated
 	 */
@@ -219,7 +219,7 @@ public interface ModelImplementsInitP1 extends EObject {
 	 * @see #setRegisteredInSetServices(boolean)
 	 * @see org.earthsystemcurator.cupid.nuopc.fsml.nuopc.NUOPCPackage#getModelImplementsInitP1_RegisteredInSetServices()
 	 * @model required="true"
-	 *        annotation="http://www.eclipse.org/emf/2002/Ecore/OCL derivation='self.parent.parent.implementsSetServices.callsSetEntryPoint->select(c|c.userRoutine=self.name)->notEmpty()'"
+	 *        annotation="http://www.eclipse.org/emf/2002/Ecore/OCL derivation='self.parent.parent.implementsSetServices.callsSetEntryPoint->select(c|c.userRoutine=self.name and c.phase=\'1\')->notEmpty()'"
 	 * @generated
 	 */
 	boolean isRegisteredInSetServices();
@@ -233,5 +233,33 @@ public interface ModelImplementsInitP1 extends EObject {
 	 * @generated
 	 */
 	void setRegisteredInSetServices(boolean value);
+
+	/**
+	 * Returns the value of the '<em><b>Advertises Or Registered</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <p>
+	 * If the meaning of the '<em>Advertises Or Registered</em>' attribute isn't clear,
+	 * there really should be more of a description here...
+	 * </p>
+	 * <!-- end-user-doc -->
+	 * @return the value of the '<em>Advertises Or Registered</em>' attribute.
+	 * @see #setAdvertisesOrRegistered(boolean)
+	 * @see org.earthsystemcurator.cupid.nuopc.fsml.nuopc.NUOPCPackage#getModelImplementsInitP1_AdvertisesOrRegistered()
+	 * @model required="true"
+	 *        annotation="http://www.eclipse.org/emf/2002/Ecore/OCL derivation='self.registeredInSetServices or self.advertisesAtLeastOneField'"
+	 *        annotation="http://www.earthsystemcog.org/projects/nuopc essential='true'"
+	 * @generated
+	 */
+	boolean isAdvertisesOrRegistered();
+
+	/**
+	 * Sets the value of the '{@link org.earthsystemcurator.cupid.nuopc.fsml.nuopc.ModelImplementsInitP1#isAdvertisesOrRegistered <em>Advertises Or Registered</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @param value the new value of the '<em>Advertises Or Registered</em>' attribute.
+	 * @see #isAdvertisesOrRegistered()
+	 * @generated
+	 */
+	void setAdvertisesOrRegistered(boolean value);
 
 } // ModelImplementsInitP1

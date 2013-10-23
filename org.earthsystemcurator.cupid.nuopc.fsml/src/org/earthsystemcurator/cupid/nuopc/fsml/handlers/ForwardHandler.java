@@ -19,6 +19,7 @@ import org.earthsystemcurator.cupid.nuopc.fsml.nuopc.NUOPCApplication;
 import org.earthsystemcurator.cupid.nuopc.fsml.nuopc.NUOPCModel;
 import org.earthsystemcurator.cupid.nuopc.fsml.nuopc.NUOPCPackage;
 import org.earthsystemcurator.cupid.nuopc.fsml.re.ReverseEngineer;
+import org.eclipse.cdt.core.model.ITranslationUnit;
 import org.eclipse.core.commands.AbstractHandler;
 import org.eclipse.core.commands.ExecutionEvent;
 import org.eclipse.core.commands.ExecutionException;
@@ -41,6 +42,9 @@ import org.eclipse.photran.core.IFortranAST;
 import org.eclipse.photran.internal.core.parser.ASTModuleNode;
 import org.eclipse.photran.internal.core.vpg.PhotranVPG;
 import org.eclipse.text.edits.ReplaceEdit;
+import org.eclipse.ui.IEditorInput;
+import org.eclipse.ui.IEditorPart;
+import org.eclipse.ui.IFileEditorInput;
 import org.eclipse.ui.IWorkbenchWindow;
 import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.handlers.HandlerUtil;
@@ -72,22 +76,34 @@ public class ForwardHandler extends AbstractHandler {
 	 * from the application context.
 	 */
 	public Object execute(ExecutionEvent event) throws ExecutionException {
-
-		final IProject selectedProject;
+		
+		IProject selectedProject = null;
 		ISelection sel = HandlerUtil.getCurrentSelection(event);
+		
 		if (sel instanceof ITreeSelection) {
 			Object item = ((ITreeSelection) sel).getFirstElement();
 			if (item instanceof IProject) {
-				selectedProject = (IProject) item;
-				//ystem.out.println("Selected project: " + ((IProject) item).getName());
+				selectedProject = (IProject) item;				
 			}
-			else {
-				return null;
+			else if (item instanceof ITranslationUnit) {
+				selectedProject = ((ITranslationUnit) item).getResource().getProject();
 			}			
 		}
-		else {
+		
+		if (selectedProject == null) {
+			IEditorPart editor = HandlerUtil.getActiveEditor(event);
+			IEditorInput input = editor.getEditorInput();
+			if (input instanceof IFileEditorInput) {
+				selectedProject = ((IFileEditorInput) input).getFile().getProject();
+			}
+		}
+		
+		if (selectedProject == null) {
+			System.out.println("Current editor input: " + sel);
 			return null;
 		}
+		
+	
 		
 		NUOPCNature nature = null;	
 		try {
@@ -102,6 +118,7 @@ public class ForwardHandler extends AbstractHandler {
 		final NUOPCApplication revApp = nature.reversedModel;
 		final Map<Object, Object> revMap = nature.reversedMappings;;
 		final NUOPCApplication forApp = nature.forwardModel;
+		final IProject selProject = selectedProject;
 		
 		if (revApp == null || revMap == null) return null;
 			
@@ -138,7 +155,7 @@ public class ForwardHandler extends AbstractHandler {
 	        		ResourceSet resourceSet2 = new ResourceSetImpl();
 	        		//String xmi1 = ReverseHandler.reverseFile;
 	        		//String xmi2 = ForwardHandler.assertedFile;
-	        		String xmi2 = selectedProject.getFile("asserted.nuopc").getFullPath().toOSString();
+	        		String xmi2 = selProject.getFile("asserted.nuopc").getFullPath().toOSString();
 	        		//Resource reversed = load(xmi1, resourceSet1);
 	        		Resource asserted = load(xmi2, resourceSet2);
 	        		forApp2 = (NUOPCApplication) asserted.getContents().get(0);
@@ -150,7 +167,7 @@ public class ForwardHandler extends AbstractHandler {
         	    //NUOPCApplication reversed1 = re.reverse(selectedProject, vpg);
         		
         		ForwardEngineer fe = new ForwardEngineer();
-        		fe.setContainer(selectedProject);
+        		fe.setContainer(selProject);
         		
         		fe.forward(revApp, forApp2, revMap);
      		

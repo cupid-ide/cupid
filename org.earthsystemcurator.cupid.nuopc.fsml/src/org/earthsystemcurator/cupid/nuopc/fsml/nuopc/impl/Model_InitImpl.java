@@ -190,9 +190,9 @@ public class Model_InitImpl extends EObjectImpl implements Model_Init {
 		if (newImplementsInitP2 != implementsInitP2) {
 			NotificationChain msgs = null;
 			if (implementsInitP2 != null)
-				msgs = ((InternalEObject)implementsInitP2).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - NUOPCPackage.MODEL_INIT__IMPLEMENTS_INIT_P2, null, msgs);
+				msgs = ((InternalEObject)implementsInitP2).eInverseRemove(this, NUOPCPackage.MODEL_IMPLEMENTS_INIT_P2__PARENT, ModelImplementsInitP2.class, msgs);
 			if (newImplementsInitP2 != null)
-				msgs = ((InternalEObject)newImplementsInitP2).eInverseAdd(this, EOPPOSITE_FEATURE_BASE - NUOPCPackage.MODEL_INIT__IMPLEMENTS_INIT_P2, null, msgs);
+				msgs = ((InternalEObject)newImplementsInitP2).eInverseAdd(this, NUOPCPackage.MODEL_IMPLEMENTS_INIT_P2__PARENT, ModelImplementsInitP2.class, msgs);
 			msgs = basicSetImplementsInitP2(newImplementsInitP2, msgs);
 			if (msgs != null) msgs.dispatch();
 		}
@@ -216,6 +216,10 @@ public class Model_InitImpl extends EObjectImpl implements Model_Init {
 				if (implementsInitP1 != null)
 					msgs = ((InternalEObject)implementsInitP1).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - NUOPCPackage.MODEL_INIT__IMPLEMENTS_INIT_P1, null, msgs);
 				return basicSetImplementsInitP1((ModelImplementsInitP1)otherEnd, msgs);
+			case NUOPCPackage.MODEL_INIT__IMPLEMENTS_INIT_P2:
+				if (implementsInitP2 != null)
+					msgs = ((InternalEObject)implementsInitP2).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - NUOPCPackage.MODEL_INIT__IMPLEMENTS_INIT_P2, null, msgs);
+				return basicSetImplementsInitP2((ModelImplementsInitP2)otherEnd, msgs);
 		}
 		return super.eInverseAdd(otherEnd, featureID, msgs);
 	}

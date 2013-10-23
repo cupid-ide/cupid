@@ -174,6 +174,12 @@ public class NUOPCSwitch<T> extends Switch<T> {
 				if (result == null) result = defaultCase(theEObject);
 				return result;
 			}
+			case NUOPCPackage.NUOPC_DRIVER_IMPLEMENTS_SET_MODEL_SERVICES: {
+				NUOPCDriver__ImplementsSetModelServices nuopcDriver__ImplementsSetModelServices = (NUOPCDriver__ImplementsSetModelServices)theEObject;
+				T result = caseNUOPCDriver__ImplementsSetModelServices(nuopcDriver__ImplementsSetModelServices);
+				if (result == null) result = defaultCase(theEObject);
+				return result;
+			}
 			case NUOPCPackage.GETS_INTERNAL_STATE: {
 				GetsInternalState getsInternalState = (GetsInternalState)theEObject;
 				T result = caseGetsInternalState(getsInternalState);
@@ -475,6 +481,21 @@ public class NUOPCSwitch<T> extends Switch<T> {
 	 * @generated
 	 */
 	public T caseNUOPCDriver__ImplementsSetModelCount(NUOPCDriver__ImplementsSetModelCount object) {
+		return null;
+	}
+
+	/**
+	 * Returns the result of interpreting the object as an instance of '<em>Driver Implements Set Model Services</em>'.
+	 * <!-- begin-user-doc -->
+	 * This implementation returns null;
+	 * returning a non-null result will terminate the switch.
+	 * <!-- end-user-doc -->
+	 * @param object the target of the switch.
+	 * @return the result of interpreting the object as an instance of '<em>Driver Implements Set Model Services</em>'.
+	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+	 * @generated
+	 */
+	public T caseNUOPCDriver__ImplementsSetModelServices(NUOPCDriver__ImplementsSetModelServices object) {
 		return null;
 	}
 

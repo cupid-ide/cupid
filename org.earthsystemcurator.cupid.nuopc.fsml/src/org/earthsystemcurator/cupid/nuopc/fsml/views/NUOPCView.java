@@ -31,17 +31,13 @@ import org.eclipse.photran.core.IFortranAST;
 import org.eclipse.photran.internal.core.analysis.binding.ScopingNode;
 import org.eclipse.photran.internal.core.lexer.Token;
 import org.eclipse.photran.internal.core.parser.ASTModuleNode;
-import org.eclipse.photran.internal.core.parser.ASTModuleStmtNode;
 import org.eclipse.photran.internal.core.parser.ASTNode;
 import org.eclipse.photran.internal.core.parser.IProgramUnit;
-import org.eclipse.photran.internal.core.vpg.PhotranTokenRef;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Menu;
 import org.eclipse.swt.widgets.TreeColumn;
 import org.eclipse.ui.IActionBars;
-import org.eclipse.ui.IEditorDescriptor;
-import org.eclipse.ui.IEditorPart;
 import org.eclipse.ui.ISharedImages;
 import org.eclipse.ui.IWorkbenchPage;
 import org.eclipse.ui.PartInitException;
@@ -49,7 +45,6 @@ import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.ide.IDE;
 import org.eclipse.ui.menus.IMenuService;
 import org.eclipse.ui.part.DrillDownAdapter;
-import org.eclipse.ui.part.FileEditorInput;
 import org.eclipse.ui.part.ViewPart;
 import org.eclipse.ui.services.IServiceLocator;
 
@@ -73,6 +68,7 @@ import org.eclipse.ui.services.IServiceLocator;
  * <p>
  */
 
+@SuppressWarnings("restriction")
 public class NUOPCView extends ViewPart {
 
 	/**
@@ -123,7 +119,7 @@ public class NUOPCView extends ViewPart {
 		tc2.setResizable(true);
 		
 		TreeColumnLayout tcl = new TreeColumnLayout();
-		tcl.setColumnData(tc1, new ColumnWeightData(1));
+		tcl.setColumnData(tc1, new ColumnWeightData(2));
 		tcl.setColumnData(tc2, new ColumnWeightData(1));
 		parent.setLayout(tcl);
 		
@@ -165,7 +161,7 @@ public class NUOPCView extends ViewPart {
 		*/
 		
 		doubleClickAction = new Action() {
-			@SuppressWarnings("restriction")
+			
 			public void run() {
 				ISelection selection = viewer.getSelection();
 				Object obj = ((IStructuredSelection)selection).getFirstElement();
@@ -208,7 +204,8 @@ public class NUOPCView extends ViewPart {
 					IWorkbenchPage page = PlatformUI.getWorkbench().getActiveWorkbenchWindow().getActivePage();
 					try {
 						IDE.openEditor(page, marker, false);
-						marker.delete();
+						
+						//marker.delete();
 					} catch (PartInitException e) {
 						e.printStackTrace();
 					} catch (CoreException e) {								
@@ -262,19 +259,43 @@ public class NUOPCView extends ViewPart {
                     if (me.structuralFeature != null && me.structuralFeature instanceof EReference) {
                     	
                     	EClass parentClass = (EClass) me.structuralFeature.getEType();
-                    	for (EReference childRef : parentClass.getEReferences()) {
-                    		if (childRef.isMany() && childRef.getUpperBound() < 0) {
-                    			Action a = new Action() {};
+                    	for (final EReference childRef : parentClass.getEReferences()) {
+                    		if (childRef.isMany() || (me.elem != null && me.elem.eGet(childRef) == null) ) {
+                    			
+                    			Action addElementAction = new Action() {
+                    				
+                    				public void run() {
+                        				
+                        				EObject newElem = NUOPCFactory.eINSTANCE.create((EClass)childRef.getEType());                      					
+                        				if (childRef.isMany()) {
+                        					EList l = (EList) me.elem.eGet(childRef);
+                        					l.add(newElem);
+                        				}
+                        				else {
+                        					me.elem.eSet(childRef, newElem);                					
+                        				}
+                        				
+                        				//showMessage("Added element: " + newElem);
+                        				                				
+                        				viewer.refresh(me);
+                        				viewer.expandToLevel(me, 1);
+                        				
+                        				
+                            		}      
+                    				
+                    			};
+                    			
                     			String label = Regex.getFromAnnotation(childRef.getEType(), "label", childRef.getEType().getName());
-                    			a.setText("Add " + label + "...");
-                    			a.setImageDescriptor(NUOPCViewLabelProvider.getFortranImageDescriptor(childRef, null, null));
+                    			addElementAction.setText("Generate " + label + "...");
+                    			addElementAction.setImageDescriptor(NUOPCViewLabelProvider.getFortranImageDescriptor(childRef, null, null));
                     			//a.setToolTipText(Regex.getFromAnnotation(childRef.getEType(), "doc"));
-                    			manager.add(a);
+                    			manager.add(addElementAction);
                     		}
                     	}
                     	
                     }
                     
+                    /*
                     if (me.elem == null && me.structuralFeature instanceof EReference) {
                     	
                     	Action action = new Action() {
@@ -301,8 +322,8 @@ public class NUOPCView extends ViewPart {
                 		//action.setToolTipText("Generate code for: " + me.typeLabel);
                 		
                     	manager.add(action);
-                    	
                     } 
+                    */
                 }
             }
         });
@@ -319,7 +340,6 @@ public class NUOPCView extends ViewPart {
 	//	contributeToActionBars();
 	}
 	
-	@SuppressWarnings("restriction")
 	protected IMarker createMarker(Token token) {
         try
         {
@@ -340,9 +360,10 @@ public class NUOPCView extends ViewPart {
             int endOffset = token.getFileOffset()+token.getLength();
             //endOffset += lastToken.getWhiteAfter().length();
 
-            IMarker marker = token.getPhysicalFile().getIFile().createMarker(IMarker.TEXT);
+            IMarker marker = token.getPhysicalFile().getIFile().createMarker(IMarker.BOOKMARK);
 			marker.setAttribute(IMarker.CHAR_START, startOffset);
 			marker.setAttribute(IMarker.CHAR_END, endOffset);
+						
             return marker;
         }
         catch (CoreException e)

@@ -13,6 +13,7 @@ import org.eclipse.emf.ecore.EObject;
  * The following features are supported:
  * <ul>
  *   <li>{@link org.earthsystemcurator.cupid.nuopc.fsml.nuopc.AdvertisesExportField#getParent <em>Parent</em>}</li>
+ *   <li>{@link org.earthsystemcurator.cupid.nuopc.fsml.nuopc.AdvertisesExportField#getRc <em>Rc</em>}</li>
  *   <li>{@link org.earthsystemcurator.cupid.nuopc.fsml.nuopc.AdvertisesExportField#getAddsToState <em>Adds To State</em>}</li>
  *   <li>{@link org.earthsystemcurator.cupid.nuopc.fsml.nuopc.AdvertisesExportField#isAddsToExportState <em>Adds To Export State</em>}</li>
  *   <li>{@link org.earthsystemcurator.cupid.nuopc.fsml.nuopc.AdvertisesExportField#getStandardName <em>Standard Name</em>}</li>
@@ -53,6 +54,33 @@ public interface AdvertisesExportField extends EObject {
 	void setParent(ModelImplementsInitP1 value);
 
 	/**
+	 * Returns the value of the '<em><b>Rc</b></em>' attribute.
+	 * The default value is <code>"rc"</code>.
+	 * <!-- begin-user-doc -->
+	 * <p>
+	 * If the meaning of the '<em>Rc</em>' attribute isn't clear,
+	 * there really should be more of a description here...
+	 * </p>
+	 * <!-- end-user-doc -->
+	 * @return the value of the '<em>Rc</em>' attribute.
+	 * @see #setRc(String)
+	 * @see org.earthsystemcurator.cupid.nuopc.fsml.nuopc.NUOPCPackage#getAdvertisesExportField_Rc()
+	 * @model default="rc" required="true"
+	 * @generated
+	 */
+	String getRc();
+
+	/**
+	 * Sets the value of the '{@link org.earthsystemcurator.cupid.nuopc.fsml.nuopc.AdvertisesExportField#getRc <em>Rc</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @param value the new value of the '<em>Rc</em>' attribute.
+	 * @see #getRc()
+	 * @generated
+	 */
+	void setRc(String value);
+
+	/**
 	 * Returns the value of the '<em><b>Adds To State</b></em>' attribute.
 	 * The default value is <code>"exportState"</code>.
 	 * <!-- begin-user-doc -->
@@ -65,7 +93,6 @@ public interface AdvertisesExportField extends EObject {
 	 * @see #setAddsToState(String)
 	 * @see org.earthsystemcurator.cupid.nuopc.fsml.nuopc.NUOPCPackage#getAdvertisesExportField_AddsToState()
 	 * @model default="exportState" required="true"
-	 *        annotation="http://www.earthsystemcog.org/projects/nuopc mappingX='argByIndex: 1'"
 	 * @generated
 	 */
 	String getAddsToState();
@@ -91,7 +118,7 @@ public interface AdvertisesExportField extends EObject {
 	 * @return the value of the '<em>Adds To Export State</em>' attribute.
 	 * @see #setAddsToExportState(boolean)
 	 * @see org.earthsystemcurator.cupid.nuopc.fsml.nuopc.NUOPCPackage#getAdvertisesExportField_AddsToExportState()
-	 * @model derived="true"
+	 * @model required="true" derived="true"
 	 *        annotation="http://www.earthsystemcog.org/projects/nuopc essential='true'"
 	 *        annotation="http://www.eclipse.org/emf/2002/Ecore/OCL derivation='self.addsToState = self.parent.exportParam'"
 	 * @generated
@@ -110,6 +137,7 @@ public interface AdvertisesExportField extends EObject {
 
 	/**
 	 * Returns the value of the '<em><b>Standard Name</b></em>' attribute.
+	 * The default value is <code>"\"Standard_Name\""</code>.
 	 * <!-- begin-user-doc -->
 	 * <p>
 	 * If the meaning of the '<em>Standard Name</em>' attribute isn't clear,
@@ -119,7 +147,7 @@ public interface AdvertisesExportField extends EObject {
 	 * @return the value of the '<em>Standard Name</em>' attribute.
 	 * @see #setStandardName(String)
 	 * @see org.earthsystemcurator.cupid.nuopc.fsml.nuopc.NUOPCPackage#getAdvertisesExportField_StandardName()
-	 * @model annotation="http://www.earthsystemcog.org/projects/nuopc mappingX='argByKeyword: \"StandardName\"'"
+	 * @model default="\"Standard_Name\"" required="true"
 	 * @generated
 	 */
 	String getStandardName();

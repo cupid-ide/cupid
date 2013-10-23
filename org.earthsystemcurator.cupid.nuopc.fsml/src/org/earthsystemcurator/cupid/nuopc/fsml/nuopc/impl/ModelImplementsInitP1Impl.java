@@ -39,6 +39,7 @@ import org.eclipse.emf.ecore.util.InternalEList;
  *   <li>{@link org.earthsystemcurator.cupid.nuopc.fsml.nuopc.impl.ModelImplementsInitP1Impl#getAdvertisesExportField <em>Advertises Export Field</em>}</li>
  *   <li>{@link org.earthsystemcurator.cupid.nuopc.fsml.nuopc.impl.ModelImplementsInitP1Impl#isAdvertisesAtLeastOneField <em>Advertises At Least One Field</em>}</li>
  *   <li>{@link org.earthsystemcurator.cupid.nuopc.fsml.nuopc.impl.ModelImplementsInitP1Impl#isRegisteredInSetServices <em>Registered In Set Services</em>}</li>
+ *   <li>{@link org.earthsystemcurator.cupid.nuopc.fsml.nuopc.impl.ModelImplementsInitP1Impl#isAdvertisesOrRegistered <em>Advertises Or Registered</em>}</li>
  * </ul>
  * </p>
  *
@@ -144,6 +145,16 @@ public class ModelImplementsInitP1Impl extends EObjectImpl implements ModelImple
 	 * @ordered
 	 */
 	protected EStructuralFeature.Internal.SettingDelegate REGISTERED_IN_SET_SERVICES__ESETTING_DELEGATE = ((EStructuralFeature.Internal)NUOPCPackage.Literals.MODEL_IMPLEMENTS_INIT_P1__REGISTERED_IN_SET_SERVICES).getSettingDelegate();
+
+	/**
+	 * The cached setting delegate for the '{@link #isAdvertisesOrRegistered() <em>Advertises Or Registered</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #isAdvertisesOrRegistered()
+	 * @generated
+	 * @ordered
+	 */
+	protected EStructuralFeature.Internal.SettingDelegate ADVERTISES_OR_REGISTERED__ESETTING_DELEGATE = ((EStructuralFeature.Internal)NUOPCPackage.Literals.MODEL_IMPLEMENTS_INIT_P1__ADVERTISES_OR_REGISTERED).getSettingDelegate();
 
 	/**
 	 * <!-- begin-user-doc -->
@@ -333,6 +344,24 @@ public class ModelImplementsInitP1Impl extends EObjectImpl implements ModelImple
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	public boolean isAdvertisesOrRegistered() {
+		return (Boolean)ADVERTISES_OR_REGISTERED__ESETTING_DELEGATE.dynamicGet(this, null, 0, true, false);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public void setAdvertisesOrRegistered(boolean newAdvertisesOrRegistered) {
+		ADVERTISES_OR_REGISTERED__ESETTING_DELEGATE.dynamicSet(this, null, 0, newAdvertisesOrRegistered);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
 	@SuppressWarnings("unchecked")
 	@Override
 	public NotificationChain eInverseAdd(InternalEObject otherEnd, int featureID, NotificationChain msgs) {
@@ -405,6 +434,8 @@ public class ModelImplementsInitP1Impl extends EObjectImpl implements ModelImple
 				return isAdvertisesAtLeastOneField();
 			case NUOPCPackage.MODEL_IMPLEMENTS_INIT_P1__REGISTERED_IN_SET_SERVICES:
 				return isRegisteredInSetServices();
+			case NUOPCPackage.MODEL_IMPLEMENTS_INIT_P1__ADVERTISES_OR_REGISTERED:
+				return isAdvertisesOrRegistered();
 		}
 		return super.eGet(featureID, resolve, coreType);
 	}
@@ -444,6 +475,9 @@ public class ModelImplementsInitP1Impl extends EObjectImpl implements ModelImple
 			case NUOPCPackage.MODEL_IMPLEMENTS_INIT_P1__REGISTERED_IN_SET_SERVICES:
 				setRegisteredInSetServices((Boolean)newValue);
 				return;
+			case NUOPCPackage.MODEL_IMPLEMENTS_INIT_P1__ADVERTISES_OR_REGISTERED:
+				setAdvertisesOrRegistered((Boolean)newValue);
+				return;
 		}
 		super.eSet(featureID, newValue);
 	}
@@ -480,6 +514,9 @@ public class ModelImplementsInitP1Impl extends EObjectImpl implements ModelImple
 			case NUOPCPackage.MODEL_IMPLEMENTS_INIT_P1__REGISTERED_IN_SET_SERVICES:
 				REGISTERED_IN_SET_SERVICES__ESETTING_DELEGATE.dynamicUnset(this, null, 0);
 				return;
+			case NUOPCPackage.MODEL_IMPLEMENTS_INIT_P1__ADVERTISES_OR_REGISTERED:
+				ADVERTISES_OR_REGISTERED__ESETTING_DELEGATE.dynamicUnset(this, null, 0);
+				return;
 		}
 		super.eUnset(featureID);
 	}
@@ -508,6 +545,8 @@ public class ModelImplementsInitP1Impl extends EObjectImpl implements ModelImple
 				return ADVERTISES_AT_LEAST_ONE_FIELD__ESETTING_DELEGATE.dynamicIsSet(this, null, 0);
 			case NUOPCPackage.MODEL_IMPLEMENTS_INIT_P1__REGISTERED_IN_SET_SERVICES:
 				return REGISTERED_IN_SET_SERVICES__ESETTING_DELEGATE.dynamicIsSet(this, null, 0);
+			case NUOPCPackage.MODEL_IMPLEMENTS_INIT_P1__ADVERTISES_OR_REGISTERED:
+				return ADVERTISES_OR_REGISTERED__ESETTING_DELEGATE.dynamicIsSet(this, null, 0);
 		}
 		return super.eIsSet(featureID);
 	}

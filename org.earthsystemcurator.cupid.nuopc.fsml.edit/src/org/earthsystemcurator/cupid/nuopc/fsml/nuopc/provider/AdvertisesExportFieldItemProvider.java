@@ -60,11 +60,34 @@ public class AdvertisesExportFieldItemProvider
 		if (itemPropertyDescriptors == null) {
 			super.getPropertyDescriptors(object);
 
+			addRcPropertyDescriptor(object);
 			addAddsToStatePropertyDescriptor(object);
 			addAddsToExportStatePropertyDescriptor(object);
 			addStandardNamePropertyDescriptor(object);
 		}
 		return itemPropertyDescriptors;
+	}
+
+	/**
+	 * This adds a property descriptor for the Rc feature.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	protected void addRcPropertyDescriptor(Object object) {
+		itemPropertyDescriptors.add
+			(createItemPropertyDescriptor
+				(((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(),
+				 getResourceLocator(),
+				 getString("_UI_AdvertisesExportField_rc_feature"),
+				 getString("_UI_PropertyDescriptor_description", "_UI_AdvertisesExportField_rc_feature", "_UI_AdvertisesExportField_type"),
+				 NUOPCPackage.Literals.ADVERTISES_EXPORT_FIELD__RC,
+				 true,
+				 false,
+				 false,
+				 ItemPropertyDescriptor.GENERIC_VALUE_IMAGE,
+				 null,
+				 null));
 	}
 
 	/**
@@ -170,6 +193,7 @@ public class AdvertisesExportFieldItemProvider
 		updateChildren(notification);
 
 		switch (notification.getFeatureID(AdvertisesExportField.class)) {
+			case NUOPCPackage.ADVERTISES_EXPORT_FIELD__RC:
 			case NUOPCPackage.ADVERTISES_EXPORT_FIELD__ADDS_TO_STATE:
 			case NUOPCPackage.ADVERTISES_EXPORT_FIELD__ADDS_TO_EXPORT_STATE:
 			case NUOPCPackage.ADVERTISES_EXPORT_FIELD__STANDARD_NAME:

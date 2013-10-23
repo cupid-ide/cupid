@@ -103,6 +103,7 @@ public class NUOPCDriverItemProvider
 			childrenFeatures.add(NUOPCPackage.Literals.NUOPC_DRIVER__GENERIC_IMPORTS);
 			childrenFeatures.add(NUOPCPackage.Literals.NUOPC_DRIVER__IMPLEMENTS_SET_SERVICES);
 			childrenFeatures.add(NUOPCPackage.Literals.NUOPC_DRIVER__IMPLEMENTS_SET_MODEL_COUNT);
+			childrenFeatures.add(NUOPCPackage.Literals.NUOPC_DRIVER__IMPLEMENTS_SET_MODEL_SERVICES);
 		}
 		return childrenFeatures;
 	}
@@ -163,6 +164,7 @@ public class NUOPCDriverItemProvider
 			case NUOPCPackage.NUOPC_DRIVER__GENERIC_IMPORTS:
 			case NUOPCPackage.NUOPC_DRIVER__IMPLEMENTS_SET_SERVICES:
 			case NUOPCPackage.NUOPC_DRIVER__IMPLEMENTS_SET_MODEL_COUNT:
+			case NUOPCPackage.NUOPC_DRIVER__IMPLEMENTS_SET_MODEL_SERVICES:
 				fireNotifyChanged(new ViewerNotification(notification, notification.getNotifier(), true, false));
 				return;
 		}
@@ -194,6 +196,11 @@ public class NUOPCDriverItemProvider
 			(createChildParameter
 				(NUOPCPackage.Literals.NUOPC_DRIVER__IMPLEMENTS_SET_MODEL_COUNT,
 				 NUOPCFactory.eINSTANCE.createNUOPCDriver__ImplementsSetModelCount()));
+
+		newChildDescriptors.add
+			(createChildParameter
+				(NUOPCPackage.Literals.NUOPC_DRIVER__IMPLEMENTS_SET_MODEL_SERVICES,
+				 NUOPCFactory.eINSTANCE.createNUOPCDriver__ImplementsSetModelServices()));
 	}
 
 	/**

@@ -103,7 +103,7 @@ public interface NUOPCPackage extends EPackage {
 	int NUOPC_MODEL__INITIALIZE = 3;
 
 	/**
-	 * The feature id for the '<em><b>Implements Model Advance</b></em>' containment reference list.
+	 * The feature id for the '<em><b>Implements Model Advance</b></em>' containment reference.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
@@ -505,13 +505,22 @@ public interface NUOPCPackage extends EPackage {
 	int MODEL_IMPLEMENTS_INIT_P1__REGISTERED_IN_SET_SERVICES = 7;
 
 	/**
+	 * The feature id for the '<em><b>Advertises Or Registered</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int MODEL_IMPLEMENTS_INIT_P1__ADVERTISES_OR_REGISTERED = 8;
+
+	/**
 	 * The number of structural features of the '<em>Model Implements Init P1</em>' class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int MODEL_IMPLEMENTS_INIT_P1_FEATURE_COUNT = 8;
+	int MODEL_IMPLEMENTS_INIT_P1_FEATURE_COUNT = 9;
 
 	/**
 	 * The number of operations of the '<em>Model Implements Init P1</em>' class.
@@ -533,13 +542,22 @@ public interface NUOPCPackage extends EPackage {
 	int MODEL_IMPLEMENTS_INIT_P2 = 7;
 
 	/**
+	 * The feature id for the '<em><b>Parent</b></em>' container reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int MODEL_IMPLEMENTS_INIT_P2__PARENT = 0;
+
+	/**
 	 * The feature id for the '<em><b>Name</b></em>' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int MODEL_IMPLEMENTS_INIT_P2__NAME = 0;
+	int MODEL_IMPLEMENTS_INIT_P2__NAME = 1;
 
 	/**
 	 * The feature id for the '<em><b>Import Param</b></em>' attribute.
@@ -548,7 +566,7 @@ public interface NUOPCPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int MODEL_IMPLEMENTS_INIT_P2__IMPORT_PARAM = 1;
+	int MODEL_IMPLEMENTS_INIT_P2__IMPORT_PARAM = 2;
 
 	/**
 	 * The feature id for the '<em><b>Export Param</b></em>' attribute.
@@ -557,7 +575,7 @@ public interface NUOPCPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int MODEL_IMPLEMENTS_INIT_P2__EXPORT_PARAM = 2;
+	int MODEL_IMPLEMENTS_INIT_P2__EXPORT_PARAM = 3;
 
 	/**
 	 * The feature id for the '<em><b>Realizes Import Field</b></em>' containment reference list.
@@ -566,7 +584,7 @@ public interface NUOPCPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int MODEL_IMPLEMENTS_INIT_P2__REALIZES_IMPORT_FIELD = 3;
+	int MODEL_IMPLEMENTS_INIT_P2__REALIZES_IMPORT_FIELD = 4;
 
 	/**
 	 * The feature id for the '<em><b>Realizes Export Field</b></em>' containment reference list.
@@ -575,7 +593,7 @@ public interface NUOPCPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int MODEL_IMPLEMENTS_INIT_P2__REALIZES_EXPORT_FIELD = 4;
+	int MODEL_IMPLEMENTS_INIT_P2__REALIZES_EXPORT_FIELD = 5;
 
 	/**
 	 * The feature id for the '<em><b>Realizes At Least One Field</b></em>' attribute.
@@ -584,7 +602,25 @@ public interface NUOPCPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int MODEL_IMPLEMENTS_INIT_P2__REALIZES_AT_LEAST_ONE_FIELD = 5;
+	int MODEL_IMPLEMENTS_INIT_P2__REALIZES_AT_LEAST_ONE_FIELD = 6;
+
+	/**
+	 * The feature id for the '<em><b>Registered In Set Services</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int MODEL_IMPLEMENTS_INIT_P2__REGISTERED_IN_SET_SERVICES = 7;
+
+	/**
+	 * The feature id for the '<em><b>Realizes Or Registered</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int MODEL_IMPLEMENTS_INIT_P2__REALIZES_OR_REGISTERED = 8;
 
 	/**
 	 * The number of structural features of the '<em>Model Implements Init P2</em>' class.
@@ -593,7 +629,7 @@ public interface NUOPCPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int MODEL_IMPLEMENTS_INIT_P2_FEATURE_COUNT = 6;
+	int MODEL_IMPLEMENTS_INIT_P2_FEATURE_COUNT = 9;
 
 	/**
 	 * The number of operations of the '<em>Model Implements Init P2</em>' class.
@@ -633,13 +669,22 @@ public interface NUOPCPackage extends EPackage {
 	int ADVERTISES_IMPORT_FIELD__ADDS_TO_STATE = 1;
 
 	/**
+	 * The feature id for the '<em><b>Rc</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int ADVERTISES_IMPORT_FIELD__RC = 2;
+
+	/**
 	 * The feature id for the '<em><b>Adds To Import State</b></em>' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int ADVERTISES_IMPORT_FIELD__ADDS_TO_IMPORT_STATE = 2;
+	int ADVERTISES_IMPORT_FIELD__ADDS_TO_IMPORT_STATE = 3;
 
 	/**
 	 * The feature id for the '<em><b>Standard Name</b></em>' attribute.
@@ -648,7 +693,7 @@ public interface NUOPCPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int ADVERTISES_IMPORT_FIELD__STANDARD_NAME = 3;
+	int ADVERTISES_IMPORT_FIELD__STANDARD_NAME = 4;
 
 	/**
 	 * The number of structural features of the '<em>Advertises Import Field</em>' class.
@@ -657,7 +702,7 @@ public interface NUOPCPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int ADVERTISES_IMPORT_FIELD_FEATURE_COUNT = 4;
+	int ADVERTISES_IMPORT_FIELD_FEATURE_COUNT = 5;
 
 	/**
 	 * The number of operations of the '<em>Advertises Import Field</em>' class.
@@ -688,13 +733,22 @@ public interface NUOPCPackage extends EPackage {
 	int ADVERTISES_EXPORT_FIELD__PARENT = 0;
 
 	/**
+	 * The feature id for the '<em><b>Rc</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int ADVERTISES_EXPORT_FIELD__RC = 1;
+
+	/**
 	 * The feature id for the '<em><b>Adds To State</b></em>' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int ADVERTISES_EXPORT_FIELD__ADDS_TO_STATE = 1;
+	int ADVERTISES_EXPORT_FIELD__ADDS_TO_STATE = 2;
 
 	/**
 	 * The feature id for the '<em><b>Adds To Export State</b></em>' attribute.
@@ -703,7 +757,7 @@ public interface NUOPCPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int ADVERTISES_EXPORT_FIELD__ADDS_TO_EXPORT_STATE = 2;
+	int ADVERTISES_EXPORT_FIELD__ADDS_TO_EXPORT_STATE = 3;
 
 	/**
 	 * The feature id for the '<em><b>Standard Name</b></em>' attribute.
@@ -712,7 +766,7 @@ public interface NUOPCPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int ADVERTISES_EXPORT_FIELD__STANDARD_NAME = 3;
+	int ADVERTISES_EXPORT_FIELD__STANDARD_NAME = 4;
 
 	/**
 	 * The number of structural features of the '<em>Advertises Export Field</em>' class.
@@ -721,7 +775,7 @@ public interface NUOPCPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int ADVERTISES_EXPORT_FIELD_FEATURE_COUNT = 4;
+	int ADVERTISES_EXPORT_FIELD_FEATURE_COUNT = 5;
 
 	/**
 	 * The number of operations of the '<em>Advertises Export Field</em>' class.
@@ -761,13 +815,22 @@ public interface NUOPCPackage extends EPackage {
 	int REALIZES_IMPORT_FIELD__REALIZED_IN_STATE = 1;
 
 	/**
+	 * The feature id for the '<em><b>Rc</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int REALIZES_IMPORT_FIELD__RC = 2;
+
+	/**
 	 * The feature id for the '<em><b>Realized In Import State</b></em>' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int REALIZES_IMPORT_FIELD__REALIZED_IN_IMPORT_STATE = 2;
+	int REALIZES_IMPORT_FIELD__REALIZED_IN_IMPORT_STATE = 3;
 
 	/**
 	 * The feature id for the '<em><b>Field</b></em>' attribute.
@@ -776,7 +839,7 @@ public interface NUOPCPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int REALIZES_IMPORT_FIELD__FIELD = 3;
+	int REALIZES_IMPORT_FIELD__FIELD = 4;
 
 	/**
 	 * The number of structural features of the '<em>Realizes Import Field</em>' class.
@@ -785,7 +848,7 @@ public interface NUOPCPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int REALIZES_IMPORT_FIELD_FEATURE_COUNT = 4;
+	int REALIZES_IMPORT_FIELD_FEATURE_COUNT = 5;
 
 	/**
 	 * The number of operations of the '<em>Realizes Import Field</em>' class.
@@ -825,13 +888,22 @@ public interface NUOPCPackage extends EPackage {
 	int REALIZES_EXPORT_FIELD__REALIZED_IN_STATE = 1;
 
 	/**
+	 * The feature id for the '<em><b>Rc</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int REALIZES_EXPORT_FIELD__RC = 2;
+
+	/**
 	 * The feature id for the '<em><b>Realized In Export State</b></em>' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int REALIZES_EXPORT_FIELD__REALIZED_IN_EXPORT_STATE = 2;
+	int REALIZES_EXPORT_FIELD__REALIZED_IN_EXPORT_STATE = 3;
 
 	/**
 	 * The feature id for the '<em><b>Field</b></em>' attribute.
@@ -840,7 +912,7 @@ public interface NUOPCPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int REALIZES_EXPORT_FIELD__FIELD = 3;
+	int REALIZES_EXPORT_FIELD__FIELD = 4;
 
 	/**
 	 * The number of structural features of the '<em>Realizes Export Field</em>' class.
@@ -849,7 +921,7 @@ public interface NUOPCPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int REALIZES_EXPORT_FIELD_FEATURE_COUNT = 4;
+	int REALIZES_EXPORT_FIELD_FEATURE_COUNT = 5;
 
 	/**
 	 * The number of operations of the '<em>Realizes Export Field</em>' class.
@@ -880,22 +952,22 @@ public interface NUOPCPackage extends EPackage {
 	int MODEL_ADVANCE__PARENT = 0;
 
 	/**
-	 * The feature id for the '<em><b>Attached Model Advance</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int MODEL_ADVANCE__ATTACHED_MODEL_ADVANCE = 1;
-
-	/**
 	 * The feature id for the '<em><b>Name</b></em>' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int MODEL_ADVANCE__NAME = 2;
+	int MODEL_ADVANCE__NAME = 1;
+
+	/**
+	 * The feature id for the '<em><b>Attached Model Advance</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int MODEL_ADVANCE__ATTACHED_MODEL_ADVANCE = 2;
 
 	/**
 	 * The number of structural features of the '<em>Model Advance</em>' class.
@@ -953,7 +1025,7 @@ public interface NUOPCPackage extends EPackage {
 	int NUOPC_DRIVER__IMPLEMENTS_SET_SERVICES = 2;
 
 	/**
-	 * The feature id for the '<em><b>Implements Set Model Count</b></em>' containment reference list.
+	 * The feature id for the '<em><b>Implements Set Model Count</b></em>' containment reference.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
@@ -962,13 +1034,22 @@ public interface NUOPCPackage extends EPackage {
 	int NUOPC_DRIVER__IMPLEMENTS_SET_MODEL_COUNT = 3;
 
 	/**
+	 * The feature id for the '<em><b>Implements Set Model Services</b></em>' containment reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int NUOPC_DRIVER__IMPLEMENTS_SET_MODEL_SERVICES = 4;
+
+	/**
 	 * The number of structural features of the '<em>Driver</em>' class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int NUOPC_DRIVER_FEATURE_COUNT = 4;
+	int NUOPC_DRIVER_FEATURE_COUNT = 5;
 
 	/**
 	 * The number of operations of the '<em>Driver</em>' class.
@@ -1245,13 +1326,22 @@ public interface NUOPCPackage extends EPackage {
 	int NUOPC_DRIVER_IMPLEMENTS_SET_MODEL_COUNT__ASSIGNS_VALUE = 6;
 
 	/**
+	 * The feature id for the '<em><b>Attached</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int NUOPC_DRIVER_IMPLEMENTS_SET_MODEL_COUNT__ATTACHED = 7;
+
+	/**
 	 * The number of structural features of the '<em>Driver Implements Set Model Count</em>' class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int NUOPC_DRIVER_IMPLEMENTS_SET_MODEL_COUNT_FEATURE_COUNT = 7;
+	int NUOPC_DRIVER_IMPLEMENTS_SET_MODEL_COUNT_FEATURE_COUNT = 8;
 
 	/**
 	 * The number of operations of the '<em>Driver Implements Set Model Count</em>' class.
@@ -1263,6 +1353,106 @@ public interface NUOPCPackage extends EPackage {
 	int NUOPC_DRIVER_IMPLEMENTS_SET_MODEL_COUNT_OPERATION_COUNT = 0;
 
 	/**
+	 * The meta object id for the '{@link org.earthsystemcurator.cupid.nuopc.fsml.nuopc.impl.NUOPCDriver__ImplementsSetModelServicesImpl <em>Driver Implements Set Model Services</em>}' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see org.earthsystemcurator.cupid.nuopc.fsml.nuopc.impl.NUOPCDriver__ImplementsSetModelServicesImpl
+	 * @see org.earthsystemcurator.cupid.nuopc.fsml.nuopc.impl.NUOPCPackageImpl#getNUOPCDriver__ImplementsSetModelServices()
+	 * @generated
+	 */
+	int NUOPC_DRIVER_IMPLEMENTS_SET_MODEL_SERVICES = 18;
+
+	/**
+	 * The feature id for the '<em><b>Parent</b></em>' container reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int NUOPC_DRIVER_IMPLEMENTS_SET_MODEL_SERVICES__PARENT = 0;
+
+	/**
+	 * The feature id for the '<em><b>Gcomp</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int NUOPC_DRIVER_IMPLEMENTS_SET_MODEL_SERVICES__GCOMP = 1;
+
+	/**
+	 * The feature id for the '<em><b>Rc</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int NUOPC_DRIVER_IMPLEMENTS_SET_MODEL_SERVICES__RC = 2;
+
+	/**
+	 * The feature id for the '<em><b>Name</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int NUOPC_DRIVER_IMPLEMENTS_SET_MODEL_SERVICES__NAME = 3;
+
+	/**
+	 * The feature id for the '<em><b>Driver Internal State</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int NUOPC_DRIVER_IMPLEMENTS_SET_MODEL_SERVICES__DRIVER_INTERNAL_STATE = 4;
+
+	/**
+	 * The feature id for the '<em><b>Gets Internal State</b></em>' containment reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int NUOPC_DRIVER_IMPLEMENTS_SET_MODEL_SERVICES__GETS_INTERNAL_STATE = 5;
+
+	/**
+	 * The feature id for the '<em><b>Assigns Value</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int NUOPC_DRIVER_IMPLEMENTS_SET_MODEL_SERVICES__ASSIGNS_VALUE = 6;
+
+	/**
+	 * The feature id for the '<em><b>Attached</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int NUOPC_DRIVER_IMPLEMENTS_SET_MODEL_SERVICES__ATTACHED = 7;
+
+	/**
+	 * The number of structural features of the '<em>Driver Implements Set Model Services</em>' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int NUOPC_DRIVER_IMPLEMENTS_SET_MODEL_SERVICES_FEATURE_COUNT = 8;
+
+	/**
+	 * The number of operations of the '<em>Driver Implements Set Model Services</em>' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int NUOPC_DRIVER_IMPLEMENTS_SET_MODEL_SERVICES_OPERATION_COUNT = 0;
+
+	/**
 	 * The meta object id for the '{@link org.earthsystemcurator.cupid.nuopc.fsml.nuopc.impl.GetsInternalStateImpl <em>Gets Internal State</em>}' class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -1270,7 +1460,7 @@ public interface NUOPCPackage extends EPackage {
 	 * @see org.earthsystemcurator.cupid.nuopc.fsml.nuopc.impl.NUOPCPackageImpl#getGetsInternalState()
 	 * @generated
 	 */
-	int GETS_INTERNAL_STATE = 18;
+	int GETS_INTERNAL_STATE = 19;
 
 	/**
 	 * The feature id for the '<em><b>Label</b></em>' attribute.
@@ -1307,7 +1497,7 @@ public interface NUOPCPackage extends EPackage {
 	 * @see org.earthsystemcurator.cupid.nuopc.fsml.nuopc.impl.NUOPCPackageImpl#getNUOPCApplication()
 	 * @generated
 	 */
-	int NUOPC_APPLICATION = 19;
+	int NUOPC_APPLICATION = 20;
 
 	/**
 	 * The feature id for the '<em><b>Name</b></em>' attribute.
@@ -1371,7 +1561,7 @@ public interface NUOPCPackage extends EPackage {
 	 * @see org.earthsystemcurator.cupid.nuopc.fsml.nuopc.impl.NUOPCPackageImpl#getTop()
 	 * @generated
 	 */
-	int TOP = 20;
+	int TOP = 21;
 
 	/**
 	 * The feature id for the '<em><b>Apps</b></em>' containment reference.
@@ -1408,7 +1598,7 @@ public interface NUOPCPackage extends EPackage {
 	 * @see org.earthsystemcurator.cupid.nuopc.fsml.nuopc.impl.NUOPCPackageImpl#getNUOPCDriverAtmOcn()
 	 * @generated
 	 */
-	int NUOPC_DRIVER_ATM_OCN = 21;
+	int NUOPC_DRIVER_ATM_OCN = 22;
 
 	/**
 	 * The feature id for the '<em><b>Name</b></em>' attribute.
@@ -1454,7 +1644,7 @@ public interface NUOPCPackage extends EPackage {
 	 * @see org.earthsystemcurator.cupid.nuopc.fsml.nuopc.impl.NUOPCPackageImpl#getNUOPCDriverAtmOcn__ImplementsSetServices()
 	 * @generated
 	 */
-	int NUOPC_DRIVER_ATM_OCN_IMPLEMENTS_SET_SERVICES = 22;
+	int NUOPC_DRIVER_ATM_OCN_IMPLEMENTS_SET_SERVICES = 23;
 
 	/**
 	 * The feature id for the '<em><b>Parent</b></em>' container reference.
@@ -1565,10 +1755,10 @@ public interface NUOPCPackage extends EPackage {
 	EReference getNUOPCModel_ImplementsSetServices();
 
 	/**
-	 * Returns the meta object for the containment reference list '{@link org.earthsystemcurator.cupid.nuopc.fsml.nuopc.NUOPCModel#getImplementsModelAdvance <em>Implements Model Advance</em>}'.
+	 * Returns the meta object for the containment reference '{@link org.earthsystemcurator.cupid.nuopc.fsml.nuopc.NUOPCModel#getImplementsModelAdvance <em>Implements Model Advance</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @return the meta object for the containment reference list '<em>Implements Model Advance</em>'.
+	 * @return the meta object for the containment reference '<em>Implements Model Advance</em>'.
 	 * @see org.earthsystemcurator.cupid.nuopc.fsml.nuopc.NUOPCModel#getImplementsModelAdvance()
 	 * @see #getNUOPCModel()
 	 * @generated
@@ -1922,6 +2112,17 @@ public interface NUOPCPackage extends EPackage {
 	EAttribute getModelImplementsInitP1_RegisteredInSetServices();
 
 	/**
+	 * Returns the meta object for the attribute '{@link org.earthsystemcurator.cupid.nuopc.fsml.nuopc.ModelImplementsInitP1#isAdvertisesOrRegistered <em>Advertises Or Registered</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the attribute '<em>Advertises Or Registered</em>'.
+	 * @see org.earthsystemcurator.cupid.nuopc.fsml.nuopc.ModelImplementsInitP1#isAdvertisesOrRegistered()
+	 * @see #getModelImplementsInitP1()
+	 * @generated
+	 */
+	EAttribute getModelImplementsInitP1_AdvertisesOrRegistered();
+
+	/**
 	 * Returns the meta object for class '{@link org.earthsystemcurator.cupid.nuopc.fsml.nuopc.ModelImplementsInitP2 <em>Model Implements Init P2</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -1930,6 +2131,17 @@ public interface NUOPCPackage extends EPackage {
 	 * @generated
 	 */
 	EClass getModelImplementsInitP2();
+
+	/**
+	 * Returns the meta object for the container reference '{@link org.earthsystemcurator.cupid.nuopc.fsml.nuopc.ModelImplementsInitP2#getParent <em>Parent</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the container reference '<em>Parent</em>'.
+	 * @see org.earthsystemcurator.cupid.nuopc.fsml.nuopc.ModelImplementsInitP2#getParent()
+	 * @see #getModelImplementsInitP2()
+	 * @generated
+	 */
+	EReference getModelImplementsInitP2_Parent();
 
 	/**
 	 * Returns the meta object for the attribute '{@link org.earthsystemcurator.cupid.nuopc.fsml.nuopc.ModelImplementsInitP2#getName <em>Name</em>}'.
@@ -1998,6 +2210,28 @@ public interface NUOPCPackage extends EPackage {
 	EAttribute getModelImplementsInitP2_RealizesAtLeastOneField();
 
 	/**
+	 * Returns the meta object for the attribute '{@link org.earthsystemcurator.cupid.nuopc.fsml.nuopc.ModelImplementsInitP2#isRegisteredInSetServices <em>Registered In Set Services</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the attribute '<em>Registered In Set Services</em>'.
+	 * @see org.earthsystemcurator.cupid.nuopc.fsml.nuopc.ModelImplementsInitP2#isRegisteredInSetServices()
+	 * @see #getModelImplementsInitP2()
+	 * @generated
+	 */
+	EAttribute getModelImplementsInitP2_RegisteredInSetServices();
+
+	/**
+	 * Returns the meta object for the attribute '{@link org.earthsystemcurator.cupid.nuopc.fsml.nuopc.ModelImplementsInitP2#isRealizesOrRegistered <em>Realizes Or Registered</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the attribute '<em>Realizes Or Registered</em>'.
+	 * @see org.earthsystemcurator.cupid.nuopc.fsml.nuopc.ModelImplementsInitP2#isRealizesOrRegistered()
+	 * @see #getModelImplementsInitP2()
+	 * @generated
+	 */
+	EAttribute getModelImplementsInitP2_RealizesOrRegistered();
+
+	/**
 	 * Returns the meta object for class '{@link org.earthsystemcurator.cupid.nuopc.fsml.nuopc.AdvertisesImportField <em>Advertises Import Field</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -2028,6 +2262,17 @@ public interface NUOPCPackage extends EPackage {
 	 * @generated
 	 */
 	EAttribute getAdvertisesImportField_AddsToState();
+
+	/**
+	 * Returns the meta object for the attribute '{@link org.earthsystemcurator.cupid.nuopc.fsml.nuopc.AdvertisesImportField#getRc <em>Rc</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the attribute '<em>Rc</em>'.
+	 * @see org.earthsystemcurator.cupid.nuopc.fsml.nuopc.AdvertisesImportField#getRc()
+	 * @see #getAdvertisesImportField()
+	 * @generated
+	 */
+	EAttribute getAdvertisesImportField_Rc();
 
 	/**
 	 * Returns the meta object for the attribute '{@link org.earthsystemcurator.cupid.nuopc.fsml.nuopc.AdvertisesImportField#isAddsToImportState <em>Adds To Import State</em>}'.
@@ -2071,6 +2316,17 @@ public interface NUOPCPackage extends EPackage {
 	 * @generated
 	 */
 	EReference getAdvertisesExportField_Parent();
+
+	/**
+	 * Returns the meta object for the attribute '{@link org.earthsystemcurator.cupid.nuopc.fsml.nuopc.AdvertisesExportField#getRc <em>Rc</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the attribute '<em>Rc</em>'.
+	 * @see org.earthsystemcurator.cupid.nuopc.fsml.nuopc.AdvertisesExportField#getRc()
+	 * @see #getAdvertisesExportField()
+	 * @generated
+	 */
+	EAttribute getAdvertisesExportField_Rc();
 
 	/**
 	 * Returns the meta object for the attribute '{@link org.earthsystemcurator.cupid.nuopc.fsml.nuopc.AdvertisesExportField#getAddsToState <em>Adds To State</em>}'.
@@ -2138,6 +2394,17 @@ public interface NUOPCPackage extends EPackage {
 	EAttribute getRealizesImportField_RealizedInState();
 
 	/**
+	 * Returns the meta object for the attribute '{@link org.earthsystemcurator.cupid.nuopc.fsml.nuopc.RealizesImportField#getRc <em>Rc</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the attribute '<em>Rc</em>'.
+	 * @see org.earthsystemcurator.cupid.nuopc.fsml.nuopc.RealizesImportField#getRc()
+	 * @see #getRealizesImportField()
+	 * @generated
+	 */
+	EAttribute getRealizesImportField_Rc();
+
+	/**
 	 * Returns the meta object for the attribute '{@link org.earthsystemcurator.cupid.nuopc.fsml.nuopc.RealizesImportField#isRealizedInImportState <em>Realized In Import State</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -2192,6 +2459,17 @@ public interface NUOPCPackage extends EPackage {
 	EAttribute getRealizesExportField_RealizedInState();
 
 	/**
+	 * Returns the meta object for the attribute '{@link org.earthsystemcurator.cupid.nuopc.fsml.nuopc.RealizesExportField#getRc <em>Rc</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the attribute '<em>Rc</em>'.
+	 * @see org.earthsystemcurator.cupid.nuopc.fsml.nuopc.RealizesExportField#getRc()
+	 * @see #getRealizesExportField()
+	 * @generated
+	 */
+	EAttribute getRealizesExportField_Rc();
+
+	/**
 	 * Returns the meta object for the attribute '{@link org.earthsystemcurator.cupid.nuopc.fsml.nuopc.RealizesExportField#isRealizedInExportState <em>Realized In Export State</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -2235,11 +2513,11 @@ public interface NUOPCPackage extends EPackage {
 	EReference getModelAdvance_Parent();
 
 	/**
-	 * Returns the meta object for the attribute '{@link org.earthsystemcurator.cupid.nuopc.fsml.nuopc.ModelAdvance#getAttachedModelAdvance <em>Attached Model Advance</em>}'.
+	 * Returns the meta object for the attribute '{@link org.earthsystemcurator.cupid.nuopc.fsml.nuopc.ModelAdvance#isAttachedModelAdvance <em>Attached Model Advance</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @return the meta object for the attribute '<em>Attached Model Advance</em>'.
-	 * @see org.earthsystemcurator.cupid.nuopc.fsml.nuopc.ModelAdvance#getAttachedModelAdvance()
+	 * @see org.earthsystemcurator.cupid.nuopc.fsml.nuopc.ModelAdvance#isAttachedModelAdvance()
 	 * @see #getModelAdvance()
 	 * @generated
 	 */
@@ -2300,15 +2578,26 @@ public interface NUOPCPackage extends EPackage {
 	EReference getNUOPCDriver_ImplementsSetServices();
 
 	/**
-	 * Returns the meta object for the containment reference list '{@link org.earthsystemcurator.cupid.nuopc.fsml.nuopc.NUOPCDriver#getImplementsSetModelCount <em>Implements Set Model Count</em>}'.
+	 * Returns the meta object for the containment reference '{@link org.earthsystemcurator.cupid.nuopc.fsml.nuopc.NUOPCDriver#getImplementsSetModelCount <em>Implements Set Model Count</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @return the meta object for the containment reference list '<em>Implements Set Model Count</em>'.
+	 * @return the meta object for the containment reference '<em>Implements Set Model Count</em>'.
 	 * @see org.earthsystemcurator.cupid.nuopc.fsml.nuopc.NUOPCDriver#getImplementsSetModelCount()
 	 * @see #getNUOPCDriver()
 	 * @generated
 	 */
 	EReference getNUOPCDriver_ImplementsSetModelCount();
+
+	/**
+	 * Returns the meta object for the containment reference '{@link org.earthsystemcurator.cupid.nuopc.fsml.nuopc.NUOPCDriver#getImplementsSetModelServices <em>Implements Set Model Services</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the containment reference '<em>Implements Set Model Services</em>'.
+	 * @see org.earthsystemcurator.cupid.nuopc.fsml.nuopc.NUOPCDriver#getImplementsSetModelServices()
+	 * @see #getNUOPCDriver()
+	 * @generated
+	 */
+	EReference getNUOPCDriver_ImplementsSetModelServices();
 
 	/**
 	 * Returns the meta object for class '{@link org.earthsystemcurator.cupid.nuopc.fsml.nuopc.NUOPCDriver__GenericImports <em>Driver Generic Imports</em>}'.
@@ -2560,6 +2849,115 @@ public interface NUOPCPackage extends EPackage {
 	EAttribute getNUOPCDriver__ImplementsSetModelCount_AssignsValue();
 
 	/**
+	 * Returns the meta object for the attribute '{@link org.earthsystemcurator.cupid.nuopc.fsml.nuopc.NUOPCDriver__ImplementsSetModelCount#isAttached <em>Attached</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the attribute '<em>Attached</em>'.
+	 * @see org.earthsystemcurator.cupid.nuopc.fsml.nuopc.NUOPCDriver__ImplementsSetModelCount#isAttached()
+	 * @see #getNUOPCDriver__ImplementsSetModelCount()
+	 * @generated
+	 */
+	EAttribute getNUOPCDriver__ImplementsSetModelCount_Attached();
+
+	/**
+	 * Returns the meta object for class '{@link org.earthsystemcurator.cupid.nuopc.fsml.nuopc.NUOPCDriver__ImplementsSetModelServices <em>Driver Implements Set Model Services</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for class '<em>Driver Implements Set Model Services</em>'.
+	 * @see org.earthsystemcurator.cupid.nuopc.fsml.nuopc.NUOPCDriver__ImplementsSetModelServices
+	 * @generated
+	 */
+	EClass getNUOPCDriver__ImplementsSetModelServices();
+
+	/**
+	 * Returns the meta object for the container reference '{@link org.earthsystemcurator.cupid.nuopc.fsml.nuopc.NUOPCDriver__ImplementsSetModelServices#getParent <em>Parent</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the container reference '<em>Parent</em>'.
+	 * @see org.earthsystemcurator.cupid.nuopc.fsml.nuopc.NUOPCDriver__ImplementsSetModelServices#getParent()
+	 * @see #getNUOPCDriver__ImplementsSetModelServices()
+	 * @generated
+	 */
+	EReference getNUOPCDriver__ImplementsSetModelServices_Parent();
+
+	/**
+	 * Returns the meta object for the attribute '{@link org.earthsystemcurator.cupid.nuopc.fsml.nuopc.NUOPCDriver__ImplementsSetModelServices#getGcomp <em>Gcomp</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the attribute '<em>Gcomp</em>'.
+	 * @see org.earthsystemcurator.cupid.nuopc.fsml.nuopc.NUOPCDriver__ImplementsSetModelServices#getGcomp()
+	 * @see #getNUOPCDriver__ImplementsSetModelServices()
+	 * @generated
+	 */
+	EAttribute getNUOPCDriver__ImplementsSetModelServices_Gcomp();
+
+	/**
+	 * Returns the meta object for the attribute '{@link org.earthsystemcurator.cupid.nuopc.fsml.nuopc.NUOPCDriver__ImplementsSetModelServices#getRc <em>Rc</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the attribute '<em>Rc</em>'.
+	 * @see org.earthsystemcurator.cupid.nuopc.fsml.nuopc.NUOPCDriver__ImplementsSetModelServices#getRc()
+	 * @see #getNUOPCDriver__ImplementsSetModelServices()
+	 * @generated
+	 */
+	EAttribute getNUOPCDriver__ImplementsSetModelServices_Rc();
+
+	/**
+	 * Returns the meta object for the attribute '{@link org.earthsystemcurator.cupid.nuopc.fsml.nuopc.NUOPCDriver__ImplementsSetModelServices#getName <em>Name</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the attribute '<em>Name</em>'.
+	 * @see org.earthsystemcurator.cupid.nuopc.fsml.nuopc.NUOPCDriver__ImplementsSetModelServices#getName()
+	 * @see #getNUOPCDriver__ImplementsSetModelServices()
+	 * @generated
+	 */
+	EAttribute getNUOPCDriver__ImplementsSetModelServices_Name();
+
+	/**
+	 * Returns the meta object for the attribute '{@link org.earthsystemcurator.cupid.nuopc.fsml.nuopc.NUOPCDriver__ImplementsSetModelServices#getDriverInternalState <em>Driver Internal State</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the attribute '<em>Driver Internal State</em>'.
+	 * @see org.earthsystemcurator.cupid.nuopc.fsml.nuopc.NUOPCDriver__ImplementsSetModelServices#getDriverInternalState()
+	 * @see #getNUOPCDriver__ImplementsSetModelServices()
+	 * @generated
+	 */
+	EAttribute getNUOPCDriver__ImplementsSetModelServices_DriverInternalState();
+
+	/**
+	 * Returns the meta object for the containment reference '{@link org.earthsystemcurator.cupid.nuopc.fsml.nuopc.NUOPCDriver__ImplementsSetModelServices#getGetsInternalState <em>Gets Internal State</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the containment reference '<em>Gets Internal State</em>'.
+	 * @see org.earthsystemcurator.cupid.nuopc.fsml.nuopc.NUOPCDriver__ImplementsSetModelServices#getGetsInternalState()
+	 * @see #getNUOPCDriver__ImplementsSetModelServices()
+	 * @generated
+	 */
+	EReference getNUOPCDriver__ImplementsSetModelServices_GetsInternalState();
+
+	/**
+	 * Returns the meta object for the attribute '{@link org.earthsystemcurator.cupid.nuopc.fsml.nuopc.NUOPCDriver__ImplementsSetModelServices#isAssignsValue <em>Assigns Value</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the attribute '<em>Assigns Value</em>'.
+	 * @see org.earthsystemcurator.cupid.nuopc.fsml.nuopc.NUOPCDriver__ImplementsSetModelServices#isAssignsValue()
+	 * @see #getNUOPCDriver__ImplementsSetModelServices()
+	 * @generated
+	 */
+	EAttribute getNUOPCDriver__ImplementsSetModelServices_AssignsValue();
+
+	/**
+	 * Returns the meta object for the attribute '{@link org.earthsystemcurator.cupid.nuopc.fsml.nuopc.NUOPCDriver__ImplementsSetModelServices#isAttached <em>Attached</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the attribute '<em>Attached</em>'.
+	 * @see org.earthsystemcurator.cupid.nuopc.fsml.nuopc.NUOPCDriver__ImplementsSetModelServices#isAttached()
+	 * @see #getNUOPCDriver__ImplementsSetModelServices()
+	 * @generated
+	 */
+	EAttribute getNUOPCDriver__ImplementsSetModelServices_Attached();
+
+	/**
 	 * Returns the meta object for class '{@link org.earthsystemcurator.cupid.nuopc.fsml.nuopc.GetsInternalState <em>Gets Internal State</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -2809,7 +3207,7 @@ public interface NUOPCPackage extends EPackage {
 		EReference NUOPC_MODEL__IMPLEMENTS_SET_SERVICES = eINSTANCE.getNUOPCModel_ImplementsSetServices();
 
 		/**
-		 * The meta object literal for the '<em><b>Implements Model Advance</b></em>' containment reference list feature.
+		 * The meta object literal for the '<em><b>Implements Model Advance</b></em>' containment reference feature.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
 		 * @generated
@@ -3085,6 +3483,14 @@ public interface NUOPCPackage extends EPackage {
 		EAttribute MODEL_IMPLEMENTS_INIT_P1__REGISTERED_IN_SET_SERVICES = eINSTANCE.getModelImplementsInitP1_RegisteredInSetServices();
 
 		/**
+		 * The meta object literal for the '<em><b>Advertises Or Registered</b></em>' attribute feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EAttribute MODEL_IMPLEMENTS_INIT_P1__ADVERTISES_OR_REGISTERED = eINSTANCE.getModelImplementsInitP1_AdvertisesOrRegistered();
+
+		/**
 		 * The meta object literal for the '{@link org.earthsystemcurator.cupid.nuopc.fsml.nuopc.impl.ModelImplementsInitP2Impl <em>Model Implements Init P2</em>}' class.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
@@ -3093,6 +3499,14 @@ public interface NUOPCPackage extends EPackage {
 		 * @generated
 		 */
 		EClass MODEL_IMPLEMENTS_INIT_P2 = eINSTANCE.getModelImplementsInitP2();
+
+		/**
+		 * The meta object literal for the '<em><b>Parent</b></em>' container reference feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EReference MODEL_IMPLEMENTS_INIT_P2__PARENT = eINSTANCE.getModelImplementsInitP2_Parent();
 
 		/**
 		 * The meta object literal for the '<em><b>Name</b></em>' attribute feature.
@@ -3143,6 +3557,22 @@ public interface NUOPCPackage extends EPackage {
 		EAttribute MODEL_IMPLEMENTS_INIT_P2__REALIZES_AT_LEAST_ONE_FIELD = eINSTANCE.getModelImplementsInitP2_RealizesAtLeastOneField();
 
 		/**
+		 * The meta object literal for the '<em><b>Registered In Set Services</b></em>' attribute feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EAttribute MODEL_IMPLEMENTS_INIT_P2__REGISTERED_IN_SET_SERVICES = eINSTANCE.getModelImplementsInitP2_RegisteredInSetServices();
+
+		/**
+		 * The meta object literal for the '<em><b>Realizes Or Registered</b></em>' attribute feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EAttribute MODEL_IMPLEMENTS_INIT_P2__REALIZES_OR_REGISTERED = eINSTANCE.getModelImplementsInitP2_RealizesOrRegistered();
+
+		/**
 		 * The meta object literal for the '{@link org.earthsystemcurator.cupid.nuopc.fsml.nuopc.impl.AdvertisesImportFieldImpl <em>Advertises Import Field</em>}' class.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
@@ -3167,6 +3597,14 @@ public interface NUOPCPackage extends EPackage {
 		 * @generated
 		 */
 		EAttribute ADVERTISES_IMPORT_FIELD__ADDS_TO_STATE = eINSTANCE.getAdvertisesImportField_AddsToState();
+
+		/**
+		 * The meta object literal for the '<em><b>Rc</b></em>' attribute feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EAttribute ADVERTISES_IMPORT_FIELD__RC = eINSTANCE.getAdvertisesImportField_Rc();
 
 		/**
 		 * The meta object literal for the '<em><b>Adds To Import State</b></em>' attribute feature.
@@ -3201,6 +3639,14 @@ public interface NUOPCPackage extends EPackage {
 		 * @generated
 		 */
 		EReference ADVERTISES_EXPORT_FIELD__PARENT = eINSTANCE.getAdvertisesExportField_Parent();
+
+		/**
+		 * The meta object literal for the '<em><b>Rc</b></em>' attribute feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EAttribute ADVERTISES_EXPORT_FIELD__RC = eINSTANCE.getAdvertisesExportField_Rc();
 
 		/**
 		 * The meta object literal for the '<em><b>Adds To State</b></em>' attribute feature.
@@ -3253,6 +3699,14 @@ public interface NUOPCPackage extends EPackage {
 		EAttribute REALIZES_IMPORT_FIELD__REALIZED_IN_STATE = eINSTANCE.getRealizesImportField_RealizedInState();
 
 		/**
+		 * The meta object literal for the '<em><b>Rc</b></em>' attribute feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EAttribute REALIZES_IMPORT_FIELD__RC = eINSTANCE.getRealizesImportField_Rc();
+
+		/**
 		 * The meta object literal for the '<em><b>Realized In Import State</b></em>' attribute feature.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
@@ -3293,6 +3747,14 @@ public interface NUOPCPackage extends EPackage {
 		 * @generated
 		 */
 		EAttribute REALIZES_EXPORT_FIELD__REALIZED_IN_STATE = eINSTANCE.getRealizesExportField_RealizedInState();
+
+		/**
+		 * The meta object literal for the '<em><b>Rc</b></em>' attribute feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EAttribute REALIZES_EXPORT_FIELD__RC = eINSTANCE.getRealizesExportField_Rc();
 
 		/**
 		 * The meta object literal for the '<em><b>Realized In Export State</b></em>' attribute feature.
@@ -3379,12 +3841,20 @@ public interface NUOPCPackage extends EPackage {
 		EReference NUOPC_DRIVER__IMPLEMENTS_SET_SERVICES = eINSTANCE.getNUOPCDriver_ImplementsSetServices();
 
 		/**
-		 * The meta object literal for the '<em><b>Implements Set Model Count</b></em>' containment reference list feature.
+		 * The meta object literal for the '<em><b>Implements Set Model Count</b></em>' containment reference feature.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
 		 * @generated
 		 */
 		EReference NUOPC_DRIVER__IMPLEMENTS_SET_MODEL_COUNT = eINSTANCE.getNUOPCDriver_ImplementsSetModelCount();
+
+		/**
+		 * The meta object literal for the '<em><b>Implements Set Model Services</b></em>' containment reference feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EReference NUOPC_DRIVER__IMPLEMENTS_SET_MODEL_SERVICES = eINSTANCE.getNUOPCDriver_ImplementsSetModelServices();
 
 		/**
 		 * The meta object literal for the '{@link org.earthsystemcurator.cupid.nuopc.fsml.nuopc.impl.NUOPCDriver__GenericImportsImpl <em>Driver Generic Imports</em>}' class.
@@ -3577,6 +4047,88 @@ public interface NUOPCPackage extends EPackage {
 		 * @generated
 		 */
 		EAttribute NUOPC_DRIVER_IMPLEMENTS_SET_MODEL_COUNT__ASSIGNS_VALUE = eINSTANCE.getNUOPCDriver__ImplementsSetModelCount_AssignsValue();
+
+		/**
+		 * The meta object literal for the '<em><b>Attached</b></em>' attribute feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EAttribute NUOPC_DRIVER_IMPLEMENTS_SET_MODEL_COUNT__ATTACHED = eINSTANCE.getNUOPCDriver__ImplementsSetModelCount_Attached();
+
+		/**
+		 * The meta object literal for the '{@link org.earthsystemcurator.cupid.nuopc.fsml.nuopc.impl.NUOPCDriver__ImplementsSetModelServicesImpl <em>Driver Implements Set Model Services</em>}' class.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @see org.earthsystemcurator.cupid.nuopc.fsml.nuopc.impl.NUOPCDriver__ImplementsSetModelServicesImpl
+		 * @see org.earthsystemcurator.cupid.nuopc.fsml.nuopc.impl.NUOPCPackageImpl#getNUOPCDriver__ImplementsSetModelServices()
+		 * @generated
+		 */
+		EClass NUOPC_DRIVER_IMPLEMENTS_SET_MODEL_SERVICES = eINSTANCE.getNUOPCDriver__ImplementsSetModelServices();
+
+		/**
+		 * The meta object literal for the '<em><b>Parent</b></em>' container reference feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EReference NUOPC_DRIVER_IMPLEMENTS_SET_MODEL_SERVICES__PARENT = eINSTANCE.getNUOPCDriver__ImplementsSetModelServices_Parent();
+
+		/**
+		 * The meta object literal for the '<em><b>Gcomp</b></em>' attribute feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EAttribute NUOPC_DRIVER_IMPLEMENTS_SET_MODEL_SERVICES__GCOMP = eINSTANCE.getNUOPCDriver__ImplementsSetModelServices_Gcomp();
+
+		/**
+		 * The meta object literal for the '<em><b>Rc</b></em>' attribute feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EAttribute NUOPC_DRIVER_IMPLEMENTS_SET_MODEL_SERVICES__RC = eINSTANCE.getNUOPCDriver__ImplementsSetModelServices_Rc();
+
+		/**
+		 * The meta object literal for the '<em><b>Name</b></em>' attribute feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EAttribute NUOPC_DRIVER_IMPLEMENTS_SET_MODEL_SERVICES__NAME = eINSTANCE.getNUOPCDriver__ImplementsSetModelServices_Name();
+
+		/**
+		 * The meta object literal for the '<em><b>Driver Internal State</b></em>' attribute feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EAttribute NUOPC_DRIVER_IMPLEMENTS_SET_MODEL_SERVICES__DRIVER_INTERNAL_STATE = eINSTANCE.getNUOPCDriver__ImplementsSetModelServices_DriverInternalState();
+
+		/**
+		 * The meta object literal for the '<em><b>Gets Internal State</b></em>' containment reference feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EReference NUOPC_DRIVER_IMPLEMENTS_SET_MODEL_SERVICES__GETS_INTERNAL_STATE = eINSTANCE.getNUOPCDriver__ImplementsSetModelServices_GetsInternalState();
+
+		/**
+		 * The meta object literal for the '<em><b>Assigns Value</b></em>' attribute feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EAttribute NUOPC_DRIVER_IMPLEMENTS_SET_MODEL_SERVICES__ASSIGNS_VALUE = eINSTANCE.getNUOPCDriver__ImplementsSetModelServices_AssignsValue();
+
+		/**
+		 * The meta object literal for the '<em><b>Attached</b></em>' attribute feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EAttribute NUOPC_DRIVER_IMPLEMENTS_SET_MODEL_SERVICES__ATTACHED = eINSTANCE.getNUOPCDriver__ImplementsSetModelServices_Attached();
 
 		/**
 		 * The meta object literal for the '{@link org.earthsystemcurator.cupid.nuopc.fsml.nuopc.impl.GetsInternalStateImpl <em>Gets Internal State</em>}' class.

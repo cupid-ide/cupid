@@ -26,6 +26,7 @@ import org.eclipse.emf.ecore.util.EcoreUtil;
  * <ul>
  *   <li>{@link org.earthsystemcurator.cupid.nuopc.fsml.nuopc.impl.AdvertisesImportFieldImpl#getParent <em>Parent</em>}</li>
  *   <li>{@link org.earthsystemcurator.cupid.nuopc.fsml.nuopc.impl.AdvertisesImportFieldImpl#getAddsToState <em>Adds To State</em>}</li>
+ *   <li>{@link org.earthsystemcurator.cupid.nuopc.fsml.nuopc.impl.AdvertisesImportFieldImpl#getRc <em>Rc</em>}</li>
  *   <li>{@link org.earthsystemcurator.cupid.nuopc.fsml.nuopc.impl.AdvertisesImportFieldImpl#isAddsToImportState <em>Adds To Import State</em>}</li>
  *   <li>{@link org.earthsystemcurator.cupid.nuopc.fsml.nuopc.impl.AdvertisesImportFieldImpl#getStandardName <em>Standard Name</em>}</li>
  * </ul>
@@ -55,6 +56,26 @@ public class AdvertisesImportFieldImpl extends EObjectImpl implements Advertises
 	protected String addsToState = ADDS_TO_STATE_EDEFAULT;
 
 	/**
+	 * The default value of the '{@link #getRc() <em>Rc</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #getRc()
+	 * @generated
+	 * @ordered
+	 */
+	protected static final String RC_EDEFAULT = "rc";
+
+	/**
+	 * The cached value of the '{@link #getRc() <em>Rc</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #getRc()
+	 * @generated
+	 * @ordered
+	 */
+	protected String rc = RC_EDEFAULT;
+
+	/**
 	 * The cached setting delegate for the '{@link #isAddsToImportState() <em>Adds To Import State</em>}' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -72,7 +93,7 @@ public class AdvertisesImportFieldImpl extends EObjectImpl implements Advertises
 	 * @generated
 	 * @ordered
 	 */
-	protected static final String STANDARD_NAME_EDEFAULT = null;
+	protected static final String STANDARD_NAME_EDEFAULT = "\"Standard_Name\"";
 
 	/**
 	 * The cached value of the '{@link #getStandardName() <em>Standard Name</em>}' attribute.
@@ -170,6 +191,27 @@ public class AdvertisesImportFieldImpl extends EObjectImpl implements Advertises
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	public String getRc() {
+		return rc;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public void setRc(String newRc) {
+		String oldRc = rc;
+		rc = newRc;
+		if (eNotificationRequired())
+			eNotify(new ENotificationImpl(this, Notification.SET, NUOPCPackage.ADVERTISES_IMPORT_FIELD__RC, oldRc, rc));
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
 	public boolean isAddsToImportState() {
 		return (Boolean)ADDS_TO_IMPORT_STATE__ESETTING_DELEGATE.dynamicGet(this, null, 0, true, false);
 	}
@@ -260,6 +302,8 @@ public class AdvertisesImportFieldImpl extends EObjectImpl implements Advertises
 				return getParent();
 			case NUOPCPackage.ADVERTISES_IMPORT_FIELD__ADDS_TO_STATE:
 				return getAddsToState();
+			case NUOPCPackage.ADVERTISES_IMPORT_FIELD__RC:
+				return getRc();
 			case NUOPCPackage.ADVERTISES_IMPORT_FIELD__ADDS_TO_IMPORT_STATE:
 				return isAddsToImportState();
 			case NUOPCPackage.ADVERTISES_IMPORT_FIELD__STANDARD_NAME:
@@ -281,6 +325,9 @@ public class AdvertisesImportFieldImpl extends EObjectImpl implements Advertises
 				return;
 			case NUOPCPackage.ADVERTISES_IMPORT_FIELD__ADDS_TO_STATE:
 				setAddsToState((String)newValue);
+				return;
+			case NUOPCPackage.ADVERTISES_IMPORT_FIELD__RC:
+				setRc((String)newValue);
 				return;
 			case NUOPCPackage.ADVERTISES_IMPORT_FIELD__ADDS_TO_IMPORT_STATE:
 				setAddsToImportState((Boolean)newValue);
@@ -306,6 +353,9 @@ public class AdvertisesImportFieldImpl extends EObjectImpl implements Advertises
 			case NUOPCPackage.ADVERTISES_IMPORT_FIELD__ADDS_TO_STATE:
 				setAddsToState(ADDS_TO_STATE_EDEFAULT);
 				return;
+			case NUOPCPackage.ADVERTISES_IMPORT_FIELD__RC:
+				setRc(RC_EDEFAULT);
+				return;
 			case NUOPCPackage.ADVERTISES_IMPORT_FIELD__ADDS_TO_IMPORT_STATE:
 				ADDS_TO_IMPORT_STATE__ESETTING_DELEGATE.dynamicUnset(this, null, 0);
 				return;
@@ -328,6 +378,8 @@ public class AdvertisesImportFieldImpl extends EObjectImpl implements Advertises
 				return getParent() != null;
 			case NUOPCPackage.ADVERTISES_IMPORT_FIELD__ADDS_TO_STATE:
 				return ADDS_TO_STATE_EDEFAULT == null ? addsToState != null : !ADDS_TO_STATE_EDEFAULT.equals(addsToState);
+			case NUOPCPackage.ADVERTISES_IMPORT_FIELD__RC:
+				return RC_EDEFAULT == null ? rc != null : !RC_EDEFAULT.equals(rc);
 			case NUOPCPackage.ADVERTISES_IMPORT_FIELD__ADDS_TO_IMPORT_STATE:
 				return ADDS_TO_IMPORT_STATE__ESETTING_DELEGATE.dynamicIsSet(this, null, 0);
 			case NUOPCPackage.ADVERTISES_IMPORT_FIELD__STANDARD_NAME:
@@ -348,6 +400,8 @@ public class AdvertisesImportFieldImpl extends EObjectImpl implements Advertises
 		StringBuffer result = new StringBuffer(super.toString());
 		result.append(" (addsToState: ");
 		result.append(addsToState);
+		result.append(", rc: ");
+		result.append(rc);
 		result.append(", standardName: ");
 		result.append(standardName);
 		result.append(')');

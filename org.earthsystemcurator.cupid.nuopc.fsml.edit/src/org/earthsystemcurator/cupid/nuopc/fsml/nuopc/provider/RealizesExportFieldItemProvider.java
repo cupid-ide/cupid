@@ -61,6 +61,7 @@ public class RealizesExportFieldItemProvider
 			super.getPropertyDescriptors(object);
 
 			addRealizedInStatePropertyDescriptor(object);
+			addRcPropertyDescriptor(object);
 			addRealizedInExportStatePropertyDescriptor(object);
 			addFieldPropertyDescriptor(object);
 		}
@@ -81,6 +82,28 @@ public class RealizesExportFieldItemProvider
 				 getString("_UI_RealizesExportField_realizedInState_feature"),
 				 getString("_UI_PropertyDescriptor_description", "_UI_RealizesExportField_realizedInState_feature", "_UI_RealizesExportField_type"),
 				 NUOPCPackage.Literals.REALIZES_EXPORT_FIELD__REALIZED_IN_STATE,
+				 true,
+				 false,
+				 false,
+				 ItemPropertyDescriptor.GENERIC_VALUE_IMAGE,
+				 null,
+				 null));
+	}
+
+	/**
+	 * This adds a property descriptor for the Rc feature.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	protected void addRcPropertyDescriptor(Object object) {
+		itemPropertyDescriptors.add
+			(createItemPropertyDescriptor
+				(((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(),
+				 getResourceLocator(),
+				 getString("_UI_RealizesExportField_rc_feature"),
+				 getString("_UI_PropertyDescriptor_description", "_UI_RealizesExportField_rc_feature", "_UI_RealizesExportField_type"),
+				 NUOPCPackage.Literals.REALIZES_EXPORT_FIELD__RC,
 				 true,
 				 false,
 				 false,
@@ -171,6 +194,7 @@ public class RealizesExportFieldItemProvider
 
 		switch (notification.getFeatureID(RealizesExportField.class)) {
 			case NUOPCPackage.REALIZES_EXPORT_FIELD__REALIZED_IN_STATE:
+			case NUOPCPackage.REALIZES_EXPORT_FIELD__RC:
 			case NUOPCPackage.REALIZES_EXPORT_FIELD__REALIZED_IN_EXPORT_STATE:
 			case NUOPCPackage.REALIZES_EXPORT_FIELD__FIELD:
 				fireNotifyChanged(new ViewerNotification(notification, notification.getNotifier(), false, true));

@@ -61,6 +61,7 @@ public class AdvertisesImportFieldItemProvider
 			super.getPropertyDescriptors(object);
 
 			addAddsToStatePropertyDescriptor(object);
+			addRcPropertyDescriptor(object);
 			addAddsToImportStatePropertyDescriptor(object);
 			addStandardNamePropertyDescriptor(object);
 		}
@@ -81,6 +82,28 @@ public class AdvertisesImportFieldItemProvider
 				 getString("_UI_AdvertisesImportField_addsToState_feature"),
 				 getString("_UI_PropertyDescriptor_description", "_UI_AdvertisesImportField_addsToState_feature", "_UI_AdvertisesImportField_type"),
 				 NUOPCPackage.Literals.ADVERTISES_IMPORT_FIELD__ADDS_TO_STATE,
+				 true,
+				 false,
+				 false,
+				 ItemPropertyDescriptor.GENERIC_VALUE_IMAGE,
+				 null,
+				 null));
+	}
+
+	/**
+	 * This adds a property descriptor for the Rc feature.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	protected void addRcPropertyDescriptor(Object object) {
+		itemPropertyDescriptors.add
+			(createItemPropertyDescriptor
+				(((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(),
+				 getResourceLocator(),
+				 getString("_UI_AdvertisesImportField_rc_feature"),
+				 getString("_UI_PropertyDescriptor_description", "_UI_AdvertisesImportField_rc_feature", "_UI_AdvertisesImportField_type"),
+				 NUOPCPackage.Literals.ADVERTISES_IMPORT_FIELD__RC,
 				 true,
 				 false,
 				 false,
@@ -171,6 +194,7 @@ public class AdvertisesImportFieldItemProvider
 
 		switch (notification.getFeatureID(AdvertisesImportField.class)) {
 			case NUOPCPackage.ADVERTISES_IMPORT_FIELD__ADDS_TO_STATE:
+			case NUOPCPackage.ADVERTISES_IMPORT_FIELD__RC:
 			case NUOPCPackage.ADVERTISES_IMPORT_FIELD__ADDS_TO_IMPORT_STATE:
 			case NUOPCPackage.ADVERTISES_IMPORT_FIELD__STANDARD_NAME:
 				fireNotifyChanged(new ViewerNotification(notification, notification.getNotifier(), false, true));

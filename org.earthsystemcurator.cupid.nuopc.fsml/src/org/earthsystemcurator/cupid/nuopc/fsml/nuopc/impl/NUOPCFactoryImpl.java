@@ -74,6 +74,7 @@ public class NUOPCFactoryImpl extends EFactoryImpl implements NUOPCFactory {
 			case NUOPCPackage.NUOPC_DRIVER_IMPLEMENTS_SET_SERVICES: return createNUOPCDriver__ImplementsSetServices();
 			case NUOPCPackage.ATTACHES_METHOD: return createAttachesMethod();
 			case NUOPCPackage.NUOPC_DRIVER_IMPLEMENTS_SET_MODEL_COUNT: return createNUOPCDriver__ImplementsSetModelCount();
+			case NUOPCPackage.NUOPC_DRIVER_IMPLEMENTS_SET_MODEL_SERVICES: return createNUOPCDriver__ImplementsSetModelServices();
 			case NUOPCPackage.GETS_INTERNAL_STATE: return createGetsInternalState();
 			case NUOPCPackage.NUOPC_APPLICATION: return createNUOPCApplication();
 			case NUOPCPackage.TOP: return createTop();
@@ -262,6 +263,16 @@ public class NUOPCFactoryImpl extends EFactoryImpl implements NUOPCFactory {
 	public NUOPCDriver__ImplementsSetModelCount createNUOPCDriver__ImplementsSetModelCount() {
 		NUOPCDriver__ImplementsSetModelCountImpl nuopcDriver__ImplementsSetModelCount = new NUOPCDriver__ImplementsSetModelCountImpl();
 		return nuopcDriver__ImplementsSetModelCount;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public NUOPCDriver__ImplementsSetModelServices createNUOPCDriver__ImplementsSetModelServices() {
+		NUOPCDriver__ImplementsSetModelServicesImpl nuopcDriver__ImplementsSetModelServices = new NUOPCDriver__ImplementsSetModelServicesImpl();
+		return nuopcDriver__ImplementsSetModelServices;
 	}
 
 	/**

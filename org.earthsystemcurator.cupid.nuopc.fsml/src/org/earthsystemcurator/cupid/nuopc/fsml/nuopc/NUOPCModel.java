@@ -111,8 +111,7 @@ public interface NUOPCModel extends EObject {
 	void setImplementsSetServices(ModelImplementsSetServices value);
 
 	/**
-	 * Returns the value of the '<em><b>Implements Model Advance</b></em>' containment reference list.
-	 * The list contents are of type {@link org.earthsystemcurator.cupid.nuopc.fsml.nuopc.ModelAdvance}.
+	 * Returns the value of the '<em><b>Implements Model Advance</b></em>' containment reference.
 	 * It is bidirectional and its opposite is '{@link org.earthsystemcurator.cupid.nuopc.fsml.nuopc.ModelAdvance#getParent <em>Parent</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <p>
@@ -120,14 +119,25 @@ public interface NUOPCModel extends EObject {
 	 * there really should be more of a description here...
 	 * </p>
 	 * <!-- end-user-doc -->
-	 * @return the value of the '<em>Implements Model Advance</em>' containment reference list.
+	 * @return the value of the '<em>Implements Model Advance</em>' containment reference.
+	 * @see #setImplementsModelAdvance(ModelAdvance)
 	 * @see org.earthsystemcurator.cupid.nuopc.fsml.nuopc.NUOPCPackage#getNUOPCModel_ImplementsModelAdvance()
 	 * @see org.earthsystemcurator.cupid.nuopc.fsml.nuopc.ModelAdvance#getParent
 	 * @model opposite="parent" containment="true"
-	 *        annotation="http://www.earthsystemcog.org/projects/nuopc mapping='subroutine: \"*(type(ESMF_GridComp), integer)\"'"
+	 *        annotation="http://www.earthsystemcog.org/projects/nuopc mapping='subroutine: \"#name(type(ESMF_GridComp), integer)\"'"
 	 * @generated
 	 */
-	EList<ModelAdvance> getImplementsModelAdvance();
+	ModelAdvance getImplementsModelAdvance();
+
+	/**
+	 * Sets the value of the '{@link org.earthsystemcurator.cupid.nuopc.fsml.nuopc.NUOPCModel#getImplementsModelAdvance <em>Implements Model Advance</em>}' containment reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @param value the new value of the '<em>Implements Model Advance</em>' containment reference.
+	 * @see #getImplementsModelAdvance()
+	 * @generated
+	 */
+	void setImplementsModelAdvance(ModelAdvance value);
 
 	/**
 	 * Returns the value of the '<em><b>Initialize</b></em>' containment reference.

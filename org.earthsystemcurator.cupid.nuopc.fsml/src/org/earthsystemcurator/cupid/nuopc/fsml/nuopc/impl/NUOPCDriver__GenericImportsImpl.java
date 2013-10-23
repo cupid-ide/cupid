@@ -37,7 +37,7 @@ public class NUOPCDriver__GenericImportsImpl extends EObjectImpl implements NUOP
 	 * @generated
 	 * @ordered
 	 */
-	protected static final String IMPORTS_GENERIC_SS_EDEFAULT = "nuopcmodel_ss";
+	protected static final String IMPORTS_GENERIC_SS_EDEFAULT = "driver_routine_SS";
 
 	/**
 	 * The cached value of the '{@link #getImportsGenericSS() <em>Imports Generic SS</em>}' attribute.
@@ -57,7 +57,7 @@ public class NUOPCDriver__GenericImportsImpl extends EObjectImpl implements NUOP
 	 * @generated
 	 * @ordered
 	 */
-	protected static final String IMPORTS_TYPE_DRIVER_IS_EDEFAULT = null;
+	protected static final String IMPORTS_TYPE_DRIVER_IS_EDEFAULT = "driver_type_IS";
 
 	/**
 	 * The cached value of the '{@link #getImportsTypeDriverIS() <em>Imports Type Driver IS</em>}' attribute.
@@ -77,7 +77,7 @@ public class NUOPCDriver__GenericImportsImpl extends EObjectImpl implements NUOP
 	 * @generated
 	 * @ordered
 	 */
-	protected static final String IMPORTS_LABEL_SET_MODEL_COUNT_EDEFAULT = null;
+	protected static final String IMPORTS_LABEL_SET_MODEL_COUNT_EDEFAULT = "driver_label_SetModelCount";
 
 	/**
 	 * The cached value of the '{@link #getImportsLabelSetModelCount() <em>Imports Label Set Model Count</em>}' attribute.
@@ -97,7 +97,7 @@ public class NUOPCDriver__GenericImportsImpl extends EObjectImpl implements NUOP
 	 * @generated
 	 * @ordered
 	 */
-	protected static final String IMPORTS_LABEL_SET_MODEL_SERVICES_EDEFAULT = null;
+	protected static final String IMPORTS_LABEL_SET_MODEL_SERVICES_EDEFAULT = "driver_label_SetModelServices";
 
 	/**
 	 * The cached value of the '{@link #getImportsLabelSetModelServices() <em>Imports Label Set Model Services</em>}' attribute.

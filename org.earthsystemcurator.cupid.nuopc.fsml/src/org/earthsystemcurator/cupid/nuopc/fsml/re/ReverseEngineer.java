@@ -72,6 +72,7 @@ public class ReverseEngineer {
 				for (IFile f : fl) {					
 					//System.out.println("Module: " + mod + " (" + f.getFullPath() + ")");
 					if (f.getProject().equals(project)) {
+						System.out.println("Adding Fortran file: " + f);
 						IFortranAST ast = vpg.acquireTransientAST(f);					
 						if (ast == null) {
 							System.out.println("Warning:  AST not found for file: " + f.getName());

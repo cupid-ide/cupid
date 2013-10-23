@@ -13,8 +13,8 @@ import org.eclipse.emf.ecore.EObject;
  * The following features are supported:
  * <ul>
  *   <li>{@link org.earthsystemcurator.cupid.nuopc.fsml.nuopc.ModelAdvance#getParent <em>Parent</em>}</li>
- *   <li>{@link org.earthsystemcurator.cupid.nuopc.fsml.nuopc.ModelAdvance#getAttachedModelAdvance <em>Attached Model Advance</em>}</li>
  *   <li>{@link org.earthsystemcurator.cupid.nuopc.fsml.nuopc.ModelAdvance#getName <em>Name</em>}</li>
+ *   <li>{@link org.earthsystemcurator.cupid.nuopc.fsml.nuopc.ModelAdvance#isAttachedModelAdvance <em>Attached Model Advance</em>}</li>
  * </ul>
  * </p>
  *
@@ -52,34 +52,8 @@ public interface ModelAdvance extends EObject {
 	void setParent(NUOPCModel value);
 
 	/**
-	 * Returns the value of the '<em><b>Attached Model Advance</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <p>
-	 * If the meaning of the '<em>Attached Model Advance</em>' attribute isn't clear,
-	 * there really should be more of a description here...
-	 * </p>
-	 * <!-- end-user-doc -->
-	 * @return the value of the '<em>Attached Model Advance</em>' attribute.
-	 * @see #setAttachedModelAdvance(String)
-	 * @see org.earthsystemcurator.cupid.nuopc.fsml.nuopc.NUOPCPackage#getModelAdvance_AttachedModelAdvance()
-	 * @model required="true" derived="true"
-	 *        annotation="http://www.eclipse.org/emf/2002/Ecore/OCL derivation='self.parent.implementsSetServices.attachesMethod->select(m|m.name=self.parent.genericImports.importsLabelModelAdvance).userRoutine->asSequence()->first()'"
-	 * @generated
-	 */
-	String getAttachedModelAdvance();
-
-	/**
-	 * Sets the value of the '{@link org.earthsystemcurator.cupid.nuopc.fsml.nuopc.ModelAdvance#getAttachedModelAdvance <em>Attached Model Advance</em>}' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @param value the new value of the '<em>Attached Model Advance</em>' attribute.
-	 * @see #getAttachedModelAdvance()
-	 * @generated
-	 */
-	void setAttachedModelAdvance(String value);
-
-	/**
 	 * Returns the value of the '<em><b>Name</b></em>' attribute.
+	 * The default value is <code>"ModelAdvance"</code>.
 	 * <!-- begin-user-doc -->
 	 * <p>
 	 * If the meaning of the '<em>Name</em>' attribute isn't clear,
@@ -89,8 +63,8 @@ public interface ModelAdvance extends EObject {
 	 * @return the value of the '<em>Name</em>' attribute.
 	 * @see #setName(String)
 	 * @see org.earthsystemcurator.cupid.nuopc.fsml.nuopc.NUOPCPackage#getModelAdvance_Name()
-	 * @model required="true"
-	 *        annotation="http://www.earthsystemcog.org/projects/nuopc mapping='subroutineName: \"#../attachedModelAdvance\"' essential='true'"
+	 * @model default="ModelAdvance" required="true"
+	 *        annotation="http://www.earthsystemcog.org/projects/nuopc mapping='subroutineName' essential='true'"
 	 * @generated
 	 */
 	String getName();
@@ -104,5 +78,33 @@ public interface ModelAdvance extends EObject {
 	 * @generated
 	 */
 	void setName(String value);
+
+	/**
+	 * Returns the value of the '<em><b>Attached Model Advance</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <p>
+	 * If the meaning of the '<em>Attached Model Advance</em>' attribute isn't clear,
+	 * there really should be more of a description here...
+	 * </p>
+	 * <!-- end-user-doc -->
+	 * @return the value of the '<em>Attached Model Advance</em>' attribute.
+	 * @see #setAttachedModelAdvance(boolean)
+	 * @see org.earthsystemcurator.cupid.nuopc.fsml.nuopc.NUOPCPackage#getModelAdvance_AttachedModelAdvance()
+	 * @model required="true" derived="true"
+	 *        annotation="http://www.eclipse.org/emf/2002/Ecore/OCL derivation='self.name = self.parent.implementsSetServices.attachesMethod->select(m|m.name=self.parent.genericImports.importsLabelModelAdvance).userRoutine->asSequence()->first()'"
+	 *        annotation="http://www.earthsystemcog.org/projects/nuopc essential='true'"
+	 * @generated
+	 */
+	boolean isAttachedModelAdvance();
+
+	/**
+	 * Sets the value of the '{@link org.earthsystemcurator.cupid.nuopc.fsml.nuopc.ModelAdvance#isAttachedModelAdvance <em>Attached Model Advance</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @param value the new value of the '<em>Attached Model Advance</em>' attribute.
+	 * @see #isAttachedModelAdvance()
+	 * @generated
+	 */
+	void setAttachedModelAdvance(boolean value);
 
 } // ModelAdvance

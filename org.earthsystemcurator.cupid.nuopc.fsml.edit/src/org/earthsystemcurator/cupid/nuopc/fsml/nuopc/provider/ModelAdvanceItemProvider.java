@@ -60,8 +60,8 @@ public class ModelAdvanceItemProvider
 		if (itemPropertyDescriptors == null) {
 			super.getPropertyDescriptors(object);
 
-			addAttachedModelAdvancePropertyDescriptor(object);
 			addNamePropertyDescriptor(object);
+			addAttachedModelAdvancePropertyDescriptor(object);
 		}
 		return itemPropertyDescriptors;
 	}
@@ -83,7 +83,7 @@ public class ModelAdvanceItemProvider
 				 true,
 				 false,
 				 false,
-				 ItemPropertyDescriptor.GENERIC_VALUE_IMAGE,
+				 ItemPropertyDescriptor.BOOLEAN_VALUE_IMAGE,
 				 null,
 				 null));
 	}
@@ -147,8 +147,8 @@ public class ModelAdvanceItemProvider
 		updateChildren(notification);
 
 		switch (notification.getFeatureID(ModelAdvance.class)) {
-			case NUOPCPackage.MODEL_ADVANCE__ATTACHED_MODEL_ADVANCE:
 			case NUOPCPackage.MODEL_ADVANCE__NAME:
+			case NUOPCPackage.MODEL_ADVANCE__ATTACHED_MODEL_ADVANCE:
 				fireNotifyChanged(new ViewerNotification(notification, notification.getNotifier(), false, true));
 				return;
 		}

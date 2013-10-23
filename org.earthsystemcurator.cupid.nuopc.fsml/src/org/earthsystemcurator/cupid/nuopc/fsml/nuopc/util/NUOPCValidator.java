@@ -127,6 +127,8 @@ public class NUOPCValidator extends OCLinEcoreEObjectValidator {
 				return validateAttachesMethod((AttachesMethod)value, diagnostics, context);
 			case NUOPCPackage.NUOPC_DRIVER_IMPLEMENTS_SET_MODEL_COUNT:
 				return validateNUOPCDriver__ImplementsSetModelCount((NUOPCDriver__ImplementsSetModelCount)value, diagnostics, context);
+			case NUOPCPackage.NUOPC_DRIVER_IMPLEMENTS_SET_MODEL_SERVICES:
+				return validateNUOPCDriver__ImplementsSetModelServices((NUOPCDriver__ImplementsSetModelServices)value, diagnostics, context);
 			case NUOPCPackage.GETS_INTERNAL_STATE:
 				return validateGetsInternalState((GetsInternalState)value, diagnostics, context);
 			case NUOPCPackage.NUOPC_APPLICATION:
@@ -371,6 +373,15 @@ public class NUOPCValidator extends OCLinEcoreEObjectValidator {
 	 */
 	public boolean validateNUOPCDriver__ImplementsSetModelCount(NUOPCDriver__ImplementsSetModelCount nuopcDriver__ImplementsSetModelCount, DiagnosticChain diagnostics, Map<Object, Object> context) {
 		return validate_EveryDefaultConstraint(nuopcDriver__ImplementsSetModelCount, diagnostics, context);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public boolean validateNUOPCDriver__ImplementsSetModelServices(NUOPCDriver__ImplementsSetModelServices nuopcDriver__ImplementsSetModelServices, DiagnosticChain diagnostics, Map<Object, Object> context) {
+		return validate_EveryDefaultConstraint(nuopcDriver__ImplementsSetModelServices, diagnostics, context);
 	}
 
 	/**

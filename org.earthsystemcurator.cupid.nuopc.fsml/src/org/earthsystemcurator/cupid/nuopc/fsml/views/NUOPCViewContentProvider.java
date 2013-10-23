@@ -1,12 +1,16 @@
 package org.earthsystemcurator.cupid.nuopc.fsml.views;
 
 import java.util.ArrayList;
+import java.util.IdentityHashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Map.Entry;
 
 import org.earthsystemcurator.cupid.nuopc.fsml.builder.NUOPCNature;
 import org.earthsystemcurator.cupid.nuopc.fsml.nuopc.NUOPCApplication;
+import org.earthsystemcurator.cupid.nuopc.fsml.nuopc.NUOPCFactory;
 import org.earthsystemcurator.cupid.nuopc.fsml.nuopc.NUOPCPackage;
+import org.earthsystemcurator.cupid.nuopc.fsml.nuopc.Top;
 import org.earthsystemcurator.cupid.nuopc.fsml.nuopc.util.NUOPCValidator;
 import org.earthsystemcurator.cupid.nuopc.fsml.util.EcoreUtils;
 import org.earthsystemcurator.cupid.nuopc.fsml.util.Regex;
@@ -24,6 +28,7 @@ import org.eclipse.emf.ecore.EcorePackage;
 import org.eclipse.emf.ecore.util.Diagnostician;
 import org.eclipse.emf.ecore.util.EObjectValidator;
 import org.eclipse.emf.ecore.util.EcoreUtil;
+import org.eclipse.emf.ecore.util.EcoreUtil.Copier;
 import org.eclipse.jface.viewers.IStructuredContentProvider;
 import org.eclipse.jface.viewers.ITreeContentProvider;
 import org.eclipse.jface.viewers.Viewer;
@@ -59,15 +64,17 @@ class NUOPCViewContentProvider implements IStructuredContentProvider, ITreeConte
 			try {
 				NUOPCNature nature = (NUOPCNature) project.getNature(NUOPCNature.NATURE_ID);
 				if (nature != null) {
+					
+					duplicateReversedModel(nature);
 					//make a deep copy
 					//app = EcoreUtil.copy(nature.reversedModel);					
 					
 					//undoing copy for now so that the mappings are correct
 					//might need to create a utility function to duplicate both
-					app = nature.reversedModel;
-					reversedMappings = nature.reversedMappings;
+					//app = nature.reversedModel;
+					//reversedMappings = nature.reversedMappings;
 										
-					nature.forwardModel = app;
+					//nature.forwardModel = app;
 				}
 			} catch (CoreException e) {			
 				e.printStackTrace();
@@ -75,6 +82,38 @@ class NUOPCViewContentProvider implements IStructuredContentProvider, ITreeConte
 				app = null;
 			}
 		}
+		
+	}
+	
+	protected void duplicateReversedModel(NUOPCNature nature) {
+		
+		if (nature.reversedModel != null) {
+			Copier copier = new Copier();
+			NUOPCApplication newApp = (NUOPCApplication) copier.copy(nature.reversedModel);
+			copier.copyReferences();
+			
+			Map<Object,Object> newMap = new IdentityHashMap<Object,Object>();
+			for (Entry<Object, Object> e : nature.reversedMappings.entrySet()) {
+				//System.out.println("Adding to newMap: " + copier.get(e.getKey()) + " ==> " + e.getValue());
+				if (copier.get(e.getKey()) != null) {
+					newMap.put(copier.get(e.getKey()), e.getValue());
+				}
+				else {
+					//this is an eattribute
+					newMap.put(e.getKey(), e.getValue());
+				}
+			}
+			
+			this.app = newApp;
+			this.reversedMappings = newMap;
+			nature.forwardModel = newApp;
+		}
+		else {
+			this.app = null;
+			this.reversedMappings = null;
+			nature.forwardModel = null;
+		}
+		
 	}
 	
 	public void dispose() {
@@ -112,10 +151,13 @@ class NUOPCViewContentProvider implements IStructuredContentProvider, ITreeConte
 			return new Object[0];
 		}
 				
-				
+		Top top = NUOPCFactory.eINSTANCE.createTop();
+		top.setApps(app);
+		
 		EReference er = NUOPCPackage.eINSTANCE.getTop_Apps();
 		String labelType = Regex.getFromAnnotation(app.eClass(), "label");		
-		return new Object[] {new NUOPCModelElem(null, er, app.getName(), labelType, app)};  
+		return new Object[] {new NUOPCModelElem(new NUOPCModelElem(null, null, null, null, top),
+												er, app.getName(), labelType, app)};  
 			
 	}
 	
@@ -125,7 +167,7 @@ class NUOPCViewContentProvider implements IStructuredContentProvider, ITreeConte
 	}
 	
 	public Object [] getChildren(Object p) {
-		//System.out.println("getChildren: " + p);
+		System.out.println("getChildren: " + p);
 		if (p instanceof NUOPCModelElem) {
 			NUOPCModelElem parent = (NUOPCModelElem) p;
 			//EReference er = parent.eref;
