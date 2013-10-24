@@ -204,8 +204,7 @@ public class NUOPCView extends ViewPart {
 					IWorkbenchPage page = PlatformUI.getWorkbench().getActiveWorkbenchWindow().getActivePage();
 					try {
 						IDE.openEditor(page, marker, false);
-						
-						//marker.delete();
+						marker.delete();
 					} catch (PartInitException e) {
 						e.printStackTrace();
 					} catch (CoreException e) {								

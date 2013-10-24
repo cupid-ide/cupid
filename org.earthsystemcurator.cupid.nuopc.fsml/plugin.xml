@@ -343,6 +343,14 @@
             file="contexts.xml">
       </contexts>
    </extension>
+   <extension
+         id="org.earthsystemcurator.cupid.marker"
+         name="Cupid Marker"
+         point="org.eclipse.core.resources.markers">
+      <super
+            type="org.eclipse.core.resources.bookmark">
+      </super>
+   </extension>
    
    <!--
    <extension point = "org.eclipse.emf.ecore.validation_delegate">

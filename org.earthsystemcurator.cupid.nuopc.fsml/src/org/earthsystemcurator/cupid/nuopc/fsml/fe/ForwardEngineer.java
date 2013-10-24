@@ -20,9 +20,11 @@ import org.earthsystemcurator.cupid.nuopc.fsml.util.CodeQuery;
 import org.earthsystemcurator.cupid.nuopc.fsml.util.EcoreUtils;
 import org.earthsystemcurator.cupid.nuopc.fsml.util.Regex;
 import org.eclipse.core.resources.IFile;
+import org.eclipse.core.resources.IMarker;
 import org.eclipse.core.resources.IProject;
 import org.eclipse.core.resources.IResource;
 import org.eclipse.core.runtime.CoreException;
+import org.eclipse.core.runtime.NullProgressMonitor;
 import org.eclipse.emf.common.notify.Notifier;
 import org.eclipse.emf.common.util.BasicMonitor;
 import org.eclipse.emf.common.util.EList;
@@ -47,6 +49,8 @@ import org.eclipse.emf.ecore.EAttribute;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.photran.core.IFortranAST;
+import org.eclipse.photran.internal.core.lexer.FileOrIFile;
+import org.eclipse.photran.internal.core.lexer.Token;
 import org.eclipse.photran.internal.core.parser.ASTModuleNode;
 import org.eclipse.photran.internal.core.parser.ASTSubroutineSubprogramNode;
 import org.eclipse.photran.internal.core.parser.IASTNode;
@@ -250,10 +254,73 @@ public class ForwardEngineer {
 		} catch (InvocationTargetException e) {
 			e.printStackTrace();
 		}
-					
+			
+		if (newFortranElem != null) {
+			createMarker(newFortranElem);
+		}
+		
 		return newFortranElem;
 	}
 	
+	private void createMarker(Object elem) {
+		if (elem instanceof IASTNode) {
+			try {
+	        	IASTNode node = (IASTNode) elem;	        	
+				
+	        	Token firstToken = node.findFirstToken();
+	        	Token lastToken = node.findLastToken();
+	        	
+	        	//if (firstToken == null
+	        	 //   || lastToken == null
+	             //   || firstToken.getPhysicalFile() == null
+	              //  || firstToken.getPhysicalFile().getIFile() == null)
+	        	  //  return null;
+
+	        	int startOffset = firstToken.getFileOffset();
+	            //startOffset -= token.getWhiteBefore().length();
+
+	            int endOffset = lastToken.getFileOffset() + lastToken.getLength();
+	            //endOffset += lastToken.getWhiteAfter().length();
+	            
+	            //IMarker marker = firstToken.getEnclosingScope().createMarker();
+	            //marker.
+	            
+	            
+	            IFile f = findFile(node);
+	            if (f != null) {
+	            	//"org.earthsystemcurator.cupid.marker"
+	            	IMarker marker = f.createMarker(IMarker.BOOKMARK);
+	            	marker.setAttribute(IMarker.CHAR_START, startOffset);
+	            	marker.setAttribute(IMarker.CHAR_END, endOffset);
+	            	marker.setAttribute(IMarker.MESSAGE, "Cupid generated code: " + elem.getClass().getCanonicalName());
+	            	marker.setAttribute(IMarker.LOCATION, "Line: " + firstToken.getLine());
+	            }
+	            
+	        }
+	        catch (CoreException e) {
+	        	e.printStackTrace();
+	        }
+			
+		}
+	}
+	
+	/**
+	 * Find the associated IFile by working up the tree toward the root.
+	 * @param newNode
+	 * @return
+	 */
+	private IFile findFile(IASTNode newNode) {
+		while (newNode != null) {
+			Token t = newNode.findFirstToken();
+			if (t.getPhysicalFile() != null && t.getPhysicalFile().getIFile() != null) {
+				return t.getPhysicalFile().getIFile();
+			}
+			else {
+				newNode = newNode.getParent();
+			}
+		}
+		return null;
+	}
 	
 	//private void forwardAdd(IASTNode context, IASTNode node, Map<String, Object> keywordMap) {
 	//	throw new RuntimeException("Default forwardAdd");		
@@ -451,7 +518,19 @@ public class ForwardEngineer {
 		
 		//assume it is a module for now
 		ASTModuleNode amn = (ASTModuleNode) context.getRoot().getProgramUnitList().get(0);
+		
+		//System.out.println("Offset before: " + amn.findLastToken().getFileOffset());
+		
 		amn.getModuleBody().add(ssn);
+		//System.out.println("Offset after: " + amn.findLastToken().getFileOffset());
+		
+		PhotranVPG.getInstance().commitChangesFromInMemoryASTs(new NullProgressMonitor(), 1, context.getFile());
+		
+		IFortranAST ast2 = PhotranVPG.getInstance().acquireTransientAST(context.getFile());
+		System.out.println("\n===============ast2=============\n\n");
+		System.out.println(ast2.getRoot().toString());
+		System.out.println("\n===============end ast2=============\n\n");
+		
 		
 		
 		//Reindenter.reindent(ssn, context, Strategy.REINDENT_EACH_LINE);
@@ -519,6 +598,7 @@ public class ForwardEngineer {
 		return null;		
 	}
 	
+	/*
 	private static Map<Object, String> collectActualArguments(EObject parent) {
 		//sort with integer args first followed by keyword args
 		Map<Object, String> args = new TreeMap<Object, String>(new Comparator<Object>(){
@@ -557,5 +637,6 @@ public class ForwardEngineer {
 		
 		return args;
 	}
+	*/
 	
 }
