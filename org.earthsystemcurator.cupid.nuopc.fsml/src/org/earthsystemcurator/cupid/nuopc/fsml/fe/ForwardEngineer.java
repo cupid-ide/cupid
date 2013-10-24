@@ -524,7 +524,7 @@ public class ForwardEngineer {
 		amn.getModuleBody().add(ssn);
 		//System.out.println("Offset after: " + amn.findLastToken().getFileOffset());
 		
-		PhotranVPG.getInstance().commitChangesFromInMemoryASTs(new NullProgressMonitor(), 1, context.getFile());
+		//PhotranVPG.getInstance().commitChangesFromInMemoryASTs(new NullProgressMonitor(), 1, context.getFile());
 		
 		IFortranAST ast2 = PhotranVPG.getInstance().acquireTransientAST(context.getFile());
 		System.out.println("\n===============ast2=============\n\n");
