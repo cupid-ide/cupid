@@ -110,8 +110,8 @@ public class ForwardHandler extends AbstractHandler {
 		//final NUOPCApplication revApp = nature.reversedModel;
 		//final Map<Object, Object> revMap = nature.reversedMappings;;
 		//final NUOPCApplication forApp = nature.forwardModel;
-		final FSM<NUOPCPackage> rev = nature.fsm;
-		final FSM<NUOPCPackage> forward = nature.fsmForward;
+		final FSM rev = nature.fsm;
+		final FSM forward = nature.fsmForward;
 		
 		final IProject selProject = selectedProject;
 		

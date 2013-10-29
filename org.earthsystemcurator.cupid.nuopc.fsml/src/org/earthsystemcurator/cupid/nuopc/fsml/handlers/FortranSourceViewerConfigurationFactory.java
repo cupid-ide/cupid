@@ -1,10 +1,15 @@
 package org.earthsystemcurator.cupid.nuopc.fsml.handlers;
 
+import java.util.ArrayList;
 import java.util.Iterator;
+import java.util.List;
 
+import org.earthsystemcurator.cupid.nuopc.fsml.builder.NUOPCNature;
 import org.eclipse.cdt.internal.ui.text.c.hover.AbstractAnnotationHover;
 import org.eclipse.cdt.internal.ui.text.correction.MarkerResolutionProposal;
 import org.eclipse.core.resources.IMarker;
+import org.eclipse.core.runtime.CoreException;
+import org.eclipse.emf.common.util.Diagnostic;
 import org.eclipse.jface.dialogs.MessageDialog;
 import org.eclipse.jface.text.DefaultTextHover;
 import org.eclipse.jface.text.IDocument;
@@ -146,42 +151,52 @@ public class FortranSourceViewerConfigurationFactory implements
 		@Override
 		public ICompletionProposal[] computeQuickAssistProposals(
 				IQuickAssistInvocationContext invocationContext) {
-			// TODO Auto-generated method stub
-			System.out.println("computeQuickAssistProposals: " + invocationContext.getOffset());
 			
 			final ISourceViewer viewer = invocationContext.getSourceViewer();
-			//int documentOffset = invocationContext.getOffset(); 
 
-			ICompletionProposal proposal1 = null;
-			ICompletionProposal proposal2 = null;
-
+			List<ICompletionProposal> proposalList = new ArrayList<ICompletionProposal>();
+			
 			Iterator<?> iter = viewer.getAnnotationModel().getAnnotationIterator();
+			NUOPCNature nature = null;
+			
 			while (iter.hasNext()) {
 				Annotation annotation = (Annotation) iter.next();				
 				if (annotation instanceof MarkerAnnotation) {
-					proposal1 = new MarkerResolutionProposal(
-								new CupidQuickFix("proposal1", invocationContext), 
-								((MarkerAnnotation) annotation).getMarker());					
-					return new ICompletionProposal[] { proposal1 };
+					
+					IMarker marker = ((MarkerAnnotation) annotation).getMarker();
+					if (nature == null) {
+						try {
+							nature = (NUOPCNature) marker.getResource().getProject().getNature(NUOPCNature.NATURE_ID);
+						} catch (CoreException e) {
+							e.printStackTrace();
+							break;
+						}
+					}
+					
+					IMarkerResolution mr = nature.markerFixes.get(marker);
+					if (mr != null) {
+						proposalList.add(new MarkerResolutionProposal(mr, marker));
+					}
+					
 				}
 			}
 
-			return new ICompletionProposal[0];
-			//return null;
+			return proposalList.toArray(new ICompletionProposal[0]);			
 						
 		}
 		
 			
 	}
 	
+	/*
 	public abstract class QuickFix implements IMarkerResolution {
 
 		protected String label;
-		protected IQuickAssistInvocationContext invocationContext;
+		//protected IQuickAssistInvocationContext invocationContext;
 		
-		QuickFix(String label, IQuickAssistInvocationContext invocationContext) {
+		QuickFix(String label) {
 			this.label = label;
-			this.invocationContext = invocationContext;
+			//this.invocationContext = invocationContext;
 		}
 		
 		public String getLabel() {
@@ -189,22 +204,33 @@ public class FortranSourceViewerConfigurationFactory implements
 		}		
 		
 	}
+	*/
 	
+	/*
 	public class CupidQuickFix extends QuickFix {
 		
-		CupidQuickFix(String label,
-				IQuickAssistInvocationContext invocationContext) {
-			super(label, invocationContext);			
-		}
+		//CupidQuickFix(String label,
+		//		IQuickAssistInvocationContext invocationContext) {
+		//	super(label, invocationContext);			
+		//}
 
 		@Override
 		public void run(IMarker marker) {
 			
+			try {
+				NUOPCNature nature = (NUOPCNature) marker.getResource().getProject().getNature(NUOPCNature.NATURE_ID);
+			} catch (CoreException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			
+			//Object o = marker.getAttribute("org.earthsystemcurator.cupid.nuopc.fsml.cupiderror.diagnostic");
+				
 			
 		}
 		
 	}
-	
+	*/
 	
 
 }

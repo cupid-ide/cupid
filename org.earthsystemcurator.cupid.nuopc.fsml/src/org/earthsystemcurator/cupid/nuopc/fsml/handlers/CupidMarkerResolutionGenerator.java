@@ -1,12 +1,19 @@
 package org.earthsystemcurator.cupid.nuopc.fsml.handlers;
 
+import org.earthsystemcurator.cupid.nuopc.fsml.core.FSM;
 import org.eclipse.core.resources.IMarker;
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.ui.IMarkerResolution;
 import org.eclipse.ui.IMarkerResolutionGenerator;
 
-public class MarkerResolutionGenerator implements IMarkerResolutionGenerator {
+public class CupidMarkerResolutionGenerator implements IMarkerResolutionGenerator {
 
+	protected FSM fsm;
+	
+	public CupidMarkerResolutionGenerator(FSM fsm) {
+		this.fsm = fsm;
+	}
+	
 	@Override
 	public IMarkerResolution[] getResolutions(IMarker marker) {
 		

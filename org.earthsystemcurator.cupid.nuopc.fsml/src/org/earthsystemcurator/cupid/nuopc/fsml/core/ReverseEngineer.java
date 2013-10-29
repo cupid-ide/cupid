@@ -49,12 +49,12 @@ public class ReverseEngineer {
 	//}
 	
 	
-	public static <P extends EPackage> FSM<P> reverseEngineer(P ePackage, EClass eClass, IProject project, PhotranVPG vpg) {
+	public static FSM reverseEngineer(EPackage ePackage, EClass eClass, IProject project, PhotranVPG vpg) {
 	
 		EFactory eFactory = ePackage.getEFactoryInstance();
 		EObject root = eFactory.create(eClass);
 		
-		FSM<P> fsm = new FSM<P>(root);
+		FSM fsm = new FSM(root);
 		
 		Set<IFortranAST> asts = new HashSet<IFortranAST>();		
 		for (String mod : vpg.listAllModules()) {

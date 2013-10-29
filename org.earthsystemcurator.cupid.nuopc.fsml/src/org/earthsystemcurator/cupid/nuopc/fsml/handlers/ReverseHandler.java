@@ -1,50 +1,56 @@
 package org.earthsystemcurator.cupid.nuopc.fsml.handlers;
 
-import java.io.BufferedReader;
 import java.io.IOException;
+import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.Reader;
+import java.io.UnsupportedEncodingException;
+import java.lang.reflect.InvocationTargetException;
+import java.util.HashSet;
 
 import org.earthsystemcurator.cupid.nuopc.fsml.builder.NUOPCNature;
 import org.earthsystemcurator.cupid.nuopc.fsml.core.FSM;
+import org.earthsystemcurator.cupid.nuopc.fsml.core.ForwardEngineer;
 import org.earthsystemcurator.cupid.nuopc.fsml.core.ReverseEngineer;
-import org.earthsystemcurator.cupid.nuopc.fsml.nuopc.NUOPCApplication;
 import org.earthsystemcurator.cupid.nuopc.fsml.nuopc.NUOPCPackage;
+import org.earthsystemcurator.cupid.nuopc.fsml.util.Regex;
 import org.earthsystemcurator.cupid.nuopc.fsml.views.NUOPCView;
 import org.eclipse.cdt.core.model.ITranslationUnit;
+import org.eclipse.compare.internal.DocLineComparator;
+import org.eclipse.compare.rangedifferencer.RangeDifference;
+import org.eclipse.compare.rangedifferencer.RangeDifferencer;
 import org.eclipse.core.commands.AbstractHandler;
 import org.eclipse.core.commands.ExecutionEvent;
 import org.eclipse.core.commands.ExecutionException;
 import org.eclipse.core.resources.IFile;
 import org.eclipse.core.resources.IMarker;
 import org.eclipse.core.resources.IProject;
-import org.eclipse.core.resources.IResource;
 import org.eclipse.core.runtime.CoreException;
-import org.eclipse.core.runtime.IAdaptable;
+import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.emf.common.util.Diagnostic;
 import org.eclipse.emf.common.util.URI;
-import org.eclipse.emf.ecore.EClass;
+import org.eclipse.emf.ecore.EObject;
+import org.eclipse.emf.ecore.EReference;
 import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.ecore.resource.ResourceSet;
 import org.eclipse.emf.ecore.resource.impl.ResourceSetImpl;
 import org.eclipse.emf.ecore.xmi.impl.XMIResourceFactoryImpl;
+import org.eclipse.jface.operation.IRunnableWithProgress;
+import org.eclipse.jface.text.Document;
 import org.eclipse.jface.viewers.ISelection;
-import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.jface.viewers.ITreeSelection;
-import org.eclipse.jface.text.ITextSelection;
-import org.eclipse.jface.text.quickassist.IQuickAssistAssistant;
-import org.eclipse.jface.text.quickassist.QuickAssistAssistant;
-import org.eclipse.jface.text.source.Annotation;
-import org.eclipse.jface.text.source.ISourceViewer;
+import org.eclipse.ltk.core.refactoring.TextFileChange;
 import org.eclipse.photran.core.IFortranAST;
 import org.eclipse.photran.internal.core.analysis.binding.ScopingNode;
 import org.eclipse.photran.internal.core.lexer.Token;
-import org.eclipse.photran.internal.core.parser.IASTNode;
+import org.eclipse.photran.internal.core.reindenter.Reindenter;
+import org.eclipse.photran.internal.core.reindenter.Reindenter.Strategy;
 import org.eclipse.photran.internal.core.vpg.PhotranVPG;
-
+import org.eclipse.text.edits.ReplaceEdit;
 import org.eclipse.ui.IEditorInput;
 import org.eclipse.ui.IEditorPart;
 import org.eclipse.ui.IFileEditorInput;
+import org.eclipse.ui.IMarkerResolution;
 import org.eclipse.ui.IViewReference;
 import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.handlers.HandlerUtil;
@@ -127,22 +133,18 @@ public class ReverseHandler extends AbstractHandler {
         //ReverseEngineer re = new ReverseEngineer();
         //NUOPCModel m = re.reverse(ast);
         
-        FSM<NUOPCPackage> fsm = ReverseEngineer.reverseEngineer(pack, pack.getNUOPCApplication(), selectedProject, vpg); 
+        final FSM fsm = ReverseEngineer.reverseEngineer(pack, pack.getNUOPCApplication(), selectedProject, vpg); 
         
         //NUOPCApplication a = ReverseEngineer.reverseEngineer(pack, pack.getNUOPCApplication(), selectedProject, vpg);        
          //use project nature to store local data
  
+        NUOPCNature nature = null;
         try {
-			NUOPCNature nature = (NUOPCNature) selectedProject.getNature(NUOPCNature.NATURE_ID);
-			//nature.setReverseEngineeredModel(a);
-			//nature.setReverseEngineer(re);
+			nature = (NUOPCNature) selectedProject.getNature(NUOPCNature.NATURE_ID);
 			if (nature != null) {
-				//nature.reversedModel = a;
-				//nature.reversedMappings = re.getMappings();
 				nature.fsm = fsm;
 			}
 		} catch (CoreException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
         
@@ -161,6 +163,8 @@ public class ReverseHandler extends AbstractHandler {
         for (Diagnostic d : fsm.getDiagnostics()) {
         	Object problemElem = d.getData().get(0);
         	Object refObject = fsm.getReference(problemElem);
+        	Object problemRef = d.getData().get(1);
+        	        
         	ScopingNode scope = null;
         	if (refObject instanceof ScopingNode) {
         		scope = (ScopingNode) refObject;				        	
@@ -190,6 +194,38 @@ public class ReverseHandler extends AbstractHandler {
 	                marker.setAttribute(IMarker.MESSAGE, d.getMessage());
 	                marker.setAttribute(IMarker.SEVERITY, IMarker.SEVERITY_ERROR);
 	                
+	                if (problemRef instanceof EReference) {
+		                
+	                	final EObject eobj = (EObject) problemElem;
+	                	final EReference eref = (EReference) problemRef;
+	                	
+		                nature.markerFixes.put(marker, new IMarkerResolution() {
+							
+		                	@Override
+							public String getLabel() {
+								return "Generate " + Regex.getFromAnnotation(eref.getEType(), "label", eref.getName());
+							}
+	
+							@Override
+							public void run(IMarker marker) {
+								System.out.println("Quick fix: Forward adding: " + eref.getName() + ", " + eobj.toString());
+								fsm.forwardAdd(eobj, eref);
+								
+								IFortranAST ast = fsm.getASTForElement(eobj);
+								Reindenter.reindent(ast.getRoot(), ast, Strategy.REINDENT_EACH_LINE);
+								
+								try {
+									PlatformUI.getWorkbench().getProgressService().run(true, true, new RewriteASTRunnable(ast));
+								} catch (InvocationTargetException e) {
+									e.printStackTrace();
+								} catch (InterruptedException e) {
+									e.printStackTrace();
+								}
+								
+							}
+	
+		                });
+	                }
 	                
 	    		} catch (CoreException e) {
 					e.printStackTrace();
@@ -222,35 +258,101 @@ public class ReverseHandler extends AbstractHandler {
 		return null;
 	}
 
-	/*
-	private int countCharsIn(IFile file) throws CoreException, IOException
-	{
-	    int size = 0;
-	    Reader in = new BufferedReader(new InputStreamReader(file.getContents(true), file.getCharset()));
-	    while (in.read() > -1)
-	        size++;
-	    in.close();
-	    return size;
-	}
-	*/
 	
-	/*
-	protected IResource extractSelection(ISelection sel) {
+	public class RewriteASTRunnable implements IRunnableWithProgress {
+		
+		IFortranAST ast;
+		
+		public RewriteASTRunnable(IFortranAST ast) {
+			this.ast = ast;
+		}
+		
+    	public void run(IProgressMonitor monitor) {
+		
+    		if (ast == null) {
+    			System.out.println("Null AST");
+				return;
+    		}
+    		
+			IFile f = ast.getFile();
+			if (!f.exists()) {
+				System.out.println("File does not exist: " + f.exists());
+				return;
+			}
+        			
+            try {
+				
+            	String fileContentsBefore = inputStreamToString(f.getContents(true));
+            	int charsInFile = fileContentsBefore.length();
+            	
+            	String replaceString = ast.getRoot().toString().trim();
 
-		System.out.println("sel = " + sel);
-
-		if (!(sel instanceof IStructuredSelection))
-			return null;
-		IStructuredSelection ss = (IStructuredSelection) sel;
-		Object element = ss.getFirstElement();
-		if (element instanceof IResource)
-			return (IResource) element;
-		if (!(element instanceof IAdaptable))
-			return null;
-		IAdaptable adaptable = (IAdaptable)element;
-		Object adapter = adaptable.getAdapter(IResource.class);
-		return (IResource) adapter;
+            	if (!replaceString.equals(fileContentsBefore)) {
+            		
+            		TextFileChange changeThisFile = new TextFileChange("Cupid code generation: " + f.getFullPath().toOSString(), f);
+		            changeThisFile.initializeValidationData(monitor);	            
+            	   	changeThisFile.setEdit(new ReplaceEdit(0, charsInFile, replaceString));
+            	   	changeThisFile.perform(monitor);
+				
+            	   	//String fileContentsAfter = inputStreamToString(f.getContents(true));
+					System.out.println("Processed file: " + f.getName() + " : " + charsInFile + " ==> " + replaceString.length());
+				
+					//IRangeComparator left = new TokenComparator(fileContentsBefore); 
+			        //IRangeComparator right = new TokenComparator(fileContentsAfter);
+					
+					DocLineComparator left = new DocLineComparator(new Document(fileContentsBefore), null, true);
+					DocLineComparator right = new DocLineComparator(new Document(replaceString), null, true);
+					
+			        RangeDifference[] diffs = RangeDifferencer.findDifferences(left, right);
+			        
+			        for (RangeDifference rd : diffs) {
+			        	
+			        	int start = right.getTokenStart(rd.rightStart());
+			        	int end = right.getTokenStart(rd.rightEnd()) + right.getTokenLength(rd.rightEnd());
+			        	//System.out.println("Range diff: " + rd.toString() + " : " + replaceString.substring(start, end));
+			        	
+			        	if (end-start > 2) {
+			        		IMarker marker = f.createMarker("org.earthsystemcurator.cupid.nuopc.fsml.cupidmarker");
+			        		marker.setAttribute(IMarker.CHAR_START, start);
+			        		marker.setAttribute(IMarker.CHAR_END, end);
+			        		marker.setAttribute(IMarker.MESSAGE, "Cupid generated code");
+			        		marker.setAttribute(IMarker.LOCATION, "Lines " + rd.rightStart() + " to " + rd.rightEnd());
+			        	}
+			        }
+            	
+            	}
+			} catch (CoreException e) {
+				e.printStackTrace();						
+			}
+        	
+    	}
+    }
+  
+	public static String inputStreamToString(final InputStream is) {
+		int bufferSize = 1024;
+		final char[] buffer = new char[bufferSize];
+		final StringBuilder out = new StringBuilder();
+		try {
+			final Reader in = new InputStreamReader(is);
+			try {
+				for (;;) {
+					int rsz = in.read(buffer, 0, buffer.length);
+					if (rsz < 0)
+						break;
+					out.append(buffer, 0, rsz);
+				}
+			}
+			finally {
+				in.close();
+			}
+		}
+		catch (UnsupportedEncodingException ex) {
+			ex.printStackTrace();
+		}
+		catch (IOException ex) {
+			ex.printStackTrace();
+		}
+		return out.toString();
 	}
-	*/
 	
 }

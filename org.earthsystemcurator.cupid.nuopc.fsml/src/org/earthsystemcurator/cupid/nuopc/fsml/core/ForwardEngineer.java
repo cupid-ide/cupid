@@ -79,7 +79,7 @@ public class ForwardEngineer {
 		this.container = container;
 	}
 
-	public void forward(FSM<NUOPCPackage> rev, FSM<NUOPCPackage> forward) {
+	public void forward(FSM rev, FSM forward) {
 		this.revMappings = rev.getMappings();
 		//astsToReindent.clear();
 		Comparison comp = compare(rev.getRoot(), forward.getRoot());
@@ -254,18 +254,6 @@ public class ForwardEngineer {
 			return null;
 		}
 		
-//		try {
-//		
-//			method = this.getClass().getMethod(methodName, IASTNode.class, EObject.class, Map.class);
-//		} catch (SecurityException e) {
-//			e.printStackTrace();
-//			return null;
-//		} catch (NoSuchMethodException e) {
-//			//e.printStackTrace();
-//			System.out.println("No forward method for mapping: " + e.getMessage());
-//			return null;
-//		}
-//		
 		Object newFortranElem = null;
 		try {
 			newFortranElem = method.invoke(this, fortranElem, modelElem, params);
@@ -367,7 +355,7 @@ public class ForwardEngineer {
 	
 	
 	//public IFortranAST module(PhotranVPG vpg, EObject modelElem, Map<String, Object> params) {
-	public IFortranAST module(Set<IFortranAST> asts, EObject modelElem, Map<String, Object> params) {
+	public IFortranAST moduleMAKE_ME_STATIC(Set<IFortranAST> asts, EObject modelElem, Map<String, Object> params) {
 		
 		//System.out.println("Module: vpg context = " + vpg);
 		//vpg.getVPGWriter()
@@ -437,7 +425,7 @@ public class ForwardEngineer {
 	}
 	*/
 	
-	public IASTNode call(IASTNode context, EObject modelElem, Map<String, Object> params) {		
+	public static IASTNode call(IASTNode context, EObject modelElem, Map<String, Object> params) {		
 				
 		String callSig = (String) params.get("call");
 		
@@ -480,7 +468,7 @@ public class ForwardEngineer {
 		return node;
 	}	
 	
-	public IASTNode subroutine(IFortranAST context, EObject modelElem, Map<String, Object> params) {		
+	public static IASTNode subroutine(IFortranAST context, EObject modelElem, Map<String, Object> params) {		
 		
 		String subroutineSig = (String) params.get("subroutine");
 		String subroutineName; // 1, subroutineName2;

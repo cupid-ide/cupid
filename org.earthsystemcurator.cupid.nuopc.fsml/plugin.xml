@@ -360,7 +360,7 @@
          point="org.eclipse.core.resources.markers">      
       <super type="org.eclipse.core.resources.problemmarker"/>
       <persistent
-            value="true">
+            value="false">
       </persistent>
       <super
             type="org.eclipse.core.resources.textmarker">
@@ -431,7 +431,7 @@
    <extension
          point="org.eclipse.ui.ide.markerResolution">
       <markerResolutionGenerator
-            class="org.earthsystemcurator.cupid.nuopc.fsml.handlers.MarkerResolutionGenerator"
+            class="org.earthsystemcurator.cupid.nuopc.fsml.handlers.CupidMarkerResolutionGenerator"
             markerType="org.earthsystemcurator.cupid.nuopc.fsml.cupiderror">
       </markerResolutionGenerator>
    </extension>

@@ -1,16 +1,16 @@
 package org.earthsystemcurator.cupid.nuopc.fsml.builder;
 
+import java.util.HashMap;
 import java.util.Map;
 
 import org.earthsystemcurator.cupid.nuopc.fsml.core.FSM;
-import org.earthsystemcurator.cupid.nuopc.fsml.nuopc.NUOPCApplication;
-import org.earthsystemcurator.cupid.nuopc.fsml.nuopc.NUOPCPackage;
 import org.eclipse.core.resources.ICommand;
+import org.eclipse.core.resources.IMarker;
 import org.eclipse.core.resources.IProject;
 import org.eclipse.core.resources.IProjectDescription;
 import org.eclipse.core.resources.IProjectNature;
 import org.eclipse.core.runtime.CoreException;
-import org.eclipse.emf.ecore.EObject;
+import org.eclipse.ui.IMarkerResolution;
 
 public class NUOPCNature implements IProjectNature {
 
@@ -25,8 +25,10 @@ public class NUOPCNature implements IProjectNature {
 	//public Map<Object, Object> reversedMappings;
 	//public NUOPCApplication forwardModel;
 	
-	public FSM<NUOPCPackage> fsm;
-	public FSM<NUOPCPackage> fsmForward;
+	public FSM fsm;
+	public FSM fsmForward;
+	
+	public Map<IMarker, IMarkerResolution> markerFixes = new HashMap<IMarker, IMarkerResolution>();
 	
 	//private NUOPCApplication reverseEngineeredModel;
 	//private ReverseEngineer reverseEngineer;
@@ -54,7 +56,7 @@ public class NUOPCNature implements IProjectNature {
 		desc.setBuildSpec(newCommands);
 		project.setDescription(desc, null);
 		
-		System.out.println("Added NUOPC project nature");
+		//System.out.println("Added NUOPC project nature");
 
 	}
 
@@ -97,15 +99,6 @@ public class NUOPCNature implements IProjectNature {
 		this.project = project;
 	}
 
-	/*
-	public NUOPCApplication getReverseEngineeredModel() {
-		return reverseEngineeredModel;
-	}
-
-	public void setReverseEngineeredModel(NUOPCApplication reverseEngineeredModel) {
-		this.reverseEngineeredModel = reverseEngineeredModel;
-	}
-	*/
 	
 
 	
