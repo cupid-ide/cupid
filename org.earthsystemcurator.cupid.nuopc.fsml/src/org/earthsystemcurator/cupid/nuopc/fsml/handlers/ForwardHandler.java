@@ -1,59 +1,51 @@
 package org.earthsystemcurator.cupid.nuopc.fsml.handlers;
 
-import java.io.BufferedReader;
-import java.io.ByteArrayInputStream;
-import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.Reader;
+import java.io.UnsupportedEncodingException;
 import java.lang.reflect.InvocationTargetException;
-import java.util.Collections;
 import java.util.HashSet;
 import java.util.Map;
-import java.util.Map.Entry;
 
 import org.earthsystemcurator.cupid.nuopc.fsml.builder.NUOPCNature;
-import org.earthsystemcurator.cupid.nuopc.fsml.fe.ForwardEngineer;
+import org.earthsystemcurator.cupid.nuopc.fsml.core.FSM;
+import org.earthsystemcurator.cupid.nuopc.fsml.core.ForwardEngineer;
 import org.earthsystemcurator.cupid.nuopc.fsml.nuopc.NUOPCApplication;
-import org.earthsystemcurator.cupid.nuopc.fsml.nuopc.NUOPCModel;
 import org.earthsystemcurator.cupid.nuopc.fsml.nuopc.NUOPCPackage;
-import org.earthsystemcurator.cupid.nuopc.fsml.re.ReverseEngineer;
 import org.eclipse.cdt.core.model.ITranslationUnit;
+import org.eclipse.compare.internal.DocLineComparator;
+import org.eclipse.compare.rangedifferencer.RangeDifference;
+import org.eclipse.compare.rangedifferencer.RangeDifferencer;
 import org.eclipse.core.commands.AbstractHandler;
 import org.eclipse.core.commands.ExecutionEvent;
 import org.eclipse.core.commands.ExecutionException;
 import org.eclipse.core.resources.IFile;
+import org.eclipse.core.resources.IMarker;
 import org.eclipse.core.resources.IProject;
 import org.eclipse.core.resources.IResource;
-import org.eclipse.core.resources.IWorkspace;
-import org.eclipse.core.resources.IWorkspaceRoot;
-import org.eclipse.core.resources.ResourcesPlugin;
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IAdaptable;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.emf.common.util.URI;
-import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.ecore.resource.ResourceSet;
 import org.eclipse.emf.ecore.resource.impl.ResourceSetImpl;
 import org.eclipse.emf.ecore.xmi.impl.XMIResourceFactoryImpl;
-import org.eclipse.photran.core.IFortranAST;
-import org.eclipse.photran.internal.core.parser.ASTModuleNode;
-import org.eclipse.photran.internal.core.vpg.PhotranVPG;
-import org.eclipse.text.edits.ReplaceEdit;
-import org.eclipse.ui.IEditorInput;
-import org.eclipse.ui.IEditorPart;
-import org.eclipse.ui.IFileEditorInput;
-import org.eclipse.ui.IWorkbenchWindow;
-import org.eclipse.ui.PlatformUI;
-import org.eclipse.ui.handlers.HandlerUtil;
-import org.eclipse.jface.dialogs.MessageDialog;
 import org.eclipse.jface.operation.IRunnableWithProgress;
+import org.eclipse.jface.text.Document;
 import org.eclipse.jface.viewers.ISelection;
 import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.jface.viewers.ITreeSelection;
 import org.eclipse.ltk.core.refactoring.TextFileChange;
+import org.eclipse.photran.core.IFortranAST;
+import org.eclipse.text.edits.ReplaceEdit;
+import org.eclipse.ui.IEditorInput;
+import org.eclipse.ui.IEditorPart;
+import org.eclipse.ui.IFileEditorInput;
+import org.eclipse.ui.PlatformUI;
+import org.eclipse.ui.handlers.HandlerUtil;
 
 /**
  * Our sample handler extends AbstractHandler, an IHandler base class.
@@ -115,12 +107,15 @@ public class ForwardHandler extends AbstractHandler {
 		
 		if (nature == null) return null;
 		
-		final NUOPCApplication revApp = nature.reversedModel;
-		final Map<Object, Object> revMap = nature.reversedMappings;;
-		final NUOPCApplication forApp = nature.forwardModel;
+		//final NUOPCApplication revApp = nature.reversedModel;
+		//final Map<Object, Object> revMap = nature.reversedMappings;;
+		//final NUOPCApplication forApp = nature.forwardModel;
+		final FSM<NUOPCPackage> rev = nature.fsm;
+		final FSM<NUOPCPackage> forward = nature.fsmForward;
+		
 		final IProject selProject = selectedProject;
 		
-		if (revApp == null || revMap == null) return null;
+		if (rev == null || forward == null) return null;
 			
         IRunnableWithProgress operation = new IRunnableWithProgress() {
 			
@@ -147,6 +142,7 @@ public class ForwardHandler extends AbstractHandler {
         		//	}
         		//}
         
+        		/*
         		NUOPCApplication forApp2 = forApp;
         		if (forApp2 == null) {
         			//use file for now
@@ -161,6 +157,7 @@ public class ForwardHandler extends AbstractHandler {
 	        		forApp2 = (NUOPCApplication) asserted.getContents().get(0);
 	        		System.out.println("Loaded asserted model from file...");
         		}
+        		*/
         		
         		//final PhotranVPG vpg = PhotranVPG.getInstance();
         	    //final ReverseEngineer re = new ReverseEngineer();
@@ -169,8 +166,9 @@ public class ForwardHandler extends AbstractHandler {
         		ForwardEngineer fe = new ForwardEngineer();
         		fe.setContainer(selProject);
         		
-        		fe.forward(revApp, forApp2, revMap);
-     		
+        		//fe.forward(revApp, forApp2, revMap);
+        		fe.forward(rev, forward);
+        		
         		
         		//fe.forward(reversed1,
         		//		   (NUOPCApplication) asserted.getContents().get(0),
@@ -180,23 +178,59 @@ public class ForwardHandler extends AbstractHandler {
         		//TODO: see about doing this on an individual file basis
         		//TODO: deal with project files "out of sync" with file system
 	            //remove duplicates
-        		for (Object entry : new HashSet<Object>(revMap.values())) {
+        		for (Object entry : new HashSet<Object>(rev.getMappings().values())) {
 	        		if (entry instanceof IFortranAST) {
 		            	
 	        			IFortranAST ast = (IFortranAST) entry;
 	        			IFile f = ast.getFile();
-		            	
-	        			TextFileChange changeThisFile = new TextFileChange("text change " + f.getFullPath().toOSString(), f);
-			            changeThisFile.initializeValidationData(monitor);	            
+	        			if (!f.exists()) {
+	        				System.out.println("Warning - File does not exist: " + f.exists());
+	        				continue;
+	        			}
+	        			
 			            try {
-							int charsInFile = countCharsIn(f);
-			            	changeThisFile.setEdit(new ReplaceEdit(0, countCharsIn(f), ast.getRoot().toString()));
-							System.out.println("Processing file: " + f.getName() + " : " + charsInFile);
-							changeThisFile.perform(monitor);			
+							
+			            	String fileContentsBefore = inputStreamToString(f.getContents(true));
+			            	int charsInFile = fileContentsBefore.length();
+			            	
+			            	String replaceString = ast.getRoot().toString().trim();
+			
+			            	if (!replaceString.equals(fileContentsBefore)) {
+			            		
+			            		TextFileChange changeThisFile = new TextFileChange("Cupid code generation: " + f.getFullPath().toOSString(), f);
+					            changeThisFile.initializeValidationData(monitor);	            
+			            	   	changeThisFile.setEdit(new ReplaceEdit(0, charsInFile, replaceString));
+			            	   	changeThisFile.perform(monitor);
+							
+			            	   	//String fileContentsAfter = inputStreamToString(f.getContents(true));
+								System.out.println("Processed file: " + f.getName() + " : " + charsInFile + " ==> " + replaceString.length());
+							
+								//IRangeComparator left = new TokenComparator(fileContentsBefore); 
+						        //IRangeComparator right = new TokenComparator(fileContentsAfter);
+								
+								DocLineComparator left = new DocLineComparator(new Document(fileContentsBefore), null, true);
+								DocLineComparator right = new DocLineComparator(new Document(replaceString), null, true);
+								
+						        RangeDifference[] diffs = RangeDifferencer.findDifferences(left, right);
+						        
+						        for (RangeDifference rd : diffs) {
+						        	
+						        	int start = right.getTokenStart(rd.rightStart());
+						        	int end = right.getTokenStart(rd.rightEnd()) + right.getTokenLength(rd.rightEnd());
+						        	System.out.println("Range diff: " + rd.toString() + " : " + replaceString.substring(start, end));
+						        	
+						        	if (end-start > 2) {
+						        		IMarker marker = f.createMarker("org.earthsystemcurator.cupid.nuopc.fsml.cupidmarker");
+						        		marker.setAttribute(IMarker.CHAR_START, start);
+						        		marker.setAttribute(IMarker.CHAR_END, end);
+						        		marker.setAttribute(IMarker.MESSAGE, "Cupid generated code");
+						        		marker.setAttribute(IMarker.LOCATION, "Lines " + rd.rightStart() + " to " + rd.rightEnd());
+						        	}
+						        }
+			            	
+			            	}
 						} catch (CoreException e) {
-							e.printStackTrace();
-						} catch (IOException e) {
-							e.printStackTrace();
+							e.printStackTrace();						
 						}
 	        		}
 	            }
@@ -238,14 +272,46 @@ public class ForwardHandler extends AbstractHandler {
 		return resourceSet.getResource(uri, true);
 	}
 	
+	/*
 	private int countCharsIn(IFile file) throws CoreException, IOException
 	{
 	    int size = 0;
+	    //InputStreamReader isr = new InputStreamReader(file.getContents(true), file.getCharset());
+	    //FileReader f;	    
+	    
 	    Reader in = new BufferedReader(new InputStreamReader(file.getContents(true), file.getCharset()));
 	    while (in.read() > -1)
 	        size++;
 	    in.close();
 	    return size;
+	}
+	*/
+	
+	public static String inputStreamToString(final InputStream is) {
+		int bufferSize = 1024;
+		final char[] buffer = new char[bufferSize];
+		final StringBuilder out = new StringBuilder();
+		try {
+			final Reader in = new InputStreamReader(is);
+			try {
+				for (;;) {
+					int rsz = in.read(buffer, 0, buffer.length);
+					if (rsz < 0)
+						break;
+					out.append(buffer, 0, rsz);
+				}
+			}
+			finally {
+				in.close();
+			}
+		}
+		catch (UnsupportedEncodingException ex) {
+			ex.printStackTrace();
+		}
+		catch (IOException ex) {
+			ex.printStackTrace();
+		}
+		return out.toString();
 	}
 
 	IResource extractSelection(ISelection sel) {

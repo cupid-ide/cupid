@@ -343,13 +343,105 @@
             file="contexts.xml">
       </contexts>
    </extension>
+   
    <extension
-         id="org.earthsystemcurator.cupid.marker"
+         id="cupidmarker"
          name="Cupid Marker"
-         point="org.eclipse.core.resources.markers">
+         point="org.eclipse.core.resources.markers">      
+      <super type="org.eclipse.core.resources.bookmark"/>
+      <persistent
+            value="true">
+      </persistent>
+   </extension>
+   
+   <extension
+         id="cupiderror"
+         name="Cupid Validation Error"
+         point="org.eclipse.core.resources.markers">      
+      <super type="org.eclipse.core.resources.problemmarker"/>
+      <persistent
+            value="true">
+      </persistent>
       <super
-            type="org.eclipse.core.resources.bookmark">
+            type="org.eclipse.core.resources.textmarker">
       </super>
+   </extension>
+   
+   <extension point="org.eclipse.ui.editors.annotationTypes">
+      <!--
+      <type
+         name="org.eclipse.jdt.ui.error"
+         super="org.eclipse.ui.workbench.texteditor.error"
+         markerType="org.eclipse.jdt.core.problem"
+         markerSeverity="2">
+      </type>
+      <type
+         name="org.eclipse.jdt.ui.warning"
+         super="org.eclipse.ui.workbench.texteditor.warning"
+         markerType="org.eclipse.jdt.core.problem"
+         markerSeverity="1">
+      </type>
+      -->
+      <!--super="org.eclipse.ui.workbench.texteditor.info"-->
+      <type
+         name="org.earthsystemcurator.cupid.nuopc.fsml.cupidannotation"
+         super="org.eclipse.ui.workbench.texteditor.info"
+         markerType="org.earthsystemcurator.cupid.nuopc.fsml.cupidmarker"
+         markerSeverity="0">
+      </type>
+      <type
+            markerSeverity="2"
+            markerType="org.earthsystemcurator.cupid.nuopc.fsml.cupiderror"
+            name="org.earthsystemcurator.cupid.nuopc.fsml.cupiderrorannotation"
+            super="org.eclipse.ui.workbench.texteditor.error">
+      </type>
+   </extension>
+   
+   <extension
+         id="cupidmarkerannotationspec"
+         point="org.eclipse.ui.editors.markerAnnotationSpecification">
+     <specification
+           annotationType="org.earthsystemcurator.cupid.nuopc.fsml.cupidannotation"
+           icon="icons/tiny_heart.gif"
+           includeOnPreferencePage="true"
+           label="Cupid Code Generation Annotation"
+           verticalRulerPreferenceKey="cupidMarkerIndicationInVerticalRuler"
+           verticalRulerPreferenceValue="true"/>
+     <specification
+           annotationType="org.earthsystemcurator.cupid.nuopc.fsml.cupiderrorannotation"
+           colorPreferenceKey="cupidErrorColorPK"
+           highlightPreferenceKey="cupidErrorHighlightPK"
+           highlightPreferenceValue="false"
+           includeOnPreferencePage="true"
+           label="Cupid Error"
+           overviewRulerPreferenceKey="cupidErrorOverviewRulerPK"
+           overviewRulerPreferenceValue="false"
+           showInNextPrevDropdownToolbarActionKey="cupidErrorSINPDTAKPK"
+           symbolicIcon="error"
+           textPreferenceKey="cupidErrorTextPK"
+           textPreferenceValue="true"
+           textStylePreferenceKey="cupidErrorTextStylePK"
+           textStylePreferenceValue="PROBLEM_UNDERLINE"
+           verticalRulerPreferenceKey="cupidErrorVerticalRulerPK"
+           verticalRulerPreferenceValue="true">
+     </specification>
+  </extension>
+   
+   <!--
+   <extension
+         point="org.eclipse.ui.ide.markerResolution">
+      <markerResolutionGenerator
+            class="org.earthsystemcurator.cupid.nuopc.fsml.handlers.MarkerResolutionGenerator"
+            markerType="org.earthsystemcurator.cupid.nuopc.fsml.cupiderror">
+      </markerResolutionGenerator>
+   </extension>
+   -->
+   
+   <extension
+         point="org.eclipse.photran.ui.sourceViewerConfig">
+      <sourceViewerConfig
+            factory="org.earthsystemcurator.cupid.nuopc.fsml.handlers.FortranSourceViewerConfigurationFactory">
+      </sourceViewerConfig>
    </extension>
    
    <!--

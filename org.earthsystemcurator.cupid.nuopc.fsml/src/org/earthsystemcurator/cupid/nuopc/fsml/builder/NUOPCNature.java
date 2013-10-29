@@ -2,7 +2,9 @@ package org.earthsystemcurator.cupid.nuopc.fsml.builder;
 
 import java.util.Map;
 
+import org.earthsystemcurator.cupid.nuopc.fsml.core.FSM;
 import org.earthsystemcurator.cupid.nuopc.fsml.nuopc.NUOPCApplication;
+import org.earthsystemcurator.cupid.nuopc.fsml.nuopc.NUOPCPackage;
 import org.eclipse.core.resources.ICommand;
 import org.eclipse.core.resources.IProject;
 import org.eclipse.core.resources.IProjectDescription;
@@ -19,9 +21,12 @@ public class NUOPCNature implements IProjectNature {
 
 	private IProject project;
 	
-	public NUOPCApplication reversedModel;
-	public Map<Object, Object> reversedMappings;
-	public NUOPCApplication forwardModel;
+	//public NUOPCApplication reversedModel;
+	//public Map<Object, Object> reversedMappings;
+	//public NUOPCApplication forwardModel;
+	
+	public FSM<NUOPCPackage> fsm;
+	public FSM<NUOPCPackage> fsmForward;
 	
 	//private NUOPCApplication reverseEngineeredModel;
 	//private ReverseEngineer reverseEngineer;

@@ -1,0 +1,210 @@
+package org.earthsystemcurator.cupid.nuopc.fsml.handlers;
+
+import java.util.Iterator;
+
+import org.eclipse.cdt.internal.ui.text.c.hover.AbstractAnnotationHover;
+import org.eclipse.cdt.internal.ui.text.correction.MarkerResolutionProposal;
+import org.eclipse.core.resources.IMarker;
+import org.eclipse.jface.dialogs.MessageDialog;
+import org.eclipse.jface.text.DefaultTextHover;
+import org.eclipse.jface.text.IDocument;
+import org.eclipse.jface.text.IRegion;
+import org.eclipse.jface.text.ITextHover;
+import org.eclipse.jface.text.ITextHoverExtension2;
+import org.eclipse.jface.text.ITextViewer;
+import org.eclipse.jface.text.Position;
+import org.eclipse.jface.text.contentassist.ICompletionProposal;
+import org.eclipse.jface.text.quickassist.IQuickAssistAssistant;
+import org.eclipse.jface.text.quickassist.IQuickAssistInvocationContext;
+import org.eclipse.jface.text.quickassist.IQuickAssistProcessor;
+import org.eclipse.jface.text.quickassist.QuickAssistAssistant;
+import org.eclipse.jface.text.source.Annotation;
+import org.eclipse.jface.text.source.DefaultAnnotationHover;
+import org.eclipse.jface.text.source.IAnnotationHover;
+import org.eclipse.jface.text.source.IAnnotationModel;
+import org.eclipse.jface.text.source.IAnnotationModelExtension2;
+import org.eclipse.jface.text.source.ISourceViewer;
+import org.eclipse.jface.text.source.SourceViewer;
+import org.eclipse.jface.text.source.SourceViewerConfiguration;
+import org.eclipse.jface.text.source.TextInvocationContext;
+import org.eclipse.photran.internal.ui.editor.FortranEditor;
+import org.eclipse.photran.internal.ui.editor.FortranEditor.FortranSourceViewerConfiguration;
+import org.eclipse.photran.internal.ui.editor.IFortranSourceViewerConfigurationFactory;
+import org.eclipse.ui.IMarkerResolution;
+import org.eclipse.ui.texteditor.MarkerAnnotation;
+
+
+@SuppressWarnings("restriction")
+public class FortranSourceViewerConfigurationFactory implements
+		IFortranSourceViewerConfigurationFactory {
+
+	public FortranSourceViewerConfigurationFactory() {
+		System.out.println("init FortranSourceViewerConfigurationFactory");
+	}
+
+	@Override
+	public SourceViewerConfiguration create(FortranEditor editor) {
+		return new FortranSourceViewerConfiguration(editor) {
+			
+			protected IQuickAssistAssistant quickAssistAssistant;
+			
+			@Override
+			public IQuickAssistAssistant getQuickAssistAssistant(ISourceViewer sourceViewer) {				
+				if (quickAssistAssistant == null) {
+					quickAssistAssistant = new QuickAssistAssistant();
+					quickAssistAssistant.setQuickAssistProcessor(new CupidQuickAssistProcessor());
+					quickAssistAssistant.setInformationControlCreator(getInformationControlCreator(sourceViewer));
+				}
+				return quickAssistAssistant;
+			}
+					
+			@Override
+			public IAnnotationHover getAnnotationHover(
+					ISourceViewer sourceViewer) {
+				//return super.getAnnotationHover(sourceViewer);
+				return new DefaultAnnotationHover();
+			}
+			
+			public ITextHover getTextHover(ISourceViewer sourceViewer, String contentType) {
+				
+				if (contentType != IDocument.DEFAULT_CONTENT_TYPE) return null;
+							
+				return new AbstractAnnotationHover(true) {
+					
+					@Override
+					public Object getHoverInfo2(final ITextViewer textViewer, IRegion hoverRegion) {
+						IAnnotationModel model = ((SourceViewer) textViewer).getAnnotationModel();						
+
+						@SuppressWarnings("rawtypes")
+						Iterator iter = 
+								((IAnnotationModelExtension2)model).getAnnotationIterator(hoverRegion.getOffset(), 
+										hoverRegion.getLength(), true, true);
+						//Iterator iter = new JavaAnnotationIterator(parent, false); 
+
+						Annotation annotation = null;
+						Position position = null;
+						while (iter.hasNext()) {
+							Annotation a = (Annotation) iter.next();
+							Position p = model.getPosition(a);
+							if (a.getType().equals("org.earthsystemcurator.cupid.nuopc.fsml.cupiderrorannotation")) {
+								annotation = a;
+								position = p;
+								break;
+							}
+						}
+
+						if (annotation != null) {
+							return new AnnotationInfo(annotation, position, textViewer) {
+								public ICompletionProposal[] getCompletionProposals() {									
+									return getQuickAssistAssistant((ISourceViewer) textViewer).
+											getQuickAssistProcessor().
+												computeQuickAssistProposals(
+														new TextInvocationContext(
+																(ISourceViewer) textViewer, 
+																position.offset, 
+																position.length));
+								}
+							};
+						}
+						else {
+							return null;
+						}
+						
+					} 
+				};
+				
+			}
+			
+		};
+		
+	}
+	
+	
+	public class CupidQuickAssistProcessor implements IQuickAssistProcessor {
+
+		@Override
+		public String getErrorMessage() {
+			// TODO Auto-generated method stub
+			return null;
+		}
+
+		@Override
+		public boolean canFix(Annotation annotation) {
+			System.out.println("canFix");
+			if (annotation.getType().equals("org.earthsystemcurator.cupid.nuopc.fsml.cupiderrorannotation")) {
+				return true;
+			}
+			return false;
+		}
+
+		@Override
+		public boolean canAssist(IQuickAssistInvocationContext invocationContext) {
+			System.out.println("canAssist");
+			return false;
+		}
+
+		@Override
+		public ICompletionProposal[] computeQuickAssistProposals(
+				IQuickAssistInvocationContext invocationContext) {
+			// TODO Auto-generated method stub
+			System.out.println("computeQuickAssistProposals: " + invocationContext.getOffset());
+			
+			final ISourceViewer viewer = invocationContext.getSourceViewer();
+			//int documentOffset = invocationContext.getOffset(); 
+
+			ICompletionProposal proposal1 = null;
+			ICompletionProposal proposal2 = null;
+
+			Iterator<?> iter = viewer.getAnnotationModel().getAnnotationIterator();
+			while (iter.hasNext()) {
+				Annotation annotation = (Annotation) iter.next();				
+				if (annotation instanceof MarkerAnnotation) {
+					proposal1 = new MarkerResolutionProposal(
+								new CupidQuickFix("proposal1", invocationContext), 
+								((MarkerAnnotation) annotation).getMarker());					
+					return new ICompletionProposal[] { proposal1 };
+				}
+			}
+
+			return new ICompletionProposal[0];
+			//return null;
+						
+		}
+		
+			
+	}
+	
+	public abstract class QuickFix implements IMarkerResolution {
+
+		protected String label;
+		protected IQuickAssistInvocationContext invocationContext;
+		
+		QuickFix(String label, IQuickAssistInvocationContext invocationContext) {
+			this.label = label;
+			this.invocationContext = invocationContext;
+		}
+		
+		public String getLabel() {
+			return label;
+		}		
+		
+	}
+	
+	public class CupidQuickFix extends QuickFix {
+		
+		CupidQuickFix(String label,
+				IQuickAssistInvocationContext invocationContext) {
+			super(label, invocationContext);			
+		}
+
+		@Override
+		public void run(IMarker marker) {
+			
+			
+		}
+		
+	}
+	
+	
+
+}

@@ -99,7 +99,6 @@ public interface ModelImplementsInitP1 extends EObject {
 	 * @see #setImportParam(String)
 	 * @see org.earthsystemcurator.cupid.nuopc.fsml.nuopc.NUOPCPackage#getModelImplementsInitP1_ImportParam()
 	 * @model default="importState" required="true"
-	 *        annotation="http://www.earthsystemcog.org/projects/nuopc mappingX='formalParam: 2'"
 	 * @generated
 	 */
 	String getImportParam();
@@ -127,7 +126,6 @@ public interface ModelImplementsInitP1 extends EObject {
 	 * @see #setExportParam(String)
 	 * @see org.earthsystemcurator.cupid.nuopc.fsml.nuopc.NUOPCPackage#getModelImplementsInitP1_ExportParam()
 	 * @model default="exportState" required="true"
-	 *        annotation="http://www.earthsystemcog.org/projects/nuopc mappingX='formalParam: 3'"
 	 * @generated
 	 */
 	String getExportParam();

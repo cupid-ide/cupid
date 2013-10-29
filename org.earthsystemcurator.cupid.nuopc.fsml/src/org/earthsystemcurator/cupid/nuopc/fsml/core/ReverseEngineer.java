@@ -1,4 +1,4 @@
-package org.earthsystemcurator.cupid.nuopc.fsml.re;
+package org.earthsystemcurator.cupid.nuopc.fsml.core;
 
 
 import java.lang.reflect.InvocationTargetException;
@@ -21,7 +21,9 @@ import org.eclipse.core.resources.IFile;
 import org.eclipse.core.resources.IProject;
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.ecore.EClass;
+import org.eclipse.emf.ecore.EFactory;
 import org.eclipse.emf.ecore.EObject;
+import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.EReference;
 import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.ecore.EcoreFactory;
@@ -32,31 +34,62 @@ import org.eclipse.photran.internal.core.vpg.PhotranVPG;
 @SuppressWarnings("restriction")
 public class ReverseEngineer {
 
-	/**
-	 * Mapping from a model element to one of:
-	 *  - a PhotranVPG (for top level)
-	 *  - an IFortranAST (for file level elements, e.g., modules and programs)
-	 *  - an IASTNode (for deeper elements)
-	 *  
-	 */
-	private Map<Object, Object> mappings = new IdentityHashMap<Object, Object>();
+	//private Map<Object, Object> mappings = new IdentityHashMap<Object, Object>();
 	
-	private NUOPCApplication app = null;
+	//private NUOPCApplication app = null;
 	
 	//private Map<IFile, IFortranAST> fileMap = new HashMap<IFile, IFortranAST>();
 	
-	public NUOPCApplication getLastModel() {
-		return app;
-	}
-	
-	public Map<Object, Object> getMappings() {
-		return mappings;
-	}
-	
-	//public Map<IFile, IFortranAST> getFileToASTMapping() {
-	//	return fileMap;
+	//public NUOPCApplication getLastModel() {
+	//	return app;
 	//}
 	
+	//public Map<Object, Object> getMappings() {
+	//	return mappings;
+	//}
+	
+	
+	public static <P extends EPackage> FSM<P> reverseEngineer(P ePackage, EClass eClass, IProject project, PhotranVPG vpg) {
+	
+		EFactory eFactory = ePackage.getEFactoryInstance();
+		EObject root = eFactory.create(eClass);
+		
+		FSM<P> fsm = new FSM<P>(root);
+		
+		Set<IFortranAST> asts = new HashSet<IFortranAST>();		
+		for (String mod : vpg.listAllModules()) {
+			//TODO: fix this - need a way to configure user files and framework files
+			if (!mod.toLowerCase().startsWith("nuopc")) {
+				List<IFile> fl = vpg.findFilesThatExportModule(mod);
+				for (IFile f : fl) {					
+					//System.out.println("Module: " + mod + " (" + f.getFullPath() + ")");
+					if (f.getProject().equals(project)) {
+						//System.out.println("Adding Fortran file: " + f);
+						IFortranAST ast = vpg.acquireTransientAST(f);					
+						if (ast == null) {
+							System.out.println("Warning:  AST not found for file: " + f.getName());
+						}
+						else {
+							asts.add(ast);
+						}
+					}
+				}
+			}
+		}
+		
+		root = reverse(asts, root, fsm.getMappings());
+		
+		//System.out.println("\n=============\nReverse mappings:");
+		//for (Entry<Object, Object> e : mappings.entrySet()) {
+		//	System.out.println(e.getKey() + " ===> " + e.getValue().getClass());
+		//}
+		
+		return fsm;
+		
+		//return fsm;
+	}
+	
+	/*
 	public NUOPCApplication reverse(IProject project, PhotranVPG vpg) {
 		
 		mappings.clear();
@@ -98,7 +131,7 @@ public class ReverseEngineer {
 		return a;
 		
 	}
-	
+	*/
 	
 	/**
 	 * Attempt to map modelElem to an IASTNode or an IFortranAST or a PhotranVPG
@@ -108,9 +141,9 @@ public class ReverseEngineer {
 	 * @return modelElem if successful, otherwise null
 	 */
 	@SuppressWarnings({ "unchecked", "rawtypes" })
-	protected <ModelElem extends EObject> ModelElem reverse(Object fortranElem, ModelElem modelElem) {
+	private static <ModelElem extends EObject> ModelElem reverse(Object fortranElem, ModelElem modelElem, Map<Object,Object> mappings) {
 		
-		System.out.println("Reverse: " + fortranElem.getClass().getSimpleName() + "\t==>\t" + modelElem.eClass().getName());
+		//System.out.println("Reverse: " + fortranElem.getClass().getSimpleName() + "\t==>\t" + modelElem.eClass().getName());
 			
 		EClass modelElemClass = modelElem.eClass();
 			
@@ -261,7 +294,7 @@ public class ReverseEngineer {
 								}
 																
 								//recursive call
-								newModelElemRet = reverse(newFortranElem, newModelElem);
+								newModelElemRet = reverse(newFortranElem, newModelElem, mappings);
 								
 								// if NULL returned, then remove model element from parent
 								if (newModelElemRet == null) {
@@ -309,7 +342,7 @@ public class ReverseEngineer {
 						else {
 							modelElem.eSet(sf, newModelElem);
 						}
-						EObject newModelElemRet = reverse(fortranElem, newModelElem);
+						EObject newModelElemRet = reverse(fortranElem, newModelElem, mappings);
 						if (newModelElemRet == null) {
 							if (sf.isMany()) {
 								EList el = (EList) modelElem.eGet(sf);

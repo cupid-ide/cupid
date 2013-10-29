@@ -171,17 +171,9 @@
       </eAnnotations>
     </eStructuralFeatures>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="importParam" lowerBound="1"
-        eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString" defaultValueLiteral="importState">
-      <eAnnotations source="http://www.earthsystemcog.org/projects/nuopc">
-        <details key="mappingX" value="formalParam: 2"/>
-      </eAnnotations>
-    </eStructuralFeatures>
+        eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString" defaultValueLiteral="importState"/>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="exportParam" lowerBound="1"
-        eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString" defaultValueLiteral="exportState">
-      <eAnnotations source="http://www.earthsystemcog.org/projects/nuopc">
-        <details key="mappingX" value="formalParam: 3"/>
-      </eAnnotations>
-    </eStructuralFeatures>
+        eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString" defaultValueLiteral="exportState"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="advertisesImportField"
         upperBound="-1" eType="#//AdvertisesImportField" containment="true" eOpposite="#//AdvertisesImportField/parent">
       <eAnnotations source="http://www.earthsystemcog.org/projects/nuopc">

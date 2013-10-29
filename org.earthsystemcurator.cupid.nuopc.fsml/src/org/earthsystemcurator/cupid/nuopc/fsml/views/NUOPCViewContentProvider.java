@@ -87,13 +87,13 @@ class NUOPCViewContentProvider implements IStructuredContentProvider, ITreeConte
 	
 	protected void duplicateReversedModel(NUOPCNature nature) {
 		
-		if (nature.reversedModel != null) {
+		if (nature.fsm != null) {
 			Copier copier = new Copier();
-			NUOPCApplication newApp = (NUOPCApplication) copier.copy(nature.reversedModel);
+			NUOPCApplication newApp = (NUOPCApplication) copier.copy(nature.fsm.getRoot());
 			copier.copyReferences();
 			
 			Map<Object,Object> newMap = new IdentityHashMap<Object,Object>();
-			for (Entry<Object, Object> e : nature.reversedMappings.entrySet()) {
+			for (Entry<Object, Object> e : nature.fsm.getMappings().entrySet()) {
 				//System.out.println("Adding to newMap: " + copier.get(e.getKey()) + " ==> " + e.getValue());
 				if (copier.get(e.getKey()) != null) {
 					newMap.put(copier.get(e.getKey()), e.getValue());
@@ -106,12 +106,12 @@ class NUOPCViewContentProvider implements IStructuredContentProvider, ITreeConte
 			
 			this.app = newApp;
 			this.reversedMappings = newMap;
-			nature.forwardModel = newApp;
+			//nature.forwardModel = newApp;
 		}
 		else {
 			this.app = null;
 			this.reversedMappings = null;
-			nature.forwardModel = null;
+			//nature.forwardModel = null;
 		}
 		
 	}

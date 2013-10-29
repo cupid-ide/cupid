@@ -6,20 +6,24 @@ import java.io.InputStreamReader;
 import java.io.Reader;
 
 import org.earthsystemcurator.cupid.nuopc.fsml.builder.NUOPCNature;
+import org.earthsystemcurator.cupid.nuopc.fsml.core.FSM;
+import org.earthsystemcurator.cupid.nuopc.fsml.core.ReverseEngineer;
 import org.earthsystemcurator.cupid.nuopc.fsml.nuopc.NUOPCApplication;
 import org.earthsystemcurator.cupid.nuopc.fsml.nuopc.NUOPCPackage;
-import org.earthsystemcurator.cupid.nuopc.fsml.re.ReverseEngineer;
 import org.earthsystemcurator.cupid.nuopc.fsml.views.NUOPCView;
 import org.eclipse.cdt.core.model.ITranslationUnit;
 import org.eclipse.core.commands.AbstractHandler;
 import org.eclipse.core.commands.ExecutionEvent;
 import org.eclipse.core.commands.ExecutionException;
 import org.eclipse.core.resources.IFile;
+import org.eclipse.core.resources.IMarker;
 import org.eclipse.core.resources.IProject;
 import org.eclipse.core.resources.IResource;
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IAdaptable;
+import org.eclipse.emf.common.util.Diagnostic;
 import org.eclipse.emf.common.util.URI;
+import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.ecore.resource.ResourceSet;
 import org.eclipse.emf.ecore.resource.impl.ResourceSetImpl;
@@ -28,7 +32,16 @@ import org.eclipse.jface.viewers.ISelection;
 import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.jface.viewers.ITreeSelection;
 import org.eclipse.jface.text.ITextSelection;
+import org.eclipse.jface.text.quickassist.IQuickAssistAssistant;
+import org.eclipse.jface.text.quickassist.QuickAssistAssistant;
+import org.eclipse.jface.text.source.Annotation;
+import org.eclipse.jface.text.source.ISourceViewer;
+import org.eclipse.photran.core.IFortranAST;
+import org.eclipse.photran.internal.core.analysis.binding.ScopingNode;
+import org.eclipse.photran.internal.core.lexer.Token;
+import org.eclipse.photran.internal.core.parser.IASTNode;
 import org.eclipse.photran.internal.core.vpg.PhotranVPG;
+
 import org.eclipse.ui.IEditorInput;
 import org.eclipse.ui.IEditorPart;
 import org.eclipse.ui.IFileEditorInput;
@@ -76,6 +89,21 @@ public class ReverseHandler extends AbstractHandler {
 		
 		if (selectedProject == null) {
 			IEditorPart editor = HandlerUtil.getActiveEditor(event);
+			
+			//TODO: look into sourceviewerconfiguration instead of this
+//			if (editor instanceof FortranEditor) {
+//				FortranEditor fortranEditor = (FortranEditor) editor;
+//				ISourceViewer sourceViewer = fortranEditor.getSourceViewerx();
+//				IQuickAssistAssistant qaa = new QuickAssistAssistant() {
+//					@Override
+//					public boolean canFix(Annotation annotation) {
+//						System.out.println("canFix: " + annotation.getText());
+//						return super.canFix(annotation);
+//					}
+//				};
+//				qaa.install(sourceViewer);
+//			}
+			
 			IEditorInput input = editor.getEditorInput();
 			if (input instanceof IFileEditorInput) {
 				selectedProject = ((IFileEditorInput) input).getFile().getProject();
@@ -93,23 +121,25 @@ public class ReverseHandler extends AbstractHandler {
         resourceSet.getResourceFactoryRegistry().getExtensionToFactoryMap().put(
             Resource.Factory.Registry.DEFAULT_EXTENSION, new XMIResourceFactoryImpl());
 
-        @SuppressWarnings("unused")
-        NUOPCPackage pack = NUOPCPackage.eINSTANCE;
-                
+        NUOPCPackage pack = NUOPCPackage.eINSTANCE;            
         
         PhotranVPG vpg = PhotranVPG.getInstance();
-        ReverseEngineer re = new ReverseEngineer();
+        //ReverseEngineer re = new ReverseEngineer();
         //NUOPCModel m = re.reverse(ast);
-        NUOPCApplication a = re.reverse(selectedProject, vpg);        
         
-        //use project nature to store local data
+        FSM<NUOPCPackage> fsm = ReverseEngineer.reverseEngineer(pack, pack.getNUOPCApplication(), selectedProject, vpg); 
+        
+        //NUOPCApplication a = ReverseEngineer.reverseEngineer(pack, pack.getNUOPCApplication(), selectedProject, vpg);        
+         //use project nature to store local data
+ 
         try {
 			NUOPCNature nature = (NUOPCNature) selectedProject.getNature(NUOPCNature.NATURE_ID);
 			//nature.setReverseEngineeredModel(a);
 			//nature.setReverseEngineer(re);
 			if (nature != null) {
-				nature.reversedModel = a;
-				nature.reversedMappings = re.getMappings();
+				//nature.reversedModel = a;
+				//nature.reversedMappings = re.getMappings();
+				nature.fsm = fsm;
 			}
 		} catch (CoreException e) {
 			// TODO Auto-generated catch block
@@ -127,92 +157,72 @@ public class ReverseHandler extends AbstractHandler {
         	}
         }
         
-        
-        if (a == null) return null;
-        
-      
-        IFile revFile = selectedProject.getFile("reverse.nuopc");
-        /*
-        if (!revFile.exists()) {
-        	try {
-				revFile.create(new ByteArrayInputStream("".getBytes()), IResource.NONE, null);
-			} catch (CoreException e) {				
-				e.printStackTrace();
-				return null;
-			}
+        //create markers for validation failures
+        for (Diagnostic d : fsm.getDiagnostics()) {
+        	Object problemElem = d.getData().get(0);
+        	Object refObject = fsm.getReference(problemElem);
+        	ScopingNode scope = null;
+        	if (refObject instanceof ScopingNode) {
+        		scope = (ScopingNode) refObject;				        	
+        	}
+        	else if (refObject instanceof IFortranAST) {
+        		IFortranAST ast = (IFortranAST) refObject;
+        		scope = (ScopingNode) ast.getRoot().getProgramUnitList().get(0);
+        	}
+        	
+        	if (scope != null) {
+	        	try {
+	    			Token t = scope.getRepresentativeToken().findToken();
+	        		
+	    			//Token firstToken = scope.findFirstToken();
+					//Token lastToken = scope.findLastToken();
+					
+					//int startOffset = firstToken.getFileOffset();
+		            //startOffset -= firstToken.getWhiteBefore().length();
+	
+		            //int endOffset = lastToken.getFileOffset()+lastToken.getLength();
+					int startOffset = t.getFileOffset();
+					int endOffset = startOffset + t.getLength();
+	    			
+	    			IMarker marker = t.getPhysicalFile().getIFile().createMarker("org.earthsystemcurator.cupid.nuopc.fsml.cupiderror");
+	    			marker.setAttribute(IMarker.CHAR_START, startOffset);
+	                marker.setAttribute(IMarker.CHAR_END, endOffset);
+	                marker.setAttribute(IMarker.MESSAGE, d.getMessage());
+	                marker.setAttribute(IMarker.SEVERITY, IMarker.SEVERITY_ERROR);
+	                
+	                
+	    		} catch (CoreException e) {
+					e.printStackTrace();
+				}
+        	}
+        	
         }
-        */
+        
+        
+        if (fsm == null) return null;
+        
+        
+        //save to file for debugging purposes
+        IFile revFile = selectedProject.getFile("reverse.nuopc");
         URI fileURI = URI.createFileURI(revFile.getFullPath().toOSString());            
         Resource resource = resourceSet.createResource(fileURI); 
                
         resource.getContents().clear();
-        resource.getContents().add(a);
+        resource.getContents().add(fsm.getRoot());
         try {
 			resource.save(null);
 		} catch (IOException e1) {
 			System.out.println("Error saving model file: ");
 			e1.printStackTrace();
 		}
-        
-        
-        
-        //ModelToModuleMapping map = new ModelToModuleMapping(m, null);
-        //System.out.println("Forward: " + map.forward().);
-        
-       // ASTExecutableProgramNode epn = new ASTExecutableProgramNode();
-       // epn.setProgramUnitList(new ASTListNode<IProgramUnit>());
-       // epn.getProgramUnitList().add(map.forward());
-        //map.forward();
-        //ast.getRoot().getProgramUnitList().get(0).replaceWith(map.forward());
-        
-        
-        //System.out.println("ast: " + ast.getRoot().toString());
-        
-        /*
-        IRunnableWithProgress operation = new IRunnableWithProgress() {
-			
-        	public void run(IProgressMonitor monitor) {
-				vpg.commitChangesFromInMemoryASTs(monitor, 1, f);
-								
-	            TextFileChange changeThisFile = new TextFileChange("text change" + f.getFullPath().toOSString(), f);
-	            changeThisFile.initializeValidationData(monitor);	            
-	            try {
-					changeThisFile.setEdit(new ReplaceEdit(0, countCharsIn(f), ast.getRoot().toString()));
-					changeThisFile.perform(monitor);			
-				} catch (CoreException e) {
-					e.printStackTrace();
-				} catch (IOException e) {
-					e.printStackTrace();
-				}
-	        
-		        
-		
-        	}
-        };
-        
-        try {
-			PlatformUI.getWorkbench().getProgressService().run(true, true, operation);
-		} catch (InvocationTargetException e) {
-			e.printStackTrace();
-		} catch (InterruptedException e) {
-			e.printStackTrace();
-		}
-		*/
-	
-        
-		//vpg.commitChangesFromInMemoryASTs(null, 1, f);
+     
+        //TODO: do I need to do this?
         vpg.releaseAllASTs();
-
-		
-		
-		//MessageDialog.openInformation(
-		//		window.getShell(),
-		//		"Nuopc Model",
-		//		"Hello, this is the MappingTestHandler");
 
 		return null;
 	}
 
+	/*
 	private int countCharsIn(IFile file) throws CoreException, IOException
 	{
 	    int size = 0;
@@ -222,8 +232,10 @@ public class ReverseHandler extends AbstractHandler {
 	    in.close();
 	    return size;
 	}
-
-	IResource extractSelection(ISelection sel) {
+	*/
+	
+	/*
+	protected IResource extractSelection(ISelection sel) {
 
 		System.out.println("sel = " + sel);
 
@@ -239,4 +251,6 @@ public class ReverseHandler extends AbstractHandler {
 		Object adapter = adaptable.getAdapter(IResource.class);
 		return (IResource) adapter;
 	}
+	*/
+	
 }

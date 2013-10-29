@@ -1,4 +1,4 @@
-package org.earthsystemcurator.cupid.nuopc.fsml.fe;
+package org.earthsystemcurator.cupid.nuopc.fsml.core;
 
 import java.io.BufferedReader;
 import java.io.ByteArrayInputStream;
@@ -15,6 +15,7 @@ import java.util.Set;
 import java.util.TreeMap;
 
 import org.earthsystemcurator.cupid.nuopc.fsml.nuopc.NUOPCApplication;
+import org.earthsystemcurator.cupid.nuopc.fsml.nuopc.NUOPCPackage;
 import org.earthsystemcurator.cupid.nuopc.fsml.util.CodeExtraction;
 import org.earthsystemcurator.cupid.nuopc.fsml.util.CodeQuery;
 import org.earthsystemcurator.cupid.nuopc.fsml.util.EcoreUtils;
@@ -78,6 +79,27 @@ public class ForwardEngineer {
 		this.container = container;
 	}
 
+	public void forward(FSM<NUOPCPackage> rev, FSM<NUOPCPackage> forward) {
+		this.revMappings = rev.getMappings();
+		//astsToReindent.clear();
+		Comparison comp = compare(rev.getRoot(), forward.getRoot());
+		forwardDiffs(comp.getMatches());
+		
+		//TODO: brute force do reindenting - optimize
+		//perhaps related each mapped node back to its AST
+		
+		//for (IFortranAST ast : astsToReindent) {
+		//	System.out.println("Reindenting: " + ast.getFile().getName());
+		//	Reindenter.reindent(ast.getRoot(), ast, Strategy.REINDENT_EACH_LINE);
+		//}
+		for (Object val : this.revMappings.values()) {
+			if (val instanceof IFortranAST) {
+				Reindenter.reindent(((IFortranAST) val).getRoot(), (IFortranAST) val, Strategy.REINDENT_EACH_LINE);
+			}
+		}
+	}
+	
+	/*
 	public void forward(NUOPCApplication reversed, NUOPCApplication asserted, Map<Object, Object> revMap) {
 		this.revMappings = revMap;
 		//astsToReindent.clear();
@@ -98,6 +120,7 @@ public class ForwardEngineer {
 		}
 		
 	}
+	*/
 	
 	protected Comparison compare(Notifier left, Notifier right) {
 		// Configure EMF Compare		
@@ -121,7 +144,7 @@ public class ForwardEngineer {
 		
 		//System.out.println("Match: " + m);
 		
-		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+		//BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
 		
 		for (Diff d : m.getDifferences()) {
 			//only interested in DELETEs for now (i.e., an addition to the asserted model)
@@ -157,7 +180,7 @@ public class ForwardEngineer {
 		if (keywordMap != null) {			
 			EObject addedElem = diff.getValue();
 			
-			//context is one of:  IASTNode, IFortranAST, PhotranVPG
+			//context is one of:  IASTNode, IFortranAST, Set<IFortranAST>
 			Object fortranElem = null;
 			EObject parentMatch = diff.getMatch().getLeft();
 			if (parentMatch == null) {
@@ -246,22 +269,19 @@ public class ForwardEngineer {
 		Object newFortranElem = null;
 		try {
 			newFortranElem = method.invoke(this, fortranElem, modelElem, params);
-			System.out.println(methodName + " generated new code: " + newFortranElem);
+			//System.out.println(methodName + " generated new code: " + newFortranElem);
 		} catch (IllegalArgumentException e) {
 			e.printStackTrace();
 		} catch (IllegalAccessException e) {
 			e.printStackTrace();
 		} catch (InvocationTargetException e) {
 			e.printStackTrace();
-		}
-			
-		if (newFortranElem != null) {
-			createMarker(newFortranElem);
-		}
+		}				
 		
 		return newFortranElem;
 	}
 	
+	/*
 	private void createMarker(Object elem) {
 		if (elem instanceof IASTNode) {
 			try {
@@ -303,12 +323,14 @@ public class ForwardEngineer {
 			
 		}
 	}
+	*/
 	
 	/**
 	 * Find the associated IFile by working up the tree toward the root.
 	 * @param newNode
 	 * @return
 	 */
+	/*
 	private IFile findFile(IASTNode newNode) {
 		while (newNode != null) {
 			Token t = newNode.findFirstToken();
@@ -321,6 +343,7 @@ public class ForwardEngineer {
 		}
 		return null;
 	}
+	*/
 	
 	//private void forwardAdd(IASTNode context, IASTNode node, Map<String, Object> keywordMap) {
 	//	throw new RuntimeException("Default forwardAdd");		
@@ -383,11 +406,13 @@ public class ForwardEngineer {
 		IFile fileToAdd = container.getFile(moduleName.toLowerCase() + ".F90");
 				
 		if (!fileToAdd.exists()) {
-		    byte[] bytes = code.render().getBytes();
-		    InputStream source = new ByteArrayInputStream(bytes);
+			byte[] bytes = code.render().getBytes();
+		    //byte[] bytes = "".getBytes();
+			
+			InputStream source = new ByteArrayInputStream(bytes);
 		    try {
 		    	//TODO: look at fileToAdd.setContents(...)
-				fileToAdd.create(source, IResource.NONE, null);				
+				fileToAdd.create(source, IResource.NONE, null);
 			} catch (CoreException e) {				
 				e.printStackTrace();
 			}
@@ -400,9 +425,7 @@ public class ForwardEngineer {
 		return ast;
 		
 		//ASTModuleNode amn = (ASTModuleNode) CodeExtraction.parseLiteralProgramUnit(code);
-			
-		//if we are adding a module, then no file exists
-		//so we need to therefore create a new file in the workspace, etc.
+					
 	}
 	
 	/*
@@ -415,9 +438,7 @@ public class ForwardEngineer {
 	*/
 	
 	public IASTNode call(IASTNode context, EObject modelElem, Map<String, Object> params) {		
-		
-		//call NUOPC_StateAdvertiseField(importState, StandardName="air_pressure_at_sea_level", rc=rc)
-		
+				
 		String callSig = (String) params.get("call");
 		
 		List<String> vars = null;
@@ -440,34 +461,20 @@ public class ForwardEngineer {
 			else if (vars.get(i).startsWith("#")) {
 				vars.set(i, EcoreUtils.eGetSFValue(vars.get(i), modelElem, "arg"+i));
 			}
-		}	
+		}
 		
-		
-		//Map<Object,String> args = collectActualArguments(modelElem);
-		
-		ST code = new ST("\n\n! this is a comment\ncall <name>(<vars, keys:{v,k|<if(k)><k> = <endif><v>}; separator=\", \">)\n");
+		ST code = new ST("\ncall <name>(<vars, keys:{v,k|<if(k)><k> = <endif><v>}; separator=\", \">)\n");
 		code.add("name", subroutineName);
 		code.add("vars", vars);
 		code.add("keys", keywords);
-		
-		/*
-		for (Entry<Object,String> e : args.entrySet()) {
-			if (e.getKey() instanceof String) {
-				code.add("args", e.getKey() + " = " + e.getValue());
-			}
-			else {
-				code.add("args", e.getValue());
-			}
-		}
-		*/
-		
-		System.out.println("Code to parse:\n" + code.render() + "\n");
+				
+		//System.out.println("Code to parse:\n" + code.render() + "\n");
 		
 		IBodyConstruct node = CodeExtraction.parseLiteralStatement(code.render());		
 		
 		ASTSubroutineSubprogramNode ssn = (ASTSubroutineSubprogramNode) context;
 		ssn.getBody().add(node);
-		
+				
 		//Reindenter.reindent(node, recentAST, Strategy.REINDENT_EACH_LINE);
 		
 		return node;
@@ -512,7 +519,8 @@ public class ForwardEngineer {
 			doc = doc.replaceAll("\n", "\n! ");
 			code.add("doc", doc.split(" "));			
 		}
-		System.out.println("Code to parse:\n" + code.render(72) + "\n");
+		
+		//System.out.println("Code to parse:\n" + code.render(72) + "\n");
 		
 		ASTSubroutineSubprogramNode ssn = (ASTSubroutineSubprogramNode) CodeExtraction.parseLiteralProgramUnit(code.render(72));
 		
@@ -522,16 +530,15 @@ public class ForwardEngineer {
 		//System.out.println("Offset before: " + amn.findLastToken().getFileOffset());
 		
 		amn.getModuleBody().add(ssn);
+		
+		//PhotranVPG.getInstance().commitChangesFromInMemoryASTs(new NullProgressMonitor(), 1, context.getFile());
 		//System.out.println("Offset after: " + amn.findLastToken().getFileOffset());
 		
-		PhotranVPG.getInstance().commitChangesFromInMemoryASTs(new NullProgressMonitor(), 1, context.getFile());
 		
-		IFortranAST ast2 = PhotranVPG.getInstance().acquireTransientAST(context.getFile());
-		System.out.println("\n===============ast2=============\n\n");
-		System.out.println(ast2.getRoot().toString());
-		System.out.println("\n===============end ast2=============\n\n");
-		
-		
+		//IFortranAST ast2 = PhotranVPG.getInstance().acquireTransientAST(context.getFile());
+		//System.out.println("\n===============ast2=============\n\n");
+		//System.out.println(ast2.getRoot().toString());
+		//System.out.println("\n===============end ast2=============\n\n");		
 		
 		//Reindenter.reindent(ssn, context, Strategy.REINDENT_EACH_LINE);
 		
