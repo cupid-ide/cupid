@@ -35,6 +35,7 @@ import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.ecore.resource.ResourceSet;
 import org.eclipse.emf.ecore.resource.impl.ResourceSetImpl;
 import org.eclipse.emf.ecore.xmi.impl.XMIResourceFactoryImpl;
+import org.eclipse.jface.action.IAction;
 import org.eclipse.jface.operation.IRunnableWithProgress;
 import org.eclipse.jface.text.Document;
 import org.eclipse.jface.viewers.ISelection;
@@ -52,8 +53,13 @@ import org.eclipse.ui.IEditorPart;
 import org.eclipse.ui.IFileEditorInput;
 import org.eclipse.ui.IMarkerResolution;
 import org.eclipse.ui.IViewReference;
+import org.eclipse.ui.IWorkbenchPage;
+import org.eclipse.ui.IWorkbenchWindow;
+import org.eclipse.ui.IWorkbenchWindowActionDelegate;
+import org.eclipse.ui.PartInitException;
 import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.handlers.HandlerUtil;
+import org.eclipse.ui.ide.IDE;
 
 /**
  * Our sample handler extends AbstractHandler, an IHandler base class.
@@ -215,7 +221,9 @@ public class ReverseHandler extends AbstractHandler {
 								Reindenter.reindent(ast.getRoot(), ast, Strategy.REINDENT_EACH_LINE);
 								
 								try {
-									PlatformUI.getWorkbench().getProgressService().run(true, true, new RewriteASTRunnable(ast));
+									IWorkbenchWindow window = PlatformUI.getWorkbench().getActiveWorkbenchWindow();
+									//running in UI thread for now so we can set focus to generated code
+									PlatformUI.getWorkbench().getProgressService().run(false, true, new RewriteASTRunnable(ast, window));
 								} catch (InvocationTargetException e) {
 									e.printStackTrace();
 								} catch (InterruptedException e) {
@@ -262,9 +270,11 @@ public class ReverseHandler extends AbstractHandler {
 	public class RewriteASTRunnable implements IRunnableWithProgress {
 		
 		IFortranAST ast;
+		IWorkbenchWindow window;
 		
-		public RewriteASTRunnable(IFortranAST ast) {
+		public RewriteASTRunnable(IFortranAST ast, IWorkbenchWindow window) {
 			this.ast = ast;
+			this.window = window;
 		}
 		
     	public void run(IProgressMonitor monitor) {
@@ -295,7 +305,7 @@ public class ReverseHandler extends AbstractHandler {
             	   	changeThisFile.perform(monitor);
 				
             	   	//String fileContentsAfter = inputStreamToString(f.getContents(true));
-					System.out.println("Processed file: " + f.getName() + " : " + charsInFile + " ==> " + replaceString.length());
+					System.out.println("Processed file: " + f.getName()); // + " : " + charsInFile + " ==> " + replaceString.length());
 				
 					//IRangeComparator left = new TokenComparator(fileContentsBefore); 
 			        //IRangeComparator right = new TokenComparator(fileContentsAfter);
@@ -305,6 +315,7 @@ public class ReverseHandler extends AbstractHandler {
 					
 			        RangeDifference[] diffs = RangeDifferencer.findDifferences(left, right);
 			        
+			        IMarker firstMarker = null;
 			        for (RangeDifference rd : diffs) {
 			        	
 			        	int start = right.getTokenStart(rd.rightStart());
@@ -317,15 +328,29 @@ public class ReverseHandler extends AbstractHandler {
 			        		marker.setAttribute(IMarker.CHAR_END, end);
 			        		marker.setAttribute(IMarker.MESSAGE, "Cupid generated code");
 			        		marker.setAttribute(IMarker.LOCATION, "Lines " + rd.rightStart() + " to " + rd.rightEnd());
+			        		if (firstMarker == null) firstMarker = marker;
 			        	}
 			        }
             	
+			        //open editor on last marker generated
+			        if (firstMarker != null && window != null) {
+						IWorkbenchPage page = window.getActivePage();
+						try {
+							IDE.openEditor(page, firstMarker, false);
+							//marker.delete();
+						} catch (PartInitException e) {
+							e.printStackTrace();						
+						}
+					}
+			        
             	}
 			} catch (CoreException e) {
 				e.printStackTrace();						
 			}
         	
     	}
+
+		
     }
   
 	public static String inputStreamToString(final InputStream is) {
