@@ -35,71 +35,55 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SO
    </license>
 
    <requires>
+      <import feature="org.eclipse.ocl.examples" version="3.2.1.v20120919-0602"/>
       <import plugin="org.eclipse.core.runtime"/>
       <import plugin="org.eclipse.emf.ecore"/>
+      <import plugin="org.eclipse.photran.core.vpg" version="8.0.0" match="greaterOrEqual"/>
+      <import plugin="org.eclipse.photran.core" version="8.0.0" match="greaterOrEqual"/>
+      <import plugin="org.eclipse.rephraserengine.core" version="8.0.0" match="greaterOrEqual"/>
+      <import plugin="org.eclipse.ui"/>
+      <import plugin="org.eclipse.core.resources" version="3.8.1" match="greaterOrEqual"/>
+      <import plugin="org.eclipse.ltk.core.refactoring" version="3.6.0" match="greaterOrEqual"/>
+      <import plugin="org.eclipse.text" version="3.5.200" match="greaterOrEqual"/>
+      <import plugin="org.eclipse.emf.compare" version="3.0.0" match="greaterOrEqual"/>
+      <import plugin="org.eclipse.emf.compare.ide" version="3.0.0" match="greaterOrEqual"/>
+      <import plugin="org.eclipse.emf.common"/>
+      <import plugin="org.eclipse.ocl" version="3.3.0" match="greaterOrEqual"/>
+      <import plugin="org.eclipse.ocl.ecore" version="3.3.0" match="greaterOrEqual"/>
+      <import plugin="org.eclipse.ui.navigator"/>
+      <import plugin="org.eclipse.ui.navigator.resources"/>
+      <import plugin="org.eclipse.cdt.core"/>
+      <import plugin="org.eclipse.jface.text" version="3.8.100" match="greaterOrEqual"/>
+      <import plugin="org.eclipse.ui.workbench"/>
+      <import plugin="org.eclipse.ui.ide" version="3.9.0" match="greaterOrEqual"/>
+      <import plugin="org.eclipse.ocl.examples.xtext.oclinecore"/>
+      <import plugin="org.eclipse.compare" version="3.5.401" match="greaterOrEqual"/>
+      <import plugin="org.eclipse.photran.ui"/>
+      <import plugin="org.eclipse.photran.cdtinterface" version="8.0.0" match="greaterOrEqual"/>
+      <import plugin="org.eclipse.cdt.ui"/>
+      <import plugin="org.eclipse.ui.workbench.texteditor"/>
+      <import plugin="org.eclipse.ui.editors" version="3.8.100" match="greaterOrEqual"/>
       <import plugin="org.eclipse.emf.edit"/>
-      <import plugin="org.eclipse.core.resources"/>
       <import plugin="org.eclipse.emf.ecore.xmi"/>
       <import plugin="org.eclipse.emf.edit.ui"/>
-      <import plugin="org.eclipse.ui.ide"/>
-      <import plugin="org.eclipse.ocl.examples.xtext.oclinecore" version="3.2.0" match="greaterOrEqual"/>
-      <import plugin="org.eclipse.ocl"/>
-      <import plugin="org.eclipse.ocl.ecore"/>
-      <import plugin="org.eclipse.acceleo.common" version="3.2.0" match="greaterOrEqual"/>
-      <import plugin="org.eclipse.acceleo.model" version="3.2.0" match="greaterOrEqual"/>
-      <import plugin="org.eclipse.acceleo.profiler" version="3.2.0" match="greaterOrEqual"/>
-      <import plugin="org.eclipse.acceleo.engine" version="3.2.0" match="greaterOrEqual"/>
-      <import plugin="com.google.guava" version="10.0.1" match="greaterOrEqual"/>
-      <import plugin="org.earthsystemcurator.cupid.esmf" version="1.0.0" match="greaterOrEqual"/>
-      <import plugin="org.earthsystemcurator.cupid.sidl" version="1.0.0" match="greaterOrEqual"/>
-      <import plugin="org.eclipse.ui"/>
-      <import feature="org.eclipse.ocl.examples" version="3.2.1.v20120919-0602"/>
    </requires>
 
    <plugin
-         id="org.earthsystemcurator.cupid.esmf"
+         id="org.earthsystemcurator.cupid.nuopc.fsml"
          download-size="0"
          install-size="0"
          version="0.0.0"
          unpack="false"/>
 
    <plugin
-         id="org.earthsystemcurator.cupid.esmf.edit"
+         id="org.earthsystemcurator.cupid.nuopc.fsml.edit"
          download-size="0"
          install-size="0"
          version="0.0.0"
          unpack="false"/>
 
    <plugin
-         id="org.earthsystemcurator.cupid.esmf.editor"
-         download-size="0"
-         install-size="0"
-         version="0.0.0"
-         unpack="false"/>
-
-   <plugin
-         id="org.earthsystemcurator.cupid.sidl"
-         download-size="0"
-         install-size="0"
-         version="0.0.0"
-         unpack="false"/>
-
-   <plugin
-         id="org.earthsystemcurator.cupid.sidl.edit"
-         download-size="0"
-         install-size="0"
-         version="0.0.0"
-         unpack="false"/>
-
-   <plugin
-         id="org.earthsystemcurator.cupid.esmf2fortran"
-         download-size="0"
-         install-size="0"
-         version="0.0.0"
-         unpack="false"/>
-
-   <plugin
-         id="org.earthsystemcurator.cupid.esmf2fortran.ui"
+         id="org.earthsystemcurator.cupid.nuopc.fsml.editor"
          download-size="0"
          install-size="0"
          version="0.0.0"
