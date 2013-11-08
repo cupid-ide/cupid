@@ -60,26 +60,46 @@ public class ReverseEngineer {
 		
 		FSM fsm = new FSM(root);
 		
-		Set<String> filesToConsider = new HashSet<String>();
+		//Set<String> filesToConsider = new HashSet<String>();
 		
-		String fileList = "";
+		Set<IFortranAST> asts = new HashSet<IFortranAST>();	
+				
 		try {
-			fileList = project.getPersistentProperty(CupidPropertyPage.NUOPC_FILES_QN);
-		} catch (CoreException e1) {
+			String fileList = project.getPersistentProperty(CupidPropertyPage.NUOPC_FILES_QN);
+			if (fileList != null) {
+				for (String path : fileList.split("\n")) {		
+					IFile f = (IFile) project.findMember(path);
+					System.out.println("Adding Fortran file: " + path);
+					if (f != null) {
+						IFortranAST ast = vpg.acquireTransientAST(f);						
+						if (ast == null) {
+							System.out.println("Warning:  AST not found for file: " + f.getFullPath());
+						}
+						else {
+							asts.add(ast);
+						}
+					}
+					else {
+						System.out.println("File not found in project: " + path);
+					}
+				}
+			}
+			else {
+				//TODO: handle case where we check all files
+			}
+		} 
+		catch (CoreException e1) {
 			e1.printStackTrace();
+			return fsm;
 		}
 		
-		for (String path : fileList.split("\n")) {		
-			filesToConsider.add(path.trim());
-		}
-		
-		Set<IFortranAST> asts = new HashSet<IFortranAST>();		
-		
+			
+		/*
 		try {
 			for (IResource r : project.members()) {
-				
+				//TODO: deal with folders - recursive method
 				if (r instanceof IFile) {
-					//System.out.println("Full path: " + r.getFullPath());
+					System.out.println("Full path: " + r.getFullPath());
 					if (filesToConsider.size() == 0 || filesToConsider.contains(r.getFullPath().toString())) {
 						System.out.println("Adding Fortran file: " + r);
 						IFortranAST ast = vpg.acquireTransientAST((IFile) r);						
@@ -97,6 +117,7 @@ public class ReverseEngineer {
 			
 			e.printStackTrace();
 		}
+		*/
 		
 		/*
 		for (String mod : vpg.listAllModules()) {

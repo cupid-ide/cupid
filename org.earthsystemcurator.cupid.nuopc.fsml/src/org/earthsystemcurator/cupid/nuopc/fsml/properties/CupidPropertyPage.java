@@ -93,7 +93,8 @@ public class CupidPropertyPage extends PropertyPage {
 					String fileList = "";
 					for (Object r : result) {
 						if (r instanceof IResource) {
-							fileList += ((IResource) r).getFullPath().toString() + "\n";
+							fileList += ((IResource) r).getProjectRelativePath().toString() + "\n";
+							
 						}
 					}
 					ownerText.setText(fileList);
