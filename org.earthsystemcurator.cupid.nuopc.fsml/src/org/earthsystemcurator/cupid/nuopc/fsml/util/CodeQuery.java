@@ -115,36 +115,18 @@ public class CodeQuery {
 	//}
 	
 	public static Set<IFortranAST> module(Set<IFortranAST> asts, Map<String, Object> params) {
-		/*
+	
 		Set<IFortranAST> result = new HashSet<IFortranAST>();
-		for (String mod : vpg.listAllModules()) {
-			
-			//TODO: fix this to configure which files to check...
-			if (mod.toLowerCase().startsWith("nuopc")) continue;
-			
-			List<IFile> fl = vpg.findFilesThatExportModule(mod);
-			if (fl.size() != 1) {
-				//TODO
-				System.out.println("Unexpected: zero or multiple files found for module: " + mod);
-			}
-			else {
-				IFile f = fl.get(0);
-				System.out.println("Module: " + mod + " (" + f.getFullPath() + ")");
-				IFortranAST ast = vpg.acquireTransientAST(f);					
-				if (ast == null) {
-					//TODO
-					System.out.println("Warning:  AST not found for file: " + f.getName());
-				}
-				else {
-					result.add(ast);
-				}
-				
+		for (IFortranAST astToCheck : asts) {
+			if (astToCheck.getRoot() != null &&
+				astToCheck.getRoot().getProgramUnitList() != null && 
+			    astToCheck.getRoot().getProgramUnitList().size() > 0 &&
+			    astToCheck.getRoot().getProgramUnitList().get(0) instanceof ASTModuleNode) {
+				result.add(astToCheck);
 			}
 		}
-		*/
-		//for now, assume that all asts represent modules
-		//and that there is one module per file
-		return asts;
+		
+		return result;
 	}
 	
 	

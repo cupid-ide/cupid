@@ -14,11 +14,15 @@ import java.util.regex.Matcher;
 
 import org.earthsystemcurator.cupid.nuopc.fsml.nuopc.NUOPCApplication;
 import org.earthsystemcurator.cupid.nuopc.fsml.nuopc.NUOPCFactory;
+import org.earthsystemcurator.cupid.nuopc.fsml.properties.CupidPropertyPage;
 import org.earthsystemcurator.cupid.nuopc.fsml.util.CodeQuery;
 import org.earthsystemcurator.cupid.nuopc.fsml.util.EcoreUtils;
 import org.earthsystemcurator.cupid.nuopc.fsml.util.Regex;
+import org.eclipse.cdt.core.model.ITranslationUnit;
 import org.eclipse.core.resources.IFile;
 import org.eclipse.core.resources.IProject;
+import org.eclipse.core.resources.IResource;
+import org.eclipse.core.runtime.CoreException;
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EFactory;
@@ -56,16 +60,54 @@ public class ReverseEngineer {
 		
 		FSM fsm = new FSM(root);
 		
+		Set<String> filesToConsider = new HashSet<String>();
+		
+		String fileList = "";
+		try {
+			fileList = project.getPersistentProperty(CupidPropertyPage.NUOPC_FILES_QN);
+		} catch (CoreException e1) {
+			e1.printStackTrace();
+		}
+		
+		for (String path : fileList.split("\n")) {		
+			filesToConsider.add(path.trim());
+		}
+		
 		Set<IFortranAST> asts = new HashSet<IFortranAST>();		
+		
+		try {
+			for (IResource r : project.members()) {
+				
+				if (r instanceof IFile) {
+					//System.out.println("Full path: " + r.getFullPath());
+					if (filesToConsider.size() == 0 || filesToConsider.contains(r.getFullPath().toString())) {
+						System.out.println("Adding Fortran file: " + r);
+						IFortranAST ast = vpg.acquireTransientAST((IFile) r);						
+						if (ast == null) {
+							System.out.println("Warning:  AST not found for file: " + r.getName());
+						}
+						else {
+							asts.add(ast);
+						}
+					}
+				
+				}
+			}
+		} catch (CoreException e) {
+			
+			e.printStackTrace();
+		}
+		
+		/*
 		for (String mod : vpg.listAllModules()) {
 			//TODO: fix this - need a way to configure user files and framework files
 			if (!mod.toLowerCase().startsWith("nuopc")) {
 				List<IFile> fl = vpg.findFilesThatExportModule(mod);
 				for (IFile f : fl) {					
-					//System.out.println("Module: " + mod + " (" + f.getFullPath() + ")");
-					if (f.getProject().equals(project)) {
-						//System.out.println("Adding Fortran file: " + f);
-						IFortranAST ast = vpg.acquireTransientAST(f);					
+					//System.out.println("Module: " + mod + " (" + f.getName() + ") " + f.getProject().getName());
+					if (filesToConsider.contains(f.getName()) && f.getProject().equals(project)) {
+						System.out.println("Adding Fortran file: " + f);
+						IFortranAST ast = vpg.acquireTransientAST(f);						
 						if (ast == null) {
 							System.out.println("Warning:  AST not found for file: " + f.getName());
 						}
@@ -76,6 +118,7 @@ public class ReverseEngineer {
 				}
 			}
 		}
+		*/
 		
 		root = reverse(asts, root, fsm.getMappings());
 		
@@ -89,49 +132,6 @@ public class ReverseEngineer {
 		//return fsm;
 	}
 	
-	/*
-	public NUOPCApplication reverse(IProject project, PhotranVPG vpg) {
-		
-		mappings.clear();
-		NUOPCApplication a = NUOPCFactory.eINSTANCE.createNUOPCApplication();
-		a.setName(project.getName());
-		
-				
-		Set<IFortranAST> asts = new HashSet<IFortranAST>();		
-		for (String mod : vpg.listAllModules()) {
-			//TODO: fix this - need a way to configure user files and framework files
-			if (!mod.toLowerCase().startsWith("nuopc")) {
-				List<IFile> fl = vpg.findFilesThatExportModule(mod);
-				for (IFile f : fl) {					
-					//System.out.println("Module: " + mod + " (" + f.getFullPath() + ")");
-					if (f.getProject().equals(project)) {
-						System.out.println("Adding Fortran file: " + f);
-						IFortranAST ast = vpg.acquireTransientAST(f);					
-						if (ast == null) {
-							System.out.println("Warning:  AST not found for file: " + f.getName());
-						}
-						else {
-							asts.add(ast);
-						}
-					}
-				}
-			}
-		}
-		
-		
-		a = reverse(asts, a);
-		
-		//System.out.println("\n=============\nReverse mappings:");
-		//for (Entry<Object, Object> e : mappings.entrySet()) {
-		//	System.out.println(e.getKey() + " ===> " + e.getValue().getClass());
-		//}
-		
-		//save for later
-		this.app = a;
-		return a;
-		
-	}
-	*/
 	
 	/**
 	 * Attempt to map modelElem to an IASTNode or an IFortranAST or a PhotranVPG

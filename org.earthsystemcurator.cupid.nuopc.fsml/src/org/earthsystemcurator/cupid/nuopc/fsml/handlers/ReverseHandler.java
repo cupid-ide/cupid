@@ -320,7 +320,11 @@ public class ReverseHandler extends AbstractHandler {
 			        	
 			        	int start = right.getTokenStart(rd.rightStart());
 			        	int end = right.getTokenStart(rd.rightEnd()) + right.getTokenLength(rd.rightEnd());
-			        	//System.out.println("Range diff: " + rd.toString() + " : " + replaceString.substring(start, end));
+			        	//System.out.println("Range diff: " + rd.toString() + " : " + replaceString.substring(start, end));		        	        	
+			        	
+			        	int oldStart = left.getTokenStart(rd.leftStart());
+			        	int oldEnd = left.getTokenStart(rd.leftEnd()) + left.getTokenLength(rd.leftEnd());
+			        	System.out.println("Range diff: " + rd.toString() + " : " + fileContentsBefore.substring(oldStart, oldEnd));		  
 			        	
 			        	if (end-start > 2) {
 			        		IMarker marker = f.createMarker("org.earthsystemcurator.cupid.nuopc.fsml.cupidmarker");

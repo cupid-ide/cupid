@@ -443,6 +443,20 @@
             factory="org.earthsystemcurator.cupid.nuopc.fsml.handlers.FortranSourceViewerConfigurationFactory">
       </sourceViewerConfig>
    </extension>
+   <extension
+         point="org.eclipse.ui.propertyPages">
+      <page
+            category="org.eclipse.photran.ui.newui.Page_head_general"
+            class="org.earthsystemcurator.cupid.nuopc.fsml.properties.CupidPropertyPage"
+            id="org.earthsystemcurator.cupid.nuopc.fsml.properties.cupidPropertyPage"
+            name="Cupid Property Page">
+         <enabledWhen>
+            <instanceof
+                  value="org.eclipse.core.resources.IProject">
+            </instanceof>
+         </enabledWhen>
+      </page>
+   </extension>
    
    <!--
    <extension point = "org.eclipse.emf.ecore.validation_delegate">
