@@ -228,8 +228,8 @@ public interface NUOPCDriver__ImplementsSetModelServices extends EObject {
 	 * @see #setAttached(boolean)
 	 * @see org.earthsystemcurator.cupid.nuopc.fsml.nuopc.NUOPCPackage#getNUOPCDriver__ImplementsSetModelServices_Attached()
 	 * @model required="true" derived="true"
-	 *        annotation="http://www.eclipse.org/emf/2002/Ecore/OCL derivation='self.name = self.parent.implementsSetServices.attachesMethod->select(m|m.name=self.parent.genericImports.importsLabelSetModelServices).userRoutine->asSequence()->first()'"
 	 *        annotation="http://www.earthsystemcog.org/projects/nuopc essential='true'"
+	 *        annotation="http://www.eclipse.org/emf/2002/Ecore/OCL derivation='self.name = self.parent.implementsSetServices.attachesMethod->select(m|m.name=self.parent.genericImports.importsLabelSetModelServices).userRoutine->asSequence()->first()'"
 	 * @generated
 	 */
 	boolean isAttached();

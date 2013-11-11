@@ -62,6 +62,7 @@ public class AttachesMethodItemProvider
 
 			addNamePropertyDescriptor(object);
 			addUserRoutinePropertyDescriptor(object);
+			addIndexPropertyDescriptor(object);
 		}
 		return itemPropertyDescriptors;
 	}
@@ -111,6 +112,28 @@ public class AttachesMethodItemProvider
 	}
 
 	/**
+	 * This adds a property descriptor for the Index feature.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	protected void addIndexPropertyDescriptor(Object object) {
+		itemPropertyDescriptors.add
+			(createItemPropertyDescriptor
+				(((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(),
+				 getResourceLocator(),
+				 getString("_UI_AttachesMethod_index_feature"),
+				 getString("_UI_PropertyDescriptor_description", "_UI_AttachesMethod_index_feature", "_UI_AttachesMethod_type"),
+				 NUOPCPackage.Literals.ATTACHES_METHOD__INDEX,
+				 true,
+				 false,
+				 false,
+				 ItemPropertyDescriptor.GENERIC_VALUE_IMAGE,
+				 null,
+				 null));
+	}
+
+	/**
 	 * This returns AttachesMethod.gif.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -149,6 +172,7 @@ public class AttachesMethodItemProvider
 		switch (notification.getFeatureID(AttachesMethod.class)) {
 			case NUOPCPackage.ATTACHES_METHOD__NAME:
 			case NUOPCPackage.ATTACHES_METHOD__USER_ROUTINE:
+			case NUOPCPackage.ATTACHES_METHOD__INDEX:
 				fireNotifyChanged(new ViewerNotification(notification, notification.getNotifier(), false, true));
 				return;
 		}

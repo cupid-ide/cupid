@@ -103,7 +103,7 @@ public interface NUOPCPackage extends EPackage {
 	int NUOPC_MODEL__INITIALIZE = 3;
 
 	/**
-	 * The feature id for the '<em><b>Implements Model Advance</b></em>' containment reference.
+	 * The feature id for the '<em><b>Implements Model Advance</b></em>' containment reference list.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
@@ -1235,13 +1235,22 @@ public interface NUOPCPackage extends EPackage {
 	int ATTACHES_METHOD__USER_ROUTINE = 1;
 
 	/**
+	 * The feature id for the '<em><b>Index</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int ATTACHES_METHOD__INDEX = 2;
+
+	/**
 	 * The number of structural features of the '<em>Attaches Method</em>' class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int ATTACHES_METHOD_FEATURE_COUNT = 2;
+	int ATTACHES_METHOD_FEATURE_COUNT = 3;
 
 	/**
 	 * The number of operations of the '<em>Attaches Method</em>' class.
@@ -1755,10 +1764,10 @@ public interface NUOPCPackage extends EPackage {
 	EReference getNUOPCModel_ImplementsSetServices();
 
 	/**
-	 * Returns the meta object for the containment reference '{@link org.earthsystemcurator.cupid.nuopc.fsml.nuopc.NUOPCModel#getImplementsModelAdvance <em>Implements Model Advance</em>}'.
+	 * Returns the meta object for the containment reference list '{@link org.earthsystemcurator.cupid.nuopc.fsml.nuopc.NUOPCModel#getImplementsModelAdvance <em>Implements Model Advance</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @return the meta object for the containment reference '<em>Implements Model Advance</em>'.
+	 * @return the meta object for the containment reference list '<em>Implements Model Advance</em>'.
 	 * @see org.earthsystemcurator.cupid.nuopc.fsml.nuopc.NUOPCModel#getImplementsModelAdvance()
 	 * @see #getNUOPCModel()
 	 * @generated
@@ -2762,6 +2771,17 @@ public interface NUOPCPackage extends EPackage {
 	EAttribute getAttachesMethod_UserRoutine();
 
 	/**
+	 * Returns the meta object for the attribute '{@link org.earthsystemcurator.cupid.nuopc.fsml.nuopc.AttachesMethod#getIndex <em>Index</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the attribute '<em>Index</em>'.
+	 * @see org.earthsystemcurator.cupid.nuopc.fsml.nuopc.AttachesMethod#getIndex()
+	 * @see #getAttachesMethod()
+	 * @generated
+	 */
+	EAttribute getAttachesMethod_Index();
+
+	/**
 	 * Returns the meta object for class '{@link org.earthsystemcurator.cupid.nuopc.fsml.nuopc.NUOPCDriver__ImplementsSetModelCount <em>Driver Implements Set Model Count</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -3207,7 +3227,7 @@ public interface NUOPCPackage extends EPackage {
 		EReference NUOPC_MODEL__IMPLEMENTS_SET_SERVICES = eINSTANCE.getNUOPCModel_ImplementsSetServices();
 
 		/**
-		 * The meta object literal for the '<em><b>Implements Model Advance</b></em>' containment reference feature.
+		 * The meta object literal for the '<em><b>Implements Model Advance</b></em>' containment reference list feature.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
 		 * @generated
@@ -3981,6 +4001,14 @@ public interface NUOPCPackage extends EPackage {
 		 * @generated
 		 */
 		EAttribute ATTACHES_METHOD__USER_ROUTINE = eINSTANCE.getAttachesMethod_UserRoutine();
+
+		/**
+		 * The meta object literal for the '<em><b>Index</b></em>' attribute feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EAttribute ATTACHES_METHOD__INDEX = eINSTANCE.getAttachesMethod_Index();
 
 		/**
 		 * The meta object literal for the '{@link org.earthsystemcurator.cupid.nuopc.fsml.nuopc.impl.NUOPCDriver__ImplementsSetModelCountImpl <em>Driver Implements Set Model Count</em>}' class.

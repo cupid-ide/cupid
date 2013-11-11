@@ -31,7 +31,7 @@
     <eStructuralFeatures xsi:type="ecore:EReference" name="initialize" lowerBound="1"
         eType="#//Model_Init" containment="true" eOpposite="#//Model_Init/parent"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="implementsModelAdvance"
-        eType="#//ModelAdvance" containment="true" eOpposite="#//ModelAdvance/parent">
+        upperBound="-1" eType="#//ModelAdvance" containment="true" eOpposite="#//ModelAdvance/parent">
       <eAnnotations source="http://www.earthsystemcog.org/projects/nuopc">
         <details key="mapping" value="subroutine: &quot;#name(type(ESMF_GridComp), integer)&quot;"/>
       </eAnnotations>
@@ -132,7 +132,7 @@
     <eStructuralFeatures xsi:type="ecore:EReference" name="attachesMethod" ordered="false"
         upperBound="-1" eType="#//AttachesMethod" containment="true">
       <eAnnotations source="http://www.earthsystemcog.org/projects/nuopc">
-        <details key="mapping" value="call: &quot;ESMF_MethodAdd(#ignore, #name, #userRoutine, #ignore)&quot;"/>
+        <details key="mapping" value="call: &quot;ESMF_MethodAdd(#ignore, index=#index, label=#name, userRoutine=#userRoutine, rc=#ignore)&quot;"/>
       </eAnnotations>
     </eStructuralFeatures>
   </eClassifiers>
@@ -201,11 +201,11 @@
     </eStructuralFeatures>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="advertisesOrRegistered"
         lowerBound="1" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean">
-      <eAnnotations source="http://www.eclipse.org/emf/2002/Ecore/OCL">
-        <details key="derivation" value="self.registeredInSetServices or self.advertisesAtLeastOneField"/>
-      </eAnnotations>
       <eAnnotations source="http://www.earthsystemcog.org/projects/nuopc">
         <details key="essential" value="true"/>
+      </eAnnotations>
+      <eAnnotations source="http://www.eclipse.org/emf/2002/Ecore/OCL">
+        <details key="derivation" value="self.registeredInSetServices or self.advertisesAtLeastOneField"/>
       </eAnnotations>
     </eStructuralFeatures>
   </eClassifiers>
@@ -264,11 +264,11 @@
     </eStructuralFeatures>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="realizesOrRegistered" lowerBound="1"
         eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean">
-      <eAnnotations source="http://www.eclipse.org/emf/2002/Ecore/OCL">
-        <details key="derivation" value="self.registeredInSetServices or self.realizesAtLeastOneField"/>
-      </eAnnotations>
       <eAnnotations source="http://www.earthsystemcog.org/projects/nuopc">
         <details key="essential" value="true"/>
+      </eAnnotations>
+      <eAnnotations source="http://www.eclipse.org/emf/2002/Ecore/OCL">
+        <details key="derivation" value="self.registeredInSetServices or self.realizesAtLeastOneField"/>
       </eAnnotations>
     </eStructuralFeatures>
   </eClassifiers>
@@ -389,11 +389,12 @@
     </eStructuralFeatures>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="attachedModelAdvance" lowerBound="1"
         eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean" derived="true">
-      <eAnnotations source="http://www.eclipse.org/emf/2002/Ecore/OCL">
-        <details key="derivation" value="self.name = self.parent.implementsSetServices.attachesMethod->select(m|m.name=self.parent.genericImports.importsLabelModelAdvance).userRoutine->asSequence()->first()"/>
-      </eAnnotations>
       <eAnnotations source="http://www.earthsystemcog.org/projects/nuopc">
         <details key="essential" value="true"/>
+        <details key="derivation_real" value="self.name = self.parent.implementsSetServices.attachesMethod->select(m|m.name=self.parent.genericImports.importsLabelModelAdvance).userRoutine->asSequence()->first()"/>
+      </eAnnotations>
+      <eAnnotations source="http://www.eclipse.org/emf/2002/Ecore/OCL">
+        <details key="derivation" value="self.parent &lt;> null and self.parent.implementsSetServices &lt;> null and &#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;self.parent.implementsSetServices.attachesMethod->size() > 0 and&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;self.parent.genericImports &lt;> null and self.parent.genericImports.importsLabelModelAdvance &lt;> null and&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;self.parent.implementsSetServices.attachesMethod->select(m|m.name=self.parent.genericImports.importsLabelModelAdvance).userRoutine->includes(self.name)"/>
       </eAnnotations>
     </eStructuralFeatures>
   </eClassifiers>
@@ -420,15 +421,13 @@
       </eAnnotations>
     </eStructuralFeatures>
     <eStructuralFeatures xsi:type="ecore:EReference" name="implementsSetModelCount"
-        ordered="false" eType="#//NUOPCDriver__ImplementsSetModelCount" containment="true"
-        eOpposite="#//NUOPCDriver__ImplementsSetModelCount/parent">
+        eType="#//NUOPCDriver__ImplementsSetModelCount" containment="true" eOpposite="#//NUOPCDriver__ImplementsSetModelCount/parent">
       <eAnnotations source="http://www.earthsystemcog.org/projects/nuopc">
         <details key="mapping" value="subroutine: &quot;#name(type(ESMF_GridComp) #gcomp, integer #rc)&quot;"/>
       </eAnnotations>
     </eStructuralFeatures>
     <eStructuralFeatures xsi:type="ecore:EReference" name="implementsSetModelServices"
-        ordered="false" eType="#//NUOPCDriver__ImplementsSetModelServices" containment="true"
-        eOpposite="#//NUOPCDriver__ImplementsSetModelServices/parent">
+        eType="#//NUOPCDriver__ImplementsSetModelServices" containment="true" eOpposite="#//NUOPCDriver__ImplementsSetModelServices/parent">
       <eAnnotations source="http://www.earthsystemcog.org/projects/nuopc">
         <details key="mapping" value="subroutine: &quot;#name(type(ESMF_GridComp) #gcomp, integer #rc)&quot;"/>
       </eAnnotations>
@@ -516,6 +515,7 @@
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="name" lowerBound="1" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="userRoutine" lowerBound="1"
         eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="index" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="NUOPCDriver__ImplementsSetModelCount">
     <eAnnotations source="http://www.earthsystemcog.org/projects/nuopc">
@@ -548,11 +548,11 @@
     </eStructuralFeatures>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="attached" lowerBound="1"
         eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean" derived="true">
-      <eAnnotations source="http://www.eclipse.org/emf/2002/Ecore/OCL">
-        <details key="derivation" value="self.name = self.parent.implementsSetServices.attachesMethod->select(m|m.name=self.parent.genericImports.importsLabelSetModelCount).userRoutine->asSequence()->first()"/>
-      </eAnnotations>
       <eAnnotations source="http://www.earthsystemcog.org/projects/nuopc">
         <details key="essential" value="true"/>
+      </eAnnotations>
+      <eAnnotations source="http://www.eclipse.org/emf/2002/Ecore/OCL">
+        <details key="derivation" value="self.name = self.parent.implementsSetServices.attachesMethod->select(m|m.name=self.parent.genericImports.importsLabelSetModelCount).userRoutine->asSequence()->first()"/>
       </eAnnotations>
     </eStructuralFeatures>
   </eClassifiers>
@@ -587,11 +587,11 @@
     </eStructuralFeatures>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="attached" lowerBound="1"
         eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean" derived="true">
-      <eAnnotations source="http://www.eclipse.org/emf/2002/Ecore/OCL">
-        <details key="derivation" value="self.name = self.parent.implementsSetServices.attachesMethod->select(m|m.name=self.parent.genericImports.importsLabelSetModelServices).userRoutine->asSequence()->first()"/>
-      </eAnnotations>
       <eAnnotations source="http://www.earthsystemcog.org/projects/nuopc">
         <details key="essential" value="true"/>
+      </eAnnotations>
+      <eAnnotations source="http://www.eclipse.org/emf/2002/Ecore/OCL">
+        <details key="derivation" value="self.name = self.parent.implementsSetServices.attachesMethod->select(m|m.name=self.parent.genericImports.importsLabelSetModelServices).userRoutine->asSequence()->first()"/>
       </eAnnotations>
     </eStructuralFeatures>
   </eClassifiers>

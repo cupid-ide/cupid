@@ -14,6 +14,7 @@ import org.eclipse.emf.ecore.EObject;
  * <ul>
  *   <li>{@link org.earthsystemcurator.cupid.nuopc.fsml.nuopc.AttachesMethod#getName <em>Name</em>}</li>
  *   <li>{@link org.earthsystemcurator.cupid.nuopc.fsml.nuopc.AttachesMethod#getUserRoutine <em>User Routine</em>}</li>
+ *   <li>{@link org.earthsystemcurator.cupid.nuopc.fsml.nuopc.AttachesMethod#getIndex <em>Index</em>}</li>
  * </ul>
  * </p>
  *
@@ -73,5 +74,31 @@ public interface AttachesMethod extends EObject {
 	 * @generated
 	 */
 	void setUserRoutine(String value);
+
+	/**
+	 * Returns the value of the '<em><b>Index</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <p>
+	 * If the meaning of the '<em>Index</em>' attribute isn't clear,
+	 * there really should be more of a description here...
+	 * </p>
+	 * <!-- end-user-doc -->
+	 * @return the value of the '<em>Index</em>' attribute.
+	 * @see #setIndex(String)
+	 * @see org.earthsystemcurator.cupid.nuopc.fsml.nuopc.NUOPCPackage#getAttachesMethod_Index()
+	 * @model
+	 * @generated
+	 */
+	String getIndex();
+
+	/**
+	 * Sets the value of the '{@link org.earthsystemcurator.cupid.nuopc.fsml.nuopc.AttachesMethod#getIndex <em>Index</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @param value the new value of the '<em>Index</em>' attribute.
+	 * @see #getIndex()
+	 * @generated
+	 */
+	void setIndex(String value);
 
 } // AttachesMethod

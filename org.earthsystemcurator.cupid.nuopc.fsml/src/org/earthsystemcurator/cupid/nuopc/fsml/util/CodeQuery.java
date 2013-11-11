@@ -37,6 +37,7 @@ import org.eclipse.photran.internal.core.parser.ASTTypeDeclarationStmtNode;
 import org.eclipse.photran.internal.core.parser.ASTUseStmtNode;
 import org.eclipse.photran.internal.core.parser.ASTVarOrFnRefNode;
 import org.eclipse.photran.internal.core.parser.ASTVisitor;
+import org.eclipse.photran.internal.core.parser.IASTListNode;
 import org.eclipse.photran.internal.core.parser.IASTNode;
 import org.eclipse.photran.internal.core.parser.IExpr;
 import org.eclipse.photran.internal.core.vpg.EdgeType;
@@ -922,9 +923,42 @@ public class CodeQuery {
 			
 			//deal with arguments now
 			if (vars != null) {
-				if (vars.size() != csn.getArgList().size()) continue;
 				
-				//TODO: fix so order of keyword arguments is insignificant
+				for (int i = 0; i < keywords.size(); i++) {
+					
+					ASTSubroutineArgNode san;
+					
+					if (keywords.get(i) == null) {
+						//match by index						
+						if (csn.getArgList().size() <= i) {
+							continue csnloop;
+						}
+						
+						san = csn.getArgList().get(i);
+					}
+					else {
+						//match by keyword
+						san = findArgByKeyword(keywords.get(i), csn.getArgList());						
+					}
+					
+					if (san == null) {
+						continue csnloop;
+					}
+					else if (vars.get(i).startsWith("#")) {
+						//TODO: need to determine semantics for how far to resolve variables
+						//for now, just use textual value of expression
+						//metavariableMap.put(vars.get(i), propagateValOrSymbol(san.getExpr()));		
+						metavariableMap.put(vars.get(i), san.getExpr().toString());	
+					}
+					else if (!san.getExpr().toString().equalsIgnoreCase(vars.get(i))) {
+						continue csnloop;
+					}
+					
+					
+				}
+				
+				/*
+				//if (vars.size() != csn.getArgList().size()) continue;				
 				for (int i = 0; i < csn.getArgList().size(); i++) {
 					ASTSubroutineArgNode san = csn.getArgList().get(i);
 					if (keywords.get(i) != null && (san.getName() == null || !san.getName().getText().equalsIgnoreCase(keywords.get(i)))) {
@@ -942,12 +976,23 @@ public class CodeQuery {
 						continue csnloop;						
 					}
 				}
+				*/
+				
 			}
 			
 			//everything matched, so add to result
 			result.put(csn, metavariableMap);
 		}
 		return result;
+	}
+	
+	public static ASTSubroutineArgNode findArgByKeyword(String keyword, IASTListNode<ASTSubroutineArgNode> argList) {
+		for (ASTSubroutineArgNode san : argList) {
+			if (san.getName() != null && san.getName().getText().equalsIgnoreCase(keyword)) {
+				return san;
+			}
+		}
+		return null;
 	}
 	
 	public static boolean calls(IASTNode node, Map<String, Object> params) {

@@ -247,9 +247,12 @@ public class ReverseHandler extends AbstractHandler {
         
         
         //save to file for debugging purposes
-        /*
-        IFile revFile = selectedProject.getFile("reverse.nuopc");
-        URI fileURI = URI.createFileURI(revFile.getFullPath().toOSString());            
+        
+        IFile revFile = selectedProject.getFile("reverse.nuopc");       
+        System.out.println("IFile location: " + revFile.getLocation());
+        URI fileURI = URI.createFileURI(revFile.getLocation().toString());            
+        System.out.println("Reversed file URL: " + fileURI.toFileString());
+        
         Resource resource = resourceSet.createResource(fileURI); 
                
         resource.getContents().clear();
@@ -260,7 +263,7 @@ public class ReverseHandler extends AbstractHandler {
 			System.out.println("Error saving model file: ");
 			e1.printStackTrace();
 		}
-     	*/
+     	
      
         //TODO: do I need to do this?
         vpg.releaseAllASTs();

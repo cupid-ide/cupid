@@ -21,6 +21,7 @@ import org.eclipse.emf.ecore.impl.EObjectImpl;
  * <ul>
  *   <li>{@link org.earthsystemcurator.cupid.nuopc.fsml.nuopc.impl.AttachesMethodImpl#getName <em>Name</em>}</li>
  *   <li>{@link org.earthsystemcurator.cupid.nuopc.fsml.nuopc.impl.AttachesMethodImpl#getUserRoutine <em>User Routine</em>}</li>
+ *   <li>{@link org.earthsystemcurator.cupid.nuopc.fsml.nuopc.impl.AttachesMethodImpl#getIndex <em>Index</em>}</li>
  * </ul>
  * </p>
  *
@@ -66,6 +67,26 @@ public class AttachesMethodImpl extends EObjectImpl implements AttachesMethod {
 	 * @ordered
 	 */
 	protected String userRoutine = USER_ROUTINE_EDEFAULT;
+
+	/**
+	 * The default value of the '{@link #getIndex() <em>Index</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #getIndex()
+	 * @generated
+	 * @ordered
+	 */
+	protected static final String INDEX_EDEFAULT = null;
+
+	/**
+	 * The cached value of the '{@link #getIndex() <em>Index</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #getIndex()
+	 * @generated
+	 * @ordered
+	 */
+	protected String index = INDEX_EDEFAULT;
 
 	/**
 	 * <!-- begin-user-doc -->
@@ -133,6 +154,27 @@ public class AttachesMethodImpl extends EObjectImpl implements AttachesMethod {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	public String getIndex() {
+		return index;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public void setIndex(String newIndex) {
+		String oldIndex = index;
+		index = newIndex;
+		if (eNotificationRequired())
+			eNotify(new ENotificationImpl(this, Notification.SET, NUOPCPackage.ATTACHES_METHOD__INDEX, oldIndex, index));
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
 	@Override
 	public Object eGet(int featureID, boolean resolve, boolean coreType) {
 		switch (featureID) {
@@ -140,6 +182,8 @@ public class AttachesMethodImpl extends EObjectImpl implements AttachesMethod {
 				return getName();
 			case NUOPCPackage.ATTACHES_METHOD__USER_ROUTINE:
 				return getUserRoutine();
+			case NUOPCPackage.ATTACHES_METHOD__INDEX:
+				return getIndex();
 		}
 		return super.eGet(featureID, resolve, coreType);
 	}
@@ -157,6 +201,9 @@ public class AttachesMethodImpl extends EObjectImpl implements AttachesMethod {
 				return;
 			case NUOPCPackage.ATTACHES_METHOD__USER_ROUTINE:
 				setUserRoutine((String)newValue);
+				return;
+			case NUOPCPackage.ATTACHES_METHOD__INDEX:
+				setIndex((String)newValue);
 				return;
 		}
 		super.eSet(featureID, newValue);
@@ -176,6 +223,9 @@ public class AttachesMethodImpl extends EObjectImpl implements AttachesMethod {
 			case NUOPCPackage.ATTACHES_METHOD__USER_ROUTINE:
 				setUserRoutine(USER_ROUTINE_EDEFAULT);
 				return;
+			case NUOPCPackage.ATTACHES_METHOD__INDEX:
+				setIndex(INDEX_EDEFAULT);
+				return;
 		}
 		super.eUnset(featureID);
 	}
@@ -192,6 +242,8 @@ public class AttachesMethodImpl extends EObjectImpl implements AttachesMethod {
 				return NAME_EDEFAULT == null ? name != null : !NAME_EDEFAULT.equals(name);
 			case NUOPCPackage.ATTACHES_METHOD__USER_ROUTINE:
 				return USER_ROUTINE_EDEFAULT == null ? userRoutine != null : !USER_ROUTINE_EDEFAULT.equals(userRoutine);
+			case NUOPCPackage.ATTACHES_METHOD__INDEX:
+				return INDEX_EDEFAULT == null ? index != null : !INDEX_EDEFAULT.equals(index);
 		}
 		return super.eIsSet(featureID);
 	}
@@ -210,6 +262,8 @@ public class AttachesMethodImpl extends EObjectImpl implements AttachesMethod {
 		result.append(name);
 		result.append(", userRoutine: ");
 		result.append(userRoutine);
+		result.append(", index: ");
+		result.append(index);
 		result.append(')');
 		return result.toString();
 	}

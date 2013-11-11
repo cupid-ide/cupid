@@ -246,8 +246,8 @@ public interface ModelImplementsInitP2 extends EObject {
 	 * @see #setRealizesOrRegistered(boolean)
 	 * @see org.earthsystemcurator.cupid.nuopc.fsml.nuopc.NUOPCPackage#getModelImplementsInitP2_RealizesOrRegistered()
 	 * @model required="true"
-	 *        annotation="http://www.eclipse.org/emf/2002/Ecore/OCL derivation='self.registeredInSetServices or self.realizesAtLeastOneField'"
 	 *        annotation="http://www.earthsystemcog.org/projects/nuopc essential='true'"
+	 *        annotation="http://www.eclipse.org/emf/2002/Ecore/OCL derivation='self.registeredInSetServices or self.realizesAtLeastOneField'"
 	 * @generated
 	 */
 	boolean isRealizesOrRegistered();

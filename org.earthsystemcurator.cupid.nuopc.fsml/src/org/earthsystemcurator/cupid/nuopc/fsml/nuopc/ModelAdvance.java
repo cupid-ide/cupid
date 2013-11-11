@@ -91,8 +91,8 @@ public interface ModelAdvance extends EObject {
 	 * @see #setAttachedModelAdvance(boolean)
 	 * @see org.earthsystemcurator.cupid.nuopc.fsml.nuopc.NUOPCPackage#getModelAdvance_AttachedModelAdvance()
 	 * @model required="true" derived="true"
-	 *        annotation="http://www.eclipse.org/emf/2002/Ecore/OCL derivation='self.name = self.parent.implementsSetServices.attachesMethod->select(m|m.name=self.parent.genericImports.importsLabelModelAdvance).userRoutine->asSequence()->first()'"
-	 *        annotation="http://www.earthsystemcog.org/projects/nuopc essential='true'"
+	 *        annotation="http://www.earthsystemcog.org/projects/nuopc essential='true' derivation_real='self.name = self.parent.implementsSetServices.attachesMethod->select(m|m.name=self.parent.genericImports.importsLabelModelAdvance).userRoutine->asSequence()->first()'"
+	 *        annotation="http://www.eclipse.org/emf/2002/Ecore/OCL derivation='self.parent <> null and self.parent.implementsSetServices <> null and \n\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\tself.parent.implementsSetServices.attachesMethod->size() > 0 and\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\tself.parent.genericImports <> null and self.parent.genericImports.importsLabelModelAdvance <> null and\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\tself.parent.implementsSetServices.attachesMethod->select(m|m.name=self.parent.genericImports.importsLabelModelAdvance).userRoutine->includes(self.name)'"
 	 * @generated
 	 */
 	boolean isAttachedModelAdvance();

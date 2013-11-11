@@ -244,8 +244,8 @@ public interface ModelImplementsInitP1 extends EObject {
 	 * @see #setAdvertisesOrRegistered(boolean)
 	 * @see org.earthsystemcurator.cupid.nuopc.fsml.nuopc.NUOPCPackage#getModelImplementsInitP1_AdvertisesOrRegistered()
 	 * @model required="true"
-	 *        annotation="http://www.eclipse.org/emf/2002/Ecore/OCL derivation='self.registeredInSetServices or self.advertisesAtLeastOneField'"
 	 *        annotation="http://www.earthsystemcog.org/projects/nuopc essential='true'"
+	 *        annotation="http://www.eclipse.org/emf/2002/Ecore/OCL derivation='self.registeredInSetServices or self.advertisesAtLeastOneField'"
 	 * @generated
 	 */
 	boolean isAdvertisesOrRegistered();

@@ -198,7 +198,7 @@ public interface ModelImplementsSetServices extends EObject {
 	 * @return the value of the '<em>Attaches Method</em>' containment reference list.
 	 * @see org.earthsystemcurator.cupid.nuopc.fsml.nuopc.NUOPCPackage#getModelImplementsSetServices_AttachesMethod()
 	 * @model containment="true" ordered="false"
-	 *        annotation="http://www.earthsystemcog.org/projects/nuopc mapping='call: \"ESMF_MethodAdd(#ignore, #name, #userRoutine, #ignore)\"'"
+	 *        annotation="http://www.earthsystemcog.org/projects/nuopc mapping='call: \"ESMF_MethodAdd(#ignore, index=#index, label=#name, userRoutine=#userRoutine, rc=#ignore)\"'"
 	 * @generated
 	 */
 	EList<AttachesMethod> getAttachesMethod();
