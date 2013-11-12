@@ -126,7 +126,7 @@
     <eStructuralFeatures xsi:type="ecore:EReference" name="callsSetEntryPoint" upperBound="-1"
         eType="#//CallsSetEntryPoint" containment="true">
       <eAnnotations source="http://www.earthsystemcog.org/projects/nuopc">
-        <details key="mapping" value="call: &quot;ESMF_GridCompSetEntryPoint(#ignore, #method, userRoutine=#userRoutine, phase=#phase, rc=#ignore)&quot;"/>
+        <details key="mapping" value="call: &quot;ESMF_GridCompSetEntryPoint(#ignore, #method, userRoutine=#userRoutine, phase?=#phase, rc=#ignore)&quot;"/>
       </eAnnotations>
     </eStructuralFeatures>
     <eStructuralFeatures xsi:type="ecore:EReference" name="attachesMethod" ordered="false"

@@ -801,10 +801,11 @@ public class CodeQuery {
 	
 	//TODO: change this to match new metavar signature
 	
-	//public static Pattern P_CALLSIG = Pattern.compile("((?:(?:#(?:../)*)?\\w+)|(?:\\*))(\\(((?:((\\w+)\\s*=\\s*)?(\\s*((?:#(?:../)*)?\\w+))?,?\\s*)*)\\))?");
-	
-	public static Pattern P_CALLSIG = Pattern.compile("(#?(?:(?:\\.\\.|\\w+)/)*\\w+|(?:\\*))(\\(((?:((\\w+)\\s*=\\s*)?(\\s*((?:#(?:../)*)?\\w+))?,?\\s*)*)\\))?");	
-	public static Pattern P_CALLARG = Pattern.compile("((\\w+)\\s*=\\s*)?((?:#(?:../)*)?\\w+)");
+	//public static Pattern P_CALLSIG = Pattern.compile("(#?(?:(?:\\.\\.|\\w+)/)*\\w+|(?:\\*))(\\(((?:((\\w+)\\s*=\\s*)?(\\s*((?:#(?:../)*)?\\w+))?,?\\s*)*)\\))?");	
+	//public static Pattern P_CALLARG = Pattern.compile("((\\w+)\\s*=\\s*)?((?:#(?:../)*)?\\w+)");
+		
+	public static Pattern P_CALLSIG = Pattern.compile("(#?(?:(?:\\.\\.|\\w+)/)*\\w+|(?:\\*))(\\(((?:((\\w+)\\??\\s*=\\s*)?(\\s*((?:#(?:../)*)?\\w+))?,?\\s*)*)\\))?");	
+	public static Pattern P_CALLARG = Pattern.compile("((\\w+)\\??\\s*=\\s*)?((?:#(?:../)*)?\\w+)");
 	
 	//out[0] --> list of vars (may be null)
 	//out[1] --> list of keywords (may be null)
@@ -840,6 +841,9 @@ public class CodeQuery {
 			out[1] = new ArrayList<String>();
 				
 			while (argMatcher.find()) {
+				for (int i = 0; i <= argMatcher.groupCount(); i++) {
+					System.out.println("argMatcher Group (" + i + ") --> " + argMatcher.group(i));
+				}
 				out[1].add(argMatcher.group(2));
 				out[0].add(argMatcher.group(3));
 			}

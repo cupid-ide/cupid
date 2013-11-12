@@ -181,7 +181,7 @@ public interface ModelImplementsSetServices extends EObject {
 	 * @return the value of the '<em>Calls Set Entry Point</em>' containment reference list.
 	 * @see org.earthsystemcurator.cupid.nuopc.fsml.nuopc.NUOPCPackage#getModelImplementsSetServices_CallsSetEntryPoint()
 	 * @model containment="true"
-	 *        annotation="http://www.earthsystemcog.org/projects/nuopc mapping='call: \"ESMF_GridCompSetEntryPoint(#ignore, #method, userRoutine=#userRoutine, phase=#phase, rc=#ignore)\"'"
+	 *        annotation="http://www.earthsystemcog.org/projects/nuopc mapping='call: \"ESMF_GridCompSetEntryPoint(#ignore, #method, userRoutine=#userRoutine, phase?=#phase, rc=#ignore)\"'"
 	 * @generated
 	 */
 	EList<CallsSetEntryPoint> getCallsSetEntryPoint();

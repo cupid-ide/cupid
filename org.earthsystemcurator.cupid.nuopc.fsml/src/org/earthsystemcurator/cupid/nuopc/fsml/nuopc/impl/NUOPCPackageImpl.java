@@ -2017,7 +2017,7 @@ public class NUOPCPackageImpl extends EPackageImpl implements NUOPCPackage {
 		  (getModelImplementsSetServices_CallsSetEntryPoint(), 
 		   source, 
 		   new String[] {
-			 "mapping", "call: \"ESMF_GridCompSetEntryPoint(#ignore, #method, userRoutine=#userRoutine, phase=#phase, rc=#ignore)\""
+			 "mapping", "call: \"ESMF_GridCompSetEntryPoint(#ignore, #method, userRoutine=#userRoutine, phase?=#phase, rc=#ignore)\""
 		   });		
 		addAnnotation
 		  (getModelImplementsSetServices_AttachesMethod(), 
