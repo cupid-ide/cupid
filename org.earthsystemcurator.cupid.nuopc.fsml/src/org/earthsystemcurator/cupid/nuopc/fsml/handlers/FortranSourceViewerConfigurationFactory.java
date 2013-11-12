@@ -9,13 +9,9 @@ import org.eclipse.cdt.internal.ui.text.c.hover.AbstractAnnotationHover;
 import org.eclipse.cdt.internal.ui.text.correction.MarkerResolutionProposal;
 import org.eclipse.core.resources.IMarker;
 import org.eclipse.core.runtime.CoreException;
-import org.eclipse.emf.common.util.Diagnostic;
-import org.eclipse.jface.dialogs.MessageDialog;
-import org.eclipse.jface.text.DefaultTextHover;
 import org.eclipse.jface.text.IDocument;
 import org.eclipse.jface.text.IRegion;
 import org.eclipse.jface.text.ITextHover;
-import org.eclipse.jface.text.ITextHoverExtension2;
 import org.eclipse.jface.text.ITextViewer;
 import org.eclipse.jface.text.Position;
 import org.eclipse.jface.text.contentassist.ICompletionProposal;
@@ -39,7 +35,7 @@ import org.eclipse.ui.IMarkerResolution;
 import org.eclipse.ui.texteditor.MarkerAnnotation;
 
 
-@SuppressWarnings("restriction")
+@SuppressWarnings({ "restriction" })
 public class FortranSourceViewerConfigurationFactory implements
 		IFortranSourceViewerConfigurationFactory {
 
