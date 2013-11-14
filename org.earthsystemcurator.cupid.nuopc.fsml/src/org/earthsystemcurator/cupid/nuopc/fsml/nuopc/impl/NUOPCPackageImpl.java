@@ -1741,7 +1741,7 @@ public class NUOPCPackageImpl extends EPackageImpl implements NUOPCPackage {
 		initEClass(callsSetEntryPointEClass, CallsSetEntryPoint.class, "CallsSetEntryPoint", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 		initEAttribute(getCallsSetEntryPoint_Method(), ecorePackage.getEString(), "method", null, 1, 1, CallsSetEntryPoint.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEAttribute(getCallsSetEntryPoint_UserRoutine(), ecorePackage.getEString(), "userRoutine", null, 1, 1, CallsSetEntryPoint.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-		initEAttribute(getCallsSetEntryPoint_Phase(), ecorePackage.getEString(), "phase", null, 1, 1, CallsSetEntryPoint.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEAttribute(getCallsSetEntryPoint_Phase(), ecorePackage.getEString(), "phase", null, 0, 1, CallsSetEntryPoint.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
 		initEClass(modelImplementsInitP1EClass, ModelImplementsInitP1.class, "ModelImplementsInitP1", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 		initEReference(getModelImplementsInitP1_Parent(), this.getModel_Init(), this.getModel_Init_ImplementsInitP1(), "parent", null, 1, 1, ModelImplementsInitP1.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);

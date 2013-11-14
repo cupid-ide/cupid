@@ -60,16 +60,22 @@ public class ReverseEngineer {
 		
 		FSM fsm = new FSM(root);
 		
+		//a bit of a hack here for the root name
+		EStructuralFeature sfName = eClass.getEStructuralFeature("name");
+		if (sfName != null) {
+			root.eSet(sfName, project.getName());
+		}
+		
 		//Set<String> filesToConsider = new HashSet<String>();
 		
 		Set<IFortranAST> asts = new HashSet<IFortranAST>();	
 				
 		try {
 			String fileList = project.getPersistentProperty(CupidPropertyPage.NUOPC_FILES_QN);
-			if (fileList != null) {
+			if (fileList != null && fileList.length() > 1) {
 				for (String path : fileList.split("\n")) {		
-					IFile f = (IFile) project.findMember(path);
-					System.out.println("Adding Fortran file: " + path);
+					IFile f = (IFile) project.findMember(path.trim());
+					System.out.println("Adding Fortran file: " + path.trim());
 					if (f != null) {
 						IFortranAST ast = vpg.acquireTransientAST(f);						
 						if (ast == null) {
@@ -85,7 +91,26 @@ public class ReverseEngineer {
 				}
 			}
 			else {
-				//TODO: handle case where we check all files
+				for (IResource r : project.members()) {
+					//TODO: deal with folders - recursive method
+					if (r instanceof IFile) {
+						//System.out.println("Full path: " + r.getFullPath());
+						//TODO: deal with these file extensions
+						if (r.getProjectRelativePath().getFileExtension() != null &&
+							(r.getProjectRelativePath().getFileExtension().equalsIgnoreCase("f") ||
+							r.getProjectRelativePath().getFileExtension().equalsIgnoreCase("f90"))) {
+							System.out.println("Adding Fortran file: " + r);
+							IFortranAST ast = vpg.acquireTransientAST((IFile) r);						
+							if (ast == null) {
+								System.out.println("Warning:  AST not found for file: " + r.getName());
+							}
+							else {
+								asts.add(ast);
+							}
+						}
+					
+					}
+				}
 			}
 		} 
 		catch (CoreException e1) {

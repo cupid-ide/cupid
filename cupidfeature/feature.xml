@@ -41,31 +41,23 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SO
       <import plugin="org.eclipse.emf.ecore.xmi"/>
       <import plugin="org.eclipse.emf.edit.ui"/>
       <import plugin="org.eclipse.ui.ide" version="3.9.0" match="greaterOrEqual"/>
-      <import feature="org.eclipse.ocl.examples" version="3.2.1.v20120919-0602"/>
       <import plugin="org.eclipse.emf.ecore"/>
       <import plugin="org.eclipse.photran.core.vpg" version="8.0.0" match="greaterOrEqual"/>
-      <import plugin="org.eclipse.photran.core" version="8.0.0" match="greaterOrEqual"/>
-      <import plugin="org.eclipse.rephraserengine.core" version="8.0.0" match="greaterOrEqual"/>
       <import plugin="org.eclipse.ui"/>
       <import plugin="org.eclipse.ltk.core.refactoring" version="3.6.0" match="greaterOrEqual"/>
-      <import plugin="org.eclipse.text" version="3.5.200" match="greaterOrEqual"/>
       <import plugin="org.eclipse.emf.compare" version="3.0.0" match="greaterOrEqual"/>
       <import plugin="org.eclipse.emf.compare.ide" version="3.0.0" match="greaterOrEqual"/>
-      <import plugin="org.eclipse.emf.common"/>
-      <import plugin="org.eclipse.ocl" version="3.3.0" match="greaterOrEqual"/>
       <import plugin="org.eclipse.ocl.ecore" version="3.3.0" match="greaterOrEqual"/>
-      <import plugin="org.eclipse.ui.navigator"/>
-      <import plugin="org.eclipse.ui.navigator.resources"/>
       <import plugin="org.eclipse.cdt.core"/>
       <import plugin="org.eclipse.jface.text" version="3.8.100" match="greaterOrEqual"/>
-      <import plugin="org.eclipse.ui.workbench"/>
       <import plugin="org.eclipse.ocl.examples.xtext.oclinecore"/>
       <import plugin="org.eclipse.compare" version="3.5.401" match="greaterOrEqual"/>
-      <import plugin="org.eclipse.photran.ui"/>
-      <import plugin="org.eclipse.photran.cdtinterface" version="8.0.0" match="greaterOrEqual"/>
       <import plugin="org.eclipse.cdt.ui"/>
-      <import plugin="org.eclipse.ui.workbench.texteditor"/>
       <import plugin="org.eclipse.ui.editors" version="3.8.100" match="greaterOrEqual"/>
+      <import plugin="org.eclipse.rephraserengine.core" version="8.0.0" match="greaterOrEqual"/>
+      <import plugin="org.eclipse.photran.cdtinterface" version="8.0.0" match="greaterOrEqual"/>
+      <import feature="org.eclipse.ocl.examples" version="3.2.1.v20120919-0602"/>
+      <import plugin="org.eclipse.photran.ui" version="8.0.0" match="greaterOrEqual"/>
    </requires>
 
    <plugin

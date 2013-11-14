@@ -78,6 +78,7 @@
                   id="org.earthsystemcurator.cupid.nuopc.fsml.menus.reverseCommand"
                   mnemonic="S">
             </command>
+            <!--
             <command
                   commandId="org.earthsystemcurator.cupid.nuopc.fsml.commands.forwardCommand"
                   icon="icons/arrow_left.png"
@@ -85,12 +86,14 @@
                   mnemonic="S"
                   tooltip="Forward engineer (generate code)">
             </command>
+            
             <command
                   commandId="org.earthsystemcurator.cupid.nuopc.fsml.commands.compareCommand"
                   id="org.earthsystemcurator.cupid.nuopc.fsml.menus.compareCommand"
                   mnemonic="S"
                   tooltip="Compare">
             </command>
+            -->
          </menu>
       </menuContribution>
       
@@ -105,6 +108,7 @@
                   id="org.earthsystemcurator.cupid.nuopc.fsml.toolbars.reverseCommand"
                   tooltip="Reverse engineer">
             </command>
+            <!--
             <command
                   commandId="org.earthsystemcurator.cupid.nuopc.fsml.commands.forwardCommand"
                   icon="icons/arrow_left.png"
@@ -117,6 +121,7 @@
                   id="org.earthsystemcurator.cupid.nuopc.fsml.toolbars.compareCommand"
                   tooltip="Compare">
             </command>
+            -->
          </toolbar>
       </menuContribution>
       
@@ -138,6 +143,7 @@
                </with>
             </visibleWhen>
          </command>
+         <!--
          <command
                commandId="org.earthsystemcurator.cupid.nuopc.fsml.commands.forwardCommand"
                id="org.earthsystemcurator.cupid.nuopc.fsml.menus.forwardCommand"
@@ -155,8 +161,10 @@
                </with>
             </visibleWhen>
          </command>
+         -->
       </menuContribution>
       
+       
        
       <menuContribution
             locationURI="popup:org.eclipse.ui.projectConfigure?after=additions">
@@ -221,12 +229,14 @@
                id="org.earthsystemcurator.cupid.nuopc.fsml.toolbars.reverseCommand"
                tooltip="Reverse engineer">
          </command>
+         <!--
          <command
                commandId="org.earthsystemcurator.cupid.nuopc.fsml.commands.forwardCommand"
                icon="icons/arrow_left.png"
                id="org.earthsystemcurator.cupid.nuopc.fsml.toolbars.forwardCommand"
                tooltip="Forward engineer (generate code)">
          </command>
+         -->
       </menuContribution>
    </extension>
    <extension

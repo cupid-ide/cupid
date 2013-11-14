@@ -131,7 +131,7 @@ public class FortranSourceViewerConfigurationFactory implements
 
 		@Override
 		public boolean canFix(Annotation annotation) {
-			System.out.println("canFix");
+			//System.out.println("canFix");
 			if (annotation.getType().equals("org.earthsystemcurator.cupid.nuopc.fsml.cupiderrorannotation")) {
 				return true;
 			}
@@ -140,7 +140,7 @@ public class FortranSourceViewerConfigurationFactory implements
 
 		@Override
 		public boolean canAssist(IQuickAssistInvocationContext invocationContext) {
-			System.out.println("canAssist");
+			//System.out.println("canAssist");
 			return false;
 		}
 

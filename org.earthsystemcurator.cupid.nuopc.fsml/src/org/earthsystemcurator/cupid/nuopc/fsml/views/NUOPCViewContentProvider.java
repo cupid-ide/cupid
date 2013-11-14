@@ -54,7 +54,7 @@ class NUOPCViewContentProvider implements IStructuredContentProvider, ITreeConte
 	}
 	
 	public void inputChanged(Viewer v, Object oldInput, Object newInput) {
-		System.out.println("inputChanged: " + v + " " + newInput);
+		//System.out.println("inputChanged: " + v + " " + newInput);
 		
 		project = null;
 		app = null;

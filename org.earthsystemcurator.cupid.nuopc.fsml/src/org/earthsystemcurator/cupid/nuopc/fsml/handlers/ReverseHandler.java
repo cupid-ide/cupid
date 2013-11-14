@@ -116,9 +116,11 @@ public class ReverseHandler extends AbstractHandler {
 //				qaa.install(sourceViewer);
 //			}
 			
-			IEditorInput input = editor.getEditorInput();
-			if (input instanceof IFileEditorInput) {
-				selectedProject = ((IFileEditorInput) input).getFile().getProject();
+			if (editor != null) {
+				IEditorInput input = editor.getEditorInput();
+				if (input instanceof IFileEditorInput) {
+					selectedProject = ((IFileEditorInput) input).getFile().getProject();
+				}
 			}
 			//return null;
 		}
@@ -169,7 +171,10 @@ public class ReverseHandler extends AbstractHandler {
         for (Diagnostic d : fsm.getDiagnostics()) {
         	Object problemElem = d.getData().get(0);
         	Object refObject = fsm.getReference(problemElem);
-        	Object problemRef = d.getData().get(1);
+        	Object problemRef = null;
+        	if (d.getData().size() > 1) {
+        		problemRef = d.getData().get(1);
+        	}
         	        
         	ScopingNode scope = null;
         	if (refObject instanceof ScopingNode) {
@@ -200,7 +205,7 @@ public class ReverseHandler extends AbstractHandler {
 	                marker.setAttribute(IMarker.MESSAGE, d.getMessage());
 	                marker.setAttribute(IMarker.SEVERITY, IMarker.SEVERITY_ERROR);
 	                
-	                if (problemRef instanceof EReference) {
+	                if (problemRef != null && problemRef instanceof EReference) {
 		                
 	                	final EObject eobj = (EObject) problemElem;
 	                	final EReference eref = (EReference) problemRef;
@@ -249,9 +254,9 @@ public class ReverseHandler extends AbstractHandler {
         //save to file for debugging purposes
         
         IFile revFile = selectedProject.getFile("reverse.nuopc");       
-        System.out.println("IFile location: " + revFile.getLocation());
+        //System.out.println("IFile location: " + revFile.getLocation());
         URI fileURI = URI.createFileURI(revFile.getLocation().toString());            
-        System.out.println("Reversed file URL: " + fileURI.toFileString());
+        //System.out.println("Reversed file URL: " + fileURI.toFileString());
         
         Resource resource = resourceSet.createResource(fileURI); 
                
@@ -329,7 +334,9 @@ public class ReverseHandler extends AbstractHandler {
 			        	
 			        	int oldStart = left.getTokenStart(rd.leftStart());
 			        	int oldEnd = left.getTokenStart(rd.leftEnd()) + left.getTokenLength(rd.leftEnd());
-			        	System.out.println("Range diff: " + rd.toString() + " : " + fileContentsBefore.substring(oldStart, oldEnd));		  
+			        	System.out.println("\n*********Range diff: " + rd.toString());
+			        	System.out.println("BEFORE:\n" + fileContentsBefore.substring(oldStart, oldEnd));
+			        	System.out.println("\nAFTER:\n" + replaceString.substring(start, end));
 			        	
 			        	if (end-start > 2) {
 			        		IMarker marker = f.createMarker("org.earthsystemcurator.cupid.nuopc.fsml.cupidmarker");

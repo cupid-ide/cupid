@@ -86,7 +86,7 @@ public interface CallsSetEntryPoint extends EObject {
 	 * @return the value of the '<em>Phase</em>' attribute.
 	 * @see #setPhase(String)
 	 * @see org.earthsystemcurator.cupid.nuopc.fsml.nuopc.NUOPCPackage#getCallsSetEntryPoint_Phase()
-	 * @model required="true"
+	 * @model
 	 * @generated
 	 */
 	String getPhase();

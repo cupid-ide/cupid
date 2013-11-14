@@ -805,7 +805,7 @@ public class CodeQuery {
 	//public static Pattern P_CALLARG = Pattern.compile("((\\w+)\\s*=\\s*)?((?:#(?:../)*)?\\w+)");
 		
 	public static Pattern P_CALLSIG = Pattern.compile("(#?(?:(?:\\.\\.|\\w+)/)*\\w+|(?:\\*))(\\(((?:((\\w+)\\??\\s*=\\s*)?(\\s*((?:#(?:../)*)?\\w+))?,?\\s*)*)\\))?");	
-	public static Pattern P_CALLARG = Pattern.compile("((\\w+)\\??\\s*=\\s*)?((?:#(?:../)*)?\\w+)");
+	public static Pattern P_CALLARG = Pattern.compile("((\\w+\\??)\\s*=\\s*)?((?:#(?:../)*)?\\w+)");
 	
 	//out[0] --> list of vars (may be null)
 	//out[1] --> list of keywords (may be null)
@@ -841,9 +841,9 @@ public class CodeQuery {
 			out[1] = new ArrayList<String>();
 				
 			while (argMatcher.find()) {
-				for (int i = 0; i <= argMatcher.groupCount(); i++) {
-					System.out.println("argMatcher Group (" + i + ") --> " + argMatcher.group(i));
-				}
+				//for (int i = 0; i <= argMatcher.groupCount(); i++) {
+				//	System.out.println("argMatcher Group (" + i + ") --> " + argMatcher.group(i));
+				//}
 				out[1].add(argMatcher.group(2));
 				out[0].add(argMatcher.group(3));
 			}
@@ -928,7 +928,7 @@ public class CodeQuery {
 			//deal with arguments now
 			if (vars != null) {
 				
-				for (int i = 0; i < keywords.size(); i++) {
+				varloop: for (int i = 0; i < keywords.size(); i++) {
 					
 					ASTSubroutineArgNode san;
 					
@@ -946,7 +946,13 @@ public class CodeQuery {
 					}
 					
 					if (san == null) {
-						continue csnloop;
+						if (keywords.get(i).endsWith("?")) {
+							//optional argument not present, so ignore it
+							continue varloop;
+						}
+						else {
+							continue csnloop;
+						}
 					}
 					else if (vars.get(i).startsWith("#")) {
 						//TODO: need to determine semantics for how far to resolve variables
@@ -991,6 +997,7 @@ public class CodeQuery {
 	}
 	
 	public static ASTSubroutineArgNode findArgByKeyword(String keyword, IASTListNode<ASTSubroutineArgNode> argList) {
+		if (keyword.endsWith("?")) keyword = keyword.substring(0, keyword.length()-1);
 		for (ASTSubroutineArgNode san : argList) {
 			if (san.getName() != null && san.getName().getText().equalsIgnoreCase(keyword)) {
 				return san;
