@@ -156,6 +156,18 @@ public class NUOPCSwitch<T> extends Switch<T> {
 				if (result == null) result = defaultCase(theEObject);
 				return result;
 			}
+			case NUOPCPackage.NUOPC_DRIVER_MODEL_IMPORTS: {
+				NUOPCDriver__ModelImports nuopcDriver__ModelImports = (NUOPCDriver__ModelImports)theEObject;
+				T result = caseNUOPCDriver__ModelImports(nuopcDriver__ModelImports);
+				if (result == null) result = defaultCase(theEObject);
+				return result;
+			}
+			case NUOPCPackage.MODEL_IMPORT: {
+				ModelImport modelImport = (ModelImport)theEObject;
+				T result = caseModelImport(modelImport);
+				if (result == null) result = defaultCase(theEObject);
+				return result;
+			}
 			case NUOPCPackage.NUOPC_DRIVER_IMPLEMENTS_SET_SERVICES: {
 				NUOPCDriver__ImplementsSetServices nuopcDriver__ImplementsSetServices = (NUOPCDriver__ImplementsSetServices)theEObject;
 				T result = caseNUOPCDriver__ImplementsSetServices(nuopcDriver__ImplementsSetServices);
@@ -177,6 +189,18 @@ public class NUOPCSwitch<T> extends Switch<T> {
 			case NUOPCPackage.NUOPC_DRIVER_IMPLEMENTS_SET_MODEL_SERVICES: {
 				NUOPCDriver__ImplementsSetModelServices nuopcDriver__ImplementsSetModelServices = (NUOPCDriver__ImplementsSetModelServices)theEObject;
 				T result = caseNUOPCDriver__ImplementsSetModelServices(nuopcDriver__ImplementsSetModelServices);
+				if (result == null) result = defaultCase(theEObject);
+				return result;
+			}
+			case NUOPCPackage.SET_MODEL_SERVICES: {
+				SetModelServices setModelServices = (SetModelServices)theEObject;
+				T result = caseSetModelServices(setModelServices);
+				if (result == null) result = defaultCase(theEObject);
+				return result;
+			}
+			case NUOPCPackage.SET_COUPLER_SERVICES: {
+				SetCouplerServices setCouplerServices = (SetCouplerServices)theEObject;
+				T result = caseSetCouplerServices(setCouplerServices);
 				if (result == null) result = defaultCase(theEObject);
 				return result;
 			}
@@ -440,6 +464,36 @@ public class NUOPCSwitch<T> extends Switch<T> {
 	}
 
 	/**
+	 * Returns the result of interpreting the object as an instance of '<em>Driver Model Imports</em>'.
+	 * <!-- begin-user-doc -->
+	 * This implementation returns null;
+	 * returning a non-null result will terminate the switch.
+	 * <!-- end-user-doc -->
+	 * @param object the target of the switch.
+	 * @return the result of interpreting the object as an instance of '<em>Driver Model Imports</em>'.
+	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+	 * @generated
+	 */
+	public T caseNUOPCDriver__ModelImports(NUOPCDriver__ModelImports object) {
+		return null;
+	}
+
+	/**
+	 * Returns the result of interpreting the object as an instance of '<em>Model Import</em>'.
+	 * <!-- begin-user-doc -->
+	 * This implementation returns null;
+	 * returning a non-null result will terminate the switch.
+	 * <!-- end-user-doc -->
+	 * @param object the target of the switch.
+	 * @return the result of interpreting the object as an instance of '<em>Model Import</em>'.
+	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+	 * @generated
+	 */
+	public T caseModelImport(ModelImport object) {
+		return null;
+	}
+
+	/**
 	 * Returns the result of interpreting the object as an instance of '<em>Driver Implements Set Services</em>'.
 	 * <!-- begin-user-doc -->
 	 * This implementation returns null;
@@ -496,6 +550,36 @@ public class NUOPCSwitch<T> extends Switch<T> {
 	 * @generated
 	 */
 	public T caseNUOPCDriver__ImplementsSetModelServices(NUOPCDriver__ImplementsSetModelServices object) {
+		return null;
+	}
+
+	/**
+	 * Returns the result of interpreting the object as an instance of '<em>Set Model Services</em>'.
+	 * <!-- begin-user-doc -->
+	 * This implementation returns null;
+	 * returning a non-null result will terminate the switch.
+	 * <!-- end-user-doc -->
+	 * @param object the target of the switch.
+	 * @return the result of interpreting the object as an instance of '<em>Set Model Services</em>'.
+	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+	 * @generated
+	 */
+	public T caseSetModelServices(SetModelServices object) {
+		return null;
+	}
+
+	/**
+	 * Returns the result of interpreting the object as an instance of '<em>Set Coupler Services</em>'.
+	 * <!-- begin-user-doc -->
+	 * This implementation returns null;
+	 * returning a non-null result will terminate the switch.
+	 * <!-- end-user-doc -->
+	 * @param object the target of the switch.
+	 * @return the result of interpreting the object as an instance of '<em>Set Coupler Services</em>'.
+	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+	 * @generated
+	 */
+	public T caseSetCouplerServices(SetCouplerServices object) {
 		return null;
 	}
 

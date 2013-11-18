@@ -121,6 +121,10 @@ public class NUOPCValidator extends OCLinEcoreEObjectValidator {
 				return validateNUOPCDriver((NUOPCDriver)value, diagnostics, context);
 			case NUOPCPackage.NUOPC_DRIVER_GENERIC_IMPORTS:
 				return validateNUOPCDriver__GenericImports((NUOPCDriver__GenericImports)value, diagnostics, context);
+			case NUOPCPackage.NUOPC_DRIVER_MODEL_IMPORTS:
+				return validateNUOPCDriver__ModelImports((NUOPCDriver__ModelImports)value, diagnostics, context);
+			case NUOPCPackage.MODEL_IMPORT:
+				return validateModelImport((ModelImport)value, diagnostics, context);
 			case NUOPCPackage.NUOPC_DRIVER_IMPLEMENTS_SET_SERVICES:
 				return validateNUOPCDriver__ImplementsSetServices((NUOPCDriver__ImplementsSetServices)value, diagnostics, context);
 			case NUOPCPackage.ATTACHES_METHOD:
@@ -129,6 +133,10 @@ public class NUOPCValidator extends OCLinEcoreEObjectValidator {
 				return validateNUOPCDriver__ImplementsSetModelCount((NUOPCDriver__ImplementsSetModelCount)value, diagnostics, context);
 			case NUOPCPackage.NUOPC_DRIVER_IMPLEMENTS_SET_MODEL_SERVICES:
 				return validateNUOPCDriver__ImplementsSetModelServices((NUOPCDriver__ImplementsSetModelServices)value, diagnostics, context);
+			case NUOPCPackage.SET_MODEL_SERVICES:
+				return validateSetModelServices((SetModelServices)value, diagnostics, context);
+			case NUOPCPackage.SET_COUPLER_SERVICES:
+				return validateSetCouplerServices((SetCouplerServices)value, diagnostics, context);
 			case NUOPCPackage.GETS_INTERNAL_STATE:
 				return validateGetsInternalState((GetsInternalState)value, diagnostics, context);
 			case NUOPCPackage.NUOPC_APPLICATION:
@@ -353,6 +361,24 @@ public class NUOPCValidator extends OCLinEcoreEObjectValidator {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	public boolean validateNUOPCDriver__ModelImports(NUOPCDriver__ModelImports nuopcDriver__ModelImports, DiagnosticChain diagnostics, Map<Object, Object> context) {
+		return validate_EveryDefaultConstraint(nuopcDriver__ModelImports, diagnostics, context);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public boolean validateModelImport(ModelImport modelImport, DiagnosticChain diagnostics, Map<Object, Object> context) {
+		return validate_EveryDefaultConstraint(modelImport, diagnostics, context);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
 	public boolean validateNUOPCDriver__ImplementsSetServices(NUOPCDriver__ImplementsSetServices nuopcDriver__ImplementsSetServices, DiagnosticChain diagnostics, Map<Object, Object> context) {
 		return validate_EveryDefaultConstraint(nuopcDriver__ImplementsSetServices, diagnostics, context);
 	}
@@ -382,6 +408,24 @@ public class NUOPCValidator extends OCLinEcoreEObjectValidator {
 	 */
 	public boolean validateNUOPCDriver__ImplementsSetModelServices(NUOPCDriver__ImplementsSetModelServices nuopcDriver__ImplementsSetModelServices, DiagnosticChain diagnostics, Map<Object, Object> context) {
 		return validate_EveryDefaultConstraint(nuopcDriver__ImplementsSetModelServices, diagnostics, context);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public boolean validateSetModelServices(SetModelServices setModelServices, DiagnosticChain diagnostics, Map<Object, Object> context) {
+		return validate_EveryDefaultConstraint(setModelServices, diagnostics, context);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public boolean validateSetCouplerServices(SetCouplerServices setCouplerServices, DiagnosticChain diagnostics, Map<Object, Object> context) {
+		return validate_EveryDefaultConstraint(setCouplerServices, diagnostics, context);
 	}
 
 	/**

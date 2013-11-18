@@ -2,21 +2,28 @@
  */
 package org.earthsystemcurator.cupid.nuopc.fsml.nuopc.impl;
 
+import java.util.Collection;
 import org.earthsystemcurator.cupid.nuopc.fsml.nuopc.GetsInternalState;
 import org.earthsystemcurator.cupid.nuopc.fsml.nuopc.NUOPCDriver;
 import org.earthsystemcurator.cupid.nuopc.fsml.nuopc.NUOPCDriver__ImplementsSetModelServices;
 import org.earthsystemcurator.cupid.nuopc.fsml.nuopc.NUOPCPackage;
 
+import org.earthsystemcurator.cupid.nuopc.fsml.nuopc.SetCouplerServices;
+import org.earthsystemcurator.cupid.nuopc.fsml.nuopc.SetModelServices;
 import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.common.notify.NotificationChain;
 
+import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.ecore.InternalEObject;
 
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
 import org.eclipse.emf.ecore.impl.EObjectImpl;
+import org.eclipse.emf.ecore.util.EObjectContainmentEList;
+import org.eclipse.emf.ecore.util.EObjectResolvingEList;
 import org.eclipse.emf.ecore.util.EcoreUtil;
+import org.eclipse.emf.ecore.util.InternalEList;
 
 /**
  * <!-- begin-user-doc -->
@@ -33,6 +40,8 @@ import org.eclipse.emf.ecore.util.EcoreUtil;
  *   <li>{@link org.earthsystemcurator.cupid.nuopc.fsml.nuopc.impl.NUOPCDriver__ImplementsSetModelServicesImpl#getGetsInternalState <em>Gets Internal State</em>}</li>
  *   <li>{@link org.earthsystemcurator.cupid.nuopc.fsml.nuopc.impl.NUOPCDriver__ImplementsSetModelServicesImpl#isAssignsValue <em>Assigns Value</em>}</li>
  *   <li>{@link org.earthsystemcurator.cupid.nuopc.fsml.nuopc.impl.NUOPCDriver__ImplementsSetModelServicesImpl#isAttached <em>Attached</em>}</li>
+ *   <li>{@link org.earthsystemcurator.cupid.nuopc.fsml.nuopc.impl.NUOPCDriver__ImplementsSetModelServicesImpl#getSetModelServices <em>Set Model Services</em>}</li>
+ *   <li>{@link org.earthsystemcurator.cupid.nuopc.fsml.nuopc.impl.NUOPCDriver__ImplementsSetModelServicesImpl#getSetCouplerServices <em>Set Coupler Services</em>}</li>
  * </ul>
  * </p>
  *
@@ -158,6 +167,26 @@ public class NUOPCDriver__ImplementsSetModelServicesImpl extends EObjectImpl imp
 	 * @ordered
 	 */
 	protected EStructuralFeature.Internal.SettingDelegate ATTACHED__ESETTING_DELEGATE = ((EStructuralFeature.Internal)NUOPCPackage.Literals.NUOPC_DRIVER_IMPLEMENTS_SET_MODEL_SERVICES__ATTACHED).getSettingDelegate();
+
+	/**
+	 * The cached value of the '{@link #getSetModelServices() <em>Set Model Services</em>}' containment reference list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #getSetModelServices()
+	 * @generated
+	 * @ordered
+	 */
+	protected EList<SetModelServices> setModelServices;
+
+	/**
+	 * The cached value of the '{@link #getSetCouplerServices() <em>Set Coupler Services</em>}' containment reference list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #getSetCouplerServices()
+	 * @generated
+	 * @ordered
+	 */
+	protected EList<SetCouplerServices> setCouplerServices;
 
 	/**
 	 * <!-- begin-user-doc -->
@@ -390,6 +419,30 @@ public class NUOPCDriver__ImplementsSetModelServicesImpl extends EObjectImpl imp
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	public EList<SetModelServices> getSetModelServices() {
+		if (setModelServices == null) {
+			setModelServices = new EObjectContainmentEList<SetModelServices>(SetModelServices.class, this, NUOPCPackage.NUOPC_DRIVER_IMPLEMENTS_SET_MODEL_SERVICES__SET_MODEL_SERVICES);
+		}
+		return setModelServices;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EList<SetCouplerServices> getSetCouplerServices() {
+		if (setCouplerServices == null) {
+			setCouplerServices = new EObjectContainmentEList<SetCouplerServices>(SetCouplerServices.class, this, NUOPCPackage.NUOPC_DRIVER_IMPLEMENTS_SET_MODEL_SERVICES__SET_COUPLER_SERVICES);
+		}
+		return setCouplerServices;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
 	@Override
 	public NotificationChain eInverseAdd(InternalEObject otherEnd, int featureID, NotificationChain msgs) {
 		switch (featureID) {
@@ -413,6 +466,10 @@ public class NUOPCDriver__ImplementsSetModelServicesImpl extends EObjectImpl imp
 				return basicSetParent(null, msgs);
 			case NUOPCPackage.NUOPC_DRIVER_IMPLEMENTS_SET_MODEL_SERVICES__GETS_INTERNAL_STATE:
 				return basicSetGetsInternalState(null, msgs);
+			case NUOPCPackage.NUOPC_DRIVER_IMPLEMENTS_SET_MODEL_SERVICES__SET_MODEL_SERVICES:
+				return ((InternalEList<?>)getSetModelServices()).basicRemove(otherEnd, msgs);
+			case NUOPCPackage.NUOPC_DRIVER_IMPLEMENTS_SET_MODEL_SERVICES__SET_COUPLER_SERVICES:
+				return ((InternalEList<?>)getSetCouplerServices()).basicRemove(otherEnd, msgs);
 		}
 		return super.eInverseRemove(otherEnd, featureID, msgs);
 	}
@@ -455,6 +512,10 @@ public class NUOPCDriver__ImplementsSetModelServicesImpl extends EObjectImpl imp
 				return isAssignsValue();
 			case NUOPCPackage.NUOPC_DRIVER_IMPLEMENTS_SET_MODEL_SERVICES__ATTACHED:
 				return isAttached();
+			case NUOPCPackage.NUOPC_DRIVER_IMPLEMENTS_SET_MODEL_SERVICES__SET_MODEL_SERVICES:
+				return getSetModelServices();
+			case NUOPCPackage.NUOPC_DRIVER_IMPLEMENTS_SET_MODEL_SERVICES__SET_COUPLER_SERVICES:
+				return getSetCouplerServices();
 		}
 		return super.eGet(featureID, resolve, coreType);
 	}
@@ -464,6 +525,7 @@ public class NUOPCDriver__ImplementsSetModelServicesImpl extends EObjectImpl imp
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@SuppressWarnings("unchecked")
 	@Override
 	public void eSet(int featureID, Object newValue) {
 		switch (featureID) {
@@ -490,6 +552,14 @@ public class NUOPCDriver__ImplementsSetModelServicesImpl extends EObjectImpl imp
 				return;
 			case NUOPCPackage.NUOPC_DRIVER_IMPLEMENTS_SET_MODEL_SERVICES__ATTACHED:
 				setAttached((Boolean)newValue);
+				return;
+			case NUOPCPackage.NUOPC_DRIVER_IMPLEMENTS_SET_MODEL_SERVICES__SET_MODEL_SERVICES:
+				getSetModelServices().clear();
+				getSetModelServices().addAll((Collection<? extends SetModelServices>)newValue);
+				return;
+			case NUOPCPackage.NUOPC_DRIVER_IMPLEMENTS_SET_MODEL_SERVICES__SET_COUPLER_SERVICES:
+				getSetCouplerServices().clear();
+				getSetCouplerServices().addAll((Collection<? extends SetCouplerServices>)newValue);
 				return;
 		}
 		super.eSet(featureID, newValue);
@@ -527,6 +597,12 @@ public class NUOPCDriver__ImplementsSetModelServicesImpl extends EObjectImpl imp
 			case NUOPCPackage.NUOPC_DRIVER_IMPLEMENTS_SET_MODEL_SERVICES__ATTACHED:
 				ATTACHED__ESETTING_DELEGATE.dynamicUnset(this, null, 0);
 				return;
+			case NUOPCPackage.NUOPC_DRIVER_IMPLEMENTS_SET_MODEL_SERVICES__SET_MODEL_SERVICES:
+				getSetModelServices().clear();
+				return;
+			case NUOPCPackage.NUOPC_DRIVER_IMPLEMENTS_SET_MODEL_SERVICES__SET_COUPLER_SERVICES:
+				getSetCouplerServices().clear();
+				return;
 		}
 		super.eUnset(featureID);
 	}
@@ -555,6 +631,10 @@ public class NUOPCDriver__ImplementsSetModelServicesImpl extends EObjectImpl imp
 				return assignsValue != ASSIGNS_VALUE_EDEFAULT;
 			case NUOPCPackage.NUOPC_DRIVER_IMPLEMENTS_SET_MODEL_SERVICES__ATTACHED:
 				return ATTACHED__ESETTING_DELEGATE.dynamicIsSet(this, null, 0);
+			case NUOPCPackage.NUOPC_DRIVER_IMPLEMENTS_SET_MODEL_SERVICES__SET_MODEL_SERVICES:
+				return setModelServices != null && !setModelServices.isEmpty();
+			case NUOPCPackage.NUOPC_DRIVER_IMPLEMENTS_SET_MODEL_SERVICES__SET_COUPLER_SERVICES:
+				return setCouplerServices != null && !setCouplerServices.isEmpty();
 		}
 		return super.eIsSet(featureID);
 	}

@@ -417,6 +417,52 @@ public class NUOPCItemProviderAdapterFactory extends NUOPCAdapterFactory impleme
 	}
 
 	/**
+	 * This keeps track of the one adapter used for all {@link org.earthsystemcurator.cupid.nuopc.fsml.nuopc.NUOPCDriver__ModelImports} instances.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	protected NUOPCDriver__ModelImportsItemProvider nuopcDriver__ModelImportsItemProvider;
+
+	/**
+	 * This creates an adapter for a {@link org.earthsystemcurator.cupid.nuopc.fsml.nuopc.NUOPCDriver__ModelImports}.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	@Override
+	public Adapter createNUOPCDriver__ModelImportsAdapter() {
+		if (nuopcDriver__ModelImportsItemProvider == null) {
+			nuopcDriver__ModelImportsItemProvider = new NUOPCDriver__ModelImportsItemProvider(this);
+		}
+
+		return nuopcDriver__ModelImportsItemProvider;
+	}
+
+	/**
+	 * This keeps track of the one adapter used for all {@link org.earthsystemcurator.cupid.nuopc.fsml.nuopc.ModelImport} instances.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	protected ModelImportItemProvider modelImportItemProvider;
+
+	/**
+	 * This creates an adapter for a {@link org.earthsystemcurator.cupid.nuopc.fsml.nuopc.ModelImport}.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	@Override
+	public Adapter createModelImportAdapter() {
+		if (modelImportItemProvider == null) {
+			modelImportItemProvider = new ModelImportItemProvider(this);
+		}
+
+		return modelImportItemProvider;
+	}
+
+	/**
 	 * This keeps track of the one adapter used for all {@link org.earthsystemcurator.cupid.nuopc.fsml.nuopc.NUOPCDriver__ImplementsSetServices} instances.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -506,6 +552,52 @@ public class NUOPCItemProviderAdapterFactory extends NUOPCAdapterFactory impleme
 		}
 
 		return nuopcDriver__ImplementsSetModelServicesItemProvider;
+	}
+
+	/**
+	 * This keeps track of the one adapter used for all {@link org.earthsystemcurator.cupid.nuopc.fsml.nuopc.SetModelServices} instances.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	protected SetModelServicesItemProvider setModelServicesItemProvider;
+
+	/**
+	 * This creates an adapter for a {@link org.earthsystemcurator.cupid.nuopc.fsml.nuopc.SetModelServices}.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	@Override
+	public Adapter createSetModelServicesAdapter() {
+		if (setModelServicesItemProvider == null) {
+			setModelServicesItemProvider = new SetModelServicesItemProvider(this);
+		}
+
+		return setModelServicesItemProvider;
+	}
+
+	/**
+	 * This keeps track of the one adapter used for all {@link org.earthsystemcurator.cupid.nuopc.fsml.nuopc.SetCouplerServices} instances.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	protected SetCouplerServicesItemProvider setCouplerServicesItemProvider;
+
+	/**
+	 * This creates an adapter for a {@link org.earthsystemcurator.cupid.nuopc.fsml.nuopc.SetCouplerServices}.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	@Override
+	public Adapter createSetCouplerServicesAdapter() {
+		if (setCouplerServicesItemProvider == null) {
+			setCouplerServicesItemProvider = new SetCouplerServicesItemProvider(this);
+		}
+
+		return setCouplerServicesItemProvider;
 	}
 
 	/**
@@ -737,10 +829,14 @@ public class NUOPCItemProviderAdapterFactory extends NUOPCAdapterFactory impleme
 		if (modelAdvanceItemProvider != null) modelAdvanceItemProvider.dispose();
 		if (nuopcDriverItemProvider != null) nuopcDriverItemProvider.dispose();
 		if (nuopcDriver__GenericImportsItemProvider != null) nuopcDriver__GenericImportsItemProvider.dispose();
+		if (nuopcDriver__ModelImportsItemProvider != null) nuopcDriver__ModelImportsItemProvider.dispose();
+		if (modelImportItemProvider != null) modelImportItemProvider.dispose();
 		if (nuopcDriver__ImplementsSetServicesItemProvider != null) nuopcDriver__ImplementsSetServicesItemProvider.dispose();
 		if (attachesMethodItemProvider != null) attachesMethodItemProvider.dispose();
 		if (nuopcDriver__ImplementsSetModelCountItemProvider != null) nuopcDriver__ImplementsSetModelCountItemProvider.dispose();
 		if (nuopcDriver__ImplementsSetModelServicesItemProvider != null) nuopcDriver__ImplementsSetModelServicesItemProvider.dispose();
+		if (setModelServicesItemProvider != null) setModelServicesItemProvider.dispose();
+		if (setCouplerServicesItemProvider != null) setCouplerServicesItemProvider.dispose();
 		if (getsInternalStateItemProvider != null) getsInternalStateItemProvider.dispose();
 		if (nuopcApplicationItemProvider != null) nuopcApplicationItemProvider.dispose();
 		if (topItemProvider != null) topItemProvider.dispose();

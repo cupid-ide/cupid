@@ -6,16 +6,13 @@ package org.earthsystemcurator.cupid.nuopc.fsml.nuopc.provider;
 import java.util.Collection;
 import java.util.List;
 
-import org.earthsystemcurator.cupid.nuopc.fsml.nuopc.NUOPCApplication;
-import org.earthsystemcurator.cupid.nuopc.fsml.nuopc.NUOPCFactory;
+import org.earthsystemcurator.cupid.nuopc.fsml.nuopc.ModelImport;
 import org.earthsystemcurator.cupid.nuopc.fsml.nuopc.NUOPCPackage;
 
 import org.eclipse.emf.common.notify.AdapterFactory;
 import org.eclipse.emf.common.notify.Notification;
 
 import org.eclipse.emf.common.util.ResourceLocator;
-
-import org.eclipse.emf.ecore.EStructuralFeature;
 
 import org.eclipse.emf.edit.provider.ComposeableAdapterFactory;
 import org.eclipse.emf.edit.provider.IEditingDomainItemProvider;
@@ -29,12 +26,12 @@ import org.eclipse.emf.edit.provider.ItemProviderAdapter;
 import org.eclipse.emf.edit.provider.ViewerNotification;
 
 /**
- * This is the item provider adapter for a {@link org.earthsystemcurator.cupid.nuopc.fsml.nuopc.NUOPCApplication} object.
+ * This is the item provider adapter for a {@link org.earthsystemcurator.cupid.nuopc.fsml.nuopc.ModelImport} object.
  * <!-- begin-user-doc -->
  * <!-- end-user-doc -->
  * @generated
  */
-public class NUOPCApplicationItemProvider
+public class ModelImportItemProvider
 	extends ItemProviderAdapter
 	implements
 		IEditingDomainItemProvider,
@@ -48,7 +45,7 @@ public class NUOPCApplicationItemProvider
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public NUOPCApplicationItemProvider(AdapterFactory adapterFactory) {
+	public ModelImportItemProvider(AdapterFactory adapterFactory) {
 		super(adapterFactory);
 	}
 
@@ -64,7 +61,8 @@ public class NUOPCApplicationItemProvider
 			super.getPropertyDescriptors(object);
 
 			addNamePropertyDescriptor(object);
-			addNuopcDriverAtmOcnPropertyDescriptor(object);
+			addSetServicesPropertyDescriptor(object);
+			addModelRefPropertyDescriptor(object);
 		}
 		return itemPropertyDescriptors;
 	}
@@ -80,9 +78,9 @@ public class NUOPCApplicationItemProvider
 			(createItemPropertyDescriptor
 				(((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(),
 				 getResourceLocator(),
-				 getString("_UI_NUOPCApplication_name_feature"),
-				 getString("_UI_PropertyDescriptor_description", "_UI_NUOPCApplication_name_feature", "_UI_NUOPCApplication_type"),
-				 NUOPCPackage.Literals.NUOPC_APPLICATION__NAME,
+				 getString("_UI_ModelImport_name_feature"),
+				 getString("_UI_PropertyDescriptor_description", "_UI_ModelImport_name_feature", "_UI_ModelImport_type"),
+				 NUOPCPackage.Literals.MODEL_IMPORT__NAME,
 				 true,
 				 false,
 				 false,
@@ -92,19 +90,41 @@ public class NUOPCApplicationItemProvider
 	}
 
 	/**
-	 * This adds a property descriptor for the Nuopc Driver Atm Ocn feature.
+	 * This adds a property descriptor for the Set Services feature.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	protected void addNuopcDriverAtmOcnPropertyDescriptor(Object object) {
+	protected void addSetServicesPropertyDescriptor(Object object) {
 		itemPropertyDescriptors.add
 			(createItemPropertyDescriptor
 				(((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(),
 				 getResourceLocator(),
-				 getString("_UI_NUOPCApplication_nuopcDriverAtmOcn_feature"),
-				 getString("_UI_PropertyDescriptor_description", "_UI_NUOPCApplication_nuopcDriverAtmOcn_feature", "_UI_NUOPCApplication_type"),
-				 NUOPCPackage.Literals.NUOPC_APPLICATION__NUOPC_DRIVER_ATM_OCN,
+				 getString("_UI_ModelImport_setServices_feature"),
+				 getString("_UI_PropertyDescriptor_description", "_UI_ModelImport_setServices_feature", "_UI_ModelImport_type"),
+				 NUOPCPackage.Literals.MODEL_IMPORT__SET_SERVICES,
+				 true,
+				 false,
+				 false,
+				 ItemPropertyDescriptor.GENERIC_VALUE_IMAGE,
+				 null,
+				 null));
+	}
+
+	/**
+	 * This adds a property descriptor for the Model Ref feature.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	protected void addModelRefPropertyDescriptor(Object object) {
+		itemPropertyDescriptors.add
+			(createItemPropertyDescriptor
+				(((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(),
+				 getResourceLocator(),
+				 getString("_UI_ModelImport_modelRef_feature"),
+				 getString("_UI_PropertyDescriptor_description", "_UI_ModelImport_modelRef_feature", "_UI_ModelImport_type"),
+				 NUOPCPackage.Literals.MODEL_IMPORT__MODEL_REF,
 				 true,
 				 false,
 				 true,
@@ -114,46 +134,14 @@ public class NUOPCApplicationItemProvider
 	}
 
 	/**
-	 * This specifies how to implement {@link #getChildren} and is used to deduce an appropriate feature for an
-	 * {@link org.eclipse.emf.edit.command.AddCommand}, {@link org.eclipse.emf.edit.command.RemoveCommand} or
-	 * {@link org.eclipse.emf.edit.command.MoveCommand} in {@link #createCommand}.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	@Override
-	public Collection<? extends EStructuralFeature> getChildrenFeatures(Object object) {
-		if (childrenFeatures == null) {
-			super.getChildrenFeatures(object);
-			childrenFeatures.add(NUOPCPackage.Literals.NUOPC_APPLICATION__NUOPC_MODEL);
-			childrenFeatures.add(NUOPCPackage.Literals.NUOPC_APPLICATION__NUOPC_DRIVER);
-			childrenFeatures.add(NUOPCPackage.Literals.NUOPC_APPLICATION__NUOPC_DRIVER_ATM_OCN);
-		}
-		return childrenFeatures;
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	@Override
-	protected EStructuralFeature getChildFeature(Object object, Object child) {
-		// Check the type of the specified child object and return the proper feature to use for
-		// adding (see {@link AddCommand}) it as a child.
-
-		return super.getChildFeature(object, child);
-	}
-
-	/**
-	 * This returns NUOPCApplication.gif.
+	 * This returns ModelImport.gif.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
 	@Override
 	public Object getImage(Object object) {
-		return overlayImage(object, getResourceLocator().getImage("full/obj16/NUOPCApplication"));
+		return overlayImage(object, getResourceLocator().getImage("full/obj16/ModelImport"));
 	}
 
 	/**
@@ -164,10 +152,10 @@ public class NUOPCApplicationItemProvider
 	 */
 	@Override
 	public String getText(Object object) {
-		String label = ((NUOPCApplication)object).getName();
+		String label = ((ModelImport)object).getName();
 		return label == null || label.length() == 0 ?
-			getString("_UI_NUOPCApplication_type") :
-			getString("_UI_NUOPCApplication_type") + " " + label;
+			getString("_UI_ModelImport_type") :
+			getString("_UI_ModelImport_type") + " " + label;
 	}
 
 	/**
@@ -181,14 +169,10 @@ public class NUOPCApplicationItemProvider
 	public void notifyChanged(Notification notification) {
 		updateChildren(notification);
 
-		switch (notification.getFeatureID(NUOPCApplication.class)) {
-			case NUOPCPackage.NUOPC_APPLICATION__NAME:
+		switch (notification.getFeatureID(ModelImport.class)) {
+			case NUOPCPackage.MODEL_IMPORT__NAME:
+			case NUOPCPackage.MODEL_IMPORT__SET_SERVICES:
 				fireNotifyChanged(new ViewerNotification(notification, notification.getNotifier(), false, true));
-				return;
-			case NUOPCPackage.NUOPC_APPLICATION__NUOPC_MODEL:
-			case NUOPCPackage.NUOPC_APPLICATION__NUOPC_DRIVER:
-			case NUOPCPackage.NUOPC_APPLICATION__NUOPC_DRIVER_ATM_OCN:
-				fireNotifyChanged(new ViewerNotification(notification, notification.getNotifier(), true, false));
 				return;
 		}
 		super.notifyChanged(notification);
@@ -204,21 +188,6 @@ public class NUOPCApplicationItemProvider
 	@Override
 	protected void collectNewChildDescriptors(Collection<Object> newChildDescriptors, Object object) {
 		super.collectNewChildDescriptors(newChildDescriptors, object);
-
-		newChildDescriptors.add
-			(createChildParameter
-				(NUOPCPackage.Literals.NUOPC_APPLICATION__NUOPC_MODEL,
-				 NUOPCFactory.eINSTANCE.createNUOPCModel()));
-
-		newChildDescriptors.add
-			(createChildParameter
-				(NUOPCPackage.Literals.NUOPC_APPLICATION__NUOPC_DRIVER,
-				 NUOPCFactory.eINSTANCE.createNUOPCDriver()));
-
-		newChildDescriptors.add
-			(createChildParameter
-				(NUOPCPackage.Literals.NUOPC_APPLICATION__NUOPC_DRIVER_ATM_OCN,
-				 NUOPCFactory.eINSTANCE.createNUOPCDriverAtmOcn()));
 	}
 
 	/**

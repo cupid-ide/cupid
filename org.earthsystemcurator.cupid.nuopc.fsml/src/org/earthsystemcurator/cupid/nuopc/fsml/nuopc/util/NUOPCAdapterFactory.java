@@ -128,6 +128,14 @@ public class NUOPCAdapterFactory extends AdapterFactoryImpl {
 				return createNUOPCDriver__GenericImportsAdapter();
 			}
 			@Override
+			public Adapter caseNUOPCDriver__ModelImports(NUOPCDriver__ModelImports object) {
+				return createNUOPCDriver__ModelImportsAdapter();
+			}
+			@Override
+			public Adapter caseModelImport(ModelImport object) {
+				return createModelImportAdapter();
+			}
+			@Override
 			public Adapter caseNUOPCDriver__ImplementsSetServices(NUOPCDriver__ImplementsSetServices object) {
 				return createNUOPCDriver__ImplementsSetServicesAdapter();
 			}
@@ -142,6 +150,14 @@ public class NUOPCAdapterFactory extends AdapterFactoryImpl {
 			@Override
 			public Adapter caseNUOPCDriver__ImplementsSetModelServices(NUOPCDriver__ImplementsSetModelServices object) {
 				return createNUOPCDriver__ImplementsSetModelServicesAdapter();
+			}
+			@Override
+			public Adapter caseSetModelServices(SetModelServices object) {
+				return createSetModelServicesAdapter();
+			}
+			@Override
+			public Adapter caseSetCouplerServices(SetCouplerServices object) {
+				return createSetCouplerServicesAdapter();
 			}
 			@Override
 			public Adapter caseGetsInternalState(GetsInternalState object) {
@@ -394,6 +410,34 @@ public class NUOPCAdapterFactory extends AdapterFactoryImpl {
 	}
 
 	/**
+	 * Creates a new adapter for an object of class '{@link org.earthsystemcurator.cupid.nuopc.fsml.nuopc.NUOPCDriver__ModelImports <em>Driver Model Imports</em>}'.
+	 * <!-- begin-user-doc -->
+	 * This default implementation returns null so that we can easily ignore cases;
+	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
+	 * <!-- end-user-doc -->
+	 * @return the new adapter.
+	 * @see org.earthsystemcurator.cupid.nuopc.fsml.nuopc.NUOPCDriver__ModelImports
+	 * @generated
+	 */
+	public Adapter createNUOPCDriver__ModelImportsAdapter() {
+		return null;
+	}
+
+	/**
+	 * Creates a new adapter for an object of class '{@link org.earthsystemcurator.cupid.nuopc.fsml.nuopc.ModelImport <em>Model Import</em>}'.
+	 * <!-- begin-user-doc -->
+	 * This default implementation returns null so that we can easily ignore cases;
+	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
+	 * <!-- end-user-doc -->
+	 * @return the new adapter.
+	 * @see org.earthsystemcurator.cupid.nuopc.fsml.nuopc.ModelImport
+	 * @generated
+	 */
+	public Adapter createModelImportAdapter() {
+		return null;
+	}
+
+	/**
 	 * Creates a new adapter for an object of class '{@link org.earthsystemcurator.cupid.nuopc.fsml.nuopc.NUOPCDriver__ImplementsSetServices <em>Driver Implements Set Services</em>}'.
 	 * <!-- begin-user-doc -->
 	 * This default implementation returns null so that we can easily ignore cases;
@@ -446,6 +490,34 @@ public class NUOPCAdapterFactory extends AdapterFactoryImpl {
 	 * @generated
 	 */
 	public Adapter createNUOPCDriver__ImplementsSetModelServicesAdapter() {
+		return null;
+	}
+
+	/**
+	 * Creates a new adapter for an object of class '{@link org.earthsystemcurator.cupid.nuopc.fsml.nuopc.SetModelServices <em>Set Model Services</em>}'.
+	 * <!-- begin-user-doc -->
+	 * This default implementation returns null so that we can easily ignore cases;
+	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
+	 * <!-- end-user-doc -->
+	 * @return the new adapter.
+	 * @see org.earthsystemcurator.cupid.nuopc.fsml.nuopc.SetModelServices
+	 * @generated
+	 */
+	public Adapter createSetModelServicesAdapter() {
+		return null;
+	}
+
+	/**
+	 * Creates a new adapter for an object of class '{@link org.earthsystemcurator.cupid.nuopc.fsml.nuopc.SetCouplerServices <em>Set Coupler Services</em>}'.
+	 * <!-- begin-user-doc -->
+	 * This default implementation returns null so that we can easily ignore cases;
+	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
+	 * <!-- end-user-doc -->
+	 * @return the new adapter.
+	 * @see org.earthsystemcurator.cupid.nuopc.fsml.nuopc.SetCouplerServices
+	 * @generated
+	 */
+	public Adapter createSetCouplerServicesAdapter() {
 		return null;
 	}
 

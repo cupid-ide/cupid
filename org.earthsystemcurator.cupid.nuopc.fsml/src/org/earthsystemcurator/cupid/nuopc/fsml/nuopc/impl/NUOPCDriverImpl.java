@@ -3,11 +3,13 @@
 package org.earthsystemcurator.cupid.nuopc.fsml.nuopc.impl;
 
 import java.util.Collection;
+import org.earthsystemcurator.cupid.nuopc.fsml.nuopc.NUOPCApplication;
 import org.earthsystemcurator.cupid.nuopc.fsml.nuopc.NUOPCDriver;
 import org.earthsystemcurator.cupid.nuopc.fsml.nuopc.NUOPCDriver__GenericImports;
 import org.earthsystemcurator.cupid.nuopc.fsml.nuopc.NUOPCDriver__ImplementsSetModelCount;
 import org.earthsystemcurator.cupid.nuopc.fsml.nuopc.NUOPCDriver__ImplementsSetModelServices;
 import org.earthsystemcurator.cupid.nuopc.fsml.nuopc.NUOPCDriver__ImplementsSetServices;
+import org.earthsystemcurator.cupid.nuopc.fsml.nuopc.NUOPCDriver__ModelImports;
 import org.earthsystemcurator.cupid.nuopc.fsml.nuopc.NUOPCPackage;
 
 import org.eclipse.emf.common.notify.Notification;
@@ -20,6 +22,7 @@ import org.eclipse.emf.ecore.impl.ENotificationImpl;
 import org.eclipse.emf.ecore.impl.EObjectImpl;
 import org.eclipse.emf.ecore.util.EObjectContainmentEList;
 import org.eclipse.emf.ecore.util.EObjectContainmentWithInverseEList;
+import org.eclipse.emf.ecore.util.EcoreUtil;
 import org.eclipse.emf.ecore.util.InternalEList;
 
 /**
@@ -29,8 +32,10 @@ import org.eclipse.emf.ecore.util.InternalEList;
  * <p>
  * The following features are implemented:
  * <ul>
+ *   <li>{@link org.earthsystemcurator.cupid.nuopc.fsml.nuopc.impl.NUOPCDriverImpl#getParent <em>Parent</em>}</li>
  *   <li>{@link org.earthsystemcurator.cupid.nuopc.fsml.nuopc.impl.NUOPCDriverImpl#getName <em>Name</em>}</li>
  *   <li>{@link org.earthsystemcurator.cupid.nuopc.fsml.nuopc.impl.NUOPCDriverImpl#getGenericImports <em>Generic Imports</em>}</li>
+ *   <li>{@link org.earthsystemcurator.cupid.nuopc.fsml.nuopc.impl.NUOPCDriverImpl#getModelImports <em>Model Imports</em>}</li>
  *   <li>{@link org.earthsystemcurator.cupid.nuopc.fsml.nuopc.impl.NUOPCDriverImpl#getImplementsSetServices <em>Implements Set Services</em>}</li>
  *   <li>{@link org.earthsystemcurator.cupid.nuopc.fsml.nuopc.impl.NUOPCDriverImpl#getImplementsSetModelCount <em>Implements Set Model Count</em>}</li>
  *   <li>{@link org.earthsystemcurator.cupid.nuopc.fsml.nuopc.impl.NUOPCDriverImpl#getImplementsSetModelServices <em>Implements Set Model Services</em>}</li>
@@ -68,6 +73,15 @@ public class NUOPCDriverImpl extends EObjectImpl implements NUOPCDriver {
 	 * @ordered
 	 */
 	protected NUOPCDriver__GenericImports genericImports;
+	/**
+	 * The cached value of the '{@link #getModelImports() <em>Model Imports</em>}' containment reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #getModelImports()
+	 * @generated
+	 * @ordered
+	 */
+	protected NUOPCDriver__ModelImports modelImports;
 	/**
 	 * The cached value of the '{@link #getImplementsSetServices() <em>Implements Set Services</em>}' containment reference.
 	 * <!-- begin-user-doc -->
@@ -115,6 +129,47 @@ public class NUOPCDriverImpl extends EObjectImpl implements NUOPCDriver {
 	@Override
 	protected EClass eStaticClass() {
 		return NUOPCPackage.Literals.NUOPC_DRIVER;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public NUOPCApplication getParent() {
+		if (eContainerFeatureID() != NUOPCPackage.NUOPC_DRIVER__PARENT) return null;
+		return (NUOPCApplication)eInternalContainer();
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public NotificationChain basicSetParent(NUOPCApplication newParent, NotificationChain msgs) {
+		msgs = eBasicSetContainer((InternalEObject)newParent, NUOPCPackage.NUOPC_DRIVER__PARENT, msgs);
+		return msgs;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public void setParent(NUOPCApplication newParent) {
+		if (newParent != eInternalContainer() || (eContainerFeatureID() != NUOPCPackage.NUOPC_DRIVER__PARENT && newParent != null)) {
+			if (EcoreUtil.isAncestor(this, newParent))
+				throw new IllegalArgumentException("Recursive containment not allowed for " + toString());
+			NotificationChain msgs = null;
+			if (eInternalContainer() != null)
+				msgs = eBasicRemoveFromContainer(msgs);
+			if (newParent != null)
+				msgs = ((InternalEObject)newParent).eInverseAdd(this, NUOPCPackage.NUOPC_APPLICATION__NUOPC_DRIVER, NUOPCApplication.class, msgs);
+			msgs = basicSetParent(newParent, msgs);
+			if (msgs != null) msgs.dispatch();
+		}
+		else if (eNotificationRequired())
+			eNotify(new ENotificationImpl(this, Notification.SET, NUOPCPackage.NUOPC_DRIVER__PARENT, newParent, newParent));
 	}
 
 	/**
@@ -179,6 +234,49 @@ public class NUOPCDriverImpl extends EObjectImpl implements NUOPCDriver {
 		}
 		else if (eNotificationRequired())
 			eNotify(new ENotificationImpl(this, Notification.SET, NUOPCPackage.NUOPC_DRIVER__GENERIC_IMPORTS, newGenericImports, newGenericImports));
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public NUOPCDriver__ModelImports getModelImports() {
+		return modelImports;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public NotificationChain basicSetModelImports(NUOPCDriver__ModelImports newModelImports, NotificationChain msgs) {
+		NUOPCDriver__ModelImports oldModelImports = modelImports;
+		modelImports = newModelImports;
+		if (eNotificationRequired()) {
+			ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, NUOPCPackage.NUOPC_DRIVER__MODEL_IMPORTS, oldModelImports, newModelImports);
+			if (msgs == null) msgs = notification; else msgs.add(notification);
+		}
+		return msgs;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public void setModelImports(NUOPCDriver__ModelImports newModelImports) {
+		if (newModelImports != modelImports) {
+			NotificationChain msgs = null;
+			if (modelImports != null)
+				msgs = ((InternalEObject)modelImports).eInverseRemove(this, NUOPCPackage.NUOPC_DRIVER_MODEL_IMPORTS__PARENT, NUOPCDriver__ModelImports.class, msgs);
+			if (newModelImports != null)
+				msgs = ((InternalEObject)newModelImports).eInverseAdd(this, NUOPCPackage.NUOPC_DRIVER_MODEL_IMPORTS__PARENT, NUOPCDriver__ModelImports.class, msgs);
+			msgs = basicSetModelImports(newModelImports, msgs);
+			if (msgs != null) msgs.dispatch();
+		}
+		else if (eNotificationRequired())
+			eNotify(new ENotificationImpl(this, Notification.SET, NUOPCPackage.NUOPC_DRIVER__MODEL_IMPORTS, newModelImports, newModelImports));
 	}
 
 	/**
@@ -319,6 +417,14 @@ public class NUOPCDriverImpl extends EObjectImpl implements NUOPCDriver {
 	@Override
 	public NotificationChain eInverseAdd(InternalEObject otherEnd, int featureID, NotificationChain msgs) {
 		switch (featureID) {
+			case NUOPCPackage.NUOPC_DRIVER__PARENT:
+				if (eInternalContainer() != null)
+					msgs = eBasicRemoveFromContainer(msgs);
+				return basicSetParent((NUOPCApplication)otherEnd, msgs);
+			case NUOPCPackage.NUOPC_DRIVER__MODEL_IMPORTS:
+				if (modelImports != null)
+					msgs = ((InternalEObject)modelImports).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - NUOPCPackage.NUOPC_DRIVER__MODEL_IMPORTS, null, msgs);
+				return basicSetModelImports((NUOPCDriver__ModelImports)otherEnd, msgs);
 			case NUOPCPackage.NUOPC_DRIVER__IMPLEMENTS_SET_SERVICES:
 				if (implementsSetServices != null)
 					msgs = ((InternalEObject)implementsSetServices).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - NUOPCPackage.NUOPC_DRIVER__IMPLEMENTS_SET_SERVICES, null, msgs);
@@ -343,8 +449,12 @@ public class NUOPCDriverImpl extends EObjectImpl implements NUOPCDriver {
 	@Override
 	public NotificationChain eInverseRemove(InternalEObject otherEnd, int featureID, NotificationChain msgs) {
 		switch (featureID) {
+			case NUOPCPackage.NUOPC_DRIVER__PARENT:
+				return basicSetParent(null, msgs);
 			case NUOPCPackage.NUOPC_DRIVER__GENERIC_IMPORTS:
 				return basicSetGenericImports(null, msgs);
+			case NUOPCPackage.NUOPC_DRIVER__MODEL_IMPORTS:
+				return basicSetModelImports(null, msgs);
 			case NUOPCPackage.NUOPC_DRIVER__IMPLEMENTS_SET_SERVICES:
 				return basicSetImplementsSetServices(null, msgs);
 			case NUOPCPackage.NUOPC_DRIVER__IMPLEMENTS_SET_MODEL_COUNT:
@@ -361,12 +471,30 @@ public class NUOPCDriverImpl extends EObjectImpl implements NUOPCDriver {
 	 * @generated
 	 */
 	@Override
+	public NotificationChain eBasicRemoveFromContainerFeature(NotificationChain msgs) {
+		switch (eContainerFeatureID()) {
+			case NUOPCPackage.NUOPC_DRIVER__PARENT:
+				return eInternalContainer().eInverseRemove(this, NUOPCPackage.NUOPC_APPLICATION__NUOPC_DRIVER, NUOPCApplication.class, msgs);
+		}
+		return super.eBasicRemoveFromContainerFeature(msgs);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	@Override
 	public Object eGet(int featureID, boolean resolve, boolean coreType) {
 		switch (featureID) {
+			case NUOPCPackage.NUOPC_DRIVER__PARENT:
+				return getParent();
 			case NUOPCPackage.NUOPC_DRIVER__NAME:
 				return getName();
 			case NUOPCPackage.NUOPC_DRIVER__GENERIC_IMPORTS:
 				return getGenericImports();
+			case NUOPCPackage.NUOPC_DRIVER__MODEL_IMPORTS:
+				return getModelImports();
 			case NUOPCPackage.NUOPC_DRIVER__IMPLEMENTS_SET_SERVICES:
 				return getImplementsSetServices();
 			case NUOPCPackage.NUOPC_DRIVER__IMPLEMENTS_SET_MODEL_COUNT:
@@ -386,11 +514,17 @@ public class NUOPCDriverImpl extends EObjectImpl implements NUOPCDriver {
 	@Override
 	public void eSet(int featureID, Object newValue) {
 		switch (featureID) {
+			case NUOPCPackage.NUOPC_DRIVER__PARENT:
+				setParent((NUOPCApplication)newValue);
+				return;
 			case NUOPCPackage.NUOPC_DRIVER__NAME:
 				setName((String)newValue);
 				return;
 			case NUOPCPackage.NUOPC_DRIVER__GENERIC_IMPORTS:
 				setGenericImports((NUOPCDriver__GenericImports)newValue);
+				return;
+			case NUOPCPackage.NUOPC_DRIVER__MODEL_IMPORTS:
+				setModelImports((NUOPCDriver__ModelImports)newValue);
 				return;
 			case NUOPCPackage.NUOPC_DRIVER__IMPLEMENTS_SET_SERVICES:
 				setImplementsSetServices((NUOPCDriver__ImplementsSetServices)newValue);
@@ -413,11 +547,17 @@ public class NUOPCDriverImpl extends EObjectImpl implements NUOPCDriver {
 	@Override
 	public void eUnset(int featureID) {
 		switch (featureID) {
+			case NUOPCPackage.NUOPC_DRIVER__PARENT:
+				setParent((NUOPCApplication)null);
+				return;
 			case NUOPCPackage.NUOPC_DRIVER__NAME:
 				setName(NAME_EDEFAULT);
 				return;
 			case NUOPCPackage.NUOPC_DRIVER__GENERIC_IMPORTS:
 				setGenericImports((NUOPCDriver__GenericImports)null);
+				return;
+			case NUOPCPackage.NUOPC_DRIVER__MODEL_IMPORTS:
+				setModelImports((NUOPCDriver__ModelImports)null);
 				return;
 			case NUOPCPackage.NUOPC_DRIVER__IMPLEMENTS_SET_SERVICES:
 				setImplementsSetServices((NUOPCDriver__ImplementsSetServices)null);
@@ -440,10 +580,14 @@ public class NUOPCDriverImpl extends EObjectImpl implements NUOPCDriver {
 	@Override
 	public boolean eIsSet(int featureID) {
 		switch (featureID) {
+			case NUOPCPackage.NUOPC_DRIVER__PARENT:
+				return getParent() != null;
 			case NUOPCPackage.NUOPC_DRIVER__NAME:
 				return NAME_EDEFAULT == null ? name != null : !NAME_EDEFAULT.equals(name);
 			case NUOPCPackage.NUOPC_DRIVER__GENERIC_IMPORTS:
 				return genericImports != null;
+			case NUOPCPackage.NUOPC_DRIVER__MODEL_IMPORTS:
+				return modelImports != null;
 			case NUOPCPackage.NUOPC_DRIVER__IMPLEMENTS_SET_SERVICES:
 				return implementsSetServices != null;
 			case NUOPCPackage.NUOPC_DRIVER__IMPLEMENTS_SET_MODEL_COUNT:

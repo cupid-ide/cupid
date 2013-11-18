@@ -2,6 +2,7 @@
  */
 package org.earthsystemcurator.cupid.nuopc.fsml.nuopc;
 
+import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.ecore.EObject;
 
 /**
@@ -20,6 +21,8 @@ import org.eclipse.emf.ecore.EObject;
  *   <li>{@link org.earthsystemcurator.cupid.nuopc.fsml.nuopc.NUOPCDriver__ImplementsSetModelServices#getGetsInternalState <em>Gets Internal State</em>}</li>
  *   <li>{@link org.earthsystemcurator.cupid.nuopc.fsml.nuopc.NUOPCDriver__ImplementsSetModelServices#isAssignsValue <em>Assigns Value</em>}</li>
  *   <li>{@link org.earthsystemcurator.cupid.nuopc.fsml.nuopc.NUOPCDriver__ImplementsSetModelServices#isAttached <em>Attached</em>}</li>
+ *   <li>{@link org.earthsystemcurator.cupid.nuopc.fsml.nuopc.NUOPCDriver__ImplementsSetModelServices#getSetModelServices <em>Set Model Services</em>}</li>
+ *   <li>{@link org.earthsystemcurator.cupid.nuopc.fsml.nuopc.NUOPCDriver__ImplementsSetModelServices#getSetCouplerServices <em>Set Coupler Services</em>}</li>
  * </ul>
  * </p>
  *
@@ -243,5 +246,39 @@ public interface NUOPCDriver__ImplementsSetModelServices extends EObject {
 	 * @generated
 	 */
 	void setAttached(boolean value);
+
+	/**
+	 * Returns the value of the '<em><b>Set Model Services</b></em>' containment reference list.
+	 * The list contents are of type {@link org.earthsystemcurator.cupid.nuopc.fsml.nuopc.SetModelServices}.
+	 * <!-- begin-user-doc -->
+	 * <p>
+	 * If the meaning of the '<em>Set Model Services</em>' reference list isn't clear,
+	 * there really should be more of a description here...
+	 * </p>
+	 * <!-- end-user-doc -->
+	 * @return the value of the '<em>Set Model Services</em>' containment reference list.
+	 * @see org.earthsystemcurator.cupid.nuopc.fsml.nuopc.NUOPCPackage#getNUOPCDriver__ImplementsSetModelServices_SetModelServices()
+	 * @model containment="true"
+	 *        annotation="http://www.earthsystemcog.org/projects/nuopc mapping='call: \"ESMF_GridCompSetServices(#modelComp, #subroutineName, userRc?=#ignore, rc?=#ignore)\"'"
+	 * @generated
+	 */
+	EList<SetModelServices> getSetModelServices();
+
+	/**
+	 * Returns the value of the '<em><b>Set Coupler Services</b></em>' containment reference list.
+	 * The list contents are of type {@link org.earthsystemcurator.cupid.nuopc.fsml.nuopc.SetCouplerServices}.
+	 * <!-- begin-user-doc -->
+	 * <p>
+	 * If the meaning of the '<em>Set Coupler Services</em>' containment reference list isn't clear,
+	 * there really should be more of a description here...
+	 * </p>
+	 * <!-- end-user-doc -->
+	 * @return the value of the '<em>Set Coupler Services</em>' containment reference list.
+	 * @see org.earthsystemcurator.cupid.nuopc.fsml.nuopc.NUOPCPackage#getNUOPCDriver__ImplementsSetModelServices_SetCouplerServices()
+	 * @model containment="true"
+	 *        annotation="http://www.earthsystemcog.org/projects/nuopc mapping='call: \"ESMF_CplCompSetServices(#cplComp, #subroutineName, userRc?=#ignore, rc?=#ignore)\"'"
+	 * @generated
+	 */
+	EList<SetCouplerServices> getSetCouplerServices();
 
 } // NUOPCDriver__ImplementsSetModelServices

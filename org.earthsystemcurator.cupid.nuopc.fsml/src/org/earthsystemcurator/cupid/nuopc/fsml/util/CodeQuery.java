@@ -372,34 +372,53 @@ public class CodeQuery {
 	}
 	
 	
+	public static Map<ASTUseStmtNode, Map<String,String>> usesModule(IFortranAST ast, Map<String, Object> params) {
+		return usesModule((ASTModuleNode) ast.getRoot().getProgramUnitList().get(0), params);
+	}
 	
-	public static ASTUseStmtNode usesModule(ASTModuleNode node, Map<String, Object> params) {
+	public static Map<ASTUseStmtNode, Map<String,String>> usesModule(ASTModuleNode node, Map<String, Object> params) {
 		String moduleName = (String) params.get("usesModule");
 		//String entityName = (String) params.get("entity");
 		
+		Map<ASTUseStmtNode, Map<String,String>> result = new HashMap<ASTUseStmtNode, Map<String,String>>();		
+		
 		for (ASTUseStmtNode usn : node.findAll(ASTUseStmtNode.class)) {
-			if (usn.getName().getText().equalsIgnoreCase(moduleName)) {
-				return usn;
+			Map<String,String> metavariableMap = new HashMap<String,String>();
+			if (moduleName.startsWith("#")) {
+				metavariableMap.put(moduleName, usn.getName().getText());				
 			}
+			else if (!usn.getName().getText().equalsIgnoreCase(moduleName)) {
+				continue;
+			}
+			result.put(usn, metavariableMap);
 		}
 		
-		return null;
+		return result;
 	}
 	
-	public static String usesEntity(ASTUseStmtNode node, Map<String, Object> params) {
+	public static Set<String> usesEntity(ASTUseStmtNode node, Map<String, Object> params) {
 		String entityName = (String) params.get("usesEntity");
+		Set<String> result = new HashSet<String>();
 		
-		for (ASTOnlyNode only : node.getOnlyList()) {
-			if (only.getName().getText().equalsIgnoreCase(entityName)) {
-				if (only.getNewName() != null) {
-					return only.getNewName().getText();
+		//TODO: this requires an explicit only list and does not look into the imported module
+		//itself to determine what public entities are imported
+		if (node.getOnlyList() != null) {
+			for (ASTOnlyNode only : node.getOnlyList()) {
+				if (entityName != null && entityName.length() > 0 && !only.getName().getText().equalsIgnoreCase(entityName)) {
+					continue;
 				}
 				else {
-					return entityName;
+					if (only.getNewName() != null) {
+						result.add(only.getNewName().getText());
+					}
+					else {
+						result.add(entityName);
+					}
 				}
 			}
 		}
-		return null;
+		
+		return result;
 	}
 	
 	
@@ -958,7 +977,7 @@ public class CodeQuery {
 						//TODO: need to determine semantics for how far to resolve variables
 						//for now, just use textual value of expression
 						//metavariableMap.put(vars.get(i), propagateValOrSymbol(san.getExpr()));		
-						metavariableMap.put(vars.get(i), san.getExpr().toString());	
+						metavariableMap.put(vars.get(i), san.getExpr().toString().trim());	
 					}
 					else if (!san.getExpr().toString().equalsIgnoreCase(vars.get(i))) {
 						continue csnloop;

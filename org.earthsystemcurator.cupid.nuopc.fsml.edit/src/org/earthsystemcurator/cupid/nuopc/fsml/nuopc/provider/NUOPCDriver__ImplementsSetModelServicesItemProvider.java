@@ -69,6 +69,7 @@ public class NUOPCDriver__ImplementsSetModelServicesItemProvider
 			addDriverInternalStatePropertyDescriptor(object);
 			addAssignsValuePropertyDescriptor(object);
 			addAttachedPropertyDescriptor(object);
+			addSetModelServicesPropertyDescriptor(object);
 		}
 		return itemPropertyDescriptors;
 	}
@@ -206,6 +207,28 @@ public class NUOPCDriver__ImplementsSetModelServicesItemProvider
 	}
 
 	/**
+	 * This adds a property descriptor for the Set Model Services feature.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	protected void addSetModelServicesPropertyDescriptor(Object object) {
+		itemPropertyDescriptors.add
+			(createItemPropertyDescriptor
+				(((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(),
+				 getResourceLocator(),
+				 getString("_UI_NUOPCDriver__ImplementsSetModelServices_setModelServices_feature"),
+				 getString("_UI_PropertyDescriptor_description", "_UI_NUOPCDriver__ImplementsSetModelServices_setModelServices_feature", "_UI_NUOPCDriver__ImplementsSetModelServices_type"),
+				 NUOPCPackage.Literals.NUOPC_DRIVER_IMPLEMENTS_SET_MODEL_SERVICES__SET_MODEL_SERVICES,
+				 true,
+				 false,
+				 true,
+				 null,
+				 null,
+				 null));
+	}
+
+	/**
 	 * This specifies how to implement {@link #getChildren} and is used to deduce an appropriate feature for an
 	 * {@link org.eclipse.emf.edit.command.AddCommand}, {@link org.eclipse.emf.edit.command.RemoveCommand} or
 	 * {@link org.eclipse.emf.edit.command.MoveCommand} in {@link #createCommand}.
@@ -218,6 +241,8 @@ public class NUOPCDriver__ImplementsSetModelServicesItemProvider
 		if (childrenFeatures == null) {
 			super.getChildrenFeatures(object);
 			childrenFeatures.add(NUOPCPackage.Literals.NUOPC_DRIVER_IMPLEMENTS_SET_MODEL_SERVICES__GETS_INTERNAL_STATE);
+			childrenFeatures.add(NUOPCPackage.Literals.NUOPC_DRIVER_IMPLEMENTS_SET_MODEL_SERVICES__SET_MODEL_SERVICES);
+			childrenFeatures.add(NUOPCPackage.Literals.NUOPC_DRIVER_IMPLEMENTS_SET_MODEL_SERVICES__SET_COUPLER_SERVICES);
 		}
 		return childrenFeatures;
 	}
@@ -281,6 +306,8 @@ public class NUOPCDriver__ImplementsSetModelServicesItemProvider
 				fireNotifyChanged(new ViewerNotification(notification, notification.getNotifier(), false, true));
 				return;
 			case NUOPCPackage.NUOPC_DRIVER_IMPLEMENTS_SET_MODEL_SERVICES__GETS_INTERNAL_STATE:
+			case NUOPCPackage.NUOPC_DRIVER_IMPLEMENTS_SET_MODEL_SERVICES__SET_MODEL_SERVICES:
+			case NUOPCPackage.NUOPC_DRIVER_IMPLEMENTS_SET_MODEL_SERVICES__SET_COUPLER_SERVICES:
 				fireNotifyChanged(new ViewerNotification(notification, notification.getNotifier(), true, false));
 				return;
 		}
@@ -302,6 +329,16 @@ public class NUOPCDriver__ImplementsSetModelServicesItemProvider
 			(createChildParameter
 				(NUOPCPackage.Literals.NUOPC_DRIVER_IMPLEMENTS_SET_MODEL_SERVICES__GETS_INTERNAL_STATE,
 				 NUOPCFactory.eINSTANCE.createGetsInternalState()));
+
+		newChildDescriptors.add
+			(createChildParameter
+				(NUOPCPackage.Literals.NUOPC_DRIVER_IMPLEMENTS_SET_MODEL_SERVICES__SET_MODEL_SERVICES,
+				 NUOPCFactory.eINSTANCE.createSetModelServices()));
+
+		newChildDescriptors.add
+			(createChildParameter
+				(NUOPCPackage.Literals.NUOPC_DRIVER_IMPLEMENTS_SET_MODEL_SERVICES__SET_COUPLER_SERVICES,
+				 NUOPCFactory.eINSTANCE.createSetCouplerServices()));
 	}
 
 	/**

@@ -71,10 +71,14 @@ public class NUOPCFactoryImpl extends EFactoryImpl implements NUOPCFactory {
 			case NUOPCPackage.MODEL_ADVANCE: return createModelAdvance();
 			case NUOPCPackage.NUOPC_DRIVER: return createNUOPCDriver();
 			case NUOPCPackage.NUOPC_DRIVER_GENERIC_IMPORTS: return createNUOPCDriver__GenericImports();
+			case NUOPCPackage.NUOPC_DRIVER_MODEL_IMPORTS: return createNUOPCDriver__ModelImports();
+			case NUOPCPackage.MODEL_IMPORT: return createModelImport();
 			case NUOPCPackage.NUOPC_DRIVER_IMPLEMENTS_SET_SERVICES: return createNUOPCDriver__ImplementsSetServices();
 			case NUOPCPackage.ATTACHES_METHOD: return createAttachesMethod();
 			case NUOPCPackage.NUOPC_DRIVER_IMPLEMENTS_SET_MODEL_COUNT: return createNUOPCDriver__ImplementsSetModelCount();
 			case NUOPCPackage.NUOPC_DRIVER_IMPLEMENTS_SET_MODEL_SERVICES: return createNUOPCDriver__ImplementsSetModelServices();
+			case NUOPCPackage.SET_MODEL_SERVICES: return createSetModelServices();
+			case NUOPCPackage.SET_COUPLER_SERVICES: return createSetCouplerServices();
 			case NUOPCPackage.GETS_INTERNAL_STATE: return createGetsInternalState();
 			case NUOPCPackage.NUOPC_APPLICATION: return createNUOPCApplication();
 			case NUOPCPackage.TOP: return createTop();
@@ -240,6 +244,26 @@ public class NUOPCFactoryImpl extends EFactoryImpl implements NUOPCFactory {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	public NUOPCDriver__ModelImports createNUOPCDriver__ModelImports() {
+		NUOPCDriver__ModelImportsImpl nuopcDriver__ModelImports = new NUOPCDriver__ModelImportsImpl();
+		return nuopcDriver__ModelImports;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public ModelImport createModelImport() {
+		ModelImportImpl modelImport = new ModelImportImpl();
+		return modelImport;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
 	public NUOPCDriver__ImplementsSetServices createNUOPCDriver__ImplementsSetServices() {
 		NUOPCDriver__ImplementsSetServicesImpl nuopcDriver__ImplementsSetServices = new NUOPCDriver__ImplementsSetServicesImpl();
 		return nuopcDriver__ImplementsSetServices;
@@ -273,6 +297,26 @@ public class NUOPCFactoryImpl extends EFactoryImpl implements NUOPCFactory {
 	public NUOPCDriver__ImplementsSetModelServices createNUOPCDriver__ImplementsSetModelServices() {
 		NUOPCDriver__ImplementsSetModelServicesImpl nuopcDriver__ImplementsSetModelServices = new NUOPCDriver__ImplementsSetModelServicesImpl();
 		return nuopcDriver__ImplementsSetModelServices;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public SetModelServices createSetModelServices() {
+		SetModelServicesImpl setModelServices = new SetModelServicesImpl();
+		return setModelServices;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public SetCouplerServices createSetCouplerServices() {
+		SetCouplerServicesImpl setCouplerServices = new SetCouplerServicesImpl();
+		return setCouplerServices;
 	}
 
 	/**

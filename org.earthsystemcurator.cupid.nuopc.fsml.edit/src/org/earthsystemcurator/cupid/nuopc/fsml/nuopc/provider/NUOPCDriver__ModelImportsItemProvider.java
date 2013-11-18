@@ -6,7 +6,7 @@ package org.earthsystemcurator.cupid.nuopc.fsml.nuopc.provider;
 import java.util.Collection;
 import java.util.List;
 
-import org.earthsystemcurator.cupid.nuopc.fsml.nuopc.NUOPCApplication;
+import org.earthsystemcurator.cupid.nuopc.fsml.nuopc.NUOPCDriver__ModelImports;
 import org.earthsystemcurator.cupid.nuopc.fsml.nuopc.NUOPCFactory;
 import org.earthsystemcurator.cupid.nuopc.fsml.nuopc.NUOPCPackage;
 
@@ -17,24 +17,22 @@ import org.eclipse.emf.common.util.ResourceLocator;
 
 import org.eclipse.emf.ecore.EStructuralFeature;
 
-import org.eclipse.emf.edit.provider.ComposeableAdapterFactory;
 import org.eclipse.emf.edit.provider.IEditingDomainItemProvider;
 import org.eclipse.emf.edit.provider.IItemLabelProvider;
 import org.eclipse.emf.edit.provider.IItemPropertyDescriptor;
 import org.eclipse.emf.edit.provider.IItemPropertySource;
 import org.eclipse.emf.edit.provider.IStructuredItemContentProvider;
 import org.eclipse.emf.edit.provider.ITreeItemContentProvider;
-import org.eclipse.emf.edit.provider.ItemPropertyDescriptor;
 import org.eclipse.emf.edit.provider.ItemProviderAdapter;
 import org.eclipse.emf.edit.provider.ViewerNotification;
 
 /**
- * This is the item provider adapter for a {@link org.earthsystemcurator.cupid.nuopc.fsml.nuopc.NUOPCApplication} object.
+ * This is the item provider adapter for a {@link org.earthsystemcurator.cupid.nuopc.fsml.nuopc.NUOPCDriver__ModelImports} object.
  * <!-- begin-user-doc -->
  * <!-- end-user-doc -->
  * @generated
  */
-public class NUOPCApplicationItemProvider
+public class NUOPCDriver__ModelImportsItemProvider
 	extends ItemProviderAdapter
 	implements
 		IEditingDomainItemProvider,
@@ -48,7 +46,7 @@ public class NUOPCApplicationItemProvider
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public NUOPCApplicationItemProvider(AdapterFactory adapterFactory) {
+	public NUOPCDriver__ModelImportsItemProvider(AdapterFactory adapterFactory) {
 		super(adapterFactory);
 	}
 
@@ -63,54 +61,8 @@ public class NUOPCApplicationItemProvider
 		if (itemPropertyDescriptors == null) {
 			super.getPropertyDescriptors(object);
 
-			addNamePropertyDescriptor(object);
-			addNuopcDriverAtmOcnPropertyDescriptor(object);
 		}
 		return itemPropertyDescriptors;
-	}
-
-	/**
-	 * This adds a property descriptor for the Name feature.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	protected void addNamePropertyDescriptor(Object object) {
-		itemPropertyDescriptors.add
-			(createItemPropertyDescriptor
-				(((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(),
-				 getResourceLocator(),
-				 getString("_UI_NUOPCApplication_name_feature"),
-				 getString("_UI_PropertyDescriptor_description", "_UI_NUOPCApplication_name_feature", "_UI_NUOPCApplication_type"),
-				 NUOPCPackage.Literals.NUOPC_APPLICATION__NAME,
-				 true,
-				 false,
-				 false,
-				 ItemPropertyDescriptor.GENERIC_VALUE_IMAGE,
-				 null,
-				 null));
-	}
-
-	/**
-	 * This adds a property descriptor for the Nuopc Driver Atm Ocn feature.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	protected void addNuopcDriverAtmOcnPropertyDescriptor(Object object) {
-		itemPropertyDescriptors.add
-			(createItemPropertyDescriptor
-				(((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(),
-				 getResourceLocator(),
-				 getString("_UI_NUOPCApplication_nuopcDriverAtmOcn_feature"),
-				 getString("_UI_PropertyDescriptor_description", "_UI_NUOPCApplication_nuopcDriverAtmOcn_feature", "_UI_NUOPCApplication_type"),
-				 NUOPCPackage.Literals.NUOPC_APPLICATION__NUOPC_DRIVER_ATM_OCN,
-				 true,
-				 false,
-				 true,
-				 null,
-				 null,
-				 null));
 	}
 
 	/**
@@ -125,9 +77,7 @@ public class NUOPCApplicationItemProvider
 	public Collection<? extends EStructuralFeature> getChildrenFeatures(Object object) {
 		if (childrenFeatures == null) {
 			super.getChildrenFeatures(object);
-			childrenFeatures.add(NUOPCPackage.Literals.NUOPC_APPLICATION__NUOPC_MODEL);
-			childrenFeatures.add(NUOPCPackage.Literals.NUOPC_APPLICATION__NUOPC_DRIVER);
-			childrenFeatures.add(NUOPCPackage.Literals.NUOPC_APPLICATION__NUOPC_DRIVER_ATM_OCN);
+			childrenFeatures.add(NUOPCPackage.Literals.NUOPC_DRIVER_MODEL_IMPORTS__MODEL_IMPORT);
 		}
 		return childrenFeatures;
 	}
@@ -146,14 +96,14 @@ public class NUOPCApplicationItemProvider
 	}
 
 	/**
-	 * This returns NUOPCApplication.gif.
+	 * This returns NUOPCDriver__ModelImports.gif.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
 	@Override
 	public Object getImage(Object object) {
-		return overlayImage(object, getResourceLocator().getImage("full/obj16/NUOPCApplication"));
+		return overlayImage(object, getResourceLocator().getImage("full/obj16/NUOPCDriver__ModelImports"));
 	}
 
 	/**
@@ -164,10 +114,7 @@ public class NUOPCApplicationItemProvider
 	 */
 	@Override
 	public String getText(Object object) {
-		String label = ((NUOPCApplication)object).getName();
-		return label == null || label.length() == 0 ?
-			getString("_UI_NUOPCApplication_type") :
-			getString("_UI_NUOPCApplication_type") + " " + label;
+		return getString("_UI_NUOPCDriver__ModelImports_type");
 	}
 
 	/**
@@ -181,13 +128,8 @@ public class NUOPCApplicationItemProvider
 	public void notifyChanged(Notification notification) {
 		updateChildren(notification);
 
-		switch (notification.getFeatureID(NUOPCApplication.class)) {
-			case NUOPCPackage.NUOPC_APPLICATION__NAME:
-				fireNotifyChanged(new ViewerNotification(notification, notification.getNotifier(), false, true));
-				return;
-			case NUOPCPackage.NUOPC_APPLICATION__NUOPC_MODEL:
-			case NUOPCPackage.NUOPC_APPLICATION__NUOPC_DRIVER:
-			case NUOPCPackage.NUOPC_APPLICATION__NUOPC_DRIVER_ATM_OCN:
+		switch (notification.getFeatureID(NUOPCDriver__ModelImports.class)) {
+			case NUOPCPackage.NUOPC_DRIVER_MODEL_IMPORTS__MODEL_IMPORT:
 				fireNotifyChanged(new ViewerNotification(notification, notification.getNotifier(), true, false));
 				return;
 		}
@@ -207,18 +149,8 @@ public class NUOPCApplicationItemProvider
 
 		newChildDescriptors.add
 			(createChildParameter
-				(NUOPCPackage.Literals.NUOPC_APPLICATION__NUOPC_MODEL,
-				 NUOPCFactory.eINSTANCE.createNUOPCModel()));
-
-		newChildDescriptors.add
-			(createChildParameter
-				(NUOPCPackage.Literals.NUOPC_APPLICATION__NUOPC_DRIVER,
-				 NUOPCFactory.eINSTANCE.createNUOPCDriver()));
-
-		newChildDescriptors.add
-			(createChildParameter
-				(NUOPCPackage.Literals.NUOPC_APPLICATION__NUOPC_DRIVER_ATM_OCN,
-				 NUOPCFactory.eINSTANCE.createNUOPCDriverAtmOcn()));
+				(NUOPCPackage.Literals.NUOPC_DRIVER_MODEL_IMPORTS__MODEL_IMPORT,
+				 NUOPCFactory.eINSTANCE.createModelImport()));
 	}
 
 	/**

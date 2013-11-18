@@ -157,6 +157,24 @@ public interface NUOPCFactory extends EFactory {
 	NUOPCDriver__GenericImports createNUOPCDriver__GenericImports();
 
 	/**
+	 * Returns a new object of class '<em>Driver Model Imports</em>'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return a new object of class '<em>Driver Model Imports</em>'.
+	 * @generated
+	 */
+	NUOPCDriver__ModelImports createNUOPCDriver__ModelImports();
+
+	/**
+	 * Returns a new object of class '<em>Model Import</em>'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return a new object of class '<em>Model Import</em>'.
+	 * @generated
+	 */
+	ModelImport createModelImport();
+
+	/**
 	 * Returns a new object of class '<em>Driver Implements Set Services</em>'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -191,6 +209,24 @@ public interface NUOPCFactory extends EFactory {
 	 * @generated
 	 */
 	NUOPCDriver__ImplementsSetModelServices createNUOPCDriver__ImplementsSetModelServices();
+
+	/**
+	 * Returns a new object of class '<em>Set Model Services</em>'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return a new object of class '<em>Set Model Services</em>'.
+	 * @generated
+	 */
+	SetModelServices createSetModelServices();
+
+	/**
+	 * Returns a new object of class '<em>Set Coupler Services</em>'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return a new object of class '<em>Set Coupler Services</em>'.
+	 * @generated
+	 */
+	SetCouplerServices createSetCouplerServices();
 
 	/**
 	 * Returns a new object of class '<em>Gets Internal State</em>'.
