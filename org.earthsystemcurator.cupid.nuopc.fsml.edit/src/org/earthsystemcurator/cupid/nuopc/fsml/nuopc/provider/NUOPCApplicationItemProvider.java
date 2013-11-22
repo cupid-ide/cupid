@@ -64,7 +64,6 @@ public class NUOPCApplicationItemProvider
 			super.getPropertyDescriptors(object);
 
 			addNamePropertyDescriptor(object);
-			addNuopcDriverAtmOcnPropertyDescriptor(object);
 		}
 		return itemPropertyDescriptors;
 	}
@@ -92,28 +91,6 @@ public class NUOPCApplicationItemProvider
 	}
 
 	/**
-	 * This adds a property descriptor for the Nuopc Driver Atm Ocn feature.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	protected void addNuopcDriverAtmOcnPropertyDescriptor(Object object) {
-		itemPropertyDescriptors.add
-			(createItemPropertyDescriptor
-				(((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(),
-				 getResourceLocator(),
-				 getString("_UI_NUOPCApplication_nuopcDriverAtmOcn_feature"),
-				 getString("_UI_PropertyDescriptor_description", "_UI_NUOPCApplication_nuopcDriverAtmOcn_feature", "_UI_NUOPCApplication_type"),
-				 NUOPCPackage.Literals.NUOPC_APPLICATION__NUOPC_DRIVER_ATM_OCN,
-				 true,
-				 false,
-				 true,
-				 null,
-				 null,
-				 null));
-	}
-
-	/**
 	 * This specifies how to implement {@link #getChildren} and is used to deduce an appropriate feature for an
 	 * {@link org.eclipse.emf.edit.command.AddCommand}, {@link org.eclipse.emf.edit.command.RemoveCommand} or
 	 * {@link org.eclipse.emf.edit.command.MoveCommand} in {@link #createCommand}.
@@ -127,7 +104,6 @@ public class NUOPCApplicationItemProvider
 			super.getChildrenFeatures(object);
 			childrenFeatures.add(NUOPCPackage.Literals.NUOPC_APPLICATION__NUOPC_MODEL);
 			childrenFeatures.add(NUOPCPackage.Literals.NUOPC_APPLICATION__NUOPC_DRIVER);
-			childrenFeatures.add(NUOPCPackage.Literals.NUOPC_APPLICATION__NUOPC_DRIVER_ATM_OCN);
 		}
 		return childrenFeatures;
 	}
@@ -187,7 +163,6 @@ public class NUOPCApplicationItemProvider
 				return;
 			case NUOPCPackage.NUOPC_APPLICATION__NUOPC_MODEL:
 			case NUOPCPackage.NUOPC_APPLICATION__NUOPC_DRIVER:
-			case NUOPCPackage.NUOPC_APPLICATION__NUOPC_DRIVER_ATM_OCN:
 				fireNotifyChanged(new ViewerNotification(notification, notification.getNotifier(), true, false));
 				return;
 		}
@@ -217,7 +192,7 @@ public class NUOPCApplicationItemProvider
 
 		newChildDescriptors.add
 			(createChildParameter
-				(NUOPCPackage.Literals.NUOPC_APPLICATION__NUOPC_DRIVER_ATM_OCN,
+				(NUOPCPackage.Literals.NUOPC_APPLICATION__NUOPC_DRIVER,
 				 NUOPCFactory.eINSTANCE.createNUOPCDriverAtmOcn()));
 	}
 

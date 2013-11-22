@@ -145,8 +145,6 @@ public class NUOPCValidator extends OCLinEcoreEObjectValidator {
 				return validateTop((Top)value, diagnostics, context);
 			case NUOPCPackage.NUOPC_DRIVER_ATM_OCN:
 				return validateNUOPCDriverAtmOcn((NUOPCDriverAtmOcn)value, diagnostics, context);
-			case NUOPCPackage.NUOPC_DRIVER_ATM_OCN_IMPLEMENTS_SET_SERVICES:
-				return validateNUOPCDriverAtmOcn__ImplementsSetServices((NUOPCDriverAtmOcn__ImplementsSetServices)value, diagnostics, context);
 			default:
 				return true;
 		}
@@ -462,15 +460,6 @@ public class NUOPCValidator extends OCLinEcoreEObjectValidator {
 	 */
 	public boolean validateNUOPCDriverAtmOcn(NUOPCDriverAtmOcn nuopcDriverAtmOcn, DiagnosticChain diagnostics, Map<Object, Object> context) {
 		return validate_EveryDefaultConstraint(nuopcDriverAtmOcn, diagnostics, context);
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public boolean validateNUOPCDriverAtmOcn__ImplementsSetServices(NUOPCDriverAtmOcn__ImplementsSetServices nuopcDriverAtmOcn__ImplementsSetServices, DiagnosticChain diagnostics, Map<Object, Object> context) {
-		return validate_EveryDefaultConstraint(nuopcDriverAtmOcn__ImplementsSetServices, diagnostics, context);
 	}
 
 	/**

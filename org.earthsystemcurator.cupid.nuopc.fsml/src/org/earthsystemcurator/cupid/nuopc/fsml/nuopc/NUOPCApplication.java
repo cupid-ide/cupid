@@ -17,7 +17,6 @@ import org.eclipse.emf.ecore.EObject;
  *   <li>{@link org.earthsystemcurator.cupid.nuopc.fsml.nuopc.NUOPCApplication#getName <em>Name</em>}</li>
  *   <li>{@link org.earthsystemcurator.cupid.nuopc.fsml.nuopc.NUOPCApplication#getNuopcModel <em>Nuopc Model</em>}</li>
  *   <li>{@link org.earthsystemcurator.cupid.nuopc.fsml.nuopc.NUOPCApplication#getNuopcDriver <em>Nuopc Driver</em>}</li>
- *   <li>{@link org.earthsystemcurator.cupid.nuopc.fsml.nuopc.NUOPCApplication#getNuopcDriverAtmOcn <em>Nuopc Driver Atm Ocn</em>}</li>
  * </ul>
  * </p>
  *
@@ -53,25 +52,6 @@ public interface NUOPCApplication extends EObject {
 	void setName(String value);
 
 	/**
-	 * Returns the value of the '<em><b>Nuopc Driver</b></em>' containment reference list.
-	 * The list contents are of type {@link org.earthsystemcurator.cupid.nuopc.fsml.nuopc.NUOPCDriver}.
-	 * It is bidirectional and its opposite is '{@link org.earthsystemcurator.cupid.nuopc.fsml.nuopc.NUOPCDriver#getParent <em>Parent</em>}'.
-	 * <!-- begin-user-doc -->
-	 * <p>
-	 * If the meaning of the '<em>Nuopc Driver</em>' containment reference list isn't clear,
-	 * there really should be more of a description here...
-	 * </p>
-	 * <!-- end-user-doc -->
-	 * @return the value of the '<em>Nuopc Driver</em>' containment reference list.
-	 * @see org.earthsystemcurator.cupid.nuopc.fsml.nuopc.NUOPCPackage#getNUOPCApplication_NuopcDriver()
-	 * @see org.earthsystemcurator.cupid.nuopc.fsml.nuopc.NUOPCDriver#getParent
-	 * @model opposite="parent" containment="true" ordered="false"
-	 *        annotation="http://www.earthsystemcog.org/projects/nuopc mapping='module'"
-	 * @generated
-	 */
-	EList<NUOPCDriver> getNuopcDriver();
-
-	/**
 	 * Returns the value of the '<em><b>Nuopc Model</b></em>' containment reference list.
 	 * The list contents are of type {@link org.earthsystemcurator.cupid.nuopc.fsml.nuopc.NUOPCModel}.
 	 * <!-- begin-user-doc -->
@@ -89,20 +69,22 @@ public interface NUOPCApplication extends EObject {
 	EList<NUOPCModel> getNuopcModel();
 
 	/**
-	 * Returns the value of the '<em><b>Nuopc Driver Atm Ocn</b></em>' containment reference list.
-	 * The list contents are of type {@link org.earthsystemcurator.cupid.nuopc.fsml.nuopc.NUOPCDriverAtmOcn}.
+	 * Returns the value of the '<em><b>Nuopc Driver</b></em>' containment reference list.
+	 * The list contents are of type {@link org.earthsystemcurator.cupid.nuopc.fsml.nuopc.NUOPCDriver}.
+	 * It is bidirectional and its opposite is '{@link org.earthsystemcurator.cupid.nuopc.fsml.nuopc.NUOPCDriver#getParent <em>Parent</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <p>
-	 * If the meaning of the '<em>Nuopc Driver Atm Ocn</em>' reference list isn't clear,
+	 * If the meaning of the '<em>Nuopc Driver</em>' containment reference list isn't clear,
 	 * there really should be more of a description here...
 	 * </p>
 	 * <!-- end-user-doc -->
-	 * @return the value of the '<em>Nuopc Driver Atm Ocn</em>' containment reference list.
-	 * @see org.earthsystemcurator.cupid.nuopc.fsml.nuopc.NUOPCPackage#getNUOPCApplication_NuopcDriverAtmOcn()
-	 * @model containment="true" ordered="false"
+	 * @return the value of the '<em>Nuopc Driver</em>' containment reference list.
+	 * @see org.earthsystemcurator.cupid.nuopc.fsml.nuopc.NUOPCPackage#getNUOPCApplication_NuopcDriver()
+	 * @see org.earthsystemcurator.cupid.nuopc.fsml.nuopc.NUOPCDriver#getParent
+	 * @model opposite="parent" containment="true"
 	 *        annotation="http://www.earthsystemcog.org/projects/nuopc mapping='module'"
 	 * @generated
 	 */
-	EList<NUOPCDriverAtmOcn> getNuopcDriverAtmOcn();
+	EList<NUOPCDriver> getNuopcDriver();
 
 } // NUOPCApplication

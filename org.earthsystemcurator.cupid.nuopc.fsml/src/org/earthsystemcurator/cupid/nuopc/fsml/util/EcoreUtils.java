@@ -28,6 +28,11 @@ public class EcoreUtils {
 			
 		}
 		
+		if (elemToCheck == null) {
+			//throw new RuntimeException("Structural feature not found: " + pathExpr);
+			return defaultVal;
+		}
+		
 		EStructuralFeature attribSF = elemToCheck.eClass().getEStructuralFeature(pathExpr);
 		if (attribSF != null) {			
 			return (T) elemToCheck.eGet(attribSF);

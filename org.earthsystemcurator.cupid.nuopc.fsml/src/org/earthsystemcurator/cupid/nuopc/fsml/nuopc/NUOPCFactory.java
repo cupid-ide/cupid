@@ -265,15 +265,6 @@ public interface NUOPCFactory extends EFactory {
 	NUOPCDriverAtmOcn createNUOPCDriverAtmOcn();
 
 	/**
-	 * Returns a new object of class '<em>Driver Atm Ocn Implements Set Services</em>'.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @return a new object of class '<em>Driver Atm Ocn Implements Set Services</em>'.
-	 * @generated
-	 */
-	NUOPCDriverAtmOcn__ImplementsSetServices createNUOPCDriverAtmOcn__ImplementsSetServices();
-
-	/**
 	 * Returns the package supported by this factory.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->

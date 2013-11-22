@@ -97,6 +97,7 @@ public interface NUOPCDriver extends EObject {
 	 * @see #setGenericImports(NUOPCDriver__GenericImports)
 	 * @see org.earthsystemcurator.cupid.nuopc.fsml.nuopc.NUOPCPackage#getNUOPCDriver_GenericImports()
 	 * @model containment="true" required="true"
+	 *        annotation="http://www.earthsystemcog.org/projects/nuopc mapping='usesModule: \"NUOPC_Driver\"'"
 	 * @generated
 	 */
 	NUOPCDriver__GenericImports getGenericImports();

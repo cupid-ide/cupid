@@ -693,29 +693,6 @@ public class NUOPCItemProviderAdapterFactory extends NUOPCAdapterFactory impleme
 	}
 
 	/**
-	 * This keeps track of the one adapter used for all {@link org.earthsystemcurator.cupid.nuopc.fsml.nuopc.NUOPCDriverAtmOcn__ImplementsSetServices} instances.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	protected NUOPCDriverAtmOcn__ImplementsSetServicesItemProvider nuopcDriverAtmOcn__ImplementsSetServicesItemProvider;
-
-	/**
-	 * This creates an adapter for a {@link org.earthsystemcurator.cupid.nuopc.fsml.nuopc.NUOPCDriverAtmOcn__ImplementsSetServices}.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	@Override
-	public Adapter createNUOPCDriverAtmOcn__ImplementsSetServicesAdapter() {
-		if (nuopcDriverAtmOcn__ImplementsSetServicesItemProvider == null) {
-			nuopcDriverAtmOcn__ImplementsSetServicesItemProvider = new NUOPCDriverAtmOcn__ImplementsSetServicesItemProvider(this);
-		}
-
-		return nuopcDriverAtmOcn__ImplementsSetServicesItemProvider;
-	}
-
-	/**
 	 * This returns the root adapter factory that contains this factory.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -841,7 +818,6 @@ public class NUOPCItemProviderAdapterFactory extends NUOPCAdapterFactory impleme
 		if (nuopcApplicationItemProvider != null) nuopcApplicationItemProvider.dispose();
 		if (topItemProvider != null) topItemProvider.dispose();
 		if (nuopcDriverAtmOcnItemProvider != null) nuopcDriverAtmOcnItemProvider.dispose();
-		if (nuopcDriverAtmOcn__ImplementsSetServicesItemProvider != null) nuopcDriverAtmOcn__ImplementsSetServicesItemProvider.dispose();
 	}
 
 }

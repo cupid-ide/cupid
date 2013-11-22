@@ -83,7 +83,6 @@ public class NUOPCFactoryImpl extends EFactoryImpl implements NUOPCFactory {
 			case NUOPCPackage.NUOPC_APPLICATION: return createNUOPCApplication();
 			case NUOPCPackage.TOP: return createTop();
 			case NUOPCPackage.NUOPC_DRIVER_ATM_OCN: return createNUOPCDriverAtmOcn();
-			case NUOPCPackage.NUOPC_DRIVER_ATM_OCN_IMPLEMENTS_SET_SERVICES: return createNUOPCDriverAtmOcn__ImplementsSetServices();
 			default:
 				throw new IllegalArgumentException("The class '" + eClass.getName() + "' is not a valid classifier");
 		}
@@ -357,16 +356,6 @@ public class NUOPCFactoryImpl extends EFactoryImpl implements NUOPCFactory {
 	public NUOPCDriverAtmOcn createNUOPCDriverAtmOcn() {
 		NUOPCDriverAtmOcnImpl nuopcDriverAtmOcn = new NUOPCDriverAtmOcnImpl();
 		return nuopcDriverAtmOcn;
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public NUOPCDriverAtmOcn__ImplementsSetServices createNUOPCDriverAtmOcn__ImplementsSetServices() {
-		NUOPCDriverAtmOcn__ImplementsSetServicesImpl nuopcDriverAtmOcn__ImplementsSetServices = new NUOPCDriverAtmOcn__ImplementsSetServicesImpl();
-		return nuopcDriverAtmOcn__ImplementsSetServices;
 	}
 
 	/**

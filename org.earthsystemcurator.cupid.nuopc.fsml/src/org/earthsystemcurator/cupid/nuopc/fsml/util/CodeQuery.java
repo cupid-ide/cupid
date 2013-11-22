@@ -933,6 +933,10 @@ public class CodeQuery {
 				//TODO: assuming we can only populate direct attributes (not parents)
 				//could also use the semantic that only non-mapped attributes (i.e.,
 				//no mapping annotation present) can be populated
+				//
+				//dealing with this is somewhat complex because all of the nodes
+				//in the path expression may not exist--so their mappings would
+				//have to be verified some how
 				continue;
 			}
 			if (subroutineName.startsWith("#")) {

@@ -225,12 +225,7 @@ public class NUOPCSwitch<T> extends Switch<T> {
 			case NUOPCPackage.NUOPC_DRIVER_ATM_OCN: {
 				NUOPCDriverAtmOcn nuopcDriverAtmOcn = (NUOPCDriverAtmOcn)theEObject;
 				T result = caseNUOPCDriverAtmOcn(nuopcDriverAtmOcn);
-				if (result == null) result = defaultCase(theEObject);
-				return result;
-			}
-			case NUOPCPackage.NUOPC_DRIVER_ATM_OCN_IMPLEMENTS_SET_SERVICES: {
-				NUOPCDriverAtmOcn__ImplementsSetServices nuopcDriverAtmOcn__ImplementsSetServices = (NUOPCDriverAtmOcn__ImplementsSetServices)theEObject;
-				T result = caseNUOPCDriverAtmOcn__ImplementsSetServices(nuopcDriverAtmOcn__ImplementsSetServices);
+				if (result == null) result = caseNUOPCDriver(nuopcDriverAtmOcn);
 				if (result == null) result = defaultCase(theEObject);
 				return result;
 			}
@@ -640,21 +635,6 @@ public class NUOPCSwitch<T> extends Switch<T> {
 	 * @generated
 	 */
 	public T caseNUOPCDriverAtmOcn(NUOPCDriverAtmOcn object) {
-		return null;
-	}
-
-	/**
-	 * Returns the result of interpreting the object as an instance of '<em>Driver Atm Ocn Implements Set Services</em>'.
-	 * <!-- begin-user-doc -->
-	 * This implementation returns null;
-	 * returning a non-null result will terminate the switch.
-	 * <!-- end-user-doc -->
-	 * @param object the target of the switch.
-	 * @return the result of interpreting the object as an instance of '<em>Driver Atm Ocn Implements Set Services</em>'.
-	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
-	 * @generated
-	 */
-	public T caseNUOPCDriverAtmOcn__ImplementsSetServices(NUOPCDriverAtmOcn__ImplementsSetServices object) {
 		return null;
 	}
 
