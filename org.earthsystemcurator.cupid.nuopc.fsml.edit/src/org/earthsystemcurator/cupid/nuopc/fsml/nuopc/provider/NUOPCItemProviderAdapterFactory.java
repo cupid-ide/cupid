@@ -72,6 +72,52 @@ public class NUOPCItemProviderAdapterFactory extends NUOPCAdapterFactory impleme
 	}
 
 	/**
+	 * This keeps track of the one adapter used for all {@link org.earthsystemcurator.cupid.nuopc.fsml.nuopc.Top} instances.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	protected TopItemProvider topItemProvider;
+
+	/**
+	 * This creates an adapter for a {@link org.earthsystemcurator.cupid.nuopc.fsml.nuopc.Top}.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	@Override
+	public Adapter createTopAdapter() {
+		if (topItemProvider == null) {
+			topItemProvider = new TopItemProvider(this);
+		}
+
+		return topItemProvider;
+	}
+
+	/**
+	 * This keeps track of the one adapter used for all {@link org.earthsystemcurator.cupid.nuopc.fsml.nuopc.NUOPCApplication} instances.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	protected NUOPCApplicationItemProvider nuopcApplicationItemProvider;
+
+	/**
+	 * This creates an adapter for a {@link org.earthsystemcurator.cupid.nuopc.fsml.nuopc.NUOPCApplication}.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	@Override
+	public Adapter createNUOPCApplicationAdapter() {
+		if (nuopcApplicationItemProvider == null) {
+			nuopcApplicationItemProvider = new NUOPCApplicationItemProvider(this);
+		}
+
+		return nuopcApplicationItemProvider;
+	}
+
+	/**
 	 * This keeps track of the one adapter used for all {@link org.earthsystemcurator.cupid.nuopc.fsml.nuopc.NUOPCModel} instances.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -325,52 +371,6 @@ public class NUOPCItemProviderAdapterFactory extends NUOPCAdapterFactory impleme
 	}
 
 	/**
-	 * This keeps track of the one adapter used for all {@link org.earthsystemcurator.cupid.nuopc.fsml.nuopc.CallsGenericSetServices} instances.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	protected CallsGenericSetServicesItemProvider callsGenericSetServicesItemProvider;
-
-	/**
-	 * This creates an adapter for a {@link org.earthsystemcurator.cupid.nuopc.fsml.nuopc.CallsGenericSetServices}.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	@Override
-	public Adapter createCallsGenericSetServicesAdapter() {
-		if (callsGenericSetServicesItemProvider == null) {
-			callsGenericSetServicesItemProvider = new CallsGenericSetServicesItemProvider(this);
-		}
-
-		return callsGenericSetServicesItemProvider;
-	}
-
-	/**
-	 * This keeps track of the one adapter used for all {@link org.earthsystemcurator.cupid.nuopc.fsml.nuopc.CallsSetEntryPoint} instances.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	protected CallsSetEntryPointItemProvider callsSetEntryPointItemProvider;
-
-	/**
-	 * This creates an adapter for a {@link org.earthsystemcurator.cupid.nuopc.fsml.nuopc.CallsSetEntryPoint}.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	@Override
-	public Adapter createCallsSetEntryPointAdapter() {
-		if (callsSetEntryPointItemProvider == null) {
-			callsSetEntryPointItemProvider = new CallsSetEntryPointItemProvider(this);
-		}
-
-		return callsSetEntryPointItemProvider;
-	}
-
-	/**
 	 * This keeps track of the one adapter used for all {@link org.earthsystemcurator.cupid.nuopc.fsml.nuopc.NUOPCDriver} instances.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -532,29 +532,6 @@ public class NUOPCItemProviderAdapterFactory extends NUOPCAdapterFactory impleme
 	}
 
 	/**
-	 * This keeps track of the one adapter used for all {@link org.earthsystemcurator.cupid.nuopc.fsml.nuopc.AttachesMethod} instances.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	protected AttachesMethodItemProvider attachesMethodItemProvider;
-
-	/**
-	 * This creates an adapter for a {@link org.earthsystemcurator.cupid.nuopc.fsml.nuopc.AttachesMethod}.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	@Override
-	public Adapter createAttachesMethodAdapter() {
-		if (attachesMethodItemProvider == null) {
-			attachesMethodItemProvider = new AttachesMethodItemProvider(this);
-		}
-
-		return attachesMethodItemProvider;
-	}
-
-	/**
 	 * This keeps track of the one adapter used for all {@link org.earthsystemcurator.cupid.nuopc.fsml.nuopc.NUOPCDriver__ImplementsSetModelCount} instances.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -598,6 +575,236 @@ public class NUOPCItemProviderAdapterFactory extends NUOPCAdapterFactory impleme
 		}
 
 		return nuopcDriver__ImplementsSetModelServicesItemProvider;
+	}
+
+	/**
+	 * This keeps track of the one adapter used for all {@link org.earthsystemcurator.cupid.nuopc.fsml.nuopc.NUOPCDriverAtmOcn} instances.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	protected NUOPCDriverAtmOcnItemProvider nuopcDriverAtmOcnItemProvider;
+
+	/**
+	 * This creates an adapter for a {@link org.earthsystemcurator.cupid.nuopc.fsml.nuopc.NUOPCDriverAtmOcn}.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	@Override
+	public Adapter createNUOPCDriverAtmOcnAdapter() {
+		if (nuopcDriverAtmOcnItemProvider == null) {
+			nuopcDriverAtmOcnItemProvider = new NUOPCDriverAtmOcnItemProvider(this);
+		}
+
+		return nuopcDriverAtmOcnItemProvider;
+	}
+
+	/**
+	 * This keeps track of the one adapter used for all {@link org.earthsystemcurator.cupid.nuopc.fsml.nuopc.NUOPCDriverAtmOcn__GenericImports} instances.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	protected NUOPCDriverAtmOcn__GenericImportsItemProvider nuopcDriverAtmOcn__GenericImportsItemProvider;
+
+	/**
+	 * This creates an adapter for a {@link org.earthsystemcurator.cupid.nuopc.fsml.nuopc.NUOPCDriverAtmOcn__GenericImports}.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	@Override
+	public Adapter createNUOPCDriverAtmOcn__GenericImportsAdapter() {
+		if (nuopcDriverAtmOcn__GenericImportsItemProvider == null) {
+			nuopcDriverAtmOcn__GenericImportsItemProvider = new NUOPCDriverAtmOcn__GenericImportsItemProvider(this);
+		}
+
+		return nuopcDriverAtmOcn__GenericImportsItemProvider;
+	}
+
+	/**
+	 * This keeps track of the one adapter used for all {@link org.earthsystemcurator.cupid.nuopc.fsml.nuopc.NUOPCDriverAtmOcn__ModelImports} instances.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	protected NUOPCDriverAtmOcn__ModelImportsItemProvider nuopcDriverAtmOcn__ModelImportsItemProvider;
+
+	/**
+	 * This creates an adapter for a {@link org.earthsystemcurator.cupid.nuopc.fsml.nuopc.NUOPCDriverAtmOcn__ModelImports}.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	@Override
+	public Adapter createNUOPCDriverAtmOcn__ModelImportsAdapter() {
+		if (nuopcDriverAtmOcn__ModelImportsItemProvider == null) {
+			nuopcDriverAtmOcn__ModelImportsItemProvider = new NUOPCDriverAtmOcn__ModelImportsItemProvider(this);
+		}
+
+		return nuopcDriverAtmOcn__ModelImportsItemProvider;
+	}
+
+	/**
+	 * This keeps track of the one adapter used for all {@link org.earthsystemcurator.cupid.nuopc.fsml.nuopc.NUOPCDriverAtmOcn__ImplementsSetServices} instances.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	protected NUOPCDriverAtmOcn__ImplementsSetServicesItemProvider nuopcDriverAtmOcn__ImplementsSetServicesItemProvider;
+
+	/**
+	 * This creates an adapter for a {@link org.earthsystemcurator.cupid.nuopc.fsml.nuopc.NUOPCDriverAtmOcn__ImplementsSetServices}.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	@Override
+	public Adapter createNUOPCDriverAtmOcn__ImplementsSetServicesAdapter() {
+		if (nuopcDriverAtmOcn__ImplementsSetServicesItemProvider == null) {
+			nuopcDriverAtmOcn__ImplementsSetServicesItemProvider = new NUOPCDriverAtmOcn__ImplementsSetServicesItemProvider(this);
+		}
+
+		return nuopcDriverAtmOcn__ImplementsSetServicesItemProvider;
+	}
+
+	/**
+	 * This keeps track of the one adapter used for all {@link org.earthsystemcurator.cupid.nuopc.fsml.nuopc.NUOPCDriverAtmOcn__ImplementsSetModelCount} instances.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	protected NUOPCDriverAtmOcn__ImplementsSetModelCountItemProvider nuopcDriverAtmOcn__ImplementsSetModelCountItemProvider;
+
+	/**
+	 * This creates an adapter for a {@link org.earthsystemcurator.cupid.nuopc.fsml.nuopc.NUOPCDriverAtmOcn__ImplementsSetModelCount}.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	@Override
+	public Adapter createNUOPCDriverAtmOcn__ImplementsSetModelCountAdapter() {
+		if (nuopcDriverAtmOcn__ImplementsSetModelCountItemProvider == null) {
+			nuopcDriverAtmOcn__ImplementsSetModelCountItemProvider = new NUOPCDriverAtmOcn__ImplementsSetModelCountItemProvider(this);
+		}
+
+		return nuopcDriverAtmOcn__ImplementsSetModelCountItemProvider;
+	}
+
+	/**
+	 * This keeps track of the one adapter used for all {@link org.earthsystemcurator.cupid.nuopc.fsml.nuopc.NUOPCDriverAtmOcn__ImplementsSetModelServices} instances.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	protected NUOPCDriverAtmOcn__ImplementsSetModelServicesItemProvider nuopcDriverAtmOcn__ImplementsSetModelServicesItemProvider;
+
+	/**
+	 * This creates an adapter for a {@link org.earthsystemcurator.cupid.nuopc.fsml.nuopc.NUOPCDriverAtmOcn__ImplementsSetModelServices}.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	@Override
+	public Adapter createNUOPCDriverAtmOcn__ImplementsSetModelServicesAdapter() {
+		if (nuopcDriverAtmOcn__ImplementsSetModelServicesItemProvider == null) {
+			nuopcDriverAtmOcn__ImplementsSetModelServicesItemProvider = new NUOPCDriverAtmOcn__ImplementsSetModelServicesItemProvider(this);
+		}
+
+		return nuopcDriverAtmOcn__ImplementsSetModelServicesItemProvider;
+	}
+
+	/**
+	 * This keeps track of the one adapter used for all {@link org.earthsystemcurator.cupid.nuopc.fsml.nuopc.NUOPCDriverAtmOcn__ModelImports__ModelImport} instances.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	protected NUOPCDriverAtmOcn__ModelImports__ModelImportItemProvider nuopcDriverAtmOcn__ModelImports__ModelImportItemProvider;
+
+	/**
+	 * This creates an adapter for a {@link org.earthsystemcurator.cupid.nuopc.fsml.nuopc.NUOPCDriverAtmOcn__ModelImports__ModelImport}.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	@Override
+	public Adapter createNUOPCDriverAtmOcn__ModelImports__ModelImportAdapter() {
+		if (nuopcDriverAtmOcn__ModelImports__ModelImportItemProvider == null) {
+			nuopcDriverAtmOcn__ModelImports__ModelImportItemProvider = new NUOPCDriverAtmOcn__ModelImports__ModelImportItemProvider(this);
+		}
+
+		return nuopcDriverAtmOcn__ModelImports__ModelImportItemProvider;
+	}
+
+	/**
+	 * This keeps track of the one adapter used for all {@link org.earthsystemcurator.cupid.nuopc.fsml.nuopc.CallsGenericSetServices} instances.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	protected CallsGenericSetServicesItemProvider callsGenericSetServicesItemProvider;
+
+	/**
+	 * This creates an adapter for a {@link org.earthsystemcurator.cupid.nuopc.fsml.nuopc.CallsGenericSetServices}.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	@Override
+	public Adapter createCallsGenericSetServicesAdapter() {
+		if (callsGenericSetServicesItemProvider == null) {
+			callsGenericSetServicesItemProvider = new CallsGenericSetServicesItemProvider(this);
+		}
+
+		return callsGenericSetServicesItemProvider;
+	}
+
+	/**
+	 * This keeps track of the one adapter used for all {@link org.earthsystemcurator.cupid.nuopc.fsml.nuopc.CallsSetEntryPoint} instances.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	protected CallsSetEntryPointItemProvider callsSetEntryPointItemProvider;
+
+	/**
+	 * This creates an adapter for a {@link org.earthsystemcurator.cupid.nuopc.fsml.nuopc.CallsSetEntryPoint}.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	@Override
+	public Adapter createCallsSetEntryPointAdapter() {
+		if (callsSetEntryPointItemProvider == null) {
+			callsSetEntryPointItemProvider = new CallsSetEntryPointItemProvider(this);
+		}
+
+		return callsSetEntryPointItemProvider;
+	}
+
+	/**
+	 * This keeps track of the one adapter used for all {@link org.earthsystemcurator.cupid.nuopc.fsml.nuopc.AttachesMethod} instances.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	protected AttachesMethodItemProvider attachesMethodItemProvider;
+
+	/**
+	 * This creates an adapter for a {@link org.earthsystemcurator.cupid.nuopc.fsml.nuopc.AttachesMethod}.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	@Override
+	public Adapter createAttachesMethodAdapter() {
+		if (attachesMethodItemProvider == null) {
+			attachesMethodItemProvider = new AttachesMethodItemProvider(this);
+		}
+
+		return attachesMethodItemProvider;
 	}
 
 	/**
@@ -920,213 +1127,6 @@ public class NUOPCItemProviderAdapterFactory extends NUOPCAdapterFactory impleme
 		}
 
 		return nuopcMediator__ModelAdvanceItemProvider;
-	}
-
-	/**
-	 * This keeps track of the one adapter used for all {@link org.earthsystemcurator.cupid.nuopc.fsml.nuopc.NUOPCApplication} instances.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	protected NUOPCApplicationItemProvider nuopcApplicationItemProvider;
-
-	/**
-	 * This creates an adapter for a {@link org.earthsystemcurator.cupid.nuopc.fsml.nuopc.NUOPCApplication}.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	@Override
-	public Adapter createNUOPCApplicationAdapter() {
-		if (nuopcApplicationItemProvider == null) {
-			nuopcApplicationItemProvider = new NUOPCApplicationItemProvider(this);
-		}
-
-		return nuopcApplicationItemProvider;
-	}
-
-	/**
-	 * This keeps track of the one adapter used for all {@link org.earthsystemcurator.cupid.nuopc.fsml.nuopc.Top} instances.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	protected TopItemProvider topItemProvider;
-
-	/**
-	 * This creates an adapter for a {@link org.earthsystemcurator.cupid.nuopc.fsml.nuopc.Top}.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	@Override
-	public Adapter createTopAdapter() {
-		if (topItemProvider == null) {
-			topItemProvider = new TopItemProvider(this);
-		}
-
-		return topItemProvider;
-	}
-
-	/**
-	 * This keeps track of the one adapter used for all {@link org.earthsystemcurator.cupid.nuopc.fsml.nuopc.NUOPCDriverAtmOcn} instances.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	protected NUOPCDriverAtmOcnItemProvider nuopcDriverAtmOcnItemProvider;
-
-	/**
-	 * This creates an adapter for a {@link org.earthsystemcurator.cupid.nuopc.fsml.nuopc.NUOPCDriverAtmOcn}.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	@Override
-	public Adapter createNUOPCDriverAtmOcnAdapter() {
-		if (nuopcDriverAtmOcnItemProvider == null) {
-			nuopcDriverAtmOcnItemProvider = new NUOPCDriverAtmOcnItemProvider(this);
-		}
-
-		return nuopcDriverAtmOcnItemProvider;
-	}
-
-	/**
-	 * This keeps track of the one adapter used for all {@link org.earthsystemcurator.cupid.nuopc.fsml.nuopc.NUOPCDriverAtmOcn__GenericImports} instances.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	protected NUOPCDriverAtmOcn__GenericImportsItemProvider nuopcDriverAtmOcn__GenericImportsItemProvider;
-
-	/**
-	 * This creates an adapter for a {@link org.earthsystemcurator.cupid.nuopc.fsml.nuopc.NUOPCDriverAtmOcn__GenericImports}.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	@Override
-	public Adapter createNUOPCDriverAtmOcn__GenericImportsAdapter() {
-		if (nuopcDriverAtmOcn__GenericImportsItemProvider == null) {
-			nuopcDriverAtmOcn__GenericImportsItemProvider = new NUOPCDriverAtmOcn__GenericImportsItemProvider(this);
-		}
-
-		return nuopcDriverAtmOcn__GenericImportsItemProvider;
-	}
-
-	/**
-	 * This keeps track of the one adapter used for all {@link org.earthsystemcurator.cupid.nuopc.fsml.nuopc.NUOPCDriverAtmOcn__ModelImports} instances.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	protected NUOPCDriverAtmOcn__ModelImportsItemProvider nuopcDriverAtmOcn__ModelImportsItemProvider;
-
-	/**
-	 * This creates an adapter for a {@link org.earthsystemcurator.cupid.nuopc.fsml.nuopc.NUOPCDriverAtmOcn__ModelImports}.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	@Override
-	public Adapter createNUOPCDriverAtmOcn__ModelImportsAdapter() {
-		if (nuopcDriverAtmOcn__ModelImportsItemProvider == null) {
-			nuopcDriverAtmOcn__ModelImportsItemProvider = new NUOPCDriverAtmOcn__ModelImportsItemProvider(this);
-		}
-
-		return nuopcDriverAtmOcn__ModelImportsItemProvider;
-	}
-
-	/**
-	 * This keeps track of the one adapter used for all {@link org.earthsystemcurator.cupid.nuopc.fsml.nuopc.NUOPCDriverAtmOcn__ImplementsSetServices} instances.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	protected NUOPCDriverAtmOcn__ImplementsSetServicesItemProvider nuopcDriverAtmOcn__ImplementsSetServicesItemProvider;
-
-	/**
-	 * This creates an adapter for a {@link org.earthsystemcurator.cupid.nuopc.fsml.nuopc.NUOPCDriverAtmOcn__ImplementsSetServices}.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	@Override
-	public Adapter createNUOPCDriverAtmOcn__ImplementsSetServicesAdapter() {
-		if (nuopcDriverAtmOcn__ImplementsSetServicesItemProvider == null) {
-			nuopcDriverAtmOcn__ImplementsSetServicesItemProvider = new NUOPCDriverAtmOcn__ImplementsSetServicesItemProvider(this);
-		}
-
-		return nuopcDriverAtmOcn__ImplementsSetServicesItemProvider;
-	}
-
-	/**
-	 * This keeps track of the one adapter used for all {@link org.earthsystemcurator.cupid.nuopc.fsml.nuopc.NUOPCDriverAtmOcn__ImplementsSetModelCount} instances.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	protected NUOPCDriverAtmOcn__ImplementsSetModelCountItemProvider nuopcDriverAtmOcn__ImplementsSetModelCountItemProvider;
-
-	/**
-	 * This creates an adapter for a {@link org.earthsystemcurator.cupid.nuopc.fsml.nuopc.NUOPCDriverAtmOcn__ImplementsSetModelCount}.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	@Override
-	public Adapter createNUOPCDriverAtmOcn__ImplementsSetModelCountAdapter() {
-		if (nuopcDriverAtmOcn__ImplementsSetModelCountItemProvider == null) {
-			nuopcDriverAtmOcn__ImplementsSetModelCountItemProvider = new NUOPCDriverAtmOcn__ImplementsSetModelCountItemProvider(this);
-		}
-
-		return nuopcDriverAtmOcn__ImplementsSetModelCountItemProvider;
-	}
-
-	/**
-	 * This keeps track of the one adapter used for all {@link org.earthsystemcurator.cupid.nuopc.fsml.nuopc.NUOPCDriverAtmOcn__ImplementsSetModelServices} instances.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	protected NUOPCDriverAtmOcn__ImplementsSetModelServicesItemProvider nuopcDriverAtmOcn__ImplementsSetModelServicesItemProvider;
-
-	/**
-	 * This creates an adapter for a {@link org.earthsystemcurator.cupid.nuopc.fsml.nuopc.NUOPCDriverAtmOcn__ImplementsSetModelServices}.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	@Override
-	public Adapter createNUOPCDriverAtmOcn__ImplementsSetModelServicesAdapter() {
-		if (nuopcDriverAtmOcn__ImplementsSetModelServicesItemProvider == null) {
-			nuopcDriverAtmOcn__ImplementsSetModelServicesItemProvider = new NUOPCDriverAtmOcn__ImplementsSetModelServicesItemProvider(this);
-		}
-
-		return nuopcDriverAtmOcn__ImplementsSetModelServicesItemProvider;
-	}
-
-	/**
-	 * This keeps track of the one adapter used for all {@link org.earthsystemcurator.cupid.nuopc.fsml.nuopc.NUOPCDriverAtmOcn__ModelImports__ModelImport} instances.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	protected NUOPCDriverAtmOcn__ModelImports__ModelImportItemProvider nuopcDriverAtmOcn__ModelImports__ModelImportItemProvider;
-
-	/**
-	 * This creates an adapter for a {@link org.earthsystemcurator.cupid.nuopc.fsml.nuopc.NUOPCDriverAtmOcn__ModelImports__ModelImport}.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	@Override
-	public Adapter createNUOPCDriverAtmOcn__ModelImports__ModelImportAdapter() {
-		if (nuopcDriverAtmOcn__ModelImports__ModelImportItemProvider == null) {
-			nuopcDriverAtmOcn__ModelImports__ModelImportItemProvider = new NUOPCDriverAtmOcn__ModelImports__ModelImportItemProvider(this);
-		}
-
-		return nuopcDriverAtmOcn__ModelImports__ModelImportItemProvider;
 	}
 
 	/**

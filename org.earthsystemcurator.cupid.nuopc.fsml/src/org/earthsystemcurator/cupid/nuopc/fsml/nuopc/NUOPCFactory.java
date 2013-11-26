@@ -22,6 +22,24 @@ public interface NUOPCFactory extends EFactory {
 	NUOPCFactory eINSTANCE = org.earthsystemcurator.cupid.nuopc.fsml.nuopc.impl.NUOPCFactoryImpl.init();
 
 	/**
+	 * Returns a new object of class '<em>Top</em>'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return a new object of class '<em>Top</em>'.
+	 * @generated
+	 */
+	Top createTop();
+
+	/**
+	 * Returns a new object of class '<em>Application</em>'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return a new object of class '<em>Application</em>'.
+	 * @generated
+	 */
+	NUOPCApplication createNUOPCApplication();
+
+	/**
 	 * Returns a new object of class '<em>Model</em>'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -121,24 +139,6 @@ public interface NUOPCFactory extends EFactory {
 	NUOPCModel__ModelAdvance createNUOPCModel__ModelAdvance();
 
 	/**
-	 * Returns a new object of class '<em>Calls Generic Set Services</em>'.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @return a new object of class '<em>Calls Generic Set Services</em>'.
-	 * @generated
-	 */
-	CallsGenericSetServices createCallsGenericSetServices();
-
-	/**
-	 * Returns a new object of class '<em>Calls Set Entry Point</em>'.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @return a new object of class '<em>Calls Set Entry Point</em>'.
-	 * @generated
-	 */
-	CallsSetEntryPoint createCallsSetEntryPoint();
-
-	/**
 	 * Returns a new object of class '<em>Driver</em>'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -202,15 +202,6 @@ public interface NUOPCFactory extends EFactory {
 	NUOPCDriver__ImplementsSetServices createNUOPCDriver__ImplementsSetServices();
 
 	/**
-	 * Returns a new object of class '<em>Attaches Method</em>'.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @return a new object of class '<em>Attaches Method</em>'.
-	 * @generated
-	 */
-	AttachesMethod createAttachesMethod();
-
-	/**
 	 * Returns a new object of class '<em>Driver Implements Set Model Count</em>'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -227,6 +218,96 @@ public interface NUOPCFactory extends EFactory {
 	 * @generated
 	 */
 	NUOPCDriver__ImplementsSetModelServices createNUOPCDriver__ImplementsSetModelServices();
+
+	/**
+	 * Returns a new object of class '<em>Driver Atm Ocn</em>'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return a new object of class '<em>Driver Atm Ocn</em>'.
+	 * @generated
+	 */
+	NUOPCDriverAtmOcn createNUOPCDriverAtmOcn();
+
+	/**
+	 * Returns a new object of class '<em>Driver Atm Ocn Generic Imports</em>'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return a new object of class '<em>Driver Atm Ocn Generic Imports</em>'.
+	 * @generated
+	 */
+	NUOPCDriverAtmOcn__GenericImports createNUOPCDriverAtmOcn__GenericImports();
+
+	/**
+	 * Returns a new object of class '<em>Driver Atm Ocn Model Imports</em>'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return a new object of class '<em>Driver Atm Ocn Model Imports</em>'.
+	 * @generated
+	 */
+	NUOPCDriverAtmOcn__ModelImports createNUOPCDriverAtmOcn__ModelImports();
+
+	/**
+	 * Returns a new object of class '<em>Driver Atm Ocn Implements Set Services</em>'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return a new object of class '<em>Driver Atm Ocn Implements Set Services</em>'.
+	 * @generated
+	 */
+	NUOPCDriverAtmOcn__ImplementsSetServices createNUOPCDriverAtmOcn__ImplementsSetServices();
+
+	/**
+	 * Returns a new object of class '<em>Driver Atm Ocn Implements Set Model Count</em>'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return a new object of class '<em>Driver Atm Ocn Implements Set Model Count</em>'.
+	 * @generated
+	 */
+	NUOPCDriverAtmOcn__ImplementsSetModelCount createNUOPCDriverAtmOcn__ImplementsSetModelCount();
+
+	/**
+	 * Returns a new object of class '<em>Driver Atm Ocn Implements Set Model Services</em>'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return a new object of class '<em>Driver Atm Ocn Implements Set Model Services</em>'.
+	 * @generated
+	 */
+	NUOPCDriverAtmOcn__ImplementsSetModelServices createNUOPCDriverAtmOcn__ImplementsSetModelServices();
+
+	/**
+	 * Returns a new object of class '<em>Driver Atm Ocn Model Imports Model Import</em>'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return a new object of class '<em>Driver Atm Ocn Model Imports Model Import</em>'.
+	 * @generated
+	 */
+	NUOPCDriverAtmOcn__ModelImports__ModelImport createNUOPCDriverAtmOcn__ModelImports__ModelImport();
+
+	/**
+	 * Returns a new object of class '<em>Calls Generic Set Services</em>'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return a new object of class '<em>Calls Generic Set Services</em>'.
+	 * @generated
+	 */
+	CallsGenericSetServices createCallsGenericSetServices();
+
+	/**
+	 * Returns a new object of class '<em>Calls Set Entry Point</em>'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return a new object of class '<em>Calls Set Entry Point</em>'.
+	 * @generated
+	 */
+	CallsSetEntryPoint createCallsSetEntryPoint();
+
+	/**
+	 * Returns a new object of class '<em>Attaches Method</em>'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return a new object of class '<em>Attaches Method</em>'.
+	 * @generated
+	 */
+	AttachesMethod createAttachesMethod();
 
 	/**
 	 * Returns a new object of class '<em>Set Model Services</em>'.
@@ -353,87 +434,6 @@ public interface NUOPCFactory extends EFactory {
 	 * @generated
 	 */
 	NUOPCMediator__ModelAdvance createNUOPCMediator__ModelAdvance();
-
-	/**
-	 * Returns a new object of class '<em>Application</em>'.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @return a new object of class '<em>Application</em>'.
-	 * @generated
-	 */
-	NUOPCApplication createNUOPCApplication();
-
-	/**
-	 * Returns a new object of class '<em>Top</em>'.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @return a new object of class '<em>Top</em>'.
-	 * @generated
-	 */
-	Top createTop();
-
-	/**
-	 * Returns a new object of class '<em>Driver Atm Ocn</em>'.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @return a new object of class '<em>Driver Atm Ocn</em>'.
-	 * @generated
-	 */
-	NUOPCDriverAtmOcn createNUOPCDriverAtmOcn();
-
-	/**
-	 * Returns a new object of class '<em>Driver Atm Ocn Generic Imports</em>'.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @return a new object of class '<em>Driver Atm Ocn Generic Imports</em>'.
-	 * @generated
-	 */
-	NUOPCDriverAtmOcn__GenericImports createNUOPCDriverAtmOcn__GenericImports();
-
-	/**
-	 * Returns a new object of class '<em>Driver Atm Ocn Model Imports</em>'.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @return a new object of class '<em>Driver Atm Ocn Model Imports</em>'.
-	 * @generated
-	 */
-	NUOPCDriverAtmOcn__ModelImports createNUOPCDriverAtmOcn__ModelImports();
-
-	/**
-	 * Returns a new object of class '<em>Driver Atm Ocn Implements Set Services</em>'.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @return a new object of class '<em>Driver Atm Ocn Implements Set Services</em>'.
-	 * @generated
-	 */
-	NUOPCDriverAtmOcn__ImplementsSetServices createNUOPCDriverAtmOcn__ImplementsSetServices();
-
-	/**
-	 * Returns a new object of class '<em>Driver Atm Ocn Implements Set Model Count</em>'.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @return a new object of class '<em>Driver Atm Ocn Implements Set Model Count</em>'.
-	 * @generated
-	 */
-	NUOPCDriverAtmOcn__ImplementsSetModelCount createNUOPCDriverAtmOcn__ImplementsSetModelCount();
-
-	/**
-	 * Returns a new object of class '<em>Driver Atm Ocn Implements Set Model Services</em>'.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @return a new object of class '<em>Driver Atm Ocn Implements Set Model Services</em>'.
-	 * @generated
-	 */
-	NUOPCDriverAtmOcn__ImplementsSetModelServices createNUOPCDriverAtmOcn__ImplementsSetModelServices();
-
-	/**
-	 * Returns a new object of class '<em>Driver Atm Ocn Model Imports Model Import</em>'.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @return a new object of class '<em>Driver Atm Ocn Model Imports Model Import</em>'.
-	 * @generated
-	 */
-	NUOPCDriverAtmOcn__ModelImports__ModelImport createNUOPCDriverAtmOcn__ModelImports__ModelImport();
 
 	/**
 	 * Returns the package supported by this factory.

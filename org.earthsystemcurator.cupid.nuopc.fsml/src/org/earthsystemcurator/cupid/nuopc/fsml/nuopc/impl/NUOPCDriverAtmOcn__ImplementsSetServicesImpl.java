@@ -3,6 +3,7 @@
 package org.earthsystemcurator.cupid.nuopc.fsml.nuopc.impl;
 
 import java.util.Collection;
+
 import org.earthsystemcurator.cupid.nuopc.fsml.nuopc.AttachesMethod;
 import org.earthsystemcurator.cupid.nuopc.fsml.nuopc.CallsGenericSetServices;
 import org.earthsystemcurator.cupid.nuopc.fsml.nuopc.NUOPCDriverAtmOcn;
@@ -13,6 +14,7 @@ import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.common.notify.NotificationChain;
 
 import org.eclipse.emf.common.util.EList;
+
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.InternalEObject;
 

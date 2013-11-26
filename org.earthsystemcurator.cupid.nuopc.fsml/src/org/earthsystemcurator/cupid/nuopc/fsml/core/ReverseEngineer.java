@@ -66,6 +66,7 @@ public class ReverseEngineer {
 			root.eSet(sfName, project.getName());
 		}
 		
+				
 		//Set<String> filesToConsider = new HashSet<String>();
 		
 		Set<IFortranAST> asts = new HashSet<IFortranAST>();	
@@ -198,8 +199,14 @@ public class ReverseEngineer {
 		//call is required (this only occurs at leaves of metamodel tree)
 		Map<Object, Object> mappingsToAdd = new IdentityHashMap<Object, Object>();
 		
-		//currently does NOT traverse inherited structural features
-		for (EStructuralFeature sf : modelElemClass.getEStructuralFeatures()) {
+		if (modelElemClass.getName().equals("NUOPCDriverAtmOcn")) {
+			System.out.println("Getting all structural features");
+			for (EStructuralFeature sf : modelElemClass.getEAllStructuralFeatures()) {
+				System.out.println("==>" + sf.getName() + "\t\t" + sf.getEContainingClass());
+			}			
+		}
+				
+		for (EStructuralFeature sf : modelElemClass.getEAllStructuralFeatures()) {
 			
 			//System.out.println("Stuctural feature: " + sf.getName());
 			

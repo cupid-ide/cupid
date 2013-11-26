@@ -47,17 +47,18 @@ import org.earthsystemcurator.cupid.nuopc.fsml.nuopc.NUOPCModel__ModelAdvance;
 import org.earthsystemcurator.cupid.nuopc.fsml.nuopc.NUOPCModel__RealizesExportField;
 import org.earthsystemcurator.cupid.nuopc.fsml.nuopc.NUOPCModel__RealizesImportField;
 import org.earthsystemcurator.cupid.nuopc.fsml.nuopc.NUOPCPackage;
-
 import org.earthsystemcurator.cupid.nuopc.fsml.nuopc.SetCouplerServices;
 import org.earthsystemcurator.cupid.nuopc.fsml.nuopc.SetModelServices;
 import org.earthsystemcurator.cupid.nuopc.fsml.nuopc.Top;
+
 import org.earthsystemcurator.cupid.nuopc.fsml.nuopc.util.NUOPCValidator;
+
 import org.eclipse.emf.ecore.EAttribute;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.EReference;
-
 import org.eclipse.emf.ecore.EValidator;
+
 import org.eclipse.emf.ecore.impl.EPackageImpl;
 
 /**
@@ -67,6 +68,20 @@ import org.eclipse.emf.ecore.impl.EPackageImpl;
  * @generated
  */
 public class NUOPCPackageImpl extends EPackageImpl implements NUOPCPackage {
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	private EClass topEClass = null;
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	private EClass nuopcApplicationEClass = null;
+
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -149,20 +164,6 @@ public class NUOPCPackageImpl extends EPackageImpl implements NUOPCPackage {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	private EClass callsGenericSetServicesEClass = null;
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	private EClass callsSetEntryPointEClass = null;
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
 	private EClass nuopcDriverEClass = null;
 
 	/**
@@ -212,13 +213,6 @@ public class NUOPCPackageImpl extends EPackageImpl implements NUOPCPackage {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	private EClass attachesMethodEClass = null;
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
 	private EClass nuopcDriver__ImplementsSetModelCountEClass = null;
 
 	/**
@@ -227,6 +221,76 @@ public class NUOPCPackageImpl extends EPackageImpl implements NUOPCPackage {
 	 * @generated
 	 */
 	private EClass nuopcDriver__ImplementsSetModelServicesEClass = null;
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	private EClass nuopcDriverAtmOcnEClass = null;
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	private EClass nuopcDriverAtmOcn__GenericImportsEClass = null;
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	private EClass nuopcDriverAtmOcn__ModelImportsEClass = null;
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	private EClass nuopcDriverAtmOcn__ImplementsSetServicesEClass = null;
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	private EClass nuopcDriverAtmOcn__ImplementsSetModelCountEClass = null;
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	private EClass nuopcDriverAtmOcn__ImplementsSetModelServicesEClass = null;
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	private EClass nuopcDriverAtmOcn__ModelImports__ModelImportEClass = null;
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	private EClass callsGenericSetServicesEClass = null;
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	private EClass callsSetEntryPointEClass = null;
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	private EClass attachesMethodEClass = null;
 
 	/**
 	 * <!-- begin-user-doc -->
@@ -327,69 +391,6 @@ public class NUOPCPackageImpl extends EPackageImpl implements NUOPCPackage {
 	private EClass nuopcMediator__ModelAdvanceEClass = null;
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	private EClass nuopcApplicationEClass = null;
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	private EClass topEClass = null;
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	private EClass nuopcDriverAtmOcnEClass = null;
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	private EClass nuopcDriverAtmOcn__GenericImportsEClass = null;
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	private EClass nuopcDriverAtmOcn__ModelImportsEClass = null;
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	private EClass nuopcDriverAtmOcn__ImplementsSetServicesEClass = null;
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	private EClass nuopcDriverAtmOcn__ImplementsSetModelCountEClass = null;
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	private EClass nuopcDriverAtmOcn__ImplementsSetModelServicesEClass = null;
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	private EClass nuopcDriverAtmOcn__ModelImports__ModelImportEClass = null;
-
-	/**
 	 * Creates an instance of the model <b>Package</b>, registered with
 	 * {@link org.eclipse.emf.ecore.EPackage.Registry EPackage.Registry} by the package
 	 * package URI value.
@@ -464,6 +465,78 @@ public class NUOPCPackageImpl extends EPackageImpl implements NUOPCPackage {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	public EClass getTop() {
+		return topEClass;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EReference getTop_Apps() {
+		return (EReference)topEClass.getEStructuralFeatures().get(0);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EClass getNUOPCApplication() {
+		return nuopcApplicationEClass;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EAttribute getNUOPCApplication_Name() {
+		return (EAttribute)nuopcApplicationEClass.getEStructuralFeatures().get(0);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EReference getNUOPCApplication_NuopcModel() {
+		return (EReference)nuopcApplicationEClass.getEStructuralFeatures().get(1);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EReference getNUOPCApplication_NuopcDriver() {
+		return (EReference)nuopcApplicationEClass.getEStructuralFeatures().get(2);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EReference getNUOPCApplication_NuopcDriverAtmOcn() {
+		return (EReference)nuopcApplicationEClass.getEStructuralFeatures().get(3);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EReference getNUOPCApplication_NuopcMediator() {
+		return (EReference)nuopcApplicationEClass.getEStructuralFeatures().get(4);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
 	public EClass getNUOPCModel() {
 		return nuopcModelEClass;
 	}
@@ -493,6 +566,15 @@ public class NUOPCPackageImpl extends EPackageImpl implements NUOPCPackage {
 	 */
 	public EReference getNUOPCModel_ImplementsSetServices() {
 		return (EReference)nuopcModelEClass.getEStructuralFeatures().get(2);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EReference getNUOPCModel_Initialize() {
+		return (EReference)nuopcModelEClass.getEStructuralFeatures().get(3);
 	}
 
 	/**
@@ -1076,78 +1158,6 @@ public class NUOPCPackageImpl extends EPackageImpl implements NUOPCPackage {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EReference getNUOPCModel_Initialize() {
-		return (EReference)nuopcModelEClass.getEStructuralFeatures().get(3);
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public EClass getCallsGenericSetServices() {
-		return callsGenericSetServicesEClass;
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public EAttribute getCallsGenericSetServices_Gcomp() {
-		return (EAttribute)callsGenericSetServicesEClass.getEStructuralFeatures().get(0);
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public EAttribute getCallsGenericSetServices_Rc() {
-		return (EAttribute)callsGenericSetServicesEClass.getEStructuralFeatures().get(1);
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public EClass getCallsSetEntryPoint() {
-		return callsSetEntryPointEClass;
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public EAttribute getCallsSetEntryPoint_Method() {
-		return (EAttribute)callsSetEntryPointEClass.getEStructuralFeatures().get(0);
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public EAttribute getCallsSetEntryPoint_UserRoutine() {
-		return (EAttribute)callsSetEntryPointEClass.getEStructuralFeatures().get(1);
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public EAttribute getCallsSetEntryPoint_Phase() {
-		return (EAttribute)callsSetEntryPointEClass.getEStructuralFeatures().get(2);
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
 	public EClass getNUOPCDriver() {
 		return nuopcDriverEClass;
 	}
@@ -1472,42 +1482,6 @@ public class NUOPCPackageImpl extends EPackageImpl implements NUOPCPackage {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EClass getAttachesMethod() {
-		return attachesMethodEClass;
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public EAttribute getAttachesMethod_Name() {
-		return (EAttribute)attachesMethodEClass.getEStructuralFeatures().get(0);
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public EAttribute getAttachesMethod_UserRoutine() {
-		return (EAttribute)attachesMethodEClass.getEStructuralFeatures().get(1);
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public EAttribute getAttachesMethod_Index() {
-		return (EAttribute)attachesMethodEClass.getEStructuralFeatures().get(2);
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
 	public EClass getNUOPCDriver__ImplementsSetModelCount() {
 		return nuopcDriver__ImplementsSetModelCountEClass;
 	}
@@ -1681,6 +1655,537 @@ public class NUOPCPackageImpl extends EPackageImpl implements NUOPCPackage {
 	 */
 	public EReference getNUOPCDriver__ImplementsSetModelServices_SetCouplerServices() {
 		return (EReference)nuopcDriver__ImplementsSetModelServicesEClass.getEStructuralFeatures().get(9);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EClass getNUOPCDriverAtmOcn() {
+		return nuopcDriverAtmOcnEClass;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EReference getNUOPCDriverAtmOcn_Parent() {
+		return (EReference)nuopcDriverAtmOcnEClass.getEStructuralFeatures().get(0);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EAttribute getNUOPCDriverAtmOcn_Name() {
+		return (EAttribute)nuopcDriverAtmOcnEClass.getEStructuralFeatures().get(1);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EReference getNUOPCDriverAtmOcn_GenericImports() {
+		return (EReference)nuopcDriverAtmOcnEClass.getEStructuralFeatures().get(2);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EReference getNUOPCDriverAtmOcn_ModelImports() {
+		return (EReference)nuopcDriverAtmOcnEClass.getEStructuralFeatures().get(3);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EReference getNUOPCDriverAtmOcn_ImplementsSetServices() {
+		return (EReference)nuopcDriverAtmOcnEClass.getEStructuralFeatures().get(4);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EReference getNUOPCDriverAtmOcn_ImplementsSetModelCount() {
+		return (EReference)nuopcDriverAtmOcnEClass.getEStructuralFeatures().get(5);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EReference getNUOPCDriverAtmOcn_ImplementsSetModelServices() {
+		return (EReference)nuopcDriverAtmOcnEClass.getEStructuralFeatures().get(6);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EClass getNUOPCDriverAtmOcn__GenericImports() {
+		return nuopcDriverAtmOcn__GenericImportsEClass;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EAttribute getNUOPCDriverAtmOcn__GenericImports_ImportsGenericSS() {
+		return (EAttribute)nuopcDriverAtmOcn__GenericImportsEClass.getEStructuralFeatures().get(0);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EAttribute getNUOPCDriverAtmOcn__GenericImports_ImportsTypeDriverIS() {
+		return (EAttribute)nuopcDriverAtmOcn__GenericImportsEClass.getEStructuralFeatures().get(1);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EAttribute getNUOPCDriverAtmOcn__GenericImports_ImportsLabelSetModelCount() {
+		return (EAttribute)nuopcDriverAtmOcn__GenericImportsEClass.getEStructuralFeatures().get(2);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EAttribute getNUOPCDriverAtmOcn__GenericImports_ImportsLabelSetModelServices() {
+		return (EAttribute)nuopcDriverAtmOcn__GenericImportsEClass.getEStructuralFeatures().get(3);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EClass getNUOPCDriverAtmOcn__ModelImports() {
+		return nuopcDriverAtmOcn__ModelImportsEClass;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EReference getNUOPCDriverAtmOcn__ModelImports_Parent() {
+		return (EReference)nuopcDriverAtmOcn__ModelImportsEClass.getEStructuralFeatures().get(0);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EReference getNUOPCDriverAtmOcn__ModelImports_ModelImport() {
+		return (EReference)nuopcDriverAtmOcn__ModelImportsEClass.getEStructuralFeatures().get(1);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EClass getNUOPCDriverAtmOcn__ImplementsSetServices() {
+		return nuopcDriverAtmOcn__ImplementsSetServicesEClass;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EReference getNUOPCDriverAtmOcn__ImplementsSetServices_Parent() {
+		return (EReference)nuopcDriverAtmOcn__ImplementsSetServicesEClass.getEStructuralFeatures().get(0);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EAttribute getNUOPCDriverAtmOcn__ImplementsSetServices_Name() {
+		return (EAttribute)nuopcDriverAtmOcn__ImplementsSetServicesEClass.getEStructuralFeatures().get(1);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EAttribute getNUOPCDriverAtmOcn__ImplementsSetServices_Param_gcomp() {
+		return (EAttribute)nuopcDriverAtmOcn__ImplementsSetServicesEClass.getEStructuralFeatures().get(2);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EAttribute getNUOPCDriverAtmOcn__ImplementsSetServices_Param_rc() {
+		return (EAttribute)nuopcDriverAtmOcn__ImplementsSetServicesEClass.getEStructuralFeatures().get(3);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EReference getNUOPCDriverAtmOcn__ImplementsSetServices_CallsGenericSetServices() {
+		return (EReference)nuopcDriverAtmOcn__ImplementsSetServicesEClass.getEStructuralFeatures().get(4);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EReference getNUOPCDriverAtmOcn__ImplementsSetServices_AttachesMethod() {
+		return (EReference)nuopcDriverAtmOcn__ImplementsSetServicesEClass.getEStructuralFeatures().get(5);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EClass getNUOPCDriverAtmOcn__ImplementsSetModelCount() {
+		return nuopcDriverAtmOcn__ImplementsSetModelCountEClass;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EReference getNUOPCDriverAtmOcn__ImplementsSetModelCount_Parent() {
+		return (EReference)nuopcDriverAtmOcn__ImplementsSetModelCountEClass.getEStructuralFeatures().get(0);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EAttribute getNUOPCDriverAtmOcn__ImplementsSetModelCount_Gcomp() {
+		return (EAttribute)nuopcDriverAtmOcn__ImplementsSetModelCountEClass.getEStructuralFeatures().get(1);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EAttribute getNUOPCDriverAtmOcn__ImplementsSetModelCount_Rc() {
+		return (EAttribute)nuopcDriverAtmOcn__ImplementsSetModelCountEClass.getEStructuralFeatures().get(2);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EAttribute getNUOPCDriverAtmOcn__ImplementsSetModelCount_Name() {
+		return (EAttribute)nuopcDriverAtmOcn__ImplementsSetModelCountEClass.getEStructuralFeatures().get(3);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EAttribute getNUOPCDriverAtmOcn__ImplementsSetModelCount_DriverInternalState() {
+		return (EAttribute)nuopcDriverAtmOcn__ImplementsSetModelCountEClass.getEStructuralFeatures().get(4);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EReference getNUOPCDriverAtmOcn__ImplementsSetModelCount_GetsInternalState() {
+		return (EReference)nuopcDriverAtmOcn__ImplementsSetModelCountEClass.getEStructuralFeatures().get(5);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EAttribute getNUOPCDriverAtmOcn__ImplementsSetModelCount_AssignsValue() {
+		return (EAttribute)nuopcDriverAtmOcn__ImplementsSetModelCountEClass.getEStructuralFeatures().get(6);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EAttribute getNUOPCDriverAtmOcn__ImplementsSetModelCount_Attached() {
+		return (EAttribute)nuopcDriverAtmOcn__ImplementsSetModelCountEClass.getEStructuralFeatures().get(7);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EClass getNUOPCDriverAtmOcn__ImplementsSetModelServices() {
+		return nuopcDriverAtmOcn__ImplementsSetModelServicesEClass;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EReference getNUOPCDriverAtmOcn__ImplementsSetModelServices_Parent() {
+		return (EReference)nuopcDriverAtmOcn__ImplementsSetModelServicesEClass.getEStructuralFeatures().get(0);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EAttribute getNUOPCDriverAtmOcn__ImplementsSetModelServices_Gcomp() {
+		return (EAttribute)nuopcDriverAtmOcn__ImplementsSetModelServicesEClass.getEStructuralFeatures().get(1);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EAttribute getNUOPCDriverAtmOcn__ImplementsSetModelServices_Rc() {
+		return (EAttribute)nuopcDriverAtmOcn__ImplementsSetModelServicesEClass.getEStructuralFeatures().get(2);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EAttribute getNUOPCDriverAtmOcn__ImplementsSetModelServices_Name() {
+		return (EAttribute)nuopcDriverAtmOcn__ImplementsSetModelServicesEClass.getEStructuralFeatures().get(3);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EAttribute getNUOPCDriverAtmOcn__ImplementsSetModelServices_DriverInternalState() {
+		return (EAttribute)nuopcDriverAtmOcn__ImplementsSetModelServicesEClass.getEStructuralFeatures().get(4);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EReference getNUOPCDriverAtmOcn__ImplementsSetModelServices_GetsInternalState() {
+		return (EReference)nuopcDriverAtmOcn__ImplementsSetModelServicesEClass.getEStructuralFeatures().get(5);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EAttribute getNUOPCDriverAtmOcn__ImplementsSetModelServices_AssignsValue() {
+		return (EAttribute)nuopcDriverAtmOcn__ImplementsSetModelServicesEClass.getEStructuralFeatures().get(6);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EAttribute getNUOPCDriverAtmOcn__ImplementsSetModelServices_Attached() {
+		return (EAttribute)nuopcDriverAtmOcn__ImplementsSetModelServicesEClass.getEStructuralFeatures().get(7);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EReference getNUOPCDriverAtmOcn__ImplementsSetModelServices_SetModelServices() {
+		return (EReference)nuopcDriverAtmOcn__ImplementsSetModelServicesEClass.getEStructuralFeatures().get(8);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EReference getNUOPCDriverAtmOcn__ImplementsSetModelServices_SetCouplerServices() {
+		return (EReference)nuopcDriverAtmOcn__ImplementsSetModelServicesEClass.getEStructuralFeatures().get(9);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EClass getNUOPCDriverAtmOcn__ModelImports__ModelImport() {
+		return nuopcDriverAtmOcn__ModelImports__ModelImportEClass;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EReference getNUOPCDriverAtmOcn__ModelImports__ModelImport_Parent() {
+		return (EReference)nuopcDriverAtmOcn__ModelImports__ModelImportEClass.getEStructuralFeatures().get(0);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EAttribute getNUOPCDriverAtmOcn__ModelImports__ModelImport_Name() {
+		return (EAttribute)nuopcDriverAtmOcn__ModelImports__ModelImportEClass.getEStructuralFeatures().get(1);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EAttribute getNUOPCDriverAtmOcn__ModelImports__ModelImport_SetServices() {
+		return (EAttribute)nuopcDriverAtmOcn__ModelImports__ModelImportEClass.getEStructuralFeatures().get(2);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EReference getNUOPCDriverAtmOcn__ModelImports__ModelImport_ModelRef() {
+		return (EReference)nuopcDriverAtmOcn__ModelImports__ModelImportEClass.getEStructuralFeatures().get(3);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EClass getCallsGenericSetServices() {
+		return callsGenericSetServicesEClass;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EAttribute getCallsGenericSetServices_Gcomp() {
+		return (EAttribute)callsGenericSetServicesEClass.getEStructuralFeatures().get(0);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EAttribute getCallsGenericSetServices_Rc() {
+		return (EAttribute)callsGenericSetServicesEClass.getEStructuralFeatures().get(1);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EClass getCallsSetEntryPoint() {
+		return callsSetEntryPointEClass;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EAttribute getCallsSetEntryPoint_Method() {
+		return (EAttribute)callsSetEntryPointEClass.getEStructuralFeatures().get(0);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EAttribute getCallsSetEntryPoint_UserRoutine() {
+		return (EAttribute)callsSetEntryPointEClass.getEStructuralFeatures().get(1);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EAttribute getCallsSetEntryPoint_Phase() {
+		return (EAttribute)callsSetEntryPointEClass.getEStructuralFeatures().get(2);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EClass getAttachesMethod() {
+		return attachesMethodEClass;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EAttribute getAttachesMethod_Name() {
+		return (EAttribute)attachesMethodEClass.getEStructuralFeatures().get(0);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EAttribute getAttachesMethod_UserRoutine() {
+		return (EAttribute)attachesMethodEClass.getEStructuralFeatures().get(1);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EAttribute getAttachesMethod_Index() {
+		return (EAttribute)attachesMethodEClass.getEStructuralFeatures().get(2);
 	}
 
 	/**
@@ -2374,510 +2879,6 @@ public class NUOPCPackageImpl extends EPackageImpl implements NUOPCPackage {
 	 */
 	public EAttribute getNUOPCMediator__ModelAdvance_AttachedModelAdvance() {
 		return (EAttribute)nuopcMediator__ModelAdvanceEClass.getEStructuralFeatures().get(2);
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public EClass getNUOPCApplication() {
-		return nuopcApplicationEClass;
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public EAttribute getNUOPCApplication_Name() {
-		return (EAttribute)nuopcApplicationEClass.getEStructuralFeatures().get(0);
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public EReference getNUOPCApplication_NuopcDriver() {
-		return (EReference)nuopcApplicationEClass.getEStructuralFeatures().get(2);
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public EReference getNUOPCApplication_NuopcModel() {
-		return (EReference)nuopcApplicationEClass.getEStructuralFeatures().get(1);
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public EClass getTop() {
-		return topEClass;
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public EReference getTop_Apps() {
-		return (EReference)topEClass.getEStructuralFeatures().get(0);
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public EReference getNUOPCApplication_NuopcDriverAtmOcn() {
-		return (EReference)nuopcApplicationEClass.getEStructuralFeatures().get(3);
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public EReference getNUOPCApplication_NuopcMediator() {
-		return (EReference)nuopcApplicationEClass.getEStructuralFeatures().get(4);
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public EClass getNUOPCDriverAtmOcn() {
-		return nuopcDriverAtmOcnEClass;
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public EReference getNUOPCDriverAtmOcn_Parent() {
-		return (EReference)nuopcDriverAtmOcnEClass.getEStructuralFeatures().get(0);
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public EAttribute getNUOPCDriverAtmOcn_Name() {
-		return (EAttribute)nuopcDriverAtmOcnEClass.getEStructuralFeatures().get(1);
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public EReference getNUOPCDriverAtmOcn_GenericImports() {
-		return (EReference)nuopcDriverAtmOcnEClass.getEStructuralFeatures().get(2);
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public EReference getNUOPCDriverAtmOcn_ModelImports() {
-		return (EReference)nuopcDriverAtmOcnEClass.getEStructuralFeatures().get(3);
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public EReference getNUOPCDriverAtmOcn_ImplementsSetServices() {
-		return (EReference)nuopcDriverAtmOcnEClass.getEStructuralFeatures().get(4);
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public EReference getNUOPCDriverAtmOcn_ImplementsSetModelCount() {
-		return (EReference)nuopcDriverAtmOcnEClass.getEStructuralFeatures().get(5);
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public EReference getNUOPCDriverAtmOcn_ImplementsSetModelServices() {
-		return (EReference)nuopcDriverAtmOcnEClass.getEStructuralFeatures().get(6);
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public EClass getNUOPCDriverAtmOcn__GenericImports() {
-		return nuopcDriverAtmOcn__GenericImportsEClass;
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public EAttribute getNUOPCDriverAtmOcn__GenericImports_ImportsGenericSS() {
-		return (EAttribute)nuopcDriverAtmOcn__GenericImportsEClass.getEStructuralFeatures().get(0);
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public EAttribute getNUOPCDriverAtmOcn__GenericImports_ImportsTypeDriverIS() {
-		return (EAttribute)nuopcDriverAtmOcn__GenericImportsEClass.getEStructuralFeatures().get(1);
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public EAttribute getNUOPCDriverAtmOcn__GenericImports_ImportsLabelSetModelCount() {
-		return (EAttribute)nuopcDriverAtmOcn__GenericImportsEClass.getEStructuralFeatures().get(2);
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public EAttribute getNUOPCDriverAtmOcn__GenericImports_ImportsLabelSetModelServices() {
-		return (EAttribute)nuopcDriverAtmOcn__GenericImportsEClass.getEStructuralFeatures().get(3);
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public EClass getNUOPCDriverAtmOcn__ModelImports() {
-		return nuopcDriverAtmOcn__ModelImportsEClass;
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public EReference getNUOPCDriverAtmOcn__ModelImports_Parent() {
-		return (EReference)nuopcDriverAtmOcn__ModelImportsEClass.getEStructuralFeatures().get(0);
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public EReference getNUOPCDriverAtmOcn__ModelImports_ModelImport() {
-		return (EReference)nuopcDriverAtmOcn__ModelImportsEClass.getEStructuralFeatures().get(1);
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public EClass getNUOPCDriverAtmOcn__ImplementsSetServices() {
-		return nuopcDriverAtmOcn__ImplementsSetServicesEClass;
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public EReference getNUOPCDriverAtmOcn__ImplementsSetServices_Parent() {
-		return (EReference)nuopcDriverAtmOcn__ImplementsSetServicesEClass.getEStructuralFeatures().get(0);
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public EAttribute getNUOPCDriverAtmOcn__ImplementsSetServices_Name() {
-		return (EAttribute)nuopcDriverAtmOcn__ImplementsSetServicesEClass.getEStructuralFeatures().get(1);
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public EAttribute getNUOPCDriverAtmOcn__ImplementsSetServices_Param_gcomp() {
-		return (EAttribute)nuopcDriverAtmOcn__ImplementsSetServicesEClass.getEStructuralFeatures().get(2);
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public EAttribute getNUOPCDriverAtmOcn__ImplementsSetServices_Param_rc() {
-		return (EAttribute)nuopcDriverAtmOcn__ImplementsSetServicesEClass.getEStructuralFeatures().get(3);
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public EReference getNUOPCDriverAtmOcn__ImplementsSetServices_CallsGenericSetServices() {
-		return (EReference)nuopcDriverAtmOcn__ImplementsSetServicesEClass.getEStructuralFeatures().get(4);
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public EReference getNUOPCDriverAtmOcn__ImplementsSetServices_AttachesMethod() {
-		return (EReference)nuopcDriverAtmOcn__ImplementsSetServicesEClass.getEStructuralFeatures().get(5);
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public EClass getNUOPCDriverAtmOcn__ImplementsSetModelCount() {
-		return nuopcDriverAtmOcn__ImplementsSetModelCountEClass;
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public EReference getNUOPCDriverAtmOcn__ImplementsSetModelCount_Parent() {
-		return (EReference)nuopcDriverAtmOcn__ImplementsSetModelCountEClass.getEStructuralFeatures().get(0);
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public EAttribute getNUOPCDriverAtmOcn__ImplementsSetModelCount_Gcomp() {
-		return (EAttribute)nuopcDriverAtmOcn__ImplementsSetModelCountEClass.getEStructuralFeatures().get(1);
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public EAttribute getNUOPCDriverAtmOcn__ImplementsSetModelCount_Rc() {
-		return (EAttribute)nuopcDriverAtmOcn__ImplementsSetModelCountEClass.getEStructuralFeatures().get(2);
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public EAttribute getNUOPCDriverAtmOcn__ImplementsSetModelCount_Name() {
-		return (EAttribute)nuopcDriverAtmOcn__ImplementsSetModelCountEClass.getEStructuralFeatures().get(3);
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public EAttribute getNUOPCDriverAtmOcn__ImplementsSetModelCount_DriverInternalState() {
-		return (EAttribute)nuopcDriverAtmOcn__ImplementsSetModelCountEClass.getEStructuralFeatures().get(4);
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public EReference getNUOPCDriverAtmOcn__ImplementsSetModelCount_GetsInternalState() {
-		return (EReference)nuopcDriverAtmOcn__ImplementsSetModelCountEClass.getEStructuralFeatures().get(5);
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public EAttribute getNUOPCDriverAtmOcn__ImplementsSetModelCount_AssignsValue() {
-		return (EAttribute)nuopcDriverAtmOcn__ImplementsSetModelCountEClass.getEStructuralFeatures().get(6);
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public EAttribute getNUOPCDriverAtmOcn__ImplementsSetModelCount_Attached() {
-		return (EAttribute)nuopcDriverAtmOcn__ImplementsSetModelCountEClass.getEStructuralFeatures().get(7);
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public EClass getNUOPCDriverAtmOcn__ImplementsSetModelServices() {
-		return nuopcDriverAtmOcn__ImplementsSetModelServicesEClass;
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public EReference getNUOPCDriverAtmOcn__ImplementsSetModelServices_Parent() {
-		return (EReference)nuopcDriverAtmOcn__ImplementsSetModelServicesEClass.getEStructuralFeatures().get(0);
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public EAttribute getNUOPCDriverAtmOcn__ImplementsSetModelServices_Gcomp() {
-		return (EAttribute)nuopcDriverAtmOcn__ImplementsSetModelServicesEClass.getEStructuralFeatures().get(1);
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public EAttribute getNUOPCDriverAtmOcn__ImplementsSetModelServices_Rc() {
-		return (EAttribute)nuopcDriverAtmOcn__ImplementsSetModelServicesEClass.getEStructuralFeatures().get(2);
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public EAttribute getNUOPCDriverAtmOcn__ImplementsSetModelServices_Name() {
-		return (EAttribute)nuopcDriverAtmOcn__ImplementsSetModelServicesEClass.getEStructuralFeatures().get(3);
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public EAttribute getNUOPCDriverAtmOcn__ImplementsSetModelServices_DriverInternalState() {
-		return (EAttribute)nuopcDriverAtmOcn__ImplementsSetModelServicesEClass.getEStructuralFeatures().get(4);
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public EReference getNUOPCDriverAtmOcn__ImplementsSetModelServices_GetsInternalState() {
-		return (EReference)nuopcDriverAtmOcn__ImplementsSetModelServicesEClass.getEStructuralFeatures().get(5);
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public EAttribute getNUOPCDriverAtmOcn__ImplementsSetModelServices_AssignsValue() {
-		return (EAttribute)nuopcDriverAtmOcn__ImplementsSetModelServicesEClass.getEStructuralFeatures().get(6);
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public EAttribute getNUOPCDriverAtmOcn__ImplementsSetModelServices_Attached() {
-		return (EAttribute)nuopcDriverAtmOcn__ImplementsSetModelServicesEClass.getEStructuralFeatures().get(7);
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public EReference getNUOPCDriverAtmOcn__ImplementsSetModelServices_SetModelServices() {
-		return (EReference)nuopcDriverAtmOcn__ImplementsSetModelServicesEClass.getEStructuralFeatures().get(8);
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public EReference getNUOPCDriverAtmOcn__ImplementsSetModelServices_SetCouplerServices() {
-		return (EReference)nuopcDriverAtmOcn__ImplementsSetModelServicesEClass.getEStructuralFeatures().get(9);
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public EClass getNUOPCDriverAtmOcn__ModelImports__ModelImport() {
-		return nuopcDriverAtmOcn__ModelImports__ModelImportEClass;
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public EReference getNUOPCDriverAtmOcn__ModelImports__ModelImport_Parent() {
-		return (EReference)nuopcDriverAtmOcn__ModelImports__ModelImportEClass.getEStructuralFeatures().get(0);
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public EAttribute getNUOPCDriverAtmOcn__ModelImports__ModelImport_Name() {
-		return (EAttribute)nuopcDriverAtmOcn__ModelImports__ModelImportEClass.getEStructuralFeatures().get(1);
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public EAttribute getNUOPCDriverAtmOcn__ModelImports__ModelImport_SetServices() {
-		return (EAttribute)nuopcDriverAtmOcn__ModelImports__ModelImportEClass.getEStructuralFeatures().get(2);
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public EReference getNUOPCDriverAtmOcn__ModelImports__ModelImport_ModelRef() {
-		return (EReference)nuopcDriverAtmOcn__ModelImports__ModelImportEClass.getEStructuralFeatures().get(3);
 	}
 
 	/**
@@ -3608,7 +3609,7 @@ public class NUOPCPackageImpl extends EPackageImpl implements NUOPCPackage {
 		   source, 
 		   new String[] {
 			 "constraints", "registersInitP1 registersInitP2"
-		   });																																																																																																																																									
+		   });																																																																																																																																										
 		addAnnotation
 		  (nuopcMediator__ImplementsSetServicesEClass, 
 		   source, 
@@ -3950,6 +3951,12 @@ public class NUOPCPackageImpl extends EPackageImpl implements NUOPCPackage {
 			 "mapping", "moduleName"
 		   });		
 		addAnnotation
+		  (getNUOPCDriver_GenericImports(), 
+		   source, 
+		   new String[] {
+			 "mapping", "usesModule: \"NUOPC_Driver\""
+		   });		
+		addAnnotation
 		  (getNUOPCDriver_ImplementsSetServices(), 
 		   source, 
 		   new String[] {
@@ -3980,7 +3987,7 @@ public class NUOPCPackageImpl extends EPackageImpl implements NUOPCPackage {
 		  (getNUOPCDriver__GenericImports_ImportsGenericSS(), 
 		   source, 
 		   new String[] {
-			 "mapping", "uses: \"NUOPC_Driver\" entity: \"routine_SetServices\"",
+			 "mapping", "usesEntity: \"routine_SetServices\"",
 			 "label", "routine_SetServices",
 			 "doc", "Subclasses of NUOPC Driver should import the public generic Set Services subroutine \"routine_SetServices\""
 		   });		
@@ -3988,21 +3995,21 @@ public class NUOPCPackageImpl extends EPackageImpl implements NUOPCPackage {
 		  (getNUOPCDriver__GenericImports_ImportsTypeDriverIS(), 
 		   source, 
 		   new String[] {
-			 "mapping", "uses: \"NUOPC_Driver\" entity: \"type_InternalState\"",
+			 "mapping", "usesEntity: \"type_InternalState\"",
 			 "label", "type_InternalState"
 		   });		
 		addAnnotation
 		  (getNUOPCDriver__GenericImports_ImportsLabelSetModelCount(), 
 		   source, 
 		   new String[] {
-			 "mapping", "uses: \"NUOPC_Driver\" entity: \"label_SetModelCount\"",
+			 "mapping", "usesEntity: \"label_SetModelCount\"",
 			 "label", "label_SetModelCount"
 		   });		
 		addAnnotation
 		  (getNUOPCDriver__GenericImports_ImportsLabelSetModelServices(), 
 		   source, 
 		   new String[] {
-			 "mapping", "uses: \"NUOPC_Driver\" entity: \"label_SetModelServices\"",
+			 "mapping", "usesEntity: \"label_SetModelServices\"",
 			 "label", "label_SetModelServices"
 		   });		
 		addAnnotation
@@ -4716,7 +4723,7 @@ public class NUOPCPackageImpl extends EPackageImpl implements NUOPCPackage {
 		   source, 
 		   new String[] {
 			 "derivation", "self.parent <> null and self.parent.implementsSetServices <> null and \n\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\tself.parent.implementsSetServices.attachesMethod->size() > 0 and\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\tself.parent.genericImports <> null and self.parent.genericImports.importsLabelModelAdvance <> null and\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\tself.parent.implementsSetServices.attachesMethod->select(m|m.name=self.parent.genericImports.importsLabelModelAdvance).userRoutine->includes(self.name)"
-		   });																	
+		   });																		
 		addAnnotation
 		  (getNUOPCDriver__ModelImports__ModelImport_ModelRef(), 
 		   source, 

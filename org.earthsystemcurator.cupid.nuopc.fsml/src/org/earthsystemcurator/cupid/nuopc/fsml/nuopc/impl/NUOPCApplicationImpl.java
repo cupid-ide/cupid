@@ -24,7 +24,6 @@ import org.eclipse.emf.ecore.impl.EObjectImpl;
 
 import org.eclipse.emf.ecore.util.EObjectContainmentEList;
 import org.eclipse.emf.ecore.util.EObjectContainmentWithInverseEList;
-import org.eclipse.emf.ecore.util.EObjectResolvingEList;
 import org.eclipse.emf.ecore.util.InternalEList;
 
 /**
@@ -150,11 +149,11 @@ public class NUOPCApplicationImpl extends EObjectImpl implements NUOPCApplicatio
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EList<NUOPCDriver> getNuopcDriver() {
-		if (nuopcDriver == null) {
-			nuopcDriver = new EObjectContainmentWithInverseEList<NUOPCDriver>(NUOPCDriver.class, this, NUOPCPackage.NUOPC_APPLICATION__NUOPC_DRIVER, NUOPCPackage.NUOPC_DRIVER__PARENT);
+	public EList<NUOPCModel> getNuopcModel() {
+		if (nuopcModel == null) {
+			nuopcModel = new EObjectContainmentEList<NUOPCModel>(NUOPCModel.class, this, NUOPCPackage.NUOPC_APPLICATION__NUOPC_MODEL);
 		}
-		return nuopcDriver;
+		return nuopcModel;
 	}
 
 	/**
@@ -162,11 +161,11 @@ public class NUOPCApplicationImpl extends EObjectImpl implements NUOPCApplicatio
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EList<NUOPCModel> getNuopcModel() {
-		if (nuopcModel == null) {
-			nuopcModel = new EObjectContainmentEList<NUOPCModel>(NUOPCModel.class, this, NUOPCPackage.NUOPC_APPLICATION__NUOPC_MODEL);
+	public EList<NUOPCDriver> getNuopcDriver() {
+		if (nuopcDriver == null) {
+			nuopcDriver = new EObjectContainmentWithInverseEList<NUOPCDriver>(NUOPCDriver.class, this, NUOPCPackage.NUOPC_APPLICATION__NUOPC_DRIVER, NUOPCPackage.NUOPC_DRIVER__PARENT);
 		}
-		return nuopcModel;
+		return nuopcDriver;
 	}
 
 	/**
