@@ -7,6 +7,7 @@ import java.util.Collection;
 import org.earthsystemcurator.cupid.nuopc.fsml.nuopc.NUOPCApplication;
 import org.earthsystemcurator.cupid.nuopc.fsml.nuopc.NUOPCDriver;
 import org.earthsystemcurator.cupid.nuopc.fsml.nuopc.NUOPCDriverAtmOcn;
+import org.earthsystemcurator.cupid.nuopc.fsml.nuopc.NUOPCMediator;
 import org.earthsystemcurator.cupid.nuopc.fsml.nuopc.NUOPCModel;
 import org.earthsystemcurator.cupid.nuopc.fsml.nuopc.NUOPCPackage;
 
@@ -37,6 +38,7 @@ import org.eclipse.emf.ecore.util.InternalEList;
  *   <li>{@link org.earthsystemcurator.cupid.nuopc.fsml.nuopc.impl.NUOPCApplicationImpl#getNuopcModel <em>Nuopc Model</em>}</li>
  *   <li>{@link org.earthsystemcurator.cupid.nuopc.fsml.nuopc.impl.NUOPCApplicationImpl#getNuopcDriver <em>Nuopc Driver</em>}</li>
  *   <li>{@link org.earthsystemcurator.cupid.nuopc.fsml.nuopc.impl.NUOPCApplicationImpl#getNuopcDriverAtmOcn <em>Nuopc Driver Atm Ocn</em>}</li>
+ *   <li>{@link org.earthsystemcurator.cupid.nuopc.fsml.nuopc.impl.NUOPCApplicationImpl#getNuopcMediator <em>Nuopc Mediator</em>}</li>
  * </ul>
  * </p>
  *
@@ -92,6 +94,16 @@ public class NUOPCApplicationImpl extends EObjectImpl implements NUOPCApplicatio
 	 * @ordered
 	 */
 	protected EList<NUOPCDriverAtmOcn> nuopcDriverAtmOcn;
+
+	/**
+	 * The cached value of the '{@link #getNuopcMediator() <em>Nuopc Mediator</em>}' containment reference list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #getNuopcMediator()
+	 * @generated
+	 * @ordered
+	 */
+	protected EList<NUOPCMediator> nuopcMediator;
 
 	/**
 	 * <!-- begin-user-doc -->
@@ -164,9 +176,21 @@ public class NUOPCApplicationImpl extends EObjectImpl implements NUOPCApplicatio
 	 */
 	public EList<NUOPCDriverAtmOcn> getNuopcDriverAtmOcn() {
 		if (nuopcDriverAtmOcn == null) {
-			nuopcDriverAtmOcn = new EObjectContainmentEList<NUOPCDriverAtmOcn>(NUOPCDriverAtmOcn.class, this, NUOPCPackage.NUOPC_APPLICATION__NUOPC_DRIVER_ATM_OCN);
+			nuopcDriverAtmOcn = new EObjectContainmentWithInverseEList<NUOPCDriverAtmOcn>(NUOPCDriverAtmOcn.class, this, NUOPCPackage.NUOPC_APPLICATION__NUOPC_DRIVER_ATM_OCN, NUOPCPackage.NUOPC_DRIVER_ATM_OCN__PARENT);
 		}
 		return nuopcDriverAtmOcn;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EList<NUOPCMediator> getNuopcMediator() {
+		if (nuopcMediator == null) {
+			nuopcMediator = new EObjectContainmentEList<NUOPCMediator>(NUOPCMediator.class, this, NUOPCPackage.NUOPC_APPLICATION__NUOPC_MEDIATOR);
+		}
+		return nuopcMediator;
 	}
 
 	/**
@@ -180,6 +204,8 @@ public class NUOPCApplicationImpl extends EObjectImpl implements NUOPCApplicatio
 		switch (featureID) {
 			case NUOPCPackage.NUOPC_APPLICATION__NUOPC_DRIVER:
 				return ((InternalEList<InternalEObject>)(InternalEList<?>)getNuopcDriver()).basicAdd(otherEnd, msgs);
+			case NUOPCPackage.NUOPC_APPLICATION__NUOPC_DRIVER_ATM_OCN:
+				return ((InternalEList<InternalEObject>)(InternalEList<?>)getNuopcDriverAtmOcn()).basicAdd(otherEnd, msgs);
 		}
 		return super.eInverseAdd(otherEnd, featureID, msgs);
 	}
@@ -198,6 +224,8 @@ public class NUOPCApplicationImpl extends EObjectImpl implements NUOPCApplicatio
 				return ((InternalEList<?>)getNuopcDriver()).basicRemove(otherEnd, msgs);
 			case NUOPCPackage.NUOPC_APPLICATION__NUOPC_DRIVER_ATM_OCN:
 				return ((InternalEList<?>)getNuopcDriverAtmOcn()).basicRemove(otherEnd, msgs);
+			case NUOPCPackage.NUOPC_APPLICATION__NUOPC_MEDIATOR:
+				return ((InternalEList<?>)getNuopcMediator()).basicRemove(otherEnd, msgs);
 		}
 		return super.eInverseRemove(otherEnd, featureID, msgs);
 	}
@@ -218,6 +246,8 @@ public class NUOPCApplicationImpl extends EObjectImpl implements NUOPCApplicatio
 				return getNuopcDriver();
 			case NUOPCPackage.NUOPC_APPLICATION__NUOPC_DRIVER_ATM_OCN:
 				return getNuopcDriverAtmOcn();
+			case NUOPCPackage.NUOPC_APPLICATION__NUOPC_MEDIATOR:
+				return getNuopcMediator();
 		}
 		return super.eGet(featureID, resolve, coreType);
 	}
@@ -246,6 +276,10 @@ public class NUOPCApplicationImpl extends EObjectImpl implements NUOPCApplicatio
 				getNuopcDriverAtmOcn().clear();
 				getNuopcDriverAtmOcn().addAll((Collection<? extends NUOPCDriverAtmOcn>)newValue);
 				return;
+			case NUOPCPackage.NUOPC_APPLICATION__NUOPC_MEDIATOR:
+				getNuopcMediator().clear();
+				getNuopcMediator().addAll((Collection<? extends NUOPCMediator>)newValue);
+				return;
 		}
 		super.eSet(featureID, newValue);
 	}
@@ -270,6 +304,9 @@ public class NUOPCApplicationImpl extends EObjectImpl implements NUOPCApplicatio
 			case NUOPCPackage.NUOPC_APPLICATION__NUOPC_DRIVER_ATM_OCN:
 				getNuopcDriverAtmOcn().clear();
 				return;
+			case NUOPCPackage.NUOPC_APPLICATION__NUOPC_MEDIATOR:
+				getNuopcMediator().clear();
+				return;
 		}
 		super.eUnset(featureID);
 	}
@@ -290,6 +327,8 @@ public class NUOPCApplicationImpl extends EObjectImpl implements NUOPCApplicatio
 				return nuopcDriver != null && !nuopcDriver.isEmpty();
 			case NUOPCPackage.NUOPC_APPLICATION__NUOPC_DRIVER_ATM_OCN:
 				return nuopcDriverAtmOcn != null && !nuopcDriverAtmOcn.isEmpty();
+			case NUOPCPackage.NUOPC_APPLICATION__NUOPC_MEDIATOR:
+				return nuopcMediator != null && !nuopcMediator.isEmpty();
 		}
 		return super.eIsSet(featureID);
 	}

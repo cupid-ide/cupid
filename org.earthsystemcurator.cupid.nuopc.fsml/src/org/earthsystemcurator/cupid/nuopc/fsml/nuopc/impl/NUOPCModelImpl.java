@@ -4,13 +4,11 @@ package org.earthsystemcurator.cupid.nuopc.fsml.nuopc.impl;
 
 import java.util.Collection;
 
-import org.earthsystemcurator.cupid.nuopc.fsml.nuopc.ModelAdvance;
-import org.earthsystemcurator.cupid.nuopc.fsml.nuopc.ModelImplementsInitP1;
-import org.earthsystemcurator.cupid.nuopc.fsml.nuopc.ModelImplementsInitP2;
-import org.earthsystemcurator.cupid.nuopc.fsml.nuopc.ModelImplementsSetServices;
-import org.earthsystemcurator.cupid.nuopc.fsml.nuopc.Model_Init;
 import org.earthsystemcurator.cupid.nuopc.fsml.nuopc.NUOPCModel;
 import org.earthsystemcurator.cupid.nuopc.fsml.nuopc.NUOPCModel__GenericImports;
+import org.earthsystemcurator.cupid.nuopc.fsml.nuopc.NUOPCModel__ImplementsSetServices;
+import org.earthsystemcurator.cupid.nuopc.fsml.nuopc.NUOPCModel__Init;
+import org.earthsystemcurator.cupid.nuopc.fsml.nuopc.NUOPCModel__ModelAdvance;
 import org.earthsystemcurator.cupid.nuopc.fsml.nuopc.NUOPCPackage;
 
 import org.eclipse.emf.common.notify.Notification;
@@ -84,7 +82,7 @@ public class NUOPCModelImpl extends EObjectImpl implements NUOPCModel {
 	 * @generated
 	 * @ordered
 	 */
-	protected ModelImplementsSetServices implementsSetServices;
+	protected NUOPCModel__ImplementsSetServices implementsSetServices;
 
 	/**
 	 * The cached value of the '{@link #getInitialize() <em>Initialize</em>}' containment reference.
@@ -94,7 +92,7 @@ public class NUOPCModelImpl extends EObjectImpl implements NUOPCModel {
 	 * @generated
 	 * @ordered
 	 */
-	protected Model_Init initialize;
+	protected NUOPCModel__Init initialize;
 
 	/**
 	 * The cached value of the '{@link #getImplementsModelAdvance() <em>Implements Model Advance</em>}' containment reference list.
@@ -104,7 +102,7 @@ public class NUOPCModelImpl extends EObjectImpl implements NUOPCModel {
 	 * @generated
 	 * @ordered
 	 */
-	protected EList<ModelAdvance> implementsModelAdvance;
+	protected EList<NUOPCModel__ModelAdvance> implementsModelAdvance;
 
 	/**
 	 * <!-- begin-user-doc -->
@@ -194,7 +192,7 @@ public class NUOPCModelImpl extends EObjectImpl implements NUOPCModel {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public ModelImplementsSetServices getImplementsSetServices() {
+	public NUOPCModel__ImplementsSetServices getImplementsSetServices() {
 		return implementsSetServices;
 	}
 
@@ -203,8 +201,8 @@ public class NUOPCModelImpl extends EObjectImpl implements NUOPCModel {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public NotificationChain basicSetImplementsSetServices(ModelImplementsSetServices newImplementsSetServices, NotificationChain msgs) {
-		ModelImplementsSetServices oldImplementsSetServices = implementsSetServices;
+	public NotificationChain basicSetImplementsSetServices(NUOPCModel__ImplementsSetServices newImplementsSetServices, NotificationChain msgs) {
+		NUOPCModel__ImplementsSetServices oldImplementsSetServices = implementsSetServices;
 		implementsSetServices = newImplementsSetServices;
 		if (eNotificationRequired()) {
 			ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, NUOPCPackage.NUOPC_MODEL__IMPLEMENTS_SET_SERVICES, oldImplementsSetServices, newImplementsSetServices);
@@ -218,13 +216,13 @@ public class NUOPCModelImpl extends EObjectImpl implements NUOPCModel {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public void setImplementsSetServices(ModelImplementsSetServices newImplementsSetServices) {
+	public void setImplementsSetServices(NUOPCModel__ImplementsSetServices newImplementsSetServices) {
 		if (newImplementsSetServices != implementsSetServices) {
 			NotificationChain msgs = null;
 			if (implementsSetServices != null)
-				msgs = ((InternalEObject)implementsSetServices).eInverseRemove(this, NUOPCPackage.MODEL_IMPLEMENTS_SET_SERVICES__PARENT, ModelImplementsSetServices.class, msgs);
+				msgs = ((InternalEObject)implementsSetServices).eInverseRemove(this, NUOPCPackage.NUOPC_MODEL_IMPLEMENTS_SET_SERVICES__PARENT, NUOPCModel__ImplementsSetServices.class, msgs);
 			if (newImplementsSetServices != null)
-				msgs = ((InternalEObject)newImplementsSetServices).eInverseAdd(this, NUOPCPackage.MODEL_IMPLEMENTS_SET_SERVICES__PARENT, ModelImplementsSetServices.class, msgs);
+				msgs = ((InternalEObject)newImplementsSetServices).eInverseAdd(this, NUOPCPackage.NUOPC_MODEL_IMPLEMENTS_SET_SERVICES__PARENT, NUOPCModel__ImplementsSetServices.class, msgs);
 			msgs = basicSetImplementsSetServices(newImplementsSetServices, msgs);
 			if (msgs != null) msgs.dispatch();
 		}
@@ -237,9 +235,9 @@ public class NUOPCModelImpl extends EObjectImpl implements NUOPCModel {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EList<ModelAdvance> getImplementsModelAdvance() {
+	public EList<NUOPCModel__ModelAdvance> getImplementsModelAdvance() {
 		if (implementsModelAdvance == null) {
-			implementsModelAdvance = new EObjectContainmentWithInverseEList<ModelAdvance>(ModelAdvance.class, this, NUOPCPackage.NUOPC_MODEL__IMPLEMENTS_MODEL_ADVANCE, NUOPCPackage.MODEL_ADVANCE__PARENT);
+			implementsModelAdvance = new EObjectContainmentWithInverseEList<NUOPCModel__ModelAdvance>(NUOPCModel__ModelAdvance.class, this, NUOPCPackage.NUOPC_MODEL__IMPLEMENTS_MODEL_ADVANCE, NUOPCPackage.NUOPC_MODEL_MODEL_ADVANCE__PARENT);
 		}
 		return implementsModelAdvance;
 	}
@@ -249,7 +247,7 @@ public class NUOPCModelImpl extends EObjectImpl implements NUOPCModel {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public Model_Init getInitialize() {
+	public NUOPCModel__Init getInitialize() {
 		return initialize;
 	}
 
@@ -258,8 +256,8 @@ public class NUOPCModelImpl extends EObjectImpl implements NUOPCModel {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public NotificationChain basicSetInitialize(Model_Init newInitialize, NotificationChain msgs) {
-		Model_Init oldInitialize = initialize;
+	public NotificationChain basicSetInitialize(NUOPCModel__Init newInitialize, NotificationChain msgs) {
+		NUOPCModel__Init oldInitialize = initialize;
 		initialize = newInitialize;
 		if (eNotificationRequired()) {
 			ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, NUOPCPackage.NUOPC_MODEL__INITIALIZE, oldInitialize, newInitialize);
@@ -273,13 +271,13 @@ public class NUOPCModelImpl extends EObjectImpl implements NUOPCModel {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public void setInitialize(Model_Init newInitialize) {
+	public void setInitialize(NUOPCModel__Init newInitialize) {
 		if (newInitialize != initialize) {
 			NotificationChain msgs = null;
 			if (initialize != null)
-				msgs = ((InternalEObject)initialize).eInverseRemove(this, NUOPCPackage.MODEL_INIT__PARENT, Model_Init.class, msgs);
+				msgs = ((InternalEObject)initialize).eInverseRemove(this, NUOPCPackage.NUOPC_MODEL_INIT__PARENT, NUOPCModel__Init.class, msgs);
 			if (newInitialize != null)
-				msgs = ((InternalEObject)newInitialize).eInverseAdd(this, NUOPCPackage.MODEL_INIT__PARENT, Model_Init.class, msgs);
+				msgs = ((InternalEObject)newInitialize).eInverseAdd(this, NUOPCPackage.NUOPC_MODEL_INIT__PARENT, NUOPCModel__Init.class, msgs);
 			msgs = basicSetInitialize(newInitialize, msgs);
 			if (msgs != null) msgs.dispatch();
 		}
@@ -299,11 +297,11 @@ public class NUOPCModelImpl extends EObjectImpl implements NUOPCModel {
 			case NUOPCPackage.NUOPC_MODEL__IMPLEMENTS_SET_SERVICES:
 				if (implementsSetServices != null)
 					msgs = ((InternalEObject)implementsSetServices).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - NUOPCPackage.NUOPC_MODEL__IMPLEMENTS_SET_SERVICES, null, msgs);
-				return basicSetImplementsSetServices((ModelImplementsSetServices)otherEnd, msgs);
+				return basicSetImplementsSetServices((NUOPCModel__ImplementsSetServices)otherEnd, msgs);
 			case NUOPCPackage.NUOPC_MODEL__INITIALIZE:
 				if (initialize != null)
 					msgs = ((InternalEObject)initialize).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - NUOPCPackage.NUOPC_MODEL__INITIALIZE, null, msgs);
-				return basicSetInitialize((Model_Init)otherEnd, msgs);
+				return basicSetInitialize((NUOPCModel__Init)otherEnd, msgs);
 			case NUOPCPackage.NUOPC_MODEL__IMPLEMENTS_MODEL_ADVANCE:
 				return ((InternalEList<InternalEObject>)(InternalEList<?>)getImplementsModelAdvance()).basicAdd(otherEnd, msgs);
 		}
@@ -368,14 +366,14 @@ public class NUOPCModelImpl extends EObjectImpl implements NUOPCModel {
 				setGenericImports((NUOPCModel__GenericImports)newValue);
 				return;
 			case NUOPCPackage.NUOPC_MODEL__IMPLEMENTS_SET_SERVICES:
-				setImplementsSetServices((ModelImplementsSetServices)newValue);
+				setImplementsSetServices((NUOPCModel__ImplementsSetServices)newValue);
 				return;
 			case NUOPCPackage.NUOPC_MODEL__INITIALIZE:
-				setInitialize((Model_Init)newValue);
+				setInitialize((NUOPCModel__Init)newValue);
 				return;
 			case NUOPCPackage.NUOPC_MODEL__IMPLEMENTS_MODEL_ADVANCE:
 				getImplementsModelAdvance().clear();
-				getImplementsModelAdvance().addAll((Collection<? extends ModelAdvance>)newValue);
+				getImplementsModelAdvance().addAll((Collection<? extends NUOPCModel__ModelAdvance>)newValue);
 				return;
 		}
 		super.eSet(featureID, newValue);
@@ -396,10 +394,10 @@ public class NUOPCModelImpl extends EObjectImpl implements NUOPCModel {
 				setGenericImports((NUOPCModel__GenericImports)null);
 				return;
 			case NUOPCPackage.NUOPC_MODEL__IMPLEMENTS_SET_SERVICES:
-				setImplementsSetServices((ModelImplementsSetServices)null);
+				setImplementsSetServices((NUOPCModel__ImplementsSetServices)null);
 				return;
 			case NUOPCPackage.NUOPC_MODEL__INITIALIZE:
-				setInitialize((Model_Init)null);
+				setInitialize((NUOPCModel__Init)null);
 				return;
 			case NUOPCPackage.NUOPC_MODEL__IMPLEMENTS_MODEL_ADVANCE:
 				getImplementsModelAdvance().clear();

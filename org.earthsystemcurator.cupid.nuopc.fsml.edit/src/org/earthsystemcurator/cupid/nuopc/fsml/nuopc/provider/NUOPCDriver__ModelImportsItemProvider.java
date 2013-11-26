@@ -150,7 +150,7 @@ public class NUOPCDriver__ModelImportsItemProvider
 		newChildDescriptors.add
 			(createChildParameter
 				(NUOPCPackage.Literals.NUOPC_DRIVER_MODEL_IMPORTS__MODEL_IMPORT,
-				 NUOPCFactory.eINSTANCE.createModelImport()));
+				 NUOPCFactory.eINSTANCE.createNUOPCDriver__ModelImports__ModelImport()));
 	}
 
 	/**

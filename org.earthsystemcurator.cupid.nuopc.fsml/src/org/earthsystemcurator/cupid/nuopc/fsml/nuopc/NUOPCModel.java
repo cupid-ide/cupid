@@ -11,6 +11,10 @@ import org.eclipse.emf.ecore.EObject;
  * A representation of the model object '<em><b>Model</b></em>'.
  * <!-- end-user-doc -->
  *
+ * <!-- begin-model-doc -->
+ * NUOPC Model classes
+ * <!-- end-model-doc -->
+ *
  * <p>
  * The following features are supported:
  * <ul>
@@ -83,7 +87,7 @@ public interface NUOPCModel extends EObject {
 
 	/**
 	 * Returns the value of the '<em><b>Implements Set Services</b></em>' containment reference.
-	 * It is bidirectional and its opposite is '{@link org.earthsystemcurator.cupid.nuopc.fsml.nuopc.ModelImplementsSetServices#getParent <em>Parent</em>}'.
+	 * It is bidirectional and its opposite is '{@link org.earthsystemcurator.cupid.nuopc.fsml.nuopc.NUOPCModel__ImplementsSetServices#getParent <em>Parent</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <p>
 	 * If the meaning of the '<em>Implements Set Services</em>' containment reference isn't clear,
@@ -91,14 +95,14 @@ public interface NUOPCModel extends EObject {
 	 * </p>
 	 * <!-- end-user-doc -->
 	 * @return the value of the '<em>Implements Set Services</em>' containment reference.
-	 * @see #setImplementsSetServices(ModelImplementsSetServices)
+	 * @see #setImplementsSetServices(NUOPCModel__ImplementsSetServices)
 	 * @see org.earthsystemcurator.cupid.nuopc.fsml.nuopc.NUOPCPackage#getNUOPCModel_ImplementsSetServices()
-	 * @see org.earthsystemcurator.cupid.nuopc.fsml.nuopc.ModelImplementsSetServices#getParent
+	 * @see org.earthsystemcurator.cupid.nuopc.fsml.nuopc.NUOPCModel__ImplementsSetServices#getParent
 	 * @model opposite="parent" containment="true" keys="name" required="true"
 	 *        annotation="http://www.earthsystemcog.org/projects/nuopc mapping='subroutine: \"#name(inout type(ESMF_GridComp) #param_gcomp, out integer #param_rc)\"' essential='true'"
 	 * @generated
 	 */
-	ModelImplementsSetServices getImplementsSetServices();
+	NUOPCModel__ImplementsSetServices getImplementsSetServices();
 
 	/**
 	 * Sets the value of the '{@link org.earthsystemcurator.cupid.nuopc.fsml.nuopc.NUOPCModel#getImplementsSetServices <em>Implements Set Services</em>}' containment reference.
@@ -108,12 +112,12 @@ public interface NUOPCModel extends EObject {
 	 * @see #getImplementsSetServices()
 	 * @generated
 	 */
-	void setImplementsSetServices(ModelImplementsSetServices value);
+	void setImplementsSetServices(NUOPCModel__ImplementsSetServices value);
 
 	/**
 	 * Returns the value of the '<em><b>Implements Model Advance</b></em>' containment reference list.
-	 * The list contents are of type {@link org.earthsystemcurator.cupid.nuopc.fsml.nuopc.ModelAdvance}.
-	 * It is bidirectional and its opposite is '{@link org.earthsystemcurator.cupid.nuopc.fsml.nuopc.ModelAdvance#getParent <em>Parent</em>}'.
+	 * The list contents are of type {@link org.earthsystemcurator.cupid.nuopc.fsml.nuopc.NUOPCModel__ModelAdvance}.
+	 * It is bidirectional and its opposite is '{@link org.earthsystemcurator.cupid.nuopc.fsml.nuopc.NUOPCModel__ModelAdvance#getParent <em>Parent</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <p>
 	 * If the meaning of the '<em>Implements Model Advance</em>' containment reference list isn't clear,
@@ -122,16 +126,16 @@ public interface NUOPCModel extends EObject {
 	 * <!-- end-user-doc -->
 	 * @return the value of the '<em>Implements Model Advance</em>' containment reference list.
 	 * @see org.earthsystemcurator.cupid.nuopc.fsml.nuopc.NUOPCPackage#getNUOPCModel_ImplementsModelAdvance()
-	 * @see org.earthsystemcurator.cupid.nuopc.fsml.nuopc.ModelAdvance#getParent
+	 * @see org.earthsystemcurator.cupid.nuopc.fsml.nuopc.NUOPCModel__ModelAdvance#getParent
 	 * @model opposite="parent" containment="true"
 	 *        annotation="http://www.earthsystemcog.org/projects/nuopc mapping='subroutine: \"#name(type(ESMF_GridComp), integer)\"'"
 	 * @generated
 	 */
-	EList<ModelAdvance> getImplementsModelAdvance();
+	EList<NUOPCModel__ModelAdvance> getImplementsModelAdvance();
 
 	/**
 	 * Returns the value of the '<em><b>Initialize</b></em>' containment reference.
-	 * It is bidirectional and its opposite is '{@link org.earthsystemcurator.cupid.nuopc.fsml.nuopc.Model_Init#getParent <em>Parent</em>}'.
+	 * It is bidirectional and its opposite is '{@link org.earthsystemcurator.cupid.nuopc.fsml.nuopc.NUOPCModel__Init#getParent <em>Parent</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <p>
 	 * If the meaning of the '<em>Initialize</em>' reference isn't clear,
@@ -139,13 +143,13 @@ public interface NUOPCModel extends EObject {
 	 * </p>
 	 * <!-- end-user-doc -->
 	 * @return the value of the '<em>Initialize</em>' containment reference.
-	 * @see #setInitialize(Model_Init)
+	 * @see #setInitialize(NUOPCModel__Init)
 	 * @see org.earthsystemcurator.cupid.nuopc.fsml.nuopc.NUOPCPackage#getNUOPCModel_Initialize()
-	 * @see org.earthsystemcurator.cupid.nuopc.fsml.nuopc.Model_Init#getParent
+	 * @see org.earthsystemcurator.cupid.nuopc.fsml.nuopc.NUOPCModel__Init#getParent
 	 * @model opposite="parent" containment="true" required="true"
 	 * @generated
 	 */
-	Model_Init getInitialize();
+	NUOPCModel__Init getInitialize();
 
 	/**
 	 * Sets the value of the '{@link org.earthsystemcurator.cupid.nuopc.fsml.nuopc.NUOPCModel#getInitialize <em>Initialize</em>}' containment reference.
@@ -155,6 +159,6 @@ public interface NUOPCModel extends EObject {
 	 * @see #getInitialize()
 	 * @generated
 	 */
-	void setInitialize(Model_Init value);
+	void setInitialize(NUOPCModel__Init value);
 
 } // NUOPCModel

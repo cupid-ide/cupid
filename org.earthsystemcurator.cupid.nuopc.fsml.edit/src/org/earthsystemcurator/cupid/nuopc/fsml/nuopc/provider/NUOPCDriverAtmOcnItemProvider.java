@@ -102,7 +102,11 @@ public class NUOPCDriverAtmOcnItemProvider
 	public Collection<? extends EStructuralFeature> getChildrenFeatures(Object object) {
 		if (childrenFeatures == null) {
 			super.getChildrenFeatures(object);
+			childrenFeatures.add(NUOPCPackage.Literals.NUOPC_DRIVER_ATM_OCN__GENERIC_IMPORTS);
+			childrenFeatures.add(NUOPCPackage.Literals.NUOPC_DRIVER_ATM_OCN__MODEL_IMPORTS);
 			childrenFeatures.add(NUOPCPackage.Literals.NUOPC_DRIVER_ATM_OCN__IMPLEMENTS_SET_SERVICES);
+			childrenFeatures.add(NUOPCPackage.Literals.NUOPC_DRIVER_ATM_OCN__IMPLEMENTS_SET_MODEL_COUNT);
+			childrenFeatures.add(NUOPCPackage.Literals.NUOPC_DRIVER_ATM_OCN__IMPLEMENTS_SET_MODEL_SERVICES);
 		}
 		return childrenFeatures;
 	}
@@ -160,7 +164,11 @@ public class NUOPCDriverAtmOcnItemProvider
 			case NUOPCPackage.NUOPC_DRIVER_ATM_OCN__NAME:
 				fireNotifyChanged(new ViewerNotification(notification, notification.getNotifier(), false, true));
 				return;
+			case NUOPCPackage.NUOPC_DRIVER_ATM_OCN__GENERIC_IMPORTS:
+			case NUOPCPackage.NUOPC_DRIVER_ATM_OCN__MODEL_IMPORTS:
 			case NUOPCPackage.NUOPC_DRIVER_ATM_OCN__IMPLEMENTS_SET_SERVICES:
+			case NUOPCPackage.NUOPC_DRIVER_ATM_OCN__IMPLEMENTS_SET_MODEL_COUNT:
+			case NUOPCPackage.NUOPC_DRIVER_ATM_OCN__IMPLEMENTS_SET_MODEL_SERVICES:
 				fireNotifyChanged(new ViewerNotification(notification, notification.getNotifier(), true, false));
 				return;
 		}
@@ -180,8 +188,28 @@ public class NUOPCDriverAtmOcnItemProvider
 
 		newChildDescriptors.add
 			(createChildParameter
+				(NUOPCPackage.Literals.NUOPC_DRIVER_ATM_OCN__GENERIC_IMPORTS,
+				 NUOPCFactory.eINSTANCE.createNUOPCDriverAtmOcn__GenericImports()));
+
+		newChildDescriptors.add
+			(createChildParameter
+				(NUOPCPackage.Literals.NUOPC_DRIVER_ATM_OCN__MODEL_IMPORTS,
+				 NUOPCFactory.eINSTANCE.createNUOPCDriverAtmOcn__ModelImports()));
+
+		newChildDescriptors.add
+			(createChildParameter
 				(NUOPCPackage.Literals.NUOPC_DRIVER_ATM_OCN__IMPLEMENTS_SET_SERVICES,
 				 NUOPCFactory.eINSTANCE.createNUOPCDriverAtmOcn__ImplementsSetServices()));
+
+		newChildDescriptors.add
+			(createChildParameter
+				(NUOPCPackage.Literals.NUOPC_DRIVER_ATM_OCN__IMPLEMENTS_SET_MODEL_COUNT,
+				 NUOPCFactory.eINSTANCE.createNUOPCDriverAtmOcn__ImplementsSetModelCount()));
+
+		newChildDescriptors.add
+			(createChildParameter
+				(NUOPCPackage.Literals.NUOPC_DRIVER_ATM_OCN__IMPLEMENTS_SET_MODEL_SERVICES,
+				 NUOPCFactory.eINSTANCE.createNUOPCDriverAtmOcn__ImplementsSetModelServices()));
 	}
 
 	/**

@@ -47,7 +47,6 @@ import org.eclipse.photran.internal.core.vpg.PhotranVPG;
 @SuppressWarnings("restriction")
 public class CodeQuery {
 
-	//public static Pattern P_METAVAR = Pattern.compile("#(?:../)*\\w+");	
 	public static Pattern P_METAVAR = Pattern.compile("#((\\.\\.|\\w+)/)*\\w+");
 	
 	public static String moduleName(ASTModuleNode node, Map<String, Object> params) {
@@ -59,6 +58,9 @@ public class CodeQuery {
 		return moduleName(node, params);
 	}
 	
+	public static String moduleName(ASTUseStmtNode node, Map<String, Object> params) {
+		return node.getName().getText();
+	}
 	
 	public static String subroutineName(ASTSubroutineSubprogramNode node, Map<String, Object> params) {
 		String subroutineName = (String) params.get("subroutineName");

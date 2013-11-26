@@ -54,8 +54,8 @@ public interface NUOPCDriver__ModelImports extends EObject {
 
 	/**
 	 * Returns the value of the '<em><b>Model Import</b></em>' containment reference list.
-	 * The list contents are of type {@link org.earthsystemcurator.cupid.nuopc.fsml.nuopc.ModelImport}.
-	 * It is bidirectional and its opposite is '{@link org.earthsystemcurator.cupid.nuopc.fsml.nuopc.ModelImport#getParent <em>Parent</em>}'.
+	 * The list contents are of type {@link org.earthsystemcurator.cupid.nuopc.fsml.nuopc.NUOPCDriver__ModelImports__ModelImport}.
+	 * It is bidirectional and its opposite is '{@link org.earthsystemcurator.cupid.nuopc.fsml.nuopc.NUOPCDriver__ModelImports__ModelImport#getParent <em>Parent</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <p>
 	 * If the meaning of the '<em>Model Import</em>' containment reference list isn't clear,
@@ -64,11 +64,11 @@ public interface NUOPCDriver__ModelImports extends EObject {
 	 * <!-- end-user-doc -->
 	 * @return the value of the '<em>Model Import</em>' containment reference list.
 	 * @see org.earthsystemcurator.cupid.nuopc.fsml.nuopc.NUOPCPackage#getNUOPCDriver__ModelImports_ModelImport()
-	 * @see org.earthsystemcurator.cupid.nuopc.fsml.nuopc.ModelImport#getParent
+	 * @see org.earthsystemcurator.cupid.nuopc.fsml.nuopc.NUOPCDriver__ModelImports__ModelImport#getParent
 	 * @model opposite="parent" containment="true"
 	 *        annotation="http://www.earthsystemcog.org/projects/nuopc mapping='usesModule: \"#name\"'"
 	 * @generated
 	 */
-	EList<ModelImport> getModelImport();
+	EList<NUOPCDriver__ModelImports__ModelImport> getModelImport();
 
 } // NUOPCDriver__ModelImports

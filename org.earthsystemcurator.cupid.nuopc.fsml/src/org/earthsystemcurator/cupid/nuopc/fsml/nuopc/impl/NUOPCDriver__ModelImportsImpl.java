@@ -4,9 +4,9 @@ package org.earthsystemcurator.cupid.nuopc.fsml.nuopc.impl;
 
 import java.util.Collection;
 
-import org.earthsystemcurator.cupid.nuopc.fsml.nuopc.ModelImport;
 import org.earthsystemcurator.cupid.nuopc.fsml.nuopc.NUOPCDriver;
 import org.earthsystemcurator.cupid.nuopc.fsml.nuopc.NUOPCDriver__ModelImports;
+import org.earthsystemcurator.cupid.nuopc.fsml.nuopc.NUOPCDriver__ModelImports__ModelImport;
 import org.earthsystemcurator.cupid.nuopc.fsml.nuopc.NUOPCPackage;
 
 import org.eclipse.emf.common.notify.Notification;
@@ -48,7 +48,7 @@ public class NUOPCDriver__ModelImportsImpl extends EObjectImpl implements NUOPCD
 	 * @generated
 	 * @ordered
 	 */
-	protected EList<ModelImport> modelImport;
+	protected EList<NUOPCDriver__ModelImports__ModelImport> modelImport;
 
 	/**
 	 * <!-- begin-user-doc -->
@@ -115,9 +115,9 @@ public class NUOPCDriver__ModelImportsImpl extends EObjectImpl implements NUOPCD
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EList<ModelImport> getModelImport() {
+	public EList<NUOPCDriver__ModelImports__ModelImport> getModelImport() {
 		if (modelImport == null) {
-			modelImport = new EObjectContainmentWithInverseEList<ModelImport>(ModelImport.class, this, NUOPCPackage.NUOPC_DRIVER_MODEL_IMPORTS__MODEL_IMPORT, NUOPCPackage.MODEL_IMPORT__PARENT);
+			modelImport = new EObjectContainmentWithInverseEList<NUOPCDriver__ModelImports__ModelImport>(NUOPCDriver__ModelImports__ModelImport.class, this, NUOPCPackage.NUOPC_DRIVER_MODEL_IMPORTS__MODEL_IMPORT, NUOPCPackage.NUOPC_DRIVER_MODEL_IMPORTS_MODEL_IMPORT__PARENT);
 		}
 		return modelImport;
 	}
@@ -201,7 +201,7 @@ public class NUOPCDriver__ModelImportsImpl extends EObjectImpl implements NUOPCD
 				return;
 			case NUOPCPackage.NUOPC_DRIVER_MODEL_IMPORTS__MODEL_IMPORT:
 				getModelImport().clear();
-				getModelImport().addAll((Collection<? extends ModelImport>)newValue);
+				getModelImport().addAll((Collection<? extends NUOPCDriver__ModelImports__ModelImport>)newValue);
 				return;
 		}
 		super.eSet(featureID, newValue);

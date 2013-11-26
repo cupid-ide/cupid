@@ -215,17 +215,17 @@ public class NUOPCModelItemProvider
 		newChildDescriptors.add
 			(createChildParameter
 				(NUOPCPackage.Literals.NUOPC_MODEL__IMPLEMENTS_SET_SERVICES,
-				 NUOPCFactory.eINSTANCE.createModelImplementsSetServices()));
+				 NUOPCFactory.eINSTANCE.createNUOPCModel__ImplementsSetServices()));
 
 		newChildDescriptors.add
 			(createChildParameter
 				(NUOPCPackage.Literals.NUOPC_MODEL__INITIALIZE,
-				 NUOPCFactory.eINSTANCE.createModel_Init()));
+				 NUOPCFactory.eINSTANCE.createNUOPCModel__Init()));
 
 		newChildDescriptors.add
 			(createChildParameter
 				(NUOPCPackage.Literals.NUOPC_MODEL__IMPLEMENTS_MODEL_ADVANCE,
-				 NUOPCFactory.eINSTANCE.createModelAdvance()));
+				 NUOPCFactory.eINSTANCE.createNUOPCModel__ModelAdvance()));
 	}
 
 	/**

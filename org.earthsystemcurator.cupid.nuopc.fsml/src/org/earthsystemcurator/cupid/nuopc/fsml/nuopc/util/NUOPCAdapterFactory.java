@@ -68,6 +68,14 @@ public class NUOPCAdapterFactory extends AdapterFactoryImpl {
 	protected NUOPCSwitch<Adapter> modelSwitch =
 		new NUOPCSwitch<Adapter>() {
 			@Override
+			public Adapter caseTop(Top object) {
+				return createTopAdapter();
+			}
+			@Override
+			public Adapter caseNUOPCApplication(NUOPCApplication object) {
+				return createNUOPCApplicationAdapter();
+			}
+			@Override
 			public Adapter caseNUOPCModel(NUOPCModel object) {
 				return createNUOPCModelAdapter();
 			}
@@ -76,48 +84,40 @@ public class NUOPCAdapterFactory extends AdapterFactoryImpl {
 				return createNUOPCModel__GenericImportsAdapter();
 			}
 			@Override
-			public Adapter caseModel_Init(Model_Init object) {
-				return createModel_InitAdapter();
+			public Adapter caseNUOPCModel__Init(NUOPCModel__Init object) {
+				return createNUOPCModel__InitAdapter();
 			}
 			@Override
-			public Adapter caseModelImplementsSetServices(ModelImplementsSetServices object) {
-				return createModelImplementsSetServicesAdapter();
+			public Adapter caseNUOPCModel__ImplementsSetServices(NUOPCModel__ImplementsSetServices object) {
+				return createNUOPCModel__ImplementsSetServicesAdapter();
 			}
 			@Override
-			public Adapter caseCallsGenericSetServices(CallsGenericSetServices object) {
-				return createCallsGenericSetServicesAdapter();
+			public Adapter caseNUOPCModel__ImplementsInitP1(NUOPCModel__ImplementsInitP1 object) {
+				return createNUOPCModel__ImplementsInitP1Adapter();
 			}
 			@Override
-			public Adapter caseCallsSetEntryPoint(CallsSetEntryPoint object) {
-				return createCallsSetEntryPointAdapter();
+			public Adapter caseNUOPCModel__ImplementsInitP2(NUOPCModel__ImplementsInitP2 object) {
+				return createNUOPCModel__ImplementsInitP2Adapter();
 			}
 			@Override
-			public Adapter caseModelImplementsInitP1(ModelImplementsInitP1 object) {
-				return createModelImplementsInitP1Adapter();
+			public Adapter caseNUOPCModel__AdvertisesImportField(NUOPCModel__AdvertisesImportField object) {
+				return createNUOPCModel__AdvertisesImportFieldAdapter();
 			}
 			@Override
-			public Adapter caseModelImplementsInitP2(ModelImplementsInitP2 object) {
-				return createModelImplementsInitP2Adapter();
+			public Adapter caseNUOPCModel__AdvertisesExportField(NUOPCModel__AdvertisesExportField object) {
+				return createNUOPCModel__AdvertisesExportFieldAdapter();
 			}
 			@Override
-			public Adapter caseAdvertisesImportField(AdvertisesImportField object) {
-				return createAdvertisesImportFieldAdapter();
+			public Adapter caseNUOPCModel__RealizesImportField(NUOPCModel__RealizesImportField object) {
+				return createNUOPCModel__RealizesImportFieldAdapter();
 			}
 			@Override
-			public Adapter caseAdvertisesExportField(AdvertisesExportField object) {
-				return createAdvertisesExportFieldAdapter();
+			public Adapter caseNUOPCModel__RealizesExportField(NUOPCModel__RealizesExportField object) {
+				return createNUOPCModel__RealizesExportFieldAdapter();
 			}
 			@Override
-			public Adapter caseRealizesImportField(RealizesImportField object) {
-				return createRealizesImportFieldAdapter();
-			}
-			@Override
-			public Adapter caseRealizesExportField(RealizesExportField object) {
-				return createRealizesExportFieldAdapter();
-			}
-			@Override
-			public Adapter caseModelAdvance(ModelAdvance object) {
-				return createModelAdvanceAdapter();
+			public Adapter caseNUOPCModel__ModelAdvance(NUOPCModel__ModelAdvance object) {
+				return createNUOPCModel__ModelAdvanceAdapter();
 			}
 			@Override
 			public Adapter caseNUOPCDriver(NUOPCDriver object) {
@@ -132,16 +132,20 @@ public class NUOPCAdapterFactory extends AdapterFactoryImpl {
 				return createNUOPCDriver__ModelImportsAdapter();
 			}
 			@Override
-			public Adapter caseModelImport(ModelImport object) {
-				return createModelImportAdapter();
+			public Adapter caseNUOPCDriver__ModelImports__ModelImport(NUOPCDriver__ModelImports__ModelImport object) {
+				return createNUOPCDriver__ModelImports__ModelImportAdapter();
+			}
+			@Override
+			public Adapter caseNUOPCDriver__ConnectorImports(NUOPCDriver__ConnectorImports object) {
+				return createNUOPCDriver__ConnectorImportsAdapter();
+			}
+			@Override
+			public Adapter caseNUOPCDriver__ConnectorImports__ConnectorImport(NUOPCDriver__ConnectorImports__ConnectorImport object) {
+				return createNUOPCDriver__ConnectorImports__ConnectorImportAdapter();
 			}
 			@Override
 			public Adapter caseNUOPCDriver__ImplementsSetServices(NUOPCDriver__ImplementsSetServices object) {
 				return createNUOPCDriver__ImplementsSetServicesAdapter();
-			}
-			@Override
-			public Adapter caseAttachesMethod(AttachesMethod object) {
-				return createAttachesMethodAdapter();
 			}
 			@Override
 			public Adapter caseNUOPCDriver__ImplementsSetModelCount(NUOPCDriver__ImplementsSetModelCount object) {
@@ -150,6 +154,46 @@ public class NUOPCAdapterFactory extends AdapterFactoryImpl {
 			@Override
 			public Adapter caseNUOPCDriver__ImplementsSetModelServices(NUOPCDriver__ImplementsSetModelServices object) {
 				return createNUOPCDriver__ImplementsSetModelServicesAdapter();
+			}
+			@Override
+			public Adapter caseNUOPCDriverAtmOcn(NUOPCDriverAtmOcn object) {
+				return createNUOPCDriverAtmOcnAdapter();
+			}
+			@Override
+			public Adapter caseNUOPCDriverAtmOcn__GenericImports(NUOPCDriverAtmOcn__GenericImports object) {
+				return createNUOPCDriverAtmOcn__GenericImportsAdapter();
+			}
+			@Override
+			public Adapter caseNUOPCDriverAtmOcn__ModelImports(NUOPCDriverAtmOcn__ModelImports object) {
+				return createNUOPCDriverAtmOcn__ModelImportsAdapter();
+			}
+			@Override
+			public Adapter caseNUOPCDriverAtmOcn__ImplementsSetServices(NUOPCDriverAtmOcn__ImplementsSetServices object) {
+				return createNUOPCDriverAtmOcn__ImplementsSetServicesAdapter();
+			}
+			@Override
+			public Adapter caseNUOPCDriverAtmOcn__ImplementsSetModelCount(NUOPCDriverAtmOcn__ImplementsSetModelCount object) {
+				return createNUOPCDriverAtmOcn__ImplementsSetModelCountAdapter();
+			}
+			@Override
+			public Adapter caseNUOPCDriverAtmOcn__ImplementsSetModelServices(NUOPCDriverAtmOcn__ImplementsSetModelServices object) {
+				return createNUOPCDriverAtmOcn__ImplementsSetModelServicesAdapter();
+			}
+			@Override
+			public Adapter caseNUOPCDriverAtmOcn__ModelImports__ModelImport(NUOPCDriverAtmOcn__ModelImports__ModelImport object) {
+				return createNUOPCDriverAtmOcn__ModelImports__ModelImportAdapter();
+			}
+			@Override
+			public Adapter caseCallsGenericSetServices(CallsGenericSetServices object) {
+				return createCallsGenericSetServicesAdapter();
+			}
+			@Override
+			public Adapter caseCallsSetEntryPoint(CallsSetEntryPoint object) {
+				return createCallsSetEntryPointAdapter();
+			}
+			@Override
+			public Adapter caseAttachesMethod(AttachesMethod object) {
+				return createAttachesMethodAdapter();
 			}
 			@Override
 			public Adapter caseSetModelServices(SetModelServices object) {
@@ -164,20 +208,48 @@ public class NUOPCAdapterFactory extends AdapterFactoryImpl {
 				return createGetsInternalStateAdapter();
 			}
 			@Override
-			public Adapter caseNUOPCApplication(NUOPCApplication object) {
-				return createNUOPCApplicationAdapter();
+			public Adapter caseNUOPCMediator(NUOPCMediator object) {
+				return createNUOPCMediatorAdapter();
 			}
 			@Override
-			public Adapter caseTop(Top object) {
-				return createTopAdapter();
+			public Adapter caseNUOPCMediator__GenericImports(NUOPCMediator__GenericImports object) {
+				return createNUOPCMediator__GenericImportsAdapter();
 			}
 			@Override
-			public Adapter caseNUOPCDriverAtmOcn(NUOPCDriverAtmOcn object) {
-				return createNUOPCDriverAtmOcnAdapter();
+			public Adapter caseNUOPCMediator__Init(NUOPCMediator__Init object) {
+				return createNUOPCMediator__InitAdapter();
 			}
 			@Override
-			public Adapter caseNUOPCDriverAtmOcn__ImplementsSetServices(NUOPCDriverAtmOcn__ImplementsSetServices object) {
-				return createNUOPCDriverAtmOcn__ImplementsSetServicesAdapter();
+			public Adapter caseNUOPCMediator__ImplementsSetServices(NUOPCMediator__ImplementsSetServices object) {
+				return createNUOPCMediator__ImplementsSetServicesAdapter();
+			}
+			@Override
+			public Adapter caseNUOPCMediator__ImplementsInitP1(NUOPCMediator__ImplementsInitP1 object) {
+				return createNUOPCMediator__ImplementsInitP1Adapter();
+			}
+			@Override
+			public Adapter caseNUOPCMediator__ImplementsInitP2(NUOPCMediator__ImplementsInitP2 object) {
+				return createNUOPCMediator__ImplementsInitP2Adapter();
+			}
+			@Override
+			public Adapter caseNUOPCMediator__AdvertisesImportField(NUOPCMediator__AdvertisesImportField object) {
+				return createNUOPCMediator__AdvertisesImportFieldAdapter();
+			}
+			@Override
+			public Adapter caseNUOPCMediator__AdvertisesExportField(NUOPCMediator__AdvertisesExportField object) {
+				return createNUOPCMediator__AdvertisesExportFieldAdapter();
+			}
+			@Override
+			public Adapter caseNUOPCMediator__RealizesImportField(NUOPCMediator__RealizesImportField object) {
+				return createNUOPCMediator__RealizesImportFieldAdapter();
+			}
+			@Override
+			public Adapter caseNUOPCMediator__RealizesExportField(NUOPCMediator__RealizesExportField object) {
+				return createNUOPCMediator__RealizesExportFieldAdapter();
+			}
+			@Override
+			public Adapter caseNUOPCMediator__ModelAdvance(NUOPCMediator__ModelAdvance object) {
+				return createNUOPCMediator__ModelAdvanceAdapter();
 			}
 			@Override
 			public Adapter defaultCase(EObject object) {
@@ -228,16 +300,128 @@ public class NUOPCAdapterFactory extends AdapterFactoryImpl {
 	}
 
 	/**
-	 * Creates a new adapter for an object of class '{@link org.earthsystemcurator.cupid.nuopc.fsml.nuopc.ModelImplementsSetServices <em>Model Implements Set Services</em>}'.
+	 * Creates a new adapter for an object of class '{@link org.earthsystemcurator.cupid.nuopc.fsml.nuopc.NUOPCModel__Init <em>Model Init</em>}'.
 	 * <!-- begin-user-doc -->
 	 * This default implementation returns null so that we can easily ignore cases;
 	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
 	 * <!-- end-user-doc -->
 	 * @return the new adapter.
-	 * @see org.earthsystemcurator.cupid.nuopc.fsml.nuopc.ModelImplementsSetServices
+	 * @see org.earthsystemcurator.cupid.nuopc.fsml.nuopc.NUOPCModel__Init
 	 * @generated
 	 */
-	public Adapter createModelImplementsSetServicesAdapter() {
+	public Adapter createNUOPCModel__InitAdapter() {
+		return null;
+	}
+
+	/**
+	 * Creates a new adapter for an object of class '{@link org.earthsystemcurator.cupid.nuopc.fsml.nuopc.NUOPCModel__ImplementsSetServices <em>Model Implements Set Services</em>}'.
+	 * <!-- begin-user-doc -->
+	 * This default implementation returns null so that we can easily ignore cases;
+	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
+	 * <!-- end-user-doc -->
+	 * @return the new adapter.
+	 * @see org.earthsystemcurator.cupid.nuopc.fsml.nuopc.NUOPCModel__ImplementsSetServices
+	 * @generated
+	 */
+	public Adapter createNUOPCModel__ImplementsSetServicesAdapter() {
+		return null;
+	}
+
+	/**
+	 * Creates a new adapter for an object of class '{@link org.earthsystemcurator.cupid.nuopc.fsml.nuopc.NUOPCModel__ImplementsInitP1 <em>Model Implements Init P1</em>}'.
+	 * <!-- begin-user-doc -->
+	 * This default implementation returns null so that we can easily ignore cases;
+	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
+	 * <!-- end-user-doc -->
+	 * @return the new adapter.
+	 * @see org.earthsystemcurator.cupid.nuopc.fsml.nuopc.NUOPCModel__ImplementsInitP1
+	 * @generated
+	 */
+	public Adapter createNUOPCModel__ImplementsInitP1Adapter() {
+		return null;
+	}
+
+	/**
+	 * Creates a new adapter for an object of class '{@link org.earthsystemcurator.cupid.nuopc.fsml.nuopc.NUOPCModel__ImplementsInitP2 <em>Model Implements Init P2</em>}'.
+	 * <!-- begin-user-doc -->
+	 * This default implementation returns null so that we can easily ignore cases;
+	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
+	 * <!-- end-user-doc -->
+	 * @return the new adapter.
+	 * @see org.earthsystemcurator.cupid.nuopc.fsml.nuopc.NUOPCModel__ImplementsInitP2
+	 * @generated
+	 */
+	public Adapter createNUOPCModel__ImplementsInitP2Adapter() {
+		return null;
+	}
+
+	/**
+	 * Creates a new adapter for an object of class '{@link org.earthsystemcurator.cupid.nuopc.fsml.nuopc.NUOPCModel__AdvertisesImportField <em>Model Advertises Import Field</em>}'.
+	 * <!-- begin-user-doc -->
+	 * This default implementation returns null so that we can easily ignore cases;
+	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
+	 * <!-- end-user-doc -->
+	 * @return the new adapter.
+	 * @see org.earthsystemcurator.cupid.nuopc.fsml.nuopc.NUOPCModel__AdvertisesImportField
+	 * @generated
+	 */
+	public Adapter createNUOPCModel__AdvertisesImportFieldAdapter() {
+		return null;
+	}
+
+	/**
+	 * Creates a new adapter for an object of class '{@link org.earthsystemcurator.cupid.nuopc.fsml.nuopc.NUOPCModel__AdvertisesExportField <em>Model Advertises Export Field</em>}'.
+	 * <!-- begin-user-doc -->
+	 * This default implementation returns null so that we can easily ignore cases;
+	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
+	 * <!-- end-user-doc -->
+	 * @return the new adapter.
+	 * @see org.earthsystemcurator.cupid.nuopc.fsml.nuopc.NUOPCModel__AdvertisesExportField
+	 * @generated
+	 */
+	public Adapter createNUOPCModel__AdvertisesExportFieldAdapter() {
+		return null;
+	}
+
+	/**
+	 * Creates a new adapter for an object of class '{@link org.earthsystemcurator.cupid.nuopc.fsml.nuopc.NUOPCModel__RealizesImportField <em>Model Realizes Import Field</em>}'.
+	 * <!-- begin-user-doc -->
+	 * This default implementation returns null so that we can easily ignore cases;
+	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
+	 * <!-- end-user-doc -->
+	 * @return the new adapter.
+	 * @see org.earthsystemcurator.cupid.nuopc.fsml.nuopc.NUOPCModel__RealizesImportField
+	 * @generated
+	 */
+	public Adapter createNUOPCModel__RealizesImportFieldAdapter() {
+		return null;
+	}
+
+	/**
+	 * Creates a new adapter for an object of class '{@link org.earthsystemcurator.cupid.nuopc.fsml.nuopc.NUOPCModel__RealizesExportField <em>Model Realizes Export Field</em>}'.
+	 * <!-- begin-user-doc -->
+	 * This default implementation returns null so that we can easily ignore cases;
+	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
+	 * <!-- end-user-doc -->
+	 * @return the new adapter.
+	 * @see org.earthsystemcurator.cupid.nuopc.fsml.nuopc.NUOPCModel__RealizesExportField
+	 * @generated
+	 */
+	public Adapter createNUOPCModel__RealizesExportFieldAdapter() {
+		return null;
+	}
+
+	/**
+	 * Creates a new adapter for an object of class '{@link org.earthsystemcurator.cupid.nuopc.fsml.nuopc.NUOPCModel__ModelAdvance <em>Model Model Advance</em>}'.
+	 * <!-- begin-user-doc -->
+	 * This default implementation returns null so that we can easily ignore cases;
+	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
+	 * <!-- end-user-doc -->
+	 * @return the new adapter.
+	 * @see org.earthsystemcurator.cupid.nuopc.fsml.nuopc.NUOPCModel__ModelAdvance
+	 * @generated
+	 */
+	public Adapter createNUOPCModel__ModelAdvanceAdapter() {
 		return null;
 	}
 
@@ -266,118 +450,6 @@ public class NUOPCAdapterFactory extends AdapterFactoryImpl {
 	 * @generated
 	 */
 	public Adapter createCallsSetEntryPointAdapter() {
-		return null;
-	}
-
-	/**
-	 * Creates a new adapter for an object of class '{@link org.earthsystemcurator.cupid.nuopc.fsml.nuopc.Model_Init <em>Model Init</em>}'.
-	 * <!-- begin-user-doc -->
-	 * This default implementation returns null so that we can easily ignore cases;
-	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
-	 * <!-- end-user-doc -->
-	 * @return the new adapter.
-	 * @see org.earthsystemcurator.cupid.nuopc.fsml.nuopc.Model_Init
-	 * @generated
-	 */
-	public Adapter createModel_InitAdapter() {
-		return null;
-	}
-
-	/**
-	 * Creates a new adapter for an object of class '{@link org.earthsystemcurator.cupid.nuopc.fsml.nuopc.ModelImplementsInitP1 <em>Model Implements Init P1</em>}'.
-	 * <!-- begin-user-doc -->
-	 * This default implementation returns null so that we can easily ignore cases;
-	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
-	 * <!-- end-user-doc -->
-	 * @return the new adapter.
-	 * @see org.earthsystemcurator.cupid.nuopc.fsml.nuopc.ModelImplementsInitP1
-	 * @generated
-	 */
-	public Adapter createModelImplementsInitP1Adapter() {
-		return null;
-	}
-
-	/**
-	 * Creates a new adapter for an object of class '{@link org.earthsystemcurator.cupid.nuopc.fsml.nuopc.ModelImplementsInitP2 <em>Model Implements Init P2</em>}'.
-	 * <!-- begin-user-doc -->
-	 * This default implementation returns null so that we can easily ignore cases;
-	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
-	 * <!-- end-user-doc -->
-	 * @return the new adapter.
-	 * @see org.earthsystemcurator.cupid.nuopc.fsml.nuopc.ModelImplementsInitP2
-	 * @generated
-	 */
-	public Adapter createModelImplementsInitP2Adapter() {
-		return null;
-	}
-
-	/**
-	 * Creates a new adapter for an object of class '{@link org.earthsystemcurator.cupid.nuopc.fsml.nuopc.AdvertisesImportField <em>Advertises Import Field</em>}'.
-	 * <!-- begin-user-doc -->
-	 * This default implementation returns null so that we can easily ignore cases;
-	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
-	 * <!-- end-user-doc -->
-	 * @return the new adapter.
-	 * @see org.earthsystemcurator.cupid.nuopc.fsml.nuopc.AdvertisesImportField
-	 * @generated
-	 */
-	public Adapter createAdvertisesImportFieldAdapter() {
-		return null;
-	}
-
-	/**
-	 * Creates a new adapter for an object of class '{@link org.earthsystemcurator.cupid.nuopc.fsml.nuopc.AdvertisesExportField <em>Advertises Export Field</em>}'.
-	 * <!-- begin-user-doc -->
-	 * This default implementation returns null so that we can easily ignore cases;
-	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
-	 * <!-- end-user-doc -->
-	 * @return the new adapter.
-	 * @see org.earthsystemcurator.cupid.nuopc.fsml.nuopc.AdvertisesExportField
-	 * @generated
-	 */
-	public Adapter createAdvertisesExportFieldAdapter() {
-		return null;
-	}
-
-	/**
-	 * Creates a new adapter for an object of class '{@link org.earthsystemcurator.cupid.nuopc.fsml.nuopc.RealizesImportField <em>Realizes Import Field</em>}'.
-	 * <!-- begin-user-doc -->
-	 * This default implementation returns null so that we can easily ignore cases;
-	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
-	 * <!-- end-user-doc -->
-	 * @return the new adapter.
-	 * @see org.earthsystemcurator.cupid.nuopc.fsml.nuopc.RealizesImportField
-	 * @generated
-	 */
-	public Adapter createRealizesImportFieldAdapter() {
-		return null;
-	}
-
-	/**
-	 * Creates a new adapter for an object of class '{@link org.earthsystemcurator.cupid.nuopc.fsml.nuopc.RealizesExportField <em>Realizes Export Field</em>}'.
-	 * <!-- begin-user-doc -->
-	 * This default implementation returns null so that we can easily ignore cases;
-	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
-	 * <!-- end-user-doc -->
-	 * @return the new adapter.
-	 * @see org.earthsystemcurator.cupid.nuopc.fsml.nuopc.RealizesExportField
-	 * @generated
-	 */
-	public Adapter createRealizesExportFieldAdapter() {
-		return null;
-	}
-
-	/**
-	 * Creates a new adapter for an object of class '{@link org.earthsystemcurator.cupid.nuopc.fsml.nuopc.ModelAdvance <em>Model Advance</em>}'.
-	 * <!-- begin-user-doc -->
-	 * This default implementation returns null so that we can easily ignore cases;
-	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
-	 * <!-- end-user-doc -->
-	 * @return the new adapter.
-	 * @see org.earthsystemcurator.cupid.nuopc.fsml.nuopc.ModelAdvance
-	 * @generated
-	 */
-	public Adapter createModelAdvanceAdapter() {
 		return null;
 	}
 
@@ -424,16 +496,44 @@ public class NUOPCAdapterFactory extends AdapterFactoryImpl {
 	}
 
 	/**
-	 * Creates a new adapter for an object of class '{@link org.earthsystemcurator.cupid.nuopc.fsml.nuopc.ModelImport <em>Model Import</em>}'.
+	 * Creates a new adapter for an object of class '{@link org.earthsystemcurator.cupid.nuopc.fsml.nuopc.NUOPCDriver__ModelImports__ModelImport <em>Driver Model Imports Model Import</em>}'.
 	 * <!-- begin-user-doc -->
 	 * This default implementation returns null so that we can easily ignore cases;
 	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
 	 * <!-- end-user-doc -->
 	 * @return the new adapter.
-	 * @see org.earthsystemcurator.cupid.nuopc.fsml.nuopc.ModelImport
+	 * @see org.earthsystemcurator.cupid.nuopc.fsml.nuopc.NUOPCDriver__ModelImports__ModelImport
 	 * @generated
 	 */
-	public Adapter createModelImportAdapter() {
+	public Adapter createNUOPCDriver__ModelImports__ModelImportAdapter() {
+		return null;
+	}
+
+	/**
+	 * Creates a new adapter for an object of class '{@link org.earthsystemcurator.cupid.nuopc.fsml.nuopc.NUOPCDriver__ConnectorImports <em>Driver Connector Imports</em>}'.
+	 * <!-- begin-user-doc -->
+	 * This default implementation returns null so that we can easily ignore cases;
+	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
+	 * <!-- end-user-doc -->
+	 * @return the new adapter.
+	 * @see org.earthsystemcurator.cupid.nuopc.fsml.nuopc.NUOPCDriver__ConnectorImports
+	 * @generated
+	 */
+	public Adapter createNUOPCDriver__ConnectorImportsAdapter() {
+		return null;
+	}
+
+	/**
+	 * Creates a new adapter for an object of class '{@link org.earthsystemcurator.cupid.nuopc.fsml.nuopc.NUOPCDriver__ConnectorImports__ConnectorImport <em>Driver Connector Imports Connector Import</em>}'.
+	 * <!-- begin-user-doc -->
+	 * This default implementation returns null so that we can easily ignore cases;
+	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
+	 * <!-- end-user-doc -->
+	 * @return the new adapter.
+	 * @see org.earthsystemcurator.cupid.nuopc.fsml.nuopc.NUOPCDriver__ConnectorImports__ConnectorImport
+	 * @generated
+	 */
+	public Adapter createNUOPCDriver__ConnectorImports__ConnectorImportAdapter() {
 		return null;
 	}
 
@@ -536,6 +636,160 @@ public class NUOPCAdapterFactory extends AdapterFactoryImpl {
 	}
 
 	/**
+	 * Creates a new adapter for an object of class '{@link org.earthsystemcurator.cupid.nuopc.fsml.nuopc.NUOPCMediator <em>Mediator</em>}'.
+	 * <!-- begin-user-doc -->
+	 * This default implementation returns null so that we can easily ignore cases;
+	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
+	 * <!-- end-user-doc -->
+	 * @return the new adapter.
+	 * @see org.earthsystemcurator.cupid.nuopc.fsml.nuopc.NUOPCMediator
+	 * @generated
+	 */
+	public Adapter createNUOPCMediatorAdapter() {
+		return null;
+	}
+
+	/**
+	 * Creates a new adapter for an object of class '{@link org.earthsystemcurator.cupid.nuopc.fsml.nuopc.NUOPCMediator__GenericImports <em>Mediator Generic Imports</em>}'.
+	 * <!-- begin-user-doc -->
+	 * This default implementation returns null so that we can easily ignore cases;
+	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
+	 * <!-- end-user-doc -->
+	 * @return the new adapter.
+	 * @see org.earthsystemcurator.cupid.nuopc.fsml.nuopc.NUOPCMediator__GenericImports
+	 * @generated
+	 */
+	public Adapter createNUOPCMediator__GenericImportsAdapter() {
+		return null;
+	}
+
+	/**
+	 * Creates a new adapter for an object of class '{@link org.earthsystemcurator.cupid.nuopc.fsml.nuopc.NUOPCMediator__Init <em>Mediator Init</em>}'.
+	 * <!-- begin-user-doc -->
+	 * This default implementation returns null so that we can easily ignore cases;
+	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
+	 * <!-- end-user-doc -->
+	 * @return the new adapter.
+	 * @see org.earthsystemcurator.cupid.nuopc.fsml.nuopc.NUOPCMediator__Init
+	 * @generated
+	 */
+	public Adapter createNUOPCMediator__InitAdapter() {
+		return null;
+	}
+
+	/**
+	 * Creates a new adapter for an object of class '{@link org.earthsystemcurator.cupid.nuopc.fsml.nuopc.NUOPCMediator__ImplementsSetServices <em>Mediator Implements Set Services</em>}'.
+	 * <!-- begin-user-doc -->
+	 * This default implementation returns null so that we can easily ignore cases;
+	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
+	 * <!-- end-user-doc -->
+	 * @return the new adapter.
+	 * @see org.earthsystemcurator.cupid.nuopc.fsml.nuopc.NUOPCMediator__ImplementsSetServices
+	 * @generated
+	 */
+	public Adapter createNUOPCMediator__ImplementsSetServicesAdapter() {
+		return null;
+	}
+
+	/**
+	 * Creates a new adapter for an object of class '{@link org.earthsystemcurator.cupid.nuopc.fsml.nuopc.NUOPCMediator__ImplementsInitP1 <em>Mediator Implements Init P1</em>}'.
+	 * <!-- begin-user-doc -->
+	 * This default implementation returns null so that we can easily ignore cases;
+	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
+	 * <!-- end-user-doc -->
+	 * @return the new adapter.
+	 * @see org.earthsystemcurator.cupid.nuopc.fsml.nuopc.NUOPCMediator__ImplementsInitP1
+	 * @generated
+	 */
+	public Adapter createNUOPCMediator__ImplementsInitP1Adapter() {
+		return null;
+	}
+
+	/**
+	 * Creates a new adapter for an object of class '{@link org.earthsystemcurator.cupid.nuopc.fsml.nuopc.NUOPCMediator__ImplementsInitP2 <em>Mediator Implements Init P2</em>}'.
+	 * <!-- begin-user-doc -->
+	 * This default implementation returns null so that we can easily ignore cases;
+	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
+	 * <!-- end-user-doc -->
+	 * @return the new adapter.
+	 * @see org.earthsystemcurator.cupid.nuopc.fsml.nuopc.NUOPCMediator__ImplementsInitP2
+	 * @generated
+	 */
+	public Adapter createNUOPCMediator__ImplementsInitP2Adapter() {
+		return null;
+	}
+
+	/**
+	 * Creates a new adapter for an object of class '{@link org.earthsystemcurator.cupid.nuopc.fsml.nuopc.NUOPCMediator__AdvertisesImportField <em>Mediator Advertises Import Field</em>}'.
+	 * <!-- begin-user-doc -->
+	 * This default implementation returns null so that we can easily ignore cases;
+	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
+	 * <!-- end-user-doc -->
+	 * @return the new adapter.
+	 * @see org.earthsystemcurator.cupid.nuopc.fsml.nuopc.NUOPCMediator__AdvertisesImportField
+	 * @generated
+	 */
+	public Adapter createNUOPCMediator__AdvertisesImportFieldAdapter() {
+		return null;
+	}
+
+	/**
+	 * Creates a new adapter for an object of class '{@link org.earthsystemcurator.cupid.nuopc.fsml.nuopc.NUOPCMediator__AdvertisesExportField <em>Mediator Advertises Export Field</em>}'.
+	 * <!-- begin-user-doc -->
+	 * This default implementation returns null so that we can easily ignore cases;
+	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
+	 * <!-- end-user-doc -->
+	 * @return the new adapter.
+	 * @see org.earthsystemcurator.cupid.nuopc.fsml.nuopc.NUOPCMediator__AdvertisesExportField
+	 * @generated
+	 */
+	public Adapter createNUOPCMediator__AdvertisesExportFieldAdapter() {
+		return null;
+	}
+
+	/**
+	 * Creates a new adapter for an object of class '{@link org.earthsystemcurator.cupid.nuopc.fsml.nuopc.NUOPCMediator__RealizesImportField <em>Mediator Realizes Import Field</em>}'.
+	 * <!-- begin-user-doc -->
+	 * This default implementation returns null so that we can easily ignore cases;
+	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
+	 * <!-- end-user-doc -->
+	 * @return the new adapter.
+	 * @see org.earthsystemcurator.cupid.nuopc.fsml.nuopc.NUOPCMediator__RealizesImportField
+	 * @generated
+	 */
+	public Adapter createNUOPCMediator__RealizesImportFieldAdapter() {
+		return null;
+	}
+
+	/**
+	 * Creates a new adapter for an object of class '{@link org.earthsystemcurator.cupid.nuopc.fsml.nuopc.NUOPCMediator__RealizesExportField <em>Mediator Realizes Export Field</em>}'.
+	 * <!-- begin-user-doc -->
+	 * This default implementation returns null so that we can easily ignore cases;
+	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
+	 * <!-- end-user-doc -->
+	 * @return the new adapter.
+	 * @see org.earthsystemcurator.cupid.nuopc.fsml.nuopc.NUOPCMediator__RealizesExportField
+	 * @generated
+	 */
+	public Adapter createNUOPCMediator__RealizesExportFieldAdapter() {
+		return null;
+	}
+
+	/**
+	 * Creates a new adapter for an object of class '{@link org.earthsystemcurator.cupid.nuopc.fsml.nuopc.NUOPCMediator__ModelAdvance <em>Mediator Model Advance</em>}'.
+	 * <!-- begin-user-doc -->
+	 * This default implementation returns null so that we can easily ignore cases;
+	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
+	 * <!-- end-user-doc -->
+	 * @return the new adapter.
+	 * @see org.earthsystemcurator.cupid.nuopc.fsml.nuopc.NUOPCMediator__ModelAdvance
+	 * @generated
+	 */
+	public Adapter createNUOPCMediator__ModelAdvanceAdapter() {
+		return null;
+	}
+
+	/**
 	 * Creates a new adapter for an object of class '{@link org.earthsystemcurator.cupid.nuopc.fsml.nuopc.NUOPCApplication <em>Application</em>}'.
 	 * <!-- begin-user-doc -->
 	 * This default implementation returns null so that we can easily ignore cases;
@@ -578,6 +832,34 @@ public class NUOPCAdapterFactory extends AdapterFactoryImpl {
 	}
 
 	/**
+	 * Creates a new adapter for an object of class '{@link org.earthsystemcurator.cupid.nuopc.fsml.nuopc.NUOPCDriverAtmOcn__GenericImports <em>Driver Atm Ocn Generic Imports</em>}'.
+	 * <!-- begin-user-doc -->
+	 * This default implementation returns null so that we can easily ignore cases;
+	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
+	 * <!-- end-user-doc -->
+	 * @return the new adapter.
+	 * @see org.earthsystemcurator.cupid.nuopc.fsml.nuopc.NUOPCDriverAtmOcn__GenericImports
+	 * @generated
+	 */
+	public Adapter createNUOPCDriverAtmOcn__GenericImportsAdapter() {
+		return null;
+	}
+
+	/**
+	 * Creates a new adapter for an object of class '{@link org.earthsystemcurator.cupid.nuopc.fsml.nuopc.NUOPCDriverAtmOcn__ModelImports <em>Driver Atm Ocn Model Imports</em>}'.
+	 * <!-- begin-user-doc -->
+	 * This default implementation returns null so that we can easily ignore cases;
+	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
+	 * <!-- end-user-doc -->
+	 * @return the new adapter.
+	 * @see org.earthsystemcurator.cupid.nuopc.fsml.nuopc.NUOPCDriverAtmOcn__ModelImports
+	 * @generated
+	 */
+	public Adapter createNUOPCDriverAtmOcn__ModelImportsAdapter() {
+		return null;
+	}
+
+	/**
 	 * Creates a new adapter for an object of class '{@link org.earthsystemcurator.cupid.nuopc.fsml.nuopc.NUOPCDriverAtmOcn__ImplementsSetServices <em>Driver Atm Ocn Implements Set Services</em>}'.
 	 * <!-- begin-user-doc -->
 	 * This default implementation returns null so that we can easily ignore cases;
@@ -588,6 +870,48 @@ public class NUOPCAdapterFactory extends AdapterFactoryImpl {
 	 * @generated
 	 */
 	public Adapter createNUOPCDriverAtmOcn__ImplementsSetServicesAdapter() {
+		return null;
+	}
+
+	/**
+	 * Creates a new adapter for an object of class '{@link org.earthsystemcurator.cupid.nuopc.fsml.nuopc.NUOPCDriverAtmOcn__ImplementsSetModelCount <em>Driver Atm Ocn Implements Set Model Count</em>}'.
+	 * <!-- begin-user-doc -->
+	 * This default implementation returns null so that we can easily ignore cases;
+	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
+	 * <!-- end-user-doc -->
+	 * @return the new adapter.
+	 * @see org.earthsystemcurator.cupid.nuopc.fsml.nuopc.NUOPCDriverAtmOcn__ImplementsSetModelCount
+	 * @generated
+	 */
+	public Adapter createNUOPCDriverAtmOcn__ImplementsSetModelCountAdapter() {
+		return null;
+	}
+
+	/**
+	 * Creates a new adapter for an object of class '{@link org.earthsystemcurator.cupid.nuopc.fsml.nuopc.NUOPCDriverAtmOcn__ImplementsSetModelServices <em>Driver Atm Ocn Implements Set Model Services</em>}'.
+	 * <!-- begin-user-doc -->
+	 * This default implementation returns null so that we can easily ignore cases;
+	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
+	 * <!-- end-user-doc -->
+	 * @return the new adapter.
+	 * @see org.earthsystemcurator.cupid.nuopc.fsml.nuopc.NUOPCDriverAtmOcn__ImplementsSetModelServices
+	 * @generated
+	 */
+	public Adapter createNUOPCDriverAtmOcn__ImplementsSetModelServicesAdapter() {
+		return null;
+	}
+
+	/**
+	 * Creates a new adapter for an object of class '{@link org.earthsystemcurator.cupid.nuopc.fsml.nuopc.NUOPCDriverAtmOcn__ModelImports__ModelImport <em>Driver Atm Ocn Model Imports Model Import</em>}'.
+	 * <!-- begin-user-doc -->
+	 * This default implementation returns null so that we can easily ignore cases;
+	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
+	 * <!-- end-user-doc -->
+	 * @return the new adapter.
+	 * @see org.earthsystemcurator.cupid.nuopc.fsml.nuopc.NUOPCDriverAtmOcn__ModelImports__ModelImport
+	 * @generated
+	 */
+	public Adapter createNUOPCDriverAtmOcn__ModelImports__ModelImportAdapter() {
 		return null;
 	}
 

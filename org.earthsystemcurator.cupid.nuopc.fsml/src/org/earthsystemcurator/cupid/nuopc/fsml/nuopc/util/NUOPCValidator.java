@@ -91,62 +91,98 @@ public class NUOPCValidator extends OCLinEcoreEObjectValidator {
 	@Override
 	protected boolean validate(int classifierID, Object value, DiagnosticChain diagnostics, Map<Object, Object> context) {
 		switch (classifierID) {
+			case NUOPCPackage.TOP:
+				return validateTop((Top)value, diagnostics, context);
+			case NUOPCPackage.NUOPC_APPLICATION:
+				return validateNUOPCApplication((NUOPCApplication)value, diagnostics, context);
 			case NUOPCPackage.NUOPC_MODEL:
 				return validateNUOPCModel((NUOPCModel)value, diagnostics, context);
 			case NUOPCPackage.NUOPC_MODEL_GENERIC_IMPORTS:
 				return validateNUOPCModel__GenericImports((NUOPCModel__GenericImports)value, diagnostics, context);
-			case NUOPCPackage.MODEL_INIT:
-				return validateModel_Init((Model_Init)value, diagnostics, context);
-			case NUOPCPackage.MODEL_IMPLEMENTS_SET_SERVICES:
-				return validateModelImplementsSetServices((ModelImplementsSetServices)value, diagnostics, context);
-			case NUOPCPackage.CALLS_GENERIC_SET_SERVICES:
-				return validateCallsGenericSetServices((CallsGenericSetServices)value, diagnostics, context);
-			case NUOPCPackage.CALLS_SET_ENTRY_POINT:
-				return validateCallsSetEntryPoint((CallsSetEntryPoint)value, diagnostics, context);
-			case NUOPCPackage.MODEL_IMPLEMENTS_INIT_P1:
-				return validateModelImplementsInitP1((ModelImplementsInitP1)value, diagnostics, context);
-			case NUOPCPackage.MODEL_IMPLEMENTS_INIT_P2:
-				return validateModelImplementsInitP2((ModelImplementsInitP2)value, diagnostics, context);
-			case NUOPCPackage.ADVERTISES_IMPORT_FIELD:
-				return validateAdvertisesImportField((AdvertisesImportField)value, diagnostics, context);
-			case NUOPCPackage.ADVERTISES_EXPORT_FIELD:
-				return validateAdvertisesExportField((AdvertisesExportField)value, diagnostics, context);
-			case NUOPCPackage.REALIZES_IMPORT_FIELD:
-				return validateRealizesImportField((RealizesImportField)value, diagnostics, context);
-			case NUOPCPackage.REALIZES_EXPORT_FIELD:
-				return validateRealizesExportField((RealizesExportField)value, diagnostics, context);
-			case NUOPCPackage.MODEL_ADVANCE:
-				return validateModelAdvance((ModelAdvance)value, diagnostics, context);
+			case NUOPCPackage.NUOPC_MODEL_INIT:
+				return validateNUOPCModel__Init((NUOPCModel__Init)value, diagnostics, context);
+			case NUOPCPackage.NUOPC_MODEL_IMPLEMENTS_SET_SERVICES:
+				return validateNUOPCModel__ImplementsSetServices((NUOPCModel__ImplementsSetServices)value, diagnostics, context);
+			case NUOPCPackage.NUOPC_MODEL_IMPLEMENTS_INIT_P1:
+				return validateNUOPCModel__ImplementsInitP1((NUOPCModel__ImplementsInitP1)value, diagnostics, context);
+			case NUOPCPackage.NUOPC_MODEL_IMPLEMENTS_INIT_P2:
+				return validateNUOPCModel__ImplementsInitP2((NUOPCModel__ImplementsInitP2)value, diagnostics, context);
+			case NUOPCPackage.NUOPC_MODEL_ADVERTISES_IMPORT_FIELD:
+				return validateNUOPCModel__AdvertisesImportField((NUOPCModel__AdvertisesImportField)value, diagnostics, context);
+			case NUOPCPackage.NUOPC_MODEL_ADVERTISES_EXPORT_FIELD:
+				return validateNUOPCModel__AdvertisesExportField((NUOPCModel__AdvertisesExportField)value, diagnostics, context);
+			case NUOPCPackage.NUOPC_MODEL_REALIZES_IMPORT_FIELD:
+				return validateNUOPCModel__RealizesImportField((NUOPCModel__RealizesImportField)value, diagnostics, context);
+			case NUOPCPackage.NUOPC_MODEL_REALIZES_EXPORT_FIELD:
+				return validateNUOPCModel__RealizesExportField((NUOPCModel__RealizesExportField)value, diagnostics, context);
+			case NUOPCPackage.NUOPC_MODEL_MODEL_ADVANCE:
+				return validateNUOPCModel__ModelAdvance((NUOPCModel__ModelAdvance)value, diagnostics, context);
 			case NUOPCPackage.NUOPC_DRIVER:
 				return validateNUOPCDriver((NUOPCDriver)value, diagnostics, context);
 			case NUOPCPackage.NUOPC_DRIVER_GENERIC_IMPORTS:
 				return validateNUOPCDriver__GenericImports((NUOPCDriver__GenericImports)value, diagnostics, context);
 			case NUOPCPackage.NUOPC_DRIVER_MODEL_IMPORTS:
 				return validateNUOPCDriver__ModelImports((NUOPCDriver__ModelImports)value, diagnostics, context);
-			case NUOPCPackage.MODEL_IMPORT:
-				return validateModelImport((ModelImport)value, diagnostics, context);
+			case NUOPCPackage.NUOPC_DRIVER_MODEL_IMPORTS_MODEL_IMPORT:
+				return validateNUOPCDriver__ModelImports__ModelImport((NUOPCDriver__ModelImports__ModelImport)value, diagnostics, context);
+			case NUOPCPackage.NUOPC_DRIVER_CONNECTOR_IMPORTS:
+				return validateNUOPCDriver__ConnectorImports((NUOPCDriver__ConnectorImports)value, diagnostics, context);
+			case NUOPCPackage.NUOPC_DRIVER_CONNECTOR_IMPORTS_CONNECTOR_IMPORT:
+				return validateNUOPCDriver__ConnectorImports__ConnectorImport((NUOPCDriver__ConnectorImports__ConnectorImport)value, diagnostics, context);
 			case NUOPCPackage.NUOPC_DRIVER_IMPLEMENTS_SET_SERVICES:
 				return validateNUOPCDriver__ImplementsSetServices((NUOPCDriver__ImplementsSetServices)value, diagnostics, context);
-			case NUOPCPackage.ATTACHES_METHOD:
-				return validateAttachesMethod((AttachesMethod)value, diagnostics, context);
 			case NUOPCPackage.NUOPC_DRIVER_IMPLEMENTS_SET_MODEL_COUNT:
 				return validateNUOPCDriver__ImplementsSetModelCount((NUOPCDriver__ImplementsSetModelCount)value, diagnostics, context);
 			case NUOPCPackage.NUOPC_DRIVER_IMPLEMENTS_SET_MODEL_SERVICES:
 				return validateNUOPCDriver__ImplementsSetModelServices((NUOPCDriver__ImplementsSetModelServices)value, diagnostics, context);
+			case NUOPCPackage.NUOPC_DRIVER_ATM_OCN:
+				return validateNUOPCDriverAtmOcn((NUOPCDriverAtmOcn)value, diagnostics, context);
+			case NUOPCPackage.NUOPC_DRIVER_ATM_OCN_GENERIC_IMPORTS:
+				return validateNUOPCDriverAtmOcn__GenericImports((NUOPCDriverAtmOcn__GenericImports)value, diagnostics, context);
+			case NUOPCPackage.NUOPC_DRIVER_ATM_OCN_MODEL_IMPORTS:
+				return validateNUOPCDriverAtmOcn__ModelImports((NUOPCDriverAtmOcn__ModelImports)value, diagnostics, context);
+			case NUOPCPackage.NUOPC_DRIVER_ATM_OCN_IMPLEMENTS_SET_SERVICES:
+				return validateNUOPCDriverAtmOcn__ImplementsSetServices((NUOPCDriverAtmOcn__ImplementsSetServices)value, diagnostics, context);
+			case NUOPCPackage.NUOPC_DRIVER_ATM_OCN_IMPLEMENTS_SET_MODEL_COUNT:
+				return validateNUOPCDriverAtmOcn__ImplementsSetModelCount((NUOPCDriverAtmOcn__ImplementsSetModelCount)value, diagnostics, context);
+			case NUOPCPackage.NUOPC_DRIVER_ATM_OCN_IMPLEMENTS_SET_MODEL_SERVICES:
+				return validateNUOPCDriverAtmOcn__ImplementsSetModelServices((NUOPCDriverAtmOcn__ImplementsSetModelServices)value, diagnostics, context);
+			case NUOPCPackage.NUOPC_DRIVER_ATM_OCN_MODEL_IMPORTS_MODEL_IMPORT:
+				return validateNUOPCDriverAtmOcn__ModelImports__ModelImport((NUOPCDriverAtmOcn__ModelImports__ModelImport)value, diagnostics, context);
+			case NUOPCPackage.CALLS_GENERIC_SET_SERVICES:
+				return validateCallsGenericSetServices((CallsGenericSetServices)value, diagnostics, context);
+			case NUOPCPackage.CALLS_SET_ENTRY_POINT:
+				return validateCallsSetEntryPoint((CallsSetEntryPoint)value, diagnostics, context);
+			case NUOPCPackage.ATTACHES_METHOD:
+				return validateAttachesMethod((AttachesMethod)value, diagnostics, context);
 			case NUOPCPackage.SET_MODEL_SERVICES:
 				return validateSetModelServices((SetModelServices)value, diagnostics, context);
 			case NUOPCPackage.SET_COUPLER_SERVICES:
 				return validateSetCouplerServices((SetCouplerServices)value, diagnostics, context);
 			case NUOPCPackage.GETS_INTERNAL_STATE:
 				return validateGetsInternalState((GetsInternalState)value, diagnostics, context);
-			case NUOPCPackage.NUOPC_APPLICATION:
-				return validateNUOPCApplication((NUOPCApplication)value, diagnostics, context);
-			case NUOPCPackage.TOP:
-				return validateTop((Top)value, diagnostics, context);
-			case NUOPCPackage.NUOPC_DRIVER_ATM_OCN:
-				return validateNUOPCDriverAtmOcn((NUOPCDriverAtmOcn)value, diagnostics, context);
-			case NUOPCPackage.NUOPC_DRIVER_ATM_OCN_IMPLEMENTS_SET_SERVICES:
-				return validateNUOPCDriverAtmOcn__ImplementsSetServices((NUOPCDriverAtmOcn__ImplementsSetServices)value, diagnostics, context);
+			case NUOPCPackage.NUOPC_MEDIATOR:
+				return validateNUOPCMediator((NUOPCMediator)value, diagnostics, context);
+			case NUOPCPackage.NUOPC_MEDIATOR_GENERIC_IMPORTS:
+				return validateNUOPCMediator__GenericImports((NUOPCMediator__GenericImports)value, diagnostics, context);
+			case NUOPCPackage.NUOPC_MEDIATOR_INIT:
+				return validateNUOPCMediator__Init((NUOPCMediator__Init)value, diagnostics, context);
+			case NUOPCPackage.NUOPC_MEDIATOR_IMPLEMENTS_SET_SERVICES:
+				return validateNUOPCMediator__ImplementsSetServices((NUOPCMediator__ImplementsSetServices)value, diagnostics, context);
+			case NUOPCPackage.NUOPC_MEDIATOR_IMPLEMENTS_INIT_P1:
+				return validateNUOPCMediator__ImplementsInitP1((NUOPCMediator__ImplementsInitP1)value, diagnostics, context);
+			case NUOPCPackage.NUOPC_MEDIATOR_IMPLEMENTS_INIT_P2:
+				return validateNUOPCMediator__ImplementsInitP2((NUOPCMediator__ImplementsInitP2)value, diagnostics, context);
+			case NUOPCPackage.NUOPC_MEDIATOR_ADVERTISES_IMPORT_FIELD:
+				return validateNUOPCMediator__AdvertisesImportField((NUOPCMediator__AdvertisesImportField)value, diagnostics, context);
+			case NUOPCPackage.NUOPC_MEDIATOR_ADVERTISES_EXPORT_FIELD:
+				return validateNUOPCMediator__AdvertisesExportField((NUOPCMediator__AdvertisesExportField)value, diagnostics, context);
+			case NUOPCPackage.NUOPC_MEDIATOR_REALIZES_IMPORT_FIELD:
+				return validateNUOPCMediator__RealizesImportField((NUOPCMediator__RealizesImportField)value, diagnostics, context);
+			case NUOPCPackage.NUOPC_MEDIATOR_REALIZES_EXPORT_FIELD:
+				return validateNUOPCMediator__RealizesExportField((NUOPCMediator__RealizesExportField)value, diagnostics, context);
+			case NUOPCPackage.NUOPC_MEDIATOR_MODEL_ADVANCE:
+				return validateNUOPCMediator__ModelAdvance((NUOPCMediator__ModelAdvance)value, diagnostics, context);
 			default:
 				return true;
 		}
@@ -175,18 +211,27 @@ public class NUOPCValidator extends OCLinEcoreEObjectValidator {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public boolean validateModelImplementsSetServices(ModelImplementsSetServices modelImplementsSetServices, DiagnosticChain diagnostics, Map<Object, Object> context) {
-		if (!validate_NoCircularContainment(modelImplementsSetServices, diagnostics, context)) return false;
-		boolean result = validate_EveryMultiplicityConforms(modelImplementsSetServices, diagnostics, context);
-		if (result || diagnostics != null) result &= validate_EveryDataValueConforms(modelImplementsSetServices, diagnostics, context);
-		if (result || diagnostics != null) result &= validate_EveryReferenceIsContained(modelImplementsSetServices, diagnostics, context);
-		if (result || diagnostics != null) result &= validate_EveryBidirectionalReferenceIsPaired(modelImplementsSetServices, diagnostics, context);
-		if (result || diagnostics != null) result &= validate_EveryProxyResolves(modelImplementsSetServices, diagnostics, context);
-		if (result || diagnostics != null) result &= validate_UniqueID(modelImplementsSetServices, diagnostics, context);
-		if (result || diagnostics != null) result &= validate_EveryKeyUnique(modelImplementsSetServices, diagnostics, context);
-		if (result || diagnostics != null) result &= validate_EveryMapEntryUnique(modelImplementsSetServices, diagnostics, context);
-		if (result || diagnostics != null) result &= validateModelImplementsSetServices_registersInitP1(modelImplementsSetServices, diagnostics, context);
-		if (result || diagnostics != null) result &= validateModelImplementsSetServices_registersInitP2(modelImplementsSetServices, diagnostics, context);
+	public boolean validateNUOPCModel__Init(NUOPCModel__Init nuopcModel__Init, DiagnosticChain diagnostics, Map<Object, Object> context) {
+		return validate_EveryDefaultConstraint(nuopcModel__Init, diagnostics, context);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public boolean validateNUOPCModel__ImplementsSetServices(NUOPCModel__ImplementsSetServices nuopcModel__ImplementsSetServices, DiagnosticChain diagnostics, Map<Object, Object> context) {
+		if (!validate_NoCircularContainment(nuopcModel__ImplementsSetServices, diagnostics, context)) return false;
+		boolean result = validate_EveryMultiplicityConforms(nuopcModel__ImplementsSetServices, diagnostics, context);
+		if (result || diagnostics != null) result &= validate_EveryDataValueConforms(nuopcModel__ImplementsSetServices, diagnostics, context);
+		if (result || diagnostics != null) result &= validate_EveryReferenceIsContained(nuopcModel__ImplementsSetServices, diagnostics, context);
+		if (result || diagnostics != null) result &= validate_EveryBidirectionalReferenceIsPaired(nuopcModel__ImplementsSetServices, diagnostics, context);
+		if (result || diagnostics != null) result &= validate_EveryProxyResolves(nuopcModel__ImplementsSetServices, diagnostics, context);
+		if (result || diagnostics != null) result &= validate_UniqueID(nuopcModel__ImplementsSetServices, diagnostics, context);
+		if (result || diagnostics != null) result &= validate_EveryKeyUnique(nuopcModel__ImplementsSetServices, diagnostics, context);
+		if (result || diagnostics != null) result &= validate_EveryMapEntryUnique(nuopcModel__ImplementsSetServices, diagnostics, context);
+		if (result || diagnostics != null) result &= validateNUOPCModel__ImplementsSetServices_registersInitP1(nuopcModel__ImplementsSetServices, diagnostics, context);
+		if (result || diagnostics != null) result &= validateNUOPCModel__ImplementsSetServices_registersInitP2(nuopcModel__ImplementsSetServices, diagnostics, context);
 		return result;
 	}
 
@@ -196,7 +241,7 @@ public class NUOPCValidator extends OCLinEcoreEObjectValidator {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	protected static final String MODEL_IMPLEMENTS_SET_SERVICES__REGISTERS_INIT_P1__EEXPRESSION = "self.parent.initialize.implementsInitP1=null or self.callsSetEntryPoint->select(c|c.userRoutine=self.parent.initialize.implementsInitP1.name)->notEmpty()";
+	protected static final String NUOPC_MODEL_IMPLEMENTS_SET_SERVICES__REGISTERS_INIT_P1__EEXPRESSION = "self.parent.initialize.implementsInitP1=null or self.callsSetEntryPoint->select(c|c.userRoutine=self.parent.initialize.implementsInitP1.name)->notEmpty()";
 
 	/**
 	 * Validates the registersInitP1 constraint of '<em>Model Implements Set Services</em>'.
@@ -204,16 +249,16 @@ public class NUOPCValidator extends OCLinEcoreEObjectValidator {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public boolean validateModelImplementsSetServices_registersInitP1(ModelImplementsSetServices modelImplementsSetServices, DiagnosticChain diagnostics, Map<Object, Object> context) {
+	public boolean validateNUOPCModel__ImplementsSetServices_registersInitP1(NUOPCModel__ImplementsSetServices nuopcModel__ImplementsSetServices, DiagnosticChain diagnostics, Map<Object, Object> context) {
 		return
 			validate
-				(NUOPCPackage.Literals.MODEL_IMPLEMENTS_SET_SERVICES,
-				 modelImplementsSetServices,
+				(NUOPCPackage.Literals.NUOPC_MODEL_IMPLEMENTS_SET_SERVICES,
+				 nuopcModel__ImplementsSetServices,
 				 diagnostics,
 				 context,
 				 "http://www.eclipse.org/emf/2002/Ecore/OCL",
 				 "registersInitP1",
-				 MODEL_IMPLEMENTS_SET_SERVICES__REGISTERS_INIT_P1__EEXPRESSION,
+				 NUOPC_MODEL_IMPLEMENTS_SET_SERVICES__REGISTERS_INIT_P1__EEXPRESSION,
 				 Diagnostic.ERROR,
 				 DIAGNOSTIC_SOURCE,
 				 0);
@@ -225,7 +270,7 @@ public class NUOPCValidator extends OCLinEcoreEObjectValidator {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	protected static final String MODEL_IMPLEMENTS_SET_SERVICES__REGISTERS_INIT_P2__EEXPRESSION = "self.parent.initialize.implementsInitP2=null or self.callsSetEntryPoint->select(c|c.userRoutine=self.parent.initialize.implementsInitP2.name)->notEmpty()";
+	protected static final String NUOPC_MODEL_IMPLEMENTS_SET_SERVICES__REGISTERS_INIT_P2__EEXPRESSION = "self.parent.initialize.implementsInitP2=null or self.callsSetEntryPoint->select(c|c.userRoutine=self.parent.initialize.implementsInitP2.name)->notEmpty()";
 
 	/**
 	 * Validates the registersInitP2 constraint of '<em>Model Implements Set Services</em>'.
@@ -233,19 +278,82 @@ public class NUOPCValidator extends OCLinEcoreEObjectValidator {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public boolean validateModelImplementsSetServices_registersInitP2(ModelImplementsSetServices modelImplementsSetServices, DiagnosticChain diagnostics, Map<Object, Object> context) {
+	public boolean validateNUOPCModel__ImplementsSetServices_registersInitP2(NUOPCModel__ImplementsSetServices nuopcModel__ImplementsSetServices, DiagnosticChain diagnostics, Map<Object, Object> context) {
 		return
 			validate
-				(NUOPCPackage.Literals.MODEL_IMPLEMENTS_SET_SERVICES,
-				 modelImplementsSetServices,
+				(NUOPCPackage.Literals.NUOPC_MODEL_IMPLEMENTS_SET_SERVICES,
+				 nuopcModel__ImplementsSetServices,
 				 diagnostics,
 				 context,
 				 "http://www.eclipse.org/emf/2002/Ecore/OCL",
 				 "registersInitP2",
-				 MODEL_IMPLEMENTS_SET_SERVICES__REGISTERS_INIT_P2__EEXPRESSION,
+				 NUOPC_MODEL_IMPLEMENTS_SET_SERVICES__REGISTERS_INIT_P2__EEXPRESSION,
 				 Diagnostic.ERROR,
 				 DIAGNOSTIC_SOURCE,
 				 0);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public boolean validateNUOPCModel__ImplementsInitP1(NUOPCModel__ImplementsInitP1 nuopcModel__ImplementsInitP1, DiagnosticChain diagnostics, Map<Object, Object> context) {
+		return validate_EveryDefaultConstraint(nuopcModel__ImplementsInitP1, diagnostics, context);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public boolean validateNUOPCModel__ImplementsInitP2(NUOPCModel__ImplementsInitP2 nuopcModel__ImplementsInitP2, DiagnosticChain diagnostics, Map<Object, Object> context) {
+		return validate_EveryDefaultConstraint(nuopcModel__ImplementsInitP2, diagnostics, context);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public boolean validateNUOPCModel__AdvertisesImportField(NUOPCModel__AdvertisesImportField nuopcModel__AdvertisesImportField, DiagnosticChain diagnostics, Map<Object, Object> context) {
+		return validate_EveryDefaultConstraint(nuopcModel__AdvertisesImportField, diagnostics, context);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public boolean validateNUOPCModel__AdvertisesExportField(NUOPCModel__AdvertisesExportField nuopcModel__AdvertisesExportField, DiagnosticChain diagnostics, Map<Object, Object> context) {
+		return validate_EveryDefaultConstraint(nuopcModel__AdvertisesExportField, diagnostics, context);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public boolean validateNUOPCModel__RealizesImportField(NUOPCModel__RealizesImportField nuopcModel__RealizesImportField, DiagnosticChain diagnostics, Map<Object, Object> context) {
+		return validate_EveryDefaultConstraint(nuopcModel__RealizesImportField, diagnostics, context);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public boolean validateNUOPCModel__RealizesExportField(NUOPCModel__RealizesExportField nuopcModel__RealizesExportField, DiagnosticChain diagnostics, Map<Object, Object> context) {
+		return validate_EveryDefaultConstraint(nuopcModel__RealizesExportField, diagnostics, context);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public boolean validateNUOPCModel__ModelAdvance(NUOPCModel__ModelAdvance nuopcModel__ModelAdvance, DiagnosticChain diagnostics, Map<Object, Object> context) {
+		return validate_EveryDefaultConstraint(nuopcModel__ModelAdvance, diagnostics, context);
 	}
 
 	/**
@@ -264,78 +372,6 @@ public class NUOPCValidator extends OCLinEcoreEObjectValidator {
 	 */
 	public boolean validateCallsSetEntryPoint(CallsSetEntryPoint callsSetEntryPoint, DiagnosticChain diagnostics, Map<Object, Object> context) {
 		return validate_EveryDefaultConstraint(callsSetEntryPoint, diagnostics, context);
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public boolean validateModel_Init(Model_Init model_Init, DiagnosticChain diagnostics, Map<Object, Object> context) {
-		return validate_EveryDefaultConstraint(model_Init, diagnostics, context);
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public boolean validateModelImplementsInitP1(ModelImplementsInitP1 modelImplementsInitP1, DiagnosticChain diagnostics, Map<Object, Object> context) {
-		return validate_EveryDefaultConstraint(modelImplementsInitP1, diagnostics, context);
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public boolean validateModelImplementsInitP2(ModelImplementsInitP2 modelImplementsInitP2, DiagnosticChain diagnostics, Map<Object, Object> context) {
-		return validate_EveryDefaultConstraint(modelImplementsInitP2, diagnostics, context);
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public boolean validateAdvertisesImportField(AdvertisesImportField advertisesImportField, DiagnosticChain diagnostics, Map<Object, Object> context) {
-		return validate_EveryDefaultConstraint(advertisesImportField, diagnostics, context);
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public boolean validateAdvertisesExportField(AdvertisesExportField advertisesExportField, DiagnosticChain diagnostics, Map<Object, Object> context) {
-		return validate_EveryDefaultConstraint(advertisesExportField, diagnostics, context);
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public boolean validateRealizesImportField(RealizesImportField realizesImportField, DiagnosticChain diagnostics, Map<Object, Object> context) {
-		return validate_EveryDefaultConstraint(realizesImportField, diagnostics, context);
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public boolean validateRealizesExportField(RealizesExportField realizesExportField, DiagnosticChain diagnostics, Map<Object, Object> context) {
-		return validate_EveryDefaultConstraint(realizesExportField, diagnostics, context);
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public boolean validateModelAdvance(ModelAdvance modelAdvance, DiagnosticChain diagnostics, Map<Object, Object> context) {
-		return validate_EveryDefaultConstraint(modelAdvance, diagnostics, context);
 	}
 
 	/**
@@ -370,8 +406,26 @@ public class NUOPCValidator extends OCLinEcoreEObjectValidator {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public boolean validateModelImport(ModelImport modelImport, DiagnosticChain diagnostics, Map<Object, Object> context) {
-		return validate_EveryDefaultConstraint(modelImport, diagnostics, context);
+	public boolean validateNUOPCDriver__ModelImports__ModelImport(NUOPCDriver__ModelImports__ModelImport nuopcDriver__ModelImports__ModelImport, DiagnosticChain diagnostics, Map<Object, Object> context) {
+		return validate_EveryDefaultConstraint(nuopcDriver__ModelImports__ModelImport, diagnostics, context);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public boolean validateNUOPCDriver__ConnectorImports(NUOPCDriver__ConnectorImports nuopcDriver__ConnectorImports, DiagnosticChain diagnostics, Map<Object, Object> context) {
+		return validate_EveryDefaultConstraint(nuopcDriver__ConnectorImports, diagnostics, context);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public boolean validateNUOPCDriver__ConnectorImports__ConnectorImport(NUOPCDriver__ConnectorImports__ConnectorImport nuopcDriver__ConnectorImports__ConnectorImport, DiagnosticChain diagnostics, Map<Object, Object> context) {
+		return validate_EveryDefaultConstraint(nuopcDriver__ConnectorImports__ConnectorImport, diagnostics, context);
 	}
 
 	/**
@@ -442,6 +496,174 @@ public class NUOPCValidator extends OCLinEcoreEObjectValidator {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	public boolean validateNUOPCMediator(NUOPCMediator nuopcMediator, DiagnosticChain diagnostics, Map<Object, Object> context) {
+		return validate_EveryDefaultConstraint(nuopcMediator, diagnostics, context);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public boolean validateNUOPCMediator__GenericImports(NUOPCMediator__GenericImports nuopcMediator__GenericImports, DiagnosticChain diagnostics, Map<Object, Object> context) {
+		return validate_EveryDefaultConstraint(nuopcMediator__GenericImports, diagnostics, context);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public boolean validateNUOPCMediator__Init(NUOPCMediator__Init nuopcMediator__Init, DiagnosticChain diagnostics, Map<Object, Object> context) {
+		return validate_EveryDefaultConstraint(nuopcMediator__Init, diagnostics, context);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public boolean validateNUOPCMediator__ImplementsSetServices(NUOPCMediator__ImplementsSetServices nuopcMediator__ImplementsSetServices, DiagnosticChain diagnostics, Map<Object, Object> context) {
+		if (!validate_NoCircularContainment(nuopcMediator__ImplementsSetServices, diagnostics, context)) return false;
+		boolean result = validate_EveryMultiplicityConforms(nuopcMediator__ImplementsSetServices, diagnostics, context);
+		if (result || diagnostics != null) result &= validate_EveryDataValueConforms(nuopcMediator__ImplementsSetServices, diagnostics, context);
+		if (result || diagnostics != null) result &= validate_EveryReferenceIsContained(nuopcMediator__ImplementsSetServices, diagnostics, context);
+		if (result || diagnostics != null) result &= validate_EveryBidirectionalReferenceIsPaired(nuopcMediator__ImplementsSetServices, diagnostics, context);
+		if (result || diagnostics != null) result &= validate_EveryProxyResolves(nuopcMediator__ImplementsSetServices, diagnostics, context);
+		if (result || diagnostics != null) result &= validate_UniqueID(nuopcMediator__ImplementsSetServices, diagnostics, context);
+		if (result || diagnostics != null) result &= validate_EveryKeyUnique(nuopcMediator__ImplementsSetServices, diagnostics, context);
+		if (result || diagnostics != null) result &= validate_EveryMapEntryUnique(nuopcMediator__ImplementsSetServices, diagnostics, context);
+		if (result || diagnostics != null) result &= validateNUOPCMediator__ImplementsSetServices_registersInitP1(nuopcMediator__ImplementsSetServices, diagnostics, context);
+		if (result || diagnostics != null) result &= validateNUOPCMediator__ImplementsSetServices_registersInitP2(nuopcMediator__ImplementsSetServices, diagnostics, context);
+		return result;
+	}
+
+	/**
+	 * The cached validation expression for the registersInitP1 constraint of '<em>Mediator Implements Set Services</em>'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	protected static final String NUOPC_MEDIATOR_IMPLEMENTS_SET_SERVICES__REGISTERS_INIT_P1__EEXPRESSION = "self.parent.initialize.implementsInitP1=null or self.callsSetEntryPoint->select(c|c.userRoutine=self.parent.initialize.implementsInitP1.name)->notEmpty()";
+
+	/**
+	 * Validates the registersInitP1 constraint of '<em>Mediator Implements Set Services</em>'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public boolean validateNUOPCMediator__ImplementsSetServices_registersInitP1(NUOPCMediator__ImplementsSetServices nuopcMediator__ImplementsSetServices, DiagnosticChain diagnostics, Map<Object, Object> context) {
+		return
+			validate
+				(NUOPCPackage.Literals.NUOPC_MEDIATOR_IMPLEMENTS_SET_SERVICES,
+				 nuopcMediator__ImplementsSetServices,
+				 diagnostics,
+				 context,
+				 "http://www.eclipse.org/emf/2002/Ecore/OCL",
+				 "registersInitP1",
+				 NUOPC_MEDIATOR_IMPLEMENTS_SET_SERVICES__REGISTERS_INIT_P1__EEXPRESSION,
+				 Diagnostic.ERROR,
+				 DIAGNOSTIC_SOURCE,
+				 0);
+	}
+
+	/**
+	 * The cached validation expression for the registersInitP2 constraint of '<em>Mediator Implements Set Services</em>'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	protected static final String NUOPC_MEDIATOR_IMPLEMENTS_SET_SERVICES__REGISTERS_INIT_P2__EEXPRESSION = "self.parent.initialize.implementsInitP2=null or self.callsSetEntryPoint->select(c|c.userRoutine=self.parent.initialize.implementsInitP2.name)->notEmpty()";
+
+	/**
+	 * Validates the registersInitP2 constraint of '<em>Mediator Implements Set Services</em>'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public boolean validateNUOPCMediator__ImplementsSetServices_registersInitP2(NUOPCMediator__ImplementsSetServices nuopcMediator__ImplementsSetServices, DiagnosticChain diagnostics, Map<Object, Object> context) {
+		return
+			validate
+				(NUOPCPackage.Literals.NUOPC_MEDIATOR_IMPLEMENTS_SET_SERVICES,
+				 nuopcMediator__ImplementsSetServices,
+				 diagnostics,
+				 context,
+				 "http://www.eclipse.org/emf/2002/Ecore/OCL",
+				 "registersInitP2",
+				 NUOPC_MEDIATOR_IMPLEMENTS_SET_SERVICES__REGISTERS_INIT_P2__EEXPRESSION,
+				 Diagnostic.ERROR,
+				 DIAGNOSTIC_SOURCE,
+				 0);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public boolean validateNUOPCMediator__ImplementsInitP1(NUOPCMediator__ImplementsInitP1 nuopcMediator__ImplementsInitP1, DiagnosticChain diagnostics, Map<Object, Object> context) {
+		return validate_EveryDefaultConstraint(nuopcMediator__ImplementsInitP1, diagnostics, context);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public boolean validateNUOPCMediator__ImplementsInitP2(NUOPCMediator__ImplementsInitP2 nuopcMediator__ImplementsInitP2, DiagnosticChain diagnostics, Map<Object, Object> context) {
+		return validate_EveryDefaultConstraint(nuopcMediator__ImplementsInitP2, diagnostics, context);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public boolean validateNUOPCMediator__AdvertisesImportField(NUOPCMediator__AdvertisesImportField nuopcMediator__AdvertisesImportField, DiagnosticChain diagnostics, Map<Object, Object> context) {
+		return validate_EveryDefaultConstraint(nuopcMediator__AdvertisesImportField, diagnostics, context);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public boolean validateNUOPCMediator__AdvertisesExportField(NUOPCMediator__AdvertisesExportField nuopcMediator__AdvertisesExportField, DiagnosticChain diagnostics, Map<Object, Object> context) {
+		return validate_EveryDefaultConstraint(nuopcMediator__AdvertisesExportField, diagnostics, context);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public boolean validateNUOPCMediator__RealizesImportField(NUOPCMediator__RealizesImportField nuopcMediator__RealizesImportField, DiagnosticChain diagnostics, Map<Object, Object> context) {
+		return validate_EveryDefaultConstraint(nuopcMediator__RealizesImportField, diagnostics, context);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public boolean validateNUOPCMediator__RealizesExportField(NUOPCMediator__RealizesExportField nuopcMediator__RealizesExportField, DiagnosticChain diagnostics, Map<Object, Object> context) {
+		return validate_EveryDefaultConstraint(nuopcMediator__RealizesExportField, diagnostics, context);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public boolean validateNUOPCMediator__ModelAdvance(NUOPCMediator__ModelAdvance nuopcMediator__ModelAdvance, DiagnosticChain diagnostics, Map<Object, Object> context) {
+		return validate_EveryDefaultConstraint(nuopcMediator__ModelAdvance, diagnostics, context);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
 	public boolean validateNUOPCApplication(NUOPCApplication nuopcApplication, DiagnosticChain diagnostics, Map<Object, Object> context) {
 		return validate_EveryDefaultConstraint(nuopcApplication, diagnostics, context);
 	}
@@ -469,8 +691,53 @@ public class NUOPCValidator extends OCLinEcoreEObjectValidator {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	public boolean validateNUOPCDriverAtmOcn__GenericImports(NUOPCDriverAtmOcn__GenericImports nuopcDriverAtmOcn__GenericImports, DiagnosticChain diagnostics, Map<Object, Object> context) {
+		return validate_EveryDefaultConstraint(nuopcDriverAtmOcn__GenericImports, diagnostics, context);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public boolean validateNUOPCDriverAtmOcn__ModelImports(NUOPCDriverAtmOcn__ModelImports nuopcDriverAtmOcn__ModelImports, DiagnosticChain diagnostics, Map<Object, Object> context) {
+		return validate_EveryDefaultConstraint(nuopcDriverAtmOcn__ModelImports, diagnostics, context);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
 	public boolean validateNUOPCDriverAtmOcn__ImplementsSetServices(NUOPCDriverAtmOcn__ImplementsSetServices nuopcDriverAtmOcn__ImplementsSetServices, DiagnosticChain diagnostics, Map<Object, Object> context) {
 		return validate_EveryDefaultConstraint(nuopcDriverAtmOcn__ImplementsSetServices, diagnostics, context);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public boolean validateNUOPCDriverAtmOcn__ImplementsSetModelCount(NUOPCDriverAtmOcn__ImplementsSetModelCount nuopcDriverAtmOcn__ImplementsSetModelCount, DiagnosticChain diagnostics, Map<Object, Object> context) {
+		return validate_EveryDefaultConstraint(nuopcDriverAtmOcn__ImplementsSetModelCount, diagnostics, context);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public boolean validateNUOPCDriverAtmOcn__ImplementsSetModelServices(NUOPCDriverAtmOcn__ImplementsSetModelServices nuopcDriverAtmOcn__ImplementsSetModelServices, DiagnosticChain diagnostics, Map<Object, Object> context) {
+		return validate_EveryDefaultConstraint(nuopcDriverAtmOcn__ImplementsSetModelServices, diagnostics, context);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public boolean validateNUOPCDriverAtmOcn__ModelImports__ModelImport(NUOPCDriverAtmOcn__ModelImports__ModelImport nuopcDriverAtmOcn__ModelImports__ModelImport, DiagnosticChain diagnostics, Map<Object, Object> context) {
+		return validate_EveryDefaultConstraint(nuopcDriverAtmOcn__ModelImports__ModelImport, diagnostics, context);
 	}
 
 	/**

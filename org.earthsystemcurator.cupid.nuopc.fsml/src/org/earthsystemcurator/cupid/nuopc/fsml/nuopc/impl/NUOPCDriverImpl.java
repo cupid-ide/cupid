@@ -5,6 +5,7 @@ package org.earthsystemcurator.cupid.nuopc.fsml.nuopc.impl;
 import java.util.Collection;
 import org.earthsystemcurator.cupid.nuopc.fsml.nuopc.NUOPCApplication;
 import org.earthsystemcurator.cupid.nuopc.fsml.nuopc.NUOPCDriver;
+import org.earthsystemcurator.cupid.nuopc.fsml.nuopc.NUOPCDriver__ConnectorImports;
 import org.earthsystemcurator.cupid.nuopc.fsml.nuopc.NUOPCDriver__GenericImports;
 import org.earthsystemcurator.cupid.nuopc.fsml.nuopc.NUOPCDriver__ImplementsSetModelCount;
 import org.earthsystemcurator.cupid.nuopc.fsml.nuopc.NUOPCDriver__ImplementsSetModelServices;
@@ -36,6 +37,7 @@ import org.eclipse.emf.ecore.util.InternalEList;
  *   <li>{@link org.earthsystemcurator.cupid.nuopc.fsml.nuopc.impl.NUOPCDriverImpl#getName <em>Name</em>}</li>
  *   <li>{@link org.earthsystemcurator.cupid.nuopc.fsml.nuopc.impl.NUOPCDriverImpl#getGenericImports <em>Generic Imports</em>}</li>
  *   <li>{@link org.earthsystemcurator.cupid.nuopc.fsml.nuopc.impl.NUOPCDriverImpl#getModelImports <em>Model Imports</em>}</li>
+ *   <li>{@link org.earthsystemcurator.cupid.nuopc.fsml.nuopc.impl.NUOPCDriverImpl#getConnectorImports <em>Connector Imports</em>}</li>
  *   <li>{@link org.earthsystemcurator.cupid.nuopc.fsml.nuopc.impl.NUOPCDriverImpl#getImplementsSetServices <em>Implements Set Services</em>}</li>
  *   <li>{@link org.earthsystemcurator.cupid.nuopc.fsml.nuopc.impl.NUOPCDriverImpl#getImplementsSetModelCount <em>Implements Set Model Count</em>}</li>
  *   <li>{@link org.earthsystemcurator.cupid.nuopc.fsml.nuopc.impl.NUOPCDriverImpl#getImplementsSetModelServices <em>Implements Set Model Services</em>}</li>
@@ -82,6 +84,15 @@ public class NUOPCDriverImpl extends EObjectImpl implements NUOPCDriver {
 	 * @ordered
 	 */
 	protected NUOPCDriver__ModelImports modelImports;
+	/**
+	 * The cached value of the '{@link #getConnectorImports() <em>Connector Imports</em>}' containment reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #getConnectorImports()
+	 * @generated
+	 * @ordered
+	 */
+	protected NUOPCDriver__ConnectorImports connectorImports;
 	/**
 	 * The cached value of the '{@link #getImplementsSetServices() <em>Implements Set Services</em>}' containment reference.
 	 * <!-- begin-user-doc -->
@@ -284,6 +295,49 @@ public class NUOPCDriverImpl extends EObjectImpl implements NUOPCDriver {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	public NUOPCDriver__ConnectorImports getConnectorImports() {
+		return connectorImports;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public NotificationChain basicSetConnectorImports(NUOPCDriver__ConnectorImports newConnectorImports, NotificationChain msgs) {
+		NUOPCDriver__ConnectorImports oldConnectorImports = connectorImports;
+		connectorImports = newConnectorImports;
+		if (eNotificationRequired()) {
+			ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, NUOPCPackage.NUOPC_DRIVER__CONNECTOR_IMPORTS, oldConnectorImports, newConnectorImports);
+			if (msgs == null) msgs = notification; else msgs.add(notification);
+		}
+		return msgs;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public void setConnectorImports(NUOPCDriver__ConnectorImports newConnectorImports) {
+		if (newConnectorImports != connectorImports) {
+			NotificationChain msgs = null;
+			if (connectorImports != null)
+				msgs = ((InternalEObject)connectorImports).eInverseRemove(this, NUOPCPackage.NUOPC_DRIVER_CONNECTOR_IMPORTS__PARENT, NUOPCDriver__ConnectorImports.class, msgs);
+			if (newConnectorImports != null)
+				msgs = ((InternalEObject)newConnectorImports).eInverseAdd(this, NUOPCPackage.NUOPC_DRIVER_CONNECTOR_IMPORTS__PARENT, NUOPCDriver__ConnectorImports.class, msgs);
+			msgs = basicSetConnectorImports(newConnectorImports, msgs);
+			if (msgs != null) msgs.dispatch();
+		}
+		else if (eNotificationRequired())
+			eNotify(new ENotificationImpl(this, Notification.SET, NUOPCPackage.NUOPC_DRIVER__CONNECTOR_IMPORTS, newConnectorImports, newConnectorImports));
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
 	public NUOPCDriver__ImplementsSetServices getImplementsSetServices() {
 		return implementsSetServices;
 	}
@@ -425,6 +479,10 @@ public class NUOPCDriverImpl extends EObjectImpl implements NUOPCDriver {
 				if (modelImports != null)
 					msgs = ((InternalEObject)modelImports).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - NUOPCPackage.NUOPC_DRIVER__MODEL_IMPORTS, null, msgs);
 				return basicSetModelImports((NUOPCDriver__ModelImports)otherEnd, msgs);
+			case NUOPCPackage.NUOPC_DRIVER__CONNECTOR_IMPORTS:
+				if (connectorImports != null)
+					msgs = ((InternalEObject)connectorImports).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - NUOPCPackage.NUOPC_DRIVER__CONNECTOR_IMPORTS, null, msgs);
+				return basicSetConnectorImports((NUOPCDriver__ConnectorImports)otherEnd, msgs);
 			case NUOPCPackage.NUOPC_DRIVER__IMPLEMENTS_SET_SERVICES:
 				if (implementsSetServices != null)
 					msgs = ((InternalEObject)implementsSetServices).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - NUOPCPackage.NUOPC_DRIVER__IMPLEMENTS_SET_SERVICES, null, msgs);
@@ -455,6 +513,8 @@ public class NUOPCDriverImpl extends EObjectImpl implements NUOPCDriver {
 				return basicSetGenericImports(null, msgs);
 			case NUOPCPackage.NUOPC_DRIVER__MODEL_IMPORTS:
 				return basicSetModelImports(null, msgs);
+			case NUOPCPackage.NUOPC_DRIVER__CONNECTOR_IMPORTS:
+				return basicSetConnectorImports(null, msgs);
 			case NUOPCPackage.NUOPC_DRIVER__IMPLEMENTS_SET_SERVICES:
 				return basicSetImplementsSetServices(null, msgs);
 			case NUOPCPackage.NUOPC_DRIVER__IMPLEMENTS_SET_MODEL_COUNT:
@@ -495,6 +555,8 @@ public class NUOPCDriverImpl extends EObjectImpl implements NUOPCDriver {
 				return getGenericImports();
 			case NUOPCPackage.NUOPC_DRIVER__MODEL_IMPORTS:
 				return getModelImports();
+			case NUOPCPackage.NUOPC_DRIVER__CONNECTOR_IMPORTS:
+				return getConnectorImports();
 			case NUOPCPackage.NUOPC_DRIVER__IMPLEMENTS_SET_SERVICES:
 				return getImplementsSetServices();
 			case NUOPCPackage.NUOPC_DRIVER__IMPLEMENTS_SET_MODEL_COUNT:
@@ -525,6 +587,9 @@ public class NUOPCDriverImpl extends EObjectImpl implements NUOPCDriver {
 				return;
 			case NUOPCPackage.NUOPC_DRIVER__MODEL_IMPORTS:
 				setModelImports((NUOPCDriver__ModelImports)newValue);
+				return;
+			case NUOPCPackage.NUOPC_DRIVER__CONNECTOR_IMPORTS:
+				setConnectorImports((NUOPCDriver__ConnectorImports)newValue);
 				return;
 			case NUOPCPackage.NUOPC_DRIVER__IMPLEMENTS_SET_SERVICES:
 				setImplementsSetServices((NUOPCDriver__ImplementsSetServices)newValue);
@@ -559,6 +624,9 @@ public class NUOPCDriverImpl extends EObjectImpl implements NUOPCDriver {
 			case NUOPCPackage.NUOPC_DRIVER__MODEL_IMPORTS:
 				setModelImports((NUOPCDriver__ModelImports)null);
 				return;
+			case NUOPCPackage.NUOPC_DRIVER__CONNECTOR_IMPORTS:
+				setConnectorImports((NUOPCDriver__ConnectorImports)null);
+				return;
 			case NUOPCPackage.NUOPC_DRIVER__IMPLEMENTS_SET_SERVICES:
 				setImplementsSetServices((NUOPCDriver__ImplementsSetServices)null);
 				return;
@@ -588,6 +656,8 @@ public class NUOPCDriverImpl extends EObjectImpl implements NUOPCDriver {
 				return genericImports != null;
 			case NUOPCPackage.NUOPC_DRIVER__MODEL_IMPORTS:
 				return modelImports != null;
+			case NUOPCPackage.NUOPC_DRIVER__CONNECTOR_IMPORTS:
+				return connectorImports != null;
 			case NUOPCPackage.NUOPC_DRIVER__IMPLEMENTS_SET_SERVICES:
 				return implementsSetServices != null;
 			case NUOPCPackage.NUOPC_DRIVER__IMPLEMENTS_SET_MODEL_COUNT:

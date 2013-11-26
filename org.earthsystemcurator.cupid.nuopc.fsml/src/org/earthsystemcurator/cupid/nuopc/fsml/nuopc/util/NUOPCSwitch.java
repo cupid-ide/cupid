@@ -66,6 +66,18 @@ public class NUOPCSwitch<T> extends Switch<T> {
 	@Override
 	protected T doSwitch(int classifierID, EObject theEObject) {
 		switch (classifierID) {
+			case NUOPCPackage.TOP: {
+				Top top = (Top)theEObject;
+				T result = caseTop(top);
+				if (result == null) result = defaultCase(theEObject);
+				return result;
+			}
+			case NUOPCPackage.NUOPC_APPLICATION: {
+				NUOPCApplication nuopcApplication = (NUOPCApplication)theEObject;
+				T result = caseNUOPCApplication(nuopcApplication);
+				if (result == null) result = defaultCase(theEObject);
+				return result;
+			}
 			case NUOPCPackage.NUOPC_MODEL: {
 				NUOPCModel nuopcModel = (NUOPCModel)theEObject;
 				T result = caseNUOPCModel(nuopcModel);
@@ -78,69 +90,57 @@ public class NUOPCSwitch<T> extends Switch<T> {
 				if (result == null) result = defaultCase(theEObject);
 				return result;
 			}
-			case NUOPCPackage.MODEL_INIT: {
-				Model_Init model_Init = (Model_Init)theEObject;
-				T result = caseModel_Init(model_Init);
+			case NUOPCPackage.NUOPC_MODEL_INIT: {
+				NUOPCModel__Init nuopcModel__Init = (NUOPCModel__Init)theEObject;
+				T result = caseNUOPCModel__Init(nuopcModel__Init);
 				if (result == null) result = defaultCase(theEObject);
 				return result;
 			}
-			case NUOPCPackage.MODEL_IMPLEMENTS_SET_SERVICES: {
-				ModelImplementsSetServices modelImplementsSetServices = (ModelImplementsSetServices)theEObject;
-				T result = caseModelImplementsSetServices(modelImplementsSetServices);
+			case NUOPCPackage.NUOPC_MODEL_IMPLEMENTS_SET_SERVICES: {
+				NUOPCModel__ImplementsSetServices nuopcModel__ImplementsSetServices = (NUOPCModel__ImplementsSetServices)theEObject;
+				T result = caseNUOPCModel__ImplementsSetServices(nuopcModel__ImplementsSetServices);
 				if (result == null) result = defaultCase(theEObject);
 				return result;
 			}
-			case NUOPCPackage.CALLS_GENERIC_SET_SERVICES: {
-				CallsGenericSetServices callsGenericSetServices = (CallsGenericSetServices)theEObject;
-				T result = caseCallsGenericSetServices(callsGenericSetServices);
+			case NUOPCPackage.NUOPC_MODEL_IMPLEMENTS_INIT_P1: {
+				NUOPCModel__ImplementsInitP1 nuopcModel__ImplementsInitP1 = (NUOPCModel__ImplementsInitP1)theEObject;
+				T result = caseNUOPCModel__ImplementsInitP1(nuopcModel__ImplementsInitP1);
 				if (result == null) result = defaultCase(theEObject);
 				return result;
 			}
-			case NUOPCPackage.CALLS_SET_ENTRY_POINT: {
-				CallsSetEntryPoint callsSetEntryPoint = (CallsSetEntryPoint)theEObject;
-				T result = caseCallsSetEntryPoint(callsSetEntryPoint);
+			case NUOPCPackage.NUOPC_MODEL_IMPLEMENTS_INIT_P2: {
+				NUOPCModel__ImplementsInitP2 nuopcModel__ImplementsInitP2 = (NUOPCModel__ImplementsInitP2)theEObject;
+				T result = caseNUOPCModel__ImplementsInitP2(nuopcModel__ImplementsInitP2);
 				if (result == null) result = defaultCase(theEObject);
 				return result;
 			}
-			case NUOPCPackage.MODEL_IMPLEMENTS_INIT_P1: {
-				ModelImplementsInitP1 modelImplementsInitP1 = (ModelImplementsInitP1)theEObject;
-				T result = caseModelImplementsInitP1(modelImplementsInitP1);
+			case NUOPCPackage.NUOPC_MODEL_ADVERTISES_IMPORT_FIELD: {
+				NUOPCModel__AdvertisesImportField nuopcModel__AdvertisesImportField = (NUOPCModel__AdvertisesImportField)theEObject;
+				T result = caseNUOPCModel__AdvertisesImportField(nuopcModel__AdvertisesImportField);
 				if (result == null) result = defaultCase(theEObject);
 				return result;
 			}
-			case NUOPCPackage.MODEL_IMPLEMENTS_INIT_P2: {
-				ModelImplementsInitP2 modelImplementsInitP2 = (ModelImplementsInitP2)theEObject;
-				T result = caseModelImplementsInitP2(modelImplementsInitP2);
+			case NUOPCPackage.NUOPC_MODEL_ADVERTISES_EXPORT_FIELD: {
+				NUOPCModel__AdvertisesExportField nuopcModel__AdvertisesExportField = (NUOPCModel__AdvertisesExportField)theEObject;
+				T result = caseNUOPCModel__AdvertisesExportField(nuopcModel__AdvertisesExportField);
 				if (result == null) result = defaultCase(theEObject);
 				return result;
 			}
-			case NUOPCPackage.ADVERTISES_IMPORT_FIELD: {
-				AdvertisesImportField advertisesImportField = (AdvertisesImportField)theEObject;
-				T result = caseAdvertisesImportField(advertisesImportField);
+			case NUOPCPackage.NUOPC_MODEL_REALIZES_IMPORT_FIELD: {
+				NUOPCModel__RealizesImportField nuopcModel__RealizesImportField = (NUOPCModel__RealizesImportField)theEObject;
+				T result = caseNUOPCModel__RealizesImportField(nuopcModel__RealizesImportField);
 				if (result == null) result = defaultCase(theEObject);
 				return result;
 			}
-			case NUOPCPackage.ADVERTISES_EXPORT_FIELD: {
-				AdvertisesExportField advertisesExportField = (AdvertisesExportField)theEObject;
-				T result = caseAdvertisesExportField(advertisesExportField);
+			case NUOPCPackage.NUOPC_MODEL_REALIZES_EXPORT_FIELD: {
+				NUOPCModel__RealizesExportField nuopcModel__RealizesExportField = (NUOPCModel__RealizesExportField)theEObject;
+				T result = caseNUOPCModel__RealizesExportField(nuopcModel__RealizesExportField);
 				if (result == null) result = defaultCase(theEObject);
 				return result;
 			}
-			case NUOPCPackage.REALIZES_IMPORT_FIELD: {
-				RealizesImportField realizesImportField = (RealizesImportField)theEObject;
-				T result = caseRealizesImportField(realizesImportField);
-				if (result == null) result = defaultCase(theEObject);
-				return result;
-			}
-			case NUOPCPackage.REALIZES_EXPORT_FIELD: {
-				RealizesExportField realizesExportField = (RealizesExportField)theEObject;
-				T result = caseRealizesExportField(realizesExportField);
-				if (result == null) result = defaultCase(theEObject);
-				return result;
-			}
-			case NUOPCPackage.MODEL_ADVANCE: {
-				ModelAdvance modelAdvance = (ModelAdvance)theEObject;
-				T result = caseModelAdvance(modelAdvance);
+			case NUOPCPackage.NUOPC_MODEL_MODEL_ADVANCE: {
+				NUOPCModel__ModelAdvance nuopcModel__ModelAdvance = (NUOPCModel__ModelAdvance)theEObject;
+				T result = caseNUOPCModel__ModelAdvance(nuopcModel__ModelAdvance);
 				if (result == null) result = defaultCase(theEObject);
 				return result;
 			}
@@ -162,21 +162,27 @@ public class NUOPCSwitch<T> extends Switch<T> {
 				if (result == null) result = defaultCase(theEObject);
 				return result;
 			}
-			case NUOPCPackage.MODEL_IMPORT: {
-				ModelImport modelImport = (ModelImport)theEObject;
-				T result = caseModelImport(modelImport);
+			case NUOPCPackage.NUOPC_DRIVER_MODEL_IMPORTS_MODEL_IMPORT: {
+				NUOPCDriver__ModelImports__ModelImport nuopcDriver__ModelImports__ModelImport = (NUOPCDriver__ModelImports__ModelImport)theEObject;
+				T result = caseNUOPCDriver__ModelImports__ModelImport(nuopcDriver__ModelImports__ModelImport);
+				if (result == null) result = defaultCase(theEObject);
+				return result;
+			}
+			case NUOPCPackage.NUOPC_DRIVER_CONNECTOR_IMPORTS: {
+				NUOPCDriver__ConnectorImports nuopcDriver__ConnectorImports = (NUOPCDriver__ConnectorImports)theEObject;
+				T result = caseNUOPCDriver__ConnectorImports(nuopcDriver__ConnectorImports);
+				if (result == null) result = defaultCase(theEObject);
+				return result;
+			}
+			case NUOPCPackage.NUOPC_DRIVER_CONNECTOR_IMPORTS_CONNECTOR_IMPORT: {
+				NUOPCDriver__ConnectorImports__ConnectorImport nuopcDriver__ConnectorImports__ConnectorImport = (NUOPCDriver__ConnectorImports__ConnectorImport)theEObject;
+				T result = caseNUOPCDriver__ConnectorImports__ConnectorImport(nuopcDriver__ConnectorImports__ConnectorImport);
 				if (result == null) result = defaultCase(theEObject);
 				return result;
 			}
 			case NUOPCPackage.NUOPC_DRIVER_IMPLEMENTS_SET_SERVICES: {
 				NUOPCDriver__ImplementsSetServices nuopcDriver__ImplementsSetServices = (NUOPCDriver__ImplementsSetServices)theEObject;
 				T result = caseNUOPCDriver__ImplementsSetServices(nuopcDriver__ImplementsSetServices);
-				if (result == null) result = defaultCase(theEObject);
-				return result;
-			}
-			case NUOPCPackage.ATTACHES_METHOD: {
-				AttachesMethod attachesMethod = (AttachesMethod)theEObject;
-				T result = caseAttachesMethod(attachesMethod);
 				if (result == null) result = defaultCase(theEObject);
 				return result;
 			}
@@ -189,6 +195,66 @@ public class NUOPCSwitch<T> extends Switch<T> {
 			case NUOPCPackage.NUOPC_DRIVER_IMPLEMENTS_SET_MODEL_SERVICES: {
 				NUOPCDriver__ImplementsSetModelServices nuopcDriver__ImplementsSetModelServices = (NUOPCDriver__ImplementsSetModelServices)theEObject;
 				T result = caseNUOPCDriver__ImplementsSetModelServices(nuopcDriver__ImplementsSetModelServices);
+				if (result == null) result = defaultCase(theEObject);
+				return result;
+			}
+			case NUOPCPackage.NUOPC_DRIVER_ATM_OCN: {
+				NUOPCDriverAtmOcn nuopcDriverAtmOcn = (NUOPCDriverAtmOcn)theEObject;
+				T result = caseNUOPCDriverAtmOcn(nuopcDriverAtmOcn);
+				if (result == null) result = defaultCase(theEObject);
+				return result;
+			}
+			case NUOPCPackage.NUOPC_DRIVER_ATM_OCN_GENERIC_IMPORTS: {
+				NUOPCDriverAtmOcn__GenericImports nuopcDriverAtmOcn__GenericImports = (NUOPCDriverAtmOcn__GenericImports)theEObject;
+				T result = caseNUOPCDriverAtmOcn__GenericImports(nuopcDriverAtmOcn__GenericImports);
+				if (result == null) result = defaultCase(theEObject);
+				return result;
+			}
+			case NUOPCPackage.NUOPC_DRIVER_ATM_OCN_MODEL_IMPORTS: {
+				NUOPCDriverAtmOcn__ModelImports nuopcDriverAtmOcn__ModelImports = (NUOPCDriverAtmOcn__ModelImports)theEObject;
+				T result = caseNUOPCDriverAtmOcn__ModelImports(nuopcDriverAtmOcn__ModelImports);
+				if (result == null) result = defaultCase(theEObject);
+				return result;
+			}
+			case NUOPCPackage.NUOPC_DRIVER_ATM_OCN_IMPLEMENTS_SET_SERVICES: {
+				NUOPCDriverAtmOcn__ImplementsSetServices nuopcDriverAtmOcn__ImplementsSetServices = (NUOPCDriverAtmOcn__ImplementsSetServices)theEObject;
+				T result = caseNUOPCDriverAtmOcn__ImplementsSetServices(nuopcDriverAtmOcn__ImplementsSetServices);
+				if (result == null) result = defaultCase(theEObject);
+				return result;
+			}
+			case NUOPCPackage.NUOPC_DRIVER_ATM_OCN_IMPLEMENTS_SET_MODEL_COUNT: {
+				NUOPCDriverAtmOcn__ImplementsSetModelCount nuopcDriverAtmOcn__ImplementsSetModelCount = (NUOPCDriverAtmOcn__ImplementsSetModelCount)theEObject;
+				T result = caseNUOPCDriverAtmOcn__ImplementsSetModelCount(nuopcDriverAtmOcn__ImplementsSetModelCount);
+				if (result == null) result = defaultCase(theEObject);
+				return result;
+			}
+			case NUOPCPackage.NUOPC_DRIVER_ATM_OCN_IMPLEMENTS_SET_MODEL_SERVICES: {
+				NUOPCDriverAtmOcn__ImplementsSetModelServices nuopcDriverAtmOcn__ImplementsSetModelServices = (NUOPCDriverAtmOcn__ImplementsSetModelServices)theEObject;
+				T result = caseNUOPCDriverAtmOcn__ImplementsSetModelServices(nuopcDriverAtmOcn__ImplementsSetModelServices);
+				if (result == null) result = defaultCase(theEObject);
+				return result;
+			}
+			case NUOPCPackage.NUOPC_DRIVER_ATM_OCN_MODEL_IMPORTS_MODEL_IMPORT: {
+				NUOPCDriverAtmOcn__ModelImports__ModelImport nuopcDriverAtmOcn__ModelImports__ModelImport = (NUOPCDriverAtmOcn__ModelImports__ModelImport)theEObject;
+				T result = caseNUOPCDriverAtmOcn__ModelImports__ModelImport(nuopcDriverAtmOcn__ModelImports__ModelImport);
+				if (result == null) result = defaultCase(theEObject);
+				return result;
+			}
+			case NUOPCPackage.CALLS_GENERIC_SET_SERVICES: {
+				CallsGenericSetServices callsGenericSetServices = (CallsGenericSetServices)theEObject;
+				T result = caseCallsGenericSetServices(callsGenericSetServices);
+				if (result == null) result = defaultCase(theEObject);
+				return result;
+			}
+			case NUOPCPackage.CALLS_SET_ENTRY_POINT: {
+				CallsSetEntryPoint callsSetEntryPoint = (CallsSetEntryPoint)theEObject;
+				T result = caseCallsSetEntryPoint(callsSetEntryPoint);
+				if (result == null) result = defaultCase(theEObject);
+				return result;
+			}
+			case NUOPCPackage.ATTACHES_METHOD: {
+				AttachesMethod attachesMethod = (AttachesMethod)theEObject;
+				T result = caseAttachesMethod(attachesMethod);
 				if (result == null) result = defaultCase(theEObject);
 				return result;
 			}
@@ -210,27 +276,69 @@ public class NUOPCSwitch<T> extends Switch<T> {
 				if (result == null) result = defaultCase(theEObject);
 				return result;
 			}
-			case NUOPCPackage.NUOPC_APPLICATION: {
-				NUOPCApplication nuopcApplication = (NUOPCApplication)theEObject;
-				T result = caseNUOPCApplication(nuopcApplication);
+			case NUOPCPackage.NUOPC_MEDIATOR: {
+				NUOPCMediator nuopcMediator = (NUOPCMediator)theEObject;
+				T result = caseNUOPCMediator(nuopcMediator);
 				if (result == null) result = defaultCase(theEObject);
 				return result;
 			}
-			case NUOPCPackage.TOP: {
-				Top top = (Top)theEObject;
-				T result = caseTop(top);
+			case NUOPCPackage.NUOPC_MEDIATOR_GENERIC_IMPORTS: {
+				NUOPCMediator__GenericImports nuopcMediator__GenericImports = (NUOPCMediator__GenericImports)theEObject;
+				T result = caseNUOPCMediator__GenericImports(nuopcMediator__GenericImports);
 				if (result == null) result = defaultCase(theEObject);
 				return result;
 			}
-			case NUOPCPackage.NUOPC_DRIVER_ATM_OCN: {
-				NUOPCDriverAtmOcn nuopcDriverAtmOcn = (NUOPCDriverAtmOcn)theEObject;
-				T result = caseNUOPCDriverAtmOcn(nuopcDriverAtmOcn);
+			case NUOPCPackage.NUOPC_MEDIATOR_INIT: {
+				NUOPCMediator__Init nuopcMediator__Init = (NUOPCMediator__Init)theEObject;
+				T result = caseNUOPCMediator__Init(nuopcMediator__Init);
 				if (result == null) result = defaultCase(theEObject);
 				return result;
 			}
-			case NUOPCPackage.NUOPC_DRIVER_ATM_OCN_IMPLEMENTS_SET_SERVICES: {
-				NUOPCDriverAtmOcn__ImplementsSetServices nuopcDriverAtmOcn__ImplementsSetServices = (NUOPCDriverAtmOcn__ImplementsSetServices)theEObject;
-				T result = caseNUOPCDriverAtmOcn__ImplementsSetServices(nuopcDriverAtmOcn__ImplementsSetServices);
+			case NUOPCPackage.NUOPC_MEDIATOR_IMPLEMENTS_SET_SERVICES: {
+				NUOPCMediator__ImplementsSetServices nuopcMediator__ImplementsSetServices = (NUOPCMediator__ImplementsSetServices)theEObject;
+				T result = caseNUOPCMediator__ImplementsSetServices(nuopcMediator__ImplementsSetServices);
+				if (result == null) result = defaultCase(theEObject);
+				return result;
+			}
+			case NUOPCPackage.NUOPC_MEDIATOR_IMPLEMENTS_INIT_P1: {
+				NUOPCMediator__ImplementsInitP1 nuopcMediator__ImplementsInitP1 = (NUOPCMediator__ImplementsInitP1)theEObject;
+				T result = caseNUOPCMediator__ImplementsInitP1(nuopcMediator__ImplementsInitP1);
+				if (result == null) result = defaultCase(theEObject);
+				return result;
+			}
+			case NUOPCPackage.NUOPC_MEDIATOR_IMPLEMENTS_INIT_P2: {
+				NUOPCMediator__ImplementsInitP2 nuopcMediator__ImplementsInitP2 = (NUOPCMediator__ImplementsInitP2)theEObject;
+				T result = caseNUOPCMediator__ImplementsInitP2(nuopcMediator__ImplementsInitP2);
+				if (result == null) result = defaultCase(theEObject);
+				return result;
+			}
+			case NUOPCPackage.NUOPC_MEDIATOR_ADVERTISES_IMPORT_FIELD: {
+				NUOPCMediator__AdvertisesImportField nuopcMediator__AdvertisesImportField = (NUOPCMediator__AdvertisesImportField)theEObject;
+				T result = caseNUOPCMediator__AdvertisesImportField(nuopcMediator__AdvertisesImportField);
+				if (result == null) result = defaultCase(theEObject);
+				return result;
+			}
+			case NUOPCPackage.NUOPC_MEDIATOR_ADVERTISES_EXPORT_FIELD: {
+				NUOPCMediator__AdvertisesExportField nuopcMediator__AdvertisesExportField = (NUOPCMediator__AdvertisesExportField)theEObject;
+				T result = caseNUOPCMediator__AdvertisesExportField(nuopcMediator__AdvertisesExportField);
+				if (result == null) result = defaultCase(theEObject);
+				return result;
+			}
+			case NUOPCPackage.NUOPC_MEDIATOR_REALIZES_IMPORT_FIELD: {
+				NUOPCMediator__RealizesImportField nuopcMediator__RealizesImportField = (NUOPCMediator__RealizesImportField)theEObject;
+				T result = caseNUOPCMediator__RealizesImportField(nuopcMediator__RealizesImportField);
+				if (result == null) result = defaultCase(theEObject);
+				return result;
+			}
+			case NUOPCPackage.NUOPC_MEDIATOR_REALIZES_EXPORT_FIELD: {
+				NUOPCMediator__RealizesExportField nuopcMediator__RealizesExportField = (NUOPCMediator__RealizesExportField)theEObject;
+				T result = caseNUOPCMediator__RealizesExportField(nuopcMediator__RealizesExportField);
+				if (result == null) result = defaultCase(theEObject);
+				return result;
+			}
+			case NUOPCPackage.NUOPC_MEDIATOR_MODEL_ADVANCE: {
+				NUOPCMediator__ModelAdvance nuopcMediator__ModelAdvance = (NUOPCMediator__ModelAdvance)theEObject;
+				T result = caseNUOPCMediator__ModelAdvance(nuopcMediator__ModelAdvance);
 				if (result == null) result = defaultCase(theEObject);
 				return result;
 			}
@@ -269,6 +377,21 @@ public class NUOPCSwitch<T> extends Switch<T> {
 	}
 
 	/**
+	 * Returns the result of interpreting the object as an instance of '<em>Model Init</em>'.
+	 * <!-- begin-user-doc -->
+	 * This implementation returns null;
+	 * returning a non-null result will terminate the switch.
+	 * <!-- end-user-doc -->
+	 * @param object the target of the switch.
+	 * @return the result of interpreting the object as an instance of '<em>Model Init</em>'.
+	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+	 * @generated
+	 */
+	public T caseNUOPCModel__Init(NUOPCModel__Init object) {
+		return null;
+	}
+
+	/**
 	 * Returns the result of interpreting the object as an instance of '<em>Model Implements Set Services</em>'.
 	 * <!-- begin-user-doc -->
 	 * This implementation returns null;
@@ -279,7 +402,112 @@ public class NUOPCSwitch<T> extends Switch<T> {
 	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
 	 * @generated
 	 */
-	public T caseModelImplementsSetServices(ModelImplementsSetServices object) {
+	public T caseNUOPCModel__ImplementsSetServices(NUOPCModel__ImplementsSetServices object) {
+		return null;
+	}
+
+	/**
+	 * Returns the result of interpreting the object as an instance of '<em>Model Implements Init P1</em>'.
+	 * <!-- begin-user-doc -->
+	 * This implementation returns null;
+	 * returning a non-null result will terminate the switch.
+	 * <!-- end-user-doc -->
+	 * @param object the target of the switch.
+	 * @return the result of interpreting the object as an instance of '<em>Model Implements Init P1</em>'.
+	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+	 * @generated
+	 */
+	public T caseNUOPCModel__ImplementsInitP1(NUOPCModel__ImplementsInitP1 object) {
+		return null;
+	}
+
+	/**
+	 * Returns the result of interpreting the object as an instance of '<em>Model Implements Init P2</em>'.
+	 * <!-- begin-user-doc -->
+	 * This implementation returns null;
+	 * returning a non-null result will terminate the switch.
+	 * <!-- end-user-doc -->
+	 * @param object the target of the switch.
+	 * @return the result of interpreting the object as an instance of '<em>Model Implements Init P2</em>'.
+	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+	 * @generated
+	 */
+	public T caseNUOPCModel__ImplementsInitP2(NUOPCModel__ImplementsInitP2 object) {
+		return null;
+	}
+
+	/**
+	 * Returns the result of interpreting the object as an instance of '<em>Model Advertises Import Field</em>'.
+	 * <!-- begin-user-doc -->
+	 * This implementation returns null;
+	 * returning a non-null result will terminate the switch.
+	 * <!-- end-user-doc -->
+	 * @param object the target of the switch.
+	 * @return the result of interpreting the object as an instance of '<em>Model Advertises Import Field</em>'.
+	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+	 * @generated
+	 */
+	public T caseNUOPCModel__AdvertisesImportField(NUOPCModel__AdvertisesImportField object) {
+		return null;
+	}
+
+	/**
+	 * Returns the result of interpreting the object as an instance of '<em>Model Advertises Export Field</em>'.
+	 * <!-- begin-user-doc -->
+	 * This implementation returns null;
+	 * returning a non-null result will terminate the switch.
+	 * <!-- end-user-doc -->
+	 * @param object the target of the switch.
+	 * @return the result of interpreting the object as an instance of '<em>Model Advertises Export Field</em>'.
+	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+	 * @generated
+	 */
+	public T caseNUOPCModel__AdvertisesExportField(NUOPCModel__AdvertisesExportField object) {
+		return null;
+	}
+
+	/**
+	 * Returns the result of interpreting the object as an instance of '<em>Model Realizes Import Field</em>'.
+	 * <!-- begin-user-doc -->
+	 * This implementation returns null;
+	 * returning a non-null result will terminate the switch.
+	 * <!-- end-user-doc -->
+	 * @param object the target of the switch.
+	 * @return the result of interpreting the object as an instance of '<em>Model Realizes Import Field</em>'.
+	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+	 * @generated
+	 */
+	public T caseNUOPCModel__RealizesImportField(NUOPCModel__RealizesImportField object) {
+		return null;
+	}
+
+	/**
+	 * Returns the result of interpreting the object as an instance of '<em>Model Realizes Export Field</em>'.
+	 * <!-- begin-user-doc -->
+	 * This implementation returns null;
+	 * returning a non-null result will terminate the switch.
+	 * <!-- end-user-doc -->
+	 * @param object the target of the switch.
+	 * @return the result of interpreting the object as an instance of '<em>Model Realizes Export Field</em>'.
+	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+	 * @generated
+	 */
+	public T caseNUOPCModel__RealizesExportField(NUOPCModel__RealizesExportField object) {
+		return null;
+	}
+
+	/**
+	 * Returns the result of interpreting the object as an instance of '<em>Model Model Advance</em>'.
+	 * <!-- begin-user-doc -->
+	 * This implementation returns null;
+	 * returning a non-null result will terminate the switch.
+	 * <!-- end-user-doc -->
+	 * @param object the target of the switch.
+	 * @return the result of interpreting the object as an instance of '<em>Model Model Advance</em>'.
+	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+	 * @generated
+	 */
+	public T caseNUOPCModel__ModelAdvance(NUOPCModel__ModelAdvance object) {
 		return null;
 	}
 
@@ -310,126 +538,6 @@ public class NUOPCSwitch<T> extends Switch<T> {
 	 * @generated
 	 */
 	public T caseCallsSetEntryPoint(CallsSetEntryPoint object) {
-		return null;
-	}
-
-	/**
-	 * Returns the result of interpreting the object as an instance of '<em>Model Init</em>'.
-	 * <!-- begin-user-doc -->
-	 * This implementation returns null;
-	 * returning a non-null result will terminate the switch.
-	 * <!-- end-user-doc -->
-	 * @param object the target of the switch.
-	 * @return the result of interpreting the object as an instance of '<em>Model Init</em>'.
-	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
-	 * @generated
-	 */
-	public T caseModel_Init(Model_Init object) {
-		return null;
-	}
-
-	/**
-	 * Returns the result of interpreting the object as an instance of '<em>Model Implements Init P1</em>'.
-	 * <!-- begin-user-doc -->
-	 * This implementation returns null;
-	 * returning a non-null result will terminate the switch.
-	 * <!-- end-user-doc -->
-	 * @param object the target of the switch.
-	 * @return the result of interpreting the object as an instance of '<em>Model Implements Init P1</em>'.
-	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
-	 * @generated
-	 */
-	public T caseModelImplementsInitP1(ModelImplementsInitP1 object) {
-		return null;
-	}
-
-	/**
-	 * Returns the result of interpreting the object as an instance of '<em>Model Implements Init P2</em>'.
-	 * <!-- begin-user-doc -->
-	 * This implementation returns null;
-	 * returning a non-null result will terminate the switch.
-	 * <!-- end-user-doc -->
-	 * @param object the target of the switch.
-	 * @return the result of interpreting the object as an instance of '<em>Model Implements Init P2</em>'.
-	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
-	 * @generated
-	 */
-	public T caseModelImplementsInitP2(ModelImplementsInitP2 object) {
-		return null;
-	}
-
-	/**
-	 * Returns the result of interpreting the object as an instance of '<em>Advertises Import Field</em>'.
-	 * <!-- begin-user-doc -->
-	 * This implementation returns null;
-	 * returning a non-null result will terminate the switch.
-	 * <!-- end-user-doc -->
-	 * @param object the target of the switch.
-	 * @return the result of interpreting the object as an instance of '<em>Advertises Import Field</em>'.
-	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
-	 * @generated
-	 */
-	public T caseAdvertisesImportField(AdvertisesImportField object) {
-		return null;
-	}
-
-	/**
-	 * Returns the result of interpreting the object as an instance of '<em>Advertises Export Field</em>'.
-	 * <!-- begin-user-doc -->
-	 * This implementation returns null;
-	 * returning a non-null result will terminate the switch.
-	 * <!-- end-user-doc -->
-	 * @param object the target of the switch.
-	 * @return the result of interpreting the object as an instance of '<em>Advertises Export Field</em>'.
-	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
-	 * @generated
-	 */
-	public T caseAdvertisesExportField(AdvertisesExportField object) {
-		return null;
-	}
-
-	/**
-	 * Returns the result of interpreting the object as an instance of '<em>Realizes Import Field</em>'.
-	 * <!-- begin-user-doc -->
-	 * This implementation returns null;
-	 * returning a non-null result will terminate the switch.
-	 * <!-- end-user-doc -->
-	 * @param object the target of the switch.
-	 * @return the result of interpreting the object as an instance of '<em>Realizes Import Field</em>'.
-	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
-	 * @generated
-	 */
-	public T caseRealizesImportField(RealizesImportField object) {
-		return null;
-	}
-
-	/**
-	 * Returns the result of interpreting the object as an instance of '<em>Realizes Export Field</em>'.
-	 * <!-- begin-user-doc -->
-	 * This implementation returns null;
-	 * returning a non-null result will terminate the switch.
-	 * <!-- end-user-doc -->
-	 * @param object the target of the switch.
-	 * @return the result of interpreting the object as an instance of '<em>Realizes Export Field</em>'.
-	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
-	 * @generated
-	 */
-	public T caseRealizesExportField(RealizesExportField object) {
-		return null;
-	}
-
-	/**
-	 * Returns the result of interpreting the object as an instance of '<em>Model Advance</em>'.
-	 * <!-- begin-user-doc -->
-	 * This implementation returns null;
-	 * returning a non-null result will terminate the switch.
-	 * <!-- end-user-doc -->
-	 * @param object the target of the switch.
-	 * @return the result of interpreting the object as an instance of '<em>Model Advance</em>'.
-	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
-	 * @generated
-	 */
-	public T caseModelAdvance(ModelAdvance object) {
 		return null;
 	}
 
@@ -479,17 +587,47 @@ public class NUOPCSwitch<T> extends Switch<T> {
 	}
 
 	/**
-	 * Returns the result of interpreting the object as an instance of '<em>Model Import</em>'.
+	 * Returns the result of interpreting the object as an instance of '<em>Driver Model Imports Model Import</em>'.
 	 * <!-- begin-user-doc -->
 	 * This implementation returns null;
 	 * returning a non-null result will terminate the switch.
 	 * <!-- end-user-doc -->
 	 * @param object the target of the switch.
-	 * @return the result of interpreting the object as an instance of '<em>Model Import</em>'.
+	 * @return the result of interpreting the object as an instance of '<em>Driver Model Imports Model Import</em>'.
 	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
 	 * @generated
 	 */
-	public T caseModelImport(ModelImport object) {
+	public T caseNUOPCDriver__ModelImports__ModelImport(NUOPCDriver__ModelImports__ModelImport object) {
+		return null;
+	}
+
+	/**
+	 * Returns the result of interpreting the object as an instance of '<em>Driver Connector Imports</em>'.
+	 * <!-- begin-user-doc -->
+	 * This implementation returns null;
+	 * returning a non-null result will terminate the switch.
+	 * <!-- end-user-doc -->
+	 * @param object the target of the switch.
+	 * @return the result of interpreting the object as an instance of '<em>Driver Connector Imports</em>'.
+	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+	 * @generated
+	 */
+	public T caseNUOPCDriver__ConnectorImports(NUOPCDriver__ConnectorImports object) {
+		return null;
+	}
+
+	/**
+	 * Returns the result of interpreting the object as an instance of '<em>Driver Connector Imports Connector Import</em>'.
+	 * <!-- begin-user-doc -->
+	 * This implementation returns null;
+	 * returning a non-null result will terminate the switch.
+	 * <!-- end-user-doc -->
+	 * @param object the target of the switch.
+	 * @return the result of interpreting the object as an instance of '<em>Driver Connector Imports Connector Import</em>'.
+	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+	 * @generated
+	 */
+	public T caseNUOPCDriver__ConnectorImports__ConnectorImport(NUOPCDriver__ConnectorImports__ConnectorImport object) {
 		return null;
 	}
 
@@ -599,6 +737,171 @@ public class NUOPCSwitch<T> extends Switch<T> {
 	}
 
 	/**
+	 * Returns the result of interpreting the object as an instance of '<em>Mediator</em>'.
+	 * <!-- begin-user-doc -->
+	 * This implementation returns null;
+	 * returning a non-null result will terminate the switch.
+	 * <!-- end-user-doc -->
+	 * @param object the target of the switch.
+	 * @return the result of interpreting the object as an instance of '<em>Mediator</em>'.
+	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+	 * @generated
+	 */
+	public T caseNUOPCMediator(NUOPCMediator object) {
+		return null;
+	}
+
+	/**
+	 * Returns the result of interpreting the object as an instance of '<em>Mediator Generic Imports</em>'.
+	 * <!-- begin-user-doc -->
+	 * This implementation returns null;
+	 * returning a non-null result will terminate the switch.
+	 * <!-- end-user-doc -->
+	 * @param object the target of the switch.
+	 * @return the result of interpreting the object as an instance of '<em>Mediator Generic Imports</em>'.
+	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+	 * @generated
+	 */
+	public T caseNUOPCMediator__GenericImports(NUOPCMediator__GenericImports object) {
+		return null;
+	}
+
+	/**
+	 * Returns the result of interpreting the object as an instance of '<em>Mediator Init</em>'.
+	 * <!-- begin-user-doc -->
+	 * This implementation returns null;
+	 * returning a non-null result will terminate the switch.
+	 * <!-- end-user-doc -->
+	 * @param object the target of the switch.
+	 * @return the result of interpreting the object as an instance of '<em>Mediator Init</em>'.
+	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+	 * @generated
+	 */
+	public T caseNUOPCMediator__Init(NUOPCMediator__Init object) {
+		return null;
+	}
+
+	/**
+	 * Returns the result of interpreting the object as an instance of '<em>Mediator Implements Set Services</em>'.
+	 * <!-- begin-user-doc -->
+	 * This implementation returns null;
+	 * returning a non-null result will terminate the switch.
+	 * <!-- end-user-doc -->
+	 * @param object the target of the switch.
+	 * @return the result of interpreting the object as an instance of '<em>Mediator Implements Set Services</em>'.
+	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+	 * @generated
+	 */
+	public T caseNUOPCMediator__ImplementsSetServices(NUOPCMediator__ImplementsSetServices object) {
+		return null;
+	}
+
+	/**
+	 * Returns the result of interpreting the object as an instance of '<em>Mediator Implements Init P1</em>'.
+	 * <!-- begin-user-doc -->
+	 * This implementation returns null;
+	 * returning a non-null result will terminate the switch.
+	 * <!-- end-user-doc -->
+	 * @param object the target of the switch.
+	 * @return the result of interpreting the object as an instance of '<em>Mediator Implements Init P1</em>'.
+	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+	 * @generated
+	 */
+	public T caseNUOPCMediator__ImplementsInitP1(NUOPCMediator__ImplementsInitP1 object) {
+		return null;
+	}
+
+	/**
+	 * Returns the result of interpreting the object as an instance of '<em>Mediator Implements Init P2</em>'.
+	 * <!-- begin-user-doc -->
+	 * This implementation returns null;
+	 * returning a non-null result will terminate the switch.
+	 * <!-- end-user-doc -->
+	 * @param object the target of the switch.
+	 * @return the result of interpreting the object as an instance of '<em>Mediator Implements Init P2</em>'.
+	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+	 * @generated
+	 */
+	public T caseNUOPCMediator__ImplementsInitP2(NUOPCMediator__ImplementsInitP2 object) {
+		return null;
+	}
+
+	/**
+	 * Returns the result of interpreting the object as an instance of '<em>Mediator Advertises Import Field</em>'.
+	 * <!-- begin-user-doc -->
+	 * This implementation returns null;
+	 * returning a non-null result will terminate the switch.
+	 * <!-- end-user-doc -->
+	 * @param object the target of the switch.
+	 * @return the result of interpreting the object as an instance of '<em>Mediator Advertises Import Field</em>'.
+	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+	 * @generated
+	 */
+	public T caseNUOPCMediator__AdvertisesImportField(NUOPCMediator__AdvertisesImportField object) {
+		return null;
+	}
+
+	/**
+	 * Returns the result of interpreting the object as an instance of '<em>Mediator Advertises Export Field</em>'.
+	 * <!-- begin-user-doc -->
+	 * This implementation returns null;
+	 * returning a non-null result will terminate the switch.
+	 * <!-- end-user-doc -->
+	 * @param object the target of the switch.
+	 * @return the result of interpreting the object as an instance of '<em>Mediator Advertises Export Field</em>'.
+	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+	 * @generated
+	 */
+	public T caseNUOPCMediator__AdvertisesExportField(NUOPCMediator__AdvertisesExportField object) {
+		return null;
+	}
+
+	/**
+	 * Returns the result of interpreting the object as an instance of '<em>Mediator Realizes Import Field</em>'.
+	 * <!-- begin-user-doc -->
+	 * This implementation returns null;
+	 * returning a non-null result will terminate the switch.
+	 * <!-- end-user-doc -->
+	 * @param object the target of the switch.
+	 * @return the result of interpreting the object as an instance of '<em>Mediator Realizes Import Field</em>'.
+	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+	 * @generated
+	 */
+	public T caseNUOPCMediator__RealizesImportField(NUOPCMediator__RealizesImportField object) {
+		return null;
+	}
+
+	/**
+	 * Returns the result of interpreting the object as an instance of '<em>Mediator Realizes Export Field</em>'.
+	 * <!-- begin-user-doc -->
+	 * This implementation returns null;
+	 * returning a non-null result will terminate the switch.
+	 * <!-- end-user-doc -->
+	 * @param object the target of the switch.
+	 * @return the result of interpreting the object as an instance of '<em>Mediator Realizes Export Field</em>'.
+	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+	 * @generated
+	 */
+	public T caseNUOPCMediator__RealizesExportField(NUOPCMediator__RealizesExportField object) {
+		return null;
+	}
+
+	/**
+	 * Returns the result of interpreting the object as an instance of '<em>Mediator Model Advance</em>'.
+	 * <!-- begin-user-doc -->
+	 * This implementation returns null;
+	 * returning a non-null result will terminate the switch.
+	 * <!-- end-user-doc -->
+	 * @param object the target of the switch.
+	 * @return the result of interpreting the object as an instance of '<em>Mediator Model Advance</em>'.
+	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+	 * @generated
+	 */
+	public T caseNUOPCMediator__ModelAdvance(NUOPCMediator__ModelAdvance object) {
+		return null;
+	}
+
+	/**
 	 * Returns the result of interpreting the object as an instance of '<em>Application</em>'.
 	 * <!-- begin-user-doc -->
 	 * This implementation returns null;
@@ -644,6 +947,36 @@ public class NUOPCSwitch<T> extends Switch<T> {
 	}
 
 	/**
+	 * Returns the result of interpreting the object as an instance of '<em>Driver Atm Ocn Generic Imports</em>'.
+	 * <!-- begin-user-doc -->
+	 * This implementation returns null;
+	 * returning a non-null result will terminate the switch.
+	 * <!-- end-user-doc -->
+	 * @param object the target of the switch.
+	 * @return the result of interpreting the object as an instance of '<em>Driver Atm Ocn Generic Imports</em>'.
+	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+	 * @generated
+	 */
+	public T caseNUOPCDriverAtmOcn__GenericImports(NUOPCDriverAtmOcn__GenericImports object) {
+		return null;
+	}
+
+	/**
+	 * Returns the result of interpreting the object as an instance of '<em>Driver Atm Ocn Model Imports</em>'.
+	 * <!-- begin-user-doc -->
+	 * This implementation returns null;
+	 * returning a non-null result will terminate the switch.
+	 * <!-- end-user-doc -->
+	 * @param object the target of the switch.
+	 * @return the result of interpreting the object as an instance of '<em>Driver Atm Ocn Model Imports</em>'.
+	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+	 * @generated
+	 */
+	public T caseNUOPCDriverAtmOcn__ModelImports(NUOPCDriverAtmOcn__ModelImports object) {
+		return null;
+	}
+
+	/**
 	 * Returns the result of interpreting the object as an instance of '<em>Driver Atm Ocn Implements Set Services</em>'.
 	 * <!-- begin-user-doc -->
 	 * This implementation returns null;
@@ -655,6 +988,51 @@ public class NUOPCSwitch<T> extends Switch<T> {
 	 * @generated
 	 */
 	public T caseNUOPCDriverAtmOcn__ImplementsSetServices(NUOPCDriverAtmOcn__ImplementsSetServices object) {
+		return null;
+	}
+
+	/**
+	 * Returns the result of interpreting the object as an instance of '<em>Driver Atm Ocn Implements Set Model Count</em>'.
+	 * <!-- begin-user-doc -->
+	 * This implementation returns null;
+	 * returning a non-null result will terminate the switch.
+	 * <!-- end-user-doc -->
+	 * @param object the target of the switch.
+	 * @return the result of interpreting the object as an instance of '<em>Driver Atm Ocn Implements Set Model Count</em>'.
+	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+	 * @generated
+	 */
+	public T caseNUOPCDriverAtmOcn__ImplementsSetModelCount(NUOPCDriverAtmOcn__ImplementsSetModelCount object) {
+		return null;
+	}
+
+	/**
+	 * Returns the result of interpreting the object as an instance of '<em>Driver Atm Ocn Implements Set Model Services</em>'.
+	 * <!-- begin-user-doc -->
+	 * This implementation returns null;
+	 * returning a non-null result will terminate the switch.
+	 * <!-- end-user-doc -->
+	 * @param object the target of the switch.
+	 * @return the result of interpreting the object as an instance of '<em>Driver Atm Ocn Implements Set Model Services</em>'.
+	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+	 * @generated
+	 */
+	public T caseNUOPCDriverAtmOcn__ImplementsSetModelServices(NUOPCDriverAtmOcn__ImplementsSetModelServices object) {
+		return null;
+	}
+
+	/**
+	 * Returns the result of interpreting the object as an instance of '<em>Driver Atm Ocn Model Imports Model Import</em>'.
+	 * <!-- begin-user-doc -->
+	 * This implementation returns null;
+	 * returning a non-null result will terminate the switch.
+	 * <!-- end-user-doc -->
+	 * @param object the target of the switch.
+	 * @return the result of interpreting the object as an instance of '<em>Driver Atm Ocn Model Imports Model Import</em>'.
+	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+	 * @generated
+	 */
+	public T caseNUOPCDriverAtmOcn__ModelImports__ModelImport(NUOPCDriverAtmOcn__ModelImports__ModelImport object) {
 		return null;
 	}
 

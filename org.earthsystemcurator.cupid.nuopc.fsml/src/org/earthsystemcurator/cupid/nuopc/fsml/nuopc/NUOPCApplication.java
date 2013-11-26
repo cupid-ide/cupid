@@ -18,6 +18,7 @@ import org.eclipse.emf.ecore.EObject;
  *   <li>{@link org.earthsystemcurator.cupid.nuopc.fsml.nuopc.NUOPCApplication#getNuopcModel <em>Nuopc Model</em>}</li>
  *   <li>{@link org.earthsystemcurator.cupid.nuopc.fsml.nuopc.NUOPCApplication#getNuopcDriver <em>Nuopc Driver</em>}</li>
  *   <li>{@link org.earthsystemcurator.cupid.nuopc.fsml.nuopc.NUOPCApplication#getNuopcDriverAtmOcn <em>Nuopc Driver Atm Ocn</em>}</li>
+ *   <li>{@link org.earthsystemcurator.cupid.nuopc.fsml.nuopc.NUOPCApplication#getNuopcMediator <em>Nuopc Mediator</em>}</li>
  * </ul>
  * </p>
  *
@@ -91,6 +92,7 @@ public interface NUOPCApplication extends EObject {
 	/**
 	 * Returns the value of the '<em><b>Nuopc Driver Atm Ocn</b></em>' containment reference list.
 	 * The list contents are of type {@link org.earthsystemcurator.cupid.nuopc.fsml.nuopc.NUOPCDriverAtmOcn}.
+	 * It is bidirectional and its opposite is '{@link org.earthsystemcurator.cupid.nuopc.fsml.nuopc.NUOPCDriverAtmOcn#getParent <em>Parent</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <p>
 	 * If the meaning of the '<em>Nuopc Driver Atm Ocn</em>' reference list isn't clear,
@@ -99,10 +101,28 @@ public interface NUOPCApplication extends EObject {
 	 * <!-- end-user-doc -->
 	 * @return the value of the '<em>Nuopc Driver Atm Ocn</em>' containment reference list.
 	 * @see org.earthsystemcurator.cupid.nuopc.fsml.nuopc.NUOPCPackage#getNUOPCApplication_NuopcDriverAtmOcn()
-	 * @model containment="true" ordered="false"
+	 * @see org.earthsystemcurator.cupid.nuopc.fsml.nuopc.NUOPCDriverAtmOcn#getParent
+	 * @model opposite="parent" containment="true" ordered="false"
 	 *        annotation="http://www.earthsystemcog.org/projects/nuopc mapping='module'"
 	 * @generated
 	 */
 	EList<NUOPCDriverAtmOcn> getNuopcDriverAtmOcn();
+
+	/**
+	 * Returns the value of the '<em><b>Nuopc Mediator</b></em>' containment reference list.
+	 * The list contents are of type {@link org.earthsystemcurator.cupid.nuopc.fsml.nuopc.NUOPCMediator}.
+	 * <!-- begin-user-doc -->
+	 * <p>
+	 * If the meaning of the '<em>Nuopc Mediator</em>' containment reference list isn't clear,
+	 * there really should be more of a description here...
+	 * </p>
+	 * <!-- end-user-doc -->
+	 * @return the value of the '<em>Nuopc Mediator</em>' containment reference list.
+	 * @see org.earthsystemcurator.cupid.nuopc.fsml.nuopc.NUOPCPackage#getNUOPCApplication_NuopcMediator()
+	 * @model containment="true"
+	 *        annotation="http://www.earthsystemcog.org/projects/nuopc mapping='module'"
+	 * @generated
+	 */
+	EList<NUOPCMediator> getNuopcMediator();
 
 } // NUOPCApplication

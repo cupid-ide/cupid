@@ -102,6 +102,7 @@ public class NUOPCDriverItemProvider
 			super.getChildrenFeatures(object);
 			childrenFeatures.add(NUOPCPackage.Literals.NUOPC_DRIVER__GENERIC_IMPORTS);
 			childrenFeatures.add(NUOPCPackage.Literals.NUOPC_DRIVER__MODEL_IMPORTS);
+			childrenFeatures.add(NUOPCPackage.Literals.NUOPC_DRIVER__CONNECTOR_IMPORTS);
 			childrenFeatures.add(NUOPCPackage.Literals.NUOPC_DRIVER__IMPLEMENTS_SET_SERVICES);
 			childrenFeatures.add(NUOPCPackage.Literals.NUOPC_DRIVER__IMPLEMENTS_SET_MODEL_COUNT);
 			childrenFeatures.add(NUOPCPackage.Literals.NUOPC_DRIVER__IMPLEMENTS_SET_MODEL_SERVICES);
@@ -164,6 +165,7 @@ public class NUOPCDriverItemProvider
 				return;
 			case NUOPCPackage.NUOPC_DRIVER__GENERIC_IMPORTS:
 			case NUOPCPackage.NUOPC_DRIVER__MODEL_IMPORTS:
+			case NUOPCPackage.NUOPC_DRIVER__CONNECTOR_IMPORTS:
 			case NUOPCPackage.NUOPC_DRIVER__IMPLEMENTS_SET_SERVICES:
 			case NUOPCPackage.NUOPC_DRIVER__IMPLEMENTS_SET_MODEL_COUNT:
 			case NUOPCPackage.NUOPC_DRIVER__IMPLEMENTS_SET_MODEL_SERVICES:
@@ -193,6 +195,11 @@ public class NUOPCDriverItemProvider
 			(createChildParameter
 				(NUOPCPackage.Literals.NUOPC_DRIVER__MODEL_IMPORTS,
 				 NUOPCFactory.eINSTANCE.createNUOPCDriver__ModelImports()));
+
+		newChildDescriptors.add
+			(createChildParameter
+				(NUOPCPackage.Literals.NUOPC_DRIVER__CONNECTOR_IMPORTS,
+				 NUOPCFactory.eINSTANCE.createNUOPCDriver__ConnectorImports()));
 
 		newChildDescriptors.add
 			(createChildParameter

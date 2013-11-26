@@ -118,26 +118,210 @@ public class NUOPCItemProviderAdapterFactory extends NUOPCAdapterFactory impleme
 	}
 
 	/**
-	 * This keeps track of the one adapter used for all {@link org.earthsystemcurator.cupid.nuopc.fsml.nuopc.ModelImplementsSetServices} instances.
+	 * This keeps track of the one adapter used for all {@link org.earthsystemcurator.cupid.nuopc.fsml.nuopc.NUOPCModel__Init} instances.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	protected ModelImplementsSetServicesItemProvider modelImplementsSetServicesItemProvider;
+	protected NUOPCModel__InitItemProvider nuopcModel__InitItemProvider;
 
 	/**
-	 * This creates an adapter for a {@link org.earthsystemcurator.cupid.nuopc.fsml.nuopc.ModelImplementsSetServices}.
+	 * This creates an adapter for a {@link org.earthsystemcurator.cupid.nuopc.fsml.nuopc.NUOPCModel__Init}.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
 	@Override
-	public Adapter createModelImplementsSetServicesAdapter() {
-		if (modelImplementsSetServicesItemProvider == null) {
-			modelImplementsSetServicesItemProvider = new ModelImplementsSetServicesItemProvider(this);
+	public Adapter createNUOPCModel__InitAdapter() {
+		if (nuopcModel__InitItemProvider == null) {
+			nuopcModel__InitItemProvider = new NUOPCModel__InitItemProvider(this);
 		}
 
-		return modelImplementsSetServicesItemProvider;
+		return nuopcModel__InitItemProvider;
+	}
+
+	/**
+	 * This keeps track of the one adapter used for all {@link org.earthsystemcurator.cupid.nuopc.fsml.nuopc.NUOPCModel__ImplementsSetServices} instances.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	protected NUOPCModel__ImplementsSetServicesItemProvider nuopcModel__ImplementsSetServicesItemProvider;
+
+	/**
+	 * This creates an adapter for a {@link org.earthsystemcurator.cupid.nuopc.fsml.nuopc.NUOPCModel__ImplementsSetServices}.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	@Override
+	public Adapter createNUOPCModel__ImplementsSetServicesAdapter() {
+		if (nuopcModel__ImplementsSetServicesItemProvider == null) {
+			nuopcModel__ImplementsSetServicesItemProvider = new NUOPCModel__ImplementsSetServicesItemProvider(this);
+		}
+
+		return nuopcModel__ImplementsSetServicesItemProvider;
+	}
+
+	/**
+	 * This keeps track of the one adapter used for all {@link org.earthsystemcurator.cupid.nuopc.fsml.nuopc.NUOPCModel__ImplementsInitP1} instances.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	protected NUOPCModel__ImplementsInitP1ItemProvider nuopcModel__ImplementsInitP1ItemProvider;
+
+	/**
+	 * This creates an adapter for a {@link org.earthsystemcurator.cupid.nuopc.fsml.nuopc.NUOPCModel__ImplementsInitP1}.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	@Override
+	public Adapter createNUOPCModel__ImplementsInitP1Adapter() {
+		if (nuopcModel__ImplementsInitP1ItemProvider == null) {
+			nuopcModel__ImplementsInitP1ItemProvider = new NUOPCModel__ImplementsInitP1ItemProvider(this);
+		}
+
+		return nuopcModel__ImplementsInitP1ItemProvider;
+	}
+
+	/**
+	 * This keeps track of the one adapter used for all {@link org.earthsystemcurator.cupid.nuopc.fsml.nuopc.NUOPCModel__ImplementsInitP2} instances.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	protected NUOPCModel__ImplementsInitP2ItemProvider nuopcModel__ImplementsInitP2ItemProvider;
+
+	/**
+	 * This creates an adapter for a {@link org.earthsystemcurator.cupid.nuopc.fsml.nuopc.NUOPCModel__ImplementsInitP2}.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	@Override
+	public Adapter createNUOPCModel__ImplementsInitP2Adapter() {
+		if (nuopcModel__ImplementsInitP2ItemProvider == null) {
+			nuopcModel__ImplementsInitP2ItemProvider = new NUOPCModel__ImplementsInitP2ItemProvider(this);
+		}
+
+		return nuopcModel__ImplementsInitP2ItemProvider;
+	}
+
+	/**
+	 * This keeps track of the one adapter used for all {@link org.earthsystemcurator.cupid.nuopc.fsml.nuopc.NUOPCModel__AdvertisesImportField} instances.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	protected NUOPCModel__AdvertisesImportFieldItemProvider nuopcModel__AdvertisesImportFieldItemProvider;
+
+	/**
+	 * This creates an adapter for a {@link org.earthsystemcurator.cupid.nuopc.fsml.nuopc.NUOPCModel__AdvertisesImportField}.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	@Override
+	public Adapter createNUOPCModel__AdvertisesImportFieldAdapter() {
+		if (nuopcModel__AdvertisesImportFieldItemProvider == null) {
+			nuopcModel__AdvertisesImportFieldItemProvider = new NUOPCModel__AdvertisesImportFieldItemProvider(this);
+		}
+
+		return nuopcModel__AdvertisesImportFieldItemProvider;
+	}
+
+	/**
+	 * This keeps track of the one adapter used for all {@link org.earthsystemcurator.cupid.nuopc.fsml.nuopc.NUOPCModel__AdvertisesExportField} instances.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	protected NUOPCModel__AdvertisesExportFieldItemProvider nuopcModel__AdvertisesExportFieldItemProvider;
+
+	/**
+	 * This creates an adapter for a {@link org.earthsystemcurator.cupid.nuopc.fsml.nuopc.NUOPCModel__AdvertisesExportField}.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	@Override
+	public Adapter createNUOPCModel__AdvertisesExportFieldAdapter() {
+		if (nuopcModel__AdvertisesExportFieldItemProvider == null) {
+			nuopcModel__AdvertisesExportFieldItemProvider = new NUOPCModel__AdvertisesExportFieldItemProvider(this);
+		}
+
+		return nuopcModel__AdvertisesExportFieldItemProvider;
+	}
+
+	/**
+	 * This keeps track of the one adapter used for all {@link org.earthsystemcurator.cupid.nuopc.fsml.nuopc.NUOPCModel__RealizesImportField} instances.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	protected NUOPCModel__RealizesImportFieldItemProvider nuopcModel__RealizesImportFieldItemProvider;
+
+	/**
+	 * This creates an adapter for a {@link org.earthsystemcurator.cupid.nuopc.fsml.nuopc.NUOPCModel__RealizesImportField}.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	@Override
+	public Adapter createNUOPCModel__RealizesImportFieldAdapter() {
+		if (nuopcModel__RealizesImportFieldItemProvider == null) {
+			nuopcModel__RealizesImportFieldItemProvider = new NUOPCModel__RealizesImportFieldItemProvider(this);
+		}
+
+		return nuopcModel__RealizesImportFieldItemProvider;
+	}
+
+	/**
+	 * This keeps track of the one adapter used for all {@link org.earthsystemcurator.cupid.nuopc.fsml.nuopc.NUOPCModel__RealizesExportField} instances.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	protected NUOPCModel__RealizesExportFieldItemProvider nuopcModel__RealizesExportFieldItemProvider;
+
+	/**
+	 * This creates an adapter for a {@link org.earthsystemcurator.cupid.nuopc.fsml.nuopc.NUOPCModel__RealizesExportField}.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	@Override
+	public Adapter createNUOPCModel__RealizesExportFieldAdapter() {
+		if (nuopcModel__RealizesExportFieldItemProvider == null) {
+			nuopcModel__RealizesExportFieldItemProvider = new NUOPCModel__RealizesExportFieldItemProvider(this);
+		}
+
+		return nuopcModel__RealizesExportFieldItemProvider;
+	}
+
+	/**
+	 * This keeps track of the one adapter used for all {@link org.earthsystemcurator.cupid.nuopc.fsml.nuopc.NUOPCModel__ModelAdvance} instances.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	protected NUOPCModel__ModelAdvanceItemProvider nuopcModel__ModelAdvanceItemProvider;
+
+	/**
+	 * This creates an adapter for a {@link org.earthsystemcurator.cupid.nuopc.fsml.nuopc.NUOPCModel__ModelAdvance}.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	@Override
+	public Adapter createNUOPCModel__ModelAdvanceAdapter() {
+		if (nuopcModel__ModelAdvanceItemProvider == null) {
+			nuopcModel__ModelAdvanceItemProvider = new NUOPCModel__ModelAdvanceItemProvider(this);
+		}
+
+		return nuopcModel__ModelAdvanceItemProvider;
 	}
 
 	/**
@@ -184,190 +368,6 @@ public class NUOPCItemProviderAdapterFactory extends NUOPCAdapterFactory impleme
 		}
 
 		return callsSetEntryPointItemProvider;
-	}
-
-	/**
-	 * This keeps track of the one adapter used for all {@link org.earthsystemcurator.cupid.nuopc.fsml.nuopc.Model_Init} instances.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	protected Model_InitItemProvider model_InitItemProvider;
-
-	/**
-	 * This creates an adapter for a {@link org.earthsystemcurator.cupid.nuopc.fsml.nuopc.Model_Init}.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	@Override
-	public Adapter createModel_InitAdapter() {
-		if (model_InitItemProvider == null) {
-			model_InitItemProvider = new Model_InitItemProvider(this);
-		}
-
-		return model_InitItemProvider;
-	}
-
-	/**
-	 * This keeps track of the one adapter used for all {@link org.earthsystemcurator.cupid.nuopc.fsml.nuopc.ModelImplementsInitP1} instances.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	protected ModelImplementsInitP1ItemProvider modelImplementsInitP1ItemProvider;
-
-	/**
-	 * This creates an adapter for a {@link org.earthsystemcurator.cupid.nuopc.fsml.nuopc.ModelImplementsInitP1}.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	@Override
-	public Adapter createModelImplementsInitP1Adapter() {
-		if (modelImplementsInitP1ItemProvider == null) {
-			modelImplementsInitP1ItemProvider = new ModelImplementsInitP1ItemProvider(this);
-		}
-
-		return modelImplementsInitP1ItemProvider;
-	}
-
-	/**
-	 * This keeps track of the one adapter used for all {@link org.earthsystemcurator.cupid.nuopc.fsml.nuopc.ModelImplementsInitP2} instances.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	protected ModelImplementsInitP2ItemProvider modelImplementsInitP2ItemProvider;
-
-	/**
-	 * This creates an adapter for a {@link org.earthsystemcurator.cupid.nuopc.fsml.nuopc.ModelImplementsInitP2}.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	@Override
-	public Adapter createModelImplementsInitP2Adapter() {
-		if (modelImplementsInitP2ItemProvider == null) {
-			modelImplementsInitP2ItemProvider = new ModelImplementsInitP2ItemProvider(this);
-		}
-
-		return modelImplementsInitP2ItemProvider;
-	}
-
-	/**
-	 * This keeps track of the one adapter used for all {@link org.earthsystemcurator.cupid.nuopc.fsml.nuopc.AdvertisesImportField} instances.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	protected AdvertisesImportFieldItemProvider advertisesImportFieldItemProvider;
-
-	/**
-	 * This creates an adapter for a {@link org.earthsystemcurator.cupid.nuopc.fsml.nuopc.AdvertisesImportField}.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	@Override
-	public Adapter createAdvertisesImportFieldAdapter() {
-		if (advertisesImportFieldItemProvider == null) {
-			advertisesImportFieldItemProvider = new AdvertisesImportFieldItemProvider(this);
-		}
-
-		return advertisesImportFieldItemProvider;
-	}
-
-	/**
-	 * This keeps track of the one adapter used for all {@link org.earthsystemcurator.cupid.nuopc.fsml.nuopc.AdvertisesExportField} instances.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	protected AdvertisesExportFieldItemProvider advertisesExportFieldItemProvider;
-
-	/**
-	 * This creates an adapter for a {@link org.earthsystemcurator.cupid.nuopc.fsml.nuopc.AdvertisesExportField}.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	@Override
-	public Adapter createAdvertisesExportFieldAdapter() {
-		if (advertisesExportFieldItemProvider == null) {
-			advertisesExportFieldItemProvider = new AdvertisesExportFieldItemProvider(this);
-		}
-
-		return advertisesExportFieldItemProvider;
-	}
-
-	/**
-	 * This keeps track of the one adapter used for all {@link org.earthsystemcurator.cupid.nuopc.fsml.nuopc.RealizesImportField} instances.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	protected RealizesImportFieldItemProvider realizesImportFieldItemProvider;
-
-	/**
-	 * This creates an adapter for a {@link org.earthsystemcurator.cupid.nuopc.fsml.nuopc.RealizesImportField}.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	@Override
-	public Adapter createRealizesImportFieldAdapter() {
-		if (realizesImportFieldItemProvider == null) {
-			realizesImportFieldItemProvider = new RealizesImportFieldItemProvider(this);
-		}
-
-		return realizesImportFieldItemProvider;
-	}
-
-	/**
-	 * This keeps track of the one adapter used for all {@link org.earthsystemcurator.cupid.nuopc.fsml.nuopc.RealizesExportField} instances.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	protected RealizesExportFieldItemProvider realizesExportFieldItemProvider;
-
-	/**
-	 * This creates an adapter for a {@link org.earthsystemcurator.cupid.nuopc.fsml.nuopc.RealizesExportField}.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	@Override
-	public Adapter createRealizesExportFieldAdapter() {
-		if (realizesExportFieldItemProvider == null) {
-			realizesExportFieldItemProvider = new RealizesExportFieldItemProvider(this);
-		}
-
-		return realizesExportFieldItemProvider;
-	}
-
-	/**
-	 * This keeps track of the one adapter used for all {@link org.earthsystemcurator.cupid.nuopc.fsml.nuopc.ModelAdvance} instances.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	protected ModelAdvanceItemProvider modelAdvanceItemProvider;
-
-	/**
-	 * This creates an adapter for a {@link org.earthsystemcurator.cupid.nuopc.fsml.nuopc.ModelAdvance}.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	@Override
-	public Adapter createModelAdvanceAdapter() {
-		if (modelAdvanceItemProvider == null) {
-			modelAdvanceItemProvider = new ModelAdvanceItemProvider(this);
-		}
-
-		return modelAdvanceItemProvider;
 	}
 
 	/**
@@ -440,26 +440,72 @@ public class NUOPCItemProviderAdapterFactory extends NUOPCAdapterFactory impleme
 	}
 
 	/**
-	 * This keeps track of the one adapter used for all {@link org.earthsystemcurator.cupid.nuopc.fsml.nuopc.ModelImport} instances.
+	 * This keeps track of the one adapter used for all {@link org.earthsystemcurator.cupid.nuopc.fsml.nuopc.NUOPCDriver__ModelImports__ModelImport} instances.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	protected ModelImportItemProvider modelImportItemProvider;
+	protected NUOPCDriver__ModelImports__ModelImportItemProvider nuopcDriver__ModelImports__ModelImportItemProvider;
 
 	/**
-	 * This creates an adapter for a {@link org.earthsystemcurator.cupid.nuopc.fsml.nuopc.ModelImport}.
+	 * This creates an adapter for a {@link org.earthsystemcurator.cupid.nuopc.fsml.nuopc.NUOPCDriver__ModelImports__ModelImport}.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
 	@Override
-	public Adapter createModelImportAdapter() {
-		if (modelImportItemProvider == null) {
-			modelImportItemProvider = new ModelImportItemProvider(this);
+	public Adapter createNUOPCDriver__ModelImports__ModelImportAdapter() {
+		if (nuopcDriver__ModelImports__ModelImportItemProvider == null) {
+			nuopcDriver__ModelImports__ModelImportItemProvider = new NUOPCDriver__ModelImports__ModelImportItemProvider(this);
 		}
 
-		return modelImportItemProvider;
+		return nuopcDriver__ModelImports__ModelImportItemProvider;
+	}
+
+	/**
+	 * This keeps track of the one adapter used for all {@link org.earthsystemcurator.cupid.nuopc.fsml.nuopc.NUOPCDriver__ConnectorImports} instances.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	protected NUOPCDriver__ConnectorImportsItemProvider nuopcDriver__ConnectorImportsItemProvider;
+
+	/**
+	 * This creates an adapter for a {@link org.earthsystemcurator.cupid.nuopc.fsml.nuopc.NUOPCDriver__ConnectorImports}.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	@Override
+	public Adapter createNUOPCDriver__ConnectorImportsAdapter() {
+		if (nuopcDriver__ConnectorImportsItemProvider == null) {
+			nuopcDriver__ConnectorImportsItemProvider = new NUOPCDriver__ConnectorImportsItemProvider(this);
+		}
+
+		return nuopcDriver__ConnectorImportsItemProvider;
+	}
+
+	/**
+	 * This keeps track of the one adapter used for all {@link org.earthsystemcurator.cupid.nuopc.fsml.nuopc.NUOPCDriver__ConnectorImports__ConnectorImport} instances.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	protected NUOPCDriver__ConnectorImports__ConnectorImportItemProvider nuopcDriver__ConnectorImports__ConnectorImportItemProvider;
+
+	/**
+	 * This creates an adapter for a {@link org.earthsystemcurator.cupid.nuopc.fsml.nuopc.NUOPCDriver__ConnectorImports__ConnectorImport}.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	@Override
+	public Adapter createNUOPCDriver__ConnectorImports__ConnectorImportAdapter() {
+		if (nuopcDriver__ConnectorImports__ConnectorImportItemProvider == null) {
+			nuopcDriver__ConnectorImports__ConnectorImportItemProvider = new NUOPCDriver__ConnectorImports__ConnectorImportItemProvider(this);
+		}
+
+		return nuopcDriver__ConnectorImports__ConnectorImportItemProvider;
 	}
 
 	/**
@@ -624,6 +670,259 @@ public class NUOPCItemProviderAdapterFactory extends NUOPCAdapterFactory impleme
 	}
 
 	/**
+	 * This keeps track of the one adapter used for all {@link org.earthsystemcurator.cupid.nuopc.fsml.nuopc.NUOPCMediator} instances.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	protected NUOPCMediatorItemProvider nuopcMediatorItemProvider;
+
+	/**
+	 * This creates an adapter for a {@link org.earthsystemcurator.cupid.nuopc.fsml.nuopc.NUOPCMediator}.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	@Override
+	public Adapter createNUOPCMediatorAdapter() {
+		if (nuopcMediatorItemProvider == null) {
+			nuopcMediatorItemProvider = new NUOPCMediatorItemProvider(this);
+		}
+
+		return nuopcMediatorItemProvider;
+	}
+
+	/**
+	 * This keeps track of the one adapter used for all {@link org.earthsystemcurator.cupid.nuopc.fsml.nuopc.NUOPCMediator__GenericImports} instances.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	protected NUOPCMediator__GenericImportsItemProvider nuopcMediator__GenericImportsItemProvider;
+
+	/**
+	 * This creates an adapter for a {@link org.earthsystemcurator.cupid.nuopc.fsml.nuopc.NUOPCMediator__GenericImports}.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	@Override
+	public Adapter createNUOPCMediator__GenericImportsAdapter() {
+		if (nuopcMediator__GenericImportsItemProvider == null) {
+			nuopcMediator__GenericImportsItemProvider = new NUOPCMediator__GenericImportsItemProvider(this);
+		}
+
+		return nuopcMediator__GenericImportsItemProvider;
+	}
+
+	/**
+	 * This keeps track of the one adapter used for all {@link org.earthsystemcurator.cupid.nuopc.fsml.nuopc.NUOPCMediator__Init} instances.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	protected NUOPCMediator__InitItemProvider nuopcMediator__InitItemProvider;
+
+	/**
+	 * This creates an adapter for a {@link org.earthsystemcurator.cupid.nuopc.fsml.nuopc.NUOPCMediator__Init}.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	@Override
+	public Adapter createNUOPCMediator__InitAdapter() {
+		if (nuopcMediator__InitItemProvider == null) {
+			nuopcMediator__InitItemProvider = new NUOPCMediator__InitItemProvider(this);
+		}
+
+		return nuopcMediator__InitItemProvider;
+	}
+
+	/**
+	 * This keeps track of the one adapter used for all {@link org.earthsystemcurator.cupid.nuopc.fsml.nuopc.NUOPCMediator__ImplementsSetServices} instances.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	protected NUOPCMediator__ImplementsSetServicesItemProvider nuopcMediator__ImplementsSetServicesItemProvider;
+
+	/**
+	 * This creates an adapter for a {@link org.earthsystemcurator.cupid.nuopc.fsml.nuopc.NUOPCMediator__ImplementsSetServices}.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	@Override
+	public Adapter createNUOPCMediator__ImplementsSetServicesAdapter() {
+		if (nuopcMediator__ImplementsSetServicesItemProvider == null) {
+			nuopcMediator__ImplementsSetServicesItemProvider = new NUOPCMediator__ImplementsSetServicesItemProvider(this);
+		}
+
+		return nuopcMediator__ImplementsSetServicesItemProvider;
+	}
+
+	/**
+	 * This keeps track of the one adapter used for all {@link org.earthsystemcurator.cupid.nuopc.fsml.nuopc.NUOPCMediator__ImplementsInitP1} instances.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	protected NUOPCMediator__ImplementsInitP1ItemProvider nuopcMediator__ImplementsInitP1ItemProvider;
+
+	/**
+	 * This creates an adapter for a {@link org.earthsystemcurator.cupid.nuopc.fsml.nuopc.NUOPCMediator__ImplementsInitP1}.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	@Override
+	public Adapter createNUOPCMediator__ImplementsInitP1Adapter() {
+		if (nuopcMediator__ImplementsInitP1ItemProvider == null) {
+			nuopcMediator__ImplementsInitP1ItemProvider = new NUOPCMediator__ImplementsInitP1ItemProvider(this);
+		}
+
+		return nuopcMediator__ImplementsInitP1ItemProvider;
+	}
+
+	/**
+	 * This keeps track of the one adapter used for all {@link org.earthsystemcurator.cupid.nuopc.fsml.nuopc.NUOPCMediator__ImplementsInitP2} instances.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	protected NUOPCMediator__ImplementsInitP2ItemProvider nuopcMediator__ImplementsInitP2ItemProvider;
+
+	/**
+	 * This creates an adapter for a {@link org.earthsystemcurator.cupid.nuopc.fsml.nuopc.NUOPCMediator__ImplementsInitP2}.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	@Override
+	public Adapter createNUOPCMediator__ImplementsInitP2Adapter() {
+		if (nuopcMediator__ImplementsInitP2ItemProvider == null) {
+			nuopcMediator__ImplementsInitP2ItemProvider = new NUOPCMediator__ImplementsInitP2ItemProvider(this);
+		}
+
+		return nuopcMediator__ImplementsInitP2ItemProvider;
+	}
+
+	/**
+	 * This keeps track of the one adapter used for all {@link org.earthsystemcurator.cupid.nuopc.fsml.nuopc.NUOPCMediator__AdvertisesImportField} instances.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	protected NUOPCMediator__AdvertisesImportFieldItemProvider nuopcMediator__AdvertisesImportFieldItemProvider;
+
+	/**
+	 * This creates an adapter for a {@link org.earthsystemcurator.cupid.nuopc.fsml.nuopc.NUOPCMediator__AdvertisesImportField}.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	@Override
+	public Adapter createNUOPCMediator__AdvertisesImportFieldAdapter() {
+		if (nuopcMediator__AdvertisesImportFieldItemProvider == null) {
+			nuopcMediator__AdvertisesImportFieldItemProvider = new NUOPCMediator__AdvertisesImportFieldItemProvider(this);
+		}
+
+		return nuopcMediator__AdvertisesImportFieldItemProvider;
+	}
+
+	/**
+	 * This keeps track of the one adapter used for all {@link org.earthsystemcurator.cupid.nuopc.fsml.nuopc.NUOPCMediator__AdvertisesExportField} instances.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	protected NUOPCMediator__AdvertisesExportFieldItemProvider nuopcMediator__AdvertisesExportFieldItemProvider;
+
+	/**
+	 * This creates an adapter for a {@link org.earthsystemcurator.cupid.nuopc.fsml.nuopc.NUOPCMediator__AdvertisesExportField}.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	@Override
+	public Adapter createNUOPCMediator__AdvertisesExportFieldAdapter() {
+		if (nuopcMediator__AdvertisesExportFieldItemProvider == null) {
+			nuopcMediator__AdvertisesExportFieldItemProvider = new NUOPCMediator__AdvertisesExportFieldItemProvider(this);
+		}
+
+		return nuopcMediator__AdvertisesExportFieldItemProvider;
+	}
+
+	/**
+	 * This keeps track of the one adapter used for all {@link org.earthsystemcurator.cupid.nuopc.fsml.nuopc.NUOPCMediator__RealizesImportField} instances.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	protected NUOPCMediator__RealizesImportFieldItemProvider nuopcMediator__RealizesImportFieldItemProvider;
+
+	/**
+	 * This creates an adapter for a {@link org.earthsystemcurator.cupid.nuopc.fsml.nuopc.NUOPCMediator__RealizesImportField}.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	@Override
+	public Adapter createNUOPCMediator__RealizesImportFieldAdapter() {
+		if (nuopcMediator__RealizesImportFieldItemProvider == null) {
+			nuopcMediator__RealizesImportFieldItemProvider = new NUOPCMediator__RealizesImportFieldItemProvider(this);
+		}
+
+		return nuopcMediator__RealizesImportFieldItemProvider;
+	}
+
+	/**
+	 * This keeps track of the one adapter used for all {@link org.earthsystemcurator.cupid.nuopc.fsml.nuopc.NUOPCMediator__RealizesExportField} instances.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	protected NUOPCMediator__RealizesExportFieldItemProvider nuopcMediator__RealizesExportFieldItemProvider;
+
+	/**
+	 * This creates an adapter for a {@link org.earthsystemcurator.cupid.nuopc.fsml.nuopc.NUOPCMediator__RealizesExportField}.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	@Override
+	public Adapter createNUOPCMediator__RealizesExportFieldAdapter() {
+		if (nuopcMediator__RealizesExportFieldItemProvider == null) {
+			nuopcMediator__RealizesExportFieldItemProvider = new NUOPCMediator__RealizesExportFieldItemProvider(this);
+		}
+
+		return nuopcMediator__RealizesExportFieldItemProvider;
+	}
+
+	/**
+	 * This keeps track of the one adapter used for all {@link org.earthsystemcurator.cupid.nuopc.fsml.nuopc.NUOPCMediator__ModelAdvance} instances.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	protected NUOPCMediator__ModelAdvanceItemProvider nuopcMediator__ModelAdvanceItemProvider;
+
+	/**
+	 * This creates an adapter for a {@link org.earthsystemcurator.cupid.nuopc.fsml.nuopc.NUOPCMediator__ModelAdvance}.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	@Override
+	public Adapter createNUOPCMediator__ModelAdvanceAdapter() {
+		if (nuopcMediator__ModelAdvanceItemProvider == null) {
+			nuopcMediator__ModelAdvanceItemProvider = new NUOPCMediator__ModelAdvanceItemProvider(this);
+		}
+
+		return nuopcMediator__ModelAdvanceItemProvider;
+	}
+
+	/**
 	 * This keeps track of the one adapter used for all {@link org.earthsystemcurator.cupid.nuopc.fsml.nuopc.NUOPCApplication} instances.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -693,6 +992,52 @@ public class NUOPCItemProviderAdapterFactory extends NUOPCAdapterFactory impleme
 	}
 
 	/**
+	 * This keeps track of the one adapter used for all {@link org.earthsystemcurator.cupid.nuopc.fsml.nuopc.NUOPCDriverAtmOcn__GenericImports} instances.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	protected NUOPCDriverAtmOcn__GenericImportsItemProvider nuopcDriverAtmOcn__GenericImportsItemProvider;
+
+	/**
+	 * This creates an adapter for a {@link org.earthsystemcurator.cupid.nuopc.fsml.nuopc.NUOPCDriverAtmOcn__GenericImports}.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	@Override
+	public Adapter createNUOPCDriverAtmOcn__GenericImportsAdapter() {
+		if (nuopcDriverAtmOcn__GenericImportsItemProvider == null) {
+			nuopcDriverAtmOcn__GenericImportsItemProvider = new NUOPCDriverAtmOcn__GenericImportsItemProvider(this);
+		}
+
+		return nuopcDriverAtmOcn__GenericImportsItemProvider;
+	}
+
+	/**
+	 * This keeps track of the one adapter used for all {@link org.earthsystemcurator.cupid.nuopc.fsml.nuopc.NUOPCDriverAtmOcn__ModelImports} instances.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	protected NUOPCDriverAtmOcn__ModelImportsItemProvider nuopcDriverAtmOcn__ModelImportsItemProvider;
+
+	/**
+	 * This creates an adapter for a {@link org.earthsystemcurator.cupid.nuopc.fsml.nuopc.NUOPCDriverAtmOcn__ModelImports}.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	@Override
+	public Adapter createNUOPCDriverAtmOcn__ModelImportsAdapter() {
+		if (nuopcDriverAtmOcn__ModelImportsItemProvider == null) {
+			nuopcDriverAtmOcn__ModelImportsItemProvider = new NUOPCDriverAtmOcn__ModelImportsItemProvider(this);
+		}
+
+		return nuopcDriverAtmOcn__ModelImportsItemProvider;
+	}
+
+	/**
 	 * This keeps track of the one adapter used for all {@link org.earthsystemcurator.cupid.nuopc.fsml.nuopc.NUOPCDriverAtmOcn__ImplementsSetServices} instances.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -713,6 +1058,75 @@ public class NUOPCItemProviderAdapterFactory extends NUOPCAdapterFactory impleme
 		}
 
 		return nuopcDriverAtmOcn__ImplementsSetServicesItemProvider;
+	}
+
+	/**
+	 * This keeps track of the one adapter used for all {@link org.earthsystemcurator.cupid.nuopc.fsml.nuopc.NUOPCDriverAtmOcn__ImplementsSetModelCount} instances.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	protected NUOPCDriverAtmOcn__ImplementsSetModelCountItemProvider nuopcDriverAtmOcn__ImplementsSetModelCountItemProvider;
+
+	/**
+	 * This creates an adapter for a {@link org.earthsystemcurator.cupid.nuopc.fsml.nuopc.NUOPCDriverAtmOcn__ImplementsSetModelCount}.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	@Override
+	public Adapter createNUOPCDriverAtmOcn__ImplementsSetModelCountAdapter() {
+		if (nuopcDriverAtmOcn__ImplementsSetModelCountItemProvider == null) {
+			nuopcDriverAtmOcn__ImplementsSetModelCountItemProvider = new NUOPCDriverAtmOcn__ImplementsSetModelCountItemProvider(this);
+		}
+
+		return nuopcDriverAtmOcn__ImplementsSetModelCountItemProvider;
+	}
+
+	/**
+	 * This keeps track of the one adapter used for all {@link org.earthsystemcurator.cupid.nuopc.fsml.nuopc.NUOPCDriverAtmOcn__ImplementsSetModelServices} instances.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	protected NUOPCDriverAtmOcn__ImplementsSetModelServicesItemProvider nuopcDriverAtmOcn__ImplementsSetModelServicesItemProvider;
+
+	/**
+	 * This creates an adapter for a {@link org.earthsystemcurator.cupid.nuopc.fsml.nuopc.NUOPCDriverAtmOcn__ImplementsSetModelServices}.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	@Override
+	public Adapter createNUOPCDriverAtmOcn__ImplementsSetModelServicesAdapter() {
+		if (nuopcDriverAtmOcn__ImplementsSetModelServicesItemProvider == null) {
+			nuopcDriverAtmOcn__ImplementsSetModelServicesItemProvider = new NUOPCDriverAtmOcn__ImplementsSetModelServicesItemProvider(this);
+		}
+
+		return nuopcDriverAtmOcn__ImplementsSetModelServicesItemProvider;
+	}
+
+	/**
+	 * This keeps track of the one adapter used for all {@link org.earthsystemcurator.cupid.nuopc.fsml.nuopc.NUOPCDriverAtmOcn__ModelImports__ModelImport} instances.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	protected NUOPCDriverAtmOcn__ModelImports__ModelImportItemProvider nuopcDriverAtmOcn__ModelImports__ModelImportItemProvider;
+
+	/**
+	 * This creates an adapter for a {@link org.earthsystemcurator.cupid.nuopc.fsml.nuopc.NUOPCDriverAtmOcn__ModelImports__ModelImport}.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	@Override
+	public Adapter createNUOPCDriverAtmOcn__ModelImports__ModelImportAdapter() {
+		if (nuopcDriverAtmOcn__ModelImports__ModelImportItemProvider == null) {
+			nuopcDriverAtmOcn__ModelImports__ModelImportItemProvider = new NUOPCDriverAtmOcn__ModelImports__ModelImportItemProvider(this);
+		}
+
+		return nuopcDriverAtmOcn__ModelImports__ModelImportItemProvider;
 	}
 
 	/**
@@ -814,34 +1228,52 @@ public class NUOPCItemProviderAdapterFactory extends NUOPCAdapterFactory impleme
 	 * @generated
 	 */
 	public void dispose() {
+		if (topItemProvider != null) topItemProvider.dispose();
+		if (nuopcApplicationItemProvider != null) nuopcApplicationItemProvider.dispose();
 		if (nuopcModelItemProvider != null) nuopcModelItemProvider.dispose();
 		if (nuopcModel__GenericImportsItemProvider != null) nuopcModel__GenericImportsItemProvider.dispose();
-		if (model_InitItemProvider != null) model_InitItemProvider.dispose();
-		if (modelImplementsSetServicesItemProvider != null) modelImplementsSetServicesItemProvider.dispose();
-		if (callsGenericSetServicesItemProvider != null) callsGenericSetServicesItemProvider.dispose();
-		if (callsSetEntryPointItemProvider != null) callsSetEntryPointItemProvider.dispose();
-		if (modelImplementsInitP1ItemProvider != null) modelImplementsInitP1ItemProvider.dispose();
-		if (modelImplementsInitP2ItemProvider != null) modelImplementsInitP2ItemProvider.dispose();
-		if (advertisesImportFieldItemProvider != null) advertisesImportFieldItemProvider.dispose();
-		if (advertisesExportFieldItemProvider != null) advertisesExportFieldItemProvider.dispose();
-		if (realizesImportFieldItemProvider != null) realizesImportFieldItemProvider.dispose();
-		if (realizesExportFieldItemProvider != null) realizesExportFieldItemProvider.dispose();
-		if (modelAdvanceItemProvider != null) modelAdvanceItemProvider.dispose();
+		if (nuopcModel__InitItemProvider != null) nuopcModel__InitItemProvider.dispose();
+		if (nuopcModel__ImplementsSetServicesItemProvider != null) nuopcModel__ImplementsSetServicesItemProvider.dispose();
+		if (nuopcModel__ImplementsInitP1ItemProvider != null) nuopcModel__ImplementsInitP1ItemProvider.dispose();
+		if (nuopcModel__ImplementsInitP2ItemProvider != null) nuopcModel__ImplementsInitP2ItemProvider.dispose();
+		if (nuopcModel__AdvertisesImportFieldItemProvider != null) nuopcModel__AdvertisesImportFieldItemProvider.dispose();
+		if (nuopcModel__AdvertisesExportFieldItemProvider != null) nuopcModel__AdvertisesExportFieldItemProvider.dispose();
+		if (nuopcModel__RealizesImportFieldItemProvider != null) nuopcModel__RealizesImportFieldItemProvider.dispose();
+		if (nuopcModel__RealizesExportFieldItemProvider != null) nuopcModel__RealizesExportFieldItemProvider.dispose();
+		if (nuopcModel__ModelAdvanceItemProvider != null) nuopcModel__ModelAdvanceItemProvider.dispose();
 		if (nuopcDriverItemProvider != null) nuopcDriverItemProvider.dispose();
 		if (nuopcDriver__GenericImportsItemProvider != null) nuopcDriver__GenericImportsItemProvider.dispose();
 		if (nuopcDriver__ModelImportsItemProvider != null) nuopcDriver__ModelImportsItemProvider.dispose();
-		if (modelImportItemProvider != null) modelImportItemProvider.dispose();
+		if (nuopcDriver__ModelImports__ModelImportItemProvider != null) nuopcDriver__ModelImports__ModelImportItemProvider.dispose();
+		if (nuopcDriver__ConnectorImportsItemProvider != null) nuopcDriver__ConnectorImportsItemProvider.dispose();
+		if (nuopcDriver__ConnectorImports__ConnectorImportItemProvider != null) nuopcDriver__ConnectorImports__ConnectorImportItemProvider.dispose();
 		if (nuopcDriver__ImplementsSetServicesItemProvider != null) nuopcDriver__ImplementsSetServicesItemProvider.dispose();
-		if (attachesMethodItemProvider != null) attachesMethodItemProvider.dispose();
 		if (nuopcDriver__ImplementsSetModelCountItemProvider != null) nuopcDriver__ImplementsSetModelCountItemProvider.dispose();
 		if (nuopcDriver__ImplementsSetModelServicesItemProvider != null) nuopcDriver__ImplementsSetModelServicesItemProvider.dispose();
+		if (nuopcDriverAtmOcnItemProvider != null) nuopcDriverAtmOcnItemProvider.dispose();
+		if (nuopcDriverAtmOcn__GenericImportsItemProvider != null) nuopcDriverAtmOcn__GenericImportsItemProvider.dispose();
+		if (nuopcDriverAtmOcn__ModelImportsItemProvider != null) nuopcDriverAtmOcn__ModelImportsItemProvider.dispose();
+		if (nuopcDriverAtmOcn__ImplementsSetServicesItemProvider != null) nuopcDriverAtmOcn__ImplementsSetServicesItemProvider.dispose();
+		if (nuopcDriverAtmOcn__ImplementsSetModelCountItemProvider != null) nuopcDriverAtmOcn__ImplementsSetModelCountItemProvider.dispose();
+		if (nuopcDriverAtmOcn__ImplementsSetModelServicesItemProvider != null) nuopcDriverAtmOcn__ImplementsSetModelServicesItemProvider.dispose();
+		if (nuopcDriverAtmOcn__ModelImports__ModelImportItemProvider != null) nuopcDriverAtmOcn__ModelImports__ModelImportItemProvider.dispose();
+		if (callsGenericSetServicesItemProvider != null) callsGenericSetServicesItemProvider.dispose();
+		if (callsSetEntryPointItemProvider != null) callsSetEntryPointItemProvider.dispose();
+		if (attachesMethodItemProvider != null) attachesMethodItemProvider.dispose();
 		if (setModelServicesItemProvider != null) setModelServicesItemProvider.dispose();
 		if (setCouplerServicesItemProvider != null) setCouplerServicesItemProvider.dispose();
 		if (getsInternalStateItemProvider != null) getsInternalStateItemProvider.dispose();
-		if (nuopcApplicationItemProvider != null) nuopcApplicationItemProvider.dispose();
-		if (topItemProvider != null) topItemProvider.dispose();
-		if (nuopcDriverAtmOcnItemProvider != null) nuopcDriverAtmOcnItemProvider.dispose();
-		if (nuopcDriverAtmOcn__ImplementsSetServicesItemProvider != null) nuopcDriverAtmOcn__ImplementsSetServicesItemProvider.dispose();
+		if (nuopcMediatorItemProvider != null) nuopcMediatorItemProvider.dispose();
+		if (nuopcMediator__GenericImportsItemProvider != null) nuopcMediator__GenericImportsItemProvider.dispose();
+		if (nuopcMediator__InitItemProvider != null) nuopcMediator__InitItemProvider.dispose();
+		if (nuopcMediator__ImplementsSetServicesItemProvider != null) nuopcMediator__ImplementsSetServicesItemProvider.dispose();
+		if (nuopcMediator__ImplementsInitP1ItemProvider != null) nuopcMediator__ImplementsInitP1ItemProvider.dispose();
+		if (nuopcMediator__ImplementsInitP2ItemProvider != null) nuopcMediator__ImplementsInitP2ItemProvider.dispose();
+		if (nuopcMediator__AdvertisesImportFieldItemProvider != null) nuopcMediator__AdvertisesImportFieldItemProvider.dispose();
+		if (nuopcMediator__AdvertisesExportFieldItemProvider != null) nuopcMediator__AdvertisesExportFieldItemProvider.dispose();
+		if (nuopcMediator__RealizesImportFieldItemProvider != null) nuopcMediator__RealizesImportFieldItemProvider.dispose();
+		if (nuopcMediator__RealizesExportFieldItemProvider != null) nuopcMediator__RealizesExportFieldItemProvider.dispose();
+		if (nuopcMediator__ModelAdvanceItemProvider != null) nuopcMediator__ModelAdvanceItemProvider.dispose();
 	}
 
 }
