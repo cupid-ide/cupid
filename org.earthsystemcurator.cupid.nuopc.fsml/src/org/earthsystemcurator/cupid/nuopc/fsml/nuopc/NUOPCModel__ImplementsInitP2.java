@@ -72,7 +72,6 @@ public interface NUOPCModel__ImplementsInitP2 extends EObject {
 	 * @see #setName(String)
 	 * @see org.earthsystemcurator.cupid.nuopc.fsml.nuopc.NUOPCPackage#getNUOPCModel__ImplementsInitP2_Name()
 	 * @model default="InitP2" required="true"
-	 *        annotation="http://www.earthsystemcog.org/projects/nuopc mappingX='subroutineName'"
 	 * @generated
 	 */
 	String getName();
@@ -100,7 +99,6 @@ public interface NUOPCModel__ImplementsInitP2 extends EObject {
 	 * @see #setImportParam(String)
 	 * @see org.earthsystemcurator.cupid.nuopc.fsml.nuopc.NUOPCPackage#getNUOPCModel__ImplementsInitP2_ImportParam()
 	 * @model default="importState" required="true"
-	 *        annotation="http://www.earthsystemcog.org/projects/nuopc mappingX='formalParam: 2'"
 	 * @generated
 	 */
 	String getImportParam();
@@ -128,7 +126,6 @@ public interface NUOPCModel__ImplementsInitP2 extends EObject {
 	 * @see #setExportParam(String)
 	 * @see org.earthsystemcurator.cupid.nuopc.fsml.nuopc.NUOPCPackage#getNUOPCModel__ImplementsInitP2_ExportParam()
 	 * @model default="exportState" required="true"
-	 *        annotation="http://www.earthsystemcog.org/projects/nuopc mappingX='formalParam: 3'"
 	 * @generated
 	 */
 	String getExportParam();

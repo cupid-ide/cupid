@@ -274,6 +274,15 @@ public interface NUOPCFactory extends EFactory {
 	NUOPCDriverAtmOcn__ImplementsSetModelServices createNUOPCDriverAtmOcn__ImplementsSetModelServices();
 
 	/**
+	 * Returns a new object of class '<em>Driver Atm Ocn Implements Set Model Pet Lists</em>'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return a new object of class '<em>Driver Atm Ocn Implements Set Model Pet Lists</em>'.
+	 * @generated
+	 */
+	NUOPCDriverAtmOcn__ImplementsSetModelPetLists createNUOPCDriverAtmOcn__ImplementsSetModelPetLists();
+
+	/**
 	 * Returns a new object of class '<em>Driver Atm Ocn Model Imports Model Import</em>'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->

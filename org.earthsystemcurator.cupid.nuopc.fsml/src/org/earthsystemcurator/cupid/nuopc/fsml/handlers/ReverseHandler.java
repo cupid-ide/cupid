@@ -207,7 +207,7 @@ public class ReverseHandler extends AbstractHandler {
 	                
 	                if (problemRef != null && problemRef instanceof EReference) {
 		                
-	                	final EObject eobj = (EObject) problemElem;
+ 	                	final EObject eobj = (EObject) problemElem;
 	                	final EReference eref = (EReference) problemRef;
 	                	
 		                nature.markerFixes.put(marker, new IMarkerResolution() {

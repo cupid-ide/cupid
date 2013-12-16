@@ -19,6 +19,7 @@ import org.eclipse.emf.ecore.EObject;
  *   <li>{@link org.earthsystemcurator.cupid.nuopc.fsml.nuopc.NUOPCDriverAtmOcn#getImplementsSetServices <em>Implements Set Services</em>}</li>
  *   <li>{@link org.earthsystemcurator.cupid.nuopc.fsml.nuopc.NUOPCDriverAtmOcn#getImplementsSetModelCount <em>Implements Set Model Count</em>}</li>
  *   <li>{@link org.earthsystemcurator.cupid.nuopc.fsml.nuopc.NUOPCDriverAtmOcn#getImplementsSetModelServices <em>Implements Set Model Services</em>}</li>
+ *   <li>{@link org.earthsystemcurator.cupid.nuopc.fsml.nuopc.NUOPCDriverAtmOcn#getImplementsSetModelPetLists <em>Implements Set Model Pet Lists</em>}</li>
  * </ul>
  * </p>
  *
@@ -223,5 +224,34 @@ public interface NUOPCDriverAtmOcn extends EObject {
 	 * @generated
 	 */
 	void setImplementsSetModelServices(NUOPCDriverAtmOcn__ImplementsSetModelServices value);
+
+	/**
+	 * Returns the value of the '<em><b>Implements Set Model Pet Lists</b></em>' containment reference.
+	 * It is bidirectional and its opposite is '{@link org.earthsystemcurator.cupid.nuopc.fsml.nuopc.NUOPCDriverAtmOcn__ImplementsSetModelPetLists#getParent <em>Parent</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <p>
+	 * If the meaning of the '<em>Implements Set Model Pet Lists</em>' containment reference isn't clear,
+	 * there really should be more of a description here...
+	 * </p>
+	 * <!-- end-user-doc -->
+	 * @return the value of the '<em>Implements Set Model Pet Lists</em>' containment reference.
+	 * @see #setImplementsSetModelPetLists(NUOPCDriverAtmOcn__ImplementsSetModelPetLists)
+	 * @see org.earthsystemcurator.cupid.nuopc.fsml.nuopc.NUOPCPackage#getNUOPCDriverAtmOcn_ImplementsSetModelPetLists()
+	 * @see org.earthsystemcurator.cupid.nuopc.fsml.nuopc.NUOPCDriverAtmOcn__ImplementsSetModelPetLists#getParent
+	 * @model opposite="parent" containment="true"
+	 *        annotation="http://www.earthsystemcog.org/projects/nuopc mapping='subroutine: \"#name(type(ESMF_GridComp) #gcomp, integer #rc)\"'"
+	 * @generated
+	 */
+	NUOPCDriverAtmOcn__ImplementsSetModelPetLists getImplementsSetModelPetLists();
+
+	/**
+	 * Sets the value of the '{@link org.earthsystemcurator.cupid.nuopc.fsml.nuopc.NUOPCDriverAtmOcn#getImplementsSetModelPetLists <em>Implements Set Model Pet Lists</em>}' containment reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @param value the new value of the '<em>Implements Set Model Pet Lists</em>' containment reference.
+	 * @see #getImplementsSetModelPetLists()
+	 * @generated
+	 */
+	void setImplementsSetModelPetLists(NUOPCDriverAtmOcn__ImplementsSetModelPetLists value);
 
 } // NUOPCDriverAtmOcn

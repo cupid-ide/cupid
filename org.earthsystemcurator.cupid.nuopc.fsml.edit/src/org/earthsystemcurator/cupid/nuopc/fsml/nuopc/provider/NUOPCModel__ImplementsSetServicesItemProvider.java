@@ -64,8 +64,8 @@ public class NUOPCModel__ImplementsSetServicesItemProvider
 			super.getPropertyDescriptors(object);
 
 			addNamePropertyDescriptor(object);
-			addParam_gcompPropertyDescriptor(object);
-			addParam_rcPropertyDescriptor(object);
+			addGcompPropertyDescriptor(object);
+			addRcPropertyDescriptor(object);
 		}
 		return itemPropertyDescriptors;
 	}
@@ -93,19 +93,19 @@ public class NUOPCModel__ImplementsSetServicesItemProvider
 	}
 
 	/**
-	 * This adds a property descriptor for the Param gcomp feature.
+	 * This adds a property descriptor for the Gcomp feature.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	protected void addParam_gcompPropertyDescriptor(Object object) {
+	protected void addGcompPropertyDescriptor(Object object) {
 		itemPropertyDescriptors.add
 			(createItemPropertyDescriptor
 				(((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(),
 				 getResourceLocator(),
-				 getString("_UI_NUOPCModel__ImplementsSetServices_param_gcomp_feature"),
-				 getString("_UI_PropertyDescriptor_description", "_UI_NUOPCModel__ImplementsSetServices_param_gcomp_feature", "_UI_NUOPCModel__ImplementsSetServices_type"),
-				 NUOPCPackage.Literals.NUOPC_MODEL_IMPLEMENTS_SET_SERVICES__PARAM_GCOMP,
+				 getString("_UI_NUOPCModel__ImplementsSetServices_gcomp_feature"),
+				 getString("_UI_PropertyDescriptor_description", "_UI_NUOPCModel__ImplementsSetServices_gcomp_feature", "_UI_NUOPCModel__ImplementsSetServices_type"),
+				 NUOPCPackage.Literals.NUOPC_MODEL_IMPLEMENTS_SET_SERVICES__GCOMP,
 				 true,
 				 false,
 				 false,
@@ -115,19 +115,19 @@ public class NUOPCModel__ImplementsSetServicesItemProvider
 	}
 
 	/**
-	 * This adds a property descriptor for the Param rc feature.
+	 * This adds a property descriptor for the Rc feature.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	protected void addParam_rcPropertyDescriptor(Object object) {
+	protected void addRcPropertyDescriptor(Object object) {
 		itemPropertyDescriptors.add
 			(createItemPropertyDescriptor
 				(((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(),
 				 getResourceLocator(),
-				 getString("_UI_NUOPCModel__ImplementsSetServices_param_rc_feature"),
-				 getString("_UI_PropertyDescriptor_description", "_UI_NUOPCModel__ImplementsSetServices_param_rc_feature", "_UI_NUOPCModel__ImplementsSetServices_type"),
-				 NUOPCPackage.Literals.NUOPC_MODEL_IMPLEMENTS_SET_SERVICES__PARAM_RC,
+				 getString("_UI_NUOPCModel__ImplementsSetServices_rc_feature"),
+				 getString("_UI_PropertyDescriptor_description", "_UI_NUOPCModel__ImplementsSetServices_rc_feature", "_UI_NUOPCModel__ImplementsSetServices_type"),
+				 NUOPCPackage.Literals.NUOPC_MODEL_IMPLEMENTS_SET_SERVICES__RC,
 				 true,
 				 false,
 				 false,
@@ -206,8 +206,8 @@ public class NUOPCModel__ImplementsSetServicesItemProvider
 
 		switch (notification.getFeatureID(NUOPCModel__ImplementsSetServices.class)) {
 			case NUOPCPackage.NUOPC_MODEL_IMPLEMENTS_SET_SERVICES__NAME:
-			case NUOPCPackage.NUOPC_MODEL_IMPLEMENTS_SET_SERVICES__PARAM_GCOMP:
-			case NUOPCPackage.NUOPC_MODEL_IMPLEMENTS_SET_SERVICES__PARAM_RC:
+			case NUOPCPackage.NUOPC_MODEL_IMPLEMENTS_SET_SERVICES__GCOMP:
+			case NUOPCPackage.NUOPC_MODEL_IMPLEMENTS_SET_SERVICES__RC:
 				fireNotifyChanged(new ViewerNotification(notification, notification.getNotifier(), false, true));
 				return;
 			case NUOPCPackage.NUOPC_MODEL_IMPLEMENTS_SET_SERVICES__CALLS_GENERIC_SET_SERVICES:

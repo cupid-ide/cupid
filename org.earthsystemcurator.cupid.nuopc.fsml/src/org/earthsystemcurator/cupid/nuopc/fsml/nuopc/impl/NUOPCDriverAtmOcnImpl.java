@@ -6,6 +6,7 @@ import org.earthsystemcurator.cupid.nuopc.fsml.nuopc.NUOPCApplication;
 import org.earthsystemcurator.cupid.nuopc.fsml.nuopc.NUOPCDriverAtmOcn;
 import org.earthsystemcurator.cupid.nuopc.fsml.nuopc.NUOPCDriverAtmOcn__GenericImports;
 import org.earthsystemcurator.cupid.nuopc.fsml.nuopc.NUOPCDriverAtmOcn__ImplementsSetModelCount;
+import org.earthsystemcurator.cupid.nuopc.fsml.nuopc.NUOPCDriverAtmOcn__ImplementsSetModelPetLists;
 import org.earthsystemcurator.cupid.nuopc.fsml.nuopc.NUOPCDriverAtmOcn__ImplementsSetModelServices;
 import org.earthsystemcurator.cupid.nuopc.fsml.nuopc.NUOPCDriverAtmOcn__ImplementsSetServices;
 import org.earthsystemcurator.cupid.nuopc.fsml.nuopc.NUOPCDriverAtmOcn__ModelImports;
@@ -36,6 +37,7 @@ import org.eclipse.emf.ecore.util.EcoreUtil;
  *   <li>{@link org.earthsystemcurator.cupid.nuopc.fsml.nuopc.impl.NUOPCDriverAtmOcnImpl#getImplementsSetServices <em>Implements Set Services</em>}</li>
  *   <li>{@link org.earthsystemcurator.cupid.nuopc.fsml.nuopc.impl.NUOPCDriverAtmOcnImpl#getImplementsSetModelCount <em>Implements Set Model Count</em>}</li>
  *   <li>{@link org.earthsystemcurator.cupid.nuopc.fsml.nuopc.impl.NUOPCDriverAtmOcnImpl#getImplementsSetModelServices <em>Implements Set Model Services</em>}</li>
+ *   <li>{@link org.earthsystemcurator.cupid.nuopc.fsml.nuopc.impl.NUOPCDriverAtmOcnImpl#getImplementsSetModelPetLists <em>Implements Set Model Pet Lists</em>}</li>
  * </ul>
  * </p>
  *
@@ -111,6 +113,16 @@ public class NUOPCDriverAtmOcnImpl extends EObjectImpl implements NUOPCDriverAtm
 	 * @ordered
 	 */
 	protected NUOPCDriverAtmOcn__ImplementsSetModelServices implementsSetModelServices;
+
+	/**
+	 * The cached value of the '{@link #getImplementsSetModelPetLists() <em>Implements Set Model Pet Lists</em>}' containment reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #getImplementsSetModelPetLists()
+	 * @generated
+	 * @ordered
+	 */
+	protected NUOPCDriverAtmOcn__ImplementsSetModelPetLists implementsSetModelPetLists;
 
 	/**
 	 * <!-- begin-user-doc -->
@@ -413,6 +425,49 @@ public class NUOPCDriverAtmOcnImpl extends EObjectImpl implements NUOPCDriverAtm
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	public NUOPCDriverAtmOcn__ImplementsSetModelPetLists getImplementsSetModelPetLists() {
+		return implementsSetModelPetLists;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public NotificationChain basicSetImplementsSetModelPetLists(NUOPCDriverAtmOcn__ImplementsSetModelPetLists newImplementsSetModelPetLists, NotificationChain msgs) {
+		NUOPCDriverAtmOcn__ImplementsSetModelPetLists oldImplementsSetModelPetLists = implementsSetModelPetLists;
+		implementsSetModelPetLists = newImplementsSetModelPetLists;
+		if (eNotificationRequired()) {
+			ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, NUOPCPackage.NUOPC_DRIVER_ATM_OCN__IMPLEMENTS_SET_MODEL_PET_LISTS, oldImplementsSetModelPetLists, newImplementsSetModelPetLists);
+			if (msgs == null) msgs = notification; else msgs.add(notification);
+		}
+		return msgs;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public void setImplementsSetModelPetLists(NUOPCDriverAtmOcn__ImplementsSetModelPetLists newImplementsSetModelPetLists) {
+		if (newImplementsSetModelPetLists != implementsSetModelPetLists) {
+			NotificationChain msgs = null;
+			if (implementsSetModelPetLists != null)
+				msgs = ((InternalEObject)implementsSetModelPetLists).eInverseRemove(this, NUOPCPackage.NUOPC_DRIVER_ATM_OCN_IMPLEMENTS_SET_MODEL_PET_LISTS__PARENT, NUOPCDriverAtmOcn__ImplementsSetModelPetLists.class, msgs);
+			if (newImplementsSetModelPetLists != null)
+				msgs = ((InternalEObject)newImplementsSetModelPetLists).eInverseAdd(this, NUOPCPackage.NUOPC_DRIVER_ATM_OCN_IMPLEMENTS_SET_MODEL_PET_LISTS__PARENT, NUOPCDriverAtmOcn__ImplementsSetModelPetLists.class, msgs);
+			msgs = basicSetImplementsSetModelPetLists(newImplementsSetModelPetLists, msgs);
+			if (msgs != null) msgs.dispatch();
+		}
+		else if (eNotificationRequired())
+			eNotify(new ENotificationImpl(this, Notification.SET, NUOPCPackage.NUOPC_DRIVER_ATM_OCN__IMPLEMENTS_SET_MODEL_PET_LISTS, newImplementsSetModelPetLists, newImplementsSetModelPetLists));
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
 	@Override
 	public NotificationChain eInverseAdd(InternalEObject otherEnd, int featureID, NotificationChain msgs) {
 		switch (featureID) {
@@ -436,6 +491,10 @@ public class NUOPCDriverAtmOcnImpl extends EObjectImpl implements NUOPCDriverAtm
 				if (implementsSetModelServices != null)
 					msgs = ((InternalEObject)implementsSetModelServices).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - NUOPCPackage.NUOPC_DRIVER_ATM_OCN__IMPLEMENTS_SET_MODEL_SERVICES, null, msgs);
 				return basicSetImplementsSetModelServices((NUOPCDriverAtmOcn__ImplementsSetModelServices)otherEnd, msgs);
+			case NUOPCPackage.NUOPC_DRIVER_ATM_OCN__IMPLEMENTS_SET_MODEL_PET_LISTS:
+				if (implementsSetModelPetLists != null)
+					msgs = ((InternalEObject)implementsSetModelPetLists).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - NUOPCPackage.NUOPC_DRIVER_ATM_OCN__IMPLEMENTS_SET_MODEL_PET_LISTS, null, msgs);
+				return basicSetImplementsSetModelPetLists((NUOPCDriverAtmOcn__ImplementsSetModelPetLists)otherEnd, msgs);
 		}
 		return super.eInverseAdd(otherEnd, featureID, msgs);
 	}
@@ -460,6 +519,8 @@ public class NUOPCDriverAtmOcnImpl extends EObjectImpl implements NUOPCDriverAtm
 				return basicSetImplementsSetModelCount(null, msgs);
 			case NUOPCPackage.NUOPC_DRIVER_ATM_OCN__IMPLEMENTS_SET_MODEL_SERVICES:
 				return basicSetImplementsSetModelServices(null, msgs);
+			case NUOPCPackage.NUOPC_DRIVER_ATM_OCN__IMPLEMENTS_SET_MODEL_PET_LISTS:
+				return basicSetImplementsSetModelPetLists(null, msgs);
 		}
 		return super.eInverseRemove(otherEnd, featureID, msgs);
 	}
@@ -500,6 +561,8 @@ public class NUOPCDriverAtmOcnImpl extends EObjectImpl implements NUOPCDriverAtm
 				return getImplementsSetModelCount();
 			case NUOPCPackage.NUOPC_DRIVER_ATM_OCN__IMPLEMENTS_SET_MODEL_SERVICES:
 				return getImplementsSetModelServices();
+			case NUOPCPackage.NUOPC_DRIVER_ATM_OCN__IMPLEMENTS_SET_MODEL_PET_LISTS:
+				return getImplementsSetModelPetLists();
 		}
 		return super.eGet(featureID, resolve, coreType);
 	}
@@ -532,6 +595,9 @@ public class NUOPCDriverAtmOcnImpl extends EObjectImpl implements NUOPCDriverAtm
 				return;
 			case NUOPCPackage.NUOPC_DRIVER_ATM_OCN__IMPLEMENTS_SET_MODEL_SERVICES:
 				setImplementsSetModelServices((NUOPCDriverAtmOcn__ImplementsSetModelServices)newValue);
+				return;
+			case NUOPCPackage.NUOPC_DRIVER_ATM_OCN__IMPLEMENTS_SET_MODEL_PET_LISTS:
+				setImplementsSetModelPetLists((NUOPCDriverAtmOcn__ImplementsSetModelPetLists)newValue);
 				return;
 		}
 		super.eSet(featureID, newValue);
@@ -566,6 +632,9 @@ public class NUOPCDriverAtmOcnImpl extends EObjectImpl implements NUOPCDriverAtm
 			case NUOPCPackage.NUOPC_DRIVER_ATM_OCN__IMPLEMENTS_SET_MODEL_SERVICES:
 				setImplementsSetModelServices((NUOPCDriverAtmOcn__ImplementsSetModelServices)null);
 				return;
+			case NUOPCPackage.NUOPC_DRIVER_ATM_OCN__IMPLEMENTS_SET_MODEL_PET_LISTS:
+				setImplementsSetModelPetLists((NUOPCDriverAtmOcn__ImplementsSetModelPetLists)null);
+				return;
 		}
 		super.eUnset(featureID);
 	}
@@ -592,6 +661,8 @@ public class NUOPCDriverAtmOcnImpl extends EObjectImpl implements NUOPCDriverAtm
 				return implementsSetModelCount != null;
 			case NUOPCPackage.NUOPC_DRIVER_ATM_OCN__IMPLEMENTS_SET_MODEL_SERVICES:
 				return implementsSetModelServices != null;
+			case NUOPCPackage.NUOPC_DRIVER_ATM_OCN__IMPLEMENTS_SET_MODEL_PET_LISTS:
+				return implementsSetModelPetLists != null;
 		}
 		return super.eIsSet(featureID);
 	}

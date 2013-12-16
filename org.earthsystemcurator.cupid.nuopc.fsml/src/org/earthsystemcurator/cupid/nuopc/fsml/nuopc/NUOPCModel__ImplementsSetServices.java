@@ -16,8 +16,8 @@ import org.eclipse.emf.ecore.EObject;
  * <ul>
  *   <li>{@link org.earthsystemcurator.cupid.nuopc.fsml.nuopc.NUOPCModel__ImplementsSetServices#getParent <em>Parent</em>}</li>
  *   <li>{@link org.earthsystemcurator.cupid.nuopc.fsml.nuopc.NUOPCModel__ImplementsSetServices#getName <em>Name</em>}</li>
- *   <li>{@link org.earthsystemcurator.cupid.nuopc.fsml.nuopc.NUOPCModel__ImplementsSetServices#getParam_gcomp <em>Param gcomp</em>}</li>
- *   <li>{@link org.earthsystemcurator.cupid.nuopc.fsml.nuopc.NUOPCModel__ImplementsSetServices#getParam_rc <em>Param rc</em>}</li>
+ *   <li>{@link org.earthsystemcurator.cupid.nuopc.fsml.nuopc.NUOPCModel__ImplementsSetServices#getGcomp <em>Gcomp</em>}</li>
+ *   <li>{@link org.earthsystemcurator.cupid.nuopc.fsml.nuopc.NUOPCModel__ImplementsSetServices#getRc <em>Rc</em>}</li>
  *   <li>{@link org.earthsystemcurator.cupid.nuopc.fsml.nuopc.NUOPCModel__ImplementsSetServices#getCallsGenericSetServices <em>Calls Generic Set Services</em>}</li>
  *   <li>{@link org.earthsystemcurator.cupid.nuopc.fsml.nuopc.NUOPCModel__ImplementsSetServices#getCallsSetEntryPoint <em>Calls Set Entry Point</em>}</li>
  *   <li>{@link org.earthsystemcurator.cupid.nuopc.fsml.nuopc.NUOPCModel__ImplementsSetServices#getAttachesMethod <em>Attaches Method</em>}</li>
@@ -26,7 +26,7 @@ import org.eclipse.emf.ecore.EObject;
  *
  * @see org.earthsystemcurator.cupid.nuopc.fsml.nuopc.NUOPCPackage#getNUOPCModel__ImplementsSetServices()
  * @model annotation="http://www.eclipse.org/emf/2002/Ecore constraints='registersInitP1 registersInitP2'"
- *        annotation="http://www.earthsystemcog.org/projects/nuopc mapping='subroutine: \"#name(inout type(ESMF_GridComp) #param_gcomp, out integer #param_rc)\"' label='Set Services' doc='In general, a Set Services method is a public subroutine that sets entry points for the component. This subroutine should call the Set Services subroutine in the generic NUOPC Model component.'"
+ *        annotation="http://www.earthsystemcog.org/projects/nuopc label='Set Services' doc='In general, a Set Services method is a public subroutine that sets entry points for the component. This subroutine should call the Set Services subroutine in the generic NUOPC Model component.'"
  *        annotation="http://www.eclipse.org/emf/2002/Ecore/OCL registersInitP1='self.parent.initialize.implementsInitP1=null or self.callsSetEntryPoint->select(c|c.userRoutine=self.parent.initialize.implementsInitP1.name)->notEmpty()' registersInitP1$message='\'A call is required in the Set Services method to ESMF_GridCompSetEntryPoint in order to register the initialize phase 1 method.\'' registersInitP2='self.parent.initialize.implementsInitP2=null or self.callsSetEntryPoint->select(c|c.userRoutine=self.parent.initialize.implementsInitP2.name)->notEmpty()' registersInitP2$message='\'A call is required in the Set Services method to ESMF_GridCompSetEntryPoint in order to register the initialize phase 2 method.\''"
  * @generated
  */
@@ -72,7 +72,6 @@ public interface NUOPCModel__ImplementsSetServices extends EObject {
 	 * @see #setName(String)
 	 * @see org.earthsystemcurator.cupid.nuopc.fsml.nuopc.NUOPCPackage#getNUOPCModel__ImplementsSetServices_Name()
 	 * @model default="SetServices" required="true"
-	 *        annotation="http://www.earthsystemcog.org/projects/nuopc mappingX='subroutineName'"
 	 * @generated
 	 */
 	String getName();
@@ -88,60 +87,58 @@ public interface NUOPCModel__ImplementsSetServices extends EObject {
 	void setName(String value);
 
 	/**
-	 * Returns the value of the '<em><b>Param gcomp</b></em>' attribute.
+	 * Returns the value of the '<em><b>Gcomp</b></em>' attribute.
 	 * The default value is <code>"gcomp"</code>.
 	 * <!-- begin-user-doc -->
 	 * <p>
-	 * If the meaning of the '<em>Param gcomp</em>' attribute isn't clear,
+	 * If the meaning of the '<em>Gcomp</em>' attribute isn't clear,
 	 * there really should be more of a description here...
 	 * </p>
 	 * <!-- end-user-doc -->
-	 * @return the value of the '<em>Param gcomp</em>' attribute.
-	 * @see #setParam_gcomp(String)
-	 * @see org.earthsystemcurator.cupid.nuopc.fsml.nuopc.NUOPCPackage#getNUOPCModel__ImplementsSetServices_Param_gcomp()
+	 * @return the value of the '<em>Gcomp</em>' attribute.
+	 * @see #setGcomp(String)
+	 * @see org.earthsystemcurator.cupid.nuopc.fsml.nuopc.NUOPCPackage#getNUOPCModel__ImplementsSetServices_Gcomp()
 	 * @model default="gcomp" required="true"
-	 *        annotation="http://www.earthsystemcog.org/projects/nuopc mappingX='formalParam: 1'"
 	 * @generated
 	 */
-	String getParam_gcomp();
+	String getGcomp();
 
 	/**
-	 * Sets the value of the '{@link org.earthsystemcurator.cupid.nuopc.fsml.nuopc.NUOPCModel__ImplementsSetServices#getParam_gcomp <em>Param gcomp</em>}' attribute.
+	 * Sets the value of the '{@link org.earthsystemcurator.cupid.nuopc.fsml.nuopc.NUOPCModel__ImplementsSetServices#getGcomp <em>Gcomp</em>}' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @param value the new value of the '<em>Param gcomp</em>' attribute.
-	 * @see #getParam_gcomp()
+	 * @param value the new value of the '<em>Gcomp</em>' attribute.
+	 * @see #getGcomp()
 	 * @generated
 	 */
-	void setParam_gcomp(String value);
+	void setGcomp(String value);
 
 	/**
-	 * Returns the value of the '<em><b>Param rc</b></em>' attribute.
+	 * Returns the value of the '<em><b>Rc</b></em>' attribute.
 	 * The default value is <code>"rc"</code>.
 	 * <!-- begin-user-doc -->
 	 * <p>
-	 * If the meaning of the '<em>Param rc</em>' attribute isn't clear,
+	 * If the meaning of the '<em>Rc</em>' attribute isn't clear,
 	 * there really should be more of a description here...
 	 * </p>
 	 * <!-- end-user-doc -->
-	 * @return the value of the '<em>Param rc</em>' attribute.
-	 * @see #setParam_rc(String)
-	 * @see org.earthsystemcurator.cupid.nuopc.fsml.nuopc.NUOPCPackage#getNUOPCModel__ImplementsSetServices_Param_rc()
+	 * @return the value of the '<em>Rc</em>' attribute.
+	 * @see #setRc(String)
+	 * @see org.earthsystemcurator.cupid.nuopc.fsml.nuopc.NUOPCPackage#getNUOPCModel__ImplementsSetServices_Rc()
 	 * @model default="rc" required="true"
-	 *        annotation="http://www.earthsystemcog.org/projects/nuopc mappingX='formalParam: 2'"
 	 * @generated
 	 */
-	String getParam_rc();
+	String getRc();
 
 	/**
-	 * Sets the value of the '{@link org.earthsystemcurator.cupid.nuopc.fsml.nuopc.NUOPCModel__ImplementsSetServices#getParam_rc <em>Param rc</em>}' attribute.
+	 * Sets the value of the '{@link org.earthsystemcurator.cupid.nuopc.fsml.nuopc.NUOPCModel__ImplementsSetServices#getRc <em>Rc</em>}' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @param value the new value of the '<em>Param rc</em>' attribute.
-	 * @see #getParam_rc()
+	 * @param value the new value of the '<em>Rc</em>' attribute.
+	 * @see #getRc()
 	 * @generated
 	 */
-	void setParam_rc(String value);
+	void setRc(String value);
 
 	/**
 	 * Returns the value of the '<em><b>Calls Generic Set Services</b></em>' containment reference.

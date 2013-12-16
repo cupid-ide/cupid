@@ -370,22 +370,22 @@ public interface NUOPCPackage extends EPackage {
 	int NUOPC_MODEL_IMPLEMENTS_SET_SERVICES__NAME = 1;
 
 	/**
-	 * The feature id for the '<em><b>Param gcomp</b></em>' attribute.
+	 * The feature id for the '<em><b>Gcomp</b></em>' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int NUOPC_MODEL_IMPLEMENTS_SET_SERVICES__PARAM_GCOMP = 2;
+	int NUOPC_MODEL_IMPLEMENTS_SET_SERVICES__GCOMP = 2;
 
 	/**
-	 * The feature id for the '<em><b>Param rc</b></em>' attribute.
+	 * The feature id for the '<em><b>Rc</b></em>' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int NUOPC_MODEL_IMPLEMENTS_SET_SERVICES__PARAM_RC = 3;
+	int NUOPC_MODEL_IMPLEMENTS_SET_SERVICES__RC = 3;
 
 	/**
 	 * The feature id for the '<em><b>Calls Generic Set Services</b></em>' containment reference.
@@ -1746,13 +1746,22 @@ public interface NUOPCPackage extends EPackage {
 	int NUOPC_DRIVER_ATM_OCN__IMPLEMENTS_SET_MODEL_SERVICES = 6;
 
 	/**
+	 * The feature id for the '<em><b>Implements Set Model Pet Lists</b></em>' containment reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int NUOPC_DRIVER_ATM_OCN__IMPLEMENTS_SET_MODEL_PET_LISTS = 7;
+
+	/**
 	 * The number of structural features of the '<em>Driver Atm Ocn</em>' class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int NUOPC_DRIVER_ATM_OCN_FEATURE_COUNT = 7;
+	int NUOPC_DRIVER_ATM_OCN_FEATURE_COUNT = 8;
 
 	/**
 	 * The number of operations of the '<em>Driver Atm Ocn</em>' class.
@@ -1810,13 +1819,22 @@ public interface NUOPCPackage extends EPackage {
 	int NUOPC_DRIVER_ATM_OCN_GENERIC_IMPORTS__IMPORTS_LABEL_SET_MODEL_SERVICES = 3;
 
 	/**
+	 * The feature id for the '<em><b>Imports Label Set Model Pet Lists</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int NUOPC_DRIVER_ATM_OCN_GENERIC_IMPORTS__IMPORTS_LABEL_SET_MODEL_PET_LISTS = 4;
+
+	/**
 	 * The number of structural features of the '<em>Driver Atm Ocn Generic Imports</em>' class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int NUOPC_DRIVER_ATM_OCN_GENERIC_IMPORTS_FEATURE_COUNT = 4;
+	int NUOPC_DRIVER_ATM_OCN_GENERIC_IMPORTS_FEATURE_COUNT = 5;
 
 	/**
 	 * The number of operations of the '<em>Driver Atm Ocn Generic Imports</em>' class.
@@ -2174,6 +2192,106 @@ public interface NUOPCPackage extends EPackage {
 	int NUOPC_DRIVER_ATM_OCN_IMPLEMENTS_SET_MODEL_SERVICES_OPERATION_COUNT = 0;
 
 	/**
+	 * The meta object id for the '{@link org.earthsystemcurator.cupid.nuopc.fsml.nuopc.impl.NUOPCDriverAtmOcn__ImplementsSetModelPetListsImpl <em>Driver Atm Ocn Implements Set Model Pet Lists</em>}' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see org.earthsystemcurator.cupid.nuopc.fsml.nuopc.impl.NUOPCDriverAtmOcn__ImplementsSetModelPetListsImpl
+	 * @see org.earthsystemcurator.cupid.nuopc.fsml.nuopc.impl.NUOPCPackageImpl#getNUOPCDriverAtmOcn__ImplementsSetModelPetLists()
+	 * @generated
+	 */
+	int NUOPC_DRIVER_ATM_OCN_IMPLEMENTS_SET_MODEL_PET_LISTS = 28;
+
+	/**
+	 * The feature id for the '<em><b>Parent</b></em>' container reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int NUOPC_DRIVER_ATM_OCN_IMPLEMENTS_SET_MODEL_PET_LISTS__PARENT = 0;
+
+	/**
+	 * The feature id for the '<em><b>Gcomp</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int NUOPC_DRIVER_ATM_OCN_IMPLEMENTS_SET_MODEL_PET_LISTS__GCOMP = 1;
+
+	/**
+	 * The feature id for the '<em><b>Rc</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int NUOPC_DRIVER_ATM_OCN_IMPLEMENTS_SET_MODEL_PET_LISTS__RC = 2;
+
+	/**
+	 * The feature id for the '<em><b>Name</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int NUOPC_DRIVER_ATM_OCN_IMPLEMENTS_SET_MODEL_PET_LISTS__NAME = 3;
+
+	/**
+	 * The feature id for the '<em><b>Driver Internal State</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int NUOPC_DRIVER_ATM_OCN_IMPLEMENTS_SET_MODEL_PET_LISTS__DRIVER_INTERNAL_STATE = 4;
+
+	/**
+	 * The feature id for the '<em><b>Gets Internal State</b></em>' containment reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int NUOPC_DRIVER_ATM_OCN_IMPLEMENTS_SET_MODEL_PET_LISTS__GETS_INTERNAL_STATE = 5;
+
+	/**
+	 * The feature id for the '<em><b>Assigns Value</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int NUOPC_DRIVER_ATM_OCN_IMPLEMENTS_SET_MODEL_PET_LISTS__ASSIGNS_VALUE = 6;
+
+	/**
+	 * The feature id for the '<em><b>Attached</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int NUOPC_DRIVER_ATM_OCN_IMPLEMENTS_SET_MODEL_PET_LISTS__ATTACHED = 7;
+
+	/**
+	 * The number of structural features of the '<em>Driver Atm Ocn Implements Set Model Pet Lists</em>' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int NUOPC_DRIVER_ATM_OCN_IMPLEMENTS_SET_MODEL_PET_LISTS_FEATURE_COUNT = 8;
+
+	/**
+	 * The number of operations of the '<em>Driver Atm Ocn Implements Set Model Pet Lists</em>' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int NUOPC_DRIVER_ATM_OCN_IMPLEMENTS_SET_MODEL_PET_LISTS_OPERATION_COUNT = 0;
+
+	/**
 	 * The meta object id for the '{@link org.earthsystemcurator.cupid.nuopc.fsml.nuopc.impl.NUOPCDriverAtmOcn__ModelImports__ModelImportImpl <em>Driver Atm Ocn Model Imports Model Import</em>}' class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -2181,7 +2299,7 @@ public interface NUOPCPackage extends EPackage {
 	 * @see org.earthsystemcurator.cupid.nuopc.fsml.nuopc.impl.NUOPCPackageImpl#getNUOPCDriverAtmOcn__ModelImports__ModelImport()
 	 * @generated
 	 */
-	int NUOPC_DRIVER_ATM_OCN_MODEL_IMPORTS_MODEL_IMPORT = 28;
+	int NUOPC_DRIVER_ATM_OCN_MODEL_IMPORTS_MODEL_IMPORT = 29;
 
 	/**
 	 * The feature id for the '<em><b>Parent</b></em>' container reference.
@@ -2245,7 +2363,7 @@ public interface NUOPCPackage extends EPackage {
 	 * @see org.earthsystemcurator.cupid.nuopc.fsml.nuopc.impl.NUOPCPackageImpl#getCallsGenericSetServices()
 	 * @generated
 	 */
-	int CALLS_GENERIC_SET_SERVICES = 29;
+	int CALLS_GENERIC_SET_SERVICES = 30;
 
 	/**
 	 * The feature id for the '<em><b>Gcomp</b></em>' attribute.
@@ -2291,7 +2409,7 @@ public interface NUOPCPackage extends EPackage {
 	 * @see org.earthsystemcurator.cupid.nuopc.fsml.nuopc.impl.NUOPCPackageImpl#getCallsSetEntryPoint()
 	 * @generated
 	 */
-	int CALLS_SET_ENTRY_POINT = 30;
+	int CALLS_SET_ENTRY_POINT = 31;
 
 	/**
 	 * The feature id for the '<em><b>Method</b></em>' attribute.
@@ -2346,7 +2464,7 @@ public interface NUOPCPackage extends EPackage {
 	 * @see org.earthsystemcurator.cupid.nuopc.fsml.nuopc.impl.NUOPCPackageImpl#getAttachesMethod()
 	 * @generated
 	 */
-	int ATTACHES_METHOD = 31;
+	int ATTACHES_METHOD = 32;
 
 	/**
 	 * The feature id for the '<em><b>Name</b></em>' attribute.
@@ -2401,7 +2519,7 @@ public interface NUOPCPackage extends EPackage {
 	 * @see org.earthsystemcurator.cupid.nuopc.fsml.nuopc.impl.NUOPCPackageImpl#getSetModelServices()
 	 * @generated
 	 */
-	int SET_MODEL_SERVICES = 32;
+	int SET_MODEL_SERVICES = 33;
 
 	/**
 	 * The feature id for the '<em><b>Model Comp</b></em>' attribute.
@@ -2447,7 +2565,7 @@ public interface NUOPCPackage extends EPackage {
 	 * @see org.earthsystemcurator.cupid.nuopc.fsml.nuopc.impl.NUOPCPackageImpl#getSetCouplerServices()
 	 * @generated
 	 */
-	int SET_COUPLER_SERVICES = 33;
+	int SET_COUPLER_SERVICES = 34;
 
 	/**
 	 * The feature id for the '<em><b>Cpl Comp</b></em>' attribute.
@@ -2493,7 +2611,7 @@ public interface NUOPCPackage extends EPackage {
 	 * @see org.earthsystemcurator.cupid.nuopc.fsml.nuopc.impl.NUOPCPackageImpl#getGetsInternalState()
 	 * @generated
 	 */
-	int GETS_INTERNAL_STATE = 34;
+	int GETS_INTERNAL_STATE = 35;
 
 	/**
 	 * The feature id for the '<em><b>Label</b></em>' attribute.
@@ -2530,7 +2648,7 @@ public interface NUOPCPackage extends EPackage {
 	 * @see org.earthsystemcurator.cupid.nuopc.fsml.nuopc.impl.NUOPCPackageImpl#getNUOPCMediator()
 	 * @generated
 	 */
-	int NUOPC_MEDIATOR = 35;
+	int NUOPC_MEDIATOR = 36;
 
 	/**
 	 * The feature id for the '<em><b>Name</b></em>' attribute.
@@ -2603,7 +2721,7 @@ public interface NUOPCPackage extends EPackage {
 	 * @see org.earthsystemcurator.cupid.nuopc.fsml.nuopc.impl.NUOPCPackageImpl#getNUOPCMediator__GenericImports()
 	 * @generated
 	 */
-	int NUOPC_MEDIATOR_GENERIC_IMPORTS = 36;
+	int NUOPC_MEDIATOR_GENERIC_IMPORTS = 37;
 
 	/**
 	 * The feature id for the '<em><b>Imports Generic SS</b></em>' attribute.
@@ -2649,7 +2767,7 @@ public interface NUOPCPackage extends EPackage {
 	 * @see org.earthsystemcurator.cupid.nuopc.fsml.nuopc.impl.NUOPCPackageImpl#getNUOPCMediator__Init()
 	 * @generated
 	 */
-	int NUOPC_MEDIATOR_INIT = 37;
+	int NUOPC_MEDIATOR_INIT = 38;
 
 	/**
 	 * The feature id for the '<em><b>Parent</b></em>' container reference.
@@ -2704,7 +2822,7 @@ public interface NUOPCPackage extends EPackage {
 	 * @see org.earthsystemcurator.cupid.nuopc.fsml.nuopc.impl.NUOPCPackageImpl#getNUOPCMediator__ImplementsSetServices()
 	 * @generated
 	 */
-	int NUOPC_MEDIATOR_IMPLEMENTS_SET_SERVICES = 38;
+	int NUOPC_MEDIATOR_IMPLEMENTS_SET_SERVICES = 39;
 
 	/**
 	 * The feature id for the '<em><b>Parent</b></em>' container reference.
@@ -2795,7 +2913,7 @@ public interface NUOPCPackage extends EPackage {
 	 * @see org.earthsystemcurator.cupid.nuopc.fsml.nuopc.impl.NUOPCPackageImpl#getNUOPCMediator__ImplementsInitP1()
 	 * @generated
 	 */
-	int NUOPC_MEDIATOR_IMPLEMENTS_INIT_P1 = 39;
+	int NUOPC_MEDIATOR_IMPLEMENTS_INIT_P1 = 40;
 
 	/**
 	 * The feature id for the '<em><b>Parent</b></em>' container reference.
@@ -2904,7 +3022,7 @@ public interface NUOPCPackage extends EPackage {
 	 * @see org.earthsystemcurator.cupid.nuopc.fsml.nuopc.impl.NUOPCPackageImpl#getNUOPCMediator__ImplementsInitP2()
 	 * @generated
 	 */
-	int NUOPC_MEDIATOR_IMPLEMENTS_INIT_P2 = 40;
+	int NUOPC_MEDIATOR_IMPLEMENTS_INIT_P2 = 41;
 
 	/**
 	 * The feature id for the '<em><b>Parent</b></em>' container reference.
@@ -3013,7 +3131,7 @@ public interface NUOPCPackage extends EPackage {
 	 * @see org.earthsystemcurator.cupid.nuopc.fsml.nuopc.impl.NUOPCPackageImpl#getNUOPCMediator__AdvertisesImportField()
 	 * @generated
 	 */
-	int NUOPC_MEDIATOR_ADVERTISES_IMPORT_FIELD = 41;
+	int NUOPC_MEDIATOR_ADVERTISES_IMPORT_FIELD = 42;
 
 	/**
 	 * The feature id for the '<em><b>Parent</b></em>' container reference.
@@ -3086,7 +3204,7 @@ public interface NUOPCPackage extends EPackage {
 	 * @see org.earthsystemcurator.cupid.nuopc.fsml.nuopc.impl.NUOPCPackageImpl#getNUOPCMediator__AdvertisesExportField()
 	 * @generated
 	 */
-	int NUOPC_MEDIATOR_ADVERTISES_EXPORT_FIELD = 42;
+	int NUOPC_MEDIATOR_ADVERTISES_EXPORT_FIELD = 43;
 
 	/**
 	 * The feature id for the '<em><b>Parent</b></em>' container reference.
@@ -3159,7 +3277,7 @@ public interface NUOPCPackage extends EPackage {
 	 * @see org.earthsystemcurator.cupid.nuopc.fsml.nuopc.impl.NUOPCPackageImpl#getNUOPCMediator__RealizesImportField()
 	 * @generated
 	 */
-	int NUOPC_MEDIATOR_REALIZES_IMPORT_FIELD = 43;
+	int NUOPC_MEDIATOR_REALIZES_IMPORT_FIELD = 44;
 
 	/**
 	 * The feature id for the '<em><b>Parent</b></em>' container reference.
@@ -3232,7 +3350,7 @@ public interface NUOPCPackage extends EPackage {
 	 * @see org.earthsystemcurator.cupid.nuopc.fsml.nuopc.impl.NUOPCPackageImpl#getNUOPCMediator__RealizesExportField()
 	 * @generated
 	 */
-	int NUOPC_MEDIATOR_REALIZES_EXPORT_FIELD = 44;
+	int NUOPC_MEDIATOR_REALIZES_EXPORT_FIELD = 45;
 
 	/**
 	 * The feature id for the '<em><b>Parent</b></em>' container reference.
@@ -3305,7 +3423,7 @@ public interface NUOPCPackage extends EPackage {
 	 * @see org.earthsystemcurator.cupid.nuopc.fsml.nuopc.impl.NUOPCPackageImpl#getNUOPCMediator__ModelAdvance()
 	 * @generated
 	 */
-	int NUOPC_MEDIATOR_MODEL_ADVANCE = 45;
+	int NUOPC_MEDIATOR_MODEL_ADVANCE = 46;
 
 	/**
 	 * The feature id for the '<em><b>Parent</b></em>' container reference.
@@ -3612,26 +3730,26 @@ public interface NUOPCPackage extends EPackage {
 	EAttribute getNUOPCModel__ImplementsSetServices_Name();
 
 	/**
-	 * Returns the meta object for the attribute '{@link org.earthsystemcurator.cupid.nuopc.fsml.nuopc.NUOPCModel__ImplementsSetServices#getParam_gcomp <em>Param gcomp</em>}'.
+	 * Returns the meta object for the attribute '{@link org.earthsystemcurator.cupid.nuopc.fsml.nuopc.NUOPCModel__ImplementsSetServices#getGcomp <em>Gcomp</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @return the meta object for the attribute '<em>Param gcomp</em>'.
-	 * @see org.earthsystemcurator.cupid.nuopc.fsml.nuopc.NUOPCModel__ImplementsSetServices#getParam_gcomp()
+	 * @return the meta object for the attribute '<em>Gcomp</em>'.
+	 * @see org.earthsystemcurator.cupid.nuopc.fsml.nuopc.NUOPCModel__ImplementsSetServices#getGcomp()
 	 * @see #getNUOPCModel__ImplementsSetServices()
 	 * @generated
 	 */
-	EAttribute getNUOPCModel__ImplementsSetServices_Param_gcomp();
+	EAttribute getNUOPCModel__ImplementsSetServices_Gcomp();
 
 	/**
-	 * Returns the meta object for the attribute '{@link org.earthsystemcurator.cupid.nuopc.fsml.nuopc.NUOPCModel__ImplementsSetServices#getParam_rc <em>Param rc</em>}'.
+	 * Returns the meta object for the attribute '{@link org.earthsystemcurator.cupid.nuopc.fsml.nuopc.NUOPCModel__ImplementsSetServices#getRc <em>Rc</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @return the meta object for the attribute '<em>Param rc</em>'.
-	 * @see org.earthsystemcurator.cupid.nuopc.fsml.nuopc.NUOPCModel__ImplementsSetServices#getParam_rc()
+	 * @return the meta object for the attribute '<em>Rc</em>'.
+	 * @see org.earthsystemcurator.cupid.nuopc.fsml.nuopc.NUOPCModel__ImplementsSetServices#getRc()
 	 * @see #getNUOPCModel__ImplementsSetServices()
 	 * @generated
 	 */
-	EAttribute getNUOPCModel__ImplementsSetServices_Param_rc();
+	EAttribute getNUOPCModel__ImplementsSetServices_Rc();
 
 	/**
 	 * Returns the meta object for the containment reference '{@link org.earthsystemcurator.cupid.nuopc.fsml.nuopc.NUOPCModel__ImplementsSetServices#getCallsGenericSetServices <em>Calls Generic Set Services</em>}'.
@@ -4882,6 +5000,17 @@ public interface NUOPCPackage extends EPackage {
 	EReference getNUOPCDriverAtmOcn_ImplementsSetModelServices();
 
 	/**
+	 * Returns the meta object for the containment reference '{@link org.earthsystemcurator.cupid.nuopc.fsml.nuopc.NUOPCDriverAtmOcn#getImplementsSetModelPetLists <em>Implements Set Model Pet Lists</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the containment reference '<em>Implements Set Model Pet Lists</em>'.
+	 * @see org.earthsystemcurator.cupid.nuopc.fsml.nuopc.NUOPCDriverAtmOcn#getImplementsSetModelPetLists()
+	 * @see #getNUOPCDriverAtmOcn()
+	 * @generated
+	 */
+	EReference getNUOPCDriverAtmOcn_ImplementsSetModelPetLists();
+
+	/**
 	 * Returns the meta object for class '{@link org.earthsystemcurator.cupid.nuopc.fsml.nuopc.NUOPCDriverAtmOcn__GenericImports <em>Driver Atm Ocn Generic Imports</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -4934,6 +5063,17 @@ public interface NUOPCPackage extends EPackage {
 	 * @generated
 	 */
 	EAttribute getNUOPCDriverAtmOcn__GenericImports_ImportsLabelSetModelServices();
+
+	/**
+	 * Returns the meta object for the attribute '{@link org.earthsystemcurator.cupid.nuopc.fsml.nuopc.NUOPCDriverAtmOcn__GenericImports#getImportsLabelSetModelPetLists <em>Imports Label Set Model Pet Lists</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the attribute '<em>Imports Label Set Model Pet Lists</em>'.
+	 * @see org.earthsystemcurator.cupid.nuopc.fsml.nuopc.NUOPCDriverAtmOcn__GenericImports#getImportsLabelSetModelPetLists()
+	 * @see #getNUOPCDriverAtmOcn__GenericImports()
+	 * @generated
+	 */
+	EAttribute getNUOPCDriverAtmOcn__GenericImports_ImportsLabelSetModelPetLists();
 
 	/**
 	 * Returns the meta object for class '{@link org.earthsystemcurator.cupid.nuopc.fsml.nuopc.NUOPCDriverAtmOcn__ModelImports <em>Driver Atm Ocn Model Imports</em>}'.
@@ -5260,6 +5400,104 @@ public interface NUOPCPackage extends EPackage {
 	 * @generated
 	 */
 	EReference getNUOPCDriverAtmOcn__ImplementsSetModelServices_SetCouplerServices();
+
+	/**
+	 * Returns the meta object for class '{@link org.earthsystemcurator.cupid.nuopc.fsml.nuopc.NUOPCDriverAtmOcn__ImplementsSetModelPetLists <em>Driver Atm Ocn Implements Set Model Pet Lists</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for class '<em>Driver Atm Ocn Implements Set Model Pet Lists</em>'.
+	 * @see org.earthsystemcurator.cupid.nuopc.fsml.nuopc.NUOPCDriverAtmOcn__ImplementsSetModelPetLists
+	 * @generated
+	 */
+	EClass getNUOPCDriverAtmOcn__ImplementsSetModelPetLists();
+
+	/**
+	 * Returns the meta object for the container reference '{@link org.earthsystemcurator.cupid.nuopc.fsml.nuopc.NUOPCDriverAtmOcn__ImplementsSetModelPetLists#getParent <em>Parent</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the container reference '<em>Parent</em>'.
+	 * @see org.earthsystemcurator.cupid.nuopc.fsml.nuopc.NUOPCDriverAtmOcn__ImplementsSetModelPetLists#getParent()
+	 * @see #getNUOPCDriverAtmOcn__ImplementsSetModelPetLists()
+	 * @generated
+	 */
+	EReference getNUOPCDriverAtmOcn__ImplementsSetModelPetLists_Parent();
+
+	/**
+	 * Returns the meta object for the attribute '{@link org.earthsystemcurator.cupid.nuopc.fsml.nuopc.NUOPCDriverAtmOcn__ImplementsSetModelPetLists#getGcomp <em>Gcomp</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the attribute '<em>Gcomp</em>'.
+	 * @see org.earthsystemcurator.cupid.nuopc.fsml.nuopc.NUOPCDriverAtmOcn__ImplementsSetModelPetLists#getGcomp()
+	 * @see #getNUOPCDriverAtmOcn__ImplementsSetModelPetLists()
+	 * @generated
+	 */
+	EAttribute getNUOPCDriverAtmOcn__ImplementsSetModelPetLists_Gcomp();
+
+	/**
+	 * Returns the meta object for the attribute '{@link org.earthsystemcurator.cupid.nuopc.fsml.nuopc.NUOPCDriverAtmOcn__ImplementsSetModelPetLists#getRc <em>Rc</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the attribute '<em>Rc</em>'.
+	 * @see org.earthsystemcurator.cupid.nuopc.fsml.nuopc.NUOPCDriverAtmOcn__ImplementsSetModelPetLists#getRc()
+	 * @see #getNUOPCDriverAtmOcn__ImplementsSetModelPetLists()
+	 * @generated
+	 */
+	EAttribute getNUOPCDriverAtmOcn__ImplementsSetModelPetLists_Rc();
+
+	/**
+	 * Returns the meta object for the attribute '{@link org.earthsystemcurator.cupid.nuopc.fsml.nuopc.NUOPCDriverAtmOcn__ImplementsSetModelPetLists#getName <em>Name</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the attribute '<em>Name</em>'.
+	 * @see org.earthsystemcurator.cupid.nuopc.fsml.nuopc.NUOPCDriverAtmOcn__ImplementsSetModelPetLists#getName()
+	 * @see #getNUOPCDriverAtmOcn__ImplementsSetModelPetLists()
+	 * @generated
+	 */
+	EAttribute getNUOPCDriverAtmOcn__ImplementsSetModelPetLists_Name();
+
+	/**
+	 * Returns the meta object for the attribute '{@link org.earthsystemcurator.cupid.nuopc.fsml.nuopc.NUOPCDriverAtmOcn__ImplementsSetModelPetLists#getDriverInternalState <em>Driver Internal State</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the attribute '<em>Driver Internal State</em>'.
+	 * @see org.earthsystemcurator.cupid.nuopc.fsml.nuopc.NUOPCDriverAtmOcn__ImplementsSetModelPetLists#getDriverInternalState()
+	 * @see #getNUOPCDriverAtmOcn__ImplementsSetModelPetLists()
+	 * @generated
+	 */
+	EAttribute getNUOPCDriverAtmOcn__ImplementsSetModelPetLists_DriverInternalState();
+
+	/**
+	 * Returns the meta object for the containment reference '{@link org.earthsystemcurator.cupid.nuopc.fsml.nuopc.NUOPCDriverAtmOcn__ImplementsSetModelPetLists#getGetsInternalState <em>Gets Internal State</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the containment reference '<em>Gets Internal State</em>'.
+	 * @see org.earthsystemcurator.cupid.nuopc.fsml.nuopc.NUOPCDriverAtmOcn__ImplementsSetModelPetLists#getGetsInternalState()
+	 * @see #getNUOPCDriverAtmOcn__ImplementsSetModelPetLists()
+	 * @generated
+	 */
+	EReference getNUOPCDriverAtmOcn__ImplementsSetModelPetLists_GetsInternalState();
+
+	/**
+	 * Returns the meta object for the attribute '{@link org.earthsystemcurator.cupid.nuopc.fsml.nuopc.NUOPCDriverAtmOcn__ImplementsSetModelPetLists#isAssignsValue <em>Assigns Value</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the attribute '<em>Assigns Value</em>'.
+	 * @see org.earthsystemcurator.cupid.nuopc.fsml.nuopc.NUOPCDriverAtmOcn__ImplementsSetModelPetLists#isAssignsValue()
+	 * @see #getNUOPCDriverAtmOcn__ImplementsSetModelPetLists()
+	 * @generated
+	 */
+	EAttribute getNUOPCDriverAtmOcn__ImplementsSetModelPetLists_AssignsValue();
+
+	/**
+	 * Returns the meta object for the attribute '{@link org.earthsystemcurator.cupid.nuopc.fsml.nuopc.NUOPCDriverAtmOcn__ImplementsSetModelPetLists#isAttached <em>Attached</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the attribute '<em>Attached</em>'.
+	 * @see org.earthsystemcurator.cupid.nuopc.fsml.nuopc.NUOPCDriverAtmOcn__ImplementsSetModelPetLists#isAttached()
+	 * @see #getNUOPCDriverAtmOcn__ImplementsSetModelPetLists()
+	 * @generated
+	 */
+	EAttribute getNUOPCDriverAtmOcn__ImplementsSetModelPetLists_Attached();
 
 	/**
 	 * Returns the meta object for class '{@link org.earthsystemcurator.cupid.nuopc.fsml.nuopc.NUOPCDriverAtmOcn__ModelImports__ModelImport <em>Driver Atm Ocn Model Imports Model Import</em>}'.
@@ -6494,20 +6732,20 @@ public interface NUOPCPackage extends EPackage {
 		EAttribute NUOPC_MODEL_IMPLEMENTS_SET_SERVICES__NAME = eINSTANCE.getNUOPCModel__ImplementsSetServices_Name();
 
 		/**
-		 * The meta object literal for the '<em><b>Param gcomp</b></em>' attribute feature.
+		 * The meta object literal for the '<em><b>Gcomp</b></em>' attribute feature.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
 		 * @generated
 		 */
-		EAttribute NUOPC_MODEL_IMPLEMENTS_SET_SERVICES__PARAM_GCOMP = eINSTANCE.getNUOPCModel__ImplementsSetServices_Param_gcomp();
+		EAttribute NUOPC_MODEL_IMPLEMENTS_SET_SERVICES__GCOMP = eINSTANCE.getNUOPCModel__ImplementsSetServices_Gcomp();
 
 		/**
-		 * The meta object literal for the '<em><b>Param rc</b></em>' attribute feature.
+		 * The meta object literal for the '<em><b>Rc</b></em>' attribute feature.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
 		 * @generated
 		 */
-		EAttribute NUOPC_MODEL_IMPLEMENTS_SET_SERVICES__PARAM_RC = eINSTANCE.getNUOPCModel__ImplementsSetServices_Param_rc();
+		EAttribute NUOPC_MODEL_IMPLEMENTS_SET_SERVICES__RC = eINSTANCE.getNUOPCModel__ImplementsSetServices_Rc();
 
 		/**
 		 * The meta object literal for the '<em><b>Calls Generic Set Services</b></em>' containment reference feature.
@@ -7464,6 +7702,14 @@ public interface NUOPCPackage extends EPackage {
 		EReference NUOPC_DRIVER_ATM_OCN__IMPLEMENTS_SET_MODEL_SERVICES = eINSTANCE.getNUOPCDriverAtmOcn_ImplementsSetModelServices();
 
 		/**
+		 * The meta object literal for the '<em><b>Implements Set Model Pet Lists</b></em>' containment reference feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EReference NUOPC_DRIVER_ATM_OCN__IMPLEMENTS_SET_MODEL_PET_LISTS = eINSTANCE.getNUOPCDriverAtmOcn_ImplementsSetModelPetLists();
+
+		/**
 		 * The meta object literal for the '{@link org.earthsystemcurator.cupid.nuopc.fsml.nuopc.impl.NUOPCDriverAtmOcn__GenericImportsImpl <em>Driver Atm Ocn Generic Imports</em>}' class.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
@@ -7504,6 +7750,14 @@ public interface NUOPCPackage extends EPackage {
 		 * @generated
 		 */
 		EAttribute NUOPC_DRIVER_ATM_OCN_GENERIC_IMPORTS__IMPORTS_LABEL_SET_MODEL_SERVICES = eINSTANCE.getNUOPCDriverAtmOcn__GenericImports_ImportsLabelSetModelServices();
+
+		/**
+		 * The meta object literal for the '<em><b>Imports Label Set Model Pet Lists</b></em>' attribute feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EAttribute NUOPC_DRIVER_ATM_OCN_GENERIC_IMPORTS__IMPORTS_LABEL_SET_MODEL_PET_LISTS = eINSTANCE.getNUOPCDriverAtmOcn__GenericImports_ImportsLabelSetModelPetLists();
 
 		/**
 		 * The meta object literal for the '{@link org.earthsystemcurator.cupid.nuopc.fsml.nuopc.impl.NUOPCDriverAtmOcn__ModelImportsImpl <em>Driver Atm Ocn Model Imports</em>}' class.
@@ -7752,6 +8006,80 @@ public interface NUOPCPackage extends EPackage {
 		 * @generated
 		 */
 		EReference NUOPC_DRIVER_ATM_OCN_IMPLEMENTS_SET_MODEL_SERVICES__SET_COUPLER_SERVICES = eINSTANCE.getNUOPCDriverAtmOcn__ImplementsSetModelServices_SetCouplerServices();
+
+		/**
+		 * The meta object literal for the '{@link org.earthsystemcurator.cupid.nuopc.fsml.nuopc.impl.NUOPCDriverAtmOcn__ImplementsSetModelPetListsImpl <em>Driver Atm Ocn Implements Set Model Pet Lists</em>}' class.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @see org.earthsystemcurator.cupid.nuopc.fsml.nuopc.impl.NUOPCDriverAtmOcn__ImplementsSetModelPetListsImpl
+		 * @see org.earthsystemcurator.cupid.nuopc.fsml.nuopc.impl.NUOPCPackageImpl#getNUOPCDriverAtmOcn__ImplementsSetModelPetLists()
+		 * @generated
+		 */
+		EClass NUOPC_DRIVER_ATM_OCN_IMPLEMENTS_SET_MODEL_PET_LISTS = eINSTANCE.getNUOPCDriverAtmOcn__ImplementsSetModelPetLists();
+
+		/**
+		 * The meta object literal for the '<em><b>Parent</b></em>' container reference feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EReference NUOPC_DRIVER_ATM_OCN_IMPLEMENTS_SET_MODEL_PET_LISTS__PARENT = eINSTANCE.getNUOPCDriverAtmOcn__ImplementsSetModelPetLists_Parent();
+
+		/**
+		 * The meta object literal for the '<em><b>Gcomp</b></em>' attribute feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EAttribute NUOPC_DRIVER_ATM_OCN_IMPLEMENTS_SET_MODEL_PET_LISTS__GCOMP = eINSTANCE.getNUOPCDriverAtmOcn__ImplementsSetModelPetLists_Gcomp();
+
+		/**
+		 * The meta object literal for the '<em><b>Rc</b></em>' attribute feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EAttribute NUOPC_DRIVER_ATM_OCN_IMPLEMENTS_SET_MODEL_PET_LISTS__RC = eINSTANCE.getNUOPCDriverAtmOcn__ImplementsSetModelPetLists_Rc();
+
+		/**
+		 * The meta object literal for the '<em><b>Name</b></em>' attribute feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EAttribute NUOPC_DRIVER_ATM_OCN_IMPLEMENTS_SET_MODEL_PET_LISTS__NAME = eINSTANCE.getNUOPCDriverAtmOcn__ImplementsSetModelPetLists_Name();
+
+		/**
+		 * The meta object literal for the '<em><b>Driver Internal State</b></em>' attribute feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EAttribute NUOPC_DRIVER_ATM_OCN_IMPLEMENTS_SET_MODEL_PET_LISTS__DRIVER_INTERNAL_STATE = eINSTANCE.getNUOPCDriverAtmOcn__ImplementsSetModelPetLists_DriverInternalState();
+
+		/**
+		 * The meta object literal for the '<em><b>Gets Internal State</b></em>' containment reference feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EReference NUOPC_DRIVER_ATM_OCN_IMPLEMENTS_SET_MODEL_PET_LISTS__GETS_INTERNAL_STATE = eINSTANCE.getNUOPCDriverAtmOcn__ImplementsSetModelPetLists_GetsInternalState();
+
+		/**
+		 * The meta object literal for the '<em><b>Assigns Value</b></em>' attribute feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EAttribute NUOPC_DRIVER_ATM_OCN_IMPLEMENTS_SET_MODEL_PET_LISTS__ASSIGNS_VALUE = eINSTANCE.getNUOPCDriverAtmOcn__ImplementsSetModelPetLists_AssignsValue();
+
+		/**
+		 * The meta object literal for the '<em><b>Attached</b></em>' attribute feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EAttribute NUOPC_DRIVER_ATM_OCN_IMPLEMENTS_SET_MODEL_PET_LISTS__ATTACHED = eINSTANCE.getNUOPCDriverAtmOcn__ImplementsSetModelPetLists_Attached();
 
 		/**
 		 * The meta object literal for the '{@link org.earthsystemcurator.cupid.nuopc.fsml.nuopc.impl.NUOPCDriverAtmOcn__ModelImports__ModelImportImpl <em>Driver Atm Ocn Model Imports Model Import</em>}' class.

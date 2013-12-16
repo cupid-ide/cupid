@@ -35,8 +35,8 @@ import org.eclipse.emf.ecore.util.InternalEList;
  * <ul>
  *   <li>{@link org.earthsystemcurator.cupid.nuopc.fsml.nuopc.impl.NUOPCModel__ImplementsSetServicesImpl#getParent <em>Parent</em>}</li>
  *   <li>{@link org.earthsystemcurator.cupid.nuopc.fsml.nuopc.impl.NUOPCModel__ImplementsSetServicesImpl#getName <em>Name</em>}</li>
- *   <li>{@link org.earthsystemcurator.cupid.nuopc.fsml.nuopc.impl.NUOPCModel__ImplementsSetServicesImpl#getParam_gcomp <em>Param gcomp</em>}</li>
- *   <li>{@link org.earthsystemcurator.cupid.nuopc.fsml.nuopc.impl.NUOPCModel__ImplementsSetServicesImpl#getParam_rc <em>Param rc</em>}</li>
+ *   <li>{@link org.earthsystemcurator.cupid.nuopc.fsml.nuopc.impl.NUOPCModel__ImplementsSetServicesImpl#getGcomp <em>Gcomp</em>}</li>
+ *   <li>{@link org.earthsystemcurator.cupid.nuopc.fsml.nuopc.impl.NUOPCModel__ImplementsSetServicesImpl#getRc <em>Rc</em>}</li>
  *   <li>{@link org.earthsystemcurator.cupid.nuopc.fsml.nuopc.impl.NUOPCModel__ImplementsSetServicesImpl#getCallsGenericSetServices <em>Calls Generic Set Services</em>}</li>
  *   <li>{@link org.earthsystemcurator.cupid.nuopc.fsml.nuopc.impl.NUOPCModel__ImplementsSetServicesImpl#getCallsSetEntryPoint <em>Calls Set Entry Point</em>}</li>
  *   <li>{@link org.earthsystemcurator.cupid.nuopc.fsml.nuopc.impl.NUOPCModel__ImplementsSetServicesImpl#getAttachesMethod <em>Attaches Method</em>}</li>
@@ -67,44 +67,44 @@ public class NUOPCModel__ImplementsSetServicesImpl extends EObjectImpl implement
 	protected String name = NAME_EDEFAULT;
 
 	/**
-	 * The default value of the '{@link #getParam_gcomp() <em>Param gcomp</em>}' attribute.
+	 * The default value of the '{@link #getGcomp() <em>Gcomp</em>}' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @see #getParam_gcomp()
+	 * @see #getGcomp()
 	 * @generated
 	 * @ordered
 	 */
-	protected static final String PARAM_GCOMP_EDEFAULT = "gcomp";
+	protected static final String GCOMP_EDEFAULT = "gcomp";
 
 	/**
-	 * The cached value of the '{@link #getParam_gcomp() <em>Param gcomp</em>}' attribute.
+	 * The cached value of the '{@link #getGcomp() <em>Gcomp</em>}' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @see #getParam_gcomp()
+	 * @see #getGcomp()
 	 * @generated
 	 * @ordered
 	 */
-	protected String param_gcomp = PARAM_GCOMP_EDEFAULT;
+	protected String gcomp = GCOMP_EDEFAULT;
 
 	/**
-	 * The default value of the '{@link #getParam_rc() <em>Param rc</em>}' attribute.
+	 * The default value of the '{@link #getRc() <em>Rc</em>}' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @see #getParam_rc()
+	 * @see #getRc()
 	 * @generated
 	 * @ordered
 	 */
-	protected static final String PARAM_RC_EDEFAULT = "rc";
+	protected static final String RC_EDEFAULT = "rc";
 
 	/**
-	 * The cached value of the '{@link #getParam_rc() <em>Param rc</em>}' attribute.
+	 * The cached value of the '{@link #getRc() <em>Rc</em>}' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @see #getParam_rc()
+	 * @see #getRc()
 	 * @generated
 	 * @ordered
 	 */
-	protected String param_rc = PARAM_RC_EDEFAULT;
+	protected String rc = RC_EDEFAULT;
 
 	/**
 	 * The cached value of the '{@link #getCallsGenericSetServices() <em>Calls Generic Set Services</em>}' containment reference.
@@ -222,8 +222,8 @@ public class NUOPCModel__ImplementsSetServicesImpl extends EObjectImpl implement
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public String getParam_gcomp() {
-		return param_gcomp;
+	public String getGcomp() {
+		return gcomp;
 	}
 
 	/**
@@ -231,11 +231,11 @@ public class NUOPCModel__ImplementsSetServicesImpl extends EObjectImpl implement
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public void setParam_gcomp(String newParam_gcomp) {
-		String oldParam_gcomp = param_gcomp;
-		param_gcomp = newParam_gcomp;
+	public void setGcomp(String newGcomp) {
+		String oldGcomp = gcomp;
+		gcomp = newGcomp;
 		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, NUOPCPackage.NUOPC_MODEL_IMPLEMENTS_SET_SERVICES__PARAM_GCOMP, oldParam_gcomp, param_gcomp));
+			eNotify(new ENotificationImpl(this, Notification.SET, NUOPCPackage.NUOPC_MODEL_IMPLEMENTS_SET_SERVICES__GCOMP, oldGcomp, gcomp));
 	}
 
 	/**
@@ -243,8 +243,8 @@ public class NUOPCModel__ImplementsSetServicesImpl extends EObjectImpl implement
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public String getParam_rc() {
-		return param_rc;
+	public String getRc() {
+		return rc;
 	}
 
 	/**
@@ -252,11 +252,11 @@ public class NUOPCModel__ImplementsSetServicesImpl extends EObjectImpl implement
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public void setParam_rc(String newParam_rc) {
-		String oldParam_rc = param_rc;
-		param_rc = newParam_rc;
+	public void setRc(String newRc) {
+		String oldRc = rc;
+		rc = newRc;
 		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, NUOPCPackage.NUOPC_MODEL_IMPLEMENTS_SET_SERVICES__PARAM_RC, oldParam_rc, param_rc));
+			eNotify(new ENotificationImpl(this, Notification.SET, NUOPCPackage.NUOPC_MODEL_IMPLEMENTS_SET_SERVICES__RC, oldRc, rc));
 	}
 
 	/**
@@ -388,10 +388,10 @@ public class NUOPCModel__ImplementsSetServicesImpl extends EObjectImpl implement
 				return getParent();
 			case NUOPCPackage.NUOPC_MODEL_IMPLEMENTS_SET_SERVICES__NAME:
 				return getName();
-			case NUOPCPackage.NUOPC_MODEL_IMPLEMENTS_SET_SERVICES__PARAM_GCOMP:
-				return getParam_gcomp();
-			case NUOPCPackage.NUOPC_MODEL_IMPLEMENTS_SET_SERVICES__PARAM_RC:
-				return getParam_rc();
+			case NUOPCPackage.NUOPC_MODEL_IMPLEMENTS_SET_SERVICES__GCOMP:
+				return getGcomp();
+			case NUOPCPackage.NUOPC_MODEL_IMPLEMENTS_SET_SERVICES__RC:
+				return getRc();
 			case NUOPCPackage.NUOPC_MODEL_IMPLEMENTS_SET_SERVICES__CALLS_GENERIC_SET_SERVICES:
 				return getCallsGenericSetServices();
 			case NUOPCPackage.NUOPC_MODEL_IMPLEMENTS_SET_SERVICES__CALLS_SET_ENTRY_POINT:
@@ -417,11 +417,11 @@ public class NUOPCModel__ImplementsSetServicesImpl extends EObjectImpl implement
 			case NUOPCPackage.NUOPC_MODEL_IMPLEMENTS_SET_SERVICES__NAME:
 				setName((String)newValue);
 				return;
-			case NUOPCPackage.NUOPC_MODEL_IMPLEMENTS_SET_SERVICES__PARAM_GCOMP:
-				setParam_gcomp((String)newValue);
+			case NUOPCPackage.NUOPC_MODEL_IMPLEMENTS_SET_SERVICES__GCOMP:
+				setGcomp((String)newValue);
 				return;
-			case NUOPCPackage.NUOPC_MODEL_IMPLEMENTS_SET_SERVICES__PARAM_RC:
-				setParam_rc((String)newValue);
+			case NUOPCPackage.NUOPC_MODEL_IMPLEMENTS_SET_SERVICES__RC:
+				setRc((String)newValue);
 				return;
 			case NUOPCPackage.NUOPC_MODEL_IMPLEMENTS_SET_SERVICES__CALLS_GENERIC_SET_SERVICES:
 				setCallsGenericSetServices((CallsGenericSetServices)newValue);
@@ -452,11 +452,11 @@ public class NUOPCModel__ImplementsSetServicesImpl extends EObjectImpl implement
 			case NUOPCPackage.NUOPC_MODEL_IMPLEMENTS_SET_SERVICES__NAME:
 				setName(NAME_EDEFAULT);
 				return;
-			case NUOPCPackage.NUOPC_MODEL_IMPLEMENTS_SET_SERVICES__PARAM_GCOMP:
-				setParam_gcomp(PARAM_GCOMP_EDEFAULT);
+			case NUOPCPackage.NUOPC_MODEL_IMPLEMENTS_SET_SERVICES__GCOMP:
+				setGcomp(GCOMP_EDEFAULT);
 				return;
-			case NUOPCPackage.NUOPC_MODEL_IMPLEMENTS_SET_SERVICES__PARAM_RC:
-				setParam_rc(PARAM_RC_EDEFAULT);
+			case NUOPCPackage.NUOPC_MODEL_IMPLEMENTS_SET_SERVICES__RC:
+				setRc(RC_EDEFAULT);
 				return;
 			case NUOPCPackage.NUOPC_MODEL_IMPLEMENTS_SET_SERVICES__CALLS_GENERIC_SET_SERVICES:
 				setCallsGenericSetServices((CallsGenericSetServices)null);
@@ -483,10 +483,10 @@ public class NUOPCModel__ImplementsSetServicesImpl extends EObjectImpl implement
 				return getParent() != null;
 			case NUOPCPackage.NUOPC_MODEL_IMPLEMENTS_SET_SERVICES__NAME:
 				return NAME_EDEFAULT == null ? name != null : !NAME_EDEFAULT.equals(name);
-			case NUOPCPackage.NUOPC_MODEL_IMPLEMENTS_SET_SERVICES__PARAM_GCOMP:
-				return PARAM_GCOMP_EDEFAULT == null ? param_gcomp != null : !PARAM_GCOMP_EDEFAULT.equals(param_gcomp);
-			case NUOPCPackage.NUOPC_MODEL_IMPLEMENTS_SET_SERVICES__PARAM_RC:
-				return PARAM_RC_EDEFAULT == null ? param_rc != null : !PARAM_RC_EDEFAULT.equals(param_rc);
+			case NUOPCPackage.NUOPC_MODEL_IMPLEMENTS_SET_SERVICES__GCOMP:
+				return GCOMP_EDEFAULT == null ? gcomp != null : !GCOMP_EDEFAULT.equals(gcomp);
+			case NUOPCPackage.NUOPC_MODEL_IMPLEMENTS_SET_SERVICES__RC:
+				return RC_EDEFAULT == null ? rc != null : !RC_EDEFAULT.equals(rc);
 			case NUOPCPackage.NUOPC_MODEL_IMPLEMENTS_SET_SERVICES__CALLS_GENERIC_SET_SERVICES:
 				return callsGenericSetServices != null;
 			case NUOPCPackage.NUOPC_MODEL_IMPLEMENTS_SET_SERVICES__CALLS_SET_ENTRY_POINT:
@@ -509,10 +509,10 @@ public class NUOPCModel__ImplementsSetServicesImpl extends EObjectImpl implement
 		StringBuffer result = new StringBuffer(super.toString());
 		result.append(" (name: ");
 		result.append(name);
-		result.append(", param_gcomp: ");
-		result.append(param_gcomp);
-		result.append(", param_rc: ");
-		result.append(param_rc);
+		result.append(", gcomp: ");
+		result.append(gcomp);
+		result.append(", rc: ");
+		result.append(rc);
 		result.append(')');
 		return result.toString();
 	}

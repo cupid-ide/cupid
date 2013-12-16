@@ -64,6 +64,7 @@ public class NUOPCDriverAtmOcn__GenericImportsItemProvider
 			addImportsTypeDriverISPropertyDescriptor(object);
 			addImportsLabelSetModelCountPropertyDescriptor(object);
 			addImportsLabelSetModelServicesPropertyDescriptor(object);
+			addImportsLabelSetModelPetListsPropertyDescriptor(object);
 		}
 		return itemPropertyDescriptors;
 	}
@@ -157,6 +158,28 @@ public class NUOPCDriverAtmOcn__GenericImportsItemProvider
 	}
 
 	/**
+	 * This adds a property descriptor for the Imports Label Set Model Pet Lists feature.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	protected void addImportsLabelSetModelPetListsPropertyDescriptor(Object object) {
+		itemPropertyDescriptors.add
+			(createItemPropertyDescriptor
+				(((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(),
+				 getResourceLocator(),
+				 getString("_UI_NUOPCDriverAtmOcn__GenericImports_importsLabelSetModelPetLists_feature"),
+				 getString("_UI_PropertyDescriptor_description", "_UI_NUOPCDriverAtmOcn__GenericImports_importsLabelSetModelPetLists_feature", "_UI_NUOPCDriverAtmOcn__GenericImports_type"),
+				 NUOPCPackage.Literals.NUOPC_DRIVER_ATM_OCN_GENERIC_IMPORTS__IMPORTS_LABEL_SET_MODEL_PET_LISTS,
+				 true,
+				 false,
+				 false,
+				 ItemPropertyDescriptor.GENERIC_VALUE_IMAGE,
+				 null,
+				 null));
+	}
+
+	/**
 	 * This returns NUOPCDriverAtmOcn__GenericImports.gif.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -197,6 +220,7 @@ public class NUOPCDriverAtmOcn__GenericImportsItemProvider
 			case NUOPCPackage.NUOPC_DRIVER_ATM_OCN_GENERIC_IMPORTS__IMPORTS_TYPE_DRIVER_IS:
 			case NUOPCPackage.NUOPC_DRIVER_ATM_OCN_GENERIC_IMPORTS__IMPORTS_LABEL_SET_MODEL_COUNT:
 			case NUOPCPackage.NUOPC_DRIVER_ATM_OCN_GENERIC_IMPORTS__IMPORTS_LABEL_SET_MODEL_SERVICES:
+			case NUOPCPackage.NUOPC_DRIVER_ATM_OCN_GENERIC_IMPORTS__IMPORTS_LABEL_SET_MODEL_PET_LISTS:
 				fireNotifyChanged(new ViewerNotification(notification, notification.getNotifier(), false, true));
 				return;
 		}

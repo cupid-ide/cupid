@@ -99,7 +99,7 @@ public interface NUOPCModel extends EObject {
 	 * @see org.earthsystemcurator.cupid.nuopc.fsml.nuopc.NUOPCPackage#getNUOPCModel_ImplementsSetServices()
 	 * @see org.earthsystemcurator.cupid.nuopc.fsml.nuopc.NUOPCModel__ImplementsSetServices#getParent
 	 * @model opposite="parent" containment="true" keys="name" required="true"
-	 *        annotation="http://www.earthsystemcog.org/projects/nuopc mapping='subroutine: \"#name(inout type(ESMF_GridComp) #param_gcomp, out integer #param_rc)\"' essential='true'"
+	 *        annotation="http://www.earthsystemcog.org/projects/nuopc mapping='subroutine: \"#name(inout type(ESMF_GridComp) #gcomp, out integer #rc)\"' essential='true'"
 	 * @generated
 	 */
 	NUOPCModel__ImplementsSetServices getImplementsSetServices();

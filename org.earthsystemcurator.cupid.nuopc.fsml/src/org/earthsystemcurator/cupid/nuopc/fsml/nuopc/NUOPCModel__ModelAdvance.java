@@ -64,7 +64,6 @@ public interface NUOPCModel__ModelAdvance extends EObject {
 	 * @see #setName(String)
 	 * @see org.earthsystemcurator.cupid.nuopc.fsml.nuopc.NUOPCPackage#getNUOPCModel__ModelAdvance_Name()
 	 * @model default="ModelAdvance" required="true"
-	 *        annotation="http://www.earthsystemcog.org/projects/nuopc mapping='subroutineName' essential='true'"
 	 * @generated
 	 */
 	String getName();
@@ -91,7 +90,7 @@ public interface NUOPCModel__ModelAdvance extends EObject {
 	 * @see #setAttachedModelAdvance(boolean)
 	 * @see org.earthsystemcurator.cupid.nuopc.fsml.nuopc.NUOPCPackage#getNUOPCModel__ModelAdvance_AttachedModelAdvance()
 	 * @model required="true" derived="true"
-	 *        annotation="http://www.earthsystemcog.org/projects/nuopc essential='true' derivation_real='self.name = self.parent.implementsSetServices.attachesMethod->select(m|m.name=self.parent.genericImports.importsLabelModelAdvance).userRoutine->asSequence()->first()'"
+	 *        annotation="http://www.earthsystemcog.org/projects/nuopc essential='true'"
 	 *        annotation="http://www.eclipse.org/emf/2002/Ecore/OCL derivation='self.parent <> null and self.parent.implementsSetServices <> null and \n\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\tself.parent.implementsSetServices.attachesMethod->size() > 0 and\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\tself.parent.genericImports <> null and self.parent.genericImports.importsLabelModelAdvance <> null and\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\tself.parent.implementsSetServices.attachesMethod->select(m|m.name=self.parent.genericImports.importsLabelModelAdvance).userRoutine->includes(self.name)'"
 	 * @generated
 	 */

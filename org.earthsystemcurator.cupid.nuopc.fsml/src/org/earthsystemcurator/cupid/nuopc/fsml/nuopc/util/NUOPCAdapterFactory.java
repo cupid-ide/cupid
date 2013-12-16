@@ -180,6 +180,10 @@ public class NUOPCAdapterFactory extends AdapterFactoryImpl {
 				return createNUOPCDriverAtmOcn__ImplementsSetModelServicesAdapter();
 			}
 			@Override
+			public Adapter caseNUOPCDriverAtmOcn__ImplementsSetModelPetLists(NUOPCDriverAtmOcn__ImplementsSetModelPetLists object) {
+				return createNUOPCDriverAtmOcn__ImplementsSetModelPetListsAdapter();
+			}
+			@Override
 			public Adapter caseNUOPCDriverAtmOcn__ModelImports__ModelImport(NUOPCDriverAtmOcn__ModelImports__ModelImport object) {
 				return createNUOPCDriverAtmOcn__ModelImports__ModelImportAdapter();
 			}
@@ -660,6 +664,20 @@ public class NUOPCAdapterFactory extends AdapterFactoryImpl {
 	 * @generated
 	 */
 	public Adapter createNUOPCDriverAtmOcn__ImplementsSetModelServicesAdapter() {
+		return null;
+	}
+
+	/**
+	 * Creates a new adapter for an object of class '{@link org.earthsystemcurator.cupid.nuopc.fsml.nuopc.NUOPCDriverAtmOcn__ImplementsSetModelPetLists <em>Driver Atm Ocn Implements Set Model Pet Lists</em>}'.
+	 * <!-- begin-user-doc -->
+	 * This default implementation returns null so that we can easily ignore cases;
+	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
+	 * <!-- end-user-doc -->
+	 * @return the new adapter.
+	 * @see org.earthsystemcurator.cupid.nuopc.fsml.nuopc.NUOPCDriverAtmOcn__ImplementsSetModelPetLists
+	 * @generated
+	 */
+	public Adapter createNUOPCDriverAtmOcn__ImplementsSetModelPetListsAdapter() {
 		return null;
 	}
 

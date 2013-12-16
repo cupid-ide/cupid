@@ -11,6 +11,7 @@ import org.earthsystemcurator.cupid.nuopc.fsml.nuopc.NUOPCDriver;
 import org.earthsystemcurator.cupid.nuopc.fsml.nuopc.NUOPCDriverAtmOcn;
 import org.earthsystemcurator.cupid.nuopc.fsml.nuopc.NUOPCDriverAtmOcn__GenericImports;
 import org.earthsystemcurator.cupid.nuopc.fsml.nuopc.NUOPCDriverAtmOcn__ImplementsSetModelCount;
+import org.earthsystemcurator.cupid.nuopc.fsml.nuopc.NUOPCDriverAtmOcn__ImplementsSetModelPetLists;
 import org.earthsystemcurator.cupid.nuopc.fsml.nuopc.NUOPCDriverAtmOcn__ImplementsSetModelServices;
 import org.earthsystemcurator.cupid.nuopc.fsml.nuopc.NUOPCDriverAtmOcn__ImplementsSetServices;
 import org.earthsystemcurator.cupid.nuopc.fsml.nuopc.NUOPCDriverAtmOcn__ModelImports;
@@ -263,6 +264,13 @@ public class NUOPCPackageImpl extends EPackageImpl implements NUOPCPackage {
 	 * @generated
 	 */
 	private EClass nuopcDriverAtmOcn__ImplementsSetModelServicesEClass = null;
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	private EClass nuopcDriverAtmOcn__ImplementsSetModelPetListsEClass = null;
 
 	/**
 	 * <!-- begin-user-doc -->
@@ -681,7 +689,7 @@ public class NUOPCPackageImpl extends EPackageImpl implements NUOPCPackage {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EAttribute getNUOPCModel__ImplementsSetServices_Param_gcomp() {
+	public EAttribute getNUOPCModel__ImplementsSetServices_Gcomp() {
 		return (EAttribute)nuopcModel__ImplementsSetServicesEClass.getEStructuralFeatures().get(2);
 	}
 
@@ -690,7 +698,7 @@ public class NUOPCPackageImpl extends EPackageImpl implements NUOPCPackage {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EAttribute getNUOPCModel__ImplementsSetServices_Param_rc() {
+	public EAttribute getNUOPCModel__ImplementsSetServices_Rc() {
 		return (EAttribute)nuopcModel__ImplementsSetServicesEClass.getEStructuralFeatures().get(3);
 	}
 
@@ -1734,6 +1742,15 @@ public class NUOPCPackageImpl extends EPackageImpl implements NUOPCPackage {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	public EReference getNUOPCDriverAtmOcn_ImplementsSetModelPetLists() {
+		return (EReference)nuopcDriverAtmOcnEClass.getEStructuralFeatures().get(7);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
 	public EClass getNUOPCDriverAtmOcn__GenericImports() {
 		return nuopcDriverAtmOcn__GenericImportsEClass;
 	}
@@ -1772,6 +1789,15 @@ public class NUOPCPackageImpl extends EPackageImpl implements NUOPCPackage {
 	 */
 	public EAttribute getNUOPCDriverAtmOcn__GenericImports_ImportsLabelSetModelServices() {
 		return (EAttribute)nuopcDriverAtmOcn__GenericImportsEClass.getEStructuralFeatures().get(3);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EAttribute getNUOPCDriverAtmOcn__GenericImports_ImportsLabelSetModelPetLists() {
+		return (EAttribute)nuopcDriverAtmOcn__GenericImportsEClass.getEStructuralFeatures().get(4);
 	}
 
 	/**
@@ -2042,6 +2068,87 @@ public class NUOPCPackageImpl extends EPackageImpl implements NUOPCPackage {
 	 */
 	public EReference getNUOPCDriverAtmOcn__ImplementsSetModelServices_SetCouplerServices() {
 		return (EReference)nuopcDriverAtmOcn__ImplementsSetModelServicesEClass.getEStructuralFeatures().get(9);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EClass getNUOPCDriverAtmOcn__ImplementsSetModelPetLists() {
+		return nuopcDriverAtmOcn__ImplementsSetModelPetListsEClass;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EReference getNUOPCDriverAtmOcn__ImplementsSetModelPetLists_Parent() {
+		return (EReference)nuopcDriverAtmOcn__ImplementsSetModelPetListsEClass.getEStructuralFeatures().get(0);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EAttribute getNUOPCDriverAtmOcn__ImplementsSetModelPetLists_Gcomp() {
+		return (EAttribute)nuopcDriverAtmOcn__ImplementsSetModelPetListsEClass.getEStructuralFeatures().get(1);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EAttribute getNUOPCDriverAtmOcn__ImplementsSetModelPetLists_Rc() {
+		return (EAttribute)nuopcDriverAtmOcn__ImplementsSetModelPetListsEClass.getEStructuralFeatures().get(2);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EAttribute getNUOPCDriverAtmOcn__ImplementsSetModelPetLists_Name() {
+		return (EAttribute)nuopcDriverAtmOcn__ImplementsSetModelPetListsEClass.getEStructuralFeatures().get(3);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EAttribute getNUOPCDriverAtmOcn__ImplementsSetModelPetLists_DriverInternalState() {
+		return (EAttribute)nuopcDriverAtmOcn__ImplementsSetModelPetListsEClass.getEStructuralFeatures().get(4);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EReference getNUOPCDriverAtmOcn__ImplementsSetModelPetLists_GetsInternalState() {
+		return (EReference)nuopcDriverAtmOcn__ImplementsSetModelPetListsEClass.getEStructuralFeatures().get(5);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EAttribute getNUOPCDriverAtmOcn__ImplementsSetModelPetLists_AssignsValue() {
+		return (EAttribute)nuopcDriverAtmOcn__ImplementsSetModelPetListsEClass.getEStructuralFeatures().get(6);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EAttribute getNUOPCDriverAtmOcn__ImplementsSetModelPetLists_Attached() {
+		return (EAttribute)nuopcDriverAtmOcn__ImplementsSetModelPetListsEClass.getEStructuralFeatures().get(7);
 	}
 
 	/**
@@ -2938,8 +3045,8 @@ public class NUOPCPackageImpl extends EPackageImpl implements NUOPCPackage {
 		nuopcModel__ImplementsSetServicesEClass = createEClass(NUOPC_MODEL_IMPLEMENTS_SET_SERVICES);
 		createEReference(nuopcModel__ImplementsSetServicesEClass, NUOPC_MODEL_IMPLEMENTS_SET_SERVICES__PARENT);
 		createEAttribute(nuopcModel__ImplementsSetServicesEClass, NUOPC_MODEL_IMPLEMENTS_SET_SERVICES__NAME);
-		createEAttribute(nuopcModel__ImplementsSetServicesEClass, NUOPC_MODEL_IMPLEMENTS_SET_SERVICES__PARAM_GCOMP);
-		createEAttribute(nuopcModel__ImplementsSetServicesEClass, NUOPC_MODEL_IMPLEMENTS_SET_SERVICES__PARAM_RC);
+		createEAttribute(nuopcModel__ImplementsSetServicesEClass, NUOPC_MODEL_IMPLEMENTS_SET_SERVICES__GCOMP);
+		createEAttribute(nuopcModel__ImplementsSetServicesEClass, NUOPC_MODEL_IMPLEMENTS_SET_SERVICES__RC);
 		createEReference(nuopcModel__ImplementsSetServicesEClass, NUOPC_MODEL_IMPLEMENTS_SET_SERVICES__CALLS_GENERIC_SET_SERVICES);
 		createEReference(nuopcModel__ImplementsSetServicesEClass, NUOPC_MODEL_IMPLEMENTS_SET_SERVICES__CALLS_SET_ENTRY_POINT);
 		createEReference(nuopcModel__ImplementsSetServicesEClass, NUOPC_MODEL_IMPLEMENTS_SET_SERVICES__ATTACHES_METHOD);
@@ -3072,12 +3179,14 @@ public class NUOPCPackageImpl extends EPackageImpl implements NUOPCPackage {
 		createEReference(nuopcDriverAtmOcnEClass, NUOPC_DRIVER_ATM_OCN__IMPLEMENTS_SET_SERVICES);
 		createEReference(nuopcDriverAtmOcnEClass, NUOPC_DRIVER_ATM_OCN__IMPLEMENTS_SET_MODEL_COUNT);
 		createEReference(nuopcDriverAtmOcnEClass, NUOPC_DRIVER_ATM_OCN__IMPLEMENTS_SET_MODEL_SERVICES);
+		createEReference(nuopcDriverAtmOcnEClass, NUOPC_DRIVER_ATM_OCN__IMPLEMENTS_SET_MODEL_PET_LISTS);
 
 		nuopcDriverAtmOcn__GenericImportsEClass = createEClass(NUOPC_DRIVER_ATM_OCN_GENERIC_IMPORTS);
 		createEAttribute(nuopcDriverAtmOcn__GenericImportsEClass, NUOPC_DRIVER_ATM_OCN_GENERIC_IMPORTS__IMPORTS_GENERIC_SS);
 		createEAttribute(nuopcDriverAtmOcn__GenericImportsEClass, NUOPC_DRIVER_ATM_OCN_GENERIC_IMPORTS__IMPORTS_TYPE_DRIVER_IS);
 		createEAttribute(nuopcDriverAtmOcn__GenericImportsEClass, NUOPC_DRIVER_ATM_OCN_GENERIC_IMPORTS__IMPORTS_LABEL_SET_MODEL_COUNT);
 		createEAttribute(nuopcDriverAtmOcn__GenericImportsEClass, NUOPC_DRIVER_ATM_OCN_GENERIC_IMPORTS__IMPORTS_LABEL_SET_MODEL_SERVICES);
+		createEAttribute(nuopcDriverAtmOcn__GenericImportsEClass, NUOPC_DRIVER_ATM_OCN_GENERIC_IMPORTS__IMPORTS_LABEL_SET_MODEL_PET_LISTS);
 
 		nuopcDriverAtmOcn__ModelImportsEClass = createEClass(NUOPC_DRIVER_ATM_OCN_MODEL_IMPORTS);
 		createEReference(nuopcDriverAtmOcn__ModelImportsEClass, NUOPC_DRIVER_ATM_OCN_MODEL_IMPORTS__PARENT);
@@ -3112,6 +3221,16 @@ public class NUOPCPackageImpl extends EPackageImpl implements NUOPCPackage {
 		createEAttribute(nuopcDriverAtmOcn__ImplementsSetModelServicesEClass, NUOPC_DRIVER_ATM_OCN_IMPLEMENTS_SET_MODEL_SERVICES__ATTACHED);
 		createEReference(nuopcDriverAtmOcn__ImplementsSetModelServicesEClass, NUOPC_DRIVER_ATM_OCN_IMPLEMENTS_SET_MODEL_SERVICES__SET_MODEL_SERVICES);
 		createEReference(nuopcDriverAtmOcn__ImplementsSetModelServicesEClass, NUOPC_DRIVER_ATM_OCN_IMPLEMENTS_SET_MODEL_SERVICES__SET_COUPLER_SERVICES);
+
+		nuopcDriverAtmOcn__ImplementsSetModelPetListsEClass = createEClass(NUOPC_DRIVER_ATM_OCN_IMPLEMENTS_SET_MODEL_PET_LISTS);
+		createEReference(nuopcDriverAtmOcn__ImplementsSetModelPetListsEClass, NUOPC_DRIVER_ATM_OCN_IMPLEMENTS_SET_MODEL_PET_LISTS__PARENT);
+		createEAttribute(nuopcDriverAtmOcn__ImplementsSetModelPetListsEClass, NUOPC_DRIVER_ATM_OCN_IMPLEMENTS_SET_MODEL_PET_LISTS__GCOMP);
+		createEAttribute(nuopcDriverAtmOcn__ImplementsSetModelPetListsEClass, NUOPC_DRIVER_ATM_OCN_IMPLEMENTS_SET_MODEL_PET_LISTS__RC);
+		createEAttribute(nuopcDriverAtmOcn__ImplementsSetModelPetListsEClass, NUOPC_DRIVER_ATM_OCN_IMPLEMENTS_SET_MODEL_PET_LISTS__NAME);
+		createEAttribute(nuopcDriverAtmOcn__ImplementsSetModelPetListsEClass, NUOPC_DRIVER_ATM_OCN_IMPLEMENTS_SET_MODEL_PET_LISTS__DRIVER_INTERNAL_STATE);
+		createEReference(nuopcDriverAtmOcn__ImplementsSetModelPetListsEClass, NUOPC_DRIVER_ATM_OCN_IMPLEMENTS_SET_MODEL_PET_LISTS__GETS_INTERNAL_STATE);
+		createEAttribute(nuopcDriverAtmOcn__ImplementsSetModelPetListsEClass, NUOPC_DRIVER_ATM_OCN_IMPLEMENTS_SET_MODEL_PET_LISTS__ASSIGNS_VALUE);
+		createEAttribute(nuopcDriverAtmOcn__ImplementsSetModelPetListsEClass, NUOPC_DRIVER_ATM_OCN_IMPLEMENTS_SET_MODEL_PET_LISTS__ATTACHED);
 
 		nuopcDriverAtmOcn__ModelImports__ModelImportEClass = createEClass(NUOPC_DRIVER_ATM_OCN_MODEL_IMPORTS_MODEL_IMPORT);
 		createEReference(nuopcDriverAtmOcn__ModelImports__ModelImportEClass, NUOPC_DRIVER_ATM_OCN_MODEL_IMPORTS_MODEL_IMPORT__PARENT);
@@ -3263,7 +3382,7 @@ public class NUOPCPackageImpl extends EPackageImpl implements NUOPCPackage {
 		initEReference(getNUOPCApplication_NuopcModel(), this.getNUOPCModel(), null, "nuopcModel", null, 0, -1, NUOPCApplication.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, !IS_ORDERED);
 		initEReference(getNUOPCApplication_NuopcDriver(), this.getNUOPCDriver(), this.getNUOPCDriver_Parent(), "nuopcDriver", null, 0, -1, NUOPCApplication.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, !IS_ORDERED);
 		initEReference(getNUOPCApplication_NuopcDriverAtmOcn(), this.getNUOPCDriverAtmOcn(), this.getNUOPCDriverAtmOcn_Parent(), "nuopcDriverAtmOcn", null, 0, -1, NUOPCApplication.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, !IS_ORDERED);
-		initEReference(getNUOPCApplication_NuopcMediator(), this.getNUOPCMediator(), null, "nuopcMediator", null, 0, -1, NUOPCApplication.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEReference(getNUOPCApplication_NuopcMediator(), this.getNUOPCMediator(), null, "nuopcMediator", null, 0, -1, NUOPCApplication.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, !IS_ORDERED);
 
 		initEClass(nuopcModelEClass, NUOPCModel.class, "NUOPCModel", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 		initEAttribute(getNUOPCModel_Name(), ecorePackage.getEString(), "name", "Model", 1, 1, NUOPCModel.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
@@ -3287,8 +3406,8 @@ public class NUOPCPackageImpl extends EPackageImpl implements NUOPCPackage {
 		initEClass(nuopcModel__ImplementsSetServicesEClass, NUOPCModel__ImplementsSetServices.class, "NUOPCModel__ImplementsSetServices", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 		initEReference(getNUOPCModel__ImplementsSetServices_Parent(), this.getNUOPCModel(), this.getNUOPCModel_ImplementsSetServices(), "parent", null, 1, 1, NUOPCModel__ImplementsSetServices.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEAttribute(getNUOPCModel__ImplementsSetServices_Name(), ecorePackage.getEString(), "name", "SetServices", 1, 1, NUOPCModel__ImplementsSetServices.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-		initEAttribute(getNUOPCModel__ImplementsSetServices_Param_gcomp(), ecorePackage.getEString(), "param_gcomp", "gcomp", 1, 1, NUOPCModel__ImplementsSetServices.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-		initEAttribute(getNUOPCModel__ImplementsSetServices_Param_rc(), ecorePackage.getEString(), "param_rc", "rc", 1, 1, NUOPCModel__ImplementsSetServices.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEAttribute(getNUOPCModel__ImplementsSetServices_Gcomp(), ecorePackage.getEString(), "gcomp", "gcomp", 1, 1, NUOPCModel__ImplementsSetServices.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEAttribute(getNUOPCModel__ImplementsSetServices_Rc(), ecorePackage.getEString(), "rc", "rc", 1, 1, NUOPCModel__ImplementsSetServices.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEReference(getNUOPCModel__ImplementsSetServices_CallsGenericSetServices(), this.getCallsGenericSetServices(), null, "callsGenericSetServices", null, 1, 1, NUOPCModel__ImplementsSetServices.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEReference(getNUOPCModel__ImplementsSetServices_CallsSetEntryPoint(), this.getCallsSetEntryPoint(), null, "callsSetEntryPoint", null, 0, -1, NUOPCModel__ImplementsSetServices.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEReference(getNUOPCModel__ImplementsSetServices_AttachesMethod(), this.getAttachesMethod(), null, "attachesMethod", null, 0, -1, NUOPCModel__ImplementsSetServices.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, !IS_ORDERED);
@@ -3421,12 +3540,14 @@ public class NUOPCPackageImpl extends EPackageImpl implements NUOPCPackage {
 		initEReference(getNUOPCDriverAtmOcn_ImplementsSetServices(), this.getNUOPCDriverAtmOcn__ImplementsSetServices(), this.getNUOPCDriverAtmOcn__ImplementsSetServices_Parent(), "implementsSetServices", null, 1, 1, NUOPCDriverAtmOcn.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEReference(getNUOPCDriverAtmOcn_ImplementsSetModelCount(), this.getNUOPCDriverAtmOcn__ImplementsSetModelCount(), this.getNUOPCDriverAtmOcn__ImplementsSetModelCount_Parent(), "implementsSetModelCount", null, 0, 1, NUOPCDriverAtmOcn.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEReference(getNUOPCDriverAtmOcn_ImplementsSetModelServices(), this.getNUOPCDriverAtmOcn__ImplementsSetModelServices(), this.getNUOPCDriverAtmOcn__ImplementsSetModelServices_Parent(), "implementsSetModelServices", null, 0, 1, NUOPCDriverAtmOcn.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEReference(getNUOPCDriverAtmOcn_ImplementsSetModelPetLists(), this.getNUOPCDriverAtmOcn__ImplementsSetModelPetLists(), this.getNUOPCDriverAtmOcn__ImplementsSetModelPetLists_Parent(), "implementsSetModelPetLists", null, 0, 1, NUOPCDriverAtmOcn.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
 		initEClass(nuopcDriverAtmOcn__GenericImportsEClass, NUOPCDriverAtmOcn__GenericImports.class, "NUOPCDriverAtmOcn__GenericImports", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 		initEAttribute(getNUOPCDriverAtmOcn__GenericImports_ImportsGenericSS(), ecorePackage.getEString(), "importsGenericSS", "driver_routine_SS", 1, 1, NUOPCDriverAtmOcn__GenericImports.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEAttribute(getNUOPCDriverAtmOcn__GenericImports_ImportsTypeDriverIS(), ecorePackage.getEString(), "importsTypeDriverIS", "driver_type_IS", 1, 1, NUOPCDriverAtmOcn__GenericImports.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEAttribute(getNUOPCDriverAtmOcn__GenericImports_ImportsLabelSetModelCount(), ecorePackage.getEString(), "importsLabelSetModelCount", "driver_label_SetModelCount", 0, 1, NUOPCDriverAtmOcn__GenericImports.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEAttribute(getNUOPCDriverAtmOcn__GenericImports_ImportsLabelSetModelServices(), ecorePackage.getEString(), "importsLabelSetModelServices", "driver_label_SetModelServices", 0, 1, NUOPCDriverAtmOcn__GenericImports.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEAttribute(getNUOPCDriverAtmOcn__GenericImports_ImportsLabelSetModelPetLists(), ecorePackage.getEString(), "importsLabelSetModelPetLists", "driver_label_SetModelPetLists", 0, 1, NUOPCDriverAtmOcn__GenericImports.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
 		initEClass(nuopcDriverAtmOcn__ModelImportsEClass, NUOPCDriverAtmOcn__ModelImports.class, "NUOPCDriverAtmOcn__ModelImports", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 		initEReference(getNUOPCDriverAtmOcn__ModelImports_Parent(), this.getNUOPCDriverAtmOcn(), this.getNUOPCDriverAtmOcn_ModelImports(), "parent", null, 1, 1, NUOPCDriverAtmOcn__ModelImports.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
@@ -3461,6 +3582,16 @@ public class NUOPCPackageImpl extends EPackageImpl implements NUOPCPackage {
 		initEAttribute(getNUOPCDriverAtmOcn__ImplementsSetModelServices_Attached(), ecorePackage.getEBoolean(), "attached", null, 1, 1, NUOPCDriverAtmOcn__ImplementsSetModelServices.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, IS_DERIVED, IS_ORDERED);
 		initEReference(getNUOPCDriverAtmOcn__ImplementsSetModelServices_SetModelServices(), this.getSetModelServices(), null, "setModelServices", null, 0, -1, NUOPCDriverAtmOcn__ImplementsSetModelServices.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEReference(getNUOPCDriverAtmOcn__ImplementsSetModelServices_SetCouplerServices(), this.getSetCouplerServices(), null, "setCouplerServices", null, 0, -1, NUOPCDriverAtmOcn__ImplementsSetModelServices.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+
+		initEClass(nuopcDriverAtmOcn__ImplementsSetModelPetListsEClass, NUOPCDriverAtmOcn__ImplementsSetModelPetLists.class, "NUOPCDriverAtmOcn__ImplementsSetModelPetLists", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+		initEReference(getNUOPCDriverAtmOcn__ImplementsSetModelPetLists_Parent(), this.getNUOPCDriverAtmOcn(), this.getNUOPCDriverAtmOcn_ImplementsSetModelPetLists(), "parent", null, 1, 1, NUOPCDriverAtmOcn__ImplementsSetModelPetLists.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEAttribute(getNUOPCDriverAtmOcn__ImplementsSetModelPetLists_Gcomp(), ecorePackage.getEString(), "gcomp", "gcomp", 0, 1, NUOPCDriverAtmOcn__ImplementsSetModelPetLists.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEAttribute(getNUOPCDriverAtmOcn__ImplementsSetModelPetLists_Rc(), ecorePackage.getEString(), "rc", "rc", 0, 1, NUOPCDriverAtmOcn__ImplementsSetModelPetLists.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEAttribute(getNUOPCDriverAtmOcn__ImplementsSetModelPetLists_Name(), ecorePackage.getEString(), "name", "SetModelServices", 1, 1, NUOPCDriverAtmOcn__ImplementsSetModelPetLists.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEAttribute(getNUOPCDriverAtmOcn__ImplementsSetModelPetLists_DriverInternalState(), ecorePackage.getEString(), "driverInternalState", null, 0, 1, NUOPCDriverAtmOcn__ImplementsSetModelPetLists.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEReference(getNUOPCDriverAtmOcn__ImplementsSetModelPetLists_GetsInternalState(), this.getGetsInternalState(), null, "getsInternalState", null, 0, 1, NUOPCDriverAtmOcn__ImplementsSetModelPetLists.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEAttribute(getNUOPCDriverAtmOcn__ImplementsSetModelPetLists_AssignsValue(), ecorePackage.getEBoolean(), "assignsValue", null, 0, 1, NUOPCDriverAtmOcn__ImplementsSetModelPetLists.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEAttribute(getNUOPCDriverAtmOcn__ImplementsSetModelPetLists_Attached(), ecorePackage.getEBoolean(), "attached", null, 1, 1, NUOPCDriverAtmOcn__ImplementsSetModelPetLists.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, IS_DERIVED, IS_ORDERED);
 
 		initEClass(nuopcDriverAtmOcn__ModelImports__ModelImportEClass, NUOPCDriverAtmOcn__ModelImports__ModelImport.class, "NUOPCDriverAtmOcn__ModelImports__ModelImport", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 		initEReference(getNUOPCDriverAtmOcn__ModelImports__ModelImport_Parent(), this.getNUOPCDriverAtmOcn__ModelImports(), this.getNUOPCDriverAtmOcn__ModelImports_ModelImport(), "parent", null, 1, 1, NUOPCDriverAtmOcn__ModelImports__ModelImport.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
@@ -3609,7 +3740,7 @@ public class NUOPCPackageImpl extends EPackageImpl implements NUOPCPackage {
 		   source, 
 		   new String[] {
 			 "constraints", "registersInitP1 registersInitP2"
-		   });																																																																																																																																										
+		   });																																																																																																																																											
 		addAnnotation
 		  (nuopcMediator__ImplementsSetServicesEClass, 
 		   source, 
@@ -3675,7 +3806,7 @@ public class NUOPCPackageImpl extends EPackageImpl implements NUOPCPackage {
 		  (getNUOPCModel_ImplementsSetServices(), 
 		   source, 
 		   new String[] {
-			 "mapping", "subroutine: \"#name(inout type(ESMF_GridComp) #param_gcomp, out integer #param_rc)\"",
+			 "mapping", "subroutine: \"#name(inout type(ESMF_GridComp) #gcomp, out integer #rc)\"",
 			 "essential", "true"
 		   });		
 		addAnnotation
@@ -3724,34 +3855,15 @@ public class NUOPCPackageImpl extends EPackageImpl implements NUOPCPackage {
 		  (getNUOPCModel__Init_ImplementsInitP2(), 
 		   source, 
 		   new String[] {
-			 "mapping", "subroutine: \"#name(inout type(ESMF_GridComp) gcomp, inout type(ESMF_State) #importParam, inout type(ESMF_State) #exportParam, inout type(ESMF_Clock) clock, out integer rc)\""
+			 "mapping", "subroutine: \"#name(inout type(ESMF_GridComp) gcomp, inout type(ESMF_State) #importParam, inout type(ESMF_State) #exportParam, inout type(ESMF_Clock) #ignore, out integer #ignore)\""
 		   });			
 		addAnnotation
 		  (nuopcModel__ImplementsSetServicesEClass, 
 		   source, 
 		   new String[] {
-			 "mapping", "subroutine: \"#name(inout type(ESMF_GridComp) #param_gcomp, out integer #param_rc)\"",
 			 "label", "Set Services",
 			 "doc", "In general, a Set Services method is a public subroutine that sets entry points for the component. This subroutine should call the Set Services subroutine in the generic NUOPC Model component."
 		   });			
-		addAnnotation
-		  (getNUOPCModel__ImplementsSetServices_Name(), 
-		   source, 
-		   new String[] {
-			 "mappingX", "subroutineName"
-		   });		
-		addAnnotation
-		  (getNUOPCModel__ImplementsSetServices_Param_gcomp(), 
-		   source, 
-		   new String[] {
-			 "mappingX", "formalParam: 1"
-		   });		
-		addAnnotation
-		  (getNUOPCModel__ImplementsSetServices_Param_rc(), 
-		   source, 
-		   new String[] {
-			 "mappingX", "formalParam: 2"
-		   });		
 		addAnnotation
 		  (getNUOPCModel__ImplementsSetServices_CallsGenericSetServices(), 
 		   source, 
@@ -3813,24 +3925,6 @@ public class NUOPCPackageImpl extends EPackageImpl implements NUOPCPackage {
 			 "label", "Initialize Phase Definition - IPDv01p2",
 			 "iconAdd", "cog_add.png",
 			 "task", "Implement Init Phase Definition (IPDv01p2)"
-		   });		
-		addAnnotation
-		  (getNUOPCModel__ImplementsInitP2_Name(), 
-		   source, 
-		   new String[] {
-			 "mappingX", "subroutineName"
-		   });		
-		addAnnotation
-		  (getNUOPCModel__ImplementsInitP2_ImportParam(), 
-		   source, 
-		   new String[] {
-			 "mappingX", "formalParam: 2"
-		   });		
-		addAnnotation
-		  (getNUOPCModel__ImplementsInitP2_ExportParam(), 
-		   source, 
-		   new String[] {
-			 "mappingX", "formalParam: 3"
 		   });		
 		addAnnotation
 		  (getNUOPCModel__ImplementsInitP2_RealizesImportField(), 
@@ -3923,18 +4017,10 @@ public class NUOPCPackageImpl extends EPackageImpl implements NUOPCPackage {
 			 "doc", "A subroutine called to advance the model ahead by the timestep interval."
 		   });		
 		addAnnotation
-		  (getNUOPCModel__ModelAdvance_Name(), 
-		   source, 
-		   new String[] {
-			 "mapping", "subroutineName",
-			 "essential", "true"
-		   });		
-		addAnnotation
 		  (getNUOPCModel__ModelAdvance_AttachedModelAdvance(), 
 		   source, 
 		   new String[] {
-			 "essential", "true",
-			 "derivation_real", "self.name = self.parent.implementsSetServices.attachesMethod->select(m|m.name=self.parent.genericImports.importsLabelModelAdvance).userRoutine->asSequence()->first()"
+			 "essential", "true"
 		   });			
 		addAnnotation
 		  (nuopcDriverEClass, 
@@ -4220,6 +4306,12 @@ public class NUOPCPackageImpl extends EPackageImpl implements NUOPCPackage {
 			 "mapping", "subroutine: \"#name(type(ESMF_GridComp) #gcomp, integer #rc)\""
 		   });		
 		addAnnotation
+		  (getNUOPCDriverAtmOcn_ImplementsSetModelPetLists(), 
+		   source, 
+		   new String[] {
+			 "mapping", "subroutine: \"#name(type(ESMF_GridComp) #gcomp, integer #rc)\""
+		   });		
+		addAnnotation
 		  (nuopcDriverAtmOcn__GenericImportsEClass, 
 		   source, 
 		   new String[] {
@@ -4255,6 +4347,13 @@ public class NUOPCPackageImpl extends EPackageImpl implements NUOPCPackage {
 		   new String[] {
 			 "mapping", "uses: \"NUOPC_DriverAtmOcn\" entity: \"label_SetModelServices\"",
 			 "label", "label_SetModelServices"
+		   });		
+		addAnnotation
+		  (getNUOPCDriverAtmOcn__GenericImports_ImportsLabelSetModelPetLists(), 
+		   source, 
+		   new String[] {
+			 "mapping", "uses: \"NUOPC_DriverAtmOcn\" entity: \"label_SetModelPetLists\"",
+			 "label", "label_SetModelPetLists"
 		   });		
 		addAnnotation
 		  (nuopcDriverAtmOcn__ModelImportsEClass, 
@@ -4363,6 +4462,36 @@ public class NUOPCPackageImpl extends EPackageImpl implements NUOPCPackage {
 		   new String[] {
 			 "mapping", "call: \"ESMF_CplCompSetServices(#cplComp, #subroutineName, userRc?=#ignore, rc?=#ignore)\""
 		   });		
+		addAnnotation
+		  (nuopcDriverAtmOcn__ImplementsSetModelPetListsEClass, 
+		   source, 
+		   new String[] {
+			 "label", "Set Model PET Lists"
+		   });		
+		addAnnotation
+		  (getNUOPCDriverAtmOcn__ImplementsSetModelPetLists_DriverInternalState(), 
+		   source, 
+		   new String[] {
+			 "mapping", "localVariable: \"type(driver_type_IS)\""
+		   });		
+		addAnnotation
+		  (getNUOPCDriverAtmOcn__ImplementsSetModelPetLists_GetsInternalState(), 
+		   source, 
+		   new String[] {
+			 "mapping", "call: \"ESMF_UserCompGetInternalState(#ignore, #label, #../driverInternalState, #ignore)\""
+		   });		
+		addAnnotation
+		  (getNUOPCDriverAtmOcn__ImplementsSetModelPetLists_AssignsValue(), 
+		   source, 
+		   new String[] {
+			 "mapping", "assigns: #driverInternalState"
+		   });		
+		addAnnotation
+		  (getNUOPCDriverAtmOcn__ImplementsSetModelPetLists_Attached(), 
+		   source, 
+		   new String[] {
+			 "essential", "true"
+		   });			
 		addAnnotation
 		  (nuopcDriverAtmOcn__ModelImports__ModelImportEClass, 
 		   source, 
@@ -4657,7 +4786,7 @@ public class NUOPCPackageImpl extends EPackageImpl implements NUOPCPackage {
 			 "registersInitP1$message", "\'A call is required in the Set Services method to ESMF_GridCompSetEntryPoint in order to register the initialize phase 1 method.\'",
 			 "registersInitP2", "self.parent.initialize.implementsInitP2=null or self.callsSetEntryPoint->select(c|c.userRoutine=self.parent.initialize.implementsInitP2.name)->notEmpty()",
 			 "registersInitP2$message", "\'A call is required in the Set Services method to ESMF_GridCompSetEntryPoint in order to register the initialize phase 2 method.\'"
-		   });												
+		   });									
 		addAnnotation
 		  (getNUOPCModel__ImplementsInitP1_AdvertisesAtLeastOneField(), 
 		   source, 
@@ -4675,7 +4804,7 @@ public class NUOPCPackageImpl extends EPackageImpl implements NUOPCPackage {
 		   source, 
 		   new String[] {
 			 "derivation", "self.registeredInSetServices or self.advertisesAtLeastOneField"
-		   });								
+		   });					
 		addAnnotation
 		  (getNUOPCModel__ImplementsInitP2_RealizesAtLeastOneField(), 
 		   source, 
@@ -4717,7 +4846,7 @@ public class NUOPCPackageImpl extends EPackageImpl implements NUOPCPackage {
 		   source, 
 		   new String[] {
 			 "derivation", "self.realizedInState = self.parent.exportParam"
-		   });						
+		   });					
 		addAnnotation
 		  (getNUOPCModel__ModelAdvance_AttachedModelAdvance(), 
 		   source, 
@@ -4741,7 +4870,7 @@ public class NUOPCPackageImpl extends EPackageImpl implements NUOPCPackage {
 		   source, 
 		   new String[] {
 			 "derivation", "self.name = self.parent.implementsSetServices.attachesMethod->select(m|m.name=self.parent.genericImports.importsLabelSetModelServices).userRoutine->asSequence()->first()"
-		   });																								
+		   });																										
 		addAnnotation
 		  (getNUOPCDriverAtmOcn__ImplementsSetModelCount_Attached(), 
 		   source, 
@@ -4753,7 +4882,13 @@ public class NUOPCPackageImpl extends EPackageImpl implements NUOPCPackage {
 		   source, 
 		   new String[] {
 			 "derivation", "self.name = self.parent.implementsSetServices.attachesMethod->select(m|m.name=self.parent.genericImports.importsLabelSetModelServices).userRoutine->asSequence()->first()"
-		   });							
+		   });									
+		addAnnotation
+		  (getNUOPCDriverAtmOcn__ImplementsSetModelPetLists_Attached(), 
+		   source, 
+		   new String[] {
+			 "derivation", "self.name = self.parent.implementsSetServices.attachesMethod->select(m|m.name=self.parent.genericImports.importsLabelSetModelPetLists).userRoutine->asSequence()->first()"
+		   });					
 		addAnnotation
 		  (getNUOPCDriverAtmOcn__ModelImports__ModelImport_ModelRef(), 
 		   source, 

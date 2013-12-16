@@ -142,6 +142,8 @@ public class NUOPCValidator extends EObjectValidator {
 				return validateNUOPCDriverAtmOcn__ImplementsSetModelCount((NUOPCDriverAtmOcn__ImplementsSetModelCount)value, diagnostics, context);
 			case NUOPCPackage.NUOPC_DRIVER_ATM_OCN_IMPLEMENTS_SET_MODEL_SERVICES:
 				return validateNUOPCDriverAtmOcn__ImplementsSetModelServices((NUOPCDriverAtmOcn__ImplementsSetModelServices)value, diagnostics, context);
+			case NUOPCPackage.NUOPC_DRIVER_ATM_OCN_IMPLEMENTS_SET_MODEL_PET_LISTS:
+				return validateNUOPCDriverAtmOcn__ImplementsSetModelPetLists((NUOPCDriverAtmOcn__ImplementsSetModelPetLists)value, diagnostics, context);
 			case NUOPCPackage.NUOPC_DRIVER_ATM_OCN_MODEL_IMPORTS_MODEL_IMPORT:
 				return validateNUOPCDriverAtmOcn__ModelImports__ModelImport((NUOPCDriverAtmOcn__ModelImports__ModelImport)value, diagnostics, context);
 			case NUOPCPackage.CALLS_GENERIC_SET_SERVICES:
@@ -502,6 +504,15 @@ public class NUOPCValidator extends EObjectValidator {
 	 */
 	public boolean validateNUOPCDriverAtmOcn__ImplementsSetModelServices(NUOPCDriverAtmOcn__ImplementsSetModelServices nuopcDriverAtmOcn__ImplementsSetModelServices, DiagnosticChain diagnostics, Map<Object, Object> context) {
 		return validate_EveryDefaultConstraint(nuopcDriverAtmOcn__ImplementsSetModelServices, diagnostics, context);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public boolean validateNUOPCDriverAtmOcn__ImplementsSetModelPetLists(NUOPCDriverAtmOcn__ImplementsSetModelPetLists nuopcDriverAtmOcn__ImplementsSetModelPetLists, DiagnosticChain diagnostics, Map<Object, Object> context) {
+		return validate_EveryDefaultConstraint(nuopcDriverAtmOcn__ImplementsSetModelPetLists, diagnostics, context);
 	}
 
 	/**

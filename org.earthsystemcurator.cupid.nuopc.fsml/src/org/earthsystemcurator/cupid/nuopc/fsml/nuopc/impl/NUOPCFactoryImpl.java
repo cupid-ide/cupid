@@ -84,6 +84,7 @@ public class NUOPCFactoryImpl extends EFactoryImpl implements NUOPCFactory {
 			case NUOPCPackage.NUOPC_DRIVER_ATM_OCN_IMPLEMENTS_SET_SERVICES: return createNUOPCDriverAtmOcn__ImplementsSetServices();
 			case NUOPCPackage.NUOPC_DRIVER_ATM_OCN_IMPLEMENTS_SET_MODEL_COUNT: return createNUOPCDriverAtmOcn__ImplementsSetModelCount();
 			case NUOPCPackage.NUOPC_DRIVER_ATM_OCN_IMPLEMENTS_SET_MODEL_SERVICES: return createNUOPCDriverAtmOcn__ImplementsSetModelServices();
+			case NUOPCPackage.NUOPC_DRIVER_ATM_OCN_IMPLEMENTS_SET_MODEL_PET_LISTS: return createNUOPCDriverAtmOcn__ImplementsSetModelPetLists();
 			case NUOPCPackage.NUOPC_DRIVER_ATM_OCN_MODEL_IMPORTS_MODEL_IMPORT: return createNUOPCDriverAtmOcn__ModelImports__ModelImport();
 			case NUOPCPackage.CALLS_GENERIC_SET_SERVICES: return createCallsGenericSetServices();
 			case NUOPCPackage.CALLS_SET_ENTRY_POINT: return createCallsSetEntryPoint();
@@ -385,6 +386,16 @@ public class NUOPCFactoryImpl extends EFactoryImpl implements NUOPCFactory {
 	public NUOPCDriverAtmOcn__ImplementsSetModelServices createNUOPCDriverAtmOcn__ImplementsSetModelServices() {
 		NUOPCDriverAtmOcn__ImplementsSetModelServicesImpl nuopcDriverAtmOcn__ImplementsSetModelServices = new NUOPCDriverAtmOcn__ImplementsSetModelServicesImpl();
 		return nuopcDriverAtmOcn__ImplementsSetModelServices;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public NUOPCDriverAtmOcn__ImplementsSetModelPetLists createNUOPCDriverAtmOcn__ImplementsSetModelPetLists() {
+		NUOPCDriverAtmOcn__ImplementsSetModelPetListsImpl nuopcDriverAtmOcn__ImplementsSetModelPetLists = new NUOPCDriverAtmOcn__ImplementsSetModelPetListsImpl();
+		return nuopcDriverAtmOcn__ImplementsSetModelPetLists;
 	}
 
 	/**

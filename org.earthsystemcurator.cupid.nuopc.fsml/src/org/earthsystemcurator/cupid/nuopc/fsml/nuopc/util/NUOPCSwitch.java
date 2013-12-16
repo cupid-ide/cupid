@@ -234,6 +234,12 @@ public class NUOPCSwitch<T> extends Switch<T> {
 				if (result == null) result = defaultCase(theEObject);
 				return result;
 			}
+			case NUOPCPackage.NUOPC_DRIVER_ATM_OCN_IMPLEMENTS_SET_MODEL_PET_LISTS: {
+				NUOPCDriverAtmOcn__ImplementsSetModelPetLists nuopcDriverAtmOcn__ImplementsSetModelPetLists = (NUOPCDriverAtmOcn__ImplementsSetModelPetLists)theEObject;
+				T result = caseNUOPCDriverAtmOcn__ImplementsSetModelPetLists(nuopcDriverAtmOcn__ImplementsSetModelPetLists);
+				if (result == null) result = defaultCase(theEObject);
+				return result;
+			}
 			case NUOPCPackage.NUOPC_DRIVER_ATM_OCN_MODEL_IMPORTS_MODEL_IMPORT: {
 				NUOPCDriverAtmOcn__ModelImports__ModelImport nuopcDriverAtmOcn__ModelImports__ModelImport = (NUOPCDriverAtmOcn__ModelImports__ModelImport)theEObject;
 				T result = caseNUOPCDriverAtmOcn__ModelImports__ModelImport(nuopcDriverAtmOcn__ModelImports__ModelImport);
@@ -763,6 +769,21 @@ public class NUOPCSwitch<T> extends Switch<T> {
 	 * @generated
 	 */
 	public T caseNUOPCDriverAtmOcn__ImplementsSetModelServices(NUOPCDriverAtmOcn__ImplementsSetModelServices object) {
+		return null;
+	}
+
+	/**
+	 * Returns the result of interpreting the object as an instance of '<em>Driver Atm Ocn Implements Set Model Pet Lists</em>'.
+	 * <!-- begin-user-doc -->
+	 * This implementation returns null;
+	 * returning a non-null result will terminate the switch.
+	 * <!-- end-user-doc -->
+	 * @param object the target of the switch.
+	 * @return the result of interpreting the object as an instance of '<em>Driver Atm Ocn Implements Set Model Pet Lists</em>'.
+	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+	 * @generated
+	 */
+	public T caseNUOPCDriverAtmOcn__ImplementsSetModelPetLists(NUOPCDriverAtmOcn__ImplementsSetModelPetLists object) {
 		return null;
 	}
 

@@ -28,5 +28,6 @@ Require-Bundle: org.eclipse.core.runtime,
  org.eclipse.ui.editors;bundle-version="3.8.100",
  org.eclipse.rephraserengine.core;bundle-version="8.0.0",
  org.eclipse.photran.ui;bundle-version="8.0.0",
- org.eclipse.photran.cdtinterface;bundle-version="8.0.0"
+ org.eclipse.photran.cdtinterface;bundle-version="8.0.0",
+ org.eclipse.photran.ui.vpg;bundle-version="8.0.0"
 Bundle-ActivationPolicy: lazy

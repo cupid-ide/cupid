@@ -23,6 +23,7 @@ import org.eclipse.emf.ecore.impl.EObjectImpl;
  *   <li>{@link org.earthsystemcurator.cupid.nuopc.fsml.nuopc.impl.NUOPCDriverAtmOcn__GenericImportsImpl#getImportsTypeDriverIS <em>Imports Type Driver IS</em>}</li>
  *   <li>{@link org.earthsystemcurator.cupid.nuopc.fsml.nuopc.impl.NUOPCDriverAtmOcn__GenericImportsImpl#getImportsLabelSetModelCount <em>Imports Label Set Model Count</em>}</li>
  *   <li>{@link org.earthsystemcurator.cupid.nuopc.fsml.nuopc.impl.NUOPCDriverAtmOcn__GenericImportsImpl#getImportsLabelSetModelServices <em>Imports Label Set Model Services</em>}</li>
+ *   <li>{@link org.earthsystemcurator.cupid.nuopc.fsml.nuopc.impl.NUOPCDriverAtmOcn__GenericImportsImpl#getImportsLabelSetModelPetLists <em>Imports Label Set Model Pet Lists</em>}</li>
  * </ul>
  * </p>
  *
@@ -108,6 +109,26 @@ public class NUOPCDriverAtmOcn__GenericImportsImpl extends EObjectImpl implement
 	 * @ordered
 	 */
 	protected String importsLabelSetModelServices = IMPORTS_LABEL_SET_MODEL_SERVICES_EDEFAULT;
+
+	/**
+	 * The default value of the '{@link #getImportsLabelSetModelPetLists() <em>Imports Label Set Model Pet Lists</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #getImportsLabelSetModelPetLists()
+	 * @generated
+	 * @ordered
+	 */
+	protected static final String IMPORTS_LABEL_SET_MODEL_PET_LISTS_EDEFAULT = "driver_label_SetModelPetLists";
+
+	/**
+	 * The cached value of the '{@link #getImportsLabelSetModelPetLists() <em>Imports Label Set Model Pet Lists</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #getImportsLabelSetModelPetLists()
+	 * @generated
+	 * @ordered
+	 */
+	protected String importsLabelSetModelPetLists = IMPORTS_LABEL_SET_MODEL_PET_LISTS_EDEFAULT;
 
 	/**
 	 * <!-- begin-user-doc -->
@@ -217,6 +238,27 @@ public class NUOPCDriverAtmOcn__GenericImportsImpl extends EObjectImpl implement
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	public String getImportsLabelSetModelPetLists() {
+		return importsLabelSetModelPetLists;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public void setImportsLabelSetModelPetLists(String newImportsLabelSetModelPetLists) {
+		String oldImportsLabelSetModelPetLists = importsLabelSetModelPetLists;
+		importsLabelSetModelPetLists = newImportsLabelSetModelPetLists;
+		if (eNotificationRequired())
+			eNotify(new ENotificationImpl(this, Notification.SET, NUOPCPackage.NUOPC_DRIVER_ATM_OCN_GENERIC_IMPORTS__IMPORTS_LABEL_SET_MODEL_PET_LISTS, oldImportsLabelSetModelPetLists, importsLabelSetModelPetLists));
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
 	@Override
 	public Object eGet(int featureID, boolean resolve, boolean coreType) {
 		switch (featureID) {
@@ -228,6 +270,8 @@ public class NUOPCDriverAtmOcn__GenericImportsImpl extends EObjectImpl implement
 				return getImportsLabelSetModelCount();
 			case NUOPCPackage.NUOPC_DRIVER_ATM_OCN_GENERIC_IMPORTS__IMPORTS_LABEL_SET_MODEL_SERVICES:
 				return getImportsLabelSetModelServices();
+			case NUOPCPackage.NUOPC_DRIVER_ATM_OCN_GENERIC_IMPORTS__IMPORTS_LABEL_SET_MODEL_PET_LISTS:
+				return getImportsLabelSetModelPetLists();
 		}
 		return super.eGet(featureID, resolve, coreType);
 	}
@@ -251,6 +295,9 @@ public class NUOPCDriverAtmOcn__GenericImportsImpl extends EObjectImpl implement
 				return;
 			case NUOPCPackage.NUOPC_DRIVER_ATM_OCN_GENERIC_IMPORTS__IMPORTS_LABEL_SET_MODEL_SERVICES:
 				setImportsLabelSetModelServices((String)newValue);
+				return;
+			case NUOPCPackage.NUOPC_DRIVER_ATM_OCN_GENERIC_IMPORTS__IMPORTS_LABEL_SET_MODEL_PET_LISTS:
+				setImportsLabelSetModelPetLists((String)newValue);
 				return;
 		}
 		super.eSet(featureID, newValue);
@@ -276,6 +323,9 @@ public class NUOPCDriverAtmOcn__GenericImportsImpl extends EObjectImpl implement
 			case NUOPCPackage.NUOPC_DRIVER_ATM_OCN_GENERIC_IMPORTS__IMPORTS_LABEL_SET_MODEL_SERVICES:
 				setImportsLabelSetModelServices(IMPORTS_LABEL_SET_MODEL_SERVICES_EDEFAULT);
 				return;
+			case NUOPCPackage.NUOPC_DRIVER_ATM_OCN_GENERIC_IMPORTS__IMPORTS_LABEL_SET_MODEL_PET_LISTS:
+				setImportsLabelSetModelPetLists(IMPORTS_LABEL_SET_MODEL_PET_LISTS_EDEFAULT);
+				return;
 		}
 		super.eUnset(featureID);
 	}
@@ -296,6 +346,8 @@ public class NUOPCDriverAtmOcn__GenericImportsImpl extends EObjectImpl implement
 				return IMPORTS_LABEL_SET_MODEL_COUNT_EDEFAULT == null ? importsLabelSetModelCount != null : !IMPORTS_LABEL_SET_MODEL_COUNT_EDEFAULT.equals(importsLabelSetModelCount);
 			case NUOPCPackage.NUOPC_DRIVER_ATM_OCN_GENERIC_IMPORTS__IMPORTS_LABEL_SET_MODEL_SERVICES:
 				return IMPORTS_LABEL_SET_MODEL_SERVICES_EDEFAULT == null ? importsLabelSetModelServices != null : !IMPORTS_LABEL_SET_MODEL_SERVICES_EDEFAULT.equals(importsLabelSetModelServices);
+			case NUOPCPackage.NUOPC_DRIVER_ATM_OCN_GENERIC_IMPORTS__IMPORTS_LABEL_SET_MODEL_PET_LISTS:
+				return IMPORTS_LABEL_SET_MODEL_PET_LISTS_EDEFAULT == null ? importsLabelSetModelPetLists != null : !IMPORTS_LABEL_SET_MODEL_PET_LISTS_EDEFAULT.equals(importsLabelSetModelPetLists);
 		}
 		return super.eIsSet(featureID);
 	}
@@ -318,6 +370,8 @@ public class NUOPCDriverAtmOcn__GenericImportsImpl extends EObjectImpl implement
 		result.append(importsLabelSetModelCount);
 		result.append(", importsLabelSetModelServices: ");
 		result.append(importsLabelSetModelServices);
+		result.append(", importsLabelSetModelPetLists: ");
+		result.append(importsLabelSetModelPetLists);
 		result.append(')');
 		return result.toString();
 	}

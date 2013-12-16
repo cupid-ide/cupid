@@ -119,7 +119,7 @@ public interface NUOPCApplication extends EObject {
 	 * <!-- end-user-doc -->
 	 * @return the value of the '<em>Nuopc Mediator</em>' containment reference list.
 	 * @see org.earthsystemcurator.cupid.nuopc.fsml.nuopc.NUOPCPackage#getNUOPCApplication_NuopcMediator()
-	 * @model containment="true"
+	 * @model containment="true" ordered="false"
 	 *        annotation="http://www.earthsystemcog.org/projects/nuopc mapping='module'"
 	 * @generated
 	 */

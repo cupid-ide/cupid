@@ -16,6 +16,7 @@ import org.eclipse.emf.ecore.EObject;
  *   <li>{@link org.earthsystemcurator.cupid.nuopc.fsml.nuopc.NUOPCDriverAtmOcn__GenericImports#getImportsTypeDriverIS <em>Imports Type Driver IS</em>}</li>
  *   <li>{@link org.earthsystemcurator.cupid.nuopc.fsml.nuopc.NUOPCDriverAtmOcn__GenericImports#getImportsLabelSetModelCount <em>Imports Label Set Model Count</em>}</li>
  *   <li>{@link org.earthsystemcurator.cupid.nuopc.fsml.nuopc.NUOPCDriverAtmOcn__GenericImports#getImportsLabelSetModelServices <em>Imports Label Set Model Services</em>}</li>
+ *   <li>{@link org.earthsystemcurator.cupid.nuopc.fsml.nuopc.NUOPCDriverAtmOcn__GenericImports#getImportsLabelSetModelPetLists <em>Imports Label Set Model Pet Lists</em>}</li>
  * </ul>
  * </p>
  *
@@ -135,5 +136,33 @@ public interface NUOPCDriverAtmOcn__GenericImports extends EObject {
 	 * @generated
 	 */
 	void setImportsLabelSetModelServices(String value);
+
+	/**
+	 * Returns the value of the '<em><b>Imports Label Set Model Pet Lists</b></em>' attribute.
+	 * The default value is <code>"driver_label_SetModelPetLists"</code>.
+	 * <!-- begin-user-doc -->
+	 * <p>
+	 * If the meaning of the '<em>Imports Label Set Model Pet Lists</em>' attribute isn't clear,
+	 * there really should be more of a description here...
+	 * </p>
+	 * <!-- end-user-doc -->
+	 * @return the value of the '<em>Imports Label Set Model Pet Lists</em>' attribute.
+	 * @see #setImportsLabelSetModelPetLists(String)
+	 * @see org.earthsystemcurator.cupid.nuopc.fsml.nuopc.NUOPCPackage#getNUOPCDriverAtmOcn__GenericImports_ImportsLabelSetModelPetLists()
+	 * @model default="driver_label_SetModelPetLists"
+	 *        annotation="http://www.earthsystemcog.org/projects/nuopc mapping='uses: \"NUOPC_DriverAtmOcn\" entity: \"label_SetModelPetLists\"' label='label_SetModelPetLists'"
+	 * @generated
+	 */
+	String getImportsLabelSetModelPetLists();
+
+	/**
+	 * Sets the value of the '{@link org.earthsystemcurator.cupid.nuopc.fsml.nuopc.NUOPCDriverAtmOcn__GenericImports#getImportsLabelSetModelPetLists <em>Imports Label Set Model Pet Lists</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @param value the new value of the '<em>Imports Label Set Model Pet Lists</em>' attribute.
+	 * @see #getImportsLabelSetModelPetLists()
+	 * @generated
+	 */
+	void setImportsLabelSetModelPetLists(String value);
 
 } // NUOPCDriverAtmOcn__GenericImports
