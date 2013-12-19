@@ -467,6 +467,22 @@
          </enabledWhen>
       </page>
    </extension>
+   <extension
+         point="org.eclipse.ui.newWizards">
+      <category
+            id="org.earthsystemcurator.cupid.nuopc.fsml"
+            name="NUOPC">
+      </category>
+      <wizard
+            category="org.earthsystemcurator.cupid.nuopc.fsml"
+            class="org.earthsystemcurator.cupid.nuopc.fsml.wizards.NUOPCProjectWizard"
+            finalPerspective="org.eclipse.photran.ui.FortranPerspective"
+            icon="icons/sample.gif"
+            id="org.earthsystemcurator.cupid.nuopc.fsml.wizards.NUOPCProjectWizard"
+            name="NUOPC Project"
+            project="true">
+      </wizard>
+   </extension>
    
    <!--
    <extension point = "org.eclipse.emf.ecore.validation_delegate">
