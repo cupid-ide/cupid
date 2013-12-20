@@ -14,6 +14,10 @@ import org.eclipse.jface.operation.IRunnableWithProgress;
 import org.eclipse.jface.viewers.ISelection;
 import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.jface.wizard.Wizard;
+import org.eclipse.swt.graphics.Font;
+import org.eclipse.swt.graphics.FontData;
+import org.eclipse.swt.widgets.Control;
+import org.eclipse.swt.widgets.Display;
 import org.eclipse.ui.INewWizard;
 import org.eclipse.ui.IWorkbench;
 import org.eclipse.ui.IWorkbenchWizard;
@@ -23,8 +27,9 @@ public class NUOPCProjectWizard extends Wizard implements INewWizard {
 
 	private WizardNewProjectCreationPage page;
 	private NUOPCProjectWizardPage2 page2;
+	private NUOPCProjectWizardPage3 page3;
 	
-	private ISelection selection;
+	
 
 	/**
 	 * Constructor for NUOPCProjectWizard.
@@ -49,6 +54,9 @@ public class NUOPCProjectWizard extends Wizard implements INewWizard {
 		
 		page2 = new NUOPCProjectWizardPage2();
 		addPage(page2);
+		
+		page3 = new NUOPCProjectWizardPage3();
+		addPage(page3);
 	}
 
 	/**
@@ -154,6 +162,13 @@ public class NUOPCProjectWizard extends Wizard implements INewWizard {
 	 * @see IWorkbenchWizard#init(IWorkbench, IStructuredSelection)
 	 */
 	public void init(IWorkbench workbench, IStructuredSelection selection) {
-		this.selection = selection;
+		//this.selection = selection;
 	}
+	
+	public static void updateFont(Control c, int style) {
+		FontData fontData = c.getFont().getFontData()[0];
+		Font font = new Font(Display.getDefault(), new FontData(fontData.getName(), fontData.getHeight(), style));
+		c.setFont(font);
+	}
+	
 }

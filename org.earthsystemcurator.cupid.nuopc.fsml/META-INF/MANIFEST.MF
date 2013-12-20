@@ -30,5 +30,6 @@ Require-Bundle: org.eclipse.core.runtime,
  org.eclipse.photran.ui;bundle-version="8.0.0",
  org.eclipse.photran.cdtinterface;bundle-version="8.0.0",
  org.eclipse.photran.ui.vpg;bundle-version="8.0.0",
- org.eclipse.core.resources
+ org.eclipse.core.resources,
+ org.eclipse.swt
 Bundle-ActivationPolicy: lazy
