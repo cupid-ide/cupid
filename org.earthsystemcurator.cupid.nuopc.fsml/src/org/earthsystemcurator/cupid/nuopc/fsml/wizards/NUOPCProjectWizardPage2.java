@@ -134,7 +134,7 @@ public class NUOPCProjectWizardPage2 extends WizardPage {
 			
 		archDesc = new Label(groupArch, SWT.WRAP);
 	    archDesc.setText(buttonData[0][3]);  
-	    GridDataFactory.fillDefaults().hint(550, SWT.DEFAULT).applyTo(archDesc);
+	    GridDataFactory.fillDefaults().hint(350, SWT.DEFAULT).applyTo(archDesc);
 	
 		archImage = new Label(groupArch, SWT.NULL);
         
@@ -145,7 +145,7 @@ public class NUOPCProjectWizardPage2 extends WizardPage {
 	    
 	    couplingDesc = new Label(groupCpl, SWT.WRAP);
 	    couplingDesc.setText(buttonData[0][4]);    
-	    GridDataFactory.fillDefaults().hint(550, SWT.DEFAULT).applyTo(couplingDesc);
+	    GridDataFactory.fillDefaults().hint(650, SWT.DEFAULT).grab(true, false).applyTo(couplingDesc);
 	    
 	    couplingImage = new Label(groupCpl, SWT.NONE);
 	    url = FileLocator.find(MY_BUNDLE, new Path(buttonData[0][2]), null);
