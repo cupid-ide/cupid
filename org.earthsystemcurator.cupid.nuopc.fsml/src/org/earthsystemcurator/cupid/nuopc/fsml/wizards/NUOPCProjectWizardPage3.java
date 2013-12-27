@@ -1,43 +1,42 @@
 package org.earthsystemcurator.cupid.nuopc.fsml.wizards;
 
-import java.net.URL;
-import java.util.ArrayList;
 import java.util.Arrays;
 
-import org.eclipse.core.runtime.FileLocator;
-import org.eclipse.core.runtime.Path;
-import org.eclipse.jface.dialogs.IDialogPage;
 import org.eclipse.jface.dialogs.IInputValidator;
 import org.eclipse.jface.dialogs.InputDialog;
 import org.eclipse.jface.layout.GridDataFactory;
 import org.eclipse.jface.layout.GridLayoutFactory;
-import org.eclipse.jface.resource.ImageDescriptor;
 import org.eclipse.jface.window.Window;
-import org.eclipse.jface.wizard.IWizardPage;
 import org.eclipse.jface.wizard.WizardPage;
 import org.eclipse.swt.SWT;
-import org.eclipse.swt.events.SelectionAdapter;
-import org.eclipse.swt.events.SelectionEvent;
+import org.eclipse.swt.events.ModifyEvent;
+import org.eclipse.swt.events.ModifyListener;
 import org.eclipse.swt.events.VerifyEvent;
 import org.eclipse.swt.events.VerifyListener;
-import org.eclipse.swt.graphics.Font;
-import org.eclipse.swt.graphics.FontData;
 import org.eclipse.swt.widgets.Button;
-import org.eclipse.swt.widgets.Combo;
 import org.eclipse.swt.widgets.Composite;
-import org.eclipse.swt.widgets.Control;
-import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Event;
 import org.eclipse.swt.widgets.Group;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.List;
 import org.eclipse.swt.widgets.Listener;
 import org.eclipse.swt.widgets.Text;
-import org.osgi.framework.Bundle;
-import org.osgi.framework.FrameworkUtil;
 
 public class NUOPCProjectWizardPage3 extends WizardPage {
-		
+	
+	private Text driverNameText;
+	private Text driverTimestepText;
+	private Text driverRunLengthText;
+	private Text modelNameText;
+	private Text minXText;
+	private Text maxXText;
+	private Text minYText;
+	private Text maxYText;
+	private Text cellsXText;
+	private Text cellsYText;
+	private List exportedFieldsList;
+	private List importedFieldsList;
+	
 	public NUOPCProjectWizardPage3() {
 		super("NUOPC Creation Wizard Page 3");
 		setTitle("Create NUOPC Project");
@@ -71,6 +70,32 @@ public class NUOPCProjectWizardPage3 extends WizardPage {
 			}
 		};
 		
+		ModifyListener pageListener = new ModifyListener() {
+
+			@Override
+			public void modifyText(ModifyEvent e) {
+				dialogChanged();
+			}
+			
+		};
+		
+		
+		VerifyListener nameListener = new VerifyListener() {
+
+			@Override
+			public void verifyText(VerifyEvent e) {
+				//System.out.println(e.text);
+				String text = ((Text) e.widget).getText() + e.text;
+				if (text.matches("[A-Za-z][A-Za-z0-9_]*")) {
+					e.doit = true;
+				}
+				else {
+					e.doit = false;
+				}
+			}
+			
+		};
+		
 		
 		/* DRIVER PROPERTIES */
 		
@@ -84,42 +109,48 @@ public class NUOPCProjectWizardPage3 extends WizardPage {
 		GridDataFactory.fillDefaults().align(SWT.LEFT, SWT.FILL).applyTo(driverNameLabel);
 		driverNameLabel.setText("Driver name:");
 	
-		Text driverNameText = new Text(groupDriver, SWT.BORDER);
+		driverNameText = new Text(groupDriver, SWT.BORDER);
 		GridDataFactory.fillDefaults().align(SWT.LEFT, SWT.FILL).hint(250, SWT.DEFAULT).applyTo(driverNameText);
 		driverNameText.setText("driver");
+		driverNameText.addModifyListener(pageListener);
+		driverNameText.addVerifyListener(nameListener);
 	
 		Label driverTimestepLabel = new Label(groupDriver, SWT.NULL);
 		GridDataFactory.fillDefaults().align(SWT.LEFT, SWT.FILL).applyTo(driverTimestepLabel);
 		driverTimestepLabel.setText("Timestep length (seconds):");
 	
-		Text driverTimestepText = new Text(groupDriver, SWT.BORDER);
+		driverTimestepText = new Text(groupDriver, SWT.BORDER);
 		GridDataFactory.fillDefaults().align(SWT.LEFT, SWT.FILL).hint(250, SWT.DEFAULT).applyTo(driverTimestepText);
 		driverTimestepText.setText("30");
-		driverTimestepText.addVerifyListener(intVerifyListener);		
+		driverTimestepText.addVerifyListener(intVerifyListener);
+		driverTimestepText.addModifyListener(pageListener);
 		
 		Label driverRunLengthLabel = new Label(groupDriver, SWT.NULL);
 		GridDataFactory.fillDefaults().align(SWT.LEFT, SWT.FILL).applyTo(driverRunLengthLabel);
 		driverRunLengthLabel.setText("Total number of timesteps:");
 	
-		Text driverRunLengthText = new Text(groupDriver, SWT.BORDER);
+		driverRunLengthText = new Text(groupDriver, SWT.BORDER);
 		GridDataFactory.fillDefaults().align(SWT.LEFT, SWT.FILL).hint(250, SWT.DEFAULT).applyTo(driverRunLengthText);
 		driverRunLengthText.setText("5");
-		driverRunLengthText.addVerifyListener(intVerifyListener);		
+		driverRunLengthText.addVerifyListener(intVerifyListener);
+		driverRunLengthText.addModifyListener(pageListener);
 		
 		
 		/* MODEL PROPERTIES */
 		Group groupModel = new Group(container, SWT.NULL);
 		groupModel.setText("Model properties");
 		NUOPCProjectWizard.updateFont(groupModel, SWT.BOLD);
-		GridLayoutFactory.fillDefaults().numColumns(3).margins(10, 10).applyTo(groupModel);
+		GridLayoutFactory.fillDefaults().numColumns(4).margins(10, 10).applyTo(groupModel);
 		
 		Label modelNameLabel = new Label(groupModel, SWT.NULL);
 		modelNameLabel.setText("Model name:");
 		GridDataFactory.fillDefaults().align(SWT.LEFT, SWT.FILL).applyTo(modelNameLabel);
 
-		Text modelNameText = new Text(groupModel, SWT.BORDER);
-		GridDataFactory.fillDefaults().align(SWT.LEFT, SWT.FILL).hint(250, SWT.DEFAULT).span(2,1).applyTo(modelNameText);
+		modelNameText = new Text(groupModel, SWT.BORDER);
+		GridDataFactory.fillDefaults().align(SWT.LEFT, SWT.FILL).hint(250, SWT.DEFAULT).span(3,1).applyTo(modelNameText);
 		modelNameText.setText("model");
+		modelNameText.addModifyListener(pageListener);
+		modelNameText.addVerifyListener(nameListener);
 		
 		/* NUMERICAL GRID */
 		Label gridLabel = new Label(groupModel, SWT.NULL);
@@ -127,61 +158,70 @@ public class NUOPCProjectWizardPage3 extends WizardPage {
 		GridDataFactory.fillDefaults().align(SWT.LEFT, SWT.FILL).applyTo(gridLabel);
 		
 		Label gridTypeLabel = new Label(groupModel, SWT.NULL);
-		gridTypeLabel.setText("Simple 2D Cartesian");
-		GridDataFactory.fillDefaults().align(SWT.LEFT, SWT.FILL).span(2,1).applyTo(gridTypeLabel);
+		gridTypeLabel.setText("Uniform 2D Cartesian");
+		GridDataFactory.fillDefaults().align(SWT.LEFT, SWT.FILL).span(3,1).applyTo(gridTypeLabel);
 		NUOPCProjectWizard.updateFont(gridTypeLabel, SWT.ITALIC);
 		
 
 		Label minXLabel = new Label(groupModel, SWT.NULL);
-		minXLabel.setText("Minimum X coordinate");
+		minXLabel.setText("Min X coordinate:");
 		GridDataFactory.fillDefaults().align(SWT.LEFT, SWT.FILL).applyTo(minXLabel);
 		
-		Text minXText = new Text(groupModel, SWT.BORDER);
-		GridDataFactory.fillDefaults().align(SWT.LEFT, SWT.FILL).hint(50, SWT.DEFAULT).span(2,1).applyTo(minXText);
+		minXText = new Text(groupModel, SWT.BORDER);
+		GridDataFactory.fillDefaults().align(SWT.LEFT, SWT.FILL).hint(50, SWT.DEFAULT).applyTo(minXText);
 		minXText.setText("0");
+		minXText.addVerifyListener(intVerifyListener);
+		minXText.addModifyListener(pageListener);
 		
 		Label maxXLabel = new Label(groupModel, SWT.NULL);
-		maxXLabel.setText("Maximum X coordinate");
+		maxXLabel.setText("Max X coordinate:");
 		GridDataFactory.fillDefaults().align(SWT.LEFT, SWT.FILL).applyTo(maxXLabel);
 		
-		Text maxXText = new Text(groupModel, SWT.BORDER);
-		GridDataFactory.fillDefaults().align(SWT.LEFT, SWT.FILL).hint(50, SWT.DEFAULT).span(2,1).applyTo(maxXText);
+		maxXText = new Text(groupModel, SWT.BORDER);
+		GridDataFactory.fillDefaults().align(SWT.LEFT, SWT.FILL).hint(50, SWT.DEFAULT).applyTo(maxXText);
 		maxXText.setText("100");
-		
+		maxXText.addVerifyListener(intVerifyListener);
+		maxXText.addModifyListener(pageListener);
 		
 		Label minYLabel = new Label(groupModel, SWT.NULL);
-		minYLabel.setText("Minimum Y coordinate");
+		minYLabel.setText("Min Y coordinate:");
 		GridDataFactory.fillDefaults().align(SWT.LEFT, SWT.FILL).applyTo(minYLabel);
 		
-		Text minYText = new Text(groupModel, SWT.BORDER);
-		GridDataFactory.fillDefaults().align(SWT.LEFT, SWT.FILL).hint(50, SWT.DEFAULT).span(2,1).applyTo(minYText);
+		minYText = new Text(groupModel, SWT.BORDER);
+		GridDataFactory.fillDefaults().align(SWT.LEFT, SWT.FILL).hint(50, SWT.DEFAULT).applyTo(minYText);
 		minYText.setText("0");
+		minYText.addVerifyListener(intVerifyListener);
+		minYText.addModifyListener(pageListener);
 		
 		Label maxYLabel = new Label(groupModel, SWT.NULL);
-		maxYLabel.setText("Maximum Y coordinate");
+		maxYLabel.setText("Max Y coordinate:");
 		GridDataFactory.fillDefaults().align(SWT.LEFT, SWT.FILL).applyTo(maxYLabel);
 		
-		Text maxYText = new Text(groupModel, SWT.BORDER);
-		GridDataFactory.fillDefaults().align(SWT.LEFT, SWT.FILL).hint(50, SWT.DEFAULT).span(2,1).applyTo(maxYText);
+		maxYText = new Text(groupModel, SWT.BORDER);
+		GridDataFactory.fillDefaults().align(SWT.LEFT, SWT.FILL).hint(50, SWT.DEFAULT).applyTo(maxYText);
 		maxYText.setText("100");
-		
+		maxYText.addVerifyListener(intVerifyListener);
+		maxYText.addModifyListener(pageListener);
 		
 		Label cellsXLabel = new Label(groupModel, SWT.NULL);
-		cellsXLabel.setText("Cells in X direction");
+		cellsXLabel.setText("Cells in X direction:");
 		GridDataFactory.fillDefaults().align(SWT.LEFT, SWT.FILL).applyTo(cellsXLabel);
 		
-		Text cellsXText = new Text(groupModel, SWT.BORDER);
-		GridDataFactory.fillDefaults().align(SWT.LEFT, SWT.FILL).hint(50, SWT.DEFAULT).span(2,1).applyTo(cellsXText);
+		cellsXText = new Text(groupModel, SWT.BORDER);
+		GridDataFactory.fillDefaults().align(SWT.LEFT, SWT.FILL).hint(50, SWT.DEFAULT).applyTo(cellsXText);
 		cellsXText.setText("100");
+		cellsXText.addVerifyListener(intVerifyListener);
+		cellsXText.addModifyListener(pageListener);
 		
 		Label cellsYLabel = new Label(groupModel, SWT.NULL);
-		cellsYLabel.setText("Cells in Y direction");
+		cellsYLabel.setText("Cells in Y direction:");
 		GridDataFactory.fillDefaults().align(SWT.LEFT, SWT.FILL).applyTo(cellsYLabel);
 		
-		Text cellsYText = new Text(groupModel, SWT.BORDER);
-		GridDataFactory.fillDefaults().align(SWT.LEFT, SWT.FILL).hint(50, SWT.DEFAULT).span(2,1).applyTo(cellsYText);
+		cellsYText = new Text(groupModel, SWT.BORDER);
+		GridDataFactory.fillDefaults().align(SWT.LEFT, SWT.FILL).hint(50, SWT.DEFAULT).applyTo(cellsYText);
 		cellsYText.setText("100");
-		
+		cellsYText.addVerifyListener(intVerifyListener);
+		cellsYText.addModifyListener(pageListener);
 		
 		
 		
@@ -190,8 +230,8 @@ public class NUOPCProjectWizardPage3 extends WizardPage {
 		importedFieldsLabel.setText("Imported fields:");
 		GridDataFactory.fillDefaults().align(SWT.LEFT, SWT.FILL).span(1,2).applyTo(importedFieldsLabel);
 		
-		final List importedFieldsList = new List (groupModel, SWT.BORDER | SWT.V_SCROLL | SWT.MULTI);
-		GridDataFactory.fillDefaults().align(SWT.LEFT, SWT.FILL).span(1,2).hint(250, SWT.DEFAULT).applyTo(importedFieldsList);
+		importedFieldsList = new List (groupModel, SWT.BORDER | SWT.V_SCROLL | SWT.MULTI);
+		GridDataFactory.fillDefaults().align(SWT.LEFT, SWT.FILL).span(2,2).hint(250, SWT.DEFAULT).applyTo(importedFieldsList);
 		
 		final Button addImportedFieldButton = new Button(groupModel, SWT.PUSH);
 		addImportedFieldButton.setText("Add");
@@ -205,8 +245,8 @@ public class NUOPCProjectWizardPage3 extends WizardPage {
 		exportedFieldsLabel.setText("Exported fields:");
 		GridDataFactory.fillDefaults().align(SWT.LEFT, SWT.FILL).span(1,2).applyTo(exportedFieldsLabel);
 		
-		final List exportedFieldsList = new List (groupModel, SWT.BORDER | SWT.V_SCROLL | SWT.MULTI);
-		GridDataFactory.fillDefaults().align(SWT.LEFT, SWT.FILL).span(1,2).hint(250, SWT.DEFAULT).applyTo(exportedFieldsList);
+		exportedFieldsList = new List (groupModel, SWT.BORDER | SWT.V_SCROLL | SWT.MULTI);
+		GridDataFactory.fillDefaults().align(SWT.LEFT, SWT.FILL).span(2,2).hint(250, SWT.DEFAULT).applyTo(exportedFieldsList);
 		
 		final Button addExportedFieldButton = new Button(groupModel, SWT.PUSH);
 		addExportedFieldButton.setText("Add");
@@ -270,6 +310,8 @@ public class NUOPCProjectWizardPage3 extends WizardPage {
 					exportedFieldsList.remove(exportedFieldsList.getSelectionIndices());
 				}
 				
+				dialogChanged();
+				
 			}
 		};
 
@@ -278,9 +320,67 @@ public class NUOPCProjectWizardPage3 extends WizardPage {
 		addExportedFieldButton.addListener(SWT.Selection, buttonListener);
 		removeExportedFieldButton.addListener(SWT.Selection, buttonListener);
 		
-		
 		setControl(container);
 		
+		dialogChanged();
+		
+	}
+	
+	private boolean checkEmpty(Text t) {
+		return t.getText().length() == 0;
+	}
+	
+	private void dialogChanged() {
+					
+		if (checkEmpty(driverNameText)) {
+			updateStatus("Driver name required");
+		}
+		else if (checkEmpty(driverTimestepText)) {
+			updateStatus("Driver timestep length required");
+		}
+		else if (checkEmpty(driverRunLengthText)) {
+				updateStatus("Driver number of timesteps required");
+		}
+		else if (checkEmpty(modelNameText)) {
+			updateStatus("Model name required");
+		}
+		else if (checkEmpty(minXText)) {
+			updateStatus("Minumum X coordinate required");
+		}
+		else if (checkEmpty(maxXText)) {
+			updateStatus("Maximum X coordinate required");
+		}
+		else if (checkEmpty(minYText)) {
+			updateStatus("Minumum Y coordinate required");
+		}
+		else if (checkEmpty(maxYText)) {
+			updateStatus("Maximum Y coordinate required");
+		}
+		else if (checkEmpty(cellsXText)) {
+			updateStatus("Number of cells in X direction required");
+		}
+		else if (checkEmpty(cellsYText)) {
+			updateStatus("Number of cells in Y direction required");
+		}
+		else if (importedFieldsList.getItemCount() == 0 && exportedFieldsList.getItemCount() == 0) {
+			updateStatus("You must define at least one import or export field for the model");
+		}
+		else {
+			updateStatus(null);
+		}
+	}
+	
+	private void updateStatus(String message) {
+		setErrorMessage(message);
+		setPageComplete(message == null);
+	}
+	
+	public String getModelName() {
+		return modelNameText.getText();
+	}
+	
+	public String getDriverName() {
+		return driverNameText.getText();
 	}
 		
 }

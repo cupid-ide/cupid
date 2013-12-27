@@ -1,9 +1,11 @@
 package org.earthsystemcurator.cupid.nuopc.fsml.wizards;
 
 import java.io.ByteArrayInputStream;
+import java.io.IOException;
 import java.io.InputStream;
 import java.lang.reflect.InvocationTargetException;
 
+import org.eclipse.core.resources.IFile;
 import org.eclipse.core.resources.IProject;
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IProgressMonitor;
@@ -28,7 +30,6 @@ public class NUOPCProjectWizard extends Wizard implements INewWizard {
 	private WizardNewProjectCreationPage page;
 	private NUOPCProjectWizardPage2 page2;
 	private NUOPCProjectWizardPage3 page3;
-	
 	
 
 	/**
@@ -73,7 +74,7 @@ public class NUOPCProjectWizard extends Wizard implements INewWizard {
 		IRunnableWithProgress op = new IRunnableWithProgress() {
 			public void run(IProgressMonitor monitor) throws InvocationTargetException {
 				try {
-					doFinish(projectHandle, monitor);
+					doFinish(projectHandle, monitor, page3.getModelName(), page3.getDriverName());
 				} catch (CoreException e) {
 					throw new InvocationTargetException(e);
 				} finally {
@@ -99,11 +100,35 @@ public class NUOPCProjectWizard extends Wizard implements INewWizard {
 	 * the editor on the newly created file.
 	 */
 
-	private void doFinish(IProject projectHandle, IProgressMonitor monitor) throws CoreException {
+	private void doFinish(IProject projectHandle, IProgressMonitor monitor, String modelName, String driverName) throws CoreException {
 		
-		// create a sample file
-		monitor.beginTask("Creating " + projectHandle.getName(), 1);
+		//create project
 		projectHandle.create(monitor);
+		monitor.worked(1);
+		
+		//create model file
+		IFile modelFile = projectHandle.getFile(modelName + ".F90");
+		try {
+			InputStream stream = openContentStream();
+			modelFile.create(stream, true, monitor);
+			stream.close();
+		} 
+		catch (IOException e) {
+			
+		}
+		monitor.worked(1);
+		
+		//create driver file
+		IFile driverFile = projectHandle.getFile(driverName + ".F90");
+		try {
+			InputStream stream = openContentStream();
+			driverFile.create(stream, true, monitor);
+			stream.close();
+		} 
+		catch (IOException e) {
+			
+		}
+		monitor.worked(1);
 		
 		/*
 		IWorkspaceRoot root = ResourcesPlugin.getWorkspace().getRoot();
@@ -145,16 +170,17 @@ public class NUOPCProjectWizard extends Wizard implements INewWizard {
 	 */
 
 	private InputStream openContentStream() {
-		String contents =
-			"This is the initial file contents for *.mpe file that should be word-sorted in the Preview page of the multi-page editor";
+		String contents = "! initialized file";
 		return new ByteArrayInputStream(contents.getBytes());
 	}
 
+	/*
 	private void throwCoreException(String message) throws CoreException {
 		IStatus status =
 			new Status(IStatus.ERROR, "org.earthsystemcurator.cupid.nuopc.fsml", IStatus.OK, message, null);
 		throw new CoreException(status);
 	}
+	*/
 
 	/**
 	 * We will accept the selection in the workbench to see if
