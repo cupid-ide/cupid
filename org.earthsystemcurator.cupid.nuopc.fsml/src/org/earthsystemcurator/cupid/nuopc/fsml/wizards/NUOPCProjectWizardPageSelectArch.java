@@ -21,6 +21,7 @@ import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Group;
 import org.eclipse.swt.widgets.Label;
+import org.eclipse.ui.dialogs.WizardNewProjectCreationPage;
 import org.osgi.framework.Bundle;
 import org.osgi.framework.FrameworkUtil;
 
@@ -30,7 +31,7 @@ import org.osgi.framework.FrameworkUtil;
  * OR with the extension that matches the expected one (mpe).
  */
 
-public class NUOPCProjectWizardPage2 extends WizardPage {
+public class NUOPCProjectWizardPageSelectArch extends WizardPage {
 	
 	final String[][] buttonData = new String[][] {
 			{"Single Model with Driver",   // configuration name
@@ -51,7 +52,7 @@ public class NUOPCProjectWizardPage2 extends WizardPage {
 				"Connector components transfer Atmosphere and Ocean fields to the Mediator at the beginning of each coupling interval. The Mediator processes this input and Connectors transfer the Mediator output back to the model components. The model components then integrate forward for one coupling interval before the same process is repeated."},
 	};
 	
-	public NUOPCProjectWizardPage2() {
+	public NUOPCProjectWizardPageSelectArch() {
 		super("NUOPC Creation Wizard Page 2");
 		setTitle("Create NUOPC Project");
 		setDescription("Please select an initial configuration.");
@@ -63,7 +64,7 @@ public class NUOPCProjectWizardPage2 extends WizardPage {
 	private Label couplingDesc;
 	
 		
-	private static Bundle MY_BUNDLE = FrameworkUtil.getBundle(NUOPCProjectWizardPage2.class);
+	private static Bundle MY_BUNDLE = FrameworkUtil.getBundle(NUOPCProjectWizardPageSelectArch.class);
 	
 	
 	
@@ -114,6 +115,9 @@ public class NUOPCProjectWizardPage2 extends WizardPage {
 								
 				archImage.getParent().layout();
 				couplingImage.getParent().layout();
+				
+				//WizardNewProjectCreationPage p = (WizardNewProjectCreationPage) getNextPage();
+				//p.setInitialProjectName(buttonData[idx][0]);
 				
 			}
 		});

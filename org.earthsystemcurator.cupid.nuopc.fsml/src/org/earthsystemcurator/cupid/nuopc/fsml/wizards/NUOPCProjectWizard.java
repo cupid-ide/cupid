@@ -54,9 +54,9 @@ public class NUOPCProjectWizard extends Wizard implements INewWizard {
 
 	private static Bundle MY_BUNDLE = FrameworkUtil.getBundle(NUOPCProjectWizard.class);
 	
-	private WizardNewProjectCreationPage page;
-	private NUOPCProjectWizardPage2 page2;
-	private NUOPCProjectWizardPageSingleModelProto page3;
+	private WizardNewProjectCreationPage newProjectPage;
+	private NUOPCProjectWizardPageSelectArch selectArchPage;
+	private NUOPCProjectWizardPageSingleModelProto singleModelProtoPage;
 	
 
 	/**
@@ -73,18 +73,18 @@ public class NUOPCProjectWizard extends Wizard implements INewWizard {
 	 */
 
 	public void addPages() {
+								
+		selectArchPage = new NUOPCProjectWizardPageSelectArch();
+		addPage(selectArchPage);
 		
-		page = new WizardNewProjectCreationPage("Create NUOPC Project");
-		page.setTitle("Create NUOPC Project");
-		page.setDescription("Create a project for developing a NUOPC application.");
+		newProjectPage = new WizardNewProjectCreationPage("Create NUOPC Project");
+		newProjectPage.setTitle("Create NUOPC Project");
+		newProjectPage.setDescription("Create a project for developing a NUOPC application.");
+		newProjectPage.setInitialProjectName("NUOPCProject");
+		addPage(newProjectPage);
 		
-		addPage(page);
-		
-		page2 = new NUOPCProjectWizardPage2();
-		addPage(page2);
-		
-		page3 = new NUOPCProjectWizardPageSingleModelProto();
-		addPage(page3);
+		singleModelProtoPage = new NUOPCProjectWizardPageSingleModelProto();
+		addPage(singleModelProtoPage);
 	}
 
 	/**
@@ -95,12 +95,12 @@ public class NUOPCProjectWizard extends Wizard implements INewWizard {
 	@Override
 	public boolean performFinish() {
 		
-		final IProject projectHandle = page.getProjectHandle();
+		final IProject projectHandle = newProjectPage.getProjectHandle();
 		
 		IRunnableWithProgress op = new IRunnableWithProgress() {
 			public void run(IProgressMonitor monitor) throws InvocationTargetException {
 				try {
-					doFinish(projectHandle, monitor, page3);
+					doFinish(projectHandle, monitor, singleModelProtoPage);
 				} catch (CoreException e) {
 					throw new InvocationTargetException(e);
 				} finally {
