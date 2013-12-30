@@ -22,7 +22,7 @@ import org.eclipse.swt.widgets.List;
 import org.eclipse.swt.widgets.Listener;
 import org.eclipse.swt.widgets.Text;
 
-public class NUOPCProjectWizardPage3 extends WizardPage {
+public class NUOPCProjectWizardPageSingleModelProto extends WizardPage {
 	
 	private Text driverNameText;
 	private Text driverTimestepText;
@@ -37,7 +37,9 @@ public class NUOPCProjectWizardPage3 extends WizardPage {
 	private List exportedFieldsList;
 	private List importedFieldsList;
 	
-	public NUOPCProjectWizardPage3() {
+	//private static final String templateDir = "templates/SingleModelProto";
+	
+	public NUOPCProjectWizardPageSingleModelProto() {
 		super("NUOPC Creation Wizard Page 3");
 		setTitle("Create NUOPC Project");
 		setDescription("Select NUOPC application properties");
@@ -382,5 +384,45 @@ public class NUOPCProjectWizardPage3 extends WizardPage {
 	public String getDriverName() {
 		return driverNameText.getText();
 	}
-		
+	
+	public String getDriverTimestep() {
+		return driverTimestepText.getText();
+	}
+	
+	public String getDriverRunLength() {
+		return driverRunLengthText.getText();
+	}
+	
+	public String getMinX() {
+		return minXText.getText();
+	}
+	
+	public String getMaxX() {
+		return maxXText.getText();
+	}
+	
+	public String getMinY() {
+		return minYText.getText();
+	}
+	
+	public String getMaxY() {
+		return maxYText.getText();
+	}
+	
+	public String getCellsX() {
+		return cellsXText.getText();
+	}
+	
+	public String getCellsY() {
+		return cellsYText.getText();
+	}
+	
+	public String[] getImportedFields() {
+		return importedFieldsList.getItems();
+	}
+	
+	public String[] getExportedFields() {
+		return exportedFieldsList.getItems();
+	}
+	
 }
