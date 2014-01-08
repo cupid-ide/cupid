@@ -59,6 +59,15 @@ public class NUOPCNature implements IProjectNature {
 		//System.out.println("Added NUOPC project nature");
 
 	}
+	
+	public static void addNUOPCNature(IProject p) throws CoreException {
+		IProjectDescription projectDesc = p.getDescription();
+	    String[] prevNatures = projectDesc.getNatureIds();
+	    String[] newNatures = new String[prevNatures.length + 1];
+	    System.arraycopy(prevNatures, 0, newNatures, 0, prevNatures.length);
+	    newNatures[prevNatures.length] = NUOPCNature.NATURE_ID;
+	    projectDesc.setNatureIds(newNatures);
+	}
 
 	/*
 	 * (non-Javadoc)

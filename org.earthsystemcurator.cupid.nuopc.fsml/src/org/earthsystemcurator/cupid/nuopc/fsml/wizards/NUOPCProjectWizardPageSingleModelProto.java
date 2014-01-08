@@ -1,6 +1,8 @@
 package org.earthsystemcurator.cupid.nuopc.fsml.wizards;
 
 import java.util.Arrays;
+import java.util.HashMap;
+import java.util.Map;
 
 import org.eclipse.jface.dialogs.IInputValidator;
 import org.eclipse.jface.dialogs.InputDialog;
@@ -8,6 +10,9 @@ import org.eclipse.jface.layout.GridDataFactory;
 import org.eclipse.jface.layout.GridLayoutFactory;
 import org.eclipse.jface.window.Window;
 import org.eclipse.jface.wizard.WizardPage;
+import org.eclipse.ptp.internal.rdt.sync.ui.SynchronizeParticipantRegistry;
+import org.eclipse.ptp.rdt.sync.ui.ISynchronizeParticipant;
+import org.eclipse.ptp.rdt.sync.ui.ISynchronizeParticipantDescriptor;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.ModifyEvent;
 import org.eclipse.swt.events.ModifyListener;
@@ -37,12 +42,15 @@ public class NUOPCProjectWizardPageSingleModelProto extends WizardPage {
 	private List exportedFieldsList;
 	private List importedFieldsList;
 	
+	private Map<String, String> wizardData;
+	
 	//private static final String templateDir = "templates/SingleModelProto";
 	
 	public NUOPCProjectWizardPageSingleModelProto() {
 		super("NUOPC Creation Wizard Page 3");
 		setTitle("Create NUOPC Project");
 		setDescription("Select NUOPC application properties");
+		wizardData = new HashMap<String,String>();
 	}
 
 	public void createControl(Composite parent) {
@@ -322,6 +330,17 @@ public class NUOPCProjectWizardPageSingleModelProto extends WizardPage {
 		addExportedFieldButton.addListener(SWT.Selection, buttonListener);
 		removeExportedFieldButton.addListener(SWT.Selection, buttonListener);
 		
+		
+		
+		//TESTING
+		/*
+		ISynchronizeParticipantDescriptor[] providers = SynchronizeParticipantRegistry.getDescriptors();
+		ISynchronizeParticipant fSelectedParticipant = providers[0].getParticipant();
+		fSelectedParticipant.createConfigurationArea(container,getContainer());
+		// Without this, participant uses the old project name from the last time it was invoked.
+		fSelectedParticipant.setProjectName("");
+		*/
+		
 		setControl(container);
 		
 		dialogChanged();
@@ -333,7 +352,10 @@ public class NUOPCProjectWizardPageSingleModelProto extends WizardPage {
 	}
 	
 	private void dialogChanged() {
-					
+		
+		//modelName = modelNameText.getText();
+		wizardData.put("modelName", modelNameText.getText());
+		
 		if (checkEmpty(driverNameText)) {
 			updateStatus("Driver name required");
 		}
@@ -377,8 +399,13 @@ public class NUOPCProjectWizardPageSingleModelProto extends WizardPage {
 		setPageComplete(message == null);
 	}
 	
+	public Map<String,String> getWizardData() {
+		return wizardData;
+	}
+	
 	public String getModelName() {
 		return modelNameText.getText();
+		//return modelName;
 	}
 	
 	public String getDriverName() {
