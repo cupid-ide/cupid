@@ -27,7 +27,7 @@ import org.eclipse.swt.widgets.List;
 import org.eclipse.swt.widgets.Listener;
 import org.eclipse.swt.widgets.Text;
 
-public class NUOPCProjectWizardPageSingleModelProto extends WizardPage {
+public class CupidProjectWizardPageSingleModelProto extends WizardPage {
 	
 	private Text driverNameText;
 	private Text driverTimestepText;
@@ -46,10 +46,10 @@ public class NUOPCProjectWizardPageSingleModelProto extends WizardPage {
 	
 	//private static final String templateDir = "templates/SingleModelProto";
 	
-	public NUOPCProjectWizardPageSingleModelProto() {
+	public CupidProjectWizardPageSingleModelProto() {
 		super("NUOPC Creation Wizard Page 3");
-		setTitle("Create NUOPC Project");
-		setDescription("Select NUOPC application properties");
+		setTitle("Create Cupid Training Project");
+		setDescription("Configure training application: NUOPC - Single Model with Driver");
 		wizardData = new HashMap<String,String>();
 	}
 
@@ -111,7 +111,7 @@ public class NUOPCProjectWizardPageSingleModelProto extends WizardPage {
 		
 		Group groupDriver = new Group(container, SWT.NULL);
 		groupDriver.setText("Driver properties");
-		NUOPCProjectWizard.updateFont(groupDriver, SWT.BOLD);
+		CupidProjectWizard.updateFont(groupDriver, SWT.BOLD);
 		//GridDataFactory.fillDefaults().span(2,1).applyTo(groupArch);
 		GridLayoutFactory.fillDefaults().numColumns(2).margins(10, 10).applyTo(groupDriver);
 		
@@ -149,7 +149,7 @@ public class NUOPCProjectWizardPageSingleModelProto extends WizardPage {
 		/* MODEL PROPERTIES */
 		Group groupModel = new Group(container, SWT.NULL);
 		groupModel.setText("Model properties");
-		NUOPCProjectWizard.updateFont(groupModel, SWT.BOLD);
+		CupidProjectWizard.updateFont(groupModel, SWT.BOLD);
 		GridLayoutFactory.fillDefaults().numColumns(4).margins(10, 10).applyTo(groupModel);
 		
 		Label modelNameLabel = new Label(groupModel, SWT.NULL);
@@ -170,7 +170,7 @@ public class NUOPCProjectWizardPageSingleModelProto extends WizardPage {
 		Label gridTypeLabel = new Label(groupModel, SWT.NULL);
 		gridTypeLabel.setText("Uniform 2D Cartesian");
 		GridDataFactory.fillDefaults().align(SWT.LEFT, SWT.FILL).span(3,1).applyTo(gridTypeLabel);
-		NUOPCProjectWizard.updateFont(gridTypeLabel, SWT.ITALIC);
+		CupidProjectWizard.updateFont(gridTypeLabel, SWT.ITALIC);
 		
 
 		Label minXLabel = new Label(groupModel, SWT.NULL);
@@ -236,6 +236,7 @@ public class NUOPCProjectWizardPageSingleModelProto extends WizardPage {
 		
 		
 		/* IMPORTED FIELDS */
+		/*
 		Label importedFieldsLabel = new Label(groupModel, SWT.NULL);
 		importedFieldsLabel.setText("Imported fields:");
 		GridDataFactory.fillDefaults().align(SWT.LEFT, SWT.FILL).span(1,2).applyTo(importedFieldsLabel);
@@ -248,9 +249,10 @@ public class NUOPCProjectWizardPageSingleModelProto extends WizardPage {
 				
 		final Button removeImportedFieldButton = new Button(groupModel, SWT.PUSH);
 		removeImportedFieldButton.setText("Remove");
-		
+		*/
 		
 		/* EXPORTED FIELDS */
+		/*
 		Label exportedFieldsLabel = new Label(groupModel, SWT.NULL);
 		exportedFieldsLabel.setText("Exported fields:");
 		GridDataFactory.fillDefaults().align(SWT.LEFT, SWT.FILL).span(1,2).applyTo(exportedFieldsLabel);
@@ -329,16 +331,6 @@ public class NUOPCProjectWizardPageSingleModelProto extends WizardPage {
 		removeImportedFieldButton.addListener(SWT.Selection, buttonListener);
 		addExportedFieldButton.addListener(SWT.Selection, buttonListener);
 		removeExportedFieldButton.addListener(SWT.Selection, buttonListener);
-		
-		
-		
-		//TESTING
-		/*
-		ISynchronizeParticipantDescriptor[] providers = SynchronizeParticipantRegistry.getDescriptors();
-		ISynchronizeParticipant fSelectedParticipant = providers[0].getParticipant();
-		fSelectedParticipant.createConfigurationArea(container,getContainer());
-		// Without this, participant uses the old project name from the last time it was invoked.
-		fSelectedParticipant.setProjectName("");
 		*/
 		
 		setControl(container);
@@ -353,7 +345,6 @@ public class NUOPCProjectWizardPageSingleModelProto extends WizardPage {
 	
 	private void dialogChanged() {
 		
-		//modelName = modelNameText.getText();
 		wizardData.put("modelName", modelNameText.getText());
 		
 		if (checkEmpty(driverNameText)) {
@@ -386,13 +377,16 @@ public class NUOPCProjectWizardPageSingleModelProto extends WizardPage {
 		else if (checkEmpty(cellsYText)) {
 			updateStatus("Number of cells in Y direction required");
 		}
-		else if (importedFieldsList.getItemCount() == 0 && exportedFieldsList.getItemCount() == 0) {
-			updateStatus("You must define at least one import or export field for the model");
-		}
+		//else if (importedFieldsList.getItemCount() == 0 && exportedFieldsList.getItemCount() == 0) {
+		//	updateStatus("You must define at least one import or export field for the model");
+		//}
 		else {
 			updateStatus(null);
 		}
 	}
+	
+	
+	
 	
 	private void updateStatus(String message) {
 		setErrorMessage(message);

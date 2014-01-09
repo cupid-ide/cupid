@@ -10,6 +10,7 @@ import org.eclipse.core.resources.IProject;
 import org.eclipse.core.resources.IProjectDescription;
 import org.eclipse.core.resources.IProjectNature;
 import org.eclipse.core.runtime.CoreException;
+import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.ui.IMarkerResolution;
 
 public class NUOPCNature implements IProjectNature {
@@ -60,13 +61,14 @@ public class NUOPCNature implements IProjectNature {
 
 	}
 	
-	public static void addNUOPCNature(IProject p) throws CoreException {
+	public static void addNUOPCNature(IProject p, IProgressMonitor monitor) throws CoreException {
 		IProjectDescription projectDesc = p.getDescription();
 	    String[] prevNatures = projectDesc.getNatureIds();
 	    String[] newNatures = new String[prevNatures.length + 1];
 	    System.arraycopy(prevNatures, 0, newNatures, 0, prevNatures.length);
 	    newNatures[prevNatures.length] = NUOPCNature.NATURE_ID;
 	    projectDesc.setNatureIds(newNatures);
+	    p.setDescription(projectDesc, monitor);
 	}
 
 	/*

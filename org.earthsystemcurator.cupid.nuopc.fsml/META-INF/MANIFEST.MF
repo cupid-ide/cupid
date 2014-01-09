@@ -60,5 +60,6 @@ Require-Bundle: org.eclipse.core.runtime,
  org.eclipse.cdt.managedbuilder.ui;bundle-version="8.2.1",
  org.eclipse.cdt.managedbuilder.core;bundle-version="8.2.1",
  org.eclipse.ptp.rdt.sync.core;bundle-version="3.0.0",
- org.eclipse.ptp.remotetools.core;bundle-version="6.0.0"
+ org.eclipse.ptp.remotetools.core;bundle-version="6.0.0",
+ org.eclipse.ui.cheatsheets
 Bundle-ActivationPolicy: lazy

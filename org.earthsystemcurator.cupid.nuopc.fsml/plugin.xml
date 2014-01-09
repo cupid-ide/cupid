@@ -470,18 +470,35 @@
    <extension
          point="org.eclipse.ui.newWizards">
       <category
-            id="org.earthsystemcurator.cupid.nuopc.fsml"
-            name="NUOPC">
+            id="org.earthsystemcurator.cupid"
+            name="Cupid">
       </category>
       <wizard
-            category="org.earthsystemcurator.cupid.nuopc.fsml"
-            class="org.earthsystemcurator.cupid.nuopc.fsml.wizards.NUOPCProjectWizard"
+            category="org.earthsystemcurator.cupid"
+            class="org.earthsystemcurator.cupid.nuopc.fsml.wizards.CupidProjectWizard"
             finalPerspective="org.eclipse.photran.ui.FortranPerspective"
             icon="icons/sample.gif"
-            id="org.earthsystemcurator.cupid.nuopc.fsml.wizards.NUOPCProjectWizard"
-            name="NUOPC Project"
+            id="org.earthsystemcurator.cupid.wizards.CupidProjectWizard"
+            name="Cupid Training Project"
             project="true">
       </wizard>
+   </extension>
+   <extension
+         point="org.eclipse.ui.cheatsheets.cheatSheetContent">
+      <category
+            id="org.earthsystemcurator.cupid.nuopc.fsml.category714676611"
+            name="Cupid">
+      </category>
+      <cheatsheet
+            category="org.earthsystemcurator.cupid.nuopc.fsml.category714676611"
+            composite="false"
+            contentFile="$nl$/cupid_cheat.xml"
+            id="org.earthsystemcurator.cupid.nuopc.fsml.cheatsheet99354137"
+            name="Cupid Cheat Sheet">
+         <description>
+            Cupid cheat sheets
+         </description>
+      </cheatsheet>
    </extension>
    
    <!--

@@ -31,31 +31,37 @@ import org.osgi.framework.FrameworkUtil;
  * OR with the extension that matches the expected one (mpe).
  */
 
-public class NUOPCProjectWizardPageSelectArch extends WizardPage {
+public class CupidProjectWizardPageSelectArch extends WizardPage {
 	
 	final String[][] buttonData = new String[][] {
-			{"Single Model with Driver",   // configuration name
+			{"NUOPC - Single Model with Driver",   // configuration name
 				"images/relationship_single.png",   // architecture image
 				"images/coupling_single.png",   // coupling image
 				"A single Model component is called by a Driver in regular intervals.",  // archicture description
 				"There is no coupling in this configuration." //coupling description
 				},  
-			{"Coupled Atmosphere-Ocean with Driver", 
+			{"NUOPC - Coupled Atmosphere-Ocean with Driver", 
 				"images/relationship_simple.png",
 				"images/coupling_explicit.png",
 				"Atmosphere and Ocean Models exchange data through generic Connectors.",
 				"Simple explicit coupling requires that Atmosphere and Ocean fields are exchanged in both directions at the beginning of each coupling interval."},
-			{"Coupled Atmosphere-Ocean with Mediator and Driver", 
+			{"NUOPC - Coupled Atmosphere-Ocean with Mediator and Driver", 
 				"images/relationship_simpleMediator.png",
 				"images/coupling_simpleMediator.png",
 				"Atmosphere and Ocean Models couple through a Mediator component.",
 				"Connector components transfer Atmosphere and Ocean fields to the Mediator at the beginning of each coupling interval. The Mediator processes this input and Connectors transfer the Mediator output back to the model components. The model components then integrate forward for one coupling interval before the same process is repeated."},
+			{"ModelE - Basic Configuration (EM20 rundeck) -- COMING SOON",   // configuration name
+				null,   // architecture image
+				null,   // coupling image
+				"This training project is currently not available...",  // archicture description
+				"" //coupling description
+				},  
 	};
 	
-	public NUOPCProjectWizardPageSelectArch() {
-		super("NUOPC Creation Wizard Page 2");
-		setTitle("Create NUOPC Project");
-		setDescription("Please select an initial configuration.");
+	public CupidProjectWizardPageSelectArch() {
+		super("Cupid Creation Wizard Page 2");
+		setTitle("Create Cupid Training Project");
+		setDescription("Please select a training project");
 	}
 
 	private Label archImage;
@@ -64,7 +70,7 @@ public class NUOPCProjectWizardPageSelectArch extends WizardPage {
 	private Label couplingDesc;
 	
 		
-	private static Bundle MY_BUNDLE = FrameworkUtil.getBundle(NUOPCProjectWizardPageSelectArch.class);
+	private static Bundle MY_BUNDLE = FrameworkUtil.getBundle(CupidProjectWizardPageSelectArch.class);
 	
 	
 	
@@ -78,13 +84,14 @@ public class NUOPCProjectWizardPageSelectArch extends WizardPage {
 		final Composite container = new Composite(parent, SWT.NULL);
 		GridLayoutFactory.fillDefaults().numColumns(3).applyTo(container);
 		
+		/*
 		Label desc = new Label(container, SWT.WRAP);
 		desc.setText("The basic configurations listed here demonstrate the control "
 				+ "and data flows in a NUOPC application. The models themselves are stubs, "
 				+ "not performing any useful scientific calculations.");
-		NUOPCProjectWizard.updateFont(desc, SWT.ITALIC);
+		CupidProjectWizard.updateFont(desc, SWT.ITALIC);
 		GridDataFactory.fillDefaults().span(3, 1).grab(true, false).hint(400,SWT.DEFAULT).applyTo(desc);
-		
+		*/
 		
 		Label configLabel = new Label(container, SWT.NULL);
 		configLabel.setText("Basic Configurations: ");
@@ -95,6 +102,7 @@ public class NUOPCProjectWizardPageSelectArch extends WizardPage {
 		GridDataFactory.fillDefaults().align(SWT.LEFT, SWT.FILL).span(2,1).applyTo(configCombo);
 		for (int i = 0; i < buttonData.length; i++) {
 			configCombo.add(buttonData[i][0]);
+			//configCombo.
 		}
 		configCombo.setText(buttonData[0][0]);
 		configCombo.addSelectionListener(new SelectionAdapter() {
@@ -105,13 +113,25 @@ public class NUOPCProjectWizardPageSelectArch extends WizardPage {
 				archDesc.setText(buttonData[idx][3]);
 				couplingDesc.setText(buttonData[idx][4]);
 				
-				URL url = FileLocator.find(MY_BUNDLE, new Path(buttonData[idx][1]), null);
-				ImageDescriptor id = ImageDescriptor.createFromURL(url);
-				archImage.setImage(id.createImage());
-				
-				url = FileLocator.find(MY_BUNDLE, new Path(buttonData[idx][2]), null);
-				id = ImageDescriptor.createFromURL(url);
-				couplingImage.setImage(id.createImage());
+				URL url;
+				ImageDescriptor id;
+				if (buttonData[idx][1] != null) {
+					url = FileLocator.find(MY_BUNDLE, new Path(buttonData[idx][1]), null);
+					id = ImageDescriptor.createFromURL(url);
+					archImage.setImage(id.createImage());
+				}
+				else {
+					archImage.setImage(null);
+				}
+					
+				if (buttonData[idx][2] != null) {
+					url = FileLocator.find(MY_BUNDLE, new Path(buttonData[idx][2]), null);
+					id = ImageDescriptor.createFromURL(url);
+					couplingImage.setImage(id.createImage());
+				}
+				else {
+					couplingImage.setImage(null);
+				}
 								
 				archImage.getParent().layout();
 				couplingImage.getParent().layout();
@@ -126,13 +146,13 @@ public class NUOPCProjectWizardPageSelectArch extends WizardPage {
 		
 		Group groupArch = new Group(container, SWT.NORMAL);
 		groupArch.setText("Model Architecture");
-		NUOPCProjectWizard.updateFont(groupArch, SWT.BOLD);
+		CupidProjectWizard.updateFont(groupArch, SWT.BOLD);
 		GridDataFactory.fillDefaults().span(2,1).applyTo(groupArch);
 		GridLayoutFactory.fillDefaults().margins(5,5).applyTo(groupArch);
 				
 		Group groupCpl = new Group(container, SWT.NORMAL);
 		groupCpl.setText("Coupling Behavior");
-		NUOPCProjectWizard.updateFont(groupCpl, SWT.BOLD);
+		CupidProjectWizard.updateFont(groupCpl, SWT.BOLD);
 		GridLayoutFactory.fillDefaults().margins(5,5).applyTo(groupCpl);
 		GridDataFactory.fillDefaults().applyTo(groupCpl);
 			
