@@ -10,8 +10,10 @@ import java.io.InputStreamReader;
 import java.lang.reflect.InvocationTargetException;
 import java.net.URL;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 
 import org.earthsystemcurator.cupid.nuopc.fsml.builder.NUOPCNature;
@@ -63,6 +65,7 @@ import org.eclipse.swt.graphics.FontData;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.Display;
+import org.eclipse.swt.widgets.Text;
 import org.eclipse.ui.INewWizard;
 import org.eclipse.ui.IWorkbench;
 import org.eclipse.ui.IWorkbenchPage;
@@ -104,6 +107,7 @@ public class CupidProjectWizard extends Wizard implements INewWizard {
 	private CupidProjectWizardPageSelectArch selectArchPage;
 	private CupidProjectWizardPageSingleModelProto singleModelProtoPage;
 	private CupidProjectWizardPageCompEnv selectCompEnvPage;
+	private Map<String,String> wizardData;
 
 
 	/**
@@ -113,11 +117,12 @@ public class CupidProjectWizard extends Wizard implements INewWizard {
 		super();
 		setNeedsProgressMonitor(true);
 		setWindowTitle("Create Cupid Training Project");
+		wizardData = new HashMap<String, String>();
 	}
 
 	@Override
 	public boolean canFinish() {
-		return getContainer().getCurrentPage() == selectCompEnvPage;
+		return getContainer().getCurrentPage() == selectCompEnvPage && selectCompEnvPage.isPageComplete();
 	}
 
 	/**
@@ -126,8 +131,11 @@ public class CupidProjectWizard extends Wizard implements INewWizard {
 
 	public void addPages() {
 
-		newProjectPage = new WizardNewProjectCreationPage("Create Cupid Training Project") {
+		selectArchPage = new CupidProjectWizardPageSelectArch(wizardData);
+		addPage(selectArchPage);
 
+		
+		newProjectPage = new WizardNewProjectCreationPage("Create Cupid Training Project") {
 			@Override
 			public void createControl(Composite parent) {
 				// TODO Auto-generated method stub
@@ -135,10 +143,8 @@ public class CupidProjectWizard extends Wizard implements INewWizard {
 				Composite control = (Composite) getControl();
 				//force to use default location (local file system)
 				control.getChildren()[1].setEnabled(false);
-				control.getChildren()[1].setVisible(false);
+				control.getChildren()[1].setVisible(false);			
 			}
-
-
 		};
 
 		newProjectPage.setTitle("Create Cupid Training Project");
@@ -146,14 +152,12 @@ public class CupidProjectWizard extends Wizard implements INewWizard {
 		newProjectPage.setInitialProjectName("CupidProject");
 		addPage(newProjectPage);
 
-		selectArchPage = new CupidProjectWizardPageSelectArch();
-		addPage(selectArchPage);
-
-		singleModelProtoPage = new CupidProjectWizardPageSingleModelProto();
+		singleModelProtoPage = new CupidProjectWizardPageSingleModelProto(wizardData);
 		addPage(singleModelProtoPage);
 
-		selectCompEnvPage = new CupidProjectWizardPageCompEnv();
+		selectCompEnvPage = new CupidProjectWizardPageCompEnv(wizardData);
 		addPage(selectCompEnvPage);
+	
 	}
 
 	/**
@@ -169,7 +173,7 @@ public class CupidProjectWizard extends Wizard implements INewWizard {
 		IRunnableWithProgress op = new IRunnableWithProgress() {
 			public void run(IProgressMonitor monitor) throws InvocationTargetException {
 				try {
-					doFinish(projectHandle, monitor, singleModelProtoPage);
+					doFinish(projectHandle, monitor, wizardData);
 				} catch (CoreException e) {
 					throw new InvocationTargetException(e);
 				} finally {
@@ -196,12 +200,10 @@ public class CupidProjectWizard extends Wizard implements INewWizard {
 	 * the editor on the newly created file.
 	 * @throws InvocationTargetException 
 	 */
-	private void doFinish(IProject projectHandle, IProgressMonitor monitor, IWizardPage page) throws CoreException {
+	private void doFinish(IProject projectHandle, IProgressMonitor monitor, Map<String,String> wizardData) throws CoreException {
 
 		monitor.beginTask("Creating Cupid training project", 20);
 		monitor.subTask("Creating new project");
-
-		//if (1==1) throw new CoreException(new OperationStatus(IStatus.ERROR, MY_BUNDLE.getSymbolicName(), 0, "My error", null));
 
 		//make a CDT/Fortran project
 		IWorkspace workspace = ResourcesPlugin.getWorkspace();
@@ -218,7 +220,7 @@ public class CupidProjectWizard extends Wizard implements INewWizard {
 		IToolChain[] tcs = ManagedBuildManager.getRealToolChains();
 		IToolChain toolchain = null;
 		for (IToolChain tc : tcs) {
-			System.out.println("Toolchain: " + tc.getName() + " : " + tc.getId());
+			//System.out.println("Toolchain: " + tc.getName() + " : " + tc.getId());
 			//Linux GCC  --> cdt.managedbuild.toolchain.gnu.base
 			//GCC Fortran  --> photran.managedbuild.toolchain.gnu.fortran.exe.debug
 			if (tc.getId().equals("org.eclipse.ptp.rdt.managedbuild.toolchain.gnu.base")) {
@@ -240,127 +242,140 @@ public class CupidProjectWizard extends Wizard implements INewWizard {
 
 		CProjectNature.addCNature(project, new SubProgressMonitor(monitor, 1));
 		FProjectNature.addFNature(project, new SubProgressMonitor(monitor, 1));
-
 		NUOPCNature.addNUOPCNature(project, new SubProgressMonitor(monitor, 1));
 
 		// Persist the project description
 		mngr.setProjectDescription(project, des);
 		monitor.worked(1);
 
-		// make the amazon ec2 compute environment
-		String ec2host;
-		try {
-			ec2host = createEC2Environment(new SubProgressMonitor(monitor, 2));
-		} catch (IOException e4) {
-			throw new CoreException(new OperationStatus(IStatus.ERROR, MY_BUNDLE.getSymbolicName(), 0, "Cannot create EC2 environment", e4));
-		}
-
-		// get a remote connection to ec2
-		IRemoteConnection remoteConn = null;
-		try {
-			remoteConn = createRemoteConnection(ec2host, new SubProgressMonitor(monitor, 2));
-		} catch (RemoteConnectionException e3) {
-			throw new CoreException(new OperationStatus(IStatus.ERROR, MY_BUNDLE.getSymbolicName(), 0, "Cannot create remote connection", e3));
-		}
-		//monitor.worked(1);
-
-		IRemoteServices remoteServices = RemoteServices.getRemoteServices("org.eclipse.ptp.remote.RemoteTools", new SubProgressMonitor(monitor,1));
-
-		monitor.subTask("Connecting to the computational environment...");
-		boolean connected = false;
-		int timeout = 0;
-
-		while(!connected && timeout < 20) {
-			try {
-				//monitor.
-				monitor.worked(1);
-				Thread.sleep(5000);
-				remoteConn.open(new NullProgressMonitor());
-				connected = true;
-			}
-			catch (RemoteConnectionException rce) {
-				//System.out.println(rce.getCause());
-			} 
-			catch (InterruptedException e) {
-				//e.printStackTrace();
-			}
-		}
-
-		if (!remoteConn.isOpen()) {
-			throw new CoreException(new OperationStatus(IStatus.ERROR, MY_BUNDLE.getSymbolicName(), 0, "Timeout connecting to EC2 environment", null));
-		}
-
-		/*
-		try {
-			IRemoteProcessBuilder rpb = remoteServices.getProcessBuilder(remoteConn, "/bin/ls", "-la");
-			IRemoteProcess rp = rpb.start();
-			while (!rp.isCompleted()) {
-				rp.waitFor();
-			}
-
-			System.out.println("Process stdout:");
-			BufferedReader in = new BufferedReader(new InputStreamReader(rp.getInputStream()));
-			String inputLine;
-			while ((inputLine = in.readLine()) != null)
-				System.out.println(inputLine);
-			in.close();
-
-
-		} catch (IOException | InterruptedException e) {
-			throw new CoreException(new OperationStatus(IStatus.ERROR, MY_BUNDLE.getSymbolicName(), 0, "Error executing command on remote environment", e));
-		}
-		*/
 		
-		// make synchronized project
-		ISynchronizeParticipant syncParticipant = null;
-		ISynchronizeParticipantDescriptor syncDescriptor = null;
-
-		ISynchronizeParticipantDescriptor[] providers = SynchronizeParticipantRegistry.getDescriptors();
-		for (ISynchronizeParticipantDescriptor p : providers) {
-			//System.out.println("ISynchronizeParticipantDescriptor ==> " + p.getName() + " : " + p.getId() + " : " + p.getServiceId());
-			if (p.getId().equals("org.eclipse.ptp.rdt.sync.git.ui.gitParticipant")) {
-				syncDescriptor = p;
-				//syncParticipant = p.getParticipant();
-				//System.out.println("syncParticipant.isConfigComplete(): " + syncParticipant.isConfigComplete());
-				//System.out.println("syncParticipant.getErrorMessage(): " + syncParticipant.getErrorMessage());
-				//syncParticipant.
-				//break;
+		IRemoteConnection remoteConn = null;
+		if (wizardData.get(CupidProjectWizardPageCompEnv.WD_COMP_ENV).equals(CupidProjectWizardPageCompEnv.WD_COMP_ENV__CLOUD)) {
+			
+			// make the amazon ec2 compute environment
+			String ec2host;
+			try {
+				ec2host = createEC2Environment(new SubProgressMonitor(monitor, 2));
+			} catch (IOException e4) {
+				throw new CoreException(new OperationStatus(IStatus.ERROR, MY_BUNDLE.getSymbolicName(), 0, "Cannot create EC2 environment", e4));
 			}
+
+			// get a remote connection to ec2
+			try {
+				remoteConn = createRemoteConnection(ec2host, new SubProgressMonitor(monitor, 2));
+			} catch (RemoteConnectionException e3) {
+				throw new CoreException(new OperationStatus(IStatus.ERROR, MY_BUNDLE.getSymbolicName(), 0, "Cannot create remote connection", e3));
+			}
+		
+		}
+		
+		if (wizardData.get(CupidProjectWizardPageCompEnv.WD_COMP_ENV).equals(CupidProjectWizardPageCompEnv.WD_COMP_ENV__REMOTE)) {
+			remoteConn = findRemoteConnection(wizardData.get(CupidProjectWizardPageCompEnv.WD_EXIST_CONN), new SubProgressMonitor(monitor, 1));
 		}
 
-		if (syncDescriptor == null) {
-			throw new CoreException(new OperationStatus(IStatus.ERROR, MY_BUNDLE.getSymbolicName(), 0, "Git synchronize descriptor not present", null));
+		if (wizardData.get(CupidProjectWizardPageCompEnv.WD_COMP_ENV).equals(CupidProjectWizardPageCompEnv.WD_COMP_ENV__CLOUD) ||
+			wizardData.get(CupidProjectWizardPageCompEnv.WD_COMP_ENV).equals(CupidProjectWizardPageCompEnv.WD_COMP_ENV__REMOTE)	) {
+			
+			monitor.subTask("Connecting to the computational environment...");
+			boolean connected = false;
+			int timeout = 0;
+	
+			while(!connected && timeout < 20) {
+				try {
+					monitor.worked(1);
+					Thread.sleep(5000);
+					remoteConn.open(new NullProgressMonitor());
+					connected = true;
+				}
+				catch (RemoteConnectionException rce) {
+					//System.out.println(rce.getCause());
+				} 
+				catch (InterruptedException e) {
+					//e.printStackTrace();
+				}
+			}
+
+			if (!remoteConn.isOpen()) {
+				throw new CoreException(new OperationStatus(IStatus.ERROR, MY_BUNDLE.getSymbolicName(), 0, "Timeout connecting to computational environment", null));
+			}
+
+			/*
+			
+			IRemoteServices remoteServices = RemoteServices.getRemoteServices("org.eclipse.ptp.remote.RemoteTools", new SubProgressMonitor(monitor,1));
+	
+			try {
+				IRemoteProcessBuilder rpb = remoteServices.getProcessBuilder(remoteConn, "/bin/ls", "-la");
+				IRemoteProcess rp = rpb.start();
+				while (!rp.isCompleted()) {
+					rp.waitFor();
+				}
+	
+				System.out.println("Process stdout:");
+				BufferedReader in = new BufferedReader(new InputStreamReader(rp.getInputStream()));
+				String inputLine;
+				while ((inputLine = in.readLine()) != null)
+					System.out.println(inputLine);
+				in.close();
+	
+	
+			} catch (IOException | InterruptedException e) {
+				throw new CoreException(new OperationStatus(IStatus.ERROR, MY_BUNDLE.getSymbolicName(), 0, "Error executing command on remote environment", e));
+			}
+			*/
+			
+			// make synchronized project
+			ISynchronizeParticipant syncParticipant = null;
+			ISynchronizeParticipantDescriptor syncDescriptor = null;
+	
+			ISynchronizeParticipantDescriptor[] providers = SynchronizeParticipantRegistry.getDescriptors();
+			for (ISynchronizeParticipantDescriptor p : providers) {
+				//System.out.println("ISynchronizeParticipantDescriptor ==> " + p.getName() + " : " + p.getId() + " : " + p.getServiceId());
+				if (p.getId().equals("org.eclipse.ptp.rdt.sync.git.ui.gitParticipant")) {
+					syncDescriptor = p;
+					//syncParticipant = p.getParticipant();
+					//System.out.println("syncParticipant.isConfigComplete(): " + syncParticipant.isConfigComplete());
+					//System.out.println("syncParticipant.getErrorMessage(): " + syncParticipant.getErrorMessage());
+					//syncParticipant.
+					//break;
+				}
+			}
+
+			if (syncDescriptor == null) {
+				throw new CoreException(new OperationStatus(IStatus.ERROR, MY_BUNDLE.getSymbolicName(), 0, "Git synchronize descriptor not present", null));
+			}
+
+			syncParticipant = new CupidGitParticipant(syncDescriptor, remoteConn, "/home/sgeadmin/SingleModelProto");
+
+
+			//IManagedBuildInfo buildInfo = ManagedBuildManager.getBuildInfo(projectHandle);
+			//IConfiguration configs[] = buildInfo.getManagedProject().getConfigurations();
+			//for (IConfiguration c : configs) {
+			//	System.out.println("\tIConfiguration ==> " + c.getName());
+			//}
+	
+			Set<String> localToolChains = new HashSet<String>();
+			localToolChains.add(toolchain.getName());
+	
+			Set<String> remoteToolChains = new HashSet<String>();
+			remoteToolChains.add(toolchain.getName());
+	
+			monitor.subTask("Setting up project synchronization");
+	
+			NewRemoteSyncProjectWizardOperation.run(project, 
+					syncParticipant, 
+					null,
+					localToolChains,
+					remoteToolChains, 
+					new SubProgressMonitor(monitor,1));
+		
 		}
-
-		syncParticipant = new CupidGitParticipant(syncDescriptor, remoteConn, "/home/sgeadmin/SingleModelProto");
-
-
-		//IManagedBuildInfo buildInfo = ManagedBuildManager.getBuildInfo(projectHandle);
-		//IConfiguration configs[] = buildInfo.getManagedProject().getConfigurations();
-		//for (IConfiguration c : configs) {
-		//	System.out.println("\tIConfiguration ==> " + c.getName());
-		//}
-
-		Set<String> localToolChains = new HashSet<String>();
-		localToolChains.add(toolchain.getName());
-
-		Set<String> remoteToolChains = new HashSet<String>();
-		remoteToolChains.add(toolchain.getName());
-
-		monitor.subTask("Setting up project synchronization");
-
-		NewRemoteSyncProjectWizardOperation.run(project, 
-				syncParticipant, 
-				null,
-				localToolChains,
-				remoteToolChains, 
-				new SubProgressMonitor(monitor,1));
 
 		monitor.subTask("Adding project files");
 		boolean skipFiles = false;
 		if (!skipFiles) {
-			String templateDir = "templates/" + page.getClass().getSimpleName().replaceFirst("CupidProjectWizardPage", "");
-
+			//String templateDir = "templates/" + page.getClass().getSimpleName().replaceFirst("CupidProjectWizardPage", "");
+			String templateDir = "templates/" + wizardData.get("templateDir");
+			
 			URL bundleURL = FileLocator.find(MY_BUNDLE, new Path(templateDir), null);
 			URL fileURL = null;
 			try {
@@ -392,7 +407,7 @@ public class CupidProjectWizard extends Wizard implements INewWizard {
 					if (f.getName().endsWith(".st")) {
 
 						ST templateST = new ST(sb.toString());
-						templateST.add("p", page);
+						templateST.add("p", wizardData);
 						contents = templateST.render();
 
 						//get filename
@@ -410,8 +425,9 @@ public class CupidProjectWizard extends Wizard implements INewWizard {
 						 */
 
 						String key = f.getName().substring(0, f.getName().indexOf("."));
-						CupidProjectWizardPageSingleModelProto pp = (CupidProjectWizardPageSingleModelProto) page;
-						filename = pp.getWizardData().get(key);
+						//CupidProjectWizardPageSingleModelProto pp = (CupidProjectWizardPageSingleModelProto) page;
+						//filename = pp.getWizardData().get(key);
+						filename = wizardData.get(key);
 						if (filename != null) {
 							filename += f.getName().substring(f.getName().indexOf("."), f.getName().lastIndexOf("."));
 						}
@@ -430,7 +446,6 @@ public class CupidProjectWizard extends Wizard implements INewWizard {
 					projectFile.create(stream, true, new SubProgressMonitor(monitor, 1));
 					filesToOpen.add(projectFile);
 					stream.close();
-					//monitor.worked(1);
 
 				} catch (IOException | SecurityException | IllegalArgumentException e) {				
 					throw new CoreException(new OperationStatus(IStatus.ERROR, MY_BUNDLE.getSymbolicName(), 0, "Error populating project with files: " + templateDir, e));				
@@ -441,13 +456,11 @@ public class CupidProjectWizard extends Wizard implements INewWizard {
 
 			monitor.subTask("Opening project files in editor");
 			if (filesToOpen.size() > 0) {
-				//monitor.setTaskName("Opening files for editing...");
 				getShell().getDisplay().asyncExec(new Runnable() {
 					public void run() {
 						IWorkbenchPage page =
 								PlatformUI.getWorkbench().getActiveWorkbenchWindow().getActivePage();
 						try {
-							//filesToOpen.toArray(new IFile[] {});
 							IDE.openEditors(page, filesToOpen.toArray(new IFile[] {}));
 						} catch (MultiPartInitException e) {}
 					}
@@ -479,17 +492,32 @@ public class CupidProjectWizard extends Wizard implements INewWizard {
 		//}
 
 		if (remoteServices.canCreateConnections()) {
-			remoteConn = connManager.newConnection("Amazon EC2 - " + host);
+			remoteConn = connManager.newConnection("Cupid Environment (Amazon EC2 - " + host + ")");
 			remoteConn.setAddress(host);
 			remoteConn.setUsername("root");
 			remoteConn.setAttribute("org.eclipse.ptp.remotetools.environment.generichost.key-path", "C:\\Users\\Rocky\\Documents\\ssh\\nesiikey.rsa");
 			remoteConn.setAttribute("org.eclipse.ptp.remotetools.environment.generichost.is-passwd-auth", "false");
+			remoteConn.setAttribute("org.earthsystemcurator.cupid.ready", "true");
 		}
 		monitor.worked(1);
 		monitor.done();
 		return remoteConn;
+	}
+	
+	
+	private IRemoteConnection findRemoteConnection(String name, IProgressMonitor monitor) {
 
+		monitor.beginTask("Retrieving remote connection", 2);
 
+		IRemoteServices remoteServices = RemoteServices.getRemoteServices("org.eclipse.ptp.remote.RemoteTools", monitor);
+		monitor.worked(1);
+
+		IRemoteConnectionManager connManager = remoteServices.getConnectionManager();
+		IRemoteConnection remoteConn = connManager.getConnection(name);
+		
+		monitor.worked(1);
+		monitor.done();
+		return remoteConn;
 	}
 
 

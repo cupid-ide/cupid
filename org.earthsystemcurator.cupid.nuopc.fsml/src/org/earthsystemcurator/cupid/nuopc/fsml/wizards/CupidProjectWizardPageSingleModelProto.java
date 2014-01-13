@@ -1,5 +1,6 @@
 package org.earthsystemcurator.cupid.nuopc.fsml.wizards;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
@@ -46,11 +47,12 @@ public class CupidProjectWizardPageSingleModelProto extends WizardPage {
 	
 	//private static final String templateDir = "templates/SingleModelProto";
 	
-	public CupidProjectWizardPageSingleModelProto() {
+	public CupidProjectWizardPageSingleModelProto(Map<String, String> wizardData) {
 		super("NUOPC Creation Wizard Page 3");
 		setTitle("Create Cupid Training Project");
 		setDescription("Configure training application: NUOPC - Single Model with Driver");
-		wizardData = new HashMap<String,String>();
+		this.wizardData = wizardData;
+		//wizardData = new HashMap<String,String>();
 	}
 
 	public void createControl(Composite parent) {
@@ -346,6 +348,20 @@ public class CupidProjectWizardPageSingleModelProto extends WizardPage {
 	private void dialogChanged() {
 		
 		wizardData.put("modelName", modelNameText.getText());
+		wizardData.put("driverName", driverNameText.getText());
+		wizardData.put("driverTimestep", driverTimestepText.getText());
+		wizardData.put("driverRunLength", driverRunLengthText.getText());
+		wizardData.put("minX", minXText.getText());
+		wizardData.put("maxX", maxXText.getText());
+		wizardData.put("minY", minYText.getText());
+		wizardData.put("maxY", maxYText.getText());
+		wizardData.put("cellsX", cellsXText.getText());
+		wizardData.put("cellsY", cellsYText.getText());
+		
+		//hard code for now
+		//java.util.List<String> importedFields = new ArrayList<String>();
+		//importedFields.add("imported_field");
+		//wizardData.put("importedFields", value)
 		
 		if (checkEmpty(driverNameText)) {
 			updateStatus("Driver name required");
@@ -354,7 +370,7 @@ public class CupidProjectWizardPageSingleModelProto extends WizardPage {
 			updateStatus("Driver timestep length required");
 		}
 		else if (checkEmpty(driverRunLengthText)) {
-				updateStatus("Driver number of timesteps required");
+			updateStatus("Driver number of timesteps required");
 		}
 		else if (checkEmpty(modelNameText)) {
 			updateStatus("Model name required");

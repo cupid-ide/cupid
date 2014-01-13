@@ -1,6 +1,7 @@
 package org.earthsystemcurator.cupid.nuopc.fsml.wizards;
 
 import java.net.URL;
+import java.util.Map;
 
 import org.eclipse.core.runtime.FileLocator;
 import org.eclipse.core.runtime.Path;
@@ -21,6 +22,7 @@ import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Group;
 import org.eclipse.swt.widgets.Label;
+import org.eclipse.swt.widgets.Text;
 import org.eclipse.ui.dialogs.WizardNewProjectCreationPage;
 import org.osgi.framework.Bundle;
 import org.osgi.framework.FrameworkUtil;
@@ -33,35 +35,43 @@ import org.osgi.framework.FrameworkUtil;
 
 public class CupidProjectWizardPageSelectArch extends WizardPage {
 	
+	private Map<String, String> wizardData;
+	private int selectedIndex = 0;
+	
 	final String[][] buttonData = new String[][] {
 			{"NUOPC - Single Model with Driver",   // configuration name
 				"images/relationship_single.png",   // architecture image
 				"images/coupling_single.png",   // coupling image
 				"A single Model component is called by a Driver in regular intervals.",  // archicture description
-				"There is no coupling in this configuration." //coupling description
+				"There is no coupling in this configuration.", //coupling description
+				"SingleModelProto" //template directory
 				},  
 			{"NUOPC - Coupled Atmosphere-Ocean with Driver", 
 				"images/relationship_simple.png",
 				"images/coupling_explicit.png",
 				"Atmosphere and Ocean Models exchange data through generic Connectors.",
-				"Simple explicit coupling requires that Atmosphere and Ocean fields are exchanged in both directions at the beginning of each coupling interval."},
+				"Simple explicit coupling requires that Atmosphere and Ocean fields are exchanged in both directions at the beginning of each coupling interval.",
+				"AtmOcnProto"},
 			{"NUOPC - Coupled Atmosphere-Ocean with Mediator and Driver", 
 				"images/relationship_simpleMediator.png",
 				"images/coupling_simpleMediator.png",
 				"Atmosphere and Ocean Models couple through a Mediator component.",
-				"Connector components transfer Atmosphere and Ocean fields to the Mediator at the beginning of each coupling interval. The Mediator processes this input and Connectors transfer the Mediator output back to the model components. The model components then integrate forward for one coupling interval before the same process is repeated."},
+				"Connector components transfer Atmosphere and Ocean fields to the Mediator at the beginning of each coupling interval. The Mediator processes this input and Connectors transfer the Mediator output back to the model components. The model components then integrate forward for one coupling interval before the same process is repeated.",
+				"AtmOcnMedProto"},
 			{"ModelE - Basic Configuration (EM20 rundeck) -- COMING SOON",   // configuration name
 				null,   // architecture image
 				null,   // coupling image
 				"This training project is currently not available...",  // archicture description
-				"" //coupling description
+				"", //coupling description
+				"ModelEExample"
 				},  
 	};
 	
-	public CupidProjectWizardPageSelectArch() {
+	public CupidProjectWizardPageSelectArch(Map<String, String> wizardData) {
 		super("Cupid Creation Wizard Page 2");
 		setTitle("Create Cupid Training Project");
 		setDescription("Please select a training project");
+		this.wizardData = wizardData;
 	}
 
 	private Label archImage;
@@ -94,7 +104,7 @@ public class CupidProjectWizardPageSelectArch extends WizardPage {
 		*/
 		
 		Label configLabel = new Label(container, SWT.NULL);
-		configLabel.setText("Basic Configurations: ");
+		configLabel.setText("Training configuration: ");
 		GridDataFactory.fillDefaults().align(SWT.LEFT, SWT.FILL).applyTo(configLabel);
 			
 		
@@ -108,15 +118,15 @@ public class CupidProjectWizardPageSelectArch extends WizardPage {
 		configCombo.addSelectionListener(new SelectionAdapter() {
 			@Override
 			public void widgetSelected(SelectionEvent e) {
-				int idx = ((Combo)e.widget).getSelectionIndex();
+				selectedIndex = ((Combo)e.widget).getSelectionIndex();
 				
-				archDesc.setText(buttonData[idx][3]);
-				couplingDesc.setText(buttonData[idx][4]);
+				archDesc.setText(buttonData[selectedIndex][3]);
+				couplingDesc.setText(buttonData[selectedIndex][4]);
 				
 				URL url;
 				ImageDescriptor id;
-				if (buttonData[idx][1] != null) {
-					url = FileLocator.find(MY_BUNDLE, new Path(buttonData[idx][1]), null);
+				if (buttonData[selectedIndex][1] != null) {
+					url = FileLocator.find(MY_BUNDLE, new Path(buttonData[selectedIndex][1]), null);
 					id = ImageDescriptor.createFromURL(url);
 					archImage.setImage(id.createImage());
 				}
@@ -124,21 +134,20 @@ public class CupidProjectWizardPageSelectArch extends WizardPage {
 					archImage.setImage(null);
 				}
 					
-				if (buttonData[idx][2] != null) {
-					url = FileLocator.find(MY_BUNDLE, new Path(buttonData[idx][2]), null);
+				if (buttonData[selectedIndex][2] != null) {
+					url = FileLocator.find(MY_BUNDLE, new Path(buttonData[selectedIndex][2]), null);
 					id = ImageDescriptor.createFromURL(url);
 					couplingImage.setImage(id.createImage());
 				}
 				else {
 					couplingImage.setImage(null);
 				}
-								
+				
+			
 				archImage.getParent().layout();
 				couplingImage.getParent().layout();
 				
-				//WizardNewProjectCreationPage p = (WizardNewProjectCreationPage) getNextPage();
-				//p.setInitialProjectName(buttonData[idx][0]);
-				
+				dialogChanged();
 			}
 		});
 			
@@ -179,90 +188,29 @@ public class CupidProjectWizardPageSelectArch extends WizardPage {
 	    GridDataFactory.fillDefaults().align(SWT.CENTER, SWT.CENTER).hint(SWT.DEFAULT, 300).applyTo(couplingImage);
 	    
 		setControl(container);
+		dialogChanged();
 		
 	}
 	
-	/*
-	@Override
-	public IWizardPage getNextPage() {
-		// TODO Auto-generated method stub
-		return new NUOPCProjectWizardPage3();
-	}
-	*/
 	
-	
-	/**
-	 * Uses the standard container selection dialog to choose the new value for
-	 * the container field.
-	 */
+	private void dialogChanged() {		
+		wizardData.put("templateDir", buttonData[selectedIndex][5]);
 
-	/*
-	private void handleBrowse() {
-		ContainerSelectionDialog dialog = new ContainerSelectionDialog(
-				getShell(), ResourcesPlugin.getWorkspace().getRoot(), false,
-				"Select new file container");
-		if (dialog.open() == ContainerSelectionDialog.OK) {
-			Object[] result = dialog.getResult();
-			if (result.length == 1) {
-				containerText.setText(((Path) result[0]).toString());
-			}
+		if (getNextPage().getControl() != null) {
+			Text prjName = (Text) ((Composite) (((Composite) getNextPage().getControl()).getChildren()[0])).getChildren()[1];
+			prjName.setText(buttonData[selectedIndex][5]);
 		}
-	}
-	*/
-	
-	/**
-	 * Ensures that both text fields are set.
-	 */
-	/*
-	private void dialogChanged() {
-		IResource container = ResourcesPlugin.getWorkspace().getRoot()
-				.findMember(new Path(getContainerName()));
-		String fileName = getFileName();
+		else {
+			((WizardNewProjectCreationPage) getNextPage()).setInitialProjectName(buttonData[selectedIndex][5]);
+		}
 
-		if (getContainerName().length() == 0) {
-			updateStatus("File container must be specified");
-			return;
-		}
-		if (container == null
-				|| (container.getType() & (IResource.PROJECT | IResource.FOLDER)) == 0) {
-			updateStatus("File container must exist");
-			return;
-		}
-		if (!container.isAccessible()) {
-			updateStatus("Project must be writable");
-			return;
-		}
-		if (fileName.length() == 0) {
-			updateStatus("File name must be specified");
-			return;
-		}
-		if (fileName.replace('\\', '/').indexOf('/', 1) > 0) {
-			updateStatus("File name must be valid");
-			return;
-		}
-		int dotLoc = fileName.lastIndexOf('.');
-		if (dotLoc != -1) {
-			String ext = fileName.substring(dotLoc + 1);
-			if (ext.equalsIgnoreCase("mpe") == false) {
-				updateStatus("File extension must be \"mpe\"");
-				return;
-			}
-		}
 		updateStatus(null);
 	}
-	*/
-	/*
+		
+	
 	private void updateStatus(String message) {
 		setErrorMessage(message);
 		setPageComplete(message == null);
 	}
-
-	public String getContainerName() {
-		return containerText.getText();
-	}
-
-	public String getFileName() {
-		return fileText.getText();
-	}
-	*/
+	
 }
