@@ -59,7 +59,7 @@ module <p.modelName>
   
   !-----------------------------------------------------------------------------
 
-  subroutine InitializeP1(gcomp, importState, exportState, clock, rc)
+   subroutine InitializeP1(gcomp, importState, exportState, clock, rc)
     type(ESMF_GridComp)  :: gcomp
     type(ESMF_State)     :: importState, exportState
     type(ESMF_Clock)     :: clock
@@ -73,24 +73,13 @@ module <p.modelName>
     ! dependencies, it is expected to be caught by the compatability checking.
 #define WITHIMPORTFIELDS___disable
 #ifdef WITHIMPORTFIELDS
-	! importable field: import_field
+    ! importable field: sea_surface_temperature
     call NUOPC_StateAdvertiseField(importState, &
       StandardName="sea_surface_temperature", rc=rc)
     if (ESMF_LogFoundError(rcToCheck=rc, msg=ESMF_LOGERR_PASSTHRU, &
       line=__LINE__, &
       file=__FILE__)) &
       return  ! bail out
-      
-    <p.importedFields:{f|
-    ! importable field: <f>
-    call NUOPC_StateAdvertiseField(importState, &
-      StandardName="<f>", rc=rc)
-    if (ESMF_LogFoundError(rcToCheck=rc, msg=ESMF_LOGERR_PASSTHRU, &
-      line=__LINE__, &
-      file=__FILE__)) &
-      return  ! bail out
-      
-    }>   
 #endif
     
     ! exportable field: air_pressure_at_sea_level
@@ -100,17 +89,15 @@ module <p.modelName>
       line=__LINE__, &
       file=__FILE__)) &
       return  ! bail out
-      
-    <p.exportedFields:{f|
-    ! exportable field: <f>
+    
+    ! exportable field: surface_net_downward_shortwave_flux
     call NUOPC_StateAdvertiseField(exportState, &
-      StandardName="<f>", rc=rc)
+      StandardName="surface_net_downward_shortwave_flux", rc=rc)
     if (ESMF_LogFoundError(rcToCheck=rc, msg=ESMF_LOGERR_PASSTHRU, &
       line=__LINE__, &
       file=__FILE__)) &
       return  ! bail out
-      
-    }>
+
   end subroutine
   
   !-----------------------------------------------------------------------------
@@ -129,8 +116,8 @@ module <p.modelName>
     rc = ESMF_SUCCESS
     
     ! create a Grid object for Fields
-    gridIn = NUOPC_GridCreateSimpleXY(<p.minX>._ESMF_KIND_R8, <p.maxX>._ESMF_KIND_R8, &
-      <p.minY>._ESMF_KIND_R8, <p.maxY>._ESMF_KIND_R8, <p.cellsX>, <p.cellsY>, rc)
+    gridIn = NUOPC_GridCreateSimpleXY(10._ESMF_KIND_R8, 20._ESMF_KIND_R8, &
+      100._ESMF_KIND_R8, 200._ESMF_KIND_R8, 10, 100, rc)
     if (ESMF_LogFoundError(rcToCheck=rc, msg=ESMF_LOGERR_PASSTHRU, &
       line=__LINE__, &
       file=__FILE__)) &
@@ -138,8 +125,8 @@ module <p.modelName>
     gridOut = gridIn ! for now out same as in
 
 #ifdef WITHIMPORTFIELDS
-	! importable field: import_field
-    field = ESMF_FieldCreate(name="import_field", grid=gridIn, &
+    ! importable field: sea_surface_temperature
+    field = ESMF_FieldCreate(name="sst", grid=gridIn, &
       typekind=ESMF_TYPEKIND_R8, rc=rc)
     if (ESMF_LogFoundError(rcToCheck=rc, msg=ESMF_LOGERR_PASSTHRU, &
       line=__LINE__, &
@@ -150,40 +137,10 @@ module <p.modelName>
       line=__LINE__, &
       file=__FILE__)) &
       return  ! bail out
-     
-    <p.importedFields:{f|
-    ! importable field: <f>
-    field = ESMF_FieldCreate(name="<f>", grid=gridIn, &
-      typekind=ESMF_TYPEKIND_R8, rc=rc)
-    if (ESMF_LogFoundError(rcToCheck=rc, msg=ESMF_LOGERR_PASSTHRU, &
-      line=__LINE__, &
-      file=__FILE__)) &
-      return  ! bail out
-    call NUOPC_StateRealizeField(importState, field=field, rc=rc)
-    if (ESMF_LogFoundError(rcToCheck=rc, msg=ESMF_LOGERR_PASSTHRU, &
-      line=__LINE__, &
-      file=__FILE__)) &
-      return  ! bail out
-      
-    }>
 #endif
 
-	! exportable field: export_field
-    field = ESMF_FieldCreate(name="export_field", grid=gridIn, &
-      typekind=ESMF_TYPEKIND_R8, rc=rc)
-    if (ESMF_LogFoundError(rcToCheck=rc, msg=ESMF_LOGERR_PASSTHRU, &
-      line=__LINE__, &
-      file=__FILE__)) &
-      return  ! bail out
-    call NUOPC_StateRealizeField(exportState, field=field, rc=rc)
-    if (ESMF_LogFoundError(rcToCheck=rc, msg=ESMF_LOGERR_PASSTHRU, &
-      line=__LINE__, &
-      file=__FILE__)) &
-      return  ! bail out
-      
-    <p.exportedFields:{f|
     ! exportable field: air_pressure_at_sea_level
-    field = ESMF_FieldCreate(name="<f>", grid=gridOut, &
+    field = ESMF_FieldCreate(name="pmsl", grid=gridOut, &
       typekind=ESMF_TYPEKIND_R8, rc=rc)
     if (ESMF_LogFoundError(rcToCheck=rc, msg=ESMF_LOGERR_PASSTHRU, &
       line=__LINE__, &
@@ -194,9 +151,19 @@ module <p.modelName>
       line=__LINE__, &
       file=__FILE__)) &
       return  ! bail out
-    
-    }>
-   
+
+    ! exportable field: surface_net_downward_shortwave_flux
+    field = ESMF_FieldCreate(name="rsns", grid=gridOut, &
+      typekind=ESMF_TYPEKIND_R8, rc=rc)
+    if (ESMF_LogFoundError(rcToCheck=rc, msg=ESMF_LOGERR_PASSTHRU, &
+      line=__LINE__, &
+      file=__FILE__)) &
+      return  ! bail out
+    call NUOPC_StateRealizeField(exportState, field=field, rc=rc)
+    if (ESMF_LogFoundError(rcToCheck=rc, msg=ESMF_LOGERR_PASSTHRU, &
+      line=__LINE__, &
+      file=__FILE__)) &
+      return  ! bail out
 
   end subroutine
   

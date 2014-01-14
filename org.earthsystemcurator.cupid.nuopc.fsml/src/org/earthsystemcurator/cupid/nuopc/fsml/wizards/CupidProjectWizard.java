@@ -1,12 +1,14 @@
 package org.earthsystemcurator.cupid.nuopc.fsml.wizards;
 
 import java.io.BufferedReader;
+import java.io.BufferedWriter;
 import java.io.ByteArrayInputStream;
 import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.io.OutputStream;
 import java.lang.reflect.InvocationTargetException;
 import java.net.URL;
 import java.util.ArrayList;
@@ -23,6 +25,10 @@ import org.eclipse.cdt.core.model.CoreModel;
 import org.eclipse.cdt.core.settings.model.ICProjectDescription;
 import org.eclipse.cdt.core.settings.model.ICProjectDescriptionManager;
 import org.eclipse.cdt.core.settings.model.extension.CConfigurationData;
+import org.eclipse.cdt.make.core.IMakeCommonBuildInfo;
+import org.eclipse.cdt.make.core.IMakeTarget;
+import org.eclipse.cdt.make.core.IMakeTargetManager;
+import org.eclipse.cdt.make.core.MakeCorePlugin;
 import org.eclipse.cdt.managedbuilder.core.IBuilder;
 import org.eclipse.cdt.managedbuilder.core.IToolChain;
 import org.eclipse.cdt.managedbuilder.core.ManagedBuildManager;
@@ -138,7 +144,7 @@ public class CupidProjectWizard extends Wizard implements INewWizard {
 		newProjectPage = new WizardNewProjectCreationPage("Create Cupid Training Project") {
 			@Override
 			public void createControl(Composite parent) {
-				// TODO Auto-generated method stub
+				
 				super.createControl(parent);
 				Composite control = (Composite) getControl();
 				//force to use default location (local file system)
@@ -202,7 +208,7 @@ public class CupidProjectWizard extends Wizard implements INewWizard {
 	 */
 	private void doFinish(IProject projectHandle, IProgressMonitor monitor, Map<String,String> wizardData) throws CoreException {
 
-		monitor.beginTask("Creating Cupid training project", 20);
+		monitor.beginTask("Creating Cupid training project", 25);
 		monitor.subTask("Creating new project");
 
 		//make a CDT/Fortran project
@@ -299,29 +305,15 @@ public class CupidProjectWizard extends Wizard implements INewWizard {
 				throw new CoreException(new OperationStatus(IStatus.ERROR, MY_BUNDLE.getSymbolicName(), 0, "Timeout connecting to computational environment", null));
 			}
 
-			/*
 			
-			IRemoteServices remoteServices = RemoteServices.getRemoteServices("org.eclipse.ptp.remote.RemoteTools", new SubProgressMonitor(monitor,1));
-	
-			try {
-				IRemoteProcessBuilder rpb = remoteServices.getProcessBuilder(remoteConn, "/bin/ls", "-la");
-				IRemoteProcess rp = rpb.start();
-				while (!rp.isCompleted()) {
-					rp.waitFor();
-				}
-	
-				System.out.println("Process stdout:");
-				BufferedReader in = new BufferedReader(new InputStreamReader(rp.getInputStream()));
-				String inputLine;
-				while ((inputLine = in.readLine()) != null)
-					System.out.println(inputLine);
-				in.close();
-	
-	
-			} catch (IOException | InterruptedException e) {
-				throw new CoreException(new OperationStatus(IStatus.ERROR, MY_BUNDLE.getSymbolicName(), 0, "Error executing command on remote environment", e));
-			}
-			*/
+			//TODO: set up computational environment
+			//executeCommandOnRemote(remoteConn, new SubProgressMonitor(monitor,1), "echo \"export ESMFMKFILE=/home/sgeadmin/esmf.mk\" >> .profile");
+			
+			//executeCommandOnRemote(remoteConn, new SubProgressMonitor(monitor,1), 
+			//		"echo \"export ESMFMKFILE=/home/sgeadmin/esmf/DEFAULTINSTALLDIR/lib/libO/Linux.gfortran.64.openmpi.default/esmf.mk\" >> /root/.profile");
+			
+			
+			
 			
 			// make synchronized project
 			ISynchronizeParticipant syncParticipant = null;
@@ -344,7 +336,7 @@ public class CupidProjectWizard extends Wizard implements INewWizard {
 				throw new CoreException(new OperationStatus(IStatus.ERROR, MY_BUNDLE.getSymbolicName(), 0, "Git synchronize descriptor not present", null));
 			}
 
-			syncParticipant = new CupidGitParticipant(syncDescriptor, remoteConn, "/home/sgeadmin/SingleModelProto");
+			syncParticipant = new CupidGitParticipant(syncDescriptor, remoteConn, "/home/sgeadmin/" + project.getName());
 
 
 			//IManagedBuildInfo buildInfo = ManagedBuildManager.getBuildInfo(projectHandle);
@@ -452,6 +444,10 @@ public class CupidProjectWizard extends Wizard implements INewWizard {
 				}
 
 			}
+			monitor.worked(1);
+			
+			monitor.subTask("Addding make targets");
+			addMakeTargets(project);
 			monitor.worked(1);
 
 			monitor.subTask("Opening project files in editor");
@@ -590,7 +586,8 @@ public class CupidProjectWizard extends Wizard implements INewWizard {
 		monitor.subTask("Starting computational environment...");
 		RunInstancesRequest runInstancesRequest = new RunInstancesRequest();
 
-		runInstancesRequest.withImageId("ami-018bd068")
+		//runInstancesRequest.withImageId("ami-018bd068")  
+		runInstancesRequest.withImageId("ami-c5feceac")
 		.withInstanceType("t1.micro")
 		.withMinCount(1)
 		.withMaxCount(1)
@@ -639,6 +636,95 @@ public class CupidProjectWizard extends Wizard implements INewWizard {
 
 	}
 
+	private void executeCommandOnRemote(IRemoteConnection remoteConn, IProgressMonitor monitor, String... cmd) throws CoreException {
+		
+		monitor.beginTask("Setting up computational environment", 3);
+		IRemoteServices remoteServices = RemoteServices.getRemoteServices("org.eclipse.ptp.remote.RemoteTools", new SubProgressMonitor(monitor,1));
+
+		try {
+			IRemoteProcessBuilder rpb = remoteServices.getProcessBuilder(remoteConn, cmd);
+			IRemoteProcess rp = rpb.start();
+			monitor.worked(1);
+			
+			while (!rp.isCompleted()) {
+				rp.waitFor();
+			}
+			//monitor.worked(1);
+
+			//OutputStream os = rp.getOutputStream();
+			//os.write("ls".getBytes());
+			//BufferedWriter bw = new BufferedWriter(os);
+			
+			System.out.println("Process stdout:");
+			
+			BufferedReader in = new BufferedReader(new InputStreamReader(rp.getInputStream()));
+			String inputLine;
+			while ((inputLine = in.readLine()) != null)
+				System.out.println(inputLine);
+			in.close();
+			
+			System.out.println("\nProcess stderr:");
+			in = new BufferedReader(new InputStreamReader(rp.getErrorStream()));
+			while ((inputLine = in.readLine()) != null)
+				System.out.println(inputLine);
+			in.close();
+			
+			//os.close();
+			
+			rp.destroy();
+			
+		} catch (InterruptedException | IOException e) {
+			throw new CoreException(new OperationStatus(IStatus.ERROR, MY_BUNDLE.getSymbolicName(), 0, "Error executing command on remote environment", e));
+		}
+		
+		monitor.done();
+		
+	}
+	
+	private void addMakeTargets(IProject project) throws CoreException {
+
+		IMakeTargetManager manager = MakeCorePlugin.getDefault().getTargetManager();
+		String[] ids = manager.getTargetBuilders(project);
+		
+		try {
+			IMakeTarget target; 
+			
+			target = manager.createTarget(project, "mainApp", ids[0]);
+			target.setStopOnError(false);
+			target.setRunAllBuilders(false);
+			target.setUseDefaultBuildCmd(true);
+			target.setBuildAttribute(IMakeCommonBuildInfo.BUILD_COMMAND, "make");
+			//target.setBuildAttribute(IMakeTarget.BUILD_LOCATION, "/build/location");
+			target.setBuildAttribute(IMakeTarget.BUILD_ARGUMENTS, "ESMFMKFILE=/home/sgeadmin/esmf/DEFAULTINSTALLDIR/lib/libO/Linux.gfortran.64.openmpi.default/esmf.mk");
+			target.setBuildAttribute(IMakeTarget.BUILD_TARGET, "mainApp");
+			manager.addTarget(project, target);
+				
+			target = manager.createTarget(project, "clean", ids[0]);
+			target.setStopOnError(false);
+			target.setRunAllBuilders(false);
+			target.setUseDefaultBuildCmd(true);
+			target.setBuildAttribute(IMakeCommonBuildInfo.BUILD_COMMAND, "make");
+			//target.setBuildAttribute(IMakeTarget.BUILD_LOCATION, "/build/location");
+			target.setBuildAttribute(IMakeTarget.BUILD_ARGUMENTS, "ESMFMKFILE=/home/sgeadmin/esmf/DEFAULTINSTALLDIR/lib/libO/Linux.gfortran.64.openmpi.default/esmf.mk");
+			target.setBuildAttribute(IMakeTarget.BUILD_TARGET, "clean");
+			manager.addTarget(project, target);
+			
+			target = manager.createTarget(project, "dust", ids[0]);
+			target.setStopOnError(false);
+			target.setRunAllBuilders(false);
+			target.setUseDefaultBuildCmd(true);
+			target.setBuildAttribute(IMakeCommonBuildInfo.BUILD_COMMAND, "make");
+			//target.setBuildAttribute(IMakeTarget.BUILD_LOCATION, "/build/location");
+			target.setBuildAttribute(IMakeTarget.BUILD_ARGUMENTS, "ESMFMKFILE=/home/sgeadmin/esmf/DEFAULTINSTALLDIR/lib/libO/Linux.gfortran.64.openmpi.default/esmf.mk");
+			target.setBuildAttribute(IMakeTarget.BUILD_TARGET, "dust");
+			manager.addTarget(project, target);
+		
+		
+		} catch (CoreException e) {
+			throw e;
+		}
+
+	}
 
 
 	/**
