@@ -66,6 +66,7 @@
    </extension>
    <extension
          point="org.eclipse.ui.menus">
+      <!--
       <menuContribution
             locationURI="menu:org.eclipse.ui.main.menu?after=additions">
          <menu
@@ -78,7 +79,7 @@
                   id="org.earthsystemcurator.cupid.nuopc.fsml.menus.reverseCommand"
                   mnemonic="S">
             </command>
-            <!--
+           
             <command
                   commandId="org.earthsystemcurator.cupid.nuopc.fsml.commands.forwardCommand"
                   icon="icons/arrow_left.png"
@@ -93,10 +94,12 @@
                   mnemonic="S"
                   tooltip="Compare">
             </command>
-            -->
+           
          </menu>
       </menuContribution>
+      -->
       
+      <!--
       <menuContribution
             locationURI="toolbar:org.eclipse.ui.main.toolbar?after=additions">
          <toolbar
@@ -108,7 +111,7 @@
                   id="org.earthsystemcurator.cupid.nuopc.fsml.toolbars.reverseCommand"
                   tooltip="Reverse engineer">
             </command>
-            <!--
+           
             <command
                   commandId="org.earthsystemcurator.cupid.nuopc.fsml.commands.forwardCommand"
                   icon="icons/arrow_left.png"
@@ -121,9 +124,10 @@
                   id="org.earthsystemcurator.cupid.nuopc.fsml.toolbars.compareCommand"
                   tooltip="Compare">
             </command>
-            -->
+           
          </toolbar>
       </menuContribution>
+      -->
       
        <menuContribution
             locationURI="popup:org.eclipse.ui.navigator.ProjectExplorer#PopupMenu?after=additions">
@@ -336,18 +340,6 @@
       </view>
    </extension>
    <extension
-         point="org.eclipse.ui.perspectiveExtensions">
-      <perspectiveExtension
-            targetID="org.eclipse.jdt.ui.JavaPerspective">
-         <view
-               id="org.earthsystemcurator.cupid.nuopc.fsml.views.NUOPCView"
-               ratio="0.5"
-               relationship="right"
-               relative="org.eclipse.ui.views.ProblemView">
-         </view>
-      </perspectiveExtension>
-   </extension>
-   <extension
          point="org.eclipse.help.contexts">
       <contexts
             file="contexts.xml">
@@ -476,29 +468,75 @@
       <wizard
             category="org.earthsystemcurator.cupid"
             class="org.earthsystemcurator.cupid.nuopc.fsml.wizards.CupidProjectWizard"
-            finalPerspective="org.eclipse.photran.ui.FortranPerspective"
+            finalPerspective="org.earthsystemcurator.cupid.perspective"
             icon="icons/sample.gif"
             id="org.earthsystemcurator.cupid.wizards.CupidProjectWizard"
             name="Cupid Training Project"
+            preferredPerspectives="org.earthsystemcurator.cupid.perspective"
             project="true">
       </wizard>
    </extension>
    <extension
          point="org.eclipse.ui.cheatsheets.cheatSheetContent">
       <category
-            id="org.earthsystemcurator.cupid.nuopc.fsml.category714676611"
+            id="org.earthsystemcurator.cupid.nuopc.cheatsheet.category"
             name="Cupid">
       </category>
       <cheatsheet
-            category="org.earthsystemcurator.cupid.nuopc.fsml.category714676611"
+            category="org.earthsystemcurator.cupid.nuopc.cheatsheet.category"
             composite="false"
-            contentFile="$nl$/cupid_cheat.xml"
-            id="org.earthsystemcurator.cupid.nuopc.fsml.cheatsheet99354137"
-            name="Cupid Cheat Sheet">
+            contentFile="cheatsheets/nuopc_init.xml"
+            id="org.earthsystemcurator.cupid.cheatsheet.nuopc_init"
+            name="NUOPC Initialization Phase Definition Cheet Sheet">
          <description>
-            Cupid cheat sheets
+            Cheat sheet for learning the NUOPC Initialize Phase Definition
          </description>
       </cheatsheet>
+      <taskEditor
+            class="org.earthsystemcurator.cupid.nuopc.fsml.views.CheatsheetTaskEditor"
+            icon="icons/green_heart.png"
+            id="org.earthsystemcurator.cupid.cheatsheet.taskEditor">
+      </taskEditor>
+      <cheatsheet
+            category="org.earthsystemcurator.cupid.nuopc.cheatsheet.category"
+            composite="true"
+            contentFile="cheatsheets/cupid_composite.xml"
+            id="org.earthsystemcurator.cupid.nuopc.fsml.cheatsheet1"
+            name="Cupid Composite Cheatsheet">
+      </cheatsheet>
+   </extension>
+   <extension
+         point="org.eclipse.ui.perspectives">
+      <perspective
+            class="org.earthsystemcurator.cupid.nuopc.fsml.views.CupidPerspectiveFactory"
+            fixed="false"
+            id="org.earthsystemcurator.cupid.perspective"
+            name="Cupid">
+         <description>
+            The Cupid Training Environment perspective simpifies the Eclipse platform by hiding toolbars, views, and menu options not required for modeler training.
+         </description>
+      </perspective>
+   </extension>
+   <extension
+         point="org.eclipse.ui.perspectiveExtensions">
+      <perspectiveExtension
+            targetID="org.earthsystemcurator.cupid.perspective">
+         <hiddenMenuItem
+               id="org.eclipse.ui.run">
+         </hiddenMenuItem>
+         <hiddenMenuItem
+               id="navigate">
+         </hiddenMenuItem>
+         <newWizardShortcut
+               id="org.earthsystemcurator.cupid.wizards.CupidProjectWizard">
+         </newWizardShortcut>
+         <hiddenToolBarItem
+               id="org.eclipse.ui.project.buildAll">
+         </hiddenToolBarItem>
+         <actionSet
+               id="org.eclipse.debug.ui.launchActionSet">
+         </actionSet>
+      </perspectiveExtension>
    </extension>
    
    <!--

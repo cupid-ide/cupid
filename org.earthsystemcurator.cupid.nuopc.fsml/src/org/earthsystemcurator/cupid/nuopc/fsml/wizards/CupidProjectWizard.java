@@ -43,6 +43,8 @@ import org.eclipse.core.resources.IWorkspace;
 import org.eclipse.core.resources.ResourcesPlugin;
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.FileLocator;
+import org.eclipse.core.runtime.IConfigurationElement;
+import org.eclipse.core.runtime.IExecutableExtension;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.NullProgressMonitor;
@@ -80,6 +82,7 @@ import org.eclipse.ui.MultiPartInitException;
 import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.dialogs.WizardNewProjectCreationPage;
 import org.eclipse.ui.ide.IDE;
+import org.eclipse.ui.wizards.newresource.BasicNewProjectResourceWizard;
 import org.osgi.framework.Bundle;
 import org.osgi.framework.FrameworkUtil;
 import org.stringtemplate.v4.ST;
@@ -105,7 +108,7 @@ import com.amazonaws.services.ec2.model.ShutdownBehavior;
 //import org.eclipse.ptp.internal.rdt.sync.git.ui.GitParticipant;
 
 @SuppressWarnings("restriction")
-public class CupidProjectWizard extends Wizard implements INewWizard {
+public class CupidProjectWizard extends Wizard implements INewWizard, IExecutableExtension {
 
 	private static Bundle MY_BUNDLE = FrameworkUtil.getBundle(CupidProjectWizard.class);
 
@@ -114,6 +117,8 @@ public class CupidProjectWizard extends Wizard implements INewWizard {
 	private CupidProjectWizardPageSingleModelProto singleModelProtoPage;
 	private CupidProjectWizardPageCompEnv selectCompEnvPage;
 	private Map<String,String> wizardData;
+	
+	private IConfigurationElement config;
 
 
 	/**
@@ -234,7 +239,7 @@ public class CupidProjectWizard extends Wizard implements INewWizard {
 			}
 		}
 
-		Configuration cfg = new Configuration(mProj, (ToolChain) toolchain, "org.earthsystemcurtor.cupid.ec2.config", "Cupid Amazon EC2 Configuration");
+		Configuration cfg = new Configuration(mProj, (ToolChain) toolchain, "org.earthsystemcurtor.cupid.ec2.config", "Cupid Configuration");
 
 		IBuilder bld = cfg.getEditableBuilder();
 		assert bld != null;
@@ -294,6 +299,10 @@ public class CupidProjectWizard extends Wizard implements INewWizard {
 					connected = true;
 				}
 				catch (RemoteConnectionException rce) {
+					if (rce.getMessage().contains("reject HostKey")) {
+						throw new CoreException(new OperationStatus(IStatus.ERROR, MY_BUNDLE.getSymbolicName(), 0, "Cannot connect to computational environment due to rejected host key", null));
+					}
+					//rce.printStackTrace();
 					//System.out.println(rce.getCause());
 				} 
 				catch (InterruptedException e) {
@@ -464,6 +473,14 @@ public class CupidProjectWizard extends Wizard implements INewWizard {
 			}
 			monitor.worked(1);
 		}
+		
+		getShell().getDisplay().asyncExec(new Runnable() {
+			public void run() {
+				BasicNewProjectResourceWizard.updatePerspective(config);
+			}
+		});
+		
+		//BasicNewProjectResourceWizard.updatePerspective(config);
 
 		monitor.done();
 
@@ -749,6 +766,12 @@ public class CupidProjectWizard extends Wizard implements INewWizard {
 		FontData fontData = c.getFont().getFontData()[0];
 		Font font = new Font(Display.getDefault(), new FontData(fontData.getName(), fontData.getHeight(), style));
 		c.setFont(font);
+	}
+
+	@Override
+	public void setInitializationData(IConfigurationElement config,
+			String propertyName, Object data) throws CoreException {
+		this.config = config;		
 	}
 
 }

@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<cheatsheet
+      title="NUOPC Initialize Phase Definition (IPD)">
+   <intro href="http://www.earthsystemmodeling.org/nuopc/NUOPC_refdoc/node3.html#SECTION00034000000000000000">
+      <description>
+         The interaction between NUOPC compliant components during the initialization process is regulated by the Initialize Phase Definition or IPD. There are two perspectives of looking at the IPD: From the driver perspective the IPD regulates the sequence in which it must call the different phases of the Initialize() routines of its child components. From the child component perspective, the IPD assigns a specific meaning and a specific set of expected calls to each initialize phase. 
+<br/><br/>
+This cheat sheet will show you how to implement several initialization phases using a skeleton NUOPC Model component.
+      </description>
+   </intro>
+   
+   <item title="Open model.F90">
+      <description>
+         First, let&apos;s view the source code of a basic NUOPC Model component. Open the file Model.F90 by double clicking on it in the Project Explorer tree on the left side of the screen.
+      </description>
+   </item>
+   <item title="Advertise Import Field &quot;sea_surface_temperature&quot;">
+      <description>
+       Find the subroutine InitializeP1 inside model.F90.  It has already been registered with ESMF, although
+       it doesn't do anything yet.
+       <br/><br/>
+       Add a call to NUOPC_StateAdvertiseField() in order to advertise the model import field &quot;sea_surface_temperature&quot;.  It should look something like this:
+       <br/><br/>
+      <b>call NUOPC_StateAdvertiseField(importState, StandardName=&quot;sea_surface_temperature&quot;, rc=rc)</b>
+      </description>
+      
+   </item>
+   
+    <item title="Advertise Export Field &quot;air_pressure_at_sea_level&quot;">
+      <description>
+       Add a call to NUOPC_StateAdvertiseField() in order to advertise the model export field &quot;air_pressure_at_sea_level&quot;.  It should look something like this:
+       <br/><br/>
+      <b>call NUOPC_StateAdvertiseField(exportState, StandardName=&quot;air_pressure_at_sea_level&quot;, rc=rc)</b>
+      </description>
+      
+   </item>
+   
+   <item title="Add logging and error handling">
+      <description>
+      All ESMF methods provide a return code to indicate whether the method executed successfully.  It is good practice
+      to check the return code and log any errors that occur.  Add the following lines of code after each call to NUOPC_StateAdvertiseField()
+      in order to log any errors and return from the subroutine if an error occurs.
+      <br/><br/>
+      <b>
+      if (ESMF_LogFoundError(rcToCheck=rc, msg=ESMF_LOGERR_PASSTHRU, line=__LINE__, &amp; file=__FILE__)) return  ! bail out
+      </b>
+       </description>
+   </item>
+   
+   <item title="Test your code">
+      <description>
+      Test your code by compiling and running it.
+      </description>
+      <subitem
+            label="Double click the make target &quot;mainApp&quot; to compile your code.">
+         <command
+               required="false"
+               serialization="org.eclipse.ui.views.showView(org.eclipse.ui.views.showView.viewId=org.eclipse.cdt.make.ui.views.MakeView)"/>
+      </subitem>
+      <subitem
+            label="Execute your code by choosing Run from the toolbar.">
+         <command
+               required="false"
+               serialization="org.eclipse.debug.ui.commands.OpenRunConfigurations"/>
+      </subitem>
+   </item>
+   
+</cheatsheet>

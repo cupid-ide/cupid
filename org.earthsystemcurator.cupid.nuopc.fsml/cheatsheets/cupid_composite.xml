@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<compositeCheatsheet name="Title">
+   <taskGroup kind="set" name="Group" skip="false">
+      <intro>
+         <b>Introduction</b>
+      </intro>
+      <onCompletion>
+         <b>Conclusion</b>
+      </onCompletion>
+      <task kind="cheatsheet" name="First Task" skip="false">
+         <intro>
+            <b>Introduction</b>
+         </intro>
+         <onCompletion>
+            <b>Conclusion</b>
+         </onCompletion>
+         <param name="path" value="nuopc_init.xml">
+         </param>
+      </task>
+      <task kind="org.earthsystemcurator.cupid.cheatsheet.taskEditor" name="Second Task - different UI" skip="false">
+         <intro>
+            <b>Introduction</b>
+         </intro>
+         <onCompletion>
+            <b>Conclusion</b>
+         </onCompletion>
+      </task>
+   </taskGroup>
+</compositeCheatsheet>
