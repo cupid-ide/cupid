@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<cheatsheet title="Compile and Run a NUOPC Model">
+   
+	<intro>
+      	<description>
+         In this cheat sheet, you will learn how to compile and run a simple NUOPC application made up of a single Model and a single Driver. The model is a skeleton application that demonstrates the basic structure of a NUOPC application.
+		<br/><br/>
+Make sure you have already created a new Cupid Training Project with the NUOPC - Single Model with Driver training scenario.
+ 		</description>
+ 	</intro>
+ 	
+ 	<item title="Examine the Source Code">
+      <description>
+        First, let&apos;s briefly examine the source code of the basic NUOPC application. Locate your project folder in the Project Explorer view on the left. Double click on the model file named model.F90 (unless you chose a different name for the model).  The source code will open in the Fortran editor window.
+		<br/><br/>
+If the Project Explorer is not visible, select Window--&gt;Show View--&gt;Other, find the General folder, choose Project Explorer and click OK.
+		<br/><br/>
+		Find the ModelAdvance subroutine.  This subroutine is executed whenever the driver instructs the model to take a timestep. 	</description>
+      <command
+            required="false"
+            serialization="org.eclipse.ui.views.showView(org.eclipse.ui.views.showView.viewId=org.eclipse.ui.navigator.ProjectExplorer)"/>   
+   	
+ </item>
+   
+   <item
+         title="Compile the Code">
+      <description>
+         If you selected <b>Create a cloud-based computational environment</b> in the New Cupid Training Project wizard, then you are ready to compile the model.  
+<br/><br/>
+A Makefile is included with the source code. Open the Make Target view by clicking on the Make Target tab (beside the Cheat Sheet tab.)  (Alternatively, click Window--&gt;Show View and find the Make folder, select Make Target and click OK.)
+<br/><br/>
+In the Make Target window, find the folder with the same name as your project.  Double click the mainApp target.
+      </description>
+      <command
+            required="false"
+            serialization="org.eclipse.ui.views.showView(org.eclipse.ui.views.showView.viewId=org.eclipse.cdt.make.ui.views.MakeView)"/>
+   </item>
+  
+   <item
+         title="View Compiler Output in Console">
+      <description>
+         The compiler output will be shown in the console view at the bottom of the screen.  Ensure that there are no errors in the output.
+      </description>
+   </item>
+   <item
+         title="Execute the NUOPC Application">
+      <description>
+      </description>
+   </item> 
+    
+   
+   
+</cheatsheet>

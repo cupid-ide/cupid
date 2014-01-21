@@ -70,7 +70,7 @@ public class CupidProjectWizardPageSelectArch extends WizardPage {
 	public CupidProjectWizardPageSelectArch(Map<String, String> wizardData) {
 		super("Cupid Creation Wizard Page 2");
 		setTitle("Create Cupid Training Project");
-		setDescription("Please select a training project");
+		setDescription("Please select a training scenario");
 		this.wizardData = wizardData;
 	}
 
@@ -104,7 +104,7 @@ public class CupidProjectWizardPageSelectArch extends WizardPage {
 		*/
 		
 		Label configLabel = new Label(container, SWT.NULL);
-		configLabel.setText("Training configuration: ");
+		configLabel.setText("Training scenario: ");
 		GridDataFactory.fillDefaults().align(SWT.LEFT, SWT.FILL).applyTo(configLabel);
 			
 		

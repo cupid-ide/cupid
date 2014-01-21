@@ -19,6 +19,8 @@ import java.util.Map;
 import java.util.Set;
 
 import org.earthsystemcurator.cupid.nuopc.fsml.builder.NUOPCNature;
+import org.earthsystemcurator.cupid.nuopc.fsml.core.CupidActivator;
+import org.earthsystemcurator.cupid.nuopc.fsml.preferences.CupidPreferencePage;
 import org.eclipse.cdt.core.CCorePlugin;
 import org.eclipse.cdt.core.CProjectNature;
 import org.eclipse.cdt.core.model.CoreModel;
@@ -53,6 +55,7 @@ import org.eclipse.core.runtime.SubProgressMonitor;
 import org.eclipse.jface.dialogs.IDialogSettings;
 import org.eclipse.jface.dialogs.MessageDialog;
 import org.eclipse.jface.operation.IRunnableWithProgress;
+import org.eclipse.jface.preference.IPreferenceStore;
 import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.jface.wizard.IWizardPage;
 import org.eclipse.jface.wizard.Wizard;
@@ -88,6 +91,7 @@ import org.osgi.framework.FrameworkUtil;
 import org.stringtemplate.v4.ST;
 
 import com.amazonaws.auth.AWSCredentials;
+import com.amazonaws.auth.BasicAWSCredentials;
 import com.amazonaws.auth.PropertiesCredentials;
 import com.amazonaws.services.ec2.AmazonEC2Client;
 import com.amazonaws.services.ec2.model.AuthorizeSecurityGroupIngressRequest;
@@ -534,13 +538,22 @@ public class CupidProjectWizard extends Wizard implements INewWizard, IExecutabl
 	}
 
 
-	private String createEC2Environment(IProgressMonitor monitor) throws IOException {
+	private String createEC2Environment(IProgressMonitor monitor) throws IOException, CoreException {
 
 		monitor.beginTask("Creating Amazon EC2 environment", 10);
 
 		AWSCredentials credentials = null;
-		credentials = new PropertiesCredentials(CupidProjectWizard.class.getResourceAsStream("AwsCredentials.properties"));
-
+		//credentials = new PropertiesCredentials(CupidProjectWizard.class.getResourceAsStream("AwsCredentials.properties"));
+		
+		IPreferenceStore prefStore = CupidActivator.getDefault().getPreferenceStore();
+		String accessKey = prefStore.getString(CupidPreferencePage.CUPID_AWS_ACCESS_KEY);
+		String secretKey = prefStore.getString(CupidPreferencePage.CUPID_AWS_SECRET_KEY);
+		
+		if (accessKey == null || accessKey.length() < 1 || secretKey == null || secretKey.length() < 1) {
+			throw new CoreException(new OperationStatus(IStatus.ERROR, MY_BUNDLE.getSymbolicName(), 0, "Amazon AWS credentials have not been set up.  To add credentials, cancel the wizard, then select Window-->Preferences-->Cupid Preferences from the Eclipse menu bar. After entering the credentials, restart the wizard.", null));
+		}
+		credentials = new BasicAWSCredentials(accessKey, secretKey);
+		
 		AmazonEC2Client amazonEC2Client = new AmazonEC2Client(credentials);
 		amazonEC2Client.setEndpoint("ec2.us-east-1.amazonaws.com");
 

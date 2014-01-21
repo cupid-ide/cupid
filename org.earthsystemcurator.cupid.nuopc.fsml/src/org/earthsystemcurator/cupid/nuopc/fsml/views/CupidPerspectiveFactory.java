@@ -28,7 +28,8 @@ public class CupidPerspectiveFactory implements IPerspectiveFactory {
 		// Right
 		IFolderLayout right = layout.createFolder("right", IPageLayout.RIGHT, 0.75f, editorArea);
 		right.addView("org.eclipse.cdt.make.ui.views.MakeView");
-	
+		right.addView("org.eclipse.ui.cheatsheets.views.CheatSheetView");
+		
 	}
 
 }

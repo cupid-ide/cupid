@@ -3,19 +3,18 @@ package org.earthsystemcurator.cupid.nuopc.fsml.properties;
 import org.eclipse.core.resources.IResource;
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.QualifiedName;
+import org.eclipse.jface.preference.PreferencePage;
 import org.eclipse.jface.window.Window;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.MouseAdapter;
 import org.eclipse.swt.events.MouseEvent;
-import org.eclipse.swt.events.MouseListener;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
+import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.Label;
-import org.eclipse.swt.widgets.Shell;
 import org.eclipse.swt.widgets.Text;
-import org.eclipse.swt.widgets.Button;
 import org.eclipse.ui.dialogs.PropertyPage;
 import org.eclipse.ui.dialogs.ResourceSelectionDialog;
 
@@ -26,7 +25,7 @@ public class CupidPropertyPage extends PropertyPage {
 	private static final String NUOPC_FILES_PROPERTY = "NUOPC_FILES";
 	
 	public static QualifiedName NUOPC_FILES_QN = new QualifiedName("", NUOPC_FILES_PROPERTY);
-	
+
 	private static final int TEXT_FIELD_WIDTH = 50;
 
 	private Text ownerText;
@@ -75,12 +74,12 @@ public class CupidPropertyPage extends PropertyPage {
 		// Populate owner text field
 		try {
 			String owner =
-				((IResource) getElement()).getPersistentProperty(NUOPC_FILES_QN);
+					((IResource) getElement()).getPersistentProperty(NUOPC_FILES_QN);
 			ownerText.setText((owner != null) ? owner : "");
 		} catch (CoreException e) {
 			ownerText.setText("");
 		}
-		
+
 		Button button = new Button(composite, SWT.PUSH);
 		button.addMouseListener(new MouseAdapter() {
 
@@ -89,12 +88,12 @@ public class CupidPropertyPage extends PropertyPage {
 				// TODO Auto-generated method stub
 				Object[] result = open();
 				if (result != null) {
-					
+
 					String fileList = "";
 					for (Object r : result) {
 						if (r instanceof IResource) {
 							fileList += ((IResource) r).getProjectRelativePath().toString() + "\n";
-							
+
 						}
 					}
 					ownerText.setText(fileList);
@@ -103,7 +102,7 @@ public class CupidPropertyPage extends PropertyPage {
 					ownerText.setText("");
 				}
 			}
-			
+
 		});
 		button.setText("Select NUOPC resources");
 	}
@@ -145,7 +144,7 @@ public class CupidPropertyPage extends PropertyPage {
 		// Populate the owner text field with the default value
 		ownerText.setText("");
 	}
-	
+
 	@Override
 	public boolean performOk() {
 		// store the value in the owner text field
@@ -154,14 +153,15 @@ public class CupidPropertyPage extends PropertyPage {
 		} catch (CoreException e) {
 			return false;
 		}
+
 		return true;
 	}
-	
+
 	public Object[] open() {
-		
+
 		ResourceSelectionDialog dialog =
 				new ResourceSelectionDialog(getShell(), ((IResource) getElement()), "Select NUOPC files/folders");
-		
+
 		if (dialog.open() == Window.OK) {
 			return dialog.getResult();
 		}

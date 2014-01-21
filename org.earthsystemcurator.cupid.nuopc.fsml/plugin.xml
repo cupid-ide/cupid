@@ -485,6 +485,20 @@
       <cheatsheet
             category="org.earthsystemcurator.cupid.nuopc.cheatsheet.category"
             composite="false"
+            contentFile="cheatsheets/cupid_new_project.xml"
+            id="org.earthsystemcurator.cupid.cheatsheet.cupid_new_project"
+            name="Create a New Cupid Training Project">
+      </cheatsheet>
+      <cheatsheet
+            category="org.earthsystemcurator.cupid.nuopc.cheatsheet.category"
+            composite="false"
+            contentFile="cheatsheets/cupid_compile_run.xml"
+            id="org.earthsystemcurator.cupid.cheatsheet.cupid_compile_run"
+            name="Compile and Run a NUOPC Application">
+      </cheatsheet>
+      <cheatsheet
+            category="org.earthsystemcurator.cupid.nuopc.cheatsheet.category"
+            composite="false"
             contentFile="cheatsheets/nuopc_init.xml"
             id="org.earthsystemcurator.cupid.cheatsheet.nuopc_init"
             name="NUOPC Initialization Phase Definition Cheet Sheet">
@@ -497,13 +511,6 @@
             icon="icons/green_heart.png"
             id="org.earthsystemcurator.cupid.cheatsheet.taskEditor">
       </taskEditor>
-      <cheatsheet
-            category="org.earthsystemcurator.cupid.nuopc.cheatsheet.category"
-            composite="true"
-            contentFile="cheatsheets/cupid_composite.xml"
-            id="org.earthsystemcurator.cupid.nuopc.fsml.cheatsheet1"
-            name="Cupid Composite Cheatsheet">
-      </cheatsheet>
    </extension>
    <extension
          point="org.eclipse.ui.perspectives">
@@ -537,6 +544,20 @@
                id="org.eclipse.debug.ui.launchActionSet">
          </actionSet>
       </perspectiveExtension>
+   </extension>
+   <extension
+         point="org.eclipse.ui.preferencePages">
+      <page
+            class="org.earthsystemcurator.cupid.nuopc.fsml.preferences.CupidPreferencePage"
+            id="org.earthsystemcurator.cupid.nuopc.fsml.preferences.CupidPreferencePage"
+            name="Cupid Preferences">
+      </page>
+   </extension>
+   <extension
+         point="org.eclipse.core.runtime.preferences">
+      <initializer
+            class="org.earthsystemcurator.cupid.nuopc.fsml.preferences.PreferenceInitializer">
+      </initializer>
    </extension>
    
    <!--

@@ -63,5 +63,7 @@ Require-Bundle: org.eclipse.core.runtime,
  org.eclipse.ptp.remotetools.core;bundle-version="6.0.0",
  org.eclipse.ui.cheatsheets,
  org.eclipse.cdt.make.core,
- org.eclipse.ui.forms;bundle-version="3.6.1"
+ org.eclipse.ui.forms;bundle-version="3.6.1",
+ org.eclipse.equinox.preferences
 Bundle-ActivationPolicy: lazy
+Bundle-Activator: org.earthsystemcurator.cupid.nuopc.fsml.core.CupidActivator

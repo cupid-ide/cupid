@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<cheatsheet
+      title="Create a New Cupid Training Project">
+   <intro>
+      <description>
+         In this cheat sheet, you will learn how to create a new training project. The training project contains all of the source code for the particular training scenario you choose, as well as all the configuration information needed to compile and execute the project.
+      </description>
+   </intro>
+  
+   <item dialog="true"
+         title="Open the New Cupid Training Project Wizard">
+      <description>
+         Open the New Cupid Training Project Wizard by clicking <b>File--&gt;New--&gt;Cupid Training Project</b>.  (If it does not appear in the menu, select <b>File--&gt;New--&gt;Other..., look for the Cupid folder and then choose Cupid Training Project and click Finish</b>.)
+      </description>
+      <command
+            required="false"
+            serialization="org.eclipse.ui.newWizard(newWizardId=org.earthsystemcurator.cupid.wizards.CupidProjectWizard)"/>
+   </item>
+   <item
+         title="Choose a Training Scenario">
+      <description>
+         On the first page of the New Cupid Training Project Wizard, select a training scenario.  There are several scenarios to choose from.  Selecting a scenario updates the wizard to show the architecture and coupling behavior.  Select the first scenario <b>NUOPC - Single Model with Driver</b> and click <b>Next</b>.
+      </description>
+   </item>
+   <item
+         title="Name the Training Project">
+      <description>
+         Give the project a meaningful name and then click <b>Next</b>.  (Note: You cannot use the same name as any existing projects in your workspace and you will not be able to continue until you enter a unique name.)
+       </description>
+   </item>
+   
+   <item
+         title="Choose Basic Parameters">
+      <description>
+         On this page of the wizard, a few basic model parameters have been exposed such as the timestep length, total number of timesteps, and grid coordinates.  You may change these parameters or leave the default values and click <b>Next</b>.
+      </description>
+   </item>
+   <item
+         skip="false"
+         title="Choose Computational Environment">
+      <description>
+         On this page of the wizard you will select a computational environment where your code will compile and execute. 
+<br/><br/>
+Selecting the first option, <b>Create a cloud-based computational environment</b>, will launch a preconfigured computational environment and automatically establish a connection to it.  This option is recommended unless you already have the appropriate libraries and compilers set up locally.
+<br/><br/>
+Selecting the second option, <b>Use my local machine</b>, allows you to compile and execute the model locally if the necessary libraries and compilers are already installed.
+<br/><br/>
+<b>Select the first option, Create a cloud-based computational environment, leave the number of processes at 1 and click Finish.</b>
+Get some coffee.  It may take up to several minutes for the computational environment to start up.
+<br/><br/>You may be asked to accept the host key to establish the SSH connection. If so, click <b>Yes</b>.
+      </description>
+   </item>
+   <item
+         skip="true"
+         title="Compile and Run Cheat Sheet">
+      <description>
+        Now that you have set up a training scenario, you can optionally view the cheat sheet <b>Compile and Run a NUOPC Application</b> for a step-by-step guide to compiling and running the project.  To change cheet sheets, click on the small downward triangle at the top of the cheat sheet window..
+      </description>
+      <command
+            required="false"
+            serialization="org.eclipse.ui.cheatsheets.openCheatSheet(cheatSheetId=org.earthsystemcurator.cupid.cheatsheet.cupid_compile_run)"/>
+   </item>
+</cheatsheet>
