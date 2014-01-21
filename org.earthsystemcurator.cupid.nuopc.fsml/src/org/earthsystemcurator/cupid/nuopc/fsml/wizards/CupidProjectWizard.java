@@ -93,16 +93,26 @@ import org.stringtemplate.v4.ST;
 import com.amazonaws.auth.AWSCredentials;
 import com.amazonaws.auth.BasicAWSCredentials;
 import com.amazonaws.auth.PropertiesCredentials;
+import com.amazonaws.services.cloudwatch.AmazonCloudWatchClient;
+import com.amazonaws.services.cloudwatch.model.ComparisonOperator;
+import com.amazonaws.services.cloudwatch.model.Dimension;
+import com.amazonaws.services.cloudwatch.model.PutMetricAlarmRequest;
+import com.amazonaws.services.cloudwatch.model.StandardUnit;
+import com.amazonaws.services.cloudwatch.model.Statistic;
 import com.amazonaws.services.ec2.AmazonEC2Client;
 import com.amazonaws.services.ec2.model.AuthorizeSecurityGroupIngressRequest;
+import com.amazonaws.services.ec2.model.CreateKeyPairRequest;
+import com.amazonaws.services.ec2.model.CreateKeyPairResult;
 import com.amazonaws.services.ec2.model.CreateSecurityGroupRequest;
 import com.amazonaws.services.ec2.model.CreateSecurityGroupResult;
+import com.amazonaws.services.ec2.model.DeleteKeyPairRequest;
 import com.amazonaws.services.ec2.model.DescribeInstancesRequest;
 import com.amazonaws.services.ec2.model.DescribeInstancesResult;
 import com.amazonaws.services.ec2.model.DescribeSecurityGroupsRequest;
 import com.amazonaws.services.ec2.model.DescribeSecurityGroupsResult;
 import com.amazonaws.services.ec2.model.Instance;
 import com.amazonaws.services.ec2.model.IpPermission;
+import com.amazonaws.services.ec2.model.KeyPair;
 import com.amazonaws.services.ec2.model.Reservation;
 import com.amazonaws.services.ec2.model.RunInstancesRequest;
 import com.amazonaws.services.ec2.model.RunInstancesResult;
@@ -268,16 +278,17 @@ public class CupidProjectWizard extends Wizard implements INewWizard, IExecutabl
 		if (wizardData.get(CupidProjectWizardPageCompEnv.WD_COMP_ENV).equals(CupidProjectWizardPageCompEnv.WD_COMP_ENV__CLOUD)) {
 			
 			// make the amazon ec2 compute environment
-			String ec2host;
+			List<String> ec2hosts;
 			try {
-				ec2host = createEC2Environment(new SubProgressMonitor(monitor, 2));
+				ec2hosts = createEC2Environment(project, new SubProgressMonitor(monitor, 2));
 			} catch (IOException e4) {
 				throw new CoreException(new OperationStatus(IStatus.ERROR, MY_BUNDLE.getSymbolicName(), 0, "Cannot create EC2 environment", e4));
 			}
 
 			// get a remote connection to ec2
 			try {
-				remoteConn = createRemoteConnection(ec2host, new SubProgressMonitor(monitor, 2));
+				//assume only a single instance for now
+				remoteConn = createRemoteConnection(ec2hosts.get(0), new SubProgressMonitor(monitor, 2));
 			} catch (RemoteConnectionException e3) {
 				throw new CoreException(new OperationStatus(IStatus.ERROR, MY_BUNDLE.getSymbolicName(), 0, "Cannot create remote connection", e3));
 			}
@@ -490,7 +501,7 @@ public class CupidProjectWizard extends Wizard implements INewWizard, IExecutabl
 
 	}
 
-	private IRemoteConnection createRemoteConnection(String host, IProgressMonitor monitor) throws RemoteConnectionException {
+	private IRemoteConnection createRemoteConnection(String host, IProgressMonitor monitor) throws RemoteConnectionException, CoreException {
 
 		monitor.beginTask("Creating remote connection", 2);
 
@@ -509,10 +520,22 @@ public class CupidProjectWizard extends Wizard implements INewWizard, IExecutabl
 		//}
 
 		if (remoteServices.canCreateConnections()) {
+			
+			//ssh key
+			URL keyURL = FileLocator.find(MY_BUNDLE, new Path("ssh/nesiikey.rsa"), null);
+			String keyFile = null;
+			try {
+				keyFile = FileLocator.toFileURL(keyURL).getFile();
+				
+			} catch (IOException e) {
+				throw new CoreException(new OperationStatus(IStatus.ERROR, MY_BUNDLE.getSymbolicName(), 0, "Cannot find SSH key file", e));
+			}
+			
 			remoteConn = connManager.newConnection("Cupid Environment (Amazon EC2 - " + host + ")");
 			remoteConn.setAddress(host);
 			remoteConn.setUsername("root");
-			remoteConn.setAttribute("org.eclipse.ptp.remotetools.environment.generichost.key-path", "C:\\Users\\Rocky\\Documents\\ssh\\nesiikey.rsa");
+			//remoteConn.setAttribute("org.eclipse.ptp.remotetools.environment.generichost.key-path", "C:\\Users\\Rocky\\Documents\\ssh\\nesiikey.rsa");
+			remoteConn.setAttribute("org.eclipse.ptp.remotetools.environment.generichost.key-path", keyFile);
 			remoteConn.setAttribute("org.eclipse.ptp.remotetools.environment.generichost.is-passwd-auth", "false");
 			remoteConn.setAttribute("org.earthsystemcurator.cupid.ready", "true");
 		}
@@ -538,7 +561,7 @@ public class CupidProjectWizard extends Wizard implements INewWizard, IExecutabl
 	}
 
 
-	private String createEC2Environment(IProgressMonitor monitor) throws IOException, CoreException {
+	private List<String> createEC2Environment(IProject project, IProgressMonitor monitor) throws IOException, CoreException {
 
 		monitor.beginTask("Creating Amazon EC2 environment", 10);
 
@@ -600,6 +623,8 @@ public class CupidProjectWizard extends Wizard implements INewWizard, IExecutabl
 
 		//create key pair
 		/*
+		monitor.subTask("Creating SSH key pair");
+		
 		DeleteKeyPairRequest deleteKeyPairRequest = new DeleteKeyPairRequest();
 		deleteKeyPairRequest.withKeyName("CupidKeyPair");
 		amazonEC2Client.deleteKeyPair(deleteKeyPairRequest);
@@ -611,8 +636,16 @@ public class CupidProjectWizard extends Wizard implements INewWizard, IExecutabl
 		KeyPair keyPair = new KeyPair();
     	keyPair = createKeyPairResult.getKeyPair();
 		String privateKey = keyPair.getKeyMaterial();
-		 */
-
+		*/
+		
+		//write key pair
+		/*
+		monitor.subTask("Writing key pair to local file");
+		IFile keyFile = project.getFile(".cupidkey.rsa");
+		InputStream stream = openContentStream(privateKey);
+		keyFile.create(stream, true, new SubProgressMonitor(monitor, 1));
+		*/
+		
 		monitor.subTask("Starting computational environment...");
 		RunInstancesRequest runInstancesRequest = new RunInstancesRequest();
 
@@ -624,12 +657,15 @@ public class CupidProjectWizard extends Wizard implements INewWizard, IExecutabl
 		.withKeyName("nesiikey")
 		.withInstanceInitiatedShutdownBehavior(ShutdownBehavior.Terminate)
 		.withSecurityGroups("CupidSecurityGroup");
+		
 
 
 		RunInstancesResult runInstancesResult = amazonEC2Client.runInstances(runInstancesRequest);		
 
 		Reservation res = runInstancesResult.getReservation();
 
+		List<String> hostNames = new ArrayList<String>();
+		List<Dimension> dimensions = new ArrayList<Dimension>();
 		List<Instance> instances = res.getInstances();
 		for (Instance i : instances) {
 			//System.out.println("\tInstance: " + i.getInstanceId() + " : " + i.getState().getName() + " : " + i.getPublicDnsName());
@@ -654,15 +690,33 @@ public class CupidProjectWizard extends Wizard implements INewWizard, IExecutabl
 				curState = i.getState().getName();
 				count++;
 			}
-			//assuming one instance for now
-			monitor.done();
-			return i.getPublicDnsName();
-
-
+			
+			hostNames.add(i.getPublicDnsName());
+			dimensions.add(new Dimension().withName("instance-id").withValue(i.getInstanceId()));
 		}
+		
+		//add monitoring to terminate idle instances
+		AmazonCloudWatchClient cloudWatchClient = new AmazonCloudWatchClient(credentials);
+		cloudWatchClient.setEndpoint("monitoring.us-east-1.amazonaws.com");
+						
+		PutMetricAlarmRequest alarmRequest = new PutMetricAlarmRequest();
+		alarmRequest.withNamespace("AWS/EC2")
+					.withMetricName("CPUUtilization")
+					.withDimensions(dimensions)
+					.withPeriod(300)
+					.withStatistic(Statistic.Average)
+					.withAlarmName("terminate-idle-" + dimensions.get(0).getValue())
+					.withComparisonOperator(ComparisonOperator.LessThanThreshold)
+					.withThreshold(10.0)
+					.withEvaluationPeriods(10)
+					.withUnit(StandardUnit.Percent)
+					.withAlarmActions("arn:aws:automate:us-east-1:ec2:terminate");
+		
+		cloudWatchClient.putMetricAlarm(alarmRequest);
+		monitor.worked(1);		
 
 		monitor.done();
-		return null;
+		return hostNames;
 
 	}
 
@@ -725,7 +779,7 @@ public class CupidProjectWizard extends Wizard implements INewWizard, IExecutabl
 			target.setUseDefaultBuildCmd(true);
 			target.setBuildAttribute(IMakeCommonBuildInfo.BUILD_COMMAND, "make");
 			//target.setBuildAttribute(IMakeTarget.BUILD_LOCATION, "/build/location");
-			target.setBuildAttribute(IMakeTarget.BUILD_ARGUMENTS, "ESMFMKFILE=/home/sgeadmin/esmf/DEFAULTINSTALLDIR/lib/libO/Linux.gfortran.64.openmpi.default/esmf.mk");
+			//target.setBuildAttribute(IMakeTarget.BUILD_ARGUMENTS, "ESMFMKFILE=/home/sgeadmin/esmf/DEFAULTINSTALLDIR/lib/libO/Linux.gfortran.64.openmpi.default/esmf.mk");
 			target.setBuildAttribute(IMakeTarget.BUILD_TARGET, "mainApp");
 			manager.addTarget(project, target);
 				
@@ -735,7 +789,7 @@ public class CupidProjectWizard extends Wizard implements INewWizard, IExecutabl
 			target.setUseDefaultBuildCmd(true);
 			target.setBuildAttribute(IMakeCommonBuildInfo.BUILD_COMMAND, "make");
 			//target.setBuildAttribute(IMakeTarget.BUILD_LOCATION, "/build/location");
-			target.setBuildAttribute(IMakeTarget.BUILD_ARGUMENTS, "ESMFMKFILE=/home/sgeadmin/esmf/DEFAULTINSTALLDIR/lib/libO/Linux.gfortran.64.openmpi.default/esmf.mk");
+			//target.setBuildAttribute(IMakeTarget.BUILD_ARGUMENTS, "ESMFMKFILE=/home/sgeadmin/esmf/DEFAULTINSTALLDIR/lib/libO/Linux.gfortran.64.openmpi.default/esmf.mk");
 			target.setBuildAttribute(IMakeTarget.BUILD_TARGET, "clean");
 			manager.addTarget(project, target);
 			
@@ -745,7 +799,7 @@ public class CupidProjectWizard extends Wizard implements INewWizard, IExecutabl
 			target.setUseDefaultBuildCmd(true);
 			target.setBuildAttribute(IMakeCommonBuildInfo.BUILD_COMMAND, "make");
 			//target.setBuildAttribute(IMakeTarget.BUILD_LOCATION, "/build/location");
-			target.setBuildAttribute(IMakeTarget.BUILD_ARGUMENTS, "ESMFMKFILE=/home/sgeadmin/esmf/DEFAULTINSTALLDIR/lib/libO/Linux.gfortran.64.openmpi.default/esmf.mk");
+			//target.setBuildAttribute(IMakeTarget.BUILD_ARGUMENTS, "ESMFMKFILE=/home/sgeadmin/esmf/DEFAULTINSTALLDIR/lib/libO/Linux.gfortran.64.openmpi.default/esmf.mk");
 			target.setBuildAttribute(IMakeTarget.BUILD_TARGET, "dust");
 			manager.addTarget(project, target);
 		
