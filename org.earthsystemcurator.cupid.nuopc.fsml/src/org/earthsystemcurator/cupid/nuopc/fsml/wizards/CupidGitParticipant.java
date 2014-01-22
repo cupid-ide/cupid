@@ -1,5 +1,6 @@
 package org.earthsystemcurator.cupid.nuopc.fsml.wizards;
 
+import org.earthsystemcurator.cupid.nuopc.fsml.core.CupidActivator;
 import org.eclipse.core.resources.IProject;
 import org.eclipse.jface.operation.IRunnableContext;
 import org.eclipse.ptp.rdt.sync.core.services.ISynchronizeService;
@@ -18,6 +19,7 @@ public class CupidGitParticipant extends AbstractSynchronizeParticipant {
 		super(descriptor);
 		this.conn = conn;
 		this.location = location;
+		CupidActivator.log("Exiting CupidGitParticipant constructor");
 	}
 	
 	@Override

@@ -27,7 +27,7 @@ Bundle-ClassPath: .,
  lib/stax-ri-1.2.0/stax-1.2.0.jar
 Bundle-Vendor: %providerName
 Bundle-Localization: plugin
-Bundle-RequiredExecutionEnvironment: JavaSE-1.6
+Bundle-RequiredExecutionEnvironment: JavaSE-1.7
 Export-Package: org.earthsystemcurator.cupid.nuopc.fsml.nuopc,
  org.earthsystemcurator.cupid.nuopc.fsml.nuopc.impl,
  org.earthsystemcurator.cupid.nuopc.fsml.nuopc.util
@@ -61,7 +61,6 @@ Require-Bundle: org.eclipse.core.runtime,
  org.eclipse.cdt.managedbuilder.core;bundle-version="8.2.1",
  org.eclipse.ptp.rdt.sync.core;bundle-version="3.0.0",
  org.eclipse.ptp.remotetools.core;bundle-version="6.0.0",
- org.eclipse.ui.cheatsheets,
  org.eclipse.cdt.make.core,
  org.eclipse.ui.forms;bundle-version="3.6.1",
  org.eclipse.equinox.preferences

@@ -7,7 +7,7 @@ Bundle-ClassPath: .
 Bundle-Activator: org.earthsystemcurator.cupid.nuopc.fsml.nuopc.provider.NuopcEditPlugin$Implementation
 Bundle-Vendor: %providerName
 Bundle-Localization: plugin
-Bundle-RequiredExecutionEnvironment: JavaSE-1.6
+Bundle-RequiredExecutionEnvironment: JavaSE-1.7
 Export-Package: org.earthsystemcurator.cupid.nuopc.fsml.nuopc.provider
 Require-Bundle: org.eclipse.core.runtime,
  org.earthsystemcurator.cupid.nuopc.fsml;visibility:=reexport,

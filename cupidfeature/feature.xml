@@ -55,10 +55,31 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SO
       <import plugin="org.eclipse.cdt.ui"/>
       <import plugin="org.eclipse.ui.editors" version="3.8.100" match="greaterOrEqual"/>
       <import plugin="org.eclipse.rephraserengine.core" version="8.0.0" match="greaterOrEqual"/>
+      <import plugin="org.eclipse.photran.ui" version="8.0.0" match="greaterOrEqual"/>
       <import plugin="org.eclipse.photran.cdtinterface" version="8.0.0" match="greaterOrEqual"/>
       <import feature="org.eclipse.ocl.examples" version="3.2.1.v20120919-0602"/>
-      <import plugin="org.eclipse.photran.ui" version="8.0.0" match="greaterOrEqual"/>
+      <import plugin="org.eclipse.photran.ui.vpg" version="8.0.0" match="greaterOrEqual"/>
+      <import plugin="org.eclipse.swt"/>
+      <import plugin="org.eclipse.jface"/>
+      <import plugin="org.eclipse.ui.workbench"/>
+      <import plugin="org.eclipse.ptp.remote.core" version="7.0.0" match="greaterOrEqual"/>
+      <import plugin="org.eclipse.ptp.rdt.sync.ui" version="2.0.0" match="greaterOrEqual"/>
+      <import plugin="org.eclipse.ptp.rdt.sync.cdt.ui" version="1.0.0" match="greaterOrEqual"/>
+      <import plugin="org.eclipse.cdt.managedbuilder.ui" version="8.2.1" match="greaterOrEqual"/>
+      <import plugin="org.eclipse.cdt.managedbuilder.core" version="8.2.1" match="greaterOrEqual"/>
+      <import plugin="org.eclipse.ptp.rdt.sync.core" version="3.0.0" match="greaterOrEqual"/>
+      <import plugin="org.eclipse.ptp.remotetools.core" version="6.0.0" match="greaterOrEqual"/>
+      <import plugin="org.eclipse.ui.cheatsheets"/>
+      <import plugin="org.eclipse.cdt.make.core"/>
+      <import plugin="org.eclipse.ui.forms" version="3.6.1" match="greaterOrEqual"/>
+      <import plugin="org.eclipse.equinox.preferences"/>
    </requires>
+
+   <plugin
+         id="org.earthsystemcurator.cupid.nuopc.fsml"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"/>
 
    <plugin
          id="org.earthsystemcurator.cupid.nuopc.fsml.edit"
@@ -69,13 +90,6 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SO
 
    <plugin
          id="org.earthsystemcurator.cupid.nuopc.fsml.editor"
-         download-size="0"
-         install-size="0"
-         version="0.0.0"
-         unpack="false"/>
-
-   <plugin
-         id="org.earthsystemcurator.cupid.nuopc.fsml"
          download-size="0"
          install-size="0"
          version="0.0.0"

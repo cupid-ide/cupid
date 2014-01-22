@@ -200,6 +200,7 @@ public class CupidProjectWizard extends Wizard implements INewWizard, IExecutabl
 				try {
 					doFinish(projectHandle, monitor, wizardData);
 				} catch (CoreException e) {
+					e.printStackTrace();
 					throw new InvocationTargetException(e);
 				} finally {
 					monitor.done();
@@ -213,7 +214,7 @@ public class CupidProjectWizard extends Wizard implements INewWizard, IExecutabl
 			return false;
 		} catch (InvocationTargetException e) {
 			Throwable realException = e.getTargetException();
-			MessageDialog.openError(getShell(), "Error", realException.getMessage());
+			MessageDialog.openError(getShell(), "Error", realException.getMessage() + "\n\n[" + e.getMessage() + "]");
 			return false;
 		}
 		return true;
@@ -227,6 +228,8 @@ public class CupidProjectWizard extends Wizard implements INewWizard, IExecutabl
 	 */
 	private void doFinish(IProject projectHandle, IProgressMonitor monitor, Map<String,String> wizardData) throws CoreException {
 
+		CupidActivator.log("Creating project: " + projectHandle.getName());
+		
 		monitor.beginTask("Creating Cupid training project", 25);
 		monitor.subTask("Creating new project");
 
@@ -248,10 +251,13 @@ public class CupidProjectWizard extends Wizard implements INewWizard, IExecutabl
 			//System.out.println("Toolchain: " + tc.getName() + " : " + tc.getId());
 			//Linux GCC  --> cdt.managedbuild.toolchain.gnu.base
 			//GCC Fortran  --> photran.managedbuild.toolchain.gnu.fortran.exe.debug
+			CupidActivator.log("Found toolchain: " + tc.getName());
 			if (tc.getId().equals("org.eclipse.ptp.rdt.managedbuild.toolchain.gnu.base")) {
 				toolchain = tc;
+				CupidActivator.log("Using toolchain: " + toolchain.getName());
 			}
 		}
+		assert toolchain != null;
 
 		Configuration cfg = new Configuration(mProj, (ToolChain) toolchain, "org.earthsystemcurtor.cupid.ec2.config", "Cupid Configuration");
 
@@ -284,6 +290,8 @@ public class CupidProjectWizard extends Wizard implements INewWizard, IExecutabl
 			} catch (IOException e4) {
 				throw new CoreException(new OperationStatus(IStatus.ERROR, MY_BUNDLE.getSymbolicName(), 0, "Cannot create EC2 environment", e4));
 			}
+			
+			CupidActivator.log("EC2 hostname:" + ec2hosts.get(0));
 
 			// get a remote connection to ec2
 			try {
@@ -292,6 +300,8 @@ public class CupidProjectWizard extends Wizard implements INewWizard, IExecutabl
 			} catch (RemoteConnectionException e3) {
 				throw new CoreException(new OperationStatus(IStatus.ERROR, MY_BUNDLE.getSymbolicName(), 0, "Cannot create remote connection", e3));
 			}
+			
+			CupidActivator.log("Created remote connection");
 		
 		}
 		
@@ -302,6 +312,7 @@ public class CupidProjectWizard extends Wizard implements INewWizard, IExecutabl
 		if (wizardData.get(CupidProjectWizardPageCompEnv.WD_COMP_ENV).equals(CupidProjectWizardPageCompEnv.WD_COMP_ENV__CLOUD) ||
 			wizardData.get(CupidProjectWizardPageCompEnv.WD_COMP_ENV).equals(CupidProjectWizardPageCompEnv.WD_COMP_ENV__REMOTE)	) {
 			
+			CupidActivator.log("Connecting to the computational environment");
 			monitor.subTask("Connecting to the computational environment...");
 			boolean connected = false;
 			int timeout = 0;
@@ -310,10 +321,13 @@ public class CupidProjectWizard extends Wizard implements INewWizard, IExecutabl
 				try {
 					monitor.worked(1);
 					Thread.sleep(5000);
+					CupidActivator.log("Attempting to open connection");
 					remoteConn.open(new NullProgressMonitor());
 					connected = true;
+					CupidActivator.log("Connection open");
 				}
 				catch (RemoteConnectionException rce) {
+					CupidActivator.log("Remote connection exception", rce);
 					if (rce.getMessage().contains("reject HostKey")) {
 						throw new CoreException(new OperationStatus(IStatus.ERROR, MY_BUNDLE.getSymbolicName(), 0, "Cannot connect to computational environment due to rejected host key", null));
 					}
@@ -321,23 +335,25 @@ public class CupidProjectWizard extends Wizard implements INewWizard, IExecutabl
 					//System.out.println(rce.getCause());
 				} 
 				catch (InterruptedException e) {
+					CupidActivator.log("InterruptedException", e);
 					//e.printStackTrace();
 				}
 			}
 
 			if (!remoteConn.isOpen()) {
+				CupidActivator.log("Remote connection not open");
 				throw new CoreException(new OperationStatus(IStatus.ERROR, MY_BUNDLE.getSymbolicName(), 0, "Timeout connecting to computational environment", null));
 			}
 
 			
-			//TODO: set up computational environment
 			//executeCommandOnRemote(remoteConn, new SubProgressMonitor(monitor,1), "echo \"export ESMFMKFILE=/home/sgeadmin/esmf.mk\" >> .profile");
 			
 			//executeCommandOnRemote(remoteConn, new SubProgressMonitor(monitor,1), 
 			//		"echo \"export ESMFMKFILE=/home/sgeadmin/esmf/DEFAULTINSTALLDIR/lib/libO/Linux.gfortran.64.openmpi.default/esmf.mk\" >> /root/.profile");
 			
 			
-			
+			CupidActivator.log("Creating synchronized project");
+			monitor.subTask("Creating synchronized project...");
 			
 			// make synchronized project
 			ISynchronizeParticipant syncParticipant = null;
@@ -347,21 +363,23 @@ public class CupidProjectWizard extends Wizard implements INewWizard, IExecutabl
 			for (ISynchronizeParticipantDescriptor p : providers) {
 				//System.out.println("ISynchronizeParticipantDescriptor ==> " + p.getName() + " : " + p.getId() + " : " + p.getServiceId());
 				if (p.getId().equals("org.eclipse.ptp.rdt.sync.git.ui.gitParticipant")) {
+					CupidActivator.log("Found sync descriptor: org.eclipse.ptp.rdt.sync.git.ui.gitParticipant");
 					syncDescriptor = p;
 					//syncParticipant = p.getParticipant();
 					//System.out.println("syncParticipant.isConfigComplete(): " + syncParticipant.isConfigComplete());
 					//System.out.println("syncParticipant.getErrorMessage(): " + syncParticipant.getErrorMessage());
 					//syncParticipant.
-					//break;
+					break;
 				}
 			}
 
 			if (syncDescriptor == null) {
+				CupidActivator.log("syncDescriptor is null");
 				throw new CoreException(new OperationStatus(IStatus.ERROR, MY_BUNDLE.getSymbolicName(), 0, "Git synchronize descriptor not present", null));
 			}
 
 			syncParticipant = new CupidGitParticipant(syncDescriptor, remoteConn, "/home/sgeadmin/" + project.getName());
-
+			CupidActivator.log("Created CupidGitParticipant");
 
 			//IManagedBuildInfo buildInfo = ManagedBuildManager.getBuildInfo(projectHandle);
 			//IConfiguration configs[] = buildInfo.getManagedProject().getConfigurations();
@@ -370,13 +388,18 @@ public class CupidProjectWizard extends Wizard implements INewWizard, IExecutabl
 			//}
 	
 			Set<String> localToolChains = new HashSet<String>();
-			localToolChains.add(toolchain.getName());
-	
 			Set<String> remoteToolChains = new HashSet<String>();
-			remoteToolChains.add(toolchain.getName());
+			
+			if (toolchain != null) {
+				CupidActivator.log("Adding toolchain: " + toolchain);
+				localToolChains.add(toolchain.getName());
+				remoteToolChains.add(toolchain.getName());
+			}
+		
 	
-			monitor.subTask("Setting up project synchronization");
+			monitor.subTask("Setting up project synchronization...");
 	
+			CupidActivator.log("Setting up project synchronization");
 			NewRemoteSyncProjectWizardOperation.run(project, 
 					syncParticipant, 
 					null,
@@ -386,6 +409,7 @@ public class CupidProjectWizard extends Wizard implements INewWizard, IExecutabl
 		
 		}
 
+		CupidActivator.log("Adding project files");
 		monitor.subTask("Adding project files");
 		boolean skipFiles = false;
 		if (!skipFiles) {
@@ -470,6 +494,7 @@ public class CupidProjectWizard extends Wizard implements INewWizard, IExecutabl
 			}
 			monitor.worked(1);
 			
+			CupidActivator.log("Adding make targets");
 			monitor.subTask("Addding make targets");
 			addMakeTargets(project);
 			monitor.worked(1);
@@ -526,7 +551,7 @@ public class CupidProjectWizard extends Wizard implements INewWizard, IExecutabl
 			String keyFile = null;
 			try {
 				keyFile = FileLocator.toFileURL(keyURL).getFile();
-				
+				CupidActivator.log("Using SSH key: " + keyFile);
 			} catch (IOException e) {
 				throw new CoreException(new OperationStatus(IStatus.ERROR, MY_BUNDLE.getSymbolicName(), 0, "Cannot find SSH key file", e));
 			}
