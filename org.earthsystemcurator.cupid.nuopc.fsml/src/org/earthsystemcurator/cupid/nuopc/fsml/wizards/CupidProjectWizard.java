@@ -40,6 +40,7 @@ import org.eclipse.cdt.managedbuilder.internal.core.Configuration;
 import org.eclipse.cdt.managedbuilder.internal.core.ManagedProject;
 import org.eclipse.cdt.managedbuilder.internal.core.ToolChain;
 import org.eclipse.core.commands.operations.OperationStatus;
+import org.eclipse.core.resources.IContainer;
 import org.eclipse.core.resources.IFile;
 import org.eclipse.core.resources.IProject;
 import org.eclipse.core.resources.IProjectDescription;
@@ -136,6 +137,7 @@ public class CupidProjectWizard extends Wizard implements INewWizard, IExecutabl
 	private org.jdom.Document configXML;
 	
 	private IConfigurationElement config;
+	private Element selectedElem;
 
 
 	/**
@@ -209,7 +211,7 @@ public class CupidProjectWizard extends Wizard implements INewWizard, IExecutabl
 		addPage(newProjectPage);
 
 		singleModelProtoPage = new CupidProjectWizardPageSingleModelProto(wizardData);
-		addPage(singleModelProtoPage);
+		//addPage(singleModelProtoPage);
 
 		selectCompEnvPage = new CupidProjectWizardPageCompEnv(wizardData);
 		addPage(selectCompEnvPage);
@@ -272,7 +274,7 @@ public class CupidProjectWizard extends Wizard implements INewWizard, IExecutabl
 				return super.matches(e) && ((Element) e).getAttributeValue("id").equals(scenarioid);
 			}
 		});
-		Element selectedElem = elemList.get(0);
+		selectedElem = elemList.get(0);
 
 		//make a CDT/Fortran project
 		IWorkspace workspace = ResourcesPlugin.getWorkspace();
@@ -553,7 +555,15 @@ public class CupidProjectWizard extends Wizard implements INewWizard, IExecutabl
 		if (selectedElem.getChild("make") != null) {
 			for (Object mt : selectedElem.getChild("make").getChildren("target")) {
 				Element makeTarget = (Element) mt;
-				addMakeTarget(project, makeTarget.getAttributeValue("name"), makeTarget.getTextNormalize());
+				String dir = makeTarget.getAttributeValue("dir");
+				IContainer folder;
+				if (dir != null) {
+					folder = project.getFolder(dir);
+				}
+				else {
+					folder = project; //use the root
+				}
+				addMakeTarget(project, folder, makeTarget.getAttributeValue("name"), makeTarget.getTextNormalize());
 			}
 		}
 		
@@ -617,7 +627,7 @@ public class CupidProjectWizard extends Wizard implements INewWizard, IExecutabl
 			
 			remoteConn = connManager.newConnection("Cupid Environment (Amazon EC2 - " + name + ")");
 			remoteConn.setAddress(host);
-			remoteConn.setUsername("root");
+			remoteConn.setUsername("sgeadmin");
 			//remoteConn.setAttribute("org.eclipse.ptp.remotetools.environment.generichost.key-path", "C:\\Users\\Rocky\\Documents\\ssh\\nesiikey.rsa");
 			remoteConn.setAttribute("org.eclipse.ptp.remotetools.environment.generichost.key-path", keyFile);
 			remoteConn.setAttribute("org.eclipse.ptp.remotetools.environment.generichost.is-passwd-auth", "false");
@@ -733,9 +743,17 @@ public class CupidProjectWizard extends Wizard implements INewWizard, IExecutabl
 		monitor.subTask("Starting computational environment...");
 		RunInstancesRequest runInstancesRequest = new RunInstancesRequest();
 
-		//runInstancesRequest.withImageId("ami-018bd068")  
-		//runInstancesRequest.withImageId("ami-c5feceac")
-		runInstancesRequest.withImageId("ami-b1b689d8")  //cupid-modele-image
+		//get image id from XML
+		String amiid = null;
+		Element compEnv = selectedElem.getChild("compenv");
+		if (compEnv != null) {
+			amiid = compEnv.getChildTextNormalize("amiid");
+		}
+		if (amiid == null || amiid.length() < 1) {
+			throw new CoreException(new OperationStatus(IStatus.ERROR, MY_BUNDLE.getSymbolicName(), 0, "No machine image identifier found in training scenario configuration XML.", null));
+		}
+		
+	    runInstancesRequest.withImageId(amiid)  //cupid-modele-image
 			.withInstanceType("t1.micro")
 			.withMinCount(1)
 			.withMaxCount(1)
@@ -850,7 +868,7 @@ public class CupidProjectWizard extends Wizard implements INewWizard, IExecutabl
 		
 	}
 	
-	private void addMakeTarget(IProject project, String name, String makeTarget) throws CoreException {
+	private void addMakeTarget(IProject project, IContainer folder, String name, String makeTarget) throws CoreException {
 	
 		IMakeTargetManager manager = MakeCorePlugin.getDefault().getTargetManager();
 		String[] ids = manager.getTargetBuilders(project);	
@@ -865,7 +883,7 @@ public class CupidProjectWizard extends Wizard implements INewWizard, IExecutabl
 		//target.setBuildAttribute(IMakeTarget.BUILD_LOCATION, "/build/location");
 		//target.setBuildAttribute(IMakeTarget.BUILD_ARGUMENTS, "ESMFMKFILE=/home/sgeadmin/esmf/DEFAULTINSTALLDIR/lib/libO/Linux.gfortran.64.openmpi.default/esmf.mk");
 		target.setBuildAttribute(IMakeTarget.BUILD_TARGET, makeTarget);
-		manager.addTarget(project, target);	
+		manager.addTarget(folder, target);	
 		
 	}
 	

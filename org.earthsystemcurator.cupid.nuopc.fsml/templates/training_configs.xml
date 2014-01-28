@@ -37,6 +37,9 @@
 			<target name="clean">clean</target>
 			<target name="dust">dust</target>
 		</make>
+		<compenv provider="ec2">
+			<amiid>ami-413f0128</amiid>
+		</compenv>
 	</scenario>
 	
 	
@@ -52,12 +55,15 @@
 		</coupling>
 		<remotedir>/home/sgeadmin/modelE</remotedir>
 		<make>
-			<target name="Create Run EM20_R1">rundeck RUN=EM20_R1 RUNSRC=EM20 USE_ESMF_LIB=YES MPI=YES</target>
-			<target name="Compile Run EM20_R1">setup RUN=EM20_R1 USE_ESMF_LIB=YES MPI=YES</target>
-			<target name="Execute Run EM20_R1">execute RUN=EM20_R1</target>
-			<target name="vclean">vclean</target>
-			<target name="clean">clean</target>
+			<target dir="decks" name="Create Run EM20_R1">rundeck RUN=EM20_R1 RUNSRC=EM20 USE_ESMF_LIB=YES MPI=YES</target>
+			<target dir="decks" name="Compile Run EM20_R1">setup RUN=EM20_R1 USE_ESMF_LIB=YES MPI=YES</target>
+			<target dir="decks" name="Execute Run EM20_R1">execute RUN=EM20_R1</target>
+			<target dir="decks" name="vclean">vclean</target>
+			<target dir="decks" name="clean">clean</target>
 		</make>
+		<compenv provider="ec2">
+			<amiid>ami-413f0128</amiid>
+		</compenv>
 	</scenario>
 
 
