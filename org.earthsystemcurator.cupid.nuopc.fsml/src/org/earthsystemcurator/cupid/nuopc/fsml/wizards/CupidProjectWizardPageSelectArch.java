@@ -44,26 +44,30 @@ public class CupidProjectWizardPageSelectArch extends WizardPage {
 				"images/coupling_single.png",   // coupling image
 				"A single Model component is called by a Driver in regular intervals.",  // archicture description
 				"There is no coupling in this configuration.", //coupling description
-				"SingleModelProto" //template directory
+				"SingleModelProto", //template directory
+				null //remote directory
 				},  
 			{"NUOPC - Coupled Atmosphere-Ocean with Driver", 
 				"images/relationship_simple.png",
 				"images/coupling_explicit.png",
 				"Atmosphere and Ocean Models exchange data through generic Connectors.",
 				"Simple explicit coupling requires that Atmosphere and Ocean fields are exchanged in both directions at the beginning of each coupling interval.",
-				"AtmOcnProto"},
+				"AtmOcnProto",
+				null},
 			{"NUOPC - Coupled Atmosphere-Ocean with Mediator and Driver", 
 				"images/relationship_simpleMediator.png",
 				"images/coupling_simpleMediator.png",
 				"Atmosphere and Ocean Models couple through a Mediator component.",
 				"Connector components transfer Atmosphere and Ocean fields to the Mediator at the beginning of each coupling interval. The Mediator processes this input and Connectors transfer the Mediator output back to the model components. The model components then integrate forward for one coupling interval before the same process is repeated.",
-				"AtmOcnMedProto"},
+				"AtmOcnMedProto",
+				null},
 			{"ModelE - Basic Configuration (EM20 rundeck) -- COMING SOON",   // configuration name
 				null,   // architecture image
 				null,   // coupling image
 				"This training project is currently not available...",  // archicture description
 				"", //coupling description
-				"ModelEExample"
+				"ModelEExample",
+				"/home/sgeadmin/modelE"
 				},  
 	};
 	
@@ -195,6 +199,7 @@ public class CupidProjectWizardPageSelectArch extends WizardPage {
 	
 	private void dialogChanged() {		
 		wizardData.put("templateDir", buttonData[selectedIndex][5]);
+		wizardData.put("remoteDir", buttonData[selectedIndex][6]);
 
 		if (getNextPage().getControl() != null) {
 			Text prjName = (Text) ((Composite) (((Composite) getNextPage().getControl()).getChildren()[0])).getChildren()[1];

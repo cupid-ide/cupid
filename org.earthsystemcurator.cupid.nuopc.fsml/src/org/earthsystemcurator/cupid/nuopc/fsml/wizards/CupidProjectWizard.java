@@ -1,14 +1,12 @@
 package org.earthsystemcurator.cupid.nuopc.fsml.wizards;
 
 import java.io.BufferedReader;
-import java.io.BufferedWriter;
 import java.io.ByteArrayInputStream;
 import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
-import java.io.OutputStream;
 import java.lang.reflect.InvocationTargetException;
 import java.net.URL;
 import java.util.ArrayList;
@@ -52,16 +50,16 @@ import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.NullProgressMonitor;
 import org.eclipse.core.runtime.Path;
 import org.eclipse.core.runtime.SubProgressMonitor;
-import org.eclipse.jface.dialogs.IDialogSettings;
 import org.eclipse.jface.dialogs.MessageDialog;
 import org.eclipse.jface.operation.IRunnableWithProgress;
 import org.eclipse.jface.preference.IPreferenceStore;
 import org.eclipse.jface.viewers.IStructuredSelection;
-import org.eclipse.jface.wizard.IWizardPage;
 import org.eclipse.jface.wizard.Wizard;
 import org.eclipse.photran.internal.core.FProjectNature;
 import org.eclipse.ptp.internal.rdt.sync.cdt.ui.wizards.NewRemoteSyncProjectWizardOperation;
 import org.eclipse.ptp.internal.rdt.sync.ui.SynchronizeParticipantRegistry;
+import org.eclipse.ptp.rdt.sync.core.SyncFlag;
+import org.eclipse.ptp.rdt.sync.core.SyncManager;
 import org.eclipse.ptp.rdt.sync.ui.ISynchronizeParticipant;
 import org.eclipse.ptp.rdt.sync.ui.ISynchronizeParticipantDescriptor;
 import org.eclipse.ptp.remote.core.IRemoteConnection;
@@ -76,7 +74,6 @@ import org.eclipse.swt.graphics.FontData;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.Display;
-import org.eclipse.swt.widgets.Text;
 import org.eclipse.ui.INewWizard;
 import org.eclipse.ui.IWorkbench;
 import org.eclipse.ui.IWorkbenchPage;
@@ -92,7 +89,6 @@ import org.stringtemplate.v4.ST;
 
 import com.amazonaws.auth.AWSCredentials;
 import com.amazonaws.auth.BasicAWSCredentials;
-import com.amazonaws.auth.PropertiesCredentials;
 import com.amazonaws.services.cloudwatch.AmazonCloudWatchClient;
 import com.amazonaws.services.cloudwatch.model.ComparisonOperator;
 import com.amazonaws.services.cloudwatch.model.Dimension;
@@ -101,18 +97,14 @@ import com.amazonaws.services.cloudwatch.model.StandardUnit;
 import com.amazonaws.services.cloudwatch.model.Statistic;
 import com.amazonaws.services.ec2.AmazonEC2Client;
 import com.amazonaws.services.ec2.model.AuthorizeSecurityGroupIngressRequest;
-import com.amazonaws.services.ec2.model.CreateKeyPairRequest;
-import com.amazonaws.services.ec2.model.CreateKeyPairResult;
 import com.amazonaws.services.ec2.model.CreateSecurityGroupRequest;
 import com.amazonaws.services.ec2.model.CreateSecurityGroupResult;
-import com.amazonaws.services.ec2.model.DeleteKeyPairRequest;
 import com.amazonaws.services.ec2.model.DescribeInstancesRequest;
 import com.amazonaws.services.ec2.model.DescribeInstancesResult;
 import com.amazonaws.services.ec2.model.DescribeSecurityGroupsRequest;
 import com.amazonaws.services.ec2.model.DescribeSecurityGroupsResult;
 import com.amazonaws.services.ec2.model.Instance;
 import com.amazonaws.services.ec2.model.IpPermission;
-import com.amazonaws.services.ec2.model.KeyPair;
 import com.amazonaws.services.ec2.model.Reservation;
 import com.amazonaws.services.ec2.model.RunInstancesRequest;
 import com.amazonaws.services.ec2.model.RunInstancesResult;
@@ -296,7 +288,7 @@ public class CupidProjectWizard extends Wizard implements INewWizard, IExecutabl
 			// get a remote connection to ec2
 			try {
 				//assume only a single instance for now
-				remoteConn = createRemoteConnection(ec2hosts.get(0), new SubProgressMonitor(monitor, 2));
+				remoteConn = createRemoteConnection(ec2hosts.get(0), project.getName(), new SubProgressMonitor(monitor, 2));
 			} catch (RemoteConnectionException e3) {
 				throw new CoreException(new OperationStatus(IStatus.ERROR, MY_BUNDLE.getSymbolicName(), 0, "Cannot create remote connection", e3));
 			}
@@ -378,7 +370,12 @@ public class CupidProjectWizard extends Wizard implements INewWizard, IExecutabl
 				throw new CoreException(new OperationStatus(IStatus.ERROR, MY_BUNDLE.getSymbolicName(), 0, "Git synchronize descriptor not present", null));
 			}
 
-			syncParticipant = new CupidGitParticipant(syncDescriptor, remoteConn, "/home/sgeadmin/" + project.getName());
+			
+			String remoteDir = wizardData.get("remoteDir");
+			if (remoteDir == null) {
+				remoteDir = "/home/sgeadmin/" + project.getName();
+			}
+			syncParticipant = new CupidGitParticipant(syncDescriptor, remoteConn, remoteDir);
 			CupidActivator.log("Created CupidGitParticipant");
 
 			//IManagedBuildInfo buildInfo = ManagedBuildManager.getBuildInfo(projectHandle);
@@ -406,25 +403,30 @@ public class CupidProjectWizard extends Wizard implements INewWizard, IExecutabl
 					localToolChains,
 					remoteToolChains, 
 					new SubProgressMonitor(monitor,1));
+			
+			//force a sync
+			SyncManager.syncBlocking(null, project, SyncFlag.FORCE, new SubProgressMonitor(monitor, 2));
+			
 		
 		}
 
 		CupidActivator.log("Adding project files");
 		monitor.subTask("Adding project files");
-		boolean skipFiles = false;
-		if (!skipFiles) {
-			//String templateDir = "templates/" + page.getClass().getSimpleName().replaceFirst("CupidProjectWizardPage", "");
-			String templateDir = "templates/" + wizardData.get("templateDir");
+				
+		String templateDir = "templates/" + wizardData.get("templateDir");
+		
+		final List<IFile> filesToOpen = new ArrayList<IFile>();
+		
+		URL bundleURL = FileLocator.find(MY_BUNDLE, new Path(templateDir), null);
+				
+		if (bundleURL != null) {
 			
-			URL bundleURL = FileLocator.find(MY_BUNDLE, new Path(templateDir), null);
 			URL fileURL = null;
 			try {
 				fileURL = FileLocator.toFileURL(bundleURL);
 			} catch (IOException e2) {
 				throw new CoreException(new OperationStatus(IStatus.ERROR, MY_BUNDLE.getSymbolicName(), 0, "Error getting location of file: " + templateDir, e2));
 			}
-
-			final List<IFile> filesToOpen = new ArrayList<IFile>();
 
 			Path templatePath = new Path(fileURL.getPath());
 			File templateDirFile = templatePath.toFile();
@@ -492,27 +494,29 @@ public class CupidProjectWizard extends Wizard implements INewWizard, IExecutabl
 				}
 
 			}
-			monitor.worked(1);
 			
-			CupidActivator.log("Adding make targets");
-			monitor.subTask("Addding make targets");
-			addMakeTargets(project);
-			monitor.worked(1);
+		}	
+		
+		monitor.worked(1);
+			
+		CupidActivator.log("Adding make targets");
+		monitor.subTask("Addding make targets");
+		addMakeTargets(project);
+		monitor.worked(1);
 
-			monitor.subTask("Opening project files in editor");
-			if (filesToOpen.size() > 0) {
-				getShell().getDisplay().asyncExec(new Runnable() {
-					public void run() {
-						IWorkbenchPage page =
-								PlatformUI.getWorkbench().getActiveWorkbenchWindow().getActivePage();
-						try {
-							IDE.openEditors(page, filesToOpen.toArray(new IFile[] {}));
-						} catch (MultiPartInitException e) {}
-					}
-				});
-			}
-			monitor.worked(1);
+		monitor.subTask("Opening project files in editor");
+		if (filesToOpen.size() > 0) {
+			getShell().getDisplay().asyncExec(new Runnable() {
+				public void run() {
+					IWorkbenchPage page =
+							PlatformUI.getWorkbench().getActiveWorkbenchWindow().getActivePage();
+					try {
+						IDE.openEditors(page, filesToOpen.toArray(new IFile[] {}));
+					} catch (MultiPartInitException e) {}
+				}
+			});
 		}
+		monitor.worked(1);		
 		
 		getShell().getDisplay().asyncExec(new Runnable() {
 			public void run() {
@@ -526,7 +530,7 @@ public class CupidProjectWizard extends Wizard implements INewWizard, IExecutabl
 
 	}
 
-	private IRemoteConnection createRemoteConnection(String host, IProgressMonitor monitor) throws RemoteConnectionException, CoreException {
+	private IRemoteConnection createRemoteConnection(String host, String name, IProgressMonitor monitor) throws RemoteConnectionException, CoreException {
 
 		monitor.beginTask("Creating remote connection", 2);
 
@@ -556,7 +560,7 @@ public class CupidProjectWizard extends Wizard implements INewWizard, IExecutabl
 				throw new CoreException(new OperationStatus(IStatus.ERROR, MY_BUNDLE.getSymbolicName(), 0, "Cannot find SSH key file", e));
 			}
 			
-			remoteConn = connManager.newConnection("Cupid Environment (Amazon EC2 - " + host + ")");
+			remoteConn = connManager.newConnection("Cupid Environment (Amazon EC2 - " + name + ")");
 			remoteConn.setAddress(host);
 			remoteConn.setUsername("root");
 			//remoteConn.setAttribute("org.eclipse.ptp.remotetools.environment.generichost.key-path", "C:\\Users\\Rocky\\Documents\\ssh\\nesiikey.rsa");
@@ -675,13 +679,14 @@ public class CupidProjectWizard extends Wizard implements INewWizard, IExecutabl
 		RunInstancesRequest runInstancesRequest = new RunInstancesRequest();
 
 		//runInstancesRequest.withImageId("ami-018bd068")  
-		runInstancesRequest.withImageId("ami-c5feceac")
-		.withInstanceType("t1.micro")
-		.withMinCount(1)
-		.withMaxCount(1)
-		.withKeyName("nesiikey")
-		.withInstanceInitiatedShutdownBehavior(ShutdownBehavior.Terminate)
-		.withSecurityGroups("CupidSecurityGroup");
+		//runInstancesRequest.withImageId("ami-c5feceac")
+		runInstancesRequest.withImageId("ami-b1b689d8")  //cupid-modele-image
+			.withInstanceType("t1.micro")
+			.withMinCount(1)
+			.withMaxCount(1)
+			.withKeyName("nesiikey")
+			.withInstanceInitiatedShutdownBehavior(ShutdownBehavior.Terminate)
+			.withSecurityGroups("CupidSecurityGroup");
 		
 
 
@@ -717,7 +722,7 @@ public class CupidProjectWizard extends Wizard implements INewWizard, IExecutabl
 			}
 			
 			hostNames.add(i.getPublicDnsName());
-			dimensions.add(new Dimension().withName("instance-id").withValue(i.getInstanceId()));
+			dimensions.add(new Dimension().withName("InstanceId").withValue(i.getInstanceId()));
 		}
 		
 		//add monitoring to terminate idle instances
