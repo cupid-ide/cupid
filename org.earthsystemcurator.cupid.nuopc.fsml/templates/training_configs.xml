@@ -1,0 +1,64 @@
+<root>
+
+	<!-- 
+	final String[][] buttonData = new String[][] {
+			
+			{"NUOPC - Coupled Atmosphere-Ocean with Driver", 
+				"images/relationship_simple.png",
+				"images/coupling_explicit.png",
+				"Atmosphere and Ocean Models exchange data through generic Connectors.",
+				"Simple explicit coupling requires that Atmosphere and Ocean fields are exchanged in both directions at the beginning of each coupling interval.",
+				"AtmOcnProto",
+				null},
+			{"NUOPC - Coupled Atmosphere-Ocean with Mediator and Driver", 
+				"images/relationship_simpleMediator.png",
+				"images/coupling_simpleMediator.png",
+				"Atmosphere and Ocean Models couple through a Mediator component.",
+				"Connector components transfer Atmosphere and Ocean fields to the Mediator at the beginning of each coupling interval. The Mediator processes this input and Connectors transfer the Mediator output back to the model components. The model components then integrate forward for one coupling interval before the same process is repeated.",
+				"AtmOcnMedProto",
+				null},
+			
+	};
+	 -->
+
+	<scenario id="NUOPCSingleModelWithDriver">
+		<shortdesc>NUOPC - Single Model with Driver</shortdesc>
+		<architecture>
+			<image>images/relationship_single.png</image>
+			<desc>A single Model component is called by a Driver in regular intervals.</desc>
+		</architecture>
+		<coupling>
+			<image>images/coupling_single.png</image>
+			<desc>There is no coupling in this configuration.</desc>
+		</coupling>
+		<templatedir>SingleModelProto</templatedir>
+		<make>
+			<target name="mainApp">mainApp</target>
+			<target name="clean">clean</target>
+			<target name="dust">dust</target>
+		</make>
+	</scenario>
+	
+	
+	<scenario id="ModelEBasic">
+		<shortdesc>ModelE - Basic Configuration (EM20 rundeck)</shortdesc>
+		<architecture>
+			<!-- <image>images/relationship_single.png</image> -->
+			<desc>The ModelE EM20 run configuraton....</desc>
+		</architecture>
+		<coupling>
+			<!-- <image>images/coupling_single.png</image> -->
+			<desc></desc>
+		</coupling>
+		<remotedir>/home/sgeadmin/modelE</remotedir>
+		<make>
+			<target name="Create Run EM20_R1">rundeck RUN=EM20_R1 RUNSRC=EM20 USE_ESMF_LIB=YES MPI=YES</target>
+			<target name="Compile Run EM20_R1">setup RUN=EM20_R1 USE_ESMF_LIB=YES MPI=YES</target>
+			<target name="Execute Run EM20_R1">execute RUN=EM20_R1</target>
+			<target name="vclean">vclean</target>
+			<target name="clean">clean</target>
+		</make>
+	</scenario>
+
+
+</root>

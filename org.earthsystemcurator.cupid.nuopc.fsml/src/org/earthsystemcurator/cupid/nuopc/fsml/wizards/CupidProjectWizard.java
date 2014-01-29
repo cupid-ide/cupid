@@ -16,6 +16,10 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
+import javax.xml.parsers.DocumentBuilder;
+import javax.xml.parsers.DocumentBuilderFactory;
+import javax.xml.parsers.ParserConfigurationException;
+
 import org.earthsystemcurator.cupid.nuopc.fsml.builder.NUOPCNature;
 import org.earthsystemcurator.cupid.nuopc.fsml.core.CupidActivator;
 import org.earthsystemcurator.cupid.nuopc.fsml.preferences.CupidPreferencePage;
@@ -83,9 +87,15 @@ import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.dialogs.WizardNewProjectCreationPage;
 import org.eclipse.ui.ide.IDE;
 import org.eclipse.ui.wizards.newresource.BasicNewProjectResourceWizard;
+import org.jdom.Element;
+import org.jdom.filter.ElementFilter;
+import org.jdom.input.DOMBuilder;
 import org.osgi.framework.Bundle;
 import org.osgi.framework.FrameworkUtil;
 import org.stringtemplate.v4.ST;
+import org.w3c.dom.Document;
+import org.w3c.dom.NodeList;
+import org.xml.sax.SAXException;
 
 import com.amazonaws.auth.AWSCredentials;
 import com.amazonaws.auth.BasicAWSCredentials;
@@ -123,6 +133,7 @@ public class CupidProjectWizard extends Wizard implements INewWizard, IExecutabl
 	private CupidProjectWizardPageSingleModelProto singleModelProtoPage;
 	private CupidProjectWizardPageCompEnv selectCompEnvPage;
 	private Map<String,String> wizardData;
+	private org.jdom.Document configXML;
 	
 	private IConfigurationElement config;
 
@@ -135,7 +146,35 @@ public class CupidProjectWizard extends Wizard implements INewWizard, IExecutabl
 		setNeedsProgressMonitor(true);
 		setWindowTitle("Create Cupid Training Project");
 		wizardData = new HashMap<String, String>();
+		parseConfigXML();
 	}
+	
+	private void parseConfigXML() {
+		
+		DocumentBuilderFactory dbf = DocumentBuilderFactory.newInstance();
+		
+		try {
+			InputStream is = FileLocator.openStream(MY_BUNDLE, new Path("templates/training_configs.xml"), false);
+			DocumentBuilder db = dbf.newDocumentBuilder();
+			Document doc = db.parse(is);
+			
+			DOMBuilder domBuilder = new DOMBuilder();
+			configXML = domBuilder.build(doc);
+						
+		} catch (ParserConfigurationException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (SAXException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	
+		
+	}
+	
 
 	@Override
 	public boolean canFinish() {
@@ -145,10 +184,10 @@ public class CupidProjectWizard extends Wizard implements INewWizard, IExecutabl
 	/**
 	 * Adding the page to the wizard.
 	 */
-
+	@Override
 	public void addPages() {
 
-		selectArchPage = new CupidProjectWizardPageSelectArch(wizardData);
+		selectArchPage = new CupidProjectWizardPageSelectArch(configXML, wizardData);
 		addPage(selectArchPage);
 
 		
@@ -224,6 +263,16 @@ public class CupidProjectWizard extends Wizard implements INewWizard, IExecutabl
 		
 		monitor.beginTask("Creating Cupid training project", 25);
 		monitor.subTask("Creating new project");
+		
+		final String scenarioid = wizardData.get("scenarioid");
+		@SuppressWarnings("unchecked")
+		List<Element> elemList = configXML.getRootElement().getContent(new ElementFilter() {
+			@Override
+			public boolean matches(Object e) {
+				return super.matches(e) && ((Element) e).getAttributeValue("id").equals(scenarioid);
+			}
+		});
+		Element selectedElem = elemList.get(0);
 
 		//make a CDT/Fortran project
 		IWorkspace workspace = ResourcesPlugin.getWorkspace();
@@ -369,10 +418,9 @@ public class CupidProjectWizard extends Wizard implements INewWizard, IExecutabl
 				CupidActivator.log("syncDescriptor is null");
 				throw new CoreException(new OperationStatus(IStatus.ERROR, MY_BUNDLE.getSymbolicName(), 0, "Git synchronize descriptor not present", null));
 			}
-
-			
-			String remoteDir = wizardData.get("remoteDir");
-			if (remoteDir == null) {
+	
+			String remoteDir = selectedElem.getChildTextNormalize("remotedir");
+			if (remoteDir == null || remoteDir.length() < 1) {
 				remoteDir = "/home/sgeadmin/" + project.getName();
 			}
 			syncParticipant = new CupidGitParticipant(syncDescriptor, remoteConn, remoteDir);
@@ -501,7 +549,14 @@ public class CupidProjectWizard extends Wizard implements INewWizard, IExecutabl
 			
 		CupidActivator.log("Adding make targets");
 		monitor.subTask("Addding make targets");
-		addMakeTargets(project);
+		
+		if (selectedElem.getChild("make") != null) {
+			for (Object mt : selectedElem.getChild("make").getChildren("target")) {
+				Element makeTarget = (Element) mt;
+				addMakeTarget(project, makeTarget.getAttributeValue("name"), makeTarget.getTextNormalize());
+			}
+		}
+		
 		monitor.worked(1);
 
 		monitor.subTask("Opening project files in editor");
@@ -792,6 +847,25 @@ public class CupidProjectWizard extends Wizard implements INewWizard, IExecutabl
 		}
 		
 		monitor.done();
+		
+	}
+	
+	private void addMakeTarget(IProject project, String name, String makeTarget) throws CoreException {
+	
+		IMakeTargetManager manager = MakeCorePlugin.getDefault().getTargetManager();
+		String[] ids = manager.getTargetBuilders(project);	
+		
+		IMakeTarget target; 
+		
+		target = manager.createTarget(project, name, ids[0]);
+		target.setStopOnError(false);
+		target.setRunAllBuilders(false);
+		target.setUseDefaultBuildCmd(true);
+		target.setBuildAttribute(IMakeCommonBuildInfo.BUILD_COMMAND, "make");
+		//target.setBuildAttribute(IMakeTarget.BUILD_LOCATION, "/build/location");
+		//target.setBuildAttribute(IMakeTarget.BUILD_ARGUMENTS, "ESMFMKFILE=/home/sgeadmin/esmf/DEFAULTINSTALLDIR/lib/libO/Linux.gfortran.64.openmpi.default/esmf.mk");
+		target.setBuildAttribute(IMakeTarget.BUILD_TARGET, makeTarget);
+		manager.addTarget(project, target);	
 		
 	}
 	

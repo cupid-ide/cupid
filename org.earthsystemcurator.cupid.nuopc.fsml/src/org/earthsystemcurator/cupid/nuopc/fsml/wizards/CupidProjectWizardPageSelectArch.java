@@ -1,7 +1,9 @@
 package org.earthsystemcurator.cupid.nuopc.fsml.wizards;
 
 import java.net.URL;
+import java.util.List;
 import java.util.Map;
+import java.util.Properties;
 
 import org.eclipse.core.runtime.FileLocator;
 import org.eclipse.core.runtime.Path;
@@ -24,8 +26,12 @@ import org.eclipse.swt.widgets.Group;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Text;
 import org.eclipse.ui.dialogs.WizardNewProjectCreationPage;
+import org.jdom.Document;
+import org.jdom.Element;
 import org.osgi.framework.Bundle;
 import org.osgi.framework.FrameworkUtil;
+import org.w3c.dom.Node;
+import org.w3c.dom.NodeList;
 
 /**
  * The "New" wizard page allows setting the container for the new file as well
@@ -37,7 +43,10 @@ public class CupidProjectWizardPageSelectArch extends WizardPage {
 	
 	private Map<String, String> wizardData;
 	private int selectedIndex = 0;
+	private Element selectedElem = null;
+	private Document configXML;
 	
+	/*
 	final String[][] buttonData = new String[][] {
 			{"NUOPC - Single Model with Driver",   // configuration name
 				"images/relationship_single.png",   // architecture image
@@ -45,7 +54,7 @@ public class CupidProjectWizardPageSelectArch extends WizardPage {
 				"A single Model component is called by a Driver in regular intervals.",  // archicture description
 				"There is no coupling in this configuration.", //coupling description
 				"SingleModelProto", //template directory
-				null //remote directory
+				null,  //remote directory
 				},  
 			{"NUOPC - Coupled Atmosphere-Ocean with Driver", 
 				"images/relationship_simple.png",
@@ -70,12 +79,14 @@ public class CupidProjectWizardPageSelectArch extends WizardPage {
 				"/home/sgeadmin/modelE"
 				},  
 	};
+	*/
 	
-	public CupidProjectWizardPageSelectArch(Map<String, String> wizardData) {
+	public CupidProjectWizardPageSelectArch(Document configXML, Map<String, String> wizardData) {
 		super("Cupid Creation Wizard Page 2");
 		setTitle("Create Cupid Training Project");
 		setDescription("Please select a training scenario");
 		this.wizardData = wizardData;
+		this.configXML = configXML;
 	}
 
 	private Label archImage;
@@ -94,6 +105,11 @@ public class CupidProjectWizardPageSelectArch extends WizardPage {
 	 * @see IDialogPage#createControl(Composite)
 	 */
 	public void createControl(Composite parent) {
+		
+		@SuppressWarnings("unchecked")
+		final List<Element> scenarioList = configXML.getRootElement().getChildren("scenario");
+		selectedElem = scenarioList.get(0);  //default
+				
 		
 		final Composite container = new Composite(parent, SWT.NULL);
 		GridLayoutFactory.fillDefaults().numColumns(3).applyTo(container);
@@ -114,23 +130,25 @@ public class CupidProjectWizardPageSelectArch extends WizardPage {
 		
 		Combo configCombo = new Combo (container, SWT.READ_ONLY);
 		GridDataFactory.fillDefaults().align(SWT.LEFT, SWT.FILL).span(2,1).applyTo(configCombo);
-		for (int i = 0; i < buttonData.length; i++) {
-			configCombo.add(buttonData[i][0]);
-			//configCombo.
+		for (Element s :  scenarioList) {
+			configCombo.add(s.getChildTextNormalize("shortdesc"));
 		}
-		configCombo.setText(buttonData[0][0]);
+		
+		configCombo.setText(scenarioList.get(0).getChildTextNormalize("shortdesc"));
+		
 		configCombo.addSelectionListener(new SelectionAdapter() {
 			@Override
 			public void widgetSelected(SelectionEvent e) {
 				selectedIndex = ((Combo)e.widget).getSelectionIndex();
+				selectedElem = scenarioList.get(selectedIndex);
 				
-				archDesc.setText(buttonData[selectedIndex][3]);
-				couplingDesc.setText(buttonData[selectedIndex][4]);
+				archDesc.setText(selectedElem.getChild("architecture").getChildTextNormalize("desc"));
+				couplingDesc.setText(selectedElem.getChild("coupling").getChildTextNormalize("desc"));
 				
 				URL url;
 				ImageDescriptor id;
-				if (buttonData[selectedIndex][1] != null) {
-					url = FileLocator.find(MY_BUNDLE, new Path(buttonData[selectedIndex][1]), null);
+				if (selectedElem.getChild("architecture").getChildTextNormalize("image") != null) {
+					url = FileLocator.find(MY_BUNDLE, new Path(selectedElem.getChild("architecture").getChildTextNormalize("image")), null);
 					id = ImageDescriptor.createFromURL(url);
 					archImage.setImage(id.createImage());
 				}
@@ -138,8 +156,8 @@ public class CupidProjectWizardPageSelectArch extends WizardPage {
 					archImage.setImage(null);
 				}
 					
-				if (buttonData[selectedIndex][2] != null) {
-					url = FileLocator.find(MY_BUNDLE, new Path(buttonData[selectedIndex][2]), null);
+				if (selectedElem.getChild("coupling").getChildTextNormalize("image") != null) {
+					url = FileLocator.find(MY_BUNDLE, new Path(selectedElem.getChild("coupling").getChildTextNormalize("image")), null);
 					id = ImageDescriptor.createFromURL(url);
 					couplingImage.setImage(id.createImage());
 				}
@@ -170,22 +188,22 @@ public class CupidProjectWizardPageSelectArch extends WizardPage {
 		GridDataFactory.fillDefaults().applyTo(groupCpl);
 			
 		archDesc = new Label(groupArch, SWT.WRAP);
-	    archDesc.setText(buttonData[0][3]);  
+	    archDesc.setText(selectedElem.getChild("architecture").getChildTextNormalize("desc"));  
 	    GridDataFactory.fillDefaults().hint(350, SWT.DEFAULT).applyTo(archDesc);
 	
 		archImage = new Label(groupArch, SWT.NULL);
         
-		URL url = FileLocator.find(MY_BUNDLE, new Path(buttonData[0][1]), null);
+		URL url = FileLocator.find(MY_BUNDLE, new Path(selectedElem.getChild("architecture").getChildTextNormalize("image")), null);
 	    ImageDescriptor id = ImageDescriptor.createFromURL(url);
 	    archImage.setImage(id.createImage());
 	    GridDataFactory.fillDefaults().align(SWT.CENTER, SWT.CENTER).hint(SWT.DEFAULT, 300).applyTo(archImage);
 	    
 	    couplingDesc = new Label(groupCpl, SWT.WRAP);
-	    couplingDesc.setText(buttonData[0][4]);    
+	    couplingDesc.setText(selectedElem.getChild("coupling").getChildTextNormalize("desc"));    
 	    GridDataFactory.fillDefaults().hint(650, SWT.DEFAULT).grab(true, false).applyTo(couplingDesc);
 	    
 	    couplingImage = new Label(groupCpl, SWT.NONE);
-	    url = FileLocator.find(MY_BUNDLE, new Path(buttonData[0][2]), null);
+	    url = FileLocator.find(MY_BUNDLE, new Path(selectedElem.getChild("coupling").getChildTextNormalize("image")), null);
 	    id = ImageDescriptor.createFromURL(url);
 	    couplingImage.setImage(id.createImage());
 			    
@@ -198,15 +216,16 @@ public class CupidProjectWizardPageSelectArch extends WizardPage {
 	
 	
 	private void dialogChanged() {		
-		wizardData.put("templateDir", buttonData[selectedIndex][5]);
-		wizardData.put("remoteDir", buttonData[selectedIndex][6]);
+		wizardData.put("scenarioid", selectedElem.getAttributeValue("id"));
+		wizardData.put("templateDir", selectedElem.getChildTextNormalize("templatedir"));
+		//wizardData.put("remoteDir", selectedElem.getChildTextNormalize("remotedir"));
 
 		if (getNextPage().getControl() != null) {
 			Text prjName = (Text) ((Composite) (((Composite) getNextPage().getControl()).getChildren()[0])).getChildren()[1];
-			prjName.setText(buttonData[selectedIndex][5]);
+			prjName.setText(selectedElem.getAttributeValue("id"));
 		}
 		else {
-			((WizardNewProjectCreationPage) getNextPage()).setInitialProjectName(buttonData[selectedIndex][5]);
+			((WizardNewProjectCreationPage) getNextPage()).setInitialProjectName(selectedElem.getAttributeValue("id"));
 		}
 
 		updateStatus(null);
