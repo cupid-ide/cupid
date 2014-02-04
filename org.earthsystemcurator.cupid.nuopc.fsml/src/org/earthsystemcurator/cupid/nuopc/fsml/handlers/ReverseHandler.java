@@ -1,24 +1,16 @@
 package org.earthsystemcurator.cupid.nuopc.fsml.handlers;
 
 import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.io.Reader;
-import java.io.UnsupportedEncodingException;
 import java.lang.reflect.InvocationTargetException;
-import java.util.HashSet;
 
 import org.earthsystemcurator.cupid.nuopc.fsml.builder.NUOPCNature;
 import org.earthsystemcurator.cupid.nuopc.fsml.core.FSM;
-import org.earthsystemcurator.cupid.nuopc.fsml.core.ForwardEngineer;
 import org.earthsystemcurator.cupid.nuopc.fsml.core.ReverseEngineer;
+import org.earthsystemcurator.cupid.nuopc.fsml.nuopc.NUOPCApplication;
 import org.earthsystemcurator.cupid.nuopc.fsml.nuopc.NUOPCPackage;
 import org.earthsystemcurator.cupid.nuopc.fsml.util.Regex;
 import org.earthsystemcurator.cupid.nuopc.fsml.views.NUOPCView;
 import org.eclipse.cdt.core.model.ITranslationUnit;
-import org.eclipse.compare.internal.DocLineComparator;
-import org.eclipse.compare.rangedifferencer.RangeDifference;
-import org.eclipse.compare.rangedifferencer.RangeDifferencer;
 import org.eclipse.core.commands.AbstractHandler;
 import org.eclipse.core.commands.ExecutionEvent;
 import org.eclipse.core.commands.ExecutionException;
@@ -26,7 +18,6 @@ import org.eclipse.core.resources.IFile;
 import org.eclipse.core.resources.IMarker;
 import org.eclipse.core.resources.IProject;
 import org.eclipse.core.runtime.CoreException;
-import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.emf.common.util.Diagnostic;
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.EObject;
@@ -35,31 +26,22 @@ import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.ecore.resource.ResourceSet;
 import org.eclipse.emf.ecore.resource.impl.ResourceSetImpl;
 import org.eclipse.emf.ecore.xmi.impl.XMIResourceFactoryImpl;
-import org.eclipse.jface.action.IAction;
-import org.eclipse.jface.operation.IRunnableWithProgress;
-import org.eclipse.jface.text.Document;
 import org.eclipse.jface.viewers.ISelection;
 import org.eclipse.jface.viewers.ITreeSelection;
-import org.eclipse.ltk.core.refactoring.TextFileChange;
 import org.eclipse.photran.core.IFortranAST;
 import org.eclipse.photran.internal.core.analysis.binding.ScopingNode;
 import org.eclipse.photran.internal.core.lexer.Token;
 import org.eclipse.photran.internal.core.reindenter.Reindenter;
 import org.eclipse.photran.internal.core.reindenter.Reindenter.Strategy;
 import org.eclipse.photran.internal.core.vpg.PhotranVPG;
-import org.eclipse.text.edits.ReplaceEdit;
 import org.eclipse.ui.IEditorInput;
 import org.eclipse.ui.IEditorPart;
 import org.eclipse.ui.IFileEditorInput;
 import org.eclipse.ui.IMarkerResolution;
 import org.eclipse.ui.IViewReference;
-import org.eclipse.ui.IWorkbenchPage;
 import org.eclipse.ui.IWorkbenchWindow;
-import org.eclipse.ui.IWorkbenchWindowActionDelegate;
-import org.eclipse.ui.PartInitException;
 import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.handlers.HandlerUtil;
-import org.eclipse.ui.ide.IDE;
 
 /**
  * Our sample handler extends AbstractHandler, an IHandler base class.
@@ -126,7 +108,7 @@ public class ReverseHandler extends AbstractHandler {
 		}
 		
 		if (selectedProject == null) {
-			System.out.println("Current editor input: " + sel);
+			//System.out.println("Current editor input: " + sel);
 			return null;
 		}
 		
@@ -141,7 +123,7 @@ public class ReverseHandler extends AbstractHandler {
         //ReverseEngineer re = new ReverseEngineer();
         //NUOPCModel m = re.reverse(ast);
         
-        final FSM fsm = ReverseEngineer.reverseEngineer(pack, pack.getNUOPCApplication(), selectedProject, vpg); 
+        final FSM<NUOPCApplication> fsm = ReverseEngineer.reverseEngineer(pack, pack.getNUOPCApplication(), selectedProject, vpg); 
         
         //NUOPCApplication a = ReverseEngineer.reverseEngineer(pack, pack.getNUOPCApplication(), selectedProject, vpg);        
          //use project nature to store local data
@@ -220,7 +202,7 @@ public class ReverseHandler extends AbstractHandler {
 							@Override
 							public void run(IMarker marker) {
 								System.out.println("Quick fix: Forward adding: " + eref.getName() + ", " + eobj.toString());
-								fsm.forwardAdd(eobj, eref);
+								fsm.forwardAdd(eobj, eref, true);
 								
 								IFortranAST ast = fsm.getASTForElement(eobj);
 								Reindenter.reindent(ast.getRoot(), ast, Strategy.REINDENT_EACH_LINE);
@@ -276,7 +258,7 @@ public class ReverseHandler extends AbstractHandler {
 		return null;
 	}
 
-	
+	/*
 	public class RewriteASTRunnable implements IRunnableWithProgress {
 		
 		IFortranAST ast;
@@ -302,7 +284,7 @@ public class ReverseHandler extends AbstractHandler {
         			
             try {
 				
-            	String fileContentsBefore = inputStreamToString(f.getContents(true));
+            	String fileContentsBefore = inputStreamToString(f.getContents(false));
             	int charsInFile = fileContentsBefore.length();
             	
             	String replaceString = ast.getRoot().toString().trim();
@@ -368,32 +350,8 @@ public class ReverseHandler extends AbstractHandler {
 
 		
     }
-  
-	public static String inputStreamToString(final InputStream is) {
-		int bufferSize = 1024;
-		final char[] buffer = new char[bufferSize];
-		final StringBuilder out = new StringBuilder();
-		try {
-			final Reader in = new InputStreamReader(is);
-			try {
-				for (;;) {
-					int rsz = in.read(buffer, 0, buffer.length);
-					if (rsz < 0)
-						break;
-					out.append(buffer, 0, rsz);
-				}
-			}
-			finally {
-				in.close();
-			}
-		}
-		catch (UnsupportedEncodingException ex) {
-			ex.printStackTrace();
-		}
-		catch (IOException ex) {
-			ex.printStackTrace();
-		}
-		return out.toString();
-	}
+  	*/
+	
+	
 	
 }

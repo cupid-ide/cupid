@@ -4,6 +4,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 import org.earthsystemcurator.cupid.nuopc.fsml.core.FSM;
+import org.earthsystemcurator.cupid.nuopc.fsml.nuopc.NUOPCApplication;
 import org.eclipse.core.resources.ICommand;
 import org.eclipse.core.resources.IMarker;
 import org.eclipse.core.resources.IProject;
@@ -26,7 +27,7 @@ public class NUOPCNature implements IProjectNature {
 	//public Map<Object, Object> reversedMappings;
 	//public NUOPCApplication forwardModel;
 	
-	public FSM fsm;
+	public FSM<NUOPCApplication> fsm;
 	public FSM fsmForward;
 	
 	public Map<IMarker, IMarkerResolution> markerFixes = new HashMap<IMarker, IMarkerResolution>();

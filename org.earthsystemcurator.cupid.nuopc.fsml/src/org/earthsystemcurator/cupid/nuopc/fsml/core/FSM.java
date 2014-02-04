@@ -8,6 +8,7 @@ import java.util.List;
 import java.util.Map;
 
 import org.earthsystemcurator.cupid.nuopc.fsml.util.Regex;
+import org.eclipse.core.resources.IProject;
 import org.eclipse.emf.common.util.Diagnostic;
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.ecore.EClass;
@@ -18,11 +19,13 @@ import org.eclipse.emf.ecore.EReference;
 import org.eclipse.emf.ecore.util.Diagnostician;
 import org.eclipse.photran.core.IFortranAST;
 
-public class FSM {
+public class FSM<RootType extends EObject> {
 
-	protected EObject root;
+	protected RootType root;
 	protected EPackage pack;
 	protected EFactory factory;
+	protected IProject project;
+	
 	
 	/**
 	 * Mapping from a model element to one of:
@@ -33,15 +36,16 @@ public class FSM {
 	 */	
 	private Map<Object, Object> mappings;	
 	
-	protected FSM(EObject root) {
+	protected FSM(RootType root, IProject project) {
 		this.root = root;
 		this.pack = root.eClass().getEPackage();
 		this.factory = this.pack.getEFactoryInstance();
 		this.mappings = new IdentityHashMap<Object, Object>();
+		this.project = project;
 	}
 	
 	
-	public EObject getRoot() {
+	public RootType getRoot() {
 		return root;
 	}
 	
@@ -79,60 +83,47 @@ public class FSM {
 	 * 
 	 * @param context
 	 * @param eref
+	 * @param recursive
 	 * 
 	 */
-	public void forwardAdd(EObject context, EReference eref) {
+	@SuppressWarnings("unchecked")
+	public EObject forwardAdd(EObject context, EReference eref, boolean recursive) {
 		
 		Map<String, Object> keywordMap = Regex.getMappingFromAnnotation(eref);
-		
-		String methodName = null;
-		if (keywordMap.size() > 0) {
-			//by convention, first parameter keyword determines method name
-			methodName = (String) keywordMap.keySet().toArray()[0];
-			//skip metavariables for now
-		}
-		
+						
 		//contextFortranElem will be one of: IASTNode, IFortranAST, or Set<IFortranAST>
 		Object contextFortranElem = getMappings().get(context);
 		if (contextFortranElem == null) {
 			System.out.println("contextFortranElem is null: " + context);
-			return;
+			return null;
 		}
 		
+		String methodName = Regex.getMappingTypeFromAnnotation(eref);
 		Method method = null;
-		for (Method m : ForwardEngineer.class.getMethods()) {
-			if (m.getName().equalsIgnoreCase(methodName)) {
-				Class<?> c = m.getParameterTypes()[0];
-				if (c.isInstance(contextFortranElem)) {
-					method = m;
-					break;
+		if (methodName != null) {
+			for (Method m : ForwardEngineer.class.getMethods()) {
+				if (m.getName().equalsIgnoreCase(methodName)) {
+					Class<?> c = m.getParameterTypes()[0];
+					if (c.isInstance(contextFortranElem)) {
+						method = m;
+						break;
+					}
 				}
+			}
+			
+			if (method == null) {
+				System.out.println("Method not found: " + methodName + " with first param type: " + contextFortranElem.getClass());
+				return null;
 			}
 		}
 		
-		if (method == null) {
-			System.out.println("Method not found: " + methodName + " with first param type: " + contextFortranElem.getClass());
-			return;
-		}
 		
-		//create the new element		
-		EObject newElem = factory.create((EClass) eref.getEType());		
 		
-		Object newFortranElem = null;
-		try {
-			newFortranElem = method.invoke(null, contextFortranElem, newElem, keywordMap);
-			//System.out.println(methodName + " generated new code: " + newFortranElem);
-		} catch (IllegalArgumentException e) {
-			e.printStackTrace();
-		} catch (IllegalAccessException e) {
-			e.printStackTrace();
-		} catch (InvocationTargetException e) {
-			e.printStackTrace();
-		}				
-		
-		if (newFortranElem == null) {
-			System.out.println("Warning: returned Fortran elements is null");
-		}
+		//create the new element and add to model		
+		//EObject newElem = factory.create((EClass) eref.getEType());
+		//EObject newElem = createElementTree(context, eref);
+		EClass type = (EClass) eref.getEType();
+		EObject newElem = factory.create(type);
 		
 		//add the new element to the model
 		if (eref.isMany()) {
@@ -144,10 +135,86 @@ public class FSM {
 			context.eSet(eref, newElem);
 		}
 		
-		//add to mappings
-		getMappings().put(newElem, newFortranElem);
+		//method may be null if there is no Fortran mapping for the element
+		//in this case the new model element maps to the context fortran element
+		if (method != null) {
+			
+			//add project to keyword map
+			//TODO: is there a cleaner way to do this?
+			keywordMap.put("_project", this.project);
+			
+			//update the AST
+			Object newFortranElem = null;
+			try {
+				newFortranElem = method.invoke(null, contextFortranElem, newElem, keywordMap);
+				//System.out.println(methodName + " generated new code: " + newFortranElem);
+			} catch (IllegalArgumentException e) {
+				e.printStackTrace();
+			} catch (IllegalAccessException e) {
+				e.printStackTrace();
+			} catch (InvocationTargetException e) {
+				e.printStackTrace();
+			}				
+			
+			if (newFortranElem == null) {
+				System.out.println("Warning: returned Fortran elements is null");
+			}
+			
+			//add to mappings
+			getMappings().put(newElem, newFortranElem);
+		}
+		else {
+			getMappings().put(newElem, contextFortranElem);
+		}
+		
+		
+		//recursively add child elements
+		if (recursive) {
+			for (EReference childRef : type.getEReferences()) {
+				if (childRef.isContainment() && 
+						(Regex.getIsEssentialFromAnnotation(childRef) || 
+								Regex.getMappingTypeFromAnnotation(childRef) == null)) {
+					System.out.println("Adding child: " + childRef.getName());
+					forwardAdd(newElem, childRef, recursive);				
+				}
+			}
+		}
+		
+		return newElem;
 		
 	}
+	
+	/**
+	 * Create an new model element including all of its children
+	 * that are marked as essential.
+	 * 
+	 * @param parent the parent object or null
+	 * @param type the reference we are creating
+	 * @return the new element tree
+	 */
+	public EObject createElementTree(EObject parent, EReference eref) {
+		
+		EClass type = (EClass) eref.getEType();
+		EObject newElem = factory.create(type);
+		
+		if (eref.isMany()) {
+			@SuppressWarnings("rawtypes")
+			EList sf = (EList) parent.eGet(eref);
+			sf.add(newElem);
+		}
+		else {
+			parent.eSet(eref, newElem);
+		}
+		
+		for (EReference childRef : type.getEReferences()) {
+			if (childRef.isContainment() && Regex.getIsEssentialFromAnnotation(childRef)) {
+				EObject childElem = createElementTree(newElem, childRef);				
+			}
+		}
+		
+		return newElem;
+	}
+	
 	
 	@SuppressWarnings("restriction")
 	public IFortranAST getASTForElement(EObject eobj) {

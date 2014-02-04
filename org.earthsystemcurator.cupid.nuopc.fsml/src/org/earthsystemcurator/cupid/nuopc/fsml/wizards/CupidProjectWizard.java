@@ -887,6 +887,7 @@ public class CupidProjectWizard extends Wizard implements INewWizard, IExecutabl
 		
 	}
 	
+	/*
 	private void addMakeTargets(IProject project) throws CoreException {
 
 		IMakeTargetManager manager = MakeCorePlugin.getDefault().getTargetManager();
@@ -931,7 +932,8 @@ public class CupidProjectWizard extends Wizard implements INewWizard, IExecutabl
 		}
 
 	}
-
+	*/
+	
 
 	/**
 	 * We will initialize file contents with a sample text.

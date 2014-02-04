@@ -58,7 +58,7 @@ public class ReverseEngineer {
 		EFactory eFactory = ePackage.getEFactoryInstance();
 		EObject root = eFactory.create(eClass);
 		
-		FSM fsm = new FSM(root);
+		FSM fsm = new FSM(root, project);
 		
 		//a bit of a hack here for the root name
 		EStructuralFeature sfName = eClass.getEStructuralFeature("name");
@@ -176,7 +176,6 @@ public class ReverseEngineer {
 		
 		return fsm;
 		
-		//return fsm;
 	}
 	
 	
@@ -199,12 +198,14 @@ public class ReverseEngineer {
 		//call is required (this only occurs at leaves of metamodel tree)
 		Map<Object, Object> mappingsToAdd = new IdentityHashMap<Object, Object>();
 		
+		/*
 		if (modelElemClass.getName().equals("NUOPCDriverAtmOcn")) {
 			System.out.println("Getting all structural features");
 			for (EStructuralFeature sf : modelElemClass.getEAllStructuralFeatures()) {
 				System.out.println("==>" + sf.getName() + "\t\t" + sf.getEContainingClass());
 			}			
 		}
+		*/
 				
 		for (EStructuralFeature sf : modelElemClass.getEAllStructuralFeatures()) {
 			

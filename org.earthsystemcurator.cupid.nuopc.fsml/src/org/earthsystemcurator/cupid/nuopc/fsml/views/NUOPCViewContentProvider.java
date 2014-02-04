@@ -7,6 +7,7 @@ import java.util.Map;
 import java.util.Map.Entry;
 
 import org.earthsystemcurator.cupid.nuopc.fsml.builder.NUOPCNature;
+import org.earthsystemcurator.cupid.nuopc.fsml.core.FSM;
 import org.earthsystemcurator.cupid.nuopc.fsml.nuopc.NUOPCApplication;
 import org.earthsystemcurator.cupid.nuopc.fsml.nuopc.NUOPCFactory;
 import org.earthsystemcurator.cupid.nuopc.fsml.nuopc.NUOPCPackage;
@@ -46,18 +47,24 @@ class NUOPCViewContentProvider implements IStructuredContentProvider, ITreeConte
 	}
 	
 	private IProject project;
-	private NUOPCApplication app;
-	private Map<Object, Object> reversedMappings;
+	//private NUOPCApplication app;
+	//private Map<Object, Object> reversedMappings;
+	private FSM<NUOPCApplication> fsm;
 	
-	public Map<Object, Object> getReverseMappings() {
-		return this.reversedMappings;
+	public FSM<NUOPCApplication> getCurrentFSM() {
+		return fsm;
 	}
+	
+	//public Map<Object, Object> getReverseMappings() {
+	//	return this.reversedMappings;
+	//}
 	
 	public void inputChanged(Viewer v, Object oldInput, Object newInput) {
 		//System.out.println("inputChanged: " + v + " " + newInput);
 		
 		project = null;
-		app = null;
+		fsm = null;
+		//app = null;
 		
 		if (newInput != null) {
 			project = (IProject) newInput;			
@@ -65,7 +72,9 @@ class NUOPCViewContentProvider implements IStructuredContentProvider, ITreeConte
 				NUOPCNature nature = (NUOPCNature) project.getNature(NUOPCNature.NATURE_ID);
 				if (nature != null) {
 					
-					duplicateReversedModel(nature);
+					fsm = nature.fsm;
+					
+					//duplicateReversedModel(nature);
 					//make a deep copy
 					//app = EcoreUtil.copy(nature.reversedModel);					
 					
@@ -79,12 +88,15 @@ class NUOPCViewContentProvider implements IStructuredContentProvider, ITreeConte
 			} catch (CoreException e) {			
 				e.printStackTrace();
 				project = null;
-				app = null;
+				//app = null;
+				fsm = null;
 			}
 		}
 		
 	}
 	
+	//this should probably be moved to FSM.clone() if we need it
+	/*
 	protected void duplicateReversedModel(NUOPCNature nature) {
 		
 		if (nature.fsm != null) {
@@ -115,6 +127,7 @@ class NUOPCViewContentProvider implements IStructuredContentProvider, ITreeConte
 		}
 		
 	}
+	*/
 	
 	public void dispose() {
 	
@@ -146,12 +159,13 @@ class NUOPCViewContentProvider implements IStructuredContentProvider, ITreeConte
 		
 		//System.out.println("getElements: " + parent);
 		
-		if (app == null) {
+		if (fsm == null) {
 			System.out.println("No reverse engineered model");
 			return new Object[0];
 		}
-				
+		
 		Top top = NUOPCFactory.eINSTANCE.createTop();
+		NUOPCApplication app = fsm.getRoot();
 		top.setApps(app);
 		
 		EReference er = NUOPCPackage.eINSTANCE.getTop_Apps();
@@ -162,12 +176,12 @@ class NUOPCViewContentProvider implements IStructuredContentProvider, ITreeConte
 	}
 	
 	public Object getParent(Object child) {
-		System.out.println("getParent: " + child);
+		//System.out.println("getParent: " + child);
 		return null;
 	}
 	
 	public Object [] getChildren(Object p) {
-		System.out.println("getChildren: " + p);
+		//System.out.println("getChildren: " + p);
 		if (p instanceof NUOPCModelElem) {
 			NUOPCModelElem parent = (NUOPCModelElem) p;
 			//EReference er = parent.eref;
@@ -202,9 +216,7 @@ class NUOPCViewContentProvider implements IStructuredContentProvider, ITreeConte
 					else if (eattrib.getEType().getName().equals("EBoolean")) {
 						nameLabel = Boolean.toString((Boolean) val);
 					}
-					
-					
-					
+				
 					children.add(new NUOPCModelElem(parent, eattrib, nameLabel, typeLabel, null));
 				}
 				

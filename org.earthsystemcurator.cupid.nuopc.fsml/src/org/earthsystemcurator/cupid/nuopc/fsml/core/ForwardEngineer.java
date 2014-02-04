@@ -355,7 +355,7 @@ public class ForwardEngineer {
 	
 	
 	//public IFortranAST module(PhotranVPG vpg, EObject modelElem, Map<String, Object> params) {
-	public IFortranAST moduleMAKE_ME_STATIC(Set<IFortranAST> asts, EObject modelElem, Map<String, Object> params) {
+	public static IFortranAST module(Set<IFortranAST> asts, EObject modelElem, Map<String, Object> params) {
 		
 		//System.out.println("Module: vpg context = " + vpg);
 		//vpg.getVPGWriter()
@@ -390,8 +390,8 @@ public class ForwardEngineer {
 		
 		System.out.println("Module code template:\n" + code.render() + "\n\n");
 		
-		//container.
-		IFile fileToAdd = container.getFile(moduleName.toLowerCase() + ".F90");
+		IProject project = (IProject) params.get("_project");
+		IFile fileToAdd = project.getFile(moduleName.toLowerCase() + ".F90");
 				
 		if (!fileToAdd.exists()) {
 			byte[] bytes = code.render().getBytes();
@@ -456,7 +456,7 @@ public class ForwardEngineer {
 		code.add("vars", vars);
 		code.add("keys", keywords);
 				
-		//System.out.println("Code to parse:\n" + code.render() + "\n");
+		System.out.println("Code to parse:\n" + code.render() + "\n");
 		
 		IBodyConstruct node = CodeExtraction.parseLiteralStatement(code.render());		
 		

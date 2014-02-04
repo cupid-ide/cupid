@@ -1,12 +1,19 @@
 package org.earthsystemcurator.cupid.nuopc.fsml.views;
 
-import org.earthsystemcurator.cupid.nuopc.fsml.nuopc.NUOPCFactory;
+import java.lang.reflect.InvocationTargetException;
+
+import org.earthsystemcurator.cupid.nuopc.fsml.handlers.RewriteASTRunnable;
 import org.earthsystemcurator.cupid.nuopc.fsml.util.Regex;
 import org.earthsystemcurator.cupid.nuopc.fsml.views.NUOPCViewContentProvider.NUOPCModelElem;
 import org.eclipse.core.resources.IMarker;
 import org.eclipse.core.resources.IProject;
+import org.eclipse.core.resources.IResourceChangeEvent;
+import org.eclipse.core.resources.IResourceChangeListener;
+import org.eclipse.core.resources.IResourceDelta;
+import org.eclipse.core.resources.IResourceDeltaVisitor;
+import org.eclipse.core.resources.IWorkspace;
+import org.eclipse.core.resources.ResourcesPlugin;
 import org.eclipse.core.runtime.CoreException;
-import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EReference;
@@ -14,10 +21,7 @@ import org.eclipse.jface.action.Action;
 import org.eclipse.jface.action.ContributionManager;
 import org.eclipse.jface.action.IMenuListener;
 import org.eclipse.jface.action.IMenuManager;
-import org.eclipse.jface.action.IToolBarManager;
 import org.eclipse.jface.action.MenuManager;
-import org.eclipse.jface.action.Separator;
-import org.eclipse.jface.dialogs.MessageDialog;
 import org.eclipse.jface.layout.TreeColumnLayout;
 import org.eclipse.jface.viewers.ColumnViewerToolTipSupport;
 import org.eclipse.jface.viewers.ColumnWeightData;
@@ -33,13 +37,15 @@ import org.eclipse.photran.internal.core.lexer.Token;
 import org.eclipse.photran.internal.core.parser.ASTModuleNode;
 import org.eclipse.photran.internal.core.parser.ASTNode;
 import org.eclipse.photran.internal.core.parser.IProgramUnit;
+import org.eclipse.photran.internal.core.reindenter.Reindenter;
+import org.eclipse.photran.internal.core.reindenter.Reindenter.Strategy;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Menu;
 import org.eclipse.swt.widgets.TreeColumn;
 import org.eclipse.ui.IActionBars;
-import org.eclipse.ui.ISharedImages;
 import org.eclipse.ui.IWorkbenchPage;
+import org.eclipse.ui.IWorkbenchWindow;
 import org.eclipse.ui.PartInitException;
 import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.ide.IDE;
@@ -85,18 +91,32 @@ public class NUOPCView extends ViewPart {
 	private TreeColumn tc2;
 	
 	private NUOPCViewContentProvider contentProvider;
+	
+	private boolean projectIsDirty = false;
 
 	
 	/**
 	 * The constructor.
 	 */
 	public NUOPCView() {
+	
 	}
+
 
 	public void updateView(IProject project) {
 		viewer.setInput(project);
 		viewer.expandToLevel(2);
-		//tc2.setText(project.getName());
+		setProjectIsDirty(false);
+	}
+	
+	protected void setProjectIsDirty(boolean dirty) {
+		projectIsDirty = dirty;
+		if (dirty) {
+			this.setPartName("*NUOPC View");
+		}
+		else {
+			this.setPartName("NUOPC View");
+		}
 	}
 	
 	/**
@@ -172,7 +192,9 @@ public class NUOPCView extends ViewPart {
 				IMarker marker = null;
 				
 				if (me.elem != null) {
-					Object val = contentProvider.getReverseMappings().get(me.elem);
+					//Object val = contentProvider.getReverseMappings().get(me.elem);
+					Object val = contentProvider.getCurrentFSM().getMappings().get(me.elem);
+					
 					if (val != null) {
 												
 						if (val instanceof ScopingNode) {
@@ -194,7 +216,8 @@ public class NUOPCView extends ViewPart {
 				}
 				//try to match on nameLabel using object identity 
 				else if (me.nameLabel != null) {
-					Object val = contentProvider.getReverseMappings().get(me.nameLabel);
+					//Object val = contentProvider.getReverseMappings().get(me.nameLabel);
+					Object val = contentProvider.getCurrentFSM().getMappings().get(me.nameLabel);
 					if (val != null && val instanceof Token) {
 						marker = createMarker((Token) val);
 					}
@@ -226,7 +249,7 @@ public class NUOPCView extends ViewPart {
 		//toolbar
 		//Action reverseEngineerAction = new Action();
 		
-		makeActions();
+		//makeActions();
 		
 		IActionBars bars = getViewSite().getActionBars();
 		//bars.getToolBarManager().add(action1);
@@ -236,7 +259,6 @@ public class NUOPCView extends ViewPart {
 		IMenuService menuService = (IMenuService) workbench.getService(IMenuService.class);
 		menuService.populateContributionManager((ContributionManager) bars.getToolBarManager(), "toolbar:org.earthsystemcurator.cupid.nuopc.fsml.views.NUOPCView.toolbar");
 		bars.updateActionBars();
-		
 		
 		MenuManager menuMgr = new MenuManager();
 
@@ -265,6 +287,7 @@ public class NUOPCView extends ViewPart {
                     				
                     				public void run() {
                         				
+                    					/*
                         				EObject newElem = NUOPCFactory.eINSTANCE.create((EClass)childRef.getEType());                      					
                         				if (childRef.isMany()) {
                         					EList l = (EList) me.elem.eGet(childRef);
@@ -273,9 +296,26 @@ public class NUOPCView extends ViewPart {
                         				else {
                         					me.elem.eSet(childRef, newElem);                					
                         				}
-                        				
+                        				*/
                         				//showMessage("Added element: " + newElem);
-                        				                				
+                        				
+                    					
+                    					EObject newElem = contentProvider.getCurrentFSM().forwardAdd(me.elem, childRef, true);
+        								IFortranAST ast = contentProvider.getCurrentFSM().getASTForElement(newElem);
+        								
+        								//TODO: in the case of NUOPCApplication, there is no AST above
+        								Reindenter.reindent(ast.getRoot(), ast, Strategy.REINDENT_EACH_LINE);
+        								
+        								try {
+        									IWorkbenchWindow window = PlatformUI.getWorkbench().getActiveWorkbenchWindow();
+        									//running in UI thread for now so we can set focus to generated code
+        									PlatformUI.getWorkbench().getProgressService().run(false, true, new RewriteASTRunnable(ast, window));
+        								} catch (InvocationTargetException e) {
+        									e.printStackTrace();
+        								} catch (InterruptedException e) {
+        									e.printStackTrace();
+        								}
+                    					
                         				viewer.refresh(me);
                         				viewer.expandToLevel(me, 1);
                         				
@@ -331,6 +371,43 @@ public class NUOPCView extends ViewPart {
 		
 		
 		
+        //resource listener to know when current project is dirty
+        
+        IWorkspace workspace = ResourcesPlugin.getWorkspace();
+		IResourceChangeListener rcl = new IResourceChangeListener() {
+			public void resourceChanged(IResourceChangeEvent event) {
+				if (viewer.getInput() != null) {
+					try {
+						event.getDelta().accept(new IResourceDeltaVisitor() {
+	
+							@Override
+							public boolean visit(IResourceDelta delta)
+									throws CoreException {
+								if (delta.getResource() instanceof IProject) {
+									if (viewer.getInput().equals(delta.getResource())) {
+										//System.out.println("Dirty project: " + delta.getResource());
+										setProjectIsDirty(true);
+										return false;
+									}
+								}
+								return true;
+							}
+							
+						});
+					} catch (CoreException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
+				}
+			}
+		};
+
+		workspace.addResourceChangeListener(rcl);
+        
+        
+        
+        
+        
 		// Create the help context id for the viewer's control
 	//	PlatformUI.getWorkbench().getHelpSystem().setHelp(viewer.getControl(), "org.earthsystemcurator.cupid.nuopc.fsml.viewer");
 		
@@ -372,6 +449,7 @@ public class NUOPCView extends ViewPart {
     }
 	
 
+	/*
 	private void hookContextMenu() {
 		MenuManager menuMgr = new MenuManager("#PopupMenu");
 		menuMgr.setRemoveAllWhenShown(true);
@@ -384,7 +462,9 @@ public class NUOPCView extends ViewPart {
 		viewer.getControl().setMenu(menu);
 		getSite().registerContextMenu(menuMgr, viewer);
 	}
-
+	*/
+	
+	/*
 	private void contributeToActionBars() {
 		IActionBars bars = getViewSite().getActionBars();
 		fillLocalPullDown(bars.getMenuManager());
@@ -412,7 +492,9 @@ public class NUOPCView extends ViewPart {
 		manager.add(new Separator());
 		drillDownAdapter.addNavigationActions(manager);
 	}
-
+	*/
+	
+	/*
 	private void makeActions() {
 		action1 = new Action() {
 			public void run() {
@@ -434,7 +516,7 @@ public class NUOPCView extends ViewPart {
 		action2.setImageDescriptor(PlatformUI.getWorkbench().getSharedImages().
 				getImageDescriptor(ISharedImages.IMG_OBJS_INFO_TSK));
 		
-		/*
+		
 		doubleClickAction = new Action() {
 			public void run() {
 				ISelection selection = viewer.getSelection();
@@ -442,8 +524,9 @@ public class NUOPCView extends ViewPart {
 				showMessage("Double-click detected on "+obj.toString());
 			}
 		};
-		*/
+		
 	}
+	*/
 
 	/*
 	private void hookDoubleClickAction() {
@@ -455,12 +538,14 @@ public class NUOPCView extends ViewPart {
 	}
 	*/
 	
+	/*
 	private void showMessage(String message) {
 		MessageDialog.openInformation(
 			viewer.getControl().getShell(),
 			"NUOPC View",
 			message);
 	}
+	*/
 
 	/**
 	 * Passing the focus request to the viewer's control.
