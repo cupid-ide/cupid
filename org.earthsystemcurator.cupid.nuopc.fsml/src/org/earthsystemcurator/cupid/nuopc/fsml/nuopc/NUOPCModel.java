@@ -71,6 +71,7 @@ public interface NUOPCModel extends EObject {
 	 * @see #setGenericImports(NUOPCModel__GenericImports)
 	 * @see org.earthsystemcurator.cupid.nuopc.fsml.nuopc.NUOPCPackage#getNUOPCModel_GenericImports()
 	 * @model containment="true" required="true"
+	 *        annotation="http://www.earthsystemcog.org/projects/nuopc mapping='usesModule: \"NUOPC_Model\"' essential='true'"
 	 * @generated
 	 */
 	NUOPCModel__GenericImports getGenericImports();

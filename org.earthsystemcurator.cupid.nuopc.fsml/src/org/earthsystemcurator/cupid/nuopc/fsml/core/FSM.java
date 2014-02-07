@@ -11,11 +11,13 @@ import org.earthsystemcurator.cupid.nuopc.fsml.util.Regex;
 import org.eclipse.core.resources.IProject;
 import org.eclipse.emf.common.util.Diagnostic;
 import org.eclipse.emf.common.util.EList;
+import org.eclipse.emf.ecore.EAttribute;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EFactory;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.EReference;
+import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.ecore.util.Diagnostician;
 import org.eclipse.photran.core.IFortranAST;
 
@@ -76,7 +78,31 @@ public class FSM<RootType extends EObject> {
 	}
 	
 	/**
-	 * Adds a new element to the FSM at the given eref and updates the associated AST.
+	 * Finds the appropriate forward engineering method (AST code generation).
+	 *
+	 * @param methodName the name of the method
+	 * @param firstParam the first parameter (used to match type)
+	 * @return the method if found, or null if not
+	 */
+	private Method getFEMethod(String methodName, Object firstParam) {
+			
+		if (methodName != null) {
+			for (Method m : ForwardEngineer.class.getMethods()) {
+				if (m.getName().equalsIgnoreCase(methodName)) {
+					Class<?> c = m.getParameterTypes()[0];
+					if (c.isInstance(firstParam)) {
+						return m;
+					}
+				}
+			}
+		}
+		return null;
+	}
+	
+	/**
+	 * Adds a new structural feature to the FSM and updates the associated AST.
+	 * A new EObject is created and the new Fortran constructs are added to the AST
+	 * according to the mapping of the EReference
 	 * 
 	 * This method does not write out the modified AST, so no change will 
 	 * be visible in the editor after this method completes.
@@ -84,44 +110,19 @@ public class FSM<RootType extends EObject> {
 	 * @param context
 	 * @param eref
 	 * @param recursive
-	 * 
+	 * @return the EObject created
 	 */
-	@SuppressWarnings("unchecked")
 	public EObject forwardAdd(EObject context, EReference eref, boolean recursive) {
-		
+	
 		Map<String, Object> keywordMap = Regex.getMappingFromAnnotation(eref);
-						
+		
 		//contextFortranElem will be one of: IASTNode, IFortranAST, or Set<IFortranAST>
 		Object contextFortranElem = getMappings().get(context);
 		if (contextFortranElem == null) {
 			System.out.println("contextFortranElem is null: " + context);
 			return null;
 		}
-		
-		String methodName = Regex.getMappingTypeFromAnnotation(eref);
-		Method method = null;
-		if (methodName != null) {
-			for (Method m : ForwardEngineer.class.getMethods()) {
-				if (m.getName().equalsIgnoreCase(methodName)) {
-					Class<?> c = m.getParameterTypes()[0];
-					if (c.isInstance(contextFortranElem)) {
-						method = m;
-						break;
-					}
-				}
-			}
 			
-			if (method == null) {
-				System.out.println("Method not found: " + methodName + " with first param type: " + contextFortranElem.getClass());
-				return null;
-			}
-		}
-		
-		
-		
-		//create the new element and add to model		
-		//EObject newElem = factory.create((EClass) eref.getEType());
-		//EObject newElem = createElementTree(context, eref);
 		EClass type = (EClass) eref.getEType();
 		EObject newElem = factory.create(type);
 		
@@ -134,10 +135,17 @@ public class FSM<RootType extends EObject> {
 		else {
 			context.eSet(eref, newElem);
 		}
+			
 		
-		//method may be null if there is no Fortran mapping for the element
-		//in this case the new model element maps to the context fortran element
-		if (method != null) {
+		String methodName = Regex.getMappingTypeFromAnnotation(eref);
+		if (methodName != null) {
+
+			Method method = getFEMethod(methodName, contextFortranElem);
+			
+			if (method == null) {
+				System.out.println("Method not found: " + methodName + " with first param type: " + contextFortranElem.getClass());
+				return null;
+			}
 			
 			//add project to keyword map
 			//TODO: is there a cleaner way to do this?
@@ -147,7 +155,94 @@ public class FSM<RootType extends EObject> {
 			Object newFortranElem = null;
 			try {
 				newFortranElem = method.invoke(null, contextFortranElem, newElem, keywordMap);
-				//System.out.println(methodName + " generated new code: " + newFortranElem);
+			} catch (IllegalArgumentException e) {
+				e.printStackTrace();
+			} catch (IllegalAccessException e) {
+				e.printStackTrace();
+			} catch (InvocationTargetException e) {
+				//most likely a syntax error - TODO: deal with this gracefully
+				e.printStackTrace();
+			}				
+			
+			if (newFortranElem == null) {
+				System.out.println("Warning: returned Fortran elements is null");
+			}
+			
+			//add to mappings
+			getMappings().put(newElem, newFortranElem);
+		
+		}	
+		else {
+			//method may be null if there is no Fortran mapping for the element
+			//in this case the new model element maps to the context fortran element
+			getMappings().put(newElem, contextFortranElem);
+		}
+		
+				
+		//recursively add child elements
+		if (recursive) {
+			
+			//handle EAttributes
+			for (EAttribute childAtt : type.getEAttributes()) {
+				//if (Regex.getIsEssentialFromAnnotation(childAtt) || 
+				//				Regex.getMappingTypeFromAnnotation(childRef) == null) {
+					forwardAdd(newElem, childAtt);				
+				//}
+			}
+			
+			//handle EReferences
+			for (EReference childRef : type.getEReferences()) {
+				if (childRef.isContainment() && 
+						(Regex.getIsEssentialFromAnnotation(childRef) || 
+								Regex.getMappingTypeFromAnnotation(childRef) == null)) {
+					forwardAdd(newElem, childRef, recursive);				
+				}
+			}
+		}
+		
+		return newElem;
+		
+	}
+	
+	/**
+	 * Updates the associated AST based on the value of the EAttribute.
+	 * 
+	 * This method does not write out the modified AST, so no change will 
+	 * be visible in the editor after this method completes.
+	 * 
+	 * @param context the EObject containing the attribute
+	 * @param eatt the EAttribute used to update the AST
+	 * @return the value of the EAttribute
+	 * 
+	 */
+		
+	public Object forwardAdd(EObject context, EAttribute eatt) {
+
+		Map<String, Object> keywordMap = Regex.getMappingFromAnnotation(eatt);
+		
+		//contextFortranElem will be one of: IASTNode, IFortranAST, or Set<IFortranAST>
+		Object contextFortranElem = getMappings().get(context);
+		if (contextFortranElem == null) {
+			System.out.println("contextFortranElem is null: " + context);
+			return null;
+		}
+			
+		Object newElem = context.eGet(eatt);
+				
+		String methodName = Regex.getMappingTypeFromAnnotation(eatt);
+		if (methodName != null) {
+
+			Method method = getFEMethod(methodName, contextFortranElem);
+			
+			if (method == null) {
+				System.out.println("Method not found: " + methodName + " with first param type: " + contextFortranElem.getClass());
+				return null;
+			}
+						
+			//update the AST
+			Object newFortranElem = null;
+			try {
+				newFortranElem = method.invoke(null, contextFortranElem, newElem, keywordMap);
 			} catch (IllegalArgumentException e) {
 				e.printStackTrace();
 			} catch (IllegalAccessException e) {
@@ -162,27 +257,18 @@ public class FSM<RootType extends EObject> {
 			
 			//add to mappings
 			getMappings().put(newElem, newFortranElem);
-		}
+		
+		}	
 		else {
+			//method may be null if there is no Fortran mapping for the element
+			//in this case the new model element maps to the context fortran element
 			getMappings().put(newElem, contextFortranElem);
 		}
 		
-		
-		//recursively add child elements
-		if (recursive) {
-			for (EReference childRef : type.getEReferences()) {
-				if (childRef.isContainment() && 
-						(Regex.getIsEssentialFromAnnotation(childRef) || 
-								Regex.getMappingTypeFromAnnotation(childRef) == null)) {
-					System.out.println("Adding child: " + childRef.getName());
-					forwardAdd(newElem, childRef, recursive);				
-				}
-			}
-		}
-		
 		return newElem;
-		
+
 	}
+
 	
 	/**
 	 * Create an new model element including all of its children
@@ -192,6 +278,7 @@ public class FSM<RootType extends EObject> {
 	 * @param type the reference we are creating
 	 * @return the new element tree
 	 */
+	/*
 	public EObject createElementTree(EObject parent, EReference eref) {
 		
 		EClass type = (EClass) eref.getEType();
@@ -214,7 +301,7 @@ public class FSM<RootType extends EObject> {
 		
 		return newElem;
 	}
-	
+	*/
 	
 	@SuppressWarnings("restriction")
 	public IFortranAST getASTForElement(EObject eobj) {

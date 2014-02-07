@@ -220,6 +220,9 @@ class NUOPCViewLabelProvider extends StyledCellLabelProvider { //implements ITab
 						else if (mappingType.equalsIgnoreCase("usesModule")) {
 							imageKey = "import.png";
 						}
+						else if (mappingType.equalsIgnoreCase("usesEntity")) {
+							imageKey = "import_obj.gif";
+						}
 					}
 					else if (sf instanceof EReference) {
 						imageKey = "tree.gif";

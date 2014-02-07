@@ -62,11 +62,12 @@ public class RewriteASTRunnable implements IRunnableWithProgress {
         	   	changeThisFile.perform(monitor);
 			
         	   	//String fileContentsAfter = inputStreamToString(f.getContents(true));
-				System.out.println("Processed file: " + f.getName()); // + " : " + charsInFile + " ==> " + replaceString.length());
+				//System.out.println("Processed file: " + f.getName()); // + " : " + charsInFile + " ==> " + replaceString.length());
 			
 				//IRangeComparator left = new TokenComparator(fileContentsBefore); 
 		        //IRangeComparator right = new TokenComparator(fileContentsAfter);
 				
+        	   	//TODO: make the marker stuff optional
 				DocLineComparator left = new DocLineComparator(new Document(fileContentsBefore), null, true);
 				DocLineComparator right = new DocLineComparator(new Document(replaceString), null, true);
 				
@@ -81,9 +82,9 @@ public class RewriteASTRunnable implements IRunnableWithProgress {
 		        	
 		        	int oldStart = left.getTokenStart(rd.leftStart());
 		        	int oldEnd = left.getTokenStart(rd.leftEnd()) + left.getTokenLength(rd.leftEnd());
-		        	System.out.println("\n*********Range diff: " + rd.toString());
-		        	System.out.println("BEFORE:\n" + fileContentsBefore.substring(oldStart, oldEnd));
-		        	System.out.println("\nAFTER:\n" + replaceString.substring(start, end));
+		        	//System.out.println("\n*********Range diff: " + rd.toString());
+		        	//System.out.println("BEFORE:\n" + fileContentsBefore.substring(oldStart, oldEnd));
+		        	//System.out.println("\nAFTER:\n" + replaceString.substring(start, end));
 		        	
 		        	if (end-start > 2) {
 		        		IMarker marker = f.createMarker("org.earthsystemcurator.cupid.nuopc.fsml.cupidmarker");

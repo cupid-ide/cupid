@@ -148,7 +148,7 @@ public interface NUOPCDriverAtmOcn__ImplementsSetModelPetLists extends EObject {
 	 * @return the value of the '<em>Driver Internal State</em>' attribute.
 	 * @see #setDriverInternalState(String)
 	 * @see org.earthsystemcurator.cupid.nuopc.fsml.nuopc.NUOPCPackage#getNUOPCDriverAtmOcn__ImplementsSetModelPetLists_DriverInternalState()
-	 * @model annotation="http://www.earthsystemcog.org/projects/nuopc mapping='localVariable: \"type(driver_type_IS)\"'"
+	 * @model annotation="http://www.earthsystemcog.org/projects/nuopc mapping='localVariable: \"type(#../../genericImports/importsTypeDriverIS)\"'"
 	 * @generated
 	 */
 	String getDriverInternalState();

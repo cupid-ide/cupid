@@ -80,6 +80,7 @@ public interface NUOPCDriver__ConnectorImports__ConnectorImport extends EObject 
 
 	/**
 	 * Returns the value of the '<em><b>Set Services</b></em>' attribute.
+	 * The default value is <code>"connector_SetServices"</code>.
 	 * <!-- begin-user-doc -->
 	 * <p>
 	 * If the meaning of the '<em>Set Services</em>' attribute isn't clear,
@@ -89,7 +90,7 @@ public interface NUOPCDriver__ConnectorImports__ConnectorImport extends EObject 
 	 * @return the value of the '<em>Set Services</em>' attribute.
 	 * @see #setSetServices(String)
 	 * @see org.earthsystemcurator.cupid.nuopc.fsml.nuopc.NUOPCPackage#getNUOPCDriver__ConnectorImports__ConnectorImport_SetServices()
-	 * @model required="true"
+	 * @model default="connector_SetServices" required="true"
 	 *        annotation="http://www.earthsystemcog.org/projects/nuopc mapping='usesEntity: \"routine_SetServices\"'"
 	 * @generated
 	 */

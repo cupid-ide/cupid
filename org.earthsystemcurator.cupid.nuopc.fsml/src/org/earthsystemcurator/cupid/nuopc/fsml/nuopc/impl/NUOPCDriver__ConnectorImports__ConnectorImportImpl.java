@@ -61,7 +61,7 @@ public class NUOPCDriver__ConnectorImports__ConnectorImportImpl extends EObjectI
 	 * @generated
 	 * @ordered
 	 */
-	protected static final String SET_SERVICES_EDEFAULT = null;
+	protected static final String SET_SERVICES_EDEFAULT = "connector_SetServices";
 
 	/**
 	 * The cached value of the '{@link #getSetServices() <em>Set Services</em>}' attribute.

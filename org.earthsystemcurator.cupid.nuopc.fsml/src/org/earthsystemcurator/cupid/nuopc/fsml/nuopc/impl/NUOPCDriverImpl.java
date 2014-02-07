@@ -52,7 +52,7 @@ public class NUOPCDriverImpl extends EObjectImpl implements NUOPCDriver {
 	 * @generated
 	 * @ordered
 	 */
-	protected static final String NAME_EDEFAULT = "ModelDefault";
+	protected static final String NAME_EDEFAULT = "DriverDefault";
 
 	/**
 	 * The cached value of the '{@link #getName() <em>Name</em>}' attribute.

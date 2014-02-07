@@ -8,6 +8,8 @@ import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.Comparator;
+import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
@@ -51,9 +53,15 @@ import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.photran.core.IFortranAST;
 import org.eclipse.photran.internal.core.lexer.FileOrIFile;
+import org.eclipse.photran.internal.core.lexer.Terminal;
 import org.eclipse.photran.internal.core.lexer.Token;
+import org.eclipse.photran.internal.core.parser.ASTListNode;
 import org.eclipse.photran.internal.core.parser.ASTModuleNode;
+import org.eclipse.photran.internal.core.parser.ASTOnlyNode;
+import org.eclipse.photran.internal.core.parser.ASTSeparatedListNode;
 import org.eclipse.photran.internal.core.parser.ASTSubroutineSubprogramNode;
+import org.eclipse.photran.internal.core.parser.ASTUseStmtNode;
+import org.eclipse.photran.internal.core.parser.IASTListNode;
 import org.eclipse.photran.internal.core.parser.IASTNode;
 import org.eclipse.photran.internal.core.parser.IBodyConstruct;
 import org.eclipse.photran.internal.core.reindenter.Reindenter;
@@ -353,6 +361,160 @@ public class ForwardEngineer {
 	}
 	*/
 	
+	public static IASTNode uses(IFortranAST ast, String renamedEntity, Map<String, Object> params) {
+		return uses((ASTModuleNode) ast.getRoot().getProgramUnitList().get(0), renamedEntity, params);
+	}
+	
+	public static IASTNode uses(ASTModuleNode module, String renamedEntity, Map<String, Object> params) {
+			    	  
+		String moduleName = (String) params.get("uses");
+		String entityName = (String) params.get("entity");
+		
+		//determine if there is already a use statement for the module
+		Map<String,Object> query = new HashMap<String, Object>();
+		query.put("usesModule", moduleName);
+		Map<ASTUseStmtNode, ?> results = CodeQuery.usesModule(module, query);
+		
+		if (results.size() > 0) {
+			ASTUseStmtNode addToNode = results.keySet().iterator().next();
+			String code = addToNode.toString().trim();
+			//if (code.endsWith("\n")) code = code.substring(0, code.length()-1);
+			if (addToNode.getOnlyList() == null) {
+				code += ", only: ";
+			}
+			else {
+				code += ", ";
+			}
+			if (!renamedEntity.equals(entityName)) {
+				code += renamedEntity + " => " + entityName;
+			}
+			else {
+				code += entityName;
+			}
+			
+			addToNode.replaceWith(code);
+			return addToNode;
+		}
+		else {
+			String code = "use " + moduleName + ", only: " + renamedEntity + " => " + entityName;
+			ASTUseStmtNode newNode = (ASTUseStmtNode) CodeExtraction.parseLiteralStatement(code);
+		
+			//find an appropriate location
+			IASTListNode<IBodyConstruct> body = (IASTListNode<IBodyConstruct>) module.getBody();
+			ASTUseStmtNode usn = body.findLast(ASTUseStmtNode.class);
+			if (usn != null) {
+				body.insertAfter(usn, newNode);
+			}
+			else {
+				body.add(0, newNode);
+			}
+			return newNode;
+		}
+		
+		
+	}
+	
+	public static IASTNode usesModule(IFortranAST ast, EObject modelElem, Map<String, Object> params) {
+		return usesModule((ASTModuleNode) ast.getRoot().getProgramUnitList().get(0), modelElem, params);
+	}
+
+	public static IASTNode usesModule(ASTModuleNode module, EObject modelElem, Map<String, Object> params) {
+		String moduleName = (String) params.get("usesModule");	
+		
+		ST code = new ST("\n\nuse <moduleName>, only: <oldName, newName:{o,n|&\n\t<n> => <o>}; separator=\", \">\n");
+		code.add("moduleName", moduleName);
+		//String code = "use " + moduleName;
+				
+		//find usesEntity children
+		Map<String, Map<String, Object>> entities = findMappedValueStrings("usesEntity", modelElem); 
+		//if (entities.size() > 0) {
+			
+			//code += ", only: ";
+			for (Entry<String, Map<String,Object>> entity : entities.entrySet()) {
+				String renamedEntity = entity.getKey();
+				String entityName = (String) entity.getValue().get("usesEntity");
+				code.add("oldName", entityName);
+				code.add("newName", renamedEntity);
+				//if (!renamedEntity.equals(entityName)) {
+				//	code += renamedEntity + " => " + entityName + ", ";
+				//}
+				//else {
+				//	code += entityName + ", ";
+				//}
+			}
+			
+		//}
+		
+		//find an appropriate location
+		String renderedCode = code.render();
+		ASTUseStmtNode newNode = (ASTUseStmtNode) CodeExtraction.parseLiteralStatement(renderedCode);
+		IASTListNode<IBodyConstruct> body = (IASTListNode<IBodyConstruct>) module.getBody();
+		ASTUseStmtNode usn = body.findLast(ASTUseStmtNode.class);
+		if (usn != null) {
+			body.insertAfter(usn, newNode);
+		}
+		else {
+			body.add(0, newNode);
+		}
+		return newNode;			
+	}
+	
+	
+	public static String usesEntityXXX(ASTUseStmtNode usn, String renamedEntity, Map<String, Object> params) {
+		String entityName = (String) params.get("usesEntity");
+		
+		String code = usn.toString().trim();
+		//ASTListNode<ASTOnlyNode> aln;
+		if (usn.getOnlyList() == null) {
+			//usn.setOnlyList(new ASTSeparatedListNode<ASTOnlyNode>());
+			code += ", only: ";
+		}
+		else {
+			code += ", ";
+		}
+		
+		//ASTOnlyNode newOnlyNode = new ASTOnlyNode();
+		//Token name = new Token(Terminal.T_IDENT, entityName);
+		//Token rename = null;
+		//newOnlyNode.setName(name);
+		
+		if (!entityName.equals(renamedEntity)) {
+			code += renamedEntity + " => " + entityName;
+			//newOnlyNode.replaceWith(renamedEntity + " => " + entityName);
+			//Token name = new Token(Terminal.T_IDENT, entityName);
+			//newOnlyNode.setName(name);
+			//rename = new Token(Terminal.T_IDENT, renamedEntity);
+			//newOnlyNode.setIsRenamed(rename);
+		}
+		else {
+		//	newOnlyNode.replaceWith(entityName);
+			code += entityName;
+		}
+		//usn.getOnlyList().add(newOnlyNode);
+		
+		//if (rename != null) {
+		//	return rename.getText();
+		//}
+		//else {
+		//	return name.getText();
+		//}
+		//ASTUseStmtNode newNode = (ASTUseStmtNode) CodeExtraction.parseLiteralStatement(code);
+		
+		//if we do a replacement, then the mappings will be off
+		//handle this by either:
+		// - updating the mappings?
+		// - not doing the replacement?
+		
+		usn.replaceWith(code);
+		
+		//TODO: fix this return
+		return null;
+		
+	}
+	
+	
+
+	
 	
 	//public IFortranAST module(PhotranVPG vpg, EObject modelElem, Map<String, Object> params) {
 	public static IFortranAST module(Set<IFortranAST> asts, EObject modelElem, Map<String, Object> params) {
@@ -404,6 +566,9 @@ public class ForwardEngineer {
 			} catch (CoreException e) {				
 				e.printStackTrace();
 			}
+		}
+		else {
+			//if it already exists, we need to deal with this - do not overwrite existing file...
 		}
 		
 		
@@ -591,6 +756,20 @@ public class ForwardEngineer {
 			}
 		}		
 		return null;		
+	}
+	
+	private static Map<String, Map<String, Object>> findMappedValueStrings(String mapping, EObject parent) {		
+		Map<String, Map<String, Object>> result = new HashMap<String, Map<String,Object>>();
+		
+		for (EStructuralFeature sf : parent.eClass().getEStructuralFeatures()) {
+			String mappingType = Regex.getMappingTypeFromAnnotation(sf);
+			Map<String, Object> keywordMap = Regex.getMappingFromAnnotation(sf);
+			if (mappingType != null && mappingType.equals(mapping)) {
+				result.put((String) parent.eGet(sf), keywordMap);
+			}
+		}		
+		
+		return result;		
 	}
 	
 	/*

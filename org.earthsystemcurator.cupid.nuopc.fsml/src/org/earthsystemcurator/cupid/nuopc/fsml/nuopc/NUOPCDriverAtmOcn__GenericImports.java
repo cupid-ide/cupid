@@ -38,7 +38,7 @@ public interface NUOPCDriverAtmOcn__GenericImports extends EObject {
 	 * @see #setImportsGenericSS(String)
 	 * @see org.earthsystemcurator.cupid.nuopc.fsml.nuopc.NUOPCPackage#getNUOPCDriverAtmOcn__GenericImports_ImportsGenericSS()
 	 * @model default="driver_routine_SS" required="true"
-	 *        annotation="http://www.earthsystemcog.org/projects/nuopc mapping='uses: \"NUOPC_DriverAtmOcn\" entity: \"routine_SetServices\"' label='routine_SetServices' doc='Subclasses of NUOPC Atm-Ocn Driver should import the public generic Set Services subroutine \"routine_SetServices\"'"
+	 *        annotation="http://www.earthsystemcog.org/projects/nuopc mapping='usesEntity: \"routine_SetServices\"' label='routine_SetServices' doc='Subclasses of NUOPC Atm-Ocn Driver should import the public generic Set Services subroutine \"routine_SetServices\"'"
 	 * @generated
 	 */
 	String getImportsGenericSS();
@@ -66,7 +66,7 @@ public interface NUOPCDriverAtmOcn__GenericImports extends EObject {
 	 * @see #setImportsTypeDriverIS(String)
 	 * @see org.earthsystemcurator.cupid.nuopc.fsml.nuopc.NUOPCPackage#getNUOPCDriverAtmOcn__GenericImports_ImportsTypeDriverIS()
 	 * @model default="driver_type_IS" required="true"
-	 *        annotation="http://www.earthsystemcog.org/projects/nuopc mapping='uses: \"NUOPC_DriverAtmOcn\" entity: \"type_InternalState\"' label='type_InternalState'"
+	 *        annotation="http://www.earthsystemcog.org/projects/nuopc mapping='usesEntity: \"type_InternalState\"' label='type_InternalState'"
 	 * @generated
 	 */
 	String getImportsTypeDriverIS();
@@ -94,7 +94,7 @@ public interface NUOPCDriverAtmOcn__GenericImports extends EObject {
 	 * @see #setImportsLabelSetModelCount(String)
 	 * @see org.earthsystemcurator.cupid.nuopc.fsml.nuopc.NUOPCPackage#getNUOPCDriverAtmOcn__GenericImports_ImportsLabelSetModelCount()
 	 * @model default="driver_label_SetModelCount"
-	 *        annotation="http://www.earthsystemcog.org/projects/nuopc mapping='uses: \"NUOPC_DriverAtmOcn\" entity: \"label_SetModelCount\"' label='label_SetModelCount'"
+	 *        annotation="http://www.earthsystemcog.org/projects/nuopc mapping='usesEntity: \"label_SetModelCount\"' label='label_SetModelCount'"
 	 * @generated
 	 */
 	String getImportsLabelSetModelCount();
@@ -122,7 +122,7 @@ public interface NUOPCDriverAtmOcn__GenericImports extends EObject {
 	 * @see #setImportsLabelSetModelServices(String)
 	 * @see org.earthsystemcurator.cupid.nuopc.fsml.nuopc.NUOPCPackage#getNUOPCDriverAtmOcn__GenericImports_ImportsLabelSetModelServices()
 	 * @model default="driver_label_SetModelServices"
-	 *        annotation="http://www.earthsystemcog.org/projects/nuopc mapping='uses: \"NUOPC_DriverAtmOcn\" entity: \"label_SetModelServices\"' label='label_SetModelServices'"
+	 *        annotation="http://www.earthsystemcog.org/projects/nuopc mapping='usesEntity: \"label_SetModelServices\"' label='label_SetModelServices'"
 	 * @generated
 	 */
 	String getImportsLabelSetModelServices();
@@ -150,7 +150,7 @@ public interface NUOPCDriverAtmOcn__GenericImports extends EObject {
 	 * @see #setImportsLabelSetModelPetLists(String)
 	 * @see org.earthsystemcurator.cupid.nuopc.fsml.nuopc.NUOPCPackage#getNUOPCDriverAtmOcn__GenericImports_ImportsLabelSetModelPetLists()
 	 * @model default="driver_label_SetModelPetLists"
-	 *        annotation="http://www.earthsystemcog.org/projects/nuopc mapping='uses: \"NUOPC_DriverAtmOcn\" entity: \"label_SetModelPetLists\"' label='label_SetModelPetLists'"
+	 *        annotation="http://www.earthsystemcog.org/projects/nuopc mapping='usesEntity: \"label_SetModelPetLists\"' label='label_SetModelPetLists'"
 	 * @generated
 	 */
 	String getImportsLabelSetModelPetLists();

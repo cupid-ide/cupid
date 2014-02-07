@@ -60,7 +60,7 @@ public interface NUOPCDriver extends EObject {
 
 	/**
 	 * Returns the value of the '<em><b>Name</b></em>' attribute.
-	 * The default value is <code>"ModelDefault"</code>.
+	 * The default value is <code>"DriverDefault"</code>.
 	 * <!-- begin-user-doc -->
 	 * <p>
 	 * If the meaning of the '<em>Name</em>' attribute isn't clear,
@@ -70,7 +70,7 @@ public interface NUOPCDriver extends EObject {
 	 * @return the value of the '<em>Name</em>' attribute.
 	 * @see #setName(String)
 	 * @see org.earthsystemcurator.cupid.nuopc.fsml.nuopc.NUOPCPackage#getNUOPCDriver_Name()
-	 * @model default="ModelDefault" required="true"
+	 * @model default="DriverDefault" required="true"
 	 *        annotation="http://www.earthsystemcog.org/projects/nuopc mapping='moduleName'"
 	 * @generated
 	 */
@@ -98,7 +98,7 @@ public interface NUOPCDriver extends EObject {
 	 * @see #setGenericImports(NUOPCDriver__GenericImports)
 	 * @see org.earthsystemcurator.cupid.nuopc.fsml.nuopc.NUOPCPackage#getNUOPCDriver_GenericImports()
 	 * @model containment="true" required="true"
-	 *        annotation="http://www.earthsystemcog.org/projects/nuopc mapping='usesModule: \"NUOPC_Driver\"'"
+	 *        annotation="http://www.earthsystemcog.org/projects/nuopc mapping='usesModule: \"NUOPC_Driver\"' essential='true'"
 	 * @generated
 	 */
 	NUOPCDriver__GenericImports getGenericImports();

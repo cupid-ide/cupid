@@ -57,7 +57,12 @@
       </eAnnotations>
     </eStructuralFeatures>
     <eStructuralFeatures xsi:type="ecore:EReference" name="genericImports" lowerBound="1"
-        eType="#//NUOPCModel__GenericImports" containment="true"/>
+        eType="#//NUOPCModel__GenericImports" containment="true">
+      <eAnnotations source="http://www.earthsystemcog.org/projects/nuopc">
+        <details key="mapping" value="usesModule: &quot;NUOPC_Model&quot;"/>
+        <details key="essential" value="true"/>
+      </eAnnotations>
+    </eStructuralFeatures>
     <eStructuralFeatures xsi:type="ecore:EReference" name="implementsSetServices"
         lowerBound="1" eType="#//NUOPCModel__ImplementsSetServices" containment="true"
         eOpposite="#//NUOPCModel__ImplementsSetServices/parent" eKeys="#//NUOPCModel__ImplementsSetServices/name">
@@ -84,15 +89,16 @@
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="importsGenericSS" lowerBound="1"
         eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString" defaultValueLiteral="model_routine_SS">
       <eAnnotations source="http://www.earthsystemcog.org/projects/nuopc">
-        <details key="mapping" value="uses: &quot;NUOPC_Model&quot; entity: &quot;routine_SetServices&quot;"/>
+        <details key="mapping" value="usesEntity: &quot;routine_SetServices&quot;"/>
         <details key="label" value="routine_SetServices"/>
         <details key="doc" value="Subclasses of NUOPC Model should import the public generic Set Services subroutine &quot;routine_SetServices&quot;"/>
+        <details key="essential" value="true"/>
       </eAnnotations>
     </eStructuralFeatures>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="importsLabelModelAdvance"
         eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString" defaultValueLiteral="model_label_Advance">
       <eAnnotations source="http://www.earthsystemcog.org/projects/nuopc">
-        <details key="mapping" value="uses: &quot;NUOPC_Model&quot; entity: &quot;label_Advance&quot;"/>
+        <details key="mapping" value="usesEntity: &quot;label_Advance&quot;"/>
         <details key="label" value="label_Advance"/>
       </eAnnotations>
     </eStructuralFeatures>
@@ -397,7 +403,7 @@
     <eStructuralFeatures xsi:type="ecore:EReference" name="parent" lowerBound="1"
         eType="#//NUOPCApplication" eOpposite="#//NUOPCApplication/nuopcDriver"/>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="name" lowerBound="1" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"
-        defaultValueLiteral="ModelDefault">
+        defaultValueLiteral="DriverDefault">
       <eAnnotations source="http://www.earthsystemcog.org/projects/nuopc">
         <details key="mapping" value="moduleName"/>
       </eAnnotations>
@@ -406,6 +412,7 @@
         eType="#//NUOPCDriver__GenericImports" containment="true">
       <eAnnotations source="http://www.earthsystemcog.org/projects/nuopc">
         <details key="mapping" value="usesModule: &quot;NUOPC_Driver&quot;"/>
+        <details key="essential" value="true"/>
       </eAnnotations>
     </eStructuralFeatures>
     <eStructuralFeatures xsi:type="ecore:EReference" name="modelImports" lowerBound="1"
@@ -534,7 +541,7 @@
       </eAnnotations>
     </eStructuralFeatures>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="setServices" lowerBound="1"
-        eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString">
+        eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString" defaultValueLiteral="connector_SetServices">
       <eAnnotations source="http://www.earthsystemcog.org/projects/nuopc">
         <details key="mapping" value="usesEntity: &quot;routine_SetServices&quot;"/>
       </eAnnotations>
@@ -677,13 +684,18 @@
     <eStructuralFeatures xsi:type="ecore:EReference" name="parent" lowerBound="1"
         eType="#//NUOPCApplication" eOpposite="#//NUOPCApplication/nuopcDriverAtmOcn"/>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="name" lowerBound="1" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"
-        defaultValueLiteral="ModelDefault">
+        defaultValueLiteral="DriverAtmOcnDefault">
       <eAnnotations source="http://www.earthsystemcog.org/projects/nuopc">
         <details key="mapping" value="moduleName"/>
       </eAnnotations>
     </eStructuralFeatures>
     <eStructuralFeatures xsi:type="ecore:EReference" name="genericImports" lowerBound="1"
-        eType="#//NUOPCDriverAtmOcn__GenericImports" containment="true"/>
+        eType="#//NUOPCDriverAtmOcn__GenericImports" containment="true">
+      <eAnnotations source="http://www.earthsystemcog.org/projects/nuopc">
+        <details key="mapping" value="usesModule: &quot;NUOPC_DriverAtmOcn&quot;"/>
+        <details key="essential" value="true"/>
+      </eAnnotations>
+    </eStructuralFeatures>
     <eStructuralFeatures xsi:type="ecore:EReference" name="modelImports" lowerBound="1"
         eType="#//NUOPCDriverAtmOcn__ModelImports" containment="true" eOpposite="#//NUOPCDriverAtmOcn__ModelImports/parent"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="implementsSetServices"
@@ -724,7 +736,7 @@
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="importsGenericSS" lowerBound="1"
         eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString" defaultValueLiteral="driver_routine_SS">
       <eAnnotations source="http://www.earthsystemcog.org/projects/nuopc">
-        <details key="mapping" value="uses: &quot;NUOPC_DriverAtmOcn&quot; entity: &quot;routine_SetServices&quot;"/>
+        <details key="mapping" value="usesEntity: &quot;routine_SetServices&quot;"/>
         <details key="label" value="routine_SetServices"/>
         <details key="doc" value="Subclasses of NUOPC Atm-Ocn Driver should import the public generic Set Services subroutine &quot;routine_SetServices&quot;"/>
       </eAnnotations>
@@ -732,28 +744,28 @@
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="importsTypeDriverIS" lowerBound="1"
         eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString" defaultValueLiteral="driver_type_IS">
       <eAnnotations source="http://www.earthsystemcog.org/projects/nuopc">
-        <details key="mapping" value="uses: &quot;NUOPC_DriverAtmOcn&quot; entity: &quot;type_InternalState&quot;"/>
+        <details key="mapping" value="usesEntity: &quot;type_InternalState&quot;"/>
         <details key="label" value="type_InternalState"/>
       </eAnnotations>
     </eStructuralFeatures>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="importsLabelSetModelCount"
         eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString" defaultValueLiteral="driver_label_SetModelCount">
       <eAnnotations source="http://www.earthsystemcog.org/projects/nuopc">
-        <details key="mapping" value="uses: &quot;NUOPC_DriverAtmOcn&quot; entity: &quot;label_SetModelCount&quot;"/>
+        <details key="mapping" value="usesEntity: &quot;label_SetModelCount&quot;"/>
         <details key="label" value="label_SetModelCount"/>
       </eAnnotations>
     </eStructuralFeatures>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="importsLabelSetModelServices"
         eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString" defaultValueLiteral="driver_label_SetModelServices">
       <eAnnotations source="http://www.earthsystemcog.org/projects/nuopc">
-        <details key="mapping" value="uses: &quot;NUOPC_DriverAtmOcn&quot; entity: &quot;label_SetModelServices&quot;"/>
+        <details key="mapping" value="usesEntity: &quot;label_SetModelServices&quot;"/>
         <details key="label" value="label_SetModelServices"/>
       </eAnnotations>
     </eStructuralFeatures>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="importsLabelSetModelPetLists"
         eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString" defaultValueLiteral="driver_label_SetModelPetLists">
       <eAnnotations source="http://www.earthsystemcog.org/projects/nuopc">
-        <details key="mapping" value="uses: &quot;NUOPC_DriverAtmOcn&quot; entity: &quot;label_SetModelPetLists&quot;"/>
+        <details key="mapping" value="usesEntity: &quot;label_SetModelPetLists&quot;"/>
         <details key="label" value="label_SetModelPetLists"/>
       </eAnnotations>
     </eStructuralFeatures>

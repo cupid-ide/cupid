@@ -287,18 +287,7 @@ public class NUOPCView extends ViewPart {
                     				
                     				public void run() {
                         				
-                    					/*
-                        				EObject newElem = NUOPCFactory.eINSTANCE.create((EClass)childRef.getEType());                      					
-                        				if (childRef.isMany()) {
-                        					EList l = (EList) me.elem.eGet(childRef);
-                        					l.add(newElem);
-                        				}
-                        				else {
-                        					me.elem.eSet(childRef, newElem);                					
-                        				}
-                        				*/
-                        				//showMessage("Added element: " + newElem);
-                        				
+                    					//showMessage("Added element: " + newElem);	
                     					
                     					EObject newElem = contentProvider.getCurrentFSM().forwardAdd(me.elem, childRef, true);
         								IFortranAST ast = contentProvider.getCurrentFSM().getASTForElement(newElem);

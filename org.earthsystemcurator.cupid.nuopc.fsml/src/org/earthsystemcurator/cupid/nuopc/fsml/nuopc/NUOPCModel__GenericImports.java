@@ -35,7 +35,7 @@ public interface NUOPCModel__GenericImports extends EObject {
 	 * @see #setImportsGenericSS(String)
 	 * @see org.earthsystemcurator.cupid.nuopc.fsml.nuopc.NUOPCPackage#getNUOPCModel__GenericImports_ImportsGenericSS()
 	 * @model default="model_routine_SS" required="true"
-	 *        annotation="http://www.earthsystemcog.org/projects/nuopc mapping='uses: \"NUOPC_Model\" entity: \"routine_SetServices\"' label='routine_SetServices' doc='Subclasses of NUOPC Model should import the public generic Set Services subroutine \"routine_SetServices\"'"
+	 *        annotation="http://www.earthsystemcog.org/projects/nuopc mapping='usesEntity: \"routine_SetServices\"' label='routine_SetServices' doc='Subclasses of NUOPC Model should import the public generic Set Services subroutine \"routine_SetServices\"' essential='true'"
 	 * @generated
 	 */
 	String getImportsGenericSS();
@@ -63,7 +63,7 @@ public interface NUOPCModel__GenericImports extends EObject {
 	 * @see #setImportsLabelModelAdvance(String)
 	 * @see org.earthsystemcurator.cupid.nuopc.fsml.nuopc.NUOPCPackage#getNUOPCModel__GenericImports_ImportsLabelModelAdvance()
 	 * @model default="model_label_Advance"
-	 *        annotation="http://www.earthsystemcog.org/projects/nuopc mapping='uses: \"NUOPC_Model\" entity: \"label_Advance\"' label='label_Advance'"
+	 *        annotation="http://www.earthsystemcog.org/projects/nuopc mapping='usesEntity: \"label_Advance\"' label='label_Advance'"
 	 * @generated
 	 */
 	String getImportsLabelModelAdvance();
