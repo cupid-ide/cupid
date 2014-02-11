@@ -28,6 +28,9 @@ public class EcoreUtils {
 			
 		}
 		
+		if (pathExpr.equals("..")) {
+			return (T) elemToCheck.eContainer();
+		}
 		if (elemToCheck == null) {
 			//throw new RuntimeException("Structural feature not found: " + pathExpr);
 			return defaultVal;

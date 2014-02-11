@@ -148,7 +148,7 @@ public interface NUOPCDriverAtmOcn__ImplementsSetServices extends EObject {
 	 * @see #setCallsGenericSetServices(CallsGenericSetServices)
 	 * @see org.earthsystemcurator.cupid.nuopc.fsml.nuopc.NUOPCPackage#getNUOPCDriverAtmOcn__ImplementsSetServices_CallsGenericSetServices()
 	 * @model containment="true" required="true"
-	 *        annotation="http://www.earthsystemcog.org/projects/nuopc mapping='call: \"#../../genericImports/importsGenericSS(#param_gcomp, rc=#param_rc)\"' essential='true'"
+	 *        annotation="http://www.earthsystemcog.org/projects/nuopc mapping='call: \"#../../genericImports/importsGenericSS(#gcomp, rc=#rc)\"' essential='true'"
 	 * @generated
 	 */
 	CallsGenericSetServices getCallsGenericSetServices();

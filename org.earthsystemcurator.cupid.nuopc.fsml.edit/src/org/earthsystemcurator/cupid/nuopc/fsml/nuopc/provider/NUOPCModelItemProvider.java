@@ -225,7 +225,7 @@ public class NUOPCModelItemProvider
 		newChildDescriptors.add
 			(createChildParameter
 				(NUOPCPackage.Literals.NUOPC_MODEL__IMPLEMENTS_MODEL_ADVANCE,
-				 NUOPCFactory.eINSTANCE.createNUOPCModel__ModelAdvance()));
+				 NUOPCFactory.eINSTANCE.createNUOPCModel__ImplementsModelAdvance()));
 	}
 
 	/**

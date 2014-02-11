@@ -67,16 +67,29 @@ public class Regex {
 		return false;
 	}
 	
+	public static final Pattern P_MAPPING_DEF = Pattern.compile("(\\w+)(\\s*:\\s*(#\\w+|\\d+|\"[^\"]*\"))?");
+	
 	public static Map<String, Object> parseMappingExpression(String mapping) {
 		
 		//System.out.println("parseMapping: " + mapping);
 		if (mapping == null)
 			return null;
 		
-		LinkedHashMap<String, Object> result = new LinkedHashMap<String, Object>();
+		mapping = mapping.trim();
 		
-		Pattern p = Pattern.compile("(\\w+)(\\s*:\\s*(#\\w+|\\d+|\"[^\"]*\"))?");	
-		Matcher match = p.matcher(mapping);
+		LinkedHashMap<String, Object> result = new LinkedHashMap<String, Object>();
+						
+		//explicit context present?
+		String contextPath = null;
+		if (mapping.startsWith("#")) {
+			int firstSpace = mapping.indexOf(" ");
+			contextPath = mapping.substring(0, firstSpace);
+			mapping = mapping.substring(firstSpace+1);
+		}
+		
+		//boolean firstTime = true;
+		//Pattern p = Pattern.compile("(\\w+)(\\s*:\\s*(#\\w+|\\d+|\"[^\"]*\"))?");	
+		Matcher match = P_MAPPING_DEF.matcher(mapping);
 		
 		while (match.find()) {
 			
@@ -88,6 +101,10 @@ public class Regex {
 			String key = match.group(1);
 			String val = match.group(3);
 			
+			//special case first time, check for explicit context element
+			//if (firstTime && key.startsWith("#") && val == null) {
+			//	result.put("_context", key);				
+			//}
 			if (val != null) {
 				//metavariable
 				if (val.startsWith("#")) {
@@ -105,6 +122,13 @@ public class Regex {
 			else {
 				result.put(key, null);
 			}
+			
+			//firstTime = false;
+			
+		}
+		
+		if (contextPath != null) {
+			result.put("_context", contextPath);
 		}
 				
 		return result;

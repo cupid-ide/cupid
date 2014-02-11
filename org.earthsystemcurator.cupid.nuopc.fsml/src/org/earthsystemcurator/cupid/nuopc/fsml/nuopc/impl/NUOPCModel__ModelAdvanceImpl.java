@@ -4,13 +4,14 @@ package org.earthsystemcurator.cupid.nuopc.fsml.nuopc.impl;
 
 import org.earthsystemcurator.cupid.nuopc.fsml.nuopc.NUOPCModel;
 import org.earthsystemcurator.cupid.nuopc.fsml.nuopc.NUOPCModel__ModelAdvance;
+import org.earthsystemcurator.cupid.nuopc.fsml.nuopc.NUOPCModel__ModelAdvance__Attached;
+import org.earthsystemcurator.cupid.nuopc.fsml.nuopc.NUOPCModel__ModelAdvance__ImplementsSubroutine;
 import org.earthsystemcurator.cupid.nuopc.fsml.nuopc.NUOPCPackage;
 
 import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.common.notify.NotificationChain;
 
 import org.eclipse.emf.ecore.EClass;
-import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.ecore.InternalEObject;
 
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
@@ -26,8 +27,8 @@ import org.eclipse.emf.ecore.util.EcoreUtil;
  * The following features are implemented:
  * <ul>
  *   <li>{@link org.earthsystemcurator.cupid.nuopc.fsml.nuopc.impl.NUOPCModel__ModelAdvanceImpl#getParent <em>Parent</em>}</li>
- *   <li>{@link org.earthsystemcurator.cupid.nuopc.fsml.nuopc.impl.NUOPCModel__ModelAdvanceImpl#getName <em>Name</em>}</li>
- *   <li>{@link org.earthsystemcurator.cupid.nuopc.fsml.nuopc.impl.NUOPCModel__ModelAdvanceImpl#isAttachedModelAdvance <em>Attached Model Advance</em>}</li>
+ *   <li>{@link org.earthsystemcurator.cupid.nuopc.fsml.nuopc.impl.NUOPCModel__ModelAdvanceImpl#getImplementsSubroutine <em>Implements Subroutine</em>}</li>
+ *   <li>{@link org.earthsystemcurator.cupid.nuopc.fsml.nuopc.impl.NUOPCModel__ModelAdvanceImpl#getAttached <em>Attached</em>}</li>
  * </ul>
  * </p>
  *
@@ -35,34 +36,24 @@ import org.eclipse.emf.ecore.util.EcoreUtil;
  */
 public class NUOPCModel__ModelAdvanceImpl extends EObjectImpl implements NUOPCModel__ModelAdvance {
 	/**
-	 * The default value of the '{@link #getName() <em>Name</em>}' attribute.
+	 * The cached value of the '{@link #getImplementsSubroutine() <em>Implements Subroutine</em>}' containment reference.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @see #getName()
+	 * @see #getImplementsSubroutine()
 	 * @generated
 	 * @ordered
 	 */
-	protected static final String NAME_EDEFAULT = "ModelAdvance";
+	protected NUOPCModel__ModelAdvance__ImplementsSubroutine implementsSubroutine;
 
 	/**
-	 * The cached value of the '{@link #getName() <em>Name</em>}' attribute.
+	 * The cached value of the '{@link #getAttached() <em>Attached</em>}' containment reference.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @see #getName()
+	 * @see #getAttached()
 	 * @generated
 	 * @ordered
 	 */
-	protected String name = NAME_EDEFAULT;
-
-	/**
-	 * The cached setting delegate for the '{@link #isAttachedModelAdvance() <em>Attached Model Advance</em>}' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @see #isAttachedModelAdvance()
-	 * @generated
-	 * @ordered
-	 */
-	protected EStructuralFeature.Internal.SettingDelegate ATTACHED_MODEL_ADVANCE__ESETTING_DELEGATE = ((EStructuralFeature.Internal)NUOPCPackage.Literals.NUOPC_MODEL_MODEL_ADVANCE__ATTACHED_MODEL_ADVANCE).getSettingDelegate();
+	protected NUOPCModel__ModelAdvance__Attached attached;
 
 	/**
 	 * <!-- begin-user-doc -->
@@ -116,7 +107,7 @@ public class NUOPCModel__ModelAdvanceImpl extends EObjectImpl implements NUOPCMo
 			if (eInternalContainer() != null)
 				msgs = eBasicRemoveFromContainer(msgs);
 			if (newParent != null)
-				msgs = ((InternalEObject)newParent).eInverseAdd(this, NUOPCPackage.NUOPC_MODEL__IMPLEMENTS_MODEL_ADVANCE, NUOPCModel.class, msgs);
+				msgs = ((InternalEObject)newParent).eInverseAdd(this, NUOPCPackage.NUOPC_MODEL__MODEL_ADVANCE, NUOPCModel.class, msgs);
 			msgs = basicSetParent(newParent, msgs);
 			if (msgs != null) msgs.dispatch();
 		}
@@ -129,8 +120,8 @@ public class NUOPCModel__ModelAdvanceImpl extends EObjectImpl implements NUOPCMo
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public String getName() {
-		return name;
+	public NUOPCModel__ModelAdvance__ImplementsSubroutine getImplementsSubroutine() {
+		return implementsSubroutine;
 	}
 
 	/**
@@ -138,11 +129,14 @@ public class NUOPCModel__ModelAdvanceImpl extends EObjectImpl implements NUOPCMo
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public void setName(String newName) {
-		String oldName = name;
-		name = newName;
-		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, NUOPCPackage.NUOPC_MODEL_MODEL_ADVANCE__NAME, oldName, name));
+	public NotificationChain basicSetImplementsSubroutine(NUOPCModel__ModelAdvance__ImplementsSubroutine newImplementsSubroutine, NotificationChain msgs) {
+		NUOPCModel__ModelAdvance__ImplementsSubroutine oldImplementsSubroutine = implementsSubroutine;
+		implementsSubroutine = newImplementsSubroutine;
+		if (eNotificationRequired()) {
+			ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, NUOPCPackage.NUOPC_MODEL_MODEL_ADVANCE__IMPLEMENTS_SUBROUTINE, oldImplementsSubroutine, newImplementsSubroutine);
+			if (msgs == null) msgs = notification; else msgs.add(notification);
+		}
+		return msgs;
 	}
 
 	/**
@@ -150,8 +144,18 @@ public class NUOPCModel__ModelAdvanceImpl extends EObjectImpl implements NUOPCMo
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public boolean isAttachedModelAdvance() {
-		return (Boolean)ATTACHED_MODEL_ADVANCE__ESETTING_DELEGATE.dynamicGet(this, null, 0, true, false);
+	public void setImplementsSubroutine(NUOPCModel__ModelAdvance__ImplementsSubroutine newImplementsSubroutine) {
+		if (newImplementsSubroutine != implementsSubroutine) {
+			NotificationChain msgs = null;
+			if (implementsSubroutine != null)
+				msgs = ((InternalEObject)implementsSubroutine).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - NUOPCPackage.NUOPC_MODEL_MODEL_ADVANCE__IMPLEMENTS_SUBROUTINE, null, msgs);
+			if (newImplementsSubroutine != null)
+				msgs = ((InternalEObject)newImplementsSubroutine).eInverseAdd(this, EOPPOSITE_FEATURE_BASE - NUOPCPackage.NUOPC_MODEL_MODEL_ADVANCE__IMPLEMENTS_SUBROUTINE, null, msgs);
+			msgs = basicSetImplementsSubroutine(newImplementsSubroutine, msgs);
+			if (msgs != null) msgs.dispatch();
+		}
+		else if (eNotificationRequired())
+			eNotify(new ENotificationImpl(this, Notification.SET, NUOPCPackage.NUOPC_MODEL_MODEL_ADVANCE__IMPLEMENTS_SUBROUTINE, newImplementsSubroutine, newImplementsSubroutine));
 	}
 
 	/**
@@ -159,8 +163,42 @@ public class NUOPCModel__ModelAdvanceImpl extends EObjectImpl implements NUOPCMo
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public void setAttachedModelAdvance(boolean newAttachedModelAdvance) {
-		ATTACHED_MODEL_ADVANCE__ESETTING_DELEGATE.dynamicSet(this, null, 0, newAttachedModelAdvance);
+	public NUOPCModel__ModelAdvance__Attached getAttached() {
+		return attached;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public NotificationChain basicSetAttached(NUOPCModel__ModelAdvance__Attached newAttached, NotificationChain msgs) {
+		NUOPCModel__ModelAdvance__Attached oldAttached = attached;
+		attached = newAttached;
+		if (eNotificationRequired()) {
+			ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, NUOPCPackage.NUOPC_MODEL_MODEL_ADVANCE__ATTACHED, oldAttached, newAttached);
+			if (msgs == null) msgs = notification; else msgs.add(notification);
+		}
+		return msgs;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public void setAttached(NUOPCModel__ModelAdvance__Attached newAttached) {
+		if (newAttached != attached) {
+			NotificationChain msgs = null;
+			if (attached != null)
+				msgs = ((InternalEObject)attached).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - NUOPCPackage.NUOPC_MODEL_MODEL_ADVANCE__ATTACHED, null, msgs);
+			if (newAttached != null)
+				msgs = ((InternalEObject)newAttached).eInverseAdd(this, EOPPOSITE_FEATURE_BASE - NUOPCPackage.NUOPC_MODEL_MODEL_ADVANCE__ATTACHED, null, msgs);
+			msgs = basicSetAttached(newAttached, msgs);
+			if (msgs != null) msgs.dispatch();
+		}
+		else if (eNotificationRequired())
+			eNotify(new ENotificationImpl(this, Notification.SET, NUOPCPackage.NUOPC_MODEL_MODEL_ADVANCE__ATTACHED, newAttached, newAttached));
 	}
 
 	/**
@@ -189,6 +227,10 @@ public class NUOPCModel__ModelAdvanceImpl extends EObjectImpl implements NUOPCMo
 		switch (featureID) {
 			case NUOPCPackage.NUOPC_MODEL_MODEL_ADVANCE__PARENT:
 				return basicSetParent(null, msgs);
+			case NUOPCPackage.NUOPC_MODEL_MODEL_ADVANCE__IMPLEMENTS_SUBROUTINE:
+				return basicSetImplementsSubroutine(null, msgs);
+			case NUOPCPackage.NUOPC_MODEL_MODEL_ADVANCE__ATTACHED:
+				return basicSetAttached(null, msgs);
 		}
 		return super.eInverseRemove(otherEnd, featureID, msgs);
 	}
@@ -202,7 +244,7 @@ public class NUOPCModel__ModelAdvanceImpl extends EObjectImpl implements NUOPCMo
 	public NotificationChain eBasicRemoveFromContainerFeature(NotificationChain msgs) {
 		switch (eContainerFeatureID()) {
 			case NUOPCPackage.NUOPC_MODEL_MODEL_ADVANCE__PARENT:
-				return eInternalContainer().eInverseRemove(this, NUOPCPackage.NUOPC_MODEL__IMPLEMENTS_MODEL_ADVANCE, NUOPCModel.class, msgs);
+				return eInternalContainer().eInverseRemove(this, NUOPCPackage.NUOPC_MODEL__MODEL_ADVANCE, NUOPCModel.class, msgs);
 		}
 		return super.eBasicRemoveFromContainerFeature(msgs);
 	}
@@ -217,10 +259,10 @@ public class NUOPCModel__ModelAdvanceImpl extends EObjectImpl implements NUOPCMo
 		switch (featureID) {
 			case NUOPCPackage.NUOPC_MODEL_MODEL_ADVANCE__PARENT:
 				return getParent();
-			case NUOPCPackage.NUOPC_MODEL_MODEL_ADVANCE__NAME:
-				return getName();
-			case NUOPCPackage.NUOPC_MODEL_MODEL_ADVANCE__ATTACHED_MODEL_ADVANCE:
-				return isAttachedModelAdvance();
+			case NUOPCPackage.NUOPC_MODEL_MODEL_ADVANCE__IMPLEMENTS_SUBROUTINE:
+				return getImplementsSubroutine();
+			case NUOPCPackage.NUOPC_MODEL_MODEL_ADVANCE__ATTACHED:
+				return getAttached();
 		}
 		return super.eGet(featureID, resolve, coreType);
 	}
@@ -236,11 +278,11 @@ public class NUOPCModel__ModelAdvanceImpl extends EObjectImpl implements NUOPCMo
 			case NUOPCPackage.NUOPC_MODEL_MODEL_ADVANCE__PARENT:
 				setParent((NUOPCModel)newValue);
 				return;
-			case NUOPCPackage.NUOPC_MODEL_MODEL_ADVANCE__NAME:
-				setName((String)newValue);
+			case NUOPCPackage.NUOPC_MODEL_MODEL_ADVANCE__IMPLEMENTS_SUBROUTINE:
+				setImplementsSubroutine((NUOPCModel__ModelAdvance__ImplementsSubroutine)newValue);
 				return;
-			case NUOPCPackage.NUOPC_MODEL_MODEL_ADVANCE__ATTACHED_MODEL_ADVANCE:
-				setAttachedModelAdvance((Boolean)newValue);
+			case NUOPCPackage.NUOPC_MODEL_MODEL_ADVANCE__ATTACHED:
+				setAttached((NUOPCModel__ModelAdvance__Attached)newValue);
 				return;
 		}
 		super.eSet(featureID, newValue);
@@ -257,11 +299,11 @@ public class NUOPCModel__ModelAdvanceImpl extends EObjectImpl implements NUOPCMo
 			case NUOPCPackage.NUOPC_MODEL_MODEL_ADVANCE__PARENT:
 				setParent((NUOPCModel)null);
 				return;
-			case NUOPCPackage.NUOPC_MODEL_MODEL_ADVANCE__NAME:
-				setName(NAME_EDEFAULT);
+			case NUOPCPackage.NUOPC_MODEL_MODEL_ADVANCE__IMPLEMENTS_SUBROUTINE:
+				setImplementsSubroutine((NUOPCModel__ModelAdvance__ImplementsSubroutine)null);
 				return;
-			case NUOPCPackage.NUOPC_MODEL_MODEL_ADVANCE__ATTACHED_MODEL_ADVANCE:
-				ATTACHED_MODEL_ADVANCE__ESETTING_DELEGATE.dynamicUnset(this, null, 0);
+			case NUOPCPackage.NUOPC_MODEL_MODEL_ADVANCE__ATTACHED:
+				setAttached((NUOPCModel__ModelAdvance__Attached)null);
 				return;
 		}
 		super.eUnset(featureID);
@@ -277,28 +319,12 @@ public class NUOPCModel__ModelAdvanceImpl extends EObjectImpl implements NUOPCMo
 		switch (featureID) {
 			case NUOPCPackage.NUOPC_MODEL_MODEL_ADVANCE__PARENT:
 				return getParent() != null;
-			case NUOPCPackage.NUOPC_MODEL_MODEL_ADVANCE__NAME:
-				return NAME_EDEFAULT == null ? name != null : !NAME_EDEFAULT.equals(name);
-			case NUOPCPackage.NUOPC_MODEL_MODEL_ADVANCE__ATTACHED_MODEL_ADVANCE:
-				return ATTACHED_MODEL_ADVANCE__ESETTING_DELEGATE.dynamicIsSet(this, null, 0);
+			case NUOPCPackage.NUOPC_MODEL_MODEL_ADVANCE__IMPLEMENTS_SUBROUTINE:
+				return implementsSubroutine != null;
+			case NUOPCPackage.NUOPC_MODEL_MODEL_ADVANCE__ATTACHED:
+				return attached != null;
 		}
 		return super.eIsSet(featureID);
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	@Override
-	public String toString() {
-		if (eIsProxy()) return super.toString();
-
-		StringBuffer result = new StringBuffer(super.toString());
-		result.append(" (name: ");
-		result.append(name);
-		result.append(')');
-		return result.toString();
 	}
 
 } //NUOPCModel__ModelAdvanceImpl

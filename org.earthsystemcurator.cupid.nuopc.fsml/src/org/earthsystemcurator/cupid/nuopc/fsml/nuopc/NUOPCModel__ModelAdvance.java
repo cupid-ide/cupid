@@ -13,19 +13,19 @@ import org.eclipse.emf.ecore.EObject;
  * The following features are supported:
  * <ul>
  *   <li>{@link org.earthsystemcurator.cupid.nuopc.fsml.nuopc.NUOPCModel__ModelAdvance#getParent <em>Parent</em>}</li>
- *   <li>{@link org.earthsystemcurator.cupid.nuopc.fsml.nuopc.NUOPCModel__ModelAdvance#getName <em>Name</em>}</li>
- *   <li>{@link org.earthsystemcurator.cupid.nuopc.fsml.nuopc.NUOPCModel__ModelAdvance#isAttachedModelAdvance <em>Attached Model Advance</em>}</li>
+ *   <li>{@link org.earthsystemcurator.cupid.nuopc.fsml.nuopc.NUOPCModel__ModelAdvance#getImplementsSubroutine <em>Implements Subroutine</em>}</li>
+ *   <li>{@link org.earthsystemcurator.cupid.nuopc.fsml.nuopc.NUOPCModel__ModelAdvance#getAttached <em>Attached</em>}</li>
  * </ul>
  * </p>
  *
  * @see org.earthsystemcurator.cupid.nuopc.fsml.nuopc.NUOPCPackage#getNUOPCModel__ModelAdvance()
- * @model annotation="http://www.earthsystemcog.org/projects/nuopc label='Model Advance' doc='A subroutine called to advance the model ahead by the timestep interval.'"
+ * @model
  * @generated
  */
 public interface NUOPCModel__ModelAdvance extends EObject {
 	/**
 	 * Returns the value of the '<em><b>Parent</b></em>' container reference.
-	 * It is bidirectional and its opposite is '{@link org.earthsystemcurator.cupid.nuopc.fsml.nuopc.NUOPCModel#getImplementsModelAdvance <em>Implements Model Advance</em>}'.
+	 * It is bidirectional and its opposite is '{@link org.earthsystemcurator.cupid.nuopc.fsml.nuopc.NUOPCModel#getModelAdvance <em>Model Advance</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <p>
 	 * If the meaning of the '<em>Parent</em>' container reference isn't clear,
@@ -35,8 +35,8 @@ public interface NUOPCModel__ModelAdvance extends EObject {
 	 * @return the value of the '<em>Parent</em>' container reference.
 	 * @see #setParent(NUOPCModel)
 	 * @see org.earthsystemcurator.cupid.nuopc.fsml.nuopc.NUOPCPackage#getNUOPCModel__ModelAdvance_Parent()
-	 * @see org.earthsystemcurator.cupid.nuopc.fsml.nuopc.NUOPCModel#getImplementsModelAdvance
-	 * @model opposite="implementsModelAdvance" required="true" transient="false"
+	 * @see org.earthsystemcurator.cupid.nuopc.fsml.nuopc.NUOPCModel#getModelAdvance
+	 * @model opposite="modelAdvance" required="true" transient="false"
 	 * @generated
 	 */
 	NUOPCModel getParent();
@@ -52,58 +52,57 @@ public interface NUOPCModel__ModelAdvance extends EObject {
 	void setParent(NUOPCModel value);
 
 	/**
-	 * Returns the value of the '<em><b>Name</b></em>' attribute.
-	 * The default value is <code>"ModelAdvance"</code>.
+	 * Returns the value of the '<em><b>Implements Subroutine</b></em>' containment reference.
 	 * <!-- begin-user-doc -->
 	 * <p>
-	 * If the meaning of the '<em>Name</em>' attribute isn't clear,
+	 * If the meaning of the '<em>Implements Subroutine</em>' containment reference isn't clear,
 	 * there really should be more of a description here...
 	 * </p>
 	 * <!-- end-user-doc -->
-	 * @return the value of the '<em>Name</em>' attribute.
-	 * @see #setName(String)
-	 * @see org.earthsystemcurator.cupid.nuopc.fsml.nuopc.NUOPCPackage#getNUOPCModel__ModelAdvance_Name()
-	 * @model default="ModelAdvance" required="true"
+	 * @return the value of the '<em>Implements Subroutine</em>' containment reference.
+	 * @see #setImplementsSubroutine(NUOPCModel__ModelAdvance__ImplementsSubroutine)
+	 * @see org.earthsystemcurator.cupid.nuopc.fsml.nuopc.NUOPCPackage#getNUOPCModel__ModelAdvance_ImplementsSubroutine()
+	 * @model containment="true" required="true"
+	 *        annotation="http://www.earthsystemcog.org/projects/nuopc mapping='subroutine: \"#name(type(ESMF_GridComp), integer)\"'"
 	 * @generated
 	 */
-	String getName();
+	NUOPCModel__ModelAdvance__ImplementsSubroutine getImplementsSubroutine();
 
 	/**
-	 * Sets the value of the '{@link org.earthsystemcurator.cupid.nuopc.fsml.nuopc.NUOPCModel__ModelAdvance#getName <em>Name</em>}' attribute.
+	 * Sets the value of the '{@link org.earthsystemcurator.cupid.nuopc.fsml.nuopc.NUOPCModel__ModelAdvance#getImplementsSubroutine <em>Implements Subroutine</em>}' containment reference.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @param value the new value of the '<em>Name</em>' attribute.
-	 * @see #getName()
+	 * @param value the new value of the '<em>Implements Subroutine</em>' containment reference.
+	 * @see #getImplementsSubroutine()
 	 * @generated
 	 */
-	void setName(String value);
+	void setImplementsSubroutine(NUOPCModel__ModelAdvance__ImplementsSubroutine value);
 
 	/**
-	 * Returns the value of the '<em><b>Attached Model Advance</b></em>' attribute.
+	 * Returns the value of the '<em><b>Attached</b></em>' containment reference.
 	 * <!-- begin-user-doc -->
 	 * <p>
-	 * If the meaning of the '<em>Attached Model Advance</em>' attribute isn't clear,
+	 * If the meaning of the '<em>Attached</em>' containment reference isn't clear,
 	 * there really should be more of a description here...
 	 * </p>
 	 * <!-- end-user-doc -->
-	 * @return the value of the '<em>Attached Model Advance</em>' attribute.
-	 * @see #setAttachedModelAdvance(boolean)
-	 * @see org.earthsystemcurator.cupid.nuopc.fsml.nuopc.NUOPCPackage#getNUOPCModel__ModelAdvance_AttachedModelAdvance()
-	 * @model required="true" derived="true"
-	 *        annotation="http://www.earthsystemcog.org/projects/nuopc essential='true'"
-	 *        annotation="http://www.eclipse.org/emf/2002/Ecore/OCL derivation='self.parent <> null and self.parent.implementsSetServices <> null and \n\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\tself.parent.implementsSetServices.attachesMethod->size() > 0 and\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\tself.parent.genericImports <> null and self.parent.genericImports.importsLabelModelAdvance <> null and\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\tself.parent.implementsSetServices.attachesMethod->select(m|m.name=self.parent.genericImports.importsLabelModelAdvance).userRoutine->includes(self.name)'"
+	 * @return the value of the '<em>Attached</em>' containment reference.
+	 * @see #setAttached(NUOPCModel__ModelAdvance__Attached)
+	 * @see org.earthsystemcurator.cupid.nuopc.fsml.nuopc.NUOPCPackage#getNUOPCModel__ModelAdvance_Attached()
+	 * @model containment="true" required="true"
+	 *        annotation="http://www.earthsystemcog.org/projects/nuopc mapping='#../../implementsSetServices call: \"ESMF_MethodAdd(#ignore, index?=#index, label=#name, userRoutine=#userRoutine, rc=#ignore)\"'"
 	 * @generated
 	 */
-	boolean isAttachedModelAdvance();
+	NUOPCModel__ModelAdvance__Attached getAttached();
 
 	/**
-	 * Sets the value of the '{@link org.earthsystemcurator.cupid.nuopc.fsml.nuopc.NUOPCModel__ModelAdvance#isAttachedModelAdvance <em>Attached Model Advance</em>}' attribute.
+	 * Sets the value of the '{@link org.earthsystemcurator.cupid.nuopc.fsml.nuopc.NUOPCModel__ModelAdvance#getAttached <em>Attached</em>}' containment reference.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @param value the new value of the '<em>Attached Model Advance</em>' attribute.
-	 * @see #isAttachedModelAdvance()
+	 * @param value the new value of the '<em>Attached</em>' containment reference.
+	 * @see #getAttached()
 	 * @generated
 	 */
-	void setAttachedModelAdvance(boolean value);
+	void setAttached(NUOPCModel__ModelAdvance__Attached value);
 
 } // NUOPCModel__ModelAdvance

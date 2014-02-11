@@ -53,6 +53,7 @@ public class ReverseEngineer {
 	//}
 	
 	
+	@SuppressWarnings("unchecked")
 	public static FSM reverseEngineer(EPackage ePackage, EClass eClass, IProject project, PhotranVPG vpg) {
 	
 		EFactory eFactory = ePackage.getEFactoryInstance();
@@ -189,43 +190,26 @@ public class ReverseEngineer {
 	@SuppressWarnings({ "unchecked", "rawtypes" })
 	private static <ModelElem extends EObject> ModelElem reverse(Object fortranElem, ModelElem modelElem, Map<Object,Object> mappings) {
 		
-		//System.out.println("Reverse: " + fortranElem.getClass().getSimpleName() + "\t==>\t" + modelElem.eClass().getName());
-			
 		EClass modelElemClass = modelElem.eClass();
 			
 		//this is required so that we can conditionally add mappings
 		//that succeeded at the end of the method when no recursive
 		//call is required (this only occurs at leaves of metamodel tree)
 		Map<Object, Object> mappingsToAdd = new IdentityHashMap<Object, Object>();
-		
-		/*
-		if (modelElemClass.getName().equals("NUOPCDriverAtmOcn")) {
-			System.out.println("Getting all structural features");
-			for (EStructuralFeature sf : modelElemClass.getEAllStructuralFeatures()) {
-				System.out.println("==>" + sf.getName() + "\t\t" + sf.getEContainingClass());
-			}			
-		}
-		*/
-				
+						
 		for (EStructuralFeature sf : modelElemClass.getEAllStructuralFeatures()) {
-			
-			//System.out.println("Stuctural feature: " + sf.getName());
-			
-			//System.out.println("\tType = " + sf.getEType());
-			//System.out.println("\tCurrent val = " + modelElem.eGet(sf));
-			//System.out.println("\tGeneric type = " + sf.getEGenericType());							
-			
+						
 			Map<String, Object> keywordMap = Regex.getMappingFromAnnotation(sf);
 						
 			if (keywordMap != null && keywordMap.size() > 0) {	
 				
-				//by convention, first parameter keyword determines code query
-				String methodName = (String) keywordMap.keySet().toArray()[0];
+				String methodName = Regex.getMappingTypeFromAnnotation(sf);
 				
-				//check for metavariables that can be populated
-										
+				//populate metavariables						
 				for (Entry<String, Object> entry : keywordMap.entrySet()) {
-					if (entry.getValue() instanceof String) {
+					//TODO: should we handle different metavariable types here?
+					// or just strings?
+					if (!entry.getKey().equals("_context") && entry.getValue() instanceof String) {
 						String val = (String) entry.getValue();
 						
 						Matcher match = CodeQuery.P_METAVAR.matcher(val);
@@ -239,7 +223,7 @@ public class ReverseEngineer {
 								//TODO: decide what to do about NULL_VALUE below
 								String replaceVal = EcoreUtils.eGetSFValue(metavar, modelElem, null);
 								if (replaceVal != null) {
-									System.out.println("Replacing metavariable: " + match.group() + " with val: " + replaceVal);
+									//System.out.println("Replacing metavariable: " + match.group() + " with val: " + replaceVal);
 									entry.setValue(val.replaceAll(match.group(), replaceVal));
 								}
 								
@@ -247,8 +231,44 @@ public class ReverseEngineer {
 						}
 					}
 				}
-								
-											
+				
+				
+				if (keywordMap.containsKey("_context")) {
+					//explicit context provided
+					String contextPath = (String) keywordMap.get("_context");
+					if (!contextPath.startsWith("#..")) {
+						//error
+						System.out.println("Explicit context path must contain parent node");
+						return null;
+					}
+					
+					if (contextPath.startsWith("#../")) {
+						contextPath = contextPath.substring(4);
+					}
+					else if (contextPath.startsWith("#..")) {
+						contextPath = contextPath.substring(3);
+					}
+					
+					EObject explicitContextElem;
+					if (contextPath.equals("")) {
+						explicitContextElem = modelElem;
+					}
+					else {
+						explicitContextElem = EcoreUtils.eGetSFValue(contextPath, modelElem, null);
+					}
+					
+					fortranElem = mappings.get(explicitContextElem);
+					if (fortranElem == null) {
+						System.out.println("MAPPED fortran element not found: " + explicitContextElem);
+						return null;
+					}
+				}
+				else {
+					//implicit context
+					
+				}
+				
+				
 				//find method that implements code query
 				Method method = null;
 				for (Method m : CodeQuery.class.getMethods()) {
@@ -265,13 +285,17 @@ public class ReverseEngineer {
 					System.out.println("Method not found: " + methodName);
 					continue;
 				}
+				
+				//assume a successful mapping (required for looking up
+				//mappings during reursive calls)
+				//mapping will be removed later if it fails
+				mappings.put(modelElem, fortranElem);
 									
 				try {
 					//System.out.println("Calling method: " + methodName + " with first param: " + fortranElem.getClass());							
+					
 					Object result = method.invoke(null, fortranElem, keywordMap);
 												
-					//if (sf.getEType().getName().equals("EString") ||
-					//	sf.getEType().getName().equals("EBoolean")) {
 					if (method.getReturnType() == String.class ||
 						method.getReturnType().isPrimitive()) {
 						modelElem.eSet(sf, result);
@@ -414,22 +438,31 @@ public class ReverseEngineer {
 			
 			//at this point we have set the value of the structural feature
 			//if is essential, but not present or false, the parent is no good
-			//String anotEssential = anot.getDetails().get("essential");
+			
 			if (Regex.getIsEssentialFromAnnotation(sf)) {	
-				if (modelElem.eGet(sf) == null) {
-					System.out.println("\tEssential feature failed: " + sf);
-					return null;
+				boolean fail = false;
+				
+				if (modelElem.eGet(sf) == null) {					
+					fail = true;
 				}
 				else if (sf.getEType().equals(EcoreFactory.eINSTANCE.getEcorePackage().getEBoolean()) &&
 						! (Boolean) modelElem.eGet(sf)) {
-					System.out.println("\tEssential feature failed: " + sf);
+					fail = true;
+				}
+				
+				if (fail) {
+					mappings.remove(modelElem);
+					//an essential feature failed, so no need to process 
+					//any more structural features
 					return null;
-				}		
+				}
+				
 			}
+			
 			
 		} // end for structural features
 		
-		mappings.put(modelElem, fortranElem);
+		//mappings.put(modelElem, fortranElem);
 		mappings.putAll(mappingsToAdd);
 
 		return modelElem;

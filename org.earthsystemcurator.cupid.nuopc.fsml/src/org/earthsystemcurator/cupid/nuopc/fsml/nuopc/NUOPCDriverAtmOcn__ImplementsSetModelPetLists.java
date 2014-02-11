@@ -229,7 +229,7 @@ public interface NUOPCDriverAtmOcn__ImplementsSetModelPetLists extends EObject {
 	 * @see org.earthsystemcurator.cupid.nuopc.fsml.nuopc.NUOPCPackage#getNUOPCDriverAtmOcn__ImplementsSetModelPetLists_Attached()
 	 * @model required="true" derived="true"
 	 *        annotation="http://www.earthsystemcog.org/projects/nuopc essential='true'"
-	 *        annotation="http://www.eclipse.org/emf/2002/Ecore/OCL derivation='self.name = self.parent.implementsSetServices.attachesMethod->select(m|m.name=self.parent.genericImports.importsLabelSetModelPetLists).userRoutine->asSequence()->first()'"
+	 *        annotation="http://www.eclipse.org/emf/2002/Ecore/OCL derivation='self.parent.genericImports.importsLabelSetModelPetLists <> null \r\nand self.parent.implementsSetServices.attachesMethod->size() > 0 \r\nand self.name = self.parent.implementsSetServices.attachesMethod->select(m|m.name=self.parent.genericImports.importsLabelSetModelPetLists).userRoutine->asSequence()->first()'"
 	 * @generated
 	 */
 	boolean isAttached();

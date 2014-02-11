@@ -130,6 +130,15 @@ public interface NUOPCFactory extends EFactory {
 	NUOPCModel__RealizesExportField createNUOPCModel__RealizesExportField();
 
 	/**
+	 * Returns a new object of class '<em>Model Implements Model Advance</em>'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return a new object of class '<em>Model Implements Model Advance</em>'.
+	 * @generated
+	 */
+	NUOPCModel__ImplementsModelAdvance createNUOPCModel__ImplementsModelAdvance();
+
+	/**
 	 * Returns a new object of class '<em>Model Model Advance</em>'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -137,6 +146,24 @@ public interface NUOPCFactory extends EFactory {
 	 * @generated
 	 */
 	NUOPCModel__ModelAdvance createNUOPCModel__ModelAdvance();
+
+	/**
+	 * Returns a new object of class '<em>Model Model Advance Implements Subroutine</em>'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return a new object of class '<em>Model Model Advance Implements Subroutine</em>'.
+	 * @generated
+	 */
+	NUOPCModel__ModelAdvance__ImplementsSubroutine createNUOPCModel__ModelAdvance__ImplementsSubroutine();
+
+	/**
+	 * Returns a new object of class '<em>Model Model Advance Attached</em>'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return a new object of class '<em>Model Model Advance Attached</em>'.
+	 * @generated
+	 */
+	NUOPCModel__ModelAdvance__Attached createNUOPCModel__ModelAdvance__Attached();
 
 	/**
 	 * Returns a new object of class '<em>Driver</em>'.

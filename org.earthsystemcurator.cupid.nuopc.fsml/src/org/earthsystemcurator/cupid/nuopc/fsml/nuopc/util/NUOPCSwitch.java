@@ -138,9 +138,27 @@ public class NUOPCSwitch<T> extends Switch<T> {
 				if (result == null) result = defaultCase(theEObject);
 				return result;
 			}
+			case NUOPCPackage.NUOPC_MODEL_IMPLEMENTS_MODEL_ADVANCE: {
+				NUOPCModel__ImplementsModelAdvance nuopcModel__ImplementsModelAdvance = (NUOPCModel__ImplementsModelAdvance)theEObject;
+				T result = caseNUOPCModel__ImplementsModelAdvance(nuopcModel__ImplementsModelAdvance);
+				if (result == null) result = defaultCase(theEObject);
+				return result;
+			}
 			case NUOPCPackage.NUOPC_MODEL_MODEL_ADVANCE: {
 				NUOPCModel__ModelAdvance nuopcModel__ModelAdvance = (NUOPCModel__ModelAdvance)theEObject;
 				T result = caseNUOPCModel__ModelAdvance(nuopcModel__ModelAdvance);
+				if (result == null) result = defaultCase(theEObject);
+				return result;
+			}
+			case NUOPCPackage.NUOPC_MODEL_MODEL_ADVANCE_IMPLEMENTS_SUBROUTINE: {
+				NUOPCModel__ModelAdvance__ImplementsSubroutine nuopcModel__ModelAdvance__ImplementsSubroutine = (NUOPCModel__ModelAdvance__ImplementsSubroutine)theEObject;
+				T result = caseNUOPCModel__ModelAdvance__ImplementsSubroutine(nuopcModel__ModelAdvance__ImplementsSubroutine);
+				if (result == null) result = defaultCase(theEObject);
+				return result;
+			}
+			case NUOPCPackage.NUOPC_MODEL_MODEL_ADVANCE_ATTACHED: {
+				NUOPCModel__ModelAdvance__Attached nuopcModel__ModelAdvance__Attached = (NUOPCModel__ModelAdvance__Attached)theEObject;
+				T result = caseNUOPCModel__ModelAdvance__Attached(nuopcModel__ModelAdvance__Attached);
 				if (result == null) result = defaultCase(theEObject);
 				return result;
 			}
@@ -533,6 +551,21 @@ public class NUOPCSwitch<T> extends Switch<T> {
 	}
 
 	/**
+	 * Returns the result of interpreting the object as an instance of '<em>Model Implements Model Advance</em>'.
+	 * <!-- begin-user-doc -->
+	 * This implementation returns null;
+	 * returning a non-null result will terminate the switch.
+	 * <!-- end-user-doc -->
+	 * @param object the target of the switch.
+	 * @return the result of interpreting the object as an instance of '<em>Model Implements Model Advance</em>'.
+	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+	 * @generated
+	 */
+	public T caseNUOPCModel__ImplementsModelAdvance(NUOPCModel__ImplementsModelAdvance object) {
+		return null;
+	}
+
+	/**
 	 * Returns the result of interpreting the object as an instance of '<em>Model Model Advance</em>'.
 	 * <!-- begin-user-doc -->
 	 * This implementation returns null;
@@ -544,6 +577,36 @@ public class NUOPCSwitch<T> extends Switch<T> {
 	 * @generated
 	 */
 	public T caseNUOPCModel__ModelAdvance(NUOPCModel__ModelAdvance object) {
+		return null;
+	}
+
+	/**
+	 * Returns the result of interpreting the object as an instance of '<em>Model Model Advance Implements Subroutine</em>'.
+	 * <!-- begin-user-doc -->
+	 * This implementation returns null;
+	 * returning a non-null result will terminate the switch.
+	 * <!-- end-user-doc -->
+	 * @param object the target of the switch.
+	 * @return the result of interpreting the object as an instance of '<em>Model Model Advance Implements Subroutine</em>'.
+	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+	 * @generated
+	 */
+	public T caseNUOPCModel__ModelAdvance__ImplementsSubroutine(NUOPCModel__ModelAdvance__ImplementsSubroutine object) {
+		return null;
+	}
+
+	/**
+	 * Returns the result of interpreting the object as an instance of '<em>Model Model Advance Attached</em>'.
+	 * <!-- begin-user-doc -->
+	 * This implementation returns null;
+	 * returning a non-null result will terminate the switch.
+	 * <!-- end-user-doc -->
+	 * @param object the target of the switch.
+	 * @return the result of interpreting the object as an instance of '<em>Model Model Advance Attached</em>'.
+	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+	 * @generated
+	 */
+	public T caseNUOPCModel__ModelAdvance__Attached(NUOPCModel__ModelAdvance__Attached object) {
 		return null;
 	}
 

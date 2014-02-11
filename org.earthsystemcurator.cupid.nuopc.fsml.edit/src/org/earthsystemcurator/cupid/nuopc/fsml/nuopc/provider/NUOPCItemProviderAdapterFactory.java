@@ -348,26 +348,26 @@ public class NUOPCItemProviderAdapterFactory extends NUOPCAdapterFactory impleme
 	}
 
 	/**
-	 * This keeps track of the one adapter used for all {@link org.earthsystemcurator.cupid.nuopc.fsml.nuopc.NUOPCModel__ModelAdvance} instances.
+	 * This keeps track of the one adapter used for all {@link org.earthsystemcurator.cupid.nuopc.fsml.nuopc.NUOPCModel__ImplementsModelAdvance} instances.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	protected NUOPCModel__ModelAdvanceItemProvider nuopcModel__ModelAdvanceItemProvider;
+	protected NUOPCModel__ImplementsModelAdvanceItemProvider nuopcModel__ImplementsModelAdvanceItemProvider;
 
 	/**
-	 * This creates an adapter for a {@link org.earthsystemcurator.cupid.nuopc.fsml.nuopc.NUOPCModel__ModelAdvance}.
+	 * This creates an adapter for a {@link org.earthsystemcurator.cupid.nuopc.fsml.nuopc.NUOPCModel__ImplementsModelAdvance}.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
 	@Override
-	public Adapter createNUOPCModel__ModelAdvanceAdapter() {
-		if (nuopcModel__ModelAdvanceItemProvider == null) {
-			nuopcModel__ModelAdvanceItemProvider = new NUOPCModel__ModelAdvanceItemProvider(this);
+	public Adapter createNUOPCModel__ImplementsModelAdvanceAdapter() {
+		if (nuopcModel__ImplementsModelAdvanceItemProvider == null) {
+			nuopcModel__ImplementsModelAdvanceItemProvider = new NUOPCModel__ImplementsModelAdvanceItemProvider(this);
 		}
 
-		return nuopcModel__ModelAdvanceItemProvider;
+		return nuopcModel__ImplementsModelAdvanceItemProvider;
 	}
 
 	/**
@@ -713,6 +713,29 @@ public class NUOPCItemProviderAdapterFactory extends NUOPCAdapterFactory impleme
 		}
 
 		return nuopcDriverAtmOcn__ImplementsSetModelServicesItemProvider;
+	}
+
+	/**
+	 * This keeps track of the one adapter used for all {@link org.earthsystemcurator.cupid.nuopc.fsml.nuopc.NUOPCDriverAtmOcn__ImplementsSetModelPetLists} instances.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	protected NUOPCDriverAtmOcn__ImplementsSetModelPetListsItemProvider nuopcDriverAtmOcn__ImplementsSetModelPetListsItemProvider;
+
+	/**
+	 * This creates an adapter for a {@link org.earthsystemcurator.cupid.nuopc.fsml.nuopc.NUOPCDriverAtmOcn__ImplementsSetModelPetLists}.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	@Override
+	public Adapter createNUOPCDriverAtmOcn__ImplementsSetModelPetListsAdapter() {
+		if (nuopcDriverAtmOcn__ImplementsSetModelPetListsItemProvider == null) {
+			nuopcDriverAtmOcn__ImplementsSetModelPetListsItemProvider = new NUOPCDriverAtmOcn__ImplementsSetModelPetListsItemProvider(this);
+		}
+
+		return nuopcDriverAtmOcn__ImplementsSetModelPetListsItemProvider;
 	}
 
 	/**
@@ -1240,7 +1263,7 @@ public class NUOPCItemProviderAdapterFactory extends NUOPCAdapterFactory impleme
 		if (nuopcModel__AdvertisesExportFieldItemProvider != null) nuopcModel__AdvertisesExportFieldItemProvider.dispose();
 		if (nuopcModel__RealizesImportFieldItemProvider != null) nuopcModel__RealizesImportFieldItemProvider.dispose();
 		if (nuopcModel__RealizesExportFieldItemProvider != null) nuopcModel__RealizesExportFieldItemProvider.dispose();
-		if (nuopcModel__ModelAdvanceItemProvider != null) nuopcModel__ModelAdvanceItemProvider.dispose();
+		if (nuopcModel__ImplementsModelAdvanceItemProvider != null) nuopcModel__ImplementsModelAdvanceItemProvider.dispose();
 		if (nuopcDriverItemProvider != null) nuopcDriverItemProvider.dispose();
 		if (nuopcDriver__GenericImportsItemProvider != null) nuopcDriver__GenericImportsItemProvider.dispose();
 		if (nuopcDriver__ModelImportsItemProvider != null) nuopcDriver__ModelImportsItemProvider.dispose();
@@ -1256,6 +1279,7 @@ public class NUOPCItemProviderAdapterFactory extends NUOPCAdapterFactory impleme
 		if (nuopcDriverAtmOcn__ImplementsSetServicesItemProvider != null) nuopcDriverAtmOcn__ImplementsSetServicesItemProvider.dispose();
 		if (nuopcDriverAtmOcn__ImplementsSetModelCountItemProvider != null) nuopcDriverAtmOcn__ImplementsSetModelCountItemProvider.dispose();
 		if (nuopcDriverAtmOcn__ImplementsSetModelServicesItemProvider != null) nuopcDriverAtmOcn__ImplementsSetModelServicesItemProvider.dispose();
+		if (nuopcDriverAtmOcn__ImplementsSetModelPetListsItemProvider != null) nuopcDriverAtmOcn__ImplementsSetModelPetListsItemProvider.dispose();
 		if (nuopcDriverAtmOcn__ModelImports__ModelImportItemProvider != null) nuopcDriverAtmOcn__ModelImports__ModelImportItemProvider.dispose();
 		if (callsGenericSetServicesItemProvider != null) callsGenericSetServicesItemProvider.dispose();
 		if (callsSetEntryPointItemProvider != null) callsSetEntryPointItemProvider.dispose();

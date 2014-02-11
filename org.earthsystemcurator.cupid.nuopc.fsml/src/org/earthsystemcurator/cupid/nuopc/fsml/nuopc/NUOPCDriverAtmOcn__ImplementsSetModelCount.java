@@ -229,7 +229,7 @@ public interface NUOPCDriverAtmOcn__ImplementsSetModelCount extends EObject {
 	 * @see org.earthsystemcurator.cupid.nuopc.fsml.nuopc.NUOPCPackage#getNUOPCDriverAtmOcn__ImplementsSetModelCount_Attached()
 	 * @model required="true" derived="true"
 	 *        annotation="http://www.earthsystemcog.org/projects/nuopc essential='true'"
-	 *        annotation="http://www.eclipse.org/emf/2002/Ecore/OCL derivation='self.parent.genericImports.importsLabelSetModelCount <> null and self.name = self.parent.implementsSetServices.attachesMethod->select(m|m.name=self.parent.genericImports.importsLabelSetModelCount).userRoutine->asSequence()->first()'"
+	 *        annotation="http://www.eclipse.org/emf/2002/Ecore/OCL derivation='self.parent.genericImports.importsLabelSetModelCount <> null \r\nand self.parent.implementsSetServices.attachesMethod->size() > 0 \r\nand self.name = self.parent.implementsSetServices.attachesMethod->select(m|m.name=self.parent.genericImports.importsLabelSetModelCount).userRoutine->asSequence()->first()'"
 	 * @generated
 	 */
 	boolean isAttached();

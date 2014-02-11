@@ -7,6 +7,7 @@ import java.util.IdentityHashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.earthsystemcurator.cupid.nuopc.fsml.util.EcoreUtils;
 import org.earthsystemcurator.cupid.nuopc.fsml.util.Regex;
 import org.eclipse.core.resources.IProject;
 import org.eclipse.emf.common.util.Diagnostic;
@@ -112,21 +113,13 @@ public class FSM<RootType extends EObject> {
 	 * @param recursive
 	 * @return the EObject created
 	 */
+	@SuppressWarnings("unchecked")
 	public EObject forwardAdd(EObject context, EReference eref, boolean recursive) {
-	
-		Map<String, Object> keywordMap = Regex.getMappingFromAnnotation(eref);
 		
-		//contextFortranElem will be one of: IASTNode, IFortranAST, or Set<IFortranAST>
-		Object contextFortranElem = getMappings().get(context);
-		if (contextFortranElem == null) {
-			System.out.println("contextFortranElem is null: " + context);
-			return null;
-		}
-			
+		//create new element and add to the model
 		EClass type = (EClass) eref.getEType();
 		EObject newElem = factory.create(type);
-		
-		//add the new element to the model
+				
 		if (eref.isMany()) {
 			@SuppressWarnings("rawtypes")
 			EList sf = (EList) context.eGet(eref);
@@ -135,7 +128,26 @@ public class FSM<RootType extends EObject> {
 		else {
 			context.eSet(eref, newElem);
 		}
-			
+		
+		Map<String, Object> keywordMap = Regex.getMappingFromAnnotation(eref);
+	
+		//contextFortranElem will be one of: IASTNode, IFortranAST, or Set<IFortranAST>
+		Object contextFortranElem;
+		if (keywordMap != null && keywordMap.containsKey("_context")) {
+			//explicit context
+			String contextPath = (String) keywordMap.get("_context");
+			EObject explicitContextElem = EcoreUtils.eGetSFValue(contextPath, newElem, null);
+			contextFortranElem = getMappings().get(explicitContextElem);
+		}
+		else {
+			//implicit context
+			contextFortranElem = getMappings().get(context);
+		}
+		
+		if (contextFortranElem == null) {
+			System.out.println("contextFortranElem is null: " + context);
+			return null;
+		}	
 		
 		String methodName = Regex.getMappingTypeFromAnnotation(eref);
 		if (methodName != null) {
@@ -219,6 +231,8 @@ public class FSM<RootType extends EObject> {
 	public Object forwardAdd(EObject context, EAttribute eatt) {
 
 		Map<String, Object> keywordMap = Regex.getMappingFromAnnotation(eatt);
+		
+		//TODO: handle explicit context
 		
 		//contextFortranElem will be one of: IASTNode, IFortranAST, or Set<IFortranAST>
 		Object contextFortranElem = getMappings().get(context);

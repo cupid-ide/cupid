@@ -116,8 +116,20 @@ public class NUOPCAdapterFactory extends AdapterFactoryImpl {
 				return createNUOPCModel__RealizesExportFieldAdapter();
 			}
 			@Override
+			public Adapter caseNUOPCModel__ImplementsModelAdvance(NUOPCModel__ImplementsModelAdvance object) {
+				return createNUOPCModel__ImplementsModelAdvanceAdapter();
+			}
+			@Override
 			public Adapter caseNUOPCModel__ModelAdvance(NUOPCModel__ModelAdvance object) {
 				return createNUOPCModel__ModelAdvanceAdapter();
+			}
+			@Override
+			public Adapter caseNUOPCModel__ModelAdvance__ImplementsSubroutine(NUOPCModel__ModelAdvance__ImplementsSubroutine object) {
+				return createNUOPCModel__ModelAdvance__ImplementsSubroutineAdapter();
+			}
+			@Override
+			public Adapter caseNUOPCModel__ModelAdvance__Attached(NUOPCModel__ModelAdvance__Attached object) {
+				return createNUOPCModel__ModelAdvance__AttachedAdapter();
 			}
 			@Override
 			public Adapter caseNUOPCDriver(NUOPCDriver object) {
@@ -444,6 +456,20 @@ public class NUOPCAdapterFactory extends AdapterFactoryImpl {
 	}
 
 	/**
+	 * Creates a new adapter for an object of class '{@link org.earthsystemcurator.cupid.nuopc.fsml.nuopc.NUOPCModel__ImplementsModelAdvance <em>Model Implements Model Advance</em>}'.
+	 * <!-- begin-user-doc -->
+	 * This default implementation returns null so that we can easily ignore cases;
+	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
+	 * <!-- end-user-doc -->
+	 * @return the new adapter.
+	 * @see org.earthsystemcurator.cupid.nuopc.fsml.nuopc.NUOPCModel__ImplementsModelAdvance
+	 * @generated
+	 */
+	public Adapter createNUOPCModel__ImplementsModelAdvanceAdapter() {
+		return null;
+	}
+
+	/**
 	 * Creates a new adapter for an object of class '{@link org.earthsystemcurator.cupid.nuopc.fsml.nuopc.NUOPCModel__ModelAdvance <em>Model Model Advance</em>}'.
 	 * <!-- begin-user-doc -->
 	 * This default implementation returns null so that we can easily ignore cases;
@@ -454,6 +480,34 @@ public class NUOPCAdapterFactory extends AdapterFactoryImpl {
 	 * @generated
 	 */
 	public Adapter createNUOPCModel__ModelAdvanceAdapter() {
+		return null;
+	}
+
+	/**
+	 * Creates a new adapter for an object of class '{@link org.earthsystemcurator.cupid.nuopc.fsml.nuopc.NUOPCModel__ModelAdvance__ImplementsSubroutine <em>Model Model Advance Implements Subroutine</em>}'.
+	 * <!-- begin-user-doc -->
+	 * This default implementation returns null so that we can easily ignore cases;
+	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
+	 * <!-- end-user-doc -->
+	 * @return the new adapter.
+	 * @see org.earthsystemcurator.cupid.nuopc.fsml.nuopc.NUOPCModel__ModelAdvance__ImplementsSubroutine
+	 * @generated
+	 */
+	public Adapter createNUOPCModel__ModelAdvance__ImplementsSubroutineAdapter() {
+		return null;
+	}
+
+	/**
+	 * Creates a new adapter for an object of class '{@link org.earthsystemcurator.cupid.nuopc.fsml.nuopc.NUOPCModel__ModelAdvance__Attached <em>Model Model Advance Attached</em>}'.
+	 * <!-- begin-user-doc -->
+	 * This default implementation returns null so that we can easily ignore cases;
+	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
+	 * <!-- end-user-doc -->
+	 * @return the new adapter.
+	 * @see org.earthsystemcurator.cupid.nuopc.fsml.nuopc.NUOPCModel__ModelAdvance__Attached
+	 * @generated
+	 */
+	public Adapter createNUOPCModel__ModelAdvance__AttachedAdapter() {
 		return null;
 	}
 

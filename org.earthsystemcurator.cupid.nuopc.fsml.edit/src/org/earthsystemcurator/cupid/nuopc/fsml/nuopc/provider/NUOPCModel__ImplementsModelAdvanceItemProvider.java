@@ -6,7 +6,7 @@ package org.earthsystemcurator.cupid.nuopc.fsml.nuopc.provider;
 import java.util.Collection;
 import java.util.List;
 
-import org.earthsystemcurator.cupid.nuopc.fsml.nuopc.NUOPCModel__ModelAdvance;
+import org.earthsystemcurator.cupid.nuopc.fsml.nuopc.NUOPCModel__ImplementsModelAdvance;
 import org.earthsystemcurator.cupid.nuopc.fsml.nuopc.NUOPCPackage;
 
 import org.eclipse.emf.common.notify.AdapterFactory;
@@ -26,12 +26,12 @@ import org.eclipse.emf.edit.provider.ItemProviderAdapter;
 import org.eclipse.emf.edit.provider.ViewerNotification;
 
 /**
- * This is the item provider adapter for a {@link org.earthsystemcurator.cupid.nuopc.fsml.nuopc.NUOPCModel__ModelAdvance} object.
+ * This is the item provider adapter for a {@link org.earthsystemcurator.cupid.nuopc.fsml.nuopc.NUOPCModel__ImplementsModelAdvance} object.
  * <!-- begin-user-doc -->
  * <!-- end-user-doc -->
  * @generated
  */
-public class NUOPCModel__ModelAdvanceItemProvider
+public class NUOPCModel__ImplementsModelAdvanceItemProvider
 	extends ItemProviderAdapter
 	implements
 		IEditingDomainItemProvider,
@@ -45,7 +45,7 @@ public class NUOPCModel__ModelAdvanceItemProvider
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public NUOPCModel__ModelAdvanceItemProvider(AdapterFactory adapterFactory) {
+	public NUOPCModel__ImplementsModelAdvanceItemProvider(AdapterFactory adapterFactory) {
 		super(adapterFactory);
 	}
 
@@ -77,9 +77,9 @@ public class NUOPCModel__ModelAdvanceItemProvider
 			(createItemPropertyDescriptor
 				(((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(),
 				 getResourceLocator(),
-				 getString("_UI_NUOPCModel__ModelAdvance_name_feature"),
-				 getString("_UI_PropertyDescriptor_description", "_UI_NUOPCModel__ModelAdvance_name_feature", "_UI_NUOPCModel__ModelAdvance_type"),
-				 NUOPCPackage.Literals.NUOPC_MODEL_MODEL_ADVANCE__NAME,
+				 getString("_UI_NUOPCModel__ImplementsModelAdvance_name_feature"),
+				 getString("_UI_PropertyDescriptor_description", "_UI_NUOPCModel__ImplementsModelAdvance_name_feature", "_UI_NUOPCModel__ImplementsModelAdvance_type"),
+				 NUOPCPackage.Literals.NUOPC_MODEL_IMPLEMENTS_MODEL_ADVANCE__NAME,
 				 true,
 				 false,
 				 false,
@@ -99,9 +99,9 @@ public class NUOPCModel__ModelAdvanceItemProvider
 			(createItemPropertyDescriptor
 				(((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(),
 				 getResourceLocator(),
-				 getString("_UI_NUOPCModel__ModelAdvance_attachedModelAdvance_feature"),
-				 getString("_UI_PropertyDescriptor_description", "_UI_NUOPCModel__ModelAdvance_attachedModelAdvance_feature", "_UI_NUOPCModel__ModelAdvance_type"),
-				 NUOPCPackage.Literals.NUOPC_MODEL_MODEL_ADVANCE__ATTACHED_MODEL_ADVANCE,
+				 getString("_UI_NUOPCModel__ImplementsModelAdvance_attachedModelAdvance_feature"),
+				 getString("_UI_PropertyDescriptor_description", "_UI_NUOPCModel__ImplementsModelAdvance_attachedModelAdvance_feature", "_UI_NUOPCModel__ImplementsModelAdvance_type"),
+				 NUOPCPackage.Literals.NUOPC_MODEL_IMPLEMENTS_MODEL_ADVANCE__ATTACHED_MODEL_ADVANCE,
 				 true,
 				 false,
 				 false,
@@ -111,14 +111,14 @@ public class NUOPCModel__ModelAdvanceItemProvider
 	}
 
 	/**
-	 * This returns NUOPCModel__ModelAdvance.gif.
+	 * This returns NUOPCModel__ImplementsModelAdvance.gif.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
 	@Override
 	public Object getImage(Object object) {
-		return overlayImage(object, getResourceLocator().getImage("full/obj16/NUOPCModel__ModelAdvance"));
+		return overlayImage(object, getResourceLocator().getImage("full/obj16/NUOPCModel__ImplementsModelAdvance"));
 	}
 
 	/**
@@ -129,10 +129,10 @@ public class NUOPCModel__ModelAdvanceItemProvider
 	 */
 	@Override
 	public String getText(Object object) {
-		String label = ((NUOPCModel__ModelAdvance)object).getName();
+		String label = ((NUOPCModel__ImplementsModelAdvance)object).getName();
 		return label == null || label.length() == 0 ?
-			getString("_UI_NUOPCModel__ModelAdvance_type") :
-			getString("_UI_NUOPCModel__ModelAdvance_type") + " " + label;
+			getString("_UI_NUOPCModel__ImplementsModelAdvance_type") :
+			getString("_UI_NUOPCModel__ImplementsModelAdvance_type") + " " + label;
 	}
 
 	/**
@@ -146,9 +146,9 @@ public class NUOPCModel__ModelAdvanceItemProvider
 	public void notifyChanged(Notification notification) {
 		updateChildren(notification);
 
-		switch (notification.getFeatureID(NUOPCModel__ModelAdvance.class)) {
-			case NUOPCPackage.NUOPC_MODEL_MODEL_ADVANCE__NAME:
-			case NUOPCPackage.NUOPC_MODEL_MODEL_ADVANCE__ATTACHED_MODEL_ADVANCE:
+		switch (notification.getFeatureID(NUOPCModel__ImplementsModelAdvance.class)) {
+			case NUOPCPackage.NUOPC_MODEL_IMPLEMENTS_MODEL_ADVANCE__NAME:
+			case NUOPCPackage.NUOPC_MODEL_IMPLEMENTS_MODEL_ADVANCE__ATTACHED_MODEL_ADVANCE:
 				fireNotifyChanged(new ViewerNotification(notification, notification.getNotifier(), false, true));
 				return;
 		}

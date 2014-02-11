@@ -68,7 +68,10 @@ public class NUOPCFactoryImpl extends EFactoryImpl implements NUOPCFactory {
 			case NUOPCPackage.NUOPC_MODEL_ADVERTISES_EXPORT_FIELD: return createNUOPCModel__AdvertisesExportField();
 			case NUOPCPackage.NUOPC_MODEL_REALIZES_IMPORT_FIELD: return createNUOPCModel__RealizesImportField();
 			case NUOPCPackage.NUOPC_MODEL_REALIZES_EXPORT_FIELD: return createNUOPCModel__RealizesExportField();
+			case NUOPCPackage.NUOPC_MODEL_IMPLEMENTS_MODEL_ADVANCE: return createNUOPCModel__ImplementsModelAdvance();
 			case NUOPCPackage.NUOPC_MODEL_MODEL_ADVANCE: return createNUOPCModel__ModelAdvance();
+			case NUOPCPackage.NUOPC_MODEL_MODEL_ADVANCE_IMPLEMENTS_SUBROUTINE: return createNUOPCModel__ModelAdvance__ImplementsSubroutine();
+			case NUOPCPackage.NUOPC_MODEL_MODEL_ADVANCE_ATTACHED: return createNUOPCModel__ModelAdvance__Attached();
 			case NUOPCPackage.NUOPC_DRIVER: return createNUOPCDriver();
 			case NUOPCPackage.NUOPC_DRIVER_GENERIC_IMPORTS: return createNUOPCDriver__GenericImports();
 			case NUOPCPackage.NUOPC_DRIVER_MODEL_IMPORTS: return createNUOPCDriver__ModelImports();
@@ -233,9 +236,39 @@ public class NUOPCFactoryImpl extends EFactoryImpl implements NUOPCFactory {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	public NUOPCModel__ImplementsModelAdvance createNUOPCModel__ImplementsModelAdvance() {
+		NUOPCModel__ImplementsModelAdvanceImpl nuopcModel__ImplementsModelAdvance = new NUOPCModel__ImplementsModelAdvanceImpl();
+		return nuopcModel__ImplementsModelAdvance;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
 	public NUOPCModel__ModelAdvance createNUOPCModel__ModelAdvance() {
 		NUOPCModel__ModelAdvanceImpl nuopcModel__ModelAdvance = new NUOPCModel__ModelAdvanceImpl();
 		return nuopcModel__ModelAdvance;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public NUOPCModel__ModelAdvance__ImplementsSubroutine createNUOPCModel__ModelAdvance__ImplementsSubroutine() {
+		NUOPCModel__ModelAdvance__ImplementsSubroutineImpl nuopcModel__ModelAdvance__ImplementsSubroutine = new NUOPCModel__ModelAdvance__ImplementsSubroutineImpl();
+		return nuopcModel__ModelAdvance__ImplementsSubroutine;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public NUOPCModel__ModelAdvance__Attached createNUOPCModel__ModelAdvance__Attached() {
+		NUOPCModel__ModelAdvance__AttachedImpl nuopcModel__ModelAdvance__Attached = new NUOPCModel__ModelAdvance__AttachedImpl();
+		return nuopcModel__ModelAdvance__Attached;
 	}
 
 	/**

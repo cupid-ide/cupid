@@ -6,6 +6,7 @@ import java.util.Collection;
 
 import org.earthsystemcurator.cupid.nuopc.fsml.nuopc.NUOPCModel;
 import org.earthsystemcurator.cupid.nuopc.fsml.nuopc.NUOPCModel__GenericImports;
+import org.earthsystemcurator.cupid.nuopc.fsml.nuopc.NUOPCModel__ImplementsModelAdvance;
 import org.earthsystemcurator.cupid.nuopc.fsml.nuopc.NUOPCModel__ImplementsSetServices;
 import org.earthsystemcurator.cupid.nuopc.fsml.nuopc.NUOPCModel__Init;
 import org.earthsystemcurator.cupid.nuopc.fsml.nuopc.NUOPCModel__ModelAdvance;
@@ -37,6 +38,7 @@ import org.eclipse.emf.ecore.util.InternalEList;
  *   <li>{@link org.earthsystemcurator.cupid.nuopc.fsml.nuopc.impl.NUOPCModelImpl#getImplementsSetServices <em>Implements Set Services</em>}</li>
  *   <li>{@link org.earthsystemcurator.cupid.nuopc.fsml.nuopc.impl.NUOPCModelImpl#getInitialize <em>Initialize</em>}</li>
  *   <li>{@link org.earthsystemcurator.cupid.nuopc.fsml.nuopc.impl.NUOPCModelImpl#getImplementsModelAdvance <em>Implements Model Advance</em>}</li>
+ *   <li>{@link org.earthsystemcurator.cupid.nuopc.fsml.nuopc.impl.NUOPCModelImpl#getModelAdvance <em>Model Advance</em>}</li>
  * </ul>
  * </p>
  *
@@ -51,7 +53,7 @@ public class NUOPCModelImpl extends EObjectImpl implements NUOPCModel {
 	 * @generated
 	 * @ordered
 	 */
-	protected static final String NAME_EDEFAULT = "Model";
+	protected static final String NAME_EDEFAULT = "ModelDefault";
 
 	/**
 	 * The cached value of the '{@link #getName() <em>Name</em>}' attribute.
@@ -101,7 +103,17 @@ public class NUOPCModelImpl extends EObjectImpl implements NUOPCModel {
 	 * @generated
 	 * @ordered
 	 */
-	protected EList<NUOPCModel__ModelAdvance> implementsModelAdvance;
+	protected EList<NUOPCModel__ImplementsModelAdvance> implementsModelAdvance;
+
+	/**
+	 * The cached value of the '{@link #getModelAdvance() <em>Model Advance</em>}' containment reference list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #getModelAdvance()
+	 * @generated
+	 * @ordered
+	 */
+	protected EList<NUOPCModel__ModelAdvance> modelAdvance;
 
 	/**
 	 * <!-- begin-user-doc -->
@@ -277,11 +289,23 @@ public class NUOPCModelImpl extends EObjectImpl implements NUOPCModel {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EList<NUOPCModel__ModelAdvance> getImplementsModelAdvance() {
+	public EList<NUOPCModel__ImplementsModelAdvance> getImplementsModelAdvance() {
 		if (implementsModelAdvance == null) {
-			implementsModelAdvance = new EObjectContainmentWithInverseEList<NUOPCModel__ModelAdvance>(NUOPCModel__ModelAdvance.class, this, NUOPCPackage.NUOPC_MODEL__IMPLEMENTS_MODEL_ADVANCE, NUOPCPackage.NUOPC_MODEL_MODEL_ADVANCE__PARENT);
+			implementsModelAdvance = new EObjectContainmentWithInverseEList<NUOPCModel__ImplementsModelAdvance>(NUOPCModel__ImplementsModelAdvance.class, this, NUOPCPackage.NUOPC_MODEL__IMPLEMENTS_MODEL_ADVANCE, NUOPCPackage.NUOPC_MODEL_IMPLEMENTS_MODEL_ADVANCE__PARENT);
 		}
 		return implementsModelAdvance;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EList<NUOPCModel__ModelAdvance> getModelAdvance() {
+		if (modelAdvance == null) {
+			modelAdvance = new EObjectContainmentWithInverseEList<NUOPCModel__ModelAdvance>(NUOPCModel__ModelAdvance.class, this, NUOPCPackage.NUOPC_MODEL__MODEL_ADVANCE, NUOPCPackage.NUOPC_MODEL_MODEL_ADVANCE__PARENT);
+		}
+		return modelAdvance;
 	}
 
 	/**
@@ -303,6 +327,8 @@ public class NUOPCModelImpl extends EObjectImpl implements NUOPCModel {
 				return basicSetInitialize((NUOPCModel__Init)otherEnd, msgs);
 			case NUOPCPackage.NUOPC_MODEL__IMPLEMENTS_MODEL_ADVANCE:
 				return ((InternalEList<InternalEObject>)(InternalEList<?>)getImplementsModelAdvance()).basicAdd(otherEnd, msgs);
+			case NUOPCPackage.NUOPC_MODEL__MODEL_ADVANCE:
+				return ((InternalEList<InternalEObject>)(InternalEList<?>)getModelAdvance()).basicAdd(otherEnd, msgs);
 		}
 		return super.eInverseAdd(otherEnd, featureID, msgs);
 	}
@@ -323,6 +349,8 @@ public class NUOPCModelImpl extends EObjectImpl implements NUOPCModel {
 				return basicSetInitialize(null, msgs);
 			case NUOPCPackage.NUOPC_MODEL__IMPLEMENTS_MODEL_ADVANCE:
 				return ((InternalEList<?>)getImplementsModelAdvance()).basicRemove(otherEnd, msgs);
+			case NUOPCPackage.NUOPC_MODEL__MODEL_ADVANCE:
+				return ((InternalEList<?>)getModelAdvance()).basicRemove(otherEnd, msgs);
 		}
 		return super.eInverseRemove(otherEnd, featureID, msgs);
 	}
@@ -345,6 +373,8 @@ public class NUOPCModelImpl extends EObjectImpl implements NUOPCModel {
 				return getInitialize();
 			case NUOPCPackage.NUOPC_MODEL__IMPLEMENTS_MODEL_ADVANCE:
 				return getImplementsModelAdvance();
+			case NUOPCPackage.NUOPC_MODEL__MODEL_ADVANCE:
+				return getModelAdvance();
 		}
 		return super.eGet(featureID, resolve, coreType);
 	}
@@ -372,7 +402,11 @@ public class NUOPCModelImpl extends EObjectImpl implements NUOPCModel {
 				return;
 			case NUOPCPackage.NUOPC_MODEL__IMPLEMENTS_MODEL_ADVANCE:
 				getImplementsModelAdvance().clear();
-				getImplementsModelAdvance().addAll((Collection<? extends NUOPCModel__ModelAdvance>)newValue);
+				getImplementsModelAdvance().addAll((Collection<? extends NUOPCModel__ImplementsModelAdvance>)newValue);
+				return;
+			case NUOPCPackage.NUOPC_MODEL__MODEL_ADVANCE:
+				getModelAdvance().clear();
+				getModelAdvance().addAll((Collection<? extends NUOPCModel__ModelAdvance>)newValue);
 				return;
 		}
 		super.eSet(featureID, newValue);
@@ -401,6 +435,9 @@ public class NUOPCModelImpl extends EObjectImpl implements NUOPCModel {
 			case NUOPCPackage.NUOPC_MODEL__IMPLEMENTS_MODEL_ADVANCE:
 				getImplementsModelAdvance().clear();
 				return;
+			case NUOPCPackage.NUOPC_MODEL__MODEL_ADVANCE:
+				getModelAdvance().clear();
+				return;
 		}
 		super.eUnset(featureID);
 	}
@@ -423,6 +460,8 @@ public class NUOPCModelImpl extends EObjectImpl implements NUOPCModel {
 				return initialize != null;
 			case NUOPCPackage.NUOPC_MODEL__IMPLEMENTS_MODEL_ADVANCE:
 				return implementsModelAdvance != null && !implementsModelAdvance.isEmpty();
+			case NUOPCPackage.NUOPC_MODEL__MODEL_ADVANCE:
+				return modelAdvance != null && !modelAdvance.isEmpty();
 		}
 		return super.eIsSet(featureID);
 	}

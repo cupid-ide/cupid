@@ -110,8 +110,14 @@ public class NUOPCValidator extends EObjectValidator {
 				return validateNUOPCModel__RealizesImportField((NUOPCModel__RealizesImportField)value, diagnostics, context);
 			case NUOPCPackage.NUOPC_MODEL_REALIZES_EXPORT_FIELD:
 				return validateNUOPCModel__RealizesExportField((NUOPCModel__RealizesExportField)value, diagnostics, context);
+			case NUOPCPackage.NUOPC_MODEL_IMPLEMENTS_MODEL_ADVANCE:
+				return validateNUOPCModel__ImplementsModelAdvance((NUOPCModel__ImplementsModelAdvance)value, diagnostics, context);
 			case NUOPCPackage.NUOPC_MODEL_MODEL_ADVANCE:
 				return validateNUOPCModel__ModelAdvance((NUOPCModel__ModelAdvance)value, diagnostics, context);
+			case NUOPCPackage.NUOPC_MODEL_MODEL_ADVANCE_IMPLEMENTS_SUBROUTINE:
+				return validateNUOPCModel__ModelAdvance__ImplementsSubroutine((NUOPCModel__ModelAdvance__ImplementsSubroutine)value, diagnostics, context);
+			case NUOPCPackage.NUOPC_MODEL_MODEL_ADVANCE_ATTACHED:
+				return validateNUOPCModel__ModelAdvance__Attached((NUOPCModel__ModelAdvance__Attached)value, diagnostics, context);
 			case NUOPCPackage.NUOPC_DRIVER:
 				return validateNUOPCDriver((NUOPCDriver)value, diagnostics, context);
 			case NUOPCPackage.NUOPC_DRIVER_GENERIC_IMPORTS:
@@ -367,8 +373,35 @@ public class NUOPCValidator extends EObjectValidator {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	public boolean validateNUOPCModel__ImplementsModelAdvance(NUOPCModel__ImplementsModelAdvance nuopcModel__ImplementsModelAdvance, DiagnosticChain diagnostics, Map<Object, Object> context) {
+		return validate_EveryDefaultConstraint(nuopcModel__ImplementsModelAdvance, diagnostics, context);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
 	public boolean validateNUOPCModel__ModelAdvance(NUOPCModel__ModelAdvance nuopcModel__ModelAdvance, DiagnosticChain diagnostics, Map<Object, Object> context) {
 		return validate_EveryDefaultConstraint(nuopcModel__ModelAdvance, diagnostics, context);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public boolean validateNUOPCModel__ModelAdvance__ImplementsSubroutine(NUOPCModel__ModelAdvance__ImplementsSubroutine nuopcModel__ModelAdvance__ImplementsSubroutine, DiagnosticChain diagnostics, Map<Object, Object> context) {
+		return validate_EveryDefaultConstraint(nuopcModel__ModelAdvance__ImplementsSubroutine, diagnostics, context);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public boolean validateNUOPCModel__ModelAdvance__Attached(NUOPCModel__ModelAdvance__Attached nuopcModel__ModelAdvance__Attached, DiagnosticChain diagnostics, Map<Object, Object> context) {
+		return validate_EveryDefaultConstraint(nuopcModel__ModelAdvance__Attached, diagnostics, context);
 	}
 
 	/**
