@@ -408,12 +408,14 @@
     <eStructuralFeatures xsi:type="ecore:EReference" name="attached" lowerBound="1"
         eType="#//NUOPCModel__ModelAdvance__Attached" containment="true">
       <eAnnotations source="http://www.earthsystemcog.org/projects/nuopc">
-        <details key="mapping" value="#../../implementsSetServices call: &quot;ESMF_MethodAdd(#ignore, index?=#index, label=#name, userRoutine=#userRoutine, rc=#ignore)&quot;"/>
+        <details key="mapping" value="#../../implementsSetServices call: &quot;ESMF_MethodAdd(#ignore, index?=#index, label=#name, userRoutine=#../implementsSubroutine/name, rc=#ignore)&quot;"/>
+        <details key="mappingNew" value="#../../implementsSetServices call(ESMF_MethodAdd(#ignore, index?=#index, label=#name, userRoutine=#../implementsSubroutine/name, rc=#ignore))"/>
       </eAnnotations>
     </eStructuralFeatures>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="NUOPCModel__ModelAdvance__ImplementsSubroutine">
-    <eStructuralFeatures xsi:type="ecore:EAttribute" name="name" lowerBound="1" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="name" lowerBound="1" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"
+        defaultValueLiteral="ModelAdvance"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="NUOPCModel__ModelAdvance__Attached">
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="name" lowerBound="1" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>

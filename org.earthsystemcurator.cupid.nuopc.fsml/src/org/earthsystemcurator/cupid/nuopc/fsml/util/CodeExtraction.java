@@ -137,7 +137,7 @@ public class CodeExtraction {
         }
         catch (Exception e)
         {
-            throw new Error(e);
+            throw new RuntimeException("Could not parse code fragment: " + string, e);
         }
     }
 	

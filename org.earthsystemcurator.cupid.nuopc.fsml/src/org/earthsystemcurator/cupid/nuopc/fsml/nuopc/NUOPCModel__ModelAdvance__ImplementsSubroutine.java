@@ -23,6 +23,7 @@ import org.eclipse.emf.ecore.EObject;
 public interface NUOPCModel__ModelAdvance__ImplementsSubroutine extends EObject {
 	/**
 	 * Returns the value of the '<em><b>Name</b></em>' attribute.
+	 * The default value is <code>"ModelAdvance"</code>.
 	 * <!-- begin-user-doc -->
 	 * <p>
 	 * If the meaning of the '<em>Name</em>' attribute isn't clear,
@@ -32,7 +33,7 @@ public interface NUOPCModel__ModelAdvance__ImplementsSubroutine extends EObject 
 	 * @return the value of the '<em>Name</em>' attribute.
 	 * @see #setName(String)
 	 * @see org.earthsystemcurator.cupid.nuopc.fsml.nuopc.NUOPCPackage#getNUOPCModel__ModelAdvance__ImplementsSubroutine_Name()
-	 * @model required="true"
+	 * @model default="ModelAdvance" required="true"
 	 * @generated
 	 */
 	String getName();

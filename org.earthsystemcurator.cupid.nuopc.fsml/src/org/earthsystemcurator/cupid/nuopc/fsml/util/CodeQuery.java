@@ -11,6 +11,12 @@ import java.util.TreeMap;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import org.earthsystemcurator.cupidLanguage.ActualParam;
+import org.earthsystemcurator.cupidLanguage.Call;
+import org.earthsystemcurator.cupidLanguage.IDOrPathExpr;
+import org.earthsystemcurator.cupidLanguage.IDOrWildcard;
+import org.earthsystemcurator.cupidLanguage.ImplicitContextMapping;
+import org.earthsystemcurator.cupidLanguage.PathExpr;
 import org.eclipse.core.resources.IFile;
 import org.eclipse.photran.core.IFortranAST;
 import org.eclipse.photran.internal.core.analysis.binding.Definition;
@@ -47,6 +53,21 @@ import org.eclipse.photran.internal.core.vpg.PhotranVPG;
 @SuppressWarnings("restriction")
 public class CodeQuery {
 
+	////NEW MAPPINGS
+	
+	//public static <T extends ImplicitContextMapping> Set<ASTCallStmtNode> handleMapping(T icm) {
+	//	Class<? extends ImplicitContextMapping> clazz = icm.getClass();
+	//	System.out.println("Called version: " + clazz.getCanonicalName());
+	//	return null;
+	//}
+	
+	//public static Set<ASTCallStmtNode> handleMapping(Call call) {
+	//	System.out.println("Called call version");
+	//	return null;
+	//}
+	
+	////END NEW MAPPINGS
+	
 	public static Pattern P_METAVAR = Pattern.compile("#((\\.\\.|\\w+)/)*\\w+");
 	
 	public static String moduleName(ASTModuleNode node, Map<String, Object> params) {
@@ -820,14 +841,15 @@ public class CodeQuery {
 	}
 	
 	
-	//TODO: change this to match new metavar signature
-	
-	//public static Pattern P_CALLSIG = Pattern.compile("(#?(?:(?:\\.\\.|\\w+)/)*\\w+|(?:\\*))(\\(((?:((\\w+)\\s*=\\s*)?(\\s*((?:#(?:../)*)?\\w+))?,?\\s*)*)\\))?");	
-	//public static Pattern P_CALLARG = Pattern.compile("((\\w+)\\s*=\\s*)?((?:#(?:../)*)?\\w+)");
-		
+	//old ones
 	public static Pattern P_CALLSIG = Pattern.compile("(#?(?:(?:\\.\\.|\\w+)/)*\\w+|(?:\\*))(\\(((?:((\\w+)\\??\\s*=\\s*)?(\\s*((?:#(?:../)*)?\\w+))?,?\\s*)*)\\))?");	
 	public static Pattern P_CALLARG = Pattern.compile("((\\w+\\??)\\s*=\\s*)?((?:#(?:../)*)?\\w+)");
 	
+	//new ones
+	//public static Pattern P_CALLSIG = Pattern.compile("(#?(?:(?:\\.\\.|\\w+)/)*\\w+|(?:\\*))(\\(((?:((\\w+)\\??\\s*=\\s*)?(\\s*((?:#(?:(?:\\.\\.|\\w+))?/)*\\w+))?,?\\s*)*)\\))?");
+	//public static Pattern P_CALLARG = Pattern.compile("((\\w+\\??)\\s*=\\s*)?((?:#(?:(?:\\.\\.|\\w+)/)*)?\\w+)");
+	
+		
 	//out[0] --> list of vars (may be null)
 	//out[1] --> list of keywords (may be null)
 	public static String parseCallSig(String callSig, List<String> out[]) {
@@ -874,12 +896,14 @@ public class CodeQuery {
 		
 	}
 	
+		
+	
 	public static Map<ASTCallStmtNode, Map<String,String>> call(IASTNode node, Map<String, Object> params) {
 			
 		String callSig = (String) params.get("call");
 		
 		List<String> vars = null;
-		List<String> keywords = null;
+		List<String> keywords = null;		
 		@SuppressWarnings("unchecked")
 		List<String> varsAndKeywords[] = new List[] {null, null};
 		
@@ -1019,6 +1043,73 @@ public class CodeQuery {
 			result.put(csn, metavariableMap);
 		}
 		return result;
+	}
+	
+	
+public static Map<ASTCallStmtNode, Map<PathExpr, String>> call(IASTNode context, Call mapping) {
+		
+		Map<ASTCallStmtNode, Map<PathExpr, String>> result = new HashMap<ASTCallStmtNode, Map<PathExpr, String>>();
+		
+		csnloop : for (ASTCallStmtNode csn : context.findAll(ASTCallStmtNode.class)) {
+			
+			final Map<PathExpr, String> bindings = new HashMap<PathExpr, String>();					
+			
+			if (mapping.getSubroutineName() instanceof PathExpr) {
+				bindings.put((PathExpr) mapping.getSubroutineName(), csn.getSubroutineName().getText().trim());
+			}
+			else {
+				IDOrWildcard subroutineName = (IDOrWildcard) mapping.getSubroutineName();
+				if (!subroutineName.isWildcard() && !csn.getSubroutineName().getText().trim().equalsIgnoreCase(subroutineName.getId())) {
+					continue;
+				}
+			}
+			
+			//deal with arguments now
+			if (mapping.getParams() != null) {
+				
+				varloop: for (int i = 0; i < mapping.getParams().size(); i++) {
+					
+					ASTSubroutineArgNode san;
+					ActualParam param = mapping.getParams().get(i);
+					String keyword = param.getKeyword();
+					IDOrPathExpr value = param.getValue();
+					
+					if (keyword == null) {
+						//match by index						
+						if (csn.getArgList().size() <= i) {
+							continue csnloop;
+						}
+						san = csn.getArgList().get(i);
+					}
+					else {
+						//match by keyword
+						san = findArgByKeyword(keyword, csn.getArgList());						
+					}
+					
+					if (san == null) {
+						if (param.isOptional()) {
+							//optional argument not present, so ignore it
+							continue varloop;
+						}
+						else {
+							continue csnloop;
+						}
+					}
+					else if (value instanceof PathExpr) {
+						bindings.put((PathExpr) value, san.getExpr().toString().trim());
+					}
+					else if (!san.getExpr().toString().equalsIgnoreCase(((IDOrWildcard) value).getId())) {
+						continue csnloop;
+					}							
+				}			
+			}
+			
+			//everything matched, so add to result
+			result.put(csn, bindings);
+		}
+		
+		return result;	
+		
 	}
 	
 	public static ASTSubroutineArgNode findArgByKeyword(String keyword, IASTListNode<ASTSubroutineArgNode> argList) {

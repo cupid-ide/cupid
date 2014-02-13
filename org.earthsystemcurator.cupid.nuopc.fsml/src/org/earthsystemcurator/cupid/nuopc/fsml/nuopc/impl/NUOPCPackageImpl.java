@@ -3591,7 +3591,7 @@ public class NUOPCPackageImpl extends EPackageImpl implements NUOPCPackage {
 		initEReference(getNUOPCModel__ModelAdvance_Attached(), this.getNUOPCModel__ModelAdvance__Attached(), null, "attached", null, 1, 1, NUOPCModel__ModelAdvance.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
 		initEClass(nuopcModel__ModelAdvance__ImplementsSubroutineEClass, NUOPCModel__ModelAdvance__ImplementsSubroutine.class, "NUOPCModel__ModelAdvance__ImplementsSubroutine", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
-		initEAttribute(getNUOPCModel__ModelAdvance__ImplementsSubroutine_Name(), ecorePackage.getEString(), "name", null, 1, 1, NUOPCModel__ModelAdvance__ImplementsSubroutine.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEAttribute(getNUOPCModel__ModelAdvance__ImplementsSubroutine_Name(), ecorePackage.getEString(), "name", "ModelAdvance", 1, 1, NUOPCModel__ModelAdvance__ImplementsSubroutine.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
 		initEClass(nuopcModel__ModelAdvance__AttachedEClass, NUOPCModel__ModelAdvance__Attached.class, "NUOPCModel__ModelAdvance__Attached", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 		initEAttribute(getNUOPCModel__ModelAdvance__Attached_Name(), ecorePackage.getEString(), "name", null, 1, 1, NUOPCModel__ModelAdvance__Attached.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
@@ -4168,7 +4168,8 @@ public class NUOPCPackageImpl extends EPackageImpl implements NUOPCPackage {
 		  (getNUOPCModel__ModelAdvance_Attached(), 
 		   source, 
 		   new String[] {
-			 "mapping", "#../../implementsSetServices call: \"ESMF_MethodAdd(#ignore, index?=#index, label=#name, userRoutine=#userRoutine, rc=#ignore)\""
+			 "mapping", "#../../implementsSetServices call: \"ESMF_MethodAdd(#ignore, index?=#index, label=#name, userRoutine=#../implementsSubroutine/name, rc=#ignore)\"",
+			 "mappingNew", "#../../implementsSetServices call(ESMF_MethodAdd(#ignore, index?=#index, label=#name, userRoutine=#../implementsSubroutine/name, rc=#ignore))"
 		   });		
 		addAnnotation
 		  (nuopcDriverEClass, 

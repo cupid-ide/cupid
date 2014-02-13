@@ -64,6 +64,9 @@ Require-Bundle: org.eclipse.core.runtime,
  org.eclipse.cdt.make.core,
  org.eclipse.ui.forms;bundle-version="3.6.1",
  org.eclipse.equinox.preferences,
- org.jdom;bundle-version="1.1.1"
+ org.jdom;bundle-version="1.1.1",
+ org.eclipse.xtext
 Bundle-ActivationPolicy: lazy
 Bundle-Activator: org.earthsystemcurator.cupid.nuopc.fsml.core.CupidActivator
+Import-Package: org.earthsystemcurator,
+ org.earthsystemcurator.cupidLanguage

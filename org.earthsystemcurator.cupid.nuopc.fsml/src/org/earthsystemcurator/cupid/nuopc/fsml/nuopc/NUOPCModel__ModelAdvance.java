@@ -90,7 +90,7 @@ public interface NUOPCModel__ModelAdvance extends EObject {
 	 * @see #setAttached(NUOPCModel__ModelAdvance__Attached)
 	 * @see org.earthsystemcurator.cupid.nuopc.fsml.nuopc.NUOPCPackage#getNUOPCModel__ModelAdvance_Attached()
 	 * @model containment="true" required="true"
-	 *        annotation="http://www.earthsystemcog.org/projects/nuopc mapping='#../../implementsSetServices call: \"ESMF_MethodAdd(#ignore, index?=#index, label=#name, userRoutine=#userRoutine, rc=#ignore)\"'"
+	 *        annotation="http://www.earthsystemcog.org/projects/nuopc mapping='#../../implementsSetServices call: \"ESMF_MethodAdd(#ignore, index?=#index, label=#name, userRoutine=#../implementsSubroutine/name, rc=#ignore)\"' mappingNew='#../../implementsSetServices call(ESMF_MethodAdd(#ignore, index?=#index, label=#name, userRoutine=#../implementsSubroutine/name, rc=#ignore))'"
 	 * @generated
 	 */
 	NUOPCModel__ModelAdvance__Attached getAttached();

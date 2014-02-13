@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<genmodel:GenModel xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:ecore="http://www.eclipse.org/emf/2002/Ecore"
+    xmlns:genmodel="http://www.eclipse.org/emf/2002/GenModel" modelDirectory="/org.earthsystemcurator.cupid.xtext/src-gen" editDirectory="/org.earthsystemcurator.cupid.xtext.edit/src"
+    editorDirectory="/org.earthsystemcurator.cupid.xtext.editor/src" modelPluginID="org.earthsystemcurator.cupid.xtext"
+    forceOverwrite="true" modelName="CupidLanguage" updateClasspath="false" rootExtendsClass="org.eclipse.emf.ecore.impl.MinimalEObjectImpl$Container"
+    complianceLevel="5.0" copyrightFields="false" editPluginID="org.earthsystemcurator.cupid.xtext.edit"
+    editorPluginID="org.earthsystemcurator.cupid.xtext.editor" runtimeVersion="2.9">
+  <genPackages prefix="CupidLanguage" basePackage="org.earthsystemcurator" disposableProviderFactory="true"
+      fileExtensions="cupid" ecorePackage="CupidLanguage.ecore#/">
+    <genClasses ecoreClass="CupidLanguage.ecore#//Mappings">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference CupidLanguage.ecore#//Mappings/mappings"/>
+    </genClasses>
+    <genClasses ecoreClass="CupidLanguage.ecore#//Mapping">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference CupidLanguage.ecore#//Mapping/context"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference CupidLanguage.ecore#//Mapping/mapping"/>
+    </genClasses>
+    <genClasses ecoreClass="CupidLanguage.ecore#//ImplicitContextMapping"/>
+    <genClasses ecoreClass="CupidLanguage.ecore#//Call">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference CupidLanguage.ecore#//Call/subroutineName"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference CupidLanguage.ecore#//Call/params"/>
+    </genClasses>
+    <genClasses ecoreClass="CupidLanguage.ecore#//ActualParam">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute CupidLanguage.ecore#//ActualParam/keyword"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute CupidLanguage.ecore#//ActualParam/optional"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference CupidLanguage.ecore#//ActualParam/value"/>
+    </genClasses>
+    <genClasses ecoreClass="CupidLanguage.ecore#//IDOrWildcard">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute CupidLanguage.ecore#//IDOrWildcard/id"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute CupidLanguage.ecore#//IDOrWildcard/wildcard"/>
+    </genClasses>
+    <genClasses ecoreClass="CupidLanguage.ecore#//IDOrPathExpr"/>
+    <genClasses ecoreClass="CupidLanguage.ecore#//PathExpr">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute CupidLanguage.ecore#//PathExpr/segments"/>
+    </genClasses>
+  </genPackages>
+</genmodel:GenModel>

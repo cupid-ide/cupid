@@ -185,7 +185,7 @@ public class NUOPCView extends ViewPart {
 			public void run() {
 				ISelection selection = viewer.getSelection();
 				Object obj = ((IStructuredSelection)selection).getFirstElement();
-				//showMessage("Double-click detected on " + obj.toString());
+				System.out.println("Double-click detected on " + obj.toString());
 				
 				NUOPCModelElem me = (NUOPCModelElem) obj;
 				

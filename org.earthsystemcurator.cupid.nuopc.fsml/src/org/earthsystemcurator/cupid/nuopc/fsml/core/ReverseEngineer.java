@@ -1,6 +1,9 @@
 package org.earthsystemcurator.cupid.nuopc.fsml.core;
 
 
+import java.io.ByteArrayInputStream;
+import java.io.IOException;
+import java.io.InputStream;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.util.HashMap;
@@ -12,18 +15,29 @@ import java.util.Map.Entry;
 import java.util.Set;
 import java.util.regex.Matcher;
 
+import org.earthsystemcurator.CupidLanguageStandaloneSetup;
 import org.earthsystemcurator.cupid.nuopc.fsml.nuopc.NUOPCApplication;
 import org.earthsystemcurator.cupid.nuopc.fsml.nuopc.NUOPCFactory;
 import org.earthsystemcurator.cupid.nuopc.fsml.properties.CupidPropertyPage;
 import org.earthsystemcurator.cupid.nuopc.fsml.util.CodeQuery;
 import org.earthsystemcurator.cupid.nuopc.fsml.util.EcoreUtils;
 import org.earthsystemcurator.cupid.nuopc.fsml.util.Regex;
+import org.earthsystemcurator.cupidLanguage.Call;
+import org.earthsystemcurator.cupidLanguage.CupidLanguageFactory;
+import org.earthsystemcurator.cupidLanguage.IDOrPathExpr;
+import org.earthsystemcurator.cupidLanguage.IDOrWildcard;
+import org.earthsystemcurator.cupidLanguage.ImplicitContextMapping;
+import org.earthsystemcurator.cupidLanguage.Mapping;
+import org.earthsystemcurator.cupidLanguage.Mappings;
+import org.earthsystemcurator.cupidLanguage.PathExpr;
 import org.eclipse.cdt.core.model.ITranslationUnit;
 import org.eclipse.core.resources.IFile;
 import org.eclipse.core.resources.IProject;
 import org.eclipse.core.resources.IResource;
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.emf.common.util.EList;
+import org.eclipse.emf.common.util.URI;
+import org.eclipse.emf.ecore.EAnnotation;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EFactory;
 import org.eclipse.emf.ecore.EObject;
@@ -31,9 +45,14 @@ import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.EReference;
 import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.ecore.EcoreFactory;
+import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.photran.core.IFortranAST;
 import org.eclipse.photran.internal.core.lexer.Token;
 import org.eclipse.photran.internal.core.vpg.PhotranVPG;
+import org.eclipse.xtext.resource.XtextResource;
+import org.eclipse.xtext.resource.XtextResourceSet;
+
+import com.google.inject.Injector;
 
 @SuppressWarnings("restriction")
 public class ReverseEngineer {
@@ -55,7 +74,7 @@ public class ReverseEngineer {
 	
 	@SuppressWarnings("unchecked")
 	public static FSM reverseEngineer(EPackage ePackage, EClass eClass, IProject project, PhotranVPG vpg) {
-	
+			
 		EFactory eFactory = ePackage.getEFactoryInstance();
 		EObject root = eFactory.create(eClass);
 		
@@ -179,6 +198,149 @@ public class ReverseEngineer {
 		
 	}
 	
+	private static XtextResourceSet xtextResourceSet = null;
+	private static Resource xTextResource = null;
+	
+	private static Mapping parseMappingNew(String mappingNew) {
+		
+		if (xTextResource == null) {
+			Injector injector = new CupidLanguageStandaloneSetup().createInjectorAndDoEMFRegistration();
+			xtextResourceSet = injector.getInstance(XtextResourceSet.class);
+			xtextResourceSet.addLoadOption(XtextResource.OPTION_RESOLVE_ALL, Boolean.TRUE);
+			xTextResource = xtextResourceSet.createResource(URI.createURI("dummy:/dummy.cupid"));
+		}
+		
+		InputStream in = new ByteArrayInputStream(mappingNew.getBytes());
+		try {
+			xTextResource.load(in, xtextResourceSet.getLoadOptions());
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		Mappings mappings = (Mappings) xTextResource.getContents().get(0);
+		return mappings.getMappings().get(0);
+		
+	}
+	
+	@SuppressWarnings("unchecked")
+	private static <T> T eGetSFValue(PathExpr pathExpr, EObject modelElem, boolean isParent, T defaultVal) {
+		
+		EList<String> segments = pathExpr.getSegments();
+		EObject elemToCheck = modelElem;
+		int start = 0;
+		if (isParent) {
+			if (!segments.get(0).equals("..")) {
+				//we are already at parent, so fail if first segment does not
+				//navigate to the parent element
+				return null;
+			}
+			else {
+				start = 1; //skip first segment
+			}
+		}
+		
+		for (int i = start; i < segments.size()-1; i++) {									
+			if (segments.get(i).equals("..")) {
+				elemToCheck = elemToCheck.eContainer();
+			}
+			else {
+				//the segment is a structural feature name
+				EStructuralFeature segmentSF = elemToCheck.eClass().getEStructuralFeature(segments.get(i));
+				elemToCheck = (EObject) elemToCheck.eGet(segmentSF);				
+			}			
+		}
+		
+		if (elemToCheck == null) {
+			//throw new RuntimeException("Structural feature not found: " + pathExpr);
+			return defaultVal;
+		}
+		
+		EStructuralFeature attribSF = elemToCheck.eClass().getEStructuralFeature(segments.get(segments.size()-1));
+		if (attribSF != null) {			
+			return (T) elemToCheck.eGet(attribSF);
+		}
+		else {
+			//throw new RuntimeException("Structural feature not found: " + attribName);
+			return defaultVal;
+		}
+	} 
+	
+	private static boolean eSetSFValue(PathExpr pathExpr, EObject modelElem, String value) {
+		
+		EList<String> segments = pathExpr.getSegments();
+		EObject elemToCheck = modelElem;
+						
+		for (int i = 0; i < segments.size() - 1; i++) {									
+			if (segments.get(i).equals("..")) {
+				elemToCheck = elemToCheck.eContainer();
+			}
+			else {
+				//the segment is a structural feature name
+				EStructuralFeature segmentSF = elemToCheck.eClass().getEStructuralFeature(segments.get(i));
+				elemToCheck = (EObject) elemToCheck.eGet(segmentSF);				
+			}			
+		}
+		
+		if (elemToCheck == null) {
+			return false;
+		}
+		
+		EStructuralFeature attribSF = elemToCheck.eClass().getEStructuralFeature(segments.get(segments.size() - 1));
+		if (attribSF != null) {
+			//TODO: assumes the structural feature is single valued, not a list
+			elemToCheck.eSet(attribSF, value);
+		}
+		else {
+			return false;
+		}
+		
+		return true;
+	}
+	
+	/**
+	 * Looks for instances of PathExpr in the mappingElement tree and, when possible,
+	 * replaces them with values from the context
+	 * 
+	 * @param mappingElement
+	 * @param context
+	 */
+	private static <T extends EObject> T replacePathExprWithValues(T mappingElement, EObject context, boolean isParent) {
+		if (mappingElement instanceof PathExpr) {
+			String replaceVal = eGetSFValue((PathExpr) mappingElement, context, isParent, null);
+			if (replaceVal != null) {
+				IDOrWildcard replaceValObj = CupidLanguageFactory.eINSTANCE.createIDOrWildcard();
+				replaceValObj.setId(replaceVal);
+				return (T) replaceValObj;
+			}			
+		}
+		else {
+			for (EReference ref : mappingElement.eClass().getEReferences()) {
+				if (!ref.isMany()) {
+					mappingElement.eSet(ref, replacePathExprWithValues((EObject) mappingElement.eGet(ref), context, isParent));
+				}
+				else {
+					EList refList = (EList) mappingElement.eGet(ref);
+					for (int i = 0; i < refList.size(); i++) {
+						refList.set(i, replacePathExprWithValues((EObject) refList.get(i), context, isParent));
+					}
+				}
+			}
+		}
+		return mappingElement;		
+	}
+	
+	private static Method findREMethod(String methodName, Object context, EObject mapping) {
+		for (Method m : CodeQuery.class.getMethods()) {
+			if (m.getName().equalsIgnoreCase(methodName) && m.getParameterTypes().length >= 2) {
+				Class contextClass = m.getParameterTypes()[0];
+				Class mappingClass = m.getParameterTypes()[1];
+				if (contextClass.isInstance(context) &&
+					mappingClass.isInstance(mapping)) {
+					return m;
+				}
+			}
+		}
+		return null;
+	}
 	
 	/**
 	 * Attempt to map modelElem to an IASTNode or an IFortranAST or a PhotranVPG
@@ -196,12 +358,170 @@ public class ReverseEngineer {
 		//that succeeded at the end of the method when no recursive
 		//call is required (this only occurs at leaves of metamodel tree)
 		Map<Object, Object> mappingsToAdd = new IdentityHashMap<Object, Object>();
+		
+		//assume a successful mapping (required for looking up
+		//mappings during recursive calls)
+		//mapping will be removed later if it fails
+		mappings.put(modelElem, fortranElem);	
+		
 						
 		for (EStructuralFeature sf : modelElemClass.getEAllStructuralFeatures()) {
-						
+			
 			Map<String, Object> keywordMap = Regex.getMappingFromAnnotation(sf);
+			
+			/////NEW MAPPING PARSER HERE
+			if (sf.getName().equals("attached")) {
+				System.out.println("attached");
+			}
+			
+			EAnnotation ann = sf.getEAnnotation("http://www.earthsystemcog.org/projects/nuopc");
+			if (ann != null && ann.getDetails().get("mappingNew") != null) {
+				String mappingNew = ann.getDetails().get("mappingNew");
+				//if (mappingNew != null) {
+				Mapping mapping = parseMappingNew(mappingNew);
+				Object fortranContextElem;
+				
+				if (mapping.getContext() != null) {
+					//explicit context
+					EObject contextElement = eGetSFValue(mapping.getContext(), modelElem, true, null);
+					fortranContextElem = mappings.get(contextElement);
+					if (fortranContextElem == null) {
+						throw new RuntimeException("No Fortran context for element: " + contextElement);
+					}
+				}
+				else {
+					fortranContextElem = fortranElem;  //implicit
+				}
+				
+				ImplicitContextMapping icMapping = mapping.getMapping();
+				icMapping = replacePathExprWithValues(icMapping, modelElem, true);
+				
+				String methodName = icMapping.eClass().getName().toLowerCase();
+				
+				//find method that implements code query
+				Method method = findREMethod(methodName, fortranContextElem, icMapping);
+				if (method == null) {
+					System.out.println("Method not found: " + methodName);
+					continue;
+				}
+				
+				
+				try {
+					
+					Object result = method.invoke(null, fortranContextElem, icMapping);
+												
+					if (method.getReturnType() == String.class ||
+						method.getReturnType().isPrimitive()) {
+						modelElem.eSet(sf, result);
+					}
+					else if (method.getReturnType() == Token.class) {
+						if (result != null) {
+							//String constructor required because of IdentityHashMap
+							String text = new String(((Token)result).getText());
+							modelElem.eSet(sf, text);
+							mappingsToAdd.put(text, result);
+						}
+						else {
+							//what should we do here?
+							modelElem.eSet(sf, null);
+						}
+					}
+					else if (method.getReturnType() == Set.class ||
+							 method.getReturnType() == Map.class) {
+												
+						//do we have a set of primitives?
+						if (sf.getEType().equals(EcoreFactory.eINSTANCE.getEcorePackage().getEString())) {
+							Set<String> resultSet = (Set<String>) result;
+							for (String res : resultSet) {
+								if (sf.isMany()) {
+									EList el = (EList) modelElem.eGet(sf);
+									el.add(res);
+								}
+								else {
+									modelElem.eSet(sf, res);
+									break;  //just take first one
+								}
+							}
+						}
+						//result is a set of objects - either IASTNodes or IFortranASTs
+						else {
+							
+							Set<Object> resultSet = null;
+							if (result instanceof Map) {
+								resultSet = ((Map) result).keySet();
+							}
+							else {
+								resultSet = (Set<Object>) result;
+							}
+							
+							for (Object newFortranElem : resultSet) {
+								
+								EObject newModelElem = NUOPCFactory.eINSTANCE.create((EClass) sf.getEType());
+								
+								//set binding in model
+								if (result instanceof Map) {
+									Map<PathExpr, String> bindings = ((Map<?, Map<PathExpr, String>>) result).get(newFortranElem);
+									for (Entry<PathExpr, String> binding : bindings.entrySet()) {
+										boolean featureSet = eSetSFValue(binding.getKey(), newModelElem, binding.getValue());
+										if (!featureSet) {
+											System.out.println("Feature not set: " + binding.getKey());
+										}
+									}
+								}
+								
+								// set up parent relationship for references (may be removed later)									
+								if (sf.isMany()) {
+									EList el = (EList) modelElem.eGet(sf);
+									el.add(newModelElem);
+								}
+								else {
+									modelElem.eSet(sf, newModelElem);
+								}
+																
+								//recursive call
+								EObject newModelElemRet = reverse(newFortranElem, newModelElem, mappings);
+								
+								// if NULL returned, then mapping failed, so remove element from parent
+								if (newModelElemRet == null) {
+									if (sf.isMany()) {
+										EList el = (EList) modelElem.eGet(sf);
+										el.remove(newModelElem);
+									}
+									else {
+										//TODO: consider replacing with previous value?
+										modelElem.eUnset(sf);
+									}
+								}
+								else if (!sf.isMany()) {
+									break; // take first one that is not null
+								}									
+							
+							}
+								
+						} // end check for primitives vs. objects in results
 						
-			if (keywordMap != null && keywordMap.size() > 0) {	
+					}
+					
+				} catch (IllegalAccessException e) {
+					throw new RuntimeException(e);
+				} catch (InvocationTargetException e) {
+					throw new RuntimeException(e);
+				}						
+				
+			}
+			
+			
+			
+			
+			
+			
+			
+			
+			////END OF NEW MAPPING PARSER
+			
+			
+						
+			else if (keywordMap != null && keywordMap.size() > 0) {	
 				
 				String methodName = Regex.getMappingTypeFromAnnotation(sf);
 				
@@ -232,6 +552,7 @@ public class ReverseEngineer {
 					}
 				}
 				
+				Object fortranContextElem;
 				
 				if (keywordMap.containsKey("_context")) {
 					//explicit context provided
@@ -257,15 +578,15 @@ public class ReverseEngineer {
 						explicitContextElem = EcoreUtils.eGetSFValue(contextPath, modelElem, null);
 					}
 					
-					fortranElem = mappings.get(explicitContextElem);
-					if (fortranElem == null) {
+					fortranContextElem = mappings.get(explicitContextElem);
+					if (fortranContextElem == null) {
 						System.out.println("MAPPED fortran element not found: " + explicitContextElem);
 						return null;
 					}
 				}
 				else {
 					//implicit context
-					
+					fortranContextElem = fortranElem;
 				}
 				
 				
@@ -273,8 +594,10 @@ public class ReverseEngineer {
 				Method method = null;
 				for (Method m : CodeQuery.class.getMethods()) {
 					if (m.getName().equalsIgnoreCase(methodName)) {
-						Class c = m.getParameterTypes()[0];
-						if (c.isInstance(fortranElem)) {
+						Class contextClass = m.getParameterTypes()[0];
+						Class paramClass = m.getParameterTypes()[1];						
+						if (contextClass.isInstance(fortranContextElem) &&
+							paramClass.isInstance(keywordMap)) {
 							method = m;
 							break;
 						}
@@ -285,16 +608,11 @@ public class ReverseEngineer {
 					System.out.println("Method not found: " + methodName);
 					continue;
 				}
-				
-				//assume a successful mapping (required for looking up
-				//mappings during reursive calls)
-				//mapping will be removed later if it fails
-				mappings.put(modelElem, fortranElem);
-									
+												
 				try {
 					//System.out.println("Calling method: " + methodName + " with first param: " + fortranElem.getClass());							
 					
-					Object result = method.invoke(null, fortranElem, keywordMap);
+					Object result = method.invoke(null, fortranContextElem, keywordMap);
 												
 					if (method.getReturnType() == String.class ||
 						method.getReturnType().isPrimitive()) {
@@ -395,8 +713,6 @@ public class ReverseEngineer {
 						
 					}
 					
-				} catch (IllegalArgumentException e) {
-					e.printStackTrace();					
 				} catch (IllegalAccessException e) {
 					e.printStackTrace();
 				} catch (InvocationTargetException e) {
@@ -462,7 +778,6 @@ public class ReverseEngineer {
 			
 		} // end for structural features
 		
-		//mappings.put(modelElem, fortranElem);
 		mappings.putAll(mappingsToAdd);
 
 		return modelElem;

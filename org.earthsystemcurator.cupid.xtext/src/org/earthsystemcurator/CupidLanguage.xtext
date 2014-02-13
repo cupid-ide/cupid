@@ -1,0 +1,39 @@
+grammar org.earthsystemcurator.CupidLanguage with org.eclipse.xtext.common.Terminals
+
+generate cupidLanguage "http://www.earthsystemcurator.org/CupidLanguage"
+
+//#../../implementsSetServices call: "ESMF_MethodAdd(#ignore, index?=#index, label=#name, userRoutine=#../implementsSubroutine/name, rc=#ignore)"
+
+Mappings:
+	mappings+=Mapping*;
+
+Mapping:
+	context=PathExpr? mapping=ImplicitContextMapping;
+
+ImplicitContextMapping:
+	Call;
+
+Call:
+	'call' '(' subroutineName=IDOrPathExpr ( '(' (params+=ActualParam (',' params+=ActualParam)* )? ')')? ')';
+
+ActualParam:
+	(keyword=ID (optional?='?')? '=')? value=IDOrPathExpr;
+
+IDOrWildcard:
+	id=ID | wildcard?='*';
+	
+//IDOrPathExpr:
+//	idOrWildcard=IDOrWildcard | pathExpr=PathExpr;
+	
+IDOrPathExpr:
+	IDOrWildcard | PathExpr;
+
+PathExpr:
+	'#' segments+=PathSegment ('/' segments+=PathSegment)*;
+	
+PathSegment:
+	'..' | ID;
+	
+
+	
+	
