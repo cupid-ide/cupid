@@ -37,7 +37,6 @@ import org.eclipse.emf.ecore.util.InternalEList;
  *   <li>{@link org.earthsystemcurator.cupid.nuopc.fsml.nuopc.impl.NUOPCModelImpl#getGenericImports <em>Generic Imports</em>}</li>
  *   <li>{@link org.earthsystemcurator.cupid.nuopc.fsml.nuopc.impl.NUOPCModelImpl#getImplementsSetServices <em>Implements Set Services</em>}</li>
  *   <li>{@link org.earthsystemcurator.cupid.nuopc.fsml.nuopc.impl.NUOPCModelImpl#getInitialize <em>Initialize</em>}</li>
- *   <li>{@link org.earthsystemcurator.cupid.nuopc.fsml.nuopc.impl.NUOPCModelImpl#getImplementsModelAdvance <em>Implements Model Advance</em>}</li>
  *   <li>{@link org.earthsystemcurator.cupid.nuopc.fsml.nuopc.impl.NUOPCModelImpl#getModelAdvance <em>Model Advance</em>}</li>
  * </ul>
  * </p>
@@ -94,16 +93,6 @@ public class NUOPCModelImpl extends EObjectImpl implements NUOPCModel {
 	 * @ordered
 	 */
 	protected NUOPCModel__Init initialize;
-
-	/**
-	 * The cached value of the '{@link #getImplementsModelAdvance() <em>Implements Model Advance</em>}' containment reference list.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @see #getImplementsModelAdvance()
-	 * @generated
-	 * @ordered
-	 */
-	protected EList<NUOPCModel__ImplementsModelAdvance> implementsModelAdvance;
 
 	/**
 	 * The cached value of the '{@link #getModelAdvance() <em>Model Advance</em>}' containment reference list.
@@ -289,18 +278,6 @@ public class NUOPCModelImpl extends EObjectImpl implements NUOPCModel {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EList<NUOPCModel__ImplementsModelAdvance> getImplementsModelAdvance() {
-		if (implementsModelAdvance == null) {
-			implementsModelAdvance = new EObjectContainmentWithInverseEList<NUOPCModel__ImplementsModelAdvance>(NUOPCModel__ImplementsModelAdvance.class, this, NUOPCPackage.NUOPC_MODEL__IMPLEMENTS_MODEL_ADVANCE, NUOPCPackage.NUOPC_MODEL_IMPLEMENTS_MODEL_ADVANCE__PARENT);
-		}
-		return implementsModelAdvance;
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
 	public EList<NUOPCModel__ModelAdvance> getModelAdvance() {
 		if (modelAdvance == null) {
 			modelAdvance = new EObjectContainmentWithInverseEList<NUOPCModel__ModelAdvance>(NUOPCModel__ModelAdvance.class, this, NUOPCPackage.NUOPC_MODEL__MODEL_ADVANCE, NUOPCPackage.NUOPC_MODEL_MODEL_ADVANCE__PARENT);
@@ -325,8 +302,6 @@ public class NUOPCModelImpl extends EObjectImpl implements NUOPCModel {
 				if (initialize != null)
 					msgs = ((InternalEObject)initialize).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - NUOPCPackage.NUOPC_MODEL__INITIALIZE, null, msgs);
 				return basicSetInitialize((NUOPCModel__Init)otherEnd, msgs);
-			case NUOPCPackage.NUOPC_MODEL__IMPLEMENTS_MODEL_ADVANCE:
-				return ((InternalEList<InternalEObject>)(InternalEList<?>)getImplementsModelAdvance()).basicAdd(otherEnd, msgs);
 			case NUOPCPackage.NUOPC_MODEL__MODEL_ADVANCE:
 				return ((InternalEList<InternalEObject>)(InternalEList<?>)getModelAdvance()).basicAdd(otherEnd, msgs);
 		}
@@ -347,8 +322,6 @@ public class NUOPCModelImpl extends EObjectImpl implements NUOPCModel {
 				return basicSetImplementsSetServices(null, msgs);
 			case NUOPCPackage.NUOPC_MODEL__INITIALIZE:
 				return basicSetInitialize(null, msgs);
-			case NUOPCPackage.NUOPC_MODEL__IMPLEMENTS_MODEL_ADVANCE:
-				return ((InternalEList<?>)getImplementsModelAdvance()).basicRemove(otherEnd, msgs);
 			case NUOPCPackage.NUOPC_MODEL__MODEL_ADVANCE:
 				return ((InternalEList<?>)getModelAdvance()).basicRemove(otherEnd, msgs);
 		}
@@ -371,8 +344,6 @@ public class NUOPCModelImpl extends EObjectImpl implements NUOPCModel {
 				return getImplementsSetServices();
 			case NUOPCPackage.NUOPC_MODEL__INITIALIZE:
 				return getInitialize();
-			case NUOPCPackage.NUOPC_MODEL__IMPLEMENTS_MODEL_ADVANCE:
-				return getImplementsModelAdvance();
 			case NUOPCPackage.NUOPC_MODEL__MODEL_ADVANCE:
 				return getModelAdvance();
 		}
@@ -399,10 +370,6 @@ public class NUOPCModelImpl extends EObjectImpl implements NUOPCModel {
 				return;
 			case NUOPCPackage.NUOPC_MODEL__INITIALIZE:
 				setInitialize((NUOPCModel__Init)newValue);
-				return;
-			case NUOPCPackage.NUOPC_MODEL__IMPLEMENTS_MODEL_ADVANCE:
-				getImplementsModelAdvance().clear();
-				getImplementsModelAdvance().addAll((Collection<? extends NUOPCModel__ImplementsModelAdvance>)newValue);
 				return;
 			case NUOPCPackage.NUOPC_MODEL__MODEL_ADVANCE:
 				getModelAdvance().clear();
@@ -432,9 +399,6 @@ public class NUOPCModelImpl extends EObjectImpl implements NUOPCModel {
 			case NUOPCPackage.NUOPC_MODEL__INITIALIZE:
 				setInitialize((NUOPCModel__Init)null);
 				return;
-			case NUOPCPackage.NUOPC_MODEL__IMPLEMENTS_MODEL_ADVANCE:
-				getImplementsModelAdvance().clear();
-				return;
 			case NUOPCPackage.NUOPC_MODEL__MODEL_ADVANCE:
 				getModelAdvance().clear();
 				return;
@@ -458,8 +422,6 @@ public class NUOPCModelImpl extends EObjectImpl implements NUOPCModel {
 				return implementsSetServices != null;
 			case NUOPCPackage.NUOPC_MODEL__INITIALIZE:
 				return initialize != null;
-			case NUOPCPackage.NUOPC_MODEL__IMPLEMENTS_MODEL_ADVANCE:
-				return implementsModelAdvance != null && !implementsModelAdvance.isEmpty();
 			case NUOPCPackage.NUOPC_MODEL__MODEL_ADVANCE:
 				return modelAdvance != null && !modelAdvance.isEmpty();
 		}

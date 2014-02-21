@@ -13,13 +13,13 @@ import org.eclipse.emf.ecore.EObject;
  * The following features are supported:
  * <ul>
  *   <li>{@link org.earthsystemcurator.cupid.nuopc.fsml.nuopc.NUOPCModel__ModelAdvance#getParent <em>Parent</em>}</li>
- *   <li>{@link org.earthsystemcurator.cupid.nuopc.fsml.nuopc.NUOPCModel__ModelAdvance#getImplementsSubroutine <em>Implements Subroutine</em>}</li>
  *   <li>{@link org.earthsystemcurator.cupid.nuopc.fsml.nuopc.NUOPCModel__ModelAdvance#getAttached <em>Attached</em>}</li>
+ *   <li>{@link org.earthsystemcurator.cupid.nuopc.fsml.nuopc.NUOPCModel__ModelAdvance#getImplementsSubroutine <em>Implements Subroutine</em>}</li>
  * </ul>
  * </p>
  *
  * @see org.earthsystemcurator.cupid.nuopc.fsml.nuopc.NUOPCPackage#getNUOPCModel__ModelAdvance()
- * @model
+ * @model annotation="http://www.earthsystemcog.org/projects/nuopc label='Model Advance' doc='A subroutine called to advance the model ahead by the timestep interval.'"
  * @generated
  */
 public interface NUOPCModel__ModelAdvance extends EObject {
@@ -63,7 +63,7 @@ public interface NUOPCModel__ModelAdvance extends EObject {
 	 * @see #setImplementsSubroutine(NUOPCModel__ModelAdvance__ImplementsSubroutine)
 	 * @see org.earthsystemcurator.cupid.nuopc.fsml.nuopc.NUOPCPackage#getNUOPCModel__ModelAdvance_ImplementsSubroutine()
 	 * @model containment="true" required="true"
-	 *        annotation="http://www.earthsystemcog.org/projects/nuopc mapping='subroutine: \"#name(type(ESMF_GridComp), integer)\"'"
+	 *        annotation="http://www.earthsystemcog.org/projects/nuopc mappingNew='subroutine(#../attached/userRoutine(inout type(ESMF_GridComp) gcomp, out integer rc)' essential='true'"
 	 * @generated
 	 */
 	NUOPCModel__ModelAdvance__ImplementsSubroutine getImplementsSubroutine();
@@ -90,7 +90,7 @@ public interface NUOPCModel__ModelAdvance extends EObject {
 	 * @see #setAttached(NUOPCModel__ModelAdvance__Attached)
 	 * @see org.earthsystemcurator.cupid.nuopc.fsml.nuopc.NUOPCPackage#getNUOPCModel__ModelAdvance_Attached()
 	 * @model containment="true" required="true"
-	 *        annotation="http://www.earthsystemcog.org/projects/nuopc mapping='#../../implementsSetServices call: \"ESMF_MethodAdd(#ignore, index?=#index, label=#name, userRoutine=#../implementsSubroutine/name, rc=#ignore)\"' mappingNew='#../../implementsSetServices call(ESMF_MethodAdd(#ignore, index?=#index, label=#name, userRoutine=#../implementsSubroutine/name, rc=#ignore))'"
+	 *        annotation="http://www.earthsystemcog.org/projects/nuopc mappingNew='#../../implementsSetServices call(ESMF_MethodAdd(#ignore, index?=#index, label=#../../genericImports/importsLabelModelAdvance, userRoutine=#userRoutine, rc=#../../implementsSetServices/rc))' essential='true'"
 	 * @generated
 	 */
 	NUOPCModel__ModelAdvance__Attached getAttached();

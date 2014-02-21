@@ -110,8 +110,6 @@ public class NUOPCValidator extends EObjectValidator {
 				return validateNUOPCModel__RealizesImportField((NUOPCModel__RealizesImportField)value, diagnostics, context);
 			case NUOPCPackage.NUOPC_MODEL_REALIZES_EXPORT_FIELD:
 				return validateNUOPCModel__RealizesExportField((NUOPCModel__RealizesExportField)value, diagnostics, context);
-			case NUOPCPackage.NUOPC_MODEL_IMPLEMENTS_MODEL_ADVANCE:
-				return validateNUOPCModel__ImplementsModelAdvance((NUOPCModel__ImplementsModelAdvance)value, diagnostics, context);
 			case NUOPCPackage.NUOPC_MODEL_MODEL_ADVANCE:
 				return validateNUOPCModel__ModelAdvance((NUOPCModel__ModelAdvance)value, diagnostics, context);
 			case NUOPCPackage.NUOPC_MODEL_MODEL_ADVANCE_IMPLEMENTS_SUBROUTINE:
@@ -366,15 +364,6 @@ public class NUOPCValidator extends EObjectValidator {
 	 */
 	public boolean validateNUOPCModel__RealizesExportField(NUOPCModel__RealizesExportField nuopcModel__RealizesExportField, DiagnosticChain diagnostics, Map<Object, Object> context) {
 		return validate_EveryDefaultConstraint(nuopcModel__RealizesExportField, diagnostics, context);
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public boolean validateNUOPCModel__ImplementsModelAdvance(NUOPCModel__ImplementsModelAdvance nuopcModel__ImplementsModelAdvance, DiagnosticChain diagnostics, Map<Object, Object> context) {
-		return validate_EveryDefaultConstraint(nuopcModel__ImplementsModelAdvance, diagnostics, context);
 	}
 
 	/**

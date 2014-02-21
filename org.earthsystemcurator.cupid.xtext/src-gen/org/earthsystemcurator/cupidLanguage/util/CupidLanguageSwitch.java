@@ -79,6 +79,50 @@ public class CupidLanguageSwitch<T> extends Switch<T>
         if (result == null) result = defaultCase(theEObject);
         return result;
       }
+      case CupidLanguagePackage.CONCEPT_DEF_OR_REF:
+      {
+        ConceptDefOrRef conceptDefOrRef = (ConceptDefOrRef)theEObject;
+        T result = caseConceptDefOrRef(conceptDefOrRef);
+        if (result == null) result = defaultCase(theEObject);
+        return result;
+      }
+      case CupidLanguagePackage.CONCEPT_DEF:
+      {
+        ConceptDef conceptDef = (ConceptDef)theEObject;
+        T result = caseConceptDef(conceptDef);
+        if (result == null) result = defaultCase(theEObject);
+        return result;
+      }
+      case CupidLanguagePackage.ANONYMOUS_CONCEPT:
+      {
+        AnonymousConcept anonymousConcept = (AnonymousConcept)theEObject;
+        T result = caseAnonymousConcept(anonymousConcept);
+        if (result == null) result = caseConceptDefOrRef(anonymousConcept);
+        if (result == null) result = defaultCase(theEObject);
+        return result;
+      }
+      case CupidLanguagePackage.CONCEPT_DEF_BODY:
+      {
+        ConceptDefBody conceptDefBody = (ConceptDefBody)theEObject;
+        T result = caseConceptDefBody(conceptDefBody);
+        if (result == null) result = defaultCase(theEObject);
+        return result;
+      }
+      case CupidLanguagePackage.CONCEPT_REF:
+      {
+        ConceptRef conceptRef = (ConceptRef)theEObject;
+        T result = caseConceptRef(conceptRef);
+        if (result == null) result = caseConceptDefOrRef(conceptRef);
+        if (result == null) result = defaultCase(theEObject);
+        return result;
+      }
+      case CupidLanguagePackage.CARDINALITY:
+      {
+        Cardinality cardinality = (Cardinality)theEObject;
+        T result = caseCardinality(cardinality);
+        if (result == null) result = defaultCase(theEObject);
+        return result;
+      }
       case CupidLanguagePackage.MAPPING:
       {
         Mapping mapping = (Mapping)theEObject;
@@ -90,6 +134,67 @@ public class CupidLanguageSwitch<T> extends Switch<T>
       {
         ImplicitContextMapping implicitContextMapping = (ImplicitContextMapping)theEObject;
         T result = caseImplicitContextMapping(implicitContextMapping);
+        if (result == null) result = defaultCase(theEObject);
+        return result;
+      }
+      case CupidLanguagePackage.MODULE:
+      {
+        Module module = (Module)theEObject;
+        T result = caseModule(module);
+        if (result == null) result = caseImplicitContextMapping(module);
+        if (result == null) result = defaultCase(theEObject);
+        return result;
+      }
+      case CupidLanguagePackage.USES_MODULE:
+      {
+        UsesModule usesModule = (UsesModule)theEObject;
+        T result = caseUsesModule(usesModule);
+        if (result == null) result = caseImplicitContextMapping(usesModule);
+        if (result == null) result = defaultCase(theEObject);
+        return result;
+      }
+      case CupidLanguagePackage.USES_ENTITY:
+      {
+        UsesEntity usesEntity = (UsesEntity)theEObject;
+        T result = caseUsesEntity(usesEntity);
+        if (result == null) result = caseImplicitContextMapping(usesEntity);
+        if (result == null) result = defaultCase(theEObject);
+        return result;
+      }
+      case CupidLanguagePackage.SUBROUTINE:
+      {
+        Subroutine subroutine = (Subroutine)theEObject;
+        T result = caseSubroutine(subroutine);
+        if (result == null) result = caseImplicitContextMapping(subroutine);
+        if (result == null) result = defaultCase(theEObject);
+        return result;
+      }
+      case CupidLanguagePackage.FORMAL_PARAM:
+      {
+        FormalParam formalParam = (FormalParam)theEObject;
+        T result = caseFormalParam(formalParam);
+        if (result == null) result = defaultCase(theEObject);
+        return result;
+      }
+      case CupidLanguagePackage.INTENT:
+      {
+        Intent intent = (Intent)theEObject;
+        T result = caseIntent(intent);
+        if (result == null) result = defaultCase(theEObject);
+        return result;
+      }
+      case CupidLanguagePackage.TYPE:
+      {
+        Type type = (Type)theEObject;
+        T result = caseType(type);
+        if (result == null) result = defaultCase(theEObject);
+        return result;
+      }
+      case CupidLanguagePackage.SUBROUTINE_NAME:
+      {
+        SubroutineName subroutineName = (SubroutineName)theEObject;
+        T result = caseSubroutineName(subroutineName);
+        if (result == null) result = caseImplicitContextMapping(subroutineName);
         if (result == null) result = defaultCase(theEObject);
         return result;
       }
@@ -152,6 +257,102 @@ public class CupidLanguageSwitch<T> extends Switch<T>
   }
 
   /**
+   * Returns the result of interpreting the object as an instance of '<em>Concept Def Or Ref</em>'.
+   * <!-- begin-user-doc -->
+   * This implementation returns null;
+   * returning a non-null result will terminate the switch.
+   * <!-- end-user-doc -->
+   * @param object the target of the switch.
+   * @return the result of interpreting the object as an instance of '<em>Concept Def Or Ref</em>'.
+   * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+   * @generated
+   */
+  public T caseConceptDefOrRef(ConceptDefOrRef object)
+  {
+    return null;
+  }
+
+  /**
+   * Returns the result of interpreting the object as an instance of '<em>Concept Def</em>'.
+   * <!-- begin-user-doc -->
+   * This implementation returns null;
+   * returning a non-null result will terminate the switch.
+   * <!-- end-user-doc -->
+   * @param object the target of the switch.
+   * @return the result of interpreting the object as an instance of '<em>Concept Def</em>'.
+   * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+   * @generated
+   */
+  public T caseConceptDef(ConceptDef object)
+  {
+    return null;
+  }
+
+  /**
+   * Returns the result of interpreting the object as an instance of '<em>Anonymous Concept</em>'.
+   * <!-- begin-user-doc -->
+   * This implementation returns null;
+   * returning a non-null result will terminate the switch.
+   * <!-- end-user-doc -->
+   * @param object the target of the switch.
+   * @return the result of interpreting the object as an instance of '<em>Anonymous Concept</em>'.
+   * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+   * @generated
+   */
+  public T caseAnonymousConcept(AnonymousConcept object)
+  {
+    return null;
+  }
+
+  /**
+   * Returns the result of interpreting the object as an instance of '<em>Concept Def Body</em>'.
+   * <!-- begin-user-doc -->
+   * This implementation returns null;
+   * returning a non-null result will terminate the switch.
+   * <!-- end-user-doc -->
+   * @param object the target of the switch.
+   * @return the result of interpreting the object as an instance of '<em>Concept Def Body</em>'.
+   * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+   * @generated
+   */
+  public T caseConceptDefBody(ConceptDefBody object)
+  {
+    return null;
+  }
+
+  /**
+   * Returns the result of interpreting the object as an instance of '<em>Concept Ref</em>'.
+   * <!-- begin-user-doc -->
+   * This implementation returns null;
+   * returning a non-null result will terminate the switch.
+   * <!-- end-user-doc -->
+   * @param object the target of the switch.
+   * @return the result of interpreting the object as an instance of '<em>Concept Ref</em>'.
+   * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+   * @generated
+   */
+  public T caseConceptRef(ConceptRef object)
+  {
+    return null;
+  }
+
+  /**
+   * Returns the result of interpreting the object as an instance of '<em>Cardinality</em>'.
+   * <!-- begin-user-doc -->
+   * This implementation returns null;
+   * returning a non-null result will terminate the switch.
+   * <!-- end-user-doc -->
+   * @param object the target of the switch.
+   * @return the result of interpreting the object as an instance of '<em>Cardinality</em>'.
+   * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+   * @generated
+   */
+  public T caseCardinality(Cardinality object)
+  {
+    return null;
+  }
+
+  /**
    * Returns the result of interpreting the object as an instance of '<em>Mapping</em>'.
    * <!-- begin-user-doc -->
    * This implementation returns null;
@@ -179,6 +380,134 @@ public class CupidLanguageSwitch<T> extends Switch<T>
    * @generated
    */
   public T caseImplicitContextMapping(ImplicitContextMapping object)
+  {
+    return null;
+  }
+
+  /**
+   * Returns the result of interpreting the object as an instance of '<em>Module</em>'.
+   * <!-- begin-user-doc -->
+   * This implementation returns null;
+   * returning a non-null result will terminate the switch.
+   * <!-- end-user-doc -->
+   * @param object the target of the switch.
+   * @return the result of interpreting the object as an instance of '<em>Module</em>'.
+   * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+   * @generated
+   */
+  public T caseModule(Module object)
+  {
+    return null;
+  }
+
+  /**
+   * Returns the result of interpreting the object as an instance of '<em>Uses Module</em>'.
+   * <!-- begin-user-doc -->
+   * This implementation returns null;
+   * returning a non-null result will terminate the switch.
+   * <!-- end-user-doc -->
+   * @param object the target of the switch.
+   * @return the result of interpreting the object as an instance of '<em>Uses Module</em>'.
+   * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+   * @generated
+   */
+  public T caseUsesModule(UsesModule object)
+  {
+    return null;
+  }
+
+  /**
+   * Returns the result of interpreting the object as an instance of '<em>Uses Entity</em>'.
+   * <!-- begin-user-doc -->
+   * This implementation returns null;
+   * returning a non-null result will terminate the switch.
+   * <!-- end-user-doc -->
+   * @param object the target of the switch.
+   * @return the result of interpreting the object as an instance of '<em>Uses Entity</em>'.
+   * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+   * @generated
+   */
+  public T caseUsesEntity(UsesEntity object)
+  {
+    return null;
+  }
+
+  /**
+   * Returns the result of interpreting the object as an instance of '<em>Subroutine</em>'.
+   * <!-- begin-user-doc -->
+   * This implementation returns null;
+   * returning a non-null result will terminate the switch.
+   * <!-- end-user-doc -->
+   * @param object the target of the switch.
+   * @return the result of interpreting the object as an instance of '<em>Subroutine</em>'.
+   * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+   * @generated
+   */
+  public T caseSubroutine(Subroutine object)
+  {
+    return null;
+  }
+
+  /**
+   * Returns the result of interpreting the object as an instance of '<em>Formal Param</em>'.
+   * <!-- begin-user-doc -->
+   * This implementation returns null;
+   * returning a non-null result will terminate the switch.
+   * <!-- end-user-doc -->
+   * @param object the target of the switch.
+   * @return the result of interpreting the object as an instance of '<em>Formal Param</em>'.
+   * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+   * @generated
+   */
+  public T caseFormalParam(FormalParam object)
+  {
+    return null;
+  }
+
+  /**
+   * Returns the result of interpreting the object as an instance of '<em>Intent</em>'.
+   * <!-- begin-user-doc -->
+   * This implementation returns null;
+   * returning a non-null result will terminate the switch.
+   * <!-- end-user-doc -->
+   * @param object the target of the switch.
+   * @return the result of interpreting the object as an instance of '<em>Intent</em>'.
+   * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+   * @generated
+   */
+  public T caseIntent(Intent object)
+  {
+    return null;
+  }
+
+  /**
+   * Returns the result of interpreting the object as an instance of '<em>Type</em>'.
+   * <!-- begin-user-doc -->
+   * This implementation returns null;
+   * returning a non-null result will terminate the switch.
+   * <!-- end-user-doc -->
+   * @param object the target of the switch.
+   * @return the result of interpreting the object as an instance of '<em>Type</em>'.
+   * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+   * @generated
+   */
+  public T caseType(Type object)
+  {
+    return null;
+  }
+
+  /**
+   * Returns the result of interpreting the object as an instance of '<em>Subroutine Name</em>'.
+   * <!-- begin-user-doc -->
+   * This implementation returns null;
+   * returning a non-null result will terminate the switch.
+   * <!-- end-user-doc -->
+   * @param object the target of the switch.
+   * @return the result of interpreting the object as an instance of '<em>Subroutine Name</em>'.
+   * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+   * @generated
+   */
+  public T caseSubroutineName(SubroutineName object)
   {
     return null;
   }

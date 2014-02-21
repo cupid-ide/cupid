@@ -218,7 +218,7 @@ public interface NUOPCModel__ImplementsInitP1 extends EObject {
 	 * @see #setRegisteredInSetServices(boolean)
 	 * @see org.earthsystemcurator.cupid.nuopc.fsml.nuopc.NUOPCPackage#getNUOPCModel__ImplementsInitP1_RegisteredInSetServices()
 	 * @model required="true"
-	 *        annotation="http://www.eclipse.org/emf/2002/Ecore/OCL derivation='self.parent.parent.implementsSetServices.callsSetEntryPoint->select(c|c.userRoutine=self.name and c.phase=\'1\')->notEmpty()'"
+	 *        annotation="http://www.eclipse.org/emf/2002/Ecore/OCL derivation='self.parent.parent.implementsSetServices <> null and self.parent.parent.implementsSetServices.callsSetEntryPoint->select(c|c.userRoutine=self.name and c.phase=\'1\')->notEmpty()'"
 	 * @generated
 	 */
 	boolean isRegisteredInSetServices();

@@ -17,7 +17,7 @@ import org.eclipse.emf.ecore.EObject;
  * </p>
  *
  * @see org.earthsystemcurator.cupid.nuopc.fsml.nuopc.NUOPCPackage#getNUOPCModel__ModelAdvance__ImplementsSubroutine()
- * @model
+ * @model annotation="http://www.earthsystemcog.org/projects/nuopc label='Model Advance Subroutine'"
  * @generated
  */
 public interface NUOPCModel__ModelAdvance__ImplementsSubroutine extends EObject {
@@ -34,6 +34,7 @@ public interface NUOPCModel__ModelAdvance__ImplementsSubroutine extends EObject 
 	 * @see #setName(String)
 	 * @see org.earthsystemcurator.cupid.nuopc.fsml.nuopc.NUOPCPackage#getNUOPCModel__ModelAdvance__ImplementsSubroutine_Name()
 	 * @model default="ModelAdvance" required="true"
+	 *        annotation="http://www.earthsystemcog.org/projects/nuopc mappingNew='subroutineName'"
 	 * @generated
 	 */
 	String getName();

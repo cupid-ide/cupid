@@ -1,0 +1,47 @@
+concept SetServices <subroutine(#name(type(ESMF_GridComp) #gcomp, integer #rc))> {
+	name,
+	gcomp,
+	rc
+}
+
+top concept NUOPCApplication {
+	 models*:NUOPCModel,
+	 drivers*:NUOPCDriver
+}
+
+concept NUOPCDriver <module>
+
+concept NUOPCModel <module>
+{
+	
+	genericImports <usesModule(NUOPC_Model)>
+	{
+		importsGenericSS <usesEntity(routine_SetServices)>,
+		importsLabelModelAdvance <usesEntity(label_ModelAdvance)>
+	},
+	
+	implementsSetServices:SetServices,
+	
+	modelAdvance*
+	{
+			
+		implementsSubroutine <subroutine(name(type(ESMF_GridComp) gcomp, integer rc))> 
+		{
+			name, 
+			gcomp, 
+			rc
+		},
+		
+		registers <#../../implementsSetServices 
+			call(ESMF_MethodAdd(#ignore, 
+								index?=#index, 
+								label=#importsLabelModelAdvance, 
+								userRoutine=#userRoutine, 
+								rc=#../../implementsSetServices/rc))>
+		{
+			index, 
+			userRoutine
+		}
+	}		
+}
+

@@ -4,6 +4,7 @@ package org.earthsystemcurator.cupidLanguage.impl;
 
 import java.util.Collection;
 
+import org.earthsystemcurator.cupidLanguage.ConceptDef;
 import org.earthsystemcurator.cupidLanguage.CupidLanguagePackage;
 import org.earthsystemcurator.cupidLanguage.Mapping;
 import org.earthsystemcurator.cupidLanguage.Mappings;
@@ -28,6 +29,7 @@ import org.eclipse.emf.ecore.util.InternalEList;
  * The following features are implemented:
  * <ul>
  *   <li>{@link org.earthsystemcurator.cupidLanguage.impl.MappingsImpl#getMappings <em>Mappings</em>}</li>
+ *   <li>{@link org.earthsystemcurator.cupidLanguage.impl.MappingsImpl#getConcepts <em>Concepts</em>}</li>
  * </ul>
  * </p>
  *
@@ -44,6 +46,16 @@ public class MappingsImpl extends MinimalEObjectImpl.Container implements Mappin
    * @ordered
    */
   protected EList<Mapping> mappings;
+
+  /**
+   * The cached value of the '{@link #getConcepts() <em>Concepts</em>}' containment reference list.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @see #getConcepts()
+   * @generated
+   * @ordered
+   */
+  protected EList<ConceptDef> concepts;
 
   /**
    * <!-- begin-user-doc -->
@@ -85,6 +97,20 @@ public class MappingsImpl extends MinimalEObjectImpl.Container implements Mappin
    * <!-- end-user-doc -->
    * @generated
    */
+  public EList<ConceptDef> getConcepts()
+  {
+    if (concepts == null)
+    {
+      concepts = new EObjectContainmentEList<ConceptDef>(ConceptDef.class, this, CupidLanguagePackage.MAPPINGS__CONCEPTS);
+    }
+    return concepts;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
   @Override
   public NotificationChain eInverseRemove(InternalEObject otherEnd, int featureID, NotificationChain msgs)
   {
@@ -92,6 +118,8 @@ public class MappingsImpl extends MinimalEObjectImpl.Container implements Mappin
     {
       case CupidLanguagePackage.MAPPINGS__MAPPINGS:
         return ((InternalEList<?>)getMappings()).basicRemove(otherEnd, msgs);
+      case CupidLanguagePackage.MAPPINGS__CONCEPTS:
+        return ((InternalEList<?>)getConcepts()).basicRemove(otherEnd, msgs);
     }
     return super.eInverseRemove(otherEnd, featureID, msgs);
   }
@@ -108,6 +136,8 @@ public class MappingsImpl extends MinimalEObjectImpl.Container implements Mappin
     {
       case CupidLanguagePackage.MAPPINGS__MAPPINGS:
         return getMappings();
+      case CupidLanguagePackage.MAPPINGS__CONCEPTS:
+        return getConcepts();
     }
     return super.eGet(featureID, resolve, coreType);
   }
@@ -127,6 +157,10 @@ public class MappingsImpl extends MinimalEObjectImpl.Container implements Mappin
         getMappings().clear();
         getMappings().addAll((Collection<? extends Mapping>)newValue);
         return;
+      case CupidLanguagePackage.MAPPINGS__CONCEPTS:
+        getConcepts().clear();
+        getConcepts().addAll((Collection<? extends ConceptDef>)newValue);
+        return;
     }
     super.eSet(featureID, newValue);
   }
@@ -144,6 +178,9 @@ public class MappingsImpl extends MinimalEObjectImpl.Container implements Mappin
       case CupidLanguagePackage.MAPPINGS__MAPPINGS:
         getMappings().clear();
         return;
+      case CupidLanguagePackage.MAPPINGS__CONCEPTS:
+        getConcepts().clear();
+        return;
     }
     super.eUnset(featureID);
   }
@@ -160,6 +197,8 @@ public class MappingsImpl extends MinimalEObjectImpl.Container implements Mappin
     {
       case CupidLanguagePackage.MAPPINGS__MAPPINGS:
         return mappings != null && !mappings.isEmpty();
+      case CupidLanguagePackage.MAPPINGS__CONCEPTS:
+        return concepts != null && !concepts.isEmpty();
     }
     return super.eIsSet(featureID);
   }

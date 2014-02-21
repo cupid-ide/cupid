@@ -5,6 +5,39 @@
   <eClassifiers xsi:type="ecore:EClass" name="Mappings">
     <eStructuralFeatures xsi:type="ecore:EReference" name="mappings" upperBound="-1"
         eType="#//Mapping" containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="concepts" upperBound="-1"
+        eType="#//ConceptDef" containment="true"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="ConceptDefOrRef">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="localName" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="cardinality" eType="#//Cardinality"
+        containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="required" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="ConceptDef">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="top" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="name" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="mapping" eType="#//Mapping"
+        containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="body" eType="#//ConceptDefBody"
+        containment="true"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="AnonymousConcept" eSuperTypes="#//ConceptDefOrRef">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="mapping" eType="#//Mapping"
+        containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="body" eType="#//ConceptDefBody"
+        containment="true"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="ConceptDefBody">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="subconcept" upperBound="-1"
+        eType="#//ConceptDefOrRef" containment="true"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="ConceptRef" eSuperTypes="#//ConceptDefOrRef">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="name" eType="#//ConceptDef"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="Cardinality">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="zeroOrMore" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="oneOrMore" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="Mapping">
     <eStructuralFeatures xsi:type="ecore:EReference" name="context" eType="#//PathExpr"
@@ -13,6 +46,50 @@
         containment="true"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="ImplicitContextMapping"/>
+  <eClassifiers xsi:type="ecore:EClass" name="Module" eSuperTypes="#//ImplicitContextMapping">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="name" eType="#//IDOrPathExpr"
+        containment="true"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="UsesModule" eSuperTypes="#//ImplicitContextMapping">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="name" eType="#//IDOrPathExpr"
+        containment="true"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="UsesEntity" eSuperTypes="#//ImplicitContextMapping">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="name" eType="#//IDOrPathExpr"
+        containment="true"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="Subroutine" eSuperTypes="#//ImplicitContextMapping">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="name" eType="#//IDOrPathExpr"
+        containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="params" upperBound="-1"
+        eType="#//FormalParam" containment="true"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="FormalParam">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="intent" eType="#//Intent"
+        containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="type" eType="#//Type" containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="name" eType="#//IDOrPathExpr"
+        containment="true"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="Intent">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="in" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="out" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="inout" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="Type">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="integer" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="character" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="logical" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="real" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="double" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="derived" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="derivedType" eType="#//IDOrPathExpr"
+        containment="true"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="SubroutineName" eSuperTypes="#//ImplicitContextMapping">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="name" eType="#//IDOrPathExpr"
+        containment="true"/>
+  </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="Call" eSuperTypes="#//ImplicitContextMapping">
     <eStructuralFeatures xsi:type="ecore:EReference" name="subroutineName" eType="#//IDOrPathExpr"
         containment="true"/>

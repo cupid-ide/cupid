@@ -65,8 +65,22 @@ public class CupidLanguageFactoryImpl extends EFactoryImpl implements CupidLangu
     switch (eClass.getClassifierID())
     {
       case CupidLanguagePackage.MAPPINGS: return createMappings();
+      case CupidLanguagePackage.CONCEPT_DEF_OR_REF: return createConceptDefOrRef();
+      case CupidLanguagePackage.CONCEPT_DEF: return createConceptDef();
+      case CupidLanguagePackage.ANONYMOUS_CONCEPT: return createAnonymousConcept();
+      case CupidLanguagePackage.CONCEPT_DEF_BODY: return createConceptDefBody();
+      case CupidLanguagePackage.CONCEPT_REF: return createConceptRef();
+      case CupidLanguagePackage.CARDINALITY: return createCardinality();
       case CupidLanguagePackage.MAPPING: return createMapping();
       case CupidLanguagePackage.IMPLICIT_CONTEXT_MAPPING: return createImplicitContextMapping();
+      case CupidLanguagePackage.MODULE: return createModule();
+      case CupidLanguagePackage.USES_MODULE: return createUsesModule();
+      case CupidLanguagePackage.USES_ENTITY: return createUsesEntity();
+      case CupidLanguagePackage.SUBROUTINE: return createSubroutine();
+      case CupidLanguagePackage.FORMAL_PARAM: return createFormalParam();
+      case CupidLanguagePackage.INTENT: return createIntent();
+      case CupidLanguagePackage.TYPE: return createType();
+      case CupidLanguagePackage.SUBROUTINE_NAME: return createSubroutineName();
       case CupidLanguagePackage.CALL: return createCall();
       case CupidLanguagePackage.ACTUAL_PARAM: return createActualParam();
       case CupidLanguagePackage.ID_OR_WILDCARD: return createIDOrWildcard();
@@ -93,6 +107,72 @@ public class CupidLanguageFactoryImpl extends EFactoryImpl implements CupidLangu
    * <!-- end-user-doc -->
    * @generated
    */
+  public ConceptDefOrRef createConceptDefOrRef()
+  {
+    ConceptDefOrRefImpl conceptDefOrRef = new ConceptDefOrRefImpl();
+    return conceptDefOrRef;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public ConceptDef createConceptDef()
+  {
+    ConceptDefImpl conceptDef = new ConceptDefImpl();
+    return conceptDef;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public AnonymousConcept createAnonymousConcept()
+  {
+    AnonymousConceptImpl anonymousConcept = new AnonymousConceptImpl();
+    return anonymousConcept;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public ConceptDefBody createConceptDefBody()
+  {
+    ConceptDefBodyImpl conceptDefBody = new ConceptDefBodyImpl();
+    return conceptDefBody;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public ConceptRef createConceptRef()
+  {
+    ConceptRefImpl conceptRef = new ConceptRefImpl();
+    return conceptRef;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public Cardinality createCardinality()
+  {
+    CardinalityImpl cardinality = new CardinalityImpl();
+    return cardinality;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
   public Mapping createMapping()
   {
     MappingImpl mapping = new MappingImpl();
@@ -108,6 +188,94 @@ public class CupidLanguageFactoryImpl extends EFactoryImpl implements CupidLangu
   {
     ImplicitContextMappingImpl implicitContextMapping = new ImplicitContextMappingImpl();
     return implicitContextMapping;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public Module createModule()
+  {
+    ModuleImpl module = new ModuleImpl();
+    return module;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public UsesModule createUsesModule()
+  {
+    UsesModuleImpl usesModule = new UsesModuleImpl();
+    return usesModule;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public UsesEntity createUsesEntity()
+  {
+    UsesEntityImpl usesEntity = new UsesEntityImpl();
+    return usesEntity;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public Subroutine createSubroutine()
+  {
+    SubroutineImpl subroutine = new SubroutineImpl();
+    return subroutine;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public FormalParam createFormalParam()
+  {
+    FormalParamImpl formalParam = new FormalParamImpl();
+    return formalParam;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public Intent createIntent()
+  {
+    IntentImpl intent = new IntentImpl();
+    return intent;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public Type createType()
+  {
+    TypeImpl type = new TypeImpl();
+    return type;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public SubroutineName createSubroutineName()
+  {
+    SubroutineNameImpl subroutineName = new SubroutineNameImpl();
+    return subroutineName;
   }
 
   /**

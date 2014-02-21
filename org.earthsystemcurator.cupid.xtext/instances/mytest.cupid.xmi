@@ -1,0 +1,148 @@
+<?xml version="1.0" encoding="ASCII"?>
+<cupidLanguage:Mappings xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:cupidLanguage="http://www.earthsystemcurator.org/CupidLanguage">
+  <concepts name="SetServices">
+    <mapping>
+      <mapping xsi:type="cupidLanguage:Subroutine">
+        <name xsi:type="cupidLanguage:PathExpr">
+          <segments>name</segments>
+        </name>
+        <params>
+          <type derived="true">
+            <derivedType xsi:type="cupidLanguage:IDOrWildcard" id="ESMF_GridComp"/>
+          </type>
+          <name xsi:type="cupidLanguage:PathExpr">
+            <segments>gcomp</segments>
+          </name>
+        </params>
+        <params>
+          <type integer="true"/>
+          <name xsi:type="cupidLanguage:PathExpr">
+            <segments>rc</segments>
+          </name>
+        </params>
+      </mapping>
+    </mapping>
+    <body>
+      <subconcept xsi:type="cupidLanguage:AnonymousConcept" localName="name"/>
+      <subconcept xsi:type="cupidLanguage:AnonymousConcept" localName="gcomp"/>
+      <subconcept xsi:type="cupidLanguage:AnonymousConcept" localName="rc"/>
+    </body>
+  </concepts>
+  <concepts top="true" name="NUOPCApplication">
+    <body>
+      <subconcept xsi:type="cupidLanguage:ConceptRef" localName="models" name="//@concepts.3">
+        <cardinality zeroOrMore="true"/>
+      </subconcept>
+      <subconcept xsi:type="cupidLanguage:ConceptRef" localName="drivers" name="//@concepts.2">
+        <cardinality zeroOrMore="true"/>
+      </subconcept>
+    </body>
+  </concepts>
+  <concepts name="NUOPCDriver">
+    <mapping>
+      <mapping xsi:type="cupidLanguage:Module"/>
+    </mapping>
+  </concepts>
+  <concepts name="NUOPCModel">
+    <mapping>
+      <mapping xsi:type="cupidLanguage:Module"/>
+    </mapping>
+    <body>
+      <subconcept xsi:type="cupidLanguage:AnonymousConcept" localName="genericImports">
+        <mapping>
+          <mapping xsi:type="cupidLanguage:UsesModule">
+            <name xsi:type="cupidLanguage:IDOrWildcard" id="NUOPC_Model"/>
+          </mapping>
+        </mapping>
+        <body>
+          <subconcept xsi:type="cupidLanguage:AnonymousConcept" localName="importsGenericSS">
+            <mapping>
+              <mapping xsi:type="cupidLanguage:UsesEntity">
+                <name xsi:type="cupidLanguage:IDOrWildcard" id="routine_SetServices"/>
+              </mapping>
+            </mapping>
+          </subconcept>
+          <subconcept xsi:type="cupidLanguage:AnonymousConcept" localName="importsLabelModelAdvance">
+            <mapping>
+              <mapping xsi:type="cupidLanguage:UsesEntity">
+                <name xsi:type="cupidLanguage:IDOrWildcard" id="label_ModelAdvance"/>
+              </mapping>
+            </mapping>
+          </subconcept>
+        </body>
+      </subconcept>
+      <subconcept xsi:type="cupidLanguage:ConceptRef" localName="implementsSetServices" name="//@concepts.0"/>
+      <subconcept xsi:type="cupidLanguage:AnonymousConcept" localName="modelAdvance">
+        <cardinality zeroOrMore="true"/>
+        <body>
+          <subconcept xsi:type="cupidLanguage:AnonymousConcept" localName="implementsSubroutine">
+            <mapping>
+              <mapping xsi:type="cupidLanguage:Subroutine">
+                <name xsi:type="cupidLanguage:IDOrWildcard" id="name"/>
+                <params>
+                  <type derived="true">
+                    <derivedType xsi:type="cupidLanguage:IDOrWildcard" id="ESMF_GridComp"/>
+                  </type>
+                  <name xsi:type="cupidLanguage:IDOrWildcard" id="gcomp"/>
+                </params>
+                <params>
+                  <type integer="true"/>
+                  <name xsi:type="cupidLanguage:IDOrWildcard" id="rc"/>
+                </params>
+              </mapping>
+            </mapping>
+            <body>
+              <subconcept xsi:type="cupidLanguage:AnonymousConcept" localName="name"/>
+              <subconcept xsi:type="cupidLanguage:AnonymousConcept" localName="gcomp"/>
+              <subconcept xsi:type="cupidLanguage:AnonymousConcept" localName="rc"/>
+            </body>
+          </subconcept>
+          <subconcept xsi:type="cupidLanguage:AnonymousConcept" localName="registers">
+            <mapping>
+              <context>
+                <segments>..</segments>
+                <segments>..</segments>
+                <segments>implementsSetServices</segments>
+              </context>
+              <mapping xsi:type="cupidLanguage:Call">
+                <subroutineName xsi:type="cupidLanguage:IDOrWildcard" id="ESMF_MethodAdd"/>
+                <params>
+                  <value xsi:type="cupidLanguage:PathExpr">
+                    <segments>ignore</segments>
+                  </value>
+                </params>
+                <params keyword="index" optional="true">
+                  <value xsi:type="cupidLanguage:PathExpr">
+                    <segments>index</segments>
+                  </value>
+                </params>
+                <params keyword="label">
+                  <value xsi:type="cupidLanguage:PathExpr">
+                    <segments>importsLabelModelAdvance</segments>
+                  </value>
+                </params>
+                <params keyword="userRoutine">
+                  <value xsi:type="cupidLanguage:PathExpr">
+                    <segments>userRoutine</segments>
+                  </value>
+                </params>
+                <params keyword="rc">
+                  <value xsi:type="cupidLanguage:PathExpr">
+                    <segments>..</segments>
+                    <segments>..</segments>
+                    <segments>implementsSetServices</segments>
+                    <segments>rc</segments>
+                  </value>
+                </params>
+              </mapping>
+            </mapping>
+            <body>
+              <subconcept xsi:type="cupidLanguage:AnonymousConcept" localName="index"/>
+              <subconcept xsi:type="cupidLanguage:AnonymousConcept" localName="userRoutine"/>
+            </body>
+          </subconcept>
+        </body>
+      </subconcept>
+    </body>
+  </concepts>
+</cupidLanguage:Mappings>

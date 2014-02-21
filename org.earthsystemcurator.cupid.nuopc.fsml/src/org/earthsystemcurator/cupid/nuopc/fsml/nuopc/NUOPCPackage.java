@@ -214,22 +214,13 @@ public interface NUOPCPackage extends EPackage {
 	int NUOPC_MODEL__INITIALIZE = 3;
 
 	/**
-	 * The feature id for the '<em><b>Implements Model Advance</b></em>' containment reference list.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int NUOPC_MODEL__IMPLEMENTS_MODEL_ADVANCE = 4;
-
-	/**
 	 * The feature id for the '<em><b>Model Advance</b></em>' containment reference list.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int NUOPC_MODEL__MODEL_ADVANCE = 5;
+	int NUOPC_MODEL__MODEL_ADVANCE = 4;
 
 	/**
 	 * The number of structural features of the '<em>Model</em>' class.
@@ -238,7 +229,7 @@ public interface NUOPCPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int NUOPC_MODEL_FEATURE_COUNT = 6;
+	int NUOPC_MODEL_FEATURE_COUNT = 5;
 
 	/**
 	 * The number of operations of the '<em>Model</em>' class.
@@ -952,61 +943,6 @@ public interface NUOPCPackage extends EPackage {
 	int NUOPC_MODEL_REALIZES_EXPORT_FIELD_OPERATION_COUNT = 0;
 
 	/**
-	 * The meta object id for the '{@link org.earthsystemcurator.cupid.nuopc.fsml.nuopc.impl.NUOPCModel__ImplementsModelAdvanceImpl <em>Model Implements Model Advance</em>}' class.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @see org.earthsystemcurator.cupid.nuopc.fsml.nuopc.impl.NUOPCModel__ImplementsModelAdvanceImpl
-	 * @see org.earthsystemcurator.cupid.nuopc.fsml.nuopc.impl.NUOPCPackageImpl#getNUOPCModel__ImplementsModelAdvance()
-	 * @generated
-	 */
-	int NUOPC_MODEL_IMPLEMENTS_MODEL_ADVANCE = 12;
-
-	/**
-	 * The feature id for the '<em><b>Parent</b></em>' container reference.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int NUOPC_MODEL_IMPLEMENTS_MODEL_ADVANCE__PARENT = 0;
-
-	/**
-	 * The feature id for the '<em><b>Name</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int NUOPC_MODEL_IMPLEMENTS_MODEL_ADVANCE__NAME = 1;
-
-	/**
-	 * The feature id for the '<em><b>Attached Model Advance</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int NUOPC_MODEL_IMPLEMENTS_MODEL_ADVANCE__ATTACHED_MODEL_ADVANCE = 2;
-
-	/**
-	 * The number of structural features of the '<em>Model Implements Model Advance</em>' class.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int NUOPC_MODEL_IMPLEMENTS_MODEL_ADVANCE_FEATURE_COUNT = 3;
-
-	/**
-	 * The number of operations of the '<em>Model Implements Model Advance</em>' class.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int NUOPC_MODEL_IMPLEMENTS_MODEL_ADVANCE_OPERATION_COUNT = 0;
-
-	/**
 	 * The meta object id for the '{@link org.earthsystemcurator.cupid.nuopc.fsml.nuopc.impl.NUOPCModel__ModelAdvanceImpl <em>Model Model Advance</em>}' class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -1014,7 +950,7 @@ public interface NUOPCPackage extends EPackage {
 	 * @see org.earthsystemcurator.cupid.nuopc.fsml.nuopc.impl.NUOPCPackageImpl#getNUOPCModel__ModelAdvance()
 	 * @generated
 	 */
-	int NUOPC_MODEL_MODEL_ADVANCE = 13;
+	int NUOPC_MODEL_MODEL_ADVANCE = 12;
 
 	/**
 	 * The feature id for the '<em><b>Parent</b></em>' container reference.
@@ -1026,22 +962,22 @@ public interface NUOPCPackage extends EPackage {
 	int NUOPC_MODEL_MODEL_ADVANCE__PARENT = 0;
 
 	/**
-	 * The feature id for the '<em><b>Implements Subroutine</b></em>' containment reference.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int NUOPC_MODEL_MODEL_ADVANCE__IMPLEMENTS_SUBROUTINE = 1;
-
-	/**
 	 * The feature id for the '<em><b>Attached</b></em>' containment reference.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int NUOPC_MODEL_MODEL_ADVANCE__ATTACHED = 2;
+	int NUOPC_MODEL_MODEL_ADVANCE__ATTACHED = 1;
+
+	/**
+	 * The feature id for the '<em><b>Implements Subroutine</b></em>' containment reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int NUOPC_MODEL_MODEL_ADVANCE__IMPLEMENTS_SUBROUTINE = 2;
 
 	/**
 	 * The number of structural features of the '<em>Model Model Advance</em>' class.
@@ -1069,7 +1005,7 @@ public interface NUOPCPackage extends EPackage {
 	 * @see org.earthsystemcurator.cupid.nuopc.fsml.nuopc.impl.NUOPCPackageImpl#getNUOPCModel__ModelAdvance__ImplementsSubroutine()
 	 * @generated
 	 */
-	int NUOPC_MODEL_MODEL_ADVANCE_IMPLEMENTS_SUBROUTINE = 14;
+	int NUOPC_MODEL_MODEL_ADVANCE_IMPLEMENTS_SUBROUTINE = 13;
 
 	/**
 	 * The feature id for the '<em><b>Name</b></em>' attribute.
@@ -1106,16 +1042,25 @@ public interface NUOPCPackage extends EPackage {
 	 * @see org.earthsystemcurator.cupid.nuopc.fsml.nuopc.impl.NUOPCPackageImpl#getNUOPCModel__ModelAdvance__Attached()
 	 * @generated
 	 */
-	int NUOPC_MODEL_MODEL_ADVANCE_ATTACHED = 15;
+	int NUOPC_MODEL_MODEL_ADVANCE_ATTACHED = 14;
 
 	/**
-	 * The feature id for the '<em><b>Name</b></em>' attribute.
+	 * The feature id for the '<em><b>User Routine</b></em>' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int NUOPC_MODEL_MODEL_ADVANCE_ATTACHED__NAME = 0;
+	int NUOPC_MODEL_MODEL_ADVANCE_ATTACHED__USER_ROUTINE = 0;
+
+	/**
+	 * The feature id for the '<em><b>Index</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int NUOPC_MODEL_MODEL_ADVANCE_ATTACHED__INDEX = 1;
 
 	/**
 	 * The number of structural features of the '<em>Model Model Advance Attached</em>' class.
@@ -1124,7 +1069,7 @@ public interface NUOPCPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int NUOPC_MODEL_MODEL_ADVANCE_ATTACHED_FEATURE_COUNT = 1;
+	int NUOPC_MODEL_MODEL_ADVANCE_ATTACHED_FEATURE_COUNT = 2;
 
 	/**
 	 * The number of operations of the '<em>Model Model Advance Attached</em>' class.
@@ -1143,7 +1088,7 @@ public interface NUOPCPackage extends EPackage {
 	 * @see org.earthsystemcurator.cupid.nuopc.fsml.nuopc.impl.NUOPCPackageImpl#getNUOPCDriver()
 	 * @generated
 	 */
-	int NUOPC_DRIVER = 16;
+	int NUOPC_DRIVER = 15;
 
 	/**
 	 * The feature id for the '<em><b>Parent</b></em>' container reference.
@@ -1243,7 +1188,7 @@ public interface NUOPCPackage extends EPackage {
 	 * @see org.earthsystemcurator.cupid.nuopc.fsml.nuopc.impl.NUOPCPackageImpl#getNUOPCDriver__GenericImports()
 	 * @generated
 	 */
-	int NUOPC_DRIVER_GENERIC_IMPORTS = 17;
+	int NUOPC_DRIVER_GENERIC_IMPORTS = 16;
 
 	/**
 	 * The feature id for the '<em><b>Imports Generic SS</b></em>' attribute.
@@ -1307,7 +1252,7 @@ public interface NUOPCPackage extends EPackage {
 	 * @see org.earthsystemcurator.cupid.nuopc.fsml.nuopc.impl.NUOPCPackageImpl#getNUOPCDriver__ModelImports()
 	 * @generated
 	 */
-	int NUOPC_DRIVER_MODEL_IMPORTS = 18;
+	int NUOPC_DRIVER_MODEL_IMPORTS = 17;
 
 	/**
 	 * The feature id for the '<em><b>Parent</b></em>' container reference.
@@ -1353,7 +1298,7 @@ public interface NUOPCPackage extends EPackage {
 	 * @see org.earthsystemcurator.cupid.nuopc.fsml.nuopc.impl.NUOPCPackageImpl#getNUOPCDriver__ModelImports__ModelImport()
 	 * @generated
 	 */
-	int NUOPC_DRIVER_MODEL_IMPORTS_MODEL_IMPORT = 19;
+	int NUOPC_DRIVER_MODEL_IMPORTS_MODEL_IMPORT = 18;
 
 	/**
 	 * The feature id for the '<em><b>Parent</b></em>' container reference.
@@ -1417,7 +1362,7 @@ public interface NUOPCPackage extends EPackage {
 	 * @see org.earthsystemcurator.cupid.nuopc.fsml.nuopc.impl.NUOPCPackageImpl#getNUOPCDriver__ConnectorImports()
 	 * @generated
 	 */
-	int NUOPC_DRIVER_CONNECTOR_IMPORTS = 20;
+	int NUOPC_DRIVER_CONNECTOR_IMPORTS = 19;
 
 	/**
 	 * The feature id for the '<em><b>Parent</b></em>' container reference.
@@ -1463,7 +1408,7 @@ public interface NUOPCPackage extends EPackage {
 	 * @see org.earthsystemcurator.cupid.nuopc.fsml.nuopc.impl.NUOPCPackageImpl#getNUOPCDriver__ConnectorImports__ConnectorImport()
 	 * @generated
 	 */
-	int NUOPC_DRIVER_CONNECTOR_IMPORTS_CONNECTOR_IMPORT = 21;
+	int NUOPC_DRIVER_CONNECTOR_IMPORTS_CONNECTOR_IMPORT = 20;
 
 	/**
 	 * The feature id for the '<em><b>Parent</b></em>' container reference.
@@ -1518,7 +1463,7 @@ public interface NUOPCPackage extends EPackage {
 	 * @see org.earthsystemcurator.cupid.nuopc.fsml.nuopc.impl.NUOPCPackageImpl#getNUOPCDriver__ImplementsSetServices()
 	 * @generated
 	 */
-	int NUOPC_DRIVER_IMPLEMENTS_SET_SERVICES = 22;
+	int NUOPC_DRIVER_IMPLEMENTS_SET_SERVICES = 21;
 
 	/**
 	 * The feature id for the '<em><b>Parent</b></em>' container reference.
@@ -1600,7 +1545,7 @@ public interface NUOPCPackage extends EPackage {
 	 * @see org.earthsystemcurator.cupid.nuopc.fsml.nuopc.impl.NUOPCPackageImpl#getNUOPCDriver__ImplementsSetModelCount()
 	 * @generated
 	 */
-	int NUOPC_DRIVER_IMPLEMENTS_SET_MODEL_COUNT = 23;
+	int NUOPC_DRIVER_IMPLEMENTS_SET_MODEL_COUNT = 22;
 
 	/**
 	 * The feature id for the '<em><b>Parent</b></em>' container reference.
@@ -1700,7 +1645,7 @@ public interface NUOPCPackage extends EPackage {
 	 * @see org.earthsystemcurator.cupid.nuopc.fsml.nuopc.impl.NUOPCPackageImpl#getNUOPCDriver__ImplementsSetModelServices()
 	 * @generated
 	 */
-	int NUOPC_DRIVER_IMPLEMENTS_SET_MODEL_SERVICES = 24;
+	int NUOPC_DRIVER_IMPLEMENTS_SET_MODEL_SERVICES = 23;
 
 	/**
 	 * The feature id for the '<em><b>Parent</b></em>' container reference.
@@ -1818,7 +1763,7 @@ public interface NUOPCPackage extends EPackage {
 	 * @see org.earthsystemcurator.cupid.nuopc.fsml.nuopc.impl.NUOPCPackageImpl#getNUOPCDriverAtmOcn()
 	 * @generated
 	 */
-	int NUOPC_DRIVER_ATM_OCN = 25;
+	int NUOPC_DRIVER_ATM_OCN = 24;
 
 	/**
 	 * The feature id for the '<em><b>Parent</b></em>' container reference.
@@ -1918,7 +1863,7 @@ public interface NUOPCPackage extends EPackage {
 	 * @see org.earthsystemcurator.cupid.nuopc.fsml.nuopc.impl.NUOPCPackageImpl#getNUOPCDriverAtmOcn__GenericImports()
 	 * @generated
 	 */
-	int NUOPC_DRIVER_ATM_OCN_GENERIC_IMPORTS = 26;
+	int NUOPC_DRIVER_ATM_OCN_GENERIC_IMPORTS = 25;
 
 	/**
 	 * The feature id for the '<em><b>Imports Generic SS</b></em>' attribute.
@@ -1991,7 +1936,7 @@ public interface NUOPCPackage extends EPackage {
 	 * @see org.earthsystemcurator.cupid.nuopc.fsml.nuopc.impl.NUOPCPackageImpl#getNUOPCDriverAtmOcn__ModelImports()
 	 * @generated
 	 */
-	int NUOPC_DRIVER_ATM_OCN_MODEL_IMPORTS = 27;
+	int NUOPC_DRIVER_ATM_OCN_MODEL_IMPORTS = 26;
 
 	/**
 	 * The feature id for the '<em><b>Parent</b></em>' container reference.
@@ -2037,7 +1982,7 @@ public interface NUOPCPackage extends EPackage {
 	 * @see org.earthsystemcurator.cupid.nuopc.fsml.nuopc.impl.NUOPCPackageImpl#getNUOPCDriverAtmOcn__ImplementsSetServices()
 	 * @generated
 	 */
-	int NUOPC_DRIVER_ATM_OCN_IMPLEMENTS_SET_SERVICES = 28;
+	int NUOPC_DRIVER_ATM_OCN_IMPLEMENTS_SET_SERVICES = 27;
 
 	/**
 	 * The feature id for the '<em><b>Parent</b></em>' container reference.
@@ -2119,7 +2064,7 @@ public interface NUOPCPackage extends EPackage {
 	 * @see org.earthsystemcurator.cupid.nuopc.fsml.nuopc.impl.NUOPCPackageImpl#getNUOPCDriverAtmOcn__ImplementsSetModelCount()
 	 * @generated
 	 */
-	int NUOPC_DRIVER_ATM_OCN_IMPLEMENTS_SET_MODEL_COUNT = 29;
+	int NUOPC_DRIVER_ATM_OCN_IMPLEMENTS_SET_MODEL_COUNT = 28;
 
 	/**
 	 * The feature id for the '<em><b>Parent</b></em>' container reference.
@@ -2219,7 +2164,7 @@ public interface NUOPCPackage extends EPackage {
 	 * @see org.earthsystemcurator.cupid.nuopc.fsml.nuopc.impl.NUOPCPackageImpl#getNUOPCDriverAtmOcn__ImplementsSetModelServices()
 	 * @generated
 	 */
-	int NUOPC_DRIVER_ATM_OCN_IMPLEMENTS_SET_MODEL_SERVICES = 30;
+	int NUOPC_DRIVER_ATM_OCN_IMPLEMENTS_SET_MODEL_SERVICES = 29;
 
 	/**
 	 * The feature id for the '<em><b>Parent</b></em>' container reference.
@@ -2337,7 +2282,7 @@ public interface NUOPCPackage extends EPackage {
 	 * @see org.earthsystemcurator.cupid.nuopc.fsml.nuopc.impl.NUOPCPackageImpl#getNUOPCDriverAtmOcn__ImplementsSetModelPetLists()
 	 * @generated
 	 */
-	int NUOPC_DRIVER_ATM_OCN_IMPLEMENTS_SET_MODEL_PET_LISTS = 31;
+	int NUOPC_DRIVER_ATM_OCN_IMPLEMENTS_SET_MODEL_PET_LISTS = 30;
 
 	/**
 	 * The feature id for the '<em><b>Parent</b></em>' container reference.
@@ -2437,7 +2382,7 @@ public interface NUOPCPackage extends EPackage {
 	 * @see org.earthsystemcurator.cupid.nuopc.fsml.nuopc.impl.NUOPCPackageImpl#getNUOPCDriverAtmOcn__ModelImports__ModelImport()
 	 * @generated
 	 */
-	int NUOPC_DRIVER_ATM_OCN_MODEL_IMPORTS_MODEL_IMPORT = 32;
+	int NUOPC_DRIVER_ATM_OCN_MODEL_IMPORTS_MODEL_IMPORT = 31;
 
 	/**
 	 * The feature id for the '<em><b>Parent</b></em>' container reference.
@@ -2501,7 +2446,7 @@ public interface NUOPCPackage extends EPackage {
 	 * @see org.earthsystemcurator.cupid.nuopc.fsml.nuopc.impl.NUOPCPackageImpl#getCallsGenericSetServices()
 	 * @generated
 	 */
-	int CALLS_GENERIC_SET_SERVICES = 33;
+	int CALLS_GENERIC_SET_SERVICES = 32;
 
 	/**
 	 * The feature id for the '<em><b>Gcomp</b></em>' attribute.
@@ -2547,7 +2492,7 @@ public interface NUOPCPackage extends EPackage {
 	 * @see org.earthsystemcurator.cupid.nuopc.fsml.nuopc.impl.NUOPCPackageImpl#getCallsSetEntryPoint()
 	 * @generated
 	 */
-	int CALLS_SET_ENTRY_POINT = 34;
+	int CALLS_SET_ENTRY_POINT = 33;
 
 	/**
 	 * The feature id for the '<em><b>Method</b></em>' attribute.
@@ -2602,7 +2547,7 @@ public interface NUOPCPackage extends EPackage {
 	 * @see org.earthsystemcurator.cupid.nuopc.fsml.nuopc.impl.NUOPCPackageImpl#getAttachesMethod()
 	 * @generated
 	 */
-	int ATTACHES_METHOD = 35;
+	int ATTACHES_METHOD = 34;
 
 	/**
 	 * The feature id for the '<em><b>Name</b></em>' attribute.
@@ -2657,7 +2602,7 @@ public interface NUOPCPackage extends EPackage {
 	 * @see org.earthsystemcurator.cupid.nuopc.fsml.nuopc.impl.NUOPCPackageImpl#getSetModelServices()
 	 * @generated
 	 */
-	int SET_MODEL_SERVICES = 36;
+	int SET_MODEL_SERVICES = 35;
 
 	/**
 	 * The feature id for the '<em><b>Model Comp</b></em>' attribute.
@@ -2703,7 +2648,7 @@ public interface NUOPCPackage extends EPackage {
 	 * @see org.earthsystemcurator.cupid.nuopc.fsml.nuopc.impl.NUOPCPackageImpl#getSetCouplerServices()
 	 * @generated
 	 */
-	int SET_COUPLER_SERVICES = 37;
+	int SET_COUPLER_SERVICES = 36;
 
 	/**
 	 * The feature id for the '<em><b>Cpl Comp</b></em>' attribute.
@@ -2749,7 +2694,7 @@ public interface NUOPCPackage extends EPackage {
 	 * @see org.earthsystemcurator.cupid.nuopc.fsml.nuopc.impl.NUOPCPackageImpl#getGetsInternalState()
 	 * @generated
 	 */
-	int GETS_INTERNAL_STATE = 38;
+	int GETS_INTERNAL_STATE = 37;
 
 	/**
 	 * The feature id for the '<em><b>Label</b></em>' attribute.
@@ -2786,7 +2731,7 @@ public interface NUOPCPackage extends EPackage {
 	 * @see org.earthsystemcurator.cupid.nuopc.fsml.nuopc.impl.NUOPCPackageImpl#getNUOPCMediator()
 	 * @generated
 	 */
-	int NUOPC_MEDIATOR = 39;
+	int NUOPC_MEDIATOR = 38;
 
 	/**
 	 * The feature id for the '<em><b>Name</b></em>' attribute.
@@ -2859,7 +2804,7 @@ public interface NUOPCPackage extends EPackage {
 	 * @see org.earthsystemcurator.cupid.nuopc.fsml.nuopc.impl.NUOPCPackageImpl#getNUOPCMediator__GenericImports()
 	 * @generated
 	 */
-	int NUOPC_MEDIATOR_GENERIC_IMPORTS = 40;
+	int NUOPC_MEDIATOR_GENERIC_IMPORTS = 39;
 
 	/**
 	 * The feature id for the '<em><b>Imports Generic SS</b></em>' attribute.
@@ -2905,7 +2850,7 @@ public interface NUOPCPackage extends EPackage {
 	 * @see org.earthsystemcurator.cupid.nuopc.fsml.nuopc.impl.NUOPCPackageImpl#getNUOPCMediator__Init()
 	 * @generated
 	 */
-	int NUOPC_MEDIATOR_INIT = 41;
+	int NUOPC_MEDIATOR_INIT = 40;
 
 	/**
 	 * The feature id for the '<em><b>Parent</b></em>' container reference.
@@ -2960,7 +2905,7 @@ public interface NUOPCPackage extends EPackage {
 	 * @see org.earthsystemcurator.cupid.nuopc.fsml.nuopc.impl.NUOPCPackageImpl#getNUOPCMediator__ImplementsSetServices()
 	 * @generated
 	 */
-	int NUOPC_MEDIATOR_IMPLEMENTS_SET_SERVICES = 42;
+	int NUOPC_MEDIATOR_IMPLEMENTS_SET_SERVICES = 41;
 
 	/**
 	 * The feature id for the '<em><b>Parent</b></em>' container reference.
@@ -3051,7 +2996,7 @@ public interface NUOPCPackage extends EPackage {
 	 * @see org.earthsystemcurator.cupid.nuopc.fsml.nuopc.impl.NUOPCPackageImpl#getNUOPCMediator__ImplementsInitP1()
 	 * @generated
 	 */
-	int NUOPC_MEDIATOR_IMPLEMENTS_INIT_P1 = 43;
+	int NUOPC_MEDIATOR_IMPLEMENTS_INIT_P1 = 42;
 
 	/**
 	 * The feature id for the '<em><b>Parent</b></em>' container reference.
@@ -3160,7 +3105,7 @@ public interface NUOPCPackage extends EPackage {
 	 * @see org.earthsystemcurator.cupid.nuopc.fsml.nuopc.impl.NUOPCPackageImpl#getNUOPCMediator__ImplementsInitP2()
 	 * @generated
 	 */
-	int NUOPC_MEDIATOR_IMPLEMENTS_INIT_P2 = 44;
+	int NUOPC_MEDIATOR_IMPLEMENTS_INIT_P2 = 43;
 
 	/**
 	 * The feature id for the '<em><b>Parent</b></em>' container reference.
@@ -3269,7 +3214,7 @@ public interface NUOPCPackage extends EPackage {
 	 * @see org.earthsystemcurator.cupid.nuopc.fsml.nuopc.impl.NUOPCPackageImpl#getNUOPCMediator__AdvertisesImportField()
 	 * @generated
 	 */
-	int NUOPC_MEDIATOR_ADVERTISES_IMPORT_FIELD = 45;
+	int NUOPC_MEDIATOR_ADVERTISES_IMPORT_FIELD = 44;
 
 	/**
 	 * The feature id for the '<em><b>Parent</b></em>' container reference.
@@ -3342,7 +3287,7 @@ public interface NUOPCPackage extends EPackage {
 	 * @see org.earthsystemcurator.cupid.nuopc.fsml.nuopc.impl.NUOPCPackageImpl#getNUOPCMediator__AdvertisesExportField()
 	 * @generated
 	 */
-	int NUOPC_MEDIATOR_ADVERTISES_EXPORT_FIELD = 46;
+	int NUOPC_MEDIATOR_ADVERTISES_EXPORT_FIELD = 45;
 
 	/**
 	 * The feature id for the '<em><b>Parent</b></em>' container reference.
@@ -3415,7 +3360,7 @@ public interface NUOPCPackage extends EPackage {
 	 * @see org.earthsystemcurator.cupid.nuopc.fsml.nuopc.impl.NUOPCPackageImpl#getNUOPCMediator__RealizesImportField()
 	 * @generated
 	 */
-	int NUOPC_MEDIATOR_REALIZES_IMPORT_FIELD = 47;
+	int NUOPC_MEDIATOR_REALIZES_IMPORT_FIELD = 46;
 
 	/**
 	 * The feature id for the '<em><b>Parent</b></em>' container reference.
@@ -3488,7 +3433,7 @@ public interface NUOPCPackage extends EPackage {
 	 * @see org.earthsystemcurator.cupid.nuopc.fsml.nuopc.impl.NUOPCPackageImpl#getNUOPCMediator__RealizesExportField()
 	 * @generated
 	 */
-	int NUOPC_MEDIATOR_REALIZES_EXPORT_FIELD = 48;
+	int NUOPC_MEDIATOR_REALIZES_EXPORT_FIELD = 47;
 
 	/**
 	 * The feature id for the '<em><b>Parent</b></em>' container reference.
@@ -3561,7 +3506,7 @@ public interface NUOPCPackage extends EPackage {
 	 * @see org.earthsystemcurator.cupid.nuopc.fsml.nuopc.impl.NUOPCPackageImpl#getNUOPCMediator__ModelAdvance()
 	 * @generated
 	 */
-	int NUOPC_MEDIATOR_MODEL_ADVANCE = 49;
+	int NUOPC_MEDIATOR_MODEL_ADVANCE = 48;
 
 	/**
 	 * The feature id for the '<em><b>Parent</b></em>' container reference.
@@ -3748,17 +3693,6 @@ public interface NUOPCPackage extends EPackage {
 	 * @generated
 	 */
 	EReference getNUOPCModel_Initialize();
-
-	/**
-	 * Returns the meta object for the containment reference list '{@link org.earthsystemcurator.cupid.nuopc.fsml.nuopc.NUOPCModel#getImplementsModelAdvance <em>Implements Model Advance</em>}'.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @return the meta object for the containment reference list '<em>Implements Model Advance</em>'.
-	 * @see org.earthsystemcurator.cupid.nuopc.fsml.nuopc.NUOPCModel#getImplementsModelAdvance()
-	 * @see #getNUOPCModel()
-	 * @generated
-	 */
-	EReference getNUOPCModel_ImplementsModelAdvance();
 
 	/**
 	 * Returns the meta object for the containment reference list '{@link org.earthsystemcurator.cupid.nuopc.fsml.nuopc.NUOPCModel#getModelAdvance <em>Model Advance</em>}'.
@@ -4412,49 +4346,6 @@ public interface NUOPCPackage extends EPackage {
 	EAttribute getNUOPCModel__RealizesExportField_Field();
 
 	/**
-	 * Returns the meta object for class '{@link org.earthsystemcurator.cupid.nuopc.fsml.nuopc.NUOPCModel__ImplementsModelAdvance <em>Model Implements Model Advance</em>}'.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @return the meta object for class '<em>Model Implements Model Advance</em>'.
-	 * @see org.earthsystemcurator.cupid.nuopc.fsml.nuopc.NUOPCModel__ImplementsModelAdvance
-	 * @generated
-	 */
-	EClass getNUOPCModel__ImplementsModelAdvance();
-
-	/**
-	 * Returns the meta object for the container reference '{@link org.earthsystemcurator.cupid.nuopc.fsml.nuopc.NUOPCModel__ImplementsModelAdvance#getParent <em>Parent</em>}'.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @return the meta object for the container reference '<em>Parent</em>'.
-	 * @see org.earthsystemcurator.cupid.nuopc.fsml.nuopc.NUOPCModel__ImplementsModelAdvance#getParent()
-	 * @see #getNUOPCModel__ImplementsModelAdvance()
-	 * @generated
-	 */
-	EReference getNUOPCModel__ImplementsModelAdvance_Parent();
-
-	/**
-	 * Returns the meta object for the attribute '{@link org.earthsystemcurator.cupid.nuopc.fsml.nuopc.NUOPCModel__ImplementsModelAdvance#getName <em>Name</em>}'.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @return the meta object for the attribute '<em>Name</em>'.
-	 * @see org.earthsystemcurator.cupid.nuopc.fsml.nuopc.NUOPCModel__ImplementsModelAdvance#getName()
-	 * @see #getNUOPCModel__ImplementsModelAdvance()
-	 * @generated
-	 */
-	EAttribute getNUOPCModel__ImplementsModelAdvance_Name();
-
-	/**
-	 * Returns the meta object for the attribute '{@link org.earthsystemcurator.cupid.nuopc.fsml.nuopc.NUOPCModel__ImplementsModelAdvance#isAttachedModelAdvance <em>Attached Model Advance</em>}'.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @return the meta object for the attribute '<em>Attached Model Advance</em>'.
-	 * @see org.earthsystemcurator.cupid.nuopc.fsml.nuopc.NUOPCModel__ImplementsModelAdvance#isAttachedModelAdvance()
-	 * @see #getNUOPCModel__ImplementsModelAdvance()
-	 * @generated
-	 */
-	EAttribute getNUOPCModel__ImplementsModelAdvance_AttachedModelAdvance();
-
-	/**
 	 * Returns the meta object for class '{@link org.earthsystemcurator.cupid.nuopc.fsml.nuopc.NUOPCModel__ModelAdvance <em>Model Model Advance</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -4529,15 +4420,26 @@ public interface NUOPCPackage extends EPackage {
 	EClass getNUOPCModel__ModelAdvance__Attached();
 
 	/**
-	 * Returns the meta object for the attribute '{@link org.earthsystemcurator.cupid.nuopc.fsml.nuopc.NUOPCModel__ModelAdvance__Attached#getName <em>Name</em>}'.
+	 * Returns the meta object for the attribute '{@link org.earthsystemcurator.cupid.nuopc.fsml.nuopc.NUOPCModel__ModelAdvance__Attached#getUserRoutine <em>User Routine</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @return the meta object for the attribute '<em>Name</em>'.
-	 * @see org.earthsystemcurator.cupid.nuopc.fsml.nuopc.NUOPCModel__ModelAdvance__Attached#getName()
+	 * @return the meta object for the attribute '<em>User Routine</em>'.
+	 * @see org.earthsystemcurator.cupid.nuopc.fsml.nuopc.NUOPCModel__ModelAdvance__Attached#getUserRoutine()
 	 * @see #getNUOPCModel__ModelAdvance__Attached()
 	 * @generated
 	 */
-	EAttribute getNUOPCModel__ModelAdvance__Attached_Name();
+	EAttribute getNUOPCModel__ModelAdvance__Attached_UserRoutine();
+
+	/**
+	 * Returns the meta object for the attribute '{@link org.earthsystemcurator.cupid.nuopc.fsml.nuopc.NUOPCModel__ModelAdvance__Attached#getIndex <em>Index</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the attribute '<em>Index</em>'.
+	 * @see org.earthsystemcurator.cupid.nuopc.fsml.nuopc.NUOPCModel__ModelAdvance__Attached#getIndex()
+	 * @see #getNUOPCModel__ModelAdvance__Attached()
+	 * @generated
+	 */
+	EAttribute getNUOPCModel__ModelAdvance__Attached_Index();
 
 	/**
 	 * Returns the meta object for class '{@link org.earthsystemcurator.cupid.nuopc.fsml.nuopc.NUOPCDriver <em>Driver</em>}'.
@@ -6872,14 +6774,6 @@ public interface NUOPCPackage extends EPackage {
 		EReference NUOPC_MODEL__INITIALIZE = eINSTANCE.getNUOPCModel_Initialize();
 
 		/**
-		 * The meta object literal for the '<em><b>Implements Model Advance</b></em>' containment reference list feature.
-		 * <!-- begin-user-doc -->
-		 * <!-- end-user-doc -->
-		 * @generated
-		 */
-		EReference NUOPC_MODEL__IMPLEMENTS_MODEL_ADVANCE = eINSTANCE.getNUOPCModel_ImplementsModelAdvance();
-
-		/**
 		 * The meta object literal for the '<em><b>Model Advance</b></em>' containment reference list feature.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
@@ -7378,40 +7272,6 @@ public interface NUOPCPackage extends EPackage {
 		EAttribute NUOPC_MODEL_REALIZES_EXPORT_FIELD__FIELD = eINSTANCE.getNUOPCModel__RealizesExportField_Field();
 
 		/**
-		 * The meta object literal for the '{@link org.earthsystemcurator.cupid.nuopc.fsml.nuopc.impl.NUOPCModel__ImplementsModelAdvanceImpl <em>Model Implements Model Advance</em>}' class.
-		 * <!-- begin-user-doc -->
-		 * <!-- end-user-doc -->
-		 * @see org.earthsystemcurator.cupid.nuopc.fsml.nuopc.impl.NUOPCModel__ImplementsModelAdvanceImpl
-		 * @see org.earthsystemcurator.cupid.nuopc.fsml.nuopc.impl.NUOPCPackageImpl#getNUOPCModel__ImplementsModelAdvance()
-		 * @generated
-		 */
-		EClass NUOPC_MODEL_IMPLEMENTS_MODEL_ADVANCE = eINSTANCE.getNUOPCModel__ImplementsModelAdvance();
-
-		/**
-		 * The meta object literal for the '<em><b>Parent</b></em>' container reference feature.
-		 * <!-- begin-user-doc -->
-		 * <!-- end-user-doc -->
-		 * @generated
-		 */
-		EReference NUOPC_MODEL_IMPLEMENTS_MODEL_ADVANCE__PARENT = eINSTANCE.getNUOPCModel__ImplementsModelAdvance_Parent();
-
-		/**
-		 * The meta object literal for the '<em><b>Name</b></em>' attribute feature.
-		 * <!-- begin-user-doc -->
-		 * <!-- end-user-doc -->
-		 * @generated
-		 */
-		EAttribute NUOPC_MODEL_IMPLEMENTS_MODEL_ADVANCE__NAME = eINSTANCE.getNUOPCModel__ImplementsModelAdvance_Name();
-
-		/**
-		 * The meta object literal for the '<em><b>Attached Model Advance</b></em>' attribute feature.
-		 * <!-- begin-user-doc -->
-		 * <!-- end-user-doc -->
-		 * @generated
-		 */
-		EAttribute NUOPC_MODEL_IMPLEMENTS_MODEL_ADVANCE__ATTACHED_MODEL_ADVANCE = eINSTANCE.getNUOPCModel__ImplementsModelAdvance_AttachedModelAdvance();
-
-		/**
 		 * The meta object literal for the '{@link org.earthsystemcurator.cupid.nuopc.fsml.nuopc.impl.NUOPCModel__ModelAdvanceImpl <em>Model Model Advance</em>}' class.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
@@ -7474,12 +7334,20 @@ public interface NUOPCPackage extends EPackage {
 		EClass NUOPC_MODEL_MODEL_ADVANCE_ATTACHED = eINSTANCE.getNUOPCModel__ModelAdvance__Attached();
 
 		/**
-		 * The meta object literal for the '<em><b>Name</b></em>' attribute feature.
+		 * The meta object literal for the '<em><b>User Routine</b></em>' attribute feature.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
 		 * @generated
 		 */
-		EAttribute NUOPC_MODEL_MODEL_ADVANCE_ATTACHED__NAME = eINSTANCE.getNUOPCModel__ModelAdvance__Attached_Name();
+		EAttribute NUOPC_MODEL_MODEL_ADVANCE_ATTACHED__USER_ROUTINE = eINSTANCE.getNUOPCModel__ModelAdvance__Attached_UserRoutine();
+
+		/**
+		 * The meta object literal for the '<em><b>Index</b></em>' attribute feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EAttribute NUOPC_MODEL_MODEL_ADVANCE_ATTACHED__INDEX = eINSTANCE.getNUOPCModel__ModelAdvance__Attached_Index();
 
 		/**
 		 * The meta object literal for the '{@link org.earthsystemcurator.cupid.nuopc.fsml.nuopc.impl.NUOPCDriverImpl <em>Driver</em>}' class.

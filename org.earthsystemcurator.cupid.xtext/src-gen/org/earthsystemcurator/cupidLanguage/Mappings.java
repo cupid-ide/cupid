@@ -15,6 +15,7 @@ import org.eclipse.emf.ecore.EObject;
  * The following features are supported:
  * <ul>
  *   <li>{@link org.earthsystemcurator.cupidLanguage.Mappings#getMappings <em>Mappings</em>}</li>
+ *   <li>{@link org.earthsystemcurator.cupidLanguage.Mappings#getConcepts <em>Concepts</em>}</li>
  * </ul>
  * </p>
  *
@@ -39,5 +40,21 @@ public interface Mappings extends EObject
    * @generated
    */
   EList<Mapping> getMappings();
+
+  /**
+   * Returns the value of the '<em><b>Concepts</b></em>' containment reference list.
+   * The list contents are of type {@link org.earthsystemcurator.cupidLanguage.ConceptDef}.
+   * <!-- begin-user-doc -->
+   * <p>
+   * If the meaning of the '<em>Concepts</em>' containment reference list isn't clear,
+   * there really should be more of a description here...
+   * </p>
+   * <!-- end-user-doc -->
+   * @return the value of the '<em>Concepts</em>' containment reference list.
+   * @see org.earthsystemcurator.cupidLanguage.CupidLanguagePackage#getMappings_Concepts()
+   * @model containment="true"
+   * @generated
+   */
+  EList<ConceptDef> getConcepts();
 
 } // Mappings

@@ -26,5 +26,6 @@ class CupidLanguageFormatter extends AbstractDeclarativeFormatter {
 //		c.setLinewrap(0, 1, 2).before(SL_COMMENTRule)
 //		c.setLinewrap(0, 1, 2).before(ML_COMMENTRule)
 //		c.setLinewrap(0, 1, 1).after(ML_COMMENTRule)
+		//c.
 	}
 }

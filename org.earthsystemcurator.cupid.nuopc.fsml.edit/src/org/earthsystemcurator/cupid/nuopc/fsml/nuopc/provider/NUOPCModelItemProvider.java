@@ -128,7 +128,6 @@ public class NUOPCModelItemProvider
 			childrenFeatures.add(NUOPCPackage.Literals.NUOPC_MODEL__GENERIC_IMPORTS);
 			childrenFeatures.add(NUOPCPackage.Literals.NUOPC_MODEL__IMPLEMENTS_SET_SERVICES);
 			childrenFeatures.add(NUOPCPackage.Literals.NUOPC_MODEL__INITIALIZE);
-			childrenFeatures.add(NUOPCPackage.Literals.NUOPC_MODEL__IMPLEMENTS_MODEL_ADVANCE);
 		}
 		return childrenFeatures;
 	}
@@ -189,7 +188,6 @@ public class NUOPCModelItemProvider
 			case NUOPCPackage.NUOPC_MODEL__GENERIC_IMPORTS:
 			case NUOPCPackage.NUOPC_MODEL__IMPLEMENTS_SET_SERVICES:
 			case NUOPCPackage.NUOPC_MODEL__INITIALIZE:
-			case NUOPCPackage.NUOPC_MODEL__IMPLEMENTS_MODEL_ADVANCE:
 				fireNotifyChanged(new ViewerNotification(notification, notification.getNotifier(), true, false));
 				return;
 		}
@@ -222,10 +220,6 @@ public class NUOPCModelItemProvider
 				(NUOPCPackage.Literals.NUOPC_MODEL__INITIALIZE,
 				 NUOPCFactory.eINSTANCE.createNUOPCModel__Init()));
 
-		newChildDescriptors.add
-			(createChildParameter
-				(NUOPCPackage.Literals.NUOPC_MODEL__IMPLEMENTS_MODEL_ADVANCE,
-				 NUOPCFactory.eINSTANCE.createNUOPCModel__ImplementsModelAdvance()));
 	}
 
 	/**

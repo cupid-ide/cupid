@@ -7,11 +7,16 @@ import java.util.IdentityHashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.earthsystemcurator.cupid.nuopc.fsml.util.CodeQuery;
+import org.earthsystemcurator.cupid.nuopc.fsml.util.CodeTransformation;
 import org.earthsystemcurator.cupid.nuopc.fsml.util.EcoreUtils;
 import org.earthsystemcurator.cupid.nuopc.fsml.util.Regex;
+import org.earthsystemcurator.cupidLanguage.ImplicitContextMapping;
+import org.earthsystemcurator.cupidLanguage.Mapping;
 import org.eclipse.core.resources.IProject;
 import org.eclipse.emf.common.util.Diagnostic;
 import org.eclipse.emf.common.util.EList;
+import org.eclipse.emf.ecore.EAnnotation;
 import org.eclipse.emf.ecore.EAttribute;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EFactory;
@@ -85,15 +90,31 @@ public class FSM<RootType extends EObject> {
 	 * @param firstParam the first parameter (used to match type)
 	 * @return the method if found, or null if not
 	 */
-	private Method getFEMethod(String methodName, Object firstParam) {
+	private Method getFEMethod(String methodName, Object firstParam, Object secondParam) {
 			
 		if (methodName != null) {
 			for (Method m : ForwardEngineer.class.getMethods()) {
-				if (m.getName().equalsIgnoreCase(methodName)) {
-					Class<?> c = m.getParameterTypes()[0];
-					if (c.isInstance(firstParam)) {
+				if (m.getName().equalsIgnoreCase(methodName) && m.getParameterTypes().length >= 3) {
+					Class<?> contextClass = m.getParameterTypes()[0];
+					Class<?> mappingClass = m.getParameterTypes()[2];
+					if (contextClass.isInstance(firstParam) &&
+							mappingClass.isInstance(secondParam)) {
 						return m;
 					}
+				}
+			}
+		}
+		return null;
+	}
+	
+	private static Method findFEMethod(String methodName, Object context, EObject mapping) {
+		for (Method m : CodeTransformation.class.getMethods()) {
+			if (m.getName().equalsIgnoreCase(methodName) && m.getParameterTypes().length == 2) {
+				Class<?> contextClass = m.getParameterTypes()[0];
+				Class<?> mappingClass = m.getParameterTypes()[1];
+				if (contextClass.isInstance(context) &&
+					mappingClass.isInstance(mapping)) {
+					return m;
 				}
 			}
 		}
@@ -129,46 +150,42 @@ public class FSM<RootType extends EObject> {
 			context.eSet(eref, newElem);
 		}
 		
-		Map<String, Object> keywordMap = Regex.getMappingFromAnnotation(eref);
-	
-		//contextFortranElem will be one of: IASTNode, IFortranAST, or Set<IFortranAST>
-		Object contextFortranElem;
-		if (keywordMap != null && keywordMap.containsKey("_context")) {
-			//explicit context
-			String contextPath = (String) keywordMap.get("_context");
-			EObject explicitContextElem = EcoreUtils.eGetSFValue(contextPath, newElem, null);
-			contextFortranElem = getMappings().get(explicitContextElem);
-		}
-		else {
-			//implicit context
-			contextFortranElem = getMappings().get(context);
-		}
+		//NEW MAPPING
 		
-		if (contextFortranElem == null) {
-			System.out.println("contextFortranElem is null: " + context);
-			return null;
-		}	
-		
-		String methodName = Regex.getMappingTypeFromAnnotation(eref);
-		if (methodName != null) {
-
-			Method method = getFEMethod(methodName, contextFortranElem);
+		EAnnotation ann = eref.getEAnnotation("http://www.earthsystemcog.org/projects/nuopc");
+		if (ann != null && ann.getDetails().get("mappingNew") != null) {
+			String mappingNew = ann.getDetails().get("mappingNew");
 			
+			Mapping mapping = ReverseEngineer.parseMappingNew(mappingNew);
+			Object fortranContextElem;
+			
+			if (mapping.getContext() != null) {
+				//explicit context
+				EObject contextElement = EcoreUtils.eGetSFValue(mapping.getContext(), context, true, null);
+				fortranContextElem = getMappings().get(contextElement);
+				if (fortranContextElem == null) {
+					throw new RuntimeException("No Fortran context for element: " + contextElement);
+				}
+			}
+			else {
+				fortranContextElem = getMappings().get(context);  //implicit
+			}
+			
+			ImplicitContextMapping icMapping = mapping.getMapping();
+			icMapping = ReverseEngineer.replacePathExprWithValues(icMapping, newElem, false);
+			
+			String methodName = icMapping.eClass().getName().toLowerCase();
+			
+			//find method that implements code query
+			Method method = findFEMethod(methodName, fortranContextElem, icMapping);
 			if (method == null) {
-				System.out.println("Method not found: " + methodName + " with first param type: " + contextFortranElem.getClass());
+				System.out.println("Method not found: " + methodName);
 				return null;
 			}
 			
-			//add project to keyword map
-			//TODO: is there a cleaner way to do this?
-			keywordMap.put("_project", this.project);
-			
-			//update the AST
 			Object newFortranElem = null;
 			try {
-				newFortranElem = method.invoke(null, contextFortranElem, newElem, keywordMap);
-			} catch (IllegalArgumentException e) {
-				e.printStackTrace();
+				newFortranElem = method.invoke(null, fortranContextElem, icMapping);
 			} catch (IllegalAccessException e) {
 				e.printStackTrace();
 			} catch (InvocationTargetException e) {
@@ -182,15 +199,74 @@ public class FSM<RootType extends EObject> {
 			
 			//add to mappings
 			getMappings().put(newElem, newFortranElem);
-		
-		}	
-		else {
-			//method may be null if there is no Fortran mapping for the element
-			//in this case the new model element maps to the context fortran element
-			getMappings().put(newElem, contextFortranElem);
 		}
 		
+		
+		//END NEW MAPPING
+		else {
+		
+		
+			Map<String, Object> keywordMap = Regex.getMappingFromAnnotation(eref);
+		
+			//contextFortranElem will be one of: IASTNode, IFortranAST, or Set<IFortranAST>
+			Object contextFortranElem;
+			if (keywordMap != null && keywordMap.containsKey("_context")) {
+				//explicit context
+				String contextPath = (String) keywordMap.get("_context");
+				EObject explicitContextElem = EcoreUtils.eGetSFValue(contextPath, newElem, null);
+				contextFortranElem = getMappings().get(explicitContextElem);
+			}
+			else {
+				//implicit context
+				contextFortranElem = getMappings().get(context);
+			}
+			
+			if (contextFortranElem == null) {
+				System.out.println("contextFortranElem is null: " + context);
+				return null;
+			}	
+			
+			String methodName = Regex.getMappingTypeFromAnnotation(eref);
+			if (methodName != null) {
+	
+				Method method = getFEMethod(methodName, contextFortranElem, keywordMap);
 				
+				if (method == null) {
+					System.out.println("Method not found: " + methodName + " with first param type: " + contextFortranElem.getClass());
+					return null;
+				}
+				
+				//add project to keyword map
+				//TODO: is there a cleaner way to do this?
+				keywordMap.put("_project", this.project);
+				
+				//update the AST
+				Object newFortranElem = null;
+				try {
+					newFortranElem = method.invoke(null, contextFortranElem, newElem, keywordMap);
+				} catch (IllegalAccessException e) {
+					e.printStackTrace();
+				} catch (InvocationTargetException e) {
+					//most likely a syntax error - TODO: deal with this gracefully
+					e.printStackTrace();
+				}				
+				
+				if (newFortranElem == null) {
+					System.out.println("Warning: returned Fortran elements is null");
+				}
+				
+				//add to mappings
+				getMappings().put(newElem, newFortranElem);
+			
+			}	
+			else {
+				//method may be null if there is no Fortran mapping for the element
+				//in this case the new model element maps to the context fortran element
+				getMappings().put(newElem, contextFortranElem);
+			}
+		
+		}
+		
 		//recursively add child elements
 		if (recursive) {
 			
@@ -246,7 +322,7 @@ public class FSM<RootType extends EObject> {
 		String methodName = Regex.getMappingTypeFromAnnotation(eatt);
 		if (methodName != null) {
 
-			Method method = getFEMethod(methodName, contextFortranElem);
+			Method method = getFEMethod(methodName, contextFortranElem, keywordMap);
 			
 			if (method == null) {
 				System.out.println("Method not found: " + methodName + " with first param type: " + contextFortranElem.getClass());

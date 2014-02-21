@@ -68,7 +68,6 @@ public class NUOPCFactoryImpl extends EFactoryImpl implements NUOPCFactory {
 			case NUOPCPackage.NUOPC_MODEL_ADVERTISES_EXPORT_FIELD: return createNUOPCModel__AdvertisesExportField();
 			case NUOPCPackage.NUOPC_MODEL_REALIZES_IMPORT_FIELD: return createNUOPCModel__RealizesImportField();
 			case NUOPCPackage.NUOPC_MODEL_REALIZES_EXPORT_FIELD: return createNUOPCModel__RealizesExportField();
-			case NUOPCPackage.NUOPC_MODEL_IMPLEMENTS_MODEL_ADVANCE: return createNUOPCModel__ImplementsModelAdvance();
 			case NUOPCPackage.NUOPC_MODEL_MODEL_ADVANCE: return createNUOPCModel__ModelAdvance();
 			case NUOPCPackage.NUOPC_MODEL_MODEL_ADVANCE_IMPLEMENTS_SUBROUTINE: return createNUOPCModel__ModelAdvance__ImplementsSubroutine();
 			case NUOPCPackage.NUOPC_MODEL_MODEL_ADVANCE_ATTACHED: return createNUOPCModel__ModelAdvance__Attached();
@@ -229,16 +228,6 @@ public class NUOPCFactoryImpl extends EFactoryImpl implements NUOPCFactory {
 	public NUOPCModel__RealizesExportField createNUOPCModel__RealizesExportField() {
 		NUOPCModel__RealizesExportFieldImpl nuopcModel__RealizesExportField = new NUOPCModel__RealizesExportFieldImpl();
 		return nuopcModel__RealizesExportField;
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public NUOPCModel__ImplementsModelAdvance createNUOPCModel__ImplementsModelAdvance() {
-		NUOPCModel__ImplementsModelAdvanceImpl nuopcModel__ImplementsModelAdvance = new NUOPCModel__ImplementsModelAdvanceImpl();
-		return nuopcModel__ImplementsModelAdvance;
 	}
 
 	/**

@@ -27,24 +27,14 @@ import org.eclipse.emf.ecore.util.EcoreUtil;
  * The following features are implemented:
  * <ul>
  *   <li>{@link org.earthsystemcurator.cupid.nuopc.fsml.nuopc.impl.NUOPCModel__ModelAdvanceImpl#getParent <em>Parent</em>}</li>
- *   <li>{@link org.earthsystemcurator.cupid.nuopc.fsml.nuopc.impl.NUOPCModel__ModelAdvanceImpl#getImplementsSubroutine <em>Implements Subroutine</em>}</li>
  *   <li>{@link org.earthsystemcurator.cupid.nuopc.fsml.nuopc.impl.NUOPCModel__ModelAdvanceImpl#getAttached <em>Attached</em>}</li>
+ *   <li>{@link org.earthsystemcurator.cupid.nuopc.fsml.nuopc.impl.NUOPCModel__ModelAdvanceImpl#getImplementsSubroutine <em>Implements Subroutine</em>}</li>
  * </ul>
  * </p>
  *
  * @generated
  */
 public class NUOPCModel__ModelAdvanceImpl extends EObjectImpl implements NUOPCModel__ModelAdvance {
-	/**
-	 * The cached value of the '{@link #getImplementsSubroutine() <em>Implements Subroutine</em>}' containment reference.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @see #getImplementsSubroutine()
-	 * @generated
-	 * @ordered
-	 */
-	protected NUOPCModel__ModelAdvance__ImplementsSubroutine implementsSubroutine;
-
 	/**
 	 * The cached value of the '{@link #getAttached() <em>Attached</em>}' containment reference.
 	 * <!-- begin-user-doc -->
@@ -54,6 +44,16 @@ public class NUOPCModel__ModelAdvanceImpl extends EObjectImpl implements NUOPCMo
 	 * @ordered
 	 */
 	protected NUOPCModel__ModelAdvance__Attached attached;
+
+	/**
+	 * The cached value of the '{@link #getImplementsSubroutine() <em>Implements Subroutine</em>}' containment reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #getImplementsSubroutine()
+	 * @generated
+	 * @ordered
+	 */
+	protected NUOPCModel__ModelAdvance__ImplementsSubroutine implementsSubroutine;
 
 	/**
 	 * <!-- begin-user-doc -->
@@ -227,10 +227,10 @@ public class NUOPCModel__ModelAdvanceImpl extends EObjectImpl implements NUOPCMo
 		switch (featureID) {
 			case NUOPCPackage.NUOPC_MODEL_MODEL_ADVANCE__PARENT:
 				return basicSetParent(null, msgs);
-			case NUOPCPackage.NUOPC_MODEL_MODEL_ADVANCE__IMPLEMENTS_SUBROUTINE:
-				return basicSetImplementsSubroutine(null, msgs);
 			case NUOPCPackage.NUOPC_MODEL_MODEL_ADVANCE__ATTACHED:
 				return basicSetAttached(null, msgs);
+			case NUOPCPackage.NUOPC_MODEL_MODEL_ADVANCE__IMPLEMENTS_SUBROUTINE:
+				return basicSetImplementsSubroutine(null, msgs);
 		}
 		return super.eInverseRemove(otherEnd, featureID, msgs);
 	}
@@ -259,10 +259,10 @@ public class NUOPCModel__ModelAdvanceImpl extends EObjectImpl implements NUOPCMo
 		switch (featureID) {
 			case NUOPCPackage.NUOPC_MODEL_MODEL_ADVANCE__PARENT:
 				return getParent();
-			case NUOPCPackage.NUOPC_MODEL_MODEL_ADVANCE__IMPLEMENTS_SUBROUTINE:
-				return getImplementsSubroutine();
 			case NUOPCPackage.NUOPC_MODEL_MODEL_ADVANCE__ATTACHED:
 				return getAttached();
+			case NUOPCPackage.NUOPC_MODEL_MODEL_ADVANCE__IMPLEMENTS_SUBROUTINE:
+				return getImplementsSubroutine();
 		}
 		return super.eGet(featureID, resolve, coreType);
 	}
@@ -278,11 +278,11 @@ public class NUOPCModel__ModelAdvanceImpl extends EObjectImpl implements NUOPCMo
 			case NUOPCPackage.NUOPC_MODEL_MODEL_ADVANCE__PARENT:
 				setParent((NUOPCModel)newValue);
 				return;
-			case NUOPCPackage.NUOPC_MODEL_MODEL_ADVANCE__IMPLEMENTS_SUBROUTINE:
-				setImplementsSubroutine((NUOPCModel__ModelAdvance__ImplementsSubroutine)newValue);
-				return;
 			case NUOPCPackage.NUOPC_MODEL_MODEL_ADVANCE__ATTACHED:
 				setAttached((NUOPCModel__ModelAdvance__Attached)newValue);
+				return;
+			case NUOPCPackage.NUOPC_MODEL_MODEL_ADVANCE__IMPLEMENTS_SUBROUTINE:
+				setImplementsSubroutine((NUOPCModel__ModelAdvance__ImplementsSubroutine)newValue);
 				return;
 		}
 		super.eSet(featureID, newValue);
@@ -299,11 +299,11 @@ public class NUOPCModel__ModelAdvanceImpl extends EObjectImpl implements NUOPCMo
 			case NUOPCPackage.NUOPC_MODEL_MODEL_ADVANCE__PARENT:
 				setParent((NUOPCModel)null);
 				return;
-			case NUOPCPackage.NUOPC_MODEL_MODEL_ADVANCE__IMPLEMENTS_SUBROUTINE:
-				setImplementsSubroutine((NUOPCModel__ModelAdvance__ImplementsSubroutine)null);
-				return;
 			case NUOPCPackage.NUOPC_MODEL_MODEL_ADVANCE__ATTACHED:
 				setAttached((NUOPCModel__ModelAdvance__Attached)null);
+				return;
+			case NUOPCPackage.NUOPC_MODEL_MODEL_ADVANCE__IMPLEMENTS_SUBROUTINE:
+				setImplementsSubroutine((NUOPCModel__ModelAdvance__ImplementsSubroutine)null);
 				return;
 		}
 		super.eUnset(featureID);
@@ -319,10 +319,10 @@ public class NUOPCModel__ModelAdvanceImpl extends EObjectImpl implements NUOPCMo
 		switch (featureID) {
 			case NUOPCPackage.NUOPC_MODEL_MODEL_ADVANCE__PARENT:
 				return getParent() != null;
-			case NUOPCPackage.NUOPC_MODEL_MODEL_ADVANCE__IMPLEMENTS_SUBROUTINE:
-				return implementsSubroutine != null;
 			case NUOPCPackage.NUOPC_MODEL_MODEL_ADVANCE__ATTACHED:
 				return attached != null;
+			case NUOPCPackage.NUOPC_MODEL_MODEL_ADVANCE__IMPLEMENTS_SUBROUTINE:
+				return implementsSubroutine != null;
 		}
 		return super.eIsSet(featureID);
 	}

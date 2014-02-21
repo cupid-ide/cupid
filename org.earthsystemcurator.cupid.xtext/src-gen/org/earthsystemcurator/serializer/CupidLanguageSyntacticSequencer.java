@@ -19,11 +19,15 @@ public class CupidLanguageSyntacticSequencer extends AbstractSyntacticSequencer 
 
 	protected CupidLanguageGrammarAccess grammarAccess;
 	protected AbstractElementAlias match_Call___LeftParenthesisKeyword_3_0_RightParenthesisKeyword_3_2__q;
+	protected AbstractElementAlias match_Subroutine___LeftParenthesisKeyword_3_0_RightParenthesisKeyword_3_2__q;
+	protected AbstractElementAlias match_Type_PrecisionKeyword_4_1_q;
 	
 	@Inject
 	protected void init(IGrammarAccess access) {
 		grammarAccess = (CupidLanguageGrammarAccess) access;
 		match_Call___LeftParenthesisKeyword_3_0_RightParenthesisKeyword_3_2__q = new GroupAlias(false, true, new TokenAlias(false, false, grammarAccess.getCallAccess().getLeftParenthesisKeyword_3_0()), new TokenAlias(false, false, grammarAccess.getCallAccess().getRightParenthesisKeyword_3_2()));
+		match_Subroutine___LeftParenthesisKeyword_3_0_RightParenthesisKeyword_3_2__q = new GroupAlias(false, true, new TokenAlias(false, false, grammarAccess.getSubroutineAccess().getLeftParenthesisKeyword_3_0()), new TokenAlias(false, false, grammarAccess.getSubroutineAccess().getRightParenthesisKeyword_3_2()));
+		match_Type_PrecisionKeyword_4_1_q = new TokenAlias(false, true, grammarAccess.getTypeAccess().getPrecisionKeyword_4_1());
 	}
 	
 	@Override
@@ -40,6 +44,10 @@ public class CupidLanguageSyntacticSequencer extends AbstractSyntacticSequencer 
 			List<INode> syntaxNodes = getNodesFor(transitionNodes, syntax);
 			if(match_Call___LeftParenthesisKeyword_3_0_RightParenthesisKeyword_3_2__q.equals(syntax))
 				emit_Call___LeftParenthesisKeyword_3_0_RightParenthesisKeyword_3_2__q(semanticObject, getLastNavigableState(), syntaxNodes);
+			else if(match_Subroutine___LeftParenthesisKeyword_3_0_RightParenthesisKeyword_3_2__q.equals(syntax))
+				emit_Subroutine___LeftParenthesisKeyword_3_0_RightParenthesisKeyword_3_2__q(semanticObject, getLastNavigableState(), syntaxNodes);
+			else if(match_Type_PrecisionKeyword_4_1_q.equals(syntax))
+				emit_Type_PrecisionKeyword_4_1_q(semanticObject, getLastNavigableState(), syntaxNodes);
 			else acceptNodes(getLastNavigableState(), syntaxNodes);
 		}
 	}
@@ -49,6 +57,22 @@ public class CupidLanguageSyntacticSequencer extends AbstractSyntacticSequencer 
 	 *     ('(' ')')?
 	 */
 	protected void emit_Call___LeftParenthesisKeyword_3_0_RightParenthesisKeyword_3_2__q(EObject semanticObject, ISynNavigable transition, List<INode> nodes) {
+		acceptNodes(transition, nodes);
+	}
+	
+	/**
+	 * Syntax:
+	 *     ('(' ')')?
+	 */
+	protected void emit_Subroutine___LeftParenthesisKeyword_3_0_RightParenthesisKeyword_3_2__q(EObject semanticObject, ISynNavigable transition, List<INode> nodes) {
+		acceptNodes(transition, nodes);
+	}
+	
+	/**
+	 * Syntax:
+	 *     'precision'?
+	 */
+	protected void emit_Type_PrecisionKeyword_4_1_q(EObject semanticObject, ISynNavigable transition, List<INode> nodes) {
 		acceptNodes(transition, nodes);
 	}
 	

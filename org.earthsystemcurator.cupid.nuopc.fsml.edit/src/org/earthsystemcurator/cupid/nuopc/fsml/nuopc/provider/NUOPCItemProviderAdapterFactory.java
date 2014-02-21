@@ -347,29 +347,8 @@ public class NUOPCItemProviderAdapterFactory extends NUOPCAdapterFactory impleme
 		return nuopcModel__RealizesExportFieldItemProvider;
 	}
 
-	/**
-	 * This keeps track of the one adapter used for all {@link org.earthsystemcurator.cupid.nuopc.fsml.nuopc.NUOPCModel__ImplementsModelAdvance} instances.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	protected NUOPCModel__ImplementsModelAdvanceItemProvider nuopcModel__ImplementsModelAdvanceItemProvider;
-
-	/**
-	 * This creates an adapter for a {@link org.earthsystemcurator.cupid.nuopc.fsml.nuopc.NUOPCModel__ImplementsModelAdvance}.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	@Override
-	public Adapter createNUOPCModel__ImplementsModelAdvanceAdapter() {
-		if (nuopcModel__ImplementsModelAdvanceItemProvider == null) {
-			nuopcModel__ImplementsModelAdvanceItemProvider = new NUOPCModel__ImplementsModelAdvanceItemProvider(this);
-		}
-
-		return nuopcModel__ImplementsModelAdvanceItemProvider;
-	}
-
+	
+	
 	/**
 	 * This keeps track of the one adapter used for all {@link org.earthsystemcurator.cupid.nuopc.fsml.nuopc.NUOPCDriver} instances.
 	 * <!-- begin-user-doc -->
@@ -1263,7 +1242,6 @@ public class NUOPCItemProviderAdapterFactory extends NUOPCAdapterFactory impleme
 		if (nuopcModel__AdvertisesExportFieldItemProvider != null) nuopcModel__AdvertisesExportFieldItemProvider.dispose();
 		if (nuopcModel__RealizesImportFieldItemProvider != null) nuopcModel__RealizesImportFieldItemProvider.dispose();
 		if (nuopcModel__RealizesExportFieldItemProvider != null) nuopcModel__RealizesExportFieldItemProvider.dispose();
-		if (nuopcModel__ImplementsModelAdvanceItemProvider != null) nuopcModel__ImplementsModelAdvanceItemProvider.dispose();
 		if (nuopcDriverItemProvider != null) nuopcDriverItemProvider.dispose();
 		if (nuopcDriver__GenericImportsItemProvider != null) nuopcDriver__GenericImportsItemProvider.dispose();
 		if (nuopcDriver__ModelImportsItemProvider != null) nuopcDriver__ModelImportsItemProvider.dispose();

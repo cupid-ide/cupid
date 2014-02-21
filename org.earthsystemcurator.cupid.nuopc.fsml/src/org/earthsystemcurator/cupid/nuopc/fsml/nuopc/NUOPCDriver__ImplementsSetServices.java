@@ -68,7 +68,6 @@ public interface NUOPCDriver__ImplementsSetServices extends EObject {
 	 * @see #setName(String)
 	 * @see org.earthsystemcurator.cupid.nuopc.fsml.nuopc.NUOPCPackage#getNUOPCDriver__ImplementsSetServices_Name()
 	 * @model default="SetServices" id="true" required="true"
-	 *        annotation="http://www.earthsystemcog.org/projects/nuopc mappingX='subroutineName'"
 	 * @generated
 	 */
 	String getName();

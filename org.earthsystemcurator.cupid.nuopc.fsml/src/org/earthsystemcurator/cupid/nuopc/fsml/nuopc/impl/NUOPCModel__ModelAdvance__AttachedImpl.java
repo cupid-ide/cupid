@@ -19,7 +19,8 @@ import org.eclipse.emf.ecore.impl.EObjectImpl;
  * <p>
  * The following features are implemented:
  * <ul>
- *   <li>{@link org.earthsystemcurator.cupid.nuopc.fsml.nuopc.impl.NUOPCModel__ModelAdvance__AttachedImpl#getName <em>Name</em>}</li>
+ *   <li>{@link org.earthsystemcurator.cupid.nuopc.fsml.nuopc.impl.NUOPCModel__ModelAdvance__AttachedImpl#getUserRoutine <em>User Routine</em>}</li>
+ *   <li>{@link org.earthsystemcurator.cupid.nuopc.fsml.nuopc.impl.NUOPCModel__ModelAdvance__AttachedImpl#getIndex <em>Index</em>}</li>
  * </ul>
  * </p>
  *
@@ -27,24 +28,44 @@ import org.eclipse.emf.ecore.impl.EObjectImpl;
  */
 public class NUOPCModel__ModelAdvance__AttachedImpl extends EObjectImpl implements NUOPCModel__ModelAdvance__Attached {
 	/**
-	 * The default value of the '{@link #getName() <em>Name</em>}' attribute.
+	 * The default value of the '{@link #getUserRoutine() <em>User Routine</em>}' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @see #getName()
+	 * @see #getUserRoutine()
 	 * @generated
 	 * @ordered
 	 */
-	protected static final String NAME_EDEFAULT = null;
+	protected static final String USER_ROUTINE_EDEFAULT = "ModelAdvanceDefault";
 
 	/**
-	 * The cached value of the '{@link #getName() <em>Name</em>}' attribute.
+	 * The cached value of the '{@link #getUserRoutine() <em>User Routine</em>}' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @see #getName()
+	 * @see #getUserRoutine()
 	 * @generated
 	 * @ordered
 	 */
-	protected String name = NAME_EDEFAULT;
+	protected String userRoutine = USER_ROUTINE_EDEFAULT;
+
+	/**
+	 * The default value of the '{@link #getIndex() <em>Index</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #getIndex()
+	 * @generated
+	 * @ordered
+	 */
+	protected static final String INDEX_EDEFAULT = null;
+
+	/**
+	 * The cached value of the '{@link #getIndex() <em>Index</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #getIndex()
+	 * @generated
+	 * @ordered
+	 */
+	protected String index = INDEX_EDEFAULT;
 
 	/**
 	 * <!-- begin-user-doc -->
@@ -70,8 +91,8 @@ public class NUOPCModel__ModelAdvance__AttachedImpl extends EObjectImpl implemen
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public String getName() {
-		return name;
+	public String getUserRoutine() {
+		return userRoutine;
 	}
 
 	/**
@@ -79,11 +100,32 @@ public class NUOPCModel__ModelAdvance__AttachedImpl extends EObjectImpl implemen
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public void setName(String newName) {
-		String oldName = name;
-		name = newName;
+	public void setUserRoutine(String newUserRoutine) {
+		String oldUserRoutine = userRoutine;
+		userRoutine = newUserRoutine;
 		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, NUOPCPackage.NUOPC_MODEL_MODEL_ADVANCE_ATTACHED__NAME, oldName, name));
+			eNotify(new ENotificationImpl(this, Notification.SET, NUOPCPackage.NUOPC_MODEL_MODEL_ADVANCE_ATTACHED__USER_ROUTINE, oldUserRoutine, userRoutine));
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public String getIndex() {
+		return index;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public void setIndex(String newIndex) {
+		String oldIndex = index;
+		index = newIndex;
+		if (eNotificationRequired())
+			eNotify(new ENotificationImpl(this, Notification.SET, NUOPCPackage.NUOPC_MODEL_MODEL_ADVANCE_ATTACHED__INDEX, oldIndex, index));
 	}
 
 	/**
@@ -94,8 +136,10 @@ public class NUOPCModel__ModelAdvance__AttachedImpl extends EObjectImpl implemen
 	@Override
 	public Object eGet(int featureID, boolean resolve, boolean coreType) {
 		switch (featureID) {
-			case NUOPCPackage.NUOPC_MODEL_MODEL_ADVANCE_ATTACHED__NAME:
-				return getName();
+			case NUOPCPackage.NUOPC_MODEL_MODEL_ADVANCE_ATTACHED__USER_ROUTINE:
+				return getUserRoutine();
+			case NUOPCPackage.NUOPC_MODEL_MODEL_ADVANCE_ATTACHED__INDEX:
+				return getIndex();
 		}
 		return super.eGet(featureID, resolve, coreType);
 	}
@@ -108,8 +152,11 @@ public class NUOPCModel__ModelAdvance__AttachedImpl extends EObjectImpl implemen
 	@Override
 	public void eSet(int featureID, Object newValue) {
 		switch (featureID) {
-			case NUOPCPackage.NUOPC_MODEL_MODEL_ADVANCE_ATTACHED__NAME:
-				setName((String)newValue);
+			case NUOPCPackage.NUOPC_MODEL_MODEL_ADVANCE_ATTACHED__USER_ROUTINE:
+				setUserRoutine((String)newValue);
+				return;
+			case NUOPCPackage.NUOPC_MODEL_MODEL_ADVANCE_ATTACHED__INDEX:
+				setIndex((String)newValue);
 				return;
 		}
 		super.eSet(featureID, newValue);
@@ -123,8 +170,11 @@ public class NUOPCModel__ModelAdvance__AttachedImpl extends EObjectImpl implemen
 	@Override
 	public void eUnset(int featureID) {
 		switch (featureID) {
-			case NUOPCPackage.NUOPC_MODEL_MODEL_ADVANCE_ATTACHED__NAME:
-				setName(NAME_EDEFAULT);
+			case NUOPCPackage.NUOPC_MODEL_MODEL_ADVANCE_ATTACHED__USER_ROUTINE:
+				setUserRoutine(USER_ROUTINE_EDEFAULT);
+				return;
+			case NUOPCPackage.NUOPC_MODEL_MODEL_ADVANCE_ATTACHED__INDEX:
+				setIndex(INDEX_EDEFAULT);
 				return;
 		}
 		super.eUnset(featureID);
@@ -138,8 +188,10 @@ public class NUOPCModel__ModelAdvance__AttachedImpl extends EObjectImpl implemen
 	@Override
 	public boolean eIsSet(int featureID) {
 		switch (featureID) {
-			case NUOPCPackage.NUOPC_MODEL_MODEL_ADVANCE_ATTACHED__NAME:
-				return NAME_EDEFAULT == null ? name != null : !NAME_EDEFAULT.equals(name);
+			case NUOPCPackage.NUOPC_MODEL_MODEL_ADVANCE_ATTACHED__USER_ROUTINE:
+				return USER_ROUTINE_EDEFAULT == null ? userRoutine != null : !USER_ROUTINE_EDEFAULT.equals(userRoutine);
+			case NUOPCPackage.NUOPC_MODEL_MODEL_ADVANCE_ATTACHED__INDEX:
+				return INDEX_EDEFAULT == null ? index != null : !INDEX_EDEFAULT.equals(index);
 		}
 		return super.eIsSet(featureID);
 	}
@@ -154,8 +206,10 @@ public class NUOPCModel__ModelAdvance__AttachedImpl extends EObjectImpl implemen
 		if (eIsProxy()) return super.toString();
 
 		StringBuffer result = new StringBuffer(super.toString());
-		result.append(" (name: ");
-		result.append(name);
+		result.append(" (userRoutine: ");
+		result.append(userRoutine);
+		result.append(", index: ");
+		result.append(index);
 		result.append(')');
 		return result.toString();
 	}

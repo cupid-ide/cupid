@@ -20,6 +20,7 @@ import org.earthsystemcurator.cupid.nuopc.fsml.nuopc.NUOPCApplication;
 import org.earthsystemcurator.cupid.nuopc.fsml.nuopc.NUOPCFactory;
 import org.earthsystemcurator.cupid.nuopc.fsml.properties.CupidPropertyPage;
 import org.earthsystemcurator.cupid.nuopc.fsml.util.CodeQuery;
+import org.earthsystemcurator.cupid.nuopc.fsml.util.CodeQuery2;
 import org.earthsystemcurator.cupid.nuopc.fsml.util.EcoreUtils;
 import org.earthsystemcurator.cupid.nuopc.fsml.util.Regex;
 import org.earthsystemcurator.cupidLanguage.Call;
@@ -198,17 +199,20 @@ public class ReverseEngineer {
 		
 	}
 	
-	private static XtextResourceSet xtextResourceSet = null;
-	private static Resource xTextResource = null;
+	//private static XtextResourceSet xtextResourceSet = null;
+	//private static Resource xTextResource = null;
+	private static Injector injector = new CupidLanguageStandaloneSetup().createInjectorAndDoEMFRegistration();
 	
-	private static Mapping parseMappingNew(String mappingNew) {
+	public static Mapping parseMappingNew(String mappingNew) {
 		
-		if (xTextResource == null) {
-			Injector injector = new CupidLanguageStandaloneSetup().createInjectorAndDoEMFRegistration();
-			xtextResourceSet = injector.getInstance(XtextResourceSet.class);
-			xtextResourceSet.addLoadOption(XtextResource.OPTION_RESOLVE_ALL, Boolean.TRUE);
-			xTextResource = xtextResourceSet.createResource(URI.createURI("dummy:/dummy.cupid"));
+		//TODO: efficiency
+		if (injector == null) {
+			injector = new CupidLanguageStandaloneSetup().createInjectorAndDoEMFRegistration();	
 		}
+		
+		XtextResourceSet xtextResourceSet = injector.getInstance(XtextResourceSet.class);
+		xtextResourceSet.addLoadOption(XtextResource.OPTION_RESOLVE_ALL, Boolean.TRUE);
+		Resource xTextResource = xtextResourceSet.createResource(URI.createURI("dummy:/dummy.cupid"));
 		
 		InputStream in = new ByteArrayInputStream(mappingNew.getBytes());
 		try {
@@ -217,84 +221,12 @@ public class ReverseEngineer {
 			e.printStackTrace();
 		}
 		Mappings mappings = (Mappings) xTextResource.getContents().get(0);
+		
 		return mappings.getMappings().get(0);
 		
 	}
 	
-	@SuppressWarnings("unchecked")
-	private static <T> T eGetSFValue(PathExpr pathExpr, EObject modelElem, boolean isParent, T defaultVal) {
-		
-		EList<String> segments = pathExpr.getSegments();
-		EObject elemToCheck = modelElem;
-		int start = 0;
-		if (isParent) {
-			if (!segments.get(0).equals("..")) {
-				//we are already at parent, so fail if first segment does not
-				//navigate to the parent element
-				return null;
-			}
-			else {
-				start = 1; //skip first segment
-			}
-		}
-		
-		for (int i = start; i < segments.size()-1; i++) {									
-			if (segments.get(i).equals("..")) {
-				elemToCheck = elemToCheck.eContainer();
-			}
-			else {
-				//the segment is a structural feature name
-				EStructuralFeature segmentSF = elemToCheck.eClass().getEStructuralFeature(segments.get(i));
-				elemToCheck = (EObject) elemToCheck.eGet(segmentSF);				
-			}			
-		}
-		
-		if (elemToCheck == null) {
-			//throw new RuntimeException("Structural feature not found: " + pathExpr);
-			return defaultVal;
-		}
-		
-		EStructuralFeature attribSF = elemToCheck.eClass().getEStructuralFeature(segments.get(segments.size()-1));
-		if (attribSF != null) {			
-			return (T) elemToCheck.eGet(attribSF);
-		}
-		else {
-			//throw new RuntimeException("Structural feature not found: " + attribName);
-			return defaultVal;
-		}
-	} 
 	
-	private static boolean eSetSFValue(PathExpr pathExpr, EObject modelElem, String value) {
-		
-		EList<String> segments = pathExpr.getSegments();
-		EObject elemToCheck = modelElem;
-						
-		for (int i = 0; i < segments.size() - 1; i++) {									
-			if (segments.get(i).equals("..")) {
-				elemToCheck = elemToCheck.eContainer();
-			}
-			else {
-				//the segment is a structural feature name
-				EStructuralFeature segmentSF = elemToCheck.eClass().getEStructuralFeature(segments.get(i));
-				elemToCheck = (EObject) elemToCheck.eGet(segmentSF);				
-			}			
-		}
-		
-		if (elemToCheck == null) {
-			return false;
-		}
-		
-		EStructuralFeature attribSF = elemToCheck.eClass().getEStructuralFeature(segments.get(segments.size() - 1));
-		if (attribSF != null) {
-			//TODO: assumes the structural feature is single valued, not a list
-			elemToCheck.eSet(attribSF, value);
-		}
-		else {
-			return false;
-		}
-		
-		return true;
-	}
 	
 	/**
 	 * Looks for instances of PathExpr in the mappingElement tree and, when possible,
@@ -303,9 +235,12 @@ public class ReverseEngineer {
 	 * @param mappingElement
 	 * @param context
 	 */
-	private static <T extends EObject> T replacePathExprWithValues(T mappingElement, EObject context, boolean isParent) {
-		if (mappingElement instanceof PathExpr) {
-			String replaceVal = eGetSFValue((PathExpr) mappingElement, context, isParent, null);
+	public static <T extends EObject> T replacePathExprWithValues(T mappingElement, EObject context, boolean isParent) {
+		if (mappingElement == null) {
+			return null;
+		}
+		else if (mappingElement instanceof PathExpr) {
+			String replaceVal = EcoreUtils.eGetSFValue((PathExpr) mappingElement, context, isParent, null);
 			if (replaceVal != null) {
 				IDOrWildcard replaceValObj = CupidLanguageFactory.eINSTANCE.createIDOrWildcard();
 				replaceValObj.setId(replaceVal);
@@ -329,7 +264,7 @@ public class ReverseEngineer {
 	}
 	
 	private static Method findREMethod(String methodName, Object context, EObject mapping) {
-		for (Method m : CodeQuery.class.getMethods()) {
+		for (Method m : CodeQuery2.class.getMethods()) {
 			if (m.getName().equalsIgnoreCase(methodName) && m.getParameterTypes().length >= 2) {
 				Class contextClass = m.getParameterTypes()[0];
 				Class mappingClass = m.getParameterTypes()[1];
@@ -370,10 +305,7 @@ public class ReverseEngineer {
 			Map<String, Object> keywordMap = Regex.getMappingFromAnnotation(sf);
 			
 			/////NEW MAPPING PARSER HERE
-			if (sf.getName().equals("attached")) {
-				System.out.println("attached");
-			}
-			
+						
 			EAnnotation ann = sf.getEAnnotation("http://www.earthsystemcog.org/projects/nuopc");
 			if (ann != null && ann.getDetails().get("mappingNew") != null) {
 				String mappingNew = ann.getDetails().get("mappingNew");
@@ -383,7 +315,7 @@ public class ReverseEngineer {
 				
 				if (mapping.getContext() != null) {
 					//explicit context
-					EObject contextElement = eGetSFValue(mapping.getContext(), modelElem, true, null);
+					EObject contextElement = EcoreUtils.eGetSFValue(mapping.getContext(), modelElem, true, null);
 					fortranContextElem = mappings.get(contextElement);
 					if (fortranContextElem == null) {
 						throw new RuntimeException("No Fortran context for element: " + contextElement);
@@ -431,7 +363,14 @@ public class ReverseEngineer {
 												
 						//do we have a set of primitives?
 						if (sf.getEType().equals(EcoreFactory.eINSTANCE.getEcorePackage().getEString())) {
-							Set<String> resultSet = (Set<String>) result;
+							Set<String> resultSet;
+							if (result instanceof Map) {
+								resultSet = (Set<String>) ((Map) result).keySet();
+								//TODO: ignoring PathExprs for now
+							}
+							else {
+								resultSet = (Set<String>) result;
+							}
 							for (String res : resultSet) {
 								if (sf.isMany()) {
 									EList el = (EList) modelElem.eGet(sf);
@@ -462,7 +401,7 @@ public class ReverseEngineer {
 								if (result instanceof Map) {
 									Map<PathExpr, String> bindings = ((Map<?, Map<PathExpr, String>>) result).get(newFortranElem);
 									for (Entry<PathExpr, String> binding : bindings.entrySet()) {
-										boolean featureSet = eSetSFValue(binding.getKey(), newModelElem, binding.getValue());
+										boolean featureSet = EcoreUtils.eSetSFValue(binding.getKey(), newModelElem, binding.getValue());
 										if (!featureSet) {
 											System.out.println("Feature not set: " + binding.getKey());
 										}
@@ -543,7 +482,7 @@ public class ReverseEngineer {
 								//TODO: decide what to do about NULL_VALUE below
 								String replaceVal = EcoreUtils.eGetSFValue(metavar, modelElem, null);
 								if (replaceVal != null) {
-									//System.out.println("Replacing metavariable: " + match.group() + " with val: " + replaceVal);
+									System.out.println("Replacing metavariable: " + match.group() + " with val: " + replaceVal);
 									entry.setValue(val.replaceAll(match.group(), replaceVal));
 								}
 								

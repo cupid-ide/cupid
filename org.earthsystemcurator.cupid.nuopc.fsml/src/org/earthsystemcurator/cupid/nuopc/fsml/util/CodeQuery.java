@@ -17,6 +17,7 @@ import org.earthsystemcurator.cupidLanguage.IDOrPathExpr;
 import org.earthsystemcurator.cupidLanguage.IDOrWildcard;
 import org.earthsystemcurator.cupidLanguage.ImplicitContextMapping;
 import org.earthsystemcurator.cupidLanguage.PathExpr;
+import org.earthsystemcurator.cupidLanguage.Subroutine;
 import org.eclipse.core.resources.IFile;
 import org.eclipse.photran.core.IFortranAST;
 import org.eclipse.photran.internal.core.analysis.binding.Definition;
@@ -256,9 +257,6 @@ public class CodeQuery {
 		return subroutine(ast.getRoot().getProgramUnitList().get(0), params);
 	}
 	
-	//returns a map where:
-	// - the keys are matching subroutine nodes
-	// - the values are a map from metavariables to their matched value (if any)
 	public static Map<ASTSubroutineSubprogramNode, Map<String, String>> subroutine(IASTNode node, Map<String, Object> params) {
 		
 		String pattern = (String) params.get("subroutine");
@@ -273,14 +271,15 @@ public class CodeQuery {
 		ssnloop: for (ASTSubroutineSubprogramNode ssn : nodes) {
 			
 			Map<String, String> metavariableMap = new HashMap<String, String>();
+			String sName = ssn.getSubroutineStmt().getSubroutineName().getSubroutineName().getText();
 			
 			if (!subroutineName.equals("*")) {
 				//subroutine name is significant
 				if (subroutineName.startsWith("#")) {
 					//match name and store in metavariable map
-					metavariableMap.put(subroutineName, ssn.getNameToken().getText());
+					metavariableMap.put(subroutineName, sName);
 				}
-				else if (!ssn.getNameToken().getText().equalsIgnoreCase(subroutineName)) {
+				else if (!sName.equalsIgnoreCase(subroutineName)) {
 					continue ssnloop;
 				}
 			}
@@ -1046,71 +1045,7 @@ public class CodeQuery {
 	}
 	
 	
-public static Map<ASTCallStmtNode, Map<PathExpr, String>> call(IASTNode context, Call mapping) {
-		
-		Map<ASTCallStmtNode, Map<PathExpr, String>> result = new HashMap<ASTCallStmtNode, Map<PathExpr, String>>();
-		
-		csnloop : for (ASTCallStmtNode csn : context.findAll(ASTCallStmtNode.class)) {
-			
-			final Map<PathExpr, String> bindings = new HashMap<PathExpr, String>();					
-			
-			if (mapping.getSubroutineName() instanceof PathExpr) {
-				bindings.put((PathExpr) mapping.getSubroutineName(), csn.getSubroutineName().getText().trim());
-			}
-			else {
-				IDOrWildcard subroutineName = (IDOrWildcard) mapping.getSubroutineName();
-				if (!subroutineName.isWildcard() && !csn.getSubroutineName().getText().trim().equalsIgnoreCase(subroutineName.getId())) {
-					continue;
-				}
-			}
-			
-			//deal with arguments now
-			if (mapping.getParams() != null) {
-				
-				varloop: for (int i = 0; i < mapping.getParams().size(); i++) {
-					
-					ASTSubroutineArgNode san;
-					ActualParam param = mapping.getParams().get(i);
-					String keyword = param.getKeyword();
-					IDOrPathExpr value = param.getValue();
-					
-					if (keyword == null) {
-						//match by index						
-						if (csn.getArgList().size() <= i) {
-							continue csnloop;
-						}
-						san = csn.getArgList().get(i);
-					}
-					else {
-						//match by keyword
-						san = findArgByKeyword(keyword, csn.getArgList());						
-					}
-					
-					if (san == null) {
-						if (param.isOptional()) {
-							//optional argument not present, so ignore it
-							continue varloop;
-						}
-						else {
-							continue csnloop;
-						}
-					}
-					else if (value instanceof PathExpr) {
-						bindings.put((PathExpr) value, san.getExpr().toString().trim());
-					}
-					else if (!san.getExpr().toString().equalsIgnoreCase(((IDOrWildcard) value).getId())) {
-						continue csnloop;
-					}							
-				}			
-			}
-			
-			//everything matched, so add to result
-			result.put(csn, bindings);
-		}
-		
-		return result;	
-		
-	}
+	
 	
 	public static ASTSubroutineArgNode findArgByKeyword(String keyword, IASTListNode<ASTSubroutineArgNode> argList) {
 		if (keyword.endsWith("?")) keyword = keyword.substring(0, keyword.length()-1);

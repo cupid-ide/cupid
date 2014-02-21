@@ -32,6 +32,60 @@ public interface CupidLanguageFactory extends EFactory
   Mappings createMappings();
 
   /**
+   * Returns a new object of class '<em>Concept Def Or Ref</em>'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return a new object of class '<em>Concept Def Or Ref</em>'.
+   * @generated
+   */
+  ConceptDefOrRef createConceptDefOrRef();
+
+  /**
+   * Returns a new object of class '<em>Concept Def</em>'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return a new object of class '<em>Concept Def</em>'.
+   * @generated
+   */
+  ConceptDef createConceptDef();
+
+  /**
+   * Returns a new object of class '<em>Anonymous Concept</em>'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return a new object of class '<em>Anonymous Concept</em>'.
+   * @generated
+   */
+  AnonymousConcept createAnonymousConcept();
+
+  /**
+   * Returns a new object of class '<em>Concept Def Body</em>'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return a new object of class '<em>Concept Def Body</em>'.
+   * @generated
+   */
+  ConceptDefBody createConceptDefBody();
+
+  /**
+   * Returns a new object of class '<em>Concept Ref</em>'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return a new object of class '<em>Concept Ref</em>'.
+   * @generated
+   */
+  ConceptRef createConceptRef();
+
+  /**
+   * Returns a new object of class '<em>Cardinality</em>'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return a new object of class '<em>Cardinality</em>'.
+   * @generated
+   */
+  Cardinality createCardinality();
+
+  /**
    * Returns a new object of class '<em>Mapping</em>'.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
@@ -48,6 +102,78 @@ public interface CupidLanguageFactory extends EFactory
    * @generated
    */
   ImplicitContextMapping createImplicitContextMapping();
+
+  /**
+   * Returns a new object of class '<em>Module</em>'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return a new object of class '<em>Module</em>'.
+   * @generated
+   */
+  Module createModule();
+
+  /**
+   * Returns a new object of class '<em>Uses Module</em>'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return a new object of class '<em>Uses Module</em>'.
+   * @generated
+   */
+  UsesModule createUsesModule();
+
+  /**
+   * Returns a new object of class '<em>Uses Entity</em>'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return a new object of class '<em>Uses Entity</em>'.
+   * @generated
+   */
+  UsesEntity createUsesEntity();
+
+  /**
+   * Returns a new object of class '<em>Subroutine</em>'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return a new object of class '<em>Subroutine</em>'.
+   * @generated
+   */
+  Subroutine createSubroutine();
+
+  /**
+   * Returns a new object of class '<em>Formal Param</em>'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return a new object of class '<em>Formal Param</em>'.
+   * @generated
+   */
+  FormalParam createFormalParam();
+
+  /**
+   * Returns a new object of class '<em>Intent</em>'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return a new object of class '<em>Intent</em>'.
+   * @generated
+   */
+  Intent createIntent();
+
+  /**
+   * Returns a new object of class '<em>Type</em>'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return a new object of class '<em>Type</em>'.
+   * @generated
+   */
+  Type createType();
+
+  /**
+   * Returns a new object of class '<em>Subroutine Name</em>'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return a new object of class '<em>Subroutine Name</em>'.
+   * @generated
+   */
+  SubroutineName createSubroutineName();
 
   /**
    * Returns a new object of class '<em>Call</em>'.

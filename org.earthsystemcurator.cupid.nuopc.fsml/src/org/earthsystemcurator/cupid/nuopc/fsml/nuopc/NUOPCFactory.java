@@ -130,15 +130,6 @@ public interface NUOPCFactory extends EFactory {
 	NUOPCModel__RealizesExportField createNUOPCModel__RealizesExportField();
 
 	/**
-	 * Returns a new object of class '<em>Model Implements Model Advance</em>'.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @return a new object of class '<em>Model Implements Model Advance</em>'.
-	 * @generated
-	 */
-	NUOPCModel__ImplementsModelAdvance createNUOPCModel__ImplementsModelAdvance();
-
-	/**
 	 * Returns a new object of class '<em>Model Model Advance</em>'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->

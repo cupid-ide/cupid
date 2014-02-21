@@ -2,16 +2,103 @@ grammar org.earthsystemcurator.CupidLanguage with org.eclipse.xtext.common.Termi
 
 generate cupidLanguage "http://www.earthsystemcurator.org/CupidLanguage"
 
-//#../../implementsSetServices call: "ESMF_MethodAdd(#ignore, index?=#index, label=#name, userRoutine=#../implementsSubroutine/name, rc=#ignore)"
-
 Mappings:
-	mappings+=Mapping*;
+	mappings+=Mapping*
+	concepts+=ConceptDef*;
+
+Subconcept:
+	AnonymousConcept | ConceptRef;
+
+ConceptDef:
+	top?='top'? 'concept' name=ID ('<' mapping=Mapping '>')? 
+		body=ConceptDefBody?;
+
+AnonymousConcept:
+	localName=ID cardinality=Cardinality? required?='!'? ('<' mapping=Mapping '>')? body=ConceptDefBody?;
+
+ConceptDefBody:
+	'{' (subconcept+=Subconcept) (',' subconcept+=Subconcept)* '}';
+
+ConceptRef:
+	localName=ID cardinality=Cardinality? required?='!'? ':' name=[ConceptDef];
+	
+Cardinality:
+	zeroOrMore?='*' |
+	oneOrMore?='+';
+	
+/* 
+ * 
+ * top concept NUOPCApplication {
+ *     model*:NUOPCModel,  //reference concept
+ * 	   driver*:NUOPCDriver,
+ *     driverAtmOcn*:NUOPCDriverAtmOcn,
+ * 	   mediator*:NUOPCMediator
+ * }
+ * 
+ *  
+ * concept NUOPCModel <--> module
+ *      [
+ *      	label = "NUOPC Model", 
+ * 	     	doc = "A NUOPC Model is blah....yada....yada...."
+ * 		]	
+ *     	{
+ *     		name <--> moduleName,
+ *   		genericImports <--> usesModule(NUOPC_Model) {    //anonymous concept mapping
+ *     			importsGenericSS <--> usesEntity(routine_SetServices),
+ *          	importsLabelModelAdvance <--> usesEntity(label_Advance)
+ *     		},
+ * 	   		setServices!:SetServices,
+ * 	   		modelAdvance*:ModelAdvance   
+ *     	}
+ * 
+ * concept SetServices <--> subroutine(#name(inout type(ESMF_GridComp) #gcomp, out integer #rc)) {
+ * 		callsGenericSetServices! <--> call(#../../genericImports/importsGenericSS(#gcomp, rc=#rc))
+ * }
+ * 
+ * concept ModelAdvance {	
+ * 	  Registered: #../../implementsSetServices call(ESMF_MethodAdd(#ignore, index?=#index, label=#../../genericImports/importsLabelModelAdvance, userRoutine=#userRoutine, rc=#../../implementsSetServices/rc)),
+ *    Implemented: subroutine(#../attached/userRoutine(inout type(ESMF_GridComp) gcomp, out integer rc)													
+ * }
+ * 
+ * */
+
+
+
 
 Mapping:
 	context=PathExpr? mapping=ImplicitContextMapping;
 
 ImplicitContextMapping:
-	Call;
+	Module | UsesModule | UsesEntity | Call | Subroutine | SubroutineName;
+
+Module: {Module} 
+	'module' ('(' name=IDOrPathExpr ')')?;
+	
+UsesModule:
+	'usesModule' '(' name=IDOrPathExpr ')';
+	
+UsesEntity:
+	'usesEntity' '(' name=IDOrPathExpr ')';
+
+Subroutine:
+	'subroutine' '(' name=IDOrPathExpr ('(' (params+=FormalParam (',' params+=FormalParam)* )? ')')? ')';
+	
+FormalParam:
+	intent=Intent? type=Type name=IDOrPathExpr;
+
+Intent:
+	in?='in' | out?='out' | inout?='inout';
+
+Type:
+	integer?='integer' | 
+	character?='character' | 
+	logical?='logical' | 
+	real?='real' |
+	double?='double' ('precision')? |
+	derived?='type' '(' derivedType=IDOrPathExpr ')';
+
+SubroutineName:
+	'subroutineName' {SubroutineName} ('(' name=IDOrPathExpr ')')?;
 
 Call:
 	'call' '(' subroutineName=IDOrPathExpr ( '(' (params+=ActualParam (',' params+=ActualParam)* )? ')')? ')';
