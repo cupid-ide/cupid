@@ -11,6 +11,7 @@ import org.earthsystemcurator.cupid.nuopc.fsml.util.CodeTransformation;
 import org.earthsystemcurator.cupid.nuopc.fsml.util.EcoreUtils;
 import org.earthsystemcurator.cupid.nuopc.fsml.util.Regex;
 import org.earthsystemcurator.cupidLanguage.ImplicitContextMapping;
+import org.earthsystemcurator.cupidLanguage.Language;
 import org.earthsystemcurator.cupidLanguage.Mapping;
 import org.eclipse.core.resources.IProject;
 import org.eclipse.emf.common.util.Diagnostic;
@@ -26,13 +27,13 @@ import org.eclipse.emf.ecore.util.Diagnostician;
 import org.eclipse.photran.core.IFortranAST;
 
 @SuppressWarnings("restriction")
-public class FSM<RootType extends EObject> {
+public class FSM2<RootType extends EObject> {
 
 	protected RootType root;
 	protected EPackage pack;
 	protected EFactory factory;
 	protected IProject project;
-	
+	protected Language language;
 	
 	/**
 	 * Mapping from a model element to one of:
@@ -43,14 +44,14 @@ public class FSM<RootType extends EObject> {
 	 */	
 	private Map<Object, Object> mappings;	
 	
-	protected FSM(RootType root, IProject project) {
+	protected FSM2(Language language, RootType root, IProject project) {
+		this.language = language;
 		this.root = root;
 		this.pack = root.eClass().getEPackage();
 		this.factory = this.pack.getEFactoryInstance();
 		this.mappings = new IdentityHashMap<Object, Object>();
 		this.project = project;
 	}
-	
 	
 	public RootType getRoot() {
 		return root;

@@ -2,14 +2,18 @@ package org.earthsystemcurator.cupid.nuopc.fsml.handlers;
 
 import java.io.IOException;
 import java.lang.reflect.InvocationTargetException;
+import java.net.URL;
 
 import org.earthsystemcurator.cupid.nuopc.fsml.builder.NUOPCNature;
 import org.earthsystemcurator.cupid.nuopc.fsml.core.FSM;
+import org.earthsystemcurator.cupid.nuopc.fsml.core.FSM2;
 import org.earthsystemcurator.cupid.nuopc.fsml.core.ReverseEngineer;
-import org.earthsystemcurator.cupid.nuopc.fsml.nuopc.NUOPCApplication;
-import org.earthsystemcurator.cupid.nuopc.fsml.nuopc.NUOPCPackage;
+import org.earthsystemcurator.cupid.nuopc.fsml.core.ReverseEngineer2;
 import org.earthsystemcurator.cupid.nuopc.fsml.util.Regex;
 import org.earthsystemcurator.cupid.nuopc.fsml.views.NUOPCView;
+import org.earthsystemcurator.cupidLanguage.Language;
+import org.earthsystemcurator.gen.nuopc.NUOPCApplication;
+import org.earthsystemcurator.gen.nuopc.NUOPCPackage;
 import org.eclipse.cdt.core.model.ITranslationUnit;
 import org.eclipse.core.commands.AbstractHandler;
 import org.eclipse.core.commands.ExecutionEvent;
@@ -18,14 +22,18 @@ import org.eclipse.core.resources.IFile;
 import org.eclipse.core.resources.IMarker;
 import org.eclipse.core.resources.IProject;
 import org.eclipse.core.runtime.CoreException;
+import org.eclipse.core.runtime.FileLocator;
+import org.eclipse.core.runtime.Path;
 import org.eclipse.emf.common.util.Diagnostic;
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.EObject;
+import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.EReference;
 import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.ecore.resource.ResourceSet;
 import org.eclipse.emf.ecore.resource.impl.ResourceSetImpl;
 import org.eclipse.emf.ecore.xmi.impl.XMIResourceFactoryImpl;
+import org.eclipse.jface.resource.ImageDescriptor;
 import org.eclipse.jface.viewers.ISelection;
 import org.eclipse.jface.viewers.ITreeSelection;
 import org.eclipse.photran.core.IFortranAST;
@@ -42,6 +50,8 @@ import org.eclipse.ui.IViewReference;
 import org.eclipse.ui.IWorkbenchWindow;
 import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.handlers.HandlerUtil;
+import org.osgi.framework.Bundle;
+import org.osgi.framework.FrameworkUtil;
 
 /**
  * Our sample handler extends AbstractHandler, an IHandler base class.
@@ -59,6 +69,7 @@ public class ReverseHandler extends AbstractHandler {
 	public ReverseHandler() {
 	}
 
+	
 	/**
 	 * the command has been executed, so extract extract the needed information
 	 * from the application context.
@@ -116,14 +127,29 @@ public class ReverseHandler extends AbstractHandler {
 
         resourceSet.getResourceFactoryRegistry().getExtensionToFactoryMap().put(
             Resource.Factory.Registry.DEFAULT_EXTENSION, new XMIResourceFactoryImpl());
-
-        NUOPCPackage pack = NUOPCPackage.eINSTANCE;            
+        EPackage packageLang = resourceSet.getPackageRegistry().getEPackage("http://www.earthsystemcurator.org/nuopcgen");
+        
+        Bundle packageBundle = FrameworkUtil.getBundle(packageLang.getClass());
+        
+        URL url = FileLocator.find(packageBundle, new Path("model/" + packageLang.getName() + ".xmi"), null);
+        try {
+        	url = FileLocator.toFileURL(url);
+        }
+        catch (IOException ioe) { 
+        	throw new RuntimeException(ioe);
+        }
+        
+    	
+    	Resource resourceLangDef = resourceSet.getResource(URI.createFileURI(url.getPath()), true);
+        Language lang = (Language) resourceLangDef.getContents().get(0);
+        
+        //NUOPCPackage pack = NUOPCPackage.eINSTANCE;            
         
         PhotranVPG vpg = PhotranVPG.getInstance();
         //ReverseEngineer re = new ReverseEngineer();
         //NUOPCModel m = re.reverse(ast);
         
-        final FSM<NUOPCApplication> fsm = ReverseEngineer.reverseEngineer(pack, pack.getNUOPCApplication(), selectedProject, vpg); 
+        final FSM2<NUOPCApplication> fsm = ReverseEngineer2.reverseEngineer(lang, packageLang, selectedProject, vpg); 
         
         //NUOPCApplication a = ReverseEngineer.reverseEngineer(pack, pack.getNUOPCApplication(), selectedProject, vpg);        
          //use project nature to store local data
@@ -132,7 +158,8 @@ public class ReverseHandler extends AbstractHandler {
         try {
 			nature = (NUOPCNature) selectedProject.getNature(NUOPCNature.NATURE_ID);
 			if (nature != null) {
-				nature.fsm = fsm;
+				//TODO: uncomment below
+				//nature.fsm = fsm;
 			}
 		} catch (CoreException e) {
 			e.printStackTrace();

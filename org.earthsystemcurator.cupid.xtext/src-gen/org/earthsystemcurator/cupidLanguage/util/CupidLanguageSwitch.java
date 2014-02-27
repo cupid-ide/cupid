@@ -72,17 +72,24 @@ public class CupidLanguageSwitch<T> extends Switch<T>
   {
     switch (classifierID)
     {
-      case CupidLanguagePackage.MAPPINGS:
+      case CupidLanguagePackage.LANGUAGE:
       {
-        Mappings mappings = (Mappings)theEObject;
-        T result = caseMappings(mappings);
+        Language language = (Language)theEObject;
+        T result = caseLanguage(language);
         if (result == null) result = defaultCase(theEObject);
         return result;
       }
-      case CupidLanguagePackage.CONCEPT_DEF_OR_REF:
+      case CupidLanguagePackage.SUBCONCEPT:
       {
-        ConceptDefOrRef conceptDefOrRef = (ConceptDefOrRef)theEObject;
-        T result = caseConceptDefOrRef(conceptDefOrRef);
+        Subconcept subconcept = (Subconcept)theEObject;
+        T result = caseSubconcept(subconcept);
+        if (result == null) result = defaultCase(theEObject);
+        return result;
+      }
+      case CupidLanguagePackage.ANNOTATION:
+      {
+        Annotation annotation = (Annotation)theEObject;
+        T result = caseAnnotation(annotation);
         if (result == null) result = defaultCase(theEObject);
         return result;
       }
@@ -93,26 +100,10 @@ public class CupidLanguageSwitch<T> extends Switch<T>
         if (result == null) result = defaultCase(theEObject);
         return result;
       }
-      case CupidLanguagePackage.ANONYMOUS_CONCEPT:
-      {
-        AnonymousConcept anonymousConcept = (AnonymousConcept)theEObject;
-        T result = caseAnonymousConcept(anonymousConcept);
-        if (result == null) result = caseConceptDefOrRef(anonymousConcept);
-        if (result == null) result = defaultCase(theEObject);
-        return result;
-      }
       case CupidLanguagePackage.CONCEPT_DEF_BODY:
       {
         ConceptDefBody conceptDefBody = (ConceptDefBody)theEObject;
         T result = caseConceptDefBody(conceptDefBody);
-        if (result == null) result = defaultCase(theEObject);
-        return result;
-      }
-      case CupidLanguagePackage.CONCEPT_REF:
-      {
-        ConceptRef conceptRef = (ConceptRef)theEObject;
-        T result = caseConceptRef(conceptRef);
-        if (result == null) result = caseConceptDefOrRef(conceptRef);
         if (result == null) result = defaultCase(theEObject);
         return result;
       }
@@ -142,6 +133,14 @@ public class CupidLanguageSwitch<T> extends Switch<T>
         Module module = (Module)theEObject;
         T result = caseModule(module);
         if (result == null) result = caseImplicitContextMapping(module);
+        if (result == null) result = defaultCase(theEObject);
+        return result;
+      }
+      case CupidLanguagePackage.MODULE_NAME:
+      {
+        ModuleName moduleName = (ModuleName)theEObject;
+        T result = caseModuleName(moduleName);
+        if (result == null) result = caseImplicitContextMapping(moduleName);
         if (result == null) result = defaultCase(theEObject);
         return result;
       }
@@ -241,33 +240,49 @@ public class CupidLanguageSwitch<T> extends Switch<T>
   }
 
   /**
-   * Returns the result of interpreting the object as an instance of '<em>Mappings</em>'.
+   * Returns the result of interpreting the object as an instance of '<em>Language</em>'.
    * <!-- begin-user-doc -->
    * This implementation returns null;
    * returning a non-null result will terminate the switch.
    * <!-- end-user-doc -->
    * @param object the target of the switch.
-   * @return the result of interpreting the object as an instance of '<em>Mappings</em>'.
+   * @return the result of interpreting the object as an instance of '<em>Language</em>'.
    * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
    * @generated
    */
-  public T caseMappings(Mappings object)
+  public T caseLanguage(Language object)
   {
     return null;
   }
 
   /**
-   * Returns the result of interpreting the object as an instance of '<em>Concept Def Or Ref</em>'.
+   * Returns the result of interpreting the object as an instance of '<em>Subconcept</em>'.
    * <!-- begin-user-doc -->
    * This implementation returns null;
    * returning a non-null result will terminate the switch.
    * <!-- end-user-doc -->
    * @param object the target of the switch.
-   * @return the result of interpreting the object as an instance of '<em>Concept Def Or Ref</em>'.
+   * @return the result of interpreting the object as an instance of '<em>Subconcept</em>'.
    * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
    * @generated
    */
-  public T caseConceptDefOrRef(ConceptDefOrRef object)
+  public T caseSubconcept(Subconcept object)
+  {
+    return null;
+  }
+
+  /**
+   * Returns the result of interpreting the object as an instance of '<em>Annotation</em>'.
+   * <!-- begin-user-doc -->
+   * This implementation returns null;
+   * returning a non-null result will terminate the switch.
+   * <!-- end-user-doc -->
+   * @param object the target of the switch.
+   * @return the result of interpreting the object as an instance of '<em>Annotation</em>'.
+   * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+   * @generated
+   */
+  public T caseAnnotation(Annotation object)
   {
     return null;
   }
@@ -289,22 +304,6 @@ public class CupidLanguageSwitch<T> extends Switch<T>
   }
 
   /**
-   * Returns the result of interpreting the object as an instance of '<em>Anonymous Concept</em>'.
-   * <!-- begin-user-doc -->
-   * This implementation returns null;
-   * returning a non-null result will terminate the switch.
-   * <!-- end-user-doc -->
-   * @param object the target of the switch.
-   * @return the result of interpreting the object as an instance of '<em>Anonymous Concept</em>'.
-   * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
-   * @generated
-   */
-  public T caseAnonymousConcept(AnonymousConcept object)
-  {
-    return null;
-  }
-
-  /**
    * Returns the result of interpreting the object as an instance of '<em>Concept Def Body</em>'.
    * <!-- begin-user-doc -->
    * This implementation returns null;
@@ -316,22 +315,6 @@ public class CupidLanguageSwitch<T> extends Switch<T>
    * @generated
    */
   public T caseConceptDefBody(ConceptDefBody object)
-  {
-    return null;
-  }
-
-  /**
-   * Returns the result of interpreting the object as an instance of '<em>Concept Ref</em>'.
-   * <!-- begin-user-doc -->
-   * This implementation returns null;
-   * returning a non-null result will terminate the switch.
-   * <!-- end-user-doc -->
-   * @param object the target of the switch.
-   * @return the result of interpreting the object as an instance of '<em>Concept Ref</em>'.
-   * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
-   * @generated
-   */
-  public T caseConceptRef(ConceptRef object)
   {
     return null;
   }
@@ -396,6 +379,22 @@ public class CupidLanguageSwitch<T> extends Switch<T>
    * @generated
    */
   public T caseModule(Module object)
+  {
+    return null;
+  }
+
+  /**
+   * Returns the result of interpreting the object as an instance of '<em>Module Name</em>'.
+   * <!-- begin-user-doc -->
+   * This implementation returns null;
+   * returning a non-null result will terminate the switch.
+   * <!-- end-user-doc -->
+   * @param object the target of the switch.
+   * @return the result of interpreting the object as an instance of '<em>Module Name</em>'.
+   * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+   * @generated
+   */
+  public T caseModuleName(ModuleName object)
   {
     return null;
   }

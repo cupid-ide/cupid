@@ -69,4 +69,5 @@ Require-Bundle: org.eclipse.core.runtime,
 Bundle-ActivationPolicy: lazy
 Bundle-Activator: org.earthsystemcurator.cupid.nuopc.fsml.core.CupidActivator
 Import-Package: org.earthsystemcurator,
- org.earthsystemcurator.cupidLanguage
+ org.earthsystemcurator.cupidLanguage,
+ org.earthsystemcurator.gen.nuopc

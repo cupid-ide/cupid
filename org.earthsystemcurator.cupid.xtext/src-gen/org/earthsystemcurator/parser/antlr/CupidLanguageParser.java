@@ -25,7 +25,7 @@ public class CupidLanguageParser extends org.eclipse.xtext.parser.antlr.Abstract
 	
 	@Override 
 	protected String getDefaultRuleName() {
-		return "Mappings";
+		return "Language";
 	}
 	
 	public CupidLanguageGrammarAccess getGrammarAccess() {

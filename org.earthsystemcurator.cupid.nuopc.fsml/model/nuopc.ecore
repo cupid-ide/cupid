@@ -168,16 +168,11 @@
       <details key="mapping" value="subroutine: &quot;#name(inout type(ESMF_GridComp) gcomp, inout type(ESMF_State) #importParam, inout type(ESMF_State) #exportParam, inout type(ESMF_Clock) clock, out integer rc)&quot;"/>
       <details key="doc" value="Initialize Phase Definition: IPDv01p1&#xD;&#xA;&#xD;&#xA;In this phase, models should advertise the set of import and export fields. This is the list of fields that may potentially be exchanged during coupling, although some fields may not be connected for a particular configuration."/>
       <details key="label" value="Initialize Phase Definition - IPDv01p1"/>
-      <details key="task" value="Implement Init Phase Definition (IPDv01p1)"/>
     </eAnnotations>
     <eStructuralFeatures xsi:type="ecore:EReference" name="parent" lowerBound="1"
         eType="#//NUOPCModel__Init" eOpposite="#//NUOPCModel__Init/implementsInitP1"/>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="name" lowerBound="1" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"
-        defaultValueLiteral="InitP1">
-      <eAnnotations source="http://www.earthsystemcog.org/projects/nuopc">
-        <details key="mappingX" value="subroutineName"/>
-      </eAnnotations>
-    </eStructuralFeatures>
+        defaultValueLiteral="InitP1"/>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="importParam" lowerBound="1"
         eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString" defaultValueLiteral="importState"/>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="exportParam" lowerBound="1"
@@ -224,8 +219,6 @@
       <details key="mapping" value="subroutine: &quot;#name(inout type(ESMF_GridComp) gcomp, inout type(ESMF_State) #importParam, inout type(ESMF_State) #exportParam, inout type(ESMF_Clock) clock, out integer rc)&quot;"/>
       <details key="doc" value="Initialize Phase Definition: IPDv01p2&#xD;&#xA;&#xD;&#xA;In this phase, models should realize the set of import and export fields. "/>
       <details key="label" value="Initialize Phase Definition - IPDv01p2"/>
-      <details key="iconAdd" value="cog_add.png"/>
-      <details key="task" value="Implement Init Phase Definition (IPDv01p2)"/>
     </eAnnotations>
     <eStructuralFeatures xsi:type="ecore:EReference" name="parent" lowerBound="1"
         eType="#//NUOPCModel__Init" eOpposite="#//NUOPCModel__Init/implementsInitP2"/>
@@ -861,7 +854,7 @@
         <details key="essential" value="true"/>
       </eAnnotations>
       <eAnnotations source="http://www.eclipse.org/emf/2002/Ecore/OCL">
-        <details key="derivation" value="self.parent.genericImports.importsLabelSetModelCount &lt;> null &#xD;&#xA;and self.parent.implementsSetServices.attachesMethod->size() > 0 &#xD;&#xA;and self.name = self.parent.implementsSetServices.attachesMethod->select(m|m.name=self.parent.genericImports.importsLabelSetModelCount).userRoutine->asSequence()->first()"/>
+        <details key="derivation" value="self.parent.genericImports.importsLabelSetModelCount &lt;> null &#xA;and self.parent.implementsSetServices.attachesMethod->size() > 0 &#xA;and self.name = self.parent.implementsSetServices.attachesMethod->select(m|m.name=self.parent.genericImports.importsLabelSetModelCount).userRoutine->asSequence()->first()"/>
       </eAnnotations>
     </eStructuralFeatures>
   </eClassifiers>
@@ -900,7 +893,7 @@
         <details key="essential" value="true"/>
       </eAnnotations>
       <eAnnotations source="http://www.eclipse.org/emf/2002/Ecore/OCL">
-        <details key="derivation" value="self.parent.genericImports.importsLabelSetModelServices &lt;> null &#xD;&#xA;and self.parent.implementsSetServices.attachesMethod->size() > 0 &#xD;&#xA;and self.name = self.parent.implementsSetServices.attachesMethod->select(m|m.name=self.parent.genericImports.importsLabelSetModelServices).userRoutine->asSequence()->first()"/>
+        <details key="derivation" value="self.parent.genericImports.importsLabelSetModelServices &lt;> null &#xA;and self.parent.implementsSetServices.attachesMethod->size() > 0 &#xA;and self.name = self.parent.implementsSetServices.attachesMethod->select(m|m.name=self.parent.genericImports.importsLabelSetModelServices).userRoutine->asSequence()->first()"/>
       </eAnnotations>
     </eStructuralFeatures>
     <eStructuralFeatures xsi:type="ecore:EReference" name="setModelServices" upperBound="-1"
@@ -950,7 +943,7 @@
         <details key="essential" value="true"/>
       </eAnnotations>
       <eAnnotations source="http://www.eclipse.org/emf/2002/Ecore/OCL">
-        <details key="derivation" value="self.parent.genericImports.importsLabelSetModelPetLists &lt;> null &#xD;&#xA;and self.parent.implementsSetServices.attachesMethod->size() > 0 &#xD;&#xA;and self.name = self.parent.implementsSetServices.attachesMethod->select(m|m.name=self.parent.genericImports.importsLabelSetModelPetLists).userRoutine->asSequence()->first()"/>
+        <details key="derivation" value="self.parent.genericImports.importsLabelSetModelPetLists &lt;> null &#xA;and self.parent.implementsSetServices.attachesMethod->size() > 0 &#xA;and self.name = self.parent.implementsSetServices.attachesMethod->select(m|m.name=self.parent.genericImports.importsLabelSetModelPetLists).userRoutine->asSequence()->first()"/>
       </eAnnotations>
     </eStructuralFeatures>
   </eClassifiers>

@@ -2,6 +2,9 @@
  */
 package org.earthsystemcurator.cupidLanguage.impl;
 
+import java.util.Collection;
+
+import org.earthsystemcurator.cupidLanguage.Annotation;
 import org.earthsystemcurator.cupidLanguage.ConceptDef;
 import org.earthsystemcurator.cupidLanguage.ConceptDefBody;
 import org.earthsystemcurator.cupidLanguage.CupidLanguagePackage;
@@ -10,11 +13,16 @@ import org.earthsystemcurator.cupidLanguage.Mapping;
 import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.common.notify.NotificationChain;
 
+import org.eclipse.emf.common.util.EList;
+
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.InternalEObject;
 
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
 import org.eclipse.emf.ecore.impl.MinimalEObjectImpl;
+
+import org.eclipse.emf.ecore.util.EObjectContainmentEList;
+import org.eclipse.emf.ecore.util.InternalEList;
 
 /**
  * <!-- begin-user-doc -->
@@ -26,6 +34,7 @@ import org.eclipse.emf.ecore.impl.MinimalEObjectImpl;
  *   <li>{@link org.earthsystemcurator.cupidLanguage.impl.ConceptDefImpl#isTop <em>Top</em>}</li>
  *   <li>{@link org.earthsystemcurator.cupidLanguage.impl.ConceptDefImpl#getName <em>Name</em>}</li>
  *   <li>{@link org.earthsystemcurator.cupidLanguage.impl.ConceptDefImpl#getMapping <em>Mapping</em>}</li>
+ *   <li>{@link org.earthsystemcurator.cupidLanguage.impl.ConceptDefImpl#getAnnotation <em>Annotation</em>}</li>
  *   <li>{@link org.earthsystemcurator.cupidLanguage.impl.ConceptDefImpl#getBody <em>Body</em>}</li>
  * </ul>
  * </p>
@@ -83,6 +92,16 @@ public class ConceptDefImpl extends MinimalEObjectImpl.Container implements Conc
    * @ordered
    */
   protected Mapping mapping;
+
+  /**
+   * The cached value of the '{@link #getAnnotation() <em>Annotation</em>}' containment reference list.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @see #getAnnotation()
+   * @generated
+   * @ordered
+   */
+  protected EList<Annotation> annotation;
 
   /**
    * The cached value of the '{@link #getBody() <em>Body</em>}' containment reference.
@@ -214,6 +233,20 @@ public class ConceptDefImpl extends MinimalEObjectImpl.Container implements Conc
    * <!-- end-user-doc -->
    * @generated
    */
+  public EList<Annotation> getAnnotation()
+  {
+    if (annotation == null)
+    {
+      annotation = new EObjectContainmentEList<Annotation>(Annotation.class, this, CupidLanguagePackage.CONCEPT_DEF__ANNOTATION);
+    }
+    return annotation;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
   public ConceptDefBody getBody()
   {
     return body;
@@ -269,6 +302,8 @@ public class ConceptDefImpl extends MinimalEObjectImpl.Container implements Conc
     {
       case CupidLanguagePackage.CONCEPT_DEF__MAPPING:
         return basicSetMapping(null, msgs);
+      case CupidLanguagePackage.CONCEPT_DEF__ANNOTATION:
+        return ((InternalEList<?>)getAnnotation()).basicRemove(otherEnd, msgs);
       case CupidLanguagePackage.CONCEPT_DEF__BODY:
         return basicSetBody(null, msgs);
     }
@@ -291,6 +326,8 @@ public class ConceptDefImpl extends MinimalEObjectImpl.Container implements Conc
         return getName();
       case CupidLanguagePackage.CONCEPT_DEF__MAPPING:
         return getMapping();
+      case CupidLanguagePackage.CONCEPT_DEF__ANNOTATION:
+        return getAnnotation();
       case CupidLanguagePackage.CONCEPT_DEF__BODY:
         return getBody();
     }
@@ -302,6 +339,7 @@ public class ConceptDefImpl extends MinimalEObjectImpl.Container implements Conc
    * <!-- end-user-doc -->
    * @generated
    */
+  @SuppressWarnings("unchecked")
   @Override
   public void eSet(int featureID, Object newValue)
   {
@@ -315,6 +353,10 @@ public class ConceptDefImpl extends MinimalEObjectImpl.Container implements Conc
         return;
       case CupidLanguagePackage.CONCEPT_DEF__MAPPING:
         setMapping((Mapping)newValue);
+        return;
+      case CupidLanguagePackage.CONCEPT_DEF__ANNOTATION:
+        getAnnotation().clear();
+        getAnnotation().addAll((Collection<? extends Annotation>)newValue);
         return;
       case CupidLanguagePackage.CONCEPT_DEF__BODY:
         setBody((ConceptDefBody)newValue);
@@ -342,6 +384,9 @@ public class ConceptDefImpl extends MinimalEObjectImpl.Container implements Conc
       case CupidLanguagePackage.CONCEPT_DEF__MAPPING:
         setMapping((Mapping)null);
         return;
+      case CupidLanguagePackage.CONCEPT_DEF__ANNOTATION:
+        getAnnotation().clear();
+        return;
       case CupidLanguagePackage.CONCEPT_DEF__BODY:
         setBody((ConceptDefBody)null);
         return;
@@ -365,6 +410,8 @@ public class ConceptDefImpl extends MinimalEObjectImpl.Container implements Conc
         return NAME_EDEFAULT == null ? name != null : !NAME_EDEFAULT.equals(name);
       case CupidLanguagePackage.CONCEPT_DEF__MAPPING:
         return mapping != null;
+      case CupidLanguagePackage.CONCEPT_DEF__ANNOTATION:
+        return annotation != null && !annotation.isEmpty();
       case CupidLanguagePackage.CONCEPT_DEF__BODY:
         return body != null;
     }

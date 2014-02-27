@@ -3,20 +3,21 @@ package org.earthsystemcurator.serializer;
 import com.google.inject.Inject;
 import com.google.inject.Provider;
 import org.earthsystemcurator.cupidLanguage.ActualParam;
-import org.earthsystemcurator.cupidLanguage.AnonymousConcept;
+import org.earthsystemcurator.cupidLanguage.Annotation;
 import org.earthsystemcurator.cupidLanguage.Call;
 import org.earthsystemcurator.cupidLanguage.Cardinality;
 import org.earthsystemcurator.cupidLanguage.ConceptDef;
 import org.earthsystemcurator.cupidLanguage.ConceptDefBody;
-import org.earthsystemcurator.cupidLanguage.ConceptRef;
 import org.earthsystemcurator.cupidLanguage.CupidLanguagePackage;
 import org.earthsystemcurator.cupidLanguage.FormalParam;
 import org.earthsystemcurator.cupidLanguage.IDOrWildcard;
 import org.earthsystemcurator.cupidLanguage.Intent;
+import org.earthsystemcurator.cupidLanguage.Language;
 import org.earthsystemcurator.cupidLanguage.Mapping;
-import org.earthsystemcurator.cupidLanguage.Mappings;
 import org.earthsystemcurator.cupidLanguage.Module;
+import org.earthsystemcurator.cupidLanguage.ModuleName;
 import org.earthsystemcurator.cupidLanguage.PathExpr;
+import org.earthsystemcurator.cupidLanguage.Subconcept;
 import org.earthsystemcurator.cupidLanguage.Subroutine;
 import org.earthsystemcurator.cupidLanguage.SubroutineName;
 import org.earthsystemcurator.cupidLanguage.Type;
@@ -49,10 +50,9 @@ public class CupidLanguageSemanticSequencer extends AbstractDelegatingSemanticSe
 					return; 
 				}
 				else break;
-			case CupidLanguagePackage.ANONYMOUS_CONCEPT:
-				if(context == grammarAccess.getAnonymousConceptRule() ||
-				   context == grammarAccess.getConceptDefOrRefRule()) {
-					sequence_AnonymousConcept(context, (AnonymousConcept) semanticObject); 
+			case CupidLanguagePackage.ANNOTATION:
+				if(context == grammarAccess.getAnnotationRule()) {
+					sequence_Annotation(context, (Annotation) semanticObject); 
 					return; 
 				}
 				else break;
@@ -81,13 +81,6 @@ public class CupidLanguageSemanticSequencer extends AbstractDelegatingSemanticSe
 					return; 
 				}
 				else break;
-			case CupidLanguagePackage.CONCEPT_REF:
-				if(context == grammarAccess.getConceptDefOrRefRule() ||
-				   context == grammarAccess.getConceptRefRule()) {
-					sequence_ConceptRef(context, (ConceptRef) semanticObject); 
-					return; 
-				}
-				else break;
 			case CupidLanguagePackage.FORMAL_PARAM:
 				if(context == grammarAccess.getFormalParamRule()) {
 					sequence_FormalParam(context, (FormalParam) semanticObject); 
@@ -107,15 +100,15 @@ public class CupidLanguageSemanticSequencer extends AbstractDelegatingSemanticSe
 					return; 
 				}
 				else break;
-			case CupidLanguagePackage.MAPPING:
-				if(context == grammarAccess.getMappingRule()) {
-					sequence_Mapping(context, (Mapping) semanticObject); 
+			case CupidLanguagePackage.LANGUAGE:
+				if(context == grammarAccess.getLanguageRule()) {
+					sequence_Language(context, (Language) semanticObject); 
 					return; 
 				}
 				else break;
-			case CupidLanguagePackage.MAPPINGS:
-				if(context == grammarAccess.getMappingsRule()) {
-					sequence_Mappings(context, (Mappings) semanticObject); 
+			case CupidLanguagePackage.MAPPING:
+				if(context == grammarAccess.getMappingRule()) {
+					sequence_Mapping(context, (Mapping) semanticObject); 
 					return; 
 				}
 				else break;
@@ -126,10 +119,23 @@ public class CupidLanguageSemanticSequencer extends AbstractDelegatingSemanticSe
 					return; 
 				}
 				else break;
+			case CupidLanguagePackage.MODULE_NAME:
+				if(context == grammarAccess.getImplicitContextMappingRule() ||
+				   context == grammarAccess.getModuleNameRule()) {
+					sequence_ModuleName(context, (ModuleName) semanticObject); 
+					return; 
+				}
+				else break;
 			case CupidLanguagePackage.PATH_EXPR:
 				if(context == grammarAccess.getIDOrPathExprRule() ||
 				   context == grammarAccess.getPathExprRule()) {
 					sequence_PathExpr(context, (PathExpr) semanticObject); 
+					return; 
+				}
+				else break;
+			case CupidLanguagePackage.SUBCONCEPT:
+				if(context == grammarAccess.getSubconceptRule()) {
+					sequence_Subconcept(context, (Subconcept) semanticObject); 
 					return; 
 				}
 				else break;
@@ -182,10 +188,20 @@ public class CupidLanguageSemanticSequencer extends AbstractDelegatingSemanticSe
 	
 	/**
 	 * Constraint:
-	 *     (localName=ID cardinality=Cardinality? required?='!'? mapping=Mapping? body=ConceptDefBody?)
+	 *     (key=ID value=STRING)
 	 */
-	protected void sequence_AnonymousConcept(EObject context, AnonymousConcept semanticObject) {
-		genericSequencer.createSequence(context, semanticObject);
+	protected void sequence_Annotation(EObject context, Annotation semanticObject) {
+		if(errorAcceptor != null) {
+			if(transientValues.isValueTransient(semanticObject, CupidLanguagePackage.Literals.ANNOTATION__KEY) == ValueTransient.YES)
+				errorAcceptor.accept(diagnosticProvider.createFeatureValueMissing(semanticObject, CupidLanguagePackage.Literals.ANNOTATION__KEY));
+			if(transientValues.isValueTransient(semanticObject, CupidLanguagePackage.Literals.ANNOTATION__VALUE) == ValueTransient.YES)
+				errorAcceptor.accept(diagnosticProvider.createFeatureValueMissing(semanticObject, CupidLanguagePackage.Literals.ANNOTATION__VALUE));
+		}
+		INodesForEObjectProvider nodes = createNodeProvider(semanticObject);
+		SequenceFeeder feeder = createSequencerFeeder(semanticObject, nodes);
+		feeder.accept(grammarAccess.getAnnotationAccess().getKeyIDTerminalRuleCall_0_0(), semanticObject.getKey());
+		feeder.accept(grammarAccess.getAnnotationAccess().getValueSTRINGTerminalRuleCall_2_0(), semanticObject.getValue());
+		feeder.finish();
 	}
 	
 	
@@ -209,7 +225,7 @@ public class CupidLanguageSemanticSequencer extends AbstractDelegatingSemanticSe
 	
 	/**
 	 * Constraint:
-	 *     (subconcept+=ConceptDefOrRef subconcept+=ConceptDefOrRef*)
+	 *     (subconcept+=Subconcept subconcept+=Subconcept*)
 	 */
 	protected void sequence_ConceptDefBody(EObject context, ConceptDefBody semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
@@ -218,18 +234,9 @@ public class CupidLanguageSemanticSequencer extends AbstractDelegatingSemanticSe
 	
 	/**
 	 * Constraint:
-	 *     (top?='top'? name=ID mapping=Mapping? body=ConceptDefBody?)
+	 *     (top?='top'? name=ID mapping=Mapping? (annotation+=Annotation annotation+=Annotation*)? body=ConceptDefBody?)
 	 */
 	protected void sequence_ConceptDef(EObject context, ConceptDef semanticObject) {
-		genericSequencer.createSequence(context, semanticObject);
-	}
-	
-	
-	/**
-	 * Constraint:
-	 *     (localName=ID cardinality=Cardinality? required?='!'? name=[ConceptDef|ID])
-	 */
-	protected void sequence_ConceptRef(EObject context, ConceptRef semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
 	}
 	
@@ -263,6 +270,15 @@ public class CupidLanguageSemanticSequencer extends AbstractDelegatingSemanticSe
 	
 	/**
 	 * Constraint:
+	 *     (name=ID uri=STRING conceptDef+=ConceptDef+)
+	 */
+	protected void sequence_Language(EObject context, Language semanticObject) {
+		genericSequencer.createSequence(context, semanticObject);
+	}
+	
+	
+	/**
+	 * Constraint:
 	 *     (context=PathExpr? mapping=ImplicitContextMapping)
 	 */
 	protected void sequence_Mapping(EObject context, Mapping semanticObject) {
@@ -272,9 +288,9 @@ public class CupidLanguageSemanticSequencer extends AbstractDelegatingSemanticSe
 	
 	/**
 	 * Constraint:
-	 *     (mappings+=Mapping* concepts+=ConceptDef*)
+	 *     {ModuleName}
 	 */
-	protected void sequence_Mappings(EObject context, Mappings semanticObject) {
+	protected void sequence_ModuleName(EObject context, ModuleName semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
 	}
 	
@@ -293,6 +309,21 @@ public class CupidLanguageSemanticSequencer extends AbstractDelegatingSemanticSe
 	 *     (segments+=PathSegment segments+=PathSegment*)
 	 */
 	protected void sequence_PathExpr(EObject context, PathExpr semanticObject) {
+		genericSequencer.createSequence(context, semanticObject);
+	}
+	
+	
+	/**
+	 * Constraint:
+	 *     (
+	 *         attrib?='attrib'? 
+	 *         name=ID 
+	 *         cardinality=Cardinality? 
+	 *         essential?='!'? 
+	 *         ((ref?=':' conceptDef=[ConceptDef|ID]) | (mapping=Mapping? (annotation+=Annotation annotation+=Annotation*)? body=ConceptDefBody?))
+	 *     )
+	 */
+	protected void sequence_Subconcept(EObject context, Subconcept semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
 	}
 	

@@ -64,16 +64,16 @@ public class CupidLanguageFactoryImpl extends EFactoryImpl implements CupidLangu
   {
     switch (eClass.getClassifierID())
     {
-      case CupidLanguagePackage.MAPPINGS: return createMappings();
-      case CupidLanguagePackage.CONCEPT_DEF_OR_REF: return createConceptDefOrRef();
+      case CupidLanguagePackage.LANGUAGE: return createLanguage();
+      case CupidLanguagePackage.SUBCONCEPT: return createSubconcept();
+      case CupidLanguagePackage.ANNOTATION: return createAnnotation();
       case CupidLanguagePackage.CONCEPT_DEF: return createConceptDef();
-      case CupidLanguagePackage.ANONYMOUS_CONCEPT: return createAnonymousConcept();
       case CupidLanguagePackage.CONCEPT_DEF_BODY: return createConceptDefBody();
-      case CupidLanguagePackage.CONCEPT_REF: return createConceptRef();
       case CupidLanguagePackage.CARDINALITY: return createCardinality();
       case CupidLanguagePackage.MAPPING: return createMapping();
       case CupidLanguagePackage.IMPLICIT_CONTEXT_MAPPING: return createImplicitContextMapping();
       case CupidLanguagePackage.MODULE: return createModule();
+      case CupidLanguagePackage.MODULE_NAME: return createModuleName();
       case CupidLanguagePackage.USES_MODULE: return createUsesModule();
       case CupidLanguagePackage.USES_ENTITY: return createUsesEntity();
       case CupidLanguagePackage.SUBROUTINE: return createSubroutine();
@@ -96,10 +96,10 @@ public class CupidLanguageFactoryImpl extends EFactoryImpl implements CupidLangu
    * <!-- end-user-doc -->
    * @generated
    */
-  public Mappings createMappings()
+  public Language createLanguage()
   {
-    MappingsImpl mappings = new MappingsImpl();
-    return mappings;
+    LanguageImpl language = new LanguageImpl();
+    return language;
   }
 
   /**
@@ -107,10 +107,21 @@ public class CupidLanguageFactoryImpl extends EFactoryImpl implements CupidLangu
    * <!-- end-user-doc -->
    * @generated
    */
-  public ConceptDefOrRef createConceptDefOrRef()
+  public Subconcept createSubconcept()
   {
-    ConceptDefOrRefImpl conceptDefOrRef = new ConceptDefOrRefImpl();
-    return conceptDefOrRef;
+    SubconceptImpl subconcept = new SubconceptImpl();
+    return subconcept;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public Annotation createAnnotation()
+  {
+    AnnotationImpl annotation = new AnnotationImpl();
+    return annotation;
   }
 
   /**
@@ -129,32 +140,10 @@ public class CupidLanguageFactoryImpl extends EFactoryImpl implements CupidLangu
    * <!-- end-user-doc -->
    * @generated
    */
-  public AnonymousConcept createAnonymousConcept()
-  {
-    AnonymousConceptImpl anonymousConcept = new AnonymousConceptImpl();
-    return anonymousConcept;
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
   public ConceptDefBody createConceptDefBody()
   {
     ConceptDefBodyImpl conceptDefBody = new ConceptDefBodyImpl();
     return conceptDefBody;
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  public ConceptRef createConceptRef()
-  {
-    ConceptRefImpl conceptRef = new ConceptRefImpl();
-    return conceptRef;
   }
 
   /**
@@ -199,6 +188,17 @@ public class CupidLanguageFactoryImpl extends EFactoryImpl implements CupidLangu
   {
     ModuleImpl module = new ModuleImpl();
     return module;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public ModuleName createModuleName()
+  {
+    ModuleNameImpl moduleName = new ModuleNameImpl();
+    return moduleName;
   }
 
   /**

@@ -29,7 +29,6 @@ import org.earthsystemcurator.cupidLanguage.IDOrPathExpr;
 import org.earthsystemcurator.cupidLanguage.IDOrWildcard;
 import org.earthsystemcurator.cupidLanguage.ImplicitContextMapping;
 import org.earthsystemcurator.cupidLanguage.Mapping;
-import org.earthsystemcurator.cupidLanguage.Mappings;
 import org.earthsystemcurator.cupidLanguage.PathExpr;
 import org.eclipse.cdt.core.model.ITranslationUnit;
 import org.eclipse.core.resources.IFile;
@@ -72,7 +71,7 @@ public class ReverseEngineer {
 	//	return mappings;
 	//}
 	
-	
+		
 	@SuppressWarnings("unchecked")
 	public static FSM reverseEngineer(EPackage ePackage, EClass eClass, IProject project, PhotranVPG vpg) {
 			
@@ -220,10 +219,10 @@ public class ReverseEngineer {
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
-		Mappings mappings = (Mappings) xTextResource.getContents().get(0);
+		//Mappings mappings = (Mappings) xTextResource.getContents().get(0);
 		
-		return mappings.getMappings().get(0);
-		
+		//return mappings.getMappings().get(0);
+		return null;
 	}
 	
 	
@@ -721,6 +720,10 @@ public class ReverseEngineer {
 
 		return modelElem;
 	}
+	
+	
+	
+	
 	
 	
 	/*********** OCL **************/

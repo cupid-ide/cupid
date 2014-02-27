@@ -5,8 +5,8 @@ package org.earthsystemcurator.cupidLanguage.impl;
 import java.util.Collection;
 
 import org.earthsystemcurator.cupidLanguage.ConceptDefBody;
-import org.earthsystemcurator.cupidLanguage.ConceptDefOrRef;
 import org.earthsystemcurator.cupidLanguage.CupidLanguagePackage;
+import org.earthsystemcurator.cupidLanguage.Subconcept;
 
 import org.eclipse.emf.common.notify.NotificationChain;
 
@@ -43,7 +43,7 @@ public class ConceptDefBodyImpl extends MinimalEObjectImpl.Container implements 
    * @generated
    * @ordered
    */
-  protected EList<ConceptDefOrRef> subconcept;
+  protected EList<Subconcept> subconcept;
 
   /**
    * <!-- begin-user-doc -->
@@ -71,11 +71,11 @@ public class ConceptDefBodyImpl extends MinimalEObjectImpl.Container implements 
    * <!-- end-user-doc -->
    * @generated
    */
-  public EList<ConceptDefOrRef> getSubconcept()
+  public EList<Subconcept> getSubconcept()
   {
     if (subconcept == null)
     {
-      subconcept = new EObjectContainmentEList<ConceptDefOrRef>(ConceptDefOrRef.class, this, CupidLanguagePackage.CONCEPT_DEF_BODY__SUBCONCEPT);
+      subconcept = new EObjectContainmentEList<Subconcept>(Subconcept.class, this, CupidLanguagePackage.CONCEPT_DEF_BODY__SUBCONCEPT);
     }
     return subconcept;
   }
@@ -125,7 +125,7 @@ public class ConceptDefBodyImpl extends MinimalEObjectImpl.Container implements 
     {
       case CupidLanguagePackage.CONCEPT_DEF_BODY__SUBCONCEPT:
         getSubconcept().clear();
-        getSubconcept().addAll((Collection<? extends ConceptDefOrRef>)newValue);
+        getSubconcept().addAll((Collection<? extends Subconcept>)newValue);
         return;
     }
     super.eSet(featureID, newValue);

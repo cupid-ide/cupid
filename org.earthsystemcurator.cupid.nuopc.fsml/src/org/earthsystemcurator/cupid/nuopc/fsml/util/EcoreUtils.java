@@ -93,6 +93,10 @@ public class EcoreUtils {
 	
 	public static boolean eSetSFValue(PathExpr pathExpr, EObject modelElem, String value) {
 		
+		if (pathExpr == null || pathExpr.getSegments() == null) {
+			System.out.println("eGetSFValue null");
+		}
+		
 		EList<String> segments = pathExpr.getSegments();
 		EObject elemToCheck = modelElem;
 						

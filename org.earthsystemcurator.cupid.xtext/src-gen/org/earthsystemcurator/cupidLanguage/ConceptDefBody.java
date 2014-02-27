@@ -26,7 +26,7 @@ public interface ConceptDefBody extends EObject
 {
   /**
    * Returns the value of the '<em><b>Subconcept</b></em>' containment reference list.
-   * The list contents are of type {@link org.earthsystemcurator.cupidLanguage.ConceptDefOrRef}.
+   * The list contents are of type {@link org.earthsystemcurator.cupidLanguage.Subconcept}.
    * <!-- begin-user-doc -->
    * <p>
    * If the meaning of the '<em>Subconcept</em>' containment reference list isn't clear,
@@ -38,6 +38,6 @@ public interface ConceptDefBody extends EObject
    * @model containment="true"
    * @generated
    */
-  EList<ConceptDefOrRef> getSubconcept();
+  EList<Subconcept> getSubconcept();
 
 } // ConceptDefBody

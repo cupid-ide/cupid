@@ -23,22 +23,31 @@ public interface CupidLanguageFactory extends EFactory
   CupidLanguageFactory eINSTANCE = org.earthsystemcurator.cupidLanguage.impl.CupidLanguageFactoryImpl.init();
 
   /**
-   * Returns a new object of class '<em>Mappings</em>'.
+   * Returns a new object of class '<em>Language</em>'.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @return a new object of class '<em>Mappings</em>'.
+   * @return a new object of class '<em>Language</em>'.
    * @generated
    */
-  Mappings createMappings();
+  Language createLanguage();
 
   /**
-   * Returns a new object of class '<em>Concept Def Or Ref</em>'.
+   * Returns a new object of class '<em>Subconcept</em>'.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @return a new object of class '<em>Concept Def Or Ref</em>'.
+   * @return a new object of class '<em>Subconcept</em>'.
    * @generated
    */
-  ConceptDefOrRef createConceptDefOrRef();
+  Subconcept createSubconcept();
+
+  /**
+   * Returns a new object of class '<em>Annotation</em>'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return a new object of class '<em>Annotation</em>'.
+   * @generated
+   */
+  Annotation createAnnotation();
 
   /**
    * Returns a new object of class '<em>Concept Def</em>'.
@@ -50,15 +59,6 @@ public interface CupidLanguageFactory extends EFactory
   ConceptDef createConceptDef();
 
   /**
-   * Returns a new object of class '<em>Anonymous Concept</em>'.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @return a new object of class '<em>Anonymous Concept</em>'.
-   * @generated
-   */
-  AnonymousConcept createAnonymousConcept();
-
-  /**
    * Returns a new object of class '<em>Concept Def Body</em>'.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
@@ -66,15 +66,6 @@ public interface CupidLanguageFactory extends EFactory
    * @generated
    */
   ConceptDefBody createConceptDefBody();
-
-  /**
-   * Returns a new object of class '<em>Concept Ref</em>'.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @return a new object of class '<em>Concept Ref</em>'.
-   * @generated
-   */
-  ConceptRef createConceptRef();
 
   /**
    * Returns a new object of class '<em>Cardinality</em>'.
@@ -111,6 +102,15 @@ public interface CupidLanguageFactory extends EFactory
    * @generated
    */
   Module createModule();
+
+  /**
+   * Returns a new object of class '<em>Module Name</em>'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return a new object of class '<em>Module Name</em>'.
+   * @generated
+   */
+  ModuleName createModuleName();
 
   /**
    * Returns a new object of class '<em>Uses Module</em>'.

@@ -2,77 +2,62 @@ grammar org.earthsystemcurator.CupidLanguage with org.eclipse.xtext.common.Termi
 
 generate cupidLanguage "http://www.earthsystemcurator.org/CupidLanguage"
 
-Mappings:
-	mappings+=Mapping*
-	concepts+=ConceptDef*;
+//Mappings:
+//	mappings+=Mapping*
+//	language+=Language?;
 
+Language:
+	'language ' name=ID uri=STRING '{' conceptDef+=ConceptDef+ '}';
+
+//Subconcept:
+//	AnonymousConcept | ConceptRef | Attribute;
+	
 Subconcept:
-	AnonymousConcept | ConceptRef;
+	attrib?='attrib'? name=ID cardinality=Cardinality? essential?='!'?
+	(
+		ref?=':' conceptDef=[ConceptDef] |
+		('<' mapping=Mapping '>')? ('[' annotation+=Annotation (',' annotation+=Annotation)* ']')? body=ConceptDefBody?	
+	);
+
+Annotation:
+	key=ID '=' value=STRING;
 
 ConceptDef:
 	top?='top'? 'concept' name=ID ('<' mapping=Mapping '>')? 
+		('[' annotation+=Annotation (',' annotation+=Annotation)* ']')?
 		body=ConceptDefBody?;
 
-AnonymousConcept:
-	localName=ID cardinality=Cardinality? required?='!'? ('<' mapping=Mapping '>')? body=ConceptDefBody?;
+//AnonymousConcept:
+//	localName=ID cardinality=Cardinality? required?='!'? ('<' mapping=Mapping '>')? 
+//	('[' annotation+=Annotation (',' annotation+=Annotation)* ']')?
+//	body=ConceptDefBody?;
+
+//Attribute:
+//	'attrib' name=ID cardinality=Cardinality? required?='!'? ('<' mapping=Mapping '>')?
+//	('[' annotation+=Annotation (',' annotation+=Annotation)* ']')?;
 
 ConceptDefBody:
 	'{' (subconcept+=Subconcept) (',' subconcept+=Subconcept)* '}';
 
-ConceptRef:
-	localName=ID cardinality=Cardinality? required?='!'? ':' name=[ConceptDef];
+//ConceptRef:
+//	localName=ID cardinality=Cardinality? required?='!'? ':' name=[ConceptDef];
 	
 Cardinality:
 	zeroOrMore?='*' |
 	oneOrMore?='+';
 	
-/* 
- * 
- * top concept NUOPCApplication {
- *     model*:NUOPCModel,  //reference concept
- * 	   driver*:NUOPCDriver,
- *     driverAtmOcn*:NUOPCDriverAtmOcn,
- * 	   mediator*:NUOPCMediator
- * }
- * 
- *  
- * concept NUOPCModel <--> module
- *      [
- *      	label = "NUOPC Model", 
- * 	     	doc = "A NUOPC Model is blah....yada....yada...."
- * 		]	
- *     	{
- *     		name <--> moduleName,
- *   		genericImports <--> usesModule(NUOPC_Model) {    //anonymous concept mapping
- *     			importsGenericSS <--> usesEntity(routine_SetServices),
- *          	importsLabelModelAdvance <--> usesEntity(label_Advance)
- *     		},
- * 	   		setServices!:SetServices,
- * 	   		modelAdvance*:ModelAdvance   
- *     	}
- * 
- * concept SetServices <--> subroutine(#name(inout type(ESMF_GridComp) #gcomp, out integer #rc)) {
- * 		callsGenericSetServices! <--> call(#../../genericImports/importsGenericSS(#gcomp, rc=#rc))
- * }
- * 
- * concept ModelAdvance {	
- * 	  Registered: #../../implementsSetServices call(ESMF_MethodAdd(#ignore, index?=#index, label=#../../genericImports/importsLabelModelAdvance, userRoutine=#userRoutine, rc=#../../implementsSetServices/rc)),
- *    Implemented: subroutine(#../attached/userRoutine(inout type(ESMF_GridComp) gcomp, out integer rc)													
- * }
- * 
- * */
-
-
-
 
 Mapping:
 	context=PathExpr? mapping=ImplicitContextMapping;
 
 ImplicitContextMapping:
-	Module | UsesModule | UsesEntity | Call | Subroutine | SubroutineName;
+	Module | ModuleName | UsesModule | UsesEntity | Call | Subroutine | SubroutineName;
 
 Module: {Module} 
 	'module' ('(' name=IDOrPathExpr ')')?;
+	
+ModuleName: {ModuleName}
+	'moduleName';
 	
 UsesModule:
 	'usesModule' '(' name=IDOrPathExpr ')';

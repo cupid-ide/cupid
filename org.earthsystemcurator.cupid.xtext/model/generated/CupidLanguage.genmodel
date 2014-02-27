@@ -7,30 +7,35 @@
     editorPluginID="org.earthsystemcurator.cupid.xtext.editor" runtimeVersion="2.9">
   <genPackages prefix="CupidLanguage" basePackage="org.earthsystemcurator" disposableProviderFactory="true"
       fileExtensions="cupid" ecorePackage="CupidLanguage.ecore#/">
-    <genClasses ecoreClass="CupidLanguage.ecore#//Mappings">
-      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference CupidLanguage.ecore#//Mappings/mappings"/>
-      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference CupidLanguage.ecore#//Mappings/concepts"/>
+    <genClasses ecoreClass="CupidLanguage.ecore#//Language">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute CupidLanguage.ecore#//Language/name"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute CupidLanguage.ecore#//Language/uri"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference CupidLanguage.ecore#//Language/conceptDef"/>
     </genClasses>
-    <genClasses ecoreClass="CupidLanguage.ecore#//ConceptDefOrRef">
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute CupidLanguage.ecore#//ConceptDefOrRef/localName"/>
-      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference CupidLanguage.ecore#//ConceptDefOrRef/cardinality"/>
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute CupidLanguage.ecore#//ConceptDefOrRef/required"/>
+    <genClasses ecoreClass="CupidLanguage.ecore#//Subconcept">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute CupidLanguage.ecore#//Subconcept/attrib"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute CupidLanguage.ecore#//Subconcept/name"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference CupidLanguage.ecore#//Subconcept/cardinality"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute CupidLanguage.ecore#//Subconcept/essential"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute CupidLanguage.ecore#//Subconcept/ref"/>
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference CupidLanguage.ecore#//Subconcept/conceptDef"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference CupidLanguage.ecore#//Subconcept/mapping"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference CupidLanguage.ecore#//Subconcept/annotation"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference CupidLanguage.ecore#//Subconcept/body"/>
+    </genClasses>
+    <genClasses ecoreClass="CupidLanguage.ecore#//Annotation">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute CupidLanguage.ecore#//Annotation/key"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute CupidLanguage.ecore#//Annotation/value"/>
     </genClasses>
     <genClasses ecoreClass="CupidLanguage.ecore#//ConceptDef">
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute CupidLanguage.ecore#//ConceptDef/top"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute CupidLanguage.ecore#//ConceptDef/name"/>
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference CupidLanguage.ecore#//ConceptDef/mapping"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference CupidLanguage.ecore#//ConceptDef/annotation"/>
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference CupidLanguage.ecore#//ConceptDef/body"/>
-    </genClasses>
-    <genClasses ecoreClass="CupidLanguage.ecore#//AnonymousConcept">
-      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference CupidLanguage.ecore#//AnonymousConcept/mapping"/>
-      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference CupidLanguage.ecore#//AnonymousConcept/body"/>
     </genClasses>
     <genClasses ecoreClass="CupidLanguage.ecore#//ConceptDefBody">
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference CupidLanguage.ecore#//ConceptDefBody/subconcept"/>
-    </genClasses>
-    <genClasses ecoreClass="CupidLanguage.ecore#//ConceptRef">
-      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference CupidLanguage.ecore#//ConceptRef/name"/>
     </genClasses>
     <genClasses ecoreClass="CupidLanguage.ecore#//Cardinality">
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute CupidLanguage.ecore#//Cardinality/zeroOrMore"/>
@@ -44,6 +49,7 @@
     <genClasses ecoreClass="CupidLanguage.ecore#//Module">
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference CupidLanguage.ecore#//Module/name"/>
     </genClasses>
+    <genClasses ecoreClass="CupidLanguage.ecore#//ModuleName"/>
     <genClasses ecoreClass="CupidLanguage.ecore#//UsesModule">
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference CupidLanguage.ecore#//UsesModule/name"/>
     </genClasses>

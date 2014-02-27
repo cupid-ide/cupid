@@ -57,60 +57,78 @@ public interface CupidLanguagePackage extends EPackage
   CupidLanguagePackage eINSTANCE = org.earthsystemcurator.cupidLanguage.impl.CupidLanguagePackageImpl.init();
 
   /**
-   * The meta object id for the '{@link org.earthsystemcurator.cupidLanguage.impl.MappingsImpl <em>Mappings</em>}' class.
+   * The meta object id for the '{@link org.earthsystemcurator.cupidLanguage.impl.LanguageImpl <em>Language</em>}' class.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @see org.earthsystemcurator.cupidLanguage.impl.MappingsImpl
-   * @see org.earthsystemcurator.cupidLanguage.impl.CupidLanguagePackageImpl#getMappings()
+   * @see org.earthsystemcurator.cupidLanguage.impl.LanguageImpl
+   * @see org.earthsystemcurator.cupidLanguage.impl.CupidLanguagePackageImpl#getLanguage()
    * @generated
    */
-  int MAPPINGS = 0;
+  int LANGUAGE = 0;
 
   /**
-   * The feature id for the '<em><b>Mappings</b></em>' containment reference list.
+   * The feature id for the '<em><b>Name</b></em>' attribute.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @generated
    * @ordered
    */
-  int MAPPINGS__MAPPINGS = 0;
+  int LANGUAGE__NAME = 0;
 
   /**
-   * The feature id for the '<em><b>Concepts</b></em>' containment reference list.
+   * The feature id for the '<em><b>Uri</b></em>' attribute.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @generated
    * @ordered
    */
-  int MAPPINGS__CONCEPTS = 1;
+  int LANGUAGE__URI = 1;
 
   /**
-   * The number of structural features of the '<em>Mappings</em>' class.
+   * The feature id for the '<em><b>Concept Def</b></em>' containment reference list.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @generated
    * @ordered
    */
-  int MAPPINGS_FEATURE_COUNT = 2;
+  int LANGUAGE__CONCEPT_DEF = 2;
 
   /**
-   * The meta object id for the '{@link org.earthsystemcurator.cupidLanguage.impl.ConceptDefOrRefImpl <em>Concept Def Or Ref</em>}' class.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @see org.earthsystemcurator.cupidLanguage.impl.ConceptDefOrRefImpl
-   * @see org.earthsystemcurator.cupidLanguage.impl.CupidLanguagePackageImpl#getConceptDefOrRef()
-   * @generated
-   */
-  int CONCEPT_DEF_OR_REF = 1;
-
-  /**
-   * The feature id for the '<em><b>Local Name</b></em>' attribute.
+   * The number of structural features of the '<em>Language</em>' class.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @generated
    * @ordered
    */
-  int CONCEPT_DEF_OR_REF__LOCAL_NAME = 0;
+  int LANGUAGE_FEATURE_COUNT = 3;
+
+  /**
+   * The meta object id for the '{@link org.earthsystemcurator.cupidLanguage.impl.SubconceptImpl <em>Subconcept</em>}' class.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @see org.earthsystemcurator.cupidLanguage.impl.SubconceptImpl
+   * @see org.earthsystemcurator.cupidLanguage.impl.CupidLanguagePackageImpl#getSubconcept()
+   * @generated
+   */
+  int SUBCONCEPT = 1;
+
+  /**
+   * The feature id for the '<em><b>Attrib</b></em>' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int SUBCONCEPT__ATTRIB = 0;
+
+  /**
+   * The feature id for the '<em><b>Name</b></em>' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int SUBCONCEPT__NAME = 1;
 
   /**
    * The feature id for the '<em><b>Cardinality</b></em>' containment reference.
@@ -119,25 +137,107 @@ public interface CupidLanguagePackage extends EPackage
    * @generated
    * @ordered
    */
-  int CONCEPT_DEF_OR_REF__CARDINALITY = 1;
+  int SUBCONCEPT__CARDINALITY = 2;
 
   /**
-   * The feature id for the '<em><b>Required</b></em>' attribute.
+   * The feature id for the '<em><b>Essential</b></em>' attribute.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @generated
    * @ordered
    */
-  int CONCEPT_DEF_OR_REF__REQUIRED = 2;
+  int SUBCONCEPT__ESSENTIAL = 3;
 
   /**
-   * The number of structural features of the '<em>Concept Def Or Ref</em>' class.
+   * The feature id for the '<em><b>Ref</b></em>' attribute.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @generated
    * @ordered
    */
-  int CONCEPT_DEF_OR_REF_FEATURE_COUNT = 3;
+  int SUBCONCEPT__REF = 4;
+
+  /**
+   * The feature id for the '<em><b>Concept Def</b></em>' reference.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int SUBCONCEPT__CONCEPT_DEF = 5;
+
+  /**
+   * The feature id for the '<em><b>Mapping</b></em>' containment reference.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int SUBCONCEPT__MAPPING = 6;
+
+  /**
+   * The feature id for the '<em><b>Annotation</b></em>' containment reference list.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int SUBCONCEPT__ANNOTATION = 7;
+
+  /**
+   * The feature id for the '<em><b>Body</b></em>' containment reference.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int SUBCONCEPT__BODY = 8;
+
+  /**
+   * The number of structural features of the '<em>Subconcept</em>' class.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int SUBCONCEPT_FEATURE_COUNT = 9;
+
+  /**
+   * The meta object id for the '{@link org.earthsystemcurator.cupidLanguage.impl.AnnotationImpl <em>Annotation</em>}' class.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @see org.earthsystemcurator.cupidLanguage.impl.AnnotationImpl
+   * @see org.earthsystemcurator.cupidLanguage.impl.CupidLanguagePackageImpl#getAnnotation()
+   * @generated
+   */
+  int ANNOTATION = 2;
+
+  /**
+   * The feature id for the '<em><b>Key</b></em>' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int ANNOTATION__KEY = 0;
+
+  /**
+   * The feature id for the '<em><b>Value</b></em>' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int ANNOTATION__VALUE = 1;
+
+  /**
+   * The number of structural features of the '<em>Annotation</em>' class.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int ANNOTATION_FEATURE_COUNT = 2;
 
   /**
    * The meta object id for the '{@link org.earthsystemcurator.cupidLanguage.impl.ConceptDefImpl <em>Concept Def</em>}' class.
@@ -147,7 +247,7 @@ public interface CupidLanguagePackage extends EPackage
    * @see org.earthsystemcurator.cupidLanguage.impl.CupidLanguagePackageImpl#getConceptDef()
    * @generated
    */
-  int CONCEPT_DEF = 2;
+  int CONCEPT_DEF = 3;
 
   /**
    * The feature id for the '<em><b>Top</b></em>' attribute.
@@ -177,13 +277,22 @@ public interface CupidLanguagePackage extends EPackage
   int CONCEPT_DEF__MAPPING = 2;
 
   /**
+   * The feature id for the '<em><b>Annotation</b></em>' containment reference list.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int CONCEPT_DEF__ANNOTATION = 3;
+
+  /**
    * The feature id for the '<em><b>Body</b></em>' containment reference.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @generated
    * @ordered
    */
-  int CONCEPT_DEF__BODY = 3;
+  int CONCEPT_DEF__BODY = 4;
 
   /**
    * The number of structural features of the '<em>Concept Def</em>' class.
@@ -192,71 +301,7 @@ public interface CupidLanguagePackage extends EPackage
    * @generated
    * @ordered
    */
-  int CONCEPT_DEF_FEATURE_COUNT = 4;
-
-  /**
-   * The meta object id for the '{@link org.earthsystemcurator.cupidLanguage.impl.AnonymousConceptImpl <em>Anonymous Concept</em>}' class.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @see org.earthsystemcurator.cupidLanguage.impl.AnonymousConceptImpl
-   * @see org.earthsystemcurator.cupidLanguage.impl.CupidLanguagePackageImpl#getAnonymousConcept()
-   * @generated
-   */
-  int ANONYMOUS_CONCEPT = 3;
-
-  /**
-   * The feature id for the '<em><b>Local Name</b></em>' attribute.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   * @ordered
-   */
-  int ANONYMOUS_CONCEPT__LOCAL_NAME = CONCEPT_DEF_OR_REF__LOCAL_NAME;
-
-  /**
-   * The feature id for the '<em><b>Cardinality</b></em>' containment reference.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   * @ordered
-   */
-  int ANONYMOUS_CONCEPT__CARDINALITY = CONCEPT_DEF_OR_REF__CARDINALITY;
-
-  /**
-   * The feature id for the '<em><b>Required</b></em>' attribute.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   * @ordered
-   */
-  int ANONYMOUS_CONCEPT__REQUIRED = CONCEPT_DEF_OR_REF__REQUIRED;
-
-  /**
-   * The feature id for the '<em><b>Mapping</b></em>' containment reference.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   * @ordered
-   */
-  int ANONYMOUS_CONCEPT__MAPPING = CONCEPT_DEF_OR_REF_FEATURE_COUNT + 0;
-
-  /**
-   * The feature id for the '<em><b>Body</b></em>' containment reference.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   * @ordered
-   */
-  int ANONYMOUS_CONCEPT__BODY = CONCEPT_DEF_OR_REF_FEATURE_COUNT + 1;
-
-  /**
-   * The number of structural features of the '<em>Anonymous Concept</em>' class.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   * @ordered
-   */
-  int ANONYMOUS_CONCEPT_FEATURE_COUNT = CONCEPT_DEF_OR_REF_FEATURE_COUNT + 2;
+  int CONCEPT_DEF_FEATURE_COUNT = 5;
 
   /**
    * The meta object id for the '{@link org.earthsystemcurator.cupidLanguage.impl.ConceptDefBodyImpl <em>Concept Def Body</em>}' class.
@@ -287,61 +332,6 @@ public interface CupidLanguagePackage extends EPackage
   int CONCEPT_DEF_BODY_FEATURE_COUNT = 1;
 
   /**
-   * The meta object id for the '{@link org.earthsystemcurator.cupidLanguage.impl.ConceptRefImpl <em>Concept Ref</em>}' class.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @see org.earthsystemcurator.cupidLanguage.impl.ConceptRefImpl
-   * @see org.earthsystemcurator.cupidLanguage.impl.CupidLanguagePackageImpl#getConceptRef()
-   * @generated
-   */
-  int CONCEPT_REF = 5;
-
-  /**
-   * The feature id for the '<em><b>Local Name</b></em>' attribute.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   * @ordered
-   */
-  int CONCEPT_REF__LOCAL_NAME = CONCEPT_DEF_OR_REF__LOCAL_NAME;
-
-  /**
-   * The feature id for the '<em><b>Cardinality</b></em>' containment reference.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   * @ordered
-   */
-  int CONCEPT_REF__CARDINALITY = CONCEPT_DEF_OR_REF__CARDINALITY;
-
-  /**
-   * The feature id for the '<em><b>Required</b></em>' attribute.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   * @ordered
-   */
-  int CONCEPT_REF__REQUIRED = CONCEPT_DEF_OR_REF__REQUIRED;
-
-  /**
-   * The feature id for the '<em><b>Name</b></em>' reference.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   * @ordered
-   */
-  int CONCEPT_REF__NAME = CONCEPT_DEF_OR_REF_FEATURE_COUNT + 0;
-
-  /**
-   * The number of structural features of the '<em>Concept Ref</em>' class.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   * @ordered
-   */
-  int CONCEPT_REF_FEATURE_COUNT = CONCEPT_DEF_OR_REF_FEATURE_COUNT + 1;
-
-  /**
    * The meta object id for the '{@link org.earthsystemcurator.cupidLanguage.impl.CardinalityImpl <em>Cardinality</em>}' class.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
@@ -349,7 +339,7 @@ public interface CupidLanguagePackage extends EPackage
    * @see org.earthsystemcurator.cupidLanguage.impl.CupidLanguagePackageImpl#getCardinality()
    * @generated
    */
-  int CARDINALITY = 6;
+  int CARDINALITY = 5;
 
   /**
    * The feature id for the '<em><b>Zero Or More</b></em>' attribute.
@@ -386,7 +376,7 @@ public interface CupidLanguagePackage extends EPackage
    * @see org.earthsystemcurator.cupidLanguage.impl.CupidLanguagePackageImpl#getMapping()
    * @generated
    */
-  int MAPPING = 7;
+  int MAPPING = 6;
 
   /**
    * The feature id for the '<em><b>Context</b></em>' containment reference.
@@ -423,7 +413,7 @@ public interface CupidLanguagePackage extends EPackage
    * @see org.earthsystemcurator.cupidLanguage.impl.CupidLanguagePackageImpl#getImplicitContextMapping()
    * @generated
    */
-  int IMPLICIT_CONTEXT_MAPPING = 8;
+  int IMPLICIT_CONTEXT_MAPPING = 7;
 
   /**
    * The number of structural features of the '<em>Implicit Context Mapping</em>' class.
@@ -442,7 +432,7 @@ public interface CupidLanguagePackage extends EPackage
    * @see org.earthsystemcurator.cupidLanguage.impl.CupidLanguagePackageImpl#getModule()
    * @generated
    */
-  int MODULE = 9;
+  int MODULE = 8;
 
   /**
    * The feature id for the '<em><b>Name</b></em>' containment reference.
@@ -461,6 +451,25 @@ public interface CupidLanguagePackage extends EPackage
    * @ordered
    */
   int MODULE_FEATURE_COUNT = IMPLICIT_CONTEXT_MAPPING_FEATURE_COUNT + 1;
+
+  /**
+   * The meta object id for the '{@link org.earthsystemcurator.cupidLanguage.impl.ModuleNameImpl <em>Module Name</em>}' class.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @see org.earthsystemcurator.cupidLanguage.impl.ModuleNameImpl
+   * @see org.earthsystemcurator.cupidLanguage.impl.CupidLanguagePackageImpl#getModuleName()
+   * @generated
+   */
+  int MODULE_NAME = 9;
+
+  /**
+   * The number of structural features of the '<em>Module Name</em>' class.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int MODULE_NAME_FEATURE_COUNT = IMPLICIT_CONTEXT_MAPPING_FEATURE_COUNT + 0;
 
   /**
    * The meta object id for the '{@link org.earthsystemcurator.cupidLanguage.impl.UsesModuleImpl <em>Uses Module</em>}' class.
@@ -926,79 +935,188 @@ public interface CupidLanguagePackage extends EPackage
 
 
   /**
-   * Returns the meta object for class '{@link org.earthsystemcurator.cupidLanguage.Mappings <em>Mappings</em>}'.
+   * Returns the meta object for class '{@link org.earthsystemcurator.cupidLanguage.Language <em>Language</em>}'.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @return the meta object for class '<em>Mappings</em>'.
-   * @see org.earthsystemcurator.cupidLanguage.Mappings
+   * @return the meta object for class '<em>Language</em>'.
+   * @see org.earthsystemcurator.cupidLanguage.Language
    * @generated
    */
-  EClass getMappings();
+  EClass getLanguage();
 
   /**
-   * Returns the meta object for the containment reference list '{@link org.earthsystemcurator.cupidLanguage.Mappings#getMappings <em>Mappings</em>}'.
+   * Returns the meta object for the attribute '{@link org.earthsystemcurator.cupidLanguage.Language#getName <em>Name</em>}'.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @return the meta object for the containment reference list '<em>Mappings</em>'.
-   * @see org.earthsystemcurator.cupidLanguage.Mappings#getMappings()
-   * @see #getMappings()
+   * @return the meta object for the attribute '<em>Name</em>'.
+   * @see org.earthsystemcurator.cupidLanguage.Language#getName()
+   * @see #getLanguage()
    * @generated
    */
-  EReference getMappings_Mappings();
+  EAttribute getLanguage_Name();
 
   /**
-   * Returns the meta object for the containment reference list '{@link org.earthsystemcurator.cupidLanguage.Mappings#getConcepts <em>Concepts</em>}'.
+   * Returns the meta object for the attribute '{@link org.earthsystemcurator.cupidLanguage.Language#getUri <em>Uri</em>}'.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @return the meta object for the containment reference list '<em>Concepts</em>'.
-   * @see org.earthsystemcurator.cupidLanguage.Mappings#getConcepts()
-   * @see #getMappings()
+   * @return the meta object for the attribute '<em>Uri</em>'.
+   * @see org.earthsystemcurator.cupidLanguage.Language#getUri()
+   * @see #getLanguage()
    * @generated
    */
-  EReference getMappings_Concepts();
+  EAttribute getLanguage_Uri();
 
   /**
-   * Returns the meta object for class '{@link org.earthsystemcurator.cupidLanguage.ConceptDefOrRef <em>Concept Def Or Ref</em>}'.
+   * Returns the meta object for the containment reference list '{@link org.earthsystemcurator.cupidLanguage.Language#getConceptDef <em>Concept Def</em>}'.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @return the meta object for class '<em>Concept Def Or Ref</em>'.
-   * @see org.earthsystemcurator.cupidLanguage.ConceptDefOrRef
+   * @return the meta object for the containment reference list '<em>Concept Def</em>'.
+   * @see org.earthsystemcurator.cupidLanguage.Language#getConceptDef()
+   * @see #getLanguage()
    * @generated
    */
-  EClass getConceptDefOrRef();
+  EReference getLanguage_ConceptDef();
 
   /**
-   * Returns the meta object for the attribute '{@link org.earthsystemcurator.cupidLanguage.ConceptDefOrRef#getLocalName <em>Local Name</em>}'.
+   * Returns the meta object for class '{@link org.earthsystemcurator.cupidLanguage.Subconcept <em>Subconcept</em>}'.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @return the meta object for the attribute '<em>Local Name</em>'.
-   * @see org.earthsystemcurator.cupidLanguage.ConceptDefOrRef#getLocalName()
-   * @see #getConceptDefOrRef()
+   * @return the meta object for class '<em>Subconcept</em>'.
+   * @see org.earthsystemcurator.cupidLanguage.Subconcept
    * @generated
    */
-  EAttribute getConceptDefOrRef_LocalName();
+  EClass getSubconcept();
 
   /**
-   * Returns the meta object for the containment reference '{@link org.earthsystemcurator.cupidLanguage.ConceptDefOrRef#getCardinality <em>Cardinality</em>}'.
+   * Returns the meta object for the attribute '{@link org.earthsystemcurator.cupidLanguage.Subconcept#isAttrib <em>Attrib</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for the attribute '<em>Attrib</em>'.
+   * @see org.earthsystemcurator.cupidLanguage.Subconcept#isAttrib()
+   * @see #getSubconcept()
+   * @generated
+   */
+  EAttribute getSubconcept_Attrib();
+
+  /**
+   * Returns the meta object for the attribute '{@link org.earthsystemcurator.cupidLanguage.Subconcept#getName <em>Name</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for the attribute '<em>Name</em>'.
+   * @see org.earthsystemcurator.cupidLanguage.Subconcept#getName()
+   * @see #getSubconcept()
+   * @generated
+   */
+  EAttribute getSubconcept_Name();
+
+  /**
+   * Returns the meta object for the containment reference '{@link org.earthsystemcurator.cupidLanguage.Subconcept#getCardinality <em>Cardinality</em>}'.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @return the meta object for the containment reference '<em>Cardinality</em>'.
-   * @see org.earthsystemcurator.cupidLanguage.ConceptDefOrRef#getCardinality()
-   * @see #getConceptDefOrRef()
+   * @see org.earthsystemcurator.cupidLanguage.Subconcept#getCardinality()
+   * @see #getSubconcept()
    * @generated
    */
-  EReference getConceptDefOrRef_Cardinality();
+  EReference getSubconcept_Cardinality();
 
   /**
-   * Returns the meta object for the attribute '{@link org.earthsystemcurator.cupidLanguage.ConceptDefOrRef#isRequired <em>Required</em>}'.
+   * Returns the meta object for the attribute '{@link org.earthsystemcurator.cupidLanguage.Subconcept#isEssential <em>Essential</em>}'.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @return the meta object for the attribute '<em>Required</em>'.
-   * @see org.earthsystemcurator.cupidLanguage.ConceptDefOrRef#isRequired()
-   * @see #getConceptDefOrRef()
+   * @return the meta object for the attribute '<em>Essential</em>'.
+   * @see org.earthsystemcurator.cupidLanguage.Subconcept#isEssential()
+   * @see #getSubconcept()
    * @generated
    */
-  EAttribute getConceptDefOrRef_Required();
+  EAttribute getSubconcept_Essential();
+
+  /**
+   * Returns the meta object for the attribute '{@link org.earthsystemcurator.cupidLanguage.Subconcept#isRef <em>Ref</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for the attribute '<em>Ref</em>'.
+   * @see org.earthsystemcurator.cupidLanguage.Subconcept#isRef()
+   * @see #getSubconcept()
+   * @generated
+   */
+  EAttribute getSubconcept_Ref();
+
+  /**
+   * Returns the meta object for the reference '{@link org.earthsystemcurator.cupidLanguage.Subconcept#getConceptDef <em>Concept Def</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for the reference '<em>Concept Def</em>'.
+   * @see org.earthsystemcurator.cupidLanguage.Subconcept#getConceptDef()
+   * @see #getSubconcept()
+   * @generated
+   */
+  EReference getSubconcept_ConceptDef();
+
+  /**
+   * Returns the meta object for the containment reference '{@link org.earthsystemcurator.cupidLanguage.Subconcept#getMapping <em>Mapping</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for the containment reference '<em>Mapping</em>'.
+   * @see org.earthsystemcurator.cupidLanguage.Subconcept#getMapping()
+   * @see #getSubconcept()
+   * @generated
+   */
+  EReference getSubconcept_Mapping();
+
+  /**
+   * Returns the meta object for the containment reference list '{@link org.earthsystemcurator.cupidLanguage.Subconcept#getAnnotation <em>Annotation</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for the containment reference list '<em>Annotation</em>'.
+   * @see org.earthsystemcurator.cupidLanguage.Subconcept#getAnnotation()
+   * @see #getSubconcept()
+   * @generated
+   */
+  EReference getSubconcept_Annotation();
+
+  /**
+   * Returns the meta object for the containment reference '{@link org.earthsystemcurator.cupidLanguage.Subconcept#getBody <em>Body</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for the containment reference '<em>Body</em>'.
+   * @see org.earthsystemcurator.cupidLanguage.Subconcept#getBody()
+   * @see #getSubconcept()
+   * @generated
+   */
+  EReference getSubconcept_Body();
+
+  /**
+   * Returns the meta object for class '{@link org.earthsystemcurator.cupidLanguage.Annotation <em>Annotation</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for class '<em>Annotation</em>'.
+   * @see org.earthsystemcurator.cupidLanguage.Annotation
+   * @generated
+   */
+  EClass getAnnotation();
+
+  /**
+   * Returns the meta object for the attribute '{@link org.earthsystemcurator.cupidLanguage.Annotation#getKey <em>Key</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for the attribute '<em>Key</em>'.
+   * @see org.earthsystemcurator.cupidLanguage.Annotation#getKey()
+   * @see #getAnnotation()
+   * @generated
+   */
+  EAttribute getAnnotation_Key();
+
+  /**
+   * Returns the meta object for the attribute '{@link org.earthsystemcurator.cupidLanguage.Annotation#getValue <em>Value</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for the attribute '<em>Value</em>'.
+   * @see org.earthsystemcurator.cupidLanguage.Annotation#getValue()
+   * @see #getAnnotation()
+   * @generated
+   */
+  EAttribute getAnnotation_Value();
 
   /**
    * Returns the meta object for class '{@link org.earthsystemcurator.cupidLanguage.ConceptDef <em>Concept Def</em>}'.
@@ -1044,6 +1162,17 @@ public interface CupidLanguagePackage extends EPackage
   EReference getConceptDef_Mapping();
 
   /**
+   * Returns the meta object for the containment reference list '{@link org.earthsystemcurator.cupidLanguage.ConceptDef#getAnnotation <em>Annotation</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for the containment reference list '<em>Annotation</em>'.
+   * @see org.earthsystemcurator.cupidLanguage.ConceptDef#getAnnotation()
+   * @see #getConceptDef()
+   * @generated
+   */
+  EReference getConceptDef_Annotation();
+
+  /**
    * Returns the meta object for the containment reference '{@link org.earthsystemcurator.cupidLanguage.ConceptDef#getBody <em>Body</em>}'.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
@@ -1053,38 +1182,6 @@ public interface CupidLanguagePackage extends EPackage
    * @generated
    */
   EReference getConceptDef_Body();
-
-  /**
-   * Returns the meta object for class '{@link org.earthsystemcurator.cupidLanguage.AnonymousConcept <em>Anonymous Concept</em>}'.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @return the meta object for class '<em>Anonymous Concept</em>'.
-   * @see org.earthsystemcurator.cupidLanguage.AnonymousConcept
-   * @generated
-   */
-  EClass getAnonymousConcept();
-
-  /**
-   * Returns the meta object for the containment reference '{@link org.earthsystemcurator.cupidLanguage.AnonymousConcept#getMapping <em>Mapping</em>}'.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @return the meta object for the containment reference '<em>Mapping</em>'.
-   * @see org.earthsystemcurator.cupidLanguage.AnonymousConcept#getMapping()
-   * @see #getAnonymousConcept()
-   * @generated
-   */
-  EReference getAnonymousConcept_Mapping();
-
-  /**
-   * Returns the meta object for the containment reference '{@link org.earthsystemcurator.cupidLanguage.AnonymousConcept#getBody <em>Body</em>}'.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @return the meta object for the containment reference '<em>Body</em>'.
-   * @see org.earthsystemcurator.cupidLanguage.AnonymousConcept#getBody()
-   * @see #getAnonymousConcept()
-   * @generated
-   */
-  EReference getAnonymousConcept_Body();
 
   /**
    * Returns the meta object for class '{@link org.earthsystemcurator.cupidLanguage.ConceptDefBody <em>Concept Def Body</em>}'.
@@ -1106,27 +1203,6 @@ public interface CupidLanguagePackage extends EPackage
    * @generated
    */
   EReference getConceptDefBody_Subconcept();
-
-  /**
-   * Returns the meta object for class '{@link org.earthsystemcurator.cupidLanguage.ConceptRef <em>Concept Ref</em>}'.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @return the meta object for class '<em>Concept Ref</em>'.
-   * @see org.earthsystemcurator.cupidLanguage.ConceptRef
-   * @generated
-   */
-  EClass getConceptRef();
-
-  /**
-   * Returns the meta object for the reference '{@link org.earthsystemcurator.cupidLanguage.ConceptRef#getName <em>Name</em>}'.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @return the meta object for the reference '<em>Name</em>'.
-   * @see org.earthsystemcurator.cupidLanguage.ConceptRef#getName()
-   * @see #getConceptRef()
-   * @generated
-   */
-  EReference getConceptRef_Name();
 
   /**
    * Returns the meta object for class '{@link org.earthsystemcurator.cupidLanguage.Cardinality <em>Cardinality</em>}'.
@@ -1222,6 +1298,16 @@ public interface CupidLanguagePackage extends EPackage
    * @generated
    */
   EReference getModule_Name();
+
+  /**
+   * Returns the meta object for class '{@link org.earthsystemcurator.cupidLanguage.ModuleName <em>Module Name</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for class '<em>Module Name</em>'.
+   * @see org.earthsystemcurator.cupidLanguage.ModuleName
+   * @generated
+   */
+  EClass getModuleName();
 
   /**
    * Returns the meta object for class '{@link org.earthsystemcurator.cupidLanguage.UsesModule <em>Uses Module</em>}'.
@@ -1653,48 +1739,64 @@ public interface CupidLanguagePackage extends EPackage
   interface Literals
   {
     /**
-     * The meta object literal for the '{@link org.earthsystemcurator.cupidLanguage.impl.MappingsImpl <em>Mappings</em>}' class.
+     * The meta object literal for the '{@link org.earthsystemcurator.cupidLanguage.impl.LanguageImpl <em>Language</em>}' class.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @see org.earthsystemcurator.cupidLanguage.impl.MappingsImpl
-     * @see org.earthsystemcurator.cupidLanguage.impl.CupidLanguagePackageImpl#getMappings()
+     * @see org.earthsystemcurator.cupidLanguage.impl.LanguageImpl
+     * @see org.earthsystemcurator.cupidLanguage.impl.CupidLanguagePackageImpl#getLanguage()
      * @generated
      */
-    EClass MAPPINGS = eINSTANCE.getMappings();
+    EClass LANGUAGE = eINSTANCE.getLanguage();
 
     /**
-     * The meta object literal for the '<em><b>Mappings</b></em>' containment reference list feature.
+     * The meta object literal for the '<em><b>Name</b></em>' attribute feature.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @generated
      */
-    EReference MAPPINGS__MAPPINGS = eINSTANCE.getMappings_Mappings();
+    EAttribute LANGUAGE__NAME = eINSTANCE.getLanguage_Name();
 
     /**
-     * The meta object literal for the '<em><b>Concepts</b></em>' containment reference list feature.
+     * The meta object literal for the '<em><b>Uri</b></em>' attribute feature.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @generated
      */
-    EReference MAPPINGS__CONCEPTS = eINSTANCE.getMappings_Concepts();
+    EAttribute LANGUAGE__URI = eINSTANCE.getLanguage_Uri();
 
     /**
-     * The meta object literal for the '{@link org.earthsystemcurator.cupidLanguage.impl.ConceptDefOrRefImpl <em>Concept Def Or Ref</em>}' class.
+     * The meta object literal for the '<em><b>Concept Def</b></em>' containment reference list feature.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @see org.earthsystemcurator.cupidLanguage.impl.ConceptDefOrRefImpl
-     * @see org.earthsystemcurator.cupidLanguage.impl.CupidLanguagePackageImpl#getConceptDefOrRef()
      * @generated
      */
-    EClass CONCEPT_DEF_OR_REF = eINSTANCE.getConceptDefOrRef();
+    EReference LANGUAGE__CONCEPT_DEF = eINSTANCE.getLanguage_ConceptDef();
 
     /**
-     * The meta object literal for the '<em><b>Local Name</b></em>' attribute feature.
+     * The meta object literal for the '{@link org.earthsystemcurator.cupidLanguage.impl.SubconceptImpl <em>Subconcept</em>}' class.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @see org.earthsystemcurator.cupidLanguage.impl.SubconceptImpl
+     * @see org.earthsystemcurator.cupidLanguage.impl.CupidLanguagePackageImpl#getSubconcept()
+     * @generated
+     */
+    EClass SUBCONCEPT = eINSTANCE.getSubconcept();
+
+    /**
+     * The meta object literal for the '<em><b>Attrib</b></em>' attribute feature.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @generated
      */
-    EAttribute CONCEPT_DEF_OR_REF__LOCAL_NAME = eINSTANCE.getConceptDefOrRef_LocalName();
+    EAttribute SUBCONCEPT__ATTRIB = eINSTANCE.getSubconcept_Attrib();
+
+    /**
+     * The meta object literal for the '<em><b>Name</b></em>' attribute feature.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    EAttribute SUBCONCEPT__NAME = eINSTANCE.getSubconcept_Name();
 
     /**
      * The meta object literal for the '<em><b>Cardinality</b></em>' containment reference feature.
@@ -1702,15 +1804,81 @@ public interface CupidLanguagePackage extends EPackage
      * <!-- end-user-doc -->
      * @generated
      */
-    EReference CONCEPT_DEF_OR_REF__CARDINALITY = eINSTANCE.getConceptDefOrRef_Cardinality();
+    EReference SUBCONCEPT__CARDINALITY = eINSTANCE.getSubconcept_Cardinality();
 
     /**
-     * The meta object literal for the '<em><b>Required</b></em>' attribute feature.
+     * The meta object literal for the '<em><b>Essential</b></em>' attribute feature.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @generated
      */
-    EAttribute CONCEPT_DEF_OR_REF__REQUIRED = eINSTANCE.getConceptDefOrRef_Required();
+    EAttribute SUBCONCEPT__ESSENTIAL = eINSTANCE.getSubconcept_Essential();
+
+    /**
+     * The meta object literal for the '<em><b>Ref</b></em>' attribute feature.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    EAttribute SUBCONCEPT__REF = eINSTANCE.getSubconcept_Ref();
+
+    /**
+     * The meta object literal for the '<em><b>Concept Def</b></em>' reference feature.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    EReference SUBCONCEPT__CONCEPT_DEF = eINSTANCE.getSubconcept_ConceptDef();
+
+    /**
+     * The meta object literal for the '<em><b>Mapping</b></em>' containment reference feature.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    EReference SUBCONCEPT__MAPPING = eINSTANCE.getSubconcept_Mapping();
+
+    /**
+     * The meta object literal for the '<em><b>Annotation</b></em>' containment reference list feature.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    EReference SUBCONCEPT__ANNOTATION = eINSTANCE.getSubconcept_Annotation();
+
+    /**
+     * The meta object literal for the '<em><b>Body</b></em>' containment reference feature.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    EReference SUBCONCEPT__BODY = eINSTANCE.getSubconcept_Body();
+
+    /**
+     * The meta object literal for the '{@link org.earthsystemcurator.cupidLanguage.impl.AnnotationImpl <em>Annotation</em>}' class.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @see org.earthsystemcurator.cupidLanguage.impl.AnnotationImpl
+     * @see org.earthsystemcurator.cupidLanguage.impl.CupidLanguagePackageImpl#getAnnotation()
+     * @generated
+     */
+    EClass ANNOTATION = eINSTANCE.getAnnotation();
+
+    /**
+     * The meta object literal for the '<em><b>Key</b></em>' attribute feature.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    EAttribute ANNOTATION__KEY = eINSTANCE.getAnnotation_Key();
+
+    /**
+     * The meta object literal for the '<em><b>Value</b></em>' attribute feature.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    EAttribute ANNOTATION__VALUE = eINSTANCE.getAnnotation_Value();
 
     /**
      * The meta object literal for the '{@link org.earthsystemcurator.cupidLanguage.impl.ConceptDefImpl <em>Concept Def</em>}' class.
@@ -1747,38 +1915,20 @@ public interface CupidLanguagePackage extends EPackage
     EReference CONCEPT_DEF__MAPPING = eINSTANCE.getConceptDef_Mapping();
 
     /**
+     * The meta object literal for the '<em><b>Annotation</b></em>' containment reference list feature.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    EReference CONCEPT_DEF__ANNOTATION = eINSTANCE.getConceptDef_Annotation();
+
+    /**
      * The meta object literal for the '<em><b>Body</b></em>' containment reference feature.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @generated
      */
     EReference CONCEPT_DEF__BODY = eINSTANCE.getConceptDef_Body();
-
-    /**
-     * The meta object literal for the '{@link org.earthsystemcurator.cupidLanguage.impl.AnonymousConceptImpl <em>Anonymous Concept</em>}' class.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @see org.earthsystemcurator.cupidLanguage.impl.AnonymousConceptImpl
-     * @see org.earthsystemcurator.cupidLanguage.impl.CupidLanguagePackageImpl#getAnonymousConcept()
-     * @generated
-     */
-    EClass ANONYMOUS_CONCEPT = eINSTANCE.getAnonymousConcept();
-
-    /**
-     * The meta object literal for the '<em><b>Mapping</b></em>' containment reference feature.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    EReference ANONYMOUS_CONCEPT__MAPPING = eINSTANCE.getAnonymousConcept_Mapping();
-
-    /**
-     * The meta object literal for the '<em><b>Body</b></em>' containment reference feature.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    EReference ANONYMOUS_CONCEPT__BODY = eINSTANCE.getAnonymousConcept_Body();
 
     /**
      * The meta object literal for the '{@link org.earthsystemcurator.cupidLanguage.impl.ConceptDefBodyImpl <em>Concept Def Body</em>}' class.
@@ -1797,24 +1947,6 @@ public interface CupidLanguagePackage extends EPackage
      * @generated
      */
     EReference CONCEPT_DEF_BODY__SUBCONCEPT = eINSTANCE.getConceptDefBody_Subconcept();
-
-    /**
-     * The meta object literal for the '{@link org.earthsystemcurator.cupidLanguage.impl.ConceptRefImpl <em>Concept Ref</em>}' class.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @see org.earthsystemcurator.cupidLanguage.impl.ConceptRefImpl
-     * @see org.earthsystemcurator.cupidLanguage.impl.CupidLanguagePackageImpl#getConceptRef()
-     * @generated
-     */
-    EClass CONCEPT_REF = eINSTANCE.getConceptRef();
-
-    /**
-     * The meta object literal for the '<em><b>Name</b></em>' reference feature.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    EReference CONCEPT_REF__NAME = eINSTANCE.getConceptRef_Name();
 
     /**
      * The meta object literal for the '{@link org.earthsystemcurator.cupidLanguage.impl.CardinalityImpl <em>Cardinality</em>}' class.
@@ -1895,6 +2027,16 @@ public interface CupidLanguagePackage extends EPackage
      * @generated
      */
     EReference MODULE__NAME = eINSTANCE.getModule_Name();
+
+    /**
+     * The meta object literal for the '{@link org.earthsystemcurator.cupidLanguage.impl.ModuleNameImpl <em>Module Name</em>}' class.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @see org.earthsystemcurator.cupidLanguage.impl.ModuleNameImpl
+     * @see org.earthsystemcurator.cupidLanguage.impl.CupidLanguagePackageImpl#getModuleName()
+     * @generated
+     */
+    EClass MODULE_NAME = eINSTANCE.getModuleName();
 
     /**
      * The meta object literal for the '{@link org.earthsystemcurator.cupidLanguage.impl.UsesModuleImpl <em>Uses Module</em>}' class.

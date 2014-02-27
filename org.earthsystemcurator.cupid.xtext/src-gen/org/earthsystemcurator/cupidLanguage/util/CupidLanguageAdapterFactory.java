@@ -75,14 +75,19 @@ public class CupidLanguageAdapterFactory extends AdapterFactoryImpl
     new CupidLanguageSwitch<Adapter>()
     {
       @Override
-      public Adapter caseMappings(Mappings object)
+      public Adapter caseLanguage(Language object)
       {
-        return createMappingsAdapter();
+        return createLanguageAdapter();
       }
       @Override
-      public Adapter caseConceptDefOrRef(ConceptDefOrRef object)
+      public Adapter caseSubconcept(Subconcept object)
       {
-        return createConceptDefOrRefAdapter();
+        return createSubconceptAdapter();
+      }
+      @Override
+      public Adapter caseAnnotation(Annotation object)
+      {
+        return createAnnotationAdapter();
       }
       @Override
       public Adapter caseConceptDef(ConceptDef object)
@@ -90,19 +95,9 @@ public class CupidLanguageAdapterFactory extends AdapterFactoryImpl
         return createConceptDefAdapter();
       }
       @Override
-      public Adapter caseAnonymousConcept(AnonymousConcept object)
-      {
-        return createAnonymousConceptAdapter();
-      }
-      @Override
       public Adapter caseConceptDefBody(ConceptDefBody object)
       {
         return createConceptDefBodyAdapter();
-      }
-      @Override
-      public Adapter caseConceptRef(ConceptRef object)
-      {
-        return createConceptRefAdapter();
       }
       @Override
       public Adapter caseCardinality(Cardinality object)
@@ -123,6 +118,11 @@ public class CupidLanguageAdapterFactory extends AdapterFactoryImpl
       public Adapter caseModule(Module object)
       {
         return createModuleAdapter();
+      }
+      @Override
+      public Adapter caseModuleName(ModuleName object)
+      {
+        return createModuleNameAdapter();
       }
       @Override
       public Adapter caseUsesModule(UsesModule object)
@@ -207,31 +207,46 @@ public class CupidLanguageAdapterFactory extends AdapterFactoryImpl
 
 
   /**
-   * Creates a new adapter for an object of class '{@link org.earthsystemcurator.cupidLanguage.Mappings <em>Mappings</em>}'.
+   * Creates a new adapter for an object of class '{@link org.earthsystemcurator.cupidLanguage.Language <em>Language</em>}'.
    * <!-- begin-user-doc -->
    * This default implementation returns null so that we can easily ignore cases;
    * it's useful to ignore a case when inheritance will catch all the cases anyway.
    * <!-- end-user-doc -->
    * @return the new adapter.
-   * @see org.earthsystemcurator.cupidLanguage.Mappings
+   * @see org.earthsystemcurator.cupidLanguage.Language
    * @generated
    */
-  public Adapter createMappingsAdapter()
+  public Adapter createLanguageAdapter()
   {
     return null;
   }
 
   /**
-   * Creates a new adapter for an object of class '{@link org.earthsystemcurator.cupidLanguage.ConceptDefOrRef <em>Concept Def Or Ref</em>}'.
+   * Creates a new adapter for an object of class '{@link org.earthsystemcurator.cupidLanguage.Subconcept <em>Subconcept</em>}'.
    * <!-- begin-user-doc -->
    * This default implementation returns null so that we can easily ignore cases;
    * it's useful to ignore a case when inheritance will catch all the cases anyway.
    * <!-- end-user-doc -->
    * @return the new adapter.
-   * @see org.earthsystemcurator.cupidLanguage.ConceptDefOrRef
+   * @see org.earthsystemcurator.cupidLanguage.Subconcept
    * @generated
    */
-  public Adapter createConceptDefOrRefAdapter()
+  public Adapter createSubconceptAdapter()
+  {
+    return null;
+  }
+
+  /**
+   * Creates a new adapter for an object of class '{@link org.earthsystemcurator.cupidLanguage.Annotation <em>Annotation</em>}'.
+   * <!-- begin-user-doc -->
+   * This default implementation returns null so that we can easily ignore cases;
+   * it's useful to ignore a case when inheritance will catch all the cases anyway.
+   * <!-- end-user-doc -->
+   * @return the new adapter.
+   * @see org.earthsystemcurator.cupidLanguage.Annotation
+   * @generated
+   */
+  public Adapter createAnnotationAdapter()
   {
     return null;
   }
@@ -252,21 +267,6 @@ public class CupidLanguageAdapterFactory extends AdapterFactoryImpl
   }
 
   /**
-   * Creates a new adapter for an object of class '{@link org.earthsystemcurator.cupidLanguage.AnonymousConcept <em>Anonymous Concept</em>}'.
-   * <!-- begin-user-doc -->
-   * This default implementation returns null so that we can easily ignore cases;
-   * it's useful to ignore a case when inheritance will catch all the cases anyway.
-   * <!-- end-user-doc -->
-   * @return the new adapter.
-   * @see org.earthsystemcurator.cupidLanguage.AnonymousConcept
-   * @generated
-   */
-  public Adapter createAnonymousConceptAdapter()
-  {
-    return null;
-  }
-
-  /**
    * Creates a new adapter for an object of class '{@link org.earthsystemcurator.cupidLanguage.ConceptDefBody <em>Concept Def Body</em>}'.
    * <!-- begin-user-doc -->
    * This default implementation returns null so that we can easily ignore cases;
@@ -277,21 +277,6 @@ public class CupidLanguageAdapterFactory extends AdapterFactoryImpl
    * @generated
    */
   public Adapter createConceptDefBodyAdapter()
-  {
-    return null;
-  }
-
-  /**
-   * Creates a new adapter for an object of class '{@link org.earthsystemcurator.cupidLanguage.ConceptRef <em>Concept Ref</em>}'.
-   * <!-- begin-user-doc -->
-   * This default implementation returns null so that we can easily ignore cases;
-   * it's useful to ignore a case when inheritance will catch all the cases anyway.
-   * <!-- end-user-doc -->
-   * @return the new adapter.
-   * @see org.earthsystemcurator.cupidLanguage.ConceptRef
-   * @generated
-   */
-  public Adapter createConceptRefAdapter()
   {
     return null;
   }
@@ -352,6 +337,21 @@ public class CupidLanguageAdapterFactory extends AdapterFactoryImpl
    * @generated
    */
   public Adapter createModuleAdapter()
+  {
+    return null;
+  }
+
+  /**
+   * Creates a new adapter for an object of class '{@link org.earthsystemcurator.cupidLanguage.ModuleName <em>Module Name</em>}'.
+   * <!-- begin-user-doc -->
+   * This default implementation returns null so that we can easily ignore cases;
+   * it's useful to ignore a case when inheritance will catch all the cases anyway.
+   * <!-- end-user-doc -->
+   * @return the new adapter.
+   * @see org.earthsystemcurator.cupidLanguage.ModuleName
+   * @generated
+   */
+  public Adapter createModuleNameAdapter()
   {
     return null;
   }

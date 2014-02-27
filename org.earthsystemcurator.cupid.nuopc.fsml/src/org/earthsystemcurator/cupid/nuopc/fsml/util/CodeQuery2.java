@@ -1,7 +1,7 @@
 package org.earthsystemcurator.cupid.nuopc.fsml.util;
 
-import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
@@ -12,18 +12,25 @@ import org.earthsystemcurator.cupidLanguage.Call;
 import org.earthsystemcurator.cupidLanguage.FormalParam;
 import org.earthsystemcurator.cupidLanguage.IDOrPathExpr;
 import org.earthsystemcurator.cupidLanguage.IDOrWildcard;
+import org.earthsystemcurator.cupidLanguage.Mapping;
+import org.earthsystemcurator.cupidLanguage.Module;
+import org.earthsystemcurator.cupidLanguage.ModuleName;
 import org.earthsystemcurator.cupidLanguage.PathExpr;
 import org.earthsystemcurator.cupidLanguage.Subroutine;
 import org.earthsystemcurator.cupidLanguage.SubroutineName;
+import org.earthsystemcurator.cupidLanguage.UsesEntity;
+import org.earthsystemcurator.cupidLanguage.UsesModule;
 import org.eclipse.photran.core.IFortranAST;
 import org.eclipse.photran.internal.core.analysis.binding.Definition;
 import org.eclipse.photran.internal.core.analysis.types.DerivedType;
 import org.eclipse.photran.internal.core.analysis.types.Type;
-import org.eclipse.photran.internal.core.lexer.Token;
 import org.eclipse.photran.internal.core.parser.ASTCallStmtNode;
+import org.eclipse.photran.internal.core.parser.ASTModuleNode;
+import org.eclipse.photran.internal.core.parser.ASTOnlyNode;
 import org.eclipse.photran.internal.core.parser.ASTSubroutineArgNode;
 import org.eclipse.photran.internal.core.parser.ASTSubroutineParNode;
 import org.eclipse.photran.internal.core.parser.ASTSubroutineSubprogramNode;
+import org.eclipse.photran.internal.core.parser.ASTUseStmtNode;
 import org.eclipse.photran.internal.core.parser.IASTListNode;
 import org.eclipse.photran.internal.core.parser.IASTNode;
 
@@ -95,6 +102,129 @@ public class CodeQuery2 {
 		return result;	
 		
 	}
+	
+	public static Map<ASTModuleNode, Map<PathExpr, String>> module(Set<IFortranAST> asts, Module mapping) {
+		
+		Map<ASTModuleNode, Map<PathExpr, String>> result = new HashMap<ASTModuleNode, Map<PathExpr, String>>();
+		
+		for (IFortranAST astToCheck : asts) {
+			if (astToCheck.getRoot() != null &&
+				astToCheck.getRoot().getProgramUnitList() != null && 
+			    astToCheck.getRoot().getProgramUnitList().size() > 0 &&
+			    astToCheck.getRoot().getProgramUnitList().get(0) instanceof ASTModuleNode) {
+				
+				ASTModuleNode node = (ASTModuleNode) astToCheck.getRoot().getProgramUnitList().get(0);
+				
+				if (mapping.getName() != null) {
+					if (mapping.getName() instanceof IDOrWildcard) {
+						IDOrWildcard moduleName = (IDOrWildcard) mapping.getName();
+						if (moduleName.isWildcard() ||
+						    moduleName.getId().equalsIgnoreCase(node.getModuleStmt().getModuleName().getModuleName().getText())) {
+							result.put(node, null);
+						}
+					}
+					else {
+						Map<PathExpr, String> bindings = new HashMap<PathExpr, String>();
+						bindings.put((PathExpr) mapping.getName(), node.getModuleStmt().getModuleName().getModuleName().getText());
+						result.put(node, bindings);
+					}
+				}
+				else {
+					result.put(node, null);
+				}
+			
+			}
+		}
+		
+		return result;
+	}
+	
+	public static String moduleName(ASTModuleNode node, ModuleName moduleName) {
+		return node.getModuleStmt().getModuleName().getModuleName().getText();
+	}
+	
+	public static String moduleName(IFortranAST ast, ModuleName moduleName) {
+		ASTModuleNode node = (ASTModuleNode) ast.getRoot().getProgramUnitList().get(0);
+		return moduleName(node, moduleName);
+	}
+	
+	
+	
+	public static boolean isPathExpr(IDOrPathExpr obj) {
+		return obj instanceof PathExpr;
+	}
+	
+	public static PathExpr asPathExpr(IDOrPathExpr obj) {
+		return (PathExpr) obj;
+	}
+	
+	public static IDOrWildcard asIDOrWildcard(IDOrPathExpr obj) {
+		return (IDOrWildcard) obj;
+	}
+	
+	public static boolean matchAndBind(IDOrPathExpr var, String value, Map<PathExpr, String> bindings) {
+		if (isPathExpr(var)) {
+			bindings.put(asPathExpr(var), value);
+			return true;
+		}
+		else if (!asIDOrWildcard(var).isWildcard() && !value.equalsIgnoreCase(asIDOrWildcard(var).getId())) {
+			return false;
+		}
+		return true;
+	}
+	
+	
+	public static Map<ASTUseStmtNode, Map<PathExpr, String>> usesModule(IFortranAST ast, UsesModule mapping) {
+		return usesModule((ASTModuleNode) ast.getRoot().getProgramUnitList().get(0), mapping);
+	}
+	
+	public static Map<ASTUseStmtNode, Map<PathExpr, String>> usesModule(ASTModuleNode node, UsesModule mapping) {
+				
+		Map<ASTUseStmtNode, Map<PathExpr, String>> result = new HashMap<ASTUseStmtNode, Map<PathExpr, String>>();		
+		
+		for (ASTUseStmtNode usn : node.findAll(ASTUseStmtNode.class)) {
+			Map<PathExpr, String> bindings = newBindings();
+			
+			if (!matchAndBind(mapping.getName(), usn.getName().getText(), bindings)) {
+				continue;
+			}
+			
+			result.put(usn, bindings);
+		}
+		
+		return result;
+	}
+	
+	public static Map<String, Map<PathExpr, String>> usesEntity(ASTUseStmtNode node, UsesEntity mapping) {
+		Map<String, Map<PathExpr, String>> result = new HashMap<String, Map<PathExpr, String>>();
+		
+		//TODO: this requires an explicit only list and does not look into the imported module
+		//itself to determine what public entities are imported
+		if (node.getOnlyList() != null) {
+			for (ASTOnlyNode only : node.getOnlyList()) {
+				String value;
+				if (only.getNewName() != null) {
+					value = only.getNewName().getText();
+				}
+				else {
+					value = only.getName().getText();
+				}
+				
+				Map<PathExpr, String> bindings = newBindings();
+				if (!matchAndBind(mapping.getName(), only.getName().getText(), bindings)) {
+					continue;
+				}
+				else {
+					result.put(value, bindings);
+				}
+			}
+		}
+		
+		return result;
+	}
+	
+	
+	
 	
 	public static Map<ASTSubroutineSubprogramNode, Map<PathExpr, String>> subroutine(IFortranAST ast, Subroutine mapping) {
 		return subroutine(ast.getRoot().getProgramUnitList().get(0), mapping);

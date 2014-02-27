@@ -2,6 +2,8 @@
  */
 package org.earthsystemcurator.cupidLanguage;
 
+import org.eclipse.emf.common.util.EList;
+
 import org.eclipse.emf.ecore.EObject;
 
 /**
@@ -15,6 +17,7 @@ import org.eclipse.emf.ecore.EObject;
  *   <li>{@link org.earthsystemcurator.cupidLanguage.ConceptDef#isTop <em>Top</em>}</li>
  *   <li>{@link org.earthsystemcurator.cupidLanguage.ConceptDef#getName <em>Name</em>}</li>
  *   <li>{@link org.earthsystemcurator.cupidLanguage.ConceptDef#getMapping <em>Mapping</em>}</li>
+ *   <li>{@link org.earthsystemcurator.cupidLanguage.ConceptDef#getAnnotation <em>Annotation</em>}</li>
  *   <li>{@link org.earthsystemcurator.cupidLanguage.ConceptDef#getBody <em>Body</em>}</li>
  * </ul>
  * </p>
@@ -102,6 +105,22 @@ public interface ConceptDef extends EObject
    * @generated
    */
   void setMapping(Mapping value);
+
+  /**
+   * Returns the value of the '<em><b>Annotation</b></em>' containment reference list.
+   * The list contents are of type {@link org.earthsystemcurator.cupidLanguage.Annotation}.
+   * <!-- begin-user-doc -->
+   * <p>
+   * If the meaning of the '<em>Annotation</em>' containment reference list isn't clear,
+   * there really should be more of a description here...
+   * </p>
+   * <!-- end-user-doc -->
+   * @return the value of the '<em>Annotation</em>' containment reference list.
+   * @see org.earthsystemcurator.cupidLanguage.CupidLanguagePackage#getConceptDef_Annotation()
+   * @model containment="true"
+   * @generated
+   */
+  EList<Annotation> getAnnotation();
 
   /**
    * Returns the value of the '<em><b>Body</b></em>' containment reference.
