@@ -15,12 +15,9 @@ import org.eclipse.emf.common.util.BasicMonitor;
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.ecore.resource.ResourceSet;
-import org.eclipse.emf.ecore.util.EcoreUtil;
 import org.eclipse.ocl.examples.pivot.OCL;
 import org.eclipse.ocl.examples.pivot.manager.MetaModelManager;
-import org.eclipse.ocl.examples.pivot.manager.MetaModelManagerResourceAdapter;
 import org.eclipse.ocl.examples.xtext.base.utilities.BaseCSResource;
-import org.eclipse.ocl.examples.xtext.oclinecore.OCLinEcoreStandaloneSetup;
 
 public class CupidToEcore {
 
@@ -74,12 +71,24 @@ public class CupidToEcore {
 		URI inputURI = xtextResource.getURI().trimFileExtension().appendFileExtension("oclinecore");
 		URI ecoreURI = xtextResource.getURI().trimFileExtension().appendFileExtension("ecore");
 		
+		//verify oclinecore file exists
 		IFile oclinecoreFile = getFile(inputURI);
-		if (oclinecoreFile.exists()) {
+		try {
+			oclinecoreFile.refreshLocal(0, new NullProgressMonitor());
+		} catch (CoreException e) {
+			throw new RuntimeException(e);
+		}
+		
+		if (!oclinecoreFile.exists()) {
+			throw new RuntimeException("Error generating OCLinEcore intermediate representation: " + inputURI.toPlatformString(true));
+		}
+		
+		IFile ecoreFile = getFile(ecoreURI);
+		if (ecoreFile.exists()) {
 			try {
-				oclinecoreFile.delete(true, false, new NullProgressMonitor());
+				ecoreFile.delete(true, false, new NullProgressMonitor());
 			} catch (CoreException e) {
-				e.printStackTrace();
+				throw new RuntimeException(e);
 			}
 		}
 		
@@ -93,25 +102,22 @@ public class CupidToEcore {
 	 
 	 public static Resource doLoadOCLinEcore(URI inputURI, URI ecoreURI) throws IOException {
 		 
-		 //OCLinEcoreStandaloneSetup.
-		 
-		 //OCL ocl = OCL.newInstance();
-		 
 		 MetaModelManager metaModelManager = ocl.getMetaModelManager();
-         //String inputName = stem + ".oclinecore";
-         //String ecoreName = stem + ".ecore";
-         //URI inputURI = getProjectFileURI(inputName);
-         //URI ecoreURI = getProjectFileURI(ecoreName);
 		 ResourceSet externalResourceSet = metaModelManager.getExternalResourceSet();
-         //OCL.initialize(externalResourceSet);
 		 
-		 BaseCSResource xtextResource = (BaseCSResource) externalResourceSet.createResource(inputURI);
-         MetaModelManagerResourceAdapter.getAdapter(xtextResource, metaModelManager);
+		 //Resource existing = externalResourceSet.getResource(inputURI, false);
+		 //if (existing != null) {
+		 //	 existing.delete(null);
+		 //}	 
+		 
+		 BaseCSResource xtextResource = (BaseCSResource) externalResourceSet.getResource(inputURI, false);
+         if (xtextResource == null) {
+        	 throw new RuntimeException("Error loading resource for conversion to Ecore XMI: " + inputURI.toPlatformString(true));
+         }
+         
+		 //MetaModelManagerResourceAdapter.getAdapter(xtextResource, metaModelManager);
          xtextResource.load(null);
-         //assertNoResourceErrors("Load failed", xtextResource);
          Resource asResource = ocl.cs2pivot(xtextResource);
-         //assertNoUnresolvedProxies("Unresolved proxies", xtextResource);
-         //assertNoValidationErrors("Pivot validation errors", asResource.getContents().get(0));
          Resource ecoreResource = ocl.pivot2ecore(asResource, ecoreURI);
          return ecoreResource;
 	 
