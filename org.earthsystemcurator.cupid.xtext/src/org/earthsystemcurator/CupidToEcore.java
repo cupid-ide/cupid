@@ -17,6 +17,7 @@ import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.ecore.resource.ResourceSet;
 import org.eclipse.ocl.examples.pivot.OCL;
 import org.eclipse.ocl.examples.pivot.manager.MetaModelManager;
+import org.eclipse.ocl.examples.pivot.manager.MetaModelManagerResourceAdapter;
 import org.eclipse.ocl.examples.xtext.base.utilities.BaseCSResource;
 
 public class CupidToEcore {
@@ -83,6 +84,7 @@ public class CupidToEcore {
 			throw new RuntimeException("Error generating OCLinEcore intermediate representation: " + inputURI.toPlatformString(true));
 		}
 		
+		/*
 		IFile ecoreFile = getFile(ecoreURI);
 		if (ecoreFile.exists()) {
 			try {
@@ -91,6 +93,7 @@ public class CupidToEcore {
 				throw new RuntimeException(e);
 			}
 		}
+		*/
 		
 		Resource ecoreResource = doLoadOCLinEcore(inputURI, ecoreURI);
 		ecoreResource.save(null);
@@ -111,8 +114,18 @@ public class CupidToEcore {
 		 //}	 
 		 
 		 BaseCSResource xtextResource = (BaseCSResource) externalResourceSet.getResource(inputURI, false);
-         if (xtextResource == null) {
-        	 throw new RuntimeException("Error loading resource for conversion to Ecore XMI: " + inputURI.toPlatformString(true));
+         //if (xtextResource != null) {
+        	 xtextResource.unload();
+        	 xtextResource.load(null);
+        	 //xtextResource.delete(null);
+        	 //throw new RuntimeException("Error loading resource for conversion to Ecore XMI: " + inputURI.toPlatformString(true));
+         //}
+         //xtextResource = (BaseCSResource) externalResourceSet.createResource(inputURI);
+         //xtextResource.load(null);
+         
+         Resource existingEcoreResource = externalResourceSet.getResource(ecoreURI, false);
+         if (existingEcoreResource != null) {
+        	 existingEcoreResource.delete(null);
          }
          
 		 //MetaModelManagerResourceAdapter.getAdapter(xtextResource, metaModelManager);

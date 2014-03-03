@@ -2,18 +2,15 @@ package org.earthsystemcurator.cupid.nuopc.fsml.handlers;
 
 import java.io.IOException;
 import java.lang.reflect.InvocationTargetException;
+import java.net.MalformedURLException;
 import java.net.URL;
 
 import org.earthsystemcurator.cupid.nuopc.fsml.builder.NUOPCNature;
-import org.earthsystemcurator.cupid.nuopc.fsml.core.FSM;
 import org.earthsystemcurator.cupid.nuopc.fsml.core.FSM2;
-import org.earthsystemcurator.cupid.nuopc.fsml.core.ReverseEngineer;
 import org.earthsystemcurator.cupid.nuopc.fsml.core.ReverseEngineer2;
 import org.earthsystemcurator.cupid.nuopc.fsml.util.Regex;
 import org.earthsystemcurator.cupid.nuopc.fsml.views.NUOPCView;
 import org.earthsystemcurator.cupidLanguage.Language;
-import org.earthsystemcurator.gen.nuopc.NUOPCApplication;
-import org.earthsystemcurator.gen.nuopc.NUOPCPackage;
 import org.eclipse.cdt.core.model.ITranslationUnit;
 import org.eclipse.core.commands.AbstractHandler;
 import org.eclipse.core.commands.ExecutionEvent;
@@ -22,8 +19,6 @@ import org.eclipse.core.resources.IFile;
 import org.eclipse.core.resources.IMarker;
 import org.eclipse.core.resources.IProject;
 import org.eclipse.core.runtime.CoreException;
-import org.eclipse.core.runtime.FileLocator;
-import org.eclipse.core.runtime.Path;
 import org.eclipse.emf.common.util.Diagnostic;
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.EObject;
@@ -32,8 +27,9 @@ import org.eclipse.emf.ecore.EReference;
 import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.ecore.resource.ResourceSet;
 import org.eclipse.emf.ecore.resource.impl.ResourceSetImpl;
-import org.eclipse.emf.ecore.xmi.impl.XMIResourceFactoryImpl;
-import org.eclipse.jface.resource.ImageDescriptor;
+import org.eclipse.emf.ecore.util.BasicExtendedMetaData;
+import org.eclipse.emf.ecore.util.ExtendedMetaData;
+import org.eclipse.emf.ecore.xmi.XMLResource;
 import org.eclipse.jface.viewers.ISelection;
 import org.eclipse.jface.viewers.ITreeSelection;
 import org.eclipse.photran.core.IFortranAST;
@@ -50,8 +46,6 @@ import org.eclipse.ui.IViewReference;
 import org.eclipse.ui.IWorkbenchWindow;
 import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.handlers.HandlerUtil;
-import org.osgi.framework.Bundle;
-import org.osgi.framework.FrameworkUtil;
 
 /**
  * Our sample handler extends AbstractHandler, an IHandler base class.
@@ -69,6 +63,42 @@ public class ReverseHandler extends AbstractHandler {
 	public ReverseHandler() {
 	}
 
+			
+	protected Language loadLanguageEcore() {
+		
+		//load a particular language
+		URL langURL = null;
+		try {
+			langURL = new URL("file:C:\\Users\\Rocky\\Documents\\eclipse\\workspace-runtime-cupid2\\xtest\\src\\nuopc.cupid");
+		} catch (MalformedURLException e) {
+			e.printStackTrace();
+		}
+		
+		ResourceSet rs = new ResourceSetImpl();
+		Resource langResource = rs.getResource(URI.createFileURI(langURL.getPath()), true);
+		Language lang = (Language) langResource.getContents().get(0);
+				
+			
+		//load and register related EPackage
+		final ExtendedMetaData extendedMetaData = new BasicExtendedMetaData(rs.getPackageRegistry());
+		rs.getLoadOptions().put(XMLResource.OPTION_EXTENDED_META_DATA, extendedMetaData);
+		
+		URL ecoreURL = null;
+		try {
+			ecoreURL = new URL("file:C:\\Users\\Rocky\\Documents\\eclipse\\workspace-runtime-cupid2\\xtest\\src\\nuopc.ecore");
+		} catch (MalformedURLException e) {
+			e.printStackTrace();
+		}
+		
+		Resource metamodelResource = rs.getResource(URI.createFileURI(ecoreURL.getPath()), true);
+		EObject eObject = metamodelResource.getContents().get(0);
+		if (eObject instanceof EPackage) {
+		    EPackage p = (EPackage) eObject;
+		    EPackage.Registry.INSTANCE.put(p.getNsURI(), p);  //guaranteed to be the same as lang.getUri()
+		}
+		
+		return lang;
+	}
 	
 	/**
 	 * the command has been executed, so extract extract the needed information
@@ -123,6 +153,7 @@ public class ReverseHandler extends AbstractHandler {
 			return null;
 		}
 		
+		/*
 		ResourceSet resourceSet = new ResourceSetImpl();
 
         resourceSet.getResourceFactoryRegistry().getExtensionToFactoryMap().put(
@@ -142,14 +173,17 @@ public class ReverseHandler extends AbstractHandler {
     	
     	Resource resourceLangDef = resourceSet.getResource(URI.createFileURI(url.getPath()), true);
         Language lang = (Language) resourceLangDef.getContents().get(0);
-        
+        */
+		
         //NUOPCPackage pack = NUOPCPackage.eINSTANCE;            
         
         PhotranVPG vpg = PhotranVPG.getInstance();
         //ReverseEngineer re = new ReverseEngineer();
         //NUOPCModel m = re.reverse(ast);
         
-        final FSM2<NUOPCApplication> fsm = ReverseEngineer2.reverseEngineer(lang, packageLang, selectedProject, vpg); 
+        Language lang = loadLanguageEcore();
+              
+        final FSM2<?> fsm = ReverseEngineer2.reverseEngineer(lang, selectedProject, vpg); 
         
         //NUOPCApplication a = ReverseEngineer.reverseEngineer(pack, pack.getNUOPCApplication(), selectedProject, vpg);        
          //use project nature to store local data
@@ -257,7 +291,7 @@ public class ReverseHandler extends AbstractHandler {
         }
         
         
-        if (fsm == null) return null;
+        //if (fsm == null) return null;
         
         
         //save to file for debugging purposes
@@ -267,6 +301,7 @@ public class ReverseHandler extends AbstractHandler {
         URI fileURI = URI.createFileURI(revFile.getLocation().toString());            
         //System.out.println("Reversed file URL: " + fileURI.toFileString());
         
+        ResourceSet resourceSet = new ResourceSetImpl();
         Resource resource = resourceSet.createResource(fileURI); 
                
         resource.getContents().clear();

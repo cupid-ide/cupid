@@ -42,7 +42,7 @@ public class ReverseEngineer2 {
 	 
 	
 	@SuppressWarnings("unchecked")
-	public static FSM2 reverseEngineer(Language lang, EPackage ePackage, IProject project, PhotranVPG vpg) {
+	public static FSM2 reverseEngineer(Language lang, IProject project, PhotranVPG vpg) {
 		
 		ConceptDef topConcept = null;
 		for (ConceptDef cd : lang.getConceptDef()) {
@@ -56,6 +56,8 @@ public class ReverseEngineer2 {
 			throw new RuntimeException("Language " + lang.getName() + " does not define a top level concept.");
 		}
 		
+		//EPackage should already be registered
+		EPackage ePackage = EPackage.Registry.INSTANCE.getEPackage(lang.getUri()); 
 		EFactory eFactory = ePackage.getEFactoryInstance();
 		EClass topClass = (EClass) ePackage.getEClassifier(topConcept.getName());
 		EObject root = eFactory.create(topClass);
