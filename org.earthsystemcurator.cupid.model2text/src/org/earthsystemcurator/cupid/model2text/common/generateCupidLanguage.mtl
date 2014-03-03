@@ -1,0 +1,149 @@
+[comment encoding = UTF-8 /]
+[module generateCupidLanguage('http://www.earthsystemcurator.org/CupidLanguage')]
+
+[template public language(l : Language)]
+[comment @main /]
+[file (l.name.toLowerCase() + '.oclinecore', false)]
+package [l.name.toLower()/] : [l.name.toLower()/] = '[l.uri/]' {
+	[for (cd : ConceptDef | l.conceptDef)]
+	[cd.generateClass()/]
+	[/for]
+}
+[/file]
+[/template]
+
+[template private generateClass(cd : ConceptDef)]
+
+class [cd.name/]
+[if (cd._body->notEmpty())]
+{
+	
+	annotation _'http://www.earthsystemcog.org/projects/nuopc' 
+	(
+		concept = '[cd.name/]'[for (a : Annotation | cd.annotation) before (',\n') separator (',\n') after ('\n')]
+		[a.key/] = '[a.value/]'[/for]
+	);
+	
+	[cd._body.generateProperties()/]
+}
+[cd._body.generateClasses()/]
+[else];[/if]
+[/template]
+
+
+[template private generateClass(sc : Subconcept) ? (not(sc.attrib) and not(sc.ref))]
+class [sc.conceptTypeName()/] 
+[if (sc._body->notEmpty())]
+{
+
+	annotation _'http://www.earthsystemcog.org/projects/nuopc' 
+	(
+		concept = '[sc.name/]'[for (a : Annotation | sc.annotation) before (',\n') separator (',\n') after ('\n')]
+		[a.key/] = '[a.value/]'[/for]
+	);
+
+	[sc._body.generateProperties()/]
+}
+[sc._body.generateClasses()/]
+[else];[/if]
+
+[/template]
+
+[comment][template private generateClass(sc : Subconcept) ? (not(sc.attrib) and sc.ref)]
+[sc.conceptDef.generateClass()/]
+[/template][/comment]
+
+[comment][template private generateClass(ac : AnonymousConcept)]
+
+class [ac.conceptTypeName()/] 
+[if (ac._body->notEmpty())]
+{
+
+	[if (ac.annotation->notEmpty())]
+	annotation _'http://www.earthsystemcog.org/projects/nuopc' 
+	(
+		[for (a : Annotation | ac.annotation) separator (',\n') after ('\n')]
+		[a.key/] = '[a.value/]'[/for]
+	);
+	[/if]
+
+	[ac._body.generateProperties()/]
+}
+[ac._body.generateClasses()/]
+[else];[/if]
+[/template][/comment]
+
+
+
+
+[template private generateProperties(cdb : ConceptDefBody) ? (cdb.subconcept->notEmpty())]
+[cdb.subconcept.generateProperty()/]
+[/template]
+
+[template private generateClasses(cdb : ConceptDefBody) ? (cdb.subconcept->notEmpty())]
+[cdb.subconcept.generateClass()/]
+[/template]
+
+[template private generateProperty(sc : Subconcept) ? (sc.attrib)]
+
+attribute [sc.name/] : String;
+
+[/template]
+
+
+[template private generateProperty(sc : Subconcept) ? (not(sc.attrib)) 
+ { typeName : String = if (sc.ref) then sc.conceptDef.conceptTypeName() else sc.conceptTypeName() endif; }]
+property [sc.name/] : [typeName/][sc.cardinality.cardinality()/] { composes } 
+{
+	annotation _'http://www.earthsystemcog.org/projects/nuopc' 
+	(
+		mapping = '[sc.conceptDef.mapping.mapping.eClass().name/]'
+		[if (sc.essential)]
+		, essential = 'true'
+		[/if]
+	);
+}
+
+[/template]
+
+
+
+
+[comment][template private cardinality(sc : Subconcept) ? (sc.cardinality->notEmpty())][ac.cardinality.cardinality()/][/template]
+[template private cardinality(cr : ConceptRef) ? (cr.cardinality->notEmpty())][cr.cardinality.cardinality()/][/template][/comment]
+
+[template private cardinality(c : Cardinality) ? (not(c.oclIsUndefined()) and c.oneOrMore)]['['/]+[']'/][/template]
+[template private cardinality(c : Cardinality) ? (not (c.oclIsUndefined()) and c.zeroOrMore)]['['/]*[']'/][/template]
+
+[query private conceptTypeName(cd : ConceptDef) : String = 
+	cd.name
+/]
+
+[comment][query private conceptTypeName(ac : AnonymousConcept) : String = 
+	if (ac.eContainer(AnonymousConcept)->isEmpty()) then
+		ac.eContainer(ConceptDef).conceptTypeName() + '__' + ac.localName.toUpperFirst()
+	else
+		ac.eContainer(AnonymousConcept).conceptTypeName() + '__' + ac.localName.toUpperFirst()
+	endif
+/][/comment]
+
+[query private conceptTypeName(sc : Subconcept) : String = 
+	if (sc.eContainer(Subconcept)->isEmpty()) then
+		sc.eContainer(ConceptDef).conceptTypeName() + '__' + sc.name.toUpperFirst()
+	else
+		sc.eContainer(Subconcept).conceptTypeName() + '__' + sc.name.toUpperFirst()
+	endif
+/]
+
+[comment][query public name(x : OclAny) : String = 
+	if (x.oclIsTypeOf(ConceptDef)) then
+		x.oclAsType(ConceptDef).name()
+	else
+		x.oclAsType(Subconcept).name()
+	endif
+ /]
+
+[query public name(x : ConceptDef) : String = x.name /]
+[query public name(x : Subconcept) : String = x.name /][/comment]
+
+
