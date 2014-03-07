@@ -15,6 +15,7 @@ import org.eclipse.emf.common.util.BasicMonitor;
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.ecore.resource.ResourceSet;
+import org.eclipse.emf.ecore.util.EcoreUtil;
 import org.eclipse.ocl.examples.pivot.OCL;
 import org.eclipse.ocl.examples.pivot.manager.MetaModelManager;
 import org.eclipse.ocl.examples.pivot.manager.MetaModelManagerResourceAdapter;
@@ -49,28 +50,34 @@ public class CupidToEcore {
 	}
 	*/
 	
-	public static void generateEcoreModel(Resource xtextResource) throws IOException {
+	public static void generateEcoreModel(URI inputURI) throws IOException {
 		
 		//get XMI representation
-		//EcoreUtil.resolveAll(xtextResource);
-		//URI xmiURI = xtextResource.getURI().trimFileExtension().appendFileExtension("xmi");
+		/*
+		EcoreUtil.resolveAll(xtextResource);
+		URI xmiURI = xtextResource.getURI().trimFileExtension().appendFileExtension("xmi");
 		
-		//Resource xmiResource = xtextResource.getResourceSet().createResource(xmiURI);
-		//xmiResource.getContents().add(xtextResource.getContents().get(0));
-		//try {
-		//	xmiResource.save(null);
-		//} catch (IOException e) {
-		//	e.printStackTrace();
-		//}
+		Resource xmiResource = xtextResource.getResourceSet().createResource(xmiURI);
+		xmiResource.getContents().add(xtextResource.getContents().get(0));
+		try {
+			xmiResource.save(null);
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		*
+		*/
 		
 		//generate Ecore model in oclinecore abstract syntax
+		/*
 		File targetDir = getJavaFile(xtextResource.getURI()).getParentFile();
 		GenerateCupidLanguage gcl = new GenerateCupidLanguage(xtextResource.getContents().get(0), targetDir, new ArrayList<Object>());	
 		gcl.doGenerate(new BasicMonitor());
-		
+		*/
+			
 		//convert to ecore file
-		URI inputURI = xtextResource.getURI().trimFileExtension().appendFileExtension("oclinecore");
-		URI ecoreURI = xtextResource.getURI().trimFileExtension().appendFileExtension("ecore");
+		//URI inputURI = xtextResource.getURI().trimFileExtension().appendFileExtension("oclinecore");
+		//URI ecoreURI = xtextResource.getURI().trimFileExtension().appendFileExtension("ecore");
+		URI ecoreURI = inputURI.trimFileExtension().appendFileExtension("ecore");
 		
 		//verify oclinecore file exists
 		IFile oclinecoreFile = getFile(inputURI);
@@ -113,7 +120,7 @@ public class CupidToEcore {
 		 //	 existing.delete(null);
 		 //}	 
 		 
-		 BaseCSResource xtextResource = (BaseCSResource) externalResourceSet.getResource(inputURI, false);
+		 BaseCSResource xtextResource = (BaseCSResource) externalResourceSet.getResource(inputURI, true);
          //if (xtextResource != null) {
         	 xtextResource.unload();
         	 xtextResource.load(null);

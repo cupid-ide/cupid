@@ -32,15 +32,6 @@ public interface CupidLanguageFactory extends EFactory
   Language createLanguage();
 
   /**
-   * Returns a new object of class '<em>Subconcept</em>'.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @return a new object of class '<em>Subconcept</em>'.
-   * @generated
-   */
-  Subconcept createSubconcept();
-
-  /**
    * Returns a new object of class '<em>Annotation</em>'.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
@@ -59,13 +50,13 @@ public interface CupidLanguageFactory extends EFactory
   ConceptDef createConceptDef();
 
   /**
-   * Returns a new object of class '<em>Concept Def Body</em>'.
+   * Returns a new object of class '<em>Subconcept Or Attribute</em>'.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @return a new object of class '<em>Concept Def Body</em>'.
+   * @return a new object of class '<em>Subconcept Or Attribute</em>'.
    * @generated
    */
-  ConceptDefBody createConceptDefBody();
+  SubconceptOrAttribute createSubconceptOrAttribute();
 
   /**
    * Returns a new object of class '<em>Cardinality</em>'.
@@ -219,6 +210,15 @@ public interface CupidLanguageFactory extends EFactory
    * @generated
    */
   PathExpr createPathExpr();
+
+  /**
+   * Returns a new object of class '<em>Path Expr Term</em>'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return a new object of class '<em>Path Expr Term</em>'.
+   * @generated
+   */
+  PathExprTerm createPathExprTerm();
 
   /**
    * Returns the package supported by this factory.

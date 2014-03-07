@@ -14,11 +14,12 @@ import org.eclipse.emf.ecore.EObject;
  * <p>
  * The following features are supported:
  * <ul>
- *   <li>{@link org.earthsystemcurator.cupidLanguage.ConceptDef#isTop <em>Top</em>}</li>
- *   <li>{@link org.earthsystemcurator.cupidLanguage.ConceptDef#getName <em>Name</em>}</li>
  *   <li>{@link org.earthsystemcurator.cupidLanguage.ConceptDef#getMapping <em>Mapping</em>}</li>
  *   <li>{@link org.earthsystemcurator.cupidLanguage.ConceptDef#getAnnotation <em>Annotation</em>}</li>
- *   <li>{@link org.earthsystemcurator.cupidLanguage.ConceptDef#getBody <em>Body</em>}</li>
+ *   <li>{@link org.earthsystemcurator.cupidLanguage.ConceptDef#getChild <em>Child</em>}</li>
+ *   <li>{@link org.earthsystemcurator.cupidLanguage.ConceptDef#isNamed <em>Named</em>}</li>
+ *   <li>{@link org.earthsystemcurator.cupidLanguage.ConceptDef#getName <em>Name</em>}</li>
+ *   <li>{@link org.earthsystemcurator.cupidLanguage.ConceptDef#isTop <em>Top</em>}</li>
  * </ul>
  * </p>
  *
@@ -28,58 +29,6 @@ import org.eclipse.emf.ecore.EObject;
  */
 public interface ConceptDef extends EObject
 {
-  /**
-   * Returns the value of the '<em><b>Top</b></em>' attribute.
-   * <!-- begin-user-doc -->
-   * <p>
-   * If the meaning of the '<em>Top</em>' attribute isn't clear,
-   * there really should be more of a description here...
-   * </p>
-   * <!-- end-user-doc -->
-   * @return the value of the '<em>Top</em>' attribute.
-   * @see #setTop(boolean)
-   * @see org.earthsystemcurator.cupidLanguage.CupidLanguagePackage#getConceptDef_Top()
-   * @model
-   * @generated
-   */
-  boolean isTop();
-
-  /**
-   * Sets the value of the '{@link org.earthsystemcurator.cupidLanguage.ConceptDef#isTop <em>Top</em>}' attribute.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @param value the new value of the '<em>Top</em>' attribute.
-   * @see #isTop()
-   * @generated
-   */
-  void setTop(boolean value);
-
-  /**
-   * Returns the value of the '<em><b>Name</b></em>' attribute.
-   * <!-- begin-user-doc -->
-   * <p>
-   * If the meaning of the '<em>Name</em>' attribute isn't clear,
-   * there really should be more of a description here...
-   * </p>
-   * <!-- end-user-doc -->
-   * @return the value of the '<em>Name</em>' attribute.
-   * @see #setName(String)
-   * @see org.earthsystemcurator.cupidLanguage.CupidLanguagePackage#getConceptDef_Name()
-   * @model
-   * @generated
-   */
-  String getName();
-
-  /**
-   * Sets the value of the '{@link org.earthsystemcurator.cupidLanguage.ConceptDef#getName <em>Name</em>}' attribute.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @param value the new value of the '<em>Name</em>' attribute.
-   * @see #getName()
-   * @generated
-   */
-  void setName(String value);
-
   /**
    * Returns the value of the '<em><b>Mapping</b></em>' containment reference.
    * <!-- begin-user-doc -->
@@ -123,29 +72,97 @@ public interface ConceptDef extends EObject
   EList<Annotation> getAnnotation();
 
   /**
-   * Returns the value of the '<em><b>Body</b></em>' containment reference.
+   * Returns the value of the '<em><b>Child</b></em>' containment reference list.
+   * The list contents are of type {@link org.earthsystemcurator.cupidLanguage.SubconceptOrAttribute}.
    * <!-- begin-user-doc -->
    * <p>
-   * If the meaning of the '<em>Body</em>' containment reference isn't clear,
+   * If the meaning of the '<em>Child</em>' containment reference list isn't clear,
    * there really should be more of a description here...
    * </p>
    * <!-- end-user-doc -->
-   * @return the value of the '<em>Body</em>' containment reference.
-   * @see #setBody(ConceptDefBody)
-   * @see org.earthsystemcurator.cupidLanguage.CupidLanguagePackage#getConceptDef_Body()
+   * @return the value of the '<em>Child</em>' containment reference list.
+   * @see org.earthsystemcurator.cupidLanguage.CupidLanguagePackage#getConceptDef_Child()
    * @model containment="true"
    * @generated
    */
-  ConceptDefBody getBody();
+  EList<SubconceptOrAttribute> getChild();
 
   /**
-   * Sets the value of the '{@link org.earthsystemcurator.cupidLanguage.ConceptDef#getBody <em>Body</em>}' containment reference.
+   * Returns the value of the '<em><b>Named</b></em>' attribute.
    * <!-- begin-user-doc -->
+   * <p>
+   * If the meaning of the '<em>Named</em>' attribute isn't clear,
+   * there really should be more of a description here...
+   * </p>
    * <!-- end-user-doc -->
-   * @param value the new value of the '<em>Body</em>' containment reference.
-   * @see #getBody()
+   * @return the value of the '<em>Named</em>' attribute.
+   * @see #setNamed(boolean)
+   * @see org.earthsystemcurator.cupidLanguage.CupidLanguagePackage#getConceptDef_Named()
+   * @model
    * @generated
    */
-  void setBody(ConceptDefBody value);
+  boolean isNamed();
+
+  /**
+   * Sets the value of the '{@link org.earthsystemcurator.cupidLanguage.ConceptDef#isNamed <em>Named</em>}' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @param value the new value of the '<em>Named</em>' attribute.
+   * @see #isNamed()
+   * @generated
+   */
+  void setNamed(boolean value);
+
+  /**
+   * Returns the value of the '<em><b>Name</b></em>' attribute.
+   * <!-- begin-user-doc -->
+   * <p>
+   * If the meaning of the '<em>Name</em>' attribute isn't clear,
+   * there really should be more of a description here...
+   * </p>
+   * <!-- end-user-doc -->
+   * @return the value of the '<em>Name</em>' attribute.
+   * @see #setName(String)
+   * @see org.earthsystemcurator.cupidLanguage.CupidLanguagePackage#getConceptDef_Name()
+   * @model
+   * @generated
+   */
+  String getName();
+
+  /**
+   * Sets the value of the '{@link org.earthsystemcurator.cupidLanguage.ConceptDef#getName <em>Name</em>}' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @param value the new value of the '<em>Name</em>' attribute.
+   * @see #getName()
+   * @generated
+   */
+  void setName(String value);
+
+  /**
+   * Returns the value of the '<em><b>Top</b></em>' attribute.
+   * <!-- begin-user-doc -->
+   * <p>
+   * If the meaning of the '<em>Top</em>' attribute isn't clear,
+   * there really should be more of a description here...
+   * </p>
+   * <!-- end-user-doc -->
+   * @return the value of the '<em>Top</em>' attribute.
+   * @see #setTop(boolean)
+   * @see org.earthsystemcurator.cupidLanguage.CupidLanguagePackage#getConceptDef_Top()
+   * @model
+   * @generated
+   */
+  boolean isTop();
+
+  /**
+   * Sets the value of the '{@link org.earthsystemcurator.cupidLanguage.ConceptDef#isTop <em>Top</em>}' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @param value the new value of the '<em>Top</em>' attribute.
+   * @see #isTop()
+   * @generated
+   */
+  void setTop(boolean value);
 
 } // ConceptDef

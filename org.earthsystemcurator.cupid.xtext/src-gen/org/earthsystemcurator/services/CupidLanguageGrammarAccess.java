@@ -28,17 +28,16 @@ public class CupidLanguageGrammarAccess extends AbstractGrammarElementFinder {
 		private final RuleCall cUriSTRINGTerminalRuleCall_2_0 = (RuleCall)cUriAssignment_2.eContents().get(0);
 		private final Keyword cLeftCurlyBracketKeyword_3 = (Keyword)cGroup.eContents().get(3);
 		private final Assignment cConceptDefAssignment_4 = (Assignment)cGroup.eContents().get(4);
-		private final RuleCall cConceptDefConceptDefParserRuleCall_4_0 = (RuleCall)cConceptDefAssignment_4.eContents().get(0);
-		private final Keyword cRightCurlyBracketKeyword_5 = (Keyword)cGroup.eContents().get(5);
+		private final RuleCall cConceptDefTopConceptDefParserRuleCall_4_0 = (RuleCall)cConceptDefAssignment_4.eContents().get(0);
+		private final Assignment cConceptDefAssignment_5 = (Assignment)cGroup.eContents().get(5);
+		private final RuleCall cConceptDefNamedConceptDefParserRuleCall_5_0 = (RuleCall)cConceptDefAssignment_5.eContents().get(0);
+		private final Keyword cRightCurlyBracketKeyword_6 = (Keyword)cGroup.eContents().get(6);
 		
-		////Mappings:
-		////	mappings+=Mapping*
-		////	language+=Language?;
 		//Language:
-		//	"language " name=ID uri=STRING "{" conceptDef+=ConceptDef+ "}";
+		//	"language " name=ID uri=STRING "{" conceptDef+=TopConceptDef conceptDef+=NamedConceptDef* "}";
 		public ParserRule getRule() { return rule; }
 
-		//"language " name=ID uri=STRING "{" conceptDef+=ConceptDef+ "}"
+		//"language " name=ID uri=STRING "{" conceptDef+=TopConceptDef conceptDef+=NamedConceptDef* "}"
 		public Group getGroup() { return cGroup; }
 
 		//"language "
@@ -59,18 +58,406 @@ public class CupidLanguageGrammarAccess extends AbstractGrammarElementFinder {
 		//"{"
 		public Keyword getLeftCurlyBracketKeyword_3() { return cLeftCurlyBracketKeyword_3; }
 
-		//conceptDef+=ConceptDef+
+		//conceptDef+=TopConceptDef
 		public Assignment getConceptDefAssignment_4() { return cConceptDefAssignment_4; }
 
-		//ConceptDef
-		public RuleCall getConceptDefConceptDefParserRuleCall_4_0() { return cConceptDefConceptDefParserRuleCall_4_0; }
+		//TopConceptDef
+		public RuleCall getConceptDefTopConceptDefParserRuleCall_4_0() { return cConceptDefTopConceptDefParserRuleCall_4_0; }
+
+		//conceptDef+=NamedConceptDef*
+		public Assignment getConceptDefAssignment_5() { return cConceptDefAssignment_5; }
+
+		//NamedConceptDef
+		public RuleCall getConceptDefNamedConceptDefParserRuleCall_5_0() { return cConceptDefNamedConceptDefParserRuleCall_5_0; }
 
 		//"}"
-		public Keyword getRightCurlyBracketKeyword_5() { return cRightCurlyBracketKeyword_5; }
+		public Keyword getRightCurlyBracketKeyword_6() { return cRightCurlyBracketKeyword_6; }
+	}
+
+	public class AnnotationElements extends AbstractParserRuleElementFinder {
+		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "Annotation");
+		private final Group cGroup = (Group)rule.eContents().get(1);
+		private final Assignment cKeyAssignment_0 = (Assignment)cGroup.eContents().get(0);
+		private final RuleCall cKeyANNOTATION_IDTerminalRuleCall_0_0 = (RuleCall)cKeyAssignment_0.eContents().get(0);
+		private final Keyword cEqualsSignKeyword_1 = (Keyword)cGroup.eContents().get(1);
+		private final Assignment cValueAssignment_2 = (Assignment)cGroup.eContents().get(2);
+		private final RuleCall cValueSTRINGTerminalRuleCall_2_0 = (RuleCall)cValueAssignment_2.eContents().get(0);
+		
+		////Subconcept:
+		////	AnonymousConcept | ConceptRef | Attribute;
+		////Subconcept:
+		////	attrib?='attrib'? name=ID cardinality=Cardinality? essential?='!'?
+		////	(
+		////		ref?=':' conceptDef=[ConceptDef] |
+		////		('<' mapping=Mapping '>')? ('[' annotation+=Annotation (',' annotation+=Annotation)* ']')? body=ConceptDefBody?	
+		////	);
+		//Annotation:
+		//	key=ANNOTATION_ID "=" value=STRING;
+		public ParserRule getRule() { return rule; }
+
+		//key=ANNOTATION_ID "=" value=STRING
+		public Group getGroup() { return cGroup; }
+
+		//key=ANNOTATION_ID
+		public Assignment getKeyAssignment_0() { return cKeyAssignment_0; }
+
+		//ANNOTATION_ID
+		public RuleCall getKeyANNOTATION_IDTerminalRuleCall_0_0() { return cKeyANNOTATION_IDTerminalRuleCall_0_0; }
+
+		//"="
+		public Keyword getEqualsSignKeyword_1() { return cEqualsSignKeyword_1; }
+
+		//value=STRING
+		public Assignment getValueAssignment_2() { return cValueAssignment_2; }
+
+		//STRING
+		public RuleCall getValueSTRINGTerminalRuleCall_2_0() { return cValueSTRINGTerminalRuleCall_2_0; }
+	}
+
+	public class AnonymousConceptDefElements extends AbstractParserRuleElementFinder {
+		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "AnonymousConceptDef");
+		private final Group cGroup = (Group)rule.eContents().get(1);
+		private final Action cConceptDefAction_0 = (Action)cGroup.eContents().get(0);
+		private final Group cGroup_1 = (Group)cGroup.eContents().get(1);
+		private final Keyword cLessThanSignKeyword_1_0 = (Keyword)cGroup_1.eContents().get(0);
+		private final Assignment cMappingAssignment_1_1 = (Assignment)cGroup_1.eContents().get(1);
+		private final RuleCall cMappingMappingParserRuleCall_1_1_0 = (RuleCall)cMappingAssignment_1_1.eContents().get(0);
+		private final Keyword cGreaterThanSignKeyword_1_2 = (Keyword)cGroup_1.eContents().get(2);
+		private final Group cGroup_2 = (Group)cGroup.eContents().get(2);
+		private final Keyword cLeftCurlyBracketKeyword_2_0 = (Keyword)cGroup_2.eContents().get(0);
+		private final Assignment cAnnotationAssignment_2_1 = (Assignment)cGroup_2.eContents().get(1);
+		private final RuleCall cAnnotationAnnotationParserRuleCall_2_1_0 = (RuleCall)cAnnotationAssignment_2_1.eContents().get(0);
+		private final Assignment cChildAssignment_2_2 = (Assignment)cGroup_2.eContents().get(2);
+		private final RuleCall cChildSubconceptOrAttributeParserRuleCall_2_2_0 = (RuleCall)cChildAssignment_2_2.eContents().get(0);
+		private final Keyword cRightCurlyBracketKeyword_2_3 = (Keyword)cGroup_2.eContents().get(3);
+		
+		////ConceptDef:
+		////	(top?='/top'? named?='concept' name=ID)? ('<' mapping=Mapping '>')? 
+		////		('[' annotation+=Annotation (',' annotation+=Annotation)* ']')?
+		////		('{' localName=ID '}')?;
+		////ConceptDef:
+		////	AnonymousConceptDef | NamedConceptDef;
+		//AnonymousConceptDef returns ConceptDef:
+		//	{ConceptDef} ("<" mapping=Mapping ">")? ("{" annotation+=Annotation* child+=SubconceptOrAttribute* "}")?;
+		public ParserRule getRule() { return rule; }
+
+		//{ConceptDef} ("<" mapping=Mapping ">")? ("{" annotation+=Annotation* child+=SubconceptOrAttribute* "}")?
+		public Group getGroup() { return cGroup; }
+
+		//{ConceptDef}
+		public Action getConceptDefAction_0() { return cConceptDefAction_0; }
+
+		//("<" mapping=Mapping ">")?
+		public Group getGroup_1() { return cGroup_1; }
+
+		//"<"
+		public Keyword getLessThanSignKeyword_1_0() { return cLessThanSignKeyword_1_0; }
+
+		//mapping=Mapping
+		public Assignment getMappingAssignment_1_1() { return cMappingAssignment_1_1; }
+
+		//Mapping
+		public RuleCall getMappingMappingParserRuleCall_1_1_0() { return cMappingMappingParserRuleCall_1_1_0; }
+
+		//">"
+		public Keyword getGreaterThanSignKeyword_1_2() { return cGreaterThanSignKeyword_1_2; }
+
+		//("{" annotation+=Annotation* child+=SubconceptOrAttribute* "}")?
+		public Group getGroup_2() { return cGroup_2; }
+
+		//"{"
+		public Keyword getLeftCurlyBracketKeyword_2_0() { return cLeftCurlyBracketKeyword_2_0; }
+
+		//annotation+=Annotation*
+		public Assignment getAnnotationAssignment_2_1() { return cAnnotationAssignment_2_1; }
+
+		//Annotation
+		public RuleCall getAnnotationAnnotationParserRuleCall_2_1_0() { return cAnnotationAnnotationParserRuleCall_2_1_0; }
+
+		//child+=SubconceptOrAttribute*
+		public Assignment getChildAssignment_2_2() { return cChildAssignment_2_2; }
+
+		//SubconceptOrAttribute
+		public RuleCall getChildSubconceptOrAttributeParserRuleCall_2_2_0() { return cChildSubconceptOrAttributeParserRuleCall_2_2_0; }
+
+		//"}"
+		public Keyword getRightCurlyBracketKeyword_2_3() { return cRightCurlyBracketKeyword_2_3; }
+	}
+
+	public class NamedConceptDefElements extends AbstractParserRuleElementFinder {
+		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "NamedConceptDef");
+		private final Group cGroup = (Group)rule.eContents().get(1);
+		private final Assignment cNamedAssignment_0 = (Assignment)cGroup.eContents().get(0);
+		private final Keyword cNamedConceptKeyword_0_0 = (Keyword)cNamedAssignment_0.eContents().get(0);
+		private final Assignment cNameAssignment_1 = (Assignment)cGroup.eContents().get(1);
+		private final RuleCall cNameIDTerminalRuleCall_1_0 = (RuleCall)cNameAssignment_1.eContents().get(0);
+		private final Group cGroup_2 = (Group)cGroup.eContents().get(2);
+		private final Keyword cLessThanSignKeyword_2_0 = (Keyword)cGroup_2.eContents().get(0);
+		private final Assignment cMappingAssignment_2_1 = (Assignment)cGroup_2.eContents().get(1);
+		private final RuleCall cMappingMappingParserRuleCall_2_1_0 = (RuleCall)cMappingAssignment_2_1.eContents().get(0);
+		private final Keyword cGreaterThanSignKeyword_2_2 = (Keyword)cGroup_2.eContents().get(2);
+		private final Group cGroup_3 = (Group)cGroup.eContents().get(3);
+		private final Keyword cLeftCurlyBracketKeyword_3_0 = (Keyword)cGroup_3.eContents().get(0);
+		private final Assignment cAnnotationAssignment_3_1 = (Assignment)cGroup_3.eContents().get(1);
+		private final RuleCall cAnnotationAnnotationParserRuleCall_3_1_0 = (RuleCall)cAnnotationAssignment_3_1.eContents().get(0);
+		private final Assignment cChildAssignment_3_2 = (Assignment)cGroup_3.eContents().get(2);
+		private final RuleCall cChildSubconceptOrAttributeParserRuleCall_3_2_0 = (RuleCall)cChildAssignment_3_2.eContents().get(0);
+		private final Keyword cRightCurlyBracketKeyword_3_3 = (Keyword)cGroup_3.eContents().get(3);
+		
+		//NamedConceptDef returns ConceptDef:
+		//	named?="concept" name=ID ("<" mapping=Mapping ">")? ("{" annotation+=Annotation* child+=SubconceptOrAttribute* "}")?;
+		public ParserRule getRule() { return rule; }
+
+		//named?="concept" name=ID ("<" mapping=Mapping ">")? ("{" annotation+=Annotation* child+=SubconceptOrAttribute* "}")?
+		public Group getGroup() { return cGroup; }
+
+		//named?="concept"
+		public Assignment getNamedAssignment_0() { return cNamedAssignment_0; }
+
+		//"concept"
+		public Keyword getNamedConceptKeyword_0_0() { return cNamedConceptKeyword_0_0; }
+
+		//name=ID
+		public Assignment getNameAssignment_1() { return cNameAssignment_1; }
+
+		//ID
+		public RuleCall getNameIDTerminalRuleCall_1_0() { return cNameIDTerminalRuleCall_1_0; }
+
+		//("<" mapping=Mapping ">")?
+		public Group getGroup_2() { return cGroup_2; }
+
+		//"<"
+		public Keyword getLessThanSignKeyword_2_0() { return cLessThanSignKeyword_2_0; }
+
+		//mapping=Mapping
+		public Assignment getMappingAssignment_2_1() { return cMappingAssignment_2_1; }
+
+		//Mapping
+		public RuleCall getMappingMappingParserRuleCall_2_1_0() { return cMappingMappingParserRuleCall_2_1_0; }
+
+		//">"
+		public Keyword getGreaterThanSignKeyword_2_2() { return cGreaterThanSignKeyword_2_2; }
+
+		//("{" annotation+=Annotation* child+=SubconceptOrAttribute* "}")?
+		public Group getGroup_3() { return cGroup_3; }
+
+		//"{"
+		public Keyword getLeftCurlyBracketKeyword_3_0() { return cLeftCurlyBracketKeyword_3_0; }
+
+		//annotation+=Annotation*
+		public Assignment getAnnotationAssignment_3_1() { return cAnnotationAssignment_3_1; }
+
+		//Annotation
+		public RuleCall getAnnotationAnnotationParserRuleCall_3_1_0() { return cAnnotationAnnotationParserRuleCall_3_1_0; }
+
+		//child+=SubconceptOrAttribute*
+		public Assignment getChildAssignment_3_2() { return cChildAssignment_3_2; }
+
+		//SubconceptOrAttribute
+		public RuleCall getChildSubconceptOrAttributeParserRuleCall_3_2_0() { return cChildSubconceptOrAttributeParserRuleCall_3_2_0; }
+
+		//"}"
+		public Keyword getRightCurlyBracketKeyword_3_3() { return cRightCurlyBracketKeyword_3_3; }
+	}
+
+	public class TopConceptDefElements extends AbstractParserRuleElementFinder {
+		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "TopConceptDef");
+		private final Group cGroup = (Group)rule.eContents().get(1);
+		private final Assignment cTopAssignment_0 = (Assignment)cGroup.eContents().get(0);
+		private final Keyword cTopTopKeyword_0_0 = (Keyword)cTopAssignment_0.eContents().get(0);
+		private final Assignment cNamedAssignment_1 = (Assignment)cGroup.eContents().get(1);
+		private final Keyword cNamedConceptKeyword_1_0 = (Keyword)cNamedAssignment_1.eContents().get(0);
+		private final Assignment cNameAssignment_2 = (Assignment)cGroup.eContents().get(2);
+		private final RuleCall cNameIDTerminalRuleCall_2_0 = (RuleCall)cNameAssignment_2.eContents().get(0);
+		private final Group cGroup_3 = (Group)cGroup.eContents().get(3);
+		private final Keyword cLessThanSignKeyword_3_0 = (Keyword)cGroup_3.eContents().get(0);
+		private final Assignment cMappingAssignment_3_1 = (Assignment)cGroup_3.eContents().get(1);
+		private final RuleCall cMappingMappingParserRuleCall_3_1_0 = (RuleCall)cMappingAssignment_3_1.eContents().get(0);
+		private final Keyword cGreaterThanSignKeyword_3_2 = (Keyword)cGroup_3.eContents().get(2);
+		private final Group cGroup_4 = (Group)cGroup.eContents().get(4);
+		private final Keyword cLeftCurlyBracketKeyword_4_0 = (Keyword)cGroup_4.eContents().get(0);
+		private final Assignment cAnnotationAssignment_4_1 = (Assignment)cGroup_4.eContents().get(1);
+		private final RuleCall cAnnotationAnnotationParserRuleCall_4_1_0 = (RuleCall)cAnnotationAssignment_4_1.eContents().get(0);
+		private final Assignment cChildAssignment_4_2 = (Assignment)cGroup_4.eContents().get(2);
+		private final RuleCall cChildSubconceptOrAttributeParserRuleCall_4_2_0 = (RuleCall)cChildAssignment_4_2.eContents().get(0);
+		private final Keyword cRightCurlyBracketKeyword_4_3 = (Keyword)cGroup_4.eContents().get(3);
+		
+		//TopConceptDef returns ConceptDef:
+		//	top?="top" named?="concept" name=ID ("<" mapping=Mapping ">")? ("{" annotation+=Annotation*
+		//	child+=SubconceptOrAttribute* "}")?;
+		public ParserRule getRule() { return rule; }
+
+		//top?="top" named?="concept" name=ID ("<" mapping=Mapping ">")? ("{" annotation+=Annotation*
+		//child+=SubconceptOrAttribute* "}")?
+		public Group getGroup() { return cGroup; }
+
+		//top?="top"
+		public Assignment getTopAssignment_0() { return cTopAssignment_0; }
+
+		//"top"
+		public Keyword getTopTopKeyword_0_0() { return cTopTopKeyword_0_0; }
+
+		//named?="concept"
+		public Assignment getNamedAssignment_1() { return cNamedAssignment_1; }
+
+		//"concept"
+		public Keyword getNamedConceptKeyword_1_0() { return cNamedConceptKeyword_1_0; }
+
+		//name=ID
+		public Assignment getNameAssignment_2() { return cNameAssignment_2; }
+
+		//ID
+		public RuleCall getNameIDTerminalRuleCall_2_0() { return cNameIDTerminalRuleCall_2_0; }
+
+		//("<" mapping=Mapping ">")?
+		public Group getGroup_3() { return cGroup_3; }
+
+		//"<"
+		public Keyword getLessThanSignKeyword_3_0() { return cLessThanSignKeyword_3_0; }
+
+		//mapping=Mapping
+		public Assignment getMappingAssignment_3_1() { return cMappingAssignment_3_1; }
+
+		//Mapping
+		public RuleCall getMappingMappingParserRuleCall_3_1_0() { return cMappingMappingParserRuleCall_3_1_0; }
+
+		//">"
+		public Keyword getGreaterThanSignKeyword_3_2() { return cGreaterThanSignKeyword_3_2; }
+
+		//("{" annotation+=Annotation* child+=SubconceptOrAttribute* "}")?
+		public Group getGroup_4() { return cGroup_4; }
+
+		//"{"
+		public Keyword getLeftCurlyBracketKeyword_4_0() { return cLeftCurlyBracketKeyword_4_0; }
+
+		//annotation+=Annotation*
+		public Assignment getAnnotationAssignment_4_1() { return cAnnotationAssignment_4_1; }
+
+		//Annotation
+		public RuleCall getAnnotationAnnotationParserRuleCall_4_1_0() { return cAnnotationAnnotationParserRuleCall_4_1_0; }
+
+		//child+=SubconceptOrAttribute*
+		public Assignment getChildAssignment_4_2() { return cChildAssignment_4_2; }
+
+		//SubconceptOrAttribute
+		public RuleCall getChildSubconceptOrAttributeParserRuleCall_4_2_0() { return cChildSubconceptOrAttributeParserRuleCall_4_2_0; }
+
+		//"}"
+		public Keyword getRightCurlyBracketKeyword_4_3() { return cRightCurlyBracketKeyword_4_3; }
+	}
+
+	public class SubconceptOrAttributeElements extends AbstractParserRuleElementFinder {
+		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "SubconceptOrAttribute");
+		private final Alternatives cAlternatives = (Alternatives)rule.eContents().get(1);
+		private final RuleCall cSubconceptParserRuleCall_0 = (RuleCall)cAlternatives.eContents().get(0);
+		private final RuleCall cAttributeParserRuleCall_1 = (RuleCall)cAlternatives.eContents().get(1);
+		
+		//SubconceptOrAttribute:
+		//	Subconcept | Attribute;
+		public ParserRule getRule() { return rule; }
+
+		//Subconcept | Attribute
+		public Alternatives getAlternatives() { return cAlternatives; }
+
+		//Subconcept
+		public RuleCall getSubconceptParserRuleCall_0() { return cSubconceptParserRuleCall_0; }
+
+		//Attribute
+		public RuleCall getAttributeParserRuleCall_1() { return cAttributeParserRuleCall_1; }
 	}
 
 	public class SubconceptElements extends AbstractParserRuleElementFinder {
 		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "Subconcept");
+		private final Group cGroup = (Group)rule.eContents().get(1);
+		private final Assignment cNameAssignment_0 = (Assignment)cGroup.eContents().get(0);
+		private final RuleCall cNameIDTerminalRuleCall_0_0 = (RuleCall)cNameAssignment_0.eContents().get(0);
+		private final Assignment cCardinalityAssignment_1 = (Assignment)cGroup.eContents().get(1);
+		private final RuleCall cCardinalityCardinalityParserRuleCall_1_0 = (RuleCall)cCardinalityAssignment_1.eContents().get(0);
+		private final Assignment cEssentialAssignment_2 = (Assignment)cGroup.eContents().get(2);
+		private final Keyword cEssentialExclamationMarkKeyword_2_0 = (Keyword)cEssentialAssignment_2.eContents().get(0);
+		private final Alternatives cAlternatives_3 = (Alternatives)cGroup.eContents().get(3);
+		private final Group cGroup_3_0 = (Group)cAlternatives_3.eContents().get(0);
+		private final Keyword cColonKeyword_3_0_0 = (Keyword)cGroup_3_0.eContents().get(0);
+		private final Assignment cDefAssignment_3_0_1 = (Assignment)cGroup_3_0.eContents().get(1);
+		private final RuleCall cDefNamedConceptDefParserRuleCall_3_0_1_0 = (RuleCall)cDefAssignment_3_0_1.eContents().get(0);
+		private final Assignment cDefAssignment_3_1 = (Assignment)cAlternatives_3.eContents().get(1);
+		private final RuleCall cDefAnonymousConceptDefParserRuleCall_3_1_0 = (RuleCall)cDefAssignment_3_1.eContents().get(0);
+		private final Group cGroup_3_2 = (Group)cAlternatives_3.eContents().get(2);
+		private final Assignment cReferenceAssignment_3_2_0 = (Assignment)cGroup_3_2.eContents().get(0);
+		private final Keyword cReferenceColonKeyword_3_2_0_0 = (Keyword)cReferenceAssignment_3_2_0.eContents().get(0);
+		private final Assignment cRefAssignment_3_2_1 = (Assignment)cGroup_3_2.eContents().get(1);
+		private final CrossReference cRefConceptDefCrossReference_3_2_1_0 = (CrossReference)cRefAssignment_3_2_1.eContents().get(0);
+		private final RuleCall cRefConceptDefIDTerminalRuleCall_3_2_1_0_1 = (RuleCall)cRefConceptDefCrossReference_3_2_1_0.eContents().get(1);
+		
+		//Subconcept returns SubconceptOrAttribute:
+		//	name=ID cardinality=Cardinality? essential?="!"? (":" def=NamedConceptDef | def=AnonymousConceptDef | reference?=":"
+		//	ref=[ConceptDef]);
+		public ParserRule getRule() { return rule; }
+
+		//name=ID cardinality=Cardinality? essential?="!"? (":" def=NamedConceptDef | def=AnonymousConceptDef | reference?=":"
+		//ref=[ConceptDef])
+		public Group getGroup() { return cGroup; }
+
+		//name=ID
+		public Assignment getNameAssignment_0() { return cNameAssignment_0; }
+
+		//ID
+		public RuleCall getNameIDTerminalRuleCall_0_0() { return cNameIDTerminalRuleCall_0_0; }
+
+		//cardinality=Cardinality?
+		public Assignment getCardinalityAssignment_1() { return cCardinalityAssignment_1; }
+
+		//Cardinality
+		public RuleCall getCardinalityCardinalityParserRuleCall_1_0() { return cCardinalityCardinalityParserRuleCall_1_0; }
+
+		//essential?="!"?
+		public Assignment getEssentialAssignment_2() { return cEssentialAssignment_2; }
+
+		//"!"
+		public Keyword getEssentialExclamationMarkKeyword_2_0() { return cEssentialExclamationMarkKeyword_2_0; }
+
+		//":" def=NamedConceptDef | def=AnonymousConceptDef | reference?=":" ref=[ConceptDef]
+		public Alternatives getAlternatives_3() { return cAlternatives_3; }
+
+		//":" def=NamedConceptDef
+		public Group getGroup_3_0() { return cGroup_3_0; }
+
+		//":"
+		public Keyword getColonKeyword_3_0_0() { return cColonKeyword_3_0_0; }
+
+		//def=NamedConceptDef
+		public Assignment getDefAssignment_3_0_1() { return cDefAssignment_3_0_1; }
+
+		//NamedConceptDef
+		public RuleCall getDefNamedConceptDefParserRuleCall_3_0_1_0() { return cDefNamedConceptDefParserRuleCall_3_0_1_0; }
+
+		//def=AnonymousConceptDef
+		public Assignment getDefAssignment_3_1() { return cDefAssignment_3_1; }
+
+		//AnonymousConceptDef
+		public RuleCall getDefAnonymousConceptDefParserRuleCall_3_1_0() { return cDefAnonymousConceptDefParserRuleCall_3_1_0; }
+
+		//reference?=":" ref=[ConceptDef]
+		public Group getGroup_3_2() { return cGroup_3_2; }
+
+		//reference?=":"
+		public Assignment getReferenceAssignment_3_2_0() { return cReferenceAssignment_3_2_0; }
+
+		//":"
+		public Keyword getReferenceColonKeyword_3_2_0_0() { return cReferenceColonKeyword_3_2_0_0; }
+
+		//ref=[ConceptDef]
+		public Assignment getRefAssignment_3_2_1() { return cRefAssignment_3_2_1; }
+
+		//[ConceptDef]
+		public CrossReference getRefConceptDefCrossReference_3_2_1_0() { return cRefConceptDefCrossReference_3_2_1_0; }
+
+		//ID
+		public RuleCall getRefConceptDefIDTerminalRuleCall_3_2_1_0_1() { return cRefConceptDefIDTerminalRuleCall_3_2_1_0_1; }
+	}
+
+	public class AttributeElements extends AbstractParserRuleElementFinder {
+		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "Attribute");
 		private final Group cGroup = (Group)rule.eContents().get(1);
 		private final Assignment cAttribAssignment_0 = (Assignment)cGroup.eContents().get(0);
 		private final Keyword cAttribAttribKeyword_0_0 = (Keyword)cAttribAssignment_0.eContents().get(0);
@@ -80,43 +467,27 @@ public class CupidLanguageGrammarAccess extends AbstractGrammarElementFinder {
 		private final RuleCall cCardinalityCardinalityParserRuleCall_2_0 = (RuleCall)cCardinalityAssignment_2.eContents().get(0);
 		private final Assignment cEssentialAssignment_3 = (Assignment)cGroup.eContents().get(3);
 		private final Keyword cEssentialExclamationMarkKeyword_3_0 = (Keyword)cEssentialAssignment_3.eContents().get(0);
-		private final Alternatives cAlternatives_4 = (Alternatives)cGroup.eContents().get(4);
-		private final Group cGroup_4_0 = (Group)cAlternatives_4.eContents().get(0);
-		private final Assignment cRefAssignment_4_0_0 = (Assignment)cGroup_4_0.eContents().get(0);
-		private final Keyword cRefColonKeyword_4_0_0_0 = (Keyword)cRefAssignment_4_0_0.eContents().get(0);
-		private final Assignment cConceptDefAssignment_4_0_1 = (Assignment)cGroup_4_0.eContents().get(1);
-		private final CrossReference cConceptDefConceptDefCrossReference_4_0_1_0 = (CrossReference)cConceptDefAssignment_4_0_1.eContents().get(0);
-		private final RuleCall cConceptDefConceptDefIDTerminalRuleCall_4_0_1_0_1 = (RuleCall)cConceptDefConceptDefCrossReference_4_0_1_0.eContents().get(1);
-		private final Group cGroup_4_1 = (Group)cAlternatives_4.eContents().get(1);
-		private final Group cGroup_4_1_0 = (Group)cGroup_4_1.eContents().get(0);
-		private final Keyword cLessThanSignKeyword_4_1_0_0 = (Keyword)cGroup_4_1_0.eContents().get(0);
-		private final Assignment cMappingAssignment_4_1_0_1 = (Assignment)cGroup_4_1_0.eContents().get(1);
-		private final RuleCall cMappingMappingParserRuleCall_4_1_0_1_0 = (RuleCall)cMappingAssignment_4_1_0_1.eContents().get(0);
-		private final Keyword cGreaterThanSignKeyword_4_1_0_2 = (Keyword)cGroup_4_1_0.eContents().get(2);
-		private final Group cGroup_4_1_1 = (Group)cGroup_4_1.eContents().get(1);
-		private final Keyword cLeftSquareBracketKeyword_4_1_1_0 = (Keyword)cGroup_4_1_1.eContents().get(0);
-		private final Assignment cAnnotationAssignment_4_1_1_1 = (Assignment)cGroup_4_1_1.eContents().get(1);
-		private final RuleCall cAnnotationAnnotationParserRuleCall_4_1_1_1_0 = (RuleCall)cAnnotationAssignment_4_1_1_1.eContents().get(0);
-		private final Group cGroup_4_1_1_2 = (Group)cGroup_4_1_1.eContents().get(2);
-		private final Keyword cCommaKeyword_4_1_1_2_0 = (Keyword)cGroup_4_1_1_2.eContents().get(0);
-		private final Assignment cAnnotationAssignment_4_1_1_2_1 = (Assignment)cGroup_4_1_1_2.eContents().get(1);
-		private final RuleCall cAnnotationAnnotationParserRuleCall_4_1_1_2_1_0 = (RuleCall)cAnnotationAssignment_4_1_1_2_1.eContents().get(0);
-		private final Keyword cRightSquareBracketKeyword_4_1_1_3 = (Keyword)cGroup_4_1_1.eContents().get(3);
-		private final Assignment cBodyAssignment_4_1_2 = (Assignment)cGroup_4_1.eContents().get(2);
-		private final RuleCall cBodyConceptDefBodyParserRuleCall_4_1_2_0 = (RuleCall)cBodyAssignment_4_1_2.eContents().get(0);
+		private final Group cGroup_4 = (Group)cGroup.eContents().get(4);
+		private final Keyword cLessThanSignKeyword_4_0 = (Keyword)cGroup_4.eContents().get(0);
+		private final Assignment cAttribMappingAssignment_4_1 = (Assignment)cGroup_4.eContents().get(1);
+		private final RuleCall cAttribMappingMappingParserRuleCall_4_1_0 = (RuleCall)cAttribMappingAssignment_4_1.eContents().get(0);
+		private final Keyword cGreaterThanSignKeyword_4_2 = (Keyword)cGroup_4.eContents().get(2);
+		private final Group cGroup_5 = (Group)cGroup.eContents().get(5);
+		private final Keyword cLeftCurlyBracketKeyword_5_0 = (Keyword)cGroup_5.eContents().get(0);
+		private final Assignment cAnnotationAssignment_5_1 = (Assignment)cGroup_5.eContents().get(1);
+		private final RuleCall cAnnotationAnnotationParserRuleCall_5_1_0 = (RuleCall)cAnnotationAssignment_5_1.eContents().get(0);
+		private final Keyword cRightCurlyBracketKeyword_5_2 = (Keyword)cGroup_5.eContents().get(2);
 		
-		////Subconcept:
-		////	AnonymousConcept | ConceptRef | Attribute;
-		//Subconcept:
-		//	attrib?="attrib"? name=ID cardinality=Cardinality? essential?="!"? (ref?=":" conceptDef=[ConceptDef] | ("<"
-		//	mapping=Mapping ">")? ("[" annotation+=Annotation ("," annotation+=Annotation)* "]")? body=ConceptDefBody?);
+		//Attribute returns SubconceptOrAttribute:
+		//	attrib?="attrib" name=ID cardinality=Cardinality? essential?="!"? ("<" attribMapping=Mapping ">")? ("{"
+		//	annotation+=Annotation* "}")?;
 		public ParserRule getRule() { return rule; }
 
-		//attrib?="attrib"? name=ID cardinality=Cardinality? essential?="!"? (ref?=":" conceptDef=[ConceptDef] | ("<"
-		//mapping=Mapping ">")? ("[" annotation+=Annotation ("," annotation+=Annotation)* "]")? body=ConceptDefBody?)
+		//attrib?="attrib" name=ID cardinality=Cardinality? essential?="!"? ("<" attribMapping=Mapping ">")? ("{"
+		//annotation+=Annotation* "}")?
 		public Group getGroup() { return cGroup; }
 
-		//attrib?="attrib"?
+		//attrib?="attrib"
 		public Assignment getAttribAssignment_0() { return cAttribAssignment_0; }
 
 		//"attrib"
@@ -140,259 +511,35 @@ public class CupidLanguageGrammarAccess extends AbstractGrammarElementFinder {
 		//"!"
 		public Keyword getEssentialExclamationMarkKeyword_3_0() { return cEssentialExclamationMarkKeyword_3_0; }
 
-		//ref?=":" conceptDef=[ConceptDef] | ("<" mapping=Mapping ">")? ("[" annotation+=Annotation ("," annotation+=Annotation)*
-		//"]")? body=ConceptDefBody?
-		public Alternatives getAlternatives_4() { return cAlternatives_4; }
-
-		//ref?=":" conceptDef=[ConceptDef]
-		public Group getGroup_4_0() { return cGroup_4_0; }
-
-		//ref?=":"
-		public Assignment getRefAssignment_4_0_0() { return cRefAssignment_4_0_0; }
-
-		//":"
-		public Keyword getRefColonKeyword_4_0_0_0() { return cRefColonKeyword_4_0_0_0; }
-
-		//conceptDef=[ConceptDef]
-		public Assignment getConceptDefAssignment_4_0_1() { return cConceptDefAssignment_4_0_1; }
-
-		//[ConceptDef]
-		public CrossReference getConceptDefConceptDefCrossReference_4_0_1_0() { return cConceptDefConceptDefCrossReference_4_0_1_0; }
-
-		//ID
-		public RuleCall getConceptDefConceptDefIDTerminalRuleCall_4_0_1_0_1() { return cConceptDefConceptDefIDTerminalRuleCall_4_0_1_0_1; }
-
-		//("<" mapping=Mapping ">")? ("[" annotation+=Annotation ("," annotation+=Annotation)* "]")? body=ConceptDefBody?
-		public Group getGroup_4_1() { return cGroup_4_1; }
-
-		//("<" mapping=Mapping ">")?
-		public Group getGroup_4_1_0() { return cGroup_4_1_0; }
-
-		//"<"
-		public Keyword getLessThanSignKeyword_4_1_0_0() { return cLessThanSignKeyword_4_1_0_0; }
-
-		//mapping=Mapping
-		public Assignment getMappingAssignment_4_1_0_1() { return cMappingAssignment_4_1_0_1; }
-
-		//Mapping
-		public RuleCall getMappingMappingParserRuleCall_4_1_0_1_0() { return cMappingMappingParserRuleCall_4_1_0_1_0; }
-
-		//">"
-		public Keyword getGreaterThanSignKeyword_4_1_0_2() { return cGreaterThanSignKeyword_4_1_0_2; }
-
-		//("[" annotation+=Annotation ("," annotation+=Annotation)* "]")?
-		public Group getGroup_4_1_1() { return cGroup_4_1_1; }
-
-		//"["
-		public Keyword getLeftSquareBracketKeyword_4_1_1_0() { return cLeftSquareBracketKeyword_4_1_1_0; }
-
-		//annotation+=Annotation
-		public Assignment getAnnotationAssignment_4_1_1_1() { return cAnnotationAssignment_4_1_1_1; }
-
-		//Annotation
-		public RuleCall getAnnotationAnnotationParserRuleCall_4_1_1_1_0() { return cAnnotationAnnotationParserRuleCall_4_1_1_1_0; }
-
-		//("," annotation+=Annotation)*
-		public Group getGroup_4_1_1_2() { return cGroup_4_1_1_2; }
-
-		//","
-		public Keyword getCommaKeyword_4_1_1_2_0() { return cCommaKeyword_4_1_1_2_0; }
-
-		//annotation+=Annotation
-		public Assignment getAnnotationAssignment_4_1_1_2_1() { return cAnnotationAssignment_4_1_1_2_1; }
-
-		//Annotation
-		public RuleCall getAnnotationAnnotationParserRuleCall_4_1_1_2_1_0() { return cAnnotationAnnotationParserRuleCall_4_1_1_2_1_0; }
-
-		//"]"
-		public Keyword getRightSquareBracketKeyword_4_1_1_3() { return cRightSquareBracketKeyword_4_1_1_3; }
-
-		//body=ConceptDefBody?
-		public Assignment getBodyAssignment_4_1_2() { return cBodyAssignment_4_1_2; }
-
-		//ConceptDefBody
-		public RuleCall getBodyConceptDefBodyParserRuleCall_4_1_2_0() { return cBodyConceptDefBodyParserRuleCall_4_1_2_0; }
-	}
-
-	public class AnnotationElements extends AbstractParserRuleElementFinder {
-		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "Annotation");
-		private final Group cGroup = (Group)rule.eContents().get(1);
-		private final Assignment cKeyAssignment_0 = (Assignment)cGroup.eContents().get(0);
-		private final RuleCall cKeyIDTerminalRuleCall_0_0 = (RuleCall)cKeyAssignment_0.eContents().get(0);
-		private final Keyword cEqualsSignKeyword_1 = (Keyword)cGroup.eContents().get(1);
-		private final Assignment cValueAssignment_2 = (Assignment)cGroup.eContents().get(2);
-		private final RuleCall cValueSTRINGTerminalRuleCall_2_0 = (RuleCall)cValueAssignment_2.eContents().get(0);
-		
-		//Annotation:
-		//	key=ID "=" value=STRING;
-		public ParserRule getRule() { return rule; }
-
-		//key=ID "=" value=STRING
-		public Group getGroup() { return cGroup; }
-
-		//key=ID
-		public Assignment getKeyAssignment_0() { return cKeyAssignment_0; }
-
-		//ID
-		public RuleCall getKeyIDTerminalRuleCall_0_0() { return cKeyIDTerminalRuleCall_0_0; }
-
-		//"="
-		public Keyword getEqualsSignKeyword_1() { return cEqualsSignKeyword_1; }
-
-		//value=STRING
-		public Assignment getValueAssignment_2() { return cValueAssignment_2; }
-
-		//STRING
-		public RuleCall getValueSTRINGTerminalRuleCall_2_0() { return cValueSTRINGTerminalRuleCall_2_0; }
-	}
-
-	public class ConceptDefElements extends AbstractParserRuleElementFinder {
-		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "ConceptDef");
-		private final Group cGroup = (Group)rule.eContents().get(1);
-		private final Assignment cTopAssignment_0 = (Assignment)cGroup.eContents().get(0);
-		private final Keyword cTopTopKeyword_0_0 = (Keyword)cTopAssignment_0.eContents().get(0);
-		private final Keyword cConceptKeyword_1 = (Keyword)cGroup.eContents().get(1);
-		private final Assignment cNameAssignment_2 = (Assignment)cGroup.eContents().get(2);
-		private final RuleCall cNameIDTerminalRuleCall_2_0 = (RuleCall)cNameAssignment_2.eContents().get(0);
-		private final Group cGroup_3 = (Group)cGroup.eContents().get(3);
-		private final Keyword cLessThanSignKeyword_3_0 = (Keyword)cGroup_3.eContents().get(0);
-		private final Assignment cMappingAssignment_3_1 = (Assignment)cGroup_3.eContents().get(1);
-		private final RuleCall cMappingMappingParserRuleCall_3_1_0 = (RuleCall)cMappingAssignment_3_1.eContents().get(0);
-		private final Keyword cGreaterThanSignKeyword_3_2 = (Keyword)cGroup_3.eContents().get(2);
-		private final Group cGroup_4 = (Group)cGroup.eContents().get(4);
-		private final Keyword cLeftSquareBracketKeyword_4_0 = (Keyword)cGroup_4.eContents().get(0);
-		private final Assignment cAnnotationAssignment_4_1 = (Assignment)cGroup_4.eContents().get(1);
-		private final RuleCall cAnnotationAnnotationParserRuleCall_4_1_0 = (RuleCall)cAnnotationAssignment_4_1.eContents().get(0);
-		private final Group cGroup_4_2 = (Group)cGroup_4.eContents().get(2);
-		private final Keyword cCommaKeyword_4_2_0 = (Keyword)cGroup_4_2.eContents().get(0);
-		private final Assignment cAnnotationAssignment_4_2_1 = (Assignment)cGroup_4_2.eContents().get(1);
-		private final RuleCall cAnnotationAnnotationParserRuleCall_4_2_1_0 = (RuleCall)cAnnotationAssignment_4_2_1.eContents().get(0);
-		private final Keyword cRightSquareBracketKeyword_4_3 = (Keyword)cGroup_4.eContents().get(3);
-		private final Assignment cBodyAssignment_5 = (Assignment)cGroup.eContents().get(5);
-		private final RuleCall cBodyConceptDefBodyParserRuleCall_5_0 = (RuleCall)cBodyAssignment_5.eContents().get(0);
-		
-		//ConceptDef:
-		//	top?="top"? "concept" name=ID ("<" mapping=Mapping ">")? ("[" annotation+=Annotation ("," annotation+=Annotation)*
-		//	"]")? body=ConceptDefBody?;
-		public ParserRule getRule() { return rule; }
-
-		//top?="top"? "concept" name=ID ("<" mapping=Mapping ">")? ("[" annotation+=Annotation ("," annotation+=Annotation)* "]")?
-		//body=ConceptDefBody?
-		public Group getGroup() { return cGroup; }
-
-		//top?="top"?
-		public Assignment getTopAssignment_0() { return cTopAssignment_0; }
-
-		//"top"
-		public Keyword getTopTopKeyword_0_0() { return cTopTopKeyword_0_0; }
-
-		//"concept"
-		public Keyword getConceptKeyword_1() { return cConceptKeyword_1; }
-
-		//name=ID
-		public Assignment getNameAssignment_2() { return cNameAssignment_2; }
-
-		//ID
-		public RuleCall getNameIDTerminalRuleCall_2_0() { return cNameIDTerminalRuleCall_2_0; }
-
-		//("<" mapping=Mapping ">")?
-		public Group getGroup_3() { return cGroup_3; }
-
-		//"<"
-		public Keyword getLessThanSignKeyword_3_0() { return cLessThanSignKeyword_3_0; }
-
-		//mapping=Mapping
-		public Assignment getMappingAssignment_3_1() { return cMappingAssignment_3_1; }
-
-		//Mapping
-		public RuleCall getMappingMappingParserRuleCall_3_1_0() { return cMappingMappingParserRuleCall_3_1_0; }
-
-		//">"
-		public Keyword getGreaterThanSignKeyword_3_2() { return cGreaterThanSignKeyword_3_2; }
-
-		//("[" annotation+=Annotation ("," annotation+=Annotation)* "]")?
+		//("<" attribMapping=Mapping ">")?
 		public Group getGroup_4() { return cGroup_4; }
 
-		//"["
-		public Keyword getLeftSquareBracketKeyword_4_0() { return cLeftSquareBracketKeyword_4_0; }
+		//"<"
+		public Keyword getLessThanSignKeyword_4_0() { return cLessThanSignKeyword_4_0; }
 
-		//annotation+=Annotation
-		public Assignment getAnnotationAssignment_4_1() { return cAnnotationAssignment_4_1; }
+		//attribMapping=Mapping
+		public Assignment getAttribMappingAssignment_4_1() { return cAttribMappingAssignment_4_1; }
 
-		//Annotation
-		public RuleCall getAnnotationAnnotationParserRuleCall_4_1_0() { return cAnnotationAnnotationParserRuleCall_4_1_0; }
+		//Mapping
+		public RuleCall getAttribMappingMappingParserRuleCall_4_1_0() { return cAttribMappingMappingParserRuleCall_4_1_0; }
 
-		//("," annotation+=Annotation)*
-		public Group getGroup_4_2() { return cGroup_4_2; }
+		//">"
+		public Keyword getGreaterThanSignKeyword_4_2() { return cGreaterThanSignKeyword_4_2; }
 
-		//","
-		public Keyword getCommaKeyword_4_2_0() { return cCommaKeyword_4_2_0; }
-
-		//annotation+=Annotation
-		public Assignment getAnnotationAssignment_4_2_1() { return cAnnotationAssignment_4_2_1; }
-
-		//Annotation
-		public RuleCall getAnnotationAnnotationParserRuleCall_4_2_1_0() { return cAnnotationAnnotationParserRuleCall_4_2_1_0; }
-
-		//"]"
-		public Keyword getRightSquareBracketKeyword_4_3() { return cRightSquareBracketKeyword_4_3; }
-
-		//body=ConceptDefBody?
-		public Assignment getBodyAssignment_5() { return cBodyAssignment_5; }
-
-		//ConceptDefBody
-		public RuleCall getBodyConceptDefBodyParserRuleCall_5_0() { return cBodyConceptDefBodyParserRuleCall_5_0; }
-	}
-
-	public class ConceptDefBodyElements extends AbstractParserRuleElementFinder {
-		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "ConceptDefBody");
-		private final Group cGroup = (Group)rule.eContents().get(1);
-		private final Keyword cLeftCurlyBracketKeyword_0 = (Keyword)cGroup.eContents().get(0);
-		private final Assignment cSubconceptAssignment_1 = (Assignment)cGroup.eContents().get(1);
-		private final RuleCall cSubconceptSubconceptParserRuleCall_1_0 = (RuleCall)cSubconceptAssignment_1.eContents().get(0);
-		private final Group cGroup_2 = (Group)cGroup.eContents().get(2);
-		private final Keyword cCommaKeyword_2_0 = (Keyword)cGroup_2.eContents().get(0);
-		private final Assignment cSubconceptAssignment_2_1 = (Assignment)cGroup_2.eContents().get(1);
-		private final RuleCall cSubconceptSubconceptParserRuleCall_2_1_0 = (RuleCall)cSubconceptAssignment_2_1.eContents().get(0);
-		private final Keyword cRightCurlyBracketKeyword_3 = (Keyword)cGroup.eContents().get(3);
-		
-		////AnonymousConcept:
-		////	localName=ID cardinality=Cardinality? required?='!'? ('<' mapping=Mapping '>')? 
-		////	('[' annotation+=Annotation (',' annotation+=Annotation)* ']')?
-		////	body=ConceptDefBody?;
-		////Attribute:
-		////	'attrib' name=ID cardinality=Cardinality? required?='!'? ('<' mapping=Mapping '>')?
-		////	('[' annotation+=Annotation (',' annotation+=Annotation)* ']')?;
-		//ConceptDefBody:
-		//	"{" subconcept+=Subconcept ("," subconcept+=Subconcept)* "}";
-		public ParserRule getRule() { return rule; }
-
-		//"{" subconcept+=Subconcept ("," subconcept+=Subconcept)* "}"
-		public Group getGroup() { return cGroup; }
+		//("{" annotation+=Annotation* "}")?
+		public Group getGroup_5() { return cGroup_5; }
 
 		//"{"
-		public Keyword getLeftCurlyBracketKeyword_0() { return cLeftCurlyBracketKeyword_0; }
+		public Keyword getLeftCurlyBracketKeyword_5_0() { return cLeftCurlyBracketKeyword_5_0; }
 
-		//subconcept+=Subconcept
-		public Assignment getSubconceptAssignment_1() { return cSubconceptAssignment_1; }
+		//annotation+=Annotation*
+		public Assignment getAnnotationAssignment_5_1() { return cAnnotationAssignment_5_1; }
 
-		//Subconcept
-		public RuleCall getSubconceptSubconceptParserRuleCall_1_0() { return cSubconceptSubconceptParserRuleCall_1_0; }
-
-		//("," subconcept+=Subconcept)*
-		public Group getGroup_2() { return cGroup_2; }
-
-		//","
-		public Keyword getCommaKeyword_2_0() { return cCommaKeyword_2_0; }
-
-		//subconcept+=Subconcept
-		public Assignment getSubconceptAssignment_2_1() { return cSubconceptAssignment_2_1; }
-
-		//Subconcept
-		public RuleCall getSubconceptSubconceptParserRuleCall_2_1_0() { return cSubconceptSubconceptParserRuleCall_2_1_0; }
+		//Annotation
+		public RuleCall getAnnotationAnnotationParserRuleCall_5_1_0() { return cAnnotationAnnotationParserRuleCall_5_1_0; }
 
 		//"}"
-		public Keyword getRightCurlyBracketKeyword_3() { return cRightCurlyBracketKeyword_3; }
+		public Keyword getRightCurlyBracketKeyword_5_2() { return cRightCurlyBracketKeyword_5_2; }
 	}
 
 	public class CardinalityElements extends AbstractParserRuleElementFinder {
@@ -403,6 +550,15 @@ public class CupidLanguageGrammarAccess extends AbstractGrammarElementFinder {
 		private final Assignment cOneOrMoreAssignment_1 = (Assignment)cAlternatives.eContents().get(1);
 		private final Keyword cOneOrMorePlusSignKeyword_1_0 = (Keyword)cOneOrMoreAssignment_1.eContents().get(0);
 		
+		////AnonymousConcept:
+		////	localName=ID cardinality=Cardinality? required?='!'? ('<' mapping=Mapping '>')? 
+		////	('[' annotation+=Annotation (',' annotation+=Annotation)* ']')?
+		////	body=ConceptDefBody?;
+		////Attribute:
+		////	'attrib' name=ID cardinality=Cardinality? required?='!'? ('<' mapping=Mapping '>')?
+		////	('[' annotation+=Annotation (',' annotation+=Annotation)* ']')?;
+		////ConceptDefBody:
+		////	'{' (subconcept+=Subconcept) (',' subconcept+=Subconcept)* '}';
 		////ConceptRef:
 		////	localName=ID cardinality=Cardinality? required?='!'? ':' name=[ConceptDef];
 		//Cardinality:
@@ -569,19 +725,19 @@ public class CupidLanguageGrammarAccess extends AbstractGrammarElementFinder {
 		//"usesModule" "(" name=IDOrPathExpr ")"
 		public Group getGroup() { return cGroup; }
 
-		//"usesModule"
+		//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/org/earthsystemcurator/CupidLanguage.xtext#/0/@rules.14/@alternatives/@elements.0'
 		public Keyword getUsesModuleKeyword_0() { return cUsesModuleKeyword_0; }
 
-		//"("
+		//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/org/earthsystemcurator/CupidLanguage.xtext#/0/@rules.14/@alternatives/@elements.1'
 		public Keyword getLeftParenthesisKeyword_1() { return cLeftParenthesisKeyword_1; }
 
-		//name=IDOrPathExpr
+		//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/org/earthsystemcurator/CupidLanguage.xtext#/0/@rules.14/@alternatives/@elements.2'
 		public Assignment getNameAssignment_2() { return cNameAssignment_2; }
 
-		//IDOrPathExpr
+		//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/org/earthsystemcurator/CupidLanguage.xtext#/0/@rules.14/@alternatives/@elements.2/@terminal'
 		public RuleCall getNameIDOrPathExprParserRuleCall_2_0() { return cNameIDOrPathExprParserRuleCall_2_0; }
 
-		//")"
+		//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/org/earthsystemcurator/CupidLanguage.xtext#/0/@rules.14/@alternatives/@elements.3'
 		public Keyword getRightParenthesisKeyword_3() { return cRightParenthesisKeyword_3; }
 	}
 
@@ -594,26 +750,25 @@ public class CupidLanguageGrammarAccess extends AbstractGrammarElementFinder {
 		private final RuleCall cNameIDOrPathExprParserRuleCall_2_0 = (RuleCall)cNameAssignment_2.eContents().get(0);
 		private final Keyword cRightParenthesisKeyword_3 = (Keyword)cGroup.eContents().get(3);
 		
-		//UsesEntity:
-		//	"usesEntity" "(" name=IDOrPathExpr ")";
+		//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/org/earthsystemcurator/CupidLanguage.xtext#XtextFragmentProvider_org.earthsystemcurator.CupidLanguage/UsesEntity'
 		public ParserRule getRule() { return rule; }
 
-		//"usesEntity" "(" name=IDOrPathExpr ")"
+		//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/org/earthsystemcurator/CupidLanguage.xtext#/0/@rules.15/@alternatives'
 		public Group getGroup() { return cGroup; }
 
-		//"usesEntity"
+		//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/org/earthsystemcurator/CupidLanguage.xtext#/0/@rules.15/@alternatives/@elements.0'
 		public Keyword getUsesEntityKeyword_0() { return cUsesEntityKeyword_0; }
 
-		//"("
+		//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/org/earthsystemcurator/CupidLanguage.xtext#/0/@rules.15/@alternatives/@elements.1'
 		public Keyword getLeftParenthesisKeyword_1() { return cLeftParenthesisKeyword_1; }
 
-		//name=IDOrPathExpr
+		//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/org/earthsystemcurator/CupidLanguage.xtext#/0/@rules.15/@alternatives/@elements.2'
 		public Assignment getNameAssignment_2() { return cNameAssignment_2; }
 
-		//IDOrPathExpr
+		//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/org/earthsystemcurator/CupidLanguage.xtext#/0/@rules.15/@alternatives/@elements.2/@terminal'
 		public RuleCall getNameIDOrPathExprParserRuleCall_2_0() { return cNameIDOrPathExprParserRuleCall_2_0; }
 
-		//")"
+		//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/org/earthsystemcurator/CupidLanguage.xtext#/0/@rules.15/@alternatives/@elements.3'
 		public Keyword getRightParenthesisKeyword_3() { return cRightParenthesisKeyword_3; }
 	}
 
@@ -636,20 +791,19 @@ public class CupidLanguageGrammarAccess extends AbstractGrammarElementFinder {
 		private final Keyword cRightParenthesisKeyword_3_2 = (Keyword)cGroup_3.eContents().get(2);
 		private final Keyword cRightParenthesisKeyword_4 = (Keyword)cGroup.eContents().get(4);
 		
-		//Subroutine:
-		//	"subroutine" "(" name=IDOrPathExpr ("(" (params+=FormalParam ("," params+=FormalParam)*)? ")")? ")";
+		//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/org/earthsystemcurator/CupidLanguage.xtext#XtextFragmentProvider_org.earthsystemcurator.CupidLanguage/Subroutine'
 		public ParserRule getRule() { return rule; }
 
-		//"subroutine" "(" name=IDOrPathExpr ("(" (params+=FormalParam ("," params+=FormalParam)*)? ")")? ")"
+		//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/org/earthsystemcurator/CupidLanguage.xtext#/0/@rules.16/@alternatives'
 		public Group getGroup() { return cGroup; }
 
-		//"subroutine"
+		//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/org/earthsystemcurator/CupidLanguage.xtext#/0/@rules.16/@alternatives/@elements.0'
 		public Keyword getSubroutineKeyword_0() { return cSubroutineKeyword_0; }
 
-		//"("
+		//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/org/earthsystemcurator/CupidLanguage.xtext#/0/@rules.16/@alternatives/@elements.1'
 		public Keyword getLeftParenthesisKeyword_1() { return cLeftParenthesisKeyword_1; }
 
-		//name=IDOrPathExpr
+		//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/org/earthsystemcurator/CupidLanguage.xtext#/0/@rules.16/@alternatives/@elements.2'
 		public Assignment getNameAssignment_2() { return cNameAssignment_2; }
 
 		//IDOrPathExpr
@@ -1061,68 +1215,145 @@ public class CupidLanguageGrammarAccess extends AbstractGrammarElementFinder {
 		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "PathExpr");
 		private final Group cGroup = (Group)rule.eContents().get(1);
 		private final Keyword cNumberSignKeyword_0 = (Keyword)cGroup.eContents().get(0);
-		private final Assignment cSegmentsAssignment_1 = (Assignment)cGroup.eContents().get(1);
-		private final RuleCall cSegmentsPathSegmentParserRuleCall_1_0 = (RuleCall)cSegmentsAssignment_1.eContents().get(0);
-		private final Group cGroup_2 = (Group)cGroup.eContents().get(2);
-		private final Keyword cSolidusKeyword_2_0 = (Keyword)cGroup_2.eContents().get(0);
-		private final Assignment cSegmentsAssignment_2_1 = (Assignment)cGroup_2.eContents().get(1);
-		private final RuleCall cSegmentsPathSegmentParserRuleCall_2_1_0 = (RuleCall)cSegmentsAssignment_2_1.eContents().get(0);
+		private final RuleCall cPathExprNodeParserRuleCall_1 = (RuleCall)cGroup.eContents().get(1);
 		
+		////PathExpr:
+		////	'#' segments+=PathSegment ('/' segments+=PathSegment)*;
 		//PathExpr:
-		//	"#" segments+=PathSegment ("/" segments+=PathSegment)*;
+		//	"#" PathExprNode;
 		public ParserRule getRule() { return rule; }
 
-		//"#" segments+=PathSegment ("/" segments+=PathSegment)*
+		//"#" PathExprNode
 		public Group getGroup() { return cGroup; }
 
 		//"#"
 		public Keyword getNumberSignKeyword_0() { return cNumberSignKeyword_0; }
 
-		//segments+=PathSegment
-		public Assignment getSegmentsAssignment_1() { return cSegmentsAssignment_1; }
-
-		//PathSegment
-		public RuleCall getSegmentsPathSegmentParserRuleCall_1_0() { return cSegmentsPathSegmentParserRuleCall_1_0; }
-
-		//("/" segments+=PathSegment)*
-		public Group getGroup_2() { return cGroup_2; }
-
-		//"/"
-		public Keyword getSolidusKeyword_2_0() { return cSolidusKeyword_2_0; }
-
-		//segments+=PathSegment
-		public Assignment getSegmentsAssignment_2_1() { return cSegmentsAssignment_2_1; }
-
-		//PathSegment
-		public RuleCall getSegmentsPathSegmentParserRuleCall_2_1_0() { return cSegmentsPathSegmentParserRuleCall_2_1_0; }
+		//PathExprNode
+		public RuleCall getPathExprNodeParserRuleCall_1() { return cPathExprNodeParserRuleCall_1; }
 	}
 
-	public class PathSegmentElements extends AbstractParserRuleElementFinder {
-		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "PathSegment");
-		private final Alternatives cAlternatives = (Alternatives)rule.eContents().get(1);
-		private final Keyword cFullStopFullStopKeyword_0 = (Keyword)cAlternatives.eContents().get(0);
-		private final RuleCall cIDTerminalRuleCall_1 = (RuleCall)cAlternatives.eContents().get(1);
+	public class PathExprNodeElements extends AbstractParserRuleElementFinder {
+		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "PathExprNode");
+		private final Group cGroup = (Group)rule.eContents().get(1);
+		private final RuleCall cPathExprTermParserRuleCall_0 = (RuleCall)cGroup.eContents().get(0);
+		private final Group cGroup_1 = (Group)cGroup.eContents().get(1);
+		private final Action cPathExprHeadAction_1_0 = (Action)cGroup_1.eContents().get(0);
+		private final Keyword cSolidusKeyword_1_1 = (Keyword)cGroup_1.eContents().get(1);
+		private final Assignment cTailAssignment_1_2 = (Assignment)cGroup_1.eContents().get(2);
+		private final CrossReference cTailSubconceptOrAttributeCrossReference_1_2_0 = (CrossReference)cTailAssignment_1_2.eContents().get(0);
+		private final RuleCall cTailSubconceptOrAttributeIDTerminalRuleCall_1_2_0_1 = (RuleCall)cTailSubconceptOrAttributeCrossReference_1_2_0.eContents().get(1);
 		
-		//PathSegment:
-		//	".." | ID;
+		////PathExprNode returns PathExpr:
+		////	PathExprTerm ({PathExpr.head=current} '/' tail=PathExprNode)?;
+		////PathExprTerm returns PathExpr:
+		////	{PathExprTerm} ref=[SubconceptOrAttribute] (guard?='['']')?;
+		//PathExprNode returns PathExpr:
+		//	PathExprTerm ({PathExpr.head=current} "/" tail=[SubconceptOrAttribute])*;
 		public ParserRule getRule() { return rule; }
 
-		//".." | ID
-		public Alternatives getAlternatives() { return cAlternatives; }
+		//PathExprTerm ({PathExpr.head=current} "/" tail=[SubconceptOrAttribute])*
+		public Group getGroup() { return cGroup; }
 
-		//".."
-		public Keyword getFullStopFullStopKeyword_0() { return cFullStopFullStopKeyword_0; }
+		//PathExprTerm
+		public RuleCall getPathExprTermParserRuleCall_0() { return cPathExprTermParserRuleCall_0; }
+
+		//({PathExpr.head=current} "/" tail=[SubconceptOrAttribute])*
+		public Group getGroup_1() { return cGroup_1; }
+
+		//{PathExpr.head=current}
+		public Action getPathExprHeadAction_1_0() { return cPathExprHeadAction_1_0; }
+
+		//"/"
+		public Keyword getSolidusKeyword_1_1() { return cSolidusKeyword_1_1; }
+
+		//tail=[SubconceptOrAttribute]
+		public Assignment getTailAssignment_1_2() { return cTailAssignment_1_2; }
+
+		//[SubconceptOrAttribute]
+		public CrossReference getTailSubconceptOrAttributeCrossReference_1_2_0() { return cTailSubconceptOrAttributeCrossReference_1_2_0; }
 
 		//ID
-		public RuleCall getIDTerminalRuleCall_1() { return cIDTerminalRuleCall_1; }
+		public RuleCall getTailSubconceptOrAttributeIDTerminalRuleCall_1_2_0_1() { return cTailSubconceptOrAttributeIDTerminalRuleCall_1_2_0_1; }
+	}
+
+	public class PathExprTermElements extends AbstractParserRuleElementFinder {
+		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "PathExprTerm");
+		private final Group cGroup = (Group)rule.eContents().get(1);
+		private final Action cPathExprTermAction_0 = (Action)cGroup.eContents().get(0);
+		private final Assignment cRefAssignment_1 = (Assignment)cGroup.eContents().get(1);
+		private final CrossReference cRefSubconceptOrAttributeCrossReference_1_0 = (CrossReference)cRefAssignment_1.eContents().get(0);
+		private final RuleCall cRefSubconceptOrAttributeIDTerminalRuleCall_1_0_1 = (RuleCall)cRefSubconceptOrAttributeCrossReference_1_0.eContents().get(1);
+		private final Group cGroup_2 = (Group)cGroup.eContents().get(2);
+		private final Assignment cGuardAssignment_2_0 = (Assignment)cGroup_2.eContents().get(0);
+		private final Keyword cGuardLeftSquareBracketKeyword_2_0_0 = (Keyword)cGuardAssignment_2_0.eContents().get(0);
+		private final Keyword cRightSquareBracketKeyword_2_1 = (Keyword)cGroup_2.eContents().get(1);
+		
+		////PathSegment:
+		////	'..' | ID;
+		////PathExpr returns Ref:
+		////   EntityRef ({PathExpr.ref=current}  "." tail=ID)*
+		////;
+		////EntityRef returns Ref:
+		////   {EntityRef} entity=[SubconceptOrAttribute]
+		////; 
+		//PathExprTerm returns PathExpr:
+		//	{PathExprTerm} ref=[SubconceptOrAttribute] (guard?="[" "]")?;
+		public ParserRule getRule() { return rule; }
+
+		//{PathExprTerm} ref=[SubconceptOrAttribute] (guard?="[" "]")? //PathSegment:
+		////	'..' | ID;
+		////PathExpr returns Ref:
+		////   EntityRef ({PathExpr.ref=current}  "." tail=ID)*
+		////;
+		////EntityRef returns Ref:
+		////   {EntityRef} entity=[SubconceptOrAttribute]
+		////;
+		public Group getGroup() { return cGroup; }
+
+		//{PathExprTerm}
+		public Action getPathExprTermAction_0() { return cPathExprTermAction_0; }
+
+		//ref=[SubconceptOrAttribute]
+		public Assignment getRefAssignment_1() { return cRefAssignment_1; }
+
+		//[SubconceptOrAttribute]
+		public CrossReference getRefSubconceptOrAttributeCrossReference_1_0() { return cRefSubconceptOrAttributeCrossReference_1_0; }
+
+		//ID
+		public RuleCall getRefSubconceptOrAttributeIDTerminalRuleCall_1_0_1() { return cRefSubconceptOrAttributeIDTerminalRuleCall_1_0_1; }
+
+		//(guard?="[" "]" //PathSegment:
+		////	'..' | ID;
+		////PathExpr returns Ref:
+		////   EntityRef ({PathExpr.ref=current}  "." tail=ID)*
+		////;
+		////EntityRef returns Ref:
+		////   {EntityRef} entity=[SubconceptOrAttribute]
+		////; 
+		//)?
+		public Group getGroup_2() { return cGroup_2; }
+
+		//guard?="["
+		public Assignment getGuardAssignment_2_0() { return cGuardAssignment_2_0; }
+
+		//"["
+		public Keyword getGuardLeftSquareBracketKeyword_2_0_0() { return cGuardLeftSquareBracketKeyword_2_0_0; }
+
+		//"]"
+		public Keyword getRightSquareBracketKeyword_2_1() { return cRightSquareBracketKeyword_2_1; }
 	}
 	
 	
 	private LanguageElements pLanguage;
-	private SubconceptElements pSubconcept;
 	private AnnotationElements pAnnotation;
-	private ConceptDefElements pConceptDef;
-	private ConceptDefBodyElements pConceptDefBody;
+	private AnonymousConceptDefElements pAnonymousConceptDef;
+	private NamedConceptDefElements pNamedConceptDef;
+	private TopConceptDefElements pTopConceptDef;
+	private SubconceptOrAttributeElements pSubconceptOrAttribute;
+	private SubconceptElements pSubconcept;
+	private AttributeElements pAttribute;
+	private TerminalRule tANNOTATION_ID;
 	private CardinalityElements pCardinality;
 	private MappingElements pMapping;
 	private ImplicitContextMappingElements pImplicitContextMapping;
@@ -1140,7 +1371,8 @@ public class CupidLanguageGrammarAccess extends AbstractGrammarElementFinder {
 	private IDOrWildcardElements pIDOrWildcard;
 	private IDOrPathExprElements pIDOrPathExpr;
 	private PathExprElements pPathExpr;
-	private PathSegmentElements pPathSegment;
+	private PathExprNodeElements pPathExprNode;
+	private PathExprTermElements pPathExprTerm;
 	
 	private final Grammar grammar;
 
@@ -1180,11 +1412,8 @@ public class CupidLanguageGrammarAccess extends AbstractGrammarElementFinder {
 	}
 
 	
-	////Mappings:
-	////	mappings+=Mapping*
-	////	language+=Language?;
 	//Language:
-	//	"language " name=ID uri=STRING "{" conceptDef+=ConceptDef+ "}";
+	//	"language " name=ID uri=STRING "{" conceptDef+=TopConceptDef conceptDef+=NamedConceptDef* "}";
 	public LanguageElements getLanguageAccess() {
 		return (pLanguage != null) ? pLanguage : (pLanguage = new LanguageElements());
 	}
@@ -1195,19 +1424,14 @@ public class CupidLanguageGrammarAccess extends AbstractGrammarElementFinder {
 
 	////Subconcept:
 	////	AnonymousConcept | ConceptRef | Attribute;
-	//Subconcept:
-	//	attrib?="attrib"? name=ID cardinality=Cardinality? essential?="!"? (ref?=":" conceptDef=[ConceptDef] | ("<"
-	//	mapping=Mapping ">")? ("[" annotation+=Annotation ("," annotation+=Annotation)* "]")? body=ConceptDefBody?);
-	public SubconceptElements getSubconceptAccess() {
-		return (pSubconcept != null) ? pSubconcept : (pSubconcept = new SubconceptElements());
-	}
-	
-	public ParserRule getSubconceptRule() {
-		return getSubconceptAccess().getRule();
-	}
-
+	////Subconcept:
+	////	attrib?='attrib'? name=ID cardinality=Cardinality? essential?='!'?
+	////	(
+	////		ref?=':' conceptDef=[ConceptDef] |
+	////		('<' mapping=Mapping '>')? ('[' annotation+=Annotation (',' annotation+=Annotation)* ']')? body=ConceptDefBody?	
+	////	);
 	//Annotation:
-	//	key=ID "=" value=STRING;
+	//	key=ANNOTATION_ID "=" value=STRING;
 	public AnnotationElements getAnnotationAccess() {
 		return (pAnnotation != null) ? pAnnotation : (pAnnotation = new AnnotationElements());
 	}
@@ -1216,16 +1440,81 @@ public class CupidLanguageGrammarAccess extends AbstractGrammarElementFinder {
 		return getAnnotationAccess().getRule();
 	}
 
-	//ConceptDef:
-	//	top?="top"? "concept" name=ID ("<" mapping=Mapping ">")? ("[" annotation+=Annotation ("," annotation+=Annotation)*
-	//	"]")? body=ConceptDefBody?;
-	public ConceptDefElements getConceptDefAccess() {
-		return (pConceptDef != null) ? pConceptDef : (pConceptDef = new ConceptDefElements());
+	////ConceptDef:
+	////	(top?='/top'? named?='concept' name=ID)? ('<' mapping=Mapping '>')? 
+	////		('[' annotation+=Annotation (',' annotation+=Annotation)* ']')?
+	////		('{' localName=ID '}')?;
+	////ConceptDef:
+	////	AnonymousConceptDef | NamedConceptDef;
+	//AnonymousConceptDef returns ConceptDef:
+	//	{ConceptDef} ("<" mapping=Mapping ">")? ("{" annotation+=Annotation* child+=SubconceptOrAttribute* "}")?;
+	public AnonymousConceptDefElements getAnonymousConceptDefAccess() {
+		return (pAnonymousConceptDef != null) ? pAnonymousConceptDef : (pAnonymousConceptDef = new AnonymousConceptDefElements());
 	}
 	
-	public ParserRule getConceptDefRule() {
-		return getConceptDefAccess().getRule();
+	public ParserRule getAnonymousConceptDefRule() {
+		return getAnonymousConceptDefAccess().getRule();
 	}
+
+	//NamedConceptDef returns ConceptDef:
+	//	named?="concept" name=ID ("<" mapping=Mapping ">")? ("{" annotation+=Annotation* child+=SubconceptOrAttribute* "}")?;
+	public NamedConceptDefElements getNamedConceptDefAccess() {
+		return (pNamedConceptDef != null) ? pNamedConceptDef : (pNamedConceptDef = new NamedConceptDefElements());
+	}
+	
+	public ParserRule getNamedConceptDefRule() {
+		return getNamedConceptDefAccess().getRule();
+	}
+
+	//TopConceptDef returns ConceptDef:
+	//	top?="top" named?="concept" name=ID ("<" mapping=Mapping ">")? ("{" annotation+=Annotation*
+	//	child+=SubconceptOrAttribute* "}")?;
+	public TopConceptDefElements getTopConceptDefAccess() {
+		return (pTopConceptDef != null) ? pTopConceptDef : (pTopConceptDef = new TopConceptDefElements());
+	}
+	
+	public ParserRule getTopConceptDefRule() {
+		return getTopConceptDefAccess().getRule();
+	}
+
+	//SubconceptOrAttribute:
+	//	Subconcept | Attribute;
+	public SubconceptOrAttributeElements getSubconceptOrAttributeAccess() {
+		return (pSubconceptOrAttribute != null) ? pSubconceptOrAttribute : (pSubconceptOrAttribute = new SubconceptOrAttributeElements());
+	}
+	
+	public ParserRule getSubconceptOrAttributeRule() {
+		return getSubconceptOrAttributeAccess().getRule();
+	}
+
+	//Subconcept returns SubconceptOrAttribute:
+	//	name=ID cardinality=Cardinality? essential?="!"? (":" def=NamedConceptDef | def=AnonymousConceptDef | reference?=":"
+	//	ref=[ConceptDef]);
+	public SubconceptElements getSubconceptAccess() {
+		return (pSubconcept != null) ? pSubconcept : (pSubconcept = new SubconceptElements());
+	}
+	
+	public ParserRule getSubconceptRule() {
+		return getSubconceptAccess().getRule();
+	}
+
+	//Attribute returns SubconceptOrAttribute:
+	//	attrib?="attrib" name=ID cardinality=Cardinality? essential?="!"? ("<" attribMapping=Mapping ">")? ("{"
+	//	annotation+=Annotation* "}")?;
+	public AttributeElements getAttributeAccess() {
+		return (pAttribute != null) ? pAttribute : (pAttribute = new AttributeElements());
+	}
+	
+	public ParserRule getAttributeRule() {
+		return getAttributeAccess().getRule();
+	}
+
+	////AnnotationID: '@' ID;
+	//terminal ANNOTATION_ID:
+	//	"@" ID;
+	public TerminalRule getANNOTATION_IDRule() {
+		return (tANNOTATION_ID != null) ? tANNOTATION_ID : (tANNOTATION_ID = (TerminalRule) GrammarUtil.findRuleForName(getGrammar(), "ANNOTATION_ID"));
+	} 
 
 	////AnonymousConcept:
 	////	localName=ID cardinality=Cardinality? required?='!'? ('<' mapping=Mapping '>')? 
@@ -1234,16 +1523,8 @@ public class CupidLanguageGrammarAccess extends AbstractGrammarElementFinder {
 	////Attribute:
 	////	'attrib' name=ID cardinality=Cardinality? required?='!'? ('<' mapping=Mapping '>')?
 	////	('[' annotation+=Annotation (',' annotation+=Annotation)* ']')?;
-	//ConceptDefBody:
-	//	"{" subconcept+=Subconcept ("," subconcept+=Subconcept)* "}";
-	public ConceptDefBodyElements getConceptDefBodyAccess() {
-		return (pConceptDefBody != null) ? pConceptDefBody : (pConceptDefBody = new ConceptDefBodyElements());
-	}
-	
-	public ParserRule getConceptDefBodyRule() {
-		return getConceptDefBodyAccess().getRule();
-	}
-
+	////ConceptDefBody:
+	////	'{' (subconcept+=Subconcept) (',' subconcept+=Subconcept)* '}';
 	////ConceptRef:
 	////	localName=ID cardinality=Cardinality? required?='!'? ':' name=[ConceptDef];
 	//Cardinality:
@@ -1409,8 +1690,10 @@ public class CupidLanguageGrammarAccess extends AbstractGrammarElementFinder {
 		return getIDOrPathExprAccess().getRule();
 	}
 
+	////PathExpr:
+	////	'#' segments+=PathSegment ('/' segments+=PathSegment)*;
 	//PathExpr:
-	//	"#" segments+=PathSegment ("/" segments+=PathSegment)*;
+	//	"#" PathExprNode;
 	public PathExprElements getPathExprAccess() {
 		return (pPathExpr != null) ? pPathExpr : (pPathExpr = new PathExprElements());
 	}
@@ -1419,14 +1702,36 @@ public class CupidLanguageGrammarAccess extends AbstractGrammarElementFinder {
 		return getPathExprAccess().getRule();
 	}
 
-	//PathSegment:
-	//	".." | ID;
-	public PathSegmentElements getPathSegmentAccess() {
-		return (pPathSegment != null) ? pPathSegment : (pPathSegment = new PathSegmentElements());
+	////PathExprNode returns PathExpr:
+	////	PathExprTerm ({PathExpr.head=current} '/' tail=PathExprNode)?;
+	////PathExprTerm returns PathExpr:
+	////	{PathExprTerm} ref=[SubconceptOrAttribute] (guard?='['']')?;
+	//PathExprNode returns PathExpr:
+	//	PathExprTerm ({PathExpr.head=current} "/" tail=[SubconceptOrAttribute])*;
+	public PathExprNodeElements getPathExprNodeAccess() {
+		return (pPathExprNode != null) ? pPathExprNode : (pPathExprNode = new PathExprNodeElements());
 	}
 	
-	public ParserRule getPathSegmentRule() {
-		return getPathSegmentAccess().getRule();
+	public ParserRule getPathExprNodeRule() {
+		return getPathExprNodeAccess().getRule();
+	}
+
+	////PathSegment:
+	////	'..' | ID;
+	////PathExpr returns Ref:
+	////   EntityRef ({PathExpr.ref=current}  "." tail=ID)*
+	////;
+	////EntityRef returns Ref:
+	////   {EntityRef} entity=[SubconceptOrAttribute]
+	////; 
+	//PathExprTerm returns PathExpr:
+	//	{PathExprTerm} ref=[SubconceptOrAttribute] (guard?="[" "]")?;
+	public PathExprTermElements getPathExprTermAccess() {
+		return (pPathExprTerm != null) ? pPathExprTerm : (pPathExprTerm = new PathExprTermElements());
+	}
+	
+	public ParserRule getPathExprTermRule() {
+		return getPathExprTermAccess().getRule();
 	}
 
 	//terminal ID:

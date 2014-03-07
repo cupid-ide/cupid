@@ -2,16 +2,17 @@
  */
 package org.earthsystemcurator.cupidLanguage.impl;
 
-import java.util.Collection;
-
 import org.earthsystemcurator.cupidLanguage.CupidLanguagePackage;
 import org.earthsystemcurator.cupidLanguage.PathExpr;
+import org.earthsystemcurator.cupidLanguage.SubconceptOrAttribute;
 
-import org.eclipse.emf.common.util.EList;
+import org.eclipse.emf.common.notify.Notification;
+import org.eclipse.emf.common.notify.NotificationChain;
 
 import org.eclipse.emf.ecore.EClass;
+import org.eclipse.emf.ecore.InternalEObject;
 
-import org.eclipse.emf.ecore.util.EDataTypeEList;
+import org.eclipse.emf.ecore.impl.ENotificationImpl;
 
 /**
  * <!-- begin-user-doc -->
@@ -20,7 +21,8 @@ import org.eclipse.emf.ecore.util.EDataTypeEList;
  * <p>
  * The following features are implemented:
  * <ul>
- *   <li>{@link org.earthsystemcurator.cupidLanguage.impl.PathExprImpl#getSegments <em>Segments</em>}</li>
+ *   <li>{@link org.earthsystemcurator.cupidLanguage.impl.PathExprImpl#getHead <em>Head</em>}</li>
+ *   <li>{@link org.earthsystemcurator.cupidLanguage.impl.PathExprImpl#getTail <em>Tail</em>}</li>
  * </ul>
  * </p>
  *
@@ -29,14 +31,24 @@ import org.eclipse.emf.ecore.util.EDataTypeEList;
 public class PathExprImpl extends IDOrPathExprImpl implements PathExpr
 {
   /**
-   * The cached value of the '{@link #getSegments() <em>Segments</em>}' attribute list.
+   * The cached value of the '{@link #getHead() <em>Head</em>}' containment reference.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @see #getSegments()
+   * @see #getHead()
    * @generated
    * @ordered
    */
-  protected EList<String> segments;
+  protected PathExpr head;
+
+  /**
+   * The cached value of the '{@link #getTail() <em>Tail</em>}' reference.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @see #getTail()
+   * @generated
+   * @ordered
+   */
+  protected SubconceptOrAttribute tail;
 
   /**
    * <!-- begin-user-doc -->
@@ -64,13 +76,106 @@ public class PathExprImpl extends IDOrPathExprImpl implements PathExpr
    * <!-- end-user-doc -->
    * @generated
    */
-  public EList<String> getSegments()
+  public PathExpr getHead()
   {
-    if (segments == null)
+    return head;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public NotificationChain basicSetHead(PathExpr newHead, NotificationChain msgs)
+  {
+    PathExpr oldHead = head;
+    head = newHead;
+    if (eNotificationRequired())
     {
-      segments = new EDataTypeEList<String>(String.class, this, CupidLanguagePackage.PATH_EXPR__SEGMENTS);
+      ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, CupidLanguagePackage.PATH_EXPR__HEAD, oldHead, newHead);
+      if (msgs == null) msgs = notification; else msgs.add(notification);
     }
-    return segments;
+    return msgs;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public void setHead(PathExpr newHead)
+  {
+    if (newHead != head)
+    {
+      NotificationChain msgs = null;
+      if (head != null)
+        msgs = ((InternalEObject)head).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - CupidLanguagePackage.PATH_EXPR__HEAD, null, msgs);
+      if (newHead != null)
+        msgs = ((InternalEObject)newHead).eInverseAdd(this, EOPPOSITE_FEATURE_BASE - CupidLanguagePackage.PATH_EXPR__HEAD, null, msgs);
+      msgs = basicSetHead(newHead, msgs);
+      if (msgs != null) msgs.dispatch();
+    }
+    else if (eNotificationRequired())
+      eNotify(new ENotificationImpl(this, Notification.SET, CupidLanguagePackage.PATH_EXPR__HEAD, newHead, newHead));
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public SubconceptOrAttribute getTail()
+  {
+    if (tail != null && tail.eIsProxy())
+    {
+      InternalEObject oldTail = (InternalEObject)tail;
+      tail = (SubconceptOrAttribute)eResolveProxy(oldTail);
+      if (tail != oldTail)
+      {
+        if (eNotificationRequired())
+          eNotify(new ENotificationImpl(this, Notification.RESOLVE, CupidLanguagePackage.PATH_EXPR__TAIL, oldTail, tail));
+      }
+    }
+    return tail;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public SubconceptOrAttribute basicGetTail()
+  {
+    return tail;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public void setTail(SubconceptOrAttribute newTail)
+  {
+    SubconceptOrAttribute oldTail = tail;
+    tail = newTail;
+    if (eNotificationRequired())
+      eNotify(new ENotificationImpl(this, Notification.SET, CupidLanguagePackage.PATH_EXPR__TAIL, oldTail, tail));
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  @Override
+  public NotificationChain eInverseRemove(InternalEObject otherEnd, int featureID, NotificationChain msgs)
+  {
+    switch (featureID)
+    {
+      case CupidLanguagePackage.PATH_EXPR__HEAD:
+        return basicSetHead(null, msgs);
+    }
+    return super.eInverseRemove(otherEnd, featureID, msgs);
   }
 
   /**
@@ -83,8 +188,11 @@ public class PathExprImpl extends IDOrPathExprImpl implements PathExpr
   {
     switch (featureID)
     {
-      case CupidLanguagePackage.PATH_EXPR__SEGMENTS:
-        return getSegments();
+      case CupidLanguagePackage.PATH_EXPR__HEAD:
+        return getHead();
+      case CupidLanguagePackage.PATH_EXPR__TAIL:
+        if (resolve) return getTail();
+        return basicGetTail();
     }
     return super.eGet(featureID, resolve, coreType);
   }
@@ -94,15 +202,16 @@ public class PathExprImpl extends IDOrPathExprImpl implements PathExpr
    * <!-- end-user-doc -->
    * @generated
    */
-  @SuppressWarnings("unchecked")
   @Override
   public void eSet(int featureID, Object newValue)
   {
     switch (featureID)
     {
-      case CupidLanguagePackage.PATH_EXPR__SEGMENTS:
-        getSegments().clear();
-        getSegments().addAll((Collection<? extends String>)newValue);
+      case CupidLanguagePackage.PATH_EXPR__HEAD:
+        setHead((PathExpr)newValue);
+        return;
+      case CupidLanguagePackage.PATH_EXPR__TAIL:
+        setTail((SubconceptOrAttribute)newValue);
         return;
     }
     super.eSet(featureID, newValue);
@@ -118,8 +227,11 @@ public class PathExprImpl extends IDOrPathExprImpl implements PathExpr
   {
     switch (featureID)
     {
-      case CupidLanguagePackage.PATH_EXPR__SEGMENTS:
-        getSegments().clear();
+      case CupidLanguagePackage.PATH_EXPR__HEAD:
+        setHead((PathExpr)null);
+        return;
+      case CupidLanguagePackage.PATH_EXPR__TAIL:
+        setTail((SubconceptOrAttribute)null);
         return;
     }
     super.eUnset(featureID);
@@ -135,27 +247,12 @@ public class PathExprImpl extends IDOrPathExprImpl implements PathExpr
   {
     switch (featureID)
     {
-      case CupidLanguagePackage.PATH_EXPR__SEGMENTS:
-        return segments != null && !segments.isEmpty();
+      case CupidLanguagePackage.PATH_EXPR__HEAD:
+        return head != null;
+      case CupidLanguagePackage.PATH_EXPR__TAIL:
+        return tail != null;
     }
     return super.eIsSet(featureID);
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  @Override
-  public String toString()
-  {
-    if (eIsProxy()) return super.toString();
-
-    StringBuffer result = new StringBuffer(super.toString());
-    result.append(" (segments: ");
-    result.append(segments);
-    result.append(')');
-    return result.toString();
   }
 
 } //PathExprImpl

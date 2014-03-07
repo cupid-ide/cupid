@@ -65,10 +65,9 @@ public class CupidLanguageFactoryImpl extends EFactoryImpl implements CupidLangu
     switch (eClass.getClassifierID())
     {
       case CupidLanguagePackage.LANGUAGE: return createLanguage();
-      case CupidLanguagePackage.SUBCONCEPT: return createSubconcept();
       case CupidLanguagePackage.ANNOTATION: return createAnnotation();
       case CupidLanguagePackage.CONCEPT_DEF: return createConceptDef();
-      case CupidLanguagePackage.CONCEPT_DEF_BODY: return createConceptDefBody();
+      case CupidLanguagePackage.SUBCONCEPT_OR_ATTRIBUTE: return createSubconceptOrAttribute();
       case CupidLanguagePackage.CARDINALITY: return createCardinality();
       case CupidLanguagePackage.MAPPING: return createMapping();
       case CupidLanguagePackage.IMPLICIT_CONTEXT_MAPPING: return createImplicitContextMapping();
@@ -86,6 +85,7 @@ public class CupidLanguageFactoryImpl extends EFactoryImpl implements CupidLangu
       case CupidLanguagePackage.ID_OR_WILDCARD: return createIDOrWildcard();
       case CupidLanguagePackage.ID_OR_PATH_EXPR: return createIDOrPathExpr();
       case CupidLanguagePackage.PATH_EXPR: return createPathExpr();
+      case CupidLanguagePackage.PATH_EXPR_TERM: return createPathExprTerm();
       default:
         throw new IllegalArgumentException("The class '" + eClass.getName() + "' is not a valid classifier");
     }
@@ -100,17 +100,6 @@ public class CupidLanguageFactoryImpl extends EFactoryImpl implements CupidLangu
   {
     LanguageImpl language = new LanguageImpl();
     return language;
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  public Subconcept createSubconcept()
-  {
-    SubconceptImpl subconcept = new SubconceptImpl();
-    return subconcept;
   }
 
   /**
@@ -140,10 +129,10 @@ public class CupidLanguageFactoryImpl extends EFactoryImpl implements CupidLangu
    * <!-- end-user-doc -->
    * @generated
    */
-  public ConceptDefBody createConceptDefBody()
+  public SubconceptOrAttribute createSubconceptOrAttribute()
   {
-    ConceptDefBodyImpl conceptDefBody = new ConceptDefBodyImpl();
-    return conceptDefBody;
+    SubconceptOrAttributeImpl subconceptOrAttribute = new SubconceptOrAttributeImpl();
+    return subconceptOrAttribute;
   }
 
   /**
@@ -331,6 +320,17 @@ public class CupidLanguageFactoryImpl extends EFactoryImpl implements CupidLangu
   {
     PathExprImpl pathExpr = new PathExprImpl();
     return pathExpr;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public PathExprTerm createPathExprTerm()
+  {
+    PathExprTermImpl pathExprTerm = new PathExprTermImpl();
+    return pathExprTerm;
   }
 
   /**

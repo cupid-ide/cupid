@@ -7,7 +7,6 @@ import org.earthsystemcurator.cupidLanguage.Annotation;
 import org.earthsystemcurator.cupidLanguage.Call;
 import org.earthsystemcurator.cupidLanguage.Cardinality;
 import org.earthsystemcurator.cupidLanguage.ConceptDef;
-import org.earthsystemcurator.cupidLanguage.ConceptDefBody;
 import org.earthsystemcurator.cupidLanguage.CupidLanguageFactory;
 import org.earthsystemcurator.cupidLanguage.CupidLanguagePackage;
 import org.earthsystemcurator.cupidLanguage.FormalParam;
@@ -20,7 +19,8 @@ import org.earthsystemcurator.cupidLanguage.Mapping;
 import org.earthsystemcurator.cupidLanguage.Module;
 import org.earthsystemcurator.cupidLanguage.ModuleName;
 import org.earthsystemcurator.cupidLanguage.PathExpr;
-import org.earthsystemcurator.cupidLanguage.Subconcept;
+import org.earthsystemcurator.cupidLanguage.PathExprTerm;
+import org.earthsystemcurator.cupidLanguage.SubconceptOrAttribute;
 import org.earthsystemcurator.cupidLanguage.Subroutine;
 import org.earthsystemcurator.cupidLanguage.SubroutineName;
 import org.earthsystemcurator.cupidLanguage.Type;
@@ -54,13 +54,6 @@ public class CupidLanguagePackageImpl extends EPackageImpl implements CupidLangu
    * <!-- end-user-doc -->
    * @generated
    */
-  private EClass subconceptEClass = null;
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
   private EClass annotationEClass = null;
 
   /**
@@ -75,7 +68,7 @@ public class CupidLanguagePackageImpl extends EPackageImpl implements CupidLangu
    * <!-- end-user-doc -->
    * @generated
    */
-  private EClass conceptDefBodyEClass = null;
+  private EClass subconceptOrAttributeEClass = null;
 
   /**
    * <!-- begin-user-doc -->
@@ -197,6 +190,13 @@ public class CupidLanguagePackageImpl extends EPackageImpl implements CupidLangu
   private EClass pathExprEClass = null;
 
   /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  private EClass pathExprTermEClass = null;
+
+  /**
    * Creates an instance of the model <b>Package</b>, registered with
    * {@link org.eclipse.emf.ecore.EPackage.Registry EPackage.Registry} by the package
    * package URI value.
@@ -304,106 +304,6 @@ public class CupidLanguagePackageImpl extends EPackageImpl implements CupidLangu
    * <!-- end-user-doc -->
    * @generated
    */
-  public EClass getSubconcept()
-  {
-    return subconceptEClass;
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  public EAttribute getSubconcept_Attrib()
-  {
-    return (EAttribute)subconceptEClass.getEStructuralFeatures().get(0);
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  public EAttribute getSubconcept_Name()
-  {
-    return (EAttribute)subconceptEClass.getEStructuralFeatures().get(1);
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  public EReference getSubconcept_Cardinality()
-  {
-    return (EReference)subconceptEClass.getEStructuralFeatures().get(2);
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  public EAttribute getSubconcept_Essential()
-  {
-    return (EAttribute)subconceptEClass.getEStructuralFeatures().get(3);
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  public EAttribute getSubconcept_Ref()
-  {
-    return (EAttribute)subconceptEClass.getEStructuralFeatures().get(4);
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  public EReference getSubconcept_ConceptDef()
-  {
-    return (EReference)subconceptEClass.getEStructuralFeatures().get(5);
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  public EReference getSubconcept_Mapping()
-  {
-    return (EReference)subconceptEClass.getEStructuralFeatures().get(6);
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  public EReference getSubconcept_Annotation()
-  {
-    return (EReference)subconceptEClass.getEStructuralFeatures().get(7);
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  public EReference getSubconcept_Body()
-  {
-    return (EReference)subconceptEClass.getEStructuralFeatures().get(8);
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
   public EClass getAnnotation()
   {
     return annotationEClass;
@@ -444,29 +344,9 @@ public class CupidLanguagePackageImpl extends EPackageImpl implements CupidLangu
    * <!-- end-user-doc -->
    * @generated
    */
-  public EAttribute getConceptDef_Top()
-  {
-    return (EAttribute)conceptDefEClass.getEStructuralFeatures().get(0);
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  public EAttribute getConceptDef_Name()
-  {
-    return (EAttribute)conceptDefEClass.getEStructuralFeatures().get(1);
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
   public EReference getConceptDef_Mapping()
   {
-    return (EReference)conceptDefEClass.getEStructuralFeatures().get(2);
+    return (EReference)conceptDefEClass.getEStructuralFeatures().get(0);
   }
 
   /**
@@ -476,7 +356,7 @@ public class CupidLanguagePackageImpl extends EPackageImpl implements CupidLangu
    */
   public EReference getConceptDef_Annotation()
   {
-    return (EReference)conceptDefEClass.getEStructuralFeatures().get(3);
+    return (EReference)conceptDefEClass.getEStructuralFeatures().get(1);
   }
 
   /**
@@ -484,9 +364,9 @@ public class CupidLanguagePackageImpl extends EPackageImpl implements CupidLangu
    * <!-- end-user-doc -->
    * @generated
    */
-  public EReference getConceptDef_Body()
+  public EReference getConceptDef_Child()
   {
-    return (EReference)conceptDefEClass.getEStructuralFeatures().get(4);
+    return (EReference)conceptDefEClass.getEStructuralFeatures().get(2);
   }
 
   /**
@@ -494,9 +374,9 @@ public class CupidLanguagePackageImpl extends EPackageImpl implements CupidLangu
    * <!-- end-user-doc -->
    * @generated
    */
-  public EClass getConceptDefBody()
+  public EAttribute getConceptDef_Named()
   {
-    return conceptDefBodyEClass;
+    return (EAttribute)conceptDefEClass.getEStructuralFeatures().get(3);
   }
 
   /**
@@ -504,9 +384,119 @@ public class CupidLanguagePackageImpl extends EPackageImpl implements CupidLangu
    * <!-- end-user-doc -->
    * @generated
    */
-  public EReference getConceptDefBody_Subconcept()
+  public EAttribute getConceptDef_Name()
   {
-    return (EReference)conceptDefBodyEClass.getEStructuralFeatures().get(0);
+    return (EAttribute)conceptDefEClass.getEStructuralFeatures().get(4);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EAttribute getConceptDef_Top()
+  {
+    return (EAttribute)conceptDefEClass.getEStructuralFeatures().get(5);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EClass getSubconceptOrAttribute()
+  {
+    return subconceptOrAttributeEClass;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EAttribute getSubconceptOrAttribute_Name()
+  {
+    return (EAttribute)subconceptOrAttributeEClass.getEStructuralFeatures().get(0);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EReference getSubconceptOrAttribute_Cardinality()
+  {
+    return (EReference)subconceptOrAttributeEClass.getEStructuralFeatures().get(1);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EAttribute getSubconceptOrAttribute_Essential()
+  {
+    return (EAttribute)subconceptOrAttributeEClass.getEStructuralFeatures().get(2);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EReference getSubconceptOrAttribute_Def()
+  {
+    return (EReference)subconceptOrAttributeEClass.getEStructuralFeatures().get(3);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EAttribute getSubconceptOrAttribute_Reference()
+  {
+    return (EAttribute)subconceptOrAttributeEClass.getEStructuralFeatures().get(4);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EReference getSubconceptOrAttribute_Ref()
+  {
+    return (EReference)subconceptOrAttributeEClass.getEStructuralFeatures().get(5);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EAttribute getSubconceptOrAttribute_Attrib()
+  {
+    return (EAttribute)subconceptOrAttributeEClass.getEStructuralFeatures().get(6);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EReference getSubconceptOrAttribute_AttribMapping()
+  {
+    return (EReference)subconceptOrAttributeEClass.getEStructuralFeatures().get(7);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EReference getSubconceptOrAttribute_Annotation()
+  {
+    return (EReference)subconceptOrAttributeEClass.getEStructuralFeatures().get(8);
   }
 
   /**
@@ -984,9 +974,49 @@ public class CupidLanguagePackageImpl extends EPackageImpl implements CupidLangu
    * <!-- end-user-doc -->
    * @generated
    */
-  public EAttribute getPathExpr_Segments()
+  public EReference getPathExpr_Head()
   {
-    return (EAttribute)pathExprEClass.getEStructuralFeatures().get(0);
+    return (EReference)pathExprEClass.getEStructuralFeatures().get(0);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EReference getPathExpr_Tail()
+  {
+    return (EReference)pathExprEClass.getEStructuralFeatures().get(1);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EClass getPathExprTerm()
+  {
+    return pathExprTermEClass;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EReference getPathExprTerm_Ref()
+  {
+    return (EReference)pathExprTermEClass.getEStructuralFeatures().get(0);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EAttribute getPathExprTerm_Guard()
+  {
+    return (EAttribute)pathExprTermEClass.getEStructuralFeatures().get(1);
   }
 
   /**
@@ -1024,30 +1054,28 @@ public class CupidLanguagePackageImpl extends EPackageImpl implements CupidLangu
     createEAttribute(languageEClass, LANGUAGE__URI);
     createEReference(languageEClass, LANGUAGE__CONCEPT_DEF);
 
-    subconceptEClass = createEClass(SUBCONCEPT);
-    createEAttribute(subconceptEClass, SUBCONCEPT__ATTRIB);
-    createEAttribute(subconceptEClass, SUBCONCEPT__NAME);
-    createEReference(subconceptEClass, SUBCONCEPT__CARDINALITY);
-    createEAttribute(subconceptEClass, SUBCONCEPT__ESSENTIAL);
-    createEAttribute(subconceptEClass, SUBCONCEPT__REF);
-    createEReference(subconceptEClass, SUBCONCEPT__CONCEPT_DEF);
-    createEReference(subconceptEClass, SUBCONCEPT__MAPPING);
-    createEReference(subconceptEClass, SUBCONCEPT__ANNOTATION);
-    createEReference(subconceptEClass, SUBCONCEPT__BODY);
-
     annotationEClass = createEClass(ANNOTATION);
     createEAttribute(annotationEClass, ANNOTATION__KEY);
     createEAttribute(annotationEClass, ANNOTATION__VALUE);
 
     conceptDefEClass = createEClass(CONCEPT_DEF);
-    createEAttribute(conceptDefEClass, CONCEPT_DEF__TOP);
-    createEAttribute(conceptDefEClass, CONCEPT_DEF__NAME);
     createEReference(conceptDefEClass, CONCEPT_DEF__MAPPING);
     createEReference(conceptDefEClass, CONCEPT_DEF__ANNOTATION);
-    createEReference(conceptDefEClass, CONCEPT_DEF__BODY);
+    createEReference(conceptDefEClass, CONCEPT_DEF__CHILD);
+    createEAttribute(conceptDefEClass, CONCEPT_DEF__NAMED);
+    createEAttribute(conceptDefEClass, CONCEPT_DEF__NAME);
+    createEAttribute(conceptDefEClass, CONCEPT_DEF__TOP);
 
-    conceptDefBodyEClass = createEClass(CONCEPT_DEF_BODY);
-    createEReference(conceptDefBodyEClass, CONCEPT_DEF_BODY__SUBCONCEPT);
+    subconceptOrAttributeEClass = createEClass(SUBCONCEPT_OR_ATTRIBUTE);
+    createEAttribute(subconceptOrAttributeEClass, SUBCONCEPT_OR_ATTRIBUTE__NAME);
+    createEReference(subconceptOrAttributeEClass, SUBCONCEPT_OR_ATTRIBUTE__CARDINALITY);
+    createEAttribute(subconceptOrAttributeEClass, SUBCONCEPT_OR_ATTRIBUTE__ESSENTIAL);
+    createEReference(subconceptOrAttributeEClass, SUBCONCEPT_OR_ATTRIBUTE__DEF);
+    createEAttribute(subconceptOrAttributeEClass, SUBCONCEPT_OR_ATTRIBUTE__REFERENCE);
+    createEReference(subconceptOrAttributeEClass, SUBCONCEPT_OR_ATTRIBUTE__REF);
+    createEAttribute(subconceptOrAttributeEClass, SUBCONCEPT_OR_ATTRIBUTE__ATTRIB);
+    createEReference(subconceptOrAttributeEClass, SUBCONCEPT_OR_ATTRIBUTE__ATTRIB_MAPPING);
+    createEReference(subconceptOrAttributeEClass, SUBCONCEPT_OR_ATTRIBUTE__ANNOTATION);
 
     cardinalityEClass = createEClass(CARDINALITY);
     createEAttribute(cardinalityEClass, CARDINALITY__ZERO_OR_MORE);
@@ -1112,7 +1140,12 @@ public class CupidLanguagePackageImpl extends EPackageImpl implements CupidLangu
     idOrPathExprEClass = createEClass(ID_OR_PATH_EXPR);
 
     pathExprEClass = createEClass(PATH_EXPR);
-    createEAttribute(pathExprEClass, PATH_EXPR__SEGMENTS);
+    createEReference(pathExprEClass, PATH_EXPR__HEAD);
+    createEReference(pathExprEClass, PATH_EXPR__TAIL);
+
+    pathExprTermEClass = createEClass(PATH_EXPR_TERM);
+    createEReference(pathExprTermEClass, PATH_EXPR_TERM__REF);
+    createEAttribute(pathExprTermEClass, PATH_EXPR_TERM__GUARD);
   }
 
   /**
@@ -1153,6 +1186,7 @@ public class CupidLanguagePackageImpl extends EPackageImpl implements CupidLangu
     callEClass.getESuperTypes().add(this.getImplicitContextMapping());
     idOrWildcardEClass.getESuperTypes().add(this.getIDOrPathExpr());
     pathExprEClass.getESuperTypes().add(this.getIDOrPathExpr());
+    pathExprTermEClass.getESuperTypes().add(this.getPathExpr());
 
     // Initialize classes and features; add operations and parameters
     initEClass(languageEClass, Language.class, "Language", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
@@ -1160,30 +1194,28 @@ public class CupidLanguagePackageImpl extends EPackageImpl implements CupidLangu
     initEAttribute(getLanguage_Uri(), ecorePackage.getEString(), "uri", null, 0, 1, Language.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
     initEReference(getLanguage_ConceptDef(), this.getConceptDef(), null, "conceptDef", null, 0, -1, Language.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
-    initEClass(subconceptEClass, Subconcept.class, "Subconcept", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
-    initEAttribute(getSubconcept_Attrib(), ecorePackage.getEBoolean(), "attrib", null, 0, 1, Subconcept.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-    initEAttribute(getSubconcept_Name(), ecorePackage.getEString(), "name", null, 0, 1, Subconcept.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-    initEReference(getSubconcept_Cardinality(), this.getCardinality(), null, "cardinality", null, 0, 1, Subconcept.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-    initEAttribute(getSubconcept_Essential(), ecorePackage.getEBoolean(), "essential", null, 0, 1, Subconcept.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-    initEAttribute(getSubconcept_Ref(), ecorePackage.getEBoolean(), "ref", null, 0, 1, Subconcept.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-    initEReference(getSubconcept_ConceptDef(), this.getConceptDef(), null, "conceptDef", null, 0, 1, Subconcept.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-    initEReference(getSubconcept_Mapping(), this.getMapping(), null, "mapping", null, 0, 1, Subconcept.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-    initEReference(getSubconcept_Annotation(), this.getAnnotation(), null, "annotation", null, 0, -1, Subconcept.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-    initEReference(getSubconcept_Body(), this.getConceptDefBody(), null, "body", null, 0, 1, Subconcept.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-
     initEClass(annotationEClass, Annotation.class, "Annotation", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
     initEAttribute(getAnnotation_Key(), ecorePackage.getEString(), "key", null, 0, 1, Annotation.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
     initEAttribute(getAnnotation_Value(), ecorePackage.getEString(), "value", null, 0, 1, Annotation.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
     initEClass(conceptDefEClass, ConceptDef.class, "ConceptDef", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
-    initEAttribute(getConceptDef_Top(), ecorePackage.getEBoolean(), "top", null, 0, 1, ConceptDef.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-    initEAttribute(getConceptDef_Name(), ecorePackage.getEString(), "name", null, 0, 1, ConceptDef.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
     initEReference(getConceptDef_Mapping(), this.getMapping(), null, "mapping", null, 0, 1, ConceptDef.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
     initEReference(getConceptDef_Annotation(), this.getAnnotation(), null, "annotation", null, 0, -1, ConceptDef.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-    initEReference(getConceptDef_Body(), this.getConceptDefBody(), null, "body", null, 0, 1, ConceptDef.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEReference(getConceptDef_Child(), this.getSubconceptOrAttribute(), null, "child", null, 0, -1, ConceptDef.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEAttribute(getConceptDef_Named(), ecorePackage.getEBoolean(), "named", null, 0, 1, ConceptDef.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEAttribute(getConceptDef_Name(), ecorePackage.getEString(), "name", null, 0, 1, ConceptDef.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEAttribute(getConceptDef_Top(), ecorePackage.getEBoolean(), "top", null, 0, 1, ConceptDef.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
-    initEClass(conceptDefBodyEClass, ConceptDefBody.class, "ConceptDefBody", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
-    initEReference(getConceptDefBody_Subconcept(), this.getSubconcept(), null, "subconcept", null, 0, -1, ConceptDefBody.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEClass(subconceptOrAttributeEClass, SubconceptOrAttribute.class, "SubconceptOrAttribute", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+    initEAttribute(getSubconceptOrAttribute_Name(), ecorePackage.getEString(), "name", null, 0, 1, SubconceptOrAttribute.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEReference(getSubconceptOrAttribute_Cardinality(), this.getCardinality(), null, "cardinality", null, 0, 1, SubconceptOrAttribute.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEAttribute(getSubconceptOrAttribute_Essential(), ecorePackage.getEBoolean(), "essential", null, 0, 1, SubconceptOrAttribute.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEReference(getSubconceptOrAttribute_Def(), this.getConceptDef(), null, "def", null, 0, 1, SubconceptOrAttribute.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEAttribute(getSubconceptOrAttribute_Reference(), ecorePackage.getEBoolean(), "reference", null, 0, 1, SubconceptOrAttribute.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEReference(getSubconceptOrAttribute_Ref(), this.getConceptDef(), null, "ref", null, 0, 1, SubconceptOrAttribute.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEAttribute(getSubconceptOrAttribute_Attrib(), ecorePackage.getEBoolean(), "attrib", null, 0, 1, SubconceptOrAttribute.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEReference(getSubconceptOrAttribute_AttribMapping(), this.getMapping(), null, "attribMapping", null, 0, 1, SubconceptOrAttribute.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEReference(getSubconceptOrAttribute_Annotation(), this.getAnnotation(), null, "annotation", null, 0, -1, SubconceptOrAttribute.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
     initEClass(cardinalityEClass, Cardinality.class, "Cardinality", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
     initEAttribute(getCardinality_ZeroOrMore(), ecorePackage.getEBoolean(), "zeroOrMore", null, 0, 1, Cardinality.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
@@ -1248,7 +1280,12 @@ public class CupidLanguagePackageImpl extends EPackageImpl implements CupidLangu
     initEClass(idOrPathExprEClass, IDOrPathExpr.class, "IDOrPathExpr", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 
     initEClass(pathExprEClass, PathExpr.class, "PathExpr", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
-    initEAttribute(getPathExpr_Segments(), ecorePackage.getEString(), "segments", null, 0, -1, PathExpr.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, !IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEReference(getPathExpr_Head(), this.getPathExpr(), null, "head", null, 0, 1, PathExpr.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEReference(getPathExpr_Tail(), this.getSubconceptOrAttribute(), null, "tail", null, 0, 1, PathExpr.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+
+    initEClass(pathExprTermEClass, PathExprTerm.class, "PathExprTerm", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+    initEReference(getPathExprTerm_Ref(), this.getSubconceptOrAttribute(), null, "ref", null, 0, 1, PathExprTerm.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEAttribute(getPathExprTerm_Guard(), ecorePackage.getEBoolean(), "guard", null, 0, 1, PathExprTerm.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
     // Create resource
     createResource(eNS_URI);

@@ -6,7 +6,14 @@ package org.earthsystemcurator.generator
 import org.eclipse.emf.ecore.resource.Resource
 import org.eclipse.xtext.generator.IGenerator
 import org.eclipse.xtext.generator.IFileSystemAccess
+import org.earthsystemcurator.cupidLanguage.ConceptDef
+import org.earthsystemcurator.cupidLanguage.Language
+import org.earthsystemcurator.cupidLanguage.SubconceptOrAttribute
+import org.earthsystemcurator.cupidLanguage.Cardinality
+import org.eclipse.emf.ecore.EObject
 import org.earthsystemcurator.CupidToEcore
+import org.eclipse.xtext.generator.IFileSystemAccessExtension2
+import org.eclipse.emf.common.util.URI
 
 /**
  * Generates code from your model files on save.
@@ -23,9 +30,97 @@ class CupidLanguageGenerator implements IGenerator {
 //				.map[name]
 //				.join(', '))
 
+		var lang = resource.contents.get(0) as Language
 		
-		CupidToEcore.generateEcoreModel(resource);
+		fsa.generateFile(lang.name + '.oclinecore', lang.toPackage);
+		
+		if (fsa instanceof IFileSystemAccessExtension2) {
+			var outputURI = fsa.getURI(lang.name + '.oclinecore')
+			CupidToEcore.generateEcoreModel(outputURI);
+		}
 		
 
 	}
+	
+	 
+	def toPackage(Language lang) '''
+		package «lang.name.toLowerCase» : «lang.name.toLowerCase» = '«lang.uri»'
+		{
+			«FOR cd : lang.conceptDef SEPARATOR '\n\n'»
+			«cd.toClass»
+			«ENDFOR»
+		}
+		
+	''' 
+	
+	def CharSequence toClass(ConceptDef cd) '''
+		class «cd.toClassName»
+		{
+			«IF (!cd.annotation.empty)»
+			annotation _'http://www.earthsystemcog.org/projects/nuopc' 
+			(
+				«FOR a : cd.annotation SEPARATOR ','»
+				«a.key.substring(1)» = '«a.value»'
+				«ENDFOR»
+			);
+			«ENDIF»
+			«FOR subconcept : cd.child»«subconcept.toProperty»«ENDFOR»
+			
+		}
+		
+		«FOR subconcept : cd.child.filter[c|!c.attrib && !c.reference]»«subconcept.toClass»«ENDFOR»
+	'''
+	
+	def toClass(SubconceptOrAttribute soa) '''
+		«IF !soa.attrib && !soa.reference»
+			«soa.def.toClass»
+		«ENDIF»
+	'''
+	 
+	def toProperty(SubconceptOrAttribute soa) '''
+		«IF soa.attrib»
+			attribute «soa.name» : String;
+		«ELSE»
+			property «soa.name» : «soa.toClassName»«soa.cardinality?.toCardinality» { composes };
+		«ENDIF»
+	'''
+	
+	
+	def toCardinality(Cardinality c) {
+		if (c.zeroOrMore) '[*]'
+		else if (c.oneOrMore) '[+]'
+		else ''
+	}
+	
+	def String toClassName(ConceptDef cd) {
+		//println('toClassName (cd): ' + cd)
+		if (cd==null) 'NULL'
+		else {
+			var parent = cd.eContainer.nearest(ConceptDef)
+			if (cd.named) {
+				if (parent != null)	parent.toClassName + '__' + cd.name.toFirstUpper
+				else cd.name.toFirstUpper
+			}
+			else {
+				parent.toClassName + '__' + cd.eContainer.nearest(SubconceptOrAttribute).name.toFirstUpper
+			}
+		}
+	}
+	
+	def String toClassName(SubconceptOrAttribute soa) {
+		//println('toClassName (soa): ' + soa.name)
+		if (soa.reference) {
+			soa.ref.toClassName
+		}
+		else {	
+			soa.def.toClassName
+		}
+	}
+	
+	def <T extends EObject> T nearest(EObject obj, Class<T> clazz) {
+		if (obj==null) null
+		else if (clazz.isInstance(obj)) obj as T
+		else nearest(obj.eContainer, clazz) as T
+	}
+	
 }

@@ -6,9 +6,9 @@ import java.util.Collection;
 
 import org.earthsystemcurator.cupidLanguage.Annotation;
 import org.earthsystemcurator.cupidLanguage.ConceptDef;
-import org.earthsystemcurator.cupidLanguage.ConceptDefBody;
 import org.earthsystemcurator.cupidLanguage.CupidLanguagePackage;
 import org.earthsystemcurator.cupidLanguage.Mapping;
+import org.earthsystemcurator.cupidLanguage.SubconceptOrAttribute;
 
 import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.common.notify.NotificationChain;
@@ -31,11 +31,12 @@ import org.eclipse.emf.ecore.util.InternalEList;
  * <p>
  * The following features are implemented:
  * <ul>
- *   <li>{@link org.earthsystemcurator.cupidLanguage.impl.ConceptDefImpl#isTop <em>Top</em>}</li>
- *   <li>{@link org.earthsystemcurator.cupidLanguage.impl.ConceptDefImpl#getName <em>Name</em>}</li>
  *   <li>{@link org.earthsystemcurator.cupidLanguage.impl.ConceptDefImpl#getMapping <em>Mapping</em>}</li>
  *   <li>{@link org.earthsystemcurator.cupidLanguage.impl.ConceptDefImpl#getAnnotation <em>Annotation</em>}</li>
- *   <li>{@link org.earthsystemcurator.cupidLanguage.impl.ConceptDefImpl#getBody <em>Body</em>}</li>
+ *   <li>{@link org.earthsystemcurator.cupidLanguage.impl.ConceptDefImpl#getChild <em>Child</em>}</li>
+ *   <li>{@link org.earthsystemcurator.cupidLanguage.impl.ConceptDefImpl#isNamed <em>Named</em>}</li>
+ *   <li>{@link org.earthsystemcurator.cupidLanguage.impl.ConceptDefImpl#getName <em>Name</em>}</li>
+ *   <li>{@link org.earthsystemcurator.cupidLanguage.impl.ConceptDefImpl#isTop <em>Top</em>}</li>
  * </ul>
  * </p>
  *
@@ -44,24 +45,54 @@ import org.eclipse.emf.ecore.util.InternalEList;
 public class ConceptDefImpl extends MinimalEObjectImpl.Container implements ConceptDef
 {
   /**
-   * The default value of the '{@link #isTop() <em>Top</em>}' attribute.
+   * The cached value of the '{@link #getMapping() <em>Mapping</em>}' containment reference.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @see #isTop()
+   * @see #getMapping()
    * @generated
    * @ordered
    */
-  protected static final boolean TOP_EDEFAULT = false;
+  protected Mapping mapping;
 
   /**
-   * The cached value of the '{@link #isTop() <em>Top</em>}' attribute.
+   * The cached value of the '{@link #getAnnotation() <em>Annotation</em>}' containment reference list.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @see #isTop()
+   * @see #getAnnotation()
    * @generated
    * @ordered
    */
-  protected boolean top = TOP_EDEFAULT;
+  protected EList<Annotation> annotation;
+
+  /**
+   * The cached value of the '{@link #getChild() <em>Child</em>}' containment reference list.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @see #getChild()
+   * @generated
+   * @ordered
+   */
+  protected EList<SubconceptOrAttribute> child;
+
+  /**
+   * The default value of the '{@link #isNamed() <em>Named</em>}' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @see #isNamed()
+   * @generated
+   * @ordered
+   */
+  protected static final boolean NAMED_EDEFAULT = false;
+
+  /**
+   * The cached value of the '{@link #isNamed() <em>Named</em>}' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @see #isNamed()
+   * @generated
+   * @ordered
+   */
+  protected boolean named = NAMED_EDEFAULT;
 
   /**
    * The default value of the '{@link #getName() <em>Name</em>}' attribute.
@@ -84,34 +115,24 @@ public class ConceptDefImpl extends MinimalEObjectImpl.Container implements Conc
   protected String name = NAME_EDEFAULT;
 
   /**
-   * The cached value of the '{@link #getMapping() <em>Mapping</em>}' containment reference.
+   * The default value of the '{@link #isTop() <em>Top</em>}' attribute.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @see #getMapping()
+   * @see #isTop()
    * @generated
    * @ordered
    */
-  protected Mapping mapping;
+  protected static final boolean TOP_EDEFAULT = false;
 
   /**
-   * The cached value of the '{@link #getAnnotation() <em>Annotation</em>}' containment reference list.
+   * The cached value of the '{@link #isTop() <em>Top</em>}' attribute.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @see #getAnnotation()
+   * @see #isTop()
    * @generated
    * @ordered
    */
-  protected EList<Annotation> annotation;
-
-  /**
-   * The cached value of the '{@link #getBody() <em>Body</em>}' containment reference.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @see #getBody()
-   * @generated
-   * @ordered
-   */
-  protected ConceptDefBody body;
+  protected boolean top = TOP_EDEFAULT;
 
   /**
    * <!-- begin-user-doc -->
@@ -132,52 +153,6 @@ public class ConceptDefImpl extends MinimalEObjectImpl.Container implements Conc
   protected EClass eStaticClass()
   {
     return CupidLanguagePackage.Literals.CONCEPT_DEF;
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  public boolean isTop()
-  {
-    return top;
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  public void setTop(boolean newTop)
-  {
-    boolean oldTop = top;
-    top = newTop;
-    if (eNotificationRequired())
-      eNotify(new ENotificationImpl(this, Notification.SET, CupidLanguagePackage.CONCEPT_DEF__TOP, oldTop, top));
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  public String getName()
-  {
-    return name;
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  public void setName(String newName)
-  {
-    String oldName = name;
-    name = newName;
-    if (eNotificationRequired())
-      eNotify(new ENotificationImpl(this, Notification.SET, CupidLanguagePackage.CONCEPT_DEF__NAME, oldName, name));
   }
 
   /**
@@ -247,9 +222,13 @@ public class ConceptDefImpl extends MinimalEObjectImpl.Container implements Conc
    * <!-- end-user-doc -->
    * @generated
    */
-  public ConceptDefBody getBody()
+  public EList<SubconceptOrAttribute> getChild()
   {
-    return body;
+    if (child == null)
+    {
+      child = new EObjectContainmentEList<SubconceptOrAttribute>(SubconceptOrAttribute.class, this, CupidLanguagePackage.CONCEPT_DEF__CHILD);
+    }
+    return child;
   }
 
   /**
@@ -257,16 +236,22 @@ public class ConceptDefImpl extends MinimalEObjectImpl.Container implements Conc
    * <!-- end-user-doc -->
    * @generated
    */
-  public NotificationChain basicSetBody(ConceptDefBody newBody, NotificationChain msgs)
+  public boolean isNamed()
   {
-    ConceptDefBody oldBody = body;
-    body = newBody;
+    return named;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public void setNamed(boolean newNamed)
+  {
+    boolean oldNamed = named;
+    named = newNamed;
     if (eNotificationRequired())
-    {
-      ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, CupidLanguagePackage.CONCEPT_DEF__BODY, oldBody, newBody);
-      if (msgs == null) msgs = notification; else msgs.add(notification);
-    }
-    return msgs;
+      eNotify(new ENotificationImpl(this, Notification.SET, CupidLanguagePackage.CONCEPT_DEF__NAMED, oldNamed, named));
   }
 
   /**
@@ -274,20 +259,45 @@ public class ConceptDefImpl extends MinimalEObjectImpl.Container implements Conc
    * <!-- end-user-doc -->
    * @generated
    */
-  public void setBody(ConceptDefBody newBody)
+  public String getName()
   {
-    if (newBody != body)
-    {
-      NotificationChain msgs = null;
-      if (body != null)
-        msgs = ((InternalEObject)body).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - CupidLanguagePackage.CONCEPT_DEF__BODY, null, msgs);
-      if (newBody != null)
-        msgs = ((InternalEObject)newBody).eInverseAdd(this, EOPPOSITE_FEATURE_BASE - CupidLanguagePackage.CONCEPT_DEF__BODY, null, msgs);
-      msgs = basicSetBody(newBody, msgs);
-      if (msgs != null) msgs.dispatch();
-    }
-    else if (eNotificationRequired())
-      eNotify(new ENotificationImpl(this, Notification.SET, CupidLanguagePackage.CONCEPT_DEF__BODY, newBody, newBody));
+    return name;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public void setName(String newName)
+  {
+    String oldName = name;
+    name = newName;
+    if (eNotificationRequired())
+      eNotify(new ENotificationImpl(this, Notification.SET, CupidLanguagePackage.CONCEPT_DEF__NAME, oldName, name));
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public boolean isTop()
+  {
+    return top;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public void setTop(boolean newTop)
+  {
+    boolean oldTop = top;
+    top = newTop;
+    if (eNotificationRequired())
+      eNotify(new ENotificationImpl(this, Notification.SET, CupidLanguagePackage.CONCEPT_DEF__TOP, oldTop, top));
   }
 
   /**
@@ -304,8 +314,8 @@ public class ConceptDefImpl extends MinimalEObjectImpl.Container implements Conc
         return basicSetMapping(null, msgs);
       case CupidLanguagePackage.CONCEPT_DEF__ANNOTATION:
         return ((InternalEList<?>)getAnnotation()).basicRemove(otherEnd, msgs);
-      case CupidLanguagePackage.CONCEPT_DEF__BODY:
-        return basicSetBody(null, msgs);
+      case CupidLanguagePackage.CONCEPT_DEF__CHILD:
+        return ((InternalEList<?>)getChild()).basicRemove(otherEnd, msgs);
     }
     return super.eInverseRemove(otherEnd, featureID, msgs);
   }
@@ -320,16 +330,18 @@ public class ConceptDefImpl extends MinimalEObjectImpl.Container implements Conc
   {
     switch (featureID)
     {
-      case CupidLanguagePackage.CONCEPT_DEF__TOP:
-        return isTop();
-      case CupidLanguagePackage.CONCEPT_DEF__NAME:
-        return getName();
       case CupidLanguagePackage.CONCEPT_DEF__MAPPING:
         return getMapping();
       case CupidLanguagePackage.CONCEPT_DEF__ANNOTATION:
         return getAnnotation();
-      case CupidLanguagePackage.CONCEPT_DEF__BODY:
-        return getBody();
+      case CupidLanguagePackage.CONCEPT_DEF__CHILD:
+        return getChild();
+      case CupidLanguagePackage.CONCEPT_DEF__NAMED:
+        return isNamed();
+      case CupidLanguagePackage.CONCEPT_DEF__NAME:
+        return getName();
+      case CupidLanguagePackage.CONCEPT_DEF__TOP:
+        return isTop();
     }
     return super.eGet(featureID, resolve, coreType);
   }
@@ -345,12 +357,6 @@ public class ConceptDefImpl extends MinimalEObjectImpl.Container implements Conc
   {
     switch (featureID)
     {
-      case CupidLanguagePackage.CONCEPT_DEF__TOP:
-        setTop((Boolean)newValue);
-        return;
-      case CupidLanguagePackage.CONCEPT_DEF__NAME:
-        setName((String)newValue);
-        return;
       case CupidLanguagePackage.CONCEPT_DEF__MAPPING:
         setMapping((Mapping)newValue);
         return;
@@ -358,8 +364,18 @@ public class ConceptDefImpl extends MinimalEObjectImpl.Container implements Conc
         getAnnotation().clear();
         getAnnotation().addAll((Collection<? extends Annotation>)newValue);
         return;
-      case CupidLanguagePackage.CONCEPT_DEF__BODY:
-        setBody((ConceptDefBody)newValue);
+      case CupidLanguagePackage.CONCEPT_DEF__CHILD:
+        getChild().clear();
+        getChild().addAll((Collection<? extends SubconceptOrAttribute>)newValue);
+        return;
+      case CupidLanguagePackage.CONCEPT_DEF__NAMED:
+        setNamed((Boolean)newValue);
+        return;
+      case CupidLanguagePackage.CONCEPT_DEF__NAME:
+        setName((String)newValue);
+        return;
+      case CupidLanguagePackage.CONCEPT_DEF__TOP:
+        setTop((Boolean)newValue);
         return;
     }
     super.eSet(featureID, newValue);
@@ -375,20 +391,23 @@ public class ConceptDefImpl extends MinimalEObjectImpl.Container implements Conc
   {
     switch (featureID)
     {
-      case CupidLanguagePackage.CONCEPT_DEF__TOP:
-        setTop(TOP_EDEFAULT);
-        return;
-      case CupidLanguagePackage.CONCEPT_DEF__NAME:
-        setName(NAME_EDEFAULT);
-        return;
       case CupidLanguagePackage.CONCEPT_DEF__MAPPING:
         setMapping((Mapping)null);
         return;
       case CupidLanguagePackage.CONCEPT_DEF__ANNOTATION:
         getAnnotation().clear();
         return;
-      case CupidLanguagePackage.CONCEPT_DEF__BODY:
-        setBody((ConceptDefBody)null);
+      case CupidLanguagePackage.CONCEPT_DEF__CHILD:
+        getChild().clear();
+        return;
+      case CupidLanguagePackage.CONCEPT_DEF__NAMED:
+        setNamed(NAMED_EDEFAULT);
+        return;
+      case CupidLanguagePackage.CONCEPT_DEF__NAME:
+        setName(NAME_EDEFAULT);
+        return;
+      case CupidLanguagePackage.CONCEPT_DEF__TOP:
+        setTop(TOP_EDEFAULT);
         return;
     }
     super.eUnset(featureID);
@@ -404,16 +423,18 @@ public class ConceptDefImpl extends MinimalEObjectImpl.Container implements Conc
   {
     switch (featureID)
     {
-      case CupidLanguagePackage.CONCEPT_DEF__TOP:
-        return top != TOP_EDEFAULT;
-      case CupidLanguagePackage.CONCEPT_DEF__NAME:
-        return NAME_EDEFAULT == null ? name != null : !NAME_EDEFAULT.equals(name);
       case CupidLanguagePackage.CONCEPT_DEF__MAPPING:
         return mapping != null;
       case CupidLanguagePackage.CONCEPT_DEF__ANNOTATION:
         return annotation != null && !annotation.isEmpty();
-      case CupidLanguagePackage.CONCEPT_DEF__BODY:
-        return body != null;
+      case CupidLanguagePackage.CONCEPT_DEF__CHILD:
+        return child != null && !child.isEmpty();
+      case CupidLanguagePackage.CONCEPT_DEF__NAMED:
+        return named != NAMED_EDEFAULT;
+      case CupidLanguagePackage.CONCEPT_DEF__NAME:
+        return NAME_EDEFAULT == null ? name != null : !NAME_EDEFAULT.equals(name);
+      case CupidLanguagePackage.CONCEPT_DEF__TOP:
+        return top != TOP_EDEFAULT;
     }
     return super.eIsSet(featureID);
   }
@@ -429,10 +450,12 @@ public class ConceptDefImpl extends MinimalEObjectImpl.Container implements Conc
     if (eIsProxy()) return super.toString();
 
     StringBuffer result = new StringBuffer(super.toString());
-    result.append(" (top: ");
-    result.append(top);
+    result.append(" (named: ");
+    result.append(named);
     result.append(", name: ");
     result.append(name);
+    result.append(", top: ");
+    result.append(top);
     result.append(')');
     return result.toString();
   }

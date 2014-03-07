@@ -2,30 +2,57 @@ grammar org.earthsystemcurator.CupidLanguage with org.eclipse.xtext.common.Termi
 
 generate cupidLanguage "http://www.earthsystemcurator.org/CupidLanguage"
 
-//Mappings:
-//	mappings+=Mapping*
-//	language+=Language?;
-
 Language:
-	'language ' name=ID uri=STRING '{' conceptDef+=ConceptDef+ '}';
+	'language ' name=ID uri=STRING '{' conceptDef+=TopConceptDef conceptDef+=NamedConceptDef* '}';
 
 //Subconcept:
 //	AnonymousConcept | ConceptRef | Attribute;
 	
-Subconcept:
-	attrib?='attrib'? name=ID cardinality=Cardinality? essential?='!'?
-	(
-		ref?=':' conceptDef=[ConceptDef] |
-		('<' mapping=Mapping '>')? ('[' annotation+=Annotation (',' annotation+=Annotation)* ']')? body=ConceptDefBody?	
-	);
+//Subconcept:
+//	attrib?='attrib'? name=ID cardinality=Cardinality? essential?='!'?
+//	(
+//		ref?=':' conceptDef=[ConceptDef] |
+//		('<' mapping=Mapping '>')? ('[' annotation+=Annotation (',' annotation+=Annotation)* ']')? body=ConceptDefBody?	
+//	);
 
 Annotation:
-	key=ID '=' value=STRING;
+	key=ANNOTATION_ID '=' value=STRING;
 
-ConceptDef:
-	top?='top'? 'concept' name=ID ('<' mapping=Mapping '>')? 
-		('[' annotation+=Annotation (',' annotation+=Annotation)* ']')?
-		body=ConceptDefBody?;
+//ConceptDef:
+//	(top?='/top'? named?='concept' name=ID)? ('<' mapping=Mapping '>')? 
+//		('[' annotation+=Annotation (',' annotation+=Annotation)* ']')?
+//		('{' localName=ID '}')?;
+
+//ConceptDef:
+//	AnonymousConceptDef | NamedConceptDef;
+	
+AnonymousConceptDef returns ConceptDef: {ConceptDef}
+	('<' mapping=Mapping '>')? 
+	('{' annotation+=Annotation* child+=SubconceptOrAttribute* '}')?;
+
+NamedConceptDef returns ConceptDef:
+	named?='concept' name=ID ('<' mapping=Mapping '>')? 
+	('{' annotation+=Annotation* child+=SubconceptOrAttribute* '}')?;
+	
+TopConceptDef returns ConceptDef:
+	top?='top' named?='concept' name=ID ('<' mapping=Mapping '>')? 
+	('{' annotation+=Annotation* child+=SubconceptOrAttribute* '}')?;
+
+SubconceptOrAttribute:
+	Subconcept | Attribute;
+			
+Subconcept returns SubconceptOrAttribute:
+	name=ID cardinality=Cardinality? essential?='!'?
+	((':' def=NamedConceptDef) | def=AnonymousConceptDef | (reference?=':' ref=[ConceptDef]));		
+	
+Attribute returns SubconceptOrAttribute:
+	attrib?='attrib' name=ID cardinality=Cardinality? essential?='!'?
+	('<' attribMapping=Mapping '>')? 
+	('{' annotation+=Annotation* '}')?;
+
+//AnnotationID: '@' ID;
+
+terminal ANNOTATION_ID : '@' ID;
 
 //AnonymousConcept:
 //	localName=ID cardinality=Cardinality? required?='!'? ('<' mapping=Mapping '>')? 
@@ -36,8 +63,8 @@ ConceptDef:
 //	'attrib' name=ID cardinality=Cardinality? required?='!'? ('<' mapping=Mapping '>')?
 //	('[' annotation+=Annotation (',' annotation+=Annotation)* ']')?;
 
-ConceptDefBody:
-	'{' (subconcept+=Subconcept) (',' subconcept+=Subconcept)* '}';
+//ConceptDefBody:
+//	'{' (subconcept+=Subconcept) (',' subconcept+=Subconcept)* '}';
 
 //ConceptRef:
 //	localName=ID cardinality=Cardinality? required?='!'? ':' name=[ConceptDef];
@@ -100,12 +127,33 @@ IDOrWildcard:
 IDOrPathExpr:
 	IDOrWildcard | PathExpr;
 
+//PathExpr:
+//	'#' segments+=PathSegment ('/' segments+=PathSegment)*;
+	
 PathExpr:
-	'#' segments+=PathSegment ('/' segments+=PathSegment)*;
-	
-PathSegment:
-	'..' | ID;
-	
+	'#' PathExprNode;
 
+//PathExprNode returns PathExpr:
+//	PathExprTerm ({PathExpr.head=current} '/' tail=PathExprNode)?;
+
+//PathExprTerm returns PathExpr:
+//	{PathExprTerm} ref=[SubconceptOrAttribute] (guard?='['']')?;
+	
+PathExprNode returns PathExpr:
+	PathExprTerm ({PathExpr.head=current} '/' tail=[SubconceptOrAttribute])*;
+
+PathExprTerm returns PathExpr:
+	{PathExprTerm} ref=[SubconceptOrAttribute] (guard?='['']')?;	
+	
+//PathSegment:
+//	'..' | ID;
+	
+//PathExpr returns Ref:
+ //   EntityRef ({PathExpr.ref=current}  "." tail=ID)*
+//;
+ 
+//EntityRef returns Ref:
+ //   {EntityRef} entity=[SubconceptOrAttribute]
+//; 
 	
 	

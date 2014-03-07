@@ -79,13 +79,6 @@ public class CupidLanguageSwitch<T> extends Switch<T>
         if (result == null) result = defaultCase(theEObject);
         return result;
       }
-      case CupidLanguagePackage.SUBCONCEPT:
-      {
-        Subconcept subconcept = (Subconcept)theEObject;
-        T result = caseSubconcept(subconcept);
-        if (result == null) result = defaultCase(theEObject);
-        return result;
-      }
       case CupidLanguagePackage.ANNOTATION:
       {
         Annotation annotation = (Annotation)theEObject;
@@ -100,10 +93,10 @@ public class CupidLanguageSwitch<T> extends Switch<T>
         if (result == null) result = defaultCase(theEObject);
         return result;
       }
-      case CupidLanguagePackage.CONCEPT_DEF_BODY:
+      case CupidLanguagePackage.SUBCONCEPT_OR_ATTRIBUTE:
       {
-        ConceptDefBody conceptDefBody = (ConceptDefBody)theEObject;
-        T result = caseConceptDefBody(conceptDefBody);
+        SubconceptOrAttribute subconceptOrAttribute = (SubconceptOrAttribute)theEObject;
+        T result = caseSubconceptOrAttribute(subconceptOrAttribute);
         if (result == null) result = defaultCase(theEObject);
         return result;
       }
@@ -235,6 +228,15 @@ public class CupidLanguageSwitch<T> extends Switch<T>
         if (result == null) result = defaultCase(theEObject);
         return result;
       }
+      case CupidLanguagePackage.PATH_EXPR_TERM:
+      {
+        PathExprTerm pathExprTerm = (PathExprTerm)theEObject;
+        T result = casePathExprTerm(pathExprTerm);
+        if (result == null) result = casePathExpr(pathExprTerm);
+        if (result == null) result = caseIDOrPathExpr(pathExprTerm);
+        if (result == null) result = defaultCase(theEObject);
+        return result;
+      }
       default: return defaultCase(theEObject);
     }
   }
@@ -251,22 +253,6 @@ public class CupidLanguageSwitch<T> extends Switch<T>
    * @generated
    */
   public T caseLanguage(Language object)
-  {
-    return null;
-  }
-
-  /**
-   * Returns the result of interpreting the object as an instance of '<em>Subconcept</em>'.
-   * <!-- begin-user-doc -->
-   * This implementation returns null;
-   * returning a non-null result will terminate the switch.
-   * <!-- end-user-doc -->
-   * @param object the target of the switch.
-   * @return the result of interpreting the object as an instance of '<em>Subconcept</em>'.
-   * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
-   * @generated
-   */
-  public T caseSubconcept(Subconcept object)
   {
     return null;
   }
@@ -304,17 +290,17 @@ public class CupidLanguageSwitch<T> extends Switch<T>
   }
 
   /**
-   * Returns the result of interpreting the object as an instance of '<em>Concept Def Body</em>'.
+   * Returns the result of interpreting the object as an instance of '<em>Subconcept Or Attribute</em>'.
    * <!-- begin-user-doc -->
    * This implementation returns null;
    * returning a non-null result will terminate the switch.
    * <!-- end-user-doc -->
    * @param object the target of the switch.
-   * @return the result of interpreting the object as an instance of '<em>Concept Def Body</em>'.
+   * @return the result of interpreting the object as an instance of '<em>Subconcept Or Attribute</em>'.
    * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
    * @generated
    */
-  public T caseConceptDefBody(ConceptDefBody object)
+  public T caseSubconceptOrAttribute(SubconceptOrAttribute object)
   {
     return null;
   }
@@ -587,6 +573,22 @@ public class CupidLanguageSwitch<T> extends Switch<T>
    * @generated
    */
   public T casePathExpr(PathExpr object)
+  {
+    return null;
+  }
+
+  /**
+   * Returns the result of interpreting the object as an instance of '<em>Path Expr Term</em>'.
+   * <!-- begin-user-doc -->
+   * This implementation returns null;
+   * returning a non-null result will terminate the switch.
+   * <!-- end-user-doc -->
+   * @param object the target of the switch.
+   * @return the result of interpreting the object as an instance of '<em>Path Expr Term</em>'.
+   * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+   * @generated
+   */
+  public T casePathExprTerm(PathExprTerm object)
   {
     return null;
   }

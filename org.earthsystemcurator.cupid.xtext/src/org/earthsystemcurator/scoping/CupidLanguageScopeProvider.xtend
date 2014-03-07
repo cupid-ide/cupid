@@ -3,6 +3,16 @@
  */
 package org.earthsystemcurator.scoping
 
+import org.earthsystemcurator.cupidLanguage.PathExpr
+import org.eclipse.emf.ecore.EReference
+import org.eclipse.xtext.scoping.IScope
+import org.eclipse.xtext.scoping.Scopes
+import org.eclipse.emf.ecore.EObject
+import org.earthsystemcurator.cupidLanguage.ConceptDef
+import org.earthsystemcurator.cupidLanguage.PathExprTerm
+import org.earthsystemcurator.cupidLanguage.SubconceptOrAttribute
+import java.util.List
+
 /**
  * This class contains custom scoping description.
  * 
@@ -11,5 +21,161 @@ package org.earthsystemcurator.scoping
  *
  */
 class CupidLanguageScopeProvider extends org.eclipse.xtext.scoping.impl.AbstractDeclarativeScopeProvider {
+
+	
+	
+	def IScope scope_SubconceptOrAttribute(PathExpr expr, EReference eref) {
+		println("scope_SubconceptOrAttribute(PathExpr): eref=" + eref.name + " | expr=" + expr); //.head + "| head.tail = " + expr.head.tail);
+		if (eref.name.equals("tail")) {
+			if (expr.head.tail != null) {
+				//println("using head.tail: " + expr.head.tail);
+				if (expr.head.tail.attrib) {
+					IScope::NULLSCOPE
+				}
+				else if (expr.head.tail.reference) {
+					//println("using ref")
+					Scopes::scopeFor(expr.head.tail.ref.child);
+				}
+				else {
+					//println("using def")
+					Scopes::scopeFor(expr.head.tail.def.child);
+				}
+			}
+			else {
+				//println("using head.ref")
+				Scopes::scopeFor((expr.head as PathExprTerm).ref.def.child);
+			}
+		}
+		else {
+			//println("eref ref")
+			Scopes::scopeFor(allDescendentSubconcepts(nearestNamedConceptDef(expr)));
+		}
+	}
+	
+	
+	/*
+	def IScope scope_SubconceptOrAttribute(PathExprTerm expr, EReference eref) {
+		println("Inside scope_SubconceptOrAttribute(PathExprTerm): head=" + expr.head + " | tail=" + expr.tail);
+		if (!(expr.eContainer instanceof PathExpr)) {
+			val cd = nearestNamedConceptDef(expr);
+			if (cd != null) {
+				println("named concept")
+				Scopes::scopeFor(cd.child)
+			}
+			else {
+				println("no named def")
+				IScope::NULLSCOPE
+			}
+		}
+		else {
+			println("children")
+			Scopes::scopeFor(((expr.eContainer as PathExpr).head as PathExprTerm).ref.def.child)
+		}
+	}
+	*/
+	
+	/*
+	def IScope scope_PathExpr_tail(PathExpr expr, EReference eref) {
+		println("Inside scope_PathExpr_tail: head.ref=" + (expr.head as PathExprTerm).ref + " |head.tail=" + (expr.head as PathExprTerm).tail);
+		if (expr.head.tail != null) {
+			println("using head.tail")
+			Scopes::scopeFor(expr.head.tail.def.child);
+		}
+		else {
+			println("using head.ref");
+			Scopes::scopeFor((expr.head as PathExprTerm).ref.def.child);
+		}		
+	}
+	*/
+	
+	/*
+	def IScope scope_PathExpr_head(PathExpr expr, EReference eref) {
+		println("Inside scope_PathExpr_head!");
+		//super.getScope(expr.eContainer, eref)
+		
+		//System.out.println("Last ref = ")// + expr.ref.last.toString)
+		IScope::NULLSCOPE
+		//val term = expr.head as PathExprTerm
+		//Scopes::scopeFor(term.ref.def.child);
+		
+	}
+	
+	def IScope scope_PathExprTerm_head(PathExprTerm expr, EReference eref) {
+		println("Inside scope_PathExprTerm_head!");
+		//super.getScope(expr.eContainer, eref)
+		
+		//System.out.println("Last ref = ")// + expr.ref.last.toString)
+		IScope::NULLSCOPE
+		//val term = expr.head as PathExprTerm
+		//Scopes::scopeFor(term.ref.def.child);
+		
+	}
+	
+	
+	def IScope scope_PathExprTerm_ref(PathExprTerm expr, EReference eref) {
+		println("Inside scope_PathExprTerm_ref!");
+		//super.getScope(expr.eContainer, eref)
+		
+		//System.out.println("Last ref = ")// + expr.ref.last.toString)
+		//IScope::NULLSCOPE
+		//val term = expr.head as PathExprTerm
+		//Scopes::scopeFor(term.ref.def.child);
+		Scopes::scopeFor(nearestNamedConceptDef(expr).child)
+		
+	}
+	*/
+	
+	/*
+	def IScope scope_PathExprTerm_ref(PathExprTerm expr, EReference eref) {
+		println("Inside scope_PathExpr_ref: parent=" + expr.eContainer + " - grandparent: " + expr.eContainer.eContainer);
+		if (expr.eContainer instanceof PathExpr) {
+			val term = (expr.eContainer as PathExpr).head as PathExprTerm;
+			println("parent head = " + term);
+			Scopes::scopeFor(term.ref.def.child);
+		}
+		else {
+			IScope::NULLSCOPE;
+		}
+			
+	}
+	*/
+	
+	def ConceptDef nearestNamedConceptDef(EObject obj) {
+		if (obj == null) {
+			null
+		}
+		else if (obj instanceof ConceptDef) {
+			if (obj.named) obj
+			else nearestNamedConceptDef(obj.eContainer)
+		}
+		else {
+			nearestNamedConceptDef(obj.eContainer)
+		}
+		
+	}
+	
+	def List<SubconceptOrAttribute> allDescendentSubconcepts(ConceptDef cd) {
+		//println("allDescendentSubconcepts: " + cd)
+		var result = newArrayList();
+		if (cd != null) {
+			result.addAll(cd.child);
+			for (SubconceptOrAttribute soa : cd.child) {
+				result.addAll(allDescendentSubconcepts(soa))
+			}
+		}
+		//println("allDescendentSubconcepts returning result of size = " + result.size);
+		result
+	}
+	
+	def List<SubconceptOrAttribute> allDescendentSubconcepts(SubconceptOrAttribute soa) {
+		//println("allDescendentSubconcepts(soa)")
+		if (soa.reference) {
+			return allDescendentSubconcepts(soa.ref);
+		}
+		else {
+			//println("soa.def")
+			return allDescendentSubconcepts(soa.def);
+		}
+	}
 
 }

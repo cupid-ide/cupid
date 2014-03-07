@@ -2,7 +2,6 @@
  */
 package org.earthsystemcurator.cupidLanguage;
 
-import org.eclipse.emf.common.util.EList;
 
 /**
  * <!-- begin-user-doc -->
@@ -12,7 +11,8 @@ import org.eclipse.emf.common.util.EList;
  * <p>
  * The following features are supported:
  * <ul>
- *   <li>{@link org.earthsystemcurator.cupidLanguage.PathExpr#getSegments <em>Segments</em>}</li>
+ *   <li>{@link org.earthsystemcurator.cupidLanguage.PathExpr#getHead <em>Head</em>}</li>
+ *   <li>{@link org.earthsystemcurator.cupidLanguage.PathExpr#getTail <em>Tail</em>}</li>
  * </ul>
  * </p>
  *
@@ -23,19 +23,55 @@ import org.eclipse.emf.common.util.EList;
 public interface PathExpr extends IDOrPathExpr
 {
   /**
-   * Returns the value of the '<em><b>Segments</b></em>' attribute list.
-   * The list contents are of type {@link java.lang.String}.
+   * Returns the value of the '<em><b>Head</b></em>' containment reference.
    * <!-- begin-user-doc -->
    * <p>
-   * If the meaning of the '<em>Segments</em>' attribute list isn't clear,
+   * If the meaning of the '<em>Head</em>' containment reference isn't clear,
    * there really should be more of a description here...
    * </p>
    * <!-- end-user-doc -->
-   * @return the value of the '<em>Segments</em>' attribute list.
-   * @see org.earthsystemcurator.cupidLanguage.CupidLanguagePackage#getPathExpr_Segments()
-   * @model unique="false"
+   * @return the value of the '<em>Head</em>' containment reference.
+   * @see #setHead(PathExpr)
+   * @see org.earthsystemcurator.cupidLanguage.CupidLanguagePackage#getPathExpr_Head()
+   * @model containment="true"
    * @generated
    */
-  EList<String> getSegments();
+  PathExpr getHead();
+
+  /**
+   * Sets the value of the '{@link org.earthsystemcurator.cupidLanguage.PathExpr#getHead <em>Head</em>}' containment reference.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @param value the new value of the '<em>Head</em>' containment reference.
+   * @see #getHead()
+   * @generated
+   */
+  void setHead(PathExpr value);
+
+  /**
+   * Returns the value of the '<em><b>Tail</b></em>' reference.
+   * <!-- begin-user-doc -->
+   * <p>
+   * If the meaning of the '<em>Tail</em>' reference isn't clear,
+   * there really should be more of a description here...
+   * </p>
+   * <!-- end-user-doc -->
+   * @return the value of the '<em>Tail</em>' reference.
+   * @see #setTail(SubconceptOrAttribute)
+   * @see org.earthsystemcurator.cupidLanguage.CupidLanguagePackage#getPathExpr_Tail()
+   * @model
+   * @generated
+   */
+  SubconceptOrAttribute getTail();
+
+  /**
+   * Sets the value of the '{@link org.earthsystemcurator.cupidLanguage.PathExpr#getTail <em>Tail</em>}' reference.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @param value the new value of the '<em>Tail</em>' reference.
+   * @see #getTail()
+   * @generated
+   */
+  void setTail(SubconceptOrAttribute value);
 
 } // PathExpr
