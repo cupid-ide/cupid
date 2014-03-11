@@ -185,6 +185,15 @@ public interface CupidLanguageFactory extends EFactory
   ActualParam createActualParam();
 
   /**
+   * Returns a new object of class '<em>Actual Param By Keyword</em>'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return a new object of class '<em>Actual Param By Keyword</em>'.
+   * @generated
+   */
+  ActualParamByKeyword createActualParamByKeyword();
+
+  /**
    * Returns a new object of class '<em>ID Or Wildcard</em>'.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->

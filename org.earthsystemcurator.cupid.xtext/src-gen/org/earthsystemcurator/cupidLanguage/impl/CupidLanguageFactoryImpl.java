@@ -82,6 +82,7 @@ public class CupidLanguageFactoryImpl extends EFactoryImpl implements CupidLangu
       case CupidLanguagePackage.SUBROUTINE_NAME: return createSubroutineName();
       case CupidLanguagePackage.CALL: return createCall();
       case CupidLanguagePackage.ACTUAL_PARAM: return createActualParam();
+      case CupidLanguagePackage.ACTUAL_PARAM_BY_KEYWORD: return createActualParamByKeyword();
       case CupidLanguagePackage.ID_OR_WILDCARD: return createIDOrWildcard();
       case CupidLanguagePackage.ID_OR_PATH_EXPR: return createIDOrPathExpr();
       case CupidLanguagePackage.PATH_EXPR: return createPathExpr();
@@ -287,6 +288,17 @@ public class CupidLanguageFactoryImpl extends EFactoryImpl implements CupidLangu
   {
     ActualParamImpl actualParam = new ActualParamImpl();
     return actualParam;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public ActualParamByKeyword createActualParamByKeyword()
+  {
+    ActualParamByKeywordImpl actualParamByKeyword = new ActualParamByKeywordImpl();
+    return actualParamByKeyword;
   }
 
   /**

@@ -89,7 +89,8 @@ public class CodeQuery2 {
 					else if (value instanceof PathExpr) {
 						bindings.put((PathExpr) value, san.getExpr().toString().trim());
 					}
-					else if (!san.getExpr().toString().equalsIgnoreCase(((IDOrWildcard) value).getId())) {
+					else if (!san.getExpr().toString().trim().equalsIgnoreCase(((IDOrWildcard) value).getId())) {
+						//System.out.println("Expr = |" + san.getExpr().toString() + "|");
 						continue csnloop;
 					}							
 				}			

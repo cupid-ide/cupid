@@ -1,39 +1,26 @@
 package org.earthsystemcurator.cupid.nuopc.fsml.views;
 
 import java.util.ArrayList;
-import java.util.IdentityHashMap;
 import java.util.List;
-import java.util.Map;
-import java.util.Map.Entry;
 
+import org.earthsystemcurator.FSM;
 import org.earthsystemcurator.cupid.nuopc.fsml.builder.NUOPCNature;
-import org.earthsystemcurator.cupid.nuopc.fsml.core.FSM;
-import org.earthsystemcurator.cupid.nuopc.fsml.nuopc.NUOPCApplication;
-import org.earthsystemcurator.cupid.nuopc.fsml.nuopc.NUOPCFactory;
-import org.earthsystemcurator.cupid.nuopc.fsml.nuopc.NUOPCPackage;
-import org.earthsystemcurator.cupid.nuopc.fsml.nuopc.Top;
-import org.earthsystemcurator.cupid.nuopc.fsml.nuopc.util.NUOPCValidator;
-import org.earthsystemcurator.cupid.nuopc.fsml.util.EcoreUtils;
 import org.earthsystemcurator.cupid.nuopc.fsml.util.Regex;
+import org.earthsystemcurator.cupidLanguage.ConceptDef;
+import org.earthsystemcurator.cupidLanguage.SubconceptOrAttribute;
 import org.eclipse.core.resources.IProject;
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.emf.common.util.Diagnostic;
 import org.eclipse.emf.common.util.EList;
-import org.eclipse.emf.ecore.EAttribute;
-import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EReference;
 import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.ecore.EValidator;
-import org.eclipse.emf.ecore.EcorePackage;
 import org.eclipse.emf.ecore.util.Diagnostician;
 import org.eclipse.emf.ecore.util.EObjectValidator;
-import org.eclipse.emf.ecore.util.EcoreUtil;
-import org.eclipse.emf.ecore.util.EcoreUtil.Copier;
 import org.eclipse.jface.viewers.IStructuredContentProvider;
 import org.eclipse.jface.viewers.ITreeContentProvider;
 import org.eclipse.jface.viewers.Viewer;
-import org.eclipse.ocl.ecore.util.EcoreValidator;
 import org.eclipse.ocl.examples.xtext.oclinecore.validation.OCLinEcoreEObjectValidator;
 
 class NUOPCViewContentProvider implements IStructuredContentProvider, ITreeContentProvider {
@@ -49,9 +36,9 @@ class NUOPCViewContentProvider implements IStructuredContentProvider, ITreeConte
 	private IProject project;
 	//private NUOPCApplication app;
 	//private Map<Object, Object> reversedMappings;
-	private FSM<NUOPCApplication> fsm;
+	private FSM<?> fsm;
 	
-	public FSM<NUOPCApplication> getCurrentFSM() {
+	public FSM<?> getCurrentFSM() {
 		return fsm;
 	}
 	
@@ -164,14 +151,21 @@ class NUOPCViewContentProvider implements IStructuredContentProvider, ITreeConte
 			return new Object[0];
 		}
 		
-		Top top = NUOPCFactory.eINSTANCE.createTop();
-		NUOPCApplication app = fsm.getRoot();
-		top.setApps(app);
+		//Top top = NUOPCFactory.eINSTANCE.createTop();
+		EObject root = fsm.getRoot();
+		//top.setApps(app);
 		
-		EReference er = NUOPCPackage.eINSTANCE.getTop_Apps();
-		String labelType = Regex.getFromAnnotation(app.eClass(), "label");		
-		return new Object[] {new NUOPCModelElem(new NUOPCModelElem(null, null, null, null, top),
-												er, app.getName(), labelType, app)};  
+		//EReference er = NUOPCPackage.eINSTANCE.getTop_Apps();
+		//String typeLabel = Regex.getFromAnnotation(root.eClass(), "label");	
+		String typeLabel = fsm.getAnnotationValue(root, "label");
+		if (typeLabel==null) {
+			typeLabel = fsm.getConceptDef(root).getName();
+		}
+		// mapping = fsm.getConceptDefForElement(root.eClass()).getMapping();
+		
+		//return new Object[] {new NUOPCModelElem(new NUOPCModelElem(null, null, null, null, top),
+		//										er, app.getName(), labelType, app)};  
+		return new Object[] {new NUOPCModelElem(null, null, typeLabel, root, null)};
 			
 	}
 	
@@ -190,53 +184,80 @@ class NUOPCViewContentProvider implements IStructuredContentProvider, ITreeConte
 			
 			if (parent.elem != null) {
 				EObject eo = parent.elem;
-				EClass ec = eo.eClass();
+				ConceptDef conceptDef = fsm.getConceptDef(eo);
+				//EClass ec = eo.eClass();
 				
 									
-				for (EAttribute eattrib : ec.getEAttributes()) {
+				for (SubconceptOrAttribute soa : conceptDef.getChild()) {
 					
-					//System.out.println("EAttrib: " + ec.getName() + "." + eattrib.getName());
+					//first pass just deal with attributes
+					if (soa.isAttrib()) {
 					
-					String typeLabel;
-					typeLabel = Regex.getFromAnnotation(eattrib, "label");
-					if (typeLabel == null) {
-						typeLabel = eattrib.getName();
-					}
+						//ConceptDef subConceptDef = soa.getDef();
+						
+						String typeLabel;
+						typeLabel = fsm.getAnnotationValue(soa, "label");
+						if (typeLabel == null) {
+							typeLabel = soa.getName();
+						}
+						
+						String nameLabel = "(none)";
+						
+						Object val = eo.eGet(eo.eClass().getEStructuralFeature(soa.getName()));
+						if (val instanceof EList) {
+							Object first = ((EList) val).get(0);
+							nameLabel = first.toString();
+						}
+						else if (val != null) {
+							nameLabel = val.toString();
+						}
+						//else if (eattrib.getEType().getName().equals("EString")) {
+						//	nameLabel = (String) val;
+						//}
+						//else if (eattrib.getEType().getName().equals("EBoolean")) {
+						//	nameLabel = Boolean.toString((Boolean) val);
+						//}
 					
-					String nameLabel = "(none)";
-					
-					Object val = eo.eGet(eattrib);
-					if (val instanceof EList) {
-						Object first = ((EList) val).get(0);
-						nameLabel = first.toString();
+						//Mapping mapping = fsm.getSubconceptForElement(modelElemClass)
+						
+						children.add(new NUOPCModelElem(parent, nameLabel, typeLabel, null, soa));
 					}
-					else if (eattrib.getEType().getName().equals("EString")) {
-						nameLabel = (String) val;
-					}
-					else if (eattrib.getEType().getName().equals("EBoolean")) {
-						nameLabel = Boolean.toString((Boolean) val);
-					}
-				
-					children.add(new NUOPCModelElem(parent, eattrib, nameLabel, typeLabel, null));
 				}
 				
 				
-				for (EReference eref : ec.getEReferences()) {
-					if (eref.isContainment()) {
+				for (SubconceptOrAttribute soa : conceptDef.getChild()) {
+					
+					if (!soa.isAttrib()) {
 						
-						String typeLabel, taskLabel;
-						typeLabel = Regex.getFromAnnotation(eref.getEType(), "label");
+						ConceptDef subConceptDef;
+						if (soa.isReference()) {
+							subConceptDef = soa.getRef();
+						}
+						else {
+							subConceptDef = soa.getDef();
+						}
+					
+					
+						String typeLabel;
+						typeLabel = fsm.getAnnotationValue(subConceptDef, "label");
 						//taskLabel = Regex.getFromAnnotation(eref.getEType(), "task");
 						if (typeLabel == null) {
-							typeLabel = eref.getEType().getName();
+							typeLabel = soa.getName();
 						}
 						
-						if (eref.isMany()) {							
-							EList<EObject> instances = (EList<EObject>) eo.eGet(eref);
+						//Subconcept sc = fsm.getSubconceptForElement((EClass) eref.getEType());
+						
+						if (soa.getCardinality()!= null && (soa.getCardinality().isOneOrMore() || soa.getCardinality().isZeroOrMore())) {							
+							@SuppressWarnings("unchecked")
+							EList<EObject> instances = (EList<EObject>) eo.eGet(eo.eClass().getEStructuralFeature(soa.getName()));
 							if (instances.size() > 0) {
 								for (EObject o : instances) {
-									String nameLabel = EcoreUtils.eGetSFValue("name", o, null);
-									NUOPCModelElem newElem = new NUOPCModelElem(parent, eref, nameLabel, typeLabel, o);
+									EStructuralFeature sf = fsm.getNameEAttribute(subConceptDef);
+									String nameLabel = null;
+									if (sf != null) {
+										nameLabel = (String) o.eGet(sf);
+									}
+									NUOPCModelElem newElem = new NUOPCModelElem(parent, nameLabel, typeLabel, o, soa);
 									children.add(newElem);
 								}
 							}
@@ -248,39 +269,48 @@ class NUOPCViewContentProvider implements IStructuredContentProvider, ITreeConte
 							
 						}
 						else {
-							EObject o = (EObject) eo.eGet(eref);
+							EObject o = (EObject) eo.eGet(eo.eClass().getEStructuralFeature(soa.getName()));
 							if (o != null) {
-								String nameLabel = EcoreUtils.eGetSFValue("name", o, null);
-								children.add(new NUOPCModelElem(parent, eref, nameLabel, typeLabel, o));
+								String nameLabel = null;
+								EStructuralFeature sfName = fsm.getNameEAttribute(subConceptDef);
+								if (sfName != null) {
+									nameLabel = (String) o.eGet(sfName);
+								}
+								children.add(new NUOPCModelElem(parent, nameLabel, typeLabel, o, soa));
 							}
 							else {
-								children.add(new NUOPCModelElem(parent, eref, null, typeLabel, null));
+								children.add(new NUOPCModelElem(parent, null, typeLabel, null, soa));
 							}
 						}
 												
 					}
 				}
 			}
-			else if (parent.structuralFeature instanceof EReference){
+			else { //if (parent.structuralFeature instanceof EReference){
+				
 				//no elem eobject
-				EClass ec = (EClass) parent.structuralFeature.getEType();
-				for (EReference eref : ec.getEReferences()) {
-					
-					String typeLabel;
-					typeLabel = Regex.getFromAnnotation(eref.getEType(), "task");
-					if (typeLabel == null) {
-						typeLabel = eref.getEType().getName();
-					}
-					
-					if (eref.isContainment()) {
-						children.add(new NUOPCModelElem(parent, eref, null, typeLabel, null));
-					}
-					
+				//EClass ec = (EClass) parent.structuralFeature.getEType();
+				ConceptDef conceptDef;
+				if (parent.subconcept.isReference()) {
+					conceptDef = parent.subconcept.getRef();
+				}
+				else {
+					conceptDef = parent.subconcept.getDef();
 				}
 				
 				
+				for (SubconceptOrAttribute soa : conceptDef.getChild()) {
+					
+					String typeLabel;
+					typeLabel = fsm.getAnnotationValue(soa, "label");
+					if (typeLabel == null) {
+						typeLabel = soa.getName();
+					}
+					
+					children.add(new NUOPCModelElem(parent, null, typeLabel, null, soa));
+				}
+				
 			}
-			
 						
 			return children.toArray();
 		}
@@ -288,91 +318,29 @@ class NUOPCViewContentProvider implements IStructuredContentProvider, ITreeConte
 	}
 		
 	
-	/*
-	public Object [] getChildren2(Object p) {
-		System.out.println("getChildren: " + p);
-		if (p instanceof NUOPCModelElem) {
-			NUOPCModelElem parent = (NUOPCModelElem) p;
-			EReference er = parent.eref;
-			EObject eo = parent.elem;
-			
-			List<NUOPCModelElem> children = new ArrayList<NUOPCModelElem>();
-			
-			if (er != null) {				
-				//instances are children
-				if (er.isMany()) {
-					EList<EObject> instances = (EList<EObject>) parent.parent.elem.eGet(er);
-					for (EObject o : instances) {
-						String label = EcoreUtils.eGetSFValue("name", o, "UKNOWN");
-						children.add(new NUOPCModelElem(parent, null, label, o));
-					}
-				}
-				else {
-					EObject o = (EObject) parent.parent.elem.eGet(er);
-					String label = EcoreUtils.eGetSFValue("name", o, "UKNOWN");
-					children.add(new NUOPCModelElem(parent, null, label, o));
-				}
-			}
-			else if (eo != null) {
-				//metamodel refs are children
-				EClass eclass = eo.eClass();
-				for (EReference eref : eclass.getEReferences()) {
-					if (eref.isContainment()) {
-						String label;
-						if (eref.isMany()) {
-							label = Regex.getFromAnnotation(eref.getEType(), "labelPlural");
-						}
-						else {
-							label = Regex.getFromAnnotation(eref.getEType(), "label");
-						}
-						if (label == null) {
-							label = eref.getEType().getName();
-						}
-						children.add(new NUOPCModelElem(parent, eref, label, null));
-					}
-				}
-				//return refs.toArray();
-			}			
-			return children.toArray();
-		}
-		return new Object[0];
-	}
-	*/
 	
-	/*
-	public boolean hasChildren(Object p) {
-		System.out.println("hasChildren: " + p);
-		if (p instanceof NUOPCModelElem) {
-			NUOPCModelElem parent = (NUOPCModelElem) p;
-			if (parent.eref != null) {
-				if (parent.eref.isMany()) {
-					EList<EObject> instances = (EList<EObject>) parent.parent.elem.eGet(parent.eref);
-					return instances.size() > 0;
-				}
-				else {
-					EObject o = (EObject) parent.parent.elem.eGet(parent.eref);
-					//String label = EcoreUtils.eGetSFValue("name", o, "UKNOWN");
-					return o != null;
-				}
-			}
-			else if (parent.elem != null) {
-				return parent.elem.eClass().getEReferences().size() > 0;
-			}
-		}
-		return false;
-	}
-	*/
 	
 	public boolean hasChildren(Object p) {
 		//System.out.println("hasChildren: " + p);
 		if (p instanceof NUOPCModelElem) {
 			NUOPCModelElem parent = (NUOPCModelElem) p;
 			if (parent.elem != null) {
-				return parent.elem.eClass().getEStructuralFeatures().size() > 0;
+				if (parent.elem.eClass().getName().equals("NUOPCApplication__DriverAtmOcn")) {
+					System.out.println("");
+				}
+				ConceptDef conceptDef = fsm.getConceptDef(parent.elem);
+				
+				return conceptDef.getChild() != null && conceptDef.getChild().size() > 0; //parent.elem.eClass().getEStructuralFeatures().size() > 0;
 			}
-			else if (parent.structuralFeature instanceof EReference) {
-				//TODO: check for isMany
-				return ((EClass) parent.structuralFeature.getEType()).getEStructuralFeatures().size() > 0;
+			else if (!parent.subconcept.isAttrib()) { //(parent.structuralFeature instanceof EReference) {
+				ConceptDef conceptDef;
+				if (parent.subconcept.isReference()) {
+					conceptDef = parent.subconcept.getRef();
+				}
+				else {
+					conceptDef = parent.subconcept.getDef();
+				}
+				return conceptDef.getChild().size() > 0;
 			}
 		}
 		return false;
@@ -382,29 +350,24 @@ class NUOPCViewContentProvider implements IStructuredContentProvider, ITreeConte
 		public NUOPCModelElem parent;
 		//public EReference eref;
 		//public EAttribute eattrib;
-		public EStructuralFeature structuralFeature;
+		//public EStructuralFeature structuralFeature;
 		public String nameLabel;
 		public String typeLabel;
 		public EObject elem;
 		public String validationMessage;
+		public SubconceptOrAttribute subconcept;
 		//public int min;
 		//public int max;
 		
-		/*
-		public NUOPCModelElem(NUOPCModelElem parent, EAttribute eattrib, String nameLabel, String typeLabel) {
-			this.parent = parent;
-			this.eattrib = eattrib;
-			this.nameLabel = nameLabel;
-			this.typeLabel = typeLabel;			
-		}
-		*/
 		
-		public NUOPCModelElem(NUOPCModelElem parent, EStructuralFeature esf, String nameLabel, String typeLabel, EObject elem) {
+		
+		public NUOPCModelElem(NUOPCModelElem parent, String nameLabel, String typeLabel, EObject elem, SubconceptOrAttribute subconcept) {
 			this.parent = parent;
-			this.structuralFeature = esf;
+			//this.structuralFeature = esf;
 			this.nameLabel = nameLabel;
 			this.typeLabel = typeLabel;
 			this.elem = elem;
+			this.subconcept = subconcept;
 			doValidationMessage();
 			//this.min = min;
 			//this.max = max;

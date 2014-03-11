@@ -79,9 +79,10 @@ public class CupidLanguageGrammarAccess extends AbstractGrammarElementFinder {
 		private final Group cGroup = (Group)rule.eContents().get(1);
 		private final Assignment cKeyAssignment_0 = (Assignment)cGroup.eContents().get(0);
 		private final RuleCall cKeyANNOTATION_IDTerminalRuleCall_0_0 = (RuleCall)cKeyAssignment_0.eContents().get(0);
-		private final Keyword cEqualsSignKeyword_1 = (Keyword)cGroup.eContents().get(1);
-		private final Assignment cValueAssignment_2 = (Assignment)cGroup.eContents().get(2);
-		private final RuleCall cValueSTRINGTerminalRuleCall_2_0 = (RuleCall)cValueAssignment_2.eContents().get(0);
+		private final Group cGroup_1 = (Group)cGroup.eContents().get(1);
+		private final Keyword cEqualsSignKeyword_1_0 = (Keyword)cGroup_1.eContents().get(0);
+		private final Assignment cValueAssignment_1_1 = (Assignment)cGroup_1.eContents().get(1);
+		private final RuleCall cValueSTRINGTerminalRuleCall_1_1_0 = (RuleCall)cValueAssignment_1_1.eContents().get(0);
 		
 		////Subconcept:
 		////	AnonymousConcept | ConceptRef | Attribute;
@@ -92,10 +93,10 @@ public class CupidLanguageGrammarAccess extends AbstractGrammarElementFinder {
 		////		('<' mapping=Mapping '>')? ('[' annotation+=Annotation (',' annotation+=Annotation)* ']')? body=ConceptDefBody?	
 		////	);
 		//Annotation:
-		//	key=ANNOTATION_ID "=" value=STRING;
+		//	key=ANNOTATION_ID ("=" value=STRING)?;
 		public ParserRule getRule() { return rule; }
 
-		//key=ANNOTATION_ID "=" value=STRING
+		//key=ANNOTATION_ID ("=" value=STRING)?
 		public Group getGroup() { return cGroup; }
 
 		//key=ANNOTATION_ID
@@ -104,14 +105,17 @@ public class CupidLanguageGrammarAccess extends AbstractGrammarElementFinder {
 		//ANNOTATION_ID
 		public RuleCall getKeyANNOTATION_IDTerminalRuleCall_0_0() { return cKeyANNOTATION_IDTerminalRuleCall_0_0; }
 
+		//("=" value=STRING)?
+		public Group getGroup_1() { return cGroup_1; }
+
 		//"="
-		public Keyword getEqualsSignKeyword_1() { return cEqualsSignKeyword_1; }
+		public Keyword getEqualsSignKeyword_1_0() { return cEqualsSignKeyword_1_0; }
 
 		//value=STRING
-		public Assignment getValueAssignment_2() { return cValueAssignment_2; }
+		public Assignment getValueAssignment_1_1() { return cValueAssignment_1_1; }
 
 		//STRING
-		public RuleCall getValueSTRINGTerminalRuleCall_2_0() { return cValueSTRINGTerminalRuleCall_2_0; }
+		public RuleCall getValueSTRINGTerminalRuleCall_1_1_0() { return cValueSTRINGTerminalRuleCall_1_1_0; }
 	}
 
 	public class AnonymousConceptDefElements extends AbstractParserRuleElementFinder {
@@ -619,12 +623,13 @@ public class CupidLanguageGrammarAccess extends AbstractGrammarElementFinder {
 		private final RuleCall cCallParserRuleCall_4 = (RuleCall)cAlternatives.eContents().get(4);
 		private final RuleCall cSubroutineParserRuleCall_5 = (RuleCall)cAlternatives.eContents().get(5);
 		private final RuleCall cSubroutineNameParserRuleCall_6 = (RuleCall)cAlternatives.eContents().get(6);
+		private final RuleCall cActualParamByKeywordParserRuleCall_7 = (RuleCall)cAlternatives.eContents().get(7);
 		
 		//ImplicitContextMapping:
-		//	Module | ModuleName | UsesModule | UsesEntity | Call | Subroutine | SubroutineName;
+		//	Module | ModuleName | UsesModule | UsesEntity | Call | Subroutine | SubroutineName | ActualParamByKeyword;
 		public ParserRule getRule() { return rule; }
 
-		//Module | ModuleName | UsesModule | UsesEntity | Call | Subroutine | SubroutineName
+		//Module | ModuleName | UsesModule | UsesEntity | Call | Subroutine | SubroutineName | ActualParamByKeyword
 		public Alternatives getAlternatives() { return cAlternatives; }
 
 		//Module
@@ -647,6 +652,9 @@ public class CupidLanguageGrammarAccess extends AbstractGrammarElementFinder {
 
 		//SubroutineName
 		public RuleCall getSubroutineNameParserRuleCall_6() { return cSubroutineNameParserRuleCall_6; }
+
+		//ActualParamByKeyword
+		public RuleCall getActualParamByKeywordParserRuleCall_7() { return cActualParamByKeywordParserRuleCall_7; }
 	}
 
 	public class ModuleElements extends AbstractParserRuleElementFinder {
@@ -725,19 +733,19 @@ public class CupidLanguageGrammarAccess extends AbstractGrammarElementFinder {
 		//"usesModule" "(" name=IDOrPathExpr ")"
 		public Group getGroup() { return cGroup; }
 
-		//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/org/earthsystemcurator/CupidLanguage.xtext#/0/@rules.14/@alternatives/@elements.0'
+		//"usesModule"
 		public Keyword getUsesModuleKeyword_0() { return cUsesModuleKeyword_0; }
 
-		//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/org/earthsystemcurator/CupidLanguage.xtext#/0/@rules.14/@alternatives/@elements.1'
+		//"("
 		public Keyword getLeftParenthesisKeyword_1() { return cLeftParenthesisKeyword_1; }
 
-		//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/org/earthsystemcurator/CupidLanguage.xtext#/0/@rules.14/@alternatives/@elements.2'
+		//name=IDOrPathExpr
 		public Assignment getNameAssignment_2() { return cNameAssignment_2; }
 
-		//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/org/earthsystemcurator/CupidLanguage.xtext#/0/@rules.14/@alternatives/@elements.2/@terminal'
+		//IDOrPathExpr
 		public RuleCall getNameIDOrPathExprParserRuleCall_2_0() { return cNameIDOrPathExprParserRuleCall_2_0; }
 
-		//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/org/earthsystemcurator/CupidLanguage.xtext#/0/@rules.14/@alternatives/@elements.3'
+		//")"
 		public Keyword getRightParenthesisKeyword_3() { return cRightParenthesisKeyword_3; }
 	}
 
@@ -750,25 +758,26 @@ public class CupidLanguageGrammarAccess extends AbstractGrammarElementFinder {
 		private final RuleCall cNameIDOrPathExprParserRuleCall_2_0 = (RuleCall)cNameAssignment_2.eContents().get(0);
 		private final Keyword cRightParenthesisKeyword_3 = (Keyword)cGroup.eContents().get(3);
 		
-		//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/org/earthsystemcurator/CupidLanguage.xtext#XtextFragmentProvider_org.earthsystemcurator.CupidLanguage/UsesEntity'
+		//UsesEntity:
+		//	"usesEntity" "(" name=IDOrPathExpr ")";
 		public ParserRule getRule() { return rule; }
 
-		//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/org/earthsystemcurator/CupidLanguage.xtext#/0/@rules.15/@alternatives'
+		//"usesEntity" "(" name=IDOrPathExpr ")"
 		public Group getGroup() { return cGroup; }
 
-		//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/org/earthsystemcurator/CupidLanguage.xtext#/0/@rules.15/@alternatives/@elements.0'
+		//"usesEntity"
 		public Keyword getUsesEntityKeyword_0() { return cUsesEntityKeyword_0; }
 
-		//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/org/earthsystemcurator/CupidLanguage.xtext#/0/@rules.15/@alternatives/@elements.1'
+		//"("
 		public Keyword getLeftParenthesisKeyword_1() { return cLeftParenthesisKeyword_1; }
 
-		//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/org/earthsystemcurator/CupidLanguage.xtext#/0/@rules.15/@alternatives/@elements.2'
+		//name=IDOrPathExpr
 		public Assignment getNameAssignment_2() { return cNameAssignment_2; }
 
-		//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/org/earthsystemcurator/CupidLanguage.xtext#/0/@rules.15/@alternatives/@elements.2/@terminal'
+		//IDOrPathExpr
 		public RuleCall getNameIDOrPathExprParserRuleCall_2_0() { return cNameIDOrPathExprParserRuleCall_2_0; }
 
-		//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/org/earthsystemcurator/CupidLanguage.xtext#/0/@rules.15/@alternatives/@elements.3'
+		//")"
 		public Keyword getRightParenthesisKeyword_3() { return cRightParenthesisKeyword_3; }
 	}
 
@@ -791,19 +800,20 @@ public class CupidLanguageGrammarAccess extends AbstractGrammarElementFinder {
 		private final Keyword cRightParenthesisKeyword_3_2 = (Keyword)cGroup_3.eContents().get(2);
 		private final Keyword cRightParenthesisKeyword_4 = (Keyword)cGroup.eContents().get(4);
 		
-		//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/org/earthsystemcurator/CupidLanguage.xtext#XtextFragmentProvider_org.earthsystemcurator.CupidLanguage/Subroutine'
+		//Subroutine:
+		//	"subroutine" "(" name=IDOrPathExpr ("(" (params+=FormalParam ("," params+=FormalParam)*)? ")")? ")";
 		public ParserRule getRule() { return rule; }
 
-		//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/org/earthsystemcurator/CupidLanguage.xtext#/0/@rules.16/@alternatives'
+		//"subroutine" "(" name=IDOrPathExpr ("(" (params+=FormalParam ("," params+=FormalParam)*)? ")")? ")"
 		public Group getGroup() { return cGroup; }
 
-		//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/org/earthsystemcurator/CupidLanguage.xtext#/0/@rules.16/@alternatives/@elements.0'
+		//"subroutine"
 		public Keyword getSubroutineKeyword_0() { return cSubroutineKeyword_0; }
 
-		//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/org/earthsystemcurator/CupidLanguage.xtext#/0/@rules.16/@alternatives/@elements.1'
+		//"("
 		public Keyword getLeftParenthesisKeyword_1() { return cLeftParenthesisKeyword_1; }
 
-		//org.eclipse.xtext.resource.ClasspathUriResolutionException: org.eclipse.xtext.resource.FileNotFoundOnClasspathException: Couldn't find resource on classpath. URI was 'classpath:/org/earthsystemcurator/CupidLanguage.xtext#/0/@rules.16/@alternatives/@elements.2'
+		//name=IDOrPathExpr
 		public Assignment getNameAssignment_2() { return cNameAssignment_2; }
 
 		//IDOrPathExpr
@@ -1161,6 +1171,54 @@ public class CupidLanguageGrammarAccess extends AbstractGrammarElementFinder {
 		public RuleCall getValueIDOrPathExprParserRuleCall_1_0() { return cValueIDOrPathExprParserRuleCall_1_0; }
 	}
 
+	public class ActualParamByKeywordElements extends AbstractParserRuleElementFinder {
+		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "ActualParamByKeyword");
+		private final Group cGroup = (Group)rule.eContents().get(1);
+		private final Keyword cActualParamByKeywordKeyword_0 = (Keyword)cGroup.eContents().get(0);
+		private final Keyword cLeftParenthesisKeyword_1 = (Keyword)cGroup.eContents().get(1);
+		private final Assignment cKeywordAssignment_2 = (Assignment)cGroup.eContents().get(2);
+		private final RuleCall cKeywordIDOrPathExprParserRuleCall_2_0 = (RuleCall)cKeywordAssignment_2.eContents().get(0);
+		private final Keyword cLeftParenthesisKeyword_3 = (Keyword)cGroup.eContents().get(3);
+		private final Assignment cValueAssignment_4 = (Assignment)cGroup.eContents().get(4);
+		private final RuleCall cValueIDOrPathExprParserRuleCall_4_0 = (RuleCall)cValueAssignment_4.eContents().get(0);
+		private final Keyword cRightParenthesisKeyword_5 = (Keyword)cGroup.eContents().get(5);
+		private final Keyword cRightParenthesisKeyword_6 = (Keyword)cGroup.eContents().get(6);
+		
+		//ActualParamByKeyword:
+		//	"actualParamByKeyword" "(" keyword=IDOrPathExpr "(" value=IDOrPathExpr ")" ")";
+		public ParserRule getRule() { return rule; }
+
+		//"actualParamByKeyword" "(" keyword=IDOrPathExpr "(" value=IDOrPathExpr ")" ")"
+		public Group getGroup() { return cGroup; }
+
+		//"actualParamByKeyword"
+		public Keyword getActualParamByKeywordKeyword_0() { return cActualParamByKeywordKeyword_0; }
+
+		//"("
+		public Keyword getLeftParenthesisKeyword_1() { return cLeftParenthesisKeyword_1; }
+
+		//keyword=IDOrPathExpr
+		public Assignment getKeywordAssignment_2() { return cKeywordAssignment_2; }
+
+		//IDOrPathExpr
+		public RuleCall getKeywordIDOrPathExprParserRuleCall_2_0() { return cKeywordIDOrPathExprParserRuleCall_2_0; }
+
+		//"("
+		public Keyword getLeftParenthesisKeyword_3() { return cLeftParenthesisKeyword_3; }
+
+		//value=IDOrPathExpr
+		public Assignment getValueAssignment_4() { return cValueAssignment_4; }
+
+		//IDOrPathExpr
+		public RuleCall getValueIDOrPathExprParserRuleCall_4_0() { return cValueIDOrPathExprParserRuleCall_4_0; }
+
+		//")"
+		public Keyword getRightParenthesisKeyword_5() { return cRightParenthesisKeyword_5; }
+
+		//")"
+		public Keyword getRightParenthesisKeyword_6() { return cRightParenthesisKeyword_6; }
+	}
+
 	public class IDOrWildcardElements extends AbstractParserRuleElementFinder {
 		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "IDOrWildcard");
 		private final Alternatives cAlternatives = (Alternatives)rule.eContents().get(1);
@@ -1368,6 +1426,7 @@ public class CupidLanguageGrammarAccess extends AbstractGrammarElementFinder {
 	private SubroutineNameElements pSubroutineName;
 	private CallElements pCall;
 	private ActualParamElements pActualParam;
+	private ActualParamByKeywordElements pActualParamByKeyword;
 	private IDOrWildcardElements pIDOrWildcard;
 	private IDOrPathExprElements pIDOrPathExpr;
 	private PathExprElements pPathExpr;
@@ -1431,7 +1490,7 @@ public class CupidLanguageGrammarAccess extends AbstractGrammarElementFinder {
 	////		('<' mapping=Mapping '>')? ('[' annotation+=Annotation (',' annotation+=Annotation)* ']')? body=ConceptDefBody?	
 	////	);
 	//Annotation:
-	//	key=ANNOTATION_ID "=" value=STRING;
+	//	key=ANNOTATION_ID ("=" value=STRING)?;
 	public AnnotationElements getAnnotationAccess() {
 		return (pAnnotation != null) ? pAnnotation : (pAnnotation = new AnnotationElements());
 	}
@@ -1548,7 +1607,7 @@ public class CupidLanguageGrammarAccess extends AbstractGrammarElementFinder {
 	}
 
 	//ImplicitContextMapping:
-	//	Module | ModuleName | UsesModule | UsesEntity | Call | Subroutine | SubroutineName;
+	//	Module | ModuleName | UsesModule | UsesEntity | Call | Subroutine | SubroutineName | ActualParamByKeyword;
 	public ImplicitContextMappingElements getImplicitContextMappingAccess() {
 		return (pImplicitContextMapping != null) ? pImplicitContextMapping : (pImplicitContextMapping = new ImplicitContextMappingElements());
 	}
@@ -1666,6 +1725,16 @@ public class CupidLanguageGrammarAccess extends AbstractGrammarElementFinder {
 	
 	public ParserRule getActualParamRule() {
 		return getActualParamAccess().getRule();
+	}
+
+	//ActualParamByKeyword:
+	//	"actualParamByKeyword" "(" keyword=IDOrPathExpr "(" value=IDOrPathExpr ")" ")";
+	public ActualParamByKeywordElements getActualParamByKeywordAccess() {
+		return (pActualParamByKeyword != null) ? pActualParamByKeyword : (pActualParamByKeyword = new ActualParamByKeywordElements());
+	}
+	
+	public ParserRule getActualParamByKeywordRule() {
+		return getActualParamByKeywordAccess().getRule();
 	}
 
 	//IDOrWildcard:

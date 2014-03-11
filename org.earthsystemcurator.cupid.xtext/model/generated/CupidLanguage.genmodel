@@ -89,6 +89,10 @@
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute CupidLanguage.ecore#//ActualParam/optional"/>
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference CupidLanguage.ecore#//ActualParam/value"/>
     </genClasses>
+    <genClasses ecoreClass="CupidLanguage.ecore#//ActualParamByKeyword">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference CupidLanguage.ecore#//ActualParamByKeyword/keyword"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference CupidLanguage.ecore#//ActualParamByKeyword/value"/>
+    </genClasses>
     <genClasses ecoreClass="CupidLanguage.ecore#//IDOrWildcard">
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute CupidLanguage.ecore#//IDOrWildcard/id"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute CupidLanguage.ecore#//IDOrWildcard/wildcard"/>

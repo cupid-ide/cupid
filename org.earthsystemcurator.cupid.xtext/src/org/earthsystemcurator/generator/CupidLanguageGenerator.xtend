@@ -13,7 +13,6 @@ import org.earthsystemcurator.cupidLanguage.Cardinality
 import org.eclipse.emf.ecore.EObject
 import org.earthsystemcurator.CupidToEcore
 import org.eclipse.xtext.generator.IFileSystemAccessExtension2
-import org.eclipse.emf.common.util.URI
 
 /**
  * Generates code from your model files on save.
@@ -38,7 +37,6 @@ class CupidLanguageGenerator implements IGenerator {
 			var outputURI = fsa.getURI(lang.name + '.oclinecore')
 			CupidToEcore.generateEcoreModel(outputURI);
 		}
-		
 
 	}
 	
@@ -93,17 +91,13 @@ class CupidLanguageGenerator implements IGenerator {
 	}
 	
 	def String toClassName(ConceptDef cd) {
-		//println('toClassName (cd): ' + cd)
-		if (cd==null) 'NULL'
+		var parent = cd.eContainer.nearest(ConceptDef)
+		if (cd.named) {
+			if (parent != null)	parent.toClassName + '__' + cd.name.toFirstUpper
+			else cd.name.toFirstUpper
+		}
 		else {
-			var parent = cd.eContainer.nearest(ConceptDef)
-			if (cd.named) {
-				if (parent != null)	parent.toClassName + '__' + cd.name.toFirstUpper
-				else cd.name.toFirstUpper
-			}
-			else {
-				parent.toClassName + '__' + cd.eContainer.nearest(SubconceptOrAttribute).name.toFirstUpper
-			}
+			parent.toClassName + '__' + cd.eContainer.nearest(SubconceptOrAttribute).name.toFirstUpper
 		}
 	}
 	
@@ -114,7 +108,7 @@ class CupidLanguageGenerator implements IGenerator {
 		}
 		else {	
 			soa.def.toClassName
-		}
+		}	
 	}
 	
 	def <T extends EObject> T nearest(EObject obj, Class<T> clazz) {

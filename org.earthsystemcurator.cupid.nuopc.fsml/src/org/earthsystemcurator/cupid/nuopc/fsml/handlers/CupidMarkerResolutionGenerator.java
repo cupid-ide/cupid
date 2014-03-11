@@ -1,6 +1,6 @@
 package org.earthsystemcurator.cupid.nuopc.fsml.handlers;
 
-import org.earthsystemcurator.cupid.nuopc.fsml.core.FSM;
+import org.earthsystemcurator.FSM;
 import org.eclipse.core.resources.IMarker;
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.ui.IMarkerResolution;

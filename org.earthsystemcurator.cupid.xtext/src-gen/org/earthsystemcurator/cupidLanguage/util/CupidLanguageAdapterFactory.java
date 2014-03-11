@@ -165,6 +165,11 @@ public class CupidLanguageAdapterFactory extends AdapterFactoryImpl
         return createActualParamAdapter();
       }
       @Override
+      public Adapter caseActualParamByKeyword(ActualParamByKeyword object)
+      {
+        return createActualParamByKeywordAdapter();
+      }
+      @Override
       public Adapter caseIDOrWildcard(IDOrWildcard object)
       {
         return createIDOrWildcardAdapter();
@@ -472,6 +477,21 @@ public class CupidLanguageAdapterFactory extends AdapterFactoryImpl
    * @generated
    */
   public Adapter createActualParamAdapter()
+  {
+    return null;
+  }
+
+  /**
+   * Creates a new adapter for an object of class '{@link org.earthsystemcurator.cupidLanguage.ActualParamByKeyword <em>Actual Param By Keyword</em>}'.
+   * <!-- begin-user-doc -->
+   * This default implementation returns null so that we can easily ignore cases;
+   * it's useful to ignore a case when inheritance will catch all the cases anyway.
+   * <!-- end-user-doc -->
+   * @return the new adapter.
+   * @see org.earthsystemcurator.cupidLanguage.ActualParamByKeyword
+   * @generated
+   */
+  public Adapter createActualParamByKeywordAdapter()
   {
     return null;
   }

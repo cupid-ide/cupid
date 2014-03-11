@@ -3,6 +3,7 @@
 package org.earthsystemcurator.cupidLanguage.impl;
 
 import org.earthsystemcurator.cupidLanguage.ActualParam;
+import org.earthsystemcurator.cupidLanguage.ActualParamByKeyword;
 import org.earthsystemcurator.cupidLanguage.Annotation;
 import org.earthsystemcurator.cupidLanguage.Call;
 import org.earthsystemcurator.cupidLanguage.Cardinality;
@@ -167,6 +168,13 @@ public class CupidLanguagePackageImpl extends EPackageImpl implements CupidLangu
    * @generated
    */
   private EClass actualParamEClass = null;
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  private EClass actualParamByKeywordEClass = null;
 
   /**
    * <!-- begin-user-doc -->
@@ -924,6 +932,36 @@ public class CupidLanguagePackageImpl extends EPackageImpl implements CupidLangu
    * <!-- end-user-doc -->
    * @generated
    */
+  public EClass getActualParamByKeyword()
+  {
+    return actualParamByKeywordEClass;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EReference getActualParamByKeyword_Keyword()
+  {
+    return (EReference)actualParamByKeywordEClass.getEStructuralFeatures().get(0);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EReference getActualParamByKeyword_Value()
+  {
+    return (EReference)actualParamByKeywordEClass.getEStructuralFeatures().get(1);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
   public EClass getIDOrWildcard()
   {
     return idOrWildcardEClass;
@@ -1133,6 +1171,10 @@ public class CupidLanguagePackageImpl extends EPackageImpl implements CupidLangu
     createEAttribute(actualParamEClass, ACTUAL_PARAM__OPTIONAL);
     createEReference(actualParamEClass, ACTUAL_PARAM__VALUE);
 
+    actualParamByKeywordEClass = createEClass(ACTUAL_PARAM_BY_KEYWORD);
+    createEReference(actualParamByKeywordEClass, ACTUAL_PARAM_BY_KEYWORD__KEYWORD);
+    createEReference(actualParamByKeywordEClass, ACTUAL_PARAM_BY_KEYWORD__VALUE);
+
     idOrWildcardEClass = createEClass(ID_OR_WILDCARD);
     createEAttribute(idOrWildcardEClass, ID_OR_WILDCARD__ID);
     createEAttribute(idOrWildcardEClass, ID_OR_WILDCARD__WILDCARD);
@@ -1184,6 +1226,7 @@ public class CupidLanguagePackageImpl extends EPackageImpl implements CupidLangu
     subroutineEClass.getESuperTypes().add(this.getImplicitContextMapping());
     subroutineNameEClass.getESuperTypes().add(this.getImplicitContextMapping());
     callEClass.getESuperTypes().add(this.getImplicitContextMapping());
+    actualParamByKeywordEClass.getESuperTypes().add(this.getImplicitContextMapping());
     idOrWildcardEClass.getESuperTypes().add(this.getIDOrPathExpr());
     pathExprEClass.getESuperTypes().add(this.getIDOrPathExpr());
     pathExprTermEClass.getESuperTypes().add(this.getPathExpr());
@@ -1272,6 +1315,10 @@ public class CupidLanguagePackageImpl extends EPackageImpl implements CupidLangu
     initEAttribute(getActualParam_Keyword(), ecorePackage.getEString(), "keyword", null, 0, 1, ActualParam.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
     initEAttribute(getActualParam_Optional(), ecorePackage.getEBoolean(), "optional", null, 0, 1, ActualParam.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
     initEReference(getActualParam_Value(), this.getIDOrPathExpr(), null, "value", null, 0, 1, ActualParam.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+
+    initEClass(actualParamByKeywordEClass, ActualParamByKeyword.class, "ActualParamByKeyword", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+    initEReference(getActualParamByKeyword_Keyword(), this.getIDOrPathExpr(), null, "keyword", null, 0, 1, ActualParamByKeyword.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEReference(getActualParamByKeyword_Value(), this.getIDOrPathExpr(), null, "value", null, 0, 1, ActualParamByKeyword.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
     initEClass(idOrWildcardEClass, IDOrWildcard.class, "IDOrWildcard", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
     initEAttribute(getIDOrWildcard_Id(), ecorePackage.getEString(), "id", null, 0, 1, IDOrWildcard.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);

@@ -3,6 +3,7 @@ package org.earthsystemcurator.serializer;
 import com.google.inject.Inject;
 import com.google.inject.Provider;
 import org.earthsystemcurator.cupidLanguage.ActualParam;
+import org.earthsystemcurator.cupidLanguage.ActualParamByKeyword;
 import org.earthsystemcurator.cupidLanguage.Annotation;
 import org.earthsystemcurator.cupidLanguage.Call;
 import org.earthsystemcurator.cupidLanguage.Cardinality;
@@ -47,6 +48,13 @@ public class CupidLanguageSemanticSequencer extends AbstractDelegatingSemanticSe
 			case CupidLanguagePackage.ACTUAL_PARAM:
 				if(context == grammarAccess.getActualParamRule()) {
 					sequence_ActualParam(context, (ActualParam) semanticObject); 
+					return; 
+				}
+				else break;
+			case CupidLanguagePackage.ACTUAL_PARAM_BY_KEYWORD:
+				if(context == grammarAccess.getActualParamByKeywordRule() ||
+				   context == grammarAccess.getImplicitContextMappingRule()) {
+					sequence_ActualParamByKeyword(context, (ActualParamByKeyword) semanticObject); 
 					return; 
 				}
 				else break;
@@ -201,6 +209,25 @@ public class CupidLanguageSemanticSequencer extends AbstractDelegatingSemanticSe
 	
 	/**
 	 * Constraint:
+	 *     (keyword=IDOrPathExpr value=IDOrPathExpr)
+	 */
+	protected void sequence_ActualParamByKeyword(EObject context, ActualParamByKeyword semanticObject) {
+		if(errorAcceptor != null) {
+			if(transientValues.isValueTransient(semanticObject, CupidLanguagePackage.Literals.ACTUAL_PARAM_BY_KEYWORD__KEYWORD) == ValueTransient.YES)
+				errorAcceptor.accept(diagnosticProvider.createFeatureValueMissing(semanticObject, CupidLanguagePackage.Literals.ACTUAL_PARAM_BY_KEYWORD__KEYWORD));
+			if(transientValues.isValueTransient(semanticObject, CupidLanguagePackage.Literals.ACTUAL_PARAM_BY_KEYWORD__VALUE) == ValueTransient.YES)
+				errorAcceptor.accept(diagnosticProvider.createFeatureValueMissing(semanticObject, CupidLanguagePackage.Literals.ACTUAL_PARAM_BY_KEYWORD__VALUE));
+		}
+		INodesForEObjectProvider nodes = createNodeProvider(semanticObject);
+		SequenceFeeder feeder = createSequencerFeeder(semanticObject, nodes);
+		feeder.accept(grammarAccess.getActualParamByKeywordAccess().getKeywordIDOrPathExprParserRuleCall_2_0(), semanticObject.getKeyword());
+		feeder.accept(grammarAccess.getActualParamByKeywordAccess().getValueIDOrPathExprParserRuleCall_4_0(), semanticObject.getValue());
+		feeder.finish();
+	}
+	
+	
+	/**
+	 * Constraint:
 	 *     ((keyword=ID optional?='?'?)? value=IDOrPathExpr)
 	 */
 	protected void sequence_ActualParam(EObject context, ActualParam semanticObject) {
@@ -210,20 +237,10 @@ public class CupidLanguageSemanticSequencer extends AbstractDelegatingSemanticSe
 	
 	/**
 	 * Constraint:
-	 *     (key=ANNOTATION_ID value=STRING)
+	 *     (key=ANNOTATION_ID value=STRING?)
 	 */
 	protected void sequence_Annotation(EObject context, Annotation semanticObject) {
-		if(errorAcceptor != null) {
-			if(transientValues.isValueTransient(semanticObject, CupidLanguagePackage.Literals.ANNOTATION__KEY) == ValueTransient.YES)
-				errorAcceptor.accept(diagnosticProvider.createFeatureValueMissing(semanticObject, CupidLanguagePackage.Literals.ANNOTATION__KEY));
-			if(transientValues.isValueTransient(semanticObject, CupidLanguagePackage.Literals.ANNOTATION__VALUE) == ValueTransient.YES)
-				errorAcceptor.accept(diagnosticProvider.createFeatureValueMissing(semanticObject, CupidLanguagePackage.Literals.ANNOTATION__VALUE));
-		}
-		INodesForEObjectProvider nodes = createNodeProvider(semanticObject);
-		SequenceFeeder feeder = createSequencerFeeder(semanticObject, nodes);
-		feeder.accept(grammarAccess.getAnnotationAccess().getKeyANNOTATION_IDTerminalRuleCall_0_0(), semanticObject.getKey());
-		feeder.accept(grammarAccess.getAnnotationAccess().getValueSTRINGTerminalRuleCall_2_0(), semanticObject.getValue());
-		feeder.finish();
+		genericSequencer.createSequence(context, semanticObject);
 	}
 	
 	

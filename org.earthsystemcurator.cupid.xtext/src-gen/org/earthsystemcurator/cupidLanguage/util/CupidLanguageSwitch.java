@@ -205,6 +205,14 @@ public class CupidLanguageSwitch<T> extends Switch<T>
         if (result == null) result = defaultCase(theEObject);
         return result;
       }
+      case CupidLanguagePackage.ACTUAL_PARAM_BY_KEYWORD:
+      {
+        ActualParamByKeyword actualParamByKeyword = (ActualParamByKeyword)theEObject;
+        T result = caseActualParamByKeyword(actualParamByKeyword);
+        if (result == null) result = caseImplicitContextMapping(actualParamByKeyword);
+        if (result == null) result = defaultCase(theEObject);
+        return result;
+      }
       case CupidLanguagePackage.ID_OR_WILDCARD:
       {
         IDOrWildcard idOrWildcard = (IDOrWildcard)theEObject;
@@ -525,6 +533,22 @@ public class CupidLanguageSwitch<T> extends Switch<T>
    * @generated
    */
   public T caseActualParam(ActualParam object)
+  {
+    return null;
+  }
+
+  /**
+   * Returns the result of interpreting the object as an instance of '<em>Actual Param By Keyword</em>'.
+   * <!-- begin-user-doc -->
+   * This implementation returns null;
+   * returning a non-null result will terminate the switch.
+   * <!-- end-user-doc -->
+   * @param object the target of the switch.
+   * @return the result of interpreting the object as an instance of '<em>Actual Param By Keyword</em>'.
+   * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+   * @generated
+   */
+  public T caseActualParamByKeyword(ActualParamByKeyword object)
   {
     return null;
   }

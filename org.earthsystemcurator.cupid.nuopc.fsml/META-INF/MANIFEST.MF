@@ -5,8 +5,6 @@ Bundle-SymbolicName: org.earthsystemcurator.cupid.nuopc.fsml;singleton:=true
 Bundle-Version: 1.0.0.qualifier
 Bundle-ClassPath: .,
  lib/ST-4.0.7.jar,
- lib/aws-java-sdk-1.6.10-javadoc.jar,
- lib/aws-java-sdk-1.6.10-sources.jar,
  lib/aws-java-sdk-1.6.10.jar,
  lib/aws-java-sdk-flow-build-tools-1.6.10.jar,
  lib/aspectj-1.6/aspectjrt.jar,
@@ -30,7 +28,8 @@ Bundle-Localization: plugin
 Bundle-RequiredExecutionEnvironment: JavaSE-1.7
 Export-Package: org.earthsystemcurator.cupid.nuopc.fsml.nuopc,
  org.earthsystemcurator.cupid.nuopc.fsml.nuopc.impl,
- org.earthsystemcurator.cupid.nuopc.fsml.nuopc.util
+ org.earthsystemcurator.cupid.nuopc.fsml.nuopc.util,
+ org.earthsystemcurator.cupid.nuopc.fsml.util
 Require-Bundle: org.eclipse.core.runtime,
  org.eclipse.emf.ecore;visibility:=reexport,
  org.eclipse.photran.core.vpg;bundle-version="8.0.0",

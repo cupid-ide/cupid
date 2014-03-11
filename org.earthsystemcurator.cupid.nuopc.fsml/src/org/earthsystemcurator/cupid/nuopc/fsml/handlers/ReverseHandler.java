@@ -5,8 +5,8 @@ import java.lang.reflect.InvocationTargetException;
 import java.net.MalformedURLException;
 import java.net.URL;
 
+import org.earthsystemcurator.FSM;
 import org.earthsystemcurator.cupid.nuopc.fsml.builder.NUOPCNature;
-import org.earthsystemcurator.cupid.nuopc.fsml.core.FSM2;
 import org.earthsystemcurator.cupid.nuopc.fsml.core.ReverseEngineer2;
 import org.earthsystemcurator.cupid.nuopc.fsml.util.Regex;
 import org.earthsystemcurator.cupid.nuopc.fsml.views.NUOPCView;
@@ -85,7 +85,7 @@ public class ReverseHandler extends AbstractHandler {
 		
 		URL ecoreURL = null;
 		try {
-			ecoreURL = new URL("file:C:\\Users\\Rocky\\Documents\\eclipse\\workspace-runtime-cupid2\\xtest\\src\\nuopc.ecore");
+			ecoreURL = new URL("file:C:\\Users\\Rocky\\Documents\\eclipse\\workspace-runtime-cupid2\\xtest\\src-gen\\nuopc.ecore");
 		} catch (MalformedURLException e) {
 			e.printStackTrace();
 		}
@@ -183,7 +183,7 @@ public class ReverseHandler extends AbstractHandler {
         
         Language lang = loadLanguageEcore();
               
-        final FSM2<?> fsm = ReverseEngineer2.reverseEngineer(lang, selectedProject, vpg); 
+        final FSM<?> fsm = ReverseEngineer2.reverseEngineer(lang, selectedProject, vpg); 
         
         //NUOPCApplication a = ReverseEngineer.reverseEngineer(pack, pack.getNUOPCApplication(), selectedProject, vpg);        
          //use project nature to store local data
@@ -193,7 +193,7 @@ public class ReverseHandler extends AbstractHandler {
 			nature = (NUOPCNature) selectedProject.getNature(NUOPCNature.NATURE_ID);
 			if (nature != null) {
 				//TODO: uncomment below
-				//nature.fsm = fsm;
+				nature.fsm = fsm;
 			}
 		} catch (CoreException e) {
 			e.printStackTrace();

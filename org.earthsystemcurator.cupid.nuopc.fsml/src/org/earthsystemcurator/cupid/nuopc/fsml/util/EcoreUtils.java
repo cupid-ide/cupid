@@ -1,5 +1,7 @@
 package org.earthsystemcurator.cupid.nuopc.fsml.util;
 
+import javax.naming.OperationNotSupportedException;
+
 import org.earthsystemcurator.cupidLanguage.PathExpr;
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.ecore.EObject;
@@ -7,6 +9,7 @@ import org.eclipse.emf.ecore.EStructuralFeature;
 
 public class EcoreUtils {
 
+	/*
 	@SuppressWarnings("unchecked")
 	public static <T> T eGetSFValue(String pathExpr, EObject modelElem, T defaultVal) {
 		
@@ -47,18 +50,21 @@ public class EcoreUtils {
 			return defaultVal;
 		}
 	}
+	*/
+	
 	
 	@SuppressWarnings("unchecked")
 	public static <T> T eGetSFValue(PathExpr pathExpr, EObject modelElem, boolean isParent, T defaultVal) {
 		
-		EList<String> segments = pathExpr.getSegments();
+		EList<String> segments = null; //pathExpr.getSegments();
 		EObject elemToCheck = modelElem;
 		int start = 0;
 		if (isParent) {
 			if (!segments.get(0).equals("..")) {
 				//we are already at parent, so fail if first segment does not
 				//navigate to the parent element
-				return null;
+				//throw new RuntimeException("First segment of path expression must be '..'  (parent)  in this context: " + pathExpr);
+				return defaultVal;
 			}
 			else {
 				start = 1; //skip first segment
@@ -72,32 +78,40 @@ public class EcoreUtils {
 			else {
 				//the segment is a structural feature name
 				EStructuralFeature segmentSF = elemToCheck.eClass().getEStructuralFeature(segments.get(i));
+				if (segmentSF==null) {
+					throw new RuntimeException("Invalid path expression: " + pathExpr);
+				}
 				elemToCheck = (EObject) elemToCheck.eGet(segmentSF);				
-			}			
+			}	
+			if (elemToCheck==null) {
+				return defaultVal;
+			}
 		}
 		
-		if (elemToCheck == null) {
+		//if (elemToCheck == null) {
 			//throw new RuntimeException("Structural feature not found: " + pathExpr);
-			return defaultVal;
-		}
+			//return defaultVal;
+		//}
 		
 		EStructuralFeature attribSF = elemToCheck.eClass().getEStructuralFeature(segments.get(segments.size()-1));
 		if (attribSF != null) {			
 			return (T) elemToCheck.eGet(attribSF);
 		}
 		else {
-			//throw new RuntimeException("Structural feature not found: " + attribName);
-			return defaultVal;
+			throw new RuntimeException("Invalid path expression: " + pathExpr);
+			//return defaultVal;
 		}
 	} 
 	
 	public static boolean eSetSFValue(PathExpr pathExpr, EObject modelElem, String value) {
 		
-		if (pathExpr == null || pathExpr.getSegments() == null) {
-			System.out.println("eGetSFValue null");
-		}
+		//throw new RuntimeException(new OperationNotSupportedException());
 		
-		EList<String> segments = pathExpr.getSegments();
+		//if (pathExpr == null || pathExpr.getSegments() == null || modelElem == null) {
+		//	System.out.println("eGetSFValue null");
+		//}
+		
+		EList<String> segments = null; //pathExpr.getSegments();
 		EObject elemToCheck = modelElem;
 						
 		for (int i = 0; i < segments.size() - 1; i++) {									
@@ -108,12 +122,15 @@ public class EcoreUtils {
 				//the segment is a structural feature name
 				EStructuralFeature segmentSF = elemToCheck.eClass().getEStructuralFeature(segments.get(i));
 				elemToCheck = (EObject) elemToCheck.eGet(segmentSF);				
-			}			
+			}
+			if (elemToCheck == null) {
+				return false;
+			}
 		}
 		
-		if (elemToCheck == null) {
-			return false;
-		}
+	//if (elemToCheck == null) {
+	//		return false;
+	//	}
 		
 		EStructuralFeature attribSF = elemToCheck.eClass().getEStructuralFeature(segments.get(segments.size() - 1));
 		if (attribSF != null) {
@@ -126,6 +143,6 @@ public class EcoreUtils {
 		
 		return true;
 	}
-		
+	
 
 }

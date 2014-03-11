@@ -7,13 +7,9 @@ import java.io.Reader;
 import java.io.UnsupportedEncodingException;
 import java.lang.reflect.InvocationTargetException;
 import java.util.HashSet;
-import java.util.Map;
 
+import org.earthsystemcurator.FSM;
 import org.earthsystemcurator.cupid.nuopc.fsml.builder.NUOPCNature;
-import org.earthsystemcurator.cupid.nuopc.fsml.core.FSM;
-import org.earthsystemcurator.cupid.nuopc.fsml.core.ForwardEngineer;
-import org.earthsystemcurator.cupid.nuopc.fsml.nuopc.NUOPCApplication;
-import org.earthsystemcurator.cupid.nuopc.fsml.nuopc.NUOPCPackage;
 import org.eclipse.cdt.core.model.ITranslationUnit;
 import org.eclipse.compare.internal.DocLineComparator;
 import org.eclipse.compare.rangedifferencer.RangeDifference;
@@ -31,7 +27,6 @@ import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.ecore.resource.ResourceSet;
-import org.eclipse.emf.ecore.resource.impl.ResourceSetImpl;
 import org.eclipse.emf.ecore.xmi.impl.XMIResourceFactoryImpl;
 import org.eclipse.jface.operation.IRunnableWithProgress;
 import org.eclipse.jface.text.Document;
@@ -163,11 +158,13 @@ public class ForwardHandler extends AbstractHandler {
         	    //final ReverseEngineer re = new ReverseEngineer();
         	    //NUOPCApplication reversed1 = re.reverse(selectedProject, vpg);
         		
-        		ForwardEngineer fe = new ForwardEngineer();
-        		fe.setContainer(selProject);
+        		//ForwardEngineer fe = new ForwardEngineer();
+        		//fe.setContainer(selProject);
         		
         		//fe.forward(revApp, forApp2, revMap);
-        		fe.forward(rev, forward);
+        		
+     
+        		//fe.forward(rev, forward);
         		
         		
         		//fe.forward(reversed1,

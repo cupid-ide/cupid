@@ -7,8 +7,8 @@ import java.util.IdentityHashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.earthsystemcurator.CupidToEcore;
 import org.earthsystemcurator.cupid.nuopc.fsml.util.CodeTransformation;
-import org.earthsystemcurator.cupid.nuopc.fsml.util.EcoreUtils;
 import org.earthsystemcurator.cupid.nuopc.fsml.util.Regex;
 import org.earthsystemcurator.cupidLanguage.ImplicitContextMapping;
 import org.earthsystemcurator.cupidLanguage.Language;
@@ -35,6 +35,9 @@ public class FSM2<RootType extends EObject> {
 	protected IProject project;
 	protected Language language;
 	
+	//TODO: clean up this object model
+	protected CupidToEcore cupidToEcore;
+	
 	/**
 	 * Mapping from a model element to one of:
 	 *  - a Set<IFortranAST> (for top level)
@@ -51,6 +54,7 @@ public class FSM2<RootType extends EObject> {
 		this.factory = this.pack.getEFactoryInstance();
 		this.mappings = new IdentityHashMap<Object, Object>();
 		this.project = project;
+		this.cupidToEcore = new CupidToEcore(pack);
 	}
 	
 	public RootType getRoot() {
@@ -90,6 +94,7 @@ public class FSM2<RootType extends EObject> {
 	 * @param firstParam the first parameter (used to match type)
 	 * @return the method if found, or null if not
 	 */
+	/*
 	private Method getFEMethod(String methodName, Object firstParam, Object secondParam) {
 			
 		if (methodName != null) {
@@ -106,6 +111,7 @@ public class FSM2<RootType extends EObject> {
 		}
 		return null;
 	}
+	*/
 	
 	private static Method findFEMethod(String methodName, Object context, EObject mapping) {
 		for (Method m : CodeTransformation.class.getMethods()) {
@@ -120,6 +126,73 @@ public class FSM2<RootType extends EObject> {
 		}
 		return null;
 	}
+	
+	/*
+	public ConceptDef getConceptDefForElement(EClass modelElemClass) {
+		String name = modelElemClass.getName();
+		for (ConceptDef cd : language.getConceptDef()) {
+			if (cd.getName().equalsIgnoreCase(name)) {
+				return cd;
+			}
+		}
+		return null;
+	}
+	
+	public Subconcept getSubconceptForElement(EClass modelElemClass) {
+		return getSubconceptForElement(modelElemClass.getName(), language.getConceptDef());
+	}
+	
+	public Subconcept getSubconceptForElement(String className, EList<ConceptDef> context) {
+		
+		int idx = className.indexOf("__");
+		String seg;
+		if (idx > 0) {
+			seg = className.substring(0, idx);
+		}
+		else {
+			seg = className;
+		}
+		
+		ConceptDef conceptDef = null;
+		for (ConceptDef cd : context) {
+			if (cd.getName().equalsIgnoreCase(seg)) {
+				conceptDef = cd;
+				break;
+			}
+		}
+		
+		return getSubconceptForElement(className.substring(idx+2), conceptDef.getBody());
+		
+ 	}
+	
+	public Subconcept getSubconceptForElement(String className, ConceptDefBody context) {
+		
+		int idx = className.indexOf("__");
+		String seg;
+		if (idx > 0) {
+			seg = className.substring(0, idx);
+		}
+		else {
+			seg = className;
+		}
+		
+		Subconcept subconcept = null;
+		for (Subconcept sc : context.getSubconcept()) {
+			if (sc.getName().equalsIgnoreCase(seg)) {
+				subconcept = sc;
+			}
+		}
+		
+		if (idx == -1) {
+			return subconcept;
+		}
+		else {
+			return getSubconceptForElement(className.substring(idx+2), subconcept.getBody());
+		}
+		
+	}
+	*/
+	
 	
 	/**
 	 * Adds a new structural feature to the FSM and updates the associated AST.
@@ -156,12 +229,12 @@ public class FSM2<RootType extends EObject> {
 		if (ann != null && ann.getDetails().get("mappingNew") != null) {
 			String mappingNew = ann.getDetails().get("mappingNew");
 			
-			Mapping mapping = ReverseEngineer.parseMappingNew(mappingNew);
+			Mapping mapping = null; //ReverseEngineer.parseMappingNew(mappingNew);
 			Object fortranContextElem;
 			
 			if (mapping.getContext() != null) {
 				//explicit context
-				EObject contextElement = EcoreUtils.eGetSFValue(mapping.getContext(), context, true, null);
+				EObject contextElement = cupidToEcore.getValueFromModel(mapping.getContext(), context, null);
 				fortranContextElem = getMappings().get(contextElement);
 				if (fortranContextElem == null) {
 					throw new RuntimeException("No Fortran context for element: " + contextElement);
@@ -172,7 +245,7 @@ public class FSM2<RootType extends EObject> {
 			}
 			
 			ImplicitContextMapping icMapping = mapping.getMapping();
-			icMapping = ReverseEngineer.replacePathExprWithValues(icMapping, newElem, false);
+			icMapping = null; //ReverseEngineer.replacePathExprWithValues(icMapping, newElem, false);
 			
 			String methodName = icMapping.eClass().getName().toLowerCase();
 			
@@ -213,7 +286,8 @@ public class FSM2<RootType extends EObject> {
 			if (keywordMap != null && keywordMap.containsKey("_context")) {
 				//explicit context
 				String contextPath = (String) keywordMap.get("_context");
-				EObject explicitContextElem = EcoreUtils.eGetSFValue(contextPath, newElem, null);
+				//TODO: fixme
+				EObject explicitContextElem = null; //cupidToEcore.getValueFromModel(contextPath, newElem, null);
 				contextFortranElem = getMappings().get(explicitContextElem);
 			}
 			else {
@@ -229,7 +303,7 @@ public class FSM2<RootType extends EObject> {
 			String methodName = Regex.getMappingTypeFromAnnotation(eref);
 			if (methodName != null) {
 	
-				Method method = getFEMethod(methodName, contextFortranElem, keywordMap);
+				Method method = null; //getFEMethod(methodName, contextFortranElem, keywordMap);
 				
 				if (method == null) {
 					System.out.println("Method not found: " + methodName + " with first param type: " + contextFortranElem.getClass());
@@ -322,7 +396,7 @@ public class FSM2<RootType extends EObject> {
 		String methodName = Regex.getMappingTypeFromAnnotation(eatt);
 		if (methodName != null) {
 
-			Method method = getFEMethod(methodName, contextFortranElem, keywordMap);
+			Method method = null; //getFEMethod(methodName, contextFortranElem, keywordMap);
 			
 			if (method == null) {
 				System.out.println("Method not found: " + methodName + " with first param type: " + contextFortranElem.getClass());
@@ -393,7 +467,6 @@ public class FSM2<RootType extends EObject> {
 	}
 	*/
 	
-	@SuppressWarnings("restriction")
 	public IFortranAST getASTForElement(EObject eobj) {
 		
 		while (eobj != null) {

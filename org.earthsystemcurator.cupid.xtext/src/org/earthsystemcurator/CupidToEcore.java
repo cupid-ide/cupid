@@ -2,23 +2,32 @@ package org.earthsystemcurator;
 
 import java.io.File;
 import java.io.IOException;
-import java.util.ArrayList;
+import java.util.Map;
 
-import org.earthsystemcurator.cupid.model2text.common.GenerateCupidLanguage;
+import org.earthsystemcurator.cupidLanguage.ConceptDef;
+import org.earthsystemcurator.cupidLanguage.CupidLanguageFactory;
+import org.earthsystemcurator.cupidLanguage.IDOrWildcard;
+import org.earthsystemcurator.cupidLanguage.PathExpr;
+import org.earthsystemcurator.cupidLanguage.PathExprTerm;
+import org.earthsystemcurator.cupidLanguage.SubconceptOrAttribute;
+import org.earthsystemcurator.generator.CupidLanguageGenerator;
 import org.eclipse.core.resources.IFile;
 import org.eclipse.core.resources.ResourcesPlugin;
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IPath;
 import org.eclipse.core.runtime.NullProgressMonitor;
 import org.eclipse.core.runtime.Path;
-import org.eclipse.emf.common.util.BasicMonitor;
+import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.common.util.URI;
+import org.eclipse.emf.ecore.EClass;
+import org.eclipse.emf.ecore.EObject;
+import org.eclipse.emf.ecore.EPackage;
+import org.eclipse.emf.ecore.EReference;
+import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.ecore.resource.ResourceSet;
-import org.eclipse.emf.ecore.util.EcoreUtil;
 import org.eclipse.ocl.examples.pivot.OCL;
 import org.eclipse.ocl.examples.pivot.manager.MetaModelManager;
-import org.eclipse.ocl.examples.pivot.manager.MetaModelManagerResourceAdapter;
 import org.eclipse.ocl.examples.xtext.base.utilities.BaseCSResource;
 
 public class CupidToEcore {
@@ -147,7 +156,7 @@ public class CupidToEcore {
 	 /**
 		 * Convert EMF URI to Eclipse file
 		 */
-	public static IFile getFile(URI uri) {
+	protected static IFile getFile(URI uri) {
 		String platformString = uri.toPlatformString(true);
 		if (platformString != null) {
 			Path path = new Path(platformString);
@@ -162,7 +171,7 @@ public class CupidToEcore {
 	 * @param uri
 	 * @return Java file
 	 */
-	public static File getJavaFile(URI uri) {
+	protected static File getJavaFile(URI uri) {
 		if (uri.isPlatform()) {
 			IFile file = getFile(uri);
 			IPath location = file.getLocation();
@@ -170,5 +179,5 @@ public class CupidToEcore {
 		}
 		return new File(uri.toFileString());
 	}
-		
+	
 }

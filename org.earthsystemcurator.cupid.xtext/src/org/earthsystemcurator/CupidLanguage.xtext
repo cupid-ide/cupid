@@ -16,7 +16,7 @@ Language:
 //	);
 
 Annotation:
-	key=ANNOTATION_ID '=' value=STRING;
+	key=ANNOTATION_ID ('=' value=STRING)?;
 
 //ConceptDef:
 //	(top?='/top'? named?='concept' name=ID)? ('<' mapping=Mapping '>')? 
@@ -73,12 +73,11 @@ Cardinality:
 	zeroOrMore?='*' |
 	oneOrMore?='+';
 	
-
 Mapping:
 	context=PathExpr? mapping=ImplicitContextMapping;
 
 ImplicitContextMapping:
-	Module | ModuleName | UsesModule | UsesEntity | Call | Subroutine | SubroutineName;
+	Module | ModuleName | UsesModule | UsesEntity | Call | Subroutine | SubroutineName | ActualParamByKeyword;
 
 Module: {Module} 
 	'module' ('(' name=IDOrPathExpr ')')?;
@@ -117,6 +116,9 @@ Call:
 
 ActualParam:
 	(keyword=ID (optional?='?')? '=')? value=IDOrPathExpr;
+
+ActualParamByKeyword:
+	'actualParamByKeyword' '(' keyword=IDOrPathExpr '(' value=IDOrPathExpr ')' ')';
 
 IDOrWildcard:
 	id=ID | wildcard?='*';

@@ -9,18 +9,19 @@ import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Set;
 
+import org.earthsystemcurator.CupidToEcore;
+import org.earthsystemcurator.FSM;
 import org.earthsystemcurator.cupid.nuopc.fsml.properties.CupidPropertyPage;
 import org.earthsystemcurator.cupid.nuopc.fsml.util.CodeQuery2;
-import org.earthsystemcurator.cupid.nuopc.fsml.util.EcoreUtils;
+import org.earthsystemcurator.cupid.nuopc.fsml.util.CodeTransformation;
 import org.earthsystemcurator.cupidLanguage.ConceptDef;
-import org.earthsystemcurator.cupidLanguage.ConceptDefBody;
 import org.earthsystemcurator.cupidLanguage.CupidLanguageFactory;
 import org.earthsystemcurator.cupidLanguage.IDOrWildcard;
 import org.earthsystemcurator.cupidLanguage.ImplicitContextMapping;
 import org.earthsystemcurator.cupidLanguage.Language;
 import org.earthsystemcurator.cupidLanguage.Mapping;
 import org.earthsystemcurator.cupidLanguage.PathExpr;
-import org.earthsystemcurator.cupidLanguage.Subconcept;
+import org.earthsystemcurator.cupidLanguage.SubconceptOrAttribute;
 import org.eclipse.core.resources.IFile;
 import org.eclipse.core.resources.IProject;
 import org.eclipse.core.resources.IResource;
@@ -42,7 +43,7 @@ public class ReverseEngineer2 {
 	 
 	
 	@SuppressWarnings("unchecked")
-	public static FSM2 reverseEngineer(Language lang, IProject project, PhotranVPG vpg) {
+	public static FSM reverseEngineer(Language lang, IProject project, PhotranVPG vpg) {
 		
 		ConceptDef topConcept = null;
 		for (ConceptDef cd : lang.getConceptDef()) {
@@ -62,7 +63,8 @@ public class ReverseEngineer2 {
 		EClass topClass = (EClass) ePackage.getEClassifier(topConcept.getName());
 		EObject root = eFactory.create(topClass);
 		
-		FSM2 fsm = new FSM2(lang, root, project);
+		
+		FSM fsm = new FSM(lang, root, project, CodeTransformation.class);
 		
 		//a bit of a hack here for the root name
 		EStructuralFeature sfName = topClass.getEStructuralFeature("name");
@@ -120,47 +122,14 @@ public class ReverseEngineer2 {
 			return fsm;
 		}
 		
-		root = reverse(asts, topConcept.getBody(), root, fsm.getMappings(), eFactory);
+		root = reverse(fsm, asts, topConcept, root, fsm.getMappings(), eFactory);
 	
 		return fsm;
 		
 	}
 		
 	
-	/**
-	 * Looks for instances of PathExpr in the mappingElement tree and, when possible,
-	 * replaces them with values from the context
-	 * 
-	 * @param mappingElement
-	 * @param context
-	 */
-	public static <T extends EObject> T replacePathExprWithValues(T mappingElement, EObject context, boolean isParent) {
-		if (mappingElement == null) {
-			return null;
-		}
-		else if (mappingElement instanceof PathExpr) {
-			String replaceVal = EcoreUtils.eGetSFValue((PathExpr) mappingElement, context, isParent, null);
-			if (replaceVal != null) {
-				IDOrWildcard replaceValObj = CupidLanguageFactory.eINSTANCE.createIDOrWildcard();
-				replaceValObj.setId(replaceVal);
-				return (T) replaceValObj;
-			}			
-		}
-		else {
-			for (EReference ref : mappingElement.eClass().getEReferences()) {
-				if (!ref.isMany()) {
-					mappingElement.eSet(ref, replacePathExprWithValues((EObject) mappingElement.eGet(ref), context, isParent));
-				}
-				else {
-					EList refList = (EList) mappingElement.eGet(ref);
-					for (int i = 0; i < refList.size(); i++) {
-						refList.set(i, replacePathExprWithValues((EObject) refList.get(i), context, isParent));
-					}
-				}
-			}
-		}
-		return mappingElement;		
-	}
+	
 	
 	private static Method findREMethod(String methodName, Object context, EObject mapping) {
 		for (Method m : CodeQuery2.class.getMethods()) {
@@ -178,48 +147,61 @@ public class ReverseEngineer2 {
 	
 	
 	@SuppressWarnings("unchecked")
-	private static EObject reverse(Object fortranElem, ConceptDefBody conceptDefBody, EObject modelElem, Map<Object,Object> mappings, EFactory factory) {
+	private static EObject reverse(FSM fsm, Object fortranElem, ConceptDef conceptDef, EObject modelElem, Map<Object,Object> mappings, EFactory factory) {
 		
 		//assume a successful mapping (required for looking up mappings during recursive calls)
 		//mapping will be removed later if it fails
 		mappings.put(modelElem, fortranElem);	
 				
-		if (conceptDefBody == null) {
+		//if (conceptDef == null) {
 			//no concept definition, so the mapping survives
-			return modelElem;
-		}
+		//	return modelElem;
+	//	}
 		
 		
 		Map<Object, Object> mappingsToAdd = new IdentityHashMap<Object, Object>();
 								
-		for (Subconcept subconcept : conceptDefBody.getSubconcept()) {
+		for (SubconceptOrAttribute subconcept : conceptDef.getChild()) {
 		
+			//if (subconcept.getName().equalsIgnoreCase("implementsInitP1")) {
+			//	System.out.println("implementsInitP1");
+			//}
+			
 			//find structural feature
 			EStructuralFeature structuralFeature = modelElem.eClass().getEStructuralFeature(subconcept.getName());
-			ConceptDefBody subconceptBody;
+			ConceptDef subconceptDef = null;
 			Mapping explicitContextMapping;
+			Object fortranContextElem = null;
 			
-			if (subconcept.isRef()) {
-				explicitContextMapping = subconcept.getConceptDef().getMapping();
-				subconceptBody = subconcept.getConceptDef().getBody();
+			if (subconcept.isAttrib()) {
+				explicitContextMapping = subconcept.getAttribMapping();
 			}
 			else {
-				explicitContextMapping = subconcept.getMapping();
-				subconceptBody = subconcept.getBody();
+				if (subconcept.isReference()) {
+					subconceptDef = subconcept.getRef();
+				}
+				else {
+					subconceptDef = subconcept.getDef();
+				}
+				explicitContextMapping = subconceptDef.getMapping();
 			}
+			
+			//explicitContextMapping = subconceptDef.getMapping();
 			
 			if (explicitContextMapping != null) {
 			
-				explicitContextMapping.setMapping(replacePathExprWithValues(explicitContextMapping.getMapping(), modelElem, true));
+				explicitContextMapping.setMapping((ImplicitContextMapping) fsm.replacePathExprWithValues(explicitContextMapping.getMapping(), modelElem));
 			
-				Object fortranContextElem;
 				if (explicitContextMapping.getContext() != null) {
 					//explicit context
-					EObject contextElement = EcoreUtils.eGetSFValue(explicitContextMapping.getContext(), modelElem, true, null);
+					EObject contextElement = (EObject) fsm.getValueFromModel(explicitContextMapping.getContext(), modelElem, (EObject) null);
+					//if (contextElement == null) {
+					//	throw new RuntimeException("No element for path expression: " + explicitContextMapping.getContext());
+					//}
 					fortranContextElem = mappings.get(contextElement);
-					if (fortranContextElem == null) {
-						throw new RuntimeException("No Fortran context for element: " + contextElement);
-					}
+					//if (fortranContextElem == null) {
+					//	throw new RuntimeException("No Fortran context for element: " + contextElement);
+					//}
 				}
 				else {
 					fortranContextElem = fortranElem;  //implicit
@@ -227,17 +209,26 @@ public class ReverseEngineer2 {
 				
 				String methodName = explicitContextMapping.getMapping().eClass().getName();
 				
-				//find method that implements code query
-				Method method = findREMethod(methodName, fortranContextElem, explicitContextMapping.getMapping());
-				if (method == null) {
-					System.out.println("Method not found: " + methodName + " : " + fortranContextElem.getClass().getName() + ", " + explicitContextMapping.getMapping().getClass().getName() );
-					continue;
-				}
-				
-				try {
+				if (fortranContextElem != null) {
+					//if there is no context element, then we cannot execute the query
+					//if it is an essential subconcept, then this mapping will fail below
 					
-					Object result = method.invoke(null, fortranContextElem, explicitContextMapping.getMapping());
-												
+					//find method that implements code query
+					Method method = findREMethod(methodName, fortranContextElem, explicitContextMapping.getMapping());
+					if (method == null) {
+						System.out.println("Method not found: " + methodName + " : " + fortranContextElem.getClass().getName() + ", " + explicitContextMapping.getMapping().getClass().getName() );
+						continue;
+					}
+				
+					Object result = null;
+					try {
+						result = method.invoke(null, fortranContextElem, explicitContextMapping.getMapping());
+					} catch (IllegalAccessException e) {
+						throw new RuntimeException(e);
+					} catch (InvocationTargetException e) {
+						throw new RuntimeException(e);
+					}	
+													
 					if (method.getReturnType() == String.class ||
 						method.getReturnType().isPrimitive()) {
 						modelElem.eSet(structuralFeature, result);
@@ -298,10 +289,10 @@ public class ReverseEngineer2 {
 									Map<PathExpr, String> bindings = ((Map<?, Map<PathExpr, String>>) result).get(newFortranElem);
 									if (bindings != null) {
 										for (Entry<PathExpr, String> binding : bindings.entrySet()) {
-											boolean featureSet = EcoreUtils.eSetSFValue(binding.getKey(), newModelElem, binding.getValue());
-											if (!featureSet) {
-												System.out.println("Feature not set: " + binding.getKey());
-											}
+											fsm.setValueInModel(binding.getKey(), newModelElem, binding.getValue());
+											//if (!featureSet) {
+											//	System.out.println("Feature not set: " + binding.getKey());
+											//}
 										}
 									}
 								}
@@ -316,7 +307,7 @@ public class ReverseEngineer2 {
 								}
 																
 								//recursive call
-								EObject newModelElemRet = reverse(newFortranElem, subconceptBody, newModelElem, mappings, factory);
+								EObject newModelElemRet = reverse(fsm, newFortranElem, subconceptDef, newModelElem, mappings, factory);
 								
 								// if NULL returned, then mapping failed, so remove element from parent
 								if (newModelElemRet == null) {
@@ -330,6 +321,9 @@ public class ReverseEngineer2 {
 									}
 								}
 								else if (!structuralFeature.isMany()) {
+									if (resultSet.size() > 1) {
+										System.out.println("Warning: Some matching elements ignored because subconcept is singular: " + subconcept.getName());
+									}
 									break; // take first one that is not null
 								}									
 							
@@ -337,14 +331,8 @@ public class ReverseEngineer2 {
 								
 						} // end check for primitives vs. objects in results
 						
-					}
-					
-				} catch (IllegalAccessException e) {
-					throw new RuntimeException(e);
-				} catch (InvocationTargetException e) {
-					throw new RuntimeException(e);
-				}						
-				
+			}				
+				}
 			}
 			else if (!subconcept.isAttrib()) {
 				//this means there is no mapping defined - if it is an EReference (non-attribute), then we create 
@@ -359,7 +347,7 @@ public class ReverseEngineer2 {
 				else {
 					modelElem.eSet(structuralFeature, newModelElem);
 				}
-				EObject newModelElemRet = reverse(fortranElem, subconceptBody, newModelElem, mappings, factory);
+				EObject newModelElemRet = reverse(fsm, fortranElem, subconceptDef, newModelElem, mappings, factory);
 				if (newModelElemRet == null) {
 					if (structuralFeature.isMany()) {
 						EList el = (EList) modelElem.eGet(structuralFeature);
@@ -387,6 +375,10 @@ public class ReverseEngineer2 {
 				}
 				
 				if (fail) {
+					System.out.println("Essential feature failed:");
+					System.out.println("\tSubconcept: " + subconcept.getName());
+					System.out.println("\tModel Element: " + modelElem);
+					//System.out.println("\tFortran Element: " + fortranContextElem);
 					mappings.remove(modelElem);
 					//an essential feature failed, so no need to process 
 					//any more structural features

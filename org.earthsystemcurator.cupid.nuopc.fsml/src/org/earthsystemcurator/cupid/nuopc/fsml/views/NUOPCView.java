@@ -91,6 +91,7 @@ public class NUOPCView extends ViewPart {
 	private TreeColumn tc2;
 	
 	private NUOPCViewContentProvider contentProvider;
+	private NUOPCViewLabelProvider labelProvider;
 	
 	private boolean projectIsDirty = false;
 
@@ -107,6 +108,7 @@ public class NUOPCView extends ViewPart {
 		viewer.setInput(project);
 		viewer.expandToLevel(2);
 		setProjectIsDirty(false);
+		labelProvider.setFSM(contentProvider.getCurrentFSM());
 	}
 	
 	protected void setProjectIsDirty(boolean dirty) {
@@ -158,7 +160,8 @@ public class NUOPCView extends ViewPart {
 		contentProvider = new NUOPCViewContentProvider();
 		viewer.setContentProvider(contentProvider);
 		
-		viewer.setLabelProvider(new NUOPCViewLabelProvider());
+		labelProvider = new NUOPCViewLabelProvider();
+		viewer.setLabelProvider(labelProvider);
 		viewer.setSorter(null);
 		ColumnViewerToolTipSupport.enableFor(viewer, ToolTip.NO_RECREATE);
 		
@@ -277,8 +280,12 @@ public class NUOPCView extends ViewPart {
                     IStructuredSelection selection = (IStructuredSelection) viewer.getSelection();
                     final NUOPCModelElem me = (NUOPCModelElem) selection.getFirstElement();
 
-                    if (me.structuralFeature != null && me.structuralFeature instanceof EReference) {
+                    if (me.subconcept != null && !me.subconcept.isAttrib()) {
                     	
+                    	
+                    	//TODO: fix below to show menu
+                    	
+                    	/*
                     	EClass parentClass = (EClass) me.structuralFeature.getEType();
                     	for (final EReference childRef : parentClass.getEReferences()) {
                     		if (childRef.isMany() || (me.elem != null && me.elem.eGet(childRef) == null) ) {
@@ -315,43 +322,16 @@ public class NUOPCView extends ViewPart {
                     			
                     			String label = Regex.getFromAnnotation(childRef.getEType(), "label", childRef.getEType().getName());
                     			addElementAction.setText("Generate " + label + "...");
-                    			addElementAction.setImageDescriptor(NUOPCViewLabelProvider.getFortranImageDescriptor(childRef, null, null));
+                    			//TODO: fix this image
+                    			//addElementAction.setImageDescriptor(NUOPCViewLabelProvider.getFortranImageDescriptor(childRef, null, null));
                     			//a.setToolTipText(Regex.getFromAnnotation(childRef.getEType(), "doc"));
                     			manager.add(addElementAction);
                     		}
                     	}
-                    	
+                    	*/
                     }
                     
-                    /*
-                    if (me.elem == null && me.structuralFeature instanceof EReference) {
-                    	
-                    	Action action = new Action() {
-                    		public void run() {
-                				
-                				EObject newElem = NUOPCFactory.eINSTANCE.create((EClass)me.structuralFeature.getEType());
-                					//need to create all essential subfeatures (at least)
-                				if (me.structuralFeature.isMany()) {
-                					EList l = (EList) me.parent.elem.eGet(me.structuralFeature);
-                					l.add(newElem);
-                				}
-                				else {
-                					me.parent.elem.eSet(me.structuralFeature, newElem);                					
-                				}
-                				
-                				showMessage("Added element: " + newElem);
-                				                				
-                				viewer.refresh(me.parent);
-                				
-                    		}                    		
-                		};
-                		
-                		action.setText("Instantiate framework concept...");
-                		//action.setToolTipText("Generate code for: " + me.typeLabel);
-                		
-                    	manager.add(action);
-                    } 
-                    */
+                   
                 }
             }
         });

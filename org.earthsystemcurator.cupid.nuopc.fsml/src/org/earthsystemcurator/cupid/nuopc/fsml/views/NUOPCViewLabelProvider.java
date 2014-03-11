@@ -1,73 +1,74 @@
 package org.earthsystemcurator.cupid.nuopc.fsml.views;
 
-import java.io.IOException;
-import java.io.InputStream;
 import java.net.URL;
 
-import org.earthsystemcurator.cupid.nuopc.fsml.util.Regex;
+import org.earthsystemcurator.FSM;
 import org.earthsystemcurator.cupid.nuopc.fsml.views.NUOPCViewContentProvider.NUOPCModelElem;
+import org.earthsystemcurator.cupidLanguage.Call;
+import org.earthsystemcurator.cupidLanguage.ImplicitContextMapping;
+import org.earthsystemcurator.cupidLanguage.Mapping;
+import org.earthsystemcurator.cupidLanguage.Module;
+import org.earthsystemcurator.cupidLanguage.SubconceptOrAttribute;
+import org.earthsystemcurator.cupidLanguage.Subroutine;
+import org.earthsystemcurator.cupidLanguage.UsesEntity;
+import org.earthsystemcurator.cupidLanguage.UsesModule;
 import org.eclipse.core.runtime.FileLocator;
 import org.eclipse.core.runtime.Path;
-import org.eclipse.emf.common.util.Diagnostic;
-import org.eclipse.emf.ecore.EAttribute;
-import org.eclipse.emf.ecore.EObject;
-import org.eclipse.emf.ecore.EReference;
-import org.eclipse.emf.ecore.EStructuralFeature;
-import org.eclipse.emf.ecore.util.Diagnostician;
 import org.eclipse.jface.resource.ImageDescriptor;
 import org.eclipse.jface.viewers.DecorationOverlayIcon;
-import org.eclipse.jface.viewers.IDecoration;
 import org.eclipse.jface.viewers.ILabelProviderListener;
-import org.eclipse.jface.viewers.ITableLabelProvider;
-import org.eclipse.jface.viewers.LabelProvider;
 import org.eclipse.jface.viewers.StyledCellLabelProvider;
 import org.eclipse.jface.viewers.StyledString;
 import org.eclipse.jface.viewers.ViewerCell;
 import org.eclipse.swt.SWT;
-import org.eclipse.swt.custom.StyleRange;
-import org.eclipse.swt.events.MouseAdapter;
-import org.eclipse.swt.events.MouseEvent;
-import org.eclipse.swt.events.MouseListener;
-import org.eclipse.swt.graphics.Cursor;
-import org.eclipse.swt.graphics.Image;
-import org.eclipse.swt.graphics.TextStyle;
-import org.eclipse.ui.ISharedImages;
-import org.eclipse.ui.PlatformUI;
 import org.osgi.framework.Bundle;
 import org.osgi.framework.FrameworkUtil;
 import org.stringtemplate.v4.ST;
 
 class NUOPCViewLabelProvider extends StyledCellLabelProvider { //implements ITableLabelProvider {
 
+	private FSM<?> fsm;
+	
+	public void setFSM(FSM<?> fsm) {
+		this.fsm = fsm;
+	}
+	
 	@Override
 	public String getToolTipText(Object element) {
 		NUOPCModelElem me = (NUOPCModelElem) element;
-				
-		if (me.structuralFeature != null) {
-			String docText;
-			if (me.structuralFeature instanceof EReference) {
-				docText = Regex.getFromAnnotation(me.structuralFeature.getEType(), "doc");			
+		
+		String docText = null;
+		if (me.subconcept != null) {
+			if (me.subconcept.isReference()) {
+				docText = fsm.getAnnotationValue(me.subconcept.getRef(), "doc");
 			}
-			else {
-				docText = Regex.getFromAnnotation(me.structuralFeature, "doc");		
+			else if (!me.subconcept.isAttrib()) {
+				docText = fsm.getAnnotationValue(me.subconcept.getDef(), "doc");
 			}
+			else if (me.subconcept.isAttrib()) {
+				docText = fsm.getAnnotationValue(me.subconcept, "doc");
+			}
+		}
+		else if (me.elem != null) {
+			docText = fsm.getAnnotationValue(fsm.getConceptDef(me.elem), "doc");
+		}
 			
-			if (docText != null || me.validationMessage != null) {
-				ST text = new ST("<doc; wrap=\"\n\", separator=\" \">");				
-				if (me.validationMessage != null) {
-					text.add("doc", me.validationMessage.split(" "));
-				}
-				if (me.validationMessage != null && docText != null) {
-					text.add("doc", "\n\n------------------------------------------------------------\n\n");
-				}
-				if (docText != null) {
-					text.add("doc", docText.split(" "));				
-				}
-					   
-				return text.render(80);
-			}			
-		}						
-		return null;		
+		if (docText != null || me.validationMessage != null) {
+			ST text = new ST("<doc; wrap=\"\n\", separator=\" \">");				
+			if (me.validationMessage != null) {
+				text.add("doc", me.validationMessage.split(" "));
+			}
+			if (me.validationMessage != null && docText != null) {
+				text.add("doc", "\n\n------------------------------------------------------------\n\n");
+			}
+			if (docText != null) {
+				text.add("doc", docText.split(" "));				
+			}
+				   
+			return text.render(80);
+		}			
+								
+		return null;
 	}
 	
 	/*
@@ -117,6 +118,7 @@ class NUOPCViewLabelProvider extends StyledCellLabelProvider { //implements ITab
 			//	text.append(me.typeLabel + " (" + me.nameLabel + ")");
 			//}
 			//else {
+	    		
 				text.append(me.typeLabel);
 				/*
 				cell.getControl().addMouseListener(new MouseAdapter() {
@@ -133,7 +135,7 @@ class NUOPCViewLabelProvider extends StyledCellLabelProvider { //implements ITab
 			
 			//cell.getControl().		
 			//cell.setText(text.toString());
-			ImageDescriptor id = getFortranImageDescriptor(me.structuralFeature, me.elem, me.validationMessage);
+			ImageDescriptor id = getFortranImageDescriptor(me.subconcept, me.elem, me.validationMessage);
 			if (id != null) {
 				cell.setImage(id.createImage());
 			}
@@ -185,22 +187,58 @@ class NUOPCViewLabelProvider extends StyledCellLabelProvider { //implements ITab
 	}
 	*/
 	
-	public static ImageDescriptor getFortranImageDescriptor(EStructuralFeature sf, Object elem, String validationMessage) {
+	public static ImageDescriptor getFortranImageDescriptor(SubconceptOrAttribute soa, Object elem, String validationMessage) {
 		String imageKey = null;
 		String bottomOverlayKey = null;
 		String topOverlayKey = null;
 		int SWT_PROPS = 0;
-		//if (obj instanceof NUOPCModelElem) {
-			//NUOPCModelElem me = (NUOPCModelElem) obj;
-			
-			if (sf != null) {
-				if (sf instanceof EReference) {			
-					imageKey = Regex.getFromAnnotation(sf.getEType(), "icon");
+		
+		Mapping explicitContextMapping = null;
+		if (soa != null) {
+			if (soa.isAttrib()) {
+				explicitContextMapping = soa.getAttribMapping();
+			}
+			else {
+				if (soa.isReference()) {
+					explicitContextMapping = soa.getRef().getMapping();
 				}
-				else if (sf instanceof EAttribute) {
-					imageKey = Regex.getFromAnnotation(sf, "icon");
+				else {
+					explicitContextMapping = soa.getDef().getMapping();
 				}
-					
+			}
+		}
+		
+		ImplicitContextMapping mapping = null;
+		if (explicitContextMapping != null) {
+			mapping = explicitContextMapping.getMapping();
+		}
+				
+		if (mapping != null) {
+			if (mapping instanceof Subroutine) {
+				imageKey = "subroutine.gif";
+			}
+			else if (mapping instanceof Module) {
+				imageKey = "module.gif";
+			}
+			else if (mapping instanceof Call) {
+				imageKey = "subroutine.gif";
+				topOverlayKey = "caller_overlay.gif";
+			}
+			//else if (mapping instanceof Uses) {
+			//	imageKey = "import_obj.gif";
+			//}
+			else if (mapping instanceof UsesModule) {
+				imageKey = "import.png";
+			}
+			else if (mapping instanceof UsesEntity) {
+				imageKey = "import_obj.gif";
+			}
+		}
+		else if (soa != null && !soa.isAttrib()) {
+			imageKey = "tree.gif";
+		}
+				
+				/*
 				if (imageKey == null) {
 					String mappingType = Regex.getMappingTypeFromAnnotation(sf);
 					if (mappingType != null) {
@@ -228,22 +266,21 @@ class NUOPCViewLabelProvider extends StyledCellLabelProvider { //implements ITab
 						imageKey = "tree.gif";
 					}
 				}
+				*/
 				
-				if (sf instanceof EReference && elem == null) {
-					
-					//gray indicates that it does not yet exist
-					SWT_PROPS = SWT.IMAGE_GRAY;
-					
-					if (sf.getLowerBound() > 0) {
-						bottomOverlayKey = "question_overlay.gif";						
-					}
-					else {
-						bottomOverlayKey = "add_overlay.gif";
-					}
-				}
-			}	
 				
-					
+		if (soa != null && !soa.isAttrib() && elem == null) {
+			
+			//gray indicates that it does not yet exist
+			SWT_PROPS = SWT.IMAGE_GRAY;
+			
+			if (soa.getCardinality()!= null && soa.getCardinality().isOneOrMore()) {
+				bottomOverlayKey = "question_overlay.gif";						
+			}
+			else {
+				bottomOverlayKey = "add_overlay.gif";
+			}
+		}
 			
 			//validation to determine overlay
 			if (elem != null && validationMessage != null) {

@@ -47,6 +47,7 @@ public class CupidLanguageParser extends AbstractContentAssistParser {
 					put(grammarAccess.getIDOrPathExprAccess().getAlternatives(), "rule__IDOrPathExpr__Alternatives");
 					put(grammarAccess.getLanguageAccess().getGroup(), "rule__Language__Group__0");
 					put(grammarAccess.getAnnotationAccess().getGroup(), "rule__Annotation__Group__0");
+					put(grammarAccess.getAnnotationAccess().getGroup_1(), "rule__Annotation__Group_1__0");
 					put(grammarAccess.getAnonymousConceptDefAccess().getGroup(), "rule__AnonymousConceptDef__Group__0");
 					put(grammarAccess.getAnonymousConceptDefAccess().getGroup_1(), "rule__AnonymousConceptDef__Group_1__0");
 					put(grammarAccess.getAnonymousConceptDefAccess().getGroup_2(), "rule__AnonymousConceptDef__Group_2__0");
@@ -83,6 +84,7 @@ public class CupidLanguageParser extends AbstractContentAssistParser {
 					put(grammarAccess.getCallAccess().getGroup_3_1_1(), "rule__Call__Group_3_1_1__0");
 					put(grammarAccess.getActualParamAccess().getGroup(), "rule__ActualParam__Group__0");
 					put(grammarAccess.getActualParamAccess().getGroup_0(), "rule__ActualParam__Group_0__0");
+					put(grammarAccess.getActualParamByKeywordAccess().getGroup(), "rule__ActualParamByKeyword__Group__0");
 					put(grammarAccess.getPathExprAccess().getGroup(), "rule__PathExpr__Group__0");
 					put(grammarAccess.getPathExprNodeAccess().getGroup(), "rule__PathExprNode__Group__0");
 					put(grammarAccess.getPathExprNodeAccess().getGroup_1(), "rule__PathExprNode__Group_1__0");
@@ -93,7 +95,7 @@ public class CupidLanguageParser extends AbstractContentAssistParser {
 					put(grammarAccess.getLanguageAccess().getConceptDefAssignment_4(), "rule__Language__ConceptDefAssignment_4");
 					put(grammarAccess.getLanguageAccess().getConceptDefAssignment_5(), "rule__Language__ConceptDefAssignment_5");
 					put(grammarAccess.getAnnotationAccess().getKeyAssignment_0(), "rule__Annotation__KeyAssignment_0");
-					put(grammarAccess.getAnnotationAccess().getValueAssignment_2(), "rule__Annotation__ValueAssignment_2");
+					put(grammarAccess.getAnnotationAccess().getValueAssignment_1_1(), "rule__Annotation__ValueAssignment_1_1");
 					put(grammarAccess.getAnonymousConceptDefAccess().getMappingAssignment_1_1(), "rule__AnonymousConceptDef__MappingAssignment_1_1");
 					put(grammarAccess.getAnonymousConceptDefAccess().getAnnotationAssignment_2_1(), "rule__AnonymousConceptDef__AnnotationAssignment_2_1");
 					put(grammarAccess.getAnonymousConceptDefAccess().getChildAssignment_2_2(), "rule__AnonymousConceptDef__ChildAssignment_2_2");
@@ -151,6 +153,8 @@ public class CupidLanguageParser extends AbstractContentAssistParser {
 					put(grammarAccess.getActualParamAccess().getKeywordAssignment_0_0(), "rule__ActualParam__KeywordAssignment_0_0");
 					put(grammarAccess.getActualParamAccess().getOptionalAssignment_0_1(), "rule__ActualParam__OptionalAssignment_0_1");
 					put(grammarAccess.getActualParamAccess().getValueAssignment_1(), "rule__ActualParam__ValueAssignment_1");
+					put(grammarAccess.getActualParamByKeywordAccess().getKeywordAssignment_2(), "rule__ActualParamByKeyword__KeywordAssignment_2");
+					put(grammarAccess.getActualParamByKeywordAccess().getValueAssignment_4(), "rule__ActualParamByKeyword__ValueAssignment_4");
 					put(grammarAccess.getIDOrWildcardAccess().getIdAssignment_0(), "rule__IDOrWildcard__IdAssignment_0");
 					put(grammarAccess.getIDOrWildcardAccess().getWildcardAssignment_1(), "rule__IDOrWildcard__WildcardAssignment_1");
 					put(grammarAccess.getPathExprNodeAccess().getTailAssignment_1_2(), "rule__PathExprNode__TailAssignment_1_2");
