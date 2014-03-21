@@ -45,6 +45,7 @@ public class CupidLanguageParser extends AbstractContentAssistParser {
 					put(grammarAccess.getTypeAccess().getAlternatives(), "rule__Type__Alternatives");
 					put(grammarAccess.getIDOrWildcardAccess().getAlternatives(), "rule__IDOrWildcard__Alternatives");
 					put(grammarAccess.getIDOrPathExprAccess().getAlternatives(), "rule__IDOrPathExpr__Alternatives");
+					put(grammarAccess.getLiteralAccess().getAlternatives(), "rule__Literal__Alternatives");
 					put(grammarAccess.getLanguageAccess().getGroup(), "rule__Language__Group__0");
 					put(grammarAccess.getAnnotationAccess().getGroup(), "rule__Annotation__Group__0");
 					put(grammarAccess.getAnnotationAccess().getGroup_1(), "rule__Annotation__Group_1__0");
@@ -89,7 +90,6 @@ public class CupidLanguageParser extends AbstractContentAssistParser {
 					put(grammarAccess.getPathExprNodeAccess().getGroup(), "rule__PathExprNode__Group__0");
 					put(grammarAccess.getPathExprNodeAccess().getGroup_1(), "rule__PathExprNode__Group_1__0");
 					put(grammarAccess.getPathExprTermAccess().getGroup(), "rule__PathExprTerm__Group__0");
-					put(grammarAccess.getPathExprTermAccess().getGroup_2(), "rule__PathExprTerm__Group_2__0");
 					put(grammarAccess.getLanguageAccess().getNameAssignment_1(), "rule__Language__NameAssignment_1");
 					put(grammarAccess.getLanguageAccess().getUriAssignment_2(), "rule__Language__UriAssignment_2");
 					put(grammarAccess.getLanguageAccess().getConceptDefAssignment_4(), "rule__Language__ConceptDefAssignment_4");
@@ -157,9 +157,11 @@ public class CupidLanguageParser extends AbstractContentAssistParser {
 					put(grammarAccess.getActualParamByKeywordAccess().getValueAssignment_4(), "rule__ActualParamByKeyword__ValueAssignment_4");
 					put(grammarAccess.getIDOrWildcardAccess().getIdAssignment_0(), "rule__IDOrWildcard__IdAssignment_0");
 					put(grammarAccess.getIDOrWildcardAccess().getWildcardAssignment_1(), "rule__IDOrWildcard__WildcardAssignment_1");
+					put(grammarAccess.getIDOrPathExprAccess().getLiteralAssignment_2(), "rule__IDOrPathExpr__LiteralAssignment_2");
 					put(grammarAccess.getPathExprNodeAccess().getTailAssignment_1_2(), "rule__PathExprNode__TailAssignment_1_2");
-					put(grammarAccess.getPathExprTermAccess().getRefAssignment_1(), "rule__PathExprTerm__RefAssignment_1");
-					put(grammarAccess.getPathExprTermAccess().getGuardAssignment_2_0(), "rule__PathExprTerm__GuardAssignment_2_0");
+					put(grammarAccess.getPathExprTermAccess().getAxisAssignment_1(), "rule__PathExprTerm__AxisAssignment_1");
+					put(grammarAccess.getPathExprTermAccess().getRefAssignment_2(), "rule__PathExprTerm__RefAssignment_2");
+					put(grammarAccess.getAxisAccess().getAncestorAssignment(), "rule__Axis__AncestorAssignment");
 				}
 			};
 		}

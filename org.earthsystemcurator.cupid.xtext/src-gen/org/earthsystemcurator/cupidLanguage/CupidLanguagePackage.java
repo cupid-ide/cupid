@@ -878,13 +878,22 @@ public interface CupidLanguagePackage extends EPackage
   int ID_OR_PATH_EXPR = 20;
 
   /**
+   * The feature id for the '<em><b>Literal</b></em>' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int ID_OR_PATH_EXPR__LITERAL = 0;
+
+  /**
    * The number of structural features of the '<em>ID Or Path Expr</em>' class.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @generated
    * @ordered
    */
-  int ID_OR_PATH_EXPR_FEATURE_COUNT = 0;
+  int ID_OR_PATH_EXPR_FEATURE_COUNT = 1;
 
   /**
    * The meta object id for the '{@link org.earthsystemcurator.cupidLanguage.impl.IDOrWildcardImpl <em>ID Or Wildcard</em>}' class.
@@ -895,6 +904,15 @@ public interface CupidLanguagePackage extends EPackage
    * @generated
    */
   int ID_OR_WILDCARD = 19;
+
+  /**
+   * The feature id for the '<em><b>Literal</b></em>' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int ID_OR_WILDCARD__LITERAL = ID_OR_PATH_EXPR__LITERAL;
 
   /**
    * The feature id for the '<em><b>Id</b></em>' attribute.
@@ -934,6 +952,15 @@ public interface CupidLanguagePackage extends EPackage
   int PATH_EXPR = 21;
 
   /**
+   * The feature id for the '<em><b>Literal</b></em>' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int PATH_EXPR__LITERAL = ID_OR_PATH_EXPR__LITERAL;
+
+  /**
    * The feature id for the '<em><b>Head</b></em>' containment reference.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
@@ -961,6 +988,34 @@ public interface CupidLanguagePackage extends EPackage
   int PATH_EXPR_FEATURE_COUNT = ID_OR_PATH_EXPR_FEATURE_COUNT + 2;
 
   /**
+   * The meta object id for the '{@link org.earthsystemcurator.cupidLanguage.impl.AxisImpl <em>Axis</em>}' class.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @see org.earthsystemcurator.cupidLanguage.impl.AxisImpl
+   * @see org.earthsystemcurator.cupidLanguage.impl.CupidLanguagePackageImpl#getAxis()
+   * @generated
+   */
+  int AXIS = 22;
+
+  /**
+   * The feature id for the '<em><b>Ancestor</b></em>' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int AXIS__ANCESTOR = 0;
+
+  /**
+   * The number of structural features of the '<em>Axis</em>' class.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int AXIS_FEATURE_COUNT = 1;
+
+  /**
    * The meta object id for the '{@link org.earthsystemcurator.cupidLanguage.impl.PathExprTermImpl <em>Path Expr Term</em>}' class.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
@@ -968,7 +1023,16 @@ public interface CupidLanguagePackage extends EPackage
    * @see org.earthsystemcurator.cupidLanguage.impl.CupidLanguagePackageImpl#getPathExprTerm()
    * @generated
    */
-  int PATH_EXPR_TERM = 22;
+  int PATH_EXPR_TERM = 23;
+
+  /**
+   * The feature id for the '<em><b>Literal</b></em>' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int PATH_EXPR_TERM__LITERAL = PATH_EXPR__LITERAL;
 
   /**
    * The feature id for the '<em><b>Head</b></em>' containment reference.
@@ -989,22 +1053,22 @@ public interface CupidLanguagePackage extends EPackage
   int PATH_EXPR_TERM__TAIL = PATH_EXPR__TAIL;
 
   /**
+   * The feature id for the '<em><b>Axis</b></em>' containment reference.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int PATH_EXPR_TERM__AXIS = PATH_EXPR_FEATURE_COUNT + 0;
+
+  /**
    * The feature id for the '<em><b>Ref</b></em>' reference.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @generated
    * @ordered
    */
-  int PATH_EXPR_TERM__REF = PATH_EXPR_FEATURE_COUNT + 0;
-
-  /**
-   * The feature id for the '<em><b>Guard</b></em>' attribute.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   * @ordered
-   */
-  int PATH_EXPR_TERM__GUARD = PATH_EXPR_FEATURE_COUNT + 1;
+  int PATH_EXPR_TERM__REF = PATH_EXPR_FEATURE_COUNT + 1;
 
   /**
    * The number of structural features of the '<em>Path Expr Term</em>' class.
@@ -1799,6 +1863,17 @@ public interface CupidLanguagePackage extends EPackage
   EClass getIDOrPathExpr();
 
   /**
+   * Returns the meta object for the attribute '{@link org.earthsystemcurator.cupidLanguage.IDOrPathExpr#getLiteral <em>Literal</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for the attribute '<em>Literal</em>'.
+   * @see org.earthsystemcurator.cupidLanguage.IDOrPathExpr#getLiteral()
+   * @see #getIDOrPathExpr()
+   * @generated
+   */
+  EAttribute getIDOrPathExpr_Literal();
+
+  /**
    * Returns the meta object for class '{@link org.earthsystemcurator.cupidLanguage.PathExpr <em>Path Expr</em>}'.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
@@ -1831,6 +1906,27 @@ public interface CupidLanguagePackage extends EPackage
   EReference getPathExpr_Tail();
 
   /**
+   * Returns the meta object for class '{@link org.earthsystemcurator.cupidLanguage.Axis <em>Axis</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for class '<em>Axis</em>'.
+   * @see org.earthsystemcurator.cupidLanguage.Axis
+   * @generated
+   */
+  EClass getAxis();
+
+  /**
+   * Returns the meta object for the attribute '{@link org.earthsystemcurator.cupidLanguage.Axis#isAncestor <em>Ancestor</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for the attribute '<em>Ancestor</em>'.
+   * @see org.earthsystemcurator.cupidLanguage.Axis#isAncestor()
+   * @see #getAxis()
+   * @generated
+   */
+  EAttribute getAxis_Ancestor();
+
+  /**
    * Returns the meta object for class '{@link org.earthsystemcurator.cupidLanguage.PathExprTerm <em>Path Expr Term</em>}'.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
@@ -1839,6 +1935,17 @@ public interface CupidLanguagePackage extends EPackage
    * @generated
    */
   EClass getPathExprTerm();
+
+  /**
+   * Returns the meta object for the containment reference '{@link org.earthsystemcurator.cupidLanguage.PathExprTerm#getAxis <em>Axis</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for the containment reference '<em>Axis</em>'.
+   * @see org.earthsystemcurator.cupidLanguage.PathExprTerm#getAxis()
+   * @see #getPathExprTerm()
+   * @generated
+   */
+  EReference getPathExprTerm_Axis();
 
   /**
    * Returns the meta object for the reference '{@link org.earthsystemcurator.cupidLanguage.PathExprTerm#getRef <em>Ref</em>}'.
@@ -1850,17 +1957,6 @@ public interface CupidLanguagePackage extends EPackage
    * @generated
    */
   EReference getPathExprTerm_Ref();
-
-  /**
-   * Returns the meta object for the attribute '{@link org.earthsystemcurator.cupidLanguage.PathExprTerm#isGuard <em>Guard</em>}'.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @return the meta object for the attribute '<em>Guard</em>'.
-   * @see org.earthsystemcurator.cupidLanguage.PathExprTerm#isGuard()
-   * @see #getPathExprTerm()
-   * @generated
-   */
-  EAttribute getPathExprTerm_Guard();
 
   /**
    * Returns the factory that creates the instances of the model.
@@ -2512,6 +2608,14 @@ public interface CupidLanguagePackage extends EPackage
     EClass ID_OR_PATH_EXPR = eINSTANCE.getIDOrPathExpr();
 
     /**
+     * The meta object literal for the '<em><b>Literal</b></em>' attribute feature.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    EAttribute ID_OR_PATH_EXPR__LITERAL = eINSTANCE.getIDOrPathExpr_Literal();
+
+    /**
      * The meta object literal for the '{@link org.earthsystemcurator.cupidLanguage.impl.PathExprImpl <em>Path Expr</em>}' class.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
@@ -2538,6 +2642,24 @@ public interface CupidLanguagePackage extends EPackage
     EReference PATH_EXPR__TAIL = eINSTANCE.getPathExpr_Tail();
 
     /**
+     * The meta object literal for the '{@link org.earthsystemcurator.cupidLanguage.impl.AxisImpl <em>Axis</em>}' class.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @see org.earthsystemcurator.cupidLanguage.impl.AxisImpl
+     * @see org.earthsystemcurator.cupidLanguage.impl.CupidLanguagePackageImpl#getAxis()
+     * @generated
+     */
+    EClass AXIS = eINSTANCE.getAxis();
+
+    /**
+     * The meta object literal for the '<em><b>Ancestor</b></em>' attribute feature.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    EAttribute AXIS__ANCESTOR = eINSTANCE.getAxis_Ancestor();
+
+    /**
      * The meta object literal for the '{@link org.earthsystemcurator.cupidLanguage.impl.PathExprTermImpl <em>Path Expr Term</em>}' class.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
@@ -2548,20 +2670,20 @@ public interface CupidLanguagePackage extends EPackage
     EClass PATH_EXPR_TERM = eINSTANCE.getPathExprTerm();
 
     /**
+     * The meta object literal for the '<em><b>Axis</b></em>' containment reference feature.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    EReference PATH_EXPR_TERM__AXIS = eINSTANCE.getPathExprTerm_Axis();
+
+    /**
      * The meta object literal for the '<em><b>Ref</b></em>' reference feature.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @generated
      */
     EReference PATH_EXPR_TERM__REF = eINSTANCE.getPathExprTerm_Ref();
-
-    /**
-     * The meta object literal for the '<em><b>Guard</b></em>' attribute feature.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    EAttribute PATH_EXPR_TERM__GUARD = eINSTANCE.getPathExprTerm_Guard();
 
   }
 

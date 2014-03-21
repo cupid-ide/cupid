@@ -3,7 +3,6 @@
  */
 package org.earthsystemcurator.scoping
 
-import org.earthsystemcurator.cupidLanguage.PathExpr
 import org.eclipse.emf.ecore.EReference
 import org.eclipse.xtext.scoping.IScope
 import org.eclipse.xtext.scoping.Scopes
@@ -12,6 +11,9 @@ import org.earthsystemcurator.cupidLanguage.ConceptDef
 import org.earthsystemcurator.cupidLanguage.PathExprTerm
 import org.earthsystemcurator.cupidLanguage.SubconceptOrAttribute
 import java.util.List
+import org.earthsystemcurator.cupidLanguage.PathExpr
+import org.earthsystemcurator.cupidLanguage.Axis
+import java.util.ArrayList
 
 /**
  * This class contains custom scoping description.
@@ -21,10 +23,100 @@ import java.util.List
  *
  */
 class CupidLanguageScopeProvider extends org.eclipse.xtext.scoping.impl.AbstractDeclarativeScopeProvider {
-
-	
 	
 	def IScope scope_SubconceptOrAttribute(PathExpr expr, EReference eref) {
+		//println("scope_SubconceptOrAttribute(PathExpr): eref=" + eref.name + " | expr=" + expr + "expr.axis=" + expr.axis); //.head + "| head.tail = " + expr.head.tail);
+		if (eref.name.equals("tail")) {
+			
+			if (expr.head.tail != null) {
+				//println("using head.tail: " + expr.head.tail);
+				if (expr.head.tail.attrib) {
+					IScope::NULLSCOPE
+				}
+				else {
+					//println("using def")
+					Scopes::scopeFor(definition(expr.head.tail).child);
+				}
+			}
+			else {
+				//println("using head.ref")
+				Scopes::scopeFor((expr.head as PathExprTerm).ref.def.child);
+				//Scopes:scopeFor(retrieveAxis())
+			}
+			
+			//IScope::NULLSCOPE
+		}
+		else {
+			//println("eref ref (axis = " + expr.axis + ")")
+			Scopes::scopeFor(retrieveAxis((expr as PathExprTerm).axis, nearest(expr, ConceptDef)))
+		}
+	}
+	
+	
+	def List<SubconceptOrAttribute> retrieveAxis(Axis axis, ConceptDef context) {
+		if (context==null) {
+			new ArrayList
+		}
+		else if (axis==null) {
+			context.child
+		}
+		//else if (axis.parent) {
+		//	var obj = context.eContainer.nearest(ConceptDef).nearest(SubconceptOrAttribute);
+		//	if (obj!=null) newArrayList(obj)
+		//}
+		else if (axis.ancestor) {
+			collectAncestorSOAs(context)
+		}
+		else {
+			new ArrayList
+		}
+	}
+
+	def List<SubconceptOrAttribute> collectAncestorSOAs(ConceptDef cd) {
+		var result = new ArrayList
+		var cur = cd;
+		while (cur != null) {
+			result.addAll(cur.child)
+			cur = nearest(cur.eContainer, ConceptDef)
+		}
+		result
+	}
+
+	def List<SubconceptOrAttribute> retrieveAxis(Axis axis, List<SubconceptOrAttribute> context) {
+		var result = new ArrayList
+		
+		for (SubconceptOrAttribute soa : context) {
+			result.addAll(retrieveAxis(axis, soa.definition))
+		}
+			
+		result
+	}	
+	
+	def definition(SubconceptOrAttribute soa) {
+		if (soa.reference) {
+			soa.ref
+		}
+		else {
+			soa.def
+		}
+	}
+	
+	/*
+	def List<SubconceptOrAttribute> children(SubconceptOrAttribute soa) {
+		if (soa.reference) {
+			soa.ref.child
+		}
+		else if (soa.def != null) {
+			soa.def.child
+		}
+		else {
+			new ArrayList
+		}
+	}
+	*/
+	
+	//working
+	def IScope scope_SubconceptOrAttribute_OLD(PathExpr expr, EReference eref) {
 		println("scope_SubconceptOrAttribute(PathExpr): eref=" + eref.name + " | expr=" + expr); //.head + "| head.tail = " + expr.head.tail);
 		if (eref.name.equals("tail")) {
 			if (expr.head.tail != null) {
@@ -152,6 +244,18 @@ class CupidLanguageScopeProvider extends org.eclipse.xtext.scoping.impl.Abstract
 			nearestNamedConceptDef(obj.eContainer)
 		}
 		
+	}
+	
+	def <T> T nearest(EObject obj, Class<T> clazz) {
+		if (obj == null) {
+			null
+		}
+		else if (clazz.isInstance(obj)) {
+			obj as T
+		}
+		else {
+			nearest(obj.eContainer, clazz)
+		}	
 	}
 	
 	def List<SubconceptOrAttribute> allDescendentSubconcepts(ConceptDef cd) {

@@ -1,7 +1,6 @@
 package org.earthsystemcurator.cupid.nuopc.fsml.util;
 
 import java.util.HashMap;
-import java.util.HashSet;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
@@ -12,7 +11,6 @@ import org.earthsystemcurator.cupidLanguage.Call;
 import org.earthsystemcurator.cupidLanguage.FormalParam;
 import org.earthsystemcurator.cupidLanguage.IDOrPathExpr;
 import org.earthsystemcurator.cupidLanguage.IDOrWildcard;
-import org.earthsystemcurator.cupidLanguage.Mapping;
 import org.earthsystemcurator.cupidLanguage.Module;
 import org.earthsystemcurator.cupidLanguage.ModuleName;
 import org.earthsystemcurator.cupidLanguage.PathExpr;
@@ -89,9 +87,15 @@ public class CodeQuery2 {
 					else if (value instanceof PathExpr) {
 						bindings.put((PathExpr) value, san.getExpr().toString().trim());
 					}
-					else if (!san.getExpr().toString().trim().equalsIgnoreCase(((IDOrWildcard) value).getId())) {
+					else if (value.getLiteral() != null && !san.getExpr().toString().trim().equals(value.getLiteral())) {
+						continue csnloop;
+					}
+					else if (value instanceof IDOrWildcard) {
+						//if not wildcard, make sure expressions match
+						if (!((IDOrWildcard) value).isWildcard() && !san.getExpr().toString().trim().equalsIgnoreCase(((IDOrWildcard) value).getId())) {
 						//System.out.println("Expr = |" + san.getExpr().toString() + "|");
 						continue csnloop;
+						}
 					}							
 				}			
 			}
@@ -100,6 +104,7 @@ public class CodeQuery2 {
 			result.put(csn, bindings);
 		}
 		
+		System.out.println("return");
 		return result;	
 		
 	}

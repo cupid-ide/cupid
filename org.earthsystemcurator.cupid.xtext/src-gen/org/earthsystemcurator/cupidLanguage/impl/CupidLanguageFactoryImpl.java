@@ -86,6 +86,7 @@ public class CupidLanguageFactoryImpl extends EFactoryImpl implements CupidLangu
       case CupidLanguagePackage.ID_OR_WILDCARD: return createIDOrWildcard();
       case CupidLanguagePackage.ID_OR_PATH_EXPR: return createIDOrPathExpr();
       case CupidLanguagePackage.PATH_EXPR: return createPathExpr();
+      case CupidLanguagePackage.AXIS: return createAxis();
       case CupidLanguagePackage.PATH_EXPR_TERM: return createPathExprTerm();
       default:
         throw new IllegalArgumentException("The class '" + eClass.getName() + "' is not a valid classifier");
@@ -332,6 +333,17 @@ public class CupidLanguageFactoryImpl extends EFactoryImpl implements CupidLangu
   {
     PathExprImpl pathExpr = new PathExprImpl();
     return pathExpr;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public Axis createAxis()
+  {
+    AxisImpl axis = new AxisImpl();
+    return axis;
   }
 
   /**

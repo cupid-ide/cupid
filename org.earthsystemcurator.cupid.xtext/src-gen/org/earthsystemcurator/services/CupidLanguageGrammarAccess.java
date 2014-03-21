@@ -1252,14 +1252,16 @@ public class CupidLanguageGrammarAccess extends AbstractGrammarElementFinder {
 		private final Alternatives cAlternatives = (Alternatives)rule.eContents().get(1);
 		private final RuleCall cIDOrWildcardParserRuleCall_0 = (RuleCall)cAlternatives.eContents().get(0);
 		private final RuleCall cPathExprParserRuleCall_1 = (RuleCall)cAlternatives.eContents().get(1);
+		private final Assignment cLiteralAssignment_2 = (Assignment)cAlternatives.eContents().get(2);
+		private final RuleCall cLiteralLiteralParserRuleCall_2_0 = (RuleCall)cLiteralAssignment_2.eContents().get(0);
 		
 		////IDOrPathExpr:
 		////	idOrWildcard=IDOrWildcard | pathExpr=PathExpr;
 		//IDOrPathExpr:
-		//	IDOrWildcard | PathExpr;
+		//	IDOrWildcard | PathExpr | literal=Literal;
 		public ParserRule getRule() { return rule; }
 
-		//IDOrWildcard | PathExpr
+		//IDOrWildcard | PathExpr | literal=Literal
 		public Alternatives getAlternatives() { return cAlternatives; }
 
 		//IDOrWildcard
@@ -1267,6 +1269,32 @@ public class CupidLanguageGrammarAccess extends AbstractGrammarElementFinder {
 
 		//PathExpr
 		public RuleCall getPathExprParserRuleCall_1() { return cPathExprParserRuleCall_1; }
+
+		//literal=Literal
+		public Assignment getLiteralAssignment_2() { return cLiteralAssignment_2; }
+
+		//Literal
+		public RuleCall getLiteralLiteralParserRuleCall_2_0() { return cLiteralLiteralParserRuleCall_2_0; }
+	}
+
+	public class LiteralElements extends AbstractParserRuleElementFinder {
+		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "Literal");
+		private final Alternatives cAlternatives = (Alternatives)rule.eContents().get(1);
+		private final RuleCall cINTTerminalRuleCall_0 = (RuleCall)cAlternatives.eContents().get(0);
+		private final RuleCall cSTRINGTerminalRuleCall_1 = (RuleCall)cAlternatives.eContents().get(1);
+		
+		//Literal:
+		//	INT+ | STRING;
+		public ParserRule getRule() { return rule; }
+
+		//INT+ | STRING
+		public Alternatives getAlternatives() { return cAlternatives; }
+
+		//INT+
+		public RuleCall getINTTerminalRuleCall_0() { return cINTTerminalRuleCall_0; }
+
+		//STRING
+		public RuleCall getSTRINGTerminalRuleCall_1() { return cSTRINGTerminalRuleCall_1; }
 	}
 
 	public class PathExprElements extends AbstractParserRuleElementFinder {
@@ -1339,67 +1367,53 @@ public class CupidLanguageGrammarAccess extends AbstractGrammarElementFinder {
 		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "PathExprTerm");
 		private final Group cGroup = (Group)rule.eContents().get(1);
 		private final Action cPathExprTermAction_0 = (Action)cGroup.eContents().get(0);
-		private final Assignment cRefAssignment_1 = (Assignment)cGroup.eContents().get(1);
-		private final CrossReference cRefSubconceptOrAttributeCrossReference_1_0 = (CrossReference)cRefAssignment_1.eContents().get(0);
-		private final RuleCall cRefSubconceptOrAttributeIDTerminalRuleCall_1_0_1 = (RuleCall)cRefSubconceptOrAttributeCrossReference_1_0.eContents().get(1);
-		private final Group cGroup_2 = (Group)cGroup.eContents().get(2);
-		private final Assignment cGuardAssignment_2_0 = (Assignment)cGroup_2.eContents().get(0);
-		private final Keyword cGuardLeftSquareBracketKeyword_2_0_0 = (Keyword)cGuardAssignment_2_0.eContents().get(0);
-		private final Keyword cRightSquareBracketKeyword_2_1 = (Keyword)cGroup_2.eContents().get(1);
+		private final Assignment cAxisAssignment_1 = (Assignment)cGroup.eContents().get(1);
+		private final RuleCall cAxisAxisParserRuleCall_1_0 = (RuleCall)cAxisAssignment_1.eContents().get(0);
+		private final Assignment cRefAssignment_2 = (Assignment)cGroup.eContents().get(2);
+		private final CrossReference cRefSubconceptOrAttributeCrossReference_2_0 = (CrossReference)cRefAssignment_2.eContents().get(0);
+		private final RuleCall cRefSubconceptOrAttributeIDTerminalRuleCall_2_0_1 = (RuleCall)cRefSubconceptOrAttributeCrossReference_2_0.eContents().get(1);
 		
-		////PathSegment:
-		////	'..' | ID;
-		////PathExpr returns Ref:
-		////   EntityRef ({PathExpr.ref=current}  "." tail=ID)*
-		////;
-		////EntityRef returns Ref:
-		////   {EntityRef} entity=[SubconceptOrAttribute]
-		////; 
 		//PathExprTerm returns PathExpr:
-		//	{PathExprTerm} ref=[SubconceptOrAttribute] (guard?="[" "]")?;
+		//	{PathExprTerm} axis=Axis? ref=[SubconceptOrAttribute];
 		public ParserRule getRule() { return rule; }
 
-		//{PathExprTerm} ref=[SubconceptOrAttribute] (guard?="[" "]")? //PathSegment:
-		////	'..' | ID;
-		////PathExpr returns Ref:
-		////   EntityRef ({PathExpr.ref=current}  "." tail=ID)*
-		////;
-		////EntityRef returns Ref:
-		////   {EntityRef} entity=[SubconceptOrAttribute]
-		////;
+		//{PathExprTerm} axis=Axis? ref=[SubconceptOrAttribute]
 		public Group getGroup() { return cGroup; }
 
 		//{PathExprTerm}
 		public Action getPathExprTermAction_0() { return cPathExprTermAction_0; }
 
+		//axis=Axis?
+		public Assignment getAxisAssignment_1() { return cAxisAssignment_1; }
+
+		//Axis
+		public RuleCall getAxisAxisParserRuleCall_1_0() { return cAxisAxisParserRuleCall_1_0; }
+
 		//ref=[SubconceptOrAttribute]
-		public Assignment getRefAssignment_1() { return cRefAssignment_1; }
+		public Assignment getRefAssignment_2() { return cRefAssignment_2; }
 
 		//[SubconceptOrAttribute]
-		public CrossReference getRefSubconceptOrAttributeCrossReference_1_0() { return cRefSubconceptOrAttributeCrossReference_1_0; }
+		public CrossReference getRefSubconceptOrAttributeCrossReference_2_0() { return cRefSubconceptOrAttributeCrossReference_2_0; }
 
 		//ID
-		public RuleCall getRefSubconceptOrAttributeIDTerminalRuleCall_1_0_1() { return cRefSubconceptOrAttributeIDTerminalRuleCall_1_0_1; }
+		public RuleCall getRefSubconceptOrAttributeIDTerminalRuleCall_2_0_1() { return cRefSubconceptOrAttributeIDTerminalRuleCall_2_0_1; }
+	}
 
-		//(guard?="[" "]" //PathSegment:
-		////	'..' | ID;
-		////PathExpr returns Ref:
-		////   EntityRef ({PathExpr.ref=current}  "." tail=ID)*
-		////;
-		////EntityRef returns Ref:
-		////   {EntityRef} entity=[SubconceptOrAttribute]
-		////; 
-		//)?
-		public Group getGroup_2() { return cGroup_2; }
+	public class AxisElements extends AbstractParserRuleElementFinder {
+		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "Axis");
+		private final Assignment cAncestorAssignment = (Assignment)rule.eContents().get(1);
+		private final Keyword cAncestorCircumflexAccentKeyword_0 = (Keyword)cAncestorAssignment.eContents().get(0);
+		
+		////parent?='..'
+		//Axis:
+		//	ancestor?="^";
+		public ParserRule getRule() { return rule; }
 
-		//guard?="["
-		public Assignment getGuardAssignment_2_0() { return cGuardAssignment_2_0; }
+		//ancestor?="^"
+		public Assignment getAncestorAssignment() { return cAncestorAssignment; }
 
-		//"["
-		public Keyword getGuardLeftSquareBracketKeyword_2_0_0() { return cGuardLeftSquareBracketKeyword_2_0_0; }
-
-		//"]"
-		public Keyword getRightSquareBracketKeyword_2_1() { return cRightSquareBracketKeyword_2_1; }
+		//"^"
+		public Keyword getAncestorCircumflexAccentKeyword_0() { return cAncestorCircumflexAccentKeyword_0; }
 	}
 	
 	
@@ -1429,9 +1443,13 @@ public class CupidLanguageGrammarAccess extends AbstractGrammarElementFinder {
 	private ActualParamByKeywordElements pActualParamByKeyword;
 	private IDOrWildcardElements pIDOrWildcard;
 	private IDOrPathExprElements pIDOrPathExpr;
+	private LiteralElements pLiteral;
 	private PathExprElements pPathExpr;
 	private PathExprNodeElements pPathExprNode;
 	private PathExprTermElements pPathExprTerm;
+	private AxisElements pAxis;
+	private TerminalRule tSL_COMMENT;
+	private TerminalRule tID;
 	
 	private final Grammar grammar;
 
@@ -1750,13 +1768,23 @@ public class CupidLanguageGrammarAccess extends AbstractGrammarElementFinder {
 	////IDOrPathExpr:
 	////	idOrWildcard=IDOrWildcard | pathExpr=PathExpr;
 	//IDOrPathExpr:
-	//	IDOrWildcard | PathExpr;
+	//	IDOrWildcard | PathExpr | literal=Literal;
 	public IDOrPathExprElements getIDOrPathExprAccess() {
 		return (pIDOrPathExpr != null) ? pIDOrPathExpr : (pIDOrPathExpr = new IDOrPathExprElements());
 	}
 	
 	public ParserRule getIDOrPathExprRule() {
 		return getIDOrPathExprAccess().getRule();
+	}
+
+	//Literal:
+	//	INT+ | STRING;
+	public LiteralElements getLiteralAccess() {
+		return (pLiteral != null) ? pLiteral : (pLiteral = new LiteralElements());
+	}
+	
+	public ParserRule getLiteralRule() {
+		return getLiteralAccess().getRule();
 	}
 
 	////PathExpr:
@@ -1785,16 +1813,8 @@ public class CupidLanguageGrammarAccess extends AbstractGrammarElementFinder {
 		return getPathExprNodeAccess().getRule();
 	}
 
-	////PathSegment:
-	////	'..' | ID;
-	////PathExpr returns Ref:
-	////   EntityRef ({PathExpr.ref=current}  "." tail=ID)*
-	////;
-	////EntityRef returns Ref:
-	////   {EntityRef} entity=[SubconceptOrAttribute]
-	////; 
 	//PathExprTerm returns PathExpr:
-	//	{PathExprTerm} ref=[SubconceptOrAttribute] (guard?="[" "]")?;
+	//	{PathExprTerm} axis=Axis? ref=[SubconceptOrAttribute];
 	public PathExprTermElements getPathExprTermAccess() {
 		return (pPathExprTerm != null) ? pPathExprTerm : (pPathExprTerm = new PathExprTermElements());
 	}
@@ -1803,10 +1823,37 @@ public class CupidLanguageGrammarAccess extends AbstractGrammarElementFinder {
 		return getPathExprTermAccess().getRule();
 	}
 
+	////parent?='..'
+	//Axis:
+	//	ancestor?="^";
+	public AxisElements getAxisAccess() {
+		return (pAxis != null) ? pAxis : (pAxis = new AxisElements());
+	}
+	
+	public ParserRule getAxisRule() {
+		return getAxisAccess().getRule();
+	}
+
+	////PathSegment:
+	////	'..' | ID;
+	////PathExpr returns Ref:
+	////   EntityRef ({PathExpr.ref=current}  "." tail=ID)*
+	////;
+	////EntityRef returns Ref:
+	////   {EntityRef} entity=[SubconceptOrAttribute]
+	////; 
+	////override	
+	//terminal SL_COMMENT:
+	//	"--" !("\n" | "\r")* ("\r"? "\n")?;
+	public TerminalRule getSL_COMMENTRule() {
+		return (tSL_COMMENT != null) ? tSL_COMMENT : (tSL_COMMENT = (TerminalRule) GrammarUtil.findRuleForName(getGrammar(), "SL_COMMENT"));
+	} 
+
+	////override
 	//terminal ID:
-	//	"^"? ("a".."z" | "A".."Z" | "_") ("a".."z" | "A".."Z" | "_" | "0".."9")*;
+	//	("a".."z" | "A".."Z" | "_") ("a".."z" | "A".."Z" | "_" | "0".."9")*;
 	public TerminalRule getIDRule() {
-		return gaTerminals.getIDRule();
+		return (tID != null) ? tID : (tID = (TerminalRule) GrammarUtil.findRuleForName(getGrammar(), "ID"));
 	} 
 
 	//terminal INT returns ecore::EInt:
@@ -1826,12 +1873,6 @@ public class CupidLanguageGrammarAccess extends AbstractGrammarElementFinder {
 	//	"/ *"->"* /";
 	public TerminalRule getML_COMMENTRule() {
 		return gaTerminals.getML_COMMENTRule();
-	} 
-
-	//terminal SL_COMMENT:
-	//	"//" !("\n" | "\r")* ("\r"? "\n")?;
-	public TerminalRule getSL_COMMENTRule() {
-		return gaTerminals.getSL_COMMENTRule();
 	} 
 
 	//terminal WS:

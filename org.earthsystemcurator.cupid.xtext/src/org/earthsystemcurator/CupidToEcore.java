@@ -59,6 +59,19 @@ public class CupidToEcore {
 	}
 	*/
 	
+	public static void saveAsXMI(Resource xtextResource) {
+		//EcoreUtil.resolveAll(xtextResource);
+		URI xmiURI = xtextResource.getURI().trimFileExtension().appendFileExtension("xmi");
+		
+		Resource xmiResource = xtextResource.getResourceSet().createResource(xmiURI);
+		xmiResource.getContents().add(xtextResource.getContents().get(0));
+		try {
+			xmiResource.save(null);
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
+	
 	public static void generateEcoreModel(URI inputURI) throws IOException {
 		
 		//get XMI representation

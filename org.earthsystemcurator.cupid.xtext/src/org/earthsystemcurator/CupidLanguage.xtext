@@ -1,4 +1,4 @@
-grammar org.earthsystemcurator.CupidLanguage with org.eclipse.xtext.common.Terminals
+grammar org.earthsystemcurator.CupidLanguage with org.eclipse.xtext.common.Terminals 
 
 generate cupidLanguage "http://www.earthsystemcurator.org/CupidLanguage"
 
@@ -127,7 +127,10 @@ IDOrWildcard:
 //	idOrWildcard=IDOrWildcard | pathExpr=PathExpr;
 	
 IDOrPathExpr:
-	IDOrWildcard | PathExpr;
+	IDOrWildcard | PathExpr | literal=Literal;
+
+Literal:
+	INT+ | STRING;
 
 //PathExpr:
 //	'#' segments+=PathSegment ('/' segments+=PathSegment)*;
@@ -145,8 +148,13 @@ PathExprNode returns PathExpr:
 	PathExprTerm ({PathExpr.head=current} '/' tail=[SubconceptOrAttribute])*;
 
 PathExprTerm returns PathExpr:
-	{PathExprTerm} ref=[SubconceptOrAttribute] (guard?='['']')?;	
+	{PathExprTerm} axis=Axis? ref=[SubconceptOrAttribute];	
 	
+Axis:
+	ancestor?='^'
+	//parent?='..'
+	;
+
 //PathSegment:
 //	'..' | ID;
 	
@@ -158,4 +166,8 @@ PathExprTerm returns PathExpr:
  //   {EntityRef} entity=[SubconceptOrAttribute]
 //; 
 	
-	
+//override	
+terminal SL_COMMENT: '--' !('\n'|'\r')* ('\r'? '\n')?;
+
+//override
+terminal ID : ('a'..'z'|'A'..'Z'|'_') ('a'..'z'|'A'..'Z'|'_'|'0'..'9')*;

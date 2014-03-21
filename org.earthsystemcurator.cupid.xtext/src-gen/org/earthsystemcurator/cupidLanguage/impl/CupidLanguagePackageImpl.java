@@ -5,6 +5,7 @@ package org.earthsystemcurator.cupidLanguage.impl;
 import org.earthsystemcurator.cupidLanguage.ActualParam;
 import org.earthsystemcurator.cupidLanguage.ActualParamByKeyword;
 import org.earthsystemcurator.cupidLanguage.Annotation;
+import org.earthsystemcurator.cupidLanguage.Axis;
 import org.earthsystemcurator.cupidLanguage.Call;
 import org.earthsystemcurator.cupidLanguage.Cardinality;
 import org.earthsystemcurator.cupidLanguage.ConceptDef;
@@ -196,6 +197,13 @@ public class CupidLanguagePackageImpl extends EPackageImpl implements CupidLangu
    * @generated
    */
   private EClass pathExprEClass = null;
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  private EClass axisEClass = null;
 
   /**
    * <!-- begin-user-doc -->
@@ -1002,6 +1010,16 @@ public class CupidLanguagePackageImpl extends EPackageImpl implements CupidLangu
    * <!-- end-user-doc -->
    * @generated
    */
+  public EAttribute getIDOrPathExpr_Literal()
+  {
+    return (EAttribute)idOrPathExprEClass.getEStructuralFeatures().get(0);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
   public EClass getPathExpr()
   {
     return pathExprEClass;
@@ -1032,6 +1050,26 @@ public class CupidLanguagePackageImpl extends EPackageImpl implements CupidLangu
    * <!-- end-user-doc -->
    * @generated
    */
+  public EClass getAxis()
+  {
+    return axisEClass;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EAttribute getAxis_Ancestor()
+  {
+    return (EAttribute)axisEClass.getEStructuralFeatures().get(0);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
   public EClass getPathExprTerm()
   {
     return pathExprTermEClass;
@@ -1042,7 +1080,7 @@ public class CupidLanguagePackageImpl extends EPackageImpl implements CupidLangu
    * <!-- end-user-doc -->
    * @generated
    */
-  public EReference getPathExprTerm_Ref()
+  public EReference getPathExprTerm_Axis()
   {
     return (EReference)pathExprTermEClass.getEStructuralFeatures().get(0);
   }
@@ -1052,9 +1090,9 @@ public class CupidLanguagePackageImpl extends EPackageImpl implements CupidLangu
    * <!-- end-user-doc -->
    * @generated
    */
-  public EAttribute getPathExprTerm_Guard()
+  public EReference getPathExprTerm_Ref()
   {
-    return (EAttribute)pathExprTermEClass.getEStructuralFeatures().get(1);
+    return (EReference)pathExprTermEClass.getEStructuralFeatures().get(1);
   }
 
   /**
@@ -1180,14 +1218,18 @@ public class CupidLanguagePackageImpl extends EPackageImpl implements CupidLangu
     createEAttribute(idOrWildcardEClass, ID_OR_WILDCARD__WILDCARD);
 
     idOrPathExprEClass = createEClass(ID_OR_PATH_EXPR);
+    createEAttribute(idOrPathExprEClass, ID_OR_PATH_EXPR__LITERAL);
 
     pathExprEClass = createEClass(PATH_EXPR);
     createEReference(pathExprEClass, PATH_EXPR__HEAD);
     createEReference(pathExprEClass, PATH_EXPR__TAIL);
 
+    axisEClass = createEClass(AXIS);
+    createEAttribute(axisEClass, AXIS__ANCESTOR);
+
     pathExprTermEClass = createEClass(PATH_EXPR_TERM);
+    createEReference(pathExprTermEClass, PATH_EXPR_TERM__AXIS);
     createEReference(pathExprTermEClass, PATH_EXPR_TERM__REF);
-    createEAttribute(pathExprTermEClass, PATH_EXPR_TERM__GUARD);
   }
 
   /**
@@ -1325,14 +1367,18 @@ public class CupidLanguagePackageImpl extends EPackageImpl implements CupidLangu
     initEAttribute(getIDOrWildcard_Wildcard(), ecorePackage.getEBoolean(), "wildcard", null, 0, 1, IDOrWildcard.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
     initEClass(idOrPathExprEClass, IDOrPathExpr.class, "IDOrPathExpr", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+    initEAttribute(getIDOrPathExpr_Literal(), ecorePackage.getEString(), "literal", null, 0, 1, IDOrPathExpr.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
     initEClass(pathExprEClass, PathExpr.class, "PathExpr", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
     initEReference(getPathExpr_Head(), this.getPathExpr(), null, "head", null, 0, 1, PathExpr.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
     initEReference(getPathExpr_Tail(), this.getSubconceptOrAttribute(), null, "tail", null, 0, 1, PathExpr.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
+    initEClass(axisEClass, Axis.class, "Axis", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+    initEAttribute(getAxis_Ancestor(), ecorePackage.getEBoolean(), "ancestor", null, 0, 1, Axis.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+
     initEClass(pathExprTermEClass, PathExprTerm.class, "PathExprTerm", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+    initEReference(getPathExprTerm_Axis(), this.getAxis(), null, "axis", null, 0, 1, PathExprTerm.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
     initEReference(getPathExprTerm_Ref(), this.getSubconceptOrAttribute(), null, "ref", null, 0, 1, PathExprTerm.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-    initEAttribute(getPathExprTerm_Guard(), ecorePackage.getEBoolean(), "guard", null, 0, 1, PathExprTerm.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
     // Create resource
     createResource(eNS_URI);

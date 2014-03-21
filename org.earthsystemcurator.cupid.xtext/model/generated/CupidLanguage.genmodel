@@ -97,14 +97,19 @@
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute CupidLanguage.ecore#//IDOrWildcard/id"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute CupidLanguage.ecore#//IDOrWildcard/wildcard"/>
     </genClasses>
-    <genClasses ecoreClass="CupidLanguage.ecore#//IDOrPathExpr"/>
+    <genClasses ecoreClass="CupidLanguage.ecore#//IDOrPathExpr">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute CupidLanguage.ecore#//IDOrPathExpr/literal"/>
+    </genClasses>
     <genClasses ecoreClass="CupidLanguage.ecore#//PathExpr">
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference CupidLanguage.ecore#//PathExpr/head"/>
       <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference CupidLanguage.ecore#//PathExpr/tail"/>
     </genClasses>
+    <genClasses ecoreClass="CupidLanguage.ecore#//Axis">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute CupidLanguage.ecore#//Axis/ancestor"/>
+    </genClasses>
     <genClasses ecoreClass="CupidLanguage.ecore#//PathExprTerm">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference CupidLanguage.ecore#//PathExprTerm/axis"/>
       <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference CupidLanguage.ecore#//PathExprTerm/ref"/>
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute CupidLanguage.ecore#//PathExprTerm/guard"/>
     </genClasses>
   </genPackages>
 </genmodel:GenModel>

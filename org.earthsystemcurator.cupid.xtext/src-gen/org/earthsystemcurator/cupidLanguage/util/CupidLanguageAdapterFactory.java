@@ -185,6 +185,11 @@ public class CupidLanguageAdapterFactory extends AdapterFactoryImpl
         return createPathExprAdapter();
       }
       @Override
+      public Adapter caseAxis(Axis object)
+      {
+        return createAxisAdapter();
+      }
+      @Override
       public Adapter casePathExprTerm(PathExprTerm object)
       {
         return createPathExprTermAdapter();
@@ -537,6 +542,21 @@ public class CupidLanguageAdapterFactory extends AdapterFactoryImpl
    * @generated
    */
   public Adapter createPathExprAdapter()
+  {
+    return null;
+  }
+
+  /**
+   * Creates a new adapter for an object of class '{@link org.earthsystemcurator.cupidLanguage.Axis <em>Axis</em>}'.
+   * <!-- begin-user-doc -->
+   * This default implementation returns null so that we can easily ignore cases;
+   * it's useful to ignore a case when inheritance will catch all the cases anyway.
+   * <!-- end-user-doc -->
+   * @return the new adapter.
+   * @see org.earthsystemcurator.cupidLanguage.Axis
+   * @generated
+   */
+  public Adapter createAxisAdapter()
   {
     return null;
   }

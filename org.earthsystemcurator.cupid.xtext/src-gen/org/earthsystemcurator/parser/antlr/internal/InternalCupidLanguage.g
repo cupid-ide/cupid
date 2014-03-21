@@ -2094,8 +2094,63 @@ ruleIDOrPathExpr returns [EObject current=null]
         $current = $this_PathExpr_1.current; 
         afterParserOrEnumRuleCall();
     }
+
+    |(
+(
+		{ 
+	        newCompositeNode(grammarAccess.getIDOrPathExprAccess().getLiteralLiteralParserRuleCall_2_0()); 
+	    }
+		lv_literal_2_0=ruleLiteral		{
+	        if ($current==null) {
+	            $current = createModelElementForParent(grammarAccess.getIDOrPathExprRule());
+	        }
+       		set(
+       			$current, 
+       			"literal",
+        		lv_literal_2_0, 
+        		"Literal");
+	        afterParserOrEnumRuleCall();
+	    }
+
 )
+))
 ;
+
+
+
+
+
+// Entry rule entryRuleLiteral
+entryRuleLiteral returns [String current=null] 
+	:
+	{ newCompositeNode(grammarAccess.getLiteralRule()); } 
+	 iv_ruleLiteral=ruleLiteral 
+	 { $current=$iv_ruleLiteral.current.getText(); }  
+	 EOF 
+;
+
+// Rule Literal
+ruleLiteral returns [AntlrDatatypeRuleToken current=new AntlrDatatypeRuleToken()] 
+    @init { enterRule(); 
+    }
+    @after { leaveRule(); }:
+((    this_INT_0=RULE_INT    {
+		$current.merge(this_INT_0);
+    }
+
+    { 
+    newLeafNode(this_INT_0, grammarAccess.getLiteralAccess().getINTTerminalRuleCall_0()); 
+    }
+)+
+    |    this_STRING_1=RULE_STRING    {
+		$current.merge(this_STRING_1);
+    }
+
+    { 
+    newLeafNode(this_STRING_1, grammarAccess.getLiteralAccess().getSTRINGTerminalRuleCall_1()); 
+    }
+)
+    ;
 
 
 
@@ -2210,37 +2265,72 @@ rulePathExprTerm returns [EObject current=null]
     }
 )(
 (
+		{ 
+	        newCompositeNode(grammarAccess.getPathExprTermAccess().getAxisAxisParserRuleCall_1_0()); 
+	    }
+		lv_axis_1_0=ruleAxis		{
+	        if ($current==null) {
+	            $current = createModelElementForParent(grammarAccess.getPathExprTermRule());
+	        }
+       		set(
+       			$current, 
+       			"axis",
+        		lv_axis_1_0, 
+        		"Axis");
+	        afterParserOrEnumRuleCall();
+	    }
+
+)
+)?(
+(
 		{
 			if ($current==null) {
 	            $current = createModelElement(grammarAccess.getPathExprTermRule());
 	        }
         }
-	otherlv_1=RULE_ID
+	otherlv_2=RULE_ID
 	{
-		newLeafNode(otherlv_1, grammarAccess.getPathExprTermAccess().getRefSubconceptOrAttributeCrossReference_1_0()); 
+		newLeafNode(otherlv_2, grammarAccess.getPathExprTermAccess().getRefSubconceptOrAttributeCrossReference_2_0()); 
 	}
 
 )
-)((
+))
+;
+
+
+
+
+
+// Entry rule entryRuleAxis
+entryRuleAxis returns [EObject current=null] 
+	:
+	{ newCompositeNode(grammarAccess.getAxisRule()); }
+	 iv_ruleAxis=ruleAxis 
+	 { $current=$iv_ruleAxis.current; } 
+	 EOF 
+;
+
+// Rule Axis
+ruleAxis returns [EObject current=null] 
+    @init { enterRule(); 
+    }
+    @after { leaveRule(); }:
 (
-		lv_guard_2_0=	'[' 
+(
+		lv_ancestor_0_0=	'^' 
     {
-        newLeafNode(lv_guard_2_0, grammarAccess.getPathExprTermAccess().getGuardLeftSquareBracketKeyword_2_0_0());
+        newLeafNode(lv_ancestor_0_0, grammarAccess.getAxisAccess().getAncestorCircumflexAccentKeyword_0());
     }
  
 	    {
 	        if ($current==null) {
-	            $current = createModelElement(grammarAccess.getPathExprTermRule());
+	            $current = createModelElement(grammarAccess.getAxisRule());
 	        }
-       		setWithLastConsumed($current, "guard", true, "[");
+       		setWithLastConsumed($current, "ancestor", true, "^");
 	    }
 
 )
-)	otherlv_3=']' 
-    {
-    	newLeafNode(otherlv_3, grammarAccess.getPathExprTermAccess().getRightSquareBracketKeyword_2_1());
-    }
-)?)
+)
 ;
 
 
@@ -2249,15 +2339,15 @@ rulePathExprTerm returns [EObject current=null]
 
 RULE_ANNOTATION_ID : '@' RULE_ID;
 
-RULE_ID : '^'? ('a'..'z'|'A'..'Z'|'_') ('a'..'z'|'A'..'Z'|'_'|'0'..'9')*;
+RULE_SL_COMMENT : '--' ~(('\n'|'\r'))* ('\r'? '\n')?;
+
+RULE_ID : ('a'..'z'|'A'..'Z'|'_') ('a'..'z'|'A'..'Z'|'_'|'0'..'9')*;
 
 RULE_INT : ('0'..'9')+;
 
 RULE_STRING : ('"' ('\\' ('b'|'t'|'n'|'f'|'r'|'u'|'"'|'\''|'\\')|~(('\\'|'"')))* '"'|'\'' ('\\' ('b'|'t'|'n'|'f'|'r'|'u'|'"'|'\''|'\\')|~(('\\'|'\'')))* '\'');
 
 RULE_ML_COMMENT : '/*' ( options {greedy=false;} : . )*'*/';
-
-RULE_SL_COMMENT : '//' ~(('\n'|'\r'))* ('\r'? '\n')?;
 
 RULE_WS : (' '|'\t'|'\r'|'\n')+;
 

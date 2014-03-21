@@ -116,14 +116,19 @@
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="id" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="wildcard" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean"/>
   </eClassifiers>
-  <eClassifiers xsi:type="ecore:EClass" name="IDOrPathExpr"/>
+  <eClassifiers xsi:type="ecore:EClass" name="IDOrPathExpr">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="literal" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+  </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="PathExpr" eSuperTypes="#//IDOrPathExpr">
     <eStructuralFeatures xsi:type="ecore:EReference" name="head" eType="#//PathExpr"
         containment="true"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="tail" eType="#//SubconceptOrAttribute"/>
   </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="Axis">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="ancestor" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean"/>
+  </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="PathExprTerm" eSuperTypes="#//PathExpr">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="axis" eType="#//Axis" containment="true"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="ref" eType="#//SubconceptOrAttribute"/>
-    <eStructuralFeatures xsi:type="ecore:EAttribute" name="guard" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean"/>
   </eClassifiers>
 </ecore:EPackage>

@@ -29,6 +29,10 @@ class CupidLanguageGenerator implements IGenerator {
 //				.map[name]
 //				.join(', '))
 
+		//temp
+		//CupidToEcore.saveAsXMI(resource);
+		
+		
 		var lang = resource.contents.get(0) as Language
 		
 		fsa.generateFile(lang.name + '.oclinecore', lang.toPackage);
@@ -37,7 +41,8 @@ class CupidLanguageGenerator implements IGenerator {
 			var outputURI = fsa.getURI(lang.name + '.oclinecore')
 			CupidToEcore.generateEcoreModel(outputURI);
 		}
-
+		
+		
 	}
 	
 	 
@@ -68,6 +73,7 @@ class CupidLanguageGenerator implements IGenerator {
 		
 		«FOR subconcept : cd.child.filter[c|!c.attrib && !c.reference]»«subconcept.toClass»«ENDFOR»
 	'''
+	
 	
 	def toClass(SubconceptOrAttribute soa) '''
 		«IF !soa.attrib && !soa.reference»

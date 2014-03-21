@@ -2,11 +2,13 @@
  */
 package org.earthsystemcurator.cupidLanguage.impl;
 
+import org.earthsystemcurator.cupidLanguage.Axis;
 import org.earthsystemcurator.cupidLanguage.CupidLanguagePackage;
 import org.earthsystemcurator.cupidLanguage.PathExprTerm;
 import org.earthsystemcurator.cupidLanguage.SubconceptOrAttribute;
 
 import org.eclipse.emf.common.notify.Notification;
+import org.eclipse.emf.common.notify.NotificationChain;
 
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.InternalEObject;
@@ -20,8 +22,8 @@ import org.eclipse.emf.ecore.impl.ENotificationImpl;
  * <p>
  * The following features are implemented:
  * <ul>
+ *   <li>{@link org.earthsystemcurator.cupidLanguage.impl.PathExprTermImpl#getAxis <em>Axis</em>}</li>
  *   <li>{@link org.earthsystemcurator.cupidLanguage.impl.PathExprTermImpl#getRef <em>Ref</em>}</li>
- *   <li>{@link org.earthsystemcurator.cupidLanguage.impl.PathExprTermImpl#isGuard <em>Guard</em>}</li>
  * </ul>
  * </p>
  *
@@ -29,6 +31,16 @@ import org.eclipse.emf.ecore.impl.ENotificationImpl;
  */
 public class PathExprTermImpl extends PathExprImpl implements PathExprTerm
 {
+  /**
+   * The cached value of the '{@link #getAxis() <em>Axis</em>}' containment reference.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @see #getAxis()
+   * @generated
+   * @ordered
+   */
+  protected Axis axis;
+
   /**
    * The cached value of the '{@link #getRef() <em>Ref</em>}' reference.
    * <!-- begin-user-doc -->
@@ -38,26 +50,6 @@ public class PathExprTermImpl extends PathExprImpl implements PathExprTerm
    * @ordered
    */
   protected SubconceptOrAttribute ref;
-
-  /**
-   * The default value of the '{@link #isGuard() <em>Guard</em>}' attribute.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @see #isGuard()
-   * @generated
-   * @ordered
-   */
-  protected static final boolean GUARD_EDEFAULT = false;
-
-  /**
-   * The cached value of the '{@link #isGuard() <em>Guard</em>}' attribute.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @see #isGuard()
-   * @generated
-   * @ordered
-   */
-  protected boolean guard = GUARD_EDEFAULT;
 
   /**
    * <!-- begin-user-doc -->
@@ -78,6 +70,54 @@ public class PathExprTermImpl extends PathExprImpl implements PathExprTerm
   protected EClass eStaticClass()
   {
     return CupidLanguagePackage.Literals.PATH_EXPR_TERM;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public Axis getAxis()
+  {
+    return axis;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public NotificationChain basicSetAxis(Axis newAxis, NotificationChain msgs)
+  {
+    Axis oldAxis = axis;
+    axis = newAxis;
+    if (eNotificationRequired())
+    {
+      ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, CupidLanguagePackage.PATH_EXPR_TERM__AXIS, oldAxis, newAxis);
+      if (msgs == null) msgs = notification; else msgs.add(notification);
+    }
+    return msgs;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public void setAxis(Axis newAxis)
+  {
+    if (newAxis != axis)
+    {
+      NotificationChain msgs = null;
+      if (axis != null)
+        msgs = ((InternalEObject)axis).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - CupidLanguagePackage.PATH_EXPR_TERM__AXIS, null, msgs);
+      if (newAxis != null)
+        msgs = ((InternalEObject)newAxis).eInverseAdd(this, EOPPOSITE_FEATURE_BASE - CupidLanguagePackage.PATH_EXPR_TERM__AXIS, null, msgs);
+      msgs = basicSetAxis(newAxis, msgs);
+      if (msgs != null) msgs.dispatch();
+    }
+    else if (eNotificationRequired())
+      eNotify(new ENotificationImpl(this, Notification.SET, CupidLanguagePackage.PATH_EXPR_TERM__AXIS, newAxis, newAxis));
   }
 
   /**
@@ -128,22 +168,15 @@ public class PathExprTermImpl extends PathExprImpl implements PathExprTerm
    * <!-- end-user-doc -->
    * @generated
    */
-  public boolean isGuard()
+  @Override
+  public NotificationChain eInverseRemove(InternalEObject otherEnd, int featureID, NotificationChain msgs)
   {
-    return guard;
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  public void setGuard(boolean newGuard)
-  {
-    boolean oldGuard = guard;
-    guard = newGuard;
-    if (eNotificationRequired())
-      eNotify(new ENotificationImpl(this, Notification.SET, CupidLanguagePackage.PATH_EXPR_TERM__GUARD, oldGuard, guard));
+    switch (featureID)
+    {
+      case CupidLanguagePackage.PATH_EXPR_TERM__AXIS:
+        return basicSetAxis(null, msgs);
+    }
+    return super.eInverseRemove(otherEnd, featureID, msgs);
   }
 
   /**
@@ -156,11 +189,11 @@ public class PathExprTermImpl extends PathExprImpl implements PathExprTerm
   {
     switch (featureID)
     {
+      case CupidLanguagePackage.PATH_EXPR_TERM__AXIS:
+        return getAxis();
       case CupidLanguagePackage.PATH_EXPR_TERM__REF:
         if (resolve) return getRef();
         return basicGetRef();
-      case CupidLanguagePackage.PATH_EXPR_TERM__GUARD:
-        return isGuard();
     }
     return super.eGet(featureID, resolve, coreType);
   }
@@ -175,11 +208,11 @@ public class PathExprTermImpl extends PathExprImpl implements PathExprTerm
   {
     switch (featureID)
     {
+      case CupidLanguagePackage.PATH_EXPR_TERM__AXIS:
+        setAxis((Axis)newValue);
+        return;
       case CupidLanguagePackage.PATH_EXPR_TERM__REF:
         setRef((SubconceptOrAttribute)newValue);
-        return;
-      case CupidLanguagePackage.PATH_EXPR_TERM__GUARD:
-        setGuard((Boolean)newValue);
         return;
     }
     super.eSet(featureID, newValue);
@@ -195,11 +228,11 @@ public class PathExprTermImpl extends PathExprImpl implements PathExprTerm
   {
     switch (featureID)
     {
+      case CupidLanguagePackage.PATH_EXPR_TERM__AXIS:
+        setAxis((Axis)null);
+        return;
       case CupidLanguagePackage.PATH_EXPR_TERM__REF:
         setRef((SubconceptOrAttribute)null);
-        return;
-      case CupidLanguagePackage.PATH_EXPR_TERM__GUARD:
-        setGuard(GUARD_EDEFAULT);
         return;
     }
     super.eUnset(featureID);
@@ -215,29 +248,12 @@ public class PathExprTermImpl extends PathExprImpl implements PathExprTerm
   {
     switch (featureID)
     {
+      case CupidLanguagePackage.PATH_EXPR_TERM__AXIS:
+        return axis != null;
       case CupidLanguagePackage.PATH_EXPR_TERM__REF:
         return ref != null;
-      case CupidLanguagePackage.PATH_EXPR_TERM__GUARD:
-        return guard != GUARD_EDEFAULT;
     }
     return super.eIsSet(featureID);
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  @Override
-  public String toString()
-  {
-    if (eIsProxy()) return super.toString();
-
-    StringBuffer result = new StringBuffer(super.toString());
-    result.append(" (guard: ");
-    result.append(guard);
-    result.append(')');
-    return result.toString();
   }
 
 } //PathExprTermImpl

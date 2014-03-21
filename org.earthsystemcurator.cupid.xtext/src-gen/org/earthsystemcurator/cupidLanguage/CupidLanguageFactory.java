@@ -221,6 +221,15 @@ public interface CupidLanguageFactory extends EFactory
   PathExpr createPathExpr();
 
   /**
+   * Returns a new object of class '<em>Axis</em>'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return a new object of class '<em>Axis</em>'.
+   * @generated
+   */
+  Axis createAxis();
+
+  /**
    * Returns a new object of class '<em>Path Expr Term</em>'.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->

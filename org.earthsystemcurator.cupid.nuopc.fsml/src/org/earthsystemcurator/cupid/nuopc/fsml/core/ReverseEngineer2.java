@@ -3,6 +3,7 @@ package org.earthsystemcurator.cupid.nuopc.fsml.core;
 
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.IdentityHashMap;
 import java.util.Map;
@@ -147,25 +148,19 @@ public class ReverseEngineer2 {
 	
 	
 	@SuppressWarnings("unchecked")
-	private static EObject reverse(FSM fsm, Object fortranElem, ConceptDef conceptDef, EObject modelElem, Map<Object,Object> mappings, EFactory factory) {
+	private static EObject reverse(FSM<?> fsm, Object fortranElem, ConceptDef conceptDef, EObject modelElem, Map<Object,Object> mappings, EFactory factory) {
 		
 		//assume a successful mapping (required for looking up mappings during recursive calls)
 		//mapping will be removed later if it fails
 		mappings.put(modelElem, fortranElem);	
-				
-		//if (conceptDef == null) {
-			//no concept definition, so the mapping survives
-		//	return modelElem;
-	//	}
-		
-		
+					
 		Map<Object, Object> mappingsToAdd = new IdentityHashMap<Object, Object>();
 								
 		for (SubconceptOrAttribute subconcept : conceptDef.getChild()) {
 		
-			//if (subconcept.getName().equalsIgnoreCase("implementsInitP1")) {
-			//	System.out.println("implementsInitP1");
-			//}
+			if (subconcept.getName().equalsIgnoreCase("implementsSubroutine")) {
+				System.out.println("implementsSubroutine");
+			}
 			
 			//find structural feature
 			EStructuralFeature structuralFeature = modelElem.eClass().getEStructuralFeature(subconcept.getName());
@@ -190,11 +185,11 @@ public class ReverseEngineer2 {
 			
 			if (explicitContextMapping != null) {
 			
-				explicitContextMapping.setMapping((ImplicitContextMapping) fsm.replacePathExprWithValues(explicitContextMapping.getMapping(), modelElem));
+				explicitContextMapping.setMapping((ImplicitContextMapping) fsm.replacePathExprWithValues(explicitContextMapping.getMapping(), modelElem, true));
 			
 				if (explicitContextMapping.getContext() != null) {
-					//explicit context
-					EObject contextElement = (EObject) fsm.getValueFromModel(explicitContextMapping.getContext(), modelElem, (EObject) null);
+					//explicit context - need to navigate elsewhere in the tree
+					EObject contextElement = (EObject) fsm.getValueFromModel(explicitContextMapping.getContext(), modelElem, true, (EObject) null);
 					//if (contextElement == null) {
 					//	throw new RuntimeException("No element for path expression: " + explicitContextMapping.getContext());
 					//}
@@ -260,7 +255,7 @@ public class ReverseEngineer2 {
 							}
 							for (String res : resultSet) {
 								if (structuralFeature.isMany()) {
-									EList el = (EList) modelElem.eGet(structuralFeature);
+									EList<String> el = (EList<String>) modelElem.eGet(structuralFeature);
 									el.add(res);
 								}
 								else {
@@ -274,7 +269,7 @@ public class ReverseEngineer2 {
 							
 							Set<Object> resultSet = null;
 							if (result instanceof Map) {
-								resultSet = ((Map) result).keySet();
+								resultSet = ((Map<Object, ?>) result).keySet();
 							}
 							else {
 								resultSet = (Set<Object>) result;
@@ -284,56 +279,89 @@ public class ReverseEngineer2 {
 								
 								EObject newModelElem = factory.create((EClass) structuralFeature.getEType());
 								
+								// set up parent relationship for references (may be removed later)									
+								if (structuralFeature.isMany()) {
+									EList<EObject> el = (EList<EObject>) modelElem.eGet(structuralFeature);
+									el.add(newModelElem);
+								}
+								else {
+									modelElem.eSet(structuralFeature, newModelElem);
+								}
+										
+								
 								//set binding in model
+								Map<PathExpr, String> undoBindings = null;
 								if (result instanceof Map) {
 									Map<PathExpr, String> bindings = ((Map<?, Map<PathExpr, String>>) result).get(newFortranElem);
 									if (bindings != null) {
+										undoBindings = new HashMap<PathExpr, String>();
+										
 										for (Entry<PathExpr, String> binding : bindings.entrySet()) {
-											fsm.setValueInModel(binding.getKey(), newModelElem, binding.getValue());
+											String oldValue = fsm.setValueInModel(binding.getKey(), newModelElem, binding.getValue());
+											undoBindings.put(binding.getKey(), oldValue);
 											//if (!featureSet) {
 											//	System.out.println("Feature not set: " + binding.getKey());
 											//}
 										}
 									}
 								}
-								
-								// set up parent relationship for references (may be removed later)									
-								if (structuralFeature.isMany()) {
-									EList el = (EList) modelElem.eGet(structuralFeature);
-									el.add(newModelElem);
-								}
-								else {
-									modelElem.eSet(structuralFeature, newModelElem);
-								}
-																
+														
 								//recursive call
 								EObject newModelElemRet = reverse(fsm, newFortranElem, subconceptDef, newModelElem, mappings, factory);
 								
-								// if NULL returned, then mapping failed, so remove element from parent
+								// if NULL returned, then mapping failed, so revert to previous state
+								// this involves:
+								// - removing the newly created element from its parent
+								// - undoing the bindings we set above
 								if (newModelElemRet == null) {
+									
+									//remove new element from the model
 									if (structuralFeature.isMany()) {
-										EList el = (EList) modelElem.eGet(structuralFeature);
+										EList<EObject> el = (EList<EObject>) modelElem.eGet(structuralFeature);
 										el.remove(newModelElem);
 									}
 									else {
 										//TODO: consider replacing with previous value?
 										modelElem.eUnset(structuralFeature);
 									}
+									
+									//undo the bindings
+									if (undoBindings != null) {
+										for (Entry<PathExpr, String> binding : undoBindings.entrySet()) {
+											fsm.setValueInModel(binding.getKey(), newModelElem, binding.getValue());
+										}
+									}
+										
 								}
+								
+								//TODO:
+								// at this point there are other matches that still need to be checked
+								// if the any of the following essential subconcepts fail, then
+								// we need to try one of the matches
+								
+								
 								else if (!structuralFeature.isMany()) {
 									if (resultSet.size() > 1) {
 										System.out.println("Warning: Some matching elements ignored because subconcept is singular: " + subconcept.getName());
+										for (Object ignoredElement : resultSet) {
+											if (!ignoredElement.equals(newFortranElem)) {
+												System.out.println("\tIgnored element: " + ignoredElement);
+											}
+										}
 									}
 									break; // take first one that is not null
 								}									
 							
-							}
+							} //end for loop of matched fortran elements
 								
 						} // end check for primitives vs. objects in results
 						
-			}				
-				}
-			}
+					} //end check for return type of set or map	
+					
+				} //end check for existence of fortran context element
+				
+			} // end check for whether a mapping is defined
+
 			else if (!subconcept.isAttrib()) {
 				//this means there is no mapping defined - if it is an EReference (non-attribute), then we create 
 				//the target and its children determine whether the mapping holds
@@ -341,7 +369,7 @@ public class ReverseEngineer2 {
 						
 				EObject newModelElem = factory.create((EClass) structuralFeature.getEType());
 				if (structuralFeature.isMany()) {
-					EList el = (EList) modelElem.eGet(structuralFeature);
+					EList<EObject> el = (EList<EObject>) modelElem.eGet(structuralFeature);
 					el.add(newModelElem);
 				}
 				else {
@@ -350,7 +378,7 @@ public class ReverseEngineer2 {
 				EObject newModelElemRet = reverse(fsm, fortranElem, subconceptDef, newModelElem, mappings, factory);
 				if (newModelElemRet == null) {
 					if (structuralFeature.isMany()) {
-						EList el = (EList) modelElem.eGet(structuralFeature);
+						EList<EObject> el = (EList<EObject>) modelElem.eGet(structuralFeature);
 						el.remove(newModelElem);
 					}
 					else {
