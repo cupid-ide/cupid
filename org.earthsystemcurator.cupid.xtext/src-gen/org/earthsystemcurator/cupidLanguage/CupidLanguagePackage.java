@@ -841,7 +841,7 @@ public interface CupidLanguagePackage extends EPackage
   int ACTUAL_PARAM_BY_KEYWORD = 18;
 
   /**
-   * The feature id for the '<em><b>Keyword</b></em>' containment reference.
+   * The feature id for the '<em><b>Keyword</b></em>' attribute.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @generated
@@ -850,22 +850,13 @@ public interface CupidLanguagePackage extends EPackage
   int ACTUAL_PARAM_BY_KEYWORD__KEYWORD = IMPLICIT_CONTEXT_MAPPING_FEATURE_COUNT + 0;
 
   /**
-   * The feature id for the '<em><b>Value</b></em>' containment reference.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   * @ordered
-   */
-  int ACTUAL_PARAM_BY_KEYWORD__VALUE = IMPLICIT_CONTEXT_MAPPING_FEATURE_COUNT + 1;
-
-  /**
    * The number of structural features of the '<em>Actual Param By Keyword</em>' class.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @generated
    * @ordered
    */
-  int ACTUAL_PARAM_BY_KEYWORD_FEATURE_COUNT = IMPLICIT_CONTEXT_MAPPING_FEATURE_COUNT + 2;
+  int ACTUAL_PARAM_BY_KEYWORD_FEATURE_COUNT = IMPLICIT_CONTEXT_MAPPING_FEATURE_COUNT + 1;
 
   /**
    * The meta object id for the '{@link org.earthsystemcurator.cupidLanguage.impl.IDOrPathExprImpl <em>ID Or Path Expr</em>}' class.
@@ -1799,26 +1790,15 @@ public interface CupidLanguagePackage extends EPackage
   EClass getActualParamByKeyword();
 
   /**
-   * Returns the meta object for the containment reference '{@link org.earthsystemcurator.cupidLanguage.ActualParamByKeyword#getKeyword <em>Keyword</em>}'.
+   * Returns the meta object for the attribute '{@link org.earthsystemcurator.cupidLanguage.ActualParamByKeyword#getKeyword <em>Keyword</em>}'.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @return the meta object for the containment reference '<em>Keyword</em>'.
+   * @return the meta object for the attribute '<em>Keyword</em>'.
    * @see org.earthsystemcurator.cupidLanguage.ActualParamByKeyword#getKeyword()
    * @see #getActualParamByKeyword()
    * @generated
    */
-  EReference getActualParamByKeyword_Keyword();
-
-  /**
-   * Returns the meta object for the containment reference '{@link org.earthsystemcurator.cupidLanguage.ActualParamByKeyword#getValue <em>Value</em>}'.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @return the meta object for the containment reference '<em>Value</em>'.
-   * @see org.earthsystemcurator.cupidLanguage.ActualParamByKeyword#getValue()
-   * @see #getActualParamByKeyword()
-   * @generated
-   */
-  EReference getActualParamByKeyword_Value();
+  EAttribute getActualParamByKeyword_Keyword();
 
   /**
    * Returns the meta object for class '{@link org.earthsystemcurator.cupidLanguage.IDOrWildcard <em>ID Or Wildcard</em>}'.
@@ -2556,20 +2536,12 @@ public interface CupidLanguagePackage extends EPackage
     EClass ACTUAL_PARAM_BY_KEYWORD = eINSTANCE.getActualParamByKeyword();
 
     /**
-     * The meta object literal for the '<em><b>Keyword</b></em>' containment reference feature.
+     * The meta object literal for the '<em><b>Keyword</b></em>' attribute feature.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @generated
      */
-    EReference ACTUAL_PARAM_BY_KEYWORD__KEYWORD = eINSTANCE.getActualParamByKeyword_Keyword();
-
-    /**
-     * The meta object literal for the '<em><b>Value</b></em>' containment reference feature.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    EReference ACTUAL_PARAM_BY_KEYWORD__VALUE = eINSTANCE.getActualParamByKeyword_Value();
+    EAttribute ACTUAL_PARAM_BY_KEYWORD__KEYWORD = eINSTANCE.getActualParamByKeyword_Keyword();
 
     /**
      * The meta object literal for the '{@link org.earthsystemcurator.cupidLanguage.impl.IDOrWildcardImpl <em>ID Or Wildcard</em>}' class.

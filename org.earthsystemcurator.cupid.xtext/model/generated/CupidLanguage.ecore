@@ -107,10 +107,7 @@
         containment="true"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="ActualParamByKeyword" eSuperTypes="#//ImplicitContextMapping">
-    <eStructuralFeatures xsi:type="ecore:EReference" name="keyword" eType="#//IDOrPathExpr"
-        containment="true"/>
-    <eStructuralFeatures xsi:type="ecore:EReference" name="value" eType="#//IDOrPathExpr"
-        containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="keyword" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="IDOrWildcard" eSuperTypes="#//IDOrPathExpr">
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="id" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>

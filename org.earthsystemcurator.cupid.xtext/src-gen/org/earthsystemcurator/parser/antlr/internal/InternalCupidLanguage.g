@@ -1953,51 +1953,25 @@ ruleActualParamByKeyword returns [EObject current=null]
     }
 (
 (
-		{ 
-	        newCompositeNode(grammarAccess.getActualParamByKeywordAccess().getKeywordIDOrPathExprParserRuleCall_2_0()); 
-	    }
-		lv_keyword_2_0=ruleIDOrPathExpr		{
+		lv_keyword_2_0=RULE_ID
+		{
+			newLeafNode(lv_keyword_2_0, grammarAccess.getActualParamByKeywordAccess().getKeywordIDTerminalRuleCall_2_0()); 
+		}
+		{
 	        if ($current==null) {
-	            $current = createModelElementForParent(grammarAccess.getActualParamByKeywordRule());
+	            $current = createModelElement(grammarAccess.getActualParamByKeywordRule());
 	        }
-       		set(
+       		setWithLastConsumed(
        			$current, 
        			"keyword",
         		lv_keyword_2_0, 
-        		"IDOrPathExpr");
-	        afterParserOrEnumRuleCall();
+        		"ID");
 	    }
 
 )
-)	otherlv_3='(' 
+)	otherlv_3=')' 
     {
-    	newLeafNode(otherlv_3, grammarAccess.getActualParamByKeywordAccess().getLeftParenthesisKeyword_3());
-    }
-(
-(
-		{ 
-	        newCompositeNode(grammarAccess.getActualParamByKeywordAccess().getValueIDOrPathExprParserRuleCall_4_0()); 
-	    }
-		lv_value_4_0=ruleIDOrPathExpr		{
-	        if ($current==null) {
-	            $current = createModelElementForParent(grammarAccess.getActualParamByKeywordRule());
-	        }
-       		set(
-       			$current, 
-       			"value",
-        		lv_value_4_0, 
-        		"IDOrPathExpr");
-	        afterParserOrEnumRuleCall();
-	    }
-
-)
-)	otherlv_5=')' 
-    {
-    	newLeafNode(otherlv_5, grammarAccess.getActualParamByKeywordAccess().getRightParenthesisKeyword_5());
-    }
-	otherlv_6=')' 
-    {
-    	newLeafNode(otherlv_6, grammarAccess.getActualParamByKeywordAccess().getRightParenthesisKeyword_6());
+    	newLeafNode(otherlv_3, grammarAccess.getActualParamByKeywordAccess().getRightParenthesisKeyword_3());
     }
 )
 ;

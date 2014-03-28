@@ -154,7 +154,6 @@ public class CupidLanguageParser extends AbstractContentAssistParser {
 					put(grammarAccess.getActualParamAccess().getOptionalAssignment_0_1(), "rule__ActualParam__OptionalAssignment_0_1");
 					put(grammarAccess.getActualParamAccess().getValueAssignment_1(), "rule__ActualParam__ValueAssignment_1");
 					put(grammarAccess.getActualParamByKeywordAccess().getKeywordAssignment_2(), "rule__ActualParamByKeyword__KeywordAssignment_2");
-					put(grammarAccess.getActualParamByKeywordAccess().getValueAssignment_4(), "rule__ActualParamByKeyword__ValueAssignment_4");
 					put(grammarAccess.getIDOrWildcardAccess().getIdAssignment_0(), "rule__IDOrWildcard__IdAssignment_0");
 					put(grammarAccess.getIDOrWildcardAccess().getWildcardAssignment_1(), "rule__IDOrWildcard__WildcardAssignment_1");
 					put(grammarAccess.getIDOrPathExprAccess().getLiteralAssignment_2(), "rule__IDOrPathExpr__LiteralAssignment_2");

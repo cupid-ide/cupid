@@ -175,7 +175,9 @@ public class ForwardHandler extends AbstractHandler {
         		//TODO: see about doing this on an individual file basis
         		//TODO: deal with project files "out of sync" with file system
 	            //remove duplicates
-        		for (Object entry : new HashSet<Object>(rev.getMappings().values())) {
+        		//for (Object entry : new HashSet<Object>(rev.getMappings().values())) {
+        		//TODO: get flat list of mapped items from tree
+        		for (Object entry : new HashSet<Object>()) {
 	        		if (entry instanceof IFortranAST) {
 		            	
 	        			IFortranAST ast = (IFortranAST) entry;

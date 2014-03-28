@@ -2512,11 +2512,11 @@ public class InternalCupidLanguageParser extends AbstractInternalContentAssistPa
             if ( (LA2_0==18) ) {
                 int LA2_1 = input.LA(2);
 
-                if ( (LA2_1==33) ) {
-                    alt2=1;
-                }
-                else if ( (LA2_1==RULE_ID) ) {
+                if ( (LA2_1==RULE_ID) ) {
                     alt2=3;
+                }
+                else if ( (LA2_1==33) ) {
+                    alt2=1;
                 }
                 else {
                     NoViableAltException nvae =
@@ -14272,22 +14272,17 @@ public class InternalCupidLanguageParser extends AbstractInternalContentAssistPa
 
 
     // $ANTLR start "rule__ActualParamByKeyword__Group__3"
-    // ../org.earthsystemcurator.cupid.xtext.ui/src-gen/org/earthsystemcurator/ui/contentassist/antlr/internal/InternalCupidLanguage.g:5251:1: rule__ActualParamByKeyword__Group__3 : rule__ActualParamByKeyword__Group__3__Impl rule__ActualParamByKeyword__Group__4 ;
+    // ../org.earthsystemcurator.cupid.xtext.ui/src-gen/org/earthsystemcurator/ui/contentassist/antlr/internal/InternalCupidLanguage.g:5251:1: rule__ActualParamByKeyword__Group__3 : rule__ActualParamByKeyword__Group__3__Impl ;
     public final void rule__ActualParamByKeyword__Group__3() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // ../org.earthsystemcurator.cupid.xtext.ui/src-gen/org/earthsystemcurator/ui/contentassist/antlr/internal/InternalCupidLanguage.g:5255:1: ( rule__ActualParamByKeyword__Group__3__Impl rule__ActualParamByKeyword__Group__4 )
-            // ../org.earthsystemcurator.cupid.xtext.ui/src-gen/org/earthsystemcurator/ui/contentassist/antlr/internal/InternalCupidLanguage.g:5256:2: rule__ActualParamByKeyword__Group__3__Impl rule__ActualParamByKeyword__Group__4
+            // ../org.earthsystemcurator.cupid.xtext.ui/src-gen/org/earthsystemcurator/ui/contentassist/antlr/internal/InternalCupidLanguage.g:5255:1: ( rule__ActualParamByKeyword__Group__3__Impl )
+            // ../org.earthsystemcurator.cupid.xtext.ui/src-gen/org/earthsystemcurator/ui/contentassist/antlr/internal/InternalCupidLanguage.g:5256:2: rule__ActualParamByKeyword__Group__3__Impl
             {
             pushFollow(FOLLOW_rule__ActualParamByKeyword__Group__3__Impl_in_rule__ActualParamByKeyword__Group__310586);
             rule__ActualParamByKeyword__Group__3__Impl();
-
-            state._fsp--;
-
-            pushFollow(FOLLOW_rule__ActualParamByKeyword__Group__4_in_rule__ActualParamByKeyword__Group__310589);
-            rule__ActualParamByKeyword__Group__4();
 
             state._fsp--;
 
@@ -14310,21 +14305,21 @@ public class InternalCupidLanguageParser extends AbstractInternalContentAssistPa
 
 
     // $ANTLR start "rule__ActualParamByKeyword__Group__3__Impl"
-    // ../org.earthsystemcurator.cupid.xtext.ui/src-gen/org/earthsystemcurator/ui/contentassist/antlr/internal/InternalCupidLanguage.g:5263:1: rule__ActualParamByKeyword__Group__3__Impl : ( '(' ) ;
+    // ../org.earthsystemcurator.cupid.xtext.ui/src-gen/org/earthsystemcurator/ui/contentassist/antlr/internal/InternalCupidLanguage.g:5262:1: rule__ActualParamByKeyword__Group__3__Impl : ( ')' ) ;
     public final void rule__ActualParamByKeyword__Group__3__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // ../org.earthsystemcurator.cupid.xtext.ui/src-gen/org/earthsystemcurator/ui/contentassist/antlr/internal/InternalCupidLanguage.g:5267:1: ( ( '(' ) )
-            // ../org.earthsystemcurator.cupid.xtext.ui/src-gen/org/earthsystemcurator/ui/contentassist/antlr/internal/InternalCupidLanguage.g:5268:1: ( '(' )
+            // ../org.earthsystemcurator.cupid.xtext.ui/src-gen/org/earthsystemcurator/ui/contentassist/antlr/internal/InternalCupidLanguage.g:5266:1: ( ( ')' ) )
+            // ../org.earthsystemcurator.cupid.xtext.ui/src-gen/org/earthsystemcurator/ui/contentassist/antlr/internal/InternalCupidLanguage.g:5267:1: ( ')' )
             {
-            // ../org.earthsystemcurator.cupid.xtext.ui/src-gen/org/earthsystemcurator/ui/contentassist/antlr/internal/InternalCupidLanguage.g:5268:1: ( '(' )
-            // ../org.earthsystemcurator.cupid.xtext.ui/src-gen/org/earthsystemcurator/ui/contentassist/antlr/internal/InternalCupidLanguage.g:5269:1: '('
+            // ../org.earthsystemcurator.cupid.xtext.ui/src-gen/org/earthsystemcurator/ui/contentassist/antlr/internal/InternalCupidLanguage.g:5267:1: ( ')' )
+            // ../org.earthsystemcurator.cupid.xtext.ui/src-gen/org/earthsystemcurator/ui/contentassist/antlr/internal/InternalCupidLanguage.g:5268:1: ')'
             {
-             before(grammarAccess.getActualParamByKeywordAccess().getLeftParenthesisKeyword_3()); 
-            match(input,20,FOLLOW_20_in_rule__ActualParamByKeyword__Group__3__Impl10617); 
-             after(grammarAccess.getActualParamByKeywordAccess().getLeftParenthesisKeyword_3()); 
+             before(grammarAccess.getActualParamByKeywordAccess().getRightParenthesisKeyword_3()); 
+            match(input,21,FOLLOW_21_in_rule__ActualParamByKeyword__Group__3__Impl10614); 
+             after(grammarAccess.getActualParamByKeywordAccess().getRightParenthesisKeyword_3()); 
 
             }
 
@@ -14346,252 +14341,22 @@ public class InternalCupidLanguageParser extends AbstractInternalContentAssistPa
     // $ANTLR end "rule__ActualParamByKeyword__Group__3__Impl"
 
 
-    // $ANTLR start "rule__ActualParamByKeyword__Group__4"
-    // ../org.earthsystemcurator.cupid.xtext.ui/src-gen/org/earthsystemcurator/ui/contentassist/antlr/internal/InternalCupidLanguage.g:5282:1: rule__ActualParamByKeyword__Group__4 : rule__ActualParamByKeyword__Group__4__Impl rule__ActualParamByKeyword__Group__5 ;
-    public final void rule__ActualParamByKeyword__Group__4() throws RecognitionException {
-
-        		int stackSize = keepStackSize();
-            
-        try {
-            // ../org.earthsystemcurator.cupid.xtext.ui/src-gen/org/earthsystemcurator/ui/contentassist/antlr/internal/InternalCupidLanguage.g:5286:1: ( rule__ActualParamByKeyword__Group__4__Impl rule__ActualParamByKeyword__Group__5 )
-            // ../org.earthsystemcurator.cupid.xtext.ui/src-gen/org/earthsystemcurator/ui/contentassist/antlr/internal/InternalCupidLanguage.g:5287:2: rule__ActualParamByKeyword__Group__4__Impl rule__ActualParamByKeyword__Group__5
-            {
-            pushFollow(FOLLOW_rule__ActualParamByKeyword__Group__4__Impl_in_rule__ActualParamByKeyword__Group__410648);
-            rule__ActualParamByKeyword__Group__4__Impl();
-
-            state._fsp--;
-
-            pushFollow(FOLLOW_rule__ActualParamByKeyword__Group__5_in_rule__ActualParamByKeyword__Group__410651);
-            rule__ActualParamByKeyword__Group__5();
-
-            state._fsp--;
-
-
-            }
-
-        }
-        catch (RecognitionException re) {
-            reportError(re);
-            recover(input,re);
-        }
-        finally {
-
-            	restoreStackSize(stackSize);
-
-        }
-        return ;
-    }
-    // $ANTLR end "rule__ActualParamByKeyword__Group__4"
-
-
-    // $ANTLR start "rule__ActualParamByKeyword__Group__4__Impl"
-    // ../org.earthsystemcurator.cupid.xtext.ui/src-gen/org/earthsystemcurator/ui/contentassist/antlr/internal/InternalCupidLanguage.g:5294:1: rule__ActualParamByKeyword__Group__4__Impl : ( ( rule__ActualParamByKeyword__ValueAssignment_4 ) ) ;
-    public final void rule__ActualParamByKeyword__Group__4__Impl() throws RecognitionException {
-
-        		int stackSize = keepStackSize();
-            
-        try {
-            // ../org.earthsystemcurator.cupid.xtext.ui/src-gen/org/earthsystemcurator/ui/contentassist/antlr/internal/InternalCupidLanguage.g:5298:1: ( ( ( rule__ActualParamByKeyword__ValueAssignment_4 ) ) )
-            // ../org.earthsystemcurator.cupid.xtext.ui/src-gen/org/earthsystemcurator/ui/contentassist/antlr/internal/InternalCupidLanguage.g:5299:1: ( ( rule__ActualParamByKeyword__ValueAssignment_4 ) )
-            {
-            // ../org.earthsystemcurator.cupid.xtext.ui/src-gen/org/earthsystemcurator/ui/contentassist/antlr/internal/InternalCupidLanguage.g:5299:1: ( ( rule__ActualParamByKeyword__ValueAssignment_4 ) )
-            // ../org.earthsystemcurator.cupid.xtext.ui/src-gen/org/earthsystemcurator/ui/contentassist/antlr/internal/InternalCupidLanguage.g:5300:1: ( rule__ActualParamByKeyword__ValueAssignment_4 )
-            {
-             before(grammarAccess.getActualParamByKeywordAccess().getValueAssignment_4()); 
-            // ../org.earthsystemcurator.cupid.xtext.ui/src-gen/org/earthsystemcurator/ui/contentassist/antlr/internal/InternalCupidLanguage.g:5301:1: ( rule__ActualParamByKeyword__ValueAssignment_4 )
-            // ../org.earthsystemcurator.cupid.xtext.ui/src-gen/org/earthsystemcurator/ui/contentassist/antlr/internal/InternalCupidLanguage.g:5301:2: rule__ActualParamByKeyword__ValueAssignment_4
-            {
-            pushFollow(FOLLOW_rule__ActualParamByKeyword__ValueAssignment_4_in_rule__ActualParamByKeyword__Group__4__Impl10678);
-            rule__ActualParamByKeyword__ValueAssignment_4();
-
-            state._fsp--;
-
-
-            }
-
-             after(grammarAccess.getActualParamByKeywordAccess().getValueAssignment_4()); 
-
-            }
-
-
-            }
-
-        }
-        catch (RecognitionException re) {
-            reportError(re);
-            recover(input,re);
-        }
-        finally {
-
-            	restoreStackSize(stackSize);
-
-        }
-        return ;
-    }
-    // $ANTLR end "rule__ActualParamByKeyword__Group__4__Impl"
-
-
-    // $ANTLR start "rule__ActualParamByKeyword__Group__5"
-    // ../org.earthsystemcurator.cupid.xtext.ui/src-gen/org/earthsystemcurator/ui/contentassist/antlr/internal/InternalCupidLanguage.g:5311:1: rule__ActualParamByKeyword__Group__5 : rule__ActualParamByKeyword__Group__5__Impl rule__ActualParamByKeyword__Group__6 ;
-    public final void rule__ActualParamByKeyword__Group__5() throws RecognitionException {
-
-        		int stackSize = keepStackSize();
-            
-        try {
-            // ../org.earthsystemcurator.cupid.xtext.ui/src-gen/org/earthsystemcurator/ui/contentassist/antlr/internal/InternalCupidLanguage.g:5315:1: ( rule__ActualParamByKeyword__Group__5__Impl rule__ActualParamByKeyword__Group__6 )
-            // ../org.earthsystemcurator.cupid.xtext.ui/src-gen/org/earthsystemcurator/ui/contentassist/antlr/internal/InternalCupidLanguage.g:5316:2: rule__ActualParamByKeyword__Group__5__Impl rule__ActualParamByKeyword__Group__6
-            {
-            pushFollow(FOLLOW_rule__ActualParamByKeyword__Group__5__Impl_in_rule__ActualParamByKeyword__Group__510708);
-            rule__ActualParamByKeyword__Group__5__Impl();
-
-            state._fsp--;
-
-            pushFollow(FOLLOW_rule__ActualParamByKeyword__Group__6_in_rule__ActualParamByKeyword__Group__510711);
-            rule__ActualParamByKeyword__Group__6();
-
-            state._fsp--;
-
-
-            }
-
-        }
-        catch (RecognitionException re) {
-            reportError(re);
-            recover(input,re);
-        }
-        finally {
-
-            	restoreStackSize(stackSize);
-
-        }
-        return ;
-    }
-    // $ANTLR end "rule__ActualParamByKeyword__Group__5"
-
-
-    // $ANTLR start "rule__ActualParamByKeyword__Group__5__Impl"
-    // ../org.earthsystemcurator.cupid.xtext.ui/src-gen/org/earthsystemcurator/ui/contentassist/antlr/internal/InternalCupidLanguage.g:5323:1: rule__ActualParamByKeyword__Group__5__Impl : ( ')' ) ;
-    public final void rule__ActualParamByKeyword__Group__5__Impl() throws RecognitionException {
-
-        		int stackSize = keepStackSize();
-            
-        try {
-            // ../org.earthsystemcurator.cupid.xtext.ui/src-gen/org/earthsystemcurator/ui/contentassist/antlr/internal/InternalCupidLanguage.g:5327:1: ( ( ')' ) )
-            // ../org.earthsystemcurator.cupid.xtext.ui/src-gen/org/earthsystemcurator/ui/contentassist/antlr/internal/InternalCupidLanguage.g:5328:1: ( ')' )
-            {
-            // ../org.earthsystemcurator.cupid.xtext.ui/src-gen/org/earthsystemcurator/ui/contentassist/antlr/internal/InternalCupidLanguage.g:5328:1: ( ')' )
-            // ../org.earthsystemcurator.cupid.xtext.ui/src-gen/org/earthsystemcurator/ui/contentassist/antlr/internal/InternalCupidLanguage.g:5329:1: ')'
-            {
-             before(grammarAccess.getActualParamByKeywordAccess().getRightParenthesisKeyword_5()); 
-            match(input,21,FOLLOW_21_in_rule__ActualParamByKeyword__Group__5__Impl10739); 
-             after(grammarAccess.getActualParamByKeywordAccess().getRightParenthesisKeyword_5()); 
-
-            }
-
-
-            }
-
-        }
-        catch (RecognitionException re) {
-            reportError(re);
-            recover(input,re);
-        }
-        finally {
-
-            	restoreStackSize(stackSize);
-
-        }
-        return ;
-    }
-    // $ANTLR end "rule__ActualParamByKeyword__Group__5__Impl"
-
-
-    // $ANTLR start "rule__ActualParamByKeyword__Group__6"
-    // ../org.earthsystemcurator.cupid.xtext.ui/src-gen/org/earthsystemcurator/ui/contentassist/antlr/internal/InternalCupidLanguage.g:5342:1: rule__ActualParamByKeyword__Group__6 : rule__ActualParamByKeyword__Group__6__Impl ;
-    public final void rule__ActualParamByKeyword__Group__6() throws RecognitionException {
-
-        		int stackSize = keepStackSize();
-            
-        try {
-            // ../org.earthsystemcurator.cupid.xtext.ui/src-gen/org/earthsystemcurator/ui/contentassist/antlr/internal/InternalCupidLanguage.g:5346:1: ( rule__ActualParamByKeyword__Group__6__Impl )
-            // ../org.earthsystemcurator.cupid.xtext.ui/src-gen/org/earthsystemcurator/ui/contentassist/antlr/internal/InternalCupidLanguage.g:5347:2: rule__ActualParamByKeyword__Group__6__Impl
-            {
-            pushFollow(FOLLOW_rule__ActualParamByKeyword__Group__6__Impl_in_rule__ActualParamByKeyword__Group__610770);
-            rule__ActualParamByKeyword__Group__6__Impl();
-
-            state._fsp--;
-
-
-            }
-
-        }
-        catch (RecognitionException re) {
-            reportError(re);
-            recover(input,re);
-        }
-        finally {
-
-            	restoreStackSize(stackSize);
-
-        }
-        return ;
-    }
-    // $ANTLR end "rule__ActualParamByKeyword__Group__6"
-
-
-    // $ANTLR start "rule__ActualParamByKeyword__Group__6__Impl"
-    // ../org.earthsystemcurator.cupid.xtext.ui/src-gen/org/earthsystemcurator/ui/contentassist/antlr/internal/InternalCupidLanguage.g:5353:1: rule__ActualParamByKeyword__Group__6__Impl : ( ')' ) ;
-    public final void rule__ActualParamByKeyword__Group__6__Impl() throws RecognitionException {
-
-        		int stackSize = keepStackSize();
-            
-        try {
-            // ../org.earthsystemcurator.cupid.xtext.ui/src-gen/org/earthsystemcurator/ui/contentassist/antlr/internal/InternalCupidLanguage.g:5357:1: ( ( ')' ) )
-            // ../org.earthsystemcurator.cupid.xtext.ui/src-gen/org/earthsystemcurator/ui/contentassist/antlr/internal/InternalCupidLanguage.g:5358:1: ( ')' )
-            {
-            // ../org.earthsystemcurator.cupid.xtext.ui/src-gen/org/earthsystemcurator/ui/contentassist/antlr/internal/InternalCupidLanguage.g:5358:1: ( ')' )
-            // ../org.earthsystemcurator.cupid.xtext.ui/src-gen/org/earthsystemcurator/ui/contentassist/antlr/internal/InternalCupidLanguage.g:5359:1: ')'
-            {
-             before(grammarAccess.getActualParamByKeywordAccess().getRightParenthesisKeyword_6()); 
-            match(input,21,FOLLOW_21_in_rule__ActualParamByKeyword__Group__6__Impl10798); 
-             after(grammarAccess.getActualParamByKeywordAccess().getRightParenthesisKeyword_6()); 
-
-            }
-
-
-            }
-
-        }
-        catch (RecognitionException re) {
-            reportError(re);
-            recover(input,re);
-        }
-        finally {
-
-            	restoreStackSize(stackSize);
-
-        }
-        return ;
-    }
-    // $ANTLR end "rule__ActualParamByKeyword__Group__6__Impl"
-
-
     // $ANTLR start "rule__PathExpr__Group__0"
-    // ../org.earthsystemcurator.cupid.xtext.ui/src-gen/org/earthsystemcurator/ui/contentassist/antlr/internal/InternalCupidLanguage.g:5386:1: rule__PathExpr__Group__0 : rule__PathExpr__Group__0__Impl rule__PathExpr__Group__1 ;
+    // ../org.earthsystemcurator.cupid.xtext.ui/src-gen/org/earthsystemcurator/ui/contentassist/antlr/internal/InternalCupidLanguage.g:5289:1: rule__PathExpr__Group__0 : rule__PathExpr__Group__0__Impl rule__PathExpr__Group__1 ;
     public final void rule__PathExpr__Group__0() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // ../org.earthsystemcurator.cupid.xtext.ui/src-gen/org/earthsystemcurator/ui/contentassist/antlr/internal/InternalCupidLanguage.g:5390:1: ( rule__PathExpr__Group__0__Impl rule__PathExpr__Group__1 )
-            // ../org.earthsystemcurator.cupid.xtext.ui/src-gen/org/earthsystemcurator/ui/contentassist/antlr/internal/InternalCupidLanguage.g:5391:2: rule__PathExpr__Group__0__Impl rule__PathExpr__Group__1
+            // ../org.earthsystemcurator.cupid.xtext.ui/src-gen/org/earthsystemcurator/ui/contentassist/antlr/internal/InternalCupidLanguage.g:5293:1: ( rule__PathExpr__Group__0__Impl rule__PathExpr__Group__1 )
+            // ../org.earthsystemcurator.cupid.xtext.ui/src-gen/org/earthsystemcurator/ui/contentassist/antlr/internal/InternalCupidLanguage.g:5294:2: rule__PathExpr__Group__0__Impl rule__PathExpr__Group__1
             {
-            pushFollow(FOLLOW_rule__PathExpr__Group__0__Impl_in_rule__PathExpr__Group__010843);
+            pushFollow(FOLLOW_rule__PathExpr__Group__0__Impl_in_rule__PathExpr__Group__010653);
             rule__PathExpr__Group__0__Impl();
 
             state._fsp--;
 
-            pushFollow(FOLLOW_rule__PathExpr__Group__1_in_rule__PathExpr__Group__010846);
+            pushFollow(FOLLOW_rule__PathExpr__Group__1_in_rule__PathExpr__Group__010656);
             rule__PathExpr__Group__1();
 
             state._fsp--;
@@ -14615,20 +14380,20 @@ public class InternalCupidLanguageParser extends AbstractInternalContentAssistPa
 
 
     // $ANTLR start "rule__PathExpr__Group__0__Impl"
-    // ../org.earthsystemcurator.cupid.xtext.ui/src-gen/org/earthsystemcurator/ui/contentassist/antlr/internal/InternalCupidLanguage.g:5398:1: rule__PathExpr__Group__0__Impl : ( '#' ) ;
+    // ../org.earthsystemcurator.cupid.xtext.ui/src-gen/org/earthsystemcurator/ui/contentassist/antlr/internal/InternalCupidLanguage.g:5301:1: rule__PathExpr__Group__0__Impl : ( '#' ) ;
     public final void rule__PathExpr__Group__0__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // ../org.earthsystemcurator.cupid.xtext.ui/src-gen/org/earthsystemcurator/ui/contentassist/antlr/internal/InternalCupidLanguage.g:5402:1: ( ( '#' ) )
-            // ../org.earthsystemcurator.cupid.xtext.ui/src-gen/org/earthsystemcurator/ui/contentassist/antlr/internal/InternalCupidLanguage.g:5403:1: ( '#' )
+            // ../org.earthsystemcurator.cupid.xtext.ui/src-gen/org/earthsystemcurator/ui/contentassist/antlr/internal/InternalCupidLanguage.g:5305:1: ( ( '#' ) )
+            // ../org.earthsystemcurator.cupid.xtext.ui/src-gen/org/earthsystemcurator/ui/contentassist/antlr/internal/InternalCupidLanguage.g:5306:1: ( '#' )
             {
-            // ../org.earthsystemcurator.cupid.xtext.ui/src-gen/org/earthsystemcurator/ui/contentassist/antlr/internal/InternalCupidLanguage.g:5403:1: ( '#' )
-            // ../org.earthsystemcurator.cupid.xtext.ui/src-gen/org/earthsystemcurator/ui/contentassist/antlr/internal/InternalCupidLanguage.g:5404:1: '#'
+            // ../org.earthsystemcurator.cupid.xtext.ui/src-gen/org/earthsystemcurator/ui/contentassist/antlr/internal/InternalCupidLanguage.g:5306:1: ( '#' )
+            // ../org.earthsystemcurator.cupid.xtext.ui/src-gen/org/earthsystemcurator/ui/contentassist/antlr/internal/InternalCupidLanguage.g:5307:1: '#'
             {
              before(grammarAccess.getPathExprAccess().getNumberSignKeyword_0()); 
-            match(input,31,FOLLOW_31_in_rule__PathExpr__Group__0__Impl10874); 
+            match(input,31,FOLLOW_31_in_rule__PathExpr__Group__0__Impl10684); 
              after(grammarAccess.getPathExprAccess().getNumberSignKeyword_0()); 
 
             }
@@ -14652,16 +14417,16 @@ public class InternalCupidLanguageParser extends AbstractInternalContentAssistPa
 
 
     // $ANTLR start "rule__PathExpr__Group__1"
-    // ../org.earthsystemcurator.cupid.xtext.ui/src-gen/org/earthsystemcurator/ui/contentassist/antlr/internal/InternalCupidLanguage.g:5417:1: rule__PathExpr__Group__1 : rule__PathExpr__Group__1__Impl ;
+    // ../org.earthsystemcurator.cupid.xtext.ui/src-gen/org/earthsystemcurator/ui/contentassist/antlr/internal/InternalCupidLanguage.g:5320:1: rule__PathExpr__Group__1 : rule__PathExpr__Group__1__Impl ;
     public final void rule__PathExpr__Group__1() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // ../org.earthsystemcurator.cupid.xtext.ui/src-gen/org/earthsystemcurator/ui/contentassist/antlr/internal/InternalCupidLanguage.g:5421:1: ( rule__PathExpr__Group__1__Impl )
-            // ../org.earthsystemcurator.cupid.xtext.ui/src-gen/org/earthsystemcurator/ui/contentassist/antlr/internal/InternalCupidLanguage.g:5422:2: rule__PathExpr__Group__1__Impl
+            // ../org.earthsystemcurator.cupid.xtext.ui/src-gen/org/earthsystemcurator/ui/contentassist/antlr/internal/InternalCupidLanguage.g:5324:1: ( rule__PathExpr__Group__1__Impl )
+            // ../org.earthsystemcurator.cupid.xtext.ui/src-gen/org/earthsystemcurator/ui/contentassist/antlr/internal/InternalCupidLanguage.g:5325:2: rule__PathExpr__Group__1__Impl
             {
-            pushFollow(FOLLOW_rule__PathExpr__Group__1__Impl_in_rule__PathExpr__Group__110905);
+            pushFollow(FOLLOW_rule__PathExpr__Group__1__Impl_in_rule__PathExpr__Group__110715);
             rule__PathExpr__Group__1__Impl();
 
             state._fsp--;
@@ -14685,20 +14450,20 @@ public class InternalCupidLanguageParser extends AbstractInternalContentAssistPa
 
 
     // $ANTLR start "rule__PathExpr__Group__1__Impl"
-    // ../org.earthsystemcurator.cupid.xtext.ui/src-gen/org/earthsystemcurator/ui/contentassist/antlr/internal/InternalCupidLanguage.g:5428:1: rule__PathExpr__Group__1__Impl : ( rulePathExprNode ) ;
+    // ../org.earthsystemcurator.cupid.xtext.ui/src-gen/org/earthsystemcurator/ui/contentassist/antlr/internal/InternalCupidLanguage.g:5331:1: rule__PathExpr__Group__1__Impl : ( rulePathExprNode ) ;
     public final void rule__PathExpr__Group__1__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // ../org.earthsystemcurator.cupid.xtext.ui/src-gen/org/earthsystemcurator/ui/contentassist/antlr/internal/InternalCupidLanguage.g:5432:1: ( ( rulePathExprNode ) )
-            // ../org.earthsystemcurator.cupid.xtext.ui/src-gen/org/earthsystemcurator/ui/contentassist/antlr/internal/InternalCupidLanguage.g:5433:1: ( rulePathExprNode )
+            // ../org.earthsystemcurator.cupid.xtext.ui/src-gen/org/earthsystemcurator/ui/contentassist/antlr/internal/InternalCupidLanguage.g:5335:1: ( ( rulePathExprNode ) )
+            // ../org.earthsystemcurator.cupid.xtext.ui/src-gen/org/earthsystemcurator/ui/contentassist/antlr/internal/InternalCupidLanguage.g:5336:1: ( rulePathExprNode )
             {
-            // ../org.earthsystemcurator.cupid.xtext.ui/src-gen/org/earthsystemcurator/ui/contentassist/antlr/internal/InternalCupidLanguage.g:5433:1: ( rulePathExprNode )
-            // ../org.earthsystemcurator.cupid.xtext.ui/src-gen/org/earthsystemcurator/ui/contentassist/antlr/internal/InternalCupidLanguage.g:5434:1: rulePathExprNode
+            // ../org.earthsystemcurator.cupid.xtext.ui/src-gen/org/earthsystemcurator/ui/contentassist/antlr/internal/InternalCupidLanguage.g:5336:1: ( rulePathExprNode )
+            // ../org.earthsystemcurator.cupid.xtext.ui/src-gen/org/earthsystemcurator/ui/contentassist/antlr/internal/InternalCupidLanguage.g:5337:1: rulePathExprNode
             {
              before(grammarAccess.getPathExprAccess().getPathExprNodeParserRuleCall_1()); 
-            pushFollow(FOLLOW_rulePathExprNode_in_rule__PathExpr__Group__1__Impl10932);
+            pushFollow(FOLLOW_rulePathExprNode_in_rule__PathExpr__Group__1__Impl10742);
             rulePathExprNode();
 
             state._fsp--;
@@ -14726,21 +14491,21 @@ public class InternalCupidLanguageParser extends AbstractInternalContentAssistPa
 
 
     // $ANTLR start "rule__PathExprNode__Group__0"
-    // ../org.earthsystemcurator.cupid.xtext.ui/src-gen/org/earthsystemcurator/ui/contentassist/antlr/internal/InternalCupidLanguage.g:5449:1: rule__PathExprNode__Group__0 : rule__PathExprNode__Group__0__Impl rule__PathExprNode__Group__1 ;
+    // ../org.earthsystemcurator.cupid.xtext.ui/src-gen/org/earthsystemcurator/ui/contentassist/antlr/internal/InternalCupidLanguage.g:5352:1: rule__PathExprNode__Group__0 : rule__PathExprNode__Group__0__Impl rule__PathExprNode__Group__1 ;
     public final void rule__PathExprNode__Group__0() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // ../org.earthsystemcurator.cupid.xtext.ui/src-gen/org/earthsystemcurator/ui/contentassist/antlr/internal/InternalCupidLanguage.g:5453:1: ( rule__PathExprNode__Group__0__Impl rule__PathExprNode__Group__1 )
-            // ../org.earthsystemcurator.cupid.xtext.ui/src-gen/org/earthsystemcurator/ui/contentassist/antlr/internal/InternalCupidLanguage.g:5454:2: rule__PathExprNode__Group__0__Impl rule__PathExprNode__Group__1
+            // ../org.earthsystemcurator.cupid.xtext.ui/src-gen/org/earthsystemcurator/ui/contentassist/antlr/internal/InternalCupidLanguage.g:5356:1: ( rule__PathExprNode__Group__0__Impl rule__PathExprNode__Group__1 )
+            // ../org.earthsystemcurator.cupid.xtext.ui/src-gen/org/earthsystemcurator/ui/contentassist/antlr/internal/InternalCupidLanguage.g:5357:2: rule__PathExprNode__Group__0__Impl rule__PathExprNode__Group__1
             {
-            pushFollow(FOLLOW_rule__PathExprNode__Group__0__Impl_in_rule__PathExprNode__Group__010965);
+            pushFollow(FOLLOW_rule__PathExprNode__Group__0__Impl_in_rule__PathExprNode__Group__010775);
             rule__PathExprNode__Group__0__Impl();
 
             state._fsp--;
 
-            pushFollow(FOLLOW_rule__PathExprNode__Group__1_in_rule__PathExprNode__Group__010968);
+            pushFollow(FOLLOW_rule__PathExprNode__Group__1_in_rule__PathExprNode__Group__010778);
             rule__PathExprNode__Group__1();
 
             state._fsp--;
@@ -14764,20 +14529,20 @@ public class InternalCupidLanguageParser extends AbstractInternalContentAssistPa
 
 
     // $ANTLR start "rule__PathExprNode__Group__0__Impl"
-    // ../org.earthsystemcurator.cupid.xtext.ui/src-gen/org/earthsystemcurator/ui/contentassist/antlr/internal/InternalCupidLanguage.g:5461:1: rule__PathExprNode__Group__0__Impl : ( rulePathExprTerm ) ;
+    // ../org.earthsystemcurator.cupid.xtext.ui/src-gen/org/earthsystemcurator/ui/contentassist/antlr/internal/InternalCupidLanguage.g:5364:1: rule__PathExprNode__Group__0__Impl : ( rulePathExprTerm ) ;
     public final void rule__PathExprNode__Group__0__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // ../org.earthsystemcurator.cupid.xtext.ui/src-gen/org/earthsystemcurator/ui/contentassist/antlr/internal/InternalCupidLanguage.g:5465:1: ( ( rulePathExprTerm ) )
-            // ../org.earthsystemcurator.cupid.xtext.ui/src-gen/org/earthsystemcurator/ui/contentassist/antlr/internal/InternalCupidLanguage.g:5466:1: ( rulePathExprTerm )
+            // ../org.earthsystemcurator.cupid.xtext.ui/src-gen/org/earthsystemcurator/ui/contentassist/antlr/internal/InternalCupidLanguage.g:5368:1: ( ( rulePathExprTerm ) )
+            // ../org.earthsystemcurator.cupid.xtext.ui/src-gen/org/earthsystemcurator/ui/contentassist/antlr/internal/InternalCupidLanguage.g:5369:1: ( rulePathExprTerm )
             {
-            // ../org.earthsystemcurator.cupid.xtext.ui/src-gen/org/earthsystemcurator/ui/contentassist/antlr/internal/InternalCupidLanguage.g:5466:1: ( rulePathExprTerm )
-            // ../org.earthsystemcurator.cupid.xtext.ui/src-gen/org/earthsystemcurator/ui/contentassist/antlr/internal/InternalCupidLanguage.g:5467:1: rulePathExprTerm
+            // ../org.earthsystemcurator.cupid.xtext.ui/src-gen/org/earthsystemcurator/ui/contentassist/antlr/internal/InternalCupidLanguage.g:5369:1: ( rulePathExprTerm )
+            // ../org.earthsystemcurator.cupid.xtext.ui/src-gen/org/earthsystemcurator/ui/contentassist/antlr/internal/InternalCupidLanguage.g:5370:1: rulePathExprTerm
             {
              before(grammarAccess.getPathExprNodeAccess().getPathExprTermParserRuleCall_0()); 
-            pushFollow(FOLLOW_rulePathExprTerm_in_rule__PathExprNode__Group__0__Impl10995);
+            pushFollow(FOLLOW_rulePathExprTerm_in_rule__PathExprNode__Group__0__Impl10805);
             rulePathExprTerm();
 
             state._fsp--;
@@ -14805,16 +14570,16 @@ public class InternalCupidLanguageParser extends AbstractInternalContentAssistPa
 
 
     // $ANTLR start "rule__PathExprNode__Group__1"
-    // ../org.earthsystemcurator.cupid.xtext.ui/src-gen/org/earthsystemcurator/ui/contentassist/antlr/internal/InternalCupidLanguage.g:5478:1: rule__PathExprNode__Group__1 : rule__PathExprNode__Group__1__Impl ;
+    // ../org.earthsystemcurator.cupid.xtext.ui/src-gen/org/earthsystemcurator/ui/contentassist/antlr/internal/InternalCupidLanguage.g:5381:1: rule__PathExprNode__Group__1 : rule__PathExprNode__Group__1__Impl ;
     public final void rule__PathExprNode__Group__1() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // ../org.earthsystemcurator.cupid.xtext.ui/src-gen/org/earthsystemcurator/ui/contentassist/antlr/internal/InternalCupidLanguage.g:5482:1: ( rule__PathExprNode__Group__1__Impl )
-            // ../org.earthsystemcurator.cupid.xtext.ui/src-gen/org/earthsystemcurator/ui/contentassist/antlr/internal/InternalCupidLanguage.g:5483:2: rule__PathExprNode__Group__1__Impl
+            // ../org.earthsystemcurator.cupid.xtext.ui/src-gen/org/earthsystemcurator/ui/contentassist/antlr/internal/InternalCupidLanguage.g:5385:1: ( rule__PathExprNode__Group__1__Impl )
+            // ../org.earthsystemcurator.cupid.xtext.ui/src-gen/org/earthsystemcurator/ui/contentassist/antlr/internal/InternalCupidLanguage.g:5386:2: rule__PathExprNode__Group__1__Impl
             {
-            pushFollow(FOLLOW_rule__PathExprNode__Group__1__Impl_in_rule__PathExprNode__Group__111024);
+            pushFollow(FOLLOW_rule__PathExprNode__Group__1__Impl_in_rule__PathExprNode__Group__110834);
             rule__PathExprNode__Group__1__Impl();
 
             state._fsp--;
@@ -14838,20 +14603,20 @@ public class InternalCupidLanguageParser extends AbstractInternalContentAssistPa
 
 
     // $ANTLR start "rule__PathExprNode__Group__1__Impl"
-    // ../org.earthsystemcurator.cupid.xtext.ui/src-gen/org/earthsystemcurator/ui/contentassist/antlr/internal/InternalCupidLanguage.g:5489:1: rule__PathExprNode__Group__1__Impl : ( ( rule__PathExprNode__Group_1__0 )* ) ;
+    // ../org.earthsystemcurator.cupid.xtext.ui/src-gen/org/earthsystemcurator/ui/contentassist/antlr/internal/InternalCupidLanguage.g:5392:1: rule__PathExprNode__Group__1__Impl : ( ( rule__PathExprNode__Group_1__0 )* ) ;
     public final void rule__PathExprNode__Group__1__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // ../org.earthsystemcurator.cupid.xtext.ui/src-gen/org/earthsystemcurator/ui/contentassist/antlr/internal/InternalCupidLanguage.g:5493:1: ( ( ( rule__PathExprNode__Group_1__0 )* ) )
-            // ../org.earthsystemcurator.cupid.xtext.ui/src-gen/org/earthsystemcurator/ui/contentassist/antlr/internal/InternalCupidLanguage.g:5494:1: ( ( rule__PathExprNode__Group_1__0 )* )
+            // ../org.earthsystemcurator.cupid.xtext.ui/src-gen/org/earthsystemcurator/ui/contentassist/antlr/internal/InternalCupidLanguage.g:5396:1: ( ( ( rule__PathExprNode__Group_1__0 )* ) )
+            // ../org.earthsystemcurator.cupid.xtext.ui/src-gen/org/earthsystemcurator/ui/contentassist/antlr/internal/InternalCupidLanguage.g:5397:1: ( ( rule__PathExprNode__Group_1__0 )* )
             {
-            // ../org.earthsystemcurator.cupid.xtext.ui/src-gen/org/earthsystemcurator/ui/contentassist/antlr/internal/InternalCupidLanguage.g:5494:1: ( ( rule__PathExprNode__Group_1__0 )* )
-            // ../org.earthsystemcurator.cupid.xtext.ui/src-gen/org/earthsystemcurator/ui/contentassist/antlr/internal/InternalCupidLanguage.g:5495:1: ( rule__PathExprNode__Group_1__0 )*
+            // ../org.earthsystemcurator.cupid.xtext.ui/src-gen/org/earthsystemcurator/ui/contentassist/antlr/internal/InternalCupidLanguage.g:5397:1: ( ( rule__PathExprNode__Group_1__0 )* )
+            // ../org.earthsystemcurator.cupid.xtext.ui/src-gen/org/earthsystemcurator/ui/contentassist/antlr/internal/InternalCupidLanguage.g:5398:1: ( rule__PathExprNode__Group_1__0 )*
             {
              before(grammarAccess.getPathExprNodeAccess().getGroup_1()); 
-            // ../org.earthsystemcurator.cupid.xtext.ui/src-gen/org/earthsystemcurator/ui/contentassist/antlr/internal/InternalCupidLanguage.g:5496:1: ( rule__PathExprNode__Group_1__0 )*
+            // ../org.earthsystemcurator.cupid.xtext.ui/src-gen/org/earthsystemcurator/ui/contentassist/antlr/internal/InternalCupidLanguage.g:5399:1: ( rule__PathExprNode__Group_1__0 )*
             loop45:
             do {
                 int alt45=2;
@@ -14864,9 +14629,9 @@ public class InternalCupidLanguageParser extends AbstractInternalContentAssistPa
 
                 switch (alt45) {
             	case 1 :
-            	    // ../org.earthsystemcurator.cupid.xtext.ui/src-gen/org/earthsystemcurator/ui/contentassist/antlr/internal/InternalCupidLanguage.g:5496:2: rule__PathExprNode__Group_1__0
+            	    // ../org.earthsystemcurator.cupid.xtext.ui/src-gen/org/earthsystemcurator/ui/contentassist/antlr/internal/InternalCupidLanguage.g:5399:2: rule__PathExprNode__Group_1__0
             	    {
-            	    pushFollow(FOLLOW_rule__PathExprNode__Group_1__0_in_rule__PathExprNode__Group__1__Impl11051);
+            	    pushFollow(FOLLOW_rule__PathExprNode__Group_1__0_in_rule__PathExprNode__Group__1__Impl10861);
             	    rule__PathExprNode__Group_1__0();
 
             	    state._fsp--;
@@ -14903,21 +14668,21 @@ public class InternalCupidLanguageParser extends AbstractInternalContentAssistPa
 
 
     // $ANTLR start "rule__PathExprNode__Group_1__0"
-    // ../org.earthsystemcurator.cupid.xtext.ui/src-gen/org/earthsystemcurator/ui/contentassist/antlr/internal/InternalCupidLanguage.g:5510:1: rule__PathExprNode__Group_1__0 : rule__PathExprNode__Group_1__0__Impl rule__PathExprNode__Group_1__1 ;
+    // ../org.earthsystemcurator.cupid.xtext.ui/src-gen/org/earthsystemcurator/ui/contentassist/antlr/internal/InternalCupidLanguage.g:5413:1: rule__PathExprNode__Group_1__0 : rule__PathExprNode__Group_1__0__Impl rule__PathExprNode__Group_1__1 ;
     public final void rule__PathExprNode__Group_1__0() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // ../org.earthsystemcurator.cupid.xtext.ui/src-gen/org/earthsystemcurator/ui/contentassist/antlr/internal/InternalCupidLanguage.g:5514:1: ( rule__PathExprNode__Group_1__0__Impl rule__PathExprNode__Group_1__1 )
-            // ../org.earthsystemcurator.cupid.xtext.ui/src-gen/org/earthsystemcurator/ui/contentassist/antlr/internal/InternalCupidLanguage.g:5515:2: rule__PathExprNode__Group_1__0__Impl rule__PathExprNode__Group_1__1
+            // ../org.earthsystemcurator.cupid.xtext.ui/src-gen/org/earthsystemcurator/ui/contentassist/antlr/internal/InternalCupidLanguage.g:5417:1: ( rule__PathExprNode__Group_1__0__Impl rule__PathExprNode__Group_1__1 )
+            // ../org.earthsystemcurator.cupid.xtext.ui/src-gen/org/earthsystemcurator/ui/contentassist/antlr/internal/InternalCupidLanguage.g:5418:2: rule__PathExprNode__Group_1__0__Impl rule__PathExprNode__Group_1__1
             {
-            pushFollow(FOLLOW_rule__PathExprNode__Group_1__0__Impl_in_rule__PathExprNode__Group_1__011086);
+            pushFollow(FOLLOW_rule__PathExprNode__Group_1__0__Impl_in_rule__PathExprNode__Group_1__010896);
             rule__PathExprNode__Group_1__0__Impl();
 
             state._fsp--;
 
-            pushFollow(FOLLOW_rule__PathExprNode__Group_1__1_in_rule__PathExprNode__Group_1__011089);
+            pushFollow(FOLLOW_rule__PathExprNode__Group_1__1_in_rule__PathExprNode__Group_1__010899);
             rule__PathExprNode__Group_1__1();
 
             state._fsp--;
@@ -14941,21 +14706,21 @@ public class InternalCupidLanguageParser extends AbstractInternalContentAssistPa
 
 
     // $ANTLR start "rule__PathExprNode__Group_1__0__Impl"
-    // ../org.earthsystemcurator.cupid.xtext.ui/src-gen/org/earthsystemcurator/ui/contentassist/antlr/internal/InternalCupidLanguage.g:5522:1: rule__PathExprNode__Group_1__0__Impl : ( () ) ;
+    // ../org.earthsystemcurator.cupid.xtext.ui/src-gen/org/earthsystemcurator/ui/contentassist/antlr/internal/InternalCupidLanguage.g:5425:1: rule__PathExprNode__Group_1__0__Impl : ( () ) ;
     public final void rule__PathExprNode__Group_1__0__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // ../org.earthsystemcurator.cupid.xtext.ui/src-gen/org/earthsystemcurator/ui/contentassist/antlr/internal/InternalCupidLanguage.g:5526:1: ( ( () ) )
-            // ../org.earthsystemcurator.cupid.xtext.ui/src-gen/org/earthsystemcurator/ui/contentassist/antlr/internal/InternalCupidLanguage.g:5527:1: ( () )
+            // ../org.earthsystemcurator.cupid.xtext.ui/src-gen/org/earthsystemcurator/ui/contentassist/antlr/internal/InternalCupidLanguage.g:5429:1: ( ( () ) )
+            // ../org.earthsystemcurator.cupid.xtext.ui/src-gen/org/earthsystemcurator/ui/contentassist/antlr/internal/InternalCupidLanguage.g:5430:1: ( () )
             {
-            // ../org.earthsystemcurator.cupid.xtext.ui/src-gen/org/earthsystemcurator/ui/contentassist/antlr/internal/InternalCupidLanguage.g:5527:1: ( () )
-            // ../org.earthsystemcurator.cupid.xtext.ui/src-gen/org/earthsystemcurator/ui/contentassist/antlr/internal/InternalCupidLanguage.g:5528:1: ()
+            // ../org.earthsystemcurator.cupid.xtext.ui/src-gen/org/earthsystemcurator/ui/contentassist/antlr/internal/InternalCupidLanguage.g:5430:1: ( () )
+            // ../org.earthsystemcurator.cupid.xtext.ui/src-gen/org/earthsystemcurator/ui/contentassist/antlr/internal/InternalCupidLanguage.g:5431:1: ()
             {
              before(grammarAccess.getPathExprNodeAccess().getPathExprHeadAction_1_0()); 
-            // ../org.earthsystemcurator.cupid.xtext.ui/src-gen/org/earthsystemcurator/ui/contentassist/antlr/internal/InternalCupidLanguage.g:5529:1: ()
-            // ../org.earthsystemcurator.cupid.xtext.ui/src-gen/org/earthsystemcurator/ui/contentassist/antlr/internal/InternalCupidLanguage.g:5531:1: 
+            // ../org.earthsystemcurator.cupid.xtext.ui/src-gen/org/earthsystemcurator/ui/contentassist/antlr/internal/InternalCupidLanguage.g:5432:1: ()
+            // ../org.earthsystemcurator.cupid.xtext.ui/src-gen/org/earthsystemcurator/ui/contentassist/antlr/internal/InternalCupidLanguage.g:5434:1: 
             {
             }
 
@@ -14978,21 +14743,21 @@ public class InternalCupidLanguageParser extends AbstractInternalContentAssistPa
 
 
     // $ANTLR start "rule__PathExprNode__Group_1__1"
-    // ../org.earthsystemcurator.cupid.xtext.ui/src-gen/org/earthsystemcurator/ui/contentassist/antlr/internal/InternalCupidLanguage.g:5541:1: rule__PathExprNode__Group_1__1 : rule__PathExprNode__Group_1__1__Impl rule__PathExprNode__Group_1__2 ;
+    // ../org.earthsystemcurator.cupid.xtext.ui/src-gen/org/earthsystemcurator/ui/contentassist/antlr/internal/InternalCupidLanguage.g:5444:1: rule__PathExprNode__Group_1__1 : rule__PathExprNode__Group_1__1__Impl rule__PathExprNode__Group_1__2 ;
     public final void rule__PathExprNode__Group_1__1() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // ../org.earthsystemcurator.cupid.xtext.ui/src-gen/org/earthsystemcurator/ui/contentassist/antlr/internal/InternalCupidLanguage.g:5545:1: ( rule__PathExprNode__Group_1__1__Impl rule__PathExprNode__Group_1__2 )
-            // ../org.earthsystemcurator.cupid.xtext.ui/src-gen/org/earthsystemcurator/ui/contentassist/antlr/internal/InternalCupidLanguage.g:5546:2: rule__PathExprNode__Group_1__1__Impl rule__PathExprNode__Group_1__2
+            // ../org.earthsystemcurator.cupid.xtext.ui/src-gen/org/earthsystemcurator/ui/contentassist/antlr/internal/InternalCupidLanguage.g:5448:1: ( rule__PathExprNode__Group_1__1__Impl rule__PathExprNode__Group_1__2 )
+            // ../org.earthsystemcurator.cupid.xtext.ui/src-gen/org/earthsystemcurator/ui/contentassist/antlr/internal/InternalCupidLanguage.g:5449:2: rule__PathExprNode__Group_1__1__Impl rule__PathExprNode__Group_1__2
             {
-            pushFollow(FOLLOW_rule__PathExprNode__Group_1__1__Impl_in_rule__PathExprNode__Group_1__111147);
+            pushFollow(FOLLOW_rule__PathExprNode__Group_1__1__Impl_in_rule__PathExprNode__Group_1__110957);
             rule__PathExprNode__Group_1__1__Impl();
 
             state._fsp--;
 
-            pushFollow(FOLLOW_rule__PathExprNode__Group_1__2_in_rule__PathExprNode__Group_1__111150);
+            pushFollow(FOLLOW_rule__PathExprNode__Group_1__2_in_rule__PathExprNode__Group_1__110960);
             rule__PathExprNode__Group_1__2();
 
             state._fsp--;
@@ -15016,20 +14781,20 @@ public class InternalCupidLanguageParser extends AbstractInternalContentAssistPa
 
 
     // $ANTLR start "rule__PathExprNode__Group_1__1__Impl"
-    // ../org.earthsystemcurator.cupid.xtext.ui/src-gen/org/earthsystemcurator/ui/contentassist/antlr/internal/InternalCupidLanguage.g:5553:1: rule__PathExprNode__Group_1__1__Impl : ( '/' ) ;
+    // ../org.earthsystemcurator.cupid.xtext.ui/src-gen/org/earthsystemcurator/ui/contentassist/antlr/internal/InternalCupidLanguage.g:5456:1: rule__PathExprNode__Group_1__1__Impl : ( '/' ) ;
     public final void rule__PathExprNode__Group_1__1__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // ../org.earthsystemcurator.cupid.xtext.ui/src-gen/org/earthsystemcurator/ui/contentassist/antlr/internal/InternalCupidLanguage.g:5557:1: ( ( '/' ) )
-            // ../org.earthsystemcurator.cupid.xtext.ui/src-gen/org/earthsystemcurator/ui/contentassist/antlr/internal/InternalCupidLanguage.g:5558:1: ( '/' )
+            // ../org.earthsystemcurator.cupid.xtext.ui/src-gen/org/earthsystemcurator/ui/contentassist/antlr/internal/InternalCupidLanguage.g:5460:1: ( ( '/' ) )
+            // ../org.earthsystemcurator.cupid.xtext.ui/src-gen/org/earthsystemcurator/ui/contentassist/antlr/internal/InternalCupidLanguage.g:5461:1: ( '/' )
             {
-            // ../org.earthsystemcurator.cupid.xtext.ui/src-gen/org/earthsystemcurator/ui/contentassist/antlr/internal/InternalCupidLanguage.g:5558:1: ( '/' )
-            // ../org.earthsystemcurator.cupid.xtext.ui/src-gen/org/earthsystemcurator/ui/contentassist/antlr/internal/InternalCupidLanguage.g:5559:1: '/'
+            // ../org.earthsystemcurator.cupid.xtext.ui/src-gen/org/earthsystemcurator/ui/contentassist/antlr/internal/InternalCupidLanguage.g:5461:1: ( '/' )
+            // ../org.earthsystemcurator.cupid.xtext.ui/src-gen/org/earthsystemcurator/ui/contentassist/antlr/internal/InternalCupidLanguage.g:5462:1: '/'
             {
              before(grammarAccess.getPathExprNodeAccess().getSolidusKeyword_1_1()); 
-            match(input,32,FOLLOW_32_in_rule__PathExprNode__Group_1__1__Impl11178); 
+            match(input,32,FOLLOW_32_in_rule__PathExprNode__Group_1__1__Impl10988); 
              after(grammarAccess.getPathExprNodeAccess().getSolidusKeyword_1_1()); 
 
             }
@@ -15053,16 +14818,16 @@ public class InternalCupidLanguageParser extends AbstractInternalContentAssistPa
 
 
     // $ANTLR start "rule__PathExprNode__Group_1__2"
-    // ../org.earthsystemcurator.cupid.xtext.ui/src-gen/org/earthsystemcurator/ui/contentassist/antlr/internal/InternalCupidLanguage.g:5572:1: rule__PathExprNode__Group_1__2 : rule__PathExprNode__Group_1__2__Impl ;
+    // ../org.earthsystemcurator.cupid.xtext.ui/src-gen/org/earthsystemcurator/ui/contentassist/antlr/internal/InternalCupidLanguage.g:5475:1: rule__PathExprNode__Group_1__2 : rule__PathExprNode__Group_1__2__Impl ;
     public final void rule__PathExprNode__Group_1__2() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // ../org.earthsystemcurator.cupid.xtext.ui/src-gen/org/earthsystemcurator/ui/contentassist/antlr/internal/InternalCupidLanguage.g:5576:1: ( rule__PathExprNode__Group_1__2__Impl )
-            // ../org.earthsystemcurator.cupid.xtext.ui/src-gen/org/earthsystemcurator/ui/contentassist/antlr/internal/InternalCupidLanguage.g:5577:2: rule__PathExprNode__Group_1__2__Impl
+            // ../org.earthsystemcurator.cupid.xtext.ui/src-gen/org/earthsystemcurator/ui/contentassist/antlr/internal/InternalCupidLanguage.g:5479:1: ( rule__PathExprNode__Group_1__2__Impl )
+            // ../org.earthsystemcurator.cupid.xtext.ui/src-gen/org/earthsystemcurator/ui/contentassist/antlr/internal/InternalCupidLanguage.g:5480:2: rule__PathExprNode__Group_1__2__Impl
             {
-            pushFollow(FOLLOW_rule__PathExprNode__Group_1__2__Impl_in_rule__PathExprNode__Group_1__211209);
+            pushFollow(FOLLOW_rule__PathExprNode__Group_1__2__Impl_in_rule__PathExprNode__Group_1__211019);
             rule__PathExprNode__Group_1__2__Impl();
 
             state._fsp--;
@@ -15086,23 +14851,23 @@ public class InternalCupidLanguageParser extends AbstractInternalContentAssistPa
 
 
     // $ANTLR start "rule__PathExprNode__Group_1__2__Impl"
-    // ../org.earthsystemcurator.cupid.xtext.ui/src-gen/org/earthsystemcurator/ui/contentassist/antlr/internal/InternalCupidLanguage.g:5583:1: rule__PathExprNode__Group_1__2__Impl : ( ( rule__PathExprNode__TailAssignment_1_2 ) ) ;
+    // ../org.earthsystemcurator.cupid.xtext.ui/src-gen/org/earthsystemcurator/ui/contentassist/antlr/internal/InternalCupidLanguage.g:5486:1: rule__PathExprNode__Group_1__2__Impl : ( ( rule__PathExprNode__TailAssignment_1_2 ) ) ;
     public final void rule__PathExprNode__Group_1__2__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // ../org.earthsystemcurator.cupid.xtext.ui/src-gen/org/earthsystemcurator/ui/contentassist/antlr/internal/InternalCupidLanguage.g:5587:1: ( ( ( rule__PathExprNode__TailAssignment_1_2 ) ) )
-            // ../org.earthsystemcurator.cupid.xtext.ui/src-gen/org/earthsystemcurator/ui/contentassist/antlr/internal/InternalCupidLanguage.g:5588:1: ( ( rule__PathExprNode__TailAssignment_1_2 ) )
+            // ../org.earthsystemcurator.cupid.xtext.ui/src-gen/org/earthsystemcurator/ui/contentassist/antlr/internal/InternalCupidLanguage.g:5490:1: ( ( ( rule__PathExprNode__TailAssignment_1_2 ) ) )
+            // ../org.earthsystemcurator.cupid.xtext.ui/src-gen/org/earthsystemcurator/ui/contentassist/antlr/internal/InternalCupidLanguage.g:5491:1: ( ( rule__PathExprNode__TailAssignment_1_2 ) )
             {
-            // ../org.earthsystemcurator.cupid.xtext.ui/src-gen/org/earthsystemcurator/ui/contentassist/antlr/internal/InternalCupidLanguage.g:5588:1: ( ( rule__PathExprNode__TailAssignment_1_2 ) )
-            // ../org.earthsystemcurator.cupid.xtext.ui/src-gen/org/earthsystemcurator/ui/contentassist/antlr/internal/InternalCupidLanguage.g:5589:1: ( rule__PathExprNode__TailAssignment_1_2 )
+            // ../org.earthsystemcurator.cupid.xtext.ui/src-gen/org/earthsystemcurator/ui/contentassist/antlr/internal/InternalCupidLanguage.g:5491:1: ( ( rule__PathExprNode__TailAssignment_1_2 ) )
+            // ../org.earthsystemcurator.cupid.xtext.ui/src-gen/org/earthsystemcurator/ui/contentassist/antlr/internal/InternalCupidLanguage.g:5492:1: ( rule__PathExprNode__TailAssignment_1_2 )
             {
              before(grammarAccess.getPathExprNodeAccess().getTailAssignment_1_2()); 
-            // ../org.earthsystemcurator.cupid.xtext.ui/src-gen/org/earthsystemcurator/ui/contentassist/antlr/internal/InternalCupidLanguage.g:5590:1: ( rule__PathExprNode__TailAssignment_1_2 )
-            // ../org.earthsystemcurator.cupid.xtext.ui/src-gen/org/earthsystemcurator/ui/contentassist/antlr/internal/InternalCupidLanguage.g:5590:2: rule__PathExprNode__TailAssignment_1_2
+            // ../org.earthsystemcurator.cupid.xtext.ui/src-gen/org/earthsystemcurator/ui/contentassist/antlr/internal/InternalCupidLanguage.g:5493:1: ( rule__PathExprNode__TailAssignment_1_2 )
+            // ../org.earthsystemcurator.cupid.xtext.ui/src-gen/org/earthsystemcurator/ui/contentassist/antlr/internal/InternalCupidLanguage.g:5493:2: rule__PathExprNode__TailAssignment_1_2
             {
-            pushFollow(FOLLOW_rule__PathExprNode__TailAssignment_1_2_in_rule__PathExprNode__Group_1__2__Impl11236);
+            pushFollow(FOLLOW_rule__PathExprNode__TailAssignment_1_2_in_rule__PathExprNode__Group_1__2__Impl11046);
             rule__PathExprNode__TailAssignment_1_2();
 
             state._fsp--;
@@ -15133,21 +14898,21 @@ public class InternalCupidLanguageParser extends AbstractInternalContentAssistPa
 
 
     // $ANTLR start "rule__PathExprTerm__Group__0"
-    // ../org.earthsystemcurator.cupid.xtext.ui/src-gen/org/earthsystemcurator/ui/contentassist/antlr/internal/InternalCupidLanguage.g:5606:1: rule__PathExprTerm__Group__0 : rule__PathExprTerm__Group__0__Impl rule__PathExprTerm__Group__1 ;
+    // ../org.earthsystemcurator.cupid.xtext.ui/src-gen/org/earthsystemcurator/ui/contentassist/antlr/internal/InternalCupidLanguage.g:5509:1: rule__PathExprTerm__Group__0 : rule__PathExprTerm__Group__0__Impl rule__PathExprTerm__Group__1 ;
     public final void rule__PathExprTerm__Group__0() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // ../org.earthsystemcurator.cupid.xtext.ui/src-gen/org/earthsystemcurator/ui/contentassist/antlr/internal/InternalCupidLanguage.g:5610:1: ( rule__PathExprTerm__Group__0__Impl rule__PathExprTerm__Group__1 )
-            // ../org.earthsystemcurator.cupid.xtext.ui/src-gen/org/earthsystemcurator/ui/contentassist/antlr/internal/InternalCupidLanguage.g:5611:2: rule__PathExprTerm__Group__0__Impl rule__PathExprTerm__Group__1
+            // ../org.earthsystemcurator.cupid.xtext.ui/src-gen/org/earthsystemcurator/ui/contentassist/antlr/internal/InternalCupidLanguage.g:5513:1: ( rule__PathExprTerm__Group__0__Impl rule__PathExprTerm__Group__1 )
+            // ../org.earthsystemcurator.cupid.xtext.ui/src-gen/org/earthsystemcurator/ui/contentassist/antlr/internal/InternalCupidLanguage.g:5514:2: rule__PathExprTerm__Group__0__Impl rule__PathExprTerm__Group__1
             {
-            pushFollow(FOLLOW_rule__PathExprTerm__Group__0__Impl_in_rule__PathExprTerm__Group__011272);
+            pushFollow(FOLLOW_rule__PathExprTerm__Group__0__Impl_in_rule__PathExprTerm__Group__011082);
             rule__PathExprTerm__Group__0__Impl();
 
             state._fsp--;
 
-            pushFollow(FOLLOW_rule__PathExprTerm__Group__1_in_rule__PathExprTerm__Group__011275);
+            pushFollow(FOLLOW_rule__PathExprTerm__Group__1_in_rule__PathExprTerm__Group__011085);
             rule__PathExprTerm__Group__1();
 
             state._fsp--;
@@ -15171,21 +14936,21 @@ public class InternalCupidLanguageParser extends AbstractInternalContentAssistPa
 
 
     // $ANTLR start "rule__PathExprTerm__Group__0__Impl"
-    // ../org.earthsystemcurator.cupid.xtext.ui/src-gen/org/earthsystemcurator/ui/contentassist/antlr/internal/InternalCupidLanguage.g:5618:1: rule__PathExprTerm__Group__0__Impl : ( () ) ;
+    // ../org.earthsystemcurator.cupid.xtext.ui/src-gen/org/earthsystemcurator/ui/contentassist/antlr/internal/InternalCupidLanguage.g:5521:1: rule__PathExprTerm__Group__0__Impl : ( () ) ;
     public final void rule__PathExprTerm__Group__0__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // ../org.earthsystemcurator.cupid.xtext.ui/src-gen/org/earthsystemcurator/ui/contentassist/antlr/internal/InternalCupidLanguage.g:5622:1: ( ( () ) )
-            // ../org.earthsystemcurator.cupid.xtext.ui/src-gen/org/earthsystemcurator/ui/contentassist/antlr/internal/InternalCupidLanguage.g:5623:1: ( () )
+            // ../org.earthsystemcurator.cupid.xtext.ui/src-gen/org/earthsystemcurator/ui/contentassist/antlr/internal/InternalCupidLanguage.g:5525:1: ( ( () ) )
+            // ../org.earthsystemcurator.cupid.xtext.ui/src-gen/org/earthsystemcurator/ui/contentassist/antlr/internal/InternalCupidLanguage.g:5526:1: ( () )
             {
-            // ../org.earthsystemcurator.cupid.xtext.ui/src-gen/org/earthsystemcurator/ui/contentassist/antlr/internal/InternalCupidLanguage.g:5623:1: ( () )
-            // ../org.earthsystemcurator.cupid.xtext.ui/src-gen/org/earthsystemcurator/ui/contentassist/antlr/internal/InternalCupidLanguage.g:5624:1: ()
+            // ../org.earthsystemcurator.cupid.xtext.ui/src-gen/org/earthsystemcurator/ui/contentassist/antlr/internal/InternalCupidLanguage.g:5526:1: ( () )
+            // ../org.earthsystemcurator.cupid.xtext.ui/src-gen/org/earthsystemcurator/ui/contentassist/antlr/internal/InternalCupidLanguage.g:5527:1: ()
             {
              before(grammarAccess.getPathExprTermAccess().getPathExprTermAction_0()); 
-            // ../org.earthsystemcurator.cupid.xtext.ui/src-gen/org/earthsystemcurator/ui/contentassist/antlr/internal/InternalCupidLanguage.g:5625:1: ()
-            // ../org.earthsystemcurator.cupid.xtext.ui/src-gen/org/earthsystemcurator/ui/contentassist/antlr/internal/InternalCupidLanguage.g:5627:1: 
+            // ../org.earthsystemcurator.cupid.xtext.ui/src-gen/org/earthsystemcurator/ui/contentassist/antlr/internal/InternalCupidLanguage.g:5528:1: ()
+            // ../org.earthsystemcurator.cupid.xtext.ui/src-gen/org/earthsystemcurator/ui/contentassist/antlr/internal/InternalCupidLanguage.g:5530:1: 
             {
             }
 
@@ -15208,21 +14973,21 @@ public class InternalCupidLanguageParser extends AbstractInternalContentAssistPa
 
 
     // $ANTLR start "rule__PathExprTerm__Group__1"
-    // ../org.earthsystemcurator.cupid.xtext.ui/src-gen/org/earthsystemcurator/ui/contentassist/antlr/internal/InternalCupidLanguage.g:5637:1: rule__PathExprTerm__Group__1 : rule__PathExprTerm__Group__1__Impl rule__PathExprTerm__Group__2 ;
+    // ../org.earthsystemcurator.cupid.xtext.ui/src-gen/org/earthsystemcurator/ui/contentassist/antlr/internal/InternalCupidLanguage.g:5540:1: rule__PathExprTerm__Group__1 : rule__PathExprTerm__Group__1__Impl rule__PathExprTerm__Group__2 ;
     public final void rule__PathExprTerm__Group__1() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // ../org.earthsystemcurator.cupid.xtext.ui/src-gen/org/earthsystemcurator/ui/contentassist/antlr/internal/InternalCupidLanguage.g:5641:1: ( rule__PathExprTerm__Group__1__Impl rule__PathExprTerm__Group__2 )
-            // ../org.earthsystemcurator.cupid.xtext.ui/src-gen/org/earthsystemcurator/ui/contentassist/antlr/internal/InternalCupidLanguage.g:5642:2: rule__PathExprTerm__Group__1__Impl rule__PathExprTerm__Group__2
+            // ../org.earthsystemcurator.cupid.xtext.ui/src-gen/org/earthsystemcurator/ui/contentassist/antlr/internal/InternalCupidLanguage.g:5544:1: ( rule__PathExprTerm__Group__1__Impl rule__PathExprTerm__Group__2 )
+            // ../org.earthsystemcurator.cupid.xtext.ui/src-gen/org/earthsystemcurator/ui/contentassist/antlr/internal/InternalCupidLanguage.g:5545:2: rule__PathExprTerm__Group__1__Impl rule__PathExprTerm__Group__2
             {
-            pushFollow(FOLLOW_rule__PathExprTerm__Group__1__Impl_in_rule__PathExprTerm__Group__111333);
+            pushFollow(FOLLOW_rule__PathExprTerm__Group__1__Impl_in_rule__PathExprTerm__Group__111143);
             rule__PathExprTerm__Group__1__Impl();
 
             state._fsp--;
 
-            pushFollow(FOLLOW_rule__PathExprTerm__Group__2_in_rule__PathExprTerm__Group__111336);
+            pushFollow(FOLLOW_rule__PathExprTerm__Group__2_in_rule__PathExprTerm__Group__111146);
             rule__PathExprTerm__Group__2();
 
             state._fsp--;
@@ -15246,20 +15011,20 @@ public class InternalCupidLanguageParser extends AbstractInternalContentAssistPa
 
 
     // $ANTLR start "rule__PathExprTerm__Group__1__Impl"
-    // ../org.earthsystemcurator.cupid.xtext.ui/src-gen/org/earthsystemcurator/ui/contentassist/antlr/internal/InternalCupidLanguage.g:5649:1: rule__PathExprTerm__Group__1__Impl : ( ( rule__PathExprTerm__AxisAssignment_1 )? ) ;
+    // ../org.earthsystemcurator.cupid.xtext.ui/src-gen/org/earthsystemcurator/ui/contentassist/antlr/internal/InternalCupidLanguage.g:5552:1: rule__PathExprTerm__Group__1__Impl : ( ( rule__PathExprTerm__AxisAssignment_1 )? ) ;
     public final void rule__PathExprTerm__Group__1__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // ../org.earthsystemcurator.cupid.xtext.ui/src-gen/org/earthsystemcurator/ui/contentassist/antlr/internal/InternalCupidLanguage.g:5653:1: ( ( ( rule__PathExprTerm__AxisAssignment_1 )? ) )
-            // ../org.earthsystemcurator.cupid.xtext.ui/src-gen/org/earthsystemcurator/ui/contentassist/antlr/internal/InternalCupidLanguage.g:5654:1: ( ( rule__PathExprTerm__AxisAssignment_1 )? )
+            // ../org.earthsystemcurator.cupid.xtext.ui/src-gen/org/earthsystemcurator/ui/contentassist/antlr/internal/InternalCupidLanguage.g:5556:1: ( ( ( rule__PathExprTerm__AxisAssignment_1 )? ) )
+            // ../org.earthsystemcurator.cupid.xtext.ui/src-gen/org/earthsystemcurator/ui/contentassist/antlr/internal/InternalCupidLanguage.g:5557:1: ( ( rule__PathExprTerm__AxisAssignment_1 )? )
             {
-            // ../org.earthsystemcurator.cupid.xtext.ui/src-gen/org/earthsystemcurator/ui/contentassist/antlr/internal/InternalCupidLanguage.g:5654:1: ( ( rule__PathExprTerm__AxisAssignment_1 )? )
-            // ../org.earthsystemcurator.cupid.xtext.ui/src-gen/org/earthsystemcurator/ui/contentassist/antlr/internal/InternalCupidLanguage.g:5655:1: ( rule__PathExprTerm__AxisAssignment_1 )?
+            // ../org.earthsystemcurator.cupid.xtext.ui/src-gen/org/earthsystemcurator/ui/contentassist/antlr/internal/InternalCupidLanguage.g:5557:1: ( ( rule__PathExprTerm__AxisAssignment_1 )? )
+            // ../org.earthsystemcurator.cupid.xtext.ui/src-gen/org/earthsystemcurator/ui/contentassist/antlr/internal/InternalCupidLanguage.g:5558:1: ( rule__PathExprTerm__AxisAssignment_1 )?
             {
              before(grammarAccess.getPathExprTermAccess().getAxisAssignment_1()); 
-            // ../org.earthsystemcurator.cupid.xtext.ui/src-gen/org/earthsystemcurator/ui/contentassist/antlr/internal/InternalCupidLanguage.g:5656:1: ( rule__PathExprTerm__AxisAssignment_1 )?
+            // ../org.earthsystemcurator.cupid.xtext.ui/src-gen/org/earthsystemcurator/ui/contentassist/antlr/internal/InternalCupidLanguage.g:5559:1: ( rule__PathExprTerm__AxisAssignment_1 )?
             int alt46=2;
             int LA46_0 = input.LA(1);
 
@@ -15268,9 +15033,9 @@ public class InternalCupidLanguageParser extends AbstractInternalContentAssistPa
             }
             switch (alt46) {
                 case 1 :
-                    // ../org.earthsystemcurator.cupid.xtext.ui/src-gen/org/earthsystemcurator/ui/contentassist/antlr/internal/InternalCupidLanguage.g:5656:2: rule__PathExprTerm__AxisAssignment_1
+                    // ../org.earthsystemcurator.cupid.xtext.ui/src-gen/org/earthsystemcurator/ui/contentassist/antlr/internal/InternalCupidLanguage.g:5559:2: rule__PathExprTerm__AxisAssignment_1
                     {
-                    pushFollow(FOLLOW_rule__PathExprTerm__AxisAssignment_1_in_rule__PathExprTerm__Group__1__Impl11363);
+                    pushFollow(FOLLOW_rule__PathExprTerm__AxisAssignment_1_in_rule__PathExprTerm__Group__1__Impl11173);
                     rule__PathExprTerm__AxisAssignment_1();
 
                     state._fsp--;
@@ -15304,16 +15069,16 @@ public class InternalCupidLanguageParser extends AbstractInternalContentAssistPa
 
 
     // $ANTLR start "rule__PathExprTerm__Group__2"
-    // ../org.earthsystemcurator.cupid.xtext.ui/src-gen/org/earthsystemcurator/ui/contentassist/antlr/internal/InternalCupidLanguage.g:5666:1: rule__PathExprTerm__Group__2 : rule__PathExprTerm__Group__2__Impl ;
+    // ../org.earthsystemcurator.cupid.xtext.ui/src-gen/org/earthsystemcurator/ui/contentassist/antlr/internal/InternalCupidLanguage.g:5569:1: rule__PathExprTerm__Group__2 : rule__PathExprTerm__Group__2__Impl ;
     public final void rule__PathExprTerm__Group__2() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // ../org.earthsystemcurator.cupid.xtext.ui/src-gen/org/earthsystemcurator/ui/contentassist/antlr/internal/InternalCupidLanguage.g:5670:1: ( rule__PathExprTerm__Group__2__Impl )
-            // ../org.earthsystemcurator.cupid.xtext.ui/src-gen/org/earthsystemcurator/ui/contentassist/antlr/internal/InternalCupidLanguage.g:5671:2: rule__PathExprTerm__Group__2__Impl
+            // ../org.earthsystemcurator.cupid.xtext.ui/src-gen/org/earthsystemcurator/ui/contentassist/antlr/internal/InternalCupidLanguage.g:5573:1: ( rule__PathExprTerm__Group__2__Impl )
+            // ../org.earthsystemcurator.cupid.xtext.ui/src-gen/org/earthsystemcurator/ui/contentassist/antlr/internal/InternalCupidLanguage.g:5574:2: rule__PathExprTerm__Group__2__Impl
             {
-            pushFollow(FOLLOW_rule__PathExprTerm__Group__2__Impl_in_rule__PathExprTerm__Group__211394);
+            pushFollow(FOLLOW_rule__PathExprTerm__Group__2__Impl_in_rule__PathExprTerm__Group__211204);
             rule__PathExprTerm__Group__2__Impl();
 
             state._fsp--;
@@ -15337,23 +15102,23 @@ public class InternalCupidLanguageParser extends AbstractInternalContentAssistPa
 
 
     // $ANTLR start "rule__PathExprTerm__Group__2__Impl"
-    // ../org.earthsystemcurator.cupid.xtext.ui/src-gen/org/earthsystemcurator/ui/contentassist/antlr/internal/InternalCupidLanguage.g:5677:1: rule__PathExprTerm__Group__2__Impl : ( ( rule__PathExprTerm__RefAssignment_2 ) ) ;
+    // ../org.earthsystemcurator.cupid.xtext.ui/src-gen/org/earthsystemcurator/ui/contentassist/antlr/internal/InternalCupidLanguage.g:5580:1: rule__PathExprTerm__Group__2__Impl : ( ( rule__PathExprTerm__RefAssignment_2 ) ) ;
     public final void rule__PathExprTerm__Group__2__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // ../org.earthsystemcurator.cupid.xtext.ui/src-gen/org/earthsystemcurator/ui/contentassist/antlr/internal/InternalCupidLanguage.g:5681:1: ( ( ( rule__PathExprTerm__RefAssignment_2 ) ) )
-            // ../org.earthsystemcurator.cupid.xtext.ui/src-gen/org/earthsystemcurator/ui/contentassist/antlr/internal/InternalCupidLanguage.g:5682:1: ( ( rule__PathExprTerm__RefAssignment_2 ) )
+            // ../org.earthsystemcurator.cupid.xtext.ui/src-gen/org/earthsystemcurator/ui/contentassist/antlr/internal/InternalCupidLanguage.g:5584:1: ( ( ( rule__PathExprTerm__RefAssignment_2 ) ) )
+            // ../org.earthsystemcurator.cupid.xtext.ui/src-gen/org/earthsystemcurator/ui/contentassist/antlr/internal/InternalCupidLanguage.g:5585:1: ( ( rule__PathExprTerm__RefAssignment_2 ) )
             {
-            // ../org.earthsystemcurator.cupid.xtext.ui/src-gen/org/earthsystemcurator/ui/contentassist/antlr/internal/InternalCupidLanguage.g:5682:1: ( ( rule__PathExprTerm__RefAssignment_2 ) )
-            // ../org.earthsystemcurator.cupid.xtext.ui/src-gen/org/earthsystemcurator/ui/contentassist/antlr/internal/InternalCupidLanguage.g:5683:1: ( rule__PathExprTerm__RefAssignment_2 )
+            // ../org.earthsystemcurator.cupid.xtext.ui/src-gen/org/earthsystemcurator/ui/contentassist/antlr/internal/InternalCupidLanguage.g:5585:1: ( ( rule__PathExprTerm__RefAssignment_2 ) )
+            // ../org.earthsystemcurator.cupid.xtext.ui/src-gen/org/earthsystemcurator/ui/contentassist/antlr/internal/InternalCupidLanguage.g:5586:1: ( rule__PathExprTerm__RefAssignment_2 )
             {
              before(grammarAccess.getPathExprTermAccess().getRefAssignment_2()); 
-            // ../org.earthsystemcurator.cupid.xtext.ui/src-gen/org/earthsystemcurator/ui/contentassist/antlr/internal/InternalCupidLanguage.g:5684:1: ( rule__PathExprTerm__RefAssignment_2 )
-            // ../org.earthsystemcurator.cupid.xtext.ui/src-gen/org/earthsystemcurator/ui/contentassist/antlr/internal/InternalCupidLanguage.g:5684:2: rule__PathExprTerm__RefAssignment_2
+            // ../org.earthsystemcurator.cupid.xtext.ui/src-gen/org/earthsystemcurator/ui/contentassist/antlr/internal/InternalCupidLanguage.g:5587:1: ( rule__PathExprTerm__RefAssignment_2 )
+            // ../org.earthsystemcurator.cupid.xtext.ui/src-gen/org/earthsystemcurator/ui/contentassist/antlr/internal/InternalCupidLanguage.g:5587:2: rule__PathExprTerm__RefAssignment_2
             {
-            pushFollow(FOLLOW_rule__PathExprTerm__RefAssignment_2_in_rule__PathExprTerm__Group__2__Impl11421);
+            pushFollow(FOLLOW_rule__PathExprTerm__RefAssignment_2_in_rule__PathExprTerm__Group__2__Impl11231);
             rule__PathExprTerm__RefAssignment_2();
 
             state._fsp--;
@@ -15384,20 +15149,20 @@ public class InternalCupidLanguageParser extends AbstractInternalContentAssistPa
 
 
     // $ANTLR start "rule__Language__NameAssignment_1"
-    // ../org.earthsystemcurator.cupid.xtext.ui/src-gen/org/earthsystemcurator/ui/contentassist/antlr/internal/InternalCupidLanguage.g:5701:1: rule__Language__NameAssignment_1 : ( RULE_ID ) ;
+    // ../org.earthsystemcurator.cupid.xtext.ui/src-gen/org/earthsystemcurator/ui/contentassist/antlr/internal/InternalCupidLanguage.g:5604:1: rule__Language__NameAssignment_1 : ( RULE_ID ) ;
     public final void rule__Language__NameAssignment_1() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // ../org.earthsystemcurator.cupid.xtext.ui/src-gen/org/earthsystemcurator/ui/contentassist/antlr/internal/InternalCupidLanguage.g:5705:1: ( ( RULE_ID ) )
-            // ../org.earthsystemcurator.cupid.xtext.ui/src-gen/org/earthsystemcurator/ui/contentassist/antlr/internal/InternalCupidLanguage.g:5706:1: ( RULE_ID )
+            // ../org.earthsystemcurator.cupid.xtext.ui/src-gen/org/earthsystemcurator/ui/contentassist/antlr/internal/InternalCupidLanguage.g:5608:1: ( ( RULE_ID ) )
+            // ../org.earthsystemcurator.cupid.xtext.ui/src-gen/org/earthsystemcurator/ui/contentassist/antlr/internal/InternalCupidLanguage.g:5609:1: ( RULE_ID )
             {
-            // ../org.earthsystemcurator.cupid.xtext.ui/src-gen/org/earthsystemcurator/ui/contentassist/antlr/internal/InternalCupidLanguage.g:5706:1: ( RULE_ID )
-            // ../org.earthsystemcurator.cupid.xtext.ui/src-gen/org/earthsystemcurator/ui/contentassist/antlr/internal/InternalCupidLanguage.g:5707:1: RULE_ID
+            // ../org.earthsystemcurator.cupid.xtext.ui/src-gen/org/earthsystemcurator/ui/contentassist/antlr/internal/InternalCupidLanguage.g:5609:1: ( RULE_ID )
+            // ../org.earthsystemcurator.cupid.xtext.ui/src-gen/org/earthsystemcurator/ui/contentassist/antlr/internal/InternalCupidLanguage.g:5610:1: RULE_ID
             {
              before(grammarAccess.getLanguageAccess().getNameIDTerminalRuleCall_1_0()); 
-            match(input,RULE_ID,FOLLOW_RULE_ID_in_rule__Language__NameAssignment_111462); 
+            match(input,RULE_ID,FOLLOW_RULE_ID_in_rule__Language__NameAssignment_111272); 
              after(grammarAccess.getLanguageAccess().getNameIDTerminalRuleCall_1_0()); 
 
             }
@@ -15421,20 +15186,20 @@ public class InternalCupidLanguageParser extends AbstractInternalContentAssistPa
 
 
     // $ANTLR start "rule__Language__UriAssignment_2"
-    // ../org.earthsystemcurator.cupid.xtext.ui/src-gen/org/earthsystemcurator/ui/contentassist/antlr/internal/InternalCupidLanguage.g:5716:1: rule__Language__UriAssignment_2 : ( RULE_STRING ) ;
+    // ../org.earthsystemcurator.cupid.xtext.ui/src-gen/org/earthsystemcurator/ui/contentassist/antlr/internal/InternalCupidLanguage.g:5619:1: rule__Language__UriAssignment_2 : ( RULE_STRING ) ;
     public final void rule__Language__UriAssignment_2() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // ../org.earthsystemcurator.cupid.xtext.ui/src-gen/org/earthsystemcurator/ui/contentassist/antlr/internal/InternalCupidLanguage.g:5720:1: ( ( RULE_STRING ) )
-            // ../org.earthsystemcurator.cupid.xtext.ui/src-gen/org/earthsystemcurator/ui/contentassist/antlr/internal/InternalCupidLanguage.g:5721:1: ( RULE_STRING )
+            // ../org.earthsystemcurator.cupid.xtext.ui/src-gen/org/earthsystemcurator/ui/contentassist/antlr/internal/InternalCupidLanguage.g:5623:1: ( ( RULE_STRING ) )
+            // ../org.earthsystemcurator.cupid.xtext.ui/src-gen/org/earthsystemcurator/ui/contentassist/antlr/internal/InternalCupidLanguage.g:5624:1: ( RULE_STRING )
             {
-            // ../org.earthsystemcurator.cupid.xtext.ui/src-gen/org/earthsystemcurator/ui/contentassist/antlr/internal/InternalCupidLanguage.g:5721:1: ( RULE_STRING )
-            // ../org.earthsystemcurator.cupid.xtext.ui/src-gen/org/earthsystemcurator/ui/contentassist/antlr/internal/InternalCupidLanguage.g:5722:1: RULE_STRING
+            // ../org.earthsystemcurator.cupid.xtext.ui/src-gen/org/earthsystemcurator/ui/contentassist/antlr/internal/InternalCupidLanguage.g:5624:1: ( RULE_STRING )
+            // ../org.earthsystemcurator.cupid.xtext.ui/src-gen/org/earthsystemcurator/ui/contentassist/antlr/internal/InternalCupidLanguage.g:5625:1: RULE_STRING
             {
              before(grammarAccess.getLanguageAccess().getUriSTRINGTerminalRuleCall_2_0()); 
-            match(input,RULE_STRING,FOLLOW_RULE_STRING_in_rule__Language__UriAssignment_211493); 
+            match(input,RULE_STRING,FOLLOW_RULE_STRING_in_rule__Language__UriAssignment_211303); 
              after(grammarAccess.getLanguageAccess().getUriSTRINGTerminalRuleCall_2_0()); 
 
             }
@@ -15458,20 +15223,20 @@ public class InternalCupidLanguageParser extends AbstractInternalContentAssistPa
 
 
     // $ANTLR start "rule__Language__ConceptDefAssignment_4"
-    // ../org.earthsystemcurator.cupid.xtext.ui/src-gen/org/earthsystemcurator/ui/contentassist/antlr/internal/InternalCupidLanguage.g:5731:1: rule__Language__ConceptDefAssignment_4 : ( ruleTopConceptDef ) ;
+    // ../org.earthsystemcurator.cupid.xtext.ui/src-gen/org/earthsystemcurator/ui/contentassist/antlr/internal/InternalCupidLanguage.g:5634:1: rule__Language__ConceptDefAssignment_4 : ( ruleTopConceptDef ) ;
     public final void rule__Language__ConceptDefAssignment_4() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // ../org.earthsystemcurator.cupid.xtext.ui/src-gen/org/earthsystemcurator/ui/contentassist/antlr/internal/InternalCupidLanguage.g:5735:1: ( ( ruleTopConceptDef ) )
-            // ../org.earthsystemcurator.cupid.xtext.ui/src-gen/org/earthsystemcurator/ui/contentassist/antlr/internal/InternalCupidLanguage.g:5736:1: ( ruleTopConceptDef )
+            // ../org.earthsystemcurator.cupid.xtext.ui/src-gen/org/earthsystemcurator/ui/contentassist/antlr/internal/InternalCupidLanguage.g:5638:1: ( ( ruleTopConceptDef ) )
+            // ../org.earthsystemcurator.cupid.xtext.ui/src-gen/org/earthsystemcurator/ui/contentassist/antlr/internal/InternalCupidLanguage.g:5639:1: ( ruleTopConceptDef )
             {
-            // ../org.earthsystemcurator.cupid.xtext.ui/src-gen/org/earthsystemcurator/ui/contentassist/antlr/internal/InternalCupidLanguage.g:5736:1: ( ruleTopConceptDef )
-            // ../org.earthsystemcurator.cupid.xtext.ui/src-gen/org/earthsystemcurator/ui/contentassist/antlr/internal/InternalCupidLanguage.g:5737:1: ruleTopConceptDef
+            // ../org.earthsystemcurator.cupid.xtext.ui/src-gen/org/earthsystemcurator/ui/contentassist/antlr/internal/InternalCupidLanguage.g:5639:1: ( ruleTopConceptDef )
+            // ../org.earthsystemcurator.cupid.xtext.ui/src-gen/org/earthsystemcurator/ui/contentassist/antlr/internal/InternalCupidLanguage.g:5640:1: ruleTopConceptDef
             {
              before(grammarAccess.getLanguageAccess().getConceptDefTopConceptDefParserRuleCall_4_0()); 
-            pushFollow(FOLLOW_ruleTopConceptDef_in_rule__Language__ConceptDefAssignment_411524);
+            pushFollow(FOLLOW_ruleTopConceptDef_in_rule__Language__ConceptDefAssignment_411334);
             ruleTopConceptDef();
 
             state._fsp--;
@@ -15499,20 +15264,20 @@ public class InternalCupidLanguageParser extends AbstractInternalContentAssistPa
 
 
     // $ANTLR start "rule__Language__ConceptDefAssignment_5"
-    // ../org.earthsystemcurator.cupid.xtext.ui/src-gen/org/earthsystemcurator/ui/contentassist/antlr/internal/InternalCupidLanguage.g:5746:1: rule__Language__ConceptDefAssignment_5 : ( ruleNamedConceptDef ) ;
+    // ../org.earthsystemcurator.cupid.xtext.ui/src-gen/org/earthsystemcurator/ui/contentassist/antlr/internal/InternalCupidLanguage.g:5649:1: rule__Language__ConceptDefAssignment_5 : ( ruleNamedConceptDef ) ;
     public final void rule__Language__ConceptDefAssignment_5() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // ../org.earthsystemcurator.cupid.xtext.ui/src-gen/org/earthsystemcurator/ui/contentassist/antlr/internal/InternalCupidLanguage.g:5750:1: ( ( ruleNamedConceptDef ) )
-            // ../org.earthsystemcurator.cupid.xtext.ui/src-gen/org/earthsystemcurator/ui/contentassist/antlr/internal/InternalCupidLanguage.g:5751:1: ( ruleNamedConceptDef )
+            // ../org.earthsystemcurator.cupid.xtext.ui/src-gen/org/earthsystemcurator/ui/contentassist/antlr/internal/InternalCupidLanguage.g:5653:1: ( ( ruleNamedConceptDef ) )
+            // ../org.earthsystemcurator.cupid.xtext.ui/src-gen/org/earthsystemcurator/ui/contentassist/antlr/internal/InternalCupidLanguage.g:5654:1: ( ruleNamedConceptDef )
             {
-            // ../org.earthsystemcurator.cupid.xtext.ui/src-gen/org/earthsystemcurator/ui/contentassist/antlr/internal/InternalCupidLanguage.g:5751:1: ( ruleNamedConceptDef )
-            // ../org.earthsystemcurator.cupid.xtext.ui/src-gen/org/earthsystemcurator/ui/contentassist/antlr/internal/InternalCupidLanguage.g:5752:1: ruleNamedConceptDef
+            // ../org.earthsystemcurator.cupid.xtext.ui/src-gen/org/earthsystemcurator/ui/contentassist/antlr/internal/InternalCupidLanguage.g:5654:1: ( ruleNamedConceptDef )
+            // ../org.earthsystemcurator.cupid.xtext.ui/src-gen/org/earthsystemcurator/ui/contentassist/antlr/internal/InternalCupidLanguage.g:5655:1: ruleNamedConceptDef
             {
              before(grammarAccess.getLanguageAccess().getConceptDefNamedConceptDefParserRuleCall_5_0()); 
-            pushFollow(FOLLOW_ruleNamedConceptDef_in_rule__Language__ConceptDefAssignment_511555);
+            pushFollow(FOLLOW_ruleNamedConceptDef_in_rule__Language__ConceptDefAssignment_511365);
             ruleNamedConceptDef();
 
             state._fsp--;
@@ -15540,20 +15305,20 @@ public class InternalCupidLanguageParser extends AbstractInternalContentAssistPa
 
 
     // $ANTLR start "rule__Annotation__KeyAssignment_0"
-    // ../org.earthsystemcurator.cupid.xtext.ui/src-gen/org/earthsystemcurator/ui/contentassist/antlr/internal/InternalCupidLanguage.g:5761:1: rule__Annotation__KeyAssignment_0 : ( RULE_ANNOTATION_ID ) ;
+    // ../org.earthsystemcurator.cupid.xtext.ui/src-gen/org/earthsystemcurator/ui/contentassist/antlr/internal/InternalCupidLanguage.g:5664:1: rule__Annotation__KeyAssignment_0 : ( RULE_ANNOTATION_ID ) ;
     public final void rule__Annotation__KeyAssignment_0() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // ../org.earthsystemcurator.cupid.xtext.ui/src-gen/org/earthsystemcurator/ui/contentassist/antlr/internal/InternalCupidLanguage.g:5765:1: ( ( RULE_ANNOTATION_ID ) )
-            // ../org.earthsystemcurator.cupid.xtext.ui/src-gen/org/earthsystemcurator/ui/contentassist/antlr/internal/InternalCupidLanguage.g:5766:1: ( RULE_ANNOTATION_ID )
+            // ../org.earthsystemcurator.cupid.xtext.ui/src-gen/org/earthsystemcurator/ui/contentassist/antlr/internal/InternalCupidLanguage.g:5668:1: ( ( RULE_ANNOTATION_ID ) )
+            // ../org.earthsystemcurator.cupid.xtext.ui/src-gen/org/earthsystemcurator/ui/contentassist/antlr/internal/InternalCupidLanguage.g:5669:1: ( RULE_ANNOTATION_ID )
             {
-            // ../org.earthsystemcurator.cupid.xtext.ui/src-gen/org/earthsystemcurator/ui/contentassist/antlr/internal/InternalCupidLanguage.g:5766:1: ( RULE_ANNOTATION_ID )
-            // ../org.earthsystemcurator.cupid.xtext.ui/src-gen/org/earthsystemcurator/ui/contentassist/antlr/internal/InternalCupidLanguage.g:5767:1: RULE_ANNOTATION_ID
+            // ../org.earthsystemcurator.cupid.xtext.ui/src-gen/org/earthsystemcurator/ui/contentassist/antlr/internal/InternalCupidLanguage.g:5669:1: ( RULE_ANNOTATION_ID )
+            // ../org.earthsystemcurator.cupid.xtext.ui/src-gen/org/earthsystemcurator/ui/contentassist/antlr/internal/InternalCupidLanguage.g:5670:1: RULE_ANNOTATION_ID
             {
              before(grammarAccess.getAnnotationAccess().getKeyANNOTATION_IDTerminalRuleCall_0_0()); 
-            match(input,RULE_ANNOTATION_ID,FOLLOW_RULE_ANNOTATION_ID_in_rule__Annotation__KeyAssignment_011586); 
+            match(input,RULE_ANNOTATION_ID,FOLLOW_RULE_ANNOTATION_ID_in_rule__Annotation__KeyAssignment_011396); 
              after(grammarAccess.getAnnotationAccess().getKeyANNOTATION_IDTerminalRuleCall_0_0()); 
 
             }
@@ -15577,20 +15342,20 @@ public class InternalCupidLanguageParser extends AbstractInternalContentAssistPa
 
 
     // $ANTLR start "rule__Annotation__ValueAssignment_1_1"
-    // ../org.earthsystemcurator.cupid.xtext.ui/src-gen/org/earthsystemcurator/ui/contentassist/antlr/internal/InternalCupidLanguage.g:5776:1: rule__Annotation__ValueAssignment_1_1 : ( RULE_STRING ) ;
+    // ../org.earthsystemcurator.cupid.xtext.ui/src-gen/org/earthsystemcurator/ui/contentassist/antlr/internal/InternalCupidLanguage.g:5679:1: rule__Annotation__ValueAssignment_1_1 : ( RULE_STRING ) ;
     public final void rule__Annotation__ValueAssignment_1_1() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // ../org.earthsystemcurator.cupid.xtext.ui/src-gen/org/earthsystemcurator/ui/contentassist/antlr/internal/InternalCupidLanguage.g:5780:1: ( ( RULE_STRING ) )
-            // ../org.earthsystemcurator.cupid.xtext.ui/src-gen/org/earthsystemcurator/ui/contentassist/antlr/internal/InternalCupidLanguage.g:5781:1: ( RULE_STRING )
+            // ../org.earthsystemcurator.cupid.xtext.ui/src-gen/org/earthsystemcurator/ui/contentassist/antlr/internal/InternalCupidLanguage.g:5683:1: ( ( RULE_STRING ) )
+            // ../org.earthsystemcurator.cupid.xtext.ui/src-gen/org/earthsystemcurator/ui/contentassist/antlr/internal/InternalCupidLanguage.g:5684:1: ( RULE_STRING )
             {
-            // ../org.earthsystemcurator.cupid.xtext.ui/src-gen/org/earthsystemcurator/ui/contentassist/antlr/internal/InternalCupidLanguage.g:5781:1: ( RULE_STRING )
-            // ../org.earthsystemcurator.cupid.xtext.ui/src-gen/org/earthsystemcurator/ui/contentassist/antlr/internal/InternalCupidLanguage.g:5782:1: RULE_STRING
+            // ../org.earthsystemcurator.cupid.xtext.ui/src-gen/org/earthsystemcurator/ui/contentassist/antlr/internal/InternalCupidLanguage.g:5684:1: ( RULE_STRING )
+            // ../org.earthsystemcurator.cupid.xtext.ui/src-gen/org/earthsystemcurator/ui/contentassist/antlr/internal/InternalCupidLanguage.g:5685:1: RULE_STRING
             {
              before(grammarAccess.getAnnotationAccess().getValueSTRINGTerminalRuleCall_1_1_0()); 
-            match(input,RULE_STRING,FOLLOW_RULE_STRING_in_rule__Annotation__ValueAssignment_1_111617); 
+            match(input,RULE_STRING,FOLLOW_RULE_STRING_in_rule__Annotation__ValueAssignment_1_111427); 
              after(grammarAccess.getAnnotationAccess().getValueSTRINGTerminalRuleCall_1_1_0()); 
 
             }
@@ -15614,20 +15379,20 @@ public class InternalCupidLanguageParser extends AbstractInternalContentAssistPa
 
 
     // $ANTLR start "rule__AnonymousConceptDef__MappingAssignment_1_1"
-    // ../org.earthsystemcurator.cupid.xtext.ui/src-gen/org/earthsystemcurator/ui/contentassist/antlr/internal/InternalCupidLanguage.g:5791:1: rule__AnonymousConceptDef__MappingAssignment_1_1 : ( ruleMapping ) ;
+    // ../org.earthsystemcurator.cupid.xtext.ui/src-gen/org/earthsystemcurator/ui/contentassist/antlr/internal/InternalCupidLanguage.g:5694:1: rule__AnonymousConceptDef__MappingAssignment_1_1 : ( ruleMapping ) ;
     public final void rule__AnonymousConceptDef__MappingAssignment_1_1() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // ../org.earthsystemcurator.cupid.xtext.ui/src-gen/org/earthsystemcurator/ui/contentassist/antlr/internal/InternalCupidLanguage.g:5795:1: ( ( ruleMapping ) )
-            // ../org.earthsystemcurator.cupid.xtext.ui/src-gen/org/earthsystemcurator/ui/contentassist/antlr/internal/InternalCupidLanguage.g:5796:1: ( ruleMapping )
+            // ../org.earthsystemcurator.cupid.xtext.ui/src-gen/org/earthsystemcurator/ui/contentassist/antlr/internal/InternalCupidLanguage.g:5698:1: ( ( ruleMapping ) )
+            // ../org.earthsystemcurator.cupid.xtext.ui/src-gen/org/earthsystemcurator/ui/contentassist/antlr/internal/InternalCupidLanguage.g:5699:1: ( ruleMapping )
             {
-            // ../org.earthsystemcurator.cupid.xtext.ui/src-gen/org/earthsystemcurator/ui/contentassist/antlr/internal/InternalCupidLanguage.g:5796:1: ( ruleMapping )
-            // ../org.earthsystemcurator.cupid.xtext.ui/src-gen/org/earthsystemcurator/ui/contentassist/antlr/internal/InternalCupidLanguage.g:5797:1: ruleMapping
+            // ../org.earthsystemcurator.cupid.xtext.ui/src-gen/org/earthsystemcurator/ui/contentassist/antlr/internal/InternalCupidLanguage.g:5699:1: ( ruleMapping )
+            // ../org.earthsystemcurator.cupid.xtext.ui/src-gen/org/earthsystemcurator/ui/contentassist/antlr/internal/InternalCupidLanguage.g:5700:1: ruleMapping
             {
              before(grammarAccess.getAnonymousConceptDefAccess().getMappingMappingParserRuleCall_1_1_0()); 
-            pushFollow(FOLLOW_ruleMapping_in_rule__AnonymousConceptDef__MappingAssignment_1_111648);
+            pushFollow(FOLLOW_ruleMapping_in_rule__AnonymousConceptDef__MappingAssignment_1_111458);
             ruleMapping();
 
             state._fsp--;
@@ -15655,20 +15420,20 @@ public class InternalCupidLanguageParser extends AbstractInternalContentAssistPa
 
 
     // $ANTLR start "rule__AnonymousConceptDef__AnnotationAssignment_2_1"
-    // ../org.earthsystemcurator.cupid.xtext.ui/src-gen/org/earthsystemcurator/ui/contentassist/antlr/internal/InternalCupidLanguage.g:5806:1: rule__AnonymousConceptDef__AnnotationAssignment_2_1 : ( ruleAnnotation ) ;
+    // ../org.earthsystemcurator.cupid.xtext.ui/src-gen/org/earthsystemcurator/ui/contentassist/antlr/internal/InternalCupidLanguage.g:5709:1: rule__AnonymousConceptDef__AnnotationAssignment_2_1 : ( ruleAnnotation ) ;
     public final void rule__AnonymousConceptDef__AnnotationAssignment_2_1() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // ../org.earthsystemcurator.cupid.xtext.ui/src-gen/org/earthsystemcurator/ui/contentassist/antlr/internal/InternalCupidLanguage.g:5810:1: ( ( ruleAnnotation ) )
-            // ../org.earthsystemcurator.cupid.xtext.ui/src-gen/org/earthsystemcurator/ui/contentassist/antlr/internal/InternalCupidLanguage.g:5811:1: ( ruleAnnotation )
+            // ../org.earthsystemcurator.cupid.xtext.ui/src-gen/org/earthsystemcurator/ui/contentassist/antlr/internal/InternalCupidLanguage.g:5713:1: ( ( ruleAnnotation ) )
+            // ../org.earthsystemcurator.cupid.xtext.ui/src-gen/org/earthsystemcurator/ui/contentassist/antlr/internal/InternalCupidLanguage.g:5714:1: ( ruleAnnotation )
             {
-            // ../org.earthsystemcurator.cupid.xtext.ui/src-gen/org/earthsystemcurator/ui/contentassist/antlr/internal/InternalCupidLanguage.g:5811:1: ( ruleAnnotation )
-            // ../org.earthsystemcurator.cupid.xtext.ui/src-gen/org/earthsystemcurator/ui/contentassist/antlr/internal/InternalCupidLanguage.g:5812:1: ruleAnnotation
+            // ../org.earthsystemcurator.cupid.xtext.ui/src-gen/org/earthsystemcurator/ui/contentassist/antlr/internal/InternalCupidLanguage.g:5714:1: ( ruleAnnotation )
+            // ../org.earthsystemcurator.cupid.xtext.ui/src-gen/org/earthsystemcurator/ui/contentassist/antlr/internal/InternalCupidLanguage.g:5715:1: ruleAnnotation
             {
              before(grammarAccess.getAnonymousConceptDefAccess().getAnnotationAnnotationParserRuleCall_2_1_0()); 
-            pushFollow(FOLLOW_ruleAnnotation_in_rule__AnonymousConceptDef__AnnotationAssignment_2_111679);
+            pushFollow(FOLLOW_ruleAnnotation_in_rule__AnonymousConceptDef__AnnotationAssignment_2_111489);
             ruleAnnotation();
 
             state._fsp--;
@@ -15696,20 +15461,20 @@ public class InternalCupidLanguageParser extends AbstractInternalContentAssistPa
 
 
     // $ANTLR start "rule__AnonymousConceptDef__ChildAssignment_2_2"
-    // ../org.earthsystemcurator.cupid.xtext.ui/src-gen/org/earthsystemcurator/ui/contentassist/antlr/internal/InternalCupidLanguage.g:5821:1: rule__AnonymousConceptDef__ChildAssignment_2_2 : ( ruleSubconceptOrAttribute ) ;
+    // ../org.earthsystemcurator.cupid.xtext.ui/src-gen/org/earthsystemcurator/ui/contentassist/antlr/internal/InternalCupidLanguage.g:5724:1: rule__AnonymousConceptDef__ChildAssignment_2_2 : ( ruleSubconceptOrAttribute ) ;
     public final void rule__AnonymousConceptDef__ChildAssignment_2_2() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // ../org.earthsystemcurator.cupid.xtext.ui/src-gen/org/earthsystemcurator/ui/contentassist/antlr/internal/InternalCupidLanguage.g:5825:1: ( ( ruleSubconceptOrAttribute ) )
-            // ../org.earthsystemcurator.cupid.xtext.ui/src-gen/org/earthsystemcurator/ui/contentassist/antlr/internal/InternalCupidLanguage.g:5826:1: ( ruleSubconceptOrAttribute )
+            // ../org.earthsystemcurator.cupid.xtext.ui/src-gen/org/earthsystemcurator/ui/contentassist/antlr/internal/InternalCupidLanguage.g:5728:1: ( ( ruleSubconceptOrAttribute ) )
+            // ../org.earthsystemcurator.cupid.xtext.ui/src-gen/org/earthsystemcurator/ui/contentassist/antlr/internal/InternalCupidLanguage.g:5729:1: ( ruleSubconceptOrAttribute )
             {
-            // ../org.earthsystemcurator.cupid.xtext.ui/src-gen/org/earthsystemcurator/ui/contentassist/antlr/internal/InternalCupidLanguage.g:5826:1: ( ruleSubconceptOrAttribute )
-            // ../org.earthsystemcurator.cupid.xtext.ui/src-gen/org/earthsystemcurator/ui/contentassist/antlr/internal/InternalCupidLanguage.g:5827:1: ruleSubconceptOrAttribute
+            // ../org.earthsystemcurator.cupid.xtext.ui/src-gen/org/earthsystemcurator/ui/contentassist/antlr/internal/InternalCupidLanguage.g:5729:1: ( ruleSubconceptOrAttribute )
+            // ../org.earthsystemcurator.cupid.xtext.ui/src-gen/org/earthsystemcurator/ui/contentassist/antlr/internal/InternalCupidLanguage.g:5730:1: ruleSubconceptOrAttribute
             {
              before(grammarAccess.getAnonymousConceptDefAccess().getChildSubconceptOrAttributeParserRuleCall_2_2_0()); 
-            pushFollow(FOLLOW_ruleSubconceptOrAttribute_in_rule__AnonymousConceptDef__ChildAssignment_2_211710);
+            pushFollow(FOLLOW_ruleSubconceptOrAttribute_in_rule__AnonymousConceptDef__ChildAssignment_2_211520);
             ruleSubconceptOrAttribute();
 
             state._fsp--;
@@ -15737,24 +15502,24 @@ public class InternalCupidLanguageParser extends AbstractInternalContentAssistPa
 
 
     // $ANTLR start "rule__NamedConceptDef__NamedAssignment_0"
-    // ../org.earthsystemcurator.cupid.xtext.ui/src-gen/org/earthsystemcurator/ui/contentassist/antlr/internal/InternalCupidLanguage.g:5836:1: rule__NamedConceptDef__NamedAssignment_0 : ( ( 'concept' ) ) ;
+    // ../org.earthsystemcurator.cupid.xtext.ui/src-gen/org/earthsystemcurator/ui/contentassist/antlr/internal/InternalCupidLanguage.g:5739:1: rule__NamedConceptDef__NamedAssignment_0 : ( ( 'concept' ) ) ;
     public final void rule__NamedConceptDef__NamedAssignment_0() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // ../org.earthsystemcurator.cupid.xtext.ui/src-gen/org/earthsystemcurator/ui/contentassist/antlr/internal/InternalCupidLanguage.g:5840:1: ( ( ( 'concept' ) ) )
-            // ../org.earthsystemcurator.cupid.xtext.ui/src-gen/org/earthsystemcurator/ui/contentassist/antlr/internal/InternalCupidLanguage.g:5841:1: ( ( 'concept' ) )
+            // ../org.earthsystemcurator.cupid.xtext.ui/src-gen/org/earthsystemcurator/ui/contentassist/antlr/internal/InternalCupidLanguage.g:5743:1: ( ( ( 'concept' ) ) )
+            // ../org.earthsystemcurator.cupid.xtext.ui/src-gen/org/earthsystemcurator/ui/contentassist/antlr/internal/InternalCupidLanguage.g:5744:1: ( ( 'concept' ) )
             {
-            // ../org.earthsystemcurator.cupid.xtext.ui/src-gen/org/earthsystemcurator/ui/contentassist/antlr/internal/InternalCupidLanguage.g:5841:1: ( ( 'concept' ) )
-            // ../org.earthsystemcurator.cupid.xtext.ui/src-gen/org/earthsystemcurator/ui/contentassist/antlr/internal/InternalCupidLanguage.g:5842:1: ( 'concept' )
-            {
-             before(grammarAccess.getNamedConceptDefAccess().getNamedConceptKeyword_0_0()); 
-            // ../org.earthsystemcurator.cupid.xtext.ui/src-gen/org/earthsystemcurator/ui/contentassist/antlr/internal/InternalCupidLanguage.g:5843:1: ( 'concept' )
-            // ../org.earthsystemcurator.cupid.xtext.ui/src-gen/org/earthsystemcurator/ui/contentassist/antlr/internal/InternalCupidLanguage.g:5844:1: 'concept'
+            // ../org.earthsystemcurator.cupid.xtext.ui/src-gen/org/earthsystemcurator/ui/contentassist/antlr/internal/InternalCupidLanguage.g:5744:1: ( ( 'concept' ) )
+            // ../org.earthsystemcurator.cupid.xtext.ui/src-gen/org/earthsystemcurator/ui/contentassist/antlr/internal/InternalCupidLanguage.g:5745:1: ( 'concept' )
             {
              before(grammarAccess.getNamedConceptDefAccess().getNamedConceptKeyword_0_0()); 
-            match(input,33,FOLLOW_33_in_rule__NamedConceptDef__NamedAssignment_011746); 
+            // ../org.earthsystemcurator.cupid.xtext.ui/src-gen/org/earthsystemcurator/ui/contentassist/antlr/internal/InternalCupidLanguage.g:5746:1: ( 'concept' )
+            // ../org.earthsystemcurator.cupid.xtext.ui/src-gen/org/earthsystemcurator/ui/contentassist/antlr/internal/InternalCupidLanguage.g:5747:1: 'concept'
+            {
+             before(grammarAccess.getNamedConceptDefAccess().getNamedConceptKeyword_0_0()); 
+            match(input,33,FOLLOW_33_in_rule__NamedConceptDef__NamedAssignment_011556); 
              after(grammarAccess.getNamedConceptDefAccess().getNamedConceptKeyword_0_0()); 
 
             }
@@ -15782,20 +15547,20 @@ public class InternalCupidLanguageParser extends AbstractInternalContentAssistPa
 
 
     // $ANTLR start "rule__NamedConceptDef__NameAssignment_1"
-    // ../org.earthsystemcurator.cupid.xtext.ui/src-gen/org/earthsystemcurator/ui/contentassist/antlr/internal/InternalCupidLanguage.g:5859:1: rule__NamedConceptDef__NameAssignment_1 : ( RULE_ID ) ;
+    // ../org.earthsystemcurator.cupid.xtext.ui/src-gen/org/earthsystemcurator/ui/contentassist/antlr/internal/InternalCupidLanguage.g:5762:1: rule__NamedConceptDef__NameAssignment_1 : ( RULE_ID ) ;
     public final void rule__NamedConceptDef__NameAssignment_1() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // ../org.earthsystemcurator.cupid.xtext.ui/src-gen/org/earthsystemcurator/ui/contentassist/antlr/internal/InternalCupidLanguage.g:5863:1: ( ( RULE_ID ) )
-            // ../org.earthsystemcurator.cupid.xtext.ui/src-gen/org/earthsystemcurator/ui/contentassist/antlr/internal/InternalCupidLanguage.g:5864:1: ( RULE_ID )
+            // ../org.earthsystemcurator.cupid.xtext.ui/src-gen/org/earthsystemcurator/ui/contentassist/antlr/internal/InternalCupidLanguage.g:5766:1: ( ( RULE_ID ) )
+            // ../org.earthsystemcurator.cupid.xtext.ui/src-gen/org/earthsystemcurator/ui/contentassist/antlr/internal/InternalCupidLanguage.g:5767:1: ( RULE_ID )
             {
-            // ../org.earthsystemcurator.cupid.xtext.ui/src-gen/org/earthsystemcurator/ui/contentassist/antlr/internal/InternalCupidLanguage.g:5864:1: ( RULE_ID )
-            // ../org.earthsystemcurator.cupid.xtext.ui/src-gen/org/earthsystemcurator/ui/contentassist/antlr/internal/InternalCupidLanguage.g:5865:1: RULE_ID
+            // ../org.earthsystemcurator.cupid.xtext.ui/src-gen/org/earthsystemcurator/ui/contentassist/antlr/internal/InternalCupidLanguage.g:5767:1: ( RULE_ID )
+            // ../org.earthsystemcurator.cupid.xtext.ui/src-gen/org/earthsystemcurator/ui/contentassist/antlr/internal/InternalCupidLanguage.g:5768:1: RULE_ID
             {
              before(grammarAccess.getNamedConceptDefAccess().getNameIDTerminalRuleCall_1_0()); 
-            match(input,RULE_ID,FOLLOW_RULE_ID_in_rule__NamedConceptDef__NameAssignment_111785); 
+            match(input,RULE_ID,FOLLOW_RULE_ID_in_rule__NamedConceptDef__NameAssignment_111595); 
              after(grammarAccess.getNamedConceptDefAccess().getNameIDTerminalRuleCall_1_0()); 
 
             }
@@ -15819,20 +15584,20 @@ public class InternalCupidLanguageParser extends AbstractInternalContentAssistPa
 
 
     // $ANTLR start "rule__NamedConceptDef__MappingAssignment_2_1"
-    // ../org.earthsystemcurator.cupid.xtext.ui/src-gen/org/earthsystemcurator/ui/contentassist/antlr/internal/InternalCupidLanguage.g:5874:1: rule__NamedConceptDef__MappingAssignment_2_1 : ( ruleMapping ) ;
+    // ../org.earthsystemcurator.cupid.xtext.ui/src-gen/org/earthsystemcurator/ui/contentassist/antlr/internal/InternalCupidLanguage.g:5777:1: rule__NamedConceptDef__MappingAssignment_2_1 : ( ruleMapping ) ;
     public final void rule__NamedConceptDef__MappingAssignment_2_1() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // ../org.earthsystemcurator.cupid.xtext.ui/src-gen/org/earthsystemcurator/ui/contentassist/antlr/internal/InternalCupidLanguage.g:5878:1: ( ( ruleMapping ) )
-            // ../org.earthsystemcurator.cupid.xtext.ui/src-gen/org/earthsystemcurator/ui/contentassist/antlr/internal/InternalCupidLanguage.g:5879:1: ( ruleMapping )
+            // ../org.earthsystemcurator.cupid.xtext.ui/src-gen/org/earthsystemcurator/ui/contentassist/antlr/internal/InternalCupidLanguage.g:5781:1: ( ( ruleMapping ) )
+            // ../org.earthsystemcurator.cupid.xtext.ui/src-gen/org/earthsystemcurator/ui/contentassist/antlr/internal/InternalCupidLanguage.g:5782:1: ( ruleMapping )
             {
-            // ../org.earthsystemcurator.cupid.xtext.ui/src-gen/org/earthsystemcurator/ui/contentassist/antlr/internal/InternalCupidLanguage.g:5879:1: ( ruleMapping )
-            // ../org.earthsystemcurator.cupid.xtext.ui/src-gen/org/earthsystemcurator/ui/contentassist/antlr/internal/InternalCupidLanguage.g:5880:1: ruleMapping
+            // ../org.earthsystemcurator.cupid.xtext.ui/src-gen/org/earthsystemcurator/ui/contentassist/antlr/internal/InternalCupidLanguage.g:5782:1: ( ruleMapping )
+            // ../org.earthsystemcurator.cupid.xtext.ui/src-gen/org/earthsystemcurator/ui/contentassist/antlr/internal/InternalCupidLanguage.g:5783:1: ruleMapping
             {
              before(grammarAccess.getNamedConceptDefAccess().getMappingMappingParserRuleCall_2_1_0()); 
-            pushFollow(FOLLOW_ruleMapping_in_rule__NamedConceptDef__MappingAssignment_2_111816);
+            pushFollow(FOLLOW_ruleMapping_in_rule__NamedConceptDef__MappingAssignment_2_111626);
             ruleMapping();
 
             state._fsp--;
@@ -15860,20 +15625,20 @@ public class InternalCupidLanguageParser extends AbstractInternalContentAssistPa
 
 
     // $ANTLR start "rule__NamedConceptDef__AnnotationAssignment_3_1"
-    // ../org.earthsystemcurator.cupid.xtext.ui/src-gen/org/earthsystemcurator/ui/contentassist/antlr/internal/InternalCupidLanguage.g:5889:1: rule__NamedConceptDef__AnnotationAssignment_3_1 : ( ruleAnnotation ) ;
+    // ../org.earthsystemcurator.cupid.xtext.ui/src-gen/org/earthsystemcurator/ui/contentassist/antlr/internal/InternalCupidLanguage.g:5792:1: rule__NamedConceptDef__AnnotationAssignment_3_1 : ( ruleAnnotation ) ;
     public final void rule__NamedConceptDef__AnnotationAssignment_3_1() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // ../org.earthsystemcurator.cupid.xtext.ui/src-gen/org/earthsystemcurator/ui/contentassist/antlr/internal/InternalCupidLanguage.g:5893:1: ( ( ruleAnnotation ) )
-            // ../org.earthsystemcurator.cupid.xtext.ui/src-gen/org/earthsystemcurator/ui/contentassist/antlr/internal/InternalCupidLanguage.g:5894:1: ( ruleAnnotation )
+            // ../org.earthsystemcurator.cupid.xtext.ui/src-gen/org/earthsystemcurator/ui/contentassist/antlr/internal/InternalCupidLanguage.g:5796:1: ( ( ruleAnnotation ) )
+            // ../org.earthsystemcurator.cupid.xtext.ui/src-gen/org/earthsystemcurator/ui/contentassist/antlr/internal/InternalCupidLanguage.g:5797:1: ( ruleAnnotation )
             {
-            // ../org.earthsystemcurator.cupid.xtext.ui/src-gen/org/earthsystemcurator/ui/contentassist/antlr/internal/InternalCupidLanguage.g:5894:1: ( ruleAnnotation )
-            // ../org.earthsystemcurator.cupid.xtext.ui/src-gen/org/earthsystemcurator/ui/contentassist/antlr/internal/InternalCupidLanguage.g:5895:1: ruleAnnotation
+            // ../org.earthsystemcurator.cupid.xtext.ui/src-gen/org/earthsystemcurator/ui/contentassist/antlr/internal/InternalCupidLanguage.g:5797:1: ( ruleAnnotation )
+            // ../org.earthsystemcurator.cupid.xtext.ui/src-gen/org/earthsystemcurator/ui/contentassist/antlr/internal/InternalCupidLanguage.g:5798:1: ruleAnnotation
             {
              before(grammarAccess.getNamedConceptDefAccess().getAnnotationAnnotationParserRuleCall_3_1_0()); 
-            pushFollow(FOLLOW_ruleAnnotation_in_rule__NamedConceptDef__AnnotationAssignment_3_111847);
+            pushFollow(FOLLOW_ruleAnnotation_in_rule__NamedConceptDef__AnnotationAssignment_3_111657);
             ruleAnnotation();
 
             state._fsp--;
@@ -15901,20 +15666,20 @@ public class InternalCupidLanguageParser extends AbstractInternalContentAssistPa
 
 
     // $ANTLR start "rule__NamedConceptDef__ChildAssignment_3_2"
-    // ../org.earthsystemcurator.cupid.xtext.ui/src-gen/org/earthsystemcurator/ui/contentassist/antlr/internal/InternalCupidLanguage.g:5904:1: rule__NamedConceptDef__ChildAssignment_3_2 : ( ruleSubconceptOrAttribute ) ;
+    // ../org.earthsystemcurator.cupid.xtext.ui/src-gen/org/earthsystemcurator/ui/contentassist/antlr/internal/InternalCupidLanguage.g:5807:1: rule__NamedConceptDef__ChildAssignment_3_2 : ( ruleSubconceptOrAttribute ) ;
     public final void rule__NamedConceptDef__ChildAssignment_3_2() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // ../org.earthsystemcurator.cupid.xtext.ui/src-gen/org/earthsystemcurator/ui/contentassist/antlr/internal/InternalCupidLanguage.g:5908:1: ( ( ruleSubconceptOrAttribute ) )
-            // ../org.earthsystemcurator.cupid.xtext.ui/src-gen/org/earthsystemcurator/ui/contentassist/antlr/internal/InternalCupidLanguage.g:5909:1: ( ruleSubconceptOrAttribute )
+            // ../org.earthsystemcurator.cupid.xtext.ui/src-gen/org/earthsystemcurator/ui/contentassist/antlr/internal/InternalCupidLanguage.g:5811:1: ( ( ruleSubconceptOrAttribute ) )
+            // ../org.earthsystemcurator.cupid.xtext.ui/src-gen/org/earthsystemcurator/ui/contentassist/antlr/internal/InternalCupidLanguage.g:5812:1: ( ruleSubconceptOrAttribute )
             {
-            // ../org.earthsystemcurator.cupid.xtext.ui/src-gen/org/earthsystemcurator/ui/contentassist/antlr/internal/InternalCupidLanguage.g:5909:1: ( ruleSubconceptOrAttribute )
-            // ../org.earthsystemcurator.cupid.xtext.ui/src-gen/org/earthsystemcurator/ui/contentassist/antlr/internal/InternalCupidLanguage.g:5910:1: ruleSubconceptOrAttribute
+            // ../org.earthsystemcurator.cupid.xtext.ui/src-gen/org/earthsystemcurator/ui/contentassist/antlr/internal/InternalCupidLanguage.g:5812:1: ( ruleSubconceptOrAttribute )
+            // ../org.earthsystemcurator.cupid.xtext.ui/src-gen/org/earthsystemcurator/ui/contentassist/antlr/internal/InternalCupidLanguage.g:5813:1: ruleSubconceptOrAttribute
             {
              before(grammarAccess.getNamedConceptDefAccess().getChildSubconceptOrAttributeParserRuleCall_3_2_0()); 
-            pushFollow(FOLLOW_ruleSubconceptOrAttribute_in_rule__NamedConceptDef__ChildAssignment_3_211878);
+            pushFollow(FOLLOW_ruleSubconceptOrAttribute_in_rule__NamedConceptDef__ChildAssignment_3_211688);
             ruleSubconceptOrAttribute();
 
             state._fsp--;
@@ -15942,24 +15707,24 @@ public class InternalCupidLanguageParser extends AbstractInternalContentAssistPa
 
 
     // $ANTLR start "rule__TopConceptDef__TopAssignment_0"
-    // ../org.earthsystemcurator.cupid.xtext.ui/src-gen/org/earthsystemcurator/ui/contentassist/antlr/internal/InternalCupidLanguage.g:5919:1: rule__TopConceptDef__TopAssignment_0 : ( ( 'top' ) ) ;
+    // ../org.earthsystemcurator.cupid.xtext.ui/src-gen/org/earthsystemcurator/ui/contentassist/antlr/internal/InternalCupidLanguage.g:5822:1: rule__TopConceptDef__TopAssignment_0 : ( ( 'top' ) ) ;
     public final void rule__TopConceptDef__TopAssignment_0() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // ../org.earthsystemcurator.cupid.xtext.ui/src-gen/org/earthsystemcurator/ui/contentassist/antlr/internal/InternalCupidLanguage.g:5923:1: ( ( ( 'top' ) ) )
-            // ../org.earthsystemcurator.cupid.xtext.ui/src-gen/org/earthsystemcurator/ui/contentassist/antlr/internal/InternalCupidLanguage.g:5924:1: ( ( 'top' ) )
+            // ../org.earthsystemcurator.cupid.xtext.ui/src-gen/org/earthsystemcurator/ui/contentassist/antlr/internal/InternalCupidLanguage.g:5826:1: ( ( ( 'top' ) ) )
+            // ../org.earthsystemcurator.cupid.xtext.ui/src-gen/org/earthsystemcurator/ui/contentassist/antlr/internal/InternalCupidLanguage.g:5827:1: ( ( 'top' ) )
             {
-            // ../org.earthsystemcurator.cupid.xtext.ui/src-gen/org/earthsystemcurator/ui/contentassist/antlr/internal/InternalCupidLanguage.g:5924:1: ( ( 'top' ) )
-            // ../org.earthsystemcurator.cupid.xtext.ui/src-gen/org/earthsystemcurator/ui/contentassist/antlr/internal/InternalCupidLanguage.g:5925:1: ( 'top' )
-            {
-             before(grammarAccess.getTopConceptDefAccess().getTopTopKeyword_0_0()); 
-            // ../org.earthsystemcurator.cupid.xtext.ui/src-gen/org/earthsystemcurator/ui/contentassist/antlr/internal/InternalCupidLanguage.g:5926:1: ( 'top' )
-            // ../org.earthsystemcurator.cupid.xtext.ui/src-gen/org/earthsystemcurator/ui/contentassist/antlr/internal/InternalCupidLanguage.g:5927:1: 'top'
+            // ../org.earthsystemcurator.cupid.xtext.ui/src-gen/org/earthsystemcurator/ui/contentassist/antlr/internal/InternalCupidLanguage.g:5827:1: ( ( 'top' ) )
+            // ../org.earthsystemcurator.cupid.xtext.ui/src-gen/org/earthsystemcurator/ui/contentassist/antlr/internal/InternalCupidLanguage.g:5828:1: ( 'top' )
             {
              before(grammarAccess.getTopConceptDefAccess().getTopTopKeyword_0_0()); 
-            match(input,34,FOLLOW_34_in_rule__TopConceptDef__TopAssignment_011914); 
+            // ../org.earthsystemcurator.cupid.xtext.ui/src-gen/org/earthsystemcurator/ui/contentassist/antlr/internal/InternalCupidLanguage.g:5829:1: ( 'top' )
+            // ../org.earthsystemcurator.cupid.xtext.ui/src-gen/org/earthsystemcurator/ui/contentassist/antlr/internal/InternalCupidLanguage.g:5830:1: 'top'
+            {
+             before(grammarAccess.getTopConceptDefAccess().getTopTopKeyword_0_0()); 
+            match(input,34,FOLLOW_34_in_rule__TopConceptDef__TopAssignment_011724); 
              after(grammarAccess.getTopConceptDefAccess().getTopTopKeyword_0_0()); 
 
             }
@@ -15987,24 +15752,24 @@ public class InternalCupidLanguageParser extends AbstractInternalContentAssistPa
 
 
     // $ANTLR start "rule__TopConceptDef__NamedAssignment_1"
-    // ../org.earthsystemcurator.cupid.xtext.ui/src-gen/org/earthsystemcurator/ui/contentassist/antlr/internal/InternalCupidLanguage.g:5942:1: rule__TopConceptDef__NamedAssignment_1 : ( ( 'concept' ) ) ;
+    // ../org.earthsystemcurator.cupid.xtext.ui/src-gen/org/earthsystemcurator/ui/contentassist/antlr/internal/InternalCupidLanguage.g:5845:1: rule__TopConceptDef__NamedAssignment_1 : ( ( 'concept' ) ) ;
     public final void rule__TopConceptDef__NamedAssignment_1() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // ../org.earthsystemcurator.cupid.xtext.ui/src-gen/org/earthsystemcurator/ui/contentassist/antlr/internal/InternalCupidLanguage.g:5946:1: ( ( ( 'concept' ) ) )
-            // ../org.earthsystemcurator.cupid.xtext.ui/src-gen/org/earthsystemcurator/ui/contentassist/antlr/internal/InternalCupidLanguage.g:5947:1: ( ( 'concept' ) )
+            // ../org.earthsystemcurator.cupid.xtext.ui/src-gen/org/earthsystemcurator/ui/contentassist/antlr/internal/InternalCupidLanguage.g:5849:1: ( ( ( 'concept' ) ) )
+            // ../org.earthsystemcurator.cupid.xtext.ui/src-gen/org/earthsystemcurator/ui/contentassist/antlr/internal/InternalCupidLanguage.g:5850:1: ( ( 'concept' ) )
             {
-            // ../org.earthsystemcurator.cupid.xtext.ui/src-gen/org/earthsystemcurator/ui/contentassist/antlr/internal/InternalCupidLanguage.g:5947:1: ( ( 'concept' ) )
-            // ../org.earthsystemcurator.cupid.xtext.ui/src-gen/org/earthsystemcurator/ui/contentassist/antlr/internal/InternalCupidLanguage.g:5948:1: ( 'concept' )
-            {
-             before(grammarAccess.getTopConceptDefAccess().getNamedConceptKeyword_1_0()); 
-            // ../org.earthsystemcurator.cupid.xtext.ui/src-gen/org/earthsystemcurator/ui/contentassist/antlr/internal/InternalCupidLanguage.g:5949:1: ( 'concept' )
-            // ../org.earthsystemcurator.cupid.xtext.ui/src-gen/org/earthsystemcurator/ui/contentassist/antlr/internal/InternalCupidLanguage.g:5950:1: 'concept'
+            // ../org.earthsystemcurator.cupid.xtext.ui/src-gen/org/earthsystemcurator/ui/contentassist/antlr/internal/InternalCupidLanguage.g:5850:1: ( ( 'concept' ) )
+            // ../org.earthsystemcurator.cupid.xtext.ui/src-gen/org/earthsystemcurator/ui/contentassist/antlr/internal/InternalCupidLanguage.g:5851:1: ( 'concept' )
             {
              before(grammarAccess.getTopConceptDefAccess().getNamedConceptKeyword_1_0()); 
-            match(input,33,FOLLOW_33_in_rule__TopConceptDef__NamedAssignment_111958); 
+            // ../org.earthsystemcurator.cupid.xtext.ui/src-gen/org/earthsystemcurator/ui/contentassist/antlr/internal/InternalCupidLanguage.g:5852:1: ( 'concept' )
+            // ../org.earthsystemcurator.cupid.xtext.ui/src-gen/org/earthsystemcurator/ui/contentassist/antlr/internal/InternalCupidLanguage.g:5853:1: 'concept'
+            {
+             before(grammarAccess.getTopConceptDefAccess().getNamedConceptKeyword_1_0()); 
+            match(input,33,FOLLOW_33_in_rule__TopConceptDef__NamedAssignment_111768); 
              after(grammarAccess.getTopConceptDefAccess().getNamedConceptKeyword_1_0()); 
 
             }
@@ -16032,20 +15797,20 @@ public class InternalCupidLanguageParser extends AbstractInternalContentAssistPa
 
 
     // $ANTLR start "rule__TopConceptDef__NameAssignment_2"
-    // ../org.earthsystemcurator.cupid.xtext.ui/src-gen/org/earthsystemcurator/ui/contentassist/antlr/internal/InternalCupidLanguage.g:5965:1: rule__TopConceptDef__NameAssignment_2 : ( RULE_ID ) ;
+    // ../org.earthsystemcurator.cupid.xtext.ui/src-gen/org/earthsystemcurator/ui/contentassist/antlr/internal/InternalCupidLanguage.g:5868:1: rule__TopConceptDef__NameAssignment_2 : ( RULE_ID ) ;
     public final void rule__TopConceptDef__NameAssignment_2() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // ../org.earthsystemcurator.cupid.xtext.ui/src-gen/org/earthsystemcurator/ui/contentassist/antlr/internal/InternalCupidLanguage.g:5969:1: ( ( RULE_ID ) )
-            // ../org.earthsystemcurator.cupid.xtext.ui/src-gen/org/earthsystemcurator/ui/contentassist/antlr/internal/InternalCupidLanguage.g:5970:1: ( RULE_ID )
+            // ../org.earthsystemcurator.cupid.xtext.ui/src-gen/org/earthsystemcurator/ui/contentassist/antlr/internal/InternalCupidLanguage.g:5872:1: ( ( RULE_ID ) )
+            // ../org.earthsystemcurator.cupid.xtext.ui/src-gen/org/earthsystemcurator/ui/contentassist/antlr/internal/InternalCupidLanguage.g:5873:1: ( RULE_ID )
             {
-            // ../org.earthsystemcurator.cupid.xtext.ui/src-gen/org/earthsystemcurator/ui/contentassist/antlr/internal/InternalCupidLanguage.g:5970:1: ( RULE_ID )
-            // ../org.earthsystemcurator.cupid.xtext.ui/src-gen/org/earthsystemcurator/ui/contentassist/antlr/internal/InternalCupidLanguage.g:5971:1: RULE_ID
+            // ../org.earthsystemcurator.cupid.xtext.ui/src-gen/org/earthsystemcurator/ui/contentassist/antlr/internal/InternalCupidLanguage.g:5873:1: ( RULE_ID )
+            // ../org.earthsystemcurator.cupid.xtext.ui/src-gen/org/earthsystemcurator/ui/contentassist/antlr/internal/InternalCupidLanguage.g:5874:1: RULE_ID
             {
              before(grammarAccess.getTopConceptDefAccess().getNameIDTerminalRuleCall_2_0()); 
-            match(input,RULE_ID,FOLLOW_RULE_ID_in_rule__TopConceptDef__NameAssignment_211997); 
+            match(input,RULE_ID,FOLLOW_RULE_ID_in_rule__TopConceptDef__NameAssignment_211807); 
              after(grammarAccess.getTopConceptDefAccess().getNameIDTerminalRuleCall_2_0()); 
 
             }
@@ -16069,20 +15834,20 @@ public class InternalCupidLanguageParser extends AbstractInternalContentAssistPa
 
 
     // $ANTLR start "rule__TopConceptDef__MappingAssignment_3_1"
-    // ../org.earthsystemcurator.cupid.xtext.ui/src-gen/org/earthsystemcurator/ui/contentassist/antlr/internal/InternalCupidLanguage.g:5980:1: rule__TopConceptDef__MappingAssignment_3_1 : ( ruleMapping ) ;
+    // ../org.earthsystemcurator.cupid.xtext.ui/src-gen/org/earthsystemcurator/ui/contentassist/antlr/internal/InternalCupidLanguage.g:5883:1: rule__TopConceptDef__MappingAssignment_3_1 : ( ruleMapping ) ;
     public final void rule__TopConceptDef__MappingAssignment_3_1() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // ../org.earthsystemcurator.cupid.xtext.ui/src-gen/org/earthsystemcurator/ui/contentassist/antlr/internal/InternalCupidLanguage.g:5984:1: ( ( ruleMapping ) )
-            // ../org.earthsystemcurator.cupid.xtext.ui/src-gen/org/earthsystemcurator/ui/contentassist/antlr/internal/InternalCupidLanguage.g:5985:1: ( ruleMapping )
+            // ../org.earthsystemcurator.cupid.xtext.ui/src-gen/org/earthsystemcurator/ui/contentassist/antlr/internal/InternalCupidLanguage.g:5887:1: ( ( ruleMapping ) )
+            // ../org.earthsystemcurator.cupid.xtext.ui/src-gen/org/earthsystemcurator/ui/contentassist/antlr/internal/InternalCupidLanguage.g:5888:1: ( ruleMapping )
             {
-            // ../org.earthsystemcurator.cupid.xtext.ui/src-gen/org/earthsystemcurator/ui/contentassist/antlr/internal/InternalCupidLanguage.g:5985:1: ( ruleMapping )
-            // ../org.earthsystemcurator.cupid.xtext.ui/src-gen/org/earthsystemcurator/ui/contentassist/antlr/internal/InternalCupidLanguage.g:5986:1: ruleMapping
+            // ../org.earthsystemcurator.cupid.xtext.ui/src-gen/org/earthsystemcurator/ui/contentassist/antlr/internal/InternalCupidLanguage.g:5888:1: ( ruleMapping )
+            // ../org.earthsystemcurator.cupid.xtext.ui/src-gen/org/earthsystemcurator/ui/contentassist/antlr/internal/InternalCupidLanguage.g:5889:1: ruleMapping
             {
              before(grammarAccess.getTopConceptDefAccess().getMappingMappingParserRuleCall_3_1_0()); 
-            pushFollow(FOLLOW_ruleMapping_in_rule__TopConceptDef__MappingAssignment_3_112028);
+            pushFollow(FOLLOW_ruleMapping_in_rule__TopConceptDef__MappingAssignment_3_111838);
             ruleMapping();
 
             state._fsp--;
@@ -16110,20 +15875,20 @@ public class InternalCupidLanguageParser extends AbstractInternalContentAssistPa
 
 
     // $ANTLR start "rule__TopConceptDef__AnnotationAssignment_4_1"
-    // ../org.earthsystemcurator.cupid.xtext.ui/src-gen/org/earthsystemcurator/ui/contentassist/antlr/internal/InternalCupidLanguage.g:5995:1: rule__TopConceptDef__AnnotationAssignment_4_1 : ( ruleAnnotation ) ;
+    // ../org.earthsystemcurator.cupid.xtext.ui/src-gen/org/earthsystemcurator/ui/contentassist/antlr/internal/InternalCupidLanguage.g:5898:1: rule__TopConceptDef__AnnotationAssignment_4_1 : ( ruleAnnotation ) ;
     public final void rule__TopConceptDef__AnnotationAssignment_4_1() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // ../org.earthsystemcurator.cupid.xtext.ui/src-gen/org/earthsystemcurator/ui/contentassist/antlr/internal/InternalCupidLanguage.g:5999:1: ( ( ruleAnnotation ) )
-            // ../org.earthsystemcurator.cupid.xtext.ui/src-gen/org/earthsystemcurator/ui/contentassist/antlr/internal/InternalCupidLanguage.g:6000:1: ( ruleAnnotation )
+            // ../org.earthsystemcurator.cupid.xtext.ui/src-gen/org/earthsystemcurator/ui/contentassist/antlr/internal/InternalCupidLanguage.g:5902:1: ( ( ruleAnnotation ) )
+            // ../org.earthsystemcurator.cupid.xtext.ui/src-gen/org/earthsystemcurator/ui/contentassist/antlr/internal/InternalCupidLanguage.g:5903:1: ( ruleAnnotation )
             {
-            // ../org.earthsystemcurator.cupid.xtext.ui/src-gen/org/earthsystemcurator/ui/contentassist/antlr/internal/InternalCupidLanguage.g:6000:1: ( ruleAnnotation )
-            // ../org.earthsystemcurator.cupid.xtext.ui/src-gen/org/earthsystemcurator/ui/contentassist/antlr/internal/InternalCupidLanguage.g:6001:1: ruleAnnotation
+            // ../org.earthsystemcurator.cupid.xtext.ui/src-gen/org/earthsystemcurator/ui/contentassist/antlr/internal/InternalCupidLanguage.g:5903:1: ( ruleAnnotation )
+            // ../org.earthsystemcurator.cupid.xtext.ui/src-gen/org/earthsystemcurator/ui/contentassist/antlr/internal/InternalCupidLanguage.g:5904:1: ruleAnnotation
             {
              before(grammarAccess.getTopConceptDefAccess().getAnnotationAnnotationParserRuleCall_4_1_0()); 
-            pushFollow(FOLLOW_ruleAnnotation_in_rule__TopConceptDef__AnnotationAssignment_4_112059);
+            pushFollow(FOLLOW_ruleAnnotation_in_rule__TopConceptDef__AnnotationAssignment_4_111869);
             ruleAnnotation();
 
             state._fsp--;
@@ -16151,20 +15916,20 @@ public class InternalCupidLanguageParser extends AbstractInternalContentAssistPa
 
 
     // $ANTLR start "rule__TopConceptDef__ChildAssignment_4_2"
-    // ../org.earthsystemcurator.cupid.xtext.ui/src-gen/org/earthsystemcurator/ui/contentassist/antlr/internal/InternalCupidLanguage.g:6010:1: rule__TopConceptDef__ChildAssignment_4_2 : ( ruleSubconceptOrAttribute ) ;
+    // ../org.earthsystemcurator.cupid.xtext.ui/src-gen/org/earthsystemcurator/ui/contentassist/antlr/internal/InternalCupidLanguage.g:5913:1: rule__TopConceptDef__ChildAssignment_4_2 : ( ruleSubconceptOrAttribute ) ;
     public final void rule__TopConceptDef__ChildAssignment_4_2() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // ../org.earthsystemcurator.cupid.xtext.ui/src-gen/org/earthsystemcurator/ui/contentassist/antlr/internal/InternalCupidLanguage.g:6014:1: ( ( ruleSubconceptOrAttribute ) )
-            // ../org.earthsystemcurator.cupid.xtext.ui/src-gen/org/earthsystemcurator/ui/contentassist/antlr/internal/InternalCupidLanguage.g:6015:1: ( ruleSubconceptOrAttribute )
+            // ../org.earthsystemcurator.cupid.xtext.ui/src-gen/org/earthsystemcurator/ui/contentassist/antlr/internal/InternalCupidLanguage.g:5917:1: ( ( ruleSubconceptOrAttribute ) )
+            // ../org.earthsystemcurator.cupid.xtext.ui/src-gen/org/earthsystemcurator/ui/contentassist/antlr/internal/InternalCupidLanguage.g:5918:1: ( ruleSubconceptOrAttribute )
             {
-            // ../org.earthsystemcurator.cupid.xtext.ui/src-gen/org/earthsystemcurator/ui/contentassist/antlr/internal/InternalCupidLanguage.g:6015:1: ( ruleSubconceptOrAttribute )
-            // ../org.earthsystemcurator.cupid.xtext.ui/src-gen/org/earthsystemcurator/ui/contentassist/antlr/internal/InternalCupidLanguage.g:6016:1: ruleSubconceptOrAttribute
+            // ../org.earthsystemcurator.cupid.xtext.ui/src-gen/org/earthsystemcurator/ui/contentassist/antlr/internal/InternalCupidLanguage.g:5918:1: ( ruleSubconceptOrAttribute )
+            // ../org.earthsystemcurator.cupid.xtext.ui/src-gen/org/earthsystemcurator/ui/contentassist/antlr/internal/InternalCupidLanguage.g:5919:1: ruleSubconceptOrAttribute
             {
              before(grammarAccess.getTopConceptDefAccess().getChildSubconceptOrAttributeParserRuleCall_4_2_0()); 
-            pushFollow(FOLLOW_ruleSubconceptOrAttribute_in_rule__TopConceptDef__ChildAssignment_4_212090);
+            pushFollow(FOLLOW_ruleSubconceptOrAttribute_in_rule__TopConceptDef__ChildAssignment_4_211900);
             ruleSubconceptOrAttribute();
 
             state._fsp--;
@@ -16192,20 +15957,20 @@ public class InternalCupidLanguageParser extends AbstractInternalContentAssistPa
 
 
     // $ANTLR start "rule__Subconcept__NameAssignment_0"
-    // ../org.earthsystemcurator.cupid.xtext.ui/src-gen/org/earthsystemcurator/ui/contentassist/antlr/internal/InternalCupidLanguage.g:6025:1: rule__Subconcept__NameAssignment_0 : ( RULE_ID ) ;
+    // ../org.earthsystemcurator.cupid.xtext.ui/src-gen/org/earthsystemcurator/ui/contentassist/antlr/internal/InternalCupidLanguage.g:5928:1: rule__Subconcept__NameAssignment_0 : ( RULE_ID ) ;
     public final void rule__Subconcept__NameAssignment_0() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // ../org.earthsystemcurator.cupid.xtext.ui/src-gen/org/earthsystemcurator/ui/contentassist/antlr/internal/InternalCupidLanguage.g:6029:1: ( ( RULE_ID ) )
-            // ../org.earthsystemcurator.cupid.xtext.ui/src-gen/org/earthsystemcurator/ui/contentassist/antlr/internal/InternalCupidLanguage.g:6030:1: ( RULE_ID )
+            // ../org.earthsystemcurator.cupid.xtext.ui/src-gen/org/earthsystemcurator/ui/contentassist/antlr/internal/InternalCupidLanguage.g:5932:1: ( ( RULE_ID ) )
+            // ../org.earthsystemcurator.cupid.xtext.ui/src-gen/org/earthsystemcurator/ui/contentassist/antlr/internal/InternalCupidLanguage.g:5933:1: ( RULE_ID )
             {
-            // ../org.earthsystemcurator.cupid.xtext.ui/src-gen/org/earthsystemcurator/ui/contentassist/antlr/internal/InternalCupidLanguage.g:6030:1: ( RULE_ID )
-            // ../org.earthsystemcurator.cupid.xtext.ui/src-gen/org/earthsystemcurator/ui/contentassist/antlr/internal/InternalCupidLanguage.g:6031:1: RULE_ID
+            // ../org.earthsystemcurator.cupid.xtext.ui/src-gen/org/earthsystemcurator/ui/contentassist/antlr/internal/InternalCupidLanguage.g:5933:1: ( RULE_ID )
+            // ../org.earthsystemcurator.cupid.xtext.ui/src-gen/org/earthsystemcurator/ui/contentassist/antlr/internal/InternalCupidLanguage.g:5934:1: RULE_ID
             {
              before(grammarAccess.getSubconceptAccess().getNameIDTerminalRuleCall_0_0()); 
-            match(input,RULE_ID,FOLLOW_RULE_ID_in_rule__Subconcept__NameAssignment_012121); 
+            match(input,RULE_ID,FOLLOW_RULE_ID_in_rule__Subconcept__NameAssignment_011931); 
              after(grammarAccess.getSubconceptAccess().getNameIDTerminalRuleCall_0_0()); 
 
             }
@@ -16229,20 +15994,20 @@ public class InternalCupidLanguageParser extends AbstractInternalContentAssistPa
 
 
     // $ANTLR start "rule__Subconcept__CardinalityAssignment_1"
-    // ../org.earthsystemcurator.cupid.xtext.ui/src-gen/org/earthsystemcurator/ui/contentassist/antlr/internal/InternalCupidLanguage.g:6040:1: rule__Subconcept__CardinalityAssignment_1 : ( ruleCardinality ) ;
+    // ../org.earthsystemcurator.cupid.xtext.ui/src-gen/org/earthsystemcurator/ui/contentassist/antlr/internal/InternalCupidLanguage.g:5943:1: rule__Subconcept__CardinalityAssignment_1 : ( ruleCardinality ) ;
     public final void rule__Subconcept__CardinalityAssignment_1() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // ../org.earthsystemcurator.cupid.xtext.ui/src-gen/org/earthsystemcurator/ui/contentassist/antlr/internal/InternalCupidLanguage.g:6044:1: ( ( ruleCardinality ) )
-            // ../org.earthsystemcurator.cupid.xtext.ui/src-gen/org/earthsystemcurator/ui/contentassist/antlr/internal/InternalCupidLanguage.g:6045:1: ( ruleCardinality )
+            // ../org.earthsystemcurator.cupid.xtext.ui/src-gen/org/earthsystemcurator/ui/contentassist/antlr/internal/InternalCupidLanguage.g:5947:1: ( ( ruleCardinality ) )
+            // ../org.earthsystemcurator.cupid.xtext.ui/src-gen/org/earthsystemcurator/ui/contentassist/antlr/internal/InternalCupidLanguage.g:5948:1: ( ruleCardinality )
             {
-            // ../org.earthsystemcurator.cupid.xtext.ui/src-gen/org/earthsystemcurator/ui/contentassist/antlr/internal/InternalCupidLanguage.g:6045:1: ( ruleCardinality )
-            // ../org.earthsystemcurator.cupid.xtext.ui/src-gen/org/earthsystemcurator/ui/contentassist/antlr/internal/InternalCupidLanguage.g:6046:1: ruleCardinality
+            // ../org.earthsystemcurator.cupid.xtext.ui/src-gen/org/earthsystemcurator/ui/contentassist/antlr/internal/InternalCupidLanguage.g:5948:1: ( ruleCardinality )
+            // ../org.earthsystemcurator.cupid.xtext.ui/src-gen/org/earthsystemcurator/ui/contentassist/antlr/internal/InternalCupidLanguage.g:5949:1: ruleCardinality
             {
              before(grammarAccess.getSubconceptAccess().getCardinalityCardinalityParserRuleCall_1_0()); 
-            pushFollow(FOLLOW_ruleCardinality_in_rule__Subconcept__CardinalityAssignment_112152);
+            pushFollow(FOLLOW_ruleCardinality_in_rule__Subconcept__CardinalityAssignment_111962);
             ruleCardinality();
 
             state._fsp--;
@@ -16270,24 +16035,24 @@ public class InternalCupidLanguageParser extends AbstractInternalContentAssistPa
 
 
     // $ANTLR start "rule__Subconcept__EssentialAssignment_2"
-    // ../org.earthsystemcurator.cupid.xtext.ui/src-gen/org/earthsystemcurator/ui/contentassist/antlr/internal/InternalCupidLanguage.g:6055:1: rule__Subconcept__EssentialAssignment_2 : ( ( '!' ) ) ;
+    // ../org.earthsystemcurator.cupid.xtext.ui/src-gen/org/earthsystemcurator/ui/contentassist/antlr/internal/InternalCupidLanguage.g:5958:1: rule__Subconcept__EssentialAssignment_2 : ( ( '!' ) ) ;
     public final void rule__Subconcept__EssentialAssignment_2() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // ../org.earthsystemcurator.cupid.xtext.ui/src-gen/org/earthsystemcurator/ui/contentassist/antlr/internal/InternalCupidLanguage.g:6059:1: ( ( ( '!' ) ) )
-            // ../org.earthsystemcurator.cupid.xtext.ui/src-gen/org/earthsystemcurator/ui/contentassist/antlr/internal/InternalCupidLanguage.g:6060:1: ( ( '!' ) )
+            // ../org.earthsystemcurator.cupid.xtext.ui/src-gen/org/earthsystemcurator/ui/contentassist/antlr/internal/InternalCupidLanguage.g:5962:1: ( ( ( '!' ) ) )
+            // ../org.earthsystemcurator.cupid.xtext.ui/src-gen/org/earthsystemcurator/ui/contentassist/antlr/internal/InternalCupidLanguage.g:5963:1: ( ( '!' ) )
             {
-            // ../org.earthsystemcurator.cupid.xtext.ui/src-gen/org/earthsystemcurator/ui/contentassist/antlr/internal/InternalCupidLanguage.g:6060:1: ( ( '!' ) )
-            // ../org.earthsystemcurator.cupid.xtext.ui/src-gen/org/earthsystemcurator/ui/contentassist/antlr/internal/InternalCupidLanguage.g:6061:1: ( '!' )
-            {
-             before(grammarAccess.getSubconceptAccess().getEssentialExclamationMarkKeyword_2_0()); 
-            // ../org.earthsystemcurator.cupid.xtext.ui/src-gen/org/earthsystemcurator/ui/contentassist/antlr/internal/InternalCupidLanguage.g:6062:1: ( '!' )
-            // ../org.earthsystemcurator.cupid.xtext.ui/src-gen/org/earthsystemcurator/ui/contentassist/antlr/internal/InternalCupidLanguage.g:6063:1: '!'
+            // ../org.earthsystemcurator.cupid.xtext.ui/src-gen/org/earthsystemcurator/ui/contentassist/antlr/internal/InternalCupidLanguage.g:5963:1: ( ( '!' ) )
+            // ../org.earthsystemcurator.cupid.xtext.ui/src-gen/org/earthsystemcurator/ui/contentassist/antlr/internal/InternalCupidLanguage.g:5964:1: ( '!' )
             {
              before(grammarAccess.getSubconceptAccess().getEssentialExclamationMarkKeyword_2_0()); 
-            match(input,35,FOLLOW_35_in_rule__Subconcept__EssentialAssignment_212188); 
+            // ../org.earthsystemcurator.cupid.xtext.ui/src-gen/org/earthsystemcurator/ui/contentassist/antlr/internal/InternalCupidLanguage.g:5965:1: ( '!' )
+            // ../org.earthsystemcurator.cupid.xtext.ui/src-gen/org/earthsystemcurator/ui/contentassist/antlr/internal/InternalCupidLanguage.g:5966:1: '!'
+            {
+             before(grammarAccess.getSubconceptAccess().getEssentialExclamationMarkKeyword_2_0()); 
+            match(input,35,FOLLOW_35_in_rule__Subconcept__EssentialAssignment_211998); 
              after(grammarAccess.getSubconceptAccess().getEssentialExclamationMarkKeyword_2_0()); 
 
             }
@@ -16315,20 +16080,20 @@ public class InternalCupidLanguageParser extends AbstractInternalContentAssistPa
 
 
     // $ANTLR start "rule__Subconcept__DefAssignment_3_0_1"
-    // ../org.earthsystemcurator.cupid.xtext.ui/src-gen/org/earthsystemcurator/ui/contentassist/antlr/internal/InternalCupidLanguage.g:6078:1: rule__Subconcept__DefAssignment_3_0_1 : ( ruleNamedConceptDef ) ;
+    // ../org.earthsystemcurator.cupid.xtext.ui/src-gen/org/earthsystemcurator/ui/contentassist/antlr/internal/InternalCupidLanguage.g:5981:1: rule__Subconcept__DefAssignment_3_0_1 : ( ruleNamedConceptDef ) ;
     public final void rule__Subconcept__DefAssignment_3_0_1() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // ../org.earthsystemcurator.cupid.xtext.ui/src-gen/org/earthsystemcurator/ui/contentassist/antlr/internal/InternalCupidLanguage.g:6082:1: ( ( ruleNamedConceptDef ) )
-            // ../org.earthsystemcurator.cupid.xtext.ui/src-gen/org/earthsystemcurator/ui/contentassist/antlr/internal/InternalCupidLanguage.g:6083:1: ( ruleNamedConceptDef )
+            // ../org.earthsystemcurator.cupid.xtext.ui/src-gen/org/earthsystemcurator/ui/contentassist/antlr/internal/InternalCupidLanguage.g:5985:1: ( ( ruleNamedConceptDef ) )
+            // ../org.earthsystemcurator.cupid.xtext.ui/src-gen/org/earthsystemcurator/ui/contentassist/antlr/internal/InternalCupidLanguage.g:5986:1: ( ruleNamedConceptDef )
             {
-            // ../org.earthsystemcurator.cupid.xtext.ui/src-gen/org/earthsystemcurator/ui/contentassist/antlr/internal/InternalCupidLanguage.g:6083:1: ( ruleNamedConceptDef )
-            // ../org.earthsystemcurator.cupid.xtext.ui/src-gen/org/earthsystemcurator/ui/contentassist/antlr/internal/InternalCupidLanguage.g:6084:1: ruleNamedConceptDef
+            // ../org.earthsystemcurator.cupid.xtext.ui/src-gen/org/earthsystemcurator/ui/contentassist/antlr/internal/InternalCupidLanguage.g:5986:1: ( ruleNamedConceptDef )
+            // ../org.earthsystemcurator.cupid.xtext.ui/src-gen/org/earthsystemcurator/ui/contentassist/antlr/internal/InternalCupidLanguage.g:5987:1: ruleNamedConceptDef
             {
              before(grammarAccess.getSubconceptAccess().getDefNamedConceptDefParserRuleCall_3_0_1_0()); 
-            pushFollow(FOLLOW_ruleNamedConceptDef_in_rule__Subconcept__DefAssignment_3_0_112227);
+            pushFollow(FOLLOW_ruleNamedConceptDef_in_rule__Subconcept__DefAssignment_3_0_112037);
             ruleNamedConceptDef();
 
             state._fsp--;
@@ -16356,20 +16121,20 @@ public class InternalCupidLanguageParser extends AbstractInternalContentAssistPa
 
 
     // $ANTLR start "rule__Subconcept__DefAssignment_3_1"
-    // ../org.earthsystemcurator.cupid.xtext.ui/src-gen/org/earthsystemcurator/ui/contentassist/antlr/internal/InternalCupidLanguage.g:6093:1: rule__Subconcept__DefAssignment_3_1 : ( ruleAnonymousConceptDef ) ;
+    // ../org.earthsystemcurator.cupid.xtext.ui/src-gen/org/earthsystemcurator/ui/contentassist/antlr/internal/InternalCupidLanguage.g:5996:1: rule__Subconcept__DefAssignment_3_1 : ( ruleAnonymousConceptDef ) ;
     public final void rule__Subconcept__DefAssignment_3_1() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // ../org.earthsystemcurator.cupid.xtext.ui/src-gen/org/earthsystemcurator/ui/contentassist/antlr/internal/InternalCupidLanguage.g:6097:1: ( ( ruleAnonymousConceptDef ) )
-            // ../org.earthsystemcurator.cupid.xtext.ui/src-gen/org/earthsystemcurator/ui/contentassist/antlr/internal/InternalCupidLanguage.g:6098:1: ( ruleAnonymousConceptDef )
+            // ../org.earthsystemcurator.cupid.xtext.ui/src-gen/org/earthsystemcurator/ui/contentassist/antlr/internal/InternalCupidLanguage.g:6000:1: ( ( ruleAnonymousConceptDef ) )
+            // ../org.earthsystemcurator.cupid.xtext.ui/src-gen/org/earthsystemcurator/ui/contentassist/antlr/internal/InternalCupidLanguage.g:6001:1: ( ruleAnonymousConceptDef )
             {
-            // ../org.earthsystemcurator.cupid.xtext.ui/src-gen/org/earthsystemcurator/ui/contentassist/antlr/internal/InternalCupidLanguage.g:6098:1: ( ruleAnonymousConceptDef )
-            // ../org.earthsystemcurator.cupid.xtext.ui/src-gen/org/earthsystemcurator/ui/contentassist/antlr/internal/InternalCupidLanguage.g:6099:1: ruleAnonymousConceptDef
+            // ../org.earthsystemcurator.cupid.xtext.ui/src-gen/org/earthsystemcurator/ui/contentassist/antlr/internal/InternalCupidLanguage.g:6001:1: ( ruleAnonymousConceptDef )
+            // ../org.earthsystemcurator.cupid.xtext.ui/src-gen/org/earthsystemcurator/ui/contentassist/antlr/internal/InternalCupidLanguage.g:6002:1: ruleAnonymousConceptDef
             {
              before(grammarAccess.getSubconceptAccess().getDefAnonymousConceptDefParserRuleCall_3_1_0()); 
-            pushFollow(FOLLOW_ruleAnonymousConceptDef_in_rule__Subconcept__DefAssignment_3_112258);
+            pushFollow(FOLLOW_ruleAnonymousConceptDef_in_rule__Subconcept__DefAssignment_3_112068);
             ruleAnonymousConceptDef();
 
             state._fsp--;
@@ -16397,24 +16162,24 @@ public class InternalCupidLanguageParser extends AbstractInternalContentAssistPa
 
 
     // $ANTLR start "rule__Subconcept__ReferenceAssignment_3_2_0"
-    // ../org.earthsystemcurator.cupid.xtext.ui/src-gen/org/earthsystemcurator/ui/contentassist/antlr/internal/InternalCupidLanguage.g:6108:1: rule__Subconcept__ReferenceAssignment_3_2_0 : ( ( ':' ) ) ;
+    // ../org.earthsystemcurator.cupid.xtext.ui/src-gen/org/earthsystemcurator/ui/contentassist/antlr/internal/InternalCupidLanguage.g:6011:1: rule__Subconcept__ReferenceAssignment_3_2_0 : ( ( ':' ) ) ;
     public final void rule__Subconcept__ReferenceAssignment_3_2_0() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // ../org.earthsystemcurator.cupid.xtext.ui/src-gen/org/earthsystemcurator/ui/contentassist/antlr/internal/InternalCupidLanguage.g:6112:1: ( ( ( ':' ) ) )
-            // ../org.earthsystemcurator.cupid.xtext.ui/src-gen/org/earthsystemcurator/ui/contentassist/antlr/internal/InternalCupidLanguage.g:6113:1: ( ( ':' ) )
+            // ../org.earthsystemcurator.cupid.xtext.ui/src-gen/org/earthsystemcurator/ui/contentassist/antlr/internal/InternalCupidLanguage.g:6015:1: ( ( ( ':' ) ) )
+            // ../org.earthsystemcurator.cupid.xtext.ui/src-gen/org/earthsystemcurator/ui/contentassist/antlr/internal/InternalCupidLanguage.g:6016:1: ( ( ':' ) )
             {
-            // ../org.earthsystemcurator.cupid.xtext.ui/src-gen/org/earthsystemcurator/ui/contentassist/antlr/internal/InternalCupidLanguage.g:6113:1: ( ( ':' ) )
-            // ../org.earthsystemcurator.cupid.xtext.ui/src-gen/org/earthsystemcurator/ui/contentassist/antlr/internal/InternalCupidLanguage.g:6114:1: ( ':' )
-            {
-             before(grammarAccess.getSubconceptAccess().getReferenceColonKeyword_3_2_0_0()); 
-            // ../org.earthsystemcurator.cupid.xtext.ui/src-gen/org/earthsystemcurator/ui/contentassist/antlr/internal/InternalCupidLanguage.g:6115:1: ( ':' )
-            // ../org.earthsystemcurator.cupid.xtext.ui/src-gen/org/earthsystemcurator/ui/contentassist/antlr/internal/InternalCupidLanguage.g:6116:1: ':'
+            // ../org.earthsystemcurator.cupid.xtext.ui/src-gen/org/earthsystemcurator/ui/contentassist/antlr/internal/InternalCupidLanguage.g:6016:1: ( ( ':' ) )
+            // ../org.earthsystemcurator.cupid.xtext.ui/src-gen/org/earthsystemcurator/ui/contentassist/antlr/internal/InternalCupidLanguage.g:6017:1: ( ':' )
             {
              before(grammarAccess.getSubconceptAccess().getReferenceColonKeyword_3_2_0_0()); 
-            match(input,18,FOLLOW_18_in_rule__Subconcept__ReferenceAssignment_3_2_012294); 
+            // ../org.earthsystemcurator.cupid.xtext.ui/src-gen/org/earthsystemcurator/ui/contentassist/antlr/internal/InternalCupidLanguage.g:6018:1: ( ':' )
+            // ../org.earthsystemcurator.cupid.xtext.ui/src-gen/org/earthsystemcurator/ui/contentassist/antlr/internal/InternalCupidLanguage.g:6019:1: ':'
+            {
+             before(grammarAccess.getSubconceptAccess().getReferenceColonKeyword_3_2_0_0()); 
+            match(input,18,FOLLOW_18_in_rule__Subconcept__ReferenceAssignment_3_2_012104); 
              after(grammarAccess.getSubconceptAccess().getReferenceColonKeyword_3_2_0_0()); 
 
             }
@@ -16442,24 +16207,24 @@ public class InternalCupidLanguageParser extends AbstractInternalContentAssistPa
 
 
     // $ANTLR start "rule__Subconcept__RefAssignment_3_2_1"
-    // ../org.earthsystemcurator.cupid.xtext.ui/src-gen/org/earthsystemcurator/ui/contentassist/antlr/internal/InternalCupidLanguage.g:6131:1: rule__Subconcept__RefAssignment_3_2_1 : ( ( RULE_ID ) ) ;
+    // ../org.earthsystemcurator.cupid.xtext.ui/src-gen/org/earthsystemcurator/ui/contentassist/antlr/internal/InternalCupidLanguage.g:6034:1: rule__Subconcept__RefAssignment_3_2_1 : ( ( RULE_ID ) ) ;
     public final void rule__Subconcept__RefAssignment_3_2_1() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // ../org.earthsystemcurator.cupid.xtext.ui/src-gen/org/earthsystemcurator/ui/contentassist/antlr/internal/InternalCupidLanguage.g:6135:1: ( ( ( RULE_ID ) ) )
-            // ../org.earthsystemcurator.cupid.xtext.ui/src-gen/org/earthsystemcurator/ui/contentassist/antlr/internal/InternalCupidLanguage.g:6136:1: ( ( RULE_ID ) )
+            // ../org.earthsystemcurator.cupid.xtext.ui/src-gen/org/earthsystemcurator/ui/contentassist/antlr/internal/InternalCupidLanguage.g:6038:1: ( ( ( RULE_ID ) ) )
+            // ../org.earthsystemcurator.cupid.xtext.ui/src-gen/org/earthsystemcurator/ui/contentassist/antlr/internal/InternalCupidLanguage.g:6039:1: ( ( RULE_ID ) )
             {
-            // ../org.earthsystemcurator.cupid.xtext.ui/src-gen/org/earthsystemcurator/ui/contentassist/antlr/internal/InternalCupidLanguage.g:6136:1: ( ( RULE_ID ) )
-            // ../org.earthsystemcurator.cupid.xtext.ui/src-gen/org/earthsystemcurator/ui/contentassist/antlr/internal/InternalCupidLanguage.g:6137:1: ( RULE_ID )
+            // ../org.earthsystemcurator.cupid.xtext.ui/src-gen/org/earthsystemcurator/ui/contentassist/antlr/internal/InternalCupidLanguage.g:6039:1: ( ( RULE_ID ) )
+            // ../org.earthsystemcurator.cupid.xtext.ui/src-gen/org/earthsystemcurator/ui/contentassist/antlr/internal/InternalCupidLanguage.g:6040:1: ( RULE_ID )
             {
              before(grammarAccess.getSubconceptAccess().getRefConceptDefCrossReference_3_2_1_0()); 
-            // ../org.earthsystemcurator.cupid.xtext.ui/src-gen/org/earthsystemcurator/ui/contentassist/antlr/internal/InternalCupidLanguage.g:6138:1: ( RULE_ID )
-            // ../org.earthsystemcurator.cupid.xtext.ui/src-gen/org/earthsystemcurator/ui/contentassist/antlr/internal/InternalCupidLanguage.g:6139:1: RULE_ID
+            // ../org.earthsystemcurator.cupid.xtext.ui/src-gen/org/earthsystemcurator/ui/contentassist/antlr/internal/InternalCupidLanguage.g:6041:1: ( RULE_ID )
+            // ../org.earthsystemcurator.cupid.xtext.ui/src-gen/org/earthsystemcurator/ui/contentassist/antlr/internal/InternalCupidLanguage.g:6042:1: RULE_ID
             {
              before(grammarAccess.getSubconceptAccess().getRefConceptDefIDTerminalRuleCall_3_2_1_0_1()); 
-            match(input,RULE_ID,FOLLOW_RULE_ID_in_rule__Subconcept__RefAssignment_3_2_112337); 
+            match(input,RULE_ID,FOLLOW_RULE_ID_in_rule__Subconcept__RefAssignment_3_2_112147); 
              after(grammarAccess.getSubconceptAccess().getRefConceptDefIDTerminalRuleCall_3_2_1_0_1()); 
 
             }
@@ -16487,24 +16252,24 @@ public class InternalCupidLanguageParser extends AbstractInternalContentAssistPa
 
 
     // $ANTLR start "rule__Attribute__AttribAssignment_0"
-    // ../org.earthsystemcurator.cupid.xtext.ui/src-gen/org/earthsystemcurator/ui/contentassist/antlr/internal/InternalCupidLanguage.g:6150:1: rule__Attribute__AttribAssignment_0 : ( ( 'attrib' ) ) ;
+    // ../org.earthsystemcurator.cupid.xtext.ui/src-gen/org/earthsystemcurator/ui/contentassist/antlr/internal/InternalCupidLanguage.g:6053:1: rule__Attribute__AttribAssignment_0 : ( ( 'attrib' ) ) ;
     public final void rule__Attribute__AttribAssignment_0() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // ../org.earthsystemcurator.cupid.xtext.ui/src-gen/org/earthsystemcurator/ui/contentassist/antlr/internal/InternalCupidLanguage.g:6154:1: ( ( ( 'attrib' ) ) )
-            // ../org.earthsystemcurator.cupid.xtext.ui/src-gen/org/earthsystemcurator/ui/contentassist/antlr/internal/InternalCupidLanguage.g:6155:1: ( ( 'attrib' ) )
+            // ../org.earthsystemcurator.cupid.xtext.ui/src-gen/org/earthsystemcurator/ui/contentassist/antlr/internal/InternalCupidLanguage.g:6057:1: ( ( ( 'attrib' ) ) )
+            // ../org.earthsystemcurator.cupid.xtext.ui/src-gen/org/earthsystemcurator/ui/contentassist/antlr/internal/InternalCupidLanguage.g:6058:1: ( ( 'attrib' ) )
             {
-            // ../org.earthsystemcurator.cupid.xtext.ui/src-gen/org/earthsystemcurator/ui/contentassist/antlr/internal/InternalCupidLanguage.g:6155:1: ( ( 'attrib' ) )
-            // ../org.earthsystemcurator.cupid.xtext.ui/src-gen/org/earthsystemcurator/ui/contentassist/antlr/internal/InternalCupidLanguage.g:6156:1: ( 'attrib' )
-            {
-             before(grammarAccess.getAttributeAccess().getAttribAttribKeyword_0_0()); 
-            // ../org.earthsystemcurator.cupid.xtext.ui/src-gen/org/earthsystemcurator/ui/contentassist/antlr/internal/InternalCupidLanguage.g:6157:1: ( 'attrib' )
-            // ../org.earthsystemcurator.cupid.xtext.ui/src-gen/org/earthsystemcurator/ui/contentassist/antlr/internal/InternalCupidLanguage.g:6158:1: 'attrib'
+            // ../org.earthsystemcurator.cupid.xtext.ui/src-gen/org/earthsystemcurator/ui/contentassist/antlr/internal/InternalCupidLanguage.g:6058:1: ( ( 'attrib' ) )
+            // ../org.earthsystemcurator.cupid.xtext.ui/src-gen/org/earthsystemcurator/ui/contentassist/antlr/internal/InternalCupidLanguage.g:6059:1: ( 'attrib' )
             {
              before(grammarAccess.getAttributeAccess().getAttribAttribKeyword_0_0()); 
-            match(input,36,FOLLOW_36_in_rule__Attribute__AttribAssignment_012377); 
+            // ../org.earthsystemcurator.cupid.xtext.ui/src-gen/org/earthsystemcurator/ui/contentassist/antlr/internal/InternalCupidLanguage.g:6060:1: ( 'attrib' )
+            // ../org.earthsystemcurator.cupid.xtext.ui/src-gen/org/earthsystemcurator/ui/contentassist/antlr/internal/InternalCupidLanguage.g:6061:1: 'attrib'
+            {
+             before(grammarAccess.getAttributeAccess().getAttribAttribKeyword_0_0()); 
+            match(input,36,FOLLOW_36_in_rule__Attribute__AttribAssignment_012187); 
              after(grammarAccess.getAttributeAccess().getAttribAttribKeyword_0_0()); 
 
             }
@@ -16532,20 +16297,20 @@ public class InternalCupidLanguageParser extends AbstractInternalContentAssistPa
 
 
     // $ANTLR start "rule__Attribute__NameAssignment_1"
-    // ../org.earthsystemcurator.cupid.xtext.ui/src-gen/org/earthsystemcurator/ui/contentassist/antlr/internal/InternalCupidLanguage.g:6173:1: rule__Attribute__NameAssignment_1 : ( RULE_ID ) ;
+    // ../org.earthsystemcurator.cupid.xtext.ui/src-gen/org/earthsystemcurator/ui/contentassist/antlr/internal/InternalCupidLanguage.g:6076:1: rule__Attribute__NameAssignment_1 : ( RULE_ID ) ;
     public final void rule__Attribute__NameAssignment_1() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // ../org.earthsystemcurator.cupid.xtext.ui/src-gen/org/earthsystemcurator/ui/contentassist/antlr/internal/InternalCupidLanguage.g:6177:1: ( ( RULE_ID ) )
-            // ../org.earthsystemcurator.cupid.xtext.ui/src-gen/org/earthsystemcurator/ui/contentassist/antlr/internal/InternalCupidLanguage.g:6178:1: ( RULE_ID )
+            // ../org.earthsystemcurator.cupid.xtext.ui/src-gen/org/earthsystemcurator/ui/contentassist/antlr/internal/InternalCupidLanguage.g:6080:1: ( ( RULE_ID ) )
+            // ../org.earthsystemcurator.cupid.xtext.ui/src-gen/org/earthsystemcurator/ui/contentassist/antlr/internal/InternalCupidLanguage.g:6081:1: ( RULE_ID )
             {
-            // ../org.earthsystemcurator.cupid.xtext.ui/src-gen/org/earthsystemcurator/ui/contentassist/antlr/internal/InternalCupidLanguage.g:6178:1: ( RULE_ID )
-            // ../org.earthsystemcurator.cupid.xtext.ui/src-gen/org/earthsystemcurator/ui/contentassist/antlr/internal/InternalCupidLanguage.g:6179:1: RULE_ID
+            // ../org.earthsystemcurator.cupid.xtext.ui/src-gen/org/earthsystemcurator/ui/contentassist/antlr/internal/InternalCupidLanguage.g:6081:1: ( RULE_ID )
+            // ../org.earthsystemcurator.cupid.xtext.ui/src-gen/org/earthsystemcurator/ui/contentassist/antlr/internal/InternalCupidLanguage.g:6082:1: RULE_ID
             {
              before(grammarAccess.getAttributeAccess().getNameIDTerminalRuleCall_1_0()); 
-            match(input,RULE_ID,FOLLOW_RULE_ID_in_rule__Attribute__NameAssignment_112416); 
+            match(input,RULE_ID,FOLLOW_RULE_ID_in_rule__Attribute__NameAssignment_112226); 
              after(grammarAccess.getAttributeAccess().getNameIDTerminalRuleCall_1_0()); 
 
             }
@@ -16569,20 +16334,20 @@ public class InternalCupidLanguageParser extends AbstractInternalContentAssistPa
 
 
     // $ANTLR start "rule__Attribute__CardinalityAssignment_2"
-    // ../org.earthsystemcurator.cupid.xtext.ui/src-gen/org/earthsystemcurator/ui/contentassist/antlr/internal/InternalCupidLanguage.g:6188:1: rule__Attribute__CardinalityAssignment_2 : ( ruleCardinality ) ;
+    // ../org.earthsystemcurator.cupid.xtext.ui/src-gen/org/earthsystemcurator/ui/contentassist/antlr/internal/InternalCupidLanguage.g:6091:1: rule__Attribute__CardinalityAssignment_2 : ( ruleCardinality ) ;
     public final void rule__Attribute__CardinalityAssignment_2() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // ../org.earthsystemcurator.cupid.xtext.ui/src-gen/org/earthsystemcurator/ui/contentassist/antlr/internal/InternalCupidLanguage.g:6192:1: ( ( ruleCardinality ) )
-            // ../org.earthsystemcurator.cupid.xtext.ui/src-gen/org/earthsystemcurator/ui/contentassist/antlr/internal/InternalCupidLanguage.g:6193:1: ( ruleCardinality )
+            // ../org.earthsystemcurator.cupid.xtext.ui/src-gen/org/earthsystemcurator/ui/contentassist/antlr/internal/InternalCupidLanguage.g:6095:1: ( ( ruleCardinality ) )
+            // ../org.earthsystemcurator.cupid.xtext.ui/src-gen/org/earthsystemcurator/ui/contentassist/antlr/internal/InternalCupidLanguage.g:6096:1: ( ruleCardinality )
             {
-            // ../org.earthsystemcurator.cupid.xtext.ui/src-gen/org/earthsystemcurator/ui/contentassist/antlr/internal/InternalCupidLanguage.g:6193:1: ( ruleCardinality )
-            // ../org.earthsystemcurator.cupid.xtext.ui/src-gen/org/earthsystemcurator/ui/contentassist/antlr/internal/InternalCupidLanguage.g:6194:1: ruleCardinality
+            // ../org.earthsystemcurator.cupid.xtext.ui/src-gen/org/earthsystemcurator/ui/contentassist/antlr/internal/InternalCupidLanguage.g:6096:1: ( ruleCardinality )
+            // ../org.earthsystemcurator.cupid.xtext.ui/src-gen/org/earthsystemcurator/ui/contentassist/antlr/internal/InternalCupidLanguage.g:6097:1: ruleCardinality
             {
              before(grammarAccess.getAttributeAccess().getCardinalityCardinalityParserRuleCall_2_0()); 
-            pushFollow(FOLLOW_ruleCardinality_in_rule__Attribute__CardinalityAssignment_212447);
+            pushFollow(FOLLOW_ruleCardinality_in_rule__Attribute__CardinalityAssignment_212257);
             ruleCardinality();
 
             state._fsp--;
@@ -16610,24 +16375,24 @@ public class InternalCupidLanguageParser extends AbstractInternalContentAssistPa
 
 
     // $ANTLR start "rule__Attribute__EssentialAssignment_3"
-    // ../org.earthsystemcurator.cupid.xtext.ui/src-gen/org/earthsystemcurator/ui/contentassist/antlr/internal/InternalCupidLanguage.g:6203:1: rule__Attribute__EssentialAssignment_3 : ( ( '!' ) ) ;
+    // ../org.earthsystemcurator.cupid.xtext.ui/src-gen/org/earthsystemcurator/ui/contentassist/antlr/internal/InternalCupidLanguage.g:6106:1: rule__Attribute__EssentialAssignment_3 : ( ( '!' ) ) ;
     public final void rule__Attribute__EssentialAssignment_3() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // ../org.earthsystemcurator.cupid.xtext.ui/src-gen/org/earthsystemcurator/ui/contentassist/antlr/internal/InternalCupidLanguage.g:6207:1: ( ( ( '!' ) ) )
-            // ../org.earthsystemcurator.cupid.xtext.ui/src-gen/org/earthsystemcurator/ui/contentassist/antlr/internal/InternalCupidLanguage.g:6208:1: ( ( '!' ) )
+            // ../org.earthsystemcurator.cupid.xtext.ui/src-gen/org/earthsystemcurator/ui/contentassist/antlr/internal/InternalCupidLanguage.g:6110:1: ( ( ( '!' ) ) )
+            // ../org.earthsystemcurator.cupid.xtext.ui/src-gen/org/earthsystemcurator/ui/contentassist/antlr/internal/InternalCupidLanguage.g:6111:1: ( ( '!' ) )
             {
-            // ../org.earthsystemcurator.cupid.xtext.ui/src-gen/org/earthsystemcurator/ui/contentassist/antlr/internal/InternalCupidLanguage.g:6208:1: ( ( '!' ) )
-            // ../org.earthsystemcurator.cupid.xtext.ui/src-gen/org/earthsystemcurator/ui/contentassist/antlr/internal/InternalCupidLanguage.g:6209:1: ( '!' )
-            {
-             before(grammarAccess.getAttributeAccess().getEssentialExclamationMarkKeyword_3_0()); 
-            // ../org.earthsystemcurator.cupid.xtext.ui/src-gen/org/earthsystemcurator/ui/contentassist/antlr/internal/InternalCupidLanguage.g:6210:1: ( '!' )
-            // ../org.earthsystemcurator.cupid.xtext.ui/src-gen/org/earthsystemcurator/ui/contentassist/antlr/internal/InternalCupidLanguage.g:6211:1: '!'
+            // ../org.earthsystemcurator.cupid.xtext.ui/src-gen/org/earthsystemcurator/ui/contentassist/antlr/internal/InternalCupidLanguage.g:6111:1: ( ( '!' ) )
+            // ../org.earthsystemcurator.cupid.xtext.ui/src-gen/org/earthsystemcurator/ui/contentassist/antlr/internal/InternalCupidLanguage.g:6112:1: ( '!' )
             {
              before(grammarAccess.getAttributeAccess().getEssentialExclamationMarkKeyword_3_0()); 
-            match(input,35,FOLLOW_35_in_rule__Attribute__EssentialAssignment_312483); 
+            // ../org.earthsystemcurator.cupid.xtext.ui/src-gen/org/earthsystemcurator/ui/contentassist/antlr/internal/InternalCupidLanguage.g:6113:1: ( '!' )
+            // ../org.earthsystemcurator.cupid.xtext.ui/src-gen/org/earthsystemcurator/ui/contentassist/antlr/internal/InternalCupidLanguage.g:6114:1: '!'
+            {
+             before(grammarAccess.getAttributeAccess().getEssentialExclamationMarkKeyword_3_0()); 
+            match(input,35,FOLLOW_35_in_rule__Attribute__EssentialAssignment_312293); 
              after(grammarAccess.getAttributeAccess().getEssentialExclamationMarkKeyword_3_0()); 
 
             }
@@ -16655,20 +16420,20 @@ public class InternalCupidLanguageParser extends AbstractInternalContentAssistPa
 
 
     // $ANTLR start "rule__Attribute__AttribMappingAssignment_4_1"
-    // ../org.earthsystemcurator.cupid.xtext.ui/src-gen/org/earthsystemcurator/ui/contentassist/antlr/internal/InternalCupidLanguage.g:6226:1: rule__Attribute__AttribMappingAssignment_4_1 : ( ruleMapping ) ;
+    // ../org.earthsystemcurator.cupid.xtext.ui/src-gen/org/earthsystemcurator/ui/contentassist/antlr/internal/InternalCupidLanguage.g:6129:1: rule__Attribute__AttribMappingAssignment_4_1 : ( ruleMapping ) ;
     public final void rule__Attribute__AttribMappingAssignment_4_1() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // ../org.earthsystemcurator.cupid.xtext.ui/src-gen/org/earthsystemcurator/ui/contentassist/antlr/internal/InternalCupidLanguage.g:6230:1: ( ( ruleMapping ) )
-            // ../org.earthsystemcurator.cupid.xtext.ui/src-gen/org/earthsystemcurator/ui/contentassist/antlr/internal/InternalCupidLanguage.g:6231:1: ( ruleMapping )
+            // ../org.earthsystemcurator.cupid.xtext.ui/src-gen/org/earthsystemcurator/ui/contentassist/antlr/internal/InternalCupidLanguage.g:6133:1: ( ( ruleMapping ) )
+            // ../org.earthsystemcurator.cupid.xtext.ui/src-gen/org/earthsystemcurator/ui/contentassist/antlr/internal/InternalCupidLanguage.g:6134:1: ( ruleMapping )
             {
-            // ../org.earthsystemcurator.cupid.xtext.ui/src-gen/org/earthsystemcurator/ui/contentassist/antlr/internal/InternalCupidLanguage.g:6231:1: ( ruleMapping )
-            // ../org.earthsystemcurator.cupid.xtext.ui/src-gen/org/earthsystemcurator/ui/contentassist/antlr/internal/InternalCupidLanguage.g:6232:1: ruleMapping
+            // ../org.earthsystemcurator.cupid.xtext.ui/src-gen/org/earthsystemcurator/ui/contentassist/antlr/internal/InternalCupidLanguage.g:6134:1: ( ruleMapping )
+            // ../org.earthsystemcurator.cupid.xtext.ui/src-gen/org/earthsystemcurator/ui/contentassist/antlr/internal/InternalCupidLanguage.g:6135:1: ruleMapping
             {
              before(grammarAccess.getAttributeAccess().getAttribMappingMappingParserRuleCall_4_1_0()); 
-            pushFollow(FOLLOW_ruleMapping_in_rule__Attribute__AttribMappingAssignment_4_112522);
+            pushFollow(FOLLOW_ruleMapping_in_rule__Attribute__AttribMappingAssignment_4_112332);
             ruleMapping();
 
             state._fsp--;
@@ -16696,20 +16461,20 @@ public class InternalCupidLanguageParser extends AbstractInternalContentAssistPa
 
 
     // $ANTLR start "rule__Attribute__AnnotationAssignment_5_1"
-    // ../org.earthsystemcurator.cupid.xtext.ui/src-gen/org/earthsystemcurator/ui/contentassist/antlr/internal/InternalCupidLanguage.g:6241:1: rule__Attribute__AnnotationAssignment_5_1 : ( ruleAnnotation ) ;
+    // ../org.earthsystemcurator.cupid.xtext.ui/src-gen/org/earthsystemcurator/ui/contentassist/antlr/internal/InternalCupidLanguage.g:6144:1: rule__Attribute__AnnotationAssignment_5_1 : ( ruleAnnotation ) ;
     public final void rule__Attribute__AnnotationAssignment_5_1() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // ../org.earthsystemcurator.cupid.xtext.ui/src-gen/org/earthsystemcurator/ui/contentassist/antlr/internal/InternalCupidLanguage.g:6245:1: ( ( ruleAnnotation ) )
-            // ../org.earthsystemcurator.cupid.xtext.ui/src-gen/org/earthsystemcurator/ui/contentassist/antlr/internal/InternalCupidLanguage.g:6246:1: ( ruleAnnotation )
+            // ../org.earthsystemcurator.cupid.xtext.ui/src-gen/org/earthsystemcurator/ui/contentassist/antlr/internal/InternalCupidLanguage.g:6148:1: ( ( ruleAnnotation ) )
+            // ../org.earthsystemcurator.cupid.xtext.ui/src-gen/org/earthsystemcurator/ui/contentassist/antlr/internal/InternalCupidLanguage.g:6149:1: ( ruleAnnotation )
             {
-            // ../org.earthsystemcurator.cupid.xtext.ui/src-gen/org/earthsystemcurator/ui/contentassist/antlr/internal/InternalCupidLanguage.g:6246:1: ( ruleAnnotation )
-            // ../org.earthsystemcurator.cupid.xtext.ui/src-gen/org/earthsystemcurator/ui/contentassist/antlr/internal/InternalCupidLanguage.g:6247:1: ruleAnnotation
+            // ../org.earthsystemcurator.cupid.xtext.ui/src-gen/org/earthsystemcurator/ui/contentassist/antlr/internal/InternalCupidLanguage.g:6149:1: ( ruleAnnotation )
+            // ../org.earthsystemcurator.cupid.xtext.ui/src-gen/org/earthsystemcurator/ui/contentassist/antlr/internal/InternalCupidLanguage.g:6150:1: ruleAnnotation
             {
              before(grammarAccess.getAttributeAccess().getAnnotationAnnotationParserRuleCall_5_1_0()); 
-            pushFollow(FOLLOW_ruleAnnotation_in_rule__Attribute__AnnotationAssignment_5_112553);
+            pushFollow(FOLLOW_ruleAnnotation_in_rule__Attribute__AnnotationAssignment_5_112363);
             ruleAnnotation();
 
             state._fsp--;
@@ -16737,24 +16502,24 @@ public class InternalCupidLanguageParser extends AbstractInternalContentAssistPa
 
 
     // $ANTLR start "rule__Cardinality__ZeroOrMoreAssignment_0"
-    // ../org.earthsystemcurator.cupid.xtext.ui/src-gen/org/earthsystemcurator/ui/contentassist/antlr/internal/InternalCupidLanguage.g:6256:1: rule__Cardinality__ZeroOrMoreAssignment_0 : ( ( '*' ) ) ;
+    // ../org.earthsystemcurator.cupid.xtext.ui/src-gen/org/earthsystemcurator/ui/contentassist/antlr/internal/InternalCupidLanguage.g:6159:1: rule__Cardinality__ZeroOrMoreAssignment_0 : ( ( '*' ) ) ;
     public final void rule__Cardinality__ZeroOrMoreAssignment_0() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // ../org.earthsystemcurator.cupid.xtext.ui/src-gen/org/earthsystemcurator/ui/contentassist/antlr/internal/InternalCupidLanguage.g:6260:1: ( ( ( '*' ) ) )
-            // ../org.earthsystemcurator.cupid.xtext.ui/src-gen/org/earthsystemcurator/ui/contentassist/antlr/internal/InternalCupidLanguage.g:6261:1: ( ( '*' ) )
+            // ../org.earthsystemcurator.cupid.xtext.ui/src-gen/org/earthsystemcurator/ui/contentassist/antlr/internal/InternalCupidLanguage.g:6163:1: ( ( ( '*' ) ) )
+            // ../org.earthsystemcurator.cupid.xtext.ui/src-gen/org/earthsystemcurator/ui/contentassist/antlr/internal/InternalCupidLanguage.g:6164:1: ( ( '*' ) )
             {
-            // ../org.earthsystemcurator.cupid.xtext.ui/src-gen/org/earthsystemcurator/ui/contentassist/antlr/internal/InternalCupidLanguage.g:6261:1: ( ( '*' ) )
-            // ../org.earthsystemcurator.cupid.xtext.ui/src-gen/org/earthsystemcurator/ui/contentassist/antlr/internal/InternalCupidLanguage.g:6262:1: ( '*' )
-            {
-             before(grammarAccess.getCardinalityAccess().getZeroOrMoreAsteriskKeyword_0_0()); 
-            // ../org.earthsystemcurator.cupid.xtext.ui/src-gen/org/earthsystemcurator/ui/contentassist/antlr/internal/InternalCupidLanguage.g:6263:1: ( '*' )
-            // ../org.earthsystemcurator.cupid.xtext.ui/src-gen/org/earthsystemcurator/ui/contentassist/antlr/internal/InternalCupidLanguage.g:6264:1: '*'
+            // ../org.earthsystemcurator.cupid.xtext.ui/src-gen/org/earthsystemcurator/ui/contentassist/antlr/internal/InternalCupidLanguage.g:6164:1: ( ( '*' ) )
+            // ../org.earthsystemcurator.cupid.xtext.ui/src-gen/org/earthsystemcurator/ui/contentassist/antlr/internal/InternalCupidLanguage.g:6165:1: ( '*' )
             {
              before(grammarAccess.getCardinalityAccess().getZeroOrMoreAsteriskKeyword_0_0()); 
-            match(input,37,FOLLOW_37_in_rule__Cardinality__ZeroOrMoreAssignment_012589); 
+            // ../org.earthsystemcurator.cupid.xtext.ui/src-gen/org/earthsystemcurator/ui/contentassist/antlr/internal/InternalCupidLanguage.g:6166:1: ( '*' )
+            // ../org.earthsystemcurator.cupid.xtext.ui/src-gen/org/earthsystemcurator/ui/contentassist/antlr/internal/InternalCupidLanguage.g:6167:1: '*'
+            {
+             before(grammarAccess.getCardinalityAccess().getZeroOrMoreAsteriskKeyword_0_0()); 
+            match(input,37,FOLLOW_37_in_rule__Cardinality__ZeroOrMoreAssignment_012399); 
              after(grammarAccess.getCardinalityAccess().getZeroOrMoreAsteriskKeyword_0_0()); 
 
             }
@@ -16782,24 +16547,24 @@ public class InternalCupidLanguageParser extends AbstractInternalContentAssistPa
 
 
     // $ANTLR start "rule__Cardinality__OneOrMoreAssignment_1"
-    // ../org.earthsystemcurator.cupid.xtext.ui/src-gen/org/earthsystemcurator/ui/contentassist/antlr/internal/InternalCupidLanguage.g:6279:1: rule__Cardinality__OneOrMoreAssignment_1 : ( ( '+' ) ) ;
+    // ../org.earthsystemcurator.cupid.xtext.ui/src-gen/org/earthsystemcurator/ui/contentassist/antlr/internal/InternalCupidLanguage.g:6182:1: rule__Cardinality__OneOrMoreAssignment_1 : ( ( '+' ) ) ;
     public final void rule__Cardinality__OneOrMoreAssignment_1() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // ../org.earthsystemcurator.cupid.xtext.ui/src-gen/org/earthsystemcurator/ui/contentassist/antlr/internal/InternalCupidLanguage.g:6283:1: ( ( ( '+' ) ) )
-            // ../org.earthsystemcurator.cupid.xtext.ui/src-gen/org/earthsystemcurator/ui/contentassist/antlr/internal/InternalCupidLanguage.g:6284:1: ( ( '+' ) )
+            // ../org.earthsystemcurator.cupid.xtext.ui/src-gen/org/earthsystemcurator/ui/contentassist/antlr/internal/InternalCupidLanguage.g:6186:1: ( ( ( '+' ) ) )
+            // ../org.earthsystemcurator.cupid.xtext.ui/src-gen/org/earthsystemcurator/ui/contentassist/antlr/internal/InternalCupidLanguage.g:6187:1: ( ( '+' ) )
             {
-            // ../org.earthsystemcurator.cupid.xtext.ui/src-gen/org/earthsystemcurator/ui/contentassist/antlr/internal/InternalCupidLanguage.g:6284:1: ( ( '+' ) )
-            // ../org.earthsystemcurator.cupid.xtext.ui/src-gen/org/earthsystemcurator/ui/contentassist/antlr/internal/InternalCupidLanguage.g:6285:1: ( '+' )
-            {
-             before(grammarAccess.getCardinalityAccess().getOneOrMorePlusSignKeyword_1_0()); 
-            // ../org.earthsystemcurator.cupid.xtext.ui/src-gen/org/earthsystemcurator/ui/contentassist/antlr/internal/InternalCupidLanguage.g:6286:1: ( '+' )
-            // ../org.earthsystemcurator.cupid.xtext.ui/src-gen/org/earthsystemcurator/ui/contentassist/antlr/internal/InternalCupidLanguage.g:6287:1: '+'
+            // ../org.earthsystemcurator.cupid.xtext.ui/src-gen/org/earthsystemcurator/ui/contentassist/antlr/internal/InternalCupidLanguage.g:6187:1: ( ( '+' ) )
+            // ../org.earthsystemcurator.cupid.xtext.ui/src-gen/org/earthsystemcurator/ui/contentassist/antlr/internal/InternalCupidLanguage.g:6188:1: ( '+' )
             {
              before(grammarAccess.getCardinalityAccess().getOneOrMorePlusSignKeyword_1_0()); 
-            match(input,38,FOLLOW_38_in_rule__Cardinality__OneOrMoreAssignment_112633); 
+            // ../org.earthsystemcurator.cupid.xtext.ui/src-gen/org/earthsystemcurator/ui/contentassist/antlr/internal/InternalCupidLanguage.g:6189:1: ( '+' )
+            // ../org.earthsystemcurator.cupid.xtext.ui/src-gen/org/earthsystemcurator/ui/contentassist/antlr/internal/InternalCupidLanguage.g:6190:1: '+'
+            {
+             before(grammarAccess.getCardinalityAccess().getOneOrMorePlusSignKeyword_1_0()); 
+            match(input,38,FOLLOW_38_in_rule__Cardinality__OneOrMoreAssignment_112443); 
              after(grammarAccess.getCardinalityAccess().getOneOrMorePlusSignKeyword_1_0()); 
 
             }
@@ -16827,20 +16592,20 @@ public class InternalCupidLanguageParser extends AbstractInternalContentAssistPa
 
 
     // $ANTLR start "rule__Mapping__ContextAssignment_0"
-    // ../org.earthsystemcurator.cupid.xtext.ui/src-gen/org/earthsystemcurator/ui/contentassist/antlr/internal/InternalCupidLanguage.g:6302:1: rule__Mapping__ContextAssignment_0 : ( rulePathExpr ) ;
+    // ../org.earthsystemcurator.cupid.xtext.ui/src-gen/org/earthsystemcurator/ui/contentassist/antlr/internal/InternalCupidLanguage.g:6205:1: rule__Mapping__ContextAssignment_0 : ( rulePathExpr ) ;
     public final void rule__Mapping__ContextAssignment_0() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // ../org.earthsystemcurator.cupid.xtext.ui/src-gen/org/earthsystemcurator/ui/contentassist/antlr/internal/InternalCupidLanguage.g:6306:1: ( ( rulePathExpr ) )
-            // ../org.earthsystemcurator.cupid.xtext.ui/src-gen/org/earthsystemcurator/ui/contentassist/antlr/internal/InternalCupidLanguage.g:6307:1: ( rulePathExpr )
+            // ../org.earthsystemcurator.cupid.xtext.ui/src-gen/org/earthsystemcurator/ui/contentassist/antlr/internal/InternalCupidLanguage.g:6209:1: ( ( rulePathExpr ) )
+            // ../org.earthsystemcurator.cupid.xtext.ui/src-gen/org/earthsystemcurator/ui/contentassist/antlr/internal/InternalCupidLanguage.g:6210:1: ( rulePathExpr )
             {
-            // ../org.earthsystemcurator.cupid.xtext.ui/src-gen/org/earthsystemcurator/ui/contentassist/antlr/internal/InternalCupidLanguage.g:6307:1: ( rulePathExpr )
-            // ../org.earthsystemcurator.cupid.xtext.ui/src-gen/org/earthsystemcurator/ui/contentassist/antlr/internal/InternalCupidLanguage.g:6308:1: rulePathExpr
+            // ../org.earthsystemcurator.cupid.xtext.ui/src-gen/org/earthsystemcurator/ui/contentassist/antlr/internal/InternalCupidLanguage.g:6210:1: ( rulePathExpr )
+            // ../org.earthsystemcurator.cupid.xtext.ui/src-gen/org/earthsystemcurator/ui/contentassist/antlr/internal/InternalCupidLanguage.g:6211:1: rulePathExpr
             {
              before(grammarAccess.getMappingAccess().getContextPathExprParserRuleCall_0_0()); 
-            pushFollow(FOLLOW_rulePathExpr_in_rule__Mapping__ContextAssignment_012672);
+            pushFollow(FOLLOW_rulePathExpr_in_rule__Mapping__ContextAssignment_012482);
             rulePathExpr();
 
             state._fsp--;
@@ -16868,20 +16633,20 @@ public class InternalCupidLanguageParser extends AbstractInternalContentAssistPa
 
 
     // $ANTLR start "rule__Mapping__MappingAssignment_1"
-    // ../org.earthsystemcurator.cupid.xtext.ui/src-gen/org/earthsystemcurator/ui/contentassist/antlr/internal/InternalCupidLanguage.g:6317:1: rule__Mapping__MappingAssignment_1 : ( ruleImplicitContextMapping ) ;
+    // ../org.earthsystemcurator.cupid.xtext.ui/src-gen/org/earthsystemcurator/ui/contentassist/antlr/internal/InternalCupidLanguage.g:6220:1: rule__Mapping__MappingAssignment_1 : ( ruleImplicitContextMapping ) ;
     public final void rule__Mapping__MappingAssignment_1() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // ../org.earthsystemcurator.cupid.xtext.ui/src-gen/org/earthsystemcurator/ui/contentassist/antlr/internal/InternalCupidLanguage.g:6321:1: ( ( ruleImplicitContextMapping ) )
-            // ../org.earthsystemcurator.cupid.xtext.ui/src-gen/org/earthsystemcurator/ui/contentassist/antlr/internal/InternalCupidLanguage.g:6322:1: ( ruleImplicitContextMapping )
+            // ../org.earthsystemcurator.cupid.xtext.ui/src-gen/org/earthsystemcurator/ui/contentassist/antlr/internal/InternalCupidLanguage.g:6224:1: ( ( ruleImplicitContextMapping ) )
+            // ../org.earthsystemcurator.cupid.xtext.ui/src-gen/org/earthsystemcurator/ui/contentassist/antlr/internal/InternalCupidLanguage.g:6225:1: ( ruleImplicitContextMapping )
             {
-            // ../org.earthsystemcurator.cupid.xtext.ui/src-gen/org/earthsystemcurator/ui/contentassist/antlr/internal/InternalCupidLanguage.g:6322:1: ( ruleImplicitContextMapping )
-            // ../org.earthsystemcurator.cupid.xtext.ui/src-gen/org/earthsystemcurator/ui/contentassist/antlr/internal/InternalCupidLanguage.g:6323:1: ruleImplicitContextMapping
+            // ../org.earthsystemcurator.cupid.xtext.ui/src-gen/org/earthsystemcurator/ui/contentassist/antlr/internal/InternalCupidLanguage.g:6225:1: ( ruleImplicitContextMapping )
+            // ../org.earthsystemcurator.cupid.xtext.ui/src-gen/org/earthsystemcurator/ui/contentassist/antlr/internal/InternalCupidLanguage.g:6226:1: ruleImplicitContextMapping
             {
              before(grammarAccess.getMappingAccess().getMappingImplicitContextMappingParserRuleCall_1_0()); 
-            pushFollow(FOLLOW_ruleImplicitContextMapping_in_rule__Mapping__MappingAssignment_112703);
+            pushFollow(FOLLOW_ruleImplicitContextMapping_in_rule__Mapping__MappingAssignment_112513);
             ruleImplicitContextMapping();
 
             state._fsp--;
@@ -16909,20 +16674,20 @@ public class InternalCupidLanguageParser extends AbstractInternalContentAssistPa
 
 
     // $ANTLR start "rule__Module__NameAssignment_2_1"
-    // ../org.earthsystemcurator.cupid.xtext.ui/src-gen/org/earthsystemcurator/ui/contentassist/antlr/internal/InternalCupidLanguage.g:6332:1: rule__Module__NameAssignment_2_1 : ( ruleIDOrPathExpr ) ;
+    // ../org.earthsystemcurator.cupid.xtext.ui/src-gen/org/earthsystemcurator/ui/contentassist/antlr/internal/InternalCupidLanguage.g:6235:1: rule__Module__NameAssignment_2_1 : ( ruleIDOrPathExpr ) ;
     public final void rule__Module__NameAssignment_2_1() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // ../org.earthsystemcurator.cupid.xtext.ui/src-gen/org/earthsystemcurator/ui/contentassist/antlr/internal/InternalCupidLanguage.g:6336:1: ( ( ruleIDOrPathExpr ) )
-            // ../org.earthsystemcurator.cupid.xtext.ui/src-gen/org/earthsystemcurator/ui/contentassist/antlr/internal/InternalCupidLanguage.g:6337:1: ( ruleIDOrPathExpr )
+            // ../org.earthsystemcurator.cupid.xtext.ui/src-gen/org/earthsystemcurator/ui/contentassist/antlr/internal/InternalCupidLanguage.g:6239:1: ( ( ruleIDOrPathExpr ) )
+            // ../org.earthsystemcurator.cupid.xtext.ui/src-gen/org/earthsystemcurator/ui/contentassist/antlr/internal/InternalCupidLanguage.g:6240:1: ( ruleIDOrPathExpr )
             {
-            // ../org.earthsystemcurator.cupid.xtext.ui/src-gen/org/earthsystemcurator/ui/contentassist/antlr/internal/InternalCupidLanguage.g:6337:1: ( ruleIDOrPathExpr )
-            // ../org.earthsystemcurator.cupid.xtext.ui/src-gen/org/earthsystemcurator/ui/contentassist/antlr/internal/InternalCupidLanguage.g:6338:1: ruleIDOrPathExpr
+            // ../org.earthsystemcurator.cupid.xtext.ui/src-gen/org/earthsystemcurator/ui/contentassist/antlr/internal/InternalCupidLanguage.g:6240:1: ( ruleIDOrPathExpr )
+            // ../org.earthsystemcurator.cupid.xtext.ui/src-gen/org/earthsystemcurator/ui/contentassist/antlr/internal/InternalCupidLanguage.g:6241:1: ruleIDOrPathExpr
             {
              before(grammarAccess.getModuleAccess().getNameIDOrPathExprParserRuleCall_2_1_0()); 
-            pushFollow(FOLLOW_ruleIDOrPathExpr_in_rule__Module__NameAssignment_2_112734);
+            pushFollow(FOLLOW_ruleIDOrPathExpr_in_rule__Module__NameAssignment_2_112544);
             ruleIDOrPathExpr();
 
             state._fsp--;
@@ -16950,20 +16715,20 @@ public class InternalCupidLanguageParser extends AbstractInternalContentAssistPa
 
 
     // $ANTLR start "rule__UsesModule__NameAssignment_2"
-    // ../org.earthsystemcurator.cupid.xtext.ui/src-gen/org/earthsystemcurator/ui/contentassist/antlr/internal/InternalCupidLanguage.g:6347:1: rule__UsesModule__NameAssignment_2 : ( ruleIDOrPathExpr ) ;
+    // ../org.earthsystemcurator.cupid.xtext.ui/src-gen/org/earthsystemcurator/ui/contentassist/antlr/internal/InternalCupidLanguage.g:6250:1: rule__UsesModule__NameAssignment_2 : ( ruleIDOrPathExpr ) ;
     public final void rule__UsesModule__NameAssignment_2() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // ../org.earthsystemcurator.cupid.xtext.ui/src-gen/org/earthsystemcurator/ui/contentassist/antlr/internal/InternalCupidLanguage.g:6351:1: ( ( ruleIDOrPathExpr ) )
-            // ../org.earthsystemcurator.cupid.xtext.ui/src-gen/org/earthsystemcurator/ui/contentassist/antlr/internal/InternalCupidLanguage.g:6352:1: ( ruleIDOrPathExpr )
+            // ../org.earthsystemcurator.cupid.xtext.ui/src-gen/org/earthsystemcurator/ui/contentassist/antlr/internal/InternalCupidLanguage.g:6254:1: ( ( ruleIDOrPathExpr ) )
+            // ../org.earthsystemcurator.cupid.xtext.ui/src-gen/org/earthsystemcurator/ui/contentassist/antlr/internal/InternalCupidLanguage.g:6255:1: ( ruleIDOrPathExpr )
             {
-            // ../org.earthsystemcurator.cupid.xtext.ui/src-gen/org/earthsystemcurator/ui/contentassist/antlr/internal/InternalCupidLanguage.g:6352:1: ( ruleIDOrPathExpr )
-            // ../org.earthsystemcurator.cupid.xtext.ui/src-gen/org/earthsystemcurator/ui/contentassist/antlr/internal/InternalCupidLanguage.g:6353:1: ruleIDOrPathExpr
+            // ../org.earthsystemcurator.cupid.xtext.ui/src-gen/org/earthsystemcurator/ui/contentassist/antlr/internal/InternalCupidLanguage.g:6255:1: ( ruleIDOrPathExpr )
+            // ../org.earthsystemcurator.cupid.xtext.ui/src-gen/org/earthsystemcurator/ui/contentassist/antlr/internal/InternalCupidLanguage.g:6256:1: ruleIDOrPathExpr
             {
              before(grammarAccess.getUsesModuleAccess().getNameIDOrPathExprParserRuleCall_2_0()); 
-            pushFollow(FOLLOW_ruleIDOrPathExpr_in_rule__UsesModule__NameAssignment_212765);
+            pushFollow(FOLLOW_ruleIDOrPathExpr_in_rule__UsesModule__NameAssignment_212575);
             ruleIDOrPathExpr();
 
             state._fsp--;
@@ -16991,20 +16756,20 @@ public class InternalCupidLanguageParser extends AbstractInternalContentAssistPa
 
 
     // $ANTLR start "rule__UsesEntity__NameAssignment_2"
-    // ../org.earthsystemcurator.cupid.xtext.ui/src-gen/org/earthsystemcurator/ui/contentassist/antlr/internal/InternalCupidLanguage.g:6362:1: rule__UsesEntity__NameAssignment_2 : ( ruleIDOrPathExpr ) ;
+    // ../org.earthsystemcurator.cupid.xtext.ui/src-gen/org/earthsystemcurator/ui/contentassist/antlr/internal/InternalCupidLanguage.g:6265:1: rule__UsesEntity__NameAssignment_2 : ( ruleIDOrPathExpr ) ;
     public final void rule__UsesEntity__NameAssignment_2() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // ../org.earthsystemcurator.cupid.xtext.ui/src-gen/org/earthsystemcurator/ui/contentassist/antlr/internal/InternalCupidLanguage.g:6366:1: ( ( ruleIDOrPathExpr ) )
-            // ../org.earthsystemcurator.cupid.xtext.ui/src-gen/org/earthsystemcurator/ui/contentassist/antlr/internal/InternalCupidLanguage.g:6367:1: ( ruleIDOrPathExpr )
+            // ../org.earthsystemcurator.cupid.xtext.ui/src-gen/org/earthsystemcurator/ui/contentassist/antlr/internal/InternalCupidLanguage.g:6269:1: ( ( ruleIDOrPathExpr ) )
+            // ../org.earthsystemcurator.cupid.xtext.ui/src-gen/org/earthsystemcurator/ui/contentassist/antlr/internal/InternalCupidLanguage.g:6270:1: ( ruleIDOrPathExpr )
             {
-            // ../org.earthsystemcurator.cupid.xtext.ui/src-gen/org/earthsystemcurator/ui/contentassist/antlr/internal/InternalCupidLanguage.g:6367:1: ( ruleIDOrPathExpr )
-            // ../org.earthsystemcurator.cupid.xtext.ui/src-gen/org/earthsystemcurator/ui/contentassist/antlr/internal/InternalCupidLanguage.g:6368:1: ruleIDOrPathExpr
+            // ../org.earthsystemcurator.cupid.xtext.ui/src-gen/org/earthsystemcurator/ui/contentassist/antlr/internal/InternalCupidLanguage.g:6270:1: ( ruleIDOrPathExpr )
+            // ../org.earthsystemcurator.cupid.xtext.ui/src-gen/org/earthsystemcurator/ui/contentassist/antlr/internal/InternalCupidLanguage.g:6271:1: ruleIDOrPathExpr
             {
              before(grammarAccess.getUsesEntityAccess().getNameIDOrPathExprParserRuleCall_2_0()); 
-            pushFollow(FOLLOW_ruleIDOrPathExpr_in_rule__UsesEntity__NameAssignment_212796);
+            pushFollow(FOLLOW_ruleIDOrPathExpr_in_rule__UsesEntity__NameAssignment_212606);
             ruleIDOrPathExpr();
 
             state._fsp--;
@@ -17032,20 +16797,20 @@ public class InternalCupidLanguageParser extends AbstractInternalContentAssistPa
 
 
     // $ANTLR start "rule__Subroutine__NameAssignment_2"
-    // ../org.earthsystemcurator.cupid.xtext.ui/src-gen/org/earthsystemcurator/ui/contentassist/antlr/internal/InternalCupidLanguage.g:6377:1: rule__Subroutine__NameAssignment_2 : ( ruleIDOrPathExpr ) ;
+    // ../org.earthsystemcurator.cupid.xtext.ui/src-gen/org/earthsystemcurator/ui/contentassist/antlr/internal/InternalCupidLanguage.g:6280:1: rule__Subroutine__NameAssignment_2 : ( ruleIDOrPathExpr ) ;
     public final void rule__Subroutine__NameAssignment_2() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // ../org.earthsystemcurator.cupid.xtext.ui/src-gen/org/earthsystemcurator/ui/contentassist/antlr/internal/InternalCupidLanguage.g:6381:1: ( ( ruleIDOrPathExpr ) )
-            // ../org.earthsystemcurator.cupid.xtext.ui/src-gen/org/earthsystemcurator/ui/contentassist/antlr/internal/InternalCupidLanguage.g:6382:1: ( ruleIDOrPathExpr )
+            // ../org.earthsystemcurator.cupid.xtext.ui/src-gen/org/earthsystemcurator/ui/contentassist/antlr/internal/InternalCupidLanguage.g:6284:1: ( ( ruleIDOrPathExpr ) )
+            // ../org.earthsystemcurator.cupid.xtext.ui/src-gen/org/earthsystemcurator/ui/contentassist/antlr/internal/InternalCupidLanguage.g:6285:1: ( ruleIDOrPathExpr )
             {
-            // ../org.earthsystemcurator.cupid.xtext.ui/src-gen/org/earthsystemcurator/ui/contentassist/antlr/internal/InternalCupidLanguage.g:6382:1: ( ruleIDOrPathExpr )
-            // ../org.earthsystemcurator.cupid.xtext.ui/src-gen/org/earthsystemcurator/ui/contentassist/antlr/internal/InternalCupidLanguage.g:6383:1: ruleIDOrPathExpr
+            // ../org.earthsystemcurator.cupid.xtext.ui/src-gen/org/earthsystemcurator/ui/contentassist/antlr/internal/InternalCupidLanguage.g:6285:1: ( ruleIDOrPathExpr )
+            // ../org.earthsystemcurator.cupid.xtext.ui/src-gen/org/earthsystemcurator/ui/contentassist/antlr/internal/InternalCupidLanguage.g:6286:1: ruleIDOrPathExpr
             {
              before(grammarAccess.getSubroutineAccess().getNameIDOrPathExprParserRuleCall_2_0()); 
-            pushFollow(FOLLOW_ruleIDOrPathExpr_in_rule__Subroutine__NameAssignment_212827);
+            pushFollow(FOLLOW_ruleIDOrPathExpr_in_rule__Subroutine__NameAssignment_212637);
             ruleIDOrPathExpr();
 
             state._fsp--;
@@ -17073,20 +16838,20 @@ public class InternalCupidLanguageParser extends AbstractInternalContentAssistPa
 
 
     // $ANTLR start "rule__Subroutine__ParamsAssignment_3_1_0"
-    // ../org.earthsystemcurator.cupid.xtext.ui/src-gen/org/earthsystemcurator/ui/contentassist/antlr/internal/InternalCupidLanguage.g:6392:1: rule__Subroutine__ParamsAssignment_3_1_0 : ( ruleFormalParam ) ;
+    // ../org.earthsystemcurator.cupid.xtext.ui/src-gen/org/earthsystemcurator/ui/contentassist/antlr/internal/InternalCupidLanguage.g:6295:1: rule__Subroutine__ParamsAssignment_3_1_0 : ( ruleFormalParam ) ;
     public final void rule__Subroutine__ParamsAssignment_3_1_0() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // ../org.earthsystemcurator.cupid.xtext.ui/src-gen/org/earthsystemcurator/ui/contentassist/antlr/internal/InternalCupidLanguage.g:6396:1: ( ( ruleFormalParam ) )
-            // ../org.earthsystemcurator.cupid.xtext.ui/src-gen/org/earthsystemcurator/ui/contentassist/antlr/internal/InternalCupidLanguage.g:6397:1: ( ruleFormalParam )
+            // ../org.earthsystemcurator.cupid.xtext.ui/src-gen/org/earthsystemcurator/ui/contentassist/antlr/internal/InternalCupidLanguage.g:6299:1: ( ( ruleFormalParam ) )
+            // ../org.earthsystemcurator.cupid.xtext.ui/src-gen/org/earthsystemcurator/ui/contentassist/antlr/internal/InternalCupidLanguage.g:6300:1: ( ruleFormalParam )
             {
-            // ../org.earthsystemcurator.cupid.xtext.ui/src-gen/org/earthsystemcurator/ui/contentassist/antlr/internal/InternalCupidLanguage.g:6397:1: ( ruleFormalParam )
-            // ../org.earthsystemcurator.cupid.xtext.ui/src-gen/org/earthsystemcurator/ui/contentassist/antlr/internal/InternalCupidLanguage.g:6398:1: ruleFormalParam
+            // ../org.earthsystemcurator.cupid.xtext.ui/src-gen/org/earthsystemcurator/ui/contentassist/antlr/internal/InternalCupidLanguage.g:6300:1: ( ruleFormalParam )
+            // ../org.earthsystemcurator.cupid.xtext.ui/src-gen/org/earthsystemcurator/ui/contentassist/antlr/internal/InternalCupidLanguage.g:6301:1: ruleFormalParam
             {
              before(grammarAccess.getSubroutineAccess().getParamsFormalParamParserRuleCall_3_1_0_0()); 
-            pushFollow(FOLLOW_ruleFormalParam_in_rule__Subroutine__ParamsAssignment_3_1_012858);
+            pushFollow(FOLLOW_ruleFormalParam_in_rule__Subroutine__ParamsAssignment_3_1_012668);
             ruleFormalParam();
 
             state._fsp--;
@@ -17114,20 +16879,20 @@ public class InternalCupidLanguageParser extends AbstractInternalContentAssistPa
 
 
     // $ANTLR start "rule__Subroutine__ParamsAssignment_3_1_1_1"
-    // ../org.earthsystemcurator.cupid.xtext.ui/src-gen/org/earthsystemcurator/ui/contentassist/antlr/internal/InternalCupidLanguage.g:6407:1: rule__Subroutine__ParamsAssignment_3_1_1_1 : ( ruleFormalParam ) ;
+    // ../org.earthsystemcurator.cupid.xtext.ui/src-gen/org/earthsystemcurator/ui/contentassist/antlr/internal/InternalCupidLanguage.g:6310:1: rule__Subroutine__ParamsAssignment_3_1_1_1 : ( ruleFormalParam ) ;
     public final void rule__Subroutine__ParamsAssignment_3_1_1_1() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // ../org.earthsystemcurator.cupid.xtext.ui/src-gen/org/earthsystemcurator/ui/contentassist/antlr/internal/InternalCupidLanguage.g:6411:1: ( ( ruleFormalParam ) )
-            // ../org.earthsystemcurator.cupid.xtext.ui/src-gen/org/earthsystemcurator/ui/contentassist/antlr/internal/InternalCupidLanguage.g:6412:1: ( ruleFormalParam )
+            // ../org.earthsystemcurator.cupid.xtext.ui/src-gen/org/earthsystemcurator/ui/contentassist/antlr/internal/InternalCupidLanguage.g:6314:1: ( ( ruleFormalParam ) )
+            // ../org.earthsystemcurator.cupid.xtext.ui/src-gen/org/earthsystemcurator/ui/contentassist/antlr/internal/InternalCupidLanguage.g:6315:1: ( ruleFormalParam )
             {
-            // ../org.earthsystemcurator.cupid.xtext.ui/src-gen/org/earthsystemcurator/ui/contentassist/antlr/internal/InternalCupidLanguage.g:6412:1: ( ruleFormalParam )
-            // ../org.earthsystemcurator.cupid.xtext.ui/src-gen/org/earthsystemcurator/ui/contentassist/antlr/internal/InternalCupidLanguage.g:6413:1: ruleFormalParam
+            // ../org.earthsystemcurator.cupid.xtext.ui/src-gen/org/earthsystemcurator/ui/contentassist/antlr/internal/InternalCupidLanguage.g:6315:1: ( ruleFormalParam )
+            // ../org.earthsystemcurator.cupid.xtext.ui/src-gen/org/earthsystemcurator/ui/contentassist/antlr/internal/InternalCupidLanguage.g:6316:1: ruleFormalParam
             {
              before(grammarAccess.getSubroutineAccess().getParamsFormalParamParserRuleCall_3_1_1_1_0()); 
-            pushFollow(FOLLOW_ruleFormalParam_in_rule__Subroutine__ParamsAssignment_3_1_1_112889);
+            pushFollow(FOLLOW_ruleFormalParam_in_rule__Subroutine__ParamsAssignment_3_1_1_112699);
             ruleFormalParam();
 
             state._fsp--;
@@ -17155,20 +16920,20 @@ public class InternalCupidLanguageParser extends AbstractInternalContentAssistPa
 
 
     // $ANTLR start "rule__FormalParam__IntentAssignment_0"
-    // ../org.earthsystemcurator.cupid.xtext.ui/src-gen/org/earthsystemcurator/ui/contentassist/antlr/internal/InternalCupidLanguage.g:6422:1: rule__FormalParam__IntentAssignment_0 : ( ruleIntent ) ;
+    // ../org.earthsystemcurator.cupid.xtext.ui/src-gen/org/earthsystemcurator/ui/contentassist/antlr/internal/InternalCupidLanguage.g:6325:1: rule__FormalParam__IntentAssignment_0 : ( ruleIntent ) ;
     public final void rule__FormalParam__IntentAssignment_0() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // ../org.earthsystemcurator.cupid.xtext.ui/src-gen/org/earthsystemcurator/ui/contentassist/antlr/internal/InternalCupidLanguage.g:6426:1: ( ( ruleIntent ) )
-            // ../org.earthsystemcurator.cupid.xtext.ui/src-gen/org/earthsystemcurator/ui/contentassist/antlr/internal/InternalCupidLanguage.g:6427:1: ( ruleIntent )
+            // ../org.earthsystemcurator.cupid.xtext.ui/src-gen/org/earthsystemcurator/ui/contentassist/antlr/internal/InternalCupidLanguage.g:6329:1: ( ( ruleIntent ) )
+            // ../org.earthsystemcurator.cupid.xtext.ui/src-gen/org/earthsystemcurator/ui/contentassist/antlr/internal/InternalCupidLanguage.g:6330:1: ( ruleIntent )
             {
-            // ../org.earthsystemcurator.cupid.xtext.ui/src-gen/org/earthsystemcurator/ui/contentassist/antlr/internal/InternalCupidLanguage.g:6427:1: ( ruleIntent )
-            // ../org.earthsystemcurator.cupid.xtext.ui/src-gen/org/earthsystemcurator/ui/contentassist/antlr/internal/InternalCupidLanguage.g:6428:1: ruleIntent
+            // ../org.earthsystemcurator.cupid.xtext.ui/src-gen/org/earthsystemcurator/ui/contentassist/antlr/internal/InternalCupidLanguage.g:6330:1: ( ruleIntent )
+            // ../org.earthsystemcurator.cupid.xtext.ui/src-gen/org/earthsystemcurator/ui/contentassist/antlr/internal/InternalCupidLanguage.g:6331:1: ruleIntent
             {
              before(grammarAccess.getFormalParamAccess().getIntentIntentParserRuleCall_0_0()); 
-            pushFollow(FOLLOW_ruleIntent_in_rule__FormalParam__IntentAssignment_012920);
+            pushFollow(FOLLOW_ruleIntent_in_rule__FormalParam__IntentAssignment_012730);
             ruleIntent();
 
             state._fsp--;
@@ -17196,20 +16961,20 @@ public class InternalCupidLanguageParser extends AbstractInternalContentAssistPa
 
 
     // $ANTLR start "rule__FormalParam__TypeAssignment_1"
-    // ../org.earthsystemcurator.cupid.xtext.ui/src-gen/org/earthsystemcurator/ui/contentassist/antlr/internal/InternalCupidLanguage.g:6437:1: rule__FormalParam__TypeAssignment_1 : ( ruleType ) ;
+    // ../org.earthsystemcurator.cupid.xtext.ui/src-gen/org/earthsystemcurator/ui/contentassist/antlr/internal/InternalCupidLanguage.g:6340:1: rule__FormalParam__TypeAssignment_1 : ( ruleType ) ;
     public final void rule__FormalParam__TypeAssignment_1() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // ../org.earthsystemcurator.cupid.xtext.ui/src-gen/org/earthsystemcurator/ui/contentassist/antlr/internal/InternalCupidLanguage.g:6441:1: ( ( ruleType ) )
-            // ../org.earthsystemcurator.cupid.xtext.ui/src-gen/org/earthsystemcurator/ui/contentassist/antlr/internal/InternalCupidLanguage.g:6442:1: ( ruleType )
+            // ../org.earthsystemcurator.cupid.xtext.ui/src-gen/org/earthsystemcurator/ui/contentassist/antlr/internal/InternalCupidLanguage.g:6344:1: ( ( ruleType ) )
+            // ../org.earthsystemcurator.cupid.xtext.ui/src-gen/org/earthsystemcurator/ui/contentassist/antlr/internal/InternalCupidLanguage.g:6345:1: ( ruleType )
             {
-            // ../org.earthsystemcurator.cupid.xtext.ui/src-gen/org/earthsystemcurator/ui/contentassist/antlr/internal/InternalCupidLanguage.g:6442:1: ( ruleType )
-            // ../org.earthsystemcurator.cupid.xtext.ui/src-gen/org/earthsystemcurator/ui/contentassist/antlr/internal/InternalCupidLanguage.g:6443:1: ruleType
+            // ../org.earthsystemcurator.cupid.xtext.ui/src-gen/org/earthsystemcurator/ui/contentassist/antlr/internal/InternalCupidLanguage.g:6345:1: ( ruleType )
+            // ../org.earthsystemcurator.cupid.xtext.ui/src-gen/org/earthsystemcurator/ui/contentassist/antlr/internal/InternalCupidLanguage.g:6346:1: ruleType
             {
              before(grammarAccess.getFormalParamAccess().getTypeTypeParserRuleCall_1_0()); 
-            pushFollow(FOLLOW_ruleType_in_rule__FormalParam__TypeAssignment_112951);
+            pushFollow(FOLLOW_ruleType_in_rule__FormalParam__TypeAssignment_112761);
             ruleType();
 
             state._fsp--;
@@ -17237,20 +17002,20 @@ public class InternalCupidLanguageParser extends AbstractInternalContentAssistPa
 
 
     // $ANTLR start "rule__FormalParam__NameAssignment_2"
-    // ../org.earthsystemcurator.cupid.xtext.ui/src-gen/org/earthsystemcurator/ui/contentassist/antlr/internal/InternalCupidLanguage.g:6452:1: rule__FormalParam__NameAssignment_2 : ( ruleIDOrPathExpr ) ;
+    // ../org.earthsystemcurator.cupid.xtext.ui/src-gen/org/earthsystemcurator/ui/contentassist/antlr/internal/InternalCupidLanguage.g:6355:1: rule__FormalParam__NameAssignment_2 : ( ruleIDOrPathExpr ) ;
     public final void rule__FormalParam__NameAssignment_2() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // ../org.earthsystemcurator.cupid.xtext.ui/src-gen/org/earthsystemcurator/ui/contentassist/antlr/internal/InternalCupidLanguage.g:6456:1: ( ( ruleIDOrPathExpr ) )
-            // ../org.earthsystemcurator.cupid.xtext.ui/src-gen/org/earthsystemcurator/ui/contentassist/antlr/internal/InternalCupidLanguage.g:6457:1: ( ruleIDOrPathExpr )
+            // ../org.earthsystemcurator.cupid.xtext.ui/src-gen/org/earthsystemcurator/ui/contentassist/antlr/internal/InternalCupidLanguage.g:6359:1: ( ( ruleIDOrPathExpr ) )
+            // ../org.earthsystemcurator.cupid.xtext.ui/src-gen/org/earthsystemcurator/ui/contentassist/antlr/internal/InternalCupidLanguage.g:6360:1: ( ruleIDOrPathExpr )
             {
-            // ../org.earthsystemcurator.cupid.xtext.ui/src-gen/org/earthsystemcurator/ui/contentassist/antlr/internal/InternalCupidLanguage.g:6457:1: ( ruleIDOrPathExpr )
-            // ../org.earthsystemcurator.cupid.xtext.ui/src-gen/org/earthsystemcurator/ui/contentassist/antlr/internal/InternalCupidLanguage.g:6458:1: ruleIDOrPathExpr
+            // ../org.earthsystemcurator.cupid.xtext.ui/src-gen/org/earthsystemcurator/ui/contentassist/antlr/internal/InternalCupidLanguage.g:6360:1: ( ruleIDOrPathExpr )
+            // ../org.earthsystemcurator.cupid.xtext.ui/src-gen/org/earthsystemcurator/ui/contentassist/antlr/internal/InternalCupidLanguage.g:6361:1: ruleIDOrPathExpr
             {
              before(grammarAccess.getFormalParamAccess().getNameIDOrPathExprParserRuleCall_2_0()); 
-            pushFollow(FOLLOW_ruleIDOrPathExpr_in_rule__FormalParam__NameAssignment_212982);
+            pushFollow(FOLLOW_ruleIDOrPathExpr_in_rule__FormalParam__NameAssignment_212792);
             ruleIDOrPathExpr();
 
             state._fsp--;
@@ -17278,24 +17043,24 @@ public class InternalCupidLanguageParser extends AbstractInternalContentAssistPa
 
 
     // $ANTLR start "rule__Intent__InAssignment_0"
-    // ../org.earthsystemcurator.cupid.xtext.ui/src-gen/org/earthsystemcurator/ui/contentassist/antlr/internal/InternalCupidLanguage.g:6467:1: rule__Intent__InAssignment_0 : ( ( 'in' ) ) ;
+    // ../org.earthsystemcurator.cupid.xtext.ui/src-gen/org/earthsystemcurator/ui/contentassist/antlr/internal/InternalCupidLanguage.g:6370:1: rule__Intent__InAssignment_0 : ( ( 'in' ) ) ;
     public final void rule__Intent__InAssignment_0() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // ../org.earthsystemcurator.cupid.xtext.ui/src-gen/org/earthsystemcurator/ui/contentassist/antlr/internal/InternalCupidLanguage.g:6471:1: ( ( ( 'in' ) ) )
-            // ../org.earthsystemcurator.cupid.xtext.ui/src-gen/org/earthsystemcurator/ui/contentassist/antlr/internal/InternalCupidLanguage.g:6472:1: ( ( 'in' ) )
+            // ../org.earthsystemcurator.cupid.xtext.ui/src-gen/org/earthsystemcurator/ui/contentassist/antlr/internal/InternalCupidLanguage.g:6374:1: ( ( ( 'in' ) ) )
+            // ../org.earthsystemcurator.cupid.xtext.ui/src-gen/org/earthsystemcurator/ui/contentassist/antlr/internal/InternalCupidLanguage.g:6375:1: ( ( 'in' ) )
             {
-            // ../org.earthsystemcurator.cupid.xtext.ui/src-gen/org/earthsystemcurator/ui/contentassist/antlr/internal/InternalCupidLanguage.g:6472:1: ( ( 'in' ) )
-            // ../org.earthsystemcurator.cupid.xtext.ui/src-gen/org/earthsystemcurator/ui/contentassist/antlr/internal/InternalCupidLanguage.g:6473:1: ( 'in' )
-            {
-             before(grammarAccess.getIntentAccess().getInInKeyword_0_0()); 
-            // ../org.earthsystemcurator.cupid.xtext.ui/src-gen/org/earthsystemcurator/ui/contentassist/antlr/internal/InternalCupidLanguage.g:6474:1: ( 'in' )
-            // ../org.earthsystemcurator.cupid.xtext.ui/src-gen/org/earthsystemcurator/ui/contentassist/antlr/internal/InternalCupidLanguage.g:6475:1: 'in'
+            // ../org.earthsystemcurator.cupid.xtext.ui/src-gen/org/earthsystemcurator/ui/contentassist/antlr/internal/InternalCupidLanguage.g:6375:1: ( ( 'in' ) )
+            // ../org.earthsystemcurator.cupid.xtext.ui/src-gen/org/earthsystemcurator/ui/contentassist/antlr/internal/InternalCupidLanguage.g:6376:1: ( 'in' )
             {
              before(grammarAccess.getIntentAccess().getInInKeyword_0_0()); 
-            match(input,39,FOLLOW_39_in_rule__Intent__InAssignment_013018); 
+            // ../org.earthsystemcurator.cupid.xtext.ui/src-gen/org/earthsystemcurator/ui/contentassist/antlr/internal/InternalCupidLanguage.g:6377:1: ( 'in' )
+            // ../org.earthsystemcurator.cupid.xtext.ui/src-gen/org/earthsystemcurator/ui/contentassist/antlr/internal/InternalCupidLanguage.g:6378:1: 'in'
+            {
+             before(grammarAccess.getIntentAccess().getInInKeyword_0_0()); 
+            match(input,39,FOLLOW_39_in_rule__Intent__InAssignment_012828); 
              after(grammarAccess.getIntentAccess().getInInKeyword_0_0()); 
 
             }
@@ -17323,24 +17088,24 @@ public class InternalCupidLanguageParser extends AbstractInternalContentAssistPa
 
 
     // $ANTLR start "rule__Intent__OutAssignment_1"
-    // ../org.earthsystemcurator.cupid.xtext.ui/src-gen/org/earthsystemcurator/ui/contentassist/antlr/internal/InternalCupidLanguage.g:6490:1: rule__Intent__OutAssignment_1 : ( ( 'out' ) ) ;
+    // ../org.earthsystemcurator.cupid.xtext.ui/src-gen/org/earthsystemcurator/ui/contentassist/antlr/internal/InternalCupidLanguage.g:6393:1: rule__Intent__OutAssignment_1 : ( ( 'out' ) ) ;
     public final void rule__Intent__OutAssignment_1() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // ../org.earthsystemcurator.cupid.xtext.ui/src-gen/org/earthsystemcurator/ui/contentassist/antlr/internal/InternalCupidLanguage.g:6494:1: ( ( ( 'out' ) ) )
-            // ../org.earthsystemcurator.cupid.xtext.ui/src-gen/org/earthsystemcurator/ui/contentassist/antlr/internal/InternalCupidLanguage.g:6495:1: ( ( 'out' ) )
+            // ../org.earthsystemcurator.cupid.xtext.ui/src-gen/org/earthsystemcurator/ui/contentassist/antlr/internal/InternalCupidLanguage.g:6397:1: ( ( ( 'out' ) ) )
+            // ../org.earthsystemcurator.cupid.xtext.ui/src-gen/org/earthsystemcurator/ui/contentassist/antlr/internal/InternalCupidLanguage.g:6398:1: ( ( 'out' ) )
             {
-            // ../org.earthsystemcurator.cupid.xtext.ui/src-gen/org/earthsystemcurator/ui/contentassist/antlr/internal/InternalCupidLanguage.g:6495:1: ( ( 'out' ) )
-            // ../org.earthsystemcurator.cupid.xtext.ui/src-gen/org/earthsystemcurator/ui/contentassist/antlr/internal/InternalCupidLanguage.g:6496:1: ( 'out' )
-            {
-             before(grammarAccess.getIntentAccess().getOutOutKeyword_1_0()); 
-            // ../org.earthsystemcurator.cupid.xtext.ui/src-gen/org/earthsystemcurator/ui/contentassist/antlr/internal/InternalCupidLanguage.g:6497:1: ( 'out' )
-            // ../org.earthsystemcurator.cupid.xtext.ui/src-gen/org/earthsystemcurator/ui/contentassist/antlr/internal/InternalCupidLanguage.g:6498:1: 'out'
+            // ../org.earthsystemcurator.cupid.xtext.ui/src-gen/org/earthsystemcurator/ui/contentassist/antlr/internal/InternalCupidLanguage.g:6398:1: ( ( 'out' ) )
+            // ../org.earthsystemcurator.cupid.xtext.ui/src-gen/org/earthsystemcurator/ui/contentassist/antlr/internal/InternalCupidLanguage.g:6399:1: ( 'out' )
             {
              before(grammarAccess.getIntentAccess().getOutOutKeyword_1_0()); 
-            match(input,40,FOLLOW_40_in_rule__Intent__OutAssignment_113062); 
+            // ../org.earthsystemcurator.cupid.xtext.ui/src-gen/org/earthsystemcurator/ui/contentassist/antlr/internal/InternalCupidLanguage.g:6400:1: ( 'out' )
+            // ../org.earthsystemcurator.cupid.xtext.ui/src-gen/org/earthsystemcurator/ui/contentassist/antlr/internal/InternalCupidLanguage.g:6401:1: 'out'
+            {
+             before(grammarAccess.getIntentAccess().getOutOutKeyword_1_0()); 
+            match(input,40,FOLLOW_40_in_rule__Intent__OutAssignment_112872); 
              after(grammarAccess.getIntentAccess().getOutOutKeyword_1_0()); 
 
             }
@@ -17368,24 +17133,24 @@ public class InternalCupidLanguageParser extends AbstractInternalContentAssistPa
 
 
     // $ANTLR start "rule__Intent__InoutAssignment_2"
-    // ../org.earthsystemcurator.cupid.xtext.ui/src-gen/org/earthsystemcurator/ui/contentassist/antlr/internal/InternalCupidLanguage.g:6513:1: rule__Intent__InoutAssignment_2 : ( ( 'inout' ) ) ;
+    // ../org.earthsystemcurator.cupid.xtext.ui/src-gen/org/earthsystemcurator/ui/contentassist/antlr/internal/InternalCupidLanguage.g:6416:1: rule__Intent__InoutAssignment_2 : ( ( 'inout' ) ) ;
     public final void rule__Intent__InoutAssignment_2() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // ../org.earthsystemcurator.cupid.xtext.ui/src-gen/org/earthsystemcurator/ui/contentassist/antlr/internal/InternalCupidLanguage.g:6517:1: ( ( ( 'inout' ) ) )
-            // ../org.earthsystemcurator.cupid.xtext.ui/src-gen/org/earthsystemcurator/ui/contentassist/antlr/internal/InternalCupidLanguage.g:6518:1: ( ( 'inout' ) )
+            // ../org.earthsystemcurator.cupid.xtext.ui/src-gen/org/earthsystemcurator/ui/contentassist/antlr/internal/InternalCupidLanguage.g:6420:1: ( ( ( 'inout' ) ) )
+            // ../org.earthsystemcurator.cupid.xtext.ui/src-gen/org/earthsystemcurator/ui/contentassist/antlr/internal/InternalCupidLanguage.g:6421:1: ( ( 'inout' ) )
             {
-            // ../org.earthsystemcurator.cupid.xtext.ui/src-gen/org/earthsystemcurator/ui/contentassist/antlr/internal/InternalCupidLanguage.g:6518:1: ( ( 'inout' ) )
-            // ../org.earthsystemcurator.cupid.xtext.ui/src-gen/org/earthsystemcurator/ui/contentassist/antlr/internal/InternalCupidLanguage.g:6519:1: ( 'inout' )
-            {
-             before(grammarAccess.getIntentAccess().getInoutInoutKeyword_2_0()); 
-            // ../org.earthsystemcurator.cupid.xtext.ui/src-gen/org/earthsystemcurator/ui/contentassist/antlr/internal/InternalCupidLanguage.g:6520:1: ( 'inout' )
-            // ../org.earthsystemcurator.cupid.xtext.ui/src-gen/org/earthsystemcurator/ui/contentassist/antlr/internal/InternalCupidLanguage.g:6521:1: 'inout'
+            // ../org.earthsystemcurator.cupid.xtext.ui/src-gen/org/earthsystemcurator/ui/contentassist/antlr/internal/InternalCupidLanguage.g:6421:1: ( ( 'inout' ) )
+            // ../org.earthsystemcurator.cupid.xtext.ui/src-gen/org/earthsystemcurator/ui/contentassist/antlr/internal/InternalCupidLanguage.g:6422:1: ( 'inout' )
             {
              before(grammarAccess.getIntentAccess().getInoutInoutKeyword_2_0()); 
-            match(input,41,FOLLOW_41_in_rule__Intent__InoutAssignment_213106); 
+            // ../org.earthsystemcurator.cupid.xtext.ui/src-gen/org/earthsystemcurator/ui/contentassist/antlr/internal/InternalCupidLanguage.g:6423:1: ( 'inout' )
+            // ../org.earthsystemcurator.cupid.xtext.ui/src-gen/org/earthsystemcurator/ui/contentassist/antlr/internal/InternalCupidLanguage.g:6424:1: 'inout'
+            {
+             before(grammarAccess.getIntentAccess().getInoutInoutKeyword_2_0()); 
+            match(input,41,FOLLOW_41_in_rule__Intent__InoutAssignment_212916); 
              after(grammarAccess.getIntentAccess().getInoutInoutKeyword_2_0()); 
 
             }
@@ -17413,24 +17178,24 @@ public class InternalCupidLanguageParser extends AbstractInternalContentAssistPa
 
 
     // $ANTLR start "rule__Type__IntegerAssignment_0"
-    // ../org.earthsystemcurator.cupid.xtext.ui/src-gen/org/earthsystemcurator/ui/contentassist/antlr/internal/InternalCupidLanguage.g:6536:1: rule__Type__IntegerAssignment_0 : ( ( 'integer' ) ) ;
+    // ../org.earthsystemcurator.cupid.xtext.ui/src-gen/org/earthsystemcurator/ui/contentassist/antlr/internal/InternalCupidLanguage.g:6439:1: rule__Type__IntegerAssignment_0 : ( ( 'integer' ) ) ;
     public final void rule__Type__IntegerAssignment_0() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // ../org.earthsystemcurator.cupid.xtext.ui/src-gen/org/earthsystemcurator/ui/contentassist/antlr/internal/InternalCupidLanguage.g:6540:1: ( ( ( 'integer' ) ) )
-            // ../org.earthsystemcurator.cupid.xtext.ui/src-gen/org/earthsystemcurator/ui/contentassist/antlr/internal/InternalCupidLanguage.g:6541:1: ( ( 'integer' ) )
+            // ../org.earthsystemcurator.cupid.xtext.ui/src-gen/org/earthsystemcurator/ui/contentassist/antlr/internal/InternalCupidLanguage.g:6443:1: ( ( ( 'integer' ) ) )
+            // ../org.earthsystemcurator.cupid.xtext.ui/src-gen/org/earthsystemcurator/ui/contentassist/antlr/internal/InternalCupidLanguage.g:6444:1: ( ( 'integer' ) )
             {
-            // ../org.earthsystemcurator.cupid.xtext.ui/src-gen/org/earthsystemcurator/ui/contentassist/antlr/internal/InternalCupidLanguage.g:6541:1: ( ( 'integer' ) )
-            // ../org.earthsystemcurator.cupid.xtext.ui/src-gen/org/earthsystemcurator/ui/contentassist/antlr/internal/InternalCupidLanguage.g:6542:1: ( 'integer' )
-            {
-             before(grammarAccess.getTypeAccess().getIntegerIntegerKeyword_0_0()); 
-            // ../org.earthsystemcurator.cupid.xtext.ui/src-gen/org/earthsystemcurator/ui/contentassist/antlr/internal/InternalCupidLanguage.g:6543:1: ( 'integer' )
-            // ../org.earthsystemcurator.cupid.xtext.ui/src-gen/org/earthsystemcurator/ui/contentassist/antlr/internal/InternalCupidLanguage.g:6544:1: 'integer'
+            // ../org.earthsystemcurator.cupid.xtext.ui/src-gen/org/earthsystemcurator/ui/contentassist/antlr/internal/InternalCupidLanguage.g:6444:1: ( ( 'integer' ) )
+            // ../org.earthsystemcurator.cupid.xtext.ui/src-gen/org/earthsystemcurator/ui/contentassist/antlr/internal/InternalCupidLanguage.g:6445:1: ( 'integer' )
             {
              before(grammarAccess.getTypeAccess().getIntegerIntegerKeyword_0_0()); 
-            match(input,42,FOLLOW_42_in_rule__Type__IntegerAssignment_013150); 
+            // ../org.earthsystemcurator.cupid.xtext.ui/src-gen/org/earthsystemcurator/ui/contentassist/antlr/internal/InternalCupidLanguage.g:6446:1: ( 'integer' )
+            // ../org.earthsystemcurator.cupid.xtext.ui/src-gen/org/earthsystemcurator/ui/contentassist/antlr/internal/InternalCupidLanguage.g:6447:1: 'integer'
+            {
+             before(grammarAccess.getTypeAccess().getIntegerIntegerKeyword_0_0()); 
+            match(input,42,FOLLOW_42_in_rule__Type__IntegerAssignment_012960); 
              after(grammarAccess.getTypeAccess().getIntegerIntegerKeyword_0_0()); 
 
             }
@@ -17458,24 +17223,24 @@ public class InternalCupidLanguageParser extends AbstractInternalContentAssistPa
 
 
     // $ANTLR start "rule__Type__CharacterAssignment_1"
-    // ../org.earthsystemcurator.cupid.xtext.ui/src-gen/org/earthsystemcurator/ui/contentassist/antlr/internal/InternalCupidLanguage.g:6559:1: rule__Type__CharacterAssignment_1 : ( ( 'character' ) ) ;
+    // ../org.earthsystemcurator.cupid.xtext.ui/src-gen/org/earthsystemcurator/ui/contentassist/antlr/internal/InternalCupidLanguage.g:6462:1: rule__Type__CharacterAssignment_1 : ( ( 'character' ) ) ;
     public final void rule__Type__CharacterAssignment_1() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // ../org.earthsystemcurator.cupid.xtext.ui/src-gen/org/earthsystemcurator/ui/contentassist/antlr/internal/InternalCupidLanguage.g:6563:1: ( ( ( 'character' ) ) )
-            // ../org.earthsystemcurator.cupid.xtext.ui/src-gen/org/earthsystemcurator/ui/contentassist/antlr/internal/InternalCupidLanguage.g:6564:1: ( ( 'character' ) )
+            // ../org.earthsystemcurator.cupid.xtext.ui/src-gen/org/earthsystemcurator/ui/contentassist/antlr/internal/InternalCupidLanguage.g:6466:1: ( ( ( 'character' ) ) )
+            // ../org.earthsystemcurator.cupid.xtext.ui/src-gen/org/earthsystemcurator/ui/contentassist/antlr/internal/InternalCupidLanguage.g:6467:1: ( ( 'character' ) )
             {
-            // ../org.earthsystemcurator.cupid.xtext.ui/src-gen/org/earthsystemcurator/ui/contentassist/antlr/internal/InternalCupidLanguage.g:6564:1: ( ( 'character' ) )
-            // ../org.earthsystemcurator.cupid.xtext.ui/src-gen/org/earthsystemcurator/ui/contentassist/antlr/internal/InternalCupidLanguage.g:6565:1: ( 'character' )
-            {
-             before(grammarAccess.getTypeAccess().getCharacterCharacterKeyword_1_0()); 
-            // ../org.earthsystemcurator.cupid.xtext.ui/src-gen/org/earthsystemcurator/ui/contentassist/antlr/internal/InternalCupidLanguage.g:6566:1: ( 'character' )
-            // ../org.earthsystemcurator.cupid.xtext.ui/src-gen/org/earthsystemcurator/ui/contentassist/antlr/internal/InternalCupidLanguage.g:6567:1: 'character'
+            // ../org.earthsystemcurator.cupid.xtext.ui/src-gen/org/earthsystemcurator/ui/contentassist/antlr/internal/InternalCupidLanguage.g:6467:1: ( ( 'character' ) )
+            // ../org.earthsystemcurator.cupid.xtext.ui/src-gen/org/earthsystemcurator/ui/contentassist/antlr/internal/InternalCupidLanguage.g:6468:1: ( 'character' )
             {
              before(grammarAccess.getTypeAccess().getCharacterCharacterKeyword_1_0()); 
-            match(input,43,FOLLOW_43_in_rule__Type__CharacterAssignment_113194); 
+            // ../org.earthsystemcurator.cupid.xtext.ui/src-gen/org/earthsystemcurator/ui/contentassist/antlr/internal/InternalCupidLanguage.g:6469:1: ( 'character' )
+            // ../org.earthsystemcurator.cupid.xtext.ui/src-gen/org/earthsystemcurator/ui/contentassist/antlr/internal/InternalCupidLanguage.g:6470:1: 'character'
+            {
+             before(grammarAccess.getTypeAccess().getCharacterCharacterKeyword_1_0()); 
+            match(input,43,FOLLOW_43_in_rule__Type__CharacterAssignment_113004); 
              after(grammarAccess.getTypeAccess().getCharacterCharacterKeyword_1_0()); 
 
             }
@@ -17503,24 +17268,24 @@ public class InternalCupidLanguageParser extends AbstractInternalContentAssistPa
 
 
     // $ANTLR start "rule__Type__LogicalAssignment_2"
-    // ../org.earthsystemcurator.cupid.xtext.ui/src-gen/org/earthsystemcurator/ui/contentassist/antlr/internal/InternalCupidLanguage.g:6582:1: rule__Type__LogicalAssignment_2 : ( ( 'logical' ) ) ;
+    // ../org.earthsystemcurator.cupid.xtext.ui/src-gen/org/earthsystemcurator/ui/contentassist/antlr/internal/InternalCupidLanguage.g:6485:1: rule__Type__LogicalAssignment_2 : ( ( 'logical' ) ) ;
     public final void rule__Type__LogicalAssignment_2() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // ../org.earthsystemcurator.cupid.xtext.ui/src-gen/org/earthsystemcurator/ui/contentassist/antlr/internal/InternalCupidLanguage.g:6586:1: ( ( ( 'logical' ) ) )
-            // ../org.earthsystemcurator.cupid.xtext.ui/src-gen/org/earthsystemcurator/ui/contentassist/antlr/internal/InternalCupidLanguage.g:6587:1: ( ( 'logical' ) )
+            // ../org.earthsystemcurator.cupid.xtext.ui/src-gen/org/earthsystemcurator/ui/contentassist/antlr/internal/InternalCupidLanguage.g:6489:1: ( ( ( 'logical' ) ) )
+            // ../org.earthsystemcurator.cupid.xtext.ui/src-gen/org/earthsystemcurator/ui/contentassist/antlr/internal/InternalCupidLanguage.g:6490:1: ( ( 'logical' ) )
             {
-            // ../org.earthsystemcurator.cupid.xtext.ui/src-gen/org/earthsystemcurator/ui/contentassist/antlr/internal/InternalCupidLanguage.g:6587:1: ( ( 'logical' ) )
-            // ../org.earthsystemcurator.cupid.xtext.ui/src-gen/org/earthsystemcurator/ui/contentassist/antlr/internal/InternalCupidLanguage.g:6588:1: ( 'logical' )
-            {
-             before(grammarAccess.getTypeAccess().getLogicalLogicalKeyword_2_0()); 
-            // ../org.earthsystemcurator.cupid.xtext.ui/src-gen/org/earthsystemcurator/ui/contentassist/antlr/internal/InternalCupidLanguage.g:6589:1: ( 'logical' )
-            // ../org.earthsystemcurator.cupid.xtext.ui/src-gen/org/earthsystemcurator/ui/contentassist/antlr/internal/InternalCupidLanguage.g:6590:1: 'logical'
+            // ../org.earthsystemcurator.cupid.xtext.ui/src-gen/org/earthsystemcurator/ui/contentassist/antlr/internal/InternalCupidLanguage.g:6490:1: ( ( 'logical' ) )
+            // ../org.earthsystemcurator.cupid.xtext.ui/src-gen/org/earthsystemcurator/ui/contentassist/antlr/internal/InternalCupidLanguage.g:6491:1: ( 'logical' )
             {
              before(grammarAccess.getTypeAccess().getLogicalLogicalKeyword_2_0()); 
-            match(input,44,FOLLOW_44_in_rule__Type__LogicalAssignment_213238); 
+            // ../org.earthsystemcurator.cupid.xtext.ui/src-gen/org/earthsystemcurator/ui/contentassist/antlr/internal/InternalCupidLanguage.g:6492:1: ( 'logical' )
+            // ../org.earthsystemcurator.cupid.xtext.ui/src-gen/org/earthsystemcurator/ui/contentassist/antlr/internal/InternalCupidLanguage.g:6493:1: 'logical'
+            {
+             before(grammarAccess.getTypeAccess().getLogicalLogicalKeyword_2_0()); 
+            match(input,44,FOLLOW_44_in_rule__Type__LogicalAssignment_213048); 
              after(grammarAccess.getTypeAccess().getLogicalLogicalKeyword_2_0()); 
 
             }
@@ -17548,24 +17313,24 @@ public class InternalCupidLanguageParser extends AbstractInternalContentAssistPa
 
 
     // $ANTLR start "rule__Type__RealAssignment_3"
-    // ../org.earthsystemcurator.cupid.xtext.ui/src-gen/org/earthsystemcurator/ui/contentassist/antlr/internal/InternalCupidLanguage.g:6605:1: rule__Type__RealAssignment_3 : ( ( 'real' ) ) ;
+    // ../org.earthsystemcurator.cupid.xtext.ui/src-gen/org/earthsystemcurator/ui/contentassist/antlr/internal/InternalCupidLanguage.g:6508:1: rule__Type__RealAssignment_3 : ( ( 'real' ) ) ;
     public final void rule__Type__RealAssignment_3() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // ../org.earthsystemcurator.cupid.xtext.ui/src-gen/org/earthsystemcurator/ui/contentassist/antlr/internal/InternalCupidLanguage.g:6609:1: ( ( ( 'real' ) ) )
-            // ../org.earthsystemcurator.cupid.xtext.ui/src-gen/org/earthsystemcurator/ui/contentassist/antlr/internal/InternalCupidLanguage.g:6610:1: ( ( 'real' ) )
+            // ../org.earthsystemcurator.cupid.xtext.ui/src-gen/org/earthsystemcurator/ui/contentassist/antlr/internal/InternalCupidLanguage.g:6512:1: ( ( ( 'real' ) ) )
+            // ../org.earthsystemcurator.cupid.xtext.ui/src-gen/org/earthsystemcurator/ui/contentassist/antlr/internal/InternalCupidLanguage.g:6513:1: ( ( 'real' ) )
             {
-            // ../org.earthsystemcurator.cupid.xtext.ui/src-gen/org/earthsystemcurator/ui/contentassist/antlr/internal/InternalCupidLanguage.g:6610:1: ( ( 'real' ) )
-            // ../org.earthsystemcurator.cupid.xtext.ui/src-gen/org/earthsystemcurator/ui/contentassist/antlr/internal/InternalCupidLanguage.g:6611:1: ( 'real' )
-            {
-             before(grammarAccess.getTypeAccess().getRealRealKeyword_3_0()); 
-            // ../org.earthsystemcurator.cupid.xtext.ui/src-gen/org/earthsystemcurator/ui/contentassist/antlr/internal/InternalCupidLanguage.g:6612:1: ( 'real' )
-            // ../org.earthsystemcurator.cupid.xtext.ui/src-gen/org/earthsystemcurator/ui/contentassist/antlr/internal/InternalCupidLanguage.g:6613:1: 'real'
+            // ../org.earthsystemcurator.cupid.xtext.ui/src-gen/org/earthsystemcurator/ui/contentassist/antlr/internal/InternalCupidLanguage.g:6513:1: ( ( 'real' ) )
+            // ../org.earthsystemcurator.cupid.xtext.ui/src-gen/org/earthsystemcurator/ui/contentassist/antlr/internal/InternalCupidLanguage.g:6514:1: ( 'real' )
             {
              before(grammarAccess.getTypeAccess().getRealRealKeyword_3_0()); 
-            match(input,45,FOLLOW_45_in_rule__Type__RealAssignment_313282); 
+            // ../org.earthsystemcurator.cupid.xtext.ui/src-gen/org/earthsystemcurator/ui/contentassist/antlr/internal/InternalCupidLanguage.g:6515:1: ( 'real' )
+            // ../org.earthsystemcurator.cupid.xtext.ui/src-gen/org/earthsystemcurator/ui/contentassist/antlr/internal/InternalCupidLanguage.g:6516:1: 'real'
+            {
+             before(grammarAccess.getTypeAccess().getRealRealKeyword_3_0()); 
+            match(input,45,FOLLOW_45_in_rule__Type__RealAssignment_313092); 
              after(grammarAccess.getTypeAccess().getRealRealKeyword_3_0()); 
 
             }
@@ -17593,24 +17358,24 @@ public class InternalCupidLanguageParser extends AbstractInternalContentAssistPa
 
 
     // $ANTLR start "rule__Type__DoubleAssignment_4_0"
-    // ../org.earthsystemcurator.cupid.xtext.ui/src-gen/org/earthsystemcurator/ui/contentassist/antlr/internal/InternalCupidLanguage.g:6628:1: rule__Type__DoubleAssignment_4_0 : ( ( 'double' ) ) ;
+    // ../org.earthsystemcurator.cupid.xtext.ui/src-gen/org/earthsystemcurator/ui/contentassist/antlr/internal/InternalCupidLanguage.g:6531:1: rule__Type__DoubleAssignment_4_0 : ( ( 'double' ) ) ;
     public final void rule__Type__DoubleAssignment_4_0() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // ../org.earthsystemcurator.cupid.xtext.ui/src-gen/org/earthsystemcurator/ui/contentassist/antlr/internal/InternalCupidLanguage.g:6632:1: ( ( ( 'double' ) ) )
-            // ../org.earthsystemcurator.cupid.xtext.ui/src-gen/org/earthsystemcurator/ui/contentassist/antlr/internal/InternalCupidLanguage.g:6633:1: ( ( 'double' ) )
+            // ../org.earthsystemcurator.cupid.xtext.ui/src-gen/org/earthsystemcurator/ui/contentassist/antlr/internal/InternalCupidLanguage.g:6535:1: ( ( ( 'double' ) ) )
+            // ../org.earthsystemcurator.cupid.xtext.ui/src-gen/org/earthsystemcurator/ui/contentassist/antlr/internal/InternalCupidLanguage.g:6536:1: ( ( 'double' ) )
             {
-            // ../org.earthsystemcurator.cupid.xtext.ui/src-gen/org/earthsystemcurator/ui/contentassist/antlr/internal/InternalCupidLanguage.g:6633:1: ( ( 'double' ) )
-            // ../org.earthsystemcurator.cupid.xtext.ui/src-gen/org/earthsystemcurator/ui/contentassist/antlr/internal/InternalCupidLanguage.g:6634:1: ( 'double' )
-            {
-             before(grammarAccess.getTypeAccess().getDoubleDoubleKeyword_4_0_0()); 
-            // ../org.earthsystemcurator.cupid.xtext.ui/src-gen/org/earthsystemcurator/ui/contentassist/antlr/internal/InternalCupidLanguage.g:6635:1: ( 'double' )
-            // ../org.earthsystemcurator.cupid.xtext.ui/src-gen/org/earthsystemcurator/ui/contentassist/antlr/internal/InternalCupidLanguage.g:6636:1: 'double'
+            // ../org.earthsystemcurator.cupid.xtext.ui/src-gen/org/earthsystemcurator/ui/contentassist/antlr/internal/InternalCupidLanguage.g:6536:1: ( ( 'double' ) )
+            // ../org.earthsystemcurator.cupid.xtext.ui/src-gen/org/earthsystemcurator/ui/contentassist/antlr/internal/InternalCupidLanguage.g:6537:1: ( 'double' )
             {
              before(grammarAccess.getTypeAccess().getDoubleDoubleKeyword_4_0_0()); 
-            match(input,46,FOLLOW_46_in_rule__Type__DoubleAssignment_4_013326); 
+            // ../org.earthsystemcurator.cupid.xtext.ui/src-gen/org/earthsystemcurator/ui/contentassist/antlr/internal/InternalCupidLanguage.g:6538:1: ( 'double' )
+            // ../org.earthsystemcurator.cupid.xtext.ui/src-gen/org/earthsystemcurator/ui/contentassist/antlr/internal/InternalCupidLanguage.g:6539:1: 'double'
+            {
+             before(grammarAccess.getTypeAccess().getDoubleDoubleKeyword_4_0_0()); 
+            match(input,46,FOLLOW_46_in_rule__Type__DoubleAssignment_4_013136); 
              after(grammarAccess.getTypeAccess().getDoubleDoubleKeyword_4_0_0()); 
 
             }
@@ -17638,24 +17403,24 @@ public class InternalCupidLanguageParser extends AbstractInternalContentAssistPa
 
 
     // $ANTLR start "rule__Type__DerivedAssignment_5_0"
-    // ../org.earthsystemcurator.cupid.xtext.ui/src-gen/org/earthsystemcurator/ui/contentassist/antlr/internal/InternalCupidLanguage.g:6651:1: rule__Type__DerivedAssignment_5_0 : ( ( 'type' ) ) ;
+    // ../org.earthsystemcurator.cupid.xtext.ui/src-gen/org/earthsystemcurator/ui/contentassist/antlr/internal/InternalCupidLanguage.g:6554:1: rule__Type__DerivedAssignment_5_0 : ( ( 'type' ) ) ;
     public final void rule__Type__DerivedAssignment_5_0() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // ../org.earthsystemcurator.cupid.xtext.ui/src-gen/org/earthsystemcurator/ui/contentassist/antlr/internal/InternalCupidLanguage.g:6655:1: ( ( ( 'type' ) ) )
-            // ../org.earthsystemcurator.cupid.xtext.ui/src-gen/org/earthsystemcurator/ui/contentassist/antlr/internal/InternalCupidLanguage.g:6656:1: ( ( 'type' ) )
+            // ../org.earthsystemcurator.cupid.xtext.ui/src-gen/org/earthsystemcurator/ui/contentassist/antlr/internal/InternalCupidLanguage.g:6558:1: ( ( ( 'type' ) ) )
+            // ../org.earthsystemcurator.cupid.xtext.ui/src-gen/org/earthsystemcurator/ui/contentassist/antlr/internal/InternalCupidLanguage.g:6559:1: ( ( 'type' ) )
             {
-            // ../org.earthsystemcurator.cupid.xtext.ui/src-gen/org/earthsystemcurator/ui/contentassist/antlr/internal/InternalCupidLanguage.g:6656:1: ( ( 'type' ) )
-            // ../org.earthsystemcurator.cupid.xtext.ui/src-gen/org/earthsystemcurator/ui/contentassist/antlr/internal/InternalCupidLanguage.g:6657:1: ( 'type' )
-            {
-             before(grammarAccess.getTypeAccess().getDerivedTypeKeyword_5_0_0()); 
-            // ../org.earthsystemcurator.cupid.xtext.ui/src-gen/org/earthsystemcurator/ui/contentassist/antlr/internal/InternalCupidLanguage.g:6658:1: ( 'type' )
-            // ../org.earthsystemcurator.cupid.xtext.ui/src-gen/org/earthsystemcurator/ui/contentassist/antlr/internal/InternalCupidLanguage.g:6659:1: 'type'
+            // ../org.earthsystemcurator.cupid.xtext.ui/src-gen/org/earthsystemcurator/ui/contentassist/antlr/internal/InternalCupidLanguage.g:6559:1: ( ( 'type' ) )
+            // ../org.earthsystemcurator.cupid.xtext.ui/src-gen/org/earthsystemcurator/ui/contentassist/antlr/internal/InternalCupidLanguage.g:6560:1: ( 'type' )
             {
              before(grammarAccess.getTypeAccess().getDerivedTypeKeyword_5_0_0()); 
-            match(input,47,FOLLOW_47_in_rule__Type__DerivedAssignment_5_013370); 
+            // ../org.earthsystemcurator.cupid.xtext.ui/src-gen/org/earthsystemcurator/ui/contentassist/antlr/internal/InternalCupidLanguage.g:6561:1: ( 'type' )
+            // ../org.earthsystemcurator.cupid.xtext.ui/src-gen/org/earthsystemcurator/ui/contentassist/antlr/internal/InternalCupidLanguage.g:6562:1: 'type'
+            {
+             before(grammarAccess.getTypeAccess().getDerivedTypeKeyword_5_0_0()); 
+            match(input,47,FOLLOW_47_in_rule__Type__DerivedAssignment_5_013180); 
              after(grammarAccess.getTypeAccess().getDerivedTypeKeyword_5_0_0()); 
 
             }
@@ -17683,20 +17448,20 @@ public class InternalCupidLanguageParser extends AbstractInternalContentAssistPa
 
 
     // $ANTLR start "rule__Type__DerivedTypeAssignment_5_2"
-    // ../org.earthsystemcurator.cupid.xtext.ui/src-gen/org/earthsystemcurator/ui/contentassist/antlr/internal/InternalCupidLanguage.g:6674:1: rule__Type__DerivedTypeAssignment_5_2 : ( ruleIDOrPathExpr ) ;
+    // ../org.earthsystemcurator.cupid.xtext.ui/src-gen/org/earthsystemcurator/ui/contentassist/antlr/internal/InternalCupidLanguage.g:6577:1: rule__Type__DerivedTypeAssignment_5_2 : ( ruleIDOrPathExpr ) ;
     public final void rule__Type__DerivedTypeAssignment_5_2() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // ../org.earthsystemcurator.cupid.xtext.ui/src-gen/org/earthsystemcurator/ui/contentassist/antlr/internal/InternalCupidLanguage.g:6678:1: ( ( ruleIDOrPathExpr ) )
-            // ../org.earthsystemcurator.cupid.xtext.ui/src-gen/org/earthsystemcurator/ui/contentassist/antlr/internal/InternalCupidLanguage.g:6679:1: ( ruleIDOrPathExpr )
+            // ../org.earthsystemcurator.cupid.xtext.ui/src-gen/org/earthsystemcurator/ui/contentassist/antlr/internal/InternalCupidLanguage.g:6581:1: ( ( ruleIDOrPathExpr ) )
+            // ../org.earthsystemcurator.cupid.xtext.ui/src-gen/org/earthsystemcurator/ui/contentassist/antlr/internal/InternalCupidLanguage.g:6582:1: ( ruleIDOrPathExpr )
             {
-            // ../org.earthsystemcurator.cupid.xtext.ui/src-gen/org/earthsystemcurator/ui/contentassist/antlr/internal/InternalCupidLanguage.g:6679:1: ( ruleIDOrPathExpr )
-            // ../org.earthsystemcurator.cupid.xtext.ui/src-gen/org/earthsystemcurator/ui/contentassist/antlr/internal/InternalCupidLanguage.g:6680:1: ruleIDOrPathExpr
+            // ../org.earthsystemcurator.cupid.xtext.ui/src-gen/org/earthsystemcurator/ui/contentassist/antlr/internal/InternalCupidLanguage.g:6582:1: ( ruleIDOrPathExpr )
+            // ../org.earthsystemcurator.cupid.xtext.ui/src-gen/org/earthsystemcurator/ui/contentassist/antlr/internal/InternalCupidLanguage.g:6583:1: ruleIDOrPathExpr
             {
              before(grammarAccess.getTypeAccess().getDerivedTypeIDOrPathExprParserRuleCall_5_2_0()); 
-            pushFollow(FOLLOW_ruleIDOrPathExpr_in_rule__Type__DerivedTypeAssignment_5_213409);
+            pushFollow(FOLLOW_ruleIDOrPathExpr_in_rule__Type__DerivedTypeAssignment_5_213219);
             ruleIDOrPathExpr();
 
             state._fsp--;
@@ -17724,20 +17489,20 @@ public class InternalCupidLanguageParser extends AbstractInternalContentAssistPa
 
 
     // $ANTLR start "rule__SubroutineName__NameAssignment_2_1"
-    // ../org.earthsystemcurator.cupid.xtext.ui/src-gen/org/earthsystemcurator/ui/contentassist/antlr/internal/InternalCupidLanguage.g:6689:1: rule__SubroutineName__NameAssignment_2_1 : ( ruleIDOrPathExpr ) ;
+    // ../org.earthsystemcurator.cupid.xtext.ui/src-gen/org/earthsystemcurator/ui/contentassist/antlr/internal/InternalCupidLanguage.g:6592:1: rule__SubroutineName__NameAssignment_2_1 : ( ruleIDOrPathExpr ) ;
     public final void rule__SubroutineName__NameAssignment_2_1() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // ../org.earthsystemcurator.cupid.xtext.ui/src-gen/org/earthsystemcurator/ui/contentassist/antlr/internal/InternalCupidLanguage.g:6693:1: ( ( ruleIDOrPathExpr ) )
-            // ../org.earthsystemcurator.cupid.xtext.ui/src-gen/org/earthsystemcurator/ui/contentassist/antlr/internal/InternalCupidLanguage.g:6694:1: ( ruleIDOrPathExpr )
+            // ../org.earthsystemcurator.cupid.xtext.ui/src-gen/org/earthsystemcurator/ui/contentassist/antlr/internal/InternalCupidLanguage.g:6596:1: ( ( ruleIDOrPathExpr ) )
+            // ../org.earthsystemcurator.cupid.xtext.ui/src-gen/org/earthsystemcurator/ui/contentassist/antlr/internal/InternalCupidLanguage.g:6597:1: ( ruleIDOrPathExpr )
             {
-            // ../org.earthsystemcurator.cupid.xtext.ui/src-gen/org/earthsystemcurator/ui/contentassist/antlr/internal/InternalCupidLanguage.g:6694:1: ( ruleIDOrPathExpr )
-            // ../org.earthsystemcurator.cupid.xtext.ui/src-gen/org/earthsystemcurator/ui/contentassist/antlr/internal/InternalCupidLanguage.g:6695:1: ruleIDOrPathExpr
+            // ../org.earthsystemcurator.cupid.xtext.ui/src-gen/org/earthsystemcurator/ui/contentassist/antlr/internal/InternalCupidLanguage.g:6597:1: ( ruleIDOrPathExpr )
+            // ../org.earthsystemcurator.cupid.xtext.ui/src-gen/org/earthsystemcurator/ui/contentassist/antlr/internal/InternalCupidLanguage.g:6598:1: ruleIDOrPathExpr
             {
              before(grammarAccess.getSubroutineNameAccess().getNameIDOrPathExprParserRuleCall_2_1_0()); 
-            pushFollow(FOLLOW_ruleIDOrPathExpr_in_rule__SubroutineName__NameAssignment_2_113440);
+            pushFollow(FOLLOW_ruleIDOrPathExpr_in_rule__SubroutineName__NameAssignment_2_113250);
             ruleIDOrPathExpr();
 
             state._fsp--;
@@ -17765,20 +17530,20 @@ public class InternalCupidLanguageParser extends AbstractInternalContentAssistPa
 
 
     // $ANTLR start "rule__Call__SubroutineNameAssignment_2"
-    // ../org.earthsystemcurator.cupid.xtext.ui/src-gen/org/earthsystemcurator/ui/contentassist/antlr/internal/InternalCupidLanguage.g:6704:1: rule__Call__SubroutineNameAssignment_2 : ( ruleIDOrPathExpr ) ;
+    // ../org.earthsystemcurator.cupid.xtext.ui/src-gen/org/earthsystemcurator/ui/contentassist/antlr/internal/InternalCupidLanguage.g:6607:1: rule__Call__SubroutineNameAssignment_2 : ( ruleIDOrPathExpr ) ;
     public final void rule__Call__SubroutineNameAssignment_2() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // ../org.earthsystemcurator.cupid.xtext.ui/src-gen/org/earthsystemcurator/ui/contentassist/antlr/internal/InternalCupidLanguage.g:6708:1: ( ( ruleIDOrPathExpr ) )
-            // ../org.earthsystemcurator.cupid.xtext.ui/src-gen/org/earthsystemcurator/ui/contentassist/antlr/internal/InternalCupidLanguage.g:6709:1: ( ruleIDOrPathExpr )
+            // ../org.earthsystemcurator.cupid.xtext.ui/src-gen/org/earthsystemcurator/ui/contentassist/antlr/internal/InternalCupidLanguage.g:6611:1: ( ( ruleIDOrPathExpr ) )
+            // ../org.earthsystemcurator.cupid.xtext.ui/src-gen/org/earthsystemcurator/ui/contentassist/antlr/internal/InternalCupidLanguage.g:6612:1: ( ruleIDOrPathExpr )
             {
-            // ../org.earthsystemcurator.cupid.xtext.ui/src-gen/org/earthsystemcurator/ui/contentassist/antlr/internal/InternalCupidLanguage.g:6709:1: ( ruleIDOrPathExpr )
-            // ../org.earthsystemcurator.cupid.xtext.ui/src-gen/org/earthsystemcurator/ui/contentassist/antlr/internal/InternalCupidLanguage.g:6710:1: ruleIDOrPathExpr
+            // ../org.earthsystemcurator.cupid.xtext.ui/src-gen/org/earthsystemcurator/ui/contentassist/antlr/internal/InternalCupidLanguage.g:6612:1: ( ruleIDOrPathExpr )
+            // ../org.earthsystemcurator.cupid.xtext.ui/src-gen/org/earthsystemcurator/ui/contentassist/antlr/internal/InternalCupidLanguage.g:6613:1: ruleIDOrPathExpr
             {
              before(grammarAccess.getCallAccess().getSubroutineNameIDOrPathExprParserRuleCall_2_0()); 
-            pushFollow(FOLLOW_ruleIDOrPathExpr_in_rule__Call__SubroutineNameAssignment_213471);
+            pushFollow(FOLLOW_ruleIDOrPathExpr_in_rule__Call__SubroutineNameAssignment_213281);
             ruleIDOrPathExpr();
 
             state._fsp--;
@@ -17806,20 +17571,20 @@ public class InternalCupidLanguageParser extends AbstractInternalContentAssistPa
 
 
     // $ANTLR start "rule__Call__ParamsAssignment_3_1_0"
-    // ../org.earthsystemcurator.cupid.xtext.ui/src-gen/org/earthsystemcurator/ui/contentassist/antlr/internal/InternalCupidLanguage.g:6719:1: rule__Call__ParamsAssignment_3_1_0 : ( ruleActualParam ) ;
+    // ../org.earthsystemcurator.cupid.xtext.ui/src-gen/org/earthsystemcurator/ui/contentassist/antlr/internal/InternalCupidLanguage.g:6622:1: rule__Call__ParamsAssignment_3_1_0 : ( ruleActualParam ) ;
     public final void rule__Call__ParamsAssignment_3_1_0() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // ../org.earthsystemcurator.cupid.xtext.ui/src-gen/org/earthsystemcurator/ui/contentassist/antlr/internal/InternalCupidLanguage.g:6723:1: ( ( ruleActualParam ) )
-            // ../org.earthsystemcurator.cupid.xtext.ui/src-gen/org/earthsystemcurator/ui/contentassist/antlr/internal/InternalCupidLanguage.g:6724:1: ( ruleActualParam )
+            // ../org.earthsystemcurator.cupid.xtext.ui/src-gen/org/earthsystemcurator/ui/contentassist/antlr/internal/InternalCupidLanguage.g:6626:1: ( ( ruleActualParam ) )
+            // ../org.earthsystemcurator.cupid.xtext.ui/src-gen/org/earthsystemcurator/ui/contentassist/antlr/internal/InternalCupidLanguage.g:6627:1: ( ruleActualParam )
             {
-            // ../org.earthsystemcurator.cupid.xtext.ui/src-gen/org/earthsystemcurator/ui/contentassist/antlr/internal/InternalCupidLanguage.g:6724:1: ( ruleActualParam )
-            // ../org.earthsystemcurator.cupid.xtext.ui/src-gen/org/earthsystemcurator/ui/contentassist/antlr/internal/InternalCupidLanguage.g:6725:1: ruleActualParam
+            // ../org.earthsystemcurator.cupid.xtext.ui/src-gen/org/earthsystemcurator/ui/contentassist/antlr/internal/InternalCupidLanguage.g:6627:1: ( ruleActualParam )
+            // ../org.earthsystemcurator.cupid.xtext.ui/src-gen/org/earthsystemcurator/ui/contentassist/antlr/internal/InternalCupidLanguage.g:6628:1: ruleActualParam
             {
              before(grammarAccess.getCallAccess().getParamsActualParamParserRuleCall_3_1_0_0()); 
-            pushFollow(FOLLOW_ruleActualParam_in_rule__Call__ParamsAssignment_3_1_013502);
+            pushFollow(FOLLOW_ruleActualParam_in_rule__Call__ParamsAssignment_3_1_013312);
             ruleActualParam();
 
             state._fsp--;
@@ -17847,20 +17612,20 @@ public class InternalCupidLanguageParser extends AbstractInternalContentAssistPa
 
 
     // $ANTLR start "rule__Call__ParamsAssignment_3_1_1_1"
-    // ../org.earthsystemcurator.cupid.xtext.ui/src-gen/org/earthsystemcurator/ui/contentassist/antlr/internal/InternalCupidLanguage.g:6734:1: rule__Call__ParamsAssignment_3_1_1_1 : ( ruleActualParam ) ;
+    // ../org.earthsystemcurator.cupid.xtext.ui/src-gen/org/earthsystemcurator/ui/contentassist/antlr/internal/InternalCupidLanguage.g:6637:1: rule__Call__ParamsAssignment_3_1_1_1 : ( ruleActualParam ) ;
     public final void rule__Call__ParamsAssignment_3_1_1_1() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // ../org.earthsystemcurator.cupid.xtext.ui/src-gen/org/earthsystemcurator/ui/contentassist/antlr/internal/InternalCupidLanguage.g:6738:1: ( ( ruleActualParam ) )
-            // ../org.earthsystemcurator.cupid.xtext.ui/src-gen/org/earthsystemcurator/ui/contentassist/antlr/internal/InternalCupidLanguage.g:6739:1: ( ruleActualParam )
+            // ../org.earthsystemcurator.cupid.xtext.ui/src-gen/org/earthsystemcurator/ui/contentassist/antlr/internal/InternalCupidLanguage.g:6641:1: ( ( ruleActualParam ) )
+            // ../org.earthsystemcurator.cupid.xtext.ui/src-gen/org/earthsystemcurator/ui/contentassist/antlr/internal/InternalCupidLanguage.g:6642:1: ( ruleActualParam )
             {
-            // ../org.earthsystemcurator.cupid.xtext.ui/src-gen/org/earthsystemcurator/ui/contentassist/antlr/internal/InternalCupidLanguage.g:6739:1: ( ruleActualParam )
-            // ../org.earthsystemcurator.cupid.xtext.ui/src-gen/org/earthsystemcurator/ui/contentassist/antlr/internal/InternalCupidLanguage.g:6740:1: ruleActualParam
+            // ../org.earthsystemcurator.cupid.xtext.ui/src-gen/org/earthsystemcurator/ui/contentassist/antlr/internal/InternalCupidLanguage.g:6642:1: ( ruleActualParam )
+            // ../org.earthsystemcurator.cupid.xtext.ui/src-gen/org/earthsystemcurator/ui/contentassist/antlr/internal/InternalCupidLanguage.g:6643:1: ruleActualParam
             {
              before(grammarAccess.getCallAccess().getParamsActualParamParserRuleCall_3_1_1_1_0()); 
-            pushFollow(FOLLOW_ruleActualParam_in_rule__Call__ParamsAssignment_3_1_1_113533);
+            pushFollow(FOLLOW_ruleActualParam_in_rule__Call__ParamsAssignment_3_1_1_113343);
             ruleActualParam();
 
             state._fsp--;
@@ -17888,20 +17653,20 @@ public class InternalCupidLanguageParser extends AbstractInternalContentAssistPa
 
 
     // $ANTLR start "rule__ActualParam__KeywordAssignment_0_0"
-    // ../org.earthsystemcurator.cupid.xtext.ui/src-gen/org/earthsystemcurator/ui/contentassist/antlr/internal/InternalCupidLanguage.g:6749:1: rule__ActualParam__KeywordAssignment_0_0 : ( RULE_ID ) ;
+    // ../org.earthsystemcurator.cupid.xtext.ui/src-gen/org/earthsystemcurator/ui/contentassist/antlr/internal/InternalCupidLanguage.g:6652:1: rule__ActualParam__KeywordAssignment_0_0 : ( RULE_ID ) ;
     public final void rule__ActualParam__KeywordAssignment_0_0() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // ../org.earthsystemcurator.cupid.xtext.ui/src-gen/org/earthsystemcurator/ui/contentassist/antlr/internal/InternalCupidLanguage.g:6753:1: ( ( RULE_ID ) )
-            // ../org.earthsystemcurator.cupid.xtext.ui/src-gen/org/earthsystemcurator/ui/contentassist/antlr/internal/InternalCupidLanguage.g:6754:1: ( RULE_ID )
+            // ../org.earthsystemcurator.cupid.xtext.ui/src-gen/org/earthsystemcurator/ui/contentassist/antlr/internal/InternalCupidLanguage.g:6656:1: ( ( RULE_ID ) )
+            // ../org.earthsystemcurator.cupid.xtext.ui/src-gen/org/earthsystemcurator/ui/contentassist/antlr/internal/InternalCupidLanguage.g:6657:1: ( RULE_ID )
             {
-            // ../org.earthsystemcurator.cupid.xtext.ui/src-gen/org/earthsystemcurator/ui/contentassist/antlr/internal/InternalCupidLanguage.g:6754:1: ( RULE_ID )
-            // ../org.earthsystemcurator.cupid.xtext.ui/src-gen/org/earthsystemcurator/ui/contentassist/antlr/internal/InternalCupidLanguage.g:6755:1: RULE_ID
+            // ../org.earthsystemcurator.cupid.xtext.ui/src-gen/org/earthsystemcurator/ui/contentassist/antlr/internal/InternalCupidLanguage.g:6657:1: ( RULE_ID )
+            // ../org.earthsystemcurator.cupid.xtext.ui/src-gen/org/earthsystemcurator/ui/contentassist/antlr/internal/InternalCupidLanguage.g:6658:1: RULE_ID
             {
              before(grammarAccess.getActualParamAccess().getKeywordIDTerminalRuleCall_0_0_0()); 
-            match(input,RULE_ID,FOLLOW_RULE_ID_in_rule__ActualParam__KeywordAssignment_0_013564); 
+            match(input,RULE_ID,FOLLOW_RULE_ID_in_rule__ActualParam__KeywordAssignment_0_013374); 
              after(grammarAccess.getActualParamAccess().getKeywordIDTerminalRuleCall_0_0_0()); 
 
             }
@@ -17925,24 +17690,24 @@ public class InternalCupidLanguageParser extends AbstractInternalContentAssistPa
 
 
     // $ANTLR start "rule__ActualParam__OptionalAssignment_0_1"
-    // ../org.earthsystemcurator.cupid.xtext.ui/src-gen/org/earthsystemcurator/ui/contentassist/antlr/internal/InternalCupidLanguage.g:6764:1: rule__ActualParam__OptionalAssignment_0_1 : ( ( '?' ) ) ;
+    // ../org.earthsystemcurator.cupid.xtext.ui/src-gen/org/earthsystemcurator/ui/contentassist/antlr/internal/InternalCupidLanguage.g:6667:1: rule__ActualParam__OptionalAssignment_0_1 : ( ( '?' ) ) ;
     public final void rule__ActualParam__OptionalAssignment_0_1() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // ../org.earthsystemcurator.cupid.xtext.ui/src-gen/org/earthsystemcurator/ui/contentassist/antlr/internal/InternalCupidLanguage.g:6768:1: ( ( ( '?' ) ) )
-            // ../org.earthsystemcurator.cupid.xtext.ui/src-gen/org/earthsystemcurator/ui/contentassist/antlr/internal/InternalCupidLanguage.g:6769:1: ( ( '?' ) )
+            // ../org.earthsystemcurator.cupid.xtext.ui/src-gen/org/earthsystemcurator/ui/contentassist/antlr/internal/InternalCupidLanguage.g:6671:1: ( ( ( '?' ) ) )
+            // ../org.earthsystemcurator.cupid.xtext.ui/src-gen/org/earthsystemcurator/ui/contentassist/antlr/internal/InternalCupidLanguage.g:6672:1: ( ( '?' ) )
             {
-            // ../org.earthsystemcurator.cupid.xtext.ui/src-gen/org/earthsystemcurator/ui/contentassist/antlr/internal/InternalCupidLanguage.g:6769:1: ( ( '?' ) )
-            // ../org.earthsystemcurator.cupid.xtext.ui/src-gen/org/earthsystemcurator/ui/contentassist/antlr/internal/InternalCupidLanguage.g:6770:1: ( '?' )
-            {
-             before(grammarAccess.getActualParamAccess().getOptionalQuestionMarkKeyword_0_1_0()); 
-            // ../org.earthsystemcurator.cupid.xtext.ui/src-gen/org/earthsystemcurator/ui/contentassist/antlr/internal/InternalCupidLanguage.g:6771:1: ( '?' )
-            // ../org.earthsystemcurator.cupid.xtext.ui/src-gen/org/earthsystemcurator/ui/contentassist/antlr/internal/InternalCupidLanguage.g:6772:1: '?'
+            // ../org.earthsystemcurator.cupid.xtext.ui/src-gen/org/earthsystemcurator/ui/contentassist/antlr/internal/InternalCupidLanguage.g:6672:1: ( ( '?' ) )
+            // ../org.earthsystemcurator.cupid.xtext.ui/src-gen/org/earthsystemcurator/ui/contentassist/antlr/internal/InternalCupidLanguage.g:6673:1: ( '?' )
             {
              before(grammarAccess.getActualParamAccess().getOptionalQuestionMarkKeyword_0_1_0()); 
-            match(input,48,FOLLOW_48_in_rule__ActualParam__OptionalAssignment_0_113600); 
+            // ../org.earthsystemcurator.cupid.xtext.ui/src-gen/org/earthsystemcurator/ui/contentassist/antlr/internal/InternalCupidLanguage.g:6674:1: ( '?' )
+            // ../org.earthsystemcurator.cupid.xtext.ui/src-gen/org/earthsystemcurator/ui/contentassist/antlr/internal/InternalCupidLanguage.g:6675:1: '?'
+            {
+             before(grammarAccess.getActualParamAccess().getOptionalQuestionMarkKeyword_0_1_0()); 
+            match(input,48,FOLLOW_48_in_rule__ActualParam__OptionalAssignment_0_113410); 
              after(grammarAccess.getActualParamAccess().getOptionalQuestionMarkKeyword_0_1_0()); 
 
             }
@@ -17970,20 +17735,20 @@ public class InternalCupidLanguageParser extends AbstractInternalContentAssistPa
 
 
     // $ANTLR start "rule__ActualParam__ValueAssignment_1"
-    // ../org.earthsystemcurator.cupid.xtext.ui/src-gen/org/earthsystemcurator/ui/contentassist/antlr/internal/InternalCupidLanguage.g:6787:1: rule__ActualParam__ValueAssignment_1 : ( ruleIDOrPathExpr ) ;
+    // ../org.earthsystemcurator.cupid.xtext.ui/src-gen/org/earthsystemcurator/ui/contentassist/antlr/internal/InternalCupidLanguage.g:6690:1: rule__ActualParam__ValueAssignment_1 : ( ruleIDOrPathExpr ) ;
     public final void rule__ActualParam__ValueAssignment_1() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // ../org.earthsystemcurator.cupid.xtext.ui/src-gen/org/earthsystemcurator/ui/contentassist/antlr/internal/InternalCupidLanguage.g:6791:1: ( ( ruleIDOrPathExpr ) )
-            // ../org.earthsystemcurator.cupid.xtext.ui/src-gen/org/earthsystemcurator/ui/contentassist/antlr/internal/InternalCupidLanguage.g:6792:1: ( ruleIDOrPathExpr )
+            // ../org.earthsystemcurator.cupid.xtext.ui/src-gen/org/earthsystemcurator/ui/contentassist/antlr/internal/InternalCupidLanguage.g:6694:1: ( ( ruleIDOrPathExpr ) )
+            // ../org.earthsystemcurator.cupid.xtext.ui/src-gen/org/earthsystemcurator/ui/contentassist/antlr/internal/InternalCupidLanguage.g:6695:1: ( ruleIDOrPathExpr )
             {
-            // ../org.earthsystemcurator.cupid.xtext.ui/src-gen/org/earthsystemcurator/ui/contentassist/antlr/internal/InternalCupidLanguage.g:6792:1: ( ruleIDOrPathExpr )
-            // ../org.earthsystemcurator.cupid.xtext.ui/src-gen/org/earthsystemcurator/ui/contentassist/antlr/internal/InternalCupidLanguage.g:6793:1: ruleIDOrPathExpr
+            // ../org.earthsystemcurator.cupid.xtext.ui/src-gen/org/earthsystemcurator/ui/contentassist/antlr/internal/InternalCupidLanguage.g:6695:1: ( ruleIDOrPathExpr )
+            // ../org.earthsystemcurator.cupid.xtext.ui/src-gen/org/earthsystemcurator/ui/contentassist/antlr/internal/InternalCupidLanguage.g:6696:1: ruleIDOrPathExpr
             {
              before(grammarAccess.getActualParamAccess().getValueIDOrPathExprParserRuleCall_1_0()); 
-            pushFollow(FOLLOW_ruleIDOrPathExpr_in_rule__ActualParam__ValueAssignment_113639);
+            pushFollow(FOLLOW_ruleIDOrPathExpr_in_rule__ActualParam__ValueAssignment_113449);
             ruleIDOrPathExpr();
 
             state._fsp--;
@@ -18011,25 +17776,21 @@ public class InternalCupidLanguageParser extends AbstractInternalContentAssistPa
 
 
     // $ANTLR start "rule__ActualParamByKeyword__KeywordAssignment_2"
-    // ../org.earthsystemcurator.cupid.xtext.ui/src-gen/org/earthsystemcurator/ui/contentassist/antlr/internal/InternalCupidLanguage.g:6802:1: rule__ActualParamByKeyword__KeywordAssignment_2 : ( ruleIDOrPathExpr ) ;
+    // ../org.earthsystemcurator.cupid.xtext.ui/src-gen/org/earthsystemcurator/ui/contentassist/antlr/internal/InternalCupidLanguage.g:6705:1: rule__ActualParamByKeyword__KeywordAssignment_2 : ( RULE_ID ) ;
     public final void rule__ActualParamByKeyword__KeywordAssignment_2() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // ../org.earthsystemcurator.cupid.xtext.ui/src-gen/org/earthsystemcurator/ui/contentassist/antlr/internal/InternalCupidLanguage.g:6806:1: ( ( ruleIDOrPathExpr ) )
-            // ../org.earthsystemcurator.cupid.xtext.ui/src-gen/org/earthsystemcurator/ui/contentassist/antlr/internal/InternalCupidLanguage.g:6807:1: ( ruleIDOrPathExpr )
+            // ../org.earthsystemcurator.cupid.xtext.ui/src-gen/org/earthsystemcurator/ui/contentassist/antlr/internal/InternalCupidLanguage.g:6709:1: ( ( RULE_ID ) )
+            // ../org.earthsystemcurator.cupid.xtext.ui/src-gen/org/earthsystemcurator/ui/contentassist/antlr/internal/InternalCupidLanguage.g:6710:1: ( RULE_ID )
             {
-            // ../org.earthsystemcurator.cupid.xtext.ui/src-gen/org/earthsystemcurator/ui/contentassist/antlr/internal/InternalCupidLanguage.g:6807:1: ( ruleIDOrPathExpr )
-            // ../org.earthsystemcurator.cupid.xtext.ui/src-gen/org/earthsystemcurator/ui/contentassist/antlr/internal/InternalCupidLanguage.g:6808:1: ruleIDOrPathExpr
+            // ../org.earthsystemcurator.cupid.xtext.ui/src-gen/org/earthsystemcurator/ui/contentassist/antlr/internal/InternalCupidLanguage.g:6710:1: ( RULE_ID )
+            // ../org.earthsystemcurator.cupid.xtext.ui/src-gen/org/earthsystemcurator/ui/contentassist/antlr/internal/InternalCupidLanguage.g:6711:1: RULE_ID
             {
-             before(grammarAccess.getActualParamByKeywordAccess().getKeywordIDOrPathExprParserRuleCall_2_0()); 
-            pushFollow(FOLLOW_ruleIDOrPathExpr_in_rule__ActualParamByKeyword__KeywordAssignment_213670);
-            ruleIDOrPathExpr();
-
-            state._fsp--;
-
-             after(grammarAccess.getActualParamByKeywordAccess().getKeywordIDOrPathExprParserRuleCall_2_0()); 
+             before(grammarAccess.getActualParamByKeywordAccess().getKeywordIDTerminalRuleCall_2_0()); 
+            match(input,RULE_ID,FOLLOW_RULE_ID_in_rule__ActualParamByKeyword__KeywordAssignment_213480); 
+             after(grammarAccess.getActualParamByKeywordAccess().getKeywordIDTerminalRuleCall_2_0()); 
 
             }
 
@@ -18051,62 +17812,21 @@ public class InternalCupidLanguageParser extends AbstractInternalContentAssistPa
     // $ANTLR end "rule__ActualParamByKeyword__KeywordAssignment_2"
 
 
-    // $ANTLR start "rule__ActualParamByKeyword__ValueAssignment_4"
-    // ../org.earthsystemcurator.cupid.xtext.ui/src-gen/org/earthsystemcurator/ui/contentassist/antlr/internal/InternalCupidLanguage.g:6817:1: rule__ActualParamByKeyword__ValueAssignment_4 : ( ruleIDOrPathExpr ) ;
-    public final void rule__ActualParamByKeyword__ValueAssignment_4() throws RecognitionException {
-
-        		int stackSize = keepStackSize();
-            
-        try {
-            // ../org.earthsystemcurator.cupid.xtext.ui/src-gen/org/earthsystemcurator/ui/contentassist/antlr/internal/InternalCupidLanguage.g:6821:1: ( ( ruleIDOrPathExpr ) )
-            // ../org.earthsystemcurator.cupid.xtext.ui/src-gen/org/earthsystemcurator/ui/contentassist/antlr/internal/InternalCupidLanguage.g:6822:1: ( ruleIDOrPathExpr )
-            {
-            // ../org.earthsystemcurator.cupid.xtext.ui/src-gen/org/earthsystemcurator/ui/contentassist/antlr/internal/InternalCupidLanguage.g:6822:1: ( ruleIDOrPathExpr )
-            // ../org.earthsystemcurator.cupid.xtext.ui/src-gen/org/earthsystemcurator/ui/contentassist/antlr/internal/InternalCupidLanguage.g:6823:1: ruleIDOrPathExpr
-            {
-             before(grammarAccess.getActualParamByKeywordAccess().getValueIDOrPathExprParserRuleCall_4_0()); 
-            pushFollow(FOLLOW_ruleIDOrPathExpr_in_rule__ActualParamByKeyword__ValueAssignment_413701);
-            ruleIDOrPathExpr();
-
-            state._fsp--;
-
-             after(grammarAccess.getActualParamByKeywordAccess().getValueIDOrPathExprParserRuleCall_4_0()); 
-
-            }
-
-
-            }
-
-        }
-        catch (RecognitionException re) {
-            reportError(re);
-            recover(input,re);
-        }
-        finally {
-
-            	restoreStackSize(stackSize);
-
-        }
-        return ;
-    }
-    // $ANTLR end "rule__ActualParamByKeyword__ValueAssignment_4"
-
-
     // $ANTLR start "rule__IDOrWildcard__IdAssignment_0"
-    // ../org.earthsystemcurator.cupid.xtext.ui/src-gen/org/earthsystemcurator/ui/contentassist/antlr/internal/InternalCupidLanguage.g:6832:1: rule__IDOrWildcard__IdAssignment_0 : ( RULE_ID ) ;
+    // ../org.earthsystemcurator.cupid.xtext.ui/src-gen/org/earthsystemcurator/ui/contentassist/antlr/internal/InternalCupidLanguage.g:6720:1: rule__IDOrWildcard__IdAssignment_0 : ( RULE_ID ) ;
     public final void rule__IDOrWildcard__IdAssignment_0() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // ../org.earthsystemcurator.cupid.xtext.ui/src-gen/org/earthsystemcurator/ui/contentassist/antlr/internal/InternalCupidLanguage.g:6836:1: ( ( RULE_ID ) )
-            // ../org.earthsystemcurator.cupid.xtext.ui/src-gen/org/earthsystemcurator/ui/contentassist/antlr/internal/InternalCupidLanguage.g:6837:1: ( RULE_ID )
+            // ../org.earthsystemcurator.cupid.xtext.ui/src-gen/org/earthsystemcurator/ui/contentassist/antlr/internal/InternalCupidLanguage.g:6724:1: ( ( RULE_ID ) )
+            // ../org.earthsystemcurator.cupid.xtext.ui/src-gen/org/earthsystemcurator/ui/contentassist/antlr/internal/InternalCupidLanguage.g:6725:1: ( RULE_ID )
             {
-            // ../org.earthsystemcurator.cupid.xtext.ui/src-gen/org/earthsystemcurator/ui/contentassist/antlr/internal/InternalCupidLanguage.g:6837:1: ( RULE_ID )
-            // ../org.earthsystemcurator.cupid.xtext.ui/src-gen/org/earthsystemcurator/ui/contentassist/antlr/internal/InternalCupidLanguage.g:6838:1: RULE_ID
+            // ../org.earthsystemcurator.cupid.xtext.ui/src-gen/org/earthsystemcurator/ui/contentassist/antlr/internal/InternalCupidLanguage.g:6725:1: ( RULE_ID )
+            // ../org.earthsystemcurator.cupid.xtext.ui/src-gen/org/earthsystemcurator/ui/contentassist/antlr/internal/InternalCupidLanguage.g:6726:1: RULE_ID
             {
              before(grammarAccess.getIDOrWildcardAccess().getIdIDTerminalRuleCall_0_0()); 
-            match(input,RULE_ID,FOLLOW_RULE_ID_in_rule__IDOrWildcard__IdAssignment_013732); 
+            match(input,RULE_ID,FOLLOW_RULE_ID_in_rule__IDOrWildcard__IdAssignment_013511); 
              after(grammarAccess.getIDOrWildcardAccess().getIdIDTerminalRuleCall_0_0()); 
 
             }
@@ -18130,24 +17850,24 @@ public class InternalCupidLanguageParser extends AbstractInternalContentAssistPa
 
 
     // $ANTLR start "rule__IDOrWildcard__WildcardAssignment_1"
-    // ../org.earthsystemcurator.cupid.xtext.ui/src-gen/org/earthsystemcurator/ui/contentassist/antlr/internal/InternalCupidLanguage.g:6847:1: rule__IDOrWildcard__WildcardAssignment_1 : ( ( '*' ) ) ;
+    // ../org.earthsystemcurator.cupid.xtext.ui/src-gen/org/earthsystemcurator/ui/contentassist/antlr/internal/InternalCupidLanguage.g:6735:1: rule__IDOrWildcard__WildcardAssignment_1 : ( ( '*' ) ) ;
     public final void rule__IDOrWildcard__WildcardAssignment_1() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // ../org.earthsystemcurator.cupid.xtext.ui/src-gen/org/earthsystemcurator/ui/contentassist/antlr/internal/InternalCupidLanguage.g:6851:1: ( ( ( '*' ) ) )
-            // ../org.earthsystemcurator.cupid.xtext.ui/src-gen/org/earthsystemcurator/ui/contentassist/antlr/internal/InternalCupidLanguage.g:6852:1: ( ( '*' ) )
+            // ../org.earthsystemcurator.cupid.xtext.ui/src-gen/org/earthsystemcurator/ui/contentassist/antlr/internal/InternalCupidLanguage.g:6739:1: ( ( ( '*' ) ) )
+            // ../org.earthsystemcurator.cupid.xtext.ui/src-gen/org/earthsystemcurator/ui/contentassist/antlr/internal/InternalCupidLanguage.g:6740:1: ( ( '*' ) )
             {
-            // ../org.earthsystemcurator.cupid.xtext.ui/src-gen/org/earthsystemcurator/ui/contentassist/antlr/internal/InternalCupidLanguage.g:6852:1: ( ( '*' ) )
-            // ../org.earthsystemcurator.cupid.xtext.ui/src-gen/org/earthsystemcurator/ui/contentassist/antlr/internal/InternalCupidLanguage.g:6853:1: ( '*' )
-            {
-             before(grammarAccess.getIDOrWildcardAccess().getWildcardAsteriskKeyword_1_0()); 
-            // ../org.earthsystemcurator.cupid.xtext.ui/src-gen/org/earthsystemcurator/ui/contentassist/antlr/internal/InternalCupidLanguage.g:6854:1: ( '*' )
-            // ../org.earthsystemcurator.cupid.xtext.ui/src-gen/org/earthsystemcurator/ui/contentassist/antlr/internal/InternalCupidLanguage.g:6855:1: '*'
+            // ../org.earthsystemcurator.cupid.xtext.ui/src-gen/org/earthsystemcurator/ui/contentassist/antlr/internal/InternalCupidLanguage.g:6740:1: ( ( '*' ) )
+            // ../org.earthsystemcurator.cupid.xtext.ui/src-gen/org/earthsystemcurator/ui/contentassist/antlr/internal/InternalCupidLanguage.g:6741:1: ( '*' )
             {
              before(grammarAccess.getIDOrWildcardAccess().getWildcardAsteriskKeyword_1_0()); 
-            match(input,37,FOLLOW_37_in_rule__IDOrWildcard__WildcardAssignment_113768); 
+            // ../org.earthsystemcurator.cupid.xtext.ui/src-gen/org/earthsystemcurator/ui/contentassist/antlr/internal/InternalCupidLanguage.g:6742:1: ( '*' )
+            // ../org.earthsystemcurator.cupid.xtext.ui/src-gen/org/earthsystemcurator/ui/contentassist/antlr/internal/InternalCupidLanguage.g:6743:1: '*'
+            {
+             before(grammarAccess.getIDOrWildcardAccess().getWildcardAsteriskKeyword_1_0()); 
+            match(input,37,FOLLOW_37_in_rule__IDOrWildcard__WildcardAssignment_113547); 
              after(grammarAccess.getIDOrWildcardAccess().getWildcardAsteriskKeyword_1_0()); 
 
             }
@@ -18175,20 +17895,20 @@ public class InternalCupidLanguageParser extends AbstractInternalContentAssistPa
 
 
     // $ANTLR start "rule__IDOrPathExpr__LiteralAssignment_2"
-    // ../org.earthsystemcurator.cupid.xtext.ui/src-gen/org/earthsystemcurator/ui/contentassist/antlr/internal/InternalCupidLanguage.g:6870:1: rule__IDOrPathExpr__LiteralAssignment_2 : ( ruleLiteral ) ;
+    // ../org.earthsystemcurator.cupid.xtext.ui/src-gen/org/earthsystemcurator/ui/contentassist/antlr/internal/InternalCupidLanguage.g:6758:1: rule__IDOrPathExpr__LiteralAssignment_2 : ( ruleLiteral ) ;
     public final void rule__IDOrPathExpr__LiteralAssignment_2() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // ../org.earthsystemcurator.cupid.xtext.ui/src-gen/org/earthsystemcurator/ui/contentassist/antlr/internal/InternalCupidLanguage.g:6874:1: ( ( ruleLiteral ) )
-            // ../org.earthsystemcurator.cupid.xtext.ui/src-gen/org/earthsystemcurator/ui/contentassist/antlr/internal/InternalCupidLanguage.g:6875:1: ( ruleLiteral )
+            // ../org.earthsystemcurator.cupid.xtext.ui/src-gen/org/earthsystemcurator/ui/contentassist/antlr/internal/InternalCupidLanguage.g:6762:1: ( ( ruleLiteral ) )
+            // ../org.earthsystemcurator.cupid.xtext.ui/src-gen/org/earthsystemcurator/ui/contentassist/antlr/internal/InternalCupidLanguage.g:6763:1: ( ruleLiteral )
             {
-            // ../org.earthsystemcurator.cupid.xtext.ui/src-gen/org/earthsystemcurator/ui/contentassist/antlr/internal/InternalCupidLanguage.g:6875:1: ( ruleLiteral )
-            // ../org.earthsystemcurator.cupid.xtext.ui/src-gen/org/earthsystemcurator/ui/contentassist/antlr/internal/InternalCupidLanguage.g:6876:1: ruleLiteral
+            // ../org.earthsystemcurator.cupid.xtext.ui/src-gen/org/earthsystemcurator/ui/contentassist/antlr/internal/InternalCupidLanguage.g:6763:1: ( ruleLiteral )
+            // ../org.earthsystemcurator.cupid.xtext.ui/src-gen/org/earthsystemcurator/ui/contentassist/antlr/internal/InternalCupidLanguage.g:6764:1: ruleLiteral
             {
              before(grammarAccess.getIDOrPathExprAccess().getLiteralLiteralParserRuleCall_2_0()); 
-            pushFollow(FOLLOW_ruleLiteral_in_rule__IDOrPathExpr__LiteralAssignment_213807);
+            pushFollow(FOLLOW_ruleLiteral_in_rule__IDOrPathExpr__LiteralAssignment_213586);
             ruleLiteral();
 
             state._fsp--;
@@ -18216,24 +17936,24 @@ public class InternalCupidLanguageParser extends AbstractInternalContentAssistPa
 
 
     // $ANTLR start "rule__PathExprNode__TailAssignment_1_2"
-    // ../org.earthsystemcurator.cupid.xtext.ui/src-gen/org/earthsystemcurator/ui/contentassist/antlr/internal/InternalCupidLanguage.g:6885:1: rule__PathExprNode__TailAssignment_1_2 : ( ( RULE_ID ) ) ;
+    // ../org.earthsystemcurator.cupid.xtext.ui/src-gen/org/earthsystemcurator/ui/contentassist/antlr/internal/InternalCupidLanguage.g:6773:1: rule__PathExprNode__TailAssignment_1_2 : ( ( RULE_ID ) ) ;
     public final void rule__PathExprNode__TailAssignment_1_2() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // ../org.earthsystemcurator.cupid.xtext.ui/src-gen/org/earthsystemcurator/ui/contentassist/antlr/internal/InternalCupidLanguage.g:6889:1: ( ( ( RULE_ID ) ) )
-            // ../org.earthsystemcurator.cupid.xtext.ui/src-gen/org/earthsystemcurator/ui/contentassist/antlr/internal/InternalCupidLanguage.g:6890:1: ( ( RULE_ID ) )
+            // ../org.earthsystemcurator.cupid.xtext.ui/src-gen/org/earthsystemcurator/ui/contentassist/antlr/internal/InternalCupidLanguage.g:6777:1: ( ( ( RULE_ID ) ) )
+            // ../org.earthsystemcurator.cupid.xtext.ui/src-gen/org/earthsystemcurator/ui/contentassist/antlr/internal/InternalCupidLanguage.g:6778:1: ( ( RULE_ID ) )
             {
-            // ../org.earthsystemcurator.cupid.xtext.ui/src-gen/org/earthsystemcurator/ui/contentassist/antlr/internal/InternalCupidLanguage.g:6890:1: ( ( RULE_ID ) )
-            // ../org.earthsystemcurator.cupid.xtext.ui/src-gen/org/earthsystemcurator/ui/contentassist/antlr/internal/InternalCupidLanguage.g:6891:1: ( RULE_ID )
+            // ../org.earthsystemcurator.cupid.xtext.ui/src-gen/org/earthsystemcurator/ui/contentassist/antlr/internal/InternalCupidLanguage.g:6778:1: ( ( RULE_ID ) )
+            // ../org.earthsystemcurator.cupid.xtext.ui/src-gen/org/earthsystemcurator/ui/contentassist/antlr/internal/InternalCupidLanguage.g:6779:1: ( RULE_ID )
             {
              before(grammarAccess.getPathExprNodeAccess().getTailSubconceptOrAttributeCrossReference_1_2_0()); 
-            // ../org.earthsystemcurator.cupid.xtext.ui/src-gen/org/earthsystemcurator/ui/contentassist/antlr/internal/InternalCupidLanguage.g:6892:1: ( RULE_ID )
-            // ../org.earthsystemcurator.cupid.xtext.ui/src-gen/org/earthsystemcurator/ui/contentassist/antlr/internal/InternalCupidLanguage.g:6893:1: RULE_ID
+            // ../org.earthsystemcurator.cupid.xtext.ui/src-gen/org/earthsystemcurator/ui/contentassist/antlr/internal/InternalCupidLanguage.g:6780:1: ( RULE_ID )
+            // ../org.earthsystemcurator.cupid.xtext.ui/src-gen/org/earthsystemcurator/ui/contentassist/antlr/internal/InternalCupidLanguage.g:6781:1: RULE_ID
             {
              before(grammarAccess.getPathExprNodeAccess().getTailSubconceptOrAttributeIDTerminalRuleCall_1_2_0_1()); 
-            match(input,RULE_ID,FOLLOW_RULE_ID_in_rule__PathExprNode__TailAssignment_1_213842); 
+            match(input,RULE_ID,FOLLOW_RULE_ID_in_rule__PathExprNode__TailAssignment_1_213621); 
              after(grammarAccess.getPathExprNodeAccess().getTailSubconceptOrAttributeIDTerminalRuleCall_1_2_0_1()); 
 
             }
@@ -18261,20 +17981,20 @@ public class InternalCupidLanguageParser extends AbstractInternalContentAssistPa
 
 
     // $ANTLR start "rule__PathExprTerm__AxisAssignment_1"
-    // ../org.earthsystemcurator.cupid.xtext.ui/src-gen/org/earthsystemcurator/ui/contentassist/antlr/internal/InternalCupidLanguage.g:6904:1: rule__PathExprTerm__AxisAssignment_1 : ( ruleAxis ) ;
+    // ../org.earthsystemcurator.cupid.xtext.ui/src-gen/org/earthsystemcurator/ui/contentassist/antlr/internal/InternalCupidLanguage.g:6792:1: rule__PathExprTerm__AxisAssignment_1 : ( ruleAxis ) ;
     public final void rule__PathExprTerm__AxisAssignment_1() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // ../org.earthsystemcurator.cupid.xtext.ui/src-gen/org/earthsystemcurator/ui/contentassist/antlr/internal/InternalCupidLanguage.g:6908:1: ( ( ruleAxis ) )
-            // ../org.earthsystemcurator.cupid.xtext.ui/src-gen/org/earthsystemcurator/ui/contentassist/antlr/internal/InternalCupidLanguage.g:6909:1: ( ruleAxis )
+            // ../org.earthsystemcurator.cupid.xtext.ui/src-gen/org/earthsystemcurator/ui/contentassist/antlr/internal/InternalCupidLanguage.g:6796:1: ( ( ruleAxis ) )
+            // ../org.earthsystemcurator.cupid.xtext.ui/src-gen/org/earthsystemcurator/ui/contentassist/antlr/internal/InternalCupidLanguage.g:6797:1: ( ruleAxis )
             {
-            // ../org.earthsystemcurator.cupid.xtext.ui/src-gen/org/earthsystemcurator/ui/contentassist/antlr/internal/InternalCupidLanguage.g:6909:1: ( ruleAxis )
-            // ../org.earthsystemcurator.cupid.xtext.ui/src-gen/org/earthsystemcurator/ui/contentassist/antlr/internal/InternalCupidLanguage.g:6910:1: ruleAxis
+            // ../org.earthsystemcurator.cupid.xtext.ui/src-gen/org/earthsystemcurator/ui/contentassist/antlr/internal/InternalCupidLanguage.g:6797:1: ( ruleAxis )
+            // ../org.earthsystemcurator.cupid.xtext.ui/src-gen/org/earthsystemcurator/ui/contentassist/antlr/internal/InternalCupidLanguage.g:6798:1: ruleAxis
             {
              before(grammarAccess.getPathExprTermAccess().getAxisAxisParserRuleCall_1_0()); 
-            pushFollow(FOLLOW_ruleAxis_in_rule__PathExprTerm__AxisAssignment_113877);
+            pushFollow(FOLLOW_ruleAxis_in_rule__PathExprTerm__AxisAssignment_113656);
             ruleAxis();
 
             state._fsp--;
@@ -18302,24 +18022,24 @@ public class InternalCupidLanguageParser extends AbstractInternalContentAssistPa
 
 
     // $ANTLR start "rule__PathExprTerm__RefAssignment_2"
-    // ../org.earthsystemcurator.cupid.xtext.ui/src-gen/org/earthsystemcurator/ui/contentassist/antlr/internal/InternalCupidLanguage.g:6919:1: rule__PathExprTerm__RefAssignment_2 : ( ( RULE_ID ) ) ;
+    // ../org.earthsystemcurator.cupid.xtext.ui/src-gen/org/earthsystemcurator/ui/contentassist/antlr/internal/InternalCupidLanguage.g:6807:1: rule__PathExprTerm__RefAssignment_2 : ( ( RULE_ID ) ) ;
     public final void rule__PathExprTerm__RefAssignment_2() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // ../org.earthsystemcurator.cupid.xtext.ui/src-gen/org/earthsystemcurator/ui/contentassist/antlr/internal/InternalCupidLanguage.g:6923:1: ( ( ( RULE_ID ) ) )
-            // ../org.earthsystemcurator.cupid.xtext.ui/src-gen/org/earthsystemcurator/ui/contentassist/antlr/internal/InternalCupidLanguage.g:6924:1: ( ( RULE_ID ) )
+            // ../org.earthsystemcurator.cupid.xtext.ui/src-gen/org/earthsystemcurator/ui/contentassist/antlr/internal/InternalCupidLanguage.g:6811:1: ( ( ( RULE_ID ) ) )
+            // ../org.earthsystemcurator.cupid.xtext.ui/src-gen/org/earthsystemcurator/ui/contentassist/antlr/internal/InternalCupidLanguage.g:6812:1: ( ( RULE_ID ) )
             {
-            // ../org.earthsystemcurator.cupid.xtext.ui/src-gen/org/earthsystemcurator/ui/contentassist/antlr/internal/InternalCupidLanguage.g:6924:1: ( ( RULE_ID ) )
-            // ../org.earthsystemcurator.cupid.xtext.ui/src-gen/org/earthsystemcurator/ui/contentassist/antlr/internal/InternalCupidLanguage.g:6925:1: ( RULE_ID )
+            // ../org.earthsystemcurator.cupid.xtext.ui/src-gen/org/earthsystemcurator/ui/contentassist/antlr/internal/InternalCupidLanguage.g:6812:1: ( ( RULE_ID ) )
+            // ../org.earthsystemcurator.cupid.xtext.ui/src-gen/org/earthsystemcurator/ui/contentassist/antlr/internal/InternalCupidLanguage.g:6813:1: ( RULE_ID )
             {
              before(grammarAccess.getPathExprTermAccess().getRefSubconceptOrAttributeCrossReference_2_0()); 
-            // ../org.earthsystemcurator.cupid.xtext.ui/src-gen/org/earthsystemcurator/ui/contentassist/antlr/internal/InternalCupidLanguage.g:6926:1: ( RULE_ID )
-            // ../org.earthsystemcurator.cupid.xtext.ui/src-gen/org/earthsystemcurator/ui/contentassist/antlr/internal/InternalCupidLanguage.g:6927:1: RULE_ID
+            // ../org.earthsystemcurator.cupid.xtext.ui/src-gen/org/earthsystemcurator/ui/contentassist/antlr/internal/InternalCupidLanguage.g:6814:1: ( RULE_ID )
+            // ../org.earthsystemcurator.cupid.xtext.ui/src-gen/org/earthsystemcurator/ui/contentassist/antlr/internal/InternalCupidLanguage.g:6815:1: RULE_ID
             {
              before(grammarAccess.getPathExprTermAccess().getRefSubconceptOrAttributeIDTerminalRuleCall_2_0_1()); 
-            match(input,RULE_ID,FOLLOW_RULE_ID_in_rule__PathExprTerm__RefAssignment_213912); 
+            match(input,RULE_ID,FOLLOW_RULE_ID_in_rule__PathExprTerm__RefAssignment_213691); 
              after(grammarAccess.getPathExprTermAccess().getRefSubconceptOrAttributeIDTerminalRuleCall_2_0_1()); 
 
             }
@@ -18347,24 +18067,24 @@ public class InternalCupidLanguageParser extends AbstractInternalContentAssistPa
 
 
     // $ANTLR start "rule__Axis__AncestorAssignment"
-    // ../org.earthsystemcurator.cupid.xtext.ui/src-gen/org/earthsystemcurator/ui/contentassist/antlr/internal/InternalCupidLanguage.g:6938:1: rule__Axis__AncestorAssignment : ( ( '^' ) ) ;
+    // ../org.earthsystemcurator.cupid.xtext.ui/src-gen/org/earthsystemcurator/ui/contentassist/antlr/internal/InternalCupidLanguage.g:6826:1: rule__Axis__AncestorAssignment : ( ( '^' ) ) ;
     public final void rule__Axis__AncestorAssignment() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // ../org.earthsystemcurator.cupid.xtext.ui/src-gen/org/earthsystemcurator/ui/contentassist/antlr/internal/InternalCupidLanguage.g:6942:1: ( ( ( '^' ) ) )
-            // ../org.earthsystemcurator.cupid.xtext.ui/src-gen/org/earthsystemcurator/ui/contentassist/antlr/internal/InternalCupidLanguage.g:6943:1: ( ( '^' ) )
+            // ../org.earthsystemcurator.cupid.xtext.ui/src-gen/org/earthsystemcurator/ui/contentassist/antlr/internal/InternalCupidLanguage.g:6830:1: ( ( ( '^' ) ) )
+            // ../org.earthsystemcurator.cupid.xtext.ui/src-gen/org/earthsystemcurator/ui/contentassist/antlr/internal/InternalCupidLanguage.g:6831:1: ( ( '^' ) )
             {
-            // ../org.earthsystemcurator.cupid.xtext.ui/src-gen/org/earthsystemcurator/ui/contentassist/antlr/internal/InternalCupidLanguage.g:6943:1: ( ( '^' ) )
-            // ../org.earthsystemcurator.cupid.xtext.ui/src-gen/org/earthsystemcurator/ui/contentassist/antlr/internal/InternalCupidLanguage.g:6944:1: ( '^' )
-            {
-             before(grammarAccess.getAxisAccess().getAncestorCircumflexAccentKeyword_0()); 
-            // ../org.earthsystemcurator.cupid.xtext.ui/src-gen/org/earthsystemcurator/ui/contentassist/antlr/internal/InternalCupidLanguage.g:6945:1: ( '^' )
-            // ../org.earthsystemcurator.cupid.xtext.ui/src-gen/org/earthsystemcurator/ui/contentassist/antlr/internal/InternalCupidLanguage.g:6946:1: '^'
+            // ../org.earthsystemcurator.cupid.xtext.ui/src-gen/org/earthsystemcurator/ui/contentassist/antlr/internal/InternalCupidLanguage.g:6831:1: ( ( '^' ) )
+            // ../org.earthsystemcurator.cupid.xtext.ui/src-gen/org/earthsystemcurator/ui/contentassist/antlr/internal/InternalCupidLanguage.g:6832:1: ( '^' )
             {
              before(grammarAccess.getAxisAccess().getAncestorCircumflexAccentKeyword_0()); 
-            match(input,49,FOLLOW_49_in_rule__Axis__AncestorAssignment13952); 
+            // ../org.earthsystemcurator.cupid.xtext.ui/src-gen/org/earthsystemcurator/ui/contentassist/antlr/internal/InternalCupidLanguage.g:6833:1: ( '^' )
+            // ../org.earthsystemcurator.cupid.xtext.ui/src-gen/org/earthsystemcurator/ui/contentassist/antlr/internal/InternalCupidLanguage.g:6834:1: '^'
+            {
+             before(grammarAccess.getAxisAccess().getAncestorCircumflexAccentKeyword_0()); 
+            match(input,49,FOLLOW_49_in_rule__Axis__AncestorAssignment13731); 
              after(grammarAccess.getAxisAccess().getAncestorCircumflexAccentKeyword_0()); 
 
             }
@@ -18855,118 +18575,108 @@ public class InternalCupidLanguageParser extends AbstractInternalContentAssistPa
     public static final BitSet FOLLOW_rule__ActualParamByKeyword__Group__0__Impl_in_rule__ActualParamByKeyword__Group__010402 = new BitSet(new long[]{0x0000000000100000L});
     public static final BitSet FOLLOW_rule__ActualParamByKeyword__Group__1_in_rule__ActualParamByKeyword__Group__010405 = new BitSet(new long[]{0x0000000000000002L});
     public static final BitSet FOLLOW_30_in_rule__ActualParamByKeyword__Group__0__Impl10433 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_rule__ActualParamByKeyword__Group__1__Impl_in_rule__ActualParamByKeyword__Group__110464 = new BitSet(new long[]{0x0000002080000070L});
+    public static final BitSet FOLLOW_rule__ActualParamByKeyword__Group__1__Impl_in_rule__ActualParamByKeyword__Group__110464 = new BitSet(new long[]{0x0000000000000040L});
     public static final BitSet FOLLOW_rule__ActualParamByKeyword__Group__2_in_rule__ActualParamByKeyword__Group__110467 = new BitSet(new long[]{0x0000000000000002L});
     public static final BitSet FOLLOW_20_in_rule__ActualParamByKeyword__Group__1__Impl10495 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_rule__ActualParamByKeyword__Group__2__Impl_in_rule__ActualParamByKeyword__Group__210526 = new BitSet(new long[]{0x0000000000100000L});
+    public static final BitSet FOLLOW_rule__ActualParamByKeyword__Group__2__Impl_in_rule__ActualParamByKeyword__Group__210526 = new BitSet(new long[]{0x0000000000200000L});
     public static final BitSet FOLLOW_rule__ActualParamByKeyword__Group__3_in_rule__ActualParamByKeyword__Group__210529 = new BitSet(new long[]{0x0000000000000002L});
     public static final BitSet FOLLOW_rule__ActualParamByKeyword__KeywordAssignment_2_in_rule__ActualParamByKeyword__Group__2__Impl10556 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_rule__ActualParamByKeyword__Group__3__Impl_in_rule__ActualParamByKeyword__Group__310586 = new BitSet(new long[]{0x0000002080000070L});
-    public static final BitSet FOLLOW_rule__ActualParamByKeyword__Group__4_in_rule__ActualParamByKeyword__Group__310589 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_20_in_rule__ActualParamByKeyword__Group__3__Impl10617 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_rule__ActualParamByKeyword__Group__4__Impl_in_rule__ActualParamByKeyword__Group__410648 = new BitSet(new long[]{0x0000000000200000L});
-    public static final BitSet FOLLOW_rule__ActualParamByKeyword__Group__5_in_rule__ActualParamByKeyword__Group__410651 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_rule__ActualParamByKeyword__ValueAssignment_4_in_rule__ActualParamByKeyword__Group__4__Impl10678 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_rule__ActualParamByKeyword__Group__5__Impl_in_rule__ActualParamByKeyword__Group__510708 = new BitSet(new long[]{0x0000000000200000L});
-    public static final BitSet FOLLOW_rule__ActualParamByKeyword__Group__6_in_rule__ActualParamByKeyword__Group__510711 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_21_in_rule__ActualParamByKeyword__Group__5__Impl10739 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_rule__ActualParamByKeyword__Group__6__Impl_in_rule__ActualParamByKeyword__Group__610770 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_21_in_rule__ActualParamByKeyword__Group__6__Impl10798 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_rule__PathExpr__Group__0__Impl_in_rule__PathExpr__Group__010843 = new BitSet(new long[]{0x0002000000000040L});
-    public static final BitSet FOLLOW_rule__PathExpr__Group__1_in_rule__PathExpr__Group__010846 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_31_in_rule__PathExpr__Group__0__Impl10874 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_rule__PathExpr__Group__1__Impl_in_rule__PathExpr__Group__110905 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_rulePathExprNode_in_rule__PathExpr__Group__1__Impl10932 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_rule__PathExprNode__Group__0__Impl_in_rule__PathExprNode__Group__010965 = new BitSet(new long[]{0x0000000100000000L});
-    public static final BitSet FOLLOW_rule__PathExprNode__Group__1_in_rule__PathExprNode__Group__010968 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_rulePathExprTerm_in_rule__PathExprNode__Group__0__Impl10995 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_rule__PathExprNode__Group__1__Impl_in_rule__PathExprNode__Group__111024 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_rule__PathExprNode__Group_1__0_in_rule__PathExprNode__Group__1__Impl11051 = new BitSet(new long[]{0x0000000100000002L});
-    public static final BitSet FOLLOW_rule__PathExprNode__Group_1__0__Impl_in_rule__PathExprNode__Group_1__011086 = new BitSet(new long[]{0x0000000100000000L});
-    public static final BitSet FOLLOW_rule__PathExprNode__Group_1__1_in_rule__PathExprNode__Group_1__011089 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_rule__PathExprNode__Group_1__1__Impl_in_rule__PathExprNode__Group_1__111147 = new BitSet(new long[]{0x0000000000000040L});
-    public static final BitSet FOLLOW_rule__PathExprNode__Group_1__2_in_rule__PathExprNode__Group_1__111150 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_32_in_rule__PathExprNode__Group_1__1__Impl11178 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_rule__PathExprNode__Group_1__2__Impl_in_rule__PathExprNode__Group_1__211209 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_rule__PathExprNode__TailAssignment_1_2_in_rule__PathExprNode__Group_1__2__Impl11236 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_rule__PathExprTerm__Group__0__Impl_in_rule__PathExprTerm__Group__011272 = new BitSet(new long[]{0x0002000000000040L});
-    public static final BitSet FOLLOW_rule__PathExprTerm__Group__1_in_rule__PathExprTerm__Group__011275 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_rule__PathExprTerm__Group__1__Impl_in_rule__PathExprTerm__Group__111333 = new BitSet(new long[]{0x0002000000000040L});
-    public static final BitSet FOLLOW_rule__PathExprTerm__Group__2_in_rule__PathExprTerm__Group__111336 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_rule__PathExprTerm__AxisAssignment_1_in_rule__PathExprTerm__Group__1__Impl11363 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_rule__PathExprTerm__Group__2__Impl_in_rule__PathExprTerm__Group__211394 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_rule__PathExprTerm__RefAssignment_2_in_rule__PathExprTerm__Group__2__Impl11421 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_RULE_ID_in_rule__Language__NameAssignment_111462 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_RULE_STRING_in_rule__Language__UriAssignment_211493 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_ruleTopConceptDef_in_rule__Language__ConceptDefAssignment_411524 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_ruleNamedConceptDef_in_rule__Language__ConceptDefAssignment_511555 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_RULE_ANNOTATION_ID_in_rule__Annotation__KeyAssignment_011586 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_RULE_STRING_in_rule__Annotation__ValueAssignment_1_111617 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_ruleMapping_in_rule__AnonymousConceptDef__MappingAssignment_1_111648 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_ruleAnnotation_in_rule__AnonymousConceptDef__AnnotationAssignment_2_111679 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_ruleSubconceptOrAttribute_in_rule__AnonymousConceptDef__ChildAssignment_2_211710 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_33_in_rule__NamedConceptDef__NamedAssignment_011746 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_RULE_ID_in_rule__NamedConceptDef__NameAssignment_111785 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_ruleMapping_in_rule__NamedConceptDef__MappingAssignment_2_111816 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_ruleAnnotation_in_rule__NamedConceptDef__AnnotationAssignment_3_111847 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_ruleSubconceptOrAttribute_in_rule__NamedConceptDef__ChildAssignment_3_211878 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_34_in_rule__TopConceptDef__TopAssignment_011914 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_33_in_rule__TopConceptDef__NamedAssignment_111958 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_RULE_ID_in_rule__TopConceptDef__NameAssignment_211997 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_ruleMapping_in_rule__TopConceptDef__MappingAssignment_3_112028 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_ruleAnnotation_in_rule__TopConceptDef__AnnotationAssignment_4_112059 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_ruleSubconceptOrAttribute_in_rule__TopConceptDef__ChildAssignment_4_212090 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_RULE_ID_in_rule__Subconcept__NameAssignment_012121 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_ruleCardinality_in_rule__Subconcept__CardinalityAssignment_112152 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_35_in_rule__Subconcept__EssentialAssignment_212188 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_ruleNamedConceptDef_in_rule__Subconcept__DefAssignment_3_0_112227 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_ruleAnonymousConceptDef_in_rule__Subconcept__DefAssignment_3_112258 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_18_in_rule__Subconcept__ReferenceAssignment_3_2_012294 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_RULE_ID_in_rule__Subconcept__RefAssignment_3_2_112337 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_36_in_rule__Attribute__AttribAssignment_012377 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_RULE_ID_in_rule__Attribute__NameAssignment_112416 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_ruleCardinality_in_rule__Attribute__CardinalityAssignment_212447 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_35_in_rule__Attribute__EssentialAssignment_312483 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_ruleMapping_in_rule__Attribute__AttribMappingAssignment_4_112522 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_ruleAnnotation_in_rule__Attribute__AnnotationAssignment_5_112553 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_37_in_rule__Cardinality__ZeroOrMoreAssignment_012589 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_38_in_rule__Cardinality__OneOrMoreAssignment_112633 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_rulePathExpr_in_rule__Mapping__ContextAssignment_012672 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_ruleImplicitContextMapping_in_rule__Mapping__MappingAssignment_112703 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_ruleIDOrPathExpr_in_rule__Module__NameAssignment_2_112734 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_ruleIDOrPathExpr_in_rule__UsesModule__NameAssignment_212765 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_ruleIDOrPathExpr_in_rule__UsesEntity__NameAssignment_212796 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_ruleIDOrPathExpr_in_rule__Subroutine__NameAssignment_212827 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_ruleFormalParam_in_rule__Subroutine__ParamsAssignment_3_1_012858 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_ruleFormalParam_in_rule__Subroutine__ParamsAssignment_3_1_1_112889 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_ruleIntent_in_rule__FormalParam__IntentAssignment_012920 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_ruleType_in_rule__FormalParam__TypeAssignment_112951 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_ruleIDOrPathExpr_in_rule__FormalParam__NameAssignment_212982 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_39_in_rule__Intent__InAssignment_013018 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_40_in_rule__Intent__OutAssignment_113062 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_41_in_rule__Intent__InoutAssignment_213106 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_42_in_rule__Type__IntegerAssignment_013150 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_43_in_rule__Type__CharacterAssignment_113194 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_44_in_rule__Type__LogicalAssignment_213238 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_45_in_rule__Type__RealAssignment_313282 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_46_in_rule__Type__DoubleAssignment_4_013326 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_47_in_rule__Type__DerivedAssignment_5_013370 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_ruleIDOrPathExpr_in_rule__Type__DerivedTypeAssignment_5_213409 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_ruleIDOrPathExpr_in_rule__SubroutineName__NameAssignment_2_113440 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_ruleIDOrPathExpr_in_rule__Call__SubroutineNameAssignment_213471 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_ruleActualParam_in_rule__Call__ParamsAssignment_3_1_013502 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_ruleActualParam_in_rule__Call__ParamsAssignment_3_1_1_113533 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_RULE_ID_in_rule__ActualParam__KeywordAssignment_0_013564 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_48_in_rule__ActualParam__OptionalAssignment_0_113600 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_ruleIDOrPathExpr_in_rule__ActualParam__ValueAssignment_113639 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_ruleIDOrPathExpr_in_rule__ActualParamByKeyword__KeywordAssignment_213670 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_ruleIDOrPathExpr_in_rule__ActualParamByKeyword__ValueAssignment_413701 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_RULE_ID_in_rule__IDOrWildcard__IdAssignment_013732 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_37_in_rule__IDOrWildcard__WildcardAssignment_113768 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_ruleLiteral_in_rule__IDOrPathExpr__LiteralAssignment_213807 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_RULE_ID_in_rule__PathExprNode__TailAssignment_1_213842 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_ruleAxis_in_rule__PathExprTerm__AxisAssignment_113877 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_RULE_ID_in_rule__PathExprTerm__RefAssignment_213912 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_49_in_rule__Axis__AncestorAssignment13952 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_rule__ActualParamByKeyword__Group__3__Impl_in_rule__ActualParamByKeyword__Group__310586 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_21_in_rule__ActualParamByKeyword__Group__3__Impl10614 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_rule__PathExpr__Group__0__Impl_in_rule__PathExpr__Group__010653 = new BitSet(new long[]{0x0002000000000040L});
+    public static final BitSet FOLLOW_rule__PathExpr__Group__1_in_rule__PathExpr__Group__010656 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_31_in_rule__PathExpr__Group__0__Impl10684 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_rule__PathExpr__Group__1__Impl_in_rule__PathExpr__Group__110715 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_rulePathExprNode_in_rule__PathExpr__Group__1__Impl10742 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_rule__PathExprNode__Group__0__Impl_in_rule__PathExprNode__Group__010775 = new BitSet(new long[]{0x0000000100000000L});
+    public static final BitSet FOLLOW_rule__PathExprNode__Group__1_in_rule__PathExprNode__Group__010778 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_rulePathExprTerm_in_rule__PathExprNode__Group__0__Impl10805 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_rule__PathExprNode__Group__1__Impl_in_rule__PathExprNode__Group__110834 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_rule__PathExprNode__Group_1__0_in_rule__PathExprNode__Group__1__Impl10861 = new BitSet(new long[]{0x0000000100000002L});
+    public static final BitSet FOLLOW_rule__PathExprNode__Group_1__0__Impl_in_rule__PathExprNode__Group_1__010896 = new BitSet(new long[]{0x0000000100000000L});
+    public static final BitSet FOLLOW_rule__PathExprNode__Group_1__1_in_rule__PathExprNode__Group_1__010899 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_rule__PathExprNode__Group_1__1__Impl_in_rule__PathExprNode__Group_1__110957 = new BitSet(new long[]{0x0000000000000040L});
+    public static final BitSet FOLLOW_rule__PathExprNode__Group_1__2_in_rule__PathExprNode__Group_1__110960 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_32_in_rule__PathExprNode__Group_1__1__Impl10988 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_rule__PathExprNode__Group_1__2__Impl_in_rule__PathExprNode__Group_1__211019 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_rule__PathExprNode__TailAssignment_1_2_in_rule__PathExprNode__Group_1__2__Impl11046 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_rule__PathExprTerm__Group__0__Impl_in_rule__PathExprTerm__Group__011082 = new BitSet(new long[]{0x0002000000000040L});
+    public static final BitSet FOLLOW_rule__PathExprTerm__Group__1_in_rule__PathExprTerm__Group__011085 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_rule__PathExprTerm__Group__1__Impl_in_rule__PathExprTerm__Group__111143 = new BitSet(new long[]{0x0002000000000040L});
+    public static final BitSet FOLLOW_rule__PathExprTerm__Group__2_in_rule__PathExprTerm__Group__111146 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_rule__PathExprTerm__AxisAssignment_1_in_rule__PathExprTerm__Group__1__Impl11173 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_rule__PathExprTerm__Group__2__Impl_in_rule__PathExprTerm__Group__211204 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_rule__PathExprTerm__RefAssignment_2_in_rule__PathExprTerm__Group__2__Impl11231 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_RULE_ID_in_rule__Language__NameAssignment_111272 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_RULE_STRING_in_rule__Language__UriAssignment_211303 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_ruleTopConceptDef_in_rule__Language__ConceptDefAssignment_411334 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_ruleNamedConceptDef_in_rule__Language__ConceptDefAssignment_511365 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_RULE_ANNOTATION_ID_in_rule__Annotation__KeyAssignment_011396 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_RULE_STRING_in_rule__Annotation__ValueAssignment_1_111427 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_ruleMapping_in_rule__AnonymousConceptDef__MappingAssignment_1_111458 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_ruleAnnotation_in_rule__AnonymousConceptDef__AnnotationAssignment_2_111489 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_ruleSubconceptOrAttribute_in_rule__AnonymousConceptDef__ChildAssignment_2_211520 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_33_in_rule__NamedConceptDef__NamedAssignment_011556 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_RULE_ID_in_rule__NamedConceptDef__NameAssignment_111595 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_ruleMapping_in_rule__NamedConceptDef__MappingAssignment_2_111626 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_ruleAnnotation_in_rule__NamedConceptDef__AnnotationAssignment_3_111657 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_ruleSubconceptOrAttribute_in_rule__NamedConceptDef__ChildAssignment_3_211688 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_34_in_rule__TopConceptDef__TopAssignment_011724 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_33_in_rule__TopConceptDef__NamedAssignment_111768 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_RULE_ID_in_rule__TopConceptDef__NameAssignment_211807 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_ruleMapping_in_rule__TopConceptDef__MappingAssignment_3_111838 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_ruleAnnotation_in_rule__TopConceptDef__AnnotationAssignment_4_111869 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_ruleSubconceptOrAttribute_in_rule__TopConceptDef__ChildAssignment_4_211900 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_RULE_ID_in_rule__Subconcept__NameAssignment_011931 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_ruleCardinality_in_rule__Subconcept__CardinalityAssignment_111962 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_35_in_rule__Subconcept__EssentialAssignment_211998 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_ruleNamedConceptDef_in_rule__Subconcept__DefAssignment_3_0_112037 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_ruleAnonymousConceptDef_in_rule__Subconcept__DefAssignment_3_112068 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_18_in_rule__Subconcept__ReferenceAssignment_3_2_012104 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_RULE_ID_in_rule__Subconcept__RefAssignment_3_2_112147 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_36_in_rule__Attribute__AttribAssignment_012187 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_RULE_ID_in_rule__Attribute__NameAssignment_112226 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_ruleCardinality_in_rule__Attribute__CardinalityAssignment_212257 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_35_in_rule__Attribute__EssentialAssignment_312293 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_ruleMapping_in_rule__Attribute__AttribMappingAssignment_4_112332 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_ruleAnnotation_in_rule__Attribute__AnnotationAssignment_5_112363 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_37_in_rule__Cardinality__ZeroOrMoreAssignment_012399 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_38_in_rule__Cardinality__OneOrMoreAssignment_112443 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_rulePathExpr_in_rule__Mapping__ContextAssignment_012482 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_ruleImplicitContextMapping_in_rule__Mapping__MappingAssignment_112513 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_ruleIDOrPathExpr_in_rule__Module__NameAssignment_2_112544 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_ruleIDOrPathExpr_in_rule__UsesModule__NameAssignment_212575 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_ruleIDOrPathExpr_in_rule__UsesEntity__NameAssignment_212606 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_ruleIDOrPathExpr_in_rule__Subroutine__NameAssignment_212637 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_ruleFormalParam_in_rule__Subroutine__ParamsAssignment_3_1_012668 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_ruleFormalParam_in_rule__Subroutine__ParamsAssignment_3_1_1_112699 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_ruleIntent_in_rule__FormalParam__IntentAssignment_012730 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_ruleType_in_rule__FormalParam__TypeAssignment_112761 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_ruleIDOrPathExpr_in_rule__FormalParam__NameAssignment_212792 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_39_in_rule__Intent__InAssignment_012828 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_40_in_rule__Intent__OutAssignment_112872 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_41_in_rule__Intent__InoutAssignment_212916 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_42_in_rule__Type__IntegerAssignment_012960 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_43_in_rule__Type__CharacterAssignment_113004 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_44_in_rule__Type__LogicalAssignment_213048 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_45_in_rule__Type__RealAssignment_313092 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_46_in_rule__Type__DoubleAssignment_4_013136 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_47_in_rule__Type__DerivedAssignment_5_013180 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_ruleIDOrPathExpr_in_rule__Type__DerivedTypeAssignment_5_213219 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_ruleIDOrPathExpr_in_rule__SubroutineName__NameAssignment_2_113250 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_ruleIDOrPathExpr_in_rule__Call__SubroutineNameAssignment_213281 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_ruleActualParam_in_rule__Call__ParamsAssignment_3_1_013312 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_ruleActualParam_in_rule__Call__ParamsAssignment_3_1_1_113343 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_RULE_ID_in_rule__ActualParam__KeywordAssignment_0_013374 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_48_in_rule__ActualParam__OptionalAssignment_0_113410 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_ruleIDOrPathExpr_in_rule__ActualParam__ValueAssignment_113449 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_RULE_ID_in_rule__ActualParamByKeyword__KeywordAssignment_213480 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_RULE_ID_in_rule__IDOrWildcard__IdAssignment_013511 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_37_in_rule__IDOrWildcard__WildcardAssignment_113547 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_ruleLiteral_in_rule__IDOrPathExpr__LiteralAssignment_213586 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_RULE_ID_in_rule__PathExprNode__TailAssignment_1_213621 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_ruleAxis_in_rule__PathExprTerm__AxisAssignment_113656 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_RULE_ID_in_rule__PathExprTerm__RefAssignment_213691 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_49_in_rule__Axis__AncestorAssignment13731 = new BitSet(new long[]{0x0000000000000002L});
 
 }

@@ -213,7 +213,7 @@ public class ReverseHandler extends AbstractHandler {
         //create markers for validation failures
         for (Diagnostic d : fsm.getDiagnostics()) {
         	Object problemElem = d.getData().get(0);
-        	Object refObject = fsm.getReference(problemElem);
+        	Object refObject = fsm.getMapsTo((EObject) problemElem); //fsm.getReference(problemElem);
         	Object problemRef = null;
         	if (d.getData().size() > 1) {
         		problemRef = d.getData().get(1);

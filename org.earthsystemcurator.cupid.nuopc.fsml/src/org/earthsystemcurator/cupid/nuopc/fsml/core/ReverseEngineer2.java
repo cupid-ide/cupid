@@ -59,19 +59,19 @@ public class ReverseEngineer2 {
 		}
 		
 		//EPackage should already be registered
-		EPackage ePackage = EPackage.Registry.INSTANCE.getEPackage(lang.getUri()); 
-		EFactory eFactory = ePackage.getEFactoryInstance();
-		EClass topClass = (EClass) ePackage.getEClassifier(topConcept.getName());
-		EObject root = eFactory.create(topClass);
+		//EPackage ePackage = EPackage.Registry.INSTANCE.getEPackage(lang.getUri()); 
+		//EFactory eFactory = ePackage.getEFactoryInstance();
+		//EClass topClass = (EClass) ePackage.getEClassifier(topConcept.getName());
+		//EObject root = eFactory.create(topClass);
 		
 		
-		FSM fsm = new FSM(lang, root, project, CodeTransformation.class);
+		FSM<?> fsm = new FSM(lang, project, CodeQuery2.class, CodeTransformation.class);
 		
 		//a bit of a hack here for the root name
-		EStructuralFeature sfName = topClass.getEStructuralFeature("name");
-		if (sfName != null) {
-			root.eSet(sfName, project.getName());
-		}
+		//EStructuralFeature sfName = topClass.getEStructuralFeature("name");
+		//if (sfName != null) {
+		//	root.eSet(sfName, project.getName());
+		//}
 				
 		Set<IFortranAST> asts = new HashSet<IFortranAST>();	
 				
@@ -123,15 +123,17 @@ public class ReverseEngineer2 {
 			return fsm;
 		}
 		
-		root = reverse(fsm, asts, topConcept, root, fsm.getMappings(), eFactory);
+		//root = reverse(fsm, asts, topConcept, root, fsm.getMappings(), eFactory);
 	
+		fsm.reverse(asts);
+		
 		return fsm;
 		
 	}
 		
 	
 	
-	
+	/*
 	private static Method findREMethod(String methodName, Object context, EObject mapping) {
 		for (Method m : CodeQuery2.class.getMethods()) {
 			if (m.getName().equalsIgnoreCase(methodName) && m.getParameterTypes().length >= 2) {
@@ -145,8 +147,9 @@ public class ReverseEngineer2 {
 		}
 		return null;
 	}
+	*/
 	
-	
+	/*
 	@SuppressWarnings("unchecked")
 	private static EObject reverse(FSM<?> fsm, Object fortranElem, ConceptDef conceptDef, EObject modelElem, Map<Object,Object> mappings, EFactory factory) {
 		
@@ -423,6 +426,6 @@ public class ReverseEngineer2 {
 		return modelElem;
 		
 	}
-	
+	*/
 	
 }

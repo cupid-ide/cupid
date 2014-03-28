@@ -223,19 +223,16 @@ public class CupidLanguageSemanticSequencer extends AbstractDelegatingSemanticSe
 	
 	/**
 	 * Constraint:
-	 *     (keyword=IDOrPathExpr value=IDOrPathExpr)
+	 *     keyword=ID
 	 */
 	protected void sequence_ActualParamByKeyword(EObject context, ActualParamByKeyword semanticObject) {
 		if(errorAcceptor != null) {
 			if(transientValues.isValueTransient(semanticObject, CupidLanguagePackage.Literals.ACTUAL_PARAM_BY_KEYWORD__KEYWORD) == ValueTransient.YES)
 				errorAcceptor.accept(diagnosticProvider.createFeatureValueMissing(semanticObject, CupidLanguagePackage.Literals.ACTUAL_PARAM_BY_KEYWORD__KEYWORD));
-			if(transientValues.isValueTransient(semanticObject, CupidLanguagePackage.Literals.ACTUAL_PARAM_BY_KEYWORD__VALUE) == ValueTransient.YES)
-				errorAcceptor.accept(diagnosticProvider.createFeatureValueMissing(semanticObject, CupidLanguagePackage.Literals.ACTUAL_PARAM_BY_KEYWORD__VALUE));
 		}
 		INodesForEObjectProvider nodes = createNodeProvider(semanticObject);
 		SequenceFeeder feeder = createSequencerFeeder(semanticObject, nodes);
-		feeder.accept(grammarAccess.getActualParamByKeywordAccess().getKeywordIDOrPathExprParserRuleCall_2_0(), semanticObject.getKeyword());
-		feeder.accept(grammarAccess.getActualParamByKeywordAccess().getValueIDOrPathExprParserRuleCall_4_0(), semanticObject.getValue());
+		feeder.accept(grammarAccess.getActualParamByKeywordAccess().getKeywordIDTerminalRuleCall_2_0(), semanticObject.getKeyword());
 		feeder.finish();
 	}
 	

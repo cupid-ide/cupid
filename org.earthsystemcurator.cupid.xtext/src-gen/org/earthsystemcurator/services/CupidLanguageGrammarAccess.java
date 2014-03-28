@@ -1177,18 +1177,14 @@ public class CupidLanguageGrammarAccess extends AbstractGrammarElementFinder {
 		private final Keyword cActualParamByKeywordKeyword_0 = (Keyword)cGroup.eContents().get(0);
 		private final Keyword cLeftParenthesisKeyword_1 = (Keyword)cGroup.eContents().get(1);
 		private final Assignment cKeywordAssignment_2 = (Assignment)cGroup.eContents().get(2);
-		private final RuleCall cKeywordIDOrPathExprParserRuleCall_2_0 = (RuleCall)cKeywordAssignment_2.eContents().get(0);
-		private final Keyword cLeftParenthesisKeyword_3 = (Keyword)cGroup.eContents().get(3);
-		private final Assignment cValueAssignment_4 = (Assignment)cGroup.eContents().get(4);
-		private final RuleCall cValueIDOrPathExprParserRuleCall_4_0 = (RuleCall)cValueAssignment_4.eContents().get(0);
-		private final Keyword cRightParenthesisKeyword_5 = (Keyword)cGroup.eContents().get(5);
-		private final Keyword cRightParenthesisKeyword_6 = (Keyword)cGroup.eContents().get(6);
+		private final RuleCall cKeywordIDTerminalRuleCall_2_0 = (RuleCall)cKeywordAssignment_2.eContents().get(0);
+		private final Keyword cRightParenthesisKeyword_3 = (Keyword)cGroup.eContents().get(3);
 		
 		//ActualParamByKeyword:
-		//	"actualParamByKeyword" "(" keyword=IDOrPathExpr "(" value=IDOrPathExpr ")" ")";
+		//	"actualParamByKeyword" "(" keyword=ID ")";
 		public ParserRule getRule() { return rule; }
 
-		//"actualParamByKeyword" "(" keyword=IDOrPathExpr "(" value=IDOrPathExpr ")" ")"
+		//"actualParamByKeyword" "(" keyword=ID ")"
 		public Group getGroup() { return cGroup; }
 
 		//"actualParamByKeyword"
@@ -1197,26 +1193,14 @@ public class CupidLanguageGrammarAccess extends AbstractGrammarElementFinder {
 		//"("
 		public Keyword getLeftParenthesisKeyword_1() { return cLeftParenthesisKeyword_1; }
 
-		//keyword=IDOrPathExpr
+		//keyword=ID
 		public Assignment getKeywordAssignment_2() { return cKeywordAssignment_2; }
 
-		//IDOrPathExpr
-		public RuleCall getKeywordIDOrPathExprParserRuleCall_2_0() { return cKeywordIDOrPathExprParserRuleCall_2_0; }
-
-		//"("
-		public Keyword getLeftParenthesisKeyword_3() { return cLeftParenthesisKeyword_3; }
-
-		//value=IDOrPathExpr
-		public Assignment getValueAssignment_4() { return cValueAssignment_4; }
-
-		//IDOrPathExpr
-		public RuleCall getValueIDOrPathExprParserRuleCall_4_0() { return cValueIDOrPathExprParserRuleCall_4_0; }
+		//ID
+		public RuleCall getKeywordIDTerminalRuleCall_2_0() { return cKeywordIDTerminalRuleCall_2_0; }
 
 		//")"
-		public Keyword getRightParenthesisKeyword_5() { return cRightParenthesisKeyword_5; }
-
-		//")"
-		public Keyword getRightParenthesisKeyword_6() { return cRightParenthesisKeyword_6; }
+		public Keyword getRightParenthesisKeyword_3() { return cRightParenthesisKeyword_3; }
 	}
 
 	public class IDOrWildcardElements extends AbstractParserRuleElementFinder {
@@ -1746,7 +1730,7 @@ public class CupidLanguageGrammarAccess extends AbstractGrammarElementFinder {
 	}
 
 	//ActualParamByKeyword:
-	//	"actualParamByKeyword" "(" keyword=IDOrPathExpr "(" value=IDOrPathExpr ")" ")";
+	//	"actualParamByKeyword" "(" keyword=ID ")";
 	public ActualParamByKeywordElements getActualParamByKeywordAccess() {
 		return (pActualParamByKeyword != null) ? pActualParamByKeyword : (pActualParamByKeyword = new ActualParamByKeywordElements());
 	}

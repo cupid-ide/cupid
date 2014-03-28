@@ -13,6 +13,8 @@ import org.earthsystemcurator.cupidLanguage.Cardinality
 import org.eclipse.emf.ecore.EObject
 import org.earthsystemcurator.CupidToEcore
 import org.eclipse.xtext.generator.IFileSystemAccessExtension2
+import org.earthsystemcurator.cupidLanguage.Mapping
+import org.earthsystemcurator.cupidLanguage.Call
 
 /**
  * Generates code from your model files on save.
@@ -47,8 +49,25 @@ class CupidLanguageGenerator implements IGenerator {
 	
 	 
 	def toPackage(Language lang) '''
+		import ecore : 'http://www.eclipse.org/emf/2002/Ecore#/';
+		
 		package «lang.name.toLowerCase» : «lang.name.toLowerCase» = '«lang.uri»'
 		{
+			
+			--
+			--common types and classes
+			datatype AST__Module : 'org.eclipse.photran.internal.core.parser.ASTModuleNode' { };
+			datatype AST__Call : 'org.eclipse.photran.internal.core.parser.ASTCallStmtNode' { };
+			datatype AST__Subroutine : 'org.eclipse.photran.internal.core.parser.ASTSubroutineSubprogramNode' { };
+			datatype AST__UsesModule : 'org.eclipse.photran.internal.core.parser.ASTUseStmtNode' { };
+		
+			abstract class MappedElement
+			{
+				attribute mapsTo : ecore::EJavaObject [0..1] { transient };
+			}
+		
+			--language specific types and classes
+			
 			«FOR cd : lang.conceptDef SEPARATOR '\n\n'»
 			«cd.toClass»
 			«ENDFOR»
@@ -56,8 +75,13 @@ class CupidLanguageGenerator implements IGenerator {
 		
 	''' 
 	
+	def CharSequence toMappingDataType(Mapping m) {
+		if (m==null) 'EObject'	
+		else 'AST__' + m.mapping.eClass.name
+	}
+	
 	def CharSequence toClass(ConceptDef cd) '''
-		class «cd.toClassName»
+		class «cd.toClassName» extends MappedElement
 		{
 			«IF (!cd.annotation.empty)»
 			annotation _'http://www.earthsystemcog.org/projects/nuopc' 

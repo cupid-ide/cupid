@@ -7,6 +7,7 @@ import java.util.Map;
 import java.util.Set;
 
 import org.earthsystemcurator.cupidLanguage.ActualParam;
+import org.earthsystemcurator.cupidLanguage.ActualParamByKeyword;
 import org.earthsystemcurator.cupidLanguage.Call;
 import org.earthsystemcurator.cupidLanguage.FormalParam;
 import org.earthsystemcurator.cupidLanguage.IDOrPathExpr;
@@ -35,6 +36,16 @@ import org.eclipse.photran.internal.core.parser.IASTNode;
 @SuppressWarnings("restriction")
 public class CodeQuery2 {
 
+	public static String actualParamByKeyword(ASTCallStmtNode context, ActualParamByKeyword mapping) {
+		ASTSubroutineArgNode san = findArgByKeyword(mapping.getKeyword(), context.getArgList());
+		if (san != null) {
+			return san.getExpr().toString().trim();
+		}
+		else {
+			return null;
+		}
+	}
+	
 	public static Map<ASTCallStmtNode, Map<PathExpr, String>> call(IASTNode context, Call mapping) {
 		
 		Map<ASTCallStmtNode, Map<PathExpr, String>> result = new HashMap<ASTCallStmtNode, Map<PathExpr, String>>();
@@ -104,7 +115,7 @@ public class CodeQuery2 {
 			result.put(csn, bindings);
 		}
 		
-		System.out.println("return");
+		//System.out.println("return");
 		return result;	
 		
 	}
@@ -258,7 +269,11 @@ public class CodeQuery2 {
 			
 			int idxParam = 0;
 			
-			if (ssn.getSubroutineStmt().getSubroutinePars() != null) {
+			if (mapping.getParams().size() == 0) {
+				//no params	to check		
+				result.put(ssn, bindings);				
+			}
+			else if (ssn.getSubroutineStmt().getSubroutinePars() != null) {
 				for (ASTSubroutineParNode spn : ssn.getSubroutineStmt().getSubroutinePars()) {
 					
 					List<Definition> defs = spn.getVariableName().resolveBinding();
@@ -287,10 +302,7 @@ public class CodeQuery2 {
 					result.put(ssn, bindings);
 				}
 			}
-			else if (mapping.getParams().size() == 0) {
-				//no params				
-				result.put(ssn, bindings);				
-			}
+			
 				
 			
 		}

@@ -118,7 +118,7 @@ ActualParam:
 	(keyword=ID (optional?='?')? '=')? value=IDOrPathExpr;
 
 ActualParamByKeyword:
-	'actualParamByKeyword' '(' keyword=IDOrPathExpr '(' value=IDOrPathExpr ')' ')';
+	'actualParamByKeyword' '(' keyword=ID ')';
 
 IDOrWildcard:
 	id=ID | wildcard?='*';

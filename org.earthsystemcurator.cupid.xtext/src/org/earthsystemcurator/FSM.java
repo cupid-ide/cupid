@@ -8,6 +8,7 @@ import java.util.HashSet;
 import java.util.IdentityHashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Map.Entry;
 import java.util.Set;
 
 import org.earthsystemcurator.cupidLanguage.Annotation;
@@ -20,7 +21,6 @@ import org.earthsystemcurator.cupidLanguage.Mapping;
 import org.earthsystemcurator.cupidLanguage.PathExpr;
 import org.earthsystemcurator.cupidLanguage.PathExprTerm;
 import org.earthsystemcurator.cupidLanguage.SubconceptOrAttribute;
-import org.earthsystemcurator.cupidLanguage.impl.PathExprTermImpl;
 import org.earthsystemcurator.generator.CupidLanguageGenerator;
 import org.eclipse.core.resources.IProject;
 import org.eclipse.emf.common.util.Diagnostic;
@@ -33,10 +33,14 @@ import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.EReference;
 import org.eclipse.emf.ecore.EStructuralFeature;
+import org.eclipse.emf.ecore.EcoreFactory;
 import org.eclipse.emf.ecore.util.Diagnostician;
 import org.eclipse.emf.ecore.util.EcoreUtil;
+import org.eclipse.emf.ecore.util.EcoreUtil.Copier;
 import org.eclipse.photran.core.IFortranAST;
+import org.eclipse.photran.internal.core.lexer.Token;
 
+@SuppressWarnings("restriction")
 public class FSM<RootType extends EObject> {
 
 	protected RootType root;
@@ -45,6 +49,7 @@ public class FSM<RootType extends EObject> {
 	protected IProject project;
 	protected Language language;
 	protected Class<?> transformations;
+	protected Class<?> queryClass;
 	
 	protected CupidLanguageGenerator generator;
 	protected Map<SubconceptOrAttribute, EStructuralFeature> cache;
@@ -56,16 +61,21 @@ public class FSM<RootType extends EObject> {
 	 *  - an IASTNode (for deeper elements)
 	 *  
 	 */	
-	private Map<Object, Object> mappings;	
+	//private Map<Object, Object> mappings;	
 	
-	public FSM(Language language, RootType root, IProject project, Class<?> transformations) {
+	public FSM(Language language, IProject project, Class<?> queryClass, Class<?> transformations) {
 		this.language = language;
-		this.root = root;
-		this.pack = root.eClass().getEPackage();
-		this.factory = this.pack.getEFactoryInstance();
-		this.mappings = new IdentityHashMap<Object, Object>();
+		//this.root = root;
+		//this.pack = root.eClass().getEPackage();
+		//this.factory = this.pack.getEFactoryInstance();
+		
+		this.pack = EPackage.Registry.INSTANCE.getEPackage(language.getUri()); 
+		this.factory = pack.getEFactoryInstance();
+		
+		//this.mappings = new IdentityHashMap<Object, Object>();
 		this.project = project;
 		this.transformations = transformations;
+		this.queryClass = queryClass;
 		this.cache = new HashMap<SubconceptOrAttribute, EStructuralFeature>();
 		this.generator = new CupidLanguageGenerator();  //just used for "toClassName" methods
 	}
@@ -74,12 +84,23 @@ public class FSM<RootType extends EObject> {
 		return root;
 	}
 	
-	public Map<Object, Object> getMappings() {
-		return mappings;
+	//public Map<Object, Object> getMappings() {
+	//	return mappings;
+	//}
+	
+	public Object getMapsTo(EObject modelElem) {
+		if (modelElem==null) {
+			return null;
+		}
+			
+		EStructuralFeature esf = modelElem.eClass().getEStructuralFeature("mapsTo");
+		return modelElem.eGet(esf);
+		//return mappings.get(modelElem);
 	}
 	
-	public Object getReference(Object modelElem) {
-		return mappings.get(modelElem);
+	public void setMapsTo(EObject modelElem, Object value) {
+		EStructuralFeature esf = modelElem.eClass().getEStructuralFeature("mapsTo");
+		modelElem.eSet(esf, value);
 	}
 		
 	public List<Diagnostic> getDiagnostics() {
@@ -154,14 +175,20 @@ public class FSM<RootType extends EObject> {
 			
 			if (mapping.getContext() != null) {
 				//explicit context
-				EObject contextElement = getValueFromModel(mapping.getContext(), context, true, null);
-				fortranContextElem = getMappings().get(contextElement);
+				EObject contextElement = null;
+				try {
+					contextElement = getValueFromModel(mapping.getContext(), context, true);
+				} catch (PathExprNotFoundException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+				fortranContextElem = getMapsTo(contextElement); //getMappings().get(contextElement);
 				if (fortranContextElem == null) {
 					throw new RuntimeException("No Fortran context for element: " + contextElement);
 				}
 			}
 			else {
-				fortranContextElem = getMappings().get(context);  //implicit
+				fortranContextElem = getMapsTo(context); //getMappings().get(context);  //implicit
 			}
 			
 			ImplicitContextMapping icMapping = mapping.getMapping();
@@ -191,7 +218,8 @@ public class FSM<RootType extends EObject> {
 			}
 			
 			//add to mappings
-			getMappings().put(newElem, newFortranElem);
+			//getMappings().put(newElem, newFortranElem);
+			setMapsTo(newElem, newFortranElem);
 		}
 			
 		//recursively add child elements
@@ -238,13 +266,13 @@ public class FSM<RootType extends EObject> {
 		//TODO: handle explicit context
 		
 		//contextFortranElem will be one of: IASTNode, IFortranAST, or Set<IFortranAST>
-		Object contextFortranElem = getMappings().get(context);
+		Object contextFortranElem = getMapsTo(context); //getMappings().get(context);
 		if (contextFortranElem == null) {
 			System.out.println("contextFortranElem is null: " + context);
 			return null;
 		}
 			
-		Object newElem = context.eGet(eatt);
+		EObject newElem = (EObject) context.eGet(eatt);
 				
 		String methodName = "";//Regex.getMappingTypeFromAnnotation(eatt);
 		if (methodName != null) {
@@ -273,13 +301,15 @@ public class FSM<RootType extends EObject> {
 			}
 			
 			//add to mappings
-			getMappings().put(newElem, newFortranElem);
+			//getMappings().put(newElem, newFortranElem);
+			setMapsTo(newElem, newFortranElem);
 		
 		}	
 		else {
 			//method may be null if there is no Fortran mapping for the element
 			//in this case the new model element maps to the context fortran element
-			getMappings().put(newElem, contextFortranElem);
+			//getMappings().put(newElem, contextFortranElem);
+			setMapsTo(newElem, contextFortranElem);
 		}
 		
 		return newElem;
@@ -294,95 +324,667 @@ public class FSM<RootType extends EObject> {
 	 * 
 	 * @param contextFortranElement the set of ASTs to which to map the FSM
 	 */
-	//@SuppressWarnings("restriction")
-	//public void reverse(Set<IFortranAST> contextFortranElement) {
-	//	mappings.clear();
-	//	
-	//	//bootstrap by mapping the root element to the set of ASTs
-	//	//this is implicit for behavior for the top concept of a FSM
-	//	EObject rootModelElement = factory.create(getEClass(getTopConceptDef()));
-	//	mappings.put(rootModelElement, contextFortranElement);
-	//	
-	//	reverse(rootModelElement, getTopConceptDef().getChild(), 0);
-	//}
+	@SuppressWarnings({ "restriction", "unchecked" })
+	public void reverse(Set<IFortranAST> contextFortranElement) {
+		//mappings.clear();
+		
+		//bootstrap by mapping the root element to the set of ASTs
+		//this is implicit for behavior for the top concept of a FSM
+		root = (RootType) factory.create(getEClass(getTopConceptDef()));
+		setMapsTo(root, contextFortranElement);
+		//mappings.put(root, contextFortranElement);
+		
+		root = reverse(root, contextFortranElement, getTopConceptDef());
+	}
 	
 	//protected void reverse(EObject contextModelElement, ConceptDef conceptDef) {
 	
 	//}
 	
-	/**
-	 * Returns a set of mappings for a particular subconcept given a contextModelElement.
-	 * Does not change the contextModelElement.
-	 * 
-	 * @param contextModelElement
-	 * @param soaList
-	 * @param soaIndex
-	 * @return
-	 */
-	protected Map<Object, Object> reverse(final EObject contextModelElement, final SubconceptOrAttribute soa) {
+	
+	@SuppressWarnings({ "restriction", "unchecked" })
+	protected <T extends EObject> T reverse(T modelElement, Object contextFortranElement, ConceptDef conceptDef) {
 		
-		// result = new Map<Object, Object>	
+		//assume a successful mapping (required for looking up mappings during recursive calls)
+		//mapping will be removed later if it fails
+		//mappings.put(modelElement, contextFortranElement);	
+		setMapsTo(modelElement, contextFortranElement);
 		
-		// -- both cases below are basically identical
-		// -- -- in the first case we create a new element for each fortran element found by the query
-		// -- -- in the second case we create a new element which implicitly maps to the parent fortran element
-		// -- -- in both cases we make a recursive call to ensure the newChildModelElement's children match
+		Map<Object, Object> mappingsToAdd = new IdentityHashMap<Object, Object>();
+								
+		for (SubconceptOrAttribute subconcept : conceptDef.getChild()) {
 		
-		
-		//	if there is a mapping defined for soa
-		//		find and call query method for mapping
-		//  	for each matching fortran element fortranMatch:
-		//			create newChildModelElement
-		//			newChildModelElement = reverse(newChildModelElement, soa.getDef)
-		//      	if (newChildModelElement != null)
-		//				result.put(newChildModelElement, fortranMatch)		
-		//		
-		//  else if there is no mapping
-		//		create newChildModelElement
-		//      newChildModelElement = reverse(newChildModelElement, soa.getDef)
-		//		result.put(newChildModelElement, mappings.get(contextModelElement)
-		//
-		//  return result
+			//alternate
+			//modelElement = reverse(modelElement, contextFortranElement, subconcept);
+			//then check whether it is essential and not populated
+			
+			if (subconcept.getName().equalsIgnoreCase("registered1")) {
+				System.out.println("registered1");
+			}
+			
+			//find structural feature
+			EStructuralFeature structuralFeature = getEStructuralFeature(subconcept);
+			//ConceptDef subconceptDef = null;
+			Mapping explicitContextMapping = getMappingQuery(subconcept);
+			Object explicitContextFortranElement = null;
+						
+			if (explicitContextMapping != null) {
+			
+				explicitContextMapping.setMapping((ImplicitContextMapping) replacePathExprWithValues(explicitContextMapping.getMapping(), modelElement, true));
+			
+				if (explicitContextMapping.getContext() != null) {
+					//explicit context - need to navigate elsewhere in the tree
+					EObject contextElement = null;
+					try {
+						contextElement = getValueFromModel(explicitContextMapping.getContext(), modelElement, true);
+					} catch (PathExprNotFoundException e) {
+						System.out.println(e.getMessage());
+						//ignore, will fail below
+					}
+					explicitContextFortranElement = getMapsTo(contextElement); //mappings.get(contextElement);
+				}
+				else {
+					explicitContextFortranElement = contextFortranElement;  //implicit
+				}
 				
+				//String methodName = explicitContextMapping.getMapping().eClass().getName();
+				
+				if (explicitContextFortranElement != null) {
+					//if there is no context element, then we cannot execute the query
+					//if it is an essential subconcept, then this mapping will fail below
+					
+					Object result = executeMappingQuery(explicitContextMapping.getMapping(), explicitContextFortranElement);
+													
+					if (result instanceof String) {
+						modelElement.eSet(structuralFeature, result);
+					}
+					else if (result instanceof Token) {
+						//if (result != null) {
+							//String constructor required because of IdentityHashMap
+							String text = new String(((Token)result).getText());
+							modelElement.eSet(structuralFeature, text);
+							mappingsToAdd.put(text, result);
+						//}
+						//else {
+							//what should we do here?
+						//	modelElement.eSet(structuralFeature, null);
+						//}
+					}
+					else if (result instanceof Map) {
+												
+						//do we have a set of primitives?
+						if (subconcept.isAttrib()) {
+							Set<String> resultSet = ((Map<String,?>) result).keySet();
+							//TODO: ignoring PathExprs for now
+							for (String res : resultSet) {
+								if (structuralFeature.isMany()) {
+									EList<String> el = (EList<String>) modelElement.eGet(structuralFeature);
+									el.add(res);
+								}
+								else {
+									modelElement.eSet(structuralFeature, res);
+									break;  //just take first one
+								}
+							}
+						}
+						//result is a set of objects - either IASTNodes or IFortranASTs
+						else {
+							
+							//Set<Object> resultSet = ((Map<Object, ?>) result).keySet();
+														
+							Map<Object, Map<PathExpr, String>> resultMap = (Map<Object, Map<PathExpr, String>>) result;
+							for (Entry<Object, Map<PathExpr, String>> resultItem : resultMap.entrySet()) {
+								
+								EObject newModelElem = factory.create((EClass) structuralFeature.getEType());
+								
+								// set up parent relationship for references (may be removed later)									
+								setOrAdd(modelElement, subconcept, newModelElem);
+															
+								//set bindings in model that satisfy query								
+								Map<PathExpr, String> bindings = resultItem.getValue();
+								if (bindings != null) {
+									for (Entry<PathExpr, String> binding : bindings.entrySet()) {
+										try {
+											setValueInModel(binding.getKey(), newModelElem, binding.getValue());
+										} catch (PathExprNotFoundException e) {
+											e.printStackTrace();
+											return null;
+										}
+										catch (ElementAlreadyBoundException e) {
+											e.printStackTrace();
+											return null;
+										}									
+									}
+								}
+								
+														
+								//recursive call
+								EObject newModelElemRet = reverse(newModelElem, resultItem.getKey(), getDefinition(subconcept));
+								
+								// if NULL returned, then mapping failed, so revert to previous state
+								// this involves:
+								// - undoing the bindings we set above
+								// - removing the newly created element from its parent
+								if (newModelElemRet == null) {
+									
+									//undo the bindings first
+									if (bindings != null) {
+										for (Entry<PathExpr, String> binding : bindings.entrySet()) {
+											try {
+												unsetValueInModel(binding.getKey(), newModelElem);
+											} catch (PathExprNotFoundException e) {
+												e.printStackTrace();
+												return null;
+											}
+										}
+									}
+									
+									//remove new element from the model
+									unsetOrRemove(modelElement, subconcept, newModelElem);
+										
+								}
+									
+								
+								else if (!structuralFeature.isMany()) {
+									if (resultMap.size() > 1) {
+										System.out.println("Warning: Some matching elements ignored because subconcept is singular: " + subconcept.getName());
+										for (Object ignoredElement : resultMap.entrySet()) {
+											if (!ignoredElement.equals(resultItem.getKey())) {
+												System.out.println("\tIgnored element: " + ignoredElement);
+											}
+										}
+									}
+									break; // take first one that is not null
+								}									
+							
+							} //end for loop of matched fortran elements
+								
+						} // end check for primitives vs. objects in results
+						
+					} //end check for return type of set or map	
+					
+				} //end check for existence of fortran context element
+				
+			} // end check for whether a mapping is defined
+
+			else if (!subconcept.isAttrib()) {
+				
+				//TODO: needs another look
+				
+				if (isMany(subconcept)) {
+					//cartesian product
+					modelElement = reverse(modelElement, contextFortranElement, subconcept);
+				}
+				else {
+				
+					EObject newModelElem = factory.create((EClass) structuralFeature.getEType());
+					setOrAdd(modelElement, subconcept, newModelElem);
+										
+					EObject newModelElemRet = reverse(newModelElem, contextFortranElement, getDefinition(subconcept));
+								
+					if (newModelElemRet == null) {
+						//remove new element from the model
+						unsetOrRemove(modelElement, subconcept, newModelElem);
+					}
+				
+				}
+				
+			}
+			
+			//at this point we have set the value of the structural feature
+			//if is essential, but not present or false, the parent is no good
+			
+			if (subconcept.isEssential()) {	
+				boolean fail = false;
+				
+				if (modelElement.eGet(structuralFeature) == null) {					
+					fail = true;
+				}
+				else if (isMany(subconcept) && ((EList) modelElement.eGet(structuralFeature)).isEmpty()) {
+					fail = true;
+				}
+				else if (structuralFeature.getEType().equals(EcoreFactory.eINSTANCE.getEcorePackage().getEBoolean()) &&
+						! (Boolean) modelElement.eGet(structuralFeature)) {
+					fail = true;
+				}
+				
+				if (fail) {
+					System.out.println("Essential feature failed:");
+					System.out.println("\tSubconcept: " + subconcept.getName());
+					System.out.println("\tModel Element: " + modelElement);
+					//System.out.println("\tFortran Element: " + fortranContextElem);
+					//mappings.remove(modelElement);
+					//an essential feature failed, so no need to process 
+					//any more structural features
+					return null;
+				}
+				
+			}
+			
+			
+		} // end for structural features
+		
+		//mappings.putAll(mappingsToAdd);
+
+		return modelElement;
+		
+	}
+	
+	//adds matching elements as children of parentElement at feature soa
+	//there may be multiple
+	protected <T extends EObject> T reverse(T parentElement, Object contextFortranElement, SubconceptOrAttribute soa) {
+		//return reverse(parentElement, contextFortranElement, soa, 0, new HashMap<SubconceptOrAttribute, EObject>());
+		return reverse(parentElement, contextFortranElement, soa, 0, null);
+	}
+	
+	protected <T extends EObject> T reverse(T parentElement, 
+			Object contextFortranElement, 
+			SubconceptOrAttribute parentSOA, 
+			int soaIndex, 
+			EObject candidate) {
+		
+		ConceptDef conceptDef = getDefinition(parentSOA);
+		if (soaIndex >= conceptDef.getChild().size()) {
+			
+			//candidate is complete if we get this far
+		
+			setOrAdd(parentElement, parentSOA, EcoreUtil.copy(candidate));  
+			
+			//optimize --> if parentSOA is single valued, we can break out here (throwable)
+			return parentElement;
+		}
+		else {
+			SubconceptOrAttribute soa = conceptDef.getChild().get(soaIndex);
+			//if (soa.getName().equals("registered1")) {
+			//	System.out.println();
+			//}
+			
+			if (soaIndex == 0) {
+				//first time through 
+				candidate = factory.create(getEClass(parentSOA));
+				
+				//temporarily add candidate to parent for metavariable refs, will be removed later
+				setOrAdd(parentElement, parentSOA, candidate);  
+			}
+			
+			if (soa.isAttrib()) {
+				//skip attributes because they should not have a mapping
+				parentElement = reverse(parentElement, contextFortranElement, parentSOA, soaIndex+1, candidate);
+			}
+			else {
+				Mapping query = getMappingQuery(soa);  
+				if (query != null) {
+					
+					//populate metavariables with values
+					//temporarily attach to parent for metavariable resolution
+					//setOrAdd(parentElement, parentSOA, candidate);
+					
+					query.setMapping((ImplicitContextMapping) replacePathExprWithValues(query.getMapping(), candidate, true));
+					Object explicitContextFortranElement = null;
+					if (query.getContext() != null) {
+						//explicit context
+						EObject contextElement = null;
+						try {
+							contextElement = getValueFromModel(query.getContext(), candidate, true);
+						} catch (PathExprNotFoundException e) {
+							e.printStackTrace();
+							//will fail below
+						}
+						explicitContextFortranElement = getMapsTo(contextElement); //mappings.get(contextElement);						
+					}
+					else {
+						explicitContextFortranElement = contextFortranElement;  //implicit
+					}
+					
+					if (explicitContextFortranElement == null) {
+						throw new RuntimeException("Could not find context Fortran element");
+					}
+					
+					//remove to restrict variable resolution
+					//unsetOrRemove(parentElement, parentSOA, candidate);
+					
+					Object result = executeMappingQuery(query.getMapping(), contextFortranElement);
+					if (result instanceof Map) {
+						Map<Object, Map<PathExpr, String>> resultMap = (Map<Object, Map<PathExpr, String>>) result;
+						if (resultMap.size() > 0) {
+							boolean firstTime = true;
+							for (Entry<Object, Map<PathExpr, String>> resultItem : resultMap.entrySet()) {
+								
+								EObject newChild = factory.create(getEClass(soa));
+								if (isMany(soa)) {
+									throw new RuntimeException("The concept " + soa.getName() + " must be single valued in this context.");
+								}
+								setOrAdd(candidate, soa, newChild); 
+														
+								Map<PathExpr, String> bindings = resultItem.getValue();
+								if (bindings != null) {
+
+									for (Entry<PathExpr, String> binding : bindings.entrySet()) {
+										try {
+											//first time around, do not allow re-binding previously bound variables
+											if (firstTime) {
+												setValueInModel(binding.getKey(), newChild, binding.getValue(), false);
+											}
+											else {
+												//second time allow it, because we will rebind the values from the next result
+												setValueInModel(binding.getKey(), newChild, binding.getValue(), true);
+											}
+										} catch (PathExprNotFoundException e) {
+											e.printStackTrace();
+											return parentElement;
+										}
+										catch (ElementAlreadyBoundException e) {
+											e.printStackTrace();
+											//this should not happen because we allow resetting above
+											return null;
+										}
+									}
+																											
+								}
+								
+								
+								EObject newChildResult = reverse(newChild, resultItem.getKey(), getDefinition(soa));
+								if (newChildResult == null) {
+									
+									//first undo bindings
+									for (Entry<PathExpr, String> binding : bindings.entrySet()) {
+										try {
+											unsetValueInModel(binding.getKey(), newChild);
+										} catch (PathExprNotFoundException e) {
+											e.printStackTrace();
+											return parentElement;
+										}
+									}
+									
+									//remove newChild from candidate
+									unsetOrRemove(candidate, soa, newChild);																
+									
+								}
+																
+								if (newChildResult != null || !soa.isEssential()) {  //optimization
+									parentElement = reverse(parentElement, contextFortranElement, parentSOA, soaIndex+1, candidate);
+									//this call adds all candidates (if any) that match with this particular result (newChild)
+								}
+								
+								
+								firstTime = false;
+								
+								//if (removed != null) {
+								//	setOrAdd(parentElement, parentSOA, removed);  //replace with previous value, which may be a matching element
+								//}
+								
+							}
+							
+							
+							
+						}
+						else if (soa.isEssential()) {
+							return parentElement;  //unmodified
+						}
+						else {
+							parentElement = reverse(parentElement, contextFortranElement, parentSOA, soaIndex+1, candidate);
+						}
+					}
+				}
+				else {
+					//nested composite - what to do here?   maybe this is disallowed
+					throw new RuntimeException("Nested concept without mapping definition not allowed");
+				}
+			}
+			
+			if (soaIndex == 0) {
+				//remove
+				unsetOrRemove(parentElement, parentSOA, candidate);
+			}
+			
+		}
+		
+		return parentElement;	
+		
+	}
+	
+	
+	
+	private Method findQueryMethod(String methodName, Object context, EObject mapping) {
+		//Class<?> queryClass = Class.forName("org.earthsystemcurator.cupid.nuopc.fsml.util.CodeQuery2");
+		for (Method m : queryClass.getMethods()) {
+			if (m.getName().equalsIgnoreCase(methodName) && m.getParameterTypes().length >= 2) {
+				Class<?> contextClass = m.getParameterTypes()[0];
+				Class<?> mappingClass = m.getParameterTypes()[1];
+				if (contextClass.isInstance(context) &&
+					mappingClass.isInstance(mapping)) {
+					return m;
+				}
+			}
+		}
 		return null;
 	}
 	
-	protected Map<EObject, Map<EObject, Object>> findMatches(EObject parent, SubconceptOrAttribute soa) {
+	protected Object executeMappingQuery(ImplicitContextMapping query, Object fortranContextElement) {
 		
-		//START HERE - is this a good approach?
+		String queryMethodName = query.eClass().getName();
 		
-		//given current context (state of FSM), return:
-		// - keys are new matching model elements
-		// - values are maps from grandchildren elements to fortran elements
+		if (fortranContextElement != null) {
+			
+			//find method that implements code query
+			Method method = findQueryMethod(queryMethodName, fortranContextElement, query);
+			if (method == null) {
+				throw new RuntimeException("Method not found: " + queryMethodName + " : " + fortranContextElement.getClass().getName() + ", " + query.getClass().getName() );
+			}
 		
-		//result = new Map<EObject, Map<EObject, Object>>
-		//conceptDef = soa.getDef() or soa.getRef()
-		//mapping = conceptDef.getMapping()
+			try {
+				return method.invoke(null, fortranContextElement, query);
+			} catch (IllegalAccessException e) {
+				throw new RuntimeException(e);
+			} catch (InvocationTargetException e) {
+				throw new RuntimeException(e);
+			}
 		
-		//if (mapping != null)
-		//	code query to find fortran elements
-		// 	for (fortranElem : query results)
-		//		create newChildElement
-		//		??? where do we add the mapping??? here?
-		//      childMap = populate(newChildElement, conceptDef.getChildren, 0)
-		//		if (childMap==null)
-		//			--could not populate the child element (failed because of a missing essential feature)
-		//			--so skip it
-		//		else
-		//			result.put(newChildElement, childMap)
-		//
+		}
+		
+		return null;
+	}
+	
+	
+	
+	/*
+	protected class Match {
+		public Object match;	//the root of the matching subtree
+		public Object mappedTo;  //the fortran element
+		//public Map<EObject, Object> mapping;	//maps elements to their fortran constructs
+		public Map<PathExpr, String> bindings;	//bindings required for the maps when match is put into context
+		
+		
+		public Match(String match) {
+			this(match, null);
+		}
+		
+		
+		public Match(String match, Map<PathExpr, String> bindings) {
+			this.match = match;
+			this.bindings = bindings;
+		}
+		
+		public Match(EObject match, Object mappedTo, Map<PathExpr, String> bindings) {
+			this.match = match;
+			this.bindings = bindings;
+		}
+		
+		
+	}
+	*/
+	
+	
+	/*
+	@SuppressWarnings("unchecked")
+	protected Set<Match> findMatches(final EObject parent, 
+									 final SubconceptOrAttribute soa, 
+									 final Map<EObject, Object> mappings) {
+		
+		Set<Match> result = new HashSet<Match>();
+		Mapping query = getMappingQuery(soa);		
+			
+		if (query != null) {
+			
+			//replace metavariables with their values, if available
+			query.setMapping(replacePathExprWithValues(query.getMapping(), parent, true));
+			
+			Object fortranContextElement;
+			if (query.getContext() != null) {
+				//explicit context - need to navigate elsewhere in the tree
+				EObject contextElement = null;
+				try {
+					contextElement = getValueFromModel(query.getContext(), parent, true);
+				} catch (PathExprNotFoundException e) {
+					e.printStackTrace();
+				}
+				fortranContextElement = mappings.get(contextElement);
+			}
+			else {
+				//implicit context - use parent's fortran element as context
+				fortranContextElement = mappings.get(parent);
+			}
+			
+			Object queryResult = executeMappingQuery(query.getMapping(), fortranContextElement);
+				
+			if (queryResult instanceof String) {
+				result.add(new Match((String) queryResult));
+				//result.put(queryResult, null);
+			}
+			
+			/*
+			else if (method.getReturnType() == Token.class) {
+				if (result != null) {
+					//String constructor required because of IdentityHashMap
+					String text = new String(((Token)result).getText());
+					modelElem.eSet(structuralFeature, text);
+					mappingsToAdd.put(text, result);
+				}
+				else {
+					//what should we do here?
+					modelElem.eSet(structuralFeature, null);
+				}
+			}
+			
+			if (queryResult instanceof Map) {
+											
+				//do we have a set of primitives?
+				if (soa.isAttrib()) {
+					for (Entry<String, Map<PathExpr, String>> resultItem : ((Map<String, Map<PathExpr, String>>) queryResult).entrySet()) {
+						result.add(new Match(resultItem.getKey(), resultItem.getValue()));
+					}
+				}
+
+				else {
+											
+					for (Entry<Object, Map<PathExpr, String>> resultItem : 
+							((Map<Object, Map<PathExpr, String>>) queryResult).entrySet()) {
+												
+						EObject newChildElement = factory.create(getEClass(soa));
+							
+						// set up parent relationship for references (may be removed later)									
+						setOrAdd(parent, soa, newChildElement);
+						
+						//set binding in model
+						Map<PathExpr, String> undoBindings = null;
+						Map<PathExpr, String> bindings = resultItem.getValue();
+						if (bindings != null) {
+							undoBindings = new HashMap<PathExpr, String>();
+							for (Entry<PathExpr, String> binding : bindings.entrySet()) {
+								//update tree with new value from binding
+								String oldValue = null;
+								try {
+									oldValue = setValueInModel(binding.getKey(), newChildElement, binding.getValue());
+								} catch (PathExprNotFoundException e) {
+									// TODO Auto-generated catch block
+									e.printStackTrace();
+								}
+								undoBindings.put(binding.getKey(), oldValue);
+							}
+						}						
+													
+						//attempt to populate the element
+						//newChildElement = populate(newChildElement, getDefinition(soa), resultItem.getKey());
+						
+						Set<Match> submatches = findMatches(parent, getDefinition(soa), resultItem.getKey());
+						//submatches is a set of matches, m_i:
+						//  m_i.match = instance of getEClass(getDefinition(soa))
+						//  m_i.mapsTo = reference to fortran element
+						//  m_i.bindings = bindings for the match
+						
+						//for each submatch: result.add(submatch)				
+						
+							
+						//restore state
+						unsetOrRemove(parent, soa, newChildElement);								
+						if (undoBindings != null) {
+							for (Entry<PathExpr, String> binding : undoBindings.entrySet()) {
+								try {
+									setValueInModel(binding.getKey(), newChildElement, binding.getValue());
+								} catch (PathExprNotFoundException e) {
+									// TODO Auto-generated catch block
+									e.printStackTrace();
+								}
+							}
+						}	
+														
+						if (newChildElement != null) {							
+							result.add(new Match(newChildElement, resultItem.getKey(), bindings));
+						}
+						
+							
+					}
+				}
+			}
+			else {
+				throw new RuntimeException("Query returned unexpected result type: " + queryResult);
+			}
+			
+		}
+				
 		// else
 		// 		--no mapping defined
-		//		Map<EObject, Map<EObject, Object>> x = findMatches(parent, conceptDef, 0)   ??
+		//		Map<EObject, Map<EObject, Object>> subMatches = findMatches(parent, conceptDef)   
+		//		for each (subMatch : subMatches)
+		//			parent.eSet(soa, subMatch.getKey()) -- add to list (if it's a list)
+		//			result.put(subMatch.getKey, subMatch.getValue)
 		//
 		// return result
 		
+		else {
+			
+			//Map<Object, Map<EObject, Object>> submatches = findMatches(parent, getDefinition(soa));
+			//for (Entry<Object, Map<EObject, Object>> submatch : submatches.entrySet()) {
+				
+			//}
+			
+		}
+		
 		return null;
 	}
 	
-	protected Map<EObject, Map<EObject, Object>> findMatches(EObject parent, ConceptDef conceptDef, int soaIndex) {
+	protected Set<Match> findMatches(final EObject parent, final ConceptDef conceptDef, final Object fortranContext) {
+		return findMatches(parent, conceptDef, 0, fortranContext, new HashSet<Match>());
+	}	
 		
-		//note: all EObjects will be of the same type in this case
+	protected Set<Match> findMatches(final EObject parent, 
+									final ConceptDef conceptDef, 
+									final int soaIndex, 
+									final Object fortranContext, 
+									final Set<Match> result) {
+			
+		if (soaIndex > conceptDef.getChild().size()) {
+			//we have a match
+			EObject match = factory.create(getEClass(conceptDef));
+			result.add(new Match(match, fortranContext, null));
+			return result;
+		}
+		
+		else {
+			SubconceptOrAttribute soa = conceptDef.getChild().get(soaIndex);
+			Set<Match> submatches = findMatches(null, soa, null);
+		}
+		
 		
 		//if (soaIndex too big)
 		//	--this indicates success
@@ -393,6 +995,9 @@ public class FSM<RootType extends EObject> {
 		//
 		//	soa = conceptDef.getChildren.get(soaIndex)
 		//	Map<EObject, Map<EObject, Object> matches = findMatches(parent, soa)
+		//			-- returned keys are of type getEClass(definition(soa))
+		//			-- returned values are mappings from grandchild elements to fortran elements
+		//
 		//	if (no matches and essential)
 		//		return empty map
 		// 	else if (there are matches)
@@ -404,12 +1009,43 @@ public class FSM<RootType extends EObject> {
 		return null;
 	}
 	
-	protected Map<EObject, Object> populate(EObject self, List<SubconceptOrAttribute> soaList, int soaIndex) {
+	protected EObject populate(final EObject self, final ConceptDef conceptDef, final Object fortranContext) {
+		return populate(self, conceptDef, 0, fortranContext);
+	}
+	*/
+	
+	/**
+	 * Attempt to populate (assign values to structural features) an EObject (self) using
+	 * a list of subconcepts which correspond to self's structural features.
+	 * 
+	 * The parameter soaIndex is an index into soaList and represents the current feature 
+	 * being populated.
+	 * 	  
+	 * If self could be populated, it is returned with its feature values set.
+	 * 
+	 * If self could not be populated (because at least one essential feature failed to 
+	 * match), null is returned.
+	 * 
+	 * @param self the EObject to populate
+	 * @param conceptDef the definition to use to populate self
+	 * @param soaIndex index into soaList
+	 * @param fortranContext the previously established fortran context element that self maps to
+	 * @return
+	 */
+	/*
+	protected EObject populate(final EObject self, 
+							   final ConceptDef conceptDef, 
+							   final int soaIndex, 
+							   final Object fortranContext) {
 		
-		//Map<EObject, Object> resultToReturn
-		
+		/*
 		//if (soaIndex > soaList.size()-1)
-		//  we made it to end, so return self
+		//  we made it to end, so return mappings
+		
+		//TODO: check is soaList is null?
+		if (soaIndex > conceptDef.getChild().size() - 1) {
+			return fortranContext;
+		}
 		
 		//else
 			//soa = soaList.get(soaIndex)
@@ -418,18 +1054,125 @@ public class FSM<RootType extends EObject> {
 			//   return null - indicates that self cannot be populated
 			//else if (there are matches)
 		    //	for (match : matches)
-			//		self.eSet(soa, match)
+			//		self.eSet(soa, match) -- setOrAdd
 			//		Map<EObject, Object> resultOfRest = populate(self, soaList, soaIndex+1)
 			//		if (resultOfRest != null)
 			//			-- this means that this combination matched
-			//			resultToReturn.addAll(resultOfRest)
+			//			mappings.addAll(resultOfRest)
 			//		else
+			//			self.eUnset(soa, null) -- unsetOrRemove
 			//			--no matches, but not essential, so just iterate
+		
+		else {
+			
+			SubconceptOrAttribute soa = conceptDef.get(soaIndex);
+			
+			//find matches for current feature
+			Map<Object, Map<EObject, Object>> matches = findMatches(self, soa, fortranContext);
+			if (matches.size() == 0 && soa.isEssential()) {
+				//an essential feature failed to match, so return null
+				return null;
+			}
+			else if (matches.size() > 0) {
+				for (Entry<Object, Map<EObject, Object>> match : matches.entrySet()) {
+					
+					setOrAdd(self, soa, match.getKey());
+					fortranContext.putAll(match.getValue());
+					Map<EObject, Object> resultOfRest = populate(self, conceptDef, soaIndex + 1, fortranContext);
+					
+					if (resultOfRest != null) {
+						//population of all next sibling features succeeded, so keep this match
+						if (!isMany(soa)) {
+							//only room for one match, so break
+							System.out.println("populate - Ignored some potential matches");
+							break;
+						}
+					}
+					else {
+						//population of next sibling features failed, so remove this match
+						unsetOrRemove(self, soa, match.getKey());
+						removeAll(match.getValue().keySet(), fortranContext);
+					}
+					
+				}
+			}
+ 		}
+		
+		return fortranContext;
 		
 		return null;
 	}
+	*/
+	
+	/**
+	 * Returns a copy of the mapping query that can be manipulated without
+	 * changing the original.
+	 * 
+	 * @param soa
+	 * @return
+	 */
+	protected Mapping getMappingQuery(SubconceptOrAttribute soa) {
+		Mapping m = null;
+		if (soa.isAttrib()) {
+			m = soa.getAttribMapping();
+		}
+		else if (soa.isReference()) {
+			m = soa.getRef().getMapping();
+		}
+		else {
+			m = soa.getDef().getMapping();
+		}
+		if (m!=null) return EcoreUtil.copy(m);
+		else return null;
+	}
 	
 	
+	protected boolean isMany(SubconceptOrAttribute soa) {
+		if (soa.getCardinality() == null) return false;
+		else return soa.getCardinality().isOneOrMore() || soa.getCardinality().isZeroOrMore();
+	}
+	
+	protected <K> void removeAll(Set<K> keys, Map<K,?> map) {
+		for (K key : keys) {
+			map.remove(key);
+		}
+	}
+	
+	/**
+	 * Sets or adds an object at a structural feature.  If an object is removed
+	 * in the process, it is returned.
+	 * 
+	 * @param o
+	 * @param soa
+	 * @param value
+	 * @return
+	 */
+	protected Object setOrAdd(EObject o, SubconceptOrAttribute soa, Object value) {
+		EStructuralFeature esf = getEStructuralFeature(soa);
+		if (esf.isMany()) {
+			EList el = (EList) o.eGet(esf);
+			el.add(value);
+			return null;
+		}
+		else {
+			Object oldValue = o.eGet(esf);
+			o.eSet(esf, value);
+			return oldValue;
+		}
+	}
+	
+	protected void unsetOrRemove(EObject o, SubconceptOrAttribute soa, Object value) {
+		EStructuralFeature esf = getEStructuralFeature(soa);
+		if (esf.isMany()) {
+			EList el = (EList) o.eGet(esf);
+			el.remove(value);
+		}
+		else {
+			if (o.eGet(esf)==value) {
+				o.eUnset(esf);
+			}
+		}
+	}
 	
 	//protected void reverse(Object fortranContextElement, ConceptDef conceptDef) {
 		
@@ -480,7 +1223,18 @@ public class FSM<RootType extends EObject> {
 	
 	public EClass getEClass(ConceptDef cd) {
 		String eclassName = generator.toClassName(cd);
-		return (EClass) pack.getEClassifier(eclassName);
+		EClass result = (EClass) pack.getEClassifier(eclassName);
+		return result;
+	}
+	
+	public EClass getEClass(SubconceptOrAttribute soa) {
+		return getEClass(getDefinition(soa));
+	}
+	
+	public ConceptDef getDefinition(SubconceptOrAttribute soa) {
+		if (soa.isAttrib()) return null;
+		else if (soa.isReference()) return soa.getRef();
+		else return soa.getDef();
 	}
 	
 	public ConceptDef getTopConceptDef() {
@@ -573,11 +1327,11 @@ public class FSM<RootType extends EObject> {
 		return false;
 	}
 
-	private List<PathExprTerm> linearizePathExpr(PathExpr pathExpr) {
+	public static List<PathExprTerm> linearizePathExpr(PathExpr pathExpr) {
 		return linearizePathExpr(pathExpr, new ArrayList<PathExprTerm>());
 	}
 	
-	private List<PathExprTerm> linearizePathExpr(PathExpr pathExpr, List<PathExprTerm> segments) {
+	private static List<PathExprTerm> linearizePathExpr(PathExpr pathExpr, List<PathExprTerm> segments) {
 		
 		if (pathExpr instanceof PathExprTerm) {
 			PathExprTerm pet = CupidLanguageFactory.eINSTANCE.createPathExprTerm();
@@ -597,8 +1351,9 @@ public class FSM<RootType extends EObject> {
 		
 	}
 	
+	
 	@SuppressWarnings("unchecked")
-	public <T> T getValueFromModel(PathExpr pathExpr, EObject modelElem, boolean isParent, T defaultVal) {
+	public <T> T getValueFromModel(PathExpr pathExpr, EObject modelElem, boolean isParent) throws PathExprNotFoundException {
 		
 		List<PathExprTerm> segments = linearizePathExpr(pathExpr);
 		PathExprTerm firstSegment = segments.get(0);
@@ -607,13 +1362,15 @@ public class FSM<RootType extends EObject> {
 		//cannot axis direct children from parent
 		//this is the point in the reverse engineering algorithm when we have not yet created the child nodes
 		if (isParent && (firstSegment.getAxis() == null || !firstSegment.getAxis().isAncestor())) {
-			return defaultVal;
+			//return defaultVal;
+			throw new PathExprNotFoundException(pathExpr);
 		}
 		
 		EObject context = modelElem;
 		
 		for (PathExprTerm pet : segments) {
 			EStructuralFeature esf = getEStructuralFeature(pet.getRef());
+			//todo: deal with multi-valued features
 			if (pet.getAxis()!= null && pet.getAxis().isAncestor()) {
 				
 				//work up the class hierarchy
@@ -626,8 +1383,9 @@ public class FSM<RootType extends EObject> {
 				}
 				
 				if (context==null) {
-					System.out.println("getValueFromModel: Value of pathExpr not found.  Ancestor not found: " + pet.getRef().getName());
-					return defaultVal;
+					//System.out.println("getValueFromModel: Value of pathExpr not found.  Ancestor not found: " + pet.getRef().getName());
+					//return defaultVal;
+					throw new PathExprNotFoundException(pathExpr);
 				}
 				else if (pet.equals(lastSegment)) {
 					return (T) context.eGet(esf);
@@ -639,12 +1397,16 @@ public class FSM<RootType extends EObject> {
 				
 			}
 			else if (pet == lastSegment) {
+				if (context == null) {
+					throw new PathExprNotFoundException(pathExpr);
+				}
 				if (context.eClass().getEStructuralFeatures().contains(esf)) {
 					return (T) context.eGet(esf);
 				}
 				else {
 					//System.out.println("getValueFromModel: Value of pathExpr not found.  Feature not found: " + pet.getRef().getName());
-					throw new RuntimeException("Invalid PathExpr.  Feature not found: " + pet.getRef().getName());
+					//throw new RuntimeException("Invalid PathExpr.  Feature not found: " + pet.getRef().getName());
+					throw new PathExprNotFoundException(pathExpr);
 				}
 			}
 			else {
@@ -654,12 +1416,78 @@ public class FSM<RootType extends EObject> {
 			}
 		}
 		
-		throw new RuntimeException("getValueFromModel returned before finding element specified in PathExpr");
-		
+		//throw new RuntimeException("getValueFromModel returned before finding element specified in PathExpr");
+		throw new PathExprNotFoundException(pathExpr);
 	}
 	
 	
-	public String setValueInModel(PathExpr pathExpr, EObject modelElem, String value) {
+	public void unsetValueInModel(PathExpr pathExpr, EObject modelElem) 
+			throws PathExprNotFoundException {
+		
+		List<PathExprTerm> segments = linearizePathExpr(pathExpr);
+		PathExprTerm lastSegment = segments.get(segments.size()-1);					
+		
+		EObject context = modelElem;
+		
+		for (PathExprTerm pet : segments) {
+			EStructuralFeature esf = getEStructuralFeature(pet.getRef());
+			if (pet.getAxis()!= null && pet.getAxis().isAncestor()) {
+				
+				//start with first ancestor
+				context = context.eContainer();
+				
+				while (context != null && !context.eClass().getEStructuralFeatures().contains(esf)) {
+					context = context.eContainer();
+				}
+				
+				if (context==null) {
+					throw new PathExprNotFoundException(pathExpr);
+				}
+				else if (pet.equals(lastSegment)) {
+					context.eUnset(esf); 
+					return;
+				}
+				else {
+					//set the context and iterate to next segment
+					context = (EObject) context.eGet(esf);
+				}
+				
+			}
+			else if (pet == lastSegment) {
+				if (context == null) {
+					throw new PathExprNotFoundException(pathExpr);
+				}
+				if (context.eClass().getEStructuralFeatures().contains(esf)) {
+					context.eUnset(esf); 
+					return;
+				}
+				else {
+					//System.out.println("getValueFromModel: Value of pathExpr not found.  Feature not found: " + pet.getRef().getName());
+					//throw new RuntimeException("setValueInModel: Invalid PathExpr.  Feature not found: " + pet.getRef().getName());
+					throw new PathExprNotFoundException(pathExpr);
+				}
+			}
+			else {
+				//not last segment
+				//child
+				context = (EObject) context.eGet(esf);  //assumes single value
+			}
+		}
+		
+		throw new PathExprNotFoundException(pathExpr);
+		
+		//throw new RuntimeException("setValueInModel returned before setting element specified in PathExpr");
+		
+		
+	}
+	
+	public void setValueInModel(PathExpr pathExpr, EObject modelElem, String value) 
+			throws PathExprNotFoundException, ElementAlreadyBoundException {
+		setValueInModel(pathExpr, modelElem, value, false);
+	}
+	
+	public void setValueInModel(PathExpr pathExpr, EObject modelElem, String value, boolean allowReset) 
+			throws PathExprNotFoundException, ElementAlreadyBoundException {
 		
 		List<PathExprTerm> segments = linearizePathExpr(pathExpr);
 		//PathExprTerm firstSegment = segments.get(0);
@@ -679,13 +1507,18 @@ public class FSM<RootType extends EObject> {
 				}
 				
 				if (context==null) {
-					//System.out.println("getValueFromModel: Value of pathExpr not found.  Ancestor not found: " + pet.getRef().getName());
-					return null;
+					throw new PathExprNotFoundException(pathExpr);
 				}
 				else if (pet.equals(lastSegment)) {
 					String oldValue = (String) context.eGet(esf);
-					context.eSet(esf, value); //assumes single valued structural feature
-					return oldValue; 
+					if (!allowReset && oldValue != null) {
+						throw new ElementAlreadyBoundException(pathExpr);
+					}
+					else {
+						context.eSet(esf, value); //assumes single valued structural feature
+						return;
+					}
+					//return oldValue; 
 				}
 				else {
 					//set the context and iterate to next segment
@@ -694,14 +1527,23 @@ public class FSM<RootType extends EObject> {
 				
 			}
 			else if (pet == lastSegment) {
+				if (context == null) {
+					throw new PathExprNotFoundException(pathExpr);
+				}
 				if (context.eClass().getEStructuralFeatures().contains(esf)) {
 					String oldValue = (String) context.eGet(esf);
-					context.eSet(esf, value);
-					return oldValue; //assumes single valued structural feature
+					if (!allowReset && oldValue != null) {
+						throw new ElementAlreadyBoundException(pathExpr);
+					}
+					else {
+						context.eSet(esf, value); //assumes single valued structural feature
+						return;
+					}
 				}
 				else {
 					//System.out.println("getValueFromModel: Value of pathExpr not found.  Feature not found: " + pet.getRef().getName());
-					throw new RuntimeException("setValueInModel: Invalid PathExpr.  Feature not found: " + pet.getRef().getName());
+					//throw new RuntimeException("setValueInModel: Invalid PathExpr.  Feature not found: " + pet.getRef().getName());
+					throw new PathExprNotFoundException(pathExpr);
 				}
 			}
 			else {
@@ -711,7 +1553,9 @@ public class FSM<RootType extends EObject> {
 			}
 		}
 		
-		throw new RuntimeException("setValueInModel returned before setting element specified in PathExpr");
+		throw new PathExprNotFoundException(pathExpr);
+		
+		//throw new RuntimeException("setValueInModel returned before setting element specified in PathExpr");
 		
 	}
 	
@@ -802,15 +1646,20 @@ public class FSM<RootType extends EObject> {
 			return null;
 		}
 		else if (mappingElement instanceof PathExpr) {
-			Object replaceVal = getValueFromModel((PathExpr) mappingElement, context, isParent, null);
-			if (replaceVal != null) {
-				if (!(replaceVal instanceof String)) {
-					throw new RuntimeException("Expecting value of type String from model.  Object returned is: " + replaceVal);
+			try {
+				Object replaceVal = getValueFromModel((PathExpr) mappingElement, context, isParent);
+				if (replaceVal != null) {
+					if (!(replaceVal instanceof String)) {
+						throw new RuntimeException("Expecting value of type String from model.  Object returned is: " + replaceVal);
+					}
+					IDOrWildcard replaceValObj = CupidLanguageFactory.eINSTANCE.createIDOrWildcard();
+					replaceValObj.setId((String) replaceVal);
+					return (T) replaceValObj;
 				}
-				IDOrWildcard replaceValObj = CupidLanguageFactory.eINSTANCE.createIDOrWildcard();
-				replaceValObj.setId((String) replaceVal);
-				return (T) replaceValObj;
-			}			
+			} catch (PathExprNotFoundException e) {
+				//do not replace
+			}
+				
 		}
 		else {
 			for (EReference ref : mappingElement.eClass().getEReferences()) {
@@ -834,10 +1683,13 @@ public class FSM<RootType extends EObject> {
 	public IFortranAST getASTForElement(EObject eobj) {
 		
 		while (eobj != null) {
-			if (getMappings().get(eobj) instanceof IFortranAST) {
-				return (IFortranAST) getMappings().get(eobj);
+			if (getMapsTo(eobj) instanceof IFortranAST) {
+				return (IFortranAST) getMapsTo(eobj);
 			}
-			eobj = eobj.eContainer();
+			//if (getMappings().get(eobj) instanceof IFortranAST) {
+			//	return (IFortranAST) getMappings().get(eobj);
+			//}
+			eobj =  eobj.eContainer();
 		}
 		return null;
 		

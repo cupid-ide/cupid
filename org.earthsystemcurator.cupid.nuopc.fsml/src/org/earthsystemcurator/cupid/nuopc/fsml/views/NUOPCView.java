@@ -196,7 +196,7 @@ public class NUOPCView extends ViewPart {
 				
 				if (me.elem != null) {
 					//Object val = contentProvider.getReverseMappings().get(me.elem);
-					Object val = contentProvider.getCurrentFSM().getMappings().get(me.elem);
+					Object val = contentProvider.getCurrentFSM().getMapsTo(me.elem);
 					
 					if (val != null) {
 												
@@ -216,11 +216,14 @@ public class NUOPCView extends ViewPart {
 							marker = createMarker(((ASTNode) val).findFirstToken());
 						}
 					}
+					else {
+						System.out.println("No mapping found for element: " + me.elem);
+					}
 				}
 				//try to match on nameLabel using object identity 
 				else if (me.nameLabel != null) {
 					//Object val = contentProvider.getReverseMappings().get(me.nameLabel);
-					Object val = contentProvider.getCurrentFSM().getMappings().get(me.nameLabel);
+					Object val = null; //contentProvider.getCurrentFSM().getMappings().get(me.nameLabel);
 					if (val != null && val instanceof Token) {
 						marker = createMarker((Token) val);
 					}

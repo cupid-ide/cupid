@@ -1363,4 +1363,10 @@
       </eAnnotations>
     </eStructuralFeatures>
   </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="MappedElement">
+    <eTypeParameters name="M"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="mapsTo">
+      <eGenericType eTypeParameter="#//MappedElement/M"/>
+    </eStructuralFeatures>
+  </eClassifiers>
 </ecore:EPackage>

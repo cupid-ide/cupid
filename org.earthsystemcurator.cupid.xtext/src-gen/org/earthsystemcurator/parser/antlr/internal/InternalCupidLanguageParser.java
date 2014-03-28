@@ -4866,28 +4866,23 @@ public class InternalCupidLanguageParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "ruleActualParamByKeyword"
-    // ../org.earthsystemcurator.cupid.xtext/src-gen/org/earthsystemcurator/parser/antlr/internal/InternalCupidLanguage.g:1942:1: ruleActualParamByKeyword returns [EObject current=null] : (otherlv_0= 'actualParamByKeyword' otherlv_1= '(' ( (lv_keyword_2_0= ruleIDOrPathExpr ) ) otherlv_3= '(' ( (lv_value_4_0= ruleIDOrPathExpr ) ) otherlv_5= ')' otherlv_6= ')' ) ;
+    // ../org.earthsystemcurator.cupid.xtext/src-gen/org/earthsystemcurator/parser/antlr/internal/InternalCupidLanguage.g:1942:1: ruleActualParamByKeyword returns [EObject current=null] : (otherlv_0= 'actualParamByKeyword' otherlv_1= '(' ( (lv_keyword_2_0= RULE_ID ) ) otherlv_3= ')' ) ;
     public final EObject ruleActualParamByKeyword() throws RecognitionException {
         EObject current = null;
 
         Token otherlv_0=null;
         Token otherlv_1=null;
+        Token lv_keyword_2_0=null;
         Token otherlv_3=null;
-        Token otherlv_5=null;
-        Token otherlv_6=null;
-        EObject lv_keyword_2_0 = null;
-
-        EObject lv_value_4_0 = null;
-
 
          enterRule(); 
             
         try {
-            // ../org.earthsystemcurator.cupid.xtext/src-gen/org/earthsystemcurator/parser/antlr/internal/InternalCupidLanguage.g:1945:28: ( (otherlv_0= 'actualParamByKeyword' otherlv_1= '(' ( (lv_keyword_2_0= ruleIDOrPathExpr ) ) otherlv_3= '(' ( (lv_value_4_0= ruleIDOrPathExpr ) ) otherlv_5= ')' otherlv_6= ')' ) )
-            // ../org.earthsystemcurator.cupid.xtext/src-gen/org/earthsystemcurator/parser/antlr/internal/InternalCupidLanguage.g:1946:1: (otherlv_0= 'actualParamByKeyword' otherlv_1= '(' ( (lv_keyword_2_0= ruleIDOrPathExpr ) ) otherlv_3= '(' ( (lv_value_4_0= ruleIDOrPathExpr ) ) otherlv_5= ')' otherlv_6= ')' )
+            // ../org.earthsystemcurator.cupid.xtext/src-gen/org/earthsystemcurator/parser/antlr/internal/InternalCupidLanguage.g:1945:28: ( (otherlv_0= 'actualParamByKeyword' otherlv_1= '(' ( (lv_keyword_2_0= RULE_ID ) ) otherlv_3= ')' ) )
+            // ../org.earthsystemcurator.cupid.xtext/src-gen/org/earthsystemcurator/parser/antlr/internal/InternalCupidLanguage.g:1946:1: (otherlv_0= 'actualParamByKeyword' otherlv_1= '(' ( (lv_keyword_2_0= RULE_ID ) ) otherlv_3= ')' )
             {
-            // ../org.earthsystemcurator.cupid.xtext/src-gen/org/earthsystemcurator/parser/antlr/internal/InternalCupidLanguage.g:1946:1: (otherlv_0= 'actualParamByKeyword' otherlv_1= '(' ( (lv_keyword_2_0= ruleIDOrPathExpr ) ) otherlv_3= '(' ( (lv_value_4_0= ruleIDOrPathExpr ) ) otherlv_5= ')' otherlv_6= ')' )
-            // ../org.earthsystemcurator.cupid.xtext/src-gen/org/earthsystemcurator/parser/antlr/internal/InternalCupidLanguage.g:1946:3: otherlv_0= 'actualParamByKeyword' otherlv_1= '(' ( (lv_keyword_2_0= ruleIDOrPathExpr ) ) otherlv_3= '(' ( (lv_value_4_0= ruleIDOrPathExpr ) ) otherlv_5= ')' otherlv_6= ')'
+            // ../org.earthsystemcurator.cupid.xtext/src-gen/org/earthsystemcurator/parser/antlr/internal/InternalCupidLanguage.g:1946:1: (otherlv_0= 'actualParamByKeyword' otherlv_1= '(' ( (lv_keyword_2_0= RULE_ID ) ) otherlv_3= ')' )
+            // ../org.earthsystemcurator.cupid.xtext/src-gen/org/earthsystemcurator/parser/antlr/internal/InternalCupidLanguage.g:1946:3: otherlv_0= 'actualParamByKeyword' otherlv_1= '(' ( (lv_keyword_2_0= RULE_ID ) ) otherlv_3= ')'
             {
             otherlv_0=(Token)match(input,46,FOLLOW_46_in_ruleActualParamByKeyword4241); 
 
@@ -4897,30 +4892,25 @@ public class InternalCupidLanguageParser extends AbstractInternalAntlrParser {
 
                 	newLeafNode(otherlv_1, grammarAccess.getActualParamByKeywordAccess().getLeftParenthesisKeyword_1());
                 
-            // ../org.earthsystemcurator.cupid.xtext/src-gen/org/earthsystemcurator/parser/antlr/internal/InternalCupidLanguage.g:1954:1: ( (lv_keyword_2_0= ruleIDOrPathExpr ) )
-            // ../org.earthsystemcurator.cupid.xtext/src-gen/org/earthsystemcurator/parser/antlr/internal/InternalCupidLanguage.g:1955:1: (lv_keyword_2_0= ruleIDOrPathExpr )
+            // ../org.earthsystemcurator.cupid.xtext/src-gen/org/earthsystemcurator/parser/antlr/internal/InternalCupidLanguage.g:1954:1: ( (lv_keyword_2_0= RULE_ID ) )
+            // ../org.earthsystemcurator.cupid.xtext/src-gen/org/earthsystemcurator/parser/antlr/internal/InternalCupidLanguage.g:1955:1: (lv_keyword_2_0= RULE_ID )
             {
-            // ../org.earthsystemcurator.cupid.xtext/src-gen/org/earthsystemcurator/parser/antlr/internal/InternalCupidLanguage.g:1955:1: (lv_keyword_2_0= ruleIDOrPathExpr )
-            // ../org.earthsystemcurator.cupid.xtext/src-gen/org/earthsystemcurator/parser/antlr/internal/InternalCupidLanguage.g:1956:3: lv_keyword_2_0= ruleIDOrPathExpr
+            // ../org.earthsystemcurator.cupid.xtext/src-gen/org/earthsystemcurator/parser/antlr/internal/InternalCupidLanguage.g:1955:1: (lv_keyword_2_0= RULE_ID )
+            // ../org.earthsystemcurator.cupid.xtext/src-gen/org/earthsystemcurator/parser/antlr/internal/InternalCupidLanguage.g:1956:3: lv_keyword_2_0= RULE_ID
             {
-             
-            	        newCompositeNode(grammarAccess.getActualParamByKeywordAccess().getKeywordIDOrPathExprParserRuleCall_2_0()); 
-            	    
-            pushFollow(FOLLOW_ruleIDOrPathExpr_in_ruleActualParamByKeyword4274);
-            lv_keyword_2_0=ruleIDOrPathExpr();
+            lv_keyword_2_0=(Token)match(input,RULE_ID,FOLLOW_RULE_ID_in_ruleActualParamByKeyword4270); 
 
-            state._fsp--;
-
+            			newLeafNode(lv_keyword_2_0, grammarAccess.getActualParamByKeywordAccess().getKeywordIDTerminalRuleCall_2_0()); 
+            		
 
             	        if (current==null) {
-            	            current = createModelElementForParent(grammarAccess.getActualParamByKeywordRule());
+            	            current = createModelElement(grammarAccess.getActualParamByKeywordRule());
             	        }
-                   		set(
+                   		setWithLastConsumed(
                    			current, 
                    			"keyword",
                     		lv_keyword_2_0, 
-                    		"IDOrPathExpr");
-            	        afterParserOrEnumRuleCall();
+                    		"ID");
             	    
 
             }
@@ -4928,48 +4918,9 @@ public class InternalCupidLanguageParser extends AbstractInternalAntlrParser {
 
             }
 
-            otherlv_3=(Token)match(input,26,FOLLOW_26_in_ruleActualParamByKeyword4286); 
+            otherlv_3=(Token)match(input,27,FOLLOW_27_in_ruleActualParamByKeyword4287); 
 
-                	newLeafNode(otherlv_3, grammarAccess.getActualParamByKeywordAccess().getLeftParenthesisKeyword_3());
-                
-            // ../org.earthsystemcurator.cupid.xtext/src-gen/org/earthsystemcurator/parser/antlr/internal/InternalCupidLanguage.g:1976:1: ( (lv_value_4_0= ruleIDOrPathExpr ) )
-            // ../org.earthsystemcurator.cupid.xtext/src-gen/org/earthsystemcurator/parser/antlr/internal/InternalCupidLanguage.g:1977:1: (lv_value_4_0= ruleIDOrPathExpr )
-            {
-            // ../org.earthsystemcurator.cupid.xtext/src-gen/org/earthsystemcurator/parser/antlr/internal/InternalCupidLanguage.g:1977:1: (lv_value_4_0= ruleIDOrPathExpr )
-            // ../org.earthsystemcurator.cupid.xtext/src-gen/org/earthsystemcurator/parser/antlr/internal/InternalCupidLanguage.g:1978:3: lv_value_4_0= ruleIDOrPathExpr
-            {
-             
-            	        newCompositeNode(grammarAccess.getActualParamByKeywordAccess().getValueIDOrPathExprParserRuleCall_4_0()); 
-            	    
-            pushFollow(FOLLOW_ruleIDOrPathExpr_in_ruleActualParamByKeyword4307);
-            lv_value_4_0=ruleIDOrPathExpr();
-
-            state._fsp--;
-
-
-            	        if (current==null) {
-            	            current = createModelElementForParent(grammarAccess.getActualParamByKeywordRule());
-            	        }
-                   		set(
-                   			current, 
-                   			"value",
-                    		lv_value_4_0, 
-                    		"IDOrPathExpr");
-            	        afterParserOrEnumRuleCall();
-            	    
-
-            }
-
-
-            }
-
-            otherlv_5=(Token)match(input,27,FOLLOW_27_in_ruleActualParamByKeyword4319); 
-
-                	newLeafNode(otherlv_5, grammarAccess.getActualParamByKeywordAccess().getRightParenthesisKeyword_5());
-                
-            otherlv_6=(Token)match(input,27,FOLLOW_27_in_ruleActualParamByKeyword4331); 
-
-                	newLeafNode(otherlv_6, grammarAccess.getActualParamByKeywordAccess().getRightParenthesisKeyword_6());
+                	newLeafNode(otherlv_3, grammarAccess.getActualParamByKeywordAccess().getRightParenthesisKeyword_3());
                 
 
             }
@@ -4992,7 +4943,7 @@ public class InternalCupidLanguageParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "entryRuleIDOrWildcard"
-    // ../org.earthsystemcurator.cupid.xtext/src-gen/org/earthsystemcurator/parser/antlr/internal/InternalCupidLanguage.g:2010:1: entryRuleIDOrWildcard returns [EObject current=null] : iv_ruleIDOrWildcard= ruleIDOrWildcard EOF ;
+    // ../org.earthsystemcurator.cupid.xtext/src-gen/org/earthsystemcurator/parser/antlr/internal/InternalCupidLanguage.g:1984:1: entryRuleIDOrWildcard returns [EObject current=null] : iv_ruleIDOrWildcard= ruleIDOrWildcard EOF ;
     public final EObject entryRuleIDOrWildcard() throws RecognitionException {
         EObject current = null;
 
@@ -5000,17 +4951,17 @@ public class InternalCupidLanguageParser extends AbstractInternalAntlrParser {
 
 
         try {
-            // ../org.earthsystemcurator.cupid.xtext/src-gen/org/earthsystemcurator/parser/antlr/internal/InternalCupidLanguage.g:2011:2: (iv_ruleIDOrWildcard= ruleIDOrWildcard EOF )
-            // ../org.earthsystemcurator.cupid.xtext/src-gen/org/earthsystemcurator/parser/antlr/internal/InternalCupidLanguage.g:2012:2: iv_ruleIDOrWildcard= ruleIDOrWildcard EOF
+            // ../org.earthsystemcurator.cupid.xtext/src-gen/org/earthsystemcurator/parser/antlr/internal/InternalCupidLanguage.g:1985:2: (iv_ruleIDOrWildcard= ruleIDOrWildcard EOF )
+            // ../org.earthsystemcurator.cupid.xtext/src-gen/org/earthsystemcurator/parser/antlr/internal/InternalCupidLanguage.g:1986:2: iv_ruleIDOrWildcard= ruleIDOrWildcard EOF
             {
              newCompositeNode(grammarAccess.getIDOrWildcardRule()); 
-            pushFollow(FOLLOW_ruleIDOrWildcard_in_entryRuleIDOrWildcard4367);
+            pushFollow(FOLLOW_ruleIDOrWildcard_in_entryRuleIDOrWildcard4323);
             iv_ruleIDOrWildcard=ruleIDOrWildcard();
 
             state._fsp--;
 
              current =iv_ruleIDOrWildcard; 
-            match(input,EOF,FOLLOW_EOF_in_entryRuleIDOrWildcard4377); 
+            match(input,EOF,FOLLOW_EOF_in_entryRuleIDOrWildcard4333); 
 
             }
 
@@ -5028,7 +4979,7 @@ public class InternalCupidLanguageParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "ruleIDOrWildcard"
-    // ../org.earthsystemcurator.cupid.xtext/src-gen/org/earthsystemcurator/parser/antlr/internal/InternalCupidLanguage.g:2019:1: ruleIDOrWildcard returns [EObject current=null] : ( ( (lv_id_0_0= RULE_ID ) ) | ( (lv_wildcard_1_0= '*' ) ) ) ;
+    // ../org.earthsystemcurator.cupid.xtext/src-gen/org/earthsystemcurator/parser/antlr/internal/InternalCupidLanguage.g:1993:1: ruleIDOrWildcard returns [EObject current=null] : ( ( (lv_id_0_0= RULE_ID ) ) | ( (lv_wildcard_1_0= '*' ) ) ) ;
     public final EObject ruleIDOrWildcard() throws RecognitionException {
         EObject current = null;
 
@@ -5038,10 +4989,10 @@ public class InternalCupidLanguageParser extends AbstractInternalAntlrParser {
          enterRule(); 
             
         try {
-            // ../org.earthsystemcurator.cupid.xtext/src-gen/org/earthsystemcurator/parser/antlr/internal/InternalCupidLanguage.g:2022:28: ( ( ( (lv_id_0_0= RULE_ID ) ) | ( (lv_wildcard_1_0= '*' ) ) ) )
-            // ../org.earthsystemcurator.cupid.xtext/src-gen/org/earthsystemcurator/parser/antlr/internal/InternalCupidLanguage.g:2023:1: ( ( (lv_id_0_0= RULE_ID ) ) | ( (lv_wildcard_1_0= '*' ) ) )
+            // ../org.earthsystemcurator.cupid.xtext/src-gen/org/earthsystemcurator/parser/antlr/internal/InternalCupidLanguage.g:1996:28: ( ( ( (lv_id_0_0= RULE_ID ) ) | ( (lv_wildcard_1_0= '*' ) ) ) )
+            // ../org.earthsystemcurator.cupid.xtext/src-gen/org/earthsystemcurator/parser/antlr/internal/InternalCupidLanguage.g:1997:1: ( ( (lv_id_0_0= RULE_ID ) ) | ( (lv_wildcard_1_0= '*' ) ) )
             {
-            // ../org.earthsystemcurator.cupid.xtext/src-gen/org/earthsystemcurator/parser/antlr/internal/InternalCupidLanguage.g:2023:1: ( ( (lv_id_0_0= RULE_ID ) ) | ( (lv_wildcard_1_0= '*' ) ) )
+            // ../org.earthsystemcurator.cupid.xtext/src-gen/org/earthsystemcurator/parser/antlr/internal/InternalCupidLanguage.g:1997:1: ( ( (lv_id_0_0= RULE_ID ) ) | ( (lv_wildcard_1_0= '*' ) ) )
             int alt41=2;
             int LA41_0 = input.LA(1);
 
@@ -5059,15 +5010,15 @@ public class InternalCupidLanguageParser extends AbstractInternalAntlrParser {
             }
             switch (alt41) {
                 case 1 :
-                    // ../org.earthsystemcurator.cupid.xtext/src-gen/org/earthsystemcurator/parser/antlr/internal/InternalCupidLanguage.g:2023:2: ( (lv_id_0_0= RULE_ID ) )
+                    // ../org.earthsystemcurator.cupid.xtext/src-gen/org/earthsystemcurator/parser/antlr/internal/InternalCupidLanguage.g:1997:2: ( (lv_id_0_0= RULE_ID ) )
                     {
-                    // ../org.earthsystemcurator.cupid.xtext/src-gen/org/earthsystemcurator/parser/antlr/internal/InternalCupidLanguage.g:2023:2: ( (lv_id_0_0= RULE_ID ) )
-                    // ../org.earthsystemcurator.cupid.xtext/src-gen/org/earthsystemcurator/parser/antlr/internal/InternalCupidLanguage.g:2024:1: (lv_id_0_0= RULE_ID )
+                    // ../org.earthsystemcurator.cupid.xtext/src-gen/org/earthsystemcurator/parser/antlr/internal/InternalCupidLanguage.g:1997:2: ( (lv_id_0_0= RULE_ID ) )
+                    // ../org.earthsystemcurator.cupid.xtext/src-gen/org/earthsystemcurator/parser/antlr/internal/InternalCupidLanguage.g:1998:1: (lv_id_0_0= RULE_ID )
                     {
-                    // ../org.earthsystemcurator.cupid.xtext/src-gen/org/earthsystemcurator/parser/antlr/internal/InternalCupidLanguage.g:2024:1: (lv_id_0_0= RULE_ID )
-                    // ../org.earthsystemcurator.cupid.xtext/src-gen/org/earthsystemcurator/parser/antlr/internal/InternalCupidLanguage.g:2025:3: lv_id_0_0= RULE_ID
+                    // ../org.earthsystemcurator.cupid.xtext/src-gen/org/earthsystemcurator/parser/antlr/internal/InternalCupidLanguage.g:1998:1: (lv_id_0_0= RULE_ID )
+                    // ../org.earthsystemcurator.cupid.xtext/src-gen/org/earthsystemcurator/parser/antlr/internal/InternalCupidLanguage.g:1999:3: lv_id_0_0= RULE_ID
                     {
-                    lv_id_0_0=(Token)match(input,RULE_ID,FOLLOW_RULE_ID_in_ruleIDOrWildcard4419); 
+                    lv_id_0_0=(Token)match(input,RULE_ID,FOLLOW_RULE_ID_in_ruleIDOrWildcard4375); 
 
                     			newLeafNode(lv_id_0_0, grammarAccess.getIDOrWildcardAccess().getIdIDTerminalRuleCall_0_0()); 
                     		
@@ -5091,15 +5042,15 @@ public class InternalCupidLanguageParser extends AbstractInternalAntlrParser {
                     }
                     break;
                 case 2 :
-                    // ../org.earthsystemcurator.cupid.xtext/src-gen/org/earthsystemcurator/parser/antlr/internal/InternalCupidLanguage.g:2042:6: ( (lv_wildcard_1_0= '*' ) )
+                    // ../org.earthsystemcurator.cupid.xtext/src-gen/org/earthsystemcurator/parser/antlr/internal/InternalCupidLanguage.g:2016:6: ( (lv_wildcard_1_0= '*' ) )
                     {
-                    // ../org.earthsystemcurator.cupid.xtext/src-gen/org/earthsystemcurator/parser/antlr/internal/InternalCupidLanguage.g:2042:6: ( (lv_wildcard_1_0= '*' ) )
-                    // ../org.earthsystemcurator.cupid.xtext/src-gen/org/earthsystemcurator/parser/antlr/internal/InternalCupidLanguage.g:2043:1: (lv_wildcard_1_0= '*' )
+                    // ../org.earthsystemcurator.cupid.xtext/src-gen/org/earthsystemcurator/parser/antlr/internal/InternalCupidLanguage.g:2016:6: ( (lv_wildcard_1_0= '*' ) )
+                    // ../org.earthsystemcurator.cupid.xtext/src-gen/org/earthsystemcurator/parser/antlr/internal/InternalCupidLanguage.g:2017:1: (lv_wildcard_1_0= '*' )
                     {
-                    // ../org.earthsystemcurator.cupid.xtext/src-gen/org/earthsystemcurator/parser/antlr/internal/InternalCupidLanguage.g:2043:1: (lv_wildcard_1_0= '*' )
-                    // ../org.earthsystemcurator.cupid.xtext/src-gen/org/earthsystemcurator/parser/antlr/internal/InternalCupidLanguage.g:2044:3: lv_wildcard_1_0= '*'
+                    // ../org.earthsystemcurator.cupid.xtext/src-gen/org/earthsystemcurator/parser/antlr/internal/InternalCupidLanguage.g:2017:1: (lv_wildcard_1_0= '*' )
+                    // ../org.earthsystemcurator.cupid.xtext/src-gen/org/earthsystemcurator/parser/antlr/internal/InternalCupidLanguage.g:2018:3: lv_wildcard_1_0= '*'
                     {
-                    lv_wildcard_1_0=(Token)match(input,23,FOLLOW_23_in_ruleIDOrWildcard4448); 
+                    lv_wildcard_1_0=(Token)match(input,23,FOLLOW_23_in_ruleIDOrWildcard4404); 
 
                             newLeafNode(lv_wildcard_1_0, grammarAccess.getIDOrWildcardAccess().getWildcardAsteriskKeyword_1_0());
                         
@@ -5139,7 +5090,7 @@ public class InternalCupidLanguageParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "entryRuleIDOrPathExpr"
-    // ../org.earthsystemcurator.cupid.xtext/src-gen/org/earthsystemcurator/parser/antlr/internal/InternalCupidLanguage.g:2065:1: entryRuleIDOrPathExpr returns [EObject current=null] : iv_ruleIDOrPathExpr= ruleIDOrPathExpr EOF ;
+    // ../org.earthsystemcurator.cupid.xtext/src-gen/org/earthsystemcurator/parser/antlr/internal/InternalCupidLanguage.g:2039:1: entryRuleIDOrPathExpr returns [EObject current=null] : iv_ruleIDOrPathExpr= ruleIDOrPathExpr EOF ;
     public final EObject entryRuleIDOrPathExpr() throws RecognitionException {
         EObject current = null;
 
@@ -5147,17 +5098,17 @@ public class InternalCupidLanguageParser extends AbstractInternalAntlrParser {
 
 
         try {
-            // ../org.earthsystemcurator.cupid.xtext/src-gen/org/earthsystemcurator/parser/antlr/internal/InternalCupidLanguage.g:2066:2: (iv_ruleIDOrPathExpr= ruleIDOrPathExpr EOF )
-            // ../org.earthsystemcurator.cupid.xtext/src-gen/org/earthsystemcurator/parser/antlr/internal/InternalCupidLanguage.g:2067:2: iv_ruleIDOrPathExpr= ruleIDOrPathExpr EOF
+            // ../org.earthsystemcurator.cupid.xtext/src-gen/org/earthsystemcurator/parser/antlr/internal/InternalCupidLanguage.g:2040:2: (iv_ruleIDOrPathExpr= ruleIDOrPathExpr EOF )
+            // ../org.earthsystemcurator.cupid.xtext/src-gen/org/earthsystemcurator/parser/antlr/internal/InternalCupidLanguage.g:2041:2: iv_ruleIDOrPathExpr= ruleIDOrPathExpr EOF
             {
              newCompositeNode(grammarAccess.getIDOrPathExprRule()); 
-            pushFollow(FOLLOW_ruleIDOrPathExpr_in_entryRuleIDOrPathExpr4497);
+            pushFollow(FOLLOW_ruleIDOrPathExpr_in_entryRuleIDOrPathExpr4453);
             iv_ruleIDOrPathExpr=ruleIDOrPathExpr();
 
             state._fsp--;
 
              current =iv_ruleIDOrPathExpr; 
-            match(input,EOF,FOLLOW_EOF_in_entryRuleIDOrPathExpr4507); 
+            match(input,EOF,FOLLOW_EOF_in_entryRuleIDOrPathExpr4463); 
 
             }
 
@@ -5175,7 +5126,7 @@ public class InternalCupidLanguageParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "ruleIDOrPathExpr"
-    // ../org.earthsystemcurator.cupid.xtext/src-gen/org/earthsystemcurator/parser/antlr/internal/InternalCupidLanguage.g:2074:1: ruleIDOrPathExpr returns [EObject current=null] : (this_IDOrWildcard_0= ruleIDOrWildcard | this_PathExpr_1= rulePathExpr | ( (lv_literal_2_0= ruleLiteral ) ) ) ;
+    // ../org.earthsystemcurator.cupid.xtext/src-gen/org/earthsystemcurator/parser/antlr/internal/InternalCupidLanguage.g:2048:1: ruleIDOrPathExpr returns [EObject current=null] : (this_IDOrWildcard_0= ruleIDOrWildcard | this_PathExpr_1= rulePathExpr | ( (lv_literal_2_0= ruleLiteral ) ) ) ;
     public final EObject ruleIDOrPathExpr() throws RecognitionException {
         EObject current = null;
 
@@ -5189,10 +5140,10 @@ public class InternalCupidLanguageParser extends AbstractInternalAntlrParser {
          enterRule(); 
             
         try {
-            // ../org.earthsystemcurator.cupid.xtext/src-gen/org/earthsystemcurator/parser/antlr/internal/InternalCupidLanguage.g:2077:28: ( (this_IDOrWildcard_0= ruleIDOrWildcard | this_PathExpr_1= rulePathExpr | ( (lv_literal_2_0= ruleLiteral ) ) ) )
-            // ../org.earthsystemcurator.cupid.xtext/src-gen/org/earthsystemcurator/parser/antlr/internal/InternalCupidLanguage.g:2078:1: (this_IDOrWildcard_0= ruleIDOrWildcard | this_PathExpr_1= rulePathExpr | ( (lv_literal_2_0= ruleLiteral ) ) )
+            // ../org.earthsystemcurator.cupid.xtext/src-gen/org/earthsystemcurator/parser/antlr/internal/InternalCupidLanguage.g:2051:28: ( (this_IDOrWildcard_0= ruleIDOrWildcard | this_PathExpr_1= rulePathExpr | ( (lv_literal_2_0= ruleLiteral ) ) ) )
+            // ../org.earthsystemcurator.cupid.xtext/src-gen/org/earthsystemcurator/parser/antlr/internal/InternalCupidLanguage.g:2052:1: (this_IDOrWildcard_0= ruleIDOrWildcard | this_PathExpr_1= rulePathExpr | ( (lv_literal_2_0= ruleLiteral ) ) )
             {
-            // ../org.earthsystemcurator.cupid.xtext/src-gen/org/earthsystemcurator/parser/antlr/internal/InternalCupidLanguage.g:2078:1: (this_IDOrWildcard_0= ruleIDOrWildcard | this_PathExpr_1= rulePathExpr | ( (lv_literal_2_0= ruleLiteral ) ) )
+            // ../org.earthsystemcurator.cupid.xtext/src-gen/org/earthsystemcurator/parser/antlr/internal/InternalCupidLanguage.g:2052:1: (this_IDOrWildcard_0= ruleIDOrWildcard | this_PathExpr_1= rulePathExpr | ( (lv_literal_2_0= ruleLiteral ) ) )
             int alt42=3;
             switch ( input.LA(1) ) {
             case RULE_ID:
@@ -5221,12 +5172,12 @@ public class InternalCupidLanguageParser extends AbstractInternalAntlrParser {
 
             switch (alt42) {
                 case 1 :
-                    // ../org.earthsystemcurator.cupid.xtext/src-gen/org/earthsystemcurator/parser/antlr/internal/InternalCupidLanguage.g:2079:5: this_IDOrWildcard_0= ruleIDOrWildcard
+                    // ../org.earthsystemcurator.cupid.xtext/src-gen/org/earthsystemcurator/parser/antlr/internal/InternalCupidLanguage.g:2053:5: this_IDOrWildcard_0= ruleIDOrWildcard
                     {
                      
                             newCompositeNode(grammarAccess.getIDOrPathExprAccess().getIDOrWildcardParserRuleCall_0()); 
                         
-                    pushFollow(FOLLOW_ruleIDOrWildcard_in_ruleIDOrPathExpr4554);
+                    pushFollow(FOLLOW_ruleIDOrWildcard_in_ruleIDOrPathExpr4510);
                     this_IDOrWildcard_0=ruleIDOrWildcard();
 
                     state._fsp--;
@@ -5239,12 +5190,12 @@ public class InternalCupidLanguageParser extends AbstractInternalAntlrParser {
                     }
                     break;
                 case 2 :
-                    // ../org.earthsystemcurator.cupid.xtext/src-gen/org/earthsystemcurator/parser/antlr/internal/InternalCupidLanguage.g:2089:5: this_PathExpr_1= rulePathExpr
+                    // ../org.earthsystemcurator.cupid.xtext/src-gen/org/earthsystemcurator/parser/antlr/internal/InternalCupidLanguage.g:2063:5: this_PathExpr_1= rulePathExpr
                     {
                      
                             newCompositeNode(grammarAccess.getIDOrPathExprAccess().getPathExprParserRuleCall_1()); 
                         
-                    pushFollow(FOLLOW_rulePathExpr_in_ruleIDOrPathExpr4581);
+                    pushFollow(FOLLOW_rulePathExpr_in_ruleIDOrPathExpr4537);
                     this_PathExpr_1=rulePathExpr();
 
                     state._fsp--;
@@ -5257,18 +5208,18 @@ public class InternalCupidLanguageParser extends AbstractInternalAntlrParser {
                     }
                     break;
                 case 3 :
-                    // ../org.earthsystemcurator.cupid.xtext/src-gen/org/earthsystemcurator/parser/antlr/internal/InternalCupidLanguage.g:2098:6: ( (lv_literal_2_0= ruleLiteral ) )
+                    // ../org.earthsystemcurator.cupid.xtext/src-gen/org/earthsystemcurator/parser/antlr/internal/InternalCupidLanguage.g:2072:6: ( (lv_literal_2_0= ruleLiteral ) )
                     {
-                    // ../org.earthsystemcurator.cupid.xtext/src-gen/org/earthsystemcurator/parser/antlr/internal/InternalCupidLanguage.g:2098:6: ( (lv_literal_2_0= ruleLiteral ) )
-                    // ../org.earthsystemcurator.cupid.xtext/src-gen/org/earthsystemcurator/parser/antlr/internal/InternalCupidLanguage.g:2099:1: (lv_literal_2_0= ruleLiteral )
+                    // ../org.earthsystemcurator.cupid.xtext/src-gen/org/earthsystemcurator/parser/antlr/internal/InternalCupidLanguage.g:2072:6: ( (lv_literal_2_0= ruleLiteral ) )
+                    // ../org.earthsystemcurator.cupid.xtext/src-gen/org/earthsystemcurator/parser/antlr/internal/InternalCupidLanguage.g:2073:1: (lv_literal_2_0= ruleLiteral )
                     {
-                    // ../org.earthsystemcurator.cupid.xtext/src-gen/org/earthsystemcurator/parser/antlr/internal/InternalCupidLanguage.g:2099:1: (lv_literal_2_0= ruleLiteral )
-                    // ../org.earthsystemcurator.cupid.xtext/src-gen/org/earthsystemcurator/parser/antlr/internal/InternalCupidLanguage.g:2100:3: lv_literal_2_0= ruleLiteral
+                    // ../org.earthsystemcurator.cupid.xtext/src-gen/org/earthsystemcurator/parser/antlr/internal/InternalCupidLanguage.g:2073:1: (lv_literal_2_0= ruleLiteral )
+                    // ../org.earthsystemcurator.cupid.xtext/src-gen/org/earthsystemcurator/parser/antlr/internal/InternalCupidLanguage.g:2074:3: lv_literal_2_0= ruleLiteral
                     {
                      
                     	        newCompositeNode(grammarAccess.getIDOrPathExprAccess().getLiteralLiteralParserRuleCall_2_0()); 
                     	    
-                    pushFollow(FOLLOW_ruleLiteral_in_ruleIDOrPathExpr4607);
+                    pushFollow(FOLLOW_ruleLiteral_in_ruleIDOrPathExpr4563);
                     lv_literal_2_0=ruleLiteral();
 
                     state._fsp--;
@@ -5314,7 +5265,7 @@ public class InternalCupidLanguageParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "entryRuleLiteral"
-    // ../org.earthsystemcurator.cupid.xtext/src-gen/org/earthsystemcurator/parser/antlr/internal/InternalCupidLanguage.g:2124:1: entryRuleLiteral returns [String current=null] : iv_ruleLiteral= ruleLiteral EOF ;
+    // ../org.earthsystemcurator.cupid.xtext/src-gen/org/earthsystemcurator/parser/antlr/internal/InternalCupidLanguage.g:2098:1: entryRuleLiteral returns [String current=null] : iv_ruleLiteral= ruleLiteral EOF ;
     public final String entryRuleLiteral() throws RecognitionException {
         String current = null;
 
@@ -5322,17 +5273,17 @@ public class InternalCupidLanguageParser extends AbstractInternalAntlrParser {
 
 
         try {
-            // ../org.earthsystemcurator.cupid.xtext/src-gen/org/earthsystemcurator/parser/antlr/internal/InternalCupidLanguage.g:2125:2: (iv_ruleLiteral= ruleLiteral EOF )
-            // ../org.earthsystemcurator.cupid.xtext/src-gen/org/earthsystemcurator/parser/antlr/internal/InternalCupidLanguage.g:2126:2: iv_ruleLiteral= ruleLiteral EOF
+            // ../org.earthsystemcurator.cupid.xtext/src-gen/org/earthsystemcurator/parser/antlr/internal/InternalCupidLanguage.g:2099:2: (iv_ruleLiteral= ruleLiteral EOF )
+            // ../org.earthsystemcurator.cupid.xtext/src-gen/org/earthsystemcurator/parser/antlr/internal/InternalCupidLanguage.g:2100:2: iv_ruleLiteral= ruleLiteral EOF
             {
              newCompositeNode(grammarAccess.getLiteralRule()); 
-            pushFollow(FOLLOW_ruleLiteral_in_entryRuleLiteral4644);
+            pushFollow(FOLLOW_ruleLiteral_in_entryRuleLiteral4600);
             iv_ruleLiteral=ruleLiteral();
 
             state._fsp--;
 
              current =iv_ruleLiteral.getText(); 
-            match(input,EOF,FOLLOW_EOF_in_entryRuleLiteral4655); 
+            match(input,EOF,FOLLOW_EOF_in_entryRuleLiteral4611); 
 
             }
 
@@ -5350,7 +5301,7 @@ public class InternalCupidLanguageParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "ruleLiteral"
-    // ../org.earthsystemcurator.cupid.xtext/src-gen/org/earthsystemcurator/parser/antlr/internal/InternalCupidLanguage.g:2133:1: ruleLiteral returns [AntlrDatatypeRuleToken current=new AntlrDatatypeRuleToken()] : ( (this_INT_0= RULE_INT )+ | this_STRING_1= RULE_STRING ) ;
+    // ../org.earthsystemcurator.cupid.xtext/src-gen/org/earthsystemcurator/parser/antlr/internal/InternalCupidLanguage.g:2107:1: ruleLiteral returns [AntlrDatatypeRuleToken current=new AntlrDatatypeRuleToken()] : ( (this_INT_0= RULE_INT )+ | this_STRING_1= RULE_STRING ) ;
     public final AntlrDatatypeRuleToken ruleLiteral() throws RecognitionException {
         AntlrDatatypeRuleToken current = new AntlrDatatypeRuleToken();
 
@@ -5360,10 +5311,10 @@ public class InternalCupidLanguageParser extends AbstractInternalAntlrParser {
          enterRule(); 
             
         try {
-            // ../org.earthsystemcurator.cupid.xtext/src-gen/org/earthsystemcurator/parser/antlr/internal/InternalCupidLanguage.g:2136:28: ( ( (this_INT_0= RULE_INT )+ | this_STRING_1= RULE_STRING ) )
-            // ../org.earthsystemcurator.cupid.xtext/src-gen/org/earthsystemcurator/parser/antlr/internal/InternalCupidLanguage.g:2137:1: ( (this_INT_0= RULE_INT )+ | this_STRING_1= RULE_STRING )
+            // ../org.earthsystemcurator.cupid.xtext/src-gen/org/earthsystemcurator/parser/antlr/internal/InternalCupidLanguage.g:2110:28: ( ( (this_INT_0= RULE_INT )+ | this_STRING_1= RULE_STRING ) )
+            // ../org.earthsystemcurator.cupid.xtext/src-gen/org/earthsystemcurator/parser/antlr/internal/InternalCupidLanguage.g:2111:1: ( (this_INT_0= RULE_INT )+ | this_STRING_1= RULE_STRING )
             {
-            // ../org.earthsystemcurator.cupid.xtext/src-gen/org/earthsystemcurator/parser/antlr/internal/InternalCupidLanguage.g:2137:1: ( (this_INT_0= RULE_INT )+ | this_STRING_1= RULE_STRING )
+            // ../org.earthsystemcurator.cupid.xtext/src-gen/org/earthsystemcurator/parser/antlr/internal/InternalCupidLanguage.g:2111:1: ( (this_INT_0= RULE_INT )+ | this_STRING_1= RULE_STRING )
             int alt44=2;
             int LA44_0 = input.LA(1);
 
@@ -5381,9 +5332,9 @@ public class InternalCupidLanguageParser extends AbstractInternalAntlrParser {
             }
             switch (alt44) {
                 case 1 :
-                    // ../org.earthsystemcurator.cupid.xtext/src-gen/org/earthsystemcurator/parser/antlr/internal/InternalCupidLanguage.g:2137:2: (this_INT_0= RULE_INT )+
+                    // ../org.earthsystemcurator.cupid.xtext/src-gen/org/earthsystemcurator/parser/antlr/internal/InternalCupidLanguage.g:2111:2: (this_INT_0= RULE_INT )+
                     {
-                    // ../org.earthsystemcurator.cupid.xtext/src-gen/org/earthsystemcurator/parser/antlr/internal/InternalCupidLanguage.g:2137:2: (this_INT_0= RULE_INT )+
+                    // ../org.earthsystemcurator.cupid.xtext/src-gen/org/earthsystemcurator/parser/antlr/internal/InternalCupidLanguage.g:2111:2: (this_INT_0= RULE_INT )+
                     int cnt43=0;
                     loop43:
                     do {
@@ -5397,9 +5348,9 @@ public class InternalCupidLanguageParser extends AbstractInternalAntlrParser {
 
                         switch (alt43) {
                     	case 1 :
-                    	    // ../org.earthsystemcurator.cupid.xtext/src-gen/org/earthsystemcurator/parser/antlr/internal/InternalCupidLanguage.g:2137:7: this_INT_0= RULE_INT
+                    	    // ../org.earthsystemcurator.cupid.xtext/src-gen/org/earthsystemcurator/parser/antlr/internal/InternalCupidLanguage.g:2111:7: this_INT_0= RULE_INT
                     	    {
-                    	    this_INT_0=(Token)match(input,RULE_INT,FOLLOW_RULE_INT_in_ruleLiteral4696); 
+                    	    this_INT_0=(Token)match(input,RULE_INT,FOLLOW_RULE_INT_in_ruleLiteral4652); 
 
                     	    		current.merge(this_INT_0);
                     	        
@@ -5423,9 +5374,9 @@ public class InternalCupidLanguageParser extends AbstractInternalAntlrParser {
                     }
                     break;
                 case 2 :
-                    // ../org.earthsystemcurator.cupid.xtext/src-gen/org/earthsystemcurator/parser/antlr/internal/InternalCupidLanguage.g:2145:10: this_STRING_1= RULE_STRING
+                    // ../org.earthsystemcurator.cupid.xtext/src-gen/org/earthsystemcurator/parser/antlr/internal/InternalCupidLanguage.g:2119:10: this_STRING_1= RULE_STRING
                     {
-                    this_STRING_1=(Token)match(input,RULE_STRING,FOLLOW_RULE_STRING_in_ruleLiteral4724); 
+                    this_STRING_1=(Token)match(input,RULE_STRING,FOLLOW_RULE_STRING_in_ruleLiteral4680); 
 
                     		current.merge(this_STRING_1);
                         
@@ -5456,7 +5407,7 @@ public class InternalCupidLanguageParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "entryRulePathExpr"
-    // ../org.earthsystemcurator.cupid.xtext/src-gen/org/earthsystemcurator/parser/antlr/internal/InternalCupidLanguage.g:2160:1: entryRulePathExpr returns [EObject current=null] : iv_rulePathExpr= rulePathExpr EOF ;
+    // ../org.earthsystemcurator.cupid.xtext/src-gen/org/earthsystemcurator/parser/antlr/internal/InternalCupidLanguage.g:2134:1: entryRulePathExpr returns [EObject current=null] : iv_rulePathExpr= rulePathExpr EOF ;
     public final EObject entryRulePathExpr() throws RecognitionException {
         EObject current = null;
 
@@ -5464,17 +5415,17 @@ public class InternalCupidLanguageParser extends AbstractInternalAntlrParser {
 
 
         try {
-            // ../org.earthsystemcurator.cupid.xtext/src-gen/org/earthsystemcurator/parser/antlr/internal/InternalCupidLanguage.g:2161:2: (iv_rulePathExpr= rulePathExpr EOF )
-            // ../org.earthsystemcurator.cupid.xtext/src-gen/org/earthsystemcurator/parser/antlr/internal/InternalCupidLanguage.g:2162:2: iv_rulePathExpr= rulePathExpr EOF
+            // ../org.earthsystemcurator.cupid.xtext/src-gen/org/earthsystemcurator/parser/antlr/internal/InternalCupidLanguage.g:2135:2: (iv_rulePathExpr= rulePathExpr EOF )
+            // ../org.earthsystemcurator.cupid.xtext/src-gen/org/earthsystemcurator/parser/antlr/internal/InternalCupidLanguage.g:2136:2: iv_rulePathExpr= rulePathExpr EOF
             {
              newCompositeNode(grammarAccess.getPathExprRule()); 
-            pushFollow(FOLLOW_rulePathExpr_in_entryRulePathExpr4769);
+            pushFollow(FOLLOW_rulePathExpr_in_entryRulePathExpr4725);
             iv_rulePathExpr=rulePathExpr();
 
             state._fsp--;
 
              current =iv_rulePathExpr; 
-            match(input,EOF,FOLLOW_EOF_in_entryRulePathExpr4779); 
+            match(input,EOF,FOLLOW_EOF_in_entryRulePathExpr4735); 
 
             }
 
@@ -5492,7 +5443,7 @@ public class InternalCupidLanguageParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "rulePathExpr"
-    // ../org.earthsystemcurator.cupid.xtext/src-gen/org/earthsystemcurator/parser/antlr/internal/InternalCupidLanguage.g:2169:1: rulePathExpr returns [EObject current=null] : (otherlv_0= '#' this_PathExprNode_1= rulePathExprNode ) ;
+    // ../org.earthsystemcurator.cupid.xtext/src-gen/org/earthsystemcurator/parser/antlr/internal/InternalCupidLanguage.g:2143:1: rulePathExpr returns [EObject current=null] : (otherlv_0= '#' this_PathExprNode_1= rulePathExprNode ) ;
     public final EObject rulePathExpr() throws RecognitionException {
         EObject current = null;
 
@@ -5503,20 +5454,20 @@ public class InternalCupidLanguageParser extends AbstractInternalAntlrParser {
          enterRule(); 
             
         try {
-            // ../org.earthsystemcurator.cupid.xtext/src-gen/org/earthsystemcurator/parser/antlr/internal/InternalCupidLanguage.g:2172:28: ( (otherlv_0= '#' this_PathExprNode_1= rulePathExprNode ) )
-            // ../org.earthsystemcurator.cupid.xtext/src-gen/org/earthsystemcurator/parser/antlr/internal/InternalCupidLanguage.g:2173:1: (otherlv_0= '#' this_PathExprNode_1= rulePathExprNode )
+            // ../org.earthsystemcurator.cupid.xtext/src-gen/org/earthsystemcurator/parser/antlr/internal/InternalCupidLanguage.g:2146:28: ( (otherlv_0= '#' this_PathExprNode_1= rulePathExprNode ) )
+            // ../org.earthsystemcurator.cupid.xtext/src-gen/org/earthsystemcurator/parser/antlr/internal/InternalCupidLanguage.g:2147:1: (otherlv_0= '#' this_PathExprNode_1= rulePathExprNode )
             {
-            // ../org.earthsystemcurator.cupid.xtext/src-gen/org/earthsystemcurator/parser/antlr/internal/InternalCupidLanguage.g:2173:1: (otherlv_0= '#' this_PathExprNode_1= rulePathExprNode )
-            // ../org.earthsystemcurator.cupid.xtext/src-gen/org/earthsystemcurator/parser/antlr/internal/InternalCupidLanguage.g:2173:3: otherlv_0= '#' this_PathExprNode_1= rulePathExprNode
+            // ../org.earthsystemcurator.cupid.xtext/src-gen/org/earthsystemcurator/parser/antlr/internal/InternalCupidLanguage.g:2147:1: (otherlv_0= '#' this_PathExprNode_1= rulePathExprNode )
+            // ../org.earthsystemcurator.cupid.xtext/src-gen/org/earthsystemcurator/parser/antlr/internal/InternalCupidLanguage.g:2147:3: otherlv_0= '#' this_PathExprNode_1= rulePathExprNode
             {
-            otherlv_0=(Token)match(input,47,FOLLOW_47_in_rulePathExpr4816); 
+            otherlv_0=(Token)match(input,47,FOLLOW_47_in_rulePathExpr4772); 
 
                 	newLeafNode(otherlv_0, grammarAccess.getPathExprAccess().getNumberSignKeyword_0());
                 
              
                     newCompositeNode(grammarAccess.getPathExprAccess().getPathExprNodeParserRuleCall_1()); 
                 
-            pushFollow(FOLLOW_rulePathExprNode_in_rulePathExpr4838);
+            pushFollow(FOLLOW_rulePathExprNode_in_rulePathExpr4794);
             this_PathExprNode_1=rulePathExprNode();
 
             state._fsp--;
@@ -5546,7 +5497,7 @@ public class InternalCupidLanguageParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "entryRulePathExprNode"
-    // ../org.earthsystemcurator.cupid.xtext/src-gen/org/earthsystemcurator/parser/antlr/internal/InternalCupidLanguage.g:2194:1: entryRulePathExprNode returns [EObject current=null] : iv_rulePathExprNode= rulePathExprNode EOF ;
+    // ../org.earthsystemcurator.cupid.xtext/src-gen/org/earthsystemcurator/parser/antlr/internal/InternalCupidLanguage.g:2168:1: entryRulePathExprNode returns [EObject current=null] : iv_rulePathExprNode= rulePathExprNode EOF ;
     public final EObject entryRulePathExprNode() throws RecognitionException {
         EObject current = null;
 
@@ -5554,17 +5505,17 @@ public class InternalCupidLanguageParser extends AbstractInternalAntlrParser {
 
 
         try {
-            // ../org.earthsystemcurator.cupid.xtext/src-gen/org/earthsystemcurator/parser/antlr/internal/InternalCupidLanguage.g:2195:2: (iv_rulePathExprNode= rulePathExprNode EOF )
-            // ../org.earthsystemcurator.cupid.xtext/src-gen/org/earthsystemcurator/parser/antlr/internal/InternalCupidLanguage.g:2196:2: iv_rulePathExprNode= rulePathExprNode EOF
+            // ../org.earthsystemcurator.cupid.xtext/src-gen/org/earthsystemcurator/parser/antlr/internal/InternalCupidLanguage.g:2169:2: (iv_rulePathExprNode= rulePathExprNode EOF )
+            // ../org.earthsystemcurator.cupid.xtext/src-gen/org/earthsystemcurator/parser/antlr/internal/InternalCupidLanguage.g:2170:2: iv_rulePathExprNode= rulePathExprNode EOF
             {
              newCompositeNode(grammarAccess.getPathExprNodeRule()); 
-            pushFollow(FOLLOW_rulePathExprNode_in_entryRulePathExprNode4873);
+            pushFollow(FOLLOW_rulePathExprNode_in_entryRulePathExprNode4829);
             iv_rulePathExprNode=rulePathExprNode();
 
             state._fsp--;
 
              current =iv_rulePathExprNode; 
-            match(input,EOF,FOLLOW_EOF_in_entryRulePathExprNode4883); 
+            match(input,EOF,FOLLOW_EOF_in_entryRulePathExprNode4839); 
 
             }
 
@@ -5582,7 +5533,7 @@ public class InternalCupidLanguageParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "rulePathExprNode"
-    // ../org.earthsystemcurator.cupid.xtext/src-gen/org/earthsystemcurator/parser/antlr/internal/InternalCupidLanguage.g:2203:1: rulePathExprNode returns [EObject current=null] : (this_PathExprTerm_0= rulePathExprTerm ( () otherlv_2= '/' ( (otherlv_3= RULE_ID ) ) )* ) ;
+    // ../org.earthsystemcurator.cupid.xtext/src-gen/org/earthsystemcurator/parser/antlr/internal/InternalCupidLanguage.g:2177:1: rulePathExprNode returns [EObject current=null] : (this_PathExprTerm_0= rulePathExprTerm ( () otherlv_2= '/' ( (otherlv_3= RULE_ID ) ) )* ) ;
     public final EObject rulePathExprNode() throws RecognitionException {
         EObject current = null;
 
@@ -5594,16 +5545,16 @@ public class InternalCupidLanguageParser extends AbstractInternalAntlrParser {
          enterRule(); 
             
         try {
-            // ../org.earthsystemcurator.cupid.xtext/src-gen/org/earthsystemcurator/parser/antlr/internal/InternalCupidLanguage.g:2206:28: ( (this_PathExprTerm_0= rulePathExprTerm ( () otherlv_2= '/' ( (otherlv_3= RULE_ID ) ) )* ) )
-            // ../org.earthsystemcurator.cupid.xtext/src-gen/org/earthsystemcurator/parser/antlr/internal/InternalCupidLanguage.g:2207:1: (this_PathExprTerm_0= rulePathExprTerm ( () otherlv_2= '/' ( (otherlv_3= RULE_ID ) ) )* )
+            // ../org.earthsystemcurator.cupid.xtext/src-gen/org/earthsystemcurator/parser/antlr/internal/InternalCupidLanguage.g:2180:28: ( (this_PathExprTerm_0= rulePathExprTerm ( () otherlv_2= '/' ( (otherlv_3= RULE_ID ) ) )* ) )
+            // ../org.earthsystemcurator.cupid.xtext/src-gen/org/earthsystemcurator/parser/antlr/internal/InternalCupidLanguage.g:2181:1: (this_PathExprTerm_0= rulePathExprTerm ( () otherlv_2= '/' ( (otherlv_3= RULE_ID ) ) )* )
             {
-            // ../org.earthsystemcurator.cupid.xtext/src-gen/org/earthsystemcurator/parser/antlr/internal/InternalCupidLanguage.g:2207:1: (this_PathExprTerm_0= rulePathExprTerm ( () otherlv_2= '/' ( (otherlv_3= RULE_ID ) ) )* )
-            // ../org.earthsystemcurator.cupid.xtext/src-gen/org/earthsystemcurator/parser/antlr/internal/InternalCupidLanguage.g:2208:5: this_PathExprTerm_0= rulePathExprTerm ( () otherlv_2= '/' ( (otherlv_3= RULE_ID ) ) )*
+            // ../org.earthsystemcurator.cupid.xtext/src-gen/org/earthsystemcurator/parser/antlr/internal/InternalCupidLanguage.g:2181:1: (this_PathExprTerm_0= rulePathExprTerm ( () otherlv_2= '/' ( (otherlv_3= RULE_ID ) ) )* )
+            // ../org.earthsystemcurator.cupid.xtext/src-gen/org/earthsystemcurator/parser/antlr/internal/InternalCupidLanguage.g:2182:5: this_PathExprTerm_0= rulePathExprTerm ( () otherlv_2= '/' ( (otherlv_3= RULE_ID ) ) )*
             {
              
                     newCompositeNode(grammarAccess.getPathExprNodeAccess().getPathExprTermParserRuleCall_0()); 
                 
-            pushFollow(FOLLOW_rulePathExprTerm_in_rulePathExprNode4930);
+            pushFollow(FOLLOW_rulePathExprTerm_in_rulePathExprNode4886);
             this_PathExprTerm_0=rulePathExprTerm();
 
             state._fsp--;
@@ -5612,7 +5563,7 @@ public class InternalCupidLanguageParser extends AbstractInternalAntlrParser {
                     current = this_PathExprTerm_0; 
                     afterParserOrEnumRuleCall();
                 
-            // ../org.earthsystemcurator.cupid.xtext/src-gen/org/earthsystemcurator/parser/antlr/internal/InternalCupidLanguage.g:2216:1: ( () otherlv_2= '/' ( (otherlv_3= RULE_ID ) ) )*
+            // ../org.earthsystemcurator.cupid.xtext/src-gen/org/earthsystemcurator/parser/antlr/internal/InternalCupidLanguage.g:2190:1: ( () otherlv_2= '/' ( (otherlv_3= RULE_ID ) ) )*
             loop45:
             do {
                 int alt45=2;
@@ -5625,10 +5576,10 @@ public class InternalCupidLanguageParser extends AbstractInternalAntlrParser {
 
                 switch (alt45) {
             	case 1 :
-            	    // ../org.earthsystemcurator.cupid.xtext/src-gen/org/earthsystemcurator/parser/antlr/internal/InternalCupidLanguage.g:2216:2: () otherlv_2= '/' ( (otherlv_3= RULE_ID ) )
+            	    // ../org.earthsystemcurator.cupid.xtext/src-gen/org/earthsystemcurator/parser/antlr/internal/InternalCupidLanguage.g:2190:2: () otherlv_2= '/' ( (otherlv_3= RULE_ID ) )
             	    {
-            	    // ../org.earthsystemcurator.cupid.xtext/src-gen/org/earthsystemcurator/parser/antlr/internal/InternalCupidLanguage.g:2216:2: ()
-            	    // ../org.earthsystemcurator.cupid.xtext/src-gen/org/earthsystemcurator/parser/antlr/internal/InternalCupidLanguage.g:2217:5: 
+            	    // ../org.earthsystemcurator.cupid.xtext/src-gen/org/earthsystemcurator/parser/antlr/internal/InternalCupidLanguage.g:2190:2: ()
+            	    // ../org.earthsystemcurator.cupid.xtext/src-gen/org/earthsystemcurator/parser/antlr/internal/InternalCupidLanguage.g:2191:5: 
             	    {
 
             	            current = forceCreateModelElementAndSet(
@@ -5638,22 +5589,22 @@ public class InternalCupidLanguageParser extends AbstractInternalAntlrParser {
 
             	    }
 
-            	    otherlv_2=(Token)match(input,48,FOLLOW_48_in_rulePathExprNode4951); 
+            	    otherlv_2=(Token)match(input,48,FOLLOW_48_in_rulePathExprNode4907); 
 
             	        	newLeafNode(otherlv_2, grammarAccess.getPathExprNodeAccess().getSolidusKeyword_1_1());
             	        
-            	    // ../org.earthsystemcurator.cupid.xtext/src-gen/org/earthsystemcurator/parser/antlr/internal/InternalCupidLanguage.g:2226:1: ( (otherlv_3= RULE_ID ) )
-            	    // ../org.earthsystemcurator.cupid.xtext/src-gen/org/earthsystemcurator/parser/antlr/internal/InternalCupidLanguage.g:2227:1: (otherlv_3= RULE_ID )
+            	    // ../org.earthsystemcurator.cupid.xtext/src-gen/org/earthsystemcurator/parser/antlr/internal/InternalCupidLanguage.g:2200:1: ( (otherlv_3= RULE_ID ) )
+            	    // ../org.earthsystemcurator.cupid.xtext/src-gen/org/earthsystemcurator/parser/antlr/internal/InternalCupidLanguage.g:2201:1: (otherlv_3= RULE_ID )
             	    {
-            	    // ../org.earthsystemcurator.cupid.xtext/src-gen/org/earthsystemcurator/parser/antlr/internal/InternalCupidLanguage.g:2227:1: (otherlv_3= RULE_ID )
-            	    // ../org.earthsystemcurator.cupid.xtext/src-gen/org/earthsystemcurator/parser/antlr/internal/InternalCupidLanguage.g:2228:3: otherlv_3= RULE_ID
+            	    // ../org.earthsystemcurator.cupid.xtext/src-gen/org/earthsystemcurator/parser/antlr/internal/InternalCupidLanguage.g:2201:1: (otherlv_3= RULE_ID )
+            	    // ../org.earthsystemcurator.cupid.xtext/src-gen/org/earthsystemcurator/parser/antlr/internal/InternalCupidLanguage.g:2202:3: otherlv_3= RULE_ID
             	    {
 
             	    			if (current==null) {
             	    	            current = createModelElement(grammarAccess.getPathExprNodeRule());
             	    	        }
             	            
-            	    otherlv_3=(Token)match(input,RULE_ID,FOLLOW_RULE_ID_in_rulePathExprNode4971); 
+            	    otherlv_3=(Token)match(input,RULE_ID,FOLLOW_RULE_ID_in_rulePathExprNode4927); 
 
             	    		newLeafNode(otherlv_3, grammarAccess.getPathExprNodeAccess().getTailSubconceptOrAttributeCrossReference_1_2_0()); 
             	    	
@@ -5693,7 +5644,7 @@ public class InternalCupidLanguageParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "entryRulePathExprTerm"
-    // ../org.earthsystemcurator.cupid.xtext/src-gen/org/earthsystemcurator/parser/antlr/internal/InternalCupidLanguage.g:2247:1: entryRulePathExprTerm returns [EObject current=null] : iv_rulePathExprTerm= rulePathExprTerm EOF ;
+    // ../org.earthsystemcurator.cupid.xtext/src-gen/org/earthsystemcurator/parser/antlr/internal/InternalCupidLanguage.g:2221:1: entryRulePathExprTerm returns [EObject current=null] : iv_rulePathExprTerm= rulePathExprTerm EOF ;
     public final EObject entryRulePathExprTerm() throws RecognitionException {
         EObject current = null;
 
@@ -5701,17 +5652,17 @@ public class InternalCupidLanguageParser extends AbstractInternalAntlrParser {
 
 
         try {
-            // ../org.earthsystemcurator.cupid.xtext/src-gen/org/earthsystemcurator/parser/antlr/internal/InternalCupidLanguage.g:2248:2: (iv_rulePathExprTerm= rulePathExprTerm EOF )
-            // ../org.earthsystemcurator.cupid.xtext/src-gen/org/earthsystemcurator/parser/antlr/internal/InternalCupidLanguage.g:2249:2: iv_rulePathExprTerm= rulePathExprTerm EOF
+            // ../org.earthsystemcurator.cupid.xtext/src-gen/org/earthsystemcurator/parser/antlr/internal/InternalCupidLanguage.g:2222:2: (iv_rulePathExprTerm= rulePathExprTerm EOF )
+            // ../org.earthsystemcurator.cupid.xtext/src-gen/org/earthsystemcurator/parser/antlr/internal/InternalCupidLanguage.g:2223:2: iv_rulePathExprTerm= rulePathExprTerm EOF
             {
              newCompositeNode(grammarAccess.getPathExprTermRule()); 
-            pushFollow(FOLLOW_rulePathExprTerm_in_entryRulePathExprTerm5009);
+            pushFollow(FOLLOW_rulePathExprTerm_in_entryRulePathExprTerm4965);
             iv_rulePathExprTerm=rulePathExprTerm();
 
             state._fsp--;
 
              current =iv_rulePathExprTerm; 
-            match(input,EOF,FOLLOW_EOF_in_entryRulePathExprTerm5019); 
+            match(input,EOF,FOLLOW_EOF_in_entryRulePathExprTerm4975); 
 
             }
 
@@ -5729,7 +5680,7 @@ public class InternalCupidLanguageParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "rulePathExprTerm"
-    // ../org.earthsystemcurator.cupid.xtext/src-gen/org/earthsystemcurator/parser/antlr/internal/InternalCupidLanguage.g:2256:1: rulePathExprTerm returns [EObject current=null] : ( () ( (lv_axis_1_0= ruleAxis ) )? ( (otherlv_2= RULE_ID ) ) ) ;
+    // ../org.earthsystemcurator.cupid.xtext/src-gen/org/earthsystemcurator/parser/antlr/internal/InternalCupidLanguage.g:2230:1: rulePathExprTerm returns [EObject current=null] : ( () ( (lv_axis_1_0= ruleAxis ) )? ( (otherlv_2= RULE_ID ) ) ) ;
     public final EObject rulePathExprTerm() throws RecognitionException {
         EObject current = null;
 
@@ -5740,14 +5691,14 @@ public class InternalCupidLanguageParser extends AbstractInternalAntlrParser {
          enterRule(); 
             
         try {
-            // ../org.earthsystemcurator.cupid.xtext/src-gen/org/earthsystemcurator/parser/antlr/internal/InternalCupidLanguage.g:2259:28: ( ( () ( (lv_axis_1_0= ruleAxis ) )? ( (otherlv_2= RULE_ID ) ) ) )
-            // ../org.earthsystemcurator.cupid.xtext/src-gen/org/earthsystemcurator/parser/antlr/internal/InternalCupidLanguage.g:2260:1: ( () ( (lv_axis_1_0= ruleAxis ) )? ( (otherlv_2= RULE_ID ) ) )
+            // ../org.earthsystemcurator.cupid.xtext/src-gen/org/earthsystemcurator/parser/antlr/internal/InternalCupidLanguage.g:2233:28: ( ( () ( (lv_axis_1_0= ruleAxis ) )? ( (otherlv_2= RULE_ID ) ) ) )
+            // ../org.earthsystemcurator.cupid.xtext/src-gen/org/earthsystemcurator/parser/antlr/internal/InternalCupidLanguage.g:2234:1: ( () ( (lv_axis_1_0= ruleAxis ) )? ( (otherlv_2= RULE_ID ) ) )
             {
-            // ../org.earthsystemcurator.cupid.xtext/src-gen/org/earthsystemcurator/parser/antlr/internal/InternalCupidLanguage.g:2260:1: ( () ( (lv_axis_1_0= ruleAxis ) )? ( (otherlv_2= RULE_ID ) ) )
-            // ../org.earthsystemcurator.cupid.xtext/src-gen/org/earthsystemcurator/parser/antlr/internal/InternalCupidLanguage.g:2260:2: () ( (lv_axis_1_0= ruleAxis ) )? ( (otherlv_2= RULE_ID ) )
+            // ../org.earthsystemcurator.cupid.xtext/src-gen/org/earthsystemcurator/parser/antlr/internal/InternalCupidLanguage.g:2234:1: ( () ( (lv_axis_1_0= ruleAxis ) )? ( (otherlv_2= RULE_ID ) ) )
+            // ../org.earthsystemcurator.cupid.xtext/src-gen/org/earthsystemcurator/parser/antlr/internal/InternalCupidLanguage.g:2234:2: () ( (lv_axis_1_0= ruleAxis ) )? ( (otherlv_2= RULE_ID ) )
             {
-            // ../org.earthsystemcurator.cupid.xtext/src-gen/org/earthsystemcurator/parser/antlr/internal/InternalCupidLanguage.g:2260:2: ()
-            // ../org.earthsystemcurator.cupid.xtext/src-gen/org/earthsystemcurator/parser/antlr/internal/InternalCupidLanguage.g:2261:5: 
+            // ../org.earthsystemcurator.cupid.xtext/src-gen/org/earthsystemcurator/parser/antlr/internal/InternalCupidLanguage.g:2234:2: ()
+            // ../org.earthsystemcurator.cupid.xtext/src-gen/org/earthsystemcurator/parser/antlr/internal/InternalCupidLanguage.g:2235:5: 
             {
 
                     current = forceCreateModelElement(
@@ -5757,7 +5708,7 @@ public class InternalCupidLanguageParser extends AbstractInternalAntlrParser {
 
             }
 
-            // ../org.earthsystemcurator.cupid.xtext/src-gen/org/earthsystemcurator/parser/antlr/internal/InternalCupidLanguage.g:2266:2: ( (lv_axis_1_0= ruleAxis ) )?
+            // ../org.earthsystemcurator.cupid.xtext/src-gen/org/earthsystemcurator/parser/antlr/internal/InternalCupidLanguage.g:2240:2: ( (lv_axis_1_0= ruleAxis ) )?
             int alt46=2;
             int LA46_0 = input.LA(1);
 
@@ -5766,15 +5717,15 @@ public class InternalCupidLanguageParser extends AbstractInternalAntlrParser {
             }
             switch (alt46) {
                 case 1 :
-                    // ../org.earthsystemcurator.cupid.xtext/src-gen/org/earthsystemcurator/parser/antlr/internal/InternalCupidLanguage.g:2267:1: (lv_axis_1_0= ruleAxis )
+                    // ../org.earthsystemcurator.cupid.xtext/src-gen/org/earthsystemcurator/parser/antlr/internal/InternalCupidLanguage.g:2241:1: (lv_axis_1_0= ruleAxis )
                     {
-                    // ../org.earthsystemcurator.cupid.xtext/src-gen/org/earthsystemcurator/parser/antlr/internal/InternalCupidLanguage.g:2267:1: (lv_axis_1_0= ruleAxis )
-                    // ../org.earthsystemcurator.cupid.xtext/src-gen/org/earthsystemcurator/parser/antlr/internal/InternalCupidLanguage.g:2268:3: lv_axis_1_0= ruleAxis
+                    // ../org.earthsystemcurator.cupid.xtext/src-gen/org/earthsystemcurator/parser/antlr/internal/InternalCupidLanguage.g:2241:1: (lv_axis_1_0= ruleAxis )
+                    // ../org.earthsystemcurator.cupid.xtext/src-gen/org/earthsystemcurator/parser/antlr/internal/InternalCupidLanguage.g:2242:3: lv_axis_1_0= ruleAxis
                     {
                      
                     	        newCompositeNode(grammarAccess.getPathExprTermAccess().getAxisAxisParserRuleCall_1_0()); 
                     	    
-                    pushFollow(FOLLOW_ruleAxis_in_rulePathExprTerm5074);
+                    pushFollow(FOLLOW_ruleAxis_in_rulePathExprTerm5030);
                     lv_axis_1_0=ruleAxis();
 
                     state._fsp--;
@@ -5799,18 +5750,18 @@ public class InternalCupidLanguageParser extends AbstractInternalAntlrParser {
 
             }
 
-            // ../org.earthsystemcurator.cupid.xtext/src-gen/org/earthsystemcurator/parser/antlr/internal/InternalCupidLanguage.g:2284:3: ( (otherlv_2= RULE_ID ) )
-            // ../org.earthsystemcurator.cupid.xtext/src-gen/org/earthsystemcurator/parser/antlr/internal/InternalCupidLanguage.g:2285:1: (otherlv_2= RULE_ID )
+            // ../org.earthsystemcurator.cupid.xtext/src-gen/org/earthsystemcurator/parser/antlr/internal/InternalCupidLanguage.g:2258:3: ( (otherlv_2= RULE_ID ) )
+            // ../org.earthsystemcurator.cupid.xtext/src-gen/org/earthsystemcurator/parser/antlr/internal/InternalCupidLanguage.g:2259:1: (otherlv_2= RULE_ID )
             {
-            // ../org.earthsystemcurator.cupid.xtext/src-gen/org/earthsystemcurator/parser/antlr/internal/InternalCupidLanguage.g:2285:1: (otherlv_2= RULE_ID )
-            // ../org.earthsystemcurator.cupid.xtext/src-gen/org/earthsystemcurator/parser/antlr/internal/InternalCupidLanguage.g:2286:3: otherlv_2= RULE_ID
+            // ../org.earthsystemcurator.cupid.xtext/src-gen/org/earthsystemcurator/parser/antlr/internal/InternalCupidLanguage.g:2259:1: (otherlv_2= RULE_ID )
+            // ../org.earthsystemcurator.cupid.xtext/src-gen/org/earthsystemcurator/parser/antlr/internal/InternalCupidLanguage.g:2260:3: otherlv_2= RULE_ID
             {
 
             			if (current==null) {
             	            current = createModelElement(grammarAccess.getPathExprTermRule());
             	        }
                     
-            otherlv_2=(Token)match(input,RULE_ID,FOLLOW_RULE_ID_in_rulePathExprTerm5095); 
+            otherlv_2=(Token)match(input,RULE_ID,FOLLOW_RULE_ID_in_rulePathExprTerm5051); 
 
             		newLeafNode(otherlv_2, grammarAccess.getPathExprTermAccess().getRefSubconceptOrAttributeCrossReference_2_0()); 
             	
@@ -5841,7 +5792,7 @@ public class InternalCupidLanguageParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "entryRuleAxis"
-    // ../org.earthsystemcurator.cupid.xtext/src-gen/org/earthsystemcurator/parser/antlr/internal/InternalCupidLanguage.g:2305:1: entryRuleAxis returns [EObject current=null] : iv_ruleAxis= ruleAxis EOF ;
+    // ../org.earthsystemcurator.cupid.xtext/src-gen/org/earthsystemcurator/parser/antlr/internal/InternalCupidLanguage.g:2279:1: entryRuleAxis returns [EObject current=null] : iv_ruleAxis= ruleAxis EOF ;
     public final EObject entryRuleAxis() throws RecognitionException {
         EObject current = null;
 
@@ -5849,17 +5800,17 @@ public class InternalCupidLanguageParser extends AbstractInternalAntlrParser {
 
 
         try {
-            // ../org.earthsystemcurator.cupid.xtext/src-gen/org/earthsystemcurator/parser/antlr/internal/InternalCupidLanguage.g:2306:2: (iv_ruleAxis= ruleAxis EOF )
-            // ../org.earthsystemcurator.cupid.xtext/src-gen/org/earthsystemcurator/parser/antlr/internal/InternalCupidLanguage.g:2307:2: iv_ruleAxis= ruleAxis EOF
+            // ../org.earthsystemcurator.cupid.xtext/src-gen/org/earthsystemcurator/parser/antlr/internal/InternalCupidLanguage.g:2280:2: (iv_ruleAxis= ruleAxis EOF )
+            // ../org.earthsystemcurator.cupid.xtext/src-gen/org/earthsystemcurator/parser/antlr/internal/InternalCupidLanguage.g:2281:2: iv_ruleAxis= ruleAxis EOF
             {
              newCompositeNode(grammarAccess.getAxisRule()); 
-            pushFollow(FOLLOW_ruleAxis_in_entryRuleAxis5131);
+            pushFollow(FOLLOW_ruleAxis_in_entryRuleAxis5087);
             iv_ruleAxis=ruleAxis();
 
             state._fsp--;
 
              current =iv_ruleAxis; 
-            match(input,EOF,FOLLOW_EOF_in_entryRuleAxis5141); 
+            match(input,EOF,FOLLOW_EOF_in_entryRuleAxis5097); 
 
             }
 
@@ -5877,7 +5828,7 @@ public class InternalCupidLanguageParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "ruleAxis"
-    // ../org.earthsystemcurator.cupid.xtext/src-gen/org/earthsystemcurator/parser/antlr/internal/InternalCupidLanguage.g:2314:1: ruleAxis returns [EObject current=null] : ( (lv_ancestor_0_0= '^' ) ) ;
+    // ../org.earthsystemcurator.cupid.xtext/src-gen/org/earthsystemcurator/parser/antlr/internal/InternalCupidLanguage.g:2288:1: ruleAxis returns [EObject current=null] : ( (lv_ancestor_0_0= '^' ) ) ;
     public final EObject ruleAxis() throws RecognitionException {
         EObject current = null;
 
@@ -5886,16 +5837,16 @@ public class InternalCupidLanguageParser extends AbstractInternalAntlrParser {
          enterRule(); 
             
         try {
-            // ../org.earthsystemcurator.cupid.xtext/src-gen/org/earthsystemcurator/parser/antlr/internal/InternalCupidLanguage.g:2317:28: ( ( (lv_ancestor_0_0= '^' ) ) )
-            // ../org.earthsystemcurator.cupid.xtext/src-gen/org/earthsystemcurator/parser/antlr/internal/InternalCupidLanguage.g:2318:1: ( (lv_ancestor_0_0= '^' ) )
+            // ../org.earthsystemcurator.cupid.xtext/src-gen/org/earthsystemcurator/parser/antlr/internal/InternalCupidLanguage.g:2291:28: ( ( (lv_ancestor_0_0= '^' ) ) )
+            // ../org.earthsystemcurator.cupid.xtext/src-gen/org/earthsystemcurator/parser/antlr/internal/InternalCupidLanguage.g:2292:1: ( (lv_ancestor_0_0= '^' ) )
             {
-            // ../org.earthsystemcurator.cupid.xtext/src-gen/org/earthsystemcurator/parser/antlr/internal/InternalCupidLanguage.g:2318:1: ( (lv_ancestor_0_0= '^' ) )
-            // ../org.earthsystemcurator.cupid.xtext/src-gen/org/earthsystemcurator/parser/antlr/internal/InternalCupidLanguage.g:2319:1: (lv_ancestor_0_0= '^' )
+            // ../org.earthsystemcurator.cupid.xtext/src-gen/org/earthsystemcurator/parser/antlr/internal/InternalCupidLanguage.g:2292:1: ( (lv_ancestor_0_0= '^' ) )
+            // ../org.earthsystemcurator.cupid.xtext/src-gen/org/earthsystemcurator/parser/antlr/internal/InternalCupidLanguage.g:2293:1: (lv_ancestor_0_0= '^' )
             {
-            // ../org.earthsystemcurator.cupid.xtext/src-gen/org/earthsystemcurator/parser/antlr/internal/InternalCupidLanguage.g:2319:1: (lv_ancestor_0_0= '^' )
-            // ../org.earthsystemcurator.cupid.xtext/src-gen/org/earthsystemcurator/parser/antlr/internal/InternalCupidLanguage.g:2320:3: lv_ancestor_0_0= '^'
+            // ../org.earthsystemcurator.cupid.xtext/src-gen/org/earthsystemcurator/parser/antlr/internal/InternalCupidLanguage.g:2293:1: (lv_ancestor_0_0= '^' )
+            // ../org.earthsystemcurator.cupid.xtext/src-gen/org/earthsystemcurator/parser/antlr/internal/InternalCupidLanguage.g:2294:3: lv_ancestor_0_0= '^'
             {
-            lv_ancestor_0_0=(Token)match(input,49,FOLLOW_49_in_ruleAxis5183); 
+            lv_ancestor_0_0=(Token)match(input,49,FOLLOW_49_in_ruleAxis5139); 
 
                     newLeafNode(lv_ancestor_0_0, grammarAccess.getAxisAccess().getAncestorCircumflexAccentKeyword_0());
                 
@@ -6102,40 +6053,37 @@ public class InternalCupidLanguageParser extends AbstractInternalAntlrParser {
     public static final BitSet FOLLOW_ruleActualParamByKeyword_in_entryRuleActualParamByKeyword4194 = new BitSet(new long[]{0x0000000000000000L});
     public static final BitSet FOLLOW_EOF_in_entryRuleActualParamByKeyword4204 = new BitSet(new long[]{0x0000000000000002L});
     public static final BitSet FOLLOW_46_in_ruleActualParamByKeyword4241 = new BitSet(new long[]{0x0000000004000000L});
-    public static final BitSet FOLLOW_26_in_ruleActualParamByKeyword4253 = new BitSet(new long[]{0x00008000008000B0L});
-    public static final BitSet FOLLOW_ruleIDOrPathExpr_in_ruleActualParamByKeyword4274 = new BitSet(new long[]{0x0000000004000000L});
-    public static final BitSet FOLLOW_26_in_ruleActualParamByKeyword4286 = new BitSet(new long[]{0x00008000008000B0L});
-    public static final BitSet FOLLOW_ruleIDOrPathExpr_in_ruleActualParamByKeyword4307 = new BitSet(new long[]{0x0000000008000000L});
-    public static final BitSet FOLLOW_27_in_ruleActualParamByKeyword4319 = new BitSet(new long[]{0x0000000008000000L});
-    public static final BitSet FOLLOW_27_in_ruleActualParamByKeyword4331 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_ruleIDOrWildcard_in_entryRuleIDOrWildcard4367 = new BitSet(new long[]{0x0000000000000000L});
-    public static final BitSet FOLLOW_EOF_in_entryRuleIDOrWildcard4377 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_RULE_ID_in_ruleIDOrWildcard4419 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_23_in_ruleIDOrWildcard4448 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_ruleIDOrPathExpr_in_entryRuleIDOrPathExpr4497 = new BitSet(new long[]{0x0000000000000000L});
-    public static final BitSet FOLLOW_EOF_in_entryRuleIDOrPathExpr4507 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_ruleIDOrWildcard_in_ruleIDOrPathExpr4554 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_rulePathExpr_in_ruleIDOrPathExpr4581 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_ruleLiteral_in_ruleIDOrPathExpr4607 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_ruleLiteral_in_entryRuleLiteral4644 = new BitSet(new long[]{0x0000000000000000L});
-    public static final BitSet FOLLOW_EOF_in_entryRuleLiteral4655 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_RULE_INT_in_ruleLiteral4696 = new BitSet(new long[]{0x0000000000000082L});
-    public static final BitSet FOLLOW_RULE_STRING_in_ruleLiteral4724 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_rulePathExpr_in_entryRulePathExpr4769 = new BitSet(new long[]{0x0000000000000000L});
-    public static final BitSet FOLLOW_EOF_in_entryRulePathExpr4779 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_47_in_rulePathExpr4816 = new BitSet(new long[]{0x0002000000000010L});
-    public static final BitSet FOLLOW_rulePathExprNode_in_rulePathExpr4838 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_rulePathExprNode_in_entryRulePathExprNode4873 = new BitSet(new long[]{0x0000000000000000L});
-    public static final BitSet FOLLOW_EOF_in_entryRulePathExprNode4883 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_rulePathExprTerm_in_rulePathExprNode4930 = new BitSet(new long[]{0x0001000000000002L});
-    public static final BitSet FOLLOW_48_in_rulePathExprNode4951 = new BitSet(new long[]{0x0000000000000010L});
-    public static final BitSet FOLLOW_RULE_ID_in_rulePathExprNode4971 = new BitSet(new long[]{0x0001000000000002L});
-    public static final BitSet FOLLOW_rulePathExprTerm_in_entryRulePathExprTerm5009 = new BitSet(new long[]{0x0000000000000000L});
-    public static final BitSet FOLLOW_EOF_in_entryRulePathExprTerm5019 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_ruleAxis_in_rulePathExprTerm5074 = new BitSet(new long[]{0x0000000000000010L});
-    public static final BitSet FOLLOW_RULE_ID_in_rulePathExprTerm5095 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_ruleAxis_in_entryRuleAxis5131 = new BitSet(new long[]{0x0000000000000000L});
-    public static final BitSet FOLLOW_EOF_in_entryRuleAxis5141 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_49_in_ruleAxis5183 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_26_in_ruleActualParamByKeyword4253 = new BitSet(new long[]{0x0000000000000010L});
+    public static final BitSet FOLLOW_RULE_ID_in_ruleActualParamByKeyword4270 = new BitSet(new long[]{0x0000000008000000L});
+    public static final BitSet FOLLOW_27_in_ruleActualParamByKeyword4287 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_ruleIDOrWildcard_in_entryRuleIDOrWildcard4323 = new BitSet(new long[]{0x0000000000000000L});
+    public static final BitSet FOLLOW_EOF_in_entryRuleIDOrWildcard4333 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_RULE_ID_in_ruleIDOrWildcard4375 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_23_in_ruleIDOrWildcard4404 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_ruleIDOrPathExpr_in_entryRuleIDOrPathExpr4453 = new BitSet(new long[]{0x0000000000000000L});
+    public static final BitSet FOLLOW_EOF_in_entryRuleIDOrPathExpr4463 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_ruleIDOrWildcard_in_ruleIDOrPathExpr4510 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_rulePathExpr_in_ruleIDOrPathExpr4537 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_ruleLiteral_in_ruleIDOrPathExpr4563 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_ruleLiteral_in_entryRuleLiteral4600 = new BitSet(new long[]{0x0000000000000000L});
+    public static final BitSet FOLLOW_EOF_in_entryRuleLiteral4611 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_RULE_INT_in_ruleLiteral4652 = new BitSet(new long[]{0x0000000000000082L});
+    public static final BitSet FOLLOW_RULE_STRING_in_ruleLiteral4680 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_rulePathExpr_in_entryRulePathExpr4725 = new BitSet(new long[]{0x0000000000000000L});
+    public static final BitSet FOLLOW_EOF_in_entryRulePathExpr4735 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_47_in_rulePathExpr4772 = new BitSet(new long[]{0x0002000000000010L});
+    public static final BitSet FOLLOW_rulePathExprNode_in_rulePathExpr4794 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_rulePathExprNode_in_entryRulePathExprNode4829 = new BitSet(new long[]{0x0000000000000000L});
+    public static final BitSet FOLLOW_EOF_in_entryRulePathExprNode4839 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_rulePathExprTerm_in_rulePathExprNode4886 = new BitSet(new long[]{0x0001000000000002L});
+    public static final BitSet FOLLOW_48_in_rulePathExprNode4907 = new BitSet(new long[]{0x0000000000000010L});
+    public static final BitSet FOLLOW_RULE_ID_in_rulePathExprNode4927 = new BitSet(new long[]{0x0001000000000002L});
+    public static final BitSet FOLLOW_rulePathExprTerm_in_entryRulePathExprTerm4965 = new BitSet(new long[]{0x0000000000000000L});
+    public static final BitSet FOLLOW_EOF_in_entryRulePathExprTerm4975 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_ruleAxis_in_rulePathExprTerm5030 = new BitSet(new long[]{0x0000000000000010L});
+    public static final BitSet FOLLOW_RULE_ID_in_rulePathExprTerm5051 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_ruleAxis_in_entryRuleAxis5087 = new BitSet(new long[]{0x0000000000000000L});
+    public static final BitSet FOLLOW_EOF_in_entryRuleAxis5097 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_49_in_ruleAxis5139 = new BitSet(new long[]{0x0000000000000002L});
 
 }
