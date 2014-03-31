@@ -28,6 +28,7 @@ import org.earthsystemcurator.cupidLanguage.SubroutineName;
 import org.earthsystemcurator.cupidLanguage.Type;
 import org.earthsystemcurator.cupidLanguage.UsesEntity;
 import org.earthsystemcurator.cupidLanguage.UsesModule;
+import org.earthsystemcurator.cupidLanguage.VariableDeclaration;
 
 import org.eclipse.emf.ecore.EAttribute;
 import org.eclipse.emf.ecore.EClass;
@@ -176,6 +177,13 @@ public class CupidLanguagePackageImpl extends EPackageImpl implements CupidLangu
    * @generated
    */
   private EClass actualParamByKeywordEClass = null;
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  private EClass variableDeclarationEClass = null;
 
   /**
    * <!-- begin-user-doc -->
@@ -960,6 +968,26 @@ public class CupidLanguagePackageImpl extends EPackageImpl implements CupidLangu
    * <!-- end-user-doc -->
    * @generated
    */
+  public EClass getVariableDeclaration()
+  {
+    return variableDeclarationEClass;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EReference getVariableDeclaration_Type()
+  {
+    return (EReference)variableDeclarationEClass.getEStructuralFeatures().get(0);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
   public EClass getIDOrWildcard()
   {
     return idOrWildcardEClass;
@@ -1202,6 +1230,9 @@ public class CupidLanguagePackageImpl extends EPackageImpl implements CupidLangu
     actualParamByKeywordEClass = createEClass(ACTUAL_PARAM_BY_KEYWORD);
     createEAttribute(actualParamByKeywordEClass, ACTUAL_PARAM_BY_KEYWORD__KEYWORD);
 
+    variableDeclarationEClass = createEClass(VARIABLE_DECLARATION);
+    createEReference(variableDeclarationEClass, VARIABLE_DECLARATION__TYPE);
+
     idOrWildcardEClass = createEClass(ID_OR_WILDCARD);
     createEAttribute(idOrWildcardEClass, ID_OR_WILDCARD__ID);
     createEAttribute(idOrWildcardEClass, ID_OR_WILDCARD__WILDCARD);
@@ -1258,6 +1289,7 @@ public class CupidLanguagePackageImpl extends EPackageImpl implements CupidLangu
     subroutineNameEClass.getESuperTypes().add(this.getImplicitContextMapping());
     callEClass.getESuperTypes().add(this.getImplicitContextMapping());
     actualParamByKeywordEClass.getESuperTypes().add(this.getImplicitContextMapping());
+    variableDeclarationEClass.getESuperTypes().add(this.getImplicitContextMapping());
     idOrWildcardEClass.getESuperTypes().add(this.getIDOrPathExpr());
     pathExprEClass.getESuperTypes().add(this.getIDOrPathExpr());
     pathExprTermEClass.getESuperTypes().add(this.getPathExpr());
@@ -1349,6 +1381,9 @@ public class CupidLanguagePackageImpl extends EPackageImpl implements CupidLangu
 
     initEClass(actualParamByKeywordEClass, ActualParamByKeyword.class, "ActualParamByKeyword", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
     initEAttribute(getActualParamByKeyword_Keyword(), ecorePackage.getEString(), "keyword", null, 0, 1, ActualParamByKeyword.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+
+    initEClass(variableDeclarationEClass, VariableDeclaration.class, "VariableDeclaration", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+    initEReference(getVariableDeclaration_Type(), this.getType(), null, "type", null, 0, 1, VariableDeclaration.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
     initEClass(idOrWildcardEClass, IDOrWildcard.class, "IDOrWildcard", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
     initEAttribute(getIDOrWildcard_Id(), ecorePackage.getEString(), "id", null, 0, 1, IDOrWildcard.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);

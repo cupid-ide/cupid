@@ -859,6 +859,34 @@ public interface CupidLanguagePackage extends EPackage
   int ACTUAL_PARAM_BY_KEYWORD_FEATURE_COUNT = IMPLICIT_CONTEXT_MAPPING_FEATURE_COUNT + 1;
 
   /**
+   * The meta object id for the '{@link org.earthsystemcurator.cupidLanguage.impl.VariableDeclarationImpl <em>Variable Declaration</em>}' class.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @see org.earthsystemcurator.cupidLanguage.impl.VariableDeclarationImpl
+   * @see org.earthsystemcurator.cupidLanguage.impl.CupidLanguagePackageImpl#getVariableDeclaration()
+   * @generated
+   */
+  int VARIABLE_DECLARATION = 19;
+
+  /**
+   * The feature id for the '<em><b>Type</b></em>' containment reference.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int VARIABLE_DECLARATION__TYPE = IMPLICIT_CONTEXT_MAPPING_FEATURE_COUNT + 0;
+
+  /**
+   * The number of structural features of the '<em>Variable Declaration</em>' class.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int VARIABLE_DECLARATION_FEATURE_COUNT = IMPLICIT_CONTEXT_MAPPING_FEATURE_COUNT + 1;
+
+  /**
    * The meta object id for the '{@link org.earthsystemcurator.cupidLanguage.impl.IDOrPathExprImpl <em>ID Or Path Expr</em>}' class.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
@@ -866,7 +894,7 @@ public interface CupidLanguagePackage extends EPackage
    * @see org.earthsystemcurator.cupidLanguage.impl.CupidLanguagePackageImpl#getIDOrPathExpr()
    * @generated
    */
-  int ID_OR_PATH_EXPR = 20;
+  int ID_OR_PATH_EXPR = 21;
 
   /**
    * The feature id for the '<em><b>Literal</b></em>' attribute.
@@ -894,7 +922,7 @@ public interface CupidLanguagePackage extends EPackage
    * @see org.earthsystemcurator.cupidLanguage.impl.CupidLanguagePackageImpl#getIDOrWildcard()
    * @generated
    */
-  int ID_OR_WILDCARD = 19;
+  int ID_OR_WILDCARD = 20;
 
   /**
    * The feature id for the '<em><b>Literal</b></em>' attribute.
@@ -940,7 +968,7 @@ public interface CupidLanguagePackage extends EPackage
    * @see org.earthsystemcurator.cupidLanguage.impl.CupidLanguagePackageImpl#getPathExpr()
    * @generated
    */
-  int PATH_EXPR = 21;
+  int PATH_EXPR = 22;
 
   /**
    * The feature id for the '<em><b>Literal</b></em>' attribute.
@@ -986,7 +1014,7 @@ public interface CupidLanguagePackage extends EPackage
    * @see org.earthsystemcurator.cupidLanguage.impl.CupidLanguagePackageImpl#getAxis()
    * @generated
    */
-  int AXIS = 22;
+  int AXIS = 23;
 
   /**
    * The feature id for the '<em><b>Ancestor</b></em>' attribute.
@@ -1014,7 +1042,7 @@ public interface CupidLanguagePackage extends EPackage
    * @see org.earthsystemcurator.cupidLanguage.impl.CupidLanguagePackageImpl#getPathExprTerm()
    * @generated
    */
-  int PATH_EXPR_TERM = 23;
+  int PATH_EXPR_TERM = 24;
 
   /**
    * The feature id for the '<em><b>Literal</b></em>' attribute.
@@ -1801,6 +1829,27 @@ public interface CupidLanguagePackage extends EPackage
   EAttribute getActualParamByKeyword_Keyword();
 
   /**
+   * Returns the meta object for class '{@link org.earthsystemcurator.cupidLanguage.VariableDeclaration <em>Variable Declaration</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for class '<em>Variable Declaration</em>'.
+   * @see org.earthsystemcurator.cupidLanguage.VariableDeclaration
+   * @generated
+   */
+  EClass getVariableDeclaration();
+
+  /**
+   * Returns the meta object for the containment reference '{@link org.earthsystemcurator.cupidLanguage.VariableDeclaration#getType <em>Type</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for the containment reference '<em>Type</em>'.
+   * @see org.earthsystemcurator.cupidLanguage.VariableDeclaration#getType()
+   * @see #getVariableDeclaration()
+   * @generated
+   */
+  EReference getVariableDeclaration_Type();
+
+  /**
    * Returns the meta object for class '{@link org.earthsystemcurator.cupidLanguage.IDOrWildcard <em>ID Or Wildcard</em>}'.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
@@ -2542,6 +2591,24 @@ public interface CupidLanguagePackage extends EPackage
      * @generated
      */
     EAttribute ACTUAL_PARAM_BY_KEYWORD__KEYWORD = eINSTANCE.getActualParamByKeyword_Keyword();
+
+    /**
+     * The meta object literal for the '{@link org.earthsystemcurator.cupidLanguage.impl.VariableDeclarationImpl <em>Variable Declaration</em>}' class.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @see org.earthsystemcurator.cupidLanguage.impl.VariableDeclarationImpl
+     * @see org.earthsystemcurator.cupidLanguage.impl.CupidLanguagePackageImpl#getVariableDeclaration()
+     * @generated
+     */
+    EClass VARIABLE_DECLARATION = eINSTANCE.getVariableDeclaration();
+
+    /**
+     * The meta object literal for the '<em><b>Type</b></em>' containment reference feature.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    EReference VARIABLE_DECLARATION__TYPE = eINSTANCE.getVariableDeclaration_Type();
 
     /**
      * The meta object literal for the '{@link org.earthsystemcurator.cupidLanguage.impl.IDOrWildcardImpl <em>ID Or Wildcard</em>}' class.

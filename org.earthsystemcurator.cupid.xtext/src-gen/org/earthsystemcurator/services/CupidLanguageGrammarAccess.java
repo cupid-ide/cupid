@@ -624,12 +624,15 @@ public class CupidLanguageGrammarAccess extends AbstractGrammarElementFinder {
 		private final RuleCall cSubroutineParserRuleCall_5 = (RuleCall)cAlternatives.eContents().get(5);
 		private final RuleCall cSubroutineNameParserRuleCall_6 = (RuleCall)cAlternatives.eContents().get(6);
 		private final RuleCall cActualParamByKeywordParserRuleCall_7 = (RuleCall)cAlternatives.eContents().get(7);
+		private final RuleCall cVariableDeclarationParserRuleCall_8 = (RuleCall)cAlternatives.eContents().get(8);
 		
 		//ImplicitContextMapping:
-		//	Module | ModuleName | UsesModule | UsesEntity | Call | Subroutine | SubroutineName | ActualParamByKeyword;
+		//	Module | ModuleName | UsesModule | UsesEntity | Call | Subroutine | SubroutineName | ActualParamByKeyword |
+		//	VariableDeclaration;
 		public ParserRule getRule() { return rule; }
 
-		//Module | ModuleName | UsesModule | UsesEntity | Call | Subroutine | SubroutineName | ActualParamByKeyword
+		//Module | ModuleName | UsesModule | UsesEntity | Call | Subroutine | SubroutineName | ActualParamByKeyword |
+		//VariableDeclaration
 		public Alternatives getAlternatives() { return cAlternatives; }
 
 		//Module
@@ -655,6 +658,9 @@ public class CupidLanguageGrammarAccess extends AbstractGrammarElementFinder {
 
 		//ActualParamByKeyword
 		public RuleCall getActualParamByKeywordParserRuleCall_7() { return cActualParamByKeywordParserRuleCall_7; }
+
+		//VariableDeclaration
+		public RuleCall getVariableDeclarationParserRuleCall_8() { return cVariableDeclarationParserRuleCall_8; }
 	}
 
 	public class ModuleElements extends AbstractParserRuleElementFinder {
@@ -1203,6 +1209,38 @@ public class CupidLanguageGrammarAccess extends AbstractGrammarElementFinder {
 		public Keyword getRightParenthesisKeyword_3() { return cRightParenthesisKeyword_3; }
 	}
 
+	public class VariableDeclarationElements extends AbstractParserRuleElementFinder {
+		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "VariableDeclaration");
+		private final Group cGroup = (Group)rule.eContents().get(1);
+		private final Keyword cDeclarationKeyword_0 = (Keyword)cGroup.eContents().get(0);
+		private final Keyword cLeftParenthesisKeyword_1 = (Keyword)cGroup.eContents().get(1);
+		private final Assignment cTypeAssignment_2 = (Assignment)cGroup.eContents().get(2);
+		private final RuleCall cTypeTypeParserRuleCall_2_0 = (RuleCall)cTypeAssignment_2.eContents().get(0);
+		private final Keyword cRightParenthesisKeyword_3 = (Keyword)cGroup.eContents().get(3);
+		
+		//VariableDeclaration:
+		//	"declaration" "(" type=Type ")";
+		public ParserRule getRule() { return rule; }
+
+		//"declaration" "(" type=Type ")"
+		public Group getGroup() { return cGroup; }
+
+		//"declaration"
+		public Keyword getDeclarationKeyword_0() { return cDeclarationKeyword_0; }
+
+		//"("
+		public Keyword getLeftParenthesisKeyword_1() { return cLeftParenthesisKeyword_1; }
+
+		//type=Type
+		public Assignment getTypeAssignment_2() { return cTypeAssignment_2; }
+
+		//Type
+		public RuleCall getTypeTypeParserRuleCall_2_0() { return cTypeTypeParserRuleCall_2_0; }
+
+		//")"
+		public Keyword getRightParenthesisKeyword_3() { return cRightParenthesisKeyword_3; }
+	}
+
 	public class IDOrWildcardElements extends AbstractParserRuleElementFinder {
 		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "IDOrWildcard");
 		private final Alternatives cAlternatives = (Alternatives)rule.eContents().get(1);
@@ -1425,6 +1463,7 @@ public class CupidLanguageGrammarAccess extends AbstractGrammarElementFinder {
 	private CallElements pCall;
 	private ActualParamElements pActualParam;
 	private ActualParamByKeywordElements pActualParamByKeyword;
+	private VariableDeclarationElements pVariableDeclaration;
 	private IDOrWildcardElements pIDOrWildcard;
 	private IDOrPathExprElements pIDOrPathExpr;
 	private LiteralElements pLiteral;
@@ -1609,7 +1648,8 @@ public class CupidLanguageGrammarAccess extends AbstractGrammarElementFinder {
 	}
 
 	//ImplicitContextMapping:
-	//	Module | ModuleName | UsesModule | UsesEntity | Call | Subroutine | SubroutineName | ActualParamByKeyword;
+	//	Module | ModuleName | UsesModule | UsesEntity | Call | Subroutine | SubroutineName | ActualParamByKeyword |
+	//	VariableDeclaration;
 	public ImplicitContextMappingElements getImplicitContextMappingAccess() {
 		return (pImplicitContextMapping != null) ? pImplicitContextMapping : (pImplicitContextMapping = new ImplicitContextMappingElements());
 	}
@@ -1737,6 +1777,16 @@ public class CupidLanguageGrammarAccess extends AbstractGrammarElementFinder {
 	
 	public ParserRule getActualParamByKeywordRule() {
 		return getActualParamByKeywordAccess().getRule();
+	}
+
+	//VariableDeclaration:
+	//	"declaration" "(" type=Type ")";
+	public VariableDeclarationElements getVariableDeclarationAccess() {
+		return (pVariableDeclaration != null) ? pVariableDeclaration : (pVariableDeclaration = new VariableDeclarationElements());
+	}
+	
+	public ParserRule getVariableDeclarationRule() {
+		return getVariableDeclarationAccess().getRule();
 	}
 
 	//IDOrWildcard:

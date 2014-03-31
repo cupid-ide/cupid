@@ -194,6 +194,15 @@ public interface CupidLanguageFactory extends EFactory
   ActualParamByKeyword createActualParamByKeyword();
 
   /**
+   * Returns a new object of class '<em>Variable Declaration</em>'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return a new object of class '<em>Variable Declaration</em>'.
+   * @generated
+   */
+  VariableDeclaration createVariableDeclaration();
+
+  /**
    * Returns a new object of class '<em>ID Or Wildcard</em>'.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->

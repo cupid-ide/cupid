@@ -86,6 +86,7 @@ public class CupidLanguageParser extends AbstractContentAssistParser {
 					put(grammarAccess.getActualParamAccess().getGroup(), "rule__ActualParam__Group__0");
 					put(grammarAccess.getActualParamAccess().getGroup_0(), "rule__ActualParam__Group_0__0");
 					put(grammarAccess.getActualParamByKeywordAccess().getGroup(), "rule__ActualParamByKeyword__Group__0");
+					put(grammarAccess.getVariableDeclarationAccess().getGroup(), "rule__VariableDeclaration__Group__0");
 					put(grammarAccess.getPathExprAccess().getGroup(), "rule__PathExpr__Group__0");
 					put(grammarAccess.getPathExprNodeAccess().getGroup(), "rule__PathExprNode__Group__0");
 					put(grammarAccess.getPathExprNodeAccess().getGroup_1(), "rule__PathExprNode__Group_1__0");
@@ -154,6 +155,7 @@ public class CupidLanguageParser extends AbstractContentAssistParser {
 					put(grammarAccess.getActualParamAccess().getOptionalAssignment_0_1(), "rule__ActualParam__OptionalAssignment_0_1");
 					put(grammarAccess.getActualParamAccess().getValueAssignment_1(), "rule__ActualParam__ValueAssignment_1");
 					put(grammarAccess.getActualParamByKeywordAccess().getKeywordAssignment_2(), "rule__ActualParamByKeyword__KeywordAssignment_2");
+					put(grammarAccess.getVariableDeclarationAccess().getTypeAssignment_2(), "rule__VariableDeclaration__TypeAssignment_2");
 					put(grammarAccess.getIDOrWildcardAccess().getIdAssignment_0(), "rule__IDOrWildcard__IdAssignment_0");
 					put(grammarAccess.getIDOrWildcardAccess().getWildcardAssignment_1(), "rule__IDOrWildcard__WildcardAssignment_1");
 					put(grammarAccess.getIDOrPathExprAccess().getLiteralAssignment_2(), "rule__IDOrPathExpr__LiteralAssignment_2");

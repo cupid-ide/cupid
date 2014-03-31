@@ -213,6 +213,14 @@ public class CupidLanguageSwitch<T> extends Switch<T>
         if (result == null) result = defaultCase(theEObject);
         return result;
       }
+      case CupidLanguagePackage.VARIABLE_DECLARATION:
+      {
+        VariableDeclaration variableDeclaration = (VariableDeclaration)theEObject;
+        T result = caseVariableDeclaration(variableDeclaration);
+        if (result == null) result = caseImplicitContextMapping(variableDeclaration);
+        if (result == null) result = defaultCase(theEObject);
+        return result;
+      }
       case CupidLanguagePackage.ID_OR_WILDCARD:
       {
         IDOrWildcard idOrWildcard = (IDOrWildcard)theEObject;
@@ -556,6 +564,22 @@ public class CupidLanguageSwitch<T> extends Switch<T>
    * @generated
    */
   public T caseActualParamByKeyword(ActualParamByKeyword object)
+  {
+    return null;
+  }
+
+  /**
+   * Returns the result of interpreting the object as an instance of '<em>Variable Declaration</em>'.
+   * <!-- begin-user-doc -->
+   * This implementation returns null;
+   * returning a non-null result will terminate the switch.
+   * <!-- end-user-doc -->
+   * @param object the target of the switch.
+   * @return the result of interpreting the object as an instance of '<em>Variable Declaration</em>'.
+   * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+   * @generated
+   */
+  public T caseVariableDeclaration(VariableDeclaration object)
   {
     return null;
   }

@@ -26,6 +26,7 @@ import org.earthsystemcurator.cupidLanguage.SubroutineName;
 import org.earthsystemcurator.cupidLanguage.Type;
 import org.earthsystemcurator.cupidLanguage.UsesEntity;
 import org.earthsystemcurator.cupidLanguage.UsesModule;
+import org.earthsystemcurator.cupidLanguage.VariableDeclaration;
 import org.earthsystemcurator.services.CupidLanguageGrammarAccess;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.xtext.serializer.acceptor.ISemanticSequenceAcceptor;
@@ -214,6 +215,13 @@ public class CupidLanguageSemanticSequencer extends AbstractDelegatingSemanticSe
 				if(context == grammarAccess.getImplicitContextMappingRule() ||
 				   context == grammarAccess.getUsesModuleRule()) {
 					sequence_UsesModule(context, (UsesModule) semanticObject); 
+					return; 
+				}
+				else break;
+			case CupidLanguagePackage.VARIABLE_DECLARATION:
+				if(context == grammarAccess.getImplicitContextMappingRule() ||
+				   context == grammarAccess.getVariableDeclarationRule()) {
+					sequence_VariableDeclaration(context, (VariableDeclaration) semanticObject); 
 					return; 
 				}
 				else break;
@@ -519,6 +527,22 @@ public class CupidLanguageSemanticSequencer extends AbstractDelegatingSemanticSe
 		INodesForEObjectProvider nodes = createNodeProvider(semanticObject);
 		SequenceFeeder feeder = createSequencerFeeder(semanticObject, nodes);
 		feeder.accept(grammarAccess.getUsesModuleAccess().getNameIDOrPathExprParserRuleCall_2_0(), semanticObject.getName());
+		feeder.finish();
+	}
+	
+	
+	/**
+	 * Constraint:
+	 *     type=Type
+	 */
+	protected void sequence_VariableDeclaration(EObject context, VariableDeclaration semanticObject) {
+		if(errorAcceptor != null) {
+			if(transientValues.isValueTransient(semanticObject, CupidLanguagePackage.Literals.VARIABLE_DECLARATION__TYPE) == ValueTransient.YES)
+				errorAcceptor.accept(diagnosticProvider.createFeatureValueMissing(semanticObject, CupidLanguagePackage.Literals.VARIABLE_DECLARATION__TYPE));
+		}
+		INodesForEObjectProvider nodes = createNodeProvider(semanticObject);
+		SequenceFeeder feeder = createSequencerFeeder(semanticObject, nodes);
+		feeder.accept(grammarAccess.getVariableDeclarationAccess().getTypeTypeParserRuleCall_2_0(), semanticObject.getType());
 		feeder.finish();
 	}
 }

@@ -113,6 +113,11 @@ class CupidLanguageGenerator implements IGenerator {
 		«ENDIF»
 	'''
 	
+	//def defaultValue(SubconceptOrAttribute soa) {
+	//	var ann = soa.annotation?.findFirst[a|a.key.equals('@default')]
+	//	if (ann != null) " = '" + ann.value + "'"
+	//	else ""
+	//}
 	
 	def toCardinality(Cardinality c) {
 		if (c.zeroOrMore) '[*]'

@@ -1,6 +1,7 @@
 package org.earthsystemcurator.cupid.nuopc.fsml.util;
 
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
@@ -19,19 +20,25 @@ import org.earthsystemcurator.cupidLanguage.Subroutine;
 import org.earthsystemcurator.cupidLanguage.SubroutineName;
 import org.earthsystemcurator.cupidLanguage.UsesEntity;
 import org.earthsystemcurator.cupidLanguage.UsesModule;
+import org.earthsystemcurator.cupidLanguage.VariableDeclaration;
 import org.eclipse.photran.core.IFortranAST;
 import org.eclipse.photran.internal.core.analysis.binding.Definition;
+import org.eclipse.photran.internal.core.analysis.binding.ScopingNode;
 import org.eclipse.photran.internal.core.analysis.types.DerivedType;
 import org.eclipse.photran.internal.core.analysis.types.Type;
 import org.eclipse.photran.internal.core.parser.ASTCallStmtNode;
+import org.eclipse.photran.internal.core.parser.ASTDerivedTypeStmtNode;
+import org.eclipse.photran.internal.core.parser.ASTEntityDeclNode;
 import org.eclipse.photran.internal.core.parser.ASTModuleNode;
 import org.eclipse.photran.internal.core.parser.ASTOnlyNode;
 import org.eclipse.photran.internal.core.parser.ASTSubroutineArgNode;
 import org.eclipse.photran.internal.core.parser.ASTSubroutineParNode;
 import org.eclipse.photran.internal.core.parser.ASTSubroutineSubprogramNode;
+import org.eclipse.photran.internal.core.parser.ASTTypeDeclarationStmtNode;
 import org.eclipse.photran.internal.core.parser.ASTUseStmtNode;
 import org.eclipse.photran.internal.core.parser.IASTListNode;
 import org.eclipse.photran.internal.core.parser.IASTNode;
+import org.eclipse.photran.internal.core.vpg.PhotranTokenRef;
 
 @SuppressWarnings("restriction")
 public class CodeQuery2 {
@@ -357,6 +364,43 @@ public class CodeQuery2 {
 			}
 		}
 		return null;
+	}
+	
+	public static Map<String, Map<PathExpr, String>> variableDeclaration(ScopingNode node, VariableDeclaration mapping) {
+			
+		Map<String, Map<PathExpr, String>> result = new HashMap<String, Map<PathExpr, String>>();
+		org.earthsystemcurator.cupidLanguage.Type type = mapping.getType();
+		
+		Set<ASTTypeDeclarationStmtNode> nodes = node.findAll(ASTTypeDeclarationStmtNode.class);
+		for (ASTTypeDeclarationStmtNode n : nodes) {
+			
+			boolean toAdd = false;
+			Map<PathExpr, String> bindings = null;
+				
+			if (type.isInteger() && n.getTypeSpec().isInteger() || 
+				type.isCharacter() && n.getTypeSpec().isCharacter() ||
+				type.isLogical() && n.getTypeSpec().isLogical() ||
+				type.isReal() && n.getTypeSpec().isReal() ||
+				type.isDouble() && n.getTypeSpec().isDouble()) {
+				//TODO: add other built-in types as needed
+				toAdd = true;
+			}
+			else if (type.isDerived() && n.getTypeSpec().isDerivedType()) {				
+				bindings = newBindings();
+				String typeName = n.getTypeSpec().getTypeName().getText().trim();
+				toAdd = matchAndBind(type.getDerivedType(), typeName, bindings);
+			}
+			
+			// if we found the type, then add it
+			if (toAdd) {
+				for (ASTEntityDeclNode decl : n.getEntityDeclList()) {
+					result.put(decl.getObjectName().getObjectName().getText(), bindings);
+				}
+			}
+				
+		}
+	
+		return result;
 	}
 	
 }

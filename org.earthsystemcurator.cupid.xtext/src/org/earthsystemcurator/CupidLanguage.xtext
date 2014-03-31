@@ -77,7 +77,7 @@ Mapping:
 	context=PathExpr? mapping=ImplicitContextMapping;
 
 ImplicitContextMapping:
-	Module | ModuleName | UsesModule | UsesEntity | Call | Subroutine | SubroutineName | ActualParamByKeyword;
+	Module | ModuleName | UsesModule | UsesEntity | Call | Subroutine | SubroutineName | ActualParamByKeyword | VariableDeclaration;
 
 Module: {Module} 
 	'module' ('(' name=IDOrPathExpr ')')?;
@@ -119,6 +119,9 @@ ActualParam:
 
 ActualParamByKeyword:
 	'actualParamByKeyword' '(' keyword=ID ')';
+	
+VariableDeclaration:
+	'declaration' '(' type=Type ')';
 
 IDOrWildcard:
 	id=ID | wildcard?='*';
