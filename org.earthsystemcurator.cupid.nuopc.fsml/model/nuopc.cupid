@@ -1,0 +1,365 @@
+language NUOPC 'http://www.earthsystemcurator.org/nuopcgen' {
+
+	top concept NUOPCApplication 
+	{	
+		@label = "NUOPC Application"
+		@doc = "A collection of interoperable NUOPC components"
+		
+		attrib name	{ @name }
+		
+		models*:NUOPCModel
+		drivers*:NUOPCDriver
+		driversAtmOcn*:NUOPCDriverAtmOcn
+		
+	}
+	
+	concept NUOPCDriver <module> 
+	{
+		@label="NUOPC Driver"
+		@doc = "A type of NUOPC component that controls its child components"
+		
+		attrib driverName <moduleName> 
+		{
+			@name
+			@label="Driver Name"
+			@default = "NUOPCDriver"
+		}
+		
+		standardESMFImport <usesModule(ESMF)> {@label = "ESMF Import"}
+		standardNUOPCImport <usesModule(NUOPC)> {@label = "NUOPC Import"}
+		
+		genericDriverImports! <usesModule(NUOPC_Driver)>
+		{
+			@label = "Generic Driver Imports"
+			attrib importsGenericSS! <usesEntity(routine_SetServices)>
+			attrib importsTypeInternalState <usesEntity(type_InternalState)>
+			attrib importsLabelInternalState <usesEntity(label_InternalState)>
+			attrib importsLabelSetModelCount <usesEntity(label_SetModelCount)>
+			attrib importsLabelSetModelServices <usesEntity(label_SetModelServices)>
+			
+		}
+		
+		modelImports {
+			@label = "Child Model Imports"
+			
+		 	modelImport* <usesModule(#modelImportName)> {
+				@label = "Child Import"
+				attrib modelImportName
+				--ref modelRef = ^models[modelName=modelImportName]
+			}
+			
+			
+		}
+		
+		implementsSetServices <subroutine(SetServices)> {
+			
+			callsGenericSetServices <call(#^genericDriverImports/importsGenericSS)>
+			
+			callsMethodAdd* <call(ESMF_MethodAdd(*, #label, *, *))> {
+				attrib label
+			}
+		}
+		
+	}
+	
+	concept NUOPCDriverAtmOcn <module> 
+	{
+		@label="NUOPC Atm-Ocn Driver"
+				
+		attrib driverName <moduleName> 
+		{
+			@name
+			@label="Driver Name"
+		}
+		
+		standardESMFImport <usesModule(ESMF)> {@label = "ESMF Import"}
+		standardNUOPCImport <usesModule(NUOPC)> {@label = "NUOPC Import"}
+		
+		genericDriverImports! <usesModule(NUOPC_DriverAtmOcn)>
+		{
+			@label = "Generic Driver Atm-Ocn Imports"
+			attrib importsGenericSS! <usesEntity(routine_SetServices)>
+			attrib importsTypeInternalState <usesEntity(type_InternalState)>
+			attrib importsLabelInternalState <usesEntity(label_InternalState)>
+			attrib importsLabelSetModelPetLists <usesEntity(label_SetModelPetLists)>
+			attrib importsLabelSetModelServices <usesEntity(label_SetModelServices)>
+			
+		}
+		
+		connectorImport <usesModule(NUOPC_Connector)> {
+			@label = "Generic Connector Imports"
+			attrib importsSetServices <usesEntity(routine_SetServices)>
+		}
+		
+		implementsSetServices <subroutine(SetServices(inout type(ESMF_GridComp) #p_gcomp, out integer #p_rc))> {
+			@label = "Set Services"		
+			
+			attrib p_gcomp
+			attrib p_rc
+			
+			callsGenericSetServices <call(#^genericDriverImports/importsGenericSS)>
+			{
+				@label = "Calls Generic Driver Atm-Ocn Set Services"
+			}
+		}
+		
+		implementsSetModelPetLists <subroutine(*(inout type(ESMF_GridComp) #p_gcomp, out integer #p_rc) )> 
+		{
+			
+			@label = "Set Model PET Lists"
+			attrib n_SetModelPetLists <subroutineName> {@name}
+			attrib p_gcomp
+			attrib p_rc	
+			
+			attrib importsLabelSetModelPetLists <#^genericDriverImports usesEntity(label_SetModelPetLists)>
+					
+			--method registration
+			setModelPetListsRegistered! <#^implementsSetServices 
+					call(ESMF_MethodAdd(#^implementsSetServices/p_gcomp, 
+										label=#^genericDriverImports/importsLabelSetModelPetLists, 
+										userRoutine=#^n_SetModelPetLists, 
+										rc=#^implementsSetServices/p_rc))>
+			{
+				@label = "Registered in Set Services"
+			}
+			
+			--TODO: deal with internal state stuff
+			
+		}
+		
+		implementsSetModelServices <subroutine(*(inout type(ESMF_GridComp) #p_gcomp, out integer #p_rc) )> 
+		{
+			
+			@label = "Set Model Services"
+			attrib n_SetModelServices <subroutineName> {@name}
+			attrib p_gcomp
+			attrib p_rc	
+			
+			--imports label
+			attrib importsLabelSetModelServices! <#^genericDriverImports usesEntity(label_SetModelServices)>			
+			
+			--method registration
+			setModelPetListsRegistered! <#^implementsSetServices 
+					call(ESMF_MethodAdd(#^implementsSetServices/p_gcomp, 
+										label=#^genericDriverImports/importsLabelSetModelServices, 
+										userRoutine=#^n_SetModelServices, 
+										rc=#^implementsSetServices/p_rc))>
+			{
+				@label = "Registered in Set Services"
+			}
+			
+			
+		}
+		
+	}
+		
+	
+	concept NUOPCModel <module>
+	{
+		@label="NUOPC Model"
+		@doc="NUOPC Model is a generic model component that wraps a model code so it is suitable to be plugged into a generic Driver component."
+				
+		attrib modelName <moduleName> 
+		{
+			@name
+			@label="Model Name"
+			@default = "NUOPCModel"
+		}
+		
+		genericImports! <usesModule(NUOPC_Model)>
+		{
+			@label = "Generic Imports"
+			attrib importsGenericSS! <usesEntity(routine_SetServices)>
+			--attrib importsLabelModelAdvance <usesEntity(label_Advance)>
+			--attrib importsLabelSetClock <usesEntity(label_SetClock)>
+			
+		}
+		
+		implementsSetServices! <subroutine(*(inout type(ESMF_GridComp) #p_gcomp, out integer #p_rc) )> 
+		{
+			@label = "Set Services"
+			attrib n_SetServices <subroutineName> {@name @default="SetServices"}
+			attrib p_gcomp {@default="gcomp"}
+			attrib p_rc	{@default="rc"}	
+						
+			callsGenericSetServices! <call(#^genericImports/importsGenericSS(#^p_gcomp, #^p_rc))> 
+			{
+				@label = "Calls generic SetServices"	
+			}
+			/*
+			callsSetEntryPoint* <call(ESMF_GridCompSetEntryPoint(#gcomp, #method, userRoutine=#userRoutine, phase?=#phase, rc=#rc))> 
+			{
+				@label = "Calls ESMF_GridCompSetEntryPoint"
+				attrib method
+				attrib userRoutine {@name}
+				attrib phase
+			}			
+			*/
+		}
+		
+		initialize
+		{
+			@label = "Model Initialization"
+			
+			implementsInitP1 <subroutine(#n_initP1(
+										inout type(ESMF_GridComp) #p_gcomp, 
+										inout type(ESMF_State) #p_import, 
+										inout type(ESMF_State) #p_export, 
+										inout type(ESMF_Clock) #p_clock, 
+										out integer #p_rc))>
+			{
+				@label = "Init Phase 1"
+				attrib n_initP1 {@name @default="InitializeP1"}
+				attrib p_gcomp {@default="gcomp"}
+				attrib p_import {@default="importState"}
+				attrib p_export {@default="exportState"}
+				attrib p_clock {@default="clock"}
+				attrib p_rc {@default="rc"}
+	
+				advertisesImportField* <call(NUOPC_StateAdvertiseField(#^p_import, StandardName=#importStandardName, #^p_rc))> 
+				{
+					@label = "Advertises import field"
+					attrib importStandardName {
+						@label = "Standard Name"
+					}
+				}
+				
+				
+				advertisesExportField* <call(NUOPC_StateAdvertiseField(#^p_export, StandardName=#exportStandardName, #^p_rc))> 
+				{
+					@label = "Advertises export field"
+					attrib exportStandardName {
+						@label = "Standard Name"
+					}
+				}
+				
+				
+				registered! <#^implementsSetServices call(ESMF_GridCompSetEntryPoint(#^implementsSetServices/p_gcomp, ESMF_METHOD_INITIALIZE, userRoutine=#^n_initP1, phase=1, rc=#^implementsSetServices/p_rc))> 
+				{
+					@label = "Registered in Set Services"
+				--	attrib userRoutine <actualParamByKeyword(userRoutine)>
+				--	attrib phase <actualParamByKeyword(phase)>
+				}
+								
+			}
+		
+			
+			implementsInitP2 <subroutine(#n_initP2(
+						inout type(ESMF_GridComp) #p_gcomp, 
+						inout type(ESMF_State) #p_import, 
+						inout type(ESMF_State) #p_export, 
+						inout type(ESMF_Clock) #p_clock, 
+						out integer #p_rc))>
+			{
+				@label = "Init Phase 2"
+				
+				attrib n_initP2 {@name @default="InitializeP2"}
+				attrib p_gcomp {@default="gcomp"}
+				attrib p_import {@default="importState"}
+				attrib p_export {@default="exportState"}
+				attrib p_clock {@default="clock"}
+				attrib p_rc {@default="rc"}
+				
+				realizesImportField* <call(NUOPC_StateRealizeField(#^p_import, field=#importedField, rc=#^p_rc))> 
+				{
+					@label = "Realizes import field"
+					attrib importedField
+				}
+				
+				realizesExportField* <call(NUOPC_StateRealizeField(#^p_export, field=#exportedField, rc=#^p_rc))> 
+				{
+					@label = "Realizes export field"
+					attrib exportedField
+				}
+				
+				registered! <#^implementsSetServices call(ESMF_GridCompSetEntryPoint(
+						#^implementsSetServices/p_gcomp, 
+						ESMF_METHOD_INITIALIZE, 
+						userRoutine=#^n_initP2, 
+						phase=2, 
+						rc=#^implementsSetServices/p_rc))>
+				{
+					@label = "Registered in Set Services"
+				}
+						
+				--realizesAtLeastOneField
+				--realizesOrRegistered
+			}
+		}	
+		
+		modelRun
+		{
+			@label = "Model Run"
+			
+			modelAdvance* {	
+				
+				@label = "Model Advance Phase"
+				attrib userRoutine  {@name @default="ModelAdvance"}
+				attrib phase
+				
+				--imports label
+				attrib importsLabelModelAdvance <#^genericImports usesEntity(label_Advance)>	
+				
+				modelAdvanceRegistered <#^implementsSetServices 
+					call(ESMF_MethodAdd(*, 
+										index?=#^phase, 
+										label=#^importsLabelModelAdvance, 
+										userRoutine=#^userRoutine, 
+										rc=#^implementsSetServices/p_rc))>
+				{
+					@label = "Registered in Set Services"
+				}
+													
+				implementsSubroutine <subroutine(#^userRoutine(inout type(ESMF_GridComp) *, out integer *))> {
+					@label = "Implementation"
+					attrib name <subroutineName> {@name}
+				}
+			
+			}
+			
+			
+		}
+		
+		implementsSetClock <subroutine(*(inout type(ESMF_GridComp) #p_gcomp, out integer #p_rc) )> 
+		{
+			
+			@label = "Set Clock"
+			attrib n_SetClock <subroutineName> {@name}
+			attrib p_gcomp
+			attrib p_rc	
+			
+			attrib clock <declaration(type(ESMF_Clock))>
+			attrib timeStep <declaration(type(ESMF_TimeInterval))>
+			
+			--imports label
+			attrib importsLabelSetClock! <#^genericImports usesEntity(label_SetClock)>			
+			
+			--method registration
+			setClockRegistered! <#^implementsSetServices 
+					call(ESMF_MethodAdd(#^implementsSetServices/p_gcomp, 
+										label=#^importsLabelSetClock, 
+										userRoutine=#^n_SetClock, 
+										rc=#^implementsSetServices/p_rc))>
+			{
+				@label = "Registered in Set Services"
+			}
+			
+			--call NUOPC_GridCompSetClock(gcomp, clock, stabilityTimeStep, rc=rc)
+			setModelClock <call (NUOPC_GridCompSetClock(#^p_gcomp, #clock, #timeStep, rc=#^p_rc))> {
+				@label = "Set Clock"
+				attrib clock
+				attrib timeStep
+			}
+			
+			
+		}
+		
+				
+	}
+	
+	concept NUOPCMediator <module> 
+	{
+		@label="NUOPC Mediator"
+	}
+	
+}

@@ -3,8 +3,8 @@
 package org.earthsystemcurator.cupidLanguage.impl;
 
 import org.earthsystemcurator.cupidLanguage.CupidLanguagePackage;
+import org.earthsystemcurator.cupidLanguage.Expr;
 import org.earthsystemcurator.cupidLanguage.FormalParam;
-import org.earthsystemcurator.cupidLanguage.IDOrPathExpr;
 import org.earthsystemcurator.cupidLanguage.Intent;
 import org.earthsystemcurator.cupidLanguage.Type;
 
@@ -62,7 +62,7 @@ public class FormalParamImpl extends MinimalEObjectImpl.Container implements For
    * @generated
    * @ordered
    */
-  protected IDOrPathExpr name;
+  protected Expr name;
 
   /**
    * <!-- begin-user-doc -->
@@ -186,7 +186,7 @@ public class FormalParamImpl extends MinimalEObjectImpl.Container implements For
    * <!-- end-user-doc -->
    * @generated
    */
-  public IDOrPathExpr getName()
+  public Expr getName()
   {
     return name;
   }
@@ -196,9 +196,9 @@ public class FormalParamImpl extends MinimalEObjectImpl.Container implements For
    * <!-- end-user-doc -->
    * @generated
    */
-  public NotificationChain basicSetName(IDOrPathExpr newName, NotificationChain msgs)
+  public NotificationChain basicSetName(Expr newName, NotificationChain msgs)
   {
-    IDOrPathExpr oldName = name;
+    Expr oldName = name;
     name = newName;
     if (eNotificationRequired())
     {
@@ -213,7 +213,7 @@ public class FormalParamImpl extends MinimalEObjectImpl.Container implements For
    * <!-- end-user-doc -->
    * @generated
    */
-  public void setName(IDOrPathExpr newName)
+  public void setName(Expr newName)
   {
     if (newName != name)
     {
@@ -286,7 +286,7 @@ public class FormalParamImpl extends MinimalEObjectImpl.Container implements For
         setType((Type)newValue);
         return;
       case CupidLanguagePackage.FORMAL_PARAM__NAME:
-        setName((IDOrPathExpr)newValue);
+        setName((Expr)newValue);
         return;
     }
     super.eSet(featureID, newValue);
@@ -309,7 +309,7 @@ public class FormalParamImpl extends MinimalEObjectImpl.Container implements For
         setType((Type)null);
         return;
       case CupidLanguagePackage.FORMAL_PARAM__NAME:
-        setName((IDOrPathExpr)null);
+        setName((Expr)null);
         return;
     }
     super.eUnset(featureID);

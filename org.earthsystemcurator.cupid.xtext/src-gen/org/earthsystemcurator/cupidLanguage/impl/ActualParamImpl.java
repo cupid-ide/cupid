@@ -4,7 +4,7 @@ package org.earthsystemcurator.cupidLanguage.impl;
 
 import org.earthsystemcurator.cupidLanguage.ActualParam;
 import org.earthsystemcurator.cupidLanguage.CupidLanguagePackage;
-import org.earthsystemcurator.cupidLanguage.IDOrPathExpr;
+import org.earthsystemcurator.cupidLanguage.Expr;
 
 import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.common.notify.NotificationChain;
@@ -80,7 +80,7 @@ public class ActualParamImpl extends MinimalEObjectImpl.Container implements Act
    * @generated
    * @ordered
    */
-  protected IDOrPathExpr value;
+  protected Expr value;
 
   /**
    * <!-- begin-user-doc -->
@@ -154,7 +154,7 @@ public class ActualParamImpl extends MinimalEObjectImpl.Container implements Act
    * <!-- end-user-doc -->
    * @generated
    */
-  public IDOrPathExpr getValue()
+  public Expr getValue()
   {
     return value;
   }
@@ -164,9 +164,9 @@ public class ActualParamImpl extends MinimalEObjectImpl.Container implements Act
    * <!-- end-user-doc -->
    * @generated
    */
-  public NotificationChain basicSetValue(IDOrPathExpr newValue, NotificationChain msgs)
+  public NotificationChain basicSetValue(Expr newValue, NotificationChain msgs)
   {
-    IDOrPathExpr oldValue = value;
+    Expr oldValue = value;
     value = newValue;
     if (eNotificationRequired())
     {
@@ -181,7 +181,7 @@ public class ActualParamImpl extends MinimalEObjectImpl.Container implements Act
    * <!-- end-user-doc -->
    * @generated
    */
-  public void setValue(IDOrPathExpr newValue)
+  public void setValue(Expr newValue)
   {
     if (newValue != value)
     {
@@ -250,7 +250,7 @@ public class ActualParamImpl extends MinimalEObjectImpl.Container implements Act
         setOptional((Boolean)newValue);
         return;
       case CupidLanguagePackage.ACTUAL_PARAM__VALUE:
-        setValue((IDOrPathExpr)newValue);
+        setValue((Expr)newValue);
         return;
     }
     super.eSet(featureID, newValue);
@@ -273,7 +273,7 @@ public class ActualParamImpl extends MinimalEObjectImpl.Container implements Act
         setOptional(OPTIONAL_EDEFAULT);
         return;
       case CupidLanguagePackage.ACTUAL_PARAM__VALUE:
-        setValue((IDOrPathExpr)null);
+        setValue((Expr)null);
         return;
     }
     super.eUnset(featureID);

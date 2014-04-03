@@ -11,12 +11,13 @@ import org.earthsystemcurator.cupidLanguage.Cardinality;
 import org.earthsystemcurator.cupidLanguage.ConceptDef;
 import org.earthsystemcurator.cupidLanguage.CupidLanguageFactory;
 import org.earthsystemcurator.cupidLanguage.CupidLanguagePackage;
+import org.earthsystemcurator.cupidLanguage.DeclaredEntity;
+import org.earthsystemcurator.cupidLanguage.Expr;
 import org.earthsystemcurator.cupidLanguage.FormalParam;
-import org.earthsystemcurator.cupidLanguage.IDOrPathExpr;
-import org.earthsystemcurator.cupidLanguage.IDOrWildcard;
 import org.earthsystemcurator.cupidLanguage.ImplicitContextMapping;
 import org.earthsystemcurator.cupidLanguage.Intent;
 import org.earthsystemcurator.cupidLanguage.Language;
+import org.earthsystemcurator.cupidLanguage.LocalExpression;
 import org.earthsystemcurator.cupidLanguage.Mapping;
 import org.earthsystemcurator.cupidLanguage.Module;
 import org.earthsystemcurator.cupidLanguage.ModuleName;
@@ -190,14 +191,14 @@ public class CupidLanguagePackageImpl extends EPackageImpl implements CupidLangu
    * <!-- end-user-doc -->
    * @generated
    */
-  private EClass idOrWildcardEClass = null;
+  private EClass localExpressionEClass = null;
 
   /**
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @generated
    */
-  private EClass idOrPathExprEClass = null;
+  private EClass exprEClass = null;
 
   /**
    * <!-- begin-user-doc -->
@@ -212,6 +213,13 @@ public class CupidLanguagePackageImpl extends EPackageImpl implements CupidLangu
    * @generated
    */
   private EClass axisEClass = null;
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  private EClass declaredEntityEClass = null;
 
   /**
    * <!-- begin-user-doc -->
@@ -988,9 +996,9 @@ public class CupidLanguagePackageImpl extends EPackageImpl implements CupidLangu
    * <!-- end-user-doc -->
    * @generated
    */
-  public EClass getIDOrWildcard()
+  public EClass getLocalExpression()
   {
-    return idOrWildcardEClass;
+    return localExpressionEClass;
   }
 
   /**
@@ -998,9 +1006,9 @@ public class CupidLanguagePackageImpl extends EPackageImpl implements CupidLangu
    * <!-- end-user-doc -->
    * @generated
    */
-  public EAttribute getIDOrWildcard_Id()
+  public EAttribute getLocalExpression_Id()
   {
-    return (EAttribute)idOrWildcardEClass.getEStructuralFeatures().get(0);
+    return (EAttribute)localExpressionEClass.getEStructuralFeatures().get(0);
   }
 
   /**
@@ -1008,9 +1016,9 @@ public class CupidLanguagePackageImpl extends EPackageImpl implements CupidLangu
    * <!-- end-user-doc -->
    * @generated
    */
-  public EAttribute getIDOrWildcard_Wildcard()
+  public EAttribute getLocalExpression_Literal()
   {
-    return (EAttribute)idOrWildcardEClass.getEStructuralFeatures().get(1);
+    return (EAttribute)localExpressionEClass.getEStructuralFeatures().get(1);
   }
 
   /**
@@ -1018,9 +1026,9 @@ public class CupidLanguagePackageImpl extends EPackageImpl implements CupidLangu
    * <!-- end-user-doc -->
    * @generated
    */
-  public EClass getIDOrPathExpr()
+  public EClass getExpr()
   {
-    return idOrPathExprEClass;
+    return exprEClass;
   }
 
   /**
@@ -1028,9 +1036,29 @@ public class CupidLanguagePackageImpl extends EPackageImpl implements CupidLangu
    * <!-- end-user-doc -->
    * @generated
    */
-  public EAttribute getIDOrPathExpr_Literal()
+  public EAttribute getExpr_Wildcard()
   {
-    return (EAttribute)idOrPathExprEClass.getEStructuralFeatures().get(0);
+    return (EAttribute)exprEClass.getEStructuralFeatures().get(0);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EReference getExpr_Expr()
+  {
+    return (EReference)exprEClass.getEStructuralFeatures().get(1);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EReference getExpr_PathExpr()
+  {
+    return (EReference)exprEClass.getEStructuralFeatures().get(2);
   }
 
   /**
@@ -1081,6 +1109,16 @@ public class CupidLanguagePackageImpl extends EPackageImpl implements CupidLangu
   public EAttribute getAxis_Ancestor()
   {
     return (EAttribute)axisEClass.getEStructuralFeatures().get(0);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EClass getDeclaredEntity()
+  {
+    return declaredEntityEClass;
   }
 
   /**
@@ -1233,12 +1271,14 @@ public class CupidLanguagePackageImpl extends EPackageImpl implements CupidLangu
     variableDeclarationEClass = createEClass(VARIABLE_DECLARATION);
     createEReference(variableDeclarationEClass, VARIABLE_DECLARATION__TYPE);
 
-    idOrWildcardEClass = createEClass(ID_OR_WILDCARD);
-    createEAttribute(idOrWildcardEClass, ID_OR_WILDCARD__ID);
-    createEAttribute(idOrWildcardEClass, ID_OR_WILDCARD__WILDCARD);
+    localExpressionEClass = createEClass(LOCAL_EXPRESSION);
+    createEAttribute(localExpressionEClass, LOCAL_EXPRESSION__ID);
+    createEAttribute(localExpressionEClass, LOCAL_EXPRESSION__LITERAL);
 
-    idOrPathExprEClass = createEClass(ID_OR_PATH_EXPR);
-    createEAttribute(idOrPathExprEClass, ID_OR_PATH_EXPR__LITERAL);
+    exprEClass = createEClass(EXPR);
+    createEAttribute(exprEClass, EXPR__WILDCARD);
+    createEReference(exprEClass, EXPR__EXPR);
+    createEReference(exprEClass, EXPR__PATH_EXPR);
 
     pathExprEClass = createEClass(PATH_EXPR);
     createEReference(pathExprEClass, PATH_EXPR__HEAD);
@@ -1246,6 +1286,8 @@ public class CupidLanguagePackageImpl extends EPackageImpl implements CupidLangu
 
     axisEClass = createEClass(AXIS);
     createEAttribute(axisEClass, AXIS__ANCESTOR);
+
+    declaredEntityEClass = createEClass(DECLARED_ENTITY);
 
     pathExprTermEClass = createEClass(PATH_EXPR_TERM);
     createEReference(pathExprTermEClass, PATH_EXPR_TERM__AXIS);
@@ -1290,8 +1332,7 @@ public class CupidLanguagePackageImpl extends EPackageImpl implements CupidLangu
     callEClass.getESuperTypes().add(this.getImplicitContextMapping());
     actualParamByKeywordEClass.getESuperTypes().add(this.getImplicitContextMapping());
     variableDeclarationEClass.getESuperTypes().add(this.getImplicitContextMapping());
-    idOrWildcardEClass.getESuperTypes().add(this.getIDOrPathExpr());
-    pathExprEClass.getESuperTypes().add(this.getIDOrPathExpr());
+    declaredEntityEClass.getESuperTypes().add(this.getImplicitContextMapping());
     pathExprTermEClass.getESuperTypes().add(this.getPathExpr());
 
     // Initialize classes and features; add operations and parameters
@@ -1334,24 +1375,24 @@ public class CupidLanguagePackageImpl extends EPackageImpl implements CupidLangu
     initEClass(implicitContextMappingEClass, ImplicitContextMapping.class, "ImplicitContextMapping", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 
     initEClass(moduleEClass, Module.class, "Module", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
-    initEReference(getModule_Name(), this.getIDOrPathExpr(), null, "name", null, 0, 1, Module.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEReference(getModule_Name(), this.getExpr(), null, "name", null, 0, 1, Module.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
     initEClass(moduleNameEClass, ModuleName.class, "ModuleName", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 
     initEClass(usesModuleEClass, UsesModule.class, "UsesModule", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
-    initEReference(getUsesModule_Name(), this.getIDOrPathExpr(), null, "name", null, 0, 1, UsesModule.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEReference(getUsesModule_Name(), this.getExpr(), null, "name", null, 0, 1, UsesModule.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
     initEClass(usesEntityEClass, UsesEntity.class, "UsesEntity", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
-    initEReference(getUsesEntity_Name(), this.getIDOrPathExpr(), null, "name", null, 0, 1, UsesEntity.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEReference(getUsesEntity_Name(), this.getExpr(), null, "name", null, 0, 1, UsesEntity.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
     initEClass(subroutineEClass, Subroutine.class, "Subroutine", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
-    initEReference(getSubroutine_Name(), this.getIDOrPathExpr(), null, "name", null, 0, 1, Subroutine.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEReference(getSubroutine_Name(), this.getExpr(), null, "name", null, 0, 1, Subroutine.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
     initEReference(getSubroutine_Params(), this.getFormalParam(), null, "params", null, 0, -1, Subroutine.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
     initEClass(formalParamEClass, FormalParam.class, "FormalParam", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
     initEReference(getFormalParam_Intent(), this.getIntent(), null, "intent", null, 0, 1, FormalParam.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
     initEReference(getFormalParam_Type(), this.getType(), null, "type", null, 0, 1, FormalParam.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-    initEReference(getFormalParam_Name(), this.getIDOrPathExpr(), null, "name", null, 0, 1, FormalParam.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEReference(getFormalParam_Name(), this.getExpr(), null, "name", null, 0, 1, FormalParam.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
     initEClass(intentEClass, Intent.class, "Intent", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
     initEAttribute(getIntent_In(), ecorePackage.getEBoolean(), "in", null, 0, 1, Intent.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
@@ -1365,19 +1406,19 @@ public class CupidLanguagePackageImpl extends EPackageImpl implements CupidLangu
     initEAttribute(getType_Real(), ecorePackage.getEBoolean(), "real", null, 0, 1, Type.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
     initEAttribute(getType_Double(), ecorePackage.getEBoolean(), "double", null, 0, 1, Type.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
     initEAttribute(getType_Derived(), ecorePackage.getEBoolean(), "derived", null, 0, 1, Type.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-    initEReference(getType_DerivedType(), this.getIDOrPathExpr(), null, "derivedType", null, 0, 1, Type.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEReference(getType_DerivedType(), this.getExpr(), null, "derivedType", null, 0, 1, Type.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
     initEClass(subroutineNameEClass, SubroutineName.class, "SubroutineName", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
-    initEReference(getSubroutineName_Name(), this.getIDOrPathExpr(), null, "name", null, 0, 1, SubroutineName.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEReference(getSubroutineName_Name(), this.getExpr(), null, "name", null, 0, 1, SubroutineName.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
     initEClass(callEClass, Call.class, "Call", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
-    initEReference(getCall_SubroutineName(), this.getIDOrPathExpr(), null, "subroutineName", null, 0, 1, Call.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEReference(getCall_SubroutineName(), this.getExpr(), null, "subroutineName", null, 0, 1, Call.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
     initEReference(getCall_Params(), this.getActualParam(), null, "params", null, 0, -1, Call.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
     initEClass(actualParamEClass, ActualParam.class, "ActualParam", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
     initEAttribute(getActualParam_Keyword(), ecorePackage.getEString(), "keyword", null, 0, 1, ActualParam.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
     initEAttribute(getActualParam_Optional(), ecorePackage.getEBoolean(), "optional", null, 0, 1, ActualParam.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-    initEReference(getActualParam_Value(), this.getIDOrPathExpr(), null, "value", null, 0, 1, ActualParam.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEReference(getActualParam_Value(), this.getExpr(), null, "value", null, 0, 1, ActualParam.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
     initEClass(actualParamByKeywordEClass, ActualParamByKeyword.class, "ActualParamByKeyword", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
     initEAttribute(getActualParamByKeyword_Keyword(), ecorePackage.getEString(), "keyword", null, 0, 1, ActualParamByKeyword.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
@@ -1385,12 +1426,14 @@ public class CupidLanguagePackageImpl extends EPackageImpl implements CupidLangu
     initEClass(variableDeclarationEClass, VariableDeclaration.class, "VariableDeclaration", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
     initEReference(getVariableDeclaration_Type(), this.getType(), null, "type", null, 0, 1, VariableDeclaration.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
-    initEClass(idOrWildcardEClass, IDOrWildcard.class, "IDOrWildcard", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
-    initEAttribute(getIDOrWildcard_Id(), ecorePackage.getEString(), "id", null, 0, 1, IDOrWildcard.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-    initEAttribute(getIDOrWildcard_Wildcard(), ecorePackage.getEBoolean(), "wildcard", null, 0, 1, IDOrWildcard.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEClass(localExpressionEClass, LocalExpression.class, "LocalExpression", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+    initEAttribute(getLocalExpression_Id(), ecorePackage.getEString(), "id", null, 0, 1, LocalExpression.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEAttribute(getLocalExpression_Literal(), ecorePackage.getEString(), "literal", null, 0, 1, LocalExpression.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
-    initEClass(idOrPathExprEClass, IDOrPathExpr.class, "IDOrPathExpr", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
-    initEAttribute(getIDOrPathExpr_Literal(), ecorePackage.getEString(), "literal", null, 0, 1, IDOrPathExpr.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEClass(exprEClass, Expr.class, "Expr", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+    initEAttribute(getExpr_Wildcard(), ecorePackage.getEBoolean(), "wildcard", null, 0, 1, Expr.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEReference(getExpr_Expr(), this.getLocalExpression(), null, "expr", null, 0, 1, Expr.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEReference(getExpr_PathExpr(), this.getPathExpr(), null, "pathExpr", null, 0, 1, Expr.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
     initEClass(pathExprEClass, PathExpr.class, "PathExpr", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
     initEReference(getPathExpr_Head(), this.getPathExpr(), null, "head", null, 0, 1, PathExpr.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
@@ -1398,6 +1441,8 @@ public class CupidLanguagePackageImpl extends EPackageImpl implements CupidLangu
 
     initEClass(axisEClass, Axis.class, "Axis", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
     initEAttribute(getAxis_Ancestor(), ecorePackage.getEBoolean(), "ancestor", null, 0, 1, Axis.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+
+    initEClass(declaredEntityEClass, DeclaredEntity.class, "DeclaredEntity", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 
     initEClass(pathExprTermEClass, PathExprTerm.class, "PathExprTerm", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
     initEReference(getPathExprTerm_Axis(), this.getAxis(), null, "axis", null, 0, 1, PathExprTerm.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);

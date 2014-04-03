@@ -625,14 +625,17 @@ public class CupidLanguageGrammarAccess extends AbstractGrammarElementFinder {
 		private final RuleCall cSubroutineNameParserRuleCall_6 = (RuleCall)cAlternatives.eContents().get(6);
 		private final RuleCall cActualParamByKeywordParserRuleCall_7 = (RuleCall)cAlternatives.eContents().get(7);
 		private final RuleCall cVariableDeclarationParserRuleCall_8 = (RuleCall)cAlternatives.eContents().get(8);
+		private final Group cGroup_9 = (Group)cAlternatives.eContents().get(9);
+		private final Action cDeclaredEntityAction_9_0 = (Action)cGroup_9.eContents().get(0);
+		private final RuleCall cDeclaredEntityParserRuleCall_9_1 = (RuleCall)cGroup_9.eContents().get(1);
 		
 		//ImplicitContextMapping:
 		//	Module | ModuleName | UsesModule | UsesEntity | Call | Subroutine | SubroutineName | ActualParamByKeyword |
-		//	VariableDeclaration;
+		//	VariableDeclaration | {DeclaredEntity} DeclaredEntity;
 		public ParserRule getRule() { return rule; }
 
 		//Module | ModuleName | UsesModule | UsesEntity | Call | Subroutine | SubroutineName | ActualParamByKeyword |
-		//VariableDeclaration
+		//VariableDeclaration | {DeclaredEntity} DeclaredEntity
 		public Alternatives getAlternatives() { return cAlternatives; }
 
 		//Module
@@ -661,6 +664,15 @@ public class CupidLanguageGrammarAccess extends AbstractGrammarElementFinder {
 
 		//VariableDeclaration
 		public RuleCall getVariableDeclarationParserRuleCall_8() { return cVariableDeclarationParserRuleCall_8; }
+
+		//{DeclaredEntity} DeclaredEntity
+		public Group getGroup_9() { return cGroup_9; }
+
+		//{DeclaredEntity}
+		public Action getDeclaredEntityAction_9_0() { return cDeclaredEntityAction_9_0; }
+
+		//DeclaredEntity
+		public RuleCall getDeclaredEntityParserRuleCall_9_1() { return cDeclaredEntityParserRuleCall_9_1; }
 	}
 
 	public class ModuleElements extends AbstractParserRuleElementFinder {
@@ -671,14 +683,14 @@ public class CupidLanguageGrammarAccess extends AbstractGrammarElementFinder {
 		private final Group cGroup_2 = (Group)cGroup.eContents().get(2);
 		private final Keyword cLeftParenthesisKeyword_2_0 = (Keyword)cGroup_2.eContents().get(0);
 		private final Assignment cNameAssignment_2_1 = (Assignment)cGroup_2.eContents().get(1);
-		private final RuleCall cNameIDOrPathExprParserRuleCall_2_1_0 = (RuleCall)cNameAssignment_2_1.eContents().get(0);
+		private final RuleCall cNameExprParserRuleCall_2_1_0 = (RuleCall)cNameAssignment_2_1.eContents().get(0);
 		private final Keyword cRightParenthesisKeyword_2_2 = (Keyword)cGroup_2.eContents().get(2);
 		
 		//Module:
-		//	{Module} "module" ("(" name=IDOrPathExpr ")")?;
+		//	{Module} "module" ("(" name=Expr ")")?;
 		public ParserRule getRule() { return rule; }
 
-		//{Module} "module" ("(" name=IDOrPathExpr ")")?
+		//{Module} "module" ("(" name=Expr ")")?
 		public Group getGroup() { return cGroup; }
 
 		//{Module}
@@ -687,17 +699,17 @@ public class CupidLanguageGrammarAccess extends AbstractGrammarElementFinder {
 		//"module"
 		public Keyword getModuleKeyword_1() { return cModuleKeyword_1; }
 
-		//("(" name=IDOrPathExpr ")")?
+		//("(" name=Expr ")")?
 		public Group getGroup_2() { return cGroup_2; }
 
 		//"("
 		public Keyword getLeftParenthesisKeyword_2_0() { return cLeftParenthesisKeyword_2_0; }
 
-		//name=IDOrPathExpr
+		//name=Expr
 		public Assignment getNameAssignment_2_1() { return cNameAssignment_2_1; }
 
-		//IDOrPathExpr
-		public RuleCall getNameIDOrPathExprParserRuleCall_2_1_0() { return cNameIDOrPathExprParserRuleCall_2_1_0; }
+		//Expr
+		public RuleCall getNameExprParserRuleCall_2_1_0() { return cNameExprParserRuleCall_2_1_0; }
 
 		//")"
 		public Keyword getRightParenthesisKeyword_2_2() { return cRightParenthesisKeyword_2_2; }
@@ -729,14 +741,14 @@ public class CupidLanguageGrammarAccess extends AbstractGrammarElementFinder {
 		private final Keyword cUsesModuleKeyword_0 = (Keyword)cGroup.eContents().get(0);
 		private final Keyword cLeftParenthesisKeyword_1 = (Keyword)cGroup.eContents().get(1);
 		private final Assignment cNameAssignment_2 = (Assignment)cGroup.eContents().get(2);
-		private final RuleCall cNameIDOrPathExprParserRuleCall_2_0 = (RuleCall)cNameAssignment_2.eContents().get(0);
+		private final RuleCall cNameExprParserRuleCall_2_0 = (RuleCall)cNameAssignment_2.eContents().get(0);
 		private final Keyword cRightParenthesisKeyword_3 = (Keyword)cGroup.eContents().get(3);
 		
 		//UsesModule:
-		//	"usesModule" "(" name=IDOrPathExpr ")";
+		//	"usesModule" "(" name=Expr ")";
 		public ParserRule getRule() { return rule; }
 
-		//"usesModule" "(" name=IDOrPathExpr ")"
+		//"usesModule" "(" name=Expr ")"
 		public Group getGroup() { return cGroup; }
 
 		//"usesModule"
@@ -745,11 +757,11 @@ public class CupidLanguageGrammarAccess extends AbstractGrammarElementFinder {
 		//"("
 		public Keyword getLeftParenthesisKeyword_1() { return cLeftParenthesisKeyword_1; }
 
-		//name=IDOrPathExpr
+		//name=Expr
 		public Assignment getNameAssignment_2() { return cNameAssignment_2; }
 
-		//IDOrPathExpr
-		public RuleCall getNameIDOrPathExprParserRuleCall_2_0() { return cNameIDOrPathExprParserRuleCall_2_0; }
+		//Expr
+		public RuleCall getNameExprParserRuleCall_2_0() { return cNameExprParserRuleCall_2_0; }
 
 		//")"
 		public Keyword getRightParenthesisKeyword_3() { return cRightParenthesisKeyword_3; }
@@ -761,14 +773,14 @@ public class CupidLanguageGrammarAccess extends AbstractGrammarElementFinder {
 		private final Keyword cUsesEntityKeyword_0 = (Keyword)cGroup.eContents().get(0);
 		private final Keyword cLeftParenthesisKeyword_1 = (Keyword)cGroup.eContents().get(1);
 		private final Assignment cNameAssignment_2 = (Assignment)cGroup.eContents().get(2);
-		private final RuleCall cNameIDOrPathExprParserRuleCall_2_0 = (RuleCall)cNameAssignment_2.eContents().get(0);
+		private final RuleCall cNameExprParserRuleCall_2_0 = (RuleCall)cNameAssignment_2.eContents().get(0);
 		private final Keyword cRightParenthesisKeyword_3 = (Keyword)cGroup.eContents().get(3);
 		
 		//UsesEntity:
-		//	"usesEntity" "(" name=IDOrPathExpr ")";
+		//	"usesEntity" "(" name=Expr ")";
 		public ParserRule getRule() { return rule; }
 
-		//"usesEntity" "(" name=IDOrPathExpr ")"
+		//"usesEntity" "(" name=Expr ")"
 		public Group getGroup() { return cGroup; }
 
 		//"usesEntity"
@@ -777,11 +789,11 @@ public class CupidLanguageGrammarAccess extends AbstractGrammarElementFinder {
 		//"("
 		public Keyword getLeftParenthesisKeyword_1() { return cLeftParenthesisKeyword_1; }
 
-		//name=IDOrPathExpr
+		//name=Expr
 		public Assignment getNameAssignment_2() { return cNameAssignment_2; }
 
-		//IDOrPathExpr
-		public RuleCall getNameIDOrPathExprParserRuleCall_2_0() { return cNameIDOrPathExprParserRuleCall_2_0; }
+		//Expr
+		public RuleCall getNameExprParserRuleCall_2_0() { return cNameExprParserRuleCall_2_0; }
 
 		//")"
 		public Keyword getRightParenthesisKeyword_3() { return cRightParenthesisKeyword_3; }
@@ -793,7 +805,7 @@ public class CupidLanguageGrammarAccess extends AbstractGrammarElementFinder {
 		private final Keyword cSubroutineKeyword_0 = (Keyword)cGroup.eContents().get(0);
 		private final Keyword cLeftParenthesisKeyword_1 = (Keyword)cGroup.eContents().get(1);
 		private final Assignment cNameAssignment_2 = (Assignment)cGroup.eContents().get(2);
-		private final RuleCall cNameIDOrPathExprParserRuleCall_2_0 = (RuleCall)cNameAssignment_2.eContents().get(0);
+		private final RuleCall cNameExprParserRuleCall_2_0 = (RuleCall)cNameAssignment_2.eContents().get(0);
 		private final Group cGroup_3 = (Group)cGroup.eContents().get(3);
 		private final Keyword cLeftParenthesisKeyword_3_0 = (Keyword)cGroup_3.eContents().get(0);
 		private final Group cGroup_3_1 = (Group)cGroup_3.eContents().get(1);
@@ -807,10 +819,10 @@ public class CupidLanguageGrammarAccess extends AbstractGrammarElementFinder {
 		private final Keyword cRightParenthesisKeyword_4 = (Keyword)cGroup.eContents().get(4);
 		
 		//Subroutine:
-		//	"subroutine" "(" name=IDOrPathExpr ("(" (params+=FormalParam ("," params+=FormalParam)*)? ")")? ")";
+		//	"subroutine" "(" name=Expr ("(" (params+=FormalParam ("," params+=FormalParam)*)? ")")? ")";
 		public ParserRule getRule() { return rule; }
 
-		//"subroutine" "(" name=IDOrPathExpr ("(" (params+=FormalParam ("," params+=FormalParam)*)? ")")? ")"
+		//"subroutine" "(" name=Expr ("(" (params+=FormalParam ("," params+=FormalParam)*)? ")")? ")"
 		public Group getGroup() { return cGroup; }
 
 		//"subroutine"
@@ -819,11 +831,11 @@ public class CupidLanguageGrammarAccess extends AbstractGrammarElementFinder {
 		//"("
 		public Keyword getLeftParenthesisKeyword_1() { return cLeftParenthesisKeyword_1; }
 
-		//name=IDOrPathExpr
+		//name=Expr
 		public Assignment getNameAssignment_2() { return cNameAssignment_2; }
 
-		//IDOrPathExpr
-		public RuleCall getNameIDOrPathExprParserRuleCall_2_0() { return cNameIDOrPathExprParserRuleCall_2_0; }
+		//Expr
+		public RuleCall getNameExprParserRuleCall_2_0() { return cNameExprParserRuleCall_2_0; }
 
 		//("(" (params+=FormalParam ("," params+=FormalParam)*)? ")")?
 		public Group getGroup_3() { return cGroup_3; }
@@ -867,13 +879,13 @@ public class CupidLanguageGrammarAccess extends AbstractGrammarElementFinder {
 		private final Assignment cTypeAssignment_1 = (Assignment)cGroup.eContents().get(1);
 		private final RuleCall cTypeTypeParserRuleCall_1_0 = (RuleCall)cTypeAssignment_1.eContents().get(0);
 		private final Assignment cNameAssignment_2 = (Assignment)cGroup.eContents().get(2);
-		private final RuleCall cNameIDOrPathExprParserRuleCall_2_0 = (RuleCall)cNameAssignment_2.eContents().get(0);
+		private final RuleCall cNameExprParserRuleCall_2_0 = (RuleCall)cNameAssignment_2.eContents().get(0);
 		
 		//FormalParam:
-		//	intent=Intent? type=Type name=IDOrPathExpr;
+		//	intent=Intent? type=Type name=Expr;
 		public ParserRule getRule() { return rule; }
 
-		//intent=Intent? type=Type name=IDOrPathExpr
+		//intent=Intent? type=Type name=Expr
 		public Group getGroup() { return cGroup; }
 
 		//intent=Intent?
@@ -888,11 +900,11 @@ public class CupidLanguageGrammarAccess extends AbstractGrammarElementFinder {
 		//Type
 		public RuleCall getTypeTypeParserRuleCall_1_0() { return cTypeTypeParserRuleCall_1_0; }
 
-		//name=IDOrPathExpr
+		//name=Expr
 		public Assignment getNameAssignment_2() { return cNameAssignment_2; }
 
-		//IDOrPathExpr
-		public RuleCall getNameIDOrPathExprParserRuleCall_2_0() { return cNameIDOrPathExprParserRuleCall_2_0; }
+		//Expr
+		public RuleCall getNameExprParserRuleCall_2_0() { return cNameExprParserRuleCall_2_0; }
 	}
 
 	public class IntentElements extends AbstractParserRuleElementFinder {
@@ -951,16 +963,16 @@ public class CupidLanguageGrammarAccess extends AbstractGrammarElementFinder {
 		private final Keyword cDerivedTypeKeyword_5_0_0 = (Keyword)cDerivedAssignment_5_0.eContents().get(0);
 		private final Keyword cLeftParenthesisKeyword_5_1 = (Keyword)cGroup_5.eContents().get(1);
 		private final Assignment cDerivedTypeAssignment_5_2 = (Assignment)cGroup_5.eContents().get(2);
-		private final RuleCall cDerivedTypeIDOrPathExprParserRuleCall_5_2_0 = (RuleCall)cDerivedTypeAssignment_5_2.eContents().get(0);
+		private final RuleCall cDerivedTypeExprParserRuleCall_5_2_0 = (RuleCall)cDerivedTypeAssignment_5_2.eContents().get(0);
 		private final Keyword cRightParenthesisKeyword_5_3 = (Keyword)cGroup_5.eContents().get(3);
 		
 		//Type:
 		//	integer?="integer" | character?="character" | logical?="logical" | real?="real" | double?="double" "precision"? |
-		//	derived?="type" "(" derivedType=IDOrPathExpr ")";
+		//	derived?="type" "(" derivedType=Expr ")";
 		public ParserRule getRule() { return rule; }
 
 		//integer?="integer" | character?="character" | logical?="logical" | real?="real" | double?="double" "precision"? |
-		//derived?="type" "(" derivedType=IDOrPathExpr ")"
+		//derived?="type" "(" derivedType=Expr ")"
 		public Alternatives getAlternatives() { return cAlternatives; }
 
 		//integer?="integer"
@@ -999,7 +1011,7 @@ public class CupidLanguageGrammarAccess extends AbstractGrammarElementFinder {
 		//"precision"?
 		public Keyword getPrecisionKeyword_4_1() { return cPrecisionKeyword_4_1; }
 
-		//derived?="type" "(" derivedType=IDOrPathExpr ")"
+		//derived?="type" "(" derivedType=Expr ")"
 		public Group getGroup_5() { return cGroup_5; }
 
 		//derived?="type"
@@ -1011,11 +1023,11 @@ public class CupidLanguageGrammarAccess extends AbstractGrammarElementFinder {
 		//"("
 		public Keyword getLeftParenthesisKeyword_5_1() { return cLeftParenthesisKeyword_5_1; }
 
-		//derivedType=IDOrPathExpr
+		//derivedType=Expr
 		public Assignment getDerivedTypeAssignment_5_2() { return cDerivedTypeAssignment_5_2; }
 
-		//IDOrPathExpr
-		public RuleCall getDerivedTypeIDOrPathExprParserRuleCall_5_2_0() { return cDerivedTypeIDOrPathExprParserRuleCall_5_2_0; }
+		//Expr
+		public RuleCall getDerivedTypeExprParserRuleCall_5_2_0() { return cDerivedTypeExprParserRuleCall_5_2_0; }
 
 		//")"
 		public Keyword getRightParenthesisKeyword_5_3() { return cRightParenthesisKeyword_5_3; }
@@ -1029,14 +1041,14 @@ public class CupidLanguageGrammarAccess extends AbstractGrammarElementFinder {
 		private final Group cGroup_2 = (Group)cGroup.eContents().get(2);
 		private final Keyword cLeftParenthesisKeyword_2_0 = (Keyword)cGroup_2.eContents().get(0);
 		private final Assignment cNameAssignment_2_1 = (Assignment)cGroup_2.eContents().get(1);
-		private final RuleCall cNameIDOrPathExprParserRuleCall_2_1_0 = (RuleCall)cNameAssignment_2_1.eContents().get(0);
+		private final RuleCall cNameExprParserRuleCall_2_1_0 = (RuleCall)cNameAssignment_2_1.eContents().get(0);
 		private final Keyword cRightParenthesisKeyword_2_2 = (Keyword)cGroup_2.eContents().get(2);
 		
 		//SubroutineName:
-		//	"subroutineName" {SubroutineName} ("(" name=IDOrPathExpr ")")?;
+		//	"subroutineName" {SubroutineName} ("(" name=Expr ")")?;
 		public ParserRule getRule() { return rule; }
 
-		//"subroutineName" {SubroutineName} ("(" name=IDOrPathExpr ")")?
+		//"subroutineName" {SubroutineName} ("(" name=Expr ")")?
 		public Group getGroup() { return cGroup; }
 
 		//"subroutineName"
@@ -1045,17 +1057,17 @@ public class CupidLanguageGrammarAccess extends AbstractGrammarElementFinder {
 		//{SubroutineName}
 		public Action getSubroutineNameAction_1() { return cSubroutineNameAction_1; }
 
-		//("(" name=IDOrPathExpr ")")?
+		//("(" name=Expr ")")?
 		public Group getGroup_2() { return cGroup_2; }
 
 		//"("
 		public Keyword getLeftParenthesisKeyword_2_0() { return cLeftParenthesisKeyword_2_0; }
 
-		//name=IDOrPathExpr
+		//name=Expr
 		public Assignment getNameAssignment_2_1() { return cNameAssignment_2_1; }
 
-		//IDOrPathExpr
-		public RuleCall getNameIDOrPathExprParserRuleCall_2_1_0() { return cNameIDOrPathExprParserRuleCall_2_1_0; }
+		//Expr
+		public RuleCall getNameExprParserRuleCall_2_1_0() { return cNameExprParserRuleCall_2_1_0; }
 
 		//")"
 		public Keyword getRightParenthesisKeyword_2_2() { return cRightParenthesisKeyword_2_2; }
@@ -1067,7 +1079,7 @@ public class CupidLanguageGrammarAccess extends AbstractGrammarElementFinder {
 		private final Keyword cCallKeyword_0 = (Keyword)cGroup.eContents().get(0);
 		private final Keyword cLeftParenthesisKeyword_1 = (Keyword)cGroup.eContents().get(1);
 		private final Assignment cSubroutineNameAssignment_2 = (Assignment)cGroup.eContents().get(2);
-		private final RuleCall cSubroutineNameIDOrPathExprParserRuleCall_2_0 = (RuleCall)cSubroutineNameAssignment_2.eContents().get(0);
+		private final RuleCall cSubroutineNameExprParserRuleCall_2_0 = (RuleCall)cSubroutineNameAssignment_2.eContents().get(0);
 		private final Group cGroup_3 = (Group)cGroup.eContents().get(3);
 		private final Keyword cLeftParenthesisKeyword_3_0 = (Keyword)cGroup_3.eContents().get(0);
 		private final Group cGroup_3_1 = (Group)cGroup_3.eContents().get(1);
@@ -1081,10 +1093,10 @@ public class CupidLanguageGrammarAccess extends AbstractGrammarElementFinder {
 		private final Keyword cRightParenthesisKeyword_4 = (Keyword)cGroup.eContents().get(4);
 		
 		//Call:
-		//	"call" "(" subroutineName=IDOrPathExpr ("(" (params+=ActualParam ("," params+=ActualParam)*)? ")")? ")";
+		//	"call" "(" subroutineName=Expr ("(" (params+=ActualParam ("," params+=ActualParam)*)? ")")? ")";
 		public ParserRule getRule() { return rule; }
 
-		//"call" "(" subroutineName=IDOrPathExpr ("(" (params+=ActualParam ("," params+=ActualParam)*)? ")")? ")"
+		//"call" "(" subroutineName=Expr ("(" (params+=ActualParam ("," params+=ActualParam)*)? ")")? ")"
 		public Group getGroup() { return cGroup; }
 
 		//"call"
@@ -1093,11 +1105,11 @@ public class CupidLanguageGrammarAccess extends AbstractGrammarElementFinder {
 		//"("
 		public Keyword getLeftParenthesisKeyword_1() { return cLeftParenthesisKeyword_1; }
 
-		//subroutineName=IDOrPathExpr
+		//subroutineName=Expr
 		public Assignment getSubroutineNameAssignment_2() { return cSubroutineNameAssignment_2; }
 
-		//IDOrPathExpr
-		public RuleCall getSubroutineNameIDOrPathExprParserRuleCall_2_0() { return cSubroutineNameIDOrPathExprParserRuleCall_2_0; }
+		//Expr
+		public RuleCall getSubroutineNameExprParserRuleCall_2_0() { return cSubroutineNameExprParserRuleCall_2_0; }
 
 		//("(" (params+=ActualParam ("," params+=ActualParam)*)? ")")?
 		public Group getGroup_3() { return cGroup_3; }
@@ -1143,13 +1155,13 @@ public class CupidLanguageGrammarAccess extends AbstractGrammarElementFinder {
 		private final Keyword cOptionalQuestionMarkKeyword_0_1_0 = (Keyword)cOptionalAssignment_0_1.eContents().get(0);
 		private final Keyword cEqualsSignKeyword_0_2 = (Keyword)cGroup_0.eContents().get(2);
 		private final Assignment cValueAssignment_1 = (Assignment)cGroup.eContents().get(1);
-		private final RuleCall cValueIDOrPathExprParserRuleCall_1_0 = (RuleCall)cValueAssignment_1.eContents().get(0);
+		private final RuleCall cValueExprParserRuleCall_1_0 = (RuleCall)cValueAssignment_1.eContents().get(0);
 		
 		//ActualParam:
-		//	(keyword=ID optional?="?"? "=")? value=IDOrPathExpr;
+		//	(keyword=ID optional?="?"? "=")? value=Expr;
 		public ParserRule getRule() { return rule; }
 
-		//(keyword=ID optional?="?"? "=")? value=IDOrPathExpr
+		//(keyword=ID optional?="?"? "=")? value=Expr
 		public Group getGroup() { return cGroup; }
 
 		//(keyword=ID optional?="?"? "=")?
@@ -1170,11 +1182,11 @@ public class CupidLanguageGrammarAccess extends AbstractGrammarElementFinder {
 		//"="
 		public Keyword getEqualsSignKeyword_0_2() { return cEqualsSignKeyword_0_2; }
 
-		//value=IDOrPathExpr
+		//value=Expr
 		public Assignment getValueAssignment_1() { return cValueAssignment_1; }
 
-		//IDOrPathExpr
-		public RuleCall getValueIDOrPathExprParserRuleCall_1_0() { return cValueIDOrPathExprParserRuleCall_1_0; }
+		//Expr
+		public RuleCall getValueExprParserRuleCall_1_0() { return cValueExprParserRuleCall_1_0; }
 	}
 
 	public class ActualParamByKeywordElements extends AbstractParserRuleElementFinder {
@@ -1241,19 +1253,31 @@ public class CupidLanguageGrammarAccess extends AbstractGrammarElementFinder {
 		public Keyword getRightParenthesisKeyword_3() { return cRightParenthesisKeyword_3; }
 	}
 
-	public class IDOrWildcardElements extends AbstractParserRuleElementFinder {
-		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "IDOrWildcard");
+	public class DeclaredEntityElements extends AbstractParserRuleElementFinder {
+		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "DeclaredEntity");
+		private final Keyword cDeclaredEntityKeyword = (Keyword)rule.eContents().get(1);
+		
+		//DeclaredEntity:
+		//	"declaredEntity";
+		public ParserRule getRule() { return rule; }
+
+		//"declaredEntity"
+		public Keyword getDeclaredEntityKeyword() { return cDeclaredEntityKeyword; }
+	}
+
+	public class LocalExpressionElements extends AbstractParserRuleElementFinder {
+		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "LocalExpression");
 		private final Alternatives cAlternatives = (Alternatives)rule.eContents().get(1);
 		private final Assignment cIdAssignment_0 = (Assignment)cAlternatives.eContents().get(0);
 		private final RuleCall cIdIDTerminalRuleCall_0_0 = (RuleCall)cIdAssignment_0.eContents().get(0);
-		private final Assignment cWildcardAssignment_1 = (Assignment)cAlternatives.eContents().get(1);
-		private final Keyword cWildcardAsteriskKeyword_1_0 = (Keyword)cWildcardAssignment_1.eContents().get(0);
+		private final Assignment cLiteralAssignment_1 = (Assignment)cAlternatives.eContents().get(1);
+		private final RuleCall cLiteralLiteralParserRuleCall_1_0 = (RuleCall)cLiteralAssignment_1.eContents().get(0);
 		
-		//IDOrWildcard:
-		//	id=ID | wildcard?="*";
+		//LocalExpression:
+		//	id=ID | literal=Literal;
 		public ParserRule getRule() { return rule; }
 
-		//id=ID | wildcard?="*"
+		//id=ID | literal=Literal
 		public Alternatives getAlternatives() { return cAlternatives; }
 
 		//id=ID
@@ -1262,41 +1286,54 @@ public class CupidLanguageGrammarAccess extends AbstractGrammarElementFinder {
 		//ID
 		public RuleCall getIdIDTerminalRuleCall_0_0() { return cIdIDTerminalRuleCall_0_0; }
 
-		//wildcard?="*"
-		public Assignment getWildcardAssignment_1() { return cWildcardAssignment_1; }
+		//literal=Literal
+		public Assignment getLiteralAssignment_1() { return cLiteralAssignment_1; }
 
-		//"*"
-		public Keyword getWildcardAsteriskKeyword_1_0() { return cWildcardAsteriskKeyword_1_0; }
+		//Literal
+		public RuleCall getLiteralLiteralParserRuleCall_1_0() { return cLiteralLiteralParserRuleCall_1_0; }
 	}
 
-	public class IDOrPathExprElements extends AbstractParserRuleElementFinder {
-		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "IDOrPathExpr");
+	public class ExprElements extends AbstractParserRuleElementFinder {
+		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "Expr");
 		private final Alternatives cAlternatives = (Alternatives)rule.eContents().get(1);
-		private final RuleCall cIDOrWildcardParserRuleCall_0 = (RuleCall)cAlternatives.eContents().get(0);
-		private final RuleCall cPathExprParserRuleCall_1 = (RuleCall)cAlternatives.eContents().get(1);
-		private final Assignment cLiteralAssignment_2 = (Assignment)cAlternatives.eContents().get(2);
-		private final RuleCall cLiteralLiteralParserRuleCall_2_0 = (RuleCall)cLiteralAssignment_2.eContents().get(0);
+		private final Assignment cWildcardAssignment_0 = (Assignment)cAlternatives.eContents().get(0);
+		private final Keyword cWildcardAsteriskKeyword_0_0 = (Keyword)cWildcardAssignment_0.eContents().get(0);
+		private final Assignment cExprAssignment_1 = (Assignment)cAlternatives.eContents().get(1);
+		private final RuleCall cExprLocalExpressionParserRuleCall_1_0 = (RuleCall)cExprAssignment_1.eContents().get(0);
+		private final Assignment cPathExprAssignment_2 = (Assignment)cAlternatives.eContents().get(2);
+		private final RuleCall cPathExprPathExprParserRuleCall_2_0 = (RuleCall)cPathExprAssignment_2.eContents().get(0);
 		
 		////IDOrPathExpr:
 		////	idOrWildcard=IDOrWildcard | pathExpr=PathExpr;
-		//IDOrPathExpr:
-		//	IDOrWildcard | PathExpr | literal=Literal;
+		////three basic cases: 
+		//// - a wildcard, 
+		//// - a local expression in the target domain, 
+		//// - or a path expression in the FSML domain	
+		////IDOrPathExpr:
+		//Expr:
+		//	wildcard?="*" | expr=LocalExpression | pathExpr=PathExpr;
 		public ParserRule getRule() { return rule; }
 
-		//IDOrWildcard | PathExpr | literal=Literal
+		//wildcard?="*" | expr=LocalExpression | pathExpr=PathExpr
 		public Alternatives getAlternatives() { return cAlternatives; }
 
-		//IDOrWildcard
-		public RuleCall getIDOrWildcardParserRuleCall_0() { return cIDOrWildcardParserRuleCall_0; }
+		//wildcard?="*"
+		public Assignment getWildcardAssignment_0() { return cWildcardAssignment_0; }
+
+		//"*"
+		public Keyword getWildcardAsteriskKeyword_0_0() { return cWildcardAsteriskKeyword_0_0; }
+
+		//expr=LocalExpression
+		public Assignment getExprAssignment_1() { return cExprAssignment_1; }
+
+		//LocalExpression
+		public RuleCall getExprLocalExpressionParserRuleCall_1_0() { return cExprLocalExpressionParserRuleCall_1_0; }
+
+		//pathExpr=PathExpr
+		public Assignment getPathExprAssignment_2() { return cPathExprAssignment_2; }
 
 		//PathExpr
-		public RuleCall getPathExprParserRuleCall_1() { return cPathExprParserRuleCall_1; }
-
-		//literal=Literal
-		public Assignment getLiteralAssignment_2() { return cLiteralAssignment_2; }
-
-		//Literal
-		public RuleCall getLiteralLiteralParserRuleCall_2_0() { return cLiteralLiteralParserRuleCall_2_0; }
+		public RuleCall getPathExprPathExprParserRuleCall_2_0() { return cPathExprPathExprParserRuleCall_2_0; }
 	}
 
 	public class LiteralElements extends AbstractParserRuleElementFinder {
@@ -1464,8 +1501,9 @@ public class CupidLanguageGrammarAccess extends AbstractGrammarElementFinder {
 	private ActualParamElements pActualParam;
 	private ActualParamByKeywordElements pActualParamByKeyword;
 	private VariableDeclarationElements pVariableDeclaration;
-	private IDOrWildcardElements pIDOrWildcard;
-	private IDOrPathExprElements pIDOrPathExpr;
+	private DeclaredEntityElements pDeclaredEntity;
+	private LocalExpressionElements pLocalExpression;
+	private ExprElements pExpr;
 	private LiteralElements pLiteral;
 	private PathExprElements pPathExpr;
 	private PathExprNodeElements pPathExprNode;
@@ -1649,7 +1687,7 @@ public class CupidLanguageGrammarAccess extends AbstractGrammarElementFinder {
 
 	//ImplicitContextMapping:
 	//	Module | ModuleName | UsesModule | UsesEntity | Call | Subroutine | SubroutineName | ActualParamByKeyword |
-	//	VariableDeclaration;
+	//	VariableDeclaration | {DeclaredEntity} DeclaredEntity;
 	public ImplicitContextMappingElements getImplicitContextMappingAccess() {
 		return (pImplicitContextMapping != null) ? pImplicitContextMapping : (pImplicitContextMapping = new ImplicitContextMappingElements());
 	}
@@ -1659,7 +1697,7 @@ public class CupidLanguageGrammarAccess extends AbstractGrammarElementFinder {
 	}
 
 	//Module:
-	//	{Module} "module" ("(" name=IDOrPathExpr ")")?;
+	//	{Module} "module" ("(" name=Expr ")")?;
 	public ModuleElements getModuleAccess() {
 		return (pModule != null) ? pModule : (pModule = new ModuleElements());
 	}
@@ -1679,7 +1717,7 @@ public class CupidLanguageGrammarAccess extends AbstractGrammarElementFinder {
 	}
 
 	//UsesModule:
-	//	"usesModule" "(" name=IDOrPathExpr ")";
+	//	"usesModule" "(" name=Expr ")";
 	public UsesModuleElements getUsesModuleAccess() {
 		return (pUsesModule != null) ? pUsesModule : (pUsesModule = new UsesModuleElements());
 	}
@@ -1689,7 +1727,7 @@ public class CupidLanguageGrammarAccess extends AbstractGrammarElementFinder {
 	}
 
 	//UsesEntity:
-	//	"usesEntity" "(" name=IDOrPathExpr ")";
+	//	"usesEntity" "(" name=Expr ")";
 	public UsesEntityElements getUsesEntityAccess() {
 		return (pUsesEntity != null) ? pUsesEntity : (pUsesEntity = new UsesEntityElements());
 	}
@@ -1699,7 +1737,7 @@ public class CupidLanguageGrammarAccess extends AbstractGrammarElementFinder {
 	}
 
 	//Subroutine:
-	//	"subroutine" "(" name=IDOrPathExpr ("(" (params+=FormalParam ("," params+=FormalParam)*)? ")")? ")";
+	//	"subroutine" "(" name=Expr ("(" (params+=FormalParam ("," params+=FormalParam)*)? ")")? ")";
 	public SubroutineElements getSubroutineAccess() {
 		return (pSubroutine != null) ? pSubroutine : (pSubroutine = new SubroutineElements());
 	}
@@ -1709,7 +1747,7 @@ public class CupidLanguageGrammarAccess extends AbstractGrammarElementFinder {
 	}
 
 	//FormalParam:
-	//	intent=Intent? type=Type name=IDOrPathExpr;
+	//	intent=Intent? type=Type name=Expr;
 	public FormalParamElements getFormalParamAccess() {
 		return (pFormalParam != null) ? pFormalParam : (pFormalParam = new FormalParamElements());
 	}
@@ -1730,7 +1768,7 @@ public class CupidLanguageGrammarAccess extends AbstractGrammarElementFinder {
 
 	//Type:
 	//	integer?="integer" | character?="character" | logical?="logical" | real?="real" | double?="double" "precision"? |
-	//	derived?="type" "(" derivedType=IDOrPathExpr ")";
+	//	derived?="type" "(" derivedType=Expr ")";
 	public TypeElements getTypeAccess() {
 		return (pType != null) ? pType : (pType = new TypeElements());
 	}
@@ -1740,7 +1778,7 @@ public class CupidLanguageGrammarAccess extends AbstractGrammarElementFinder {
 	}
 
 	//SubroutineName:
-	//	"subroutineName" {SubroutineName} ("(" name=IDOrPathExpr ")")?;
+	//	"subroutineName" {SubroutineName} ("(" name=Expr ")")?;
 	public SubroutineNameElements getSubroutineNameAccess() {
 		return (pSubroutineName != null) ? pSubroutineName : (pSubroutineName = new SubroutineNameElements());
 	}
@@ -1750,7 +1788,7 @@ public class CupidLanguageGrammarAccess extends AbstractGrammarElementFinder {
 	}
 
 	//Call:
-	//	"call" "(" subroutineName=IDOrPathExpr ("(" (params+=ActualParam ("," params+=ActualParam)*)? ")")? ")";
+	//	"call" "(" subroutineName=Expr ("(" (params+=ActualParam ("," params+=ActualParam)*)? ")")? ")";
 	public CallElements getCallAccess() {
 		return (pCall != null) ? pCall : (pCall = new CallElements());
 	}
@@ -1760,7 +1798,7 @@ public class CupidLanguageGrammarAccess extends AbstractGrammarElementFinder {
 	}
 
 	//ActualParam:
-	//	(keyword=ID optional?="?"? "=")? value=IDOrPathExpr;
+	//	(keyword=ID optional?="?"? "=")? value=Expr;
 	public ActualParamElements getActualParamAccess() {
 		return (pActualParam != null) ? pActualParam : (pActualParam = new ActualParamElements());
 	}
@@ -1789,26 +1827,41 @@ public class CupidLanguageGrammarAccess extends AbstractGrammarElementFinder {
 		return getVariableDeclarationAccess().getRule();
 	}
 
-	//IDOrWildcard:
-	//	id=ID | wildcard?="*";
-	public IDOrWildcardElements getIDOrWildcardAccess() {
-		return (pIDOrWildcard != null) ? pIDOrWildcard : (pIDOrWildcard = new IDOrWildcardElements());
+	//DeclaredEntity:
+	//	"declaredEntity";
+	public DeclaredEntityElements getDeclaredEntityAccess() {
+		return (pDeclaredEntity != null) ? pDeclaredEntity : (pDeclaredEntity = new DeclaredEntityElements());
 	}
 	
-	public ParserRule getIDOrWildcardRule() {
-		return getIDOrWildcardAccess().getRule();
+	public ParserRule getDeclaredEntityRule() {
+		return getDeclaredEntityAccess().getRule();
+	}
+
+	//LocalExpression:
+	//	id=ID | literal=Literal;
+	public LocalExpressionElements getLocalExpressionAccess() {
+		return (pLocalExpression != null) ? pLocalExpression : (pLocalExpression = new LocalExpressionElements());
+	}
+	
+	public ParserRule getLocalExpressionRule() {
+		return getLocalExpressionAccess().getRule();
 	}
 
 	////IDOrPathExpr:
 	////	idOrWildcard=IDOrWildcard | pathExpr=PathExpr;
-	//IDOrPathExpr:
-	//	IDOrWildcard | PathExpr | literal=Literal;
-	public IDOrPathExprElements getIDOrPathExprAccess() {
-		return (pIDOrPathExpr != null) ? pIDOrPathExpr : (pIDOrPathExpr = new IDOrPathExprElements());
+	////three basic cases: 
+	//// - a wildcard, 
+	//// - a local expression in the target domain, 
+	//// - or a path expression in the FSML domain	
+	////IDOrPathExpr:
+	//Expr:
+	//	wildcard?="*" | expr=LocalExpression | pathExpr=PathExpr;
+	public ExprElements getExprAccess() {
+		return (pExpr != null) ? pExpr : (pExpr = new ExprElements());
 	}
 	
-	public ParserRule getIDOrPathExprRule() {
-		return getIDOrPathExprAccess().getRule();
+	public ParserRule getExprRule() {
+		return getExprAccess().getRule();
 	}
 
 	//Literal:

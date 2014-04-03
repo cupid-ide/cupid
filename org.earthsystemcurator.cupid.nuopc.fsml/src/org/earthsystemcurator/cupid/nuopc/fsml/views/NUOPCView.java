@@ -2,9 +2,11 @@ package org.earthsystemcurator.cupid.nuopc.fsml.views;
 
 import java.lang.reflect.InvocationTargetException;
 
+import org.earthsystemcurator.FSM;
 import org.earthsystemcurator.cupid.nuopc.fsml.handlers.RewriteASTRunnable;
-import org.earthsystemcurator.cupid.nuopc.fsml.util.Regex;
 import org.earthsystemcurator.cupid.nuopc.fsml.views.NUOPCViewContentProvider.NUOPCModelElem;
+import org.earthsystemcurator.cupidLanguage.ConceptDef;
+import org.earthsystemcurator.cupidLanguage.SubconceptOrAttribute;
 import org.eclipse.core.resources.IMarker;
 import org.eclipse.core.resources.IProject;
 import org.eclipse.core.resources.IResourceChangeEvent;
@@ -14,14 +16,13 @@ import org.eclipse.core.resources.IResourceDeltaVisitor;
 import org.eclipse.core.resources.IWorkspace;
 import org.eclipse.core.resources.ResourcesPlugin;
 import org.eclipse.core.runtime.CoreException;
-import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EObject;
-import org.eclipse.emf.ecore.EReference;
 import org.eclipse.jface.action.Action;
 import org.eclipse.jface.action.ContributionManager;
 import org.eclipse.jface.action.IMenuListener;
 import org.eclipse.jface.action.IMenuManager;
 import org.eclipse.jface.action.MenuManager;
+import org.eclipse.jface.dialogs.MessageDialog;
 import org.eclipse.jface.layout.TreeColumnLayout;
 import org.eclipse.jface.viewers.ColumnViewerToolTipSupport;
 import org.eclipse.jface.viewers.ColumnWeightData;
@@ -54,26 +55,6 @@ import org.eclipse.ui.part.DrillDownAdapter;
 import org.eclipse.ui.part.ViewPart;
 import org.eclipse.ui.services.IServiceLocator;
 
-
-
-/**
- * This sample class demonstrates how to plug-in a new
- * workbench view. The view shows data obtained from the
- * model. The sample creates a dummy model on the fly,
- * but a real implementation would connect to the model
- * available either in this or another plug-in (e.g. the workspace).
- * The view is connected to the model using a content provider.
- * <p>
- * The view uses a label provider to define how model
- * objects should be presented in the view. Each
- * view can present the same model objects using
- * different labels and icons, if needed. Alternatively,
- * a single label provider can be shared between views
- * in order to ensure that objects of the same type are
- * presented in the same way everywhere.
- * <p>
- */
-
 @SuppressWarnings("restriction")
 public class NUOPCView extends ViewPart {
 
@@ -84,8 +65,8 @@ public class NUOPCView extends ViewPart {
 
 	private TreeViewer viewer;
 	private DrillDownAdapter drillDownAdapter;
-	private Action action1;
-	private Action action2;
+	//private Action action1;
+	//private Action action2;
 	private Action doubleClickAction;
 	
 	private TreeColumn tc2;
@@ -113,7 +94,7 @@ public class NUOPCView extends ViewPart {
 	
 	protected void setProjectIsDirty(boolean dirty) {
 		projectIsDirty = dirty;
-		if (dirty) {
+		if (projectIsDirty) {
 			this.setPartName("*NUOPC View");
 		}
 		else {
@@ -188,7 +169,7 @@ public class NUOPCView extends ViewPart {
 			public void run() {
 				ISelection selection = viewer.getSelection();
 				Object obj = ((IStructuredSelection)selection).getFirstElement();
-				System.out.println("Double-click detected on " + obj.toString());
+				//System.out.println("Double-click detected on " + obj.toString());
 				
 				NUOPCModelElem me = (NUOPCModelElem) obj;
 				
@@ -283,55 +264,65 @@ public class NUOPCView extends ViewPart {
                     IStructuredSelection selection = (IStructuredSelection) viewer.getSelection();
                     final NUOPCModelElem me = (NUOPCModelElem) selection.getFirstElement();
 
+                    final FSM<?> fsm = contentProvider.getCurrentFSM();
+                    ConceptDef conceptDef = null;
                     if (me.subconcept != null && !me.subconcept.isAttrib()) {
+                    	conceptDef = fsm.getDefinition(me.subconcept);
+                    }
+                    else if (me.subconcept == null && me.elem != null) {
+                    	conceptDef = fsm.getConceptDef(me.elem);
+                    }
+                    
+                    if (conceptDef != null) {
                     	
-                    	
-                    	//TODO: fix below to show menu
-                    	
-                    	/*
-                    	EClass parentClass = (EClass) me.structuralFeature.getEType();
-                    	for (final EReference childRef : parentClass.getEReferences()) {
-                    		if (childRef.isMany() || (me.elem != null && me.elem.eGet(childRef) == null) ) {
+                    	for (final SubconceptOrAttribute soa : conceptDef.getChild()) {
+                    		
+                    		if (!soa.isAttrib() && (fsm.isMany(soa) || (me.elem != null && fsm.getValue(me.elem, soa) == null)) ) {
                     			
                     			Action addElementAction = new Action() {
                     				
                     				public void run() {
-                        				
+
+                    					EObject newElem = fsm.forwardAdd(me.elem, soa, true);
                     					//showMessage("Added element: " + newElem);	
-                    					
-                    					EObject newElem = contentProvider.getCurrentFSM().forwardAdd(me.elem, childRef, true);
-        								IFortranAST ast = contentProvider.getCurrentFSM().getASTForElement(newElem);
+        								IFortranAST ast = fsm.getASTForElement(newElem);
         								
         								//TODO: in the case of NUOPCApplication, there is no AST above
         								Reindenter.reindent(ast.getRoot(), ast, Strategy.REINDENT_EACH_LINE);
         								
+                    					
         								try {
         									IWorkbenchWindow window = PlatformUI.getWorkbench().getActiveWorkbenchWindow();
         									//running in UI thread for now so we can set focus to generated code
-        									PlatformUI.getWorkbench().getProgressService().run(false, true, new RewriteASTRunnable(ast, window));
+        									PlatformUI.getWorkbench().getProgressService().run(false, false, new RewriteASTRunnable(ast, window));
         								} catch (InvocationTargetException e) {
         									e.printStackTrace();
         								} catch (InterruptedException e) {
         									e.printStackTrace();
         								}
                     					
+                    					
                         				viewer.refresh(me);
                         				viewer.expandToLevel(me, 1);
-                        				
-                        				
+                         				
                             		}      
                     				
                     			};
                     			
-                    			String label = Regex.getFromAnnotation(childRef.getEType(), "label", childRef.getEType().getName());
-                    			addElementAction.setText("Generate " + label + "...");
+                    			//String label = Regex.getFromAnnotation(childRef.getEType(), "label", childRef.getEType().getName());
+                    			String label = fsm.getAnnotationValue(fsm.getDefinition(soa), "label");
+                    			if (label==null) {
+                    				label = soa.getName();
+                    			}
+                    			
+                    			addElementAction.setText("Add " + label);
                     			//TODO: fix this image
                     			//addElementAction.setImageDescriptor(NUOPCViewLabelProvider.getFortranImageDescriptor(childRef, null, null));
                     			//a.setToolTipText(Regex.getFromAnnotation(childRef.getEType(), "doc"));
                     			manager.add(addElementAction);
                     		}
                     	}
-                    	*/
+                    	
                     }
                     
                    
@@ -408,8 +399,10 @@ public class NUOPCView extends ViewPart {
             int endOffset = token.getFileOffset()+token.getLength();
             //endOffset += lastToken.getWhiteAfter().length();
 
-            IMarker marker = token.getPhysicalFile().getIFile().createMarker(IMarker.BOOKMARK);
-			marker.setAttribute(IMarker.CHAR_START, startOffset);
+            //IMarker marker = token.getPhysicalFile().getIFile().createMarker(IMarker.BOOKMARK);
+            IMarker marker = token.getLogicalFile().createMarker(IMarker.BOOKMARK);
+			
+            marker.setAttribute(IMarker.CHAR_START, startOffset);
 			marker.setAttribute(IMarker.CHAR_END, endOffset);
 						
             return marker;
@@ -510,14 +503,14 @@ public class NUOPCView extends ViewPart {
 	}
 	*/
 	
-	/*
+	
 	private void showMessage(String message) {
 		MessageDialog.openInformation(
 			viewer.getControl().getShell(),
 			"NUOPC View",
 			message);
 	}
-	*/
+	
 
 	/**
 	 * Passing the focus request to the viewer's control.

@@ -85,12 +85,12 @@ public interface ActualParam extends EObject
    * </p>
    * <!-- end-user-doc -->
    * @return the value of the '<em>Value</em>' containment reference.
-   * @see #setValue(IDOrPathExpr)
+   * @see #setValue(Expr)
    * @see org.earthsystemcurator.cupidLanguage.CupidLanguagePackage#getActualParam_Value()
    * @model containment="true"
    * @generated
    */
-  IDOrPathExpr getValue();
+  Expr getValue();
 
   /**
    * Sets the value of the '{@link org.earthsystemcurator.cupidLanguage.ActualParam#getValue <em>Value</em>}' containment reference.
@@ -100,6 +100,6 @@ public interface ActualParam extends EObject
    * @see #getValue()
    * @generated
    */
-  void setValue(IDOrPathExpr value);
+  void setValue(Expr value);
 
 } // ActualParam

@@ -3,7 +3,7 @@
 package org.earthsystemcurator.cupidLanguage.impl;
 
 import org.earthsystemcurator.cupidLanguage.CupidLanguagePackage;
-import org.earthsystemcurator.cupidLanguage.IDOrPathExpr;
+import org.earthsystemcurator.cupidLanguage.Expr;
 import org.earthsystemcurator.cupidLanguage.Type;
 
 import org.eclipse.emf.common.notify.Notification;
@@ -164,7 +164,7 @@ public class TypeImpl extends MinimalEObjectImpl.Container implements Type
    * @generated
    * @ordered
    */
-  protected IDOrPathExpr derivedType;
+  protected Expr derivedType;
 
   /**
    * <!-- begin-user-doc -->
@@ -330,7 +330,7 @@ public class TypeImpl extends MinimalEObjectImpl.Container implements Type
    * <!-- end-user-doc -->
    * @generated
    */
-  public IDOrPathExpr getDerivedType()
+  public Expr getDerivedType()
   {
     return derivedType;
   }
@@ -340,9 +340,9 @@ public class TypeImpl extends MinimalEObjectImpl.Container implements Type
    * <!-- end-user-doc -->
    * @generated
    */
-  public NotificationChain basicSetDerivedType(IDOrPathExpr newDerivedType, NotificationChain msgs)
+  public NotificationChain basicSetDerivedType(Expr newDerivedType, NotificationChain msgs)
   {
-    IDOrPathExpr oldDerivedType = derivedType;
+    Expr oldDerivedType = derivedType;
     derivedType = newDerivedType;
     if (eNotificationRequired())
     {
@@ -357,7 +357,7 @@ public class TypeImpl extends MinimalEObjectImpl.Container implements Type
    * <!-- end-user-doc -->
    * @generated
    */
-  public void setDerivedType(IDOrPathExpr newDerivedType)
+  public void setDerivedType(Expr newDerivedType)
   {
     if (newDerivedType != derivedType)
     {
@@ -446,7 +446,7 @@ public class TypeImpl extends MinimalEObjectImpl.Container implements Type
         setDerived((Boolean)newValue);
         return;
       case CupidLanguagePackage.TYPE__DERIVED_TYPE:
-        setDerivedType((IDOrPathExpr)newValue);
+        setDerivedType((Expr)newValue);
         return;
     }
     super.eSet(featureID, newValue);
@@ -481,7 +481,7 @@ public class TypeImpl extends MinimalEObjectImpl.Container implements Type
         setDerived(DERIVED_EDEFAULT);
         return;
       case CupidLanguagePackage.TYPE__DERIVED_TYPE:
-        setDerivedType((IDOrPathExpr)null);
+        setDerivedType((Expr)null);
         return;
     }
     super.eUnset(featureID);

@@ -263,7 +263,8 @@ public class ReverseHandler extends AbstractHandler {
 							@Override
 							public void run(IMarker marker) {
 								System.out.println("Quick fix: Forward adding: " + eref.getName() + ", " + eobj.toString());
-								fsm.forwardAdd(eobj, eref, true);
+								
+								//fsm.forwardAdd(eobj, eref, true);
 								
 								IFortranAST ast = fsm.getASTForElement(eobj);
 								Reindenter.reindent(ast.getRoot(), ast, Strategy.REINDENT_EACH_LINE);

@@ -203,22 +203,22 @@ public interface CupidLanguageFactory extends EFactory
   VariableDeclaration createVariableDeclaration();
 
   /**
-   * Returns a new object of class '<em>ID Or Wildcard</em>'.
+   * Returns a new object of class '<em>Local Expression</em>'.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @return a new object of class '<em>ID Or Wildcard</em>'.
+   * @return a new object of class '<em>Local Expression</em>'.
    * @generated
    */
-  IDOrWildcard createIDOrWildcard();
+  LocalExpression createLocalExpression();
 
   /**
-   * Returns a new object of class '<em>ID Or Path Expr</em>'.
+   * Returns a new object of class '<em>Expr</em>'.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @return a new object of class '<em>ID Or Path Expr</em>'.
+   * @return a new object of class '<em>Expr</em>'.
    * @generated
    */
-  IDOrPathExpr createIDOrPathExpr();
+  Expr createExpr();
 
   /**
    * Returns a new object of class '<em>Path Expr</em>'.
@@ -237,6 +237,15 @@ public interface CupidLanguageFactory extends EFactory
    * @generated
    */
   Axis createAxis();
+
+  /**
+   * Returns a new object of class '<em>Declared Entity</em>'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return a new object of class '<em>Declared Entity</em>'.
+   * @generated
+   */
+  DeclaredEntity createDeclaredEntity();
 
   /**
    * Returns a new object of class '<em>Path Expr Term</em>'.

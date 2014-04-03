@@ -3,7 +3,7 @@
 package org.earthsystemcurator.cupidLanguage.impl;
 
 import org.earthsystemcurator.cupidLanguage.CupidLanguagePackage;
-import org.earthsystemcurator.cupidLanguage.IDOrPathExpr;
+import org.earthsystemcurator.cupidLanguage.Expr;
 import org.earthsystemcurator.cupidLanguage.UsesEntity;
 
 import org.eclipse.emf.common.notify.Notification;
@@ -37,7 +37,7 @@ public class UsesEntityImpl extends ImplicitContextMappingImpl implements UsesEn
    * @generated
    * @ordered
    */
-  protected IDOrPathExpr name;
+  protected Expr name;
 
   /**
    * <!-- begin-user-doc -->
@@ -65,7 +65,7 @@ public class UsesEntityImpl extends ImplicitContextMappingImpl implements UsesEn
    * <!-- end-user-doc -->
    * @generated
    */
-  public IDOrPathExpr getName()
+  public Expr getName()
   {
     return name;
   }
@@ -75,9 +75,9 @@ public class UsesEntityImpl extends ImplicitContextMappingImpl implements UsesEn
    * <!-- end-user-doc -->
    * @generated
    */
-  public NotificationChain basicSetName(IDOrPathExpr newName, NotificationChain msgs)
+  public NotificationChain basicSetName(Expr newName, NotificationChain msgs)
   {
-    IDOrPathExpr oldName = name;
+    Expr oldName = name;
     name = newName;
     if (eNotificationRequired())
     {
@@ -92,7 +92,7 @@ public class UsesEntityImpl extends ImplicitContextMappingImpl implements UsesEn
    * <!-- end-user-doc -->
    * @generated
    */
-  public void setName(IDOrPathExpr newName)
+  public void setName(Expr newName)
   {
     if (newName != name)
     {
@@ -151,7 +151,7 @@ public class UsesEntityImpl extends ImplicitContextMappingImpl implements UsesEn
     switch (featureID)
     {
       case CupidLanguagePackage.USES_ENTITY__NAME:
-        setName((IDOrPathExpr)newValue);
+        setName((Expr)newValue);
         return;
     }
     super.eSet(featureID, newValue);
@@ -168,7 +168,7 @@ public class UsesEntityImpl extends ImplicitContextMappingImpl implements UsesEn
     switch (featureID)
     {
       case CupidLanguagePackage.USES_ENTITY__NAME:
-        setName((IDOrPathExpr)null);
+        setName((Expr)null);
         return;
     }
     super.eUnset(featureID);

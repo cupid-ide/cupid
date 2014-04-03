@@ -175,14 +175,14 @@ public class CupidLanguageAdapterFactory extends AdapterFactoryImpl
         return createVariableDeclarationAdapter();
       }
       @Override
-      public Adapter caseIDOrWildcard(IDOrWildcard object)
+      public Adapter caseLocalExpression(LocalExpression object)
       {
-        return createIDOrWildcardAdapter();
+        return createLocalExpressionAdapter();
       }
       @Override
-      public Adapter caseIDOrPathExpr(IDOrPathExpr object)
+      public Adapter caseExpr(Expr object)
       {
-        return createIDOrPathExprAdapter();
+        return createExprAdapter();
       }
       @Override
       public Adapter casePathExpr(PathExpr object)
@@ -193,6 +193,11 @@ public class CupidLanguageAdapterFactory extends AdapterFactoryImpl
       public Adapter caseAxis(Axis object)
       {
         return createAxisAdapter();
+      }
+      @Override
+      public Adapter caseDeclaredEntity(DeclaredEntity object)
+      {
+        return createDeclaredEntityAdapter();
       }
       @Override
       public Adapter casePathExprTerm(PathExprTerm object)
@@ -522,31 +527,31 @@ public class CupidLanguageAdapterFactory extends AdapterFactoryImpl
   }
 
   /**
-   * Creates a new adapter for an object of class '{@link org.earthsystemcurator.cupidLanguage.IDOrWildcard <em>ID Or Wildcard</em>}'.
+   * Creates a new adapter for an object of class '{@link org.earthsystemcurator.cupidLanguage.LocalExpression <em>Local Expression</em>}'.
    * <!-- begin-user-doc -->
    * This default implementation returns null so that we can easily ignore cases;
    * it's useful to ignore a case when inheritance will catch all the cases anyway.
    * <!-- end-user-doc -->
    * @return the new adapter.
-   * @see org.earthsystemcurator.cupidLanguage.IDOrWildcard
+   * @see org.earthsystemcurator.cupidLanguage.LocalExpression
    * @generated
    */
-  public Adapter createIDOrWildcardAdapter()
+  public Adapter createLocalExpressionAdapter()
   {
     return null;
   }
 
   /**
-   * Creates a new adapter for an object of class '{@link org.earthsystemcurator.cupidLanguage.IDOrPathExpr <em>ID Or Path Expr</em>}'.
+   * Creates a new adapter for an object of class '{@link org.earthsystemcurator.cupidLanguage.Expr <em>Expr</em>}'.
    * <!-- begin-user-doc -->
    * This default implementation returns null so that we can easily ignore cases;
    * it's useful to ignore a case when inheritance will catch all the cases anyway.
    * <!-- end-user-doc -->
    * @return the new adapter.
-   * @see org.earthsystemcurator.cupidLanguage.IDOrPathExpr
+   * @see org.earthsystemcurator.cupidLanguage.Expr
    * @generated
    */
-  public Adapter createIDOrPathExprAdapter()
+  public Adapter createExprAdapter()
   {
     return null;
   }
@@ -577,6 +582,21 @@ public class CupidLanguageAdapterFactory extends AdapterFactoryImpl
    * @generated
    */
   public Adapter createAxisAdapter()
+  {
+    return null;
+  }
+
+  /**
+   * Creates a new adapter for an object of class '{@link org.earthsystemcurator.cupidLanguage.DeclaredEntity <em>Declared Entity</em>}'.
+   * <!-- begin-user-doc -->
+   * This default implementation returns null so that we can easily ignore cases;
+   * it's useful to ignore a case when inheritance will catch all the cases anyway.
+   * <!-- end-user-doc -->
+   * @return the new adapter.
+   * @see org.earthsystemcurator.cupidLanguage.DeclaredEntity
+   * @generated
+   */
+  public Adapter createDeclaredEntityAdapter()
   {
     return null;
   }

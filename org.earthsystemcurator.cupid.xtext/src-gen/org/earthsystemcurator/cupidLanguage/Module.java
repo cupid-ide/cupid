@@ -30,12 +30,12 @@ public interface Module extends ImplicitContextMapping
    * </p>
    * <!-- end-user-doc -->
    * @return the value of the '<em>Name</em>' containment reference.
-   * @see #setName(IDOrPathExpr)
+   * @see #setName(Expr)
    * @see org.earthsystemcurator.cupidLanguage.CupidLanguagePackage#getModule_Name()
    * @model containment="true"
    * @generated
    */
-  IDOrPathExpr getName();
+  Expr getName();
 
   /**
    * Sets the value of the '{@link org.earthsystemcurator.cupidLanguage.Module#getName <em>Name</em>}' containment reference.
@@ -45,6 +45,6 @@ public interface Module extends ImplicitContextMapping
    * @see #getName()
    * @generated
    */
-  void setName(IDOrPathExpr value);
+  void setName(Expr value);
 
 } // Module

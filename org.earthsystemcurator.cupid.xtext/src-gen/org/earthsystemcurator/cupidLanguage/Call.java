@@ -32,12 +32,12 @@ public interface Call extends ImplicitContextMapping
    * </p>
    * <!-- end-user-doc -->
    * @return the value of the '<em>Subroutine Name</em>' containment reference.
-   * @see #setSubroutineName(IDOrPathExpr)
+   * @see #setSubroutineName(Expr)
    * @see org.earthsystemcurator.cupidLanguage.CupidLanguagePackage#getCall_SubroutineName()
    * @model containment="true"
    * @generated
    */
-  IDOrPathExpr getSubroutineName();
+  Expr getSubroutineName();
 
   /**
    * Sets the value of the '{@link org.earthsystemcurator.cupidLanguage.Call#getSubroutineName <em>Subroutine Name</em>}' containment reference.
@@ -47,7 +47,7 @@ public interface Call extends ImplicitContextMapping
    * @see #getSubroutineName()
    * @generated
    */
-  void setSubroutineName(IDOrPathExpr value);
+  void setSubroutineName(Expr value);
 
   /**
    * Returns the value of the '<em><b>Params</b></em>' containment reference list.

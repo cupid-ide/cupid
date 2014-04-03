@@ -193,12 +193,12 @@ public interface Type extends EObject
    * </p>
    * <!-- end-user-doc -->
    * @return the value of the '<em>Derived Type</em>' containment reference.
-   * @see #setDerivedType(IDOrPathExpr)
+   * @see #setDerivedType(Expr)
    * @see org.earthsystemcurator.cupidLanguage.CupidLanguagePackage#getType_DerivedType()
    * @model containment="true"
    * @generated
    */
-  IDOrPathExpr getDerivedType();
+  Expr getDerivedType();
 
   /**
    * Sets the value of the '{@link org.earthsystemcurator.cupidLanguage.Type#getDerivedType <em>Derived Type</em>}' containment reference.
@@ -208,6 +208,6 @@ public interface Type extends EObject
    * @see #getDerivedType()
    * @generated
    */
-  void setDerivedType(IDOrPathExpr value);
+  void setDerivedType(Expr value);
 
 } // Type

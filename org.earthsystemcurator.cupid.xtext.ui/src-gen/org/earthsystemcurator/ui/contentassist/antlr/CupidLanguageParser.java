@@ -43,8 +43,8 @@ public class CupidLanguageParser extends AbstractContentAssistParser {
 					put(grammarAccess.getImplicitContextMappingAccess().getAlternatives(), "rule__ImplicitContextMapping__Alternatives");
 					put(grammarAccess.getIntentAccess().getAlternatives(), "rule__Intent__Alternatives");
 					put(grammarAccess.getTypeAccess().getAlternatives(), "rule__Type__Alternatives");
-					put(grammarAccess.getIDOrWildcardAccess().getAlternatives(), "rule__IDOrWildcard__Alternatives");
-					put(grammarAccess.getIDOrPathExprAccess().getAlternatives(), "rule__IDOrPathExpr__Alternatives");
+					put(grammarAccess.getLocalExpressionAccess().getAlternatives(), "rule__LocalExpression__Alternatives");
+					put(grammarAccess.getExprAccess().getAlternatives(), "rule__Expr__Alternatives");
 					put(grammarAccess.getLiteralAccess().getAlternatives(), "rule__Literal__Alternatives");
 					put(grammarAccess.getLanguageAccess().getGroup(), "rule__Language__Group__0");
 					put(grammarAccess.getAnnotationAccess().getGroup(), "rule__Annotation__Group__0");
@@ -65,6 +65,7 @@ public class CupidLanguageParser extends AbstractContentAssistParser {
 					put(grammarAccess.getAttributeAccess().getGroup_4(), "rule__Attribute__Group_4__0");
 					put(grammarAccess.getAttributeAccess().getGroup_5(), "rule__Attribute__Group_5__0");
 					put(grammarAccess.getMappingAccess().getGroup(), "rule__Mapping__Group__0");
+					put(grammarAccess.getImplicitContextMappingAccess().getGroup_9(), "rule__ImplicitContextMapping__Group_9__0");
 					put(grammarAccess.getModuleAccess().getGroup(), "rule__Module__Group__0");
 					put(grammarAccess.getModuleAccess().getGroup_2(), "rule__Module__Group_2__0");
 					put(grammarAccess.getModuleNameAccess().getGroup(), "rule__ModuleName__Group__0");
@@ -156,9 +157,11 @@ public class CupidLanguageParser extends AbstractContentAssistParser {
 					put(grammarAccess.getActualParamAccess().getValueAssignment_1(), "rule__ActualParam__ValueAssignment_1");
 					put(grammarAccess.getActualParamByKeywordAccess().getKeywordAssignment_2(), "rule__ActualParamByKeyword__KeywordAssignment_2");
 					put(grammarAccess.getVariableDeclarationAccess().getTypeAssignment_2(), "rule__VariableDeclaration__TypeAssignment_2");
-					put(grammarAccess.getIDOrWildcardAccess().getIdAssignment_0(), "rule__IDOrWildcard__IdAssignment_0");
-					put(grammarAccess.getIDOrWildcardAccess().getWildcardAssignment_1(), "rule__IDOrWildcard__WildcardAssignment_1");
-					put(grammarAccess.getIDOrPathExprAccess().getLiteralAssignment_2(), "rule__IDOrPathExpr__LiteralAssignment_2");
+					put(grammarAccess.getLocalExpressionAccess().getIdAssignment_0(), "rule__LocalExpression__IdAssignment_0");
+					put(grammarAccess.getLocalExpressionAccess().getLiteralAssignment_1(), "rule__LocalExpression__LiteralAssignment_1");
+					put(grammarAccess.getExprAccess().getWildcardAssignment_0(), "rule__Expr__WildcardAssignment_0");
+					put(grammarAccess.getExprAccess().getExprAssignment_1(), "rule__Expr__ExprAssignment_1");
+					put(grammarAccess.getExprAccess().getPathExprAssignment_2(), "rule__Expr__PathExprAssignment_2");
 					put(grammarAccess.getPathExprNodeAccess().getTailAssignment_1_2(), "rule__PathExprNode__TailAssignment_1_2");
 					put(grammarAccess.getPathExprTermAccess().getAxisAssignment_1(), "rule__PathExprTerm__AxisAssignment_1");
 					put(grammarAccess.getPathExprTermAccess().getRefAssignment_2(), "rule__PathExprTerm__RefAssignment_2");

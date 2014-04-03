@@ -221,18 +221,17 @@ public class CupidLanguageSwitch<T> extends Switch<T>
         if (result == null) result = defaultCase(theEObject);
         return result;
       }
-      case CupidLanguagePackage.ID_OR_WILDCARD:
+      case CupidLanguagePackage.LOCAL_EXPRESSION:
       {
-        IDOrWildcard idOrWildcard = (IDOrWildcard)theEObject;
-        T result = caseIDOrWildcard(idOrWildcard);
-        if (result == null) result = caseIDOrPathExpr(idOrWildcard);
+        LocalExpression localExpression = (LocalExpression)theEObject;
+        T result = caseLocalExpression(localExpression);
         if (result == null) result = defaultCase(theEObject);
         return result;
       }
-      case CupidLanguagePackage.ID_OR_PATH_EXPR:
+      case CupidLanguagePackage.EXPR:
       {
-        IDOrPathExpr idOrPathExpr = (IDOrPathExpr)theEObject;
-        T result = caseIDOrPathExpr(idOrPathExpr);
+        Expr expr = (Expr)theEObject;
+        T result = caseExpr(expr);
         if (result == null) result = defaultCase(theEObject);
         return result;
       }
@@ -240,7 +239,6 @@ public class CupidLanguageSwitch<T> extends Switch<T>
       {
         PathExpr pathExpr = (PathExpr)theEObject;
         T result = casePathExpr(pathExpr);
-        if (result == null) result = caseIDOrPathExpr(pathExpr);
         if (result == null) result = defaultCase(theEObject);
         return result;
       }
@@ -251,12 +249,19 @@ public class CupidLanguageSwitch<T> extends Switch<T>
         if (result == null) result = defaultCase(theEObject);
         return result;
       }
+      case CupidLanguagePackage.DECLARED_ENTITY:
+      {
+        DeclaredEntity declaredEntity = (DeclaredEntity)theEObject;
+        T result = caseDeclaredEntity(declaredEntity);
+        if (result == null) result = caseImplicitContextMapping(declaredEntity);
+        if (result == null) result = defaultCase(theEObject);
+        return result;
+      }
       case CupidLanguagePackage.PATH_EXPR_TERM:
       {
         PathExprTerm pathExprTerm = (PathExprTerm)theEObject;
         T result = casePathExprTerm(pathExprTerm);
         if (result == null) result = casePathExpr(pathExprTerm);
-        if (result == null) result = caseIDOrPathExpr(pathExprTerm);
         if (result == null) result = defaultCase(theEObject);
         return result;
       }
@@ -585,33 +590,33 @@ public class CupidLanguageSwitch<T> extends Switch<T>
   }
 
   /**
-   * Returns the result of interpreting the object as an instance of '<em>ID Or Wildcard</em>'.
+   * Returns the result of interpreting the object as an instance of '<em>Local Expression</em>'.
    * <!-- begin-user-doc -->
    * This implementation returns null;
    * returning a non-null result will terminate the switch.
    * <!-- end-user-doc -->
    * @param object the target of the switch.
-   * @return the result of interpreting the object as an instance of '<em>ID Or Wildcard</em>'.
+   * @return the result of interpreting the object as an instance of '<em>Local Expression</em>'.
    * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
    * @generated
    */
-  public T caseIDOrWildcard(IDOrWildcard object)
+  public T caseLocalExpression(LocalExpression object)
   {
     return null;
   }
 
   /**
-   * Returns the result of interpreting the object as an instance of '<em>ID Or Path Expr</em>'.
+   * Returns the result of interpreting the object as an instance of '<em>Expr</em>'.
    * <!-- begin-user-doc -->
    * This implementation returns null;
    * returning a non-null result will terminate the switch.
    * <!-- end-user-doc -->
    * @param object the target of the switch.
-   * @return the result of interpreting the object as an instance of '<em>ID Or Path Expr</em>'.
+   * @return the result of interpreting the object as an instance of '<em>Expr</em>'.
    * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
    * @generated
    */
-  public T caseIDOrPathExpr(IDOrPathExpr object)
+  public T caseExpr(Expr object)
   {
     return null;
   }
@@ -644,6 +649,22 @@ public class CupidLanguageSwitch<T> extends Switch<T>
    * @generated
    */
   public T caseAxis(Axis object)
+  {
+    return null;
+  }
+
+  /**
+   * Returns the result of interpreting the object as an instance of '<em>Declared Entity</em>'.
+   * <!-- begin-user-doc -->
+   * This implementation returns null;
+   * returning a non-null result will terminate the switch.
+   * <!-- end-user-doc -->
+   * @param object the target of the switch.
+   * @return the result of interpreting the object as an instance of '<em>Declared Entity</em>'.
+   * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+   * @generated
+   */
+  public T caseDeclaredEntity(DeclaredEntity object)
   {
     return null;
   }

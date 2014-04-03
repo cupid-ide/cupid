@@ -2,6 +2,7 @@
  */
 package org.earthsystemcurator.cupidLanguage;
 
+import org.eclipse.emf.ecore.EObject;
 
 /**
  * <!-- begin-user-doc -->
@@ -20,7 +21,7 @@ package org.earthsystemcurator.cupidLanguage;
  * @model
  * @generated
  */
-public interface PathExpr extends IDOrPathExpr
+public interface PathExpr extends EObject
 {
   /**
    * Returns the value of the '<em><b>Head</b></em>' containment reference.

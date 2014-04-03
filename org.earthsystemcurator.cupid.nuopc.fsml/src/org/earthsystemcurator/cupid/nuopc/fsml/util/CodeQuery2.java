@@ -10,9 +10,9 @@ import java.util.Set;
 import org.earthsystemcurator.cupidLanguage.ActualParam;
 import org.earthsystemcurator.cupidLanguage.ActualParamByKeyword;
 import org.earthsystemcurator.cupidLanguage.Call;
+import org.earthsystemcurator.cupidLanguage.DeclaredEntity;
+import org.earthsystemcurator.cupidLanguage.Expr;
 import org.earthsystemcurator.cupidLanguage.FormalParam;
-import org.earthsystemcurator.cupidLanguage.IDOrPathExpr;
-import org.earthsystemcurator.cupidLanguage.IDOrWildcard;
 import org.earthsystemcurator.cupidLanguage.Module;
 import org.earthsystemcurator.cupidLanguage.ModuleName;
 import org.earthsystemcurator.cupidLanguage.PathExpr;
@@ -27,7 +27,6 @@ import org.eclipse.photran.internal.core.analysis.binding.ScopingNode;
 import org.eclipse.photran.internal.core.analysis.types.DerivedType;
 import org.eclipse.photran.internal.core.analysis.types.Type;
 import org.eclipse.photran.internal.core.parser.ASTCallStmtNode;
-import org.eclipse.photran.internal.core.parser.ASTDerivedTypeStmtNode;
 import org.eclipse.photran.internal.core.parser.ASTEntityDeclNode;
 import org.eclipse.photran.internal.core.parser.ASTModuleNode;
 import org.eclipse.photran.internal.core.parser.ASTOnlyNode;
@@ -38,7 +37,6 @@ import org.eclipse.photran.internal.core.parser.ASTTypeDeclarationStmtNode;
 import org.eclipse.photran.internal.core.parser.ASTUseStmtNode;
 import org.eclipse.photran.internal.core.parser.IASTListNode;
 import org.eclipse.photran.internal.core.parser.IASTNode;
-import org.eclipse.photran.internal.core.vpg.PhotranTokenRef;
 
 @SuppressWarnings("restriction")
 public class CodeQuery2 {
@@ -59,17 +57,23 @@ public class CodeQuery2 {
 		
 		csnloop : for (ASTCallStmtNode csn : context.findAll(ASTCallStmtNode.class)) {
 			
-			final Map<PathExpr, String> bindings = new HashMap<PathExpr, String>();					
+			final Map<PathExpr, String> bindings = newBindings();					
 			
-			if (mapping.getSubroutineName() instanceof PathExpr) {
-				bindings.put((PathExpr) mapping.getSubroutineName(), csn.getSubroutineName().getText().trim());
+			if (!matchAndBind(mapping.getSubroutineName(), csn.getSubroutineName().getText(), bindings)) {
+				continue;
+			}
+			
+			/*
+			if (mapping.getSubroutineName().getPathExpr() != null) {
+				bindings.put(mapping.getSubroutineName().getPathExpr(), csn.getSubroutineName().getText().trim());
 			}
 			else {
-				IDOrWildcard subroutineName = (IDOrWildcard) mapping.getSubroutineName();
-				if (!subroutineName.isWildcard() && !csn.getSubroutineName().getText().trim().equalsIgnoreCase(subroutineName.getId())) {
+				
+				if (!mapping.getSubroutineName().isWildcard() && !csn.getSubroutineName().getText().trim().equalsIgnoreCase(mapping.getSubroutineName().getExpr().getId())) {
 					continue;
 				}
 			}
+			*/
 			
 			//deal with arguments now
 			if (mapping.getParams() != null) {
@@ -79,7 +83,7 @@ public class CodeQuery2 {
 					ASTSubroutineArgNode san;
 					ActualParam param = mapping.getParams().get(i);
 					String keyword = param.getKeyword();
-					IDOrPathExpr value = param.getValue();
+					Expr value = param.getValue();
 					
 					if (keyword == null) {
 						//match by index						
@@ -102,18 +106,22 @@ public class CodeQuery2 {
 							continue csnloop;
 						}
 					}
-					else if (value instanceof PathExpr) {
-						bindings.put((PathExpr) value, san.getExpr().toString().trim());
+					else if (value.getPathExpr() != null) {
+						bindings.put(value.getPathExpr(), san.getExpr().toString().trim());
 					}
-					else if (value.getLiteral() != null && !san.getExpr().toString().trim().equals(value.getLiteral())) {
-						continue csnloop;
+					else if (value.getExpr() != null && value.getExpr().getLiteral() != null) {
+						System.out.println("literal search = " + value.getExpr().getLiteral());
+						System.out.println("\t=>compared to = " + san.getExpr().toString().trim());
+						
+						if (!san.getExpr().toString().trim().equals(value.getExpr().getLiteral())) {
+							continue csnloop;
+						}
+						
 					}
-					else if (value instanceof IDOrWildcard) {
+					else if (!value.isWildcard() && !san.getExpr().toString().trim().equalsIgnoreCase(value.getExpr().getId())) {
 						//if not wildcard, make sure expressions match
-						if (!((IDOrWildcard) value).isWildcard() && !san.getExpr().toString().trim().equalsIgnoreCase(((IDOrWildcard) value).getId())) {
 						//System.out.println("Expr = |" + san.getExpr().toString() + "|");
 						continue csnloop;
-						}
 					}							
 				}			
 			}
@@ -127,9 +135,9 @@ public class CodeQuery2 {
 		
 	}
 	
-	public static Map<ASTModuleNode, Map<PathExpr, String>> module(Set<IFortranAST> asts, Module mapping) {
+	public static Map<IFortranAST, Map<PathExpr, String>> module(Set<IFortranAST> asts, Module mapping) {
 		
-		Map<ASTModuleNode, Map<PathExpr, String>> result = new HashMap<ASTModuleNode, Map<PathExpr, String>>();
+		Map<IFortranAST, Map<PathExpr, String>> result = new HashMap<IFortranAST, Map<PathExpr, String>>();
 		
 		for (IFortranAST astToCheck : asts) {
 			if (astToCheck.getRoot() != null &&
@@ -140,21 +148,24 @@ public class CodeQuery2 {
 				ASTModuleNode node = (ASTModuleNode) astToCheck.getRoot().getProgramUnitList().get(0);
 				
 				if (mapping.getName() != null) {
-					if (mapping.getName() instanceof IDOrWildcard) {
-						IDOrWildcard moduleName = (IDOrWildcard) mapping.getName();
-						if (moduleName.isWildcard() ||
-						    moduleName.getId().equalsIgnoreCase(node.getModuleStmt().getModuleName().getModuleName().getText())) {
-							result.put(node, null);
-						}
+					Map<PathExpr, String> bindings = newBindings();
+					if (matchAndBind(mapping.getName(), node.getModuleStmt().getModuleName().getModuleName().getText(), bindings)) {
+						result.put(astToCheck,  bindings);
 					}
-					else {
+					/*
+					if (mapping.getName().isWildcard() ||
+					    (mapping.getName().getExpr()!=null && mapping.getName().getExpr().getId().equalsIgnoreCase(node.getModuleStmt().getModuleName().getModuleName().getText()))) {
+						result.put(astToCheck, null);
+					}
+					else if (mapping.getName().getPathExpr() != null) {
 						Map<PathExpr, String> bindings = new HashMap<PathExpr, String>();
-						bindings.put((PathExpr) mapping.getName(), node.getModuleStmt().getModuleName().getModuleName().getText());
-						result.put(node, bindings);
+						bindings.put(mapping.getName().getPathExpr(), node.getModuleStmt().getModuleName().getModuleName().getText());
+						result.put(astToCheck, bindings);
 					}
+					*/
 				}
 				else {
-					result.put(node, null);
+					result.put(astToCheck, null);
 				}
 			
 			}
@@ -174,24 +185,25 @@ public class CodeQuery2 {
 	
 	
 	
-	public static boolean isPathExpr(IDOrPathExpr obj) {
-		return obj instanceof PathExpr;
-	}
+	//public static boolean isPathExpr(IDOrPathExpr obj) {
+	//	return obj instanceof PathExpr;
+	//}
 	
-	public static PathExpr asPathExpr(IDOrPathExpr obj) {
-		return (PathExpr) obj;
-	}
+	//public static PathExpr asPathExpr(IDOrPathExpr obj) {
+	//	return (PathExpr) obj;
+	//}
 	
-	public static IDOrWildcard asIDOrWildcard(IDOrPathExpr obj) {
-		return (IDOrWildcard) obj;
-	}
+	//public static IDOrWildcard asIDOrWildcard(IDOrPathExpr obj) {
+	//	return (IDOrWildcard) obj;
+	//}
 	
-	public static boolean matchAndBind(IDOrPathExpr var, String value, Map<PathExpr, String> bindings) {
-		if (isPathExpr(var)) {
-			bindings.put(asPathExpr(var), value);
+	//TODO: handle literals
+	public static boolean matchAndBind(Expr var, String value, Map<PathExpr, String> bindings) {
+		if (var.getPathExpr() != null) {
+			bindings.put(var.getPathExpr(), value);
 			return true;
 		}
-		else if (!asIDOrWildcard(var).isWildcard() && !value.equalsIgnoreCase(asIDOrWildcard(var).getId())) {
+		else if (!var.isWildcard() && !value.trim().equalsIgnoreCase(var.getExpr().getId())) {
 			return false;
 		}
 		return true;
@@ -261,18 +273,21 @@ public class CodeQuery2 {
 		Set<ASTSubroutineSubprogramNode> nodes = node.findAll(ASTSubroutineSubprogramNode.class);
 		ssnloop: for (ASTSubroutineSubprogramNode ssn : nodes) {
 			
-			Map<PathExpr, String> bindings = new HashMap<PathExpr, String>();
+			Map<PathExpr, String> bindings = newBindings();
 			String subroutineName = ssn.getSubroutineStmt().getSubroutineName().getSubroutineName().getText();
 			
-			if (mapping.getName() instanceof IDOrWildcard) {
-				IDOrWildcard sName = (IDOrWildcard) mapping.getName();
-				if (!sName.isWildcard() && !subroutineName.equalsIgnoreCase(sName.getId())) {
-					continue ssnloop;
-				}
+			if (!matchAndBind(mapping.getName(), subroutineName, bindings)) {
+				continue ssnloop;
+			}
+			//IDOrWildcard sName = (IDOrWildcard) mapping.getName();
+			/*if (!mapping.getName().isWildcard() && mapping.getName().getId() != null && !subroutineName.equalsIgnoreCase(sName.getId())) {
+				continue ssnloop;
 			}
 			else {
-				bindings.put((PathExpr) mapping.getName(), subroutineName);
+				bindings.put(mapping.getName(), subroutineName);
 			}
+			*/
+			
 			
 			int idxParam = 0;
 			
@@ -294,8 +309,8 @@ public class CodeQuery2 {
 								continue ssnloop;
 							}
 							else {
-								if (param.getName() instanceof PathExpr) {
-									bindings.put((PathExpr) param.getName(), spn.getVariableName().getText());
+								if (param.getName().getPathExpr() != null) {
+									bindings.put(param.getName().getPathExpr(), spn.getVariableName().getText());
 								}
 								idxParam++;
 							}							
@@ -328,11 +343,19 @@ public class CodeQuery2 {
 	}
 	
 	public static Map<String, Map<PathExpr, String>> subroutineName(ASTSubroutineSubprogramNode node, SubroutineName mapping) {
+		
 		Map<String, Map<PathExpr, String>> result = new HashMap<String, Map<PathExpr, String>>();
 		String name = node.getNameToken().getText();
+		
+		Map<PathExpr, String> bindings = newBindings();
+		
 		if (mapping.getName() == null) {
 			result.put(name, null);
 		}
+		else if (matchAndBind(mapping.getName(), name, bindings)) {
+			result.put(name, bindings);
+		}
+		/*
 		else if (mapping.getName() instanceof IDOrWildcard) {
 			if (((IDOrWildcard) mapping.getName()).getId().equalsIgnoreCase(name) ||
 			    ((IDOrWildcard) mapping.getName()).isWildcard()) {
@@ -342,7 +365,7 @@ public class CodeQuery2 {
 		else {
 			result.put(name, newBindings((PathExpr) mapping.getName(), name));
 		}
-		
+		*/
 		return result;
 	}
 	
@@ -352,7 +375,7 @@ public class CodeQuery2 {
 		else if (inType.isDouble()) return Type.DOUBLEPRECISION;
 		else if (inType.isInteger()) return Type.INTEGER;
 		else if (inType.isLogical()) return Type.LOGICAL;
-		else if (inType.isDerived()) return new DerivedType(((IDOrWildcard)inType.getDerivedType()).getId());
+		else if (inType.isDerived()) return new DerivedType(inType.getDerivedType().getExpr().getId());
 		else return null;
 	}
 	
@@ -366,9 +389,9 @@ public class CodeQuery2 {
 		return null;
 	}
 	
-	public static Map<String, Map<PathExpr, String>> variableDeclaration(ScopingNode node, VariableDeclaration mapping) {
+	public static Map<ASTTypeDeclarationStmtNode, Map<PathExpr, String>> variableDeclaration(ScopingNode node, VariableDeclaration mapping) {
 			
-		Map<String, Map<PathExpr, String>> result = new HashMap<String, Map<PathExpr, String>>();
+		Map<ASTTypeDeclarationStmtNode, Map<PathExpr, String>> result = new HashMap<ASTTypeDeclarationStmtNode, Map<PathExpr, String>>();
 		org.earthsystemcurator.cupidLanguage.Type type = mapping.getType();
 		
 		Set<ASTTypeDeclarationStmtNode> nodes = node.findAll(ASTTypeDeclarationStmtNode.class);
@@ -393,13 +416,22 @@ public class CodeQuery2 {
 			
 			// if we found the type, then add it
 			if (toAdd) {
-				for (ASTEntityDeclNode decl : n.getEntityDeclList()) {
-					result.put(decl.getObjectName().getObjectName().getText(), bindings);
-				}
+				result.put(n, bindings);
+				//for (ASTEntityDeclNode decl : n.getEntityDeclList()) {
+					//result.put(decl.getObjectName().getObjectName().getText(), bindings);
+				//}
 			}
 				
 		}
 	
+		return result;
+	}
+	
+	public static Map<String, Map<PathExpr, String>> declaredEntity(ASTTypeDeclarationStmtNode context, DeclaredEntity mapping) {
+		Map<String, Map<PathExpr, String>> result = new HashMap<String, Map<PathExpr, String>>();
+		for (ASTEntityDeclNode edn : context.getEntityDeclList()) {
+			result.put(edn.getObjectName().getObjectName().getText(), null);
+		}
 		return result;
 	}
 	

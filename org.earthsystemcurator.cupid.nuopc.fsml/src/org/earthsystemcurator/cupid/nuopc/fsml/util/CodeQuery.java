@@ -7,18 +7,9 @@ import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
-import java.util.TreeMap;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import org.earthsystemcurator.cupidLanguage.ActualParam;
-import org.earthsystemcurator.cupidLanguage.Call;
-import org.earthsystemcurator.cupidLanguage.IDOrPathExpr;
-import org.earthsystemcurator.cupidLanguage.IDOrWildcard;
-import org.earthsystemcurator.cupidLanguage.ImplicitContextMapping;
-import org.earthsystemcurator.cupidLanguage.PathExpr;
-import org.earthsystemcurator.cupidLanguage.Subroutine;
-import org.eclipse.core.resources.IFile;
 import org.eclipse.photran.core.IFortranAST;
 import org.eclipse.photran.internal.core.analysis.binding.Definition;
 import org.eclipse.photran.internal.core.analysis.binding.ScopingNode;
@@ -49,7 +40,6 @@ import org.eclipse.photran.internal.core.parser.IASTNode;
 import org.eclipse.photran.internal.core.parser.IExpr;
 import org.eclipse.photran.internal.core.vpg.EdgeType;
 import org.eclipse.photran.internal.core.vpg.PhotranTokenRef;
-import org.eclipse.photran.internal.core.vpg.PhotranVPG;
 
 @SuppressWarnings("restriction")
 public class CodeQuery {

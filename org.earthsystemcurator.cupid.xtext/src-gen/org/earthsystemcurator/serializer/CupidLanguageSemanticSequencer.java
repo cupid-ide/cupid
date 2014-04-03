@@ -10,11 +10,12 @@ import org.earthsystemcurator.cupidLanguage.Call;
 import org.earthsystemcurator.cupidLanguage.Cardinality;
 import org.earthsystemcurator.cupidLanguage.ConceptDef;
 import org.earthsystemcurator.cupidLanguage.CupidLanguagePackage;
+import org.earthsystemcurator.cupidLanguage.DeclaredEntity;
+import org.earthsystemcurator.cupidLanguage.Expr;
 import org.earthsystemcurator.cupidLanguage.FormalParam;
-import org.earthsystemcurator.cupidLanguage.IDOrPathExpr;
-import org.earthsystemcurator.cupidLanguage.IDOrWildcard;
 import org.earthsystemcurator.cupidLanguage.Intent;
 import org.earthsystemcurator.cupidLanguage.Language;
+import org.earthsystemcurator.cupidLanguage.LocalExpression;
 import org.earthsystemcurator.cupidLanguage.Mapping;
 import org.earthsystemcurator.cupidLanguage.Module;
 import org.earthsystemcurator.cupidLanguage.ModuleName;
@@ -100,22 +101,21 @@ public class CupidLanguageSemanticSequencer extends AbstractDelegatingSemanticSe
 					return; 
 				}
 				else break;
+			case CupidLanguagePackage.DECLARED_ENTITY:
+				if(context == grammarAccess.getImplicitContextMappingRule()) {
+					sequence_ImplicitContextMapping(context, (DeclaredEntity) semanticObject); 
+					return; 
+				}
+				else break;
+			case CupidLanguagePackage.EXPR:
+				if(context == grammarAccess.getExprRule()) {
+					sequence_Expr(context, (Expr) semanticObject); 
+					return; 
+				}
+				else break;
 			case CupidLanguagePackage.FORMAL_PARAM:
 				if(context == grammarAccess.getFormalParamRule()) {
 					sequence_FormalParam(context, (FormalParam) semanticObject); 
-					return; 
-				}
-				else break;
-			case CupidLanguagePackage.ID_OR_PATH_EXPR:
-				if(context == grammarAccess.getIDOrPathExprRule()) {
-					sequence_IDOrPathExpr(context, (IDOrPathExpr) semanticObject); 
-					return; 
-				}
-				else break;
-			case CupidLanguagePackage.ID_OR_WILDCARD:
-				if(context == grammarAccess.getIDOrPathExprRule() ||
-				   context == grammarAccess.getIDOrWildcardRule()) {
-					sequence_IDOrWildcard(context, (IDOrWildcard) semanticObject); 
 					return; 
 				}
 				else break;
@@ -128,6 +128,12 @@ public class CupidLanguageSemanticSequencer extends AbstractDelegatingSemanticSe
 			case CupidLanguagePackage.LANGUAGE:
 				if(context == grammarAccess.getLanguageRule()) {
 					sequence_Language(context, (Language) semanticObject); 
+					return; 
+				}
+				else break;
+			case CupidLanguagePackage.LOCAL_EXPRESSION:
+				if(context == grammarAccess.getLocalExpressionRule()) {
+					sequence_LocalExpression(context, (LocalExpression) semanticObject); 
 					return; 
 				}
 				else break;
@@ -152,8 +158,7 @@ public class CupidLanguageSemanticSequencer extends AbstractDelegatingSemanticSe
 				}
 				else break;
 			case CupidLanguagePackage.PATH_EXPR:
-				if(context == grammarAccess.getIDOrPathExprRule() ||
-				   context == grammarAccess.getPathExprRule() ||
+				if(context == grammarAccess.getPathExprRule() ||
 				   context == grammarAccess.getPathExprNodeRule() ||
 				   context == grammarAccess.getPathExprNodeAccess().getPathExprHeadAction_1_0()) {
 					sequence_PathExprNode(context, (PathExpr) semanticObject); 
@@ -161,8 +166,7 @@ public class CupidLanguageSemanticSequencer extends AbstractDelegatingSemanticSe
 				}
 				else break;
 			case CupidLanguagePackage.PATH_EXPR_TERM:
-				if(context == grammarAccess.getIDOrPathExprRule() ||
-				   context == grammarAccess.getPathExprRule() ||
+				if(context == grammarAccess.getPathExprRule() ||
 				   context == grammarAccess.getPathExprNodeRule() ||
 				   context == grammarAccess.getPathExprNodeAccess().getPathExprHeadAction_1_0() ||
 				   context == grammarAccess.getPathExprTermRule()) {
@@ -247,7 +251,7 @@ public class CupidLanguageSemanticSequencer extends AbstractDelegatingSemanticSe
 	
 	/**
 	 * Constraint:
-	 *     ((keyword=ID optional?='?'?)? value=IDOrPathExpr)
+	 *     ((keyword=ID optional?='?'?)? value=Expr)
 	 */
 	protected void sequence_ActualParam(EObject context, ActualParam semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
@@ -325,7 +329,7 @@ public class CupidLanguageSemanticSequencer extends AbstractDelegatingSemanticSe
 	
 	/**
 	 * Constraint:
-	 *     (subroutineName=IDOrPathExpr (params+=ActualParam params+=ActualParam*)?)
+	 *     (subroutineName=Expr (params+=ActualParam params+=ActualParam*)?)
 	 */
 	protected void sequence_Call(EObject context, Call semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
@@ -343,7 +347,16 @@ public class CupidLanguageSemanticSequencer extends AbstractDelegatingSemanticSe
 	
 	/**
 	 * Constraint:
-	 *     (intent=Intent? type=Type name=IDOrPathExpr)
+	 *     (wildcard?='*' | expr=LocalExpression | pathExpr=PathExpr)
+	 */
+	protected void sequence_Expr(EObject context, Expr semanticObject) {
+		genericSequencer.createSequence(context, semanticObject);
+	}
+	
+	
+	/**
+	 * Constraint:
+	 *     (intent=Intent? type=Type name=Expr)
 	 */
 	protected void sequence_FormalParam(EObject context, FormalParam semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
@@ -352,25 +365,9 @@ public class CupidLanguageSemanticSequencer extends AbstractDelegatingSemanticSe
 	
 	/**
 	 * Constraint:
-	 *     literal=Literal
+	 *     {DeclaredEntity}
 	 */
-	protected void sequence_IDOrPathExpr(EObject context, IDOrPathExpr semanticObject) {
-		if(errorAcceptor != null) {
-			if(transientValues.isValueTransient(semanticObject, CupidLanguagePackage.Literals.ID_OR_PATH_EXPR__LITERAL) == ValueTransient.YES)
-				errorAcceptor.accept(diagnosticProvider.createFeatureValueMissing(semanticObject, CupidLanguagePackage.Literals.ID_OR_PATH_EXPR__LITERAL));
-		}
-		INodesForEObjectProvider nodes = createNodeProvider(semanticObject);
-		SequenceFeeder feeder = createSequencerFeeder(semanticObject, nodes);
-		feeder.accept(grammarAccess.getIDOrPathExprAccess().getLiteralLiteralParserRuleCall_2_0(), semanticObject.getLiteral());
-		feeder.finish();
-	}
-	
-	
-	/**
-	 * Constraint:
-	 *     (id=ID | wildcard?='*')
-	 */
-	protected void sequence_IDOrWildcard(EObject context, IDOrWildcard semanticObject) {
+	protected void sequence_ImplicitContextMapping(EObject context, DeclaredEntity semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
 	}
 	
@@ -395,6 +392,15 @@ public class CupidLanguageSemanticSequencer extends AbstractDelegatingSemanticSe
 	
 	/**
 	 * Constraint:
+	 *     (id=ID | literal=Literal)
+	 */
+	protected void sequence_LocalExpression(EObject context, LocalExpression semanticObject) {
+		genericSequencer.createSequence(context, semanticObject);
+	}
+	
+	
+	/**
+	 * Constraint:
 	 *     (context=PathExpr? mapping=ImplicitContextMapping)
 	 */
 	protected void sequence_Mapping(EObject context, Mapping semanticObject) {
@@ -413,7 +419,7 @@ public class CupidLanguageSemanticSequencer extends AbstractDelegatingSemanticSe
 	
 	/**
 	 * Constraint:
-	 *     (name=IDOrPathExpr?)
+	 *     (name=Expr?)
 	 */
 	protected void sequence_Module(EObject context, Module semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
@@ -434,7 +440,17 @@ public class CupidLanguageSemanticSequencer extends AbstractDelegatingSemanticSe
 	 *     (head=PathExprNode_PathExpr_1_0 tail=[SubconceptOrAttribute|ID])
 	 */
 	protected void sequence_PathExprNode(EObject context, PathExpr semanticObject) {
-		genericSequencer.createSequence(context, semanticObject);
+		if(errorAcceptor != null) {
+			if(transientValues.isValueTransient(semanticObject, CupidLanguagePackage.Literals.PATH_EXPR__HEAD) == ValueTransient.YES)
+				errorAcceptor.accept(diagnosticProvider.createFeatureValueMissing(semanticObject, CupidLanguagePackage.Literals.PATH_EXPR__HEAD));
+			if(transientValues.isValueTransient(semanticObject, CupidLanguagePackage.Literals.PATH_EXPR__TAIL) == ValueTransient.YES)
+				errorAcceptor.accept(diagnosticProvider.createFeatureValueMissing(semanticObject, CupidLanguagePackage.Literals.PATH_EXPR__TAIL));
+		}
+		INodesForEObjectProvider nodes = createNodeProvider(semanticObject);
+		SequenceFeeder feeder = createSequencerFeeder(semanticObject, nodes);
+		feeder.accept(grammarAccess.getPathExprNodeAccess().getPathExprHeadAction_1_0(), semanticObject.getHead());
+		feeder.accept(grammarAccess.getPathExprNodeAccess().getTailSubconceptOrAttributeIDTerminalRuleCall_1_2_0_1(), semanticObject.getTail());
+		feeder.finish();
 	}
 	
 	
@@ -458,7 +474,7 @@ public class CupidLanguageSemanticSequencer extends AbstractDelegatingSemanticSe
 	
 	/**
 	 * Constraint:
-	 *     (name=IDOrPathExpr?)
+	 *     (name=Expr?)
 	 */
 	protected void sequence_SubroutineName(EObject context, SubroutineName semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
@@ -467,7 +483,7 @@ public class CupidLanguageSemanticSequencer extends AbstractDelegatingSemanticSe
 	
 	/**
 	 * Constraint:
-	 *     (name=IDOrPathExpr (params+=FormalParam params+=FormalParam*)?)
+	 *     (name=Expr (params+=FormalParam params+=FormalParam*)?)
 	 */
 	protected void sequence_Subroutine(EObject context, Subroutine semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
@@ -491,7 +507,7 @@ public class CupidLanguageSemanticSequencer extends AbstractDelegatingSemanticSe
 	 *         logical?='logical' | 
 	 *         real?='real' | 
 	 *         double?='double' | 
-	 *         (derived?='type' derivedType=IDOrPathExpr)
+	 *         (derived?='type' derivedType=Expr)
 	 *     )
 	 */
 	protected void sequence_Type(EObject context, Type semanticObject) {
@@ -501,7 +517,7 @@ public class CupidLanguageSemanticSequencer extends AbstractDelegatingSemanticSe
 	
 	/**
 	 * Constraint:
-	 *     name=IDOrPathExpr
+	 *     name=Expr
 	 */
 	protected void sequence_UsesEntity(EObject context, UsesEntity semanticObject) {
 		if(errorAcceptor != null) {
@@ -510,14 +526,14 @@ public class CupidLanguageSemanticSequencer extends AbstractDelegatingSemanticSe
 		}
 		INodesForEObjectProvider nodes = createNodeProvider(semanticObject);
 		SequenceFeeder feeder = createSequencerFeeder(semanticObject, nodes);
-		feeder.accept(grammarAccess.getUsesEntityAccess().getNameIDOrPathExprParserRuleCall_2_0(), semanticObject.getName());
+		feeder.accept(grammarAccess.getUsesEntityAccess().getNameExprParserRuleCall_2_0(), semanticObject.getName());
 		feeder.finish();
 	}
 	
 	
 	/**
 	 * Constraint:
-	 *     name=IDOrPathExpr
+	 *     name=Expr
 	 */
 	protected void sequence_UsesModule(EObject context, UsesModule semanticObject) {
 		if(errorAcceptor != null) {
@@ -526,7 +542,7 @@ public class CupidLanguageSemanticSequencer extends AbstractDelegatingSemanticSe
 		}
 		INodesForEObjectProvider nodes = createNodeProvider(semanticObject);
 		SequenceFeeder feeder = createSequencerFeeder(semanticObject, nodes);
-		feeder.accept(grammarAccess.getUsesModuleAccess().getNameIDOrPathExprParserRuleCall_2_0(), semanticObject.getName());
+		feeder.accept(grammarAccess.getUsesModuleAccess().getNameExprParserRuleCall_2_0(), semanticObject.getName());
 		feeder.finish();
 	}
 	

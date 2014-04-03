@@ -77,25 +77,27 @@ Mapping:
 	context=PathExpr? mapping=ImplicitContextMapping;
 
 ImplicitContextMapping:
-	Module | ModuleName | UsesModule | UsesEntity | Call | Subroutine | SubroutineName | ActualParamByKeyword | VariableDeclaration;
+	Module | ModuleName | UsesModule | UsesEntity | 
+	Call | Subroutine | SubroutineName | ActualParamByKeyword | 
+	VariableDeclaration | {DeclaredEntity} DeclaredEntity;
 
 Module: {Module} 
-	'module' ('(' name=IDOrPathExpr ')')?;
+	'module' ('(' name=Expr ')')?;
 	
 ModuleName: {ModuleName}
 	'moduleName';
 	
 UsesModule:
-	'usesModule' '(' name=IDOrPathExpr ')';
+	'usesModule' '(' name=Expr ')';
 	
 UsesEntity:
-	'usesEntity' '(' name=IDOrPathExpr ')';
+	'usesEntity' '(' name=Expr ')';
 
 Subroutine:
-	'subroutine' '(' name=IDOrPathExpr ('(' (params+=FormalParam (',' params+=FormalParam)* )? ')')? ')';
+	'subroutine' '(' name=Expr ('(' (params+=FormalParam (',' params+=FormalParam)* )? ')')? ')';
 	
 FormalParam:
-	intent=Intent? type=Type name=IDOrPathExpr;
+	intent=Intent? type=Type name=Expr;
 
 Intent:
 	in?='in' | out?='out' | inout?='inout';
@@ -106,31 +108,39 @@ Type:
 	logical?='logical' | 
 	real?='real' |
 	double?='double' ('precision')? |
-	derived?='type' '(' derivedType=IDOrPathExpr ')';
+	derived?='type' '(' derivedType=Expr ')';
 
 SubroutineName:
-	'subroutineName' {SubroutineName} ('(' name=IDOrPathExpr ')')?;
+	'subroutineName' {SubroutineName} ('(' name=Expr ')')?;
 
 Call:
-	'call' '(' subroutineName=IDOrPathExpr ( '(' (params+=ActualParam (',' params+=ActualParam)* )? ')')? ')';
+	'call' '(' subroutineName=Expr ( '(' (params+=ActualParam (',' params+=ActualParam)* )? ')')? ')';
 
 ActualParam:
-	(keyword=ID (optional?='?')? '=')? value=IDOrPathExpr;
+	(keyword=ID (optional?='?')? '=')? value=Expr;
 
 ActualParamByKeyword:
 	'actualParamByKeyword' '(' keyword=ID ')';
 	
 VariableDeclaration:
 	'declaration' '(' type=Type ')';
+	
+DeclaredEntity:
+	'declaredEntity';
 
-IDOrWildcard:
-	id=ID | wildcard?='*';
+LocalExpression:
+	id=ID | literal=Literal;
 	
 //IDOrPathExpr:
 //	idOrWildcard=IDOrWildcard | pathExpr=PathExpr;
-	
-IDOrPathExpr:
-	IDOrWildcard | PathExpr | literal=Literal;
+
+//three basic cases: 
+// - a wildcard, 
+// - a local expression in the target domain, 
+// - or a path expression in the FSML domain	
+//IDOrPathExpr:
+Expr:
+	wildcard?='*' | expr=LocalExpression | pathExpr=PathExpr;
 
 Literal:
 	INT+ | STRING;

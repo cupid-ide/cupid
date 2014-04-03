@@ -5,8 +5,8 @@ package org.earthsystemcurator.cupidLanguage.impl;
 import java.util.Collection;
 
 import org.earthsystemcurator.cupidLanguage.CupidLanguagePackage;
+import org.earthsystemcurator.cupidLanguage.Expr;
 import org.earthsystemcurator.cupidLanguage.FormalParam;
-import org.earthsystemcurator.cupidLanguage.IDOrPathExpr;
 import org.earthsystemcurator.cupidLanguage.Subroutine;
 
 import org.eclipse.emf.common.notify.Notification;
@@ -46,7 +46,7 @@ public class SubroutineImpl extends ImplicitContextMappingImpl implements Subrou
    * @generated
    * @ordered
    */
-  protected IDOrPathExpr name;
+  protected Expr name;
 
   /**
    * The cached value of the '{@link #getParams() <em>Params</em>}' containment reference list.
@@ -84,7 +84,7 @@ public class SubroutineImpl extends ImplicitContextMappingImpl implements Subrou
    * <!-- end-user-doc -->
    * @generated
    */
-  public IDOrPathExpr getName()
+  public Expr getName()
   {
     return name;
   }
@@ -94,9 +94,9 @@ public class SubroutineImpl extends ImplicitContextMappingImpl implements Subrou
    * <!-- end-user-doc -->
    * @generated
    */
-  public NotificationChain basicSetName(IDOrPathExpr newName, NotificationChain msgs)
+  public NotificationChain basicSetName(Expr newName, NotificationChain msgs)
   {
-    IDOrPathExpr oldName = name;
+    Expr oldName = name;
     name = newName;
     if (eNotificationRequired())
     {
@@ -111,7 +111,7 @@ public class SubroutineImpl extends ImplicitContextMappingImpl implements Subrou
    * <!-- end-user-doc -->
    * @generated
    */
-  public void setName(IDOrPathExpr newName)
+  public void setName(Expr newName)
   {
     if (newName != name)
     {
@@ -189,7 +189,7 @@ public class SubroutineImpl extends ImplicitContextMappingImpl implements Subrou
     switch (featureID)
     {
       case CupidLanguagePackage.SUBROUTINE__NAME:
-        setName((IDOrPathExpr)newValue);
+        setName((Expr)newValue);
         return;
       case CupidLanguagePackage.SUBROUTINE__PARAMS:
         getParams().clear();
@@ -210,7 +210,7 @@ public class SubroutineImpl extends ImplicitContextMappingImpl implements Subrou
     switch (featureID)
     {
       case CupidLanguagePackage.SUBROUTINE__NAME:
-        setName((IDOrPathExpr)null);
+        setName((Expr)null);
         return;
       case CupidLanguagePackage.SUBROUTINE__PARAMS:
         getParams().clear();

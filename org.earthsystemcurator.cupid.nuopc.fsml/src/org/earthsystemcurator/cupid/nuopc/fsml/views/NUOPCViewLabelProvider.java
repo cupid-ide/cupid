@@ -12,6 +12,7 @@ import org.earthsystemcurator.cupidLanguage.SubconceptOrAttribute;
 import org.earthsystemcurator.cupidLanguage.Subroutine;
 import org.earthsystemcurator.cupidLanguage.UsesEntity;
 import org.earthsystemcurator.cupidLanguage.UsesModule;
+import org.earthsystemcurator.cupidLanguage.VariableDeclaration;
 import org.eclipse.core.runtime.FileLocator;
 import org.eclipse.core.runtime.Path;
 import org.eclipse.jface.resource.ImageDescriptor;
@@ -221,8 +222,9 @@ class NUOPCViewLabelProvider extends StyledCellLabelProvider { //implements ITab
 				imageKey = "module.gif";
 			}
 			else if (mapping instanceof Call) {
-				imageKey = "subroutine.gif";
-				topOverlayKey = "caller_overlay.gif";
+				//imageKey = "subroutine.gif";
+				//topOverlayKey = "caller_overlay.gif";
+				imageKey = "callarrow.gif";
 			}
 			//else if (mapping instanceof Uses) {
 			//	imageKey = "import_obj.gif";
@@ -232,6 +234,9 @@ class NUOPCViewLabelProvider extends StyledCellLabelProvider { //implements ITab
 			}
 			else if (mapping instanceof UsesEntity) {
 				imageKey = "import_obj.gif";
+			}
+			else if (mapping instanceof VariableDeclaration) {
+				imageKey = "localvariable.gif";
 			}
 		}
 		else if (soa != null && !soa.isAttrib()) {

@@ -887,51 +887,14 @@ public interface CupidLanguagePackage extends EPackage
   int VARIABLE_DECLARATION_FEATURE_COUNT = IMPLICIT_CONTEXT_MAPPING_FEATURE_COUNT + 1;
 
   /**
-   * The meta object id for the '{@link org.earthsystemcurator.cupidLanguage.impl.IDOrPathExprImpl <em>ID Or Path Expr</em>}' class.
+   * The meta object id for the '{@link org.earthsystemcurator.cupidLanguage.impl.LocalExpressionImpl <em>Local Expression</em>}' class.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @see org.earthsystemcurator.cupidLanguage.impl.IDOrPathExprImpl
-   * @see org.earthsystemcurator.cupidLanguage.impl.CupidLanguagePackageImpl#getIDOrPathExpr()
+   * @see org.earthsystemcurator.cupidLanguage.impl.LocalExpressionImpl
+   * @see org.earthsystemcurator.cupidLanguage.impl.CupidLanguagePackageImpl#getLocalExpression()
    * @generated
    */
-  int ID_OR_PATH_EXPR = 21;
-
-  /**
-   * The feature id for the '<em><b>Literal</b></em>' attribute.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   * @ordered
-   */
-  int ID_OR_PATH_EXPR__LITERAL = 0;
-
-  /**
-   * The number of structural features of the '<em>ID Or Path Expr</em>' class.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   * @ordered
-   */
-  int ID_OR_PATH_EXPR_FEATURE_COUNT = 1;
-
-  /**
-   * The meta object id for the '{@link org.earthsystemcurator.cupidLanguage.impl.IDOrWildcardImpl <em>ID Or Wildcard</em>}' class.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @see org.earthsystemcurator.cupidLanguage.impl.IDOrWildcardImpl
-   * @see org.earthsystemcurator.cupidLanguage.impl.CupidLanguagePackageImpl#getIDOrWildcard()
-   * @generated
-   */
-  int ID_OR_WILDCARD = 20;
-
-  /**
-   * The feature id for the '<em><b>Literal</b></em>' attribute.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   * @ordered
-   */
-  int ID_OR_WILDCARD__LITERAL = ID_OR_PATH_EXPR__LITERAL;
+  int LOCAL_EXPRESSION = 20;
 
   /**
    * The feature id for the '<em><b>Id</b></em>' attribute.
@@ -940,7 +903,35 @@ public interface CupidLanguagePackage extends EPackage
    * @generated
    * @ordered
    */
-  int ID_OR_WILDCARD__ID = ID_OR_PATH_EXPR_FEATURE_COUNT + 0;
+  int LOCAL_EXPRESSION__ID = 0;
+
+  /**
+   * The feature id for the '<em><b>Literal</b></em>' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int LOCAL_EXPRESSION__LITERAL = 1;
+
+  /**
+   * The number of structural features of the '<em>Local Expression</em>' class.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int LOCAL_EXPRESSION_FEATURE_COUNT = 2;
+
+  /**
+   * The meta object id for the '{@link org.earthsystemcurator.cupidLanguage.impl.ExprImpl <em>Expr</em>}' class.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @see org.earthsystemcurator.cupidLanguage.impl.ExprImpl
+   * @see org.earthsystemcurator.cupidLanguage.impl.CupidLanguagePackageImpl#getExpr()
+   * @generated
+   */
+  int EXPR = 21;
 
   /**
    * The feature id for the '<em><b>Wildcard</b></em>' attribute.
@@ -949,16 +940,34 @@ public interface CupidLanguagePackage extends EPackage
    * @generated
    * @ordered
    */
-  int ID_OR_WILDCARD__WILDCARD = ID_OR_PATH_EXPR_FEATURE_COUNT + 1;
+  int EXPR__WILDCARD = 0;
 
   /**
-   * The number of structural features of the '<em>ID Or Wildcard</em>' class.
+   * The feature id for the '<em><b>Expr</b></em>' containment reference.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @generated
    * @ordered
    */
-  int ID_OR_WILDCARD_FEATURE_COUNT = ID_OR_PATH_EXPR_FEATURE_COUNT + 2;
+  int EXPR__EXPR = 1;
+
+  /**
+   * The feature id for the '<em><b>Path Expr</b></em>' containment reference.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int EXPR__PATH_EXPR = 2;
+
+  /**
+   * The number of structural features of the '<em>Expr</em>' class.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int EXPR_FEATURE_COUNT = 3;
 
   /**
    * The meta object id for the '{@link org.earthsystemcurator.cupidLanguage.impl.PathExprImpl <em>Path Expr</em>}' class.
@@ -971,22 +980,13 @@ public interface CupidLanguagePackage extends EPackage
   int PATH_EXPR = 22;
 
   /**
-   * The feature id for the '<em><b>Literal</b></em>' attribute.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   * @ordered
-   */
-  int PATH_EXPR__LITERAL = ID_OR_PATH_EXPR__LITERAL;
-
-  /**
    * The feature id for the '<em><b>Head</b></em>' containment reference.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @generated
    * @ordered
    */
-  int PATH_EXPR__HEAD = ID_OR_PATH_EXPR_FEATURE_COUNT + 0;
+  int PATH_EXPR__HEAD = 0;
 
   /**
    * The feature id for the '<em><b>Tail</b></em>' reference.
@@ -995,7 +995,7 @@ public interface CupidLanguagePackage extends EPackage
    * @generated
    * @ordered
    */
-  int PATH_EXPR__TAIL = ID_OR_PATH_EXPR_FEATURE_COUNT + 1;
+  int PATH_EXPR__TAIL = 1;
 
   /**
    * The number of structural features of the '<em>Path Expr</em>' class.
@@ -1004,7 +1004,7 @@ public interface CupidLanguagePackage extends EPackage
    * @generated
    * @ordered
    */
-  int PATH_EXPR_FEATURE_COUNT = ID_OR_PATH_EXPR_FEATURE_COUNT + 2;
+  int PATH_EXPR_FEATURE_COUNT = 2;
 
   /**
    * The meta object id for the '{@link org.earthsystemcurator.cupidLanguage.impl.AxisImpl <em>Axis</em>}' class.
@@ -1035,6 +1035,25 @@ public interface CupidLanguagePackage extends EPackage
   int AXIS_FEATURE_COUNT = 1;
 
   /**
+   * The meta object id for the '{@link org.earthsystemcurator.cupidLanguage.impl.DeclaredEntityImpl <em>Declared Entity</em>}' class.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @see org.earthsystemcurator.cupidLanguage.impl.DeclaredEntityImpl
+   * @see org.earthsystemcurator.cupidLanguage.impl.CupidLanguagePackageImpl#getDeclaredEntity()
+   * @generated
+   */
+  int DECLARED_ENTITY = 24;
+
+  /**
+   * The number of structural features of the '<em>Declared Entity</em>' class.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int DECLARED_ENTITY_FEATURE_COUNT = IMPLICIT_CONTEXT_MAPPING_FEATURE_COUNT + 0;
+
+  /**
    * The meta object id for the '{@link org.earthsystemcurator.cupidLanguage.impl.PathExprTermImpl <em>Path Expr Term</em>}' class.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
@@ -1042,16 +1061,7 @@ public interface CupidLanguagePackage extends EPackage
    * @see org.earthsystemcurator.cupidLanguage.impl.CupidLanguagePackageImpl#getPathExprTerm()
    * @generated
    */
-  int PATH_EXPR_TERM = 24;
-
-  /**
-   * The feature id for the '<em><b>Literal</b></em>' attribute.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   * @ordered
-   */
-  int PATH_EXPR_TERM__LITERAL = PATH_EXPR__LITERAL;
+  int PATH_EXPR_TERM = 25;
 
   /**
    * The feature id for the '<em><b>Head</b></em>' containment reference.
@@ -1850,57 +1860,79 @@ public interface CupidLanguagePackage extends EPackage
   EReference getVariableDeclaration_Type();
 
   /**
-   * Returns the meta object for class '{@link org.earthsystemcurator.cupidLanguage.IDOrWildcard <em>ID Or Wildcard</em>}'.
+   * Returns the meta object for class '{@link org.earthsystemcurator.cupidLanguage.LocalExpression <em>Local Expression</em>}'.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @return the meta object for class '<em>ID Or Wildcard</em>'.
-   * @see org.earthsystemcurator.cupidLanguage.IDOrWildcard
+   * @return the meta object for class '<em>Local Expression</em>'.
+   * @see org.earthsystemcurator.cupidLanguage.LocalExpression
    * @generated
    */
-  EClass getIDOrWildcard();
+  EClass getLocalExpression();
 
   /**
-   * Returns the meta object for the attribute '{@link org.earthsystemcurator.cupidLanguage.IDOrWildcard#getId <em>Id</em>}'.
+   * Returns the meta object for the attribute '{@link org.earthsystemcurator.cupidLanguage.LocalExpression#getId <em>Id</em>}'.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @return the meta object for the attribute '<em>Id</em>'.
-   * @see org.earthsystemcurator.cupidLanguage.IDOrWildcard#getId()
-   * @see #getIDOrWildcard()
+   * @see org.earthsystemcurator.cupidLanguage.LocalExpression#getId()
+   * @see #getLocalExpression()
    * @generated
    */
-  EAttribute getIDOrWildcard_Id();
+  EAttribute getLocalExpression_Id();
 
   /**
-   * Returns the meta object for the attribute '{@link org.earthsystemcurator.cupidLanguage.IDOrWildcard#isWildcard <em>Wildcard</em>}'.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @return the meta object for the attribute '<em>Wildcard</em>'.
-   * @see org.earthsystemcurator.cupidLanguage.IDOrWildcard#isWildcard()
-   * @see #getIDOrWildcard()
-   * @generated
-   */
-  EAttribute getIDOrWildcard_Wildcard();
-
-  /**
-   * Returns the meta object for class '{@link org.earthsystemcurator.cupidLanguage.IDOrPathExpr <em>ID Or Path Expr</em>}'.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @return the meta object for class '<em>ID Or Path Expr</em>'.
-   * @see org.earthsystemcurator.cupidLanguage.IDOrPathExpr
-   * @generated
-   */
-  EClass getIDOrPathExpr();
-
-  /**
-   * Returns the meta object for the attribute '{@link org.earthsystemcurator.cupidLanguage.IDOrPathExpr#getLiteral <em>Literal</em>}'.
+   * Returns the meta object for the attribute '{@link org.earthsystemcurator.cupidLanguage.LocalExpression#getLiteral <em>Literal</em>}'.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @return the meta object for the attribute '<em>Literal</em>'.
-   * @see org.earthsystemcurator.cupidLanguage.IDOrPathExpr#getLiteral()
-   * @see #getIDOrPathExpr()
+   * @see org.earthsystemcurator.cupidLanguage.LocalExpression#getLiteral()
+   * @see #getLocalExpression()
    * @generated
    */
-  EAttribute getIDOrPathExpr_Literal();
+  EAttribute getLocalExpression_Literal();
+
+  /**
+   * Returns the meta object for class '{@link org.earthsystemcurator.cupidLanguage.Expr <em>Expr</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for class '<em>Expr</em>'.
+   * @see org.earthsystemcurator.cupidLanguage.Expr
+   * @generated
+   */
+  EClass getExpr();
+
+  /**
+   * Returns the meta object for the attribute '{@link org.earthsystemcurator.cupidLanguage.Expr#isWildcard <em>Wildcard</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for the attribute '<em>Wildcard</em>'.
+   * @see org.earthsystemcurator.cupidLanguage.Expr#isWildcard()
+   * @see #getExpr()
+   * @generated
+   */
+  EAttribute getExpr_Wildcard();
+
+  /**
+   * Returns the meta object for the containment reference '{@link org.earthsystemcurator.cupidLanguage.Expr#getExpr <em>Expr</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for the containment reference '<em>Expr</em>'.
+   * @see org.earthsystemcurator.cupidLanguage.Expr#getExpr()
+   * @see #getExpr()
+   * @generated
+   */
+  EReference getExpr_Expr();
+
+  /**
+   * Returns the meta object for the containment reference '{@link org.earthsystemcurator.cupidLanguage.Expr#getPathExpr <em>Path Expr</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for the containment reference '<em>Path Expr</em>'.
+   * @see org.earthsystemcurator.cupidLanguage.Expr#getPathExpr()
+   * @see #getExpr()
+   * @generated
+   */
+  EReference getExpr_PathExpr();
 
   /**
    * Returns the meta object for class '{@link org.earthsystemcurator.cupidLanguage.PathExpr <em>Path Expr</em>}'.
@@ -1954,6 +1986,16 @@ public interface CupidLanguagePackage extends EPackage
    * @generated
    */
   EAttribute getAxis_Ancestor();
+
+  /**
+   * Returns the meta object for class '{@link org.earthsystemcurator.cupidLanguage.DeclaredEntity <em>Declared Entity</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for class '<em>Declared Entity</em>'.
+   * @see org.earthsystemcurator.cupidLanguage.DeclaredEntity
+   * @generated
+   */
+  EClass getDeclaredEntity();
 
   /**
    * Returns the meta object for class '{@link org.earthsystemcurator.cupidLanguage.PathExprTerm <em>Path Expr Term</em>}'.
@@ -2611,14 +2653,14 @@ public interface CupidLanguagePackage extends EPackage
     EReference VARIABLE_DECLARATION__TYPE = eINSTANCE.getVariableDeclaration_Type();
 
     /**
-     * The meta object literal for the '{@link org.earthsystemcurator.cupidLanguage.impl.IDOrWildcardImpl <em>ID Or Wildcard</em>}' class.
+     * The meta object literal for the '{@link org.earthsystemcurator.cupidLanguage.impl.LocalExpressionImpl <em>Local Expression</em>}' class.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @see org.earthsystemcurator.cupidLanguage.impl.IDOrWildcardImpl
-     * @see org.earthsystemcurator.cupidLanguage.impl.CupidLanguagePackageImpl#getIDOrWildcard()
+     * @see org.earthsystemcurator.cupidLanguage.impl.LocalExpressionImpl
+     * @see org.earthsystemcurator.cupidLanguage.impl.CupidLanguagePackageImpl#getLocalExpression()
      * @generated
      */
-    EClass ID_OR_WILDCARD = eINSTANCE.getIDOrWildcard();
+    EClass LOCAL_EXPRESSION = eINSTANCE.getLocalExpression();
 
     /**
      * The meta object literal for the '<em><b>Id</b></em>' attribute feature.
@@ -2626,25 +2668,7 @@ public interface CupidLanguagePackage extends EPackage
      * <!-- end-user-doc -->
      * @generated
      */
-    EAttribute ID_OR_WILDCARD__ID = eINSTANCE.getIDOrWildcard_Id();
-
-    /**
-     * The meta object literal for the '<em><b>Wildcard</b></em>' attribute feature.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    EAttribute ID_OR_WILDCARD__WILDCARD = eINSTANCE.getIDOrWildcard_Wildcard();
-
-    /**
-     * The meta object literal for the '{@link org.earthsystemcurator.cupidLanguage.impl.IDOrPathExprImpl <em>ID Or Path Expr</em>}' class.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @see org.earthsystemcurator.cupidLanguage.impl.IDOrPathExprImpl
-     * @see org.earthsystemcurator.cupidLanguage.impl.CupidLanguagePackageImpl#getIDOrPathExpr()
-     * @generated
-     */
-    EClass ID_OR_PATH_EXPR = eINSTANCE.getIDOrPathExpr();
+    EAttribute LOCAL_EXPRESSION__ID = eINSTANCE.getLocalExpression_Id();
 
     /**
      * The meta object literal for the '<em><b>Literal</b></em>' attribute feature.
@@ -2652,7 +2676,41 @@ public interface CupidLanguagePackage extends EPackage
      * <!-- end-user-doc -->
      * @generated
      */
-    EAttribute ID_OR_PATH_EXPR__LITERAL = eINSTANCE.getIDOrPathExpr_Literal();
+    EAttribute LOCAL_EXPRESSION__LITERAL = eINSTANCE.getLocalExpression_Literal();
+
+    /**
+     * The meta object literal for the '{@link org.earthsystemcurator.cupidLanguage.impl.ExprImpl <em>Expr</em>}' class.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @see org.earthsystemcurator.cupidLanguage.impl.ExprImpl
+     * @see org.earthsystemcurator.cupidLanguage.impl.CupidLanguagePackageImpl#getExpr()
+     * @generated
+     */
+    EClass EXPR = eINSTANCE.getExpr();
+
+    /**
+     * The meta object literal for the '<em><b>Wildcard</b></em>' attribute feature.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    EAttribute EXPR__WILDCARD = eINSTANCE.getExpr_Wildcard();
+
+    /**
+     * The meta object literal for the '<em><b>Expr</b></em>' containment reference feature.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    EReference EXPR__EXPR = eINSTANCE.getExpr_Expr();
+
+    /**
+     * The meta object literal for the '<em><b>Path Expr</b></em>' containment reference feature.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    EReference EXPR__PATH_EXPR = eINSTANCE.getExpr_PathExpr();
 
     /**
      * The meta object literal for the '{@link org.earthsystemcurator.cupidLanguage.impl.PathExprImpl <em>Path Expr</em>}' class.
@@ -2697,6 +2755,16 @@ public interface CupidLanguagePackage extends EPackage
      * @generated
      */
     EAttribute AXIS__ANCESTOR = eINSTANCE.getAxis_Ancestor();
+
+    /**
+     * The meta object literal for the '{@link org.earthsystemcurator.cupidLanguage.impl.DeclaredEntityImpl <em>Declared Entity</em>}' class.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @see org.earthsystemcurator.cupidLanguage.impl.DeclaredEntityImpl
+     * @see org.earthsystemcurator.cupidLanguage.impl.CupidLanguagePackageImpl#getDeclaredEntity()
+     * @generated
+     */
+    EClass DECLARED_ENTITY = eINSTANCE.getDeclaredEntity();
 
     /**
      * The meta object literal for the '{@link org.earthsystemcurator.cupidLanguage.impl.PathExprTermImpl <em>Path Expr Term</em>}' class.

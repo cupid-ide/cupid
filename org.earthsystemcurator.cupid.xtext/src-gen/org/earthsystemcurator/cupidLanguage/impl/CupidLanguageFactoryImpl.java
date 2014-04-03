@@ -84,10 +84,11 @@ public class CupidLanguageFactoryImpl extends EFactoryImpl implements CupidLangu
       case CupidLanguagePackage.ACTUAL_PARAM: return createActualParam();
       case CupidLanguagePackage.ACTUAL_PARAM_BY_KEYWORD: return createActualParamByKeyword();
       case CupidLanguagePackage.VARIABLE_DECLARATION: return createVariableDeclaration();
-      case CupidLanguagePackage.ID_OR_WILDCARD: return createIDOrWildcard();
-      case CupidLanguagePackage.ID_OR_PATH_EXPR: return createIDOrPathExpr();
+      case CupidLanguagePackage.LOCAL_EXPRESSION: return createLocalExpression();
+      case CupidLanguagePackage.EXPR: return createExpr();
       case CupidLanguagePackage.PATH_EXPR: return createPathExpr();
       case CupidLanguagePackage.AXIS: return createAxis();
+      case CupidLanguagePackage.DECLARED_ENTITY: return createDeclaredEntity();
       case CupidLanguagePackage.PATH_EXPR_TERM: return createPathExprTerm();
       default:
         throw new IllegalArgumentException("The class '" + eClass.getName() + "' is not a valid classifier");
@@ -319,10 +320,10 @@ public class CupidLanguageFactoryImpl extends EFactoryImpl implements CupidLangu
    * <!-- end-user-doc -->
    * @generated
    */
-  public IDOrWildcard createIDOrWildcard()
+  public LocalExpression createLocalExpression()
   {
-    IDOrWildcardImpl idOrWildcard = new IDOrWildcardImpl();
-    return idOrWildcard;
+    LocalExpressionImpl localExpression = new LocalExpressionImpl();
+    return localExpression;
   }
 
   /**
@@ -330,10 +331,10 @@ public class CupidLanguageFactoryImpl extends EFactoryImpl implements CupidLangu
    * <!-- end-user-doc -->
    * @generated
    */
-  public IDOrPathExpr createIDOrPathExpr()
+  public Expr createExpr()
   {
-    IDOrPathExprImpl idOrPathExpr = new IDOrPathExprImpl();
-    return idOrPathExpr;
+    ExprImpl expr = new ExprImpl();
+    return expr;
   }
 
   /**
@@ -356,6 +357,17 @@ public class CupidLanguageFactoryImpl extends EFactoryImpl implements CupidLangu
   {
     AxisImpl axis = new AxisImpl();
     return axis;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public DeclaredEntity createDeclaredEntity()
+  {
+    DeclaredEntityImpl declaredEntity = new DeclaredEntityImpl();
+    return declaredEntity;
   }
 
   /**

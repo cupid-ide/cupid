@@ -13,6 +13,7 @@ import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.InternalEObject;
 
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
+import org.eclipse.emf.ecore.impl.MinimalEObjectImpl;
 
 /**
  * <!-- begin-user-doc -->
@@ -28,7 +29,7 @@ import org.eclipse.emf.ecore.impl.ENotificationImpl;
  *
  * @generated
  */
-public class PathExprImpl extends IDOrPathExprImpl implements PathExpr
+public class PathExprImpl extends MinimalEObjectImpl.Container implements PathExpr
 {
   /**
    * The cached value of the '{@link #getHead() <em>Head</em>}' containment reference.

@@ -1,42 +1,20 @@
 package org.earthsystemcurator.cupid.nuopc.fsml.core;
 
 
-import java.lang.reflect.InvocationTargetException;
-import java.lang.reflect.Method;
-import java.util.HashMap;
 import java.util.HashSet;
-import java.util.IdentityHashMap;
-import java.util.Map;
-import java.util.Map.Entry;
 import java.util.Set;
 
-import org.earthsystemcurator.CupidToEcore;
 import org.earthsystemcurator.FSM;
 import org.earthsystemcurator.cupid.nuopc.fsml.properties.CupidPropertyPage;
 import org.earthsystemcurator.cupid.nuopc.fsml.util.CodeQuery2;
 import org.earthsystemcurator.cupid.nuopc.fsml.util.CodeTransformation;
 import org.earthsystemcurator.cupidLanguage.ConceptDef;
-import org.earthsystemcurator.cupidLanguage.CupidLanguageFactory;
-import org.earthsystemcurator.cupidLanguage.IDOrWildcard;
-import org.earthsystemcurator.cupidLanguage.ImplicitContextMapping;
 import org.earthsystemcurator.cupidLanguage.Language;
-import org.earthsystemcurator.cupidLanguage.Mapping;
-import org.earthsystemcurator.cupidLanguage.PathExpr;
-import org.earthsystemcurator.cupidLanguage.SubconceptOrAttribute;
 import org.eclipse.core.resources.IFile;
 import org.eclipse.core.resources.IProject;
 import org.eclipse.core.resources.IResource;
 import org.eclipse.core.runtime.CoreException;
-import org.eclipse.emf.common.util.EList;
-import org.eclipse.emf.ecore.EClass;
-import org.eclipse.emf.ecore.EFactory;
-import org.eclipse.emf.ecore.EObject;
-import org.eclipse.emf.ecore.EPackage;
-import org.eclipse.emf.ecore.EReference;
-import org.eclipse.emf.ecore.EStructuralFeature;
-import org.eclipse.emf.ecore.EcoreFactory;
 import org.eclipse.photran.core.IFortranAST;
-import org.eclipse.photran.internal.core.lexer.Token;
 import org.eclipse.photran.internal.core.vpg.PhotranVPG;
 
 @SuppressWarnings("restriction")

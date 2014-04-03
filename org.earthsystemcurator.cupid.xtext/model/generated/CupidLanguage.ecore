@@ -50,21 +50,17 @@
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="ImplicitContextMapping"/>
   <eClassifiers xsi:type="ecore:EClass" name="Module" eSuperTypes="#//ImplicitContextMapping">
-    <eStructuralFeatures xsi:type="ecore:EReference" name="name" eType="#//IDOrPathExpr"
-        containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="name" eType="#//Expr" containment="true"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="ModuleName" eSuperTypes="#//ImplicitContextMapping"/>
   <eClassifiers xsi:type="ecore:EClass" name="UsesModule" eSuperTypes="#//ImplicitContextMapping">
-    <eStructuralFeatures xsi:type="ecore:EReference" name="name" eType="#//IDOrPathExpr"
-        containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="name" eType="#//Expr" containment="true"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="UsesEntity" eSuperTypes="#//ImplicitContextMapping">
-    <eStructuralFeatures xsi:type="ecore:EReference" name="name" eType="#//IDOrPathExpr"
-        containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="name" eType="#//Expr" containment="true"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="Subroutine" eSuperTypes="#//ImplicitContextMapping">
-    <eStructuralFeatures xsi:type="ecore:EReference" name="name" eType="#//IDOrPathExpr"
-        containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="name" eType="#//Expr" containment="true"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="params" upperBound="-1"
         eType="#//FormalParam" containment="true"/>
   </eClassifiers>
@@ -72,8 +68,7 @@
     <eStructuralFeatures xsi:type="ecore:EReference" name="intent" eType="#//Intent"
         containment="true"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="type" eType="#//Type" containment="true"/>
-    <eStructuralFeatures xsi:type="ecore:EReference" name="name" eType="#//IDOrPathExpr"
-        containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="name" eType="#//Expr" containment="true"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="Intent">
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="in" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean"/>
@@ -87,15 +82,14 @@
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="real" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean"/>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="double" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean"/>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="derived" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean"/>
-    <eStructuralFeatures xsi:type="ecore:EReference" name="derivedType" eType="#//IDOrPathExpr"
+    <eStructuralFeatures xsi:type="ecore:EReference" name="derivedType" eType="#//Expr"
         containment="true"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="SubroutineName" eSuperTypes="#//ImplicitContextMapping">
-    <eStructuralFeatures xsi:type="ecore:EReference" name="name" eType="#//IDOrPathExpr"
-        containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="name" eType="#//Expr" containment="true"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="Call" eSuperTypes="#//ImplicitContextMapping">
-    <eStructuralFeatures xsi:type="ecore:EReference" name="subroutineName" eType="#//IDOrPathExpr"
+    <eStructuralFeatures xsi:type="ecore:EReference" name="subroutineName" eType="#//Expr"
         containment="true"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="params" upperBound="-1"
         eType="#//ActualParam" containment="true"/>
@@ -103,7 +97,7 @@
   <eClassifiers xsi:type="ecore:EClass" name="ActualParam">
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="keyword" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="optional" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean"/>
-    <eStructuralFeatures xsi:type="ecore:EReference" name="value" eType="#//IDOrPathExpr"
+    <eStructuralFeatures xsi:type="ecore:EReference" name="value" eType="#//Expr"
         containment="true"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="ActualParamByKeyword" eSuperTypes="#//ImplicitContextMapping">
@@ -112,14 +106,18 @@
   <eClassifiers xsi:type="ecore:EClass" name="VariableDeclaration" eSuperTypes="#//ImplicitContextMapping">
     <eStructuralFeatures xsi:type="ecore:EReference" name="type" eType="#//Type" containment="true"/>
   </eClassifiers>
-  <eClassifiers xsi:type="ecore:EClass" name="IDOrWildcard" eSuperTypes="#//IDOrPathExpr">
+  <eClassifiers xsi:type="ecore:EClass" name="LocalExpression">
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="id" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
-    <eStructuralFeatures xsi:type="ecore:EAttribute" name="wildcard" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean"/>
-  </eClassifiers>
-  <eClassifiers xsi:type="ecore:EClass" name="IDOrPathExpr">
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="literal" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
   </eClassifiers>
-  <eClassifiers xsi:type="ecore:EClass" name="PathExpr" eSuperTypes="#//IDOrPathExpr">
+  <eClassifiers xsi:type="ecore:EClass" name="Expr">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="wildcard" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="expr" eType="#//LocalExpression"
+        containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="pathExpr" eType="#//PathExpr"
+        containment="true"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="PathExpr">
     <eStructuralFeatures xsi:type="ecore:EReference" name="head" eType="#//PathExpr"
         containment="true"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="tail" eType="#//SubconceptOrAttribute"/>
@@ -127,6 +125,7 @@
   <eClassifiers xsi:type="ecore:EClass" name="Axis">
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="ancestor" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean"/>
   </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="DeclaredEntity" eSuperTypes="#//ImplicitContextMapping"/>
   <eClassifiers xsi:type="ecore:EClass" name="PathExprTerm" eSuperTypes="#//PathExpr">
     <eStructuralFeatures xsi:type="ecore:EReference" name="axis" eType="#//Axis" containment="true"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="ref" eType="#//SubconceptOrAttribute"/>

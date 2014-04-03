@@ -40,9 +40,20 @@ public class CupidLanguageSyntacticSequencer extends AbstractSyntacticSequencer 
 	
 	@Override
 	protected String getUnassignedRuleCallToken(EObject semanticObject, RuleCall ruleCall, INode node) {
+		if(ruleCall.getRule() == grammarAccess.getDeclaredEntityRule())
+			return getDeclaredEntityToken(semanticObject, ruleCall, node);
 		return "";
 	}
 	
+	/**
+	 * DeclaredEntity:
+	 * 	'declaredEntity';
+	 */
+	protected String getDeclaredEntityToken(EObject semanticObject, RuleCall ruleCall, INode node) {
+		if (node != null)
+			return getTokenText(node);
+		return "declaredEntity";
+	}
 	
 	@Override
 	protected void emitUnassignedTokens(EObject semanticObject, ISynTransition transition, INode fromNode, INode toNode) {
