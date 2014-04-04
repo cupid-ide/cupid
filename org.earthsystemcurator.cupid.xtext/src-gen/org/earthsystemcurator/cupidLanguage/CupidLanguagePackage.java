@@ -387,13 +387,22 @@ public interface CupidLanguagePackage extends EPackage
   int MAPPING__MAPPING = 1;
 
   /**
-   * The feature id for the '<em><b>After Path Expr</b></em>' containment reference.
+   * The feature id for the '<em><b>Before</b></em>' containment reference.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @generated
    * @ordered
    */
-  int MAPPING__AFTER_PATH_EXPR = 2;
+  int MAPPING__BEFORE = 2;
+
+  /**
+   * The feature id for the '<em><b>After</b></em>' containment reference.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int MAPPING__AFTER = 3;
 
   /**
    * The number of structural features of the '<em>Mapping</em>' class.
@@ -402,7 +411,7 @@ public interface CupidLanguagePackage extends EPackage
    * @generated
    * @ordered
    */
-  int MAPPING_FEATURE_COUNT = 3;
+  int MAPPING_FEATURE_COUNT = 4;
 
   /**
    * The meta object id for the '{@link org.earthsystemcurator.cupidLanguage.impl.ImplicitContextMappingImpl <em>Implicit Context Mapping</em>}' class.
@@ -1509,15 +1518,26 @@ public interface CupidLanguagePackage extends EPackage
   EReference getMapping_Mapping();
 
   /**
-   * Returns the meta object for the containment reference '{@link org.earthsystemcurator.cupidLanguage.Mapping#getAfterPathExpr <em>After Path Expr</em>}'.
+   * Returns the meta object for the containment reference '{@link org.earthsystemcurator.cupidLanguage.Mapping#getBefore <em>Before</em>}'.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @return the meta object for the containment reference '<em>After Path Expr</em>'.
-   * @see org.earthsystemcurator.cupidLanguage.Mapping#getAfterPathExpr()
+   * @return the meta object for the containment reference '<em>Before</em>'.
+   * @see org.earthsystemcurator.cupidLanguage.Mapping#getBefore()
    * @see #getMapping()
    * @generated
    */
-  EReference getMapping_AfterPathExpr();
+  EReference getMapping_Before();
+
+  /**
+   * Returns the meta object for the containment reference '{@link org.earthsystemcurator.cupidLanguage.Mapping#getAfter <em>After</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for the containment reference '<em>After</em>'.
+   * @see org.earthsystemcurator.cupidLanguage.Mapping#getAfter()
+   * @see #getMapping()
+   * @generated
+   */
+  EReference getMapping_After();
 
   /**
    * Returns the meta object for class '{@link org.earthsystemcurator.cupidLanguage.ImplicitContextMapping <em>Implicit Context Mapping</em>}'.
@@ -2442,12 +2462,20 @@ public interface CupidLanguagePackage extends EPackage
     EReference MAPPING__MAPPING = eINSTANCE.getMapping_Mapping();
 
     /**
-     * The meta object literal for the '<em><b>After Path Expr</b></em>' containment reference feature.
+     * The meta object literal for the '<em><b>Before</b></em>' containment reference feature.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @generated
      */
-    EReference MAPPING__AFTER_PATH_EXPR = eINSTANCE.getMapping_AfterPathExpr();
+    EReference MAPPING__BEFORE = eINSTANCE.getMapping_Before();
+
+    /**
+     * The meta object literal for the '<em><b>After</b></em>' containment reference feature.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    EReference MAPPING__AFTER = eINSTANCE.getMapping_After();
 
     /**
      * The meta object literal for the '{@link org.earthsystemcurator.cupidLanguage.impl.ImplicitContextMappingImpl <em>Implicit Context Mapping</em>}' class.

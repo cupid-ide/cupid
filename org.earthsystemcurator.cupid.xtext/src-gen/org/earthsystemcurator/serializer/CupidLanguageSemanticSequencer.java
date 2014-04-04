@@ -423,7 +423,7 @@ public class CupidLanguageSemanticSequencer extends AbstractDelegatingSemanticSe
 	
 	/**
 	 * Constraint:
-	 *     (context=PathExpr? mapping=ImplicitContextMapping afterPathExpr=PathExpr?)
+	 *     (context=PathExpr? mapping=ImplicitContextMapping before=PathExpr? after=PathExpr?)
 	 */
 	protected void sequence_Mapping(EObject context, Mapping semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);

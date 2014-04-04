@@ -14,7 +14,8 @@ import org.eclipse.emf.ecore.EObject;
  * <ul>
  *   <li>{@link org.earthsystemcurator.cupidLanguage.Mapping#getContext <em>Context</em>}</li>
  *   <li>{@link org.earthsystemcurator.cupidLanguage.Mapping#getMapping <em>Mapping</em>}</li>
- *   <li>{@link org.earthsystemcurator.cupidLanguage.Mapping#getAfterPathExpr <em>After Path Expr</em>}</li>
+ *   <li>{@link org.earthsystemcurator.cupidLanguage.Mapping#getBefore <em>Before</em>}</li>
+ *   <li>{@link org.earthsystemcurator.cupidLanguage.Mapping#getAfter <em>After</em>}</li>
  * </ul>
  * </p>
  *
@@ -77,29 +78,55 @@ public interface Mapping extends EObject
   void setMapping(ImplicitContextMapping value);
 
   /**
-   * Returns the value of the '<em><b>After Path Expr</b></em>' containment reference.
+   * Returns the value of the '<em><b>Before</b></em>' containment reference.
    * <!-- begin-user-doc -->
    * <p>
-   * If the meaning of the '<em>After Path Expr</em>' containment reference isn't clear,
+   * If the meaning of the '<em>Before</em>' containment reference isn't clear,
    * there really should be more of a description here...
    * </p>
    * <!-- end-user-doc -->
-   * @return the value of the '<em>After Path Expr</em>' containment reference.
-   * @see #setAfterPathExpr(PathExpr)
-   * @see org.earthsystemcurator.cupidLanguage.CupidLanguagePackage#getMapping_AfterPathExpr()
+   * @return the value of the '<em>Before</em>' containment reference.
+   * @see #setBefore(PathExpr)
+   * @see org.earthsystemcurator.cupidLanguage.CupidLanguagePackage#getMapping_Before()
    * @model containment="true"
    * @generated
    */
-  PathExpr getAfterPathExpr();
+  PathExpr getBefore();
 
   /**
-   * Sets the value of the '{@link org.earthsystemcurator.cupidLanguage.Mapping#getAfterPathExpr <em>After Path Expr</em>}' containment reference.
+   * Sets the value of the '{@link org.earthsystemcurator.cupidLanguage.Mapping#getBefore <em>Before</em>}' containment reference.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @param value the new value of the '<em>After Path Expr</em>' containment reference.
-   * @see #getAfterPathExpr()
+   * @param value the new value of the '<em>Before</em>' containment reference.
+   * @see #getBefore()
    * @generated
    */
-  void setAfterPathExpr(PathExpr value);
+  void setBefore(PathExpr value);
+
+  /**
+   * Returns the value of the '<em><b>After</b></em>' containment reference.
+   * <!-- begin-user-doc -->
+   * <p>
+   * If the meaning of the '<em>After</em>' containment reference isn't clear,
+   * there really should be more of a description here...
+   * </p>
+   * <!-- end-user-doc -->
+   * @return the value of the '<em>After</em>' containment reference.
+   * @see #setAfter(PathExpr)
+   * @see org.earthsystemcurator.cupidLanguage.CupidLanguagePackage#getMapping_After()
+   * @model containment="true"
+   * @generated
+   */
+  PathExpr getAfter();
+
+  /**
+   * Sets the value of the '{@link org.earthsystemcurator.cupidLanguage.Mapping#getAfter <em>After</em>}' containment reference.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @param value the new value of the '<em>After</em>' containment reference.
+   * @see #getAfter()
+   * @generated
+   */
+  void setAfter(PathExpr value);
 
 } // Mapping

@@ -1044,9 +1044,9 @@ ruleMapping returns [EObject current=null]
 	    }
 
 )
-)(	otherlv_2='after' 
+)(	otherlv_2='before' 
     {
-    	newLeafNode(otherlv_2, grammarAccess.getMappingAccess().getAfterKeyword_2_0());
+    	newLeafNode(otherlv_2, grammarAccess.getMappingAccess().getBeforeKeyword_2_0());
     }
 	otherlv_3='(' 
     {
@@ -1055,16 +1055,16 @@ ruleMapping returns [EObject current=null]
 (
 (
 		{ 
-	        newCompositeNode(grammarAccess.getMappingAccess().getAfterPathExprPathExprParserRuleCall_2_2_0()); 
+	        newCompositeNode(grammarAccess.getMappingAccess().getBeforePathExprParserRuleCall_2_2_0()); 
 	    }
-		lv_afterPathExpr_4_0=rulePathExpr		{
+		lv_before_4_0=rulePathExpr		{
 	        if ($current==null) {
 	            $current = createModelElementForParent(grammarAccess.getMappingRule());
 	        }
        		set(
        			$current, 
-       			"afterPathExpr",
-        		lv_afterPathExpr_4_0, 
+       			"before",
+        		lv_before_4_0, 
         		"PathExpr");
 	        afterParserOrEnumRuleCall();
 	    }
@@ -1073,6 +1073,36 @@ ruleMapping returns [EObject current=null]
 )	otherlv_5=')' 
     {
     	newLeafNode(otherlv_5, grammarAccess.getMappingAccess().getRightParenthesisKeyword_2_3());
+    }
+)?(	otherlv_6='after' 
+    {
+    	newLeafNode(otherlv_6, grammarAccess.getMappingAccess().getAfterKeyword_3_0());
+    }
+	otherlv_7='(' 
+    {
+    	newLeafNode(otherlv_7, grammarAccess.getMappingAccess().getLeftParenthesisKeyword_3_1());
+    }
+(
+(
+		{ 
+	        newCompositeNode(grammarAccess.getMappingAccess().getAfterPathExprParserRuleCall_3_2_0()); 
+	    }
+		lv_after_8_0=rulePathExpr		{
+	        if ($current==null) {
+	            $current = createModelElementForParent(grammarAccess.getMappingRule());
+	        }
+       		set(
+       			$current, 
+       			"after",
+        		lv_after_8_0, 
+        		"PathExpr");
+	        afterParserOrEnumRuleCall();
+	    }
+
+)
+)	otherlv_9=')' 
+    {
+    	newLeafNode(otherlv_9, grammarAccess.getMappingAccess().getRightParenthesisKeyword_3_3());
     }
 )?)
 ;

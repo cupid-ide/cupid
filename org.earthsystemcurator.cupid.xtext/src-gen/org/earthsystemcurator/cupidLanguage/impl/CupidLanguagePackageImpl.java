@@ -614,9 +614,19 @@ public class CupidLanguagePackageImpl extends EPackageImpl implements CupidLangu
    * <!-- end-user-doc -->
    * @generated
    */
-  public EReference getMapping_AfterPathExpr()
+  public EReference getMapping_Before()
   {
     return (EReference)mappingEClass.getEStructuralFeatures().get(2);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EReference getMapping_After()
+  {
+    return (EReference)mappingEClass.getEStructuralFeatures().get(3);
   }
 
   /**
@@ -1285,7 +1295,8 @@ public class CupidLanguagePackageImpl extends EPackageImpl implements CupidLangu
     mappingEClass = createEClass(MAPPING);
     createEReference(mappingEClass, MAPPING__CONTEXT);
     createEReference(mappingEClass, MAPPING__MAPPING);
-    createEReference(mappingEClass, MAPPING__AFTER_PATH_EXPR);
+    createEReference(mappingEClass, MAPPING__BEFORE);
+    createEReference(mappingEClass, MAPPING__AFTER);
 
     implicitContextMappingEClass = createEClass(IMPLICIT_CONTEXT_MAPPING);
 
@@ -1448,7 +1459,8 @@ public class CupidLanguagePackageImpl extends EPackageImpl implements CupidLangu
     initEClass(mappingEClass, Mapping.class, "Mapping", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
     initEReference(getMapping_Context(), this.getPathExpr(), null, "context", null, 0, 1, Mapping.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
     initEReference(getMapping_Mapping(), this.getImplicitContextMapping(), null, "mapping", null, 0, 1, Mapping.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-    initEReference(getMapping_AfterPathExpr(), this.getPathExpr(), null, "afterPathExpr", null, 0, 1, Mapping.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEReference(getMapping_Before(), this.getPathExpr(), null, "before", null, 0, 1, Mapping.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEReference(getMapping_After(), this.getPathExpr(), null, "after", null, 0, 1, Mapping.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
     initEClass(implicitContextMappingEClass, ImplicitContextMapping.class, "ImplicitContextMapping", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 

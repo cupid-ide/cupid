@@ -617,17 +617,24 @@ public class CupidLanguageGrammarAccess extends AbstractGrammarElementFinder {
 		private final Assignment cMappingAssignment_1 = (Assignment)cGroup.eContents().get(1);
 		private final RuleCall cMappingImplicitContextMappingParserRuleCall_1_0 = (RuleCall)cMappingAssignment_1.eContents().get(0);
 		private final Group cGroup_2 = (Group)cGroup.eContents().get(2);
-		private final Keyword cAfterKeyword_2_0 = (Keyword)cGroup_2.eContents().get(0);
+		private final Keyword cBeforeKeyword_2_0 = (Keyword)cGroup_2.eContents().get(0);
 		private final Keyword cLeftParenthesisKeyword_2_1 = (Keyword)cGroup_2.eContents().get(1);
-		private final Assignment cAfterPathExprAssignment_2_2 = (Assignment)cGroup_2.eContents().get(2);
-		private final RuleCall cAfterPathExprPathExprParserRuleCall_2_2_0 = (RuleCall)cAfterPathExprAssignment_2_2.eContents().get(0);
+		private final Assignment cBeforeAssignment_2_2 = (Assignment)cGroup_2.eContents().get(2);
+		private final RuleCall cBeforePathExprParserRuleCall_2_2_0 = (RuleCall)cBeforeAssignment_2_2.eContents().get(0);
 		private final Keyword cRightParenthesisKeyword_2_3 = (Keyword)cGroup_2.eContents().get(3);
+		private final Group cGroup_3 = (Group)cGroup.eContents().get(3);
+		private final Keyword cAfterKeyword_3_0 = (Keyword)cGroup_3.eContents().get(0);
+		private final Keyword cLeftParenthesisKeyword_3_1 = (Keyword)cGroup_3.eContents().get(1);
+		private final Assignment cAfterAssignment_3_2 = (Assignment)cGroup_3.eContents().get(2);
+		private final RuleCall cAfterPathExprParserRuleCall_3_2_0 = (RuleCall)cAfterAssignment_3_2.eContents().get(0);
+		private final Keyword cRightParenthesisKeyword_3_3 = (Keyword)cGroup_3.eContents().get(3);
 		
 		//Mapping:
-		//	context=PathExpr? mapping=ImplicitContextMapping ("after" "(" afterPathExpr=PathExpr ")")?;
+		//	context=PathExpr? mapping=ImplicitContextMapping ("before" "(" before=PathExpr ")")? ("after" "(" after=PathExpr
+		//	")")?;
 		public ParserRule getRule() { return rule; }
 
-		//context=PathExpr? mapping=ImplicitContextMapping ("after" "(" afterPathExpr=PathExpr ")")?
+		//context=PathExpr? mapping=ImplicitContextMapping ("before" "(" before=PathExpr ")")? ("after" "(" after=PathExpr ")")?
 		public Group getGroup() { return cGroup; }
 
 		//context=PathExpr?
@@ -642,23 +649,41 @@ public class CupidLanguageGrammarAccess extends AbstractGrammarElementFinder {
 		//ImplicitContextMapping
 		public RuleCall getMappingImplicitContextMappingParserRuleCall_1_0() { return cMappingImplicitContextMappingParserRuleCall_1_0; }
 
-		//("after" "(" afterPathExpr=PathExpr ")")?
+		//("before" "(" before=PathExpr ")")?
 		public Group getGroup_2() { return cGroup_2; }
 
-		//"after"
-		public Keyword getAfterKeyword_2_0() { return cAfterKeyword_2_0; }
+		//"before"
+		public Keyword getBeforeKeyword_2_0() { return cBeforeKeyword_2_0; }
 
 		//"("
 		public Keyword getLeftParenthesisKeyword_2_1() { return cLeftParenthesisKeyword_2_1; }
 
-		//afterPathExpr=PathExpr
-		public Assignment getAfterPathExprAssignment_2_2() { return cAfterPathExprAssignment_2_2; }
+		//before=PathExpr
+		public Assignment getBeforeAssignment_2_2() { return cBeforeAssignment_2_2; }
 
 		//PathExpr
-		public RuleCall getAfterPathExprPathExprParserRuleCall_2_2_0() { return cAfterPathExprPathExprParserRuleCall_2_2_0; }
+		public RuleCall getBeforePathExprParserRuleCall_2_2_0() { return cBeforePathExprParserRuleCall_2_2_0; }
 
 		//")"
 		public Keyword getRightParenthesisKeyword_2_3() { return cRightParenthesisKeyword_2_3; }
+
+		//("after" "(" after=PathExpr ")")?
+		public Group getGroup_3() { return cGroup_3; }
+
+		//"after"
+		public Keyword getAfterKeyword_3_0() { return cAfterKeyword_3_0; }
+
+		//"("
+		public Keyword getLeftParenthesisKeyword_3_1() { return cLeftParenthesisKeyword_3_1; }
+
+		//after=PathExpr
+		public Assignment getAfterAssignment_3_2() { return cAfterAssignment_3_2; }
+
+		//PathExpr
+		public RuleCall getAfterPathExprParserRuleCall_3_2_0() { return cAfterPathExprParserRuleCall_3_2_0; }
+
+		//")"
+		public Keyword getRightParenthesisKeyword_3_3() { return cRightParenthesisKeyword_3_3; }
 	}
 
 	public class ImplicitContextMappingElements extends AbstractParserRuleElementFinder {
@@ -1816,7 +1841,8 @@ public class CupidLanguageGrammarAccess extends AbstractGrammarElementFinder {
 	}
 
 	//Mapping:
-	//	context=PathExpr? mapping=ImplicitContextMapping ("after" "(" afterPathExpr=PathExpr ")")?;
+	//	context=PathExpr? mapping=ImplicitContextMapping ("before" "(" before=PathExpr ")")? ("after" "(" after=PathExpr
+	//	")")?;
 	public MappingElements getMappingAccess() {
 		return (pMapping != null) ? pMapping : (pMapping = new MappingElements());
 	}

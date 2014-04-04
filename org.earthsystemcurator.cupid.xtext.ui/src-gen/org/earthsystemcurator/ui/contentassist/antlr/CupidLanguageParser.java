@@ -68,6 +68,7 @@ public class CupidLanguageParser extends AbstractContentAssistParser {
 					put(grammarAccess.getAttributeAccess().getGroup_5(), "rule__Attribute__Group_5__0");
 					put(grammarAccess.getMappingAccess().getGroup(), "rule__Mapping__Group__0");
 					put(grammarAccess.getMappingAccess().getGroup_2(), "rule__Mapping__Group_2__0");
+					put(grammarAccess.getMappingAccess().getGroup_3(), "rule__Mapping__Group_3__0");
 					put(grammarAccess.getImplicitContextMappingAccess().getGroup_9(), "rule__ImplicitContextMapping__Group_9__0");
 					put(grammarAccess.getModuleAccess().getGroup(), "rule__Module__Group__0");
 					put(grammarAccess.getModuleAccess().getGroup_2(), "rule__Module__Group_2__0");
@@ -138,7 +139,8 @@ public class CupidLanguageParser extends AbstractContentAssistParser {
 					put(grammarAccess.getCardinalityAccess().getOneOrMoreAssignment_1(), "rule__Cardinality__OneOrMoreAssignment_1");
 					put(grammarAccess.getMappingAccess().getContextAssignment_0(), "rule__Mapping__ContextAssignment_0");
 					put(grammarAccess.getMappingAccess().getMappingAssignment_1(), "rule__Mapping__MappingAssignment_1");
-					put(grammarAccess.getMappingAccess().getAfterPathExprAssignment_2_2(), "rule__Mapping__AfterPathExprAssignment_2_2");
+					put(grammarAccess.getMappingAccess().getBeforeAssignment_2_2(), "rule__Mapping__BeforeAssignment_2_2");
+					put(grammarAccess.getMappingAccess().getAfterAssignment_3_2(), "rule__Mapping__AfterAssignment_3_2");
 					put(grammarAccess.getModuleAccess().getNameAssignment_2_1(), "rule__Module__NameAssignment_2_1");
 					put(grammarAccess.getUsesModuleAccess().getNameAssignment_2(), "rule__UsesModule__NameAssignment_2");
 					put(grammarAccess.getUsesEntityAccess().getNameAssignment_2(), "rule__UsesEntity__NameAssignment_2");

@@ -74,7 +74,7 @@ Cardinality:
 	oneOrMore?='+';
 	
 Mapping:
-	context=PathExpr? mapping=ImplicitContextMapping ('after' '(' afterPathExpr=PathExpr ')')?;
+	context=PathExpr? mapping=ImplicitContextMapping ('before' '(' before=PathExpr ')')? ('after' '(' after=PathExpr ')')?;
 
 ImplicitContextMapping:
 	Module | ModuleName | UsesModule | UsesEntity | 

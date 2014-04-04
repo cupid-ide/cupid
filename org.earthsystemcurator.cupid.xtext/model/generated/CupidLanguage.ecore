@@ -48,7 +48,9 @@
         containment="true"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="mapping" eType="#//ImplicitContextMapping"
         containment="true"/>
-    <eStructuralFeatures xsi:type="ecore:EReference" name="afterPathExpr" eType="#//PathExpr"
+    <eStructuralFeatures xsi:type="ecore:EReference" name="before" eType="#//PathExpr"
+        containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="after" eType="#//PathExpr"
         containment="true"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="ImplicitContextMapping"/>

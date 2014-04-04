@@ -532,57 +532,73 @@ public class FSM<RootType extends EObject> {
 						}
 						//result is a set of objects - either IASTNodes or IFortranASTs
 						else {
-										
-														
+																								
 							Map<Object, Map<PathExpr, String>> resultMap = (Map<Object, Map<PathExpr, String>>) result;
-						
-							
+														
 							//check position and remove if necessary
-							if (explicitContextMapping.getAfterPathExpr() != null) {						
-								
-								EObject afterMe = null;
+							EObject afterMe = null;
+							EObject beforeMe = null;
+							int afterMeOffset = -1;
+							int beforeMeOffset = -1;
+							
+							if (explicitContextMapping.getAfter() != null) {												
 								try {
-									afterMe = getValueFromModel(explicitContextMapping.getAfterPathExpr(), modelElement, true);
+									afterMe = getValueFromModel(explicitContextMapping.getAfter(), modelElement, true);
 								} catch (PathExprNotFoundException e1) {
 									//will be handled below
-								}	
-								
+								}								
 								if (afterMe == null) {
-									//node cannot come after a node that is not there
 									resultMap.clear();
 								}
 								else {
-								
 									IASTNode afterMeNode = (IASTNode) getMapsTo(afterMe);
 									Token afterMeToken = afterMeNode.findLastToken();
-									int afterMeOffset = afterMeToken.getFileOffset() + afterMeToken.getLength() + 1;
-									
-									Set<Object> toRemove = new HashSet<Object>();
-									for (Entry<Object, Map<PathExpr, String>> resultItem : resultMap.entrySet()) {
-										
+									afterMeOffset = afterMeToken.getFileOffset() + afterMeToken.getLength() + 1;
+								}
+							}
+							
+							if (explicitContextMapping.getBefore() != null) {												
+								try {
+									beforeMe = getValueFromModel(explicitContextMapping.getBefore(), modelElement, true);
+								} catch (PathExprNotFoundException e1) {
+									//will be handled below
+								}								
+								if (beforeMe == null) {
+									resultMap.clear();
+								}
+								else {
+									IASTNode beforeMeNode = (IASTNode) getMapsTo(beforeMe);
+									Token beforeMeToken = beforeMeNode.findFirstToken();
+									beforeMeOffset = beforeMeToken.getFileOffset();
+								}
+							}	
+							
+							if (afterMeOffset > -1 || beforeMeOffset > -1) {
+								Set<Object> toRemove = new HashSet<Object>();
+								if (afterMeOffset > -1) {
+									for (Entry<Object, Map<PathExpr, String>> resultItem : resultMap.entrySet()) {								
 										IASTNode resultNode = (IASTNode) resultItem.getKey();
-										Token resultToken = resultNode.findFirstToken();
-										//int resultOffset = resultToken.getFileOffset();
-										
-										if (afterMeToken.getLogicalFile() != resultToken.getLogicalFile()) {
-											throw new RuntimeException("Cannot compare positions across files.");
-										}
-																				
+										Token resultToken = resultNode.findFirstToken();																										
 										if (!resultToken.isOnOrAfterFileOffset(afterMeOffset)) {
-											//System.out.println("\t==>REMOVING");
 											toRemove.add(resultItem.getKey());
 										}								
-									
-									}
-									
-									for (Object r : toRemove) {
-										resultMap.remove(r);
-									}							
-									
+									}						
 								}
-								
+								if (beforeMeOffset > -1) {
+									for (Entry<Object, Map<PathExpr, String>> resultItem : resultMap.entrySet()) {								
+										IASTNode resultNode = (IASTNode) resultItem.getKey();
+										Token resultToken = resultNode.findFirstToken();																										
+										if (resultToken.isOnOrAfterFileOffset(beforeMeOffset)) {
+											toRemove.add(resultItem.getKey());
+										}								
+									}						
+								}
+								for (Object r : toRemove) {
+									resultMap.remove(r);
+								}
 							}
-						
+							
+							
 							
 							for (Entry<Object, Map<PathExpr, String>> resultItem : resultMap.entrySet()) {
 								
@@ -685,9 +701,8 @@ public class FSM<RootType extends EObject> {
 			//at this point we have set the value of the structural feature
 			//if is essential, but not present or false, the parent is no good
 			
-			if (subconcept.isEssential()) {	
-				boolean fail = false;
-				
+			boolean fail = false;
+			if (subconcept.isEssential()) {					
 				if (modelElement.eGet(structuralFeature) == null) {					
 					fail = true;
 				}
@@ -698,20 +713,26 @@ public class FSM<RootType extends EObject> {
 						! (Boolean) modelElement.eGet(structuralFeature)) {
 					fail = true;
 				}
-				
-				if (fail) {
-					System.out.println("Essential feature failed:");
-					System.out.println("\tSubconcept: " + subconcept.getName());
-					System.out.println("\tModel Element: " + modelElement);
-					//System.out.println("\tFortran Element: " + fortranContextElem);
-					//mappings.remove(modelElement);
-					//an essential feature failed, so no need to process 
-					//any more structural features
-					return null;
+			}
+			else if (subconcept.isMustBeNull()) {
+				if (modelElement.eGet(structuralFeature) != null) {
+					fail = true;
 				}
-				
+				else if (isMany(subconcept) && !((EList) modelElement.eGet(structuralFeature)).isEmpty()) {
+					fail = true;
+				}
 			}
 			
+			if (fail) {
+				//System.out.println("Essential feature failed:");
+				//System.out.println("\tSubconcept: " + subconcept.getName());
+				//System.out.println("\tModel Element: " + modelElement);
+				//System.out.println("\tFortran Element: " + fortranContextElem);
+				//mappings.remove(modelElement);
+				//an essential feature failed, so no need to process 
+				//any more structural features
+				return null;
+			}
 			
 		} // end for structural features
 		
@@ -799,51 +820,67 @@ public class FSM<RootType extends EObject> {
 						Map<Object, Map<PathExpr, String>> resultMap = (Map<Object, Map<PathExpr, String>>) result;
 						
 						//check position and remove if necessary
-						if (query.getAfterPathExpr() != null) {						
-							
-							EObject afterMe = null;
+						EObject afterMe = null;
+						EObject beforeMe = null;
+						int afterMeOffset = -1;
+						int beforeMeOffset = -1;
+						
+						if (query.getAfter() != null) {												
 							try {
-								afterMe = getValueFromModel(query.getAfterPathExpr(), candidate, true);
+								afterMe = getValueFromModel(query.getAfter(), candidate, true);
 							} catch (PathExprNotFoundException e1) {
 								//will be handled below
-							}	
-							
+							}								
 							if (afterMe == null) {
-								//node cannot come after a node that is not there
 								resultMap.clear();
 							}
 							else {
-							
 								IASTNode afterMeNode = (IASTNode) getMapsTo(afterMe);
 								Token afterMeToken = afterMeNode.findLastToken();
-								int afterMeOffset = afterMeToken.getFileOffset() + afterMeToken.getLength() + 1;
-								
-								Set<Object> toRemove = new HashSet<Object>();
-								for (Entry<Object, Map<PathExpr, String>> resultItem : resultMap.entrySet()) {
-									
-									IASTNode resultNode = (IASTNode) resultItem.getKey();
-									Token resultToken = resultNode.findFirstToken();
-									//int resultOffset = resultToken.getFileOffset();
-									
-									if (afterMeToken.getLogicalFile() != resultToken.getLogicalFile()) {
-										throw new RuntimeException("Cannot compare positions across files.");
-									}
-																			
-									if (!resultToken.isOnOrAfterFileOffset(afterMeOffset)) {
-										//System.out.println("\t==>REMOVING");
-										toRemove.add(resultItem.getKey());
-									}								
-								
-								}
-								
-								for (Object r : toRemove) {
-									resultMap.remove(r);
-								}							
-								
+								afterMeOffset = afterMeToken.getFileOffset() + afterMeToken.getLength() + 1;
 							}
-							
 						}
 						
+						if (query.getBefore() != null) {												
+							try {
+								beforeMe = getValueFromModel(query.getBefore(), candidate, true);
+							} catch (PathExprNotFoundException e1) {
+								//will be handled below
+							}								
+							if (beforeMe == null) {
+								resultMap.clear();
+							}
+							else {
+								IASTNode beforeMeNode = (IASTNode) getMapsTo(beforeMe);
+								Token beforeMeToken = beforeMeNode.findFirstToken();
+								beforeMeOffset = beforeMeToken.getFileOffset();
+							}
+						}	
+						
+						if (afterMeOffset > -1 || beforeMeOffset > -1) {
+							Set<Object> toRemove = new HashSet<Object>();
+							if (afterMeOffset > -1) {
+								for (Entry<Object, Map<PathExpr, String>> resultItem : resultMap.entrySet()) {								
+									IASTNode resultNode = (IASTNode) resultItem.getKey();
+									Token resultToken = resultNode.findFirstToken();																										
+									if (!resultToken.isOnOrAfterFileOffset(afterMeOffset)) {
+										toRemove.add(resultItem.getKey());
+									}								
+								}						
+							}
+							if (beforeMeOffset > -1) {
+								for (Entry<Object, Map<PathExpr, String>> resultItem : resultMap.entrySet()) {								
+									IASTNode resultNode = (IASTNode) resultItem.getKey();
+									Token resultToken = resultNode.findFirstToken();																										
+									if (resultToken.isOnOrAfterFileOffset(beforeMeOffset)) {
+										toRemove.add(resultItem.getKey());
+									}								
+								}						
+							}
+							for (Object r : toRemove) {
+								resultMap.remove(r);
+							}
+						}
 						
 						if (resultMap.size() > 0) {
 							boolean firstTime = true;
@@ -899,8 +936,11 @@ public class FSM<RootType extends EObject> {
 									unsetOrRemove(candidate, soa, newChild);																
 									
 								}
-																
-								if (newChildResult != null || !soa.isEssential()) {  //optimization
+								
+								if (newChildResult != null && soa.isMustBeNull()) {
+									return parentElement; //found a match, but it must be null
+								}
+								else if (newChildResult != null || !soa.isEssential()) {  //optimization
 									parentElement = reverse(parentElement, contextFortranElement, parentSOA, soaIndex+1, candidate);
 									//this call adds all candidates (if any) that match with this particular result (newChild)
 								}

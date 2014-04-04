@@ -43,7 +43,8 @@
     <genClasses ecoreClass="CupidLanguage.ecore#//Mapping">
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference CupidLanguage.ecore#//Mapping/context"/>
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference CupidLanguage.ecore#//Mapping/mapping"/>
-      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference CupidLanguage.ecore#//Mapping/afterPathExpr"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference CupidLanguage.ecore#//Mapping/before"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference CupidLanguage.ecore#//Mapping/after"/>
     </genClasses>
     <genClasses ecoreClass="CupidLanguage.ecore#//ImplicitContextMapping"/>
     <genClasses ecoreClass="CupidLanguage.ecore#//Module">
