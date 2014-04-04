@@ -17,6 +17,7 @@ import org.eclipse.emf.ecore.EObject;
  *   <li>{@link org.earthsystemcurator.cupidLanguage.SubconceptOrAttribute#getName <em>Name</em>}</li>
  *   <li>{@link org.earthsystemcurator.cupidLanguage.SubconceptOrAttribute#getCardinality <em>Cardinality</em>}</li>
  *   <li>{@link org.earthsystemcurator.cupidLanguage.SubconceptOrAttribute#isEssential <em>Essential</em>}</li>
+ *   <li>{@link org.earthsystemcurator.cupidLanguage.SubconceptOrAttribute#isMustBeNull <em>Must Be Null</em>}</li>
  *   <li>{@link org.earthsystemcurator.cupidLanguage.SubconceptOrAttribute#getDef <em>Def</em>}</li>
  *   <li>{@link org.earthsystemcurator.cupidLanguage.SubconceptOrAttribute#isReference <em>Reference</em>}</li>
  *   <li>{@link org.earthsystemcurator.cupidLanguage.SubconceptOrAttribute#getRef <em>Ref</em>}</li>
@@ -109,6 +110,32 @@ public interface SubconceptOrAttribute extends EObject
    * @generated
    */
   void setEssential(boolean value);
+
+  /**
+   * Returns the value of the '<em><b>Must Be Null</b></em>' attribute.
+   * <!-- begin-user-doc -->
+   * <p>
+   * If the meaning of the '<em>Must Be Null</em>' attribute isn't clear,
+   * there really should be more of a description here...
+   * </p>
+   * <!-- end-user-doc -->
+   * @return the value of the '<em>Must Be Null</em>' attribute.
+   * @see #setMustBeNull(boolean)
+   * @see org.earthsystemcurator.cupidLanguage.CupidLanguagePackage#getSubconceptOrAttribute_MustBeNull()
+   * @model
+   * @generated
+   */
+  boolean isMustBeNull();
+
+  /**
+   * Sets the value of the '{@link org.earthsystemcurator.cupidLanguage.SubconceptOrAttribute#isMustBeNull <em>Must Be Null</em>}' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @param value the new value of the '<em>Must Be Null</em>' attribute.
+   * @see #isMustBeNull()
+   * @generated
+   */
+  void setMustBeNull(boolean value);
 
   /**
    * Returns the value of the '<em><b>Def</b></em>' containment reference.

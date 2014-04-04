@@ -14,6 +14,7 @@ import org.eclipse.emf.ecore.EObject;
  * <ul>
  *   <li>{@link org.earthsystemcurator.cupidLanguage.Mapping#getContext <em>Context</em>}</li>
  *   <li>{@link org.earthsystemcurator.cupidLanguage.Mapping#getMapping <em>Mapping</em>}</li>
+ *   <li>{@link org.earthsystemcurator.cupidLanguage.Mapping#getAfterPathExpr <em>After Path Expr</em>}</li>
  * </ul>
  * </p>
  *
@@ -74,5 +75,31 @@ public interface Mapping extends EObject
    * @generated
    */
   void setMapping(ImplicitContextMapping value);
+
+  /**
+   * Returns the value of the '<em><b>After Path Expr</b></em>' containment reference.
+   * <!-- begin-user-doc -->
+   * <p>
+   * If the meaning of the '<em>After Path Expr</em>' containment reference isn't clear,
+   * there really should be more of a description here...
+   * </p>
+   * <!-- end-user-doc -->
+   * @return the value of the '<em>After Path Expr</em>' containment reference.
+   * @see #setAfterPathExpr(PathExpr)
+   * @see org.earthsystemcurator.cupidLanguage.CupidLanguagePackage#getMapping_AfterPathExpr()
+   * @model containment="true"
+   * @generated
+   */
+  PathExpr getAfterPathExpr();
+
+  /**
+   * Sets the value of the '{@link org.earthsystemcurator.cupidLanguage.Mapping#getAfterPathExpr <em>After Path Expr</em>}' containment reference.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @param value the new value of the '<em>After Path Expr</em>' containment reference.
+   * @see #getAfterPathExpr()
+   * @generated
+   */
+  void setAfterPathExpr(PathExpr value);
 
 } // Mapping

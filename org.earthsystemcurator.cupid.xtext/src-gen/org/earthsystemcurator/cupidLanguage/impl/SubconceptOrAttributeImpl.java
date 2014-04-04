@@ -35,6 +35,7 @@ import org.eclipse.emf.ecore.util.InternalEList;
  *   <li>{@link org.earthsystemcurator.cupidLanguage.impl.SubconceptOrAttributeImpl#getName <em>Name</em>}</li>
  *   <li>{@link org.earthsystemcurator.cupidLanguage.impl.SubconceptOrAttributeImpl#getCardinality <em>Cardinality</em>}</li>
  *   <li>{@link org.earthsystemcurator.cupidLanguage.impl.SubconceptOrAttributeImpl#isEssential <em>Essential</em>}</li>
+ *   <li>{@link org.earthsystemcurator.cupidLanguage.impl.SubconceptOrAttributeImpl#isMustBeNull <em>Must Be Null</em>}</li>
  *   <li>{@link org.earthsystemcurator.cupidLanguage.impl.SubconceptOrAttributeImpl#getDef <em>Def</em>}</li>
  *   <li>{@link org.earthsystemcurator.cupidLanguage.impl.SubconceptOrAttributeImpl#isReference <em>Reference</em>}</li>
  *   <li>{@link org.earthsystemcurator.cupidLanguage.impl.SubconceptOrAttributeImpl#getRef <em>Ref</em>}</li>
@@ -97,6 +98,26 @@ public class SubconceptOrAttributeImpl extends MinimalEObjectImpl.Container impl
    * @ordered
    */
   protected boolean essential = ESSENTIAL_EDEFAULT;
+
+  /**
+   * The default value of the '{@link #isMustBeNull() <em>Must Be Null</em>}' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @see #isMustBeNull()
+   * @generated
+   * @ordered
+   */
+  protected static final boolean MUST_BE_NULL_EDEFAULT = false;
+
+  /**
+   * The cached value of the '{@link #isMustBeNull() <em>Must Be Null</em>}' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @see #isMustBeNull()
+   * @generated
+   * @ordered
+   */
+  protected boolean mustBeNull = MUST_BE_NULL_EDEFAULT;
 
   /**
    * The cached value of the '{@link #getDef() <em>Def</em>}' containment reference.
@@ -291,6 +312,29 @@ public class SubconceptOrAttributeImpl extends MinimalEObjectImpl.Container impl
     essential = newEssential;
     if (eNotificationRequired())
       eNotify(new ENotificationImpl(this, Notification.SET, CupidLanguagePackage.SUBCONCEPT_OR_ATTRIBUTE__ESSENTIAL, oldEssential, essential));
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public boolean isMustBeNull()
+  {
+    return mustBeNull;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public void setMustBeNull(boolean newMustBeNull)
+  {
+    boolean oldMustBeNull = mustBeNull;
+    mustBeNull = newMustBeNull;
+    if (eNotificationRequired())
+      eNotify(new ENotificationImpl(this, Notification.SET, CupidLanguagePackage.SUBCONCEPT_OR_ATTRIBUTE__MUST_BE_NULL, oldMustBeNull, mustBeNull));
   }
 
   /**
@@ -530,6 +574,8 @@ public class SubconceptOrAttributeImpl extends MinimalEObjectImpl.Container impl
         return getCardinality();
       case CupidLanguagePackage.SUBCONCEPT_OR_ATTRIBUTE__ESSENTIAL:
         return isEssential();
+      case CupidLanguagePackage.SUBCONCEPT_OR_ATTRIBUTE__MUST_BE_NULL:
+        return isMustBeNull();
       case CupidLanguagePackage.SUBCONCEPT_OR_ATTRIBUTE__DEF:
         return getDef();
       case CupidLanguagePackage.SUBCONCEPT_OR_ATTRIBUTE__REFERENCE:
@@ -566,6 +612,9 @@ public class SubconceptOrAttributeImpl extends MinimalEObjectImpl.Container impl
         return;
       case CupidLanguagePackage.SUBCONCEPT_OR_ATTRIBUTE__ESSENTIAL:
         setEssential((Boolean)newValue);
+        return;
+      case CupidLanguagePackage.SUBCONCEPT_OR_ATTRIBUTE__MUST_BE_NULL:
+        setMustBeNull((Boolean)newValue);
         return;
       case CupidLanguagePackage.SUBCONCEPT_OR_ATTRIBUTE__DEF:
         setDef((ConceptDef)newValue);
@@ -609,6 +658,9 @@ public class SubconceptOrAttributeImpl extends MinimalEObjectImpl.Container impl
       case CupidLanguagePackage.SUBCONCEPT_OR_ATTRIBUTE__ESSENTIAL:
         setEssential(ESSENTIAL_EDEFAULT);
         return;
+      case CupidLanguagePackage.SUBCONCEPT_OR_ATTRIBUTE__MUST_BE_NULL:
+        setMustBeNull(MUST_BE_NULL_EDEFAULT);
+        return;
       case CupidLanguagePackage.SUBCONCEPT_OR_ATTRIBUTE__DEF:
         setDef((ConceptDef)null);
         return;
@@ -647,6 +699,8 @@ public class SubconceptOrAttributeImpl extends MinimalEObjectImpl.Container impl
         return cardinality != null;
       case CupidLanguagePackage.SUBCONCEPT_OR_ATTRIBUTE__ESSENTIAL:
         return essential != ESSENTIAL_EDEFAULT;
+      case CupidLanguagePackage.SUBCONCEPT_OR_ATTRIBUTE__MUST_BE_NULL:
+        return mustBeNull != MUST_BE_NULL_EDEFAULT;
       case CupidLanguagePackage.SUBCONCEPT_OR_ATTRIBUTE__DEF:
         return def != null;
       case CupidLanguagePackage.SUBCONCEPT_OR_ATTRIBUTE__REFERENCE:
@@ -678,6 +732,8 @@ public class SubconceptOrAttributeImpl extends MinimalEObjectImpl.Container impl
     result.append(name);
     result.append(", essential: ");
     result.append(essential);
+    result.append(", mustBeNull: ");
+    result.append(mustBeNull);
     result.append(", reference: ");
     result.append(reference);
     result.append(", attrib: ");

@@ -28,6 +28,7 @@
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute CupidLanguage.ecore#//SubconceptOrAttribute/name"/>
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference CupidLanguage.ecore#//SubconceptOrAttribute/cardinality"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute CupidLanguage.ecore#//SubconceptOrAttribute/essential"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute CupidLanguage.ecore#//SubconceptOrAttribute/mustBeNull"/>
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference CupidLanguage.ecore#//SubconceptOrAttribute/def"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute CupidLanguage.ecore#//SubconceptOrAttribute/reference"/>
       <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference CupidLanguage.ecore#//SubconceptOrAttribute/ref"/>
@@ -42,6 +43,7 @@
     <genClasses ecoreClass="CupidLanguage.ecore#//Mapping">
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference CupidLanguage.ecore#//Mapping/context"/>
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference CupidLanguage.ecore#//Mapping/mapping"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference CupidLanguage.ecore#//Mapping/afterPathExpr"/>
     </genClasses>
     <genClasses ecoreClass="CupidLanguage.ecore#//ImplicitContextMapping"/>
     <genClasses ecoreClass="CupidLanguage.ecore#//Module">
@@ -94,6 +96,11 @@
     </genClasses>
     <genClasses ecoreClass="CupidLanguage.ecore#//VariableDeclaration">
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference CupidLanguage.ecore#//VariableDeclaration/type"/>
+    </genClasses>
+    <genClasses ecoreClass="CupidLanguage.ecore#//FunctionAssignment">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference CupidLanguage.ecore#//FunctionAssignment/lhs"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference CupidLanguage.ecore#//FunctionAssignment/functionName"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference CupidLanguage.ecore#//FunctionAssignment/params"/>
     </genClasses>
     <genClasses ecoreClass="CupidLanguage.ecore#//LocalExpression">
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute CupidLanguage.ecore#//LocalExpression/id"/>

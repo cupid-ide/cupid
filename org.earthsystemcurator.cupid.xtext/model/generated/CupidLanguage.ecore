@@ -28,6 +28,7 @@
     <eStructuralFeatures xsi:type="ecore:EReference" name="cardinality" eType="#//Cardinality"
         containment="true"/>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="essential" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="mustBeNull" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="def" eType="#//ConceptDef"
         containment="true"/>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="reference" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean"/>
@@ -46,6 +47,8 @@
     <eStructuralFeatures xsi:type="ecore:EReference" name="context" eType="#//PathExpr"
         containment="true"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="mapping" eType="#//ImplicitContextMapping"
+        containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="afterPathExpr" eType="#//PathExpr"
         containment="true"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="ImplicitContextMapping"/>
@@ -105,6 +108,13 @@
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="VariableDeclaration" eSuperTypes="#//ImplicitContextMapping">
     <eStructuralFeatures xsi:type="ecore:EReference" name="type" eType="#//Type" containment="true"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="FunctionAssignment" eSuperTypes="#//ImplicitContextMapping">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="lhs" eType="#//Expr" containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="functionName" eType="#//Expr"
+        containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="params" upperBound="-1"
+        eType="#//ActualParam" containment="true"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="LocalExpression">
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="id" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>

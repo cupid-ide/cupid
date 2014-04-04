@@ -84,6 +84,7 @@ public class CupidLanguageFactoryImpl extends EFactoryImpl implements CupidLangu
       case CupidLanguagePackage.ACTUAL_PARAM: return createActualParam();
       case CupidLanguagePackage.ACTUAL_PARAM_BY_KEYWORD: return createActualParamByKeyword();
       case CupidLanguagePackage.VARIABLE_DECLARATION: return createVariableDeclaration();
+      case CupidLanguagePackage.FUNCTION_ASSIGNMENT: return createFunctionAssignment();
       case CupidLanguagePackage.LOCAL_EXPRESSION: return createLocalExpression();
       case CupidLanguagePackage.EXPR: return createExpr();
       case CupidLanguagePackage.PATH_EXPR: return createPathExpr();
@@ -313,6 +314,17 @@ public class CupidLanguageFactoryImpl extends EFactoryImpl implements CupidLangu
   {
     VariableDeclarationImpl variableDeclaration = new VariableDeclarationImpl();
     return variableDeclaration;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public FunctionAssignment createFunctionAssignment()
+  {
+    FunctionAssignmentImpl functionAssignment = new FunctionAssignmentImpl();
+    return functionAssignment;
   }
 
   /**

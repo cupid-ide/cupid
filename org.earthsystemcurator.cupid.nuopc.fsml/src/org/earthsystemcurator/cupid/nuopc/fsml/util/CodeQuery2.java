@@ -13,6 +13,7 @@ import org.earthsystemcurator.cupidLanguage.Call;
 import org.earthsystemcurator.cupidLanguage.DeclaredEntity;
 import org.earthsystemcurator.cupidLanguage.Expr;
 import org.earthsystemcurator.cupidLanguage.FormalParam;
+import org.earthsystemcurator.cupidLanguage.FunctionAssignment;
 import org.earthsystemcurator.cupidLanguage.Module;
 import org.earthsystemcurator.cupidLanguage.ModuleName;
 import org.earthsystemcurator.cupidLanguage.PathExpr;
@@ -26,15 +27,19 @@ import org.eclipse.photran.internal.core.analysis.binding.Definition;
 import org.eclipse.photran.internal.core.analysis.binding.ScopingNode;
 import org.eclipse.photran.internal.core.analysis.types.DerivedType;
 import org.eclipse.photran.internal.core.analysis.types.Type;
+import org.eclipse.photran.internal.core.parser.ASTAssignmentStmtNode;
 import org.eclipse.photran.internal.core.parser.ASTCallStmtNode;
 import org.eclipse.photran.internal.core.parser.ASTEntityDeclNode;
+import org.eclipse.photran.internal.core.parser.ASTFunctionArgListNode;
 import org.eclipse.photran.internal.core.parser.ASTModuleNode;
 import org.eclipse.photran.internal.core.parser.ASTOnlyNode;
+import org.eclipse.photran.internal.core.parser.ASTSectionSubscriptNode;
 import org.eclipse.photran.internal.core.parser.ASTSubroutineArgNode;
 import org.eclipse.photran.internal.core.parser.ASTSubroutineParNode;
 import org.eclipse.photran.internal.core.parser.ASTSubroutineSubprogramNode;
 import org.eclipse.photran.internal.core.parser.ASTTypeDeclarationStmtNode;
 import org.eclipse.photran.internal.core.parser.ASTUseStmtNode;
+import org.eclipse.photran.internal.core.parser.ASTVarOrFnRefNode;
 import org.eclipse.photran.internal.core.parser.IASTListNode;
 import org.eclipse.photran.internal.core.parser.IASTNode;
 
@@ -110,8 +115,8 @@ public class CodeQuery2 {
 						bindings.put(value.getPathExpr(), san.getExpr().toString().trim());
 					}
 					else if (value.getExpr() != null && value.getExpr().getLiteral() != null) {
-						System.out.println("literal search = " + value.getExpr().getLiteral());
-						System.out.println("\t=>compared to = " + san.getExpr().toString().trim());
+						//System.out.println("literal search = " + value.getExpr().getLiteral());
+						//System.out.println("\t=>compared to = " + san.getExpr().toString().trim());
 						
 						if (!san.getExpr().toString().trim().equals(value.getExpr().getLiteral())) {
 							continue csnloop;
@@ -389,6 +394,16 @@ public class CodeQuery2 {
 		return null;
 	}
 	
+	public static ASTFunctionArgListNode findFuncArgByKeyword(String keyword, IASTListNode<ASTFunctionArgListNode> argList) {
+		if (keyword.endsWith("?")) keyword = keyword.substring(0, keyword.length()-1);
+		for (ASTFunctionArgListNode ssn : argList) {
+			if (ssn.getFunctionArg().getName() != null && ssn.getFunctionArg().getName().getText().equalsIgnoreCase(keyword)) {
+				return ssn;
+			}
+		}
+		return null;
+	}
+	
 	public static Map<ASTTypeDeclarationStmtNode, Map<PathExpr, String>> variableDeclaration(ScopingNode node, VariableDeclaration mapping) {
 			
 		Map<ASTTypeDeclarationStmtNode, Map<PathExpr, String>> result = new HashMap<ASTTypeDeclarationStmtNode, Map<PathExpr, String>>();
@@ -434,5 +449,106 @@ public class CodeQuery2 {
 		}
 		return result;
 	}
+	
+	public static Map<ASTAssignmentStmtNode, Map<PathExpr, String>> functionAssignment(IASTNode context, FunctionAssignment mapping) {
+	
+		Map<ASTAssignmentStmtNode, Map<PathExpr, String>> result = new HashMap<ASTAssignmentStmtNode, Map<PathExpr, String>>();
+		
+		Set<ASTAssignmentStmtNode> nodes = context.findAll(ASTAssignmentStmtNode.class);
+		asnloop: for (ASTAssignmentStmtNode node : nodes) {
+			Map<PathExpr, String> bindings = newBindings();
+			//we are only considering a subset of assignment statements
+			if (node.getLhsVariable() != null && node.getRhs() instanceof ASTVarOrFnRefNode) {
+						
+				//match lhs
+				String varName = node.getLhsVariable().getName().getText();
+				if (!matchAndBind(mapping.getLhs(), varName, bindings)) {
+					continue;
+				}
+				
+				//match function name
+				ASTVarOrFnRefNode rhs = (ASTVarOrFnRefNode) node.getRhs();
+				String funcName = rhs.getName().getName().getText();
+				if (!matchAndBind(mapping.getFunctionName(), funcName, bindings)) {
+					continue;
+				}
+				
+				//match parameters
+				//deal with arguments now
+				if (mapping.getParams() != null) {
+					
+					varloop: for (int i = 0; i < mapping.getParams().size(); i++) {
+						
+						ASTFunctionArgListNode ssn;
+						ActualParam param = mapping.getParams().get(i);
+						String keyword = param.getKeyword();
+						Expr value = param.getValue();
+						
+						if (keyword == null) {
+							//match by index		
+							//TODO: deal with getPrimarySectionSubscriptList
+							if (rhs.getFunctionArgList().size() <= i) {
+								continue asnloop;
+							}
+							ssn = rhs.getFunctionArgList().get(i);
+						}
+						else {
+							//match by keyword
+							//ssn = findFuncArgByKeyword(keyword, rhs.getPrimarySectionSubscriptList());
+							ssn = findFuncArgByKeyword(keyword, rhs.getFunctionArgList());	
+						}
+						
+						if (ssn == null) {
+							if (param.isOptional()) {
+								//optional argument not present, so ignore it
+								continue varloop;
+							}
+							else {
+								continue asnloop;
+							}
+						}
+						else if (value.getPathExpr() != null) {
+							bindings.put(value.getPathExpr(), ssn.getFunctionArg().getExpr().toString().trim());
+						}
+						else if (value.getExpr() != null && value.getExpr().getLiteral() != null) {
+							//System.out.println("literal search = " + value.getExpr().getLiteral());
+							//System.out.println("\t=>compared to = " + ssn.getExpr().toString().trim());
+							
+							if (!ssn.getFunctionArg().getExpr().toString().trim().equals(value.getExpr().getLiteral())) {
+								continue asnloop;
+							}
+							
+						}
+						else if (!value.isWildcard() && !ssn.getFunctionArg().getExpr().toString().trim().equalsIgnoreCase(value.getExpr().getId())) {
+							//if not wildcard, make sure expressions match
+							//System.out.println("Expr = |" + san.getExpr().toString() + "|");
+							continue asnloop;
+						}		
+					}
+				}
+				
+				result.put(node, bindings);
+			}
+			else {
+				//TODO: other lhs options not supported
+			}
+		}
+		
+		return result;
+		
+	}
+	
+	/*
+	public static Map<ASTVarOrFnRefNode, Map<PathExpr, String>> rightHandSideFunctionRef(ASTAssignmentStmtNode context, RightHandSideFunctionRef mapping) {
+		
+		Map<ASTVarOrFnRefNode, Map<PathExpr, String>> result = new HashMap<ASTVarOrFnRefNode, Map<PathExpr, String>>();
+		
+		if (context.getRhs() instanceof ASTVarOrFnRefNode) {
+			result.put((ASTVarOrFnRefNode) context.getRhs(), null);
+		}
+		
+		return result;
+	}
+	*/
 	
 }

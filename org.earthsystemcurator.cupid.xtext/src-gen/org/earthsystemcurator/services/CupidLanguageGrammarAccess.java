@@ -377,8 +377,11 @@ public class CupidLanguageGrammarAccess extends AbstractGrammarElementFinder {
 		private final RuleCall cNameIDTerminalRuleCall_0_0 = (RuleCall)cNameAssignment_0.eContents().get(0);
 		private final Assignment cCardinalityAssignment_1 = (Assignment)cGroup.eContents().get(1);
 		private final RuleCall cCardinalityCardinalityParserRuleCall_1_0 = (RuleCall)cCardinalityAssignment_1.eContents().get(0);
-		private final Assignment cEssentialAssignment_2 = (Assignment)cGroup.eContents().get(2);
-		private final Keyword cEssentialExclamationMarkKeyword_2_0 = (Keyword)cEssentialAssignment_2.eContents().get(0);
+		private final Alternatives cAlternatives_2 = (Alternatives)cGroup.eContents().get(2);
+		private final Assignment cEssentialAssignment_2_0 = (Assignment)cAlternatives_2.eContents().get(0);
+		private final Keyword cEssentialExclamationMarkKeyword_2_0_0 = (Keyword)cEssentialAssignment_2_0.eContents().get(0);
+		private final Assignment cMustBeNullAssignment_2_1 = (Assignment)cAlternatives_2.eContents().get(1);
+		private final Keyword cMustBeNullExclamationMarkExclamationMarkKeyword_2_1_0 = (Keyword)cMustBeNullAssignment_2_1.eContents().get(0);
 		private final Alternatives cAlternatives_3 = (Alternatives)cGroup.eContents().get(3);
 		private final Group cGroup_3_0 = (Group)cAlternatives_3.eContents().get(0);
 		private final Keyword cColonKeyword_3_0_0 = (Keyword)cGroup_3_0.eContents().get(0);
@@ -394,12 +397,12 @@ public class CupidLanguageGrammarAccess extends AbstractGrammarElementFinder {
 		private final RuleCall cRefConceptDefIDTerminalRuleCall_3_2_1_0_1 = (RuleCall)cRefConceptDefCrossReference_3_2_1_0.eContents().get(1);
 		
 		//Subconcept returns SubconceptOrAttribute:
-		//	name=ID cardinality=Cardinality? essential?="!"? (":" def=NamedConceptDef | def=AnonymousConceptDef | reference?=":"
-		//	ref=[ConceptDef]);
+		//	name=ID cardinality=Cardinality? (essential?="!"? | mustBeNull?="!!") (":" def=NamedConceptDef |
+		//	def=AnonymousConceptDef | reference?=":" ref=[ConceptDef]);
 		public ParserRule getRule() { return rule; }
 
-		//name=ID cardinality=Cardinality? essential?="!"? (":" def=NamedConceptDef | def=AnonymousConceptDef | reference?=":"
-		//ref=[ConceptDef])
+		//name=ID cardinality=Cardinality? (essential?="!"? | mustBeNull?="!!") (":" def=NamedConceptDef | def=AnonymousConceptDef
+		//| reference?=":" ref=[ConceptDef])
 		public Group getGroup() { return cGroup; }
 
 		//name=ID
@@ -414,11 +417,20 @@ public class CupidLanguageGrammarAccess extends AbstractGrammarElementFinder {
 		//Cardinality
 		public RuleCall getCardinalityCardinalityParserRuleCall_1_0() { return cCardinalityCardinalityParserRuleCall_1_0; }
 
+		//essential?="!"? | mustBeNull?="!!"
+		public Alternatives getAlternatives_2() { return cAlternatives_2; }
+
 		//essential?="!"?
-		public Assignment getEssentialAssignment_2() { return cEssentialAssignment_2; }
+		public Assignment getEssentialAssignment_2_0() { return cEssentialAssignment_2_0; }
 
 		//"!"
-		public Keyword getEssentialExclamationMarkKeyword_2_0() { return cEssentialExclamationMarkKeyword_2_0; }
+		public Keyword getEssentialExclamationMarkKeyword_2_0_0() { return cEssentialExclamationMarkKeyword_2_0_0; }
+
+		//mustBeNull?="!!"
+		public Assignment getMustBeNullAssignment_2_1() { return cMustBeNullAssignment_2_1; }
+
+		//"!!"
+		public Keyword getMustBeNullExclamationMarkExclamationMarkKeyword_2_1_0() { return cMustBeNullExclamationMarkExclamationMarkKeyword_2_1_0; }
 
 		//":" def=NamedConceptDef | def=AnonymousConceptDef | reference?=":" ref=[ConceptDef]
 		public Alternatives getAlternatives_3() { return cAlternatives_3; }
@@ -469,8 +481,11 @@ public class CupidLanguageGrammarAccess extends AbstractGrammarElementFinder {
 		private final RuleCall cNameIDTerminalRuleCall_1_0 = (RuleCall)cNameAssignment_1.eContents().get(0);
 		private final Assignment cCardinalityAssignment_2 = (Assignment)cGroup.eContents().get(2);
 		private final RuleCall cCardinalityCardinalityParserRuleCall_2_0 = (RuleCall)cCardinalityAssignment_2.eContents().get(0);
-		private final Assignment cEssentialAssignment_3 = (Assignment)cGroup.eContents().get(3);
-		private final Keyword cEssentialExclamationMarkKeyword_3_0 = (Keyword)cEssentialAssignment_3.eContents().get(0);
+		private final Alternatives cAlternatives_3 = (Alternatives)cGroup.eContents().get(3);
+		private final Assignment cEssentialAssignment_3_0 = (Assignment)cAlternatives_3.eContents().get(0);
+		private final Keyword cEssentialExclamationMarkKeyword_3_0_0 = (Keyword)cEssentialAssignment_3_0.eContents().get(0);
+		private final Assignment cMustBeNullAssignment_3_1 = (Assignment)cAlternatives_3.eContents().get(1);
+		private final Keyword cMustBeNullExclamationMarkExclamationMarkKeyword_3_1_0 = (Keyword)cMustBeNullAssignment_3_1.eContents().get(0);
 		private final Group cGroup_4 = (Group)cGroup.eContents().get(4);
 		private final Keyword cLessThanSignKeyword_4_0 = (Keyword)cGroup_4.eContents().get(0);
 		private final Assignment cAttribMappingAssignment_4_1 = (Assignment)cGroup_4.eContents().get(1);
@@ -483,12 +498,12 @@ public class CupidLanguageGrammarAccess extends AbstractGrammarElementFinder {
 		private final Keyword cRightCurlyBracketKeyword_5_2 = (Keyword)cGroup_5.eContents().get(2);
 		
 		//Attribute returns SubconceptOrAttribute:
-		//	attrib?="attrib" name=ID cardinality=Cardinality? essential?="!"? ("<" attribMapping=Mapping ">")? ("{"
-		//	annotation+=Annotation* "}")?;
+		//	attrib?="attrib" name=ID cardinality=Cardinality? (essential?="!"? | mustBeNull?="!!") ("<" attribMapping=Mapping
+		//	">")? ("{" annotation+=Annotation* "}")?;
 		public ParserRule getRule() { return rule; }
 
-		//attrib?="attrib" name=ID cardinality=Cardinality? essential?="!"? ("<" attribMapping=Mapping ">")? ("{"
-		//annotation+=Annotation* "}")?
+		//attrib?="attrib" name=ID cardinality=Cardinality? (essential?="!"? | mustBeNull?="!!") ("<" attribMapping=Mapping ">")?
+		//("{" annotation+=Annotation* "}")?
 		public Group getGroup() { return cGroup; }
 
 		//attrib?="attrib"
@@ -509,11 +524,20 @@ public class CupidLanguageGrammarAccess extends AbstractGrammarElementFinder {
 		//Cardinality
 		public RuleCall getCardinalityCardinalityParserRuleCall_2_0() { return cCardinalityCardinalityParserRuleCall_2_0; }
 
+		//essential?="!"? | mustBeNull?="!!"
+		public Alternatives getAlternatives_3() { return cAlternatives_3; }
+
 		//essential?="!"?
-		public Assignment getEssentialAssignment_3() { return cEssentialAssignment_3; }
+		public Assignment getEssentialAssignment_3_0() { return cEssentialAssignment_3_0; }
 
 		//"!"
-		public Keyword getEssentialExclamationMarkKeyword_3_0() { return cEssentialExclamationMarkKeyword_3_0; }
+		public Keyword getEssentialExclamationMarkKeyword_3_0_0() { return cEssentialExclamationMarkKeyword_3_0_0; }
+
+		//mustBeNull?="!!"
+		public Assignment getMustBeNullAssignment_3_1() { return cMustBeNullAssignment_3_1; }
+
+		//"!!"
+		public Keyword getMustBeNullExclamationMarkExclamationMarkKeyword_3_1_0() { return cMustBeNullExclamationMarkExclamationMarkKeyword_3_1_0; }
 
 		//("<" attribMapping=Mapping ">")?
 		public Group getGroup_4() { return cGroup_4; }
@@ -592,12 +616,18 @@ public class CupidLanguageGrammarAccess extends AbstractGrammarElementFinder {
 		private final RuleCall cContextPathExprParserRuleCall_0_0 = (RuleCall)cContextAssignment_0.eContents().get(0);
 		private final Assignment cMappingAssignment_1 = (Assignment)cGroup.eContents().get(1);
 		private final RuleCall cMappingImplicitContextMappingParserRuleCall_1_0 = (RuleCall)cMappingAssignment_1.eContents().get(0);
+		private final Group cGroup_2 = (Group)cGroup.eContents().get(2);
+		private final Keyword cAfterKeyword_2_0 = (Keyword)cGroup_2.eContents().get(0);
+		private final Keyword cLeftParenthesisKeyword_2_1 = (Keyword)cGroup_2.eContents().get(1);
+		private final Assignment cAfterPathExprAssignment_2_2 = (Assignment)cGroup_2.eContents().get(2);
+		private final RuleCall cAfterPathExprPathExprParserRuleCall_2_2_0 = (RuleCall)cAfterPathExprAssignment_2_2.eContents().get(0);
+		private final Keyword cRightParenthesisKeyword_2_3 = (Keyword)cGroup_2.eContents().get(3);
 		
 		//Mapping:
-		//	context=PathExpr? mapping=ImplicitContextMapping;
+		//	context=PathExpr? mapping=ImplicitContextMapping ("after" "(" afterPathExpr=PathExpr ")")?;
 		public ParserRule getRule() { return rule; }
 
-		//context=PathExpr? mapping=ImplicitContextMapping
+		//context=PathExpr? mapping=ImplicitContextMapping ("after" "(" afterPathExpr=PathExpr ")")?
 		public Group getGroup() { return cGroup; }
 
 		//context=PathExpr?
@@ -611,6 +641,24 @@ public class CupidLanguageGrammarAccess extends AbstractGrammarElementFinder {
 
 		//ImplicitContextMapping
 		public RuleCall getMappingImplicitContextMappingParserRuleCall_1_0() { return cMappingImplicitContextMappingParserRuleCall_1_0; }
+
+		//("after" "(" afterPathExpr=PathExpr ")")?
+		public Group getGroup_2() { return cGroup_2; }
+
+		//"after"
+		public Keyword getAfterKeyword_2_0() { return cAfterKeyword_2_0; }
+
+		//"("
+		public Keyword getLeftParenthesisKeyword_2_1() { return cLeftParenthesisKeyword_2_1; }
+
+		//afterPathExpr=PathExpr
+		public Assignment getAfterPathExprAssignment_2_2() { return cAfterPathExprAssignment_2_2; }
+
+		//PathExpr
+		public RuleCall getAfterPathExprPathExprParserRuleCall_2_2_0() { return cAfterPathExprPathExprParserRuleCall_2_2_0; }
+
+		//")"
+		public Keyword getRightParenthesisKeyword_2_3() { return cRightParenthesisKeyword_2_3; }
 	}
 
 	public class ImplicitContextMappingElements extends AbstractParserRuleElementFinder {
@@ -628,14 +676,15 @@ public class CupidLanguageGrammarAccess extends AbstractGrammarElementFinder {
 		private final Group cGroup_9 = (Group)cAlternatives.eContents().get(9);
 		private final Action cDeclaredEntityAction_9_0 = (Action)cGroup_9.eContents().get(0);
 		private final RuleCall cDeclaredEntityParserRuleCall_9_1 = (RuleCall)cGroup_9.eContents().get(1);
+		private final RuleCall cFunctionAssignmentParserRuleCall_10 = (RuleCall)cAlternatives.eContents().get(10);
 		
 		//ImplicitContextMapping:
 		//	Module | ModuleName | UsesModule | UsesEntity | Call | Subroutine | SubroutineName | ActualParamByKeyword |
-		//	VariableDeclaration | {DeclaredEntity} DeclaredEntity;
+		//	VariableDeclaration | {DeclaredEntity} DeclaredEntity | FunctionAssignment;
 		public ParserRule getRule() { return rule; }
 
 		//Module | ModuleName | UsesModule | UsesEntity | Call | Subroutine | SubroutineName | ActualParamByKeyword |
-		//VariableDeclaration | {DeclaredEntity} DeclaredEntity
+		//VariableDeclaration | {DeclaredEntity} DeclaredEntity | FunctionAssignment
 		public Alternatives getAlternatives() { return cAlternatives; }
 
 		//Module
@@ -673,6 +722,9 @@ public class CupidLanguageGrammarAccess extends AbstractGrammarElementFinder {
 
 		//DeclaredEntity
 		public RuleCall getDeclaredEntityParserRuleCall_9_1() { return cDeclaredEntityParserRuleCall_9_1; }
+
+		//FunctionAssignment
+		public RuleCall getFunctionAssignmentParserRuleCall_10() { return cFunctionAssignmentParserRuleCall_10; }
 	}
 
 	public class ModuleElements extends AbstractParserRuleElementFinder {
@@ -1265,6 +1317,91 @@ public class CupidLanguageGrammarAccess extends AbstractGrammarElementFinder {
 		public Keyword getDeclaredEntityKeyword() { return cDeclaredEntityKeyword; }
 	}
 
+	public class FunctionAssignmentElements extends AbstractParserRuleElementFinder {
+		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "FunctionAssignment");
+		private final Group cGroup = (Group)rule.eContents().get(1);
+		private final Keyword cFunctionAssignmentKeyword_0 = (Keyword)cGroup.eContents().get(0);
+		private final Keyword cLeftParenthesisKeyword_1 = (Keyword)cGroup.eContents().get(1);
+		private final Assignment cLhsAssignment_2 = (Assignment)cGroup.eContents().get(2);
+		private final RuleCall cLhsExprParserRuleCall_2_0 = (RuleCall)cLhsAssignment_2.eContents().get(0);
+		private final Keyword cCommaKeyword_3 = (Keyword)cGroup.eContents().get(3);
+		private final Assignment cFunctionNameAssignment_4 = (Assignment)cGroup.eContents().get(4);
+		private final RuleCall cFunctionNameExprParserRuleCall_4_0 = (RuleCall)cFunctionNameAssignment_4.eContents().get(0);
+		private final Group cGroup_5 = (Group)cGroup.eContents().get(5);
+		private final Keyword cLeftParenthesisKeyword_5_0 = (Keyword)cGroup_5.eContents().get(0);
+		private final Group cGroup_5_1 = (Group)cGroup_5.eContents().get(1);
+		private final Assignment cParamsAssignment_5_1_0 = (Assignment)cGroup_5_1.eContents().get(0);
+		private final RuleCall cParamsActualParamParserRuleCall_5_1_0_0 = (RuleCall)cParamsAssignment_5_1_0.eContents().get(0);
+		private final Group cGroup_5_1_1 = (Group)cGroup_5_1.eContents().get(1);
+		private final Keyword cCommaKeyword_5_1_1_0 = (Keyword)cGroup_5_1_1.eContents().get(0);
+		private final Assignment cParamsAssignment_5_1_1_1 = (Assignment)cGroup_5_1_1.eContents().get(1);
+		private final RuleCall cParamsActualParamParserRuleCall_5_1_1_1_0 = (RuleCall)cParamsAssignment_5_1_1_1.eContents().get(0);
+		private final Keyword cRightParenthesisKeyword_5_2 = (Keyword)cGroup_5.eContents().get(2);
+		private final Keyword cRightParenthesisKeyword_6 = (Keyword)cGroup.eContents().get(6);
+		
+		//FunctionAssignment:
+		//	"functionAssignment" "(" lhs=Expr "," functionName=Expr ("(" (params+=ActualParam ("," params+=ActualParam)*)? ")")?
+		//	")";
+		public ParserRule getRule() { return rule; }
+
+		//"functionAssignment" "(" lhs=Expr "," functionName=Expr ("(" (params+=ActualParam ("," params+=ActualParam)*)? ")")? ")"
+		public Group getGroup() { return cGroup; }
+
+		//"functionAssignment"
+		public Keyword getFunctionAssignmentKeyword_0() { return cFunctionAssignmentKeyword_0; }
+
+		//"("
+		public Keyword getLeftParenthesisKeyword_1() { return cLeftParenthesisKeyword_1; }
+
+		//lhs=Expr
+		public Assignment getLhsAssignment_2() { return cLhsAssignment_2; }
+
+		//Expr
+		public RuleCall getLhsExprParserRuleCall_2_0() { return cLhsExprParserRuleCall_2_0; }
+
+		//","
+		public Keyword getCommaKeyword_3() { return cCommaKeyword_3; }
+
+		//functionName=Expr
+		public Assignment getFunctionNameAssignment_4() { return cFunctionNameAssignment_4; }
+
+		//Expr
+		public RuleCall getFunctionNameExprParserRuleCall_4_0() { return cFunctionNameExprParserRuleCall_4_0; }
+
+		//("(" (params+=ActualParam ("," params+=ActualParam)*)? ")")?
+		public Group getGroup_5() { return cGroup_5; }
+
+		//"("
+		public Keyword getLeftParenthesisKeyword_5_0() { return cLeftParenthesisKeyword_5_0; }
+
+		//(params+=ActualParam ("," params+=ActualParam)*)?
+		public Group getGroup_5_1() { return cGroup_5_1; }
+
+		//params+=ActualParam
+		public Assignment getParamsAssignment_5_1_0() { return cParamsAssignment_5_1_0; }
+
+		//ActualParam
+		public RuleCall getParamsActualParamParserRuleCall_5_1_0_0() { return cParamsActualParamParserRuleCall_5_1_0_0; }
+
+		//("," params+=ActualParam)*
+		public Group getGroup_5_1_1() { return cGroup_5_1_1; }
+
+		//","
+		public Keyword getCommaKeyword_5_1_1_0() { return cCommaKeyword_5_1_1_0; }
+
+		//params+=ActualParam
+		public Assignment getParamsAssignment_5_1_1_1() { return cParamsAssignment_5_1_1_1; }
+
+		//ActualParam
+		public RuleCall getParamsActualParamParserRuleCall_5_1_1_1_0() { return cParamsActualParamParserRuleCall_5_1_1_1_0; }
+
+		//")"
+		public Keyword getRightParenthesisKeyword_5_2() { return cRightParenthesisKeyword_5_2; }
+
+		//")"
+		public Keyword getRightParenthesisKeyword_6() { return cRightParenthesisKeyword_6; }
+	}
+
 	public class LocalExpressionElements extends AbstractParserRuleElementFinder {
 		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "LocalExpression");
 		private final Alternatives cAlternatives = (Alternatives)rule.eContents().get(1);
@@ -1273,6 +1410,8 @@ public class CupidLanguageGrammarAccess extends AbstractGrammarElementFinder {
 		private final Assignment cLiteralAssignment_1 = (Assignment)cAlternatives.eContents().get(1);
 		private final RuleCall cLiteralLiteralParserRuleCall_1_0 = (RuleCall)cLiteralAssignment_1.eContents().get(0);
 		
+		////RightHandSideFunctionRef:
+		////	'rhsFunctionRef';
 		//LocalExpression:
 		//	id=ID | literal=Literal;
 		public ParserRule getRule() { return rule; }
@@ -1502,6 +1641,7 @@ public class CupidLanguageGrammarAccess extends AbstractGrammarElementFinder {
 	private ActualParamByKeywordElements pActualParamByKeyword;
 	private VariableDeclarationElements pVariableDeclaration;
 	private DeclaredEntityElements pDeclaredEntity;
+	private FunctionAssignmentElements pFunctionAssignment;
 	private LocalExpressionElements pLocalExpression;
 	private ExprElements pExpr;
 	private LiteralElements pLiteral;
@@ -1626,8 +1766,8 @@ public class CupidLanguageGrammarAccess extends AbstractGrammarElementFinder {
 	}
 
 	//Subconcept returns SubconceptOrAttribute:
-	//	name=ID cardinality=Cardinality? essential?="!"? (":" def=NamedConceptDef | def=AnonymousConceptDef | reference?=":"
-	//	ref=[ConceptDef]);
+	//	name=ID cardinality=Cardinality? (essential?="!"? | mustBeNull?="!!") (":" def=NamedConceptDef |
+	//	def=AnonymousConceptDef | reference?=":" ref=[ConceptDef]);
 	public SubconceptElements getSubconceptAccess() {
 		return (pSubconcept != null) ? pSubconcept : (pSubconcept = new SubconceptElements());
 	}
@@ -1637,8 +1777,8 @@ public class CupidLanguageGrammarAccess extends AbstractGrammarElementFinder {
 	}
 
 	//Attribute returns SubconceptOrAttribute:
-	//	attrib?="attrib" name=ID cardinality=Cardinality? essential?="!"? ("<" attribMapping=Mapping ">")? ("{"
-	//	annotation+=Annotation* "}")?;
+	//	attrib?="attrib" name=ID cardinality=Cardinality? (essential?="!"? | mustBeNull?="!!") ("<" attribMapping=Mapping
+	//	">")? ("{" annotation+=Annotation* "}")?;
 	public AttributeElements getAttributeAccess() {
 		return (pAttribute != null) ? pAttribute : (pAttribute = new AttributeElements());
 	}
@@ -1676,7 +1816,7 @@ public class CupidLanguageGrammarAccess extends AbstractGrammarElementFinder {
 	}
 
 	//Mapping:
-	//	context=PathExpr? mapping=ImplicitContextMapping;
+	//	context=PathExpr? mapping=ImplicitContextMapping ("after" "(" afterPathExpr=PathExpr ")")?;
 	public MappingElements getMappingAccess() {
 		return (pMapping != null) ? pMapping : (pMapping = new MappingElements());
 	}
@@ -1687,7 +1827,7 @@ public class CupidLanguageGrammarAccess extends AbstractGrammarElementFinder {
 
 	//ImplicitContextMapping:
 	//	Module | ModuleName | UsesModule | UsesEntity | Call | Subroutine | SubroutineName | ActualParamByKeyword |
-	//	VariableDeclaration | {DeclaredEntity} DeclaredEntity;
+	//	VariableDeclaration | {DeclaredEntity} DeclaredEntity | FunctionAssignment;
 	public ImplicitContextMappingElements getImplicitContextMappingAccess() {
 		return (pImplicitContextMapping != null) ? pImplicitContextMapping : (pImplicitContextMapping = new ImplicitContextMappingElements());
 	}
@@ -1837,6 +1977,19 @@ public class CupidLanguageGrammarAccess extends AbstractGrammarElementFinder {
 		return getDeclaredEntityAccess().getRule();
 	}
 
+	//FunctionAssignment:
+	//	"functionAssignment" "(" lhs=Expr "," functionName=Expr ("(" (params+=ActualParam ("," params+=ActualParam)*)? ")")?
+	//	")";
+	public FunctionAssignmentElements getFunctionAssignmentAccess() {
+		return (pFunctionAssignment != null) ? pFunctionAssignment : (pFunctionAssignment = new FunctionAssignmentElements());
+	}
+	
+	public ParserRule getFunctionAssignmentRule() {
+		return getFunctionAssignmentAccess().getRule();
+	}
+
+	////RightHandSideFunctionRef:
+	////	'rhsFunctionRef';
 	//LocalExpression:
 	//	id=ID | literal=Literal;
 	public LocalExpressionElements getLocalExpressionAccess() {

@@ -14,6 +14,7 @@ import org.earthsystemcurator.cupidLanguage.CupidLanguagePackage;
 import org.earthsystemcurator.cupidLanguage.DeclaredEntity;
 import org.earthsystemcurator.cupidLanguage.Expr;
 import org.earthsystemcurator.cupidLanguage.FormalParam;
+import org.earthsystemcurator.cupidLanguage.FunctionAssignment;
 import org.earthsystemcurator.cupidLanguage.ImplicitContextMapping;
 import org.earthsystemcurator.cupidLanguage.Intent;
 import org.earthsystemcurator.cupidLanguage.Language;
@@ -185,6 +186,13 @@ public class CupidLanguagePackageImpl extends EPackageImpl implements CupidLangu
    * @generated
    */
   private EClass variableDeclarationEClass = null;
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  private EClass functionAssignmentEClass = null;
 
   /**
    * <!-- begin-user-doc -->
@@ -476,9 +484,19 @@ public class CupidLanguagePackageImpl extends EPackageImpl implements CupidLangu
    * <!-- end-user-doc -->
    * @generated
    */
+  public EAttribute getSubconceptOrAttribute_MustBeNull()
+  {
+    return (EAttribute)subconceptOrAttributeEClass.getEStructuralFeatures().get(3);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
   public EReference getSubconceptOrAttribute_Def()
   {
-    return (EReference)subconceptOrAttributeEClass.getEStructuralFeatures().get(3);
+    return (EReference)subconceptOrAttributeEClass.getEStructuralFeatures().get(4);
   }
 
   /**
@@ -488,7 +506,7 @@ public class CupidLanguagePackageImpl extends EPackageImpl implements CupidLangu
    */
   public EAttribute getSubconceptOrAttribute_Reference()
   {
-    return (EAttribute)subconceptOrAttributeEClass.getEStructuralFeatures().get(4);
+    return (EAttribute)subconceptOrAttributeEClass.getEStructuralFeatures().get(5);
   }
 
   /**
@@ -498,7 +516,7 @@ public class CupidLanguagePackageImpl extends EPackageImpl implements CupidLangu
    */
   public EReference getSubconceptOrAttribute_Ref()
   {
-    return (EReference)subconceptOrAttributeEClass.getEStructuralFeatures().get(5);
+    return (EReference)subconceptOrAttributeEClass.getEStructuralFeatures().get(6);
   }
 
   /**
@@ -508,7 +526,7 @@ public class CupidLanguagePackageImpl extends EPackageImpl implements CupidLangu
    */
   public EAttribute getSubconceptOrAttribute_Attrib()
   {
-    return (EAttribute)subconceptOrAttributeEClass.getEStructuralFeatures().get(6);
+    return (EAttribute)subconceptOrAttributeEClass.getEStructuralFeatures().get(7);
   }
 
   /**
@@ -518,7 +536,7 @@ public class CupidLanguagePackageImpl extends EPackageImpl implements CupidLangu
    */
   public EReference getSubconceptOrAttribute_AttribMapping()
   {
-    return (EReference)subconceptOrAttributeEClass.getEStructuralFeatures().get(7);
+    return (EReference)subconceptOrAttributeEClass.getEStructuralFeatures().get(8);
   }
 
   /**
@@ -528,7 +546,7 @@ public class CupidLanguagePackageImpl extends EPackageImpl implements CupidLangu
    */
   public EReference getSubconceptOrAttribute_Annotation()
   {
-    return (EReference)subconceptOrAttributeEClass.getEStructuralFeatures().get(8);
+    return (EReference)subconceptOrAttributeEClass.getEStructuralFeatures().get(9);
   }
 
   /**
@@ -589,6 +607,16 @@ public class CupidLanguagePackageImpl extends EPackageImpl implements CupidLangu
   public EReference getMapping_Mapping()
   {
     return (EReference)mappingEClass.getEStructuralFeatures().get(1);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EReference getMapping_AfterPathExpr()
+  {
+    return (EReference)mappingEClass.getEStructuralFeatures().get(2);
   }
 
   /**
@@ -996,6 +1024,46 @@ public class CupidLanguagePackageImpl extends EPackageImpl implements CupidLangu
    * <!-- end-user-doc -->
    * @generated
    */
+  public EClass getFunctionAssignment()
+  {
+    return functionAssignmentEClass;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EReference getFunctionAssignment_Lhs()
+  {
+    return (EReference)functionAssignmentEClass.getEStructuralFeatures().get(0);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EReference getFunctionAssignment_FunctionName()
+  {
+    return (EReference)functionAssignmentEClass.getEStructuralFeatures().get(1);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EReference getFunctionAssignment_Params()
+  {
+    return (EReference)functionAssignmentEClass.getEStructuralFeatures().get(2);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
   public EClass getLocalExpression()
   {
     return localExpressionEClass;
@@ -1202,6 +1270,7 @@ public class CupidLanguagePackageImpl extends EPackageImpl implements CupidLangu
     createEAttribute(subconceptOrAttributeEClass, SUBCONCEPT_OR_ATTRIBUTE__NAME);
     createEReference(subconceptOrAttributeEClass, SUBCONCEPT_OR_ATTRIBUTE__CARDINALITY);
     createEAttribute(subconceptOrAttributeEClass, SUBCONCEPT_OR_ATTRIBUTE__ESSENTIAL);
+    createEAttribute(subconceptOrAttributeEClass, SUBCONCEPT_OR_ATTRIBUTE__MUST_BE_NULL);
     createEReference(subconceptOrAttributeEClass, SUBCONCEPT_OR_ATTRIBUTE__DEF);
     createEAttribute(subconceptOrAttributeEClass, SUBCONCEPT_OR_ATTRIBUTE__REFERENCE);
     createEReference(subconceptOrAttributeEClass, SUBCONCEPT_OR_ATTRIBUTE__REF);
@@ -1216,6 +1285,7 @@ public class CupidLanguagePackageImpl extends EPackageImpl implements CupidLangu
     mappingEClass = createEClass(MAPPING);
     createEReference(mappingEClass, MAPPING__CONTEXT);
     createEReference(mappingEClass, MAPPING__MAPPING);
+    createEReference(mappingEClass, MAPPING__AFTER_PATH_EXPR);
 
     implicitContextMappingEClass = createEClass(IMPLICIT_CONTEXT_MAPPING);
 
@@ -1270,6 +1340,11 @@ public class CupidLanguagePackageImpl extends EPackageImpl implements CupidLangu
 
     variableDeclarationEClass = createEClass(VARIABLE_DECLARATION);
     createEReference(variableDeclarationEClass, VARIABLE_DECLARATION__TYPE);
+
+    functionAssignmentEClass = createEClass(FUNCTION_ASSIGNMENT);
+    createEReference(functionAssignmentEClass, FUNCTION_ASSIGNMENT__LHS);
+    createEReference(functionAssignmentEClass, FUNCTION_ASSIGNMENT__FUNCTION_NAME);
+    createEReference(functionAssignmentEClass, FUNCTION_ASSIGNMENT__PARAMS);
 
     localExpressionEClass = createEClass(LOCAL_EXPRESSION);
     createEAttribute(localExpressionEClass, LOCAL_EXPRESSION__ID);
@@ -1332,6 +1407,7 @@ public class CupidLanguagePackageImpl extends EPackageImpl implements CupidLangu
     callEClass.getESuperTypes().add(this.getImplicitContextMapping());
     actualParamByKeywordEClass.getESuperTypes().add(this.getImplicitContextMapping());
     variableDeclarationEClass.getESuperTypes().add(this.getImplicitContextMapping());
+    functionAssignmentEClass.getESuperTypes().add(this.getImplicitContextMapping());
     declaredEntityEClass.getESuperTypes().add(this.getImplicitContextMapping());
     pathExprTermEClass.getESuperTypes().add(this.getPathExpr());
 
@@ -1357,6 +1433,7 @@ public class CupidLanguagePackageImpl extends EPackageImpl implements CupidLangu
     initEAttribute(getSubconceptOrAttribute_Name(), ecorePackage.getEString(), "name", null, 0, 1, SubconceptOrAttribute.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
     initEReference(getSubconceptOrAttribute_Cardinality(), this.getCardinality(), null, "cardinality", null, 0, 1, SubconceptOrAttribute.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
     initEAttribute(getSubconceptOrAttribute_Essential(), ecorePackage.getEBoolean(), "essential", null, 0, 1, SubconceptOrAttribute.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEAttribute(getSubconceptOrAttribute_MustBeNull(), ecorePackage.getEBoolean(), "mustBeNull", null, 0, 1, SubconceptOrAttribute.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
     initEReference(getSubconceptOrAttribute_Def(), this.getConceptDef(), null, "def", null, 0, 1, SubconceptOrAttribute.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
     initEAttribute(getSubconceptOrAttribute_Reference(), ecorePackage.getEBoolean(), "reference", null, 0, 1, SubconceptOrAttribute.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
     initEReference(getSubconceptOrAttribute_Ref(), this.getConceptDef(), null, "ref", null, 0, 1, SubconceptOrAttribute.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
@@ -1371,6 +1448,7 @@ public class CupidLanguagePackageImpl extends EPackageImpl implements CupidLangu
     initEClass(mappingEClass, Mapping.class, "Mapping", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
     initEReference(getMapping_Context(), this.getPathExpr(), null, "context", null, 0, 1, Mapping.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
     initEReference(getMapping_Mapping(), this.getImplicitContextMapping(), null, "mapping", null, 0, 1, Mapping.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEReference(getMapping_AfterPathExpr(), this.getPathExpr(), null, "afterPathExpr", null, 0, 1, Mapping.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
     initEClass(implicitContextMappingEClass, ImplicitContextMapping.class, "ImplicitContextMapping", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 
@@ -1425,6 +1503,11 @@ public class CupidLanguagePackageImpl extends EPackageImpl implements CupidLangu
 
     initEClass(variableDeclarationEClass, VariableDeclaration.class, "VariableDeclaration", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
     initEReference(getVariableDeclaration_Type(), this.getType(), null, "type", null, 0, 1, VariableDeclaration.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+
+    initEClass(functionAssignmentEClass, FunctionAssignment.class, "FunctionAssignment", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+    initEReference(getFunctionAssignment_Lhs(), this.getExpr(), null, "lhs", null, 0, 1, FunctionAssignment.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEReference(getFunctionAssignment_FunctionName(), this.getExpr(), null, "functionName", null, 0, 1, FunctionAssignment.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEReference(getFunctionAssignment_Params(), this.getActualParam(), null, "params", null, 0, -1, FunctionAssignment.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
     initEClass(localExpressionEClass, LocalExpression.class, "LocalExpression", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
     initEAttribute(getLocalExpression_Id(), ecorePackage.getEString(), "id", null, 0, 1, LocalExpression.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);

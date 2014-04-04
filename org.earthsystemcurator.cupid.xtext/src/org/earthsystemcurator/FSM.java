@@ -4,6 +4,7 @@ import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.IdentityHashMap;
 import java.util.List;
 import java.util.Map;
@@ -36,6 +37,7 @@ import org.eclipse.emf.ecore.util.Diagnostician;
 import org.eclipse.emf.ecore.util.EcoreUtil;
 import org.eclipse.photran.core.IFortranAST;
 import org.eclipse.photran.internal.core.lexer.Token;
+import org.eclipse.photran.internal.core.parser.IASTNode;
 
 @SuppressWarnings("restriction")
 public class FSM<RootType extends EObject> {
@@ -530,10 +532,58 @@ public class FSM<RootType extends EObject> {
 						}
 						//result is a set of objects - either IASTNodes or IFortranASTs
 						else {
-							
-							//Set<Object> resultSet = ((Map<Object, ?>) result).keySet();
+										
 														
 							Map<Object, Map<PathExpr, String>> resultMap = (Map<Object, Map<PathExpr, String>>) result;
+						
+							
+							//check position and remove if necessary
+							if (explicitContextMapping.getAfterPathExpr() != null) {						
+								
+								EObject afterMe = null;
+								try {
+									afterMe = getValueFromModel(explicitContextMapping.getAfterPathExpr(), modelElement, true);
+								} catch (PathExprNotFoundException e1) {
+									//will be handled below
+								}	
+								
+								if (afterMe == null) {
+									//node cannot come after a node that is not there
+									resultMap.clear();
+								}
+								else {
+								
+									IASTNode afterMeNode = (IASTNode) getMapsTo(afterMe);
+									Token afterMeToken = afterMeNode.findLastToken();
+									int afterMeOffset = afterMeToken.getFileOffset() + afterMeToken.getLength() + 1;
+									
+									Set<Object> toRemove = new HashSet<Object>();
+									for (Entry<Object, Map<PathExpr, String>> resultItem : resultMap.entrySet()) {
+										
+										IASTNode resultNode = (IASTNode) resultItem.getKey();
+										Token resultToken = resultNode.findFirstToken();
+										//int resultOffset = resultToken.getFileOffset();
+										
+										if (afterMeToken.getLogicalFile() != resultToken.getLogicalFile()) {
+											throw new RuntimeException("Cannot compare positions across files.");
+										}
+																				
+										if (!resultToken.isOnOrAfterFileOffset(afterMeOffset)) {
+											//System.out.println("\t==>REMOVING");
+											toRemove.add(resultItem.getKey());
+										}								
+									
+									}
+									
+									for (Object r : toRemove) {
+										resultMap.remove(r);
+									}							
+									
+								}
+								
+							}
+						
+							
 							for (Entry<Object, Map<PathExpr, String>> resultItem : resultMap.entrySet()) {
 								
 								EObject newModelElem = factory.create((EClass) structuralFeature.getEType());
@@ -589,11 +639,11 @@ public class FSM<RootType extends EObject> {
 								else if (!structuralFeature.isMany()) {
 									if (resultMap.size() > 1) {
 										System.out.println("Warning: Some matching elements ignored because subconcept is singular: " + subconcept.getName());
-										for (Object ignoredElement : resultMap.entrySet()) {
-											if (!ignoredElement.equals(resultItem.getKey())) {
-												System.out.println("\tIgnored element: " + ignoredElement);
-											}
-										}
+										//for (Object ignoredElement : resultMap.entrySet()) {
+										//	if (!ignoredElement.equals(resultItem.getKey())) {
+										//		System.out.println("\tIgnored element: " + ignoredElement);
+										//	}
+										//}
 									}
 									break; // take first one that is not null
 								}									
@@ -747,6 +797,54 @@ public class FSM<RootType extends EObject> {
 					Object result = executeMappingQuery(query.getMapping(), explicitContextFortranElement);
 					if (result instanceof Map) {
 						Map<Object, Map<PathExpr, String>> resultMap = (Map<Object, Map<PathExpr, String>>) result;
+						
+						//check position and remove if necessary
+						if (query.getAfterPathExpr() != null) {						
+							
+							EObject afterMe = null;
+							try {
+								afterMe = getValueFromModel(query.getAfterPathExpr(), candidate, true);
+							} catch (PathExprNotFoundException e1) {
+								//will be handled below
+							}	
+							
+							if (afterMe == null) {
+								//node cannot come after a node that is not there
+								resultMap.clear();
+							}
+							else {
+							
+								IASTNode afterMeNode = (IASTNode) getMapsTo(afterMe);
+								Token afterMeToken = afterMeNode.findLastToken();
+								int afterMeOffset = afterMeToken.getFileOffset() + afterMeToken.getLength() + 1;
+								
+								Set<Object> toRemove = new HashSet<Object>();
+								for (Entry<Object, Map<PathExpr, String>> resultItem : resultMap.entrySet()) {
+									
+									IASTNode resultNode = (IASTNode) resultItem.getKey();
+									Token resultToken = resultNode.findFirstToken();
+									//int resultOffset = resultToken.getFileOffset();
+									
+									if (afterMeToken.getLogicalFile() != resultToken.getLogicalFile()) {
+										throw new RuntimeException("Cannot compare positions across files.");
+									}
+																			
+									if (!resultToken.isOnOrAfterFileOffset(afterMeOffset)) {
+										//System.out.println("\t==>REMOVING");
+										toRemove.add(resultItem.getKey());
+									}								
+								
+								}
+								
+								for (Object r : toRemove) {
+									resultMap.remove(r);
+								}							
+								
+							}
+							
+						}
+						
+						
 						if (resultMap.size() > 0) {
 							boolean firstTime = true;
 							for (Entry<Object, Map<PathExpr, String>> resultItem : resultMap.entrySet()) {

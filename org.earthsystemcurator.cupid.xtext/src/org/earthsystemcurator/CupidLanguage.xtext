@@ -42,11 +42,11 @@ SubconceptOrAttribute:
 	Subconcept | Attribute;
 			
 Subconcept returns SubconceptOrAttribute:
-	name=ID cardinality=Cardinality? essential?='!'?
+	name=ID cardinality=Cardinality? (essential?='!'? | mustBeNull?='!!')
 	((':' def=NamedConceptDef) | def=AnonymousConceptDef | (reference?=':' ref=[ConceptDef]));		
 	
 Attribute returns SubconceptOrAttribute:
-	attrib?='attrib' name=ID cardinality=Cardinality? essential?='!'?
+	attrib?='attrib' name=ID cardinality=Cardinality? (essential?='!'? | mustBeNull?='!!')
 	('<' attribMapping=Mapping '>')? 
 	('{' annotation+=Annotation* '}')?;
 
@@ -74,12 +74,13 @@ Cardinality:
 	oneOrMore?='+';
 	
 Mapping:
-	context=PathExpr? mapping=ImplicitContextMapping;
+	context=PathExpr? mapping=ImplicitContextMapping ('after' '(' afterPathExpr=PathExpr ')')?;
 
 ImplicitContextMapping:
 	Module | ModuleName | UsesModule | UsesEntity | 
 	Call | Subroutine | SubroutineName | ActualParamByKeyword | 
-	VariableDeclaration | {DeclaredEntity} DeclaredEntity;
+	VariableDeclaration | {DeclaredEntity} DeclaredEntity |
+	FunctionAssignment;
 
 Module: {Module} 
 	'module' ('(' name=Expr ')')?;
@@ -127,6 +128,14 @@ VariableDeclaration:
 	
 DeclaredEntity:
 	'declaredEntity';
+	
+FunctionAssignment:
+	'functionAssignment' '(' lhs=Expr ',' functionName=Expr ( '(' (params+=ActualParam (',' params+=ActualParam)* )? ')')? ')';
+	
+//RightHandSideFunctionRef:
+//	'rhsFunctionRef';
+
+
 
 LocalExpression:
 	id=ID | literal=Literal;

@@ -25,6 +25,7 @@ import org.eclipse.emf.ecore.impl.MinimalEObjectImpl;
  * <ul>
  *   <li>{@link org.earthsystemcurator.cupidLanguage.impl.MappingImpl#getContext <em>Context</em>}</li>
  *   <li>{@link org.earthsystemcurator.cupidLanguage.impl.MappingImpl#getMapping <em>Mapping</em>}</li>
+ *   <li>{@link org.earthsystemcurator.cupidLanguage.impl.MappingImpl#getAfterPathExpr <em>After Path Expr</em>}</li>
  * </ul>
  * </p>
  *
@@ -51,6 +52,16 @@ public class MappingImpl extends MinimalEObjectImpl.Container implements Mapping
    * @ordered
    */
   protected ImplicitContextMapping mapping;
+
+  /**
+   * The cached value of the '{@link #getAfterPathExpr() <em>After Path Expr</em>}' containment reference.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @see #getAfterPathExpr()
+   * @generated
+   * @ordered
+   */
+  protected PathExpr afterPathExpr;
 
   /**
    * <!-- begin-user-doc -->
@@ -174,6 +185,54 @@ public class MappingImpl extends MinimalEObjectImpl.Container implements Mapping
    * <!-- end-user-doc -->
    * @generated
    */
+  public PathExpr getAfterPathExpr()
+  {
+    return afterPathExpr;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public NotificationChain basicSetAfterPathExpr(PathExpr newAfterPathExpr, NotificationChain msgs)
+  {
+    PathExpr oldAfterPathExpr = afterPathExpr;
+    afterPathExpr = newAfterPathExpr;
+    if (eNotificationRequired())
+    {
+      ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, CupidLanguagePackage.MAPPING__AFTER_PATH_EXPR, oldAfterPathExpr, newAfterPathExpr);
+      if (msgs == null) msgs = notification; else msgs.add(notification);
+    }
+    return msgs;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public void setAfterPathExpr(PathExpr newAfterPathExpr)
+  {
+    if (newAfterPathExpr != afterPathExpr)
+    {
+      NotificationChain msgs = null;
+      if (afterPathExpr != null)
+        msgs = ((InternalEObject)afterPathExpr).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - CupidLanguagePackage.MAPPING__AFTER_PATH_EXPR, null, msgs);
+      if (newAfterPathExpr != null)
+        msgs = ((InternalEObject)newAfterPathExpr).eInverseAdd(this, EOPPOSITE_FEATURE_BASE - CupidLanguagePackage.MAPPING__AFTER_PATH_EXPR, null, msgs);
+      msgs = basicSetAfterPathExpr(newAfterPathExpr, msgs);
+      if (msgs != null) msgs.dispatch();
+    }
+    else if (eNotificationRequired())
+      eNotify(new ENotificationImpl(this, Notification.SET, CupidLanguagePackage.MAPPING__AFTER_PATH_EXPR, newAfterPathExpr, newAfterPathExpr));
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
   @Override
   public NotificationChain eInverseRemove(InternalEObject otherEnd, int featureID, NotificationChain msgs)
   {
@@ -183,6 +242,8 @@ public class MappingImpl extends MinimalEObjectImpl.Container implements Mapping
         return basicSetContext(null, msgs);
       case CupidLanguagePackage.MAPPING__MAPPING:
         return basicSetMapping(null, msgs);
+      case CupidLanguagePackage.MAPPING__AFTER_PATH_EXPR:
+        return basicSetAfterPathExpr(null, msgs);
     }
     return super.eInverseRemove(otherEnd, featureID, msgs);
   }
@@ -201,6 +262,8 @@ public class MappingImpl extends MinimalEObjectImpl.Container implements Mapping
         return getContext();
       case CupidLanguagePackage.MAPPING__MAPPING:
         return getMapping();
+      case CupidLanguagePackage.MAPPING__AFTER_PATH_EXPR:
+        return getAfterPathExpr();
     }
     return super.eGet(featureID, resolve, coreType);
   }
@@ -220,6 +283,9 @@ public class MappingImpl extends MinimalEObjectImpl.Container implements Mapping
         return;
       case CupidLanguagePackage.MAPPING__MAPPING:
         setMapping((ImplicitContextMapping)newValue);
+        return;
+      case CupidLanguagePackage.MAPPING__AFTER_PATH_EXPR:
+        setAfterPathExpr((PathExpr)newValue);
         return;
     }
     super.eSet(featureID, newValue);
@@ -241,6 +307,9 @@ public class MappingImpl extends MinimalEObjectImpl.Container implements Mapping
       case CupidLanguagePackage.MAPPING__MAPPING:
         setMapping((ImplicitContextMapping)null);
         return;
+      case CupidLanguagePackage.MAPPING__AFTER_PATH_EXPR:
+        setAfterPathExpr((PathExpr)null);
+        return;
     }
     super.eUnset(featureID);
   }
@@ -259,6 +328,8 @@ public class MappingImpl extends MinimalEObjectImpl.Container implements Mapping
         return context != null;
       case CupidLanguagePackage.MAPPING__MAPPING:
         return mapping != null;
+      case CupidLanguagePackage.MAPPING__AFTER_PATH_EXPR:
+        return afterPathExpr != null;
     }
     return super.eIsSet(featureID);
   }

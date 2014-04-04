@@ -1,0 +1,10 @@
+language Simple 'http://www.earthsystemcurator.org/cupid/test/Simple' 
+{
+		top concept TopConcept 
+		{			
+			attrib name	{ @name }
+			
+			modules* <module>
+			
+		}
+}

@@ -13,6 +13,7 @@ import org.earthsystemcurator.cupidLanguage.CupidLanguagePackage;
 import org.earthsystemcurator.cupidLanguage.DeclaredEntity;
 import org.earthsystemcurator.cupidLanguage.Expr;
 import org.earthsystemcurator.cupidLanguage.FormalParam;
+import org.earthsystemcurator.cupidLanguage.FunctionAssignment;
 import org.earthsystemcurator.cupidLanguage.Intent;
 import org.earthsystemcurator.cupidLanguage.Language;
 import org.earthsystemcurator.cupidLanguage.LocalExpression;
@@ -116,6 +117,13 @@ public class CupidLanguageSemanticSequencer extends AbstractDelegatingSemanticSe
 			case CupidLanguagePackage.FORMAL_PARAM:
 				if(context == grammarAccess.getFormalParamRule()) {
 					sequence_FormalParam(context, (FormalParam) semanticObject); 
+					return; 
+				}
+				else break;
+			case CupidLanguagePackage.FUNCTION_ASSIGNMENT:
+				if(context == grammarAccess.getFunctionAssignmentRule() ||
+				   context == grammarAccess.getImplicitContextMappingRule()) {
+					sequence_FunctionAssignment(context, (FunctionAssignment) semanticObject); 
 					return; 
 				}
 				else break;
@@ -282,7 +290,7 @@ public class CupidLanguageSemanticSequencer extends AbstractDelegatingSemanticSe
 	 *         attrib?='attrib' 
 	 *         name=ID 
 	 *         cardinality=Cardinality? 
-	 *         essential?='!'? 
+	 *         (essential?='!'? | mustBeNull?='!!') 
 	 *         attribMapping=Mapping? 
 	 *         annotation+=Annotation*
 	 *     )
@@ -295,12 +303,17 @@ public class CupidLanguageSemanticSequencer extends AbstractDelegatingSemanticSe
 	/**
 	 * Constraint:
 	 *     (
-	 *         (name=ID cardinality=Cardinality? essential?='!'? (def=NamedConceptDef | def=AnonymousConceptDef | (reference?=':' ref=[ConceptDef|ID]))) | 
+	 *         (
+	 *             name=ID 
+	 *             cardinality=Cardinality? 
+	 *             (essential?='!'? | mustBeNull?='!!') 
+	 *             (def=NamedConceptDef | def=AnonymousConceptDef | (reference?=':' ref=[ConceptDef|ID]))
+	 *         ) | 
 	 *         (
 	 *             attrib?='attrib' 
 	 *             name=ID 
 	 *             cardinality=Cardinality? 
-	 *             essential?='!'? 
+	 *             (essential?='!'? | mustBeNull?='!!') 
 	 *             attribMapping=Mapping? 
 	 *             annotation+=Annotation*
 	 *         )
@@ -365,6 +378,15 @@ public class CupidLanguageSemanticSequencer extends AbstractDelegatingSemanticSe
 	
 	/**
 	 * Constraint:
+	 *     (lhs=Expr functionName=Expr (params+=ActualParam params+=ActualParam*)?)
+	 */
+	protected void sequence_FunctionAssignment(EObject context, FunctionAssignment semanticObject) {
+		genericSequencer.createSequence(context, semanticObject);
+	}
+	
+	
+	/**
+	 * Constraint:
 	 *     {DeclaredEntity}
 	 */
 	protected void sequence_ImplicitContextMapping(EObject context, DeclaredEntity semanticObject) {
@@ -401,7 +423,7 @@ public class CupidLanguageSemanticSequencer extends AbstractDelegatingSemanticSe
 	
 	/**
 	 * Constraint:
-	 *     (context=PathExpr? mapping=ImplicitContextMapping)
+	 *     (context=PathExpr? mapping=ImplicitContextMapping afterPathExpr=PathExpr?)
 	 */
 	protected void sequence_Mapping(EObject context, Mapping semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
@@ -465,7 +487,12 @@ public class CupidLanguageSemanticSequencer extends AbstractDelegatingSemanticSe
 	
 	/**
 	 * Constraint:
-	 *     (name=ID cardinality=Cardinality? essential?='!'? (def=NamedConceptDef | def=AnonymousConceptDef | (reference?=':' ref=[ConceptDef|ID])))
+	 *     (
+	 *         name=ID 
+	 *         cardinality=Cardinality? 
+	 *         (essential?='!'? | mustBeNull?='!!') 
+	 *         (def=NamedConceptDef | def=AnonymousConceptDef | (reference?=':' ref=[ConceptDef|ID]))
+	 *     )
 	 */
 	protected void sequence_Subconcept(EObject context, SubconceptOrAttribute semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);

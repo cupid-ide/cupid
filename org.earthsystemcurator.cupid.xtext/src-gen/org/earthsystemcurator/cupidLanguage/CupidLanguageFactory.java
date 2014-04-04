@@ -203,6 +203,15 @@ public interface CupidLanguageFactory extends EFactory
   VariableDeclaration createVariableDeclaration();
 
   /**
+   * Returns a new object of class '<em>Function Assignment</em>'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return a new object of class '<em>Function Assignment</em>'.
+   * @generated
+   */
+  FunctionAssignment createFunctionAssignment();
+
+  /**
    * Returns a new object of class '<em>Local Expression</em>'.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->

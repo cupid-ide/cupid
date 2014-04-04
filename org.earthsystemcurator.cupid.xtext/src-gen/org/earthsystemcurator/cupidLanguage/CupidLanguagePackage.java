@@ -250,13 +250,22 @@ public interface CupidLanguagePackage extends EPackage
   int SUBCONCEPT_OR_ATTRIBUTE__ESSENTIAL = 2;
 
   /**
+   * The feature id for the '<em><b>Must Be Null</b></em>' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int SUBCONCEPT_OR_ATTRIBUTE__MUST_BE_NULL = 3;
+
+  /**
    * The feature id for the '<em><b>Def</b></em>' containment reference.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @generated
    * @ordered
    */
-  int SUBCONCEPT_OR_ATTRIBUTE__DEF = 3;
+  int SUBCONCEPT_OR_ATTRIBUTE__DEF = 4;
 
   /**
    * The feature id for the '<em><b>Reference</b></em>' attribute.
@@ -265,7 +274,7 @@ public interface CupidLanguagePackage extends EPackage
    * @generated
    * @ordered
    */
-  int SUBCONCEPT_OR_ATTRIBUTE__REFERENCE = 4;
+  int SUBCONCEPT_OR_ATTRIBUTE__REFERENCE = 5;
 
   /**
    * The feature id for the '<em><b>Ref</b></em>' reference.
@@ -274,7 +283,7 @@ public interface CupidLanguagePackage extends EPackage
    * @generated
    * @ordered
    */
-  int SUBCONCEPT_OR_ATTRIBUTE__REF = 5;
+  int SUBCONCEPT_OR_ATTRIBUTE__REF = 6;
 
   /**
    * The feature id for the '<em><b>Attrib</b></em>' attribute.
@@ -283,7 +292,7 @@ public interface CupidLanguagePackage extends EPackage
    * @generated
    * @ordered
    */
-  int SUBCONCEPT_OR_ATTRIBUTE__ATTRIB = 6;
+  int SUBCONCEPT_OR_ATTRIBUTE__ATTRIB = 7;
 
   /**
    * The feature id for the '<em><b>Attrib Mapping</b></em>' containment reference.
@@ -292,7 +301,7 @@ public interface CupidLanguagePackage extends EPackage
    * @generated
    * @ordered
    */
-  int SUBCONCEPT_OR_ATTRIBUTE__ATTRIB_MAPPING = 7;
+  int SUBCONCEPT_OR_ATTRIBUTE__ATTRIB_MAPPING = 8;
 
   /**
    * The feature id for the '<em><b>Annotation</b></em>' containment reference list.
@@ -301,7 +310,7 @@ public interface CupidLanguagePackage extends EPackage
    * @generated
    * @ordered
    */
-  int SUBCONCEPT_OR_ATTRIBUTE__ANNOTATION = 8;
+  int SUBCONCEPT_OR_ATTRIBUTE__ANNOTATION = 9;
 
   /**
    * The number of structural features of the '<em>Subconcept Or Attribute</em>' class.
@@ -310,7 +319,7 @@ public interface CupidLanguagePackage extends EPackage
    * @generated
    * @ordered
    */
-  int SUBCONCEPT_OR_ATTRIBUTE_FEATURE_COUNT = 9;
+  int SUBCONCEPT_OR_ATTRIBUTE_FEATURE_COUNT = 10;
 
   /**
    * The meta object id for the '{@link org.earthsystemcurator.cupidLanguage.impl.CardinalityImpl <em>Cardinality</em>}' class.
@@ -378,13 +387,22 @@ public interface CupidLanguagePackage extends EPackage
   int MAPPING__MAPPING = 1;
 
   /**
+   * The feature id for the '<em><b>After Path Expr</b></em>' containment reference.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int MAPPING__AFTER_PATH_EXPR = 2;
+
+  /**
    * The number of structural features of the '<em>Mapping</em>' class.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @generated
    * @ordered
    */
-  int MAPPING_FEATURE_COUNT = 2;
+  int MAPPING_FEATURE_COUNT = 3;
 
   /**
    * The meta object id for the '{@link org.earthsystemcurator.cupidLanguage.impl.ImplicitContextMappingImpl <em>Implicit Context Mapping</em>}' class.
@@ -887,6 +905,52 @@ public interface CupidLanguagePackage extends EPackage
   int VARIABLE_DECLARATION_FEATURE_COUNT = IMPLICIT_CONTEXT_MAPPING_FEATURE_COUNT + 1;
 
   /**
+   * The meta object id for the '{@link org.earthsystemcurator.cupidLanguage.impl.FunctionAssignmentImpl <em>Function Assignment</em>}' class.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @see org.earthsystemcurator.cupidLanguage.impl.FunctionAssignmentImpl
+   * @see org.earthsystemcurator.cupidLanguage.impl.CupidLanguagePackageImpl#getFunctionAssignment()
+   * @generated
+   */
+  int FUNCTION_ASSIGNMENT = 20;
+
+  /**
+   * The feature id for the '<em><b>Lhs</b></em>' containment reference.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int FUNCTION_ASSIGNMENT__LHS = IMPLICIT_CONTEXT_MAPPING_FEATURE_COUNT + 0;
+
+  /**
+   * The feature id for the '<em><b>Function Name</b></em>' containment reference.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int FUNCTION_ASSIGNMENT__FUNCTION_NAME = IMPLICIT_CONTEXT_MAPPING_FEATURE_COUNT + 1;
+
+  /**
+   * The feature id for the '<em><b>Params</b></em>' containment reference list.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int FUNCTION_ASSIGNMENT__PARAMS = IMPLICIT_CONTEXT_MAPPING_FEATURE_COUNT + 2;
+
+  /**
+   * The number of structural features of the '<em>Function Assignment</em>' class.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int FUNCTION_ASSIGNMENT_FEATURE_COUNT = IMPLICIT_CONTEXT_MAPPING_FEATURE_COUNT + 3;
+
+  /**
    * The meta object id for the '{@link org.earthsystemcurator.cupidLanguage.impl.LocalExpressionImpl <em>Local Expression</em>}' class.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
@@ -894,7 +958,7 @@ public interface CupidLanguagePackage extends EPackage
    * @see org.earthsystemcurator.cupidLanguage.impl.CupidLanguagePackageImpl#getLocalExpression()
    * @generated
    */
-  int LOCAL_EXPRESSION = 20;
+  int LOCAL_EXPRESSION = 21;
 
   /**
    * The feature id for the '<em><b>Id</b></em>' attribute.
@@ -931,7 +995,7 @@ public interface CupidLanguagePackage extends EPackage
    * @see org.earthsystemcurator.cupidLanguage.impl.CupidLanguagePackageImpl#getExpr()
    * @generated
    */
-  int EXPR = 21;
+  int EXPR = 22;
 
   /**
    * The feature id for the '<em><b>Wildcard</b></em>' attribute.
@@ -977,7 +1041,7 @@ public interface CupidLanguagePackage extends EPackage
    * @see org.earthsystemcurator.cupidLanguage.impl.CupidLanguagePackageImpl#getPathExpr()
    * @generated
    */
-  int PATH_EXPR = 22;
+  int PATH_EXPR = 23;
 
   /**
    * The feature id for the '<em><b>Head</b></em>' containment reference.
@@ -1014,7 +1078,7 @@ public interface CupidLanguagePackage extends EPackage
    * @see org.earthsystemcurator.cupidLanguage.impl.CupidLanguagePackageImpl#getAxis()
    * @generated
    */
-  int AXIS = 23;
+  int AXIS = 24;
 
   /**
    * The feature id for the '<em><b>Ancestor</b></em>' attribute.
@@ -1042,7 +1106,7 @@ public interface CupidLanguagePackage extends EPackage
    * @see org.earthsystemcurator.cupidLanguage.impl.CupidLanguagePackageImpl#getDeclaredEntity()
    * @generated
    */
-  int DECLARED_ENTITY = 24;
+  int DECLARED_ENTITY = 25;
 
   /**
    * The number of structural features of the '<em>Declared Entity</em>' class.
@@ -1061,7 +1125,7 @@ public interface CupidLanguagePackage extends EPackage
    * @see org.earthsystemcurator.cupidLanguage.impl.CupidLanguagePackageImpl#getPathExprTerm()
    * @generated
    */
-  int PATH_EXPR_TERM = 25;
+  int PATH_EXPR_TERM = 26;
 
   /**
    * The feature id for the '<em><b>Head</b></em>' containment reference.
@@ -1304,6 +1368,17 @@ public interface CupidLanguagePackage extends EPackage
   EAttribute getSubconceptOrAttribute_Essential();
 
   /**
+   * Returns the meta object for the attribute '{@link org.earthsystemcurator.cupidLanguage.SubconceptOrAttribute#isMustBeNull <em>Must Be Null</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for the attribute '<em>Must Be Null</em>'.
+   * @see org.earthsystemcurator.cupidLanguage.SubconceptOrAttribute#isMustBeNull()
+   * @see #getSubconceptOrAttribute()
+   * @generated
+   */
+  EAttribute getSubconceptOrAttribute_MustBeNull();
+
+  /**
    * Returns the meta object for the containment reference '{@link org.earthsystemcurator.cupidLanguage.SubconceptOrAttribute#getDef <em>Def</em>}'.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
@@ -1432,6 +1507,17 @@ public interface CupidLanguagePackage extends EPackage
    * @generated
    */
   EReference getMapping_Mapping();
+
+  /**
+   * Returns the meta object for the containment reference '{@link org.earthsystemcurator.cupidLanguage.Mapping#getAfterPathExpr <em>After Path Expr</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for the containment reference '<em>After Path Expr</em>'.
+   * @see org.earthsystemcurator.cupidLanguage.Mapping#getAfterPathExpr()
+   * @see #getMapping()
+   * @generated
+   */
+  EReference getMapping_AfterPathExpr();
 
   /**
    * Returns the meta object for class '{@link org.earthsystemcurator.cupidLanguage.ImplicitContextMapping <em>Implicit Context Mapping</em>}'.
@@ -1860,6 +1946,49 @@ public interface CupidLanguagePackage extends EPackage
   EReference getVariableDeclaration_Type();
 
   /**
+   * Returns the meta object for class '{@link org.earthsystemcurator.cupidLanguage.FunctionAssignment <em>Function Assignment</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for class '<em>Function Assignment</em>'.
+   * @see org.earthsystemcurator.cupidLanguage.FunctionAssignment
+   * @generated
+   */
+  EClass getFunctionAssignment();
+
+  /**
+   * Returns the meta object for the containment reference '{@link org.earthsystemcurator.cupidLanguage.FunctionAssignment#getLhs <em>Lhs</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for the containment reference '<em>Lhs</em>'.
+   * @see org.earthsystemcurator.cupidLanguage.FunctionAssignment#getLhs()
+   * @see #getFunctionAssignment()
+   * @generated
+   */
+  EReference getFunctionAssignment_Lhs();
+
+  /**
+   * Returns the meta object for the containment reference '{@link org.earthsystemcurator.cupidLanguage.FunctionAssignment#getFunctionName <em>Function Name</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for the containment reference '<em>Function Name</em>'.
+   * @see org.earthsystemcurator.cupidLanguage.FunctionAssignment#getFunctionName()
+   * @see #getFunctionAssignment()
+   * @generated
+   */
+  EReference getFunctionAssignment_FunctionName();
+
+  /**
+   * Returns the meta object for the containment reference list '{@link org.earthsystemcurator.cupidLanguage.FunctionAssignment#getParams <em>Params</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for the containment reference list '<em>Params</em>'.
+   * @see org.earthsystemcurator.cupidLanguage.FunctionAssignment#getParams()
+   * @see #getFunctionAssignment()
+   * @generated
+   */
+  EReference getFunctionAssignment_Params();
+
+  /**
    * Returns the meta object for class '{@link org.earthsystemcurator.cupidLanguage.LocalExpression <em>Local Expression</em>}'.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
@@ -2205,6 +2334,14 @@ public interface CupidLanguagePackage extends EPackage
     EAttribute SUBCONCEPT_OR_ATTRIBUTE__ESSENTIAL = eINSTANCE.getSubconceptOrAttribute_Essential();
 
     /**
+     * The meta object literal for the '<em><b>Must Be Null</b></em>' attribute feature.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    EAttribute SUBCONCEPT_OR_ATTRIBUTE__MUST_BE_NULL = eINSTANCE.getSubconceptOrAttribute_MustBeNull();
+
+    /**
      * The meta object literal for the '<em><b>Def</b></em>' containment reference feature.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
@@ -2303,6 +2440,14 @@ public interface CupidLanguagePackage extends EPackage
      * @generated
      */
     EReference MAPPING__MAPPING = eINSTANCE.getMapping_Mapping();
+
+    /**
+     * The meta object literal for the '<em><b>After Path Expr</b></em>' containment reference feature.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    EReference MAPPING__AFTER_PATH_EXPR = eINSTANCE.getMapping_AfterPathExpr();
 
     /**
      * The meta object literal for the '{@link org.earthsystemcurator.cupidLanguage.impl.ImplicitContextMappingImpl <em>Implicit Context Mapping</em>}' class.
@@ -2651,6 +2796,40 @@ public interface CupidLanguagePackage extends EPackage
      * @generated
      */
     EReference VARIABLE_DECLARATION__TYPE = eINSTANCE.getVariableDeclaration_Type();
+
+    /**
+     * The meta object literal for the '{@link org.earthsystemcurator.cupidLanguage.impl.FunctionAssignmentImpl <em>Function Assignment</em>}' class.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @see org.earthsystemcurator.cupidLanguage.impl.FunctionAssignmentImpl
+     * @see org.earthsystemcurator.cupidLanguage.impl.CupidLanguagePackageImpl#getFunctionAssignment()
+     * @generated
+     */
+    EClass FUNCTION_ASSIGNMENT = eINSTANCE.getFunctionAssignment();
+
+    /**
+     * The meta object literal for the '<em><b>Lhs</b></em>' containment reference feature.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    EReference FUNCTION_ASSIGNMENT__LHS = eINSTANCE.getFunctionAssignment_Lhs();
+
+    /**
+     * The meta object literal for the '<em><b>Function Name</b></em>' containment reference feature.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    EReference FUNCTION_ASSIGNMENT__FUNCTION_NAME = eINSTANCE.getFunctionAssignment_FunctionName();
+
+    /**
+     * The meta object literal for the '<em><b>Params</b></em>' containment reference list feature.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    EReference FUNCTION_ASSIGNMENT__PARAMS = eINSTANCE.getFunctionAssignment_Params();
 
     /**
      * The meta object literal for the '{@link org.earthsystemcurator.cupidLanguage.impl.LocalExpressionImpl <em>Local Expression</em>}' class.

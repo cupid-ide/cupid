@@ -175,6 +175,11 @@ public class CupidLanguageAdapterFactory extends AdapterFactoryImpl
         return createVariableDeclarationAdapter();
       }
       @Override
+      public Adapter caseFunctionAssignment(FunctionAssignment object)
+      {
+        return createFunctionAssignmentAdapter();
+      }
+      @Override
       public Adapter caseLocalExpression(LocalExpression object)
       {
         return createLocalExpressionAdapter();
@@ -522,6 +527,21 @@ public class CupidLanguageAdapterFactory extends AdapterFactoryImpl
    * @generated
    */
   public Adapter createVariableDeclarationAdapter()
+  {
+    return null;
+  }
+
+  /**
+   * Creates a new adapter for an object of class '{@link org.earthsystemcurator.cupidLanguage.FunctionAssignment <em>Function Assignment</em>}'.
+   * <!-- begin-user-doc -->
+   * This default implementation returns null so that we can easily ignore cases;
+   * it's useful to ignore a case when inheritance will catch all the cases anyway.
+   * <!-- end-user-doc -->
+   * @return the new adapter.
+   * @see org.earthsystemcurator.cupidLanguage.FunctionAssignment
+   * @generated
+   */
+  public Adapter createFunctionAssignmentAdapter()
   {
     return null;
   }
