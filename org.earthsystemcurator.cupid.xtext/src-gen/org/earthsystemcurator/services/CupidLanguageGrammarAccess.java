@@ -573,10 +573,12 @@ public class CupidLanguageGrammarAccess extends AbstractGrammarElementFinder {
 	public class CardinalityElements extends AbstractParserRuleElementFinder {
 		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "Cardinality");
 		private final Alternatives cAlternatives = (Alternatives)rule.eContents().get(1);
-		private final Assignment cZeroOrMoreAssignment_0 = (Assignment)cAlternatives.eContents().get(0);
-		private final Keyword cZeroOrMoreAsteriskKeyword_0_0 = (Keyword)cZeroOrMoreAssignment_0.eContents().get(0);
-		private final Assignment cOneOrMoreAssignment_1 = (Assignment)cAlternatives.eContents().get(1);
-		private final Keyword cOneOrMorePlusSignKeyword_1_0 = (Keyword)cOneOrMoreAssignment_1.eContents().get(0);
+		private final Assignment cZeroOrOneAssignment_0 = (Assignment)cAlternatives.eContents().get(0);
+		private final Keyword cZeroOrOneQuestionMarkKeyword_0_0 = (Keyword)cZeroOrOneAssignment_0.eContents().get(0);
+		private final Assignment cZeroOrMoreAssignment_1 = (Assignment)cAlternatives.eContents().get(1);
+		private final Keyword cZeroOrMoreAsteriskKeyword_1_0 = (Keyword)cZeroOrMoreAssignment_1.eContents().get(0);
+		private final Assignment cOneOrMoreAssignment_2 = (Assignment)cAlternatives.eContents().get(2);
+		private final Keyword cOneOrMorePlusSignKeyword_2_0 = (Keyword)cOneOrMoreAssignment_2.eContents().get(0);
 		
 		////AnonymousConcept:
 		////	localName=ID cardinality=Cardinality? required?='!'? ('<' mapping=Mapping '>')? 
@@ -590,23 +592,29 @@ public class CupidLanguageGrammarAccess extends AbstractGrammarElementFinder {
 		////ConceptRef:
 		////	localName=ID cardinality=Cardinality? required?='!'? ':' name=[ConceptDef];
 		//Cardinality:
-		//	zeroOrMore?="*" | oneOrMore?="+";
+		//	zeroOrOne?="?" | zeroOrMore?="*" | oneOrMore?="+";
 		public ParserRule getRule() { return rule; }
 
-		//zeroOrMore?="*" | oneOrMore?="+"
+		//zeroOrOne?="?" | zeroOrMore?="*" | oneOrMore?="+"
 		public Alternatives getAlternatives() { return cAlternatives; }
 
+		//zeroOrOne?="?"
+		public Assignment getZeroOrOneAssignment_0() { return cZeroOrOneAssignment_0; }
+
+		//"?"
+		public Keyword getZeroOrOneQuestionMarkKeyword_0_0() { return cZeroOrOneQuestionMarkKeyword_0_0; }
+
 		//zeroOrMore?="*"
-		public Assignment getZeroOrMoreAssignment_0() { return cZeroOrMoreAssignment_0; }
+		public Assignment getZeroOrMoreAssignment_1() { return cZeroOrMoreAssignment_1; }
 
 		//"*"
-		public Keyword getZeroOrMoreAsteriskKeyword_0_0() { return cZeroOrMoreAsteriskKeyword_0_0; }
+		public Keyword getZeroOrMoreAsteriskKeyword_1_0() { return cZeroOrMoreAsteriskKeyword_1_0; }
 
 		//oneOrMore?="+"
-		public Assignment getOneOrMoreAssignment_1() { return cOneOrMoreAssignment_1; }
+		public Assignment getOneOrMoreAssignment_2() { return cOneOrMoreAssignment_2; }
 
 		//"+"
-		public Keyword getOneOrMorePlusSignKeyword_1_0() { return cOneOrMorePlusSignKeyword_1_0; }
+		public Keyword getOneOrMorePlusSignKeyword_2_0() { return cOneOrMorePlusSignKeyword_2_0; }
 	}
 
 	public class MappingElements extends AbstractParserRuleElementFinder {
@@ -1831,7 +1839,7 @@ public class CupidLanguageGrammarAccess extends AbstractGrammarElementFinder {
 	////ConceptRef:
 	////	localName=ID cardinality=Cardinality? required?='!'? ':' name=[ConceptDef];
 	//Cardinality:
-	//	zeroOrMore?="*" | oneOrMore?="+";
+	//	zeroOrOne?="?" | zeroOrMore?="*" | oneOrMore?="+";
 	public CardinalityElements getCardinalityAccess() {
 		return (pCardinality != null) ? pCardinality : (pCardinality = new CardinalityElements());
 	}

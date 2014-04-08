@@ -332,13 +332,22 @@ public interface CupidLanguagePackage extends EPackage
   int CARDINALITY = 4;
 
   /**
+   * The feature id for the '<em><b>Zero Or One</b></em>' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int CARDINALITY__ZERO_OR_ONE = 0;
+
+  /**
    * The feature id for the '<em><b>Zero Or More</b></em>' attribute.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @generated
    * @ordered
    */
-  int CARDINALITY__ZERO_OR_MORE = 0;
+  int CARDINALITY__ZERO_OR_MORE = 1;
 
   /**
    * The feature id for the '<em><b>One Or More</b></em>' attribute.
@@ -347,7 +356,7 @@ public interface CupidLanguagePackage extends EPackage
    * @generated
    * @ordered
    */
-  int CARDINALITY__ONE_OR_MORE = 1;
+  int CARDINALITY__ONE_OR_MORE = 2;
 
   /**
    * The number of structural features of the '<em>Cardinality</em>' class.
@@ -356,7 +365,7 @@ public interface CupidLanguagePackage extends EPackage
    * @generated
    * @ordered
    */
-  int CARDINALITY_FEATURE_COUNT = 2;
+  int CARDINALITY_FEATURE_COUNT = 3;
 
   /**
    * The meta object id for the '{@link org.earthsystemcurator.cupidLanguage.impl.MappingImpl <em>Mapping</em>}' class.
@@ -1464,6 +1473,17 @@ public interface CupidLanguagePackage extends EPackage
   EClass getCardinality();
 
   /**
+   * Returns the meta object for the attribute '{@link org.earthsystemcurator.cupidLanguage.Cardinality#isZeroOrOne <em>Zero Or One</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for the attribute '<em>Zero Or One</em>'.
+   * @see org.earthsystemcurator.cupidLanguage.Cardinality#isZeroOrOne()
+   * @see #getCardinality()
+   * @generated
+   */
+  EAttribute getCardinality_ZeroOrOne();
+
+  /**
    * Returns the meta object for the attribute '{@link org.earthsystemcurator.cupidLanguage.Cardinality#isZeroOrMore <em>Zero Or More</em>}'.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
@@ -2418,6 +2438,14 @@ public interface CupidLanguagePackage extends EPackage
      * @generated
      */
     EClass CARDINALITY = eINSTANCE.getCardinality();
+
+    /**
+     * The meta object literal for the '<em><b>Zero Or One</b></em>' attribute feature.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    EAttribute CARDINALITY__ZERO_OR_ONE = eINSTANCE.getCardinality_ZeroOrOne();
 
     /**
      * The meta object literal for the '<em><b>Zero Or More</b></em>' attribute feature.

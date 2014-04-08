@@ -69,6 +69,10 @@ public class FSM<RootType extends EObject> {
 		//this.factory = this.pack.getEFactoryInstance();
 		
 		this.pack = EPackage.Registry.INSTANCE.getEPackage(language.getUri()); 
+		if (this.pack == null) {
+			throw new RuntimeException("No EPackage registered for language with URI: " + language.getUri());
+		}
+		
 		this.factory = pack.getEFactoryInstance();
 		
 		//this.mappings = new IdentityHashMap<Object, Object>();
@@ -167,6 +171,9 @@ public class FSM<RootType extends EObject> {
 		if (soa.isAttrib()) {
 			throw new RuntimeException("forwardAdd should only be called with non-attribute subconcepts");
 		}
+		if (soa.isMustBeNull()) {
+			throw new RuntimeException("forwardAdd should not be called with a subconcept that must be null");
+		}
 		
 		//create new element and add to the model
 		EClass type = getEClass(soa);
@@ -184,9 +191,10 @@ public class FSM<RootType extends EObject> {
 		
 			mapping.setMapping((ImplicitContextMapping) replacePathExprWithValues(mapping.getMapping(), newElem, false));
 			Object explicitContextFortranElement = null;
+			EObject contextElement = null;
+			
 			if (mapping.getContext() != null) {
 				//explicit context
-				EObject contextElement = null;
 				try {
 					contextElement = getValueFromModel(mapping.getContext(), newElem, true);
 				} catch (PathExprNotFoundException e) {
@@ -196,6 +204,7 @@ public class FSM<RootType extends EObject> {
 				explicitContextFortranElement = getMapsTo(contextElement); 						
 			}
 			else {
+				contextElement = context;
 				explicitContextFortranElement = getMapsTo(context);
 			}
 			
@@ -203,7 +212,7 @@ public class FSM<RootType extends EObject> {
 				throw new RuntimeException("Could not find context Fortran element");
 			}
 			
-			Object newFortranElem = executeMappingTransformation(mapping.getMapping(), explicitContextFortranElement);	
+			Object newFortranElem = executeMappingTransformation(contextElement, mapping.getMapping(), explicitContextFortranElement, getDefinition(soa).getAnnotation());	
 				
 			if (newFortranElem == null) {
 				throw new RuntimeException("AST element returned from transformation is NULL");
@@ -226,7 +235,7 @@ public class FSM<RootType extends EObject> {
 				if (soaChild.isAttrib()) {
 					forwardAddAttribute(newElem, soaChild);				
 				}
-				else {
+				else if (!soaChild.isMustBeNull()){
 					forwardAdd(newElem, soaChild, recursive);		
 				}
 			}
@@ -373,9 +382,11 @@ public class FSM<RootType extends EObject> {
 		if (mapping != null) {
 			mapping.setMapping((ImplicitContextMapping) replacePathExprWithValues(mapping.getMapping(), context, true));
 			Object explicitContextFortranElement = null;
+			EObject contextElement = null;
+			
 			if (mapping.getContext() != null) {
 				//explicit context
-				EObject contextElement = null;
+				
 				try {
 					contextElement = getValueFromModel(mapping.getContext(), context, true);
 				} catch (PathExprNotFoundException e) {
@@ -385,6 +396,7 @@ public class FSM<RootType extends EObject> {
 				explicitContextFortranElement = getMapsTo(contextElement); 						
 			}
 			else {
+				contextElement = context;
 				explicitContextFortranElement = getMapsTo(context);
 			}
 			
@@ -396,8 +408,17 @@ public class FSM<RootType extends EObject> {
 		
 			//get current value, which may have been set by a default
 			String curValue = (String) getValue(context, soa);
-				
-			Object newFortranElem = executeMappingTransformation(mapping.getMapping(), explicitContextFortranElement, curValue);	
+			
+			List<Annotation> anots = null;
+			if (getDefinition(soa)!=null) {
+				anots = getDefinition(soa).getAnnotation();
+			}
+			//try {
+			Object newFortranElem = executeMappingTransformation(contextElement, mapping.getMapping(), explicitContextFortranElement, anots, curValue);	
+			//}
+			//catch (NullPointerException npe) {
+			//	System.out.println("blag");	
+			//}
 			
 			//if (newFortranElem == null) {
 			//	throw new RuntimeException("Transformation of attribute returned NULL AST element");
@@ -988,7 +1009,6 @@ public class FSM<RootType extends EObject> {
 	
 	
 	private Method findQueryMethod(String methodName, Object context, EObject mapping) {
-		//Class<?> queryClass = Class.forName("org.earthsystemcurator.cupid.nuopc.fsml.util.CodeQuery2");
 		for (Method m : queryClass.getMethods()) {
 			if (m.getName().equalsIgnoreCase(methodName) && m.getParameterTypes().length >= 2) {
 				Class<?> contextClass = m.getParameterTypes()[0];
@@ -1001,6 +1021,18 @@ public class FSM<RootType extends EObject> {
 		}
 		return null;
 	}
+	
+	
+	/*
+	private Method findQueryMethod(String methodName, Object context, EObject mapping) {
+		for (Method m : queryClass.getMethods()) {
+			if (m.getName().equalsIgnoreCase(methodName)) {
+				return m;
+			}
+		}
+		return null;
+	}
+	*/
 	
 	protected Object executeMappingQuery(ImplicitContextMapping query, Object fortranContextElement) {		
 		String queryMethodName = query.eClass().getName();
@@ -1020,20 +1052,27 @@ public class FSM<RootType extends EObject> {
 		return null;
 	}
 	
-	protected Object executeMappingTransformation(ImplicitContextMapping mapping, Object fortranContextElement) {
-		return executeMappingTransformation(mapping, fortranContextElement, null);
+	protected Object executeMappingTransformation(EObject context, ImplicitContextMapping mapping, Object fortranContextElement, List<Annotation> anots) {
+		return executeMappingTransformation(context, mapping, fortranContextElement, anots, null);
 	}	
 		
-	protected Object executeMappingTransformation(ImplicitContextMapping mapping, Object fortranContextElement, String value) {
+	protected Object executeMappingTransformation(EObject context, ImplicitContextMapping mapping, Object fortranContextElement, List<Annotation> anots, String value) {
 		String queryMethodName = mapping.eClass().getName();
 		if (fortranContextElement != null) {
 			Method method = findTransformationMethod(queryMethodName, fortranContextElement, mapping);
 			if (method == null) {
+				//return null;
 				throw new RuntimeException("Transformation method not found: " + queryMethodName + " : " + fortranContextElement.getClass().getName() + ", " + mapping.getClass().getName() );
 			}
 			try {
-				if (method.getParameterTypes().length==3) {
-					return method.invoke(null, fortranContextElement, mapping, value);
+				if (method.getParameterTypes().length==5) {
+					return method.invoke(null, fortranContextElement, mapping, value, anots, context);
+				}
+				if (method.getParameterTypes().length==4) {
+					return method.invoke(null, fortranContextElement, mapping, value, anots);
+				}
+				else if (method.getParameterTypes().length==3) {
+					return method.invoke(null, fortranContextElement, mapping, anots);
 				}
 				else {
 					return method.invoke(null, fortranContextElement, mapping);

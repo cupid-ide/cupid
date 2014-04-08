@@ -351,7 +351,7 @@ public class CupidLanguageSemanticSequencer extends AbstractDelegatingSemanticSe
 	
 	/**
 	 * Constraint:
-	 *     (zeroOrMore?='*' | oneOrMore?='+')
+	 *     (zeroOrOne?='?' | zeroOrMore?='*' | oneOrMore?='+')
 	 */
 	protected void sequence_Cardinality(EObject context, Cardinality semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);

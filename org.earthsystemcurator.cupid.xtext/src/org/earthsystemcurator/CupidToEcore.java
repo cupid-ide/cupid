@@ -10,6 +10,7 @@ import org.eclipse.core.runtime.IPath;
 import org.eclipse.core.runtime.NullProgressMonitor;
 import org.eclipse.core.runtime.Path;
 import org.eclipse.emf.common.util.URI;
+import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.ecore.resource.ResourceSet;
 import org.eclipse.ocl.examples.pivot.OCL;
@@ -58,7 +59,7 @@ public class CupidToEcore {
 		}
 	}
 	
-	public static void generateEcoreModel(URI inputURI) throws IOException {
+	public static void generateEcoreModel(URI inputURI, String packageURI) throws IOException {
 		
 		//get XMI representation
 		/*
@@ -114,6 +115,9 @@ public class CupidToEcore {
 		Resource ecoreResource = doLoadOCLinEcore(inputURI, ecoreURI);
 		ecoreResource.save(null);
 		
+		//register package for immediate use
+		EPackage ecorePackage = (EPackage) ecoreResource.getContents().get(0);
+		EPackage.Registry.INSTANCE.put(packageURI, ecorePackage); 		
 	
 	}
 	
@@ -145,7 +149,7 @@ public class CupidToEcore {
          }
          
 		 //MetaModelManagerResourceAdapter.getAdapter(xtextResource, metaModelManager);
-         xtextResource.load(null);
+        // xtextResource.load(null);
          Resource asResource = ocl.cs2pivot(xtextResource);
          Resource ecoreResource = ocl.pivot2ecore(asResource, ecoreURI);
          return ecoreResource;

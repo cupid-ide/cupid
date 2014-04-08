@@ -167,7 +167,6 @@ language NUOPC 'http://www.earthsystemcurator.org/nuopcgen' {
 		
 		genericImports! <usesModule(NUOPC_Model)>
 		{
-			@doc="usesModule doc usesModule doc usesModule doc usesModule doc usesModule doc usesModule doc"
 			@label = "Generic Imports"
 			attrib importsGenericSS! <usesEntity(routine_SetServices)> {@default = "model_routine_SetServices"}
 			--attrib importsLabelModelAdvance <usesEntity(label_Advance)>
@@ -178,14 +177,12 @@ language NUOPC 'http://www.earthsystemcurator.org/nuopcgen' {
 		implementsSetServices! <subroutine(*(inout type(ESMF_GridComp) #p_gcomp, out integer #p_rc) )> 
 		{
 			@label = "Set Services"
-			@doc = "implementsSetServices doc implementsSetServices doc implementsSetServices doc implementsSetServices doc implementsSetServices doc "
 			attrib n_SetServices <subroutineName> {@name @default="SetServices"}
 			attrib p_gcomp {@default="gcomp"}
 			attrib p_rc	{@default="rc"}	
 						
 			callsGenericSetServices! <call(#^genericImports/importsGenericSS(#^p_gcomp, #^p_rc))> 
 			{
-				@doc = "callsGenericSetServices doc is right here\nsecond line\nthird line\nlast line"
 				@label = "Calls generic SetServices"	
 			}
 			
@@ -318,7 +315,6 @@ language NUOPC 'http://www.earthsystemcurator.org/nuopcgen' {
 					-- local variable
 					fieldDeclaration <declaration(type(ESMF_Field))> {
 						@label = "Declare ESMF_Field"
-						@doc = "export field"
 						attrib fieldName <declaredEntity> {
 							@name 
 							@label="name" 
@@ -328,7 +324,6 @@ language NUOPC 'http://www.earthsystemcurator.org/nuopcgen' {
 					
 					gridDeclaration <declaration(type(ESMF_Grid))> {
 						@label = "Declare ESMF_Grid"
-						@doc = "export declaration"
 						attrib gridName <declaredEntity> {
 							@name
 							@label="name"
@@ -340,7 +335,6 @@ language NUOPC 'http://www.earthsystemcurator.org/nuopcgen' {
 					fieldAssignment <functionAssignment(#^fieldDeclaration/fieldName, ESMF_FieldCreate(name=#name, grid?=#^gridDeclaration/gridName, typekind?=#typekind, rc?=#^p_rc))>
 					{
 						@label = "Create field"
-						@doc = "field assignment export"
 						attrib name {@name @default="\"field_name\""}
 						attrib typekind {@default="ESMF_TYPEKIND_R8"}
 					}
@@ -398,7 +392,6 @@ language NUOPC 'http://www.earthsystemcurator.org/nuopcgen' {
 					
 					clock <declaration(type(ESMF_Clock))> 
 					{
-						@doc = "This is the doc object"
 						attrib name <declaredEntity> {@default="clock"}
 					}
 					
@@ -459,14 +452,26 @@ language NUOPC 'http://www.earthsystemcurator.org/nuopcgen' {
 		
 		modelRun
 		{
-			@label = "Model Run"
+			@label = "Run"
 			
-			modelAdvance* 
-			{	
-				
-				@label = "Model Advance Phase"
-				attrib userRoutine  {@name @default="ModelAdvance"}
-				attrib phase
+			runP1 {
+				@label = "phase 1"
+				@doc = "Provided by NUOPC. Assigns driverClock as alias to incoming clock. Checks compatibility of incoming clock. Checks compatibility of import Fields timestamps. Performs model timestep loop. Timestamps all export Fields."
+			}
+			
+			specSetRunClock? {
+				@label = "Set Run Clock (optional specialization)"
+				@doc = "Optional specialization to check and set the internal clock against the incoming clock."
+			}
+			
+			specCheckImport? {
+				@label = "Check Fields in import State (optional specialization)"
+				@doc = "Optional specialization to check Fields in import State."
+			}
+			
+			specModelAdvance {
+				@label = "Model Advance (required specialization)" 
+				@doc = "Required specialization. Advance the model one time step. May be multi-phase."
 				
 				--imports label
 				attrib importsLabelModelAdvance! <#^genericImports usesEntity(label_Advance)>
@@ -474,27 +479,62 @@ language NUOPC 'http://www.earthsystemcurator.org/nuopcgen' {
 					@default = "model_label_Advance"
 				}	
 				
-				modelAdvanceRegistered <#^implementsSetServices 
-					call(ESMF_MethodAdd(*, 
-										index?=#^phase, 
-										label=#^importsLabelModelAdvance, 
-										userRoutine=#^userRoutine, 
-										rc=#^implementsSetServices/p_rc))>
+				modelAdvancePhase+ <subroutine(#userRoutine(inout type(ESMF_GridComp) #p_gcomp, out integer #p_rc))> 
+				{	
+					@label = "Model Advance Phase"
+					@doc = "A single model advance phase"
+									
+					attrib userRoutine  {@name @default="ModelAdvance"}
+					attrib p_gcomp {@default="gcomp"}
+					attrib p_rc {@default="rc"}
+					attrib phase?
+									
+					modelAdvanceRegistered! <#^implementsSetServices 
+						call(ESMF_MethodAdd(*, 
+											index?=#^phase, 
+											label=#^importsLabelModelAdvance, 
+											userRoutine=#^userRoutine, 
+											rc=#^implementsSetServices/p_rc))>
+					{
+						@label = "Registered in Set Services"
+					}
+				
+				}
+			}
+			
+		}
+		
+		finalize? <subroutine(#n_finalize(
+						inout type(ESMF_GridComp) #p_gcomp, 
+						inout type(ESMF_State) #p_import, 
+						inout type(ESMF_State) #p_export, 
+						inout type(ESMF_Clock) #p_clock, 
+						out integer #p_rc))>
+		{
+			@label = "Finalize"
+			@doc = "NUOPC Provided.  Optionally overwrite the provided NOOP with model finalization code."
+			
+			attrib n_finalize {@default="Finalize"}
+			attrib p_gcomp {@default="gcomp"}
+			attrib p_import {@default="importState"}
+			attrib p_export {@default="exportState"}
+			attrib p_clock {@default="clock"}
+			attrib p_rc {@default="rc"}
+			attrib phase {@default="1"}
+			
+			registered! <#^implementsSetServices call(ESMF_GridCompSetEntryPoint(
+						#^implementsSetServices/p_gcomp, 
+						ESMF_METHOD_FINALIZE, 
+						userRoutine=#^n_finalize, 
+						phase?=#^phase, 
+						rc=#^implementsSetServices/p_rc))>
 				{
 					@label = "Registered in Set Services"
 				}
-													
-				implementsSubroutine <subroutine(#^userRoutine(inout type(ESMF_GridComp) #gcomp, out integer #rc))> 
-				{
-					@label = "Implementation"
-					attrib name <subroutineName> {@name}
-					attrib gcomp {@default="gcomp"}
-					attrib rc {@default="rc"}
-				}
 			
-			}
-				
 		}
+		
+		
 		
 				
 	}

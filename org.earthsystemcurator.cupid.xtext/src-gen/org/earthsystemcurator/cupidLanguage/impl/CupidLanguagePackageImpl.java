@@ -564,7 +564,7 @@ public class CupidLanguagePackageImpl extends EPackageImpl implements CupidLangu
    * <!-- end-user-doc -->
    * @generated
    */
-  public EAttribute getCardinality_ZeroOrMore()
+  public EAttribute getCardinality_ZeroOrOne()
   {
     return (EAttribute)cardinalityEClass.getEStructuralFeatures().get(0);
   }
@@ -574,9 +574,19 @@ public class CupidLanguagePackageImpl extends EPackageImpl implements CupidLangu
    * <!-- end-user-doc -->
    * @generated
    */
-  public EAttribute getCardinality_OneOrMore()
+  public EAttribute getCardinality_ZeroOrMore()
   {
     return (EAttribute)cardinalityEClass.getEStructuralFeatures().get(1);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EAttribute getCardinality_OneOrMore()
+  {
+    return (EAttribute)cardinalityEClass.getEStructuralFeatures().get(2);
   }
 
   /**
@@ -1289,6 +1299,7 @@ public class CupidLanguagePackageImpl extends EPackageImpl implements CupidLangu
     createEReference(subconceptOrAttributeEClass, SUBCONCEPT_OR_ATTRIBUTE__ANNOTATION);
 
     cardinalityEClass = createEClass(CARDINALITY);
+    createEAttribute(cardinalityEClass, CARDINALITY__ZERO_OR_ONE);
     createEAttribute(cardinalityEClass, CARDINALITY__ZERO_OR_MORE);
     createEAttribute(cardinalityEClass, CARDINALITY__ONE_OR_MORE);
 
@@ -1453,6 +1464,7 @@ public class CupidLanguagePackageImpl extends EPackageImpl implements CupidLangu
     initEReference(getSubconceptOrAttribute_Annotation(), this.getAnnotation(), null, "annotation", null, 0, -1, SubconceptOrAttribute.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
     initEClass(cardinalityEClass, Cardinality.class, "Cardinality", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+    initEAttribute(getCardinality_ZeroOrOne(), ecorePackage.getEBoolean(), "zeroOrOne", null, 0, 1, Cardinality.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
     initEAttribute(getCardinality_ZeroOrMore(), ecorePackage.getEBoolean(), "zeroOrMore", null, 0, 1, Cardinality.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
     initEAttribute(getCardinality_OneOrMore(), ecorePackage.getEBoolean(), "oneOrMore", null, 0, 1, Cardinality.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 

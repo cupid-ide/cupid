@@ -19,6 +19,7 @@ public class PreferenceInitializer extends AbstractPreferenceInitializer {
 		IPreferenceStore store = CupidActivator.getDefault().getPreferenceStore();
 		store.setDefault(CupidPreferencePage.CUPID_AWS_ACCESS_KEY, "");
 		store.setDefault(CupidPreferencePage.CUPID_AWS_SECRET_KEY, "");
+		store.setDefault(CupidPreferencePage.CUPID_LANGUAGE_URI, "platform:/plugin/org.earthsystemcurator.cupid.nuopc.fsml/cupidmodel/nuopc.cupid");
 	}
 
 }

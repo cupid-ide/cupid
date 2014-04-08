@@ -41,7 +41,7 @@ class CupidLanguageGenerator implements IGenerator {
 		
 		if (fsa instanceof IFileSystemAccessExtension2) {
 			var outputURI = fsa.getURI(lang.name + '.oclinecore')
-			CupidToEcore.generateEcoreModel(outputURI);
+			CupidToEcore.generateEcoreModel(outputURI, lang.uri);
 		}
 		
 		
@@ -56,10 +56,10 @@ class CupidLanguageGenerator implements IGenerator {
 			
 			--
 			--common types and classes
-			datatype AST__Module : 'org.eclipse.photran.internal.core.parser.ASTModuleNode' { };
-			datatype AST__Call : 'org.eclipse.photran.internal.core.parser.ASTCallStmtNode' { };
-			datatype AST__Subroutine : 'org.eclipse.photran.internal.core.parser.ASTSubroutineSubprogramNode' { };
-			datatype AST__UsesModule : 'org.eclipse.photran.internal.core.parser.ASTUseStmtNode' { };
+			--datatype AST__Module : 'org.eclipse.photran.internal.core.parser.ASTModuleNode' { };
+			--datatype AST__Call : 'org.eclipse.photran.internal.core.parser.ASTCallStmtNode' { };
+			--datatype AST__Subroutine : 'org.eclipse.photran.internal.core.parser.ASTSubroutineSubprogramNode' { };
+			--datatype AST__UsesModule : 'org.eclipse.photran.internal.core.parser.ASTUseStmtNode' { };
 		
 			abstract class MappedElement
 			{
@@ -87,7 +87,7 @@ class CupidLanguageGenerator implements IGenerator {
 			annotation _'http://www.earthsystemcog.org/projects/nuopc' 
 			(
 				«FOR a : cd.annotation SEPARATOR ','»
-				«a.key.substring(1)» = '«a.value»'
+				«a.key.substring(1)» = '«a.value.replace("'", "\\'")»'
 				«ENDFOR»
 			);
 			«ENDIF»
@@ -107,9 +107,9 @@ class CupidLanguageGenerator implements IGenerator {
 	 
 	def toProperty(SubconceptOrAttribute soa) '''
 		«IF soa.attrib»
-			attribute «soa.name» : String;
+			attribute «soa.name» : String «soa.toCardinality»;
 		«ELSE»
-			property «soa.name» : «soa.toClassName»«soa.cardinality?.toCardinality» { composes };
+			property «soa.name» : «soa.toClassName»«soa.toCardinality» { composes };
 		«ENDIF»
 	'''
 	
@@ -119,9 +119,15 @@ class CupidLanguageGenerator implements IGenerator {
 	//	else ""
 	//}
 	
+	def toCardinality(SubconceptOrAttribute soa) {
+		if (soa.mustBeNull) '[0..1]'
+		else soa.cardinality?.toCardinality	
+	}
+	
 	def toCardinality(Cardinality c) {
 		if (c.zeroOrMore) '[*]'
 		else if (c.oneOrMore) '[+]'
+		else if (c.zeroOrOne) '[0..1]'
 		else ''
 	}
 	

@@ -958,9 +958,25 @@ ruleCardinality returns [EObject current=null]
     @after { leaveRule(); }:
 ((
 (
-		lv_zeroOrMore_0_0=	'*' 
+		lv_zeroOrOne_0_0=	'?' 
     {
-        newLeafNode(lv_zeroOrMore_0_0, grammarAccess.getCardinalityAccess().getZeroOrMoreAsteriskKeyword_0_0());
+        newLeafNode(lv_zeroOrOne_0_0, grammarAccess.getCardinalityAccess().getZeroOrOneQuestionMarkKeyword_0_0());
+    }
+ 
+	    {
+	        if ($current==null) {
+	            $current = createModelElement(grammarAccess.getCardinalityRule());
+	        }
+       		setWithLastConsumed($current, "zeroOrOne", true, "?");
+	    }
+
+)
+)
+    |(
+(
+		lv_zeroOrMore_1_0=	'*' 
+    {
+        newLeafNode(lv_zeroOrMore_1_0, grammarAccess.getCardinalityAccess().getZeroOrMoreAsteriskKeyword_1_0());
     }
  
 	    {
@@ -974,9 +990,9 @@ ruleCardinality returns [EObject current=null]
 )
     |(
 (
-		lv_oneOrMore_1_0=	'+' 
+		lv_oneOrMore_2_0=	'+' 
     {
-        newLeafNode(lv_oneOrMore_1_0, grammarAccess.getCardinalityAccess().getOneOrMorePlusSignKeyword_1_0());
+        newLeafNode(lv_oneOrMore_2_0, grammarAccess.getCardinalityAccess().getOneOrMorePlusSignKeyword_2_0());
     }
  
 	    {

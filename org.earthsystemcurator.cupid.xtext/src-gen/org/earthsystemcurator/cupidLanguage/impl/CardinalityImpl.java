@@ -19,6 +19,7 @@ import org.eclipse.emf.ecore.impl.MinimalEObjectImpl;
  * <p>
  * The following features are implemented:
  * <ul>
+ *   <li>{@link org.earthsystemcurator.cupidLanguage.impl.CardinalityImpl#isZeroOrOne <em>Zero Or One</em>}</li>
  *   <li>{@link org.earthsystemcurator.cupidLanguage.impl.CardinalityImpl#isZeroOrMore <em>Zero Or More</em>}</li>
  *   <li>{@link org.earthsystemcurator.cupidLanguage.impl.CardinalityImpl#isOneOrMore <em>One Or More</em>}</li>
  * </ul>
@@ -28,6 +29,26 @@ import org.eclipse.emf.ecore.impl.MinimalEObjectImpl;
  */
 public class CardinalityImpl extends MinimalEObjectImpl.Container implements Cardinality
 {
+  /**
+   * The default value of the '{@link #isZeroOrOne() <em>Zero Or One</em>}' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @see #isZeroOrOne()
+   * @generated
+   * @ordered
+   */
+  protected static final boolean ZERO_OR_ONE_EDEFAULT = false;
+
+  /**
+   * The cached value of the '{@link #isZeroOrOne() <em>Zero Or One</em>}' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @see #isZeroOrOne()
+   * @generated
+   * @ordered
+   */
+  protected boolean zeroOrOne = ZERO_OR_ONE_EDEFAULT;
+
   /**
    * The default value of the '{@link #isZeroOrMore() <em>Zero Or More</em>}' attribute.
    * <!-- begin-user-doc -->
@@ -94,6 +115,29 @@ public class CardinalityImpl extends MinimalEObjectImpl.Container implements Car
    * <!-- end-user-doc -->
    * @generated
    */
+  public boolean isZeroOrOne()
+  {
+    return zeroOrOne;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public void setZeroOrOne(boolean newZeroOrOne)
+  {
+    boolean oldZeroOrOne = zeroOrOne;
+    zeroOrOne = newZeroOrOne;
+    if (eNotificationRequired())
+      eNotify(new ENotificationImpl(this, Notification.SET, CupidLanguagePackage.CARDINALITY__ZERO_OR_ONE, oldZeroOrOne, zeroOrOne));
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
   public boolean isZeroOrMore()
   {
     return zeroOrMore;
@@ -145,6 +189,8 @@ public class CardinalityImpl extends MinimalEObjectImpl.Container implements Car
   {
     switch (featureID)
     {
+      case CupidLanguagePackage.CARDINALITY__ZERO_OR_ONE:
+        return isZeroOrOne();
       case CupidLanguagePackage.CARDINALITY__ZERO_OR_MORE:
         return isZeroOrMore();
       case CupidLanguagePackage.CARDINALITY__ONE_OR_MORE:
@@ -163,6 +209,9 @@ public class CardinalityImpl extends MinimalEObjectImpl.Container implements Car
   {
     switch (featureID)
     {
+      case CupidLanguagePackage.CARDINALITY__ZERO_OR_ONE:
+        setZeroOrOne((Boolean)newValue);
+        return;
       case CupidLanguagePackage.CARDINALITY__ZERO_OR_MORE:
         setZeroOrMore((Boolean)newValue);
         return;
@@ -183,6 +232,9 @@ public class CardinalityImpl extends MinimalEObjectImpl.Container implements Car
   {
     switch (featureID)
     {
+      case CupidLanguagePackage.CARDINALITY__ZERO_OR_ONE:
+        setZeroOrOne(ZERO_OR_ONE_EDEFAULT);
+        return;
       case CupidLanguagePackage.CARDINALITY__ZERO_OR_MORE:
         setZeroOrMore(ZERO_OR_MORE_EDEFAULT);
         return;
@@ -203,6 +255,8 @@ public class CardinalityImpl extends MinimalEObjectImpl.Container implements Car
   {
     switch (featureID)
     {
+      case CupidLanguagePackage.CARDINALITY__ZERO_OR_ONE:
+        return zeroOrOne != ZERO_OR_ONE_EDEFAULT;
       case CupidLanguagePackage.CARDINALITY__ZERO_OR_MORE:
         return zeroOrMore != ZERO_OR_MORE_EDEFAULT;
       case CupidLanguagePackage.CARDINALITY__ONE_OR_MORE:
@@ -222,7 +276,9 @@ public class CardinalityImpl extends MinimalEObjectImpl.Container implements Car
     if (eIsProxy()) return super.toString();
 
     StringBuffer result = new StringBuffer(super.toString());
-    result.append(" (zeroOrMore: ");
+    result.append(" (zeroOrOne: ");
+    result.append(zeroOrOne);
+    result.append(", zeroOrMore: ");
     result.append(zeroOrMore);
     result.append(", oneOrMore: ");
     result.append(oneOrMore);

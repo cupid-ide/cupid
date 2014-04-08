@@ -7,7 +7,9 @@ import java.net.URL;
 
 import org.earthsystemcurator.FSM;
 import org.earthsystemcurator.cupid.nuopc.fsml.builder.NUOPCNature;
+import org.earthsystemcurator.cupid.nuopc.fsml.core.CupidActivator;
 import org.earthsystemcurator.cupid.nuopc.fsml.core.ReverseEngineer2;
+import org.earthsystemcurator.cupid.nuopc.fsml.preferences.CupidPreferencePage;
 import org.earthsystemcurator.cupid.nuopc.fsml.util.Regex;
 import org.earthsystemcurator.cupid.nuopc.fsml.views.NUOPCView;
 import org.earthsystemcurator.cupidLanguage.Language;
@@ -23,7 +25,9 @@ import org.eclipse.emf.common.util.Diagnostic;
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EPackage;
+import org.eclipse.emf.ecore.EPackage.Registry;
 import org.eclipse.emf.ecore.EReference;
+import org.eclipse.emf.ecore.impl.EPackageRegistryImpl;
 import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.ecore.resource.ResourceSet;
 import org.eclipse.emf.ecore.resource.impl.ResourceSetImpl;
@@ -63,13 +67,49 @@ public class ReverseHandler extends AbstractHandler {
 	public ReverseHandler() {
 	}
 
-			
 	protected Language loadLanguageEcore() {
+		
+		//platform:/resource/nuopcdef/src/nuopc.cupid
+		//platform:/plugin/org.earthsystemcurator.cupid.nuopc.fsml/cupidmodel/nuopc.cupid
+		
+		//default set in /org.earthsystemcurator.cupid.nuopc.fsml/src/org/earthsystemcurator/cupid/nuopc/fsml/preferences/PreferenceInitializer.java
+		
+		String langURIString = CupidActivator.getDefault().getPreferenceStore().getString(CupidPreferencePage.CUPID_LANGUAGE_URI);
+		URI langURI = URI.createURI(langURIString);
+		
+		ResourceSet rs = new ResourceSetImpl();
+		Resource langResource = rs.getResource(langURI, true);
+		Language lang = (Language) langResource.getContents().get(0);
+		
+		/*
+		URI ecoreURI = langURI.trimFileExtension().appendFileExtension("ecore");
+				
+		//load and register related EPackage
+		final ExtendedMetaData extendedMetaData = new BasicExtendedMetaData(rs.getPackageRegistry());
+		rs.getLoadOptions().put(XMLResource.OPTION_EXTENDED_META_DATA, extendedMetaData);
+		
+		Resource metamodelResource = rs.getResource(ecoreURI, true);
+		EObject eObject = metamodelResource.getContents().get(0);
+		if (eObject instanceof EPackage) {
+		    EPackage p = (EPackage) eObject;
+		    EPackage.Registry.INSTANCE.put(p.getNsURI(), p);
+		}
+		*/
+		
+		return lang;
+		
+	}
+			
+	protected Language loadLanguageEcoreOLD() {
+		
+		
+		String langURI = CupidActivator.getDefault().getPreferenceStore().getString(CupidPreferencePage.CUPID_LANGUAGE_URI);
+		
 		
 		//load a particular language
 		URL langURL = null;
 		try {
-			langURL = new URL("file:C:\\Users\\Rocky\\Documents\\eclipse\\workspace-runtime-cupid2\\xtest\\src\\nuopc.cupid");
+			langURL = new URL("file:C:\\Users\\Rocky\\Documents\\eclipse\\workspace-runtime-cupid2\\nuopcdef\\src\\nuopc.cupid");
 		} catch (MalformedURLException e) {
 			e.printStackTrace();
 		}
@@ -85,7 +125,7 @@ public class ReverseHandler extends AbstractHandler {
 		
 		URL ecoreURL = null;
 		try {
-			ecoreURL = new URL("file:C:\\Users\\Rocky\\Documents\\eclipse\\workspace-runtime-cupid2\\xtest\\src-gen\\nuopc.ecore");
+			ecoreURL = new URL("file:C:\\Users\\Rocky\\Documents\\eclipse\\workspace-runtime-cupid2\\nuopcdef\\src-gen\\nuopc.ecore");
 		} catch (MalformedURLException e) {
 			e.printStackTrace();
 		}
@@ -94,6 +134,7 @@ public class ReverseHandler extends AbstractHandler {
 		EObject eObject = metamodelResource.getContents().get(0);
 		if (eObject instanceof EPackage) {
 		    EPackage p = (EPackage) eObject;
+		    Registry epr = EPackage.Registry.INSTANCE;
 		    EPackage.Registry.INSTANCE.put(p.getNsURI(), p);  //guaranteed to be the same as lang.getUri()
 		}
 		

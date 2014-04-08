@@ -723,10 +723,10 @@ public class InternalCupidLanguageLexer extends Lexer {
         try {
             int _type = T__43;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // ../org.earthsystemcurator.cupid.xtext.ui/src-gen/org/earthsystemcurator/ui/contentassist/antlr/internal/InternalCupidLanguage.g:42:7: ( '*' )
-            // ../org.earthsystemcurator.cupid.xtext.ui/src-gen/org/earthsystemcurator/ui/contentassist/antlr/internal/InternalCupidLanguage.g:42:9: '*'
+            // ../org.earthsystemcurator.cupid.xtext.ui/src-gen/org/earthsystemcurator/ui/contentassist/antlr/internal/InternalCupidLanguage.g:42:7: ( '?' )
+            // ../org.earthsystemcurator.cupid.xtext.ui/src-gen/org/earthsystemcurator/ui/contentassist/antlr/internal/InternalCupidLanguage.g:42:9: '?'
             {
-            match('*'); 
+            match('?'); 
 
             }
 
@@ -743,10 +743,10 @@ public class InternalCupidLanguageLexer extends Lexer {
         try {
             int _type = T__44;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // ../org.earthsystemcurator.cupid.xtext.ui/src-gen/org/earthsystemcurator/ui/contentassist/antlr/internal/InternalCupidLanguage.g:43:7: ( '+' )
-            // ../org.earthsystemcurator.cupid.xtext.ui/src-gen/org/earthsystemcurator/ui/contentassist/antlr/internal/InternalCupidLanguage.g:43:9: '+'
+            // ../org.earthsystemcurator.cupid.xtext.ui/src-gen/org/earthsystemcurator/ui/contentassist/antlr/internal/InternalCupidLanguage.g:43:7: ( '*' )
+            // ../org.earthsystemcurator.cupid.xtext.ui/src-gen/org/earthsystemcurator/ui/contentassist/antlr/internal/InternalCupidLanguage.g:43:9: '*'
             {
-            match('+'); 
+            match('*'); 
 
             }
 
@@ -763,11 +763,10 @@ public class InternalCupidLanguageLexer extends Lexer {
         try {
             int _type = T__45;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // ../org.earthsystemcurator.cupid.xtext.ui/src-gen/org/earthsystemcurator/ui/contentassist/antlr/internal/InternalCupidLanguage.g:44:7: ( 'in' )
-            // ../org.earthsystemcurator.cupid.xtext.ui/src-gen/org/earthsystemcurator/ui/contentassist/antlr/internal/InternalCupidLanguage.g:44:9: 'in'
+            // ../org.earthsystemcurator.cupid.xtext.ui/src-gen/org/earthsystemcurator/ui/contentassist/antlr/internal/InternalCupidLanguage.g:44:7: ( '+' )
+            // ../org.earthsystemcurator.cupid.xtext.ui/src-gen/org/earthsystemcurator/ui/contentassist/antlr/internal/InternalCupidLanguage.g:44:9: '+'
             {
-            match("in"); 
-
+            match('+'); 
 
             }
 
@@ -784,10 +783,10 @@ public class InternalCupidLanguageLexer extends Lexer {
         try {
             int _type = T__46;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // ../org.earthsystemcurator.cupid.xtext.ui/src-gen/org/earthsystemcurator/ui/contentassist/antlr/internal/InternalCupidLanguage.g:45:7: ( 'out' )
-            // ../org.earthsystemcurator.cupid.xtext.ui/src-gen/org/earthsystemcurator/ui/contentassist/antlr/internal/InternalCupidLanguage.g:45:9: 'out'
+            // ../org.earthsystemcurator.cupid.xtext.ui/src-gen/org/earthsystemcurator/ui/contentassist/antlr/internal/InternalCupidLanguage.g:45:7: ( 'in' )
+            // ../org.earthsystemcurator.cupid.xtext.ui/src-gen/org/earthsystemcurator/ui/contentassist/antlr/internal/InternalCupidLanguage.g:45:9: 'in'
             {
-            match("out"); 
+            match("in"); 
 
 
             }
@@ -805,10 +804,10 @@ public class InternalCupidLanguageLexer extends Lexer {
         try {
             int _type = T__47;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // ../org.earthsystemcurator.cupid.xtext.ui/src-gen/org/earthsystemcurator/ui/contentassist/antlr/internal/InternalCupidLanguage.g:46:7: ( 'inout' )
-            // ../org.earthsystemcurator.cupid.xtext.ui/src-gen/org/earthsystemcurator/ui/contentassist/antlr/internal/InternalCupidLanguage.g:46:9: 'inout'
+            // ../org.earthsystemcurator.cupid.xtext.ui/src-gen/org/earthsystemcurator/ui/contentassist/antlr/internal/InternalCupidLanguage.g:46:7: ( 'out' )
+            // ../org.earthsystemcurator.cupid.xtext.ui/src-gen/org/earthsystemcurator/ui/contentassist/antlr/internal/InternalCupidLanguage.g:46:9: 'out'
             {
-            match("inout"); 
+            match("out"); 
 
 
             }
@@ -826,10 +825,10 @@ public class InternalCupidLanguageLexer extends Lexer {
         try {
             int _type = T__48;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // ../org.earthsystemcurator.cupid.xtext.ui/src-gen/org/earthsystemcurator/ui/contentassist/antlr/internal/InternalCupidLanguage.g:47:7: ( 'integer' )
-            // ../org.earthsystemcurator.cupid.xtext.ui/src-gen/org/earthsystemcurator/ui/contentassist/antlr/internal/InternalCupidLanguage.g:47:9: 'integer'
+            // ../org.earthsystemcurator.cupid.xtext.ui/src-gen/org/earthsystemcurator/ui/contentassist/antlr/internal/InternalCupidLanguage.g:47:7: ( 'inout' )
+            // ../org.earthsystemcurator.cupid.xtext.ui/src-gen/org/earthsystemcurator/ui/contentassist/antlr/internal/InternalCupidLanguage.g:47:9: 'inout'
             {
-            match("integer"); 
+            match("inout"); 
 
 
             }
@@ -847,10 +846,10 @@ public class InternalCupidLanguageLexer extends Lexer {
         try {
             int _type = T__49;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // ../org.earthsystemcurator.cupid.xtext.ui/src-gen/org/earthsystemcurator/ui/contentassist/antlr/internal/InternalCupidLanguage.g:48:7: ( 'character' )
-            // ../org.earthsystemcurator.cupid.xtext.ui/src-gen/org/earthsystemcurator/ui/contentassist/antlr/internal/InternalCupidLanguage.g:48:9: 'character'
+            // ../org.earthsystemcurator.cupid.xtext.ui/src-gen/org/earthsystemcurator/ui/contentassist/antlr/internal/InternalCupidLanguage.g:48:7: ( 'integer' )
+            // ../org.earthsystemcurator.cupid.xtext.ui/src-gen/org/earthsystemcurator/ui/contentassist/antlr/internal/InternalCupidLanguage.g:48:9: 'integer'
             {
-            match("character"); 
+            match("integer"); 
 
 
             }
@@ -868,10 +867,10 @@ public class InternalCupidLanguageLexer extends Lexer {
         try {
             int _type = T__50;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // ../org.earthsystemcurator.cupid.xtext.ui/src-gen/org/earthsystemcurator/ui/contentassist/antlr/internal/InternalCupidLanguage.g:49:7: ( 'logical' )
-            // ../org.earthsystemcurator.cupid.xtext.ui/src-gen/org/earthsystemcurator/ui/contentassist/antlr/internal/InternalCupidLanguage.g:49:9: 'logical'
+            // ../org.earthsystemcurator.cupid.xtext.ui/src-gen/org/earthsystemcurator/ui/contentassist/antlr/internal/InternalCupidLanguage.g:49:7: ( 'character' )
+            // ../org.earthsystemcurator.cupid.xtext.ui/src-gen/org/earthsystemcurator/ui/contentassist/antlr/internal/InternalCupidLanguage.g:49:9: 'character'
             {
-            match("logical"); 
+            match("character"); 
 
 
             }
@@ -889,10 +888,10 @@ public class InternalCupidLanguageLexer extends Lexer {
         try {
             int _type = T__51;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // ../org.earthsystemcurator.cupid.xtext.ui/src-gen/org/earthsystemcurator/ui/contentassist/antlr/internal/InternalCupidLanguage.g:50:7: ( 'real' )
-            // ../org.earthsystemcurator.cupid.xtext.ui/src-gen/org/earthsystemcurator/ui/contentassist/antlr/internal/InternalCupidLanguage.g:50:9: 'real'
+            // ../org.earthsystemcurator.cupid.xtext.ui/src-gen/org/earthsystemcurator/ui/contentassist/antlr/internal/InternalCupidLanguage.g:50:7: ( 'logical' )
+            // ../org.earthsystemcurator.cupid.xtext.ui/src-gen/org/earthsystemcurator/ui/contentassist/antlr/internal/InternalCupidLanguage.g:50:9: 'logical'
             {
-            match("real"); 
+            match("logical"); 
 
 
             }
@@ -910,10 +909,10 @@ public class InternalCupidLanguageLexer extends Lexer {
         try {
             int _type = T__52;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // ../org.earthsystemcurator.cupid.xtext.ui/src-gen/org/earthsystemcurator/ui/contentassist/antlr/internal/InternalCupidLanguage.g:51:7: ( 'double' )
-            // ../org.earthsystemcurator.cupid.xtext.ui/src-gen/org/earthsystemcurator/ui/contentassist/antlr/internal/InternalCupidLanguage.g:51:9: 'double'
+            // ../org.earthsystemcurator.cupid.xtext.ui/src-gen/org/earthsystemcurator/ui/contentassist/antlr/internal/InternalCupidLanguage.g:51:7: ( 'real' )
+            // ../org.earthsystemcurator.cupid.xtext.ui/src-gen/org/earthsystemcurator/ui/contentassist/antlr/internal/InternalCupidLanguage.g:51:9: 'real'
             {
-            match("double"); 
+            match("real"); 
 
 
             }
@@ -931,10 +930,10 @@ public class InternalCupidLanguageLexer extends Lexer {
         try {
             int _type = T__53;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // ../org.earthsystemcurator.cupid.xtext.ui/src-gen/org/earthsystemcurator/ui/contentassist/antlr/internal/InternalCupidLanguage.g:52:7: ( 'type' )
-            // ../org.earthsystemcurator.cupid.xtext.ui/src-gen/org/earthsystemcurator/ui/contentassist/antlr/internal/InternalCupidLanguage.g:52:9: 'type'
+            // ../org.earthsystemcurator.cupid.xtext.ui/src-gen/org/earthsystemcurator/ui/contentassist/antlr/internal/InternalCupidLanguage.g:52:7: ( 'double' )
+            // ../org.earthsystemcurator.cupid.xtext.ui/src-gen/org/earthsystemcurator/ui/contentassist/antlr/internal/InternalCupidLanguage.g:52:9: 'double'
             {
-            match("type"); 
+            match("double"); 
 
 
             }
@@ -952,10 +951,11 @@ public class InternalCupidLanguageLexer extends Lexer {
         try {
             int _type = T__54;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // ../org.earthsystemcurator.cupid.xtext.ui/src-gen/org/earthsystemcurator/ui/contentassist/antlr/internal/InternalCupidLanguage.g:53:7: ( '?' )
-            // ../org.earthsystemcurator.cupid.xtext.ui/src-gen/org/earthsystemcurator/ui/contentassist/antlr/internal/InternalCupidLanguage.g:53:9: '?'
+            // ../org.earthsystemcurator.cupid.xtext.ui/src-gen/org/earthsystemcurator/ui/contentassist/antlr/internal/InternalCupidLanguage.g:53:7: ( 'type' )
+            // ../org.earthsystemcurator.cupid.xtext.ui/src-gen/org/earthsystemcurator/ui/contentassist/antlr/internal/InternalCupidLanguage.g:53:9: 'type'
             {
-            match('?'); 
+            match("type"); 
+
 
             }
 
@@ -992,8 +992,8 @@ public class InternalCupidLanguageLexer extends Lexer {
         try {
             int _type = RULE_ANNOTATION_ID;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // ../org.earthsystemcurator.cupid.xtext.ui/src-gen/org/earthsystemcurator/ui/contentassist/antlr/internal/InternalCupidLanguage.g:8135:20: ( '@' RULE_ID )
-            // ../org.earthsystemcurator.cupid.xtext.ui/src-gen/org/earthsystemcurator/ui/contentassist/antlr/internal/InternalCupidLanguage.g:8135:22: '@' RULE_ID
+            // ../org.earthsystemcurator.cupid.xtext.ui/src-gen/org/earthsystemcurator/ui/contentassist/antlr/internal/InternalCupidLanguage.g:8164:20: ( '@' RULE_ID )
+            // ../org.earthsystemcurator.cupid.xtext.ui/src-gen/org/earthsystemcurator/ui/contentassist/antlr/internal/InternalCupidLanguage.g:8164:22: '@' RULE_ID
             {
             match('@'); 
             mRULE_ID(); 
@@ -1013,12 +1013,12 @@ public class InternalCupidLanguageLexer extends Lexer {
         try {
             int _type = RULE_SL_COMMENT;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // ../org.earthsystemcurator.cupid.xtext.ui/src-gen/org/earthsystemcurator/ui/contentassist/antlr/internal/InternalCupidLanguage.g:8137:17: ( '--' (~ ( ( '\\n' | '\\r' ) ) )* ( ( '\\r' )? '\\n' )? )
-            // ../org.earthsystemcurator.cupid.xtext.ui/src-gen/org/earthsystemcurator/ui/contentassist/antlr/internal/InternalCupidLanguage.g:8137:19: '--' (~ ( ( '\\n' | '\\r' ) ) )* ( ( '\\r' )? '\\n' )?
+            // ../org.earthsystemcurator.cupid.xtext.ui/src-gen/org/earthsystemcurator/ui/contentassist/antlr/internal/InternalCupidLanguage.g:8166:17: ( '--' (~ ( ( '\\n' | '\\r' ) ) )* ( ( '\\r' )? '\\n' )? )
+            // ../org.earthsystemcurator.cupid.xtext.ui/src-gen/org/earthsystemcurator/ui/contentassist/antlr/internal/InternalCupidLanguage.g:8166:19: '--' (~ ( ( '\\n' | '\\r' ) ) )* ( ( '\\r' )? '\\n' )?
             {
             match("--"); 
 
-            // ../org.earthsystemcurator.cupid.xtext.ui/src-gen/org/earthsystemcurator/ui/contentassist/antlr/internal/InternalCupidLanguage.g:8137:24: (~ ( ( '\\n' | '\\r' ) ) )*
+            // ../org.earthsystemcurator.cupid.xtext.ui/src-gen/org/earthsystemcurator/ui/contentassist/antlr/internal/InternalCupidLanguage.g:8166:24: (~ ( ( '\\n' | '\\r' ) ) )*
             loop1:
             do {
                 int alt1=2;
@@ -1031,7 +1031,7 @@ public class InternalCupidLanguageLexer extends Lexer {
 
                 switch (alt1) {
             	case 1 :
-            	    // ../org.earthsystemcurator.cupid.xtext.ui/src-gen/org/earthsystemcurator/ui/contentassist/antlr/internal/InternalCupidLanguage.g:8137:24: ~ ( ( '\\n' | '\\r' ) )
+            	    // ../org.earthsystemcurator.cupid.xtext.ui/src-gen/org/earthsystemcurator/ui/contentassist/antlr/internal/InternalCupidLanguage.g:8166:24: ~ ( ( '\\n' | '\\r' ) )
             	    {
             	    if ( (input.LA(1)>='\u0000' && input.LA(1)<='\t')||(input.LA(1)>='\u000B' && input.LA(1)<='\f')||(input.LA(1)>='\u000E' && input.LA(1)<='\uFFFF') ) {
             	        input.consume();
@@ -1051,7 +1051,7 @@ public class InternalCupidLanguageLexer extends Lexer {
                 }
             } while (true);
 
-            // ../org.earthsystemcurator.cupid.xtext.ui/src-gen/org/earthsystemcurator/ui/contentassist/antlr/internal/InternalCupidLanguage.g:8137:40: ( ( '\\r' )? '\\n' )?
+            // ../org.earthsystemcurator.cupid.xtext.ui/src-gen/org/earthsystemcurator/ui/contentassist/antlr/internal/InternalCupidLanguage.g:8166:40: ( ( '\\r' )? '\\n' )?
             int alt3=2;
             int LA3_0 = input.LA(1);
 
@@ -1060,9 +1060,9 @@ public class InternalCupidLanguageLexer extends Lexer {
             }
             switch (alt3) {
                 case 1 :
-                    // ../org.earthsystemcurator.cupid.xtext.ui/src-gen/org/earthsystemcurator/ui/contentassist/antlr/internal/InternalCupidLanguage.g:8137:41: ( '\\r' )? '\\n'
+                    // ../org.earthsystemcurator.cupid.xtext.ui/src-gen/org/earthsystemcurator/ui/contentassist/antlr/internal/InternalCupidLanguage.g:8166:41: ( '\\r' )? '\\n'
                     {
-                    // ../org.earthsystemcurator.cupid.xtext.ui/src-gen/org/earthsystemcurator/ui/contentassist/antlr/internal/InternalCupidLanguage.g:8137:41: ( '\\r' )?
+                    // ../org.earthsystemcurator.cupid.xtext.ui/src-gen/org/earthsystemcurator/ui/contentassist/antlr/internal/InternalCupidLanguage.g:8166:41: ( '\\r' )?
                     int alt2=2;
                     int LA2_0 = input.LA(1);
 
@@ -1071,7 +1071,7 @@ public class InternalCupidLanguageLexer extends Lexer {
                     }
                     switch (alt2) {
                         case 1 :
-                            // ../org.earthsystemcurator.cupid.xtext.ui/src-gen/org/earthsystemcurator/ui/contentassist/antlr/internal/InternalCupidLanguage.g:8137:41: '\\r'
+                            // ../org.earthsystemcurator.cupid.xtext.ui/src-gen/org/earthsystemcurator/ui/contentassist/antlr/internal/InternalCupidLanguage.g:8166:41: '\\r'
                             {
                             match('\r'); 
 
@@ -1103,8 +1103,8 @@ public class InternalCupidLanguageLexer extends Lexer {
         try {
             int _type = RULE_ID;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // ../org.earthsystemcurator.cupid.xtext.ui/src-gen/org/earthsystemcurator/ui/contentassist/antlr/internal/InternalCupidLanguage.g:8139:9: ( ( 'a' .. 'z' | 'A' .. 'Z' | '_' ) ( 'a' .. 'z' | 'A' .. 'Z' | '_' | '0' .. '9' )* )
-            // ../org.earthsystemcurator.cupid.xtext.ui/src-gen/org/earthsystemcurator/ui/contentassist/antlr/internal/InternalCupidLanguage.g:8139:11: ( 'a' .. 'z' | 'A' .. 'Z' | '_' ) ( 'a' .. 'z' | 'A' .. 'Z' | '_' | '0' .. '9' )*
+            // ../org.earthsystemcurator.cupid.xtext.ui/src-gen/org/earthsystemcurator/ui/contentassist/antlr/internal/InternalCupidLanguage.g:8168:9: ( ( 'a' .. 'z' | 'A' .. 'Z' | '_' ) ( 'a' .. 'z' | 'A' .. 'Z' | '_' | '0' .. '9' )* )
+            // ../org.earthsystemcurator.cupid.xtext.ui/src-gen/org/earthsystemcurator/ui/contentassist/antlr/internal/InternalCupidLanguage.g:8168:11: ( 'a' .. 'z' | 'A' .. 'Z' | '_' ) ( 'a' .. 'z' | 'A' .. 'Z' | '_' | '0' .. '9' )*
             {
             if ( (input.LA(1)>='A' && input.LA(1)<='Z')||input.LA(1)=='_'||(input.LA(1)>='a' && input.LA(1)<='z') ) {
                 input.consume();
@@ -1115,7 +1115,7 @@ public class InternalCupidLanguageLexer extends Lexer {
                 recover(mse);
                 throw mse;}
 
-            // ../org.earthsystemcurator.cupid.xtext.ui/src-gen/org/earthsystemcurator/ui/contentassist/antlr/internal/InternalCupidLanguage.g:8139:35: ( 'a' .. 'z' | 'A' .. 'Z' | '_' | '0' .. '9' )*
+            // ../org.earthsystemcurator.cupid.xtext.ui/src-gen/org/earthsystemcurator/ui/contentassist/antlr/internal/InternalCupidLanguage.g:8168:35: ( 'a' .. 'z' | 'A' .. 'Z' | '_' | '0' .. '9' )*
             loop4:
             do {
                 int alt4=2;
@@ -1164,10 +1164,10 @@ public class InternalCupidLanguageLexer extends Lexer {
         try {
             int _type = RULE_INT;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // ../org.earthsystemcurator.cupid.xtext.ui/src-gen/org/earthsystemcurator/ui/contentassist/antlr/internal/InternalCupidLanguage.g:8141:10: ( ( '0' .. '9' )+ )
-            // ../org.earthsystemcurator.cupid.xtext.ui/src-gen/org/earthsystemcurator/ui/contentassist/antlr/internal/InternalCupidLanguage.g:8141:12: ( '0' .. '9' )+
+            // ../org.earthsystemcurator.cupid.xtext.ui/src-gen/org/earthsystemcurator/ui/contentassist/antlr/internal/InternalCupidLanguage.g:8170:10: ( ( '0' .. '9' )+ )
+            // ../org.earthsystemcurator.cupid.xtext.ui/src-gen/org/earthsystemcurator/ui/contentassist/antlr/internal/InternalCupidLanguage.g:8170:12: ( '0' .. '9' )+
             {
-            // ../org.earthsystemcurator.cupid.xtext.ui/src-gen/org/earthsystemcurator/ui/contentassist/antlr/internal/InternalCupidLanguage.g:8141:12: ( '0' .. '9' )+
+            // ../org.earthsystemcurator.cupid.xtext.ui/src-gen/org/earthsystemcurator/ui/contentassist/antlr/internal/InternalCupidLanguage.g:8170:12: ( '0' .. '9' )+
             int cnt5=0;
             loop5:
             do {
@@ -1181,7 +1181,7 @@ public class InternalCupidLanguageLexer extends Lexer {
 
                 switch (alt5) {
             	case 1 :
-            	    // ../org.earthsystemcurator.cupid.xtext.ui/src-gen/org/earthsystemcurator/ui/contentassist/antlr/internal/InternalCupidLanguage.g:8141:13: '0' .. '9'
+            	    // ../org.earthsystemcurator.cupid.xtext.ui/src-gen/org/earthsystemcurator/ui/contentassist/antlr/internal/InternalCupidLanguage.g:8170:13: '0' .. '9'
             	    {
             	    matchRange('0','9'); 
 
@@ -1213,10 +1213,10 @@ public class InternalCupidLanguageLexer extends Lexer {
         try {
             int _type = RULE_STRING;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // ../org.earthsystemcurator.cupid.xtext.ui/src-gen/org/earthsystemcurator/ui/contentassist/antlr/internal/InternalCupidLanguage.g:8143:13: ( ( '\"' ( '\\\\' ( 'b' | 't' | 'n' | 'f' | 'r' | 'u' | '\"' | '\\'' | '\\\\' ) | ~ ( ( '\\\\' | '\"' ) ) )* '\"' | '\\'' ( '\\\\' ( 'b' | 't' | 'n' | 'f' | 'r' | 'u' | '\"' | '\\'' | '\\\\' ) | ~ ( ( '\\\\' | '\\'' ) ) )* '\\'' ) )
-            // ../org.earthsystemcurator.cupid.xtext.ui/src-gen/org/earthsystemcurator/ui/contentassist/antlr/internal/InternalCupidLanguage.g:8143:15: ( '\"' ( '\\\\' ( 'b' | 't' | 'n' | 'f' | 'r' | 'u' | '\"' | '\\'' | '\\\\' ) | ~ ( ( '\\\\' | '\"' ) ) )* '\"' | '\\'' ( '\\\\' ( 'b' | 't' | 'n' | 'f' | 'r' | 'u' | '\"' | '\\'' | '\\\\' ) | ~ ( ( '\\\\' | '\\'' ) ) )* '\\'' )
+            // ../org.earthsystemcurator.cupid.xtext.ui/src-gen/org/earthsystemcurator/ui/contentassist/antlr/internal/InternalCupidLanguage.g:8172:13: ( ( '\"' ( '\\\\' ( 'b' | 't' | 'n' | 'f' | 'r' | 'u' | '\"' | '\\'' | '\\\\' ) | ~ ( ( '\\\\' | '\"' ) ) )* '\"' | '\\'' ( '\\\\' ( 'b' | 't' | 'n' | 'f' | 'r' | 'u' | '\"' | '\\'' | '\\\\' ) | ~ ( ( '\\\\' | '\\'' ) ) )* '\\'' ) )
+            // ../org.earthsystemcurator.cupid.xtext.ui/src-gen/org/earthsystemcurator/ui/contentassist/antlr/internal/InternalCupidLanguage.g:8172:15: ( '\"' ( '\\\\' ( 'b' | 't' | 'n' | 'f' | 'r' | 'u' | '\"' | '\\'' | '\\\\' ) | ~ ( ( '\\\\' | '\"' ) ) )* '\"' | '\\'' ( '\\\\' ( 'b' | 't' | 'n' | 'f' | 'r' | 'u' | '\"' | '\\'' | '\\\\' ) | ~ ( ( '\\\\' | '\\'' ) ) )* '\\'' )
             {
-            // ../org.earthsystemcurator.cupid.xtext.ui/src-gen/org/earthsystemcurator/ui/contentassist/antlr/internal/InternalCupidLanguage.g:8143:15: ( '\"' ( '\\\\' ( 'b' | 't' | 'n' | 'f' | 'r' | 'u' | '\"' | '\\'' | '\\\\' ) | ~ ( ( '\\\\' | '\"' ) ) )* '\"' | '\\'' ( '\\\\' ( 'b' | 't' | 'n' | 'f' | 'r' | 'u' | '\"' | '\\'' | '\\\\' ) | ~ ( ( '\\\\' | '\\'' ) ) )* '\\'' )
+            // ../org.earthsystemcurator.cupid.xtext.ui/src-gen/org/earthsystemcurator/ui/contentassist/antlr/internal/InternalCupidLanguage.g:8172:15: ( '\"' ( '\\\\' ( 'b' | 't' | 'n' | 'f' | 'r' | 'u' | '\"' | '\\'' | '\\\\' ) | ~ ( ( '\\\\' | '\"' ) ) )* '\"' | '\\'' ( '\\\\' ( 'b' | 't' | 'n' | 'f' | 'r' | 'u' | '\"' | '\\'' | '\\\\' ) | ~ ( ( '\\\\' | '\\'' ) ) )* '\\'' )
             int alt8=2;
             int LA8_0 = input.LA(1);
 
@@ -1234,10 +1234,10 @@ public class InternalCupidLanguageLexer extends Lexer {
             }
             switch (alt8) {
                 case 1 :
-                    // ../org.earthsystemcurator.cupid.xtext.ui/src-gen/org/earthsystemcurator/ui/contentassist/antlr/internal/InternalCupidLanguage.g:8143:16: '\"' ( '\\\\' ( 'b' | 't' | 'n' | 'f' | 'r' | 'u' | '\"' | '\\'' | '\\\\' ) | ~ ( ( '\\\\' | '\"' ) ) )* '\"'
+                    // ../org.earthsystemcurator.cupid.xtext.ui/src-gen/org/earthsystemcurator/ui/contentassist/antlr/internal/InternalCupidLanguage.g:8172:16: '\"' ( '\\\\' ( 'b' | 't' | 'n' | 'f' | 'r' | 'u' | '\"' | '\\'' | '\\\\' ) | ~ ( ( '\\\\' | '\"' ) ) )* '\"'
                     {
                     match('\"'); 
-                    // ../org.earthsystemcurator.cupid.xtext.ui/src-gen/org/earthsystemcurator/ui/contentassist/antlr/internal/InternalCupidLanguage.g:8143:20: ( '\\\\' ( 'b' | 't' | 'n' | 'f' | 'r' | 'u' | '\"' | '\\'' | '\\\\' ) | ~ ( ( '\\\\' | '\"' ) ) )*
+                    // ../org.earthsystemcurator.cupid.xtext.ui/src-gen/org/earthsystemcurator/ui/contentassist/antlr/internal/InternalCupidLanguage.g:8172:20: ( '\\\\' ( 'b' | 't' | 'n' | 'f' | 'r' | 'u' | '\"' | '\\'' | '\\\\' ) | ~ ( ( '\\\\' | '\"' ) ) )*
                     loop6:
                     do {
                         int alt6=3;
@@ -1253,7 +1253,7 @@ public class InternalCupidLanguageLexer extends Lexer {
 
                         switch (alt6) {
                     	case 1 :
-                    	    // ../org.earthsystemcurator.cupid.xtext.ui/src-gen/org/earthsystemcurator/ui/contentassist/antlr/internal/InternalCupidLanguage.g:8143:21: '\\\\' ( 'b' | 't' | 'n' | 'f' | 'r' | 'u' | '\"' | '\\'' | '\\\\' )
+                    	    // ../org.earthsystemcurator.cupid.xtext.ui/src-gen/org/earthsystemcurator/ui/contentassist/antlr/internal/InternalCupidLanguage.g:8172:21: '\\\\' ( 'b' | 't' | 'n' | 'f' | 'r' | 'u' | '\"' | '\\'' | '\\\\' )
                     	    {
                     	    match('\\'); 
                     	    if ( input.LA(1)=='\"'||input.LA(1)=='\''||input.LA(1)=='\\'||input.LA(1)=='b'||input.LA(1)=='f'||input.LA(1)=='n'||input.LA(1)=='r'||(input.LA(1)>='t' && input.LA(1)<='u') ) {
@@ -1269,7 +1269,7 @@ public class InternalCupidLanguageLexer extends Lexer {
                     	    }
                     	    break;
                     	case 2 :
-                    	    // ../org.earthsystemcurator.cupid.xtext.ui/src-gen/org/earthsystemcurator/ui/contentassist/antlr/internal/InternalCupidLanguage.g:8143:66: ~ ( ( '\\\\' | '\"' ) )
+                    	    // ../org.earthsystemcurator.cupid.xtext.ui/src-gen/org/earthsystemcurator/ui/contentassist/antlr/internal/InternalCupidLanguage.g:8172:66: ~ ( ( '\\\\' | '\"' ) )
                     	    {
                     	    if ( (input.LA(1)>='\u0000' && input.LA(1)<='!')||(input.LA(1)>='#' && input.LA(1)<='[')||(input.LA(1)>=']' && input.LA(1)<='\uFFFF') ) {
                     	        input.consume();
@@ -1294,10 +1294,10 @@ public class InternalCupidLanguageLexer extends Lexer {
                     }
                     break;
                 case 2 :
-                    // ../org.earthsystemcurator.cupid.xtext.ui/src-gen/org/earthsystemcurator/ui/contentassist/antlr/internal/InternalCupidLanguage.g:8143:86: '\\'' ( '\\\\' ( 'b' | 't' | 'n' | 'f' | 'r' | 'u' | '\"' | '\\'' | '\\\\' ) | ~ ( ( '\\\\' | '\\'' ) ) )* '\\''
+                    // ../org.earthsystemcurator.cupid.xtext.ui/src-gen/org/earthsystemcurator/ui/contentassist/antlr/internal/InternalCupidLanguage.g:8172:86: '\\'' ( '\\\\' ( 'b' | 't' | 'n' | 'f' | 'r' | 'u' | '\"' | '\\'' | '\\\\' ) | ~ ( ( '\\\\' | '\\'' ) ) )* '\\''
                     {
                     match('\''); 
-                    // ../org.earthsystemcurator.cupid.xtext.ui/src-gen/org/earthsystemcurator/ui/contentassist/antlr/internal/InternalCupidLanguage.g:8143:91: ( '\\\\' ( 'b' | 't' | 'n' | 'f' | 'r' | 'u' | '\"' | '\\'' | '\\\\' ) | ~ ( ( '\\\\' | '\\'' ) ) )*
+                    // ../org.earthsystemcurator.cupid.xtext.ui/src-gen/org/earthsystemcurator/ui/contentassist/antlr/internal/InternalCupidLanguage.g:8172:91: ( '\\\\' ( 'b' | 't' | 'n' | 'f' | 'r' | 'u' | '\"' | '\\'' | '\\\\' ) | ~ ( ( '\\\\' | '\\'' ) ) )*
                     loop7:
                     do {
                         int alt7=3;
@@ -1313,7 +1313,7 @@ public class InternalCupidLanguageLexer extends Lexer {
 
                         switch (alt7) {
                     	case 1 :
-                    	    // ../org.earthsystemcurator.cupid.xtext.ui/src-gen/org/earthsystemcurator/ui/contentassist/antlr/internal/InternalCupidLanguage.g:8143:92: '\\\\' ( 'b' | 't' | 'n' | 'f' | 'r' | 'u' | '\"' | '\\'' | '\\\\' )
+                    	    // ../org.earthsystemcurator.cupid.xtext.ui/src-gen/org/earthsystemcurator/ui/contentassist/antlr/internal/InternalCupidLanguage.g:8172:92: '\\\\' ( 'b' | 't' | 'n' | 'f' | 'r' | 'u' | '\"' | '\\'' | '\\\\' )
                     	    {
                     	    match('\\'); 
                     	    if ( input.LA(1)=='\"'||input.LA(1)=='\''||input.LA(1)=='\\'||input.LA(1)=='b'||input.LA(1)=='f'||input.LA(1)=='n'||input.LA(1)=='r'||(input.LA(1)>='t' && input.LA(1)<='u') ) {
@@ -1329,7 +1329,7 @@ public class InternalCupidLanguageLexer extends Lexer {
                     	    }
                     	    break;
                     	case 2 :
-                    	    // ../org.earthsystemcurator.cupid.xtext.ui/src-gen/org/earthsystemcurator/ui/contentassist/antlr/internal/InternalCupidLanguage.g:8143:137: ~ ( ( '\\\\' | '\\'' ) )
+                    	    // ../org.earthsystemcurator.cupid.xtext.ui/src-gen/org/earthsystemcurator/ui/contentassist/antlr/internal/InternalCupidLanguage.g:8172:137: ~ ( ( '\\\\' | '\\'' ) )
                     	    {
                     	    if ( (input.LA(1)>='\u0000' && input.LA(1)<='&')||(input.LA(1)>='(' && input.LA(1)<='[')||(input.LA(1)>=']' && input.LA(1)<='\uFFFF') ) {
                     	        input.consume();
@@ -1372,12 +1372,12 @@ public class InternalCupidLanguageLexer extends Lexer {
         try {
             int _type = RULE_ML_COMMENT;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // ../org.earthsystemcurator.cupid.xtext.ui/src-gen/org/earthsystemcurator/ui/contentassist/antlr/internal/InternalCupidLanguage.g:8145:17: ( '/*' ( options {greedy=false; } : . )* '*/' )
-            // ../org.earthsystemcurator.cupid.xtext.ui/src-gen/org/earthsystemcurator/ui/contentassist/antlr/internal/InternalCupidLanguage.g:8145:19: '/*' ( options {greedy=false; } : . )* '*/'
+            // ../org.earthsystemcurator.cupid.xtext.ui/src-gen/org/earthsystemcurator/ui/contentassist/antlr/internal/InternalCupidLanguage.g:8174:17: ( '/*' ( options {greedy=false; } : . )* '*/' )
+            // ../org.earthsystemcurator.cupid.xtext.ui/src-gen/org/earthsystemcurator/ui/contentassist/antlr/internal/InternalCupidLanguage.g:8174:19: '/*' ( options {greedy=false; } : . )* '*/'
             {
             match("/*"); 
 
-            // ../org.earthsystemcurator.cupid.xtext.ui/src-gen/org/earthsystemcurator/ui/contentassist/antlr/internal/InternalCupidLanguage.g:8145:24: ( options {greedy=false; } : . )*
+            // ../org.earthsystemcurator.cupid.xtext.ui/src-gen/org/earthsystemcurator/ui/contentassist/antlr/internal/InternalCupidLanguage.g:8174:24: ( options {greedy=false; } : . )*
             loop9:
             do {
                 int alt9=2;
@@ -1402,7 +1402,7 @@ public class InternalCupidLanguageLexer extends Lexer {
 
                 switch (alt9) {
             	case 1 :
-            	    // ../org.earthsystemcurator.cupid.xtext.ui/src-gen/org/earthsystemcurator/ui/contentassist/antlr/internal/InternalCupidLanguage.g:8145:52: .
+            	    // ../org.earthsystemcurator.cupid.xtext.ui/src-gen/org/earthsystemcurator/ui/contentassist/antlr/internal/InternalCupidLanguage.g:8174:52: .
             	    {
             	    matchAny(); 
 
@@ -1432,10 +1432,10 @@ public class InternalCupidLanguageLexer extends Lexer {
         try {
             int _type = RULE_WS;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // ../org.earthsystemcurator.cupid.xtext.ui/src-gen/org/earthsystemcurator/ui/contentassist/antlr/internal/InternalCupidLanguage.g:8147:9: ( ( ' ' | '\\t' | '\\r' | '\\n' )+ )
-            // ../org.earthsystemcurator.cupid.xtext.ui/src-gen/org/earthsystemcurator/ui/contentassist/antlr/internal/InternalCupidLanguage.g:8147:11: ( ' ' | '\\t' | '\\r' | '\\n' )+
+            // ../org.earthsystemcurator.cupid.xtext.ui/src-gen/org/earthsystemcurator/ui/contentassist/antlr/internal/InternalCupidLanguage.g:8176:9: ( ( ' ' | '\\t' | '\\r' | '\\n' )+ )
+            // ../org.earthsystemcurator.cupid.xtext.ui/src-gen/org/earthsystemcurator/ui/contentassist/antlr/internal/InternalCupidLanguage.g:8176:11: ( ' ' | '\\t' | '\\r' | '\\n' )+
             {
-            // ../org.earthsystemcurator.cupid.xtext.ui/src-gen/org/earthsystemcurator/ui/contentassist/antlr/internal/InternalCupidLanguage.g:8147:11: ( ' ' | '\\t' | '\\r' | '\\n' )+
+            // ../org.earthsystemcurator.cupid.xtext.ui/src-gen/org/earthsystemcurator/ui/contentassist/antlr/internal/InternalCupidLanguage.g:8176:11: ( ' ' | '\\t' | '\\r' | '\\n' )+
             int cnt10=0;
             loop10:
             do {
@@ -1489,8 +1489,8 @@ public class InternalCupidLanguageLexer extends Lexer {
         try {
             int _type = RULE_ANY_OTHER;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // ../org.earthsystemcurator.cupid.xtext.ui/src-gen/org/earthsystemcurator/ui/contentassist/antlr/internal/InternalCupidLanguage.g:8149:16: ( . )
-            // ../org.earthsystemcurator.cupid.xtext.ui/src-gen/org/earthsystemcurator/ui/contentassist/antlr/internal/InternalCupidLanguage.g:8149:18: .
+            // ../org.earthsystemcurator.cupid.xtext.ui/src-gen/org/earthsystemcurator/ui/contentassist/antlr/internal/InternalCupidLanguage.g:8178:16: ( . )
+            // ../org.earthsystemcurator.cupid.xtext.ui/src-gen/org/earthsystemcurator/ui/contentassist/antlr/internal/InternalCupidLanguage.g:8178:18: .
             {
             matchAny(); 
 
@@ -1882,9 +1882,9 @@ public class InternalCupidLanguageLexer extends Lexer {
     protected DFA11 dfa11 = new DFA11(this);
     static final String DFA11_eotS =
         "\1\uffff\2\51\6\uffff\1\51\2\uffff\4\51\1\uffff\3\51\1\uffff\1"+
-        "\103\1\51\1\107\2\uffff\3\51\2\uffff\2\46\2\uffff\2\46\2\uffff\2"+
+        "\103\1\51\1\107\3\uffff\3\51\1\uffff\2\46\2\uffff\2\46\2\uffff\2"+
         "\51\1\uffff\2\51\6\uffff\1\51\2\uffff\6\51\1\uffff\5\51\3\uffff"+
-        "\2\51\4\uffff\1\150\2\51\7\uffff\20\51\1\173\3\51\1\uffff\1\177"+
+        "\2\51\5\uffff\1\150\2\51\6\uffff\20\51\1\173\3\51\1\uffff\1\177"+
         "\15\51\1\u008e\3\51\1\uffff\1\u0092\2\51\1\uffff\1\u0095\5\51\1"+
         "\u009b\7\51\1\uffff\3\51\1\uffff\1\u00a6\1\51\1\uffff\1\51\1\u00aa"+
         "\2\51\1\u00ad\1\uffff\1\51\1\u00af\1\u00b1\7\51\1\uffff\3\51\1\uffff"+
@@ -1898,11 +1898,11 @@ public class InternalCupidLanguageLexer extends Lexer {
         "\u0101\uffff";
     static final String DFA11_minS =
         "\1\0\1\145\1\141\6\uffff\1\145\2\uffff\1\143\1\157\1\163\1\165"+
-        "\1\uffff\1\162\1\141\1\165\1\uffff\1\52\1\157\1\41\2\uffff\1\156"+
-        "\1\165\1\145\2\uffff\1\101\1\55\2\uffff\2\0\2\uffff\1\143\1\165"+
+        "\1\uffff\1\162\1\141\1\165\1\uffff\1\52\1\157\1\41\3\uffff\1\156"+
+        "\1\165\1\145\1\uffff\1\101\1\55\2\uffff\2\0\2\uffff\1\143\1\165"+
         "\1\uffff\1\156\1\147\6\uffff\1\146\2\uffff\3\164\1\144\1\145\1\142"+
-        "\1\uffff\1\145\1\154\1\156\1\141\1\156\3\uffff\2\160\4\uffff\1\60"+
-        "\1\164\1\141\7\uffff\1\154\1\142\1\147\1\151\1\157\1\145\1\165\1"+
+        "\1\uffff\1\145\1\154\1\156\1\141\1\156\3\uffff\2\160\5\uffff\1\60"+
+        "\1\164\1\141\6\uffff\1\154\1\142\1\147\1\151\1\157\1\145\1\165\1"+
         "\162\1\165\1\163\1\162\1\143\1\154\1\143\1\162\1\143\1\60\1\145"+
         "\1\165\1\145\1\uffff\1\60\1\154\1\141\1\154\1\165\1\143\2\162\1"+
         "\141\1\151\1\154\1\105\1\157\1\151\1\60\1\145\1\141\1\164\1\uffff"+
@@ -1920,11 +1920,11 @@ public class InternalCupidLanguageLexer extends Lexer {
         "\1\162\1\60\1\144\1\uffff\1\60\1\uffff";
     static final String DFA11_maxS =
         "\1\uffff\2\157\6\uffff\1\145\2\uffff\1\164\1\157\1\163\1\165\1"+
-        "\uffff\1\162\1\157\1\165\1\uffff\1\52\1\171\1\41\2\uffff\1\156\1"+
-        "\165\1\145\2\uffff\1\172\1\55\2\uffff\2\uffff\2\uffff\1\143\1\165"+
+        "\uffff\1\162\1\157\1\165\1\uffff\1\52\1\171\1\41\3\uffff\1\156\1"+
+        "\165\1\145\1\uffff\1\172\1\55\2\uffff\2\uffff\2\uffff\1\143\1\165"+
         "\1\uffff\1\156\1\147\6\uffff\1\146\2\uffff\3\164\1\144\1\145\1\142"+
-        "\1\uffff\1\145\1\154\1\156\1\141\1\156\3\uffff\2\160\4\uffff\1\172"+
-        "\1\164\1\141\7\uffff\1\154\1\142\1\147\1\151\1\157\1\145\1\165\1"+
+        "\1\uffff\1\145\1\154\1\156\1\141\1\156\3\uffff\2\160\5\uffff\1\172"+
+        "\1\164\1\141\6\uffff\1\154\1\142\1\147\1\151\1\157\1\145\1\165\1"+
         "\162\1\165\1\163\1\162\1\143\1\154\1\143\1\162\1\143\1\172\1\145"+
         "\1\165\1\145\1\uffff\1\172\1\154\1\141\1\154\1\165\1\143\2\162\1"+
         "\141\1\151\1\154\1\115\1\157\1\151\1\172\1\145\1\141\1\164\1\uffff"+
@@ -1942,23 +1942,23 @@ public class InternalCupidLanguageLexer extends Lexer {
         "\164\1\162\1\172\1\144\1\uffff\1\172\1\uffff";
     static final String DFA11_acceptS =
         "\3\uffff\1\3\1\4\1\5\1\6\1\7\1\10\1\uffff\1\12\1\13\4\uffff\1\22"+
-        "\3\uffff\1\31\3\uffff\1\40\1\41\3\uffff\1\53\1\54\2\uffff\1\57\1"+
+        "\3\uffff\1\31\3\uffff\1\40\1\41\1\42\3\uffff\1\54\2\uffff\1\57\1"+
         "\60\2\uffff\1\63\1\64\2\uffff\1\57\2\uffff\1\3\1\4\1\5\1\6\1\7\1"+
         "\10\1\uffff\1\12\1\13\6\uffff\1\22\5\uffff\1\31\1\62\1\32\2\uffff"+
-        "\1\36\1\35\1\40\1\41\3\uffff\1\53\1\54\1\55\1\56\1\60\1\61\1\63"+
-        "\24\uffff\1\42\22\uffff\1\34\3\uffff\1\43\16\uffff\1\25\3\uffff"+
-        "\1\52\2\uffff\1\50\5\uffff\1\14\12\uffff\1\44\3\uffff\1\51\2\uffff"+
-        "\1\11\1\uffff\1\37\1\uffff\1\15\13\uffff\1\47\6\uffff\1\33\2\uffff"+
-        "\1\45\2\uffff\1\2\17\uffff\1\23\1\46\4\uffff\1\16\1\17\1\20\1\uffff"+
+        "\1\36\1\35\1\40\1\41\1\42\3\uffff\1\54\1\55\1\56\1\60\1\61\1\63"+
+        "\24\uffff\1\43\22\uffff\1\34\3\uffff\1\44\16\uffff\1\25\3\uffff"+
+        "\1\53\2\uffff\1\51\5\uffff\1\14\12\uffff\1\45\3\uffff\1\52\2\uffff"+
+        "\1\11\1\uffff\1\37\1\uffff\1\15\13\uffff\1\50\6\uffff\1\33\2\uffff"+
+        "\1\46\2\uffff\1\2\17\uffff\1\23\1\47\4\uffff\1\16\1\17\1\20\1\uffff"+
         "\1\21\2\uffff\1\27\13\uffff\1\1\1\uffff\1\24\10\uffff\1\30\1\uffff"+
         "\1\26";
     static final String DFA11_specialS =
-        "\1\2\42\uffff\1\0\1\1\u00dc\uffff}>";
+        "\1\1\42\uffff\1\0\1\2\u00dc\uffff}>";
     static final String[] DFA11_transitionS = {
             "\11\46\2\45\2\46\1\45\22\46\1\45\1\27\1\43\1\24\3\46\1\44\1"+
-            "\12\1\13\1\30\1\31\1\20\1\40\1\46\1\25\12\42\1\10\1\46\1\6\1"+
-            "\5\1\7\1\35\1\37\32\41\3\46\1\36\1\41\1\46\1\14\1\11\1\22\1"+
-            "\1\1\41\1\23\2\41\1\32\2\41\1\2\1\15\1\41\1\33\1\21\1\41\1\34"+
+            "\12\1\13\1\31\1\32\1\20\1\40\1\46\1\25\12\42\1\10\1\46\1\6\1"+
+            "\5\1\7\1\30\1\37\32\41\3\46\1\36\1\41\1\46\1\14\1\11\1\22\1"+
+            "\1\1\41\1\23\2\41\1\33\2\41\1\2\1\15\1\41\1\34\1\21\1\41\1\35"+
             "\1\17\1\26\1\16\5\41\1\3\1\46\1\4\uff82\46",
             "\1\47\11\uffff\1\50",
             "\1\52\15\uffff\1\53",
@@ -1985,10 +1985,10 @@ public class InternalCupidLanguageLexer extends Lexer {
             "\1\106",
             "",
             "",
-            "\1\112",
+            "",
             "\1\113",
             "\1\114",
-            "",
+            "\1\115",
             "",
             "\32\117\4\uffff\1\117\1\uffff\32\117",
             "\1\120",
@@ -2033,11 +2033,11 @@ public class InternalCupidLanguageLexer extends Lexer {
             "",
             "",
             "",
+            "",
             "\12\51\7\uffff\32\51\4\uffff\1\51\1\uffff\16\51\1\146\4\51"+
             "\1\147\6\51",
             "\1\151",
             "\1\152",
-            "",
             "",
             "",
             "",
@@ -2268,16 +2268,6 @@ public class InternalCupidLanguageLexer extends Lexer {
                         if ( s>=0 ) return s;
                         break;
                     case 1 : 
-                        int LA11_36 = input.LA(1);
-
-                        s = -1;
-                        if ( ((LA11_36>='\u0000' && LA11_36<='\uFFFF')) ) {s = 82;}
-
-                        else s = 38;
-
-                        if ( s>=0 ) return s;
-                        break;
-                    case 2 : 
                         int LA11_0 = input.LA(1);
 
                         s = -1;
@@ -2327,17 +2317,17 @@ public class InternalCupidLanguageLexer extends Lexer {
 
                         else if ( (LA11_0=='!') ) {s = 23;}
 
-                        else if ( (LA11_0=='*') ) {s = 24;}
+                        else if ( (LA11_0=='?') ) {s = 24;}
 
-                        else if ( (LA11_0=='+') ) {s = 25;}
+                        else if ( (LA11_0=='*') ) {s = 25;}
 
-                        else if ( (LA11_0=='i') ) {s = 26;}
+                        else if ( (LA11_0=='+') ) {s = 26;}
 
-                        else if ( (LA11_0=='o') ) {s = 27;}
+                        else if ( (LA11_0=='i') ) {s = 27;}
 
-                        else if ( (LA11_0=='r') ) {s = 28;}
+                        else if ( (LA11_0=='o') ) {s = 28;}
 
-                        else if ( (LA11_0=='?') ) {s = 29;}
+                        else if ( (LA11_0=='r') ) {s = 29;}
 
                         else if ( (LA11_0=='^') ) {s = 30;}
 
@@ -2356,6 +2346,16 @@ public class InternalCupidLanguageLexer extends Lexer {
                         else if ( ((LA11_0>='\t' && LA11_0<='\n')||LA11_0=='\r'||LA11_0==' ') ) {s = 37;}
 
                         else if ( ((LA11_0>='\u0000' && LA11_0<='\b')||(LA11_0>='\u000B' && LA11_0<='\f')||(LA11_0>='\u000E' && LA11_0<='\u001F')||(LA11_0>='$' && LA11_0<='&')||LA11_0=='.'||LA11_0==';'||(LA11_0>='[' && LA11_0<=']')||LA11_0=='`'||LA11_0=='|'||(LA11_0>='~' && LA11_0<='\uFFFF')) ) {s = 38;}
+
+                        if ( s>=0 ) return s;
+                        break;
+                    case 2 : 
+                        int LA11_36 = input.LA(1);
+
+                        s = -1;
+                        if ( ((LA11_36>='\u0000' && LA11_36<='\uFFFF')) ) {s = 82;}
+
+                        else s = 38;
 
                         if ( s>=0 ) return s;
                         break;

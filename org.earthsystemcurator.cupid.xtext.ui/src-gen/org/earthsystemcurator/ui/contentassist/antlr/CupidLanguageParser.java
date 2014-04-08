@@ -135,8 +135,9 @@ public class CupidLanguageParser extends AbstractContentAssistParser {
 					put(grammarAccess.getAttributeAccess().getMustBeNullAssignment_3_1(), "rule__Attribute__MustBeNullAssignment_3_1");
 					put(grammarAccess.getAttributeAccess().getAttribMappingAssignment_4_1(), "rule__Attribute__AttribMappingAssignment_4_1");
 					put(grammarAccess.getAttributeAccess().getAnnotationAssignment_5_1(), "rule__Attribute__AnnotationAssignment_5_1");
-					put(grammarAccess.getCardinalityAccess().getZeroOrMoreAssignment_0(), "rule__Cardinality__ZeroOrMoreAssignment_0");
-					put(grammarAccess.getCardinalityAccess().getOneOrMoreAssignment_1(), "rule__Cardinality__OneOrMoreAssignment_1");
+					put(grammarAccess.getCardinalityAccess().getZeroOrOneAssignment_0(), "rule__Cardinality__ZeroOrOneAssignment_0");
+					put(grammarAccess.getCardinalityAccess().getZeroOrMoreAssignment_1(), "rule__Cardinality__ZeroOrMoreAssignment_1");
+					put(grammarAccess.getCardinalityAccess().getOneOrMoreAssignment_2(), "rule__Cardinality__OneOrMoreAssignment_2");
 					put(grammarAccess.getMappingAccess().getContextAssignment_0(), "rule__Mapping__ContextAssignment_0");
 					put(grammarAccess.getMappingAccess().getMappingAssignment_1(), "rule__Mapping__MappingAssignment_1");
 					put(grammarAccess.getMappingAccess().getBeforeAssignment_2_2(), "rule__Mapping__BeforeAssignment_2_2");

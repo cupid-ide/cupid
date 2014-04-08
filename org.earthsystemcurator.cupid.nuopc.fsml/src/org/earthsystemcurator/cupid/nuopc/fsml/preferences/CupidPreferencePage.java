@@ -13,6 +13,7 @@ public class CupidPreferencePage
 	
 	public static final String CUPID_AWS_ACCESS_KEY = "CUPID_AWS_ACCESS_KEY";
 	public static final String CUPID_AWS_SECRET_KEY = "CUPID_AWS_SECRET_KEY";
+	public static final String CUPID_LANGUAGE_URI = "CUPID_LANGUAGE_URI";
 
 
 	public CupidPreferencePage() {
@@ -43,6 +44,14 @@ public class CupidPreferencePage
 		
 		addField(new PasswordStringFieldEditor(CUPID_AWS_ACCESS_KEY, "Amazon AWS Access Key:", getFieldEditorParent()));
 		addField(new PasswordStringFieldEditor(CUPID_AWS_SECRET_KEY, "Amazon AWS Secret Key:", getFieldEditorParent()));
+	
+		addField(new StringFieldEditor(CUPID_LANGUAGE_URI, "Language definition URI", getFieldEditorParent()){
+			@Override
+			protected void doLoadDefault() {
+				setStringValue("http://defaulturi");
+			}
+		});
+		
 	}
 	
 	class PasswordStringFieldEditor extends StringFieldEditor {
@@ -54,6 +63,8 @@ public class CupidPreferencePage
 	        super.doFillIntoGrid(parent, numColumns);
 	        getTextControl().setEchoChar('*');
 	    }
+		
+		
 	}
 
 	/* (non-Javadoc)

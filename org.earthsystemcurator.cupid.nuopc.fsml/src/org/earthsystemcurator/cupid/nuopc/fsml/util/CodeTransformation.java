@@ -23,7 +23,11 @@ import org.eclipse.core.resources.IFile;
 import org.eclipse.core.resources.IProject;
 import org.eclipse.core.resources.IResource;
 import org.eclipse.core.runtime.CoreException;
+import org.eclipse.emf.ecore.EObject;
+import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.photran.core.IFortranAST;
+import org.eclipse.photran.internal.core.lexer.Terminal;
+import org.eclipse.photran.internal.core.lexer.Token;
 import org.eclipse.photran.internal.core.parser.ASTAssignmentStmtNode;
 import org.eclipse.photran.internal.core.parser.ASTModuleNode;
 import org.eclipse.photran.internal.core.parser.ASTSubroutineSubprogramNode;
@@ -57,6 +61,11 @@ public class CodeTransformation {
 			st.add("doc", doc.replaceAll("\n", "\n! ").split(" "));
 		}
 		return st;
+	}
+	
+	private static void setMapsTo(EObject modelElem, Object value) {
+		EStructuralFeature esf = modelElem.eClass().getEStructuralFeature("mapsTo");
+		modelElem.eSet(esf, value);
 	}
 	
 	public static IFortranAST module(Set<IFortranAST> context, Module mapping, List<Annotation> anots) {		
@@ -183,13 +192,13 @@ public class CodeTransformation {
 	 * @param value
 	 * @return
 	 */
-	public static IASTNode usesEntity(ASTUseStmtNode context, UsesEntity mapping, String value, List<Annotation> anots) {
+	public static IASTNode usesEntity(ASTUseStmtNode contextNode, UsesEntity mapping, String value, List<Annotation> anots, EObject context) {
 		
 		String oldName = mapping.getName().getExpr().getId();
 		String newName = value;
 					
-		String code = context.toString().trim();  
-		if (context.getOnlyList() == null) {
+		String code = contextNode.toString().trim();  
+		if (contextNode.getOnlyList() == null) {
 			code += ", only: ";
 		}
 		else {
@@ -202,49 +211,31 @@ public class CodeTransformation {
 			code += oldName;
 		}
 		
-		try {
-			ASTUseStmtNode tempNode = (ASTUseStmtNode) CodeExtraction.parseLiteralStatement(code);
-			
-			//if (context.getOnlyList() == null) {
-				if (tempNode.getOnlyList().get(0).getNewName() != null) {
-					tempNode.getOnlyList().get(0).getNewName().setWhiteBefore(", only: "); //works, but a bit hacky
-				}
-				else {
-					tempNode.getOnlyList().get(0).getName().setWhiteBefore(", only: ");
-				}
-			//}
-			
-			context.setOnlyList(tempNode.getOnlyList());
-			
-		}
-		catch (ClassCastException c) {
-			System.out.println("CCE");
-		}
-
+		ASTUseStmtNode tempNode = (ASTUseStmtNode) CodeExtraction.parseLiteralStatement(code);
+		contextNode.replaceWith(tempNode);
 		
+		//TODO: don't like this break in modularity as the transformation
+		//class is now aware of the model elements
+		//
+		//all the mapping should be handled separately from the code transformation stuff...
+		setMapsTo(context, tempNode);
 		
-		return context;
-	
 		/*
-		else {
-			String code = "use " + moduleName + ", only: " + renamedEntity + " => " + entityName;
-			ASTUseStmtNode newNode = (ASTUseStmtNode) CodeExtraction.parseLiteralStatement(code);
-		
-			//find an appropriate location
-			IASTListNode<IBodyConstruct> body = (IASTListNode<IBodyConstruct>) module.getBody();
-			ASTUseStmtNode usn = body.findLast(ASTUseStmtNode.class);
-			if (usn != null) {
-				body.insertAfter(usn, newNode);
+		if (contextNode.getOnlyList() == null) {
+			if (tempNode.getOnlyList().get(0).getNewName() != null) {
+				tempNode.getOnlyList().get(0).getNewName().setWhiteBefore(", only: "); //works, but a bit hacky
 			}
 			else {
-				body.add(0, newNode);
+				tempNode.getOnlyList().get(0).getName().setWhiteBefore(", only: ");
 			}
-			return newNode;
 		}
 		
+		//context.
+		contextNode.setOnlyList(tempNode.getOnlyList());
+		*/		
 		
-		return null;
-		*/
+		return contextNode;	
+		
 	}	
 		
 	

@@ -37,6 +37,7 @@
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference CupidLanguage.ecore#//SubconceptOrAttribute/annotation"/>
     </genClasses>
     <genClasses ecoreClass="CupidLanguage.ecore#//Cardinality">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute CupidLanguage.ecore#//Cardinality/zeroOrOne"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute CupidLanguage.ecore#//Cardinality/zeroOrMore"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute CupidLanguage.ecore#//Cardinality/oneOrMore"/>
     </genClasses>

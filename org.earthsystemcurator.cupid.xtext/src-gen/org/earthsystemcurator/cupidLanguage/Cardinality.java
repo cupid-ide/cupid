@@ -12,6 +12,7 @@ import org.eclipse.emf.ecore.EObject;
  * <p>
  * The following features are supported:
  * <ul>
+ *   <li>{@link org.earthsystemcurator.cupidLanguage.Cardinality#isZeroOrOne <em>Zero Or One</em>}</li>
  *   <li>{@link org.earthsystemcurator.cupidLanguage.Cardinality#isZeroOrMore <em>Zero Or More</em>}</li>
  *   <li>{@link org.earthsystemcurator.cupidLanguage.Cardinality#isOneOrMore <em>One Or More</em>}</li>
  * </ul>
@@ -23,6 +24,32 @@ import org.eclipse.emf.ecore.EObject;
  */
 public interface Cardinality extends EObject
 {
+  /**
+   * Returns the value of the '<em><b>Zero Or One</b></em>' attribute.
+   * <!-- begin-user-doc -->
+   * <p>
+   * If the meaning of the '<em>Zero Or One</em>' attribute isn't clear,
+   * there really should be more of a description here...
+   * </p>
+   * <!-- end-user-doc -->
+   * @return the value of the '<em>Zero Or One</em>' attribute.
+   * @see #setZeroOrOne(boolean)
+   * @see org.earthsystemcurator.cupidLanguage.CupidLanguagePackage#getCardinality_ZeroOrOne()
+   * @model
+   * @generated
+   */
+  boolean isZeroOrOne();
+
+  /**
+   * Sets the value of the '{@link org.earthsystemcurator.cupidLanguage.Cardinality#isZeroOrOne <em>Zero Or One</em>}' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @param value the new value of the '<em>Zero Or One</em>' attribute.
+   * @see #isZeroOrOne()
+   * @generated
+   */
+  void setZeroOrOne(boolean value);
+
   /**
    * Returns the value of the '<em><b>Zero Or More</b></em>' attribute.
    * <!-- begin-user-doc -->
