@@ -7,6 +7,7 @@ language NUOPC 'http://www.earthsystemcurator.org/nuopcgen' {
 		
 		attrib name	{ @name }
 		
+		
 		models*:NUOPCModel
 		drivers*:NUOPCDriver
 		driversAtmOcn*:NUOPCDriverAtmOcn
@@ -36,7 +37,6 @@ language NUOPC 'http://www.earthsystemcurator.org/nuopcgen' {
 			attrib importsLabelInternalState <usesEntity(label_InternalState)>
 			attrib importsLabelSetModelCount <usesEntity(label_SetModelCount)>
 			attrib importsLabelSetModelServices <usesEntity(label_SetModelServices)>
-			
 		}
 		
 		modelImports {
@@ -83,7 +83,6 @@ language NUOPC 'http://www.earthsystemcurator.org/nuopcgen' {
 			attrib importsLabelInternalState <usesEntity(label_InternalState)>
 			attrib importsLabelSetModelPetLists <usesEntity(label_SetModelPetLists)>
 			attrib importsLabelSetModelServices <usesEntity(label_SetModelServices)>
-			
 		}
 		
 		connectorImport <usesModule(NUOPC_Connector)> {
@@ -111,7 +110,7 @@ language NUOPC 'http://www.earthsystemcurator.org/nuopcgen' {
 			attrib p_gcomp
 			attrib p_rc	
 			
-			attrib importsLabelSetModelPetLists <#^genericDriverImports usesEntity(label_SetModelPetLists)>
+			attrib importsLabelSetModelPetLists! <#^genericDriverImports usesEntity(label_SetModelPetLists)>
 					
 			--method registration
 			setModelPetListsRegistered! <#^implementsSetServices 
@@ -154,12 +153,12 @@ language NUOPC 'http://www.earthsystemcurator.org/nuopcgen' {
 	}
 		
 	
-	concept NUOPCModel <module>
+	concept NUOPCModel <module(#modelName)>
 	{
 		@label="NUOPC Model"
 		@doc="NUOPC Model is a generic model component that wraps a model code so it is suitable to be plugged into a generic Driver component."
 				
-		attrib modelName <moduleName> 
+		attrib modelName
 		{
 			@name
 			@label="Model Name"
@@ -168,8 +167,9 @@ language NUOPC 'http://www.earthsystemcurator.org/nuopcgen' {
 		
 		genericImports! <usesModule(NUOPC_Model)>
 		{
+			@doc="usesModule doc usesModule doc usesModule doc usesModule doc usesModule doc usesModule doc"
 			@label = "Generic Imports"
-			attrib importsGenericSS! <usesEntity(routine_SetServices)>
+			attrib importsGenericSS! <usesEntity(routine_SetServices)> {@default = "model_routine_SetServices"}
 			--attrib importsLabelModelAdvance <usesEntity(label_Advance)>
 			--attrib importsLabelSetClock <usesEntity(label_SetClock)>
 			
@@ -178,37 +178,45 @@ language NUOPC 'http://www.earthsystemcurator.org/nuopcgen' {
 		implementsSetServices! <subroutine(*(inout type(ESMF_GridComp) #p_gcomp, out integer #p_rc) )> 
 		{
 			@label = "Set Services"
+			@doc = "implementsSetServices doc implementsSetServices doc implementsSetServices doc implementsSetServices doc implementsSetServices doc "
 			attrib n_SetServices <subroutineName> {@name @default="SetServices"}
 			attrib p_gcomp {@default="gcomp"}
 			attrib p_rc	{@default="rc"}	
 						
 			callsGenericSetServices! <call(#^genericImports/importsGenericSS(#^p_gcomp, #^p_rc))> 
 			{
+				@doc = "callsGenericSetServices doc is right here\nsecond line\nthird line\nlast line"
 				@label = "Calls generic SetServices"	
 			}
+			
 			/*
-			callsSetEntryPoint* <call(ESMF_GridCompSetEntryPoint(#gcomp, #method, userRoutine=#userRoutine, phase?=#phase, rc=#rc))> 
-			{
-				@label = "Calls ESMF_GridCompSetEntryPoint"
-				attrib method
-				attrib userRoutine {@name}
-				attrib phase
-			}			
+			afterTest* {
+				
+				first <call(#name)> 
+					{attrib name {@name}}
+					
+				second <call(#name) after(#^first)> 
+					{attrib name {@name}}
+				
+			}
 			*/
+			
 		}
 		
 		initialize
 		{
-			@label = "Model Initialization"
+			@label = "Initialization"
 			
-			implementsInitP1 <subroutine(#n_initP1(
+			initP1 <subroutine(#n_initP1(
 										inout type(ESMF_GridComp) #p_gcomp, 
 										inout type(ESMF_State) #p_import, 
 										inout type(ESMF_State) #p_export, 
 										inout type(ESMF_Clock) #p_clock, 
 										out integer #p_rc))>
 			{
-				@label = "Init Phase 1"
+				@label = "phase 1"
+				@doc = "Required and implementor provided. Advertise Fields in import and export States"
+				
 				attrib n_initP1 {@name @default="InitializeP1"}
 				attrib p_gcomp {@default="gcomp"}
 				attrib p_import {@default="importState"}
@@ -221,6 +229,7 @@ language NUOPC 'http://www.earthsystemcurator.org/nuopcgen' {
 					@label = "Advertises import field"
 					attrib importStandardName {
 						@label = "Standard Name"
+						@default = "\"standard_name\""
 					}
 				}
 				
@@ -230,11 +239,12 @@ language NUOPC 'http://www.earthsystemcurator.org/nuopcgen' {
 					@label = "Advertises export field"
 					attrib exportStandardName {
 						@label = "Standard Name"
+						@default = "\"standard_name\""
 					}
 				}
 				
 				
-				registered! <#^implementsSetServices call(ESMF_GridCompSetEntryPoint(#^implementsSetServices/p_gcomp, ESMF_METHOD_INITIALIZE, userRoutine=#^n_initP1, phase=1, rc=#^implementsSetServices/p_rc))> 
+				registered1! <#^implementsSetServices call(ESMF_GridCompSetEntryPoint(#^implementsSetServices/p_gcomp, ESMF_METHOD_INITIALIZE, userRoutine=#^n_initP1, phase=1, rc=#^implementsSetServices/p_rc))> 
 				{
 					@label = "Registered in Set Services"
 				--	attrib userRoutine <actualParamByKeyword(userRoutine)>
@@ -244,14 +254,15 @@ language NUOPC 'http://www.earthsystemcurator.org/nuopcgen' {
 			}
 		
 			
-			implementsInitP2 <subroutine(#n_initP2(
+			initP2 <subroutine(#n_initP2(
 						inout type(ESMF_GridComp) #p_gcomp, 
 						inout type(ESMF_State) #p_import, 
 						inout type(ESMF_State) #p_export, 
 						inout type(ESMF_Clock) #p_clock, 
 						out integer #p_rc))>
 			{
-				@label = "Init Phase 2"
+				@label = "phase 2"
+				@doc = "Required and implementor provided. Realize the advertised Fields in import and export States"
 				
 				attrib n_initP2 {@name @default="InitializeP2"}
 				attrib p_gcomp {@default="gcomp"}
@@ -259,20 +270,106 @@ language NUOPC 'http://www.earthsystemcurator.org/nuopcgen' {
 				attrib p_export {@default="exportState"}
 				attrib p_clock {@default="clock"}
 				attrib p_rc {@default="rc"}
+												
+				--create and realize an import field
+				createAndRealizeImport* {
+					@label = "Create and Realize Import Field"
+					
+					-- local variables
+					fieldDeclaration <declaration(type(ESMF_Field))> {
+						@label = "Declare ESMF_Field"
+						attrib fieldName <declaredEntity> {
+							@name 
+							@label="name" 
+							@default="field"
+						}
+					}
+					
+					gridDeclaration <declaration(type(ESMF_Grid))> {
+						@label = "Declare ESMF_Grid"
+						attrib gridName <declaredEntity> {
+							@name
+							@label="name"
+							@default="grid"
+						}
+					}
+					
+					-- field = ESMF_FieldCreate(name="sst", grid=gridIn, typekind=ESMF_TYPEKIND_R8, rc=rc)
+					fieldAssignment <functionAssignment(#^fieldDeclaration/fieldName, ESMF_FieldCreate(name=#name, grid?=#^gridDeclaration/gridName, typekind?=#typekind, rc?=#^p_rc))>
+					{
+						@label = "Create field"
+						attrib name {@name @default="\"field_name\""}
+						attrib typekind {@default="ESMF_TYPEKIND_R8"}
+					}
+					
+					realizesImportField! <call(NUOPC_StateRealizeField(#^p_import, field=#^fieldDeclaration/fieldName, rc=#^p_rc)) after(#^fieldAssignment)> 
+					{
+						@label = "Realize field"
+					}
+					
+					dummyAssignment!! <functionAssignment(#^fieldDeclaration/fieldName, *) before(#^realizesImportField) after(#^fieldAssignment)>					
 				
-				realizesImportField* <call(NUOPC_StateRealizeField(#^p_import, field=#importedField, rc=#^p_rc))> 
-				{
-					@label = "Realizes import field"
-					attrib importedField
 				}
 				
+					
+				createAndRealizeExport* {
+					@label = "Create and Realize Export Field"
+					
+					-- local variable
+					fieldDeclaration <declaration(type(ESMF_Field))> {
+						@label = "Declare ESMF_Field"
+						@doc = "export field"
+						attrib fieldName <declaredEntity> {
+							@name 
+							@label="name" 
+							@default="field"
+						}
+					}
+					
+					gridDeclaration <declaration(type(ESMF_Grid))> {
+						@label = "Declare ESMF_Grid"
+						@doc = "export declaration"
+						attrib gridName <declaredEntity> {
+							@name
+							@label="name"
+							@default="grid"
+						}
+					}
+					
+					-- field = ESMF_FieldCreate(name="sst", grid=gridIn, typekind=ESMF_TYPEKIND_R8, rc=rc)
+					fieldAssignment <functionAssignment(#^fieldDeclaration/fieldName, ESMF_FieldCreate(name=#name, grid?=#^gridDeclaration/gridName, typekind?=#typekind, rc?=#^p_rc))>
+					{
+						@label = "Create field"
+						@doc = "field assignment export"
+						attrib name {@name @default="\"field_name\""}
+						attrib typekind {@default="ESMF_TYPEKIND_R8"}
+					}
+					
+					realizesExportField! <call(NUOPC_StateRealizeField(#^p_export, field=#^fieldDeclaration/fieldName, rc=#^p_rc)) after(#^fieldAssignment)> 
+					{
+						@label = "Realize field"
+					}
+					
+					-- !! indicates that is mustBeNull
+					-- this makes sure that there are no changes to field between when the
+					-- field is created and when it is realized
+					-- TODO: implement a raw <assignment> mapping that ignore the type of assignment, just checks lhs
+					-- TODO: fix the bug that a mapped element comes after itself....
+					dummyAssignment!! <functionAssignment(#^fieldDeclaration/fieldName, *) before(#^realizesExportField) after(#^fieldAssignment)>
+					
+				}
+				
+				
+				
+				/*
 				realizesExportField* <call(NUOPC_StateRealizeField(#^p_export, field=#exportedField, rc=#^p_rc))> 
 				{
 					@label = "Realizes export field"
 					attrib exportedField
 				}
+				*/
 				
-				registered! <#^implementsSetServices call(ESMF_GridCompSetEntryPoint(
+				registered2! <#^implementsSetServices call(ESMF_GridCompSetEntryPoint(
 						#^implementsSetServices/p_gcomp, 
 						ESMF_METHOD_INITIALIZE, 
 						userRoutine=#^n_initP2, 
@@ -285,20 +382,97 @@ language NUOPC 'http://www.earthsystemcurator.org/nuopcgen' {
 				--realizesAtLeastOneField
 				--realizesOrRegistered
 			}
+		
+			initP3 {
+				@label = "phase 3"
+				@doc = "Provided by NUOPC. If not set, internal clock is set to copy of incoming clock. Check compatibility, ensuring all advertised import Fields are connected."
+			
+				specSetClock? <subroutine(*(inout type(ESMF_GridComp) #p_gcomp, out integer #p_rc) )> 
+				{
+					@label = "Set Clock (optional specialization)"
+					@doc = "Optional specialization to set the Model's internal clock and/or alarms."
+					
+					attrib n_SetClock <subroutineName> {@name @default="SetModelClock"}
+					attrib p_gcomp {@default="gcomp"}
+					attrib p_rc	{@default="rc"}
+					
+					clock <declaration(type(ESMF_Clock))> 
+					{
+						@doc = "This is the doc object"
+						attrib name <declaredEntity> {@default="clock"}
+					}
+					
+					timeStep <declaration(type(ESMF_TimeInterval))> 
+					{
+						attrib name <declaredEntity> {@default="timeStep"}
+					}
+					
+					--imports label
+					attrib importsLabelSetClock! <#^genericImports usesEntity(label_SetClock)> {
+						@default = "model_label_SetClock"
+					}		
+					
+					--method registration
+					setClockRegistered! <#^implementsSetServices 
+							call(ESMF_MethodAdd(#^implementsSetServices/p_gcomp, 
+												label=#^importsLabelSetClock, 
+												userRoutine=#^n_SetClock, 
+												rc=#^implementsSetServices/p_rc))>
+					{
+						@label = "Registered in Set Services"
+					}
+					
+					--call NUOPC_GridCompSetClock(gcomp, clock, stabilityTimeStep, rc=rc)
+					setModelClock <call (NUOPC_GridCompSetClock(#^p_gcomp, #^clock/name, #^timeStep/name, rc=#^p_rc))> 
+					{
+						@label = "Set Clock"
+						@doc = "Sets the Component internal Clock as a copy of externalClock, but with a timeStep that is less than or equal to the stabilityTimeStep. At the same time ensures that the timeStep of the external Clock is a multiple of the internal Clock's timeStep. If the stabilityTimeStep argument is not provided then the internal Clock will simply be set as a copy of the externalClock."
+					}
+					
+					
+				}
+				
+			}
+			
+			initP4 {
+				@label = "phase 4"
+				@doc = "Provided by NUOPC. Field in export state are timestamped for compatibility checking."
+				
+				specDataInitialize {
+					@label = "Data Initialize (optional specialization)"
+					@doc = "Optional specialization to initialize export Fields"
+				}
+			}
+			
+			initP5 {
+				@label = "phase 5"
+				@doc = "Provided by NUOPC. Field in export state are timestamped for compatibility checking."
+				
+				specDataInitialize {
+					@label = "Data Initialize (optional specialization)"
+					@doc = "Optional specialization to initialize export Fields"
+				}
+			}
+			
 		}	
+		
 		
 		modelRun
 		{
 			@label = "Model Run"
 			
-			modelAdvance* {	
+			modelAdvance* 
+			{	
 				
 				@label = "Model Advance Phase"
 				attrib userRoutine  {@name @default="ModelAdvance"}
 				attrib phase
 				
 				--imports label
-				attrib importsLabelModelAdvance <#^genericImports usesEntity(label_Advance)>	
+				attrib importsLabelModelAdvance! <#^genericImports usesEntity(label_Advance)>
+				{
+					@default = "model_label_Advance"
+				}	
 				
 				modelAdvanceRegistered <#^implementsSetServices 
 					call(ESMF_MethodAdd(*, 
@@ -310,48 +484,16 @@ language NUOPC 'http://www.earthsystemcurator.org/nuopcgen' {
 					@label = "Registered in Set Services"
 				}
 													
-				implementsSubroutine <subroutine(#^userRoutine(inout type(ESMF_GridComp) *, out integer *))> {
+				implementsSubroutine <subroutine(#^userRoutine(inout type(ESMF_GridComp) #gcomp, out integer #rc))> 
+				{
 					@label = "Implementation"
 					attrib name <subroutineName> {@name}
+					attrib gcomp {@default="gcomp"}
+					attrib rc {@default="rc"}
 				}
 			
 			}
-			
-			
-		}
-		
-		implementsSetClock <subroutine(*(inout type(ESMF_GridComp) #p_gcomp, out integer #p_rc) )> 
-		{
-			
-			@label = "Set Clock"
-			attrib n_SetClock <subroutineName> {@name}
-			attrib p_gcomp
-			attrib p_rc	
-			
-			attrib clock <declaration(type(ESMF_Clock))>
-			attrib timeStep <declaration(type(ESMF_TimeInterval))>
-			
-			--imports label
-			attrib importsLabelSetClock! <#^genericImports usesEntity(label_SetClock)>			
-			
-			--method registration
-			setClockRegistered! <#^implementsSetServices 
-					call(ESMF_MethodAdd(#^implementsSetServices/p_gcomp, 
-										label=#^importsLabelSetClock, 
-										userRoutine=#^n_SetClock, 
-										rc=#^implementsSetServices/p_rc))>
-			{
-				@label = "Registered in Set Services"
-			}
-			
-			--call NUOPC_GridCompSetClock(gcomp, clock, stabilityTimeStep, rc=rc)
-			setModelClock <call (NUOPC_GridCompSetClock(#^p_gcomp, #clock, #timeStep, rc=#^p_rc))> {
-				@label = "Set Clock"
-				attrib clock
-				attrib timeStep
-			}
-			
-			
+				
 		}
 		
 				

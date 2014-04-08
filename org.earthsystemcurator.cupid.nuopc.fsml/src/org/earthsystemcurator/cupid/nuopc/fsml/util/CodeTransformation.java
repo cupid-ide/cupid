@@ -2,11 +2,14 @@ package org.earthsystemcurator.cupid.nuopc.fsml.util;
 
 import java.io.ByteArrayInputStream;
 import java.io.InputStream;
+import java.util.List;
 import java.util.Set;
 
+import org.earthsystemcurator.cupidLanguage.Annotation;
 import org.earthsystemcurator.cupidLanguage.Call;
 import org.earthsystemcurator.cupidLanguage.DeclaredEntity;
 import org.earthsystemcurator.cupidLanguage.FormalParam;
+import org.earthsystemcurator.cupidLanguage.FunctionAssignment;
 import org.earthsystemcurator.cupidLanguage.Intent;
 import org.earthsystemcurator.cupidLanguage.Module;
 import org.earthsystemcurator.cupidLanguage.ModuleName;
@@ -21,6 +24,7 @@ import org.eclipse.core.resources.IProject;
 import org.eclipse.core.resources.IResource;
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.photran.core.IFortranAST;
+import org.eclipse.photran.internal.core.parser.ASTAssignmentStmtNode;
 import org.eclipse.photran.internal.core.parser.ASTModuleNode;
 import org.eclipse.photran.internal.core.parser.ASTSubroutineSubprogramNode;
 import org.eclipse.photran.internal.core.parser.ASTTypeDeclarationStmtNode;
@@ -34,6 +38,8 @@ import org.stringtemplate.v4.ST;
 @SuppressWarnings("restriction")
 public class CodeTransformation {
 
+	private static final int LINE_WIDTH = 72;
+	
 	//a hack to acquire the project handle, required only when adding new files
 	//need to think about how to deal with this in a cleaner way
 	private static IProject project;
@@ -42,14 +48,24 @@ public class CodeTransformation {
 		project = p;
 	}
 	
-	public static IFortranAST module(Set<IFortranAST> context, Module mapping) {		
+	//for convenience and consistency
+	private static ST STWithDoc(String template, List<Annotation> anots) {
+		String docPreamble = "<if(doc)>\n\n! <doc; wrap=\"\n! \", separator=\" \">\n<endif>";
+		ST st = new ST(docPreamble + template);
+		String doc = getDoc(anots);
+		if (doc != null) {
+			st.add("doc", doc.replaceAll("\n", "\n! ").split(" "));
+		}
+		return st;
+	}
+	
+	public static IFortranAST module(Set<IFortranAST> context, Module mapping, List<Annotation> anots) {		
 	
 		if (project==null) {
 			throw new RuntimeException("Project not set for code transformations");
 		}
 		
-		ST code = new ST("module <moduleName>\n"
-				  		+ "\nimplicit none\ncontains\nend module");
+		ST code = STWithDoc("module <moduleName>\n\nimplicit none\ncontains\nend module", anots);
 		
 		String moduleName = null;
 		if (mapping.getName() != null) {
@@ -59,13 +75,13 @@ public class CodeTransformation {
 			moduleName = "module_name_default";
 		}
 		code.add("moduleName", moduleName);
-		
-		//System.out.println("Module code template:\n" + code.render() + "\n\n");
+			
+		System.out.println("Module code template:\n" + code.render(LINE_WIDTH) + "\n\n");
 		
 		IFile fileToAdd = project.getFile(moduleName.toLowerCase() + ".F90");
 				
 		if (!fileToAdd.exists()) {
-			byte[] bytes = code.render().getBytes();
+			byte[] bytes = code.render(LINE_WIDTH).getBytes();
 		    //byte[] bytes = "".getBytes();
 			
 			InputStream source = new ByteArrayInputStream(bytes);
@@ -90,25 +106,25 @@ public class CodeTransformation {
 	
 	}
 	
-	public static void moduleName(IFortranAST context, ModuleName mapping, String value) {		
-		moduleName((ASTModuleNode) context.getRoot().getProgramUnitList().get(0), mapping, value);
+	public static void moduleName(IFortranAST context, ModuleName mapping, String value, List<Annotation> anots) {		
+		moduleName((ASTModuleNode) context.getRoot().getProgramUnitList().get(0), mapping, value, anots);
 	}
 	
-	public static void moduleName(ASTModuleNode context, ModuleName mapping, String value) {
+	public static void moduleName(ASTModuleNode context, ModuleName mapping, String value, List<Annotation> anots) {
 		if (value != null) {
 			context.getModuleStmt().getModuleName().getModuleName().setText(value);
 		}
 	}
 	
-	public static IASTNode call(IASTNode context, Call mapping) {					
+	public static IASTNode call(IASTNode context, Call mapping, List<Annotation> anots) {					
 		
-		ST code = new ST("\ncall <name.id>(<params:{p|<if(!p.optional || p.value.expr.id)><if(p.keyword)><p.keyword> = <endif><if(p.value.expr.literal)><p.value.expr.literal><else><p.value.expr.id><endif><endif>}; separator=\", \">)\n");
+		ST code = STWithDoc("\ncall <name.id>(<params:{p|<if(!p.optional || p.value.expr.id)><if(p.keyword)><p.keyword> = <endif><if(p.value.expr.literal)><p.value.expr.literal><else><p.value.expr.id><endif><endif>}; separator=\", \">)\n", anots);
 		code.add("name", mapping.getSubroutineName().getExpr());
 		code.add("params", mapping.getParams());
 				
-		System.out.println("Code to parse:\n" + code.render() + "\n");
+		//System.out.println("Code to parse:\n" + code.render(LINE_WIDTH) + "\n");
 		
-		IBodyConstruct node = CodeExtraction.parseLiteralStatement(code.render());		
+		IBodyConstruct node = CodeExtraction.parseLiteralStatement(code.render(LINE_WIDTH));		
 		
 		ASTSubroutineSubprogramNode ssn = (ASTSubroutineSubprogramNode) context;
 		ssn.getBody().add(node);
@@ -132,21 +148,21 @@ public class CodeTransformation {
 		else return "inout";
 	}
 	
-	public static IASTNode usesModule(IFortranAST context, UsesModule mapping) {
-		return usesModule((ASTModuleNode) context.getRoot().getProgramUnitList().get(0), mapping);
+	public static IASTNode usesModule(IFortranAST context, UsesModule mapping, List<Annotation> anots) {
+		return usesModule((ASTModuleNode) context.getRoot().getProgramUnitList().get(0), mapping, anots);
 	}
 
 	
-	public static IASTNode usesModule(ASTModuleNode context, UsesModule mapping) {
+	@SuppressWarnings("unchecked")
+	public static IASTNode usesModule(ASTModuleNode context, UsesModule mapping, List<Annotation> anots) {
 		
 		String moduleName = mapping.getName().getExpr().getId();
 		
-		ST code = new ST("\n\nuse <moduleName>\n");
+		ST code = STWithDoc("use <moduleName>\n", anots);
 		code.add("moduleName", moduleName);
-		String renderedCode = code.render();
 			
 		//find an appropriate location
-		ASTUseStmtNode newNode = (ASTUseStmtNode) CodeExtraction.parseLiteralStatement(renderedCode);
+		ASTUseStmtNode newNode = (ASTUseStmtNode) CodeExtraction.parseLiteralStatement(code.render(LINE_WIDTH));
 		IASTListNode<IBodyConstruct> body = (IASTListNode<IBodyConstruct>) context.getBody();
 		ASTUseStmtNode usn = body.findLast(ASTUseStmtNode.class);
 		if (usn != null) {
@@ -167,7 +183,7 @@ public class CodeTransformation {
 	 * @param value
 	 * @return
 	 */
-	public static IASTNode usesEntity(ASTUseStmtNode context, UsesEntity mapping, String value) {
+	public static IASTNode usesEntity(ASTUseStmtNode context, UsesEntity mapping, String value, List<Annotation> anots) {
 		
 		String oldName = mapping.getName().getExpr().getId();
 		String newName = value;
@@ -186,19 +202,26 @@ public class CodeTransformation {
 			code += oldName;
 		}
 		
-		ASTUseStmtNode tempNode = (ASTUseStmtNode) CodeExtraction.parseLiteralStatement(code);
-		//String newOnlyList = tempNode.getOnlyList().toString();
-		if (tempNode.getOnlyList().get(0).getNewName() != null) {
-			tempNode.getOnlyList().get(0).getNewName().setWhiteBefore(", only: "); //testing this approach
+		try {
+			ASTUseStmtNode tempNode = (ASTUseStmtNode) CodeExtraction.parseLiteralStatement(code);
+			
+			//if (context.getOnlyList() == null) {
+				if (tempNode.getOnlyList().get(0).getNewName() != null) {
+					tempNode.getOnlyList().get(0).getNewName().setWhiteBefore(", only: "); //works, but a bit hacky
+				}
+				else {
+					tempNode.getOnlyList().get(0).getName().setWhiteBefore(", only: ");
+				}
+			//}
+			
+			context.setOnlyList(tempNode.getOnlyList());
+			
 		}
-		else {
-			tempNode.getOnlyList().get(0).getName().setWhiteBefore(", only: ");
+		catch (ClassCastException c) {
+			System.out.println("CCE");
 		}
+
 		
-		context.setOnlyList(tempNode.getOnlyList());
-		//context.getOnlyList().replaceWith(newOnlyList);
-		
-		//context.replaceWith(code + "\n\n");
 		
 		return context;
 	
@@ -225,8 +248,12 @@ public class CodeTransformation {
 	}	
 		
 	
-	public static IASTNode variableDeclaration(ASTSubroutineSubprogramNode context, VariableDeclaration mapping) {
+	public static IASTNode variableDeclaration(ASTSubroutineSubprogramNode context, VariableDeclaration mapping, List<Annotation> anots) {
 		
+		ST code = STWithDoc("\ntype(<type>) :: DEFAULT_VAR_NAME\n", anots);
+		code.add("type", mapping.getType().getDerivedType().getExpr().getId());
+		
+		/*
 		String typeStmt;
 		if (mapping.getType().isDerived()) {
 			typeStmt = "\ntype(" + mapping.getType().getDerivedType().getExpr().getId() + ")";
@@ -236,9 +263,10 @@ public class CodeTransformation {
 			typeStmt = "\nundefined";
 		}
 		
-		typeStmt = typeStmt + " :: default_var_name\n";
+		typeStmt = typeStmt + " :: DEFAULT_VAR_NAME\n";
+		*/
 		
-		ASTTypeDeclarationStmtNode tds = (ASTTypeDeclarationStmtNode) CodeExtraction.parseLiteralStatement(typeStmt);
+		ASTTypeDeclarationStmtNode tds = (ASTTypeDeclarationStmtNode) CodeExtraction.parseLiteralStatement(code.render(LINE_WIDTH));
 		ASTTypeDeclarationStmtNode last = context.findLast(ASTTypeDeclarationStmtNode.class);
 		if (last != null) {
 			context.getBody().insertAfter(last, tds);
@@ -250,11 +278,11 @@ public class CodeTransformation {
 		return tds;
 	}
 	
-	public static void declaredEntity(ASTTypeDeclarationStmtNode context, DeclaredEntity mapping, String value) {
+	public static void declaredEntity(ASTTypeDeclarationStmtNode context, DeclaredEntity mapping, String value, List<Annotation> anots) {
 		context.getEntityDeclList().get(0).getObjectName().getObjectName().setText(value);
 	}
 	
-	public static void subroutineName(ASTSubroutineSubprogramNode context, SubroutineName mapping, String value) {
+	public static void subroutineName(ASTSubroutineSubprogramNode context, SubroutineName mapping, String value, List<Annotation> anots) {
 		String newName = value;
 		if (mapping.getName() != null && mapping.getName().getExpr() != null) {
 			newName = mapping.getName().getExpr().getId();
@@ -264,20 +292,15 @@ public class CodeTransformation {
 		}
 	}
 	
-	public static IASTNode subroutine(IFortranAST context, Subroutine mapping) {
-		return subroutine((ASTModuleNode) context.getRoot().getProgramUnitList().get(0), mapping);
+	public static IASTNode subroutine(IFortranAST context, Subroutine mapping, List<Annotation> anots) {
+		return subroutine((ASTModuleNode) context.getRoot().getProgramUnitList().get(0), mapping, anots);
 	}
 	
-	public static IASTNode subroutine(ASTModuleNode context, Subroutine mapping) {		
+	public static IASTNode subroutine(ASTModuleNode context, Subroutine mapping, List<Annotation> anots) {				
 		
-		//TODO: deal with documentation
-		//String doc = Regex.getDocFromAnnotation(modelElem.eClass());
-		String doc = null;
-		
-		ST code = new ST("\n\n<if(doc)>\n!\n! <doc; wrap=\"\n! \", separator=\" \">\n!\n<endif>"
-				       + "subroutine <name>(<vars:{v|<v.id>}; separator=\", \">)\n"
+		ST code = STWithDoc("subroutine <name>(<vars:{v|<v.id>}; separator=\", \">)\n"
 					   + "<vars, types, intents:{v, t, i|    <t><if(i)>, intent(<i>)<endif> :: <v.id>}; separator=\"\n\">\n"
-					   + "end subroutine\n");
+					   + "end subroutine\n", anots);
 		
 		if (mapping.getName().getExpr() != null) { 
 			code.add("name", mapping.getName().getExpr().getId());
@@ -291,20 +314,45 @@ public class CodeTransformation {
 			code.add("intents", intentToString(fp.getIntent()));
 			code.add("vars", fp.getName().getExpr());
 		}
-		if (doc != null) {
-			doc = doc.replaceAll("\n", "\n! ");
-			code.add("doc", doc.split(" "));
-		}
 		
-		System.out.println("Code to parse:\n" + code.render(72) + "\n");
+		//System.out.println("Code to parse:\n" + code.render(LINE_WIDTH) + "\n");
 		
-		ASTSubroutineSubprogramNode ssn = (ASTSubroutineSubprogramNode) CodeExtraction.parseLiteralProgramUnit(code.render(72));
+		ASTSubroutineSubprogramNode ssn = (ASTSubroutineSubprogramNode) CodeExtraction.parseLiteralProgramUnit(code.render(LINE_WIDTH));
 		
 		//assume it is a module for now
 		//ASTModuleNode amn = (ASTModuleNode) context.getRoot().getProgramUnitList().get(0);
 	
 		context.getModuleBody().add(ssn);
 		return ssn;
+	}
+	
+	public static IASTNode functionAssignment(ASTSubroutineSubprogramNode context, FunctionAssignment mapping, List<Annotation> anots) {		
+		
+		ST code = STWithDoc("<var> = <func>(<params:{p|<if(!p.optional || p.value.expr.id)><if(p.keyword)><p.keyword> = <endif><if(p.value.expr.literal)><p.value.expr.literal><else><p.value.expr.id><endif><endif>}; separator=\", \">)", anots);
+		code.add("var", mapping.getLhs().getExpr().getId());
+		code.add("func", mapping.getFunctionName().getExpr().getId());
+		code.add("params", mapping.getParams());
+		
+		ASTAssignmentStmtNode node = (ASTAssignmentStmtNode) CodeExtraction.parseLiteralStatement(code.render(LINE_WIDTH));
+		
+		//TODO:for now, add to end
+		context.getBody().add(node);
+		return node;
+		
+	}
+	
+	static String getAnnotationValue(List<Annotation> anots, String key) {
+		if (!key.startsWith("@")) key = "@" + key;
+		for (Annotation a : anots) {
+			if (a.getKey().equalsIgnoreCase(key)) {
+				return a.getValue();
+			}
+		}
+		return null;
+	}
+	
+	static String getDoc(List<Annotation> anots) {
+		return getAnnotationValue(anots, "doc");
 	}
 	
 }

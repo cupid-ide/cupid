@@ -15,6 +15,7 @@
 \setheaderspaces{*}{2\onelineskip}{*}
 \checkandfixthelayout
 
+\usepackage{wrapfig}
 \usepackage{titlepic}
 \usepackage{hyperref}
 \usepackage{graphicx}
@@ -49,14 +50,18 @@
 
 \begin{document}
 
-\title{The Cupid Integrated Development Environment for Earth System Models}
-\author{Rocky Dunlap\thanks{This work supported by the NASA CMAC program.}\\
-	College of Computing\\
-	Georgia Tech\\
-	\texttt{rocky@cc.gatech.edu}}
-\date{\today}
-\titlepic{\includegraphics{figs/logo_cupid.png}}
-
+%\begin{titlepage}
+	\title{The Cupid Integrated Development Environment for Earth System Models
+	
+	\\ \vspace{20pt} \textsc{\textbf{Feature Overview and Tutorial}}}
+	
+	\author{Rocky Dunlap\thanks{This work supported by the NASA CMAC program.}\\
+		College of Computing\\
+		Georgia Tech\\
+		\texttt{rocky@cc.gatech.edu}}
+	\date{\today}
+	\titlepic{\includegraphics{figs/logo_cupid.png}}
+%\end{titlepage}
 
 \maketitle
 
@@ -67,20 +72,44 @@
 
 \chapter{Overview of Features}
 
-Cupid is a set of development tools to facilitate the adoption of the geoscience modeling frameworks into new and existing model codebases.  The target framework is the \href{http://www.earthsystemmodeling.org/}{Earth System Modeling Framework} (ESMF) and its interoperability layer called the \href{https://earthsystemcog.org/projects/nuopc/}{National Unified Operation Prediction Capability} (NUOPC), which is currently being implemented in most major climate and weather models in the US. Cupid tools are intended for model developers who have prior experience with model development workflows, but are new to developing with ESMF and NUOPC.  It is also aimed at developers interested in exploring the benefits of using the Eclipse Integrated Development Environment (IDE) for improving development productivity.
+Cupid is a set of development tools to facilitate the adoption of geoscience modeling frameworks into new and existing model codebases.  It features a framework-aware code editing environment and a cloud-based configuration tool to simplify configuring the compile and execution environment.  The target framework is the \href{http://www.earthsystemmodeling.org/}{Earth System Modeling Framework} (ESMF) and its interoperability layer called the \href{https://earthsystemcog.org/projects/nuopc/}{National Unified Operation Prediction Capability} (NUOPC), which is currently being implemented in most major climate and weather models in the US. Cupid tools are intended for model developers who have prior experience with model development workflows, but are new to developing with ESMF and NUOPC.  It is also aimed at developers interested in exploring the benefits of using the Eclipse Integrated Development Environment (IDE) for improving development productivity.
 
 Use of modeling frameworks is quickly becoming the norm for both operational and research climate and weather models. Modeling frameworks provide a number of benefits including mechanisms for componentizing complex codebases, functions and data structures for coupling independent models into a single simulation, increased developer productivity through code reuse, improved quality and robustness of features compared with ``home grown'' solutions, and fast execution via parallel data transfer and interpolation operators. 
 
-In a framework-based application, such as a coupled model that uses ESMF, some application behaviors are provided by the framework and some are provided by the application developer. For example, ESMF provides functions for transferring and interpolating field data from one model's native grid to another model's native grid. However, ESMF does not prescribe what it means for the model to take a step forward in time since that behavior is application specific. The framework provides a set of abstractions, \emph{framework-provided concepts}, that the developer is required to instantiate and configure in their code. Creating a framework-based application is called \emph{framework completion} because the developer fills in application behaviors not provided by the framework, or specializes  behaviors provided by the framework. 
+In a framework-based application, such as a coupled model that uses ESMF, some application behaviors are provided by the framework and some are provided by the application developer. For example, ESMF provides functions for transferring and interpolating field data from one model's native grid to another model's native grid. However, ESMF does not prescribe what it means for the model to take a step forward in time since that behavior is application specific. A framework provides a set of abstractions, \emph{framework-provided concepts}, that the developer is required to instantiate and configure in their code. Creating a framework-based application is called \emph{framework completion} because the developer fills in application behaviors not provided by the framework, or specializes  behaviors provided by the framework. Software engineering research has shown that even for well-designed frameworks, writing correct framework completion code is difficult because it requires a deep understanding of the framework's behavior.
 
 The Cupid tools adds framework-specific intelligence to the \href{https://www.eclipse.org/}{Eclipse Integrated Development Environment} in order to facilitate adoption of ESMF and NUOPC. The features include:
+
 \begin{itemize}
 
-\item A tool for \textbf{reverse engineering} an existing codebase to determine what ESMF and NUOPC framework concepts are present in the code. The reverse engineering function does not require execution of the user's code---instead, it operates during the phase of development when code is written, such as when framework code is first introduced into an existing model. The reverse engineered model is presented to the user alongside the source code in the form of a tree where nodes correspond to framework concepts. Clicking on a node takes the user directly to the relevant code fragments. The reverse engineering tool also checks for code-level compliance to \href{https://earthsystemcog.org/projects/nuopc/esmf2nuopc}{NUOPC technical rules} and offers suggestions for addressing compliance issues.
+%\begin{minipage}{\linewidth}
+%    \begin{wrapfigure}{r}{0.5\textwidth}
+%      \begin{center}
+%        \includegraphics[width=\linewidth]{figs/feature_reveng.png}
+%      \end{center}
+%   \end{wrapfigure}
+%\end{minipage}
 
-\item A tool for \textbf{automatic source code generation} of NUOPC-compliant code fragments directly in new or existing source files.  The generated code helps the developer see what framework concepts should be instantiated in their code, such as framework functions the developer should call, callback functions that the developer must implement, and what API methods are relevant in particular contexts.
+\item
+A tool for \textbf{reverse engineering} an existing codebase to determine what ESMF and NUOPC framework concepts are present in the code. The reverse engineering function does not require execution of the user's code---instead, it operates during the phase of development when code is written, such as when framework code is first introduced into an existing model. The reverse engineered model is presented to the user alongside the source code in the form of a tree where nodes correspond to framework concepts. Clicking on a node brings up the relevant code fragments in the code editor. The reverse engineering tool also checks for code-level compliance to \href{https://earthsystemcog.org/projects/nuopc/esmf2nuopc}{NUOPC technical rules} and offers suggestions for addressing compliance issues.
 
-\item A \textbf{cloud configuration} feature that allows the user to select a training scenario and, within a few minutes, configure, compile, execute, and view the output of both skeleton models and realistic models executing on virtual machine instances on the \href{http://aws.amazon.com/ec2/}{Amazon EC2} platform.
+\parbox{\linewidth}{\centering
+  \includegraphics[width=8cm]{figs/feature_reveng.png}
+}
+\vspace{24pt}
+
+\item A tool for \textbf{automatic source code generation} of NUOPC-compliant code fragments. The generated code can often be used as is, although the tool does not prevent further customization of the generated code when required. The generated code is woven into the user's existing code at the appropriate places, keeping the existing code structure intact. The code generation feature helps the developer understand what framework code is required and where it should be located. For example, the tool generates variable declarations for framework-specific types, calls to framework functions, and skeletons for callback subroutines that the developer must implement. The code generation feature also works hand-in-hand with the reverse engineering function: after code fragments have been generated and (optionally) customized, the codebase can be reversed engineered again to update the outline and check for any compliance issues.
+
+\parbox{\linewidth}{\centering
+  \includegraphics[width=10cm]{figs/feature_foreng.png}
+}
+\vspace{24pt}
+
+\item A \textbf{cloud configuration} feature that allows the user to select a training scenario and, within a few minutes, configure, compile, and execute both skeleton models and realistic models on virtual machine instances using the \href{http://aws.amazon.com/ec2/}{Amazon EC2} platform.
+
+\parbox{\linewidth}{\centering
+  \includegraphics[width=12cm]{figs/feature_cloud.png}
+}
 
 \end{itemize}
 
@@ -111,6 +140,235 @@ To take full advantage of NUOPC, developers must ensure that model components co
 
 %Cupid supports the goals of NUOPC by providing a tool capable of generating fragments of framework completion code (while not hindering developers from writing customized code) and validating existing NUOPC codebases.
 
+\chapter{Installation}
+
+\section{Download and Install the Cupid Plugin}
+
+This section describes how to install the Cupid tools. Cupid is a plugin for the Eclipse Integrated Development Environment (IDE) and is available on all its supported platforms (Windows, Mac, Unix). 
+
+\begin{enumerate}
+
+\item \textbf{Download and install Eclipse for Parallel Application Developers, version 4.3.2 SR2 (Kepler)}.
+
+The main download page is: \href{http://www.eclipse.org/downloads/}{http://www.eclipse.org/downloads/}.  
+
+There is a list of available Eclipse packages.  Be sure to choose ``Eclipse for Parallel Application Developers'' as it will come pre-bundled with the necessary plugins for working with remote systems.
+
+\item \textbf{Unpack the downloaded file into a local directory and run Eclipse by double clicking on the Eclipse executable.}
+
+The first time you start Eclipse, you will be prompted to select a location for your workspace.  Choose an empty folder.
+
+\item \textbf{Install the Cupid Plugin from the Cupid Update Site.}
+
+\begin{enumerate}
+\itemsep2em
+
+\item Click Help $\rightarrow$ Install New Software
+
+\parbox{\linewidth}{\centering
+  \includegraphics[width=6cm]{figs/install_fig1.png}
+}
+
+\item Put the Cupid Update Site URL into ``Work with...''  You will be prompted to give the update site a name of your choosing.
+
+The Update site URL is:  \texttt{http://www.cc.gatech.edu/\textasciitilde{}rocky/cupid/}
+
+\parbox{\linewidth}{\centering
+  \includegraphics{figs/install_fig2.png}
+}
+
+\item Uncheck the ``Group items by category'' option.
+
+\parbox{\linewidth}{\centering
+  \includegraphics{figs/install_fig3.png}
+}
+
+\item Select ``Cupid'' from the list and click Next.
+
+\parbox{\linewidth}{\centering
+  \includegraphics{figs/install_fig4.png}
+}
+
+\item You will need to click Next a couple more times and accept the license agreements. Then click Finish.  The Cupid plugin and its dependencies will be downloaded and installed. 
+
+During the process, you may receive a message that the software contains unsigned content.  Click OK.
+
+\parbox{\linewidth}{\centering
+  \includegraphics{figs/install_fig5.png}
+}
+
+\item After installation, you will be prompted to restart Eclipse.  Click Yes.
+
+\end{enumerate}
+\end{enumerate}
+
+\section{Configure Cloud Account Credentials (Optional)}
+\label{sec:cloudconfig}
+
+Cupid can create cloud-based virtual machine instances to serve as the computational environment for training scenarios. If you plan on using the cloud configuration feature of Cupid, you need to set up your cloud credentials the first time you run Cupid. Currently, the supported cloud provider is Amazon EC2. You may use your own credentials or request access to the NESII cloud.
+
+(Note: Cupid automatically launches Amazon machine instances when you create a new training project.  Alarms are set up to automatically kill instances after 50 minutes of idle CPU utilization. However, it is your responsibility to ensure that any unused instances are terminated to avoid unnecessary cloud computing charges to your account.)
+
+\begin{enumerate}
+\item \textbf{In the Eclipse menu, select Window $\rightarrow$ Preferences. Then select Cupid Preferences in the list on the left.}
+\item \textbf{Enter your Amazon Web Services (AWS) access key and secret key.}
+\item \textbf{Click OK.}  Your credentials have now been set up.  
+
+\parbox{\linewidth}{\centering
+  \includegraphics{figs/install_fig5.png}
+}
+
+\emph{Warning:  Only set up AWS credentials on a secure, private machine as they are currently stored in plain text in the Eclipse configuration metadata.  This feature of Cupid is currently in prototype mode with minimal consideration of security ramifications. It is highly recommended to set up an AWS user account with limited privileges for use with Cupid.  For more information, see the \href{http://docs.aws.amazon.com/IAM/latest/UserGuide/IAM_Introduction.html}{AWS Identity and Access Management documentation.}}
+
+
+\end{enumerate}
+
+\chapter{Cloud-based Training Environment}
+
+Cupid simplifies the process of configuring a computational environment capable of compiling and executing high-performance geoscience models. IDEs package a lot of development tools into a single application to help manage and simplify the software development workflow. Although IDEs aim to increase developer productivity, they can still introduce a steep learning curve. Some challenges with using IDEs for geoscience model development include:
+
+\begin{itemize}
+\item Understanding the basic steps involved in moving from source code to a running model
+\item Making sense of the many development tools and features available in the IDE
+\item Setting up a high-performance computational environment capable of configuring, compiling and executing model code
+\item Configuring the IDE to connect to remote computational environments
+\end{itemize}
+
+Cupid's cloud integration feature allows a developer to select a training scenario and, within a few minutes, configure, compile, execute, and view the standard output of both skeleton models and realistic models. (This does not include data file post processing or plot generation.) This feature relies on a set of pre-configured machine images that can be instantiated on \href{http://aws.amazon.com/ec2/}{Amazon EC2} cloud infrastructure. The machine images contain all of the necessary software dependencies for the selected scenario. Furthermore, Cupid automatically configures the IDE to connect to and synchronize source code with cloud-based virtual machines.
+
+While understanding how to set up and use a high-performance computational environment, including acquiring and configuring prerequisite software packages, is an important part of geoscience modeling, it should not preclude non-experts from quickly setting up a complete computational environment and begin getting their feet wet with writing framework-based code.
+
+\section{Creating a new Cupid Training Project}
+
+This section of the tutorial describes how to use the \emph{New Cupid Training Project Wizard} to create a new Eclipse project, populate it with a skeleton NUOPC application, and start up a remote virtual machine instance for compiling and executing the project.
+
+\emph{Before beginning this section, please ensure that your Amazon EC2 credentials have been set up in the Cupid preferences. For instruction on how to do this, see section~\ref{sec:cloudconfig}.}
+
+\begin{enumerate}
+
+\item \textbf{Click File $\rightarrow$ New $\rightarrow$ Other… and choose Cupid Training Project in the Cupid folder.  Click Next.}
+
+\parbox{\linewidth}{\centering
+  \includegraphics{figs/cloud_fig1.png}
+}
+
+
+\item \textbf{On the first page of the wizard, choose a training scenario.  }
+
+\begin{itemize}
+\item NUOPC --- Single Model with Driver
+\item NUOPC --- Coupled Atmosphere-Ocean Driver  \emph{(coming soon)}
+\item NUOPC --- Coupled Atmosphere-Ocean with Mediator and Driver \emph{(coming soon)}
+\item ModelE --- Basic Configuration (EM20 rundeck) \emph{(coming soon)}
+\end{itemize}
+
+Changing the training scenario in the list will update the screen to show the model architecture and coupling behavior of the selected scenario.  \textbf{Choose the scenario ``NUOPC – Single Model with Driver'' and click Next.}
+
+\parbox{\linewidth}{\centering
+  \includegraphics[width=\textwidth]{figs/cloud_fig2.png}
+}
+
+
+\item \textbf{Choose a name for your project or accept the default name.}  Note that project names must be unique, so you must choose a name that does not already exist in your workspace.  \textbf{Click Next.}
+
+\parbox{\linewidth}{\centering
+  \includegraphics[width=\textwidth]{figs/cloud_fig3.png}
+}
+
+\item Choose a computational environment on which to compile and run the training scenario.  The three options are:
+
+\begin{itemize}
+\item Create a cloud-based computational environment
+\item Use my local machine
+\item Use an existing remote environment \emph{(this option is not always available)}
+\end{itemize}
+
+The first option will create a preconfigured virtual machine instance for you with all dependent software (model source code, Fortran compiler, MPI, NetCDF, ESMF, etc.). This is the recommended option unless you know you have a supported environment already set up locally.  In some cases, a third option will be available to re-use an existing remote environment that is already running. 
+
+\textbf{Choose the first option and leave the number of processes at 1.  Click Finish.}
+
+\parbox{\linewidth}{\centering
+  \includegraphics[width=\textwidth]{figs/cloud_fig4.png}
+}
+
+\item It will take up to several minutes for the new computational environment to start up.  \textbf{During this process you will be asked to accept the host SSH key.  Click Yes.}
+
+\parbox{\linewidth}{\centering
+  \includegraphics[width=\textwidth]{figs/cloud_fig5.png}
+}
+
+You might also be asked if you would like to switch to the Cupid Perspective.  An Eclipse perspective is a particular screen layout customized for specific tasks. The Cupid Perspective hides a number of Eclipse tools and commands that are not required for the training.  \textbf{Click Yes to switch to the Cupid Perspective.}
+
+\parbox{\linewidth}{\centering
+  \includegraphics[width=\textwidth]{figs/cloud_fig6.png}
+}
+
+
+\item You should now see your project in the Project Explorer on the left.  The Cupid Perspective also exposes several other views including a Fortran source code editor, a Make Target view on the right for compiling your code and a Console at the bottom for viewing output from the compiler.
+
+\parbox{\linewidth}{\centering
+  \includegraphics[width=\textwidth]{figs/cloud_fig7.png}
+}
+
+\end{enumerate}
+
+
+
+\section{Compile and Run the NUOPC Single Model with Driver training scenario}
+
+In this section of the tutorial, you will learn how to compile and execute the source code provided in the NUOPC Single Model with Driver training scenario.   An Eclipse Cheat Sheet is available for this task.  (Click Help $\rightarrow$ Cheat Sheets and choose ``Compile and Run a NUOPC Application'' in the Cupid folder.)
+
+\begin{enumerate}
+
+\item Ensure that the Make Target view is showing (see below).  If not, \textbf{choose Window $\rightarrow$ Show View $\rightarrow$ Other... and select ``Make Target''under the Make folder.}  Open the folder in the Make Target view with the same name as the project you created.
+
+\parbox{\linewidth}{\centering
+  \includegraphics{figs/cloudrun_fig1.png}
+}
+
+\item If you used the New Cupid Training Project wizard to set up the training scenario, then the correct make targets have already been set up.  To compile the NUOPC application, double click the ``mainApp'' target.  You should be able to see the compiler output in the Console view at the bottom of the screen.
+
+\parbox{\linewidth}{\centering
+  \includegraphics[width=\textwidth]{figs/cloudrun_fig2.png}
+}
+
+\item To run the compiled code, you must set up a run configuration.  \emph{(Note: This step will be automated in a future release of Cupid.)}  Click the down arrow next to the Run As... button in the toolbar (green circle with a white arrow) and choose Run Configurations… from the popup menu.
+
+\parbox{\linewidth}{\centering
+  \includegraphics{figs/cloudrun_fig3.png}
+}
+
+\item In the Run Configurations dialog, right click on Parallel Application and choose ``New.''  Configure the run configuration as follows:
+
+\begin{itemize}
+\item Resources tab
+	\begin{itemize}
+	\item Target System Configuration: \textbf{Open MPI-Generic-Interactive}
+	\item Connection type: \textbf{Remote}
+	\item Connection: \textbf{Cupid Environment (Amazon EC2  <Project Name>)}
+	\end{itemize}
+\item Application tab
+	\begin{itemize}
+	\item Project: should default to your project name
+	\item Application program: Click Browse and select ``mainApp''.  The final path should be \textbf{/home/sgeadmin/SingleModelProto/mainApp}
+	\end{itemize}
+\item \textbf{Click Apply then Run}
+\end{itemize}
+
+\item Once the Run Configuration has been created, you do not need to set it up again unless you need to change configuration settings.  After running it the first time, the run configuration should be available in the Run Configurations dropdown list on the toolbar.
+
+\parbox{\linewidth}{\centering
+  \includegraphics{figs/cloudrun_fig4.png}
+}
+
+\item Standard output from the run will be shown in the Console view.
+
+\parbox{\linewidth}{\centering
+  \includegraphics[width=\textwidth]{figs/cloudrun_fig5.png}
+}
+
+\end{enumerate}
+
 \chapter{Reverse Engineering and Compliance Verification of NUOPC Applications}
 
 Most climate and weather model codebases are staggeringly large and obtaining an overview of the model, its subcomponents, and their interconnections is a cumbersome, time-consuming task. Often, this can only be accomplished by manually reading through the top-level source files to establish a mental picture of the overall structure of the model and its data flows. 
@@ -134,18 +392,6 @@ A developer has finished writing the initialization phases for a NUOPC Model com
 The use case shows some advantages of this approach compared to an approach in which code is copied-and-pasted from archetypical example code. First, the new Model Advance element added to the tree viewer included multiple sub-elements indicating that source code changes are required in at least two places: a new subroutine and a call to register this subroutine with the framework.  This provides guidance to the developer to ensure that all framework requirements are met. The approach, therefore, is less error-prone than brute force copy and paste. Also, the generated code fragments are customized based on the state of the existing source code. For example, the developer may be using specialized variable names. Since these variables have already been discovered during the reverse engineering phase, the generated code can reference these variables instead of requiring the developer to modify variables in copy-pasted code.
 
 
-\chapter{Cloud-based configuration}
-
-Cupid simplifies the process of configuring a computational environment capable of compiling and executing high-performance geoscience models. IDEs package a lot of development tools into a single application to help manage and simplify the software development workflow. Although IDEs aim to increase developer productivity, they can still introduce a steep learning curve. Some challenges with using IDEs for geoscience model development include:
-
-\begin{itemize}
-\item Understanding the basic steps involved in moving from source code to a running model
-\item Making sense of the many development tools and features available in the IDE
-\item Setting up a high-performance computational environment capable of configuring, compiling and executing model code
-\item Configuring the IDE to connect to remote computational environments
-\end{itemize}
-
-Cupid's cloud integration feature allows a developer to select a training scenario and, within a few minutes, configure, compile, execute, and view the output of both skeleton models and realistic models. This feature relies on a set of pre-configured machine images that can be instantiated on Amazon EC2 cloud infrastructure. The machine images contain all of the necessary software dependencies for the selected scenario. Furthermore, Cupid automatically configures the IDE to connect to and synchronize source code with cloud-based virtual machines.
 
 
 \chapter{The Behind-the-Scenes Meta-tool}

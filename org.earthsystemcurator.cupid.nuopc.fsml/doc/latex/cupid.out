@@ -3,10 +3,15 @@
 \BOOKMARK [0][-]{chapter.2}{ESMF and NUOPC}{}% 3
 \BOOKMARK [1][-]{section.2.1}{The Earth System Modeling Framework}{chapter.2}% 4
 \BOOKMARK [1][-]{section.2.2}{The National Unified Operational Prediction Capability}{chapter.2}% 5
-\BOOKMARK [0][-]{chapter.3}{Reverse Engineering and Compliance Verification of NUOPC Applications}{}% 6
-\BOOKMARK [0][-]{chapter.4}{Generating NUOPC-compliant Code}{}% 7
-\BOOKMARK [0][-]{chapter.5}{Cloud-based configuration}{}% 8
-\BOOKMARK [0][-]{chapter.6}{The Behind-the-Scenes Meta-tool}{}% 9
-\BOOKMARK [1][-]{section.6.1}{The NUOPC Framework-Specific Modeling Language}{chapter.6}% 10
-\BOOKMARK [1][-]{section.6.2}{FSML Implementation}{chapter.6}% 11
-\BOOKMARK [0][-]{section*.3}{Bibliography}{}% 12
+\BOOKMARK [0][-]{chapter.3}{Installation}{}% 6
+\BOOKMARK [1][-]{section.3.1}{Download and Install the Cupid Plugin}{chapter.3}% 7
+\BOOKMARK [1][-]{section.3.2}{Configure Cloud Account Credentials \(Optional\)}{chapter.3}% 8
+\BOOKMARK [0][-]{chapter.4}{Cloud-based Training Environment}{}% 9
+\BOOKMARK [1][-]{section.4.1}{Creating a new Cupid Training Project}{chapter.4}% 10
+\BOOKMARK [1][-]{section.4.2}{Compile and Run the NUOPC Single Model with Driver training scenario}{chapter.4}% 11
+\BOOKMARK [0][-]{chapter.5}{Reverse Engineering and Compliance Verification of NUOPC Applications}{}% 12
+\BOOKMARK [0][-]{chapter.6}{Generating NUOPC-compliant Code}{}% 13
+\BOOKMARK [0][-]{chapter.7}{The Behind-the-Scenes Meta-tool}{}% 14
+\BOOKMARK [1][-]{section.7.1}{The NUOPC Framework-Specific Modeling Language}{chapter.7}% 15
+\BOOKMARK [1][-]{section.7.2}{FSML Implementation}{chapter.7}% 16
+\BOOKMARK [0][-]{section*.3}{Bibliography}{}% 17

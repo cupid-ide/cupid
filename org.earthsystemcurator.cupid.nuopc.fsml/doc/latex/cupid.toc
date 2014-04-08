@@ -1,12 +1,17 @@
 \contentsline {chapter}{Contents}{2}{section*.1}
 \contentsline {chapter}{\chapternumberline {1}Overview of Features}{3}{chapter.1}
-\contentsline {chapter}{\chapternumberline {2}ESMF and NUOPC}{5}{chapter.2}
-\contentsline {section}{\numberline {2.1}The Earth System Modeling Framework}{5}{section.2.1}
-\contentsline {section}{\numberline {2.2}The National Unified Operational Prediction Capability}{5}{section.2.2}
-\contentsline {chapter}{\chapternumberline {3}Reverse Engineering and Compliance Verification of NUOPC Applications}{8}{chapter.3}
-\contentsline {chapter}{\chapternumberline {4}Generating NUOPC-compliant Code}{10}{chapter.4}
-\contentsline {chapter}{\chapternumberline {5}Cloud-based configuration}{12}{chapter.5}
-\contentsline {chapter}{\chapternumberline {6}The Behind-the-Scenes Meta-tool}{13}{chapter.6}
-\contentsline {section}{\numberline {6.1}The NUOPC Framework-Specific Modeling Language}{14}{section.6.1}
-\contentsline {section}{\numberline {6.2}FSML Implementation}{16}{section.6.2}
-\contentsline {chapter}{Bibliography}{18}{section*.3}
+\contentsline {chapter}{\chapternumberline {2}ESMF and NUOPC}{6}{chapter.2}
+\contentsline {section}{\numberline {2.1}The Earth System Modeling Framework}{6}{section.2.1}
+\contentsline {section}{\numberline {2.2}The National Unified Operational Prediction Capability}{6}{section.2.2}
+\contentsline {chapter}{\chapternumberline {3}Installation}{9}{chapter.3}
+\contentsline {section}{\numberline {3.1}Download and Install the Cupid Plugin}{9}{section.3.1}
+\contentsline {section}{\numberline {3.2}Configure Cloud Account Credentials (Optional)}{12}{section.3.2}
+\contentsline {chapter}{\chapternumberline {4}Cloud-based Training Environment}{13}{chapter.4}
+\contentsline {section}{\numberline {4.1}Creating a new Cupid Training Project}{14}{section.4.1}
+\contentsline {section}{\numberline {4.2}Compile and Run the NUOPC Single Model with Driver training scenario}{18}{section.4.2}
+\contentsline {chapter}{\chapternumberline {5}Reverse Engineering and Compliance Verification of NUOPC Applications}{22}{chapter.5}
+\contentsline {chapter}{\chapternumberline {6}Generating NUOPC-compliant Code}{24}{chapter.6}
+\contentsline {chapter}{\chapternumberline {7}The Behind-the-Scenes Meta-tool}{26}{chapter.7}
+\contentsline {section}{\numberline {7.1}The NUOPC Framework-Specific Modeling Language}{27}{section.7.1}
+\contentsline {section}{\numberline {7.2}FSML Implementation}{29}{section.7.2}
+\contentsline {chapter}{Bibliography}{31}{section*.3}

@@ -239,41 +239,11 @@ class NUOPCViewLabelProvider extends StyledCellLabelProvider { //implements ITab
 				imageKey = "localvariable.gif";
 			}
 		}
-		else if (soa != null && !soa.isAttrib()) {
-			imageKey = "tree.gif";
-		}
+		//else if (soa != null && !soa.isAttrib()) {
+		//	imageKey = "tree.gif";
+		//}
 				
-				/*
-				if (imageKey == null) {
-					String mappingType = Regex.getMappingTypeFromAnnotation(sf);
-					if (mappingType != null) {
-						if (mappingType.equalsIgnoreCase("module")) {
-							imageKey = "module.gif";
-						}
-						else if (mappingType.equalsIgnoreCase("subroutine")) {
-							imageKey = "subroutine.gif";
-						}
-						else if (mappingType.equalsIgnoreCase("call")) {
-							imageKey = "subroutine.gif";
-							topOverlayKey = "caller_overlay.gif";
-						}
-						else if (mappingType.equalsIgnoreCase("uses")) {
-							imageKey = "import_obj.gif";
-						}
-						else if (mappingType.equalsIgnoreCase("usesModule")) {
-							imageKey = "import.png";
-						}
-						else if (mappingType.equalsIgnoreCase("usesEntity")) {
-							imageKey = "import_obj.gif";
-						}
-					}
-					else if (sf instanceof EReference) {
-						imageKey = "tree.gif";
-					}
-				}
-				*/
-				
-				
+					
 		if (soa != null && !soa.isAttrib() && elem == null) {
 			
 			//gray indicates that it does not yet exist

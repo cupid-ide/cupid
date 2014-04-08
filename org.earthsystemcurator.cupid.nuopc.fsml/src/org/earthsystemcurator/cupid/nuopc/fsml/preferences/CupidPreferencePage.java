@@ -1,24 +1,11 @@
 package org.earthsystemcurator.cupid.nuopc.fsml.preferences;
 
+
 import org.earthsystemcurator.cupid.nuopc.fsml.core.CupidActivator;
 import org.eclipse.jface.preference.*;
+import org.eclipse.swt.widgets.Composite;
 import org.eclipse.ui.IWorkbenchPreferencePage;
 import org.eclipse.ui.IWorkbench;
-
-
-/**
- * This class represents a preference page that
- * is contributed to the Preferences dialog. By 
- * subclassing <samp>FieldEditorPreferencePage</samp>, we
- * can use the field support built into JFace that allows
- * us to create a page that is small and knows how to 
- * save, restore and apply itself.
- * <p>
- * This page is used to modify preferences only. They
- * are stored in the preference store that belongs to
- * the main plug-in class. That way, preferences can
- * be accessed directly via the preference store.
- */
 
 public class CupidPreferencePage
 	extends FieldEditorPreferencePage
@@ -34,12 +21,6 @@ public class CupidPreferencePage
 		setDescription("Cupid preferences");
 	}
 	
-	/**
-	 * Creates the field editors. Field editors are abstractions of
-	 * the common GUI blocks needed to manipulate various types
-	 * of preferences. Each field editor knows how to save and
-	 * restore itself.
-	 */
 	public void createFieldEditors() {
 		/*
 		addField(new DirectoryFieldEditor(PreferenceConstants.P_PATH, 
@@ -58,8 +39,21 @@ public class CupidPreferencePage
 				"C&hoice 2", "choice2" }
 		}, getFieldEditorParent()));
 		*/
-		addField(new StringFieldEditor(CUPID_AWS_ACCESS_KEY, "Amazon AWS Access Key:", getFieldEditorParent()));
-		addField(new StringFieldEditor(CUPID_AWS_SECRET_KEY, "Amazon AWS Secret Key:", getFieldEditorParent()));
+		
+		
+		addField(new PasswordStringFieldEditor(CUPID_AWS_ACCESS_KEY, "Amazon AWS Access Key:", getFieldEditorParent()));
+		addField(new PasswordStringFieldEditor(CUPID_AWS_SECRET_KEY, "Amazon AWS Secret Key:", getFieldEditorParent()));
+	}
+	
+	class PasswordStringFieldEditor extends StringFieldEditor {
+		public PasswordStringFieldEditor(String name, String labelText, Composite parent) {
+			super(name, labelText, parent);
+		}
+		@Override
+	    protected void doFillIntoGrid(Composite parent, int numColumns) {
+	        super.doFillIntoGrid(parent, numColumns);
+	        getTextControl().setEchoChar('*');
+	    }
 	}
 
 	/* (non-Javadoc)
