@@ -6,8 +6,8 @@ import java.net.MalformedURLException;
 import java.net.URL;
 
 import org.earthsystemcurator.FSM;
-import org.earthsystemcurator.cupid.nuopc.fsml.builder.NUOPCNature;
 import org.earthsystemcurator.cupid.nuopc.fsml.core.CupidActivator;
+import org.earthsystemcurator.cupid.nuopc.fsml.core.CupidStorage;
 import org.earthsystemcurator.cupid.nuopc.fsml.core.ReverseEngineer2;
 import org.earthsystemcurator.cupid.nuopc.fsml.preferences.CupidPreferencePage;
 import org.earthsystemcurator.cupid.nuopc.fsml.util.Regex;
@@ -20,6 +20,9 @@ import org.eclipse.core.commands.ExecutionException;
 import org.eclipse.core.resources.IFile;
 import org.eclipse.core.resources.IMarker;
 import org.eclipse.core.resources.IProject;
+import org.eclipse.core.resources.IResource;
+import org.eclipse.core.resources.IResourceDelta;
+import org.eclipse.core.resources.IResourceDeltaVisitor;
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.emf.common.util.Diagnostic;
 import org.eclipse.emf.common.util.URI;
@@ -81,6 +84,14 @@ public class ReverseHandler extends AbstractHandler {
 		Resource langResource = rs.getResource(langURI, true);
 		Language lang = (Language) langResource.getContents().get(0);
 		
+		//add default NUOPC metamodel to registry if necessary
+		if (EPackage.Registry.INSTANCE.getEPackage("http://www.earthsystemcurator.org/nuopcgen") == null) {
+			URI ecoreURI = URI.createURI("platform:/plugin/org.earthsystemcurator.cupid.nuopc.fsml/cupidmodel/nuopc.ecore");
+			Resource ecoreResource = rs.getResource(ecoreURI, true);
+			EPackage ecorePackage = (EPackage) ecoreResource.getContents().get(0);
+			EPackage.Registry.INSTANCE.put("http://www.earthsystemcurator.org/nuopcgen", ecorePackage); 		
+		}
+					
 		/*
 		URI ecoreURI = langURI.trimFileExtension().appendFileExtension("ecore");
 				
@@ -229,6 +240,7 @@ public class ReverseHandler extends AbstractHandler {
         //NUOPCApplication a = ReverseEngineer.reverseEngineer(pack, pack.getNUOPCApplication(), selectedProject, vpg);        
          //use project nature to store local data
  
+        /*
         NUOPCNature nature = null;
         try {
 			nature = (NUOPCNature) selectedProject.getNature(NUOPCNature.NATURE_ID);
@@ -239,6 +251,8 @@ public class ReverseHandler extends AbstractHandler {
 		} catch (CoreException e) {
 			e.printStackTrace();
 		}
+		*/
+        CupidStorage.INSTANCE.setFSM(selectedProject, fsm);
         
         //update the view here for now
         IViewReference viewRef = 
@@ -252,6 +266,14 @@ public class ReverseHandler extends AbstractHandler {
         }
         
         //create markers for validation failures
+        try {
+			selectedProject.deleteMarkers("org.earthsystemcurator.cupid.nuopc.fsml.cupiderror", true, IResource.DEPTH_INFINITE);
+		} catch (CoreException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
+        
+        
         for (Diagnostic d : fsm.getDiagnostics()) {
         	Object problemElem = d.getData().get(0);
         	Object refObject = fsm.getMapsTo((EObject) problemElem); //fsm.getReference(problemElem);
@@ -273,13 +295,6 @@ public class ReverseHandler extends AbstractHandler {
 	        	try {
 	    			Token t = scope.getRepresentativeToken().findToken();
 	        		
-	    			//Token firstToken = scope.findFirstToken();
-					//Token lastToken = scope.findLastToken();
-					
-					//int startOffset = firstToken.getFileOffset();
-		            //startOffset -= firstToken.getWhiteBefore().length();
-	
-		            //int endOffset = lastToken.getFileOffset()+lastToken.getLength();
 					int startOffset = t.getFileOffset();
 					int endOffset = startOffset + t.getLength();
 	    			
@@ -289,13 +304,16 @@ public class ReverseHandler extends AbstractHandler {
 	                marker.setAttribute(IMarker.MESSAGE, d.getMessage());
 	                marker.setAttribute(IMarker.SEVERITY, IMarker.SEVERITY_ERROR);
 	                
+	                //skip quick fixes for now
+	                /*
 	                if (problemRef != null && problemRef instanceof EReference) {
 		                
  	                	final EObject eobj = (EObject) problemElem;
 	                	final EReference eref = (EReference) problemRef;
 	                	
-		                nature.markerFixes.put(marker, new IMarkerResolution() {
-							
+		                //nature.markerFixes.put(marker, new IMarkerResolution() {
+						CupidStorage.INSTANCE.getMarkerFixes(selectedProject).put(marker, new IMarkerResolution() {
+	                	
 		                	@Override
 							public String getLabel() {
 								return "Generate " + Regex.getFromAnnotation(eref.getEType(), "label", eref.getName());
@@ -324,6 +342,7 @@ public class ReverseHandler extends AbstractHandler {
 	
 		                });
 	                }
+	                */
 	                
 	    		} catch (CoreException e) {
 					e.printStackTrace();
@@ -331,17 +350,14 @@ public class ReverseHandler extends AbstractHandler {
         	}
         	
         }
+       
         
-        
-        //if (fsm == null) return null;
-        
-        
+               
         //save to file for debugging purposes
-        
+ 
+        /*
         IFile revFile = selectedProject.getFile("reverse.nuopc");       
-        //System.out.println("IFile location: " + revFile.getLocation());
         URI fileURI = URI.createFileURI(revFile.getLocation().toString());            
-        //System.out.println("Reversed file URL: " + fileURI.toFileString());
         
         ResourceSet resourceSet = new ResourceSetImpl();
         Resource resource = resourceSet.createResource(fileURI); 
@@ -354,7 +370,7 @@ public class ReverseHandler extends AbstractHandler {
 			System.out.println("Error saving model file: ");
 			e1.printStackTrace();
 		}
-     	
+     	*/
      
         //TODO: do I need to do this?
         vpg.releaseAllASTs();

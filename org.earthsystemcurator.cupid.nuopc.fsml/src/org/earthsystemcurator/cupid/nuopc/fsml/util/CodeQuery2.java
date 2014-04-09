@@ -321,6 +321,10 @@ public class CodeQuery2 {
 							}							
 						}												
 					}
+					else {
+						//TODO: deal with this more gracefully
+						throw new RuntimeException("Cannot resolve binding for variable: " + spn.getVariableName().getText() + " inside subroutine " + subroutineName);
+					}
 					
 				}
 				
@@ -350,7 +354,14 @@ public class CodeQuery2 {
 	public static Map<String, Map<PathExpr, String>> subroutineName(ASTSubroutineSubprogramNode node, SubroutineName mapping) {
 		
 		Map<String, Map<PathExpr, String>> result = new HashMap<String, Map<PathExpr, String>>();
-		String name = node.getNameToken().getText();
+		String name = null;
+		try {
+		//name = node.getNameToken().getText();
+		name = node.getSubroutineStmt().getSubroutineName().getSubroutineName().getText();
+		}
+		catch (NullPointerException npe) {
+			npe.printStackTrace();
+		}
 		
 		Map<PathExpr, String> bindings = newBindings();
 		

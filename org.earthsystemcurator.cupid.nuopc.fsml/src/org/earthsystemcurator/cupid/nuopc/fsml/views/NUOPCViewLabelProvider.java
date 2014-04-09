@@ -53,8 +53,15 @@ class NUOPCViewLabelProvider extends StyledCellLabelProvider { //implements ITab
 		else if (me.elem != null) {
 			docText = fsm.getAnnotationValue(fsm.getConceptDef(me.elem), "doc");
 		}
+		
+		if (docText == null) docText = "";	
 			
-		if (docText != null || me.validationMessage != null) {
+		if (me.validationMessage != null) {
+			docText = "<b>" + me.validationMessage + "</b><hr/><br/>" + docText;
+		}
+		
+		/*
+		if (docText != null || me.validationMessage != null) {		
 			ST text = new ST("<doc; wrap=\"\n\", separator=\" \">");				
 			if (me.validationMessage != null) {
 				text.add("doc", me.validationMessage.split(" "));
@@ -64,12 +71,13 @@ class NUOPCViewLabelProvider extends StyledCellLabelProvider { //implements ITab
 			}
 			if (docText != null) {
 				text.add("doc", docText.split(" "));				
-			}
-				   
+			}				   
 			return text.render(80);
-		}			
-								
-		return null;
+		}
+		*/			
+		
+		if (docText.length() > 0) return docText;
+		else return null;
 	}
 	
 	/*

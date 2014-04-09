@@ -83,7 +83,7 @@ public class ReverseEngineer2 {
 							(r.getProjectRelativePath().getFileExtension().equalsIgnoreCase("f") ||
 							r.getProjectRelativePath().getFileExtension().equalsIgnoreCase("f90"))) {
 							System.out.println("Adding Fortran file: " + r);
-							IFortranAST ast = vpg.acquireTransientAST((IFile) r);						
+							IFortranAST ast = vpg.acquireTransientAST((IFile) r);							
 							if (ast == null) {
 								System.out.println("Warning:  AST not found for file: " + r.getName());
 							}

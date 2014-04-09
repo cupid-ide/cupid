@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
-import org.earthsystemcurator.cupid.nuopc.fsml.builder.NUOPCNature;
+import org.earthsystemcurator.cupid.nuopc.fsml.core.CupidStorage;
 import org.eclipse.cdt.internal.ui.text.c.hover.AbstractAnnotationHover;
 import org.eclipse.cdt.internal.ui.text.correction.MarkerResolutionProposal;
 import org.eclipse.core.resources.IMarker;
@@ -153,13 +153,14 @@ public class FortranSourceViewerConfigurationFactory implements
 			List<ICompletionProposal> proposalList = new ArrayList<ICompletionProposal>();
 			
 			Iterator<?> iter = viewer.getAnnotationModel().getAnnotationIterator();
-			NUOPCNature nature = null;
+			//NUOPCNature nature = null;
 			
 			while (iter.hasNext()) {
 				Annotation annotation = (Annotation) iter.next();				
 				if (annotation instanceof MarkerAnnotation) {
 					
 					IMarker marker = ((MarkerAnnotation) annotation).getMarker();
+					/*
 					if (nature == null) {
 						try {
 							nature = (NUOPCNature) marker.getResource().getProject().getNature(NUOPCNature.NATURE_ID);
@@ -168,8 +169,10 @@ public class FortranSourceViewerConfigurationFactory implements
 							break;
 						}
 					}
+					*/
+					IMarkerResolution mr = CupidStorage.INSTANCE.getMarkerFixes(marker.getResource().getProject()).get(marker);
 					
-					IMarkerResolution mr = nature.markerFixes.get(marker);
+					//IMarkerResolution mr = nature.markerFixes.get(marker);
 					if (mr != null) {
 						proposalList.add(new MarkerResolutionProposal(mr, marker));
 					}

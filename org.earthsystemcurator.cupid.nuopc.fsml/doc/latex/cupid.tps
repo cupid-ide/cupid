@@ -17,8 +17,8 @@ Class=LaTeXView
 Document=cupid.tex
 
 [Frame0_View0,0]
-TopLine=42
-Cursor=1586
+TopLine=80
+Cursor=3630
 
 [Frame1]
 Flags=0
@@ -35,7 +35,7 @@ Class=LaTeXView
 Document=..\..\..\..\..\..\..\Program Files\MiKTeX 2.9\tex\latex\titlepic\titlepic.sty
 
 [Frame1_View0,0]
-TopLine=19
+TopLine=49
 Cursor=1980
 
 [SessionInfo]

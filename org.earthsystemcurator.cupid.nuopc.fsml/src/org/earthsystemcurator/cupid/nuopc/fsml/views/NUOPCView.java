@@ -1,5 +1,6 @@
 package org.earthsystemcurator.cupid.nuopc.fsml.views;
 
+import java.awt.Color;
 import java.lang.reflect.InvocationTargetException;
 
 import org.earthsystemcurator.FSM;
@@ -24,6 +25,7 @@ import org.eclipse.jface.action.IMenuManager;
 import org.eclipse.jface.action.MenuManager;
 import org.eclipse.jface.dialogs.MessageDialog;
 import org.eclipse.jface.layout.TreeColumnLayout;
+import org.eclipse.jface.viewers.ColumnViewer;
 import org.eclipse.jface.viewers.ColumnViewerToolTipSupport;
 import org.eclipse.jface.viewers.ColumnWeightData;
 import org.eclipse.jface.viewers.DoubleClickEvent;
@@ -41,7 +43,13 @@ import org.eclipse.photran.internal.core.parser.IProgramUnit;
 import org.eclipse.photran.internal.core.reindenter.Reindenter;
 import org.eclipse.photran.internal.core.reindenter.Reindenter.Strategy;
 import org.eclipse.swt.SWT;
+import org.eclipse.swt.browser.Browser;
+import org.eclipse.swt.graphics.Font;
+import org.eclipse.swt.layout.GridData;
+import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Composite;
+import org.eclipse.swt.widgets.Display;
+import org.eclipse.swt.widgets.Event;
 import org.eclipse.swt.widgets.Menu;
 import org.eclipse.swt.widgets.TreeColumn;
 import org.eclipse.ui.IActionBars;
@@ -102,6 +110,100 @@ public class NUOPCView extends ViewPart {
 		}
 	}
 	
+	
+	private static class FancyToolTipSupport extends ColumnViewerToolTipSupport {
+
+		protected FancyToolTipSupport(ColumnViewer viewer, int style,
+				boolean manualActivation) {
+			super(viewer, style, manualActivation);
+		}
+
+		@Override
+		protected Composite createToolTipContentArea(Event event, Composite parent) {
+			Composite comp = new Composite(parent, SWT.NO_SCROLL);
+			GridLayout l = new GridLayout(1,false);
+			
+			l.horizontalSpacing=0;
+			l.marginWidth=1;
+			l.marginHeight=1;
+			l.verticalSpacing=0;
+
+			comp.setLayout(l);	
+			Browser browser = new Browser(comp, SWT.NO_SCROLL);
+			//browser.setFont(new Font(Display.getDefault(), "Arial", 10, SWT.ITALIC ));
+			
+			String text = getText(event);
+			text = "<html><body bgcolor=\"#FFFFE0\" style=\"margin-top:2pt;overflow:auto;font-size:13px;font-family:Helvetica;\">" + text + "</body></html>";
+			
+			browser.setText(text);
+			
+			int height = 75;
+			if (text.length() > 650) {
+				height = 300;
+			}
+			else if (text.length() > 300) {
+				height = 200;
+			}
+			else if (text.length() > 200) {
+				height = 150;
+			}
+			browser.setLayoutData(new GridData(400, height));
+			
+			
+
+			return comp;
+		}
+
+		@Override
+		public boolean isHideOnMouseDown() {
+			return false;
+		}
+
+		public static final void enableFor(ColumnViewer viewer, int style) {
+			new FancyToolTipSupport(viewer,style,false);
+		}
+	}
+	
+	
+	private class AddElementAction extends Action {
+		
+		private FSM<?> fsm;
+		private NUOPCModelElem me;
+		private SubconceptOrAttribute soa;
+		private boolean addAll;
+		
+		public AddElementAction(FSM<?> fsm, NUOPCModelElem me, SubconceptOrAttribute soa, boolean addAll) {
+			this.fsm = fsm;
+			this.me = me;
+			this.soa = soa;
+			this.addAll = addAll;
+		}
+		
+		public void run() {
+	
+			EObject newElem = fsm.forwardAdd(me.elem, soa, true, addAll);
+			IFortranAST ast = fsm.getASTForElement(newElem);
+			
+			//TODO: in the case of NUOPCApplication, there is no AST above
+			Reindenter.reindent(ast.getRoot(), ast, Strategy.REINDENT_EACH_LINE);      								
+			
+			try {
+				IWorkbenchWindow window = PlatformUI.getWorkbench().getActiveWorkbenchWindow();
+				//running in UI thread for now so we can set focus to generated code
+				PlatformUI.getWorkbench().getProgressService().run(false, false, new RewriteASTRunnable(ast, window));
+			} catch (InvocationTargetException e) {
+				e.printStackTrace();
+			} catch (InterruptedException e) {
+				e.printStackTrace();
+			}
+			                   					
+			viewer.refresh(me);
+			viewer.expandToLevel(me, 1);
+				
+		}      
+	}
+	
+	
 	/**
 	 * This is a callback that will allow us
 	 * to create the viewer and initialize it.
@@ -144,7 +246,9 @@ public class NUOPCView extends ViewPart {
 		labelProvider = new NUOPCViewLabelProvider();
 		viewer.setLabelProvider(labelProvider);
 		viewer.setSorter(null);
-		ColumnViewerToolTipSupport.enableFor(viewer, ToolTip.NO_RECREATE);
+		
+		//ColumnViewerToolTipSupport.enableFor(viewer, ToolTip.NO_RECREATE);
+		FancyToolTipSupport.enableFor(viewer, ToolTip.NO_RECREATE);
 		
 		//viewer.setInput(getViewSite());
 		
@@ -279,6 +383,7 @@ public class NUOPCView extends ViewPart {
                     		
                     		if (!soa.isAttrib() && (fsm.isMany(soa) || (me.elem != null && fsm.getValue(me.elem, soa) == null)) ) {
                     			
+                    			/*
                     			Action addElementAction = new Action() {
                     				
                     				public void run() {
@@ -288,8 +393,7 @@ public class NUOPCView extends ViewPart {
         								IFortranAST ast = fsm.getASTForElement(newElem);
         								
         								//TODO: in the case of NUOPCApplication, there is no AST above
-        								Reindenter.reindent(ast.getRoot(), ast, Strategy.REINDENT_EACH_LINE);
-        								
+        								Reindenter.reindent(ast.getRoot(), ast, Strategy.REINDENT_EACH_LINE);      								
                     					
         								try {
         									IWorkbenchWindow window = PlatformUI.getWorkbench().getActiveWorkbenchWindow();
@@ -300,26 +404,32 @@ public class NUOPCView extends ViewPart {
         								} catch (InterruptedException e) {
         									e.printStackTrace();
         								}
-                    					
-                    					
+                    					                   					
                         				viewer.refresh(me);
                         				viewer.expandToLevel(me, 1);
                          				
                             		}      
                     				
                     			};
+                    			*/
                     			
-                    			//String label = Regex.getFromAnnotation(childRef.getEType(), "label", childRef.getEType().getName());
                     			String label = fsm.getAnnotationValue(fsm.getDefinition(soa), "label");
                     			if (label==null) {
                     				label = soa.getName();
                     			}
                     			
-                    			addElementAction.setText("Add " + label);
-                    			//TODO: fix this image
-                    			//addElementAction.setImageDescriptor(NUOPCViewLabelProvider.getFortranImageDescriptor(childRef, null, null));
-                    			//a.setToolTipText(Regex.getFromAnnotation(childRef.getEType(), "doc"));
+                    			AddElementAction addElementAction = new AddElementAction(fsm, me, soa, false);
+                    			addElementAction.setText("Add " + label + " (basic)");
+                    			addElementAction.setImageDescriptor(NUOPCViewLabelProvider.getFortranImageDescriptor(soa, null, null));
+                    			//addElementAction.setToolTipText(fsm.getAnnotationValue(soa, "doc"));
                     			manager.add(addElementAction);
+                    			
+                    			AddElementAction addElementAction2 = new AddElementAction(fsm, me, soa, true);
+                    			addElementAction2.setText("Add " + label + " (complete)");
+                    			addElementAction2.setImageDescriptor(NUOPCViewLabelProvider.getFortranImageDescriptor(soa, null, null));
+                    			//addElementAction2.setToolTipText(fsm.getAnnotationValue(fsm.getDefinition(soa), "doc"));
+                    			manager.add(addElementAction2);
+                    			
                     		}
                     	}
                     	
@@ -337,33 +447,36 @@ public class NUOPCView extends ViewPart {
         //resource listener to know when current project is dirty
         
         IWorkspace workspace = ResourcesPlugin.getWorkspace();
-		IResourceChangeListener rcl = new IResourceChangeListener() {
-			public void resourceChanged(IResourceChangeEvent event) {
-				if (viewer.getInput() != null) {
-					try {
-						event.getDelta().accept(new IResourceDeltaVisitor() {
-	
-							@Override
-							public boolean visit(IResourceDelta delta)
-									throws CoreException {
-								if (delta.getResource() instanceof IProject) {
-									if (viewer.getInput().equals(delta.getResource())) {
-										//System.out.println("Dirty project: " + delta.getResource());
-										setProjectIsDirty(true);
-										return false;
-									}
-								}
-								return true;
-							}
-							
-						});
-					} catch (CoreException e) {
-						// TODO Auto-generated catch block
-						e.printStackTrace();
-					}
-				}
-			}
-		};
+        IResourceChangeListener rcl = new IResourceChangeListener() {
+        	public void resourceChanged(final IResourceChangeEvent event) {
+        		if (viewer.getInput() != null && event.getDelta() != null) {
+        			Display.getDefault().syncExec(new Runnable() {
+        				public void run() {
+        					try {
+        						event.getDelta().accept(new IResourceDeltaVisitor() {
+        							@Override
+        							public boolean visit(IResourceDelta delta) throws CoreException {
+        								if (delta.getResource() instanceof IProject) {
+        									if (viewer.getInput().equals(delta.getResource())) {
+        										//System.out.println("Dirty project: " + delta.getResource());
+        										setProjectIsDirty(true);
+        										return false;
+        									}
+        								}
+        								return true;
+        							}
+        						});
+        					} catch (CoreException e) {
+        						// TODO Auto-generated catch block
+        						e.printStackTrace();
+        					}
+
+        				}
+        			});
+
+        		}
+        	}
+        };
 
 		workspace.addResourceChangeListener(rcl);
         

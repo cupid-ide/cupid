@@ -7,19 +7,17 @@ language NUOPC 'http://www.earthsystemcurator.org/nuopcgen' {
 		
 		attrib name	{ @name }
 		
-		
 		models*:NUOPCModel
 		drivers*:NUOPCDriver
-		driversAtmOcn*:NUOPCDriverAtmOcn
-		
+		--driversAtmOcn*:NUOPCDriverAtmOcn
 	}
 	
-	concept NUOPCDriver <module> 
+	concept NUOPCDriver <module (#driverName)> 
 	{
 		@label="NUOPC Driver"
 		@doc = "A type of NUOPC component that controls its child components"
 		
-		attrib driverName <moduleName> 
+		attrib driverName 
 		{
 			@name
 			@label="Driver Name"
@@ -29,39 +27,232 @@ language NUOPC 'http://www.earthsystemcurator.org/nuopcgen' {
 		standardESMFImport <usesModule(ESMF)> {@label = "ESMF Import"}
 		standardNUOPCImport <usesModule(NUOPC)> {@label = "NUOPC Import"}
 		
-		genericDriverImports! <usesModule(NUOPC_Driver)>
+		genericImports! <usesModule(NUOPC_Driver)>
 		{
 			@label = "Generic Driver Imports"
-			attrib importsGenericSS! <usesEntity(routine_SetServices)>
-			attrib importsTypeInternalState <usesEntity(type_InternalState)>
-			attrib importsLabelInternalState <usesEntity(label_InternalState)>
-			attrib importsLabelSetModelCount <usesEntity(label_SetModelCount)>
-			attrib importsLabelSetModelServices <usesEntity(label_SetModelServices)>
+			attrib importsGenericSS! <usesEntity(routine_SetServices)> {@default="driver_routine_SetServices"}
+			--attrib importsTypeInternalState <usesEntity(type_InternalState)>
+			--attrib importsLabelInternalState <usesEntity(label_InternalState)>
+			--attrib importsLabelSetModelCount <usesEntity(label_SetModelCount)>
+			--attrib importsLabelSetModelServices <usesEntity(label_SetModelServices)>
+		}
+				
+		implementsSetServices! <subroutine(*(inout type(ESMF_GridComp) #p_gcomp, out integer #p_rc) )> 
+		{
+			@label = "Set Services"
+			attrib n_SetServices <subroutineName> {@name @default="SetServices"}
+			attrib p_gcomp {@default="gcomp"}
+			attrib p_rc	{@default="rc"}	
+						
+			callsGenericSetServices! <call(#^genericImports/importsGenericSS(#^p_gcomp, #^p_rc))> 
+			{
+				@label = "Calls generic SetServices"	
+			}					
 		}
 		
-		modelImports {
-			@label = "Child Model Imports"
+		
+		initialize
+		{
+			@label = "Initialization"
 			
-		 	modelImport* <usesModule(#modelImportName)> {
-				@label = "Child Import"
-				attrib modelImportName
-				--ref modelRef = ^models[modelName=modelImportName]
+			initP0 {
+				@label = "phase 0"
+				@doc = "<b>NUOPC provided.</b> Initialize the InitializePhaseMap Attribute according to the NUOPC Initialize Phase Definition (IPD) version 00."
 			}
 			
+			initP1 {
+				@label = "phase 1"
+				@doc = "<b>NUOPC provided.</b>
+						<ul>
+						<li>Allocate and initialize the internal state.</li>
+						<li>If the internal clock is not yet set, set the default internal clock to be a copy of the incoming clock, if the incoming clock is valid.</li>
+						<li><i>Required specialization</i> to set number of Model+Mediator components, <tt>modelCount</tt>, in the internal state: <tt>label_SetModelCount</tt>.</li>
+						<li>Allocate internal storage according to <tt>modelCount</tt>.</li>
+						<li><i>Optional specialization</i> to provide Model, Mediator, and Connector <tt>petList</tt> members in the internal state: <tt>label_SetModelPetList</tt>.</li>
+						<li>Create Model and Mediator components with their import and export States.</li>
+						<li>Attach standard NUOPC Model Component metadata.</li>
+						<li>Create Connector components.</li>
+						<li>Attach standard NUOPC Connector Component metadata.</li>
+						<li>Initialize the default run sequence.</li>
+						<li><i>Required specialization</i> to set component services: <tt>label_SetModelServices</tt>. 						  
+							<ul>
+							<li>Call into SetServices() for all Model, Mediator, and Connector components.</li>
+							<li>Optionally replace the default clock.</li>
+							<li>Optionally replace the default run sequence.</li>
+							</ul>
+						</li>
+						<li>Execute Initialize phase=0 for all Model, Mediator, and Connector components. This is the method where each component is required to initialize its <tt>InitializePhaseMap</tt> Attribute.</li>
+						<li><i>Optional specialization</i> to analyze and modify components' <tt>InitializePhaseMap</tt> Attribute before the Driver uses it: <tt>label_ModifyInitializePhaseMap</tt>.</li>
+						<li>Implement the initialize sequence for the child components, compatible with up to IPD version 02, as documented in section 2.4.1.</li>
+						</ul>"
+				
+				specSetModelCount <subroutine(#userRoutine(inout type(ESMF_GridComp) #p_gcomp, out integer #p_rc) )> 
+				{
+					@label = "Set Model Count (required)"
+					@doc = "Required specialization to set the number of Model+Mediator components, modelCount, in the internal state."
+										
+					attrib userRoutine {@name @default="SetModelCount"}
+					attrib p_gcomp {@default="gcomp"}
+					attrib p_rc	{@default="rc"}	
+					
+					--imports label
+					attrib importsLabel! <#^genericImports usesEntity(label_SetModelCount)> {
+						@default = "driver_label_SetModelCount"
+					}		
+					
+					--method registration
+					registered! <#^implementsSetServices 
+							call(ESMF_MethodAdd(#^implementsSetServices/p_gcomp, 
+												label=#^importsLabel, 
+												userRoutine=#^userRoutine, 
+												rc=#^implementsSetServices/p_rc))> {
+						@label = "Registered in Set Services"
+					}
+				}
+				
+				specSetModelPetList? <subroutine(#userRoutine(inout type(ESMF_GridComp) #p_gcomp, out integer #p_rc) )> 
+				{
+					@label = "Set Model PET List (optional)"
+					@doc = "Optional specialization to provide Model, Mediator, and Connector petList members in the internal state."
+					
+					attrib userRoutine {@name @default="SetModelPetList"}
+					attrib p_gcomp {@default="gcomp"}
+					attrib p_rc	{@default="rc"}	
+					
+					--imports label
+					attrib importsLabel! <#^genericImports usesEntity(label_SetModelPetList)> {
+						@default = "driver_label_SetModelPetList"
+					}		
+					
+					--method registration
+					registered! <#^implementsSetServices 
+							call(ESMF_MethodAdd(#^implementsSetServices/p_gcomp, 
+												label=#^importsLabel, 
+												userRoutine=#^userRoutine, 
+												rc=#^implementsSetServices/p_rc))>
+					{
+						@label = "Registered in Set Services"
+					}
+				}
+				
+				specSetModelServices <subroutine(#userRoutine(inout type(ESMF_GridComp) #p_gcomp, out integer #p_rc) )> 
+				{
+					@label = "Set Model Services (required)"
+					@doc = "Required specialization to set component services."
+					
+					attrib userRoutine {@name @default="SetModelServices"}
+					attrib p_gcomp {@default="gcomp"}
+					attrib p_rc	{@default="rc"}	
+					
+					--imports label
+					attrib importsLabel! <#^genericImports usesEntity(label_SetModelServices)> {
+						@default = "driver_label_SetModelServices"
+					}		
+					
+					--method registration
+					registered! <#^implementsSetServices 
+							call(ESMF_MethodAdd(#^implementsSetServices/p_gcomp, 
+												label=#^importsLabel, 
+												userRoutine=#^userRoutine, 
+												rc=#^implementsSetServices/p_rc))>
+					{
+						@label = "Registered in Set Services"
+					}
+				}
+				
+				specModifyInitializePhaseMap? <subroutine(#userRoutine(inout type(ESMF_GridComp) #p_gcomp, out integer #p_rc) )> 
+				{
+					@label = "Modify Initialize Phase Map (optional)"
+					@doc = "Optional specialization to analyze and modify components' InitializePhaseMap Attribute before the Driver uses it."
+					
+					attrib userRoutine {@name @default="ModifyInitializePhaseMap"}
+					attrib p_gcomp {@default="gcomp"}
+					attrib p_rc	{@default="rc"}	
+					
+					--imports label
+					attrib importsLabel! <#^genericImports usesEntity(label_ModifyInitializePhaseMap)> {
+						@default = "driver_label_ModifyInitializePhaseMap"
+					}		
+					
+					--method registration
+					registered! <#^implementsSetServices 
+							call(ESMF_MethodAdd(#^implementsSetServices/p_gcomp, 
+												label=#^importsLabel, 
+												userRoutine=#^userRoutine, 
+												rc=#^implementsSetServices/p_rc))>
+					{
+						@label = "Registered in Set Services"
+					}
+				}
+				
+				
+				
+			}
 			
 		}
 		
-		implementsSetServices <subroutine(SetServices)> {
+		
+		run {
+			@label = "Run"
 			
-			callsGenericSetServices <call(#^genericDriverImports/importsGenericSS)>
+			runP1 {
+				@label = "phase 1"
+				@doc = "<b>NUOPC provided.</b><ul>
+  						<li>If the incoming clock is valid, set the internal stop time to one time step interval on the incoming clock.
+  						<li>Time stepping loop, from current time to stop time, incrementing by time step.
+  						<li>For each time step iteration, the Model and Connector components Run() methods are being called according to the run sequence.
+						</ul>"
+			}
 			
-			callsMethodAdd* <call(ESMF_MethodAdd(*, #label, *, *))> {
-				attrib label
+		}
+		
+		finalize {
+			@label="Finalize"
+			finalizeP1  {
+				@label = "phase 1"
+				@doc = "<b>NUOPC provided.</b>
+					<ul>
+					 <li><i>Optional specialization</i> to finalize driver component: <tt>label_Finalize</tt>.</li>
+					 <li>Execute all Connector components' Finalize() methods in order.</li>
+					 <li>Execute all Model components' Finalize() methods in order.</li>
+					 <li>Destroy all Model components and their import and export states.</li>
+					 <li>Destroy all Connector components.</li>
+					 <li>Deallocate the run sequence.</li>
+					 <li>Deallocate the internal state.</li>
+					</ul>"
+				
+				specFinalize? <subroutine(#userRoutine(inout type(ESMF_GridComp) #p_gcomp, out integer #p_rc) )> 
+				{
+					@label = "Finalize (optional)"
+					@doc = "Optional specialization to finalize driver."
+					
+					attrib userRoutine {@name @default="Finalize"}
+					attrib p_gcomp {@default="gcomp"}
+					attrib p_rc	{@default="rc"}	
+					
+					--imports label
+					attrib importsLabel! <#^genericImports usesEntity(label_Finalize)> {
+						@default = "driver_label_Finalize"
+					}		
+					
+					--method registration
+					registered! <#^implementsSetServices 
+							call(ESMF_MethodAdd(#^implementsSetServices/p_gcomp, 
+												label=#^importsLabel, 
+												userRoutine=#^userRoutine, 
+												rc=#^implementsSetServices/p_rc))>
+					{
+						@label = "Registered in Set Services"
+					}
+				}
+		
+				
 			}
 		}
 		
 	}
 	
+	/*
 	concept NUOPCDriverAtmOcn <module> 
 	{
 		@label="NUOPC Atm-Ocn Driver"
@@ -151,12 +342,14 @@ language NUOPC 'http://www.earthsystemcurator.org/nuopcgen' {
 		}
 		
 	}
+	* 
+	*/
 		
 	
 	concept NUOPCModel <module(#modelName)>
 	{
 		@label="NUOPC Model"
-		@doc="NUOPC Model is a generic model component that wraps a model code so it is suitable to be plugged into a generic Driver component."
+		@doc="<b>NUOPC Model</b> is a generic model component that wraps a model code so it is suitable to be plugged into a generic Driver component."
 				
 		attrib modelName
 		{
@@ -184,25 +377,17 @@ language NUOPC 'http://www.earthsystemcurator.org/nuopcgen' {
 			callsGenericSetServices! <call(#^genericImports/importsGenericSS(#^p_gcomp, #^p_rc))> 
 			{
 				@label = "Calls generic SetServices"	
-			}
-			
-			/*
-			afterTest* {
-				
-				first <call(#name)> 
-					{attrib name {@name}}
-					
-				second <call(#name) after(#^first)> 
-					{attrib name {@name}}
-				
-			}
-			*/
-			
+			}					
 		}
 		
 		initialize
 		{
 			@label = "Initialization"
+			
+			initP0 {
+				@label = "phase 0"
+				@doc = "<b>NUOPC provided.</b> Initialize the InitializePhaseMap Attribute according to the NUOPC Initialize Phase Definition (IPD) version 00."
+			}
 			
 			initP1 <subroutine(#n_initP1(
 										inout type(ESMF_GridComp) #p_gcomp, 
@@ -383,7 +568,7 @@ language NUOPC 'http://www.earthsystemcurator.org/nuopcgen' {
 			
 				specSetClock? <subroutine(*(inout type(ESMF_GridComp) #p_gcomp, out integer #p_rc) )> 
 				{
-					@label = "Set Clock (optional specialization)"
+					@label = "Set Clock (optional)"
 					@doc = "Optional specialization to set the Model's internal clock and/or alarms."
 					
 					attrib n_SetClock <subroutineName> {@name @default="SetModelClock"}
@@ -397,7 +582,7 @@ language NUOPC 'http://www.earthsystemcurator.org/nuopcgen' {
 					
 					timeStep <declaration(type(ESMF_TimeInterval))> 
 					{
-						attrib name <declaredEntity> {@default="timeStep"}
+						attrib name <declaredEntity> {@default="stabilityTimeStep"}
 					}
 					
 					--imports label
@@ -414,6 +599,12 @@ language NUOPC 'http://www.earthsystemcurator.org/nuopcgen' {
 					{
 						@label = "Registered in Set Services"
 					}
+					
+					--call ESMF_TimeIntervalSet(stabilityTimeStep, m=5, rc=rc) ! 5 minute steps
+					setStabilityTimeInterval? <call(ESMF_TimeIntervalSet(#^timeStep/name, m?=#mins, rc?=#rc))> {
+						attrib mins {@default="5"}
+						attrib rc {@default="rc"}
+					}				
 					
 					--call NUOPC_GridCompSetClock(gcomp, clock, stabilityTimeStep, rc=rc)
 					setModelClock <call (NUOPC_GridCompSetClock(#^p_gcomp, #^clock/name, #^timeStep/name, rc=#^p_rc))> 
@@ -432,7 +623,7 @@ language NUOPC 'http://www.earthsystemcurator.org/nuopcgen' {
 				@doc = "Provided by NUOPC. Field in export state are timestamped for compatibility checking."
 				
 				specDataInitialize {
-					@label = "Data Initialize (optional specialization)"
+					@label = "Data Initialize (optional)"
 					@doc = "Optional specialization to initialize export Fields"
 				}
 			}
@@ -442,7 +633,7 @@ language NUOPC 'http://www.earthsystemcurator.org/nuopcgen' {
 				@doc = "Provided by NUOPC. Field in export state are timestamped for compatibility checking."
 				
 				specDataInitialize {
-					@label = "Data Initialize (optional specialization)"
+					@label = "Data Initialize (optional)"
 					@doc = "Optional specialization to initialize export Fields"
 				}
 			}
@@ -450,60 +641,62 @@ language NUOPC 'http://www.earthsystemcurator.org/nuopcgen' {
 		}	
 		
 		
-		modelRun
+		run
 		{
 			@label = "Run"
 			
 			runP1 {
 				@label = "phase 1"
 				@doc = "Provided by NUOPC. Assigns driverClock as alias to incoming clock. Checks compatibility of incoming clock. Checks compatibility of import Fields timestamps. Performs model timestep loop. Timestamps all export Fields."
-			}
 			
-			specSetRunClock? {
-				@label = "Set Run Clock (optional specialization)"
-				@doc = "Optional specialization to check and set the internal clock against the incoming clock."
-			}
 			
-			specCheckImport? {
-				@label = "Check Fields in import State (optional specialization)"
-				@doc = "Optional specialization to check Fields in import State."
-			}
-			
-			specModelAdvance {
-				@label = "Model Advance (required specialization)" 
-				@doc = "Required specialization. Advance the model one time step. May be multi-phase."
+				specSetRunClock? {
+					@label = "Set Run Clock (optional)"
+					@doc = "Optional specialization to check and set the internal clock against the incoming clock."
+				}
 				
-				--imports label
-				attrib importsLabelModelAdvance! <#^genericImports usesEntity(label_Advance)>
-				{
-					@default = "model_label_Advance"
-				}	
+				specCheckImport? {
+					@label = "Check Fields in import State (optional)"
+					@doc = "Optional specialization to check Fields in import State."
+				}
 				
-				modelAdvancePhase+ <subroutine(#userRoutine(inout type(ESMF_GridComp) #p_gcomp, out integer #p_rc))> 
-				{	
-					@label = "Model Advance Phase"
-					@doc = "A single model advance phase"
-									
-					attrib userRoutine  {@name @default="ModelAdvance"}
-					attrib p_gcomp {@default="gcomp"}
-					attrib p_rc {@default="rc"}
-					attrib phase?
-									
-					modelAdvanceRegistered! <#^implementsSetServices 
-						call(ESMF_MethodAdd(*, 
-											index?=#^phase, 
-											label=#^importsLabelModelAdvance, 
-											userRoutine=#^userRoutine, 
-											rc=#^implementsSetServices/p_rc))>
+				specModelAdvance {
+					@label = "Model Advance (required)" 
+					@doc = "Required specialization. Advance the model one time step. May be multi-phase."
+				
+					
+					--imports label
+					attrib importsLabelModelAdvance! <#^genericImports usesEntity(label_Advance)>
 					{
-						@label = "Registered in Set Services"
+						@default = "model_label_Advance"
+					}	
+	
+					
+					modelAdvancePhase+ <subroutine(#userRoutine(inout type(ESMF_GridComp) #p_gcomp, out integer #p_rc))> 
+					{	
+						@label = "Model Advance Phase"
+						@doc = "A single model advance phase"
+										
+						attrib userRoutine  {@name @default="ModelAdvance"}
+						attrib p_gcomp {@default="gcomp"}
+						attrib p_rc {@default="rc"}
+						attrib phase?
+										
+						modelAdvanceRegistered! <#^implementsSetServices 
+							call(ESMF_MethodAdd(*, 
+												index?=#^phase, 
+												label=#^importsLabelModelAdvance, 
+												userRoutine=#^userRoutine, 
+												rc=#^implementsSetServices/p_rc))>
+						{
+							@label = "Registered in Set Services"
+						}
+					
 					}
-				
 				}
 			}
-			
 		}
-		
+				
 		finalize? <subroutine(#n_finalize(
 						inout type(ESMF_GridComp) #p_gcomp, 
 						inout type(ESMF_State) #p_import, 
@@ -512,7 +705,7 @@ language NUOPC 'http://www.earthsystemcurator.org/nuopcgen' {
 						out integer #p_rc))>
 		{
 			@label = "Finalize"
-			@doc = "NUOPC Provided.  Optionally overwrite the provided NOOP with model finalization code."
+			@doc = "<b>NUOPC provided.</b>  Optionally overwrite the provided NOOP with model finalization code."
 			
 			attrib n_finalize {@default="Finalize"}
 			attrib p_gcomp {@default="gcomp"}
@@ -533,11 +726,9 @@ language NUOPC 'http://www.earthsystemcurator.org/nuopcgen' {
 				}
 			
 		}
-		
-		
-		
 				
 	}
+	
 	
 	concept NUOPCMediator <module> 
 	{

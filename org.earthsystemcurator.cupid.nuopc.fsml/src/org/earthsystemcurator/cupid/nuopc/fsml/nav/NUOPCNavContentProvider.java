@@ -1,5 +1,5 @@
 package org.earthsystemcurator.cupid.nuopc.fsml.nav;
-import org.earthsystemcurator.cupid.nuopc.fsml.builder.NUOPCNature;
+
 import org.earthsystemcurator.cupid.nuopc.fsml.nuopc.NUOPCApplication;
 import org.eclipse.core.resources.IFile;
 import org.eclipse.core.resources.IProject;
@@ -64,17 +64,17 @@ public class NUOPCNavContentProvider implements ITreeContentProvider {
 		//	return revMap.get(p);
 		//}
 		//else {
-		try {
-			NUOPCNature nature = (NUOPCNature) p.getNature(NUOPCNature.NATURE_ID);
+		//try {
+			//NUOPCNature nature = (NUOPCNature) p.getNature(NUOPCNature.NATURE_ID);
 			//if (nature.getReverseEngineeredModel() != null) {
 			//	revMap.put(p, nature.getReverseEngineeredModel());
 			//return nature.getReverseEngineeredModel();
 			return null;
 			//}
-		} catch (CoreException e) {
-			e.printStackTrace();
-			return null;
-		}
+		//} catch (CoreException e) {
+		//	e.printStackTrace();
+		///	return null;
+		//}
 		//}
 		//return null;
 	}

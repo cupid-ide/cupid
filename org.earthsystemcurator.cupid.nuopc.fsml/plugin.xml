@@ -229,7 +229,7 @@
             locationURI="toolbar:org.earthsystemcurator.cupid.nuopc.fsml.views.NUOPCView.toolbar">
          <command
                commandId="org.earthsystemcurator.cupid.nuopc.fsml.commands.reverseCommand"
-               icon="icons/arrow_right.png"
+               icon="icons/arrow_rev.png"
                id="org.earthsystemcurator.cupid.nuopc.fsml.toolbars.reverseCommand"
                tooltip="Reverse engineer">
          </command>
@@ -243,6 +243,7 @@
          -->
       </menuContribution>
    </extension>
+   <!--
    <extension
          id="nuopcBuilder"
          name="NUOPC Project Builder"
@@ -254,6 +255,8 @@
          </run>
       </builder>
    </extension>
+   -->
+   <!--
    <extension
          id="nuopcNature"
          name="NUOPC Project Nature"
@@ -267,6 +270,7 @@
             id="org.earthsystemcurator.cupid.nuopc.fsml.nuopcBuilder">
       </builder>
    </extension>
+   -->
    <extension
          id="xmlProblem"
          name="XML Problem"

@@ -9,7 +9,6 @@ import java.lang.reflect.InvocationTargetException;
 import java.util.HashSet;
 
 import org.earthsystemcurator.FSM;
-import org.earthsystemcurator.cupid.nuopc.fsml.builder.NUOPCNature;
 import org.eclipse.cdt.core.model.ITranslationUnit;
 import org.eclipse.compare.internal.DocLineComparator;
 import org.eclipse.compare.rangedifferencer.RangeDifference;
@@ -92,21 +91,21 @@ public class ForwardHandler extends AbstractHandler {
 		
 	
 		
-		NUOPCNature nature = null;	
-		try {
-			nature = (NUOPCNature) selectedProject.getNature(NUOPCNature.NATURE_ID);			
-		} catch (CoreException e) {
+		//NUOPCNature nature = null;	
+		//try {
+		//	nature = (NUOPCNature) selectedProject.getNature(NUOPCNature.NATURE_ID);			
+		//} catch (CoreException e) {
 			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+		//	e.printStackTrace();
+		//}
 		
-		if (nature == null) return null;
+		//if (nature == null) return null;
 		
 		//final NUOPCApplication revApp = nature.reversedModel;
 		//final Map<Object, Object> revMap = nature.reversedMappings;;
 		//final NUOPCApplication forApp = nature.forwardModel;
-		final FSM rev = nature.fsm;
-		final FSM forward = nature.fsmForward;
+		final FSM rev = null; //nature.fsm;
+		final FSM forward = null; //nature.fsmForward;
 		
 		final IProject selProject = selectedProject;
 		

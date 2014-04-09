@@ -20,7 +20,6 @@ import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
 
-import org.earthsystemcurator.cupid.nuopc.fsml.builder.NUOPCNature;
 import org.earthsystemcurator.cupid.nuopc.fsml.core.CupidActivator;
 import org.earthsystemcurator.cupid.nuopc.fsml.preferences.CupidPreferencePage;
 import org.eclipse.cdt.core.CCorePlugin;
@@ -316,7 +315,7 @@ public class CupidProjectWizard extends Wizard implements INewWizard, IExecutabl
 
 		CProjectNature.addCNature(project, new SubProgressMonitor(monitor, 1));
 		FProjectNature.addFNature(project, new SubProgressMonitor(monitor, 1));
-		NUOPCNature.addNUOPCNature(project, new SubProgressMonitor(monitor, 1));
+		//NUOPCNature.addNUOPCNature(project, new SubProgressMonitor(monitor, 1));
 
 		// Persist the project description
 		mngr.setProjectDescription(project, des);

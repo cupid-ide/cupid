@@ -103,15 +103,14 @@ public class CodeTransformation {
 		}
 		else {
 			//if it already exists, we need to deal with this - do not overwrite existing file...
+			return null;
 		}
 		
-		
-		IFortranAST ast = PhotranVPG.getInstance().acquireTransientAST(fileToAdd);
-		context.add(ast);
-		
+		IFortranAST ast = PhotranVPG.getInstance().parse(fileToAdd.getFullPath().toString());		
+		//IFortranAST ast = PhotranVPG.getInstance().acquireTransientAST(fileToAdd);
+
+		context.add(ast);		
 		return ast;
-		
-		//ASTModuleNode amn = (ASTModuleNode) CodeExtraction.parseLiteralProgramUnit(code);
 	
 	}
 	
@@ -127,7 +126,7 @@ public class CodeTransformation {
 	
 	public static IASTNode call(IASTNode context, Call mapping, List<Annotation> anots) {					
 		
-		ST code = STWithDoc("\ncall <name.id>(<params:{p|<if(!p.optional || p.value.expr.id)><if(p.keyword)><p.keyword> = <endif><if(p.value.expr.literal)><p.value.expr.literal><else><p.value.expr.id><endif><endif>}; separator=\", \">)\n", anots);
+		ST code = STWithDoc("\ncall <name.id>(<params:{p|<if(!p.optional || p.value.expr.id)><if(p.keyword)><p.keyword> = <endif><if(p.value.expr.literal)><p.value.expr.literal><else><p.value.expr.id><endif><endif>}; wrap=\"&\n\", separator=\", \">)\n", anots);
 		code.add("name", mapping.getSubroutineName().getExpr());
 		code.add("params", mapping.getParams());
 				

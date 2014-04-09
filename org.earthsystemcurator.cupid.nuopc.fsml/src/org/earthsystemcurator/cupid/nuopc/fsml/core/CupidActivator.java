@@ -29,15 +29,7 @@ public class CupidActivator extends AbstractUIPlugin {
 	@Override
 	public void start(BundleContext context) throws Exception {
 		super.start(context);		
-		instance = this;
-		
-		//add default NUOPC metamodel to registry
-		URI ecoreURI = URI.createURI("platform:/plugin/org.earthsystemcurator.cupid.nuopc.fsml/cupidmodel/nuopc.ecore");
-		ResourceSet rs = new ResourceSetImpl();
-		Resource ecoreResource = rs.getResource(ecoreURI, true);
-		EPackage ecorePackage = (EPackage) ecoreResource.getContents().get(0);
-		EPackage.Registry.INSTANCE.put("http://www.earthsystemcurator.org/nuopcgen", ecorePackage); 		
-		
+		instance = this;		
 	}	
 	
 	public static CupidActivator getDefault() {

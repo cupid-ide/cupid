@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.earthsystemcurator.FSM;
-import org.earthsystemcurator.cupid.nuopc.fsml.builder.NUOPCNature;
+import org.earthsystemcurator.cupid.nuopc.fsml.core.CupidStorage;
 import org.earthsystemcurator.cupid.nuopc.fsml.util.Regex;
 import org.earthsystemcurator.cupidLanguage.ConceptDef;
 import org.earthsystemcurator.cupidLanguage.SubconceptOrAttribute;
@@ -12,6 +12,7 @@ import org.eclipse.core.resources.IProject;
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.emf.common.util.Diagnostic;
 import org.eclipse.emf.common.util.EList;
+import org.eclipse.emf.ecore.EAttribute;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EReference;
 import org.eclipse.emf.ecore.EStructuralFeature;
@@ -54,30 +55,8 @@ class NUOPCViewContentProvider implements IStructuredContentProvider, ITreeConte
 		//app = null;
 		
 		if (newInput != null) {
-			project = (IProject) newInput;			
-			try {
-				NUOPCNature nature = (NUOPCNature) project.getNature(NUOPCNature.NATURE_ID);
-				if (nature != null) {
-					
-					fsm = nature.fsm;
-					
-					//duplicateReversedModel(nature);
-					//make a deep copy
-					//app = EcoreUtil.copy(nature.reversedModel);					
-					
-					//undoing copy for now so that the mappings are correct
-					//might need to create a utility function to duplicate both
-					//app = nature.reversedModel;
-					//reversedMappings = nature.reversedMappings;
-										
-					//nature.forwardModel = app;
-				}
-			} catch (CoreException e) {			
-				e.printStackTrace();
-				project = null;
-				//app = null;
-				fsm = null;
-			}
+			project = (IProject) newInput;	
+			fsm = CupidStorage.INSTANCE.getFSM(project);
 		}
 		
 	}
@@ -386,7 +365,7 @@ class NUOPCViewContentProvider implements IStructuredContentProvider, ITreeConte
 						validationMessage = "";
 						for (Diagnostic d : diagnostic.getChildren()) {
 							if (validationMessage.length() > 0) {
-								validationMessage += "\n\n";
+								validationMessage += "\n<br/>";
 							}
 							validationMessage += getValidationMessage(d);
 						}						
@@ -404,14 +383,23 @@ class NUOPCViewContentProvider implements IStructuredContentProvider, ITreeConte
 			if (d.getSource().equals(EObjectValidator.DIAGNOSTIC_SOURCE) && d.getCode() == EObjectValidator.EOBJECT__EVERY_MULTIPCITY_CONFORMS) {
 				if (d.getData().size() >= 2) {
 					Object o = d.getData().get(1);
+					String label = null;
 					if (o instanceof EReference) {
-						String label = Regex.getFromAnnotation(((EReference) o).getEType(), "label", ((EReference) o).getEType().getName());
+						label = Regex.getFromAnnotation(((EReference) o).getEType(), "label", ((EReference) o).getEType().getName());
+					}
+					else if (o instanceof EAttribute) {
+						label = Regex.getFromAnnotation((EAttribute) o, "label", ((EAttribute) o).getName());
+					}
+					
+					if (label != null) {
 						return "Error: " + label + " missing";
 					}
+					
 				}
 			}
 			
-			return "Error: " + d.getMessage();
+			//return "Error: " + d.getMessage();
+			return "";
 		}
 		
 	}
