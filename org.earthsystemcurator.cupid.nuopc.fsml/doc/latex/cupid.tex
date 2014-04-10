@@ -524,7 +524,7 @@ In the steps that follow, we will create a compliance issue in the \emph{SingleM
 
 \item In the NUOPC tree viewer, click the reverse engineering button again to re-run the reverse engineering function on the modified code.  \textit{(Currently, the tool does not automatically sync with updated code---the reverse engineering function must be run manually.)}  
 
-\item Elements in reverse engineered model are colored red if a compliance issue is found at or below that element.  Drilling down into the outline reveals the missing element: because the \texttt{SetModelCount} subroutine is commented out, one of the required specialization points no longer appears in the code.  Hovering over a red element shows a tooltip popup with a description of the compliance issue.
+\item Elements in the reverse engineered model are colored red if a compliance issue is found at or below that element.  Drilling down into the outline reveals the missing element: because the \texttt{SetModelCount} subroutine is commented out, one of the required specialization points no longer appears in the code.  Hovering over a red element shows a tooltip popup with a description of the compliance issue.
 
 \parbox{\linewidth}{\centering
   \includegraphics[width=8cm]{figs/verify_fig3.png}
@@ -536,8 +536,9 @@ In the steps that follow, we will create a compliance issue in the \emph{SingleM
 
 \chapter{Generating NUOPC-compliant Code}
 
-Even if a software framework is well designed, writing framework completion code is notoriously difficult, even for seasoned developers. Often, completing a single logical task such as adding a new run initialization phase or run phase to the model requires making several code additions at multiple places spread throughout the application source code. If one or more of the required additions are inadvertently left out, the application may not behave as expected.  
-In the software engineering research community, many ideas have been proposed for how to help developers write framework-based applications correctly and efficiently. For ESMF and NUOPC, guidance is provided in the form of comprehensive API documentation (\href{http://www.earthsystemmodeling.org/esmf_releases/public/last/ESMF_refdoc/}{ESMF}, \href{https://earthsystemcog.org/projects/nuopc/refmans}{NUOPC}), system tests (included with source distribution), and \href{https://earthsystemcog.org/projects/nuopc/proto_codes}{small archetypical codebases} that show how to structure NUOPC applications based on the components in the modeled system (e.g., standalone atmosphere, coupled atmosphere-ocean, three-component system, etc.). 
+Even if a software framework is well designed, writing framework completion code is notoriously difficult, even for seasoned developers. Often, completing a single logical task requires making several code additions at multiple places spread throughout the application source code. If one or more of the required additions are inadvertently left out, the application may not behave as expected.  
+
+In the software engineering research community, many ideas have been proposed for how to help developers write framework-based applications correctly and efficiently. For ESMF and NUOPC, guidance is provided in the form of comprehensive API documentation (\href{http://www.earthsystemmodeling.org/esmf_releases/public/last/ESMF_refdoc/}{ESMF Reference Manual}, \href{https://earthsystemcog.org/projects/nuopc/refmans}{NUOPC Reference Manual}), system tests (included with source distribution), and \href{https://earthsystemcog.org/projects/nuopc/proto_codes}{small prototype codebases} that show how to structure NUOPC applications based on the components in the modeled system (e.g., standalone atmosphere, coupled atmosphere-ocean, three-component system, etc.). 
 
 Cupid's code generation feature complements these static resources by generating on-the-fly NUOPC-compliant source code fragments directly in existing source files. The user initiates a code fragment generation by adding elements to a reverse engineered model in the NUOPC tree viewer. The source code is then synchronized with the tree viewer, generating the required code fragments. The generated code fragments can then be customized by the developer for their particular case. The following use case illustrates use of forward engineering feature:
 
@@ -545,9 +546,54 @@ Cupid's code generation feature complements these static resources by generating
 A developer has finished writing the initialization phases for a NUOPC Model component called ATM and now needs to add the capability to advance the model one time step. The developer right clicks on the ATM element in the NUOPC tree viewer and selects ``Add Model Advance.''  Two things happen immediately: the tree viewer is updated with a new sub-element underneath ATM called ``Model Advance'' which in turn contains sub-elements ``Registered in Set Services'' and ``Implementation.'' Then, source code fragments are generated inside the Fortran file for ATM including a call inside the ATM SetServices to register the Model Advance subroutine and a stub for the new Model Advance subroutine.
 \end{quote}
 
-The use case shows some advantages of this approach compared to an approach in which code is copied-and-pasted from archetypical example code. First, the new Model Advance element added to the tree viewer included multiple sub-elements indicating that source code changes are required in at least two places: a new subroutine and a call to register this subroutine with the framework.  This provides guidance to the developer to ensure that all framework requirements are met. The approach, therefore, is less error-prone than brute force copy and paste. Also, the generated code fragments are customized based on the state of the existing source code. For example, the developer may be using specialized variable names. Since these variables have already been discovered during the reverse engineering phase, the generated code can reference these variables instead of requiring the developer to modify variables in copy-pasted code.
+The use case shows some advantages of this approach compared to an approach in which code is copied-and-pasted from prototypical example code. First, the new Model Advance element added to the tree viewer included multiple sub-elements indicating that source code changes are required in at least two places: a new subroutine and a call to register this subroutine with the framework.  This provides guidance to the developer to ensure that all framework requirements are met. The approach, therefore, is less error-prone than brute force copy and paste as some required code may inadvertently be left off. Also, the generated code fragments are customized based on the state of the existing source code. For example, the developer may be using specialized variable names. Since these variables have already been discovered during the reverse engineering phase, the generated code can reference these variables instead of requiring the developer to modify variables in copy-pasted code.
+
+\section {Generate a NUOPC Model Finalize method}
+
+In this section we will demonstrate the code generation capabilities of Cupid by generating a subroutine stub for an optional specialization point and registering the subroutine in the \texttt{SetServices} method of the model.
+
+\begin{enumerate}
+
+\item Be sure you have the \emph{SingleModelProto} project in your Eclipse workspace.
+
+\item Open the file \emph{model.F90}.
+
+\item In the NUOPC view, click the reverse engineer button.  The view should populate with the reverse engineered model.
+
+\item Expand the \emph{NUOPC Model} element and notice that the last child element, \emph{Finalize}, has a grayed out icon.  This indicates that there is no \texttt{Finalize} subroutine defined in \emph{model.F90} (the subroutine is optional).
+
+\parbox{\linewidth}{\centering
+  \includegraphics[width=8cm]{figs/gen_fig1.png}
+}
+
+\item Right click on the \emph{NUOPC Model} element in the outline and select \emph{Add Finalize (basic)}. Both the NUOPC view and code editor will be updated.  
+
+In the editor showing \emph{model.F90}, two blocks of code are generated.  The yellow blocks on the small vertical bar directly to the right of editor indicate which blocks of code were generated by Cupid.  Clicking on a yellow block highlights the generated code, which has been inserted into the existing source file.  The generated fragments of code are shown in listings~\ref{lst:simple1} and \ref{lst:simple2}
+
+\parbox{\linewidth}{\centering
+  \includegraphics[width=12cm]{figs/gen_fig2.png}
+}
 
 
+\begin{lstlisting}[label={lst:simple1}, caption=A call to register the generated subroutine as an ESMF Finalize method. This call is inserted at the end of the Model's \texttt{SetServices} method.]
+call ESMF_GridCompSetEntryPoint(gcomp, ESMF_METHOD_FINALIZE, & 
+		userRoutine = Finalize, phase = 1, rc = rc)
+\end{lstlisting}
+
+\begin{lstlisting}[label={lst:simple2}, caption=A Finalize subroutine stub to be customized. The subroutine is inserted at the end of the module.]
+! <b>NUOPC provided.</b>  Optionally overwrite the provided NOOP with model 
+! finalization code.
+subroutine Finalize(gcomp, importState, exportState, clock, rc)
+		type(ESMF_GridComp), intent(inout) :: gcomp
+		type(ESMF_State), intent(inout) :: importState
+		type(ESMF_State), intent(inout) :: exportState
+		type(ESMF_Clock), intent(inout) :: clock
+		integer, intent(out) :: rc
+end subroutine
+\end{lstlisting}
+
+
+\end{enumerate}
 
 
 \chapter{The Behind-the-Scenes Meta-tool}

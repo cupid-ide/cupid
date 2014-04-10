@@ -14,7 +14,8 @@
 \contentsline {section}{\numberline {5.2}Reverse Engineer a NUOPC Prototype Application}{26}{section.5.2}
 \contentsline {section}{\numberline {5.3}NUOPC Compliance Verification}{29}{section.5.3}
 \contentsline {chapter}{\chapternumberline {6}Generating NUOPC-compliant Code}{32}{chapter.6}
-\contentsline {chapter}{\chapternumberline {7}The Behind-the-Scenes Meta-tool}{34}{chapter.7}
-\contentsline {section}{\numberline {7.1}The NUOPC Framework-Specific Modeling Language}{35}{section.7.1}
-\contentsline {section}{\numberline {7.2}FSML Implementation}{37}{section.7.2}
-\contentsline {chapter}{Bibliography}{39}{section*.3}
+\contentsline {section}{\numberline {6.1}Generate a NUOPC Model Finalize method}{33}{section.6.1}
+\contentsline {chapter}{\chapternumberline {7}The Behind-the-Scenes Meta-tool}{36}{chapter.7}
+\contentsline {section}{\numberline {7.1}The NUOPC Framework-Specific Modeling Language}{37}{section.7.1}
+\contentsline {section}{\numberline {7.2}FSML Implementation}{39}{section.7.2}
+\contentsline {chapter}{Bibliography}{41}{section*.3}
