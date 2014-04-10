@@ -10,8 +10,11 @@
 \BOOKMARK [1][-]{section.4.1}{Creating a new Cupid Training Project}{chapter.4}% 10
 \BOOKMARK [1][-]{section.4.2}{Compile and Run the NUOPC Single Model with Driver training scenario}{chapter.4}% 11
 \BOOKMARK [0][-]{chapter.5}{Reverse Engineering and Compliance Verification of NUOPC Applications}{}% 12
-\BOOKMARK [0][-]{chapter.6}{Generating NUOPC-compliant Code}{}% 13
-\BOOKMARK [0][-]{chapter.7}{The Behind-the-Scenes Meta-tool}{}% 14
-\BOOKMARK [1][-]{section.7.1}{The NUOPC Framework-Specific Modeling Language}{chapter.7}% 15
-\BOOKMARK [1][-]{section.7.2}{FSML Implementation}{chapter.7}% 16
-\BOOKMARK [0][-]{section*.3}{Bibliography}{}% 17
+\BOOKMARK [1][-]{section.5.1}{Acquiring NUOPC Prototype Applications}{chapter.5}% 13
+\BOOKMARK [1][-]{section.5.2}{Reverse Engineer a NUOPC Prototype Application}{chapter.5}% 14
+\BOOKMARK [1][-]{section.5.3}{NUOPC Compliance Verification}{chapter.5}% 15
+\BOOKMARK [0][-]{chapter.6}{Generating NUOPC-compliant Code}{}% 16
+\BOOKMARK [0][-]{chapter.7}{The Behind-the-Scenes Meta-tool}{}% 17
+\BOOKMARK [1][-]{section.7.1}{The NUOPC Framework-Specific Modeling Language}{chapter.7}% 18
+\BOOKMARK [1][-]{section.7.2}{FSML Implementation}{chapter.7}% 19
+\BOOKMARK [0][-]{section*.3}{Bibliography}{}% 20

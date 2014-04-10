@@ -68,9 +68,29 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SO
       <import plugin="org.eclipse.cdt.make.core"/>
       <import plugin="org.eclipse.ui.forms" version="3.6.1" match="greaterOrEqual"/>
       <import plugin="org.eclipse.equinox.preferences"/>
+      <import plugin="org.jdom" version="1.1.1" match="greaterOrEqual"/>
+      <import plugin="org.eclipse.xtext"/>
+      <import plugin="org.earthsystemcurator.cupid.xtext" version="1.0.0" match="greaterOrEqual"/>
       <import plugin="org.eclipse.emf.edit"/>
       <import plugin="org.eclipse.emf.ecore.xmi"/>
       <import plugin="org.eclipse.emf.edit.ui"/>
+      <import plugin="org.eclipse.xtext.util"/>
+      <import plugin="org.eclipse.emf.common"/>
+      <import plugin="org.antlr.runtime"/>
+      <import plugin="org.eclipse.xtext.common.types"/>
+      <import plugin="org.eclipse.ocl.examples.pivot"/>
+      <import plugin="org.eclipse.ocl.examples.xtext.base"/>
+      <import plugin="org.eclipse.core.runtime" version="3.9.0" match="greaterOrEqual"/>
+      <import plugin="org.eclipse.equinox.registry"/>
+      <import plugin="org.apache.log4j"/>
+      <import plugin="org.eclipse.xtext.xbase.lib"/>
+      <import plugin="org.eclipse.xtext.ui"/>
+      <import plugin="org.eclipse.ui.editors" version="3.5.0" match="greaterOrEqual"/>
+      <import plugin="org.eclipse.ui.ide" version="3.5.0" match="greaterOrEqual"/>
+      <import plugin="org.eclipse.xtext.ui.shared"/>
+      <import plugin="org.eclipse.xtext.builder"/>
+      <import plugin="org.eclipse.xtext.common.types.ui"/>
+      <import plugin="org.eclipse.xtext.ui.codetemplates.ui"/>
       <import feature="org.eclipse.ocl.examples" version="3.2.1.v20120919-0602"/>
       <import feature="org.eclipse.ptp" version="7.0.3.201308141907"/>
       <import feature="org.eclipse.ptp.fortran" version="7.0.3.201308141907"/>
@@ -92,6 +112,20 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SO
 
    <plugin
          id="org.earthsystemcurator.cupid.nuopc.fsml.editor"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"
+         unpack="false"/>
+
+   <plugin
+         id="org.earthsystemcurator.cupid.xtext"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"
+         unpack="false"/>
+
+   <plugin
+         id="org.earthsystemcurator.cupid.xtext.ui"
          download-size="0"
          install-size="0"
          version="0.0.0"

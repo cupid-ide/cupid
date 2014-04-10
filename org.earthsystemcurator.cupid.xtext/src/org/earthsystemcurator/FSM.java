@@ -166,7 +166,12 @@ public class FSM<RootType extends EObject> {
 		
 	}
 	
-	public EObject forwardAdd(EObject context, SubconceptOrAttribute soa, boolean recursive) {
+	public EObject forwardAdd(EObject context, SubconceptOrAttribute soa, boolean recursive, boolean addAll) {
+		
+		//recursive = false --> only add this element
+		
+		//addAll = true --> add both optional and essential elements
+		//addAll = false --> only add essential elements
 		
 		if (soa.isAttrib()) {
 			throw new RuntimeException("forwardAdd should only be called with non-attribute subconcepts");
@@ -235,8 +240,8 @@ public class FSM<RootType extends EObject> {
 				if (soaChild.isAttrib()) {
 					forwardAddAttribute(newElem, soaChild);				
 				}
-				else if (!soaChild.isMustBeNull()){
-					forwardAdd(newElem, soaChild, recursive);		
+				else if (addAll || isRequired(soaChild)){
+					forwardAdd(newElem, soaChild, recursive, addAll);		
 				}
 			}
 		}
@@ -245,6 +250,14 @@ public class FSM<RootType extends EObject> {
 		
 	}
 	
+	public static boolean isRequired(SubconceptOrAttribute soa) {
+		if (soa.isMustBeNull()) return false;
+		else if (soa.isEssential()) return true;
+		else if (soa.getCardinality()==null) return true;
+		else if (soa.getCardinality().isOneOrMore()) return true;
+		return false;
+	}
+ 	
 	/**
 	 * Adds a new structural feature element to the FSM and updates the associated AST.
 	 * A new EObject is created and the new Fortran constructs are added to the AST
@@ -482,12 +495,15 @@ public class FSM<RootType extends EObject> {
 			//modelElement = reverse(modelElement, contextFortranElement, subconcept);
 			//then check whether it is essential and not populated
 			
-			if (subconcept.getName().equalsIgnoreCase("registered1")) {
-				System.out.println("registered1");
+			if (subconcept.getName().equalsIgnoreCase("initP1")) {
+				System.out.println("initP1");
 			}
 			
 			//find structural feature
 			EStructuralFeature structuralFeature = getEStructuralFeature(subconcept);
+			if (structuralFeature == null) {
+				throw new RuntimeException("structuralFeature null");
+			}
 			//ConceptDef subconceptDef = null;
 			Mapping explicitContextMapping = getMappingQuery(subconcept);
 			Object explicitContextFortranElement = null;
@@ -623,7 +639,13 @@ public class FSM<RootType extends EObject> {
 							
 							for (Entry<Object, Map<PathExpr, String>> resultItem : resultMap.entrySet()) {
 								
-								EObject newModelElem = factory.create((EClass) structuralFeature.getEType());
+								EObject newModelElem = null;
+								try {
+								newModelElem = factory.create((EClass) structuralFeature.getEType());
+								}
+								catch (NullPointerException npe) {
+									npe.printStackTrace();
+								}
 								
 								// set up parent relationship for references (may be removed later)									
 								setOrAdd(modelElement, subconcept, newModelElem);

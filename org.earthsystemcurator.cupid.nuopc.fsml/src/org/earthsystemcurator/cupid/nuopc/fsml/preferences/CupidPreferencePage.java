@@ -44,13 +44,7 @@ public class CupidPreferencePage
 		
 		addField(new PasswordStringFieldEditor(CUPID_AWS_ACCESS_KEY, "Amazon AWS Access Key:", getFieldEditorParent()));
 		addField(new PasswordStringFieldEditor(CUPID_AWS_SECRET_KEY, "Amazon AWS Secret Key:", getFieldEditorParent()));
-	
-		addField(new StringFieldEditor(CUPID_LANGUAGE_URI, "Language definition URI", getFieldEditorParent()){
-			@Override
-			protected void doLoadDefault() {
-				setStringValue("http://defaulturi");
-			}
-		});
+		addField(new StringFieldEditor(CUPID_LANGUAGE_URI, "Language definition URI", getFieldEditorParent()));
 		
 	}
 	

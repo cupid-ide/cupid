@@ -22,6 +22,9 @@ import org.eclipse.jface.viewers.StyledCellLabelProvider;
 import org.eclipse.jface.viewers.StyledString;
 import org.eclipse.jface.viewers.ViewerCell;
 import org.eclipse.swt.SWT;
+import org.eclipse.swt.custom.StyleRange;
+import org.eclipse.swt.graphics.TextStyle;
+import org.eclipse.swt.widgets.Display;
 import org.osgi.framework.Bundle;
 import org.osgi.framework.FrameworkUtil;
 import org.stringtemplate.v4.ST;
@@ -92,8 +95,8 @@ class NUOPCViewLabelProvider extends StyledCellLabelProvider { //implements ITab
 	public void update(final ViewerCell cell) {
 	
 		NUOPCModelElem me = (NUOPCModelElem) cell.getElement();
-	    StyledString text = new StyledString();	    
-	    
+	    StyledString text = new StyledString();	
+	    	    
 	    /*
 	    StyledString.Styler styler = new StyledString.Styler() {			
 			@Override
@@ -108,7 +111,10 @@ class NUOPCViewLabelProvider extends StyledCellLabelProvider { //implements ITab
 				
 			}						
 		};
-	    */
+		*/
+	    
+		//text.s
+		
 	    if (cell.getColumnIndex() == 0) {
 			
 	    	/*
@@ -159,6 +165,10 @@ class NUOPCViewLabelProvider extends StyledCellLabelProvider { //implements ITab
 	    
 	    cell.setText(text.toString());
 	    cell.setStyleRanges(text.getStyleRanges());
+	    
+	    if (me.validationMessage != null || (me.elem==null && !me.subconcept.isAttrib() && FSM.isRequired(me.subconcept))) {
+	    	cell.setForeground(Display.getCurrent().getSystemColor(SWT.COLOR_RED));
+	    }
 	    
 		//cell.getControl().addM
 		//cell.getControl().setCursor(new Cursor(cell.getControl().getDisplay(), SWT.CURSOR));		
@@ -248,7 +258,7 @@ class NUOPCViewLabelProvider extends StyledCellLabelProvider { //implements ITab
 			}
 		}
 		//else if (soa != null && !soa.isAttrib()) {
-		//	imageKey = "tree.gif";
+		//	imageKey = "blank.png";
 		//}
 				
 					

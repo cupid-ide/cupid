@@ -18,7 +18,7 @@ Require-Bundle: org.earthsystemcurator.cupid.xtext;visibility:=reexport,
  org.eclipse.compare
 Import-Package: org.apache.log4j,
  org.eclipse.xtext.xbase.lib
-Bundle-RequiredExecutionEnvironment: J2SE-1.5
+Bundle-RequiredExecutionEnvironment: JavaSE-1.7
 Export-Package: org.earthsystemcurator.ui.quickfix,
  org.earthsystemcurator.ui.contentassist,
  org.earthsystemcurator.ui.contentassist.antlr,

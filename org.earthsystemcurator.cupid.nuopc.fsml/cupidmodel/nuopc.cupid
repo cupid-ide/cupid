@@ -5,7 +5,7 @@ language NUOPC 'http://www.earthsystemcurator.org/nuopcgen' {
 		@label = "NUOPC Application"
 		@doc = "A collection of interoperable NUOPC components"
 		
-		attrib name	{ @name }
+		attrib name?	{ @name }
 		
 		models*:NUOPCModel
 		drivers*:NUOPCDriver

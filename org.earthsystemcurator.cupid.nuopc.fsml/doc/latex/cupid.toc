@@ -10,8 +10,11 @@
 \contentsline {section}{\numberline {4.1}Creating a new Cupid Training Project}{14}{section.4.1}
 \contentsline {section}{\numberline {4.2}Compile and Run the NUOPC Single Model with Driver training scenario}{18}{section.4.2}
 \contentsline {chapter}{\chapternumberline {5}Reverse Engineering and Compliance Verification of NUOPC Applications}{22}{chapter.5}
-\contentsline {chapter}{\chapternumberline {6}Generating NUOPC-compliant Code}{24}{chapter.6}
-\contentsline {chapter}{\chapternumberline {7}The Behind-the-Scenes Meta-tool}{26}{chapter.7}
-\contentsline {section}{\numberline {7.1}The NUOPC Framework-Specific Modeling Language}{27}{section.7.1}
-\contentsline {section}{\numberline {7.2}FSML Implementation}{29}{section.7.2}
-\contentsline {chapter}{Bibliography}{31}{section*.3}
+\contentsline {section}{\numberline {5.1}Acquiring NUOPC Prototype Applications}{23}{section.5.1}
+\contentsline {section}{\numberline {5.2}Reverse Engineer a NUOPC Prototype Application}{26}{section.5.2}
+\contentsline {section}{\numberline {5.3}NUOPC Compliance Verification}{29}{section.5.3}
+\contentsline {chapter}{\chapternumberline {6}Generating NUOPC-compliant Code}{32}{chapter.6}
+\contentsline {chapter}{\chapternumberline {7}The Behind-the-Scenes Meta-tool}{34}{chapter.7}
+\contentsline {section}{\numberline {7.1}The NUOPC Framework-Specific Modeling Language}{35}{section.7.1}
+\contentsline {section}{\numberline {7.2}FSML Implementation}{37}{section.7.2}
+\contentsline {chapter}{Bibliography}{39}{section*.3}

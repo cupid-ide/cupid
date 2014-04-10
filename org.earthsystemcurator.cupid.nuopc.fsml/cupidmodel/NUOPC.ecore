@@ -13,7 +13,7 @@
       <details key="label" value="NUOPC Application"/>
       <details key="doc" value="A collection of interoperable NUOPC components"/>
     </eAnnotations>
-    <eStructuralFeatures xsi:type="ecore:EAttribute" name="name" lowerBound="1" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="name" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="models" ordered="false"
         upperBound="-1" eType="#//NUOPCModel" containment="true"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="drivers" ordered="false"

@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.1415926-2.4-1.40.13 (MiKTeX 2.9 64-bit) (preloaded format=pdflatex 2013.12.3)  7 APR 2014 14:53
+This is pdfTeX, Version 3.1415926-2.4-1.40.13 (MiKTeX 2.9 64-bit) (preloaded format=pdflatex 2013.12.3)  10 APR 2014 11:26
 entering extended mode
 **cupid.tex
 (C:\Users\Rocky\git\cupid\org.earthsystemcurator.cupid.nuopc.fsml\doc\latex\cupid.tex
@@ -635,7 +635,7 @@ LaTeX Font Info:    External font `cmex10' loaded for size
 (Font)              <8> on input line 67.
 LaTeX Font Info:    External font `cmex10' loaded for size
 (Font)              <6> on input line 67.
-<figs/logo_cupid.png, id=71, 126.4725pt x 57.21375pt>
+<figs/logo_cupid.png, id=83, 126.4725pt x 57.21375pt>
 File: figs/logo_cupid.png Graphic file (type png)
  <use figs/logo_cupid.png>
 Package pdftex.def Info: figs/logo_cupid.png used on input line 67.
@@ -676,20 +676,20 @@ File: omscmr.fd 1999/05/25 v2.5h Standard LaTeX font definitions
 )
 LaTeX Font Info:    Font shape `OMS/cmr/m/n' in size <10.95> not available
 (Font)              Font shape `OMS/cmsy/m/n' tried instead on input line 94.
- <figs/feature_reveng.png, id=121, 263.7855pt x 221.628pt>
+ <figs/feature_reveng.png, id=136, 263.7855pt x 221.628pt>
 File: figs/feature_reveng.png Graphic file (type png)
 
 <use figs/feature_reveng.png>
 Package pdftex.def Info: figs/feature_reveng.png used on input line 98.
 (pdftex.def)             Requested size: 227.62204pt x 191.24565pt.
  [4 <C:/Users/Rocky/git/cupid/org.earthsystemcurator.cupid.nuopc.fsml/doc/latex/figs/feature_reveng.png>] <figs/feature_
-foreng.png, id=131, 475.17525pt x 192.72pt>
+foreng.png, id=146, 475.17525pt x 192.72pt>
 File: figs/feature_foreng.png Graphic file (type png)
  <use figs/feature_foreng.png>
 Package pdftex.def Info: figs/feature_foreng.png used on input line 105.
 (pdftex.def)             Requested size: 284.52756pt x 115.40056pt.
 
-<figs/feature_cloud.png, id=133, 667.89525pt x 410.13225pt>
+<figs/feature_cloud.png, id=148, 667.89525pt x 410.13225pt>
 File: figs/feature_cloud.png Graphic file (type png)
  <use figs/feature_cloud.png>
 Package pdftex.def Info: figs/feature_cloud.png used on input line 112.
@@ -718,63 +718,63 @@ LaTeX Warning: Citation `modele' on page 6 undefined on input line 124.
 
 [6
 
-] <figs/nuopcarchs.png, id=150, 903.375pt x 346.896pt>
+] <figs/nuopcarchs.png, id=165, 903.375pt x 346.896pt>
 File: figs/nuopcarchs.png Graphic file (type png)
  <use figs/nuopcarchs.png>
 Package pdftex.def Info: figs/nuopcarchs.png used on input line 134.
 (pdftex.def)             Requested size: 396.0pt x 152.06833pt.
  [7] [8 <C:/Users/Rocky/git/cupid/org.earthsystemcurator.cupid.nuopc.fsml/doc/latex/figs/nuopcarchs.png>]
-<figs/install_fig1.png, id=164, 202.95825pt x 219.219pt>
+<figs/install_fig1.png, id=179, 202.95825pt x 219.219pt>
 File: figs/install_fig1.png Graphic file (type png)
  <use figs/install_fig1.png>
-Package pdftex.def Info: figs/install_fig1.png used on input line 170.
+Package pdftex.def Info: figs/install_fig1.png used on input line 171.
 (pdftex.def)             Requested size: 170.71652pt x 184.3969pt.
  [9
 
 ]
-Overfull \hbox (4.75919pt too wide) in paragraph at lines 172--173
+Overfull \hbox (4.75919pt too wide) in paragraph at lines 173--174
 []\OT1/cmr/m/n/10.95 Put the Cu-pid Up-date Site URL into ``Work with...'' You will be prompted
  []
 
-<figs/install_fig2.png, id=173, 440.847pt x 100.57574pt>
+<figs/install_fig2.png, id=188, 440.847pt x 100.57574pt>
 File: figs/install_fig2.png Graphic file (type png)
  <use figs/install_fig2.png>
-Package pdftex.def Info: figs/install_fig2.png used on input line 178.
+Package pdftex.def Info: figs/install_fig2.png used on input line 179.
 (pdftex.def)             Requested size: 440.84592pt x 100.57549pt.
 
-Overfull \hbox (96.311pt too wide) in paragraph at lines 178--178
+Overfull \hbox (96.311pt too wide) in paragraph at lines 179--179
  [][] 
  []
 
-<figs/install_fig3.png, id=174, 221.628pt x 66.84975pt>
+<figs/install_fig3.png, id=189, 221.628pt x 66.84975pt>
 File: figs/install_fig3.png Graphic file (type png)
  <use figs/install_fig3.png>
-Package pdftex.def Info: figs/install_fig3.png used on input line 184.
+Package pdftex.def Info: figs/install_fig3.png used on input line 185.
 (pdftex.def)             Requested size: 221.62746pt x 66.84956pt.
 
-<figs/install_fig4.png, id=175, 437.83575pt x 373.395pt>
+<figs/install_fig4.png, id=190, 437.83575pt x 373.395pt>
 File: figs/install_fig4.png Graphic file (type png)
  <use figs/install_fig4.png>
-Package pdftex.def Info: figs/install_fig4.png used on input line 190.
+Package pdftex.def Info: figs/install_fig4.png used on input line 191.
 (pdftex.def)             Requested size: 437.83469pt x 373.39409pt.
 
-Overfull \hbox (93.29977pt too wide) in paragraph at lines 190--190
+Overfull \hbox (93.29977pt too wide) in paragraph at lines 191--191
  [][] 
  []
 
 [10 <C:/Users/Rocky/git/cupid/org.earthsystemcurator.cupid.nuopc.fsml/doc/latex/figs/install_fig1.png> <C:/Users/Rocky/g
 it/cupid/org.earthsystemcurator.cupid.nuopc.fsml/doc/latex/figs/install_fig2.png> <C:/Users/Rocky/git/cupid/org.earthsys
 temcurator.cupid.nuopc.fsml/doc/latex/figs/install_fig3.png>]
-<figs/install_fig5.png, id=186, 331.83975pt x 102.98476pt>
+<figs/install_fig5.png, id=201, 331.83975pt x 102.98476pt>
 File: figs/install_fig5.png Graphic file (type png)
  <use figs/install_fig5.png>
-Package pdftex.def Info: figs/install_fig5.png used on input line 198.
+Package pdftex.def Info: figs/install_fig5.png used on input line 199.
 (pdftex.def)             Requested size: 331.83894pt x 102.98448pt.
  [11 <C:/Users/Rocky/git/cupid/org.earthsystemcurator.cupid.nuopc.fsml/doc/latex/figs/install_fig4.png> <C:/Users/Rocky/
 git/cupid/org.earthsystemcurator.cupid.nuopc.fsml/doc/latex/figs/install_fig5.png>]
 File: figs/install_fig5.png Graphic file (type png)
  <use figs/install_fig5.png>
-Package pdftex.def Info: figs/install_fig5.png used on input line 219.
+Package pdftex.def Info: figs/install_fig5.png used on input line 220.
 (pdftex.def)             Requested size: 331.83894pt x 102.98448pt.
  [12] [13
 
@@ -783,13 +783,13 @@ Missing character: There is no â in font cmbx10!
 Missing character: There is no € in font cmbx10!
 Missing character: There is no ¦ in font cmbx10!
 
-<figs/cloud_fig1.png, id=210, 421.575pt x 302.93175pt>
+<figs/cloud_fig1.png, id=225, 421.575pt x 302.93175pt>
 File: figs/cloud_fig1.png Graphic file (type png)
  <use figs/cloud_fig1.png>
-Package pdftex.def Info: figs/cloud_fig1.png used on input line 253.
+Package pdftex.def Info: figs/cloud_fig1.png used on input line 255.
 (pdftex.def)             Requested size: 421.57396pt x 302.931pt.
 
-Overfull \hbox (52.94902pt too wide) in paragraph at lines 253--253
+Overfull \hbox (52.94902pt too wide) in paragraph at lines 255--255
  [][] 
  []
 
@@ -798,196 +798,309 @@ Missing character: There is no â in font cmbx10!
 Missing character: There is no € in font cmbx10!
 Missing character: There is no “ in font cmbx10!
 
-<figs/cloud_fig2.png, id=218, 645.00975pt x 414.348pt>
+<figs/cloud_fig2.png, id=233, 645.00975pt x 414.348pt>
 File: figs/cloud_fig2.png Graphic file (type png)
  <use figs/cloud_fig2.png>
-Package pdftex.def Info: figs/cloud_fig2.png used on input line 269.
+Package pdftex.def Info: figs/cloud_fig2.png used on input line 271.
 (pdftex.def)             Requested size: 396.0pt x 254.38942pt.
 
-Overfull \hbox (27.37506pt too wide) in paragraph at lines 269--269
+Overfull \hbox (27.37506pt too wide) in paragraph at lines 271--271
  [][] 
  []
 
-<figs/cloud_fig3.png, id=219, 475.17525pt x 199.34476pt>
+<figs/cloud_fig3.png, id=234, 475.17525pt x 199.34476pt>
 File: figs/cloud_fig3.png Graphic file (type png)
  <use figs/cloud_fig3.png>
-Package pdftex.def Info: figs/cloud_fig3.png used on input line 276.
+Package pdftex.def Info: figs/cloud_fig3.png used on input line 278.
 (pdftex.def)             Requested size: 396.0pt x 166.1344pt.
 
-Overfull \hbox (27.37506pt too wide) in paragraph at lines 276--276
+Overfull \hbox (27.37506pt too wide) in paragraph at lines 278--278
  [][] 
  []
 
 [15 <C:/Users/Rocky/git/cupid/org.earthsystemcurator.cupid.nuopc.fsml/doc/latex/figs/cloud_fig2.png>]
-Overfull \hbox (13.56091pt too wide) in paragraph at lines 286--287
+Overfull \hbox (13.56091pt too wide) in paragraph at lines 288--289
 \OT1/cmr/m/n/10.95 with all de-pen-dent soft-ware (model source code, For-tran com-piler, MPI, NetCDF,
  []
 
-<figs/cloud_fig4.png, id=226, 476.982pt x 292.09125pt>
+<figs/cloud_fig4.png, id=241, 476.982pt x 292.09125pt>
 File: figs/cloud_fig4.png Graphic file (type png)
  <use figs/cloud_fig4.png>
-Package pdftex.def Info: figs/cloud_fig4.png used on input line 292.
+Package pdftex.def Info: figs/cloud_fig4.png used on input line 294.
 (pdftex.def)             Requested size: 396.0pt x 242.5025pt.
 
-Overfull \hbox (27.37506pt too wide) in paragraph at lines 292--292
+Overfull \hbox (27.37506pt too wide) in paragraph at lines 294--294
  [][] 
  []
 
 [16 <C:/Users/Rocky/git/cupid/org.earthsystemcurator.cupid.nuopc.fsml/doc/latex/figs/cloud_fig3.png>]
-<figs/cloud_fig5.png, id=233, 433.01775pt x 192.72pt>
+<figs/cloud_fig5.png, id=248, 433.01775pt x 192.72pt>
 File: figs/cloud_fig5.png Graphic file (type png)
  <use figs/cloud_fig5.png>
-Package pdftex.def Info: figs/cloud_fig5.png used on input line 298.
+Package pdftex.def Info: figs/cloud_fig5.png used on input line 300.
 (pdftex.def)             Requested size: 396.0pt x 176.24884pt.
 
-Overfull \hbox (27.37506pt too wide) in paragraph at lines 298--298
+Overfull \hbox (27.37506pt too wide) in paragraph at lines 300--300
  [][] 
  []
 
-<figs/cloud_fig6.png, id=234, 698.61pt x 297.11pt>
+<figs/cloud_fig6.png, id=249, 698.61pt x 297.11pt>
 File: figs/cloud_fig6.png Graphic file (type png)
  <use figs/cloud_fig6.png>
-Package pdftex.def Info: figs/cloud_fig6.png used on input line 304.
+Package pdftex.def Info: figs/cloud_fig6.png used on input line 306.
 (pdftex.def)             Requested size: 396.0pt x 168.41602pt.
 
-Overfull \hbox (27.37506pt too wide) in paragraph at lines 304--304
+Overfull \hbox (27.37506pt too wide) in paragraph at lines 306--306
  [][] 
  []
 
 [17 <C:/Users/Rocky/git/cupid/org.earthsystemcurator.cupid.nuopc.fsml/doc/latex/figs/cloud_fig4.png> <C:/Users/Rocky/git
 /cupid/org.earthsystemcurator.cupid.nuopc.fsml/doc/latex/figs/cloud_fig5.png>]
-<figs/cloud_fig7.png, id=242, 1294.8375pt x 794.97pt>
+<figs/cloud_fig7.png, id=257, 1294.8375pt x 794.97pt>
 File: figs/cloud_fig7.png Graphic file (type png)
  <use figs/cloud_fig7.png>
-Package pdftex.def Info: figs/cloud_fig7.png used on input line 311.
+Package pdftex.def Info: figs/cloud_fig7.png used on input line 313.
 (pdftex.def)             Requested size: 396.0pt x 243.12659pt.
 
-Overfull \hbox (27.37506pt too wide) in paragraph at lines 311--311
+Overfull \hbox (27.37506pt too wide) in paragraph at lines 313--313
  [][] 
  []
 
 [18 <C:/Users/Rocky/git/cupid/org.earthsystemcurator.cupid.nuopc.fsml/doc/latex/figs/cloud_fig6.png> <C:/Users/Rocky/git
 /cupid/org.earthsystemcurator.cupid.nuopc.fsml/doc/latex/figs/cloud_fig7.png>]
-<figs/cloudrun_fig1.png, id=248, 198.7425pt x 131.89275pt>
+<figs/cloudrun_fig1.png, id=263, 198.7425pt x 131.89275pt>
 File: figs/cloudrun_fig1.png Graphic file (type png)
  <use figs/cloudrun_fig1.png>
-Package pdftex.def Info: figs/cloudrun_fig1.png used on input line 327.
+Package pdftex.def Info: figs/cloudrun_fig1.png used on input line 329.
 (pdftex.def)             Requested size: 198.742pt x 131.89241pt.
 
-<figs/cloudrun_fig2.png, id=249, 1136.245pt x 338.26375pt>
+<figs/cloudrun_fig2.png, id=264, 1136.245pt x 338.26375pt>
 File: figs/cloudrun_fig2.png Graphic file (type png)
  <use figs/cloudrun_fig2.png>
-Package pdftex.def Info: figs/cloudrun_fig2.png used on input line 333.
+Package pdftex.def Info: figs/cloudrun_fig2.png used on input line 335.
 (pdftex.def)             Requested size: 396.0pt x 117.88824pt.
 
-Overfull \hbox (27.37506pt too wide) in paragraph at lines 333--333
+Overfull \hbox (27.37506pt too wide) in paragraph at lines 335--335
  [][] 
  []
 
 Missing character: There is no â in font cmr10!
 Missing character: There is no € in font cmr10!
 Missing character: There is no ¦ in font cmr10!
-<figs/cloudrun_fig3.png, id=250, 172.84575pt x 104.18925pt>
+<figs/cloudrun_fig3.png, id=265, 172.84575pt x 104.18925pt>
 File: figs/cloudrun_fig3.png Graphic file (type png)
  <use figs/cloudrun_fig3.png>
-Package pdftex.def Info: figs/cloudrun_fig3.png used on input line 339.
+Package pdftex.def Info: figs/cloudrun_fig3.png used on input line 341.
 (pdftex.def)             Requested size: 172.8453pt x 104.18898pt.
  [19 <C:/Users/Rocky/git/cupid/org.earthsystemcurator.cupid.nuopc.fsml/doc/latex/figs/cloudrun_fig1.png> <C:/Users/Rocky
 /git/cupid/org.earthsystemcurator.cupid.nuopc.fsml/doc/latex/figs/cloudrun_fig2.png>]
-Overfull \hbox (17.70906pt too wide) in paragraph at lines 348--349
+Overfull \hbox (17.70906pt too wide) in paragraph at lines 350--351
 []\OT1/cmr/m/n/10.95 Connection: \OT1/cmr/bx/n/10.95 Cu-pid En-vi-ron-ment (Ama-zon EC2 <Project Name>) 
  []
 
 
-Overfull \hbox (3.18683pt too wide) in paragraph at lines 353--354
+Overfull \hbox (3.18683pt too wide) in paragraph at lines 355--356
 \OT1/cmr/m/n/10.95 path should be \OT1/cmr/bx/n/10.95 /home-/s-gead-min/S-in-gle-Mod-el-Pro-to/-mainApp 
  []
 
-<figs/cloudrun_fig4.png, id=260, 164.41425pt x 111.41624pt>
+<figs/cloudrun_fig4.png, id=275, 164.41425pt x 111.41624pt>
 File: figs/cloudrun_fig4.png Graphic file (type png)
  <use figs/cloudrun_fig4.png>
-Package pdftex.def Info: figs/cloudrun_fig4.png used on input line 362.
+Package pdftex.def Info: figs/cloudrun_fig4.png used on input line 364.
 (pdftex.def)             Requested size: 164.41383pt x 111.41597pt.
 
-<figs/cloudrun_fig5.png, id=261, 1138.2525pt x 375.4025pt>
+<figs/cloudrun_fig5.png, id=276, 1138.2525pt x 375.4025pt>
 File: figs/cloudrun_fig5.png Graphic file (type png)
  <use figs/cloudrun_fig5.png>
-Package pdftex.def Info: figs/cloudrun_fig5.png used on input line 368.
+Package pdftex.def Info: figs/cloudrun_fig5.png used on input line 370.
 (pdftex.def)             Requested size: 396.0pt x 130.60236pt.
 
-Overfull \hbox (27.37506pt too wide) in paragraph at lines 368--368
+Overfull \hbox (27.37506pt too wide) in paragraph at lines 370--370
  [][] 
  []
 
 [20 <C:/Users/Rocky/git/cupid/org.earthsystemcurator.cupid.nuopc.fsml/doc/latex/figs/cloudrun_fig3.png> <C:/Users/Rocky/
 git/cupid/org.earthsystemcurator.cupid.nuopc.fsml/doc/latex/figs/cloudrun_fig4.png>] [21 <C:/Users/Rocky/git/cupid/org.e
-arthsystemcurator.cupid.nuopc.fsml/doc/latex/figs/cloudrun_fig5.png>]
-Missing character: There is no â in font cmr10!
-Missing character: There is no € in font cmr10!
-Missing character: There is no ™ in font cmr10!
-Missing character: There is no â in font cmr10!
-Missing character: There is no € in font cmr10!
-Missing character: There is no ™ in font cmr10!
- [22
+arthsystemcurator.cupid.nuopc.fsml/doc/latex/figs/cloudrun_fig5.png>] [22
 
 ]
+Overfull \hbox (79.32411pt too wide) in paragraph at lines 388--389
+[]\OT1/cmtt/m/n/10.95 http://sourceforge.net/p/esmfcontrib/svn/HEAD/tree/NUOPC/tags/ESMF[]6[]3[]0r/ 
+ []
+
+
+Overfull \hbox (8.26843pt too wide) in paragraph at lines 395--396
+[]\OT1/cmr/m/n/10.95 Connect Eclipse to the Source-forge Sub-ver-sion repos-i-tory and check out NUOPC
+ []
+
+
+Overfull \hbox (96.47325pt too wide) in paragraph at lines 409--410
+[]\OT1/cmr/m/n/10.95 In the Work With box, choose \OT1/cmtt/m/n/10.95 Kepler - http://download.eclipse.org/releases/kepl
+er 
+ []
+
 
 Class memoir Warning: The material used in the headers is too large
 (27.2pt) for the given head height (13.6pt), it is recommended to
 either increase the head height or redesign the header
-(in both cases you will find help in the memoir manual). on input line 381.
+(in both cases you will find help in the memoir manual). on input line 412.
 
 
 Overfull \vbox (13.59999pt too high) has occurred while \output is active []
 
- [23] [24
+ [23]
+Overfull \hbox (13.73622pt too wide) in paragraph at lines 422--423
+[]\OT1/cmr/m/n/10.95 In the new repos-i-tory lo-ca-tion, nav-i-gate to NUOPC $\OMS/cmsy/m/n/10.95 !$ \OT1/cmr/m/n/10.95 
+tags $\OMS/cmsy/m/n/10.95 !$ \OT1/cmr/m/n/10.95 ESMF[]6[]3[]0r.
+ []
 
-] [25]
+<figs/svn_fig1.png, id=308, 279.444pt x 428.19975pt>
+File: figs/svn_fig1.png Graphic file (type png)
+ <use figs/svn_fig1.png>
+Package pdftex.def Info: figs/svn_fig1.png used on input line 426.
+(pdftex.def)             Requested size: 279.44331pt x 428.1987pt.
 
-LaTeX Warning: Citation `czarnecki' on page 26 undefined on input line 402.
+Overfull \vbox (13.59999pt too high) has occurred while \output is active []
 
-[26
+ [24]
+<figs/svn_fig2.png, id=323, 181.27725pt x 139.722pt>
+File: figs/svn_fig2.png Graphic file (type png)
+ <use figs/svn_fig2.png>
+Package pdftex.def Info: figs/svn_fig2.png used on input line 432.
+(pdftex.def)             Requested size: 181.27681pt x 139.72165pt.
 
-] <figs/nuopcfm.png, id=304, 572.8602pt x 691.50345pt>
+Overfull \vbox (13.59999pt too high) has occurred while \output is active []
+
+ [25 <C:/Users/Rocky/git/cupid/org.earthsystemcurator.cupid.nuopc.fsml/doc/latex/figs/svn_fig1.png>] <figs/reveng_fig1.p
+ng, id=331, 238.491pt x 289.08pt>
+File: figs/reveng_fig1.png Graphic file (type png)
+
+<use figs/reveng_fig1.png>
+Package pdftex.def Info: figs/reveng_fig1.png used on input line 455.
+(pdftex.def)             Requested size: 140.83946pt x 170.71652pt.
+
+Overfull \vbox (13.59999pt too high) has occurred while \output is active []
+
+ [26 <C:/Users/Rocky/git/cupid/org.earthsystemcurator.cupid.nuopc.fsml/doc/latex/figs/svn_fig2.png> <C:/Users/Rocky/git/
+cupid/org.earthsystemcurator.cupid.nuopc.fsml/doc/latex/figs/reveng_fig1.png>] <figs/reveng_fig2.png, id=339, 239.09325p
+t x 120.45pt>
+File: figs/reveng_fig2.png Graphic file (type png)
+ <use figs/reveng_fig2.png>
+Package pdftex.def Info: figs/reveng_fig2.png used on input line 465.
+(pdftex.def)             Requested size: 170.71652pt x 86.00713pt.
+
+<figs/reveng_fig3.png, id=340, 258.9675pt x 232.4685pt>
+File: figs/reveng_fig3.png Graphic file (type png)
+ <use figs/reveng_fig3.png>
+Package pdftex.def Info: figs/reveng_fig3.png used on input line 471.
+(pdftex.def)             Requested size: 221.88577pt x 199.16928pt.
+
+<figs/reveng_fig4.png, id=341, 481.8pt x 278.84175pt>
+File: figs/reveng_fig4.png Graphic file (type png)
+ <use figs/reveng_fig4.png>
+Package pdftex.def Info: figs/reveng_fig4.png used on input line 477.
+(pdftex.def)             Requested size: 227.62204pt x 131.73639pt.
+
+Overfull \vbox (13.59999pt too high) has occurred while \output is active []
+
+ [27 <C:/Users/Rocky/git/cupid/org.earthsystemcurator.cupid.nuopc.fsml/doc/latex/figs/reveng_fig2.png> <C:/Users/Rocky/g
+it/cupid/org.earthsystemcurator.cupid.nuopc.fsml/doc/latex/figs/reveng_fig3.png>] <figs/reveng_fig5.png, id=351, 313.17p
+t x 286.06876pt>
+File: figs/reveng_fig5.png Graphic file (type png)
+ <use figs/reveng_fig5.png>
+Package pdftex.def Info: figs/reveng_fig5.png used on input line 485.
+(pdftex.def)             Requested size: 227.62204pt x 207.92924pt.
+
+Overfull \vbox (13.59999pt too high) has occurred while \output is active []
+
+ [28 <C:/Users/Rocky/git/cupid/org.earthsystemcurator.cupid.nuopc.fsml/doc/latex/figs/reveng_fig4.png> <C:/Users/Rocky/g
+it/cupid/org.earthsystemcurator.cupid.nuopc.fsml/doc/latex/figs/reveng_fig5.png>] <figs/reveng_fig6.png, id=360, 311.363
+25pt x 141.52875pt>
+File: figs/reveng_fig6.png Graphic file (type png)
+ <use figs/reveng_fig6.png>
+Package pdftex.def Info: figs/reveng_fig6.png used on input line 493.
+(pdftex.def)             Requested size: 227.62204pt x 103.46413pt.
+
+<figs/reveng_fig7.png, id=361, 357.7365pt x 104.7915pt>
+File: figs/reveng_fig7.png Graphic file (type png)
+ <use figs/reveng_fig7.png>
+Package pdftex.def Info: figs/reveng_fig7.png used on input line 499.
+(pdftex.def)             Requested size: 227.62204pt x 66.67618pt.
+
+Overfull \vbox (13.59999pt too high) has occurred while \output is active []
+
+ [29 <C:/Users/Rocky/git/cupid/org.earthsystemcurator.cupid.nuopc.fsml/doc/latex/figs/reveng_fig6.png> <C:/Users/Rocky/g
+it/cupid/org.earthsystemcurator.cupid.nuopc.fsml/doc/latex/figs/reveng_fig7.png>]
+Overfull \hbox (8.64253pt too wide) in paragraph at lines 515--516
+[]\OT1/cmr/m/n/10.95 Make sure you have the \OT1/cmr/m/it/10.95 Sin-gle-Mod-el-Proto \OT1/cmr/m/n/10.95 source code in y
+our Eclipse workspace. 
+ []
+
+<figs/verify_fig1.png, id=369, 454.0965pt x 433.62pt>
+File: figs/verify_fig1.png Graphic file (type png)
+ <use figs/verify_fig1.png>
+Package pdftex.def Info: figs/verify_fig1.png used on input line 521.
+(pdftex.def)             Requested size: 227.62204pt x 217.35863pt.
+
+<figs/verify_fig3.png, id=370, 325.215pt x 260.172pt>
+File: figs/verify_fig3.png Graphic file (type png)
+ <use figs/verify_fig3.png>
+Package pdftex.def Info: figs/verify_fig3.png used on input line 531.
+(pdftex.def)             Requested size: 227.62204pt x 182.10326pt.
+
+Overfull \vbox (13.59999pt too high) has occurred while \output is active []
+
+ [30 <C:/Users/Rocky/git/cupid/org.earthsystemcurator.cupid.nuopc.fsml/doc/latex/figs/verify_fig1.png>]
+Overfull \vbox (13.59999pt too high) has occurred while \output is active []
+
+ [31 <C:/Users/Rocky/git/cupid/org.earthsystemcurator.cupid.nuopc.fsml/doc/latex/figs/verify_fig3.png>] [32
+
+] [33]
+
+LaTeX Warning: Citation `czarnecki' on page 34 undefined on input line 558.
+
+[34
+
+] <figs/nuopcfm.png, id=405, 572.8602pt x 691.50345pt>
 File: figs/nuopcfm.png Graphic file (type png)
  <use figs/nuopcfm.png>
-Package pdftex.def Info: figs/nuopcfm.png used on input line 459.
+Package pdftex.def Info: figs/nuopcfm.png used on input line 615.
 (pdftex.def)             Requested size: 396.0pt x 478.02422pt.
 
-Overfull \hbox (13.73213pt too wide) in paragraph at lines 471--472
+Overfull \hbox (13.73213pt too wide) in paragraph at lines 627--628
 \OT1/cmr/m/n/10.95 sented as fea-tures in a fea-ture model. The top-level con-cept node is \OT1/cmtt/m/n/10.95 NUOPCAppl
 ication\OT1/cmr/m/n/10.95 .
  []
 
 
-Overfull \hbox (6.29034pt too wide) in paragraph at lines 471--472
+Overfull \hbox (6.29034pt too wide) in paragraph at lines 627--628
 \OT1/cmr/m/n/10.95 sents a framework-called sub-rou-tine that the de-vel-oper im-ple-ments, \OT1/cmtt/m/n/10.95 initiali
 zation\OT1/cmr/m/n/10.95 ,
  []
 
 
-Overfull \hbox (23.30963pt too wide) in paragraph at lines 487--504
+Overfull \hbox (23.30963pt too wide) in paragraph at lines 643--660
  [] 
  []
 
-[27] [28 <C:/Users/Rocky/git/cupid/org.earthsystemcurator.cupid.nuopc.fsml/doc/latex/figs/nuopcfm.png>]
-<figs/nuopcmodel.png, id=320, 678.25395pt x 304.85895pt>
+[35] [36 <C:/Users/Rocky/git/cupid/org.earthsystemcurator.cupid.nuopc.fsml/doc/latex/figs/nuopcfm.png>]
+<figs/nuopcmodel.png, id=421, 678.25395pt x 304.85895pt>
 File: figs/nuopcmodel.png Graphic file (type png)
  <use figs/nuopcmodel.png>
-Package pdftex.def Info: figs/nuopcmodel.png used on input line 515.
+Package pdftex.def Info: figs/nuopcmodel.png used on input line 671.
 (pdftex.def)             Requested size: 435.60242pt x 195.79286pt.
 
-<figs/setservices_mappings.png, id=321, 579.96675pt x 347.49825pt>
+<figs/setservices_mappings.png, id=422, 579.96675pt x 347.49825pt>
 File: figs/setservices_mappings.png Graphic file (type png)
  <use figs/setservices_mappings.png>
-Package pdftex.def Info: figs/setservices_mappings.png used on input line 522.
+Package pdftex.def Info: figs/setservices_mappings.png used on input line 678.
 (pdftex.def)             Requested size: 435.60242pt x 261.0101pt.
 
-Overfull \hbox (39.60242pt too wide) in paragraph at lines 522--523
+Overfull \hbox (39.60242pt too wide) in paragraph at lines 678--679
  [][] 
  []
 
-(C:\Users\Rocky\git\cupid\org.earthsystemcurator.cupid.nuopc.fsml\doc\latex\cupid.bbl [29] [30 <C:/Users/Rocky/git/cupid
+(C:\Users\Rocky\git\cupid\org.earthsystemcurator.cupid.nuopc.fsml\doc\latex\cupid.bbl [37] [38 <C:/Users/Rocky/git/cupid
 /org.earthsystemcurator.cupid.nuopc.fsml/doc/latex/figs/nuopcmodel.png> <C:/Users/Rocky/git/cupid/org.earthsystemcurator
 .cupid.nuopc.fsml/doc/latex/figs/setservices_mappings.png>]
 bibitemlist
@@ -996,19 +1109,19 @@ bibitemlist
 Class memoir Warning: The material used in the headers is too large
 (27.2pt) for the given head height (13.6pt), it is recommended to
 either increase the head height or redesign the header
-(in both cases you will find help in the memoir manual). on input line 535.
+(in both cases you will find help in the memoir manual). on input line 691.
 
-[31
+[39
 
 ]
 \tf@toc=\write5
-Package atveryend Info: Empty hook `BeforeClearDocument' on input line 535.
-Package atveryend Info: Empty hook `AfterLastShipout' on input line 535.
+Package atveryend Info: Empty hook `BeforeClearDocument' on input line 691.
+Package atveryend Info: Empty hook `AfterLastShipout' on input line 691.
  (C:\Users\Rocky\git\cupid\org.earthsystemcurator.cupid.nuopc.fsml\doc\latex\cupid.aux)
-Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 535.
-Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 535.
+Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 691.
+Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 691.
 Package rerunfilecheck Info: File `cupid.out' has not changed.
-(rerunfilecheck)             Checksum: 0D14A35E7B6535F1B652BCC70243DBA3;1283.
+(rerunfilecheck)             Checksum: 811606A5503DEE861BCDEE71B3E10CA9;1540.
 
 
 LaTeX Font Warning: Some font shapes were not available, defaults substituted.
@@ -1016,13 +1129,13 @@ LaTeX Font Warning: Some font shapes were not available, defaults substituted.
 
 LaTeX Warning: There were undefined references.
 
-Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 535.
+Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 691.
  ) 
 Here is how much of TeX's memory you used:
- 9907 strings out of 493921
- 143853 string characters out of 3147282
+ 10007 strings out of 493921
+ 145443 string characters out of 3147282
  286315 words of memory out of 3000000
- 13034 multiletter control sequences out of 15000+200000
+ 13083 multiletter control sequences out of 15000+200000
  11659 words of font info for 41 fonts, out of 3000000 for 9000
  841 hyphenation exceptions out of 8191
  32i,11n,49p,1239b,485s stack positions out of 5000i,500n,10000p,200000b,50000s
@@ -1034,9 +1147,9 @@ cm/cmr8.pfb><C:/Program Files/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmsl10.p
 pe1/public/amsfonts/cm/cmsy10.pfb><C:/Program Files/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmti10.pfb><C:/Program Fil
 es/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmtt10.pfb><C:/Program Files/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmtt
 12.pfb>
-Output written on cupid.pdf (31 pages, 4096695 bytes).
+Output written on cupid.pdf (39 pages, 4282497 bytes).
 PDF statistics:
- 396 PDF objects out of 1000 (max. 8388607)
- 80 named destinations out of 1000 (max. 500000)
- 262 words of extra memory for PDF output out of 10000 (max. 10000000)
+ 506 PDF objects out of 1000 (max. 8388607)
+ 120 named destinations out of 1000 (max. 500000)
+ 341 words of extra memory for PDF output out of 10000 (max. 10000000)
 
