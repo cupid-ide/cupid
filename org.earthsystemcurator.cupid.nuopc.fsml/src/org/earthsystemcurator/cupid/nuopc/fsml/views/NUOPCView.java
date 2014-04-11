@@ -43,6 +43,7 @@ import org.eclipse.photran.internal.core.parser.IProgramUnit;
 import org.eclipse.photran.internal.core.reindenter.Reindenter;
 import org.eclipse.photran.internal.core.reindenter.Reindenter.Strategy;
 import org.eclipse.swt.SWT;
+import org.eclipse.swt.SWTError;
 import org.eclipse.swt.browser.Browser;
 import org.eclipse.swt.graphics.Font;
 import org.eclipse.swt.layout.GridData;
@@ -50,7 +51,9 @@ import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Event;
+import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Menu;
+import org.eclipse.swt.widgets.Text;
 import org.eclipse.swt.widgets.TreeColumn;
 import org.eclipse.ui.IActionBars;
 import org.eclipse.ui.IWorkbenchPage;
@@ -120,7 +123,7 @@ public class NUOPCView extends ViewPart {
 
 		@Override
 		protected Composite createToolTipContentArea(Event event, Composite parent) {
-			Composite comp = new Composite(parent, SWT.NO_SCROLL);
+			Composite comp = new Composite(parent, SWT.NONE);
 			GridLayout l = new GridLayout(1,false);
 			
 			l.horizontalSpacing=0;
@@ -129,25 +132,57 @@ public class NUOPCView extends ViewPart {
 			l.verticalSpacing=0;
 
 			comp.setLayout(l);	
-			Browser browser = new Browser(comp, SWT.NO_SCROLL);
-			//browser.setFont(new Font(Display.getDefault(), "Arial", 10, SWT.ITALIC ));
 			
 			String text = getText(event);
-			text = "<html><body bgcolor=\"#FFFFE0\" style=\"margin-top:2pt;overflow:auto;font-size:13px;font-family:Helvetica;\">" + text + "</body></html>";
 			
-			browser.setText(text);
+			try {
+				Browser browser = new Browser(comp, SWT.NONE);
+				
+				text = "<html><body bgcolor=\"#FFFFE0\" style=\"margin-top:2pt;overflow:auto;font-size:13px;font-family:Helvetica;\">" + text + "</body></html>";
+				
+				browser.setText(text);
+				
+				int height = 75;
+				if (text.length() > 650) {
+					height = 300;
+				}
+				else if (text.length() > 300) {
+					height = 200;
+				}
+				else if (text.length() > 200) {
+					height = 150;
+				}
+				browser.setLayoutData(new GridData(400, height));
+			}
+			catch (SWTError e) {
+				//e.printStackTrace();
+				//Browser failed to render because it is not installed on platform
+				//Ubuntu users should do:   sudo apt-get install libwebkitgtk-1.0-0
+				
+				//basic HTML stripping for how
+				text = text.replaceAll("\\<.*?\\>", "");
+				Text label = new Text(comp, SWT.WRAP  | SWT.V_SCROLL);
+				label.setEditable(false);
+				label.setText(text);
+				
+				int height = 75;
+				if (text.length() > 650) {
+					height = 300;
+				}
+				else if (text.length() > 300) {
+					height = 200;
+				}
+				else if (text.length() > 200) {
+					height = 150;
+				}
+				
+				label.setLayoutData(new GridData(400, height));
+				
+			}
 			
-			int height = 75;
-			if (text.length() > 650) {
-				height = 300;
-			}
-			else if (text.length() > 300) {
-				height = 200;
-			}
-			else if (text.length() > 200) {
-				height = 150;
-			}
-			browser.setLayoutData(new GridData(400, height));
+			
+			
+			
 			
 			
 
@@ -158,6 +193,8 @@ public class NUOPCView extends ViewPart {
 		public boolean isHideOnMouseDown() {
 			return false;
 		}
+		
+		
 
 		public static final void enableFor(ColumnViewer viewer, int style) {
 			new FancyToolTipSupport(viewer,style,false);

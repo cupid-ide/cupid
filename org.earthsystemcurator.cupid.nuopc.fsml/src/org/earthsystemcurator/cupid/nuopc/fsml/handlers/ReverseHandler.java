@@ -1,7 +1,5 @@
 package org.earthsystemcurator.cupid.nuopc.fsml.handlers;
 
-import java.io.IOException;
-import java.lang.reflect.InvocationTargetException;
 import java.net.MalformedURLException;
 import java.net.URL;
 
@@ -10,27 +8,21 @@ import org.earthsystemcurator.cupid.nuopc.fsml.core.CupidActivator;
 import org.earthsystemcurator.cupid.nuopc.fsml.core.CupidStorage;
 import org.earthsystemcurator.cupid.nuopc.fsml.core.ReverseEngineer2;
 import org.earthsystemcurator.cupid.nuopc.fsml.preferences.CupidPreferencePage;
-import org.earthsystemcurator.cupid.nuopc.fsml.util.Regex;
 import org.earthsystemcurator.cupid.nuopc.fsml.views.NUOPCView;
 import org.earthsystemcurator.cupidLanguage.Language;
 import org.eclipse.cdt.core.model.ITranslationUnit;
 import org.eclipse.core.commands.AbstractHandler;
 import org.eclipse.core.commands.ExecutionEvent;
 import org.eclipse.core.commands.ExecutionException;
-import org.eclipse.core.resources.IFile;
 import org.eclipse.core.resources.IMarker;
 import org.eclipse.core.resources.IProject;
 import org.eclipse.core.resources.IResource;
-import org.eclipse.core.resources.IResourceDelta;
-import org.eclipse.core.resources.IResourceDeltaVisitor;
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.emf.common.util.Diagnostic;
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.EPackage.Registry;
-import org.eclipse.emf.ecore.EReference;
-import org.eclipse.emf.ecore.impl.EPackageRegistryImpl;
 import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.ecore.resource.ResourceSet;
 import org.eclipse.emf.ecore.resource.impl.ResourceSetImpl;
@@ -42,15 +34,11 @@ import org.eclipse.jface.viewers.ITreeSelection;
 import org.eclipse.photran.core.IFortranAST;
 import org.eclipse.photran.internal.core.analysis.binding.ScopingNode;
 import org.eclipse.photran.internal.core.lexer.Token;
-import org.eclipse.photran.internal.core.reindenter.Reindenter;
-import org.eclipse.photran.internal.core.reindenter.Reindenter.Strategy;
 import org.eclipse.photran.internal.core.vpg.PhotranVPG;
 import org.eclipse.ui.IEditorInput;
 import org.eclipse.ui.IEditorPart;
 import org.eclipse.ui.IFileEditorInput;
-import org.eclipse.ui.IMarkerResolution;
 import org.eclipse.ui.IViewReference;
-import org.eclipse.ui.IWorkbenchWindow;
 import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.handlers.HandlerUtil;
 
@@ -91,7 +79,8 @@ public class ReverseHandler extends AbstractHandler {
 		//add default NUOPC metamodel to registry if necessary
 		if (EPackage.Registry.INSTANCE.getEPackage("http://www.earthsystemcurator.org/nuopcgen") == null) {
 			CupidActivator.log("ReverseHandler.loadLanguageEcore: registering EPackage");
-			URI ecoreURI = URI.createURI("platform:/plugin/org.earthsystemcurator.cupid.nuopc.fsml/cupidmodel/nuopc.ecore");
+			URI ecoreURI = URI.createURI("platform:/plugin/org.earthsystemcurator.cupid.nuopc.fsml/cupidmodel/NUOPC.ecore");
+			
 			Resource ecoreResource = rs.getResource(ecoreURI, true);
 			EPackage ecorePackage = (EPackage) ecoreResource.getContents().get(0);
 			EPackage.Registry.INSTANCE.put("http://www.earthsystemcurator.org/nuopcgen", ecorePackage);
