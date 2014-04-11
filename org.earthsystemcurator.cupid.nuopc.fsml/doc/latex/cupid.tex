@@ -142,6 +142,20 @@ To take full advantage of NUOPC, developers must ensure that model components co
 
 \chapter{Installation}
 
+\section{Prerequisites}
+
+Nearly all of Cupid's software dependencies will be managed automatically by the Eclipse plugin machinery.  However, it is recommended that Linux users install the Web content engine library for GTK+ (\texttt{libwebkitgtk-1.0-0}) for a better user experience.  The Web content engine is used to render framework documentation in the tool.
+
+The library is available in the package manager for major distributions of Linux, including Ubuntu, Red Hat, and Debian.
+
+For example, Ubuntu users should issue the following command to install the library.
+
+\texttt{\$ sudo apt-get install libwebkitgtk-1.0-0}
+
+
+\emph{This is an optional prerequisite and the tool will still function without it.}
+
+
 \section{Download and Install the Cupid Plugin}
 \label{sec:installcupid}
 
@@ -170,7 +184,7 @@ The first time you start Eclipse, you will be prompted to select a location for 
   \includegraphics[width=6cm]{figs/install_fig1.png}
 }
 
-\item Put the Cupid Update Site URL into ``Work with...''  You will be prompted to give the update site a name of your choosing.
+\item Put the Cupid Update Site URL into \emph{Work with...}  You will be prompted to give the update site a name of your choosing.
 
 The Update site URL is:  \texttt{http://www.cc.gatech.edu/\textasciitilde{}rocky/cupid/}
 
@@ -178,13 +192,13 @@ The Update site URL is:  \texttt{http://www.cc.gatech.edu/\textasciitilde{}rocky
   \includegraphics{figs/install_fig2.png}
 }
 
-\item Uncheck the ``Group items by category'' option.
+\item If you do not see the Cupid plugin listed, uncheck the \emph{Group items by category} option.  Otherwise, expand the Cupid category.
 
 \parbox{\linewidth}{\centering
   \includegraphics{figs/install_fig3.png}
 }
 
-\item Select ``Cupid'' from the list and click Next.
+\item Select the \emph{Cupid} plugin from the list and click Next.
 
 \parbox{\linewidth}{\centering
   \includegraphics{figs/install_fig4.png}
