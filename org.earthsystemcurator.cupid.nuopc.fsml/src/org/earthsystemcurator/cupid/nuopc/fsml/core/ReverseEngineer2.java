@@ -14,6 +14,8 @@ import org.eclipse.core.resources.IFile;
 import org.eclipse.core.resources.IProject;
 import org.eclipse.core.resources.IResource;
 import org.eclipse.core.runtime.CoreException;
+import org.eclipse.core.runtime.Status;
+import org.eclipse.emf.ecore.EObject;
 import org.eclipse.photran.core.IFortranAST;
 import org.eclipse.photran.internal.core.vpg.PhotranVPG;
 
@@ -22,7 +24,9 @@ public class ReverseEngineer2 {
 	 
 	
 	@SuppressWarnings("unchecked")
-	public static FSM reverseEngineer(Language lang, IProject project, PhotranVPG vpg) {
+	public static FSM<?> reverseEngineer(Language lang, IProject project, PhotranVPG vpg) {
+		
+		CupidActivator.log("enter ReverseEngineer2.reverseEngineer");
 		
 		ConceptDef topConcept = null;
 		for (ConceptDef cd : lang.getConceptDef()) {
@@ -43,7 +47,7 @@ public class ReverseEngineer2 {
 		//EObject root = eFactory.create(topClass);
 		
 		
-		FSM<?> fsm = new FSM(lang, project, CodeQuery2.class, CodeTransformation.class);
+		FSM<?> fsm = new FSM<EObject>(lang, project, CodeQuery2.class, CodeTransformation.class, CupidActivator.getDefault().getLog());
 		
 		//a bit of a hack here for the root name
 		//EStructuralFeature sfName = topClass.getEStructuralFeature("name");
@@ -58,18 +62,20 @@ public class ReverseEngineer2 {
 			if (fileList != null && fileList.length() > 1) {
 				for (String path : fileList.split("\n")) {		
 					IFile f = (IFile) project.findMember(path.trim());
-					System.out.println("Adding Fortran file: " + path.trim());
+					//System.out.println("Adding Fortran file: " + path.trim());
+					CupidActivator.log("ReverseEngineer2.reverseEngineer: adding file: " + path.trim());
 					if (f != null) {
 						IFortranAST ast = vpg.acquireTransientAST(f);						
 						if (ast == null) {
-							System.out.println("Warning:  AST not found for file: " + f.getFullPath());
+							CupidActivator.log(Status.ERROR, "ReverseEngineer2.reverseEngineer - AST not found: " + f.getFullPath());
 						}
 						else {
 							asts.add(ast);
 						}
 					}
 					else {
-						System.out.println("File not found in project: " + path);
+						//System.out.println("File not found in project: " + path);
+						CupidActivator.log(Status.ERROR, "ReverseEngineer2.reverseEngineer - File not found: " + path);
 					}
 				}
 			}
@@ -82,10 +88,10 @@ public class ReverseEngineer2 {
 						if (r.getProjectRelativePath().getFileExtension() != null &&
 							(r.getProjectRelativePath().getFileExtension().equalsIgnoreCase("f") ||
 							r.getProjectRelativePath().getFileExtension().equalsIgnoreCase("f90"))) {
-							System.out.println("Adding Fortran file: " + r);
+							CupidActivator.log("ReverseEngineer2.reverseEngineer: adding file: " + r.getFullPath());
 							IFortranAST ast = vpg.acquireTransientAST((IFile) r);							
 							if (ast == null) {
-								System.out.println("Warning:  AST not found for file: " + r.getName());
+								CupidActivator.log(Status.ERROR, "ReverseEngineer2.reverseEngineer - AST not found: " + r.getFullPath());
 							}
 							else {
 								asts.add(ast);
@@ -97,13 +103,16 @@ public class ReverseEngineer2 {
 			}
 		} 
 		catch (CoreException e1) {
-			e1.printStackTrace();
+			CupidActivator.log(Status.ERROR, "ReverseEngineer2.reverseEngineer", e1);
+			//e1.printStackTrace();
 			return fsm;
 		}
 		
 		//root = reverse(fsm, asts, topConcept, root, fsm.getMappings(), eFactory);
 	
 		fsm.reverse(asts);
+		
+		CupidActivator.log("exit ReverseEngineer2.reverseEngineer");
 		
 		return fsm;
 		

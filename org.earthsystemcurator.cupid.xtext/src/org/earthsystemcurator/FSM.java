@@ -23,6 +23,8 @@ import org.earthsystemcurator.cupidLanguage.PathExprTerm;
 import org.earthsystemcurator.cupidLanguage.SubconceptOrAttribute;
 import org.earthsystemcurator.generator.CupidLanguageGenerator;
 import org.eclipse.core.resources.IProject;
+import org.eclipse.core.runtime.ILog;
+import org.eclipse.core.runtime.Status;
 import org.eclipse.emf.common.util.Diagnostic;
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.ecore.EAttribute;
@@ -38,6 +40,8 @@ import org.eclipse.emf.ecore.util.EcoreUtil;
 import org.eclipse.photran.core.IFortranAST;
 import org.eclipse.photran.internal.core.lexer.Token;
 import org.eclipse.photran.internal.core.parser.IASTNode;
+import org.osgi.framework.Bundle;
+import org.osgi.framework.FrameworkUtil;
 
 @SuppressWarnings("restriction")
 public class FSM<RootType extends EObject> {
@@ -53,6 +57,15 @@ public class FSM<RootType extends EObject> {
 	protected CupidLanguageGenerator generator;
 	protected Map<SubconceptOrAttribute, EStructuralFeature> cache;
 	
+	private static Bundle MY_BUNDLE = FrameworkUtil.getBundle(FSM.class);
+	protected ILog log;
+	
+	protected void log(int severity, String msg, Throwable e) {
+		if (log!= null) {
+			log.log(new Status(severity, MY_BUNDLE.getSymbolicName(), msg, e));
+		}
+	}
+
 	/**
 	 * Mapping from a model element to one of:
 	 *  - a Set<IFortranAST> (for top level)
@@ -62,7 +75,7 @@ public class FSM<RootType extends EObject> {
 	 */	
 	//private Map<Object, Object> mappings;	
 	
-	public FSM(Language language, IProject project, Class<?> queryClass, Class<?> transformations) {
+	public FSM(Language language, IProject project, Class<?> queryClass, Class<?> transformations, ILog log) {
 		this.language = language;
 		//this.root = root;
 		//this.pack = root.eClass().getEPackage();
@@ -70,6 +83,7 @@ public class FSM<RootType extends EObject> {
 		
 		this.pack = EPackage.Registry.INSTANCE.getEPackage(language.getUri()); 
 		if (this.pack == null) {
+			log(Status.ERROR, "No EPackage registered for language with URI: " + language.getUri(), null);
 			throw new RuntimeException("No EPackage registered for language with URI: " + language.getUri());
 		}
 		
@@ -95,6 +109,8 @@ public class FSM<RootType extends EObject> {
 		} catch (InvocationTargetException e) {
 			e.printStackTrace();
 		}
+		
+		this.log = log;
 		
 	}
 	
@@ -463,6 +479,7 @@ public class FSM<RootType extends EObject> {
 	 */
 	@SuppressWarnings({ "restriction", "unchecked" })
 	public void reverse(Set<IFortranAST> contextFortranElement) {
+		log(Status.INFO, "entering FSM.reverse", null);
 		//mappings.clear();
 		
 		//bootstrap by mapping the root element to the set of ASTs
@@ -472,6 +489,7 @@ public class FSM<RootType extends EObject> {
 		//mappings.put(root, contextFortranElement);
 		
 		root = reverse(root, contextFortranElement, getTopConceptDef());
+		log(Status.INFO, "exiting FSM.reverse", null);
 	}
 	
 	//protected void reverse(EObject contextModelElement, ConceptDef conceptDef) {
@@ -495,13 +513,14 @@ public class FSM<RootType extends EObject> {
 			//modelElement = reverse(modelElement, contextFortranElement, subconcept);
 			//then check whether it is essential and not populated
 			
-			if (subconcept.getName().equalsIgnoreCase("initP1")) {
-				System.out.println("initP1");
-			}
+			//if (subconcept.getName().equalsIgnoreCase("initP1")) {
+			//	System.out.println("initP1");
+			//}
 			
 			//find structural feature
 			EStructuralFeature structuralFeature = getEStructuralFeature(subconcept);
 			if (structuralFeature == null) {
+				log(Status.ERROR, "FSM.reverse - Error accessing the language metamodel", null);
 				throw new RuntimeException("structuralFeature null");
 			}
 			//ConceptDef subconceptDef = null;
@@ -696,14 +715,14 @@ public class FSM<RootType extends EObject> {
 									
 								
 								else if (!structuralFeature.isMany()) {
-									if (resultMap.size() > 1) {
-										System.out.println("Warning: Some matching elements ignored because subconcept is singular: " + subconcept.getName());
+									//if (resultMap.size() > 1) {
+										//System.out.println("Warning: Some matching elements ignored because subconcept is singular: " + subconcept.getName());
 										//for (Object ignoredElement : resultMap.entrySet()) {
 										//	if (!ignoredElement.equals(resultItem.getKey())) {
 										//		System.out.println("\tIgnored element: " + ignoredElement);
 										//	}
 										//}
-									}
+									//}
 									break; // take first one that is not null
 								}									
 							

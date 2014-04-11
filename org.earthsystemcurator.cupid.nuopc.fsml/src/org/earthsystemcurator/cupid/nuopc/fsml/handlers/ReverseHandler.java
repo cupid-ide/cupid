@@ -72,13 +72,17 @@ public class ReverseHandler extends AbstractHandler {
 
 	protected Language loadLanguageEcore() {
 		
+		CupidActivator.log("enter ReverseHandler.loadLanguageEcore");
+		
 		//platform:/resource/nuopcdef/src/nuopc.cupid
 		//platform:/plugin/org.earthsystemcurator.cupid.nuopc.fsml/cupidmodel/nuopc.cupid
 		
 		//default set in /org.earthsystemcurator.cupid.nuopc.fsml/src/org/earthsystemcurator/cupid/nuopc/fsml/preferences/PreferenceInitializer.java
 		
 		String langURIString = CupidActivator.getDefault().getPreferenceStore().getString(CupidPreferencePage.CUPID_LANGUAGE_URI);
+		CupidActivator.log("ReverseHandler.loadLanguageEcore: language URI = " + langURIString);
 		URI langURI = URI.createURI(langURIString);
+		
 		
 		ResourceSet rs = new ResourceSetImpl();
 		Resource langResource = rs.getResource(langURI, true);
@@ -86,10 +90,12 @@ public class ReverseHandler extends AbstractHandler {
 		
 		//add default NUOPC metamodel to registry if necessary
 		if (EPackage.Registry.INSTANCE.getEPackage("http://www.earthsystemcurator.org/nuopcgen") == null) {
+			CupidActivator.log("ReverseHandler.loadLanguageEcore: registering EPackage");
 			URI ecoreURI = URI.createURI("platform:/plugin/org.earthsystemcurator.cupid.nuopc.fsml/cupidmodel/nuopc.ecore");
 			Resource ecoreResource = rs.getResource(ecoreURI, true);
 			EPackage ecorePackage = (EPackage) ecoreResource.getContents().get(0);
-			EPackage.Registry.INSTANCE.put("http://www.earthsystemcurator.org/nuopcgen", ecorePackage); 		
+			EPackage.Registry.INSTANCE.put("http://www.earthsystemcurator.org/nuopcgen", ecorePackage);
+			CupidActivator.log("ReverseHandler.loadLanguageEcore: registering EPackage - complete");
 		}
 					
 		/*
@@ -106,6 +112,8 @@ public class ReverseHandler extends AbstractHandler {
 		    EPackage.Registry.INSTANCE.put(p.getNsURI(), p);
 		}
 		*/
+		
+		CupidActivator.log("exit ReverseHandler.loadLanguageEcore");
 		
 		return lang;
 		
@@ -159,6 +167,8 @@ public class ReverseHandler extends AbstractHandler {
 	public Object execute(ExecutionEvent event) throws ExecutionException {
 
 		//IWorkbenchWindow window = HandlerUtil.getActiveWorkbenchWindowChecked(event);
+		
+		CupidActivator.log("enter ReverseHandler.execute");
 		
 		IProject selectedProject = null;
 		ISelection sel = HandlerUtil.getCurrentSelection(event);
@@ -374,6 +384,8 @@ public class ReverseHandler extends AbstractHandler {
      
         //TODO: do I need to do this?
         vpg.releaseAllASTs();
+        
+        CupidActivator.log("exit ReverseHandler.execute");
 
 		return null;
 	}
