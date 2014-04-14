@@ -8,6 +8,7 @@ import org.earthsystemcurator.cupid.nuopc.fsml.core.CupidActivator;
 import org.earthsystemcurator.cupid.nuopc.fsml.core.CupidStorage;
 import org.earthsystemcurator.cupid.nuopc.fsml.core.ReverseEngineer2;
 import org.earthsystemcurator.cupid.nuopc.fsml.preferences.CupidPreferencePage;
+import org.earthsystemcurator.cupid.nuopc.fsml.util.Regex;
 import org.earthsystemcurator.cupid.nuopc.fsml.views.NUOPCView;
 import org.earthsystemcurator.cupidLanguage.Language;
 import org.eclipse.cdt.core.model.ITranslationUnit;
@@ -20,13 +21,16 @@ import org.eclipse.core.resources.IResource;
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.emf.common.util.Diagnostic;
 import org.eclipse.emf.common.util.URI;
+import org.eclipse.emf.ecore.EAttribute;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EPackage;
+import org.eclipse.emf.ecore.EReference;
 import org.eclipse.emf.ecore.EPackage.Registry;
 import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.ecore.resource.ResourceSet;
 import org.eclipse.emf.ecore.resource.impl.ResourceSetImpl;
 import org.eclipse.emf.ecore.util.BasicExtendedMetaData;
+import org.eclipse.emf.ecore.util.EObjectValidator;
 import org.eclipse.emf.ecore.util.ExtendedMetaData;
 import org.eclipse.emf.ecore.xmi.XMLResource;
 import org.eclipse.jface.viewers.ISelection;
@@ -300,7 +304,7 @@ public class ReverseHandler extends AbstractHandler {
 	    			IMarker marker = t.getPhysicalFile().getIFile().createMarker("org.earthsystemcurator.cupid.nuopc.fsml.cupiderror");
 	    			marker.setAttribute(IMarker.CHAR_START, startOffset);
 	                marker.setAttribute(IMarker.CHAR_END, endOffset);
-	                marker.setAttribute(IMarker.MESSAGE, d.getMessage());
+	                marker.setAttribute(IMarker.MESSAGE, getValidationMessage(d));
 	                marker.setAttribute(IMarker.SEVERITY, IMarker.SEVERITY_ERROR);
 	                
 	                //skip quick fixes for now
@@ -377,6 +381,32 @@ public class ReverseHandler extends AbstractHandler {
         CupidActivator.log("exit ReverseHandler.execute");
 
 		return null;
+	}
+	
+	//TODO: duplicated functionality, integrate this will the 
+	//same function in NUOPCViewContentProvider
+	private String getValidationMessage(Diagnostic d) {
+		
+		if (d.getSource().equals(EObjectValidator.DIAGNOSTIC_SOURCE) && d.getCode() == EObjectValidator.EOBJECT__EVERY_MULTIPCITY_CONFORMS) {
+			if (d.getData().size() >= 2) {
+				Object o = d.getData().get(1);
+				String label = null;
+				if (o instanceof EReference) {
+					label = Regex.getFromAnnotation(((EReference) o).getEType(), "label", ((EReference) o).getEType().getName());
+				}
+				else if (o instanceof EAttribute) {
+					label = Regex.getFromAnnotation((EAttribute) o, "label", ((EAttribute) o).getName());
+				}
+				
+				if (label != null) {
+					return "NUOPC Compliance Error: " + label + " missing";
+				}
+				
+			}
+		}
+		
+		//return "Error: " + d.getMessage();
+		return "";
 	}
 
 	/*

@@ -178,7 +178,7 @@ public class CupidProjectWizardPageSelectArch extends WizardPage {
 		Group groupArch = new Group(container, SWT.NORMAL);
 		groupArch.setText("Model Architecture");
 		CupidProjectWizard.updateFont(groupArch, SWT.BOLD);
-		GridDataFactory.fillDefaults().span(2,1).applyTo(groupArch);
+		GridDataFactory.fillDefaults().span(2,1).hint(SWT.DEFAULT, 375).applyTo(groupArch);
 		GridLayoutFactory.fillDefaults().margins(5,5).applyTo(groupArch);
 				
 		Group groupCpl = new Group(container, SWT.NORMAL);
@@ -191,12 +191,12 @@ public class CupidProjectWizardPageSelectArch extends WizardPage {
 	    archDesc.setText(selectedElem.getChild("architecture").getChildTextNormalize("desc"));  
 	    GridDataFactory.fillDefaults().hint(350, SWT.DEFAULT).applyTo(archDesc);
 	
-		archImage = new Label(groupArch, SWT.NULL);
+		archImage = new Label(groupArch, SWT.NONE);
         
 		URL url = FileLocator.find(MY_BUNDLE, new Path(selectedElem.getChild("architecture").getChildTextNormalize("image")), null);
 	    ImageDescriptor id = ImageDescriptor.createFromURL(url);
 	    archImage.setImage(id.createImage());
-	    GridDataFactory.fillDefaults().align(SWT.CENTER, SWT.CENTER).hint(SWT.DEFAULT, 300).applyTo(archImage);
+	    GridDataFactory.fillDefaults().align(SWT.CENTER, SWT.CENTER).hint(SWT.DEFAULT, SWT.DEFAULT).applyTo(archImage);
 	    
 	    couplingDesc = new Label(groupCpl, SWT.WRAP);
 	    couplingDesc.setText(selectedElem.getChild("coupling").getChildTextNormalize("desc"));    
@@ -205,9 +205,8 @@ public class CupidProjectWizardPageSelectArch extends WizardPage {
 	    couplingImage = new Label(groupCpl, SWT.NONE);
 	    url = FileLocator.find(MY_BUNDLE, new Path(selectedElem.getChild("coupling").getChildTextNormalize("image")), null);
 	    id = ImageDescriptor.createFromURL(url);
-	    couplingImage.setImage(id.createImage());
-			    
-	    GridDataFactory.fillDefaults().align(SWT.CENTER, SWT.CENTER).hint(SWT.DEFAULT, 300).applyTo(couplingImage);
+	    couplingImage.setImage(id.createImage());   
+	    GridDataFactory.fillDefaults().align(SWT.CENTER, SWT.CENTER).hint(SWT.DEFAULT, SWT.DEFAULT).applyTo(couplingImage);
 	    
 		setControl(container);
 		dialogChanged();

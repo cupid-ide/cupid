@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.1415926-2.4-1.40.13 (MiKTeX 2.9 64-bit) (preloaded format=pdflatex 2013.12.3)  11 APR 2014 17:02
+This is pdfTeX, Version 3.1415926-2.4-1.40.13 (MiKTeX 2.9 64-bit) (preloaded format=pdflatex 2013.12.3)  13 APR 2014 16:03
 entering extended mode
 **cupid.tex
 (C:\Users\Rocky\git\cupid\org.earthsystemcurator.cupid.nuopc.fsml\doc\latex\cupid.tex
@@ -689,11 +689,11 @@ File: figs/feature_foreng.png Graphic file (type png)
 Package pdftex.def Info: figs/feature_foreng.png used on input line 105.
 (pdftex.def)             Requested size: 284.52756pt x 115.40056pt.
 
-<figs/feature_cloud.png, id=158, 667.89525pt x 410.13225pt>
+<figs/feature_cloud.png, id=158, 644.4075pt x 420.97275pt>
 File: figs/feature_cloud.png Graphic file (type png)
  <use figs/feature_cloud.png>
 Package pdftex.def Info: figs/feature_cloud.png used on input line 112.
-(pdftex.def)             Requested size: 341.43306pt x 209.66531pt.
+(pdftex.def)             Requested size: 341.43306pt x 223.05667pt.
  [5 <C:/Users/Rocky/git/cupid/org.earthsystemcurator.cupid.nuopc.fsml/doc/latex/figs/feature_foreng.png> <C:/Users/Rocky
 /git/cupid/org.earthsystemcurator.cupid.nuopc.fsml/doc/latex/figs/feature_cloud.png>]
 Overfull \hbox (51.11696pt too wide) in paragraph at lines 121--122
@@ -791,11 +791,11 @@ Missing character: There is no â in font cmbx10!
 Missing character: There is no € in font cmbx10!
 Missing character: There is no “ in font cmbx10!
 
-<figs/cloud_fig2.png, id=247, 645.00975pt x 414.348pt>
+<figs/cloud_fig2.png, id=247, 650.43pt x 423.984pt>
 File: figs/cloud_fig2.png Graphic file (type png)
  <use figs/cloud_fig2.png>
 Package pdftex.def Info: figs/cloud_fig2.png used on input line 285.
-(pdftex.def)             Requested size: 396.0pt x 254.38942pt.
+(pdftex.def)             Requested size: 396.0pt x 258.13817pt.
 
 Overfull \hbox (27.37506pt too wide) in paragraph at lines 285--285
  [][] 
@@ -1168,7 +1168,7 @@ es/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmssbx10.pfb><C:/Program Files/MiKT
 ssi10.pfb><C:/Program Files/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmsy10.pfb><C:/Program Files/MiKTeX 2.9/fonts/type
 1/public/amsfonts/cm/cmti10.pfb><C:/Program Files/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmtt10.pfb><C:/Program Files
 /MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmtt12.pfb>
-Output written on cupid.pdf (42 pages, 4388464 bytes).
+Output written on cupid.pdf (42 pages, 4438632 bytes).
 PDF statistics:
  570 PDF objects out of 1000 (max. 8388607)
  143 named destinations out of 1000 (max. 500000)

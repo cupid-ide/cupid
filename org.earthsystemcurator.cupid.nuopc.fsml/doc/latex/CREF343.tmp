@@ -1,0 +1,751 @@
+% Cupid Overview and Tutorial
+% Rocky Dunlap
+
+\documentclass[oneside,11pt]{memoir}
+
+\settrimmedsize{11in}{210mm}{*}
+\setlength{\trimtop}{0pt}
+\setlength{\trimedge}{\stockwidth}
+\addtolength{\trimedge}{-\paperwidth}
+\settypeblocksize{7.75in}{33pc}{*}
+\setulmargins{4cm}{*}{*}
+\setlrmargins{1.25in}{*}{*}
+\setmarginnotes{17pt}{51pt}{\onelineskip}
+\setheadfoot{\onelineskip}{2\onelineskip}
+\setheaderspaces{*}{2\onelineskip}{*}
+\checkandfixthelayout
+
+\usepackage{wrapfig}
+\usepackage{titlepic}
+\usepackage{hyperref}
+\usepackage{graphicx}
+%\usepackage{color}
+%\usepackage{xcolor}
+\usepackage{listings}
+%\usepackage{caption}
+
+% source code listing captions
+%\DeclareCaptionFont{white}{\color{white}}
+%\DeclareCaptionFormat{listing}{\colorbox{gray}{\parbox{\textwidth}{#1#2#3}}}
+%\captionsetup[lstlisting]{format=listing,labelfont=white,textfont=white}
+
+% source code listings
+\lstset{
+	language=Fortran,
+	basicstyle=\small\sffamily,
+	%basicstyle=\footnotesize\ttfamily,
+	numbers=left,
+	numberstyle=\tiny,
+	frame=tb,
+	columns=fullflexible,
+	showstringspaces=false
+}
+
+% macros for formatting
+\newcommand{\mapping}[1]{\texttt{\textit{#1}}}
+
+%%%%%%%%%%%%%%%%%%
+% document start %
+%%%%%%%%%%%%%%%%%%
+
+\begin{document}
+
+%\begin{titlepage}
+	\title{The Cupid Integrated Development Environment for Earth System Models
+	
+	\\ \vspace{20pt} \textsc{\textbf{Feature Overview and Tutorial}}}
+	
+	\author{Rocky Dunlap\thanks{This work supported by the NASA CMAC program.}\\
+		College of Computing\\
+		Georgia Tech\\
+		\texttt{rocky@cc.gatech.edu}}
+	\date{\today}
+	\titlepic{\includegraphics{figs/logo_cupid.png}}
+%\end{titlepage}
+
+\maketitle
+
+
+
+\clearpage
+\tableofcontents
+
+\chapter{Overview of Features}
+
+Cupid is a set of development tools to facilitate the adoption of geoscience modeling frameworks into new and existing model codebases.  It features a framework-aware code editing environment and a cloud-based configuration tool to simplify configuring the compile and execution environment.  The target framework is the \href{http://www.earthsystemmodeling.org/}{Earth System Modeling Framework} (ESMF) and its interoperability layer called the \href{https://earthsystemcog.org/projects/nuopc/}{National Unified Operation Prediction Capability} (NUOPC), which is currently being implemented in most major climate and weather models in the US. Cupid tools are intended for model developers who have prior experience with model development workflows, but are new to developing with ESMF and NUOPC.  It is also aimed at developers interested in exploring the benefits of using the Eclipse Integrated Development Environment (IDE) for improving development productivity.
+
+Use of modeling frameworks is quickly becoming the norm for both operational and research climate and weather models. Modeling frameworks provide a number of benefits including mechanisms for componentizing complex codebases, functions and data structures for coupling independent models into a single simulation, increased developer productivity through code reuse, improved quality and robustness of features compared with ``home grown'' solutions, and fast execution via parallel data transfer and interpolation operators. 
+
+In a framework-based application, such as a coupled model that uses ESMF, some application behaviors are provided by the framework and some are provided by the application developer. For example, ESMF provides functions for transferring and interpolating field data from one model's native grid to another model's native grid. However, ESMF does not prescribe entirely what it means for the model to take a step forward in time since that behavior is application specific. A framework provides a set of abstractions, \emph{framework-provided concepts}, that the developer is required to instantiate and configure in their code. Creating a framework-based application is called \emph{framework completion} because the developer fills in application behaviors not provided by the framework, or specializes  behaviors provided by the framework. Software engineering research has shown that even for well-designed frameworks, writing correct framework completion code is difficult because it requires a deep understanding of the framework's behavior.
+
+The Cupid tools adds framework-specific intelligence to the \href{https://www.eclipse.org/}{Eclipse Integrated Development Environment} in order to facilitate adoption of ESMF and NUOPC. The features include:
+
+\begin{itemize}
+
+%\begin{minipage}{\linewidth}
+%    \begin{wrapfigure}{r}{0.5\textwidth}
+%      \begin{center}
+%        \includegraphics[width=\linewidth]{figs/feature_reveng.png}
+%      \end{center}
+%   \end{wrapfigure}
+%\end{minipage}
+
+\item
+A tool for \textbf{reverse engineering} an existing codebase to determine what ESMF and NUOPC framework concepts are present in the code. The reverse engineering function does not require execution of the user's code---instead, it operates during the phase of development when code is written, such as when framework code is first introduced into an existing model. The reverse engineered model is presented to the user alongside the source code in the form of a tree where nodes correspond to framework concepts. Clicking on a node brings up the relevant code fragments in the code editor. The reverse engineering tool also checks for code-level compliance to \href{https://earthsystemcog.org/projects/nuopc/esmf2nuopc}{NUOPC technical rules} and offers suggestions for addressing compliance issues.
+
+\parbox{\linewidth}{\centering
+  \includegraphics[width=8cm]{figs/feature_reveng.png}
+}
+\vspace{24pt}
+
+\item A tool for \textbf{automatic source code generation} of NUOPC-compliant code fragments. The generated code can often be used as is, although the tool does not prevent further customization of the generated code when required. The generated code is woven into the user's existing code at the appropriate places, keeping the existing code structure intact. The code generation feature helps the developer understand what framework code is required and where it should be located. For example, the tool generates variable declarations for framework-specific types, calls to framework functions, and skeletons for callback subroutines that the developer must implement. The code generation feature also works hand-in-hand with the reverse engineering function: after code fragments have been generated and (optionally) customized, the codebase can be reversed engineered again to update the outline and check for any compliance issues.
+
+\parbox{\linewidth}{\centering
+  \includegraphics[width=10cm]{figs/feature_foreng.png}
+}
+\vspace{24pt}
+
+\item A \textbf{cloud configuration} feature that allows the user to select a training scenario and, within a few minutes, configure, compile, and execute both skeleton models and realistic models on virtual machine instances using the \href{http://aws.amazon.com/ec2/}{Amazon EC2} platform.
+
+\parbox{\linewidth}{\centering
+  \includegraphics[width=12cm]{figs/feature_cloud.png}
+}
+
+\end{itemize}
+
+\chapter{ESMF and NUOPC}
+
+This section describes the Earth System Modeling Framework (ESMF) and the National Unified Operational Prediction Capability (NUOCP) and provides references for those interested in finding out more. Readers already familiar with ESMF and NUOPC may choose to skip this section.
+
+\section{The Earth System Modeling Framework}
+ESMF is a high-performance software framework designed for numerical geoscience models. Some of the framework-provided concepts include model components (\texttt{ESMF\_GridComp}) and coupler components (\texttt{ESMF\_CplComp}; mediators between model components), and data types for model state (\texttt{ESMF\_State}), distributed arrays (\texttt{ESMF\_Array}), physical fields (\texttt{ESMF\_Field)}, and numerical grids (\texttt{ESMF\_Grid}; discretization schemes). An ESMF-based application is typically designed as a hierarchy of model components where components communicate by exchanging \texttt{ESMF\_State} objects via framework-provided interfaces. \texttt{ESMF\_GridComp}s and \texttt{ESMF\_CplComp}s have user-customizable \texttt{initialize()}, \texttt{run()}, and \texttt{finalize()} methods.  For more information about ESMF, see the \href{http://www.earthsystemmodeling.org/esmf_releases/public/last/ESMF_usrdoc/}{ESMF User's Guide} and the \href{http://www.earthsystemmodeling.org/esmf_releases/public/last/ESMF_refdoc/}{ESMF Reference Manual}.
+
+\section{The National Unified Operational Prediction Capability}
+To promote interoperability of model components, NUOPC is a set of generic components, metadata conventions, and behavioral protocols encoded in a software layer on top of ESMF. Together, these elements form the basis of a \emph{common model architecture}---a standard way of building models in order to make it easier to assemble coupled models using components from different sources. NUOPC is currently being implemented in research and operational models such as the HYCOM ocean model~\cite{hycom}, GFDL's MOM5 ocean model~\cite{mom5}, and NASA's ModelE climate model~\cite{modele}.  Additional information about NUOPC can be found on the \href{https://earthsystemcog.org/projects/nuopc/}{NUOPC home page}.
+
+%Cupid is a tool that aids model developers in creating, executing, and analyzing Earth System Modeling Framework (ESMF) codebases that adhere to the conventions defined by the National Unified Operational Prediction Capability (NUOPC), a software layer designed to facilitate interoperability of modeling components used in operational weather prediction systems.  Cupid is implemented as a plugin for the Eclipse Integrated Development Environment\footnote{http://www.eclipse.org} and leverages existing plugins, especially the Photran language editor\footnote{http://www.eclipse.org/photran/}.
+
+NUOPC applications are built by combining four basic building blocks called \emph{generic components}. The four types of generic component are \texttt{Driver}, \texttt{Model}, \texttt{Mediator}, and \texttt{Connector}. Many component behaviors have been predefined by NUOPC. However, in some cases, the developer needs to provide implementations of behaviors not defined by NUOPC. Additionally, if the generic behavior does not meet the requirements of the coupled model, the developer may need to override existing behaviors.  In both cases, the developer's implementation is typically provided in subroutines which are registered with and called by the framework. The process of providing new behaviors or overriding existing ones is called \emph{specialization}. As defined here, \emph{specialization} is conceptually similar to how a class overrides a parent class method to provide a different implementation in an object-oriented programming language. However, because the public ESMF and NUOPC APIs are not implemented in an object-oriented language, a custom specialization mechanism has been defined. Understanding the specialization process is essential for adopting NUOPC into a model's codebase.
+
+The \texttt{Driver} generic component implements a harness of ESMF components and \texttt{ESMF\_State} objects and it is specialized by plugging in \texttt{Model}, \texttt{Mediator}, \texttt{Connector}, and other \texttt{Driver} components. The \texttt{Driver} initializes its child components according to an \emph{Initialize Phase Definition} and drives their \texttt{run()} methods according to a \emph{Run Sequence}. \texttt{Model} wraps a user's code so it can be plugged into a \texttt{Driver}. \texttt{Model}s represent major geophysical domains such as atmosphere, ocean, and ice. \texttt{Connector}s and \texttt{Mediator}s manage communication between \texttt{Model}s. \texttt{Connector}s implement standard interactions such as parallel redistribution or regridding (interpolation) of fields and \texttt{Mediator}s implement complex \texttt{Model} interactions requiring customized code. Figure~\ref{fig:nuopcarchs} illustrates several possible architectural configurations of NUOPC components.
+
+\begin{figure}
+	\centering
+	 \includegraphics[width=\textwidth]{figs/nuopcarchs.png}
+	\caption{\textbf{a.} A \texttt{Driver} (blue box) with two child \texttt{Model}s (yellow boxes) and simple \texttt{Connector}s (green arrows).  \textbf{b.} A configuration in which a \texttt{Mediator} (orange box) couples atmosphere, ocean, ice, and wave \texttt{Model}s.  \textbf{c.} A complex configuration showing nested \texttt{Driver}s.}
+	\label{fig:nuopcarchs}
+\end{figure}
+
+To take full advantage of NUOPC, developers must ensure that model components comply with NUOPC architectural constraints and technical rules. The full definition of NUOPC compliance is available on the \href{http://earthsystemcog.org/projects/nuopc/esmf2nuopc}{NUOPC compliance web page}. 
+
+%Cupid supports the goals of NUOPC by providing a tool capable of generating fragments of framework completion code (while not hindering developers from writing customized code) and validating existing NUOPC codebases.
+
+\chapter{Installation}
+
+\section{Prerequisites}
+
+Nearly all of Cupid's software dependencies will be managed automatically by the Eclipse plugin machinery.  However, it is recommended that Linux users install the Web content engine library for GTK+ (\texttt{libwebkitgtk-1.0-0}) for a better user experience.  The Web content engine is used to render framework documentation in the tool.
+
+The library is available in the package manager for major distributions of Linux, including Ubuntu, Red Hat, and Debian.
+
+For example, Ubuntu users should issue the following command to install the library.
+
+\texttt{\$ sudo apt-get install libwebkitgtk-1.0-0}
+
+
+\emph{This is an optional prerequisite and the tool will still function without it.}
+
+
+\section{Download and Install the Cupid Plugin}
+\label{sec:installcupid}
+
+This section describes how to install the Cupid tools. Cupid is a plugin for the Eclipse Integrated Development Environment (IDE) and is available on all its supported platforms (Windows, Mac, Unix). 
+
+\begin{enumerate}
+
+\item \textbf{Download and install Eclipse for Parallel Application Developers, version 4.3.2 SR2 (Kepler)}.
+
+The main download page is: \href{http://www.eclipse.org/downloads/}{http://www.eclipse.org/downloads/}.  
+
+There is a list of available Eclipse packages.  Be sure to choose ``Eclipse for Parallel Application Developers'' as it will come pre-bundled with the necessary plugins for working with remote systems.
+
+\item \textbf{Unpack the downloaded file into a local directory and run Eclipse by double clicking on the Eclipse executable.}
+
+The first time you start Eclipse, you will be prompted to select a location for your workspace.  Choose an empty folder.
+
+\item \textbf{Install the Cupid Plugin from the Cupid Update Site.}
+
+\begin{enumerate}
+\itemsep2em
+
+\item Click Help $\rightarrow$ Install New Software
+
+\parbox{\linewidth}{\centering
+  \includegraphics[width=6cm]{figs/install_fig1.png}
+}
+
+\item Put the Cupid Update Site URL into \emph{Work with...}  You will be prompted to give the update site a name of your choosing.
+
+The Update site URL is:  \texttt{http://www.cc.gatech.edu/\textasciitilde{}rocky/cupid/}
+
+\parbox{\linewidth}{\centering
+  \includegraphics{figs/install_fig2.png}
+}
+
+\item If you do not see the Cupid plugin listed, uncheck the \emph{Group items by category} option.  Otherwise, expand the Cupid category.
+
+\parbox{\linewidth}{\centering
+  \includegraphics{figs/install_fig3.png}
+}
+
+\item Select the \emph{Cupid} plugin from the list and click Next.
+
+\parbox{\linewidth}{\centering
+  \includegraphics{figs/install_fig4.png}
+}
+
+\item You will need to click Next a couple more times and accept the license agreements. Then click Finish.  The Cupid plugin and its dependencies will be downloaded and installed. 
+
+During the process, you may receive a message that the software contains unsigned content.  Click OK.
+
+\parbox{\linewidth}{\centering
+  \includegraphics{figs/install_fig5.png}
+}
+
+\item After installation, you will be prompted to restart Eclipse.  Click Yes.
+
+\end{enumerate}
+\end{enumerate}
+
+\section{Configure Cloud Account Credentials (Optional)}
+\label{sec:cloudconfig}
+
+Cupid can create cloud-based virtual machine instances to serve as the computational environment for training scenarios. If you plan on using the cloud configuration feature of Cupid, you need to set up your cloud credentials the first time you run Cupid. Currently, the supported cloud provider is Amazon EC2. You may use your own credentials or request access to the NESII cloud.
+
+(Note: Cupid automatically launches Amazon machine instances when you create a new training project.  Alarms are set up to automatically kill instances after 50 minutes of idle CPU utilization. However, it is your responsibility to ensure that any unused instances are terminated to avoid unnecessary cloud computing charges to your account.)
+
+\begin{enumerate}
+\item \textbf{In the Eclipse menu, select Window $\rightarrow$ Preferences. Then select Cupid Preferences in the list on the left.}
+\item \textbf{Enter your Amazon Web Services (AWS) access key and secret key.}
+\item \textbf{Click OK.}  Your credentials have now been set up.  
+
+\parbox{\linewidth}{\centering
+  \includegraphics{figs/install_fig5.png}
+}
+
+\emph{Warning:  Only set up AWS credentials on a secure, private machine as they are currently stored in plain text in the Eclipse configuration metadata.  This feature of Cupid is currently in prototype mode with minimal consideration of security ramifications. It is highly recommended to set up an AWS user account with limited privileges for use with Cupid.  For more information, see the \href{http://docs.aws.amazon.com/IAM/latest/UserGuide/IAM_Introduction.html}{AWS Identity and Access Management documentation.}}
+
+
+\end{enumerate}
+
+\chapter{Cloud-based Training Environment}
+
+Cupid simplifies the process of configuring a computational environment capable of compiling and executing high-performance geoscience models. IDEs package a lot of development tools into a single application to help manage and simplify the software development workflow. Although IDEs aim to increase developer productivity, they can still introduce a steep learning curve. Some challenges with using IDEs for geoscience model development include:
+
+\begin{itemize}
+\item Understanding the basic steps involved in moving from source code to a running model
+\item Making sense of the many development tools and features available in the IDE
+\item Setting up a high-performance computational environment capable of configuring, compiling and executing model code
+\item Configuring the IDE to connect to remote computational environments
+\end{itemize}
+
+Cupid's cloud integration feature allows a developer to select a training scenario and, within a few minutes, configure, compile, execute, and view the standard output of both skeleton models and realistic models. (This does not include data file post processing or plot generation.) This feature relies on a set of pre-configured machine images that can be instantiated on \href{http://aws.amazon.com/ec2/}{Amazon EC2} cloud infrastructure. The machine images contain all of the necessary software dependencies for the selected scenario. Furthermore, Cupid automatically configures the IDE to connect to and synchronize source code with cloud-based virtual machines.
+
+While understanding how to set up and use a high-performance computational environment, including acquiring and configuring prerequisite software packages, is an important part of geoscience modeling, it should not preclude non-experts from quickly setting up a complete computational environment and begin getting their feet wet with writing framework-based code.
+
+\section{Creating a new Cupid Training Project}
+\label{sec:cupidwizard}
+
+This section of the tutorial describes how to use the \emph{New Cupid Training Project Wizard} to create a new Eclipse project, populate it with a skeleton NUOPC application, and start up a remote virtual machine instance for compiling and executing the project.
+
+\emph{Before beginning this section, please ensure that your Amazon EC2 credentials have been set up in the Cupid preferences. For instruction on how to do this, see section~\ref{sec:cloudconfig}.}
+
+\begin{enumerate}
+
+\item \textbf{Click File $\rightarrow$ New $\rightarrow$ Other… and choose Cupid Training Project in the Cupid folder.  Click Next.}
+
+\parbox{\linewidth}{\centering
+  \includegraphics{figs/cloud_fig1.png}
+}
+
+
+\item \textbf{On the first page of the wizard, choose a training scenario.  }
+
+\begin{itemize}
+\item NUOPC --- Single Model with Driver
+\item NUOPC --- Coupled Atmosphere-Ocean Driver  \emph{(coming soon)}
+\item NUOPC --- Coupled Atmosphere-Ocean with Mediator and Driver \emph{(coming soon)}
+\item ModelE --- Basic Configuration (EM20 rundeck) \emph{(coming soon)}
+\end{itemize}
+
+Changing the training scenario in the list will update the screen to show the model architecture and coupling behavior of the selected scenario.  \textbf{Choose the scenario ``NUOPC – Single Model with Driver'' and click Next.}
+
+\parbox{\linewidth}{\centering
+  \includegraphics[width=\textwidth]{figs/cloud_fig2.png}
+}
+
+
+\item \textbf{Choose a name for your project or accept the default name.}  Note that project names must be unique, so you must choose a name that does not already exist in your workspace.  \textbf{Click Next.}
+
+\parbox{\linewidth}{\centering
+  \includegraphics[width=\textwidth]{figs/cloud_fig3.png}
+}
+
+\item Choose a computational environment on which to compile and run the training scenario.  The three options are:
+
+\begin{itemize}
+\item Create a cloud-based computational environment
+\item Use my local machine
+\item Use an existing remote environment \emph{(this option is not always available)}
+\end{itemize}
+
+The first option will create a preconfigured virtual machine instance for you with all dependent software (model source code, Fortran compiler, MPI, NetCDF, ESMF, etc.). This is the recommended option unless you know you have a supported environment already set up locally.  In some cases, a third option will be available to re-use an existing remote environment that is already running. 
+
+\textbf{Choose the first option and leave the number of processes at 1.  Click Finish.}
+
+\parbox{\linewidth}{\centering
+  \includegraphics[width=\textwidth]{figs/cloud_fig4.png}
+}
+
+\item It will take up to several minutes for the new computational environment to start up.  \textbf{During this process you will be asked to accept the host SSH key.  Click Yes.}
+
+\parbox{\linewidth}{\centering
+  \includegraphics[width=\textwidth]{figs/cloud_fig5.png}
+}
+
+You might also be asked if you would like to switch to the Cupid Perspective.  An Eclipse perspective is a particular screen layout customized for specific tasks. The Cupid Perspective hides a number of Eclipse tools and commands that are not required for the training.  \textbf{Click Yes to switch to the Cupid Perspective.}
+
+\parbox{\linewidth}{\centering
+  \includegraphics[width=\textwidth]{figs/cloud_fig6.png}
+}
+
+
+\item You should now see your project in the Project Explorer on the left.  The Cupid Perspective also exposes several other views including a Fortran source code editor, a Make Target view on the right for compiling your code and a Console at the bottom for viewing output from the compiler.
+
+\parbox{\linewidth}{\centering
+  \includegraphics[width=\textwidth]{figs/cloud_fig7.png}
+}
+
+\end{enumerate}
+
+
+
+\section{Compile and Run the NUOPC Single Model with Driver training scenario}
+
+In this section of the tutorial, you will learn how to compile and execute the source code provided in the NUOPC Single Model with Driver training scenario.   An Eclipse Cheat Sheet is available for this task.  (Click Help $\rightarrow$ Cheat Sheets and choose ``Compile and Run a NUOPC Application'' in the Cupid folder.)
+
+\begin{enumerate}
+
+\item Ensure that the Make Target view is showing (see below).  If not, \textbf{choose Window $\rightarrow$ Show View $\rightarrow$ Other... and select ``Make Target''under the Make folder.}  Open the folder in the Make Target view with the same name as the project you created.
+
+\parbox{\linewidth}{\centering
+  \includegraphics{figs/cloudrun_fig1.png}
+}
+
+\item If you used the New Cupid Training Project wizard to set up the training scenario, then the correct make targets have already been set up.  To compile the NUOPC application, double click the ``mainApp'' target.  You should be able to see the compiler output in the Console view at the bottom of the screen.
+
+\parbox{\linewidth}{\centering
+  \includegraphics[width=\textwidth]{figs/cloudrun_fig2.png}
+}
+
+\item To run the compiled code, you must set up a run configuration.  \emph{(Note: This step will be automated in a future release of Cupid.)}  Click the down arrow next to the Run As... button in the toolbar (green circle with a white arrow) and choose Run Configurations… from the popup menu.
+
+\parbox{\linewidth}{\centering
+  \includegraphics{figs/cloudrun_fig3.png}
+}
+
+\item In the Run Configurations dialog, right click on Parallel Application and choose ``New.''  Configure the run configuration as follows:
+
+\begin{itemize}
+\item Resources tab
+	\begin{itemize}
+	\item Target System Configuration: \textbf{Open MPI-Generic-Interactive}
+	\item Connection type: \textbf{Remote}
+	\item Connection: \textbf{Cupid Environment (Amazon EC2  <Project Name>)}
+	\end{itemize}
+\item Application tab
+	\begin{itemize}
+	\item Project: should default to your project name
+	\item Application program: Click Browse and select ``mainApp''.  The final path should be \textbf{/home/sgeadmin/SingleModelProto/mainApp}
+	\end{itemize}
+\item \textbf{Click Apply then Run}
+\end{itemize}
+
+\item Once the Run Configuration has been created, you do not need to set it up again unless you need to change configuration settings.  After running it the first time, the run configuration should be available in the Run Configurations dropdown list on the toolbar.
+
+\parbox{\linewidth}{\centering
+  \includegraphics{figs/cloudrun_fig4.png}
+}
+
+\item Standard output from the run will be shown in the Console view.
+
+\parbox{\linewidth}{\centering
+  \includegraphics[width=\textwidth]{figs/cloudrun_fig5.png}
+}
+
+\end{enumerate}
+
+\chapter{Reverse Engineering and Compliance Verification of NUOPC Applications}
+
+Most climate and weather model codebases are staggeringly large and obtaining an overview of the model, its subcomponents, and their interconnections is a cumbersome, time-consuming task. Often, this can only be accomplished by manually reading through the top-level source files to establish a mental picture of the overall structure of the model and its data flows. 
+
+Instead of viewing a model as an opaque, complex set of source files, Cupid's reverse engineering feature parses a model's source code and produces an abstract representation of the framework concepts that are present in the code. The reverse engineering feature is a kind of \href{http://en.wikipedia.org/wiki/Static_program_analysis}{static analysis} because the source code is analyzed before it is compiled and does not require execution of the model.  This representation is shown to the user alongside the source code in an outline form called the NUOPC tree viewer. This provides an alternative, more abstract perspective for viewing a model's source code. Some of the main concepts provided by NUOPC are Drivers, Models, Mediators, and Connectors. If a codebase contains any of these generic components, the reverse engineering function will automatically find them and present them in outline form. This provides an architectural overview of an entire coupled system without requiring the developer to read through thousands of lines of source code.
+
+NUOPC ensures interoperability of modeling components by specifying a set of technical rules that model implementers should follow.  In addition to presenting a high level view of framework concepts in source code, Cupid's compliance checking feature provides feedback to the user when potential compliance issues are discovered in a reverse engineered model. For example, when developing a NUOPC Model component, certain subroutines must be implemented and registered with the framework. If a required subroutine or its registration is missing, Cupid can identify the problem and annotate the outline view with icons indicating that some required code is missing. Moreover, this feedback is provided immediately to the user during model development thereby reducing the number of runtime failures and improving efficiency of the development process.
+
+
+\section{Acquiring NUOPC Prototype Applications}
+
+In order to explore Cupid's reverse engineering and code generation capabilities, you need to acquire the source code for at least one of the provided NUOPC prototype applications. A description of the available prototype codes is available at \href{https://earthsystemcog.org/projects/nuopc/proto\_codes}{https://earthsystemcog.org/projects/nuopc/proto\_codes}. The prototype source code itself is available in a Subversion repository on Sourceforge:
+
+\begin{quote}
+\texttt{http://sourceforge.net/p/esmfcontrib/svn/HEAD/tree/NUOPC/tags/ESMF\_6\_3\_0r/}
+\end{quote}
+
+Assuming you have already installed Eclipse and the Cupid plugin (see section~\ref{sec:installcupid}), there are several ways to acquire the NUOPC prototype code in your local workspace:
+\begin{enumerate}
+\item Start up a cloud-based training environment as described in section~\ref{sec:cupidwizard}.
+\item Download a snapshot from Sourceforge and import it into a new Eclipse project.
+\item Connect Eclipse to the Sourceforge Subversion repository and check out NUOPC prototype code.
+\end{enumerate}
+
+In this section we will describe how to connect Eclipse to the NUOPC prototype Subversion repository and how to check out one of the prototype applications into a new project in your Eclipse workspace.
+
+\begin{enumerate}
+
+\item Install the Subversion plugin for Eclipse (Subversive)
+
+First, ensure that the Subversive plugin, which provides access to Subversion repositories, is installed on your copy of Eclipse.  To determine if it is already installed go to Window $\rightarrow$ Show View $\rightarrow$ Other... and look for a folder called SVN. If it is there, Subversive is installed and you can skip the rest of this step.
+
+If you need to install Subversive follow these steps:
+\begin{enumerate}
+\item Select Help $\rightarrow$ Install New Software from the Eclipse menu
+\item In the Work With box, choose \texttt{Kepler - http://download.eclipse.org/releases/kepler}
+\item In the list, choose \emph{Subversive SVN Team Provider} under the \emph{Collaboration} group
+\item Click Next a couple times, accept the license agreement, and click Finish.
+\item You will be prompted to restart Eclipse.  Choose Yes.
+\item After Eclipse restarts, choose Window $\rightarrow$ Show View $\rightarrow$ Other..., open the SVN folder and choose SVN Repositories
+\item The first time you select the SVN Repositories view, the \emph{Subversive Connector Discovery} dialog will appear.  Select one of the latest SVN connectors (e.g., SVN Kit 1.8.3) and click Finish.  Click Next a couple times, accept the license agreement, agree to installing unsigned content, click Finish and restart Eclipse.  Subversive is now installed and ready to use.
+\end{enumerate}
+
+\item Add the NUOPC prototype codes repository to Subversive
+\begin{enumerate}
+\item In the menu, select Window $\rightarrow$ Show View $\rightarrow$ Other..., open the SVN folder and choose SVN Repositories.
+\item In the SVN Repositories view, right click and choose New $\rightarrow$ Repository Location...
+\item In the URL field, put the URL of the NUOPC prototype codes Subversion repository: \texttt{http://svn.code.sf.net/p/esmfcontrib/svn/} and click Finish.  The new repository location now appears in the list.
+\item In the new repository location, navigate to NUOPC $\rightarrow$ tags $\rightarrow$ ESMF\_6\_3\_0r.  Each subfolder under that location is a separate NUOPC prototype application. Right click on the folder \emph{SingleModelProto} and click Check Out.
+
+\parbox{\linewidth}{\centering
+  \includegraphics{figs/svn_fig1.png}
+}
+
+\item You should now see a new project in your workspace named SingleModelProto.
+
+\parbox{\linewidth}{\centering
+  \includegraphics{figs/svn_fig2.png}
+}
+
+\end{enumerate}
+\end{enumerate}
+
+\section{Reverse Engineer a NUOPC Prototype Application}
+
+In this section you will learn how apply Cupid's reverse engineering function to the \emph{SingleModelProto} NUOPC application. You should now have a project called SingleModelProto in your Eclipse workspace containing several source files:
+\begin{itemize}
+\item driver.F90
+\item mainApp.F90
+\item Makefile
+\item model.F90
+\item README
+\end{itemize}
+
+\begin{enumerate}
+\item Open the NUOPC tree view
+
+From the Eclipse menu, choose Window $\rightarrow$ Show View $\rightarrow$ Other... and then select \emph{NUOPC View} from the \emph{NUOPC Category} folder.
+
+\parbox{\linewidth}{\centering
+  \includegraphics[height=6cm]{figs/reveng_fig1.png}
+}
+
+\item Open the file \emph{driver.F90} from the SingleModelProto project by double-clicking the file in the Project Explorer.
+
+\item With \emph{driver.F90} open in the editor, click on the reverse engineer icon in the NUOPC tree viewer (circular blue arrow in the top right corner of the view).  
+
+\textit{The reverse engineering function works on one project at a time, not all projects in your workspace. The NUOPC tree viewer determines which project to reverse engineer based on the source file currently selected in the Project Explorer or open in the editor.  Therefore, if you are working with multiple projects, be sure that a file from the project you want to reverse engineer is active in the editor.}
+
+\parbox{\linewidth}{\centering
+  \includegraphics[width=6cm]{figs/reveng_fig2.png}
+}
+
+\item The reverse engineered model outline now appears in the tree viewer.  The elements in the reverse engineered model correspond to parts of the prototype application source code.
+
+\parbox{\linewidth}{\centering
+  \includegraphics[height=7cm]{figs/reveng_fig3.png}
+}
+
+Expand the \emph{NUOPC Driver} element in the NUOPC viewer and find the \emph{Set Services} element. The green circle indicates that this element maps to a Fortran subroutine.  Double-click the \emph{Set Services} element and the corresponding subroutine name will be highlighted in the source code editor.
+
+\parbox{\linewidth}{\centering
+  \includegraphics[width=8cm]{figs/reveng_fig4.png}
+}
+
+Every NUOPC component is required to have a single public entry point called \texttt{SetServices}.  This subroutine is called by a parent component or top-level program to register all of the execution phases and specialization points for the component.
+
+\item In the NUOPC tree view, find the element \emph{Calls generic Set Services} under the \emph{Set Services} element. The yellow arrow icon indicates that the element maps to a subroutine call found during reverse engineering. Double-click the element and the corresponding call will be highlighted in the source code. 
+
+\parbox{\linewidth}{\centering
+  \includegraphics[width=8cm]{figs/reveng_fig5.png}
+}
+
+This call is an up call to the \texttt{SetServices} routine of the generic NUOPC Driver component and it handles registration of the methods common to all NUOPC Drivers. Calling the generic SetServices method is always required when implementing a specialized version of a NUOPC component (e.g., Model, Driver, or Mediator).
+
+\item In the reverse engineered model, find the element \emph{NUOPC Driver} $\rightarrow$ \emph{Initialization} $\rightarrow$ \emph{phase 0}. Note that it does not have an icon because this element does not map to an element in the reverse engineered code. This is because the phase 0 initialization is handled by the generic NUOPC Driver and does not require a separate user-supplied implementation. The behavior of the generic implementation is described in a tooltip popup when the mouse hovers over the phase 0 element. 
+
+\parbox{\linewidth}{\centering
+  \includegraphics[width=8cm]{figs/reveng_fig6.png}
+}
+
+\item Hover over the \emph{phase 1} initialization element in the reverse engineered model to see the documentation about this element.  Again, this phase is provided by the generic NUOPC Driver although there are several ways in which the generic phase 1 behavior can be specialized.  Two of the specializations are required, \emph{Set Model Count} and \emph{Set Model Services}, and two are optional, \emph{Set Model PET List} and \emph{Modify Initialize Phase Map}.  Note that the two required specializations have been provided in the prototype code (indicated by the green subroutine icons) and the two optional specializations are not present (indicated by the grayed out icons).
+
+\parbox{\linewidth}{\centering
+  \includegraphics[width=8cm]{figs/reveng_fig7.png}
+}
+
+\end{enumerate}
+
+\section{NUOPC Compliance Verification}
+
+In this section, we will see how the Cupid reverse engineering tool can show compliance issues by identifying required source code elements that are missing.  The compliance checking capabilities of Cupid are a companion to two other analysis tools, the \emph{NUOPC Compliance Checker} and \emph{Component Explorer}. The key difference lies in the kinds of analyses performed. At present, Cupid is purely a static analysis tool and identifies compliance issues by examining the abstract syntax of NUOPC application source code. The \emph{NUOPC Compliance Checker} and \emph{Component Explorer} support dynamic analysis, outputting compliance information in log form as the NUOPC application executes.  As such these runtime tools can identify a greater number of compliance issues.  
+
+However, because Cupid's reverse engineering works on partially completed code, it is useful for identifying many compliance issues earlier in the development process, before any runs are attempted. The results of the static compliance check are available immediately as the NUOPC application is being developed and, as we will see in the next chapter, Cupid's code generation feature provides some additional assistance to the developer in bringing the code to a compliant state.
+
+More information about the runtime compliance checking tools can be found in section 5 of the \href{http://www.earthsystemmodeling.org/esmf_releases/public/ESMF\_6\_3\_0r/NUOPC_refdoc/node6.html}{NUOPC Reference Manual}.
+
+In the steps that follow, we will create a compliance issue in the \emph{SingleModelProto} application and see the results of the reverse engineered model.
+
+\begin{enumerate}
+
+\item Make sure you have the \emph{SingleModelProto} source code in your Eclipse workspace.
+
+\item Open the file \emph{driver.F90} and find the subroutine \texttt{SetModelCount}.  Select the entire subroutine, right click, and choose Toggle Comment.  This will comment out the entire region of code.
+
+\parbox{\linewidth}{\centering
+  \includegraphics[width=8cm]{figs/verify_fig1.png}
+}
+
+\item Save \emph{driver.F90}.
+
+\item In the NUOPC tree viewer, click the reverse engineering button again to re-run the reverse engineering function on the modified code.  \textit{(Currently, the tool does not automatically sync with updated code---the reverse engineering function must be run manually.)}  
+
+\item Elements in the reverse engineered model are colored red if a compliance issue is found at or below that element.  Drilling down into the outline reveals the missing element: because the \texttt{SetModelCount} subroutine is commented out, one of the required specialization points no longer appears in the code.  Hovering over a red element shows a tooltip popup with a description of the compliance issue.
+
+\parbox{\linewidth}{\centering
+  \includegraphics[width=8cm]{figs/verify_fig3.png}
+}
+
+\end{enumerate}
+
+
+
+\chapter{Generating NUOPC-compliant Code}
+
+Even if a software framework is well designed, writing framework completion code is notoriously difficult, even for seasoned developers. Often, completing a single logical task requires making several code additions at multiple places spread throughout the application source code. If one or more of the required additions are inadvertently left out, the application may not behave as expected.  
+
+In the software engineering research community, many ideas have been proposed for how to help developers write framework-based applications correctly and efficiently. For ESMF and NUOPC, guidance is provided in the form of comprehensive API documentation (\href{http://www.earthsystemmodeling.org/esmf_releases/public/last/ESMF_refdoc/}{ESMF Reference Manual}, \href{https://earthsystemcog.org/projects/nuopc/refmans}{NUOPC Reference Manual}), system tests (included with source distribution), and \href{https://earthsystemcog.org/projects/nuopc/proto_codes}{small prototype codebases} that show how to structure NUOPC applications based on the components in the modeled system (e.g., standalone atmosphere, coupled atmosphere-ocean, three-component system, etc.). 
+
+Cupid's code generation feature complements these static resources by generating on-the-fly NUOPC-compliant source code fragments directly in existing source files. The user initiates a code fragment generation by adding elements to a reverse engineered model in the NUOPC tree viewer. The source code is then synchronized with the tree viewer, generating the required code fragments. The generated code fragments can then be customized by the developer for their particular case. The following use case illustrates use of forward engineering feature:
+
+\begin{quote}
+A developer has finished writing the initialization phases for a NUOPC Model component called ATM and now needs to add the capability to advance the model one time step. The developer right clicks on the ATM element in the NUOPC tree viewer and selects ``Add Model Advance.''  Two things happen immediately: the tree viewer is updated with a new sub-element underneath ATM called ``Model Advance'' which in turn contains sub-elements ``Registered in Set Services'' and ``Implementation.'' Then, source code fragments are generated inside the Fortran file for ATM including a call inside the ATM SetServices to register the Model Advance subroutine and a stub for the new Model Advance subroutine.
+\end{quote}
+
+The use case shows some advantages of this approach compared to an approach in which code is copied-and-pasted from prototypical example code. First, the new Model Advance element added to the tree viewer included multiple sub-elements indicating that source code changes are required in at least two places: a new subroutine and a call to register this subroutine with the framework.  This provides guidance to the developer to ensure that all framework requirements are met. The approach, therefore, is less error-prone than brute force copy and paste as some required code may inadvertently be left off. Also, the generated code fragments are customized based on the state of the existing source code. For example, the developer may be using specialized variable names. Since these variables have already been discovered during the reverse engineering phase, the generated code can reference these variables instead of requiring the developer to modify variables in copy-pasted code.
+
+\section {Generate a NUOPC Model Finalize method}
+
+In this section we will demonstrate the code generation capabilities of Cupid by generating a subroutine stub for an optional specialization point and registering the subroutine in the \texttt{SetServices} method of the model.
+
+\begin{enumerate}
+
+\item Be sure you have the \emph{SingleModelProto} project in your Eclipse workspace.
+
+\item Open the file \emph{model.F90}.
+
+\item In the NUOPC view, click the reverse engineer button.  The view should populate with the reverse engineered model.
+
+\item Expand the \emph{NUOPC Model} element and notice that the last child element, \emph{Finalize}, has a grayed out icon.  This indicates that there is no \texttt{Finalize} subroutine defined in \emph{model.F90} (the subroutine is optional).
+
+\parbox{\linewidth}{\centering
+  \includegraphics[width=8cm]{figs/gen_fig1.png}
+}
+
+\item Right click on the \emph{NUOPC Model} element in the outline and select \emph{Add Finalize (basic)}. Both the NUOPC view and code editor will be updated.  
+
+In the editor showing \emph{model.F90}, two blocks of code are generated.  The yellow blocks on the small vertical bar directly to the right of editor indicate which blocks of code were generated by Cupid.  Clicking on a yellow block highlights the generated code, which has been inserted into the existing source file.  The generated fragments of code are shown in listings~\ref{lst:simple1} and \ref{lst:simple2}
+
+\parbox{\linewidth}{\centering
+  \includegraphics[width=12cm]{figs/gen_fig2.png}
+}
+
+
+\begin{lstlisting}[label={lst:simple1}, caption=A call to register the generated subroutine as an ESMF Finalize method. This call is inserted at the end of the Model's \texttt{SetServices} method.]
+call ESMF_GridCompSetEntryPoint(gcomp, ESMF_METHOD_FINALIZE, & 
+		userRoutine = Finalize, phase = 1, rc = rc)
+\end{lstlisting}
+
+\begin{lstlisting}[label={lst:simple2}, caption=A Finalize subroutine stub to be customized. The subroutine is inserted at the end of the module.]
+! <b>NUOPC provided.</b>  Optionally overwrite the provided NOOP with model 
+! finalization code.
+subroutine Finalize(gcomp, importState, exportState, clock, rc)
+		type(ESMF_GridComp), intent(inout) :: gcomp
+		type(ESMF_State), intent(inout) :: importState
+		type(ESMF_State), intent(inout) :: exportState
+		type(ESMF_Clock), intent(inout) :: clock
+		integer, intent(out) :: rc
+end subroutine
+\end{lstlisting}
+
+
+\end{enumerate}
+
+
+\chapter{The Behind-the-Scenes Meta-tool}
+%In general, a software framework provides a set of abstractions, \emph{framework-provided concepts}, which the developer is required to instantiate and configure in code. Creating a framework-based application is called \emph{framework completion} because the developer is filling in application behaviors not provided by the framework, or specializing existing behaviors. 
+
+This section describes theoretical and implementation aspects of the meta-tool used to define the mappings from framework-provided concepts to source code. This chapter may be of interest to software engineering researchers or those interested in using Cupid for defining their own framework-specific development tools. Reading this chapter is optional for users who wish to use the tool to develop NUOPC-based applications.
+
+To support model developers in writing NUOPC-complaint code, the Cupid tool leverages existing work aimed at facilitating development of framework-based applications called Framework-Specific Modeling Languages (FSMLs). A FSML is a domain-specific language designed for a specific framework \cite{antkiewicz06}. FSMLs are aimed at addressing some of the challenges involved in developing framework-based applications, especially knowing how to complete a framework correctly and how to ensure respect of its rules of engagement\cite{antkiewicz06}. The language elements in the FSML's abstract syntax represent framework-provided concepts that the developer instantiates in code. FSMLs can be represented as a \emph{feature model}~\cite{czarnecki}, where features correspond to framework-provided concepts and each feature model configuration represents a valid framework completion.
+
+Bidirectional mappings from framework-provided concepts to application source code are used to support forward and reverse engineering functions. In the forward direction, framework completion code is generated from an FSML instance---i.e., a Framework-Specific Model (FSM). In the reverse direction, an existing codebase is analyzed in order to recognize code patterns that correspond to framework concepts, producing a FSM. Taken together, the forward and reverse mappings enable round-trip engineering: the developer can seamlessly move between two perspectives, a zoomed in code-level perspective for customizing source code, and a higher level perspective showing the framework concepts present in the application and their inter-relationships. 
+
+
+%\begin{lstlisting}[label=NUOPCCode, caption=A typical SetServices subroutine for a specialized \texttt{NUOPC\_Model}]
+%subroutine SetServices(gcomp, rc)
+    %type(ESMF_GridComp)  :: gcomp
+    %integer, intent(out) :: rc
+    %
+    %rc = ESMF_SUCCESS
+    %
+    %! the NUOPC model component will register the generic methods
+    %call model_routine_SS(gcomp, rc=rc)
+    %if (ESMF_LogFoundError(rcToCheck=rc, msg=ESMF_LOGERR_PASSTHRU, &
+      %line=__LINE__, &
+      %file=__FILE__)) &
+      %return  ! bail out
+%
+    %! set entry point for methods that require specific implementation
+    %call ESMF_GridCompSetEntryPoint(gcomp, ESMF_METHOD_INITIALIZE, &
+      %userRoutine=InitializeP1, phase=1, rc=rc)
+    %if (ESMF_LogFoundError(rcToCheck=rc, msg=ESMF_LOGERR_PASSTHRU, &
+      %line=__LINE__, &
+      %file=__FILE__)) &
+      %return  ! bail out
+    %call ESMF_GridCompSetEntryPoint(gcomp, ESMF_METHOD_INITIALIZE, &
+     %userRoutine=InitializeP2, phase=2, rc=rc)
+    %if (ESMF_LogFoundError(rcToCheck=rc, msg=ESMF_LOGERR_PASSTHRU, &
+      %line=__LINE__, &
+      %file=__FILE__)) &
+      %return  ! bail out
+    %
+    %! attach specializing method(s)
+    %call ESMF_MethodAdd(gcomp, label=model_label_Advance, &
+      %userRoutine=ModelAdvance, rc=rc)
+    %if (ESMF_LogFoundError(rcToCheck=rc, msg=ESMF_LOGERR_PASSTHRU, &
+      %line=__LINE__, &
+      %file=__FILE__)) &
+      %return  ! bail out
+    %
+  %end subroutine
+%\end{lstlisting}
+
+
+%traditionally based on object-oriented language features to provide mechanisms for specialization and refinement - however these specialization mechansisms can be approximated in a procedural language
+
+
+
+\section{The NUOPC Framework-Specific Modeling Language}
+
+%Cupid is a meta-tool  for creating FSMLs and accompanying development tools for Eclipse. Some steps have been taken to ensure that the meta-tool is not tied to any specific FSML. That being said, so far NUOPC is the only FSML created, so there will inevitably be issues that crop up when creating a FSML for another framework. However, the representation used for FSMLs and the algorithms for forward and reverse engineering are generic, allowing for the creation of other FSMLs in the future.
+
+%A FSML are often represented as a feature model \cite{antkiewicz06}, tree-based data structure in which nodes represent framework concepts. The abstract syntax of Cupid FSMLs is class-based instead of feature-based, but it retains the hierarchical structure of feature models. Currently, only an abstract syntax has been defined. A concrete syntax could be introduced later to make language definition more concise. Similarly, reuse and abstraction mechanisms could also be introduced to facilitate FSML definition.
+
+\begin{figure}
+	\centering
+	 \includegraphics[width=\textwidth]{figs/nuopcfm.png}
+	\caption{A partial feature model representation of the NUOPC FSML}
+	\label{fig:nuopcfm}
+\end{figure}
+
+%\begin{figure}
+	%\centering
+	 %\includegraphics[width=.7\textwidth]{figs/nuopcapp.png}
+	%\caption{Top-level classes in the NUOPC Framework Specific Modeling Language (FSML). \texttt{NUOPCApplication} is the top-level class with three containment references: \texttt{NUOPCModel}, \texttt{NUOPCDriver}, and \texttt{NUOPCMediator}. (Some references are not shown.) Mappings from framework-provided concepts to code artifacts are shown in \mapping{italics}.}
+	%\label{fig:nuopcapp}
+%\end{figure}
+
+This section describes a subset of the abstract syntax of the NUOPC FSML. Figure~\ref{fig:nuopcfm} shows some of the framework-provided concepts in the NUOPC FSML represented as features in a feature model. The top-level concept node is \texttt{NUOPCApplication}. Its child features, \texttt{NUOPCModel}, \texttt{NUOPCDriver}, and \texttt{NUOPCMediator}, are the primary architectural components defined by NUOPC that require specialization by the developer. Subfeatures of \texttt{NUOPCModel} include \texttt{genericImports}, a container feature for required and optional module imports, \texttt{implementsSetServices}, which represents a framework-called subroutine that the developer implements, \texttt{initialization}, whose (elided) subfeatures represent the initialization subroutines that the developer implements, and \texttt{implementsModelAdvance}, which represents the developer-provided subroutine that advances the model forward in time.
+
+\emph{Mapping definitions} define the correspondence between features in the FSML and structural and behavioral code patterns. Cupid defines	 a set of mapping types for Fortran 90, the primary language binding supported by ESMF and NUOPC. Currently, only structural mappings types are supported, and they have been defined on an as-needed basis. Mappings are indicated in the figure next to each feature. \texttt{NUOPCModel}, \texttt{NUOPCDriver}, and \texttt{NUOPCMediator} each have a mapping definition of \texttt{module}. The top-level concept, \texttt{NUOPCApplication}, does not indicate a mapping. It will be implicitly mapped to an entire codebase. (Think of this as the root directory of a source tree.) Table~\ref{tab:mappings} lists the current set of supported mapping types.
+
+The mapping definition for the feature \texttt{implementsSetServices} is \texttt{subroutine: "\#name(inout type(ESMF\_GridComp) \#gcomp, out integer \#rc)"}. A subroutine signature includes the subroutine name, and optionally the intents (in/out/inout), types, and names of its formal parameters. Only subroutines with a matching name and matching argument intents and types are matched. In general, mapping definitions may include meta-variables that refer to features. The subroutine signature above contains three meta-variables, \texttt{\#name}, \texttt{\#gcomp}, and \texttt{\#rc}. The \texttt{\#name} meta-variable implicitly maps the subfeature \texttt{name} to the name of the mapped subroutine.
+
+%When the mapping is executed in the reverse engineering direction, the attributes \texttt{name}, \texttt{gcomp}, and \texttt{rc} are populated by the mapped subroutine name, its first formal parameter name, and its second formal parameter name, respectively.
+
+In the figure, some features are marked with a \texttt{!} indicating that they are \emph{essential} features. A feature is only instantiated if all of its essential child features can be successfully mapped. For example, in Figure~\ref{fig:nuopcfm}, the features \texttt{importsGenericSS} and \texttt{callsGenericSetServices} are essential. If their mappings fail, then the higher-level feature \texttt{NUOPCModel} will not be be instantiated.
+
+{
+\footnotesize
+\begin{table}
+\caption{Mappings types for Fortran 90}
+\label{tab:mappings}
+\begin{center}
+    \begin{tabular}{| l | p{8cm} |}
+		\hline
+    \textbf{Structural Pattern Expression} & \textbf{Structural Elements Matched} \\ \hline
+		\texttt{module} & matches a Fortran module \\ \hline
+		\texttt{m moduleName} & matches the name of module \texttt{m} \\ \hline
+		\texttt{m usesModule: mn} & matches use statements in module \texttt{m} with imported module name \texttt{mn} \\ \hline
+		\texttt{u usesEntity: en} & matches import of entity named \texttt{en} within use statement \texttt{u} \\ \hline
+		\texttt{m uses: mn entity: en} & matches use statements in module \texttt{m} with imported module name \texttt{mn} and imported entity name \texttt{en} \\ \hline
+		\texttt{m subroutine} & matches subroutines defined within module \texttt{m} \\ \hline
+		\texttt{m subroutine: ss} & matches subroutines defined within module \texttt{m} with signature \texttt{ss} \\ \hline
+		\texttt{s subroutineName} & matches the name of subroutine \texttt{s} \\ \hline
+		\texttt{s formalParam: i} & matches the \texttt{i}th formal parameter of subroutine \texttt{s} \\ \hline
+		\texttt{s call} & matches calls with the implementation of subroutine \texttt{s} \\ \hline
+		\texttt{s call: cs} & matches calls with the implementation of subroutine \texttt{s} with call signature \texttt{cs}\\ \hline
+		\texttt{c argByIndex: i} & matches the \texttt{i}th actual parameter of call \texttt{c} \\ \hline
+		\texttt{c argByKeyword: k} & matches the actual parameter with keyword \texttt{k} of call \texttt{c} \\ \hline
+    \end{tabular}
+\end{center}
+\end{table}
+}
+
+
+\section{FSML Implementation}
+
+In Cupid, a FSML is implemented as an Ecore model to take advantage of the Eclipse Modeling Framework (EMF) suite of tools. Ecore is an object-oriented meta-model and it includes a graphical Eclipse-based editor for creating class models and generating Java code. While classes represent framework-provided concepts, annotations on classes and their properties are used to specify mapping definitions. Figure~\ref{fig:nuopcmodel} shows a UML class diagram for part of the NUOPC FSML rooted at the feature \texttt{NUOPCModel}. Features are represented as classes or attributes and subfeatures are represented as containment references. Figure~\ref{fig:setservices_mappings} shows an instantiation of classes (a FSM) and mappings to source code.
+
+\begin{figure}
+	\centering
+	 \makebox[\textwidth][c]{\includegraphics[width=1.1\textwidth]{figs/nuopcmodel.png}}
+	 \caption{Partial NUOPC FSML class diagram rooted at \texttt{NUOPCModel}.}
+	\label{fig:nuopcmodel}
+\end{figure}
+
+\begin{figure}
+	\centering
+	 \includegraphics[width=1.1\textwidth]{figs/setservices_mappings.png}
+	\caption{The object diagram on the left shows an instantiation of part of the NUOPC FSML corresponding to a \texttt{Model SetServices} subroutine. The dashed lines show mappings from FSM objects to source code.}
+	\label{fig:setservices_mappings}
+\end{figure}
+
+
+
+
+
+
+\bibliographystyle{plain}
+\bibliography{bib}
+
+\end{document}

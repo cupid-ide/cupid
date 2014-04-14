@@ -1,26 +1,5 @@
 <root>
 
-	<!-- 
-	final String[][] buttonData = new String[][] {
-			
-			{"NUOPC - Coupled Atmosphere-Ocean with Driver", 
-				"images/relationship_simple.png",
-				"images/coupling_explicit.png",
-				"Atmosphere and Ocean Models exchange data through generic Connectors.",
-				"Simple explicit coupling requires that Atmosphere and Ocean fields are exchanged in both directions at the beginning of each coupling interval.",
-				"AtmOcnProto",
-				null},
-			{"NUOPC - Coupled Atmosphere-Ocean with Mediator and Driver", 
-				"images/relationship_simpleMediator.png",
-				"images/coupling_simpleMediator.png",
-				"Atmosphere and Ocean Models couple through a Mediator component.",
-				"Connector components transfer Atmosphere and Ocean fields to the Mediator at the beginning of each coupling interval. The Mediator processes this input and Connectors transfer the Mediator output back to the model components. The model components then integrate forward for one coupling interval before the same process is repeated.",
-				"AtmOcnMedProto",
-				null},
-			
-	};
-	 -->
-
 	<scenario id="NUOPCSingleModelWithDriver">
 		<shortdesc>NUOPC - Single Model with Driver</shortdesc>
 		<architecture>
@@ -34,6 +13,51 @@
 		<templatedir>SingleModelProto</templatedir>
 		<make>
 			<target name="mainApp">mainApp</target>
+			<target name="clean">clean</target>
+			<target name="dust">dust</target>
+		</make>
+		<compenv provider="ec2">
+			<amiid>ami-413f0128</amiid>
+		</compenv>
+	</scenario>
+	
+	
+	
+	<scenario id="NUOPCCoupledAtmOcn">
+		<shortdesc>NUOPC - Coupled Atmosphere-Ocean with Driver</shortdesc>
+		<architecture>
+			<image>images/relationship_atmocn.png</image>
+			<desc>Atmosphere and Ocean Models exchange data through generic Connectors.</desc>
+		</architecture>
+		<coupling>
+			<image>images/coupling_atmocn.png</image>
+			<desc>Simple explicit coupling requires that Atmosphere and Ocean fields are exchanged in both directions at the beginning of each coupling interval.</desc>
+		</coupling>
+		<templatedir>AtmOcnProto</templatedir>
+		<make>
+			<target name="esmApp">esmApp</target>
+			<target name="clean">clean</target>
+			<target name="dust">dust</target>
+		</make>
+		<compenv provider="ec2">
+			<amiid>ami-413f0128</amiid>
+		</compenv>
+	</scenario>
+	
+			
+	<scenario id="NUOPCCoupledAtmOcnMed">
+		<shortdesc>NUOPC - Coupled Atmosphere-Ocean with Mediator and Driver</shortdesc>
+		<architecture>
+			<image>images/relationship_atmocnmed.png</image>
+			<desc>Atmosphere and Ocean Models couple through a Mediator component.</desc>
+		</architecture>
+		<coupling>
+			<image>images/coupling_atmocnmed.png</image>
+			<desc>Connector components transfer Atmosphere and Ocean fields to the Mediator at the beginning of each coupling interval. The Mediator processes this input and Connectors transfer the Mediator output back to the model components. The model components then integrate forward for one coupling interval before the same process is repeated.</desc>
+		</coupling>
+		<templatedir>AtmOcnMedProto</templatedir>
+		<make>
+			<target name="esmApp">esmApp</target>
 			<target name="clean">clean</target>
 			<target name="dust">dust</target>
 		</make>
