@@ -1,5 +1,6 @@
 language NUOPC 'http://www.earthsystemcurator.org/nuopcgen' {
 
+
 	top concept NUOPCApplication 
 	{	
 		@label = "NUOPC Application"
@@ -37,7 +38,7 @@ language NUOPC 'http://www.earthsystemcurator.org/nuopcgen' {
 			--attrib importsLabelSetModelServices <usesEntity(label_SetModelServices)>
 		}
 				
-		implementsSetServices! <subroutine(*(inout type(ESMF_GridComp) #p_gcomp, out integer #p_rc) )> 
+		implementsSetServices! <subroutine(*(type(ESMF_GridComp) #p_gcomp, out integer #p_rc) )> 
 		{
 			@label = "Set Services"
 			attrib n_SetServices <subroutineName> {@name @default="SetServices"}
@@ -86,10 +87,14 @@ language NUOPC 'http://www.earthsystemcurator.org/nuopcgen' {
 						<li>Implement the initialize sequence for the child components, compatible with up to IPD version 02, as documented in section 2.4.1.</li>
 						</ul>"
 				
-				specSetModelCount <subroutine(#userRoutine(inout type(ESMF_GridComp) #p_gcomp, out integer #p_rc) )> 
+				specSetModelCount <subroutine(#userRoutine(type(ESMF_GridComp) #p_gcomp, out integer #p_rc) )> 
 				{
 					@label = "Set Model Count (required)"
-					@doc = "Required specialization to set the number of Model+Mediator components, modelCount, in the internal state."
+					@doc = "Required specialization to set the number of Model + Mediator components, modelCount, in the internal state.
+							User code should acquire the internal state by calling<br/>
+							<code>ESMF_UserCompGetInternalState</code> and set the model count using:<br/>
+							<code>is%wrap%modelCount = X</code><br/>
+							where X is the number of Model + Mediator child components."
 										
 					attrib userRoutine {@name @default="SetModelCount"}
 					attrib p_gcomp {@default="gcomp"}
@@ -98,7 +103,27 @@ language NUOPC 'http://www.earthsystemcurator.org/nuopcgen' {
 					--imports label
 					attrib importsLabel! <#^genericImports usesEntity(label_SetModelCount)> {
 						@default = "driver_label_SetModelCount"
-					}		
+					}	
+					
+					attrib importsTypeIS <#^genericImports usesEntity(type_InternalState)> {
+						@default = "driver_type_IS"
+					}
+					
+					attrib importsLabelIS <#^genericImports usesEntity(label_InternalState)> {
+						@default = "driver_label_IS"
+					}
+									
+					internalStateDeclaration <declaration(type(#^importsTypeIS))> {
+						@label = "Internal state"
+						attrib internalStateName <declaredEntity> {
+							@name 
+							@label="name" 
+							@default="is"
+						}
+					}
+										
+					--call ESMF_UserCompGetInternalState(gcomp, driver_label_IS, is, rc)
+					getInternalState <call(ESMF_UserCompGetInternalState(#^p_gcomp, #^importsLabelIS, #^internalStateDeclaration/internalStateName, #^p_rc))>
 					
 					--method registration
 					registered! <#^implementsSetServices 
@@ -110,7 +135,7 @@ language NUOPC 'http://www.earthsystemcurator.org/nuopcgen' {
 					}
 				}
 				
-				specSetModelPetList? <subroutine(#userRoutine(inout type(ESMF_GridComp) #p_gcomp, out integer #p_rc) )> 
+				specSetModelPetList? <subroutine(#userRoutine(type(ESMF_GridComp) #p_gcomp, out integer #p_rc) )> 
 				{
 					@label = "Set Model PET List (optional)"
 					@doc = "Optional specialization to provide Model, Mediator, and Connector petList members in the internal state."
@@ -120,8 +145,8 @@ language NUOPC 'http://www.earthsystemcurator.org/nuopcgen' {
 					attrib p_rc	{@default="rc"}	
 					
 					--imports label
-					attrib importsLabel! <#^genericImports usesEntity(label_SetModelPetList)> {
-						@default = "driver_label_SetModelPetList"
+					attrib importsLabel! <#^genericImports usesEntity(label_SetModelPetLists)> {
+						@default = "driver_label_SetModelPetLists"
 					}		
 					
 					--method registration
@@ -135,7 +160,7 @@ language NUOPC 'http://www.earthsystemcurator.org/nuopcgen' {
 					}
 				}
 				
-				specSetModelServices <subroutine(#userRoutine(inout type(ESMF_GridComp) #p_gcomp, out integer #p_rc) )> 
+				specSetModelServices <subroutine(#userRoutine(type(ESMF_GridComp) #p_gcomp, out integer #p_rc) )> 
 				{
 					@label = "Set Model Services (required)"
 					@doc = "Required specialization to set component services."
@@ -160,7 +185,7 @@ language NUOPC 'http://www.earthsystemcurator.org/nuopcgen' {
 					}
 				}
 				
-				specModifyInitializePhaseMap? <subroutine(#userRoutine(inout type(ESMF_GridComp) #p_gcomp, out integer #p_rc) )> 
+				specModifyInitializePhaseMap? <subroutine(#userRoutine(type(ESMF_GridComp) #p_gcomp, out integer #p_rc) )> 
 				{
 					@label = "Modify Initialize Phase Map (optional)"
 					@doc = "Optional specialization to analyze and modify components' InitializePhaseMap Attribute before the Driver uses it."
@@ -221,7 +246,7 @@ language NUOPC 'http://www.earthsystemcurator.org/nuopcgen' {
 					 <li>Deallocate the internal state.</li>
 					</ul>"
 				
-				specFinalize? <subroutine(#userRoutine(inout type(ESMF_GridComp) #p_gcomp, out integer #p_rc) )> 
+				specFinalize? <subroutine(#userRoutine(type(ESMF_GridComp) #p_gcomp, out integer #p_rc) )> 
 				{
 					@label = "Finalize (optional)"
 					@doc = "Optional specialization to finalize driver."
@@ -358,6 +383,9 @@ language NUOPC 'http://www.earthsystemcurator.org/nuopcgen' {
 			@default = "NUOPCModel"
 		}
 		
+		standardESMFImport <usesModule(ESMF)> {@label = "ESMF Import"}
+		standardNUOPCImport <usesModule(NUOPC)> {@label = "NUOPC Import"}
+		
 		genericImports! <usesModule(NUOPC_Model)>
 		{
 			@label = "Generic Imports"
@@ -367,7 +395,7 @@ language NUOPC 'http://www.earthsystemcurator.org/nuopcgen' {
 			
 		}
 		
-		implementsSetServices! <subroutine(*(inout type(ESMF_GridComp) #p_gcomp, out integer #p_rc) )> 
+		implementsSetServices! <subroutine(*(type(ESMF_GridComp) #p_gcomp, out integer #p_rc) )> 
 		{
 			@label = "Set Services"
 			attrib n_SetServices <subroutineName> {@name @default="SetServices"}
@@ -390,10 +418,10 @@ language NUOPC 'http://www.earthsystemcurator.org/nuopcgen' {
 			}
 			
 			initP1 <subroutine(#n_initP1(
-										inout type(ESMF_GridComp) #p_gcomp, 
-										inout type(ESMF_State) #p_import, 
-										inout type(ESMF_State) #p_export, 
-										inout type(ESMF_Clock) #p_clock, 
+										type(ESMF_GridComp) #p_gcomp, 
+										type(ESMF_State) #p_import, 
+										type(ESMF_State) #p_export, 
+										type(ESMF_Clock) #p_clock, 
 										out integer #p_rc))>
 			{
 				@label = "phase 1"
@@ -406,7 +434,7 @@ language NUOPC 'http://www.earthsystemcurator.org/nuopcgen' {
 				attrib p_clock {@default="clock"}
 				attrib p_rc {@default="rc"}
 	
-				advertisesImportField* <call(NUOPC_StateAdvertiseField(#^p_import, StandardName=#importStandardName, #^p_rc))> 
+				advertisesImportField* <call(NUOPC_StateAdvertiseField(#^p_import, StandardName=#importStandardName, rc?=#^p_rc))> 
 				{
 					@label = "Advertises import field"
 					attrib importStandardName {
@@ -416,7 +444,7 @@ language NUOPC 'http://www.earthsystemcurator.org/nuopcgen' {
 				}
 				
 				
-				advertisesExportField* <call(NUOPC_StateAdvertiseField(#^p_export, StandardName=#exportStandardName, #^p_rc))> 
+				advertisesExportField* <call(NUOPC_StateAdvertiseField(#^p_export, StandardName=#exportStandardName, rc?=#^p_rc))> 
 				{
 					@label = "Advertises export field"
 					attrib exportStandardName {
@@ -437,10 +465,10 @@ language NUOPC 'http://www.earthsystemcurator.org/nuopcgen' {
 		
 			
 			initP2 <subroutine(#n_initP2(
-						inout type(ESMF_GridComp) #p_gcomp, 
-						inout type(ESMF_State) #p_import, 
-						inout type(ESMF_State) #p_export, 
-						inout type(ESMF_Clock) #p_clock, 
+						type(ESMF_GridComp) #p_gcomp, 
+						type(ESMF_State) #p_import, 
+						type(ESMF_State) #p_export, 
+						type(ESMF_Clock) #p_clock, 
 						out integer #p_rc))>
 			{
 				@label = "phase 2"
@@ -566,7 +594,7 @@ language NUOPC 'http://www.earthsystemcurator.org/nuopcgen' {
 				@label = "phase 3"
 				@doc = "Provided by NUOPC. If not set, internal clock is set to copy of incoming clock. Check compatibility, ensuring all advertised import Fields are connected."
 			
-				specSetClock? <subroutine(*(inout type(ESMF_GridComp) #p_gcomp, out integer #p_rc) )> 
+				specSetClock? <subroutine(*(type(ESMF_GridComp) #p_gcomp, out integer #p_rc) )> 
 				{
 					@label = "Set Clock (optional)"
 					@doc = "Optional specialization to set the Model's internal clock and/or alarms."
@@ -672,7 +700,7 @@ language NUOPC 'http://www.earthsystemcurator.org/nuopcgen' {
 					}	
 	
 					
-					modelAdvancePhase+ <subroutine(#userRoutine(inout type(ESMF_GridComp) #p_gcomp, out integer #p_rc))> 
+					modelAdvancePhase+ <subroutine(#userRoutine(type(ESMF_GridComp) #p_gcomp, out integer #p_rc))> 
 					{	
 						@label = "Model Advance Phase"
 						@doc = "A single model advance phase"
@@ -683,7 +711,7 @@ language NUOPC 'http://www.earthsystemcurator.org/nuopcgen' {
 						attrib phase?
 										
 						modelAdvanceRegistered! <#^implementsSetServices 
-							call(ESMF_MethodAdd(*, 
+							call(ESMF_MethodAdd(#^implementsSetServices/p_gcomp, 
 												index?=#^phase, 
 												label=#^importsLabelModelAdvance, 
 												userRoutine=#^userRoutine, 
@@ -698,10 +726,10 @@ language NUOPC 'http://www.earthsystemcurator.org/nuopcgen' {
 		}
 				
 		finalize? <subroutine(#n_finalize(
-						inout type(ESMF_GridComp) #p_gcomp, 
-						inout type(ESMF_State) #p_import, 
-						inout type(ESMF_State) #p_export, 
-						inout type(ESMF_Clock) #p_clock, 
+						type(ESMF_GridComp) #p_gcomp, 
+						type(ESMF_State) #p_import, 
+						type(ESMF_State) #p_export, 
+						type(ESMF_Clock) #p_clock, 
 						out integer #p_rc))>
 		{
 			@label = "Finalize"

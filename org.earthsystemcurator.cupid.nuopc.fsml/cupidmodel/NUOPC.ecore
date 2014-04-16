@@ -111,7 +111,7 @@
       eSuperTypes="#//MappedElement">
     <eAnnotations source="http://www.earthsystemcog.org/projects/nuopc">
       <details key="label" value="Set Model Count (required)"/>
-      <details key="doc" value="Required specialization to set the number of Model+Mediator components, modelCount, in the internal state."/>
+      <details key="doc" value="Required specialization to set the number of Model + Mediator components, modelCount, in the internal state.&#xD;&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;User code should acquire the internal state by calling&lt;br/>&#xD;&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;&lt;code>ESMF_UserCompGetInternalState&lt;/code> and set the model count using:&lt;br/>&#xD;&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;&lt;code>is%wrap%modelCount = X&lt;/code>&lt;br/>&#xD;&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;where X is the number of Model + Mediator child components."/>
     </eAnnotations>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="userRoutine" lowerBound="1"
         eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
@@ -120,10 +120,30 @@
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="p_rc" lowerBound="1" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="importsLabel" lowerBound="1"
         eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="importsTypeIS" lowerBound="1"
+        eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="importsLabelIS" lowerBound="1"
+        eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="internalStateDeclaration"
+        lowerBound="1" eType="#//NUOPCDriver__Initialize__InitP1__SpecSetModelCount__InternalStateDeclaration"
+        containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="getInternalState" lowerBound="1"
+        eType="#//NUOPCDriver__Initialize__InitP1__SpecSetModelCount__GetInternalState"
+        containment="true"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="registered" lowerBound="1"
         eType="#//NUOPCDriver__Initialize__InitP1__SpecSetModelCount__Registered"
         containment="true"/>
   </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="NUOPCDriver__Initialize__InitP1__SpecSetModelCount__InternalStateDeclaration"
+      eSuperTypes="#//MappedElement">
+    <eAnnotations source="http://www.earthsystemcog.org/projects/nuopc">
+      <details key="label" value="Internal state"/>
+    </eAnnotations>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="internalStateName" lowerBound="1"
+        eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="NUOPCDriver__Initialize__InitP1__SpecSetModelCount__GetInternalState"
+      eSuperTypes="#//MappedElement"/>
   <eClassifiers xsi:type="ecore:EClass" name="NUOPCDriver__Initialize__InitP1__SpecSetModelCount__Registered"
       eSuperTypes="#//MappedElement">
     <eAnnotations source="http://www.earthsystemcog.org/projects/nuopc">
@@ -256,6 +276,10 @@
     </eAnnotations>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="modelName" lowerBound="1"
         eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="standardESMFImport" lowerBound="1"
+        eType="#//NUOPCModel__StandardESMFImport" containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="standardNUOPCImport" lowerBound="1"
+        eType="#//NUOPCModel__StandardNUOPCImport" containment="true"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="genericImports" lowerBound="1"
         eType="#//NUOPCModel__GenericImports" containment="true"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="implementsSetServices"
@@ -266,6 +290,16 @@
         containment="true"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="finalize" eType="#//NUOPCModel__Finalize"
         containment="true"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="NUOPCModel__StandardESMFImport" eSuperTypes="#//MappedElement">
+    <eAnnotations source="http://www.earthsystemcog.org/projects/nuopc">
+      <details key="label" value="ESMF Import"/>
+    </eAnnotations>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="NUOPCModel__StandardNUOPCImport" eSuperTypes="#//MappedElement">
+    <eAnnotations source="http://www.earthsystemcog.org/projects/nuopc">
+      <details key="label" value="NUOPC Import"/>
+    </eAnnotations>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="NUOPCModel__GenericImports" eSuperTypes="#//MappedElement">
     <eAnnotations source="http://www.earthsystemcog.org/projects/nuopc">

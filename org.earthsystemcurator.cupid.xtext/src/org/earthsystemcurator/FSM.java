@@ -256,7 +256,7 @@ public class FSM<RootType extends EObject> {
 				if (soaChild.isAttrib()) {
 					forwardAddAttribute(newElem, soaChild);				
 				}
-				else if (addAll || isRequired(soaChild)){
+				else if (isRequired(soaChild) || (addAll && !soaChild.isMustBeNull()) ) {
 					forwardAdd(newElem, soaChild, recursive, addAll);		
 				}
 			}

@@ -15,12 +15,16 @@ import org.eclipse.cdt.core.model.ITranslationUnit;
 import org.eclipse.core.commands.AbstractHandler;
 import org.eclipse.core.commands.ExecutionEvent;
 import org.eclipse.core.commands.ExecutionException;
+import org.eclipse.core.internal.resources.ResourceException;
 import org.eclipse.core.resources.IMarker;
 import org.eclipse.core.resources.IProject;
 import org.eclipse.core.resources.IResource;
 import org.eclipse.core.runtime.CoreException;
+import org.eclipse.core.runtime.IStatus;
+import org.eclipse.core.runtime.Status;
 import org.eclipse.emf.common.util.Diagnostic;
 import org.eclipse.emf.common.util.URI;
+import org.eclipse.emf.common.util.WrappedException;
 import org.eclipse.emf.ecore.EAttribute;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EPackage;
@@ -77,7 +81,14 @@ public class ReverseHandler extends AbstractHandler {
 		
 		
 		ResourceSet rs = new ResourceSetImpl();
-		Resource langResource = rs.getResource(langURI, true);
+		Resource langResource = null;
+		try {
+			langResource = rs.getResource(langURI, true);
+		}
+		catch (WrappedException we) {
+			CupidActivator.log(Status.ERROR, "Cupid language definition file not found: " + langURI, we);
+			throw new RuntimeException("Cupid language definition file not found: " + langURI);
+		}
 		Language lang = (Language) langResource.getContents().get(0);
 		
 		//add default NUOPC metamodel to registry if necessary

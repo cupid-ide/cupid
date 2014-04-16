@@ -53,6 +53,7 @@ import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.NullProgressMonitor;
 import org.eclipse.core.runtime.Path;
+import org.eclipse.core.runtime.Status;
 import org.eclipse.core.runtime.SubProgressMonitor;
 import org.eclipse.jface.dialogs.MessageDialog;
 import org.eclipse.jface.operation.IRunnableWithProgress;
@@ -369,8 +370,8 @@ public class CupidProjectWizard extends Wizard implements INewWizard, IExecutabl
 					CupidActivator.log("Connection open");
 				}
 				catch (RemoteConnectionException rce) {
-					CupidActivator.log("Remote connection exception", rce);
 					if (rce.getMessage().contains("reject HostKey")) {
+						CupidActivator.log("User rejected SSH host key", rce);
 						throw new CoreException(new OperationStatus(IStatus.ERROR, MY_BUNDLE.getSymbolicName(), 0, "Cannot connect to computational environment due to rejected host key", null));
 					}
 					//rce.printStackTrace();
@@ -454,8 +455,14 @@ public class CupidProjectWizard extends Wizard implements INewWizard, IExecutabl
 					new SubProgressMonitor(monitor,1));
 			
 			//force a sync
-			SyncManager.syncBlocking(null, project, SyncFlag.FORCE, new SubProgressMonitor(monitor, 2));
-			
+			CupidActivator.log("Forcing initial synchronization");
+			try {
+				SyncManager.syncBlocking(null, project, SyncFlag.FORCE, new SubProgressMonitor(monitor, 2));
+			}
+			catch (CoreException ce) {
+				CupidActivator.log(Status.ERROR, "Forcing initial synchronization", ce);
+				//should still be able to continue
+			}
 		
 		}
 
@@ -624,7 +631,7 @@ public class CupidProjectWizard extends Wizard implements INewWizard, IExecutabl
 				throw new CoreException(new OperationStatus(IStatus.ERROR, MY_BUNDLE.getSymbolicName(), 0, "Cannot find SSH key file", e));
 			}
 			
-			remoteConn = connManager.newConnection("Cupid Environment (Amazon EC2 - " + name + ")");
+			remoteConn = connManager.newConnection("Cupid Environment (" + name + " - " + host + ")");
 			remoteConn.setAddress(host);
 			remoteConn.setUsername("sgeadmin");
 			//remoteConn.setAttribute("org.eclipse.ptp.remotetools.environment.generichost.key-path", "C:\\Users\\Rocky\\Documents\\ssh\\nesiikey.rsa");

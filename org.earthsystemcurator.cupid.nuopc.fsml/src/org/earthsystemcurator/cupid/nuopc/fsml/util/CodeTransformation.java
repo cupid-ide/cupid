@@ -5,6 +5,7 @@ import java.io.InputStream;
 import java.util.List;
 import java.util.Set;
 
+import org.earthsystemcurator.cupidLanguage.ActualParam;
 import org.earthsystemcurator.cupidLanguage.Annotation;
 import org.earthsystemcurator.cupidLanguage.Call;
 import org.earthsystemcurator.cupidLanguage.DeclaredEntity;
@@ -58,6 +59,9 @@ public class CodeTransformation {
 		ST st = new ST(docPreamble + template);
 		String doc = getDoc(anots);
 		if (doc != null) {
+			//remove HTML tags for in-code doc
+			//TODO: standardize how this is done
+			doc = doc.replaceAll("\\<.*?\\>", "");
 			st.add("doc", doc.replaceAll("\n", "\n! ").split(" "));
 		}
 		return st;
@@ -128,9 +132,15 @@ public class CodeTransformation {
 		
 		ST code = STWithDoc("\ncall <name.id>(<params:{p|<if(!p.optional || p.value.expr.id)><if(p.keyword)><p.keyword> = <endif><if(p.value.expr.literal)><p.value.expr.literal><else><p.value.expr.id><endif><endif>}; wrap=\"&\n\", separator=\", \">)\n", anots);
 		code.add("name", mapping.getSubroutineName().getExpr());
-		code.add("params", mapping.getParams());
+		// add param one at a time to deal with optional
+		for (ActualParam ap : mapping.getParams()) {
+			if (!ap.isOptional() || ap.getValue().getExpr() != null) {
+				code.add("params", ap);
+			}
+		}	
+		//code.add("params", mapping.getParams());
 				
-		//System.out.println("Code to parse:\n" + code.render(LINE_WIDTH) + "\n");
+		System.out.println("Code to parse:\n" + code.render(LINE_WIDTH) + "\n");
 		
 		IBodyConstruct node = CodeExtraction.parseLiteralStatement(code.render(LINE_WIDTH));		
 		
@@ -151,6 +161,7 @@ public class CodeTransformation {
 	}
 	
 	public static String intentToString(Intent i) {
+		if (i==null) return null;
 		if (i.isIn()) return "in";
 		else if (i.isOut()) return "out";
 		else return "inout";
