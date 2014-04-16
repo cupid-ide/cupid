@@ -17,8 +17,8 @@ Class=LaTeXView
 Document=cupid.tex
 
 [Frame0_View0,0]
-TopLine=871
-Cursor=45170
+TopLine=403
+Cursor=21310
 
 [Frame1]
 Flags=0
