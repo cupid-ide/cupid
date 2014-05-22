@@ -3,7 +3,7 @@ grammar org.earthsystemcurator.CupidLanguage with org.eclipse.xtext.common.Termi
 generate cupidLanguage "http://www.earthsystemcurator.org/CupidLanguage"
 
 Language:
-	'language ' name=ID uri=STRING '{' conceptDef+=TopConceptDef conceptDef+=NamedConceptDef* '}';
+	'language' name=ID uri=STRING '{' conceptDef+=TopConceptDef conceptDef+=NamedConceptDef* '}';
 
 //Subconcept:
 //	AnonymousConcept | ConceptRef | Attribute;

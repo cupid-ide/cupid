@@ -77,7 +77,7 @@ ruleLanguage returns [EObject current=null]
     @init { enterRule(); 
     }
     @after { leaveRule(); }:
-(	otherlv_0='language ' 
+(	otherlv_0='language' 
     {
     	newLeafNode(otherlv_0, grammarAccess.getLanguageAccess().getLanguageKeyword_0());
     }

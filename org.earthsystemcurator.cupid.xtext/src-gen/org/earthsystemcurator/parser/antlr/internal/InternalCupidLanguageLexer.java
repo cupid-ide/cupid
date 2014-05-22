@@ -84,10 +84,10 @@ public class InternalCupidLanguageLexer extends Lexer {
         try {
             int _type = T__12;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // ../org.earthsystemcurator.cupid.xtext/src-gen/org/earthsystemcurator/parser/antlr/internal/InternalCupidLanguage.g:11:7: ( 'language ' )
-            // ../org.earthsystemcurator.cupid.xtext/src-gen/org/earthsystemcurator/parser/antlr/internal/InternalCupidLanguage.g:11:9: 'language '
+            // ../org.earthsystemcurator.cupid.xtext/src-gen/org/earthsystemcurator/parser/antlr/internal/InternalCupidLanguage.g:11:7: ( 'language' )
+            // ../org.earthsystemcurator.cupid.xtext/src-gen/org/earthsystemcurator/parser/antlr/internal/InternalCupidLanguage.g:11:9: 'language'
             {
-            match("language "); 
+            match("language"); 
 
 
             }
@@ -1888,11 +1888,11 @@ public class InternalCupidLanguageLexer extends Lexer {
         "\1\uffff\1\u0086\11\51\1\uffff\1\u0091\10\51\2\uffff\1\51\1\u009b"+
         "\6\51\1\u00a2\1\51\1\uffff\10\51\1\u00ac\1\uffff\1\51\1\u00ae\1"+
         "\u00b0\3\51\1\uffff\1\51\1\u00b5\4\51\1\u00bb\1\u00bc\1\51\1\uffff"+
-        "\1\51\1\uffff\1\51\1\uffff\3\51\1\u00c3\1\uffff\5\51\2\uffff\6\51"+
-        "\1\uffff\4\51\1\uffff\1\u00d3\7\51\1\u00db\1\51\1\uffff\1\51\1\u00de"+
-        "\1\u00df\1\u00e0\1\u00e2\2\51\1\uffff\2\51\3\uffff\1\51\1\uffff"+
-        "\1\u00e8\4\51\1\uffff\7\51\1\u00f4\1\u00f5\2\51\2\uffff\6\51\1\u00fe"+
-        "\1\51\1\uffff\1\u0100\1\uffff";
+        "\1\51\1\uffff\1\51\1\uffff\3\51\1\u00c3\1\uffff\4\51\1\u00c8\2\uffff"+
+        "\6\51\1\uffff\4\51\1\uffff\1\u00d3\7\51\1\u00db\1\51\1\uffff\1\51"+
+        "\1\u00de\1\u00df\1\u00e0\1\u00e2\2\51\1\uffff\2\51\3\uffff\1\51"+
+        "\1\uffff\1\u00e8\4\51\1\uffff\7\51\1\u00f4\1\u00f5\2\51\2\uffff"+
+        "\6\51\1\u00fe\1\51\1\uffff\1\u0100\1\uffff";
     static final String DFA11_eofS =
         "\u0101\uffff";
     static final String DFA11_minS =
@@ -1910,7 +1910,7 @@ public class InternalCupidLanguageLexer extends Lexer {
         "\151\1\147\1\154\2\164\1\60\1\uffff\1\120\2\60\1\144\2\164\1\uffff"+
         "\1\162\1\60\1\141\1\151\1\157\1\145\2\60\1\145\1\uffff\1\141\1\uffff"+
         "\1\141\1\uffff\1\165\2\151\1\60\1\uffff\1\164\1\144\1\157\1\156"+
-        "\1\40\2\uffff\2\162\1\155\1\154\1\164\1\156\1\uffff\1\151\1\105"+
+        "\1\60\2\uffff\2\162\1\155\1\154\1\164\1\156\1\uffff\1\151\1\105"+
         "\1\156\1\101\1\uffff\1\60\1\141\2\145\1\171\1\145\1\157\1\156\1"+
         "\60\1\163\1\uffff\1\155\4\60\1\156\1\164\1\uffff\1\163\1\102\3\uffff"+
         "\1\141\1\uffff\1\60\2\151\1\171\1\155\1\uffff\1\164\1\147\1\113"+
@@ -1931,7 +1931,7 @@ public class InternalCupidLanguageLexer extends Lexer {
         "\1\163\1\151\1\147\1\154\2\164\1\172\1\uffff\1\120\2\172\1\144\2"+
         "\164\1\uffff\1\162\1\172\1\145\1\151\1\157\1\145\2\172\1\145\1\uffff"+
         "\1\141\1\uffff\1\141\1\uffff\1\165\2\151\1\172\1\uffff\1\164\1\144"+
-        "\1\157\1\156\1\40\2\uffff\2\162\1\155\1\154\1\164\1\156\1\uffff"+
+        "\1\157\1\156\1\172\2\uffff\2\162\1\155\1\154\1\164\1\156\1\uffff"+
         "\1\151\1\105\1\156\1\101\1\uffff\1\172\1\141\2\145\1\171\1\145\1"+
         "\157\1\156\1\172\1\163\1\uffff\1\155\4\172\1\156\1\164\1\uffff\1"+
         "\163\1\102\3\uffff\1\141\1\uffff\1\172\2\151\1\171\1\155\1\uffff"+
@@ -2144,7 +2144,7 @@ public class InternalCupidLanguageLexer extends Lexer {
             "\1\u00c5",
             "\1\u00c6",
             "\1\u00c7",
-            "\1\u00c8",
+            "\12\51\7\uffff\32\51\4\uffff\1\51\1\uffff\32\51",
             "",
             "",
             "\1\u00c9",

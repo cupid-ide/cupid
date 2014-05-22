@@ -21,7 +21,7 @@ import java.util.ArrayList;
 @SuppressWarnings("all")
 public class InternalCupidLanguageParser extends AbstractInternalAntlrParser {
     public static final String[] tokenNames = new String[] {
-        "<invalid>", "<EOR>", "<DOWN>", "<UP>", "RULE_ID", "RULE_STRING", "RULE_ANNOTATION_ID", "RULE_INT", "RULE_SL_COMMENT", "RULE_ML_COMMENT", "RULE_WS", "RULE_ANY_OTHER", "'language '", "'{'", "'}'", "'='", "'<'", "'>'", "'concept'", "'top'", "'!'", "'!!'", "':'", "'attrib'", "'?'", "'*'", "'+'", "'before'", "'('", "')'", "'after'", "'module'", "'moduleName'", "'usesModule'", "'usesEntity'", "'subroutine'", "','", "'in'", "'out'", "'inout'", "'integer'", "'character'", "'logical'", "'real'", "'double'", "'precision'", "'type'", "'subroutineName'", "'call'", "'actualParamByKeyword'", "'declaration'", "'declaredEntity'", "'functionAssignment'", "'#'", "'/'", "'^'"
+        "<invalid>", "<EOR>", "<DOWN>", "<UP>", "RULE_ID", "RULE_STRING", "RULE_ANNOTATION_ID", "RULE_INT", "RULE_SL_COMMENT", "RULE_ML_COMMENT", "RULE_WS", "RULE_ANY_OTHER", "'language'", "'{'", "'}'", "'='", "'<'", "'>'", "'concept'", "'top'", "'!'", "'!!'", "':'", "'attrib'", "'?'", "'*'", "'+'", "'before'", "'('", "')'", "'after'", "'module'", "'moduleName'", "'usesModule'", "'usesEntity'", "'subroutine'", "','", "'in'", "'out'", "'inout'", "'integer'", "'character'", "'logical'", "'real'", "'double'", "'precision'", "'type'", "'subroutineName'", "'call'", "'actualParamByKeyword'", "'declaration'", "'declaredEntity'", "'functionAssignment'", "'#'", "'/'", "'^'"
     };
     public static final int RULE_ID=4;
     public static final int T__29=29;
@@ -152,7 +152,7 @@ public class InternalCupidLanguageParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "ruleLanguage"
-    // ../org.earthsystemcurator.cupid.xtext/src-gen/org/earthsystemcurator/parser/antlr/internal/InternalCupidLanguage.g:76:1: ruleLanguage returns [EObject current=null] : (otherlv_0= 'language ' ( (lv_name_1_0= RULE_ID ) ) ( (lv_uri_2_0= RULE_STRING ) ) otherlv_3= '{' ( (lv_conceptDef_4_0= ruleTopConceptDef ) ) ( (lv_conceptDef_5_0= ruleNamedConceptDef ) )* otherlv_6= '}' ) ;
+    // ../org.earthsystemcurator.cupid.xtext/src-gen/org/earthsystemcurator/parser/antlr/internal/InternalCupidLanguage.g:76:1: ruleLanguage returns [EObject current=null] : (otherlv_0= 'language' ( (lv_name_1_0= RULE_ID ) ) ( (lv_uri_2_0= RULE_STRING ) ) otherlv_3= '{' ( (lv_conceptDef_4_0= ruleTopConceptDef ) ) ( (lv_conceptDef_5_0= ruleNamedConceptDef ) )* otherlv_6= '}' ) ;
     public final EObject ruleLanguage() throws RecognitionException {
         EObject current = null;
 
@@ -169,11 +169,11 @@ public class InternalCupidLanguageParser extends AbstractInternalAntlrParser {
          enterRule(); 
             
         try {
-            // ../org.earthsystemcurator.cupid.xtext/src-gen/org/earthsystemcurator/parser/antlr/internal/InternalCupidLanguage.g:79:28: ( (otherlv_0= 'language ' ( (lv_name_1_0= RULE_ID ) ) ( (lv_uri_2_0= RULE_STRING ) ) otherlv_3= '{' ( (lv_conceptDef_4_0= ruleTopConceptDef ) ) ( (lv_conceptDef_5_0= ruleNamedConceptDef ) )* otherlv_6= '}' ) )
-            // ../org.earthsystemcurator.cupid.xtext/src-gen/org/earthsystemcurator/parser/antlr/internal/InternalCupidLanguage.g:80:1: (otherlv_0= 'language ' ( (lv_name_1_0= RULE_ID ) ) ( (lv_uri_2_0= RULE_STRING ) ) otherlv_3= '{' ( (lv_conceptDef_4_0= ruleTopConceptDef ) ) ( (lv_conceptDef_5_0= ruleNamedConceptDef ) )* otherlv_6= '}' )
+            // ../org.earthsystemcurator.cupid.xtext/src-gen/org/earthsystemcurator/parser/antlr/internal/InternalCupidLanguage.g:79:28: ( (otherlv_0= 'language' ( (lv_name_1_0= RULE_ID ) ) ( (lv_uri_2_0= RULE_STRING ) ) otherlv_3= '{' ( (lv_conceptDef_4_0= ruleTopConceptDef ) ) ( (lv_conceptDef_5_0= ruleNamedConceptDef ) )* otherlv_6= '}' ) )
+            // ../org.earthsystemcurator.cupid.xtext/src-gen/org/earthsystemcurator/parser/antlr/internal/InternalCupidLanguage.g:80:1: (otherlv_0= 'language' ( (lv_name_1_0= RULE_ID ) ) ( (lv_uri_2_0= RULE_STRING ) ) otherlv_3= '{' ( (lv_conceptDef_4_0= ruleTopConceptDef ) ) ( (lv_conceptDef_5_0= ruleNamedConceptDef ) )* otherlv_6= '}' )
             {
-            // ../org.earthsystemcurator.cupid.xtext/src-gen/org/earthsystemcurator/parser/antlr/internal/InternalCupidLanguage.g:80:1: (otherlv_0= 'language ' ( (lv_name_1_0= RULE_ID ) ) ( (lv_uri_2_0= RULE_STRING ) ) otherlv_3= '{' ( (lv_conceptDef_4_0= ruleTopConceptDef ) ) ( (lv_conceptDef_5_0= ruleNamedConceptDef ) )* otherlv_6= '}' )
-            // ../org.earthsystemcurator.cupid.xtext/src-gen/org/earthsystemcurator/parser/antlr/internal/InternalCupidLanguage.g:80:3: otherlv_0= 'language ' ( (lv_name_1_0= RULE_ID ) ) ( (lv_uri_2_0= RULE_STRING ) ) otherlv_3= '{' ( (lv_conceptDef_4_0= ruleTopConceptDef ) ) ( (lv_conceptDef_5_0= ruleNamedConceptDef ) )* otherlv_6= '}'
+            // ../org.earthsystemcurator.cupid.xtext/src-gen/org/earthsystemcurator/parser/antlr/internal/InternalCupidLanguage.g:80:1: (otherlv_0= 'language' ( (lv_name_1_0= RULE_ID ) ) ( (lv_uri_2_0= RULE_STRING ) ) otherlv_3= '{' ( (lv_conceptDef_4_0= ruleTopConceptDef ) ) ( (lv_conceptDef_5_0= ruleNamedConceptDef ) )* otherlv_6= '}' )
+            // ../org.earthsystemcurator.cupid.xtext/src-gen/org/earthsystemcurator/parser/antlr/internal/InternalCupidLanguage.g:80:3: otherlv_0= 'language' ( (lv_name_1_0= RULE_ID ) ) ( (lv_uri_2_0= RULE_STRING ) ) otherlv_3= '{' ( (lv_conceptDef_4_0= ruleTopConceptDef ) ) ( (lv_conceptDef_5_0= ruleNamedConceptDef ) )* otherlv_6= '}'
             {
             otherlv_0=(Token)match(input,12,FOLLOW_12_in_ruleLanguage122); 
 

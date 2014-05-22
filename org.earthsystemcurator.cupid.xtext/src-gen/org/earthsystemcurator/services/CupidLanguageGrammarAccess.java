@@ -34,13 +34,13 @@ public class CupidLanguageGrammarAccess extends AbstractGrammarElementFinder {
 		private final Keyword cRightCurlyBracketKeyword_6 = (Keyword)cGroup.eContents().get(6);
 		
 		//Language:
-		//	"language " name=ID uri=STRING "{" conceptDef+=TopConceptDef conceptDef+=NamedConceptDef* "}";
+		//	"language" name=ID uri=STRING "{" conceptDef+=TopConceptDef conceptDef+=NamedConceptDef* "}";
 		public ParserRule getRule() { return rule; }
 
-		//"language " name=ID uri=STRING "{" conceptDef+=TopConceptDef conceptDef+=NamedConceptDef* "}"
+		//"language" name=ID uri=STRING "{" conceptDef+=TopConceptDef conceptDef+=NamedConceptDef* "}"
 		public Group getGroup() { return cGroup; }
 
-		//"language "
+		//"language"
 		public Keyword getLanguageKeyword_0() { return cLanguageKeyword_0; }
 
 		//name=ID
@@ -1724,7 +1724,7 @@ public class CupidLanguageGrammarAccess extends AbstractGrammarElementFinder {
 
 	
 	//Language:
-	//	"language " name=ID uri=STRING "{" conceptDef+=TopConceptDef conceptDef+=NamedConceptDef* "}";
+	//	"language" name=ID uri=STRING "{" conceptDef+=TopConceptDef conceptDef+=NamedConceptDef* "}";
 	public LanguageElements getLanguageAccess() {
 		return (pLanguage != null) ? pLanguage : (pLanguage = new LanguageElements());
 	}

@@ -22,7 +22,7 @@ import java.util.ArrayList;
 @SuppressWarnings("all")
 public class InternalCupidLanguageParser extends AbstractInternalContentAssistParser {
     public static final String[] tokenNames = new String[] {
-        "<invalid>", "<EOR>", "<DOWN>", "<UP>", "RULE_INT", "RULE_STRING", "RULE_ID", "RULE_ANNOTATION_ID", "RULE_SL_COMMENT", "RULE_ML_COMMENT", "RULE_WS", "RULE_ANY_OTHER", "'declaredEntity'", "'language '", "'{'", "'}'", "'='", "'<'", "'>'", "':'", "'before'", "'('", "')'", "'after'", "'module'", "'moduleName'", "'usesModule'", "'usesEntity'", "'subroutine'", "','", "'precision'", "'subroutineName'", "'call'", "'actualParamByKeyword'", "'declaration'", "'functionAssignment'", "'#'", "'/'", "'concept'", "'top'", "'!'", "'!!'", "'attrib'", "'?'", "'*'", "'+'", "'in'", "'out'", "'inout'", "'integer'", "'character'", "'logical'", "'real'", "'double'", "'type'", "'^'"
+        "<invalid>", "<EOR>", "<DOWN>", "<UP>", "RULE_INT", "RULE_STRING", "RULE_ID", "RULE_ANNOTATION_ID", "RULE_SL_COMMENT", "RULE_ML_COMMENT", "RULE_WS", "RULE_ANY_OTHER", "'declaredEntity'", "'language'", "'{'", "'}'", "'='", "'<'", "'>'", "':'", "'before'", "'('", "')'", "'after'", "'module'", "'moduleName'", "'usesModule'", "'usesEntity'", "'subroutine'", "','", "'precision'", "'subroutineName'", "'call'", "'actualParamByKeyword'", "'declaration'", "'functionAssignment'", "'#'", "'/'", "'concept'", "'top'", "'!'", "'!!'", "'attrib'", "'?'", "'*'", "'+'", "'in'", "'out'", "'inout'", "'integer'", "'character'", "'logical'", "'real'", "'double'", "'type'", "'^'"
     };
     public static final int RULE_ID=6;
     public static final int T__29=29;
@@ -4201,17 +4201,17 @@ public class InternalCupidLanguageParser extends AbstractInternalContentAssistPa
 
 
     // $ANTLR start "rule__Language__Group__0__Impl"
-    // ../org.earthsystemcurator.cupid.xtext.ui/src-gen/org/earthsystemcurator/ui/contentassist/antlr/internal/InternalCupidLanguage.g:1351:1: rule__Language__Group__0__Impl : ( 'language ' ) ;
+    // ../org.earthsystemcurator.cupid.xtext.ui/src-gen/org/earthsystemcurator/ui/contentassist/antlr/internal/InternalCupidLanguage.g:1351:1: rule__Language__Group__0__Impl : ( 'language' ) ;
     public final void rule__Language__Group__0__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // ../org.earthsystemcurator.cupid.xtext.ui/src-gen/org/earthsystemcurator/ui/contentassist/antlr/internal/InternalCupidLanguage.g:1355:1: ( ( 'language ' ) )
-            // ../org.earthsystemcurator.cupid.xtext.ui/src-gen/org/earthsystemcurator/ui/contentassist/antlr/internal/InternalCupidLanguage.g:1356:1: ( 'language ' )
+            // ../org.earthsystemcurator.cupid.xtext.ui/src-gen/org/earthsystemcurator/ui/contentassist/antlr/internal/InternalCupidLanguage.g:1355:1: ( ( 'language' ) )
+            // ../org.earthsystemcurator.cupid.xtext.ui/src-gen/org/earthsystemcurator/ui/contentassist/antlr/internal/InternalCupidLanguage.g:1356:1: ( 'language' )
             {
-            // ../org.earthsystemcurator.cupid.xtext.ui/src-gen/org/earthsystemcurator/ui/contentassist/antlr/internal/InternalCupidLanguage.g:1356:1: ( 'language ' )
-            // ../org.earthsystemcurator.cupid.xtext.ui/src-gen/org/earthsystemcurator/ui/contentassist/antlr/internal/InternalCupidLanguage.g:1357:1: 'language '
+            // ../org.earthsystemcurator.cupid.xtext.ui/src-gen/org/earthsystemcurator/ui/contentassist/antlr/internal/InternalCupidLanguage.g:1356:1: ( 'language' )
+            // ../org.earthsystemcurator.cupid.xtext.ui/src-gen/org/earthsystemcurator/ui/contentassist/antlr/internal/InternalCupidLanguage.g:1357:1: 'language'
             {
              before(grammarAccess.getLanguageAccess().getLanguageKeyword_0()); 
             match(input,13,FOLLOW_13_in_rule__Language__Group__0__Impl2956); 

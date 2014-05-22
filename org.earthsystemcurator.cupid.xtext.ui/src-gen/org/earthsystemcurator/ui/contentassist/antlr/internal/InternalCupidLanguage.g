@@ -1356,7 +1356,7 @@ rule__Language__Group__0__Impl
 (
 { before(grammarAccess.getLanguageAccess().getLanguageKeyword_0()); }
 
-	'language ' 
+	'language' 
 
 { after(grammarAccess.getLanguageAccess().getLanguageKeyword_0()); }
 )
