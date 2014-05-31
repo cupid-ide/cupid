@@ -326,6 +326,15 @@ program sw
         !  v(:,[1 end]) = 0;
         !  h(:,2:end-1) = h_new([end 1:end 1],:);
 
+        ! TO DO - BOUNDARY CONDITIONS
+        u(2:nx-1, 2:ny-1) = unew
+        v(2:nx-1, 2:ny-1) = vnew
+        v(:,1) = 0
+        v(:,ny) = 0
+
+        h(1,      2:ny-1) = hnew(nx,:)
+        h(2:nx-1, 2:ny-1) = hnew
+        h(nx,     2:ny-1) = hnew(1,:)
 
     end do
 
@@ -359,6 +368,10 @@ subroutine lax_wendroff(nx, ny, dx, dy, dt, g, u, v, h, u_tendency, v_tendency, 
     real(8), dimension(nx, ny) :: uh_mid_xt, uh_mid_yt
     real(8), dimension(nx, ny) :: Vx, Vy
     real(8), dimension(nx, ny) :: vh_mid_xt, vh_mid_yt
+    real(8), dimension(nx, ny) :: Ux_mid_xt, Uy_mid_yt
+    real(8), dimension(nx, ny) :: uh_new
+    real(8), dimension(nx, ny) :: Vx_mid_xt, Vy_mid_yt
+    real(8), dimension(nx, ny) :: vh_new
 
     print *, "Entering lax_wendroff"
 
@@ -381,8 +394,8 @@ subroutine lax_wendroff(nx, ny, dx, dy, dt, g, u, v, h, u_tendency, v_tendency, 
 
     Vx = Uy
     Vy = vh * v + 0.5 * g * h**2
-    !vh_mid_xt = 0.5.*(vh(2:end,:)+vh(1:end-1,:)) -(0.5*dt/dx).*(Vx(2:end,:)-Vx(1:end-1,:));
-    !vh_mid_yt = 0.5.*(vh(:,2:end)+vh(:,1:end-1)) -(0.5*dt/dy).*(Vy(:,2:end)-Vy(:,1:end-1));
+    vh_mid_xt = 0.5 * (vh(2:nx,:) + vh(1:nx-1,:)) -(0.5*dt/dx) * (Vx(2:nx,:) - Vx(1:nx-1,:))
+    vh_mid_yt = 0.5 * (vh(:,2:ny) + vh(:,1:ny-1)) -(0.5*dt/dy) * (Vy(:,2:ny) - Vy(:,1:ny-1))
 
 
     ! Now use the mid-point values to predict the values at the next
@@ -390,26 +403,41 @@ subroutine lax_wendroff(nx, ny, dx, dy, dt, g, u, v, h, u_tendency, v_tendency, 
     !h_new = h(2:end-1,2:end-1) ...
     !  - (dt/dx).*(uh_mid_xt(2:end,2:end-1)-uh_mid_xt(1:end-1,2:end-1)) ...
     !  - (dt/dy).*(vh_mid_yt(2:end-1,2:end)-vh_mid_yt(2:end-1,1:end-1));
-    !
-    !Ux_mid_xt = uh_mid_xt.*uh_mid_xt./h_mid_xt + 0.5.*g.*h_mid_xt.^2;
-    !Uy_mid_yt = uh_mid_yt.*vh_mid_yt./h_mid_yt;
+
+    h_new = h(2:nx-1,2:ny-1) &
+        - (dt/dx) * (uh_mid_xt(2:nx,2:ny-1) - uh_mid_xt(1:nx-1,2:ny-1)) &
+        - (dt/dy) * (vh_mid_yt(2:nx-1,2:ny) - vh_mid_yt(2:nx-1,1:ny-1))
+
+
+    Ux_mid_xt = uh_mid_xt * uh_mid_xt / h_mid_xt + 0.5 * g * h_mid_xt**2
+    Uy_mid_yt = uh_mid_yt * vh_mid_yt / h_mid_yt
+
     !uh_new = uh(2:end-1,2:end-1) ...
     !  - (dt/dx).*(Ux_mid_xt(2:end,2:end-1)-Ux_mid_xt(1:end-1,2:end-1)) ...
     !  - (dt/dy).*(Uy_mid_yt(2:end-1,2:end)-Uy_mid_yt(2:end-1,1:end-1)) ...
     !  + dt.*u_tendency.*0.5.*(h(2:end-1,2:end-1)+h_new);
-    !
-    !Vx_mid_xt = uh_mid_xt.*vh_mid_xt./h_mid_xt;
-    !Vy_mid_yt = vh_mid_yt.*vh_mid_yt./h_mid_yt + 0.5.*g.*h_mid_yt.^2;
+
+    uh_new = uh(2:nx-1,2:ny-1) &
+      - (dt/dx) * (Ux_mid_xt(2:nx,2:ny-1) - Ux_mid_xt(1:nx-1,2:ny-1)) &
+      - (dt/dy) * (Uy_mid_yt(2:nx-1,2:ny) - Uy_mid_yt(2:nx-1,1:ny-1)) &
+      + dt * u_tendency * 0.5 * (h(2:nx-1,2:ny-1) + h_new)
+
+
+    Vx_mid_xt = uh_mid_xt * vh_mid_xt / h_mid_xt
+    Vy_mid_yt = vh_mid_yt * vh_mid_yt / h_mid_yt + 0.5 * g * h_mid_yt**2
+
     !vh_new = vh(2:end-1,2:end-1) ...
     !  - (dt/dx).*(Vx_mid_xt(2:end,2:end-1)-Vx_mid_xt(1:end-1,2:end-1)) ...
     !  - (dt/dy).*(Vy_mid_yt(2:end-1,2:end)-Vy_mid_yt(2:end-1,1:end-1)) ...
     !  + dt.*v_tendency.*0.5.*(h(2:end-1,2:end-1)+h_new);
-    !u_new = uh_new./h_new;
-    !v_new = vh_new./h_new;
 
+    vh_new = vh(2:nx-1,2:ny-1) &
+      - (dt/dx) * (Vx_mid_xt(2:nx,2:ny-1) - Vx_mid_xt(1:nx-1,2:ny-1)) &
+      - (dt/dy) * (Vy_mid_yt(2:nx-1,2:ny) - Vy_mid_yt(2:nx-1,1:ny-1)) &
+      + dt * v_tendency * 0.5 * (h(2:nx-1,2:ny-1) + h_new)
 
-
-
+    u_new = uh_new / h_new
+    v_new = vh_new / h_new
 
 end subroutine
 
