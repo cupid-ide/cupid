@@ -64,8 +64,8 @@ program sw
     integer, parameter :: nx = 254      ! Number of zonal gridpoints
     integer, parameter :: ny = 50       ! Number of meridional gridpoints
 
-    real(8), parameter :: dx=100.0e3       ! Zonal grid spacing (m)
-    integer, parameter :: dy=dx          ! Meridional grid spacing
+    real(8), parameter :: dx=100.0e3    ! Zonal grid spacing (m)
+    real(8), parameter :: dy=dx         ! Meridional grid spacing
 
     ! Specify the range of heights to plot in metres
     !plot_height_range = [9500 10500];
@@ -98,9 +98,15 @@ program sw
     real(8), dimension(nx, ny) :: u         ! wind velocity (m/s)
     real(8), dimension(nx, ny) :: v         ! wind velocity (m/s)
     real(8), dimension(nx, ny) :: h         ! depth of fluid (height - ORO)
+    real(8), dimension(2:nx-1, 2:ny-1) :: u_accel   ! wind acceleration (m/s^2)
+    real(8), dimension(2:nx-1, 2:ny-1) :: v_accel   ! wind acceleration (m/s^2)
 
     real(8), dimension(nx * ny) :: u_temp
     real(8), dimension(nx * ny) :: v_temp
+
+    real(8), dimension(2:nx-1, 2:ny-1) :: unew
+    real(8), dimension(2:nx-1, 2:ny-1) :: vnew
+    real(8), dimension(2:nx-1, 2:ny-1) :: hnew
 
     real(8), dimension(nx, ny, noutput) :: u_save    ! save u data
     real(8), dimension(nx, ny, noutput) :: v_save    ! save v data
@@ -289,9 +295,10 @@ program sw
             u_temp = reshape(u, (/nx*ny/))
             v_temp = reshape(v, (/nx*ny/))
             max_u = sqrt(maxval(u_temp*u_temp + v_temp*v_temp))
-!    disp(['Time = ' num2str((n-1)*dt/3600) ...
-!      ' hours (max ' num2str(forecast_length_days*24) ...
-!           '); max(|u|) = ' num2str(max_u)]);
+
+            !    disp(['Time = ' num2str((n-1)*dt/3600) ...
+            !      ' hours (max ' num2str(forecast_length_days*24) ...
+            !           '); max(|u|) = ' num2str(max_u)]);
 
             print *, "Time = ", (n-1)*dt/3600, " hours (max ", forecast_length_days*24, ") max(|u|) = ", max_u
             u_save(:,:,i_save) = u
@@ -300,27 +307,25 @@ program sw
             t_save(i_save) = (n-1) * dt
             i_save = i_save + 1
 
-
         end if
-!
-!  % Compute the accelerations
-!  u_accel = F(2:end-1,2:end-1).*v(2:end-1,2:end-1) ...
-!              - (g/(2*dx)).*(H(3:end,2:end-1)-H(1:end-2,2:end-1));
-!  v_accel = -F(2:end-1,2:end-1).*u(2:end-1,2:end-1) ...
-!              - (g/(2*dy)).*(H(2:end-1,3:end)-H(2:end-1,1:end-2));
-!
-!  % Call the Lax-Wendroff scheme to move forward one timestep
-!  [unew, vnew, h_new] = lax_wendroff(dx, dy, dt, g, u, v, h, ...
-!                                     u_accel, v_accel);
-!
-!  % Update the wind and height fields, taking care to enforce
-!  % boundary conditions
-!  u = unew([end 1:end 1],[1 1:end end]);
-!  v = vnew([end 1:end 1],[1 1:end end]);
-!  v(:,[1 end]) = 0;
-!  h(:,2:end-1) = h_new([end 1:end 1],:);
-!
-!end
+
+        !  Compute the accelerations
+        !  u_accel = F(2:end-1,2:end-1).*v(2:end-1,2:end-1) - (g/(2*dx)).*(H(3:end,2:end-1)-H(1:end-2,2:end-1));
+        u_accel = FCor(2:nx-1,2:ny-1) * v(2:nx-1,2:ny-1) - (g/(2*dx)) * (H(3:nx,2:ny-1) - H(1:nx-2,2:ny-1))
+        !  v_accel = -F(2:end-1,2:end-1).*u(2:end-1,2:end-1) - (g/(2*dy)).*(H(2:end-1,3:end)-H(2:end-1,1:end-2));
+        v_accel = -FCor(2:nx-1,2:ny-1) * u(2:nx-1,2:ny-1) - (g/(2*dy)) * (H(2:nx-1,3:ny) - H(2:nx-1,1:ny-2))
+
+        !  Call the Lax-Wendroff scheme to move forward one timestep
+        !  [unew, vnew, h_new] = lax_wendroff(dx, dy, dt, g, u, v, h, u_accel, v_accel);
+        call lax_wendroff(nx, ny, dx, dy, dt, g, u, v, h, u_accel, v_accel, unew, vnew, hnew)
+
+        !  Update the wind and height fields, taking care to enforce
+        !  boundary conditions
+        !  u = unew([end 1:end 1],[1 1:end end]);
+        !  v = vnew([end 1:end 1],[1 1:end end]);
+        !  v(:,[1 end]) = 0;
+        !  h(:,2:end-1) = h_new([end 1:end 1],:);
+
 
     end do
 
@@ -337,6 +342,76 @@ function mean(arr)
     real(8) :: mean
     mean = sum(arr) / size(arr)
 end function
+
+
+!function [u_new, v_new, h_new] = lax_wendroff(dx, dy, dt, g, u, v, h, u_tendency, v_tendency);
+
+subroutine lax_wendroff(nx, ny, dx, dy, dt, g, u, v, h, u_tendency, v_tendency, u_new, v_new, h_new)
+    integer, intent(in) :: nx, ny
+    real(8), intent(in) :: dx, dy, dt, g
+    real(8), dimension(nx, ny), intent(in) :: u, v, h
+    real(8), dimension(2:nx-1, 2:ny-1), intent(in) :: u_tendency, v_tendency
+    real(8), dimension(2:nx-1, 2:ny-1), intent(out) :: u_new, v_new, h_new
+
+    real(8), dimension(nx, ny) :: uh, vh
+    real(8), dimension(nx, ny) :: h_mid_xt, h_mid_yt
+    real(8), dimension(nx, ny) :: Ux, Uy
+    real(8), dimension(nx, ny) :: uh_mid_xt, uh_mid_yt
+    real(8), dimension(nx, ny) :: Vx, Vy
+    real(8), dimension(nx, ny) :: vh_mid_xt, vh_mid_yt
+
+    print *, "Entering lax_wendroff"
+
+    ! This function performs one timestep of the Lax-Wendroff scheme
+    ! applied to the shallow water equations
+    !
+    ! First work out mid-point values in time and space
+
+    uh = u * h
+    vh = v * h
+    h_mid_xt = 0.5 * (h(2:nx,:)+h(1:nx-1,:)) -(0.5*dt/dx) * (uh(2:nx,:)-uh(1:nx-1,:))
+    h_mid_yt = 0.5 * (h(:,2:ny)+h(:,1:ny-1)) -(0.5*dt/dy) * (vh(:,2:ny)-vh(:,1:ny-1))
+
+    ! Ux = uh.*u+0.5.*g.*h.^2;
+    Ux = uh * u + 0.5 * g * h**2;
+    Uy = uh * v
+    uh_mid_xt = 0.5 * (uh(2:nx,:)+uh(1:nx-1,:)) -(0.5*dt/dx) * (Ux(2:nx,:)-Ux(1:nx-1,:))
+    uh_mid_yt = 0.5 * (uh(:,2:ny)+uh(:,1:ny-1)) -(0.5*dt/dy) * (Uy(:,2:ny)-Uy(:,1:ny-1))
+
+
+    Vx = Uy
+    Vy = vh * v + 0.5 * g * h**2
+    !vh_mid_xt = 0.5.*(vh(2:end,:)+vh(1:end-1,:)) -(0.5*dt/dx).*(Vx(2:end,:)-Vx(1:end-1,:));
+    !vh_mid_yt = 0.5.*(vh(:,2:end)+vh(:,1:end-1)) -(0.5*dt/dy).*(Vy(:,2:end)-Vy(:,1:end-1));
+
+
+    ! Now use the mid-point values to predict the values at the next
+    ! timestep
+    !h_new = h(2:end-1,2:end-1) ...
+    !  - (dt/dx).*(uh_mid_xt(2:end,2:end-1)-uh_mid_xt(1:end-1,2:end-1)) ...
+    !  - (dt/dy).*(vh_mid_yt(2:end-1,2:end)-vh_mid_yt(2:end-1,1:end-1));
+    !
+    !Ux_mid_xt = uh_mid_xt.*uh_mid_xt./h_mid_xt + 0.5.*g.*h_mid_xt.^2;
+    !Uy_mid_yt = uh_mid_yt.*vh_mid_yt./h_mid_yt;
+    !uh_new = uh(2:end-1,2:end-1) ...
+    !  - (dt/dx).*(Ux_mid_xt(2:end,2:end-1)-Ux_mid_xt(1:end-1,2:end-1)) ...
+    !  - (dt/dy).*(Uy_mid_yt(2:end-1,2:end)-Uy_mid_yt(2:end-1,1:end-1)) ...
+    !  + dt.*u_tendency.*0.5.*(h(2:end-1,2:end-1)+h_new);
+    !
+    !Vx_mid_xt = uh_mid_xt.*vh_mid_xt./h_mid_xt;
+    !Vy_mid_yt = vh_mid_yt.*vh_mid_yt./h_mid_yt + 0.5.*g.*h_mid_yt.^2;
+    !vh_new = vh(2:end-1,2:end-1) ...
+    !  - (dt/dx).*(Vx_mid_xt(2:end,2:end-1)-Vx_mid_xt(1:end-1,2:end-1)) ...
+    !  - (dt/dy).*(Vy_mid_yt(2:end-1,2:end)-Vy_mid_yt(2:end-1,1:end-1)) ...
+    !  + dt.*v_tendency.*0.5.*(h(2:end-1,2:end-1)+h_new);
+    !u_new = uh_new./h_new;
+    !v_new = vh_new./h_new;
+
+
+
+
+
+end subroutine
 
 
 
