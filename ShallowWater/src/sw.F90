@@ -77,7 +77,7 @@ program sw
     !!!!!!!!!!!!!!!!!!!!!!!!!
 
     integer :: i
-    real(8) :: r
+    !real(8) :: r
     integer :: n    ! current timestep
 
     real(8), parameter :: dt = dt_mins * 60.0       ! Timestep (s)
@@ -290,9 +290,9 @@ program sw
     do n=1, nt
         !  Every fixed number of timesteps we store the fields
 
-        print *, "n=", n
+        !print *, "n=", n
 
-         if (mod(n-1, timesteps_between_outputs) == 0) then
+        if (mod(n-1, timesteps_between_outputs) == 0) then
             !    max_u = sqrt(max(u(:).*u(:)+v(:).*v(:)));
             u_temp = reshape(u, (/nx*ny/))
             v_temp = reshape(v, (/nx*ny/))
@@ -312,10 +312,11 @@ program sw
         end if
 
         !  Compute the accelerations
-        !  u_accel = F(2:end-1,2:end-1).*v(2:end-1,2:end-1) - (g/(2*dx)).*(H(3:end,2:end-1)-H(1:end-2,2:end-1));
-        u_accel = FCor(2:nx-1,2:ny-1) * v(2:nx-1,2:ny-1) - (g/(2*dx)) * (H(3:nx,2:ny-1) - H(1:nx-2,2:ny-1))
-        !  v_accel = -F(2:end-1,2:end-1).*u(2:end-1,2:end-1) - (g/(2*dy)).*(H(2:end-1,3:end)-H(2:end-1,1:end-2));
-        v_accel = -FCor(2:nx-1,2:ny-1) * u(2:nx-1,2:ny-1) - (g/(2*dy)) * (H(2:nx-1,3:ny) - H(2:nx-1,1:ny-2))
+        !  u_accel = F(2:end-1,2:end-1).*v(2:end-1,2:end-1) - (g/(2*dx)).*(ORO(3:end,2:end-1)-ORO(1:end-2,2:end-1));
+        u_accel = FCor(2:nx-1,2:ny-1) * v(2:nx-1,2:ny-1) - (g/(2.0*dx)) * (ORO(3:nx,2:ny-1) - ORO(1:nx-2,2:ny-1))
+
+        !  v_accel = -F(2:end-1,2:end-1).*u(2:end-1,2:end-1) - (g/(2*dy)).*(ORO(2:end-1,3:end)-ORO(2:end-1,1:end-2));
+        v_accel = -FCor(2:nx-1,2:ny-1) * u(2:nx-1,2:ny-1) - (g/(2.0*dy)) * (ORO(2:nx-1,3:ny) - ORO(2:nx-1,1:ny-2))
 
         !  Call the Lax-Wendroff scheme to move forward one timestep
         !  [unew, vnew, h_new] = lax_wendroff(dx, dy, dt, g, u, v, h, u_accel, v_accel);
@@ -362,6 +363,15 @@ program sw
 
     end do
 
+    ! DEBUG
+    u_temp = reshape(u, (/nx*ny/))
+    v_temp = reshape(v, (/nx*ny/))
+    max_u = sqrt(maxval(u_temp*u_temp + v_temp*v_temp))
+
+    print *, "maxval(u_temp) = ", maxval(u_temp)
+    print *, "maxval(v_temp) = ", maxval(v_temp)
+    print *, "max_u = ", max_u
+
 
 end program sw
 
@@ -389,34 +399,50 @@ subroutine lax_wendroff(nx, ny, dx, dy, dt, g, u, v, h, u_tendency, v_tendency, 
     real(8), dimension(nx, ny) :: Vx, Vy
     real(8), dimension(nx, ny) :: vh_mid_xt, vh_mid_yt
     real(8), dimension(nx, ny) :: Ux_mid_xt, Uy_mid_yt
-    real(8), dimension(nx, ny) :: uh_new
+    real(8), dimension(2:nx-1, 2:ny-1) :: uh_new
     real(8), dimension(nx, ny) :: Vx_mid_xt, Vy_mid_yt
-    real(8), dimension(nx, ny) :: vh_new
+    real(8), dimension(2:nx-1, 2:ny-1) :: vh_new
 
-    print *, "Entering lax_wendroff"
+    !print *, "Entering lax_wendroff"
+
 
     ! This function performs one timestep of the Lax-Wendroff scheme
     ! applied to the shallow water equations
     !
     ! First work out mid-point values in time and space
 
+    !print *, "sum(u) = ", sum(reshape(u, (/nx*ny/)))
+    !print *, "sum(u_tendency) = ", sum(reshape(u_tendency, (/(nx-2)*(ny-2)/)))
+
     uh = u * h
     vh = v * h
+
+    !print *, "sum(uh) = ", sum(reshape(uh, (/nx*ny/)))
+
     h_mid_xt = 0.5 * (h(2:nx,:)+h(1:nx-1,:)) -(0.5*dt/dx) * (uh(2:nx,:)-uh(1:nx-1,:))
     h_mid_yt = 0.5 * (h(:,2:ny)+h(:,1:ny-1)) -(0.5*dt/dy) * (vh(:,2:ny)-vh(:,1:ny-1))
 
+    !print *, "g = ", g
+    !print *, "sum(g * h**2) = ", sum(reshape(g * h**2, (/nx*ny/)))
+
     ! Ux = uh.*u+0.5.*g.*h.^2;
     Ux = uh * u + 0.5 * g * h**2
+    !print *, "sum(Ux) = ", sum(reshape(Ux, (/nx*ny/)))
     Uy = uh * v
+    !print *, "sum(Uy) = ", sum(reshape(Uy, (/nx*ny/)))
     uh_mid_xt = 0.5 * (uh(2:nx,:)+uh(1:nx-1,:)) -(0.5*dt/dx) * (Ux(2:nx,:)-Ux(1:nx-1,:))
     uh_mid_yt = 0.5 * (uh(:,2:ny)+uh(:,1:ny-1)) -(0.5*dt/dy) * (Uy(:,2:ny)-Uy(:,1:ny-1))
 
+   ! print *, "sum(uh_mid_xt) = ", sum(reshape(uh_mid_xt, (/nx*ny/)))
+   ! print *, "sum(uh_mid_yt) = ", sum(reshape(uh_mid_yt, (/nx*ny/)))
 
     Vx = Uy
     Vy = vh * v + 0.5 * g * h**2
     vh_mid_xt = 0.5 * (vh(2:nx,:) + vh(1:nx-1,:)) -(0.5*dt/dx) * (Vx(2:nx,:) - Vx(1:nx-1,:))
     vh_mid_yt = 0.5 * (vh(:,2:ny) + vh(:,1:ny-1)) -(0.5*dt/dy) * (Vy(:,2:ny) - Vy(:,1:ny-1))
 
+   ! print *, "sum(vh_mid_xt) = ", sum(reshape(vh_mid_xt, (/nx*ny/)))
+   ! print *, "sum(vh_mid_yt) = ", sum(reshape(vh_mid_yt, (/nx*ny/)))
 
     ! Now use the mid-point values to predict the values at the next
     ! timestep
@@ -428,20 +454,27 @@ subroutine lax_wendroff(nx, ny, dx, dy, dt, g, u, v, h, u_tendency, v_tendency, 
         - (dt/dx) * (uh_mid_xt(2:nx,2:ny-1) - uh_mid_xt(1:nx-1,2:ny-1)) &
         - (dt/dy) * (vh_mid_yt(2:nx-1,2:ny) - vh_mid_yt(2:nx-1,1:ny-1))
 
+  !  print *, "sum(h_new) = ", sum(reshape(h_new, (/(nx-2)*(ny-2)/)))
 
     Ux_mid_xt = uh_mid_xt * uh_mid_xt / h_mid_xt + 0.5 * g * h_mid_xt**2
     Uy_mid_yt = uh_mid_yt * vh_mid_yt / h_mid_yt
 
+ !   print *, "maxval(Ux_mid_xt) = ", maxval(reshape(Ux_mid_xt, (/nx*ny/)))
+  !  print *, "maxval(Uy_mid_yt) = ", maxval(reshape(Uy_mid_yt, (/nx*ny/)))
+
+
     !uh_new = uh(2:end-1,2:end-1) ...
-    !  - (dt/dx).*(Ux_mid_xt(2:end,2:end-1)-Ux_mid_xt(1:end-1,2:end-1)) ...
-    !  - (dt/dy).*(Uy_mid_yt(2:end-1,2:end)-Uy_mid_yt(2:end-1,1:end-1)) ...
-    !  + dt.*u_tendency.*0.5.*(h(2:end-1,2:end-1)+h_new);
+  !   - (dt/dx).*(Ux_mid_xt(2:end,2:end-1)-Ux_mid_xt(1:end-1,2:end-1)) ...
+  !   - (dt/dy).*(Uy_mid_yt(2:end-1,2:end)-Uy_mid_yt(2:end-1,1:end-1)) ...
+  !   + dt.*u_tendency.*0.5.*(h(2:end-1,2:end-1)+h_new);
+
 
     uh_new = uh(2:nx-1,2:ny-1) &
       - (dt/dx) * (Ux_mid_xt(2:nx,2:ny-1) - Ux_mid_xt(1:nx-1,2:ny-1)) &
       - (dt/dy) * (Uy_mid_yt(2:nx-1,2:ny) - Uy_mid_yt(2:nx-1,1:ny-1)) &
       + dt * u_tendency * 0.5 * (h(2:nx-1,2:ny-1) + h_new)
 
+ !   print *, "sum(uh_new) = ", sum(reshape(uh_new, (/(nx-2)*(ny-2)/)))
 
     Vx_mid_xt = uh_mid_xt * vh_mid_xt / h_mid_xt
     Vy_mid_yt = vh_mid_yt * vh_mid_yt / h_mid_yt + 0.5 * g * h_mid_yt**2
@@ -458,12 +491,13 @@ subroutine lax_wendroff(nx, ny, dx, dy, dt, g, u, v, h, u_tendency, v_tendency, 
       - (dt/dy) * (Vy_mid_yt(2:nx-1,2:ny) - Vy_mid_yt(2:nx-1,1:ny-1)) &
       + dt * v_tendency * 0.5 * (h(2:nx-1,2:ny-1) + h_new)
 
-
-
     u_new = uh_new / h_new
     v_new = vh_new / h_new
 
-    print *, "Leaving lax_wendroff"
+  !  print *, "max(u_new) = ", maxval(reshape(u_new, (/(nx-2)*(ny-2)/)))
+  !  print *, "max(v_new) = ", maxval(reshape(v_new, (/(nx-2)*(ny-2)/)))
+
+    !print *, "Leaving lax_wendroff"
 
 end subroutine
 
