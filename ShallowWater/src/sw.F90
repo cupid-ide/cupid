@@ -129,9 +129,9 @@ program sw
         YCoord(i,:) = y
     end do
 
-    !print *, "nt=", nt
-    !print *, "timesteps_between_outputs=", timesteps_between_outputs
-    !print *, "noutput=", noutput
+    print *, "nt=", nt
+    print *, "timesteps_between_outputs=", timesteps_between_outputs
+    print *, "noutput=", noutput
 
     !print *, "x=",x
     !print *, "y=", y
@@ -290,6 +290,8 @@ program sw
     do n=1, nt
         !  Every fixed number of timesteps we store the fields
 
+        print *, "n=", n
+
          if (mod(n-1, timesteps_between_outputs) == 0) then
             !    max_u = sqrt(max(u(:).*u(:)+v(:).*v(:)));
             u_temp = reshape(u, (/nx*ny/))
@@ -326,22 +328,39 @@ program sw
         !  v(:,[1 end]) = 0;
         !  h(:,2:end-1) = h_new([end 1:end 1],:);
 
-        ! TO DO - BOUNDARY CONDITIONS
+
         u(2:nx-1, 2:ny-1) = unew
+
+        u(1,1) = unew(nx-1,2)
+        u(2:nx-1,1) = unew(:,2)
+        u(nx,1) = unew(2,2)
+        u(1,ny) = unew(nx-1,ny-1)
+        u(2:nx-1,ny) = unew(:,ny-1)
+        u(nx,ny) = unew(2,ny-1)
+        u(1,2:ny-1) = unew(nx-1,:)
+        u(nx,2:ny-1) = unew(2,:)
+
+
         v(2:nx-1, 2:ny-1) = vnew
+
+        v(1,1) = vnew(nx-1,2)
+        v(2:nx-1,1) = vnew(:,2)
+        v(nx,1) = vnew(2,2)
+        v(1,ny) = vnew(nx-1,ny-1)
+        v(2:nx-1,ny) = vnew(:,ny-1)
+        v(nx,ny) = vnew(2,ny-1)
+        v(1,2:ny-1) = vnew(nx-1,:)
+        v(nx,2:ny-1) = vnew(2,:)
+
         v(:,1) = 0
         v(:,ny) = 0
 
-        h(1,      2:ny-1) = hnew(nx,:)
+        h(1,      2:ny-1) = hnew(nx-1,:)
         h(2:nx-1, 2:ny-1) = hnew
-        h(nx,     2:ny-1) = hnew(1,:)
+        h(nx,     2:ny-1) = hnew(2,:)
+
 
     end do
-
-
-
-
-
 
 
 end program sw
@@ -356,6 +375,7 @@ end function
 !function [u_new, v_new, h_new] = lax_wendroff(dx, dy, dt, g, u, v, h, u_tendency, v_tendency);
 
 subroutine lax_wendroff(nx, ny, dx, dy, dt, g, u, v, h, u_tendency, v_tendency, u_new, v_new, h_new)
+
     integer, intent(in) :: nx, ny
     real(8), intent(in) :: dx, dy, dt, g
     real(8), dimension(nx, ny), intent(in) :: u, v, h
@@ -386,7 +406,7 @@ subroutine lax_wendroff(nx, ny, dx, dy, dt, g, u, v, h, u_tendency, v_tendency, 
     h_mid_yt = 0.5 * (h(:,2:ny)+h(:,1:ny-1)) -(0.5*dt/dy) * (vh(:,2:ny)-vh(:,1:ny-1))
 
     ! Ux = uh.*u+0.5.*g.*h.^2;
-    Ux = uh * u + 0.5 * g * h**2;
+    Ux = uh * u + 0.5 * g * h**2
     Uy = uh * v
     uh_mid_xt = 0.5 * (uh(2:nx,:)+uh(1:nx-1,:)) -(0.5*dt/dx) * (Ux(2:nx,:)-Ux(1:nx-1,:))
     uh_mid_yt = 0.5 * (uh(:,2:ny)+uh(:,1:ny-1)) -(0.5*dt/dy) * (Uy(:,2:ny)-Uy(:,1:ny-1))
@@ -431,13 +451,19 @@ subroutine lax_wendroff(nx, ny, dx, dy, dt, g, u, v, h, u_tendency, v_tendency, 
     !  - (dt/dy).*(Vy_mid_yt(2:end-1,2:end)-Vy_mid_yt(2:end-1,1:end-1)) ...
     !  + dt.*v_tendency.*0.5.*(h(2:end-1,2:end-1)+h_new);
 
+
+
     vh_new = vh(2:nx-1,2:ny-1) &
       - (dt/dx) * (Vx_mid_xt(2:nx,2:ny-1) - Vx_mid_xt(1:nx-1,2:ny-1)) &
       - (dt/dy) * (Vy_mid_yt(2:nx-1,2:ny) - Vy_mid_yt(2:nx-1,1:ny-1)) &
       + dt * v_tendency * 0.5 * (h(2:nx-1,2:ny-1) + h_new)
 
+
+
     u_new = uh_new / h_new
     v_new = vh_new / h_new
+
+    print *, "Leaving lax_wendroff"
 
 end subroutine
 
