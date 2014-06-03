@@ -53,8 +53,9 @@ program sw
     real(8), parameter :: beta = 1.6e-11   ! Meridional gradient of f (s-1m-1)
 
     real(8), parameter :: dt_mins = 1                  ! Timestep (minutes)
-    real(8), parameter :: output_interval_mins = 60    ! Time between outputs (minutes)
+    real(8), parameter :: output_interval_mins = 5    ! Time between outputs (minutes)
     real(8), parameter :: forecast_length_days = 4     ! Total simulation length (days)
+    character(*), parameter :: output_file = "swout.nc"  ! netcdf output file
 
     real(8), parameter :: orography = FLAT
     real(8), parameter :: initial_conditions = GAUSSIAN_BLOB
@@ -79,9 +80,14 @@ program sw
     !!!!!!!!!!!!!!!!!!!!!!!!!
 
     integer :: i
-    integer :: rc   ! return code
+    !integer :: rc   ! return code
     integer :: n    ! current timestep
+
+    ! netcdf handles
     integer :: ncid ! id of netcdf file
+    integer :: x_dimid, y_dimid, t_dimid
+    integer :: var_dimids(3), coord_dimids(2)
+    integer :: u_varid, v_varid, h_varid, x_varid, y_varid
 
     real(8), parameter :: dt = dt_mins * 60.0       ! Timestep (s)
     real(8), parameter :: output_interval = output_interval_mins * 60.0        ! Time between outputs (s)
@@ -115,6 +121,7 @@ program sw
     real(8), dimension(nx, ny, noutput) :: v_save    ! save v data
     real(8), dimension(nx, ny, noutput) :: h_save    ! save h data
     real(8), dimension(noutput) :: t_save    ! save t data
+
 
 
     real(8) :: std_blob     ! Standard deviation of blob (m), orography = GAUSSIAN_BLOB
@@ -290,8 +297,21 @@ program sw
     !!!!!!!!!!!!!!!!!!!!!!!!!
 
     ! set up netcdf
-    call check( nf90_create("swtest.nc", NF90_CLOBBER, ncid) )
-    call check( nf90_close(ncid) )
+    call check( nf90_create(output_file, NF90_CLOBBER, ncid) )
+    call check( nf90_def_dim(ncid, "x", nx, x_dimid) )
+    call check( nf90_def_dim(ncid, "y", ny, y_dimid) )
+    call check( nf90_def_dim(ncid, "t", noutput, t_dimid) )
+
+    var_dimids = (/ x_dimid, y_dimid, t_dimid /)
+    call check( nf90_def_var(ncid, "u", NF90_DOUBLE, var_dimids, u_varid) )
+    call check( nf90_def_var(ncid, "v", NF90_DOUBLE, var_dimids, v_varid) )
+    call check( nf90_def_var(ncid, "h", NF90_DOUBLE, var_dimids, h_varid) )
+
+    coord_dimids = (/ x_dimid, y_dimid /)
+    call check( nf90_def_var(ncid, "x", NF90_DOUBLE, coord_dimids, x_varid) )
+    call check( nf90_def_var(ncid, "y", NF90_DOUBLE, coord_dimids, y_varid) )
+
+    call check( nf90_enddef(ncid) )
 
 
     do n=1, nt
@@ -360,6 +380,16 @@ program sw
 
 
     end do
+
+    call check( nf90_put_var(ncid, x_varid, XCoord) )
+    call check( nf90_put_var(ncid, y_varid, YCoord) )
+
+    call check( nf90_put_var(ncid, u_varid, u_save) )
+    call check( nf90_put_var(ncid, v_varid, v_save) )
+    call check( nf90_put_var(ncid, h_varid, h_save) )
+
+    call check( nf90_close(ncid) )
+
 
     ! DEBUG
     !u_temp = reshape(u, (/nx*ny/))

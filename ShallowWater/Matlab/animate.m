@@ -63,10 +63,9 @@ for it = 1:noutput
   warning on
 
   % Plot the velocity vectors
-  % RSD removed below
-  %quiver(x_1000km(3:interval:end), y_1000km(3:interval:end), ...
-  %       u(3:interval:end, 3:interval:end)',...
-  %       v(3:interval:end, 3:interval:end)','k');
+  quiver(x_1000km(3:interval:end), y_1000km(3:interval:end), ...
+         u(3:interval:end, 3:interval:end)',...
+         v(3:interval:end, 3:interval:end)','k');
 
   % Write the axis labels, title and time of the frame
   xlabel('X distance (1000s of km)');
