@@ -10,6 +10,7 @@
 
 program sw
 
+    use netcdf
     implicit none
 
     ! interface for function to find mean of values in an array
@@ -19,6 +20,7 @@ program sw
             real(8) :: mean
         end function
     end interface
+
 
     !!!!!!!!!!!!!!!!!!!!!!!!
     ! Section 0: Constants !
@@ -77,8 +79,9 @@ program sw
     !!!!!!!!!!!!!!!!!!!!!!!!!
 
     integer :: i
-    !real(8) :: r
+    integer :: rc   ! return code
     integer :: n    ! current timestep
+    integer :: ncid ! id of netcdf file
 
     real(8), parameter :: dt = dt_mins * 60.0       ! Timestep (s)
     real(8), parameter :: output_interval = output_interval_mins * 60.0        ! Time between outputs (s)
@@ -286,6 +289,10 @@ program sw
     ! Section 2: Main loop  !
     !!!!!!!!!!!!!!!!!!!!!!!!!
 
+    ! set up netcdf
+    call check( nf90_create("swtest.nc", NF90_CLOBBER, ncid) )
+    call check( nf90_close(ncid) )
+
 
     do n=1, nt
         !  Every fixed number of timesteps we store the fields
@@ -293,14 +300,9 @@ program sw
         !print *, "n=", n
 
         if (mod(n-1, timesteps_between_outputs) == 0) then
-            !    max_u = sqrt(max(u(:).*u(:)+v(:).*v(:)));
             u_temp = reshape(u, (/nx*ny/))
             v_temp = reshape(v, (/nx*ny/))
             max_u = sqrt(maxval(u_temp*u_temp + v_temp*v_temp))
-
-            !    disp(['Time = ' num2str((n-1)*dt/3600) ...
-            !      ' hours (max ' num2str(forecast_length_days*24) ...
-            !           '); max(|u|) = ' num2str(max_u)]);
 
             print *, "Time = ", (n-1)*dt/3600, " hours (max ", forecast_length_days*24, ") max(|u|) = ", max_u
             u_save(:,:,i_save) = u
@@ -312,15 +314,11 @@ program sw
         end if
 
         !  Compute the accelerations
-        !  u_accel = F(2:end-1,2:end-1).*v(2:end-1,2:end-1) - (g/(2*dx)).*(ORO(3:end,2:end-1)-ORO(1:end-2,2:end-1));
         u_accel = FCor(2:nx-1,2:ny-1) * v(2:nx-1,2:ny-1) - (g/(2.0*dx)) * (ORO(3:nx,2:ny-1) - ORO(1:nx-2,2:ny-1))
-
-        !  v_accel = -F(2:end-1,2:end-1).*u(2:end-1,2:end-1) - (g/(2*dy)).*(ORO(2:end-1,3:end)-ORO(2:end-1,1:end-2));
         v_accel = -FCor(2:nx-1,2:ny-1) * u(2:nx-1,2:ny-1) - (g/(2.0*dy)) * (ORO(2:nx-1,3:ny) - ORO(2:nx-1,1:ny-2))
 
         !  Call the Lax-Wendroff scheme to move forward one timestep
-        !  [unew, vnew, h_new] = lax_wendroff(dx, dy, dt, g, u, v, h, u_accel, v_accel);
-        call lax_wendroff(nx, ny, dx, dy, dt, g, u, v, h, u_accel, v_accel, unew, vnew, hnew)
+         call lax_wendroff(nx, ny, dx, dy, dt, g, u, v, h, u_accel, v_accel, unew, vnew, hnew)
 
         !  Update the wind and height fields, taking care to enforce
         !  boundary conditions
@@ -364,13 +362,13 @@ program sw
     end do
 
     ! DEBUG
-    u_temp = reshape(u, (/nx*ny/))
-    v_temp = reshape(v, (/nx*ny/))
-    max_u = sqrt(maxval(u_temp*u_temp + v_temp*v_temp))
+    !u_temp = reshape(u, (/nx*ny/))
+    !v_temp = reshape(v, (/nx*ny/))
+    !max_u = sqrt(maxval(u_temp*u_temp + v_temp*v_temp))
 
-    print *, "maxval(u_temp) = ", maxval(u_temp)
-    print *, "maxval(v_temp) = ", maxval(v_temp)
-    print *, "max_u = ", max_u
+    !print *, "maxval(u_temp) = ", maxval(u_temp)
+    !print *, "maxval(v_temp) = ", maxval(v_temp)
+    !print *, "max_u = ", max_u
 
 
 end program sw
@@ -381,8 +379,6 @@ function mean(arr)
     mean = sum(arr) / size(arr)
 end function
 
-
-!function [u_new, v_new, h_new] = lax_wendroff(dx, dy, dt, g, u, v, h, u_tendency, v_tendency);
 
 subroutine lax_wendroff(nx, ny, dx, dy, dt, g, u, v, h, u_tendency, v_tendency, u_new, v_new, h_new)
 
@@ -411,62 +407,35 @@ subroutine lax_wendroff(nx, ny, dx, dy, dt, g, u, v, h, u_tendency, v_tendency, 
     !
     ! First work out mid-point values in time and space
 
-    !print *, "sum(u) = ", sum(reshape(u, (/nx*ny/)))
-    !print *, "sum(u_tendency) = ", sum(reshape(u_tendency, (/(nx-2)*(ny-2)/)))
-
     uh = u * h
     vh = v * h
 
-    !print *, "sum(uh) = ", sum(reshape(uh, (/nx*ny/)))
 
     h_mid_xt = 0.5 * (h(2:nx,:)+h(1:nx-1,:)) -(0.5*dt/dx) * (uh(2:nx,:)-uh(1:nx-1,:))
     h_mid_yt = 0.5 * (h(:,2:ny)+h(:,1:ny-1)) -(0.5*dt/dy) * (vh(:,2:ny)-vh(:,1:ny-1))
 
-    !print *, "g = ", g
-    !print *, "sum(g * h**2) = ", sum(reshape(g * h**2, (/nx*ny/)))
-
-    ! Ux = uh.*u+0.5.*g.*h.^2;
     Ux = uh * u + 0.5 * g * h**2
-    !print *, "sum(Ux) = ", sum(reshape(Ux, (/nx*ny/)))
     Uy = uh * v
-    !print *, "sum(Uy) = ", sum(reshape(Uy, (/nx*ny/)))
     uh_mid_xt = 0.5 * (uh(2:nx,:)+uh(1:nx-1,:)) -(0.5*dt/dx) * (Ux(2:nx,:)-Ux(1:nx-1,:))
     uh_mid_yt = 0.5 * (uh(:,2:ny)+uh(:,1:ny-1)) -(0.5*dt/dy) * (Uy(:,2:ny)-Uy(:,1:ny-1))
 
-   ! print *, "sum(uh_mid_xt) = ", sum(reshape(uh_mid_xt, (/nx*ny/)))
-   ! print *, "sum(uh_mid_yt) = ", sum(reshape(uh_mid_yt, (/nx*ny/)))
 
     Vx = Uy
     Vy = vh * v + 0.5 * g * h**2
     vh_mid_xt = 0.5 * (vh(2:nx,:) + vh(1:nx-1,:)) -(0.5*dt/dx) * (Vx(2:nx,:) - Vx(1:nx-1,:))
     vh_mid_yt = 0.5 * (vh(:,2:ny) + vh(:,1:ny-1)) -(0.5*dt/dy) * (Vy(:,2:ny) - Vy(:,1:ny-1))
 
-   ! print *, "sum(vh_mid_xt) = ", sum(reshape(vh_mid_xt, (/nx*ny/)))
-   ! print *, "sum(vh_mid_yt) = ", sum(reshape(vh_mid_yt, (/nx*ny/)))
 
     ! Now use the mid-point values to predict the values at the next
     ! timestep
-    !h_new = h(2:end-1,2:end-1) ...
-    !  - (dt/dx).*(uh_mid_xt(2:end,2:end-1)-uh_mid_xt(1:end-1,2:end-1)) ...
-    !  - (dt/dy).*(vh_mid_yt(2:end-1,2:end)-vh_mid_yt(2:end-1,1:end-1));
 
     h_new = h(2:nx-1,2:ny-1) &
         - (dt/dx) * (uh_mid_xt(2:nx,2:ny-1) - uh_mid_xt(1:nx-1,2:ny-1)) &
         - (dt/dy) * (vh_mid_yt(2:nx-1,2:ny) - vh_mid_yt(2:nx-1,1:ny-1))
 
-  !  print *, "sum(h_new) = ", sum(reshape(h_new, (/(nx-2)*(ny-2)/)))
 
     Ux_mid_xt = uh_mid_xt * uh_mid_xt / h_mid_xt + 0.5 * g * h_mid_xt**2
     Uy_mid_yt = uh_mid_yt * vh_mid_yt / h_mid_yt
-
- !   print *, "maxval(Ux_mid_xt) = ", maxval(reshape(Ux_mid_xt, (/nx*ny/)))
-  !  print *, "maxval(Uy_mid_yt) = ", maxval(reshape(Uy_mid_yt, (/nx*ny/)))
-
-
-    !uh_new = uh(2:end-1,2:end-1) ...
-  !   - (dt/dx).*(Ux_mid_xt(2:end,2:end-1)-Ux_mid_xt(1:end-1,2:end-1)) ...
-  !   - (dt/dy).*(Uy_mid_yt(2:end-1,2:end)-Uy_mid_yt(2:end-1,1:end-1)) ...
-  !   + dt.*u_tendency.*0.5.*(h(2:end-1,2:end-1)+h_new);
 
 
     uh_new = uh(2:nx-1,2:ny-1) &
@@ -474,17 +443,9 @@ subroutine lax_wendroff(nx, ny, dx, dy, dt, g, u, v, h, u_tendency, v_tendency, 
       - (dt/dy) * (Uy_mid_yt(2:nx-1,2:ny) - Uy_mid_yt(2:nx-1,1:ny-1)) &
       + dt * u_tendency * 0.5 * (h(2:nx-1,2:ny-1) + h_new)
 
- !   print *, "sum(uh_new) = ", sum(reshape(uh_new, (/(nx-2)*(ny-2)/)))
 
     Vx_mid_xt = uh_mid_xt * vh_mid_xt / h_mid_xt
     Vy_mid_yt = vh_mid_yt * vh_mid_yt / h_mid_yt + 0.5 * g * h_mid_yt**2
-
-    !vh_new = vh(2:end-1,2:end-1) ...
-    !  - (dt/dx).*(Vx_mid_xt(2:end,2:end-1)-Vx_mid_xt(1:end-1,2:end-1)) ...
-    !  - (dt/dy).*(Vy_mid_yt(2:end-1,2:end)-Vy_mid_yt(2:end-1,1:end-1)) ...
-    !  + dt.*v_tendency.*0.5.*(h(2:end-1,2:end-1)+h_new);
-
-
 
     vh_new = vh(2:nx-1,2:ny-1) &
       - (dt/dx) * (Vx_mid_xt(2:nx,2:ny-1) - Vx_mid_xt(1:nx-1,2:ny-1)) &
@@ -494,12 +455,34 @@ subroutine lax_wendroff(nx, ny, dx, dy, dt, g, u, v, h, u_tendency, v_tendency, 
     u_new = uh_new / h_new
     v_new = vh_new / h_new
 
-  !  print *, "max(u_new) = ", maxval(reshape(u_new, (/(nx-2)*(ny-2)/)))
-  !  print *, "max(v_new) = ", maxval(reshape(v_new, (/(nx-2)*(ny-2)/)))
+
+    ! DEBUG
+    !print *, "sum(u) = ", sum(reshape(u, (/nx*ny/)))
+    !print *, "sum(u_tendency) = ", sum(reshape(u_tendency, (/(nx-2)*(ny-2)/)))
+    !print *, "sum(uh) = ", sum(reshape(uh, (/nx*ny/)))
+    !print *, "sum(uh_mid_xt) = ", sum(reshape(uh_mid_xt, (/nx*ny/)))
+    !print *, "sum(uh_mid_yt) = ", sum(reshape(uh_mid_yt, (/nx*ny/)))
+    !print *, "sum(vh_mid_xt) = ", sum(reshape(vh_mid_xt, (/nx*ny/)))
+    !print *, "sum(vh_mid_yt) = ", sum(reshape(vh_mid_yt, (/nx*ny/)))
+    !print *, "maxval(Ux_mid_xt) = ", maxval(reshape(Ux_mid_xt, (/nx*ny/)))
+    !print *, "maxval(Uy_mid_yt) = ", maxval(reshape(Uy_mid_yt, (/nx*ny/)))
+    !print *, "max(u_new) = ", maxval(reshape(u_new, (/(nx-2)*(ny-2)/)))
+    !print *, "max(v_new) = ", maxval(reshape(v_new, (/(nx-2)*(ny-2)/)))
 
     !print *, "Leaving lax_wendroff"
 
 end subroutine
+
+! NetCDF status check
+subroutine check(status)
+    use netcdf
+    integer, intent ( in) :: status
+
+    if(status /= nf90_noerr) then
+      print *, trim(nf90_strerror(status))
+      stop "Stopped due to NetCDF error"
+    end if
+end subroutine check
 
 
 
