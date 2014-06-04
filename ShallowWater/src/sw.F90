@@ -4,9 +4,17 @@
 ! http://www.met.reading.ac.uk/~swrhgnrj/shallow_water_model/
 !
 ! The Matlab has essentially been transcribed into Fortran, retaining
-! the same numerics, parameters, and code structure.
+! the same numerics, parameters, and code structure.  Currently, the
+! only parameters supported are:
 !
-! Author: Rocky Dunlap
+!   orography = FLAT
+!   initial_conditions = GAUSSIAN_BLOB
+!   initially_geostrophic = .false.
+!   add_random_height_noise = .false.
+!
+! Unlike the  original code, NetCDF is used to save output.
+!
+! Author: Rocky Dunlap  <rocky.dunlap@noaa.gov>
 
 program sw
 
@@ -69,10 +77,6 @@ program sw
 
     real(8), parameter :: dx=100.0e3    ! Zonal grid spacing (m)
     real(8), parameter :: dy=dx         ! Meridional grid spacing
-
-    ! Specify the range of heights to plot in metres
-    !plot_height_range = [9500 10500];
-
 
 
     !!!!!!!!!!!!!!!!!!!!!!!!!
@@ -139,10 +143,10 @@ program sw
         YCoord(i,:) = y
     end do
 
-    print *, "nt=", nt
-    print *, "timesteps_between_outputs=", timesteps_between_outputs
-    print *, "noutput=", noutput
-
+    !DEBUG
+    !print *, "nt=", nt
+    !print *, "timesteps_between_outputs=", timesteps_between_outputs
+    !print *, "noutput=", noutput
     !print *, "x=",x
     !print *, "y=", y
     !print *, "XCoord=", XCoord(:,1)
@@ -159,7 +163,6 @@ program sw
         stop
     end if
 
-    !print *, "H=", H
 
 !% Create the orography field "H"
 !switch orography
