@@ -1,44 +1,44 @@
 package org.earthsystemcurator.cupid.xtext.tests;
 
-import org.junit.runner.RunWith;
-import org.eclipse.xtext.junit4.InjectWith;
-import org.earthsystemcurator.CupidLanguageInjectorProvider;
-import org.eclipse.xtext.junit4.XtextRunner;
-
-import static org.junit.Assert.*;
-
-import org.eclipse.xtext.junit4.util.ParseHelper;
-
-import com.google.inject.Inject;
-
-import org.earthsystemcurator.cupidLanguage.Language;
-import org.junit.BeforeClass;
-import org.junit.Test;
-import org.eclipse.xtext.generator.AbstractFileSystemAccess;
-import org.eclipse.xtext.generator.IFileSystemAccess;
-import org.eclipse.xtext.generator.IGenerator;
-import org.eclipse.xtext.generator.InMemoryFileSystemAccess;
-import org.eclipse.ocl.examples.pivot.model.OCLstdlib;
-import org.eclipse.ocl.examples.xtext.oclinecore.OCLinEcoreStandaloneSetup;
-import org.junit.Before;
-import org.eclipse.xtext.generator.JavaIoFileSystemAccess;
-
-import java.net.URL;
-import java.net.MalformedURLException;
-
-import org.eclipse.emf.ecore.resource.ResourceSet;
-import org.eclipse.emf.ecore.resource.impl.ResourceSetImpl;
-import org.eclipse.emf.ecore.resource.Resource;
-import org.eclipse.emf.common.util.URI;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
 
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.InputStream;
+import java.net.MalformedURLException;
+import java.net.URL;
+import java.util.HashSet;
+import java.util.Set;
+
+import org.earthsystemcurator.CupidLanguageInjectorProvider;
+import org.earthsystemcurator.cupidLanguage.ConceptDef;
+import org.earthsystemcurator.cupidLanguage.Language;
+import org.eclipse.emf.common.util.URI;
+import org.eclipse.emf.ecore.EClass;
+import org.eclipse.emf.ecore.EPackage;
+import org.eclipse.emf.ecore.EReference;
+import org.eclipse.emf.ecore.resource.Resource;
+import org.eclipse.emf.ecore.resource.ResourceSet;
+import org.eclipse.emf.ecore.resource.impl.ResourceSetImpl;
+import org.eclipse.ocl.examples.pivot.model.OCLstdlib;
+import org.eclipse.ocl.examples.xtext.oclinecore.OCLinEcoreStandaloneSetup;
+import org.eclipse.photran.core.IFortranAST;
+import org.eclipse.photran.internal.core.vpg.PhotranVPG;
+import org.eclipse.xtext.generator.IFileSystemAccess;
+import org.eclipse.xtext.generator.IGenerator;
+import org.eclipse.xtext.generator.JavaIoFileSystemAccess;
+import org.eclipse.xtext.junit4.InjectWith;
+import org.eclipse.xtext.junit4.XtextRunner;
+import org.eclipse.xtext.junit4.util.ParseHelper;
+import org.eclipse.xtext.parser.IEncodingProvider;
+import org.eclipse.xtext.service.AbstractGenericModule;
+import org.junit.BeforeClass;
+import org.junit.Test;
+import org.junit.runner.RunWith;
 
 import com.google.inject.Guice;
-
-import org.eclipse.xtext.service.AbstractGenericModule;
-import org.eclipse.xtext.parser.IEncodingProvider;
+import com.google.inject.Inject;
 
 @InjectWith(CupidLanguageInjectorProvider.class)
 @RunWith(XtextRunner.class)
@@ -50,11 +50,11 @@ public class CupidTests {
 	@Inject
 	IGenerator generator;
 	
-	IFileSystemAccess fsa;
+	JavaIoFileSystemAccess fsa;
 	
 	public CupidTests() {
 		JavaIoFileSystemAccess fsa = new JavaIoFileSystemAccess();
-		fsa.setOutputPath("C:\\Users\\Rocky\\git\\cupid\\org.earthsystemcurator.cupid.xtext.tests\\src\\tests");
+		fsa.setOutputPath("src/tests/output");
 		
 		Guice.createInjector(new AbstractGenericModule() {	
 			@SuppressWarnings("unused")
@@ -73,8 +73,8 @@ public class CupidTests {
 	}
 
 	@Test
-	public void simpleParse() {		
-		Language model = parseSimpleLang();
+	public void parseSimple() {		
+		Language model = parse("src/tests/simple.cupid");
 		
 		assertNotNull(model);
 		assertNotNull(model.getConceptDef());
@@ -83,38 +83,96 @@ public class CupidTests {
 	}
 	
 	@Test
-	public void generatorTest() {
+	public void parseSimple2() {		
+		Language model = parse("src/tests/simple2.cupid");
+		
+		assertNotNull(model);
+		assertNotNull(model.getConceptDef());
+		assertNotNull(model.getConceptDef().get(0));
+		assertEquals(model.getConceptDef().get(0).getName(), "Simple2");
+		assertEquals(model.getConceptDef().get(1).getName(), "Con1");
+		assertEquals(model.getConceptDef().get(2).getName(), "Con2");
+		
+		ConceptDef simple2 = model.getConceptDef().get(0);
+		assertEquals(simple2.getChild().get(0).getName(), "c1");
+		assertEquals(simple2.getChild().get(1).getName(), "c2");
+		assertEquals(simple2.getChild().get(2).getName(), "c3");
+	}
+	
+	
+	@Test
+	public void generatorSimple() {
 			
-		Language lang = parseSimpleLang();
+		Language lang = parse("src/tests/simple.cupid");
 		assertNotNull(lang.eResource());
 		assertNotNull(fsa);
 		
 		generator.doGenerate(lang.eResource(), fsa);
+		CharSequence cs;
+		cs = fsa.readTextFile("simple.oclinecore");
+		cs = fsa.readTextFile("simple.ecore");
 
 	}
-
-	public Language parseSimpleLang() {
+	
+	@Test
+	public void generatorSimple2() {
+			
+		Language lang = parse("src/tests/simple2.cupid");
+		assertNotNull(lang.eResource());
+		assertNotNull(fsa);
 		
-		URL langURL = null;
-		try {
-			langURL = new URL("file:C:\\Users\\Rocky\\git\\cupid\\org.earthsystemcurator.cupid.xtext.tests\\src\\tests\\simple.cupid");
-		} catch (MalformedURLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+		generator.doGenerate(lang.eResource(), fsa);
+		CharSequence cs;
+		cs = fsa.readTextFile("simple2.oclinecore");
+		cs = fsa.readTextFile("simple2.ecore");
+
+		EPackage ep = getEPackageFromEcore("simple2.ecore");
+		assertEquals(ep.getName(), "simple2");
+		assertNotNull(ep.getEClassifier("Simple2"));
+		assertNotNull(ep.getEClassifier("Con1"));
+		assertNotNull(ep.getEClassifier("Con2"));
+		assertNotNull(ep.getEClassifier("Simple2__C3"));
+		
+		EClass con1class = (EClass) ep.getEClassifier("Con1");
+		EReference c2ref = con1class.getEReferences().get(0);
+		assertEquals(c2ref.getLowerBound(), 0);
+		assertEquals(c2ref.getUpperBound(), -1);
+		
+		EClass con2class = (EClass) ep.getEClassifier("Con2");
+		EReference c1ref = con2class.getEReferences().get(0);
+		assertEquals(c1ref.getLowerBound(), 1);
+		assertEquals(c1ref.getUpperBound(), -1);
+		
+		
+	}
+
+	@Test
+	public void parseFortran() {
+		
+		PhotranVPG vpg = PhotranVPG.getInstance();
+		Set<IFortranAST> asts = new HashSet<IFortranAST>();
+		
+		
+	}
+	
+	private EPackage getEPackageFromEcore(String filename) {
+		ResourceSet rs = new ResourceSetImpl();
+		Resource ecoreResource = rs.getResource(fsa.getURI("simple2.ecore"), true);
+		return (EPackage) ecoreResource.getContents().get(0);
+	}
+
+	private Language parse(String filename) {
+			
 		InputStream is = null;
 		try {
-			is = new FileInputStream(langURL.getFile());
+			is = new FileInputStream(filename);
 		} catch (FileNotFoundException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
+			return null;
 		}
 		
 		ResourceSet rs = new ResourceSetImpl();
-		//val langResource = rs.getResource(URI.createFileURI(langURL.getPath()), true);
-		//langResource.
-		
-		return parser.parse(is, URI.createFileURI(langURL.getPath()), null, rs);
+		return parser.parse(is, URI.createFileURI(filename), null, rs);
 	}
 
 }

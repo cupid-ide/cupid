@@ -1,0 +1,33 @@
+import ecore : 'http://www.eclipse.org/emf/2002/Ecore#/';
+
+package simple : simple = 'http://www.earthsystemcurator.org/cupid/test/Simple'
+{
+	
+	--
+	--common types and classes
+	--datatype AST__Module : 'org.eclipse.photran.internal.core.parser.ASTModuleNode' { };
+	--datatype AST__Call : 'org.eclipse.photran.internal.core.parser.ASTCallStmtNode' { };
+	--datatype AST__Subroutine : 'org.eclipse.photran.internal.core.parser.ASTSubroutineSubprogramNode' { };
+	--datatype AST__UsesModule : 'org.eclipse.photran.internal.core.parser.ASTUseStmtNode' { };
+
+	abstract class MappedElement
+	{
+		attribute mapsTo : ecore::EJavaObject [0..1] { transient };
+	}
+
+	--language specific types and classes
+	
+	class TopConcept extends MappedElement
+	{
+		attribute name : String ;
+		property Module : TopConcept__Module[*] { composes };
+		
+	}
+	
+	class TopConcept__Module extends MappedElement
+	{
+		
+	}
+	
+}
+

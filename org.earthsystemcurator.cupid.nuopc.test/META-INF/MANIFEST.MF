@@ -1,0 +1,10 @@
+Manifest-Version: 1.0
+Bundle-ManifestVersion: 2
+Bundle-Name: Cupid Test Fragment
+Bundle-SymbolicName: org.earthsystemcurator.cupid.nuopc.test
+Bundle-Version: 1.0.0.qualifier
+Fragment-Host: org.earthsystemcurator.cupid.nuopc.fsml;bundle-version="1.0.0"
+Bundle-RequiredExecutionEnvironment: JavaSE-1.7
+Require-Bundle: org.junit,
+ org.apache.commons.io;bundle-version="2.0.1"
+Import-Package: org.eclipse.photran.core

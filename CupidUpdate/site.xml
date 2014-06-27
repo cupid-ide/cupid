@@ -1,7 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<site>
-   <feature url="features/cupidfeature_1.0.0.201404111642.jar" id="cupidfeature" version="1.0.0.201404111642">
-      <category name="Cupid"/>
-   </feature>
-   <category-def name="Cupid" label="Cupid"/>
-</site>

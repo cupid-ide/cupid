@@ -3,18 +3,17 @@
  */
 package org.earthsystemcurator.generator
 
-import org.eclipse.emf.ecore.resource.Resource
-import org.eclipse.xtext.generator.IGenerator
-import org.eclipse.xtext.generator.IFileSystemAccess
+import org.earthsystemcurator.CupidToEcore
+import org.earthsystemcurator.cupidLanguage.Cardinality
 import org.earthsystemcurator.cupidLanguage.ConceptDef
 import org.earthsystemcurator.cupidLanguage.Language
-import org.earthsystemcurator.cupidLanguage.SubconceptOrAttribute
-import org.earthsystemcurator.cupidLanguage.Cardinality
-import org.eclipse.emf.ecore.EObject
-import org.earthsystemcurator.CupidToEcore
-import org.eclipse.xtext.generator.IFileSystemAccessExtension2
 import org.earthsystemcurator.cupidLanguage.Mapping
-import org.earthsystemcurator.cupidLanguage.Call
+import org.earthsystemcurator.cupidLanguage.SubconceptOrAttribute
+import org.eclipse.emf.ecore.EObject
+import org.eclipse.emf.ecore.resource.Resource
+import org.eclipse.xtext.generator.IFileSystemAccess
+import org.eclipse.xtext.generator.IFileSystemAccessExtension2
+import org.eclipse.xtext.generator.IGenerator
 
 /**
  * Generates code from your model files on save.
