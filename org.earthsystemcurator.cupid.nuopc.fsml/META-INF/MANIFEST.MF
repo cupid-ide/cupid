@@ -1,7 +1,7 @@
 Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
 Bundle-Name: %pluginName
-Bundle-SymbolicName: org.earthsystemcurator.cupid.nuopc.fsml;singleton:=true
+Bundle-SymbolicName: org.earthsystemmodeling.cupid;singleton:=true
 Bundle-Version: 1.0.0.qualifier
 Bundle-ClassPath: .,
  lib/ST-4.0.7.jar,
@@ -26,10 +26,6 @@ Bundle-ClassPath: .,
 Bundle-Vendor: %providerName
 Bundle-Localization: plugin
 Bundle-RequiredExecutionEnvironment: JavaSE-1.7
-Export-Package: org.earthsystemcurator.cupid.nuopc.fsml.nuopc,
- org.earthsystemcurator.cupid.nuopc.fsml.nuopc.impl,
- org.earthsystemcurator.cupid.nuopc.fsml.nuopc.util,
- org.earthsystemcurator.cupid.nuopc.fsml.util
 Require-Bundle: org.eclipse.core.runtime,
  org.eclipse.emf.ecore;visibility:=reexport,
  org.eclipse.photran.core.vpg;bundle-version="8.0.0",
@@ -66,4 +62,4 @@ Require-Bundle: org.eclipse.core.runtime,
  org.eclipse.xtext,
  org.earthsystemcurator.cupid.xtext;bundle-version="1.0.0"
 Bundle-ActivationPolicy: lazy
-Bundle-Activator: org.earthsystemcurator.cupid.nuopc.fsml.core.CupidActivator
+Bundle-Activator: org.earthsystemmodeling.cupid.core.CupidActivator

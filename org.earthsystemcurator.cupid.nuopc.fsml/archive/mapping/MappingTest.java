@@ -1,4 +1,4 @@
-package org.earthsystemcurator.cupid.nuopc.fsml.mapping;
+package org.earthsystemmodeling.cupid.mapping;
 
 import org.eclipse.photran.core.IFortranAST;
 import org.eclipse.photran.internal.core.vpg.PhotranVPG;
@@ -6,8 +6,8 @@ import org.eclipse.photran.internal.core.vpg.PhotranVPG;
 @SuppressWarnings("restriction")
 public class MappingTest {
 
-	public static String ffile = "C:\\Users\\Rocky\\Documents\\eclipse\\workspace4.2-cplgen\\org.earthsystemcurator.cupid.nuopc.fsml\\instance\\atm.F90";
-	public static String mfile = "C:\\Users\\Rocky\\Documents\\eclipse\\workspace4.2-cplgen\\org.earthsystemcurator.cupid.nuopc.fsml\\instance\\Model.xmi";
+	public static String ffile = "C:\\Users\\Rocky\\Documents\\eclipse\\workspace4.2-cplgen\\org.earthsystemmodeling.cupid\\instance\\atm.F90";
+	public static String mfile = "C:\\Users\\Rocky\\Documents\\eclipse\\workspace4.2-cplgen\\org.earthsystemmodeling.cupid\\instance\\Model.xmi";
 	
 	public void go() {
 		

@@ -1,4 +1,4 @@
-package org.earthsystemcurator.cupid.nuopc.fsml.builder;
+package org.earthsystemmodeling.cupid.builder;
 
 import java.util.Iterator;
 import org.eclipse.core.commands.*;

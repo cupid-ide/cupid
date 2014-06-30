@@ -1,4 +1,4 @@
-package org.earthsystemcurator.cupid.nuopc.fsml.core;
+package org.earthsystemmodeling.cupid.core;
 
 
 import java.io.ByteArrayInputStream;
@@ -16,13 +16,13 @@ import java.util.Set;
 import java.util.regex.Matcher;
 
 import org.earthsystemcurator.CupidLanguageStandaloneSetup;
-import org.earthsystemcurator.cupid.nuopc.fsml.nuopc.NUOPCApplication;
-import org.earthsystemcurator.cupid.nuopc.fsml.nuopc.NUOPCFactory;
-import org.earthsystemcurator.cupid.nuopc.fsml.properties.CupidPropertyPage;
-import org.earthsystemcurator.cupid.nuopc.fsml.util.CodeQuery;
-import org.earthsystemcurator.cupid.nuopc.fsml.util.CodeQuery2;
-import org.earthsystemcurator.cupid.nuopc.fsml.util.EcoreUtils;
-import org.earthsystemcurator.cupid.nuopc.fsml.util.Regex;
+import org.earthsystemmodeling.cupid.nuopc.NUOPCApplication;
+import org.earthsystemmodeling.cupid.nuopc.NUOPCFactory;
+import org.earthsystemmodeling.cupid.properties.CupidPropertyPage;
+import org.earthsystemmodeling.cupid.util.CodeQuery;
+import org.earthsystemmodeling.cupid.util.CodeQuery2;
+import org.earthsystemmodeling.cupid.util.EcoreUtils;
+import org.earthsystemmodeling.cupid.util.Regex;
 import org.earthsystemcurator.cupidLanguage.Call;
 import org.earthsystemcurator.cupidLanguage.CupidLanguageFactory;
 import org.earthsystemcurator.cupidLanguage.IDOrPathExpr;

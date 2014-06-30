@@ -1,4 +1,0 @@
-<?xml version="1.0" encoding="ASCII"?>
-<nuopc:Model xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:nuopc="http://www.earthsystemcurator.org/nuopc" name="atm" usesAllImports="true">
-  <definesSetServices name="SetServices" parameters="true" callsSetEntryPointPhase1="true" callsSetEntryPointPhase2="true"/>
-</nuopc:Model>

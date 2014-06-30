@@ -1,4 +1,4 @@
-package org.earthsystemcurator.cupid.nuopc.fsml.core;
+package org.earthsystemmodeling.cupid.core;
 
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
@@ -7,9 +7,9 @@ import java.util.IdentityHashMap;
 import java.util.List;
 import java.util.Map;
 
-import org.earthsystemcurator.cupid.nuopc.fsml.util.CodeTransformation;
-import org.earthsystemcurator.cupid.nuopc.fsml.util.EcoreUtils;
-import org.earthsystemcurator.cupid.nuopc.fsml.util.Regex;
+import org.earthsystemmodeling.cupid.util.CodeTransformation;
+import org.earthsystemmodeling.cupid.util.EcoreUtils;
+import org.earthsystemmodeling.cupid.util.Regex;
 import org.earthsystemcurator.cupidLanguage.ImplicitContextMapping;
 import org.earthsystemcurator.cupidLanguage.Mapping;
 import org.eclipse.core.resources.IProject;

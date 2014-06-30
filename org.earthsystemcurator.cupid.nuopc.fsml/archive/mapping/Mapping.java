@@ -1,4 +1,4 @@
-package org.earthsystemcurator.cupid.nuopc.fsml.mapping;
+package org.earthsystemmodeling.cupid.mapping;
 
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.photran.core.IFortranAST;

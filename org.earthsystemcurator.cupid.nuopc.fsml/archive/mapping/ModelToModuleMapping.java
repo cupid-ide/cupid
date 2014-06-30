@@ -1,4 +1,4 @@
-package org.earthsystemcurator.cupid.nuopc.fsml.mapping;
+package org.earthsystemmodeling.cupid.mapping;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -8,11 +8,11 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
-import org.earthsystemcurator.cupid.nuopc.fsml.nuopc.Model;
-import org.earthsystemcurator.cupid.nuopc.fsml.nuopc.ModelImplementsSetServices;
-import org.earthsystemcurator.cupid.nuopc.fsml.nuopc.NUOPCFactory;
-import org.earthsystemcurator.cupid.nuopc.fsml.util.CodeExtraction;
-import org.earthsystemcurator.cupid.nuopc.fsml.util.CodeQuery;
+import org.earthsystemmodeling.cupid.nuopc.Model;
+import org.earthsystemmodeling.cupid.nuopc.ModelImplementsSetServices;
+import org.earthsystemmodeling.cupid.nuopc.NUOPCFactory;
+import org.earthsystemmodeling.cupid.util.CodeExtraction;
+import org.earthsystemmodeling.cupid.util.CodeQuery;
 import org.eclipse.photran.core.IFortranAST;
 import org.eclipse.photran.internal.core.parser.ASTModuleNameNode;
 import org.eclipse.photran.internal.core.parser.ASTModuleNode;
