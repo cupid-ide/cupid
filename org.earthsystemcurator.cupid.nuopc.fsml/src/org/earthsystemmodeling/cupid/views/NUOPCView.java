@@ -3,11 +3,11 @@ package org.earthsystemmodeling.cupid.views;
 import java.awt.Color;
 import java.lang.reflect.InvocationTargetException;
 
-import org.earthsystemcurator.FSM;
-import org.earthsystemcurator.cupidLanguage.ConceptDef;
-import org.earthsystemcurator.cupidLanguage.SubconceptOrAttribute;
+import org.earthsystemmodeling.FSM;
 import org.earthsystemmodeling.cupid.handlers.RewriteASTRunnable;
 import org.earthsystemmodeling.cupid.views.NUOPCViewContentProvider.NUOPCModelElem;
+import org.earthsystemmodeling.psyche.ConceptDef;
+import org.earthsystemmodeling.psyche.SubconceptOrAttribute;
 import org.eclipse.core.resources.IMarker;
 import org.eclipse.core.resources.IProject;
 import org.eclipse.core.resources.IResourceChangeEvent;

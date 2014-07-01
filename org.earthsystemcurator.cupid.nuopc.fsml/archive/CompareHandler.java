@@ -1,6 +1,6 @@
-package org.earthsystemcurator.cupid.nuopc.fsml.handlers;
+package org.earthsystemmodeling.cupid.nuopc.fsml.handlers;
 
-import org.earthsystemcurator.cupid.nuopc.fsml.nuopc.NUOPCPackage;
+import org.earthsystemmodeling.cupid.nuopc.fsml.nuopc.NUOPCPackage;
 import org.eclipse.core.commands.AbstractHandler;
 import org.eclipse.core.commands.ExecutionEvent;
 import org.eclipse.core.commands.ExecutionException;

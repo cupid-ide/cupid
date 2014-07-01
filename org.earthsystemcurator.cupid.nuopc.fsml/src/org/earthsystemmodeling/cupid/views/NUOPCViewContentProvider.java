@@ -3,11 +3,11 @@ package org.earthsystemmodeling.cupid.views;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.earthsystemcurator.FSM;
-import org.earthsystemcurator.cupidLanguage.ConceptDef;
-import org.earthsystemcurator.cupidLanguage.SubconceptOrAttribute;
+import org.earthsystemmodeling.FSM;
 import org.earthsystemmodeling.cupid.core.CupidStorage;
 import org.earthsystemmodeling.cupid.util.Regex;
+import org.earthsystemmodeling.psyche.ConceptDef;
+import org.earthsystemmodeling.psyche.SubconceptOrAttribute;
 import org.eclipse.core.resources.IProject;
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.emf.common.util.Diagnostic;

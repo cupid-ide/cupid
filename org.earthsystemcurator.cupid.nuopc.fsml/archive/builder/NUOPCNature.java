@@ -3,7 +3,7 @@ package org.earthsystemmodeling.cupid.builder;
 import java.util.HashMap;
 import java.util.Map;
 
-import org.earthsystemcurator.FSM;
+import org.earthsystemmodeling.FSM;
 import org.earthsystemmodeling.cupid.nuopc.NUOPCApplication;
 import org.eclipse.core.resources.ICommand;
 import org.eclipse.core.resources.IMarker;

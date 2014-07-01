@@ -8,9 +8,9 @@ import java.io.IOException;
 import java.net.URL;
 
 import org.apache.commons.io.FileUtils;
-import org.earthsystemcurator.FSM;
-import org.earthsystemcurator.cupidLanguage.Language;
+import org.earthsystemmodeling.FSM;
 import org.earthsystemmodeling.cupid.core.ReverseEngineer2;
+import org.earthsystemmodeling.psyche.Language;
 import org.eclipse.core.resources.IProject;
 import org.eclipse.core.resources.IResource;
 import org.eclipse.core.resources.IWorkspaceRoot;
@@ -120,14 +120,9 @@ public class CupidTest {
 		return (EList<EObject>) o.eGet(eref);
 	}
 	
-	//@Test
-	//public void copyTest() throws IOException, CoreException {
-	//	copyProjectToWorkspace("fortran");
-	//}
-	
 	@Test
 	public void re_Simple_ProjA() throws IOException, CoreException {
-		EObject result = reverseEngineer("ProjA", "langs/Simple.cupid");
+		EObject result = reverseEngineer("ProjA", "langs/Simple.psyche");
 		assertNotNull(result);
 		assertEquals("TopConcept", result.eClass().getName());
 		
@@ -137,7 +132,7 @@ public class CupidTest {
 	
 	@Test
 	public void re_Simple_ProjB() throws IOException, CoreException {
-		EObject result = reverseEngineer("ProjB", "langs/Simple.cupid");
+		EObject result = reverseEngineer("ProjB", "langs/Simple.psyche");
 		assertNotNull(result);
 		assertEquals("TopConcept", result.eClass().getName());
 		

@@ -2,17 +2,17 @@ package org.earthsystemmodeling.cupid.views;
 
 import java.net.URL;
 
-import org.earthsystemcurator.FSM;
-import org.earthsystemcurator.cupidLanguage.Call;
-import org.earthsystemcurator.cupidLanguage.ImplicitContextMapping;
-import org.earthsystemcurator.cupidLanguage.Mapping;
-import org.earthsystemcurator.cupidLanguage.Module;
-import org.earthsystemcurator.cupidLanguage.SubconceptOrAttribute;
-import org.earthsystemcurator.cupidLanguage.Subroutine;
-import org.earthsystemcurator.cupidLanguage.UsesEntity;
-import org.earthsystemcurator.cupidLanguage.UsesModule;
-import org.earthsystemcurator.cupidLanguage.VariableDeclaration;
+import org.earthsystemmodeling.FSM;
 import org.earthsystemmodeling.cupid.views.NUOPCViewContentProvider.NUOPCModelElem;
+import org.earthsystemmodeling.psyche.Call;
+import org.earthsystemmodeling.psyche.ImplicitContextMapping;
+import org.earthsystemmodeling.psyche.Mapping;
+import org.earthsystemmodeling.psyche.Module;
+import org.earthsystemmodeling.psyche.SubconceptOrAttribute;
+import org.earthsystemmodeling.psyche.Subroutine;
+import org.earthsystemmodeling.psyche.UsesEntity;
+import org.earthsystemmodeling.psyche.UsesModule;
+import org.earthsystemmodeling.psyche.VariableDeclaration;
 import org.eclipse.core.runtime.FileLocator;
 import org.eclipse.core.runtime.Path;
 import org.eclipse.jface.resource.ImageDescriptor;
@@ -22,12 +22,9 @@ import org.eclipse.jface.viewers.StyledCellLabelProvider;
 import org.eclipse.jface.viewers.StyledString;
 import org.eclipse.jface.viewers.ViewerCell;
 import org.eclipse.swt.SWT;
-import org.eclipse.swt.custom.StyleRange;
-import org.eclipse.swt.graphics.TextStyle;
 import org.eclipse.swt.widgets.Display;
 import org.osgi.framework.Bundle;
 import org.osgi.framework.FrameworkUtil;
-import org.stringtemplate.v4.ST;
 
 class NUOPCViewLabelProvider extends StyledCellLabelProvider { //implements ITableLabelProvider {
 

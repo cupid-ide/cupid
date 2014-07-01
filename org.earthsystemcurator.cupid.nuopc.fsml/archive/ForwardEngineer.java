@@ -22,7 +22,7 @@ import org.earthsystemmodeling.cupid.util.CodeExtraction;
 import org.earthsystemmodeling.cupid.util.CodeQuery;
 import org.earthsystemmodeling.cupid.util.EcoreUtils;
 import org.earthsystemmodeling.cupid.util.Regex;
-import org.earthsystemcurator.cupidLanguage.Call;
+import org.earthsystemmodeling.cupidLanguage.Call;
 import org.eclipse.core.resources.IFile;
 import org.eclipse.core.resources.IMarker;
 import org.eclipse.core.resources.IProject;

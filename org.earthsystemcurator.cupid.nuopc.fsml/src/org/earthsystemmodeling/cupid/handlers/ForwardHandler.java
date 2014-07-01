@@ -8,7 +8,7 @@ import java.io.UnsupportedEncodingException;
 import java.lang.reflect.InvocationTargetException;
 import java.util.HashSet;
 
-import org.earthsystemcurator.FSM;
+import org.earthsystemmodeling.FSM;
 import org.eclipse.cdt.core.model.ITranslationUnit;
 import org.eclipse.compare.internal.DocLineComparator;
 import org.eclipse.compare.rangedifferencer.RangeDifference;

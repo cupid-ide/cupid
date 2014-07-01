@@ -1,6 +1,6 @@
 package org.earthsystemmodeling.cupid.handlers;
 
-import org.earthsystemcurator.FSM;
+import org.earthsystemmodeling.FSM;
 import org.eclipse.core.resources.IMarker;
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.ui.IMarkerResolution;

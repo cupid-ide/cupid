@@ -7,4 +7,3 @@ Fragment-Host: org.earthsystemmodeling.cupid;bundle-version="1.0.0.qualifier"
 Bundle-RequiredExecutionEnvironment: JavaSE-1.7
 Require-Bundle: org.junit,
  org.apache.commons.io;bundle-version="2.0.1"
-Import-Package: org.eclipse.photran.core

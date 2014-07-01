@@ -4,12 +4,12 @@ package org.earthsystemmodeling.cupid.core;
 import java.util.HashSet;
 import java.util.Set;
 
-import org.earthsystemcurator.FSM;
-import org.earthsystemcurator.cupidLanguage.ConceptDef;
-import org.earthsystemcurator.cupidLanguage.Language;
+import org.earthsystemmodeling.FSM;
 import org.earthsystemmodeling.cupid.properties.CupidPropertyPage;
 import org.earthsystemmodeling.cupid.util.CodeQuery2;
 import org.earthsystemmodeling.cupid.util.CodeTransformation;
+import org.earthsystemmodeling.psyche.ConceptDef;
+import org.earthsystemmodeling.psyche.Language;
 import org.eclipse.core.resources.IFile;
 import org.eclipse.core.resources.IProject;
 import org.eclipse.core.resources.IResource;

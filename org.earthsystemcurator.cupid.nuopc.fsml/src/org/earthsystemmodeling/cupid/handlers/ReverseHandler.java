@@ -3,14 +3,14 @@ package org.earthsystemmodeling.cupid.handlers;
 import java.net.MalformedURLException;
 import java.net.URL;
 
-import org.earthsystemcurator.FSM;
-import org.earthsystemcurator.cupidLanguage.Language;
+import org.earthsystemmodeling.FSM;
 import org.earthsystemmodeling.cupid.core.CupidActivator;
 import org.earthsystemmodeling.cupid.core.CupidStorage;
 import org.earthsystemmodeling.cupid.core.ReverseEngineer2;
 import org.earthsystemmodeling.cupid.preferences.CupidPreferencePage;
 import org.earthsystemmodeling.cupid.util.Regex;
 import org.earthsystemmodeling.cupid.views.NUOPCView;
+import org.earthsystemmodeling.psyche.Language;
 import org.eclipse.cdt.core.model.ITranslationUnit;
 import org.eclipse.core.commands.AbstractHandler;
 import org.eclipse.core.commands.ExecutionEvent;

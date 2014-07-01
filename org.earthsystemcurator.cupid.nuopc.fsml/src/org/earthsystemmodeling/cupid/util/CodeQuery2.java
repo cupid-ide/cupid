@@ -7,21 +7,21 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
-import org.earthsystemcurator.cupidLanguage.ActualParam;
-import org.earthsystemcurator.cupidLanguage.ActualParamByKeyword;
-import org.earthsystemcurator.cupidLanguage.Call;
-import org.earthsystemcurator.cupidLanguage.DeclaredEntity;
-import org.earthsystemcurator.cupidLanguage.Expr;
-import org.earthsystemcurator.cupidLanguage.FormalParam;
-import org.earthsystemcurator.cupidLanguage.FunctionAssignment;
-import org.earthsystemcurator.cupidLanguage.Module;
-import org.earthsystemcurator.cupidLanguage.ModuleName;
-import org.earthsystemcurator.cupidLanguage.PathExpr;
-import org.earthsystemcurator.cupidLanguage.Subroutine;
-import org.earthsystemcurator.cupidLanguage.SubroutineName;
-import org.earthsystemcurator.cupidLanguage.UsesEntity;
-import org.earthsystemcurator.cupidLanguage.UsesModule;
-import org.earthsystemcurator.cupidLanguage.VariableDeclaration;
+import org.earthsystemmodeling.psyche.ActualParam;
+import org.earthsystemmodeling.psyche.ActualParamByKeyword;
+import org.earthsystemmodeling.psyche.Call;
+import org.earthsystemmodeling.psyche.DeclaredEntity;
+import org.earthsystemmodeling.psyche.Expr;
+import org.earthsystemmodeling.psyche.FormalParam;
+import org.earthsystemmodeling.psyche.FunctionAssignment;
+import org.earthsystemmodeling.psyche.Module;
+import org.earthsystemmodeling.psyche.ModuleName;
+import org.earthsystemmodeling.psyche.PathExpr;
+import org.earthsystemmodeling.psyche.Subroutine;
+import org.earthsystemmodeling.psyche.SubroutineName;
+import org.earthsystemmodeling.psyche.UsesEntity;
+import org.earthsystemmodeling.psyche.UsesModule;
+import org.earthsystemmodeling.psyche.VariableDeclaration;
 import org.eclipse.photran.core.IFortranAST;
 import org.eclipse.photran.internal.core.analysis.binding.Definition;
 import org.eclipse.photran.internal.core.analysis.binding.ScopingNode;
@@ -385,7 +385,7 @@ public class CodeQuery2 {
 		return result;
 	}
 	
-	public static Type translateType(org.earthsystemcurator.cupidLanguage.Type inType) {
+	public static Type translateType(org.earthsystemmodeling.psyche.Type inType) {
 		if (inType.isReal()) return Type.REAL;
 		else if (inType.isCharacter()) return Type.CHARACTER;
 		else if (inType.isDouble()) return Type.DOUBLEPRECISION;
@@ -418,7 +418,7 @@ public class CodeQuery2 {
 	public static Map<ASTTypeDeclarationStmtNode, Map<PathExpr, String>> variableDeclaration(ScopingNode node, VariableDeclaration mapping) {
 			
 		Map<ASTTypeDeclarationStmtNode, Map<PathExpr, String>> result = new HashMap<ASTTypeDeclarationStmtNode, Map<PathExpr, String>>();
-		org.earthsystemcurator.cupidLanguage.Type type = mapping.getType();
+		org.earthsystemmodeling.psyche.Type type = mapping.getType();
 		
 		Set<ASTTypeDeclarationStmtNode> nodes = node.findAll(ASTTypeDeclarationStmtNode.class);
 		for (ASTTypeDeclarationStmtNode n : nodes) {

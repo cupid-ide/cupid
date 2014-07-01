@@ -1,6 +1,6 @@
-package org.earthsystemcurator.cupid.nuopc.fsml.nav;
+package org.earthsystemmodeling.cupid.nuopc.fsml.nav;
 
-import org.earthsystemcurator.cupid.nuopc.fsml.nuopc.NUOPCApplication;
+import org.earthsystemmodeling.cupid.nuopc.fsml.nuopc.NUOPCApplication;
 import org.eclipse.core.resources.IFile;
 import org.eclipse.core.resources.IProject;
 import org.eclipse.core.runtime.CoreException;

@@ -7,12 +7,12 @@ import java.util.IdentityHashMap;
 import java.util.List;
 import java.util.Map;
 
-import org.earthsystemcurator.CupidToEcore;
+import org.earthsystemmodeling.CupidToEcore;
 import org.earthsystemmodeling.cupid.util.CodeTransformation;
 import org.earthsystemmodeling.cupid.util.Regex;
-import org.earthsystemcurator.cupidLanguage.ImplicitContextMapping;
-import org.earthsystemcurator.cupidLanguage.Language;
-import org.earthsystemcurator.cupidLanguage.Mapping;
+import org.earthsystemmodeling.cupidLanguage.ImplicitContextMapping;
+import org.earthsystemmodeling.cupidLanguage.Language;
+import org.earthsystemmodeling.cupidLanguage.Mapping;
 import org.eclipse.core.resources.IProject;
 import org.eclipse.emf.common.util.Diagnostic;
 import org.eclipse.emf.common.util.EList;
