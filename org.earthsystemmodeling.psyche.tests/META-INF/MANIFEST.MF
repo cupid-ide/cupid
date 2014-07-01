@@ -1,0 +1,28 @@
+Manifest-Version: 1.0
+Bundle-ManifestVersion: 2
+Bundle-Name: org.earthsystemmodeling.psyche.tests
+Bundle-Vendor: My Company
+Bundle-Version: 1.0.0.qualifier
+Bundle-SymbolicName: org.earthsystemmodeling.psyche.tests; singleton:=true
+Bundle-ActivationPolicy: lazy
+Require-Bundle: org.earthsystemmodeling.psyche,
+ org.earthsystemmodeling.psyche.ui,
+ org.eclipse.core.runtime,
+ org.eclipse.xtext.junit4,
+ org.eclipse.ui.workbench;resolution:=optional,
+ org.apache.commons.io;bundle-version="2.0.1",
+ org.eclipse.core.resources;bundle-version="3.8.101",
+ org.eclipse.photran.core.vpg,
+ org.eclipse.rephraserengine.core;bundle-version="8.0.0",
+ org.eclipse.ocl.examples.xtext.oclinecore;bundle-version="3.3.0"
+Import-Package: org.apache.log4j,
+ org.junit;version="4.5.0",
+ org.junit.runner;version="4.5.0",
+ org.junit.runner.manipulation;version="4.5.0",
+ org.junit.runner.notification;version="4.5.0",
+ org.junit.runners;version="4.5.0",
+ org.junit.runners.model;version="4.5.0",
+ org.hamcrest.core,
+ org.eclipse.photran.core
+Bundle-RequiredExecutionEnvironment: J2SE-1.5
+Export-Package: org.earthsystemmodeling

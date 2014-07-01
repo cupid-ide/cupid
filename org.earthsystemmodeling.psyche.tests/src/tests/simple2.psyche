@@ -1,0 +1,17 @@
+language Simple2 'http://Simple2' {
+	
+	top concept Simple2 {
+		c1 : Con1
+		c2 : Con2
+		c3 <module>
+	}
+
+	concept Con1 <module> {
+		c2* : Con2
+	}
+	
+	concept Con2 <module> {
+		c1+ : Con1
+	}
+	
+}

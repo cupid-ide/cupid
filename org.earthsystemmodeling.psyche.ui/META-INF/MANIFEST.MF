@@ -1,0 +1,26 @@
+Manifest-Version: 1.0
+Bundle-ManifestVersion: 2
+Bundle-Name: org.earthsystemmodeling.psyche.ui
+Bundle-Vendor: My Company
+Bundle-Version: 1.0.0.qualifier
+Bundle-SymbolicName: org.earthsystemmodeling.psyche.ui; singleton:=true
+Bundle-ActivationPolicy: lazy
+Require-Bundle: org.earthsystemmodeling.psyche;visibility:=reexport,
+ org.eclipse.xtext.ui,
+ org.eclipse.ui.editors;bundle-version="3.5.0",
+ org.eclipse.ui.ide;bundle-version="3.5.0",
+ org.eclipse.xtext.ui.shared,
+ org.eclipse.ui,
+ org.eclipse.xtext.builder,
+ org.antlr.runtime,
+ org.eclipse.xtext.common.types.ui,
+ org.eclipse.xtext.ui.codetemplates.ui,
+ org.eclipse.compare
+Import-Package: org.apache.log4j,
+ org.eclipse.xtext.xbase.lib
+Bundle-RequiredExecutionEnvironment: J2SE-1.5
+Export-Package: org.earthsystemmodeling.ui.quickfix,
+ org.earthsystemmodeling.ui.contentassist,
+ org.earthsystemmodeling.ui.contentassist.antlr,
+ org.earthsystemmodeling.ui.internal
+Bundle-Activator: org.earthsystemmodeling.ui.internal.PsycheActivator

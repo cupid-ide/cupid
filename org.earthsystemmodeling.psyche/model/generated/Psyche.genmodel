@@ -1,0 +1,129 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<genmodel:GenModel xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:ecore="http://www.eclipse.org/emf/2002/Ecore"
+    xmlns:genmodel="http://www.eclipse.org/emf/2002/GenModel" modelDirectory="/org.earthsystemmodeling.psyche/src-gen" editDirectory="/org.earthsystemmodeling.psyche.edit/src"
+    editorDirectory="/org.earthsystemmodeling.psyche.editor/src" modelPluginID="org.earthsystemmodeling.psyche"
+    forceOverwrite="true" modelName="Psyche" updateClasspath="false" rootExtendsClass="org.eclipse.emf.ecore.impl.MinimalEObjectImpl$Container"
+    complianceLevel="5.0" copyrightFields="false" editPluginID="org.earthsystemmodeling.psyche.edit"
+    editorPluginID="org.earthsystemmodeling.psyche.editor" runtimeVersion="2.9">
+  <genPackages prefix="Psyche" basePackage="org.earthsystemmodeling" disposableProviderFactory="true"
+      fileExtensions="psyche" ecorePackage="Psyche.ecore#/">
+    <genClasses ecoreClass="Psyche.ecore#//Language">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Psyche.ecore#//Language/name"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Psyche.ecore#//Language/uri"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Psyche.ecore#//Language/conceptDef"/>
+    </genClasses>
+    <genClasses ecoreClass="Psyche.ecore#//Annotation">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Psyche.ecore#//Annotation/key"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Psyche.ecore#//Annotation/value"/>
+    </genClasses>
+    <genClasses ecoreClass="Psyche.ecore#//ConceptDef">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Psyche.ecore#//ConceptDef/mapping"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Psyche.ecore#//ConceptDef/annotation"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Psyche.ecore#//ConceptDef/child"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Psyche.ecore#//ConceptDef/named"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Psyche.ecore#//ConceptDef/name"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Psyche.ecore#//ConceptDef/top"/>
+    </genClasses>
+    <genClasses ecoreClass="Psyche.ecore#//SubconceptOrAttribute">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Psyche.ecore#//SubconceptOrAttribute/name"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Psyche.ecore#//SubconceptOrAttribute/cardinality"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Psyche.ecore#//SubconceptOrAttribute/essential"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Psyche.ecore#//SubconceptOrAttribute/mustBeNull"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Psyche.ecore#//SubconceptOrAttribute/def"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Psyche.ecore#//SubconceptOrAttribute/reference"/>
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference Psyche.ecore#//SubconceptOrAttribute/ref"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Psyche.ecore#//SubconceptOrAttribute/attrib"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Psyche.ecore#//SubconceptOrAttribute/attribMapping"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Psyche.ecore#//SubconceptOrAttribute/annotation"/>
+    </genClasses>
+    <genClasses ecoreClass="Psyche.ecore#//Cardinality">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Psyche.ecore#//Cardinality/zeroOrOne"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Psyche.ecore#//Cardinality/zeroOrMore"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Psyche.ecore#//Cardinality/oneOrMore"/>
+    </genClasses>
+    <genClasses ecoreClass="Psyche.ecore#//Mapping">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Psyche.ecore#//Mapping/context"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Psyche.ecore#//Mapping/mapping"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Psyche.ecore#//Mapping/before"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Psyche.ecore#//Mapping/after"/>
+    </genClasses>
+    <genClasses ecoreClass="Psyche.ecore#//ImplicitContextMapping"/>
+    <genClasses ecoreClass="Psyche.ecore#//Module">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Psyche.ecore#//Module/name"/>
+    </genClasses>
+    <genClasses ecoreClass="Psyche.ecore#//ModuleName"/>
+    <genClasses ecoreClass="Psyche.ecore#//UsesModule">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Psyche.ecore#//UsesModule/name"/>
+    </genClasses>
+    <genClasses ecoreClass="Psyche.ecore#//UsesEntity">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Psyche.ecore#//UsesEntity/name"/>
+    </genClasses>
+    <genClasses ecoreClass="Psyche.ecore#//Subroutine">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Psyche.ecore#//Subroutine/name"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Psyche.ecore#//Subroutine/params"/>
+    </genClasses>
+    <genClasses ecoreClass="Psyche.ecore#//FormalParam">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Psyche.ecore#//FormalParam/intent"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Psyche.ecore#//FormalParam/type"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Psyche.ecore#//FormalParam/name"/>
+    </genClasses>
+    <genClasses ecoreClass="Psyche.ecore#//Intent">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Psyche.ecore#//Intent/in"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Psyche.ecore#//Intent/out"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Psyche.ecore#//Intent/inout"/>
+    </genClasses>
+    <genClasses ecoreClass="Psyche.ecore#//Type">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Psyche.ecore#//Type/integer"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Psyche.ecore#//Type/character"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Psyche.ecore#//Type/logical"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Psyche.ecore#//Type/real"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Psyche.ecore#//Type/double"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Psyche.ecore#//Type/derived"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Psyche.ecore#//Type/derivedType"/>
+    </genClasses>
+    <genClasses ecoreClass="Psyche.ecore#//SubroutineName">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Psyche.ecore#//SubroutineName/name"/>
+    </genClasses>
+    <genClasses ecoreClass="Psyche.ecore#//Call">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Psyche.ecore#//Call/subroutineName"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Psyche.ecore#//Call/params"/>
+    </genClasses>
+    <genClasses ecoreClass="Psyche.ecore#//ActualParam">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Psyche.ecore#//ActualParam/keyword"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Psyche.ecore#//ActualParam/optional"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Psyche.ecore#//ActualParam/value"/>
+    </genClasses>
+    <genClasses ecoreClass="Psyche.ecore#//ActualParamByKeyword">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Psyche.ecore#//ActualParamByKeyword/keyword"/>
+    </genClasses>
+    <genClasses ecoreClass="Psyche.ecore#//VariableDeclaration">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Psyche.ecore#//VariableDeclaration/type"/>
+    </genClasses>
+    <genClasses ecoreClass="Psyche.ecore#//FunctionAssignment">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Psyche.ecore#//FunctionAssignment/lhs"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Psyche.ecore#//FunctionAssignment/functionName"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Psyche.ecore#//FunctionAssignment/params"/>
+    </genClasses>
+    <genClasses ecoreClass="Psyche.ecore#//LocalExpression">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Psyche.ecore#//LocalExpression/id"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Psyche.ecore#//LocalExpression/literal"/>
+    </genClasses>
+    <genClasses ecoreClass="Psyche.ecore#//Expr">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Psyche.ecore#//Expr/wildcard"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Psyche.ecore#//Expr/expr"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Psyche.ecore#//Expr/pathExpr"/>
+    </genClasses>
+    <genClasses ecoreClass="Psyche.ecore#//PathExpr">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Psyche.ecore#//PathExpr/head"/>
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference Psyche.ecore#//PathExpr/tail"/>
+    </genClasses>
+    <genClasses ecoreClass="Psyche.ecore#//Axis">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Psyche.ecore#//Axis/ancestor"/>
+    </genClasses>
+    <genClasses ecoreClass="Psyche.ecore#//DeclaredEntity"/>
+    <genClasses ecoreClass="Psyche.ecore#//PathExprTerm">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Psyche.ecore#//PathExprTerm/axis"/>
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference Psyche.ecore#//PathExprTerm/ref"/>
+    </genClasses>
+  </genPackages>
+</genmodel:GenModel>

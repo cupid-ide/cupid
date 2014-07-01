@@ -1,0 +1,50 @@
+import ecore : 'http://www.eclipse.org/emf/2002/Ecore#/';
+
+package simple2 : simple2 = 'http://Simple2'
+{
+	
+	--
+	--common types and classes
+	--datatype AST__Module : 'org.eclipse.photran.internal.core.parser.ASTModuleNode' { };
+	--datatype AST__Call : 'org.eclipse.photran.internal.core.parser.ASTCallStmtNode' { };
+	--datatype AST__Subroutine : 'org.eclipse.photran.internal.core.parser.ASTSubroutineSubprogramNode' { };
+	--datatype AST__UsesModule : 'org.eclipse.photran.internal.core.parser.ASTUseStmtNode' { };
+
+	abstract class MappedElement
+	{
+		attribute mapsTo : ecore::EJavaObject [0..1] { transient };
+	}
+
+	--language specific types and classes
+	
+	class Simple2 extends MappedElement
+	{
+		property c1 : Con1 { composes };
+		property c2 : Con2 { composes };
+		property c3 : Simple2__C3 { composes };
+		
+	}
+	
+	class Simple2__C3 extends MappedElement
+	{
+		
+	}
+	
+	
+	
+	class Con1 extends MappedElement
+	{
+		property c2 : Con2[*] { composes };
+		
+	}
+	
+	
+	
+	class Con2 extends MappedElement
+	{
+		property c1 : Con1[+] { composes };
+		
+	}
+	
+}
+
