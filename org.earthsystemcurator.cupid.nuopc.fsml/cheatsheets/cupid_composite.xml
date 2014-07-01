@@ -17,7 +17,7 @@
          <param name="path" value="nuopc_init.xml">
          </param>
       </task>
-      <task kind="org.earthsystemcurator.cupid.cheatsheet.taskEditor" name="Second Task - different UI" skip="false">
+      <task kind="org.earthsystemmodeling.cupid.cheatsheet.taskEditor" name="Second Task - different UI" skip="false">
          <intro>
             <b>Introduction</b>
          </intro>

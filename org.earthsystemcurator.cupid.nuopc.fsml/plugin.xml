@@ -6,62 +6,42 @@
 
 <plugin>
 
-   <extension point="org.eclipse.emf.ecore.generated_package">
-      <package
-            uri="http://www.earthsystemcurator.org/nuopc"
-            class="org.earthsystemcurator.cupid.nuopc.fsml.nuopc.NUOPCPackage"
-            genModel="model/nuopc.genmodel"/>
-   </extension>
+
    <extension
          point="org.eclipse.ui.commands">
-      <category
-            id="org.earthsystemcurator.cupid.nuopc.fsml.commands.category"
-            name="Sample Category">
-      </category>
       <command
-            categoryId="org.earthsystemcurator.cupid.nuopc.fsml.commands.category"
-            id="org.earthsystemcurator.cupid.nuopc.fsml.commands.sampleCommand"
-            name="Sample Command">
-      </command>
-      <command
-            categoryId="org.earthsystemcurator.cupid.nuopc.fsml.commands.category"
-            id="org.earthsystemcurator.cupid.nuopc.fsml.commands.reverseCommand"
+            categoryId="org.earthsystemmodeling.cupid.commands"
+            id="org.earthsystemmodeling.cupid.commands.reverseCommand"
             name="Reverse Engineer">
       </command>
       <command
-            categoryId="org.earthsystemcurator.cupid.nuopc.fsml.commands.category"
-            id="org.earthsystemcurator.cupid.nuopc.fsml.commands.forwardCommand"
+            categoryId="org.earthsystemmodeling.cupid.commands"
+            id="org.earthsystemmodeling.cupid.commands.forwardCommand"
             name="Forward Engineer">
       </command>
       <command
-            categoryId="org.earthsystemcurator.cupid.nuopc.fsml.commands.category"
-            id="org.earthsystemcurator.cupid.nuopc.fsml.commands.compareCommand"
+            categoryId="org.earthsystemmodeling.cupid.commands"
+            id="org.earthsystemmodeling.cupid.commands.compareCommand"
             name="Compare">
       </command>
       <category
-            id="org.earthsystemcurator.cupid.nuopc.fsml.nuopcNature.category"
-            name="NUOPC Project Nature commands">
+            id="org.earthsystemmodeling.cupid.commands"
+            name="Cupid Commands">
       </category>
-      <command
-            categoryId="org.earthsystemcurator.cupid.nuopc.fsml.nuopcNature.category"
-            defaultHandler="org.earthsystemcurator.cupid.nuopc.fsml.builder.AddRemoveNUOPCNatureHandler"
-            id="org.earthsystemcurator.cupid.nuopc.fsml.addRemoveNUOPCNature"
-            name="Add/RemoveNUOPC Project Nature">
-      </command>
    </extension>
    <extension
          point="org.eclipse.ui.handlers">
       <handler
-            class="org.earthsystemcurator.cupid.nuopc.fsml.handlers.ReverseHandler"
-            commandId="org.earthsystemcurator.cupid.nuopc.fsml.commands.reverseCommand">
+            class="org.earthsystemmodeling.cupid.handlers.ReverseHandler"
+            commandId="org.earthsystemmodeling.cupid.commands.reverseCommand">
       </handler>
       <handler
-            class="org.earthsystemcurator.cupid.nuopc.fsml.handlers.ForwardHandler"
-            commandId="org.earthsystemcurator.cupid.nuopc.fsml.commands.forwardCommand">
+            class="org.earthsystemmodeling.cupid.handlers.ForwardHandler"
+            commandId="org.earthsystemmodeling.cupid.commands.forwardCommand">
       </handler>
       <handler
-            class="org.earthsystemcurator.cupid.nuopc.fsml.handlers.CompareHandler"
-            commandId="org.earthsystemcurator.cupid.nuopc.fsml.commands.compareCommand">
+            class="org.earthsystemmodeling.cupid.handlers.CompareHandler"
+            commandId="org.earthsystemmodeling.cupid.commands.compareCommand">
       </handler>
    </extension>
    <extension
@@ -70,27 +50,27 @@
       <menuContribution
             locationURI="menu:org.eclipse.ui.main.menu?after=additions">
          <menu
-               id="org.earthsystemcurator.cupid.nuopc.fsml.menus.sampleMenu"
+               id="org.earthsystemmodeling.cupid.menus.sampleMenu"
                label="Cupid"
                mnemonic="M">
             <command
-                  commandId="org.earthsystemcurator.cupid.nuopc.fsml.commands.reverseCommand"
+                  commandId="org.earthsystemmodeling.cupid.commands.reverseCommand"
                   icon="icons/arrow_right.png"
-                  id="org.earthsystemcurator.cupid.nuopc.fsml.menus.reverseCommand"
+                  id="org.earthsystemmodeling.cupid.menus.reverseCommand"
                   mnemonic="S">
             </command>
            
             <command
-                  commandId="org.earthsystemcurator.cupid.nuopc.fsml.commands.forwardCommand"
+                  commandId="org.earthsystemmodeling.cupid.commands.forwardCommand"
                   icon="icons/arrow_left.png"
-                  id="org.earthsystemcurator.cupid.nuopc.fsml.menus.forwardCommand"
+                  id="org.earthsystemmodeling.cupid.menus.forwardCommand"
                   mnemonic="S"
                   tooltip="Forward engineer (generate code)">
             </command>
             
             <command
-                  commandId="org.earthsystemcurator.cupid.nuopc.fsml.commands.compareCommand"
-                  id="org.earthsystemcurator.cupid.nuopc.fsml.menus.compareCommand"
+                  commandId="org.earthsystemmodeling.cupid.commands.compareCommand"
+                  id="org.earthsystemmodeling.cupid.menus.compareCommand"
                   mnemonic="S"
                   tooltip="Compare">
             </command>
@@ -103,25 +83,25 @@
       <menuContribution
             locationURI="toolbar:org.eclipse.ui.main.toolbar?after=additions">
          <toolbar
-               id="org.earthsystemcurator.cupid.nuopc.fsml.toolbars.sampleToolbar"
+               id="org.earthsystemmodeling.cupid.toolbars.sampleToolbar"
                label="Cupid">
             <command
-                  commandId="org.earthsystemcurator.cupid.nuopc.fsml.commands.reverseCommand"
+                  commandId="org.earthsystemmodeling.cupid.commands.reverseCommand"
                   icon="icons/arrow_right.png"
-                  id="org.earthsystemcurator.cupid.nuopc.fsml.toolbars.reverseCommand"
+                  id="org.earthsystemmodeling.cupid.toolbars.reverseCommand"
                   tooltip="Reverse engineer">
             </command>
            
             <command
-                  commandId="org.earthsystemcurator.cupid.nuopc.fsml.commands.forwardCommand"
+                  commandId="org.earthsystemmodeling.cupid.commands.forwardCommand"
                   icon="icons/arrow_left.png"
-                  id="org.earthsystemcurator.cupid.nuopc.fsml.toolbars.forwardCommand"
+                  id="org.earthsystemmodeling.cupid.toolbars.forwardCommand"
                   tooltip="Forward engineer (generate code)">
             </command>
             <command
-                  commandId="org.earthsystemcurator.cupid.nuopc.fsml.commands.compareCommand"
+                  commandId="org.earthsystemmodeling.cupid.commands.compareCommand"
                   icon="icons/sample.gif"
-                  id="org.earthsystemcurator.cupid.nuopc.fsml.toolbars.compareCommand"
+                  id="org.earthsystemmodeling.cupid.toolbars.compareCommand"
                   tooltip="Compare">
             </command>
            
@@ -132,8 +112,8 @@
        <menuContribution
             locationURI="popup:org.eclipse.ui.navigator.ProjectExplorer#PopupMenu?after=additions">
          <command
-               commandId="org.earthsystemcurator.cupid.nuopc.fsml.commands.reverseCommand"
-               id="org.earthsystemcurator.cupid.nuopc.fsml.menus.reverseCommand">
+               commandId="org.earthsystemmodeling.cupid.commands.reverseCommand"
+               id="org.earthsystemmodeling.cupid.menus.reverseCommand">
             <visibleWhen
                   checkEnabled="false">
                <with
@@ -149,8 +129,8 @@
          </command>
          <!--
          <command
-               commandId="org.earthsystemcurator.cupid.nuopc.fsml.commands.forwardCommand"
-               id="org.earthsystemcurator.cupid.nuopc.fsml.menus.forwardCommand"
+               commandId="org.earthsystemmodeling.cupid.commands.forwardCommand"
+               id="org.earthsystemmodeling.cupid.menus.forwardCommand"
                tooltip="Forward engineer (generate code)">
             <visibleWhen
                   checkEnabled="false">
@@ -173,7 +153,7 @@
       <menuContribution
             locationURI="popup:org.eclipse.ui.projectConfigure?after=additions">
          <command
-               commandId="org.earthsystemcurator.cupid.nuopc.fsml.addRemoveNUOPCNature"
+               commandId="org.earthsystemmodeling.cupid.addRemoveNUOPCNature"
                label="Remove NUOPC project nature"
                style="push">
             <visibleWhen
@@ -190,7 +170,7 @@
                         </instanceof>
                         <test
                               property="org.eclipse.core.resources.projectNature"
-                              value="org.earthsystemcurator.cupid.nuopc.fsml.nuopcNature">
+                              value="org.earthsystemmodeling.cupid.nuopcNature">
                         </test>
                      </and>
                   </iterate>
@@ -198,7 +178,7 @@
             </visibleWhen>
          </command>
          <command
-               commandId="org.earthsystemcurator.cupid.nuopc.fsml.addRemoveNUOPCNature"
+               commandId="org.earthsystemmodeling.cupid.addRemoveNUOPCNature"
                label="Add NUOPC project nature"
                style="push">
             <visibleWhen
@@ -216,7 +196,7 @@
                         <not>
                            <test
                                  property="org.eclipse.core.resources.projectNature"
-                                 value="org.earthsystemcurator.cupid.nuopc.fsml.nuopcNature">
+                                 value="org.earthsystemmodeling.cupid.nuopcNature">
                            </test>
                         </not>
                      </and>
@@ -226,18 +206,18 @@
          </command>
       </menuContribution>
       <menuContribution
-            locationURI="toolbar:org.earthsystemcurator.cupid.nuopc.fsml.views.NUOPCView.toolbar">
+            locationURI="toolbar:org.earthsystemmodeling.cupid.views.NUOPCView.toolbar">
          <command
-               commandId="org.earthsystemcurator.cupid.nuopc.fsml.commands.reverseCommand"
+               commandId="org.earthsystemmodeling.cupid.commands.reverseCommand"
                icon="icons/arrow_rev.png"
-               id="org.earthsystemcurator.cupid.nuopc.fsml.toolbars.reverseCommand"
+               id="org.earthsystemmodeling.cupid.toolbars.reverseCommand"
                tooltip="Reverse engineer">
          </command>
          <!--
          <command
-               commandId="org.earthsystemcurator.cupid.nuopc.fsml.commands.forwardCommand"
+               commandId="org.earthsystemmodeling.cupid.commands.forwardCommand"
                icon="icons/arrow_left.png"
-               id="org.earthsystemcurator.cupid.nuopc.fsml.toolbars.forwardCommand"
+               id="org.earthsystemmodeling.cupid.toolbars.forwardCommand"
                tooltip="Forward engineer (generate code)">
          </command>
          -->
@@ -251,7 +231,7 @@
       <builder
             hasNature="true">
          <run
-               class="org.earthsystemcurator.cupid.nuopc.fsml.builder.NUOPCBuilder">
+               class="org.earthsystemmodeling.cupid.builder.NUOPCBuilder">
          </run>
       </builder>
    </extension>
@@ -263,11 +243,11 @@
          point="org.eclipse.core.resources.natures">
       <runtime>
          <run
-               class="org.earthsystemcurator.cupid.nuopc.fsml.builder.NUOPCNature">
+               class="org.earthsystemmodeling.cupid.builder.NUOPCNature">
          </run>
       </runtime>
       <builder
-            id="org.earthsystemcurator.cupid.nuopc.fsml.nuopcBuilder">
+            id="org.earthsystemmodeling.cupid.nuopcBuilder">
       </builder>
    </extension>
    -->
@@ -285,7 +265,7 @@
    <extension
          point="org.eclipse.ui.navigator.viewer">
       <viewerActionBinding
-            viewerId="org.earthsystemcurator.nuopcnav">
+            viewerId="org.earthsystemmodeling.nuopcnav">
          <includes>
             <actionExtension
                   pattern="org.eclipse.ui.navigator.resources.*">
@@ -296,22 +276,22 @@
             viewerId="org.eclipse.ui.navigator.ProjectExplorer">
          <includes>
             <contentExtension
-                  pattern="org.earthsystemcurator.cupid.nuopc.fsml.navigatorContent2">
+                  pattern="org.earthsystemmodeling.cupid.navigatorContent2">
             </contentExtension>
          </includes>
       </viewerContentBinding>
    </extension>
    <extension
-         id="org.earthsystemcurator.nuopc_nav_content"
+         id="org.earthsystemmodeling.nuopc_nav_content"
          name="NUOPC Navigator Content"
          point="org.eclipse.ui.navigator.navigatorContent">
       <navigatorContent
             activeByDefault="true"
             appearsBefore="org.eclipse.cdt.ui.navigator.content"
-            contentProvider="org.earthsystemcurator.cupid.nuopc.fsml.nav.NUOPCNavContentProvider"
+            contentProvider="org.earthsystemmodeling.cupid.nav.NUOPCNavContentProvider"
             icon="icons/sample.gif"
-            id="org.earthsystemcurator.cupid.nuopc.fsml.navigatorContent2"
-            labelProvider="org.earthsystemcurator.cupid.nuopc.fsml.nav.NUOPCNavLabelProvider"
+            id="org.earthsystemmodeling.cupid.navigatorContent2"
+            labelProvider="org.earthsystemmodeling.cupid.nav.NUOPCNavLabelProvider"
             name="NUOPC Navigator Content"
             priority="normal">
          <triggerPoints>
@@ -332,14 +312,14 @@
    <extension
          point="org.eclipse.ui.views">
       <category
-            id="org.earthsystemcurator.cupid.nuopc.fsml"
-            name="NUOPC Category">
+            id="org.earthsystemmodeling.cupid"
+            name="NUOPC">
       </category>
       <view
-            category="org.earthsystemcurator.cupid.nuopc.fsml"
-            class="org.earthsystemcurator.cupid.nuopc.fsml.views.NUOPCView"
+            category="org.earthsystemmodeling.cupid"
+            class="org.earthsystemmodeling.cupid.views.NUOPCView"
             icon="icons/sample.gif"
-            id="org.earthsystemcurator.cupid.nuopc.fsml.views.NUOPCView"
+            id="org.earthsystemmodeling.cupid.views.NUOPCView"
             name="NUOPC View">
       </view>
    </extension>
@@ -390,15 +370,15 @@
       -->
       <!--super="org.eclipse.ui.workbench.texteditor.info"-->
       <type
-         name="org.earthsystemcurator.cupid.nuopc.fsml.cupidannotation"
+         name="org.earthsystemmodeling.cupid.cupidannotation"
          super="org.eclipse.ui.workbench.texteditor.info"
-         markerType="org.earthsystemcurator.cupid.nuopc.fsml.cupidmarker"
+         markerType="org.earthsystemmodeling.cupid.cupidmarker"
          markerSeverity="0">
       </type>
       <type
             markerSeverity="2"
-            markerType="org.earthsystemcurator.cupid.nuopc.fsml.cupiderror"
-            name="org.earthsystemcurator.cupid.nuopc.fsml.cupiderrorannotation"
+            markerType="org.earthsystemmodeling.cupid.cupiderror"
+            name="org.earthsystemmodeling.cupid.cupiderrorannotation"
             super="org.eclipse.ui.workbench.texteditor.error">
       </type>
    </extension>
@@ -407,14 +387,14 @@
          id="cupidmarkerannotationspec"
          point="org.eclipse.ui.editors.markerAnnotationSpecification">
      <specification
-           annotationType="org.earthsystemcurator.cupid.nuopc.fsml.cupidannotation"
+           annotationType="org.earthsystemmodeling.cupid.cupidannotation"
            icon="icons/tiny_heart.gif"
            includeOnPreferencePage="true"
            label="Cupid Code Generation Annotation"
            verticalRulerPreferenceKey="cupidMarkerIndicationInVerticalRuler"
            verticalRulerPreferenceValue="true"/>
      <specification
-           annotationType="org.earthsystemcurator.cupid.nuopc.fsml.cupiderrorannotation"
+           annotationType="org.earthsystemmodeling.cupid.cupiderrorannotation"
            colorPreferenceKey="cupidErrorColorPK"
            highlightPreferenceKey="cupidErrorHighlightPK"
            highlightPreferenceValue="false"
@@ -437,8 +417,8 @@
    <extension
          point="org.eclipse.ui.ide.markerResolution">
       <markerResolutionGenerator
-            class="org.earthsystemcurator.cupid.nuopc.fsml.handlers.CupidMarkerResolutionGenerator"
-            markerType="org.earthsystemcurator.cupid.nuopc.fsml.cupiderror">
+            class="org.earthsystemmodeling.cupid.handlers.CupidMarkerResolutionGenerator"
+            markerType="org.earthsystemmodeling.cupid.cupiderror">
       </markerResolutionGenerator>
    </extension>
    -->
@@ -446,15 +426,15 @@
    <extension
          point="org.eclipse.photran.ui.sourceViewerConfig">
       <sourceViewerConfig
-            factory="org.earthsystemcurator.cupid.nuopc.fsml.handlers.FortranSourceViewerConfigurationFactory">
+            factory="org.earthsystemmodeling.cupid.handlers.FortranSourceViewerConfigurationFactory">
       </sourceViewerConfig>
    </extension>
    <extension
          point="org.eclipse.ui.propertyPages">
       <page
             category="org.eclipse.photran.ui.newui.Page_head_general"
-            class="org.earthsystemcurator.cupid.nuopc.fsml.properties.CupidPropertyPage"
-            id="org.earthsystemcurator.cupid.nuopc.fsml.properties.cupidPropertyPage"
+            class="org.earthsystemmodeling.cupid.properties.CupidPropertyPage"
+            id="org.earthsystemmodeling.cupid.properties.cupidPropertyPage"
             name="Cupid Property Page">
          <enabledWhen>
             <instanceof
@@ -466,62 +446,62 @@
    <extension
          point="org.eclipse.ui.newWizards">
       <category
-            id="org.earthsystemcurator.cupid"
+            id="org.earthsystemmodeling.cupid"
             name="Cupid">
       </category>
       <wizard
-            category="org.earthsystemcurator.cupid"
-            class="org.earthsystemcurator.cupid.nuopc.fsml.wizards.CupidProjectWizard"
-            finalPerspective="org.earthsystemcurator.cupid.perspective"
+            category="org.earthsystemmodeling.cupid"
+            class="org.earthsystemmodeling.cupid.wizards.CupidProjectWizard"
+            finalPerspective="org.earthsystemmodeling.cupid.perspective"
             icon="icons/sample.gif"
-            id="org.earthsystemcurator.cupid.wizards.CupidProjectWizard"
+            id="org.earthsystemmodeling.cupid.wizards.CupidProjectWizard"
             name="Cupid Training Project"
-            preferredPerspectives="org.earthsystemcurator.cupid.perspective"
+            preferredPerspectives="org.earthsystemmodeling.cupid.perspective"
             project="true">
       </wizard>
    </extension>
    <extension
          point="org.eclipse.ui.cheatsheets.cheatSheetContent">
       <category
-            id="org.earthsystemcurator.cupid.nuopc.cheatsheet.category"
+            id="org.earthsystemmodeling.cupid.nuopc.cheatsheet.category"
             name="Cupid">
       </category>
       <cheatsheet
-            category="org.earthsystemcurator.cupid.nuopc.cheatsheet.category"
+            category="org.earthsystemmodeling.cupid.nuopc.cheatsheet.category"
             composite="false"
             contentFile="cheatsheets/cupid_new_project.xml"
-            id="org.earthsystemcurator.cupid.cheatsheet.cupid_new_project"
+            id="org.earthsystemmodeling.cupid.cheatsheet.cupid_new_project"
             name="Create a New Cupid Training Project">
       </cheatsheet>
       <cheatsheet
-            category="org.earthsystemcurator.cupid.nuopc.cheatsheet.category"
+            category="org.earthsystemmodeling.cupid.nuopc.cheatsheet.category"
             composite="false"
             contentFile="cheatsheets/cupid_compile_run.xml"
-            id="org.earthsystemcurator.cupid.cheatsheet.cupid_compile_run"
+            id="org.earthsystemmodeling.cupid.cheatsheet.cupid_compile_run"
             name="Compile and Run a NUOPC Application">
       </cheatsheet>
       <cheatsheet
-            category="org.earthsystemcurator.cupid.nuopc.cheatsheet.category"
+            category="org.earthsystemmodeling.cupid.nuopc.cheatsheet.category"
             composite="false"
             contentFile="cheatsheets/nuopc_init.xml"
-            id="org.earthsystemcurator.cupid.cheatsheet.nuopc_init"
+            id="org.earthsystemmodeling.cupid.cheatsheet.nuopc_init"
             name="NUOPC Initialization Phase Definition Cheet Sheet">
          <description>
             Cheat sheet for learning the NUOPC Initialize Phase Definition
          </description>
       </cheatsheet>
       <taskEditor
-            class="org.earthsystemcurator.cupid.nuopc.fsml.views.CheatsheetTaskEditor"
+            class="org.earthsystemmodeling.cupid.views.CheatsheetTaskEditor"
             icon="icons/green_heart.png"
-            id="org.earthsystemcurator.cupid.cheatsheet.taskEditor">
+            id="org.earthsystemmodeling.cupid.cheatsheet.taskEditor">
       </taskEditor>
    </extension>
    <extension
          point="org.eclipse.ui.perspectives">
       <perspective
-            class="org.earthsystemcurator.cupid.nuopc.fsml.views.CupidPerspectiveFactory"
+            class="org.earthsystemmodeling.cupid.views.CupidPerspectiveFactory"
             fixed="false"
-            id="org.earthsystemcurator.cupid.perspective"
+            id="org.earthsystemmodeling.cupid.perspective"
             name="Cupid">
          <description>
             The Cupid Training Environment perspective simpifies the Eclipse platform by hiding toolbars, views, and menu options not required for modeler training.
@@ -531,7 +511,7 @@
    <extension
          point="org.eclipse.ui.perspectiveExtensions">
       <perspectiveExtension
-            targetID="org.earthsystemcurator.cupid.perspective">
+            targetID="org.earthsystemmodeling.cupid.perspective">
          <hiddenMenuItem
                id="org.eclipse.ui.run">
          </hiddenMenuItem>
@@ -539,7 +519,7 @@
                id="navigate">
          </hiddenMenuItem>
          <newWizardShortcut
-               id="org.earthsystemcurator.cupid.wizards.CupidProjectWizard">
+               id="org.earthsystemmodeling.cupid.wizards.CupidProjectWizard">
          </newWizardShortcut>
          <hiddenToolBarItem
                id="org.eclipse.ui.project.buildAll">
@@ -552,22 +532,22 @@
    <extension
          point="org.eclipse.ui.preferencePages">
       <page
-            class="org.earthsystemcurator.cupid.nuopc.fsml.preferences.CupidPreferencePage"
-            id="org.earthsystemcurator.cupid.nuopc.fsml.preferences.CupidPreferencePage"
+            class="org.earthsystemmodeling.cupid.preferences.CupidPreferencePage"
+            id="org.earthsystemmodeling.cupid.preferences.CupidPreferencePage"
             name="Cupid Preferences">
       </page>
    </extension>
    <extension
          point="org.eclipse.core.runtime.preferences">
       <initializer
-            class="org.earthsystemcurator.cupid.nuopc.fsml.preferences.PreferenceInitializer">
+            class="org.earthsystemmodeling.cupid.preferences.PreferenceInitializer">
       </initializer>
    </extension>
    
    <!--
    <extension point = "org.eclipse.emf.ecore.validation_delegate">
     <delegate uri = "http://www.eclipse.org/emf/2002/Ecore/OCL"
-       class = "org.earthsystemcurator.cupid.nuopc.fsml.util.OCLValidationDelegateMappingExt" />
+       class = "org.earthsystemmodeling.cupid.util.OCLValidationDelegateMappingExt" />
   </extension>
 	-->
 

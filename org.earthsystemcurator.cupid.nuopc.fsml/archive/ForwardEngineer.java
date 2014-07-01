@@ -1,4 +1,4 @@
-package org.earthsystemcurator.cupid.nuopc.fsml.core;
+package org.earthsystemmodeling.cupid.core;
 
 import java.io.BufferedReader;
 import java.io.ByteArrayInputStream;
@@ -16,13 +16,13 @@ import java.util.Map.Entry;
 import java.util.Set;
 import java.util.TreeMap;
 
-import org.earthsystemcurator.cupid.nuopc.fsml.nuopc.NUOPCApplication;
-import org.earthsystemcurator.cupid.nuopc.fsml.nuopc.NUOPCPackage;
-import org.earthsystemcurator.cupid.nuopc.fsml.util.CodeExtraction;
-import org.earthsystemcurator.cupid.nuopc.fsml.util.CodeQuery;
-import org.earthsystemcurator.cupid.nuopc.fsml.util.EcoreUtils;
-import org.earthsystemcurator.cupid.nuopc.fsml.util.Regex;
-import org.earthsystemcurator.cupidLanguage.Call;
+import org.earthsystemmodeling.cupid.nuopc.NUOPCApplication;
+import org.earthsystemmodeling.cupid.nuopc.NUOPCPackage;
+import org.earthsystemmodeling.cupid.util.CodeExtraction;
+import org.earthsystemmodeling.cupid.util.CodeQuery;
+import org.earthsystemmodeling.cupid.util.EcoreUtils;
+import org.earthsystemmodeling.cupid.util.Regex;
+import org.earthsystemmodeling.cupidLanguage.Call;
 import org.eclipse.core.resources.IFile;
 import org.eclipse.core.resources.IMarker;
 import org.eclipse.core.resources.IProject;
@@ -305,7 +305,7 @@ public class ForwardEngineer {
 	            
 	            IFile f = findFile(node);
 	            if (f != null) {
-	            	//"org.earthsystemcurator.cupid.marker"
+	            	//"org.earthsystemmodeling.cupid.marker"
 	            	IMarker marker = f.createMarker(IMarker.BOOKMARK);
 	            	marker.setAttribute(IMarker.CHAR_START, startOffset);
 	            	marker.setAttribute(IMarker.CHAR_END, endOffset);

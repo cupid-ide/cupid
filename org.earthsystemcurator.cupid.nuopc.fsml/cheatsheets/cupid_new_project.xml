@@ -14,7 +14,7 @@
       </description>
       <command
             required="false"
-            serialization="org.eclipse.ui.newWizard(newWizardId=org.earthsystemcurator.cupid.wizards.CupidProjectWizard)"/>
+            serialization="org.eclipse.ui.newWizard(newWizardId=org.earthsystemmodeling.cupid.wizards.CupidProjectWizard)"/>
    </item>
    <item
          title="Choose a Training Scenario">
@@ -58,6 +58,6 @@ Get some coffee.  It may take up to several minutes for the computational enviro
       </description>
       <command
             required="false"
-            serialization="org.eclipse.ui.cheatsheets.openCheatSheet(cheatSheetId=org.earthsystemcurator.cupid.cheatsheet.cupid_compile_run)"/>
+            serialization="org.eclipse.ui.cheatsheets.openCheatSheet(cheatSheetId=org.earthsystemmodeling.cupid.cheatsheet.cupid_compile_run)"/>
    </item>
 </cheatsheet>

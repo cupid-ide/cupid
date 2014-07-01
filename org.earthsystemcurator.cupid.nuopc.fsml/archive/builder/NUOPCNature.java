@@ -1,10 +1,10 @@
-package org.earthsystemcurator.cupid.nuopc.fsml.builder;
+package org.earthsystemmodeling.cupid.builder;
 
 import java.util.HashMap;
 import java.util.Map;
 
-import org.earthsystemcurator.FSM;
-import org.earthsystemcurator.cupid.nuopc.fsml.nuopc.NUOPCApplication;
+import org.earthsystemmodeling.FSM;
+import org.earthsystemmodeling.cupid.nuopc.NUOPCApplication;
 import org.eclipse.core.resources.ICommand;
 import org.eclipse.core.resources.IMarker;
 import org.eclipse.core.resources.IProject;
@@ -19,7 +19,7 @@ public class NUOPCNature implements IProjectNature {
 	/**
 	 * ID of this project nature
 	 */
-	public static final String NATURE_ID = "org.earthsystemcurator.cupid.nuopc.fsml.nuopcNature";
+	public static final String NATURE_ID = "org.earthsystemmodeling.cupid.nuopcNature";
 
 	private IProject project;
 	

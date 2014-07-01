@@ -1,4 +1,4 @@
-package org.earthsystemcurator.cupid.nuopc.fsml.views;
+package org.earthsystemmodeling.cupid.views;
 
 import java.net.MalformedURLException;
 import java.net.URL;

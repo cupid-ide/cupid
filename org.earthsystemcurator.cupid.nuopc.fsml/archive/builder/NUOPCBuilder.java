@@ -1,4 +1,4 @@
-package org.earthsystemcurator.cupid.nuopc.fsml.builder;
+package org.earthsystemmodeling.cupid.builder;
 
 import java.util.Map;
 
@@ -82,9 +82,9 @@ public class NUOPCBuilder extends IncrementalProjectBuilder {
 		}
 	}
 
-	public static final String BUILDER_ID = "org.earthsystemcurator.cupid.nuopc.fsml.nuopcBuilder";
+	public static final String BUILDER_ID = "org.earthsystemmodeling.cupid.nuopcBuilder";
 
-	private static final String MARKER_TYPE = "org.earthsystemcurator.cupid.nuopc.fsml.xmlProblem";
+	private static final String MARKER_TYPE = "org.earthsystemmodeling.cupid.xmlProblem";
 
 	private SAXParserFactory parserFactory;
 

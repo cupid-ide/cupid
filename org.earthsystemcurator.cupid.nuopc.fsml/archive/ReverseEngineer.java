@@ -1,4 +1,4 @@
-package org.earthsystemcurator.cupid.nuopc.fsml.core;
+package org.earthsystemmodeling.cupid.core;
 
 
 import java.io.ByteArrayInputStream;
@@ -15,21 +15,21 @@ import java.util.Map.Entry;
 import java.util.Set;
 import java.util.regex.Matcher;
 
-import org.earthsystemcurator.CupidLanguageStandaloneSetup;
-import org.earthsystemcurator.cupid.nuopc.fsml.nuopc.NUOPCApplication;
-import org.earthsystemcurator.cupid.nuopc.fsml.nuopc.NUOPCFactory;
-import org.earthsystemcurator.cupid.nuopc.fsml.properties.CupidPropertyPage;
-import org.earthsystemcurator.cupid.nuopc.fsml.util.CodeQuery;
-import org.earthsystemcurator.cupid.nuopc.fsml.util.CodeQuery2;
-import org.earthsystemcurator.cupid.nuopc.fsml.util.EcoreUtils;
-import org.earthsystemcurator.cupid.nuopc.fsml.util.Regex;
-import org.earthsystemcurator.cupidLanguage.Call;
-import org.earthsystemcurator.cupidLanguage.CupidLanguageFactory;
-import org.earthsystemcurator.cupidLanguage.IDOrPathExpr;
-import org.earthsystemcurator.cupidLanguage.IDOrWildcard;
-import org.earthsystemcurator.cupidLanguage.ImplicitContextMapping;
-import org.earthsystemcurator.cupidLanguage.Mapping;
-import org.earthsystemcurator.cupidLanguage.PathExpr;
+import org.earthsystemmodeling.CupidLanguageStandaloneSetup;
+import org.earthsystemmodeling.cupid.nuopc.NUOPCApplication;
+import org.earthsystemmodeling.cupid.nuopc.NUOPCFactory;
+import org.earthsystemmodeling.cupid.properties.CupidPropertyPage;
+import org.earthsystemmodeling.cupid.util.CodeQuery;
+import org.earthsystemmodeling.cupid.util.CodeQuery2;
+import org.earthsystemmodeling.cupid.util.EcoreUtils;
+import org.earthsystemmodeling.cupid.util.Regex;
+import org.earthsystemmodeling.cupidLanguage.Call;
+import org.earthsystemmodeling.cupidLanguage.CupidLanguageFactory;
+import org.earthsystemmodeling.cupidLanguage.IDOrPathExpr;
+import org.earthsystemmodeling.cupidLanguage.IDOrWildcard;
+import org.earthsystemmodeling.cupidLanguage.ImplicitContextMapping;
+import org.earthsystemmodeling.cupidLanguage.Mapping;
+import org.earthsystemmodeling.cupidLanguage.PathExpr;
 import org.eclipse.cdt.core.model.ITranslationUnit;
 import org.eclipse.core.resources.IFile;
 import org.eclipse.core.resources.IProject;
