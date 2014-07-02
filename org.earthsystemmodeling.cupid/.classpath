@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <classpath>
 	<classpathentry kind="src" path="src"/>
+	<classpathentry exported="true" kind="lib" path="lib/jdom/jdom-1.1.3.jar"/>
 	<classpathentry exported="true" kind="lib" path="lib/aspectj-1.6/aspectjrt.jar"/>
 	<classpathentry exported="true" kind="lib" path="lib/aspectj-1.6/aspectjweaver.jar"/>
 	<classpathentry exported="true" kind="lib" path="lib/commons-codec-1.3/commons-codec-1.3.jar"/>

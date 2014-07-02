@@ -6,7 +6,7 @@ import org.eclipse.jface.operation.IRunnableContext;
 import org.eclipse.ptp.rdt.sync.core.services.ISynchronizeService;
 import org.eclipse.ptp.rdt.sync.ui.AbstractSynchronizeParticipant;
 import org.eclipse.ptp.rdt.sync.ui.ISynchronizeParticipantDescriptor;
-import org.eclipse.ptp.remote.core.IRemoteConnection;
+import org.eclipse.ptp.remotetools.core.IRemoteConnection;
 import org.eclipse.swt.widgets.Composite;
 
 @SuppressWarnings("restriction")
