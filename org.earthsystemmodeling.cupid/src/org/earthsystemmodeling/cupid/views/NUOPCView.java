@@ -4,10 +4,14 @@ import java.awt.Color;
 import java.lang.reflect.InvocationTargetException;
 
 import org.earthsystemmodeling.FSM;
+import org.earthsystemmodeling.cupid.core.CupidActivator;
+import org.earthsystemmodeling.cupid.handlers.ReverseHandler;
 import org.earthsystemmodeling.cupid.handlers.RewriteASTRunnable;
 import org.earthsystemmodeling.cupid.views.NUOPCViewContentProvider.NUOPCModelElem;
 import org.earthsystemmodeling.psyche.ConceptDef;
 import org.earthsystemmodeling.psyche.SubconceptOrAttribute;
+import org.eclipse.core.commands.ExecutionEvent;
+import org.eclipse.core.commands.ExecutionException;
 import org.eclipse.core.resources.IMarker;
 import org.eclipse.core.resources.IProject;
 import org.eclipse.core.resources.IResourceChangeEvent;
@@ -17,14 +21,20 @@ import org.eclipse.core.resources.IResourceDeltaVisitor;
 import org.eclipse.core.resources.IWorkspace;
 import org.eclipse.core.resources.ResourcesPlugin;
 import org.eclipse.core.runtime.CoreException;
+import org.eclipse.core.runtime.Status;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.jface.action.Action;
 import org.eclipse.jface.action.ContributionManager;
+import org.eclipse.jface.action.IAction;
+import org.eclipse.jface.action.IContributionItem;
 import org.eclipse.jface.action.IMenuListener;
 import org.eclipse.jface.action.IMenuManager;
+import org.eclipse.jface.action.IToolBarManager;
 import org.eclipse.jface.action.MenuManager;
+import org.eclipse.jface.action.ToolBarManager;
 import org.eclipse.jface.dialogs.MessageDialog;
 import org.eclipse.jface.layout.TreeColumnLayout;
+import org.eclipse.jface.resource.ImageDescriptor;
 import org.eclipse.jface.viewers.ColumnViewer;
 import org.eclipse.jface.viewers.ColumnViewerToolTipSupport;
 import org.eclipse.jface.viewers.ColumnWeightData;
@@ -374,20 +384,56 @@ public class NUOPCView extends ViewPart {
 			}
 		});
 		
-		//toolbar
-		//Action reverseEngineerAction = new Action();
-		
-		//makeActions();
-		
 		IActionBars bars = getViewSite().getActionBars();
-		//bars.getToolBarManager().add(action1);
 		
+		//Since the Luna update, the populated contributions (from plugin.xml) are not showing
+		//so I am adding an explicit action below
 		
-		IServiceLocator workbench = PlatformUI.getWorkbench();
-		IMenuService menuService = (IMenuService) workbench.getService(IMenuService.class);
-		menuService.populateContributionManager((ContributionManager) bars.getToolBarManager(), "toolbar:org.earthsystemmodeling.cupid.views.NUOPCView.toolbar");
+		//IServiceLocator workbench = PlatformUI.getWorkbench();
+		//IMenuService menuService = (IMenuService) getViewSite().getService(IMenuService.class); //(IMenuService) workbench.getService(IMenuService.class);
+		ToolBarManager toolbarManager = (ToolBarManager) bars.getToolBarManager();
+		toolbarManager.removeAll();
+		
+		//menuService.populateContributionManager((ContributionManager) bars.getToolBarManager(), "toolbar:org.earthsystemmodeling.cupid.views.NUOPCView.toolbar");
+		//menuService.populateContributionManager(toolbarManager, "toolbar:org.earthsystemmodeling.cupid.views.NUOPCView.toolbar");
+				
+		toolbarManager.add(new Action() {
+			
+			
+			@Override
+			public void run() {
+				ReverseHandler rh = new ReverseHandler();
+				try {
+					rh.execute(null);
+				} catch (ExecutionException e) {
+					CupidActivator.log(Status.ERROR, "Error executing reverse engineer command", e);
+				}
+			}
+			
+			@Override
+			public String getId() {
+				return "org.earthsystemmodeling.cupid.reverseEngineer.toolbar";
+			}
+			@Override
+			public String getText() {
+				return "Reverse engineer";
+			}
+			
+			@Override
+			public ImageDescriptor getImageDescriptor() {
+				return CupidActivator.getImageDescriptor("icons/arrow_rev.png");
+			}
+			
+		});
+		
+		//for (IContributionItem i : toolbarManager.getItems()) {
+		//	System.out.println("item: " + i.getId() + " - " + i.isVisible() + " - " + i.isEnabled());
+		//}
+		
+		toolbarManager.update(true);
 		bars.updateActionBars();
-		
+			
+						
 		MenuManager menuMgr = new MenuManager();
 
         Menu menu = menuMgr.createContextMenu(viewer.getControl());

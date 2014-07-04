@@ -3,6 +3,7 @@ package org.earthsystemmodeling.cupid.views;
 import java.net.URL;
 
 import org.earthsystemmodeling.FSM;
+import org.earthsystemmodeling.cupid.core.CupidActivator;
 import org.earthsystemmodeling.cupid.views.NUOPCViewContentProvider.NUOPCModelElem;
 import org.earthsystemmodeling.psyche.Call;
 import org.earthsystemmodeling.psyche.ImplicitContextMapping;
@@ -352,9 +353,10 @@ class NUOPCViewLabelProvider extends StyledCellLabelProvider { //implements ITab
 	private static Bundle MY_BUNDLE = FrameworkUtil.getBundle(NUOPCViewLabelProvider.class);
 	
 	private static ImageDescriptor getImageDescriptor(String file, String topOverlay, String bottomOverlay, int SWT_PROPS) {
-	    URL url = FileLocator.find(MY_BUNDLE, new Path("icons/" + file), null);
-	    ImageDescriptor image = ImageDescriptor.createFromURL(url);
-	    if (SWT_PROPS > 0) {
+	    //URL url = FileLocator.find(MY_BUNDLE, new Path("icons/" + file), null);
+	    //ImageDescriptor image = ImageDescriptor.createFromURL(url);
+	    ImageDescriptor image = CupidActivator.getImageDescriptor("icons/" + file);
+		if (SWT_PROPS > 0) {
 	    	image = ImageDescriptor.createWithFlags(image, SWT_PROPS);
 	    }
 	    

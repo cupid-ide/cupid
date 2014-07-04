@@ -3,7 +3,7 @@
     xmlns:ecore="http://www.eclipse.org/emf/2002/Ecore" name="simple" nsURI="http://www.earthsystemcurator.org/cupid/test/Simple"
     nsPrefix="simple">
   <eAnnotations source="http://www.eclipse.org/OCL/Import">
-    <details key="ecore" value="http://www.eclipse.org/emf/2002/Ecore#/"/>
+    <details key="ecore" value="http://www.eclipse.org/emf/2002/Ecore"/>
   </eAnnotations>
   <eClassifiers xsi:type="ecore:EClass" name="MappedElement" abstract="true">
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="mapsTo" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EJavaObject"

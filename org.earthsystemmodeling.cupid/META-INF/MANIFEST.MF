@@ -60,7 +60,6 @@ Require-Bundle: org.eclipse.core.runtime,
  org.eclipse.equinox.preferences,
  org.eclipse.xtext,
  org.earthsystemmodeling.psyche;bundle-version="1.0.0",
- org.eclipse.jdt.annotation;bundle-version="2.0.0",
  org.eclipse.remote.core;bundle-version="1.0.0"
 Bundle-ActivationPolicy: lazy
 Bundle-Activator: org.earthsystemmodeling.cupid.core.CupidActivator

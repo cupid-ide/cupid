@@ -1,7 +1,14 @@
 package org.earthsystemmodeling.cupid.core;
+import java.net.URL;
+
+import org.eclipse.core.runtime.FileLocator;
+import org.eclipse.core.runtime.Path;
 import org.eclipse.core.runtime.Status;
+import org.eclipse.jface.resource.ImageDescriptor;
 import org.eclipse.ui.plugin.AbstractUIPlugin;
+import org.osgi.framework.Bundle;
 import org.osgi.framework.BundleContext;
+import org.osgi.framework.FrameworkUtil;
 
 
 public class CupidActivator extends AbstractUIPlugin {
@@ -43,5 +50,13 @@ public class CupidActivator extends AbstractUIPlugin {
 		}		
 		getDefault().getLog().log(new Status(severity, PLUGIN_ID, Status.OK, msg, e));
 	}
+	
+	
+	public static ImageDescriptor getImageDescriptor(String file) {  
+		URL url = FileLocator.find(getDefault().getBundle(), new Path(file), null);
+	    ImageDescriptor image = ImageDescriptor.createFromURL(url);
+	    return image;
+	}
+
 
 }

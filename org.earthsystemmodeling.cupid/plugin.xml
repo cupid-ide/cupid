@@ -149,7 +149,7 @@
       </menuContribution>
       
        
-       
+      <!-- 
       <menuContribution
             locationURI="popup:org.eclipse.ui.projectConfigure?after=additions">
          <command
@@ -205,12 +205,16 @@
             </visibleWhen>
          </command>
       </menuContribution>
+      -->
+      
       <menuContribution
+            allPopups="true"
             locationURI="toolbar:org.earthsystemmodeling.cupid.views.NUOPCView.toolbar">
          <command
                commandId="org.earthsystemmodeling.cupid.commands.reverseCommand"
-               icon="icons/arrow_rev.png"
                id="org.earthsystemmodeling.cupid.toolbars.reverseCommand"
+               label="Reverse engineer"
+               style="push"
                tooltip="Reverse engineer">
          </command>
          <!--

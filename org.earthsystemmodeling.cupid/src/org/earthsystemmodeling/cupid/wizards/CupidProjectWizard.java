@@ -67,15 +67,21 @@ import org.eclipse.ptp.rdt.sync.core.SyncFlag;
 import org.eclipse.ptp.rdt.sync.core.SyncManager;
 import org.eclipse.ptp.rdt.sync.ui.ISynchronizeParticipant;
 import org.eclipse.ptp.rdt.sync.ui.ISynchronizeParticipantDescriptor;
-import org.eclipse.ptp.remotetools.exception.RemoteConnectionException;
-//import org.eclipse.remote.core.IRemoteConnection;
-import org.eclipse.ptp.remote.core.IRemoteConnection;
-import org.eclipse.ptp.remote.core.IRemoteConnectionManager;
-import org.eclipse.ptp.remote.core.IRemoteProcess;
-import org.eclipse.ptp.remote.core.IRemoteProcessBuilder;
-import org.eclipse.ptp.remote.core.IRemoteServices;
-import org.eclipse.ptp.remote.core.RemoteServices;
-import org.eclipse.ptp.remote.core.exception.RemoteConnectionException;
+import org.eclipse.remote.core.IRemoteConnection;
+import org.eclipse.remote.core.IRemoteConnectionManager;
+import org.eclipse.remote.core.IRemoteConnectionWorkingCopy;
+import org.eclipse.remote.core.IRemoteProcess;
+import org.eclipse.remote.core.IRemoteProcessBuilder;
+import org.eclipse.remote.core.IRemoteServices;
+import org.eclipse.remote.core.RemoteServices;
+import org.eclipse.remote.core.exception.RemoteConnectionException;
+//import org.eclipse.ptp.remote.core.IRemoteConnection;
+//import org.eclipse.ptp.remote.core.IRemoteConnectionManager;
+//import org.eclipse.ptp.remote.core.IRemoteProcess;
+//import org.eclipse.ptp.remote.core.IRemoteProcessBuilder;
+//import org.eclipse.ptp.remote.core.IRemoteServices;
+//import org.eclipse.ptp.remote.core.RemoteServices;
+//import org.eclipse.ptp.remote.core.exception.RemoteConnectionException;
 import org.eclipse.swt.graphics.Font;
 import org.eclipse.swt.graphics.FontData;
 import org.eclipse.swt.widgets.Composite;
@@ -406,7 +412,7 @@ public class CupidProjectWizard extends Wizard implements INewWizard, IExecutabl
 	
 			ISynchronizeParticipantDescriptor[] providers = SynchronizeParticipantRegistry.getDescriptors();
 			for (ISynchronizeParticipantDescriptor p : providers) {
-				//System.out.println("ISynchronizeParticipantDescriptor ==> " + p.getName() + " : " + p.getId() + " : " + p.getServiceId());
+				System.out.println("ISynchronizeParticipantDescriptor ==> " + p.getName() + " : " + p.getId() + " : " + p.getServiceId());
 				if (p.getId().equals("org.eclipse.ptp.rdt.sync.git.ui.gitParticipant")) {
 					CupidActivator.log("Found sync descriptor: org.eclipse.ptp.rdt.sync.git.ui.gitParticipant");
 					syncDescriptor = p;
@@ -459,7 +465,9 @@ public class CupidProjectWizard extends Wizard implements INewWizard, IExecutabl
 			//force a sync
 			CupidActivator.log("Forcing initial synchronization");
 			try {
-				SyncManager.syncBlocking(null, project, SyncFlag.FORCE, new SubProgressMonitor(monitor, 2));
+				//Set<SyncFlag> syncFlags = new HashSet<SyncFlag>();
+				//syncFlags.add(SyncFlag.)
+				SyncManager.syncBlocking(null, project, SyncFlag.BOTH, new SubProgressMonitor(monitor, 2));
 			}
 			catch (CoreException ce) {
 				CupidActivator.log(Status.ERROR, "Forcing initial synchronization", ce);
@@ -612,6 +620,7 @@ public class CupidProjectWizard extends Wizard implements INewWizard, IExecutabl
 
 		IRemoteConnectionManager connManager = remoteServices.getConnectionManager();
 		IRemoteConnection remoteConn = null;
+		IRemoteConnectionWorkingCopy remoteConnWorkingCopy = null;
 
 		//System.out.println("Can create connections? " + remoteServices.canCreateConnections());
 		//for (IRemoteConnection rc : connManager.getConnections()) {
@@ -621,7 +630,8 @@ public class CupidProjectWizard extends Wizard implements INewWizard, IExecutabl
 		//	}
 		//}
 
-		if (remoteServices.canCreateConnections()) {
+		if ((remoteServices.getCapabilities() & IRemoteServices.CAPABILITY_ADD_CONNECTIONS) 
+					== IRemoteServices.CAPABILITY_ADD_CONNECTIONS) {
 			
 			//ssh key
 			URL keyURL = FileLocator.find(MY_BUNDLE, new Path("ssh/nesiikey.rsa"), null);
@@ -633,13 +643,14 @@ public class CupidProjectWizard extends Wizard implements INewWizard, IExecutabl
 				throw new CoreException(new OperationStatus(IStatus.ERROR, MY_BUNDLE.getSymbolicName(), 0, "Cannot find SSH key file", e));
 			}
 			
-			remoteConn = connManager.newConnection("Cupid Environment (" + name + " - " + host + ")");
-			remoteConn.setAddress(host);
-			remoteConn.setUsername("sgeadmin");
+			remoteConnWorkingCopy = connManager.newConnection("Cupid Environment (" + name + " - " + host + ")");
+			remoteConnWorkingCopy.setAddress(host);
+			remoteConnWorkingCopy.setUsername("sgeadmin");
 			//remoteConn.setAttribute("org.eclipse.ptp.remotetools.environment.generichost.key-path", "C:\\Users\\Rocky\\Documents\\ssh\\nesiikey.rsa");
-			remoteConn.setAttribute("org.eclipse.ptp.remotetools.environment.generichost.key-path", keyFile);
-			remoteConn.setAttribute("org.eclipse.ptp.remotetools.environment.generichost.is-passwd-auth", "false");
-			remoteConn.setAttribute("org.earthsystemmodeling.cupid.ready", "true");
+			remoteConnWorkingCopy.setAttribute("org.eclipse.ptp.remotetools.environment.generichost.key-path", keyFile);
+			remoteConnWorkingCopy.setAttribute("org.eclipse.ptp.remotetools.environment.generichost.is-passwd-auth", "false");
+			remoteConnWorkingCopy.setAttribute("org.earthsystemmodeling.cupid.ready", "true");
+			remoteConn = remoteConnWorkingCopy.save();
 		}
 		monitor.worked(1);
 		monitor.done();
@@ -837,7 +848,8 @@ public class CupidProjectWizard extends Wizard implements INewWizard, IExecutabl
 		IRemoteServices remoteServices = RemoteServices.getRemoteServices("org.eclipse.ptp.remote.RemoteTools", new SubProgressMonitor(monitor,1));
 
 		try {
-			IRemoteProcessBuilder rpb = remoteServices.getProcessBuilder(remoteConn, cmd);
+			//IRemoteProcessBuilder rpb = remoteServices.getProcessBuilder(remoteConn, cmd);
+			IRemoteProcessBuilder rpb = remoteConn.getProcessBuilder(cmd);
 			IRemoteProcess rp = rpb.start();
 			monitor.worked(1);
 			

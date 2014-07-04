@@ -15,12 +15,10 @@ import org.eclipse.cdt.core.model.ITranslationUnit;
 import org.eclipse.core.commands.AbstractHandler;
 import org.eclipse.core.commands.ExecutionEvent;
 import org.eclipse.core.commands.ExecutionException;
-import org.eclipse.core.internal.resources.ResourceException;
 import org.eclipse.core.resources.IMarker;
 import org.eclipse.core.resources.IProject;
 import org.eclipse.core.resources.IResource;
 import org.eclipse.core.runtime.CoreException;
-import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.Status;
 import org.eclipse.emf.common.util.Diagnostic;
 import org.eclipse.emf.common.util.URI;
@@ -28,8 +26,8 @@ import org.eclipse.emf.common.util.WrappedException;
 import org.eclipse.emf.ecore.EAttribute;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EPackage;
-import org.eclipse.emf.ecore.EReference;
 import org.eclipse.emf.ecore.EPackage.Registry;
+import org.eclipse.emf.ecore.EReference;
 import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.ecore.resource.ResourceSet;
 import org.eclipse.emf.ecore.resource.impl.ResourceSetImpl;
@@ -46,23 +44,15 @@ import org.eclipse.photran.internal.core.vpg.PhotranVPG;
 import org.eclipse.ui.IEditorInput;
 import org.eclipse.ui.IEditorPart;
 import org.eclipse.ui.IFileEditorInput;
+import org.eclipse.ui.ISelectionService;
 import org.eclipse.ui.IViewReference;
 import org.eclipse.ui.PlatformUI;
-import org.eclipse.ui.handlers.HandlerUtil;
 
-/**
- * Our sample handler extends AbstractHandler, an IHandler base class.
- * @see org.eclipse.core.commands.IHandler
- * @see org.eclipse.core.commands.AbstractHandler
- */
+
 @SuppressWarnings("restriction")
 public class ReverseHandler extends AbstractHandler {
 	
-	public static String reverseFile = "C:\\Users\\Rocky\\Documents\\eclipse\\runtime-nuopc\\example\\Reverse.nuopc";
-	
-	/**
-	 * The constructor.
-	 */
+		
 	public ReverseHandler() {
 	}
 
@@ -101,21 +91,6 @@ public class ReverseHandler extends AbstractHandler {
 			EPackage.Registry.INSTANCE.put("http://www.earthsystemcurator.org/nuopcgen", ecorePackage);
 			CupidActivator.log("ReverseHandler.loadLanguageEcore: registering EPackage - complete");
 		}
-					
-		/*
-		URI ecoreURI = langURI.trimFileExtension().appendFileExtension("ecore");
-				
-		//load and register related EPackage
-		final ExtendedMetaData extendedMetaData = new BasicExtendedMetaData(rs.getPackageRegistry());
-		rs.getLoadOptions().put(XMLResource.OPTION_EXTENDED_META_DATA, extendedMetaData);
-		
-		Resource metamodelResource = rs.getResource(ecoreURI, true);
-		EObject eObject = metamodelResource.getContents().get(0);
-		if (eObject instanceof EPackage) {
-		    EPackage p = (EPackage) eObject;
-		    EPackage.Registry.INSTANCE.put(p.getNsURI(), p);
-		}
-		*/
 		
 		CupidActivator.log("exit ReverseHandler.loadLanguageEcore");
 		
@@ -123,59 +98,20 @@ public class ReverseHandler extends AbstractHandler {
 		
 	}
 			
-	protected Language loadLanguageEcoreOLD() {
-		
-		
-		String langURI = CupidActivator.getDefault().getPreferenceStore().getString(CupidPreferencePage.CUPID_LANGUAGE_URI);
-		
-		
-		//load a particular language
-		URL langURL = null;
-		try {
-			langURL = new URL("file:C:\\Users\\Rocky\\Documents\\eclipse\\workspace-runtime-cupid2\\nuopcdef\\src\\nuopc.cupid");
-		} catch (MalformedURLException e) {
-			e.printStackTrace();
-		}
-		
-		ResourceSet rs = new ResourceSetImpl();
-		Resource langResource = rs.getResource(URI.createFileURI(langURL.getPath()), true);
-		Language lang = (Language) langResource.getContents().get(0);
-				
-			
-		//load and register related EPackage
-		final ExtendedMetaData extendedMetaData = new BasicExtendedMetaData(rs.getPackageRegistry());
-		rs.getLoadOptions().put(XMLResource.OPTION_EXTENDED_META_DATA, extendedMetaData);
-		
-		URL ecoreURL = null;
-		try {
-			ecoreURL = new URL("file:C:\\Users\\Rocky\\Documents\\eclipse\\workspace-runtime-cupid2\\nuopcdef\\src-gen\\nuopc.ecore");
-		} catch (MalformedURLException e) {
-			e.printStackTrace();
-		}
-		
-		Resource metamodelResource = rs.getResource(URI.createFileURI(ecoreURL.getPath()), true);
-		EObject eObject = metamodelResource.getContents().get(0);
-		if (eObject instanceof EPackage) {
-		    EPackage p = (EPackage) eObject;
-		    Registry epr = EPackage.Registry.INSTANCE;
-		    EPackage.Registry.INSTANCE.put(p.getNsURI(), p);  //guaranteed to be the same as lang.getUri()
-		}
-		
-		return lang;
-	}
-	
-	/**
-	 * the command has been executed, so extract extract the needed information
-	 * from the application context.
-	 */
 	public Object execute(ExecutionEvent event) throws ExecutionException {
 
+		//event is ignored so that this can be called from Actions without
+		//requiring an ExecutionEvent to be generated
+		
 		//IWorkbenchWindow window = HandlerUtil.getActiveWorkbenchWindowChecked(event);
 		
 		CupidActivator.log("enter ReverseHandler.execute");
 		
+		
+		ISelectionService selService = PlatformUI.getWorkbench().getActiveWorkbenchWindow().getSelectionService();
+		
 		IProject selectedProject = null;
-		ISelection sel = HandlerUtil.getCurrentSelection(event);
+		ISelection sel = selService.getSelection(); //HandlerUtil.getCurrentSelection(event);
 		
 		if (sel instanceof ITreeSelection) {
 			Object item = ((ITreeSelection) sel).getFirstElement();
@@ -189,21 +125,14 @@ public class ReverseHandler extends AbstractHandler {
 		}
 		
 		if (selectedProject == null) {
-			IEditorPart editor = HandlerUtil.getActiveEditor(event);
 			
-			//TODO: look into sourceviewerconfiguration instead of this
-//			if (editor instanceof FortranEditor) {
-//				FortranEditor fortranEditor = (FortranEditor) editor;
-//				ISourceViewer sourceViewer = fortranEditor.getSourceViewerx();
-//				IQuickAssistAssistant qaa = new QuickAssistAssistant() {
-//					@Override
-//					public boolean canFix(Annotation annotation) {
-//						System.out.println("canFix: " + annotation.getText());
-//						return super.canFix(annotation);
-//					}
-//				};
-//				qaa.install(sourceViewer);
-//			}
+			IEditorPart editor = null;
+			
+			try {
+				editor = PlatformUI.getWorkbench().getActiveWorkbenchWindow().getActivePage().getActiveEditor(); //HandlerUtil.getActiveEditor(event);
+			} catch (NullPointerException npe) {
+				//handled below
+			}
 			
 			if (editor != null) {
 				IEditorInput input = editor.getEditorInput();
@@ -211,61 +140,22 @@ public class ReverseHandler extends AbstractHandler {
 					selectedProject = ((IFileEditorInput) input).getFile().getProject();
 				}
 			}
-			//return null;
+			
 		}
 		
 		if (selectedProject == null) {
 			//System.out.println("Current editor input: " + sel);
+			CupidActivator.log("Cannot reverse engineer because not project is selected");
 			return null;
 		}
 		
-		/*
-		ResourceSet resourceSet = new ResourceSetImpl();
-
-        resourceSet.getResourceFactoryRegistry().getExtensionToFactoryMap().put(
-            Resource.Factory.Registry.DEFAULT_EXTENSION, new XMIResourceFactoryImpl());
-        EPackage packageLang = resourceSet.getPackageRegistry().getEPackage("http://www.earthsystemcurator.org/nuopcgen");
-        
-        Bundle packageBundle = FrameworkUtil.getBundle(packageLang.getClass());
-        
-        URL url = FileLocator.find(packageBundle, new Path("model/" + packageLang.getName() + ".xmi"), null);
-        try {
-        	url = FileLocator.toFileURL(url);
-        }
-        catch (IOException ioe) { 
-        	throw new RuntimeException(ioe);
-        }
-        
-    	
-    	Resource resourceLangDef = resourceSet.getResource(URI.createFileURI(url.getPath()), true);
-        Language lang = (Language) resourceLangDef.getContents().get(0);
-        */
-		
-        //NUOPCPackage pack = NUOPCPackage.eINSTANCE;            
-        
+	        
         PhotranVPG vpg = PhotranVPG.getInstance();
-        //ReverseEngineer re = new ReverseEngineer();
-        //NUOPCModel m = re.reverse(ast);
-        
+      
         Language lang = loadLanguageEcore();
               
         final FSM<?> fsm = ReverseEngineer2.reverseEngineer(lang, selectedProject, vpg); 
         
-        //NUOPCApplication a = ReverseEngineer.reverseEngineer(pack, pack.getNUOPCApplication(), selectedProject, vpg);        
-         //use project nature to store local data
- 
-        /*
-        NUOPCNature nature = null;
-        try {
-			nature = (NUOPCNature) selectedProject.getNature(NUOPCNature.NATURE_ID);
-			if (nature != null) {
-				//TODO: uncomment below
-				nature.fsm = fsm;
-			}
-		} catch (CoreException e) {
-			e.printStackTrace();
-		}
-		*/
         CupidStorage.INSTANCE.setFSM(selectedProject, fsm);
         
         //update the view here for now
@@ -282,9 +172,8 @@ public class ReverseHandler extends AbstractHandler {
         //create markers for validation failures
         try {
 			selectedProject.deleteMarkers("org.earthsystemmodeling.cupid.cupiderror", true, IResource.DEPTH_INFINITE);
-		} catch (CoreException e1) {
-			// TODO Auto-generated catch block
-			e1.printStackTrace();
+		} catch (CoreException ce) {
+			CupidActivator.log(Status.ERROR, "Error deleting validation markers", ce);
 		}
         
         
