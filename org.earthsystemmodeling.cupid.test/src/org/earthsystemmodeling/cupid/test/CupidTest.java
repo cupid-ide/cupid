@@ -115,6 +115,7 @@ public class CupidTest {
 		return fsm.getRoot();		
 	}
 	
+	@SuppressWarnings("unchecked")
 	private EList<EObject> getEList(EObject o, String featureName) {
 		EReference eref = (EReference) o.eClass().getEStructuralFeature(featureName);
 		return (EList<EObject>) o.eGet(eref);

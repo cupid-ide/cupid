@@ -266,6 +266,7 @@
             value="true">
       </persistent>
    </extension>
+   <!--
    <extension
          point="org.eclipse.ui.navigator.viewer">
       <viewerActionBinding
@@ -285,6 +286,8 @@
          </includes>
       </viewerContentBinding>
    </extension>
+  -->
+   <!--
    <extension
          id="org.earthsystemmodeling.nuopc_nav_content"
          name="NUOPC Navigator Content"
@@ -313,6 +316,7 @@
          </triggerPoints>
       </navigatorContent>
    </extension>
+   -->
    <extension
          point="org.eclipse.ui.views">
       <category
