@@ -49,6 +49,7 @@ import org.eclipse.photran.internal.core.analysis.binding.ScopingNode;
 import org.eclipse.photran.internal.core.lexer.Token;
 import org.eclipse.photran.internal.core.parser.ASTModuleNode;
 import org.eclipse.photran.internal.core.parser.ASTNode;
+import org.eclipse.photran.internal.core.parser.ASTSubroutineSubprogramNode;
 import org.eclipse.photran.internal.core.parser.IProgramUnit;
 import org.eclipse.photran.internal.core.reindenter.Reindenter;
 import org.eclipse.photran.internal.core.reindenter.Reindenter.Strategy;
@@ -331,8 +332,20 @@ public class NUOPCView extends ViewPart {
 					Object val = contentProvider.getCurrentFSM().getMapsTo(me.elem);
 					
 					if (val != null) {
-												
-						if (val instanceof ScopingNode) {
+						
+						if (val instanceof ASTSubroutineSubprogramNode) {
+							ASTSubroutineSubprogramNode ssn = (ASTSubroutineSubprogramNode) val;
+							Token t = null;
+							try {
+								t = ssn.getSubroutineStmt().getSubroutineName().getSubroutineName();
+								marker = createMarker(t);
+							}
+							catch (NullPointerException npe) {
+								//handled below
+							}
+							
+						}
+						else if (val instanceof ScopingNode) {
 							//PhotranTokenRef tokenRef = ((ScopingNode) val).getRepresentativeToken();
 							marker = createMarker( ((ScopingNode) val).getRepresentativeToken().findTokenOrReturnNull());							
 						}

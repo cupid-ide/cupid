@@ -1,8 +1,12 @@
 package org.earthsystemmodeling.cupid.properties;
 
+import org.earthsystemmodeling.cupid.core.CupidActivator;
+import org.eclipse.core.resources.IProject;
 import org.eclipse.core.resources.IResource;
-import org.eclipse.core.runtime.CoreException;
+import org.eclipse.core.resources.ProjectScope;
 import org.eclipse.core.runtime.QualifiedName;
+import org.eclipse.core.runtime.Status;
+import org.eclipse.core.runtime.preferences.IEclipsePreferences;
 import org.eclipse.jface.preference.PreferencePage;
 import org.eclipse.jface.window.Window;
 import org.eclipse.swt.SWT;
@@ -17,6 +21,7 @@ import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Text;
 import org.eclipse.ui.dialogs.PropertyPage;
 import org.eclipse.ui.dialogs.ResourceSelectionDialog;
+import org.osgi.service.prefs.BackingStoreException;
 
 public class CupidPropertyPage extends PropertyPage {
 
@@ -71,15 +76,10 @@ public class CupidPropertyPage extends PropertyPage {
 		gd.heightHint = 100;
 		ownerText.setLayoutData(gd);
 
-		// Populate owner text field
-		try {
-			String owner =
-					((IResource) getElement()).getPersistentProperty(NUOPC_FILES_QN);
-			ownerText.setText((owner != null) ? owner : "");
-		} catch (CoreException e) {
-			ownerText.setText("");
-		}
-
+		IEclipsePreferences prefs = new ProjectScope((IProject) getElement()).getNode("org.earthsystemmodeling.cupid");
+		String owner = prefs.get(NUOPC_FILES_PROPERTY, "");	
+		ownerText.setText((owner != null) ? owner : "");
+	
 		Button button = new Button(composite, SWT.PUSH);
 		button.addMouseListener(new MouseAdapter() {
 
@@ -147,15 +147,23 @@ public class CupidPropertyPage extends PropertyPage {
 
 	@Override
 	public boolean performOk() {
+		
 		// store the value in the owner text field
 		try {
-			((IResource) getElement()).setPersistentProperty(NUOPC_FILES_QN, ownerText.getText());
-		} catch (CoreException e) {
+			//((IResource) getElement()).setPersistentProperty(NUOPC_FILES_QN, ownerText.getText());
+			IEclipsePreferences prefs = new ProjectScope((IProject) getElement()).getNode("org.earthsystemmodeling.cupid");
+			prefs.put(NUOPC_FILES_PROPERTY, ownerText.getText());
+			prefs.flush();
+		} catch (BackingStoreException e) {
+			setErrorMessage(e.getMessage());
+			CupidActivator.log(Status.ERROR, "Error saving NUOPC files list", e);
 			return false;
 		}
 
 		return true;
 	}
+	
+	
 
 	public Object[] open() {
 
