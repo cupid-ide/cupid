@@ -110,8 +110,8 @@ public class PsycheTests {
 		
 		generator.doGenerate(lang.eResource(), fsa);
 		CharSequence cs;
-		cs = fsa.readTextFile("simple.oclinecore");
-		cs = fsa.readTextFile("simple.ecore");
+		cs = fsa.readTextFile("Simple.oclinecore");
+		cs = fsa.readTextFile("Simple.ecore");
 
 	}
 	
@@ -124,10 +124,10 @@ public class PsycheTests {
 		
 		generator.doGenerate(lang.eResource(), fsa);
 		CharSequence cs;
-		cs = fsa.readTextFile("simple2.oclinecore");
-		cs = fsa.readTextFile("simple2.ecore");
+		cs = fsa.readTextFile("Simple2.oclinecore");
+		cs = fsa.readTextFile("Simple2.ecore");
 
-		EPackage ep = getEPackageFromEcore("simple2.ecore");
+		EPackage ep = getEPackageFromEcore("Simple2.ecore");
 		assertEquals(ep.getName(), "simple2");
 		assertNotNull(ep.getEClassifier("Simple2"));
 		assertNotNull(ep.getEClassifier("Con1"));
@@ -150,7 +150,7 @@ public class PsycheTests {
 		
 	private EPackage getEPackageFromEcore(String filename) {
 		ResourceSet rs = new ResourceSetImpl();
-		Resource ecoreResource = rs.getResource(fsa.getURI("simple2.ecore"), true);
+		Resource ecoreResource = rs.getResource(fsa.getURI(filename), true);
 		return (EPackage) ecoreResource.getContents().get(0);
 	}
 
