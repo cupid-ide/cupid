@@ -4,7 +4,6 @@ import org.earthsystemmodeling.cupid.core.CupidActivator;
 import org.eclipse.core.resources.IProject;
 import org.eclipse.core.resources.IResource;
 import org.eclipse.core.resources.ProjectScope;
-import org.eclipse.core.runtime.QualifiedName;
 import org.eclipse.core.runtime.Status;
 import org.eclipse.core.runtime.preferences.IEclipsePreferences;
 import org.eclipse.jface.preference.PreferencePage;
@@ -27,9 +26,9 @@ public class CupidPropertyPage extends PropertyPage {
 
 	private static final String PATH_TITLE = "Project:";
 	private static final String OWNER_TITLE = "NUOPC Resources:";
-	private static final String NUOPC_FILES_PROPERTY = "NUOPC_FILES";
+	public static final String NUOPC_FILES_PROPERTY = "NUOPC_FILES";
 	
-	public static QualifiedName NUOPC_FILES_QN = new QualifiedName("", NUOPC_FILES_PROPERTY);
+	//public static QualifiedName NUOPC_FILES_QN = new QualifiedName("", NUOPC_FILES_PROPERTY);
 
 	private static final int TEXT_FIELD_WIDTH = 50;
 

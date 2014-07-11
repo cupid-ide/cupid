@@ -11,10 +11,13 @@ import org.earthsystemmodeling.cupid.util.CodeTransformation;
 import org.earthsystemmodeling.psyche.ConceptDef;
 import org.earthsystemmodeling.psyche.Language;
 import org.eclipse.core.resources.IFile;
+import org.eclipse.core.resources.IFolder;
 import org.eclipse.core.resources.IProject;
 import org.eclipse.core.resources.IResource;
+import org.eclipse.core.resources.ProjectScope;
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.Status;
+import org.eclipse.core.runtime.preferences.IEclipsePreferences;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.photran.core.IFortranAST;
 import org.eclipse.photran.internal.core.vpg.PhotranVPG;
@@ -50,7 +53,10 @@ public class ReverseEngineer2 {
 		Set<IFortranAST> asts = new HashSet<IFortranAST>();	
 				
 		try {
-			String fileList = project.getPersistentProperty(CupidPropertyPage.NUOPC_FILES_QN);
+			//String fileList = project.getPersistentProperty(CupidPropertyPage.NUOPC_FILES_QN);
+			IEclipsePreferences prefs = new ProjectScope(project).getNode("org.earthsystemmodeling.cupid");
+			String fileList = prefs.get(CupidPropertyPage.NUOPC_FILES_PROPERTY, null);	
+		
 			if (fileList != null && fileList.length() > 1) {
 				for (String path : fileList.split("\n")) {		
 					IFile f = (IFile) project.findMember(path.trim());
@@ -72,33 +78,26 @@ public class ReverseEngineer2 {
 				}
 			}
 			else {
-				for (IResource r : project.members()) {
-					//TODO: deal with folders - recursive method
-					if (r instanceof IFile) {
-						//System.out.println("Full path: " + r.getFullPath());
-						//TODO: deal with these file extensions
-						if (r.getProjectRelativePath().getFileExtension() != null &&
-							(r.getProjectRelativePath().getFileExtension().equalsIgnoreCase("f") ||
-							r.getProjectRelativePath().getFileExtension().equalsIgnoreCase("f90"))) {
-							CupidActivator.log("ReverseEngineer2.reverseEngineer: adding file: " + r.getFullPath());
-							IFortranAST ast = vpg.acquireTransientAST((IFile) r);							
-							if (ast == null) {
-								CupidActivator.log(Status.ERROR, "ReverseEngineer2.reverseEngineer - AST not found: " + r.getFullPath());
-							}
-							else {
-								asts.add(ast);
-							}
-						}
-					
+				Set<IFile> files = getFiles(project.members());
+				for (IFile f : files) {
+					CupidActivator.log("ReverseEngineer2.reverseEngineer: adding file: " + f.getFullPath());
+					IFortranAST ast = vpg.acquireTransientAST(f);							
+					if (ast == null) {
+						CupidActivator.log(Status.ERROR, "ReverseEngineer2.reverseEngineer - AST not found: " + f.getFullPath());
+					}
+					else {
+						asts.add(ast);
 					}
 				}
+				CupidActivator.log(files.size() + " total Fortran files found in project.");
 			}
 		} 
 		catch (CoreException e1) {
 			CupidActivator.log(Status.ERROR, "ReverseEngineer2.reverseEngineer", e1);
-			//e1.printStackTrace();
 			return fsm;
 		}
+		
+		CupidActivator.log("Found ASTs for " + asts.size() + " files.");
 		
 		//root = reverse(fsm, asts, topConcept, root, fsm.getMappings(), eFactory);
 	
@@ -108,6 +107,24 @@ public class ReverseEngineer2 {
 		
 		return fsm;
 		
+	}
+	
+	private static Set<IFile> getFiles(IResource[] resources) throws CoreException {
+		Set<IFile> files = new HashSet<IFile>();
+		for (IResource r : resources) {
+			if (r instanceof IFile) {
+				if (r.getProjectRelativePath().getFileExtension() != null &&
+					(r.getProjectRelativePath().getFileExtension().equalsIgnoreCase("f") ||
+					r.getProjectRelativePath().getFileExtension().equalsIgnoreCase("f90"))) {
+					files.add((IFile) r);
+				}
+			}
+			else if (r instanceof IFolder) {
+				files.addAll( getFiles(  ((IFolder) r).members() )  );
+			}
+		}
+		return files;
+	
 	}
 		
 	
