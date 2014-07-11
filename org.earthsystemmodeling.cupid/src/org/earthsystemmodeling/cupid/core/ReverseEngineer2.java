@@ -52,6 +52,8 @@ public class ReverseEngineer2 {
 				
 		Set<IFortranAST> asts = new HashSet<IFortranAST>();	
 				
+		vpg.releaseAllASTs();
+		
 		try {
 			//String fileList = project.getPersistentProperty(CupidPropertyPage.NUOPC_FILES_QN);
 			IEclipsePreferences prefs = new ProjectScope(project).getNode("org.earthsystemmodeling.cupid");
