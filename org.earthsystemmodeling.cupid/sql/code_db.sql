@@ -1,3 +1,6 @@
+create schema if not exists prolog;
+set schema prolog;
+
 drop table if exists module;
 drop table if exists call;
 drop table if exists subroutine;

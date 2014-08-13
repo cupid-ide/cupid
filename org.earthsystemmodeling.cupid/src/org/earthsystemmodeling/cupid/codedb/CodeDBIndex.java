@@ -94,7 +94,7 @@ public class CodeDBIndex {
 		
 		try {
 			//TODO: connection string
-			conn = DriverManager.getConnection("jdbc:h2:~/h2/prolog2;SCHEMA=PROLOG");
+			conn = DriverManager.getConnection("jdbc:h2:~/h2/prolog2");
 		} catch (SQLException e3) {
 			//TODO: deal with this
 			throw new RuntimeException(e3);
