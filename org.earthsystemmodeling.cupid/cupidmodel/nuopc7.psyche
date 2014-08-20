@@ -400,11 +400,19 @@ language NUOPC7 'http://www.earthsystemcurator.org/nuopcgen' {
 			attrib n_SetServices <subroutineName> {@name @default="SetServices"}
 			attrib p_gcomp {@default="gcomp"}
 			attrib p_rc	{@default="rc"}	
-						
+			
+			--call NUOPC_CompDerive(gcomp, model_routine_SS, rc=rc)
+			callsCompDerive! <call(NUOPC_CompDerive(#^p_gcomp, #^genericImports/importsGenericSS, rc?=#^p_rc))>	{
+				@label = "Calls NUOPC_CompDerive"
+			}		
+			
+			/*
 			callsGenericSetServices! <call(#^genericImports/importsGenericSS(#^p_gcomp, #^p_rc))> 
 			{
 				@label = "Calls generic SetServices"	
-			}					
+			}
+			
+			*/					
 		}
 		
 		initialize

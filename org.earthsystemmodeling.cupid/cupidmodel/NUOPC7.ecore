@@ -317,14 +317,13 @@
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="p_gcomp" lowerBound="1"
         eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="p_rc" lowerBound="1" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
-    <eStructuralFeatures xsi:type="ecore:EReference" name="callsGenericSetServices"
-        lowerBound="1" eType="#//NUOPCModel__ImplementsSetServices__CallsGenericSetServices"
-        containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="callsCompDerive" lowerBound="1"
+        eType="#//NUOPCModel__ImplementsSetServices__CallsCompDerive" containment="true"/>
   </eClassifiers>
-  <eClassifiers xsi:type="ecore:EClass" name="NUOPCModel__ImplementsSetServices__CallsGenericSetServices"
+  <eClassifiers xsi:type="ecore:EClass" name="NUOPCModel__ImplementsSetServices__CallsCompDerive"
       eSuperTypes="#//MappedElement">
     <eAnnotations source="http://www.earthsystemcog.org/projects/nuopc">
-      <details key="label" value="Calls generic SetServices"/>
+      <details key="label" value="Calls NUOPC_CompDerive"/>
     </eAnnotations>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="NUOPCModel__Initialize" eSuperTypes="#//MappedElement">

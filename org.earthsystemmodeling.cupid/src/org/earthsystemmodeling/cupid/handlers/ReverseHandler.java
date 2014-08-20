@@ -82,15 +82,18 @@ public class ReverseHandler extends AbstractHandler {
 		Language lang = (Language) langResource.getContents().get(0);
 		
 		//add default NUOPC metamodel to registry if necessary
-		if (EPackage.Registry.INSTANCE.getEPackage("http://www.earthsystemcurator.org/nuopcgen") == null) {
-			CupidActivator.log("ReverseHandler.loadLanguageEcore: registering EPackage");
-			URI ecoreURI = URI.createURI("platform:/plugin/org.earthsystemmodeling.cupid/cupidmodel/NUOPC.ecore");
-			
-			Resource ecoreResource = rs.getResource(ecoreURI, true);
-			EPackage ecorePackage = (EPackage) ecoreResource.getContents().get(0);
-			EPackage.Registry.INSTANCE.put("http://www.earthsystemcurator.org/nuopcgen", ecorePackage);
-			CupidActivator.log("ReverseHandler.loadLanguageEcore: registering EPackage - complete");
-		}
+		//always register in case it changes during the run
+		
+		//if (EPackage.Registry.INSTANCE.getEPackage("http://www.earthsystemcurator.org/nuopcgen") == null) {
+		CupidActivator.log("ReverseHandler.loadLanguageEcore: registering EPackage");
+		//URI ecoreURI = URI.createURI("platform:/plugin/org.earthsystemmodeling.cupid/cupidmodel/NUOPC.ecore");
+		URI ecoreURI = langURI.trimFileExtension().appendFileExtension("ecore");	
+		
+		Resource ecoreResource = rs.getResource(ecoreURI, true);
+		EPackage ecorePackage = (EPackage) ecoreResource.getContents().get(0);
+		EPackage.Registry.INSTANCE.put("http://www.earthsystemcurator.org/nuopcgen", ecorePackage);
+		CupidActivator.log("ReverseHandler.loadLanguageEcore: registering EPackage - complete");
+		//}
 		
 		CupidActivator.log("exit ReverseHandler.loadLanguageEcore");
 		
