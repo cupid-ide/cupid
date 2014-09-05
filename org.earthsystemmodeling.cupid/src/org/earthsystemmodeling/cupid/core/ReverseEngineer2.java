@@ -5,6 +5,7 @@ import java.util.HashSet;
 import java.util.Set;
 
 import org.earthsystemmodeling.FSM;
+import org.earthsystemmodeling.cupid.codedb.CodeDBIndex;
 import org.earthsystemmodeling.cupid.properties.CupidPropertyPage;
 import org.earthsystemmodeling.cupid.util.CodeQuery2;
 import org.earthsystemmodeling.cupid.util.CodeTransformation;
@@ -21,6 +22,19 @@ import org.eclipse.core.runtime.preferences.IEclipsePreferences;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.photran.core.IFortranAST;
 import org.eclipse.photran.internal.core.vpg.PhotranVPG;
+
+import alice.tuprolog.InvalidTheoryException;
+import alice.tuprolog.MalformedGoalException;
+import alice.tuprolog.NoMoreSolutionException;
+import alice.tuprolog.NoSolutionException;
+import alice.tuprolog.Prolog;
+import alice.tuprolog.SolveInfo;
+import alice.tuprolog.Struct;
+import alice.tuprolog.Theory;
+import alice.tuprolog.UnknownVarException;
+import alice.tuprolog.Var;
+import alice.tuprolog.lib.InvalidObjectIdException;
+import alice.tuprolog.lib.JavaLibrary;
 
 @SuppressWarnings("restriction")
 public class ReverseEngineer2 {
@@ -103,6 +117,60 @@ public class ReverseEngineer2 {
 		
 		//root = reverse(fsm, asts, topConcept, root, fsm.getMappings(), eFactory);
 	
+		//testing indexing code
+		
+		CodeDBIndex codeIndex = new CodeDBIndex();
+		codeIndex.indexASTs(asts);
+		codeIndex.printClauseList();
+		
+		
+		Prolog prolog = codeIndex.getProlog();
+		try {
+			
+			// subroutine(#id, #parent, name, [#stmt_1, #stmt_2...])
+			// call(#id, #parent, subroutine name)
+			//def(#id, ref(file, offset, length),  type, intentIn?, intentOut?)
+			
+			prolog.addTheory(new Theory("nuopc_module(_id, _name) :- module(_id, _, _name, _), uses(_, _id, 'NUOPC', _)."));
+			prolog.addTheory(new Theory("nuopc_module(_id, _name, _ss) :- nuopc_module(_id, _name), "
+					+ "subroutine(_sid, _id, _ss, _), "
+					+ "call(_, _sid, 'NUOPC_CompDerive')."));
+			
+			prolog.addTheory(new Theory("esmf_method(_id, _name) :- subroutine(_id, _, _name, _), "
+					+ "subroutineParam(_param0, _id, 0, _name0, _def0), "
+					+ "def(_def0, _, 'type(esmf_gridcomp)', _, _)."));
+			
+			
+			//SolveInfo sol = prolog.solve("nuopc_module(_id, _name, _ss).");
+			SolveInfo sol = prolog.solve("esmf_method(_id, _name).");
+			while (true) {
+				System.out.println("\nSolution: ");
+				try {
+					for (Var var : sol.getBindingVars()) {
+						System.out.println("\t" + var.getName() + " = " + sol.getVarValue(var.getName()));
+					}
+					
+					//get object
+					//JavaLibrary lib = (JavaLibrary) prolog.getLibrary("alice.tuprolog.lib.JavaLibrary");
+					//Object obj = lib.getRegisteredObject((Struct) sol.getTerm("MObj"));
+					
+					sol = prolog.solveNext();
+				} catch (NoSolutionException | NoMoreSolutionException e) {
+					break;
+				}
+				
+			
+			}	
+						
+		} catch (MalformedGoalException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (InvalidTheoryException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}			
+		
+		
 		fsm.reverse(asts);
 		
 		CupidActivator.log("exit ReverseEngineer2.reverseEngineer");
@@ -110,6 +178,8 @@ public class ReverseEngineer2 {
 		return fsm;
 		
 	}
+	
+	
 	
 	private static Set<IFile> getFiles(IResource[] resources) throws CoreException {
 		Set<IFile> files = new HashSet<IFile>();

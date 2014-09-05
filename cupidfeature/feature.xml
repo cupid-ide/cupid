@@ -2,7 +2,7 @@
 <feature
       id="cupidfeature"
       label="Cupid"
-      version="1.0.0.qualifier">
+      version="0.1.0.qualifier">
    <install-handler handler=""/>
 
    <description url="http://www.earthsystemcog.org/projects/cupid">
@@ -52,7 +52,7 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SO
       <import plugin="org.eclipse.photran.ui" version="8.0.0" match="greaterOrEqual"/>
       <import plugin="org.eclipse.photran.cdtinterface" version="8.0.0" match="greaterOrEqual"/>
       <import plugin="org.eclipse.photran.ui.vpg" version="8.0.0" match="greaterOrEqual"/>
-      <import plugin="org.eclipse.core.resources" version="3.8.1" match="greaterOrEqual"/>
+      <import plugin="org.eclipse.core.resources" version="3.9.0" match="greaterOrEqual"/>
       <import plugin="org.eclipse.swt"/>
       <import plugin="org.eclipse.jface"/>
       <import plugin="org.eclipse.ui.workbench"/>
@@ -74,9 +74,7 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SO
       <import plugin="org.eclipse.xtext.common.types"/>
       <import plugin="org.eclipse.ocl.examples.pivot"/>
       <import plugin="org.eclipse.ocl.examples.xtext.base"/>
-      <import plugin="org.eclipse.core.runtime" version="3.9.0" match="greaterOrEqual"/>
       <import plugin="org.eclipse.equinox.registry"/>
-      <import plugin="org.eclipse.core.resources" version="3.8.101" match="greaterOrEqual"/>
       <import plugin="org.apache.log4j"/>
       <import plugin="org.eclipse.xtext.xbase.lib"/>
       <import plugin="org.eclipse.xtext.ui"/>
@@ -86,8 +84,7 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SO
       <import plugin="org.eclipse.xtext.builder"/>
       <import plugin="org.eclipse.xtext.common.types.ui"/>
       <import plugin="org.eclipse.xtext.ui.codetemplates.ui"/>
-      <import feature="org.eclipse.ocl.examples" version="3.2.1.v20120919-0602"/>
-      <import feature="org.eclipse.photran" version="8.1.3.201308141858"/>
+      <import feature="org.eclipse.photran" version="8.2.0.201406102021"/>
       <import feature="org.eclipse.ptp" version="8.0.0.201406102209"/>
    </requires>
 

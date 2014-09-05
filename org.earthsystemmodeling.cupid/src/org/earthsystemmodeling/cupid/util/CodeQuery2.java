@@ -27,6 +27,8 @@ import org.eclipse.photran.internal.core.analysis.binding.Definition;
 import org.eclipse.photran.internal.core.analysis.binding.ScopingNode;
 import org.eclipse.photran.internal.core.analysis.types.DerivedType;
 import org.eclipse.photran.internal.core.analysis.types.Type;
+import org.eclipse.photran.internal.core.parser.ASTAcValueNode;
+import org.eclipse.photran.internal.core.parser.ASTArrayConstructorNode;
 import org.eclipse.photran.internal.core.parser.ASTAssignmentStmtNode;
 import org.eclipse.photran.internal.core.parser.ASTCallStmtNode;
 import org.eclipse.photran.internal.core.parser.ASTEntityDeclNode;
@@ -68,6 +70,12 @@ public class CodeQuery2 {
 				continue;
 			}
 			
+			//if (mapping.getSubroutineName().getExpr() != null && mapping.getSubroutineName().getExpr().getId() != null) {
+			//	if (mapping.getSubroutineName().getExpr().getId().contains("NUOPC_CompSet")) {
+			//		System.out.println("subroutine = " + mapping.getSubroutineName().getExpr().getId());
+			//	}
+			//}
+			
 			/*
 			if (mapping.getSubroutineName().getPathExpr() != null) {
 				bindings.put(mapping.getSubroutineName().getPathExpr(), csn.getSubroutineName().getText().trim());
@@ -82,6 +90,11 @@ public class CodeQuery2 {
 			
 			//deal with arguments now
 			if (mapping.getParams() != null) {
+				
+				//arg list could be smaller since some can be optional, but cannot be larger
+				if (csn.getArgList().size() > mapping.getParams().size()) {
+					continue csnloop;
+				}
 				
 				varloop: for (int i = 0; i < mapping.getParams().size(); i++) {
 					
@@ -122,6 +135,22 @@ public class CodeQuery2 {
 							continue csnloop;
 						}
 						
+					}
+					else if (value.getExpr() != null && value.getExpr().getArrayConstructor() != null) {
+						if (san.getExpr() instanceof ASTArrayConstructorNode) {
+							ASTArrayConstructorNode acn = (ASTArrayConstructorNode) san.getExpr();
+							ASTAcValueNode avn = acn.getAcValueList().get(0);
+							String actual = avn.getExpr().toString().trim();
+							String need = value.getExpr().getArrayConstructor().getItem().get(0).trim();
+							//System.out.println("compare: " + actual);
+							//System.out.println("to: " + need);
+							if (!actual.equalsIgnoreCase(need)) {
+								continue csnloop;
+							}
+						}
+						else {
+							continue csnloop;
+						}
 					}
 					else if (!value.isWildcard() && !san.getExpr().toString().trim().equalsIgnoreCase(value.getExpr().getId())) {
 						//if not wildcard, make sure expressions match

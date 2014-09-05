@@ -86,6 +86,7 @@ public class PsycheFactoryImpl extends EFactoryImpl implements PsycheFactory
       case PsychePackage.VARIABLE_DECLARATION: return createVariableDeclaration();
       case PsychePackage.FUNCTION_ASSIGNMENT: return createFunctionAssignment();
       case PsychePackage.LOCAL_EXPRESSION: return createLocalExpression();
+      case PsychePackage.ARRAY_CONSTRUCTOR: return createArrayConstructor();
       case PsychePackage.EXPR: return createExpr();
       case PsychePackage.PATH_EXPR: return createPathExpr();
       case PsychePackage.AXIS: return createAxis();
@@ -336,6 +337,17 @@ public class PsycheFactoryImpl extends EFactoryImpl implements PsycheFactory
   {
     LocalExpressionImpl localExpression = new LocalExpressionImpl();
     return localExpression;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public ArrayConstructor createArrayConstructor()
+  {
+    ArrayConstructorImpl arrayConstructor = new ArrayConstructorImpl();
+    return arrayConstructor;
   }
 
   /**

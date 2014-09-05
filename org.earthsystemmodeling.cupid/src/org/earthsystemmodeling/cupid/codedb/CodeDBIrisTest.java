@@ -1,0 +1,348 @@
+package org.earthsystemmodeling.cupid.codedb;
+
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.Map.Entry;
+
+import org.deri.iris.Configuration;
+import org.deri.iris.EvaluationException;
+import org.deri.iris.KnowledgeBaseFactory;
+import org.deri.iris.api.IKnowledgeBase;
+import org.deri.iris.api.basics.IAtom;
+import org.deri.iris.api.basics.IPredicate;
+import org.deri.iris.api.basics.IQuery;
+import org.deri.iris.api.basics.IRule;
+import org.deri.iris.api.basics.ITuple;
+import org.deri.iris.api.factory.IBasicFactory;
+import org.deri.iris.api.factory.IConcreteFactory;
+import org.deri.iris.api.factory.ITermFactory;
+import org.deri.iris.api.terms.ITerm;
+import org.deri.iris.factory.Factory;
+import org.deri.iris.optimisations.magicsets.MagicSets;
+import org.deri.iris.optimisations.rulefilter.RuleFilter;
+import org.deri.iris.storage.IRelation;
+import org.deri.iris.storage.simple.SimpleRelationFactory;
+import org.deri.iris.compiler.Parser;
+import org.deri.iris.compiler.ParserException;
+
+
+public class CodeDBIrisTest {
+
+	public static void main(String[] args) throws ParserException, EvaluationException, IOException {
+		
+		System.out.print("Press any key to go: ");
+		InputStreamReader readIn = new InputStreamReader(System.in);
+		readIn.read();
+		
+		Configuration config = KnowledgeBaseFactory.getDefaultConfiguration();
+		
+		CodeDBIrisTest c = new CodeDBIrisTest();
+		c.testPopulateWithParser(config);
+		c.testPopulateManually(config);
+		
+	}
+	
+	public static void main2(String[] args) throws ParserException, EvaluationException, IOException {
+		
+		
+		
+		Configuration config = KnowledgeBaseFactory.getDefaultConfiguration();
+		//config.programOptmimisers.add(new RuleFilter());
+		//config.programOptmimisers.add(new MagicSets());
+		
+		StringBuilder dl = new StringBuilder();
+		//StringBuilder dl = generateFacts();
+		
+		//facts
+		dl.append("module('modA').\n");
+		dl.append("module('modB').\n");
+		dl.append("module('modC').\n");
+		
+		dl.append("uses('modA', 'ESMF').\n");
+		dl.append("uses('modA', 'NUOPC').\n");
+		dl.append("uses('modA', 'NUOPC_Model').\n");
+		dl.append("uses('modB', 'NUOPC_Driver').\n");
+		
+		dl.append("usesOnly('modA', 'NUOPC_Model', 'routine_SetServices', 'model_routineSS').\n");
+		dl.append("usesOnly('modA', 'NUOPC_Model', 'label_SetModelCount', 'label_SetModelCount').\n");
+
+		dl.append("subroutine('modA', 'modASub1').\n");
+		dl.append("subroutine('modA', 'modASub2').\n");
+		dl.append("subroutine('modA', 'modASub3').\n");
+		
+		dl.append("call(101, 'modA', 'modASub1', 'NUOPC_CompDerive').\n");
+		dl.append("callArg(101, 0, 'gcomp').\n");
+		dl.append("callArg(101, 0, 'rc').\n");
+		
+		dl.append("call(201, 'modB', 'modBSub2', 'NUOPC_CompDerive').\n");
+		dl.append("callArg(201, 0, 'gcomp').\n");
+		dl.append("callArg(201, 0, 'rc').\n");
+		dl.append("call(202, 'modB', 'modBSub2', 'NUOPC_CompSpecialize').\n");
+		dl.append("callArg(202, 0, 'gcomp').\n");
+		dl.append("callArg(202, 0, 'rc').\n");
+		
+		dl.append("subroutine('modB', 'modBSub1').\n");
+		dl.append("subroutine('modB', 'modBSub2').\n");
+		dl.append("subroutine('modB', 'modBSub3').\n");
+		
+		dl.append("subroutine('modC', 'modCSub1').\n");
+		dl.append("subroutine('modC', 'modCSub2').\n");
+		dl.append("subroutine('modC', 'modCSub3').\n");
+		
+		//rules
+		dl.append("NUOPCModule(?M) :- module(?M), uses(?M, 'NUOPC_Model').\n");
+		dl.append("NUOPCModule(?M) :- module(?M), uses(?M, 'NUOPC_Driver').\n");
+		dl.append("SetServices(?M, ?S) :- NUOPCModule(?M), subroutine(?M, ?S), call(?CID, ?M, ?S, 'NUOPC_CompDerive').\n");
+		
+		
+		//queries
+		dl.append("?-module(?M).\n");
+		dl.append("?-subroutine('mod1', ?S).\n");
+		dl.append("?-subroutine('mod1', ?S), arg(?S, 2).\n");
+		dl.append("?-module(?M), uses(?M, 'NUOPC_Model'), usesOnly(?M, 'NUOPC_Model', 'routine_SetServices', ?SS).\n");
+		dl.append("?-NUOPCComponent(?X).\n");
+		dl.append("?-SetServices(?M, ?S).\n");
+		dl.append("?-module(?M), SetServices(?M, ?S).\n");
+		
+		
+		//game plan
+		// 1) in rev eng function, add code to populate iris knowledge base using AST visitors
+		// 2) introduce query syntax into Psyche
+		// 3) find a way to map query results back to AST? (this is necessary if we use AST rewriting for code gen)
+		
+		long startParse = System.currentTimeMillis();
+		Parser parser = new Parser();
+		parser.parse(dl.toString());
+		long endParse = System.currentTimeMillis();
+				
+		/*
+		for (Entry<IPredicate, IRelation> e : parser.getFacts().entrySet()) {
+			System.out.println("Predicate: " + e.getKey().getPredicateSymbol());
+			for (int i = 0; i < e.getValue().size(); i++) {
+				System.out.println("Tuple: " + e.getValue().get(i));
+			}
+		}
+		*/
+		
+		List<IQuery> queryList = parser.getQueries();
+		for (IQuery q : queryList) {
+			System.out.println("Query: " + q);
+		}
+		
+		IQuery qMod = queryList.get(queryList.size()-1);
+		
+		long startKB = System.currentTimeMillis();
+		IKnowledgeBase kb = KnowledgeBaseFactory.createKnowledgeBase(
+				parser.getFacts(), 
+				parser.getRules(), 
+				config);
+		long endKB = System.currentTimeMillis();
+		
+		long startQuery = System.currentTimeMillis();
+		//for (int i = 0; i < 10; i++) {
+			IRelation res = kb.execute(qMod);
+		//}
+		long endQuery = System.currentTimeMillis();
+		
+		
+		System.out.println("Query result: ");
+		for (int i = 0; i < res.size(); i++) {
+			System.out.println("Tuple: " + res.get(i));
+		}
+		
+				
+		long parseTime = endParse - startParse;
+		long KBtime = endKB - startKB;
+		long queryTime = (endQuery - startQuery); //// 10;  //average
+		
+		System.out.println("Parse time: " + parseTime);
+		System.out.println("KB time: " + KBtime);
+		System.out.println("Query time: " + queryTime);
+		
+		
+	}
+	
+	public void testPopulateWithParser(Configuration config) throws ParserException, EvaluationException {
+	
+		StringBuilder dl = generateFacts();
+						
+		
+		Parser parser = new Parser();
+		parser.parse(dl.toString());
+				
+		IKnowledgeBase kb = KnowledgeBaseFactory.createKnowledgeBase(
+				parser.getFacts(), 
+				getRules(), 
+				config);
+	
+		List<IQuery> queries = getQueries();
+		IQuery query = queries.get(queries.size()-1);
+		
+		IRelation res = kb.execute(query);
+		
+		System.out.println("Query result (parser): " + res.size());
+		//for (int i = 0; i < res.size(); i++) {
+		//	System.out.println("Tuple: " + res.get(i));
+		//}
+		
+	}
+	
+	public void testPopulateManually(Configuration config) throws EvaluationException, ParserException {
+		
+		Map<IPredicate, IRelation> facts = getFacts();
+		
+		long start = System.currentTimeMillis();
+		IKnowledgeBase kb = KnowledgeBaseFactory.createKnowledgeBase(
+				getFacts(), 
+				getRules(), 
+				config);
+		long stop = System.currentTimeMillis();
+		System.out.println("Time to create KB (1): " + (stop-start));
+		
+		List<IQuery> queries = getQueries();
+		IQuery query = queries.get(queries.size()-1);
+		
+		IRelation res = kb.execute(query);
+		System.out.println("Query result (manual): " + res.size());
+		
+		//add a fact
+		ITerm termMod = Factory.TERM.createString("modABC123");
+		ITuple tupMod = Factory.BASIC.createTuple(termMod);
+		
+		for (IPredicate pred : facts.keySet()) {
+			if (pred.getPredicateSymbol().equals("module")) {
+				facts.get(pred).add(tupMod);
+				System.out.println("Added tuple");
+				break;
+			}
+		}
+		
+		start = System.currentTimeMillis();
+		kb = KnowledgeBaseFactory.createKnowledgeBase(
+				facts, 
+				getRules(), 
+				config);
+		stop = System.currentTimeMillis();
+		System.out.println("Time to create KB (2): " + (stop-start));
+		
+		res = kb.execute(query);
+		System.out.println("Query result (manual after add): " + res.size());
+		
+		//for (int i = 0; i < res.size(); i++) {
+		//	System.out.println("Tuple: " + res.get(i));
+		//}
+		
+	}
+	
+	private StringBuilder generateFacts() {
+		
+		StringBuilder dl = new StringBuilder();
+		
+		for (int modi = 0; modi < 50; modi++) {
+			
+			String modString = "mod" + modi;		
+			dl.append("module('" + modString + "').\n");
+		
+			for (int subi = 0; subi < 50; subi++) {
+				
+				String subString = modString + "_sub" + subi;				
+				dl.append("subroutine('" + modString + "', '" + subString + "').\n");
+			
+				for (int argi = 0; argi < 5; argi++) {
+			
+					dl.append("arg('" + subString + "', " + argi + ").\n");
+					
+				}
+			}
+		}
+		
+		return dl;
+	}
+
+	private Map<IPredicate, IRelation> getFacts() {
+		
+		IBasicFactory bf = Factory.BASIC;
+		ITermFactory tf = Factory.TERM;
+		IConcreteFactory cf = Factory.CONCRETE;
+		
+		IPredicate predModule = bf.createPredicate("module", 1);
+		IPredicate predSubroutine = bf.createPredicate("subroutine", 2);
+		IPredicate predArg = bf.createPredicate("arg", 2);
+		
+		SimpleRelationFactory srf = new SimpleRelationFactory();
+		IRelation relModule = srf.createRelation();
+		IRelation relSubroutine = srf.createRelation();
+		IRelation relArg = srf.createRelation();
+		
+		for (int modi = 0; modi < 50; modi++) {
+			
+			String modString = "mod" + modi;		
+			
+			ITerm termMod = tf.createString(modString);
+			ITuple tupMod = bf.createTuple(termMod);
+			relModule.add(tupMod);
+		
+			for (int subi = 0; subi < 50; subi++) {
+				
+				String subString = modString + "_sub" + subi;				
+				
+				ITerm termSub= tf.createString(subString);
+				ITuple tupSub = bf.createTuple(termMod, termSub);
+				relSubroutine.add(tupSub);
+				
+				for (int argi = 0; argi < 5; argi++) {
+							
+					ITuple tupArg = bf.createTuple(termSub, cf.createInt(argi));
+					relArg.add(tupArg);
+					
+				}
+			}
+		}
+		
+		Map<IPredicate, IRelation> ret = new HashMap<IPredicate, IRelation>();
+		ret.put(predModule, relModule);
+		ret.put(predSubroutine, relSubroutine);
+		ret.put(predArg, relArg);
+		
+		return ret;
+		
+	}
+	
+	private List<IRule> getRules() throws ParserException {
+		
+		StringBuilder dl = new StringBuilder();
+		dl.append("NUOPCModule(?M) :- module(?M), uses(?M, 'NUOPC_Model').\n");
+		dl.append("NUOPCModule(?M) :- module(?M), uses(?M, 'NUOPC_Driver').\n");
+		dl.append("SetServices(?M, ?S) :- NUOPCModule(?M), subroutine(?M, ?S), call(?CID, ?M, ?S, 'NUOPC_CompDerive').\n");
+				
+		Parser parser = new Parser();
+		parser.parse(dl.toString());
+		
+		return parser.getRules();
+		
+	}
+	
+	private List<IQuery> getQueries() throws ParserException {
+	
+		StringBuilder dl = new StringBuilder();
+		//dl.append("?-subroutine('mod1', ?S).\n");
+		//dl.append("?-module(?M), uses(?M, 'NUOPC_Model'), usesOnly(?M, 'NUOPC_Model', 'routine_SetServices', ?SS).\n");
+		//dl.append("?-NUOPCComponent(?X).\n");
+		//dl.append("?-SetServices(?M, ?S).\n");
+		//dl.append("?-module(?M), SetServices(?M, ?S).\n");
+		//dl.append("?-subroutine(?M, ?S), arg(?S, 2).\n");
+		dl.append("?-module(?M).\n");
+		
+		Parser parser = new Parser();
+		parser.parse(dl.toString());
+		
+		return parser.getQueries();
+		
+		
+				
+	}
+	
+}

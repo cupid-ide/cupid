@@ -221,6 +221,15 @@ public interface PsycheFactory extends EFactory
   LocalExpression createLocalExpression();
 
   /**
+   * Returns a new object of class '<em>Array Constructor</em>'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return a new object of class '<em>Array Constructor</em>'.
+   * @generated
+   */
+  ArrayConstructor createArrayConstructor();
+
+  /**
    * Returns a new object of class '<em>Expr</em>'.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->

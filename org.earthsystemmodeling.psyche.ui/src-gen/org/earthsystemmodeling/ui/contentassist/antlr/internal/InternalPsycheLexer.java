@@ -579,10 +579,10 @@ public class InternalPsycheLexer extends Lexer {
         try {
             int _type = T__36;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // ../org.earthsystemmodeling.psyche.ui/src-gen/org/earthsystemmodeling/ui/contentassist/antlr/internal/InternalPsyche.g:35:7: ( '#' )
-            // ../org.earthsystemmodeling.psyche.ui/src-gen/org/earthsystemmodeling/ui/contentassist/antlr/internal/InternalPsyche.g:35:9: '#'
+            // ../org.earthsystemmodeling.psyche.ui/src-gen/org/earthsystemmodeling/ui/contentassist/antlr/internal/InternalPsyche.g:35:7: ( '/' )
+            // ../org.earthsystemmodeling.psyche.ui/src-gen/org/earthsystemmodeling/ui/contentassist/antlr/internal/InternalPsyche.g:35:9: '/'
             {
-            match('#'); 
+            match('/'); 
 
             }
 
@@ -599,10 +599,10 @@ public class InternalPsycheLexer extends Lexer {
         try {
             int _type = T__37;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // ../org.earthsystemmodeling.psyche.ui/src-gen/org/earthsystemmodeling/ui/contentassist/antlr/internal/InternalPsyche.g:36:7: ( '/' )
-            // ../org.earthsystemmodeling.psyche.ui/src-gen/org/earthsystemmodeling/ui/contentassist/antlr/internal/InternalPsyche.g:36:9: '/'
+            // ../org.earthsystemmodeling.psyche.ui/src-gen/org/earthsystemmodeling/ui/contentassist/antlr/internal/InternalPsyche.g:36:7: ( '#' )
+            // ../org.earthsystemmodeling.psyche.ui/src-gen/org/earthsystemmodeling/ui/contentassist/antlr/internal/InternalPsyche.g:36:9: '#'
             {
-            match('/'); 
+            match('#'); 
 
             }
 
@@ -992,8 +992,8 @@ public class InternalPsycheLexer extends Lexer {
         try {
             int _type = RULE_ANNOTATION_ID;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // ../org.earthsystemmodeling.psyche.ui/src-gen/org/earthsystemmodeling/ui/contentassist/antlr/internal/InternalPsyche.g:8164:20: ( '@' RULE_ID )
-            // ../org.earthsystemmodeling.psyche.ui/src-gen/org/earthsystemmodeling/ui/contentassist/antlr/internal/InternalPsyche.g:8164:22: '@' RULE_ID
+            // ../org.earthsystemmodeling.psyche.ui/src-gen/org/earthsystemmodeling/ui/contentassist/antlr/internal/InternalPsyche.g:8499:20: ( '@' RULE_ID )
+            // ../org.earthsystemmodeling.psyche.ui/src-gen/org/earthsystemmodeling/ui/contentassist/antlr/internal/InternalPsyche.g:8499:22: '@' RULE_ID
             {
             match('@'); 
             mRULE_ID(); 
@@ -1013,12 +1013,12 @@ public class InternalPsycheLexer extends Lexer {
         try {
             int _type = RULE_SL_COMMENT;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // ../org.earthsystemmodeling.psyche.ui/src-gen/org/earthsystemmodeling/ui/contentassist/antlr/internal/InternalPsyche.g:8166:17: ( '--' (~ ( ( '\\n' | '\\r' ) ) )* ( ( '\\r' )? '\\n' )? )
-            // ../org.earthsystemmodeling.psyche.ui/src-gen/org/earthsystemmodeling/ui/contentassist/antlr/internal/InternalPsyche.g:8166:19: '--' (~ ( ( '\\n' | '\\r' ) ) )* ( ( '\\r' )? '\\n' )?
+            // ../org.earthsystemmodeling.psyche.ui/src-gen/org/earthsystemmodeling/ui/contentassist/antlr/internal/InternalPsyche.g:8501:17: ( '--' (~ ( ( '\\n' | '\\r' ) ) )* ( ( '\\r' )? '\\n' )? )
+            // ../org.earthsystemmodeling.psyche.ui/src-gen/org/earthsystemmodeling/ui/contentassist/antlr/internal/InternalPsyche.g:8501:19: '--' (~ ( ( '\\n' | '\\r' ) ) )* ( ( '\\r' )? '\\n' )?
             {
             match("--"); 
 
-            // ../org.earthsystemmodeling.psyche.ui/src-gen/org/earthsystemmodeling/ui/contentassist/antlr/internal/InternalPsyche.g:8166:24: (~ ( ( '\\n' | '\\r' ) ) )*
+            // ../org.earthsystemmodeling.psyche.ui/src-gen/org/earthsystemmodeling/ui/contentassist/antlr/internal/InternalPsyche.g:8501:24: (~ ( ( '\\n' | '\\r' ) ) )*
             loop1:
             do {
                 int alt1=2;
@@ -1031,7 +1031,7 @@ public class InternalPsycheLexer extends Lexer {
 
                 switch (alt1) {
             	case 1 :
-            	    // ../org.earthsystemmodeling.psyche.ui/src-gen/org/earthsystemmodeling/ui/contentassist/antlr/internal/InternalPsyche.g:8166:24: ~ ( ( '\\n' | '\\r' ) )
+            	    // ../org.earthsystemmodeling.psyche.ui/src-gen/org/earthsystemmodeling/ui/contentassist/antlr/internal/InternalPsyche.g:8501:24: ~ ( ( '\\n' | '\\r' ) )
             	    {
             	    if ( (input.LA(1)>='\u0000' && input.LA(1)<='\t')||(input.LA(1)>='\u000B' && input.LA(1)<='\f')||(input.LA(1)>='\u000E' && input.LA(1)<='\uFFFF') ) {
             	        input.consume();
@@ -1051,7 +1051,7 @@ public class InternalPsycheLexer extends Lexer {
                 }
             } while (true);
 
-            // ../org.earthsystemmodeling.psyche.ui/src-gen/org/earthsystemmodeling/ui/contentassist/antlr/internal/InternalPsyche.g:8166:40: ( ( '\\r' )? '\\n' )?
+            // ../org.earthsystemmodeling.psyche.ui/src-gen/org/earthsystemmodeling/ui/contentassist/antlr/internal/InternalPsyche.g:8501:40: ( ( '\\r' )? '\\n' )?
             int alt3=2;
             int LA3_0 = input.LA(1);
 
@@ -1060,9 +1060,9 @@ public class InternalPsycheLexer extends Lexer {
             }
             switch (alt3) {
                 case 1 :
-                    // ../org.earthsystemmodeling.psyche.ui/src-gen/org/earthsystemmodeling/ui/contentassist/antlr/internal/InternalPsyche.g:8166:41: ( '\\r' )? '\\n'
+                    // ../org.earthsystemmodeling.psyche.ui/src-gen/org/earthsystemmodeling/ui/contentassist/antlr/internal/InternalPsyche.g:8501:41: ( '\\r' )? '\\n'
                     {
-                    // ../org.earthsystemmodeling.psyche.ui/src-gen/org/earthsystemmodeling/ui/contentassist/antlr/internal/InternalPsyche.g:8166:41: ( '\\r' )?
+                    // ../org.earthsystemmodeling.psyche.ui/src-gen/org/earthsystemmodeling/ui/contentassist/antlr/internal/InternalPsyche.g:8501:41: ( '\\r' )?
                     int alt2=2;
                     int LA2_0 = input.LA(1);
 
@@ -1071,7 +1071,7 @@ public class InternalPsycheLexer extends Lexer {
                     }
                     switch (alt2) {
                         case 1 :
-                            // ../org.earthsystemmodeling.psyche.ui/src-gen/org/earthsystemmodeling/ui/contentassist/antlr/internal/InternalPsyche.g:8166:41: '\\r'
+                            // ../org.earthsystemmodeling.psyche.ui/src-gen/org/earthsystemmodeling/ui/contentassist/antlr/internal/InternalPsyche.g:8501:41: '\\r'
                             {
                             match('\r'); 
 
@@ -1103,8 +1103,8 @@ public class InternalPsycheLexer extends Lexer {
         try {
             int _type = RULE_ID;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // ../org.earthsystemmodeling.psyche.ui/src-gen/org/earthsystemmodeling/ui/contentassist/antlr/internal/InternalPsyche.g:8168:9: ( ( 'a' .. 'z' | 'A' .. 'Z' | '_' ) ( 'a' .. 'z' | 'A' .. 'Z' | '_' | '0' .. '9' )* )
-            // ../org.earthsystemmodeling.psyche.ui/src-gen/org/earthsystemmodeling/ui/contentassist/antlr/internal/InternalPsyche.g:8168:11: ( 'a' .. 'z' | 'A' .. 'Z' | '_' ) ( 'a' .. 'z' | 'A' .. 'Z' | '_' | '0' .. '9' )*
+            // ../org.earthsystemmodeling.psyche.ui/src-gen/org/earthsystemmodeling/ui/contentassist/antlr/internal/InternalPsyche.g:8503:9: ( ( 'a' .. 'z' | 'A' .. 'Z' | '_' ) ( 'a' .. 'z' | 'A' .. 'Z' | '_' | '0' .. '9' )* )
+            // ../org.earthsystemmodeling.psyche.ui/src-gen/org/earthsystemmodeling/ui/contentassist/antlr/internal/InternalPsyche.g:8503:11: ( 'a' .. 'z' | 'A' .. 'Z' | '_' ) ( 'a' .. 'z' | 'A' .. 'Z' | '_' | '0' .. '9' )*
             {
             if ( (input.LA(1)>='A' && input.LA(1)<='Z')||input.LA(1)=='_'||(input.LA(1)>='a' && input.LA(1)<='z') ) {
                 input.consume();
@@ -1115,7 +1115,7 @@ public class InternalPsycheLexer extends Lexer {
                 recover(mse);
                 throw mse;}
 
-            // ../org.earthsystemmodeling.psyche.ui/src-gen/org/earthsystemmodeling/ui/contentassist/antlr/internal/InternalPsyche.g:8168:35: ( 'a' .. 'z' | 'A' .. 'Z' | '_' | '0' .. '9' )*
+            // ../org.earthsystemmodeling.psyche.ui/src-gen/org/earthsystemmodeling/ui/contentassist/antlr/internal/InternalPsyche.g:8503:35: ( 'a' .. 'z' | 'A' .. 'Z' | '_' | '0' .. '9' )*
             loop4:
             do {
                 int alt4=2;
@@ -1164,10 +1164,10 @@ public class InternalPsycheLexer extends Lexer {
         try {
             int _type = RULE_INT;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // ../org.earthsystemmodeling.psyche.ui/src-gen/org/earthsystemmodeling/ui/contentassist/antlr/internal/InternalPsyche.g:8170:10: ( ( '0' .. '9' )+ )
-            // ../org.earthsystemmodeling.psyche.ui/src-gen/org/earthsystemmodeling/ui/contentassist/antlr/internal/InternalPsyche.g:8170:12: ( '0' .. '9' )+
+            // ../org.earthsystemmodeling.psyche.ui/src-gen/org/earthsystemmodeling/ui/contentassist/antlr/internal/InternalPsyche.g:8505:10: ( ( '0' .. '9' )+ )
+            // ../org.earthsystemmodeling.psyche.ui/src-gen/org/earthsystemmodeling/ui/contentassist/antlr/internal/InternalPsyche.g:8505:12: ( '0' .. '9' )+
             {
-            // ../org.earthsystemmodeling.psyche.ui/src-gen/org/earthsystemmodeling/ui/contentassist/antlr/internal/InternalPsyche.g:8170:12: ( '0' .. '9' )+
+            // ../org.earthsystemmodeling.psyche.ui/src-gen/org/earthsystemmodeling/ui/contentassist/antlr/internal/InternalPsyche.g:8505:12: ( '0' .. '9' )+
             int cnt5=0;
             loop5:
             do {
@@ -1181,7 +1181,7 @@ public class InternalPsycheLexer extends Lexer {
 
                 switch (alt5) {
             	case 1 :
-            	    // ../org.earthsystemmodeling.psyche.ui/src-gen/org/earthsystemmodeling/ui/contentassist/antlr/internal/InternalPsyche.g:8170:13: '0' .. '9'
+            	    // ../org.earthsystemmodeling.psyche.ui/src-gen/org/earthsystemmodeling/ui/contentassist/antlr/internal/InternalPsyche.g:8505:13: '0' .. '9'
             	    {
             	    matchRange('0','9'); 
 
@@ -1213,10 +1213,10 @@ public class InternalPsycheLexer extends Lexer {
         try {
             int _type = RULE_STRING;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // ../org.earthsystemmodeling.psyche.ui/src-gen/org/earthsystemmodeling/ui/contentassist/antlr/internal/InternalPsyche.g:8172:13: ( ( '\"' ( '\\\\' ( 'b' | 't' | 'n' | 'f' | 'r' | 'u' | '\"' | '\\'' | '\\\\' ) | ~ ( ( '\\\\' | '\"' ) ) )* '\"' | '\\'' ( '\\\\' ( 'b' | 't' | 'n' | 'f' | 'r' | 'u' | '\"' | '\\'' | '\\\\' ) | ~ ( ( '\\\\' | '\\'' ) ) )* '\\'' ) )
-            // ../org.earthsystemmodeling.psyche.ui/src-gen/org/earthsystemmodeling/ui/contentassist/antlr/internal/InternalPsyche.g:8172:15: ( '\"' ( '\\\\' ( 'b' | 't' | 'n' | 'f' | 'r' | 'u' | '\"' | '\\'' | '\\\\' ) | ~ ( ( '\\\\' | '\"' ) ) )* '\"' | '\\'' ( '\\\\' ( 'b' | 't' | 'n' | 'f' | 'r' | 'u' | '\"' | '\\'' | '\\\\' ) | ~ ( ( '\\\\' | '\\'' ) ) )* '\\'' )
+            // ../org.earthsystemmodeling.psyche.ui/src-gen/org/earthsystemmodeling/ui/contentassist/antlr/internal/InternalPsyche.g:8507:13: ( ( '\"' ( '\\\\' ( 'b' | 't' | 'n' | 'f' | 'r' | 'u' | '\"' | '\\'' | '\\\\' ) | ~ ( ( '\\\\' | '\"' ) ) )* '\"' | '\\'' ( '\\\\' ( 'b' | 't' | 'n' | 'f' | 'r' | 'u' | '\"' | '\\'' | '\\\\' ) | ~ ( ( '\\\\' | '\\'' ) ) )* '\\'' ) )
+            // ../org.earthsystemmodeling.psyche.ui/src-gen/org/earthsystemmodeling/ui/contentassist/antlr/internal/InternalPsyche.g:8507:15: ( '\"' ( '\\\\' ( 'b' | 't' | 'n' | 'f' | 'r' | 'u' | '\"' | '\\'' | '\\\\' ) | ~ ( ( '\\\\' | '\"' ) ) )* '\"' | '\\'' ( '\\\\' ( 'b' | 't' | 'n' | 'f' | 'r' | 'u' | '\"' | '\\'' | '\\\\' ) | ~ ( ( '\\\\' | '\\'' ) ) )* '\\'' )
             {
-            // ../org.earthsystemmodeling.psyche.ui/src-gen/org/earthsystemmodeling/ui/contentassist/antlr/internal/InternalPsyche.g:8172:15: ( '\"' ( '\\\\' ( 'b' | 't' | 'n' | 'f' | 'r' | 'u' | '\"' | '\\'' | '\\\\' ) | ~ ( ( '\\\\' | '\"' ) ) )* '\"' | '\\'' ( '\\\\' ( 'b' | 't' | 'n' | 'f' | 'r' | 'u' | '\"' | '\\'' | '\\\\' ) | ~ ( ( '\\\\' | '\\'' ) ) )* '\\'' )
+            // ../org.earthsystemmodeling.psyche.ui/src-gen/org/earthsystemmodeling/ui/contentassist/antlr/internal/InternalPsyche.g:8507:15: ( '\"' ( '\\\\' ( 'b' | 't' | 'n' | 'f' | 'r' | 'u' | '\"' | '\\'' | '\\\\' ) | ~ ( ( '\\\\' | '\"' ) ) )* '\"' | '\\'' ( '\\\\' ( 'b' | 't' | 'n' | 'f' | 'r' | 'u' | '\"' | '\\'' | '\\\\' ) | ~ ( ( '\\\\' | '\\'' ) ) )* '\\'' )
             int alt8=2;
             int LA8_0 = input.LA(1);
 
@@ -1234,10 +1234,10 @@ public class InternalPsycheLexer extends Lexer {
             }
             switch (alt8) {
                 case 1 :
-                    // ../org.earthsystemmodeling.psyche.ui/src-gen/org/earthsystemmodeling/ui/contentassist/antlr/internal/InternalPsyche.g:8172:16: '\"' ( '\\\\' ( 'b' | 't' | 'n' | 'f' | 'r' | 'u' | '\"' | '\\'' | '\\\\' ) | ~ ( ( '\\\\' | '\"' ) ) )* '\"'
+                    // ../org.earthsystemmodeling.psyche.ui/src-gen/org/earthsystemmodeling/ui/contentassist/antlr/internal/InternalPsyche.g:8507:16: '\"' ( '\\\\' ( 'b' | 't' | 'n' | 'f' | 'r' | 'u' | '\"' | '\\'' | '\\\\' ) | ~ ( ( '\\\\' | '\"' ) ) )* '\"'
                     {
                     match('\"'); 
-                    // ../org.earthsystemmodeling.psyche.ui/src-gen/org/earthsystemmodeling/ui/contentassist/antlr/internal/InternalPsyche.g:8172:20: ( '\\\\' ( 'b' | 't' | 'n' | 'f' | 'r' | 'u' | '\"' | '\\'' | '\\\\' ) | ~ ( ( '\\\\' | '\"' ) ) )*
+                    // ../org.earthsystemmodeling.psyche.ui/src-gen/org/earthsystemmodeling/ui/contentassist/antlr/internal/InternalPsyche.g:8507:20: ( '\\\\' ( 'b' | 't' | 'n' | 'f' | 'r' | 'u' | '\"' | '\\'' | '\\\\' ) | ~ ( ( '\\\\' | '\"' ) ) )*
                     loop6:
                     do {
                         int alt6=3;
@@ -1253,7 +1253,7 @@ public class InternalPsycheLexer extends Lexer {
 
                         switch (alt6) {
                     	case 1 :
-                    	    // ../org.earthsystemmodeling.psyche.ui/src-gen/org/earthsystemmodeling/ui/contentassist/antlr/internal/InternalPsyche.g:8172:21: '\\\\' ( 'b' | 't' | 'n' | 'f' | 'r' | 'u' | '\"' | '\\'' | '\\\\' )
+                    	    // ../org.earthsystemmodeling.psyche.ui/src-gen/org/earthsystemmodeling/ui/contentassist/antlr/internal/InternalPsyche.g:8507:21: '\\\\' ( 'b' | 't' | 'n' | 'f' | 'r' | 'u' | '\"' | '\\'' | '\\\\' )
                     	    {
                     	    match('\\'); 
                     	    if ( input.LA(1)=='\"'||input.LA(1)=='\''||input.LA(1)=='\\'||input.LA(1)=='b'||input.LA(1)=='f'||input.LA(1)=='n'||input.LA(1)=='r'||(input.LA(1)>='t' && input.LA(1)<='u') ) {
@@ -1269,7 +1269,7 @@ public class InternalPsycheLexer extends Lexer {
                     	    }
                     	    break;
                     	case 2 :
-                    	    // ../org.earthsystemmodeling.psyche.ui/src-gen/org/earthsystemmodeling/ui/contentassist/antlr/internal/InternalPsyche.g:8172:66: ~ ( ( '\\\\' | '\"' ) )
+                    	    // ../org.earthsystemmodeling.psyche.ui/src-gen/org/earthsystemmodeling/ui/contentassist/antlr/internal/InternalPsyche.g:8507:66: ~ ( ( '\\\\' | '\"' ) )
                     	    {
                     	    if ( (input.LA(1)>='\u0000' && input.LA(1)<='!')||(input.LA(1)>='#' && input.LA(1)<='[')||(input.LA(1)>=']' && input.LA(1)<='\uFFFF') ) {
                     	        input.consume();
@@ -1294,10 +1294,10 @@ public class InternalPsycheLexer extends Lexer {
                     }
                     break;
                 case 2 :
-                    // ../org.earthsystemmodeling.psyche.ui/src-gen/org/earthsystemmodeling/ui/contentassist/antlr/internal/InternalPsyche.g:8172:86: '\\'' ( '\\\\' ( 'b' | 't' | 'n' | 'f' | 'r' | 'u' | '\"' | '\\'' | '\\\\' ) | ~ ( ( '\\\\' | '\\'' ) ) )* '\\''
+                    // ../org.earthsystemmodeling.psyche.ui/src-gen/org/earthsystemmodeling/ui/contentassist/antlr/internal/InternalPsyche.g:8507:86: '\\'' ( '\\\\' ( 'b' | 't' | 'n' | 'f' | 'r' | 'u' | '\"' | '\\'' | '\\\\' ) | ~ ( ( '\\\\' | '\\'' ) ) )* '\\''
                     {
                     match('\''); 
-                    // ../org.earthsystemmodeling.psyche.ui/src-gen/org/earthsystemmodeling/ui/contentassist/antlr/internal/InternalPsyche.g:8172:91: ( '\\\\' ( 'b' | 't' | 'n' | 'f' | 'r' | 'u' | '\"' | '\\'' | '\\\\' ) | ~ ( ( '\\\\' | '\\'' ) ) )*
+                    // ../org.earthsystemmodeling.psyche.ui/src-gen/org/earthsystemmodeling/ui/contentassist/antlr/internal/InternalPsyche.g:8507:91: ( '\\\\' ( 'b' | 't' | 'n' | 'f' | 'r' | 'u' | '\"' | '\\'' | '\\\\' ) | ~ ( ( '\\\\' | '\\'' ) ) )*
                     loop7:
                     do {
                         int alt7=3;
@@ -1313,7 +1313,7 @@ public class InternalPsycheLexer extends Lexer {
 
                         switch (alt7) {
                     	case 1 :
-                    	    // ../org.earthsystemmodeling.psyche.ui/src-gen/org/earthsystemmodeling/ui/contentassist/antlr/internal/InternalPsyche.g:8172:92: '\\\\' ( 'b' | 't' | 'n' | 'f' | 'r' | 'u' | '\"' | '\\'' | '\\\\' )
+                    	    // ../org.earthsystemmodeling.psyche.ui/src-gen/org/earthsystemmodeling/ui/contentassist/antlr/internal/InternalPsyche.g:8507:92: '\\\\' ( 'b' | 't' | 'n' | 'f' | 'r' | 'u' | '\"' | '\\'' | '\\\\' )
                     	    {
                     	    match('\\'); 
                     	    if ( input.LA(1)=='\"'||input.LA(1)=='\''||input.LA(1)=='\\'||input.LA(1)=='b'||input.LA(1)=='f'||input.LA(1)=='n'||input.LA(1)=='r'||(input.LA(1)>='t' && input.LA(1)<='u') ) {
@@ -1329,7 +1329,7 @@ public class InternalPsycheLexer extends Lexer {
                     	    }
                     	    break;
                     	case 2 :
-                    	    // ../org.earthsystemmodeling.psyche.ui/src-gen/org/earthsystemmodeling/ui/contentassist/antlr/internal/InternalPsyche.g:8172:137: ~ ( ( '\\\\' | '\\'' ) )
+                    	    // ../org.earthsystemmodeling.psyche.ui/src-gen/org/earthsystemmodeling/ui/contentassist/antlr/internal/InternalPsyche.g:8507:137: ~ ( ( '\\\\' | '\\'' ) )
                     	    {
                     	    if ( (input.LA(1)>='\u0000' && input.LA(1)<='&')||(input.LA(1)>='(' && input.LA(1)<='[')||(input.LA(1)>=']' && input.LA(1)<='\uFFFF') ) {
                     	        input.consume();
@@ -1372,12 +1372,12 @@ public class InternalPsycheLexer extends Lexer {
         try {
             int _type = RULE_ML_COMMENT;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // ../org.earthsystemmodeling.psyche.ui/src-gen/org/earthsystemmodeling/ui/contentassist/antlr/internal/InternalPsyche.g:8174:17: ( '/*' ( options {greedy=false; } : . )* '*/' )
-            // ../org.earthsystemmodeling.psyche.ui/src-gen/org/earthsystemmodeling/ui/contentassist/antlr/internal/InternalPsyche.g:8174:19: '/*' ( options {greedy=false; } : . )* '*/'
+            // ../org.earthsystemmodeling.psyche.ui/src-gen/org/earthsystemmodeling/ui/contentassist/antlr/internal/InternalPsyche.g:8509:17: ( '/*' ( options {greedy=false; } : . )* '*/' )
+            // ../org.earthsystemmodeling.psyche.ui/src-gen/org/earthsystemmodeling/ui/contentassist/antlr/internal/InternalPsyche.g:8509:19: '/*' ( options {greedy=false; } : . )* '*/'
             {
             match("/*"); 
 
-            // ../org.earthsystemmodeling.psyche.ui/src-gen/org/earthsystemmodeling/ui/contentassist/antlr/internal/InternalPsyche.g:8174:24: ( options {greedy=false; } : . )*
+            // ../org.earthsystemmodeling.psyche.ui/src-gen/org/earthsystemmodeling/ui/contentassist/antlr/internal/InternalPsyche.g:8509:24: ( options {greedy=false; } : . )*
             loop9:
             do {
                 int alt9=2;
@@ -1402,7 +1402,7 @@ public class InternalPsycheLexer extends Lexer {
 
                 switch (alt9) {
             	case 1 :
-            	    // ../org.earthsystemmodeling.psyche.ui/src-gen/org/earthsystemmodeling/ui/contentassist/antlr/internal/InternalPsyche.g:8174:52: .
+            	    // ../org.earthsystemmodeling.psyche.ui/src-gen/org/earthsystemmodeling/ui/contentassist/antlr/internal/InternalPsyche.g:8509:52: .
             	    {
             	    matchAny(); 
 
@@ -1432,10 +1432,10 @@ public class InternalPsycheLexer extends Lexer {
         try {
             int _type = RULE_WS;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // ../org.earthsystemmodeling.psyche.ui/src-gen/org/earthsystemmodeling/ui/contentassist/antlr/internal/InternalPsyche.g:8176:9: ( ( ' ' | '\\t' | '\\r' | '\\n' )+ )
-            // ../org.earthsystemmodeling.psyche.ui/src-gen/org/earthsystemmodeling/ui/contentassist/antlr/internal/InternalPsyche.g:8176:11: ( ' ' | '\\t' | '\\r' | '\\n' )+
+            // ../org.earthsystemmodeling.psyche.ui/src-gen/org/earthsystemmodeling/ui/contentassist/antlr/internal/InternalPsyche.g:8511:9: ( ( ' ' | '\\t' | '\\r' | '\\n' )+ )
+            // ../org.earthsystemmodeling.psyche.ui/src-gen/org/earthsystemmodeling/ui/contentassist/antlr/internal/InternalPsyche.g:8511:11: ( ' ' | '\\t' | '\\r' | '\\n' )+
             {
-            // ../org.earthsystemmodeling.psyche.ui/src-gen/org/earthsystemmodeling/ui/contentassist/antlr/internal/InternalPsyche.g:8176:11: ( ' ' | '\\t' | '\\r' | '\\n' )+
+            // ../org.earthsystemmodeling.psyche.ui/src-gen/org/earthsystemmodeling/ui/contentassist/antlr/internal/InternalPsyche.g:8511:11: ( ' ' | '\\t' | '\\r' | '\\n' )+
             int cnt10=0;
             loop10:
             do {
@@ -1489,8 +1489,8 @@ public class InternalPsycheLexer extends Lexer {
         try {
             int _type = RULE_ANY_OTHER;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // ../org.earthsystemmodeling.psyche.ui/src-gen/org/earthsystemmodeling/ui/contentassist/antlr/internal/InternalPsyche.g:8178:16: ( . )
-            // ../org.earthsystemmodeling.psyche.ui/src-gen/org/earthsystemmodeling/ui/contentassist/antlr/internal/InternalPsyche.g:8178:18: .
+            // ../org.earthsystemmodeling.psyche.ui/src-gen/org/earthsystemmodeling/ui/contentassist/antlr/internal/InternalPsyche.g:8513:16: ( . )
+            // ../org.earthsystemmodeling.psyche.ui/src-gen/org/earthsystemmodeling/ui/contentassist/antlr/internal/InternalPsyche.g:8513:18: .
             {
             matchAny(); 
 
@@ -1881,13 +1881,13 @@ public class InternalPsycheLexer extends Lexer {
 
     protected DFA11 dfa11 = new DFA11(this);
     static final String DFA11_eotS =
-        "\1\uffff\2\51\6\uffff\1\51\2\uffff\4\51\1\uffff\3\51\1\uffff\1"+
-        "\103\1\51\1\107\3\uffff\3\51\1\uffff\2\46\2\uffff\2\46\2\uffff\2"+
-        "\51\1\uffff\2\51\6\uffff\1\51\2\uffff\6\51\1\uffff\5\51\3\uffff"+
-        "\2\51\5\uffff\1\150\2\51\6\uffff\20\51\1\173\3\51\1\uffff\1\177"+
-        "\15\51\1\u008e\3\51\1\uffff\1\u0092\2\51\1\uffff\1\u0095\5\51\1"+
-        "\u009b\7\51\1\uffff\3\51\1\uffff\1\u00a6\1\51\1\uffff\1\51\1\u00aa"+
-        "\2\51\1\u00ad\1\uffff\1\51\1\u00af\1\u00b1\7\51\1\uffff\3\51\1\uffff"+
+        "\1\uffff\2\51\6\uffff\1\51\2\uffff\4\51\1\uffff\3\51\1\102\1\uffff"+
+        "\1\51\1\107\3\uffff\3\51\1\uffff\2\46\2\uffff\2\46\2\uffff\2\51"+
+        "\1\uffff\2\51\6\uffff\1\51\2\uffff\6\51\1\uffff\5\51\3\uffff\2\51"+
+        "\5\uffff\1\150\2\51\6\uffff\20\51\1\173\3\51\1\uffff\1\177\15\51"+
+        "\1\u008e\3\51\1\uffff\1\u0092\2\51\1\uffff\1\u0095\5\51\1\u009b"+
+        "\7\51\1\uffff\3\51\1\uffff\1\u00a6\1\51\1\uffff\1\51\1\u00aa\2\51"+
+        "\1\u00ad\1\uffff\1\51\1\u00af\1\u00b1\7\51\1\uffff\3\51\1\uffff"+
         "\1\51\1\u00bd\1\uffff\1\51\1\uffff\1\51\1\uffff\4\51\1\u00c4\2\51"+
         "\1\u00c7\2\51\1\u00ca\1\uffff\6\51\1\uffff\2\51\1\uffff\2\51\1\uffff"+
         "\5\51\1\u00da\1\u00db\4\51\1\u00e0\1\u00e1\1\u00e2\1\u00e4\2\uffff"+
@@ -1898,7 +1898,7 @@ public class InternalPsycheLexer extends Lexer {
         "\u0101\uffff";
     static final String DFA11_minS =
         "\1\0\1\145\1\141\6\uffff\1\145\2\uffff\1\143\1\157\1\163\1\165"+
-        "\1\uffff\1\162\1\141\1\165\1\uffff\1\52\1\157\1\41\3\uffff\1\156"+
+        "\1\uffff\1\162\1\141\1\165\1\52\1\uffff\1\157\1\41\3\uffff\1\156"+
         "\1\165\1\145\1\uffff\1\101\1\55\2\uffff\2\0\2\uffff\1\143\1\165"+
         "\1\uffff\1\156\1\147\6\uffff\1\146\2\uffff\3\164\1\144\1\145\1\142"+
         "\1\uffff\1\145\1\154\1\156\1\141\1\156\3\uffff\2\160\5\uffff\1\60"+
@@ -1920,7 +1920,7 @@ public class InternalPsycheLexer extends Lexer {
         "\1\162\1\60\1\144\1\uffff\1\60\1\uffff";
     static final String DFA11_maxS =
         "\1\uffff\2\157\6\uffff\1\145\2\uffff\1\164\1\157\1\163\1\165\1"+
-        "\uffff\1\162\1\157\1\165\1\uffff\1\52\1\171\1\41\3\uffff\1\156\1"+
+        "\uffff\1\162\1\157\1\165\1\52\1\uffff\1\171\1\41\3\uffff\1\156\1"+
         "\165\1\145\1\uffff\1\172\1\55\2\uffff\2\uffff\2\uffff\1\143\1\165"+
         "\1\uffff\1\156\1\147\6\uffff\1\146\2\uffff\3\164\1\144\1\145\1\142"+
         "\1\uffff\1\145\1\154\1\156\1\141\1\156\3\uffff\2\160\5\uffff\1\172"+
@@ -1942,9 +1942,9 @@ public class InternalPsycheLexer extends Lexer {
         "\164\1\162\1\172\1\144\1\uffff\1\172\1\uffff";
     static final String DFA11_acceptS =
         "\3\uffff\1\3\1\4\1\5\1\6\1\7\1\10\1\uffff\1\12\1\13\4\uffff\1\22"+
-        "\3\uffff\1\31\3\uffff\1\40\1\41\1\42\3\uffff\1\54\2\uffff\1\57\1"+
+        "\4\uffff\1\32\2\uffff\1\40\1\41\1\42\3\uffff\1\54\2\uffff\1\57\1"+
         "\60\2\uffff\1\63\1\64\2\uffff\1\57\2\uffff\1\3\1\4\1\5\1\6\1\7\1"+
-        "\10\1\uffff\1\12\1\13\6\uffff\1\22\5\uffff\1\31\1\62\1\32\2\uffff"+
+        "\10\1\uffff\1\12\1\13\6\uffff\1\22\5\uffff\1\62\1\31\1\32\2\uffff"+
         "\1\36\1\35\1\40\1\41\1\42\3\uffff\1\54\1\55\1\56\1\60\1\61\1\63"+
         "\24\uffff\1\43\22\uffff\1\34\3\uffff\1\44\16\uffff\1\25\3\uffff"+
         "\1\53\2\uffff\1\51\5\uffff\1\14\12\uffff\1\45\3\uffff\1\52\2\uffff"+
@@ -1955,8 +1955,8 @@ public class InternalPsycheLexer extends Lexer {
     static final String DFA11_specialS =
         "\1\1\42\uffff\1\0\1\2\u00dc\uffff}>";
     static final String[] DFA11_transitionS = {
-            "\11\46\2\45\2\46\1\45\22\46\1\45\1\27\1\43\1\24\3\46\1\44\1"+
-            "\12\1\13\1\31\1\32\1\20\1\40\1\46\1\25\12\42\1\10\1\46\1\6\1"+
+            "\11\46\2\45\2\46\1\45\22\46\1\45\1\27\1\43\1\25\3\46\1\44\1"+
+            "\12\1\13\1\31\1\32\1\20\1\40\1\46\1\24\12\42\1\10\1\46\1\6\1"+
             "\5\1\7\1\30\1\37\32\41\3\46\1\36\1\41\1\46\1\14\1\11\1\22\1"+
             "\1\1\41\1\23\2\41\1\33\2\41\1\2\1\15\1\41\1\34\1\21\1\41\1\35"+
             "\1\17\1\26\1\16\5\41\1\3\1\46\1\4\uff82\46",
@@ -1979,8 +1979,8 @@ public class InternalPsycheLexer extends Lexer {
             "\1\74",
             "\1\75\6\uffff\1\77\6\uffff\1\76",
             "\1\100",
+            "\1\101",
             "",
-            "\1\102",
             "\1\104\11\uffff\1\105",
             "\1\106",
             "",
@@ -2309,9 +2309,9 @@ public class InternalPsycheLexer extends Lexer {
 
                         else if ( (LA11_0=='f') ) {s = 19;}
 
-                        else if ( (LA11_0=='#') ) {s = 20;}
+                        else if ( (LA11_0=='/') ) {s = 20;}
 
-                        else if ( (LA11_0=='/') ) {s = 21;}
+                        else if ( (LA11_0=='#') ) {s = 21;}
 
                         else if ( (LA11_0=='t') ) {s = 22;}
 

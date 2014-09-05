@@ -1,6 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <classpath>
 	<classpathentry kind="src" path="src"/>
+	<classpathentry exported="true" kind="lib" path="lib/jgrapht/jgrapht-jdk1.5-0.7.1.jar"/>
+	<classpathentry exported="true" kind="lib" path="lib/iris-parser-0.60.jar"/>
+	<classpathentry exported="true" kind="lib" path="lib/iris-0.60.jar"/>
+	<classpathentry exported="true" kind="lib" path="lib/tuprolog.jar"/>
 	<classpathentry exported="true" kind="lib" path="lib/jdom/jdom-1.1.3.jar"/>
 	<classpathentry exported="true" kind="lib" path="lib/aspectj-1.6/aspectjrt.jar"/>
 	<classpathentry exported="true" kind="lib" path="lib/aspectj-1.6/aspectjweaver.jar"/>

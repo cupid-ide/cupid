@@ -14,6 +14,7 @@ import org.eclipse.emf.ecore.EObject;
  * <ul>
  *   <li>{@link org.earthsystemmodeling.psyche.LocalExpression#getId <em>Id</em>}</li>
  *   <li>{@link org.earthsystemmodeling.psyche.LocalExpression#getLiteral <em>Literal</em>}</li>
+ *   <li>{@link org.earthsystemmodeling.psyche.LocalExpression#getArrayConstructor <em>Array Constructor</em>}</li>
  * </ul>
  * </p>
  *
@@ -74,5 +75,31 @@ public interface LocalExpression extends EObject
    * @generated
    */
   void setLiteral(String value);
+
+  /**
+   * Returns the value of the '<em><b>Array Constructor</b></em>' containment reference.
+   * <!-- begin-user-doc -->
+   * <p>
+   * If the meaning of the '<em>Array Constructor</em>' containment reference isn't clear,
+   * there really should be more of a description here...
+   * </p>
+   * <!-- end-user-doc -->
+   * @return the value of the '<em>Array Constructor</em>' containment reference.
+   * @see #setArrayConstructor(ArrayConstructor)
+   * @see org.earthsystemmodeling.psyche.PsychePackage#getLocalExpression_ArrayConstructor()
+   * @model containment="true"
+   * @generated
+   */
+  ArrayConstructor getArrayConstructor();
+
+  /**
+   * Sets the value of the '{@link org.earthsystemmodeling.psyche.LocalExpression#getArrayConstructor <em>Array Constructor</em>}' containment reference.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @param value the new value of the '<em>Array Constructor</em>' containment reference.
+   * @see #getArrayConstructor()
+   * @generated
+   */
+  void setArrayConstructor(ArrayConstructor value);
 
 } // LocalExpression

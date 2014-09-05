@@ -4,7 +4,7 @@
     editorDirectory="/org.earthsystemmodeling.psyche.editor/src" modelPluginID="org.earthsystemmodeling.psyche"
     forceOverwrite="true" modelName="Psyche" updateClasspath="false" rootExtendsClass="org.eclipse.emf.ecore.impl.MinimalEObjectImpl$Container"
     complianceLevel="5.0" copyrightFields="false" editPluginID="org.earthsystemmodeling.psyche.edit"
-    editorPluginID="org.earthsystemmodeling.psyche.editor" runtimeVersion="2.9">
+    editorPluginID="org.earthsystemmodeling.psyche.editor" runtimeVersion="2.10">
   <genPackages prefix="Psyche" basePackage="org.earthsystemmodeling" disposableProviderFactory="true"
       fileExtensions="psyche" ecorePackage="Psyche.ecore#/">
     <genClasses ecoreClass="Psyche.ecore#//Language">
@@ -107,6 +107,10 @@
     <genClasses ecoreClass="Psyche.ecore#//LocalExpression">
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Psyche.ecore#//LocalExpression/id"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Psyche.ecore#//LocalExpression/literal"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Psyche.ecore#//LocalExpression/arrayConstructor"/>
+    </genClasses>
+    <genClasses ecoreClass="Psyche.ecore#//ArrayConstructor">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Psyche.ecore#//ArrayConstructor/item"/>
     </genClasses>
     <genClasses ecoreClass="Psyche.ecore#//Expr">
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Psyche.ecore#//Expr/wildcard"/>

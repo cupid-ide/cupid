@@ -5,6 +5,7 @@ package org.earthsystemmodeling.psyche.impl;
 import org.earthsystemmodeling.psyche.ActualParam;
 import org.earthsystemmodeling.psyche.ActualParamByKeyword;
 import org.earthsystemmodeling.psyche.Annotation;
+import org.earthsystemmodeling.psyche.ArrayConstructor;
 import org.earthsystemmodeling.psyche.Axis;
 import org.earthsystemmodeling.psyche.Call;
 import org.earthsystemmodeling.psyche.Cardinality;
@@ -200,6 +201,13 @@ public class PsychePackageImpl extends EPackageImpl implements PsychePackage
    * @generated
    */
   private EClass localExpressionEClass = null;
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  private EClass arrayConstructorEClass = null;
 
   /**
    * <!-- begin-user-doc -->
@@ -1114,6 +1122,36 @@ public class PsychePackageImpl extends EPackageImpl implements PsychePackage
    * <!-- end-user-doc -->
    * @generated
    */
+  public EReference getLocalExpression_ArrayConstructor()
+  {
+    return (EReference)localExpressionEClass.getEStructuralFeatures().get(2);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EClass getArrayConstructor()
+  {
+    return arrayConstructorEClass;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EAttribute getArrayConstructor_Item()
+  {
+    return (EAttribute)arrayConstructorEClass.getEStructuralFeatures().get(0);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
   public EClass getExpr()
   {
     return exprEClass;
@@ -1371,6 +1409,10 @@ public class PsychePackageImpl extends EPackageImpl implements PsychePackage
     localExpressionEClass = createEClass(LOCAL_EXPRESSION);
     createEAttribute(localExpressionEClass, LOCAL_EXPRESSION__ID);
     createEAttribute(localExpressionEClass, LOCAL_EXPRESSION__LITERAL);
+    createEReference(localExpressionEClass, LOCAL_EXPRESSION__ARRAY_CONSTRUCTOR);
+
+    arrayConstructorEClass = createEClass(ARRAY_CONSTRUCTOR);
+    createEAttribute(arrayConstructorEClass, ARRAY_CONSTRUCTOR__ITEM);
 
     exprEClass = createEClass(EXPR);
     createEAttribute(exprEClass, EXPR__WILDCARD);
@@ -1536,6 +1578,10 @@ public class PsychePackageImpl extends EPackageImpl implements PsychePackage
     initEClass(localExpressionEClass, LocalExpression.class, "LocalExpression", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
     initEAttribute(getLocalExpression_Id(), ecorePackage.getEString(), "id", null, 0, 1, LocalExpression.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
     initEAttribute(getLocalExpression_Literal(), ecorePackage.getEString(), "literal", null, 0, 1, LocalExpression.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEReference(getLocalExpression_ArrayConstructor(), this.getArrayConstructor(), null, "arrayConstructor", null, 0, 1, LocalExpression.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+
+    initEClass(arrayConstructorEClass, ArrayConstructor.class, "ArrayConstructor", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+    initEAttribute(getArrayConstructor_Item(), ecorePackage.getEString(), "item", null, 0, -1, ArrayConstructor.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, !IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
     initEClass(exprEClass, Expr.class, "Expr", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
     initEAttribute(getExpr_Wildcard(), ecorePackage.getEBoolean(), "wildcard", null, 0, 1, Expr.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);

@@ -172,8 +172,10 @@ class NUOPCViewContentProvider implements IStructuredContentProvider, ITreeConte
 					//first pass just deal with attributes
 					if (soa.isAttrib()) {
 					
-						//ConceptDef subConceptDef = soa.getDef();
-						
+						if (fsm.hasAnnotation(soa, "hide")) {
+							continue;
+						}
+																		
 						String typeLabel;
 						typeLabel = fsm.getAnnotationValue(soa, "label");
 						if (typeLabel == null) {
@@ -207,6 +209,10 @@ class NUOPCViewContentProvider implements IStructuredContentProvider, ITreeConte
 				for (SubconceptOrAttribute soa : conceptDef.getChild()) {
 					
 					if (!soa.isAttrib()) {
+						
+						if (fsm.hasAnnotation(fsm.getDefinition(soa), "hide")) {
+							continue;
+						}
 						
 						ConceptDef subConceptDef;
 						if (soa.isReference()) {

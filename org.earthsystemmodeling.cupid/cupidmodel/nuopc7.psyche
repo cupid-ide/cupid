@@ -1,4 +1,4 @@
-language NUOPC7 'http://www.earthsystemcurator.org/nuopcgen' {
+language nuopc7 'http://www.earthsystemcurator.org/nuopcgen' {
 
 	top concept NUOPCApplication 
 	{	
@@ -9,7 +9,7 @@ language NUOPC7 'http://www.earthsystemcurator.org/nuopcgen' {
 		
 		models*:NUOPCModel
 		drivers*:NUOPCDriver
-		--driversAtmOcn*:NUOPCDriverAtmOcn
+		driversAtmOcn*:NUOPCDriverAtmOcn
 	}
 	
 	concept NUOPCDriver <module (#driverName)> 
@@ -21,7 +21,7 @@ language NUOPC7 'http://www.earthsystemcurator.org/nuopcgen' {
 		{
 			@name
 			@label="Driver Name"
-			@default = "NUOPCDriver"
+			@default = "NUOPCDriver"	
 		}
 		
 		standardESMFImport <usesModule(ESMF)> {@label = "ESMF Import"}
@@ -30,13 +30,10 @@ language NUOPC7 'http://www.earthsystemcurator.org/nuopcgen' {
 		genericImports! <usesModule(NUOPC_Driver)>
 		{
 			@label = "Generic Driver Imports"
-			attrib importsGenericSS! <usesEntity(routine_SetServices)> {@default="driver_routine_SetServices"}
-			--attrib importsTypeInternalState <usesEntity(type_InternalState)>
-			--attrib importsLabelInternalState <usesEntity(label_InternalState)>
-			--attrib importsLabelSetModelCount <usesEntity(label_SetModelCount)>
-			--attrib importsLabelSetModelServices <usesEntity(label_SetModelServices)>
+			attrib importsGenericSS <usesEntity(routine_SetServices)> {@default="driver_routine_SetServices"}
 		}
 				
+		
 		implementsSetServices! <subroutine(*(type(ESMF_GridComp) #p_gcomp, out integer #p_rc) )> 
 		{
 			@label = "Set Services"
@@ -44,10 +41,11 @@ language NUOPC7 'http://www.earthsystemcurator.org/nuopcgen' {
 			attrib p_gcomp {@default="gcomp"}
 			attrib p_rc	{@default="rc"}	
 						
-			callsGenericSetServices! <call(#^genericImports/importsGenericSS(#^p_gcomp, #^p_rc))> 
-			{
-				@label = "Calls generic SetServices"	
-			}					
+			--call NUOPC_CompDerive(driver, driver_routine_SS, rc=rc)			
+			derivesFromDriver! <call(NUOPC_CompDerive(#^p_gcomp, #^genericImports/importsGenericSS, rc?=#^p_rc))> {
+				@label = "Calls NUOPC_CompDerive"
+			}
+			
 		}
 		
 		
@@ -230,6 +228,8 @@ language NUOPC7 'http://www.earthsystemcurator.org/nuopcgen' {
 			
 		}
 		
+		
+		
 		finalize {
 			@label="Finalize"
 			finalizeP1  {
@@ -276,47 +276,47 @@ language NUOPC7 'http://www.earthsystemcurator.org/nuopcgen' {
 		
 	}
 	
-	/*
-	concept NUOPCDriverAtmOcn <module> 
+	
+	concept NUOPCDriverAtmOcn <module(#driverName)> 
 	{
 		@label="NUOPC Atm-Ocn Driver"
 				
-		attrib driverName <moduleName> 
+		attrib driverName 
 		{
 			@name
 			@label="Driver Name"
+			@default = "NUOPCDriverAtmOcn"
 		}
 		
 		standardESMFImport <usesModule(ESMF)> {@label = "ESMF Import"}
 		standardNUOPCImport <usesModule(NUOPC)> {@label = "NUOPC Import"}
 		
-		genericDriverImports! <usesModule(NUOPC_DriverAtmOcn)>
+		genericImports! <usesModule(NUOPC_DriverAtmOcn)>
 		{
 			@label = "Generic Driver Atm-Ocn Imports"
-			attrib importsGenericSS! <usesEntity(routine_SetServices)>
-			attrib importsTypeInternalState <usesEntity(type_InternalState)>
-			attrib importsLabelInternalState <usesEntity(label_InternalState)>
-			attrib importsLabelSetModelPetLists <usesEntity(label_SetModelPetLists)>
-			attrib importsLabelSetModelServices <usesEntity(label_SetModelServices)>
+			attrib importsGenericSS <usesEntity(routine_SetServices)> {@default="driverAtmOcn_SetServices"}
 		}
 		
 		connectorImport <usesModule(NUOPC_Connector)> {
 			@label = "Generic Connector Imports"
-			attrib importsSetServices <usesEntity(routine_SetServices)>
+			attrib importsSetServices <usesEntity(routine_SetServices)> {@default="connector_SetServices"}
 		}
 		
-		implementsSetServices <subroutine(SetServices(inout type(ESMF_GridComp) #p_gcomp, out integer #p_rc))> {
+		implementsSetServices! <subroutine(#n_SetServices(type(ESMF_GridComp) #p_gcomp, out integer #p_rc))> {
 			@label = "Set Services"		
 			
-			attrib p_gcomp
-			attrib p_rc
+			attrib n_SetServices {@default="SetServices"}
+			attrib p_gcomp {@default="driver"}
+			attrib p_rc {@default="rc"}
 			
-			callsGenericSetServices <call(#^genericDriverImports/importsGenericSS)>
-			{
-				@label = "Calls Generic Driver Atm-Ocn Set Services"
-			}
+			--call NUOPC_CompDerive(driver, driver_routine_SS, rc=rc)
+			callsCompDerive! <call(NUOPC_CompDerive(#^p_gcomp, #^genericImports/importsGenericSS, rc?=#^p_rc))>	{
+				@label = "Calls NUOPC_CompDerive"
+			}	
+			
 		}
 		
+		/*
 		implementsSetModelPetLists <subroutine(*(inout type(ESMF_GridComp) #p_gcomp, out integer #p_rc) )> 
 		{
 			
@@ -340,34 +340,76 @@ language NUOPC7 'http://www.earthsystemcurator.org/nuopcgen' {
 			--TODO: deal with internal state stuff
 			
 		}
+		*/
 		
-		implementsSetModelServices <subroutine(*(inout type(ESMF_GridComp) #p_gcomp, out integer #p_rc) )> 
+		
+		specSetModelServices <subroutine(*(type(ESMF_GridComp) #p_gcomp, out integer #p_rc) )> 
 		{
 			
 			@label = "Set Model Services"
-			attrib n_SetModelServices <subroutineName> {@name}
-			attrib p_gcomp
-			attrib p_rc	
+			attrib n_SetModelServices <subroutineName> {@name @default="SetModelServices"}
+			attrib p_gcomp {@default="driver"}
+			attrib p_rc {@default="rc"}
+			attrib phase?
 			
-			--imports label
-			attrib importsLabelSetModelServices! <#^genericDriverImports usesEntity(label_SetModelServices)>			
+			attrib importsLabelSetModelServices! <#^genericImports usesEntity(label_SetModelServices)> {@default="label_SMS"}	
 			
-			--method registration
-			setModelPetListsRegistered! <#^implementsSetServices 
-					call(ESMF_MethodAdd(#^implementsSetServices/p_gcomp, 
-										label=#^genericDriverImports/importsLabelSetModelServices, 
-										userRoutine=#^n_SetModelServices, 
-										rc=#^implementsSetServices/p_rc))>
+			registered! <#^implementsSetServices 
+							call(NUOPC_CompSpecialize(#^implementsSetServices/p_gcomp, 
+												specLabel=#^importsLabelSetModelServices, 
+												specPhaseLabel?=#^phase,
+												specRoutine=#^n_SetModelServices, 
+												rc=#^implementsSetServices/p_rc))>
 			{
 				@label = "Registered in Set Services"
+			}
+			
+			
+			attrib importsDriverAddComp <#^genericImports usesEntity(NUOPC_DriverAddComp)>
+			
+			-- does not work because of subroutine param declaration
+			childCompDeclaration <declaration(type(ESMF_GridComp))> {
+				@label = "Declare ESMF_GridComp"
+				attrib compRef <declaredEntity> {
+					@name 
+					@label="name" 
+					@default="child"
+				}
+			}
+			
+			connectorDeclaration <declaration(type(ESMF_CplComp))> {
+				@label = "Declare ESMF_CplComp"
+				attrib connRef <declaredEntity> {
+					@name 
+					@label="name" 
+					@default="connector"
+				}
+			}
+			
+			--call NUOPC_DriverAddComp(driver, "ATM", atmSS, comp=child, rc=rc)
+			addComp* <call(NUOPC_DriverAddComp(#^p_gcomp, #compLabel, #compSS, comp=#^childCompDeclaration/compRef, rc?=#rc))> {
+				@label = "Add Child Component"
+				attrib compLabel {@label="label" @default="\"COMP_LABEL\""}
+				attrib compSS {@label="Set Services" @default="comp_SetServices"}
+				attrib compRef {@label="Component" @default="child"}
+				attrib rc {@default="rc"}
+			}
+			
+			--call NUOPC_DriverAddComp(driver, srcCompLabel="OCN", dstCompLabel="ATM", compSetServicesRoutine=cplSS, comp=connector, rc=rc)
+			addConnector* <call(NUOPC_DriverAddComp(#^p_gcomp, srcCompLabel=#srcLabel, dstCompLabel=#dstLabel, compSetServicesRoutine=#compSS, comp=#^connectorDeclaration/connRef, rc?=#rc))> {
+				@label = "Add Child Connector"
+				attrib srcLabel {@label="Source" @default="\"SRC_COMP_LABEL\""}
+				attrib dstLabel {@label="Destination" @default="\"DST_COMP_LABEL\""}
+				attrib compSS {@label="Set Services" @default="conn_SetServices"}
+				attrib compRef {@label="Component" @default="connector"}
+				attrib rc {@default="rc"}
 			}
 			
 			
 		}
 		
 	}
-	* 
-	*/
+
 		
 	
 	concept NUOPCModel <module(#modelName)>
@@ -388,31 +430,20 @@ language NUOPC7 'http://www.earthsystemcurator.org/nuopcgen' {
 		genericImports! <usesModule(NUOPC_Model)>
 		{
 			@label = "Generic Imports"
-			attrib importsGenericSS! <usesEntity(routine_SetServices)> {@default = "model_routine_SetServices"}
-			--attrib importsLabelModelAdvance <usesEntity(label_Advance)>
-			--attrib importsLabelSetClock <usesEntity(label_SetClock)>
-			
+			attrib importsGenericSS <usesEntity(routine_SetServices)> {@default = "model_routine_SetServices"}		
 		}
 		
-		implementsSetServices! <subroutine(*(type(ESMF_GridComp) #p_gcomp, out integer #p_rc) )> 
+		implementsSetServices <subroutine(*(type(ESMF_GridComp) #p_gcomp, out integer #p_rc) )> 
 		{
 			@label = "Set Services"
 			attrib n_SetServices <subroutineName> {@name @default="SetServices"}
 			attrib p_gcomp {@default="gcomp"}
 			attrib p_rc	{@default="rc"}	
 			
-			--call NUOPC_CompDerive(gcomp, model_routine_SS, rc=rc)
 			callsCompDerive! <call(NUOPC_CompDerive(#^p_gcomp, #^genericImports/importsGenericSS, rc?=#^p_rc))>	{
 				@label = "Calls NUOPC_CompDerive"
 			}		
-			
-			/*
-			callsGenericSetServices! <call(#^genericImports/importsGenericSS(#^p_gcomp, #^p_rc))> 
-			{
-				@label = "Calls generic SetServices"	
-			}
-			
-			*/					
+								
 		}
 		
 		initialize
@@ -449,8 +480,7 @@ language NUOPC7 'http://www.earthsystemcurator.org/nuopcgen' {
 						@default = "\"standard_name\""
 					}
 				}
-				
-				
+								
 				advertisesExportField* <call(NUOPC_StateAdvertiseField(#^p_export, StandardName=#exportStandardName, rc?=#^p_rc))> 
 				{
 					@label = "Advertises export field"
@@ -458,16 +488,14 @@ language NUOPC7 'http://www.earthsystemcurator.org/nuopcgen' {
 						@label = "Standard Name"
 						@default = "\"standard_name\""
 					}
-				}
+				}			
 				
-				
-				registered1! <#^implementsSetServices call(ESMF_GridCompSetEntryPoint(#^implementsSetServices/p_gcomp, ESMF_METHOD_INITIALIZE, userRoutine=#^n_initP1, phase=1, rc=#^implementsSetServices/p_rc))> 
+				registered1! <#^implementsSetServices call(NUOPC_CompSetEntryPoint(#^implementsSetServices/p_gcomp, ESMF_METHOD_INITIALIZE, phaseLabelList=(/"IPDv00p1"/), userRoutine=#^n_initP1, rc=#^implementsSetServices/p_rc))> 
 				{
 					@label = "Registered in Set Services"
-				--	attrib userRoutine <actualParamByKeyword(userRoutine)>
-				--	attrib phase <actualParamByKeyword(phase)>
 				}
-								
+				
+							
 			}
 		
 			
@@ -524,7 +552,9 @@ language NUOPC7 'http://www.earthsystemcurator.org/nuopcgen' {
 						@label = "Realize field"
 					}
 					
-					dummyAssignment!! <functionAssignment(#^fieldDeclaration/fieldName, *) before(#^realizesImportField) after(#^fieldAssignment)>					
+					dummyAssignment!! <functionAssignment(#^fieldDeclaration/fieldName, *) before(#^realizesImportField) after(#^fieldAssignment)> {
+						@hide
+					}					
 				
 				}
 				
@@ -569,26 +599,19 @@ language NUOPC7 'http://www.earthsystemcurator.org/nuopcgen' {
 					-- field is created and when it is realized
 					-- TODO: implement a raw <assignment> mapping that ignore the type of assignment, just checks lhs
 					-- TODO: fix the bug that a mapped element comes after itself....
-					dummyAssignment!! <functionAssignment(#^fieldDeclaration/fieldName, *) before(#^realizesExportField) after(#^fieldAssignment)>
+					dummyAssignment!! <functionAssignment(#^fieldDeclaration/fieldName, *) before(#^realizesExportField) after(#^fieldAssignment)> {
+						@hide
+					}
 					
 				}
-				
-				
-				
-				/*
-				realizesExportField* <call(NUOPC_StateRealizeField(#^p_export, field=#exportedField, rc=#^p_rc))> 
-				{
-					@label = "Realizes export field"
-					attrib exportedField
-				}
-				*/
-				
-				registered2! <#^implementsSetServices call(ESMF_GridCompSetEntryPoint(
-						#^implementsSetServices/p_gcomp, 
-						ESMF_METHOD_INITIALIZE, 
-						userRoutine=#^n_initP2, 
-						phase=2, 
-						rc=#^implementsSetServices/p_rc))>
+								
+				registered2! <#^implementsSetServices call(NUOPC_CompSetEntryPoint(
+					#^implementsSetServices/p_gcomp, 
+					ESMF_METHOD_INITIALIZE, 
+					phaseLabelList=(/"IPDv00p2"/), 
+					userRoutine=#^n_initP2, 
+					rc=#^implementsSetServices/p_rc
+				))> 
 				{
 					@label = "Registered in Set Services"
 				}
@@ -717,11 +740,12 @@ language NUOPC7 'http://www.earthsystemcurator.org/nuopcgen' {
 						attrib p_rc {@default="rc"}
 						attrib phase?
 										
+						--call NUOPC_CompSpecialize(gcomp, specLabel=model_label_Advance, specRoutine=ModelAdvance, rc=rc)
 						modelAdvanceRegistered! <#^implementsSetServices 
-							call(ESMF_MethodAdd(#^implementsSetServices/p_gcomp, 
-												index?=#^phase, 
-												label=#^importsLabelModelAdvance, 
-												userRoutine=#^userRoutine, 
+							call(NUOPC_CompSpecialize(#^implementsSetServices/p_gcomp, 
+												specLabel=#^importsLabelModelAdvance, 
+												specPhaseLabel?=#^phase,
+												specRoutine=#^userRoutine, 
 												rc=#^implementsSetServices/p_rc))>
 						{
 							@label = "Registered in Set Services"

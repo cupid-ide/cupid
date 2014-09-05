@@ -85,7 +85,11 @@ class PsycheGenerator implements IGenerator {
 			annotation _'http://www.earthsystemcog.org/projects/nuopc' 
 			(
 				«FOR a : cd.annotation SEPARATOR ','»
+				«IF a.value != null»
 				«a.key.substring(1)» = '«a.value.replace("'", "\\'")»'
+				«ELSE»
+				«a.key.substring(1)» = ''
+				«ENDIF»
 				«ENDFOR»
 			);
 			«ENDIF»

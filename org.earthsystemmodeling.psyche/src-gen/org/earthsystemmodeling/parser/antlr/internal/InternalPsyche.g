@@ -2373,7 +2373,103 @@ ruleLocalExpression returns [EObject current=null]
 	    }
 
 )
+)
+    |(
+(
+		{ 
+	        newCompositeNode(grammarAccess.getLocalExpressionAccess().getArrayConstructorArrayConstructorParserRuleCall_2_0()); 
+	    }
+		lv_arrayConstructor_2_0=ruleArrayConstructor		{
+	        if ($current==null) {
+	            $current = createModelElementForParent(grammarAccess.getLocalExpressionRule());
+	        }
+       		set(
+       			$current, 
+       			"arrayConstructor",
+        		lv_arrayConstructor_2_0, 
+        		"ArrayConstructor");
+	        afterParserOrEnumRuleCall();
+	    }
+
+)
 ))
+;
+
+
+
+
+
+// Entry rule entryRuleArrayConstructor
+entryRuleArrayConstructor returns [EObject current=null] 
+	:
+	{ newCompositeNode(grammarAccess.getArrayConstructorRule()); }
+	 iv_ruleArrayConstructor=ruleArrayConstructor 
+	 { $current=$iv_ruleArrayConstructor.current; } 
+	 EOF 
+;
+
+// Rule ArrayConstructor
+ruleArrayConstructor returns [EObject current=null] 
+    @init { enterRule(); 
+    }
+    @after { leaveRule(); }:
+(	otherlv_0='(' 
+    {
+    	newLeafNode(otherlv_0, grammarAccess.getArrayConstructorAccess().getLeftParenthesisKeyword_0());
+    }
+	otherlv_1='/' 
+    {
+    	newLeafNode(otherlv_1, grammarAccess.getArrayConstructorAccess().getSolidusKeyword_1());
+    }
+(
+(
+		{ 
+	        newCompositeNode(grammarAccess.getArrayConstructorAccess().getItemLiteralParserRuleCall_2_0()); 
+	    }
+		lv_item_2_0=ruleLiteral		{
+	        if ($current==null) {
+	            $current = createModelElementForParent(grammarAccess.getArrayConstructorRule());
+	        }
+       		add(
+       			$current, 
+       			"item",
+        		lv_item_2_0, 
+        		"Literal");
+	        afterParserOrEnumRuleCall();
+	    }
+
+)
+)(	otherlv_3=',' 
+    {
+    	newLeafNode(otherlv_3, grammarAccess.getArrayConstructorAccess().getCommaKeyword_3_0());
+    }
+(
+(
+		{ 
+	        newCompositeNode(grammarAccess.getArrayConstructorAccess().getItemLiteralParserRuleCall_3_1_0()); 
+	    }
+		lv_item_4_0=ruleLiteral		{
+	        if ($current==null) {
+	            $current = createModelElementForParent(grammarAccess.getArrayConstructorRule());
+	        }
+       		add(
+       			$current, 
+       			"item",
+        		lv_item_4_0, 
+        		"Literal");
+	        afterParserOrEnumRuleCall();
+	    }
+
+)
+))*	otherlv_5='/' 
+    {
+    	newLeafNode(otherlv_5, grammarAccess.getArrayConstructorAccess().getSolidusKeyword_4());
+    }
+	otherlv_6=')' 
+    {
+    	newLeafNode(otherlv_6, grammarAccess.getArrayConstructorAccess().getRightParenthesisKeyword_5());
+    }
+)
 ;
 
 

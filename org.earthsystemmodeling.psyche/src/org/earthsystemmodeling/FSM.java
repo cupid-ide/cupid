@@ -1673,6 +1673,16 @@ public class FSM<RootType extends EObject> {
 		}
 		return false;
 	}
+	
+	public boolean hasAnnotation(ConceptDef def, String key) {
+		if (!key.startsWith("@")) key = "@" + key;
+		for (Annotation a : def.getAnnotation()) {
+			if (a.getKey().equalsIgnoreCase(key)) {
+				return true;
+			}
+		}
+		return false;
+	}
 
 	public static List<PathExprTerm> linearizePathExpr(PathExpr pathExpr) {
 		return linearizePathExpr(pathExpr, new ArrayList<PathExprTerm>());

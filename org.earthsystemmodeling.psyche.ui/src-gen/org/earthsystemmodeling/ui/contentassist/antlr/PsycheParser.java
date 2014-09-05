@@ -96,6 +96,8 @@ public class PsycheParser extends AbstractContentAssistParser {
 					put(grammarAccess.getFunctionAssignmentAccess().getGroup_5(), "rule__FunctionAssignment__Group_5__0");
 					put(grammarAccess.getFunctionAssignmentAccess().getGroup_5_1(), "rule__FunctionAssignment__Group_5_1__0");
 					put(grammarAccess.getFunctionAssignmentAccess().getGroup_5_1_1(), "rule__FunctionAssignment__Group_5_1_1__0");
+					put(grammarAccess.getArrayConstructorAccess().getGroup(), "rule__ArrayConstructor__Group__0");
+					put(grammarAccess.getArrayConstructorAccess().getGroup_3(), "rule__ArrayConstructor__Group_3__0");
 					put(grammarAccess.getPathExprAccess().getGroup(), "rule__PathExpr__Group__0");
 					put(grammarAccess.getPathExprNodeAccess().getGroup(), "rule__PathExprNode__Group__0");
 					put(grammarAccess.getPathExprNodeAccess().getGroup_1(), "rule__PathExprNode__Group_1__0");
@@ -176,6 +178,9 @@ public class PsycheParser extends AbstractContentAssistParser {
 					put(grammarAccess.getFunctionAssignmentAccess().getParamsAssignment_5_1_1_1(), "rule__FunctionAssignment__ParamsAssignment_5_1_1_1");
 					put(grammarAccess.getLocalExpressionAccess().getIdAssignment_0(), "rule__LocalExpression__IdAssignment_0");
 					put(grammarAccess.getLocalExpressionAccess().getLiteralAssignment_1(), "rule__LocalExpression__LiteralAssignment_1");
+					put(grammarAccess.getLocalExpressionAccess().getArrayConstructorAssignment_2(), "rule__LocalExpression__ArrayConstructorAssignment_2");
+					put(grammarAccess.getArrayConstructorAccess().getItemAssignment_2(), "rule__ArrayConstructor__ItemAssignment_2");
+					put(grammarAccess.getArrayConstructorAccess().getItemAssignment_3_1(), "rule__ArrayConstructor__ItemAssignment_3_1");
 					put(grammarAccess.getExprAccess().getWildcardAssignment_0(), "rule__Expr__WildcardAssignment_0");
 					put(grammarAccess.getExprAccess().getExprAssignment_1(), "rule__Expr__ExprAssignment_1");
 					put(grammarAccess.getExprAccess().getPathExprAssignment_2(), "rule__Expr__PathExprAssignment_2");

@@ -1442,14 +1442,16 @@ public class PsycheGrammarAccess extends AbstractGrammarElementFinder {
 		private final RuleCall cIdIDTerminalRuleCall_0_0 = (RuleCall)cIdAssignment_0.eContents().get(0);
 		private final Assignment cLiteralAssignment_1 = (Assignment)cAlternatives.eContents().get(1);
 		private final RuleCall cLiteralLiteralParserRuleCall_1_0 = (RuleCall)cLiteralAssignment_1.eContents().get(0);
+		private final Assignment cArrayConstructorAssignment_2 = (Assignment)cAlternatives.eContents().get(2);
+		private final RuleCall cArrayConstructorArrayConstructorParserRuleCall_2_0 = (RuleCall)cArrayConstructorAssignment_2.eContents().get(0);
 		
 		////RightHandSideFunctionRef:
 		////	'rhsFunctionRef';
 		//LocalExpression:
-		//	id=ID | literal=Literal;
+		//	id=ID | literal=Literal | arrayConstructor=ArrayConstructor;
 		public ParserRule getRule() { return rule; }
 
-		//id=ID | literal=Literal
+		//id=ID | literal=Literal | arrayConstructor=ArrayConstructor
 		public Alternatives getAlternatives() { return cAlternatives; }
 
 		//id=ID
@@ -1463,6 +1465,64 @@ public class PsycheGrammarAccess extends AbstractGrammarElementFinder {
 
 		//Literal
 		public RuleCall getLiteralLiteralParserRuleCall_1_0() { return cLiteralLiteralParserRuleCall_1_0; }
+
+		//arrayConstructor=ArrayConstructor
+		public Assignment getArrayConstructorAssignment_2() { return cArrayConstructorAssignment_2; }
+
+		//ArrayConstructor
+		public RuleCall getArrayConstructorArrayConstructorParserRuleCall_2_0() { return cArrayConstructorArrayConstructorParserRuleCall_2_0; }
+	}
+
+	public class ArrayConstructorElements extends AbstractParserRuleElementFinder {
+		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "ArrayConstructor");
+		private final Group cGroup = (Group)rule.eContents().get(1);
+		private final Keyword cLeftParenthesisKeyword_0 = (Keyword)cGroup.eContents().get(0);
+		private final Keyword cSolidusKeyword_1 = (Keyword)cGroup.eContents().get(1);
+		private final Assignment cItemAssignment_2 = (Assignment)cGroup.eContents().get(2);
+		private final RuleCall cItemLiteralParserRuleCall_2_0 = (RuleCall)cItemAssignment_2.eContents().get(0);
+		private final Group cGroup_3 = (Group)cGroup.eContents().get(3);
+		private final Keyword cCommaKeyword_3_0 = (Keyword)cGroup_3.eContents().get(0);
+		private final Assignment cItemAssignment_3_1 = (Assignment)cGroup_3.eContents().get(1);
+		private final RuleCall cItemLiteralParserRuleCall_3_1_0 = (RuleCall)cItemAssignment_3_1.eContents().get(0);
+		private final Keyword cSolidusKeyword_4 = (Keyword)cGroup.eContents().get(4);
+		private final Keyword cRightParenthesisKeyword_5 = (Keyword)cGroup.eContents().get(5);
+		
+		//ArrayConstructor:
+		//	"(" "/" item+=Literal ("," item+=Literal)* "/" ")";
+		public ParserRule getRule() { return rule; }
+
+		//"(" "/" item+=Literal ("," item+=Literal)* "/" ")"
+		public Group getGroup() { return cGroup; }
+
+		//"("
+		public Keyword getLeftParenthesisKeyword_0() { return cLeftParenthesisKeyword_0; }
+
+		//"/"
+		public Keyword getSolidusKeyword_1() { return cSolidusKeyword_1; }
+
+		//item+=Literal
+		public Assignment getItemAssignment_2() { return cItemAssignment_2; }
+
+		//Literal
+		public RuleCall getItemLiteralParserRuleCall_2_0() { return cItemLiteralParserRuleCall_2_0; }
+
+		//("," item+=Literal)*
+		public Group getGroup_3() { return cGroup_3; }
+
+		//","
+		public Keyword getCommaKeyword_3_0() { return cCommaKeyword_3_0; }
+
+		//item+=Literal
+		public Assignment getItemAssignment_3_1() { return cItemAssignment_3_1; }
+
+		//Literal
+		public RuleCall getItemLiteralParserRuleCall_3_1_0() { return cItemLiteralParserRuleCall_3_1_0; }
+
+		//"/"
+		public Keyword getSolidusKeyword_4() { return cSolidusKeyword_4; }
+
+		//")"
+		public Keyword getRightParenthesisKeyword_5() { return cRightParenthesisKeyword_5; }
 	}
 
 	public class ExprElements extends AbstractParserRuleElementFinder {
@@ -1676,6 +1736,7 @@ public class PsycheGrammarAccess extends AbstractGrammarElementFinder {
 	private DeclaredEntityElements pDeclaredEntity;
 	private FunctionAssignmentElements pFunctionAssignment;
 	private LocalExpressionElements pLocalExpression;
+	private ArrayConstructorElements pArrayConstructor;
 	private ExprElements pExpr;
 	private LiteralElements pLiteral;
 	private PathExprElements pPathExpr;
@@ -2025,13 +2086,23 @@ public class PsycheGrammarAccess extends AbstractGrammarElementFinder {
 	////RightHandSideFunctionRef:
 	////	'rhsFunctionRef';
 	//LocalExpression:
-	//	id=ID | literal=Literal;
+	//	id=ID | literal=Literal | arrayConstructor=ArrayConstructor;
 	public LocalExpressionElements getLocalExpressionAccess() {
 		return (pLocalExpression != null) ? pLocalExpression : (pLocalExpression = new LocalExpressionElements());
 	}
 	
 	public ParserRule getLocalExpressionRule() {
 		return getLocalExpressionAccess().getRule();
+	}
+
+	//ArrayConstructor:
+	//	"(" "/" item+=Literal ("," item+=Literal)* "/" ")";
+	public ArrayConstructorElements getArrayConstructorAccess() {
+		return (pArrayConstructor != null) ? pArrayConstructor : (pArrayConstructor = new ArrayConstructorElements());
+	}
+	
+	public ParserRule getArrayConstructorRule() {
+		return getArrayConstructorAccess().getRule();
 	}
 
 	////IDOrPathExpr:

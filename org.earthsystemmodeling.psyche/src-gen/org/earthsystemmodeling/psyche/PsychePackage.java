@@ -997,13 +997,50 @@ public interface PsychePackage extends EPackage
   int LOCAL_EXPRESSION__LITERAL = 1;
 
   /**
+   * The feature id for the '<em><b>Array Constructor</b></em>' containment reference.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int LOCAL_EXPRESSION__ARRAY_CONSTRUCTOR = 2;
+
+  /**
    * The number of structural features of the '<em>Local Expression</em>' class.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @generated
    * @ordered
    */
-  int LOCAL_EXPRESSION_FEATURE_COUNT = 2;
+  int LOCAL_EXPRESSION_FEATURE_COUNT = 3;
+
+  /**
+   * The meta object id for the '{@link org.earthsystemmodeling.psyche.impl.ArrayConstructorImpl <em>Array Constructor</em>}' class.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @see org.earthsystemmodeling.psyche.impl.ArrayConstructorImpl
+   * @see org.earthsystemmodeling.psyche.impl.PsychePackageImpl#getArrayConstructor()
+   * @generated
+   */
+  int ARRAY_CONSTRUCTOR = 22;
+
+  /**
+   * The feature id for the '<em><b>Item</b></em>' attribute list.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int ARRAY_CONSTRUCTOR__ITEM = 0;
+
+  /**
+   * The number of structural features of the '<em>Array Constructor</em>' class.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int ARRAY_CONSTRUCTOR_FEATURE_COUNT = 1;
 
   /**
    * The meta object id for the '{@link org.earthsystemmodeling.psyche.impl.ExprImpl <em>Expr</em>}' class.
@@ -1013,7 +1050,7 @@ public interface PsychePackage extends EPackage
    * @see org.earthsystemmodeling.psyche.impl.PsychePackageImpl#getExpr()
    * @generated
    */
-  int EXPR = 22;
+  int EXPR = 23;
 
   /**
    * The feature id for the '<em><b>Wildcard</b></em>' attribute.
@@ -1059,7 +1096,7 @@ public interface PsychePackage extends EPackage
    * @see org.earthsystemmodeling.psyche.impl.PsychePackageImpl#getPathExpr()
    * @generated
    */
-  int PATH_EXPR = 23;
+  int PATH_EXPR = 24;
 
   /**
    * The feature id for the '<em><b>Head</b></em>' containment reference.
@@ -1096,7 +1133,7 @@ public interface PsychePackage extends EPackage
    * @see org.earthsystemmodeling.psyche.impl.PsychePackageImpl#getAxis()
    * @generated
    */
-  int AXIS = 24;
+  int AXIS = 25;
 
   /**
    * The feature id for the '<em><b>Ancestor</b></em>' attribute.
@@ -1124,7 +1161,7 @@ public interface PsychePackage extends EPackage
    * @see org.earthsystemmodeling.psyche.impl.PsychePackageImpl#getDeclaredEntity()
    * @generated
    */
-  int DECLARED_ENTITY = 25;
+  int DECLARED_ENTITY = 26;
 
   /**
    * The number of structural features of the '<em>Declared Entity</em>' class.
@@ -1143,7 +1180,7 @@ public interface PsychePackage extends EPackage
    * @see org.earthsystemmodeling.psyche.impl.PsychePackageImpl#getPathExprTerm()
    * @generated
    */
-  int PATH_EXPR_TERM = 26;
+  int PATH_EXPR_TERM = 27;
 
   /**
    * The feature id for the '<em><b>Head</b></em>' containment reference.
@@ -2061,6 +2098,38 @@ public interface PsychePackage extends EPackage
   EAttribute getLocalExpression_Literal();
 
   /**
+   * Returns the meta object for the containment reference '{@link org.earthsystemmodeling.psyche.LocalExpression#getArrayConstructor <em>Array Constructor</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for the containment reference '<em>Array Constructor</em>'.
+   * @see org.earthsystemmodeling.psyche.LocalExpression#getArrayConstructor()
+   * @see #getLocalExpression()
+   * @generated
+   */
+  EReference getLocalExpression_ArrayConstructor();
+
+  /**
+   * Returns the meta object for class '{@link org.earthsystemmodeling.psyche.ArrayConstructor <em>Array Constructor</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for class '<em>Array Constructor</em>'.
+   * @see org.earthsystemmodeling.psyche.ArrayConstructor
+   * @generated
+   */
+  EClass getArrayConstructor();
+
+  /**
+   * Returns the meta object for the attribute list '{@link org.earthsystemmodeling.psyche.ArrayConstructor#getItem <em>Item</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for the attribute list '<em>Item</em>'.
+   * @see org.earthsystemmodeling.psyche.ArrayConstructor#getItem()
+   * @see #getArrayConstructor()
+   * @generated
+   */
+  EAttribute getArrayConstructor_Item();
+
+  /**
    * Returns the meta object for class '{@link org.earthsystemmodeling.psyche.Expr <em>Expr</em>}'.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
@@ -2912,6 +2981,32 @@ public interface PsychePackage extends EPackage
      * @generated
      */
     EAttribute LOCAL_EXPRESSION__LITERAL = eINSTANCE.getLocalExpression_Literal();
+
+    /**
+     * The meta object literal for the '<em><b>Array Constructor</b></em>' containment reference feature.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    EReference LOCAL_EXPRESSION__ARRAY_CONSTRUCTOR = eINSTANCE.getLocalExpression_ArrayConstructor();
+
+    /**
+     * The meta object literal for the '{@link org.earthsystemmodeling.psyche.impl.ArrayConstructorImpl <em>Array Constructor</em>}' class.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @see org.earthsystemmodeling.psyche.impl.ArrayConstructorImpl
+     * @see org.earthsystemmodeling.psyche.impl.PsychePackageImpl#getArrayConstructor()
+     * @generated
+     */
+    EClass ARRAY_CONSTRUCTOR = eINSTANCE.getArrayConstructor();
+
+    /**
+     * The meta object literal for the '<em><b>Item</b></em>' attribute list feature.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    EAttribute ARRAY_CONSTRUCTOR__ITEM = eINSTANCE.getArrayConstructor_Item();
 
     /**
      * The meta object literal for the '{@link org.earthsystemmodeling.psyche.impl.ExprImpl <em>Expr</em>}' class.

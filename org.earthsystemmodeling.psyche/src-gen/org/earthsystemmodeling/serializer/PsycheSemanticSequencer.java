@@ -5,6 +5,7 @@ import com.google.inject.Provider;
 import org.earthsystemmodeling.psyche.ActualParam;
 import org.earthsystemmodeling.psyche.ActualParamByKeyword;
 import org.earthsystemmodeling.psyche.Annotation;
+import org.earthsystemmodeling.psyche.ArrayConstructor;
 import org.earthsystemmodeling.psyche.Axis;
 import org.earthsystemmodeling.psyche.Call;
 import org.earthsystemmodeling.psyche.Cardinality;
@@ -66,6 +67,12 @@ public class PsycheSemanticSequencer extends AbstractDelegatingSemanticSequencer
 			case PsychePackage.ANNOTATION:
 				if(context == grammarAccess.getAnnotationRule()) {
 					sequence_Annotation(context, (Annotation) semanticObject); 
+					return; 
+				}
+				else break;
+			case PsychePackage.ARRAY_CONSTRUCTOR:
+				if(context == grammarAccess.getArrayConstructorRule()) {
+					sequence_ArrayConstructor(context, (ArrayConstructor) semanticObject); 
 					return; 
 				}
 				else break;
@@ -286,6 +293,15 @@ public class PsycheSemanticSequencer extends AbstractDelegatingSemanticSequencer
 	
 	/**
 	 * Constraint:
+	 *     (item+=Literal item+=Literal*)
+	 */
+	protected void sequence_ArrayConstructor(EObject context, ArrayConstructor semanticObject) {
+		genericSequencer.createSequence(context, semanticObject);
+	}
+	
+	
+	/**
+	 * Constraint:
 	 *     (
 	 *         attrib?='attrib' 
 	 *         name=ID 
@@ -414,7 +430,7 @@ public class PsycheSemanticSequencer extends AbstractDelegatingSemanticSequencer
 	
 	/**
 	 * Constraint:
-	 *     (id=ID | literal=Literal)
+	 *     (id=ID | literal=Literal | arrayConstructor=ArrayConstructor)
 	 */
 	protected void sequence_LocalExpression(EObject context, LocalExpression semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);

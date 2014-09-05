@@ -139,7 +139,10 @@ FunctionAssignment:
 
 
 LocalExpression:
-	id=ID | literal=Literal;
+	id=ID | literal=Literal | arrayConstructor=ArrayConstructor;
+	
+ArrayConstructor:
+	'(' '/' item+=Literal (',' item+=Literal)* '/' ')';
 	
 //IDOrPathExpr:
 //	idOrWildcard=IDOrWildcard | pathExpr=PathExpr;
