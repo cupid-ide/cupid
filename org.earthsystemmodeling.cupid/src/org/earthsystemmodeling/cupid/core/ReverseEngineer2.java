@@ -4,6 +4,7 @@ package org.earthsystemmodeling.cupid.core;
 import java.util.HashSet;
 import java.util.Set;
 
+import org.aspectj.weaver.patterns.ThisOrTargetAnnotationPointcut;
 import org.earthsystemmodeling.FSM;
 import org.earthsystemmodeling.cupid.codedb.CodeDBIndex;
 import org.earthsystemmodeling.cupid.properties.CupidPropertyPage;
@@ -22,6 +23,7 @@ import org.eclipse.core.runtime.preferences.IEclipsePreferences;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.photran.core.IFortranAST;
 import org.eclipse.photran.internal.core.vpg.PhotranVPG;
+import org.osgi.framework.FrameworkUtil;
 
 import alice.tuprolog.InvalidTheoryException;
 import alice.tuprolog.MalformedGoalException;
@@ -119,17 +121,18 @@ public class ReverseEngineer2 {
 	
 		//testing indexing code
 		
-		CodeDBIndex codeIndex = new CodeDBIndex();
+		CodeDBIndex codeIndex = CodeDBIndex.getInstance();
 		codeIndex.indexASTs(asts);
-		codeIndex.printClauseList();
+		//codeIndex.printClauseList();
 		
-		
+		/*
 		Prolog prolog = codeIndex.getProlog();
 		try {
 			
 			// subroutine(#id, #parent, name, [#stmt_1, #stmt_2...])
 			// call(#id, #parent, subroutine name)
 			//def(#id, ref(file, offset, length),  type, intentIn?, intentOut?)
+			//FrameworkUtil.getBundle(ReverseEngineer2.class).getResource("").
 			
 			prolog.addTheory(new Theory("nuopc_module(_id, _name) :- module(_id, _, _name, _), uses(_, _id, 'NUOPC', _)."));
 			prolog.addTheory(new Theory("nuopc_module(_id, _name, _ss) :- nuopc_module(_id, _name), "
@@ -169,7 +172,7 @@ public class ReverseEngineer2 {
 			// TODO Auto-generated catch block
 			e1.printStackTrace();
 		}			
-		
+		*/
 		
 		fsm.reverse(asts);
 		

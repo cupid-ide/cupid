@@ -13,10 +13,13 @@ import java.util.Stack;
 
 import org.eclipse.photran.core.IFortranAST;
 import org.eclipse.photran.internal.core.analysis.binding.Definition;
+import org.eclipse.photran.internal.core.analysis.types.FunctionType;
+import org.eclipse.photran.internal.core.analysis.types.TypeProcessor;
 import org.eclipse.photran.internal.core.lexer.Token;
 import org.eclipse.photran.internal.core.parser.ASTArrayConstructorNode;
 import org.eclipse.photran.internal.core.parser.ASTCallStmtNode;
 import org.eclipse.photran.internal.core.parser.ASTDblConstNode;
+import org.eclipse.photran.internal.core.parser.ASTEntityDeclNode;
 import org.eclipse.photran.internal.core.parser.ASTExecutableProgramNode;
 import org.eclipse.photran.internal.core.parser.ASTIntConstNode;
 import org.eclipse.photran.internal.core.parser.ASTMainProgramNode;
@@ -28,6 +31,8 @@ import org.eclipse.photran.internal.core.parser.ASTStringConstNode;
 import org.eclipse.photran.internal.core.parser.ASTSubroutineArgNode;
 import org.eclipse.photran.internal.core.parser.ASTSubroutineParNode;
 import org.eclipse.photran.internal.core.parser.ASTSubroutineSubprogramNode;
+import org.eclipse.photran.internal.core.parser.ASTTypeDeclarationStmtNode;
+import org.eclipse.photran.internal.core.parser.ASTTypeSpecNode;
 import org.eclipse.photran.internal.core.parser.ASTUseStmtNode;
 import org.eclipse.photran.internal.core.parser.ASTVarOrFnRefNode;
 import org.eclipse.photran.internal.core.parser.ASTVisitor;
@@ -68,12 +73,22 @@ public class CodeDBIndex {
 	   !.
 	*/
 
+	private static CodeDBIndex instance = null;
+	
+	public static CodeDBIndex getInstance() {
+		if (instance == null) {
+			instance = new CodeDBIndex();
+		}
+		return instance;
+	}
+	
 	ArrayList<Struct> clauseList = new ArrayList<Struct>(1024);
 	Map<Struct, Object> toRegister = new HashMap<Struct, Object>();
 	
 	int factID = -1;  //increments each time
 	
 	public void indexASTs(Set<IFortranAST> asts) {			
+		clauseList.clear();
 		for (IFortranAST ast : asts) {
 			ast.accept(new CodeDBIndexVisitor(ast));
 			
@@ -163,6 +178,10 @@ public class CodeDBIndex {
 		System.out.println("Number of clauses: " + clauseList.size());
 	}
 	
+	public int size() {
+		return clauseList.size();
+	}
+	
 	class CodeDBIndexVisitor extends ASTVisitor {
 		
 		int compilationUnitID = -1;
@@ -226,6 +245,10 @@ public class CodeDBIndex {
 			}
 		}
 		
+		private Struct toListTerm(List<Term> in) {
+			return new Struct(in.toArray(new Term[]{}));
+		}
+		
 		/*
 		private boolean checkContext(Class<?> c) {
 			if (contextStack.size() == 0) return false;
@@ -279,6 +302,7 @@ public class CodeDBIndex {
 			Term termName = createStringTerm(node.getProgramStmt().getProgramName().getProgramName().getText());
 			
 			listSubprogramIDs = new ArrayList<Integer>();
+			listExec = new ArrayList<Integer>();
 			int id = reserveID();
 			
 			traverseChildren(node, id);
@@ -340,24 +364,57 @@ public class CodeDBIndex {
 		List<Integer> listSubprogramIDs = new ArrayList<Integer>();
 		
 		/**
-		 * subroutine(#id, #parent, name, [#stmt_1, #stmt_2...])
+		 * subroutine(#id, #parent, name, [#decl_1, ...], [#stmt_1, ...])
 		 */
 		@Override
 		public void visitASTSubroutineSubprogramNode(ASTSubroutineSubprogramNode node) {
 			
-			Term termName = createStringTerm(node.getSubroutineStmt().getSubroutineName().getSubroutineName().getText());
+			Term termName = createStringTerm(node.getSubroutineStmt().getSubroutineName().getSubroutineName());
 			
 			int id = reserveID();
 			
 			currentParamIndex = 0;
 			listExec = new ArrayList<Integer>();
+			listDecl = new ArrayList<Integer>();
 			traverseChildren(node, id);
 			
 			addFact("subroutine", id, parentID(), termName, toList(listExec));
 			listSubprogramIDs.add(id);
 		}
 		
-		List<Integer> listExec = new ArrayList<Integer>();
+		List<Integer> listExec;
+		List<Integer> listDecl;
+		List<Term> listEntityDecl;
+		
+		/**
+		 * decl(#id, #parent, 'type', ['entity_1', ...])
+		 */
+		@Override
+		public void visitASTTypeDeclarationStmtNode(ASTTypeDeclarationStmtNode node) {
+			//node.getAttrSpecSeq().get(0).getAttrSpec().
+			//node.getEntityDeclList().get(0).g
+			Term termType = createStringTerm(toTypeName(node.getTypeSpec()));
+			listEntityDecl = new ArrayList<Term>();
+			traverseChildren(node);
+			addFact("decl", parentID(), termType, toListTerm(listEntityDecl));
+		}
+		
+		private String toTypeName(ASTTypeSpecNode node) {
+			if (node.isCharacter()) return "character";
+			else if (node.isComplex()) return "complex";
+			else if (node.isDblComplex()) return "doublecomplex";
+			else if (node.isDerivedType()) return "type(" + node.getTypeName().getText() + ")";
+			else if (node.isDblComplex()) return "double";
+			else if (node.isInteger()) return "integer";
+			else if (node.isLogical()) return "logical";
+			else if (node.isReal()) return "real";
+			else return "UNKNOWN";
+		}
+		
+		@Override
+		public void visitASTEntityDeclNode(ASTEntityDeclNode node) {
+			listEntityDecl.add(createStringTerm(node.getObjectName().getObjectName()));
+		}
 		
 		/*
 		 * exec(#id, #parent, stmt)
@@ -386,14 +443,23 @@ public class CodeDBIndex {
 		 */
 		protected int addDefinition(Definition def) {
 			
-			//definitions may be added redundantly currently
-			
+			//definitions may be added redundantly currently, could cache them and look up
 			Term termFile = createStringTerm(def.getTokenRef().getFilename());
 			Term termOffset = createIntTerm(def.getTokenRef().getOffset());
 			Term termLength = createIntTerm(def.getTokenRef().getLength());
 			Struct structRef  = new Struct("ref", termFile, termOffset, termLength);
 			
 			Term termType = createStringTerm(def.getType().toString());
+			/*
+			def.getType().processUsing(new TypeProcessor<Term>() {
+				@Override
+				public Term ifFunctionType(String name,
+						FunctionType functionType) {
+					functionType.f
+				}
+			});
+			*/
+			
 			Term termIntentIn = def.isIntentIn() ? Term.TRUE : Term.FALSE;
 			Term termIntentOut = def.isIntentOut() ? Term.TRUE : Term.FALSE;
 			
@@ -416,15 +482,7 @@ public class CodeDBIndex {
 		 */		
 		@Override
 		public void visitASTSubroutineParNode(ASTSubroutineParNode node) {
-			/*
-			List<Definition> defs = node.getVariableName().resolveBinding();
-			int defId = -1;
 			
-			if (defs.size() > 0) {
-				Definition def = defs.get(0);
-				defId = addDefinition(def);
-			}
-			*/
 			int defId = addDefinition(node.getVariableName());
 			
 			Term termName = createStringTerm(node.getVariableName().getText());
