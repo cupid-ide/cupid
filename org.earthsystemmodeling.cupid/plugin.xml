@@ -28,6 +28,11 @@
             id="org.earthsystemmodeling.cupid.commands"
             name="Cupid Commands">
       </category>
+      <command
+            categoryId="org.earthsystemmodeling.cupid.commands"
+            id="org.earthsystemmodeling.cupid.populateCodeDB"
+            name="Populate CodeDB">
+      </command>
    </extension>
    <extension
          point="org.eclipse.ui.handlers">
@@ -42,6 +47,10 @@
       <handler
             class="org.earthsystemmodeling.cupid.handlers.CompareHandler"
             commandId="org.earthsystemmodeling.cupid.commands.compareCommand">
+      </handler>
+      <handler
+            class="org.earthsystemmodeling.cupid.handlers.PopulateCodeDBHandler"
+            commandId="org.earthsystemmodeling.cupid.populateCodeDB">
       </handler>
    </extension>
    <extension
@@ -225,6 +234,25 @@
                tooltip="Forward engineer (generate code)">
          </command>
          -->
+      </menuContribution>
+      <menuContribution
+            locationURI="popup:org.eclipse.ui.navigator.ProjectExplorer#PopupMenu?after=additions">
+         <command
+               commandId="org.earthsystemmodeling.cupid.populateCodeDB"
+               id="org.earthsystemmodeling.cupid.menus.populateCodeDB">
+            <visibleWhen
+                  checkEnabled="false">
+               <with
+                     variable="selection">
+                  <iterate
+                        operator="and">
+                     <instanceof
+                           value="org.eclipse.core.resources.IProject">
+                     </instanceof>
+                  </iterate>
+               </with>
+            </visibleWhen>
+         </command>
       </menuContribution>
    </extension>
    <!--

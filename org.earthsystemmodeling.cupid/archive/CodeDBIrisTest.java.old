@@ -2,6 +2,12 @@ package org.earthsystemmodeling.cupid.codedb;
 
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.sql.Connection;
+import java.sql.DatabaseMetaData;
+import java.sql.DriverManager;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -21,8 +27,13 @@ import org.deri.iris.api.factory.IConcreteFactory;
 import org.deri.iris.api.factory.ITermFactory;
 import org.deri.iris.api.terms.ITerm;
 import org.deri.iris.factory.Factory;
+import org.deri.iris.facts.Facts;
+import org.deri.iris.facts.IDataSource;
+import org.deri.iris.facts.IFacts;
 import org.deri.iris.optimisations.magicsets.MagicSets;
 import org.deri.iris.optimisations.rulefilter.RuleFilter;
+import org.deri.iris.rdb.RdbKnowledgeBase;
+import org.deri.iris.rdb.facts.RdbFacts;
 import org.deri.iris.storage.IRelation;
 import org.deri.iris.storage.simple.SimpleRelationFactory;
 import org.deri.iris.compiler.Parser;
@@ -31,7 +42,7 @@ import org.deri.iris.compiler.ParserException;
 
 public class CodeDBIrisTest {
 
-	public static void main(String[] args) throws ParserException, EvaluationException, IOException {
+	public static void main(String[] args) throws ParserException, EvaluationException, IOException, ClassNotFoundException, SQLException {
 		
 		System.out.print("Press any key to go: ");
 		InputStreamReader readIn = new InputStreamReader(System.in);
@@ -40,8 +51,12 @@ public class CodeDBIrisTest {
 		Configuration config = KnowledgeBaseFactory.getDefaultConfiguration();
 		
 		CodeDBIrisTest c = new CodeDBIrisTest();
-		c.testPopulateWithParser(config);
-		c.testPopulateManually(config);
+		//c.testPopulateWithParser(config);
+		//c.testPopulateManually(config);
+		c.testRDB(config);
+		
+		//c.testH2();
+	
 		
 	}
 	
@@ -190,6 +205,74 @@ public class CodeDBIrisTest {
 		
 	}
 	
+	//kb = new RdbKnowledgeBase(facts, rules, configuration);
+	public void testRDB(Configuration config) throws ParserException, EvaluationException, ClassNotFoundException, IOException, SQLException {
+		
+		StringBuilder dl = generateFacts();
+							
+				
+		//IFacts facts = new Facts(parser.getFacts(), config.relationFactory);
+		
+		
+		//connection
+		Class.forName("org.h2.Driver");
+		Connection conn = DriverManager.getConnection("jdbc:h2:~/h2/test;SCHEMA=IRIS");
+		RdbFacts facts = new RdbFacts(conn);
+		
+		Parser parser = new Parser(facts);
+		parser.parse(dl.toString());
+								
+		RdbKnowledgeBase kb = new RdbKnowledgeBase(facts, getRules(), config);
+		
+		/*
+		DatabaseMetaData metadata = conn.getMetaData();
+		ResultSet schemas = metadata.getSchemas();
+		while (schemas.next()) {
+			String table = schemas.getString(1);
+			String catalog = schemas.getString(2);
+			System.out.println("Table: " + table + " - Catalog: " + catalog);
+		}
+		*/
+							
+		List<IQuery> queries = getQueries();
+		IQuery query = queries.get(queries.size()-1);
+		
+		IRelation res = kb.execute(query);
+		
+		System.out.println("Query result (db): " + res.size());
+		
+		
+		//add a fact
+		
+		ITerm termMod = Factory.TERM.createString("modABC123");
+		ITuple tupMod = Factory.BASIC.createTuple(termMod);
+		
+		for (IPredicate pred : facts.getPredicates()) {
+			if (pred.getPredicateSymbol().equals("module")) {
+				IRelation rel = facts.get(pred);
+				rel.add(tupMod);
+				System.out.println("Added tuple");
+				break;
+			}
+		}
+		
+		//kb.dispose();
+		
+		//kb = new RdbKnowledgeBase(conn, facts, getRules(), config);
+		res = kb.execute(query);
+		
+		System.out.println("Query result (db) [after add]: " + res.size());
+		
+		
+		//System.out.print("Press any key to quit: ");
+		//InputStreamReader readIn = new InputStreamReader(System.in);
+		//readIn.read();
+		
+		kb.dispose();
+		conn.close();
+		
+	}
+	
 	public void testPopulateManually(Configuration config) throws EvaluationException, ParserException {
 		
 		Map<IPredicate, IRelation> facts = getFacts();
@@ -234,6 +317,23 @@ public class CodeDBIrisTest {
 		//for (int i = 0; i < res.size(); i++) {
 		//	System.out.println("Tuple: " + res.get(i));
 		//}
+		
+	}
+	
+	public void testH2() throws ClassNotFoundException, SQLException {
+		Class.forName("org.h2.Driver");
+		Connection conn = DriverManager.getConnection("jdbc:h2:file:~/h2/test;SCHEMA=IRIS");
+				
+		//conn.createStatement().execute("SET SCHEMA IRIS;");
+		//conn.createStatement().execute("CREATE SCHEMA IRIS;");
+		//conn.createStatement().execute("SET SCHEMA IRIS;");
+		
+		PreparedStatement stmt = conn.prepareStatement("SELECT * FROM MODULE");
+		ResultSet rs = stmt.executeQuery();
+		while (rs.next()) {
+			System.out.println(rs.getString(1));
+		}
+		conn.close();
 		
 	}
 	
@@ -344,5 +444,17 @@ public class CodeDBIrisTest {
 		
 				
 	}
+	
+	
+	public class FileBackedDataSource implements IDataSource {
+
+		@Override
+		public void get(IPredicate p, ITuple from, ITuple to, IRelation r) {
+			// TODO Auto-generated method stub
+			
+		}
+		
+	}
+	
 	
 }

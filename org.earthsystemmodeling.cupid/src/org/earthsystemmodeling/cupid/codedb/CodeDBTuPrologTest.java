@@ -7,6 +7,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import alice.tuprolog.ClauseInfo;
+import alice.tuprolog.InvalidTermException;
 import alice.tuprolog.InvalidTheoryException;
 import alice.tuprolog.MalformedGoalException;
 import alice.tuprolog.NoMoreSolutionException;
@@ -20,7 +21,7 @@ import alice.tuprolog.Var;
 
 public class CodeDBTuPrologTest {
 
-	public static void main(String[] args) throws InvalidTheoryException, MalformedGoalException, NoSolutionException, NoMoreSolutionException, IOException {
+	public static void main(String[] args) throws InvalidTheoryException, MalformedGoalException, NoSolutionException, NoMoreSolutionException, IOException, InvalidTermException {
 		
 		//System.out.print("Press any key to go: ");
 		//InputStreamReader readIn = new InputStreamReader(System.in);
@@ -134,10 +135,8 @@ public class CodeDBTuPrologTest {
 		//Term termM = sol.getVarValue("M");
 		//Term termA = sol.getVarValue("A");
 		
-		System.out.println("First soln: ");
-		for (Var var : sol.getBindingVars()) {
-			System.out.println("\t" + var.getName() + " = " + sol.getVarValue(var.getName()));
-		}
+		System.out.println("First soln: " + sol);
+		
 		
 		int numSolutions = 1;
 		while (prolog.hasOpenAlternatives()) {

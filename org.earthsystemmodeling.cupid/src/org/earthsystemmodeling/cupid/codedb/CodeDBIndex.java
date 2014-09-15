@@ -1,5 +1,11 @@
 package org.earthsystemmodeling.cupid.codedb;
 
+import java.io.IOException;
+import java.io.InputStream;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.AbstractMap;
 import java.util.ArrayList;
 import java.util.Collection;
@@ -11,6 +17,10 @@ import java.util.Map.Entry;
 import java.util.Set;
 import java.util.Stack;
 
+import org.apache.commons.io.IOUtils;
+import org.earthsystemmodeling.cupid.core.CupidActivator;
+import org.eclipse.core.runtime.FileLocator;
+import org.eclipse.core.runtime.Path;
 import org.eclipse.photran.core.IFortranAST;
 import org.eclipse.photran.internal.core.analysis.binding.Definition;
 import org.eclipse.photran.internal.core.analysis.types.FunctionType;
@@ -21,6 +31,7 @@ import org.eclipse.photran.internal.core.parser.ASTCallStmtNode;
 import org.eclipse.photran.internal.core.parser.ASTDblConstNode;
 import org.eclipse.photran.internal.core.parser.ASTEntityDeclNode;
 import org.eclipse.photran.internal.core.parser.ASTExecutableProgramNode;
+import org.eclipse.photran.internal.core.parser.ASTFunctionSubprogramNode;
 import org.eclipse.photran.internal.core.parser.ASTIntConstNode;
 import org.eclipse.photran.internal.core.parser.ASTMainProgramNode;
 import org.eclipse.photran.internal.core.parser.ASTModuleNode;
@@ -58,21 +69,6 @@ import alice.tuprolog.lib.JavaLibrary;
 @SuppressWarnings("restriction")
 public class CodeDBIndex {
 	
-	/*
-	 :- dynamic( atom_counter/2 ).
-
-	   counters( Name, Number ) :-
-	   atom_counter( Name, LastNumber ),
-	   retract( atom_counter( Name, LastNumber ) ),
-	   Number is LastNumber + 1,
-	   assertz( atom_counter( Name, Number ) ),
-	   !.
-
-	   counters( Name, 0 ) :-
-	   assertz( atom_counter( Name, 0 ) ),
-	   !.
-	*/
-
 	private static CodeDBIndex instance = null;
 	
 	public static CodeDBIndex getInstance() {
@@ -82,6 +78,62 @@ public class CodeDBIndex {
 		return instance;
 	}
 	
+	private Connection conn = null;
+	
+	public CodeDBIndex() {
+				
+	}
+	
+	public void openConnection() {
+		try {
+			Class.forName("org.h2.Driver");
+		} catch (ClassNotFoundException e) {
+			CupidActivator.log("H2 database driver class used by code indexer not found.", e);
+			throw new RuntimeException(e);
+		}
+		
+		try {
+			//TODO: connection string
+			conn = DriverManager.getConnection("jdbc:h2:~/h2/prolog2;SCHEMA=PROLOG");
+		} catch (SQLException e3) {
+			//TODO: deal with this
+			throw new RuntimeException(e3);
+		}
+	}
+	
+	public void resetDatabase() {
+		
+		String sql = null;
+		try {
+			InputStream inputStream = FileLocator.openStream(
+				    CupidActivator.getDefault().getBundle(), new Path("sql/code_db.sql"), false);
+			sql = IOUtils.toString(inputStream);
+		} catch (IOException e) {
+			CupidActivator.log("Error accessing code db SQL file", e);
+			return;
+		}
+		
+		try {
+			Statement stmt = conn.createStatement();
+			stmt.execute(sql);
+		}
+		catch (SQLException e) {
+			CupidActivator.log("Error in SQL file to recreate code database.", e);
+		}
+		
+	}
+	
+	public void closeConnection() {
+		try {
+			if (!conn.isClosed()) {
+				conn.close();
+			}
+		} catch (SQLException e) {
+			CupidActivator.log("Exception closing code index db.", e);
+		}
+	}
+	
+	
 	ArrayList<Struct> clauseList = new ArrayList<Struct>(1024);
 	Map<Struct, Object> toRegister = new HashMap<Struct, Object>();
 	
@@ -90,7 +142,7 @@ public class CodeDBIndex {
 	public void indexASTs(Set<IFortranAST> asts) {			
 		clauseList.clear();
 		for (IFortranAST ast : asts) {
-			ast.accept(new CodeDBIndexVisitor(ast));
+			ast.accept(new CodeDBVisitor(conn));
 			
 			//control flow analysis
 			//ControlFlowAnalysis cfa = ControlFlowAnalysis.analyze(ast.getFile().getName(), ast.getRoot());
@@ -99,6 +151,12 @@ public class CodeDBIndex {
 		}
 	}
 	
+	public void indexAST(IFortranAST ast) {
+		assert ast != null;
+		ast.accept(new CodeDBVisitor(conn));
+	}
+	
+	/*
 	private Struct toRegister(Term prefixId, String id, Object obj) {
 		String prefix = ((Struct) prefixId).getName();
 		return toRegister(prefix + "__" + id, obj);
@@ -109,6 +167,7 @@ public class CodeDBIndex {
 		toRegister.put(s, obj);
 		return s;
 	}
+	*/
 	
 	public Prolog getProlog() {
 		Prolog prolog = new Prolog();
@@ -139,18 +198,6 @@ public class CodeDBIndex {
 					}
 					catch (InvalidTheoryException e) {
 						e.printStackTrace();
-						//System.out.println("clause (-1): " + clauseList.get(e.line - 1));
-						//System.out.println("clause: " + clauseList.get(e.line));
-						//System.out.println("clause (+1): " + clauseList.get(e.line + 1));
-						
-						//System.out.println("Theory=========================");
-						//Iterator<? extends Term> iter = theory.iterator(prolog);
-						//int c = 0;
-						//while(iter.hasNext()) {
-						//	System.out.println(iter.next() + ".");
-						//	c++;
-						//}
-						//System.out.println("End Theory=====================: " + e.clause);
 					}
 					theory = new Theory(new Struct(new Struct("startme", Term.TRUE), new Struct()));
 				}
@@ -162,7 +209,6 @@ public class CodeDBIndex {
 			e.printStackTrace();
 		}
 		
-		//prolog.getTheoryManager().
 		return prolog;
 		
 	}
@@ -178,9 +224,14 @@ public class CodeDBIndex {
 		System.out.println("Number of clauses: " + clauseList.size());
 	}
 	
+	public void clear() {
+		clauseList.clear();
+	}
+	
 	public int size() {
 		return clauseList.size();
 	}
+	
 	
 	class CodeDBIndexVisitor extends ASTVisitor {
 		
@@ -195,6 +246,7 @@ public class CodeDBIndex {
 			
 			//add compilation unit fact
 			compilationUnitID = addFact("compilationUnit", createStringTerm(ast.getFile().getFullPath().toString()));
+			parentStack.push(compilationUnitID);
 		}
 			
 		//Stack<Entry<IASTNode, Term>> contextStack;
@@ -209,7 +261,11 @@ public class CodeDBIndex {
 		
 		protected int addFact(String predicate, int id, Term...termArgs) {
 			Term[] terms = new Term[termArgs.length + 1];
-			terms[0] = Term.createTerm(String.valueOf(id));
+			try {
+				terms[0] = Term.createTerm(String.valueOf(id));
+			} catch (InvalidTermException e) {
+				throw new RuntimeException(e);
+			}
 			System.arraycopy(termArgs, 0, terms, 1, termArgs.length);
 			
 			Struct fact = new Struct(predicate, terms);
@@ -239,7 +295,12 @@ public class CodeDBIndex {
 			else {
 				Term[] terms = new Term[in.size()];
 				for (int idx = 0; idx < in.size(); idx++) {
-					terms[idx] = Term.createTerm(in.get(idx).toString());
+					try {
+						terms[idx] = Term.createTerm(in.get(idx).toString());
+					} catch (InvalidTermException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
 				}
 				return new Struct(terms);
 			}
@@ -299,7 +360,15 @@ public class CodeDBIndex {
 		 * mainProgram(#id, #compilationUnitID, name, [#subprogram_1, ...])
 		 */
 		public void visitASTMainProgramNode(ASTMainProgramNode node) {
-			Term termName = createStringTerm(node.getProgramStmt().getProgramName().getProgramName().getText());
+			
+			Term termName;
+			
+			if (node.getProgramStmt() != null) {
+				termName= createStringTerm(node.getProgramStmt().getProgramName().getProgramName().getText());
+			}
+			else {
+				termName = createStringTerm("Anonymous");
+			}
 			
 			listSubprogramIDs = new ArrayList<Integer>();
 			listExec = new ArrayList<Integer>();
@@ -332,17 +401,20 @@ public class CodeDBIndex {
 		 */
 		@Override
 		public void visitASTOnlyNode(ASTOnlyNode node) {
-			Term termName = createStringTerm(node.getName().getText());
-			Term termNewName;
-			if (node.getNewName() != null) {
-				termNewName = createStringTerm(node.getNewName().getText());
+			//TODO: deal with generic spec
+			if (node.getGenericSpec() == null) {
+				Term termName = createStringTerm(node.getName().getText());
+				Term termNewName;
+				if (node.getNewName() != null) {
+					termNewName = createStringTerm(node.getNewName().getText());
+				}
+				else {
+					termNewName = createStringTerm(node.getName().getText());
+				}
+				//last term is true if it's an "only" use
+				int id = addFact("usesEntity", parentID(), termName, termNewName, Term.TRUE);
+				listEntity.add(id);
 			}
-			else {
-				termNewName = createStringTerm(node.getName().getText());
-			}
-			//last term is true if it's an "only" use
-			int id = addFact("usesEntity", parentID(), termName, termNewName, Term.TRUE);
-			listEntity.add(id);
 		}
 		
 		
@@ -364,7 +436,7 @@ public class CodeDBIndex {
 		List<Integer> listSubprogramIDs = new ArrayList<Integer>();
 		
 		/**
-		 * subroutine(#id, #parent, name, [#decl_1, ...], [#stmt_1, ...])
+		 * subroutine(#id, #parent, name, [#stmt_1, ...])
 		 */
 		@Override
 		public void visitASTSubroutineSubprogramNode(ASTSubroutineSubprogramNode node) {
@@ -375,15 +447,33 @@ public class CodeDBIndex {
 			
 			currentParamIndex = 0;
 			listExec = new ArrayList<Integer>();
-			listDecl = new ArrayList<Integer>();
+			//listDecl = new ArrayList<Integer>();
 			traverseChildren(node, id);
 			
 			addFact("subroutine", id, parentID(), termName, toList(listExec));
 			listSubprogramIDs.add(id);
 		}
 		
+		/**
+		 * function(#id, #parent,  name, [#stmt_1, ...])
+		 */
+		public void visitASTFunctionSubprogramNode(ASTFunctionSubprogramNode node) {
+			
+			Term termName = createStringTerm(node.getFunctionStmt().getFunctionName().getFunctionName());
+			int id = reserveID();
+			
+			
+			//TODO: handle params
+			listExec = new ArrayList<Integer>();
+			traverseChildren(node, id);
+			
+			addFact("function", id, parentID(), termName, toList(listExec));
+			listSubprogramIDs.add(id);
+			
+		};
+		
 		List<Integer> listExec;
-		List<Integer> listDecl;
+		//List<Integer> listDecl;
 		List<Term> listEntityDecl;
 		
 		/**
@@ -594,8 +684,15 @@ public class CodeDBIndex {
 		
 	}
 	
+	
 	private static Term createIntTerm(int i) {
-		return Term.createTerm(String.valueOf(i));
+		try {
+			return Term.createTerm(String.valueOf(i));
+		} catch (InvalidTermException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			return null;
+		}
 	}
 	
 	private static Term createStringTerm(Token t) {
@@ -615,7 +712,7 @@ public class CodeDBIndex {
 			}
 		}
 		catch (InvalidTermException e) {
-			return Term.createTerm("INVALID_TERM_EXCEPTION");
+			return null;
 		}
 	}
 	

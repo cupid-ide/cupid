@@ -1,10 +1,15 @@
 package org.earthsystemmodeling.cupid.views;
 
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
 import org.earthsystemmodeling.cupid.codedb.CodeDBIndex;
+import org.eclipse.core.resources.IFile;
+import org.eclipse.core.resources.IResource;
+import org.eclipse.core.resources.ResourcesPlugin;
+import org.eclipse.core.runtime.CoreException;
 import org.eclipse.jface.action.Action;
 import org.eclipse.jface.action.IMenuListener;
 import org.eclipse.jface.action.IMenuManager;
@@ -23,6 +28,7 @@ import org.eclipse.jface.viewers.TableViewer;
 import org.eclipse.jface.viewers.TableViewerColumn;
 import org.eclipse.jface.viewers.Viewer;
 import org.eclipse.jface.viewers.ViewerSorter;
+import org.eclipse.jface.window.Window;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
@@ -34,6 +40,7 @@ import org.eclipse.swt.widgets.Combo;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Menu;
+import org.eclipse.swt.widgets.Shell;
 import org.eclipse.swt.widgets.Table;
 import org.eclipse.swt.widgets.TableColumn;
 import org.eclipse.swt.widgets.Text;
@@ -41,13 +48,16 @@ import org.eclipse.ui.IActionBars;
 import org.eclipse.ui.ISharedImages;
 import org.eclipse.ui.IWorkbenchActionConstants;
 import org.eclipse.ui.PlatformUI;
+import org.eclipse.ui.dialogs.ResourceSelectionDialog;
 import org.eclipse.ui.part.ViewPart;
 
+import alice.tuprolog.InvalidTheoryException;
 import alice.tuprolog.MalformedGoalException;
 import alice.tuprolog.NoMoreSolutionException;
 import alice.tuprolog.NoSolutionException;
 import alice.tuprolog.Prolog;
 import alice.tuprolog.SolveInfo;
+import alice.tuprolog.Theory;
 import alice.tuprolog.Var;
 
 
@@ -65,18 +75,20 @@ public class CodeQueryView extends ViewPart {
 	private Text textQuery;
 	private Combo comboQuery;
 	private ViewContentProvider viewContentProvider;
+	private Shell shell;
 	//private List<String> queryCache = new ArrayList<String>();
+	private Prolog prolog = null;
 	
 	class ViewContentProvider implements IStructuredContentProvider {
 		
 		String query;
-		Prolog prolog = null;
+		//Prolog prolog = null;
 		List<List<String>> resultList = new ArrayList<List<String>>();
 		List<String> queryCache = new ArrayList<String>();
 		
-		public void setProlog(Prolog prolog) {
-			this.prolog = prolog;
-		}
+		//public void setProlog(Prolog prolog) {
+		//	this.prolog = prolog;
+		//}
 		
 		public void inputChanged(Viewer v, Object oldInput, Object newInput) {
 			this.query = (String) newInput;
@@ -106,7 +118,8 @@ public class CodeQueryView extends ViewPart {
 				
 				//reset column names
 				int i = 0;
-				for (Var var : sol.getBindingVars()) {
+				for (Object objVar : sol.getBindingVars()) {
+					Var var = (Var) objVar;
 					if (i > viewer.getTable().getColumnCount()-1) {
 						createTableViewerColumn(var.getName());
 					}
@@ -122,7 +135,8 @@ public class CodeQueryView extends ViewPart {
 					try {
 						
 						List<String> result = new ArrayList<String>();
-						for (Var var : sol.getBindingVars()) {
+						for (Object objVar : sol.getBindingVars()) {
+							Var var = (Var) objVar;
 							result.add(sol.getVarValue(var.getName()).toString());
 						}
 						resultList.add(result);
@@ -133,9 +147,7 @@ public class CodeQueryView extends ViewPart {
 					}
 					
 				}
-				
-				
-				
+					
 			} catch (MalformedGoalException e1) {
 				showMessage("Invalid query");
 			} catch (NoSolutionException e1) {
@@ -158,6 +170,9 @@ public class CodeQueryView extends ViewPart {
 		
 		public String getColumnText(Object obj, int index) {
 			if (obj instanceof List) {
+				if (index > ((List)obj).size()-1) {
+					return null;
+				}
 				return ((List) obj).get(index).toString();
 			}
 			else {
@@ -187,8 +202,8 @@ public class CodeQueryView extends ViewPart {
 	 * to create the viewer and initialize it.
 	 */
 	public void createPartControl(Composite parent) {
-		
-		//this.parent = parent;
+	
+		this.shell = parent.getShell();
 		
 		GridLayout layout = new GridLayout(2, false);
 		parent.setLayout(layout);
@@ -203,7 +218,6 @@ public class CodeQueryView extends ViewPart {
 		comboQuery = new Combo (parent, SWT.READ_ONLY);
 	    data = new GridData(SWT.FILL, SWT.TOP, true, false, 1, 1);
 	    comboQuery.setLayoutData(data);
-	    //comboQuery.setItems (new String [] {"Alpha", "Bravo", "Charlie"});
 	    comboQuery.addSelectionListener(new SelectionAdapter() {
 	    	@Override
 	    	public void widgetSelected(SelectionEvent e) {
@@ -217,7 +231,6 @@ public class CodeQueryView extends ViewPart {
 	    labelQuery.setLayoutData(data);
 		
 	    textQuery = new Text(parent, SWT.BORDER | SWT.MULTI);
-	    //textQuery.setSize(100, 400);
 	    data = new GridData(SWT.FILL, SWT.FILL, true, true, 2, 1);
 	    textQuery.setLayoutData(data);
 	    
@@ -241,7 +254,6 @@ public class CodeQueryView extends ViewPart {
 	    buttonExec.addSelectionListener(new SelectionAdapter() {
 			@Override
 			public void widgetSelected(SelectionEvent e) {
-				//executeQuery(textQuery.getText());
 				if (textQuery.getText().length() > 0) {
 					viewer.setInput(textQuery.getText());
 				}
@@ -252,19 +264,14 @@ public class CodeQueryView extends ViewPart {
 		viewer = new TableViewer(parent, SWT.MULTI | SWT.H_SCROLL | SWT.V_SCROLL | SWT.FULL_SELECTION);
 		data = new GridData(SWT.FILL, SWT.FILL, true, true, 2, 1);
 		viewer.getControl().setLayoutData(data);
-		
-		//createTableViewerColumn("A");
-		//createTableViewerColumn("B");
-		
-		final Table table = viewer.getTable();
+				
+		Table table = viewer.getTable();
 	    table.setHeaderVisible(true);
 	    table.setLinesVisible(true);
 	   		
 	    viewContentProvider = new ViewContentProvider();   
 		viewer.setContentProvider(viewContentProvider);
-		viewer.setLabelProvider(new ViewLabelProvider());
-		
-		
+		viewer.setLabelProvider(new ViewLabelProvider());		
 	    
 		makeActions();
 		//hookContextMenu();
@@ -324,7 +331,8 @@ public class CodeQueryView extends ViewPart {
 		action1 = new Action() {
 			public void run() {
 				//TODO: for now
-				viewContentProvider.setProlog(CodeDBIndex.getInstance().getProlog());
+				//viewContentProvider.setProlog(CodeDBIndex.getInstance().getProlog());
+				prolog = CodeDBIndex.getInstance().getProlog();
 			}
 		};
 		action1.setText("Reload DB");
@@ -334,7 +342,44 @@ public class CodeQueryView extends ViewPart {
 		
 		action2 = new Action() {
 			public void run() {
-				showMessage("Action 2 executed");
+				//showMessage("Action 2 executed");
+				ResourceSelectionDialog dialog =
+						new ResourceSelectionDialog(shell, ResourcesPlugin.getWorkspace().getRoot(), "Load theory");
+				
+				if (dialog.open() == Window.OK) {
+					Object[] obj = dialog.getResult();
+					if (obj != null) {
+						for (int i = 0; i < obj.length; i++) {
+							
+							if (obj[i] instanceof IFile) {
+								IFile file = (IFile) obj[i];
+								
+								try {
+									
+									Theory theory = new Theory(file.getContents());
+									System.out.println(theory.toString());
+									if (prolog != null) {
+										theory.append(prolog.getTheory());
+										prolog.setTheory(theory);
+										showMessage("Theory added: " + file.getFullPath());
+									}
+									else {
+										showMessage("Database not loaded.");
+										break;
+									}
+									
+								
+								} catch (IOException | CoreException e) {
+									showMessage("Error opening file: " + e.getMessage());
+								} catch (InvalidTheoryException e) {
+									showMessage("Invalid theory");
+								}
+								
+							}
+							
+						}
+					}
+				}
 			}
 		};
 		action2.setText("Action 2");

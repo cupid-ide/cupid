@@ -1,31 +1,15 @@
-grammar org.earthsystemmodeling.Psyche with org.eclipse.xtext.common.Terminals
+grammar org.earthsystemmodeling.Psyche with org.eclipse.xtext.common.Terminals //org.earthsystemmodeling.prolog.Prolog
 
 generate psyche "http://www.earthsystemmodeling.org/Psyche"
+
+//import "http://www.earthsystemmodeling.org/prolog/Prolog" as pl
 
 Language:
 	'language' name=ID uri=STRING '{' conceptDef+=TopConceptDef conceptDef+=NamedConceptDef* '}';
 
-//Subconcept:
-//	AnonymousConcept | ConceptRef | Attribute;
-	
-//Subconcept:
-//	attrib?='attrib'? name=ID cardinality=Cardinality? essential?='!'?
-//	(
-//		ref?=':' conceptDef=[ConceptDef] |
-//		('<' mapping=Mapping '>')? ('[' annotation+=Annotation (',' annotation+=Annotation)* ']')? body=ConceptDefBody?	
-//	);
-
 Annotation:
 	key=ANNOTATION_ID ('=' value=STRING)?;
 
-//ConceptDef:
-//	(top?='/top'? named?='concept' name=ID)? ('<' mapping=Mapping '>')? 
-//		('[' annotation+=Annotation (',' annotation+=Annotation)* ']')?
-//		('{' localName=ID '}')?;
-
-//ConceptDef:
-//	AnonymousConceptDef | NamedConceptDef;
-	
 AnonymousConceptDef returns ConceptDef: {ConceptDef}
 	('<' mapping=Mapping '>')? 
 	('{' annotation+=Annotation* child+=SubconceptOrAttribute* '}')?;
@@ -50,25 +34,9 @@ Attribute returns SubconceptOrAttribute:
 	('<' attribMapping=Mapping '>')? 
 	('{' annotation+=Annotation* '}')?;
 
-//AnnotationID: '@' ID;
 
 terminal ANNOTATION_ID : '@' ID;
 
-//AnonymousConcept:
-//	localName=ID cardinality=Cardinality? required?='!'? ('<' mapping=Mapping '>')? 
-//	('[' annotation+=Annotation (',' annotation+=Annotation)* ']')?
-//	body=ConceptDefBody?;
-
-//Attribute:
-//	'attrib' name=ID cardinality=Cardinality? required?='!'? ('<' mapping=Mapping '>')?
-//	('[' annotation+=Annotation (',' annotation+=Annotation)* ']')?;
-
-//ConceptDefBody:
-//	'{' (subconcept+=Subconcept) (',' subconcept+=Subconcept)* '}';
-
-//ConceptRef:
-//	localName=ID cardinality=Cardinality? required?='!'? ':' name=[ConceptDef];
-	
 Cardinality:
 	zeroOrOne?='?' |
 	zeroOrMore?='*' |
@@ -133,11 +101,6 @@ DeclaredEntity:
 FunctionAssignment:
 	'functionAssignment' '(' lhs=Expr ',' functionName=Expr ( '(' (params+=ActualParam (',' params+=ActualParam)* )? ')')? ')';
 	
-//RightHandSideFunctionRef:
-//	'rhsFunctionRef';
-
-
-
 LocalExpression:
 	id=ID | literal=Literal | arrayConstructor=ArrayConstructor;
 	
@@ -158,18 +121,11 @@ Expr:
 Literal:
 	INT+ | STRING;
 
-//PathExpr:
-//	'#' segments+=PathSegment ('/' segments+=PathSegment)*;
-	
+
 PathExpr:
 	'#' PathExprNode;
 
-//PathExprNode returns PathExpr:
-//	PathExprTerm ({PathExpr.head=current} '/' tail=PathExprNode)?;
 
-//PathExprTerm returns PathExpr:
-//	{PathExprTerm} ref=[SubconceptOrAttribute] (guard?='['']')?;
-	
 PathExprNode returns PathExpr:
 	PathExprTerm ({PathExpr.head=current} '/' tail=[SubconceptOrAttribute])*;
 
@@ -181,16 +137,6 @@ Axis:
 	//parent?='..'
 	;
 
-//PathSegment:
-//	'..' | ID;
-	
-//PathExpr returns Ref:
- //   EntityRef ({PathExpr.ref=current}  "." tail=ID)*
-//;
- 
-//EntityRef returns Ref:
- //   {EntityRef} entity=[SubconceptOrAttribute]
-//; 
 	
 //override	
 terminal SL_COMMENT: '--' !('\n'|'\r')* ('\r'? '\n')?;

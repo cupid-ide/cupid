@@ -33,6 +33,7 @@ public class PsycheGrammarAccess extends AbstractGrammarElementFinder {
 		private final RuleCall cConceptDefNamedConceptDefParserRuleCall_5_0 = (RuleCall)cConceptDefAssignment_5.eContents().get(0);
 		private final Keyword cRightCurlyBracketKeyword_6 = (Keyword)cGroup.eContents().get(6);
 		
+		////import "http://www.earthsystemmodeling.org/prolog/Prolog" as pl
 		//Language:
 		//	"language" name=ID uri=STRING "{" conceptDef+=TopConceptDef conceptDef+=NamedConceptDef* "}";
 		public ParserRule getRule() { return rule; }
@@ -84,14 +85,6 @@ public class PsycheGrammarAccess extends AbstractGrammarElementFinder {
 		private final Assignment cValueAssignment_1_1 = (Assignment)cGroup_1.eContents().get(1);
 		private final RuleCall cValueSTRINGTerminalRuleCall_1_1_0 = (RuleCall)cValueAssignment_1_1.eContents().get(0);
 		
-		////Subconcept:
-		////	AnonymousConcept | ConceptRef | Attribute;
-		////Subconcept:
-		////	attrib?='attrib'? name=ID cardinality=Cardinality? essential?='!'?
-		////	(
-		////		ref?=':' conceptDef=[ConceptDef] |
-		////		('<' mapping=Mapping '>')? ('[' annotation+=Annotation (',' annotation+=Annotation)* ']')? body=ConceptDefBody?	
-		////	);
 		//Annotation:
 		//	key=ANNOTATION_ID ("=" value=STRING)?;
 		public ParserRule getRule() { return rule; }
@@ -135,12 +128,6 @@ public class PsycheGrammarAccess extends AbstractGrammarElementFinder {
 		private final RuleCall cChildSubconceptOrAttributeParserRuleCall_2_2_0 = (RuleCall)cChildAssignment_2_2.eContents().get(0);
 		private final Keyword cRightCurlyBracketKeyword_2_3 = (Keyword)cGroup_2.eContents().get(3);
 		
-		////ConceptDef:
-		////	(top?='/top'? named?='concept' name=ID)? ('<' mapping=Mapping '>')? 
-		////		('[' annotation+=Annotation (',' annotation+=Annotation)* ']')?
-		////		('{' localName=ID '}')?;
-		////ConceptDef:
-		////	AnonymousConceptDef | NamedConceptDef;
 		//AnonymousConceptDef returns ConceptDef:
 		//	{ConceptDef} ("<" mapping=Mapping ">")? ("{" annotation+=Annotation* child+=SubconceptOrAttribute* "}")?;
 		public ParserRule getRule() { return rule; }
@@ -580,17 +567,6 @@ public class PsycheGrammarAccess extends AbstractGrammarElementFinder {
 		private final Assignment cOneOrMoreAssignment_2 = (Assignment)cAlternatives.eContents().get(2);
 		private final Keyword cOneOrMorePlusSignKeyword_2_0 = (Keyword)cOneOrMoreAssignment_2.eContents().get(0);
 		
-		////AnonymousConcept:
-		////	localName=ID cardinality=Cardinality? required?='!'? ('<' mapping=Mapping '>')? 
-		////	('[' annotation+=Annotation (',' annotation+=Annotation)* ']')?
-		////	body=ConceptDefBody?;
-		////Attribute:
-		////	'attrib' name=ID cardinality=Cardinality? required?='!'? ('<' mapping=Mapping '>')?
-		////	('[' annotation+=Annotation (',' annotation+=Annotation)* ']')?;
-		////ConceptDefBody:
-		////	'{' (subconcept+=Subconcept) (',' subconcept+=Subconcept)* '}';
-		////ConceptRef:
-		////	localName=ID cardinality=Cardinality? required?='!'? ':' name=[ConceptDef];
 		//Cardinality:
 		//	zeroOrOne?="?" | zeroOrMore?="*" | oneOrMore?="+";
 		public ParserRule getRule() { return rule; }
@@ -1445,8 +1421,6 @@ public class PsycheGrammarAccess extends AbstractGrammarElementFinder {
 		private final Assignment cArrayConstructorAssignment_2 = (Assignment)cAlternatives.eContents().get(2);
 		private final RuleCall cArrayConstructorArrayConstructorParserRuleCall_2_0 = (RuleCall)cArrayConstructorAssignment_2.eContents().get(0);
 		
-		////RightHandSideFunctionRef:
-		////	'rhsFunctionRef';
 		//LocalExpression:
 		//	id=ID | literal=Literal | arrayConstructor=ArrayConstructor;
 		public ParserRule getRule() { return rule; }
@@ -1594,8 +1568,6 @@ public class PsycheGrammarAccess extends AbstractGrammarElementFinder {
 		private final Keyword cNumberSignKeyword_0 = (Keyword)cGroup.eContents().get(0);
 		private final RuleCall cPathExprNodeParserRuleCall_1 = (RuleCall)cGroup.eContents().get(1);
 		
-		////PathExpr:
-		////	'#' segments+=PathSegment ('/' segments+=PathSegment)*;
 		//PathExpr:
 		//	"#" PathExprNode;
 		public ParserRule getRule() { return rule; }
@@ -1621,10 +1593,6 @@ public class PsycheGrammarAccess extends AbstractGrammarElementFinder {
 		private final CrossReference cTailSubconceptOrAttributeCrossReference_1_2_0 = (CrossReference)cTailAssignment_1_2.eContents().get(0);
 		private final RuleCall cTailSubconceptOrAttributeIDTerminalRuleCall_1_2_0_1 = (RuleCall)cTailSubconceptOrAttributeCrossReference_1_2_0.eContents().get(1);
 		
-		////PathExprNode returns PathExpr:
-		////	PathExprTerm ({PathExpr.head=current} '/' tail=PathExprNode)?;
-		////PathExprTerm returns PathExpr:
-		////	{PathExprTerm} ref=[SubconceptOrAttribute] (guard?='['']')?;
 		//PathExprNode returns PathExpr:
 		//	PathExprTerm ({PathExpr.head=current} "/" tail=[SubconceptOrAttribute])*;
 		public ParserRule getRule() { return rule; }
@@ -1784,6 +1752,7 @@ public class PsycheGrammarAccess extends AbstractGrammarElementFinder {
 	}
 
 	
+	////import "http://www.earthsystemmodeling.org/prolog/Prolog" as pl
 	//Language:
 	//	"language" name=ID uri=STRING "{" conceptDef+=TopConceptDef conceptDef+=NamedConceptDef* "}";
 	public LanguageElements getLanguageAccess() {
@@ -1794,14 +1763,6 @@ public class PsycheGrammarAccess extends AbstractGrammarElementFinder {
 		return getLanguageAccess().getRule();
 	}
 
-	////Subconcept:
-	////	AnonymousConcept | ConceptRef | Attribute;
-	////Subconcept:
-	////	attrib?='attrib'? name=ID cardinality=Cardinality? essential?='!'?
-	////	(
-	////		ref?=':' conceptDef=[ConceptDef] |
-	////		('<' mapping=Mapping '>')? ('[' annotation+=Annotation (',' annotation+=Annotation)* ']')? body=ConceptDefBody?	
-	////	);
 	//Annotation:
 	//	key=ANNOTATION_ID ("=" value=STRING)?;
 	public AnnotationElements getAnnotationAccess() {
@@ -1812,12 +1773,6 @@ public class PsycheGrammarAccess extends AbstractGrammarElementFinder {
 		return getAnnotationAccess().getRule();
 	}
 
-	////ConceptDef:
-	////	(top?='/top'? named?='concept' name=ID)? ('<' mapping=Mapping '>')? 
-	////		('[' annotation+=Annotation (',' annotation+=Annotation)* ']')?
-	////		('{' localName=ID '}')?;
-	////ConceptDef:
-	////	AnonymousConceptDef | NamedConceptDef;
 	//AnonymousConceptDef returns ConceptDef:
 	//	{ConceptDef} ("<" mapping=Mapping ">")? ("{" annotation+=Annotation* child+=SubconceptOrAttribute* "}")?;
 	public AnonymousConceptDefElements getAnonymousConceptDefAccess() {
@@ -1881,24 +1836,12 @@ public class PsycheGrammarAccess extends AbstractGrammarElementFinder {
 		return getAttributeAccess().getRule();
 	}
 
-	////AnnotationID: '@' ID;
 	//terminal ANNOTATION_ID:
 	//	"@" ID;
 	public TerminalRule getANNOTATION_IDRule() {
 		return (tANNOTATION_ID != null) ? tANNOTATION_ID : (tANNOTATION_ID = (TerminalRule) GrammarUtil.findRuleForName(getGrammar(), "ANNOTATION_ID"));
 	} 
 
-	////AnonymousConcept:
-	////	localName=ID cardinality=Cardinality? required?='!'? ('<' mapping=Mapping '>')? 
-	////	('[' annotation+=Annotation (',' annotation+=Annotation)* ']')?
-	////	body=ConceptDefBody?;
-	////Attribute:
-	////	'attrib' name=ID cardinality=Cardinality? required?='!'? ('<' mapping=Mapping '>')?
-	////	('[' annotation+=Annotation (',' annotation+=Annotation)* ']')?;
-	////ConceptDefBody:
-	////	'{' (subconcept+=Subconcept) (',' subconcept+=Subconcept)* '}';
-	////ConceptRef:
-	////	localName=ID cardinality=Cardinality? required?='!'? ':' name=[ConceptDef];
 	//Cardinality:
 	//	zeroOrOne?="?" | zeroOrMore?="*" | oneOrMore?="+";
 	public CardinalityElements getCardinalityAccess() {
@@ -2083,8 +2026,6 @@ public class PsycheGrammarAccess extends AbstractGrammarElementFinder {
 		return getFunctionAssignmentAccess().getRule();
 	}
 
-	////RightHandSideFunctionRef:
-	////	'rhsFunctionRef';
 	//LocalExpression:
 	//	id=ID | literal=Literal | arrayConstructor=ArrayConstructor;
 	public LocalExpressionElements getLocalExpressionAccess() {
@@ -2132,8 +2073,6 @@ public class PsycheGrammarAccess extends AbstractGrammarElementFinder {
 		return getLiteralAccess().getRule();
 	}
 
-	////PathExpr:
-	////	'#' segments+=PathSegment ('/' segments+=PathSegment)*;
 	//PathExpr:
 	//	"#" PathExprNode;
 	public PathExprElements getPathExprAccess() {
@@ -2144,10 +2083,6 @@ public class PsycheGrammarAccess extends AbstractGrammarElementFinder {
 		return getPathExprAccess().getRule();
 	}
 
-	////PathExprNode returns PathExpr:
-	////	PathExprTerm ({PathExpr.head=current} '/' tail=PathExprNode)?;
-	////PathExprTerm returns PathExpr:
-	////	{PathExprTerm} ref=[SubconceptOrAttribute] (guard?='['']')?;
 	//PathExprNode returns PathExpr:
 	//	PathExprTerm ({PathExpr.head=current} "/" tail=[SubconceptOrAttribute])*;
 	public PathExprNodeElements getPathExprNodeAccess() {
@@ -2179,14 +2114,6 @@ public class PsycheGrammarAccess extends AbstractGrammarElementFinder {
 		return getAxisAccess().getRule();
 	}
 
-	////PathSegment:
-	////	'..' | ID;
-	////PathExpr returns Ref:
-	////   EntityRef ({PathExpr.ref=current}  "." tail=ID)*
-	////;
-	////EntityRef returns Ref:
-	////   {EntityRef} entity=[SubconceptOrAttribute]
-	////; 
 	////override	
 	//terminal SL_COMMENT:
 	//	"--" !("\n" | "\r")* ("\r"? "\n")?;
