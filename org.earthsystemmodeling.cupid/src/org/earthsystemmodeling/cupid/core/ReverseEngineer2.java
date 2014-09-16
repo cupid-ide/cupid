@@ -121,8 +121,8 @@ public class ReverseEngineer2 {
 	
 		//testing indexing code
 		
-		CodeDBIndex codeIndex = CodeDBIndex.getInstance();
-		codeIndex.indexASTs(asts);
+		//CodeDBIndex codeIndex = CodeDBIndex.getInstance();
+		//codeIndex.indexASTs(asts);
 		//codeIndex.printClauseList();
 		
 		/*
