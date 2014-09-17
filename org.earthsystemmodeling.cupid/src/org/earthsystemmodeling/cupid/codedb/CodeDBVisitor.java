@@ -10,10 +10,16 @@ import java.util.Map;
 import java.util.Stack;
 
 import org.earthsystemmodeling.cupid.core.CupidActivator;
+import org.eclipse.photran.internal.core.parser.ASTArrayConstructorNode;
 import org.eclipse.photran.internal.core.parser.ASTCallStmtNode;
+import org.eclipse.photran.internal.core.parser.ASTDblConstNode;
+import org.eclipse.photran.internal.core.parser.ASTIntConstNode;
 import org.eclipse.photran.internal.core.parser.ASTModuleNode;
+import org.eclipse.photran.internal.core.parser.ASTRealConstNode;
+import org.eclipse.photran.internal.core.parser.ASTStringConstNode;
 import org.eclipse.photran.internal.core.parser.ASTSubroutineArgNode;
 import org.eclipse.photran.internal.core.parser.ASTSubroutineSubprogramNode;
+import org.eclipse.photran.internal.core.parser.ASTVarOrFnRefNode;
 import org.eclipse.photran.internal.core.parser.ASTVisitor;
 import org.eclipse.photran.internal.core.parser.IASTNode;
 
@@ -27,6 +33,7 @@ public class CodeDBVisitor extends ASTVisitor {
 	protected Stack<Long> parentStack;
 	
 	private int currentArgIndex = 0;
+	private long childExprId = -1;
 	
 	public CodeDBVisitor(Connection conn) {
 		this.conn = conn;
@@ -161,19 +168,54 @@ public class CodeDBVisitor extends ASTVisitor {
 	}
 	
 	@Override
-	public void visitASTSubroutineArgNode(ASTSubroutineArgNode node) {
-		
+	public void visitASTSubroutineArgNode(ASTSubroutineArgNode node) {	
 		long id = reserveID();
-		//childExprId = -1;
-		//traverseChildren(node, id);
-		
-		//Term termIdx = createIntTerm(currentArgIndex);
-		//Term termExpr = createIntTerm(childExprId);
-		
+		childExprId = -1;
+		traverseChildren(node, id);
+	
 		currentArgIndex++;
-		id = addFactWithID("callArg", id, parentID(), currentArgIndex);
+		id = addFactWithID("callArg", id, parentID(), currentArgIndex, childExprId);
 				
 	}
+	
+	
+	@Override
+	public void visitASTVarOrFnRefNode(ASTVarOrFnRefNode node) {	
+		//int defId = addDefinition(node.getName().getName());
+		childExprId = addFact("ident", parentID(), node.getName().getName().getText());
+	}
+	
+	/**
+	 * const(#id, #parent, 'string', value)
+	 * type is one of: 'string', 'double', 'integer', 'real', etc. 
+	 */
+	@Override
+	public void visitASTStringConstNode(ASTStringConstNode node) {
+		childExprId = addFact("const", parentID(), "string", node.getStringConst().getText());
+	}
+	
+	@Override
+	public void visitASTIntConstNode(ASTIntConstNode node) {
+		childExprId = addFact("const", parentID(), "integer", node.getIntConst().getText());
+	}
+	
+	@Override
+	public void visitASTRealConstNode(ASTRealConstNode node) {
+		childExprId = addFact("const", parentID(), "real", node.getRealConst().getText());
+	}
+	
+	@Override
+	public void visitASTDblConstNode(ASTDblConstNode node) {
+		childExprId = addFact("const", parentID(), "double", node.getDblConst().getText());
+	}
+	
+	@Override
+	public void visitASTArrayConstructorNode(ASTArrayConstructorNode node) {
+		String val = node.toString().replaceAll("\n", "\\\\n");
+		val = val.substring(0, Math.min(100, val.length()));  //TODO: fixme
+		childExprId = addFact("arrayConstructor", parentID(), val);
+	}
+	
 	
 	
 	

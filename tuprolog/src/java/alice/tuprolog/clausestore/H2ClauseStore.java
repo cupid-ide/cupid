@@ -3,7 +3,9 @@ package alice.tuprolog.clausestore;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.ResultSetMetaData;
 import java.sql.SQLException;
+import java.sql.Types;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -25,6 +27,7 @@ public class H2ClauseStore implements ClauseStore
 	private Prolog engine;
 	private ResultSet resultSet = null;
 	private int resultSetColCount = 0;
+	private ResultSetMetaData resultSetMetaData = null;
 	private Struct nextResult = null;
 	
 	
@@ -56,7 +59,8 @@ public class H2ClauseStore implements ClauseStore
 							ResultSet.TYPE_SCROLL_INSENSITIVE, 
 							ResultSet.CONCUR_READ_ONLY);
 			resultSet = stmt.executeQuery();
-			resultSetColCount = resultSet.getMetaData().getColumnCount();
+			resultSetMetaData = resultSet.getMetaData();
+			resultSetColCount = resultSetMetaData.getColumnCount();
 			fetchInternal();
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -96,8 +100,32 @@ public class H2ClauseStore implements ClauseStore
 			
 				Term[] terms = new Term[resultSetColCount];
 				for (int i = 1; i <= resultSetColCount; i++) {
-					terms[i-1] = Term.createTerm(resultSet.getString(i));
+										
+					int type = resultSetMetaData.getColumnType(i);
 					
+					if (type == Types.BIGINT) {
+						terms[i-1] = new alice.tuprolog.Long(resultSet.getLong(i));
+					}
+					else if (type == Types.INTEGER) {
+						terms[i-1] = new alice.tuprolog.Int(resultSet.getInt(i));
+					}
+					else {
+						terms[i-1] = new Struct(resultSet.getString(i));
+					}
+					
+					/*
+					if (termString.contains("'")) {
+							terms[i-1] = Term.createTerm("\"" + termString + "\""); 
+						}
+						else {
+							terms[i-1] = Term.createTerm("'" + termString + "'");
+						}
+					}
+					catch (InvalidTermException e) {
+						e.printStackTrace();
+					}
+					*/
+		
 					Term toUnify = goal.getTerm(i-1);
 					
 					List v1 = new ArrayList();
@@ -120,8 +148,6 @@ public class H2ClauseStore implements ClauseStore
 		
 			
 		} catch (SQLException e) {
-			e.printStackTrace();
-		} catch (InvalidTermException e) {
 			e.printStackTrace();
 		}
 		

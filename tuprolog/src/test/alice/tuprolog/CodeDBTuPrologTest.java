@@ -1,4 +1,4 @@
-package org.earthsystemmodeling.cupid.codedb;
+package alice.tuprolog;
 
 import java.io.IOException;
 import java.sql.Connection;
@@ -38,13 +38,14 @@ public class CodeDBTuPrologTest {
 			//prolog.addTheory(new Theory("nuopc_module(M) :- module(M), subroutine(M, S), call(S, NUOPC_CompDerive)."));
 			//prolog.addTheory(new Theory("module(a, b). module(c,d). module(a,f)."));
 			prolog.addTheory(new Theory("subroutine(mod0, s1). subroutine(mod1, s2)."));
-			prolog.addTheory(new Theory("nuopc_module(_mid, _name, _sid) :- module(_mid, _name), subroutine(_sid, _mid, 'skipHeader')."));
-			prolog.addTheory(new Theory("special(M, S, C) :- nuopc_module(M, S), call(M, S, C)."));
+			prolog.addTheory(new Theory("nuopc_module(_mid, _name, _ssid) :- subroutine(_sid, _mid, 'SetServices'), module(_mid, _name)."));
+			//prolog.addTheory(new Theory("special(_name, _callname, _argidx, _expr_id) :- nuopc_module(_mid, _name, _ssid), call(_cid, _ssid, _callname), callArg(_caid, _cid, _argidx, _expr_id)."));
+			prolog.addTheory(new Theory("special(_name, _callname) :- nuopc_module(_mid, _name, _ssid), call(_cid, _ssid, _callname)."));
 		} catch (InvalidTheoryException e2) {
 			e2.printStackTrace();
 		}
 		
-		String query = "subroutine(_id, _mid, 'parseHeader').";
+		String query = "call(108, _ssid, _callname), callArg(_caid, 108, _argidx, _expr_id).";
 		int numSolutions = 0;
 		
 		long startSolve = System.currentTimeMillis();
