@@ -75,13 +75,7 @@ import org.eclipse.remote.core.IRemoteProcessBuilder;
 import org.eclipse.remote.core.IRemoteServices;
 import org.eclipse.remote.core.RemoteServices;
 import org.eclipse.remote.core.exception.RemoteConnectionException;
-//import org.eclipse.ptp.remote.core.IRemoteConnection;
-//import org.eclipse.ptp.remote.core.IRemoteConnectionManager;
-//import org.eclipse.ptp.remote.core.IRemoteProcess;
-//import org.eclipse.ptp.remote.core.IRemoteProcessBuilder;
-//import org.eclipse.ptp.remote.core.IRemoteServices;
-//import org.eclipse.ptp.remote.core.RemoteServices;
-//import org.eclipse.ptp.remote.core.exception.RemoteConnectionException;
+import org.eclipse.remote.internal.jsch.core.JSchConnectionWorkingCopy;
 import org.eclipse.swt.graphics.Font;
 import org.eclipse.swt.graphics.FontData;
 import org.eclipse.swt.widgets.Composite;
@@ -129,6 +123,8 @@ import com.amazonaws.services.ec2.model.RunInstancesRequest;
 import com.amazonaws.services.ec2.model.RunInstancesResult;
 import com.amazonaws.services.ec2.model.SecurityGroup;
 import com.amazonaws.services.ec2.model.ShutdownBehavior;
+
+//import org.eclipse.remote.internal.jsch.core.JSchConnectionWorkingCopy;
 
 //import org.eclipse.ptp.internal.rdt.sync.git.ui.GitParticipant;
 
@@ -382,6 +378,10 @@ public class CupidProjectWizard extends Wizard implements INewWizard, IExecutabl
 						CupidActivator.log("User rejected SSH host key", rce);
 						throw new CoreException(new OperationStatus(IStatus.ERROR, MY_BUNDLE.getSymbolicName(), 0, "Cannot connect to computational environment due to rejected host key", null));
 					}
+					else if (rce.getMessage().contains("Auth fail")) {
+						CupidActivator.log("Authorization failure logging in to remote machine", rce);
+						throw new CoreException(new OperationStatus(IStatus.ERROR, MY_BUNDLE.getSymbolicName(), 0, "Cannot connect to computational environment due to failed authorization", null));
+					}
 					//rce.printStackTrace();
 					//System.out.println(rce.getCause());
 				} 
@@ -615,20 +615,14 @@ public class CupidProjectWizard extends Wizard implements INewWizard, IExecutabl
 
 		monitor.beginTask("Creating remote connection", 2);
 
-		IRemoteServices remoteServices = RemoteServices.getRemoteServices("org.eclipse.ptp.remote.RemoteTools", monitor);
+		//IRemoteServices remoteServices = RemoteServices.getRemoteServices("org.eclipse.ptp.remote.RemoteTools", monitor);
+		IRemoteServices remoteServices = RemoteServices.getRemoteServices("org.eclipse.remote.JSch", monitor);
+		
 		monitor.worked(1);
 
 		IRemoteConnectionManager connManager = remoteServices.getConnectionManager();
 		IRemoteConnection remoteConn = null;
-		IRemoteConnectionWorkingCopy remoteConnWorkingCopy = null;
-
-		//System.out.println("Can create connections? " + remoteServices.canCreateConnections());
-		//for (IRemoteConnection rc : connManager.getConnections()) {
-		//	System.out.println("\n==> Remote connection:  " + rc.getName() + " : " + rc.getAddress());
-		//	for (Entry<String, String> att : rc.getAttributes().entrySet()) {
-		//		System.out.println("\t" + att.getKey() + " --> " + att.getValue());
-		//	}
-		//}
+		JSchConnectionWorkingCopy remoteConnWorkingCopy = null;
 
 		if ((remoteServices.getCapabilities() & IRemoteServices.CAPABILITY_ADD_CONNECTIONS) 
 					== IRemoteServices.CAPABILITY_ADD_CONNECTIONS) {
@@ -643,13 +637,16 @@ public class CupidProjectWizard extends Wizard implements INewWizard, IExecutabl
 				throw new CoreException(new OperationStatus(IStatus.ERROR, MY_BUNDLE.getSymbolicName(), 0, "Cannot find SSH key file", e));
 			}
 			
-			remoteConnWorkingCopy = connManager.newConnection("Cupid Environment (" + name + " - " + host + ")");
+			remoteConnWorkingCopy = (JSchConnectionWorkingCopy) connManager.newConnection("Cupid Environment (" + name + " - " + host + ")");
 			remoteConnWorkingCopy.setAddress(host);
 			remoteConnWorkingCopy.setUsername("sgeadmin");
-			//remoteConn.setAttribute("org.eclipse.ptp.remotetools.environment.generichost.key-path", "C:\\Users\\Rocky\\Documents\\ssh\\nesiikey.rsa");
-			remoteConnWorkingCopy.setAttribute("org.eclipse.ptp.remotetools.environment.generichost.key-path", keyFile);
-			remoteConnWorkingCopy.setAttribute("org.eclipse.ptp.remotetools.environment.generichost.is-passwd-auth", "false");
 			remoteConnWorkingCopy.setAttribute("org.earthsystemmodeling.cupid.ready", "true");
+			remoteConnWorkingCopy.setKeyFile(keyFile);
+			remoteConnWorkingCopy.setIsPasswordAuth(false);
+			
+			//remoteConnWorkingCopy.setAttribute("org.eclipse.ptp.remotetools.environment.generichost.key-path", keyFile);
+			//remoteConnWorkingCopy.setAttribute("org.eclipse.ptp.remotetools.environment.generichost.is-passwd-auth", "false");	
+			
 			remoteConn = remoteConnWorkingCopy.save();
 		}
 		monitor.worked(1);

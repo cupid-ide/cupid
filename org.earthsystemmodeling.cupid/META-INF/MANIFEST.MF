@@ -63,7 +63,8 @@ Require-Bundle: org.eclipse.core.runtime,
  org.eclipse.xtext,
  org.earthsystemmodeling.psyche;bundle-version="1.0.0",
  org.eclipse.remote.core;bundle-version="1.0.0",
- com.google.guava
+ com.google.guava,
+ org.eclipse.remote.jsch.core;bundle-version="1.0.0"
 Bundle-ActivationPolicy: lazy
 Bundle-Activator: org.earthsystemmodeling.cupid.core.CupidActivator
 Export-Package: org.earthsystemmodeling.cupid.core
