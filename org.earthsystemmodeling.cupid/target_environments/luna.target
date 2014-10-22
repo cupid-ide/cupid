@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<?pde version="3.8"?><target name="luna" sequenceNumber="0">
+<locations>
+<location includeAllPlatforms="false" includeConfigurePhase="true" includeMode="planner" includeSource="true" type="InstallableUnit">
+<unit id="org.eclipse.platform.feature.group" version="4.4.0.v20140925-0400"/>
+<unit id="org.eclipse.ptp.rdt.sync.feature.group" version="8.1.0.201409161348"/>
+<unit id="org.eclipse.remote.feature.group" version="1.1.0.201409111520"/>
+<unit id="org.eclipse.photran.feature.group" version="9.0.0.201409161342"/>
+<unit id="org.eclipse.ptp.remote.feature.group" version="8.1.0.201409161348"/>
+<unit id="org.eclipse.xtext.sdk.feature.group" version="2.7.2.v201409160908"/>
+<unit id="org.eclipse.ptp.rdt.sync.fortran.feature.group" version="8.1.0.201409161348"/>
+<unit id="org.eclipse.emf.compare.feature.group" version="3.0.1.201408191310"/>
+<unit id="org.eclipse.emf.sdk.feature.group" version="2.10.1.v20140901-1055"/>
+<unit id="epp.package.modeling" version="4.4.1.20140925-1820"/>
+<unit id="org.eclipse.ptp.fortran.feature.group" version="8.1.0.201409161348"/>
+<unit id="org.eclipse.ocl.examples.feature.group" version="3.4.2.v20140819-1612"/>
+<repository location="http://download.eclipse.org/releases/luna"/>
+</location>
+</locations>
+</target>

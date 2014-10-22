@@ -6,11 +6,8 @@ import static org.junit.Assert.assertNotNull;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.InputStream;
-import java.net.MalformedURLException;
-import java.net.URL;
-import java.util.HashSet;
-import java.util.Set;
 
+import org.earthsystemmodeling.PsycheInjectorProvider;
 import org.earthsystemmodeling.psyche.ConceptDef;
 import org.earthsystemmodeling.psyche.Language;
 import org.eclipse.emf.common.util.URI;
@@ -22,9 +19,6 @@ import org.eclipse.emf.ecore.resource.ResourceSet;
 import org.eclipse.emf.ecore.resource.impl.ResourceSetImpl;
 import org.eclipse.ocl.examples.pivot.model.OCLstdlib;
 import org.eclipse.ocl.examples.xtext.oclinecore.OCLinEcoreStandaloneSetup;
-import org.eclipse.photran.core.IFortranAST;
-import org.eclipse.photran.internal.core.vpg.PhotranVPG;
-import org.eclipse.xtext.generator.IFileSystemAccess;
 import org.eclipse.xtext.generator.IGenerator;
 import org.eclipse.xtext.generator.JavaIoFileSystemAccess;
 import org.eclipse.xtext.junit4.InjectWith;
@@ -38,8 +32,6 @@ import org.junit.runner.RunWith;
 
 import com.google.inject.Guice;
 import com.google.inject.Inject;
-
-import org.earthsystemmodeling.PsycheInjectorProvider;
 
 @InjectWith(PsycheInjectorProvider.class)
 @RunWith(XtextRunner.class)

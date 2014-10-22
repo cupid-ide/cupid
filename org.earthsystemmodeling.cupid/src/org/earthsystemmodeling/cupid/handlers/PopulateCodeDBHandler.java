@@ -19,7 +19,7 @@ import org.eclipse.jface.viewers.ISelection;
 import org.eclipse.jface.viewers.ITreeSelection;
 import org.eclipse.photran.core.IFortranAST;
 import org.eclipse.photran.internal.core.vpg.PhotranVPG;
-import org.eclipse.rephraserengine.core.vpg.eclipse.EclipseVPG;
+import org.eclipse.photran.internal.core.vpg.eclipse.EclipseVPG;
 import org.eclipse.ui.ISelectionService;
 import org.eclipse.ui.PlatformUI;
 
