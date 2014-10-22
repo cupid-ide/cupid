@@ -33,6 +33,7 @@ import org.junit.Test;
 import org.osgi.framework.Bundle;
 import org.osgi.framework.FrameworkUtil;
 
+@SuppressWarnings("restriction")
 public class CupidTest {
 
 	private static Bundle MY_BUNDLE = FrameworkUtil.getBundle(CupidTest.class);
