@@ -6,7 +6,7 @@ import java.net.URL;
 import org.earthsystemmodeling.FSM;
 import org.earthsystemmodeling.cupid.core.CupidActivator;
 import org.earthsystemmodeling.cupid.core.CupidStorage;
-import org.earthsystemmodeling.cupid.core.ReverseEngineer2;
+import org.earthsystemmodeling.cupid.core.ReverseEngineer;
 import org.earthsystemmodeling.cupid.preferences.CupidPreferencePage;
 import org.earthsystemmodeling.cupid.util.Regex;
 import org.earthsystemmodeling.cupid.views.NUOPCView;
@@ -56,50 +56,7 @@ public class ReverseHandler extends AbstractHandler {
 	public ReverseHandler() {
 	}
 
-	protected Language loadLanguageEcore() {
-		
-		CupidActivator.log("enter ReverseHandler.loadLanguageEcore");
-		
-		//platform:/resource/nuopcdef/src/nuopc.cupid
-		//platform:/plugin/org.earthsystemmodeling.cupid/cupidmodel/nuopc.cupid
-		
-		//default set in /org.earthsystemmodeling.cupid/src/org/earthsystemcurator/cupid/nuopc/fsml/preferences/PreferenceInitializer.java
-		
-		String langURIString = CupidActivator.getDefault().getPreferenceStore().getString(CupidPreferencePage.CUPID_LANGUAGE_URI);
-		CupidActivator.log("ReverseHandler.loadLanguageEcore: language URI = " + langURIString);
-		URI langURI = URI.createURI(langURIString);
-		
-		
-		ResourceSet rs = new ResourceSetImpl();
-		Resource langResource = null;
-		try {
-			langResource = rs.getResource(langURI, true);
-		}
-		catch (WrappedException we) {
-			CupidActivator.log(Status.ERROR, "Cupid language definition file not found: " + langURI, we);
-			throw new RuntimeException("Cupid language definition file not found: " + langURI);
-		}
-		Language lang = (Language) langResource.getContents().get(0);
-		
-		//add default NUOPC metamodel to registry if necessary
-		//always register in case it changes during the run
-		
-		//if (EPackage.Registry.INSTANCE.getEPackage("http://www.earthsystemcurator.org/nuopcgen") == null) {
-		CupidActivator.log("ReverseHandler.loadLanguageEcore: registering EPackage");
-		//URI ecoreURI = URI.createURI("platform:/plugin/org.earthsystemmodeling.cupid/cupidmodel/NUOPC.ecore");
-		URI ecoreURI = langURI.trimFileExtension().appendFileExtension("ecore");	
-		
-		Resource ecoreResource = rs.getResource(ecoreURI, true);
-		EPackage ecorePackage = (EPackage) ecoreResource.getContents().get(0);
-		EPackage.Registry.INSTANCE.put("http://www.earthsystemcurator.org/nuopcgen", ecorePackage);
-		CupidActivator.log("ReverseHandler.loadLanguageEcore: registering EPackage - complete");
-		//}
-		
-		CupidActivator.log("exit ReverseHandler.loadLanguageEcore");
-		
-		return lang;
-		
-	}
+	
 			
 	public Object execute(ExecutionEvent event) throws ExecutionException {
 
@@ -153,11 +110,11 @@ public class ReverseHandler extends AbstractHandler {
 		}
 		
 	        
-        PhotranVPG vpg = PhotranVPG.getInstance();
+        //PhotranVPG vpg = PhotranVPG.getInstance();
       
-        Language lang = loadLanguageEcore();
+       // Language lang = loadLanguageEcore();
               
-        final FSM<?> fsm = ReverseEngineer2.reverseEngineer(lang, selectedProject, vpg); 
+        final FSM<?> fsm = ReverseEngineer.reverseEngineer(selectedProject); 
         
         CupidStorage.INSTANCE.setFSM(selectedProject, fsm);
         
@@ -168,7 +125,7 @@ public class ReverseHandler extends AbstractHandler {
         if (viewRef != null) {
         	NUOPCView view = (NUOPCView) viewRef.getPart(true);
         	if (view != null) {
-        		view.updateView(selectedProject);
+        		//view.updateView(selectedProject);
         	}
         }
         
@@ -279,7 +236,7 @@ public class ReverseHandler extends AbstractHandler {
      	*/
      
         //TODO: do I need to do this?
-        vpg.releaseAllASTs();
+        PhotranVPG.getInstance().releaseAllASTs();
         
         CupidActivator.log("exit ReverseHandler.execute");
 

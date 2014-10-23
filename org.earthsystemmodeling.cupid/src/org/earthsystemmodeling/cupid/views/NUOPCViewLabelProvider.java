@@ -29,14 +29,22 @@ import org.osgi.framework.FrameworkUtil;
 
 class NUOPCViewLabelProvider extends StyledCellLabelProvider { //implements ITableLabelProvider {
 
-	private FSM<?> fsm;
+	//private FSM<?> fsm;
+	private NUOPCViewContentProvider contentProvider;
 	
-	public void setFSM(FSM<?> fsm) {
-		this.fsm = fsm;
+	public NUOPCViewLabelProvider(NUOPCViewContentProvider contentProvider) {
+		this.contentProvider = contentProvider;
 	}
+
+	
+	//public void setFSM(FSM<?> fsm) {
+	//	this.fsm = fsm;
+	//}
 	
 	@Override
 	public String getToolTipText(Object element) {
+		FSM<?> fsm = contentProvider.getCurrentFSM();
+		
 		NUOPCModelElem me = (NUOPCModelElem) element;
 		
 		String docText = null;

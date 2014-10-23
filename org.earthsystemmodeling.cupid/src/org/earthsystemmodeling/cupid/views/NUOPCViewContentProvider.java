@@ -4,12 +4,13 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.earthsystemmodeling.FSM;
-import org.earthsystemmodeling.cupid.core.CupidStorage;
+import org.earthsystemmodeling.cupid.core.CupidActivator;
+import org.earthsystemmodeling.cupid.core.ReverseEngineer;
 import org.earthsystemmodeling.cupid.util.Regex;
 import org.earthsystemmodeling.psyche.ConceptDef;
 import org.earthsystemmodeling.psyche.SubconceptOrAttribute;
-import org.eclipse.core.resources.IProject;
-import org.eclipse.core.runtime.CoreException;
+import org.eclipse.core.resources.IFile;
+import org.eclipse.core.resources.IResource;
 import org.eclipse.emf.common.util.Diagnostic;
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.ecore.EAttribute;
@@ -29,105 +30,38 @@ class NUOPCViewContentProvider implements IStructuredContentProvider, ITreeConte
 	
 	static {
 		//necessary for custom validation messages
-		//System.out.println("Registered OCLinEcoreEObjectValidator");
 		EValidator.Registry.INSTANCE.put(null, new OCLinEcoreEObjectValidator());
 		//EValidator.Registry.INSTANCE.put(NUOPCPackage.eINSTANCE, NUOPCValidator.INSTANCE);
 	}
 	
-	private IProject project;
-	//private NUOPCApplication app;
-	//private Map<Object, Object> reversedMappings;
+	
 	private FSM<?> fsm;
+	private IFile input; 
 	
 	public FSM<?> getCurrentFSM() {
 		return fsm;
 	}
 	
-	//public Map<Object, Object> getReverseMappings() {
-	//	return this.reversedMappings;
-	//}
-	
 	public void inputChanged(Viewer v, Object oldInput, Object newInput) {
-		//System.out.println("inputChanged: " + v + " " + newInput);
-		
-		project = null;
-		fsm = null;
-		//app = null;
-		
+		fsm = null;		
 		if (newInput != null) {
-			project = (IProject) newInput;	
-			fsm = CupidStorage.INSTANCE.getFSM(project);
+			input = (IFile) newInput;
+			//fsm = CupidStorage.INSTANCE.getFSM(project);
 		}
-		
 	}
-	
-	//this should probably be moved to FSM.clone() if we need it
-	/*
-	protected void duplicateReversedModel(NUOPCNature nature) {
 		
-		if (nature.fsm != null) {
-			Copier copier = new Copier();
-			NUOPCApplication newApp = (NUOPCApplication) copier.copy(nature.fsm.getRoot());
-			copier.copyReferences();
-			
-			Map<Object,Object> newMap = new IdentityHashMap<Object,Object>();
-			for (Entry<Object, Object> e : nature.fsm.getMappings().entrySet()) {
-				//System.out.println("Adding to newMap: " + copier.get(e.getKey()) + " ==> " + e.getValue());
-				if (copier.get(e.getKey()) != null) {
-					newMap.put(copier.get(e.getKey()), e.getValue());
-				}
-				else {
-					//this is an eattribute
-					newMap.put(e.getKey(), e.getValue());
-				}
-			}
-			
-			this.app = newApp;
-			this.reversedMappings = newMap;
-			//nature.forwardModel = newApp;
-		}
-		else {
-			this.app = null;
-			this.reversedMappings = null;
-			//nature.forwardModel = null;
-		}
-		
-	}
-	*/
-	
 	public void dispose() {
 	
 	}
-	
-	/*
-	public Object[] getElements(Object parent) {
-		
-		System.out.println("getElements: " + parent);
-		
-		if (app == null) {
-			System.out.println("No reverse engineered model");
-			return new Object[0];
-		}
-				
-		EReference er = NUOPCPackage.eINSTANCE.getTop_Apps();
-		String labelType = Regex.getFromAnnotation(er.getEType(), "label");		
-		return new Object[] {
-				new NUOPCModelElem(
-						new NUOPCModelElem(null, er, label, null), //parent
-						null, //eref
-						app.getName(),  
-						app )};  //eobject
-			
-	}
-	*/
 	
 	public Object[] getElements(Object parent) {
 		
 		//System.out.println("getElements: " + parent);
 		
+		//TODO: do this in another thread???
+		fsm = ReverseEngineer.reverseEngineer(input);
 		if (fsm == null) {
-			System.out.println("No reverse engineered model");
-			return new Object[0];
+			CupidActivator.log("No reverse engineered model to display");
 		}
 		
 		//Top top = NUOPCFactory.eINSTANCE.createTop();

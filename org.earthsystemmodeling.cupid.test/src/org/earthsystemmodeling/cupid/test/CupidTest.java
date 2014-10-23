@@ -9,7 +9,7 @@ import java.net.URL;
 
 import org.apache.commons.io.FileUtils;
 import org.earthsystemmodeling.FSM;
-import org.earthsystemmodeling.cupid.core.ReverseEngineer2;
+import org.earthsystemmodeling.cupid.core.ReverseEngineer;
 import org.earthsystemmodeling.psyche.Language;
 import org.eclipse.core.resources.IProject;
 import org.eclipse.core.resources.IResource;
@@ -112,7 +112,8 @@ public class CupidTest {
 		
 		vpg.clearDatabase();
 		
-		final FSM<?> fsm = ReverseEngineer2.reverseEngineer(l, p, vpg); 
+		//TODO: check line below
+		final FSM<?> fsm = ReverseEngineer.reverseEngineer(p); 
 		return fsm.getRoot();		
 	}
 	

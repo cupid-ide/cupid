@@ -1,6 +1,5 @@
 package org.earthsystemmodeling.cupid.views;
 
-import java.awt.Color;
 import java.lang.reflect.InvocationTargetException;
 
 import org.earthsystemmodeling.FSM;
@@ -10,8 +9,8 @@ import org.earthsystemmodeling.cupid.handlers.RewriteASTRunnable;
 import org.earthsystemmodeling.cupid.views.NUOPCViewContentProvider.NUOPCModelElem;
 import org.earthsystemmodeling.psyche.ConceptDef;
 import org.earthsystemmodeling.psyche.SubconceptOrAttribute;
-import org.eclipse.core.commands.ExecutionEvent;
 import org.eclipse.core.commands.ExecutionException;
+import org.eclipse.core.resources.IFile;
 import org.eclipse.core.resources.IMarker;
 import org.eclipse.core.resources.IProject;
 import org.eclipse.core.resources.IResourceChangeEvent;
@@ -24,12 +23,8 @@ import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.Status;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.jface.action.Action;
-import org.eclipse.jface.action.ContributionManager;
-import org.eclipse.jface.action.IAction;
-import org.eclipse.jface.action.IContributionItem;
 import org.eclipse.jface.action.IMenuListener;
 import org.eclipse.jface.action.IMenuManager;
-import org.eclipse.jface.action.IToolBarManager;
 import org.eclipse.jface.action.MenuManager;
 import org.eclipse.jface.action.ToolBarManager;
 import org.eclipse.jface.dialogs.MessageDialog;
@@ -56,26 +51,30 @@ import org.eclipse.photran.internal.core.reindenter.Reindenter.Strategy;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.SWTError;
 import org.eclipse.swt.browser.Browser;
-import org.eclipse.swt.graphics.Font;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Event;
-import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Menu;
 import org.eclipse.swt.widgets.Text;
 import org.eclipse.swt.widgets.TreeColumn;
 import org.eclipse.ui.IActionBars;
+import org.eclipse.ui.IEditorInput;
+import org.eclipse.ui.IEditorReference;
+import org.eclipse.ui.IPartListener2;
+import org.eclipse.ui.IPartService;
+import org.eclipse.ui.ISelectionListener;
 import org.eclipse.ui.IWorkbenchPage;
+import org.eclipse.ui.IWorkbenchPart;
+import org.eclipse.ui.IWorkbenchPartReference;
 import org.eclipse.ui.IWorkbenchWindow;
 import org.eclipse.ui.PartInitException;
 import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.ide.IDE;
-import org.eclipse.ui.menus.IMenuService;
 import org.eclipse.ui.part.DrillDownAdapter;
+import org.eclipse.ui.part.FileEditorInput;
 import org.eclipse.ui.part.ViewPart;
-import org.eclipse.ui.services.IServiceLocator;
 
 @SuppressWarnings("restriction")
 public class NUOPCView extends ViewPart {
@@ -87,8 +86,6 @@ public class NUOPCView extends ViewPart {
 
 	private TreeViewer viewer;
 	private DrillDownAdapter drillDownAdapter;
-	//private Action action1;
-	//private Action action2;
 	private Action doubleClickAction;
 	
 	private TreeColumn tc2;
@@ -96,8 +93,10 @@ public class NUOPCView extends ViewPart {
 	private NUOPCViewContentProvider contentProvider;
 	private NUOPCViewLabelProvider labelProvider;
 	
-	private boolean projectIsDirty = false;
+	//private boolean projectIsDirty = false;
 
+	private IPartListener2 partListener;
+	private IResourceChangeListener resourceChangeListener;
 	
 	/**
 	 * The constructor.
@@ -105,15 +104,18 @@ public class NUOPCView extends ViewPart {
 	public NUOPCView() {
 	
 	}
-
-
+	
+	
+	/*
 	public void updateView(IProject project) {
 		viewer.setInput(project);
 		viewer.expandToLevel(2);
-		setProjectIsDirty(false);
+		//setProjectIsDirty(false);
 		labelProvider.setFSM(contentProvider.getCurrentFSM());
 	}
+	*/
 	
+	/*
 	protected void setProjectIsDirty(boolean dirty) {
 		projectIsDirty = dirty;
 		if (projectIsDirty) {
@@ -123,6 +125,8 @@ public class NUOPCView extends ViewPart {
 			this.setPartName("NUOPC View");
 		}
 	}
+	*/
+	
 	
 	
 	private static class FancyToolTipSupport extends ColumnViewerToolTipSupport {
@@ -291,7 +295,7 @@ public class NUOPCView extends ViewPart {
 		contentProvider = new NUOPCViewContentProvider();
 		viewer.setContentProvider(contentProvider);
 		
-		labelProvider = new NUOPCViewLabelProvider();
+		labelProvider = new NUOPCViewLabelProvider(contentProvider);
 		viewer.setLabelProvider(labelProvider);
 		viewer.setSorter(null);
 		
@@ -304,6 +308,7 @@ public class NUOPCView extends ViewPart {
 		ISelectionListener listener = new ISelectionListener() {
 			public void selectionChanged(IWorkbenchPart part, ISelection sel) {
 				System.out.println("selectionChanged: " + part + " - " + sel);
+				
 				if (!(sel instanceof IStructuredSelection))
 					return;
 				IStructuredSelection ss = (IStructuredSelection) sel;
@@ -362,7 +367,7 @@ public class NUOPCView extends ViewPart {
 						}
 					}
 					else {
-						System.out.println("No mapping found for element: " + me.elem);
+						CupidActivator.log("No mapping found for element: " + me.elem);
 					}
 				}
 				//try to match on nameLabel using object identity 
@@ -541,7 +546,7 @@ public class NUOPCView extends ViewPart {
 		
 		
         //resource listener to know when current project is dirty
-        
+        /*
         IWorkspace workspace = ResourcesPlugin.getWorkspace();
         IResourceChangeListener rcl = new IResourceChangeListener() {
         	public void resourceChanged(final IResourceChangeEvent event) {
@@ -575,17 +580,106 @@ public class NUOPCView extends ViewPart {
         };
 
 		workspace.addResourceChangeListener(rcl);
+        */
+        
+        //listen for editor activation
+        IPartService service = PlatformUI.getWorkbench().getActiveWorkbenchWindow().getPartService();
+        partListener = new IPartListener2() {
+
+			@Override
+			public void partActivated(IWorkbenchPartReference partRef) {
+				if (partRef instanceof IEditorReference) {
+					IEditorReference eref = (IEditorReference) partRef;
+					IEditorInput ein;
+					try {
+						ein = eref.getEditorInput();
+					} catch (PartInitException e) {
+						CupidActivator.log("Error listening to activated editor.", e);
+						return;
+					}
+					if (ein instanceof FileEditorInput) {
+						FileEditorInput fein = (FileEditorInput) ein;
+						IFile file = fein.getFile();
+						if (viewer.getInput() != file) {
+							viewer.setInput(file);
+						}
+						viewer.expandToLevel(3);
+						//System.out.println("file = " + file);
+					}
+				}
+			}
+
+			@Override
+			public void partBroughtToTop(IWorkbenchPartReference partRef) {
+			}
+
+			@Override
+			public void partClosed(IWorkbenchPartReference partRef) {
+			}
+
+			@Override
+			public void partDeactivated(IWorkbenchPartReference partRef) {
+			}
+
+			@Override
+			public void partOpened(IWorkbenchPartReference partRef) {
+			}
+
+			@Override
+			public void partHidden(IWorkbenchPartReference partRef) {
+			}
+
+			@Override
+			public void partVisible(IWorkbenchPartReference partRef) {
+			}
+
+			@Override
+			public void partInputChanged(IWorkbenchPartReference partRef) {
+			}
+        	
+        };
+        
+        service.addPartListener(partListener);
         
         
+        //listen for resource changes to synchronize
+        resourceChangeListener = new IResourceChangeListener() {
+        	public void resourceChanged(final IResourceChangeEvent event) {
+        		
+         		if (viewer.getInput() != null && event.getDelta() != null) {
+        			Display.getDefault().syncExec(new Runnable() {
+        				public void run() {
+        					try {
+        						event.getDelta().accept(new IResourceDeltaVisitor() {
+        							@Override
+        							public boolean visit(IResourceDelta delta) throws CoreException {
+        								//System.out.println("delta resource = " + delta.getResource());
+        								if ((delta.getFlags() & IResourceDelta.CONTENT) == IResourceDelta.CONTENT) {
+	        								if (viewer.getInput().equals(delta.getResource())) {
+	    										System.out.println("Refreshing viewer");
+	    										viewer.refresh();
+	    										viewer.expandToLevel(3);
+	    										return false;
+	        								}
+        								}
+        								return true;
+        							}
+        						});
+        					} catch (CoreException e) {        		
+        						CupidActivator.log("Error visting resource change delta", e);
+        					}
+
+        				}
+        			});
+					
+        		} 
+        	}
+        };
+
+        ResourcesPlugin.getWorkspace().addResourceChangeListener(
+        		resourceChangeListener, 
+        		IResourceChangeEvent.POST_CHANGE);        
         
-        
-        
-		// Create the help context id for the viewer's control
-	//	PlatformUI.getWorkbench().getHelpSystem().setHelp(viewer.getControl(), "org.earthsystemmodeling.cupid.viewer");
-		
-	//	hookContextMenu();
-	//	hookDoubleClickAction();
-	//	contributeToActionBars();
 	}
 	
 	protected IMarker createMarker(Token token) {
@@ -712,14 +806,14 @@ public class NUOPCView extends ViewPart {
 	}
 	*/
 	
-	
+	/*
 	private void showMessage(String message) {
 		MessageDialog.openInformation(
 			viewer.getControl().getShell(),
 			"NUOPC View",
 			message);
 	}
-	
+	*/
 
 	/**
 	 * Passing the focus request to the viewer's control.
@@ -727,4 +821,18 @@ public class NUOPCView extends ViewPart {
 	public void setFocus() {
 		viewer.getControl().setFocus();
 	}
+	
+	
+	@Override
+	public void dispose() {
+		super.dispose();
+		if (partListener != null) {
+			IPartService service = PlatformUI.getWorkbench().getActiveWorkbenchWindow().getPartService();
+			service.removePartListener(partListener);
+		}
+		if (resourceChangeListener != null) {
+			 ResourcesPlugin.getWorkspace().removeResourceChangeListener(resourceChangeListener);
+		}
+	}
+	
 }
