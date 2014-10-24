@@ -35,9 +35,10 @@ public class H2ClauseStoreFactory implements ClauseStoreFactory
 		if (goal instanceof Struct)
 		{
 			Struct s = (Struct)goal;
-			
-			H2ClauseStore store;
-			
+
+			//cannot cache because goal may be different
+			/*
+		    H2ClauseStore store;
 			store = cache.get(s.getName());
 			if (store != null) {
 				store.reset();
@@ -48,6 +49,11 @@ public class H2ClauseStoreFactory implements ClauseStoreFactory
 				store = new H2ClauseStore(prolog, conn, s);
 				cache.put(s.getName(), store);
 				return store;
+			}
+			*/
+			if (coversPredicate(s.getName(), s.getArity())) 
+			{				
+				return new H2ClauseStore(prolog, conn, s);			
 			}
 		}
 		return null;

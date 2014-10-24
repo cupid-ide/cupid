@@ -604,7 +604,6 @@ public class NUOPCView extends ViewPart {
 							viewer.setInput(file);
 						}
 						viewer.expandToLevel(3);
-						//System.out.println("file = " + file);
 					}
 				}
 			}
@@ -656,8 +655,9 @@ public class NUOPCView extends ViewPart {
         								//System.out.println("delta resource = " + delta.getResource());
         								if ((delta.getFlags() & IResourceDelta.CONTENT) == IResourceDelta.CONTENT) {
 	        								if (viewer.getInput().equals(delta.getResource())) {
-	    										System.out.println("Refreshing viewer");
-	    										viewer.refresh();
+	    										//System.out.println("Refreshing viewer");
+	    										viewer.setInput(delta.getResource());
+	        									//viewer.refresh();
 	    										viewer.expandToLevel(3);
 	    										return false;
 	        								}

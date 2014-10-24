@@ -6,10 +6,7 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
 import java.sql.Statement;
-import java.util.AbstractMap;
 import java.util.ArrayList;
-import java.util.Collection;
-import java.util.EmptyStackException;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -23,14 +20,11 @@ import org.eclipse.core.runtime.FileLocator;
 import org.eclipse.core.runtime.Path;
 import org.eclipse.photran.core.IFortranAST;
 import org.eclipse.photran.internal.core.analysis.binding.Definition;
-import org.eclipse.photran.internal.core.analysis.types.FunctionType;
-import org.eclipse.photran.internal.core.analysis.types.TypeProcessor;
 import org.eclipse.photran.internal.core.lexer.Token;
 import org.eclipse.photran.internal.core.parser.ASTArrayConstructorNode;
 import org.eclipse.photran.internal.core.parser.ASTCallStmtNode;
 import org.eclipse.photran.internal.core.parser.ASTDblConstNode;
 import org.eclipse.photran.internal.core.parser.ASTEntityDeclNode;
-import org.eclipse.photran.internal.core.parser.ASTExecutableProgramNode;
 import org.eclipse.photran.internal.core.parser.ASTFunctionSubprogramNode;
 import org.eclipse.photran.internal.core.parser.ASTIntConstNode;
 import org.eclipse.photran.internal.core.parser.ASTMainProgramNode;
@@ -48,20 +42,18 @@ import org.eclipse.photran.internal.core.parser.ASTUseStmtNode;
 import org.eclipse.photran.internal.core.parser.ASTVarOrFnRefNode;
 import org.eclipse.photran.internal.core.parser.ASTVisitor;
 import org.eclipse.photran.internal.core.parser.IASTNode;
-import org.eclipse.photran.internal.core.parser.IActionStmt;
-import org.eclipse.photran.internal.core.parser.IBodyConstruct;
-import org.eclipse.photran.internal.core.parser.IExecutableConstruct;
-import org.eclipse.photran.internal.core.parser.IModuleSubprogram;
-import org.eclipse.photran.internal.core.parser.IProgramUnit;
-
-import com.google.common.collect.Multimap;
 
 import alice.tuprolog.InvalidTermException;
 import alice.tuprolog.InvalidTheoryException;
+import alice.tuprolog.MalformedGoalException;
+import alice.tuprolog.NoMoreSolutionException;
+import alice.tuprolog.NoSolutionException;
 import alice.tuprolog.Prolog;
+import alice.tuprolog.SolveInfo;
 import alice.tuprolog.Struct;
 import alice.tuprolog.Term;
 import alice.tuprolog.Theory;
+import alice.tuprolog.clausestore.H2ClauseStoreFactory;
 import alice.tuprolog.lib.InvalidObjectIdException;
 import alice.tuprolog.lib.JavaLibrary;
 
@@ -79,6 +71,7 @@ public class CodeDBIndex {
 	}
 	
 	private Connection conn = null;
+	private Prolog prolog = null;
 	
 	public CodeDBIndex() {
 				
@@ -94,22 +87,34 @@ public class CodeDBIndex {
 		
 		try {
 			//TODO: connection string
+			//LOG=0;CACHE_SIZE=65536;LOCK_MODE=0;UNDO_LOG=0
 			conn = DriverManager.getConnection("jdbc:h2:~/h2/prolog2");
 		} catch (SQLException e3) {
 			//TODO: deal with this
 			throw new RuntimeException(e3);
 		}
+		
+		prolog = new Prolog();
+		prolog.getEngineManager().getClauseStoreManager().getFactories().add(new H2ClauseStoreFactory(conn, "PROLOG"));
 	}
 	
-	public void resetDatabase() {
+	public void truncateDatabase() {
+		executeSQL("sql/truncate_db.sql");
+	}
+	
+	public void rebuildDatabase() {
+		executeSQL("sql/build_db.sql");
+	}
+	
+	protected void executeSQL(String path) {
 		
 		String sql = null;
 		try {
 			InputStream inputStream = FileLocator.openStream(
-				    CupidActivator.getDefault().getBundle(), new Path("sql/code_db.sql"), false);
+				    CupidActivator.getDefault().getBundle(), new Path(path), false);
 			sql = IOUtils.toString(inputStream);
 		} catch (IOException e) {
-			CupidActivator.log("Error accessing code db SQL file", e);
+			CupidActivator.log("Error accessing SQL file", e);
 			return;
 		}
 		
@@ -118,10 +123,12 @@ public class CodeDBIndex {
 			stmt.execute(sql);
 		}
 		catch (SQLException e) {
-			CupidActivator.log("Error in SQL file to recreate code database.", e);
+			CupidActivator.log("Error in SQL file.", e);
 		}
 		
 	}
+	
+	
 	
 	public void closeConnection() {
 		try {
@@ -169,7 +176,33 @@ public class CodeDBIndex {
 	}
 	*/
 	
+	public List<Term> query(String query) throws MalformedGoalException {
+		
+		ArrayList<Term> sols = new ArrayList<Term>();
+		
+		SolveInfo solveInfo = prolog.solve(query);
+		
+		while (true) {
+			try {
+				sols.add(solveInfo.getSolution());
+				solveInfo = prolog.solveNext();
+			} catch (NoMoreSolutionException e) {
+				break;
+			} catch (NoSolutionException e) {
+				break;
+			}
+			//set a hard limit for now
+			if (sols.size() > 10000) break;
+		}
+		
+		return sols;
+	}
+	
 	public Prolog getProlog() {
+		return prolog;
+	}
+	
+	public Prolog getPrologX() {
 		Prolog prolog = new Prolog();
 		
 		//java object binding

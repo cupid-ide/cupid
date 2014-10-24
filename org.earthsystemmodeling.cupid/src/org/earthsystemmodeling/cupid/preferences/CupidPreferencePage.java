@@ -14,38 +14,20 @@ public class CupidPreferencePage
 	public static final String CUPID_AWS_ACCESS_KEY = "CUPID_AWS_ACCESS_KEY";
 	public static final String CUPID_AWS_SECRET_KEY = "CUPID_AWS_SECRET_KEY";
 	public static final String CUPID_LANGUAGE_URI = "CUPID_LANGUAGE_URI";
+	public static final String CUPID_LANGUAGE_RELOAD = "CUPID_LANGUAGE_RELOAD";
 
 
 	public CupidPreferencePage() {
 		super(GRID);
 		setPreferenceStore(CupidActivator.getDefault().getPreferenceStore());
-		setDescription("Cupid preferences");
+		//setDescription("Cupid preferences");
 	}
 	
-	public void createFieldEditors() {
-		/*
-		addField(new DirectoryFieldEditor(PreferenceConstants.P_PATH, 
-				"&Directory preference:", getFieldEditorParent()));
-		addField(
-			new BooleanFieldEditor(
-				PreferenceConstants.P_BOOLEAN,
-				"&An example of a boolean preference",
-				getFieldEditorParent()));
-
-		addField(new RadioGroupFieldEditor(
-				PreferenceConstants.P_CHOICE,
-			"An example of a multiple-choice preference",
-			1,
-			new String[][] { { "&Choice 1", "choice1" }, {
-				"C&hoice 2", "choice2" }
-		}, getFieldEditorParent()));
-		*/
-		
-		
+	public void createFieldEditors() {	
 		addField(new PasswordStringFieldEditor(CUPID_AWS_ACCESS_KEY, "Amazon AWS Access Key:", getFieldEditorParent()));
 		addField(new PasswordStringFieldEditor(CUPID_AWS_SECRET_KEY, "Amazon AWS Secret Key:", getFieldEditorParent()));
 		addField(new StringFieldEditor(CUPID_LANGUAGE_URI, "Language definition URI", getFieldEditorParent()));
-		
+		addField(new BooleanFieldEditor(CUPID_LANGUAGE_RELOAD, "Reload language every time (debugging)", getFieldEditorParent()));	
 	}
 	
 	class PasswordStringFieldEditor extends StringFieldEditor {
@@ -56,9 +38,7 @@ public class CupidPreferencePage
 	    protected void doFillIntoGrid(Composite parent, int numColumns) {
 	        super.doFillIntoGrid(parent, numColumns);
 	        getTextControl().setEchoChar('*');
-	    }
-		
-		
+	    }	
 	}
 
 	/* (non-Javadoc)

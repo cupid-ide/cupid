@@ -62,7 +62,6 @@ public class ReverseEngineer {
 		Language lang = (Language) langResource.getContents().get(0);
 		
 		//add default NUOPC metamodel to registry if necessary
-		//always register in case it changes during the run
 		
 		//if (EPackage.Registry.INSTANCE.getEPackage("http://www.earthsystemcurator.org/nuopcgen") == null) {
 		CupidActivator.log("ReverseEngineer.loadLanguageEcore: registering EPackage");
@@ -122,11 +121,13 @@ public class ReverseEngineer {
 			return null;
 		}
 		
-		//only loading first time
-		//needs to be reloaded in cases where the definition is changing dynamically (e.g., debugging)
-		//if (lang == null) {
-		//	lang = loadLanguageEcore();
-		//}
+		//preference determines whether to reload language every time
+		//(slower but useful while developing the langauge definition)
+		boolean langReload = CupidActivator.getDefault().getPreferenceStore().getBoolean(CupidPreferencePage.CUPID_LANGUAGE_RELOAD);
+		
+		if (langReload || lang == null) {
+			lang = loadLanguageEcore();
+		}
 		
 		ConceptDef topConcept = null;
 		for (ConceptDef cd : lang.getConceptDef()) {

@@ -58,7 +58,7 @@ public class PopulateCodeDBHandler extends AbstractHandler {
 		
 		CodeDBIndex.getInstance().clear();
 		CodeDBIndex.getInstance().openConnection();  //open, reset & close now for debugging
-		CodeDBIndex.getInstance().resetDatabase();
+		CodeDBIndex.getInstance().rebuildDatabase();
 		
 		long totalParse = 0;
 		long totalIndex = 0;

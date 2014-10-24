@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.earthsystemmodeling.FSM;
+import org.earthsystemmodeling.cupid.codedb.CodeDBIndex;
 import org.earthsystemmodeling.cupid.core.CupidActivator;
 import org.earthsystemmodeling.cupid.core.ReverseEngineer;
 import org.earthsystemmodeling.cupid.util.Regex;
@@ -11,6 +12,7 @@ import org.earthsystemmodeling.psyche.ConceptDef;
 import org.earthsystemmodeling.psyche.SubconceptOrAttribute;
 import org.eclipse.core.resources.IFile;
 import org.eclipse.core.resources.IResource;
+import org.eclipse.core.runtime.IStatus;
 import org.eclipse.emf.common.util.Diagnostic;
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.ecore.EAttribute;
@@ -24,6 +26,15 @@ import org.eclipse.jface.viewers.IStructuredContentProvider;
 import org.eclipse.jface.viewers.ITreeContentProvider;
 import org.eclipse.jface.viewers.Viewer;
 import org.eclipse.ocl.examples.xtext.oclinecore.validation.OCLinEcoreEObjectValidator;
+import org.eclipse.photran.core.IFortranAST;
+import org.eclipse.photran.internal.core.vpg.PhotranVPG;
+import org.eclipse.photran.internal.core.vpg.eclipse.EclipseVPG;
+
+import alice.tuprolog.MalformedGoalException;
+import alice.tuprolog.NoSolutionException;
+import alice.tuprolog.Prolog;
+import alice.tuprolog.SolveInfo;
+import alice.tuprolog.Term;
 
 class NUOPCViewContentProvider implements IStructuredContentProvider, ITreeContentProvider {
 	
@@ -38,6 +49,11 @@ class NUOPCViewContentProvider implements IStructuredContentProvider, ITreeConte
 	private FSM<?> fsm;
 	private IFile input; 
 	
+	public NUOPCViewContentProvider() {
+		CodeDBIndex.getInstance().openConnection();
+		CodeDBIndex.getInstance().rebuildDatabase();
+	}
+	
 	public FSM<?> getCurrentFSM() {
 		return fsm;
 	}
@@ -46,7 +62,34 @@ class NUOPCViewContentProvider implements IStructuredContentProvider, ITreeConte
 		fsm = null;		
 		if (newInput != null) {
 			input = (IFile) newInput;
-			//fsm = CupidStorage.INSTANCE.getFSM(project);
+			
+			//test CodeDB approach
+			long startRebuild = System.currentTimeMillis();
+			CodeDBIndex.getInstance().truncateDatabase();
+			long endRebuild = System.currentTimeMillis();
+			
+			String filename = EclipseVPG.getFilenameForIFile(input);
+			long startParse = System.currentTimeMillis();
+			IFortranAST ast = PhotranVPG.getInstance().parse(filename);
+			long endParse = System.currentTimeMillis();
+			
+			long startIndex = System.currentTimeMillis();
+			CodeDBIndex.getInstance().indexAST(ast);
+			long endIndex = System.currentTimeMillis();
+			
+			//CupidActivator.log(IStatus.INFO, "Rebuild DB time: " + (endRebuild-startRebuild));
+			//CupidActivator.log(IStatus.INFO, "Parse time: " + (endParse-startParse));
+			CupidActivator.log(IStatus.INFO, "Index DB time: " + (endIndex-startIndex));
+			
+			//attempt a query
+			try {
+				List<Term> results = CodeDBIndex.getInstance().query("ident(_id, _parent_id, _name).");
+				for (Term t : results) {
+					System.out.println("Result: " + t);
+				}
+			} catch (MalformedGoalException e) {
+				e.printStackTrace();
+			}
 		}
 	}
 		
@@ -56,12 +99,11 @@ class NUOPCViewContentProvider implements IStructuredContentProvider, ITreeConte
 	
 	public Object[] getElements(Object parent) {
 		
-		//System.out.println("getElements: " + parent);
-		
 		//TODO: do this in another thread???
-		fsm = ReverseEngineer.reverseEngineer(input);
+		//fsm = ReverseEngineer.reverseEngineer(input);
 		if (fsm == null) {
 			CupidActivator.log("No reverse engineered model to display");
+			return new Object[0];
 		}
 		
 		//Top top = NUOPCFactory.eINSTANCE.createTop();
