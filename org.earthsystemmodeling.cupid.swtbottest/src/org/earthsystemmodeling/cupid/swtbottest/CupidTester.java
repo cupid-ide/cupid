@@ -1,7 +1,9 @@
 package org.earthsystemmodeling.cupid.swtbottest;
 
+import static org.eclipse.swtbot.swt.finder.SWTBotAssert.assertContains;
 import static org.hamcrest.core.IsInstanceOf.instanceOf;
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
 
 import java.io.File;
 import java.io.IOException;
@@ -23,6 +25,7 @@ import org.eclipse.swtbot.eclipse.finder.widgets.SWTBotView;
 import org.eclipse.swtbot.swt.finder.exceptions.WidgetNotFoundException;
 import org.eclipse.swtbot.swt.finder.junit.SWTBotJunit4ClassRunner;
 import org.eclipse.swtbot.swt.finder.widgets.SWTBotTree;
+import org.eclipse.ui.PartInitException;
 import org.hamcrest.Matcher;
 import org.junit.AfterClass;
 import org.junit.BeforeClass;
@@ -45,27 +48,7 @@ public class CupidTester {
 	}
 
 	
-	/**
-	 * Open and reverse engineer a DriverAtmOcn.
-	 */
-	@Test
-	public void reverseEngineerAtmOcnDriver() {
-		ensureNUOPCViewVisible();
 		
-		bot.tree().getTreeItem("v7-AtmOcnProto").select();
-		bot.tree().getTreeItem("v7-AtmOcnProto").expand();
-		bot.tree().getTreeItem("v7-AtmOcnProto").getNode("esm.F90").doubleClick();
-		bot.editorByTitle("esm.F90");
-		
-		//wait for reverse engineer
-		sleep(3*1000);
-		
-		//basic verification of reverse engineering
-		SWTBotTree tree = NUOPCTree();
-			
-		assertEquals("ESM", tree.getTreeItem("NUOPC Application").getNode("NUOPC Atm-Ocn Driver").getNode("Driver Name").cell(1));
-	}
-	
 	@Test
 	/**
 	 * Opens the Cupid preferences page and changes the NUOPC language location.
@@ -107,6 +90,27 @@ public class CupidTester {
 		catch (WidgetNotFoundException wnfe) {
 			showNUOPCView();
 		}
+	}
+	
+	/**
+	 * Open and reverse engineer a DriverAtmOcn.
+	 */
+	@Test
+	public void reverseEngineerAtmOcnDriver() {
+		ensureNUOPCViewVisible();
+		
+		bot.tree().getTreeItem("v7-AtmOcnProto").select();
+		bot.tree().getTreeItem("v7-AtmOcnProto").expand();
+		bot.tree().getTreeItem("v7-AtmOcnProto").getNode("esm.F90").doubleClick();
+		bot.editorByTitle("esm.F90");
+		
+		//wait for reverse engineer
+		sleep(3*1000);
+		
+		//basic verification of reverse engineering
+		SWTBotTree tree = NUOPCTree();
+			
+		assertEquals("ESM", tree.getTreeItem("NUOPC Application").getNode("NUOPC Atm-Ocn Driver").getNode("Driver Name").cell(1));
 	}
 	
 	/**
@@ -165,10 +169,36 @@ public class CupidTester {
 	}
 	
 	/**
+	 * Test code generation of finalize method in a NUOPC Component.
+	 * @throws PartInitException 
+	 */
+	@Test
+	public void forwardEngineerModelAtmFinalize() throws PartInitException {
+		ensureNUOPCViewVisible();
+		
+		bot.tree().getTreeItem("v7-AtmOcnProto").select();
+		bot.tree().getTreeItem("v7-AtmOcnProto").expand();
+		bot.tree().getTreeItem("v7-AtmOcnProto").getNode("atm.F90").doubleClick();
+		bot.editorByTitle("atm.F90");
+		
+		assertFalse(bot.editorByTitle("atm.F90").toTextEditor().getText().contains("subroutine Finalize"));
+				
+		//wait for reverse engineer
+		sleep(3*1000);
+		
+		//basic verification of reverse engineering
+		SWTBotTree tree = NUOPCTree();
+		tree.getTreeItem("NUOPC Application").getNode("NUOPC Model").contextMenu("Add Finalize (basic)").click();
+		
+		assertContains("subroutine Finalize", bot.editorByTitle("atm.F90").toTextEditor().getText());
+
+	}
+	
+	/**
 	 * Verifies that the Cupid project properties page works.
 	 */
 	@Test
-	public void showAndUpdatePropsPage() {
+	public void showPropsPage() {
 		bot.tree().getTreeItem("v7-AtmOcnProto").select();
 		bot.menu("Properties").click();
 		bot.tree().getTreeItem("Cupid Property Page").select();
