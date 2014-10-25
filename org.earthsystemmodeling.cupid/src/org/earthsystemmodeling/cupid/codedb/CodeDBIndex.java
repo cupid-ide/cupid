@@ -74,7 +74,7 @@ public class CodeDBIndex {
 	private Prolog prolog = null;
 	
 	public CodeDBIndex() {
-				
+		prolog = new Prolog();
 	}
 	
 	public void openConnection() {
@@ -87,15 +87,16 @@ public class CodeDBIndex {
 		
 		try {
 			//TODO: connection string
-			//LOG=0;CACHE_SIZE=65536;LOCK_MODE=0;UNDO_LOG=0
-			conn = DriverManager.getConnection("jdbc:h2:~/h2/prolog2");
+			//String connString = "jdbc:h2:mem:";
+			String connString = "jdbc:h2:~/h2/prolog2;LOG=0;CACHE_SIZE=65536;LOCK_MODE=0;UNDO_LOG=0";
+			conn = DriverManager.getConnection(connString);
 		} catch (SQLException e3) {
 			//TODO: deal with this
 			throw new RuntimeException(e3);
 		}
 		
-		prolog = new Prolog();
-		prolog.getEngineManager().getClauseStoreManager().getFactories().add(new H2ClauseStoreFactory(conn, "PROLOG"));
+		prolog.getEngineManager().getClauseStoreManager().getFactories()
+								.add(new H2ClauseStoreFactory(conn, "PROLOG"));
 	}
 	
 	public void truncateDatabase() {
@@ -128,8 +129,6 @@ public class CodeDBIndex {
 		
 	}
 	
-	
-	
 	public void closeConnection() {
 		try {
 			if (!conn.isClosed()) {
@@ -137,6 +136,10 @@ public class CodeDBIndex {
 			}
 		} catch (SQLException e) {
 			CupidActivator.log("Exception closing code index db.", e);
+		}
+		
+		if (prolog != null) {
+			prolog = null;
 		}
 	}
 	
@@ -147,7 +150,7 @@ public class CodeDBIndex {
 	int factID = -1;  //increments each time
 	
 	public void indexASTs(Set<IFortranAST> asts) {			
-		clauseList.clear();
+		//clauseList.clear();
 		for (IFortranAST ast : asts) {
 			ast.accept(new CodeDBVisitor(conn));
 			
@@ -180,12 +183,12 @@ public class CodeDBIndex {
 		
 		ArrayList<Term> sols = new ArrayList<Term>();
 		
-		SolveInfo solveInfo = prolog.solve(query);
+		SolveInfo solveInfo = getProlog().solve(query);
 		
 		while (true) {
 			try {
 				sols.add(solveInfo.getSolution());
-				solveInfo = prolog.solveNext();
+				solveInfo = getProlog().solveNext();
 			} catch (NoMoreSolutionException e) {
 				break;
 			} catch (NoSolutionException e) {
@@ -202,6 +205,15 @@ public class CodeDBIndex {
 		return prolog;
 	}
 	
+	public void clearTheory() {
+		getProlog().clearTheory();
+	}
+	
+	public void addTheory(String theory) throws InvalidTheoryException {
+		getProlog().addTheory(new Theory(theory));
+	}
+	
+	/*
 	public Prolog getPrologX() {
 		Prolog prolog = new Prolog();
 		
@@ -245,6 +257,7 @@ public class CodeDBIndex {
 		return prolog;
 		
 	}
+	*/
 	
 	public void printClauseList() {
 		System.out.println("CodeDBIndex clause list:");

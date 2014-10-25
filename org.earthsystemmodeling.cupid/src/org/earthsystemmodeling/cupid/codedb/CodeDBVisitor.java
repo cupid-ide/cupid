@@ -15,10 +15,13 @@ import org.eclipse.photran.internal.core.parser.ASTCallStmtNode;
 import org.eclipse.photran.internal.core.parser.ASTDblConstNode;
 import org.eclipse.photran.internal.core.parser.ASTIntConstNode;
 import org.eclipse.photran.internal.core.parser.ASTModuleNode;
+import org.eclipse.photran.internal.core.parser.ASTOnlyNode;
 import org.eclipse.photran.internal.core.parser.ASTRealConstNode;
+import org.eclipse.photran.internal.core.parser.ASTRenameNode;
 import org.eclipse.photran.internal.core.parser.ASTStringConstNode;
 import org.eclipse.photran.internal.core.parser.ASTSubroutineArgNode;
 import org.eclipse.photran.internal.core.parser.ASTSubroutineSubprogramNode;
+import org.eclipse.photran.internal.core.parser.ASTUseStmtNode;
 import org.eclipse.photran.internal.core.parser.ASTVarOrFnRefNode;
 import org.eclipse.photran.internal.core.parser.ASTVisitor;
 import org.eclipse.photran.internal.core.parser.IASTNode;
@@ -152,6 +155,29 @@ public class CodeDBVisitor extends ASTVisitor {
 	public void visitASTModuleNode(ASTModuleNode node) {
 		long id = addFact("module", node.getModuleStmt().getModuleName().getModuleName().getText());
 		traverseChildren(node, id);
+	}
+	
+	@Override
+	public void visitASTUseStmtNode(ASTUseStmtNode node) {
+		long id = addFact("uses", parentID(), node.getName().getText());
+		traverseChildren(node, id);
+	}
+	
+	@Override
+	public void visitASTOnlyNode(ASTOnlyNode node) {
+		String newName;
+		if (node.getNewName() != null) {
+			newName = node.getNewName().getText();
+		}
+		else {
+			newName = node.getName().getText();
+		}
+		long id = addFact("usesEntity", parentID(), node.getName().getText(), newName, 1);
+	}
+	
+	@Override
+	public void visitASTRenameNode(ASTRenameNode node) {
+		long id = addFact("usesEntity", parentID(), node.getName().getText(), node.getNewName().getText(), 0);
 	}
 	
 	@Override

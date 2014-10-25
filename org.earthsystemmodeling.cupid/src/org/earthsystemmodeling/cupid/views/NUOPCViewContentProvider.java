@@ -6,12 +6,10 @@ import java.util.List;
 import org.earthsystemmodeling.FSM;
 import org.earthsystemmodeling.cupid.codedb.CodeDBIndex;
 import org.earthsystemmodeling.cupid.core.CupidActivator;
-import org.earthsystemmodeling.cupid.core.ReverseEngineer;
 import org.earthsystemmodeling.cupid.util.Regex;
 import org.earthsystemmodeling.psyche.ConceptDef;
 import org.earthsystemmodeling.psyche.SubconceptOrAttribute;
 import org.eclipse.core.resources.IFile;
-import org.eclipse.core.resources.IResource;
 import org.eclipse.core.runtime.IStatus;
 import org.eclipse.emf.common.util.Diagnostic;
 import org.eclipse.emf.common.util.EList;
@@ -28,12 +26,9 @@ import org.eclipse.jface.viewers.Viewer;
 import org.eclipse.ocl.examples.xtext.oclinecore.validation.OCLinEcoreEObjectValidator;
 import org.eclipse.photran.core.IFortranAST;
 import org.eclipse.photran.internal.core.vpg.PhotranVPG;
-import org.eclipse.photran.internal.core.vpg.eclipse.EclipseVPG;
 
+import alice.tuprolog.InvalidTheoryException;
 import alice.tuprolog.MalformedGoalException;
-import alice.tuprolog.NoSolutionException;
-import alice.tuprolog.Prolog;
-import alice.tuprolog.SolveInfo;
 import alice.tuprolog.Term;
 
 class NUOPCViewContentProvider implements IStructuredContentProvider, ITreeContentProvider {
@@ -47,11 +42,19 @@ class NUOPCViewContentProvider implements IStructuredContentProvider, ITreeConte
 	
 	
 	private FSM<?> fsm;
-	private IFile input; 
+	private IFile input;
+	private CodeDBIndex codeDB = CodeDBIndex.getInstance();
 	
 	public NUOPCViewContentProvider() {
-		CodeDBIndex.getInstance().openConnection();
-		CodeDBIndex.getInstance().rebuildDatabase();
+		
+		codeDB.openConnection();
+		codeDB.rebuildDatabase();
+		codeDB.clearTheory();
+		try {
+			codeDB.addTheory("nuopc_model(_mid, _name, _uid) :- module(_mid, _name), uses(_uid, _mid, 'NUOPC_Model').");
+		} catch (InvalidTheoryException e) {
+			CupidActivator.log("Invalid theory", e);
+		}
 	}
 	
 	public FSM<?> getCurrentFSM() {
@@ -65,25 +68,25 @@ class NUOPCViewContentProvider implements IStructuredContentProvider, ITreeConte
 			
 			//test CodeDB approach
 			long startRebuild = System.currentTimeMillis();
-			CodeDBIndex.getInstance().truncateDatabase();
+			codeDB.truncateDatabase();
 			long endRebuild = System.currentTimeMillis();
 			
-			String filename = EclipseVPG.getFilenameForIFile(input);
+			String filename = PhotranVPG.getFilenameForIFile(input);
 			long startParse = System.currentTimeMillis();
 			IFortranAST ast = PhotranVPG.getInstance().parse(filename);
 			long endParse = System.currentTimeMillis();
 			
 			long startIndex = System.currentTimeMillis();
-			CodeDBIndex.getInstance().indexAST(ast);
+			codeDB.indexAST(ast);
 			long endIndex = System.currentTimeMillis();
 			
-			//CupidActivator.log(IStatus.INFO, "Rebuild DB time: " + (endRebuild-startRebuild));
-			//CupidActivator.log(IStatus.INFO, "Parse time: " + (endParse-startParse));
+			CupidActivator.log(IStatus.INFO, "Rebuild DB time: " + (endRebuild-startRebuild));
+			CupidActivator.log(IStatus.INFO, "Parse time: " + (endParse-startParse));
 			CupidActivator.log(IStatus.INFO, "Index DB time: " + (endIndex-startIndex));
 			
 			//attempt a query
 			try {
-				List<Term> results = CodeDBIndex.getInstance().query("ident(_id, _parent_id, _name).");
+				List<Term> results = codeDB.query("nuopc_model(_id, _name, _uid).");
 				for (Term t : results) {
 					System.out.println("Result: " + t);
 				}

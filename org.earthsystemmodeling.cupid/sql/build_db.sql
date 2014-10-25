@@ -2,6 +2,8 @@ create schema if not exists prolog;
 set schema prolog;
 
 drop table if exists module;
+drop table if exists uses;
+drop table if exists usesEntity;
 drop table if exists call;
 drop table if exists subroutine;
 drop table if exists callArg;
@@ -15,6 +17,18 @@ create sequence global_fact_id;
 create table module(
     id bigint default global_fact_id.nextval primary key, 
     name varchar(100));
+    
+create table uses(
+	id bigint default global_fact_id.nextval primary key,
+	parent_id bigint,
+	name varchar(100));
+	
+create table usesEntity(
+	id bigint default global_fact_id.nextval primary key,
+	parent_id bigint,
+	name varchar(100),
+	newName varchar(100),
+	only boolean);
 
 create table subroutine(
      id bigint default global_fact_id.nextval primary key, 

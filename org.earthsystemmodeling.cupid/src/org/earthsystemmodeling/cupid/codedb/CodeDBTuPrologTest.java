@@ -38,7 +38,7 @@ public class CodeDBTuPrologTest {
 			//prolog.addTheory(new Theory("nuopc_module(M) :- module(M), subroutine(M, S), call(S, NUOPC_CompDerive)."));
 			//prolog.addTheory(new Theory("module(a, b). module(c,d). module(a,f)."));
 			prolog.addTheory(new Theory("subroutine(mod0, s1). subroutine(mod1, s2)."));
-			prolog.addTheory(new Theory("nuopc_module(_mid, _name, _sid) :- module(_mid, _name), subroutine(_sid, _mid, 'skipHeader')."));
+			prolog.addTheory(new Theory("nuopc_module(_mid, _name, _sid, _sname) :- module(_mid, _name), subroutine(_sid, _mid, _sname)."));
 			prolog.addTheory(new Theory("special(M, S, C) :- nuopc_module(M, S), call(M, S, C)."));
 		} catch (InvalidTheoryException e2) {
 			e2.printStackTrace();
