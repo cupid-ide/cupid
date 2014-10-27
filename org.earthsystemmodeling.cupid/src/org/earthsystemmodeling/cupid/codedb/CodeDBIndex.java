@@ -92,7 +92,7 @@ public class CodeDBIndex {
 		try {
 			//TODO: connection string
 			//String connString = "jdbc:h2:mem:";
-			String connString = "jdbc:h2:~/h2/prolog2;LOG=0;CACHE_SIZE=65536;LOCK_MODE=0;UNDO_LOG=0";
+			String connString = "jdbc:h2:~/.cupid/codedb;LOG=0;CACHE_SIZE=65536;LOCK_MODE=0;UNDO_LOG=0";
 			conn = DriverManager.getConnection(connString);
 		} catch (SQLException e3) {
 			//TODO: deal with this
@@ -229,9 +229,8 @@ public class CodeDBIndex {
 	public List<Struct> query(String query) throws MalformedGoalException {
 		
 		ArrayList<Struct> sols = new ArrayList<Struct>();
-		
 		SolveInfo solveInfo = getProlog().solve(query);
-		
+				
 		while (true) {
 			try {
 				sols.add((Struct) solveInfo.getSolution());
@@ -324,8 +323,7 @@ public class CodeDBIndex {
 	public int size() {
 		return clauseList.size();
 	}
-	
-	
+		
 	class CodeDBIndexVisitor extends ASTVisitor {
 		
 		int compilationUnitID = -1;

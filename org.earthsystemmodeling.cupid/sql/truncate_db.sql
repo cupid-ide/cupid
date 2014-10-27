@@ -4,7 +4,7 @@ truncate table tokenRef;
 truncate table module;
 truncate table uses;
 truncate table usesEntity;
-truncate table call;
+truncate table call_;
 truncate table subroutine;
 truncate table param;
 truncate table callArg;

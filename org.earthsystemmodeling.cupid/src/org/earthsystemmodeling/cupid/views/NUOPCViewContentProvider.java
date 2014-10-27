@@ -11,6 +11,7 @@ import org.earthsystemmodeling.psyche.ConceptDef;
 import org.earthsystemmodeling.psyche.SubconceptOrAttribute;
 import org.eclipse.core.resources.IFile;
 import org.eclipse.core.runtime.IStatus;
+import org.eclipse.core.runtime.Status;
 import org.eclipse.emf.common.util.Diagnostic;
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.ecore.EAttribute;
@@ -30,6 +31,8 @@ import org.eclipse.photran.internal.core.vpg.PhotranVPG;
 import alice.tuprolog.InvalidTheoryException;
 import alice.tuprolog.MalformedGoalException;
 import alice.tuprolog.Struct;
+import alice.tuprolog.event.WarningEvent;
+import alice.tuprolog.event.WarningListener;
 
 @SuppressWarnings("restriction")
 class NUOPCViewContentProvider implements IStructuredContentProvider, ITreeContentProvider {
@@ -59,6 +62,13 @@ class NUOPCViewContentProvider implements IStructuredContentProvider, ITreeConte
 		} catch (InvalidTheoryException e) {
 			CupidActivator.log("Invalid theory", e);
 		}
+		
+		codeDB.getProlog().addWarningListener(new WarningListener() {
+			@Override
+			public void onWarning(WarningEvent e) {
+				CupidActivator.log(Status.WARNING, "Prolog warning: " + e.getMsg());
+			}
+		});
 	}
 	
 	public FSM<?> getCurrentFSM() {
@@ -99,13 +109,16 @@ class NUOPCViewContentProvider implements IStructuredContentProvider, ITreeConte
 				//String query = "module(_mid, _modname), uses(_uid, _mid, _usedMod), (_usedMod='NUOPC_Model'; _usedMod='NUOPC_DriverAtmOcn').";
 				//String query = "param(_id, _pid, _idx, _name, _type, _intentIn, _intentOut).";
 				//String query = "esmf_method(_id, _parentid, _name).";
-				
-				//call(NUOPC_CompDerive(#^p_gcomp, #^genericImports/importsGenericSS, rc?=#^p_rc))
-				
+								
 				query = "call(_id, _modid, 'NUOPC_CompDerive'),"
 						+ "callArg(_arg1, _id, 1, _expr1),"
 						+ "callArg(_arg2, _id, 2, _expr2),"
 						+ "callArg(_arg3, _id, 3, _expr3).";
+			
+				query = "call_(_id, _modid, 'NUOPC_CompDerive'),"
+						+ "findall(_expr, callArg(_x,_id,_y,_expr), _args).";
+				
+				//query = "findall(_expr, callArg(_x,_id,_y,_expr), _args).";
 				
 				List<Struct> results = codeDB.query(query);
 				for (Struct t : results) {

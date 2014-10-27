@@ -5,7 +5,7 @@ drop table if exists tokenRef;
 drop table if exists module;
 drop table if exists uses;
 drop table if exists usesEntity;
-drop table if exists call;
+drop table if exists call_;
 drop table if exists subroutine;
 drop table if exists param;
 drop table if exists callArg;
@@ -53,7 +53,7 @@ create table param(
      intentIn boolean,
      intentOut boolean);
 
-create table call(
+create table call_(
      id bigint default global_fact_id.nextval primary key, 
      parent_id bigint,
      name varchar(100)); 

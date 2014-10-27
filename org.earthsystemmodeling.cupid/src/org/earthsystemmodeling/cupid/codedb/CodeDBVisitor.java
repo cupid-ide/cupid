@@ -211,6 +211,7 @@ public class CodeDBVisitor extends ASTVisitor {
 	@Override
 	public void visitASTSubroutineSubprogramNode(ASTSubroutineSubprogramNode node) {
 		long id = addFact("subroutine", parentID(), node.getSubroutineStmt().getSubroutineName().getSubroutineName().getText());
+		addTokenRef(id, node.getSubroutineStmt().getSubroutineName().getSubroutineName(), "subroutine");
 		indexParam = 0;
 		traverseChildren(node, id);
 		
@@ -225,6 +226,7 @@ public class CodeDBVisitor extends ASTVisitor {
 		String type = "UNKNOWN";
 		boolean intentIn = false;
 		boolean intentOut = false;
+		//TODO: this assumes we allow Photran to index the AST
 		List<Definition> defs = node.getVariableName().resolveBinding();
 		if (defs.size() > 0) {
 			Definition def = defs.get(0);
@@ -238,7 +240,8 @@ public class CodeDBVisitor extends ASTVisitor {
 	
 	@Override
 	public void visitASTCallStmtNode(ASTCallStmtNode node) {
-		long id = addFact("call", parentID(), node.getSubroutineName().getText());
+		long id = addFact("call_", parentID(), node.getSubroutineName().getText());
+		addTokenRef(id, node.getSubroutineName(), "call_");
 		currentArgIndex = 0;
 		traverseChildren(node, id);
 	}
