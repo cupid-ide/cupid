@@ -6,10 +6,14 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.Stack;
 
 import org.earthsystemmodeling.cupid.core.CupidActivator;
+import org.eclipse.photran.internal.core.analysis.binding.Definition;
+import org.eclipse.photran.internal.core.analysis.dependence.Dependence.Type;
+import org.eclipse.photran.internal.core.lexer.Token;
 import org.eclipse.photran.internal.core.parser.ASTArrayConstructorNode;
 import org.eclipse.photran.internal.core.parser.ASTCallStmtNode;
 import org.eclipse.photran.internal.core.parser.ASTDblConstNode;
@@ -20,13 +24,12 @@ import org.eclipse.photran.internal.core.parser.ASTRealConstNode;
 import org.eclipse.photran.internal.core.parser.ASTRenameNode;
 import org.eclipse.photran.internal.core.parser.ASTStringConstNode;
 import org.eclipse.photran.internal.core.parser.ASTSubroutineArgNode;
+import org.eclipse.photran.internal.core.parser.ASTSubroutineParNode;
 import org.eclipse.photran.internal.core.parser.ASTSubroutineSubprogramNode;
 import org.eclipse.photran.internal.core.parser.ASTUseStmtNode;
 import org.eclipse.photran.internal.core.parser.ASTVarOrFnRefNode;
 import org.eclipse.photran.internal.core.parser.ASTVisitor;
 import org.eclipse.photran.internal.core.parser.IASTNode;
-
-import alice.tuprolog.Term;
 
 @SuppressWarnings("restriction")
 public class CodeDBVisitor extends ASTVisitor {
@@ -43,8 +46,6 @@ public class CodeDBVisitor extends ASTVisitor {
 		this.stmtCache = new HashMap<String, PreparedStatement>();
 		this.parentStack = new Stack<Long>();
 	}
-
-	
 	
 	private long addFact(String predicate, Object... args) {
 		return addFactWithID(predicate, -1, args);
@@ -136,6 +137,31 @@ public class CodeDBVisitor extends ASTVisitor {
 		return -1;
 	}
 	
+	protected void addTokenRef(long id, Token token, String type) {
+		PreparedStatement addTokenRefStmt = stmtCache.get("__add_token_ref__");
+		if (addTokenRefStmt == null) {
+			String insertSQL = "INSERT INTO tokenRef (id, filename, offset, length, type) VALUES (?,?,?,?,?);";
+			try {
+				addTokenRefStmt = conn.prepareStatement(insertSQL);
+			} catch (SQLException e) {
+				CupidActivator.log("Error creating SQL statement in code indexer: " + insertSQL, e);
+				return;
+			}
+			stmtCache.put("__add_token_ref__", addTokenRefStmt);
+		}
+		try {
+			addTokenRefStmt.setLong(1, id);
+			addTokenRefStmt.setString(2, token.getTokenRef().getFilename());
+			addTokenRefStmt.setInt(3, token.getFileOffset());
+			addTokenRefStmt.setInt(4, token.getLength());
+			addTokenRefStmt.setString(5, type);
+			addTokenRefStmt.executeUpdate();
+		} catch (SQLException e) {
+			CupidActivator.log("SQL error adding token ref", e);
+		}
+	}
+	
+	
 	protected void traverseChildren(IASTNode node, long id) {
 		parentStack.push(id);
 		traverseChildren(node);
@@ -154,11 +180,13 @@ public class CodeDBVisitor extends ASTVisitor {
 	@Override
 	public void visitASTModuleNode(ASTModuleNode node) {
 		long id = addFact("module", node.getModuleStmt().getModuleName().getModuleName().getText());
+		addTokenRef(id, node.getModuleStmt().getModuleName().getModuleName(), "module");
 		traverseChildren(node, id);
 	}
 	
 	@Override
 	public void visitASTUseStmtNode(ASTUseStmtNode node) {
+		node.getName().getTokenRef();
 		long id = addFact("uses", parentID(), node.getName().getText());
 		traverseChildren(node, id);
 	}
@@ -183,7 +211,29 @@ public class CodeDBVisitor extends ASTVisitor {
 	@Override
 	public void visitASTSubroutineSubprogramNode(ASTSubroutineSubprogramNode node) {
 		long id = addFact("subroutine", parentID(), node.getSubroutineStmt().getSubroutineName().getSubroutineName().getText());
+		indexParam = 0;
 		traverseChildren(node, id);
+		
+	}
+	
+	int indexParam;
+	
+	@Override
+	public void visitASTSubroutineParNode(ASTSubroutineParNode node) {
+		
+		indexParam++;
+		String type = "UNKNOWN";
+		boolean intentIn = false;
+		boolean intentOut = false;
+		List<Definition> defs = node.getVariableName().resolveBinding();
+		if (defs.size() > 0) {
+			Definition def = defs.get(0);
+			type = def.getType().toString();
+			intentIn = def.isIntentIn();
+			intentOut = def.isIntentOut();
+		}
+		
+		long id = addFact("param", parentID(), indexParam, node.getVariableName().getText(), type, intentIn, intentOut);
 	}
 	
 	@Override

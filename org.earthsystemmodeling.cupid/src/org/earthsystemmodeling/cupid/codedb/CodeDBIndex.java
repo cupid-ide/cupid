@@ -4,6 +4,8 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.sql.Connection;
 import java.sql.DriverManager;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
@@ -42,6 +44,7 @@ import org.eclipse.photran.internal.core.parser.ASTUseStmtNode;
 import org.eclipse.photran.internal.core.parser.ASTVarOrFnRefNode;
 import org.eclipse.photran.internal.core.parser.ASTVisitor;
 import org.eclipse.photran.internal.core.parser.IASTNode;
+import org.eclipse.photran.internal.core.vpg.PhotranTokenRef;
 
 import alice.tuprolog.InvalidTermException;
 import alice.tuprolog.InvalidTheoryException;
@@ -72,6 +75,7 @@ public class CodeDBIndex {
 	
 	private Connection conn = null;
 	private Prolog prolog = null;
+	private PreparedStatement findTokenRefStmt = null;
 	
 	public CodeDBIndex() {
 		prolog = new Prolog();
@@ -179,15 +183,58 @@ public class CodeDBIndex {
 	}
 	*/
 	
-	public List<Term> query(String query) throws MalformedGoalException {
+	public <N extends IASTNode> N findASTNode(Struct s) {
+		alice.tuprolog.Long id = (alice.tuprolog.Long) s.getTerm(0);
+		return findASTNode(id.longValue());
+	}
+	
+	public <N extends IASTNode> N findASTNode(long id) {
 		
-		ArrayList<Term> sols = new ArrayList<Term>();
+		if (findTokenRefStmt == null) {
+			try {
+				findTokenRefStmt = conn.prepareStatement("SELECT filename, offset, length, type FROM tokenRef WHERE id=?;");
+			} catch (SQLException e) {
+				CupidActivator.log("Error preparing SQL statement for finding token refs", e);
+				return null;
+			}
+		}
+		
+		try {
+			findTokenRefStmt.setLong(1, id);
+			ResultSet rs = findTokenRefStmt.executeQuery();
+			if (rs.next()) {
+				String filename = rs.getString("filename");
+				int offset = rs.getInt("offset");
+				int length = rs.getInt("length");
+				String type = rs.getString("type");
+				PhotranTokenRef tokenRef = new PhotranTokenRef(filename, offset, length);
+				
+				if (type.equalsIgnoreCase("module")) {
+					return (N) tokenRef.findToken().findNearestAncestor(ASTModuleNode.class);
+				}
+				else {
+					return (N) tokenRef.findToken();
+				}
+				
+			}
+			rs.close();
+		} catch (SQLException e) {
+			CupidActivator.log("Error retrieving token ref", e);
+		}
+		
+		return null;
+		
+	}
+	
+	public List<Struct> query(String query) throws MalformedGoalException {
+		
+		ArrayList<Struct> sols = new ArrayList<Struct>();
 		
 		SolveInfo solveInfo = getProlog().solve(query);
 		
 		while (true) {
 			try {
-				sols.add(solveInfo.getSolution());
+				sols.add((Struct) solveInfo.getSolution());
 				solveInfo = getProlog().solveNext();
 			} catch (NoMoreSolutionException e) {
 				break;

@@ -29,8 +29,9 @@ import org.eclipse.photran.internal.core.vpg.PhotranVPG;
 
 import alice.tuprolog.InvalidTheoryException;
 import alice.tuprolog.MalformedGoalException;
-import alice.tuprolog.Term;
+import alice.tuprolog.Struct;
 
+@SuppressWarnings("restriction")
 class NUOPCViewContentProvider implements IStructuredContentProvider, ITreeContentProvider {
 	
 	
@@ -52,6 +53,9 @@ class NUOPCViewContentProvider implements IStructuredContentProvider, ITreeConte
 		codeDB.clearTheory();
 		try {
 			codeDB.addTheory("nuopc_model(_mid, _name, _uid) :- module(_mid, _name), uses(_uid, _mid, 'NUOPC_Model').");
+			codeDB.addTheory("esmf_method(_id, _parentid, _name) :- subroutine(_id, _parentid, _name),"
+					+ "param(_pid1, _id, 1, _pname1, 'type(esmf_gridcomp)', _, _),"
+					+ "param(_pid2, _id, 2, _pname2, 'integer', false, true).");
 		} catch (InvalidTheoryException e) {
 			CupidActivator.log("Invalid theory", e);
 		}
@@ -73,11 +77,15 @@ class NUOPCViewContentProvider implements IStructuredContentProvider, ITreeConte
 			
 			String filename = PhotranVPG.getFilenameForIFile(input);
 			long startParse = System.currentTimeMillis();
-			IFortranAST ast = PhotranVPG.getInstance().parse(filename);
+			//IFortranAST ast = PhotranVPG.getInstance().parse(filename);
+			PhotranVPG.getInstance().releaseAST(filename);
+			IFortranAST ast = PhotranVPG.getInstance().acquireTransientAST(filename);
 			long endParse = System.currentTimeMillis();
 			
 			long startIndex = System.currentTimeMillis();
-			codeDB.indexAST(ast);
+			if (ast != null) {
+				codeDB.indexAST(ast);
+			}
 			long endIndex = System.currentTimeMillis();
 			
 			CupidActivator.log(IStatus.INFO, "Rebuild DB time: " + (endRebuild-startRebuild));
@@ -85,14 +93,36 @@ class NUOPCViewContentProvider implements IStructuredContentProvider, ITreeConte
 			CupidActivator.log(IStatus.INFO, "Index DB time: " + (endIndex-startIndex));
 			
 			//attempt a query
+			String query = "";
 			try {
-				List<Term> results = codeDB.query("nuopc_model(_id, _name, _uid).");
-				for (Term t : results) {
+				
+				//String query = "module(_mid, _modname), uses(_uid, _mid, _usedMod), (_usedMod='NUOPC_Model'; _usedMod='NUOPC_DriverAtmOcn').";
+				//String query = "param(_id, _pid, _idx, _name, _type, _intentIn, _intentOut).";
+				//String query = "esmf_method(_id, _parentid, _name).";
+				
+				//call(NUOPC_CompDerive(#^p_gcomp, #^genericImports/importsGenericSS, rc?=#^p_rc))
+				
+				query = "call(_id, _modid, 'NUOPC_CompDerive'),"
+						+ "callArg(_arg1, _id, 1, _expr1),"
+						+ "callArg(_arg2, _id, 2, _expr2),"
+						+ "callArg(_arg3, _id, 3, _expr3).";
+				
+				List<Struct> results = codeDB.query(query);
+				for (Struct t : results) {
 					System.out.println("Result: " + t);
 				}
+				
 			} catch (MalformedGoalException e) {
-				e.printStackTrace();
+				System.out.println("BAD QUERY: " + query);
 			}
+			
+			
+			//NUOPCDriver driver = new NUOPCDriver();
+			//NUOPCDriverAtmOcn driverAtmOcn = new NUOPCDriverAtmOcn();
+			
+			//boolean matches = driverAtmOcn.match(codeDB);
+			//System.out.println("matches driverAtmOcn = " + matches);
+			
 		}
 	}
 		

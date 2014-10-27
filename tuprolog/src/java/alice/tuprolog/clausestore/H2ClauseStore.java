@@ -109,6 +109,14 @@ public class H2ClauseStore implements ClauseStore
 					else if (type == Types.INTEGER) {
 						terms[i-1] = new alice.tuprolog.Int(resultSet.getInt(i));
 					}
+					else if (type == Types.BOOLEAN) {
+						if (resultSet.getBoolean(i)) {
+							terms[i-1] = Term.TRUE;
+						}
+						else {
+							terms[i-1] = Term.FALSE;
+						}
+					}
 					else {
 						terms[i-1] = new Struct(resultSet.getString(i));
 					}
