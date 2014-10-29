@@ -63,15 +63,15 @@ public abstract class CodeConcept<P extends CodeConcept<?,?>, A extends IASTNode
 	}
 	
 	override toString() {
-		'''«this.class.simpleName» : «_id»'''
+		'''Â«this.class.simpleNameÂ» : Â«_idÂ»'''
 	}
 	
 	def paramch(String defaultVal) {
-		'''CUPIDPARAM$CHAR$«defaultVal»$'''
+		'''CUPIDPARAM$CHAR$Â«defaultValÂ»$'''
 	}
 	
 	def paramint(int defaultVal) {
-		'''CUPIDPARAM$INT$«defaultVal»$'''
+		'''CUPIDPARAM$INT$Â«defaultValÂ»$'''
 	}
 	
 	

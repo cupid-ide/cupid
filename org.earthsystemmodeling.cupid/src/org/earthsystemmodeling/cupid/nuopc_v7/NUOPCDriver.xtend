@@ -79,11 +79,11 @@ class NUOPCDriver extends CodeConcept<CodeConcept<?,?>, ASTModuleNode> {
 				importNUOPCDriver = newBasicCodeConcept(this, rs.getLong("_uid"))
 				rs.close
 				
-				rs = '''uses(_uid, «_id», 'ESMF').'''.execQuery
+				rs = '''uses(_uid, Â«_idÂ», 'ESMF').'''.execQuery
 				if (rs.next) importESMF = newBasicCodeConcept(this, rs.getLong("_uid"))
 				rs.close
 				
-				rs = '''uses(_uid, «_id», 'NUOPC').'''.execQuery
+				rs = '''uses(_uid, Â«_idÂ», 'NUOPC').'''.execQuery
 				if (rs.next) importNUOPC = newBasicCodeConcept(this, rs.getLong("_uid"))
 				rs.close
 				
@@ -105,11 +105,11 @@ class NUOPCDriver extends CodeConcept<CodeConcept<?,?>, ASTModuleNode> {
 
 	
 	override toString() {
-'''NUOPCDriver2: (id = «_id», driverName = «driverName»)
-	importESMF: «importESMF»
-	importNUOPC: «importNUOPC»
-	importNUOPCDriver: «importNUOPCDriver»
-	setServices: «setServices»
+'''NUOPCDriver2: (id = Â«_idÂ», driverName = Â«driverNameÂ»)
+	importESMF: Â«importESMFÂ»
+	importNUOPC: Â«importNUOPCÂ»
+	importNUOPCDriver: Â«importNUOPCDriverÂ»
+	setServices: Â«setServicesÂ»
 '''
 	
 	}
@@ -179,9 +179,9 @@ class NUOPCDriver extends CodeConcept<CodeConcept<?,?>, ASTModuleNode> {
 		
 		override subroutineTemplate() {
 '''
-subroutine «subroutineName»(«paramGridComp», «paramRC»)
-    type(ESMF_GridComp)  :: «paramGridComp»
-    integer, intent(out) :: «paramRC»
+subroutine Â«subroutineNameÂ»(Â«paramGridCompÂ», Â«paramRCÂ»)
+    type(ESMF_GridComp)  :: Â«paramGridCompÂ»
+    integer, intent(out) :: Â«paramRCÂ»
 
     rc = ESMF_SUCCESS
 
@@ -228,7 +228,7 @@ end subroutine
 			
 		override reverse() {
 			if (this == super.reverse) {				
-				var rs = '''call_(_cid, «_id», 'ESMF_GridCompSet'),
+				var rs = '''call_(_cid, Â«_idÂ», 'ESMF_GridCompSet'),
 							callArgWithType(_, _cid, _, 'clock', _, _clockExpr).'''.execQuery
 				if (rs.next) {
 					setClock = newBasicCodeConcept(this, rs.getLong("_cid"))
@@ -288,33 +288,33 @@ type(ESMF_Clock)           :: internalClock
 			code = 			
 '''
 ! set the model clock
-call ESMF_TimeIntervalSet(timeStep, m=«paramint(15)», rc=«paramRC») ! 15 minute steps
-if (ESMF_LogFoundError(rcToCheck=«paramRC», msg=ESMF_LOGERR_PASSTHRU, &
+call ESMF_TimeIntervalSet(timeStep, m=Â«paramint(15)Â», rc=Â«paramRCÂ») ! 15 minute steps
+if (ESMF_LogFoundError(rcToCheck=Â«paramRCÂ», msg=ESMF_LOGERR_PASSTHRU, &
   line=__LINE__, &
   file=__FILE__)) &
   call ESMF_Finalize(endflag=ESMF_END_ABORT)
 
-call ESMF_TimeSet(startTime, yy=«paramint(2010)», mm=«paramint(6)», dd=«paramint(1)», h=«paramint(0)», m=«paramint(0)», rc=«paramRC»)
-if (ESMF_LogFoundError(rcToCheck=«paramRC», msg=ESMF_LOGERR_PASSTHRU, &
+call ESMF_TimeSet(startTime, yy=Â«paramint(2010)Â», mm=Â«paramint(6)Â», dd=Â«paramint(1)Â», h=Â«paramint(0)Â», m=Â«paramint(0)Â», rc=Â«paramRCÂ»)
+if (ESMF_LogFoundError(rcToCheck=Â«paramRCÂ», msg=ESMF_LOGERR_PASSTHRU, &
   line=__LINE__, &
   file=__FILE__)) &
   call ESMF_Finalize(endflag=ESMF_END_ABORT)
 
-call ESMF_TimeSet(stopTime, yy=«paramint(2010)», mm=«paramint(6)», dd=«paramint(1)», h=«paramint(1)», m=«paramint(0)», rc=«paramRC»)
-if (ESMF_LogFoundError(rcToCheck=«paramRC», msg=ESMF_LOGERR_PASSTHRU, &
+call ESMF_TimeSet(stopTime, yy=Â«paramint(2010)Â», mm=Â«paramint(6)Â», dd=Â«paramint(1)Â», h=Â«paramint(1)Â», m=Â«paramint(0)Â», rc=Â«paramRCÂ»)
+if (ESMF_LogFoundError(rcToCheck=Â«paramRCÂ», msg=ESMF_LOGERR_PASSTHRU, &
   line=__LINE__, &
   file=__FILE__)) &
   call ESMF_Finalize(endflag=ESMF_END_ABORT)
 
-internalClock = ESMF_ClockCreate(name="«paramch('AppClock')»", &
-  timeStep=timeStep, startTime=startTime, stopTime=stopTime, rc=«paramRC»)
+internalClock = ESMF_ClockCreate(name="Â«paramch('AppClock')Â»", &
+  timeStep=timeStep, startTime=startTime, stopTime=stopTime, rc=Â«paramRCÂ»)
 if (ESMF_LogFoundError(rcToCheck=rc, msg=ESMF_LOGERR_PASSTHRU, &
   line=__LINE__, &
   file=__FILE__)) &
   call ESMF_Finalize(endflag=ESMF_END_ABORT)
   
-call ESMF_GridCompSet(«paramGridComp», clock=internalClock, rc=«paramRC»)
-if (ESMF_LogFoundError(rcToCheck=«paramRC», msg=ESMF_LOGERR_PASSTHRU, &
+call ESMF_GridCompSet(Â«paramGridCompÂ», clock=internalClock, rc=Â«paramRCÂ»)
+if (ESMF_LogFoundError(rcToCheck=Â«paramRCÂ», msg=ESMF_LOGERR_PASSTHRU, &
   line=__LINE__, &
   file=__FILE__)) &
   return  ! bail out
@@ -352,7 +352,7 @@ if (ESMF_LogFoundError(rcToCheck=«paramRC», msg=ESMF_LOGERR_PASSTHRU, &
 		override List reverseMultiple() {
 			var retList = newArrayList()
 			
-			var rs = '''call_(_cid, «parentID», 'NUOPC_DriverAddComp'),
+			var rs = '''call_(_cid, Â«parentIDÂ», 'NUOPC_DriverAddComp'),
 							callArgWithType(_, _cid, 2, _arg2keyword, _arg2Type, _arg2Expr),
 							callArgWithType(_, _cid, 3, _arg3keyword, _arg3Type, _arg3Expr).'''
 							.execQuery
@@ -386,8 +386,8 @@ if (ESMF_LogFoundError(rcToCheck=«paramRC», msg=ESMF_LOGERR_PASSTHRU, &
 			var code = 
 '''
 
-call NUOPC_DriverAddComp(«_parent.paramGridComp», "«paramch('ComponentName')»", «paramch('CompSetServices')», comp=child, rc=«_parent.paramRC»)
-if (ESMF_LogFoundError(rcToCheck=«_parent.paramRC», msg=ESMF_LOGERR_PASSTHRU, &
+call NUOPC_DriverAddComp(Â«_parent.paramGridCompÂ», "Â«paramch('ComponentName')Â»", Â«paramch('CompSetServices')Â», comp=child, rc=Â«_parent.paramRCÂ»)
+if (ESMF_LogFoundError(rcToCheck=Â«_parent.paramRCÂ», msg=ESMF_LOGERR_PASSTHRU, &
     line=__LINE__, &
     file=__FILE__)) &
     return  ! bail out
@@ -477,9 +477,9 @@ if (ESMF_LogFoundError(rcToCheck=«_parent.paramRC», msg=ESMF_LOGERR_PASSTHRU, &
 		override subroutineTemplate() {
 '''
 
-subroutine «subroutineName»(«paramGridComp», «paramRC»)
-    type(ESMF_GridComp)  :: «paramGridComp»
-    integer, intent(out) :: «paramRC»
+subroutine Â«subroutineNameÂ»(Â«paramGridCompÂ», Â«paramRCÂ»)
+    type(ESMF_GridComp)  :: Â«paramGridCompÂ»
+    integer, intent(out) :: Â«paramRCÂ»
     
     ! local variables
     integer                       :: localrc
@@ -489,7 +489,7 @@ subroutine «subroutineName»(«paramGridComp», «paramRC»)
     rc = ESMF_SUCCESS
 
     ! get the petCount
-    call ESMF_GridCompGet(«paramGridComp», petCount=petCount, rc=localrc)
+    call ESMF_GridCompGet(Â«paramGridCompÂ», petCount=petCount, rc=localrc)
     if (ESMF_LogFoundError(rcToCheck=localrc, msg=ESMF_LOGERR_PASSTHRU, &
       line=__LINE__, &
       file=__FILE__)) &
@@ -501,7 +501,7 @@ subroutine «subroutineName»(«paramGridComp», «paramRC»)
       petList(i) = i-1 ! PET labeling goes from 0 to petCount-1
     enddo
     
-    call NUOPC_DriverSetModel(«paramGridComp», compIndex=1, petList=petList, rc=localrc)
+    call NUOPC_DriverSetModel(Â«paramGridCompÂ», compIndex=1, petList=petList, rc=localrc)
     if (ESMF_LogFoundError(rcToCheck=localrc, msg=ESMF_LOGERR_PASSTHRU, &
       line=__LINE__, &
       file=__FILE__)) &

@@ -18,7 +18,7 @@ public class BasicCodeConcept extends CodeConcept<CodeConcept<?,?>, IASTNode> {
 	}
 	
 	override toString() {
-		'''BasicCodeConcept: (id=«_id»)'''
+		'''BasicCodeConcept: (id=Â«_idÂ»)'''
 	}
 	
 	def static BasicCodeConcept newBasicCodeConcept(CodeConcept<?,?> parent, long id) {

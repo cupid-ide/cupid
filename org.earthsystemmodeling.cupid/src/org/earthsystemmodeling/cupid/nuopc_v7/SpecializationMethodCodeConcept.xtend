@@ -41,7 +41,7 @@ public abstract class SpecializationMethodCodeConcept<P extends CodeConcept<?, ?
 	}
 
 	override SpecializationMethodCodeConcept<P> reverse() {
-		var rs = '''esmf_regspec(_sid, «parentID», _name, '«labelComponent»', _specLabelExpr, '«labelName»', _regid).'''.
+		var rs = '''esmf_regspec(_sid, Â«parentIDÂ», _name, 'Â«labelComponentÂ»', _specLabelExpr, 'Â«labelNameÂ»', _regid).'''.
 			execQuery
 		if (rs.next) {
 			_id = rs.getLong("_sid")
@@ -50,7 +50,7 @@ public abstract class SpecializationMethodCodeConcept<P extends CodeConcept<?, ?
 			registration = newBasicCodeConcept(this, rs.getLong("_regid"))
 			rs.close
 
-			rs = '''esmf_specmethod(«_id», «parentID», _, _param_gridcomp, _param_rc).'''.execQuery
+			rs = '''esmf_specmethod(Â«_idÂ», Â«parentIDÂ», _, _param_gridcomp, _param_rc).'''.execQuery
 			if (rs.next) {
 				paramGridComp = rs.getString("_param_gridcomp")
 				paramRC = rs.getString("_param_rc")
@@ -74,9 +74,9 @@ public abstract class SpecializationMethodCodeConcept<P extends CodeConcept<?, ?
 	def String subroutineTemplate() {
 		'''
 
-subroutine «subroutineName»(«paramGridComp», «paramRC»)
-    type(ESMF_GridComp)  :: «paramGridComp»
-    integer, intent(out) :: «paramRC»
+subroutine Â«subroutineNameÂ»(Â«paramGridCompÂ», Â«paramRCÂ»)
+    type(ESMF_GridComp)  :: Â«paramGridCompÂ»
+    integer, intent(out) :: Â«paramRCÂ»
 
     rc = ESMF_SUCCESS
 
@@ -107,7 +107,7 @@ end subroutine
 		var usesNUOPCDriver = genericUse.getASTRef as ASTUseStmtNode
 		var tempCode = usesNUOPCDriver.toString.trim
 		tempCode += ''', &
-		«IF !specLabel.equals(labelName)»«specLabel» => «ENDIF»«labelName»'''
+		Â«IF !specLabel.equals(labelName)Â»Â«specLabelÂ» => Â«ENDIFÂ»Â«labelNameÂ»'''
 
 		var tempNode = parseLiteralStatement(tempCode) as ASTUseStmtNode;
 		usesNUOPCDriver.replaceWith(tempNode)
@@ -119,8 +119,8 @@ end subroutine
 			code = 
 '''
 
-call NUOPC_CompSpecialize(«paramGridComp», specLabel=«specLabel», &
-	specRoutine=«subroutineName», rc=«paramRC»)
+call NUOPC_CompSpecialize(Â«paramGridCompÂ», specLabel=Â«specLabelÂ», &
+	specRoutine=Â«subroutineNameÂ», rc=Â«paramRCÂ»)
 '''
 
 			var ASTCallStmtNode regCall = parseLiteralStatement(code) as ASTCallStmtNode
@@ -128,7 +128,7 @@ call NUOPC_CompSpecialize(«paramGridComp», specLabel=«specLabel», &
 		
 			code = 
 '''
-if (ESMF_LogFoundError(rcToCheck=«paramRC», msg=ESMF_LOGERR_PASSTHRU, &
+if (ESMF_LogFoundError(rcToCheck=Â«paramRCÂ», msg=ESMF_LOGERR_PASSTHRU, &
             line=__LINE__, &
             file=__FILE__)) &
             return  ! bail out
