@@ -1,5 +1,7 @@
 package org.earthsystemmodeling.cupid.views;
 
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -110,23 +112,31 @@ class NUOPCViewContentProvider implements IStructuredContentProvider, ITreeConte
 				//String query = "param(_id, _pid, _idx, _name, _type, _intentIn, _intentOut).";
 				//String query = "esmf_method(_id, _parentid, _name).";
 								
-				query = "call(_id, _modid, 'NUOPC_CompDerive'),"
+				query = "call_(_id, _modid, 'NUOPC_CompDerive'),"
 						+ "callArg(_arg1, _id, 1, _expr1),"
 						+ "callArg(_arg2, _id, 2, _expr2),"
 						+ "callArg(_arg3, _id, 3, _expr3).";
 			
-				query = "call_(_id, _modid, 'NUOPC_CompDerive'),"
-						+ "findall(_expr, callArg(_x,_id,_y,_expr), _args).";
+				//query = "call_(_id, _modid, 'NUOPC_CompDerive'),"
+				//		+ "findall(_expr, callArg(_x,_id,_y,_expr), _args).";
 				
 				//query = "findall(_expr, callArg(_x,_id,_y,_expr), _args).";
 				
-				List<Struct> results = codeDB.query(query);
-				for (Struct t : results) {
-					System.out.println("Result: " + t);
+				//List<Struct> results = codeDB.query(query);
+				//for (Struct t : results) {
+				//	System.out.println("Result: " + t);
+				//}
+				ResultSet rs = codeDB.query2(query);
+				
+				while (rs.next()) {
+					System.out.println("Result: " + rs.getLong("_id"));
 				}
 				
 			} catch (MalformedGoalException e) {
 				System.out.println("BAD QUERY: " + query);
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
 			}
 			
 			

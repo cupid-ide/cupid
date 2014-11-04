@@ -19,14 +19,14 @@ public class H2ClauseStoreFactory implements ClauseStoreFactory
 	
 	private Connection conn;
 	private String schema;
-	private Map<String, Boolean> coversPredicateMap;
-	private Map<String, H2ClauseStore> cache;
+	private Map<String, Boolean> coversPredicateMap;   //e.g.,   "tableName/arity" --> true/false 
+	//private Map<String, H2ClauseStore> cache;
 	
 	public H2ClauseStoreFactory(Connection conn, String schema) {
 		this.conn = conn;
 		this.schema = schema;
 		this.coversPredicateMap = new HashMap<String, Boolean>();
-		this.cache = new HashMap<String, H2ClauseStore>();		
+		//this.cache = new HashMap<String, H2ClauseStore>();		
 	}
 	
 	public ClauseStore buildClause(Prolog prolog, Term goal, List<?> varList)
@@ -60,13 +60,14 @@ public class H2ClauseStoreFactory implements ClauseStoreFactory
 	}
 	
 	protected boolean coversPredicate(String predicate, int arity) {
-		if (coversPredicateMap.containsKey(predicate)) {
-			return coversPredicateMap.get(predicate);
+		String predicateKey = predicateKey(predicate, arity);
+		if (coversPredicateMap.containsKey(predicateKey)) {
+			return coversPredicateMap.get(predicateKey);
 		}
 		else {
 			
 			//assume no
-			coversPredicateMap.put(predicate, false);
+			coversPredicateMap.put(predicateKey, false);
 			
 			//check metadata
 			ResultSet rs;
@@ -84,7 +85,7 @@ public class H2ClauseStoreFactory implements ClauseStoreFactory
 					}
 					
 					if (colCount == arity) {
-						coversPredicateMap.put(predicate, true);
+						coversPredicateMap.put(predicateKey, true);
 					}
 					rs.close();
 
@@ -94,8 +95,12 @@ public class H2ClauseStoreFactory implements ClauseStoreFactory
 				e.printStackTrace();
 			}
 			
-			return coversPredicateMap.get(predicate);
+			return coversPredicateMap.get(predicateKey);
 		}
+	}
+	
+	protected String predicateKey(String predicate, int arity) {
+		return predicate + "/" + arity;
 	}
 	
 	

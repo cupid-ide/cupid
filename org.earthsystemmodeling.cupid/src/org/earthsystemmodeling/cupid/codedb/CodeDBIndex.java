@@ -18,6 +18,7 @@ import java.util.Stack;
 
 import org.apache.commons.io.IOUtils;
 import org.earthsystemmodeling.cupid.core.CupidActivator;
+import org.earthsystemmodeling.cupid.preferences.CupidPreferencePage;
 import org.eclipse.core.runtime.FileLocator;
 import org.eclipse.core.runtime.Path;
 import org.eclipse.photran.core.IFortranAST;
@@ -90,9 +91,15 @@ public class CodeDBIndex {
 		}
 		
 		try {
-			//TODO: connection string
+			String dbloc;
+			dbloc = CupidActivator.getDefault().getPreferenceStore().getString(CupidPreferencePage.CUPID_CODEDB_LOCATION);
+			
+			if (dbloc.length() < 1) {
+				dbloc = CupidActivator.getDefault().getPreferenceStore().getDefaultString(CupidPreferencePage.CUPID_CODEDB_LOCATION);  
+			}
+			
 			//String connString = "jdbc:h2:mem:";
-			String connString = "jdbc:h2:~/.cupid/codedb;LOG=0;CACHE_SIZE=65536;LOCK_MODE=0;UNDO_LOG=0";
+			String connString = "jdbc:h2:" + dbloc + ";LOG=0;CACHE_SIZE=65536;LOCK_MODE=0;UNDO_LOG=0";
 			conn = DriverManager.getConnection(connString);
 		} catch (SQLException e3) {
 			//TODO: deal with this
@@ -224,6 +231,15 @@ public class CodeDBIndex {
 		
 		return null;
 		
+	}
+	
+	public ResultSet query2(String query) throws MalformedGoalException {
+		if (getProlog() != null) {
+			return new PrologResultSet(getProlog(), query);
+		}
+		else {
+			return null;
+		}
 	}
 	
 	public List<Struct> query(String query) throws MalformedGoalException {

@@ -17,6 +17,7 @@ public class PreferenceInitializer extends AbstractPreferenceInitializer {
 	 */
 	public void initializeDefaultPreferences() {
 		IPreferenceStore store = CupidActivator.getDefault().getPreferenceStore();
+		store.setDefault(CupidPreferencePage.CUPID_CODEDB_LOCATION, "~/.cupid/codedb");
 		store.setDefault(CupidPreferencePage.CUPID_AWS_ACCESS_KEY, "");
 		store.setDefault(CupidPreferencePage.CUPID_AWS_SECRET_KEY, "");
 		store.setDefault(CupidPreferencePage.CUPID_LANGUAGE_URI, "platform:/plugin/org.earthsystemmodeling.cupid/cupidmodel/nuopc7.psyche");

@@ -2,6 +2,9 @@ package org.earthsystemmodeling.cupid.views;
 
 
 import java.io.IOException;
+import java.sql.ResultSet;
+import java.sql.ResultSetMetaData;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -59,6 +62,8 @@ import alice.tuprolog.Prolog;
 import alice.tuprolog.SolveInfo;
 import alice.tuprolog.Theory;
 import alice.tuprolog.Var;
+import alice.tuprolog.event.WarningEvent;
+import alice.tuprolog.event.WarningListener;
 
 
 public class CodeQueryView extends ViewPart {
@@ -74,12 +79,24 @@ public class CodeQueryView extends ViewPart {
 	private Action doubleClickAction;
 	private Text textQuery;
 	private Combo comboQuery;
+	private Combo comboQT;
 	private ViewContentProvider viewContentProvider;
 	private Shell shell;
+	private Label labelCount;
 	//private List<String> queryCache = new ArrayList<String>();
-	private Prolog prolog = null;
+	//private Prolog prolog = null;
 	
 	class ViewContentProvider implements IStructuredContentProvider {
+		
+		public ViewContentProvider() {
+			Prolog prolog = CodeDBIndex.getInstance().getProlog();
+			prolog.addWarningListener(new WarningListener() {
+				@Override
+				public void onWarning(WarningEvent e) {
+					showMessage(e.getMsg());					
+				}
+			});
+		}
 		
 		String query;
 		//Prolog prolog = null;
@@ -93,10 +110,6 @@ public class CodeQueryView extends ViewPart {
 		public void inputChanged(Viewer v, Object oldInput, Object newInput) {
 			this.query = (String) newInput;
 			
-			if (prolog == null) {
-				showMessage("Code database not loaded.");
-				return;
-			}
 						
 			//clear columns
 			for (int i = 0; i < viewer.getTable().getColumnCount(); i++) {
@@ -107,7 +120,8 @@ public class CodeQueryView extends ViewPart {
 			
 			try {
 						
-				SolveInfo sol = prolog.solve(query);
+				//SolveInfo sol = prolog.solve(query);
+				ResultSet rs = CodeDBIndex.getInstance().query2(query);
 				
 				if (!queryCache.contains(query)) {
 					queryCache.add(query);
@@ -117,41 +131,38 @@ public class CodeQueryView extends ViewPart {
 				}
 				
 				//reset column names
-				int i = 0;
-				for (Object objVar : sol.getBindingVars()) {
-					Var var = (Var) objVar;
-					if (i > viewer.getTable().getColumnCount()-1) {
-						createTableViewerColumn(var.getName());
+				ResultSetMetaData rsm = rs.getMetaData();
+				for (int i = 1; i <= rsm.getColumnCount(); i++) {
+					if (i > viewer.getTable().getColumnCount()) {
+						createTableViewerColumn(rsm.getColumnName(i));
 					}
 					else {
-						viewer.getTable().getColumn(i).setText(var.getName());
+						viewer.getTable().getColumn(i-1).setText(rsm.getColumnName(i));
 					}
-					i++;
 				}
 				
 				//add data
-				while (true) {
-					
-					try {
-						
+				int count = 0;
+				while (rs.next()) {
+						count++;
 						List<String> result = new ArrayList<String>();
-						for (Object objVar : sol.getBindingVars()) {
-							Var var = (Var) objVar;
-							result.add(sol.getVarValue(var.getName()).toString());
+						//for (Object objVar : sol.getBindingVars()) {
+						//	Var var = (Var) objVar;
+						//	result.add(sol.getVarValue(var.getName()).toString());
+						//}
+						for (int i = 1; i <= rsm.getColumnCount(); i++) {
+							result.add(rs.getString(i));
 						}
 						resultList.add(result);
-											
-						sol = prolog.solveNext();
-					} catch (NoMoreSolutionException e) {
-						break;
-					}
-					
 				}
+				
+				labelCount.setText("Total results: " + count);
+				
 					
 			} catch (MalformedGoalException e1) {
 				showMessage("Invalid query");
-			} catch (NoSolutionException e1) {
-				showMessage("The query returned no results");
+			} catch (SQLException e1) {
+				showMessage("SQL Exception: " + e1.getMessage());
 			}
 			
 			viewer.setLabelProvider(new ViewLabelProvider());
@@ -225,6 +236,24 @@ public class CodeQueryView extends ViewPart {
 	    	}	    	
 	    });
 	    
+	    Label labelQueryTemplates = new Label(parent, SWT.NONE);
+	    labelQueryTemplates.setText("Query templates");
+	    data = new GridData(SWT.FILL, SWT.TOP, false, false, 1, 1);
+	    labelQueryTemplates.setLayoutData(data);
+	    
+	    comboQT = new Combo (parent, SWT.READ_ONLY);
+	    data = new GridData(SWT.FILL, SWT.TOP, true, false, 1, 1);
+	    comboQT.setLayoutData(data);
+	    comboQT.addSelectionListener(new SelectionAdapter() {
+	    	@Override
+	    	public void widgetSelected(SelectionEvent e) {
+	    		textQuery.setText(textQuery.getText() + "\n" + comboQT.getText());
+	    	}	    	
+	    });
+	    populateQueryTemplates();
+	    
+	    
+	    
 		Label labelQuery = new Label(parent, SWT.NONE);
 	    labelQuery.setText("Query");
 	    data = new GridData(SWT.FILL, SWT.TOP, true, false, 2, 1);
@@ -243,6 +272,9 @@ public class CodeQueryView extends ViewPart {
 			public void widgetSelected(SelectionEvent e) {
 				if (viewer != null) {
 					viewer.getTable().clearAll();
+					for (TableColumn tc : viewer.getTable().getColumns()) {
+						tc.setText("");
+					}
 				}
 			}
 		});
@@ -271,7 +303,13 @@ public class CodeQueryView extends ViewPart {
 	   		
 	    viewContentProvider = new ViewContentProvider();   
 		viewer.setContentProvider(viewContentProvider);
-		viewer.setLabelProvider(new ViewLabelProvider());		
+		viewer.setLabelProvider(new ViewLabelProvider());
+		
+		//result count label
+		labelCount = new Label(parent, SWT.NONE);
+	    labelCount.setText("");
+	    data = new GridData(SWT.FILL, SWT.TOP, true, false, 2, 1);
+	    labelCount.setLayoutData(data);
 	    
 		makeActions();
 		//hookContextMenu();
@@ -279,7 +317,12 @@ public class CodeQueryView extends ViewPart {
 		contributeToActionBars();
 	}
 	
-	 private TableViewerColumn createTableViewerColumn(String title) {
+	 private void populateQueryTemplates() {
+		comboQT.add("module(_mid, _mname)");
+		comboQT.add("subroutine(_sid, _pid, _sname)");
+	}
+
+	private TableViewerColumn createTableViewerColumn(String title) {
 		final TableViewerColumn viewerColumn = new TableViewerColumn(viewer, SWT.NONE);
 	    final TableColumn column = viewerColumn.getColumn();
 	    column.setText(title);
@@ -310,24 +353,26 @@ public class CodeQueryView extends ViewPart {
 	}
 
 	private void fillLocalPullDown(IMenuManager manager) {
-		manager.add(action1);
-		manager.add(new Separator());
+		//manager.add(action1);
+		//manager.add(new Separator());
 		manager.add(action2);
 	}
 
 	private void fillContextMenu(IMenuManager manager) {
-		manager.add(action1);
+		//manager.add(action1);
 		manager.add(action2);
 		// Other plug-ins can contribute there actions here
 		manager.add(new Separator(IWorkbenchActionConstants.MB_ADDITIONS));
 	}
 	
 	private void fillLocalToolBar(IToolBarManager manager) {
-		manager.add(action1);
+		//manager.add(action1);
 		manager.add(action2);
 	}
 
 	private void makeActions() {
+		
+		/*
 		action1 = new Action() {
 			public void run() {
 				//TODO: for now
@@ -339,6 +384,7 @@ public class CodeQueryView extends ViewPart {
 		action1.setToolTipText("Reload DB");
 		action1.setImageDescriptor(PlatformUI.getWorkbench().getSharedImages().
 			getImageDescriptor(ISharedImages.IMG_OBJ_ADD));
+		*/
 		
 		action2 = new Action() {
 			public void run() {
@@ -358,6 +404,7 @@ public class CodeQueryView extends ViewPart {
 									
 									Theory theory = new Theory(file.getContents());
 									System.out.println(theory.toString());
+									Prolog prolog = CodeDBIndex.getInstance().getProlog();
 									if (prolog != null) {
 										theory.append(prolog.getTheory());
 										prolog.setTheory(theory);
