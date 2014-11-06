@@ -118,7 +118,12 @@ public class H2ClauseStore implements ClauseStore
 						}
 					}
 					else {
-						terms[i-1] = new Struct(resultSet.getString(i));
+						if (resultSet.getString(i)==null) {
+							terms[i-1] = Struct.EMPTY_LIST;   //null becomes empty list
+						}
+						else {
+							terms[i-1] = new Struct(resultSet.getString(i));
+						}
 					}
 					
 					/*

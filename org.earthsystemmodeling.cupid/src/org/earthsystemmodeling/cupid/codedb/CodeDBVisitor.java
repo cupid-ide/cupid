@@ -253,7 +253,11 @@ public class CodeDBVisitor extends ASTVisitor {
 		traverseChildren(node, id);
 	
 		currentArgIndex++;
-		id = addFactWithID("callArg", id, parentID(), currentArgIndex, childExprId);
+		String keyword = null;
+		if (node.getName() != null) {
+			keyword = node.getName().getText();
+		}
+		id = addFactWithID("callArg", id, parentID(), currentArgIndex, keyword, childExprId);
 				
 	}
 	

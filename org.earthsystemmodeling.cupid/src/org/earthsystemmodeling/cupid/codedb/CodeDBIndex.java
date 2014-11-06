@@ -216,8 +216,9 @@ public class CodeDBIndex {
 				String type = rs.getString("type");
 				PhotranTokenRef tokenRef = new PhotranTokenRef(filename, offset, length);
 				
-				if (type.equalsIgnoreCase("module")) {
-					return (N) tokenRef.findToken().findNearestAncestor(ASTModuleNode.class);
+				Class<? extends IASTNode> astClass = typeToClass(type);
+				if (astClass != null) {
+					return (N) tokenRef.findToken().findNearestAncestor(astClass);
 				}
 				else {
 					return (N) tokenRef.findToken();
@@ -231,6 +232,11 @@ public class CodeDBIndex {
 		
 		return null;
 		
+	}
+	
+	protected Class<? extends IASTNode> typeToClass(String type) {
+		if (type.equalsIgnoreCase("module")) return ASTModuleNode.class;
+		return null;
 	}
 	
 	public ResultSet query2(String query) throws MalformedGoalException {

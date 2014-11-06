@@ -103,7 +103,13 @@ public class PrologResultSet implements ResultSet {
 		if (curSolution != null) {
 			try {
 				Var colVar = (Var) curSolution.getBindingVars().get(columnIndex-1);
-				return colVar.getTerm().toString();
+				if (!colVar.isBound()) return null;
+				if (colVar.getTerm().isEmptyList()) {
+					return null;
+				}
+				else {
+					return colVar.getTerm().toString();
+				}
 			} catch (NoSolutionException e) {
 				throw new SQLException(e);
 			}
@@ -140,6 +146,7 @@ public class PrologResultSet implements ResultSet {
 		if (curSolution != null) {
 			try {
 				Var colVar = (Var) curSolution.getBindingVars().get(columnIndex-1);
+				if (!colVar.isBound()) return 0;
 				alice.tuprolog.Long l = (alice.tuprolog.Long) colVar.getTerm();
 				return l.longValue();
 			} catch (NoSolutionException e) {
@@ -216,6 +223,7 @@ public class PrologResultSet implements ResultSet {
 			try {
 				Term t = curSolution.getVarValue(columnLabel);
 				if (t==null) throw new SQLException("No variable named " + columnLabel);
+				if (t instanceof Var) return null;
 				return t.toString();
 			} catch (NoSolutionException e) {
 				throw new SQLException(e);
@@ -253,7 +261,9 @@ public class PrologResultSet implements ResultSet {
 	public long getLong(String columnLabel) throws SQLException {
 		if (curSolution != null) {
 			try {
-				alice.tuprolog.Long t = (alice.tuprolog.Long) curSolution.getVarValue(columnLabel);
+				Term term = curSolution.getVarValue(columnLabel);
+				if (term instanceof Var) return 0;
+				alice.tuprolog.Long t = (alice.tuprolog.Long) term;
 				return t.longValue();
 			} catch (NoSolutionException e) {
 				throw new SQLException(e);

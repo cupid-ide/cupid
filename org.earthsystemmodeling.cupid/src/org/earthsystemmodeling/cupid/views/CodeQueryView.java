@@ -88,15 +88,20 @@ public class CodeQueryView extends ViewPart {
 	
 	class ViewContentProvider implements IStructuredContentProvider {
 		
+		private WarningListener wl;
+		
 		public ViewContentProvider() {
 			Prolog prolog = CodeDBIndex.getInstance().getProlog();
-			prolog.addWarningListener(new WarningListener() {
+			wl = new WarningListener() {
 				@Override
 				public void onWarning(WarningEvent e) {
 					showMessage(e.getMsg());					
 				}
-			});
+			};
+			prolog.addWarningListener(wl);
 		}
+			
+		
 		
 		String query;
 		//Prolog prolog = null;
@@ -170,6 +175,12 @@ public class CodeQueryView extends ViewPart {
 		}
 		
 		public void dispose() {
+			if (wl != null) {
+				Prolog prolog = CodeDBIndex.getInstance().getProlog();
+				if (prolog != null) {
+					prolog.removeWarningListener(wl);
+				}
+			}
 		}
 		
 		public Object[] getElements(Object parent) {
@@ -184,7 +195,12 @@ public class CodeQueryView extends ViewPart {
 				if (index > ((List)obj).size()-1) {
 					return null;
 				}
-				return ((List) obj).get(index).toString();
+				else if (((List) obj).get(index) == null) {
+					return "(null)";
+				}
+				else {
+					return ((List) obj).get(index).toString();
+				}
 			}
 			else {
 				return obj.toString();
@@ -320,6 +336,9 @@ public class CodeQueryView extends ViewPart {
 	 private void populateQueryTemplates() {
 		comboQT.add("module(_mid, _mname)");
 		comboQT.add("subroutine(_sid, _pid, _sname)");
+		comboQT.add("call_(_id, _pid, _cname)");
+		comboQT.add("callArg(_id, _pid, _idx, _keyword, _arg_expr_id)");
+		comboQT.add("ident(_id, _pid, _name)");
 	}
 
 	private TableViewerColumn createTableViewerColumn(String title) {

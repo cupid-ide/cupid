@@ -8,6 +8,8 @@ import java.util.List;
 import org.earthsystemmodeling.FSM;
 import org.earthsystemmodeling.cupid.codedb.CodeDBIndex;
 import org.earthsystemmodeling.cupid.core.CupidActivator;
+import org.earthsystemmodeling.cupid.nuopc_v7.NUOPCDriver;
+import org.earthsystemmodeling.cupid.nuopc_v7.NUOPCDriver;
 import org.earthsystemmodeling.cupid.util.Regex;
 import org.earthsystemmodeling.psyche.ConceptDef;
 import org.earthsystemmodeling.psyche.SubconceptOrAttribute;
@@ -57,8 +59,9 @@ class NUOPCViewContentProvider implements IStructuredContentProvider, ITreeConte
 		codeDB.rebuildDatabase();
 		codeDB.clearTheory();
 		try {
+			//TODO: add these somewhere else
 			codeDB.addTheory("nuopc_model(_mid, _name, _uid) :- module(_mid, _name), uses(_uid, _mid, 'NUOPC_Model').");
-			codeDB.addTheory("esmf_method(_id, _parentid, _name) :- subroutine(_id, _parentid, _name),"
+			codeDB.addTheory("esmf_setservices(_id, _parentid, _name) :- subroutine(_id, _parentid, _name),"
 					+ "param(_pid1, _id, 1, _pname1, 'type(esmf_gridcomp)', _, _),"
 					+ "param(_pid2, _id, 2, _pname2, 'integer', false, true).");
 		} catch (InvalidTheoryException e) {
@@ -71,6 +74,7 @@ class NUOPCViewContentProvider implements IStructuredContentProvider, ITreeConte
 				CupidActivator.log(Status.WARNING, "Prolog warning: " + e.getMsg());
 			}
 		});
+		
 	}
 	
 	public FSM<?> getCurrentFSM() {
@@ -105,6 +109,7 @@ class NUOPCViewContentProvider implements IStructuredContentProvider, ITreeConte
 			CupidActivator.log(IStatus.INFO, "Index DB time: " + (endIndex-startIndex));
 			
 			//attempt a query
+			/*
 			String query = "";
 			try {
 				
@@ -138,9 +143,10 @@ class NUOPCViewContentProvider implements IStructuredContentProvider, ITreeConte
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
+			*/
 			
-			
-			//NUOPCDriver driver = new NUOPCDriver();
+			NUOPCDriver driver = new NUOPCDriver(codeDB).reverse();
+			System.out.println("Reverse engineer driver:\n" + driver);
 			//NUOPCDriverAtmOcn driverAtmOcn = new NUOPCDriverAtmOcn();
 			
 			//boolean matches = driverAtmOcn.match(codeDB);
