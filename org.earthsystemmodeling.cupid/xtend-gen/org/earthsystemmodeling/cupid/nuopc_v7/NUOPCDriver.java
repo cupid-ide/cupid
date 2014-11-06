@@ -2,14 +2,15 @@ package org.earthsystemmodeling.cupid.nuopc_v7;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import org.earthsystemmodeling.cupid.annotation.Child;
+import org.earthsystemmodeling.cupid.annotation.Label;
+import org.earthsystemmodeling.cupid.annotation.Name;
 import org.earthsystemmodeling.cupid.codedb.CodeDBIndex;
 import org.earthsystemmodeling.cupid.core.CupidActivator;
-import org.earthsystemmodeling.cupid.nuopc_v7.Child;
 import org.earthsystemmodeling.cupid.nuopc_v7.CodeConcept;
-import org.earthsystemmodeling.cupid.nuopc_v7.Label;
-import org.earthsystemmodeling.cupid.nuopc_v7.Name;
 import org.eclipse.ltk.core.refactoring.TextFileChange;
 import org.eclipse.photran.internal.core.parser.ASTModuleNode;
+import org.eclipse.photran.internal.core.parser.ASTNode;
 import org.eclipse.photran.internal.core.parser.ASTSubroutineStmtNode;
 import org.eclipse.xtend2.lib.StringConcatenation;
 import org.eclipse.xtext.xbase.lib.Exceptions;
@@ -33,7 +34,8 @@ public class NUOPCDriver extends CodeConcept<NUOPCDriver, NUOPCDriver, ASTModule
       {
         StringConcatenation _builder = new StringConcatenation();
         _builder.append("esmf_setservices(_sid, ");
-        _builder.append(this._parent._id, "");
+        long _parentID = this.parentID();
+        _builder.append(_parentID, "");
         _builder.append(", _sname), ");
         _builder.newLineIfNotEmpty();
         _builder.append("\t\t\t\t\t");
@@ -80,11 +82,11 @@ public class NUOPCDriver extends CodeConcept<NUOPCDriver, NUOPCDriver, ASTModule
   }
   
   @Label("SetModelServices")
-  public static class SetModelServices extends CodeConcept<NUOPCDriver.SetModelServices, NUOPCDriver, ASTSubroutineStmtNode> {
+  public static class SetModelServices extends CodeConcept<NUOPCDriver.SetModelServices, NUOPCDriver.Initialization, ASTSubroutineStmtNode> {
     @Name
     public String subroutineName;
     
-    public SetModelServices(final NUOPCDriver parent, final CodeDBIndex codeDB) {
+    public SetModelServices(final NUOPCDriver.Initialization parent, final CodeDBIndex codeDB) {
       super(parent, codeDB);
     }
     
@@ -94,7 +96,8 @@ public class NUOPCDriver extends CodeConcept<NUOPCDriver, NUOPCDriver, ASTModule
         {
           StringConcatenation _builder = new StringConcatenation();
           _builder.append("esmf_setservices(_sid, ");
-          _builder.append(this._parent._id, "");
+          long _parentID = this.parentID();
+          _builder.append(_parentID, "");
           _builder.append(", _sname), ");
           _builder.newLineIfNotEmpty();
           _builder.append("\t\t\t\t\t ");
@@ -144,18 +147,102 @@ public class NUOPCDriver extends CodeConcept<NUOPCDriver, NUOPCDriver, ASTModule
     }
   }
   
+  @Label("Initialization")
+  public static class Initialization extends CodeConcept<NUOPCDriver.Initialization, NUOPCDriver, ASTNode> {
+    @Child
+    public NUOPCDriver.SetModelServices setModelServices;
+    
+    public Initialization(final NUOPCDriver parent, final CodeDBIndex codeDB) {
+      super(parent, codeDB);
+    }
+    
+    public NUOPCDriver.Initialization reverse() {
+      return this.reverseChildren();
+    }
+    
+    public NUOPCDriver.Initialization reverseChildren() {
+      NUOPCDriver.Initialization _xblockexpression = null;
+      {
+        NUOPCDriver.SetModelServices _setModelServices = new NUOPCDriver.SetModelServices(this, this._codeDB);
+        NUOPCDriver.SetModelServices _reverse = _setModelServices.reverse();
+        this.setModelServices = _reverse;
+        _xblockexpression = this;
+      }
+      return _xblockexpression;
+    }
+    
+    public TextFileChange forward() {
+      throw new UnsupportedOperationException("TODO: auto-generated method stub");
+    }
+  }
+  
+  public static class SetModelCount extends CodeConcept<NUOPCDriver.SetModelCount, NUOPCDriver.Initialization, ASTSubroutineStmtNode> {
+    public SetModelCount(final NUOPCDriver.Initialization parent, final CodeDBIndex codeDB) {
+      super(parent, codeDB);
+    }
+    
+    public NUOPCDriver.SetModelCount reverse() {
+      try {
+        NUOPCDriver.SetModelCount _xblockexpression = null;
+        {
+          StringConcatenation _builder = new StringConcatenation();
+          _builder.append("esmf_specmethod(_sid, ");
+          long _parentID = this.parentID();
+          _builder.append(_parentID, "");
+          _builder.append(", _sname)");
+          ResultSet rs = this.execQuery(_builder);
+          NUOPCDriver.SetModelCount _xifexpression = null;
+          boolean _next = rs.next();
+          if (_next) {
+            NUOPCDriver.SetModelCount _xblockexpression_1 = null;
+            {
+              long _long = rs.getLong("_sid");
+              this._id = _long;
+              rs.close();
+              _xblockexpression_1 = this;
+            }
+            _xifexpression = _xblockexpression_1;
+          } else {
+            Object _xblockexpression_2 = null;
+            {
+              rs.close();
+              _xblockexpression_2 = null;
+            }
+            _xifexpression = ((NUOPCDriver.SetModelCount)_xblockexpression_2);
+          }
+          _xblockexpression = _xifexpression;
+        }
+        return _xblockexpression;
+      } catch (Throwable _e) {
+        throw Exceptions.sneakyThrow(_e);
+      }
+    }
+    
+    public TextFileChange forward() {
+      throw new UnsupportedOperationException("TODO: auto-generated method stub");
+    }
+  }
+  
+  public String driverName;
+  
   @Name
-  public Object driverName = null;
+  public String filename;
   
-  private long standardESMFImportID = (-1);
+  public String path;
   
-  private long standardNUOPCImportID = (-1);
+  @Label("ESMF Import")
+  @Child
+  public long standardESMFImportID = (-1);
+  
+  @Label("NUOPC Import")
+  @Child
+  public long standardNUOPCImportID = (-1);
   
   @Child
   public NUOPCDriver.SetServices setServices;
   
   @Child
-  public NUOPCDriver.SetModelServices setModelServices;
+  public NUOPCDriver.Initialization initialization;
   
   public NUOPCDriver(final CodeDBIndex codeDB) {
     super(null, codeDB);
@@ -169,7 +256,16 @@ public class NUOPCDriver extends CodeConcept<NUOPCDriver, NUOPCDriver, ASTModule
     Object _xblockexpression = null;
     {
       StringConcatenation _builder = new StringConcatenation();
-      _builder.append("module(_moduleID, _driverName), uses(_uid, _mid, \'NUOPC_Driver\').");
+      _builder.append("module(_moduleID, _compUnitID, _driverName), ");
+      _builder.newLine();
+      _builder.append("\t\t            ");
+      _builder.append("compilationUnit(_compUnitID, _filename, _path),");
+      _builder.newLine();
+      _builder.append("   \t\t\t\t\t ");
+      _builder.append("( uses(_uid, _mid, \'NUOPC_Driver\') ;");
+      _builder.newLine();
+      _builder.append("     \t\t\t\t   ");
+      _builder.append("uses(_uid, _mid, \'NUOPC_DriverAtmOcn\') ).");
       ResultSet rs = this.execQuery(_builder);
       try {
         boolean _next = rs.next();
@@ -178,6 +274,10 @@ public class NUOPCDriver extends CodeConcept<NUOPCDriver, NUOPCDriver, ASTModule
           this._id = _long;
           String _string = rs.getString("_driverName");
           this.driverName = _string;
+          String _string_1 = rs.getString("_filename");
+          this.filename = _string_1;
+          String _string_2 = rs.getString("_path");
+          this.path = _string_2;
           rs.close();
           StringConcatenation _builder_1 = new StringConcatenation();
           _builder_1.append("uses(_uid, ");
@@ -224,9 +324,9 @@ public class NUOPCDriver extends CodeConcept<NUOPCDriver, NUOPCDriver, ASTModule
       NUOPCDriver.SetServices _setServices = new NUOPCDriver.SetServices(this, this._codeDB);
       NUOPCDriver.SetServices _reverse = _setServices.reverse();
       this.setServices = _reverse;
-      NUOPCDriver.SetModelServices _setModelServices = new NUOPCDriver.SetModelServices(this, this._codeDB);
-      NUOPCDriver.SetModelServices _reverse_1 = _setModelServices.reverse();
-      this.setModelServices = _reverse_1;
+      NUOPCDriver.Initialization _initialization = new NUOPCDriver.Initialization(this, this._codeDB);
+      NUOPCDriver.Initialization _reverse_1 = _initialization.reverse();
+      this.initialization = _reverse_1;
       _xblockexpression = this;
     }
     return _xblockexpression;
@@ -247,10 +347,6 @@ public class NUOPCDriver extends CodeConcept<NUOPCDriver, NUOPCDriver, ASTModule
     _builder.append("\t");
     _builder.append("setServices: ");
     _builder.append(this.setServices, "\t");
-    _builder.newLineIfNotEmpty();
-    _builder.append("\t");
-    _builder.append("setModelServices: ");
-    _builder.append(this.setModelServices, "\t");
     _builder.newLineIfNotEmpty();
     return _builder.toString();
   }

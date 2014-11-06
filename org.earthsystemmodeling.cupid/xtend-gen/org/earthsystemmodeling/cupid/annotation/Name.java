@@ -1,4 +1,4 @@
-package org.earthsystemmodeling.cupid.nuopc_v7;
+package org.earthsystemmodeling.cupid.annotation;
 
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;

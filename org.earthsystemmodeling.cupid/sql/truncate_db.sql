@@ -1,5 +1,6 @@
 set schema prolog;
 
+truncate table compilationUnit;
 truncate table tokenRef;
 truncate table module;
 truncate table uses;

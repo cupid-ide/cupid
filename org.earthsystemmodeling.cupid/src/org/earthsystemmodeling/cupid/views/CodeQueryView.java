@@ -95,7 +95,7 @@ public class CodeQueryView extends ViewPart {
 			wl = new WarningListener() {
 				@Override
 				public void onWarning(WarningEvent e) {
-					showMessage(e.getMsg());					
+					System.out.println("Prolog warning: " + e.getMsg());					
 				}
 			};
 			prolog.addWarningListener(wl);
@@ -125,8 +125,13 @@ public class CodeQueryView extends ViewPart {
 			
 			try {
 						
+				//reload default theory for debugging
+				CodeDBIndex.getInstance().clearTheory();
+				CodeDBIndex.getInstance().addDefaultTheory();
+				
 				//SolveInfo sol = prolog.solve(query);
 				ResultSet rs = CodeDBIndex.getInstance().query2(query);
+				
 				
 				if (!queryCache.contains(query)) {
 					queryCache.add(query);
@@ -136,6 +141,7 @@ public class CodeQueryView extends ViewPart {
 				}
 				
 				//reset column names
+				boolean hasNext = rs.next();
 				ResultSetMetaData rsm = rs.getMetaData();
 				for (int i = 1; i <= rsm.getColumnCount(); i++) {
 					if (i > viewer.getTable().getColumnCount()) {
@@ -147,8 +153,9 @@ public class CodeQueryView extends ViewPart {
 				}
 				
 				//add data
+				long startQuery = System.currentTimeMillis();
 				int count = 0;
-				while (rs.next()) {
+				while (hasNext) {
 						count++;
 						List<String> result = new ArrayList<String>();
 						//for (Object objVar : sol.getBindingVars()) {
@@ -159,9 +166,12 @@ public class CodeQueryView extends ViewPart {
 							result.add(rs.getString(i));
 						}
 						resultList.add(result);
+						hasNext = rs.next();
 				}
+				long stopQuery = System.currentTimeMillis();
+				long queryTime = stopQuery - startQuery;
 				
-				labelCount.setText("Total results: " + count);
+				labelCount.setText("Total results: " + count + "\t\tQuery time: " + queryTime);
 				
 					
 			} catch (MalformedGoalException e1) {
@@ -334,10 +344,14 @@ public class CodeQueryView extends ViewPart {
 	}
 	
 	 private void populateQueryTemplates() {
-		comboQT.add("module(_mid, _mname)");
+		comboQT.add("compilationUnit(_id, _filename, _path)");
+		comboQT.add("module(_mid, _compUnitID, _mname)");
+		comboQT.add("uses(_uid, _pid, _name)");
+		comboQT.add("usesEntity(_ueid, _uid, _name, _newName, _only)");
 		comboQT.add("subroutine(_sid, _pid, _sname)");
 		comboQT.add("call_(_id, _pid, _cname)");
 		comboQT.add("callArg(_id, _pid, _idx, _keyword, _arg_expr_id)");
+		comboQT.add("callArgIdent(_id, _pid, _idx, _keyword, _arg_expr).");
 		comboQT.add("ident(_id, _pid, _name)");
 	}
 

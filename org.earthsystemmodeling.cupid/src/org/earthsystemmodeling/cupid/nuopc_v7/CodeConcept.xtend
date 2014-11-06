@@ -19,12 +19,13 @@ public abstract class CodeConcept<S extends CodeConcept, P extends CodeConcept, 
 		_parent = parent
 	}
 	
+	def long parentID() {
+		if (_parent?._id > 0) _parent._id
+		else _parent?.parentID()
+	}
+	
 	def abstract S reverse()
 	def List<S> reverseMultiple() {newArrayList(reverse)}
-	
-	//def S reverseChildren() {
-	//	this as S
-	//}
 	
 	def abstract TextFileChange forward()
 

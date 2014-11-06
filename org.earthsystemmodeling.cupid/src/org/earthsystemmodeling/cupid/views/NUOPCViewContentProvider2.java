@@ -1,15 +1,13 @@
 package org.earthsystemmodeling.cupid.views;
 
-import java.lang.annotation.Annotation;
 import java.lang.reflect.Field;
 import java.util.ArrayList;
 
-import org.earthsystemmodeling.FSM;
+import org.earthsystemmodeling.cupid.annotation.Child;
+import org.earthsystemmodeling.cupid.annotation.Label;
 import org.earthsystemmodeling.cupid.codedb.CodeDBIndex;
 import org.earthsystemmodeling.cupid.core.CupidActivator;
-import org.earthsystemmodeling.cupid.nuopc_v7.Child;
 import org.earthsystemmodeling.cupid.nuopc_v7.CodeConcept;
-import org.earthsystemmodeling.cupid.nuopc_v7.Label;
 import org.earthsystemmodeling.cupid.nuopc_v7.NUOPCDriver;
 import org.eclipse.core.resources.IFile;
 import org.eclipse.core.runtime.IStatus;
@@ -21,6 +19,8 @@ import org.eclipse.photran.core.IFortranAST;
 import org.eclipse.photran.internal.core.vpg.PhotranVPG;
 
 import alice.tuprolog.InvalidTheoryException;
+import alice.tuprolog.event.OutputEvent;
+import alice.tuprolog.event.OutputListener;
 import alice.tuprolog.event.WarningEvent;
 import alice.tuprolog.event.WarningListener;
 
@@ -30,22 +30,13 @@ class NUOPCViewContentProvider2 implements IStructuredContentProvider, ITreeCont
 	private IFile input;
 	private CodeDBIndex codeDB = CodeDBIndex.getInstance();
 	private WarningListener warningListener;
+	private OutputListener outputListener;
 	
 	public NUOPCViewContentProvider2() {
 		
 		codeDB.openConnection();
 		codeDB.rebuildDatabase();
-		codeDB.clearTheory();
-		try {
-			//TODO: add these somewhere else
-			codeDB.addTheory("nuopc_model(_mid, _name, _uid) :- module(_mid, _name), uses(_uid, _mid, 'NUOPC_Model').");
-			codeDB.addTheory("esmf_setservices(_id, _parentid, _name) :- subroutine(_id, _parentid, _name),"
-					+ "param(_pid1, _id, 1, _pname1, 'type(esmf_gridcomp)', _, _),"
-					+ "param(_pid2, _id, 2, _pname2, 'integer', false, true).");
-		} catch (InvalidTheoryException e) {
-			CupidActivator.log("Invalid theory", e);
-		}
-		
+				
 		warningListener = new WarningListener() {
 			@Override
 			public void onWarning(WarningEvent e) {
@@ -53,7 +44,16 @@ class NUOPCViewContentProvider2 implements IStructuredContentProvider, ITreeCont
 			}
 		};
 		
+		outputListener = new OutputListener() {
+			@Override
+			public void onOutput(OutputEvent e) {
+				System.out.println("Prolog output: " + e.getMsg());
+			}
+		};
+		
+		
 		codeDB.getProlog().addWarningListener(warningListener);
+		codeDB.getProlog().addOutputListener(outputListener);
 		
 	}
 	
@@ -137,6 +137,9 @@ class NUOPCViewContentProvider2 implements IStructuredContentProvider, ITreeCont
 		if (warningListener != null && codeDB != null) {
 			codeDB.getProlog().removeWarningListener(warningListener);
 		}
+		if (outputListener != null && codeDB != null) {
+			codeDB.getProlog().removeOutputListener(outputListener);
+		}
 	}
 	
 	public Object[] getElements(Object parent) {	
@@ -155,18 +158,28 @@ class NUOPCViewContentProvider2 implements IStructuredContentProvider, ITreeCont
 	}
 	
 	public Object [] getChildren(Object p) {
-		ArrayList children = new ArrayList();
-		CodeConcept<?,?,?> cc = (CodeConcept<?,?,?>) p;
-		Class<?> clazz = cc.getClass();
+		ArrayList<Object> children = new ArrayList<Object>();
+		//CodeConcept<?,?,?> cc = (CodeConcept<?,?,?>) p;
+		Class<?> clazz = p.getClass();
 		for (Field field : clazz.getFields()) {
 			if (field.getAnnotation(Child.class) != null) {
 				try {
-					Object childVal = field.get(cc);
-					children.add(childVal);
-				} catch (IllegalArgumentException e) {
-					e.printStackTrace();
-				} catch (IllegalAccessException e) {
-					e.printStackTrace();
+					Object childVal = field.get(p);
+					
+					if (childVal instanceof CodeConcept) {
+						children.add(childVal);
+					}
+					else if (childVal != null) {
+						Label lbl = field.getAnnotation(Label.class);
+						CodeConceptProxy ccp = new CodeConceptProxy();
+						if (lbl != null) {
+							ccp.name = lbl.value();
+						}
+						ccp.value = childVal.toString();
+						children.add(ccp);
+					}
+				} catch (IllegalArgumentException | IllegalAccessException e) {
+					//ignore
 				}
 			}
 		}
@@ -178,6 +191,14 @@ class NUOPCViewContentProvider2 implements IStructuredContentProvider, ITreeCont
 		return getChildren(p).length > 0;
 	}
 	
-	
+	public static class CodeConceptProxy {
+		public String name = "";
+		public String value = "";
+		public CodeConceptProxy() {}
+		public CodeConceptProxy(String name, String value) {
+			this.name = name;
+			this.value = value;
+		}
+	}
 	
 }

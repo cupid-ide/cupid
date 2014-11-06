@@ -11,12 +11,14 @@ import java.util.Map;
 import java.util.Stack;
 
 import org.earthsystemmodeling.cupid.core.CupidActivator;
+import org.eclipse.core.resources.IFile;
 import org.eclipse.photran.internal.core.analysis.binding.Definition;
 import org.eclipse.photran.internal.core.analysis.dependence.Dependence.Type;
 import org.eclipse.photran.internal.core.lexer.Token;
 import org.eclipse.photran.internal.core.parser.ASTArrayConstructorNode;
 import org.eclipse.photran.internal.core.parser.ASTCallStmtNode;
 import org.eclipse.photran.internal.core.parser.ASTDblConstNode;
+import org.eclipse.photran.internal.core.parser.ASTExecutableProgramNode;
 import org.eclipse.photran.internal.core.parser.ASTIntConstNode;
 import org.eclipse.photran.internal.core.parser.ASTModuleNode;
 import org.eclipse.photran.internal.core.parser.ASTOnlyNode;
@@ -178,8 +180,17 @@ public class CodeDBVisitor extends ASTVisitor {
 	}
 	
 	@Override
+	public void visitASTExecutableProgramNode(ASTExecutableProgramNode node) {
+		IFile file = node.findFirstToken().getLogicalFile();
+		String filename = file.getName();
+		String path = file.getFullPath().toPortableString();
+		long id = addFact("compilationUnit", filename, path);
+		traverseChildren(node, id);
+	}
+	
+	@Override
 	public void visitASTModuleNode(ASTModuleNode node) {
-		long id = addFact("module", node.getModuleStmt().getModuleName().getModuleName().getText());
+		long id = addFact("module", parentID(), node.getModuleStmt().getModuleName().getModuleName().getText());
 		addTokenRef(id, node.getModuleStmt().getModuleName().getModuleName(), "module");
 		traverseChildren(node, id);
 	}

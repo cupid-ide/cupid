@@ -4,12 +4,12 @@ import java.lang.reflect.Field;
 import java.net.URL;
 
 import org.earthsystemmodeling.FSM;
+import org.earthsystemmodeling.cupid.annotation.Label;
+import org.earthsystemmodeling.cupid.annotation.Name;
 import org.earthsystemmodeling.cupid.core.CupidActivator;
-import org.earthsystemmodeling.cupid.nuopc_v7.Child;
 import org.earthsystemmodeling.cupid.nuopc_v7.CodeConcept;
-import org.earthsystemmodeling.cupid.nuopc_v7.Label;
-import org.earthsystemmodeling.cupid.nuopc_v7.Name;
 import org.earthsystemmodeling.cupid.views.NUOPCViewContentProvider.NUOPCModelElem;
+import org.earthsystemmodeling.cupid.views.NUOPCViewContentProvider2.CodeConceptProxy;
 import org.earthsystemmodeling.psyche.Call;
 import org.earthsystemmodeling.psyche.ImplicitContextMapping;
 import org.earthsystemmodeling.psyche.Mapping;
@@ -56,14 +56,15 @@ class NUOPCViewLabelProvider2 extends StyledCellLabelProvider { //implements ITa
 	@Override
 	public void update(final ViewerCell cell) {
 	
-		CodeConcept<?,?,?> element = (CodeConcept<?,?,?>) cell.getElement();
+		Object element = cell.getElement();
+		
+		//CodeConcept<?,?,?> element = (CodeConcept<?,?,?>) cell.getElement();
 	    StyledString text = new StyledString();	
 	    	    
 	    /*
 	    StyledString.Styler styler = new StyledString.Styler() {			
 			@Override
 			public void applyStyles(TextStyle textStyle) {
-				// TODO Auto-generated method stub
 				if (textStyle instanceof StyleRange) {
 					StyleRange sr = (StyleRange) textStyle;
 					sr.fontStyle = SWT.BOLD;
@@ -75,61 +76,66 @@ class NUOPCViewLabelProvider2 extends StyledCellLabelProvider { //implements ITa
 		};
 		*/
 		
-	    Class<?> clazz = element.getClass();
 	    
-	    if (cell.getColumnIndex() == 0) {
-	    	
-	    	//see if there is a name annotation
-	    	String label = clazz.getSimpleName();
-	    	Label lbl = clazz.getAnnotation(Label.class);
-    		if (lbl != null) {
-				try {
-					label = lbl.value();
-				} catch (IllegalArgumentException e) {
-					//ignore
-				}
-			}
-			
-			text.append(label);
-			
-			
-			/*
-			cell.getControl().addMouseListener(new MouseAdapter() {
-				@Override
-				public void mouseDoubleClick(MouseEvent e) {
-					System.out.println("You double clicked: " + e.data);
-				}
-			});
-			*/
-		
-			ImageDescriptor id = getFortranImageDescriptor();
-			if (id != null) {
-				cell.setImage(id.createImage());
-			}
-			
+	    
+	    if (element instanceof CodeConceptProxy) {
+	    	CodeConceptProxy proxy = (CodeConceptProxy) element;
+	    	if (cell.getColumnIndex()==0) {
+	    		text.append(proxy.name);
+	    	}
+	    	else {
+	    		text.append(proxy.value);
+	    	}
 	    }
 	    else {
-	    	
-	    	String name = null;
-	    	
-	    	for (Field field : clazz.getFields()) {
-				if (field.getAnnotation(Name.class) != null) {
+	    
+		    Class<?> clazz = element.getClass();
+		    
+		    if (cell.getColumnIndex() == 0) {
+		    	
+		    	//see if there is a name annotation
+		    	String label = clazz.getSimpleName();
+		    	Label lbl = clazz.getAnnotation(Label.class);
+	    		if (lbl != null) {
 					try {
-						name = (String) field.get(element);
-						break; //assume one name for now
-					} catch (IllegalArgumentException | IllegalAccessException e) {
+						label = lbl.value();
+					} catch (IllegalArgumentException e) {
 						//ignore
 					}
 				}
-			}
-	    	
-	    	if (name != null) {
-	    		text.append(name);
-	    	}
-	    	else {
-	    		text.append(element.toString());
-	    	}
-	    	//cell.setImage(getFortranImage(me));
+				
+				text.append(label);			
+						
+				ImageDescriptor id = getFortranImageDescriptor();
+				if (id != null) {
+					cell.setImage(id.createImage());
+				}
+				
+		    }
+		    else {
+		    	
+		    	String name = null;
+		    	
+		    	for (Field field : clazz.getFields()) {
+					if (field.getAnnotation(Name.class) != null) {
+						try {
+							name = (String) field.get(element);
+							break; //assume one name for now
+						} catch (IllegalArgumentException | IllegalAccessException e) {
+							//ignore
+						}
+					}
+				}
+		    	
+		    	if (name != null) {
+		    		text.append(name);
+		    	}
+		    	else {
+		    		text.append(element.toString());
+		    	}
+		    	//cell.setImage(getFortranImage(me));
+		    }
+	    
 	    }
 	    
 	    cell.setText(text.toString());

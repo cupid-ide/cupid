@@ -80,6 +80,17 @@ public class CodeDBIndex {
 	
 	public CodeDBIndex() {
 		prolog = new Prolog();
+		addDefaultTheory();
+	}
+	
+	public void addDefaultTheory() {
+		try {
+			InputStream inputStream = CupidActivator.getInputStream("sql/default.pl");
+			String theory = IOUtils.toString(inputStream);
+			addTheory(theory);
+		} catch (InvalidTheoryException | IOException e) {
+			CupidActivator.log("Error loading default theory into CodeDB", e);
+		}			
 	}
 	
 	public void openConnection() {
@@ -106,7 +117,7 @@ public class CodeDBIndex {
 			throw new RuntimeException(e3);
 		}
 		
-		prolog.getEngineManager().getClauseStoreManager().getFactories()
+		getProlog().getEngineManager().getClauseStoreManager().getFactories()
 								.add(new H2ClauseStoreFactory(conn, "PROLOG"));
 	}
 	
@@ -163,7 +174,7 @@ public class CodeDBIndex {
 	public void indexASTs(Set<IFortranAST> asts) {			
 		//clauseList.clear();
 		for (IFortranAST ast : asts) {
-			ast.accept(new CodeDBVisitor(conn));
+			indexAST(ast);
 			
 			//control flow analysis
 			//ControlFlowAnalysis cfa = ControlFlowAnalysis.analyze(ast.getFile().getName(), ast.getRoot());
@@ -327,6 +338,7 @@ public class CodeDBIndex {
 	}
 	*/
 	
+	/*
 	public void printClauseList() {
 		System.out.println("CodeDBIndex clause list:");
 		int i = 0;
@@ -345,7 +357,8 @@ public class CodeDBIndex {
 	public int size() {
 		return clauseList.size();
 	}
-		
+	*/
+	
 	class CodeDBIndexVisitor extends ASTVisitor {
 		
 		int compilationUnitID = -1;

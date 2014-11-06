@@ -1,4 +1,6 @@
 package org.earthsystemmodeling.cupid.core;
+import java.io.IOException;
+import java.io.InputStream;
 import java.net.URL;
 
 import org.eclipse.core.runtime.FileLocator;
@@ -56,6 +58,16 @@ public class CupidActivator extends AbstractUIPlugin {
 		URL url = FileLocator.find(getDefault().getBundle(), new Path(file), null);
 	    ImageDescriptor image = ImageDescriptor.createFromURL(url);
 	    return image;
+	}
+	
+	public static InputStream getInputStream(String path) {
+		try {
+			return FileLocator.openStream(
+				   getDefault().getBundle(), new Path(path), false);
+		} catch (IOException e) {
+			log("Error opening input stream: " + path, e);
+		}
+		return null;
 	}
 
 

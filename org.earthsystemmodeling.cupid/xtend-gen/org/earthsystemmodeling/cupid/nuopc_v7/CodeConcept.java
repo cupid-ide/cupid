@@ -26,6 +26,25 @@ public abstract class CodeConcept<S extends CodeConcept, P extends CodeConcept, 
     this._parent = parent;
   }
   
+  public long parentID() {
+    long _xifexpression = (long) 0;
+    long __id = 0l;
+    if (this._parent!=null) {
+      __id=this._parent._id;
+    }
+    boolean _greaterThan = (__id > 0);
+    if (_greaterThan) {
+      _xifexpression = this._parent._id;
+    } else {
+      long _parentID = 0l;
+      if (this._parent!=null) {
+        _parentID=this._parent.parentID();
+      }
+      _xifexpression = _parentID;
+    }
+    return _xifexpression;
+  }
+  
   public abstract S reverse();
   
   public List<S> reverseMultiple() {

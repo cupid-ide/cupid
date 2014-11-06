@@ -1,6 +1,7 @@
 create schema if not exists prolog;
 set schema prolog;
 
+drop table if exists compilationUnit;
 drop table if exists tokenRef;
 drop table if exists module;
 drop table if exists uses;
@@ -16,6 +17,11 @@ drop sequence if exists global_fact_id;
 
 create sequence global_fact_id;
 
+create table compilationUnit(
+	id bigint default global_fact_id.nextval primary key,
+	filename varchar(100),
+	path varchar(1024));
+
 create table tokenRef(
 	id bigint primary key,
 	filename varchar(500),
@@ -25,6 +31,7 @@ create table tokenRef(
 
 create table module(
     id bigint default global_fact_id.nextval primary key, 
+    parent_id bigint,
     name varchar(100));
     
 create table uses(

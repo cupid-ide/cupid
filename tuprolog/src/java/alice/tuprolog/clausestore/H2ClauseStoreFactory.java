@@ -72,6 +72,7 @@ public class H2ClauseStoreFactory implements ClauseStoreFactory
 			//check metadata
 			ResultSet rs;
 			try {
+				//String[] TABLE_AND_VIEW_TYPES = {"TABLE","VIEW"};
 				rs = conn.getMetaData().getTables(null, schema.toUpperCase(), predicate.toUpperCase(), null);
 				if (rs.next()) {
 					rs.close();

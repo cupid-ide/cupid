@@ -33,13 +33,17 @@ import alice.tuprolog.Var;
 public class PrologResultSet implements ResultSet {
 
 	private Prolog prolog;
-	private SolveInfo curSolution;
-	private SolveInfo nextSolution;
+	private SolveInfo curSolution = null;
+	private String query;
+	private boolean beforeFirst;
+	//private SolveInfo nextSolution;
 	
-	protected PrologResultSet(Prolog prolog, String query) throws MalformedGoalException {
+	protected PrologResultSet(Prolog prolog, String query) {
 		
 		this.prolog = prolog;
-		nextSolution = prolog.solve(query);
+		this.query = query;
+		this.beforeFirst = true;
+		//nextSolution = prolog.solve(query);
 				
 		/*
 		while (true) {
@@ -74,13 +78,20 @@ public class PrologResultSet implements ResultSet {
 
 	@Override
 	public boolean next() throws SQLException {
-		curSolution = nextSolution;
 		
-		if (curSolution != null && curSolution.isSuccess()) {
+		if (beforeFirst) {
+			beforeFirst = false;
 			try {
-				nextSolution = prolog.solveNext();
+				curSolution = prolog.solve(query);
+			} catch (MalformedGoalException e) {
+				throw new SQLException(e);
+			}
+		}
+		else {
+			try {
+				curSolution = prolog.solveNext();
 			} catch (NoMoreSolutionException e) {
-				nextSolution = null;
+				curSolution = null;
 			}
 		}
 		
@@ -103,7 +114,7 @@ public class PrologResultSet implements ResultSet {
 		if (curSolution != null) {
 			try {
 				Var colVar = (Var) curSolution.getBindingVars().get(columnIndex-1);
-				if (!colVar.isBound()) return null;
+				if (colVar.getTerm() instanceof Var) return null;
 				if (colVar.getTerm().isEmptyList()) {
 					return null;
 				}
@@ -355,9 +366,6 @@ public class PrologResultSet implements ResultSet {
 	public ResultSetMetaData getMetaData() throws SQLException {
 		if (curSolution != null) {
 			return new PrologResultSetMetadata(curSolution);
-		}
-		else if (nextSolution != null) {
-			return new PrologResultSetMetadata(nextSolution);
 		}
 		else {
 			return null;
