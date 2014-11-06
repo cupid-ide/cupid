@@ -90,8 +90,8 @@ public class NUOPCView extends ViewPart {
 	
 	private TreeColumn tc2;
 	
-	private NUOPCViewContentProvider contentProvider;
-	private NUOPCViewLabelProvider labelProvider;
+	private NUOPCViewContentProvider2 contentProvider;
+	private NUOPCViewLabelProvider2 labelProvider;
 	
 	//private boolean projectIsDirty = false;
 
@@ -292,10 +292,10 @@ public class NUOPCView extends ViewPart {
 		
 		drillDownAdapter = new DrillDownAdapter(viewer);
 		
-		contentProvider = new NUOPCViewContentProvider();
+		contentProvider = new NUOPCViewContentProvider2();
 		viewer.setContentProvider(contentProvider);
 		
-		labelProvider = new NUOPCViewLabelProvider(contentProvider);
+		labelProvider = new NUOPCViewLabelProvider2(contentProvider);
 		viewer.setLabelProvider(labelProvider);
 		viewer.setSorter(null);
 		
@@ -334,7 +334,7 @@ public class NUOPCView extends ViewPart {
 				
 				if (me.elem != null) {
 					//Object val = contentProvider.getReverseMappings().get(me.elem);
-					Object val = contentProvider.getCurrentFSM().getMapsTo(me.elem);
+					Object val = null; //contentProvider.getCurrentFSM().getMapsTo(me.elem);
 					
 					if (val != null) {
 						
@@ -469,7 +469,7 @@ public class NUOPCView extends ViewPart {
                     IStructuredSelection selection = (IStructuredSelection) viewer.getSelection();
                     final NUOPCModelElem me = (NUOPCModelElem) selection.getFirstElement();
 
-                    final FSM<?> fsm = contentProvider.getCurrentFSM();
+                    final FSM<?> fsm = null; //contentProvider.getCurrentFSM();
                     ConceptDef conceptDef = null;
                     if (me.subconcept != null && !me.subconcept.isAttrib()) {
                     	conceptDef = fsm.getDefinition(me.subconcept);

@@ -9,15 +9,15 @@ import static org.earthsystemmodeling.cupid.core.CupidActivator.log
 class NUOPCDriver extends CodeConcept<NUOPCDriver, NUOPCDriver, ASTModuleNode> {
 	
 	@Name
-	var driverName = null
+	var public driverName = null
 	var long standardESMFImportID = -1
 	var long standardNUOPCImportID = -1
 	
 	@Child
-	var SetServices setServices
+	var public SetServices setServices
 	
 	@Child
-	var SetModelServices setModelServices	
+	var public SetModelServices setModelServices	
 	
 	new(CodeDBIndex codeDB) {
 		super(null, codeDB)	
@@ -69,9 +69,11 @@ class NUOPCDriver extends CodeConcept<NUOPCDriver, NUOPCDriver, ASTModuleNode> {
 	}
 	
 	
+	@Label("SetServices")
 	static class SetServices extends CodeConcept<SetServices, NUOPCDriver, ASTSubroutineStmtNode> {
 		
-		var String subroutineName
+		@Name
+		var public String subroutineName
 		var long callsCompDeriveID = -1
 		
 		new(NUOPCDriver parent, CodeDBIndex codeDB) {
@@ -109,9 +111,11 @@ class NUOPCDriver extends CodeConcept<NUOPCDriver, NUOPCDriver, ASTModuleNode> {
 		
 	}
 	
+	@Label("SetModelServices")
 	static class SetModelServices extends CodeConcept<SetModelServices, NUOPCDriver, ASTSubroutineStmtNode> {
 	
-		var String subroutineName
+		@Name
+		var public String subroutineName
 		
 		new(NUOPCDriver parent, CodeDBIndex codeDB) {
 			super(parent, codeDB)

@@ -17,8 +17,10 @@ import org.eclipse.xtext.xbase.lib.Exceptions;
 @Label("NUOPC Driver")
 @SuppressWarnings("all")
 public class NUOPCDriver extends CodeConcept<NUOPCDriver, NUOPCDriver, ASTModuleNode> {
+  @Label("SetServices")
   public static class SetServices extends CodeConcept<NUOPCDriver.SetServices, NUOPCDriver, ASTSubroutineStmtNode> {
-    private String subroutineName;
+    @Name
+    public String subroutineName;
     
     private long callsCompDeriveID = (-1);
     
@@ -77,8 +79,10 @@ public class NUOPCDriver extends CodeConcept<NUOPCDriver, NUOPCDriver, ASTModule
     }
   }
   
+  @Label("SetModelServices")
   public static class SetModelServices extends CodeConcept<NUOPCDriver.SetModelServices, NUOPCDriver, ASTSubroutineStmtNode> {
-    private String subroutineName;
+    @Name
+    public String subroutineName;
     
     public SetModelServices(final NUOPCDriver parent, final CodeDBIndex codeDB) {
       super(parent, codeDB);
@@ -141,17 +145,17 @@ public class NUOPCDriver extends CodeConcept<NUOPCDriver, NUOPCDriver, ASTModule
   }
   
   @Name
-  private Object driverName = null;
+  public Object driverName = null;
   
   private long standardESMFImportID = (-1);
   
   private long standardNUOPCImportID = (-1);
   
   @Child
-  private NUOPCDriver.SetServices setServices;
+  public NUOPCDriver.SetServices setServices;
   
   @Child
-  private NUOPCDriver.SetModelServices setModelServices;
+  public NUOPCDriver.SetModelServices setModelServices;
   
   public NUOPCDriver(final CodeDBIndex codeDB) {
     super(null, codeDB);
