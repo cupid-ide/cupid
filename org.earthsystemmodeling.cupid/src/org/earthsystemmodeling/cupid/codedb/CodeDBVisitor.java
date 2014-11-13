@@ -154,7 +154,7 @@ public class CodeDBVisitor extends ASTVisitor {
 		try {
 			addTokenRefStmt.setLong(1, id);
 			addTokenRefStmt.setString(2, token.getTokenRef().getFilename());
-			addTokenRefStmt.setInt(3, token.getFileOffset());
+			addTokenRefStmt.setInt(3, token.getStreamOffset());
 			addTokenRefStmt.setInt(4, token.getLength());
 			addTokenRefStmt.setString(5, type);
 			addTokenRefStmt.executeUpdate();
@@ -199,6 +199,7 @@ public class CodeDBVisitor extends ASTVisitor {
 	public void visitASTUseStmtNode(ASTUseStmtNode node) {
 		node.getName().getTokenRef();
 		long id = addFact("uses", parentID(), node.getName().getText());
+		addTokenRef(id, node.getName(), "uses");
 		traverseChildren(node, id);
 	}
 	
@@ -275,17 +276,21 @@ public class CodeDBVisitor extends ASTVisitor {
 	
 	@Override
 	public void visitASTVarOrFnRefNode(ASTVarOrFnRefNode node) {	
-		//int defId = addDefinition(node.getName().getName());
-		childExprId = addFact("ident", parentID(), node.getName().getName().getText());
+		
+		String type = null;
+		List<Definition> defs = node.getName().getName().resolveBinding();
+		if (defs.size() > 0) {
+			Definition def = defs.get(0);
+			type = def.getType().toString();
+		}
+		
+		childExprId = addFact("ident", parentID(), type, node.getName().getName().getText());
 	}
 	
-	/**
-	 * const(#id, #parent, 'string', value)
-	 * type is one of: 'string', 'double', 'integer', 'real', etc. 
-	 */
+	
 	@Override
 	public void visitASTStringConstNode(ASTStringConstNode node) {
-		childExprId = addFact("const", parentID(), "string", node.getStringConst().getText());
+		childExprId = addFact("const", parentID(), "character", node.getStringConst().getText());
 	}
 	
 	@Override

@@ -123,8 +123,9 @@ public class CodeExtraction {
      * <p>
      * No semantic analysis is done; it is only necessary that the
      * program unit be syntactically correct.
+     * @return 
      */
- 	public static IProgramUnit parseLiteralProgramUnit(String string)
+ 	public static <T extends IProgramUnit> T parseLiteralProgramUnit(String string)
     {
         try
         {
@@ -133,7 +134,7 @@ public class CodeExtraction {
             Parser parser = new Parser();
 
             FortranAST ast = new FortranAST(null, parser.parse(lexer), lexer.getTokenList());
-            return ast.getRoot().getProgramUnitList().get(0);
+            return (T) ast.getRoot().getProgramUnitList().get(0);
         }
         catch (Exception e)
         {

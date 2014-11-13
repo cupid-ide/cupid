@@ -2,6 +2,8 @@ package org.earthsystemmodeling.cupid.views;
 
 import java.lang.reflect.Field;
 import java.net.URL;
+import java.util.HashMap;
+import java.util.Map;
 
 import org.earthsystemmodeling.FSM;
 import org.earthsystemmodeling.cupid.annotation.Label;
@@ -56,9 +58,7 @@ class NUOPCViewLabelProvider2 extends StyledCellLabelProvider { //implements ITa
 	@Override
 	public void update(final ViewerCell cell) {
 	
-		Object element = cell.getElement();
-		
-		//CodeConcept<?,?,?> element = (CodeConcept<?,?,?>) cell.getElement();
+		Object element = cell.getElement();		
 	    StyledString text = new StyledString();	
 	    	    
 	    /*
@@ -76,70 +76,54 @@ class NUOPCViewLabelProvider2 extends StyledCellLabelProvider { //implements ITa
 		};
 		*/
 		
-	    
-	    
-	    if (element instanceof CodeConceptProxy) {
-	    	CodeConceptProxy proxy = (CodeConceptProxy) element;
-	    	if (cell.getColumnIndex()==0) {
-	    		text.append(proxy.name);
-	    	}
-	    	else {
-	    		text.append(proxy.value);
-	    	}
-	    }
-	    else {
-	    
-		    Class<?> clazz = element.getClass();
-		    
-		    if (cell.getColumnIndex() == 0) {
-		    	
-		    	//see if there is a name annotation
-		    	String label = clazz.getSimpleName();
-		    	Label lbl = clazz.getAnnotation(Label.class);
-	    		if (lbl != null) {
-					try {
-						label = lbl.value();
-					} catch (IllegalArgumentException e) {
-						//ignore
-					}
-				}
-				
-				text.append(label);			
-						
-				ImageDescriptor id = getFortranImageDescriptor();
-				if (id != null) {
-					cell.setImage(id.createImage());
-				}
-				
-		    }
-		    else {
-		    	
-		    	String name = null;
-		    	
-		    	for (Field field : clazz.getFields()) {
-					if (field.getAnnotation(Name.class) != null) {
-						try {
-							name = (String) field.get(element);
-							break; //assume one name for now
-						} catch (IllegalArgumentException | IllegalAccessException e) {
-							//ignore
+	    ImageDescriptor icon = null;
+	    	   
+    	CodeConceptProxy proxy = (CodeConceptProxy) element;
+    	if (cell.getColumnIndex()==0) {
+    		text.append(proxy.label);
+    		icon = getFortranImageDescriptor(proxy.type);
+    	}
+    	else {
+    		
+    		String value = null;
+    		if (proxy.codeConcept != null) {
+	    		//first try name method
+    			value = proxy.codeConcept.name();
+    			
+    			//then look for annotation
+    			if (value == null) {
+	    			for (Field field : proxy.clazz.getFields()) {
+						if (field.getAnnotation(Name.class) != null) {
+							try {
+								value = (String) field.get(proxy.codeConcept);
+								break; //assume one name for now
+							} catch (IllegalArgumentException | IllegalAccessException e) {
+								//ignore
+							}
 						}
 					}
-				}
-		    	
-		    	if (name != null) {
-		    		text.append(name);
-		    	}
-		    	else {
-		    		text.append(element.toString());
-		    	}
-		    	//cell.setImage(getFortranImage(me));
-		    }
-	    
-	    }
+    			}
+    			
+    		}
+    		
+    		if (value == null) {
+    			value = "";
+    		}
+    		
+    		text.append(value);
+    	}
+	    	
 	    
 	    cell.setText(text.toString());
 	    cell.setStyleRanges(text.getStyleRanges());
+	    if (icon != null) {
+			cell.setImage(icon.createImage());
+		}
+	    
+	    //simple constraint check
+	    if (proxy.codeConcept==null && proxy.min==1) {
+	    	cell.setForeground(Display.getCurrent().getSystemColor(SWT.COLOR_RED));
+	    }
 	    
 	    //if (me.validationMessage != null || (me.elem==null && !me.subconcept.isAttrib() && FSM.isRequired(me.subconcept))) {
 	    //	cell.setForeground(Display.getCurrent().getSystemColor(SWT.COLOR_RED));
@@ -148,6 +132,13 @@ class NUOPCViewLabelProvider2 extends StyledCellLabelProvider { //implements ITa
 		//cell.getControl().setCursor(new Cursor(cell.getControl().getDisplay(), SWT.CURSOR));		
 		
 		super.update(cell);
+	}
+	
+	private String stripQuotes(String s) {
+		if (s.startsWith("'") && s.endsWith("'")) {
+			return s.substring(1, s.length()-1);
+		}
+		return s;
 	}
 	
 	/*
@@ -178,13 +169,24 @@ class NUOPCViewLabelProvider2 extends StyledCellLabelProvider { //implements ITa
 	}
 	*/
 	
-	public static ImageDescriptor getFortranImageDescriptor() {
+	public static ImageDescriptor getFortranImageDescriptor(String type) {
+		
+		if (type == null) {
+			return null;
+		}
+		
 		String imageKey = null;
 		String bottomOverlayKey = null;
 		String topOverlayKey = null;
 		int SWT_PROPS = 0;
-
-		imageKey = "subroutine.gif";
+		
+		Map<String,String> iconMap = new HashMap<String,String>();
+		iconMap.put("subroutine", "subroutine.gif");
+		iconMap.put("module", "module.gif");
+		iconMap.put("uses", "import.png");
+		iconMap.put("call", "runtoline.gif");
+		
+		imageKey = iconMap.get(type);
 		
 		/*
 		if (mapping instanceof Subroutine) {
@@ -224,9 +226,9 @@ class NUOPCViewLabelProvider2 extends StyledCellLabelProvider { //implements ITa
 		if (imageKey != null) {		
 			return getImageDescriptor(imageKey, topOverlayKey, bottomOverlayKey, SWT_PROPS);			
 		}
-		else {
-			return null;
-		}
+		
+		return null;
+		
 		
 	}
 	
@@ -256,11 +258,9 @@ class NUOPCViewLabelProvider2 extends StyledCellLabelProvider { //implements ITa
 	    if (topOverlay != null || bottomOverlay != null) {
 	    	DecorationOverlayIcon decorationOverlayIcon = 
 	    			new DecorationOverlayIcon(image.createImage(), overlayArray);
-	    	//return decorationOverlayIcon.createImage();
 	    	return decorationOverlayIcon;
 	    }
 	    else {
-	    	//return image.createImage();
 	    	return image;
 	    }
 	  } 

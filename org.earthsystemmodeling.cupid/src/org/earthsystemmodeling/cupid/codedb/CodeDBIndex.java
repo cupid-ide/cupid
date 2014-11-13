@@ -38,6 +38,7 @@ import org.eclipse.photran.internal.core.parser.ASTRenameNode;
 import org.eclipse.photran.internal.core.parser.ASTStringConstNode;
 import org.eclipse.photran.internal.core.parser.ASTSubroutineArgNode;
 import org.eclipse.photran.internal.core.parser.ASTSubroutineParNode;
+import org.eclipse.photran.internal.core.parser.ASTSubroutineStmtNode;
 import org.eclipse.photran.internal.core.parser.ASTSubroutineSubprogramNode;
 import org.eclipse.photran.internal.core.parser.ASTTypeDeclarationStmtNode;
 import org.eclipse.photran.internal.core.parser.ASTTypeSpecNode;
@@ -46,6 +47,7 @@ import org.eclipse.photran.internal.core.parser.ASTVarOrFnRefNode;
 import org.eclipse.photran.internal.core.parser.ASTVisitor;
 import org.eclipse.photran.internal.core.parser.IASTNode;
 import org.eclipse.photran.internal.core.vpg.PhotranTokenRef;
+import org.eclipse.photran.internal.core.vpg.PhotranVPG;
 
 import alice.tuprolog.InvalidTermException;
 import alice.tuprolog.InvalidTheoryException;
@@ -188,24 +190,12 @@ public class CodeDBIndex {
 		ast.accept(new CodeDBVisitor(conn));
 	}
 	
-	/*
-	private Struct toRegister(Term prefixId, String id, Object obj) {
-		String prefix = ((Struct) prefixId).getName();
-		return toRegister(prefix + "__" + id, obj);
-	}
-	
-	private Struct toRegister(String id, Object obj) {
-		Struct s = new Struct("java_obj_" + id);
-		toRegister.put(s, obj);
-		return s;
-	}
-	*/
-	
 	public <N extends IASTNode> N findASTNode(Struct s) {
 		alice.tuprolog.Long id = (alice.tuprolog.Long) s.getTerm(0);
 		return findASTNode(id.longValue());
 	}
 	
+	@SuppressWarnings("unchecked")
 	public <N extends IASTNode> N findASTNode(long id) {
 		
 		if (findTokenRefStmt == null) {
@@ -225,16 +215,17 @@ public class CodeDBIndex {
 				int offset = rs.getInt("offset");
 				int length = rs.getInt("length");
 				String type = rs.getString("type");
+				
 				PhotranTokenRef tokenRef = new PhotranTokenRef(filename, offset, length);
+				Token token = tokenRef.findToken();
 				
 				Class<? extends IASTNode> astClass = typeToClass(type);
 				if (astClass != null) {
-					return (N) tokenRef.findToken().findNearestAncestor(astClass);
+					return (N) token.findNearestAncestor(astClass);
 				}
 				else {
-					return (N) tokenRef.findToken();
-				}
-				
+					return (N) token;
+				}		
 			}
 			rs.close();
 		} catch (SQLException e) {
@@ -245,9 +236,28 @@ public class CodeDBIndex {
 		
 	}
 	
+	public IFortranAST findAST(long id) {
+		IASTNode node = findASTNode(id);
+		Token t = node.findFirstToken();
+		if (t != null) {
+			return PhotranVPG.getInstance().acquireTransientAST(t.getLogicalFile());
+		}
+		else {
+			return null;
+		}
+	}
+	
+	protected Map<String, Class<? extends IASTNode>> typeToClassMap = null;
+	
 	protected Class<? extends IASTNode> typeToClass(String type) {
-		if (type.equalsIgnoreCase("module")) return ASTModuleNode.class;
-		return null;
+		if (typeToClassMap==null) {
+			typeToClassMap = new HashMap<String, Class<? extends IASTNode>>();
+			typeToClassMap.put("module", ASTModuleNode.class);
+			typeToClassMap.put("uses", ASTUseStmtNode.class);
+			typeToClassMap.put("subroutine", ASTSubroutineSubprogramNode.class);
+			typeToClassMap.put("call_", ASTCallStmtNode.class);
+		}
+		return typeToClassMap.get(type);
 	}
 	
 	public ResultSet query2(String query) throws MalformedGoalException {

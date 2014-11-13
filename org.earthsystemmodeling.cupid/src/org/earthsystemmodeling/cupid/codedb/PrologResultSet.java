@@ -119,7 +119,7 @@ public class PrologResultSet implements ResultSet {
 					return null;
 				}
 				else {
-					return colVar.getTerm().toString();
+					return stripQuotes(colVar.getTerm().toString());
 				}
 			} catch (NoSolutionException e) {
 				throw new SQLException(e);
@@ -128,6 +128,13 @@ public class PrologResultSet implements ResultSet {
 		throw new SQLException("No current solution");
 	}
 
+	private String stripQuotes(String s) {
+		if (s.startsWith("'") && s.endsWith("'")) {
+			return s.substring(1, s.length()-1);
+		}
+		return s;
+	}
+	
 	@Override
 	public boolean getBoolean(int columnIndex) throws SQLException {
 		// TODO Auto-generated method stub
@@ -235,7 +242,7 @@ public class PrologResultSet implements ResultSet {
 				Term t = curSolution.getVarValue(columnLabel);
 				if (t==null) throw new SQLException("No variable named " + columnLabel);
 				if (t instanceof Var) return null;
-				return t.toString();
+				return stripQuotes(t.toString());
 			} catch (NoSolutionException e) {
 				throw new SQLException(e);
 			}

@@ -381,7 +381,7 @@
          id="cupidmarker"
          name="Cupid Marker"
          point="org.eclipse.core.resources.markers">      
-      <super type="org.eclipse.core.resources.bookmark"/>
+      <super type="org.eclipse.core.resources.textmarker"/>
       <persistent
             value="true">
       </persistent>
@@ -417,10 +417,9 @@
       -->
       <!--super="org.eclipse.ui.workbench.texteditor.info"-->
       <type
-         name="org.earthsystemmodeling.cupid.cupidannotation"
-         super="org.eclipse.ui.workbench.texteditor.info"
-         markerType="org.earthsystemmodeling.cupid.cupidmarker"
-         markerSeverity="0">
+            markerSeverity="0"
+            markerType="org.earthsystemmodeling.cupid.cupidmarker"
+            name="CupidAnnotation"> <!--super="org.eclipse.ui.workbench.texteditor.info"-->
       </type>
       <type
             markerSeverity="2"
@@ -430,16 +429,32 @@
       </type>
    </extension>
    
-   <extension
-         id="cupidmarkerannotationspec"
-         point="org.eclipse.ui.editors.markerAnnotationSpecification">
+   <extension point="org.eclipse.ui.editors.markerAnnotationSpecification">
      <specification
-           annotationType="org.earthsystemmodeling.cupid.cupidannotation"
-           icon="icons/tiny_heart.gif"
+           annotationType="CupidAnnotation"
+           colorPreferenceKey="cupidMarkerColorPK"
+           colorPreferenceValue="242,189,65"
+           contributesToHeader="false"
+           highlightPreferenceKey="cupidMarkerHighlightPK"
+           highlightPreferenceValue="false"
            includeOnPreferencePage="true"
+           isGoToNextNavigationTarget="false"
+           isGoToNextNavigationTargetKey="cupidMarkerIGTNNTK"
+           isGoToPreviousNavigationTarget="false"
+           isGoToPreviousNavigationTargetKey="cupidMarkerIGTPNTK"
            label="Cupid Code Generation Annotation"
-           verticalRulerPreferenceKey="cupidMarkerIndicationInVerticalRuler"
-           verticalRulerPreferenceValue="true"/>
+           overviewRulerPreferenceKey="cupidMarkerOverviewRulerPK"
+           overviewRulerPreferenceValue="true"
+           presentationLayer="1"
+           showInNextPrevDropdownToolbarAction="false"
+           showInNextPrevDropdownToolbarActionKey="cupidMarkerSINPDTAK"
+           textPreferenceKey="cupidMarkerTextPK"
+           textPreferenceValue="true"
+           textStylePreferenceKey="cupidMarkerTextStylePrefKey"
+           textStylePreferenceValue="IBEAM"
+           verticalRulerPreferenceKey="cupidMarkerVerticalRulerPK"
+           verticalRulerPreferenceValue="false"/>
+    <!--
      <specification
            annotationType="org.earthsystemmodeling.cupid.cupiderrorannotation"
            colorPreferenceKey="cupidErrorColorPK"
@@ -458,6 +473,7 @@
            verticalRulerPreferenceKey="cupidErrorVerticalRulerPK"
            verticalRulerPreferenceValue="true">
      </specification>
+     -->
   </extension>
    
    <!--

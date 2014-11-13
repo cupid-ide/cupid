@@ -1,12 +1,18 @@
 package org.earthsystemmodeling.cupid.views;
 
+import java.lang.reflect.Constructor;
+import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;
 
 import org.earthsystemmodeling.FSM;
+import org.earthsystemmodeling.cupid.annotation.Child;
+import org.earthsystemmodeling.cupid.annotation.Label;
 import org.earthsystemmodeling.cupid.core.CupidActivator;
 import org.earthsystemmodeling.cupid.handlers.ReverseHandler;
 import org.earthsystemmodeling.cupid.handlers.RewriteASTRunnable;
+import org.earthsystemmodeling.cupid.nuopc_v7.CodeConcept;
 import org.earthsystemmodeling.cupid.views.NUOPCViewContentProvider.NUOPCModelElem;
+import org.earthsystemmodeling.cupid.views.NUOPCViewContentProvider2.CodeConceptProxy;
 import org.earthsystemmodeling.psyche.ConceptDef;
 import org.earthsystemmodeling.psyche.SubconceptOrAttribute;
 import org.eclipse.core.commands.ExecutionException;
@@ -20,9 +26,11 @@ import org.eclipse.core.resources.IResourceDeltaVisitor;
 import org.eclipse.core.resources.IWorkspace;
 import org.eclipse.core.resources.ResourcesPlugin;
 import org.eclipse.core.runtime.CoreException;
+import org.eclipse.core.runtime.NullProgressMonitor;
 import org.eclipse.core.runtime.Status;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.jface.action.Action;
+import org.eclipse.jface.action.IAction;
 import org.eclipse.jface.action.IMenuListener;
 import org.eclipse.jface.action.IMenuManager;
 import org.eclipse.jface.action.MenuManager;
@@ -39,12 +47,15 @@ import org.eclipse.jface.viewers.ISelection;
 import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.jface.viewers.TreeViewer;
 import org.eclipse.jface.window.ToolTip;
+import org.eclipse.ltk.core.refactoring.TextFileChange;
 import org.eclipse.photran.core.IFortranAST;
 import org.eclipse.photran.internal.core.analysis.binding.ScopingNode;
 import org.eclipse.photran.internal.core.lexer.Token;
 import org.eclipse.photran.internal.core.parser.ASTModuleNode;
 import org.eclipse.photran.internal.core.parser.ASTNode;
 import org.eclipse.photran.internal.core.parser.ASTSubroutineSubprogramNode;
+import org.eclipse.photran.internal.core.parser.ASTUseStmtNode;
+import org.eclipse.photran.internal.core.parser.IASTNode;
 import org.eclipse.photran.internal.core.parser.IProgramUnit;
 import org.eclipse.photran.internal.core.reindenter.Reindenter;
 import org.eclipse.photran.internal.core.reindenter.Reindenter.Strategy;
@@ -216,7 +227,7 @@ public class NUOPCView extends ViewPart {
 		}
 	}
 	
-	
+	/*
 	private class AddElementAction extends Action {
 		
 		private FSM<?> fsm;
@@ -242,7 +253,7 @@ public class NUOPCView extends ViewPart {
 			try {
 				IWorkbenchWindow window = PlatformUI.getWorkbench().getActiveWorkbenchWindow();
 				//running in UI thread for now so we can set focus to generated code
-				PlatformUI.getWorkbench().getProgressService().run(false, false, new RewriteASTRunnable(ast, window));
+				PlatformUI.getWorkbench().getProgressService().run(false, false, new RewriteASTRunnable(ast));
 			} catch (InvocationTargetException e) {
 				e.printStackTrace();
 			} catch (InterruptedException e) {
@@ -254,7 +265,7 @@ public class NUOPCView extends ViewPart {
 				
 		}      
 	}
-	
+	*/
 	
 	/**
 	 * This is a callback that will allow us
@@ -280,47 +291,20 @@ public class NUOPCView extends ViewPart {
 		tcl.setColumnData(tc2, new ColumnWeightData(1));
 		parent.setLayout(tcl);
 		
-		
-		//TreeViewerColumn tvc1 = new TreeViewerColumn(viewer, SWT.LEFT);
-		//TreeViewerColumn tvc2 = new TreeViewerColumn(viewer, SWT.RIGHT);
 		viewer.getTree().setHeaderVisible(true);
 		viewer.getTree().setLinesVisible(true);
 		
-		//tvc1.getColumn().setText("Name");
-		//tvc2.getColumn().setText("Column2");
-		
-		
-		drillDownAdapter = new DrillDownAdapter(viewer);
-		
+		drillDownAdapter = new DrillDownAdapter(viewer);		
 		contentProvider = new NUOPCViewContentProvider2();
 		viewer.setContentProvider(contentProvider);
 		
 		labelProvider = new NUOPCViewLabelProvider2(contentProvider);
 		viewer.setLabelProvider(labelProvider);
 		viewer.setSorter(null);
-		
-		//ColumnViewerToolTipSupport.enableFor(viewer, ToolTip.NO_RECREATE);
+	
 		FancyToolTipSupport.enableFor(viewer, ToolTip.NO_RECREATE);
 		
-		//viewer.setInput(getViewSite());
-		
 		/*
-		ISelectionListener listener = new ISelectionListener() {
-			public void selectionChanged(IWorkbenchPart part, ISelection sel) {
-				System.out.println("selectionChanged: " + part + " - " + sel);
-				
-				if (!(sel instanceof IStructuredSelection))
-					return;
-				IStructuredSelection ss = (IStructuredSelection) sel;
-				Object o = ss.getFirstElement();
-				if (o instanceof IProject)
-					viewer.setInput(ss.size()==1 ? o : null);
-			}
-		};
-		
-		this.getSite().getPage().addSelectionListener(listener);
-		*/
-		
 		doubleClickAction = new Action() {
 			
 			public void run() {
@@ -395,7 +379,76 @@ public class NUOPCView extends ViewPart {
 				
 			}
 		};
+		*/
+		
+		doubleClickAction = new Action() {
+			
+			public void run() {
 				
+				ISelection selection = viewer.getSelection();
+				Object obj = ((IStructuredSelection)selection).getFirstElement();
+				
+				IMarker marker = null;
+				
+				if (obj instanceof CodeConceptProxy) {
+					@SuppressWarnings("unchecked")
+					CodeConceptProxy ccp = (CodeConceptProxy) obj;
+					CodeConcept<?,?,IASTNode> cc = (CodeConcept<?,?,IASTNode>) ccp.codeConcept;
+					
+					if (cc==null) {
+						return;
+					}
+					
+					IASTNode astNode = cc.getASTRef();
+					
+					if (astNode == null) {
+						return;
+					}
+					if (astNode instanceof ASTSubroutineSubprogramNode) {
+						ASTSubroutineSubprogramNode ssn = (ASTSubroutineSubprogramNode) astNode;
+						Token t = null;
+						try {
+							t = ssn.getSubroutineStmt().getSubroutineName().getSubroutineName();
+							marker = createMarker(t);
+						}
+						catch (NullPointerException npe) {
+							//handled below
+						}					
+					}
+					else if (astNode instanceof ASTUseStmtNode) {
+						marker = createMarker(((ASTUseStmtNode) astNode).getName());
+					}
+					else if (astNode instanceof ScopingNode) {
+						marker = createMarker( ((ScopingNode) astNode).getRepresentativeToken().findTokenOrReturnNull());							
+					}
+					//else if (astNode instanceof IFortranAST) {
+					//	//try to find module statement
+					//	IProgramUnit ipu = ((IFortranAST)val).getRoot().getProgramUnitList().get(0);
+					//	if (ipu != null && ipu instanceof ASTModuleNode) {
+					//		ASTModuleNode ams = (ASTModuleNode) ipu;
+					//		marker = createMarker(ams.getNameToken());
+					//	}							
+					//}
+					else {
+						marker = createMarker(astNode.findFirstToken());
+					}
+				}
+					
+				if (marker != null) {
+					IWorkbenchPage page = PlatformUI.getWorkbench().getActiveWorkbenchWindow().getActivePage();
+					try {
+						IDE.openEditor(page, marker, false);
+						marker.delete();
+					} catch (PartInitException e) {
+						e.printStackTrace();
+					} catch (CoreException e) {								
+						e.printStackTrace();
+					}
+				}
+				
+			}
+		};
+		
 		viewer.addDoubleClickListener(new IDoubleClickListener() {
 			public void doubleClick(DoubleClickEvent event) {
 				doubleClickAction.run();
@@ -458,7 +511,108 @@ public class NUOPCView extends ViewPart {
         menuMgr.addMenuListener(new IMenuListener() {
             
         	@Override
-            public void menuAboutToShow(IMenuManager manager) {
+        	public void menuAboutToShow(IMenuManager manager) {
+        		if (viewer.getSelection().isEmpty()) {
+                    return;
+                }
+
+                if (viewer.getSelection() instanceof IStructuredSelection) {
+                    IStructuredSelection selection = (IStructuredSelection) viewer.getSelection();
+                    final CodeConceptProxy ccp = (CodeConceptProxy) selection.getFirstElement();
+                   
+                    if (ccp.codeConcept==null) {
+                    	return;  //assume we must first have parent to generate code
+                    }
+                    
+                	final Class<?> parentClass = ccp.clazz;
+    				
+            		for (final Field field : parentClass.getFields()) {
+            			
+            			final Child childAnn = field.getAnnotation(Child.class);
+            			final Label labelAnn = NUOPCViewContentProvider2.getLabelFromField(field);
+            			final Class<?> fieldClass = NUOPCViewContentProvider2.getTypeFromField(field);
+            			
+            			if (childAnn != null) {
+            				
+            				IAction actionToAdd = new Action() {
+            					
+            					@Override
+            					public String getText() {
+            						if (labelAnn != null) {
+            							return "Generate " + labelAnn.label();
+            						}
+            						else {
+            							return "Generate " + field.getName();
+            						}
+            					}
+            					
+            					public void run() {
+            						
+            						CodeConcept<?,?,?> newcc = null;
+            						
+            						try {        							
+            							Constructor<?>[] cons = fieldClass.getConstructors();
+            							Constructor<?> con = cons[0];
+            							newcc = (CodeConcept<?, ?, ?>) con.newInstance(ccp.codeConcept);           						
+            						} catch (SecurityException | InstantiationException | IllegalAccessException | IllegalArgumentException | InvocationTargetException e) {
+            							CupidActivator.log("Exception executing constructor", e);
+            							return;
+            						}
+            						
+            						//TextFileChange tfc = newcc.forward();
+            						IFortranAST ast = newcc.forward();
+            						
+            						if (ast != null) {
+            							
+            							Reindenter.reindent(ast.getRoot(), ast, Strategy.REINDENT_EACH_LINE);      								
+            							
+            							try {
+            								     
+            								RewriteASTRunnable rewriter = new RewriteASTRunnable(ast);
+            								PlatformUI.getWorkbench().getProgressService().run(true, false, rewriter);
+            								
+            								IWorkbenchWindow window = PlatformUI.getWorkbench().getActiveWorkbenchWindow();
+            								//open editor on last marker generated
+            						        
+            								if (rewriter.getMarkers().size() > 0 &&
+            										window != null) {
+            								
+            									IWorkbenchPage page = window.getActivePage();
+	            								try {
+	            									IDE.openEditor(page, rewriter.getMarkers().get(0), true);
+	            									//marker.delete();
+	            								} catch (PartInitException e) {
+	            									e.printStackTrace();						
+	            								}
+	            								
+            								}
+	            						        
+            							} catch (InvocationTargetException | InterruptedException e) {
+            								CupidActivator.log("Exception executing code generation", e);
+            							}
+            							                   					
+            							viewer.refresh(ccp);
+            							viewer.expandToLevel(ccp, 1);
+        							
+            							
+            						}
+            						
+            						
+            					};
+            					
+            				};
+            				
+            				manager.add(actionToAdd);
+            				
+            			}
+            		}
+                    
+                }
+        	}
+        });
+        	
+        	/*
+            public void menuAboutToShowOld(IMenuManager manager) {
                 // IWorkbench wb = PlatformUI.getWorkbench();
                 // IWorkbenchWindow win = wb.getActiveWorkbenchWindow();
                 if (viewer.getSelection().isEmpty()) {
@@ -484,7 +638,7 @@ public class NUOPCView extends ViewPart {
                     		
                     		if (!soa.isAttrib() && (fsm.isMany(soa) || (me.elem != null && fsm.getValue(me.elem, soa) == null)) ) {
                     			
-                    			/*
+                    			
                     			Action addElementAction = new Action() {
                     				
                     				public void run() {
@@ -512,7 +666,7 @@ public class NUOPCView extends ViewPart {
                             		}      
                     				
                     			};
-                    			*/
+                    			
                     			
                     			String label = fsm.getAnnotationValue(fsm.getDefinition(soa), "label");
                     			if (label==null) {
@@ -538,8 +692,9 @@ public class NUOPCView extends ViewPart {
                     
                    
                 }
-            }
-        });
+                */
+        
+        	
         menuMgr.setRemoveAllWhenShown(true);
         viewer.getControl().setMenu(menu);
 		
@@ -683,36 +838,20 @@ public class NUOPCView extends ViewPart {
 	}
 	
 	protected IMarker createMarker(Token token) {
-        try
-        {
-        	if (token == null) return null;
-        	//Token token = photranTokenRef.findToken();
-        	//Token firstToken = findFirstTokenIn(this);
-        	//Token lastToken = findLastTokenIn(this);
-
-        	//if (firstToken == null
-        	//    || lastToken == null
-             //   || firstToken.getPhysicalFile() == null
-              //  || firstToken.getPhysicalFile().getIFile() == null)
-        	  //  return null;
-
+		if (token == null) return null;
+		try {
             int startOffset = token.getFileOffset();
-            //startOffset -= token.getWhiteBefore().length();
-
             int endOffset = token.getFileOffset()+token.getLength();
-            //endOffset += lastToken.getWhiteAfter().length();
-
-            //IMarker marker = token.getPhysicalFile().getIFile().createMarker(IMarker.BOOKMARK);
+            
             IMarker marker = token.getLogicalFile().createMarker(IMarker.BOOKMARK);
-			
-            marker.setAttribute(IMarker.CHAR_START, startOffset);
+			marker.setAttribute(IMarker.CHAR_START, startOffset);
 			marker.setAttribute(IMarker.CHAR_END, endOffset);
 						
             return marker;
         }
-        catch (CoreException e)
-        {
-            return null;
+        catch (CoreException e) {
+            CupidActivator.log("Error creating marker", e);
+        	return null;
         }
     }
 	

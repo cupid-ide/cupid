@@ -5,7 +5,7 @@ import java.sql.ResultSet;
 import java.util.List;
 import org.earthsystemmodeling.cupid.codedb.CodeDBIndex;
 import org.earthsystemmodeling.cupid.core.CupidActivator;
-import org.eclipse.ltk.core.refactoring.TextFileChange;
+import org.eclipse.photran.core.IFortranAST;
 import org.eclipse.photran.internal.core.parser.IASTNode;
 import org.eclipse.xtend2.lib.StringConcatenation;
 import org.eclipse.xtext.xbase.lib.CollectionLiterals;
@@ -13,17 +13,19 @@ import org.eclipse.xtext.xbase.lib.Exceptions;
 
 @SuppressWarnings("all")
 public abstract class CodeConcept<S extends CodeConcept, P extends CodeConcept, A extends IASTNode> {
-  protected A _ref;
-  
   protected P _parent;
   
   protected long _id;
   
   protected CodeDBIndex _codeDB;
   
-  public CodeConcept(final P parent, final CodeDBIndex codeDB) {
-    this._codeDB = codeDB;
+  public CodeConcept(final P parent) {
     this._parent = parent;
+    CodeDBIndex __codeDB = null;
+    if (parent!=null) {
+      __codeDB=parent._codeDB;
+    }
+    this._codeDB = __codeDB;
   }
   
   public long parentID() {
@@ -45,14 +47,35 @@ public abstract class CodeConcept<S extends CodeConcept, P extends CodeConcept, 
     return _xifexpression;
   }
   
-  public abstract S reverse();
+  public A getASTRef() {
+    return this._codeDB.<A>findASTNode(this._id);
+  }
+  
+  public IFortranAST getAST() {
+    IFortranAST _xifexpression = null;
+    if ((this._id > 0)) {
+      _xifexpression = this._codeDB.findAST(this._id);
+    } else {
+      long _parentID = this.parentID();
+      _xifexpression = this._codeDB.findAST(_parentID);
+    }
+    return _xifexpression;
+  }
+  
+  public S reverse() {
+    return ((S) this);
+  }
   
   public List<S> reverseMultiple() {
     S _reverse = this.reverse();
     return CollectionLiterals.<S>newArrayList(_reverse);
   }
   
-  public abstract TextFileChange forward();
+  public abstract IFortranAST forward();
+  
+  public String name() {
+    return null;
+  }
   
   public ResultSet execQuery(final CharSequence query) {
     Object _xblockexpression = null;

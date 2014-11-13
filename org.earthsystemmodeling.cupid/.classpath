@@ -24,8 +24,8 @@
 	<classpathentry exported="true" kind="lib" path="lib/stax-ri-1.2.0/stax-1.2.0.jar"/>
 	<classpathentry exported="true" kind="lib" path="lib/aws-java-sdk-1.6.10.jar"/>
 	<classpathentry exported="true" kind="lib" path="lib/aws-java-sdk-flow-build-tools-1.6.10.jar"/>
-	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/JavaSE-1.6"/>
 	<classpathentry kind="con" path="org.eclipse.pde.core.requiredPlugins"/>
+	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/JavaSE-1.6"/>
 	<classpathentry kind="lib" path="lib/ST-4.0.7.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

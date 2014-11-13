@@ -1,7 +1,12 @@
 package org.earthsystemmodeling.cupid.views;
 
 import java.lang.reflect.Field;
+import java.lang.reflect.Method;
+import java.lang.reflect.ParameterizedType;
+import java.lang.reflect.Type;
+import java.lang.reflect.TypeVariable;
 import java.util.ArrayList;
+import java.util.List;
 
 import org.earthsystemmodeling.cupid.annotation.Child;
 import org.earthsystemmodeling.cupid.annotation.Label;
@@ -85,51 +90,7 @@ class NUOPCViewContentProvider2 implements IStructuredContentProvider, ITreeCont
 			CupidActivator.log(IStatus.INFO, "Rebuild DB time: " + (endRebuild-startRebuild));
 			CupidActivator.log(IStatus.INFO, "Parse time: " + (endParse-startParse));
 			CupidActivator.log(IStatus.INFO, "Index DB time: " + (endIndex-startIndex));
-			
-			//attempt a query
-			/*
-			String query = "";
-			try {
-				
-				//String query = "module(_mid, _modname), uses(_uid, _mid, _usedMod), (_usedMod='NUOPC_Model'; _usedMod='NUOPC_DriverAtmOcn').";
-				//String query = "param(_id, _pid, _idx, _name, _type, _intentIn, _intentOut).";
-				//String query = "esmf_method(_id, _parentid, _name).";
-								
-				query = "call_(_id, _modid, 'NUOPC_CompDerive'),"
-						+ "callArg(_arg1, _id, 1, _expr1),"
-						+ "callArg(_arg2, _id, 2, _expr2),"
-						+ "callArg(_arg3, _id, 3, _expr3).";
-			
-				//query = "call_(_id, _modid, 'NUOPC_CompDerive'),"
-				//		+ "findall(_expr, callArg(_x,_id,_y,_expr), _args).";
-				
-				//query = "findall(_expr, callArg(_x,_id,_y,_expr), _args).";
-				
-				//List<Struct> results = codeDB.query(query);
-				//for (Struct t : results) {
-				//	System.out.println("Result: " + t);
-				//}
-				ResultSet rs = codeDB.query2(query);
-				
-				while (rs.next()) {
-					System.out.println("Result: " + rs.getLong("_id"));
-				}
-				
-			} catch (MalformedGoalException e) {
-				System.out.println("BAD QUERY: " + query);
-			} catch (SQLException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-			*/
-			
-			//NUOPCDriver driver = new NUOPCDriver(codeDB).reverse();
-			//System.out.println("Reverse engineer driver:\n" + driver);
-			//NUOPCDriverAtmOcn driverAtmOcn = new NUOPCDriverAtmOcn();
-			
-			//boolean matches = driverAtmOcn.match(codeDB);
-			//System.out.println("matches driverAtmOcn = " + matches);
-			
+
 		}
 	}
 		
@@ -145,7 +106,9 @@ class NUOPCViewContentProvider2 implements IStructuredContentProvider, ITreeCont
 	public Object[] getElements(Object parent) {	
 		NUOPCDriver driver = new NUOPCDriver(codeDB).reverse();
 		if (driver != null) {
-			return new Object[] {driver};
+			return new Object[] {
+				new CodeConceptProxy(NUOPCDriver.class, driver, driver.getClass().getAnnotation(Label.class), null)
+			};
 		}
 		else {
 			return new Object[0];
@@ -157,27 +120,66 @@ class NUOPCViewContentProvider2 implements IStructuredContentProvider, ITreeCont
 		return null;
 	}
 	
+	public static Class<?> getTypeFromField(Field f) {
+		Class<?> codeConceptClass = f.getType();
+		if (codeConceptClass == List.class) {
+			ParameterizedType pt = (ParameterizedType) f.getGenericType();
+			codeConceptClass = (Class<?>) pt.getActualTypeArguments()[0];
+		}
+		return codeConceptClass;
+	}
+	
+	public static Label getLabelFromField(Field f) {
+		Label lbl = f.getAnnotation(Label.class);
+		if (lbl != null) return lbl;
+			
+		Class<?> c = getTypeFromField(f);
+		lbl = c.getAnnotation(Label.class);
+		if (lbl != null) return lbl;
+		
+		return null;
+	}
+	
 	public Object [] getChildren(Object p) {
+		
 		ArrayList<Object> children = new ArrayList<Object>();
-		//CodeConcept<?,?,?> cc = (CodeConcept<?,?,?>) p;
-		Class<?> clazz = p.getClass();
-		for (Field field : clazz.getFields()) {
-			if (field.getAnnotation(Child.class) != null) {
-				try {
-					Object childVal = field.get(p);
+		
+		CodeConceptProxy parent = (CodeConceptProxy) p;
+		Class<?> parentClass = parent.clazz;
+				
+		for (Field field : parentClass.getFields()) {
+			Child childAnn = field.getAnnotation(Child.class);
+			if (childAnn != null) {
+				try {					
+
+					//int min = childAnn.min();
+					//int max = childAnn.max();
 					
-					if (childVal instanceof CodeConcept) {
-						children.add(childVal);
-					}
-					else if (childVal != null) {
-						Label lbl = field.getAnnotation(Label.class);
-						CodeConceptProxy ccp = new CodeConceptProxy();
-						if (lbl != null) {
-							ccp.name = lbl.value();
+					Class<?> codeConceptClass = getTypeFromField(field);
+					Label lbl = getLabelFromField(field);
+					
+					CodeConcept<?,?,?> cc = null;
+					if (parent.codeConcept != null) {
+						Object fieldObj = field.get(parent.codeConcept);
+						if (fieldObj instanceof List) {
+							
+							List<CodeConcept<?,?,?>> ccList = (List<CodeConcept<?,?,?>>) fieldObj;
+							for (CodeConcept<?,?,?> item : ccList) {
+								children.add(new CodeConceptProxy(codeConceptClass, item, lbl, childAnn));
+							}
+							
 						}
-						ccp.value = childVal.toString();
+						else {
+							cc = (CodeConcept<?,?,?>) fieldObj;
+							CodeConceptProxy ccp = new CodeConceptProxy(codeConceptClass, cc, lbl, childAnn);
+							children.add(ccp);
+						}
+					}
+					else {
+						CodeConceptProxy ccp = new CodeConceptProxy(codeConceptClass, null, lbl, childAnn);
 						children.add(ccp);
 					}
+					
 				} catch (IllegalArgumentException | IllegalAccessException e) {
 					//ignore
 				}
@@ -191,14 +193,45 @@ class NUOPCViewContentProvider2 implements IStructuredContentProvider, ITreeCont
 		return getChildren(p).length > 0;
 	}
 	
+	
 	public static class CodeConceptProxy {
-		public String name = "";
-		public String value = "";
+
+		public String label = null;
+		public String value = null;  //needed?
+		public String type = null;
+		public CodeConcept<?,?,?> codeConcept = null;
+		public Class<?> clazz = null;
+		public int min=1;
+		public int max=1;
 		public CodeConceptProxy() {}
-		public CodeConceptProxy(String name, String value) {
-			this.name = name;
+
+		/*
+		public CodeConceptProxy(String label, String value, String type, CodeConcept<?,?,?> codeConcept) {
+			this.label = label;
 			this.value = value;
+			this.type = type;
+			this.codeConcept = codeConcept;
 		}
+		*/
+		
+		public CodeConceptProxy(Class<?> clazz, CodeConcept<?,?,?> codeConcept, Label lbl, Child child) {
+			this.codeConcept = codeConcept;
+			this.clazz = clazz;
+			if (lbl != null) {
+				label = lbl.label();
+				type = lbl.type();
+			}
+			else {
+				label = clazz.getSimpleName();
+			}
+			if (child != null) {
+				min = child.min();
+				max = child.max();
+			}
+			
+		}
+		
 	}
+	
 	
 }
