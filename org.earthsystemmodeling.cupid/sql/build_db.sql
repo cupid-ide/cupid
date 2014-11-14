@@ -75,7 +75,7 @@ create table callArg(
 create table ident(
 	 id bigint default global_fact_id.nextval primary key,
 	 parent_id bigint,
-	 type varchar(100),
+	 type varchar(200),
 	 name varchar(100));
 	
 create table const(

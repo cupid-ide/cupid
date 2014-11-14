@@ -145,7 +145,7 @@ class NUOPCViewContentProvider implements IStructuredContentProvider, ITreeConte
 			}
 			*/
 			
-			NUOPCDriver driver = new NUOPCDriver(codeDB).reverse();
+			NUOPCDriver driver = (NUOPCDriver) new NUOPCDriver(codeDB).reverse();
 			System.out.println("Reverse engineer driver:\n" + driver);
 			//NUOPCDriverAtmOcn driverAtmOcn = new NUOPCDriverAtmOcn();
 			

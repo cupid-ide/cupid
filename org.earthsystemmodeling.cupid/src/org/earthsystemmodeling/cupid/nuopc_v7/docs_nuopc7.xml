@@ -1,0 +1,104 @@
+<docs>
+	
+	<doc class="org.earthsystemmodeling.cupid.nuopc_v7.NUOPCDriver">
+	<![CDATA[
+	<b>NUOPC Driver</b><hr/>
+	Driver component that drives Model, Mediator, and Connector components. The default is to use explicit time stepping. For every Driver time step the same sequence of Model, Mediator, and Connector Run methods are called. The run sequence is fully customizable.
+	]]>
+	</doc>
+	
+	<doc class="org.earthsystemmodeling.cupid.nuopc_v7.NUOPCDriver.Initialization">
+	<![CDATA[
+	
+	<b>Initialize</b><hr/>
+
+			<UL>
+		<LI>phase 0: (R<SMALL>EQUIRED, </SMALL>NUOPC P<SMALL>ROVIDED</SMALL>)
+		  
+		<UL>
+		<LI>Initialize the <TT>InitializePhaseMap</TT> Attribute according to the NUOPC Initialize Phase Definition (IPD) version 00 (see section 2.4.2 for a precise definition), with the following mapping:
+		    
+		<UL>
+		<LI>IPDv00p1 = phase 1: (R<SMALL>EQUIRED, </SMALL>NUOPC P<SMALL>ROVIDED</SMALL>)
+		    
+		</LI>
+		</UL>
+		</LI>
+		</UL>  
+		</LI>
+		<LI>phase 1: (NUOPC P<SMALL>ROVIDED</SMALL>, suitable for: IPDv00p1)
+		  
+		<UL>
+		<LI>Allocate and initialize the internal state.
+		</LI>
+		<LI>If the internal clock is not yet set, set the default internal clock to be a copy of the incoming clock, if the incoming clock is valid.
+		</LI>
+		<LI><I>Required specialization</I> to set number of Model+Mediator components, <TT>modelCount</TT>, in the internal state: <TT>label_SetModelCount</TT>.
+		</LI>
+		<LI>Allocate internal storage according to <TT>modelCount</TT>.
+		</LI>
+		<LI><I>Optional specialization</I> to provide Model, Mediator, and Connector <TT>petList</TT> members in the internal state: <TT>label_SetModelPetList</TT>.
+		</LI>
+		<LI>Create Model and Mediator components with their import and export States.
+		</LI>
+		<LI>Attach standard NUOPC Model Component metadata.
+		</LI>
+		<LI>Create Connector components.
+		</LI>
+		<LI>Attach standard NUOPC Connector Component metadata.
+		</LI>
+		<LI>Initialize the default run sequence.
+		</LI>
+		<LI><I>Required specialization</I> to set component services: <TT>label_SetModelServices</TT>. 
+		  
+		<UL>
+		<LI>Call into SetServices() for all Model, Mediator, and Connector components.
+		</LI>
+		<LI>Optionally replace the default clock. 
+		</LI>
+
+		</UL>
+		</LI>
+		<LI>Execute Initialize phase=0 for all Model, Mediator, and Connector components. This is the method where each component is required to initialize its <TT>InitializePhaseMap</TT> Attribute.
+		</LI>
+		<LI><I>Optional specialization</I> to analyze and modify components' <TT>InitializePhaseMap</TT> Attribute before the Driver uses it: <TT>label_ModifyInitializePhaseMap</TT>.
+		</LI>
+		<LI>Implement the initialize sequence for the child components, compatible with up to IPD version 02, as documented in section 2.4.2.
+		  
+		</LI>
+		</UL>
+		</LI>
+		</UL>
+		
+		
+	
+	]]>
+	</doc>
+	
+	<doc class="org.earthsystemmodeling.cupid.nuopc_v7.NUOPCDriver.SetModelCount">
+	<![CDATA[
+	<b>SetModelCount</b><hr/>
+	Required specialization to set number of Model+Mediator components, modelCount, in the internal state: <tt>label_SetModelCount</tt>.
+	]]>
+	</doc>
+	
+	<doc class="org.earthsystemmodeling.cupid.nuopc_v7.NUOPCDriver.SetModelPetLists">
+	<![CDATA[
+	<b>SetModelPetLists</b><hr/>
+	Optional specialization to provide Model, Mediator, and Connector petList members in the internal state: <tt>label_SetModelPetLists</tt>.
+	]]>
+	</doc>
+	
+	<doc class="org.earthsystemmodeling.cupid.nuopc_v7.NUOPCDriver.SetModelServices">
+	<![CDATA[
+	<b>SetModelServices</b><hr/>
+	<i>Required specialization</i> to set component services: <tt>label_SetModelServices</tt>. 
+		<UL>
+		<LI>Call into SetServices() for all Model, Mediator, and Connector components.</LI>
+		<LI>Optionally replace the default clock.</LI>
+		</UL>
+	]]>
+	</doc>
+	
+	
+</docs>

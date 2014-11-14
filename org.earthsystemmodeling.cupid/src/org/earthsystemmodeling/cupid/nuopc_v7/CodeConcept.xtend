@@ -8,12 +8,12 @@ import alice.tuprolog.MalformedGoalException
 import org.earthsystemmodeling.cupid.core.CupidActivator
 import org.eclipse.photran.core.IFortranAST
 
-public abstract class CodeConcept<S extends CodeConcept, P extends CodeConcept, A extends IASTNode> {
+public abstract class CodeConcept<P extends CodeConcept<?,?>, A extends IASTNode> {
 	
-	//var protected A _ref
 	var protected P _parent
-	var protected long _id  //from code DB
+	var protected long _id  
 	var protected CodeDBIndex _codeDB
+	var protected A _astRef
 	
 	new(P parent) {
 		_parent = parent
@@ -26,7 +26,16 @@ public abstract class CodeConcept<S extends CodeConcept, P extends CodeConcept, 
 	}
 	
 	def A getASTRef() {
-		_codeDB.findASTNode(_id);
+		if (_astRef != null) {
+			_astRef
+		}
+		else {
+			_codeDB.findASTNode(_id);
+		}
+	}
+	
+	def setASTRef(A astRef) {
+		_astRef = astRef
 	}
 	
 	def getAST() {
@@ -36,8 +45,8 @@ public abstract class CodeConcept<S extends CodeConcept, P extends CodeConcept, 
 			_codeDB.findAST(parentID)
 	}
 		
-	def S reverse() {this as S}
-	def List<S> reverseMultiple() {newArrayList(reverse)}
+	def CodeConcept<P,A> reverse() {this}
+	def List<CodeConcept<P,A>> reverseMultiple() {newArrayList(reverse)}
 	
 	def abstract IFortranAST forward()
 	
@@ -56,5 +65,15 @@ public abstract class CodeConcept<S extends CodeConcept, P extends CodeConcept, 
 	override toString() {
 		'''«this.class.simpleName» : «_id»'''
 	}
+	
+	def paramch(String defaultVal) {
+		'''CUPIDPARAM$CHAR$«defaultVal»$'''
+	}
+	
+	def paramint(int defaultVal) {
+		'''CUPIDPARAM$INT$«defaultVal»$'''
+	}
+	
+	
 	
 }

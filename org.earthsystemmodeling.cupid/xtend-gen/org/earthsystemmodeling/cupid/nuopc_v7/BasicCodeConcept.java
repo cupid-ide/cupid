@@ -6,13 +6,13 @@ import org.eclipse.photran.internal.core.parser.IASTNode;
 import org.eclipse.xtend2.lib.StringConcatenation;
 
 @SuppressWarnings("all")
-public class BasicCodeConcept extends CodeConcept<BasicCodeConcept, CodeConcept, IASTNode> {
+public class BasicCodeConcept extends CodeConcept<CodeConcept<?, ?>, IASTNode> {
   public BasicCodeConcept(final CodeConcept parent, final long id) {
     super(parent);
     this._id = id;
   }
   
-  public BasicCodeConcept reverse() {
+  public CodeConcept<CodeConcept<?, ?>, IASTNode> reverse() {
     return this;
   }
   
@@ -28,7 +28,7 @@ public class BasicCodeConcept extends CodeConcept<BasicCodeConcept, CodeConcept,
     return _builder.toString();
   }
   
-  public static BasicCodeConcept newBasicCodeConcept(final CodeConcept parent, final long id) {
+  public static BasicCodeConcept newBasicCodeConcept(final CodeConcept<?, ?> parent, final long id) {
     BasicCodeConcept _xifexpression = null;
     if ((id > 0)) {
       _xifexpression = new BasicCodeConcept(parent, id);

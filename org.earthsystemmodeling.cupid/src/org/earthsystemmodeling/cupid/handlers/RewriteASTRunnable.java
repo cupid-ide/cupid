@@ -3,6 +3,8 @@ package org.earthsystemmodeling.cupid.handlers;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import org.apache.commons.io.IOUtils;
 import org.earthsystemmodeling.cupid.core.CupidActivator;
@@ -26,16 +28,30 @@ public class RewriteASTRunnable implements IRunnableWithProgress {
 	
 	IFortranAST ast;
 	IFile file;
-	//IWorkbenchWindow window;
 	TextFileChange textFileChange;
 	String fileContentsBefore;
 	String fileContentsAfter;
 	List<IMarker> markers;
 	
+	List<MarkerLoc> paramMarkers;
+	
+	static String paramRegex = "CUPIDPARAM\\$(CHAR|INT)\\$([^\\$]*)\\$";
+	static Pattern paramPattern = Pattern.compile(paramRegex);
+
+	static class MarkerLoc {
+		public int start;
+		public int end;
+		public MarkerLoc(int start, int end) {
+			this.start = start;
+			this.end = end;
+		}
+	}
+	
 	public RewriteASTRunnable(IFortranAST ast) {
 		this.ast = ast;
 		//this.window = window;
 		this.markers = new ArrayList<IMarker>();
+		this.paramMarkers = new ArrayList<MarkerLoc>();
 		
 		file = ast.getFile();
     			
@@ -46,7 +62,22 @@ public class RewriteASTRunnable implements IRunnableWithProgress {
 			fileContentsAfter = ast.getRoot().toString().trim();
 			
 			if (!fileContentsAfter.equals(fileContentsBefore)) {
-	    		textFileChange = new TextFileChange("Cupid code generation: " + file.getFullPath().toOSString(), file);
+	    		
+				Matcher matcher = paramPattern.matcher(fileContentsAfter);
+    		        
+				StringBuffer sb = new StringBuffer();
+		        while (matcher.find()) {
+		        	//System.out.println(matcher.group(2));
+		        	matcher.appendReplacement(sb, "$2");
+		        	int endLoc = sb.length();
+		        	int startLoc = endLoc - matcher.group(2).length();
+		        	paramMarkers.add(new MarkerLoc(startLoc, endLoc));
+		        }
+		        matcher.appendTail(sb);
+		        
+			    fileContentsAfter = sb.toString();
+				
+				textFileChange = new TextFileChange("Cupid code generation: " + file.getFullPath().toOSString(), file);
 	            //changeThisFile.initializeValidationData(monitor);	            
 	    	   	textFileChange.setEdit(new ReplaceEdit(0, charsInFile, fileContentsAfter));
 	    	}
@@ -63,15 +94,11 @@ public class RewriteASTRunnable implements IRunnableWithProgress {
 		this.textFileChange = tfc;
 	}
 	
-	public void run(IProgressMonitor monitor) {
 	
-	//	if (ast == null) {
-	//		System.out.println("Null AST");
-	//		return;
-	//	}
-		
-		
-        try {
+	
+	public void run(IProgressMonitor monitor) {
+
+		try {
 			
         	if (textFileChange != null) {
         		
@@ -86,6 +113,7 @@ public class RewriteASTRunnable implements IRunnableWithProgress {
 		        RangeDifference[] diffs = RangeDifferencer.findDifferences(left, right);
 		        
 		        file.deleteMarkers("org.earthsystemmodeling.cupid.cupidmarker", false, IResource.DEPTH_ZERO);
+		        file.deleteMarkers("org.earthsystemmodeling.cupid.cupidparam", false, IResource.DEPTH_ZERO);
 		        
 		        //IMarker firstMarker = null;
 		        for (RangeDifference rd : diffs) {
@@ -100,6 +128,7 @@ public class RewriteASTRunnable implements IRunnableWithProgress {
 		        	//System.out.println("BEFORE:\n" + fileContentsBefore.substring(oldStart, oldEnd));
 		        	//System.out.println("\nAFTER:\n" + replaceString.substring(start, end));
 		        	
+		        	
 		        	if (end-start > 2) {
 		        		IMarker marker = file.createMarker("org.earthsystemmodeling.cupid.cupidmarker");
 		        		marker.setAttribute(IMarker.CHAR_START, start);
@@ -108,9 +137,17 @@ public class RewriteASTRunnable implements IRunnableWithProgress {
 		        		marker.setAttribute(IMarker.LOCATION, "Lines " + rd.rightStart() + " to " + rd.rightEnd());
 		        		markers.add(marker);
 		        	}
+		        	
 		        }
-        	
-		        		        
+		        
+		        //add param markers
+	        	for (MarkerLoc ml : paramMarkers) {
+	        		IMarker marker = file.createMarker("org.earthsystemmodeling.cupid.cupidparam");
+	        		marker.setAttribute(IMarker.CHAR_START, ml.start);
+	        		marker.setAttribute(IMarker.CHAR_END, ml.end);
+	        		marker.setAttribute(IMarker.MESSAGE, "Generated parameter");
+	        	}		        
+		     
         	}
 		} catch (CoreException e) {
 			CupidActivator.log("Error executing code generation", e);

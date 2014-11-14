@@ -393,7 +393,7 @@ public class NUOPCView extends ViewPart {
 				if (obj instanceof CodeConceptProxy) {
 					@SuppressWarnings("unchecked")
 					CodeConceptProxy ccp = (CodeConceptProxy) obj;
-					CodeConcept<?,?,IASTNode> cc = (CodeConcept<?,?,IASTNode>) ccp.codeConcept;
+					CodeConcept<?,IASTNode> cc = (CodeConcept<?,IASTNode>) ccp.codeConcept;
 					
 					if (cc==null) {
 						return;
@@ -532,7 +532,14 @@ public class NUOPCView extends ViewPart {
             			final Label labelAnn = NUOPCViewContentProvider2.getLabelFromField(field);
             			final Class<?> fieldClass = NUOPCViewContentProvider2.getTypeFromField(field);
             			
-            			if (childAnn != null) {
+            			boolean childPresent = true;
+            			try {
+							childPresent = (field.get(ccp.codeConcept) != null);
+						} catch (IllegalArgumentException | IllegalAccessException e1) {
+							//ignore
+						}
+            			
+            			if (childAnn != null && !(childAnn.max()==1 && childPresent)) {
             				
             				IAction actionToAdd = new Action() {
             					
@@ -548,12 +555,12 @@ public class NUOPCView extends ViewPart {
             					
             					public void run() {
             						
-            						CodeConcept<?,?,?> newcc = null;
+            						CodeConcept<?,?> newcc = null;
             						
             						try {        							
             							Constructor<?>[] cons = fieldClass.getConstructors();
             							Constructor<?> con = cons[0];
-            							newcc = (CodeConcept<?, ?, ?>) con.newInstance(ccp.codeConcept);           						
+            							newcc = (CodeConcept<?, ?>) con.newInstance(ccp.codeConcept);           						
             						} catch (SecurityException | InstantiationException | IllegalAccessException | IllegalArgumentException | InvocationTargetException e) {
             							CupidActivator.log("Exception executing constructor", e);
             							return;

@@ -1,6 +1,7 @@
 package org.earthsystemmodeling.cupid.nuopc_v7;
 
 import alice.tuprolog.MalformedGoalException;
+import com.google.common.base.Objects;
 import java.sql.ResultSet;
 import java.util.List;
 import org.earthsystemmodeling.cupid.codedb.CodeDBIndex;
@@ -12,12 +13,14 @@ import org.eclipse.xtext.xbase.lib.CollectionLiterals;
 import org.eclipse.xtext.xbase.lib.Exceptions;
 
 @SuppressWarnings("all")
-public abstract class CodeConcept<S extends CodeConcept, P extends CodeConcept, A extends IASTNode> {
+public abstract class CodeConcept<P extends CodeConcept<?, ?>, A extends IASTNode> {
   protected P _parent;
   
   protected long _id;
   
   protected CodeDBIndex _codeDB;
+  
+  protected A _astRef;
   
   public CodeConcept(final P parent) {
     this._parent = parent;
@@ -48,7 +51,18 @@ public abstract class CodeConcept<S extends CodeConcept, P extends CodeConcept, 
   }
   
   public A getASTRef() {
-    return this._codeDB.<A>findASTNode(this._id);
+    A _xifexpression = null;
+    boolean _notEquals = (!Objects.equal(this._astRef, null));
+    if (_notEquals) {
+      _xifexpression = this._astRef;
+    } else {
+      _xifexpression = this._codeDB.<A>findASTNode(this._id);
+    }
+    return _xifexpression;
+  }
+  
+  public A setASTRef(final A astRef) {
+    return this._astRef = astRef;
   }
   
   public IFortranAST getAST() {
@@ -62,13 +76,13 @@ public abstract class CodeConcept<S extends CodeConcept, P extends CodeConcept, 
     return _xifexpression;
   }
   
-  public S reverse() {
-    return ((S) this);
+  public CodeConcept<P, A> reverse() {
+    return this;
   }
   
-  public List<S> reverseMultiple() {
-    S _reverse = this.reverse();
-    return CollectionLiterals.<S>newArrayList(_reverse);
+  public List<CodeConcept<P, A>> reverseMultiple() {
+    CodeConcept<P, A> _reverse = this.reverse();
+    return CollectionLiterals.<CodeConcept<P, A>>newArrayList(_reverse);
   }
   
   public abstract IFortranAST forward();
@@ -105,5 +119,21 @@ public abstract class CodeConcept<S extends CodeConcept, P extends CodeConcept, 
     _builder.append(" : ");
     _builder.append(this._id, "");
     return _builder.toString();
+  }
+  
+  public CharSequence paramch(final String defaultVal) {
+    StringConcatenation _builder = new StringConcatenation();
+    _builder.append("CUPIDPARAM$CHAR$");
+    _builder.append(defaultVal, "");
+    _builder.append("$");
+    return _builder;
+  }
+  
+  public CharSequence paramint(final int defaultVal) {
+    StringConcatenation _builder = new StringConcatenation();
+    _builder.append("CUPIDPARAM$INT$");
+    _builder.append(defaultVal, "");
+    _builder.append("$");
+    return _builder;
   }
 }

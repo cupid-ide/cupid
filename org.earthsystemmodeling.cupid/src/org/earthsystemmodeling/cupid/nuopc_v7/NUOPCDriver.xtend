@@ -15,22 +15,22 @@ import org.eclipse.photran.internal.core.parser.ASTCallStmtNode
 import java.util.List
 
 import static org.earthsystemmodeling.cupid.util.CodeExtraction.parseLiteralStatement
+import static org.earthsystemmodeling.cupid.util.CodeExtraction.parseLiteralStatementSequence
 import static org.earthsystemmodeling.cupid.util.CodeExtraction.parseLiteralProgramUnit
 
 import org.eclipse.photran.internal.core.parser.ASTSubroutineSubprogramNode
-import org.apache.commons.io.IOUtils
 import org.eclipse.photran.core.IFortranAST
 import org.eclipse.photran.internal.core.parser.ASTExecutableProgramNode
-import org.eclipse.ltk.core.refactoring.TextFileChange
-import org.eclipse.text.edits.ReplaceEdit
 import org.eclipse.photran.internal.core.parser.ASTUseStmtNode
+import org.earthsystemmodeling.cupid.nuopc_v7.NUOPCDriver.Initialization
+import org.eclipse.photran.internal.core.parser.IASTListNode
+import org.eclipse.photran.internal.core.parser.IBodyConstruct
+import org.eclipse.photran.internal.core.parser.ASTTypeDeclarationStmtNode
 
 @Label(label="NUOPC Driver", type="module")
-class NUOPCDriver extends CodeConcept<NUOPCDriver, NUOPCDriver, ASTModuleNode> {
+class NUOPCDriver extends CodeConcept<CodeConcept<?,?>, ASTModuleNode> {
 	
-	@Name
 	var public String driverName	
-
 	var public String filename
 	var public String path
 	
@@ -45,9 +45,8 @@ class NUOPCDriver extends CodeConcept<NUOPCDriver, NUOPCDriver, ASTModuleNode> {
 	@Label(label="NUOPC Driver Import", type="uses")
 	var public BasicCodeConcept importNUOPCDriver
 	
-	
 	@Child
-	var public SetServices setServices
+	var public SetServicesCodeConcept<NUOPCDriver> setServices
 	
 	@Child
 	var public Initialization initialization
@@ -99,8 +98,7 @@ class NUOPCDriver extends CodeConcept<NUOPCDriver, NUOPCDriver, ASTModuleNode> {
 	}
 	
 	def reverseChildren() {
-		setServices = new SetServices(this).reverse
-		//setModelServices = new SetModelServices(this, _codeDB).reverse
+		setServices = new SetServicesCodeConcept(this).reverse
 		initialization = new Initialization(this).reverse
 		this
 	}
@@ -116,75 +114,46 @@ class NUOPCDriver extends CodeConcept<NUOPCDriver, NUOPCDriver, ASTModuleNode> {
 	
 	}
 	
-	
-	@Label(label="SetServices", type="subroutine")
-	static class SetServices extends CodeConcept<SetServices, NUOPCDriver, ASTSubroutineSubprogramNode> {
-		
-		@Name
-		var public String subroutineName
-		var long callsCompDeriveID = -1
-		
-		new(NUOPCDriver parent) {
-			super(parent)
-		}
-		
-		override reverse() {
-			
-			var rs = '''esmf_setservices(_sid, «parentID», _sname), 
-					( call_(_cid, _sid, 'NUOPC_CompDerive') ; true).'''.execQuery
-						
-			try {
-				if (rs.next) {
-					_id = rs.getLong("_sid")
-					subroutineName = rs.getString("_sname")
-					callsCompDeriveID = rs.getLong("_cid")
-					rs.close
-					return this
-				}
-			} catch (SQLException e) {
-				log("SQL error", e);
-			}
-			
-			null
-					
-		}
-			
-		override forward() {
-			throw new UnsupportedOperationException("TODO: auto-generated method stub")
-		}
-		
-		override toString() {
-			'''SetServices: (id=«_id», callsCompDeriveID=«callsCompDeriveID»)'''
-		}
-		
+	override name() {
+		driverName + " (" + filename + ")"
 	}
 	
 	
+		
 	
-	@Label(label="Initialize Specialization Points")
-	static class Initialization extends CodeConcept<Initialization, NUOPCDriver, ASTNode> {
+	@Label(label="Initialize")
+	static class Initialization extends CodeConcept<NUOPCDriver, ASTNode> {
 	
 		@Child
 		var public SetModelServices setModelServices
 		
-		@Child(min=1)
+		@Child
 		var public SetModelCount setModelCount
 		
-		@Child
+		@Child(min=0)
+		var public SetModelPetLists setModelPetLists
+		
+		@Child(min=0)
 		var public SetRunSequence setRunSequence
+		
+		@Child(min=0)
+		var public ModifyInitializePhaseMap modifyInitializePhaseMap
 	
 		new(NUOPCDriver parent) {
 			super(parent)
 		}
 		
-		override reverse() {
+		override Initialization reverse() {
 			reverseChildren
 		}
 		
 		def reverseChildren() {
-			setModelServices = new SetModelServices(this).reverse
-			setModelCount = new SetModelCount(this).reverse
-			setRunSequence = new SetRunSequence(this).reverse
+			setModelServices = new SetModelServices(this).reverse as SetModelServices
+			setModelCount = new SetModelCount(this).reverse as SetModelCount
+			setModelPetLists = new SetModelPetLists(this).reverse as SetModelPetLists
+			setRunSequence = new SetRunSequence(this).reverse as SetRunSequence
+			modifyInitializePhaseMap = new ModifyInitializePhaseMap(this).reverse as ModifyInitializePhaseMap		
+			
 			this	
 		}
 		
@@ -196,155 +165,170 @@ class NUOPCDriver extends CodeConcept<NUOPCDriver, NUOPCDriver, ASTModuleNode> {
 	}
 	
 	@Label(label="SetModelCount", type="subroutine")
-	public static class SetModelCount extends CodeConcept<SetModelCount, Initialization, ASTSubroutineStmtNode> {
-	
-		@Name
-		var public String subroutineName = "SetModelCount"  //default values?
-		
-		//@Child
-		var public String specLabel = "driver_label_SetModelCount"
-		
-		@Label(label="Registration", type="call")
-		@Child
-		var public BasicCodeConcept registration
-		
-		var public String paramGridComp = "driver"
-		
-		var public String paramRC = "rc"
-		
+	public static class SetModelCount extends SpecializationMethodCodeConcept<Initialization> {
 		
 		new(Initialization parent) {
-			super(parent)
+			super(parent, "NUOPC_Driver", "label_SetModelCount")
+			
+			//defaults
+			subroutineName = "SetModelCount"
+			specLabel = "driver_label_SetModelCount"
+			paramGridComp = "driver"
+			paramRC = "rc"			
 		}
 		
-		override reverse() {
-			var rs = '''esmf_regspec(_sid, «parentID», _name, 'NUOPC_Driver', _specLabelExpr, 'label_SetModelCount', _regid).'''.execQuery
-			if (rs.next) {
-				_id = rs.getLong("_sid")
-				subroutineName = rs.getString("_name")
-				specLabel = rs.getString("_specLabelExpr")
-				registration = newBasicCodeConcept(this, rs.getLong("_regid"))
-				rs.close
-				
-				rs = '''esmf_specmethod(«_id», «parentID», _, _param_gridcomp, _param_rc).'''.execQuery
-				if (rs.next) {
-					paramGridComp = rs.getString("_param_gridcomp")
-					paramRC = rs.getString("_param_rc")
-					rs.close	
-				}
-				
-				this
-			}
-			else {
-				rs.close
-				null
-			}
-		}
-		
-		override forward() {
-						
-			val IFortranAST ast = getAST()
-				
-			//add specialization subroutine itself			
-			var code = '''
-
-subroutine SetModelCount(driver, rc)
-    type(ESMF_GridComp)  :: driver
-    integer, intent(out) :: rc
+		override subroutineTemplate() {
+'''
+subroutine «subroutineName»(«paramGridComp», «paramRC»)
+    type(ESMF_GridComp)  :: «paramGridComp»
+    integer, intent(out) :: «paramRC»
 
     rc = ESMF_SUCCESS
 
     ! set the modelCount 
-    call NUOPC_DriverSet(driver, modelCount=XXX, rc=rc)
+    call NUOPC_DriverSet(driver, modelCount=1, rc=rc)
     if (ESMF_LogFoundError(rcToCheck=rc, msg=ESMF_LOGERR_PASSTHRU, &
       line=__LINE__, &
       file=__FILE__)) &
       return  ! bail out
 
-  end subroutine
-  '''
-								
-			var ASTModuleNode mn = _parent._parent.getASTRef
-			var ASTSubroutineSubprogramNode ssn = parseLiteralProgramUnit(code)
-		
-			mn.getModuleBody().add(ssn)
-				
-			//add label import
-			var usesNUOPCDriver = _parent._parent.importNUOPCDriver.getASTRef as ASTUseStmtNode		
-			var tempCode = usesNUOPCDriver.toString.trim
-			tempCode += ''', &
-			«IF !specLabel.equals("label_SetModelCount")»«specLabel» => «ENDIF»label_SetModelCount'''
-			
-			var tempNode = parseLiteralStatement(tempCode) as ASTUseStmtNode;
-			usesNUOPCDriver.replaceWith(tempNode)
-			
-			
-			//add call in setservices
-			var ASTSubroutineSubprogramNode setServices = _parent._parent.setServices?.getASTRef
-			if (setServices != null) {
-				
-				code = 
+end subroutine
 '''
-
-call NUOPC_CompSpecialize(«paramGridComp», specLabel=«specLabel», &
-	specRoutine=«subroutineName», rc=«paramRC»)
-'''
-
-				var ASTCallStmtNode regCall = parseLiteralStatement(code) as ASTCallStmtNode
-				setServices.body.add(regCall)
-				
-			}
-			
+	}
 		
-			ast
+		override module() {
+			_parent._parent
+		}
+		
+		override setServices() {
+			_parent._parent.setServices
+		}
+		
+		override genericUse() {
+			_parent._parent.importNUOPCDriver
 		}
 		
 	}
 	
 	@Label(label="SetModelServices", type="subroutine")
-	static class SetModelServices extends CodeConcept<SetModelServices, Initialization, ASTSubroutineStmtNode> {
+	static class SetModelServices extends SpecializationMethodCodeConcept<Initialization> {
 	
-		@Name
-		var public String subroutineName
-		
-		@Child
+		@Child(max=-1)
 		var public List<SetModelServices_AddComp> addComps
 		
-		new(Initialization parent) {
-			super(parent)
-		}
+		@Label(label="SetClock", type="call")
+		@Child
+		var public BasicCodeConcept setClock
 		
+		new(Initialization parent) {
+			super(parent, "NUOPC_Driver", "label_SetModelServices")
+			subroutineName = "SetModelServices"
+			specLabel = "driver_label_SetModelServices"
+		}
+			
 		override reverse() {
-			var rs = '''esmf_regspec(_sid, «parentID», _name, 'NUOPC_Driver', _specLabelExpr, 'label_SetModelServices', _regid).'''.execQuery
-			if (rs.next) {
-				_id = rs.getLong("_sid")
-				subroutineName = rs.getString("_name")
-				rs.close
-				reverseChildren
+			if (this == super.reverse) {				
+				var rs = '''call_(_cid, «_id», 'ESMF_GridCompSet'),
+							callArgWithType(_, _cid, _, 'clock', _, _clockExpr).'''.execQuery
+				if (rs.next) {
+					setClock = newBasicCodeConcept(this, rs.getLong("_cid"))
+				}
+				this
 			}
 			else {
-				rs.close
 				null
 			}
-		}
-		
-		def reverseChildren() {
-			addComps = new SetModelServices_AddComp(this).reverseMultiple
+		}	
+			
+		override reverseChildren() {
+			addComps = new SetModelServices_AddComp(this).reverseMultiple as List<SetModelServices_AddComp>
 			this
 		}
 		
-		override forward() {
-			throw new UnsupportedOperationException("TODO: auto-generated method stub")
+		override module() {
+			_parent._parent
 		}
 		
-		override toString() {
-			'''SetModelServices: (id=«_id», subroutineName=«subroutineName»)'''
+		override setServices() {
+			_parent._parent.setServices
+		}
+		
+		override genericUse() {
+			_parent._parent.importNUOPCDriver
+		}
+		
+		override forward() {
+			val IFortranAST ast = super.forward
+			
+			val ASTSubroutineSubprogramNode ssn = getASTRef
+
+			var code = 
+'''
+
+type(ESMF_Time)            :: startTime
+type(ESMF_Time)            :: stopTime
+type(ESMF_TimeInterval)    :: timeStep
+type(ESMF_Clock)           :: internalClock
+
+'''			
+			val IASTListNode<IBodyConstruct> typeNodes = parseLiteralStatementSequence(code)
+						
+			val ASTTypeDeclarationStmtNode last = ssn.findLast(ASTTypeDeclarationStmtNode);
+			
+			if (last != null) {
+				for (IBodyConstruct typeNode : typeNodes.reverse) {
+					ssn.body.insertAfter(last, typeNode);
+				}
+			}
+			else {
+				ssn.body.addAll(typeNodes);
+			}
+			
+			
+			code = 			
+'''
+! set the model clock
+call ESMF_TimeIntervalSet(timeStep, m=«paramint(15)», rc=«paramRC») ! 15 minute steps
+if (ESMF_LogFoundError(rcToCheck=«paramRC», msg=ESMF_LOGERR_PASSTHRU, &
+  line=__LINE__, &
+  file=__FILE__)) &
+  call ESMF_Finalize(endflag=ESMF_END_ABORT)
+
+call ESMF_TimeSet(startTime, yy=«paramint(2010)», mm=«paramint(6)», dd=«paramint(1)», h=«paramint(0)», m=«paramint(0)», rc=«paramRC»)
+if (ESMF_LogFoundError(rcToCheck=«paramRC», msg=ESMF_LOGERR_PASSTHRU, &
+  line=__LINE__, &
+  file=__FILE__)) &
+  call ESMF_Finalize(endflag=ESMF_END_ABORT)
+
+call ESMF_TimeSet(stopTime, yy=«paramint(2010)», mm=«paramint(6)», dd=«paramint(1)», h=«paramint(1)», m=«paramint(0)», rc=«paramRC»)
+if (ESMF_LogFoundError(rcToCheck=«paramRC», msg=ESMF_LOGERR_PASSTHRU, &
+  line=__LINE__, &
+  file=__FILE__)) &
+  call ESMF_Finalize(endflag=ESMF_END_ABORT)
+
+internalClock = ESMF_ClockCreate(name="«paramch('AppClock')»", &
+  timeStep=timeStep, startTime=startTime, stopTime=stopTime, rc=«paramRC»)
+if (ESMF_LogFoundError(rcToCheck=rc, msg=ESMF_LOGERR_PASSTHRU, &
+  line=__LINE__, &
+  file=__FILE__)) &
+  call ESMF_Finalize(endflag=ESMF_END_ABORT)
+  
+call ESMF_GridCompSet(«paramGridComp», clock=internalClock, rc=«paramRC»)
+if (ESMF_LogFoundError(rcToCheck=«paramRC», msg=ESMF_LOGERR_PASSTHRU, &
+  line=__LINE__, &
+  file=__FILE__)) &
+  return  ! bail out
+'''			
+			val IASTListNode<IBodyConstruct> stmts = parseLiteralStatementSequence(code)
+			ssn.body.addAll(stmts)
+			
+			ast
 		}
 		
 	}
 	
 	@Label(label="Add Component", type="call")
-	static class SetModelServices_AddComp extends CodeConcept<SetModelServices_AddComp, SetModelServices, ASTCallStmtNode> {
+	static class SetModelServices_AddComp extends CodeConcept<SetModelServices, ASTCallStmtNode> {
 	
 		//single child component
 		var public String compLabel
@@ -365,7 +349,7 @@ call NUOPC_CompSpecialize(«paramGridComp», specLabel=«specLabel», &
 			else null
 		}
 		
-		override reverseMultiple() {
+		override List reverseMultiple() {
 			var retList = newArrayList()
 			
 			var rs = '''call_(_cid, «parentID», 'NUOPC_DriverAddComp'),
@@ -394,56 +378,144 @@ call NUOPC_CompSpecialize(«paramGridComp», specLabel=«specLabel», &
 		}
 		
 		override forward() {
-			throw new UnsupportedOperationException("TODO: auto-generated method stub")
+			
+			var IFortranAST ast = getAST			
+			
+			//TODO: handle declaration of child
+			
+			var code = 
+'''
+
+call NUOPC_DriverAddComp(«_parent.paramGridComp», "«paramch('ComponentName')»", «paramch('CompSetServices')», comp=child, rc=«_parent.paramRC»)
+if (ESMF_LogFoundError(rcToCheck=«_parent.paramRC», msg=ESMF_LOGERR_PASSTHRU, &
+    line=__LINE__, &
+    file=__FILE__)) &
+    return  ! bail out
+'''
+			val IASTListNode<IBodyConstruct> stmts = parseLiteralStatementSequence(code)
+			var ASTSubroutineSubprogramNode ssn = _parent.ASTRef
+			
+			ssn.body.addAll(stmts)
+			setASTRef(stmts.get(0) as ASTCallStmtNode)
+	
+			ast
 		}
 	
 	}
 	
 	@Label(label="SetRunSequence", type="subroutine")
-	static class SetRunSequence extends CodeConcept<SetRunSequence, Initialization, ASTSubroutineStmtNode> {
+	static class SetRunSequence extends SpecializationMethodCodeConcept<Initialization> {
 	
-		@Name
-		var public String subroutineName
-		
-		@Label(label="Registration", type="call")
-		@Child
-		var public BasicCodeConcept registration
-		
-		//@Child
-		//var public List<SetModelServices_AddComp> addComps
-		
 		new(Initialization parent) {
-			super(parent)
+			super(parent, "NUOPC_Driver", "label_SetRunSequence")
+			//defaults
+			subroutineName = "SetRunSequence"
+			specLabel = "driver_label_SetRunSequence"
 		}
 		
-		override reverse() {
-			var rs = '''esmf_regspec(_sid, «parentID», _name, 'NUOPC_Driver', _specLabelExpr, 'label_SetRunSequence', _regid).'''.execQuery
-			if (rs.next) {
-				_id = rs.getLong("_sid")
-				subroutineName = rs.getString("_name")
-				registration = newBasicCodeConcept(this, rs.getLong("_regid"))
-				rs.close
-				this
-				//reverseChildren
-			}
-			else {
-				rs.close
-				null
-			}
+		override module() {
+			_parent._parent
 		}
 		
-		//def reverseChildren() {
-		//	addComps = new SetModelServices_AddComp(this, _codeDB).reverseMultiple
-		//	this
-		//}
-		
-		override forward() {
-			throw new UnsupportedOperationException("TODO: auto-generated method stub")
+		override setServices() {
+			_parent._parent.setServices
 		}
 		
-		override toString() {
-			'''SetModelServices: (id=«_id», subroutineName=«subroutineName»)'''
+		override genericUse() {
+			_parent._parent.importNUOPCDriver
 		}
+		
 		
 	}
+	
+	@Label(label="ModifyInitializePhaseMap", type="subroutine")
+	static class ModifyInitializePhaseMap extends SpecializationMethodCodeConcept<Initialization> {
+	
+		new(Initialization parent) {
+			super(parent, "NUOPC_Driver", "label_ModifyInitializePhaseMap")
+			//defaults
+			subroutineName = "ModifyInitializePhaseMap"
+			specLabel = "driver_label_ModifyInitializePhaseMap"
+		}
+		
+		override module() {
+			_parent._parent
+		}
+		
+		override setServices() {
+			_parent._parent.setServices
+		}
+		
+		override genericUse() {
+			_parent._parent.importNUOPCDriver
+		}	
+		
+	}
+	
+	@Label(label="SetModelPetLists", type="subroutine")
+	static class SetModelPetLists extends SpecializationMethodCodeConcept<Initialization> {
+	
+		new(Initialization parent) {
+			super(parent, "NUOPC_Driver", "label_SetModelPetLists")
+			//defaults
+			subroutineName = "SetModelPetLists"
+			specLabel = "driver_label_SetModelPetLists"
+		}
+		
+		override module() {
+			_parent._parent
+		}
+		
+		override setServices() {
+			_parent._parent.setServices
+		}
+		
+		override genericUse() {
+			_parent._parent.importNUOPCDriver
+		}
+		
+		override subroutineTemplate() {
+'''
+
+subroutine «subroutineName»(«paramGridComp», «paramRC»)
+    type(ESMF_GridComp)  :: «paramGridComp»
+    integer, intent(out) :: «paramRC»
+    
+    ! local variables
+    integer                       :: localrc
+    integer                       :: petCount, i
+    integer, allocatable          :: petList(:)
+
+    rc = ESMF_SUCCESS
+
+    ! get the petCount
+    call ESMF_GridCompGet(«paramGridComp», petCount=petCount, rc=localrc)
+    if (ESMF_LogFoundError(rcToCheck=localrc, msg=ESMF_LOGERR_PASSTHRU, &
+      line=__LINE__, &
+      file=__FILE__)) &
+      return  ! bail out
+    
+    ! example of setting petList for a component
+    allocate(petList(petCount/2-1))
+    do i=1, petCount/2-1
+      petList(i) = i-1 ! PET labeling goes from 0 to petCount-1
+    enddo
+    
+    call NUOPC_DriverSetModel(«paramGridComp», compIndex=1, petList=petList, rc=localrc)
+    if (ESMF_LogFoundError(rcToCheck=localrc, msg=ESMF_LOGERR_PASSTHRU, &
+      line=__LINE__, &
+      file=__FILE__)) &
+      return  ! bail out
+    deallocate(petList)
+      
+    ! repeat as necessary for each component
+    
+  end subroutine
+
+'''
+		}
+		
+	
+	}
+	
 }

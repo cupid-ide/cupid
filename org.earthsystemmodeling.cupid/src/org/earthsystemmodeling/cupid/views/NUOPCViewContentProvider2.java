@@ -104,7 +104,7 @@ class NUOPCViewContentProvider2 implements IStructuredContentProvider, ITreeCont
 	}
 	
 	public Object[] getElements(Object parent) {	
-		NUOPCDriver driver = new NUOPCDriver(codeDB).reverse();
+		NUOPCDriver driver = (NUOPCDriver) new NUOPCDriver(codeDB).reverse();
 		if (driver != null) {
 			return new Object[] {
 				new CodeConceptProxy(NUOPCDriver.class, driver, driver.getClass().getAnnotation(Label.class), null)
@@ -158,19 +158,24 @@ class NUOPCViewContentProvider2 implements IStructuredContentProvider, ITreeCont
 					Class<?> codeConceptClass = getTypeFromField(field);
 					Label lbl = getLabelFromField(field);
 					
-					CodeConcept<?,?,?> cc = null;
+					CodeConcept<?,?> cc = null;
 					if (parent.codeConcept != null) {
 						Object fieldObj = field.get(parent.codeConcept);
 						if (fieldObj instanceof List) {
 							
-							List<CodeConcept<?,?,?>> ccList = (List<CodeConcept<?,?,?>>) fieldObj;
-							for (CodeConcept<?,?,?> item : ccList) {
-								children.add(new CodeConceptProxy(codeConceptClass, item, lbl, childAnn));
+							List<CodeConcept<?,?>> ccList = (List<CodeConcept<?,?>>) fieldObj;
+							if (ccList.size() > 0) {
+								for (CodeConcept<?,?> item : ccList) {
+									children.add(new CodeConceptProxy(codeConceptClass, item, lbl, childAnn));
+								}
+							}
+							else {
+								children.add(new CodeConceptProxy(codeConceptClass, null, lbl, childAnn));
 							}
 							
 						}
 						else {
-							cc = (CodeConcept<?,?,?>) fieldObj;
+							cc = (CodeConcept<?,?>) fieldObj;
 							CodeConceptProxy ccp = new CodeConceptProxy(codeConceptClass, cc, lbl, childAnn);
 							children.add(ccp);
 						}
@@ -199,7 +204,7 @@ class NUOPCViewContentProvider2 implements IStructuredContentProvider, ITreeCont
 		public String label = null;
 		public String value = null;  //needed?
 		public String type = null;
-		public CodeConcept<?,?,?> codeConcept = null;
+		public CodeConcept<?,?> codeConcept = null;
 		public Class<?> clazz = null;
 		public int min=1;
 		public int max=1;
@@ -214,7 +219,7 @@ class NUOPCViewContentProvider2 implements IStructuredContentProvider, ITreeCont
 		}
 		*/
 		
-		public CodeConceptProxy(Class<?> clazz, CodeConcept<?,?,?> codeConcept, Label lbl, Child child) {
+		public CodeConceptProxy(Class<?> clazz, CodeConcept<?,?> codeConcept, Label lbl, Child child) {
 			this.codeConcept = codeConcept;
 			this.clazz = clazz;
 			if (lbl != null) {

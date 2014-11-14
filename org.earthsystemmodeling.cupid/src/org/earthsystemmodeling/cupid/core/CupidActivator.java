@@ -25,7 +25,9 @@ public class CupidActivator extends AbstractUIPlugin {
 	@Override
 	public void start(BundleContext context) throws Exception {
 		super.start(context);		
-		instance = this;		
+		instance = this;
+		
+		instance.setDebugging(true);  //comment out before release
 	}	
 	
 	public static CupidActivator getDefault() {

@@ -388,6 +388,16 @@
    </extension>
    
    <extension
+         id="cupidparam"
+         name="Cupid Parameter Marker"
+         point="org.eclipse.core.resources.markers">      
+      <super type="org.eclipse.core.resources.textmarker"/>
+      <persistent
+            value="true">
+      </persistent>
+   </extension>
+   
+   <extension
          id="cupiderror"
          name="Cupid Validation Error"
          point="org.eclipse.core.resources.markers">      
@@ -422,6 +432,11 @@
             name="CupidAnnotation"> <!--super="org.eclipse.ui.workbench.texteditor.info"-->
       </type>
       <type
+            markerSeverity="0"
+            markerType="org.earthsystemmodeling.cupid.cupidparam"
+            name="CupidParam"> 
+      </type>
+      <type
             markerSeverity="2"
             markerType="org.earthsystemmodeling.cupid.cupiderror"
             name="org.earthsystemmodeling.cupid.cupiderrorannotation"
@@ -442,7 +457,7 @@
            isGoToNextNavigationTargetKey="cupidMarkerIGTNNTK"
            isGoToPreviousNavigationTarget="false"
            isGoToPreviousNavigationTargetKey="cupidMarkerIGTPNTK"
-           label="Cupid Code Generation Annotation"
+           label="Cupid Generated Code Annotation"
            overviewRulerPreferenceKey="cupidMarkerOverviewRulerPK"
            overviewRulerPreferenceValue="true"
            presentationLayer="1"
@@ -454,6 +469,32 @@
            textStylePreferenceValue="IBEAM"
            verticalRulerPreferenceKey="cupidMarkerVerticalRulerPK"
            verticalRulerPreferenceValue="false"/>
+           
+      <specification
+           annotationType="CupidParam"
+           colorPreferenceKey="cupidParamColorPK"
+           colorPreferenceValue="199,210,243"
+           contributesToHeader="false"
+           highlightPreferenceKey="cupidParamHighlightPK"
+           highlightPreferenceValue="true"
+           includeOnPreferencePage="true"
+           isGoToNextNavigationTarget="true"
+           isGoToNextNavigationTargetKey="cupidParamIGTNNTK"
+           isGoToPreviousNavigationTarget="true"
+           isGoToPreviousNavigationTargetKey="cupidParamIGTPNTK"
+           label="Cupid Parameter Annotation"
+           overviewRulerPreferenceKey="cupidParamOverviewRulerPK"
+           overviewRulerPreferenceValue="true"
+           presentationLayer="1"
+           showInNextPrevDropdownToolbarAction="false"
+           showInNextPrevDropdownToolbarActionKey="cupidParamSINPDTAK"
+           textPreferenceKey="cupidParamTextPK"
+           textPreferenceValue="true"
+           textStylePreferenceKey="cupidParamTextStylePrefKey"
+           textStylePreferenceValue="NONE"
+           verticalRulerPreferenceKey="cupidParamVerticalRulerPK"
+           verticalRulerPreferenceValue="false"/>
+                
     <!--
      <specification
            annotationType="org.earthsystemmodeling.cupid.cupiderrorannotation"

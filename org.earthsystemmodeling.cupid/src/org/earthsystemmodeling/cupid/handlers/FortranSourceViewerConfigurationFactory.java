@@ -40,17 +40,27 @@ public class FortranSourceViewerConfigurationFactory implements
 		IFortranSourceViewerConfigurationFactory {
 
 	public FortranSourceViewerConfigurationFactory() {
-		System.out.println("init FortranSourceViewerConfigurationFactory");
+		//System.out.println("init FortranSourceViewerConfigurationFactory");
+		
 	}
 
 	@Override
 	public SourceViewerConfiguration create(FortranEditor editor) {
+		
+				
 		return new FortranSourceViewerConfiguration(editor) {
+			
+			
 			
 			protected IQuickAssistAssistant quickAssistAssistant;
 			
+			
+			
 			@Override
 			public IQuickAssistAssistant getQuickAssistAssistant(ISourceViewer sourceViewer) {				
+				
+				
+				
 				if (quickAssistAssistant == null) {
 					quickAssistAssistant = new QuickAssistAssistant();
 					quickAssistAssistant.setQuickAssistProcessor(new CupidQuickAssistProcessor());
