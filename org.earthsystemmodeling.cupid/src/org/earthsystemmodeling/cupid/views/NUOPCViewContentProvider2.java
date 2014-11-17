@@ -1,10 +1,7 @@
 package org.earthsystemmodeling.cupid.views;
 
 import java.lang.reflect.Field;
-import java.lang.reflect.Method;
 import java.lang.reflect.ParameterizedType;
-import java.lang.reflect.Type;
-import java.lang.reflect.TypeVariable;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -22,8 +19,10 @@ import org.eclipse.jface.viewers.ITreeContentProvider;
 import org.eclipse.jface.viewers.Viewer;
 import org.eclipse.photran.core.IFortranAST;
 import org.eclipse.photran.internal.core.vpg.PhotranVPG;
+import org.eclipse.photran.internal.ui.editor.FortranEditor;
+import org.eclipse.ui.IPropertyListener;
+import org.eclipse.ui.IWorkbenchPartConstants;
 
-import alice.tuprolog.InvalidTheoryException;
 import alice.tuprolog.event.OutputEvent;
 import alice.tuprolog.event.OutputListener;
 import alice.tuprolog.event.WarningEvent;
@@ -32,7 +31,9 @@ import alice.tuprolog.event.WarningListener;
 @SuppressWarnings("restriction")
 class NUOPCViewContentProvider2 implements IStructuredContentProvider, ITreeContentProvider {
 	
-	private IFile input;
+	private IFile file;
+	private FortranEditor editor;
+	
 	private CodeDBIndex codeDB = CodeDBIndex.getInstance();
 	private WarningListener warningListener;
 	private OutputListener outputListener;
@@ -62,36 +63,56 @@ class NUOPCViewContentProvider2 implements IStructuredContentProvider, ITreeCont
 		
 	}
 	
+	public boolean editorIsDirty() {
+		if (editor != null) {
+			return editor.isDirty();
+		}
+		return false;
+	}
 	
-	
+		
 	public void inputChanged(Viewer v, Object oldInput, Object newInput) {
 		
-		if (newInput != null) {
-			input = (IFile) newInput;
-			
-			//test CodeDB approach
-			long startRebuild = System.currentTimeMillis();
-			codeDB.truncateDatabase();
-			long endRebuild = System.currentTimeMillis();
-			
-			String filename = PhotranVPG.getFilenameForIFile(input);
-			long startParse = System.currentTimeMillis();
-			//IFortranAST ast = PhotranVPG.getInstance().parse(filename);
-			PhotranVPG.getInstance().releaseAST(filename);
-			IFortranAST ast = PhotranVPG.getInstance().acquireTransientAST(filename);
-			long endParse = System.currentTimeMillis();
-			
-			long startIndex = System.currentTimeMillis();
-			if (ast != null) {
-				codeDB.indexAST(ast);
-			}
-			long endIndex = System.currentTimeMillis();
-			
-			CupidActivator.log(IStatus.INFO, "Rebuild DB time: " + (endRebuild-startRebuild));
-			CupidActivator.log(IStatus.INFO, "Parse time: " + (endParse-startParse));
-			CupidActivator.log(IStatus.INFO, "Index DB time: " + (endIndex-startIndex));
-
+				
+		if (newInput == null) {
+			return;
 		}
+		
+		if (newInput instanceof FortranEditor) {
+			editor = (FortranEditor) newInput;
+			file = editor.getIFile();
+		}
+		else {
+			return;
+		}
+		
+		
+		
+		
+		//input = (IFile) newInput;
+			
+		long startRebuild = System.currentTimeMillis();
+		codeDB.truncateDatabase();
+		long endRebuild = System.currentTimeMillis();
+		
+		String filename = PhotranVPG.getFilenameForIFile(file);
+		long startParse = System.currentTimeMillis();
+		//IFortranAST ast = PhotranVPG.getInstance().parse(filename);
+		PhotranVPG.getInstance().releaseAST(filename);
+		IFortranAST ast = PhotranVPG.getInstance().acquireTransientAST(filename);
+		long endParse = System.currentTimeMillis();
+		
+		long startIndex = System.currentTimeMillis();
+		if (ast != null) {
+			codeDB.indexAST(ast);
+		}
+		long endIndex = System.currentTimeMillis();
+		
+		CupidActivator.log(IStatus.INFO, "Rebuild DB time: " + (endRebuild-startRebuild));
+		CupidActivator.log(IStatus.INFO, "Parse time: " + (endParse-startParse));
+		CupidActivator.log(IStatus.INFO, "Index DB time: " + (endIndex-startIndex));
+
+		
 	}
 		
 	public void dispose() {

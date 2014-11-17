@@ -38,6 +38,8 @@ import org.eclipse.jface.action.ToolBarManager;
 import org.eclipse.jface.dialogs.MessageDialog;
 import org.eclipse.jface.layout.TreeColumnLayout;
 import org.eclipse.jface.resource.ImageDescriptor;
+import org.eclipse.jface.text.DocumentEvent;
+import org.eclipse.jface.text.IDocumentListener;
 import org.eclipse.jface.viewers.ColumnViewer;
 import org.eclipse.jface.viewers.ColumnViewerToolTipSupport;
 import org.eclipse.jface.viewers.ColumnWeightData;
@@ -59,6 +61,7 @@ import org.eclipse.photran.internal.core.parser.IASTNode;
 import org.eclipse.photran.internal.core.parser.IProgramUnit;
 import org.eclipse.photran.internal.core.reindenter.Reindenter;
 import org.eclipse.photran.internal.core.reindenter.Reindenter.Strategy;
+import org.eclipse.photran.internal.ui.editor.FortranEditor;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.SWTError;
 import org.eclipse.swt.browser.Browser;
@@ -72,12 +75,15 @@ import org.eclipse.swt.widgets.Text;
 import org.eclipse.swt.widgets.TreeColumn;
 import org.eclipse.ui.IActionBars;
 import org.eclipse.ui.IEditorInput;
+import org.eclipse.ui.IEditorPart;
 import org.eclipse.ui.IEditorReference;
 import org.eclipse.ui.IPartListener2;
 import org.eclipse.ui.IPartService;
+import org.eclipse.ui.IPropertyListener;
 import org.eclipse.ui.ISelectionListener;
 import org.eclipse.ui.IWorkbenchPage;
 import org.eclipse.ui.IWorkbenchPart;
+import org.eclipse.ui.IWorkbenchPartConstants;
 import org.eclipse.ui.IWorkbenchPartReference;
 import org.eclipse.ui.IWorkbenchWindow;
 import org.eclipse.ui.PartInitException;
@@ -555,6 +561,15 @@ public class NUOPCView extends ViewPart {
             					
             					public void run() {
             						
+            						//dissallow if editor is dirty
+            						if (contentProvider.editorIsDirty()) {
+            							MessageDialog.openError(
+            									viewer.getControl().getShell(),
+            									"Cannot generate",
+            									"Please save file before generating code");
+            							return;
+            						}
+            						
             						CodeConcept<?,?> newcc = null;
             						
             						try {        							
@@ -748,13 +763,39 @@ public class NUOPCView extends ViewPart {
         IPartService service = PlatformUI.getWorkbench().getActiveWorkbenchWindow().getPartService();
         partListener = new IPartListener2() {
 
+        	private IPropertyListener saveListener = new IPropertyListener() {
+				@Override
+				public void propertyChanged(Object source, int propId) {
+					if (propId == IWorkbenchPartConstants.PROP_DIRTY &&
+							!((FortranEditor)source).isDirty()) {
+						//if (viewer.getInput() != source) {							
+							viewer.setInput(source);
+						//}
+					}
+				}	
+			};
+        	
 			@Override
 			public void partActivated(IWorkbenchPartReference partRef) {
 				if (partRef instanceof IEditorReference) {
 					IEditorReference eref = (IEditorReference) partRef;
+					
+					IEditorPart editor = eref.getEditor(true);
+					if (editor != null && editor instanceof FortranEditor) {
+						//FortranEditor feditor = (FortranEditor) editor;
+						
+						editor.addPropertyListener(saveListener);
+						
+						if (viewer.getInput() != editor) {							
+							viewer.setInput(editor);
+						}
+					}
+					
+					/*
 					IEditorInput ein;
 					try {
 						ein = eref.getEditorInput();
+						
 					} catch (PartInitException e) {
 						CupidActivator.log("Error listening to activated editor.", e);
 						return;
@@ -762,16 +803,18 @@ public class NUOPCView extends ViewPart {
 					if (ein instanceof FileEditorInput) {
 						FileEditorInput fein = (FileEditorInput) ein;
 						IFile file = fein.getFile();
-						if (viewer.getInput() != file) {
+						//if (viewer.getInput() != file) {
 							viewer.setInput(file);
-						}
+						//}
 						viewer.expandToLevel(3);
 					}
+					*/
 				}
 			}
 
 			@Override
 			public void partBroughtToTop(IWorkbenchPartReference partRef) {
+				//System.out.println("broughtToTop: " + partRef);
 			}
 
 			@Override
@@ -780,6 +823,13 @@ public class NUOPCView extends ViewPart {
 
 			@Override
 			public void partDeactivated(IWorkbenchPartReference partRef) {
+				if (partRef instanceof IEditorReference) {
+					IEditorReference eref = (IEditorReference) partRef;
+					IEditorPart editor = eref.getEditor(true);
+					if (editor != null && editor instanceof FortranEditor) {
+						editor.removePropertyListener(saveListener);
+					}
+				}
 			}
 
 			@Override
