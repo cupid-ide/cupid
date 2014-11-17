@@ -47,6 +47,7 @@ import org.eclipse.jface.viewers.DoubleClickEvent;
 import org.eclipse.jface.viewers.IDoubleClickListener;
 import org.eclipse.jface.viewers.ISelection;
 import org.eclipse.jface.viewers.IStructuredSelection;
+import org.eclipse.jface.viewers.TreePath;
 import org.eclipse.jface.viewers.TreeViewer;
 import org.eclipse.jface.window.ToolTip;
 import org.eclipse.ltk.core.refactoring.TextFileChange;
@@ -307,6 +308,7 @@ public class NUOPCView extends ViewPart {
 		labelProvider = new NUOPCViewLabelProvider2(contentProvider);
 		viewer.setLabelProvider(labelProvider);
 		viewer.setSorter(null);
+		viewer.setAutoExpandLevel(3);
 	
 		FancyToolTipSupport.enableFor(viewer, ToolTip.NO_RECREATE);
 		
@@ -763,14 +765,14 @@ public class NUOPCView extends ViewPart {
         IPartService service = PlatformUI.getWorkbench().getActiveWorkbenchWindow().getPartService();
         partListener = new IPartListener2() {
 
+        	private IEditorPart previousEditor = null;
+        	
         	private IPropertyListener saveListener = new IPropertyListener() {
 				@Override
 				public void propertyChanged(Object source, int propId) {
 					if (propId == IWorkbenchPartConstants.PROP_DIRTY &&
 							!((FortranEditor)source).isDirty()) {
-						//if (viewer.getInput() != source) {							
-							viewer.setInput(source);
-						//}
+						viewer.setInput(source);
 					}
 				}	
 			};
@@ -779,10 +781,14 @@ public class NUOPCView extends ViewPart {
 			public void partActivated(IWorkbenchPartReference partRef) {
 				if (partRef instanceof IEditorReference) {
 					IEditorReference eref = (IEditorReference) partRef;
-					
 					IEditorPart editor = eref.getEditor(true);
 					if (editor != null && editor instanceof FortranEditor) {
 						//FortranEditor feditor = (FortranEditor) editor;
+						
+						if (previousEditor != null && previousEditor != editor) {
+							previousEditor.removePropertyListener(saveListener);
+							previousEditor = editor;
+						}
 						
 						editor.addPropertyListener(saveListener);
 						
@@ -814,7 +820,6 @@ public class NUOPCView extends ViewPart {
 
 			@Override
 			public void partBroughtToTop(IWorkbenchPartReference partRef) {
-				//System.out.println("broughtToTop: " + partRef);
 			}
 
 			@Override
@@ -823,6 +828,7 @@ public class NUOPCView extends ViewPart {
 
 			@Override
 			public void partDeactivated(IWorkbenchPartReference partRef) {
+				/*
 				if (partRef instanceof IEditorReference) {
 					IEditorReference eref = (IEditorReference) partRef;
 					IEditorPart editor = eref.getEditor(true);
@@ -830,6 +836,7 @@ public class NUOPCView extends ViewPart {
 						editor.removePropertyListener(saveListener);
 					}
 				}
+				*/
 			}
 
 			@Override
@@ -854,6 +861,7 @@ public class NUOPCView extends ViewPart {
         
         
         //listen for resource changes to synchronize
+        /*
         resourceChangeListener = new IResourceChangeListener() {
         	public void resourceChanged(final IResourceChangeEvent event) {
         		
@@ -890,7 +898,8 @@ public class NUOPCView extends ViewPart {
 
         ResourcesPlugin.getWorkspace().addResourceChangeListener(
         		resourceChangeListener, 
-        		IResourceChangeEvent.POST_CHANGE);        
+        		IResourceChangeEvent.POST_CHANGE);     
+        */   
         
 	}
 	

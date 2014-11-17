@@ -43,6 +43,7 @@ class NUOPCDriver extends CodeConcept<CodeConcept<?,?>, ASTModuleNode> {
 	var public BasicCodeConcept importNUOPC
 	
 	@Label(label="NUOPC Driver Import", type="uses")
+	@Child
 	var public BasicCodeConcept importNUOPCDriver
 	
 	@Child

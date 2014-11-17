@@ -4,7 +4,7 @@ import org.eclipse.photran.internal.core.parser.IASTNode
 
 public class BasicCodeConcept extends CodeConcept<CodeConcept<?,?>, IASTNode> {
 	
-	new(CodeConcept parent, long id) {
+	new(CodeConcept<?,?> parent, long id) {
 		super(parent)
 		_id = id
 	}

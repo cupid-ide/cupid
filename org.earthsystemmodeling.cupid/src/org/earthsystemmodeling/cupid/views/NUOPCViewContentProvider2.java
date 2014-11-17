@@ -42,24 +42,26 @@ class NUOPCViewContentProvider2 implements IStructuredContentProvider, ITreeCont
 		
 		codeDB.openConnection();
 		codeDB.rebuildDatabase();
-				
-		warningListener = new WarningListener() {
-			@Override
-			public void onWarning(WarningEvent e) {
-				CupidActivator.log(Status.WARNING, "Prolog warning: " + e.getMsg());
-			}
-		};
 		
-		outputListener = new OutputListener() {
-			@Override
-			public void onOutput(OutputEvent e) {
-				System.out.println("Prolog output: " + e.getMsg());
-			}
-		};
-		
-		
-		codeDB.getProlog().addWarningListener(warningListener);
-		codeDB.getProlog().addOutputListener(outputListener);
+		if (CupidActivator.getDefault().isDebugging()) {
+			warningListener = new WarningListener() {
+				@Override
+				public void onWarning(WarningEvent e) {
+					CupidActivator.log(Status.WARNING, "Prolog warning: " + e.getMsg());
+				}
+			};
+			
+			outputListener = new OutputListener() {
+				@Override
+				public void onOutput(OutputEvent e) {
+					System.out.println("Prolog output: " + e.getMsg());
+				}
+			};
+			
+			
+			codeDB.getProlog().addWarningListener(warningListener);
+			codeDB.getProlog().addOutputListener(outputListener);
+		}
 		
 	}
 	
@@ -108,10 +110,11 @@ class NUOPCViewContentProvider2 implements IStructuredContentProvider, ITreeCont
 		}
 		long endIndex = System.currentTimeMillis();
 		
-		CupidActivator.log(IStatus.INFO, "Rebuild DB time: " + (endRebuild-startRebuild));
-		CupidActivator.log(IStatus.INFO, "Parse time: " + (endParse-startParse));
-		CupidActivator.log(IStatus.INFO, "Index DB time: " + (endIndex-startIndex));
-
+		if (CupidActivator.getDefault().isDebugging()) {
+			CupidActivator.log(IStatus.INFO, "Rebuild DB time: " + (endRebuild-startRebuild));
+			CupidActivator.log(IStatus.INFO, "Parse time: " + (endParse-startParse));
+			CupidActivator.log(IStatus.INFO, "Index DB time: " + (endIndex-startIndex));
+		}
 		
 	}
 		

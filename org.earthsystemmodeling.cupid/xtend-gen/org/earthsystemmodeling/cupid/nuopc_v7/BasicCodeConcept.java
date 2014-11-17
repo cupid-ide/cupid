@@ -7,7 +7,7 @@ import org.eclipse.xtend2.lib.StringConcatenation;
 
 @SuppressWarnings("all")
 public class BasicCodeConcept extends CodeConcept<CodeConcept<?, ?>, IASTNode> {
-  public BasicCodeConcept(final CodeConcept parent, final long id) {
+  public BasicCodeConcept(final CodeConcept<?, ?> parent, final long id) {
     super(parent);
     this._id = id;
   }
