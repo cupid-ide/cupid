@@ -81,6 +81,11 @@ public class CodeDBIndex {
 	private PreparedStatement findTokenRefStmt = null;
 	
 	public CodeDBIndex() {
+		/*
+		 * a caveat of having one prolog instance is that you cannot solve
+		 * multiple goals at the same time, e.g., such as iterating through
+		 * an inner resultset for every row in an outer resultset
+		 */
 		prolog = new Prolog();
 		addDefaultTheory();
 	}

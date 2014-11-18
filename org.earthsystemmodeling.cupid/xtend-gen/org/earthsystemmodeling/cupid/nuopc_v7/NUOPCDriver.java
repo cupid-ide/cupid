@@ -7,6 +7,7 @@ import java.util.ArrayList;
 import java.util.List;
 import org.earthsystemmodeling.cupid.annotation.Child;
 import org.earthsystemmodeling.cupid.annotation.Label;
+import org.earthsystemmodeling.cupid.annotation.Prop;
 import org.earthsystemmodeling.cupid.codedb.CodeDBIndex;
 import org.earthsystemmodeling.cupid.core.CupidActivator;
 import org.earthsystemmodeling.cupid.nuopc_v7.BasicCodeConcept;
@@ -405,6 +406,8 @@ public class NUOPCDriver extends CodeConcept<CodeConcept<?, ?>, ASTModuleNode> {
     
     public String dstCompLabel;
     
+    @Prop
+    @Label(label = "Set Services")
     public String compSetServices;
     
     public SetModelServices_AddComp(final NUOPCDriver.SetModelServices parent) {
@@ -526,10 +529,54 @@ public class NUOPCDriver extends CodeConcept<CodeConcept<?, ?>, ASTModuleNode> {
   
   @Label(label = "SetRunSequence", type = "subroutine")
   public static class SetRunSequence extends SpecializationMethodCodeConcept<NUOPCDriver.Initialization> {
+    @Child
+    @Label(label = "New Run Sequence", type = "call")
+    public BasicCodeConcept newRunSequence;
+    
+    @Child(max = (-1))
+    public List<NUOPCDriver.SetRunSequence_AddRunElement> runElements;
+    
     public SetRunSequence(final NUOPCDriver.Initialization parent) {
       super(parent, "NUOPC_Driver", "label_SetRunSequence");
       this.subroutineName = "SetRunSequence";
       this.specLabel = "driver_label_SetRunSequence";
+    }
+    
+    public SpecializationMethodCodeConcept<NUOPCDriver.Initialization> reverse() {
+      try {
+        NUOPCDriver.SetRunSequence _xifexpression = null;
+        SpecializationMethodCodeConcept<NUOPCDriver.Initialization> _reverse = super.reverse();
+        boolean _equals = Objects.equal(this, _reverse);
+        if (_equals) {
+          NUOPCDriver.SetRunSequence _xblockexpression = null;
+          {
+            StringConcatenation _builder = new StringConcatenation();
+            _builder.append("call_(_cid, ");
+            _builder.append(this._id, "");
+            _builder.append(", \'NUOPC_DriverNewRunSequence\'),");
+            _builder.newLineIfNotEmpty();
+            _builder.append("\t\t\t\t\t\t\t");
+            _builder.append("callArgWithType(_, _cid, _, \'slotCount\', _, _slotExpr).");
+            ResultSet rs = this.execQuery(_builder);
+            boolean _next = rs.next();
+            if (_next) {
+              long _long = rs.getLong("_cid");
+              BasicCodeConcept _newBasicCodeConcept = BasicCodeConcept.newBasicCodeConcept(this, _long);
+              this.newRunSequence = _newBasicCodeConcept;
+            }
+            NUOPCDriver.SetRunSequence_AddRunElement _setRunSequence_AddRunElement = new NUOPCDriver.SetRunSequence_AddRunElement(this);
+            List _reverseMultiple = _setRunSequence_AddRunElement.reverseMultiple();
+            this.runElements = ((List<NUOPCDriver.SetRunSequence_AddRunElement>) _reverseMultiple);
+            _xblockexpression = this;
+          }
+          _xifexpression = _xblockexpression;
+        } else {
+          _xifexpression = null;
+        }
+        return _xifexpression;
+      } catch (Throwable _e) {
+        throw Exceptions.sneakyThrow(_e);
+      }
     }
     
     public CodeConcept<?, ASTModuleNode> module() {
@@ -542,6 +589,114 @@ public class NUOPCDriver extends CodeConcept<CodeConcept<?, ?>, ASTModuleNode> {
     
     public BasicCodeConcept genericUse() {
       return this._parent._parent.importNUOPCDriver;
+    }
+  }
+  
+  @Label(label = "Add Run Element", type = "uses")
+  public static class SetRunSequence_AddRunElement extends CodeConcept<NUOPCDriver.SetRunSequence, ASTCallStmtNode> {
+    @Label(label = "slot")
+    @Prop
+    public String slot;
+    
+    public String compLabel;
+    
+    public String srcCompLabel;
+    
+    public String dstCompLabel;
+    
+    public String name() {
+      String _xifexpression = null;
+      boolean _notEquals = (!Objects.equal(this.compLabel, null));
+      if (_notEquals) {
+        _xifexpression = (((this.compLabel + "(slot=") + this.slot) + ")");
+      } else {
+        _xifexpression = (((((this.srcCompLabel + " => ") + this.dstCompLabel) + "(slot=") + this.slot) + ")");
+      }
+      return _xifexpression;
+    }
+    
+    public SetRunSequence_AddRunElement(final NUOPCDriver.SetRunSequence parent) {
+      super(parent);
+    }
+    
+    public List reverseMultiple() {
+      try {
+        ArrayList<NUOPCDriver.SetRunSequence_AddRunElement> _xblockexpression = null;
+        {
+          ArrayList<NUOPCDriver.SetRunSequence_AddRunElement> retList = CollectionLiterals.<NUOPCDriver.SetRunSequence_AddRunElement>newArrayList();
+          StringConcatenation _builder = new StringConcatenation();
+          _builder.append("call_(_cid, ");
+          long _parentID = this.parentID();
+          _builder.append(_parentID, "");
+          _builder.append(", \'NUOPC_DriverAddRunElement\').");
+          ResultSet rs = this.execQuery(_builder);
+          while (rs.next()) {
+            {
+              NUOPCDriver.SetRunSequence_AddRunElement addComp = new NUOPCDriver.SetRunSequence_AddRunElement(this._parent);
+              long _long = rs.getLong("_cid");
+              addComp._id = _long;
+              retList.add(addComp);
+            }
+          }
+          for (final NUOPCDriver.SetRunSequence_AddRunElement addComp : retList) {
+            {
+              StringConcatenation _builder_1 = new StringConcatenation();
+              _builder_1.append("callArgWithType(_, ");
+              _builder_1.append(addComp._id, "");
+              _builder_1.append(", _, \'srcCompLabel\', _, _srcCompExpr),");
+              _builder_1.newLineIfNotEmpty();
+              _builder_1.append("\t\t\t\t\t\t\t ");
+              _builder_1.append("callArgWithType(_, ");
+              _builder_1.append(addComp._id, "\t\t\t\t\t\t\t ");
+              _builder_1.append(", _, \'dstCompLabel\', _, _dstCompExpr),");
+              _builder_1.newLineIfNotEmpty();
+              _builder_1.append("\t\t\t\t\t\t\t ");
+              _builder_1.append("callArgWithType(_, ");
+              _builder_1.append(addComp._id, "\t\t\t\t\t\t\t ");
+              _builder_1.append(", _, \'slot\', _, _slotExpr).");
+              ResultSet rs2 = this.execQuery(_builder_1);
+              boolean _next = rs2.next();
+              if (_next) {
+                String _string = rs2.getString("_srcCompExpr");
+                addComp.srcCompLabel = _string;
+                String _string_1 = rs2.getString("_dstCompExpr");
+                addComp.dstCompLabel = _string_1;
+                String _string_2 = rs2.getString("_slotExpr");
+                addComp.slot = _string_2;
+                rs2.close();
+              } else {
+                StringConcatenation _builder_2 = new StringConcatenation();
+                _builder_2.append("callArgWithType(_, ");
+                _builder_2.append(addComp._id, "");
+                _builder_2.append(", _, \'compLabel\', _, _compExpr),");
+                _builder_2.newLineIfNotEmpty();
+                _builder_2.append("\t\t\t\t\t\t\t ");
+                _builder_2.append("callArgWithType(_, ");
+                _builder_2.append(addComp._id, "\t\t\t\t\t\t\t ");
+                _builder_2.append(", _, \'slot\', _, _slotExpr).");
+                ResultSet _execQuery = this.execQuery(_builder_2);
+                rs2 = _execQuery;
+                boolean _next_1 = rs2.next();
+                if (_next_1) {
+                  String _string_3 = rs2.getString("_compExpr");
+                  addComp.compLabel = _string_3;
+                  String _string_4 = rs2.getString("_slotExpr");
+                  addComp.slot = _string_4;
+                }
+                rs2.close();
+              }
+            }
+          }
+          _xblockexpression = retList;
+        }
+        return _xblockexpression;
+      } catch (Throwable _e) {
+        throw Exceptions.sneakyThrow(_e);
+      }
+    }
+    
+    public IFortranAST forward() {
+      throw new UnsupportedOperationException("TODO: auto-generated method stub");
     }
   }
   

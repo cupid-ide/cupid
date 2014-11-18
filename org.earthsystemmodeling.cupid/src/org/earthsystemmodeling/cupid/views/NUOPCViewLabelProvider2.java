@@ -15,8 +15,10 @@ import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
 
 import org.earthsystemmodeling.FSM;
+import org.earthsystemmodeling.cupid.annotation.Child;
 import org.earthsystemmodeling.cupid.annotation.Label;
 import org.earthsystemmodeling.cupid.annotation.Name;
+import org.earthsystemmodeling.cupid.annotation.Prop;
 import org.earthsystemmodeling.cupid.core.CupidActivator;
 import org.earthsystemmodeling.cupid.nuopc_v7.CodeConcept;
 import org.earthsystemmodeling.cupid.views.NUOPCViewContentProvider.NUOPCModelElem;
@@ -80,23 +82,53 @@ class NUOPCViewLabelProvider2 extends StyledCellLabelProvider { //implements ITa
 	public String getToolTipText(Object element) {
 		
 		if (CupidActivator.getDefault().isDebugging()) {
-			loadDocXML(); //reload when debugging
+			loadDocXML(); //reload every time when debugging
 		}
 		
 		CodeConceptProxy ccp = (CodeConceptProxy) element;
 		final String className = ccp.clazz.getCanonicalName();
+		StringBuffer buf = new StringBuffer();
+		
+		//display any properties first
+		if (ccp.codeConcept != null) {
+			for (Field field : ccp.clazz.getFields()) {
+				Prop propAnn = field.getAnnotation(Prop.class);
+				if (propAnn != null) {
+					Object propVal = null;
+					try {
+						propVal = field.get(ccp.codeConcept);
+					} catch (IllegalArgumentException | IllegalAccessException e) {
+						//ignore
+					}
+					if (propVal != null) {
+						Label labAnn = field.getAnnotation(Label.class);
+						if (labAnn != null) {
+							buf.append("<b>" + labAnn.label() + ": </b>");
+						}
+						else {
+							buf.append("<b>" + field.getName() + ": </b>");
+						}
+						buf.append(propVal.toString() + "<br/>");
+					}
+				}
+			}
+		}
 		
 		if (docXML != null) {
 			List<Element> xmlElems = docXML.getRootElement().getChildren("doc");
 			for (Element xmlElem : xmlElems) {
 				if (xmlElem.getAttributeValue("class").equals(className)) {
-					return xmlElem.getTextTrim();
-					
+					buf.append(xmlElem.getTextTrim());
 				}
 			}			
 		}
 		
-		return null;
+		if (buf.length() > 0) {
+			return buf.toString();
+		}
+		else {
+			return null;
+		}
 	}
 	
 	/*

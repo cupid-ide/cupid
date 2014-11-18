@@ -10,7 +10,6 @@ import org.earthsystemmodeling.cupid.annotation.Name
 import org.earthsystemmodeling.cupid.annotation.Child
 import org.eclipse.photran.internal.core.parser.ASTNode
 import static org.earthsystemmodeling.cupid.nuopc_v7.BasicCodeConcept.newBasicCodeConcept
-import org.earthsystemmodeling.cupid.nuopc_v7.NUOPCDriver.SetModelServices
 import org.eclipse.photran.internal.core.parser.ASTCallStmtNode
 import java.util.List
 
@@ -22,10 +21,10 @@ import org.eclipse.photran.internal.core.parser.ASTSubroutineSubprogramNode
 import org.eclipse.photran.core.IFortranAST
 import org.eclipse.photran.internal.core.parser.ASTExecutableProgramNode
 import org.eclipse.photran.internal.core.parser.ASTUseStmtNode
-import org.earthsystemmodeling.cupid.nuopc_v7.NUOPCDriver.Initialization
 import org.eclipse.photran.internal.core.parser.IASTListNode
 import org.eclipse.photran.internal.core.parser.IBodyConstruct
 import org.eclipse.photran.internal.core.parser.ASTTypeDeclarationStmtNode
+import org.earthsystemmodeling.cupid.annotation.Prop
 
 @Label(label="NUOPC Driver", type="module")
 class NUOPCDriver extends CodeConcept<CodeConcept<?,?>, ASTModuleNode> {
@@ -338,6 +337,8 @@ if (ESMF_LogFoundError(rcToCheck=«paramRC», msg=ESMF_LOGERR_PASSTHRU, &
 		var public String srcCompLabel
 		var public String dstCompLabel
 		
+		@Prop
+		@Label(label="Set Services")
 		var public String compSetServices
 			
 		new(SetModelServices parent) {
@@ -407,11 +408,35 @@ if (ESMF_LogFoundError(rcToCheck=«_parent.paramRC», msg=ESMF_LOGERR_PASSTHRU, 
 	@Label(label="SetRunSequence", type="subroutine")
 	static class SetRunSequence extends SpecializationMethodCodeConcept<Initialization> {
 	
+		@Child
+		@Label(label="New Run Sequence", type="call")
+		public BasicCodeConcept newRunSequence
+		
+		@Child(max=-1)
+		public List<SetRunSequence_AddRunElement> runElements
+		
 		new(Initialization parent) {
 			super(parent, "NUOPC_Driver", "label_SetRunSequence")
 			//defaults
 			subroutineName = "SetRunSequence"
 			specLabel = "driver_label_SetRunSequence"
+		}
+			
+		override reverse() {
+			if (this == super.reverse) {				
+				var rs = '''call_(_cid, «_id», 'NUOPC_DriverNewRunSequence'),
+							callArgWithType(_, _cid, _, 'slotCount', _, _slotExpr).'''.execQuery
+				if (rs.next) {
+					newRunSequence = newBasicCodeConcept(this, rs.getLong("_cid"))
+				}
+				
+				runElements = new SetRunSequence_AddRunElement(this).reverseMultiple() as List<SetRunSequence_AddRunElement>
+				this
+			}
+			else {
+				null
+			}
+	
 		}
 		
 		override module() {
@@ -425,6 +450,78 @@ if (ESMF_LogFoundError(rcToCheck=«_parent.paramRC», msg=ESMF_LOGERR_PASSTHRU, 
 		override genericUse() {
 			_parent._parent.importNUOPCDriver
 		}
+		
+		
+	}
+	
+	@Label(label="Add Run Element", type="uses")
+	static class SetRunSequence_AddRunElement extends CodeConcept<SetRunSequence, ASTCallStmtNode> {
+	
+		@Label(label="slot")
+		@Prop
+		public String slot
+		public String compLabel
+		
+		public String srcCompLabel
+		public String dstCompLabel
+		
+		
+		override name() {
+			if (compLabel != null) compLabel + "(slot=" + slot + ")"
+			else srcCompLabel + " => " + dstCompLabel + "(slot=" + slot + ")"
+		}		
+		
+		new(SetRunSequence parent) {
+			super(parent)
+		}
+		
+		override List reverseMultiple() {
+			
+			var retList = newArrayList()
+			
+			var rs = '''call_(_cid, «parentID», 'NUOPC_DriverAddRunElement').'''.execQuery
+			
+			/*
+			 * due to limitation with CodeDB (using one instance of prolog)
+			 * we cannot nest queries - therefore first go through the outer
+			 * query and store in a list, then go back through the list
+			 */
+			while (rs.next) {
+				var addComp = new SetRunSequence_AddRunElement(_parent)
+				addComp._id = rs.getLong("_cid")
+				retList.add(addComp)
+			}
+			
+			for (SetRunSequence_AddRunElement addComp : retList) {
+				var rs2 = '''callArgWithType(_, «addComp._id», _, 'srcCompLabel', _, _srcCompExpr),
+							 callArgWithType(_, «addComp._id», _, 'dstCompLabel', _, _dstCompExpr),
+							 callArgWithType(_, «addComp._id», _, 'slot', _, _slotExpr).'''.execQuery
+				
+				if (rs2.next) {
+					addComp.srcCompLabel = rs2.getString("_srcCompExpr")
+					addComp.dstCompLabel = rs2.getString("_dstCompExpr")
+					addComp.slot = rs2.getString("_slotExpr")
+					rs2.close
+				}
+				else {
+					rs2 = '''callArgWithType(_, «addComp._id», _, 'compLabel', _, _compExpr),
+							 callArgWithType(_, «addComp._id», _, 'slot', _, _slotExpr).'''.execQuery
+					if (rs2.next) {
+						addComp.compLabel = rs2.getString("_compExpr")
+						addComp.slot = rs2.getString("_slotExpr")
+					}
+					rs2.close
+				}
+			}
+			
+			retList
+			
+		}
+		
+		override forward() {
+			throw new UnsupportedOperationException("TODO: auto-generated method stub")
+		}
+		
 		
 		
 	}

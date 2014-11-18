@@ -155,8 +155,17 @@ public class PrologResultSet implements ResultSet {
 
 	@Override
 	public int getInt(int columnIndex) throws SQLException {
-		// TODO Auto-generated method stub
-		return 0;
+		if (curSolution != null) {
+			try {
+				Var colVar = (Var) curSolution.getBindingVars().get(columnIndex-1);
+				if (!colVar.isBound()) return 0;
+				alice.tuprolog.Int i = (alice.tuprolog.Int) colVar.getTerm();
+				return i.intValue();
+			} catch (NoSolutionException e) {
+				throw new SQLException(e);
+			}
+		}
+		throw new SQLException("No current solution");
 	}
 
 	@Override
@@ -240,7 +249,7 @@ public class PrologResultSet implements ResultSet {
 		if (curSolution != null) {
 			try {
 				Term t = curSolution.getVarValue(columnLabel);
-				if (t==null) throw new SQLException("No variable named " + columnLabel);
+				if (t==null) throw new SQLException("No column with name " + columnLabel);
 				if (t instanceof Var) return null;
 				return stripQuotes(t.toString());
 			} catch (NoSolutionException e) {
@@ -271,8 +280,18 @@ public class PrologResultSet implements ResultSet {
 
 	@Override
 	public int getInt(String columnLabel) throws SQLException {
-		// TODO Auto-generated method stub
-		return 0;
+		if (curSolution != null) {
+			try {
+				Term term = curSolution.getVarValue(columnLabel);
+				if (term == null) throw new SQLException("No column with name " + columnLabel);
+				if (term instanceof Var) return 0;
+				alice.tuprolog.Int i = (alice.tuprolog.Int) term;
+				return i.intValue();
+			} catch (NoSolutionException e) {
+				throw new SQLException(e);
+			}
+		}
+		throw new SQLException("No current solution");
 	}
 
 	@Override
@@ -280,6 +299,7 @@ public class PrologResultSet implements ResultSet {
 		if (curSolution != null) {
 			try {
 				Term term = curSolution.getVarValue(columnLabel);
+				if (term == null) throw new SQLException("No column with name " + columnLabel);
 				if (term instanceof Var) return 0;
 				alice.tuprolog.Long t = (alice.tuprolog.Long) term;
 				return t.longValue();

@@ -51,7 +51,7 @@ public abstract class CodeConcept<P extends CodeConcept<?,?>, A extends IASTNode
 	def abstract IFortranAST forward()
 	
 	def String name() {null}
-
+	
 	def execQuery(CharSequence query) {
 		try {
 			var rs = _codeDB.query2(query.toString)
