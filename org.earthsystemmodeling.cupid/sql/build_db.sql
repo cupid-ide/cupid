@@ -13,6 +13,7 @@ drop table if exists callArg;
 drop table if exists ident;
 drop table if exists const;
 drop table if exists arrayConstructor;
+drop table if exists arrayConstructorVal;
 drop sequence if exists global_fact_id;
 
 create sequence global_fact_id;
@@ -87,4 +88,10 @@ create table const(
 create table arrayConstructor(
      id bigint default global_fact_id.nextval primary key,
      parent_id bigint,
+     val varchar(100));
+     
+create table arrayConstructorVal(
+     id bigint default global_fact_id.nextval primary key,
+     parent_id bigint,
+     index int,
      val varchar(100));

@@ -1,5 +1,6 @@
 package org.earthsystemmodeling.cupid.handlers;
 
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -57,7 +58,12 @@ public class PopulateCodeDBHandler extends AbstractHandler {
 		}
 		
 		//CodeDBIndex.getInstance().clear();
-		CodeDBIndex.getInstance().openConnection();  //open, reset & close now for debugging
+		try {
+			CodeDBIndex.getInstance().openConnection();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}  //open, reset & close now for debugging
 		CodeDBIndex.getInstance().rebuildDatabase();
 		
 		long totalParse = 0;

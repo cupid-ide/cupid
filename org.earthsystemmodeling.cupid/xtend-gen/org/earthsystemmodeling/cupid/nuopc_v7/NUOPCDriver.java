@@ -45,9 +45,6 @@ public class NUOPCDriver extends CodeConcept<CodeConcept<?, ?>, ASTModuleNode> {
     @Child(min = 0)
     public NUOPCDriver.SetRunSequence setRunSequence;
     
-    @Child(min = 0)
-    public NUOPCDriver.ModifyInitializePhaseMap modifyInitializePhaseMap;
-    
     public Initialization(final NUOPCDriver parent) {
       super(parent);
     }
@@ -71,16 +68,9 @@ public class NUOPCDriver extends CodeConcept<CodeConcept<?, ?>, ASTModuleNode> {
         NUOPCDriver.SetRunSequence _setRunSequence = new NUOPCDriver.SetRunSequence(this);
         SpecializationMethodCodeConcept<NUOPCDriver.Initialization> _reverse_3 = _setRunSequence.reverse();
         this.setRunSequence = ((NUOPCDriver.SetRunSequence) _reverse_3);
-        NUOPCDriver.ModifyInitializePhaseMap _modifyInitializePhaseMap = new NUOPCDriver.ModifyInitializePhaseMap(this);
-        SpecializationMethodCodeConcept<NUOPCDriver.Initialization> _reverse_4 = _modifyInitializePhaseMap.reverse();
-        this.modifyInitializePhaseMap = ((NUOPCDriver.ModifyInitializePhaseMap) _reverse_4);
         _xblockexpression = this;
       }
       return _xblockexpression;
-    }
-    
-    public IFortranAST forward() {
-      throw new UnsupportedOperationException("TODO: auto-generated method stub");
     }
   }
   
@@ -638,6 +628,7 @@ public class NUOPCDriver extends CodeConcept<CodeConcept<?, ?>, ASTModuleNode> {
               retList.add(addComp);
             }
           }
+          rs.close();
           for (final NUOPCDriver.SetRunSequence_AddRunElement addComp : retList) {
             {
               StringConcatenation _builder_1 = new StringConcatenation();
@@ -654,16 +645,17 @@ public class NUOPCDriver extends CodeConcept<CodeConcept<?, ?>, ASTModuleNode> {
               _builder_1.append("callArgWithType(_, ");
               _builder_1.append(addComp._id, "\t\t\t\t\t\t\t ");
               _builder_1.append(", _, \'slot\', _, _slotExpr).");
-              ResultSet rs2 = this.execQuery(_builder_1);
-              boolean _next = rs2.next();
+              ResultSet _execQuery = this.execQuery(_builder_1);
+              rs = _execQuery;
+              boolean _next = rs.next();
               if (_next) {
-                String _string = rs2.getString("_srcCompExpr");
+                String _string = rs.getString("_srcCompExpr");
                 addComp.srcCompLabel = _string;
-                String _string_1 = rs2.getString("_dstCompExpr");
+                String _string_1 = rs.getString("_dstCompExpr");
                 addComp.dstCompLabel = _string_1;
-                String _string_2 = rs2.getString("_slotExpr");
+                String _string_2 = rs.getString("_slotExpr");
                 addComp.slot = _string_2;
-                rs2.close();
+                rs.close();
               } else {
                 StringConcatenation _builder_2 = new StringConcatenation();
                 _builder_2.append("callArgWithType(_, ");
@@ -674,16 +666,16 @@ public class NUOPCDriver extends CodeConcept<CodeConcept<?, ?>, ASTModuleNode> {
                 _builder_2.append("callArgWithType(_, ");
                 _builder_2.append(addComp._id, "\t\t\t\t\t\t\t ");
                 _builder_2.append(", _, \'slot\', _, _slotExpr).");
-                ResultSet _execQuery = this.execQuery(_builder_2);
-                rs2 = _execQuery;
-                boolean _next_1 = rs2.next();
+                ResultSet _execQuery_1 = this.execQuery(_builder_2);
+                rs = _execQuery_1;
+                boolean _next_1 = rs.next();
                 if (_next_1) {
-                  String _string_3 = rs2.getString("_compExpr");
+                  String _string_3 = rs.getString("_compExpr");
                   addComp.compLabel = _string_3;
-                  String _string_4 = rs2.getString("_slotExpr");
+                  String _string_4 = rs.getString("_slotExpr");
                   addComp.slot = _string_4;
                 }
-                rs2.close();
+                rs.close();
               }
             }
           }
@@ -696,7 +688,83 @@ public class NUOPCDriver extends CodeConcept<CodeConcept<?, ?>, ASTModuleNode> {
     }
     
     public IFortranAST forward() {
-      throw new UnsupportedOperationException("TODO: auto-generated method stub");
+      IFortranAST _xblockexpression = null;
+      {
+        IFortranAST ast = this.getAST();
+        StringConcatenation _builder = new StringConcatenation();
+        _builder.newLine();
+        _builder.append("! add a run sequence element for a Model, Mediator, or Driver       ");
+        _builder.newLine();
+        _builder.append("call NUOPC_DriverAddRunElement(");
+        _builder.append(this._parent.paramGridComp, "");
+        _builder.append(", slot=");
+        CharSequence _paramint = this.paramint(1);
+        _builder.append(_paramint, "");
+        _builder.append(", &");
+        _builder.newLineIfNotEmpty();
+        _builder.append("    ");
+        _builder.append("compLabel=\"");
+        CharSequence _paramch = this.paramch("compLabel");
+        _builder.append(_paramch, "    ");
+        _builder.append("\", rc=");
+        _builder.append(this._parent.paramRC, "    ");
+        _builder.append(")");
+        _builder.newLineIfNotEmpty();
+        _builder.append("if (ESMF_LogFoundError(rcToCheck=");
+        _builder.append(this._parent.paramRC, "");
+        _builder.append(", msg=ESMF_LOGERR_PASSTHRU, &");
+        _builder.newLineIfNotEmpty();
+        _builder.append("    ");
+        _builder.append("line=__LINE__, &");
+        _builder.newLine();
+        _builder.append("    ");
+        _builder.append("file=__FILE__)) &");
+        _builder.newLine();
+        _builder.append("    ");
+        _builder.append("return  ! bail out");
+        _builder.newLine();
+        _builder.newLine();
+        _builder.append("! add a run sequence element for a Connector   ");
+        _builder.newLine();
+        _builder.append("call NUOPC_DriverAddRunElement(");
+        _builder.append(this._parent.paramGridComp, "");
+        _builder.append(", slot=");
+        CharSequence _paramint_1 = this.paramint(1);
+        _builder.append(_paramint_1, "");
+        _builder.append(", &");
+        _builder.newLineIfNotEmpty();
+        _builder.append("    ");
+        _builder.append("srcCompLabel=\"");
+        CharSequence _paramch_1 = this.paramch("srcComp");
+        _builder.append(_paramch_1, "    ");
+        _builder.append("\", dstCompLabel=\"");
+        CharSequence _paramch_2 = this.paramch("dstComp");
+        _builder.append(_paramch_2, "    ");
+        _builder.append("\", rc=");
+        _builder.append(this._parent.paramRC, "    ");
+        _builder.append(")");
+        _builder.newLineIfNotEmpty();
+        _builder.append("if (ESMF_LogFoundError(rcToCheck=");
+        _builder.append(this._parent.paramRC, "");
+        _builder.append(", msg=ESMF_LOGERR_PASSTHRU, &");
+        _builder.newLineIfNotEmpty();
+        _builder.append("    ");
+        _builder.append("line=__LINE__, &");
+        _builder.newLine();
+        _builder.append("    ");
+        _builder.append("file=__FILE__)) &");
+        _builder.newLine();
+        _builder.append("    ");
+        _builder.append("return  ! bail out");
+        _builder.newLine();
+        String code = _builder.toString();
+        final IASTListNode<IBodyConstruct> stmts = CodeExtraction.parseLiteralStatementSequence(code);
+        ASTSubroutineSubprogramNode ssn = this._parent.getASTRef();
+        IASTListNode<IBodyConstruct> _body = ssn.getBody();
+        _body.addAll(stmts);
+        _xblockexpression = ast;
+      }
+      return _xblockexpression;
     }
   }
   
@@ -882,10 +950,6 @@ public class NUOPCDriver extends CodeConcept<CodeConcept<?, ?>, ASTModuleNode> {
     this._codeDB = codeDB;
   }
   
-  public IFortranAST forward() {
-    throw new UnsupportedOperationException("TODO: auto-generated method stub");
-  }
-  
   public CodeConcept<CodeConcept<?, ?>, ASTModuleNode> reverse() {
     Object _xblockexpression = null;
     {
@@ -966,33 +1030,6 @@ public class NUOPCDriver extends CodeConcept<CodeConcept<?, ?>, ASTModuleNode> {
       _xblockexpression = this;
     }
     return _xblockexpression;
-  }
-  
-  public String toString() {
-    StringConcatenation _builder = new StringConcatenation();
-    _builder.append("NUOPCDriver2: (id = ");
-    _builder.append(this._id, "");
-    _builder.append(", driverName = ");
-    _builder.append(this.driverName, "");
-    _builder.append(")");
-    _builder.newLineIfNotEmpty();
-    _builder.append("\t");
-    _builder.append("importESMF: ");
-    _builder.append(this.importESMF, "\t");
-    _builder.newLineIfNotEmpty();
-    _builder.append("\t");
-    _builder.append("importNUOPC: ");
-    _builder.append(this.importNUOPC, "\t");
-    _builder.newLineIfNotEmpty();
-    _builder.append("\t");
-    _builder.append("importNUOPCDriver: ");
-    _builder.append(this.importNUOPCDriver, "\t");
-    _builder.newLineIfNotEmpty();
-    _builder.append("\t");
-    _builder.append("setServices: ");
-    _builder.append(this.setServices, "\t");
-    _builder.newLineIfNotEmpty();
-    return _builder.toString();
   }
   
   public String name() {

@@ -53,9 +53,11 @@
             commandId="org.earthsystemmodeling.cupid.populateCodeDB">
       </handler>
    </extension>
+  
+  <!--
    <extension
          point="org.eclipse.ui.menus">
-      <!--
+      
       <menuContribution
             locationURI="menu:org.eclipse.ui.main.menu?after=additions">
          <menu
@@ -86,9 +88,9 @@
            
          </menu>
       </menuContribution>
-      -->
+     
       
-      <!--
+      
       <menuContribution
             locationURI="toolbar:org.eclipse.ui.main.toolbar?after=additions">
          <toolbar
@@ -116,8 +118,9 @@
            
          </toolbar>
       </menuContribution>
-      -->
       
+      
+     
        <menuContribution
             locationURI="popup:org.eclipse.ui.navigator.ProjectExplorer#PopupMenu?after=additions">
          <command
@@ -136,7 +139,8 @@
                </with>
             </visibleWhen>
          </command>
-         <!--
+         
+       
          <command
                commandId="org.earthsystemmodeling.cupid.commands.forwardCommand"
                id="org.earthsystemmodeling.cupid.menus.forwardCommand"
@@ -154,11 +158,11 @@
                </with>
             </visibleWhen>
          </command>
-         -->
+        
       </menuContribution>
       
        
-      <!-- 
+      
       <menuContribution
             locationURI="popup:org.eclipse.ui.projectConfigure?after=additions">
          <command
@@ -214,7 +218,7 @@
             </visibleWhen>
          </command>
       </menuContribution>
-      -->
+     
       
       <menuContribution
             allPopups="true"
@@ -226,15 +230,16 @@
                style="push"
                tooltip="Reverse engineer">
          </command>
-         <!--
+         
          <command
                commandId="org.earthsystemmodeling.cupid.commands.forwardCommand"
                icon="icons/arrow_left.png"
                id="org.earthsystemmodeling.cupid.toolbars.forwardCommand"
                tooltip="Forward engineer (generate code)">
          </command>
-         -->
+        
       </menuContribution>
+      
       <menuContribution
             locationURI="popup:org.eclipse.ui.navigator.ProjectExplorer#PopupMenu?after=additions">
          <command
@@ -255,6 +260,8 @@
          </command>
       </menuContribution>
    </extension>
+  -->
+  
    <!--
    <extension
          id="nuopcBuilder"

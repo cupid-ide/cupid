@@ -2,6 +2,8 @@ package org.earthsystemmodeling.cupid.nuopc_v7;
 
 import com.google.common.base.Objects;
 import java.sql.ResultSet;
+import java.util.ArrayList;
+import java.util.List;
 import org.earthsystemmodeling.cupid.annotation.Child;
 import org.earthsystemmodeling.cupid.annotation.Label;
 import org.earthsystemmodeling.cupid.annotation.Name;
@@ -14,85 +16,87 @@ import org.eclipse.photran.internal.core.parser.ASTCallStmtNode;
 import org.eclipse.photran.internal.core.parser.ASTIfStmtNode;
 import org.eclipse.photran.internal.core.parser.ASTModuleNode;
 import org.eclipse.photran.internal.core.parser.ASTSubroutineSubprogramNode;
-import org.eclipse.photran.internal.core.parser.ASTUseStmtNode;
 import org.eclipse.photran.internal.core.parser.IASTListNode;
-import org.eclipse.photran.internal.core.parser.IASTNode;
 import org.eclipse.photran.internal.core.parser.IBodyConstruct;
 import org.eclipse.photran.internal.core.parser.IModuleBodyConstruct;
 import org.eclipse.xtend2.lib.StringConcatenation;
+import org.eclipse.xtext.xbase.lib.CollectionLiterals;
 import org.eclipse.xtext.xbase.lib.Exceptions;
 
 @SuppressWarnings("all")
-public abstract class SpecializationMethodCodeConcept<P extends CodeConcept<?, ?>> extends CodeConcept<P, ASTSubroutineSubprogramNode> {
+public abstract class EntryPointCodeConcept<P extends CodeConcept<?, ?>> extends CodeConcept<P, ASTSubroutineSubprogramNode> {
   @Name
-  public String subroutineName = "SpecializationMethod";
-  
-  public String specLabel = "label_SpecializationLabel";
+  public String subroutineName = "NUOPCEntryPoint";
   
   @Label(label = "Registration", type = "call")
   @Child
   public BasicCodeConcept registration;
   
-  public String paramGridComp = "driver";
+  public String paramGridComp = "gcomp";
   
   public String paramRC = "rc";
   
-  private String labelComponent;
+  public String paramImport = "importState";
   
-  private String labelName;
+  public String paramExport = "exportState";
   
-  public SpecializationMethodCodeConcept(final P parent, final String labelComponent, final String labelName) {
+  public String paramClock = "clock";
+  
+  public List<String> phaseLabelList;
+  
+  private String phaseLabel;
+  
+  public EntryPointCodeConcept(final P parent, final String phaseLabel) {
     super(parent);
-    this.labelComponent = labelComponent;
-    this.labelName = labelName;
+    ArrayList<String> _newArrayList = CollectionLiterals.<String>newArrayList();
+    this.phaseLabelList = _newArrayList;
+    this.phaseLabel = phaseLabel;
   }
   
-  public SpecializationMethodCodeConcept<P> reverse() {
+  public CodeConcept<P, ASTSubroutineSubprogramNode> reverse() {
     try {
-      SpecializationMethodCodeConcept<P> _xblockexpression = null;
+      EntryPointCodeConcept<P> _xblockexpression = null;
       {
         StringConcatenation _builder = new StringConcatenation();
-        _builder.append("esmf_regspec(_sid, ");
-        long _parentID = this.parentID();
-        _builder.append(_parentID, "");
-        _builder.append(", _name, \'");
-        _builder.append(this.labelComponent, "");
-        _builder.append("\', _specLabelExpr, \'");
-        _builder.append(this.labelName, "");
-        _builder.append("\', _regid).");
+        _builder.append("esmf_reg_entrypoint(_epId, ");
+        CodeConcept<?, ASTModuleNode> _module = this.module();
+        _builder.append(_module._id, "");
+        _builder.append(", _epName, \'\"");
+        _builder.append(this.phaseLabel, "");
+        _builder.append("\"\', _regid).");
         ResultSet rs = this.execQuery(_builder);
-        SpecializationMethodCodeConcept<P> _xifexpression = null;
+        EntryPointCodeConcept<P> _xifexpression = null;
         boolean _next = rs.next();
         if (_next) {
-          SpecializationMethodCodeConcept<P> _xblockexpression_1 = null;
+          EntryPointCodeConcept<P> _xblockexpression_1 = null;
           {
-            long _long = rs.getLong("_sid");
+            long _long = rs.getLong("_epId");
             this._id = _long;
-            String _string = rs.getString("_name");
+            String _string = rs.getString("_epName");
             this.subroutineName = _string;
-            String _string_1 = rs.getString("_specLabelExpr");
-            this.specLabel = _string_1;
             long _long_1 = rs.getLong("_regid");
             BasicCodeConcept _newBasicCodeConcept = BasicCodeConcept.newBasicCodeConcept(this, _long_1);
             this.registration = _newBasicCodeConcept;
             rs.close();
             StringConcatenation _builder_1 = new StringConcatenation();
-            _builder_1.append("esmf_specmethod(");
-            _builder_1.append(this._id, "");
-            _builder_1.append(", ");
-            long _parentID_1 = this.parentID();
-            _builder_1.append(_parentID_1, "");
-            _builder_1.append(", _, _param_gridcomp, _param_rc).");
+            _builder_1.append("esmf_entrypoint(_sid, ");
+            long _parentID = this.parentID();
+            _builder_1.append(_parentID, "");
+            _builder_1.append(", _name, _param_gridcomp, _param_import, _param_export, _param_clock, _param_rc).");
             ResultSet _execQuery = this.execQuery(_builder_1);
             rs = _execQuery;
             boolean _next_1 = rs.next();
             if (_next_1) {
-              String _string_2 = rs.getString("_param_gridcomp");
-              this.paramGridComp = _string_2;
-              String _string_3 = rs.getString("_param_rc");
-              this.paramRC = _string_3;
-              rs.close();
+              String _string_1 = rs.getString("_param_gridcomp");
+              this.paramGridComp = _string_1;
+              String _string_2 = rs.getString("_param_import");
+              this.paramImport = _string_2;
+              String _string_3 = rs.getString("_param_export");
+              this.paramExport = _string_3;
+              String _string_4 = rs.getString("_param_clock");
+              this.paramClock = _string_4;
             }
+            rs.close();
             _xblockexpression_1 = this.reverseChildren();
           }
           _xifexpression = _xblockexpression_1;
@@ -102,7 +106,7 @@ public abstract class SpecializationMethodCodeConcept<P extends CodeConcept<?, ?
             rs.close();
             _xblockexpression_2 = null;
           }
-          _xifexpression = ((SpecializationMethodCodeConcept<P>)_xblockexpression_2);
+          _xifexpression = ((EntryPointCodeConcept<P>)_xblockexpression_2);
         }
         _xblockexpression = _xifexpression;
       }
@@ -112,7 +116,7 @@ public abstract class SpecializationMethodCodeConcept<P extends CodeConcept<?, ?
     }
   }
   
-  public SpecializationMethodCodeConcept<P> reverseChildren() {
+  public EntryPointCodeConcept<P> reverseChildren() {
     return this;
   }
   
@@ -127,6 +131,12 @@ public abstract class SpecializationMethodCodeConcept<P extends CodeConcept<?, ?
     _builder.append("(");
     _builder.append(this.paramGridComp, "");
     _builder.append(", ");
+    _builder.append(this.paramImport, "");
+    _builder.append(", ");
+    _builder.append(this.paramExport, "");
+    _builder.append(", ");
+    _builder.append(this.paramClock, "");
+    _builder.append(", ");
     _builder.append(this.paramRC, "");
     _builder.append(")");
     _builder.newLineIfNotEmpty();
@@ -135,13 +145,25 @@ public abstract class SpecializationMethodCodeConcept<P extends CodeConcept<?, ?
     _builder.append(this.paramGridComp, "    ");
     _builder.newLineIfNotEmpty();
     _builder.append("    ");
+    _builder.append("type(ESMF_State)     :: ");
+    _builder.append(this.paramImport, "    ");
+    _builder.append(", ");
+    _builder.append(this.paramExport, "    ");
+    _builder.newLineIfNotEmpty();
+    _builder.append("    ");
+    _builder.append("type(ESMF_Clock)     :: ");
+    _builder.append(this.paramClock, "    ");
+    _builder.newLineIfNotEmpty();
+    _builder.append("    ");
     _builder.append("integer, intent(out) :: ");
     _builder.append(this.paramRC, "    ");
     _builder.newLineIfNotEmpty();
+    _builder.append("    ");
     _builder.newLine();
     _builder.append("    ");
     _builder.append("rc = ESMF_SUCCESS");
     _builder.newLine();
+    _builder.append("    ");
     _builder.newLine();
     _builder.append("end subroutine");
     _builder.newLine();
@@ -151,8 +173,6 @@ public abstract class SpecializationMethodCodeConcept<P extends CodeConcept<?, ?
   public abstract CodeConcept<?, ASTModuleNode> module();
   
   public abstract SetServicesCodeConcept<?> setServices();
-  
-  public abstract BasicCodeConcept genericUse();
   
   public IFortranAST forward() {
     IFortranAST _xblockexpression = null;
@@ -165,70 +185,36 @@ public abstract class SpecializationMethodCodeConcept<P extends CodeConcept<?, ?
       IASTListNode<IModuleBodyConstruct> _moduleBody = mn.getModuleBody();
       _moduleBody.add(ssn);
       this.setASTRef(ssn);
-      BasicCodeConcept _genericUse = this.genericUse();
-      IASTNode _aSTRef = _genericUse.getASTRef();
-      ASTUseStmtNode usesNUOPCDriver = ((ASTUseStmtNode) _aSTRef);
-      String _string = usesNUOPCDriver.toString();
-      String tempCode = _string.trim();
-      String _tempCode = tempCode;
-      StringConcatenation _builder = new StringConcatenation();
-      _builder.append(", &");
-      _builder.newLine();
-      _builder.append("\t\t");
-      {
-        boolean _equals = this.specLabel.equals(this.labelName);
-        boolean _not = (!_equals);
-        if (_not) {
-          _builder.append(this.specLabel, "\t\t");
-          _builder.append(" => ");
-        }
-      }
-      _builder.append(this.labelName, "\t\t");
-      tempCode = (_tempCode + _builder);
-      IBodyConstruct _parseLiteralStatement = CodeExtraction.parseLiteralStatement(tempCode);
-      ASTUseStmtNode tempNode = ((ASTUseStmtNode) _parseLiteralStatement);
-      usesNUOPCDriver.replaceWith(tempNode);
       SetServicesCodeConcept<?> _setServices = this.setServices();
       ASTSubroutineSubprogramNode setServicesNode = _setServices.getASTRef();
       boolean _notEquals = (!Objects.equal(setServicesNode, null));
       if (_notEquals) {
-        StringConcatenation _builder_1 = new StringConcatenation();
-        _builder_1.newLine();
-        _builder_1.append("call NUOPC_CompSpecialize(");
-        _builder_1.append(this.paramGridComp, "");
-        _builder_1.append(", specLabel=");
-        _builder_1.append(this.specLabel, "");
-        _builder_1.append(", &");
-        _builder_1.newLineIfNotEmpty();
-        _builder_1.append("\t");
-        _builder_1.append("specRoutine=");
-        _builder_1.append(this.subroutineName, "\t");
-        _builder_1.append(", rc=");
-        _builder_1.append(this.paramRC, "\t");
-        _builder_1.append(")");
-        _builder_1.newLineIfNotEmpty();
-        code = _builder_1.toString();
-        IBodyConstruct _parseLiteralStatement_1 = CodeExtraction.parseLiteralStatement(code);
-        ASTCallStmtNode regCall = ((ASTCallStmtNode) _parseLiteralStatement_1);
+        StringConcatenation _builder = new StringConcatenation();
+        _builder.newLine();
+        _builder.append("call NUOPC_CompSetEntryPoint()");
+        _builder.newLine();
+        code = _builder.toString();
+        IBodyConstruct _parseLiteralStatement = CodeExtraction.parseLiteralStatement(code);
+        ASTCallStmtNode regCall = ((ASTCallStmtNode) _parseLiteralStatement);
         IASTListNode<IBodyConstruct> _body = setServicesNode.getBody();
         _body.add(regCall);
-        StringConcatenation _builder_2 = new StringConcatenation();
-        _builder_2.append("if (ESMF_LogFoundError(rcToCheck=");
-        _builder_2.append(this.paramRC, "");
-        _builder_2.append(", msg=ESMF_LOGERR_PASSTHRU, &");
-        _builder_2.newLineIfNotEmpty();
-        _builder_2.append("            ");
-        _builder_2.append("line=__LINE__, &");
-        _builder_2.newLine();
-        _builder_2.append("            ");
-        _builder_2.append("file=__FILE__)) &");
-        _builder_2.newLine();
-        _builder_2.append("            ");
-        _builder_2.append("return  ! bail out");
-        _builder_2.newLine();
-        code = _builder_2.toString();
-        IBodyConstruct _parseLiteralStatement_2 = CodeExtraction.parseLiteralStatement(code);
-        ASTIfStmtNode ifNode = ((ASTIfStmtNode) _parseLiteralStatement_2);
+        StringConcatenation _builder_1 = new StringConcatenation();
+        _builder_1.append("if (ESMF_LogFoundError(rcToCheck=");
+        _builder_1.append(this.paramRC, "");
+        _builder_1.append(", msg=ESMF_LOGERR_PASSTHRU, &");
+        _builder_1.newLineIfNotEmpty();
+        _builder_1.append("            ");
+        _builder_1.append("line=__LINE__, &");
+        _builder_1.newLine();
+        _builder_1.append("            ");
+        _builder_1.append("file=__FILE__)) &");
+        _builder_1.newLine();
+        _builder_1.append("            ");
+        _builder_1.append("return  ! bail out");
+        _builder_1.newLine();
+        code = _builder_1.toString();
+        IBodyConstruct _parseLiteralStatement_1 = CodeExtraction.parseLiteralStatement(code);
+        ASTIfStmtNode ifNode = ((ASTIfStmtNode) _parseLiteralStatement_1);
         IASTListNode<IBodyConstruct> _body_1 = setServicesNode.getBody();
         _body_1.add(ifNode);
       }

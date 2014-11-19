@@ -2,6 +2,7 @@ package org.earthsystemmodeling.cupid.views;
 
 import java.lang.reflect.Field;
 import java.lang.reflect.ParameterizedType;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -11,9 +12,11 @@ import org.earthsystemmodeling.cupid.codedb.CodeDBIndex;
 import org.earthsystemmodeling.cupid.core.CupidActivator;
 import org.earthsystemmodeling.cupid.nuopc_v7.CodeConcept;
 import org.earthsystemmodeling.cupid.nuopc_v7.NUOPCDriver;
+import org.earthsystemmodeling.cupid.nuopc_v7.NUOPCModel;
 import org.eclipse.core.resources.IFile;
 import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.Status;
+import org.eclipse.jface.dialogs.MessageDialog;
 import org.eclipse.jface.viewers.IStructuredContentProvider;
 import org.eclipse.jface.viewers.ITreeContentProvider;
 import org.eclipse.jface.viewers.Viewer;
@@ -40,7 +43,17 @@ class NUOPCViewContentProvider2 implements IStructuredContentProvider, ITreeCont
 	
 	public NUOPCViewContentProvider2() {
 		
-		codeDB.openConnection();
+		try {
+			codeDB.openConnection();
+		}
+		catch (SQLException s) {
+			MessageDialog.openError(
+					null,
+					"Error connecting to code database",
+					"An error occured connecting to the code database.  Please delete the directory ~/.cupid and restart Eclipse.");
+			return;
+		}
+		
 		codeDB.rebuildDatabase();
 		
 		if (CupidActivator.getDefault().isDebugging()) {
@@ -80,6 +93,10 @@ class NUOPCViewContentProvider2 implements IStructuredContentProvider, ITreeCont
 			return;
 		}
 		
+		if (!codeDB.isConnected()) {
+			return;
+		}
+		
 		if (newInput instanceof FortranEditor) {
 			editor = (FortranEditor) newInput;
 			file = editor.getIFile();
@@ -87,9 +104,6 @@ class NUOPCViewContentProvider2 implements IStructuredContentProvider, ITreeCont
 		else {
 			return;
 		}
-		
-		
-		
 		
 		//input = (IFile) newInput;
 			
@@ -128,10 +142,19 @@ class NUOPCViewContentProvider2 implements IStructuredContentProvider, ITreeCont
 	}
 	
 	public Object[] getElements(Object parent) {	
-		NUOPCDriver driver = (NUOPCDriver) new NUOPCDriver(codeDB).reverse();
-		if (driver != null) {
+		
+		CodeConcept<?,?> codeConcept;
+		
+		//TODO: cleaner way to go through these, maybe a new top level concept
+		//with the below as children
+		codeConcept = new NUOPCDriver(codeDB).reverse();
+		if (codeConcept == null) {
+			codeConcept = new NUOPCModel(codeDB).reverse();
+		}
+		
+		if (codeConcept != null) {
 			return new Object[] {
-				new CodeConceptProxy(NUOPCDriver.class, driver, driver.getClass().getAnnotation(Label.class), null)
+				new CodeConceptProxy(codeConcept.getClass(), codeConcept, codeConcept.getClass().getAnnotation(Label.class), null)
 			};
 		}
 		else {
@@ -234,15 +257,6 @@ class NUOPCViewContentProvider2 implements IStructuredContentProvider, ITreeCont
 		public int max=1;
 		public CodeConceptProxy() {}
 
-		/*
-		public CodeConceptProxy(String label, String value, String type, CodeConcept<?,?,?> codeConcept) {
-			this.label = label;
-			this.value = value;
-			this.type = type;
-			this.codeConcept = codeConcept;
-		}
-		*/
-		
 		public CodeConceptProxy(Class<?> clazz, CodeConcept<?,?> codeConcept, Label lbl, Child child) {
 			this.codeConcept = codeConcept;
 			this.clazz = clazz;

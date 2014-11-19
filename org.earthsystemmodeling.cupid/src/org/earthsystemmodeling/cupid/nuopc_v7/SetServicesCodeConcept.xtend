@@ -45,8 +45,5 @@ public class SetServicesCodeConcept<P extends CodeConcept<?, ?>> extends CodeCon
 
 	}
 
-	override forward() {
-		throw new UnsupportedOperationException("TODO: auto-generated method stub")
-	}
 
 }

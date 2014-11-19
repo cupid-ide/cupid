@@ -108,7 +108,7 @@ class NUOPCViewLabelProvider2 extends StyledCellLabelProvider { //implements ITa
 						else {
 							buf.append("<b>" + field.getName() + ": </b>");
 						}
-						buf.append(propVal.toString() + "<br/>");
+						buf.append(propVal.toString() + "<br/><br/>");
 					}
 				}
 			}

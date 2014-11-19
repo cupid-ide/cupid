@@ -56,17 +56,9 @@ class NUOPCDriver extends CodeConcept<CodeConcept<?,?>, ASTModuleNode> {
 		_codeDB = codeDB
 	}
 	
-	override forward() {
-		throw new UnsupportedOperationException("TODO: auto-generated method stub")
-	}
 	
 	override reverse() {
-		
-		//var rs = '''module(_moduleID, _compUnitID, _driverName), 
-		//           compilationUnit(_compUnitID, _filename, _path),
-   		//			 ( uses(_uid, _mid, 'NUOPC_Driver') ;
-     	//			   uses(_uid, _mid, 'NUOPC_DriverAtmOcn') ).'''.execQuery
-     	
+		  	
      	var rs = '''module(_moduleID, _compUnitID, _driverName), 
 		            compilationUnit(_compUnitID, _filename, _path),
    					uses(_uid, _mid, 'NUOPC_Driver').'''.execQuery
@@ -104,16 +96,6 @@ class NUOPCDriver extends CodeConcept<CodeConcept<?,?>, ASTModuleNode> {
 	}
 
 	
-	override toString() {
-'''NUOPCDriver2: (id = «_id», driverName = «driverName»)
-	importESMF: «importESMF»
-	importNUOPC: «importNUOPC»
-	importNUOPCDriver: «importNUOPCDriver»
-	setServices: «setServices»
-'''
-	
-	}
-	
 	override name() {
 		driverName + " (" + filename + ")"
 	}
@@ -122,7 +104,7 @@ class NUOPCDriver extends CodeConcept<CodeConcept<?,?>, ASTModuleNode> {
 		
 	
 	@Label(label="Initialize")
-	static class Initialization extends CodeConcept<NUOPCDriver, ASTNode> {
+	public static class Initialization extends CodeConcept<NUOPCDriver, ASTNode> {
 	
 		@Child
 		var public SetModelServices setModelServices
@@ -136,8 +118,8 @@ class NUOPCDriver extends CodeConcept<CodeConcept<?,?>, ASTModuleNode> {
 		@Child(min=0)
 		var public SetRunSequence setRunSequence
 		
-		@Child(min=0)
-		var public ModifyInitializePhaseMap modifyInitializePhaseMap
+		//@Child(min=0)
+		//var public ModifyInitializePhaseMap modifyInitializePhaseMap
 	
 		new(NUOPCDriver parent) {
 			super(parent)
@@ -152,13 +134,9 @@ class NUOPCDriver extends CodeConcept<CodeConcept<?,?>, ASTModuleNode> {
 			setModelCount = new SetModelCount(this).reverse as SetModelCount
 			setModelPetLists = new SetModelPetLists(this).reverse as SetModelPetLists
 			setRunSequence = new SetRunSequence(this).reverse as SetRunSequence
-			modifyInitializePhaseMap = new ModifyInitializePhaseMap(this).reverse as ModifyInitializePhaseMap		
+			//modifyInitializePhaseMap = new ModifyInitializePhaseMap(this).reverse as ModifyInitializePhaseMap		
 			
 			this	
-		}
-		
-		override forward() {
-			throw new UnsupportedOperationException("TODO: auto-generated method stub")
 		}
 		
 		
@@ -491,26 +469,27 @@ if (ESMF_LogFoundError(rcToCheck=«_parent.paramRC», msg=ESMF_LOGERR_PASSTHRU, 
 				addComp._id = rs.getLong("_cid")
 				retList.add(addComp)
 			}
+			rs.close
 			
 			for (SetRunSequence_AddRunElement addComp : retList) {
-				var rs2 = '''callArgWithType(_, «addComp._id», _, 'srcCompLabel', _, _srcCompExpr),
+				rs = '''callArgWithType(_, «addComp._id», _, 'srcCompLabel', _, _srcCompExpr),
 							 callArgWithType(_, «addComp._id», _, 'dstCompLabel', _, _dstCompExpr),
 							 callArgWithType(_, «addComp._id», _, 'slot', _, _slotExpr).'''.execQuery
 				
-				if (rs2.next) {
-					addComp.srcCompLabel = rs2.getString("_srcCompExpr")
-					addComp.dstCompLabel = rs2.getString("_dstCompExpr")
-					addComp.slot = rs2.getString("_slotExpr")
-					rs2.close
+				if (rs.next) {
+					addComp.srcCompLabel = rs.getString("_srcCompExpr")
+					addComp.dstCompLabel = rs.getString("_dstCompExpr")
+					addComp.slot = rs.getString("_slotExpr")
+					rs.close
 				}
 				else {
-					rs2 = '''callArgWithType(_, «addComp._id», _, 'compLabel', _, _compExpr),
+					rs = '''callArgWithType(_, «addComp._id», _, 'compLabel', _, _compExpr),
 							 callArgWithType(_, «addComp._id», _, 'slot', _, _slotExpr).'''.execQuery
-					if (rs2.next) {
-						addComp.compLabel = rs2.getString("_compExpr")
-						addComp.slot = rs2.getString("_slotExpr")
+					if (rs.next) {
+						addComp.compLabel = rs.getString("_compExpr")
+						addComp.slot = rs.getString("_slotExpr")
 					}
-					rs2.close
+					rs.close
 				}
 			}
 			
@@ -519,7 +498,37 @@ if (ESMF_LogFoundError(rcToCheck=«_parent.paramRC», msg=ESMF_LOGERR_PASSTHRU, 
 		}
 		
 		override forward() {
-			throw new UnsupportedOperationException("TODO: auto-generated method stub")
+			var IFortranAST ast = getAST			
+			
+			//this approach breaks the 1-to-1 mapping
+			//probably need to separate subclasses, one for each type of run sequence element
+			
+			var code = 
+'''
+
+! add a run sequence element for a Model, Mediator, or Driver       
+call NUOPC_DriverAddRunElement(«_parent.paramGridComp», slot=«paramint(1)», &
+    compLabel="«paramch('compLabel')»", rc=«_parent.paramRC»)
+if (ESMF_LogFoundError(rcToCheck=«_parent.paramRC», msg=ESMF_LOGERR_PASSTHRU, &
+    line=__LINE__, &
+    file=__FILE__)) &
+    return  ! bail out
+
+! add a run sequence element for a Connector   
+call NUOPC_DriverAddRunElement(«_parent.paramGridComp», slot=«paramint(1)», &
+    srcCompLabel="«paramch('srcComp')»", dstCompLabel="«paramch('dstComp')»", rc=«_parent.paramRC»)
+if (ESMF_LogFoundError(rcToCheck=«_parent.paramRC», msg=ESMF_LOGERR_PASSTHRU, &
+    line=__LINE__, &
+    file=__FILE__)) &
+    return  ! bail out
+'''
+			val IASTListNode<IBodyConstruct> stmts = parseLiteralStatementSequence(code)
+			var ASTSubroutineSubprogramNode ssn = _parent.ASTRef
+			
+			ssn.body.addAll(stmts)
+			//setASTRef(stmts.get(0) as ASTCallStmtNode)
+	
+			ast
 		}
 		
 		

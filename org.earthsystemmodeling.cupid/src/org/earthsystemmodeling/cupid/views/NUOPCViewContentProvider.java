@@ -55,7 +55,12 @@ class NUOPCViewContentProvider implements IStructuredContentProvider, ITreeConte
 	
 	public NUOPCViewContentProvider() {
 		
-		codeDB.openConnection();
+		try {
+			codeDB.openConnection();
+		} catch (SQLException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
 		codeDB.rebuildDatabase();
 		codeDB.clearTheory();
 		try {

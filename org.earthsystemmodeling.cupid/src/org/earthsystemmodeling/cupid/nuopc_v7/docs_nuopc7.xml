@@ -7,6 +7,13 @@
 	]]>
 	</doc>
 	
+	<doc class="org.earthsystemmodeling.cupid.nuopc_v7.SetServicesCodeConcept">
+	<![CDATA[
+	<b>Set Services</b><hr/>
+	All ESMF-based component must define a SetServices subroutine. Within NUOPC components, the SetServices subroutine is used to define which component is being extended (e.g., NUOPC_Driver), to register entry points, and to register specialization subroutines.
+	]]>
+	</doc>
+	
 	<doc class="org.earthsystemmodeling.cupid.nuopc_v7.NUOPCDriver.Initialization">
 	<![CDATA[
 	
@@ -68,10 +75,7 @@
 		</LI>
 		</UL>
 		</LI>
-		</UL>
-		
-		
-	
+		</UL>	
 	]]>
 	</doc>
 	
@@ -99,6 +103,122 @@
 		</UL>
 	]]>
 	</doc>
+	
+	<doc class="org.earthsystemmodeling.cupid.nuopc_v7.NUOPCDriver.SetRunSequence">
+	<![CDATA[
+	<b>SetRunSequence</b><hr/>
+	<i>Optional specialization</i> to replace the default run sequence: <tt>label_SetRunSequence</tt>. 
+	]]>
+	</doc>
+	
+	<doc class="org.earthsystemmodeling.cupid.nuopc_v7.NUOPCModel">
+	<![CDATA[
+	<b>NUOPC Model</b><hr/>
+	A NUOC Model component with has a default <i>explicit</i> time dependency. Each time the Run method is called the model integrates one timeStep forward on the provided Clock. The Clock must be advanced between Run calls. The component's Run method flags incompatibility if the current time of the incoming Clock does not match the current time of the model.
+	]]>
+	</doc>
+	
+	<doc class="org.earthsystemmodeling.cupid.nuopc_v7.NUOPCModel.Initialization">
+	<![CDATA[
+	<b>Initialize</b><hr/>
+	<UL>
+	<LI>phase 0: (R<SMALL>EQUIRED, </SMALL>NUOPC P<SMALL>ROVIDED</SMALL>)
+	  
+	<UL>
+	<LI>Initialize the <TT>InitializePhaseMap</TT> Attribute according to the NUOPC Initialize Phase Definition (IPD) version 00 (see section 2.4.2 for a precise definition), with the following mapping:
+	    
+	<UL>
+	<LI>IPDv00p1 = phase 1: (R<SMALL>EQUIRED, </SMALL>I<SMALL>MPLEMENTOR </SMALL>P<SMALL>ROVIDED</SMALL>)
+	      
+	<UL>
+	<LI>Advertise Fields in import and export States.
+	      
+	</LI>
+	</UL>
+	</LI>
+	<LI>IPDv00p2 = phase 2: (R<SMALL>EQUIRED, </SMALL>I<SMALL>MPLEMENTOR </SMALL>P<SMALL>ROVIDED</SMALL>)
+	      
+	<UL>
+	<LI>Realize the advertised Fields in import and export States.
+	      
+	</LI>
+	</UL>  
+	</LI>
+	<LI>IPDv00p3 = phase 3: (R<SMALL>EQUIRED, </SMALL>NUOPC P<SMALL>ROVIDED</SMALL>)
+	      
+	<UL>
+	<LI>Check compatibility of the Fields' Connected status.
+	      
+	</LI>
+	</UL>
+	</LI>
+	<LI>IPDv00p4 = phase 4: (R<SMALL>EQUIRED, </SMALL>NUOPC P<SMALL>ROVIDED</SMALL>)
+	      
+	<UL>
+	<LI>Handle Field data initialization. Time stamp the export Fields.
+	      
+	</LI>
+	</UL>
+	</LI>
+	</UL>
+	</LI>
+	</UL>  
+	</LI>
+	<LI>phase 3: (NUOPC P<SMALL>ROVIDED</SMALL>, suitable for: IPDv00p3, IPDv01p4, IPDv02p4)
+	  
+	<UL>
+	<LI>If the model internal clock is found to be not set, then set the model internal clock as a copy of the incoming clock. 
+	</LI>
+	<LI><I>Optional specialization</I> to set the internal clock and/or alarms: <TT>label_SetClock</TT>.
+	</LI>
+	<LI>Check compatibility, ensuring all advertised import Fields are connected.
+	  
+	</LI>
+	</UL>  
+	</LI>
+	<LI>phase 4: (NUOPC P<SMALL>ROVIDED</SMALL>, suitable for: IPDv00p4, IPDv01p5)
+	  
+	<UL>
+	<LI><I>Optional specialization</I> to initialize export Fields: <TT>label_DataInitialize</TT>
+	</LI>
+	<LI>Time stamp Fields in export State for compatibility checking.
+	  
+	</LI>
+	</UL>    
+	</LI>
+	<LI>phase 5: (NUOPC P<SMALL>ROVIDED</SMALL>, suitable for: IPDv02p5)
+	  
+	<UL>
+	<LI><I>Optional specialization</I> to initialize export Fields: <TT>label_DataInitialize</TT>
+	</LI>
+	<LI>Timestamp Fields in export State for compatibility checking.
+	</LI>
+	<LI>Set Component metadata used to resolve initialize data dependencies.
+	  
+	</LI>
+	</UL>
+	</LI>
+	</UL>
+		
+	
+	]]>
+	</doc>
+	
+	<doc class="org.earthsystemmodeling.cupid.nuopc_v7.NUOPCModel.InitP1">
+	<![CDATA[
+	<b>Initialize Phase 1 (IPDv00p1)</b><hr/>
+	Advertise model Fields in import and export States.
+	]]>
+	</doc>
+	
+	<doc class="org.earthsystemmodeling.cupid.nuopc_v7.NUOPCModel.InitP2">
+	<![CDATA[
+	<b>Initialize Phase 1 (IPDv00p1)</b><hr/>
+	Realize the advertised Fields in import and export States.
+	]]>
+	</doc>
+	
+	
 	
 	
 </docs>

@@ -8,7 +8,6 @@ import org.earthsystemmodeling.cupid.annotation.Name;
 import org.earthsystemmodeling.cupid.core.CupidActivator;
 import org.earthsystemmodeling.cupid.nuopc_v7.BasicCodeConcept;
 import org.earthsystemmodeling.cupid.nuopc_v7.CodeConcept;
-import org.eclipse.photran.core.IFortranAST;
 import org.eclipse.photran.internal.core.parser.ASTSubroutineSubprogramNode;
 import org.eclipse.xtend2.lib.StringConcatenation;
 import org.eclipse.xtext.xbase.lib.Exceptions;
@@ -63,9 +62,5 @@ public class SetServicesCodeConcept<P extends CodeConcept<?, ?>> extends CodeCon
       _xblockexpression = null;
     }
     return ((SetServicesCodeConcept<P>)_xblockexpression);
-  }
-  
-  public IFortranAST forward() {
-    throw new UnsupportedOperationException("TODO: auto-generated method stub");
   }
 }

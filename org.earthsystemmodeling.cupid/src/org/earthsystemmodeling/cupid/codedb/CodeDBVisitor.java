@@ -15,6 +15,7 @@ import org.eclipse.core.resources.IFile;
 import org.eclipse.photran.internal.core.analysis.binding.Definition;
 import org.eclipse.photran.internal.core.analysis.dependence.Dependence.Type;
 import org.eclipse.photran.internal.core.lexer.Token;
+import org.eclipse.photran.internal.core.parser.ASTAcValueNode;
 import org.eclipse.photran.internal.core.parser.ASTArrayConstructorNode;
 import org.eclipse.photran.internal.core.parser.ASTCallStmtNode;
 import org.eclipse.photran.internal.core.parser.ASTDblConstNode;
@@ -313,6 +314,17 @@ public class CodeDBVisitor extends ASTVisitor {
 		String val = node.toString().replaceAll("\n", "\\\\n");
 		val = val.substring(0, Math.min(100, val.length()));  //TODO: fixme
 		childExprId = addFact("arrayConstructor", parentID(), val);
+		
+		currentAcValueIndex = 0;
+		traverseChildren(node, childExprId);
+	}
+	
+	int currentAcValueIndex = 0;
+	
+	@Override
+	public void visitASTAcValueNode(ASTAcValueNode node) {
+		currentAcValueIndex++;
+		addFact("arrayConstructorVal", parentID(), currentAcValueIndex, node.getExpr().toString());
 	}
 	
 	

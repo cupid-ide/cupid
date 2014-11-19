@@ -177,7 +177,7 @@ public class NUOPCView extends ViewPart {
 				
 				int height = 75;
 				if (text.length() > 650) {
-					height = 300;
+					height = 400;
 				}
 				else if (text.length() > 300) {
 					height = 200;
@@ -200,7 +200,7 @@ public class NUOPCView extends ViewPart {
 				
 				int height = 75;
 				if (text.length() > 650) {
-					height = 300;
+					height = 400;
 				}
 				else if (text.length() > 300) {
 					height = 200;
@@ -463,6 +463,7 @@ public class NUOPCView extends ViewPart {
 			}
 		});
 		
+		/*
 		IActionBars bars = getViewSite().getActionBars();
 		
 		//Since the Luna update, the populated contributions (from plugin.xml) are not showing
@@ -511,7 +512,7 @@ public class NUOPCView extends ViewPart {
 		
 		toolbarManager.update(true);
 		bars.updateActionBars();
-			
+		*/	
 						
 		MenuManager menuMgr = new MenuManager();
 

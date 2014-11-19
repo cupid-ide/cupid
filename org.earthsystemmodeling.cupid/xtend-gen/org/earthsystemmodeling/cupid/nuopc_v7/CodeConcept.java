@@ -85,7 +85,9 @@ public abstract class CodeConcept<P extends CodeConcept<?, ?>, A extends IASTNod
     return CollectionLiterals.<CodeConcept<P, A>>newArrayList(_reverse);
   }
   
-  public abstract IFortranAST forward();
+  public IFortranAST forward() {
+    return null;
+  }
   
   public String name() {
     return null;

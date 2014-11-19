@@ -14,54 +14,61 @@ import org.eclipse.photran.internal.core.parser.ASTSubroutineSubprogramNode
 import org.eclipse.photran.internal.core.parser.ASTUseStmtNode
 import org.eclipse.photran.internal.core.parser.ASTCallStmtNode
 import org.eclipse.photran.internal.core.parser.ASTIfStmtNode
+import java.util.List
+import org.earthsystemmodeling.cupid.annotation.Prop
 
-public abstract class SpecializationMethodCodeConcept<P extends CodeConcept<?, ?>> extends CodeConcept<P, ASTSubroutineSubprogramNode> {
+public abstract class EntryPointCodeConcept<P extends CodeConcept<?, ?>> extends CodeConcept<P, ASTSubroutineSubprogramNode> {
 
 	@Name
-	var public String subroutineName = "SpecializationMethod"  //subclasses should default
-
-	var public String specLabel = "label_SpecializationLabel"  //subclasses should default
+	var public String subroutineName = "NUOPCEntryPoint"  //subclasses should default
 
 	@Label(label="Registration", type="call")
 	@Child
 	var public BasicCodeConcept registration
 
-	var public String paramGridComp = "driver"	//subclasses should default
-
+	var public String paramGridComp = "gcomp"	//subclasses should default
 	var public String paramRC = "rc" //subclasses should default
+	var public String paramImport = "importState"
+	var public String paramExport = "exportState"
+	var public String paramClock = "clock"
+	
+	var public List<String> phaseLabelList
+	
+	var String phaseLabel
 
-	var String labelComponent
-	var String labelName
 	//var SetServicesCodeConcept<?> setServices
 
-	new(P parent, String labelComponent, String labelName) {
+	new(P parent, String phaseLabel) {
 		super(parent)
-		this.labelComponent = labelComponent
-		this.labelName = labelName
+		phaseLabelList = newArrayList()
+		this.phaseLabel = phaseLabel
 	}
 
-	override SpecializationMethodCodeConcept<P> reverse() {
-		var rs = '''esmf_regspec(_sid, «parentID», _name, '«labelComponent»', _specLabelExpr, '«labelName»', _regid).'''.
-			execQuery
+	override reverse() {
+		
+		var rs = '''esmf_reg_entrypoint(_epId, «module()._id», _epName, '"«phaseLabel»"', _regid).'''.execQuery		
+		
 		if (rs.next) {
-			_id = rs.getLong("_sid")
-			subroutineName = rs.getString("_name")
-			specLabel = rs.getString("_specLabelExpr")
+			_id = rs.getLong("_epId")
+			subroutineName = rs.getString("_epName")
 			registration = newBasicCodeConcept(this, rs.getLong("_regid"))
 			rs.close
-
-			rs = '''esmf_specmethod(«_id», «parentID», _, _param_gridcomp, _param_rc).'''.execQuery
+			
+			rs = '''esmf_entrypoint(_sid, «parentID», _name, _param_gridcomp, _param_import, _param_export, _param_clock, _param_rc).'''.execQuery
 			if (rs.next) {
 				paramGridComp = rs.getString("_param_gridcomp")
-				paramRC = rs.getString("_param_rc")
-				rs.close
+				paramImport = rs.getString("_param_import")
+				paramExport = rs.getString("_param_export")
+				paramClock = rs.getString("_param_clock")
 			}
-
+			rs.close
+							      
 			reverseChildren
-		} else {
+		} 
+		else {
 			rs.close
 			null
-		}
+		}	
 	}
 
 	def reverseChildren() {
@@ -74,12 +81,14 @@ public abstract class SpecializationMethodCodeConcept<P extends CodeConcept<?, ?
 	def String subroutineTemplate() {
 		'''
 
-subroutine «subroutineName»(«paramGridComp», «paramRC»)
+subroutine «subroutineName»(«paramGridComp», «paramImport», «paramExport», «paramClock», «paramRC»)
     type(ESMF_GridComp)  :: «paramGridComp»
+    type(ESMF_State)     :: «paramImport», «paramExport»
+    type(ESMF_Clock)     :: «paramClock»
     integer, intent(out) :: «paramRC»
-
+    
     rc = ESMF_SUCCESS
-
+    
 end subroutine
 '''
 	}
@@ -88,7 +97,7 @@ end subroutine
 
 	def abstract SetServicesCodeConcept<?> setServices()
 
-	def abstract BasicCodeConcept genericUse()
+	//def abstract BasicCodeConcept genericUse()
 
 	override forward() {
 
@@ -104,13 +113,13 @@ end subroutine
 		setASTRef(ssn)
 
 		//add label import
-		var usesNUOPCDriver = genericUse.getASTRef as ASTUseStmtNode
-		var tempCode = usesNUOPCDriver.toString.trim
-		tempCode += ''', &
-		«IF !specLabel.equals(labelName)»«specLabel» => «ENDIF»«labelName»'''
+		//var usesNUOPCDriver = genericUse.getASTRef as ASTUseStmtNode
+		//var tempCode = usesNUOPCDriver.toString.trim
+		//tempCode += ''', &
+		//«IF !specLabel.equals(labelName)»«specLabel» => «ENDIF»«labelName»'''
 
-		var tempNode = parseLiteralStatement(tempCode) as ASTUseStmtNode;
-		usesNUOPCDriver.replaceWith(tempNode)
+		//var tempNode = parseLiteralStatement(tempCode) as ASTUseStmtNode;
+		//usesNUOPCDriver.replaceWith(tempNode)
 
 		//add call in setservices
 		var ASTSubroutineSubprogramNode setServicesNode = setServices().getASTRef
@@ -119,8 +128,7 @@ end subroutine
 			code = 
 '''
 
-call NUOPC_CompSpecialize(«paramGridComp», specLabel=«specLabel», &
-	specRoutine=«subroutineName», rc=«paramRC»)
+call NUOPC_CompSetEntryPoint()
 '''
 
 			var ASTCallStmtNode regCall = parseLiteralStatement(code) as ASTCallStmtNode

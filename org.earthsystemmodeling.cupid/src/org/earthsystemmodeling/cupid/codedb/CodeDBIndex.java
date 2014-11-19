@@ -100,7 +100,7 @@ public class CodeDBIndex {
 		}			
 	}
 	
-	public void openConnection() {
+	public void openConnection() throws SQLException {
 		try {
 			Class.forName("org.h2.Driver");
 		} catch (ClassNotFoundException e) {
@@ -108,7 +108,7 @@ public class CodeDBIndex {
 			throw new RuntimeException(e);
 		}
 		
-		try {
+		//try {
 			String dbloc;
 			dbloc = CupidActivator.getDefault().getPreferenceStore().getString(CupidPreferencePage.CUPID_CODEDB_LOCATION);
 			
@@ -119,10 +119,10 @@ public class CodeDBIndex {
 			//String connString = "jdbc:h2:mem:";
 			String connString = "jdbc:h2:" + dbloc + ";LOG=0;CACHE_SIZE=65536;LOCK_MODE=0;UNDO_LOG=0";
 			conn = DriverManager.getConnection(connString);
-		} catch (SQLException e3) {
-			//TODO: deal with this
-			throw new RuntimeException(e3);
-		}
+		//} catch (SQLException e3) {
+		//	//TODO: deal with this
+		//	throw new RuntimeException(e3);
+		//}
 		
 		getProlog().getEngineManager().getClauseStoreManager().getFactories()
 								.add(new H2ClauseStoreFactory(conn, "PROLOG"));
@@ -156,6 +156,14 @@ public class CodeDBIndex {
 			CupidActivator.log("Error in SQL file.", e);
 		}
 		
+	}
+	
+	public boolean isConnected() {
+		try {
+			return (conn !=null && !conn.isClosed());
+		} catch (SQLException e) {
+			return false;
+		}
 	}
 	
 	public void closeConnection() {

@@ -12,5 +12,6 @@ truncate table callArg;
 truncate table ident;
 truncate table const;
 truncate table arrayConstructor;
+truncate table arrayConstructorVal;
 
 alter sequence global_fact_id restart with 1;
