@@ -162,13 +162,27 @@ class NUOPCViewLabelProvider2 extends StyledCellLabelProvider { //implements ITa
 			}						
 		};
 		
+		StyledString.Styler redStyler = new StyledString.Styler() {			
+			@Override
+			public void applyStyles(TextStyle textStyle) {
+				if (textStyle instanceof StyleRange) {
+					StyleRange sr = (StyleRange) textStyle;
+					sr.foreground = Display.getCurrent().getSystemColor(SWT.COLOR_RED);	
+				}
+			}						
+		};
 		
 	    ImageDescriptor icon = null;
 	    	   
     	CodeConceptProxy proxy = (CodeConceptProxy) element;
     	if (cell.getColumnIndex()==0) {
     		if (proxy.codeConcept == null) {
-    			text.append(proxy.label, grayStyler);
+    			if (proxy.min==0) {
+    				text.append(proxy.label, grayStyler);
+    			}
+    			else {
+    				text.append(proxy.label, redStyler);
+    			}
     			icon = getFortranImageDescriptor(proxy.type, SWT.IMAGE_GRAY);
     		}
     		else {
@@ -222,9 +236,9 @@ class NUOPCViewLabelProvider2 extends StyledCellLabelProvider { //implements ITa
 		}
 	    
 	    //simple constraint check
-	    if (proxy.codeConcept==null && proxy.min==1) {
-	    	cell.setForeground(Display.getCurrent().getSystemColor(SWT.COLOR_RED));
-	    }
+	    //if (proxy.codeConcept==null && proxy.min==1) {
+	    //	cell.setForeground(Display.getCurrent().getSystemColor(SWT.COLOR_RED));
+	    //}
 	    
 	    //if (me.validationMessage != null || (me.elem==null && !me.subconcept.isAttrib() && FSM.isRequired(me.subconcept))) {
 	    //	cell.setForeground(Display.getCurrent().getSystemColor(SWT.COLOR_RED));

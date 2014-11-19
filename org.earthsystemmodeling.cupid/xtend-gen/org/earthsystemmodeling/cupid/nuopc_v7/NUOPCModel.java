@@ -12,6 +12,7 @@ import org.earthsystemmodeling.cupid.nuopc_v7.BasicCodeConcept;
 import org.earthsystemmodeling.cupid.nuopc_v7.CodeConcept;
 import org.earthsystemmodeling.cupid.nuopc_v7.EntryPointCodeConcept;
 import org.earthsystemmodeling.cupid.nuopc_v7.SetServicesCodeConcept;
+import org.earthsystemmodeling.cupid.nuopc_v7.SpecializationMethodCodeConcept;
 import org.earthsystemmodeling.cupid.util.CodeExtraction;
 import org.eclipse.photran.core.IFortranAST;
 import org.eclipse.photran.internal.core.parser.ASTCallStmtNode;
@@ -35,6 +36,12 @@ public class NUOPCModel extends CodeConcept<CodeConcept<?, ?>, ASTModuleNode> {
     @Child
     public NUOPCModel.InitP2 initP2;
     
+    @Child(min = 0)
+    public NUOPCModel.SetClock setClock;
+    
+    @Child(min = 0)
+    public NUOPCModel.DataInitialize dataInitialize;
+    
     public Initialization(final NUOPCModel parent) {
       super(parent);
     }
@@ -52,6 +59,12 @@ public class NUOPCModel extends CodeConcept<CodeConcept<?, ?>, ASTModuleNode> {
         NUOPCModel.InitP2 _initP2 = new NUOPCModel.InitP2(this);
         CodeConcept<NUOPCModel.Initialization, ASTSubroutineSubprogramNode> _reverse_1 = _initP2.reverse();
         this.initP2 = ((NUOPCModel.InitP2) _reverse_1);
+        NUOPCModel.SetClock _setClock = new NUOPCModel.SetClock(this);
+        SpecializationMethodCodeConcept<NUOPCModel.Initialization> _reverse_2 = _setClock.reverse();
+        this.setClock = ((NUOPCModel.SetClock) _reverse_2);
+        NUOPCModel.DataInitialize _dataInitialize = new NUOPCModel.DataInitialize(this);
+        SpecializationMethodCodeConcept<NUOPCModel.Initialization> _reverse_3 = _dataInitialize.reverse();
+        this.dataInitialize = ((NUOPCModel.DataInitialize) _reverse_3);
         _xblockexpression = this;
       }
       return _xblockexpression;
@@ -183,8 +196,704 @@ public class NUOPCModel extends CodeConcept<CodeConcept<?, ?>, ASTModuleNode> {
   
   @Label(label = "Initialize Phase 2", type = "subroutine")
   public static class InitP2 extends EntryPointCodeConcept<NUOPCModel.Initialization> {
+    @Child(max = (-1))
+    public List<NUOPCModel.InitP2_RealizeField> realizeFields;
+    
     public InitP2(final NUOPCModel.Initialization parent) {
       super(parent, "IPDv00p2");
+    }
+    
+    public EntryPointCodeConcept<NUOPCModel.Initialization> reverseChildren() {
+      NUOPCModel.InitP2 _xblockexpression = null;
+      {
+        NUOPCModel.InitP2_RealizeField _initP2_RealizeField = new NUOPCModel.InitP2_RealizeField(this);
+        List _reverseMultiple = _initP2_RealizeField.reverseMultiple();
+        this.realizeFields = _reverseMultiple;
+        _xblockexpression = this;
+      }
+      return _xblockexpression;
+    }
+    
+    public CodeConcept<?, ASTModuleNode> module() {
+      return this._parent._parent;
+    }
+    
+    public SetServicesCodeConcept<?> setServices() {
+      return this._parent._parent.setServices;
+    }
+  }
+  
+  @Label(label = "Realize Field", type = "call")
+  public static class InitP2_RealizeField extends CodeConcept<NUOPCModel.InitP2, ASTCallStmtNode> {
+    public String state;
+    
+    public String field;
+    
+    public InitP2_RealizeField(final NUOPCModel.InitP2 parent) {
+      super(parent);
+      this.state = this._parent.paramImport;
+      this.field = "field";
+    }
+    
+    public String name() {
+      return ((this.state + " / ") + this.field);
+    }
+    
+    public List reverseMultiple() {
+      try {
+        ArrayList<NUOPCModel.InitP2_RealizeField> _xblockexpression = null;
+        {
+          ArrayList<NUOPCModel.InitP2_RealizeField> retList = CollectionLiterals.<NUOPCModel.InitP2_RealizeField>newArrayList();
+          StringConcatenation _builder = new StringConcatenation();
+          _builder.append("call_(_cid, ");
+          long _parentID = this.parentID();
+          _builder.append(_parentID, "");
+          _builder.append(", \'NUOPC_StateRealizeField\'),");
+          _builder.newLineIfNotEmpty();
+          _builder.append("\t\t\t\t\t\t");
+          _builder.append("callArgWithType(_, _cid, 1, _, _, _stateExpr),");
+          _builder.newLine();
+          _builder.append("\t\t\t\t\t\t");
+          _builder.append("callArgWithType(_, _cid, 2, _, _, _fieldExpr).");
+          ResultSet rs = this.execQuery(_builder);
+          while (rs.next()) {
+            {
+              NUOPCModel.InitP2_RealizeField relField = new NUOPCModel.InitP2_RealizeField(this._parent);
+              long _long = rs.getLong("_cid");
+              relField._id = _long;
+              String _string = rs.getString("_stateExpr");
+              relField.state = _string;
+              String _string_1 = rs.getString("_fieldExpr");
+              relField.field = _string_1;
+              retList.add(relField);
+            }
+          }
+          rs.close();
+          _xblockexpression = retList;
+        }
+        return _xblockexpression;
+      } catch (Throwable _e) {
+        throw Exceptions.sneakyThrow(_e);
+      }
+    }
+    
+    public IFortranAST forward() {
+      IFortranAST _xblockexpression = null;
+      {
+        IFortranAST ast = this.getAST();
+        StringConcatenation _builder = new StringConcatenation();
+        _builder.newLine();
+        _builder.append("call NUOPC_StateRealizeField(");
+        CharSequence _paramch = this.paramch(this.state);
+        _builder.append(_paramch, "");
+        _builder.append(", field=");
+        CharSequence _paramch_1 = this.paramch(this.field);
+        _builder.append(_paramch_1, "");
+        _builder.append(", rc=");
+        _builder.append(this._parent.paramRC, "");
+        _builder.append(")");
+        _builder.newLineIfNotEmpty();
+        _builder.append("if (ESMF_LogFoundError(rcToCheck=");
+        _builder.append(this._parent.paramRC, "");
+        _builder.append(", msg=ESMF_LOGERR_PASSTHRU, &");
+        _builder.newLineIfNotEmpty();
+        _builder.append("    ");
+        _builder.append("line=__LINE__, &");
+        _builder.newLine();
+        _builder.append("    ");
+        _builder.append("file=__FILE__)) &");
+        _builder.newLine();
+        _builder.append("    ");
+        _builder.append("return  ! bail out");
+        _builder.newLine();
+        String code = _builder.toString();
+        final IASTListNode<IBodyConstruct> stmts = CodeExtraction.parseLiteralStatementSequence(code);
+        ASTSubroutineSubprogramNode ssn = this._parent.getASTRef();
+        IASTListNode<IBodyConstruct> _body = ssn.getBody();
+        _body.addAll(stmts);
+        _xblockexpression = ast;
+      }
+      return _xblockexpression;
+    }
+  }
+  
+  @Label(label = "SetClock", type = "subroutine")
+  public static class SetClock extends SpecializationMethodCodeConcept<NUOPCModel.Initialization> {
+    public SetClock(final NUOPCModel.Initialization parent) {
+      super(parent, "NUOPC_Model", "label_SetClock");
+      this.subroutineName = "SetClock";
+      this.specLabel = "model_label_SetClock";
+      this.paramGridComp = "gcomp";
+      this.paramRC = "rc";
+    }
+    
+    public String subroutineTemplate() {
+      StringConcatenation _builder = new StringConcatenation();
+      _builder.newLine();
+      _builder.append("subroutine ");
+      _builder.append(this.subroutineName, "");
+      _builder.append("(");
+      _builder.append(this.paramGridComp, "");
+      _builder.append(", ");
+      _builder.append(this.paramRC, "");
+      _builder.append(")");
+      _builder.newLineIfNotEmpty();
+      _builder.append("    ");
+      _builder.append("type(ESMF_GridComp)  :: ");
+      _builder.append(this.paramGridComp, "    ");
+      _builder.newLineIfNotEmpty();
+      _builder.append("    ");
+      _builder.append("integer, intent(out) :: ");
+      _builder.append(this.paramRC, "    ");
+      _builder.newLineIfNotEmpty();
+      _builder.newLine();
+      _builder.append("    ");
+      _builder.append("! local variables");
+      _builder.newLine();
+      _builder.append("    ");
+      _builder.append("type(ESMF_Clock)              :: clock");
+      _builder.newLine();
+      _builder.append("    ");
+      _builder.append("type(ESMF_TimeInterval)       :: stabilityTimeStep");
+      _builder.newLine();
+      _builder.newLine();
+      _builder.append("    ");
+      _builder.append("rc = ESMF_SUCCESS");
+      _builder.newLine();
+      _builder.append("    ");
+      _builder.newLine();
+      _builder.append("    ");
+      _builder.append("! query the Component for its clock, importState and exportState");
+      _builder.newLine();
+      _builder.append("    ");
+      _builder.append("call ESMF_GridCompGet(gcomp, clock=clock, rc=rc)");
+      _builder.newLine();
+      _builder.append("    ");
+      _builder.append("if (ESMF_LogFoundError(rcToCheck=rc, msg=ESMF_LOGERR_PASSTHRU, &");
+      _builder.newLine();
+      _builder.append("      ");
+      _builder.append("line=__LINE__, &");
+      _builder.newLine();
+      _builder.append("      ");
+      _builder.append("file=__FILE__)) &");
+      _builder.newLine();
+      _builder.append("      ");
+      _builder.append("return  ! bail out");
+      _builder.newLine();
+      _builder.append("      ");
+      _builder.newLine();
+      _builder.append("    ");
+      _builder.append("! initialize internal clock");
+      _builder.newLine();
+      _builder.append("    ");
+      _builder.append("! here: parent Clock and stability timeStep determine actual model timeStep");
+      _builder.newLine();
+      _builder.append("    ");
+      _builder.append("call ESMF_TimeIntervalSet(stabilityTimeStep, m=");
+      CharSequence _paramint = this.paramint(5);
+      _builder.append(_paramint, "    ");
+      _builder.append(", rc=rc)");
+      _builder.newLineIfNotEmpty();
+      _builder.append("    ");
+      _builder.append("if (ESMF_LogFoundError(rcToCheck=rc, msg=ESMF_LOGERR_PASSTHRU, &");
+      _builder.newLine();
+      _builder.append("      ");
+      _builder.append("line=__LINE__, &");
+      _builder.newLine();
+      _builder.append("      ");
+      _builder.append("file=__FILE__)) &");
+      _builder.newLine();
+      _builder.append("      ");
+      _builder.append("return  ! bail out");
+      _builder.newLine();
+      _builder.append("    ");
+      _builder.newLine();
+      _builder.append("    ");
+      _builder.append("call NUOPC_CompSetClock(gcomp, clock, stabilityTimeStep, rc=rc)");
+      _builder.newLine();
+      _builder.append("    ");
+      _builder.append("if (ESMF_LogFoundError(rcToCheck=rc, msg=ESMF_LOGERR_PASSTHRU, &");
+      _builder.newLine();
+      _builder.append("      ");
+      _builder.append("line=__LINE__, &");
+      _builder.newLine();
+      _builder.append("      ");
+      _builder.append("file=__FILE__)) &");
+      _builder.newLine();
+      _builder.append("      ");
+      _builder.append("return  ! bail out");
+      _builder.newLine();
+      _builder.newLine();
+      _builder.append("end subroutine");
+      _builder.newLine();
+      return _builder.toString();
+    }
+    
+    public CodeConcept<?, ASTModuleNode> module() {
+      return this._parent._parent;
+    }
+    
+    public SetServicesCodeConcept<?> setServices() {
+      return this._parent._parent.setServices;
+    }
+    
+    public BasicCodeConcept genericUse() {
+      return this._parent._parent.importNUOPCModel;
+    }
+  }
+  
+  @Label(label = "DataInitialize", type = "subroutine")
+  public static class DataInitialize extends SpecializationMethodCodeConcept<NUOPCModel.Initialization> {
+    public DataInitialize(final NUOPCModel.Initialization parent) {
+      super(parent, "NUOPC_Model", "label_DataInitialize");
+      this.subroutineName = "DataInitialize";
+      this.specLabel = "model_label_DataInitialize";
+      this.paramGridComp = "gcomp";
+      this.paramRC = "rc";
+    }
+    
+    public String subroutineTemplate() {
+      StringConcatenation _builder = new StringConcatenation();
+      _builder.newLine();
+      _builder.append("subroutine ");
+      _builder.append(this.subroutineName, "");
+      _builder.append("(");
+      _builder.append(this.paramGridComp, "");
+      _builder.append(", ");
+      _builder.append(this.paramRC, "");
+      _builder.append(")");
+      _builder.newLineIfNotEmpty();
+      _builder.append("    ");
+      _builder.append("type(ESMF_GridComp)  :: ");
+      _builder.append(this.paramGridComp, "    ");
+      _builder.newLineIfNotEmpty();
+      _builder.append("    ");
+      _builder.append("integer, intent(out) :: ");
+      _builder.append(this.paramRC, "    ");
+      _builder.newLineIfNotEmpty();
+      _builder.newLine();
+      _builder.append("    ");
+      _builder.append("rc = ESMF_SUCCESS");
+      _builder.newLine();
+      _builder.append("    ");
+      _builder.newLine();
+      _builder.append("    ");
+      _builder.append("! initialize export fields");
+      _builder.newLine();
+      _builder.newLine();
+      _builder.append("end subroutine");
+      _builder.newLine();
+      return _builder.toString();
+    }
+    
+    public CodeConcept<?, ASTModuleNode> module() {
+      return this._parent._parent;
+    }
+    
+    public SetServicesCodeConcept<?> setServices() {
+      return this._parent._parent.setServices;
+    }
+    
+    public BasicCodeConcept genericUse() {
+      return this._parent._parent.importNUOPCModel;
+    }
+  }
+  
+  @Label(label = "Run")
+  public static class Run extends CodeConcept<NUOPCModel, ASTNode> {
+    @Child(min = 0)
+    public NUOPCModel.SetRunClock setRunClock;
+    
+    @Child(min = 0)
+    public NUOPCModel.CheckImport checkImport;
+    
+    @Child
+    public NUOPCModel.ModelAdvance modelAdvance;
+    
+    public Run(final NUOPCModel parent) {
+      super(parent);
+    }
+    
+    public NUOPCModel.Run reverse() {
+      return this.reverseChildren();
+    }
+    
+    public NUOPCModel.Run reverseChildren() {
+      NUOPCModel.Run _xblockexpression = null;
+      {
+        NUOPCModel.ModelAdvance _modelAdvance = new NUOPCModel.ModelAdvance(this);
+        SpecializationMethodCodeConcept<NUOPCModel.Run> _reverse = _modelAdvance.reverse();
+        this.modelAdvance = ((NUOPCModel.ModelAdvance) _reverse);
+        NUOPCModel.SetRunClock _setRunClock = new NUOPCModel.SetRunClock(this);
+        SpecializationMethodCodeConcept<NUOPCModel.Run> _reverse_1 = _setRunClock.reverse();
+        this.setRunClock = ((NUOPCModel.SetRunClock) _reverse_1);
+        NUOPCModel.CheckImport _checkImport = new NUOPCModel.CheckImport(this);
+        SpecializationMethodCodeConcept<NUOPCModel.Run> _reverse_2 = _checkImport.reverse();
+        this.checkImport = ((NUOPCModel.CheckImport) _reverse_2);
+        _xblockexpression = this;
+      }
+      return _xblockexpression;
+    }
+  }
+  
+  @Label(label = "ModelAdvance", type = "subroutine")
+  public static class ModelAdvance extends SpecializationMethodCodeConcept<NUOPCModel.Run> {
+    public ModelAdvance(final NUOPCModel.Run parent) {
+      super(parent, "NUOPC_Model", "label_Advance");
+      this.subroutineName = "ModelAdvance";
+      this.specLabel = "model_label_Advance";
+      this.paramGridComp = "gcomp";
+      this.paramRC = "rc";
+    }
+    
+    public String subroutineTemplate() {
+      StringConcatenation _builder = new StringConcatenation();
+      _builder.newLine();
+      _builder.append("subroutine ");
+      _builder.append(this.subroutineName, "");
+      _builder.append("(");
+      _builder.append(this.paramGridComp, "");
+      _builder.append(", ");
+      _builder.append(this.paramRC, "");
+      _builder.append(")");
+      _builder.newLineIfNotEmpty();
+      _builder.append("    ");
+      _builder.append("type(ESMF_GridComp)  :: ");
+      _builder.append(this.paramGridComp, "    ");
+      _builder.newLineIfNotEmpty();
+      _builder.append("    ");
+      _builder.append("integer, intent(out) :: ");
+      _builder.append(this.paramRC, "    ");
+      _builder.newLineIfNotEmpty();
+      _builder.newLine();
+      _builder.append("     ");
+      _builder.append("! local variables");
+      _builder.newLine();
+      _builder.append("    ");
+      _builder.append("type(ESMF_Clock)              :: clock");
+      _builder.newLine();
+      _builder.append("    ");
+      _builder.append("type(ESMF_State)              :: importState, exportState");
+      _builder.newLine();
+      _builder.append("    ");
+      _builder.append("type(ESMF_Time)               :: currTime");
+      _builder.newLine();
+      _builder.append("    ");
+      _builder.append("type(ESMF_TimeInterval)       :: timeStep");
+      _builder.newLine();
+      _builder.newLine();
+      _builder.append("    ");
+      _builder.append("rc = ESMF_SUCCESS");
+      _builder.newLine();
+      _builder.newLine();
+      _builder.append("    ");
+      _builder.append("! query the Component for its clock, importState and exportState");
+      _builder.newLine();
+      _builder.append("    ");
+      _builder.append("call ESMF_GridCompGet(");
+      _builder.append(this.paramGridComp, "    ");
+      _builder.append(", clock=clock, importState=importState, &");
+      _builder.newLineIfNotEmpty();
+      _builder.append("        ");
+      _builder.append("exportState=exportState, rc=");
+      _builder.append(this.paramRC, "        ");
+      _builder.append(")");
+      _builder.newLineIfNotEmpty();
+      _builder.append("    ");
+      _builder.append("if (ESMF_LogFoundError(rcToCheck=");
+      _builder.append(this.paramRC, "    ");
+      _builder.append(", msg=ESMF_LOGERR_PASSTHRU, &");
+      _builder.newLineIfNotEmpty();
+      _builder.append("        ");
+      _builder.append("line=__LINE__, &");
+      _builder.newLine();
+      _builder.append("        ");
+      _builder.append("file=__FILE__)) &");
+      _builder.newLine();
+      _builder.append("        ");
+      _builder.append("return  ! bail out");
+      _builder.newLine();
+      _builder.newLine();
+      _builder.append("    ");
+      _builder.append("! advance the model: currTime -> currTime + timeStep");
+      _builder.newLine();
+      _builder.newLine();
+      _builder.append("    ");
+      _builder.append("call NUOPC_ClockPrintCurrTime(clock, &");
+      _builder.newLine();
+      _builder.append("        ");
+      _builder.append("\"------>Advancing ");
+      _builder.append(this._parent._parent.modelName, "        ");
+      _builder.append(" from: \", rc=");
+      _builder.append(this.paramRC, "        ");
+      _builder.append(")");
+      _builder.newLineIfNotEmpty();
+      _builder.append("    ");
+      _builder.append("if (ESMF_LogFoundError(rcToCheck=rc, msg=ESMF_LOGERR_PASSTHRU, &");
+      _builder.newLine();
+      _builder.append("        ");
+      _builder.append("line=__LINE__, &");
+      _builder.newLine();
+      _builder.append("        ");
+      _builder.append("file=__FILE__)) &");
+      _builder.newLine();
+      _builder.append("        ");
+      _builder.append("return  ! bail out");
+      _builder.newLine();
+      _builder.newLine();
+      _builder.append("    ");
+      _builder.append("call ESMF_ClockGet(clock, currTime=currTime, timeStep=timeStep, rc=");
+      _builder.append(this.paramRC, "    ");
+      _builder.append(")");
+      _builder.newLineIfNotEmpty();
+      _builder.append("    ");
+      _builder.append("if (ESMF_LogFoundError(rcToCheck=");
+      _builder.append(this.paramRC, "    ");
+      _builder.append(", msg=ESMF_LOGERR_PASSTHRU, &");
+      _builder.newLineIfNotEmpty();
+      _builder.append("        ");
+      _builder.append("line=__LINE__, &");
+      _builder.newLine();
+      _builder.append("        ");
+      _builder.append("file=__FILE__)) &");
+      _builder.newLine();
+      _builder.append("        ");
+      _builder.append("return  ! bail out");
+      _builder.newLine();
+      _builder.newLine();
+      _builder.append("    ");
+      _builder.append("call NUOPC_TimePrint(currTime + timeStep, &");
+      _builder.newLine();
+      _builder.append("        ");
+      _builder.append("\"--------------------------------> to: \", rc=");
+      _builder.append(this.paramRC, "        ");
+      _builder.append(")");
+      _builder.newLineIfNotEmpty();
+      _builder.append("    ");
+      _builder.append("if (ESMF_LogFoundError(rcToCheck=rc, msg=ESMF_LOGERR_PASSTHRU, &");
+      _builder.newLine();
+      _builder.append("        ");
+      _builder.append("line=__LINE__, &");
+      _builder.newLine();
+      _builder.append("        ");
+      _builder.append("file=__FILE__)) &");
+      _builder.newLine();
+      _builder.append("        ");
+      _builder.append("return  ! bail out");
+      _builder.newLine();
+      _builder.newLine();
+      _builder.append("end subroutine");
+      _builder.newLine();
+      return _builder.toString();
+    }
+    
+    public CodeConcept<?, ASTModuleNode> module() {
+      return this._parent._parent;
+    }
+    
+    public SetServicesCodeConcept<?> setServices() {
+      return this._parent._parent.setServices;
+    }
+    
+    public BasicCodeConcept genericUse() {
+      return this._parent._parent.importNUOPCModel;
+    }
+  }
+  
+  @Label(label = "SetRunClock", type = "subroutine")
+  public static class SetRunClock extends SpecializationMethodCodeConcept<NUOPCModel.Run> {
+    public SetRunClock(final NUOPCModel.Run parent) {
+      super(parent, "NUOPC_Model", "label_SetRunClock");
+      this.subroutineName = "SetRunClock";
+      this.specLabel = "model_label_SetRunClock";
+      this.paramGridComp = "gcomp";
+      this.paramRC = "rc";
+    }
+    
+    public String subroutineTemplate() {
+      StringConcatenation _builder = new StringConcatenation();
+      _builder.newLine();
+      _builder.append("subroutine ");
+      _builder.append(this.subroutineName, "");
+      _builder.append("(");
+      _builder.append(this.paramGridComp, "");
+      _builder.append(", ");
+      _builder.append(this.paramRC, "");
+      _builder.append(")");
+      _builder.newLineIfNotEmpty();
+      _builder.append("    ");
+      _builder.append("type(ESMF_GridComp)  :: ");
+      _builder.append(this.paramGridComp, "    ");
+      _builder.newLineIfNotEmpty();
+      _builder.append("    ");
+      _builder.append("integer, intent(out) :: ");
+      _builder.append(this.paramRC, "    ");
+      _builder.newLineIfNotEmpty();
+      _builder.newLine();
+      _builder.append("    ");
+      _builder.append("! local variables");
+      _builder.newLine();
+      _builder.append("    ");
+      _builder.append("type(ESMF_Clock)              :: clock");
+      _builder.newLine();
+      _builder.append("    ");
+      _builder.newLine();
+      _builder.append("    ");
+      _builder.append("rc = ESMF_SUCCESS");
+      _builder.newLine();
+      _builder.append("    ");
+      _builder.newLine();
+      _builder.append("    ");
+      _builder.append("! query the component for its clock");
+      _builder.newLine();
+      _builder.append("    ");
+      _builder.append("call ESMF_GridCompGet(gcomp, clock=clock, rc=");
+      _builder.append(this.paramRC, "    ");
+      _builder.append(")");
+      _builder.newLineIfNotEmpty();
+      _builder.append("    ");
+      _builder.append("if (ESMF_LogFoundError(rcToCheck=rc, msg=ESMF_LOGERR_PASSTHRU, &");
+      _builder.newLine();
+      _builder.append("      ");
+      _builder.append("line=__LINE__, &");
+      _builder.newLine();
+      _builder.append("      ");
+      _builder.append("file=__FILE__)) &");
+      _builder.newLine();
+      _builder.append("      ");
+      _builder.append("return  ! bail out");
+      _builder.newLine();
+      _builder.append("      ");
+      _builder.newLine();
+      _builder.append("    ");
+      _builder.append("! set the component\'s clock ");
+      _builder.newLine();
+      _builder.append("    ");
+      _builder.append("call NUOPC_CompSetClock(gcomp, clock=clock, rc=");
+      _builder.append(this.paramRC, "    ");
+      _builder.append(")");
+      _builder.newLineIfNotEmpty();
+      _builder.append("    ");
+      _builder.append("if (ESMF_LogFoundError(rcToCheck=rc, msg=ESMF_LOGERR_PASSTHRU, &");
+      _builder.newLine();
+      _builder.append("      ");
+      _builder.append("line=__LINE__, &");
+      _builder.newLine();
+      _builder.append("      ");
+      _builder.append("file=__FILE__)) &");
+      _builder.newLine();
+      _builder.append("      ");
+      _builder.append("return  ! bail out");
+      _builder.newLine();
+      _builder.newLine();
+      _builder.append("end subroutine");
+      _builder.newLine();
+      return _builder.toString();
+    }
+    
+    public CodeConcept<?, ASTModuleNode> module() {
+      return this._parent._parent;
+    }
+    
+    public SetServicesCodeConcept<?> setServices() {
+      return this._parent._parent.setServices;
+    }
+    
+    public BasicCodeConcept genericUse() {
+      return this._parent._parent.importNUOPCModel;
+    }
+  }
+  
+  @Label(label = "CheckImport", type = "subroutine")
+  public static class CheckImport extends SpecializationMethodCodeConcept<NUOPCModel.Run> {
+    public CheckImport(final NUOPCModel.Run parent) {
+      super(parent, "NUOPC_Model", "label_CheckImport");
+      this.subroutineName = "CheckImport";
+      this.specLabel = "model_label_CheckImport";
+      this.paramGridComp = "gcomp";
+      this.paramRC = "rc";
+    }
+    
+    public String subroutineTemplate() {
+      StringConcatenation _builder = new StringConcatenation();
+      _builder.newLine();
+      _builder.append("subroutine ");
+      _builder.append(this.subroutineName, "");
+      _builder.append("(");
+      _builder.append(this.paramGridComp, "");
+      _builder.append(", ");
+      _builder.append(this.paramRC, "");
+      _builder.append(")");
+      _builder.newLineIfNotEmpty();
+      _builder.append("    ");
+      _builder.append("type(ESMF_GridComp)  :: ");
+      _builder.append(this.paramGridComp, "    ");
+      _builder.newLineIfNotEmpty();
+      _builder.append("    ");
+      _builder.append("integer, intent(out) :: ");
+      _builder.append(this.paramRC, "    ");
+      _builder.newLineIfNotEmpty();
+      _builder.newLine();
+      _builder.append("    ");
+      _builder.append("rc = ESMF_SUCCESS");
+      _builder.newLine();
+      _builder.append("    ");
+      _builder.newLine();
+      _builder.append("    ");
+      _builder.append("! check fields in import state");
+      _builder.newLine();
+      _builder.newLine();
+      _builder.append("end subroutine");
+      _builder.newLine();
+      return _builder.toString();
+    }
+    
+    public CodeConcept<?, ASTModuleNode> module() {
+      return this._parent._parent;
+    }
+    
+    public SetServicesCodeConcept<?> setServices() {
+      return this._parent._parent.setServices;
+    }
+    
+    public BasicCodeConcept genericUse() {
+      return this._parent._parent.importNUOPCModel;
+    }
+  }
+  
+  @Label(label = "Finalize")
+  public static class Finalize extends CodeConcept<NUOPCModel, ASTNode> {
+    @Child(min = 0)
+    public NUOPCModel.FinalizeP1 finalizeP1;
+    
+    public Finalize(final NUOPCModel parent) {
+      super(parent);
+    }
+    
+    public NUOPCModel.Finalize reverse() {
+      return this.reverseChildren();
+    }
+    
+    public NUOPCModel.Finalize reverseChildren() {
+      NUOPCModel.Finalize _xblockexpression = null;
+      {
+        NUOPCModel.FinalizeP1 _finalizeP1 = new NUOPCModel.FinalizeP1(this);
+        CodeConcept<NUOPCModel.Finalize, ASTSubroutineSubprogramNode> _reverse = _finalizeP1.reverse();
+        this.finalizeP1 = ((NUOPCModel.FinalizeP1) _reverse);
+        _xblockexpression = this;
+      }
+      return _xblockexpression;
+    }
+  }
+  
+  @Label(label = "Finalize Phase 1", type = "subroutine")
+  public static class FinalizeP1 extends EntryPointCodeConcept<NUOPCModel.Finalize> {
+    public FinalizeP1(final NUOPCModel.Finalize parent) {
+      super(parent, "???");
+    }
+    
+    public EntryPointCodeConcept<NUOPCModel.Finalize> reverseChildren() {
+      return this;
     }
     
     public CodeConcept<?, ASTModuleNode> module() {
@@ -219,6 +928,12 @@ public class NUOPCModel extends CodeConcept<CodeConcept<?, ?>, ASTModuleNode> {
   
   @Child
   public NUOPCModel.Initialization initialization;
+  
+  @Child
+  public NUOPCModel.Run run;
+  
+  @Child
+  public NUOPCModel.Finalize finalize;
   
   public NUOPCModel(final CodeDBIndex codeDB) {
     super(null);
@@ -302,6 +1017,12 @@ public class NUOPCModel extends CodeConcept<CodeConcept<?, ?>, ASTModuleNode> {
       NUOPCModel.Initialization _initialization = new NUOPCModel.Initialization(this);
       NUOPCModel.Initialization _reverse_1 = _initialization.reverse();
       this.initialization = _reverse_1;
+      NUOPCModel.Run _run = new NUOPCModel.Run(this);
+      NUOPCModel.Run _reverse_2 = _run.reverse();
+      this.run = _reverse_2;
+      NUOPCModel.Finalize _finalize = new NUOPCModel.Finalize(this);
+      NUOPCModel.Finalize _reverse_3 = _finalize.reverse();
+      this.finalize = _reverse_3;
       _xblockexpression = this;
     }
     return _xblockexpression;

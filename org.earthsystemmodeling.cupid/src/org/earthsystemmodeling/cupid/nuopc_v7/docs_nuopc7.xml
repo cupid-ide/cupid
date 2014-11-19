@@ -213,8 +213,62 @@
 	
 	<doc class="org.earthsystemmodeling.cupid.nuopc_v7.NUOPCModel.InitP2">
 	<![CDATA[
-	<b>Initialize Phase 1 (IPDv00p1)</b><hr/>
+	<b>Initialize Phase 2 (IPDv00p2)</b><hr/>
 	Realize the advertised Fields in import and export States.
+	]]>
+	</doc>
+	
+	<doc class="org.earthsystemmodeling.cupid.nuopc_v7.NUOPCModel.Run">
+	<![CDATA[
+	<b>Run</b><hr/>
+	<UL>
+	<LI>phase 1: (R<SMALL>EQUIRED, </SMALL>NUOPC P<SMALL>ROVIDED</SMALL>)
+	  
+	<UL>
+	<LI>Allocate internal state memory.
+	</LI>
+	<LI>Assign the <TT>driverClock</TT> member in the internal state as an alias to the incoming Clock.
+	</LI>
+	<LI>S<SMALL>PECIALIZATION </SMALL>R<SMALL>EQUIRED/</SMALL>P<SMALL>ROVIDED</SMALL>: <TT>label_SetRunClock</TT> to check and set the internal Clock against the incoming Clock.
+	  
+	<UL>
+	<LI><TT>IF</TT> (Phase specific specialization present): Execute the phase specific specialization.
+	</LI>
+	<LI><TT>ELSE</TT>: Execute the phase independent specialization. P<SMALL>ROVIDED</SMALL>: By default check that internal Clock and incoming Clock agree on current time and that the time step of the incoming Clock is a multiple of the internal Clock time step. Under these conditions set the internal stop time to one time step interval of the incoming Clock. Otherwise exit with error, flagging an incompatibility.
+	  
+	</LI>
+	</UL>
+	</LI>
+	<LI>S<SMALL>PECIALIZATION </SMALL>R<SMALL>EQUIRED/</SMALL>P<SMALL>ROVIDED</SMALL>: <TT>label_CheckImport</TT> to check Fields in the import State.
+	  
+	<UL>
+	<LI><TT>IF</TT> (Phase specific specialization is present): Execute the phase specific specialization.
+	</LI>
+	<LI><TT>ELSE</TT>: Execute the phase independent specialization. P<SMALL>ROVIDED</SMALL>: By default check that all import Fields are at the current time of the internal Clock.
+	  
+	</LI>
+	</UL>
+	</LI>
+	<LI>Time stepping loop: starting at current time, running to stop time of the internal Clock.
+	  
+	<UL>
+	<LI>Timestamp the Fields in the export State according to the current time of the internal Clock.
+	</LI>
+	<LI>S<SMALL>PECIALIZATION </SMALL>R<SMALL>EQUIRED</SMALL>: <TT>label_Advance</TT> to execute model code.
+	</LI>
+	<LI>Advance the current time of the internal Clock according to the time step of the internal Clock.
+	  
+	</LI>
+	</UL>
+	</LI>
+	<LI>Timestamp all Fields in the export State according to the current time of the internal Clock, which now is identical to the stop time of the internal Clock.
+	</LI>
+	<LI>Deallocate the internal state memory.
+	  
+	</LI>
+	</UL>
+	</LI>
+	</UL>
 	]]>
 	</doc>
 	
