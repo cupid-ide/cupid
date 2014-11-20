@@ -1,6 +1,5 @@
 package org.earthsystemmodeling.cupid.test;
 
-import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 
 import java.io.File;
@@ -8,9 +7,6 @@ import java.io.IOException;
 import java.net.URL;
 
 import org.apache.commons.io.FileUtils;
-import org.earthsystemmodeling.FSM;
-import org.earthsystemmodeling.cupid.core.ReverseEngineer;
-import org.earthsystemmodeling.psyche.Language;
 import org.eclipse.core.resources.IProject;
 import org.eclipse.core.resources.IResource;
 import org.eclipse.core.resources.IWorkspaceRoot;
@@ -19,17 +15,8 @@ import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.FileLocator;
 import org.eclipse.core.runtime.NullProgressMonitor;
 import org.eclipse.core.runtime.Path;
-import org.eclipse.emf.common.util.EList;
-import org.eclipse.emf.common.util.URI;
-import org.eclipse.emf.ecore.EObject;
-import org.eclipse.emf.ecore.EPackage;
-import org.eclipse.emf.ecore.EReference;
-import org.eclipse.emf.ecore.resource.Resource;
-import org.eclipse.emf.ecore.resource.ResourceSet;
-import org.eclipse.emf.ecore.resource.impl.ResourceSetImpl;
 import org.eclipse.photran.internal.core.vpg.PhotranVPG;
 import org.junit.BeforeClass;
-import org.junit.Test;
 import org.osgi.framework.Bundle;
 import org.osgi.framework.FrameworkUtil;
 
@@ -84,6 +71,7 @@ public class CupidTest {
 	}
 	*/
 	
+	/*
 	private Language registerLanguage(String langFile) throws IOException {
 		
 		URL langFileURL = FileLocator.toFileURL(FileLocator.find(MY_BUNDLE, new Path(langFile), null));		
@@ -117,6 +105,7 @@ public class CupidTest {
 		return fsm.getRoot();		
 	}
 	
+	
 	@SuppressWarnings("unchecked")
 	private EList<EObject> getEList(EObject o, String featureName) {
 		EReference eref = (EReference) o.eClass().getEStructuralFeature(featureName);
@@ -142,5 +131,5 @@ public class CupidTest {
 		EList<EObject> modules = getEList(result, "Module");
 		assertEquals(2, modules.size());
 	}
-
+	*/
 }

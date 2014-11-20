@@ -44,7 +44,7 @@ public class CupidTester {
 	public static void beforeClass() throws Exception {
 		bot = new SWTWorkbenchBot();
 		bot.viewByTitle("Welcome").close();
-		copyProjectToWorkspace("v7-AtmOcnProto");
+		copyProjectToWorkspace("v7-AtmOcnLndProto");
 	}
 
 	
@@ -75,6 +75,9 @@ public class CupidTester {
 	 */
 	@Test
 	public void showNUOPCView() {
+		
+		sleep(3*1000);
+		
 		bot.menu("Window").menu("Show View").menu("Other...").click();
 		bot.tree().getTreeItem("NUOPC").select();
 		bot.tree().getTreeItem("NUOPC").expand();
@@ -96,12 +99,14 @@ public class CupidTester {
 	 * Open and reverse engineer a DriverAtmOcn.
 	 */
 	@Test
-	public void reverseEngineerAtmOcnDriver() {
+	public void reverseEngineerDriver() {
 		ensureNUOPCViewVisible();
 		
-		bot.tree().getTreeItem("v7-AtmOcnProto").select();
-		bot.tree().getTreeItem("v7-AtmOcnProto").expand();
-		bot.tree().getTreeItem("v7-AtmOcnProto").getNode("esm.F90").doubleClick();
+		sleep(3*1000);
+		
+		bot.tree().getTreeItem("v7-AtmOcnLndProto").select();
+		bot.tree().getTreeItem("v7-AtmOcnLndProto").expand();
+		bot.tree().getTreeItem("v7-AtmOcnLndProto").getNode("esm.F90").doubleClick();
 		bot.editorByTitle("esm.F90");
 		
 		//wait for reverse engineer
@@ -110,7 +115,7 @@ public class CupidTester {
 		//basic verification of reverse engineering
 		SWTBotTree tree = NUOPCTree();
 			
-		assertEquals("ESM", tree.getTreeItem("NUOPC Application").getNode("NUOPC Atm-Ocn Driver").getNode("Driver Name").cell(1));
+		assertEquals("ESM (esm.F90)", tree.getTreeItem("NUOPC Driver").cell(1));
 	}
 	
 	/**
@@ -120,9 +125,11 @@ public class CupidTester {
 	public void reverseEngineerModelAtm() {
 		ensureNUOPCViewVisible();
 		
-		bot.tree().getTreeItem("v7-AtmOcnProto").select();
-		bot.tree().getTreeItem("v7-AtmOcnProto").expand();
-		bot.tree().getTreeItem("v7-AtmOcnProto").getNode("atm.F90").doubleClick();
+		sleep(3*1000);
+		
+		bot.tree().getTreeItem("v7-AtmOcnLndProto").select();
+		bot.tree().getTreeItem("v7-AtmOcnLndProto").expand();
+		bot.tree().getTreeItem("v7-AtmOcnLndProto").getNode("atm.F90").doubleClick();
 		bot.editorByTitle("atm.F90");
 		
 		//wait for reverse engineer
@@ -131,13 +138,13 @@ public class CupidTester {
 		//basic verification of reverse engineering
 		SWTBotTree tree = NUOPCTree();
 		
-		tree.getTreeItem("NUOPC Application").getNode("NUOPC Model").getNode("Initialization").expand();
+		tree.getTreeItem("NUOPC Model").getNode("Initialize").expand();
 					
-		assertEquals("ATM", tree.getTreeItem("NUOPC Application").getNode("NUOPC Model").getNode("Model Name").cell(1));
-		assertEquals("SetServices", tree.getTreeItem("NUOPC Application").getNode("NUOPC Model").getNode("Set Services").cell(1));
-		assertEquals("InitializeP1", tree.getTreeItem("NUOPC Application").getNode("NUOPC Model").getNode("Initialization").getNode("phase 1").cell(1));
-		assertEquals("InitializeP2", tree.getTreeItem("NUOPC Application").getNode("NUOPC Model").getNode("Initialization").getNode("phase 2").cell(1));
-
+		assertEquals("ATM (atm.F90)", tree.getTreeItem("NUOPC Model").cell(1));
+		assertEquals("SetServices", tree.getTreeItem("NUOPC Model").getNode("SetServices").cell(1));
+		assertEquals("InitializeP1", tree.getTreeItem("NUOPC Model").getNode("Initialize").getNode("Initialize Phase 1").cell(1));
+		assertEquals("InitializeP2", tree.getTreeItem("NUOPC Model").getNode("Initialize").getNode("Initialize Phase 2").cell(1));
+		assertEquals("ModelAdvance", tree.getTreeItem("NUOPC Model").getNode("Run").getNode("ModelAdvance").cell(1));	
 
 	}
 	
@@ -148,9 +155,11 @@ public class CupidTester {
 	public void reverseEngineerModelOcn() {
 		ensureNUOPCViewVisible();
 		
-		bot.tree().getTreeItem("v7-AtmOcnProto").select();
-		bot.tree().getTreeItem("v7-AtmOcnProto").expand();
-		bot.tree().getTreeItem("v7-AtmOcnProto").getNode("ocn.F90").doubleClick();
+		sleep(3*1000);
+		
+		bot.tree().getTreeItem("v7-AtmOcnLndProto").select();
+		bot.tree().getTreeItem("v7-AtmOcnLndProto").expand();
+		bot.tree().getTreeItem("v7-AtmOcnLndProto").getNode("ocn.F90").doubleClick();
 		bot.editorByTitle("ocn.F90");
 		
 		//wait for reverse engineer
@@ -159,12 +168,13 @@ public class CupidTester {
 		//basic verification of reverse engineering
 		SWTBotTree tree = NUOPCTree();
 		
-		tree.getTreeItem("NUOPC Application").getNode("NUOPC Model").getNode("Initialization").expand();
+		tree.getTreeItem("NUOPC Model").getNode("Initialize").expand();
 			
-		assertEquals("OCN", tree.getTreeItem("NUOPC Application").getNode("NUOPC Model").getNode("Model Name").cell(1));
-		assertEquals("SetServices", tree.getTreeItem("NUOPC Application").getNode("NUOPC Model").getNode("Set Services").cell(1));
-		assertEquals("InitializeP1", tree.getTreeItem("NUOPC Application").getNode("NUOPC Model").getNode("Initialization").getNode("phase 1").cell(1));
-		assertEquals("InitializeP2", tree.getTreeItem("NUOPC Application").getNode("NUOPC Model").getNode("Initialization").getNode("phase 2").cell(1));
+		assertEquals("OCN (ocn.F90)", tree.getTreeItem("NUOPC Model").cell(1));
+		assertEquals("SetServices", tree.getTreeItem("NUOPC Model").getNode("SetServices").cell(1));
+		assertEquals("InitializeP1", tree.getTreeItem("NUOPC Model").getNode("Initialize").getNode("Initialize Phase 1").cell(1));
+		assertEquals("InitializeP2", tree.getTreeItem("NUOPC Model").getNode("Initialize").getNode("Initialize Phase 2").cell(1));
+		assertEquals("ModelAdvance", tree.getTreeItem("NUOPC Model").getNode("Run").getNode("ModelAdvance").cell(1));	
 
 	}
 	
@@ -176,9 +186,11 @@ public class CupidTester {
 	public void forwardEngineerModelAtmFinalize() throws PartInitException {
 		ensureNUOPCViewVisible();
 		
-		bot.tree().getTreeItem("v7-AtmOcnProto").select();
-		bot.tree().getTreeItem("v7-AtmOcnProto").expand();
-		bot.tree().getTreeItem("v7-AtmOcnProto").getNode("atm.F90").doubleClick();
+		sleep(3*1000);
+		
+		bot.tree().getTreeItem("v7-AtmOcnLndProto").select();
+		bot.tree().getTreeItem("v7-AtmOcnLndProto").expand();
+		bot.tree().getTreeItem("v7-AtmOcnLndProto").getNode("atm.F90").doubleClick();
 		bot.editorByTitle("atm.F90");
 		
 		assertFalse(bot.editorByTitle("atm.F90").toTextEditor().getText().contains("subroutine Finalize"));
@@ -188,10 +200,63 @@ public class CupidTester {
 		
 		//basic verification of reverse engineering
 		SWTBotTree tree = NUOPCTree();
-		tree.getTreeItem("NUOPC Application").getNode("NUOPC Model").contextMenu("Add Finalize (basic)").click();
+		tree.getTreeItem("NUOPC Model").getNode("Finalize").contextMenu("Generate Finalize Phase 1").click();
 		
-		assertContains("subroutine Finalize", bot.editorByTitle("atm.F90").toTextEditor().getText());
-
+		String editorText = bot.editorByTitle("atm.F90").toTextEditor().getText();
+		assertContains("subroutine Finalize", editorText);
+		assertContains("userRoutine=Finalize", editorText);
+	}
+	
+	@Test
+	public void forwardEngineerModelAtmSetClock() throws PartInitException {
+		ensureNUOPCViewVisible();
+		
+		sleep(3*1000);
+		
+		bot.tree().getTreeItem("v7-AtmOcnLndProto").select();
+		bot.tree().getTreeItem("v7-AtmOcnLndProto").expand();
+		bot.tree().getTreeItem("v7-AtmOcnLndProto").getNode("atm.F90").doubleClick();
+		bot.editorByTitle("atm.F90");
+		
+		assertFalse(bot.editorByTitle("atm.F90").toTextEditor().getText().contains("subroutine SetClock"));
+				
+		//wait for reverse engineer
+		sleep(3*1000);
+		
+		//basic verification of reverse engineering
+		SWTBotTree tree = NUOPCTree();
+		tree.getTreeItem("NUOPC Model").getNode("Initialize").contextMenu("Generate SetClock").click();
+		
+		String editorText = bot.editorByTitle("atm.F90").toTextEditor().getText();
+		assertContains("subroutine SetClock", editorText);
+		assertContains("label_SetClock", editorText);
+		assertContains("specRoutine=SetClock", editorText);
+	}
+	
+	@Test
+	public void forwardEngineerModelLndAdvance() throws PartInitException {
+		ensureNUOPCViewVisible();
+		
+		sleep(3*1000);
+		
+		bot.tree().getTreeItem("v7-AtmOcnLndProto").select();
+		bot.tree().getTreeItem("v7-AtmOcnLndProto").expand();
+		bot.tree().getTreeItem("v7-AtmOcnLndProto").getNode("lnd.F90").doubleClick();
+		bot.editorByTitle("lnd.F90");
+		
+		assertFalse(bot.editorByTitle("lnd.F90").toTextEditor().getText().contains("subroutine ModelAdvance"));
+				
+		//wait for reverse engineer
+		sleep(3*1000);
+		
+		//basic verification of reverse engineering
+		SWTBotTree tree = NUOPCTree();
+		tree.getTreeItem("NUOPC Model").getNode("Run").contextMenu("Generate ModelAdvance").click();
+		
+		String editorText = bot.editorByTitle("lnd.F90").toTextEditor().getText();
+		assertContains("subroutine ModelAdvance", editorText);
+		assertContains("label_Advance", editorText);
+		assertContains("specRoutine=ModelAdvance", editorText);
 	}
 	
 	/**
@@ -199,7 +264,7 @@ public class CupidTester {
 	 */
 	@Test
 	public void showPropsPage() {
-		bot.tree().getTreeItem("v7-AtmOcnProto").select();
+		bot.tree().getTreeItem("v7-AtmOcnLndProto").select();
 		bot.menu("Properties").click();
 		bot.tree().getTreeItem("Cupid Property Page").select();
 		bot.button("Select NUOPC resources").click();

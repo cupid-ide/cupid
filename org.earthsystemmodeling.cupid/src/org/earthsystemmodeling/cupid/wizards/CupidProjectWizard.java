@@ -75,6 +75,7 @@ import org.eclipse.remote.core.IRemoteProcessBuilder;
 import org.eclipse.remote.core.IRemoteServices;
 import org.eclipse.remote.core.RemoteServices;
 import org.eclipse.remote.core.exception.RemoteConnectionException;
+import org.eclipse.remote.internal.jsch.core.JSchConnectionAttributes;
 import org.eclipse.remote.internal.jsch.core.JSchConnectionWorkingCopy;
 import org.eclipse.swt.graphics.Font;
 import org.eclipse.swt.graphics.FontData;
@@ -641,7 +642,11 @@ public class CupidProjectWizard extends Wizard implements INewWizard, IExecutabl
 			remoteConnWorkingCopy.setAddress(host);
 			remoteConnWorkingCopy.setUsername("sgeadmin");
 			remoteConnWorkingCopy.setAttribute("org.earthsystemmodeling.cupid.ready", "true");
-			remoteConnWorkingCopy.setKeyFile(keyFile);
+			
+			//TODO: remove below after new version or org.eclipse.remote is released
+			remoteConnWorkingCopy.setAttribute("JSCH_KEYFILE_ATTR", keyFile);
+			//remoteConnWorkingCopy.setKeyFile(keyFile);
+			//remoteConnWorkingCopy.setAttribute(JSchConnectionAttributes.KEYFILE_ATTR, keyFile);
 			remoteConnWorkingCopy.setIsPasswordAuth(false);
 			
 			//remoteConnWorkingCopy.setAttribute("org.eclipse.ptp.remotetools.environment.generichost.key-path", keyFile);

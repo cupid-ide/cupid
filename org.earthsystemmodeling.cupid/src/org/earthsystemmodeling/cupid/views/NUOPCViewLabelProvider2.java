@@ -1,12 +1,10 @@
 package org.earthsystemmodeling.cupid.views;
 
-import java.awt.Color;
 import java.io.IOException;
 import java.io.InputStream;
 import java.lang.reflect.Field;
 import java.net.URL;
 import java.util.HashMap;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
@@ -14,24 +12,11 @@ import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
 
-import org.earthsystemmodeling.FSM;
-import org.earthsystemmodeling.cupid.annotation.Child;
 import org.earthsystemmodeling.cupid.annotation.Label;
 import org.earthsystemmodeling.cupid.annotation.Name;
 import org.earthsystemmodeling.cupid.annotation.Prop;
 import org.earthsystemmodeling.cupid.core.CupidActivator;
-import org.earthsystemmodeling.cupid.nuopc_v7.CodeConcept;
-import org.earthsystemmodeling.cupid.views.NUOPCViewContentProvider.NUOPCModelElem;
 import org.earthsystemmodeling.cupid.views.NUOPCViewContentProvider2.CodeConceptProxy;
-import org.earthsystemmodeling.psyche.Call;
-import org.earthsystemmodeling.psyche.ImplicitContextMapping;
-import org.earthsystemmodeling.psyche.Mapping;
-import org.earthsystemmodeling.psyche.Module;
-import org.earthsystemmodeling.psyche.SubconceptOrAttribute;
-import org.earthsystemmodeling.psyche.Subroutine;
-import org.earthsystemmodeling.psyche.UsesEntity;
-import org.earthsystemmodeling.psyche.UsesModule;
-import org.earthsystemmodeling.psyche.VariableDeclaration;
 import org.eclipse.core.runtime.FileLocator;
 import org.eclipse.core.runtime.Path;
 import org.eclipse.jface.resource.ImageDescriptor;
@@ -45,7 +30,6 @@ import org.eclipse.swt.custom.StyleRange;
 import org.eclipse.swt.graphics.TextStyle;
 import org.eclipse.swt.widgets.Display;
 import org.jdom.Element;
-import org.jdom.filter.Filter;
 import org.jdom.input.DOMBuilder;
 import org.osgi.framework.Bundle;
 import org.osgi.framework.FrameworkUtil;

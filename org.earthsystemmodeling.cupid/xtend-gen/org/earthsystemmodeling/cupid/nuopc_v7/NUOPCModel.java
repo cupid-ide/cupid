@@ -889,7 +889,7 @@ public class NUOPCModel extends CodeConcept<CodeConcept<?, ?>, ASTModuleNode> {
   @Label(label = "Finalize Phase 1", type = "subroutine")
   public static class FinalizeP1 extends EntryPointCodeConcept<NUOPCModel.Finalize> {
     public FinalizeP1(final NUOPCModel.Finalize parent) {
-      super(parent, null);
+      super(parent, "FinalizePhase1");
       this.methodType = "ESMF_METHOD_FINALIZE";
       this.subroutineName = "Finalize";
     }

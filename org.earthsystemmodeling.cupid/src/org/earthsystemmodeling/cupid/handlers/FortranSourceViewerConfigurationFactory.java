@@ -4,7 +4,6 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
-import org.earthsystemmodeling.cupid.core.CupidStorage;
 import org.eclipse.cdt.internal.ui.text.c.hover.AbstractAnnotationHover;
 import org.eclipse.cdt.internal.ui.text.correction.MarkerResolutionProposal;
 import org.eclipse.core.resources.IMarker;
@@ -58,8 +57,6 @@ public class FortranSourceViewerConfigurationFactory implements
 			
 			@Override
 			public IQuickAssistAssistant getQuickAssistAssistant(ISourceViewer sourceViewer) {				
-				
-				
 				
 				if (quickAssistAssistant == null) {
 					quickAssistAssistant = new QuickAssistAssistant();
@@ -180,7 +177,7 @@ public class FortranSourceViewerConfigurationFactory implements
 						}
 					}
 					*/
-					IMarkerResolution mr = CupidStorage.INSTANCE.getMarkerFixes(marker.getResource().getProject()).get(marker);
+					IMarkerResolution mr = null; //CupidStorage.INSTANCE.getMarkerFixes(marker.getResource().getProject()).get(marker);
 					
 					//IMarkerResolution mr = nature.markerFixes.get(marker);
 					if (mr != null) {
