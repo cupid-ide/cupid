@@ -49,7 +49,10 @@ class NUOPCViewLabelProvider2 extends StyledCellLabelProvider { //implements ITa
 	private void loadDocXML() {
 		DocumentBuilderFactory dbf = DocumentBuilderFactory.newInstance();
 		try {
-			InputStream is = CupidActivator.getInputStream("src/org/earthsystemmodeling/cupid/nuopc_v7/docs_nuopc7.xml");
+			InputStream is = CupidActivator.getInputStream("nuopcdocs/nuopc7.xml");
+			if (is == null) {
+				return;
+			}
 			DocumentBuilder db = dbf.newDocumentBuilder();
 			Document doc = db.parse(is);
 			is.close();
