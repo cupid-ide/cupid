@@ -20,21 +20,23 @@ import org.earthsystemmodeling.cupid.annotation.Prop
 public abstract class EntryPointCodeConcept<P extends CodeConcept<?, ?>> extends CodeConcept<P, ASTSubroutineSubprogramNode> {
 
 	@Name
-	var public String subroutineName = "NUOPCEntryPoint"  //subclasses should default
+	public String subroutineName = "NUOPCEntryPoint"  //subclasses should default
 
 	@Label(label="Registration", type="call")
 	@Child
-	var public BasicCodeConcept registration
+	public BasicCodeConcept registration
 
-	var public String paramGridComp = "gcomp"	//subclasses should default
-	var public String paramRC = "rc" //subclasses should default
-	var public String paramImport = "importState"
-	var public String paramExport = "exportState"
-	var public String paramClock = "clock"
+	public String paramGridComp = "gcomp"	//subclasses should default
+	public String paramRC = "rc" //subclasses should default
+	public String paramImport = "importState"
+	public String paramExport = "exportState"
+	public String paramClock = "clock"
 	
-	var public List<String> phaseLabelList
+	public String methodType = "ESMF_METHOD_INITIALIZE"
 	
-	var String phaseLabel
+	public List<String> phaseLabelList
+	
+	String phaseLabel
 
 	//var SetServicesCodeConcept<?> setServices
 
@@ -125,10 +127,13 @@ end subroutine
 		var ASTSubroutineSubprogramNode setServicesNode = setServices().getASTRef
 		if (setServicesNode != null) {
 
+//call NUOPC_CompSetEntryPoint(gcomp, ESMF_METHOD_INITIALIZE, &
+//      phaseLabelList=(/"IPDv00p1"/), userRoutine=InitializeP1, rc=rc)
 			code = 
 '''
 
-call NUOPC_CompSetEntryPoint()
+call NUOPC_CompSetEntryPoint(«setServices().paramGridComp», «methodType», &
+	«IF phaseLabel!=null»phaseLabelList=(/"«phaseLabel»"/),«ENDIF» userRoutine=«subroutineName», rc=«setServices().paramRC»)
 '''
 
 			var ASTCallStmtNode regCall = parseLiteralStatement(code) as ASTCallStmtNode

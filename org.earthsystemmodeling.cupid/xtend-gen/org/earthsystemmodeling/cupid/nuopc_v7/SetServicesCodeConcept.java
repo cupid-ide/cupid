@@ -18,6 +18,10 @@ public class SetServicesCodeConcept<P extends CodeConcept<?, ?>> extends CodeCon
   @Name
   public String subroutineName;
   
+  public String paramGridComp;
+  
+  public String paramRC;
+  
   @Label(label = "NUOPC_CompDerive", type = "call")
   @Child
   public BasicCodeConcept callsCompDeriveID;
@@ -33,7 +37,7 @@ public class SetServicesCodeConcept<P extends CodeConcept<?, ?>> extends CodeCon
       _builder.append("esmf_setservices(_sid, ");
       long _parentID = this.parentID();
       _builder.append(_parentID, "");
-      _builder.append(", _sname), ");
+      _builder.append(", _sname, _param_gcomp, _param_rc), ");
       _builder.newLineIfNotEmpty();
       _builder.append("\t\t\t\t\t");
       _builder.append("( call_(_cid, _sid, \'NUOPC_CompDerive\') ; true).");
@@ -48,6 +52,10 @@ public class SetServicesCodeConcept<P extends CodeConcept<?, ?>> extends CodeCon
           long _long_1 = rs.getLong("_cid");
           BasicCodeConcept _newBasicCodeConcept = BasicCodeConcept.newBasicCodeConcept(this, _long_1);
           this.callsCompDeriveID = _newBasicCodeConcept;
+          String _string_1 = rs.getString("_param_gcomp");
+          this.paramGridComp = _string_1;
+          String _string_2 = rs.getString("_param_rc");
+          this.paramRC = _string_2;
           rs.close();
           return this;
         }

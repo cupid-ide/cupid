@@ -42,6 +42,8 @@ public abstract class EntryPointCodeConcept<P extends CodeConcept<?, ?>> extends
   
   public String paramClock = "clock";
   
+  public String methodType = "ESMF_METHOD_INITIALIZE";
+  
   public List<String> phaseLabelList;
   
   private String phaseLabel;
@@ -191,8 +193,29 @@ public abstract class EntryPointCodeConcept<P extends CodeConcept<?, ?>> extends
       if (_notEquals) {
         StringConcatenation _builder = new StringConcatenation();
         _builder.newLine();
-        _builder.append("call NUOPC_CompSetEntryPoint()");
-        _builder.newLine();
+        _builder.append("call NUOPC_CompSetEntryPoint(");
+        SetServicesCodeConcept<?> _setServices_1 = this.setServices();
+        _builder.append(_setServices_1.paramGridComp, "");
+        _builder.append(", ");
+        _builder.append(this.methodType, "");
+        _builder.append(", &");
+        _builder.newLineIfNotEmpty();
+        _builder.append("\t");
+        {
+          boolean _notEquals_1 = (!Objects.equal(this.phaseLabel, null));
+          if (_notEquals_1) {
+            _builder.append("phaseLabelList=(/\"");
+            _builder.append(this.phaseLabel, "\t");
+            _builder.append("\"/),");
+          }
+        }
+        _builder.append(" userRoutine=");
+        _builder.append(this.subroutineName, "\t");
+        _builder.append(", rc=");
+        SetServicesCodeConcept<?> _setServices_2 = this.setServices();
+        _builder.append(_setServices_2.paramRC, "\t");
+        _builder.append(")");
+        _builder.newLineIfNotEmpty();
         code = _builder.toString();
         IBodyConstruct _parseLiteralStatement = CodeExtraction.parseLiteralStatement(code);
         ASTCallStmtNode regCall = ((ASTCallStmtNode) _parseLiteralStatement);

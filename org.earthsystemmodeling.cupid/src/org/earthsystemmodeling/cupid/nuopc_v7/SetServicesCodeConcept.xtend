@@ -15,6 +15,9 @@ public class SetServicesCodeConcept<P extends CodeConcept<?, ?>> extends CodeCon
 
 	@Name
 	var public String subroutineName
+	
+	var public String paramGridComp
+	var public String paramRC
 
 	@Label(label="NUOPC_CompDerive", type="call")
 	@Child
@@ -26,7 +29,7 @@ public class SetServicesCodeConcept<P extends CodeConcept<?, ?>> extends CodeCon
 
 	override SetServicesCodeConcept<P> reverse() {
 
-		var rs = '''esmf_setservices(_sid, «parentID», _sname), 
+		var rs = '''esmf_setservices(_sid, «parentID», _sname, _param_gcomp, _param_rc), 
 					( call_(_cid, _sid, 'NUOPC_CompDerive') ; true).'''.execQuery
 
 		try {
@@ -34,6 +37,8 @@ public class SetServicesCodeConcept<P extends CodeConcept<?, ?>> extends CodeCon
 				_id = rs.getLong("_sid")
 				subroutineName = rs.getString("_sname")
 				callsCompDeriveID = newBasicCodeConcept(this, rs.getLong("_cid"))
+				paramGridComp = rs.getString("_param_gcomp")
+				paramRC = rs.getString("_param_rc")
 				rs.close
 				return this
 			}

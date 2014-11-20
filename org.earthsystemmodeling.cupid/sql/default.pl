@@ -29,6 +29,15 @@ esmf_setservices(_id, _parentid, _name) :-
   ( 	_name == 'SetServices', !;
   	call_(_cid, _id, 'NUOPC_CompDerive')
   ).
+
+/* redundant - same as above but with param names */  
+esmf_setservices(_id, _parentid, _name, _param_gcomp, _param_rc) :- 
+  subroutine(_id, _parentid, _name),
+  param(_pid1, _id, 1, _param_gcomp, 'type(esmf_gridcomp)', _, _),
+  param(_pid2, _id, 2, _param_rc, 'integer', false, true),
+  ( 	_name == 'SetServices', !;
+  	call_(_cid, _id, 'NUOPC_CompDerive')
+  ).
  
   
 /* esmf registered specialization */

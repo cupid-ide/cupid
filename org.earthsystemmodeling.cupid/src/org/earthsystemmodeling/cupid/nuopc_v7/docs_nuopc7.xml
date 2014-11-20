@@ -272,7 +272,34 @@
 	]]>
 	</doc>
 	
+	<doc class="org.earthsystemmodeling.cupid.nuopc_v7.NUOPCModel.SetRunClock">
+	<![CDATA[
+	<b>SetRunClock</b><hr />
+	<SMALL>PECIALIZATION </SMALL>R<SMALL>EQUIRED/</SMALL>P<SMALL>ROVIDED</SMALL>: <TT>label_SetRunClock</TT> to check and set the internal Clock against the incoming Clock.
 	
+	]]>
+	</doc>
+	
+	<doc class="org.earthsystemmodeling.cupid.nuopc_v7.NUOPCModel.CheckImport">
+	<![CDATA[
+	<b>CheckImport</b><hr />
+	S<SMALL>PECIALIZATION </SMALL>R<SMALL>EQUIRED/</SMALL>P<SMALL>ROVIDED</SMALL>: <TT>label_CheckImport</TT> to check Fields in the import State.
+	]]>
+	</doc>
+	
+	<doc class="org.earthsystemmodeling.cupid.nuopc_v7.NUOPCModel.ModelAdvance">
+	<![CDATA[
+	<b>ModelAdvance</b><hr />
+	S<SMALL>PECIALIZATION </SMALL>R<SMALL>EQUIRED</SMALL>: <TT>label_Advance</TT> to execute model code.
+	]]>
+	</doc>
+	
+	<doc class="org.earthsystemmodeling.cupid.nuopc_v7.NUOPCModel.FinalizeP1">
+	<![CDATA[
+	<b>Finalize</b><hr />
+	Optionally overwrite the provided NOOP with model finalization code.
+	]]>
+	</doc>
 	
 	
 </docs>

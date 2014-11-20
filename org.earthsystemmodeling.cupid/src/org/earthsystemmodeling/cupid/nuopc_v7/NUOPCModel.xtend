@@ -639,7 +639,9 @@ end subroutine
 	public static class FinalizeP1 extends EntryPointCodeConcept<Finalize> {
 		
 		new(Finalize parent) {
-			super(parent, "???")
+			super(parent, null)
+			methodType = "ESMF_METHOD_FINALIZE"
+			subroutineName = "Finalize"
 		}
 			
 		override reverseChildren() {
