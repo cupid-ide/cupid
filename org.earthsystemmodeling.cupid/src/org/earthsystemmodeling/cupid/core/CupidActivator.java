@@ -27,7 +27,7 @@ public class CupidActivator extends AbstractUIPlugin {
 		super.start(context);		
 		instance = this;
 		
-		instance.setDebugging(true);  //comment out before release
+		//instance.setDebugging(true);  //comment out before release
 	}	
 	
 	public static CupidActivator getDefault() {

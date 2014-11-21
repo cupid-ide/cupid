@@ -19,6 +19,7 @@ import org.eclipse.photran.internal.core.parser.ASTAcValueNode;
 import org.eclipse.photran.internal.core.parser.ASTArrayConstructorNode;
 import org.eclipse.photran.internal.core.parser.ASTCallStmtNode;
 import org.eclipse.photran.internal.core.parser.ASTDblConstNode;
+import org.eclipse.photran.internal.core.parser.ASTEntityDeclNode;
 import org.eclipse.photran.internal.core.parser.ASTExecutableProgramNode;
 import org.eclipse.photran.internal.core.parser.ASTIntConstNode;
 import org.eclipse.photran.internal.core.parser.ASTModuleNode;
@@ -29,10 +30,12 @@ import org.eclipse.photran.internal.core.parser.ASTStringConstNode;
 import org.eclipse.photran.internal.core.parser.ASTSubroutineArgNode;
 import org.eclipse.photran.internal.core.parser.ASTSubroutineParNode;
 import org.eclipse.photran.internal.core.parser.ASTSubroutineSubprogramNode;
+import org.eclipse.photran.internal.core.parser.ASTTypeDeclarationStmtNode;
 import org.eclipse.photran.internal.core.parser.ASTUseStmtNode;
 import org.eclipse.photran.internal.core.parser.ASTVarOrFnRefNode;
 import org.eclipse.photran.internal.core.parser.ASTVisitor;
 import org.eclipse.photran.internal.core.parser.IASTNode;
+import org.eclipse.photran.internal.core.vpg.PhotranTokenRef;
 
 @SuppressWarnings("restriction")
 public class CodeDBVisitor extends ASTVisitor {
@@ -182,11 +185,14 @@ public class CodeDBVisitor extends ASTVisitor {
 	
 	@Override
 	public void visitASTExecutableProgramNode(ASTExecutableProgramNode node) {
-		IFile file = node.findFirstToken().getLogicalFile();
-		String filename = file.getName();
-		String path = file.getFullPath().toPortableString();
-		long id = addFact("compilationUnit", filename, path);
-		traverseChildren(node, id);
+		Token t = node.findFirstToken();
+		if (t != null) {
+			IFile file = t.getLogicalFile();  
+			String filename = file.getName();
+			String path = file.getFullPath().toPortableString();
+			long id = addFact("compilationUnit", filename, path);
+			traverseChildren(node, id);
+		}
 	}
 	
 	@Override
@@ -221,13 +227,19 @@ public class CodeDBVisitor extends ASTVisitor {
 		long id = addFact("usesEntity", parentID(), node.getName().getText(), node.getNewName().getText(), 0);
 	}
 	
+	//cache this for below
+	ASTSubroutineSubprogramNode currentASTSubroutineSubprogramNode;
+	
 	@Override
 	public void visitASTSubroutineSubprogramNode(ASTSubroutineSubprogramNode node) {
+		currentASTSubroutineSubprogramNode = node;
+		
 		long id = addFact("subroutine", parentID(), node.getSubroutineStmt().getSubroutineName().getSubroutineName().getText());
 		addTokenRef(id, node.getSubroutineStmt().getSubroutineName().getSubroutineName(), "subroutine");
 		indexParam = 0;
 		traverseChildren(node, id);
 		
+		currentASTSubroutineSubprogramNode = null;
 	}
 	
 	int indexParam;
@@ -239,6 +251,8 @@ public class CodeDBVisitor extends ASTVisitor {
 		String type = "UNKNOWN";
 		boolean intentIn = false;
 		boolean intentOut = false;
+		final String varName = node.getVariableName().getText();
+		
 		//TODO: this assumes we allow Photran to index the AST
 		List<Definition> defs = node.getVariableName().resolveBinding();
 		if (defs.size() > 0) {
@@ -247,8 +261,35 @@ public class CodeDBVisitor extends ASTVisitor {
 			intentIn = def.isIntentIn();
 			intentOut = def.isIntentOut();
 		}
+		else {
+			
+			/*
+			List<PhotranTokenRef> bindings = node.getVariableName().manuallyResolveBinding();
+			for (PhotranTokenRef tokenRef : bindings) {
+				Token t = tokenRef.findToken();
+				System.out.println("token = " + t);
+			}
+			*/
+			
+			/*
+			//find it manually
+			currentASTSubroutineSubprogramNode.accept(new ASTVisitor() {
+				@Override
+				public void visitASTTypeDeclarationStmtNode(
+						ASTTypeDeclarationStmtNode node) {
+					for (ASTEntityDeclNode entityDecl : node.getEntityDeclList()) {
+						if (entityDecl.getObjectName().getObjectName().getText().equals(varName)) {
+							
+							String typeName = node.getTypeSpec().getTypeName().getText();
+						}
+					}
+				}
+			});
+			*/
+		}
 		
-		long id = addFact("param", parentID(), indexParam, node.getVariableName().getText(), type, intentIn, intentOut);
+		
+		long id = addFact("param", parentID(), indexParam, varName, type, intentIn, intentOut);
 	}
 	
 	@Override

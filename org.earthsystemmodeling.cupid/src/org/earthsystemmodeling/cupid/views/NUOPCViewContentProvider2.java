@@ -122,7 +122,7 @@ class NUOPCViewContentProvider2 implements IStructuredContentProvider, ITreeCont
 		long startParse = System.currentTimeMillis();
 		//IFortranAST ast = PhotranVPG.getInstance().parse(filename);
 		PhotranVPG.getInstance().releaseAST(filename);
-		IFortranAST ast = PhotranVPG.getInstance().acquireTransientAST(filename);
+		IFortranAST ast = PhotranVPG.getInstance().acquireTransientAST(filename);	
 		long endParse = System.currentTimeMillis();
 		
 		long startIndex = System.currentTimeMillis();
