@@ -11,6 +11,7 @@ import org.earthsystemmodeling.cupid.core.CupidActivator;
 import org.earthsystemmodeling.cupid.nuopc_v7.BasicCodeConcept;
 import org.earthsystemmodeling.cupid.nuopc_v7.CodeConcept;
 import org.earthsystemmodeling.cupid.nuopc_v7.EntryPointCodeConcept;
+import org.earthsystemmodeling.cupid.nuopc_v7.NUOPCComponent;
 import org.earthsystemmodeling.cupid.nuopc_v7.SetServicesCodeConcept;
 import org.earthsystemmodeling.cupid.nuopc_v7.SpecializationMethodCodeConcept;
 import org.earthsystemmodeling.cupid.util.CodeExtraction;
@@ -27,7 +28,7 @@ import org.eclipse.xtext.xbase.lib.Exceptions;
 
 @Label(label = "NUOPC Model", type = "module")
 @SuppressWarnings("all")
-public class NUOPCModel extends CodeConcept<CodeConcept<?, ?>, ASTModuleNode> {
+public class NUOPCModel extends NUOPCComponent {
   @Label(label = "Initialize")
   public static class Initialization extends CodeConcept<NUOPCModel, ASTNode> {
     @Child
@@ -73,11 +74,13 @@ public class NUOPCModel extends CodeConcept<CodeConcept<?, ?>, ASTModuleNode> {
   
   @Label(label = "Initialize Phase 1", type = "subroutine")
   public static class InitP1 extends EntryPointCodeConcept<NUOPCModel.Initialization> {
-    @Child(max = (-1))
+    @Child(min = 0, max = (-1))
     public List<NUOPCModel.InitP1_AdvertiseField> advertiseFields;
     
     public InitP1(final NUOPCModel.Initialization parent) {
       super(parent, "IPDv00p1");
+      this.subroutineName = "InitializeP1";
+      this.methodType = "ESMF_METHOD_INITIALIZE";
     }
     
     public EntryPointCodeConcept<NUOPCModel.Initialization> reverseChildren() {
@@ -196,11 +199,13 @@ public class NUOPCModel extends CodeConcept<CodeConcept<?, ?>, ASTModuleNode> {
   
   @Label(label = "Initialize Phase 2", type = "subroutine")
   public static class InitP2 extends EntryPointCodeConcept<NUOPCModel.Initialization> {
-    @Child(max = (-1))
+    @Child(min = 0, max = (-1))
     public List<NUOPCModel.InitP2_RealizeField> realizeFields;
     
     public InitP2(final NUOPCModel.Initialization parent) {
       super(parent, "IPDv00p2");
+      this.subroutineName = "InitializeP2";
+      this.methodType = "ESMF_METHOD_INITIALIZE";
     }
     
     public EntryPointCodeConcept<NUOPCModel.Initialization> reverseChildren() {
@@ -437,8 +442,8 @@ public class NUOPCModel extends CodeConcept<CodeConcept<?, ?>, ASTModuleNode> {
       return this._parent._parent.setServices;
     }
     
-    public BasicCodeConcept genericUse() {
-      return this._parent._parent.importNUOPCModel;
+    public NUOPCComponent.GenericImport genericUse() {
+      return this._parent._parent.importNUOPCGeneric;
     }
   }
   
@@ -494,8 +499,8 @@ public class NUOPCModel extends CodeConcept<CodeConcept<?, ?>, ASTModuleNode> {
       return this._parent._parent.setServices;
     }
     
-    public BasicCodeConcept genericUse() {
-      return this._parent._parent.importNUOPCModel;
+    public NUOPCComponent.GenericImport genericUse() {
+      return this._parent._parent.importNUOPCGeneric;
     }
   }
   
@@ -695,8 +700,8 @@ public class NUOPCModel extends CodeConcept<CodeConcept<?, ?>, ASTModuleNode> {
       return this._parent._parent.setServices;
     }
     
-    public BasicCodeConcept genericUse() {
-      return this._parent._parent.importNUOPCModel;
+    public NUOPCComponent.GenericImport genericUse() {
+      return this._parent._parent.importNUOPCGeneric;
     }
   }
   
@@ -799,8 +804,8 @@ public class NUOPCModel extends CodeConcept<CodeConcept<?, ?>, ASTModuleNode> {
       return this._parent._parent.setServices;
     }
     
-    public BasicCodeConcept genericUse() {
-      return this._parent._parent.importNUOPCModel;
+    public NUOPCComponent.GenericImport genericUse() {
+      return this._parent._parent.importNUOPCGeneric;
     }
   }
   
@@ -856,8 +861,8 @@ public class NUOPCModel extends CodeConcept<CodeConcept<?, ?>, ASTModuleNode> {
       return this._parent._parent.setServices;
     }
     
-    public BasicCodeConcept genericUse() {
-      return this._parent._parent.importNUOPCModel;
+    public NUOPCComponent.GenericImport genericUse() {
+      return this._parent._parent.importNUOPCGeneric;
     }
   }
   
@@ -913,18 +918,6 @@ public class NUOPCModel extends CodeConcept<CodeConcept<?, ?>, ASTModuleNode> {
   
   public String path;
   
-  @Label(label = "ESMF Import", type = "uses")
-  @Child
-  public BasicCodeConcept importESMF;
-  
-  @Label(label = "NUOPC Import", type = "uses")
-  @Child
-  public BasicCodeConcept importNUOPC;
-  
-  @Label(label = "NUOPC Model Import", type = "uses")
-  @Child
-  public BasicCodeConcept importNUOPCModel;
-  
   @Child
   public SetServicesCodeConcept<NUOPCModel> setServices;
   
@@ -940,6 +933,10 @@ public class NUOPCModel extends CodeConcept<CodeConcept<?, ?>, ASTModuleNode> {
   public NUOPCModel(final CodeDBIndex codeDB) {
     super(null);
     this._codeDB = codeDB;
+  }
+  
+  public String prefix() {
+    return "model";
   }
   
   public CodeConcept<CodeConcept<?, ?>, ASTModuleNode> reverse() {
@@ -966,8 +963,9 @@ public class NUOPCModel extends CodeConcept<CodeConcept<?, ?>, ASTModuleNode> {
           String _string_2 = rs.getString("_path");
           this.path = _string_2;
           long _long_1 = rs.getLong("_uid");
-          BasicCodeConcept _newBasicCodeConcept = BasicCodeConcept.newBasicCodeConcept(this, _long_1);
-          this.importNUOPCModel = _newBasicCodeConcept;
+          NUOPCComponent.GenericImport _genericImport = new NUOPCComponent.GenericImport(this, _long_1);
+          NUOPCComponent.GenericImport _reverse = _genericImport.reverse();
+          this.importNUOPCGeneric = _reverse;
           rs.close();
           StringConcatenation _builder_1 = new StringConcatenation();
           _builder_1.append("uses(_uid, ");
@@ -978,8 +976,8 @@ public class NUOPCModel extends CodeConcept<CodeConcept<?, ?>, ASTModuleNode> {
           boolean _next_1 = rs.next();
           if (_next_1) {
             long _long_2 = rs.getLong("_uid");
-            BasicCodeConcept _newBasicCodeConcept_1 = BasicCodeConcept.newBasicCodeConcept(this, _long_2);
-            this.importESMF = _newBasicCodeConcept_1;
+            BasicCodeConcept _newBasicCodeConcept = BasicCodeConcept.newBasicCodeConcept(this, _long_2);
+            this.importESMF = _newBasicCodeConcept;
           }
           rs.close();
           StringConcatenation _builder_2 = new StringConcatenation();
@@ -991,8 +989,8 @@ public class NUOPCModel extends CodeConcept<CodeConcept<?, ?>, ASTModuleNode> {
           boolean _next_2 = rs.next();
           if (_next_2) {
             long _long_3 = rs.getLong("_uid");
-            BasicCodeConcept _newBasicCodeConcept_2 = BasicCodeConcept.newBasicCodeConcept(this, _long_3);
-            this.importNUOPC = _newBasicCodeConcept_2;
+            BasicCodeConcept _newBasicCodeConcept_1 = BasicCodeConcept.newBasicCodeConcept(this, _long_3);
+            this.importNUOPC = _newBasicCodeConcept_1;
           }
           rs.close();
           return this.reverseChildren();

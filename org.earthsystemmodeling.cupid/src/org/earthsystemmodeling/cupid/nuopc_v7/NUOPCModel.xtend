@@ -20,23 +20,11 @@ import static org.earthsystemmodeling.cupid.util.CodeExtraction.parseLiteralStat
 import org.eclipse.photran.internal.core.parser.ASTSubroutineSubprogramNode
 
 @Label(label="NUOPC Model", type="module")
-class NUOPCModel extends CodeConcept<CodeConcept<?,?>, ASTModuleNode> {
+class NUOPCModel extends NUOPCComponent {
 	
 	public String modelName	
 	public String filename
 	public String path
-	
-	@Label(label="ESMF Import", type="uses")
-	@Child
-	public BasicCodeConcept importESMF
-	
-	@Label(label="NUOPC Import", type="uses")
-	@Child
-	public BasicCodeConcept importNUOPC
-	
-	@Label(label="NUOPC Model Import", type="uses")
-	@Child
-	public BasicCodeConcept importNUOPCModel
 	
 	@Child
 	public SetServicesCodeConcept<NUOPCModel> setServices
@@ -55,6 +43,7 @@ class NUOPCModel extends CodeConcept<CodeConcept<?,?>, ASTModuleNode> {
 		_codeDB = codeDB
 	}
 	
+	override prefix() {"model"}
 	
 	override reverse() {
 		  	
@@ -67,7 +56,7 @@ class NUOPCModel extends CodeConcept<CodeConcept<?,?>, ASTModuleNode> {
 				modelName = rs.getString("_driverName")
 				filename = rs.getString("_filename")
 				path = rs.getString("_path")
-				importNUOPCModel = newBasicCodeConcept(this, rs.getLong("_uid"))
+				importNUOPCGeneric = new GenericImport(this, rs.getLong("_uid")).reverse
 				rs.close
 				
 				rs = '''uses(_uid, «_id», 'ESMF').'''.execQuery
@@ -138,11 +127,13 @@ class NUOPCModel extends CodeConcept<CodeConcept<?,?>, ASTModuleNode> {
 	@Label(label="Initialize Phase 1", type="subroutine")
 	public static class InitP1 extends EntryPointCodeConcept<Initialization> {
 		
-		@Child(max=-1)
+		@Child(min=0, max=-1)
 		public List<InitP1_AdvertiseField> advertiseFields
 		
 		new(Initialization parent) {
 			super(parent, "IPDv00p1")
+			subroutineName = "InitializeP1"
+			methodType = "ESMF_METHOD_INITIALIZE"
 		}
 			
 		override reverseChildren() {
@@ -222,11 +213,13 @@ if (ESMF_LogFoundError(rcToCheck=«_parent.paramRC», msg=ESMF_LOGERR_PASSTHRU, 
 	@Label(label="Initialize Phase 2", type="subroutine")
 	public static class InitP2 extends EntryPointCodeConcept<Initialization> {
 	
-		@Child(max=-1)
+		@Child(min=0, max=-1)
 		public List<InitP2_RealizeField> realizeFields
 		
 		new(Initialization parent) {
 			super(parent, "IPDv00p2")
+			subroutineName = "InitializeP2"
+			methodType = "ESMF_METHOD_INITIALIZE"
 		}
 		
 		override reverseChildren() {
@@ -362,7 +355,7 @@ end subroutine
 		}
 		
 		override genericUse() {
-			_parent._parent.importNUOPCModel
+			_parent._parent.importNUOPCGeneric
 		}
 		
 	}
@@ -405,7 +398,7 @@ end subroutine
 		}
 		
 		override genericUse() {
-			_parent._parent.importNUOPCModel
+			_parent._parent.importNUOPCGeneric
 		}
 		
 	}
@@ -510,7 +503,7 @@ end subroutine
 		}
 		
 		override genericUse() {
-			_parent._parent.importNUOPCModel
+			_parent._parent.importNUOPCGeneric
 		}
 		
 	}
@@ -567,7 +560,7 @@ end subroutine
 		}
 		
 		override genericUse() {
-			_parent._parent.importNUOPCModel
+			_parent._parent.importNUOPCGeneric
 		}
 		
 	}
@@ -609,7 +602,7 @@ end subroutine
 		}
 		
 		override genericUse() {
-			_parent._parent.importNUOPCModel
+			_parent._parent.importNUOPCGeneric
 		}
 		
 	}

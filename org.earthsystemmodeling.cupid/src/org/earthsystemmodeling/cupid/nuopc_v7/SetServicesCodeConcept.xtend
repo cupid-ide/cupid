@@ -9,15 +9,21 @@ import static org.earthsystemmodeling.cupid.core.CupidActivator.log
 import org.eclipse.photran.internal.core.parser.ASTSubroutineSubprogramNode
 import org.earthsystemmodeling.cupid.annotation.Label
 import org.earthsystemmodeling.cupid.annotation.Child
+import org.eclipse.photran.core.IFortranAST
+import org.eclipse.photran.internal.core.parser.ASTModuleNode
+
+import static org.earthsystemmodeling.cupid.util.CodeExtraction.parseLiteralProgramUnit
+import static org.earthsystemmodeling.cupid.util.CodeExtraction.parseLiteralStatement
+import org.eclipse.photran.internal.core.parser.ASTUseStmtNode
 
 @Label(label="SetServices", type="subroutine")
-public class SetServicesCodeConcept<P extends CodeConcept<?, ?>> extends CodeConcept<P, ASTSubroutineSubprogramNode> {
+public class SetServicesCodeConcept<P extends NUOPCComponent> extends CodeConcept<P, ASTSubroutineSubprogramNode> {
 
 	@Name
-	var public String subroutineName
+	var public String subroutineName = "SetServices"
 	
-	var public String paramGridComp
-	var public String paramRC
+	var public String paramGridComp = "gcomp"
+	var public String paramRC = "rc"
 
 	@Label(label="NUOPC_CompDerive", type="call")
 	@Child
@@ -48,6 +54,51 @@ public class SetServicesCodeConcept<P extends CodeConcept<?, ?>> extends CodeCon
 
 		null
 
+	}
+	
+	override forward() {
+		
+		val IFortranAST ast = getAST()
+		
+		//add to generic import if necessary
+		//TODO: is there a cleaner way to do this?
+		var routineSetServices = _parent.importNUOPCGeneric.routineSetServices
+		if (routineSetServices == null) {
+			routineSetServices = _parent.prefix + "_SetServices";
+			val ASTUseStmtNode genericUse = _parent.importNUOPCGeneric.ASTRef as ASTUseStmtNode
+			var tempCode = genericUse.toString.trim
+			tempCode += ''', &
+						«routineSetServices» => routine_SetServices'''
+			var tempNode = parseLiteralStatement(tempCode) as ASTUseStmtNode;
+			genericUse.replaceWith(tempNode)					
+		}
+				
+		var code = 	
+'''
+
+subroutine SetServices(«paramGridComp», «paramRC»)
+    type(ESMF_GridComp)  :: «paramGridComp»
+    integer, intent(out) :: «paramRC»
+    
+    rc = ESMF_SUCCESS
+    
+    ! NUOPC_Driver registers the generic methods
+    call NUOPC_CompDerive(«paramGridComp», «routineSetServices», rc=«paramRC»)
+    if (ESMF_LogFoundError(rcToCheck=«paramRC», msg=ESMF_LOGERR_PASSTHRU, &
+      line=__LINE__, &
+      file=__FILE__)) &
+      return  ! bail out
+      
+end subroutine
+'''
+
+		var ASTModuleNode mn = _parent.ASTRef
+		var ASTSubroutineSubprogramNode ssn = parseLiteralProgramUnit(code)
+
+		mn.getModuleBody().add(ssn)
+		setASTRef(ssn)
+		
+		ast
 	}
 
 

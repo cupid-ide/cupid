@@ -6,6 +6,7 @@ import java.sql.ResultSet;
 import java.util.List;
 import org.earthsystemmodeling.cupid.codedb.CodeDBIndex;
 import org.earthsystemmodeling.cupid.core.CupidActivator;
+import org.earthsystemmodeling.cupid.nuopc_v7.CodeGenerationException;
 import org.eclipse.photran.core.IFortranAST;
 import org.eclipse.photran.internal.core.parser.IASTNode;
 import org.eclipse.xtend2.lib.StringConcatenation;
@@ -85,7 +86,7 @@ public abstract class CodeConcept<P extends CodeConcept<?, ?>, A extends IASTNod
     return CollectionLiterals.<CodeConcept<P, A>>newArrayList(_reverse);
   }
   
-  public IFortranAST forward() {
+  public IFortranAST forward() throws CodeGenerationException {
     return null;
   }
   

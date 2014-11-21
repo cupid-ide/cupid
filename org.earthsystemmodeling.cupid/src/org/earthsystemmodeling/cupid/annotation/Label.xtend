@@ -6,4 +6,5 @@ import java.lang.annotation.Retention
 annotation Label {
 	val String label
 	val String type = ""
+	val int sort=999999
 }

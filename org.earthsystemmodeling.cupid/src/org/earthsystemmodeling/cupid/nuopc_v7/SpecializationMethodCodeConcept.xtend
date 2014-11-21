@@ -88,10 +88,14 @@ end subroutine
 
 	def abstract SetServicesCodeConcept<?> setServices()
 
-	def abstract BasicCodeConcept genericUse()
+	def abstract NUOPCComponent.GenericImport genericUse()
 
 	override forward() {
 
+		if (setServices() == null) {
+			throw new CodeGenerationException("A SetServices subroutine must exist first.")	
+		}
+		
 		val IFortranAST ast = getAST()
 
 		//add specialization subroutine itself			

@@ -9,6 +9,7 @@ import org.earthsystemmodeling.cupid.annotation.Label;
 import org.earthsystemmodeling.cupid.core.CupidActivator;
 import org.earthsystemmodeling.cupid.handlers.RewriteASTRunnable;
 import org.earthsystemmodeling.cupid.nuopc_v7.CodeConcept;
+import org.earthsystemmodeling.cupid.nuopc_v7.CodeGenerationException;
 import org.earthsystemmodeling.cupid.views.NUOPCViewContentProvider2.CodeConceptProxy;
 import org.eclipse.core.resources.IMarker;
 import org.eclipse.core.resources.IResourceChangeListener;
@@ -518,7 +519,7 @@ public class NUOPCView extends ViewPart {
 							//ignore
 						}
             			
-            			if (childAnn != null && !(childAnn.max()==1 && childPresent)) {
+            			if (childAnn != null && childAnn.forward() && !(childAnn.max()==1 && childPresent)) {
             				
             				IAction actionToAdd = new Action() {
             					
@@ -555,7 +556,16 @@ public class NUOPCView extends ViewPart {
             						}
             						
             						//TextFileChange tfc = newcc.forward();
-            						IFortranAST ast = newcc.forward();
+            						IFortranAST ast = null;
+									try {
+										ast = newcc.forward();
+									} catch (CodeGenerationException cge) {
+										MessageDialog.openError(
+            									viewer.getControl().getShell(),
+            									"Code generation failed",
+            									cge.getMessage());
+            							return;
+									}
             						
             						if (ast != null) {
             							

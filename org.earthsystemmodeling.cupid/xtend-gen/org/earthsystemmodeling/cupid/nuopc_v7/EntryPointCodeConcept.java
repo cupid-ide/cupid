@@ -9,6 +9,7 @@ import org.earthsystemmodeling.cupid.annotation.Label;
 import org.earthsystemmodeling.cupid.annotation.Name;
 import org.earthsystemmodeling.cupid.nuopc_v7.BasicCodeConcept;
 import org.earthsystemmodeling.cupid.nuopc_v7.CodeConcept;
+import org.earthsystemmodeling.cupid.nuopc_v7.CodeGenerationException;
 import org.earthsystemmodeling.cupid.nuopc_v7.SetServicesCodeConcept;
 import org.earthsystemmodeling.cupid.util.CodeExtraction;
 import org.eclipse.photran.core.IFortranAST;
@@ -177,72 +178,81 @@ public abstract class EntryPointCodeConcept<P extends CodeConcept<?, ?>> extends
   public abstract SetServicesCodeConcept<?> setServices();
   
   public IFortranAST forward() {
-    IFortranAST _xblockexpression = null;
-    {
-      final IFortranAST ast = this.getAST();
-      String code = this.subroutineTemplate();
-      CodeConcept<?, ASTModuleNode> _module = this.module();
-      ASTModuleNode mn = _module.getASTRef();
-      ASTSubroutineSubprogramNode ssn = CodeExtraction.<ASTSubroutineSubprogramNode>parseLiteralProgramUnit(code);
-      IASTListNode<IModuleBodyConstruct> _moduleBody = mn.getModuleBody();
-      _moduleBody.add(ssn);
-      this.setASTRef(ssn);
-      SetServicesCodeConcept<?> _setServices = this.setServices();
-      ASTSubroutineSubprogramNode setServicesNode = _setServices.getASTRef();
-      boolean _notEquals = (!Objects.equal(setServicesNode, null));
-      if (_notEquals) {
-        StringConcatenation _builder = new StringConcatenation();
-        _builder.newLine();
-        _builder.append("call NUOPC_CompSetEntryPoint(");
-        SetServicesCodeConcept<?> _setServices_1 = this.setServices();
-        _builder.append(_setServices_1.paramGridComp, "");
-        _builder.append(", ");
-        _builder.append(this.methodType, "");
-        _builder.append(", &");
-        _builder.newLineIfNotEmpty();
-        _builder.append("\t");
-        {
-          boolean _notEquals_1 = (!Objects.equal(this.phaseLabel, null));
-          if (_notEquals_1) {
-            _builder.append("phaseLabelList=(/\"");
-            _builder.append(this.phaseLabel, "\t");
-            _builder.append("\"/),");
-          }
+    try {
+      IFortranAST _xblockexpression = null;
+      {
+        SetServicesCodeConcept<?> _setServices = this.setServices();
+        boolean _equals = Objects.equal(_setServices, null);
+        if (_equals) {
+          throw new CodeGenerationException("A SetServices subroutine must exist first.");
         }
-        _builder.append(" userRoutine=");
-        _builder.append(this.subroutineName, "\t");
-        _builder.append(", rc=");
-        SetServicesCodeConcept<?> _setServices_2 = this.setServices();
-        _builder.append(_setServices_2.paramRC, "\t");
-        _builder.append(")");
-        _builder.newLineIfNotEmpty();
-        code = _builder.toString();
-        IBodyConstruct _parseLiteralStatement = CodeExtraction.parseLiteralStatement(code);
-        ASTCallStmtNode regCall = ((ASTCallStmtNode) _parseLiteralStatement);
-        IASTListNode<IBodyConstruct> _body = setServicesNode.getBody();
-        _body.add(regCall);
-        StringConcatenation _builder_1 = new StringConcatenation();
-        _builder_1.append("if (ESMF_LogFoundError(rcToCheck=");
-        _builder_1.append(this.paramRC, "");
-        _builder_1.append(", msg=ESMF_LOGERR_PASSTHRU, &");
-        _builder_1.newLineIfNotEmpty();
-        _builder_1.append("            ");
-        _builder_1.append("line=__LINE__, &");
-        _builder_1.newLine();
-        _builder_1.append("            ");
-        _builder_1.append("file=__FILE__)) &");
-        _builder_1.newLine();
-        _builder_1.append("            ");
-        _builder_1.append("return  ! bail out");
-        _builder_1.newLine();
-        code = _builder_1.toString();
-        IBodyConstruct _parseLiteralStatement_1 = CodeExtraction.parseLiteralStatement(code);
-        ASTIfStmtNode ifNode = ((ASTIfStmtNode) _parseLiteralStatement_1);
-        IASTListNode<IBodyConstruct> _body_1 = setServicesNode.getBody();
-        _body_1.add(ifNode);
+        final IFortranAST ast = this.getAST();
+        String code = this.subroutineTemplate();
+        CodeConcept<?, ASTModuleNode> _module = this.module();
+        ASTModuleNode mn = _module.getASTRef();
+        ASTSubroutineSubprogramNode ssn = CodeExtraction.<ASTSubroutineSubprogramNode>parseLiteralProgramUnit(code);
+        IASTListNode<IModuleBodyConstruct> _moduleBody = mn.getModuleBody();
+        _moduleBody.add(ssn);
+        this.setASTRef(ssn);
+        SetServicesCodeConcept<?> _setServices_1 = this.setServices();
+        ASTSubroutineSubprogramNode setServicesNode = _setServices_1.getASTRef();
+        boolean _notEquals = (!Objects.equal(setServicesNode, null));
+        if (_notEquals) {
+          StringConcatenation _builder = new StringConcatenation();
+          _builder.newLine();
+          _builder.append("call NUOPC_CompSetEntryPoint(");
+          SetServicesCodeConcept<?> _setServices_2 = this.setServices();
+          _builder.append(_setServices_2.paramGridComp, "");
+          _builder.append(", ");
+          _builder.append(this.methodType, "");
+          _builder.append(", &");
+          _builder.newLineIfNotEmpty();
+          _builder.append("\t");
+          {
+            boolean _notEquals_1 = (!Objects.equal(this.phaseLabel, null));
+            if (_notEquals_1) {
+              _builder.append("phaseLabelList=(/\"");
+              _builder.append(this.phaseLabel, "\t");
+              _builder.append("\"/),");
+            }
+          }
+          _builder.append(" userRoutine=");
+          _builder.append(this.subroutineName, "\t");
+          _builder.append(", rc=");
+          SetServicesCodeConcept<?> _setServices_3 = this.setServices();
+          _builder.append(_setServices_3.paramRC, "\t");
+          _builder.append(")");
+          _builder.newLineIfNotEmpty();
+          code = _builder.toString();
+          IBodyConstruct _parseLiteralStatement = CodeExtraction.parseLiteralStatement(code);
+          ASTCallStmtNode regCall = ((ASTCallStmtNode) _parseLiteralStatement);
+          IASTListNode<IBodyConstruct> _body = setServicesNode.getBody();
+          _body.add(regCall);
+          StringConcatenation _builder_1 = new StringConcatenation();
+          _builder_1.append("if (ESMF_LogFoundError(rcToCheck=");
+          _builder_1.append(this.paramRC, "");
+          _builder_1.append(", msg=ESMF_LOGERR_PASSTHRU, &");
+          _builder_1.newLineIfNotEmpty();
+          _builder_1.append("            ");
+          _builder_1.append("line=__LINE__, &");
+          _builder_1.newLine();
+          _builder_1.append("            ");
+          _builder_1.append("file=__FILE__)) &");
+          _builder_1.newLine();
+          _builder_1.append("            ");
+          _builder_1.append("return  ! bail out");
+          _builder_1.newLine();
+          code = _builder_1.toString();
+          IBodyConstruct _parseLiteralStatement_1 = CodeExtraction.parseLiteralStatement(code);
+          ASTIfStmtNode ifNode = ((ASTIfStmtNode) _parseLiteralStatement_1);
+          IASTListNode<IBodyConstruct> _body_1 = setServicesNode.getBody();
+          _body_1.add(ifNode);
+        }
+        _xblockexpression = ast;
       }
-      _xblockexpression = ast;
+      return _xblockexpression;
+    } catch (Throwable _e) {
+      throw Exceptions.sneakyThrow(_e);
     }
-    return _xblockexpression;
   }
 }

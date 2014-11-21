@@ -7,4 +7,5 @@ import java.lang.annotation.RetentionPolicy;
 public @interface Label {
   public String label();
   public String type() default "";
+  public int sort() default 999999;
 }

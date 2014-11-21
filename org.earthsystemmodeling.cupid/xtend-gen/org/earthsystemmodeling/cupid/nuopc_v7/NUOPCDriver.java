@@ -12,6 +12,7 @@ import org.earthsystemmodeling.cupid.codedb.CodeDBIndex;
 import org.earthsystemmodeling.cupid.core.CupidActivator;
 import org.earthsystemmodeling.cupid.nuopc_v7.BasicCodeConcept;
 import org.earthsystemmodeling.cupid.nuopc_v7.CodeConcept;
+import org.earthsystemmodeling.cupid.nuopc_v7.NUOPCComponent;
 import org.earthsystemmodeling.cupid.nuopc_v7.SetServicesCodeConcept;
 import org.earthsystemmodeling.cupid.nuopc_v7.SpecializationMethodCodeConcept;
 import org.earthsystemmodeling.cupid.util.CodeExtraction;
@@ -30,7 +31,7 @@ import org.eclipse.xtext.xbase.lib.ListExtensions;
 
 @Label(label = "NUOPC Driver", type = "module")
 @SuppressWarnings("all")
-public class NUOPCDriver extends CodeConcept<CodeConcept<?, ?>, ASTModuleNode> {
+public class NUOPCDriver extends NUOPCComponent {
   @Label(label = "Initialize")
   public static class Initialization extends CodeConcept<NUOPCDriver, ASTNode> {
     @Child
@@ -86,6 +87,7 @@ public class NUOPCDriver extends CodeConcept<CodeConcept<?, ?>, ASTModuleNode> {
     
     public String subroutineTemplate() {
       StringConcatenation _builder = new StringConcatenation();
+      _builder.newLine();
       _builder.append("subroutine ");
       _builder.append(this.subroutineName, "");
       _builder.append("(");
@@ -139,8 +141,8 @@ public class NUOPCDriver extends CodeConcept<CodeConcept<?, ?>, ASTModuleNode> {
       return this._parent._parent.setServices;
     }
     
-    public BasicCodeConcept genericUse() {
-      return this._parent._parent.importNUOPCDriver;
+    public NUOPCComponent.GenericImport genericUse() {
+      return this._parent._parent.importNUOPCGeneric;
     }
   }
   
@@ -212,8 +214,8 @@ public class NUOPCDriver extends CodeConcept<CodeConcept<?, ?>, ASTModuleNode> {
       return this._parent._parent.setServices;
     }
     
-    public BasicCodeConcept genericUse() {
-      return this._parent._parent.importNUOPCDriver;
+    public NUOPCComponent.GenericImport genericUse() {
+      return this._parent._parent.importNUOPCGeneric;
     }
     
     public IFortranAST forward() {
@@ -247,6 +249,12 @@ public class NUOPCDriver extends CodeConcept<CodeConcept<?, ?>, ASTModuleNode> {
           _body_1.addAll(typeNodes);
         }
         StringConcatenation _builder_1 = new StringConcatenation();
+        _builder_1.newLine();
+        _builder_1.append("! call into SetServices for all Model, Mediator, and Connector components");
+        _builder_1.newLine();
+        _builder_1.newLine();
+        _builder_1.newLine();
+        _builder_1.newLine();
         _builder_1.append("! set the model clock");
         _builder_1.newLine();
         _builder_1.append("call ESMF_TimeIntervalSet(timeStep, m=");
@@ -519,8 +527,8 @@ public class NUOPCDriver extends CodeConcept<CodeConcept<?, ?>, ASTModuleNode> {
   
   @Label(label = "SetRunSequence", type = "subroutine")
   public static class SetRunSequence extends SpecializationMethodCodeConcept<NUOPCDriver.Initialization> {
-    @Child
     @Label(label = "New Run Sequence", type = "call")
+    @Child(forward = false)
     public BasicCodeConcept newRunSequence;
     
     @Child(max = (-1))
@@ -569,6 +577,64 @@ public class NUOPCDriver extends CodeConcept<CodeConcept<?, ?>, ASTModuleNode> {
       }
     }
     
+    public String subroutineTemplate() {
+      StringConcatenation _builder = new StringConcatenation();
+      _builder.newLine();
+      _builder.append("subroutine ");
+      _builder.append(this.subroutineName, "");
+      _builder.append("(");
+      _builder.append(this.paramGridComp, "");
+      _builder.append(", ");
+      _builder.append(this.paramRC, "");
+      _builder.append(")");
+      _builder.newLineIfNotEmpty();
+      _builder.append("    ");
+      _builder.append("type(ESMF_GridComp)  :: ");
+      _builder.append(this.paramGridComp, "    ");
+      _builder.newLineIfNotEmpty();
+      _builder.append("    ");
+      _builder.append("integer, intent(out) :: ");
+      _builder.append(this.paramRC, "    ");
+      _builder.newLineIfNotEmpty();
+      _builder.newLine();
+      _builder.append("    ");
+      _builder.append("rc = ESMF_SUCCESS");
+      _builder.newLine();
+      _builder.append("    ");
+      _builder.newLine();
+      _builder.append("    ");
+      _builder.append("! Replace the default RunSequence with a customized one");
+      _builder.newLine();
+      _builder.append("    ");
+      _builder.append("call NUOPC_DriverNewRunSequence(");
+      _builder.append(this.paramGridComp, "    ");
+      _builder.append(", slotCount=");
+      CharSequence _paramint = this.paramint(1);
+      _builder.append(_paramint, "    ");
+      _builder.append(", rc=");
+      _builder.append(this.paramRC, "    ");
+      _builder.append(")");
+      _builder.newLineIfNotEmpty();
+      _builder.append("    ");
+      _builder.append("if (ESMF_LogFoundError(rcToCheck=");
+      _builder.append(this.paramRC, "    ");
+      _builder.append(", msg=ESMF_LOGERR_PASSTHRU, &");
+      _builder.newLineIfNotEmpty();
+      _builder.append("      ");
+      _builder.append("line=__LINE__, &");
+      _builder.newLine();
+      _builder.append("      ");
+      _builder.append("file=__FILE__)) &");
+      _builder.newLine();
+      _builder.append("      ");
+      _builder.append("return  ! bail out");
+      _builder.newLine();
+      _builder.newLine();
+      _builder.append("end subroutine");
+      _builder.newLine();
+      return _builder.toString();
+    }
+    
     public CodeConcept<?, ASTModuleNode> module() {
       return this._parent._parent;
     }
@@ -577,8 +643,8 @@ public class NUOPCDriver extends CodeConcept<CodeConcept<?, ?>, ASTModuleNode> {
       return this._parent._parent.setServices;
     }
     
-    public BasicCodeConcept genericUse() {
-      return this._parent._parent.importNUOPCDriver;
+    public NUOPCComponent.GenericImport genericUse() {
+      return this._parent._parent.importNUOPCGeneric;
     }
   }
   
@@ -784,8 +850,8 @@ public class NUOPCDriver extends CodeConcept<CodeConcept<?, ?>, ASTModuleNode> {
       return this._parent._parent.setServices;
     }
     
-    public BasicCodeConcept genericUse() {
-      return this._parent._parent.importNUOPCDriver;
+    public NUOPCComponent.GenericImport genericUse() {
+      return this._parent._parent.importNUOPCGeneric;
     }
   }
   
@@ -805,8 +871,8 @@ public class NUOPCDriver extends CodeConcept<CodeConcept<?, ?>, ASTModuleNode> {
       return this._parent._parent.setServices;
     }
     
-    public BasicCodeConcept genericUse() {
-      return this._parent._parent.importNUOPCDriver;
+    public NUOPCComponent.GenericImport genericUse() {
+      return this._parent._parent.importNUOPCGeneric;
     }
     
     public String subroutineTemplate() {
@@ -927,18 +993,6 @@ public class NUOPCDriver extends CodeConcept<CodeConcept<?, ?>, ASTModuleNode> {
   
   public String path;
   
-  @Label(label = "ESMF Import", type = "uses")
-  @Child
-  public BasicCodeConcept importESMF;
-  
-  @Label(label = "NUOPC Import", type = "uses")
-  @Child
-  public BasicCodeConcept importNUOPC;
-  
-  @Label(label = "NUOPC Driver Import", type = "uses")
-  @Child
-  public BasicCodeConcept importNUOPCDriver;
-  
   @Child
   public SetServicesCodeConcept<NUOPCDriver> setServices;
   
@@ -948,6 +1002,10 @@ public class NUOPCDriver extends CodeConcept<CodeConcept<?, ?>, ASTModuleNode> {
   public NUOPCDriver(final CodeDBIndex codeDB) {
     super(null);
     this._codeDB = codeDB;
+  }
+  
+  public String prefix() {
+    return "driver";
   }
   
   public CodeConcept<CodeConcept<?, ?>, ASTModuleNode> reverse() {
@@ -974,8 +1032,9 @@ public class NUOPCDriver extends CodeConcept<CodeConcept<?, ?>, ASTModuleNode> {
           String _string_2 = rs.getString("_path");
           this.path = _string_2;
           long _long_1 = rs.getLong("_uid");
-          BasicCodeConcept _newBasicCodeConcept = BasicCodeConcept.newBasicCodeConcept(this, _long_1);
-          this.importNUOPCDriver = _newBasicCodeConcept;
+          NUOPCComponent.GenericImport _genericImport = new NUOPCComponent.GenericImport(this, _long_1);
+          NUOPCComponent.GenericImport _reverse = _genericImport.reverse();
+          this.importNUOPCGeneric = _reverse;
           rs.close();
           StringConcatenation _builder_1 = new StringConcatenation();
           _builder_1.append("uses(_uid, ");
@@ -986,8 +1045,8 @@ public class NUOPCDriver extends CodeConcept<CodeConcept<?, ?>, ASTModuleNode> {
           boolean _next_1 = rs.next();
           if (_next_1) {
             long _long_2 = rs.getLong("_uid");
-            BasicCodeConcept _newBasicCodeConcept_1 = BasicCodeConcept.newBasicCodeConcept(this, _long_2);
-            this.importESMF = _newBasicCodeConcept_1;
+            BasicCodeConcept _newBasicCodeConcept = BasicCodeConcept.newBasicCodeConcept(this, _long_2);
+            this.importESMF = _newBasicCodeConcept;
           }
           rs.close();
           StringConcatenation _builder_2 = new StringConcatenation();
@@ -999,8 +1058,8 @@ public class NUOPCDriver extends CodeConcept<CodeConcept<?, ?>, ASTModuleNode> {
           boolean _next_2 = rs.next();
           if (_next_2) {
             long _long_3 = rs.getLong("_uid");
-            BasicCodeConcept _newBasicCodeConcept_2 = BasicCodeConcept.newBasicCodeConcept(this, _long_3);
-            this.importNUOPC = _newBasicCodeConcept_2;
+            BasicCodeConcept _newBasicCodeConcept_1 = BasicCodeConcept.newBasicCodeConcept(this, _long_3);
+            this.importNUOPC = _newBasicCodeConcept_1;
           }
           rs.close();
           return this.reverseChildren();

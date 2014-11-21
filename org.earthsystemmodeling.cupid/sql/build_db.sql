@@ -57,7 +57,7 @@ create table param(
      parent_id bigint,
      index int,
      name varchar(100),
-     type varchar(100),
+     type varchar(200),
      intentIn boolean,
      intentOut boolean);
 

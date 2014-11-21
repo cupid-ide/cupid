@@ -103,6 +103,10 @@ end subroutine
 
 	override forward() {
 
+		if (setServices() == null) {
+			throw new CodeGenerationException("A SetServices subroutine must exist first.")	
+		}
+		
 		val IFortranAST ast = getAST()
 
 		//add specialization subroutine itself			
@@ -127,8 +131,6 @@ end subroutine
 		var ASTSubroutineSubprogramNode setServicesNode = setServices().getASTRef
 		if (setServicesNode != null) {
 
-//call NUOPC_CompSetEntryPoint(gcomp, ESMF_METHOD_INITIALIZE, &
-//      phaseLabelList=(/"IPDv00p1"/), userRoutine=InitializeP1, rc=rc)
 			code = 
 '''
 

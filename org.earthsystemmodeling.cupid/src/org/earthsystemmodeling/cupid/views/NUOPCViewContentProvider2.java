@@ -1,10 +1,15 @@
 package org.earthsystemmodeling.cupid.views;
 
+import java.lang.reflect.Array;
 import java.lang.reflect.Field;
 import java.lang.reflect.ParameterizedType;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Comparator;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.earthsystemmodeling.cupid.annotation.Child;
 import org.earthsystemmodeling.cupid.annotation.Label;
@@ -40,6 +45,8 @@ class NUOPCViewContentProvider2 implements IStructuredContentProvider, ITreeCont
 	private CodeDBIndex codeDB = CodeDBIndex.getInstance();
 	private WarningListener warningListener;
 	private OutputListener outputListener;
+	
+	static Map<Class<?>, Field[]> fieldCache = new HashMap<Class<?>, Field[]>();
 	
 	public NUOPCViewContentProvider2() {
 		
@@ -187,14 +194,51 @@ class NUOPCViewContentProvider2 implements IStructuredContentProvider, ITreeCont
 		return null;
 	}
 	
+	public static class FieldSorter implements Comparator<Field> {
+		@Override
+		public int compare(Field f1, Field f2) {
+			Label labelAnn1 = f1.getAnnotation(Label.class);
+			Label labelAnn2 = f2.getAnnotation(Label.class);
+			
+			int f1sort = 999999;
+			int f2sort = 999999;
+			
+			if (labelAnn1 != null) {
+				f1sort = labelAnn1.sort();
+			}
+			if (labelAnn2 != null) {
+				f2sort = labelAnn2.sort();
+			}
+			
+			if (f1sort < f2sort) return -1;
+			else if (f1sort > f2sort) return 1;
+			else return 0;
+			
+		}
+	}
+	
+	
+	
 	public Object [] getChildren(Object p) {
 		
 		ArrayList<Object> children = new ArrayList<Object>();
 		
 		CodeConceptProxy parent = (CodeConceptProxy) p;
 		Class<?> parentClass = parent.clazz;
-				
-		for (Field field : parentClass.getFields()) {
+		
+		Field[] fields;
+		
+		if (fieldCache.containsKey(parentClass) && !CupidActivator.getDefault().isDebugging()) {
+			//don't use cache for debugging to allow for Java hot swaps
+			fields = fieldCache.get(parentClass);
+		}
+		else {
+			fields = parentClass.getFields();
+			Arrays.sort(fields, new FieldSorter());
+			fieldCache.put(parentClass, fields);
+		}
+		
+		for (Field field : fields) {
 			Child childAnn = field.getAnnotation(Child.class);
 			if (childAnn != null) {
 				try {					

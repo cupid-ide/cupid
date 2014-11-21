@@ -48,7 +48,7 @@ public abstract class CodeConcept<P extends CodeConcept<?,?>, A extends IASTNode
 	def CodeConcept<P,A> reverse() {this}
 	def List<CodeConcept<P,A>> reverseMultiple() {newArrayList(reverse)}
 	
-	def IFortranAST forward() {null}
+	def IFortranAST forward() throws CodeGenerationException {null}
 	
 	def String name() {null}
 	

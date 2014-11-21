@@ -27,23 +27,11 @@ import org.eclipse.photran.internal.core.parser.ASTTypeDeclarationStmtNode
 import org.earthsystemmodeling.cupid.annotation.Prop
 
 @Label(label="NUOPC Driver", type="module")
-class NUOPCDriver extends CodeConcept<CodeConcept<?,?>, ASTModuleNode> {
+class NUOPCDriver extends NUOPCComponent {
 	
-	var public String driverName	
-	var public String filename
-	var public String path
-	
-	@Label(label="ESMF Import", type="uses")
-	@Child
-	var public BasicCodeConcept importESMF
-	
-	@Label(label="NUOPC Import", type="uses")
-	@Child
-	var public BasicCodeConcept importNUOPC
-	
-	@Label(label="NUOPC Driver Import", type="uses")
-	@Child
-	var public BasicCodeConcept importNUOPCDriver
+	public String driverName	
+	public String filename
+	public String path
 	
 	@Child
 	var public SetServicesCodeConcept<NUOPCDriver> setServices
@@ -56,7 +44,8 @@ class NUOPCDriver extends CodeConcept<CodeConcept<?,?>, ASTModuleNode> {
 		_codeDB = codeDB
 	}
 	
-	
+	override prefix() {"driver"}
+
 	override reverse() {
 		  	
      	var rs = '''module(_moduleID, _compUnitID, _driverName), 
@@ -68,7 +57,7 @@ class NUOPCDriver extends CodeConcept<CodeConcept<?,?>, ASTModuleNode> {
 				driverName = rs.getString("_driverName")
 				filename = rs.getString("_filename")
 				path = rs.getString("_path")
-				importNUOPCDriver = newBasicCodeConcept(this, rs.getLong("_uid"))
+				importNUOPCGeneric = new GenericImport(this, rs.getLong("_uid")).reverse
 				rs.close
 				
 				rs = '''uses(_uid, «_id», 'ESMF').'''.execQuery
@@ -157,6 +146,7 @@ class NUOPCDriver extends CodeConcept<CodeConcept<?,?>, ASTModuleNode> {
 		
 		override subroutineTemplate() {
 '''
+
 subroutine «subroutineName»(«paramGridComp», «paramRC»)
     type(ESMF_GridComp)  :: «paramGridComp»
     integer, intent(out) :: «paramRC»
@@ -183,7 +173,7 @@ end subroutine
 		}
 		
 		override genericUse() {
-			_parent._parent.importNUOPCDriver
+			_parent._parent.importNUOPCGeneric
 		}
 		
 	}
@@ -232,7 +222,7 @@ end subroutine
 		}
 		
 		override genericUse() {
-			_parent._parent.importNUOPCDriver
+			_parent._parent.importNUOPCGeneric
 		}
 		
 		override forward() {
@@ -265,6 +255,11 @@ type(ESMF_Clock)           :: internalClock
 			
 			code = 			
 '''
+
+! call into SetServices for all Model, Mediator, and Connector components
+
+
+
 ! set the model clock
 call ESMF_TimeIntervalSet(timeStep, m=«paramint(15)», rc=«paramRC») ! 15 minute steps
 if (ESMF_LogFoundError(rcToCheck=«paramRC», msg=ESMF_LOGERR_PASSTHRU, &
@@ -386,8 +381,8 @@ if (ESMF_LogFoundError(rcToCheck=«_parent.paramRC», msg=ESMF_LOGERR_PASSTHRU, 
 	@Label(label="SetRunSequence", type="subroutine")
 	static class SetRunSequence extends SpecializationMethodCodeConcept<Initialization> {
 	
-		@Child
 		@Label(label="New Run Sequence", type="call")
+		@Child(forward=false)
 		public BasicCodeConcept newRunSequence
 		
 		@Child(max=-1)
@@ -417,6 +412,26 @@ if (ESMF_LogFoundError(rcToCheck=«_parent.paramRC», msg=ESMF_LOGERR_PASSTHRU, 
 	
 		}
 		
+		override subroutineTemplate() {
+'''
+
+subroutine «subroutineName»(«paramGridComp», «paramRC»)
+    type(ESMF_GridComp)  :: «paramGridComp»
+    integer, intent(out) :: «paramRC»
+
+    rc = ESMF_SUCCESS
+    
+    ! Replace the default RunSequence with a customized one
+    call NUOPC_DriverNewRunSequence(«paramGridComp», slotCount=«paramint(1)», rc=«paramRC»)
+    if (ESMF_LogFoundError(rcToCheck=«paramRC», msg=ESMF_LOGERR_PASSTHRU, &
+      line=__LINE__, &
+      file=__FILE__)) &
+      return  ! bail out
+
+end subroutine
+'''
+		}
+		
 		override module() {
 			_parent._parent
 		}
@@ -426,7 +441,7 @@ if (ESMF_LogFoundError(rcToCheck=«_parent.paramRC», msg=ESMF_LOGERR_PASSTHRU, 
 		}
 		
 		override genericUse() {
-			_parent._parent.importNUOPCDriver
+			_parent._parent.importNUOPCGeneric
 		}
 		
 		
@@ -554,7 +569,7 @@ if (ESMF_LogFoundError(rcToCheck=«_parent.paramRC», msg=ESMF_LOGERR_PASSTHRU, 
 		}
 		
 		override genericUse() {
-			_parent._parent.importNUOPCDriver
+			_parent._parent.importNUOPCGeneric
 		}	
 		
 	}
@@ -578,7 +593,7 @@ if (ESMF_LogFoundError(rcToCheck=«_parent.paramRC», msg=ESMF_LOGERR_PASSTHRU, 
 		}
 		
 		override genericUse() {
-			_parent._parent.importNUOPCDriver
+			_parent._parent.importNUOPCGeneric
 		}
 		
 		override subroutineTemplate() {
