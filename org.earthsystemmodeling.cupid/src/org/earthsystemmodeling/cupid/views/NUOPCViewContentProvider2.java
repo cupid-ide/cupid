@@ -122,7 +122,15 @@ class NUOPCViewContentProvider2 implements IStructuredContentProvider, ITreeCont
 		long startParse = System.currentTimeMillis();
 		//IFortranAST ast = PhotranVPG.getInstance().parse(filename);
 		PhotranVPG.getInstance().releaseAST(filename);
-		IFortranAST ast = PhotranVPG.getInstance().acquireTransientAST(filename);	
+		IFortranAST ast = null;
+		try {
+			ast = PhotranVPG.getInstance().acquireTransientAST(filename);
+		}
+		catch (NullPointerException npe) {
+			//there is a bug in PhotranVPG when opening a file directly from the SVN view
+			//because it is not a "real" Eclipse file
+			return;
+		}
 		long endParse = System.currentTimeMillis();
 		
 		long startIndex = System.currentTimeMillis();

@@ -301,5 +301,19 @@
 	]]>
 	</doc>
 	
+	<doc class="org.earthsystemmodeling.cupid.nuopc_v7.NUOPCModel.SetClock">
+	<![CDATA[
+	<b>SetClock</b><hr/>
+	<i>Optional specialization</i> to set the internal clock and/or alarms: <tt>label_SetClock</tt>. 
+	]]>
+	</doc>
+	
+	<doc class="org.earthsystemmodeling.cupid.nuopc_v7.NUOPCModel.DataInitialize">
+	<![CDATA[
+	<b>DataInitialize</b><hr/>
+	<i>Optional specialization</i> to initialize export Fields: <tt>label_DataInitialize</tt>. 
+	]]>
+	</doc>
+	
 	
 </docs>

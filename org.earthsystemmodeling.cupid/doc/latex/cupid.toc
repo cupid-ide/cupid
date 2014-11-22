@@ -1,22 +1,19 @@
 \contentsline {chapter}{Contents}{2}{section*.1}
 \contentsline {chapter}{\chapternumberline {1}Overview of Features}{3}{chapter.1}
-\contentsline {chapter}{\chapternumberline {2}ESMF and NUOPC}{6}{chapter.2}
-\contentsline {section}{\numberline {2.1}The Earth System Modeling Framework}{6}{section.2.1}
-\contentsline {section}{\numberline {2.2}The National Unified Operational Prediction Capability}{6}{section.2.2}
-\contentsline {chapter}{\chapternumberline {3}Installation}{9}{chapter.3}
-\contentsline {section}{\numberline {3.1}Prerequisites}{9}{section.3.1}
-\contentsline {section}{\numberline {3.2}Download and Install the Cupid Plugin}{9}{section.3.2}
-\contentsline {section}{\numberline {3.3}Configure Cloud Account Credentials (Optional)}{12}{section.3.3}
-\contentsline {chapter}{\chapternumberline {4}Cloud-based Training Environment}{14}{chapter.4}
-\contentsline {section}{\numberline {4.1}Creating a new Cupid Training Project}{15}{section.4.1}
-\contentsline {section}{\numberline {4.2}Compile and Run the NUOPC Single Model with Driver training scenario}{19}{section.4.2}
-\contentsline {chapter}{\chapternumberline {5}Reverse Engineering and Compliance Verification of NUOPC Applications}{22}{chapter.5}
-\contentsline {section}{\numberline {5.1}Acquiring NUOPC Prototype Applications}{23}{section.5.1}
-\contentsline {section}{\numberline {5.2}Reverse Engineer a NUOPC Prototype Application}{26}{section.5.2}
-\contentsline {section}{\numberline {5.3}NUOPC Compliance Verification}{29}{section.5.3}
-\contentsline {chapter}{\chapternumberline {6}Generating NUOPC-compliant Code}{32}{chapter.6}
-\contentsline {section}{\numberline {6.1}Generate a NUOPC Model Finalize method}{33}{section.6.1}
-\contentsline {chapter}{\chapternumberline {7}The Behind-the-Scenes Meta-tool}{36}{chapter.7}
-\contentsline {section}{\numberline {7.1}The NUOPC Framework-Specific Modeling Language}{37}{section.7.1}
-\contentsline {section}{\numberline {7.2}FSML Implementation}{39}{section.7.2}
-\contentsline {chapter}{Bibliography}{41}{section*.3}
+\contentsline {chapter}{\chapternumberline {2}ESMF and NUOPC}{7}{chapter.2}
+\contentsline {section}{\numberline {2.1}The Earth System Modeling Framework}{7}{section.2.1}
+\contentsline {section}{\numberline {2.2}The National Unified Operational Prediction Capability}{7}{section.2.2}
+\contentsline {chapter}{\chapternumberline {3}Tutorial}{10}{chapter.3}
+\contentsline {section}{\numberline {3.1}Installation}{10}{section.3.1}
+\contentsline {section}{\numberline {3.2}Acquiring NUOPC Prototype Applications from Sourceforge}{10}{section.3.2}
+\contentsline {section}{\numberline {3.3}Reverse Engineer a NUOPC Driver}{13}{section.3.3}
+\contentsline {section}{\numberline {3.4}NUOPC Compliance Verification}{16}{section.3.4}
+\contentsline {chapter}{\chapternumberline {4}Generating NUOPC-compliant Code}{18}{chapter.4}
+\contentsline {section}{\numberline {4.1}Generate a NUOPC Model Finalize method}{19}{section.4.1}
+\contentsline {chapter}{\chapternumberline {5}Cloud-based Training Environment}{22}{chapter.5}
+\contentsline {section}{\numberline {5.1}Creating a new Cupid Training Project}{23}{section.5.1}
+\contentsline {section}{\numberline {5.2}Compile and Run the NUOPC Single Model with Driver training scenario}{27}{section.5.2}
+\contentsline {chapter}{\chapternumberline {6}The Behind-the-Scenes Meta-tool}{30}{chapter.6}
+\contentsline {section}{\numberline {6.1}The NUOPC Framework-Specific Modeling Language}{31}{section.6.1}
+\contentsline {section}{\numberline {6.2}FSML Implementation}{33}{section.6.2}
+\contentsline {chapter}{Bibliography}{35}{section*.3}

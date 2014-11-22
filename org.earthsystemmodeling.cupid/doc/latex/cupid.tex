@@ -66,7 +66,6 @@
 \maketitle
 
 
-
 \clearpage
 \tableofcontents
 
@@ -121,7 +120,7 @@ This section describes the Earth System Modeling Framework (ESMF) and the Nation
 ESMF is a high-performance software framework designed for numerical geoscience models. Some of the framework-provided concepts include model components (\texttt{ESMF\_GridComp}) and coupler components (\texttt{ESMF\_CplComp}; mediators between model components), and data types for model state (\texttt{ESMF\_State}), distributed arrays (\texttt{ESMF\_Array}), physical fields (\texttt{ESMF\_Field)}, and numerical grids (\texttt{ESMF\_Grid}; discretization schemes). An ESMF-based application is typically designed as a hierarchy of model components where components communicate by exchanging \texttt{ESMF\_State} objects via framework-provided interfaces. \texttt{ESMF\_GridComp}s and \texttt{ESMF\_CplComp}s have user-customizable \texttt{initialize()}, \texttt{run()}, and \texttt{finalize()} methods.  For more information about ESMF, see the \href{http://www.earthsystemmodeling.org/esmf_releases/public/last/ESMF_usrdoc/}{ESMF User's Guide} and the \href{http://www.earthsystemmodeling.org/esmf_releases/public/last/ESMF_refdoc/}{ESMF Reference Manual}.
 
 \section{The National Unified Operational Prediction Capability}
-To promote interoperability of model components, NUOPC is a set of generic components, metadata conventions, and behavioral protocols encoded in a software layer on top of ESMF. Together, these elements form the basis of a \emph{common model architecture}---a standard way of building models in order to make it easier to assemble coupled models using components from different sources. NUOPC is currently being implemented in research and operational models such as the HYCOM ocean model~\cite{hycom}, GFDL's MOM5 ocean model~\cite{mom5}, and NASA's ModelE climate model~\cite{modele}.  Additional information about NUOPC can be found on the \href{https://earthsystemcog.org/projects/nuopc/}{NUOPC home page}.
+To promote interoperability of model components, NUOPC is a set of generic components, metadata conventions, and behavioral protocols encoded in a software layer on top of ESMF. Together, these elements form the basis of a \emph{common model architecture}---a standard way of building models in order to make it easier to assemble coupled models using components from different sources. NUOPC is currently being implemented in research and operational models such as the HYCOM ocean model, GFDL's MOM5 ocean model, and NASA's ModelE climate model.  Additional information about NUOPC can be found on the \href{https://earthsystemcog.org/projects/nuopc/}{NUOPC home page}.
 
 %Cupid is a tool that aids model developers in creating, executing, and analyzing Earth System Modeling Framework (ESMF) codebases that adhere to the conventions defined by the National Unified Operational Prediction Capability (NUOPC), a software layer designed to facilitate interoperability of modeling components used in operational weather prediction systems.  Cupid is implemented as a plugin for the Eclipse Integrated Development Environment\footnote{http://www.eclipse.org} and leverages existing plugins, especially the Photran language editor\footnote{http://www.eclipse.org/photran/}.
 
@@ -138,105 +137,339 @@ The \texttt{Driver} generic component implements a harness of ESMF components an
 
 To take full advantage of NUOPC, developers must ensure that model components comply with NUOPC architectural constraints and technical rules. The full definition of NUOPC compliance is available on the \href{http://earthsystemcog.org/projects/nuopc/esmf2nuopc}{NUOPC compliance web page}. 
 
-%Cupid supports the goals of NUOPC by providing a tool capable of generating fragments of framework completion code (while not hindering developers from writing customized code) and validating existing NUOPC codebases.
 
-\chapter{Installation}
+%\chapter{Installation}
+%\section{Prerequisites}
+%
+%Nearly all of Cupid's software dependencies will be managed automatically by the Eclipse plugin machinery.  However, it is recommended that Linux users install the Web content engine library for GTK+ (\texttt{libwebkitgtk-1.0-0}) for a better user experience.  The Web content engine is used to render framework documentation in the tool.
+%
+%The library is available in the package manager for major distributions of Linux, including Ubuntu, Red Hat, and Debian.
+%
+%For example, Ubuntu users should issue the following command to install the library.
+%
+%\texttt{\$ sudo apt-get install libwebkitgtk-1.0-0}
+%
+%
+%\emph{This is an optional prerequisite and the tool will still function without it.}
+%
+%
+%\section{Download and Install the Cupid Plugin}
+%\label{sec:installcupid}
+%
+%This section describes how to install the Cupid tools. Cupid is a plugin for the Eclipse Integrated Development Environment (IDE) and is available on all its supported platforms (Windows, Mac, Unix). 
+%
+%\begin{enumerate}
+%
+%\item \textbf{Download and install Eclipse for Parallel Application Developers, version 4.3.2 SR2 (Kepler)}.
+%
+%The main download page is: \href{http://www.eclipse.org/downloads/}{http://www.eclipse.org/downloads/}.  
+%
+%There is a list of available Eclipse packages.  Be sure to choose ``Eclipse for Parallel Application Developers'' as it will come pre-bundled with the necessary plugins for working with remote systems.
+%
+%\item \textbf{Unpack the downloaded file into a local directory and run Eclipse by double clicking on the Eclipse executable.}
+%
+%The first time you start Eclipse, you will be prompted to select a location for your workspace.  Choose an empty folder.
+%
+%\item \textbf{Install the Cupid Plugin from the Cupid Update Site.}
+%
+%\begin{enumerate}
+%\itemsep2em
+%
+%\item Click Help $\rightarrow$ Install New Software
+%
+%\parbox{\linewidth}{\centering
+  %\includegraphics[width=6cm]{figs/install_fig1.png}
+%}
+%
+%\item Put the Cupid Update Site URL into \emph{Work with...}  You will be prompted to give the update site a name of your choosing.
+%
+%The Update site URL is:  \texttt{http://earthsystemmodeling.org/cupidupdate/}
+%
+%\parbox{\linewidth}{\centering
+  %\includegraphics{figs/install_fig2.png}
+%}
+%
+%\item If you do not see the Cupid plugin listed, uncheck the \emph{Group items by category} option.  Otherwise, expand the Cupid category.
+%
+%\parbox{\linewidth}{\centering
+  %\includegraphics{figs/install_fig3.png}
+%}
+%
+%\item Select the \emph{Cupid} plugin from the list and click Next.
+%
+%\parbox{\linewidth}{\centering
+  %\includegraphics{figs/install_fig4.png}
+%}
+%
+%\item You will need to click Next a couple more times and accept the license agreements. Then click Finish.  The Cupid plugin and its dependencies will be downloaded and installed. 
+%
+%During the process, you may receive a message that the software contains unsigned content.  Click OK.
+%
+%\parbox{\linewidth}{\centering
+  %\includegraphics{figs/install_fig5.png}
+%}
+%
+%\item After installation, you will be prompted to restart Eclipse.  Click Yes.
+%
+%\end{enumerate}
+%\end{enumerate}
+%
+%\section{Configure Cloud Account Credentials (Optional)}
+%\label{sec:cloudconfig}
+%
+%Cupid can create cloud-based virtual machine instances to serve as the computational environment for training scenarios. If you plan on using the cloud configuration feature of Cupid, you need to set up your cloud credentials the first time you run Cupid. Currently, the supported cloud provider is Amazon EC2. You may use your own credentials or request access to the NESII cloud.
+%
+%(Note: Cupid automatically launches Amazon machine instances when you create a new training project.  Alarms are set up to automatically kill instances after 50 minutes of idle CPU utilization. However, it is your responsibility to ensure that any unused instances are terminated to avoid unnecessary cloud computing charges to your account.)
+%
+%\begin{enumerate}
+%\item \textbf{In the Eclipse menu, select Window $\rightarrow$ Preferences. Then select Cupid Preferences in the list on the left.}
+%\item \textbf{Enter your Amazon Web Services (AWS) access key and secret key.}
+%\item \textbf{Click OK.}  Your credentials have now been set up.  
+%
+%\parbox{\linewidth}{\centering
+  %\includegraphics{figs/install_fig5.png}
+%}
+%
+%\emph{Warning:  Only set up AWS credentials on a secure, private machine as they are currently stored in plain text in the Eclipse configuration metadata.  This feature of Cupid is currently in prototype mode with minimal consideration of security ramifications. It is highly recommended to set up an AWS user account with limited privileges for use with Cupid.  For more information, see the \href{http://docs.aws.amazon.com/IAM/latest/UserGuide/IAM_Introduction.html}{AWS Identity and Access Management documentation.}}
+%
+%
+%\end{enumerate}
 
-\section{Prerequisites}
-
-Nearly all of Cupid's software dependencies will be managed automatically by the Eclipse plugin machinery.  However, it is recommended that Linux users install the Web content engine library for GTK+ (\texttt{libwebkitgtk-1.0-0}) for a better user experience.  The Web content engine is used to render framework documentation in the tool.
-
-The library is available in the package manager for major distributions of Linux, including Ubuntu, Red Hat, and Debian.
-
-For example, Ubuntu users should issue the following command to install the library.
-
-\texttt{\$ sudo apt-get install libwebkitgtk-1.0-0}
 
 
-\emph{This is an optional prerequisite and the tool will still function without it.}
+\chapter{Tutorial}
+
+%Most climate and weather model codebases are staggeringly large and obtaining an overview of the model, its subcomponents, and their interconnections is a cumbersome, time-consuming task. Often, this can only be accomplished by manually reading through the top-level source files to establish a mental picture of the overall structure of the model and its data flows. 
+
+%Instead of viewing a model as an opaque, complex set of source files, Cupid's reverse engineering feature parses a model's source code and produces an abstract representation of the framework concepts that are present in the code. The reverse engineering feature is a kind of \href{http://en.wikipedia.org/wiki/Static_program_analysis}{static analysis} because the source code is analyzed before it is compiled and does not require execution of the model.  This representation is shown to the user alongside the source code in an outline form called the NUOPC tree viewer. This provides an alternative, more abstract perspective for viewing a model's source code. Some of the main concepts provided by NUOPC are Drivers, Models, Mediators, and Connectors. If a codebase contains any of these generic components, the reverse engineering function will automatically find them and present them in outline form. This provides an architectural overview of an entire coupled system without requiring the developer to read through thousands of lines of source code.
+
+%NUOPC ensures interoperability of modeling components by specifying a set of technical rules that model implementers should follow.  In addition to presenting a high level view of framework concepts in source code, Cupid's compliance checking feature provides feedback to the user when potential compliance issues are discovered in a reverse engineered model. For example, when developing a NUOPC Model component, certain subroutines must be implemented and registered with the framework. If a required subroutine or its registration is missing, Cupid can identify the problem and annotate the outline view with icons indicating that some required code is missing. Moreover, this feedback is provided immediately to the user during model development thereby reducing the number of runtime failures and improving efficiency of the development process.
 
 
-\section{Download and Install the Cupid Plugin}
-\label{sec:installcupid}
+\section{Installation}
 
-This section describes how to install the Cupid tools. Cupid is a plugin for the Eclipse Integrated Development Environment (IDE) and is available on all its supported platforms (Windows, Mac, Unix). 
+Instructions for downloading and installing Cupid (and the Eclipse IDE itself) are located on the Cupid web site at \href{https://www.earthsystemcog.org/projects/cupid/installation}{https://www.earthsystemcog.org/projects/cupid/installation}.
+
+
+\section{Acquiring NUOPC Prototype Applications from Sourceforge}
+
+In order to explore Cupid's reverse engineering and code generation capabilities, you need to acquire the source code for at least one of the provided NUOPC prototype applications. A description of the available prototype codes is available at \href{https://earthsystemcog.org/projects/nuopc/proto\_codes}{https://earthsystemcog.org/projects/nuopc/proto\_codes}. The prototype source code itself is available in a Subversion repository on Sourceforge:
+
+\begin{quote}
+\texttt{http://sourceforge.net/p/esmfcontrib/svn/HEAD/tree/NUOPC/trunk/}
+\end{quote}
+
+Assuming you have already installed Eclipse and the Cupid plugin, there are a couple ways to acquire the NUOPC prototype code in your local workspace:
+\begin{enumerate}
+%\item Start up a cloud-based training environment as described in section~\ref{sec:cupidwizard}.
+\item Download a snapshot from Sourceforge and import it into a new Eclipse project.
+\item Connect Eclipse to the Sourceforge Subversion repository and check out NUOPC prototype code.
+\end{enumerate}
+
+In this section we will describe how to connect Eclipse to the NUOPC prototype Subversion repository and how to check out one of the prototype applications into a new project in your Eclipse workspace.
 
 \begin{enumerate}
 
-\item \textbf{Download and install Eclipse for Parallel Application Developers, version 4.3.2 SR2 (Kepler)}.
+\item Install the Subversion plugin for Eclipse (Subversive)
 
-The main download page is: \href{http://www.eclipse.org/downloads/}{http://www.eclipse.org/downloads/}.  
+First, ensure that the Subversive plugin, which provides access to Subversion repositories, is installed on your copy of Eclipse.  To determine if it is already installed go to Window $\rightarrow$ Show View $\rightarrow$ Other... and look for a folder called SVN. If it is there, Subversive is installed and you can skip the rest of this step.
 
-There is a list of available Eclipse packages.  Be sure to choose ``Eclipse for Parallel Application Developers'' as it will come pre-bundled with the necessary plugins for working with remote systems.
-
-\item \textbf{Unpack the downloaded file into a local directory and run Eclipse by double clicking on the Eclipse executable.}
-
-The first time you start Eclipse, you will be prompted to select a location for your workspace.  Choose an empty folder.
-
-\item \textbf{Install the Cupid Plugin from the Cupid Update Site.}
-
+If you need to install Subversive follow these steps:
 \begin{enumerate}
-\itemsep2em
+\item Select Help $\rightarrow$ Install New Software from the Eclipse menu
+\item In the Work With box, choose \texttt{Luna - http://download.eclipse.org/releases/luna}
+\item In the list, choose \emph{Subversive SVN Team Provider} under the \emph{Collaboration} group
+\item Click Next a couple times, accept the license agreement, and click Finish.
+\item You will be prompted to restart Eclipse.  Choose Yes.
+\item After Eclipse restarts, choose Window $\rightarrow$ Show View $\rightarrow$ Other..., open the SVN folder and choose SVN Repositories
+\item The first time you select the SVN Repositories view, the \emph{Subversive Connector Discovery} dialog will appear.  Select one of the latest SVN connectors (e.g., SVN Kit 1.8.3) and click Finish.  Click Next a couple times, accept the license agreement, agree to installing unsigned content, click Finish and restart Eclipse.  Subversive is now installed and ready to use.
+\end{enumerate}
 
-\item Click Help $\rightarrow$ Install New Software
-
-\parbox{\linewidth}{\centering
-  \includegraphics[width=6cm]{figs/install_fig1.png}
-}
-
-\item Put the Cupid Update Site URL into \emph{Work with...}  You will be prompted to give the update site a name of your choosing.
-
-The Update site URL is:  \texttt{http://earthsystemmodeling.org/cupidupdate/}
-
-\parbox{\linewidth}{\centering
-  \includegraphics{figs/install_fig2.png}
-}
-
-\item If you do not see the Cupid plugin listed, uncheck the \emph{Group items by category} option.  Otherwise, expand the Cupid category.
+\item Add the NUOPC prototype codes repository to Subversive
+\begin{enumerate}
+\item In the menu, select Window $\rightarrow$ Show View $\rightarrow$ Other..., open the SVN folder and choose SVN Repositories.
+\item In the SVN Repositories view, right click and choose New $\rightarrow$ Repository Location...
+\item In the URL field, put the URL of the NUOPC prototype codes Subversion repository: \texttt{http://svn.code.sf.net/p/esmfcontrib/svn/} and click Finish.  The new repository location now appears in the list.
+\item In the new repository location, navigate to NUOPC $\rightarrow$ trunk.  Each subfolder under that location is a separate NUOPC prototype application. Right click on the folder \emph{v7-AtmOcnLndProto} and click Check Out.
 
 \parbox{\linewidth}{\centering
-  \includegraphics{figs/install_fig3.png}
+  \includegraphics{figs/svn_fig1.png}
 }
+\vspace{24pt}
 
-\item Select the \emph{Cupid} plugin from the list and click Next.
+\item You should now see a new project in your workspace named \emph{v7-AtmOcnLndProto}.
 
+\vspace{24pt}
 \parbox{\linewidth}{\centering
-  \includegraphics{figs/install_fig4.png}
+  \includegraphics{figs/svn_fig2.png}
 }
-
-\item You will need to click Next a couple more times and accept the license agreements. Then click Finish.  The Cupid plugin and its dependencies will be downloaded and installed. 
-
-During the process, you may receive a message that the software contains unsigned content.  Click OK.
-
-\parbox{\linewidth}{\centering
-  \includegraphics{figs/install_fig5.png}
-}
-
-\item After installation, you will be prompted to restart Eclipse.  Click Yes.
 
 \end{enumerate}
 \end{enumerate}
 
-\section{Configure Cloud Account Credentials (Optional)}
-\label{sec:cloudconfig}
+\section{Reverse Engineer NUOPC Components}
 
-Cupid can create cloud-based virtual machine instances to serve as the computational environment for training scenarios. If you plan on using the cloud configuration feature of Cupid, you need to set up your cloud credentials the first time you run Cupid. Currently, the supported cloud provider is Amazon EC2. You may use your own credentials or request access to the NESII cloud.
-
-(Note: Cupid automatically launches Amazon machine instances when you create a new training project.  Alarms are set up to automatically kill instances after 50 minutes of idle CPU utilization. However, it is your responsibility to ensure that any unused instances are terminated to avoid unnecessary cloud computing charges to your account.)
+In this section you will learn how use Cupid's reverse engineering function. You should now have a project called \emph{v7-AtmOcnLndProto} in your Eclipse workspace containing several files:
+\begin{itemize}
+\item atm.F90
+\item esm.F90
+\item esmApp.F90
+\item lnd.F90
+\item Makefile
+\item ocn.F90
+\item README
+\end{itemize}
 
 \begin{enumerate}
-\item \textbf{In the Eclipse menu, select Window $\rightarrow$ Preferences. Then select Cupid Preferences in the list on the left.}
-\item \textbf{Enter your Amazon Web Services (AWS) access key and secret key.}
-\item \textbf{Click OK.}  Your credentials have now been set up.  
+\item Open the NUOPC View
+
+From the Eclipse menu, choose Window $\rightarrow$ Show View $\rightarrow$ Other... and then select \emph{NUOPC View} from the \emph{NUOPC} folder.
+
+\vspace{24pt}
+\parbox{\linewidth}{\centering
+  \includegraphics[height=6cm]{figs/reveng_fig1.png}
+}
+\vspace{24pt}
+
+\item Open the file \emph{esm.F90} from the \emph{v7-AtmOcnLndProto} project by double-clicking the file in the Project Explorer.  When the NUOPC View is visible, it automatically updates when a new file is opened that contains code for one of the supported NUOPC components (currently Model and Driver).  The NUOPC View also updates when a file is saved.  \emph{Therefore, after making any modifications to a source file, you must save it first before seeing the updated outline.}
+
+\item The reverse engineered outline now appears in the NUOPC View.  
+
+\vspace{24pt}
+\parbox{\linewidth}{\centering
+  \includegraphics[height=7cm]{figs/reveng_fig3.png}
+}
+\vspace{24pt}
+
+\item Expand the \emph{NUOPC Driver} element in the NUOPC View (if it's not already expanded) and find the \emph{SetServices} element. The green circle indicates that this element maps to a Fortran subroutine.  Double-click the \emph{SetServices} element and the corresponding subroutine name will be highlighted in the source code editor.
+
+\vspace{24pt}
+\parbox{\linewidth}{\centering
+  \includegraphics[width=8cm]{figs/reveng_fig4.png}
+}
+\vspace{24pt}
+
+Every NUOPC component is required to have a single public entry point called \texttt{SetServices}.  This subroutine is called by a parent component or top-level program to register all of the execution phases and specialization points for the component.
+
+\item In the NUOPC View, find the element \emph{NUOPC\_CompDerive} under the \emph{SetServices} element. The yellow arrow icon indicates that the element maps to a subroutine call. Double-click the element and the corresponding call will be highlighted in the source code. The call to \texttt{NUOPC\_CompDerive} indicates that this component is deriving from one of the generic NUOPC components, in this case the \texttt{NUOPC\_Driver} component. 
+
+\item In the reverse engineered model, find the element \emph{NUOPC Driver} $\rightarrow$ \emph{Initialize}. Note that it does not have an icon because this element does not map to an element in the reverse engineered code. The NUOPC technical rules defined precisely the Driver initialization process. Hover your mouse over \emph{Initialize} in the NUOPC View to see reference manual documentation about the order of Driver initialization.
+
+\vspace{24pt}
+\parbox{\linewidth}{\centering
+  \includegraphics[width=8cm]{figs/reveng_fig6.png}
+}
+\vspace{24pt}
+
+Note that the initialize documentation identifies two required specialization points---implementations that the user must provide---\texttt{SetModelServices} and \texttt{SetModelCount}.  These two specialization points have already been implemented in \emph{esm.F90.}  Two optional specialization points are also indicated, \texttt{SetModelPetLists} and \texttt{SetRunSequence}, the latter of which is already implemented in \emph{esm.F90}. Hovering over these specialization points in the NUOPC View will show the reference documentation.
+
+\item Now open the file \empt{atm.F90} by double-clicking in the Project Explorer.  The NUOPC View should now update with content from that file.
+
+\vspace{24pt}
+\parbox{\linewidth}{\centering
+  \includegraphics[width=8cm]{figs/reveng_fig7.png}
+}
+\vspace{24pt}
+
+The NUOPC View shows that atm.F90 is code for a NUOPC Model.
+
+\end{enumerate}
+
+\section{NUOPC Compliance Verification}
+
+In this section, we will see how the Cupid reverse engineering tool can show compliance issues by identifying required source code elements that are missing.  The compliance checking capabilities of Cupid are a companion to two other analysis tools, the \emph{NUOPC Compliance Checker} and \emph{Component Explorer}. The key difference lies in the kinds of analyses performed. At present, Cupid is purely a static analysis tool and identifies compliance issues by examining the abstract syntax of NUOPC application source code. The \emph{NUOPC Compliance Checker} and \emph{Component Explorer} support dynamic analysis, outputting compliance information in log form as the NUOPC application executes.  As such these runtime tools can identify a greater number of compliance issues.  
+
+However, because Cupid's reverse engineering works on partially completed code, it is useful for identifying many compliance issues earlier in the development process, before any runs are attempted. The results of the static compliance check are available immediately as the NUOPC application is being developed and, as we will see in the next chapter, Cupid's code generation feature provides some additional assistance to the developer in bringing the code to a compliant state.
+
+More information about the runtime compliance checking tools can be found in section 5 of the \href{http://www.earthsystemmodeling.org/esmf_releases/public/ESMF\_6\_3\_0r/NUOPC_refdoc/node6.html}{NUOPC Reference Manual}.
+
+In the steps that follow, we will create a compliance issue in the \emph{SingleModelProto} application and see the results of the reverse engineered model.
+
+\begin{enumerate}
+
+\item Make sure you have the \emph{SingleModelProto} source code in your Eclipse workspace.
+
+\item Open the file \emph{driver.F90} and find the subroutine \texttt{SetModelCount}.  Select the entire subroutine, right click, and choose Toggle Comment.  This will comment out the entire region of code.
 
 \parbox{\linewidth}{\centering
-  \includegraphics{figs/install_fig5.png}
+  \includegraphics[width=8cm]{figs/verify_fig1.png}
 }
 
-\emph{Warning:  Only set up AWS credentials on a secure, private machine as they are currently stored in plain text in the Eclipse configuration metadata.  This feature of Cupid is currently in prototype mode with minimal consideration of security ramifications. It is highly recommended to set up an AWS user account with limited privileges for use with Cupid.  For more information, see the \href{http://docs.aws.amazon.com/IAM/latest/UserGuide/IAM_Introduction.html}{AWS Identity and Access Management documentation.}}
+\item Save \emph{driver.F90}.
+
+\item In the NUOPC tree viewer, click the reverse engineering button again to re-run the reverse engineering function on the modified code.  \textit{(Currently, the tool does not automatically sync with updated code---the reverse engineering function must be run manually.)}  
+
+\item Elements in the reverse engineered model are colored red if a compliance issue is found at or below that element.  Drilling down into the outline reveals the missing element: because the \texttt{SetModelCount} subroutine is commented out, one of the required specialization points no longer appears in the code.  Hovering over a red element shows a tooltip popup with a description of the compliance issue.
+
+\parbox{\linewidth}{\centering
+  \includegraphics[width=8cm]{figs/verify_fig3.png}
+}
+
+\end{enumerate}
+
+
+
+\chapter{Generating NUOPC-compliant Code}
+
+Even if a software framework is well designed, writing framework completion code is notoriously difficult, even for seasoned developers. Often, completing a single logical task requires making several code additions at multiple places spread throughout the application source code. If one or more of the required additions are inadvertently left out, the application may not behave as expected.  
+
+In the software engineering research community, many ideas have been proposed for how to help developers write framework-based applications correctly and efficiently. For ESMF and NUOPC, guidance is provided in the form of comprehensive API documentation (\href{http://www.earthsystemmodeling.org/esmf_releases/public/last/ESMF_refdoc/}{ESMF Reference Manual}, \href{https://earthsystemcog.org/projects/nuopc/refmans}{NUOPC Reference Manual}), system tests (included with source distribution), and \href{https://earthsystemcog.org/projects/nuopc/proto_codes}{small prototype codebases} that show how to structure NUOPC applications based on the components in the modeled system (e.g., standalone atmosphere, coupled atmosphere-ocean, three-component system, etc.). 
+
+Cupid's code generation feature complements these static resources by generating on-the-fly NUOPC-compliant source code fragments directly in existing source files. The user initiates a code fragment generation by adding elements to a reverse engineered model in the NUOPC tree viewer. The source code is then synchronized with the tree viewer, generating the required code fragments. The generated code fragments can then be customized by the developer for their particular case. The following use case illustrates use of forward engineering feature:
+
+\begin{quote}
+A developer has finished writing the initialization phases for a NUOPC Model component called ATM and now needs to add the capability to advance the model one time step. The developer right clicks on the ATM element in the NUOPC tree viewer and selects ``Add Model Advance.''  Two things happen immediately: the tree viewer is updated with a new sub-element underneath ATM called ``Model Advance'' which in turn contains sub-elements ``Registered in Set Services'' and ``Implementation.'' Then, source code fragments are generated inside the Fortran file for ATM including a call inside the ATM SetServices to register the Model Advance subroutine and a stub for the new Model Advance subroutine.
+\end{quote}
+
+The use case shows some advantages of this approach compared to an approach in which code is copied-and-pasted from prototypical example code. First, the new Model Advance element added to the tree viewer included multiple sub-elements indicating that source code changes are required in at least two places: a new subroutine and a call to register this subroutine with the framework.  This provides guidance to the developer to ensure that all framework requirements are met. The approach, therefore, is less error-prone than brute force copy and paste as some required code may inadvertently be left off. Also, the generated code fragments are customized based on the state of the existing source code. For example, the developer may be using specialized variable names. Since these variables have already been discovered during the reverse engineering phase, the generated code can reference these variables instead of requiring the developer to modify variables in copy-pasted code.
+
+\section {Generate a NUOPC Model Finalize method}
+
+In this section we will demonstrate the code generation capabilities of Cupid by generating a subroutine stub for an optional specialization point and registering the subroutine in the \texttt{SetServices} method of the model.
+
+\begin{enumerate}
+
+\item Be sure you have the \emph{SingleModelProto} project in your Eclipse workspace.
+
+\item Open the file \emph{model.F90}.
+
+\item In the NUOPC view, click the reverse engineer button.  The view should populate with the reverse engineered model.
+
+\item Expand the \emph{NUOPC Model} element and notice that the last child element, \emph{Finalize}, has a grayed out icon.  This indicates that there is no \texttt{Finalize} subroutine defined in \emph{model.F90} (the subroutine is optional).
+
+\parbox{\linewidth}{\centering
+  \includegraphics[width=8cm]{figs/gen_fig1.png}
+}
+
+\item Right click on the \emph{NUOPC Model} element in the outline and select \emph{Add Finalize (basic)}. Both the NUOPC view and code editor will be updated.  
+
+In the editor showing \emph{model.F90}, two blocks of code are generated.  The yellow blocks on the small vertical bar directly to the right of editor indicate which blocks of code were generated by Cupid.  Clicking on a yellow block highlights the generated code, which has been inserted into the existing source file.  The generated fragments of code are shown in listings~\ref{lst:simple1} and \ref{lst:simple2}
+
+\parbox{\linewidth}{\centering
+  \includegraphics[width=12cm]{figs/gen_fig2.png}
+}
+
+
+\begin{lstlisting}[label={lst:simple1}, caption=A call to register the generated subroutine as an ESMF Finalize method. This call is inserted at the end of the Model's \texttt{SetServices} method.]
+call ESMF_GridCompSetEntryPoint(gcomp, ESMF_METHOD_FINALIZE, & 
+		userRoutine = Finalize, phase = 1, rc = rc)
+\end{lstlisting}
+
+\begin{lstlisting}[label={lst:simple2}, caption=A Finalize subroutine stub to be customized. The subroutine is inserted at the end of the module.]
+! <b>NUOPC provided.</b>  Optionally overwrite the provided NOOP with model 
+! finalization code.
+subroutine Finalize(gcomp, importState, exportState, clock, rc)
+		type(ESMF_GridComp), intent(inout) :: gcomp
+		type(ESMF_State), intent(inout) :: importState
+		type(ESMF_State), intent(inout) :: exportState
+		type(ESMF_Clock), intent(inout) :: clock
+		integer, intent(out) :: rc
+end subroutine
+\end{lstlisting}
 
 
 \end{enumerate}
+
 
 \chapter{Cloud-based Training Environment}
 
@@ -382,230 +615,6 @@ In this section of the tutorial, you will learn how to compile and execute the s
 \parbox{\linewidth}{\centering
   \includegraphics[width=\textwidth]{figs/cloudrun_fig5.png}
 }
-
-\end{enumerate}
-
-\chapter{Reverse Engineering and Compliance Verification of NUOPC Applications}
-
-Most climate and weather model codebases are staggeringly large and obtaining an overview of the model, its subcomponents, and their interconnections is a cumbersome, time-consuming task. Often, this can only be accomplished by manually reading through the top-level source files to establish a mental picture of the overall structure of the model and its data flows. 
-
-Instead of viewing a model as an opaque, complex set of source files, Cupid's reverse engineering feature parses a model's source code and produces an abstract representation of the framework concepts that are present in the code. The reverse engineering feature is a kind of \href{http://en.wikipedia.org/wiki/Static_program_analysis}{static analysis} because the source code is analyzed before it is compiled and does not require execution of the model.  This representation is shown to the user alongside the source code in an outline form called the NUOPC tree viewer. This provides an alternative, more abstract perspective for viewing a model's source code. Some of the main concepts provided by NUOPC are Drivers, Models, Mediators, and Connectors. If a codebase contains any of these generic components, the reverse engineering function will automatically find them and present them in outline form. This provides an architectural overview of an entire coupled system without requiring the developer to read through thousands of lines of source code.
-
-NUOPC ensures interoperability of modeling components by specifying a set of technical rules that model implementers should follow.  In addition to presenting a high level view of framework concepts in source code, Cupid's compliance checking feature provides feedback to the user when potential compliance issues are discovered in a reverse engineered model. For example, when developing a NUOPC Model component, certain subroutines must be implemented and registered with the framework. If a required subroutine or its registration is missing, Cupid can identify the problem and annotate the outline view with icons indicating that some required code is missing. Moreover, this feedback is provided immediately to the user during model development thereby reducing the number of runtime failures and improving efficiency of the development process.
-
-
-\section{Acquiring NUOPC Prototype Applications}
-
-In order to explore Cupid's reverse engineering and code generation capabilities, you need to acquire the source code for at least one of the provided NUOPC prototype applications. A description of the available prototype codes is available at \href{https://earthsystemcog.org/projects/nuopc/proto\_codes}{https://earthsystemcog.org/projects/nuopc/proto\_codes}. The prototype source code itself is available in a Subversion repository on Sourceforge:
-
-\begin{quote}
-\texttt{http://sourceforge.net/p/esmfcontrib/svn/HEAD/tree/NUOPC/tags/ESMF\_6\_3\_0r/}
-\end{quote}
-
-Assuming you have already installed Eclipse and the Cupid plugin (see section~\ref{sec:installcupid}), there are several ways to acquire the NUOPC prototype code in your local workspace:
-\begin{enumerate}
-\item Start up a cloud-based training environment as described in section~\ref{sec:cupidwizard}.
-\item Download a snapshot from Sourceforge and import it into a new Eclipse project.
-\item Connect Eclipse to the Sourceforge Subversion repository and check out NUOPC prototype code.
-\end{enumerate}
-
-In this section we will describe how to connect Eclipse to the NUOPC prototype Subversion repository and how to check out one of the prototype applications into a new project in your Eclipse workspace.
-
-\begin{enumerate}
-
-\item Install the Subversion plugin for Eclipse (Subversive)
-
-First, ensure that the Subversive plugin, which provides access to Subversion repositories, is installed on your copy of Eclipse.  To determine if it is already installed go to Window $\rightarrow$ Show View $\rightarrow$ Other... and look for a folder called SVN. If it is there, Subversive is installed and you can skip the rest of this step.
-
-If you need to install Subversive follow these steps:
-\begin{enumerate}
-\item Select Help $\rightarrow$ Install New Software from the Eclipse menu
-\item In the Work With box, choose \texttt{Kepler - http://download.eclipse.org/releases/kepler}
-\item In the list, choose \emph{Subversive SVN Team Provider} under the \emph{Collaboration} group
-\item Click Next a couple times, accept the license agreement, and click Finish.
-\item You will be prompted to restart Eclipse.  Choose Yes.
-\item After Eclipse restarts, choose Window $\rightarrow$ Show View $\rightarrow$ Other..., open the SVN folder and choose SVN Repositories
-\item The first time you select the SVN Repositories view, the \emph{Subversive Connector Discovery} dialog will appear.  Select one of the latest SVN connectors (e.g., SVN Kit 1.8.3) and click Finish.  Click Next a couple times, accept the license agreement, agree to installing unsigned content, click Finish and restart Eclipse.  Subversive is now installed and ready to use.
-\end{enumerate}
-
-\item Add the NUOPC prototype codes repository to Subversive
-\begin{enumerate}
-\item In the menu, select Window $\rightarrow$ Show View $\rightarrow$ Other..., open the SVN folder and choose SVN Repositories.
-\item In the SVN Repositories view, right click and choose New $\rightarrow$ Repository Location...
-\item In the URL field, put the URL of the NUOPC prototype codes Subversion repository: \texttt{http://svn.code.sf.net/p/esmfcontrib/svn/} and click Finish.  The new repository location now appears in the list.
-\item In the new repository location, navigate to NUOPC $\rightarrow$ tags $\rightarrow$ ESMF\_6\_3\_0r.  Each subfolder under that location is a separate NUOPC prototype application. Right click on the folder \emph{SingleModelProto} and click Check Out.
-
-\parbox{\linewidth}{\centering
-  \includegraphics{figs/svn_fig1.png}
-}
-
-\item You should now see a new project in your workspace named SingleModelProto.
-
-\parbox{\linewidth}{\centering
-  \includegraphics{figs/svn_fig2.png}
-}
-
-\end{enumerate}
-\end{enumerate}
-
-\section{Reverse Engineer a NUOPC Prototype Application}
-
-In this section you will learn how apply Cupid's reverse engineering function to the \emph{SingleModelProto} NUOPC application. You should now have a project called SingleModelProto in your Eclipse workspace containing several source files:
-\begin{itemize}
-\item driver.F90
-\item mainApp.F90
-\item Makefile
-\item model.F90
-\item README
-\end{itemize}
-
-\begin{enumerate}
-\item Open the NUOPC tree view
-
-From the Eclipse menu, choose Window $\rightarrow$ Show View $\rightarrow$ Other... and then select \emph{NUOPC View} from the \emph{NUOPC Category} folder.
-
-\parbox{\linewidth}{\centering
-  \includegraphics[height=6cm]{figs/reveng_fig1.png}
-}
-
-\item Open the file \emph{driver.F90} from the SingleModelProto project by double-clicking the file in the Project Explorer.
-
-\item With \emph{driver.F90} open in the editor, click on the reverse engineer icon in the NUOPC tree viewer (circular blue arrow in the top right corner of the view).  
-
-\textit{The reverse engineering function works on one project at a time, not all projects in your workspace. The NUOPC tree viewer determines which project to reverse engineer based on the source file currently selected in the Project Explorer or open in the editor.  Therefore, if you are working with multiple projects, be sure that a file from the project you want to reverse engineer is active in the editor.}
-
-\parbox{\linewidth}{\centering
-  \includegraphics[width=6cm]{figs/reveng_fig2.png}
-}
-
-\item The reverse engineered model outline now appears in the tree viewer.  The elements in the reverse engineered model correspond to parts of the prototype application source code.
-
-\parbox{\linewidth}{\centering
-  \includegraphics[height=7cm]{figs/reveng_fig3.png}
-}
-
-Expand the \emph{NUOPC Driver} element in the NUOPC viewer and find the \emph{Set Services} element. The green circle indicates that this element maps to a Fortran subroutine.  Double-click the \emph{Set Services} element and the corresponding subroutine name will be highlighted in the source code editor.
-
-\parbox{\linewidth}{\centering
-  \includegraphics[width=8cm]{figs/reveng_fig4.png}
-}
-
-Every NUOPC component is required to have a single public entry point called \texttt{SetServices}.  This subroutine is called by a parent component or top-level program to register all of the execution phases and specialization points for the component.
-
-\item In the NUOPC tree view, find the element \emph{Calls generic Set Services} under the \emph{Set Services} element. The yellow arrow icon indicates that the element maps to a subroutine call found during reverse engineering. Double-click the element and the corresponding call will be highlighted in the source code. 
-
-\parbox{\linewidth}{\centering
-  \includegraphics[width=8cm]{figs/reveng_fig5.png}
-}
-
-This call is an up call to the \texttt{SetServices} routine of the generic NUOPC Driver component and it handles registration of the methods common to all NUOPC Drivers. Calling the generic SetServices method is always required when implementing a specialized version of a NUOPC component (e.g., Model, Driver, or Mediator).
-
-\item In the reverse engineered model, find the element \emph{NUOPC Driver} $\rightarrow$ \emph{Initialization} $\rightarrow$ \emph{phase 0}. Note that it does not have an icon because this element does not map to an element in the reverse engineered code. This is because the phase 0 initialization is handled by the generic NUOPC Driver and does not require a separate user-supplied implementation. The behavior of the generic implementation is described in a tooltip popup when the mouse hovers over the phase 0 element. 
-
-\parbox{\linewidth}{\centering
-  \includegraphics[width=8cm]{figs/reveng_fig6.png}
-}
-
-\item Hover over the \emph{phase 1} initialization element in the reverse engineered model to see the documentation about this element.  Again, this phase is provided by the generic NUOPC Driver although there are several ways in which the generic phase 1 behavior can be specialized.  Two of the specializations are required, \emph{Set Model Count} and \emph{Set Model Services}, and two are optional, \emph{Set Model PET List} and \emph{Modify Initialize Phase Map}.  Note that the two required specializations have been provided in the prototype code (indicated by the green subroutine icons) and the two optional specializations are not present (indicated by the grayed out icons).
-
-\parbox{\linewidth}{\centering
-  \includegraphics[width=8cm]{figs/reveng_fig7.png}
-}
-
-\end{enumerate}
-
-\section{NUOPC Compliance Verification}
-
-In this section, we will see how the Cupid reverse engineering tool can show compliance issues by identifying required source code elements that are missing.  The compliance checking capabilities of Cupid are a companion to two other analysis tools, the \emph{NUOPC Compliance Checker} and \emph{Component Explorer}. The key difference lies in the kinds of analyses performed. At present, Cupid is purely a static analysis tool and identifies compliance issues by examining the abstract syntax of NUOPC application source code. The \emph{NUOPC Compliance Checker} and \emph{Component Explorer} support dynamic analysis, outputting compliance information in log form as the NUOPC application executes.  As such these runtime tools can identify a greater number of compliance issues.  
-
-However, because Cupid's reverse engineering works on partially completed code, it is useful for identifying many compliance issues earlier in the development process, before any runs are attempted. The results of the static compliance check are available immediately as the NUOPC application is being developed and, as we will see in the next chapter, Cupid's code generation feature provides some additional assistance to the developer in bringing the code to a compliant state.
-
-More information about the runtime compliance checking tools can be found in section 5 of the \href{http://www.earthsystemmodeling.org/esmf_releases/public/ESMF\_6\_3\_0r/NUOPC_refdoc/node6.html}{NUOPC Reference Manual}.
-
-In the steps that follow, we will create a compliance issue in the \emph{SingleModelProto} application and see the results of the reverse engineered model.
-
-\begin{enumerate}
-
-\item Make sure you have the \emph{SingleModelProto} source code in your Eclipse workspace.
-
-\item Open the file \emph{driver.F90} and find the subroutine \texttt{SetModelCount}.  Select the entire subroutine, right click, and choose Toggle Comment.  This will comment out the entire region of code.
-
-\parbox{\linewidth}{\centering
-  \includegraphics[width=8cm]{figs/verify_fig1.png}
-}
-
-\item Save \emph{driver.F90}.
-
-\item In the NUOPC tree viewer, click the reverse engineering button again to re-run the reverse engineering function on the modified code.  \textit{(Currently, the tool does not automatically sync with updated code---the reverse engineering function must be run manually.)}  
-
-\item Elements in the reverse engineered model are colored red if a compliance issue is found at or below that element.  Drilling down into the outline reveals the missing element: because the \texttt{SetModelCount} subroutine is commented out, one of the required specialization points no longer appears in the code.  Hovering over a red element shows a tooltip popup with a description of the compliance issue.
-
-\parbox{\linewidth}{\centering
-  \includegraphics[width=8cm]{figs/verify_fig3.png}
-}
-
-\end{enumerate}
-
-
-
-\chapter{Generating NUOPC-compliant Code}
-
-Even if a software framework is well designed, writing framework completion code is notoriously difficult, even for seasoned developers. Often, completing a single logical task requires making several code additions at multiple places spread throughout the application source code. If one or more of the required additions are inadvertently left out, the application may not behave as expected.  
-
-In the software engineering research community, many ideas have been proposed for how to help developers write framework-based applications correctly and efficiently. For ESMF and NUOPC, guidance is provided in the form of comprehensive API documentation (\href{http://www.earthsystemmodeling.org/esmf_releases/public/last/ESMF_refdoc/}{ESMF Reference Manual}, \href{https://earthsystemcog.org/projects/nuopc/refmans}{NUOPC Reference Manual}), system tests (included with source distribution), and \href{https://earthsystemcog.org/projects/nuopc/proto_codes}{small prototype codebases} that show how to structure NUOPC applications based on the components in the modeled system (e.g., standalone atmosphere, coupled atmosphere-ocean, three-component system, etc.). 
-
-Cupid's code generation feature complements these static resources by generating on-the-fly NUOPC-compliant source code fragments directly in existing source files. The user initiates a code fragment generation by adding elements to a reverse engineered model in the NUOPC tree viewer. The source code is then synchronized with the tree viewer, generating the required code fragments. The generated code fragments can then be customized by the developer for their particular case. The following use case illustrates use of forward engineering feature:
-
-\begin{quote}
-A developer has finished writing the initialization phases for a NUOPC Model component called ATM and now needs to add the capability to advance the model one time step. The developer right clicks on the ATM element in the NUOPC tree viewer and selects ``Add Model Advance.''  Two things happen immediately: the tree viewer is updated with a new sub-element underneath ATM called ``Model Advance'' which in turn contains sub-elements ``Registered in Set Services'' and ``Implementation.'' Then, source code fragments are generated inside the Fortran file for ATM including a call inside the ATM SetServices to register the Model Advance subroutine and a stub for the new Model Advance subroutine.
-\end{quote}
-
-The use case shows some advantages of this approach compared to an approach in which code is copied-and-pasted from prototypical example code. First, the new Model Advance element added to the tree viewer included multiple sub-elements indicating that source code changes are required in at least two places: a new subroutine and a call to register this subroutine with the framework.  This provides guidance to the developer to ensure that all framework requirements are met. The approach, therefore, is less error-prone than brute force copy and paste as some required code may inadvertently be left off. Also, the generated code fragments are customized based on the state of the existing source code. For example, the developer may be using specialized variable names. Since these variables have already been discovered during the reverse engineering phase, the generated code can reference these variables instead of requiring the developer to modify variables in copy-pasted code.
-
-\section {Generate a NUOPC Model Finalize method}
-
-In this section we will demonstrate the code generation capabilities of Cupid by generating a subroutine stub for an optional specialization point and registering the subroutine in the \texttt{SetServices} method of the model.
-
-\begin{enumerate}
-
-\item Be sure you have the \emph{SingleModelProto} project in your Eclipse workspace.
-
-\item Open the file \emph{model.F90}.
-
-\item In the NUOPC view, click the reverse engineer button.  The view should populate with the reverse engineered model.
-
-\item Expand the \emph{NUOPC Model} element and notice that the last child element, \emph{Finalize}, has a grayed out icon.  This indicates that there is no \texttt{Finalize} subroutine defined in \emph{model.F90} (the subroutine is optional).
-
-\parbox{\linewidth}{\centering
-  \includegraphics[width=8cm]{figs/gen_fig1.png}
-}
-
-\item Right click on the \emph{NUOPC Model} element in the outline and select \emph{Add Finalize (basic)}. Both the NUOPC view and code editor will be updated.  
-
-In the editor showing \emph{model.F90}, two blocks of code are generated.  The yellow blocks on the small vertical bar directly to the right of editor indicate which blocks of code were generated by Cupid.  Clicking on a yellow block highlights the generated code, which has been inserted into the existing source file.  The generated fragments of code are shown in listings~\ref{lst:simple1} and \ref{lst:simple2}
-
-\parbox{\linewidth}{\centering
-  \includegraphics[width=12cm]{figs/gen_fig2.png}
-}
-
-
-\begin{lstlisting}[label={lst:simple1}, caption=A call to register the generated subroutine as an ESMF Finalize method. This call is inserted at the end of the Model's \texttt{SetServices} method.]
-call ESMF_GridCompSetEntryPoint(gcomp, ESMF_METHOD_FINALIZE, & 
-		userRoutine = Finalize, phase = 1, rc = rc)
-\end{lstlisting}
-
-\begin{lstlisting}[label={lst:simple2}, caption=A Finalize subroutine stub to be customized. The subroutine is inserted at the end of the module.]
-! <b>NUOPC provided.</b>  Optionally overwrite the provided NOOP with model 
-! finalization code.
-subroutine Finalize(gcomp, importState, exportState, clock, rc)
-		type(ESMF_GridComp), intent(inout) :: gcomp
-		type(ESMF_State), intent(inout) :: importState
-		type(ESMF_State), intent(inout) :: exportState
-		type(ESMF_Clock), intent(inout) :: clock
-		integer, intent(out) :: rc
-end subroutine
-\end{lstlisting}
-
 
 \end{enumerate}
 
