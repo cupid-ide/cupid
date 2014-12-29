@@ -20,3 +20,7 @@
 /.EntryPointCodeConcept.java._trace
 /.CodeGenerationException.java._trace
 /.NUOPCComponent.java._trace
+/CodeGenerationException.java
+/EntryPointCodeConcept.java
+/NUOPCComponent.java
+/NUOPCModel.java
