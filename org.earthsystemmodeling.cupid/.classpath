@@ -1,11 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <classpath>
-	<classpathentry kind="src" path="xtend-gen"/>
-	<classpathentry kind="src" path="src"/>
-	<classpathentry exported="true" kind="lib" path="lib/commons-io-2.0.jar"/>
-	<classpathentry exported="true" kind="lib" path="lib/h2-1.3.148.jar"/>
-	<classpathentry exported="true" kind="lib" path="lib/hgdbprolog-1.2.jar" sourcepath="/tuprolog/src/java"/>
-	<classpathentry exported="true" kind="lib" path="lib/jdom/jdom-1.1.3.jar"/>
+	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/JavaSE-1.7"/>
+	<classpathentry kind="con" path="org.eclipse.pde.core.requiredPlugins"/>
+	<classpathentry kind="src" path="src/"/>
+	<classpathentry kind="src" path="xtend-gen/"/>
+	<classpathentry exported="true" kind="lib" path="lib/ST-4.0.7.jar"/>
+	<classpathentry exported="true" kind="lib" path="lib/aws-java-sdk-1.6.10.jar"/>
+	<classpathentry exported="true" kind="lib" path="lib/aws-java-sdk-flow-build-tools-1.6.10.jar"/>
 	<classpathentry exported="true" kind="lib" path="lib/aspectj-1.6/aspectjrt.jar"/>
 	<classpathentry exported="true" kind="lib" path="lib/aspectj-1.6/aspectjweaver.jar"/>
 	<classpathentry exported="true" kind="lib" path="lib/commons-codec-1.3/commons-codec-1.3.jar"/>
@@ -22,10 +23,9 @@
 	<classpathentry exported="true" kind="lib" path="lib/spring-3.0/spring-core-3.0.7.jar"/>
 	<classpathentry exported="true" kind="lib" path="lib/stax-api-1.0.1/stax-api-1.0.1.jar"/>
 	<classpathentry exported="true" kind="lib" path="lib/stax-ri-1.2.0/stax-1.2.0.jar"/>
-	<classpathentry exported="true" kind="lib" path="lib/aws-java-sdk-1.6.10.jar"/>
-	<classpathentry exported="true" kind="lib" path="lib/aws-java-sdk-flow-build-tools-1.6.10.jar"/>
-	<classpathentry kind="con" path="org.eclipse.pde.core.requiredPlugins"/>
-	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/JavaSE-1.6"/>
-	<classpathentry kind="lib" path="lib/ST-4.0.7.jar"/>
-	<classpathentry kind="output" path="bin"/>
+	<classpathentry exported="true" kind="lib" path="lib/jdom/jdom-1.1.3.jar"/>
+	<classpathentry exported="true" kind="lib" path="lib/hgdbprolog-1.2.jar" sourcepath="/tuprolog/src/java"/>
+	<classpathentry exported="true" kind="lib" path="lib/h2-1.3.148.jar"/>
+	<classpathentry exported="true" kind="lib" path="lib/commons-io-2.0.jar"/>
+	<classpathentry kind="output" path="target/classes"/>
 </classpath>
