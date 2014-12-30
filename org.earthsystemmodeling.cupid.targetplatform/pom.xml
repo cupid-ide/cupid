@@ -1,0 +1,30 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+  <groupId>org.earthsystemmodeling.cupid</groupId>
+  <artifactId>org.earthsystemmodeling.cupid.targetplatform</artifactId>
+  <version>0.0.1-SNAPSHOT</version>
+  <packaging>eclipse-target-definition</packaging>
+  
+  <properties>  
+  	<tycho-version>0.19.0</tycho-version>  
+ 	</properties> 
+ 	
+ 	<build>  
+  <plugins>  
+   <plugin>  
+    <!-- enable tycho build extension -->  
+    <groupId>org.eclipse.tycho</groupId>  
+    <artifactId>tycho-maven-plugin</artifactId>  
+    <version>${tycho-version}</version>  
+    <extensions>true</extensions>  
+   </plugin> 
+   </plugins>
+   </build>
+ 	
+ 	<parent>
+ 		<groupId>org.earthsystemmodeling.cupid</groupId>
+ 		<artifactId>org.earthsystemmodeling.cupid.releng</artifactId>
+ 		<version>0.1.0--SNAPSHOT</version>
+ 		<relativePath>../org.earthsystemmodeling.cupid.releng</relativePath>
+ 	</parent>
+</project>
