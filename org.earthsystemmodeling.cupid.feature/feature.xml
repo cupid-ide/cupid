@@ -34,26 +34,6 @@ DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
    </license>
 
-   <includes
-         id="org.eclipse.ptp"
-         version="0.0.0"/>
-
-   <includes
-         id="org.eclipse.ptp.fortran"
-         version="0.0.0"/>
-
-   <includes
-         id="org.eclipse.ptp.rdt.sync.fortran"
-         version="0.0.0"/>
-
-   <includes
-         id="org.eclipse.remote"
-         version="0.0.0"/>
-
-   <includes
-         id="org.eclipse.photran"
-         version="0.0.0"/>
-
    <requires>
       <import plugin="org.eclipse.core.runtime"/>
       <import plugin="org.eclipse.photran.core.vpg" version="8.0.0" match="greaterOrEqual"/>
