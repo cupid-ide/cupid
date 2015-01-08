@@ -3,5 +3,5 @@ Customized Files:
 org.eclipse.ptp.master/pom.xml
 org.eclipse.ptp/pom.xml
 org.eclipse.ptp/releng/org.eclipse.ptp.repo/category.xml
-
+org.eclipse.ptp.master/org.eclipse.ptp.product-feature/feature.xml
 
