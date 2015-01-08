@@ -17,8 +17,8 @@ Class=LaTeXView
 Document=cupid_0.1beta.tex
 
 [Frame0_View0,0]
-TopLine=674
-Cursor=36700
+TopLine=349
+Cursor=20204
 
 [SessionInfo]
 FrameCount=1
