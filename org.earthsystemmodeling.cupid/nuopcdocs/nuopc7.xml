@@ -275,7 +275,7 @@
 	<doc class="org.earthsystemmodeling.cupid.nuopc_v7.NUOPCModel.SetRunClock">
 	<![CDATA[
 	<b>SetRunClock</b><hr />
-	<SMALL>PECIALIZATION </SMALL>R<SMALL>EQUIRED/</SMALL>P<SMALL>ROVIDED</SMALL>: <TT>label_SetRunClock</TT> to check and set the internal Clock against the incoming Clock.
+	S<SMALL>PECIALIZATION </SMALL>R<SMALL>EQUIRED/</SMALL>P<SMALL>ROVIDED</SMALL>: <TT>label_SetRunClock</TT> to check and set the internal Clock against the incoming Clock.
 	
 	]]>
 	</doc>

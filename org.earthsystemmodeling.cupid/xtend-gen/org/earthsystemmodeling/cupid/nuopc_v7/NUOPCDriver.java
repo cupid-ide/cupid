@@ -37,12 +37,6 @@ public class NUOPCDriver extends NUOPCComponent {
     @Child
     public NUOPCDriver.SetModelServices setModelServices;
     
-    @Child
-    public NUOPCDriver.SetModelCount setModelCount;
-    
-    @Child(min = 0)
-    public NUOPCDriver.SetModelPetLists setModelPetLists;
-    
     @Child(min = 0)
     public NUOPCDriver.SetRunSequence setRunSequence;
     
@@ -60,92 +54,63 @@ public class NUOPCDriver extends NUOPCComponent {
         NUOPCDriver.SetModelServices _setModelServices = new NUOPCDriver.SetModelServices(this);
         SpecializationMethodCodeConcept<NUOPCDriver.Initialization> _reverse = _setModelServices.reverse();
         this.setModelServices = ((NUOPCDriver.SetModelServices) _reverse);
-        NUOPCDriver.SetModelCount _setModelCount = new NUOPCDriver.SetModelCount(this);
-        SpecializationMethodCodeConcept<NUOPCDriver.Initialization> _reverse_1 = _setModelCount.reverse();
-        this.setModelCount = ((NUOPCDriver.SetModelCount) _reverse_1);
-        NUOPCDriver.SetModelPetLists _setModelPetLists = new NUOPCDriver.SetModelPetLists(this);
-        SpecializationMethodCodeConcept<NUOPCDriver.Initialization> _reverse_2 = _setModelPetLists.reverse();
-        this.setModelPetLists = ((NUOPCDriver.SetModelPetLists) _reverse_2);
         NUOPCDriver.SetRunSequence _setRunSequence = new NUOPCDriver.SetRunSequence(this);
-        SpecializationMethodCodeConcept<NUOPCDriver.Initialization> _reverse_3 = _setRunSequence.reverse();
-        this.setRunSequence = ((NUOPCDriver.SetRunSequence) _reverse_3);
+        SpecializationMethodCodeConcept<NUOPCDriver.Initialization> _reverse_1 = _setRunSequence.reverse();
+        this.setRunSequence = ((NUOPCDriver.SetRunSequence) _reverse_1);
         _xblockexpression = this;
       }
       return _xblockexpression;
     }
   }
   
-  @Label(label = "SetModelCount", type = "subroutine")
-  public static class SetModelCount extends SpecializationMethodCodeConcept<NUOPCDriver.Initialization> {
-    public SetModelCount(final NUOPCDriver.Initialization parent) {
-      super(parent, "NUOPC_Driver", "label_SetModelCount");
-      this.subroutineName = "SetModelCount";
-      this.specLabel = "driver_label_SetModelCount";
-      this.paramGridComp = "driver";
-      this.paramRC = "rc";
-    }
-    
-    public String subroutineTemplate() {
-      StringConcatenation _builder = new StringConcatenation();
-      _builder.newLine();
-      _builder.append("subroutine ");
-      _builder.append(this.subroutineName, "");
-      _builder.append("(");
-      _builder.append(this.paramGridComp, "");
-      _builder.append(", ");
-      _builder.append(this.paramRC, "");
-      _builder.append(")");
-      _builder.newLineIfNotEmpty();
-      _builder.append("    ");
-      _builder.append("type(ESMF_GridComp)  :: ");
-      _builder.append(this.paramGridComp, "    ");
-      _builder.newLineIfNotEmpty();
-      _builder.append("    ");
-      _builder.append("integer, intent(out) :: ");
-      _builder.append(this.paramRC, "    ");
-      _builder.newLineIfNotEmpty();
-      _builder.newLine();
-      _builder.append("    ");
-      _builder.append("rc = ESMF_SUCCESS");
-      _builder.newLine();
-      _builder.newLine();
-      _builder.append("    ");
-      _builder.append("! set the modelCount ");
-      _builder.newLine();
-      _builder.append("    ");
-      _builder.append("call NUOPC_DriverSet(driver, modelCount=1, rc=rc)");
-      _builder.newLine();
-      _builder.append("    ");
-      _builder.append("if (ESMF_LogFoundError(rcToCheck=rc, msg=ESMF_LOGERR_PASSTHRU, &");
-      _builder.newLine();
-      _builder.append("      ");
-      _builder.append("line=__LINE__, &");
-      _builder.newLine();
-      _builder.append("      ");
-      _builder.append("file=__FILE__)) &");
-      _builder.newLine();
-      _builder.append("      ");
-      _builder.append("return  ! bail out");
-      _builder.newLine();
-      _builder.newLine();
-      _builder.append("end subroutine");
-      _builder.newLine();
-      return _builder.toString();
-    }
-    
-    public CodeConcept<?, ASTModuleNode> module() {
-      return this._parent._parent;
-    }
-    
-    public SetServicesCodeConcept<?> setServices() {
-      return this._parent._parent.setServices;
-    }
-    
-    public NUOPCComponent.GenericImport genericUse() {
-      return this._parent._parent.importNUOPCGeneric;
-    }
-  }
-  
+  /**
+   * @Label(label="SetModelCount", type="subroutine")
+   * public static class SetModelCount extends SpecializationMethodCodeConcept<Initialization> {
+   * 
+   * new(Initialization parent) {
+   * super(parent, "NUOPC_Driver", "label_SetModelCount")
+   * 
+   * //defaults
+   * subroutineName = "SetModelCount"
+   * specLabel = "driver_label_SetModelCount"
+   * paramGridComp = "driver"
+   * paramRC = "rc"
+   * }
+   * 
+   * override subroutineTemplate() {
+   * '''
+   * 
+   * subroutine «subroutineName»(«paramGridComp», «paramRC»)
+   * type(ESMF_GridComp)  :: «paramGridComp»
+   * integer, intent(out) :: «paramRC»
+   * 
+   * rc = ESMF_SUCCESS
+   * 
+   * ! set the modelCount
+   * call NUOPC_DriverSet(driver, modelCount=1, rc=rc)
+   * if (ESMF_LogFoundError(rcToCheck=rc, msg=ESMF_LOGERR_PASSTHRU, &
+   * line=__LINE__, &
+   * file=__FILE__)) &
+   * return  ! bail out
+   * 
+   * end subroutine
+   * '''
+   * }
+   * 
+   * override module() {
+   * _parent._parent
+   * }
+   * 
+   * override setServices() {
+   * _parent._parent.setServices
+   * }
+   * 
+   * override genericUse() {
+   * _parent._parent.importNUOPCGeneric
+   * }
+   * 
+   * }
+   */
   @Label(label = "SetModelServices", type = "subroutine")
   public static class SetModelServices extends SpecializationMethodCodeConcept<NUOPCDriver.Initialization> {
     @Child(max = (-1))
@@ -469,6 +434,8 @@ public class NUOPCDriver extends NUOPCComponent {
               } else {
                 String _string_2 = rs.getString("_arg2Expr");
                 addComp.compLabel = _string_2;
+                String _string_3 = rs.getString("_arg3Expr");
+                addComp.compSetServices = _string_3;
               }
               retList.add(addComp);
             }
@@ -485,38 +452,56 @@ public class NUOPCDriver extends NUOPCComponent {
       IFortranAST _xblockexpression = null;
       {
         IFortranAST ast = this.getAST();
+        ASTSubroutineSubprogramNode ssn = this._parent.getASTRef();
         StringConcatenation _builder = new StringConcatenation();
         _builder.newLine();
-        _builder.append("call NUOPC_DriverAddComp(");
-        _builder.append(this._parent.paramGridComp, "");
-        _builder.append(", \"");
-        CharSequence _paramch = this.paramch("ComponentName");
-        _builder.append(_paramch, "");
-        _builder.append("\", ");
-        CharSequence _paramch_1 = this.paramch("CompSetServices");
-        _builder.append(_paramch_1, "");
-        _builder.append(", comp=child, rc=");
-        _builder.append(this._parent.paramRC, "");
-        _builder.append(")");
-        _builder.newLineIfNotEmpty();
-        _builder.append("if (ESMF_LogFoundError(rcToCheck=");
-        _builder.append(this._parent.paramRC, "");
-        _builder.append(", msg=ESMF_LOGERR_PASSTHRU, &");
-        _builder.newLineIfNotEmpty();
-        _builder.append("    ");
-        _builder.append("line=__LINE__, &");
-        _builder.newLine();
-        _builder.append("    ");
-        _builder.append("file=__FILE__)) &");
-        _builder.newLine();
-        _builder.append("    ");
-        _builder.append("return  ! bail out");
+        _builder.append("type(ESMF_GridComp)            :: child");
         _builder.newLine();
         String code = _builder.toString();
+        final IASTListNode<IBodyConstruct> typeNodes = CodeExtraction.parseLiteralStatementSequence(code);
+        final ASTTypeDeclarationStmtNode last = ssn.<ASTTypeDeclarationStmtNode>findLast(ASTTypeDeclarationStmtNode.class);
+        boolean _notEquals = (!Objects.equal(last, null));
+        if (_notEquals) {
+          List<IBodyConstruct> _reverse = ListExtensions.<IBodyConstruct>reverse(typeNodes);
+          for (final IBodyConstruct typeNode : _reverse) {
+            IASTListNode<IBodyConstruct> _body = ssn.getBody();
+            _body.insertAfter(last, typeNode);
+          }
+        } else {
+          IASTListNode<IBodyConstruct> _body_1 = ssn.getBody();
+          _body_1.addAll(typeNodes);
+        }
+        StringConcatenation _builder_1 = new StringConcatenation();
+        _builder_1.newLine();
+        _builder_1.append("call NUOPC_DriverAddComp(");
+        _builder_1.append(this._parent.paramGridComp, "");
+        _builder_1.append(", \"");
+        CharSequence _paramch = this.paramch("ComponentName");
+        _builder_1.append(_paramch, "");
+        _builder_1.append("\", ");
+        CharSequence _paramch_1 = this.paramch("CompSetServices");
+        _builder_1.append(_paramch_1, "");
+        _builder_1.append(", comp=child, rc=");
+        _builder_1.append(this._parent.paramRC, "");
+        _builder_1.append(")");
+        _builder_1.newLineIfNotEmpty();
+        _builder_1.append("if (ESMF_LogFoundError(rcToCheck=");
+        _builder_1.append(this._parent.paramRC, "");
+        _builder_1.append(", msg=ESMF_LOGERR_PASSTHRU, &");
+        _builder_1.newLineIfNotEmpty();
+        _builder_1.append("    ");
+        _builder_1.append("line=__LINE__, &");
+        _builder_1.newLine();
+        _builder_1.append("    ");
+        _builder_1.append("file=__FILE__)) &");
+        _builder_1.newLine();
+        _builder_1.append("    ");
+        _builder_1.append("return  ! bail out");
+        _builder_1.newLine();
+        code = _builder_1.toString();
         final IASTListNode<IBodyConstruct> stmts = CodeExtraction.parseLiteralStatementSequence(code);
-        ASTSubroutineSubprogramNode ssn = this._parent.getASTRef();
-        IASTListNode<IBodyConstruct> _body = ssn.getBody();
-        _body.addAll(stmts);
+        IASTListNode<IBodyConstruct> _body_2 = ssn.getBody();
+        _body_2.addAll(stmts);
         IBodyConstruct _get = stmts.get(0);
         this.setASTRef(((ASTCallStmtNode) _get));
         _xblockexpression = ast;
@@ -852,138 +837,6 @@ public class NUOPCDriver extends NUOPCComponent {
     
     public NUOPCComponent.GenericImport genericUse() {
       return this._parent._parent.importNUOPCGeneric;
-    }
-  }
-  
-  @Label(label = "SetModelPetLists", type = "subroutine")
-  public static class SetModelPetLists extends SpecializationMethodCodeConcept<NUOPCDriver.Initialization> {
-    public SetModelPetLists(final NUOPCDriver.Initialization parent) {
-      super(parent, "NUOPC_Driver", "label_SetModelPetLists");
-      this.subroutineName = "SetModelPetLists";
-      this.specLabel = "driver_label_SetModelPetLists";
-    }
-    
-    public CodeConcept<?, ASTModuleNode> module() {
-      return this._parent._parent;
-    }
-    
-    public SetServicesCodeConcept<?> setServices() {
-      return this._parent._parent.setServices;
-    }
-    
-    public NUOPCComponent.GenericImport genericUse() {
-      return this._parent._parent.importNUOPCGeneric;
-    }
-    
-    public String subroutineTemplate() {
-      StringConcatenation _builder = new StringConcatenation();
-      _builder.newLine();
-      _builder.append("subroutine ");
-      _builder.append(this.subroutineName, "");
-      _builder.append("(");
-      _builder.append(this.paramGridComp, "");
-      _builder.append(", ");
-      _builder.append(this.paramRC, "");
-      _builder.append(")");
-      _builder.newLineIfNotEmpty();
-      _builder.append("    ");
-      _builder.append("type(ESMF_GridComp)  :: ");
-      _builder.append(this.paramGridComp, "    ");
-      _builder.newLineIfNotEmpty();
-      _builder.append("    ");
-      _builder.append("integer, intent(out) :: ");
-      _builder.append(this.paramRC, "    ");
-      _builder.newLineIfNotEmpty();
-      _builder.append("    ");
-      _builder.newLine();
-      _builder.append("    ");
-      _builder.append("! local variables");
-      _builder.newLine();
-      _builder.append("    ");
-      _builder.append("integer                       :: localrc");
-      _builder.newLine();
-      _builder.append("    ");
-      _builder.append("integer                       :: petCount, i");
-      _builder.newLine();
-      _builder.append("    ");
-      _builder.append("integer, allocatable          :: petList(:)");
-      _builder.newLine();
-      _builder.newLine();
-      _builder.append("    ");
-      _builder.append("rc = ESMF_SUCCESS");
-      _builder.newLine();
-      _builder.newLine();
-      _builder.append("    ");
-      _builder.append("! get the petCount");
-      _builder.newLine();
-      _builder.append("    ");
-      _builder.append("call ESMF_GridCompGet(");
-      _builder.append(this.paramGridComp, "    ");
-      _builder.append(", petCount=petCount, rc=localrc)");
-      _builder.newLineIfNotEmpty();
-      _builder.append("    ");
-      _builder.append("if (ESMF_LogFoundError(rcToCheck=localrc, msg=ESMF_LOGERR_PASSTHRU, &");
-      _builder.newLine();
-      _builder.append("      ");
-      _builder.append("line=__LINE__, &");
-      _builder.newLine();
-      _builder.append("      ");
-      _builder.append("file=__FILE__)) &");
-      _builder.newLine();
-      _builder.append("      ");
-      _builder.append("return  ! bail out");
-      _builder.newLine();
-      _builder.append("    ");
-      _builder.newLine();
-      _builder.append("    ");
-      _builder.append("! example of setting petList for a component");
-      _builder.newLine();
-      _builder.append("    ");
-      _builder.append("allocate(petList(petCount/2-1))");
-      _builder.newLine();
-      _builder.append("    ");
-      _builder.append("do i=1, petCount/2-1");
-      _builder.newLine();
-      _builder.append("      ");
-      _builder.append("petList(i) = i-1 ! PET labeling goes from 0 to petCount-1");
-      _builder.newLine();
-      _builder.append("    ");
-      _builder.append("enddo");
-      _builder.newLine();
-      _builder.append("    ");
-      _builder.newLine();
-      _builder.append("    ");
-      _builder.append("call NUOPC_DriverSetModel(");
-      _builder.append(this.paramGridComp, "    ");
-      _builder.append(", compIndex=1, petList=petList, rc=localrc)");
-      _builder.newLineIfNotEmpty();
-      _builder.append("    ");
-      _builder.append("if (ESMF_LogFoundError(rcToCheck=localrc, msg=ESMF_LOGERR_PASSTHRU, &");
-      _builder.newLine();
-      _builder.append("      ");
-      _builder.append("line=__LINE__, &");
-      _builder.newLine();
-      _builder.append("      ");
-      _builder.append("file=__FILE__)) &");
-      _builder.newLine();
-      _builder.append("      ");
-      _builder.append("return  ! bail out");
-      _builder.newLine();
-      _builder.append("    ");
-      _builder.append("deallocate(petList)");
-      _builder.newLine();
-      _builder.append("      ");
-      _builder.newLine();
-      _builder.append("    ");
-      _builder.append("! repeat as necessary for each component");
-      _builder.newLine();
-      _builder.append("    ");
-      _builder.newLine();
-      _builder.append("  ");
-      _builder.append("end subroutine");
-      _builder.newLine();
-      _builder.newLine();
-      return _builder.toString();
     }
   }
   

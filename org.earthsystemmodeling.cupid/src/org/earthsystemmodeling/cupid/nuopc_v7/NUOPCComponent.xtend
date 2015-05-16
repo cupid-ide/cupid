@@ -44,7 +44,7 @@ public abstract class NUOPCComponent extends CodeConcept<CodeConcept<?,?>, ASTMo
 		
 		override GenericImport reverse() {
 			var rs = '''uses(«_id», _mid, _genericComp),
-						(usesEntity(_, «_id», 'routine_SetServices', _newName, _) ; true).'''.execQuery
+						(usesEntity(_, «_id», 'SetServices', _newName, _) ; true).'''.execQuery
 			if (rs.next) {
 				genericComp = rs.getString("_genericComp")
 				routineSetServices = rs.getString("_newName")

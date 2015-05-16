@@ -101,6 +101,18 @@ public class NUOPCModel extends NUOPCComponent {
     public SetServicesCodeConcept<?> setServices() {
       return this._parent._parent.setServices;
     }
+    
+    public IFortranAST forward() {
+      IFortranAST _xblockexpression = null;
+      {
+        IFortranAST ast = super.forward();
+        NUOPCModel.InitP1_AdvertiseField _initP1_AdvertiseField = new NUOPCModel.InitP1_AdvertiseField(this);
+        IFortranAST _forward = _initP1_AdvertiseField.forward();
+        ast = _forward;
+        _xblockexpression = ast;
+      }
+      return _xblockexpression;
+    }
   }
   
   @Label(label = "Advertise Field", type = "call")
@@ -774,7 +786,7 @@ public class NUOPCModel extends NUOPCComponent {
       _builder.append("! set the component\'s clock ");
       _builder.newLine();
       _builder.append("    ");
-      _builder.append("call NUOPC_CompSetClock(gcomp, clock=clock, rc=");
+      _builder.append("call NUOPC_CompSetClock(gcomp, externalClock=clock, rc=");
       _builder.append(this.paramRC, "    ");
       _builder.append(")");
       _builder.newLineIfNotEmpty();

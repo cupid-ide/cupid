@@ -1,6 +1,8 @@
 create schema if not exists prolog;
 set schema prolog;
 
+drop view if exists esmf_setservices;
+
 drop table if exists compilationUnit;
 drop table if exists tokenRef;
 drop table if exists module;
@@ -95,3 +97,21 @@ create table arrayConstructorVal(
      parent_id bigint,
      index int,
      val varchar(100));
+     
+
+/*
+CREATE OR REPLACE VIEW esmf_setservices AS
+SELECT s.id, s.parent_id, s.name, p1.name as param_gcomp, p2.name as param_rc
+FROM subroutine s
+INNER JOIN param p1 ON p1.parent_id = s.id 
+	and p1.index = 1
+	and p1.type = 'type(esmf_gridcomp)'
+INNER JOIN param p2 ON p2.parent_id = s.id 
+	and p2.index = 2
+	and p2.type = 'integer'
+	and p2.intentIn = 0
+	and p2.intentOut = 1
+WHERE s.name = 'SetServices' 
+	OR EXISTS 
+		(SELECT * from call_ c WHERE c.parent_id = s.id and c.name='NUOPC_CompDerive');
+*/   

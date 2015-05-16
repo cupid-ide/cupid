@@ -41,7 +41,7 @@ public abstract class NUOPCComponent extends CodeConcept<CodeConcept<?, ?>, ASTM
           _builder.append("\t\t\t\t\t\t");
           _builder.append("(usesEntity(_, ");
           _builder.append(this._id, "\t\t\t\t\t\t");
-          _builder.append(", \'routine_SetServices\', _newName, _) ; true).");
+          _builder.append(", \'SetServices\', _newName, _) ; true).");
           ResultSet rs = this.execQuery(_builder);
           NUOPCComponent.GenericImport _xifexpression = null;
           boolean _next = rs.next();

@@ -30,6 +30,25 @@ esmf_setservices(_id, _parentid, _name) :-
   	call_(_cid, _id, 'NUOPC_CompDerive')
   ).
 
+/*
+
+CREATE VIEW esmf_setservices AS
+SELECT s.id, s.parentid, s.name
+FROM subroutine s
+INNER JOIN param p1 ON p1.parentid = s.id 
+	and p1.index = 1
+	and p1.type = 'type(esmf_gridcomp)'
+INNER JOIN param p2 ON p2.parentid = s.id 
+	and p2.index = 2
+	and p2.type = 'integer'
+	and p2.intentIn = 0
+	and p2.intentOut = 1
+WHERE s.name = 'SetServices' 
+	OR EXISTS 
+		(SELECT * from call_ c WHERE c.parentid = s.id and c.name='NUOPC_CompDerive')
+
+*/
+
 /* redundant - same as above but with param names */  
 esmf_setservices(_id, _parentid, _name, _param_gcomp, _param_rc) :- 
   subroutine(_id, _parentid, _name),

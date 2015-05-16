@@ -123,8 +123,8 @@ end subroutine
 			code = 
 '''
 
-call NUOPC_CompSpecialize(«paramGridComp», specLabel=«specLabel», &
-	specRoutine=«subroutineName», rc=«paramRC»)
+call NUOPC_CompSpecialize(«setServices().paramGridComp», specLabel=«specLabel», &
+	specRoutine=«subroutineName», rc=«setServices().paramRC»)
 '''
 
 			var ASTCallStmtNode regCall = parseLiteralStatement(code) as ASTCallStmtNode

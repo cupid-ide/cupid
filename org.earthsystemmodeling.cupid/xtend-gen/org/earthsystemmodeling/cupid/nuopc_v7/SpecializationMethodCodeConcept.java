@@ -202,7 +202,8 @@ public abstract class SpecializationMethodCodeConcept<P extends CodeConcept<?, ?
           StringConcatenation _builder_1 = new StringConcatenation();
           _builder_1.newLine();
           _builder_1.append("call NUOPC_CompSpecialize(");
-          _builder_1.append(this.paramGridComp, "");
+          SetServicesCodeConcept<?> _setServices_2 = this.setServices();
+          _builder_1.append(_setServices_2.paramGridComp, "");
           _builder_1.append(", specLabel=");
           _builder_1.append(this.specLabel, "");
           _builder_1.append(", &");
@@ -211,7 +212,8 @@ public abstract class SpecializationMethodCodeConcept<P extends CodeConcept<?, ?
           _builder_1.append("specRoutine=");
           _builder_1.append(this.subroutineName, "\t");
           _builder_1.append(", rc=");
-          _builder_1.append(this.paramRC, "\t");
+          SetServicesCodeConcept<?> _setServices_3 = this.setServices();
+          _builder_1.append(_setServices_3.paramRC, "\t");
           _builder_1.append(")");
           _builder_1.newLineIfNotEmpty();
           code = _builder_1.toString();

@@ -25,6 +25,7 @@ import org.eclipse.photran.internal.core.parser.IASTListNode
 import org.eclipse.photran.internal.core.parser.IBodyConstruct
 import org.eclipse.photran.internal.core.parser.ASTTypeDeclarationStmtNode
 import org.earthsystemmodeling.cupid.annotation.Prop
+import alice.tuprolog.Struct
 
 @Label(label="NUOPC Driver", type="module")
 class NUOPCDriver extends NUOPCComponent {
@@ -98,11 +99,11 @@ class NUOPCDriver extends NUOPCComponent {
 		@Child
 		var public SetModelServices setModelServices
 		
-		@Child
-		var public SetModelCount setModelCount
+		//@Child
+		//var public SetModelCount setModelCount
 		
-		@Child(min=0)
-		var public SetModelPetLists setModelPetLists
+		//@Child(min=0)
+		//var public SetModelPetLists setModelPetLists
 		
 		@Child(min=0)
 		var public SetRunSequence setRunSequence
@@ -120,8 +121,8 @@ class NUOPCDriver extends NUOPCComponent {
 		
 		def reverseChildren() {
 			setModelServices = new SetModelServices(this).reverse as SetModelServices
-			setModelCount = new SetModelCount(this).reverse as SetModelCount
-			setModelPetLists = new SetModelPetLists(this).reverse as SetModelPetLists
+			//setModelCount = new SetModelCount(this).reverse as SetModelCount
+			//setModelPetLists = new SetModelPetLists(this).reverse as SetModelPetLists
 			setRunSequence = new SetRunSequence(this).reverse as SetRunSequence
 			//modifyInitializePhaseMap = new ModifyInitializePhaseMap(this).reverse as ModifyInitializePhaseMap		
 			
@@ -131,6 +132,7 @@ class NUOPCDriver extends NUOPCComponent {
 		
 	}
 	
+	/*
 	@Label(label="SetModelCount", type="subroutine")
 	public static class SetModelCount extends SpecializationMethodCodeConcept<Initialization> {
 		
@@ -177,6 +179,8 @@ end subroutine
 		}
 		
 	}
+	*
+	*/
 	
 	@Label(label="SetModelServices", type="subroutine")
 	static class SetModelServices extends SpecializationMethodCodeConcept<Initialization> {
@@ -332,6 +336,22 @@ if (ESMF_LogFoundError(rcToCheck=«paramRC», msg=ESMF_LOGERR_PASSTHRU, &
 							callArgWithType(_, _cid, 3, _arg3keyword, _arg3Type, _arg3Expr).'''
 							.execQuery
 			
+			//var rs = '''call_(_cid, «parentID», 'NUOPC_DriverAddComp'),
+			//				findall(arg(_idx, _keyword, _type, _expr), callArgWithType(_, _cid, _idx, _keyword, _type, _expr), Args).'''
+			//				.execQueryStruct
+			
+			//for (Struct s : rs) {
+				
+				//println(s);
+			//	println((s.getTerm(1) as Struct).getTerm(2) as Struct);
+				
+			//	var args = ((s.getTerm(1) as Struct).getTerm(2) as Struct).listIterator
+				//args.
+				
+			//}
+			
+			
+			
 			while (rs.next) {
 				var addComp = new SetModelServices_AddComp(_parent)
 				addComp._id = rs.getLong("_cid")
@@ -342,23 +362,41 @@ if (ESMF_LogFoundError(rcToCheck=«paramRC», msg=ESMF_LOGERR_PASSTHRU, &
 					addComp.dstCompLabel = rs.getString("_arg3Expr")
 				}
 				else {
-					addComp.compLabel = rs.getString("_arg2Expr")	
+					addComp.compLabel = rs.getString("_arg2Expr")
+					addComp.compSetServices = rs.getString("_arg3Expr")
 				}
 				
 				//addComp.compSetServices = rs.getString("_compSS")
 				retList.add(addComp)
 			}
 			
+			
 			retList
 		}
 		
 		override forward() {
 			
-			var IFortranAST ast = getAST			
-			
-			//TODO: handle declaration of child
+			var IFortranAST ast = getAST
+			var ASTSubroutineSubprogramNode ssn = _parent.ASTRef			
 			
 			var code = 
+'''
+
+type(ESMF_GridComp)            :: child
+'''			
+			val IASTListNode<IBodyConstruct> typeNodes = parseLiteralStatementSequence(code)
+			val ASTTypeDeclarationStmtNode last = ssn.findLast(ASTTypeDeclarationStmtNode);
+			if (last != null) {
+				for (IBodyConstruct typeNode : typeNodes.reverse) {
+					ssn.body.insertAfter(last, typeNode);
+				}
+			}
+			else {
+				ssn.body.addAll(typeNodes);
+			}
+					
+			
+			code = 
 '''
 
 call NUOPC_DriverAddComp(«_parent.paramGridComp», "«paramch('ComponentName')»", «paramch('CompSetServices')», comp=child, rc=«_parent.paramRC»)
@@ -368,8 +406,7 @@ if (ESMF_LogFoundError(rcToCheck=«_parent.paramRC», msg=ESMF_LOGERR_PASSTHRU, 
     return  ! bail out
 '''
 			val IASTListNode<IBodyConstruct> stmts = parseLiteralStatementSequence(code)
-			var ASTSubroutineSubprogramNode ssn = _parent.ASTRef
-			
+						
 			ssn.body.addAll(stmts)
 			setASTRef(stmts.get(0) as ASTCallStmtNode)
 	
@@ -574,6 +611,7 @@ if (ESMF_LogFoundError(rcToCheck=«_parent.paramRC», msg=ESMF_LOGERR_PASSTHRU, 
 		
 	}
 	
+	/*
 	@Label(label="SetModelPetLists", type="subroutine")
 	static class SetModelPetLists extends SpecializationMethodCodeConcept<Initialization> {
 	
@@ -639,5 +677,7 @@ subroutine «subroutineName»(«paramGridComp», «paramRC»)
 		
 	
 	}
+	*
+	*/
 	
 }

@@ -149,6 +149,13 @@ class NUOPCModel extends NUOPCComponent {
 			_parent._parent.setServices
 		}
 		
+		//testing forward chaining
+		override forward() {
+			var ast = super.forward
+			ast = new InitP1_AdvertiseField(this).forward
+			ast	
+		}
+		
 	}
 	
 	@Label(label="Advertise Field", type="call")
@@ -541,7 +548,7 @@ subroutine «subroutineName»(«paramGridComp», «paramRC»)
       return  ! bail out
       
     ! set the component's clock 
-    call NUOPC_CompSetClock(gcomp, clock=clock, rc=«paramRC»)
+    call NUOPC_CompSetClock(gcomp, externalClock=clock, rc=«paramRC»)
     if (ESMF_LogFoundError(rcToCheck=rc, msg=ESMF_LOGERR_PASSTHRU, &
       line=__LINE__, &
       file=__FILE__)) &

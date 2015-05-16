@@ -15,6 +15,9 @@ import org.eclipse.photran.internal.core.parser.ASTModuleNode
 import static org.earthsystemmodeling.cupid.util.CodeExtraction.parseLiteralProgramUnit
 import static org.earthsystemmodeling.cupid.util.CodeExtraction.parseLiteralStatement
 import org.eclipse.photran.internal.core.parser.ASTUseStmtNode
+import org.eclipse.photran.internal.core.parser.ASTImplicitStmtNode
+import org.eclipse.photran.internal.core.parser.ASTContainsStmtNode
+import org.eclipse.photran.internal.core.parser.ASTAccessStmtNode
 
 @Label(label="SetServices", type="subroutine")
 public class SetServicesCodeConcept<P extends NUOPCComponent> extends CodeConcept<P, ASTSubroutineSubprogramNode> {
@@ -38,6 +41,7 @@ public class SetServicesCodeConcept<P extends NUOPCComponent> extends CodeConcep
 		var rs = '''esmf_setservices(_sid, «parentID», _sname, _param_gcomp, _param_rc), 
 					( call_(_cid, _sid, 'NUOPC_CompDerive') ; true).'''.execQuery
 
+		//change to SQL?
 		try {
 			if (rs.next) {
 				_id = rs.getLong("_sid")
@@ -68,7 +72,7 @@ public class SetServicesCodeConcept<P extends NUOPCComponent> extends CodeConcep
 			val ASTUseStmtNode genericUse = _parent.importNUOPCGeneric.ASTRef as ASTUseStmtNode
 			var tempCode = genericUse.toString.trim
 			tempCode += ''', &
-						«routineSetServices» => routine_SetServices'''
+						«routineSetServices» => SetServices'''
 			var tempNode = parseLiteralStatement(tempCode) as ASTUseStmtNode;
 			genericUse.replaceWith(tempNode)					
 		}
@@ -97,6 +101,29 @@ end subroutine
 
 		mn.getModuleBody().add(ssn)
 		setASTRef(ssn)
+		
+		
+		//make SetServices public
+		code = 
+'''
+
+public SetServices
+'''
+		var tempNode = parseLiteralStatement(code) as ASTAccessStmtNode;
+		
+		var ASTContainsStmtNode csn = mn.getModuleBody().findLast(ASTContainsStmtNode)
+		if (csn != null) {
+			mn.getModuleBody().insertBefore(csn, tempNode)
+		}
+		else {
+			var ASTImplicitStmtNode isn = mn.getModuleBody().findLast(ASTImplicitStmtNode)
+			if (isn != null) {
+				mn.getModuleBody().insertAfter(isn, tempNode)
+			}
+			else {
+				mn.getModuleBody().add(tempNode)
+			}
+		}
 		
 		ast
 	}

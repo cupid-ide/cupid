@@ -12,6 +12,9 @@ import org.earthsystemmodeling.cupid.nuopc_v7.CodeConcept;
 import org.earthsystemmodeling.cupid.nuopc_v7.NUOPCComponent;
 import org.earthsystemmodeling.cupid.util.CodeExtraction;
 import org.eclipse.photran.core.IFortranAST;
+import org.eclipse.photran.internal.core.parser.ASTAccessStmtNode;
+import org.eclipse.photran.internal.core.parser.ASTContainsStmtNode;
+import org.eclipse.photran.internal.core.parser.ASTImplicitStmtNode;
 import org.eclipse.photran.internal.core.parser.ASTModuleNode;
 import org.eclipse.photran.internal.core.parser.ASTSubroutineSubprogramNode;
 import org.eclipse.photran.internal.core.parser.ASTUseStmtNode;
@@ -101,7 +104,7 @@ public class SetServicesCodeConcept<P extends NUOPCComponent> extends CodeConcep
         _builder.newLine();
         _builder.append("\t\t\t\t\t\t");
         _builder.append(routineSetServices, "\t\t\t\t\t\t");
-        _builder.append(" => routine_SetServices");
+        _builder.append(" => SetServices");
         tempCode = (_tempCode + _builder);
         IBodyConstruct _parseLiteralStatement = CodeExtraction.parseLiteralStatement(tempCode);
         ASTUseStmtNode tempNode = ((ASTUseStmtNode) _parseLiteralStatement);
@@ -166,6 +169,31 @@ public class SetServicesCodeConcept<P extends NUOPCComponent> extends CodeConcep
       IASTListNode<IModuleBodyConstruct> _moduleBody = mn.getModuleBody();
       _moduleBody.add(ssn);
       this.setASTRef(ssn);
+      StringConcatenation _builder_2 = new StringConcatenation();
+      _builder_2.newLine();
+      _builder_2.append("public SetServices");
+      _builder_2.newLine();
+      code = _builder_2.toString();
+      IBodyConstruct _parseLiteralStatement_1 = CodeExtraction.parseLiteralStatement(code);
+      ASTAccessStmtNode tempNode_1 = ((ASTAccessStmtNode) _parseLiteralStatement_1);
+      IASTListNode<IModuleBodyConstruct> _moduleBody_1 = mn.getModuleBody();
+      ASTContainsStmtNode csn = _moduleBody_1.<ASTContainsStmtNode>findLast(ASTContainsStmtNode.class);
+      boolean _notEquals = (!Objects.equal(csn, null));
+      if (_notEquals) {
+        IASTListNode<IModuleBodyConstruct> _moduleBody_2 = mn.getModuleBody();
+        _moduleBody_2.insertBefore(csn, tempNode_1);
+      } else {
+        IASTListNode<IModuleBodyConstruct> _moduleBody_3 = mn.getModuleBody();
+        ASTImplicitStmtNode isn = _moduleBody_3.<ASTImplicitStmtNode>findLast(ASTImplicitStmtNode.class);
+        boolean _notEquals_1 = (!Objects.equal(isn, null));
+        if (_notEquals_1) {
+          IASTListNode<IModuleBodyConstruct> _moduleBody_4 = mn.getModuleBody();
+          _moduleBody_4.insertAfter(isn, tempNode_1);
+        } else {
+          IASTListNode<IModuleBodyConstruct> _moduleBody_5 = mn.getModuleBody();
+          _moduleBody_5.add(tempNode_1);
+        }
+      }
       _xblockexpression = ast;
     }
     return _xblockexpression;
