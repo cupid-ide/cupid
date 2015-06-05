@@ -68,15 +68,15 @@ import org.eclipse.ptp.rdt.sync.core.SyncManager;
 import org.eclipse.ptp.rdt.sync.ui.ISynchronizeParticipant;
 import org.eclipse.ptp.rdt.sync.ui.ISynchronizeParticipantDescriptor;
 import org.eclipse.remote.core.IRemoteConnection;
-import org.eclipse.remote.core.IRemoteConnectionManager;
+import org.eclipse.remote.core.IRemoteConnectionType;
 import org.eclipse.remote.core.IRemoteConnectionWorkingCopy;
 import org.eclipse.remote.core.IRemoteProcess;
 import org.eclipse.remote.core.IRemoteProcessBuilder;
-import org.eclipse.remote.core.IRemoteServices;
-import org.eclipse.remote.core.RemoteServices;
+import org.eclipse.remote.core.IRemoteProcessService;
+import org.eclipse.remote.core.IRemoteServicesManager;
 import org.eclipse.remote.core.exception.RemoteConnectionException;
-import org.eclipse.remote.internal.jsch.core.JSchConnectionAttributes;
-import org.eclipse.remote.internal.jsch.core.JSchConnectionWorkingCopy;
+import org.eclipse.remote.internal.core.RemoteServicesManager;
+import org.eclipse.remote.internal.jsch.core.JSchConnection;
 import org.eclipse.swt.graphics.Font;
 import org.eclipse.swt.graphics.FontData;
 import org.eclipse.swt.widgets.Composite;
@@ -98,7 +98,7 @@ import org.osgi.framework.Bundle;
 import org.osgi.framework.FrameworkUtil;
 import org.stringtemplate.v4.ST;
 import org.w3c.dom.Document;
-import org.w3c.dom.NodeList;
+
 import org.xml.sax.SAXException;
 
 import com.amazonaws.auth.AWSCredentials;
@@ -617,16 +617,21 @@ public class CupidProjectWizard extends Wizard implements INewWizard, IExecutabl
 		monitor.beginTask("Creating remote connection", 2);
 
 		//IRemoteServices remoteServices = RemoteServices.getRemoteServices("org.eclipse.ptp.remote.RemoteTools", monitor);
-		IRemoteServices remoteServices = RemoteServices.getRemoteServices("org.eclipse.remote.JSch", monitor);
+		//IRemoteServices remoteServices = RemoteServices.getRemoteServices("org.eclipse.remote.JSch", monitor);
 		
+		IRemoteServicesManager remoteServicesManager = new RemoteServicesManager();
+		IRemoteConnectionType remoteConnType = remoteServicesManager.getConnectionType("org.eclipse.remote.JSch");
+				
 		monitor.worked(1);
 
-		IRemoteConnectionManager connManager = remoteServices.getConnectionManager();
+		//IRemoteConnectionManager connManager = remoteServices.getConnectionManager();
+				
 		IRemoteConnection remoteConn = null;
-		JSchConnectionWorkingCopy remoteConnWorkingCopy = null;
+		//JSchConnectionWorkingCopy remoteConnWorkingCopy = null;
+		IRemoteConnectionWorkingCopy remoteConnWorkingCopy = null;
 
-		if ((remoteServices.getCapabilities() & IRemoteServices.CAPABILITY_ADD_CONNECTIONS) 
-					== IRemoteServices.CAPABILITY_ADD_CONNECTIONS) {
+		if ((remoteConnType.getCapabilities() & IRemoteConnectionType.CAPABILITY_ADD_CONNECTIONS) == 
+				IRemoteConnectionType.CAPABILITY_ADD_CONNECTIONS) {
 			
 			//ssh key
 			URL keyURL = FileLocator.find(MY_BUNDLE, new Path("ssh/nesiikey.rsa"), null);
@@ -638,16 +643,26 @@ public class CupidProjectWizard extends Wizard implements INewWizard, IExecutabl
 				throw new CoreException(new OperationStatus(IStatus.ERROR, MY_BUNDLE.getSymbolicName(), 0, "Cannot find SSH key file", e));
 			}
 			
-			remoteConnWorkingCopy = (JSchConnectionWorkingCopy) connManager.newConnection("Cupid Environment (" + name + " - " + host + ")");
-			remoteConnWorkingCopy.setAddress(host);
-			remoteConnWorkingCopy.setUsername("sgeadmin");
+			//remoteConnWorkingCopy = (JSchConnectionWorkingCopy) connManager.newConnection("Cupid Environment (" + name + " - " + host + ")");
+			remoteConnWorkingCopy = remoteConnType.newConnection("Cupid Environment (" + name + " - " + host + ")");
+			
+			remoteConnWorkingCopy.setAttribute(JSchConnection.ADDRESS_ATTR, host);
+			remoteConnWorkingCopy.setAttribute(JSchConnection.USERNAME_ATTR, "sgeadmin");
+			
+			//remoteConnWorkingCopy.setAddress(host);
+			//remoteConnWorkingCopy.setUsername("sgeadmin");
+			
 			remoteConnWorkingCopy.setAttribute("org.earthsystemmodeling.cupid.ready", "true");
 			
-			//TODO: remove below after new version or org.eclipse.remote is released
-			remoteConnWorkingCopy.setAttribute("JSCH_KEYFILE_ATTR", keyFile);
+			//TODO: figure out how to set keyfile
+			//remoteConnWorkingCopy.setAttribute("JSCH_KEYFILE_ATTR", keyFile);
+			
+			
+			
 			//remoteConnWorkingCopy.setKeyFile(keyFile);
 			//remoteConnWorkingCopy.setAttribute(JSchConnectionAttributes.KEYFILE_ATTR, keyFile);
-			remoteConnWorkingCopy.setIsPasswordAuth(false);
+			remoteConnWorkingCopy.setAttribute(JSchConnection.IS_PASSWORD_ATTR, "false");
+			//remoteConnWorkingCopy.setIsPasswordAuth(false);
 			
 			//remoteConnWorkingCopy.setAttribute("org.eclipse.ptp.remotetools.environment.generichost.key-path", keyFile);
 			//remoteConnWorkingCopy.setAttribute("org.eclipse.ptp.remotetools.environment.generichost.is-passwd-auth", "false");	
@@ -664,11 +679,16 @@ public class CupidProjectWizard extends Wizard implements INewWizard, IExecutabl
 
 		monitor.beginTask("Retrieving remote connection", 2);
 
-		IRemoteServices remoteServices = RemoteServices.getRemoteServices("org.eclipse.ptp.remote.RemoteTools", monitor);
+		IRemoteServicesManager remoteServicesManager = new RemoteServicesManager();
+		
+		//IRemoteServices remoteServices = RemoteServices.getRemoteServices("org.eclipse.ptp.remote.RemoteTools", monitor);
 		monitor.worked(1);
 
-		IRemoteConnectionManager connManager = remoteServices.getConnectionManager();
-		IRemoteConnection remoteConn = connManager.getConnection(name);
+		IRemoteConnectionType remoteConnType = remoteServicesManager.getConnectionType("org.eclipse.remote.JSch");
+		IRemoteConnection remoteConn = remoteConnType.getConnection(name);
+		
+		//IRemoteConnectionManager connManager = remoteServices.getConnectionManager();
+		//IRemoteConnection remoteConn = connManager.getConnection(name);
 		
 		monitor.worked(1);
 		monitor.done();
@@ -847,11 +867,14 @@ public class CupidProjectWizard extends Wizard implements INewWizard, IExecutabl
 	private void executeCommandOnRemote(IRemoteConnection remoteConn, IProgressMonitor monitor, String... cmd) throws CoreException {
 		
 		monitor.beginTask("Setting up computational environment", 3);
-		IRemoteServices remoteServices = RemoteServices.getRemoteServices("org.eclipse.ptp.remote.RemoteTools", new SubProgressMonitor(monitor,1));
-
+		//IRemoteServices remoteServices = RemoteServices.getRemoteServices("org.eclipse.ptp.remote.RemoteTools", new SubProgressMonitor(monitor,1));
+		//IRemoteServicesManager remoteServicesManager = new RemoteServicesManager();
+		//IRemoteConnectionType remoteConnType = remoteServicesManager.getConnectionType("org.eclipse.remote.JSch");
+		//remoteConnType.getService(IRemoteProcessService.class);
+		
 		try {
-			//IRemoteProcessBuilder rpb = remoteServices.getProcessBuilder(remoteConn, cmd);
-			IRemoteProcessBuilder rpb = remoteConn.getProcessBuilder(cmd);
+			IRemoteProcessService remoteProcService = remoteConn.getService(IRemoteProcessService.class);
+			IRemoteProcessBuilder rpb = remoteProcService.getProcessBuilder(cmd);
 			IRemoteProcess rp = rpb.start();
 			monitor.worked(1);
 			

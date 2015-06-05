@@ -12,14 +12,17 @@ public class BasicCodeConcept extends CodeConcept<CodeConcept<?, ?>, IASTNode> {
     this._id = id;
   }
   
+  @Override
   public CodeConcept<CodeConcept<?, ?>, IASTNode> reverse() {
     return this;
   }
   
+  @Override
   public IFortranAST forward() {
     return null;
   }
   
+  @Override
   public String toString() {
     StringConcatenation _builder = new StringConcatenation();
     _builder.append("BasicCodeConcept: (id=");

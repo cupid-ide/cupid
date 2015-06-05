@@ -56,6 +56,7 @@ public abstract class EntryPointCodeConcept<P extends CodeConcept<?, ?>> extends
     this.phaseLabel = phaseLabel;
   }
   
+  @Override
   public CodeConcept<P, ASTSubroutineSubprogramNode> reverse() {
     try {
       EntryPointCodeConcept<P> _xblockexpression = null;
@@ -177,6 +178,7 @@ public abstract class EntryPointCodeConcept<P extends CodeConcept<?, ?>> extends
   
   public abstract SetServicesCodeConcept<?> setServices();
   
+  @Override
   public IFortranAST forward() {
     try {
       IFortranAST _xblockexpression = null;

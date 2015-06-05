@@ -48,6 +48,7 @@ public abstract class SpecializationMethodCodeConcept<P extends CodeConcept<?, ?
     this.labelName = labelName;
   }
   
+  @Override
   public SpecializationMethodCodeConcept<P> reverse() {
     try {
       SpecializationMethodCodeConcept<P> _xblockexpression = null;
@@ -155,6 +156,7 @@ public abstract class SpecializationMethodCodeConcept<P extends CodeConcept<?, ?
   
   public abstract NUOPCComponent.GenericImport genericUse();
   
+  @Override
   public IFortranAST forward() {
     try {
       IFortranAST _xblockexpression = null;
