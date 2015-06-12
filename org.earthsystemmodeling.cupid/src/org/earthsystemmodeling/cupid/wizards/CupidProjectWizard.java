@@ -630,9 +630,9 @@ public class CupidProjectWizard extends Wizard implements INewWizard, IExecutabl
 		//JSchConnectionWorkingCopy remoteConnWorkingCopy = null;
 		IRemoteConnectionWorkingCopy remoteConnWorkingCopy = null;
 
-		if ((remoteConnType.getCapabilities() & IRemoteConnectionType.CAPABILITY_ADD_CONNECTIONS) == 
-				IRemoteConnectionType.CAPABILITY_ADD_CONNECTIONS) {
-			
+		//if ((remoteConnType.getCapabilities() & IRemoteConnectionType.CAPABILITY_ADD_CONNECTIONS) == 
+		//		IRemoteConnectionType.CAPABILITY_ADD_CONNECTIONS) {
+		if (remoteConnType.canAdd()) {
 			//ssh key
 			URL keyURL = FileLocator.find(MY_BUNDLE, new Path("ssh/nesiikey.rsa"), null);
 			String keyFile = null;
@@ -645,6 +645,8 @@ public class CupidProjectWizard extends Wizard implements INewWizard, IExecutabl
 			
 			//remoteConnWorkingCopy = (JSchConnectionWorkingCopy) connManager.newConnection("Cupid Environment (" + name + " - " + host + ")");
 			remoteConnWorkingCopy = remoteConnType.newConnection("Cupid Environment (" + name + " - " + host + ")");
+			
+			
 			
 			remoteConnWorkingCopy.setAttribute(JSchConnection.ADDRESS_ATTR, host);
 			remoteConnWorkingCopy.setAttribute(JSchConnection.USERNAME_ATTR, "sgeadmin");
