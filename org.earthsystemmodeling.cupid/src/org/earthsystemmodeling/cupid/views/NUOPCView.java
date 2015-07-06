@@ -8,8 +8,8 @@ import org.earthsystemmodeling.cupid.annotation.Child;
 import org.earthsystemmodeling.cupid.annotation.Label;
 import org.earthsystemmodeling.cupid.core.CupidActivator;
 import org.earthsystemmodeling.cupid.handlers.RewriteASTRunnable;
-import org.earthsystemmodeling.cupid.nuopc_v7.CodeConcept;
-import org.earthsystemmodeling.cupid.nuopc_v7.CodeGenerationException;
+import org.earthsystemmodeling.cupid.nuopc.CodeConcept;
+import org.earthsystemmodeling.cupid.nuopc.CodeGenerationException;
 import org.earthsystemmodeling.cupid.views.NUOPCViewContentProvider2.CodeConceptProxy;
 import org.eclipse.core.resources.IMarker;
 import org.eclipse.core.resources.IResourceChangeListener;
@@ -28,7 +28,9 @@ import org.eclipse.jface.viewers.ColumnWeightData;
 import org.eclipse.jface.viewers.DoubleClickEvent;
 import org.eclipse.jface.viewers.IDoubleClickListener;
 import org.eclipse.jface.viewers.ISelection;
+import org.eclipse.jface.viewers.ISelectionChangedListener;
 import org.eclipse.jface.viewers.IStructuredSelection;
+import org.eclipse.jface.viewers.SelectionChangedEvent;
 import org.eclipse.jface.viewers.TreeViewer;
 import org.eclipse.jface.window.ToolTip;
 import org.eclipse.photran.core.IFortranAST;
@@ -43,6 +45,7 @@ import org.eclipse.photran.internal.ui.editor.FortranEditor;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.SWTError;
 import org.eclipse.swt.browser.Browser;
+import org.eclipse.swt.custom.SashForm;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Composite;
@@ -250,25 +253,42 @@ public class NUOPCView extends ViewPart {
 	 * to create the viewer and initialize it.
 	 */
 	public void createPartControl(Composite parent) {
+		
+		/*
+		GridLayout gridLayout = new GridLayout(1,true);
+		gridLayout.marginHeight = 0;
+		gridLayout.marginWidth = 0;
+		gridLayout.verticalSpacing = 4;
+		parent.setLayout(gridLayout);
+		
+		//SashForm sashForm = new SashForm(parent, SWT.VERTICAL);
+		Composite composite = new Composite(parent, SWT.NONE);
+		GridData gd = new GridData(GridData.FILL_BOTH);
+		//GridData gd = new GridData(SWT.FILL, SWT.FILL, true, true);
+		//gd.heightHint = (int) (parent.getBounds().height * .50);
+		//gd.heightHint = 100;
+		composite.setLayoutData(gd);
+		*/
+		
 		viewer = new TreeViewer(parent, SWT.H_SCROLL | SWT.V_SCROLL | SWT.FULL_SELECTION);
 		
 		TreeColumn tc1 = new TreeColumn(viewer.getTree(), SWT.LEFT);
 		tc1.setAlignment(SWT.LEFT);
 		tc1.setText("NUOPC Definition");
-		tc1.setWidth(100);
+		//tc1.setWidth(100);
 		tc1.setResizable(true);
 		
 		tc2 = new TreeColumn(viewer.getTree(), SWT.MULTI | SWT.RIGHT);
 		tc2.setAlignment(SWT.LEFT);
 		tc2.setText("Value");
-		tc2.setWidth(100);
+		//tc2.setWidth(100);
 		tc2.setResizable(true);
 		
 		TreeColumnLayout tcl = new TreeColumnLayout();
 		tcl.setColumnData(tc1, new ColumnWeightData(2));
 		tcl.setColumnData(tc2, new ColumnWeightData(1));
 		parent.setLayout(tcl);
-		
+				
 		viewer.getTree().setHeaderVisible(true);
 		viewer.getTree().setLinesVisible(true);
 		
@@ -283,81 +303,21 @@ public class NUOPCView extends ViewPart {
 	
 		FancyToolTipSupport.enableFor(viewer, ToolTip.NO_RECREATE);
 		
+		
+		/* documentation viewer */
 		/*
-		doubleClickAction = new Action() {
-			
-			public void run() {
-				ISelection selection = viewer.getSelection();
-				Object obj = ((IStructuredSelection)selection).getFirstElement();
-				//System.out.println("Double-click detected on " + obj.toString());
-				
-				NUOPCModelElem me = (NUOPCModelElem) obj;
-				
-				IMarker marker = null;
-				
-				if (me.elem != null) {
-					//Object val = contentProvider.getReverseMappings().get(me.elem);
-					Object val = null; //contentProvider.getCurrentFSM().getMapsTo(me.elem);
-					
-					if (val != null) {
-						
-						if (val instanceof ASTSubroutineSubprogramNode) {
-							ASTSubroutineSubprogramNode ssn = (ASTSubroutineSubprogramNode) val;
-							Token t = null;
-							try {
-								t = ssn.getSubroutineStmt().getSubroutineName().getSubroutineName();
-								marker = createMarker(t);
-							}
-							catch (NullPointerException npe) {
-								//handled below
-							}
-							
-						}
-						else if (val instanceof ScopingNode) {
-							//PhotranTokenRef tokenRef = ((ScopingNode) val).getRepresentativeToken();
-							marker = createMarker( ((ScopingNode) val).getRepresentativeToken().findTokenOrReturnNull());							
-						}
-						else if (val instanceof IFortranAST) {
-							//try to find module statement
-							IProgramUnit ipu = ((IFortranAST)val).getRoot().getProgramUnitList().get(0);
-							if (ipu != null && ipu instanceof ASTModuleNode) {
-								ASTModuleNode ams = (ASTModuleNode) ipu;
-								marker = createMarker(ams.getNameToken());
-							}							
-						}
-						else if (val instanceof ASTNode) {
-							marker = createMarker(((ASTNode) val).findFirstToken());
-						}
-					}
-					else {
-						CupidActivator.log("No mapping found for element: " + me.elem);
-					}
-				}
-				//try to match on nameLabel using object identity 
-				else if (me.nameLabel != null) {
-					//Object val = contentProvider.getReverseMappings().get(me.nameLabel);
-					Object val = null; //contentProvider.getCurrentFSM().getMappings().get(me.nameLabel);
-					if (val != null && val instanceof Token) {
-						marker = createMarker((Token) val);
-					}
-				}
-					
-				if (marker != null) {
-					IWorkbenchPage page = PlatformUI.getWorkbench().getActiveWorkbenchWindow().getActivePage();
-					try {
-						IDE.openEditor(page, marker, false);
-						marker.delete();
-					} catch (PartInitException e) {
-						e.printStackTrace();
-					} catch (CoreException e) {								
-						e.printStackTrace();
-					}
-				}
-					
-					
-				
-			}
-		};
+		try {
+			Browser browser = new Browser(parent, SWT.V_SCROLL);
+			gd = new GridData(GridData.FILL_HORIZONTAL);
+			gd.heightHint = 200;
+			//gd = new GridData(SWT.FILL, SWT.FILL, true, false);
+			browser.setLayoutData(gd);
+			String docText = "<html><body bgcolor=\"#FFFFE0\" style=\"margin-top:2pt;overflow:auto;font-size:13px;font-family:Helvetica;\">" + "Here is some documentaiton" + "</body></html>";
+			browser.setText(docText);
+		}
+		catch (SWTError se) {
+			CupidActivator.log("Error rendering documentation in NUOPC view", se);
+		}
 		*/
 		
 		doubleClickAction = new Action() {
@@ -370,8 +330,8 @@ public class NUOPCView extends ViewPart {
 				IMarker marker = null;
 				
 				if (obj instanceof CodeConceptProxy) {
-					@SuppressWarnings("unchecked")
 					CodeConceptProxy ccp = (CodeConceptProxy) obj;
+					@SuppressWarnings("unchecked")
 					CodeConcept<?,IASTNode> cc = (CodeConcept<?,IASTNode>) ccp.codeConcept;
 					
 					if (cc==null) {
@@ -417,11 +377,15 @@ public class NUOPCView extends ViewPart {
 					IWorkbenchPage page = PlatformUI.getWorkbench().getActiveWorkbenchWindow().getActivePage();
 					try {
 						IDE.openEditor(page, marker, false);
-						marker.delete();
 					} catch (PartInitException e) {
-						e.printStackTrace();
-					} catch (CoreException e) {								
-						e.printStackTrace();
+						CupidActivator.log("Error opening editor on NUOPC code", e);
+					}
+					
+					try {
+						marker.delete();
+					}
+					catch (CoreException e) {
+						CupidActivator.log("Error deleting temporary marker", e);
 					}
 				}
 				
@@ -433,6 +397,26 @@ public class NUOPCView extends ViewPart {
 				doubleClickAction.run();
 			}
 		});
+		
+		viewer.addSelectionChangedListener(new ISelectionChangedListener() {
+
+			@Override
+			public void selectionChanged(SelectionChangedEvent event) {
+				NUOPCDocView ndv = (NUOPCDocView) PlatformUI.getWorkbench().getActiveWorkbenchWindow().getActivePage().findView(NUOPCDocView.ID);
+				if (ndv != null) {
+					ISelection selection = viewer.getSelection();
+					Object obj = ((IStructuredSelection)selection).getFirstElement();
+					CodeConceptProxy ccp = (CodeConceptProxy) obj;
+					//ndv.setDoc("You clicked: " + ccp.label);
+					String doc = labelProvider.getNUOPCDoc(ccp);
+					if (doc != null) {
+						ndv.setDoc(doc);
+					}
+				}
+			}
+			
+		});
+		
 		
 		/*
 		IActionBars bars = getViewSite().getActionBars();
@@ -616,133 +600,11 @@ public class NUOPCView extends ViewPart {
         	}
         });
         	
-        	/*
-            public void menuAboutToShowOld(IMenuManager manager) {
-                // IWorkbench wb = PlatformUI.getWorkbench();
-                // IWorkbenchWindow win = wb.getActiveWorkbenchWindow();
-                if (viewer.getSelection().isEmpty()) {
-                    return;
-                }
-
-                if (viewer.getSelection() instanceof IStructuredSelection) {
-                    IStructuredSelection selection = (IStructuredSelection) viewer.getSelection();
-                    final NUOPCModelElem me = (NUOPCModelElem) selection.getFirstElement();
-
-                    final FSM<?> fsm = null; //contentProvider.getCurrentFSM();
-                    ConceptDef conceptDef = null;
-                    if (me.subconcept != null && !me.subconcept.isAttrib()) {
-                    	conceptDef = fsm.getDefinition(me.subconcept);
-                    }
-                    else if (me.subconcept == null && me.elem != null) {
-                    	conceptDef = fsm.getConceptDef(me.elem);
-                    }
-                    
-                    if (conceptDef != null) {
-                    	
-                    	for (final SubconceptOrAttribute soa : conceptDef.getChild()) {
-                    		
-                    		if (!soa.isAttrib() && (fsm.isMany(soa) || (me.elem != null && fsm.getValue(me.elem, soa) == null)) ) {
-                    			
-                    			
-                    			Action addElementAction = new Action() {
-                    				
-                    				public void run() {
-
-                    					EObject newElem = fsm.forwardAdd(me.elem, soa, true);
-                    					//showMessage("Added element: " + newElem);	
-        								IFortranAST ast = fsm.getASTForElement(newElem);
-        								
-        								//TODO: in the case of NUOPCApplication, there is no AST above
-        								Reindenter.reindent(ast.getRoot(), ast, Strategy.REINDENT_EACH_LINE);      								
-                    					
-        								try {
-        									IWorkbenchWindow window = PlatformUI.getWorkbench().getActiveWorkbenchWindow();
-        									//running in UI thread for now so we can set focus to generated code
-        									PlatformUI.getWorkbench().getProgressService().run(false, false, new RewriteASTRunnable(ast, window));
-        								} catch (InvocationTargetException e) {
-        									e.printStackTrace();
-        								} catch (InterruptedException e) {
-        									e.printStackTrace();
-        								}
-                    					                   					
-                        				viewer.refresh(me);
-                        				viewer.expandToLevel(me, 1);
-                         				
-                            		}      
-                    				
-                    			};
-                    			
-                    			
-                    			String label = fsm.getAnnotationValue(fsm.getDefinition(soa), "label");
-                    			if (label==null) {
-                    				label = soa.getName();
-                    			}
-                    			
-                    			AddElementAction addElementAction = new AddElementAction(fsm, me, soa, false);
-                    			addElementAction.setText("Add " + label + " (basic)");
-                    			addElementAction.setImageDescriptor(NUOPCViewLabelProvider.getFortranImageDescriptor(soa, null, null));
-                    			//addElementAction.setToolTipText(fsm.getAnnotationValue(soa, "doc"));
-                    			manager.add(addElementAction);
-                    			
-                    			AddElementAction addElementAction2 = new AddElementAction(fsm, me, soa, true);
-                    			addElementAction2.setText("Add " + label + " (complete)");
-                    			addElementAction2.setImageDescriptor(NUOPCViewLabelProvider.getFortranImageDescriptor(soa, null, null));
-                    			//addElementAction2.setToolTipText(fsm.getAnnotationValue(fsm.getDefinition(soa), "doc"));
-                    			manager.add(addElementAction2);
-                    			
-                    		}
-                    	}
-                    	
-                    }
-                    
-                   
-                }
-                */
-        
         	
         menuMgr.setRemoveAllWhenShown(true);
         viewer.getControl().setMenu(menu);
 		
-		
-		
-        //resource listener to know when current project is dirty
-        /*
-        IWorkspace workspace = ResourcesPlugin.getWorkspace();
-        IResourceChangeListener rcl = new IResourceChangeListener() {
-        	public void resourceChanged(final IResourceChangeEvent event) {
-        		if (viewer.getInput() != null && event.getDelta() != null) {
-        			Display.getDefault().syncExec(new Runnable() {
-        				public void run() {
-        					try {
-        						event.getDelta().accept(new IResourceDeltaVisitor() {
-        							@Override
-        							public boolean visit(IResourceDelta delta) throws CoreException {
-        								if (delta.getResource() instanceof IProject) {
-        									if (viewer.getInput().equals(delta.getResource())) {
-        										//System.out.println("Dirty project: " + delta.getResource());
-        										setProjectIsDirty(true);
-        										return false;
-        									}
-        								}
-        								return true;
-        							}
-        						});
-        					} catch (CoreException e) {
-        						// TODO Auto-generated catch block
-        						e.printStackTrace();
-        					}
-
-        				}
-        			});
-
-        		}
-        	}
-        };
-
-		workspace.addResourceChangeListener(rcl);
-        */
-        
-        //listen for editor activation
+	    //listen for editor activation
         IPartService service = PlatformUI.getWorkbench().getActiveWorkbenchWindow().getPartService();
         partListener = new IPartListener2() {
 

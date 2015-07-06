@@ -1,5 +1,5 @@
-package org.earthsystemmodeling.cupid.nuopc_v7 
-import org.earthsystemmodeling.cupid.nuopc_v7.CodeConcept
+package org.earthsystemmodeling.cupid.nuopc 
+import org.earthsystemmodeling.cupid.nuopc.CodeConcept
 import org.eclipse.photran.internal.core.parser.IASTNode
 
 public class BasicCodeConcept extends CodeConcept<CodeConcept<?,?>, IASTNode> {

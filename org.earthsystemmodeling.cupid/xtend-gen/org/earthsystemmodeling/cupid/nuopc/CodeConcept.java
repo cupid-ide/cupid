@@ -1,4 +1,4 @@
-package org.earthsystemmodeling.cupid.nuopc_v7;
+package org.earthsystemmodeling.cupid.nuopc;
 
 import alice.tuprolog.MalformedGoalException;
 import com.google.common.base.Objects;
@@ -6,7 +6,7 @@ import java.sql.ResultSet;
 import java.util.List;
 import org.earthsystemmodeling.cupid.codedb.CodeDBIndex;
 import org.earthsystemmodeling.cupid.core.CupidActivator;
-import org.earthsystemmodeling.cupid.nuopc_v7.CodeGenerationException;
+import org.earthsystemmodeling.cupid.nuopc.CodeGenerationException;
 import org.eclipse.photran.core.IFortranAST;
 import org.eclipse.photran.internal.core.parser.IASTNode;
 import org.eclipse.xtend2.lib.StringConcatenation;
@@ -15,13 +15,13 @@ import org.eclipse.xtext.xbase.lib.Exceptions;
 
 @SuppressWarnings("all")
 public abstract class CodeConcept<P extends CodeConcept<?, ?>, A extends IASTNode> {
-  protected P _parent;
+  public P _parent;
   
-  protected long _id;
+  public long _id;
   
-  protected CodeDBIndex _codeDB;
+  public CodeDBIndex _codeDB;
   
-  protected A _astRef;
+  public A _astRef;
   
   public CodeConcept(final P parent) {
     this._parent = parent;

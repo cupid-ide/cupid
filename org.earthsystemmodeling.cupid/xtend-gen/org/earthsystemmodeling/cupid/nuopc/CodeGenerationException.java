@@ -1,4 +1,4 @@
-package org.earthsystemmodeling.cupid.nuopc_v7;
+package org.earthsystemmodeling.cupid.nuopc;
 
 @SuppressWarnings("all")
 public class CodeGenerationException extends Exception {

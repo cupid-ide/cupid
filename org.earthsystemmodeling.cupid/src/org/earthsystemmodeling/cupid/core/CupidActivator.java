@@ -38,7 +38,7 @@ public class CupidActivator extends AbstractUIPlugin {
 		log(msg, null);
 	}
 	
-	public static void log(String msg, Exception e) {
+	public static void log(String msg, Throwable e) {
 		log(Status.INFO, msg, e);
 	}
 	
@@ -46,7 +46,7 @@ public class CupidActivator extends AbstractUIPlugin {
 		log(severity, msg, null);
 	}
 	
-	public static void log(int severity, String msg, Exception e) {
+	public static void log(int severity, String msg, Throwable e) {
 		if (getDefault()==null) return;
 		
 		if (PLUGIN_ID == null) {

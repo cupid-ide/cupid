@@ -1,10 +1,12 @@
-package org.earthsystemmodeling.cupid.nuopc_v7 
+package org.earthsystemmodeling.cupid.nuopc.v7 
 import org.eclipse.photran.internal.core.parser.ASTModuleNode
 import org.earthsystemmodeling.cupid.annotation.Label
 import org.earthsystemmodeling.cupid.annotation.Child
 import org.eclipse.photran.internal.core.parser.ASTUseStmtNode
 import org.earthsystemmodeling.cupid.annotation.Name
 import org.earthsystemmodeling.cupid.annotation.Prop
+import org.earthsystemmodeling.cupid.nuopc.CodeConcept
+import org.earthsystemmodeling.cupid.nuopc.BasicCodeConcept
 
 @Label(label="NUOPC Driver", type="module")
 public abstract class NUOPCComponent extends CodeConcept<CodeConcept<?,?>, ASTModuleNode> {

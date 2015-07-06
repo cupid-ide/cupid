@@ -9,6 +9,7 @@
 
    <extension
          point="org.eclipse.ui.commands">
+      <!--
       <command
             categoryId="org.earthsystemmodeling.cupid.commands"
             id="org.earthsystemmodeling.cupid.commands.reverseCommand"
@@ -24,6 +25,7 @@
             id="org.earthsystemmodeling.cupid.commands.compareCommand"
             name="Compare">
       </command>
+      -->
       <category
             id="org.earthsystemmodeling.cupid.commands"
             name="Cupid Commands">
@@ -33,9 +35,20 @@
             id="org.earthsystemmodeling.cupid.populateCodeDB"
             name="Populate CodeDB">
       </command>
+      <command
+            categoryId="org.earthsystemmodeling.cupid.commands"
+            id="org.earthsystemmodeling.cupid.showNUOPCView"
+            name="Show NUOPC View">
+      </command>
+      <command
+            categoryId="org.earthsystemmodeling.cupid.commands"
+            id="org.earthsystemmodeling.cupid.showNUOPCDocView"
+            name="Show NUOPC Doc View">
+      </command>
    </extension>
    <extension
          point="org.eclipse.ui.handlers">
+      <!--
       <handler
             class="org.earthsystemmodeling.cupid.handlers.ReverseHandler"
             commandId="org.earthsystemmodeling.cupid.commands.reverseCommand">
@@ -48,16 +61,26 @@
             class="org.earthsystemmodeling.cupid.handlers.CompareHandler"
             commandId="org.earthsystemmodeling.cupid.commands.compareCommand">
       </handler>
+      -->
       <handler
             class="org.earthsystemmodeling.cupid.handlers.PopulateCodeDBHandler"
             commandId="org.earthsystemmodeling.cupid.populateCodeDB">
       </handler>
+      <handler
+            class="org.earthsystemmodeling.cupid.handlers.ShowNUOPCView"
+            commandId="org.earthsystemmodeling.cupid.showNUOPCView">
+      </handler>
+      <handler
+            class="org.earthsystemmodeling.cupid.handlers.ShowNUOPCDocView"
+            commandId="org.earthsystemmodeling.cupid.showNUOPCDocView">
+      </handler>
    </extension>
   
-  <!--
+  -
    <extension
          point="org.eclipse.ui.menus">
       
+      <!--
       <menuContribution
             locationURI="menu:org.eclipse.ui.main.menu?after=additions">
          <menu
@@ -89,13 +112,14 @@
          </menu>
       </menuContribution>
      
-      
+      -->
       
       <menuContribution
             locationURI="toolbar:org.eclipse.ui.main.toolbar?after=additions">
          <toolbar
                id="org.earthsystemmodeling.cupid.toolbars.sampleToolbar"
                label="Cupid">
+            <!--
             <command
                   commandId="org.earthsystemmodeling.cupid.commands.reverseCommand"
                   icon="icons/arrow_right.png"
@@ -115,12 +139,24 @@
                   id="org.earthsystemmodeling.cupid.toolbars.compareCommand"
                   tooltip="Compare">
             </command>
-           
+           	-->
+           	<command
+                  commandId="org.earthsystemmodeling.cupid.showNUOPCView"
+                  icon="icons/hierarchy.png"
+                  id="org.earthsystemmodeling.cupid.toolbars.showNUOPCView"
+                  tooltip="Show NUOPC View">
+            </command>
+            <command
+                  commandId="org.earthsystemmodeling.cupid.showNUOPCDocView"
+                  icon="icons/book.gif"
+                  id="org.earthsystemmodeling.cupid.toolbars.showNUOPCDocView"
+                  tooltip="Show NUOPC Doc View">
+            </command>
          </toolbar>
       </menuContribution>
       
       
-     
+     <!--
        <menuContribution
             locationURI="popup:org.eclipse.ui.navigator.ProjectExplorer#PopupMenu?after=additions">
          <command
@@ -259,8 +295,10 @@
             </visibleWhen>
          </command>
       </menuContribution>
+      
+      -->
    </extension>
-  -->
+ 
   
    <!--
    <extension
@@ -290,6 +328,7 @@
       </builder>
    </extension>
    -->
+   <!--
    <extension
          id="xmlProblem"
          name="XML Problem"
@@ -301,6 +340,7 @@
             value="true">
       </persistent>
    </extension>
+   -->
    <!--
    <extension
          point="org.eclipse.ui.navigator.viewer">
@@ -361,9 +401,16 @@
       <view
             category="org.earthsystemmodeling.cupid"
             class="org.earthsystemmodeling.cupid.views.NUOPCView"
-            icon="icons/sample.gif"
+            icon="icons/hierarchy.png"
             id="org.earthsystemmodeling.cupid.views.NUOPCView"
             name="NUOPC View">
+      </view>
+      <view
+            category="org.earthsystemmodeling.cupid"
+            class="org.earthsystemmodeling.cupid.views.NUOPCDocView"
+            icon="icons/book.gif"
+            id="org.earthsystemmodeling.cupid.views.NUOPCDocView"
+            name="NUOPC Doc">
       </view>
       <category
             id="org.earthsystemmodeling.codequery"

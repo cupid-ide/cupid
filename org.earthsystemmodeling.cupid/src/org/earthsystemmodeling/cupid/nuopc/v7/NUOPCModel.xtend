@@ -1,23 +1,21 @@
-package org.earthsystemmodeling.cupid.nuopc_v7 
-import org.earthsystemmodeling.cupid.annotation.Label
-import org.eclipse.photran.internal.core.parser.ASTModuleNode
-import org.earthsystemmodeling.cupid.annotation.Child
-import org.earthsystemmodeling.cupid.codedb.CodeDBIndex
-import static org.earthsystemmodeling.cupid.nuopc_v7.BasicCodeConcept.newBasicCodeConcept
-import static org.earthsystemmodeling.cupid.core.CupidActivator.log
-import java.sql.SQLException
-import org.eclipse.photran.internal.core.parser.ASTNode
-import org.earthsystemmodeling.cupid.nuopc_v7.NUOPCModel.Initialization
-import org.eclipse.photran.internal.core.parser.ASTCallStmtNode
-import org.earthsystemmodeling.cupid.nuopc_v7.NUOPCModel.InitP1
-import java.util.List
-import org.eclipse.photran.core.IFortranAST
-import org.eclipse.photran.internal.core.parser.IBodyConstruct
-import org.eclipse.photran.internal.core.parser.IASTListNode
+package org.earthsystemmodeling.cupid.nuopc.v7
 
-import static org.earthsystemmodeling.cupid.util.CodeExtraction.parseLiteralStatement
-import static org.earthsystemmodeling.cupid.util.CodeExtraction.parseLiteralStatementSequence
+import java.sql.SQLException
+import java.util.List
+import org.earthsystemmodeling.cupid.annotation.Child
+import org.earthsystemmodeling.cupid.annotation.Label
+import org.earthsystemmodeling.cupid.codedb.CodeDBIndex
+import org.earthsystemmodeling.cupid.nuopc.CodeConcept
+import org.eclipse.photran.core.IFortranAST
+import org.eclipse.photran.internal.core.parser.ASTCallStmtNode
+import org.eclipse.photran.internal.core.parser.ASTNode
 import org.eclipse.photran.internal.core.parser.ASTSubroutineSubprogramNode
+import org.eclipse.photran.internal.core.parser.IASTListNode
+import org.eclipse.photran.internal.core.parser.IBodyConstruct
+
+import static org.earthsystemmodeling.cupid.core.CupidActivator.log
+import static org.earthsystemmodeling.cupid.nuopc.BasicCodeConcept.newBasicCodeConcept
+import static org.earthsystemmodeling.cupid.util.CodeExtraction.parseLiteralStatementSequence
 
 @Label(label="NUOPC Model", type="module")
 class NUOPCModel extends NUOPCComponent {

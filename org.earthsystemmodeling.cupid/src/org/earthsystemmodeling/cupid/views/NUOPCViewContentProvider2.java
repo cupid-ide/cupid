@@ -1,6 +1,5 @@
 package org.earthsystemmodeling.cupid.views;
 
-import java.lang.reflect.Array;
 import java.lang.reflect.Field;
 import java.lang.reflect.ParameterizedType;
 import java.sql.SQLException;
@@ -15,9 +14,9 @@ import org.earthsystemmodeling.cupid.annotation.Child;
 import org.earthsystemmodeling.cupid.annotation.Label;
 import org.earthsystemmodeling.cupid.codedb.CodeDBIndex;
 import org.earthsystemmodeling.cupid.core.CupidActivator;
-import org.earthsystemmodeling.cupid.nuopc_v7.CodeConcept;
-import org.earthsystemmodeling.cupid.nuopc_v7.NUOPCDriver;
-import org.earthsystemmodeling.cupid.nuopc_v7.NUOPCModel;
+import org.earthsystemmodeling.cupid.nuopc.CodeConcept;
+import org.earthsystemmodeling.cupid.nuopc.v7bs50.NUOPCDriver;
+import org.earthsystemmodeling.cupid.nuopc.v7bs50.NUOPCModel;
 import org.eclipse.core.resources.IFile;
 import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.Status;
@@ -28,8 +27,6 @@ import org.eclipse.jface.viewers.Viewer;
 import org.eclipse.photran.core.IFortranAST;
 import org.eclipse.photran.internal.core.vpg.PhotranVPG;
 import org.eclipse.photran.internal.ui.editor.FortranEditor;
-import org.eclipse.ui.IPropertyListener;
-import org.eclipse.ui.IWorkbenchPartConstants;
 
 import alice.tuprolog.event.OutputEvent;
 import alice.tuprolog.event.OutputListener;
@@ -230,6 +227,16 @@ class NUOPCViewContentProvider2 implements IStructuredContentProvider, ITreeCont
 	public Object [] getChildren(Object p) {
 		
 		ArrayList<Object> children = new ArrayList<Object>();
+		/*
+		if (p instanceof CodeConceptProxyDoc) {
+			return children.toArray();
+		}
+		else {
+			//add documentation node
+			CodeConceptProxyDoc docNode = new CodeConceptProxyDoc();
+			children.add(docNode);
+		}
+		*/
 		
 		CodeConceptProxy parent = (CodeConceptProxy) p;
 		Class<?> parentClass = parent.clazz;
@@ -326,6 +333,10 @@ class NUOPCViewContentProvider2 implements IStructuredContentProvider, ITreeCont
 			
 		}
 		
+	}
+	
+	public static class CodeConceptProxyDoc extends CodeConceptProxy {
+		public String doc = "This is my documentation.  It might be a few lines long, who knows?";
 	}
 	
 	

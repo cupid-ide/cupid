@@ -1,4 +1,4 @@
-package org.earthsystemmodeling.cupid.nuopc_v7;
+package org.earthsystemmodeling.cupid.nuopc.v7bs50;
 
 import com.google.common.base.Objects;
 import java.sql.ResultSet;
@@ -10,11 +10,11 @@ import org.earthsystemmodeling.cupid.annotation.Label;
 import org.earthsystemmodeling.cupid.annotation.Prop;
 import org.earthsystemmodeling.cupid.codedb.CodeDBIndex;
 import org.earthsystemmodeling.cupid.core.CupidActivator;
-import org.earthsystemmodeling.cupid.nuopc_v7.BasicCodeConcept;
-import org.earthsystemmodeling.cupid.nuopc_v7.CodeConcept;
-import org.earthsystemmodeling.cupid.nuopc_v7.NUOPCComponent;
-import org.earthsystemmodeling.cupid.nuopc_v7.SetServicesCodeConcept;
-import org.earthsystemmodeling.cupid.nuopc_v7.SpecializationMethodCodeConcept;
+import org.earthsystemmodeling.cupid.nuopc.BasicCodeConcept;
+import org.earthsystemmodeling.cupid.nuopc.CodeConcept;
+import org.earthsystemmodeling.cupid.nuopc.v7bs50.NUOPCComponent;
+import org.earthsystemmodeling.cupid.nuopc.v7bs50.SetServicesCodeConcept;
+import org.earthsystemmodeling.cupid.nuopc.v7bs50.SpecializationMethodCodeConcept;
 import org.earthsystemmodeling.cupid.util.CodeExtraction;
 import org.eclipse.photran.core.IFortranAST;
 import org.eclipse.photran.internal.core.parser.ASTCallStmtNode;

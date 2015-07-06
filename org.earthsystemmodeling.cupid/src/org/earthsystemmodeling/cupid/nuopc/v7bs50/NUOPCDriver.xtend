@@ -1,4 +1,4 @@
-package org.earthsystemmodeling.cupid.nuopc_v7 
+package org.earthsystemmodeling.cupid.nuopc.v7bs50 
 
 import org.eclipse.photran.internal.core.parser.ASTModuleNode
 import org.earthsystemmodeling.cupid.codedb.CodeDBIndex
@@ -9,7 +9,7 @@ import org.earthsystemmodeling.cupid.annotation.Label
 import org.earthsystemmodeling.cupid.annotation.Name
 import org.earthsystemmodeling.cupid.annotation.Child
 import org.eclipse.photran.internal.core.parser.ASTNode
-import static org.earthsystemmodeling.cupid.nuopc_v7.BasicCodeConcept.newBasicCodeConcept
+import static org.earthsystemmodeling.cupid.nuopc.BasicCodeConcept.newBasicCodeConcept
 import org.eclipse.photran.internal.core.parser.ASTCallStmtNode
 import java.util.List
 
@@ -26,6 +26,8 @@ import org.eclipse.photran.internal.core.parser.IBodyConstruct
 import org.eclipse.photran.internal.core.parser.ASTTypeDeclarationStmtNode
 import org.earthsystemmodeling.cupid.annotation.Prop
 import alice.tuprolog.Struct
+import org.earthsystemmodeling.cupid.nuopc.CodeConcept
+import org.earthsystemmodeling.cupid.nuopc.BasicCodeConcept
 
 @Label(label="NUOPC Driver", type="module")
 class NUOPCDriver extends NUOPCComponent {

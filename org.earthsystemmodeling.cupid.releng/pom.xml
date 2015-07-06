@@ -2,21 +2,23 @@
   <modelVersion>4.0.0</modelVersion>
   <groupId>org.earthsystemmodeling.cupid</groupId>
   <artifactId>org.earthsystemmodeling.cupid.releng</artifactId>
-  <version>0.1.0-SNAPSHOT</version>
+  <version>0.2.0-SNAPSHOT</version>
   <packaging>pom</packaging>
   
    <properties>  
-  	<tycho-version>0.22.0</tycho-version> 
+  	<tycho-version>0.23.0</tycho-version> 
   	<!--  WARNING: if you change the version above, also change it in:
   		/org.earthsystemmodeling.cupid.product/pom.xml
   		For some reason I had to hard code it there.
   	 -->
      <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding> 
-     <eclipse-p2-repo.url>http://download.eclipse.org/releases/luna</eclipse-p2-repo.url> 
-     	<eclipse-release>luna</eclipse-release>
-		<eclipse-site>http://download.eclipse.org/releases/luna</eclipse-site>
+     <eclipse-p2-repo.url>http://download.eclipse.org/releases/mars</eclipse-p2-repo.url> 
+     	<eclipse-release>mars</eclipse-release>
+		<eclipse-site>http://download.eclipse.org/releases/mars</eclipse-site>
+		<!-- 
 		<ptp-site>file:/data/git/org.eclipse.ptp/releng/org.eclipse.ptp.repo/target/repository</ptp-site>
 		<remote-site>file:/data/git/org.eclipse.remote/releng/org.eclipse.remote.repo/target/repository</remote-site>
+ 		-->	
  	</properties> 
  	
  <!-- 
@@ -99,6 +101,7 @@
  
  <repositories>
 		<!--  CUPID - copied from org.eclipse.ptp.master/pom.xml -->
+		<!-- 
 		<repository>
 			<id>ptp-${eclipse-release}</id>
 			<url>${ptp-site}</url>
@@ -109,6 +112,7 @@
 			<url>${remote-site}</url>
 			<layout>p2</layout>
 		</repository>
+		-->
 		<repository>
 			<id>eclipse-${eclipse-release}</id>
 			<url>${eclipse-site}</url>

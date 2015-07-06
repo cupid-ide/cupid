@@ -38,11 +38,9 @@ import org.xml.sax.SAXException;
 
 class NUOPCViewLabelProvider2 extends StyledCellLabelProvider { //implements ITableLabelProvider {
 
-	private NUOPCViewContentProvider2 contentProvider;
 	private org.jdom.Document docXML;
 	
 	public NUOPCViewLabelProvider2(NUOPCViewContentProvider2 contentProvider) {
-		this.contentProvider = contentProvider;
 		loadDocXML();
 	}
 	
@@ -61,19 +59,38 @@ class NUOPCViewLabelProvider2 extends StyledCellLabelProvider { //implements ITa
 			docXML = domBuilder.build(doc);
 		}
 		catch (ParserConfigurationException | SAXException | IOException e) {
-			CupidActivator.log("Error loading doc XML", e);
+			CupidActivator.log("Error loading NUOPC doc XML", e);
+		}
+	}
+	
+	public String getNUOPCDoc(CodeConceptProxy ccp) {
+		if (docXML == null || CupidActivator.getDefault().isDebugging()) {
+			loadDocXML(); //reload every time when debugging
+		}
+		final String className = ccp.clazz.getCanonicalName();
+		StringBuffer buf = new StringBuffer();
+		if (docXML != null) {
+			@SuppressWarnings("unchecked")
+			List<Element> xmlElems = docXML.getRootElement().getChildren("doc");
+			for (Element xmlElem : xmlElems) {
+				if (xmlElem.getAttributeValue("class").equals(className)) {
+					buf.append(xmlElem.getTextTrim());
+				}
+			}			
+		}
+		if (buf.length() > 0) {
+			return buf.toString();
+		}
+		else {
+			return null;
 		}
 	}
 	
 	@Override
 	public String getToolTipText(Object element) {
 		
-		if (CupidActivator.getDefault().isDebugging()) {
-			loadDocXML(); //reload every time when debugging
-		}
-		
 		CodeConceptProxy ccp = (CodeConceptProxy) element;
-		final String className = ccp.clazz.getCanonicalName();
+		//final String className = ccp.clazz.getCanonicalName();
 		StringBuffer buf = new StringBuffer();
 		
 		//display any properties first
@@ -99,13 +116,9 @@ class NUOPCViewLabelProvider2 extends StyledCellLabelProvider { //implements ITa
 			}
 		}
 		
-		if (docXML != null) {
-			List<Element> xmlElems = docXML.getRootElement().getChildren("doc");
-			for (Element xmlElem : xmlElems) {
-				if (xmlElem.getAttributeValue("class").equals(className)) {
-					buf.append(xmlElem.getTextTrim());
-				}
-			}			
+		String doc = getNUOPCDoc(ccp);
+		if (doc != null) {
+			buf.append(doc);
 		}
 		
 		if (buf.length() > 0) {
@@ -127,9 +140,18 @@ class NUOPCViewLabelProvider2 extends StyledCellLabelProvider { //implements ITa
 	@Override
 	public void update(final ViewerCell cell) {
 	
-		Object element = cell.getElement();		
-	    StyledString text = new StyledString();	
-	    	    
+		Object element = cell.getElement();
+		/*
+		if (element instanceof CodeConceptProxyDoc) {
+			if (cell.getColumnIndex()==0) {
+				cell.setText(((CodeConceptProxyDoc) element).doc);				
+				super.update(cell);
+			}
+			return;
+		}
+		*/
+		
+	    StyledString text = new StyledString();		    	    
 	   
 	    StyledString.Styler grayStyler = new StyledString.Styler() {			
 			@Override
@@ -141,7 +163,7 @@ class NUOPCViewLabelProvider2 extends StyledCellLabelProvider { //implements ITa
 					//sr.font = null;
 					//sr.fontStyle
 					//sr.borderStyle = SWT.BORDER_DOT;
-					//sr.underline = true;
+					//sr.underline = true;				
 				}
 				
 			}						
@@ -158,7 +180,7 @@ class NUOPCViewLabelProvider2 extends StyledCellLabelProvider { //implements ITa
 		};
 		
 	    ImageDescriptor icon = null;
-	    	   
+	       
     	CodeConceptProxy proxy = (CodeConceptProxy) element;
     	if (cell.getColumnIndex()==0) {
     		if (proxy.codeConcept == null) {
@@ -234,12 +256,14 @@ class NUOPCViewLabelProvider2 extends StyledCellLabelProvider { //implements ITa
 		super.update(cell);
 	}
 	
+	/*
 	private String stripQuotes(String s) {
 		if (s.startsWith("'") && s.endsWith("'")) {
 			return s.substring(1, s.length()-1);
 		}
 		return s;
 	}
+	*/
 	
 	/*
 	public String getText(Object obj) {
@@ -285,55 +309,23 @@ class NUOPCViewLabelProvider2 extends StyledCellLabelProvider { //implements ITa
 				
 		Map<String,String> iconMap = new HashMap<String,String>();
 		iconMap.put("subroutine", "subroutine.gif");
+		iconMap.put("subroutine-inherited", "subroutine.gif");
 		iconMap.put("module", "module.gif");
 		iconMap.put("uses", "import.png");
 		iconMap.put("call", "runtoline.gif");
 		
+		Map<String,String> bottomOverlayMap = new HashMap<String,String>();
+		bottomOverlayMap.put("subroutine-inherited", "over_co.gif");
+		
 		imageKey = iconMap.get(type);
-		
-		/*
-		if (mapping instanceof Subroutine) {
-			imageKey = "subroutine.gif";
-		}
-		else if (mapping instanceof Module) {
-			imageKey = "module.gif";
-		}
-		else if (mapping instanceof Call) {
-			//imageKey = "subroutine.gif";
-			//topOverlayKey = "caller_overlay.gif";
-			imageKey = "callarrow.gif";
-		}
-		//else if (mapping instanceof Uses) {
-		//	imageKey = "import_obj.gif";
-		//}
-		else if (mapping instanceof UsesModule) {
-			imageKey = "import.png";
-		}
-		else if (mapping instanceof UsesEntity) {
-			imageKey = "import_obj.gif";
-		}
-		else if (mapping instanceof VariableDeclaration) {
-			imageKey = "localvariable.gif";
-		}
-		*/
-		
-		/*
-		if (soa.getCardinality()!= null && soa.getCardinality().isOneOrMore()) {
-			bottomOverlayKey = "question_overlay.gif";						
-		}
-		else {
-			bottomOverlayKey = "add_overlay.gif";
-		}
-		*/
-		
-		
+		bottomOverlayKey = bottomOverlayMap.get(type);
+				
 		if (imageKey != null) {		
 			return getImageDescriptor(imageKey, topOverlayKey, bottomOverlayKey, SWT_PROPS);			
 		}
 		
 		return null;
-		
-		
+				
 	}
 	
 	

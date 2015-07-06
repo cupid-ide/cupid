@@ -1,4 +1,4 @@
-package org.earthsystemmodeling.cupid.nuopc_v7;
+package org.earthsystemmodeling.cupid.nuopc;
 
 import java.util.List
 import org.earthsystemmodeling.cupid.codedb.CodeDBIndex
@@ -10,10 +10,10 @@ import org.eclipse.photran.core.IFortranAST
 
 public abstract class CodeConcept<P extends CodeConcept<?,?>, A extends IASTNode> {
 	
-	var protected P _parent
-	var protected long _id  
-	var protected CodeDBIndex _codeDB
-	var protected A _astRef
+	var public P _parent
+	var public long _id  
+	var public CodeDBIndex _codeDB
+	var public A _astRef
 	
 	new(P parent) {
 		_parent = parent

@@ -1,12 +1,12 @@
-package org.earthsystemmodeling.cupid.nuopc_v7;
+package org.earthsystemmodeling.cupid.nuopc.v7;
 
 import java.sql.ResultSet;
 import org.earthsystemmodeling.cupid.annotation.Child;
 import org.earthsystemmodeling.cupid.annotation.Label;
 import org.earthsystemmodeling.cupid.annotation.Name;
 import org.earthsystemmodeling.cupid.annotation.Prop;
-import org.earthsystemmodeling.cupid.nuopc_v7.BasicCodeConcept;
-import org.earthsystemmodeling.cupid.nuopc_v7.CodeConcept;
+import org.earthsystemmodeling.cupid.nuopc.BasicCodeConcept;
+import org.earthsystemmodeling.cupid.nuopc.CodeConcept;
 import org.eclipse.photran.internal.core.parser.ASTModuleNode;
 import org.eclipse.photran.internal.core.parser.ASTUseStmtNode;
 import org.eclipse.xtend2.lib.StringConcatenation;
