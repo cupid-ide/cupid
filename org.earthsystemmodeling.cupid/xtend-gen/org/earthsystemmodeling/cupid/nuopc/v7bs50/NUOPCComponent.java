@@ -3,6 +3,7 @@ package org.earthsystemmodeling.cupid.nuopc.v7bs50;
 import java.sql.ResultSet;
 import org.earthsystemmodeling.cupid.annotation.Child;
 import org.earthsystemmodeling.cupid.annotation.Label;
+import org.earthsystemmodeling.cupid.annotation.MappingType;
 import org.earthsystemmodeling.cupid.annotation.Name;
 import org.earthsystemmodeling.cupid.annotation.Prop;
 import org.earthsystemmodeling.cupid.nuopc.BasicCodeConcept;
@@ -12,10 +13,12 @@ import org.eclipse.photran.internal.core.parser.ASTUseStmtNode;
 import org.eclipse.xtend2.lib.StringConcatenation;
 import org.eclipse.xtext.xbase.lib.Exceptions;
 
-@Label(label = "NUOPC Driver", type = "module")
+@Label(label = "NUOPC Driver")
+@MappingType("module")
 @SuppressWarnings("all")
 public abstract class NUOPCComponent extends CodeConcept<CodeConcept<?, ?>, ASTModuleNode> {
-  @Label(label = "Generic Import", type = "uses")
+  @Label(label = "Generic Import")
+  @MappingType("uses")
   public static class GenericImport extends CodeConcept<NUOPCComponent, ASTUseStmtNode> {
     @Name
     public String genericComp;
@@ -74,16 +77,19 @@ public abstract class NUOPCComponent extends CodeConcept<CodeConcept<?, ?>, ASTM
     }
   }
   
-  @Label(label = "ESMF Import", type = "uses", sort = 1)
+  @Label(label = "ESMF Import", sort = 1)
   @Child(forward = false)
+  @MappingType("uses")
   public BasicCodeConcept importESMF;
   
-  @Label(label = "NUOPC Import", type = "uses", sort = 2)
+  @Label(label = "NUOPC Import", sort = 2)
   @Child(forward = false)
+  @MappingType("uses")
   public BasicCodeConcept importNUOPC;
   
-  @Label(label = "Generic Import", type = "uses", sort = 3)
+  @Label(label = "Generic Import", sort = 3)
   @Child
+  @MappingType("uses")
   public NUOPCComponent.GenericImport importNUOPCGeneric;
   
   public NUOPCComponent(final CodeConcept<?, ?> parent) {

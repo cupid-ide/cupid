@@ -7,6 +7,7 @@ import java.util.ArrayList;
 import java.util.List;
 import org.earthsystemmodeling.cupid.annotation.Child;
 import org.earthsystemmodeling.cupid.annotation.Label;
+import org.earthsystemmodeling.cupid.annotation.MappingType;
 import org.earthsystemmodeling.cupid.annotation.Prop;
 import org.earthsystemmodeling.cupid.codedb.CodeDBIndex;
 import org.earthsystemmodeling.cupid.core.CupidActivator;
@@ -29,7 +30,8 @@ import org.eclipse.xtext.xbase.lib.CollectionLiterals;
 import org.eclipse.xtext.xbase.lib.Exceptions;
 import org.eclipse.xtext.xbase.lib.ListExtensions;
 
-@Label(label = "NUOPC Driver", type = "module")
+@Label(label = "NUOPC Driver")
+@MappingType("module")
 @SuppressWarnings("all")
 public class NUOPCDriver extends NUOPCComponent {
   @Label(label = "Initialize")
@@ -112,12 +114,14 @@ public class NUOPCDriver extends NUOPCComponent {
    * 
    * }
    */
-  @Label(label = "SetModelServices", type = "subroutine")
+  @Label(label = "SetModelServices")
+  @MappingType("subroutine")
   public static class SetModelServices extends SpecializationMethodCodeConcept<NUOPCDriver.Initialization> {
     @Child(max = (-1))
     public List<NUOPCDriver.SetModelServices_AddComp> addComps;
     
-    @Label(label = "SetClock", type = "call")
+    @Label(label = "SetClock")
+    @MappingType("call")
     @Child
     public BasicCodeConcept setClock;
     
@@ -368,7 +372,8 @@ public class NUOPCDriver extends NUOPCComponent {
     }
   }
   
-  @Label(label = "Add Component", type = "call")
+  @Label(label = "Add Component")
+  @MappingType("call")
   public static class SetModelServices_AddComp extends CodeConcept<NUOPCDriver.SetModelServices, ASTCallStmtNode> {
     public String compLabel;
     
@@ -520,9 +525,11 @@ public class NUOPCDriver extends NUOPCComponent {
     }
   }
   
-  @Label(label = "SetRunSequence", type = "subroutine")
+  @Label(label = "SetRunSequence")
+  @MappingType("subroutine")
   public static class SetRunSequence extends SpecializationMethodCodeConcept<NUOPCDriver.Initialization> {
-    @Label(label = "New Run Sequence", type = "call")
+    @Label(label = "New Run Sequence")
+    @MappingType("call")
     @Child(forward = false)
     public BasicCodeConcept newRunSequence;
     
@@ -648,7 +655,8 @@ public class NUOPCDriver extends NUOPCComponent {
     }
   }
   
-  @Label(label = "Add Run Element", type = "uses")
+  @Label(label = "Add Run Element")
+  @MappingType("call")
   public static class SetRunSequence_AddRunElement extends CodeConcept<NUOPCDriver.SetRunSequence, ASTCallStmtNode> {
     @Label(label = "slot")
     @Prop
@@ -837,7 +845,8 @@ public class NUOPCDriver extends NUOPCComponent {
     }
   }
   
-  @Label(label = "ModifyInitializePhaseMap", type = "subroutine")
+  @Label(label = "ModifyInitializePhaseMap")
+  @MappingType("subroutine")
   public static class ModifyInitializePhaseMap extends SpecializationMethodCodeConcept<NUOPCDriver.Initialization> {
     public ModifyInitializePhaseMap(final NUOPCDriver.Initialization parent) {
       super(parent, "NUOPC_Driver", "label_ModifyInitializePhaseMap");

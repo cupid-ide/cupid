@@ -5,8 +5,14 @@ import org.eclipse.core.runtime.Status;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.SWTError;
 import org.eclipse.swt.browser.Browser;
+import org.eclipse.swt.browser.LocationEvent;
+import org.eclipse.swt.browser.LocationListener;
+import org.eclipse.swt.events.MouseEvent;
+import org.eclipse.swt.events.MouseListener;
 import org.eclipse.swt.widgets.Composite;
+import org.eclipse.swt.widgets.Event;
 import org.eclipse.swt.widgets.Label;
+import org.eclipse.swt.widgets.Listener;
 import org.eclipse.ui.part.ViewPart;
 
 public class NUOPCDocView extends ViewPart {
@@ -35,9 +41,21 @@ public class NUOPCDocView extends ViewPart {
 		
 		try {
 			browser = new Browser(parent, SWT.NONE);
+			//TODO: the code below was supposed to prevent right-clicking the
+			//browser and clicking reload, but it doesn't
+			/*
+			browser.addListener(SWT.MouseDown, new Listener() {
+				@Override
+				public void handleEvent(Event event) {
+					if (event.button==3) {
+						event.doit = false;
+					}				
+				}				
+			});
+			*/
 		}
 		catch (SWTError se) {
-			CupidActivator.log(Status.WARNING, 	"Error creating NUOPC viewer.  Trying alternative method.");
+			CupidActivator.log(Status.WARNING, 	"Error creating NUOPC Doc viewer.  Trying alternative method.");
 			browser = null;
 			label = new Label(parent, SWT.NONE);
 		}
@@ -54,7 +72,14 @@ public class NUOPCDocView extends ViewPart {
 			label.setText(text);
 		}
 	}
-
+	
+	/*
+	public void setURL(String url) {
+		if (browser != null) {
+			browser.setUrl(url);
+		}
+	}
+	*/
 	
 	@Override
 	public void setFocus() {
@@ -63,7 +88,6 @@ public class NUOPCDocView extends ViewPart {
 		}
 		else {
 			label.setFocus();
-		
 		}
 	}
 }

@@ -406,11 +406,15 @@ public class NUOPCView extends ViewPart {
 				if (ndv != null) {
 					ISelection selection = viewer.getSelection();
 					Object obj = ((IStructuredSelection)selection).getFirstElement();
-					CodeConceptProxy ccp = (CodeConceptProxy) obj;
-					//ndv.setDoc("You clicked: " + ccp.label);
-					String doc = labelProvider.getNUOPCDoc(ccp);
-					if (doc != null) {
-						ndv.setDoc(doc);
+					if (obj != null) {
+						CodeConceptProxy ccp = (CodeConceptProxy) obj;
+						String doc = labelProvider.getNUOPCDoc(ccp);
+						if (doc != null) {
+							ndv.setDoc(doc);
+						}
+						//else {
+			   		   	//	ndv.setURL("www.google.com");
+						//}
 					}
 				}
 			}

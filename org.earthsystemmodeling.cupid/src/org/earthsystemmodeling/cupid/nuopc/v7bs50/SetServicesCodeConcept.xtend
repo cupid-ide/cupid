@@ -18,8 +18,10 @@ import static org.earthsystemmodeling.cupid.core.CupidActivator.log
 import static org.earthsystemmodeling.cupid.nuopc.BasicCodeConcept.newBasicCodeConcept
 import static org.earthsystemmodeling.cupid.util.CodeExtraction.parseLiteralProgramUnit
 import static org.earthsystemmodeling.cupid.util.CodeExtraction.parseLiteralStatement
+import org.earthsystemmodeling.cupid.annotation.MappingType
 
-@Label(label="SetServices", type="subroutine")
+@Label(label="SetServices")
+@MappingType("subroutine")
 public class SetServicesCodeConcept<P extends NUOPCComponent> extends CodeConcept<P, ASTSubroutineSubprogramNode> {
 
 	@Name
@@ -28,7 +30,8 @@ public class SetServicesCodeConcept<P extends NUOPCComponent> extends CodeConcep
 	var public String paramGridComp = "gcomp"
 	var public String paramRC = "rc"
 
-	@Label(label="NUOPC_CompDerive", type="call")
+	@Label(label="NUOPC_CompDerive")
+	@MappingType("call")
 	@Child
 	var public BasicCodeConcept callsCompDeriveID
 

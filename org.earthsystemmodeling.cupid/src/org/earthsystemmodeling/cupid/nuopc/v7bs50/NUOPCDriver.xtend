@@ -1,35 +1,28 @@
-package org.earthsystemmodeling.cupid.nuopc.v7bs50 
+package org.earthsystemmodeling.cupid.nuopc.v7bs50
 
-import org.eclipse.photran.internal.core.parser.ASTModuleNode
-import org.earthsystemmodeling.cupid.codedb.CodeDBIndex
-import org.eclipse.photran.internal.core.parser.ASTSubroutineStmtNode
 import java.sql.SQLException
-import static org.earthsystemmodeling.cupid.core.CupidActivator.log
-import org.earthsystemmodeling.cupid.annotation.Label
-import org.earthsystemmodeling.cupid.annotation.Name
-import org.earthsystemmodeling.cupid.annotation.Child
-import org.eclipse.photran.internal.core.parser.ASTNode
-import static org.earthsystemmodeling.cupid.nuopc.BasicCodeConcept.newBasicCodeConcept
-import org.eclipse.photran.internal.core.parser.ASTCallStmtNode
 import java.util.List
-
-import static org.earthsystemmodeling.cupid.util.CodeExtraction.parseLiteralStatement
-import static org.earthsystemmodeling.cupid.util.CodeExtraction.parseLiteralStatementSequence
-import static org.earthsystemmodeling.cupid.util.CodeExtraction.parseLiteralProgramUnit
-
-import org.eclipse.photran.internal.core.parser.ASTSubroutineSubprogramNode
+import org.earthsystemmodeling.cupid.annotation.Child
+import org.earthsystemmodeling.cupid.annotation.Label
+import org.earthsystemmodeling.cupid.annotation.Prop
+import org.earthsystemmodeling.cupid.codedb.CodeDBIndex
+import org.earthsystemmodeling.cupid.nuopc.BasicCodeConcept
+import org.earthsystemmodeling.cupid.nuopc.CodeConcept
 import org.eclipse.photran.core.IFortranAST
-import org.eclipse.photran.internal.core.parser.ASTExecutableProgramNode
-import org.eclipse.photran.internal.core.parser.ASTUseStmtNode
+import org.eclipse.photran.internal.core.parser.ASTCallStmtNode
+import org.eclipse.photran.internal.core.parser.ASTNode
+import org.eclipse.photran.internal.core.parser.ASTSubroutineSubprogramNode
+import org.eclipse.photran.internal.core.parser.ASTTypeDeclarationStmtNode
 import org.eclipse.photran.internal.core.parser.IASTListNode
 import org.eclipse.photran.internal.core.parser.IBodyConstruct
-import org.eclipse.photran.internal.core.parser.ASTTypeDeclarationStmtNode
-import org.earthsystemmodeling.cupid.annotation.Prop
-import alice.tuprolog.Struct
-import org.earthsystemmodeling.cupid.nuopc.CodeConcept
-import org.earthsystemmodeling.cupid.nuopc.BasicCodeConcept
 
-@Label(label="NUOPC Driver", type="module")
+import static org.earthsystemmodeling.cupid.core.CupidActivator.log
+import static org.earthsystemmodeling.cupid.nuopc.BasicCodeConcept.newBasicCodeConcept
+import static org.earthsystemmodeling.cupid.util.CodeExtraction.parseLiteralStatementSequence
+import org.earthsystemmodeling.cupid.annotation.MappingType
+
+@Label(label="NUOPC Driver")
+@MappingType("module")
 class NUOPCDriver extends NUOPCComponent {
 	
 	public String driverName	
@@ -184,13 +177,15 @@ end subroutine
 	*
 	*/
 	
-	@Label(label="SetModelServices", type="subroutine")
+	@Label(label="SetModelServices")
+	@MappingType("subroutine")
 	static class SetModelServices extends SpecializationMethodCodeConcept<Initialization> {
 	
 		@Child(max=-1)
 		var public List<SetModelServices_AddComp> addComps
 		
-		@Label(label="SetClock", type="call")
+		@Label(label="SetClock")
+		@MappingType("call")
 		@Child
 		var public BasicCodeConcept setClock
 		
@@ -306,7 +301,8 @@ if (ESMF_LogFoundError(rcToCheck=«paramRC», msg=ESMF_LOGERR_PASSTHRU, &
 		
 	}
 	
-	@Label(label="Add Component", type="call")
+	@Label(label="Add Component")
+	@MappingType("call")
 	static class SetModelServices_AddComp extends CodeConcept<SetModelServices, ASTCallStmtNode> {
 	
 		//single child component
@@ -417,10 +413,12 @@ if (ESMF_LogFoundError(rcToCheck=«_parent.paramRC», msg=ESMF_LOGERR_PASSTHRU, 
 	
 	}
 	
-	@Label(label="SetRunSequence", type="subroutine")
+	@Label(label="SetRunSequence")
+	@MappingType("subroutine")
 	static class SetRunSequence extends SpecializationMethodCodeConcept<Initialization> {
 	
-		@Label(label="New Run Sequence", type="call")
+		@Label(label="New Run Sequence")
+		@MappingType("call")
 		@Child(forward=false)
 		public BasicCodeConcept newRunSequence
 		
@@ -486,7 +484,8 @@ end subroutine
 		
 	}
 	
-	@Label(label="Add Run Element", type="uses")
+	@Label(label="Add Run Element")
+	@MappingType("call")
 	static class SetRunSequence_AddRunElement extends CodeConcept<SetRunSequence, ASTCallStmtNode> {
 	
 		@Label(label="slot")
@@ -589,7 +588,8 @@ if (ESMF_LogFoundError(rcToCheck=«_parent.paramRC», msg=ESMF_LOGERR_PASSTHRU, 
 		
 	}
 	
-	@Label(label="ModifyInitializePhaseMap", type="subroutine")
+	@Label(label="ModifyInitializePhaseMap")
+	@MappingType("subroutine")
 	static class ModifyInitializePhaseMap extends SpecializationMethodCodeConcept<Initialization> {
 	
 		new(Initialization parent) {

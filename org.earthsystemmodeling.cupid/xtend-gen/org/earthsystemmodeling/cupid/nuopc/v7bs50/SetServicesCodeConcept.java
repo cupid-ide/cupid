@@ -5,6 +5,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import org.earthsystemmodeling.cupid.annotation.Child;
 import org.earthsystemmodeling.cupid.annotation.Label;
+import org.earthsystemmodeling.cupid.annotation.MappingType;
 import org.earthsystemmodeling.cupid.annotation.Name;
 import org.earthsystemmodeling.cupid.core.CupidActivator;
 import org.earthsystemmodeling.cupid.nuopc.BasicCodeConcept;
@@ -24,7 +25,8 @@ import org.eclipse.photran.internal.core.parser.IModuleBodyConstruct;
 import org.eclipse.xtend2.lib.StringConcatenation;
 import org.eclipse.xtext.xbase.lib.Exceptions;
 
-@Label(label = "SetServices", type = "subroutine")
+@Label(label = "SetServices")
+@MappingType("subroutine")
 @SuppressWarnings("all")
 public class SetServicesCodeConcept<P extends NUOPCComponent> extends CodeConcept<P, ASTSubroutineSubprogramNode> {
   @Name
@@ -34,7 +36,8 @@ public class SetServicesCodeConcept<P extends NUOPCComponent> extends CodeConcep
   
   public String paramRC = "rc";
   
-  @Label(label = "NUOPC_CompDerive", type = "call")
+  @Label(label = "NUOPC_CompDerive")
+  @MappingType("call")
   @Child
   public BasicCodeConcept callsCompDeriveID;
   

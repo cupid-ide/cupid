@@ -7,20 +7,25 @@ import org.earthsystemmodeling.cupid.annotation.Name
 import org.earthsystemmodeling.cupid.annotation.Prop
 import org.earthsystemmodeling.cupid.nuopc.CodeConcept
 import org.earthsystemmodeling.cupid.nuopc.BasicCodeConcept
+import org.earthsystemmodeling.cupid.annotation.MappingType
 
-@Label(label="NUOPC Driver", type="module")
+@Label(label="NUOPC Driver")
+@MappingType("module")
 public abstract class NUOPCComponent extends CodeConcept<CodeConcept<?,?>, ASTModuleNode> {
 	
-	@Label(label="ESMF Import", type="uses", sort=1)
+	@Label(label="ESMF Import", sort=1)
 	@Child(forward=false)
+	@MappingType("uses")
 	public BasicCodeConcept importESMF
 	
-	@Label(label="NUOPC Import", type="uses", sort=2)
+	@Label(label="NUOPC Import", sort=2)
 	@Child(forward=false)
+	@MappingType("uses")
 	public BasicCodeConcept importNUOPC
 	
-	@Label(label="Generic Import", type="uses", sort=3)
+	@Label(label="Generic Import", sort=3)
 	@Child
+	@MappingType("uses")
 	public GenericImport importNUOPCGeneric
 	
 	new(CodeConcept<?, ?> parent) {
@@ -29,7 +34,8 @@ public abstract class NUOPCComponent extends CodeConcept<CodeConcept<?,?>, ASTMo
 	
 	def abstract String prefix() 
 	
-	@Label(label="Generic Import", type="uses")
+	@Label(label="Generic Import")
+	@MappingType("uses")
 	public static class GenericImport extends CodeConcept<NUOPCComponent, ASTUseStmtNode> {
 	
 		@Name

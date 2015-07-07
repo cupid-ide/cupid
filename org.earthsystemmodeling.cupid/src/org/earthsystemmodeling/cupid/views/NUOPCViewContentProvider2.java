@@ -12,6 +12,7 @@ import java.util.Map;
 
 import org.earthsystemmodeling.cupid.annotation.Child;
 import org.earthsystemmodeling.cupid.annotation.Label;
+import org.earthsystemmodeling.cupid.annotation.MappingType;
 import org.earthsystemmodeling.cupid.codedb.CodeDBIndex;
 import org.earthsystemmodeling.cupid.core.CupidActivator;
 import org.earthsystemmodeling.cupid.nuopc.CodeConcept;
@@ -166,7 +167,11 @@ class NUOPCViewContentProvider2 implements IStructuredContentProvider, ITreeCont
 		
 		if (codeConcept != null) {
 			return new Object[] {
-				new CodeConceptProxy(codeConcept.getClass(), codeConcept, codeConcept.getClass().getAnnotation(Label.class), null)
+				new CodeConceptProxy(codeConcept.getClass(), 
+						codeConcept, 
+						codeConcept.getClass().getAnnotation(Label.class), 
+						null,
+						codeConcept.getClass().getAnnotation(MappingType.class))
 			};
 		}
 		else {
@@ -195,6 +200,17 @@ class NUOPCViewContentProvider2 implements IStructuredContentProvider, ITreeCont
 		Class<?> c = getTypeFromField(f);
 		lbl = c.getAnnotation(Label.class);
 		if (lbl != null) return lbl;
+		
+		return null;
+	}
+	
+	public static MappingType getMappingTypeFromField(Field f) {
+		MappingType mt = f.getAnnotation(MappingType.class);
+		if (mt != null) return mt;
+			
+		Class<?> c = getTypeFromField(f);
+		mt = c.getAnnotation(MappingType.class);
+		if (mt != null) return mt;
 		
 		return null;
 	}
@@ -263,6 +279,7 @@ class NUOPCViewContentProvider2 implements IStructuredContentProvider, ITreeCont
 					
 					Class<?> codeConceptClass = getTypeFromField(field);
 					Label lbl = getLabelFromField(field);
+					MappingType mt = getMappingTypeFromField(field);
 					
 					CodeConcept<?,?> cc = null;
 					if (parent.codeConcept != null) {
@@ -272,22 +289,22 @@ class NUOPCViewContentProvider2 implements IStructuredContentProvider, ITreeCont
 							List<CodeConcept<?,?>> ccList = (List<CodeConcept<?,?>>) fieldObj;
 							if (ccList.size() > 0) {
 								for (CodeConcept<?,?> item : ccList) {
-									children.add(new CodeConceptProxy(codeConceptClass, item, lbl, childAnn));
+									children.add(new CodeConceptProxy(codeConceptClass, item, lbl, childAnn, mt));
 								}
 							}
 							else {
-								children.add(new CodeConceptProxy(codeConceptClass, null, lbl, childAnn));
+								children.add(new CodeConceptProxy(codeConceptClass, null, lbl, childAnn, mt));
 							}
 							
 						}
 						else {
 							cc = (CodeConcept<?,?>) fieldObj;
-							CodeConceptProxy ccp = new CodeConceptProxy(codeConceptClass, cc, lbl, childAnn);
+							CodeConceptProxy ccp = new CodeConceptProxy(codeConceptClass, cc, lbl, childAnn, mt);
 							children.add(ccp);
 						}
 					}
 					else {
-						CodeConceptProxy ccp = new CodeConceptProxy(codeConceptClass, null, lbl, childAnn);
+						CodeConceptProxy ccp = new CodeConceptProxy(codeConceptClass, null, lbl, childAnn, mt);
 						children.add(ccp);
 					}
 					
@@ -316,12 +333,12 @@ class NUOPCViewContentProvider2 implements IStructuredContentProvider, ITreeCont
 		public int max=1;
 		public CodeConceptProxy() {}
 
-		public CodeConceptProxy(Class<?> clazz, CodeConcept<?,?> codeConcept, Label lbl, Child child) {
+		public CodeConceptProxy(Class<?> clazz, CodeConcept<?,?> codeConcept, Label lbl, Child child, MappingType mt) {
 			this.codeConcept = codeConcept;
 			this.clazz = clazz;
 			if (lbl != null) {
 				label = lbl.label();
-				type = lbl.type();
+				//type = lbl.type();
 			}
 			else {
 				label = clazz.getSimpleName();
@@ -330,14 +347,18 @@ class NUOPCViewContentProvider2 implements IStructuredContentProvider, ITreeCont
 				min = child.min();
 				max = child.max();
 			}
+			if (mt != null) {
+				type = mt.value();
+			}
+			else {
+				//deprecated, but leaving here for now
+				type = lbl.type();
+			}
 			
 		}
 		
 	}
 	
-	public static class CodeConceptProxyDoc extends CodeConceptProxy {
-		public String doc = "This is my documentation.  It might be a few lines long, who knows?";
-	}
 	
 	
 }

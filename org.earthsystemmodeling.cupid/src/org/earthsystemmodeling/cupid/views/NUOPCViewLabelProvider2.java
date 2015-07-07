@@ -184,11 +184,14 @@ class NUOPCViewLabelProvider2 extends StyledCellLabelProvider { //implements ITa
     	CodeConceptProxy proxy = (CodeConceptProxy) element;
     	if (cell.getColumnIndex()==0) {
     		if (proxy.codeConcept == null) {
+    			//TODO: the styles below are not being applied since Mars release
     			if (proxy.min==0) {
     				text.append(proxy.label, grayStyler);
+    				cell.setForeground(Display.getCurrent().getSystemColor(SWT.COLOR_GRAY));
     			}
     			else {
     				text.append(proxy.label, redStyler);
+    				cell.setForeground(Display.getCurrent().getSystemColor(SWT.COLOR_RED));
     			}
     			icon = getFortranImageDescriptor(proxy.type, SWT.IMAGE_GRAY);
     		}
@@ -237,7 +240,7 @@ class NUOPCViewLabelProvider2 extends StyledCellLabelProvider { //implements ITa
 	    
 	    cell.setText(text.toString());
 	    cell.setStyleRanges(text.getStyleRanges());
-	    
+	    	    
 	    if (icon != null) {
 			cell.setImage(icon.createImage());
 		}

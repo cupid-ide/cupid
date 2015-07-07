@@ -4,6 +4,7 @@ import com.google.common.base.Objects;
 import java.sql.ResultSet;
 import org.earthsystemmodeling.cupid.annotation.Child;
 import org.earthsystemmodeling.cupid.annotation.Label;
+import org.earthsystemmodeling.cupid.annotation.MappingType;
 import org.earthsystemmodeling.cupid.annotation.Name;
 import org.earthsystemmodeling.cupid.nuopc.BasicCodeConcept;
 import org.earthsystemmodeling.cupid.nuopc.CodeConcept;
@@ -30,7 +31,8 @@ public abstract class SpecializationMethodCodeConcept<P extends CodeConcept<?, ?
   
   public String specLabel = "label_SpecializationLabel";
   
-  @Label(label = "Registration", type = "call")
+  @Label(label = "Registration")
+  @MappingType("call")
   @Child
   public BasicCodeConcept registration;
   

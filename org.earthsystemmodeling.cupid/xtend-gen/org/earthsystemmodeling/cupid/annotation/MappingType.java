@@ -4,9 +4,6 @@ import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 
 @Retention(RetentionPolicy.RUNTIME)
-public @interface Label {
-  public String label();
-  @Deprecated
-  public String type() default "";
-  public int sort() default 999999;
+public @interface MappingType {
+  public String value();
 }

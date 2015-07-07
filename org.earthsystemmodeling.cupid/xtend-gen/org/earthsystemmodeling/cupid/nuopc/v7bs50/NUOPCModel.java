@@ -6,6 +6,7 @@ import java.util.ArrayList;
 import java.util.List;
 import org.earthsystemmodeling.cupid.annotation.Child;
 import org.earthsystemmodeling.cupid.annotation.Label;
+import org.earthsystemmodeling.cupid.annotation.MappingType;
 import org.earthsystemmodeling.cupid.codedb.CodeDBIndex;
 import org.earthsystemmodeling.cupid.core.CupidActivator;
 import org.earthsystemmodeling.cupid.nuopc.BasicCodeConcept;
@@ -26,22 +27,158 @@ import org.eclipse.xtend2.lib.StringConcatenation;
 import org.eclipse.xtext.xbase.lib.CollectionLiterals;
 import org.eclipse.xtext.xbase.lib.Exceptions;
 
-@Label(label = "NUOPC Model", type = "module")
+@Label(label = "NUOPC Model")
+@MappingType("module")
 @SuppressWarnings("all")
 public class NUOPCModel extends NUOPCComponent {
+  @Label(label = "Initialize Phase Definition")
+  public static abstract class IPD extends CodeConcept<NUOPCModel, ASTNode> {
+    @Label(label = "IPDv04p1 - Advertise Fields")
+    @MappingType("subroutine")
+    public static class IPDv04p1 extends EntryPointCodeConcept<NUOPCModel.IPD> {
+      public IPDv04p1(final NUOPCModel.IPD parent, final String phaseLabel) {
+        super(parent, phaseLabel);
+        this.subroutineName = "AdvertiseFields";
+        this.methodType = "ESMF_METHOD_INITIALIZE";
+      }
+      
+      @Override
+      public EntryPointCodeConcept<NUOPCModel.IPD> reverseChildren() {
+        return this;
+      }
+      
+      @Override
+      public CodeConcept<?, ASTModuleNode> module() {
+        return this._parent._parent;
+      }
+      
+      @Override
+      public SetServicesCodeConcept<?> setServices() {
+        return this._parent._parent.setServices;
+      }
+    }
+    
+    @Label(label = "IPDv04p2")
+    @MappingType("subroutine-inherited")
+    public static class IPDv04p2 extends CodeConcept<NUOPCModel.IPD, ASTNode> {
+      public IPDv04p2(final NUOPCModel.IPD parent, final String phaseLabel) {
+        super(parent);
+      }
+    }
+    
+    @Label(label = "IPDv04p3 - Realize Fields providing grid")
+    @MappingType("subroutine")
+    public static class IPDv04p3 extends EntryPointCodeConcept<NUOPCModel.IPD> {
+      public IPDv04p3(final NUOPCModel.IPD parent, final String phaseLabel) {
+        super(parent, phaseLabel);
+        this.subroutineName = "RealizeFieldsProvidingGrid";
+        this.methodType = "ESMF_METHOD_INITIALIZE";
+      }
+      
+      @Override
+      public EntryPointCodeConcept<NUOPCModel.IPD> reverseChildren() {
+        return this;
+      }
+      
+      @Override
+      public CodeConcept<?, ASTModuleNode> module() {
+        return this._parent._parent;
+      }
+      
+      @Override
+      public SetServicesCodeConcept<?> setServices() {
+        return this._parent._parent.setServices;
+      }
+    }
+    
+    @Label(label = "IPDv04p4")
+    @MappingType("subroutine")
+    public static class IPDv04p4 extends EntryPointCodeConcept<NUOPCModel.IPD> {
+      public IPDv04p4(final NUOPCModel.IPD parent, final String phaseLabel) {
+        super(parent, phaseLabel);
+        this.subroutineName = "ModifyDistGrid";
+        this.methodType = "ESMF_METHOD_INITIALIZE";
+      }
+      
+      @Override
+      public EntryPointCodeConcept<NUOPCModel.IPD> reverseChildren() {
+        return this;
+      }
+      
+      @Override
+      public CodeConcept<?, ASTModuleNode> module() {
+        return this._parent._parent;
+      }
+      
+      @Override
+      public SetServicesCodeConcept<?> setServices() {
+        return this._parent._parent.setServices;
+      }
+    }
+    
+    @Label(label = "IPDv04p5 - Realize Fields accepting grid")
+    @MappingType("subroutine")
+    public static class IPDv04p5 extends EntryPointCodeConcept<NUOPCModel.IPD> {
+      public IPDv04p5(final NUOPCModel.IPD parent, final String phaseLabel) {
+        super(parent, phaseLabel);
+        this.subroutineName = "RealizeFieldsAcceptingGrid";
+        this.methodType = "ESMF_METHOD_INITIALIZE";
+      }
+      
+      @Override
+      public EntryPointCodeConcept<NUOPCModel.IPD> reverseChildren() {
+        return this;
+      }
+      
+      @Override
+      public CodeConcept<?, ASTModuleNode> module() {
+        return this._parent._parent;
+      }
+      
+      @Override
+      public SetServicesCodeConcept<?> setServices() {
+        return this._parent._parent.setServices;
+      }
+    }
+    
+    @Label(label = "IPDv04p6 - Verify Connected / Set Clock")
+    @MappingType("subroutine-inherited")
+    public static class IPDv04p6 extends CodeConcept<NUOPCModel.IPD, ASTNode> {
+      public IPDv04p6(final NUOPCModel.IPD parent, final String phaseLabel) {
+        super(parent);
+      }
+    }
+    
+    @Label(label = "IPDv04p7 - Data Initialize")
+    @MappingType("subroutine-inherited")
+    public static class IPDv04p7 extends CodeConcept<NUOPCModel.IPD, ASTNode> {
+      public IPDv04p7(final NUOPCModel.IPD parent, final String phaseLabel) {
+        super(parent);
+      }
+    }
+    
+    public IPD(final NUOPCModel parent) {
+      super(parent);
+    }
+  }
+  
   @Label(label = "Initialize Phase Definition (v00)")
-  public static class IPDv00 extends CodeConcept<NUOPCModel, ASTNode> {
-    @Child
-    public NUOPCModel.IPDv00p1 ipdv00p1;
+  public static class IPDv00 extends NUOPCModel.IPD {
+    @Child(min = 1)
+    @Label(label = "IPDv00p1 - Advertise Fields")
+    public NUOPCModel.IPD.IPDv04p1 ipdv00p1;
+    
+    @Child(min = 1)
+    @Label(label = "IPDv00p2 - Realize Fields")
+    public NUOPCModel.IPD.IPDv04p5 ipdv00p2;
     
     @Child
-    public NUOPCModel.IPDv00p2 ipdv00p2;
+    @Label(label = "IPDv00p3 - Verify All Connected & Set Clock")
+    public NUOPCModel.IPD.IPDv04p6 ipdv00p3;
     
     @Child
-    public NUOPCModel.IPDv00p3 ipdv00p3;
-    
-    @Child
-    public NUOPCModel.IPDv00p4 ipdv00p4;
+    @Label(label = "IPDv00p4 - Initialize Fields")
+    public NUOPCModel.IPD.IPDv04p7 ipdv00p4;
     
     public IPDv00(final NUOPCModel parent) {
       super(parent);
@@ -51,83 +188,72 @@ public class NUOPCModel extends NUOPCComponent {
     public NUOPCModel.IPDv00 reverse() {
       NUOPCModel.IPDv00 _xblockexpression = null;
       {
-        NUOPCModel.IPDv00p1 _iPDv00p1 = new NUOPCModel.IPDv00p1(this);
-        CodeConcept<NUOPCModel.IPDv00, ASTSubroutineSubprogramNode> _reverse = _iPDv00p1.reverse();
-        this.ipdv00p1 = ((NUOPCModel.IPDv00p1) _reverse);
-        NUOPCModel.IPDv00p2 _iPDv00p2 = new NUOPCModel.IPDv00p2(this);
-        CodeConcept<NUOPCModel.IPDv00, ASTSubroutineSubprogramNode> _reverse_1 = _iPDv00p2.reverse();
-        this.ipdv00p2 = ((NUOPCModel.IPDv00p2) _reverse_1);
-        NUOPCModel.IPDv00p3 _iPDv00p3 = new NUOPCModel.IPDv00p3(this);
-        CodeConcept<NUOPCModel.IPDv00, ASTNode> _reverse_2 = _iPDv00p3.reverse();
-        this.ipdv00p3 = ((NUOPCModel.IPDv00p3) _reverse_2);
-        NUOPCModel.IPDv00p4 _iPDv00p4 = new NUOPCModel.IPDv00p4(this);
-        CodeConcept<NUOPCModel.IPDv00, ASTNode> _reverse_3 = _iPDv00p4.reverse();
-        this.ipdv00p4 = ((NUOPCModel.IPDv00p4) _reverse_3);
+        NUOPCModel.IPD.IPDv04p1 _iPDv04p1 = new NUOPCModel.IPD.IPDv04p1(this, "IPDv00p1");
+        CodeConcept<NUOPCModel.IPD, ASTSubroutineSubprogramNode> _reverse = _iPDv04p1.reverse();
+        this.ipdv00p1 = ((NUOPCModel.IPD.IPDv04p1) _reverse);
+        NUOPCModel.IPD.IPDv04p5 _iPDv04p5 = new NUOPCModel.IPD.IPDv04p5(this, "IPDv00p2");
+        CodeConcept<NUOPCModel.IPD, ASTSubroutineSubprogramNode> _reverse_1 = _iPDv04p5.reverse();
+        this.ipdv00p2 = ((NUOPCModel.IPD.IPDv04p5) _reverse_1);
+        NUOPCModel.IPD.IPDv04p6 _iPDv04p6 = new NUOPCModel.IPD.IPDv04p6(this, "IPDv00p3");
+        CodeConcept<NUOPCModel.IPD, ASTNode> _reverse_2 = _iPDv04p6.reverse();
+        this.ipdv00p3 = ((NUOPCModel.IPD.IPDv04p6) _reverse_2);
+        NUOPCModel.IPD.IPDv04p7 _iPDv04p7 = new NUOPCModel.IPD.IPDv04p7(this, "IPDv00p4");
+        CodeConcept<NUOPCModel.IPD, ASTNode> _reverse_3 = _iPDv04p7.reverse();
+        this.ipdv00p4 = ((NUOPCModel.IPD.IPDv04p7) _reverse_3);
         _xblockexpression = this;
       }
       return _xblockexpression;
     }
   }
   
-  @Label(label = "IPDv00p1 - Advertise", type = "subroutine")
-  public static class IPDv00p1 extends EntryPointCodeConcept<NUOPCModel.IPDv00> {
-    public IPDv00p1(final NUOPCModel.IPDv00 parent) {
-      super(parent, "IPDv00p1");
-      this.subroutineName = "AdvertiseFields";
-      this.methodType = "ESMF_METHOD_INITIALIZE";
-    }
+  @Label(label = "Initialize Phase Definition (v01)")
+  public static class IPDv01 extends NUOPCModel.IPD {
+    @Child(min = 1)
+    @Label(label = "IPDv01p1 - Advertise Fields")
+    public NUOPCModel.IPD.IPDv04p1 ipdv01p1;
     
-    @Override
-    public EntryPointCodeConcept<NUOPCModel.IPDv00> reverseChildren() {
-      return this;
-    }
+    @Child
+    @Label(label = "IPDv01p2 - (unspecified by NUOPC)")
+    public NUOPCModel.IPD.IPDv04p2 ipdv01p2;
     
-    @Override
-    public CodeConcept<?, ASTModuleNode> module() {
-      return this._parent._parent;
-    }
+    @Child(min = 1)
+    @Label(label = "IPDv01p3 - Realize Fields")
+    public NUOPCModel.IPD.IPDv04p3 ipdv01p3;
     
-    @Override
-    public SetServicesCodeConcept<?> setServices() {
-      return this._parent._parent.setServices;
-    }
-  }
-  
-  @Label(label = "IPDv00p2 - Realize", type = "subroutine")
-  public static class IPDv00p2 extends EntryPointCodeConcept<NUOPCModel.IPDv00> {
-    public IPDv00p2(final NUOPCModel.IPDv00 parent) {
-      super(parent, "IPDv00p2");
-      this.subroutineName = "RealizeFields";
-      this.methodType = "ESMF_METHOD_INITIALIZE";
-    }
+    @Child
+    @Label(label = "IPDv01p4 - Verify All Connected & Set Clock")
+    public NUOPCModel.IPD.IPDv04p6 ipdv01p4;
     
-    @Override
-    public EntryPointCodeConcept<NUOPCModel.IPDv00> reverseChildren() {
-      return this;
-    }
+    @Child
+    @Label(label = "IPDv01p5 - Initialize Fields")
+    public NUOPCModel.IPD.IPDv04p7 ipdv01p5;
     
-    @Override
-    public CodeConcept<?, ASTModuleNode> module() {
-      return this._parent._parent;
-    }
-    
-    @Override
-    public SetServicesCodeConcept<?> setServices() {
-      return this._parent._parent.setServices;
-    }
-  }
-  
-  @Label(label = "IPDv00p3 - Set Clock / Verify Connected", type = "subroutine-inherited")
-  public static class IPDv00p3 extends CodeConcept<NUOPCModel.IPDv00, ASTNode> {
-    public IPDv00p3(final NUOPCModel.IPDv00 parent) {
+    public IPDv01(final NUOPCModel parent) {
       super(parent);
     }
-  }
-  
-  @Label(label = "IPDv00p4 - Data Initialize", type = "subroutine-inherited")
-  public static class IPDv00p4 extends CodeConcept<NUOPCModel.IPDv00, ASTNode> {
-    public IPDv00p4(final NUOPCModel.IPDv00 parent) {
-      super(parent);
+    
+    @Override
+    public NUOPCModel.IPDv01 reverse() {
+      NUOPCModel.IPDv01 _xblockexpression = null;
+      {
+        NUOPCModel.IPD.IPDv04p1 _iPDv04p1 = new NUOPCModel.IPD.IPDv04p1(this, "IPDv01p1");
+        CodeConcept<NUOPCModel.IPD, ASTSubroutineSubprogramNode> _reverse = _iPDv04p1.reverse();
+        this.ipdv01p1 = ((NUOPCModel.IPD.IPDv04p1) _reverse);
+        NUOPCModel.IPD.IPDv04p2 _iPDv04p2 = new NUOPCModel.IPD.IPDv04p2(this, "IPDv01p2");
+        CodeConcept<NUOPCModel.IPD, ASTNode> _reverse_1 = _iPDv04p2.reverse();
+        this.ipdv01p2 = ((NUOPCModel.IPD.IPDv04p2) _reverse_1);
+        NUOPCModel.IPD.IPDv04p3 _iPDv04p3 = new NUOPCModel.IPD.IPDv04p3(this, "IPDv01p3");
+        CodeConcept<NUOPCModel.IPD, ASTSubroutineSubprogramNode> _reverse_2 = _iPDv04p3.reverse();
+        this.ipdv01p3 = ((NUOPCModel.IPD.IPDv04p3) _reverse_2);
+        NUOPCModel.IPD.IPDv04p6 _iPDv04p6 = new NUOPCModel.IPD.IPDv04p6(this, "IPDv01p4");
+        CodeConcept<NUOPCModel.IPD, ASTNode> _reverse_3 = _iPDv04p6.reverse();
+        this.ipdv01p4 = ((NUOPCModel.IPD.IPDv04p6) _reverse_3);
+        NUOPCModel.IPD.IPDv04p7 _iPDv04p7 = new NUOPCModel.IPD.IPDv04p7(this, "IPDv01p5");
+        CodeConcept<NUOPCModel.IPD, ASTNode> _reverse_4 = _iPDv04p7.reverse();
+        this.ipdv01p5 = ((NUOPCModel.IPD.IPDv04p7) _reverse_4);
+        _xblockexpression = this;
+      }
+      return _xblockexpression;
     }
   }
   
@@ -175,7 +301,8 @@ public class NUOPCModel extends NUOPCComponent {
     }
   }
   
-  @Label(label = "Initialize Phase 1", type = "subroutine")
+  @Label(label = "Initialize Phase 1")
+  @MappingType("subroutine")
   public static class InitP1 extends EntryPointCodeConcept<NUOPCModel.Initialization> {
     @Child(min = 0, max = (-1))
     public List<NUOPCModel.InitP1_AdvertiseField> advertiseFields;
@@ -222,7 +349,8 @@ public class NUOPCModel extends NUOPCComponent {
     }
   }
   
-  @Label(label = "Advertise Field", type = "call")
+  @Label(label = "Advertise Field")
+  @MappingType("call")
   public static class InitP1_AdvertiseField extends CodeConcept<NUOPCModel.InitP1, ASTCallStmtNode> {
     public String state;
     
@@ -319,7 +447,8 @@ public class NUOPCModel extends NUOPCComponent {
     }
   }
   
-  @Label(label = "Initialize Phase 2", type = "subroutine")
+  @Label(label = "Initialize Phase 2")
+  @MappingType("subroutine")
   public static class InitP2 extends EntryPointCodeConcept<NUOPCModel.Initialization> {
     @Child(min = 0, max = (-1))
     public List<NUOPCModel.InitP2_RealizeField> realizeFields;
@@ -353,7 +482,8 @@ public class NUOPCModel extends NUOPCComponent {
     }
   }
   
-  @Label(label = "Realize Field", type = "call")
+  @Label(label = "Realize Field")
+  @MappingType("call")
   public static class InitP2_RealizeField extends CodeConcept<NUOPCModel.InitP2, ASTCallStmtNode> {
     public String state;
     
@@ -450,7 +580,8 @@ public class NUOPCModel extends NUOPCComponent {
     }
   }
   
-  @Label(label = "SetClock", type = "subroutine")
+  @Label(label = "SetClock")
+  @MappingType("subroutine")
   public static class SetClock extends SpecializationMethodCodeConcept<NUOPCModel.Initialization> {
     public SetClock(final NUOPCModel.Initialization parent) {
       super(parent, "NUOPC_Model", "label_SetClock");
@@ -579,7 +710,8 @@ public class NUOPCModel extends NUOPCComponent {
     }
   }
   
-  @Label(label = "DataInitialize", type = "subroutine")
+  @Label(label = "DataInitialize")
+  @MappingType("subroutine")
   public static class DataInitialize extends SpecializationMethodCodeConcept<NUOPCModel.Initialization> {
     public DataInitialize(final NUOPCModel.Initialization parent) {
       super(parent, "NUOPC_Model", "label_DataInitialize");
@@ -678,7 +810,8 @@ public class NUOPCModel extends NUOPCComponent {
     }
   }
   
-  @Label(label = "ModelAdvance", type = "subroutine")
+  @Label(label = "ModelAdvance")
+  @MappingType("subroutine")
   public static class ModelAdvance extends SpecializationMethodCodeConcept<NUOPCModel.Run> {
     public ModelAdvance(final NUOPCModel.Run parent) {
       super(parent, "NUOPC_Model", "label_Advance");
@@ -846,7 +979,8 @@ public class NUOPCModel extends NUOPCComponent {
     }
   }
   
-  @Label(label = "SetRunClock", type = "subroutine")
+  @Label(label = "SetRunClock")
+  @MappingType("subroutine")
   public static class SetRunClock extends SpecializationMethodCodeConcept<NUOPCModel.Run> {
     public SetRunClock(final NUOPCModel.Run parent) {
       super(parent, "NUOPC_Model", "label_SetRunClock");
@@ -954,7 +1088,8 @@ public class NUOPCModel extends NUOPCComponent {
     }
   }
   
-  @Label(label = "CheckImport", type = "subroutine")
+  @Label(label = "CheckImport")
+  @MappingType("subroutine")
   public static class CheckImport extends SpecializationMethodCodeConcept<NUOPCModel.Run> {
     public CheckImport(final NUOPCModel.Run parent) {
       super(parent, "NUOPC_Model", "label_CheckImport");
@@ -1041,7 +1176,8 @@ public class NUOPCModel extends NUOPCComponent {
     }
   }
   
-  @Label(label = "Finalize Phase 1", type = "subroutine")
+  @Label(label = "Finalize Phase 1")
+  @MappingType("subroutine")
   public static class FinalizeP1 extends EntryPointCodeConcept<NUOPCModel.Finalize> {
     public FinalizeP1(final NUOPCModel.Finalize parent) {
       super(parent, "FinalizePhase1");
@@ -1076,6 +1212,9 @@ public class NUOPCModel extends NUOPCComponent {
   
   @Child
   public NUOPCModel.IPDv00 ipdv00;
+  
+  @Child
+  public NUOPCModel.IPDv01 ipdv01;
   
   @Child
   public NUOPCModel.Initialization initialization;
@@ -1175,15 +1314,18 @@ public class NUOPCModel extends NUOPCComponent {
       NUOPCModel.IPDv00 _iPDv00 = new NUOPCModel.IPDv00(this);
       NUOPCModel.IPDv00 _reverse_1 = _iPDv00.reverse();
       this.ipdv00 = _reverse_1;
+      NUOPCModel.IPDv01 _iPDv01 = new NUOPCModel.IPDv01(this);
+      NUOPCModel.IPDv01 _reverse_2 = _iPDv01.reverse();
+      this.ipdv01 = _reverse_2;
       NUOPCModel.Initialization _initialization = new NUOPCModel.Initialization(this);
-      NUOPCModel.Initialization _reverse_2 = _initialization.reverse();
-      this.initialization = _reverse_2;
+      NUOPCModel.Initialization _reverse_3 = _initialization.reverse();
+      this.initialization = _reverse_3;
       NUOPCModel.Run _run = new NUOPCModel.Run(this);
-      NUOPCModel.Run _reverse_3 = _run.reverse();
-      this.run = _reverse_3;
+      NUOPCModel.Run _reverse_4 = _run.reverse();
+      this.run = _reverse_4;
       NUOPCModel.Finalize _finalize = new NUOPCModel.Finalize(this);
-      NUOPCModel.Finalize _reverse_4 = _finalize.reverse();
-      this.finalize = _reverse_4;
+      NUOPCModel.Finalize _reverse_5 = _finalize.reverse();
+      this.finalize = _reverse_5;
       _xblockexpression = this;
     }
     return _xblockexpression;

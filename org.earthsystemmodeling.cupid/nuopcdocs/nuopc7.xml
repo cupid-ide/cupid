@@ -118,6 +118,22 @@
 	]]>
 	</doc>
 	
+	
+	<doc class="org.earthsystemmodeling.cupid.nuopc.v7bs50.NUOPCModel.IPDv00">
+	<![CDATA[
+	Initialize Phase Definition version 00 (IPDv00) 
+	]]>
+	</doc>
+	
+	<doc class="org.earthsystemmodeling.cupid.nuopc.v7bs50.NUOPCModel.IPD.IPDv04p1">
+	<![CDATA[
+	IPDv01p1, IPDv02p1, IPDv03p1, IPDv04p1 <br/>
+	<b>(Required, Implementor Provided)</b> <br/>
+	Advertise model Fields in import/export States.
+	]]>
+	</doc>
+	
+	
 	<doc class="org.earthsystemmodeling.cupid.nuopc.v7bs50.NUOPCModel.Initialization">
 	<![CDATA[
 	<b>Initialize</b><hr/>

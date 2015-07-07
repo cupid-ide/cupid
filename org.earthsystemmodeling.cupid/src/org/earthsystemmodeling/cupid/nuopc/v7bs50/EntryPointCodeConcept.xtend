@@ -16,13 +16,15 @@ import org.eclipse.photran.internal.core.parser.ASTSubroutineSubprogramNode
 import static org.earthsystemmodeling.cupid.nuopc.BasicCodeConcept.newBasicCodeConcept
 import static org.earthsystemmodeling.cupid.util.CodeExtraction.parseLiteralProgramUnit
 import static org.earthsystemmodeling.cupid.util.CodeExtraction.parseLiteralStatement
+import org.earthsystemmodeling.cupid.annotation.MappingType
 
 public abstract class EntryPointCodeConcept<P extends CodeConcept<?, ?>> extends CodeConcept<P, ASTSubroutineSubprogramNode> {
 
 	@Name
 	public String subroutineName = "NUOPCEntryPoint"  //subclasses should default
 
-	@Label(label="Registration", type="call")
+	@Label(label="Registration")
+	@MappingType("call")
 	@Child
 	public BasicCodeConcept registration
 

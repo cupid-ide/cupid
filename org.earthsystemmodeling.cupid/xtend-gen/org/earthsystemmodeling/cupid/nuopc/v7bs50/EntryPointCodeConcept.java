@@ -6,6 +6,7 @@ import java.util.ArrayList;
 import java.util.List;
 import org.earthsystemmodeling.cupid.annotation.Child;
 import org.earthsystemmodeling.cupid.annotation.Label;
+import org.earthsystemmodeling.cupid.annotation.MappingType;
 import org.earthsystemmodeling.cupid.annotation.Name;
 import org.earthsystemmodeling.cupid.nuopc.BasicCodeConcept;
 import org.earthsystemmodeling.cupid.nuopc.CodeConcept;
@@ -29,7 +30,8 @@ public abstract class EntryPointCodeConcept<P extends CodeConcept<?, ?>> extends
   @Name
   public String subroutineName = "NUOPCEntryPoint";
   
-  @Label(label = "Registration", type = "call")
+  @Label(label = "Registration")
+  @MappingType("call")
   @Child
   public BasicCodeConcept registration;
   

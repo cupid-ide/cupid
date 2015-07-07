@@ -17,6 +17,7 @@ import org.eclipse.photran.internal.core.parser.ASTIfStmtNode
 import org.earthsystemmodeling.cupid.nuopc.BasicCodeConcept
 import org.earthsystemmodeling.cupid.nuopc.CodeConcept
 import org.earthsystemmodeling.cupid.nuopc.CodeGenerationException
+import org.earthsystemmodeling.cupid.annotation.MappingType
 
 public abstract class SpecializationMethodCodeConcept<P extends CodeConcept<?, ?>> extends CodeConcept<P, ASTSubroutineSubprogramNode> {
 
@@ -25,7 +26,8 @@ public abstract class SpecializationMethodCodeConcept<P extends CodeConcept<?, ?
 
 	var public String specLabel = "label_SpecializationLabel"  //subclasses should default
 
-	@Label(label="Registration", type="call")
+	@Label(label="Registration")
+	@MappingType("call")
 	@Child
 	var public BasicCodeConcept registration
 
