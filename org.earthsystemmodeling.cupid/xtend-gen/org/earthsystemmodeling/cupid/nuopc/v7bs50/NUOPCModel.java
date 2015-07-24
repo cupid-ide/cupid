@@ -36,6 +36,9 @@ public class NUOPCModel extends NUOPCComponent {
     @Label(label = "IPDv04p1 - Advertise Fields")
     @MappingType("subroutine")
     public static class IPDv04p1 extends EntryPointCodeConcept<NUOPCModel.IPD> {
+      @Child(min = 0, max = (-1))
+      public List<NUOPCModel.IPD.AdvertiseField> advertiseFields;
+      
       public IPDv04p1(final NUOPCModel.IPD parent, final String phaseLabel) {
         super(parent, phaseLabel);
         this.subroutineName = "AdvertiseFields";
@@ -44,7 +47,14 @@ public class NUOPCModel extends NUOPCComponent {
       
       @Override
       public EntryPointCodeConcept<NUOPCModel.IPD> reverseChildren() {
-        return this;
+        NUOPCModel.IPD.IPDv04p1 _xblockexpression = null;
+        {
+          NUOPCModel.IPD.AdvertiseField _advertiseField = new NUOPCModel.IPD.AdvertiseField(this);
+          List _reverseMultiple = _advertiseField.reverseMultiple();
+          this.advertiseFields = _reverseMultiple;
+          _xblockexpression = this;
+        }
+        return _xblockexpression;
       }
       
       @Override
@@ -154,6 +164,104 @@ public class NUOPCModel extends NUOPCComponent {
     public static class IPDv04p7 extends CodeConcept<NUOPCModel.IPD, ASTNode> {
       public IPDv04p7(final NUOPCModel.IPD parent, final String phaseLabel) {
         super(parent);
+      }
+    }
+    
+    @Label(label = "Advertise Field")
+    @MappingType("call")
+    public static class AdvertiseField extends CodeConcept<EntryPointCodeConcept<?>, ASTCallStmtNode> {
+      public String state;
+      
+      public String standardName;
+      
+      public AdvertiseField(final EntryPointCodeConcept<?> parent) {
+        super(parent);
+        this.state = this._parent.paramImport;
+        this.standardName = "StandardName";
+      }
+      
+      @Override
+      public String name() {
+        return ((this.state + " / ") + this.standardName);
+      }
+      
+      @Override
+      public List reverseMultiple() {
+        try {
+          ArrayList<NUOPCModel.IPD.AdvertiseField> _xblockexpression = null;
+          {
+            ArrayList<NUOPCModel.IPD.AdvertiseField> retList = CollectionLiterals.<NUOPCModel.IPD.AdvertiseField>newArrayList();
+            StringConcatenation _builder = new StringConcatenation();
+            _builder.append("call_(_cid, ");
+            long _parentID = this.parentID();
+            _builder.append(_parentID, "");
+            _builder.append(", \'NUOPC_StateAdvertiseField\'),");
+            _builder.newLineIfNotEmpty();
+            _builder.append("\t\t\t\t\t\t\t");
+            _builder.append("callArgWithType(_, _cid, 1, _, _, _stateExpr),");
+            _builder.newLine();
+            _builder.append("\t\t\t\t\t\t\t");
+            _builder.append("callArgWithType(_, _cid, 2, _, _, _standardNameExpr).");
+            ResultSet rs = this.execQuery(_builder);
+            while (rs.next()) {
+              {
+                NUOPCModel.IPD.AdvertiseField advField = new NUOPCModel.IPD.AdvertiseField(this._parent);
+                long _long = rs.getLong("_cid");
+                advField._id = _long;
+                String _string = rs.getString("_stateExpr");
+                advField.state = _string;
+                String _string_1 = rs.getString("_standardNameExpr");
+                advField.standardName = _string_1;
+                retList.add(advField);
+              }
+            }
+            rs.close();
+            _xblockexpression = retList;
+          }
+          return _xblockexpression;
+        } catch (Throwable _e) {
+          throw Exceptions.sneakyThrow(_e);
+        }
+      }
+      
+      @Override
+      public IFortranAST forward() {
+        IFortranAST _xblockexpression = null;
+        {
+          IFortranAST ast = this.getAST();
+          StringConcatenation _builder = new StringConcatenation();
+          _builder.newLine();
+          _builder.append("call NUOPC_StateAdvertiseField(");
+          CharSequence _paramch = this.paramch(this.state);
+          _builder.append(_paramch, "");
+          _builder.append(", \'");
+          CharSequence _paramch_1 = this.paramch(this.standardName);
+          _builder.append(_paramch_1, "");
+          _builder.append("\', rc=");
+          _builder.append(this._parent.paramRC, "");
+          _builder.append(")");
+          _builder.newLineIfNotEmpty();
+          _builder.append("if (ESMF_LogFoundError(rcToCheck=");
+          _builder.append(this._parent.paramRC, "");
+          _builder.append(", msg=ESMF_LOGERR_PASSTHRU, &");
+          _builder.newLineIfNotEmpty();
+          _builder.append("    ");
+          _builder.append("line=__LINE__, &");
+          _builder.newLine();
+          _builder.append("    ");
+          _builder.append("file=__FILE__)) &");
+          _builder.newLine();
+          _builder.append("    ");
+          _builder.append("return  ! bail out");
+          _builder.newLine();
+          String code = _builder.toString();
+          final IASTListNode<IBodyConstruct> stmts = CodeExtraction.parseLiteralStatementSequence(code);
+          ASTSubroutineSubprogramNode ssn = this._parent.getASTRef();
+          IASTListNode<IBodyConstruct> _body = ssn.getBody();
+          _body.addAll(stmts);
+          _xblockexpression = ast;
+        }
+        return _xblockexpression;
       }
     }
     

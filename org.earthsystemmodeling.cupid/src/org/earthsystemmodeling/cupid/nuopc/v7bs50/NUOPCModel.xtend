@@ -108,6 +108,9 @@ class NUOPCModel extends NUOPCComponent {
 		@MappingType("subroutine")
 		public static class IPDv04p1 extends EntryPointCodeConcept<IPD> {
 
+			@Child(min=0, max=-1)
+			public List<AdvertiseField> advertiseFields
+		
 			new(IPD parent, String phaseLabel) {
 				super(parent, phaseLabel)
 				subroutineName = "AdvertiseFields"
@@ -115,6 +118,7 @@ class NUOPCModel extends NUOPCComponent {
 			}
 
 			override reverseChildren() {
+				advertiseFields = new AdvertiseField(this).reverseMultiple
 				this
 			}
 
@@ -222,6 +226,65 @@ class NUOPCModel extends NUOPCComponent {
 				super(parent)
 			}
 		}
+		
+		@Label(label="Advertise Field")
+		@MappingType("call")
+		public static class AdvertiseField extends CodeConcept<EntryPointCodeConcept<?>, ASTCallStmtNode> {
+	
+			public String state
+			public String standardName
+	
+			new(EntryPointCodeConcept<?> parent) {
+				super(parent)
+				// defaults
+				state = _parent.paramImport
+				standardName = "StandardName"
+			}
+	
+			override name() {
+				state + " / " + standardName
+			}
+	
+			override List reverseMultiple() {
+				var retList = newArrayList()
+	
+				var rs = '''call_(_cid, «parentID», 'NUOPC_StateAdvertiseField'),
+							callArgWithType(_, _cid, 1, _, _, _stateExpr),
+							callArgWithType(_, _cid, 2, _, _, _standardNameExpr).'''.execQuery
+	
+				while (rs.next) {
+					var advField = new AdvertiseField(_parent);
+					advField._id = rs.getLong("_cid")
+					advField.state = rs.getString("_stateExpr")
+					advField.standardName = rs.getString("_standardNameExpr")
+					retList.add(advField)
+				}
+				rs.close
+	
+				retList
+			}
+	
+			override forward() {
+				var IFortranAST ast = getAST
+	
+				var code = '''
+	
+	call NUOPC_StateAdvertiseField(«paramch(state)», '«paramch(standardName)»', rc=«_parent.paramRC»)
+	if (ESMF_LogFoundError(rcToCheck=«_parent.paramRC», msg=ESMF_LOGERR_PASSTHRU, &
+	    line=__LINE__, &
+	    file=__FILE__)) &
+	    return  ! bail out
+	'''
+				val IASTListNode<IBodyConstruct> stmts = parseLiteralStatementSequence(code)
+				var ASTSubroutineSubprogramNode ssn = _parent.ASTRef
+	
+				ssn.body.addAll(stmts)
+				// setASTRef(stmts.get(0) as ASTCallStmtNode)
+				ast
+			}
+	
+		}
+			
 
 	}
 	
