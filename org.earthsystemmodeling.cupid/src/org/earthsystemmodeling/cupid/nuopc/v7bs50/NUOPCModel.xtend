@@ -34,7 +34,16 @@ class NUOPCModel extends NUOPCComponent {
 	
 	@Child
 	public IPDv01 ipdv01
-
+	
+	@Child
+	public IPDv02 ipdv02
+	
+	@Child
+	public IPDv03 ipdv03
+	
+	@Child
+	public IPDv04 ipdv04
+	
 	@Child
 	public Initialization initialization
 
@@ -84,8 +93,13 @@ class NUOPCModel extends NUOPCComponent {
 
 	def reverseChildren() {
 		setServices = new SetServicesCodeConcept(this).reverse
+		
 		ipdv00 = new IPDv00(this).reverse
 		ipdv01 = new IPDv01(this).reverse
+		ipdv02 = new IPDv02(this).reverse
+		ipdv03 = new IPDv03(this).reverse
+		ipdv04 = new IPDv04(this).reverse
+
 		initialization = new Initialization(this).reverse
 		run = new Run(this).reverse
 		finalize = new Finalize(this).reverse
@@ -111,10 +125,21 @@ class NUOPCModel extends NUOPCComponent {
 			@Child(min=0, max=-1)
 			public List<AdvertiseField> advertiseFields
 		
-			new(IPD parent, String phaseLabel) {
-				super(parent, phaseLabel)
+			new(IPD parent) {
+				super(parent)
+				phaseLabel = getPhaseLabel()
 				subroutineName = "AdvertiseFields"
 				methodType = "ESMF_METHOD_INITIALIZE"
+			}
+			
+			def getPhaseLabel() {
+				switch _parent {
+					IPDv00 : "IPDv00p1"
+					IPDv01 : "IPDv01p1"
+					IPDv02 : "IPDv02p1"
+					IPDv03 : "IPDv03p1"
+					default : "IPDv04p1"
+				}
 			}
 
 			override reverseChildren() {
@@ -132,10 +157,10 @@ class NUOPCModel extends NUOPCComponent {
 
 		}
 		
-		@Label(label="IPDv04p2")
+		@Label(label="IPDv04p2 - Unspecified by NUOPC")
 		@MappingType("subroutine-inherited")
 		public static class IPDv04p2 extends CodeConcept<IPD, ASTNode> {
-			new(IPD parent, String phaseLabel) {
+			new(IPD parent) {
 				super(parent)
 			}
 		}		
@@ -144,10 +169,21 @@ class NUOPCModel extends NUOPCComponent {
 		@MappingType("subroutine")
 		public static class IPDv04p3 extends EntryPointCodeConcept<IPD> {
 
-			new(IPD parent, String phaseLabel) {
-				super(parent, phaseLabel)
+			new(IPD parent) {
+				super(parent)
+				phaseLabel = getPhaseLabel()
 				subroutineName = "RealizeFieldsProvidingGrid"
 				methodType = "ESMF_METHOD_INITIALIZE"
+			}
+			
+			def getPhaseLabel() {
+				switch _parent {
+					IPDv00 : "IPDv00p2"
+					IPDv01 : "IPDv01p3"
+					IPDv02 : "IPDv02p3"
+					IPDv03 : "IPDv03p3"
+					default : "IPDv04p3"
+				}
 			}
 
 			override reverseChildren() {
@@ -164,14 +200,22 @@ class NUOPCModel extends NUOPCComponent {
 
 		}
 		
-		@Label(label="IPDv04p4")
+		@Label(label="IPDv04p4 - Modify Decomposition of Accepted Grid/Mesh")
 		@MappingType("subroutine")
 		public static class IPDv04p4 extends EntryPointCodeConcept<IPD> {
 
-			new(IPD parent, String phaseLabel) {
-				super(parent, phaseLabel)
+			new(IPD parent) {
+				super(parent)
+				phaseLabel = getPhaseLabel()
 				subroutineName = "ModifyDistGrid"
 				methodType = "ESMF_METHOD_INITIALIZE"
+			}
+			
+			def getPhaseLabel() {
+				switch _parent {
+					IPDv03 : "IPDv03p4"
+					default : "IPDv04p4"
+				}
 			}
 
 			override reverseChildren() {
@@ -192,10 +236,18 @@ class NUOPCModel extends NUOPCComponent {
 		@MappingType("subroutine")
 		public static class IPDv04p5 extends EntryPointCodeConcept<IPD> {
 			
-			new(IPD parent, String phaseLabel) {
-				super(parent, phaseLabel)
+			new(IPD parent) {
+				super(parent)
+				phaseLabel = getPhaseLabel()
 				subroutineName = "RealizeFieldsAcceptingGrid"
 				methodType = "ESMF_METHOD_INITIALIZE"
+			}
+			
+			def getPhaseLabel() {
+				switch _parent {
+					IPDv03 : "IPDv03p5"
+					default : "IPDv04p5"
+				}
 			}
 
 			override reverseChildren() {
@@ -214,7 +266,7 @@ class NUOPCModel extends NUOPCComponent {
 		@Label(label="IPDv04p6 - Verify Connected / Set Clock")
 		@MappingType("subroutine-inherited")
 		public static class IPDv04p6 extends CodeConcept<IPD, ASTNode> {
-			new(IPD parent, String phaseLabel) {
+			new(IPD parent) {
 				super(parent)
 			}
 		}	
@@ -222,7 +274,7 @@ class NUOPCModel extends NUOPCComponent {
 		@Label(label="IPDv04p7 - Data Initialize")
 		@MappingType("subroutine-inherited")
 		public static class IPDv04p7 extends CodeConcept<IPD, ASTNode> {
-			new(IPD parent, String phaseLabel) {
+			new(IPD parent) {
 				super(parent)
 			}
 		}
@@ -298,7 +350,7 @@ class NUOPCModel extends NUOPCComponent {
 
 		@Child(min=1)
 		@Label(label="IPDv00p2 - Realize Fields")
-		public IPD.IPDv04p5 ipdv00p2
+		public IPD.IPDv04p3 ipdv00p2
 
 		@Child
 		@Label(label="IPDv00p3 - Verify All Connected & Set Clock")
@@ -313,10 +365,10 @@ class NUOPCModel extends NUOPCComponent {
 		}
 
 		override IPDv00 reverse() {
-			ipdv00p1 = new IPD.IPDv04p1(this, "IPDv00p1").reverse as IPD.IPDv04p1
-			ipdv00p2 = new IPD.IPDv04p5(this, "IPDv00p2").reverse as IPD.IPDv04p5
-			ipdv00p3 = new IPD.IPDv04p6(this, "IPDv00p3").reverse as IPD.IPDv04p6
-			ipdv00p4 = new IPD.IPDv04p7(this, "IPDv00p4").reverse as IPD.IPDv04p7
+			ipdv00p1 = new IPD.IPDv04p1(this).reverse as IPD.IPDv04p1
+			ipdv00p2 = new IPD.IPDv04p3(this).reverse as IPD.IPDv04p3
+			ipdv00p3 = new IPD.IPDv04p6(this).reverse as IPD.IPDv04p6
+			ipdv00p4 = new IPD.IPDv04p7(this).reverse as IPD.IPDv04p7
 			this
 		}
 
@@ -416,11 +468,11 @@ class NUOPCModel extends NUOPCComponent {
 		}
 
 		override IPDv01 reverse() {
-			ipdv01p1 = new IPD.IPDv04p1(this, "IPDv01p1").reverse as IPD.IPDv04p1
-			ipdv01p2 = new IPD.IPDv04p2(this, "IPDv01p2").reverse as IPD.IPDv04p2
-			ipdv01p3 = new IPD.IPDv04p3(this, "IPDv01p3").reverse as IPD.IPDv04p3
-			ipdv01p4 = new IPD.IPDv04p6(this, "IPDv01p4").reverse as IPD.IPDv04p6
-			ipdv01p5 = new IPD.IPDv04p7(this, "IPDv01p5").reverse as IPD.IPDv04p7
+			ipdv01p1 = new IPD.IPDv04p1(this).reverse as IPD.IPDv04p1
+			ipdv01p2 = new IPD.IPDv04p2(this).reverse as IPD.IPDv04p2
+			ipdv01p3 = new IPD.IPDv04p3(this).reverse as IPD.IPDv04p3
+			ipdv01p4 = new IPD.IPDv04p6(this).reverse as IPD.IPDv04p6
+			ipdv01p5 = new IPD.IPDv04p7(this).reverse as IPD.IPDv04p7
 			this
 		}
 		
@@ -498,6 +550,125 @@ class NUOPCModel extends NUOPCComponent {
 		
 	}
 		
+	@Label(label="Initialize Phase Definition (v02)")
+	public static class IPDv02 extends IPD {
+	
+		new(NUOPCModel parent) {
+			super(parent)
+		}
+		
+		@Child(min=1)
+		public IPD.IPDv04p1 ipdv02p1
+
+		@Child
+		public IPD.IPDv04p2 ipdv02p2
+
+		@Child(min=1)
+		public IPD.IPDv04p3 ipdv02p3
+		
+		@Child
+		public IPD.IPDv04p6 ipdv02p4
+		
+		@Child
+		public IPD.IPDv04p7 ipdv02p5
+		
+		override IPDv02 reverse() {
+			ipdv02p1 = new IPD.IPDv04p1(this).reverse as IPD.IPDv04p1
+			ipdv02p2 = new IPD.IPDv04p2(this).reverse as IPD.IPDv04p2
+			ipdv02p3 = new IPD.IPDv04p3(this).reverse as IPD.IPDv04p3
+			ipdv02p4 = new IPD.IPDv04p6(this).reverse as IPD.IPDv04p6
+			ipdv02p5 = new IPD.IPDv04p7(this).reverse as IPD.IPDv04p7
+			this
+		}
+		
+		
+	}
+	
+	@Label(label="Initialize Phase Definition (v03)")
+	public static class IPDv03 extends IPD {
+	
+		new(NUOPCModel parent) {
+			super(parent)
+		}
+		
+		@Child(min=1)
+		public IPD.IPDv04p1 ipdv03p1
+
+		@Child
+		public IPD.IPDv04p2 ipdv03p2
+
+		@Child(min=1)
+		public IPD.IPDv04p3 ipdv03p3
+		
+		@Child(min=0)
+		public IPD.IPDv04p4 ipdv03p4
+		
+		@Child(min=1)
+		public IPD.IPDv04p5 ipdv03p5
+
+		@Child
+		public IPD.IPDv04p6 ipdv03p6
+		
+		@Child
+		public IPD.IPDv04p7 ipdv03p7
+		
+		override IPDv03 reverse() {
+			ipdv03p1 = new IPD.IPDv04p1(this).reverse as IPD.IPDv04p1
+			ipdv03p2 = new IPD.IPDv04p2(this).reverse as IPD.IPDv04p2
+			ipdv03p3 = new IPD.IPDv04p3(this).reverse as IPD.IPDv04p3
+			ipdv03p4 = new IPD.IPDv04p4(this).reverse as IPD.IPDv04p4
+			ipdv03p5 = new IPD.IPDv04p5(this).reverse as IPD.IPDv04p5
+			ipdv03p6 = new IPD.IPDv04p6(this).reverse as IPD.IPDv04p6
+			ipdv03p7 = new IPD.IPDv04p7(this).reverse as IPD.IPDv04p7
+			this
+		}
+		
+	}
+	
+	@Label(label="Initialize Phase Definition (v04)")
+	public static class IPDv04 extends IPD {
+	
+		new(NUOPCModel parent) {
+			super(parent)
+		}
+		
+		@Child(min=1)
+		public IPD.IPDv04p1 ipdv04p1
+
+		@Child
+		public IPD.IPDv04p2 ipdv04p2
+
+		@Child(min=1)
+		public IPD.IPDv04p3 ipdv04p3
+		
+		@Child(min=0)
+		public IPD.IPDv04p4 ipdv04p4
+		
+		@Child(min=1)
+		public IPD.IPDv04p5 ipdv04p5
+
+		@Child
+		public IPD.IPDv04p6 ipdv04p6
+		
+		@Child
+		public IPD.IPDv04p7 ipdv04p7
+		
+		override IPDv04 reverse() {
+			ipdv04p1 = new IPD.IPDv04p1(this).reverse as IPD.IPDv04p1
+			ipdv04p2 = new IPD.IPDv04p2(this).reverse as IPD.IPDv04p2
+			ipdv04p3 = new IPD.IPDv04p3(this).reverse as IPD.IPDv04p3
+			ipdv04p4 = new IPD.IPDv04p4(this).reverse as IPD.IPDv04p4
+			ipdv04p5 = new IPD.IPDv04p5(this).reverse as IPD.IPDv04p5
+			ipdv04p6 = new IPD.IPDv04p6(this).reverse as IPD.IPDv04p6
+			ipdv04p7 = new IPD.IPDv04p7(this).reverse as IPD.IPDv04p7
+			
+			//if (ipdv04p1==null && ipdv04p3==null && ipdv04p4==null) return null
+			//else this
+			this
+		}
+		
+	}
+	
 		
 	
 

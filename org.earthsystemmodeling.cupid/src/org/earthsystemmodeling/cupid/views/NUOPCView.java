@@ -3,6 +3,7 @@ package org.earthsystemmodeling.cupid.views;
 import java.lang.reflect.Constructor;
 import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;
+import java.net.URI;
 
 import org.earthsystemmodeling.cupid.annotation.Child;
 import org.earthsystemmodeling.cupid.annotation.Label;
@@ -410,7 +411,12 @@ public class NUOPCView extends ViewPart {
 						CodeConceptProxy ccp = (CodeConceptProxy) obj;
 						String doc = labelProvider.getNUOPCDoc(ccp);
 						if (doc != null) {
-							ndv.setDoc(doc);
+							if (doc.startsWith("http")) {
+								ndv.setURL(doc);
+							}
+							else {
+								ndv.setDoc(doc);
+							}
 						}
 						//else {
 			   		   	//	ndv.setURL("www.google.com");

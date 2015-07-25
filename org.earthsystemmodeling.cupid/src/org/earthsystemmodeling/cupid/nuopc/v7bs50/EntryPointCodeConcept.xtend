@@ -38,7 +38,7 @@ public abstract class EntryPointCodeConcept<P extends CodeConcept<?, ?>> extends
 	
 	public List<String> phaseLabelList
 	
-	String phaseLabel
+	public String phaseLabel
 
 	//var SetServicesCodeConcept<?> setServices
 
@@ -46,6 +46,11 @@ public abstract class EntryPointCodeConcept<P extends CodeConcept<?, ?>> extends
 		super(parent)
 		phaseLabelList = newArrayList()
 		this.phaseLabel = phaseLabel
+	}
+	
+	/* subclasses using this must explicitly set the phaseLabel */
+	new(P parent) {
+		this(parent, null)
 	}
 
 	override reverse() {

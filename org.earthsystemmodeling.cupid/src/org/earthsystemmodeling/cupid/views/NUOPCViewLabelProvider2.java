@@ -74,7 +74,12 @@ class NUOPCViewLabelProvider2 extends StyledCellLabelProvider { //implements ITa
 			List<Element> xmlElems = docXML.getRootElement().getChildren("doc");
 			for (Element xmlElem : xmlElems) {
 				if (xmlElem.getAttributeValue("class").equals(className)) {
-					buf.append(xmlElem.getTextTrim());
+					if (xmlElem.getAttributeValue("url") != null) {
+						buf.append(xmlElem.getAttributeValue("url"));
+					}
+					else {
+						buf.append(xmlElem.getTextTrim());
+					}
 				}
 			}			
 		}

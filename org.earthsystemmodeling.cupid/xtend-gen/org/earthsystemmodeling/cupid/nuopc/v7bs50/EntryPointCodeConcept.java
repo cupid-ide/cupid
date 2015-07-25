@@ -49,13 +49,20 @@ public abstract class EntryPointCodeConcept<P extends CodeConcept<?, ?>> extends
   
   public List<String> phaseLabelList;
   
-  private String phaseLabel;
+  public String phaseLabel;
   
   public EntryPointCodeConcept(final P parent, final String phaseLabel) {
     super(parent);
     ArrayList<String> _newArrayList = CollectionLiterals.<String>newArrayList();
     this.phaseLabelList = _newArrayList;
     this.phaseLabel = phaseLabel;
+  }
+  
+  /**
+   * subclasses using this must explicitly set the phaseLabel
+   */
+  public EntryPointCodeConcept(final P parent) {
+    this(parent, null);
   }
   
   @Override

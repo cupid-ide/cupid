@@ -73,13 +73,13 @@ public class NUOPCDocView extends ViewPart {
 		}
 	}
 	
-	/*
+	
 	public void setURL(String url) {
 		if (browser != null) {
 			browser.setUrl(url);
 		}
 	}
-	*/
+	
 	
 	@Override
 	public void setFocus() {
