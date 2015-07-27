@@ -148,6 +148,9 @@ class NUOPCModel extends NUOPCComponent {
 		@MappingType("subroutine")
 		public static class IPDv04p3 extends EntryPointCodeConcept<IPD> {
 
+			@Child(min=0, max=-1)
+			public List<RealizeField> realizeFields
+			
 			new(IPD parent) {
 				super(parent)
 				phaseLabel = getPhaseLabel()
@@ -166,9 +169,10 @@ class NUOPCModel extends NUOPCComponent {
 			}
 
 			override reverseChildren() {
+				realizeFields = new RealizeField(this).reverseMultiple
 				this
 			}
-
+			
 			override module() {
 				_parent._parent._parent._parent
 			}
@@ -316,6 +320,64 @@ class NUOPCModel extends NUOPCComponent {
 			}
 	
 		}
+		
+		@Label(label="Realize Field")
+		@MappingType("call")
+		public static class RealizeField extends CodeConcept<EntryPointCodeConcept<?>, ASTCallStmtNode> {
+
+		public String state
+		public String field
+
+		new(EntryPointCodeConcept<?> parent) {
+			super(parent)
+			// defaults
+			state = _parent.paramImport
+			field = "field"
+		}
+
+		override name() {
+			state + " / " + field
+		}
+
+		override List reverseMultiple() {
+			var retList = newArrayList()
+
+			var rs = '''call_(_cid, «parentID», 'NUOPC_StateRealizeField'),
+						callArgWithType(_, _cid, 1, _, _, _stateExpr),
+						callArgWithType(_, _cid, 2, _, _, _fieldExpr).'''.execQuery
+
+			while (rs.next) {
+				var relField = new RealizeField(_parent);
+				relField._id = rs.getLong("_cid")
+				relField.state = rs.getString("_stateExpr")
+				relField.field = rs.getString("_fieldExpr")
+				retList.add(relField)
+			}
+			rs.close
+
+			retList
+		}
+
+		override forward() {
+			var IFortranAST ast = getAST
+
+			var code = '''
+
+call NUOPC_StateRealizeField(«paramch(state)», field=«paramch(field)», rc=«_parent.paramRC»)
+if (ESMF_LogFoundError(rcToCheck=«_parent.paramRC», msg=ESMF_LOGERR_PASSTHRU, &
+    line=__LINE__, &
+    file=__FILE__)) &
+    return  ! bail out
+'''
+			val IASTListNode<IBodyConstruct> stmts = parseLiteralStatementSequence(code)
+			var ASTSubroutineSubprogramNode ssn = _parent.ASTRef
+
+			ssn.body.addAll(stmts)
+			ast
+		}
+
+	}
+		
 			
 
 	}
@@ -733,6 +795,7 @@ class NUOPCModel extends NUOPCComponent {
 	}
 	
 
+/*
 
 	@Label(label="Initialize Phase 1")
 	@MappingType("subroutine")
@@ -911,6 +974,7 @@ if (ESMF_LogFoundError(rcToCheck=«_parent.paramRC», msg=ESMF_LOGERR_PASSTHRU, 
 		}
 
 	}
+*/
 
 	@Label(label="SetClock")
 	@MappingType("subroutine")
@@ -1274,12 +1338,61 @@ end subroutine
 		}
 
 	}
+	
+	@Label(label="Phases")
+	public static class FinalizePhases extends CodeConcept<Finalize, ASTNode> {
+	
+		@Child
+		public FinalizePhase1 p1
+		
+		new(Finalize parent) {
+			super(parent)
+		}
+		
+		override FinalizePhases reverse() {
+			p1 = new FinalizePhase1(this).reverse as FinalizePhase1
+			this
+		}
+	
+	}
+	
+	@Label(label="Specializations")
+	public static class FinalizeSpecializations extends CodeConcept<Finalize, ASTNode> {
+
+		@Child(min=0)
+		public FinalizeModel finalize
+
+		new(Finalize parent) {
+			super(parent)
+		}
+
+		override reverse() {
+			reverseChildren
+		}
+
+		def reverseChildren() {
+			finalize = new FinalizeModel(this).reverse as FinalizeModel
+			this
+		}
+
+	}
+	
+	@Label(label="Finalize Phase 1")
+	@MappingType("subroutine-inherited")
+	public static class FinalizePhase1 extends CodeConcept<FinalizePhases, ASTNode> {
+		new(FinalizePhases parent) {
+			super(parent)
+		}
+	}	
 
 	@Label(label="Finalize")
 	public static class Finalize extends CodeConcept<NUOPCModel, ASTNode> {
 
-		@Child(min=0)
-		public FinalizeP1 finalizeP1
+		@Child
+		public FinalizePhases finalPhases
+		
+		@Child
+		public FinalizeSpecializations finalSpecs
 
 		new(NUOPCModel parent) {
 			super(parent)
@@ -1290,35 +1403,57 @@ end subroutine
 		}
 
 		def reverseChildren() {
-			finalizeP1 = new FinalizeP1(this).reverse as FinalizeP1
+			finalPhases = new FinalizePhases(this).reverse as FinalizePhases
+			finalSpecs = new FinalizeSpecializations(this).reverse as FinalizeSpecializations
 			this
 		}
 
 	}
-
-	@Label(label="Finalize Phase 1")
+	
+	@Label(label="FinalizeModel")
 	@MappingType("subroutine")
-	public static class FinalizeP1 extends EntryPointCodeConcept<Finalize> {
+	public static class FinalizeModel extends SpecializationMethodCodeConcept<FinalizeSpecializations> {
 
-		new(Finalize parent) {
-			super(parent, "FinalizePhase1")
-			methodType = "ESMF_METHOD_FINALIZE"
-			subroutineName = "Finalize"
+		new(FinalizeSpecializations parent) {
+			super(parent, "NUOPC_Model", "label_Finalize")
+
+			// defaults
+			subroutineName = "FinalizeModel"
+			specLabel = "model_label_Finalize"
+			paramGridComp = "gcomp"
+			paramRC = "rc"
 		}
 
-		override reverseChildren() {
-			this
+		override subroutineTemplate() {
+			'''
+
+subroutine «subroutineName»(«paramGridComp», «paramRC»)
+    type(ESMF_GridComp)  :: «paramGridComp»
+    integer, intent(out) :: «paramRC»
+
+    rc = ESMF_SUCCESS
+    
+    ! finalize model
+
+end subroutine
+'''
 		}
 
 		override module() {
-			_parent._parent
+			_parent._parent._parent
 		}
 
 		override setServices() {
-			_parent._parent.setServices
+			_parent._parent._parent.setServices
+		}
+
+		override genericUse() {
+			_parent._parent._parent.importNUOPCGeneric
 		}
 
 	}
+
+	
 
 }
 	
