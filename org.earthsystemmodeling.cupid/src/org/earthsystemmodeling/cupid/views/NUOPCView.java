@@ -162,7 +162,7 @@ public class NUOPCView extends ViewPart {
 				
 				//text = "<html><body bgcolor=\"#FFFFE0\" style=\"margin-top:2pt;overflow:auto;font-size:13px;font-family:Helvetica;\">" + text + "</body></html>";
 				
-				text = "<html><head><link rel=\"stylesheet\" type=\"text/css\" href=\"" + stylePath + "\" /></head><body>" + text + "</body></html>";
+				text = "<html><head><link rel=\"stylesheet\" type=\"text/css\" href=\"" + NUOPCDocView.getStylesheetPath() + "\" /></head><body>" + text + "</body></html>";
 
 				
 				browser.setText(text);

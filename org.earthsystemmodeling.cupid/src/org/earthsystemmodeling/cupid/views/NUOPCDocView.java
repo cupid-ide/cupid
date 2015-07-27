@@ -1,5 +1,7 @@
 package org.earthsystemmodeling.cupid.views;
 
+import java.io.File;
+import java.net.URISyntaxException;
 import java.net.URL;
 
 import org.earthsystemmodeling.cupid.core.CupidActivator;
@@ -30,18 +32,26 @@ public class NUOPCDocView extends ViewPart {
 	/**
 	 *  Location on file system of stylesheet.
 	 */
-	private String stylePath;
+	private static String stylePath = null;
 	
 	
 	/**
 	 * The constructor.
 	 */
 	public NUOPCDocView() {
-		URL styleURL = CupidActivator.getFileURL("nuopcdocs/styles.css");
-		stylePath = "";
-		if (styleURL != null) {
-			stylePath = styleURL.getPath();
+		
+	}
+	
+	public static String getStylesheetPath() {
+		if (stylePath == null) {
+			URL styleURL = CupidActivator.getFileURL("nuopcdocs/styles.css");
+			CupidActivator.debug("Stylesheet URL: " + styleURL);
+			stylePath = "";
+			if (styleURL != null) {
+				stylePath = styleURL.toExternalForm();
+			}
 		}
+		return stylePath;
 	}
 	
 	
@@ -78,7 +88,7 @@ public class NUOPCDocView extends ViewPart {
 	public void setDoc(String text) {
 		if (browser != null) {
 //			String docText = "<html><head><link rel=\"stylesheet\" type=\"text/css\" href=\"styles.css\" /></head><body bgcolor=\"#FFFFE0\" style=\"margin-top:2pt;overflow:auto;font-size:13px;font-family:Helvetica;\">" + text + "</body></html>";
-			String docText = "<html><head><link rel=\"stylesheet\" type=\"text/css\" href=\"" + stylePath + "\" /></head><body>" + text + "</body></html>";
+			String docText = "<html><head><link rel=\"stylesheet\" type=\"text/css\" href=\"" + getStylesheetPath() + "\" /></head><body>" + text + "</body></html>";
 			browser.setText(docText);
 		}
 		else {

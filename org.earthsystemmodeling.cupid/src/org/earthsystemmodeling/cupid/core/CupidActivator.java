@@ -34,6 +34,18 @@ public class CupidActivator extends AbstractUIPlugin {
 		return instance;
 	}
 	
+	public static void debug(String msg, Throwable e) {
+		if (getDefault().isDebugging()) {
+			log(Status.INFO, msg, e);
+		}
+	}
+	
+	public static void debug(String msg) {
+		if (getDefault().isDebugging()) {
+			log(Status.INFO, msg);
+		}
+	}
+	
 	public static void log(String msg) {
 		log(msg, null);
 	}
