@@ -25,6 +25,17 @@ public abstract class CodeConcept<P extends CodeConcept<?,?>, A extends IASTNode
 		else _parent?.parentID()
 	}
 	
+	/*
+	def CodeConcept<?,?> nearestAncestor(Class<?> c) {
+		var CodeConcept<?,?> cur = _parent;
+		while (cur != null) {
+			if (c.isInstance(cur)) return cur;
+		}
+		null;
+	}
+	* 
+	*/
+	
 	def A getASTRef() {
 		if (_astRef != null) {
 			_astRef

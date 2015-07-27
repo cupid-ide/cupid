@@ -62,6 +62,15 @@ public class CupidActivator extends AbstractUIPlugin {
 	    return image;
 	}
 	
+	public static URL getFileURL(String relative) {
+		URL url = FileLocator.find(getDefault().getBundle(), new Path(relative), null);
+		try {
+			return FileLocator.toFileURL(url);
+		} catch (IOException e) {
+			return null;
+		}
+	}
+	
 	public static InputStream getInputStream(String path) {
 		try {
 			return FileLocator.openStream(

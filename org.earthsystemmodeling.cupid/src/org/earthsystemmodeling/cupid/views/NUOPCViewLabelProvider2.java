@@ -31,6 +31,7 @@ import org.eclipse.swt.graphics.TextStyle;
 import org.eclipse.swt.widgets.Display;
 import org.jdom.Element;
 import org.jdom.input.DOMBuilder;
+import org.jdom.output.XMLOutputter;
 import org.osgi.framework.Bundle;
 import org.osgi.framework.FrameworkUtil;
 import org.w3c.dom.Document;
@@ -78,7 +79,10 @@ class NUOPCViewLabelProvider2 extends StyledCellLabelProvider { //implements ITa
 						buf.append(xmlElem.getAttributeValue("url"));
 					}
 					else {
-						buf.append(xmlElem.getTextTrim());
+						XMLOutputter outputter = new XMLOutputter();
+						//xmlElem.g
+						//buf.append(xmlElem.getTextTrim())
+						buf.append(outputter.outputString(xmlElem.getContent()));
 					}
 				}
 			}			

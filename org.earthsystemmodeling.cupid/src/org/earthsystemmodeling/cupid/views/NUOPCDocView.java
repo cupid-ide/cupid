@@ -1,5 +1,7 @@
 package org.earthsystemmodeling.cupid.views;
 
+import java.net.URL;
+
 import org.earthsystemmodeling.cupid.core.CupidActivator;
 import org.eclipse.core.runtime.Status;
 import org.eclipse.swt.SWT;
@@ -25,11 +27,21 @@ public class NUOPCDocView extends ViewPart {
 	private Browser browser;
 	private Label label;
 	
+	/**
+	 *  Location on file system of stylesheet.
+	 */
+	private String stylePath;
+	
 	
 	/**
 	 * The constructor.
 	 */
 	public NUOPCDocView() {
+		URL styleURL = CupidActivator.getFileURL("nuopcdocs/styles.css");
+		stylePath = "";
+		if (styleURL != null) {
+			stylePath = styleURL.getPath();
+		}
 	}
 	
 	
@@ -65,7 +77,8 @@ public class NUOPCDocView extends ViewPart {
 	
 	public void setDoc(String text) {
 		if (browser != null) {
-			String docText = "<html><body bgcolor=\"#FFFFE0\" style=\"margin-top:2pt;overflow:auto;font-size:13px;font-family:Helvetica;\">" + text + "</body></html>";
+//			String docText = "<html><head><link rel=\"stylesheet\" type=\"text/css\" href=\"styles.css\" /></head><body bgcolor=\"#FFFFE0\" style=\"margin-top:2pt;overflow:auto;font-size:13px;font-family:Helvetica;\">" + text + "</body></html>";
+			String docText = "<html><head><link rel=\"stylesheet\" type=\"text/css\" href=\"" + stylePath + "\" /></head><body>" + text + "</body></html>";
 			browser.setText(docText);
 		}
 		else {

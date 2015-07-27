@@ -4,6 +4,7 @@ import java.lang.reflect.Constructor;
 import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;
 import java.net.URI;
+import java.net.URL;
 
 import org.earthsystemmodeling.cupid.annotation.Child;
 import org.earthsystemmodeling.cupid.annotation.Label;
@@ -91,11 +92,24 @@ public class NUOPCView extends ViewPart {
 	private IPartListener2 partListener;
 	private IResourceChangeListener resourceChangeListener;
 	
+	private static String stylePath;
+	
+	static {
+		//TODO:  this is duplicated in NUOPCDocView.java
+		URL styleURL = CupidActivator.getFileURL("nuopcdocs/styles.css");
+		if (styleURL != null) {
+			stylePath = styleURL.getPath();
+		}
+		else {
+			stylePath = "";
+		}
+	}
+	
 	/**
 	 * The constructor.
 	 */
 	public NUOPCView() {
-	
+		
 	}
 	
 	
@@ -146,7 +160,10 @@ public class NUOPCView extends ViewPart {
 			try {
 				Browser browser = new Browser(comp, SWT.NONE);
 				
-				text = "<html><body bgcolor=\"#FFFFE0\" style=\"margin-top:2pt;overflow:auto;font-size:13px;font-family:Helvetica;\">" + text + "</body></html>";
+				//text = "<html><body bgcolor=\"#FFFFE0\" style=\"margin-top:2pt;overflow:auto;font-size:13px;font-family:Helvetica;\">" + text + "</body></html>";
+				
+				text = "<html><head><link rel=\"stylesheet\" type=\"text/css\" href=\"" + stylePath + "\" /></head><body>" + text + "</body></html>";
+
 				
 				browser.setText(text);
 				

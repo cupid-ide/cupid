@@ -51,6 +51,15 @@ public abstract class CodeConcept<P extends CodeConcept<?, ?>, A extends IASTNod
     return _xifexpression;
   }
   
+  /**
+   * def CodeConcept<?,?> nearestAncestor(Class<?> c) {
+   * var CodeConcept<?,?> cur = _parent;
+   * while (cur != null) {
+   * if (c.isInstance(cur)) return cur;
+   * }
+   * null;
+   * }
+   */
   public A getASTRef() {
     A _xifexpression = null;
     boolean _notEquals = (!Objects.equal(this._astRef, null));

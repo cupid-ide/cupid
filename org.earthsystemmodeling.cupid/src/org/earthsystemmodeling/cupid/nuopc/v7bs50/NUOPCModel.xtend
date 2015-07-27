@@ -17,6 +17,7 @@ import static org.earthsystemmodeling.cupid.core.CupidActivator.log
 import static org.earthsystemmodeling.cupid.nuopc.BasicCodeConcept.newBasicCodeConcept
 import static org.earthsystemmodeling.cupid.util.CodeExtraction.parseLiteralStatementSequence
 import org.earthsystemmodeling.cupid.annotation.MappingType
+import org.earthsystemmodeling.cupid.nuopc.v7bs50.NUOPCModel.Initialization
 
 @Label(label="NUOPC Model")
 @MappingType("module")
@@ -28,21 +29,6 @@ class NUOPCModel extends NUOPCComponent {
 
 	@Child
 	public SetServicesCodeConcept<NUOPCModel> setServices
-
-	@Child
-	public IPDv00 ipdv00
-	
-	@Child
-	public IPDv01 ipdv01
-	
-	@Child
-	public IPDv02 ipdv02
-	
-	@Child
-	public IPDv03 ipdv03
-	
-	@Child
-	public IPDv04 ipdv04
 	
 	@Child
 	public Initialization initialization
@@ -93,13 +79,6 @@ class NUOPCModel extends NUOPCComponent {
 
 	def reverseChildren() {
 		setServices = new SetServicesCodeConcept(this).reverse
-		
-		ipdv00 = new IPDv00(this).reverse
-		ipdv01 = new IPDv01(this).reverse
-		ipdv02 = new IPDv02(this).reverse
-		ipdv03 = new IPDv03(this).reverse
-		ipdv04 = new IPDv04(this).reverse
-
 		initialization = new Initialization(this).reverse
 		run = new Run(this).reverse
 		finalize = new Finalize(this).reverse
@@ -112,9 +91,9 @@ class NUOPCModel extends NUOPCComponent {
 	
 	
 	@Label(label="Initialize Phase Definition")
-	public static abstract class IPD extends CodeConcept<NUOPCModel, ASTNode> {
+	public static abstract class IPD extends CodeConcept<NUOPCModel.InitPhases, ASTNode> {
 
-		new(NUOPCModel parent) {
+		new(NUOPCModel.InitPhases parent) {
 			super(parent)
 		}
 	
@@ -148,11 +127,11 @@ class NUOPCModel extends NUOPCComponent {
 			}
 
 			override module() {
-				_parent._parent
+				_parent._parent._parent._parent
 			}
 
 			override setServices() {
-				_parent._parent.setServices
+				_parent._parent._parent._parent.setServices
 			}
 
 		}
@@ -165,7 +144,7 @@ class NUOPCModel extends NUOPCComponent {
 			}
 		}		
 
-		@Label(label="IPDv04p3 - Realize Fields providing grid")
+		@Label(label="IPDv04p3 - Realize Fields Providing Geom Object")
 		@MappingType("subroutine")
 		public static class IPDv04p3 extends EntryPointCodeConcept<IPD> {
 
@@ -191,16 +170,16 @@ class NUOPCModel extends NUOPCComponent {
 			}
 
 			override module() {
-				_parent._parent
+				_parent._parent._parent._parent
 			}
 
 			override setServices() {
-				_parent._parent.setServices
+				_parent._parent._parent._parent.setServices
 			}
 
 		}
 		
-		@Label(label="IPDv04p4 - Modify Decomposition of Accepted Grid/Mesh")
+		@Label(label="IPDv04p4 - Modify Decomposition of Accepted Geom Object")
 		@MappingType("subroutine")
 		public static class IPDv04p4 extends EntryPointCodeConcept<IPD> {
 
@@ -223,16 +202,17 @@ class NUOPCModel extends NUOPCComponent {
 			}
 
 			override module() {
-				_parent._parent
+				_parent._parent._parent._parent
 			}
 
 			override setServices() {
-				_parent._parent.setServices
+				_parent._parent._parent._parent.setServices
 			}
+
 
 		}
 		
-		@Label(label="IPDv04p5 - Realize Fields accepting grid")
+		@Label(label="IPDv04p5 - Realize Fields Accepting Geom Object")
 		@MappingType("subroutine")
 		public static class IPDv04p5 extends EntryPointCodeConcept<IPD> {
 			
@@ -255,11 +235,11 @@ class NUOPCModel extends NUOPCComponent {
 			}
 
 			override module() {
-				_parent._parent
+				_parent._parent._parent._parent
 			}
 
 			override setServices() {
-				_parent._parent.setServices
+				_parent._parent._parent._parent.setServices
 			}
 		}
 		
@@ -360,7 +340,7 @@ class NUOPCModel extends NUOPCComponent {
 		@Label(label="IPDv00p4 - Initialize Fields")
 		public IPD.IPDv04p7 ipdv00p4
 
-		new(NUOPCModel parent) {
+		new(NUOPCModel.InitPhases parent) {
 			super(parent)
 		}
 
@@ -463,7 +443,7 @@ class NUOPCModel extends NUOPCComponent {
 		@Label(label="IPDv01p5 - Initialize Fields")
 		public IPD.IPDv04p7 ipdv01p5
 
-		new(NUOPCModel parent) {
+		new(NUOPCModel.InitPhases parent) {
 			super(parent)
 		}
 
@@ -553,7 +533,7 @@ class NUOPCModel extends NUOPCComponent {
 	@Label(label="Initialize Phase Definition (v02)")
 	public static class IPDv02 extends IPD {
 	
-		new(NUOPCModel parent) {
+		new(NUOPCModel.InitPhases parent) {
 			super(parent)
 		}
 		
@@ -587,7 +567,7 @@ class NUOPCModel extends NUOPCComponent {
 	@Label(label="Initialize Phase Definition (v03)")
 	public static class IPDv03 extends IPD {
 	
-		new(NUOPCModel parent) {
+		new(NUOPCModel.InitPhases parent) {
 			super(parent)
 		}
 		
@@ -628,7 +608,7 @@ class NUOPCModel extends NUOPCComponent {
 	@Label(label="Initialize Phase Definition (v04)")
 	public static class IPDv04 extends IPD {
 	
-		new(NUOPCModel parent) {
+		new(NUOPCModel.InitPhases parent) {
 			super(parent)
 		}
 		
@@ -669,6 +649,39 @@ class NUOPCModel extends NUOPCComponent {
 		
 	}
 	
+	
+	@Label(label="Phases")
+	public static class InitPhases extends CodeConcept<Initialization, ASTNode> {
+	
+		@Child
+		public IPDv00 ipdv00
+		
+		@Child
+		public IPDv01 ipdv01
+		
+		@Child
+		public IPDv02 ipdv02
+		
+		@Child
+		public IPDv03 ipdv03
+		
+		@Child
+		public IPDv04 ipdv04
+	
+		new(Initialization parent) {
+			super(parent)
+		}
+		
+		override reverse() {
+			ipdv00 = new IPDv00(this).reverse
+			ipdv01 = new IPDv01(this).reverse
+			ipdv02 = new IPDv02(this).reverse
+			ipdv03 = new IPDv03(this).reverse
+			ipdv04 = new IPDv04(this).reverse
+			this
+		}
+	
+	}
 		
 	
 
@@ -676,17 +689,11 @@ class NUOPCModel extends NUOPCComponent {
 	public static class Initialization extends CodeConcept<NUOPCModel, ASTNode> {
 
 		@Child
-		public InitP1 initP1
-
+		public InitPhases initPhases
+		
 		@Child
-		public InitP2 initP2
-
-		@Child(min=0)
-		public SetClock setClock
-
-		@Child(min=0)
-		public DataInitialize dataInitialize
-
+		public InitSpecializations initSpecs
+		
 		new(NUOPCModel parent) {
 			super(parent)
 		}
@@ -696,14 +703,36 @@ class NUOPCModel extends NUOPCComponent {
 		}
 
 		def reverseChildren() {
-			initP1 = new InitP1(this).reverse as InitP1
-			initP2 = new InitP2(this).reverse as InitP2
-			setClock = new SetClock(this).reverse as SetClock
-			dataInitialize = new DataInitialize(this).reverse as DataInitialize
+			initPhases = new InitPhases(this).reverse as InitPhases
+			initSpecs = new InitSpecializations(this).reverse as InitSpecializations
 			this
 		}
 
 	}
+	
+	@Label(label="Specializations")
+	public static class InitSpecializations extends CodeConcept<Initialization, ASTNode> {
+	
+		@Child(min=0)
+		public SetClock setClock
+
+		@Child(min=0)
+		public DataInitialize dataInitialize
+		
+		
+		new(Initialization parent) {
+			super(parent)
+		}
+		
+		override reverse() {
+			setClock = new SetClock(this).reverse as SetClock
+			dataInitialize = new DataInitialize(this).reverse as DataInitialize
+			this
+		}
+		
+	}
+	
+
 
 	@Label(label="Initialize Phase 1")
 	@MappingType("subroutine")
@@ -885,9 +914,9 @@ if (ESMF_LogFoundError(rcToCheck=«_parent.paramRC», msg=ESMF_LOGERR_PASSTHRU, 
 
 	@Label(label="SetClock")
 	@MappingType("subroutine")
-	public static class SetClock extends SpecializationMethodCodeConcept<Initialization> {
+	public static class SetClock extends SpecializationMethodCodeConcept<InitSpecializations> {
 
-		new(Initialization parent) {
+		new(InitSpecializations parent) {
 			super(parent, "NUOPC_Model", "label_SetClock")
 
 			// defaults
@@ -936,24 +965,24 @@ end subroutine
 		}
 
 		override module() {
-			_parent._parent
+			_parent._parent._parent
 		}
 
 		override setServices() {
-			_parent._parent.setServices
+			_parent._parent._parent.setServices
 		}
 
 		override genericUse() {
-			_parent._parent.importNUOPCGeneric
+			_parent._parent._parent.importNUOPCGeneric
 		}
 
 	}
 
 	@Label(label="DataInitialize")
 	@MappingType("subroutine")
-	public static class DataInitialize extends SpecializationMethodCodeConcept<Initialization> {
+	public static class DataInitialize extends SpecializationMethodCodeConcept<InitSpecializations> {
 
-		new(Initialization parent) {
+		new(InitSpecializations parent) {
 			super(parent, "NUOPC_Model", "label_DataInitialize")
 
 			// defaults
@@ -979,21 +1008,43 @@ end subroutine
 		}
 
 		override module() {
-			_parent._parent
+			_parent._parent._parent
 		}
 
 		override setServices() {
-			_parent._parent.setServices
+			_parent._parent._parent.setServices
 		}
 
 		override genericUse() {
-			_parent._parent.importNUOPCGeneric
+			_parent._parent._parent.importNUOPCGeneric
 		}
 
 	}
 
 	@Label(label="Run")
 	public static class Run extends CodeConcept<NUOPCModel, ASTNode> {
+
+		@Child
+		public RunPhases runPhases
+		
+		@Child
+		public RunSpecializations runSpecs
+	
+		new(NUOPCModel parent) {
+			super(parent)
+		}
+		
+		override Run reverse() {
+			runPhases = new RunPhases(this).reverse as RunPhases
+			runSpecs = new RunSpecializations(this).reverse as RunSpecializations
+			this
+		}
+	
+	}
+	
+	
+	@Label(label="Specializations")
+	public static class RunSpecializations extends CodeConcept<Run, ASTNode> {
 
 		@Child(min=0)
 		public SetRunClock setRunClock
@@ -1004,11 +1055,11 @@ end subroutine
 		@Child
 		public ModelAdvance modelAdvance
 
-		new(NUOPCModel parent) {
+		new(Run parent) {
 			super(parent)
 		}
 
-		override Run reverse() {
+		override reverse() {
 			reverseChildren
 		}
 
@@ -1020,12 +1071,37 @@ end subroutine
 		}
 
 	}
-
-	@Label(label="ModelAdvance")
-	@MappingType("subroutine")
-	public static class ModelAdvance extends SpecializationMethodCodeConcept<Run> {
-
+	
+	@Label(label="Phases")
+	public static class RunPhases extends CodeConcept<Run, ASTNode> {
+	
+		@Child
+		public RunPhase1 p1
+		
 		new(Run parent) {
+			super(parent)
+		}
+		
+		override RunPhases reverse() {
+			p1 = new RunPhase1(this).reverse as RunPhase1
+			this
+		}
+	
+	}
+	
+	@Label(label="Run Phase 1")
+	@MappingType("subroutine-inherited")
+	public static class RunPhase1 extends CodeConcept<RunPhases, ASTNode> {
+		new(RunPhases parent) {
+			super(parent)
+		}
+	}	
+
+	@Label(label="Advance")
+	@MappingType("subroutine")
+	public static class ModelAdvance extends SpecializationMethodCodeConcept<RunSpecializations> {
+
+		new(RunSpecializations parent) {
 			super(parent, "NUOPC_Model", "label_Advance")
 
 			// defaults
@@ -1061,7 +1137,7 @@ subroutine «subroutineName»(«paramGridComp», «paramRC»)
     ! advance the model: currTime -> currTime + timeStep
 
     call NUOPC_ClockPrintCurrTime(clock, &
-        "------>Advancing «_parent._parent.modelName» from: ", rc=«paramRC»)
+        "------>Advancing «_parent._parent._parent.modelName» from: ", rc=«paramRC»)
     if (ESMF_LogFoundError(rcToCheck=rc, msg=ESMF_LOGERR_PASSTHRU, &
         line=__LINE__, &
         file=__FILE__)) &
@@ -1085,24 +1161,24 @@ end subroutine
 		}
 
 		override module() {
-			_parent._parent
+			_parent._parent._parent
 		}
 
 		override setServices() {
-			_parent._parent.setServices
+			_parent._parent._parent.setServices
 		}
 
 		override genericUse() {
-			_parent._parent.importNUOPCGeneric
+			_parent._parent._parent.importNUOPCGeneric
 		}
 
 	}
 
 	@Label(label="SetRunClock")
 	@MappingType("subroutine")
-	public static class SetRunClock extends SpecializationMethodCodeConcept<Run> {
+	public static class SetRunClock extends SpecializationMethodCodeConcept<RunSpecializations> {
 
-		new(Run parent) {
+		new(RunSpecializations parent) {
 			super(parent, "NUOPC_Model", "label_SetRunClock")
 
 			// defaults
@@ -1143,24 +1219,24 @@ end subroutine
 		}
 
 		override module() {
-			_parent._parent
+			_parent._parent._parent
 		}
 
 		override setServices() {
-			_parent._parent.setServices
+			_parent._parent._parent.setServices
 		}
 
 		override genericUse() {
-			_parent._parent.importNUOPCGeneric
+			_parent._parent._parent.importNUOPCGeneric
 		}
 
 	}
 
 	@Label(label="CheckImport")
 	@MappingType("subroutine")
-	public static class CheckImport extends SpecializationMethodCodeConcept<Run> {
+	public static class CheckImport extends SpecializationMethodCodeConcept<RunSpecializations> {
 
-		new(Run parent) {
+		new(RunSpecializations parent) {
 			super(parent, "NUOPC_Model", "label_CheckImport")
 
 			// defaults
@@ -1186,15 +1262,15 @@ end subroutine
 		}
 
 		override module() {
-			_parent._parent
+			_parent._parent._parent
 		}
 
 		override setServices() {
-			_parent._parent.setServices
+			_parent._parent._parent.setServices
 		}
 
 		override genericUse() {
-			_parent._parent.importNUOPCGeneric
+			_parent._parent._parent.importNUOPCGeneric
 		}
 
 	}
