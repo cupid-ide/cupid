@@ -414,71 +414,6 @@ if (ESMF_LogFoundError(rcToCheck=«_parent.paramRC», msg=ESMF_LOGERR_PASSTHRU, 
 			this
 		}
 
-/*
-		@Label(label="IPDv00p1 - Advertise", type="subroutine")
-		public static class IPDv00p1 extends EntryPointCodeConcept<IPDv00> {
-
-			new(IPDv00 parent) {
-				super(parent, "IPDv00p1")
-				subroutineName = "AdvertiseFields"
-				methodType = "ESMF_METHOD_INITIALIZE"
-			}
-
-			override reverseChildren() {
-				// advertiseFields = new InitP1_AdvertiseField(this).reverseMultiple
-				this
-			}
-
-			override module() {
-				_parent._parent
-			}
-
-			override setServices() {
-				_parent._parent.setServices
-			}
-
-		}
-
-		@Label(label="IPDv00p2 - Realize", type="subroutine")
-		public static class IPDv00p2 extends EntryPointCodeConcept<IPDv00> {
-
-			new(IPDv00 parent) {
-				super(parent, "IPDv00p2")
-				subroutineName = "RealizeFields"
-				methodType = "ESMF_METHOD_INITIALIZE"
-			}
-
-			override reverseChildren() {
-				// advertiseFields = new InitP1_AdvertiseField(this).reverseMultiple
-				this
-			}
-
-			override module() {
-				_parent._parent
-			}
-
-			override setServices() {
-				_parent._parent.setServices
-			}
-
-		}
-
-		@Label(label="IPDv00p3 - Set Clock / Verify Connected", type="subroutine-inherited")
-		public static class IPDv00p3 extends CodeConcept<IPDv00, ASTNode> {
-			new(IPDv00 parent) {
-				super(parent)
-			}
-		}
-
-		@Label(label="IPDv00p4 - Data Initialize", type="subroutine-inherited")
-		public static class IPDv00p4 extends CodeConcept<IPDv00, ASTNode> {
-			new(IPDv00 parent) {
-				super(parent)
-			}
-		}
-		* 
-		*/
-
 	}
 	
 	
@@ -518,78 +453,6 @@ if (ESMF_LogFoundError(rcToCheck=«_parent.paramRC», msg=ESMF_LOGERR_PASSTHRU, 
 			this
 		}
 		
-		/* 
-		@Label(label="IPDv01p1 - Advertise")
-		@MappingType("subroutine-inherited")
-		public static class IPDv01p1 extends EntryPointCodeConcept<IPDv01> {
-
-			new(IPDv01 parent) {
-				super(parent, "IPDv01p1")
-				subroutineName = "AdvertiseFields"
-				methodType = "ESMF_METHOD_INITIALIZE"
-			}
-
-			override reverseChildren() {
-				// advertiseFields = new InitP1_AdvertiseField(this).reverseMultiple
-				this
-			}
-
-			override module() {
-				_parent._parent
-			}
-
-			override setServices() {
-				_parent._parent.setServices
-			}
-
-		}
-		
-		@Label(label="IPDv01p2 - Unspecified by NUOPC", type="subroutine-inherited")
-		public static class IPDv01p2 extends CodeConcept<IPDv01, ASTNode> {
-			new(IPDv01 parent) {
-				super(parent)
-			}
-		}
-
-		@Label(label="IPDv01p3 - Realize", type="subroutine")
-		public static class IPDv01p3 extends EntryPointCodeConcept<IPDv01> {
-
-			new(IPDv01 parent) {
-				super(parent, "IPDv01p3")
-				subroutineName = "RealizeFields"
-				methodType = "ESMF_METHOD_INITIALIZE"
-			}
-
-			override reverseChildren() {
-				// advertiseFields = new InitP1_AdvertiseField(this).reverseMultiple
-				this
-			}
-
-			override module() {
-				_parent._parent
-			}
-
-			override setServices() {
-				_parent._parent.setServices
-			}
-
-		}
-
-		@Label(label="IPDv01p4 - Set Clock / Verify Connected", type="subroutine-inherited")
-		public static class IPDv01p4 extends CodeConcept<IPDv01, ASTNode> {
-			new(IPDv01 parent) {
-				super(parent)
-			}
-		}
-
-		@Label(label="IPDv01p5 - Data Initialize", type="subroutine-inherited")
-		public static class IPDv01p5 extends CodeConcept<IPDv01, ASTNode> {
-			new(IPDv01 parent) {
-				super(parent)
-			}
-		}
-		*/
-		
 	}
 		
 	@Label(label="Initialize Phase Definition (v02)")
@@ -600,18 +463,23 @@ if (ESMF_LogFoundError(rcToCheck=«_parent.paramRC», msg=ESMF_LOGERR_PASSTHRU, 
 		}
 		
 		@Child(min=1)
+		@Label(label="IPDv02p1 - Advertise Fields")
 		public IPD.IPDv04p1 ipdv02p1
 
 		@Child
+		@Label(label="IPDv02p2 - Unspecified by NUOPC")
 		public IPD.IPDv04p2 ipdv02p2
 
 		@Child(min=1)
+		@Label(label="IPDv02p3 - Realize Fields Providing Geom Object")
 		public IPD.IPDv04p3 ipdv02p3
 		
 		@Child
+		@Label(label="IPDv02p4 - Verify Connected / Set Clock")
 		public IPD.IPDv04p6 ipdv02p4
 		
 		@Child
+		@Label(label="IPDv02p5 - Data Initialize")
 		public IPD.IPDv04p7 ipdv02p5
 		
 		override IPDv02 reverse() {
@@ -634,24 +502,31 @@ if (ESMF_LogFoundError(rcToCheck=«_parent.paramRC», msg=ESMF_LOGERR_PASSTHRU, 
 		}
 		
 		@Child(min=1)
+		@Label(label="IPDv03p1 - Advertise Fields")
 		public IPD.IPDv04p1 ipdv03p1
 
 		@Child
+		@Label(label="IPDv03p2 - Unspecified by NUOPC")
 		public IPD.IPDv04p2 ipdv03p2
 
 		@Child(min=1)
+		@Label(label="IPDv03p3 - Realize Fields Providing Geom Object")
 		public IPD.IPDv04p3 ipdv03p3
-		
+				
 		@Child(min=0)
+		@Label(label="IPDv03p4 - Modify Decomposition of Accepted Geom Object")
 		public IPD.IPDv04p4 ipdv03p4
 		
 		@Child(min=1)
+		@Label(label="IPDv03p5 - Realize Fields Accepting Geom Object")
 		public IPD.IPDv04p5 ipdv03p5
 
 		@Child
+		@Label(label="IPDv03p6 - Verify Connected / Set Clock")
 		public IPD.IPDv04p6 ipdv03p6
 		
 		@Child
+		@Label(label="IPDv03p7 - Data Initialize")
 		public IPD.IPDv04p7 ipdv03p7
 		
 		override IPDv03 reverse() {

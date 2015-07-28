@@ -70,19 +70,23 @@ class NUOPCViewLabelProvider2 extends StyledCellLabelProvider { //implements ITa
 		}
 		final String className = ccp.clazz.getCanonicalName();
 		StringBuffer buf = new StringBuffer();
+		//TODO: introduce cacheing for below
 		if (docXML != null) {
 			@SuppressWarnings("unchecked")
 			List<Element> xmlElems = docXML.getRootElement().getChildren("doc");
 			for (Element xmlElem : xmlElems) {
-				if (xmlElem.getAttributeValue("class").equals(className)) {
-					if (xmlElem.getAttributeValue("url") != null) {
-						buf.append(xmlElem.getAttributeValue("url"));
-					}
-					else {
-						XMLOutputter outputter = new XMLOutputter();
-						//xmlElem.g
-						//buf.append(xmlElem.getTextTrim())
-						buf.append(outputter.outputString(xmlElem.getContent()));
+				String[] classlist = xmlElem.getAttributeValue("class").split(" ");
+				for (int i=0; i<classlist.length; i++) {
+					if (classlist[i].equals(className)) {
+						if (xmlElem.getAttributeValue("url") != null) {
+							buf.append(xmlElem.getAttributeValue("url"));
+						}
+						else {
+							XMLOutputter outputter = new XMLOutputter();
+							//xmlElem.g
+							//buf.append(xmlElem.getTextTrim())
+							buf.append(outputter.outputString(xmlElem.getContent()));
+						}
 					}
 				}
 			}			

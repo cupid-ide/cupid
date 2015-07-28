@@ -20,6 +20,8 @@ import static org.earthsystemmodeling.cupid.core.CupidActivator.log
 import static org.earthsystemmodeling.cupid.nuopc.BasicCodeConcept.newBasicCodeConcept
 import static org.earthsystemmodeling.cupid.util.CodeExtraction.parseLiteralStatementSequence
 import org.earthsystemmodeling.cupid.annotation.MappingType
+import org.earthsystemmodeling.cupid.nuopc.v7bs50.NUOPCModel.IPD.AdvertiseField
+import org.earthsystemmodeling.cupid.nuopc.v7bs50.NUOPCModel.IPD.RealizeField
 
 @Label(label="NUOPC Driver")
 @MappingType("module")
@@ -86,10 +88,582 @@ class NUOPCDriver extends NUOPCComponent {
 	}
 	
 	
-		
 	
+	//////////////
+	
+	
+	@Label(label="Initialize Phase Definition")
+	public static abstract class IPD extends CodeConcept<InternalInitPhases, ASTNode> {
+
+		new(InternalInitPhases parent) {
+			super(parent)
+		}
+	
+		@Label(label="IPDv04p1 - Advertise Fields")
+		@MappingType("subroutine")
+		public static class IPDv04p1 extends InternalEntryPointCodeConcept<IPD> {
+
+			@Child(min=0, max=-1)
+			public List<NUOPCModel.IPD.AdvertiseField> advertiseFields
+		
+			new(IPD parent) {
+				super(parent)
+				phaseLabel = getPhaseLabel()
+				subroutineName = "AdvertiseFields"
+				methodType = "ESMF_METHOD_INITIALIZE"
+			}
+			
+			def getPhaseLabel() {
+				switch _parent {
+					IPDv00 : "IPDv00p1"
+					IPDv01 : "IPDv01p1"
+					IPDv02 : "IPDv02p1"
+					IPDv03 : "IPDv03p1"
+					default : "IPDv04p1"
+				}
+			}
+
+			override reverseChildren() {
+				advertiseFields = new AdvertiseField(this).reverseMultiple
+				this
+			}
+
+			override module() {
+				_parent._parent._parent._parent
+			}
+
+			override setServices() {
+				_parent._parent._parent._parent.setServices
+			}
+
+		}
+		
+		@Label(label="IPDv04p2 - Modify CplList in Connectors")
+		@MappingType("subroutine")
+		public static class IPDv04p2 extends InternalEntryPointCodeConcept<IPD> {
+
+			new(IPD parent) {
+				super(parent)
+				phaseLabel = getPhaseLabel()
+				subroutineName = "ModifyCplList"
+				methodType = "ESMF_METHOD_INITIALIZE"
+				paramGridComp = "driver"
+			}
+			
+			def getPhaseLabel() {
+				switch _parent {
+					IPDv01 : "IPDv01p2"
+					IPDv02 : "IPDv02p2"
+					IPDv03 : "IPDv03p2"
+					default : "IPDv04p2"
+				}
+			}
+
+			override reverseChildren() {
+				this
+			}
+			
+			override module() {
+				_parent._parent._parent._parent
+			}
+
+			override setServices() {
+				_parent._parent._parent._parent.setServices
+			}
+			
+			override subroutineTemplate() {
+				'''
+				
+recursive subroutine «subroutineName»(«paramGridComp», «paramImport», «paramExport», «paramClock», «paramRC»)
+    type(ESMF_GridComp)  :: «paramGridComp»
+    type(ESMF_State)     :: «paramImport», «paramExport»
+    type(ESMF_Clock)     :: «paramClock»
+    integer, intent(out) :: «paramRC»
+
+    type(ESMF_CplComp), pointer     :: connectorList(:)
+    integer                         :: i, j, cplListSize
+    character(len=160), allocatable :: cplList(:)
+
+    rc = ESMF_SUCCESS
+
+    nullify(connectorList)
+    call NUOPC_DriverGetComp(«paramGridComp», compList=connectorList, rc=rc)
+    if (ESMF_LogFoundError(rcToCheck=rc, msg=ESMF_LOGERR_PASSTHRU, &
+        line=__LINE__, &
+        file=__FILE__)) &
+        return  ! bail out
+     
+    do i=1, size(connectorList)
+        ! query the cplList for connector i
+        call NUOPC_CompAttributeGet(connectorList(i), name="CplList", &
+            itemCount=cplListSize, rc=rc)
+        if (ESMF_LogFoundError(rcToCheck=rc, msg=ESMF_LOGERR_PASSTHRU, &
+            line=__LINE__, &
+            file=__FILE__)) &
+            return  ! bail out
+        if (cplListSize>0) then
+            allocate(cplList(cplListSize))
+            call NUOPC_CompAttributeGet(connectorList(i), name="CplList", &
+                valueList=cplList, rc=rc)
+            if (ESMF_LogFoundError(rcToCheck=rc, msg=ESMF_LOGERR_PASSTHRU, &
+                line=__LINE__, &
+                file=__FILE__)) &
+                return  ! bail out
+            ! go through all of the entries in the cplList
+            do j=1, cplListSize
+            	! example of modifying a cplList entry
+                !if (trim(cplList(j))=="air_pressure_at_sea_level") then
+                !    ! switch from default regrid to redist
+                !    cplList(j) = trim(cplList(j))//":REMAPMETHOD=redist"
+                !endif
+            enddo
+            ! store the modified cplList in CplList attribute of connector i
+            call NUOPC_CompAttributeSet(connectorList(i), &
+                name="CplList", valueList=cplList, rc=rc)
+            if (ESMF_LogFoundError(rcToCheck=rc, msg=ESMF_LOGERR_PASSTHRU, &
+                line=__LINE__, &
+                file=__FILE__)) &
+                return  ! bail out
+            deallocate(cplList)
+        endif
+    enddo
+  
+    deallocate(connectorList)
+
+end subroutine				
+				'''
+			}
+
+		}
+		
+		@Label(label="IPDv04p3 - Realize Fields Providing Geom Object")
+		@MappingType("subroutine")
+		public static class IPDv04p3 extends InternalEntryPointCodeConcept<IPD> {
+
+			@Child(min=0, max=-1)
+			public List<RealizeField> realizeFields
+			
+			new(IPD parent) {
+				super(parent)
+				phaseLabel = getPhaseLabel()
+				subroutineName = "RealizeFieldsProvidingGrid"
+				methodType = "ESMF_METHOD_INITIALIZE"
+			}
+			
+			def getPhaseLabel() {
+				switch _parent {
+					IPDv00 : "IPDv00p2"
+					IPDv01 : "IPDv01p3"
+					IPDv02 : "IPDv02p3"
+					IPDv03 : "IPDv03p3"
+					default : "IPDv04p3"
+				}
+			}
+
+			override reverseChildren() {
+				realizeFields = new RealizeField(this).reverseMultiple
+				this
+			}
+			
+			override module() {
+				_parent._parent._parent._parent
+			}
+
+			override setServices() {
+				_parent._parent._parent._parent.setServices
+			}
+
+		}
+		
+		@Label(label="IPDv04p4 - Modify Decomposition of Accepted Geom Object")
+		@MappingType("subroutine")
+		public static class IPDv04p4 extends InternalEntryPointCodeConcept<IPD> {
+
+			new(IPD parent) {
+				super(parent)
+				phaseLabel = getPhaseLabel()
+				subroutineName = "ModifyDistGrid"
+				methodType = "ESMF_METHOD_INITIALIZE"
+			}
+			
+			def getPhaseLabel() {
+				switch _parent {
+					IPDv03 : "IPDv03p4"
+					default : "IPDv04p4"
+				}
+			}
+
+			override reverseChildren() {
+				this
+			}
+
+			override module() {
+				_parent._parent._parent._parent
+			}
+
+			override setServices() {
+				_parent._parent._parent._parent.setServices
+			}
+
+
+		}
+		
+		@Label(label="IPDv04p5 - Realize Fields Accepting Geom Object")
+		@MappingType("subroutine")
+		public static class IPDv04p5 extends InternalEntryPointCodeConcept<IPD> {
+			
+			new(IPD parent) {
+				super(parent)
+				phaseLabel = getPhaseLabel()
+				subroutineName = "RealizeFieldsAcceptingGrid"
+				methodType = "ESMF_METHOD_INITIALIZE"
+			}
+			
+			def getPhaseLabel() {
+				switch _parent {
+					IPDv03 : "IPDv03p5"
+					default : "IPDv04p5"
+				}
+			}
+
+			override reverseChildren() {
+				this
+			}
+
+			override module() {
+				_parent._parent._parent._parent
+			}
+
+			override setServices() {
+				_parent._parent._parent._parent.setServices
+			}
+		}
+		
+		@Label(label="IPDv04p6 - Unspecified by NUOPC")
+		@MappingType("subroutine-inherited")
+		public static class IPDv04p6 extends CodeConcept<IPD, ASTNode> {
+			new(IPD parent) {
+				super(parent)
+			}
+		}	
+
+		@Label(label="IPDv04p7 - Unspecified by NUOPC")
+		@MappingType("subroutine-inherited")
+		public static class IPDv04p7 extends CodeConcept<IPD, ASTNode> {
+			new(IPD parent) {
+				super(parent)
+			}
+		}
+		
+
+	}
+	
+
+	@Label(label="Initialize Phase Definition (v00)")
+	public static class IPDv00 extends IPD {
+
+		@Child(min=0)
+		@Label(label="IPDv00p1 - Advertise Fields")
+		public IPD.IPDv04p1 ipdv00p1
+
+		@Child(min=0)
+		@Label(label="IPDv00p2 - Realize Fields")
+		public IPD.IPDv04p3 ipdv00p2
+
+		@Child(min=0)
+		@Label(label="IPDv00p3 - Unspecified by NUOPC")
+		public IPD.IPDv04p6 ipdv00p3
+
+		@Child(min=0)
+		@Label(label="IPDv00p4 - Unspecified by NUOPC")
+		public IPD.IPDv04p7 ipdv00p4
+
+		new(InternalInitPhases parent) {
+			super(parent)
+		}
+
+		override IPDv00 reverse() {
+			ipdv00p1 = new IPD.IPDv04p1(this).reverse as IPD.IPDv04p1
+			ipdv00p2 = new IPD.IPDv04p3(this).reverse as IPD.IPDv04p3
+			ipdv00p3 = new IPD.IPDv04p6(this).reverse as IPD.IPDv04p6
+			ipdv00p4 = new IPD.IPDv04p7(this).reverse as IPD.IPDv04p7
+			this
+		}
+
+	}
+	
+	
+	@Label(label="Initialize Phase Definition (v01)")
+	public static class IPDv01 extends IPD {
+
+		@Child(min=0)
+		@Label(label="IPDv01p1 - Advertise Fields")
+		public IPD.IPDv04p1 ipdv01p1
+
+		@Child(min=0)
+		@Label(label="IPDv01p2 - Modify CplList in Connectors")
+		public IPD.IPDv04p2 ipdv01p2
+
+		@Child(min=0)
+		@Label(label="IPDv01p3 - Realize Fields")
+		public IPD.IPDv04p3 ipdv01p3
+
+		@Child(min=0)
+		@Label(label="IPDv01p4 - Unspecified by NUOPC")
+		public IPD.IPDv04p6 ipdv01p4
+		
+		@Child(min=0)
+		@Label(label="IPDv01p5 - Unspecified by NUOPC")
+		public IPD.IPDv04p7 ipdv01p5
+
+		new(InternalInitPhases parent) {
+			super(parent)
+		}
+
+		override IPDv01 reverse() {
+			ipdv01p1 = new IPD.IPDv04p1(this).reverse as IPD.IPDv04p1
+			ipdv01p2 = new IPD.IPDv04p2(this).reverse as IPD.IPDv04p2
+			ipdv01p3 = new IPD.IPDv04p3(this).reverse as IPD.IPDv04p3
+			ipdv01p4 = new IPD.IPDv04p6(this).reverse as IPD.IPDv04p6
+			ipdv01p5 = new IPD.IPDv04p7(this).reverse as IPD.IPDv04p7
+			this
+		}
+		
+	}
+		
+	@Label(label="Initialize Phase Definition (v02)")
+	public static class IPDv02 extends IPD {
+	
+		new(InternalInitPhases parent) {
+			super(parent)
+		}
+		
+		@Child(min=0)
+		@Label(label="IPDv02p1 - Advertise Fields")
+		public IPD.IPDv04p1 ipdv02p1
+
+		@Child(min=0)
+		@Label(label="IPDv02p2 - Modify CplList in Connectors")
+		public IPD.IPDv04p2 ipdv02p2
+
+		@Child(min=0)
+		@Label(label="IPDv02p3 - Realize Fields Providing Geom Object")
+		public IPD.IPDv04p3 ipdv02p3
+		
+		@Child(min=0)
+		@Label(label="IPDv02p4 - Unspecified by NUOPC")
+		public IPD.IPDv04p6 ipdv02p4
+		
+		@Child(min=0)
+		@Label(label="IPDv02p5 - Unspecified by NUOPC")
+		public IPD.IPDv04p7 ipdv02p5
+		
+		override IPDv02 reverse() {
+			ipdv02p1 = new IPD.IPDv04p1(this).reverse as IPD.IPDv04p1
+			ipdv02p2 = new IPD.IPDv04p2(this).reverse as IPD.IPDv04p2
+			ipdv02p3 = new IPD.IPDv04p3(this).reverse as IPD.IPDv04p3
+			ipdv02p4 = new IPD.IPDv04p6(this).reverse as IPD.IPDv04p6
+			ipdv02p5 = new IPD.IPDv04p7(this).reverse as IPD.IPDv04p7
+			this
+		}
+		
+		
+	}
+	
+	@Label(label="Initialize Phase Definition (v03)")
+	public static class IPDv03 extends IPD {
+	
+		new(InternalInitPhases parent) {
+			super(parent)
+		}
+		
+		@Child(min=0)
+		@Label(label="IPDv03p1 - Advertise Fields")
+		public IPD.IPDv04p1 ipdv03p1
+
+		@Child(min=0)
+		@Label(label="IPDv03p2 - Modify CplList in Connectors")
+		public IPD.IPDv04p2 ipdv03p2
+
+		@Child(min=0)
+		@Label(label="IPDv03p3 - Realize Fields Providing Geom Object")
+		public IPD.IPDv04p3 ipdv03p3
+				
+		@Child(min=0)
+		@Label(label="IPDv03p4 - Modify Decomposition of Accepted Geom Object")
+		public IPD.IPDv04p4 ipdv03p4
+		
+		@Child(min=0)
+		@Label(label="IPDv03p5 - Realize Fields Accepting Geom Object")
+		public IPD.IPDv04p5 ipdv03p5
+
+		@Child(min=0)
+		@Label(label="IPDv03p6 - Unspecified by NUOPC")
+		public IPD.IPDv04p6 ipdv03p6
+		
+		@Child(min=0)
+		@Label(label="IPDv03p7 - Unspecified by NUOPC")
+		public IPD.IPDv04p7 ipdv03p7
+		
+		override IPDv03 reverse() {
+			ipdv03p1 = new IPD.IPDv04p1(this).reverse as IPD.IPDv04p1
+			ipdv03p2 = new IPD.IPDv04p2(this).reverse as IPD.IPDv04p2
+			ipdv03p3 = new IPD.IPDv04p3(this).reverse as IPD.IPDv04p3
+			ipdv03p4 = new IPD.IPDv04p4(this).reverse as IPD.IPDv04p4
+			ipdv03p5 = new IPD.IPDv04p5(this).reverse as IPD.IPDv04p5
+			ipdv03p6 = new IPD.IPDv04p6(this).reverse as IPD.IPDv04p6
+			ipdv03p7 = new IPD.IPDv04p7(this).reverse as IPD.IPDv04p7
+			this
+		}
+		
+	}
+	
+	@Label(label="Initialize Phase Definition (v04)")
+	public static class IPDv04 extends IPD {
+	
+		new(InternalInitPhases parent) {
+			super(parent)
+		}
+		
+		@Child(min=0)
+		public IPD.IPDv04p1 ipdv04p1
+
+		@Child(min=0)
+		public IPD.IPDv04p2 ipdv04p2
+
+		@Child(min=0)
+		public IPD.IPDv04p3 ipdv04p3
+		
+		@Child(min=0)
+		public IPD.IPDv04p4 ipdv04p4
+		
+		@Child(min=0)
+		public IPD.IPDv04p5 ipdv04p5
+
+		@Child(min=0)
+		public IPD.IPDv04p6 ipdv04p6
+		
+		@Child(min=0)
+		public IPD.IPDv04p7 ipdv04p7
+		
+		override IPDv04 reverse() {
+			ipdv04p1 = new IPD.IPDv04p1(this).reverse as IPD.IPDv04p1
+			ipdv04p2 = new IPD.IPDv04p2(this).reverse as IPD.IPDv04p2
+			ipdv04p3 = new IPD.IPDv04p3(this).reverse as IPD.IPDv04p3
+			ipdv04p4 = new IPD.IPDv04p4(this).reverse as IPD.IPDv04p4
+			ipdv04p5 = new IPD.IPDv04p5(this).reverse as IPD.IPDv04p5
+			ipdv04p6 = new IPD.IPDv04p6(this).reverse as IPD.IPDv04p6
+			ipdv04p7 = new IPD.IPDv04p7(this).reverse as IPD.IPDv04p7
+			
+			//if (ipdv04p1==null && ipdv04p3==null && ipdv04p4==null) return null
+			//else this
+			this
+		}
+		
+	}
+	
+	
+	@Label(label="Internal Phases")
+	public static class InternalInitPhases extends CodeConcept<Initialization, ASTNode> {
+	
+		@Child
+		public IPDv00 ipdv00
+		
+		@Child
+		public IPDv01 ipdv01
+		
+		@Child
+		public IPDv02 ipdv02
+		
+		@Child
+		public IPDv03 ipdv03
+		
+		@Child
+		public IPDv04 ipdv04
+	
+		new(Initialization parent) {
+			super(parent)
+		}
+		
+		override reverse() {
+			ipdv00 = new IPDv00(this).reverse
+			ipdv01 = new IPDv01(this).reverse
+			ipdv02 = new IPDv02(this).reverse
+			ipdv03 = new IPDv03(this).reverse
+			ipdv04 = new IPDv04(this).reverse
+			this
+		}
+	
+	}
+		
+	@Label(label="Phases")
+	public static class InitPhases extends CodeConcept<Initialization, ASTNode> {
+	
+		@Child
+		public InitP1 initP1
+	
+		new(Initialization parent) {
+			super(parent)
+		}
+		
+		override reverse() {
+			initP1 = new InitP1(this).reverse as InitP1			
+			this
+		}
+		
+		@Label(label="Phase 1")
+		@MappingType("subroutine-inherited")
+		public static class InitP1 extends CodeConcept<InitPhases, ASTNode> {
+			new(InitPhases parent) {
+				super(parent)
+			}
+		}
+	
+	}
+	
+
 	@Label(label="Initialize")
 	public static class Initialization extends CodeConcept<NUOPCDriver, ASTNode> {
+
+		@Child
+		public InitPhases initPhases
+		
+		@Child
+		public InternalInitPhases internalInitPhases
+		
+		@Child
+		public InitSpecializations initSpecs
+		
+		new(NUOPCDriver parent) {
+			super(parent)
+		}
+
+		override Initialization reverse() {
+			reverseChildren
+		}
+
+		def reverseChildren() {
+			initPhases = new InitPhases(this).reverse as InitPhases
+			internalInitPhases = new InternalInitPhases(this).reverse as InternalInitPhases
+			initSpecs = new InitSpecializations(this).reverse as InitSpecializations
+			this
+		}
+
+	}
+	
+	
+	
+	
+	
+	/////////////////////
+		
+		
+		
+		
+		
+	
+	@Label(label="Specializations")
+	public static class InitSpecializations extends CodeConcept<Initialization, ASTNode> {
 	
 		@Child
 		var public SetModelServices setModelServices
@@ -106,11 +680,11 @@ class NUOPCDriver extends NUOPCComponent {
 		//@Child(min=0)
 		//var public ModifyInitializePhaseMap modifyInitializePhaseMap
 	
-		new(NUOPCDriver parent) {
+		new(Initialization parent) {
 			super(parent)
 		}
 		
-		override Initialization reverse() {
+		override InitSpecializations reverse() {
 			reverseChildren
 		}
 		
@@ -179,7 +753,7 @@ end subroutine
 	
 	@Label(label="SetModelServices")
 	@MappingType("subroutine")
-	static class SetModelServices extends SpecializationMethodCodeConcept<Initialization> {
+	static class SetModelServices extends SpecializationMethodCodeConcept<InitSpecializations> {
 	
 		@Child(max=-1)
 		var public List<SetModelServices_AddComp> addComps
@@ -189,7 +763,7 @@ end subroutine
 		@Child
 		var public BasicCodeConcept setClock
 		
-		new(Initialization parent) {
+		new(InitSpecializations parent) {
 			super(parent, "NUOPC_Driver", "label_SetModelServices")
 			subroutineName = "SetModelServices"
 			specLabel = "driver_label_SetModelServices"
@@ -215,15 +789,15 @@ end subroutine
 		}
 		
 		override module() {
-			_parent._parent
+			_parent._parent._parent
 		}
 		
 		override setServices() {
-			_parent._parent.setServices
+			_parent._parent._parent.setServices
 		}
 		
 		override genericUse() {
-			_parent._parent.importNUOPCGeneric
+			_parent._parent._parent.importNUOPCGeneric
 		}
 		
 		override forward() {
@@ -301,7 +875,7 @@ if (ESMF_LogFoundError(rcToCheck=«paramRC», msg=ESMF_LOGERR_PASSTHRU, &
 		
 	}
 	
-	@Label(label="Add Component")
+	@Label(label="DriverAddComp")
 	@MappingType("call")
 	static class SetModelServices_AddComp extends CodeConcept<SetModelServices, ASTCallStmtNode> {
 	
@@ -312,7 +886,7 @@ if (ESMF_LogFoundError(rcToCheck=«paramRC», msg=ESMF_LOGERR_PASSTHRU, &
 		var public String srcCompLabel
 		var public String dstCompLabel
 		
-		@Prop
+		//@Prop
 		@Label(label="Set Services")
 		var public String compSetServices
 			
@@ -402,6 +976,11 @@ if (ESMF_LogFoundError(rcToCheck=«_parent.paramRC», msg=ESMF_LOGERR_PASSTHRU, 
     line=__LINE__, &
     file=__FILE__)) &
     return  ! bail out
+
+! for connector, use signature below    
+!call NUOPC_DriverAddComp(driver, srcCompLabel="«paramch('SrcComp')»", dstCompLabel="«paramch('DstComp')»", &
+!    compSetServicesRoutine=«paramch('cplSS')», rc=rc)
+    
 '''
 			val IASTListNode<IBodyConstruct> stmts = parseLiteralStatementSequence(code)
 						
@@ -415,7 +994,7 @@ if (ESMF_LogFoundError(rcToCheck=«_parent.paramRC», msg=ESMF_LOGERR_PASSTHRU, 
 	
 	@Label(label="SetRunSequence")
 	@MappingType("subroutine")
-	static class SetRunSequence extends SpecializationMethodCodeConcept<Initialization> {
+	static class SetRunSequence extends SpecializationMethodCodeConcept<InitSpecializations> {
 	
 		@Label(label="New Run Sequence")
 		@MappingType("call")
@@ -425,7 +1004,7 @@ if (ESMF_LogFoundError(rcToCheck=«_parent.paramRC», msg=ESMF_LOGERR_PASSTHRU, 
 		@Child(max=-1)
 		public List<SetRunSequence_AddRunElement> runElements
 		
-		new(Initialization parent) {
+		new(InitSpecializations parent) {
 			super(parent, "NUOPC_Driver", "label_SetRunSequence")
 			//defaults
 			subroutineName = "SetRunSequence"
@@ -470,15 +1049,15 @@ end subroutine
 		}
 		
 		override module() {
-			_parent._parent
+			_parent._parent._parent
 		}
 		
 		override setServices() {
-			_parent._parent.setServices
+			_parent._parent._parent.setServices
 		}
 		
 		override genericUse() {
-			_parent._parent.importNUOPCGeneric
+			_parent._parent._parent.importNUOPCGeneric
 		}
 		
 		

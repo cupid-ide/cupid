@@ -53,6 +53,7 @@ table
 	border-spacing: 0;
 	border-collapse: collapse;
 	border-top: 1px solid #ddd;
+	font: .875em Helvetica, Arial, Geneva, sans-serif;
 }
 
 th, td

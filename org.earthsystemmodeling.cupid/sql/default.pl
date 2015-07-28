@@ -96,3 +96,13 @@ esmf_reg_entrypoint(_epId, _modid, _epName, _phaseLabel, _regid) :-
 	callArg(_, _regid, _, 'phaseLabelList', _phaseLabelExprId),
 	arrayConstructorVal(_, _phaseLabelExprId, _, _phaseLabel).  
   
+/* esmf register internal entry point */
+esmf_reg_intentrypoint(_epId, _modid, _epName, _phaseLabel, _regid) :-
+  esmf_setservices(_ssid, _modid, _ssname),
+  esmf_entrypoint(_epId, _modid, _epName, _, _, _, _, _),
+  call_(_regid, _ssid, 'NUOPC_CompSetInternalEntryPoint'),
+	callArgIdent(_, _regid, _, 'userRoutine', _, _epName),
+	callArgWithType(_, _regid, 2, _, _, _methodExpr),
+	callArg(_, _regid, _, 'phaseLabelList', _phaseLabelExprId),
+	arrayConstructorVal(_, _phaseLabelExprId, _, _phaseLabel).  
+  
