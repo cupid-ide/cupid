@@ -588,18 +588,23 @@ public class NUOPCModel extends NUOPCComponent {
     }
     
     @Child(min = 1)
+    @Label(label = "IPDv02p1 - Advertise Fields")
     public NUOPCModel.IPD.IPDv04p1 ipdv02p1;
     
     @Child
+    @Label(label = "IPDv02p2 - Unspecified by NUOPC")
     public NUOPCModel.IPD.IPDv04p2 ipdv02p2;
     
     @Child(min = 1)
+    @Label(label = "IPDv02p3 - Realize Fields Providing Geom Object")
     public NUOPCModel.IPD.IPDv04p3 ipdv02p3;
     
     @Child
+    @Label(label = "IPDv02p4 - Verify Connected / Set Clock")
     public NUOPCModel.IPD.IPDv04p6 ipdv02p4;
     
     @Child
+    @Label(label = "IPDv02p5 - Data Initialize")
     public NUOPCModel.IPD.IPDv04p7 ipdv02p5;
     
     @Override
@@ -634,24 +639,31 @@ public class NUOPCModel extends NUOPCComponent {
     }
     
     @Child(min = 1)
+    @Label(label = "IPDv03p1 - Advertise Fields")
     public NUOPCModel.IPD.IPDv04p1 ipdv03p1;
     
     @Child
+    @Label(label = "IPDv03p2 - Unspecified by NUOPC")
     public NUOPCModel.IPD.IPDv04p2 ipdv03p2;
     
     @Child(min = 1)
+    @Label(label = "IPDv03p3 - Realize Fields Providing Geom Object")
     public NUOPCModel.IPD.IPDv04p3 ipdv03p3;
     
     @Child(min = 0)
+    @Label(label = "IPDv03p4 - Modify Decomposition of Accepted Geom Object")
     public NUOPCModel.IPD.IPDv04p4 ipdv03p4;
     
     @Child(min = 1)
+    @Label(label = "IPDv03p5 - Realize Fields Accepting Geom Object")
     public NUOPCModel.IPD.IPDv04p5 ipdv03p5;
     
     @Child
+    @Label(label = "IPDv03p6 - Verify Connected / Set Clock")
     public NUOPCModel.IPD.IPDv04p6 ipdv03p6;
     
     @Child
+    @Label(label = "IPDv03p7 - Data Initialize")
     public NUOPCModel.IPD.IPDv04p7 ipdv03p7;
     
     @Override

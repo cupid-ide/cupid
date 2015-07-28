@@ -13,7 +13,10 @@ import org.earthsystemmodeling.cupid.codedb.CodeDBIndex;
 import org.earthsystemmodeling.cupid.core.CupidActivator;
 import org.earthsystemmodeling.cupid.nuopc.BasicCodeConcept;
 import org.earthsystemmodeling.cupid.nuopc.CodeConcept;
+import org.earthsystemmodeling.cupid.nuopc.v7bs50.EntryPointCodeConcept;
+import org.earthsystemmodeling.cupid.nuopc.v7bs50.InternalEntryPointCodeConcept;
 import org.earthsystemmodeling.cupid.nuopc.v7bs50.NUOPCComponent;
+import org.earthsystemmodeling.cupid.nuopc.v7bs50.NUOPCModel;
 import org.earthsystemmodeling.cupid.nuopc.v7bs50.SetServicesCodeConcept;
 import org.earthsystemmodeling.cupid.nuopc.v7bs50.SpecializationMethodCodeConcept;
 import org.earthsystemmodeling.cupid.util.CodeExtraction;
@@ -34,13 +37,855 @@ import org.eclipse.xtext.xbase.lib.ListExtensions;
 @MappingType("module")
 @SuppressWarnings("all")
 public class NUOPCDriver extends NUOPCComponent {
+  @Label(label = "Initialize Phase Definition")
+  public static abstract class IPD extends CodeConcept<NUOPCDriver.InternalInitPhases, ASTNode> {
+    @Label(label = "IPDv04p1 - Advertise Fields")
+    @MappingType("subroutine")
+    public static class IPDv04p1 extends InternalEntryPointCodeConcept<NUOPCDriver.IPD> {
+      @Child(min = 0, max = (-1))
+      public List<NUOPCModel.IPD.AdvertiseField> advertiseFields;
+      
+      public IPDv04p1(final NUOPCDriver.IPD parent) {
+        super(parent);
+        String _phaseLabel = this.getPhaseLabel();
+        this.phaseLabel = _phaseLabel;
+        this.subroutineName = "AdvertiseFields";
+        this.methodType = "ESMF_METHOD_INITIALIZE";
+      }
+      
+      public String getPhaseLabel() {
+        String _switchResult = null;
+        final NUOPCDriver.IPD _parent = this._parent;
+        boolean _matched = false;
+        if (!_matched) {
+          if (_parent instanceof NUOPCDriver.IPDv00) {
+            _matched=true;
+            _switchResult = "IPDv00p1";
+          }
+        }
+        if (!_matched) {
+          if (_parent instanceof NUOPCDriver.IPDv01) {
+            _matched=true;
+            _switchResult = "IPDv01p1";
+          }
+        }
+        if (!_matched) {
+          if (_parent instanceof NUOPCDriver.IPDv02) {
+            _matched=true;
+            _switchResult = "IPDv02p1";
+          }
+        }
+        if (!_matched) {
+          if (_parent instanceof NUOPCDriver.IPDv03) {
+            _matched=true;
+            _switchResult = "IPDv03p1";
+          }
+        }
+        if (!_matched) {
+          _switchResult = "IPDv04p1";
+        }
+        return _switchResult;
+      }
+      
+      @Override
+      public EntryPointCodeConcept<NUOPCDriver.IPD> reverseChildren() {
+        NUOPCDriver.IPD.IPDv04p1 _xblockexpression = null;
+        {
+          NUOPCModel.IPD.AdvertiseField _advertiseField = new NUOPCModel.IPD.AdvertiseField(this);
+          List _reverseMultiple = _advertiseField.reverseMultiple();
+          this.advertiseFields = _reverseMultiple;
+          _xblockexpression = this;
+        }
+        return _xblockexpression;
+      }
+      
+      @Override
+      public CodeConcept<?, ASTModuleNode> module() {
+        return this._parent._parent._parent._parent;
+      }
+      
+      @Override
+      public SetServicesCodeConcept<?> setServices() {
+        return this._parent._parent._parent._parent.setServices;
+      }
+    }
+    
+    @Label(label = "IPDv04p2 - Modify CplList in Connectors")
+    @MappingType("subroutine")
+    public static class IPDv04p2 extends InternalEntryPointCodeConcept<NUOPCDriver.IPD> {
+      public IPDv04p2(final NUOPCDriver.IPD parent) {
+        super(parent);
+        String _phaseLabel = this.getPhaseLabel();
+        this.phaseLabel = _phaseLabel;
+        this.subroutineName = "ModifyCplList";
+        this.methodType = "ESMF_METHOD_INITIALIZE";
+        this.paramGridComp = "driver";
+      }
+      
+      public String getPhaseLabel() {
+        String _switchResult = null;
+        final NUOPCDriver.IPD _parent = this._parent;
+        boolean _matched = false;
+        if (!_matched) {
+          if (_parent instanceof NUOPCDriver.IPDv01) {
+            _matched=true;
+            _switchResult = "IPDv01p2";
+          }
+        }
+        if (!_matched) {
+          if (_parent instanceof NUOPCDriver.IPDv02) {
+            _matched=true;
+            _switchResult = "IPDv02p2";
+          }
+        }
+        if (!_matched) {
+          if (_parent instanceof NUOPCDriver.IPDv03) {
+            _matched=true;
+            _switchResult = "IPDv03p2";
+          }
+        }
+        if (!_matched) {
+          _switchResult = "IPDv04p2";
+        }
+        return _switchResult;
+      }
+      
+      @Override
+      public EntryPointCodeConcept<NUOPCDriver.IPD> reverseChildren() {
+        return this;
+      }
+      
+      @Override
+      public CodeConcept<?, ASTModuleNode> module() {
+        return this._parent._parent._parent._parent;
+      }
+      
+      @Override
+      public SetServicesCodeConcept<?> setServices() {
+        return this._parent._parent._parent._parent.setServices;
+      }
+      
+      @Override
+      public String subroutineTemplate() {
+        StringConcatenation _builder = new StringConcatenation();
+        _builder.append("\t\t\t\t");
+        _builder.newLine();
+        _builder.append("recursive subroutine ");
+        _builder.append(this.subroutineName, "");
+        _builder.append("(");
+        _builder.append(this.paramGridComp, "");
+        _builder.append(", ");
+        _builder.append(this.paramImport, "");
+        _builder.append(", ");
+        _builder.append(this.paramExport, "");
+        _builder.append(", ");
+        _builder.append(this.paramClock, "");
+        _builder.append(", ");
+        _builder.append(this.paramRC, "");
+        _builder.append(")");
+        _builder.newLineIfNotEmpty();
+        _builder.append("    ");
+        _builder.append("type(ESMF_GridComp)  :: ");
+        _builder.append(this.paramGridComp, "    ");
+        _builder.newLineIfNotEmpty();
+        _builder.append("    ");
+        _builder.append("type(ESMF_State)     :: ");
+        _builder.append(this.paramImport, "    ");
+        _builder.append(", ");
+        _builder.append(this.paramExport, "    ");
+        _builder.newLineIfNotEmpty();
+        _builder.append("    ");
+        _builder.append("type(ESMF_Clock)     :: ");
+        _builder.append(this.paramClock, "    ");
+        _builder.newLineIfNotEmpty();
+        _builder.append("    ");
+        _builder.append("integer, intent(out) :: ");
+        _builder.append(this.paramRC, "    ");
+        _builder.newLineIfNotEmpty();
+        _builder.newLine();
+        _builder.append("    ");
+        _builder.append("type(ESMF_CplComp), pointer     :: connectorList(:)");
+        _builder.newLine();
+        _builder.append("    ");
+        _builder.append("integer                         :: i, j, cplListSize");
+        _builder.newLine();
+        _builder.append("    ");
+        _builder.append("character(len=160), allocatable :: cplList(:)");
+        _builder.newLine();
+        _builder.newLine();
+        _builder.append("    ");
+        _builder.append("rc = ESMF_SUCCESS");
+        _builder.newLine();
+        _builder.newLine();
+        _builder.append("    ");
+        _builder.append("nullify(connectorList)");
+        _builder.newLine();
+        _builder.append("    ");
+        _builder.append("call NUOPC_DriverGetComp(");
+        _builder.append(this.paramGridComp, "    ");
+        _builder.append(", compList=connectorList, rc=rc)");
+        _builder.newLineIfNotEmpty();
+        _builder.append("    ");
+        _builder.append("if (ESMF_LogFoundError(rcToCheck=rc, msg=ESMF_LOGERR_PASSTHRU, &");
+        _builder.newLine();
+        _builder.append("        ");
+        _builder.append("line=__LINE__, &");
+        _builder.newLine();
+        _builder.append("        ");
+        _builder.append("file=__FILE__)) &");
+        _builder.newLine();
+        _builder.append("        ");
+        _builder.append("return  ! bail out");
+        _builder.newLine();
+        _builder.append("     ");
+        _builder.newLine();
+        _builder.append("    ");
+        _builder.append("do i=1, size(connectorList)");
+        _builder.newLine();
+        _builder.append("        ");
+        _builder.append("! query the cplList for connector i");
+        _builder.newLine();
+        _builder.append("        ");
+        _builder.append("call NUOPC_CompAttributeGet(connectorList(i), name=\"CplList\", &");
+        _builder.newLine();
+        _builder.append("            ");
+        _builder.append("itemCount=cplListSize, rc=rc)");
+        _builder.newLine();
+        _builder.append("        ");
+        _builder.append("if (ESMF_LogFoundError(rcToCheck=rc, msg=ESMF_LOGERR_PASSTHRU, &");
+        _builder.newLine();
+        _builder.append("            ");
+        _builder.append("line=__LINE__, &");
+        _builder.newLine();
+        _builder.append("            ");
+        _builder.append("file=__FILE__)) &");
+        _builder.newLine();
+        _builder.append("            ");
+        _builder.append("return  ! bail out");
+        _builder.newLine();
+        _builder.append("        ");
+        _builder.append("if (cplListSize>0) then");
+        _builder.newLine();
+        _builder.append("            ");
+        _builder.append("allocate(cplList(cplListSize))");
+        _builder.newLine();
+        _builder.append("            ");
+        _builder.append("call NUOPC_CompAttributeGet(connectorList(i), name=\"CplList\", &");
+        _builder.newLine();
+        _builder.append("                ");
+        _builder.append("valueList=cplList, rc=rc)");
+        _builder.newLine();
+        _builder.append("            ");
+        _builder.append("if (ESMF_LogFoundError(rcToCheck=rc, msg=ESMF_LOGERR_PASSTHRU, &");
+        _builder.newLine();
+        _builder.append("                ");
+        _builder.append("line=__LINE__, &");
+        _builder.newLine();
+        _builder.append("                ");
+        _builder.append("file=__FILE__)) &");
+        _builder.newLine();
+        _builder.append("                ");
+        _builder.append("return  ! bail out");
+        _builder.newLine();
+        _builder.append("            ");
+        _builder.append("! go through all of the entries in the cplList");
+        _builder.newLine();
+        _builder.append("            ");
+        _builder.append("do j=1, cplListSize");
+        _builder.newLine();
+        _builder.append("            \t");
+        _builder.append("! example of modifying a cplList entry");
+        _builder.newLine();
+        _builder.append("                ");
+        _builder.append("!if (trim(cplList(j))==\"air_pressure_at_sea_level\") then");
+        _builder.newLine();
+        _builder.append("                ");
+        _builder.append("!    ! switch from default regrid to redist");
+        _builder.newLine();
+        _builder.append("                ");
+        _builder.append("!    cplList(j) = trim(cplList(j))//\":REMAPMETHOD=redist\"");
+        _builder.newLine();
+        _builder.append("                ");
+        _builder.append("!endif");
+        _builder.newLine();
+        _builder.append("            ");
+        _builder.append("enddo");
+        _builder.newLine();
+        _builder.append("            ");
+        _builder.append("! store the modified cplList in CplList attribute of connector i");
+        _builder.newLine();
+        _builder.append("            ");
+        _builder.append("call NUOPC_CompAttributeSet(connectorList(i), &");
+        _builder.newLine();
+        _builder.append("                ");
+        _builder.append("name=\"CplList\", valueList=cplList, rc=rc)");
+        _builder.newLine();
+        _builder.append("            ");
+        _builder.append("if (ESMF_LogFoundError(rcToCheck=rc, msg=ESMF_LOGERR_PASSTHRU, &");
+        _builder.newLine();
+        _builder.append("                ");
+        _builder.append("line=__LINE__, &");
+        _builder.newLine();
+        _builder.append("                ");
+        _builder.append("file=__FILE__)) &");
+        _builder.newLine();
+        _builder.append("                ");
+        _builder.append("return  ! bail out");
+        _builder.newLine();
+        _builder.append("            ");
+        _builder.append("deallocate(cplList)");
+        _builder.newLine();
+        _builder.append("        ");
+        _builder.append("endif");
+        _builder.newLine();
+        _builder.append("    ");
+        _builder.append("enddo");
+        _builder.newLine();
+        _builder.append("  ");
+        _builder.newLine();
+        _builder.append("    ");
+        _builder.append("deallocate(connectorList)");
+        _builder.newLine();
+        _builder.newLine();
+        _builder.append("end subroutine\t\t\t\t");
+        _builder.newLine();
+        return _builder.toString();
+      }
+    }
+    
+    @Label(label = "IPDv04p3 - Realize Fields Providing Geom Object")
+    @MappingType("subroutine")
+    public static class IPDv04p3 extends InternalEntryPointCodeConcept<NUOPCDriver.IPD> {
+      @Child(min = 0, max = (-1))
+      public List<NUOPCModel.IPD.RealizeField> realizeFields;
+      
+      public IPDv04p3(final NUOPCDriver.IPD parent) {
+        super(parent);
+        String _phaseLabel = this.getPhaseLabel();
+        this.phaseLabel = _phaseLabel;
+        this.subroutineName = "RealizeFieldsProvidingGrid";
+        this.methodType = "ESMF_METHOD_INITIALIZE";
+      }
+      
+      public String getPhaseLabel() {
+        String _switchResult = null;
+        final NUOPCDriver.IPD _parent = this._parent;
+        boolean _matched = false;
+        if (!_matched) {
+          if (_parent instanceof NUOPCDriver.IPDv00) {
+            _matched=true;
+            _switchResult = "IPDv00p2";
+          }
+        }
+        if (!_matched) {
+          if (_parent instanceof NUOPCDriver.IPDv01) {
+            _matched=true;
+            _switchResult = "IPDv01p3";
+          }
+        }
+        if (!_matched) {
+          if (_parent instanceof NUOPCDriver.IPDv02) {
+            _matched=true;
+            _switchResult = "IPDv02p3";
+          }
+        }
+        if (!_matched) {
+          if (_parent instanceof NUOPCDriver.IPDv03) {
+            _matched=true;
+            _switchResult = "IPDv03p3";
+          }
+        }
+        if (!_matched) {
+          _switchResult = "IPDv04p3";
+        }
+        return _switchResult;
+      }
+      
+      @Override
+      public EntryPointCodeConcept<NUOPCDriver.IPD> reverseChildren() {
+        NUOPCDriver.IPD.IPDv04p3 _xblockexpression = null;
+        {
+          NUOPCModel.IPD.RealizeField _realizeField = new NUOPCModel.IPD.RealizeField(this);
+          List _reverseMultiple = _realizeField.reverseMultiple();
+          this.realizeFields = _reverseMultiple;
+          _xblockexpression = this;
+        }
+        return _xblockexpression;
+      }
+      
+      @Override
+      public CodeConcept<?, ASTModuleNode> module() {
+        return this._parent._parent._parent._parent;
+      }
+      
+      @Override
+      public SetServicesCodeConcept<?> setServices() {
+        return this._parent._parent._parent._parent.setServices;
+      }
+    }
+    
+    @Label(label = "IPDv04p4 - Modify Decomposition of Accepted Geom Object")
+    @MappingType("subroutine")
+    public static class IPDv04p4 extends InternalEntryPointCodeConcept<NUOPCDriver.IPD> {
+      public IPDv04p4(final NUOPCDriver.IPD parent) {
+        super(parent);
+        String _phaseLabel = this.getPhaseLabel();
+        this.phaseLabel = _phaseLabel;
+        this.subroutineName = "ModifyDistGrid";
+        this.methodType = "ESMF_METHOD_INITIALIZE";
+      }
+      
+      public String getPhaseLabel() {
+        String _switchResult = null;
+        final NUOPCDriver.IPD _parent = this._parent;
+        boolean _matched = false;
+        if (!_matched) {
+          if (_parent instanceof NUOPCDriver.IPDv03) {
+            _matched=true;
+            _switchResult = "IPDv03p4";
+          }
+        }
+        if (!_matched) {
+          _switchResult = "IPDv04p4";
+        }
+        return _switchResult;
+      }
+      
+      @Override
+      public EntryPointCodeConcept<NUOPCDriver.IPD> reverseChildren() {
+        return this;
+      }
+      
+      @Override
+      public CodeConcept<?, ASTModuleNode> module() {
+        return this._parent._parent._parent._parent;
+      }
+      
+      @Override
+      public SetServicesCodeConcept<?> setServices() {
+        return this._parent._parent._parent._parent.setServices;
+      }
+    }
+    
+    @Label(label = "IPDv04p5 - Realize Fields Accepting Geom Object")
+    @MappingType("subroutine")
+    public static class IPDv04p5 extends InternalEntryPointCodeConcept<NUOPCDriver.IPD> {
+      public IPDv04p5(final NUOPCDriver.IPD parent) {
+        super(parent);
+        String _phaseLabel = this.getPhaseLabel();
+        this.phaseLabel = _phaseLabel;
+        this.subroutineName = "RealizeFieldsAcceptingGrid";
+        this.methodType = "ESMF_METHOD_INITIALIZE";
+      }
+      
+      public String getPhaseLabel() {
+        String _switchResult = null;
+        final NUOPCDriver.IPD _parent = this._parent;
+        boolean _matched = false;
+        if (!_matched) {
+          if (_parent instanceof NUOPCDriver.IPDv03) {
+            _matched=true;
+            _switchResult = "IPDv03p5";
+          }
+        }
+        if (!_matched) {
+          _switchResult = "IPDv04p5";
+        }
+        return _switchResult;
+      }
+      
+      @Override
+      public EntryPointCodeConcept<NUOPCDriver.IPD> reverseChildren() {
+        return this;
+      }
+      
+      @Override
+      public CodeConcept<?, ASTModuleNode> module() {
+        return this._parent._parent._parent._parent;
+      }
+      
+      @Override
+      public SetServicesCodeConcept<?> setServices() {
+        return this._parent._parent._parent._parent.setServices;
+      }
+    }
+    
+    @Label(label = "IPDv04p6 - Unspecified by NUOPC")
+    @MappingType("subroutine-inherited")
+    public static class IPDv04p6 extends CodeConcept<NUOPCDriver.IPD, ASTNode> {
+      public IPDv04p6(final NUOPCDriver.IPD parent) {
+        super(parent);
+      }
+    }
+    
+    @Label(label = "IPDv04p7 - Unspecified by NUOPC")
+    @MappingType("subroutine-inherited")
+    public static class IPDv04p7 extends CodeConcept<NUOPCDriver.IPD, ASTNode> {
+      public IPDv04p7(final NUOPCDriver.IPD parent) {
+        super(parent);
+      }
+    }
+    
+    public IPD(final NUOPCDriver.InternalInitPhases parent) {
+      super(parent);
+    }
+  }
+  
+  @Label(label = "Initialize Phase Definition (v00)")
+  public static class IPDv00 extends NUOPCDriver.IPD {
+    @Child(min = 0)
+    @Label(label = "IPDv00p1 - Advertise Fields")
+    public NUOPCDriver.IPD.IPDv04p1 ipdv00p1;
+    
+    @Child(min = 0)
+    @Label(label = "IPDv00p2 - Realize Fields")
+    public NUOPCDriver.IPD.IPDv04p3 ipdv00p2;
+    
+    @Child(min = 0)
+    @Label(label = "IPDv00p3 - Unspecified by NUOPC")
+    public NUOPCDriver.IPD.IPDv04p6 ipdv00p3;
+    
+    @Child(min = 0)
+    @Label(label = "IPDv00p4 - Unspecified by NUOPC")
+    public NUOPCDriver.IPD.IPDv04p7 ipdv00p4;
+    
+    public IPDv00(final NUOPCDriver.InternalInitPhases parent) {
+      super(parent);
+    }
+    
+    @Override
+    public NUOPCDriver.IPDv00 reverse() {
+      NUOPCDriver.IPDv00 _xblockexpression = null;
+      {
+        NUOPCDriver.IPD.IPDv04p1 _iPDv04p1 = new NUOPCDriver.IPD.IPDv04p1(this);
+        CodeConcept<NUOPCDriver.IPD, ASTSubroutineSubprogramNode> _reverse = _iPDv04p1.reverse();
+        this.ipdv00p1 = ((NUOPCDriver.IPD.IPDv04p1) _reverse);
+        NUOPCDriver.IPD.IPDv04p3 _iPDv04p3 = new NUOPCDriver.IPD.IPDv04p3(this);
+        CodeConcept<NUOPCDriver.IPD, ASTSubroutineSubprogramNode> _reverse_1 = _iPDv04p3.reverse();
+        this.ipdv00p2 = ((NUOPCDriver.IPD.IPDv04p3) _reverse_1);
+        NUOPCDriver.IPD.IPDv04p6 _iPDv04p6 = new NUOPCDriver.IPD.IPDv04p6(this);
+        CodeConcept<NUOPCDriver.IPD, ASTNode> _reverse_2 = _iPDv04p6.reverse();
+        this.ipdv00p3 = ((NUOPCDriver.IPD.IPDv04p6) _reverse_2);
+        NUOPCDriver.IPD.IPDv04p7 _iPDv04p7 = new NUOPCDriver.IPD.IPDv04p7(this);
+        CodeConcept<NUOPCDriver.IPD, ASTNode> _reverse_3 = _iPDv04p7.reverse();
+        this.ipdv00p4 = ((NUOPCDriver.IPD.IPDv04p7) _reverse_3);
+        _xblockexpression = this;
+      }
+      return _xblockexpression;
+    }
+  }
+  
+  @Label(label = "Initialize Phase Definition (v01)")
+  public static class IPDv01 extends NUOPCDriver.IPD {
+    @Child(min = 0)
+    @Label(label = "IPDv01p1 - Advertise Fields")
+    public NUOPCDriver.IPD.IPDv04p1 ipdv01p1;
+    
+    @Child(min = 0)
+    @Label(label = "IPDv01p2 - Modify CplList in Connectors")
+    public NUOPCDriver.IPD.IPDv04p2 ipdv01p2;
+    
+    @Child(min = 0)
+    @Label(label = "IPDv01p3 - Realize Fields")
+    public NUOPCDriver.IPD.IPDv04p3 ipdv01p3;
+    
+    @Child(min = 0)
+    @Label(label = "IPDv01p4 - Unspecified by NUOPC")
+    public NUOPCDriver.IPD.IPDv04p6 ipdv01p4;
+    
+    @Child(min = 0)
+    @Label(label = "IPDv01p5 - Unspecified by NUOPC")
+    public NUOPCDriver.IPD.IPDv04p7 ipdv01p5;
+    
+    public IPDv01(final NUOPCDriver.InternalInitPhases parent) {
+      super(parent);
+    }
+    
+    @Override
+    public NUOPCDriver.IPDv01 reverse() {
+      NUOPCDriver.IPDv01 _xblockexpression = null;
+      {
+        NUOPCDriver.IPD.IPDv04p1 _iPDv04p1 = new NUOPCDriver.IPD.IPDv04p1(this);
+        CodeConcept<NUOPCDriver.IPD, ASTSubroutineSubprogramNode> _reverse = _iPDv04p1.reverse();
+        this.ipdv01p1 = ((NUOPCDriver.IPD.IPDv04p1) _reverse);
+        NUOPCDriver.IPD.IPDv04p2 _iPDv04p2 = new NUOPCDriver.IPD.IPDv04p2(this);
+        CodeConcept<NUOPCDriver.IPD, ASTSubroutineSubprogramNode> _reverse_1 = _iPDv04p2.reverse();
+        this.ipdv01p2 = ((NUOPCDriver.IPD.IPDv04p2) _reverse_1);
+        NUOPCDriver.IPD.IPDv04p3 _iPDv04p3 = new NUOPCDriver.IPD.IPDv04p3(this);
+        CodeConcept<NUOPCDriver.IPD, ASTSubroutineSubprogramNode> _reverse_2 = _iPDv04p3.reverse();
+        this.ipdv01p3 = ((NUOPCDriver.IPD.IPDv04p3) _reverse_2);
+        NUOPCDriver.IPD.IPDv04p6 _iPDv04p6 = new NUOPCDriver.IPD.IPDv04p6(this);
+        CodeConcept<NUOPCDriver.IPD, ASTNode> _reverse_3 = _iPDv04p6.reverse();
+        this.ipdv01p4 = ((NUOPCDriver.IPD.IPDv04p6) _reverse_3);
+        NUOPCDriver.IPD.IPDv04p7 _iPDv04p7 = new NUOPCDriver.IPD.IPDv04p7(this);
+        CodeConcept<NUOPCDriver.IPD, ASTNode> _reverse_4 = _iPDv04p7.reverse();
+        this.ipdv01p5 = ((NUOPCDriver.IPD.IPDv04p7) _reverse_4);
+        _xblockexpression = this;
+      }
+      return _xblockexpression;
+    }
+  }
+  
+  @Label(label = "Initialize Phase Definition (v02)")
+  public static class IPDv02 extends NUOPCDriver.IPD {
+    public IPDv02(final NUOPCDriver.InternalInitPhases parent) {
+      super(parent);
+    }
+    
+    @Child(min = 0)
+    @Label(label = "IPDv02p1 - Advertise Fields")
+    public NUOPCDriver.IPD.IPDv04p1 ipdv02p1;
+    
+    @Child(min = 0)
+    @Label(label = "IPDv02p2 - Modify CplList in Connectors")
+    public NUOPCDriver.IPD.IPDv04p2 ipdv02p2;
+    
+    @Child(min = 0)
+    @Label(label = "IPDv02p3 - Realize Fields Providing Geom Object")
+    public NUOPCDriver.IPD.IPDv04p3 ipdv02p3;
+    
+    @Child(min = 0)
+    @Label(label = "IPDv02p4 - Unspecified by NUOPC")
+    public NUOPCDriver.IPD.IPDv04p6 ipdv02p4;
+    
+    @Child(min = 0)
+    @Label(label = "IPDv02p5 - Unspecified by NUOPC")
+    public NUOPCDriver.IPD.IPDv04p7 ipdv02p5;
+    
+    @Override
+    public NUOPCDriver.IPDv02 reverse() {
+      NUOPCDriver.IPDv02 _xblockexpression = null;
+      {
+        NUOPCDriver.IPD.IPDv04p1 _iPDv04p1 = new NUOPCDriver.IPD.IPDv04p1(this);
+        CodeConcept<NUOPCDriver.IPD, ASTSubroutineSubprogramNode> _reverse = _iPDv04p1.reverse();
+        this.ipdv02p1 = ((NUOPCDriver.IPD.IPDv04p1) _reverse);
+        NUOPCDriver.IPD.IPDv04p2 _iPDv04p2 = new NUOPCDriver.IPD.IPDv04p2(this);
+        CodeConcept<NUOPCDriver.IPD, ASTSubroutineSubprogramNode> _reverse_1 = _iPDv04p2.reverse();
+        this.ipdv02p2 = ((NUOPCDriver.IPD.IPDv04p2) _reverse_1);
+        NUOPCDriver.IPD.IPDv04p3 _iPDv04p3 = new NUOPCDriver.IPD.IPDv04p3(this);
+        CodeConcept<NUOPCDriver.IPD, ASTSubroutineSubprogramNode> _reverse_2 = _iPDv04p3.reverse();
+        this.ipdv02p3 = ((NUOPCDriver.IPD.IPDv04p3) _reverse_2);
+        NUOPCDriver.IPD.IPDv04p6 _iPDv04p6 = new NUOPCDriver.IPD.IPDv04p6(this);
+        CodeConcept<NUOPCDriver.IPD, ASTNode> _reverse_3 = _iPDv04p6.reverse();
+        this.ipdv02p4 = ((NUOPCDriver.IPD.IPDv04p6) _reverse_3);
+        NUOPCDriver.IPD.IPDv04p7 _iPDv04p7 = new NUOPCDriver.IPD.IPDv04p7(this);
+        CodeConcept<NUOPCDriver.IPD, ASTNode> _reverse_4 = _iPDv04p7.reverse();
+        this.ipdv02p5 = ((NUOPCDriver.IPD.IPDv04p7) _reverse_4);
+        _xblockexpression = this;
+      }
+      return _xblockexpression;
+    }
+  }
+  
+  @Label(label = "Initialize Phase Definition (v03)")
+  public static class IPDv03 extends NUOPCDriver.IPD {
+    public IPDv03(final NUOPCDriver.InternalInitPhases parent) {
+      super(parent);
+    }
+    
+    @Child(min = 0)
+    @Label(label = "IPDv03p1 - Advertise Fields")
+    public NUOPCDriver.IPD.IPDv04p1 ipdv03p1;
+    
+    @Child(min = 0)
+    @Label(label = "IPDv03p2 - Modify CplList in Connectors")
+    public NUOPCDriver.IPD.IPDv04p2 ipdv03p2;
+    
+    @Child(min = 0)
+    @Label(label = "IPDv03p3 - Realize Fields Providing Geom Object")
+    public NUOPCDriver.IPD.IPDv04p3 ipdv03p3;
+    
+    @Child(min = 0)
+    @Label(label = "IPDv03p4 - Modify Decomposition of Accepted Geom Object")
+    public NUOPCDriver.IPD.IPDv04p4 ipdv03p4;
+    
+    @Child(min = 0)
+    @Label(label = "IPDv03p5 - Realize Fields Accepting Geom Object")
+    public NUOPCDriver.IPD.IPDv04p5 ipdv03p5;
+    
+    @Child(min = 0)
+    @Label(label = "IPDv03p6 - Unspecified by NUOPC")
+    public NUOPCDriver.IPD.IPDv04p6 ipdv03p6;
+    
+    @Child(min = 0)
+    @Label(label = "IPDv03p7 - Unspecified by NUOPC")
+    public NUOPCDriver.IPD.IPDv04p7 ipdv03p7;
+    
+    @Override
+    public NUOPCDriver.IPDv03 reverse() {
+      NUOPCDriver.IPDv03 _xblockexpression = null;
+      {
+        NUOPCDriver.IPD.IPDv04p1 _iPDv04p1 = new NUOPCDriver.IPD.IPDv04p1(this);
+        CodeConcept<NUOPCDriver.IPD, ASTSubroutineSubprogramNode> _reverse = _iPDv04p1.reverse();
+        this.ipdv03p1 = ((NUOPCDriver.IPD.IPDv04p1) _reverse);
+        NUOPCDriver.IPD.IPDv04p2 _iPDv04p2 = new NUOPCDriver.IPD.IPDv04p2(this);
+        CodeConcept<NUOPCDriver.IPD, ASTSubroutineSubprogramNode> _reverse_1 = _iPDv04p2.reverse();
+        this.ipdv03p2 = ((NUOPCDriver.IPD.IPDv04p2) _reverse_1);
+        NUOPCDriver.IPD.IPDv04p3 _iPDv04p3 = new NUOPCDriver.IPD.IPDv04p3(this);
+        CodeConcept<NUOPCDriver.IPD, ASTSubroutineSubprogramNode> _reverse_2 = _iPDv04p3.reverse();
+        this.ipdv03p3 = ((NUOPCDriver.IPD.IPDv04p3) _reverse_2);
+        NUOPCDriver.IPD.IPDv04p4 _iPDv04p4 = new NUOPCDriver.IPD.IPDv04p4(this);
+        CodeConcept<NUOPCDriver.IPD, ASTSubroutineSubprogramNode> _reverse_3 = _iPDv04p4.reverse();
+        this.ipdv03p4 = ((NUOPCDriver.IPD.IPDv04p4) _reverse_3);
+        NUOPCDriver.IPD.IPDv04p5 _iPDv04p5 = new NUOPCDriver.IPD.IPDv04p5(this);
+        CodeConcept<NUOPCDriver.IPD, ASTSubroutineSubprogramNode> _reverse_4 = _iPDv04p5.reverse();
+        this.ipdv03p5 = ((NUOPCDriver.IPD.IPDv04p5) _reverse_4);
+        NUOPCDriver.IPD.IPDv04p6 _iPDv04p6 = new NUOPCDriver.IPD.IPDv04p6(this);
+        CodeConcept<NUOPCDriver.IPD, ASTNode> _reverse_5 = _iPDv04p6.reverse();
+        this.ipdv03p6 = ((NUOPCDriver.IPD.IPDv04p6) _reverse_5);
+        NUOPCDriver.IPD.IPDv04p7 _iPDv04p7 = new NUOPCDriver.IPD.IPDv04p7(this);
+        CodeConcept<NUOPCDriver.IPD, ASTNode> _reverse_6 = _iPDv04p7.reverse();
+        this.ipdv03p7 = ((NUOPCDriver.IPD.IPDv04p7) _reverse_6);
+        _xblockexpression = this;
+      }
+      return _xblockexpression;
+    }
+  }
+  
+  @Label(label = "Initialize Phase Definition (v04)")
+  public static class IPDv04 extends NUOPCDriver.IPD {
+    public IPDv04(final NUOPCDriver.InternalInitPhases parent) {
+      super(parent);
+    }
+    
+    @Child(min = 0)
+    public NUOPCDriver.IPD.IPDv04p1 ipdv04p1;
+    
+    @Child(min = 0)
+    public NUOPCDriver.IPD.IPDv04p2 ipdv04p2;
+    
+    @Child(min = 0)
+    public NUOPCDriver.IPD.IPDv04p3 ipdv04p3;
+    
+    @Child(min = 0)
+    public NUOPCDriver.IPD.IPDv04p4 ipdv04p4;
+    
+    @Child(min = 0)
+    public NUOPCDriver.IPD.IPDv04p5 ipdv04p5;
+    
+    @Child(min = 0)
+    public NUOPCDriver.IPD.IPDv04p6 ipdv04p6;
+    
+    @Child(min = 0)
+    public NUOPCDriver.IPD.IPDv04p7 ipdv04p7;
+    
+    @Override
+    public NUOPCDriver.IPDv04 reverse() {
+      NUOPCDriver.IPDv04 _xblockexpression = null;
+      {
+        NUOPCDriver.IPD.IPDv04p1 _iPDv04p1 = new NUOPCDriver.IPD.IPDv04p1(this);
+        CodeConcept<NUOPCDriver.IPD, ASTSubroutineSubprogramNode> _reverse = _iPDv04p1.reverse();
+        this.ipdv04p1 = ((NUOPCDriver.IPD.IPDv04p1) _reverse);
+        NUOPCDriver.IPD.IPDv04p2 _iPDv04p2 = new NUOPCDriver.IPD.IPDv04p2(this);
+        CodeConcept<NUOPCDriver.IPD, ASTSubroutineSubprogramNode> _reverse_1 = _iPDv04p2.reverse();
+        this.ipdv04p2 = ((NUOPCDriver.IPD.IPDv04p2) _reverse_1);
+        NUOPCDriver.IPD.IPDv04p3 _iPDv04p3 = new NUOPCDriver.IPD.IPDv04p3(this);
+        CodeConcept<NUOPCDriver.IPD, ASTSubroutineSubprogramNode> _reverse_2 = _iPDv04p3.reverse();
+        this.ipdv04p3 = ((NUOPCDriver.IPD.IPDv04p3) _reverse_2);
+        NUOPCDriver.IPD.IPDv04p4 _iPDv04p4 = new NUOPCDriver.IPD.IPDv04p4(this);
+        CodeConcept<NUOPCDriver.IPD, ASTSubroutineSubprogramNode> _reverse_3 = _iPDv04p4.reverse();
+        this.ipdv04p4 = ((NUOPCDriver.IPD.IPDv04p4) _reverse_3);
+        NUOPCDriver.IPD.IPDv04p5 _iPDv04p5 = new NUOPCDriver.IPD.IPDv04p5(this);
+        CodeConcept<NUOPCDriver.IPD, ASTSubroutineSubprogramNode> _reverse_4 = _iPDv04p5.reverse();
+        this.ipdv04p5 = ((NUOPCDriver.IPD.IPDv04p5) _reverse_4);
+        NUOPCDriver.IPD.IPDv04p6 _iPDv04p6 = new NUOPCDriver.IPD.IPDv04p6(this);
+        CodeConcept<NUOPCDriver.IPD, ASTNode> _reverse_5 = _iPDv04p6.reverse();
+        this.ipdv04p6 = ((NUOPCDriver.IPD.IPDv04p6) _reverse_5);
+        NUOPCDriver.IPD.IPDv04p7 _iPDv04p7 = new NUOPCDriver.IPD.IPDv04p7(this);
+        CodeConcept<NUOPCDriver.IPD, ASTNode> _reverse_6 = _iPDv04p7.reverse();
+        this.ipdv04p7 = ((NUOPCDriver.IPD.IPDv04p7) _reverse_6);
+        _xblockexpression = this;
+      }
+      return _xblockexpression;
+    }
+  }
+  
+  @Label(label = "Internal Phases")
+  public static class InternalInitPhases extends CodeConcept<NUOPCDriver.Initialization, ASTNode> {
+    @Child
+    public NUOPCDriver.IPDv00 ipdv00;
+    
+    @Child
+    public NUOPCDriver.IPDv01 ipdv01;
+    
+    @Child
+    public NUOPCDriver.IPDv02 ipdv02;
+    
+    @Child
+    public NUOPCDriver.IPDv03 ipdv03;
+    
+    @Child
+    public NUOPCDriver.IPDv04 ipdv04;
+    
+    public InternalInitPhases(final NUOPCDriver.Initialization parent) {
+      super(parent);
+    }
+    
+    @Override
+    public CodeConcept<NUOPCDriver.Initialization, ASTNode> reverse() {
+      NUOPCDriver.InternalInitPhases _xblockexpression = null;
+      {
+        NUOPCDriver.IPDv00 _iPDv00 = new NUOPCDriver.IPDv00(this);
+        NUOPCDriver.IPDv00 _reverse = _iPDv00.reverse();
+        this.ipdv00 = _reverse;
+        NUOPCDriver.IPDv01 _iPDv01 = new NUOPCDriver.IPDv01(this);
+        NUOPCDriver.IPDv01 _reverse_1 = _iPDv01.reverse();
+        this.ipdv01 = _reverse_1;
+        NUOPCDriver.IPDv02 _iPDv02 = new NUOPCDriver.IPDv02(this);
+        NUOPCDriver.IPDv02 _reverse_2 = _iPDv02.reverse();
+        this.ipdv02 = _reverse_2;
+        NUOPCDriver.IPDv03 _iPDv03 = new NUOPCDriver.IPDv03(this);
+        NUOPCDriver.IPDv03 _reverse_3 = _iPDv03.reverse();
+        this.ipdv03 = _reverse_3;
+        NUOPCDriver.IPDv04 _iPDv04 = new NUOPCDriver.IPDv04(this);
+        NUOPCDriver.IPDv04 _reverse_4 = _iPDv04.reverse();
+        this.ipdv04 = _reverse_4;
+        _xblockexpression = this;
+      }
+      return _xblockexpression;
+    }
+  }
+  
+  @Label(label = "Phases")
+  public static class InitPhases extends CodeConcept<NUOPCDriver.Initialization, ASTNode> {
+    @Label(label = "Phase 1")
+    @MappingType("subroutine-inherited")
+    public static class InitP1 extends CodeConcept<NUOPCDriver.InitPhases, ASTNode> {
+      public InitP1(final NUOPCDriver.InitPhases parent) {
+        super(parent);
+      }
+    }
+    
+    @Child
+    public NUOPCDriver.InitPhases.InitP1 initP1;
+    
+    public InitPhases(final NUOPCDriver.Initialization parent) {
+      super(parent);
+    }
+    
+    @Override
+    public CodeConcept<NUOPCDriver.Initialization, ASTNode> reverse() {
+      NUOPCDriver.InitPhases _xblockexpression = null;
+      {
+        NUOPCDriver.InitPhases.InitP1 _initP1 = new NUOPCDriver.InitPhases.InitP1(this);
+        CodeConcept<NUOPCDriver.InitPhases, ASTNode> _reverse = _initP1.reverse();
+        this.initP1 = ((NUOPCDriver.InitPhases.InitP1) _reverse);
+        _xblockexpression = this;
+      }
+      return _xblockexpression;
+    }
+  }
+  
   @Label(label = "Initialize")
   public static class Initialization extends CodeConcept<NUOPCDriver, ASTNode> {
     @Child
-    public NUOPCDriver.SetModelServices setModelServices;
+    public NUOPCDriver.InitPhases initPhases;
     
-    @Child(min = 0)
-    public NUOPCDriver.SetRunSequence setRunSequence;
+    @Child
+    public NUOPCDriver.InternalInitPhases internalInitPhases;
+    
+    @Child
+    public NUOPCDriver.InitSpecializations initSpecs;
     
     public Initialization(final NUOPCDriver parent) {
       super(parent);
@@ -54,12 +899,53 @@ public class NUOPCDriver extends NUOPCComponent {
     public NUOPCDriver.Initialization reverseChildren() {
       NUOPCDriver.Initialization _xblockexpression = null;
       {
+        NUOPCDriver.InitPhases _initPhases = new NUOPCDriver.InitPhases(this);
+        CodeConcept<NUOPCDriver.Initialization, ASTNode> _reverse = _initPhases.reverse();
+        this.initPhases = ((NUOPCDriver.InitPhases) _reverse);
+        NUOPCDriver.InternalInitPhases _internalInitPhases = new NUOPCDriver.InternalInitPhases(this);
+        CodeConcept<NUOPCDriver.Initialization, ASTNode> _reverse_1 = _internalInitPhases.reverse();
+        this.internalInitPhases = ((NUOPCDriver.InternalInitPhases) _reverse_1);
+        NUOPCDriver.InitSpecializations _initSpecializations = new NUOPCDriver.InitSpecializations(this);
+        NUOPCDriver.InitSpecializations _reverse_2 = _initSpecializations.reverse();
+        this.initSpecs = ((NUOPCDriver.InitSpecializations) _reverse_2);
+        _xblockexpression = this;
+      }
+      return _xblockexpression;
+    }
+  }
+  
+  @Label(label = "Specializations")
+  public static class InitSpecializations extends CodeConcept<NUOPCDriver.Initialization, ASTNode> {
+    @Child
+    public NUOPCDriver.SetModelServices setModelServices;
+    
+    @Child(min = 0)
+    public NUOPCDriver.SetRunSequence setRunSequence;
+    
+    @Child(min = 0)
+    public NUOPCDriver.ModifyInitializePhaseMap modifyInitializePhaseMap;
+    
+    public InitSpecializations(final NUOPCDriver.Initialization parent) {
+      super(parent);
+    }
+    
+    @Override
+    public NUOPCDriver.InitSpecializations reverse() {
+      return this.reverseChildren();
+    }
+    
+    public NUOPCDriver.InitSpecializations reverseChildren() {
+      NUOPCDriver.InitSpecializations _xblockexpression = null;
+      {
         NUOPCDriver.SetModelServices _setModelServices = new NUOPCDriver.SetModelServices(this);
-        SpecializationMethodCodeConcept<NUOPCDriver.Initialization> _reverse = _setModelServices.reverse();
+        SpecializationMethodCodeConcept<NUOPCDriver.InitSpecializations> _reverse = _setModelServices.reverse();
         this.setModelServices = ((NUOPCDriver.SetModelServices) _reverse);
         NUOPCDriver.SetRunSequence _setRunSequence = new NUOPCDriver.SetRunSequence(this);
-        SpecializationMethodCodeConcept<NUOPCDriver.Initialization> _reverse_1 = _setRunSequence.reverse();
+        SpecializationMethodCodeConcept<NUOPCDriver.InitSpecializations> _reverse_1 = _setRunSequence.reverse();
         this.setRunSequence = ((NUOPCDriver.SetRunSequence) _reverse_1);
+        NUOPCDriver.ModifyInitializePhaseMap _modifyInitializePhaseMap = new NUOPCDriver.ModifyInitializePhaseMap(this);
+        SpecializationMethodCodeConcept<NUOPCDriver.InitSpecializations> _reverse_2 = _modifyInitializePhaseMap.reverse();
+        this.modifyInitializePhaseMap = ((NUOPCDriver.ModifyInitializePhaseMap) _reverse_2);
         _xblockexpression = this;
       }
       return _xblockexpression;
@@ -116,7 +1002,7 @@ public class NUOPCDriver extends NUOPCComponent {
    */
   @Label(label = "SetModelServices")
   @MappingType("subroutine")
-  public static class SetModelServices extends SpecializationMethodCodeConcept<NUOPCDriver.Initialization> {
+  public static class SetModelServices extends SpecializationMethodCodeConcept<NUOPCDriver.InitSpecializations> {
     @Child(max = (-1))
     public List<NUOPCDriver.SetModelServices_AddComp> addComps;
     
@@ -125,17 +1011,17 @@ public class NUOPCDriver extends NUOPCComponent {
     @Child
     public BasicCodeConcept setClock;
     
-    public SetModelServices(final NUOPCDriver.Initialization parent) {
+    public SetModelServices(final NUOPCDriver.InitSpecializations parent) {
       super(parent, "NUOPC_Driver", "label_SetModelServices");
       this.subroutineName = "SetModelServices";
       this.specLabel = "driver_label_SetModelServices";
     }
     
     @Override
-    public SpecializationMethodCodeConcept<NUOPCDriver.Initialization> reverse() {
+    public SpecializationMethodCodeConcept<NUOPCDriver.InitSpecializations> reverse() {
       try {
         NUOPCDriver.SetModelServices _xifexpression = null;
-        SpecializationMethodCodeConcept<NUOPCDriver.Initialization> _reverse = super.reverse();
+        SpecializationMethodCodeConcept<NUOPCDriver.InitSpecializations> _reverse = super.reverse();
         boolean _equals = Objects.equal(this, _reverse);
         if (_equals) {
           NUOPCDriver.SetModelServices _xblockexpression = null;
@@ -167,7 +1053,7 @@ public class NUOPCDriver extends NUOPCComponent {
     }
     
     @Override
-    public SpecializationMethodCodeConcept<NUOPCDriver.Initialization> reverseChildren() {
+    public SpecializationMethodCodeConcept<NUOPCDriver.InitSpecializations> reverseChildren() {
       NUOPCDriver.SetModelServices _xblockexpression = null;
       {
         NUOPCDriver.SetModelServices_AddComp _setModelServices_AddComp = new NUOPCDriver.SetModelServices_AddComp(this);
@@ -180,17 +1066,17 @@ public class NUOPCDriver extends NUOPCComponent {
     
     @Override
     public CodeConcept<?, ASTModuleNode> module() {
-      return this._parent._parent;
+      return this._parent._parent._parent;
     }
     
     @Override
     public SetServicesCodeConcept<?> setServices() {
-      return this._parent._parent.setServices;
+      return this._parent._parent._parent.setServices;
     }
     
     @Override
     public NUOPCComponent.GenericImport genericUse() {
-      return this._parent._parent.importNUOPCGeneric;
+      return this._parent._parent._parent.importNUOPCGeneric;
     }
     
     @Override
@@ -372,7 +1258,7 @@ public class NUOPCDriver extends NUOPCComponent {
     }
   }
   
-  @Label(label = "Add Component")
+  @Label(label = "DriverAddComp")
   @MappingType("call")
   public static class SetModelServices_AddComp extends CodeConcept<NUOPCDriver.SetModelServices, ASTCallStmtNode> {
     public String compLabel;
@@ -381,7 +1267,6 @@ public class NUOPCDriver extends NUOPCComponent {
     
     public String dstCompLabel;
     
-    @Prop
     @Label(label = "Set Services")
     public String compSetServices;
     
@@ -468,55 +1353,58 @@ public class NUOPCDriver extends NUOPCComponent {
       {
         IFortranAST ast = this.getAST();
         ASTSubroutineSubprogramNode ssn = this._parent.getASTRef();
+        ASTModuleNode amn = this._parent._parent._parent._parent.getASTRef();
         StringConcatenation _builder = new StringConcatenation();
         _builder.newLine();
-        _builder.append("type(ESMF_GridComp)            :: child");
+        _builder.append("call NUOPC_DriverAddComp(");
+        _builder.append(this._parent.paramGridComp, "");
+        _builder.append(", \"");
+        CharSequence _paramch = this.paramch("ComponentName");
+        _builder.append(_paramch, "");
+        _builder.append("\", ");
+        CharSequence _paramch_1 = this.paramch("CompSetServices");
+        _builder.append(_paramch_1, "");
+        _builder.append(", rc=");
+        _builder.append(this._parent.paramRC, "");
+        _builder.append(")");
+        _builder.newLineIfNotEmpty();
+        _builder.newLine();
+        _builder.append("! To add a Connector, use signature below instead   ");
+        _builder.newLine();
+        _builder.append("!call NUOPC_DriverAddComp(driver, srcCompLabel=\"");
+        CharSequence _paramch_2 = this.paramch("SrcComp");
+        _builder.append(_paramch_2, "");
+        _builder.append("\", dstCompLabel=\"");
+        CharSequence _paramch_3 = this.paramch("DstComp");
+        _builder.append(_paramch_3, "");
+        _builder.append("\", &");
+        _builder.newLineIfNotEmpty();
+        _builder.append("!    compSetServicesRoutine=");
+        CharSequence _paramch_4 = this.paramch("cplSS");
+        _builder.append(_paramch_4, "");
+        _builder.append(", rc=rc)");
+        _builder.newLineIfNotEmpty();
+        _builder.newLine();
+        _builder.append("if (ESMF_LogFoundError(rcToCheck=");
+        _builder.append(this._parent.paramRC, "");
+        _builder.append(", msg=ESMF_LOGERR_PASSTHRU, &");
+        _builder.newLineIfNotEmpty();
+        _builder.append("    ");
+        _builder.append("line=__LINE__, &");
+        _builder.newLine();
+        _builder.append("    ");
+        _builder.append("file=__FILE__)) &");
+        _builder.newLine();
+        _builder.append("    ");
+        _builder.append("return  ! bail out");
+        _builder.newLine();
+        _builder.newLine();
+        _builder.append("    ");
         _builder.newLine();
         String code = _builder.toString();
-        final IASTListNode<IBodyConstruct> typeNodes = CodeExtraction.parseLiteralStatementSequence(code);
-        final ASTTypeDeclarationStmtNode last = ssn.<ASTTypeDeclarationStmtNode>findLast(ASTTypeDeclarationStmtNode.class);
-        boolean _notEquals = (!Objects.equal(last, null));
-        if (_notEquals) {
-          List<IBodyConstruct> _reverse = ListExtensions.<IBodyConstruct>reverse(typeNodes);
-          for (final IBodyConstruct typeNode : _reverse) {
-            IASTListNode<IBodyConstruct> _body = ssn.getBody();
-            _body.insertAfter(last, typeNode);
-          }
-        } else {
-          IASTListNode<IBodyConstruct> _body_1 = ssn.getBody();
-          _body_1.addAll(typeNodes);
-        }
-        StringConcatenation _builder_1 = new StringConcatenation();
-        _builder_1.newLine();
-        _builder_1.append("call NUOPC_DriverAddComp(");
-        _builder_1.append(this._parent.paramGridComp, "");
-        _builder_1.append(", \"");
-        CharSequence _paramch = this.paramch("ComponentName");
-        _builder_1.append(_paramch, "");
-        _builder_1.append("\", ");
-        CharSequence _paramch_1 = this.paramch("CompSetServices");
-        _builder_1.append(_paramch_1, "");
-        _builder_1.append(", comp=child, rc=");
-        _builder_1.append(this._parent.paramRC, "");
-        _builder_1.append(")");
-        _builder_1.newLineIfNotEmpty();
-        _builder_1.append("if (ESMF_LogFoundError(rcToCheck=");
-        _builder_1.append(this._parent.paramRC, "");
-        _builder_1.append(", msg=ESMF_LOGERR_PASSTHRU, &");
-        _builder_1.newLineIfNotEmpty();
-        _builder_1.append("    ");
-        _builder_1.append("line=__LINE__, &");
-        _builder_1.newLine();
-        _builder_1.append("    ");
-        _builder_1.append("file=__FILE__)) &");
-        _builder_1.newLine();
-        _builder_1.append("    ");
-        _builder_1.append("return  ! bail out");
-        _builder_1.newLine();
-        code = _builder_1.toString();
         final IASTListNode<IBodyConstruct> stmts = CodeExtraction.parseLiteralStatementSequence(code);
-        IASTListNode<IBodyConstruct> _body_2 = ssn.getBody();
-        _body_2.addAll(stmts);
+        IASTListNode<IBodyConstruct> _body = ssn.getBody();
+        _body.addAll(stmts);
         IBodyConstruct _get = stmts.get(0);
         this.setASTRef(((ASTCallStmtNode) _get));
         _xblockexpression = ast;
@@ -527,7 +1415,7 @@ public class NUOPCDriver extends NUOPCComponent {
   
   @Label(label = "SetRunSequence")
   @MappingType("subroutine")
-  public static class SetRunSequence extends SpecializationMethodCodeConcept<NUOPCDriver.Initialization> {
+  public static class SetRunSequence extends SpecializationMethodCodeConcept<NUOPCDriver.InitSpecializations> {
     @Label(label = "New Run Sequence")
     @MappingType("call")
     @Child(forward = false)
@@ -536,17 +1424,17 @@ public class NUOPCDriver extends NUOPCComponent {
     @Child(max = (-1))
     public List<NUOPCDriver.SetRunSequence_AddRunElement> runElements;
     
-    public SetRunSequence(final NUOPCDriver.Initialization parent) {
+    public SetRunSequence(final NUOPCDriver.InitSpecializations parent) {
       super(parent, "NUOPC_Driver", "label_SetRunSequence");
       this.subroutineName = "SetRunSequence";
       this.specLabel = "driver_label_SetRunSequence";
     }
     
     @Override
-    public SpecializationMethodCodeConcept<NUOPCDriver.Initialization> reverse() {
+    public SpecializationMethodCodeConcept<NUOPCDriver.InitSpecializations> reverse() {
       try {
         NUOPCDriver.SetRunSequence _xifexpression = null;
-        SpecializationMethodCodeConcept<NUOPCDriver.Initialization> _reverse = super.reverse();
+        SpecializationMethodCodeConcept<NUOPCDriver.InitSpecializations> _reverse = super.reverse();
         boolean _equals = Objects.equal(this, _reverse);
         if (_equals) {
           NUOPCDriver.SetRunSequence _xblockexpression = null;
@@ -641,17 +1529,17 @@ public class NUOPCDriver extends NUOPCComponent {
     
     @Override
     public CodeConcept<?, ASTModuleNode> module() {
-      return this._parent._parent;
+      return this._parent._parent._parent;
     }
     
     @Override
     public SetServicesCodeConcept<?> setServices() {
-      return this._parent._parent.setServices;
+      return this._parent._parent._parent.setServices;
     }
     
     @Override
     public NUOPCComponent.GenericImport genericUse() {
-      return this._parent._parent.importNUOPCGeneric;
+      return this._parent._parent._parent.importNUOPCGeneric;
     }
   }
   
@@ -661,6 +1549,10 @@ public class NUOPCDriver extends NUOPCComponent {
     @Label(label = "slot")
     @Prop
     public String slot;
+    
+    @Label(label = "linkSlot")
+    @Prop
+    public String linkSlot;
     
     public String compLabel;
     
@@ -675,7 +1567,14 @@ public class NUOPCDriver extends NUOPCComponent {
       if (_notEquals) {
         _xifexpression = (((this.compLabel + "(slot=") + this.slot) + ")");
       } else {
-        _xifexpression = (((((this.srcCompLabel + " => ") + this.dstCompLabel) + "(slot=") + this.slot) + ")");
+        String _xifexpression_1 = null;
+        boolean _notEquals_1 = (!Objects.equal(this.linkSlot, null));
+        if (_notEquals_1) {
+          _xifexpression_1 = ((("slot " + this.slot) + " => slot ") + this.linkSlot);
+        } else {
+          _xifexpression_1 = (((((this.srcCompLabel + " => ") + this.dstCompLabel) + "(slot=") + this.slot) + ")");
+        }
+        _xifexpression = _xifexpression_1;
       }
       return _xifexpression;
     }
@@ -750,8 +1649,28 @@ public class NUOPCDriver extends NUOPCComponent {
                   addComp.compLabel = _string_3;
                   String _string_4 = rs.getString("_slotExpr");
                   addComp.slot = _string_4;
+                  rs.close();
+                } else {
+                  StringConcatenation _builder_3 = new StringConcatenation();
+                  _builder_3.append("callArgWithType(_, ");
+                  _builder_3.append(addComp._id, "");
+                  _builder_3.append(", _, \'slot\', _, _slotExpr),");
+                  _builder_3.newLineIfNotEmpty();
+                  _builder_3.append("\t\t\t\t\t\t\t ");
+                  _builder_3.append("callArgWithType(_, ");
+                  _builder_3.append(addComp._id, "\t\t\t\t\t\t\t ");
+                  _builder_3.append(", _, \'linkSlot\', _, _linkSlotExpr).");
+                  ResultSet _execQuery_2 = this.execQuery(_builder_3);
+                  rs = _execQuery_2;
+                  boolean _next_2 = rs.next();
+                  if (_next_2) {
+                    String _string_5 = rs.getString("_linkSlotExpr");
+                    addComp.linkSlot = _string_5;
+                    String _string_6 = rs.getString("_slotExpr");
+                    addComp.slot = _string_6;
+                    rs.close();
+                  }
                 }
-                rs.close();
               }
             }
           }
@@ -783,6 +1702,9 @@ public class NUOPCDriver extends NUOPCComponent {
         _builder.append("compLabel=\"");
         CharSequence _paramch = this.paramch("compLabel");
         _builder.append(_paramch, "    ");
+        _builder.append("\", phaseLabel=\"");
+        CharSequence _paramch_1 = this.paramch("optionalPhaseLabel");
+        _builder.append(_paramch_1, "    ");
         _builder.append("\", rc=");
         _builder.append(this._parent.paramRC, "    ");
         _builder.append(")");
@@ -812,11 +1734,11 @@ public class NUOPCDriver extends NUOPCComponent {
         _builder.newLineIfNotEmpty();
         _builder.append("    ");
         _builder.append("srcCompLabel=\"");
-        CharSequence _paramch_1 = this.paramch("srcComp");
-        _builder.append(_paramch_1, "    ");
-        _builder.append("\", dstCompLabel=\"");
-        CharSequence _paramch_2 = this.paramch("dstComp");
+        CharSequence _paramch_2 = this.paramch("srcComp");
         _builder.append(_paramch_2, "    ");
+        _builder.append("\", dstCompLabel=\"");
+        CharSequence _paramch_3 = this.paramch("dstComp");
+        _builder.append(_paramch_3, "    ");
         _builder.append("\", rc=");
         _builder.append(this._parent.paramRC, "    ");
         _builder.append(")");
@@ -834,6 +1756,34 @@ public class NUOPCDriver extends NUOPCComponent {
         _builder.append("    ");
         _builder.append("return  ! bail out");
         _builder.newLine();
+        _builder.newLine();
+        _builder.append("! add a run sequence element to link between slots    ");
+        _builder.newLine();
+        _builder.append("call NUOPC_DriverAddRunElement(");
+        _builder.append(this._parent.paramGridComp, "");
+        _builder.append(", slot=");
+        CharSequence _paramint_2 = this.paramint(1);
+        _builder.append(_paramint_2, "");
+        _builder.append(", linkSlot=");
+        CharSequence _paramint_3 = this.paramint(2);
+        _builder.append(_paramint_3, "");
+        _builder.append(", rc=");
+        _builder.append(this._parent.paramRC, "");
+        _builder.append(")");
+        _builder.newLineIfNotEmpty();
+        _builder.append("if (ESMF_LogFoundError(rcToCheck=rc, msg=ESMF_LOGERR_PASSTHRU, &");
+        _builder.newLine();
+        _builder.append("    ");
+        _builder.append("line=__LINE__, &");
+        _builder.newLine();
+        _builder.append("    ");
+        _builder.append("file=__FILE__)) &");
+        _builder.newLine();
+        _builder.append("    ");
+        _builder.append("return  ! bail out");
+        _builder.newLine();
+        _builder.append("    ");
+        _builder.newLine();
         String code = _builder.toString();
         final IASTListNode<IBodyConstruct> stmts = CodeExtraction.parseLiteralStatementSequence(code);
         ASTSubroutineSubprogramNode ssn = this._parent.getASTRef();
@@ -847,8 +1797,8 @@ public class NUOPCDriver extends NUOPCComponent {
   
   @Label(label = "ModifyInitializePhaseMap")
   @MappingType("subroutine")
-  public static class ModifyInitializePhaseMap extends SpecializationMethodCodeConcept<NUOPCDriver.Initialization> {
-    public ModifyInitializePhaseMap(final NUOPCDriver.Initialization parent) {
+  public static class ModifyInitializePhaseMap extends SpecializationMethodCodeConcept<NUOPCDriver.InitSpecializations> {
+    public ModifyInitializePhaseMap(final NUOPCDriver.InitSpecializations parent) {
       super(parent, "NUOPC_Driver", "label_ModifyInitializePhaseMap");
       this.subroutineName = "ModifyInitializePhaseMap";
       this.specLabel = "driver_label_ModifyInitializePhaseMap";
@@ -856,17 +1806,197 @@ public class NUOPCDriver extends NUOPCComponent {
     
     @Override
     public CodeConcept<?, ASTModuleNode> module() {
-      return this._parent._parent;
+      return this._parent._parent._parent;
     }
     
     @Override
     public SetServicesCodeConcept<?> setServices() {
-      return this._parent._parent.setServices;
+      return this._parent._parent._parent.setServices;
     }
     
     @Override
     public NUOPCComponent.GenericImport genericUse() {
-      return this._parent._parent.importNUOPCGeneric;
+      return this._parent._parent._parent.importNUOPCGeneric;
+    }
+  }
+  
+  @Label(label = "Run")
+  public static class Run extends CodeConcept<NUOPCDriver, ASTNode> {
+    @Child
+    public NUOPCDriver.RunPhases runPhases;
+    
+    @Child
+    public NUOPCDriver.RunSpecializations runSpecs;
+    
+    public Run(final NUOPCDriver parent) {
+      super(parent);
+    }
+    
+    @Override
+    public NUOPCDriver.Run reverse() {
+      NUOPCDriver.Run _xblockexpression = null;
+      {
+        NUOPCDriver.RunPhases _runPhases = new NUOPCDriver.RunPhases(this);
+        NUOPCDriver.RunPhases _reverse = _runPhases.reverse();
+        this.runPhases = ((NUOPCDriver.RunPhases) _reverse);
+        NUOPCDriver.RunSpecializations _runSpecializations = new NUOPCDriver.RunSpecializations(this);
+        CodeConcept<NUOPCDriver.Run, ASTNode> _reverse_1 = _runSpecializations.reverse();
+        this.runSpecs = ((NUOPCDriver.RunSpecializations) _reverse_1);
+        _xblockexpression = this;
+      }
+      return _xblockexpression;
+    }
+  }
+  
+  @Label(label = "Phases")
+  public static class RunPhases extends CodeConcept<NUOPCDriver.Run, ASTNode> {
+    @Child
+    public NUOPCDriver.RunPhase1 p1;
+    
+    public RunPhases(final NUOPCDriver.Run parent) {
+      super(parent);
+    }
+    
+    @Override
+    public NUOPCDriver.RunPhases reverse() {
+      NUOPCDriver.RunPhases _xblockexpression = null;
+      {
+        NUOPCDriver.RunPhase1 _runPhase1 = new NUOPCDriver.RunPhase1(this);
+        CodeConcept<NUOPCDriver.RunPhases, ASTNode> _reverse = _runPhase1.reverse();
+        this.p1 = ((NUOPCDriver.RunPhase1) _reverse);
+        _xblockexpression = this;
+      }
+      return _xblockexpression;
+    }
+  }
+  
+  @Label(label = "Run Phase 1")
+  @MappingType("subroutine-inherited")
+  public static class RunPhase1 extends CodeConcept<NUOPCDriver.RunPhases, ASTNode> {
+    public RunPhase1(final NUOPCDriver.RunPhases parent) {
+      super(parent);
+    }
+  }
+  
+  @Label(label = "Specializations")
+  public static class RunSpecializations extends CodeConcept<NUOPCDriver.Run, ASTNode> {
+    @Child(min = 0)
+    public NUOPCDriver.SetRunClock setRunClock;
+    
+    public RunSpecializations(final NUOPCDriver.Run parent) {
+      super(parent);
+    }
+    
+    @Override
+    public CodeConcept<NUOPCDriver.Run, ASTNode> reverse() {
+      return this.reverseChildren();
+    }
+    
+    public NUOPCDriver.RunSpecializations reverseChildren() {
+      NUOPCDriver.RunSpecializations _xblockexpression = null;
+      {
+        NUOPCDriver.SetRunClock _setRunClock = new NUOPCDriver.SetRunClock(this);
+        SpecializationMethodCodeConcept<NUOPCDriver.RunSpecializations> _reverse = _setRunClock.reverse();
+        this.setRunClock = ((NUOPCDriver.SetRunClock) _reverse);
+        _xblockexpression = this;
+      }
+      return _xblockexpression;
+    }
+  }
+  
+  @Label(label = "SetRunClock")
+  @MappingType("subroutine")
+  public static class SetRunClock extends SpecializationMethodCodeConcept<NUOPCDriver.RunSpecializations> {
+    public SetRunClock(final NUOPCDriver.RunSpecializations parent) {
+      super(parent, "NUOPC_Driver", "label_SetRunClock");
+      this.subroutineName = "SetRunClock";
+      this.specLabel = "driver_label_SetRunClock";
+      this.paramGridComp = "driver";
+      this.paramRC = "rc";
+    }
+    
+    @Override
+    public String subroutineTemplate() {
+      StringConcatenation _builder = new StringConcatenation();
+      _builder.newLine();
+      _builder.append("subroutine ");
+      _builder.append(this.subroutineName, "");
+      _builder.append("(");
+      _builder.append(this.paramGridComp, "");
+      _builder.append(", ");
+      _builder.append(this.paramRC, "");
+      _builder.append(")");
+      _builder.newLineIfNotEmpty();
+      _builder.append("    ");
+      _builder.append("type(ESMF_GridComp)  :: ");
+      _builder.append(this.paramGridComp, "    ");
+      _builder.newLineIfNotEmpty();
+      _builder.append("    ");
+      _builder.append("integer, intent(out) :: ");
+      _builder.append(this.paramRC, "    ");
+      _builder.newLineIfNotEmpty();
+      _builder.append("   ");
+      _builder.newLine();
+      _builder.append("   \t");
+      _builder.append("! local variable");
+      _builder.newLine();
+      _builder.append("   \t");
+      _builder.append("type(ESMF_Clock) :: myClock");
+      _builder.newLine();
+      _builder.append("   \t");
+      _builder.newLine();
+      _builder.append("    ");
+      _builder.append("rc = ESMF_SUCCESS");
+      _builder.newLine();
+      _builder.newLine();
+      _builder.append("    ");
+      _builder.append("! check and set clock against an external clock");
+      _builder.newLine();
+      _builder.append("    ");
+      _builder.append("call NUOPC_CompCheckSetClock(");
+      _builder.append(this.paramGridComp, "    ");
+      _builder.append(", ");
+      CharSequence _paramch = this.paramch("myClock");
+      _builder.append(_paramch, "    ");
+      _builder.append(", rc=");
+      _builder.append(this.paramRC, "    ");
+      _builder.append(")");
+      _builder.newLineIfNotEmpty();
+      _builder.append("    ");
+      _builder.append("if (ESMF_LogFoundError(rcToCheck=");
+      _builder.append(this.paramRC, "    ");
+      _builder.append(", msg=ESMF_LOGERR_PASSTHRU, &");
+      _builder.newLineIfNotEmpty();
+      _builder.append("        ");
+      _builder.append("line=__LINE__, &");
+      _builder.newLine();
+      _builder.append("        ");
+      _builder.append("file=__FILE__)) &");
+      _builder.newLine();
+      _builder.append("        ");
+      _builder.append("return  ! bail out");
+      _builder.newLine();
+      _builder.append("          ");
+      _builder.newLine();
+      _builder.append("  ");
+      _builder.append("end subroutine");
+      _builder.newLine();
+      return _builder.toString();
+    }
+    
+    @Override
+    public CodeConcept<?, ASTModuleNode> module() {
+      return this._parent._parent._parent;
+    }
+    
+    @Override
+    public SetServicesCodeConcept<?> setServices() {
+      return this._parent._parent._parent.setServices;
+    }
+    
+    @Override
+    public NUOPCComponent.GenericImport genericUse() {
+      return this._parent._parent._parent.importNUOPCGeneric;
     }
   }
   
@@ -881,6 +2011,9 @@ public class NUOPCDriver extends NUOPCComponent {
   
   @Child
   public NUOPCDriver.Initialization initialization;
+  
+  @Child
+  public NUOPCDriver.Run run;
   
   public NUOPCDriver(final CodeDBIndex codeDB) {
     super(null);
@@ -971,6 +2104,9 @@ public class NUOPCDriver extends NUOPCComponent {
       NUOPCDriver.Initialization _initialization = new NUOPCDriver.Initialization(this);
       NUOPCDriver.Initialization _reverse_1 = _initialization.reverse();
       this.initialization = _reverse_1;
+      NUOPCDriver.Run _run = new NUOPCDriver.Run(this);
+      NUOPCDriver.Run _reverse_2 = _run.reverse();
+      this.run = _reverse_2;
       _xblockexpression = this;
     }
     return _xblockexpression;

@@ -22,6 +22,8 @@ import static org.earthsystemmodeling.cupid.util.CodeExtraction.parseLiteralStat
 import org.earthsystemmodeling.cupid.annotation.MappingType
 import org.earthsystemmodeling.cupid.nuopc.v7bs50.NUOPCModel.IPD.AdvertiseField
 import org.earthsystemmodeling.cupid.nuopc.v7bs50.NUOPCModel.IPD.RealizeField
+import org.eclipse.photran.internal.core.parser.ASTModuleNode
+import org.eclipse.photran.internal.core.parser.ASTUseStmtNode
 
 @Label(label="NUOPC Driver")
 @MappingType("module")
@@ -36,6 +38,9 @@ class NUOPCDriver extends NUOPCComponent {
 	
 	@Child
 	var public Initialization initialization
+	
+	@Child
+	var public Run run
 	
 	new(CodeDBIndex codeDB) {
 		super(null)
@@ -79,6 +84,7 @@ class NUOPCDriver extends NUOPCComponent {
 	def reverseChildren() {
 		setServices = new SetServicesCodeConcept(this).reverse
 		initialization = new Initialization(this).reverse
+		run = new Run(this).reverse
 		this
 	}
 
@@ -668,17 +674,11 @@ end subroutine
 		@Child
 		var public SetModelServices setModelServices
 		
-		//@Child
-		//var public SetModelCount setModelCount
-		
-		//@Child(min=0)
-		//var public SetModelPetLists setModelPetLists
-		
 		@Child(min=0)
 		var public SetRunSequence setRunSequence
 		
-		//@Child(min=0)
-		//var public ModifyInitializePhaseMap modifyInitializePhaseMap
+		@Child(min=0)
+		var public ModifyInitializePhaseMap modifyInitializePhaseMap
 	
 		new(Initialization parent) {
 			super(parent)
@@ -690,10 +690,8 @@ end subroutine
 		
 		def reverseChildren() {
 			setModelServices = new SetModelServices(this).reverse as SetModelServices
-			//setModelCount = new SetModelCount(this).reverse as SetModelCount
-			//setModelPetLists = new SetModelPetLists(this).reverse as SetModelPetLists
 			setRunSequence = new SetRunSequence(this).reverse as SetRunSequence
-			//modifyInitializePhaseMap = new ModifyInitializePhaseMap(this).reverse as ModifyInitializePhaseMap		
+			modifyInitializePhaseMap = new ModifyInitializePhaseMap(this).reverse as ModifyInitializePhaseMap		
 			
 			this	
 		}
@@ -951,6 +949,19 @@ if (ESMF_LogFoundError(rcToCheck=«paramRC», msg=ESMF_LOGERR_PASSTHRU, &
 			var IFortranAST ast = getAST
 			var ASTSubroutineSubprogramNode ssn = _parent.ASTRef			
 			
+			var ASTModuleNode amn = _parent._parent._parent._parent.ASTRef
+
+/*			
+			var code = 
+'''
+						
+use «paramch('MODEL')», only: «paramch('modelSS')» => SetServices
+'''			
+
+			val IASTListNode<IBodyConstruct> useNodes = parseLiteralStatementSequence(code)
+*/
+
+/*
 			var code = 
 '''
 
@@ -966,20 +977,22 @@ type(ESMF_GridComp)            :: child
 			else {
 				ssn.body.addAll(typeNodes);
 			}
-					
+*/					
 			
-			code = 
+			var code = 
 '''
 
-call NUOPC_DriverAddComp(«_parent.paramGridComp», "«paramch('ComponentName')»", «paramch('CompSetServices')», comp=child, rc=«_parent.paramRC»)
+call NUOPC_DriverAddComp(«_parent.paramGridComp», "«paramch('ComponentName')»", «paramch('CompSetServices')», rc=«_parent.paramRC»)
+
+! To add a Connector, use signature below instead   
+!call NUOPC_DriverAddComp(driver, srcCompLabel="«paramch('SrcComp')»", dstCompLabel="«paramch('DstComp')»", &
+!    compSetServicesRoutine=«paramch('cplSS')», rc=rc)
+
 if (ESMF_LogFoundError(rcToCheck=«_parent.paramRC», msg=ESMF_LOGERR_PASSTHRU, &
     line=__LINE__, &
     file=__FILE__)) &
     return  ! bail out
 
-! for connector, use signature below    
-!call NUOPC_DriverAddComp(driver, srcCompLabel="«paramch('SrcComp')»", dstCompLabel="«paramch('DstComp')»", &
-!    compSetServicesRoutine=«paramch('cplSS')», rc=rc)
     
 '''
 			val IASTListNode<IBodyConstruct> stmts = parseLiteralStatementSequence(code)
@@ -1070,6 +1083,11 @@ end subroutine
 		@Label(label="slot")
 		@Prop
 		public String slot
+		
+		@Label(label="linkSlot")
+		@Prop
+		public String linkSlot
+		
 		public String compLabel
 		
 		public String srcCompLabel
@@ -1078,6 +1096,7 @@ end subroutine
 		
 		override name() {
 			if (compLabel != null) compLabel + "(slot=" + slot + ")"
+			else if (linkSlot != null) "slot " + slot + " => slot " + linkSlot
 			else srcCompLabel + " => " + dstCompLabel + "(slot=" + slot + ")"
 		}		
 		
@@ -1120,8 +1139,18 @@ end subroutine
 					if (rs.next) {
 						addComp.compLabel = rs.getString("_compExpr")
 						addComp.slot = rs.getString("_slotExpr")
+						rs.close
 					}
-					rs.close
+					else {
+						//call NUOPC_DriverAddRunElement(driver, slot=1, linkSlot=2, rc=rc)
+						rs = '''callArgWithType(_, «addComp._id», _, 'slot', _, _slotExpr),
+							 callArgWithType(_, «addComp._id», _, 'linkSlot', _, _linkSlotExpr).'''.execQuery
+						if (rs.next) {
+							addComp.linkSlot = rs.getString("_linkSlotExpr")
+							addComp.slot = rs.getString("_slotExpr")
+							rs.close
+						}
+					}
 				}
 			}
 			
@@ -1140,7 +1169,7 @@ end subroutine
 
 ! add a run sequence element for a Model, Mediator, or Driver       
 call NUOPC_DriverAddRunElement(«_parent.paramGridComp», slot=«paramint(1)», &
-    compLabel="«paramch('compLabel')»", rc=«_parent.paramRC»)
+    compLabel="«paramch('compLabel')»", phaseLabel="«paramch('optionalPhaseLabel')»", rc=«_parent.paramRC»)
 if (ESMF_LogFoundError(rcToCheck=«_parent.paramRC», msg=ESMF_LOGERR_PASSTHRU, &
     line=__LINE__, &
     file=__FILE__)) &
@@ -1153,6 +1182,14 @@ if (ESMF_LogFoundError(rcToCheck=«_parent.paramRC», msg=ESMF_LOGERR_PASSTHRU, 
     line=__LINE__, &
     file=__FILE__)) &
     return  ! bail out
+
+! add a run sequence element to link between slots    
+call NUOPC_DriverAddRunElement(«_parent.paramGridComp», slot=«paramint(1)», linkSlot=«paramint(2)», rc=«_parent.paramRC»)
+if (ESMF_LogFoundError(rcToCheck=rc, msg=ESMF_LOGERR_PASSTHRU, &
+    line=__LINE__, &
+    file=__FILE__)) &
+    return  ! bail out
+    
 '''
 			val IASTListNode<IBodyConstruct> stmts = parseLiteralStatementSequence(code)
 			var ASTSubroutineSubprogramNode ssn = _parent.ASTRef
@@ -1169,9 +1206,9 @@ if (ESMF_LogFoundError(rcToCheck=«_parent.paramRC», msg=ESMF_LOGERR_PASSTHRU, 
 	
 	@Label(label="ModifyInitializePhaseMap")
 	@MappingType("subroutine")
-	static class ModifyInitializePhaseMap extends SpecializationMethodCodeConcept<Initialization> {
+	static class ModifyInitializePhaseMap extends SpecializationMethodCodeConcept<InitSpecializations> {
 	
-		new(Initialization parent) {
+		new(InitSpecializations parent) {
 			super(parent, "NUOPC_Driver", "label_ModifyInitializePhaseMap")
 			//defaults
 			subroutineName = "ModifyInitializePhaseMap"
@@ -1179,86 +1216,138 @@ if (ESMF_LogFoundError(rcToCheck=«_parent.paramRC», msg=ESMF_LOGERR_PASSTHRU, 
 		}
 		
 		override module() {
-			_parent._parent
+			_parent._parent._parent
 		}
 		
 		override setServices() {
-			_parent._parent.setServices
+			_parent._parent._parent.setServices
 		}
 		
 		override genericUse() {
-			_parent._parent.importNUOPCGeneric
+			_parent._parent._parent.importNUOPCGeneric
 		}	
 		
 	}
 	
-	/*
-	@Label(label="SetModelPetLists", type="subroutine")
-	static class SetModelPetLists extends SpecializationMethodCodeConcept<Initialization> {
 	
-		new(Initialization parent) {
-			super(parent, "NUOPC_Driver", "label_SetModelPetLists")
-			//defaults
-			subroutineName = "SetModelPetLists"
-			specLabel = "driver_label_SetModelPetLists"
+	@Label(label="Run")
+	public static class Run extends CodeConcept<NUOPCDriver, ASTNode> {
+
+		@Child
+		public RunPhases runPhases
+		
+		@Child
+		public RunSpecializations runSpecs
+	
+		new(NUOPCDriver parent) {
+			super(parent)
 		}
 		
-		override module() {
-			_parent._parent
+		override Run reverse() {
+			runPhases = new RunPhases(this).reverse as RunPhases
+			runSpecs = new RunSpecializations(this).reverse as RunSpecializations
+			this
+		}
+	
+	}
+	
+	
+	@Label(label="Phases")
+	public static class RunPhases extends CodeConcept<Run, ASTNode> {
+	
+		@Child
+		public RunPhase1 p1
+		
+		new(Run parent) {
+			super(parent)
 		}
 		
-		override setServices() {
-			_parent._parent.setServices
+		override RunPhases reverse() {
+			p1 = new RunPhase1(this).reverse as RunPhase1
+			this
 		}
-		
-		override genericUse() {
-			_parent._parent.importNUOPCGeneric
+	
+	}
+	
+	@Label(label="Run Phase 1")
+	@MappingType("subroutine-inherited")
+	public static class RunPhase1 extends CodeConcept<RunPhases, ASTNode> {
+		new(RunPhases parent) {
+			super(parent)
 		}
-		
+	}	
+	
+	@Label(label="Specializations")
+	public static class RunSpecializations extends CodeConcept<Run, ASTNode> {
+
+		@Child(min=0)
+		public SetRunClock setRunClock
+
+		new(Run parent) {
+			super(parent)
+		}
+
+		override reverse() {
+			reverseChildren
+		}
+
+		def reverseChildren() {
+			setRunClock = new SetRunClock(this).reverse as SetRunClock
+			this
+		}
+
+	}
+	
+	@Label(label="SetRunClock")
+	@MappingType("subroutine")
+	public static class SetRunClock extends SpecializationMethodCodeConcept<RunSpecializations> {
+
+		new(RunSpecializations parent) {
+			super(parent, "NUOPC_Driver", "label_SetRunClock")
+
+			// defaults
+			subroutineName = "SetRunClock"
+			specLabel = "driver_label_SetRunClock"
+			paramGridComp = "driver"
+			paramRC = "rc"
+		}
+
 		override subroutineTemplate() {
-'''
+			'''
 
 subroutine «subroutineName»(«paramGridComp», «paramRC»)
     type(ESMF_GridComp)  :: «paramGridComp»
     integer, intent(out) :: «paramRC»
-    
-    ! local variables
-    integer                       :: localrc
-    integer                       :: petCount, i
-    integer, allocatable          :: petList(:)
-
+   
+   	! local variable
+   	type(ESMF_Clock) :: myClock
+   	
     rc = ESMF_SUCCESS
 
-    ! get the petCount
-    call ESMF_GridCompGet(«paramGridComp», petCount=petCount, rc=localrc)
-    if (ESMF_LogFoundError(rcToCheck=localrc, msg=ESMF_LOGERR_PASSTHRU, &
-      line=__LINE__, &
-      file=__FILE__)) &
-      return  ! bail out
-    
-    ! example of setting petList for a component
-    allocate(petList(petCount/2-1))
-    do i=1, petCount/2-1
-      petList(i) = i-1 ! PET labeling goes from 0 to petCount-1
-    enddo
-    
-    call NUOPC_DriverSetModel(«paramGridComp», compIndex=1, petList=petList, rc=localrc)
-    if (ESMF_LogFoundError(rcToCheck=localrc, msg=ESMF_LOGERR_PASSTHRU, &
-      line=__LINE__, &
-      file=__FILE__)) &
-      return  ! bail out
-    deallocate(petList)
-      
-    ! repeat as necessary for each component
-    
+    ! check and set clock against an external clock
+    call NUOPC_CompCheckSetClock(«paramGridComp», «paramch('myClock')», rc=«paramRC»)
+    if (ESMF_LogFoundError(rcToCheck=«paramRC», msg=ESMF_LOGERR_PASSTHRU, &
+        line=__LINE__, &
+        file=__FILE__)) &
+        return  ! bail out
+          
   end subroutine
-
 '''
+		}
+
+		override module() {
+			_parent._parent._parent
+		}
+
+		override setServices() {
+			_parent._parent._parent.setServices
+		}
+
+		override genericUse() {
+			_parent._parent._parent.importNUOPCGeneric
 		}
 		
 	
 	}
-	*
-	*/
 	
 }
