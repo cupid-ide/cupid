@@ -1,12 +1,14 @@
 package org.earthsystemmodeling.cupid.nuopc;
 
-import java.util.List
-import org.earthsystemmodeling.cupid.codedb.CodeDBIndex
-import org.eclipse.photran.internal.core.parser.IASTNode
-import org.eclipse.ltk.core.refactoring.TextFileChange
 import alice.tuprolog.MalformedGoalException
+import java.lang.reflect.Field
+import java.util.ArrayList
+import java.util.List
+import org.earthsystemmodeling.cupid.annotation.Child
+import org.earthsystemmodeling.cupid.codedb.CodeDBIndex
 import org.earthsystemmodeling.cupid.core.CupidActivator
 import org.eclipse.photran.core.IFortranAST
+import org.eclipse.photran.internal.core.parser.IASTNode
 
 public abstract class CodeConcept<P extends CodeConcept<?,?>, A extends IASTNode> {
 	
@@ -14,6 +16,8 @@ public abstract class CodeConcept<P extends CodeConcept<?,?>, A extends IASTNode
 	var public long _id  
 	var public CodeDBIndex _codeDB
 	var public A _astRef
+	
+	var private List<Field> childFields;
 	
 	new(P parent) {
 		_parent = parent
@@ -35,6 +39,65 @@ public abstract class CodeConcept<P extends CodeConcept<?,?>, A extends IASTNode
 	}
 	* 
 	*/
+	
+	def protected List<Field> getChildFields() {
+		if (childFields == null) {
+			childFields = new ArrayList<Field>();		
+			for (Field f : this.class.fields) {
+				if (f.getAnnotation(Child) != null) {
+					childFields.add(f)
+				}
+			}
+		}
+		childFields
+	}
+	
+	/**
+	 * Validate this code concept.  Default behavior is to make sure all
+	 * children that are required (min>0) are present and to validate
+	 * recursively.
+	 */
+	def boolean validate() {	
+		for (Field f : getChildFields) {
+			if (!validate(f)) return false			
+		}
+		true
+	}
+	
+	def protected boolean validate(List<CodeConcept<?,?>> codeConcepts) {
+		for (CodeConcept<?,?> cc : codeConcepts) {
+			if (!cc.validate) return false;
+		}
+		true
+	}
+	
+	def protected boolean validate(Field f) {
+		val childAnn = f.getAnnotation(Child)
+		if (f.type == List) {
+			var lst = f.get(this) as List<CodeConcept<?,?>>
+			if (lst == null && childAnn.min>0) {
+				return false;
+			}
+			else if (lst !=null && lst.size < childAnn.min) {
+				return false;
+			}
+			else {
+				return validate(lst)	
+			}
+		}
+		else {
+			var obj = f.get(this) as CodeConcept<?,?>
+			if (obj==null && childAnn.min>0) {
+				return false;
+			}
+			else if (obj!=null) {
+				return obj.validate
+			}
+			else {
+				true
+			}
+		}
+	}
 	
 	def A getASTRef() {
 		if (_astRef != null) {
@@ -84,7 +147,5 @@ public abstract class CodeConcept<P extends CodeConcept<?,?>, A extends IASTNode
 	def paramint(int defaultVal) {
 		'''CUPIDPARAM$INT$«defaultVal»$'''
 	}
-	
-	
 	
 }

@@ -317,7 +317,7 @@ public class NUOPCView extends ViewPart {
 		labelProvider = new NUOPCViewLabelProvider2(contentProvider);
 		viewer.setLabelProvider(labelProvider);
 		viewer.setSorter(null);
-		viewer.setAutoExpandLevel(3);
+		viewer.setAutoExpandLevel(4);
 	
 		FancyToolTipSupport.enableFor(viewer, ToolTip.NO_RECREATE);
 		

@@ -42,6 +42,9 @@ class NUOPCDriver extends NUOPCComponent {
 	@Child
 	var public Run run
 	
+	@Child
+	var public Finalize finalize
+	
 	new(CodeDBIndex codeDB) {
 		super(null)
 		_codeDB = codeDB
@@ -85,6 +88,7 @@ class NUOPCDriver extends NUOPCComponent {
 		setServices = new SetServicesCodeConcept(this).reverse
 		initialization = new Initialization(this).reverse
 		run = new Run(this).reverse
+		finalize = new Finalize(this).reverse
 		this
 	}
 
@@ -435,6 +439,8 @@ end subroutine
 			this
 		}
 		
+		
+		
 	}
 		
 	@Label(label="Initialize Phase Definition (v02)")
@@ -598,6 +604,14 @@ end subroutine
 			ipdv03 = new IPDv03(this).reverse
 			ipdv04 = new IPDv04(this).reverse
 			this
+		}
+		
+		override validate() {
+			ipdv00.validate ||
+			ipdv01.validate ||
+			ipdv02.validate ||
+			ipdv03.validate || 
+			ipdv04.validate
 		}
 	
 	}
@@ -838,26 +852,26 @@ call ESMF_TimeIntervalSet(timeStep, m=«paramint(15)», rc=«paramRC») ! 15 min
 if (ESMF_LogFoundError(rcToCheck=«paramRC», msg=ESMF_LOGERR_PASSTHRU, &
   line=__LINE__, &
   file=__FILE__)) &
-  call ESMF_Finalize(endflag=ESMF_END_ABORT)
+  return
 
 call ESMF_TimeSet(startTime, yy=«paramint(2010)», mm=«paramint(6)», dd=«paramint(1)», h=«paramint(0)», m=«paramint(0)», rc=«paramRC»)
 if (ESMF_LogFoundError(rcToCheck=«paramRC», msg=ESMF_LOGERR_PASSTHRU, &
   line=__LINE__, &
   file=__FILE__)) &
-  call ESMF_Finalize(endflag=ESMF_END_ABORT)
+  return
 
 call ESMF_TimeSet(stopTime, yy=«paramint(2010)», mm=«paramint(6)», dd=«paramint(1)», h=«paramint(1)», m=«paramint(0)», rc=«paramRC»)
 if (ESMF_LogFoundError(rcToCheck=«paramRC», msg=ESMF_LOGERR_PASSTHRU, &
   line=__LINE__, &
   file=__FILE__)) &
-  call ESMF_Finalize(endflag=ESMF_END_ABORT)
+  return
 
 internalClock = ESMF_ClockCreate(name="«paramch('AppClock')»", &
   timeStep=timeStep, startTime=startTime, stopTime=stopTime, rc=«paramRC»)
 if (ESMF_LogFoundError(rcToCheck=rc, msg=ESMF_LOGERR_PASSTHRU, &
   line=__LINE__, &
   file=__FILE__)) &
-  call ESMF_Finalize(endflag=ESMF_END_ABORT)
+  return
   
 call ESMF_GridCompSet(«paramGridComp», clock=internalClock, rc=«paramRC»)
 if (ESMF_LogFoundError(rcToCheck=«paramRC», msg=ESMF_LOGERR_PASSTHRU, &
@@ -1348,6 +1362,120 @@ subroutine «subroutineName»(«paramGridComp», «paramRC»)
 		}
 		
 	
+	}
+	
+	@Label(label="Phases")
+	public static class FinalizePhases extends CodeConcept<Finalize, ASTNode> {
+	
+		@Child
+		public FinalizePhase1 p1
+		
+		new(Finalize parent) {
+			super(parent)
+		}
+		
+		override FinalizePhases reverse() {
+			p1 = new FinalizePhase1(this).reverse as FinalizePhase1
+			this
+		}
+	
+	}
+	
+	@Label(label="Specializations")
+	public static class FinalizeSpecializations extends CodeConcept<Finalize, ASTNode> {
+
+		@Child(min=0)
+		public FinalizeDriver finalize
+
+		new(Finalize parent) {
+			super(parent)
+		}
+
+		override reverse() {
+			reverseChildren
+		}
+
+		def reverseChildren() {
+			finalize = new FinalizeDriver(this).reverse as FinalizeDriver
+			this
+		}
+
+	}
+	
+	@Label(label="Finalize Phase 1")
+	@MappingType("subroutine-inherited")
+	public static class FinalizePhase1 extends CodeConcept<FinalizePhases, ASTNode> {
+		new(FinalizePhases parent) {
+			super(parent)
+		}
+	}	
+
+	@Label(label="Finalize")
+	public static class Finalize extends CodeConcept<NUOPCDriver, ASTNode> {
+
+		@Child
+		public FinalizePhases finalPhases
+		
+		@Child
+		public FinalizeSpecializations finalSpecs
+
+		new(NUOPCDriver parent) {
+			super(parent)
+		}
+
+		override Finalize reverse() {
+			reverseChildren
+		}
+
+		def reverseChildren() {
+			finalPhases = new FinalizePhases(this).reverse as FinalizePhases
+			finalSpecs = new FinalizeSpecializations(this).reverse as FinalizeSpecializations
+			this
+		}
+
+	}
+	
+	@Label(label="FinalizeDriver")
+	@MappingType("subroutine")
+	public static class FinalizeDriver extends SpecializationMethodCodeConcept<FinalizeSpecializations> {
+
+		new(FinalizeSpecializations parent) {
+			super(parent, "NUOPC_Driver", "label_Finalize")
+
+			// defaults
+			subroutineName = "FinalizeDriver"
+			specLabel = "driver_label_Finalize"
+			paramGridComp = "driver"
+			paramRC = "rc"
+		}
+
+		override subroutineTemplate() {
+			'''
+
+subroutine «subroutineName»(«paramGridComp», «paramRC»)
+    type(ESMF_GridComp)  :: «paramGridComp»
+    integer, intent(out) :: «paramRC»
+
+    rc = ESMF_SUCCESS
+    
+    ! finalize driver
+
+end subroutine
+'''
+		}
+
+		override module() {
+			_parent._parent._parent
+		}
+
+		override setServices() {
+			_parent._parent._parent.setServices
+		}
+
+		override genericUse() {
+			_parent._parent._parent.importNUOPCGeneric
+		}
+
 	}
 	
 }

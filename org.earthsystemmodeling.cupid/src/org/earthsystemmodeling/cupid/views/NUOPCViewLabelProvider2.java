@@ -40,8 +40,10 @@ import org.xml.sax.SAXException;
 class NUOPCViewLabelProvider2 extends StyledCellLabelProvider { //implements ITableLabelProvider {
 
 	private org.jdom.Document docXML;
+	private NUOPCViewContentProvider2 contentProvider;
 	
 	public NUOPCViewLabelProvider2(NUOPCViewContentProvider2 contentProvider) {
+		this.contentProvider = contentProvider;
 		loadDocXML();
 	}
 	
@@ -150,20 +152,53 @@ class NUOPCViewLabelProvider2 extends StyledCellLabelProvider { //implements ITa
 	}
 	*/
 	
+	//TODO: this is inefficient, could introduce cacheing, etc.
+	/*
+	private boolean existsInvalidDescendant(CodeConceptProxy ccp) {
+		Object[] children = contentProvider.getChildren(ccp);
+		for (Object child : children) {
+			CodeConceptProxy c = (CodeConceptProxy) child;
+			if (c.codeConcept==null && c.min>0) {
+				return true;
+			}
+			else if (c.codeConcept==null) {  //in this case, the concept is not required
+				return false;
+			}
+			else if (existsInvalidDescendant(c)) {
+				return true;
+			}
+		}
+		return false;
+	}
+	*/
+	
+	/*
+	private boolean hasOptionalAscendant(ViewerCell cell) {
+		
+		ViewerCell parentElem = cell.getNeighbor(ViewerCell.ABOVE, false);
+		if (parentElem != null) {
+			CodeConceptProxy parentCCP = (CodeConceptProxy) parentElem.getElement();
+			if (parentCCP.min==0) {
+				return true;
+			}
+			else {
+				return hasOptionalAscendant(parentElem);
+			}
+		}
+		else {
+			return false;
+		}
+				
+	}
+	*/
+	
+	//boolean grayState = false;
+	
 	@Override
 	public void update(final ViewerCell cell) {
 	
 		Object element = cell.getElement();
-		/*
-		if (element instanceof CodeConceptProxyDoc) {
-			if (cell.getColumnIndex()==0) {
-				cell.setText(((CodeConceptProxyDoc) element).doc);				
-				super.update(cell);
-			}
-			return;
-		}
-		*/
-		
+					
 	    StyledString text = new StyledString();		    	    
 	   
 	    StyledString.Styler grayStyler = new StyledString.Styler() {			
@@ -194,13 +229,14 @@ class NUOPCViewLabelProvider2 extends StyledCellLabelProvider { //implements ITa
 		
 	    ImageDescriptor icon = null;
 	       
+	   	    
     	CodeConceptProxy proxy = (CodeConceptProxy) element;
     	if (cell.getColumnIndex()==0) {
     		if (proxy.codeConcept == null) {
     			//TODO: the styles below are not being applied since Mars release
     			if (proxy.min==0) {
     				text.append(proxy.label, grayStyler);
-    				cell.setForeground(Display.getCurrent().getSystemColor(SWT.COLOR_GRAY));
+    				cell.setForeground(Display.getCurrent().getSystemColor(SWT.COLOR_GRAY));  
     			}
     			else {
     				text.append(proxy.label, redStyler);
@@ -208,9 +244,14 @@ class NUOPCViewLabelProvider2 extends StyledCellLabelProvider { //implements ITa
     			}
     			icon = getFortranImageDescriptor(proxy.type, SWT.IMAGE_GRAY);
     		}
-    		else {
+    		else if (!proxy.codeConcept.validate()) {
+    			text.append(proxy.label, redStyler);
+				cell.setForeground(Display.getCurrent().getSystemColor(SWT.COLOR_RED));
+				icon = getFortranImageDescriptor(proxy.type);				
+    		}
+    		else {  //present and valid   			
     			text.append(proxy.label);
-    			icon = getFortranImageDescriptor(proxy.type);
+    			icon = getFortranImageDescriptor(proxy.type);    			
     		}
     		if (! (proxy.min==1 && proxy.max==1)) {
     			String maxString = Integer.toString(proxy.max);

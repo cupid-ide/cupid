@@ -18,6 +18,7 @@ import static org.earthsystemmodeling.cupid.nuopc.BasicCodeConcept.newBasicCodeC
 import static org.earthsystemmodeling.cupid.util.CodeExtraction.parseLiteralStatementSequence
 import org.earthsystemmodeling.cupid.annotation.MappingType
 import org.earthsystemmodeling.cupid.nuopc.v7bs50.NUOPCModel.Initialization
+import java.lang.reflect.Field
 
 @Label(label="NUOPC Model")
 @MappingType("module")
@@ -413,6 +414,7 @@ if (ESMF_LogFoundError(rcToCheck=«_parent.paramRC», msg=ESMF_LOGERR_PASSTHRU, 
 			ipdv00p4 = new IPD.IPDv04p7(this).reverse as IPD.IPDv04p7
 			this
 		}
+		
 
 	}
 	
@@ -453,6 +455,7 @@ if (ESMF_LogFoundError(rcToCheck=«_parent.paramRC», msg=ESMF_LOGERR_PASSTHRU, 
 			this
 		}
 		
+		
 	}
 		
 	@Label(label="Initialize Phase Definition (v02)")
@@ -490,6 +493,7 @@ if (ESMF_LogFoundError(rcToCheck=«_parent.paramRC», msg=ESMF_LOGERR_PASSTHRU, 
 			ipdv02p5 = new IPD.IPDv04p7(this).reverse as IPD.IPDv04p7
 			this
 		}
+		
 		
 		
 	}
@@ -540,6 +544,7 @@ if (ESMF_LogFoundError(rcToCheck=«_parent.paramRC», msg=ESMF_LOGERR_PASSTHRU, 
 			this
 		}
 		
+		
 	}
 	
 	@Label(label="Initialize Phase Definition (v04)")
@@ -578,11 +583,9 @@ if (ESMF_LogFoundError(rcToCheck=«_parent.paramRC», msg=ESMF_LOGERR_PASSTHRU, 
 			ipdv04p5 = new IPD.IPDv04p5(this).reverse as IPD.IPDv04p5
 			ipdv04p6 = new IPD.IPDv04p6(this).reverse as IPD.IPDv04p6
 			ipdv04p7 = new IPD.IPDv04p7(this).reverse as IPD.IPDv04p7
-			
-			//if (ipdv04p1==null && ipdv04p3==null && ipdv04p4==null) return null
-			//else this
 			this
 		}
+		
 		
 	}
 	
@@ -617,6 +620,15 @@ if (ESMF_LogFoundError(rcToCheck=«_parent.paramRC», msg=ESMF_LOGERR_PASSTHRU, 
 			ipdv04 = new IPDv04(this).reverse
 			this
 		}
+		
+		override validate() {
+			ipdv00.validate ||
+			ipdv01.validate ||
+			ipdv02.validate ||
+			ipdv03.validate ||
+			ipdv04.validate	
+		}
+		
 	
 	}
 		
