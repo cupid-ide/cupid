@@ -544,6 +544,12 @@ if (ESMF_LogFoundError(rcToCheck=«_parent.paramRC», msg=ESMF_LOGERR_PASSTHRU, 
 			this
 		}
 		
+		override validate() {
+			(ipdv03p1 != null && ipdv03p1.validate) &&
+			((ipdv03p3 != null && ipdv03p3.validate) ||
+			(ipdv03p5 != null && ipdv03p5.validate))
+		}
+		
 		
 	}
 	
@@ -584,6 +590,12 @@ if (ESMF_LogFoundError(rcToCheck=«_parent.paramRC», msg=ESMF_LOGERR_PASSTHRU, 
 			ipdv04p6 = new IPD.IPDv04p6(this).reverse as IPD.IPDv04p6
 			ipdv04p7 = new IPD.IPDv04p7(this).reverse as IPD.IPDv04p7
 			this
+		}
+		
+		override validate() {
+			(ipdv04p1 != null && ipdv04p1.validate) &&
+			((ipdv04p3 != null && ipdv04p3.validate) ||
+			(ipdv04p5 != null && ipdv04p5.validate))
 		}
 		
 		

@@ -60,6 +60,7 @@ esmf_setservices(_id, _parentid, _name, _param_gcomp, _param_rc) :-
  
   
 /* esmf registered specialization */
+/*
 esmf_regspec(_sid, _modid, _name, _genericComp, _specLabelExpr, _specLabelOrig, _regid) :-
   esmf_setservices(_ssid, _modid, _ssname),
   esmf_specmethod(_sid, _modid, _name, _, _),
@@ -68,7 +69,28 @@ esmf_regspec(_sid, _modid, _name, _genericComp, _specLabelExpr, _specLabelOrig, 
     uses(_uid, _modid, _genericComp),
     usesEntity(_ueid, _uid, _specLabelOrig, _specLabelExpr, _),
   callArgIdent(_, _regid, _, 'specRoutine', _, _name).
-  
+*/
+
+/* 
+* this assumes that _specLabelOrig is a valid public entity in the _genericComp
+* and does not do any semantic analysis.  So, if the entity is not used directly,
+* and there are no "only" elements, the it is assumed to be imported.
+*/
+esmf_regspec(_sid, _modid, _name, _genericComp, _specLabelExpr, _specLabelOrig, _regid) :-
+  esmf_setservices(_ssid, _modid, _ssname),
+  esmf_specmethod(_sid, _modid, _name, _, _),
+  call_(_regid, _ssid, 'NUOPC_CompSpecialize'),
+  (
+    (callArgIdent(_, _regid, _, 'specLabel', _, _specLabelExpr),
+      uses(_uid, _modid, _genericComp),
+      usesEntity(_ueid, _uid, _specLabelOrig, _specLabelExpr, _)) 
+    ; 
+    (callArgIdent(_, _regid, _, 'specLabel', _, _specLabelOrig),
+      uses(_uid, _modid, _genericComp),
+      \+ usesEntity(_, _uid, _, _, 1))
+  ),
+  callArgIdent(_, _regid, _, 'specRoutine', _, _name).
+
     
 /* esmf specialization subroutine signature */
 esmf_specmethod(_id, _parentid, _name, _param_gridcomp, _param_rc) :- 
