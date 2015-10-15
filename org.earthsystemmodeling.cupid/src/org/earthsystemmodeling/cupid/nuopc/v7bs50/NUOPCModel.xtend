@@ -4,6 +4,7 @@ import java.sql.SQLException
 import java.util.List
 import org.earthsystemmodeling.cupid.annotation.Child
 import org.earthsystemmodeling.cupid.annotation.Label
+import org.earthsystemmodeling.cupid.annotation.MappingType
 import org.earthsystemmodeling.cupid.codedb.CodeDBIndex
 import org.earthsystemmodeling.cupid.nuopc.CodeConcept
 import org.eclipse.photran.core.IFortranAST
@@ -16,9 +17,6 @@ import org.eclipse.photran.internal.core.parser.IBodyConstruct
 import static org.earthsystemmodeling.cupid.core.CupidActivator.log
 import static org.earthsystemmodeling.cupid.nuopc.BasicCodeConcept.newBasicCodeConcept
 import static org.earthsystemmodeling.cupid.util.CodeExtraction.parseLiteralStatementSequence
-import org.earthsystemmodeling.cupid.annotation.MappingType
-import org.earthsystemmodeling.cupid.nuopc.v7bs50.NUOPCModel.Initialization
-import java.lang.reflect.Field
 
 @Label(label="NUOPC Model")
 @MappingType("module")
@@ -1238,6 +1236,7 @@ end subroutine
 
 	}
 	
+
 	@Label(label="Phases")
 	public static class FinalizePhases extends CodeConcept<Finalize, ASTNode> {
 	

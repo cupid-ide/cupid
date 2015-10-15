@@ -17,6 +17,7 @@ import org.earthsystemmodeling.cupid.codedb.CodeDBIndex;
 import org.earthsystemmodeling.cupid.core.CupidActivator;
 import org.earthsystemmodeling.cupid.nuopc.CodeConcept;
 import org.earthsystemmodeling.cupid.nuopc.v7bs50.NUOPCDriver;
+import org.earthsystemmodeling.cupid.nuopc.v7bs50.NUOPCMediator;
 import org.earthsystemmodeling.cupid.nuopc.v7bs50.NUOPCModel;
 import org.eclipse.core.resources.IFile;
 import org.eclipse.core.runtime.IStatus;
@@ -160,9 +161,20 @@ class NUOPCViewContentProvider2 implements IStructuredContentProvider, ITreeCont
 		
 		//TODO: cleaner way to go through these, maybe a new top level concept
 		//with the below as children
+		long startIndex = System.currentTimeMillis();
+		
 		codeConcept = new NUOPCDriver(codeDB).reverse();
 		if (codeConcept == null) {
 			codeConcept = new NUOPCModel(codeDB).reverse();
+		}
+		if (codeConcept == null) {
+			codeConcept = new NUOPCMediator(codeDB).reverse();
+		}
+		
+		long endIndex = System.currentTimeMillis();
+		
+		if (CupidActivator.getDefault().isDebugging()) {
+			CupidActivator.log(IStatus.INFO, "Code query time: " + (endIndex-startIndex));
 		}
 		
 		if (codeConcept != null) {

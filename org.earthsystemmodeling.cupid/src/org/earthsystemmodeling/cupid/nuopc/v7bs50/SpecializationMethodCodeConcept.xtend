@@ -18,6 +18,8 @@ import org.earthsystemmodeling.cupid.nuopc.BasicCodeConcept
 import org.earthsystemmodeling.cupid.nuopc.CodeConcept
 import org.earthsystemmodeling.cupid.nuopc.CodeGenerationException
 import org.earthsystemmodeling.cupid.annotation.MappingType
+import java.util.List
+import org.earthsystemmodeling.cupid.annotation.Prop
 
 public abstract class SpecializationMethodCodeConcept<P extends CodeConcept<?, ?>> extends CodeConcept<P, ASTSubroutineSubprogramNode> {
 
@@ -25,6 +27,9 @@ public abstract class SpecializationMethodCodeConcept<P extends CodeConcept<?, ?
 	var public String subroutineName = "SpecializationMethod"  //subclasses should default
 
 	var public String specLabel = "label_SpecializationLabel"  //subclasses should default
+	
+	@Prop
+	var public String specPhaseLabel = "EMPTY"
 
 	@Label(label="Registration")
 	@MappingType("call")
@@ -46,27 +51,82 @@ public abstract class SpecializationMethodCodeConcept<P extends CodeConcept<?, ?
 	}
 
 	override SpecializationMethodCodeConcept<P> reverse() {
-		var rs = '''esmf_regspec(_sid, «parentID», _name, '«labelComponent»', _specLabelExpr, '«labelName»', _regid).'''.
+		var rs = '''esmf_regspec(_sid, «parentID», _name, '«labelComponent»', _specLabelExpr, '«labelName»', _specPhaseLabel, _regid, _paramgcomp, _paramrc).'''.
 			execQuery
 		if (rs.next) {
 			_id = rs.getLong("_sid")
 			subroutineName = rs.getString("_name")
 			specLabel = rs.getString("_specLabelExpr")
+			specPhaseLabel = rs.getString("_specPhaseLabel")
 			registration = newBasicCodeConcept(this, rs.getLong("_regid"))
+			paramGridComp = rs.getString("_paramgcomp")
+			paramRC = rs.getString("_paramrc")
+				
 			rs.close
-
+			/*
 			rs = '''esmf_specmethod(«_id», «parentID», _, _param_gridcomp, _param_rc).'''.execQuery
 			if (rs.next) {
 				paramGridComp = rs.getString("_param_gridcomp")
 				paramRC = rs.getString("_param_rc")
 				rs.close
 			}
+			*/
 
 			reverseChildren
 		} else {
 			rs.close
 			null
 		}
+	}
+	
+	override List reverseMultiple() {
+		var retList = newArrayList()
+
+		/*
+		var rs = '''call_(_cid, «parentID», 'NUOPC_StateAdvertiseField'),
+					callArgWithType(_, _cid, 1, _, _, _stateExpr),
+					callArgWithType(_, _cid, 2, _, _, _standardNameExpr).'''.execQuery
+
+		while (rs.next) {
+			var advField = new AdvertiseField(_parent);
+			advField._id = rs.getLong("_cid")
+			advField.state = rs.getString("_stateExpr")
+			advField.standardName = rs.getString("_standardNameExpr")
+			retList.add(advField)
+		}
+		rs.close
+		*/
+
+		var rs = '''esmf_regspec(_sid, «parentID», _name, '«labelComponent»', _specLabelExpr, '«labelName»', _specPhaseLabel, _regid, _paramgcomp, _paramrc).'''.
+			execQuery
+
+		while (rs.next) {
+			var smcc = this.class.newInstance
+			smcc._parent = _parent
+			smcc._id = rs.getLong("_sid")
+			smcc.subroutineName = rs.getString("_name")
+			smcc.specLabel = rs.getString("_specLabelExpr")
+			smcc.specPhaseLabel = rs.getString("_specPhaseLabel")
+			smcc.registration = newBasicCodeConcept(this, rs.getLong("_regid"))
+			
+			smcc = smcc.reverseChildren
+			if (smcc != null) {
+				retList.add(smcc)
+			}
+		}
+		rs.close
+		
+		/*
+		rs = '''esmf_specmethod(«_id», «parentID», _, _param_gridcomp, _param_rc).'''.execQuery
+			if (rs.next) {
+				paramGridComp = rs.getString("_param_gridcomp")
+				paramRC = rs.getString("_param_rc")
+				rs.close
+			}
+			
+			*/
+
+		retList
 	}
 
 	def reverseChildren() {

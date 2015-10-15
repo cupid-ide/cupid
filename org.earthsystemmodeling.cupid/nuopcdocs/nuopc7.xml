@@ -353,7 +353,8 @@
 	
 	
 	<doc class="org.earthsystemmodeling.cupid.nuopc.v7bs50.NUOPCModel.IPD.IPDv04p1 
-				org.earthsystemmodeling.cupid.nuopc.v7bs50.NUOPCDriver.IPD.IPDv04p1">
+				org.earthsystemmodeling.cupid.nuopc.v7bs50.NUOPCDriver.IPD.IPDv04p1 
+				org.earthsystemmodeling.cupid.nuopc.v7bs50.NUOPCMediator.IPD.IPDv04p1">
 	<div class="content">
 		<div class="container">
 			<div class="main">
@@ -362,7 +363,7 @@
 				<hr />
 
 				<p>
-					Advertise model Fields in import/export States using
+					Advertise Fields in import/export States using
 					<code>NUOPC_StateAdvertiseField()</code>
 					and/or
 					<code>NUOPC_StateAdvertiseFields()</code>
@@ -405,22 +406,24 @@
 	
 
 	
-	<doc class="org.earthsystemmodeling.cupid.nuopc.v7bs50.NUOPCModel.IPD.IPDv04p2">
+	<doc class="org.earthsystemmodeling.cupid.nuopc.v7bs50.NUOPCModel.IPD.IPDv04p2
+	 	        org.earthsystemmodeling.cupid.nuopc.v7bs50.NUOPCMediator.IPD.IPDv04p2">
 		<div class="content">
 		<div class="container">
 			<div class="main">
 				<h1>IPDv01p2, IPDv02p2, IPDv03p2, IPDv04p2 - <i>Unspecified by NUOPC</i></h1>
 				<hr />
 				<p>
-					This phase is unspecified by NUOPC for Model components.
+					This phase is unspecified by NUOPC for Model and Mediator components.
 				</p>
 			</div>
 		</div>
 	</div>	
 	</doc>
 	
-	<doc class="org.earthsystemmodeling.cupid.nuopc.v7bs50.NUOPCModel.IPD.IPDv04p3
-				org.earthsystemmodeling.cupid.nuopc.v7bs50.NUOPCDriver.IPD.IPDv04p3">
+	<doc class="org.earthsystemmodeling.cupid.nuopc.v7bs50.NUOPCModel.IPD.IPDv04p3 
+				org.earthsystemmodeling.cupid.nuopc.v7bs50.NUOPCDriver.IPD.IPDv04p3 
+				org.earthsystemmodeling.cupid.nuopc.v7bs50.NUOPCMediator.IPD.IPDv04p3">
 	<div class="content">
 		<div class="container">
 			<div class="main">
@@ -441,7 +444,8 @@
 	</doc>
 	
 	<doc class="org.earthsystemmodeling.cupid.nuopc.v7bs50.NUOPCModel.IPD.IPDv04p4
-				org.earthsystemmodeling.cupid.nuopc.v7bs50.NUOPCDriver.IPD.IPDv04p4">
+				org.earthsystemmodeling.cupid.nuopc.v7bs50.NUOPCDriver.IPD.IPDv04p4 
+				org.earthsystemmodeling.cupid.nuopc.v7bs50.NUOPCMediator.IPD.IPDv04p4">
 	<div class="content">
 		<div class="container">
 			<div class="main">
@@ -459,7 +463,8 @@
 	</doc>
 	
 	<doc class="org.earthsystemmodeling.cupid.nuopc.v7bs50.NUOPCModel.IPD.IPDv04p5
-				org.earthsystemmodeling.cupid.nuopc.v7bs50.NUOPCDriver.IPD.IPDv04p5">
+				org.earthsystemmodeling.cupid.nuopc.v7bs50.NUOPCDriver.IPD.IPDv04p5 
+				org.earthsystemmodeling.cupid.nuopc.v7bs50.NUOPCMediator.IPD.IPDv04p5">
 	<div class="content">
 		<div class="container">
 			<div class="main">
@@ -491,7 +496,7 @@
 				<hr />
 				<p>
 				If the Model's internal clock has not been set, set as a copy of the parent clock. 
-				Call the SetClock (label_SetClock) specialization method (if present). 
+				Call the <code>SetClock</code> specialization method (if present). 
 				Verify all import fields are connected and set error code if not.
 				</p>
 			</div>
@@ -499,7 +504,8 @@
 	</div>
 	</doc>
 	
-	<doc class="org.earthsystemmodeling.cupid.nuopc.v7bs50.NUOPCModel.IPD.IPDv04p7">
+	<doc class="org.earthsystemmodeling.cupid.nuopc.v7bs50.NUOPCModel.IPD.IPDv04p7 
+	            org.earthsystemmodeling.cupid.nuopc.v7bs50.NUOPCMediator.IPD.IPDv04p7">
 	<div class="content">
 		<div class="container">
 			<div class="main">
@@ -507,7 +513,7 @@
 				<h2>Provided by NUOPC</h2>
 				<hr />
 				<p>
-				Call DataInitialize (label_DataInitialize) specialization method if it exists, which initializes all export fields. 
+				Call <code>DataInitialize</code> specialization method if it exists, which initializes all export fields. 
 				Set timestamp in export fields to internal clock's time.
 				</p>
 			</div>
@@ -629,13 +635,6 @@
 
 				<p>
 					<UL>
-						<!-- 
-						<LI>
-							Assign the
-							<TT>driverClock</TT>
-							member in the internal state as an alias to the incoming Clock.
-						</LI>
-						-->
 						<LI>
 							Call the <code>SetRunClock</code> specialization method to check and set the internal Clock against the incoming Clock.
 							If a phase-specific specialization exists, call it.  Else if a phase-independent specialization exists,
@@ -651,7 +650,6 @@
 						</LI>
 						<LI>
 							Time stepping loop: starting at current time, running to stop time of the internal Clock.
-
 							<UL>
 								<LI>Timestamp the Fields in the export State according to the
 									current time of the internal Clock.
@@ -665,12 +663,17 @@
 								</LI>
 							</UL>
 						</LI>
-						<LI>Timestamp all Fields in the export State according to the
-							current	time of the internal Clock, which now is identical to the stop time
-							of the internal Clock.
+						<LI>
+							Call the <code>TimestampExport</code> specialization method to set the timestamp on Export Fields.
+							If a phase-specific specialization exists, call it.  Else if a phase-independent specialization exists,
+							call it.
+							<!--  below only true for models, not mediators -->
+							If neither specialization exists, the default method will
+							timestamp all Fields in the Export State according to the
+							current	time of the internal Clock, which now is identical to the stop time of the internal Clock.						
 						</LI>
 					</UL>
-					<!-- missing two specializations: AdvanceClock, TimestampExport -->
+					<!-- missing specialization: AdvanceClock -->
 				</p>
 			</div>
 		</div>
@@ -681,14 +684,14 @@
 	</doc>
 	
 	<doc class="org.earthsystemmodeling.cupid.nuopc.v7bs50.NUOPCModel.SetRunClock
-				org.earthsystemmodeling.cupid.nuopc.v7bs50.NUOPCDriver.SetRunClock">
+				org.earthsystemmodeling.cupid.nuopc.v7bs50.NUOPCDriver.SetRunClock
+				org.earthsystemmodeling.cupid.nuopc.v7bs50.NUOPCMediator.SetRunClock">
 	<div class="content">
 		<div class="container">
 			<div class="main">
 				<h1>SetRunClock Specialization</h1>
 				<h2>(Required, NUOPC Provided, may be phase-specific)</h2>
 				<hr />
-
 				<p>
 					A specialization method to check and set the internal Clock against the incoming Clock. This
 					method is called by the default run phase.
@@ -703,16 +706,16 @@
 	</div>
 	</doc>
 	
-	<doc class="org.earthsystemmodeling.cupid.nuopc.v7bs50.NUOPCModel.CheckImport">
+	<doc class="org.earthsystemmodeling.cupid.nuopc.v7bs50.NUOPCModel.CheckImport 
+	            org.earthsystemmodeling.cupid.nuopc.v7bs50.NUOPCMediator.CheckImport">
 	<div class="content">
 		<div class="container">
 			<div class="main">
 				<h1>CheckImport Specialization</h1>
 				<h2>(Required, NUOPC Provided, may be phase-specific)</h2>
 				<hr />
-
 				<p>
-					A specialization method to verify Import Fields before the model Advances in time. This method is called
+					A specialization method to verify Import Fields before advancing in time. This method is called
 					by the default run phase.
 					<br/><br/>
 					If not overridden, the default
@@ -723,16 +726,16 @@
 	</div>	
 	</doc>
 	
-	<doc class="org.earthsystemmodeling.cupid.nuopc.v7bs50.NUOPCModel.ModelAdvance">
+	<doc class="org.earthsystemmodeling.cupid.nuopc.v7bs50.NUOPCModel.ModelAdvance 
+	            org.earthsystemmodeling.cupid.nuopc.v7bs50.NUOPCMediator.MediatorAdvance">
 	<div class="content">
 		<div class="container">
 			<div class="main">
 				<h1>Advance Specialization</h1>
 				<h2>(Required, Implementor Provided, may be phase-specific)</h2>
 				<hr />
-
 				<p>
-					A specialization method that advances the model forward in time by one timestep
+					A specialization method that advances the model/mediator forward in time by one timestep
 					of the internal clock.  This method will be called iteratively by the default
 					run phase until reaching the stop time on the internal clock.
 				</p>
@@ -741,7 +744,8 @@
 	</div>		
 	</doc>
 	
-	<doc class="org.earthsystemmodeling.cupid.nuopc.v7bs50.NUOPCModel.FinalizePhase1">
+	<doc class="org.earthsystemmodeling.cupid.nuopc.v7bs50.NUOPCModel.FinalizePhase1 
+	            org.earthsystemmodeling.cupid.nuopc.v7bs50.NUOPCMediator.FinalizePhase1">
 	<div class="content">
 		<div class="container">
 			<div class="main">
@@ -758,7 +762,8 @@
 	</doc>
 	
 	<doc class="org.earthsystemmodeling.cupid.nuopc.v7bs50.NUOPCModel.FinalizeModel
-				org.earthsystemmodeling.cupid.nuopc.v7bs50.NUOPCDriver.FinalizeDriver">
+				org.earthsystemmodeling.cupid.nuopc.v7bs50.NUOPCDriver.FinalizeDriver
+				org.earthsystemmodeling.cupid.nuopc.v7bs50.NUOPCMediator.FinalizeMediator">
 	<div class="content">
 		<div class="container">
 			<div class="main">
@@ -780,7 +785,6 @@
 				<h1>SetClock Specialization</h1>
 				<h2>(Optional, Implementor Provided)</h2>
 				<hr />
-
 				<p>
 				If present, this specialization will be called during phases IPDv00p3, IPDv01p4, IPDv02p4, IPDv03p6, and IPDv04p6.
 				The specialization method can change aspects of the internal clock, which defaults to a copy of the incoming parent
@@ -799,22 +803,129 @@
 	</div>
 	</doc>
 	
-	<doc class="org.earthsystemmodeling.cupid.nuopc.v7bs50.NUOPCModel.DataInitialize">
+	<doc class="org.earthsystemmodeling.cupid.nuopc.v7bs50.NUOPCModel.DataInitialize 
+	            org.earthsystemmodeling.cupid.nuopc.v7bs50.NUOPCMediator.DataInitialize">
 	<div class="content">
 		<div class="container">
 			<div class="main">
 				<h1>DataInitialize Specialization</h1>
 				<h2>(Optional, Implementor Provided)</h2>
 				<hr />
-
 				<p>
 				If present, this specialization will be called during phases IPDv00p4, IPDv01p5, IPDv02p5, IPDv03p7, and IPDv04p6.
-				The specialization method should initialize Field data in the Component's Export State.  Fields in the Export State
+				The specialization method should initialize Field data in the Export State.  Fields in the Export State
 				will be timestamped automatically by the calling phase, so there is no need to do it here.
 				</p>
 			</div>
 		</div>
 	</div>
+	</doc>
+	
+	<doc class="org.earthsystemmodeling.cupid.nuopc.v7bs50.NUOPCMediator">
+	<div class="content">
+		<div class="container">
+			<div class="main">
+				<h1>NUOPC Mediator</h1>
+				<hr />
+				<p>
+				A NUOPC Mediator component has a default <i>explicit</i> time dependency. Each time the Run method is called, the time stamp on the imported Fields must match the current time (on both the incoming and internal clock). Before returning, the Mediator time stamps the exported Fields with the <b>same current time</b>, before advancing the internal clock one timeStep forward.
+				</p>
+			</div>
+		</div>
+	</div>
+	</doc>
+	
+	<doc class="org.earthsystemmodeling.cupid.nuopc.v7bs50.NUOPCMediator.IPD.IPDv04p6">
+	<div class="content">
+		<div class="container">
+			<div class="main">
+				<h1>IPDv00p3, IPDv01p4, IPDv02p4, IPDv03p6, IPDv04p6 - Verify Connected / Set Clock</h1>
+				<h2>Provided by NUOPC</h2>
+				<hr />
+				<p>
+				If the Mediator's internal clock has not been set, set as a copy of the parent clock. 
+				Verify all import fields are connected and set error code if not.
+				</p>
+			</div>
+		</div>
+	</div>
+	</doc>
+	
+	<doc class="org.earthsystemmodeling.cupid.nuopc.v7bs50.NUOPCMediator.TimestampExport">
+	<div class="content">
+		<div class="container">
+			<div class="main">
+				<h1>TimestampExport Specialization</h1>
+				<h2>(Optional, may be phase-specific)</h2>
+				<hr />
+
+				<p>
+					A specialization method to timestamp the Fields in the Export State. This method is called
+					by the default run phase after the timestepping loop when the internal clock is at the stop time.
+					<br/><br/>
+					If not overridden, the there is no default implementation, so the timestamp of Fields in the 
+					Export State remains unchanged.
+				</p>
+			</div>
+		</div>
+	</div>	
+	</doc>
+
+
+	<doc class="org.earthsystemmodeling.cupid.nuopc.v7bs50.NUOPCMediator.RunPhase1">
+	<div class="content">
+		<div class="container">
+			<div class="main">
+				<h1>Run Phase 1</h1>
+				<h2>(Required, NUOPC Provided)</h2>
+				<hr />
+
+				<p>
+					<UL>
+						<LI>
+							Call the <code>SetRunClock</code> specialization method to check and set the internal Clock against the incoming Clock.
+							If a phase-specific specialization exists, call it.  Else if a phase-independent specialization exists,
+							call it. If neither specialization exists, the default method will check that internal Clock and incoming Clock agree
+							on current time and that the time step of the incoming Clock is a multiple of the internal Clock time step. 
+							Under these	conditions set the internal stop time to one time step interval of the incoming Clock. 
+							Otherwise exit with error, flagging an incompatibility.
+						</LI>
+						<LI>
+							Call the <code>CheckImport</code> specialization method to check Import Fields. If a phase-specific method
+							exists, call it. Otherwise if a phase-independent method exists, call it. If neither exist, the default
+							method verifies that all Import Fields are at the current time of the internal Clock.
+						</LI>
+						<LI>
+							Time stepping loop: starting at current time, running to stop time of the internal Clock.
+							<UL>
+								<LI>Timestamp the Fields in the Export State according to the
+									current time of the internal Clock.
+								</LI>
+								<LI>
+									Call the <code>Advance</code> specialization method, checking first for a phase-specific method and
+									then for a phase-independent method.
+								</LI>
+								<LI>Advance the current time of the internal Clock according to
+									the	time step of the internal Clock.
+								</LI>
+							</UL>
+						</LI>
+						<LI>
+							Call the <code>TimestampExport</code> specialization method to set the timestamp on Export Fields.
+							If a phase-specific specialization exists, call it.  Else if a phase-independent specialization exists,
+							call it.  If no specialization exists, then Export Field timestamps are left unchanged from the
+							timestamping that occurs during the timestepping loop (above).
+							
+						</LI>
+					</UL>
+					<!-- missing specialization: AdvanceClock -->
+				</p>
+			</div>
+		</div>
+	</div>
+	
+	
+
 	</doc>
 	
 	

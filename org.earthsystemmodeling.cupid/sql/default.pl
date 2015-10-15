@@ -30,6 +30,17 @@ esmf_setservices(_id, _parentid, _name) :-
   	call_(_cid, _id, 'NUOPC_CompDerive')
   ).
 
+/* same as above but with param names */  
+/*
+esmf_setservices(_id, _parentid, _name, _param_gcomp, _param_rc) :- 
+  subroutine(_id, _parentid, _name),
+  param(_pid1, _id, 1, _param_gcomp, 'type(esmf_gridcomp)', _, _),
+  param(_pid2, _id, 2, _param_rc, 'integer', false, true),
+  ( 	_name == 'SetServices', !;
+  	call_(_cid, _id, 'NUOPC_CompDerive')
+  ).
+*/
+
 /*
 
 CREATE VIEW esmf_setservices AS
@@ -49,14 +60,7 @@ WHERE s.name = 'SetServices'
 
 */
 
-/* redundant - same as above but with param names */  
-esmf_setservices(_id, _parentid, _name, _param_gcomp, _param_rc) :- 
-  subroutine(_id, _parentid, _name),
-  param(_pid1, _id, 1, _param_gcomp, 'type(esmf_gridcomp)', _, _),
-  param(_pid2, _id, 2, _param_rc, 'integer', false, true),
-  ( 	_name == 'SetServices', !;
-  	call_(_cid, _id, 'NUOPC_CompDerive')
-  ).
+
  
   
 /* esmf registered specialization */
@@ -76,8 +80,15 @@ esmf_regspec(_sid, _modid, _name, _genericComp, _specLabelExpr, _specLabelOrig, 
 * and does not do any semantic analysis.  So, if the entity is not used directly,
 * and there are no "only" elements, the it is assumed to be imported.
 */
-esmf_regspec(_sid, _modid, _name, _genericComp, _specLabelExpr, _specLabelOrig, _regid) :-
-  esmf_setservices(_ssid, _modid, _ssname),
+
+/*
+call NUOPC_CompSpecialize(gcomp, specLabel=mediator_label_SetRunClock, &
+      specPhaseLabel="MedPhase_fast_before", &
+      specRoutine=SetRunClock_atm_before, rc=rc)
+*/
+
+esmf_regspec(_sid, _modid, _name, _genericComp, _specLabelExpr, _specLabelOrig, _specPhaseLabel, _regid, _paramgcomp, _paramrc) :-
+  esmf_setservices(_ssid, _modid, _ssname, _paramgcomp, _paramrc),
   esmf_specmethod(_sid, _modid, _name, _, _),
   call_(_regid, _ssid, 'NUOPC_CompSpecialize'),
   (
@@ -89,14 +100,20 @@ esmf_regspec(_sid, _modid, _name, _genericComp, _specLabelExpr, _specLabelOrig, 
       uses(_uid, _modid, _genericComp),
       \+ usesEntity(_, _uid, _, _, 1))
   ),
-  callArgIdent(_, _regid, _, 'specRoutine', _, _name).
+  callArgIdent(_, _regid, _, 'specRoutine', _, _name), 
+  (
+      callArgConst(_, _regid, _, 'specPhaseLabel', _, _specPhaseLabel) ;
+      _specPhaseLabel = "-1"
+  ).
 
     
 /* esmf specialization subroutine signature */
+/*
 esmf_specmethod(_id, _parentid, _name, _param_gridcomp, _param_rc) :- 
   subroutine(_id, _parentid, _name),
   param(_pid1, _id, 1, _param_gridcomp, 'type(esmf_gridcomp)', _, _),
   param(_pid2, _id, 2, _param_rc, 'integer', false, true).
+*/
   
   
 /* esmf entry point subroutine signature */
