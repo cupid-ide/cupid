@@ -1379,14 +1379,14 @@ public class NUOPCModel extends NUOPCComponent {
   
   @Label(label = "Specializations")
   public static class RunSpecializations extends CodeConcept<NUOPCModel.Run, ASTNode> {
-    @Child(min = 0)
-    public NUOPCModel.SetRunClock setRunClock;
+    @Child(min = 0, max = (-1))
+    public List<NUOPCModel.SetRunClock> setRunClock;
     
-    @Child(min = 0)
-    public NUOPCModel.CheckImport checkImport;
+    @Child(min = 0, max = (-1))
+    public List<NUOPCModel.CheckImport> checkImport;
     
-    @Child
-    public NUOPCModel.ModelAdvance modelAdvance;
+    @Child(min = 1, max = (-1))
+    public List<NUOPCModel.ModelAdvance> modelAdvance;
     
     public RunSpecializations(final NUOPCModel.Run parent) {
       super(parent);
@@ -1401,14 +1401,14 @@ public class NUOPCModel extends NUOPCComponent {
       NUOPCModel.RunSpecializations _xblockexpression = null;
       {
         NUOPCModel.ModelAdvance _modelAdvance = new NUOPCModel.ModelAdvance(this);
-        SpecializationMethodCodeConcept<NUOPCModel.RunSpecializations> _reverse = _modelAdvance.reverse();
-        this.modelAdvance = ((NUOPCModel.ModelAdvance) _reverse);
+        List _reverseMultiple = _modelAdvance.reverseMultiple();
+        this.modelAdvance = _reverseMultiple;
         NUOPCModel.SetRunClock _setRunClock = new NUOPCModel.SetRunClock(this);
-        SpecializationMethodCodeConcept<NUOPCModel.RunSpecializations> _reverse_1 = _setRunClock.reverse();
-        this.setRunClock = ((NUOPCModel.SetRunClock) _reverse_1);
+        List _reverseMultiple_1 = _setRunClock.reverseMultiple();
+        this.setRunClock = _reverseMultiple_1;
         NUOPCModel.CheckImport _checkImport = new NUOPCModel.CheckImport(this);
-        SpecializationMethodCodeConcept<NUOPCModel.RunSpecializations> _reverse_2 = _checkImport.reverse();
-        this.checkImport = ((NUOPCModel.CheckImport) _reverse_2);
+        List _reverseMultiple_2 = _checkImport.reverseMultiple();
+        this.checkImport = _reverseMultiple_2;
         _xblockexpression = this;
       }
       return _xblockexpression;
@@ -1448,6 +1448,10 @@ public class NUOPCModel extends NUOPCComponent {
   @Label(label = "Advance")
   @MappingType("subroutine")
   public static class ModelAdvance extends SpecializationMethodCodeConcept<NUOPCModel.RunSpecializations> {
+    public ModelAdvance() {
+      this(null);
+    }
+    
     public ModelAdvance(final NUOPCModel.RunSpecializations parent) {
       super(parent, "NUOPC_Model", "label_Advance");
       this.subroutineName = "ModelAdvance";
@@ -1617,6 +1621,10 @@ public class NUOPCModel extends NUOPCComponent {
   @Label(label = "SetRunClock")
   @MappingType("subroutine")
   public static class SetRunClock extends SpecializationMethodCodeConcept<NUOPCModel.RunSpecializations> {
+    public SetRunClock() {
+      this(null);
+    }
+    
     public SetRunClock(final NUOPCModel.RunSpecializations parent) {
       super(parent, "NUOPC_Model", "label_SetRunClock");
       this.subroutineName = "SetRunClock";
@@ -1726,6 +1734,10 @@ public class NUOPCModel extends NUOPCComponent {
   @Label(label = "CheckImport")
   @MappingType("subroutine")
   public static class CheckImport extends SpecializationMethodCodeConcept<NUOPCModel.RunSpecializations> {
+    public CheckImport() {
+      this(null);
+    }
+    
     public CheckImport(final NUOPCModel.RunSpecializations parent) {
       super(parent, "NUOPC_Model", "label_CheckImport");
       this.subroutineName = "CheckImport";

@@ -1007,14 +1007,14 @@ end subroutine
 	@Label(label="Specializations")
 	public static class RunSpecializations extends CodeConcept<Run, ASTNode> {
 
-		@Child(min=0)
-		public SetRunClock setRunClock
+		@Child(min=0, max=-1)
+		public List<SetRunClock> setRunClock
 
-		@Child(min=0)
-		public CheckImport checkImport
+		@Child(min=0, max=-1)
+		public List<CheckImport> checkImport
 
-		@Child
-		public ModelAdvance modelAdvance
+		@Child(min=1, max=-1)
+		public List<ModelAdvance> modelAdvance
 
 		new(Run parent) {
 			super(parent)
@@ -1025,9 +1025,9 @@ end subroutine
 		}
 
 		def reverseChildren() {
-			modelAdvance = new ModelAdvance(this).reverse as ModelAdvance
-			setRunClock = new SetRunClock(this).reverse as SetRunClock
-			checkImport = new CheckImport(this).reverse as CheckImport
+			modelAdvance = new ModelAdvance(this).reverseMultiple
+			setRunClock = new SetRunClock(this).reverseMultiple
+			checkImport = new CheckImport(this).reverseMultiple
 			this
 		}
 
@@ -1062,6 +1062,8 @@ end subroutine
 	@MappingType("subroutine")
 	public static class ModelAdvance extends SpecializationMethodCodeConcept<RunSpecializations> {
 
+		new() {this(null) }
+		
 		new(RunSpecializations parent) {
 			super(parent, "NUOPC_Model", "label_Advance")
 
@@ -1139,6 +1141,8 @@ end subroutine
 	@MappingType("subroutine")
 	public static class SetRunClock extends SpecializationMethodCodeConcept<RunSpecializations> {
 
+		new() {this(null) }
+		
 		new(RunSpecializations parent) {
 			super(parent, "NUOPC_Model", "label_SetRunClock")
 
@@ -1197,6 +1201,8 @@ end subroutine
 	@MappingType("subroutine")
 	public static class CheckImport extends SpecializationMethodCodeConcept<RunSpecializations> {
 
+		new() {this(null) }
+		
 		new(RunSpecializations parent) {
 			super(parent, "NUOPC_Model", "label_CheckImport")
 
