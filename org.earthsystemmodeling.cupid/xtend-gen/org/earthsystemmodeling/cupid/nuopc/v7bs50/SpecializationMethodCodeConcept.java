@@ -36,6 +36,7 @@ public abstract class SpecializationMethodCodeConcept<P extends CodeConcept<?, ?
   
   public String specLabel = "label_SpecializationLabel";
   
+  @Label(label = "Phase Label")
   @Prop
   public String specPhaseLabel = "EMPTY";
   

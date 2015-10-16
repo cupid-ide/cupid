@@ -29,6 +29,7 @@ public abstract class SpecializationMethodCodeConcept<P extends CodeConcept<?, ?
 
 	var public String specLabel = "label_SpecializationLabel"  //subclasses should default
 	
+	@Label(label="Phase Label")
 	@Prop
 	var public String specPhaseLabel = "EMPTY"
 

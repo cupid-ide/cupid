@@ -119,14 +119,17 @@ class NUOPCViewLabelProvider2 extends StyledCellLabelProvider { //implements ITa
 					} catch (IllegalArgumentException | IllegalAccessException e) {
 						//ignore
 					}
-					Label labAnn = field.getAnnotation(Label.class);
-					if (labAnn != null) {
-						buf.append("<b>" + labAnn.label() + ": </b>");
+					if (propVal != null) {
+						buf.append("<div class=\"content\"><div class=\"main\">");
+						Label labAnn = field.getAnnotation(Label.class);
+						if (labAnn != null) {
+							buf.append("<b>" + labAnn.label() + ": </b>");
+						}
+						else {
+							buf.append("<b>" + field.getName() + ": </b>");
+						}
+						buf.append(propVal + "</div></div>");
 					}
-					else {
-						buf.append("<b>" + field.getName() + ": </b>");
-					}
-					buf.append(propVal + "<br/><br/>");
 				}
 			}
 		}
