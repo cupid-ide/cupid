@@ -146,7 +146,7 @@ public class CodeDBVisitor extends ASTVisitor {
 	protected void addTokenRef(long id, Token token, String type) {
 		PreparedStatement addTokenRefStmt = stmtCache.get("__add_token_ref__");
 		if (addTokenRefStmt == null) {
-			String insertSQL = "INSERT INTO tokenRef (id, filename, offset, length, type) VALUES (?,?,?,?,?);";
+			String insertSQL = "INSERT INTO tokenRef (id, filename, _offset, length, type) VALUES (?,?,?,?,?);";
 			try {
 				addTokenRefStmt = conn.prepareStatement(insertSQL);
 			} catch (SQLException e) {

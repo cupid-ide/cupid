@@ -20,6 +20,7 @@ import org.earthsystemmodeling.cupid.nuopc.CodeGenerationException
 import org.earthsystemmodeling.cupid.annotation.MappingType
 import java.util.List
 import org.earthsystemmodeling.cupid.annotation.Prop
+import java.sql.PreparedStatement
 
 public abstract class SpecializationMethodCodeConcept<P extends CodeConcept<?, ?>> extends CodeConcept<P, ASTSubroutineSubprogramNode> {
 
@@ -43,35 +44,51 @@ public abstract class SpecializationMethodCodeConcept<P extends CodeConcept<?, ?
 	var String labelComponent
 	var String labelName
 	//var SetServicesCodeConcept<?> setServices
+	
+	//PreparedStatement
+	static PreparedStatement stmtRegspec = null	
 
 	new(P parent, String labelComponent, String labelName) {
 		super(parent)
 		this.labelComponent = labelComponent
 		this.labelName = labelName
+		
+		if (stmtRegspec == null) {
+			stmtRegspec = _codeDB.prepareStatement('''
+								SELECT * FROM esmf_regspec 
+								WHERE mod_id=? AND genericUse=? AND specLabelOrig=?''')
+		}
 	}
 
 	override SpecializationMethodCodeConcept<P> reverse() {
-		var rs = '''esmf_regspec(_sid, «parentID», _name, '«labelComponent»', _specLabelExpr, '«labelName»', _specPhaseLabel, _regid, _paramgcomp, _paramrc).'''.
-			execQuery
+		//var rs = '''esmf_regspec(_sid, «parentID», _name, '«labelComponent»', _specLabelExpr, '«labelName»', _specPhaseLabel, _regid, _paramgcomp, _paramrc).'''.
+		//	execQuery
+		
+		stmtRegspec.setLong(1, parentID)
+		stmtRegspec.setString(2, labelComponent)
+		stmtRegspec.setString(3, labelName)
+		
+		var rs = stmtRegspec.executeQuery
+		
 		if (rs.next) {
-			_id = rs.getLong("_sid")
-			subroutineName = rs.getString("_name")
-			specLabel = rs.getString("_specLabelExpr")
-			specPhaseLabel = rs.getString("_specPhaseLabel")
-			registration = newBasicCodeConcept(this, rs.getLong("_regid"))
-			paramGridComp = rs.getString("_paramgcomp")
-			paramRC = rs.getString("_paramrc")
+			//_id = rs.getLong("_sid")
+			//subroutineName = rs.getString("_name")
+			//specLabel = rs.getString("_specLabelExpr")
+			//specPhaseLabel = rs.getString("_specPhaseLabel")
+			//registration = newBasicCodeConcept(this, rs.getLong("_regid"))
+			//paramGridComp = rs.getString("_paramgcomp")
+			//paramRC = rs.getString("_paramrc")
+			
+			_id = rs.getLong("id")
+			subroutineName = rs.getString("name")
+			specLabel = rs.getString("specLabelExpr")
+			specPhaseLabel = rs.getString("specPhaseLabel")
+			paramGridComp = rs.getString("param_gcomp")
+			paramRC = rs.getString("param_rc")
+			registration = newBasicCodeConcept(this, rs.getLong("reg_id"))
 				
 			rs.close
-			/*
-			rs = '''esmf_specmethod(«_id», «parentID», _, _param_gridcomp, _param_rc).'''.execQuery
-			if (rs.next) {
-				paramGridComp = rs.getString("_param_gridcomp")
-				paramRC = rs.getString("_param_rc")
-				rs.close
-			}
-			*/
-
+			
 			reverseChildren
 		} else {
 			rs.close
@@ -97,17 +114,29 @@ public abstract class SpecializationMethodCodeConcept<P extends CodeConcept<?, ?
 		rs.close
 		*/
 
-		var rs = '''esmf_regspec(_sid, «parentID», _name, '«labelComponent»', _specLabelExpr, '«labelName»', _specPhaseLabel, _regid, _paramgcomp, _paramrc).'''.
-			execQuery
-
+		//var rs = '''esmf_regspec(_sid, «parentID», _name, '«labelComponent»', _specLabelExpr, '«labelName»', _specPhaseLabel, _regid, _paramgcomp, _paramrc).'''.
+		//	execQuery
+		
+		
+		//var query = _codeDB.prepareStatement('''
+		//						SELECT * FROM esmf_regspec 
+		//						WHERE mod_id=? AND genericUse=? AND specLabelOrig=?''')	
+		stmtRegspec.setLong(1, parentID)
+		stmtRegspec.setString(2, labelComponent)
+		stmtRegspec.setString(3, labelName)
+		
+		var rs = stmtRegspec.executeQuery
+		
 		while (rs.next) {
 			var smcc = this.class.newInstance
-			smcc._parent = _parent
-			smcc._id = rs.getLong("_sid")
-			smcc.subroutineName = rs.getString("_name")
-			smcc.specLabel = rs.getString("_specLabelExpr")
-			smcc.specPhaseLabel = rs.getString("_specPhaseLabel")
-			smcc.registration = newBasicCodeConcept(this, rs.getLong("_regid"))
+			smcc.init(_parent)
+			smcc._id = rs.getLong("id")
+			smcc.subroutineName = rs.getString("name")
+			smcc.specLabel = rs.getString("specLabelExpr")
+			smcc.specPhaseLabel = rs.getString("specPhaseLabel")
+			smcc.paramGridComp = rs.getString("param_gcomp")
+			smcc.paramRC = rs.getString("param_rc")
+			smcc.registration = newBasicCodeConcept(this, rs.getLong("reg_id"))
 			
 			smcc = smcc.reverseChildren
 			if (smcc != null) {

@@ -1009,17 +1009,17 @@ end subroutine
 	@Label(label="Specializations")
 	public static class RunSpecializations extends CodeConcept<Run, ASTNode> {
 
-		@Child(min=0)
-		public SetRunClock setRunClock
+		@Child(min=0, max=-1)
+		public List<SetRunClock> setRunClock
 
 		@Child(min=0, max=-1)
-		public List<CheckImport> checkImports
+		public List<CheckImport> checkImport
 
-		@Child
-		public MediatorAdvance mediatorAdvance
+		@Child(min=1, max=-1)
+		public List<MediatorAdvance> mediatorAdvance
 		
-		@Child(min=0)
-		public TimestampExport timestampExport
+		@Child(min=0, max=-1)
+		public List<TimestampExport> timestampExport
 
 		new(Run parent) {
 			super(parent)
@@ -1030,11 +1030,10 @@ end subroutine
 		}
 
 		def reverseChildren() {
-			mediatorAdvance = new MediatorAdvance(this).reverse as MediatorAdvance
-			setRunClock = new SetRunClock(this).reverse as SetRunClock
-			//checkImport = new CheckImport(this).reverse as CheckImport
-			checkImports = new CheckImport(this).reverseMultiple
-			timestampExport = new TimestampExport(this).reverse as TimestampExport
+			mediatorAdvance = new MediatorAdvance(this).reverseMultiple
+			setRunClock = new SetRunClock(this).reverseMultiple
+			checkImport = new CheckImport(this).reverseMultiple
+			timestampExport = new TimestampExport(this).reverseMultiple
 			this
 		}
 
@@ -1069,6 +1068,8 @@ end subroutine
 	@MappingType("subroutine")
 	public static class MediatorAdvance extends SpecializationMethodCodeConcept<RunSpecializations> {
 
+		new() {	this(null) }
+				
 		new(RunSpecializations parent) {
 			super(parent, "NUOPC_Mediator", "label_Advance")
 
@@ -1145,7 +1146,9 @@ end subroutine
 	@Label(label="SetRunClock")
 	@MappingType("subroutine")
 	public static class SetRunClock extends SpecializationMethodCodeConcept<RunSpecializations> {
-
+	
+		new() {	this(null) }
+		
 		new(RunSpecializations parent) {
 			super(parent, "NUOPC_Mediator", "label_SetRunClock")
 
@@ -1206,9 +1209,7 @@ end subroutine
 	
 		//default constructor required by SpecializationMethodCodeConcept
 		//to generate instances in reverseMultiple
-		new() {
-			this(null)
-		}
+		new() {	this(null) }
 
 		new(RunSpecializations parent) {
 			super(parent, "NUOPC_Mediator", "label_CheckImport")
@@ -1253,6 +1254,8 @@ end subroutine
 	@MappingType("subroutine")
 	public static class TimestampExport extends SpecializationMethodCodeConcept<RunSpecializations> {
 
+		new() {	this(null) }
+		
 		new(RunSpecializations parent) {
 			super(parent, "NUOPC_Mediator", "label_TimestampExport")
 

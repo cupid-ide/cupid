@@ -1,11 +1,15 @@
 /* general */
+/*
 callArgIdent(_id, _pid, _idx, _keyword, _identType, _identExpr) :-
   callArg(_id, _pid, _idx, _keyword, _arg_expr_id),
   ident(_arg_expr_id, _, _identType, _identExpr).
+*/
 
+/*
 callArgConst(_id, _pid, _idx, _keyword, _constType, _constExpr) :-
   callArg(_id, _pid, _idx, _keyword, _arg_expr_id),
   const(_arg_expr_id, _, _constType, _constExpr).
+*/  
   
 callArgWithType(_id, _pid, _idx, _keyword, _type, _expr) :-
   callArg(_id, _pid, _idx, _keyword, _arg_expr_id),

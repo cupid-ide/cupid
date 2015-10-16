@@ -29,12 +29,20 @@ public abstract class CodeConcept<P extends CodeConcept<?, ?>, A extends IASTNod
   private List<Field> childFields;
   
   public CodeConcept(final P parent) {
-    this._parent = parent;
-    CodeDBIndex __codeDB = null;
-    if (parent!=null) {
-      __codeDB=parent._codeDB;
+    this.init(parent);
+  }
+  
+  public CodeDBIndex init(final P parent) {
+    CodeDBIndex _xblockexpression = null;
+    {
+      this._parent = parent;
+      CodeDBIndex __codeDB = null;
+      if (parent!=null) {
+        __codeDB=parent._codeDB;
+      }
+      _xblockexpression = this._codeDB = __codeDB;
     }
-    this._codeDB = __codeDB;
+    return _xblockexpression;
   }
   
   public long parentID() {

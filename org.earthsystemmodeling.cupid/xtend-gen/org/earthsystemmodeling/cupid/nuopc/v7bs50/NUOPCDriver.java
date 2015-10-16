@@ -844,6 +844,40 @@ public class NUOPCDriver extends NUOPCComponent {
       }
       return _xblockexpression;
     }
+    
+    @Override
+    public boolean validate() {
+      boolean _or = false;
+      boolean _or_1 = false;
+      boolean _or_2 = false;
+      boolean _or_3 = false;
+      boolean _validate = this.ipdv00.validate();
+      if (_validate) {
+        _or_3 = true;
+      } else {
+        boolean _validate_1 = this.ipdv01.validate();
+        _or_3 = _validate_1;
+      }
+      if (_or_3) {
+        _or_2 = true;
+      } else {
+        boolean _validate_2 = this.ipdv02.validate();
+        _or_2 = _validate_2;
+      }
+      if (_or_2) {
+        _or_1 = true;
+      } else {
+        boolean _validate_3 = this.ipdv03.validate();
+        _or_1 = _validate_3;
+      }
+      if (_or_1) {
+        _or = true;
+      } else {
+        boolean _validate_4 = this.ipdv04.validate();
+        _or = _validate_4;
+      }
+      return _or;
+    }
   }
   
   @Label(label = "Phases")
@@ -1137,7 +1171,7 @@ public class NUOPCDriver extends NUOPCComponent {
         _builder_1.append("file=__FILE__)) &");
         _builder_1.newLine();
         _builder_1.append("  ");
-        _builder_1.append("call ESMF_Finalize(endflag=ESMF_END_ABORT)");
+        _builder_1.append("return");
         _builder_1.newLine();
         _builder_1.newLine();
         _builder_1.append("call ESMF_TimeSet(startTime, yy=");
@@ -1170,7 +1204,7 @@ public class NUOPCDriver extends NUOPCComponent {
         _builder_1.append("file=__FILE__)) &");
         _builder_1.newLine();
         _builder_1.append("  ");
-        _builder_1.append("call ESMF_Finalize(endflag=ESMF_END_ABORT)");
+        _builder_1.append("return");
         _builder_1.newLine();
         _builder_1.newLine();
         _builder_1.append("call ESMF_TimeSet(stopTime, yy=");
@@ -1203,7 +1237,7 @@ public class NUOPCDriver extends NUOPCComponent {
         _builder_1.append("file=__FILE__)) &");
         _builder_1.newLine();
         _builder_1.append("  ");
-        _builder_1.append("call ESMF_Finalize(endflag=ESMF_END_ABORT)");
+        _builder_1.append("return");
         _builder_1.newLine();
         _builder_1.newLine();
         _builder_1.append("internalClock = ESMF_ClockCreate(name=\"");
@@ -1225,7 +1259,7 @@ public class NUOPCDriver extends NUOPCComponent {
         _builder_1.append("file=__FILE__)) &");
         _builder_1.newLine();
         _builder_1.append("  ");
-        _builder_1.append("call ESMF_Finalize(endflag=ESMF_END_ABORT)");
+        _builder_1.append("return");
         _builder_1.newLine();
         _builder_1.append("  ");
         _builder_1.newLine();
@@ -2000,6 +2034,156 @@ public class NUOPCDriver extends NUOPCComponent {
     }
   }
   
+  @Label(label = "Phases")
+  public static class FinalizePhases extends CodeConcept<NUOPCDriver.Finalize, ASTNode> {
+    @Child
+    public NUOPCDriver.FinalizePhase1 p1;
+    
+    public FinalizePhases(final NUOPCDriver.Finalize parent) {
+      super(parent);
+    }
+    
+    @Override
+    public NUOPCDriver.FinalizePhases reverse() {
+      NUOPCDriver.FinalizePhases _xblockexpression = null;
+      {
+        NUOPCDriver.FinalizePhase1 _finalizePhase1 = new NUOPCDriver.FinalizePhase1(this);
+        CodeConcept<NUOPCDriver.FinalizePhases, ASTNode> _reverse = _finalizePhase1.reverse();
+        this.p1 = ((NUOPCDriver.FinalizePhase1) _reverse);
+        _xblockexpression = this;
+      }
+      return _xblockexpression;
+    }
+  }
+  
+  @Label(label = "Specializations")
+  public static class FinalizeSpecializations extends CodeConcept<NUOPCDriver.Finalize, ASTNode> {
+    @Child(min = 0)
+    public NUOPCDriver.FinalizeDriver finalize;
+    
+    public FinalizeSpecializations(final NUOPCDriver.Finalize parent) {
+      super(parent);
+    }
+    
+    @Override
+    public CodeConcept<NUOPCDriver.Finalize, ASTNode> reverse() {
+      return this.reverseChildren();
+    }
+    
+    public NUOPCDriver.FinalizeSpecializations reverseChildren() {
+      NUOPCDriver.FinalizeSpecializations _xblockexpression = null;
+      {
+        NUOPCDriver.FinalizeDriver _finalizeDriver = new NUOPCDriver.FinalizeDriver(this);
+        SpecializationMethodCodeConcept<NUOPCDriver.FinalizeSpecializations> _reverse = _finalizeDriver.reverse();
+        this.finalize = ((NUOPCDriver.FinalizeDriver) _reverse);
+        _xblockexpression = this;
+      }
+      return _xblockexpression;
+    }
+  }
+  
+  @Label(label = "Finalize Phase 1")
+  @MappingType("subroutine-inherited")
+  public static class FinalizePhase1 extends CodeConcept<NUOPCDriver.FinalizePhases, ASTNode> {
+    public FinalizePhase1(final NUOPCDriver.FinalizePhases parent) {
+      super(parent);
+    }
+  }
+  
+  @Label(label = "Finalize")
+  public static class Finalize extends CodeConcept<NUOPCDriver, ASTNode> {
+    @Child
+    public NUOPCDriver.FinalizePhases finalPhases;
+    
+    @Child
+    public NUOPCDriver.FinalizeSpecializations finalSpecs;
+    
+    public Finalize(final NUOPCDriver parent) {
+      super(parent);
+    }
+    
+    @Override
+    public NUOPCDriver.Finalize reverse() {
+      return this.reverseChildren();
+    }
+    
+    public NUOPCDriver.Finalize reverseChildren() {
+      NUOPCDriver.Finalize _xblockexpression = null;
+      {
+        NUOPCDriver.FinalizePhases _finalizePhases = new NUOPCDriver.FinalizePhases(this);
+        NUOPCDriver.FinalizePhases _reverse = _finalizePhases.reverse();
+        this.finalPhases = ((NUOPCDriver.FinalizePhases) _reverse);
+        NUOPCDriver.FinalizeSpecializations _finalizeSpecializations = new NUOPCDriver.FinalizeSpecializations(this);
+        CodeConcept<NUOPCDriver.Finalize, ASTNode> _reverse_1 = _finalizeSpecializations.reverse();
+        this.finalSpecs = ((NUOPCDriver.FinalizeSpecializations) _reverse_1);
+        _xblockexpression = this;
+      }
+      return _xblockexpression;
+    }
+  }
+  
+  @Label(label = "FinalizeDriver")
+  @MappingType("subroutine")
+  public static class FinalizeDriver extends SpecializationMethodCodeConcept<NUOPCDriver.FinalizeSpecializations> {
+    public FinalizeDriver(final NUOPCDriver.FinalizeSpecializations parent) {
+      super(parent, "NUOPC_Driver", "label_Finalize");
+      this.subroutineName = "FinalizeDriver";
+      this.specLabel = "driver_label_Finalize";
+      this.paramGridComp = "driver";
+      this.paramRC = "rc";
+    }
+    
+    @Override
+    public String subroutineTemplate() {
+      StringConcatenation _builder = new StringConcatenation();
+      _builder.newLine();
+      _builder.append("subroutine ");
+      _builder.append(this.subroutineName, "");
+      _builder.append("(");
+      _builder.append(this.paramGridComp, "");
+      _builder.append(", ");
+      _builder.append(this.paramRC, "");
+      _builder.append(")");
+      _builder.newLineIfNotEmpty();
+      _builder.append("    ");
+      _builder.append("type(ESMF_GridComp)  :: ");
+      _builder.append(this.paramGridComp, "    ");
+      _builder.newLineIfNotEmpty();
+      _builder.append("    ");
+      _builder.append("integer, intent(out) :: ");
+      _builder.append(this.paramRC, "    ");
+      _builder.newLineIfNotEmpty();
+      _builder.newLine();
+      _builder.append("    ");
+      _builder.append("rc = ESMF_SUCCESS");
+      _builder.newLine();
+      _builder.append("    ");
+      _builder.newLine();
+      _builder.append("    ");
+      _builder.append("! finalize driver");
+      _builder.newLine();
+      _builder.newLine();
+      _builder.append("end subroutine");
+      _builder.newLine();
+      return _builder.toString();
+    }
+    
+    @Override
+    public CodeConcept<?, ASTModuleNode> module() {
+      return this._parent._parent._parent;
+    }
+    
+    @Override
+    public SetServicesCodeConcept<?> setServices() {
+      return this._parent._parent._parent.setServices;
+    }
+    
+    @Override
+    public NUOPCComponent.GenericImport genericUse() {
+      return this._parent._parent._parent.importNUOPCGeneric;
+    }
+  }
+  
   public String driverName;
   
   public String filename;
@@ -2014,6 +2198,9 @@ public class NUOPCDriver extends NUOPCComponent {
   
   @Child
   public NUOPCDriver.Run run;
+  
+  @Child
+  public NUOPCDriver.Finalize finalize;
   
   public NUOPCDriver(final CodeDBIndex codeDB) {
     super(null);
@@ -2107,6 +2294,9 @@ public class NUOPCDriver extends NUOPCComponent {
       NUOPCDriver.Run _run = new NUOPCDriver.Run(this);
       NUOPCDriver.Run _reverse_2 = _run.reverse();
       this.run = _reverse_2;
+      NUOPCDriver.Finalize _finalize = new NUOPCDriver.Finalize(this);
+      NUOPCDriver.Finalize _reverse_3 = _finalize.reverse();
+      this.finalize = _reverse_3;
       _xblockexpression = this;
     }
     return _xblockexpression;

@@ -118,6 +118,7 @@ public class CodeDBIndex {
 			
 			//String connString = "jdbc:h2:mem:";
 			String connString = "jdbc:h2:" + dbloc + ";LOG=0;CACHE_SIZE=65536;LOCK_MODE=0;UNDO_LOG=0";
+			CupidActivator.log("Code DB connection string: " + connString);
 			conn = DriverManager.getConnection(connString);
 		//} catch (SQLException e3) {
 		//	//TODO: deal with this
@@ -208,12 +209,21 @@ public class CodeDBIndex {
 		return findASTNode(id.longValue());
 	}
 	
+	public PreparedStatement prepareStatement(String query) {
+		try {
+			return conn.prepareStatement(query);
+		} catch (SQLException e) {
+			CupidActivator.log("Error preparing SQL statement: " + query);
+			return null;
+		}
+	}
+	
 	@SuppressWarnings("unchecked")
 	public <N extends IASTNode> N findASTNode(long id) {
 		
 		if (findTokenRefStmt == null) {
 			try {
-				findTokenRefStmt = conn.prepareStatement("SELECT filename, offset, length, type FROM tokenRef WHERE id=?;");
+				findTokenRefStmt = conn.prepareStatement("SELECT filename, _offset, length, type FROM tokenRef WHERE id=?;");
 			} catch (SQLException e) {
 				CupidActivator.log("Error preparing SQL statement for finding token refs", e);
 				return null;
@@ -225,7 +235,7 @@ public class CodeDBIndex {
 			ResultSet rs = findTokenRefStmt.executeQuery();
 			if (rs.next()) {
 				String filename = rs.getString("filename");
-				int offset = rs.getInt("offset");
+				int offset = rs.getInt("_offset");
 				int length = rs.getInt("length");
 				String type = rs.getString("type");
 				

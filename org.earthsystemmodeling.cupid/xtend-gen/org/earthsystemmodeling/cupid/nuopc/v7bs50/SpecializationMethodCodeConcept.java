@@ -1,11 +1,15 @@
 package org.earthsystemmodeling.cupid.nuopc.v7bs50;
 
 import com.google.common.base.Objects;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.util.ArrayList;
+import java.util.List;
 import org.earthsystemmodeling.cupid.annotation.Child;
 import org.earthsystemmodeling.cupid.annotation.Label;
 import org.earthsystemmodeling.cupid.annotation.MappingType;
 import org.earthsystemmodeling.cupid.annotation.Name;
+import org.earthsystemmodeling.cupid.annotation.Prop;
 import org.earthsystemmodeling.cupid.nuopc.BasicCodeConcept;
 import org.earthsystemmodeling.cupid.nuopc.CodeConcept;
 import org.earthsystemmodeling.cupid.nuopc.CodeGenerationException;
@@ -22,6 +26,7 @@ import org.eclipse.photran.internal.core.parser.IASTListNode;
 import org.eclipse.photran.internal.core.parser.IBodyConstruct;
 import org.eclipse.photran.internal.core.parser.IModuleBodyConstruct;
 import org.eclipse.xtend2.lib.StringConcatenation;
+import org.eclipse.xtext.xbase.lib.CollectionLiterals;
 import org.eclipse.xtext.xbase.lib.Exceptions;
 
 @SuppressWarnings("all")
@@ -30,6 +35,9 @@ public abstract class SpecializationMethodCodeConcept<P extends CodeConcept<?, ?
   public String subroutineName = "SpecializationMethod";
   
   public String specLabel = "label_SpecializationLabel";
+  
+  @Prop
+  public String specPhaseLabel = "EMPTY";
   
   @Label(label = "Registration")
   @MappingType("call")
@@ -44,10 +52,21 @@ public abstract class SpecializationMethodCodeConcept<P extends CodeConcept<?, ?
   
   private String labelName;
   
+  private static PreparedStatement stmtRegspec = null;
+  
   public SpecializationMethodCodeConcept(final P parent, final String labelComponent, final String labelName) {
     super(parent);
     this.labelComponent = labelComponent;
     this.labelName = labelName;
+    boolean _equals = Objects.equal(SpecializationMethodCodeConcept.stmtRegspec, null);
+    if (_equals) {
+      StringConcatenation _builder = new StringConcatenation();
+      _builder.append("SELECT * FROM esmf_regspec ");
+      _builder.newLine();
+      _builder.append("WHERE mod_id=? AND genericUse=? AND specLabelOrig=?");
+      PreparedStatement _prepareStatement = this._codeDB.prepareStatement(_builder.toString());
+      SpecializationMethodCodeConcept.stmtRegspec = _prepareStatement;
+    }
   }
   
   @Override
@@ -55,48 +74,32 @@ public abstract class SpecializationMethodCodeConcept<P extends CodeConcept<?, ?
     try {
       SpecializationMethodCodeConcept<P> _xblockexpression = null;
       {
-        StringConcatenation _builder = new StringConcatenation();
-        _builder.append("esmf_regspec(_sid, ");
         long _parentID = this.parentID();
-        _builder.append(_parentID, "");
-        _builder.append(", _name, \'");
-        _builder.append(this.labelComponent, "");
-        _builder.append("\', _specLabelExpr, \'");
-        _builder.append(this.labelName, "");
-        _builder.append("\', _regid).");
-        ResultSet rs = this.execQuery(_builder);
+        SpecializationMethodCodeConcept.stmtRegspec.setLong(1, _parentID);
+        SpecializationMethodCodeConcept.stmtRegspec.setString(2, this.labelComponent);
+        SpecializationMethodCodeConcept.stmtRegspec.setString(3, this.labelName);
+        ResultSet rs = SpecializationMethodCodeConcept.stmtRegspec.executeQuery();
         SpecializationMethodCodeConcept<P> _xifexpression = null;
         boolean _next = rs.next();
         if (_next) {
           SpecializationMethodCodeConcept<P> _xblockexpression_1 = null;
           {
-            long _long = rs.getLong("_sid");
+            long _long = rs.getLong("id");
             this._id = _long;
-            String _string = rs.getString("_name");
+            String _string = rs.getString("name");
             this.subroutineName = _string;
-            String _string_1 = rs.getString("_specLabelExpr");
+            String _string_1 = rs.getString("specLabelExpr");
             this.specLabel = _string_1;
-            long _long_1 = rs.getLong("_regid");
+            String _string_2 = rs.getString("specPhaseLabel");
+            this.specPhaseLabel = _string_2;
+            String _string_3 = rs.getString("param_gcomp");
+            this.paramGridComp = _string_3;
+            String _string_4 = rs.getString("param_rc");
+            this.paramRC = _string_4;
+            long _long_1 = rs.getLong("reg_id");
             BasicCodeConcept _newBasicCodeConcept = BasicCodeConcept.newBasicCodeConcept(this, _long_1);
             this.registration = _newBasicCodeConcept;
             rs.close();
-            StringConcatenation _builder_1 = new StringConcatenation();
-            _builder_1.append("esmf_specmethod(");
-            _builder_1.append(this._id, "");
-            _builder_1.append(", ");
-            long _parentID_1 = this.parentID();
-            _builder_1.append(_parentID_1, "");
-            _builder_1.append(", _, _param_gridcomp, _param_rc).");
-            ResultSet _execQuery = this.execQuery(_builder_1);
-            rs = _execQuery;
-            boolean _next_1 = rs.next();
-            if (_next_1) {
-              String _string_2 = rs.getString("_param_gridcomp");
-              this.paramGridComp = _string_2;
-              String _string_3 = rs.getString("_param_rc");
-              this.paramRC = _string_3;
-              rs.close();
-            }
             _xblockexpression_1 = this.reverseChildren();
           }
           _xifexpression = _xblockexpression_1;
@@ -109,6 +112,54 @@ public abstract class SpecializationMethodCodeConcept<P extends CodeConcept<?, ?
           _xifexpression = ((SpecializationMethodCodeConcept<P>)_xblockexpression_2);
         }
         _xblockexpression = _xifexpression;
+      }
+      return _xblockexpression;
+    } catch (Throwable _e) {
+      throw Exceptions.sneakyThrow(_e);
+    }
+  }
+  
+  @Override
+  public List reverseMultiple() {
+    try {
+      ArrayList<SpecializationMethodCodeConcept> _xblockexpression = null;
+      {
+        ArrayList<SpecializationMethodCodeConcept> retList = CollectionLiterals.<SpecializationMethodCodeConcept>newArrayList();
+        long _parentID = this.parentID();
+        SpecializationMethodCodeConcept.stmtRegspec.setLong(1, _parentID);
+        SpecializationMethodCodeConcept.stmtRegspec.setString(2, this.labelComponent);
+        SpecializationMethodCodeConcept.stmtRegspec.setString(3, this.labelName);
+        ResultSet rs = SpecializationMethodCodeConcept.stmtRegspec.executeQuery();
+        while (rs.next()) {
+          {
+            Class<? extends SpecializationMethodCodeConcept> _class = this.getClass();
+            SpecializationMethodCodeConcept smcc = _class.newInstance();
+            smcc.init(this._parent);
+            long _long = rs.getLong("id");
+            smcc._id = _long;
+            String _string = rs.getString("name");
+            smcc.subroutineName = _string;
+            String _string_1 = rs.getString("specLabelExpr");
+            smcc.specLabel = _string_1;
+            String _string_2 = rs.getString("specPhaseLabel");
+            smcc.specPhaseLabel = _string_2;
+            String _string_3 = rs.getString("param_gcomp");
+            smcc.paramGridComp = _string_3;
+            String _string_4 = rs.getString("param_rc");
+            smcc.paramRC = _string_4;
+            long _long_1 = rs.getLong("reg_id");
+            BasicCodeConcept _newBasicCodeConcept = BasicCodeConcept.newBasicCodeConcept(this, _long_1);
+            smcc.registration = _newBasicCodeConcept;
+            SpecializationMethodCodeConcept _reverseChildren = smcc.reverseChildren();
+            smcc = _reverseChildren;
+            boolean _notEquals = (!Objects.equal(smcc, null));
+            if (_notEquals) {
+              retList.add(smcc);
+            }
+          }
+        }
+        rs.close();
+        _xblockexpression = retList;
       }
       return _xblockexpression;
     } catch (Throwable _e) {

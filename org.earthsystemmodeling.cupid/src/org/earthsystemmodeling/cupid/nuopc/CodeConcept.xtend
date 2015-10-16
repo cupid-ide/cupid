@@ -20,6 +20,10 @@ public abstract class CodeConcept<P extends CodeConcept<?,?>, A extends IASTNode
 	var private List<Field> childFields;
 	
 	new(P parent) {
+		init(parent)
+	}
+	
+	def init(P parent) {
 		_parent = parent
 		_codeDB = parent?._codeDB
 	}

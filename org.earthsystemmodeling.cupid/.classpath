@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <classpath>
+	<classpathentry exported="true" kind="lib" path="lib/h2-1.4.190.jar"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/JavaSE-1.7"/>
 	<classpathentry kind="con" path="org.eclipse.pde.core.requiredPlugins"/>
 	<classpathentry kind="src" path="src/"/>
@@ -25,7 +26,6 @@
 	<classpathentry exported="true" kind="lib" path="lib/stax-ri-1.2.0/stax-1.2.0.jar"/>
 	<classpathentry exported="true" kind="lib" path="lib/jdom/jdom-1.1.3.jar"/>
 	<classpathentry exported="true" kind="lib" path="lib/hgdbprolog-1.2.jar" sourcepath="/tuprolog/src/java"/>
-	<classpathentry exported="true" kind="lib" path="lib/h2-1.3.148.jar"/>
 	<classpathentry exported="true" kind="lib" path="lib/commons-io-2.0.jar"/>
 	<classpathentry kind="output" path="target/classes"/>
 </classpath>

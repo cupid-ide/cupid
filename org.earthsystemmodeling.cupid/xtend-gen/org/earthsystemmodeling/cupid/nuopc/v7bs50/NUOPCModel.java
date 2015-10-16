@@ -1,5 +1,6 @@
 package org.earthsystemmodeling.cupid.nuopc.v7bs50;
 
+import com.google.common.base.Objects;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -695,6 +696,47 @@ public class NUOPCModel extends NUOPCComponent {
       }
       return _xblockexpression;
     }
+    
+    @Override
+    public boolean validate() {
+      boolean _and = false;
+      boolean _and_1 = false;
+      boolean _notEquals = (!Objects.equal(this.ipdv03p1, null));
+      if (!_notEquals) {
+        _and_1 = false;
+      } else {
+        boolean _validate = this.ipdv03p1.validate();
+        _and_1 = _validate;
+      }
+      if (!_and_1) {
+        _and = false;
+      } else {
+        boolean _or = false;
+        boolean _and_2 = false;
+        boolean _notEquals_1 = (!Objects.equal(this.ipdv03p3, null));
+        if (!_notEquals_1) {
+          _and_2 = false;
+        } else {
+          boolean _validate_1 = this.ipdv03p3.validate();
+          _and_2 = _validate_1;
+        }
+        if (_and_2) {
+          _or = true;
+        } else {
+          boolean _and_3 = false;
+          boolean _notEquals_2 = (!Objects.equal(this.ipdv03p5, null));
+          if (!_notEquals_2) {
+            _and_3 = false;
+          } else {
+            boolean _validate_2 = this.ipdv03p5.validate();
+            _and_3 = _validate_2;
+          }
+          _or = _and_3;
+        }
+        _and = _or;
+      }
+      return _and;
+    }
   }
   
   @Label(label = "Initialize Phase Definition (v04)")
@@ -753,6 +795,47 @@ public class NUOPCModel extends NUOPCComponent {
       }
       return _xblockexpression;
     }
+    
+    @Override
+    public boolean validate() {
+      boolean _and = false;
+      boolean _and_1 = false;
+      boolean _notEquals = (!Objects.equal(this.ipdv04p1, null));
+      if (!_notEquals) {
+        _and_1 = false;
+      } else {
+        boolean _validate = this.ipdv04p1.validate();
+        _and_1 = _validate;
+      }
+      if (!_and_1) {
+        _and = false;
+      } else {
+        boolean _or = false;
+        boolean _and_2 = false;
+        boolean _notEquals_1 = (!Objects.equal(this.ipdv04p3, null));
+        if (!_notEquals_1) {
+          _and_2 = false;
+        } else {
+          boolean _validate_1 = this.ipdv04p3.validate();
+          _and_2 = _validate_1;
+        }
+        if (_and_2) {
+          _or = true;
+        } else {
+          boolean _and_3 = false;
+          boolean _notEquals_2 = (!Objects.equal(this.ipdv04p5, null));
+          if (!_notEquals_2) {
+            _and_3 = false;
+          } else {
+            boolean _validate_2 = this.ipdv04p5.validate();
+            _and_3 = _validate_2;
+          }
+          _or = _and_3;
+        }
+        _and = _or;
+      }
+      return _and;
+    }
   }
   
   @Label(label = "Phases")
@@ -798,6 +881,40 @@ public class NUOPCModel extends NUOPCComponent {
         _xblockexpression = this;
       }
       return _xblockexpression;
+    }
+    
+    @Override
+    public boolean validate() {
+      boolean _or = false;
+      boolean _or_1 = false;
+      boolean _or_2 = false;
+      boolean _or_3 = false;
+      boolean _validate = this.ipdv00.validate();
+      if (_validate) {
+        _or_3 = true;
+      } else {
+        boolean _validate_1 = this.ipdv01.validate();
+        _or_3 = _validate_1;
+      }
+      if (_or_3) {
+        _or_2 = true;
+      } else {
+        boolean _validate_2 = this.ipdv02.validate();
+        _or_2 = _validate_2;
+      }
+      if (_or_2) {
+        _or_1 = true;
+      } else {
+        boolean _validate_3 = this.ipdv03.validate();
+        _or_1 = _validate_3;
+      }
+      if (_or_1) {
+        _or = true;
+      } else {
+        boolean _validate_4 = this.ipdv04.validate();
+        _or = _validate_4;
+      }
+      return _or;
     }
   }
   
