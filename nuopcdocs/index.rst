@@ -14,14 +14,11 @@ Contents:
 
    overview
    idea
-   build
    cap
    generic
+   approach
    test
-   share
-     
-
-
+   
 Indices and tables
 ==================
 

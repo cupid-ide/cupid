@@ -1,5 +1,7 @@
-An Example NUOPC Model Cap
-==========================
+.. _atmexample:
+
+An Example 
+==========
 
 In this section we'll look at code for an example NUOPC Model cap.
 The example shows basic structure of a NUOPC Model cap for a fictitious 

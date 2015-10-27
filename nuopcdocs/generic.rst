@@ -38,8 +38,8 @@ implemented by the generic component.
     3.  In some cases, the generic component can be specialized by setting a
         particular parameter that affects the generic component's behavior.
 
-Initialization
---------------
+Initialization Sequence
+-----------------------
 
 The generic ``NUOPC_Model`` executes the following initialization
 sequence in the order shown.  There are multiple versions of the
@@ -130,7 +130,7 @@ state for the previously advertised field.
 .. _modify_decomp:
 
 Modify decomposition of accepted geom object
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^**
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 **IPDv03p4, IPDv04p4**
 
 *(Optional, User Provided)*
@@ -150,69 +150,177 @@ needs to be set based on the current processor count.
 
 Realize fields *accepting* a geom object
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+**IPDv03p5, IPDv04p5**
+
+*(Required, User Provided)*
+
+Realize connected import and export fields that have their ``TransferActionGeomObject`` 
+attribute set to "accept", i.e., that will accept a geom object from a connected 
+field in another component. 
+
+If the generic ``NUOPC_Connector`` is used, at this point the full geom object (e.g., grid or mesh) 
+has already been set in the field and only a call to ``ESMF_FieldEmptyComplete`` 
+is required to allocate memory for the field. 
+
+The method ``NUOPC_StateRealizeField`` is used to realize a field. Only previously 
+advertised fields can be realized and the field's name is used to search the 
+state for the previously advertised field.
+
+
 
 .. _verify_imports:
 
 Verify import fields connected and set clock
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+**IPDv00p3, IPDv01p4, IPDv02p4, IPDv03p6, IPDv04p6**
+
+*(Required, NUOPC Provided)*
+
+If the model's internal clock has not been set, set as a copy of the parent clock. 
+Call the :ref:`setclock` specialization subroutine (if present). 
+Verify all import fields are connected and set error code if not.
 
 
 .. _init_export:
 
 Initialize export fields
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+^^^^^^^^^^^^^^^^^^^^^^^^
+**IPDv00p4, IPDv01p5, IPDv02p5, IPDv03p7, IPDv04p6**
+
+*(Required, NUOPC Provided)*
+
+Call the :ref:`datainit` specialization method if it exists, which initializes all export fields. 
+Set the timestamp in export fields to the internal clock's time.
 
 
-Recommended Approach
---------------------
+Initialization Specialization Points
+------------------------------------
 
-While there is no one right way to write the NUOPC cap code, we have 
-found that following the steps in order helps to simplify the overall process.
-
- #.  Acquire a basic Fortran code template of a NUOPC Model cap.  
-
- #.  Call your model's existing initialization procedure from the cap.
-
- #.  Call your model's update (timestepping) subroutine from the cap.
-
- #.  Plug your cap into a NUOPC Driver and try to get through a short run of several timesteps.  
-
- #.  Go back and split up the initialize phases as required by NUOPC.  
-
- #.  Test the cap in a NUOPC coupled system.  
+The following specialization points are used during the ``NUOPC_Model``
+intitalization sequence.
 
 
-Acquire a NUOPC Model Cap Code Template
----------------------------------------
+.. _setclock:
 
-We recommend starting from a NUOPC Model cap code template.  
-There are at least a couple options:
+SetClock
+^^^^^^^^
+**Called from: IPDv00p3, IPDv01p4, IPDv02p4, IPDv03p6, IPDv04p6**
 
- 1.  Use code from one of the `NUOPC Prototype applications <http://sourceforge.net/p/esmfcontrib/svn/HEAD/tree/NUOPC/tags/ESMF_7_0_0_beta_snapshot_52/>`_ or from an existing NUOPC Model cap.
- 
- 2.  Use the Cupid plugin for Eclipse to generate NUOPC code.
+*(Optional, User Provided)*
+
+The specialization method can change aspects of the internal clock, which 
+defaults to a copy of the incoming parent clock. For example, the timeStep 
+size may be changed and/or Alarms may be set on the clock. 
+
+The method ``NUOPC_CompSetClock(comp, externalClock, stabilityTimeStep, rc)`` 
+can be used to set the internal clock as a copy of externalClock, but with a 
+timeStep that is less than or equal to the stabilityTimeStep. At the same 
+time ensure that the timeStep of the external clock is a multiple of the 
+timeStep of the internal clock. If the stabilityTimeStep argument is not 
+provided then the internal clock will simply be set as a copy of the external clock.
+
+.. _datainit:
+
+DataInitialize
+^^^^^^^^^^^^^^
+**Called from:  IPDv00p4, IPDv01p5, IPDv02p5, IPDv03p7, IPDv04p7**
+
+*(Optional, User Provided)*
+
+The specialization method should initialize field data in the export state. 
+Fields in the export state will be timestamped automatically by the calling phase, 
+so there is no need to do it here.
 
 
-**MORE details about getting the code**
+Run Sequence
+------------
+
+The generic ``NUOPC_Model`` component has a single run phase.  The purpose of the run phase
+is to move the model forward in time from the current time to the stop time on the
+internal clock.  Keep in mind that the ``NUOPC_Driver`` sitting above this component
+is responsible for setting the stop time of this component's clock.
+
+#. Call the :ref:`setrunclock` specialization method to check and set the internal clock against the incoming clock. 
+   If no specialization exists, the default method will check that internal clock and incoming clock agree 
+   on current time and that the time step of the incoming clock is a multiple of the internal clock time step. 
+   Under these conditions set the internal stop time to one time step interval of the incoming clock. 
+   Otherwise exit with error, flagging an incompatibility.
+  
+#. Call the :ref:`checkimport` specialization method to check import fields. If no specialization exists, 
+   the default method verifies that all import fields are at the current time of the internal clock.
+  
+#. Time stepping loop: starting at current time, running to stop time of the internal clock:
+
+    #. Timestamp the fields in the export state according to the current time of the internal clock.
+
+    #. Call the :ref:`advance` specialization routine.
+
+    #. Advance the current time of the internal clock according to the time step of the internal clock.
+
+#. Call the :ref:`timestampexport` specialization method to set the timestamp on export fields. 
+   If no specialization exists, the default method will timestamp all fields in the export state 
+   according to the current	time of the internal clock, which now is identical to the 
+   stop time of the internal clock.
 
 
 
+Run Specialization Points
+-------------------------
+
+.. _setrunclock:
+
+SetRunClock
+^^^^^^^^^^^
+**Called from: default run phase**
+
+*(Required, NUOPC Provided)*
+
+A specialization method to check and set the internal clock against the incoming clock. 
+This method is called by the default run phase. 
+
+If not overridden, the default method will check that the internal clock and incoming clock agree 
+on the current time and that the time step of the incoming clock is a multiple of the internal 
+clock time step. Under these conditions set the internal stop time to one time step interval
+of the incoming clock. Otherwise exit with error, flagging an incompatibility.
 
 
+.. _checkimport:
 
-Initialize Your Model from the Cap
-----------------------------------
+CheckImport
+^^^^^^^^^^^
+**Called from: default run phase**
+
+*(Required, NUOPC Provided)*
+
+A specialization method to verify import fields before advancing in time. If not overridden, 
+the default method verifies that all import fields are at the current time of the internal clock.
 
 
-Call Your Model's Run Subroutine from the Cap
----------------------------------------------
+.. _advance:
+
+Advance
+^^^^^^^
+**Called from: default run phase**
+
+*(Required, User Provided)*
+
+A specialization method that advances the model forward in time by one timestep of the internal clock. 
+This method will be called iteratively by the default run phase until reaching the 
+stop time on the internal clock.
 
 
-Test with a Simple NUOPC Driver
--------------------------------
+.. _timestampexport:
+
+TimestampExport
+^^^^^^^^^^^^^^^
+**Called from: default run phase**
+
+*(Required, NUOPC Provided)*
+
+A specialization method to set the timestamp on export fields after the model has advanced. 
+If not overridden, the default method sets the timestamp on all export fields to the stop
+time on the internal clock (which is also now the current model time).
 
 
-Split Up Initialize Phases
---------------------------
 
    
