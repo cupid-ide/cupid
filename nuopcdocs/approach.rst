@@ -237,7 +237,7 @@ Initialize Your Model from the Cap
 The cap template you placed in your source tree is in no way connected
 to your model.  Instead of tackling the full set of NUOPC initialization
 phases up front, we recommend that you start by adding calls in the cap's 
-first initialization phase to your existing initialization routine(s).  
+first initialization phase to your model's existing initialization routine(s).  
 A good place to do this is within the Advertise Fields initialization phase.
 You will need to add ``use`` statements at the top to import the relevant
 initialization subroutines from your model into the NUOPC cap module.
@@ -270,11 +270,27 @@ When you are done, your cap should look something like this:
 Run the Cap with a NUOPC Driver
 ---------------------------------------
 
-With the basic cap written, you should build your model along
-with the cap code using your model's build script or Makefile.  
+Now you should test the basic cap you have implemented. First, 
+build your model along with the cap code using your model's build 
+script or Makefile.  If you followed the procedure in the :ref:`genmakefrag`
+section, your build process should have produced a NUOPC Makefile 
+fragment file in addition to the compiled object files (or library).
 
-If your build procedure typically creates
-an executable, it should now be changed to produce a 
+To test the cap, we recommend running it using the `NUOPC 
+Component Explorer <https://www.earthsystemcog.org/projects/nuopc/compliance_testing>`_, 
+which is a specialized ``NUOPC_Driver`` designed
+to execute any ``NUOPC_Model``.  `Complete instructions for
+acquiring the Component Explorer and linking it to your NUOPC
+cap are available <https://www.earthsystemcog.org/projects/nuopc/compliance_test>`_.
+
+The instructions above also describe how to turn on the `NUOPC
+Compliance Checker <https://www.earthsystemcog.org/projects/nuopc/compliance_testing>`_ 
+while running the Component Explorer.  The 
+Compliance Checker produces additional output in the ESMF log
+files that is useful for debugging.  It also produces WARNINGS
+in the logs if a compliance issue is identified.  When running with
+the basic cap, you should not expect to have all compliance issues
+resolved.  
 
 
 
@@ -283,4 +299,17 @@ an executable, it should now be changed to produce a
 Split Up the Initialization Phases
 ----------------------------------
 
+Once the basic cap described above can be executed using the Component Explorer,
+you should modify the cap to implement the required initialization sequence
+as described in the :ref:`Generic NUOPC Model <initseq>` documentation. This
+include advertising fields with standard names and realizing fields by creating
+``ESMF_Field`` objects to wrap your model variables.  As part of this process,
+you will need to describe your model's grid structure using the ESMF geometric
+classes, e.g., ``ESMF_Grid`` and ``ESMF_Mesh``.
+
+After splitting up the phases, rebuild your model and execute again using
+the Component Explorer with the Compliance Checker turned on.  Ideally, you
+should see no compliance WARNINGS in the generated log files.  At this point
+you are ready to integrate your NUOPC Model cap into a coupled system with
+other NUOPC components.
 

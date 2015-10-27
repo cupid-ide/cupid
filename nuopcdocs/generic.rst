@@ -38,6 +38,8 @@ implemented by the generic component.
     3.  In some cases, the generic component can be specialized by setting a
         particular parameter that affects the generic component's behavior.
 
+.. _initseq:
+
 Initialization Sequence
 -----------------------
 
