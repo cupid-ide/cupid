@@ -22,10 +22,3 @@ The tasks covered in this document include:
 
 Additionally, we provide some considerations for making it easier to 
 obtain and link against your NUOPC-compliant model in coupled systems.
-
-
-.. _refman: http://www.earthsystemmodeling.org/esmf_releases/last_built/NUOPC_refdoc/node4.html 
-.. _rm: refman_
-
-This is the refman_ I know and rm_ too.
-

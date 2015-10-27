@@ -17,8 +17,6 @@ Contents:
    cap
    test
    share
-   NUOPC_Comp
-   NUOPC_Model
    glossary
   
 
