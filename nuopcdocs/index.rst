@@ -13,12 +13,13 @@ Contents:
    :numbered:
 
    overview
+   idea
    build
    cap
+   generic
    test
    share
-   glossary
-  
+     
 
 
 Indices and tables

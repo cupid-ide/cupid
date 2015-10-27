@@ -7,7 +7,7 @@ be added to an existing model codebase in order to make the model NUOPC-complian
 and therefore able to communicate with other NUOPC components in a coupled system.
 
 This documentation will help you understand the steps required to add a 
-:term:`NUOPC Model cap` to an existing model.  The NUOPC Model *cap* is 
+NUOPC Model cap to an existing model.  The NUOPC Model *cap* is 
 simply a Fortran module with certain required subroutines.  We call it a 
 "cap" because it sits on top of your model code and mediates interactions 
 of your model with the coupling infrastructure.
