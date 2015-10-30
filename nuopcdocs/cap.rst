@@ -15,18 +15,19 @@ which contains the entire example cap.
 Module Imports
 --------------
 
-The required NUOPC subroutines in the cap are grouped into a Fortran module, here called ATM.  
-All NUOPC Model caps will import the ``ESMF``, ``NUOPC``, and
-``NUOPC_Model`` modules and it is often a good idea to rename some of the
-imported entities to avoid name clashes (as is the case with ``SetServices`` and
-``label_Advance`` in the example).  Also note that the module exposes only a 
-single public entry point (subroutine) called ``SetServices``.  This should be
-true for all NUOPC Model caps.
+The required NUOPC subroutines in the cap are grouped into a Fortran module, 
+here called ATM.  All NUOPC Model caps will import the ``ESMF``, ``NUOPC``, and
+``NUOPC_Model`` modules.  Typically, other ``use`` statements will appear
+as well to import subroutines and variables from your model code. The module 
+exposes only a single public entry point (subroutine) called ``SetServices``.  
+This should be true for all NUOPC Model caps.
 
 .. literalinclude:: include/atm.F90
     :language: fortran
     :lines: 1-23
 
+
+.. _ex_setservices:
 
 SetServices
 -----------
@@ -42,8 +43,8 @@ and should do several things:
 
 In the example code, the call to ``NUOPC_CompDerive`` on line 8 indicates that 
 this component derives from (and specializes) the generic ``NUOPC_Model``
-component.  (In other words, this is a ``NUOPC_Model`` component customized 
-for a specific model.)
+component.  In other words, this is a ``NUOPC_Model`` component customized 
+for a specific model.
 
 The calls to ``NUOPC_CompSetEntryPoint``  on lines 15-16 and and 21-22 register 
 subroutines that are implemented in the cap.  These are initialization phases
@@ -54,9 +55,8 @@ initialization and these labels uniquely define each phase.  For example, on lin
 16, ``"IPDv00p1"`` stands for "Initialize Phase Definition version 00 phase 1". The
 value for the parameter ``userRoutine`` is the name of the subroutine that should
 be executed for the phase (e.g., ``InitializeP1`` on line 16).   This subroutine
-appears later on in the cap.  Note that the actual name of the registered subroutine
-is entirely up to you, although a particular signature (parameter list) is required.
-(More on that below.)
+appears later on in the cap and the name of the registered subroutine is entirely 
+up to you.
 
 At this point, don't worry too much about what happens during each phase, just
 know that some phases are not provided by NUOPC and so must be written
@@ -114,16 +114,19 @@ For now you should notice a few things:
         * ``rc`` - an ``integer`` return code
         
     * If the subroutine succeeds, it should return ``ESMF_SUCCESS`` in 
-      the return code.  Otherwise it should return ``ESMF_FAILURE``.
+      the return code.  Otherwise it should return an error code. The
+      list of pre-defined ESMF error codes is provided in the 
+      `reference manual <http://www.earthsystemmodeling.org/esmf_releases/public/last/ESMF_refdoc/node9.html#SECTION09030000000000000000>`_.
       
 .. literalinclude:: include/atm.F90
     :language: fortran
-    :lines: 65-103
+    :lines: 65-97
     :linenos:
+    :emphasize-lines: 10-11, 18-19, 26-27
    
 The purpose of this phase is for your model to **advertise its import and
 export fields**.  This means that your model announces which model variables
-it is capable of exporting (e.g., an ocean might export sea surface temperature)
+it is capable of exporting (e.g., an atmosphere might export air pressure at sea level)
 and which model variables it requires (e.g., an atmosphere might require
 sea surface temperature as a boundary condition).  The reason there is an
 explicit **advertise** phase is because NUOPC dynamically matches fields among
@@ -131,15 +134,15 @@ all the models participating in a coupled simulation during runtime. So, we
 need to collect the list of possible input and output fields from all the
 models during their initialization.
 
-
-As shown in lines 15-16, to advertise a field you call
-``NUOPC_StateAdvertiseField`` with the following parameters:
+As shown in lines 10-11, to advertise a field you call
+``NUOPC_Advertise`` with the following parameters:
 
     * either the ``importState`` or ``exportState`` object
     * the standard name of the field, based on the 
       `CF conventions <http://cfconventions.org/standard-names.html>`_
-    * a short name for the field, which can be used to
-      retrieve it later from its ``ESMF_State``
+    * an optional name for the field, which can be used to
+      retrieve it later from its ``ESMF_State``; if ommited
+      the standard name will be used as the field name
     * a return code
 
 
@@ -150,7 +153,7 @@ names ``"air_pressure_at_sea_level"`` and ``"surface_net_downward_shortwave_flux
 .. note:: **Advertising a Field does NOT allocate memory**
 
     Note that NUOPC does not allocate memory for fields during the
-    advertise phase or when ``NUOPC_StateAdvertiseField`` is called.
+    advertise phase or when ``NUOPC_Advertise`` is called.
     Instead, this is simply a way for models to communicate the
     standard names of fields.  During a later phase, only those fields that
     are *connected* (e.g., a field exported from one model that is
@@ -164,7 +167,7 @@ names ``"air_pressure_at_sea_level"`` and ``"surface_net_downward_shortwave_flux
 Initialize Phase - Realize Fields
 ---------------------------------
 
-.. sidebar::  Model Grids
+.. sidebar::  ESMF Geometric Objects
 
     Describing your model's grid (physical discretization) in the 
     ESMF representation is  one of the most important parts of creating 
@@ -175,9 +178,12 @@ Initialize Phase - Realize Fields
     These geometric types are described in detail in the ESMF Reference
     Manual:
     
-        * `Grid <http://www.earthsystemmodeling.org/esmf_releases/public/last/ESMF_refdoc/node5.html#SECTION05080000000000000000>`_
-        * `Mesh <http://www.earthsystemmodeling.org/esmf_releases/public/last/ESMF_refdoc/node5.html#SECTION050100000000000000000>`_
-        * `LocStream <http://www.earthsystemmodeling.org/esmf_releases/public/last/ESMF_refdoc/node5.html#SECTION05090000000000000000>`_
+        * `ESMF_Grid <http://www.earthsystemmodeling.org/esmf_releases/public/last/ESMF_refdoc/node5.html#SECTION05080000000000000000>`_
+          - logically rectangular grids
+        * `ESMF_Mesh <http://www.earthsystemmodeling.org/esmf_releases/public/last/ESMF_refdoc/node5.html#SECTION050100000000000000000>`_
+          - unstructured grids
+        * `ESMF_LocStream <http://www.earthsystemmodeling.org/esmf_releases/public/last/ESMF_refdoc/node5.html#SECTION05090000000000000000>`_
+          - a set of observational points
     
 
 The following code fragment shows the ``InitializeP2`` subroutine, which
@@ -189,31 +195,32 @@ means that an ``ESMF_Field`` object is created and it is added to the appropriat
 In order to create an ``ESMF_Field``, you'll first need to create one of the
 ESMF geometric types, ``ESMF_Grid``, ``ESMF_Mesh``, or ``ESMF_LocStream``.
 For 2D and 3D logically rectangular grids (such as a lat-lon grid), the
-typical choice is ``ESMF_Grid``.
+typical choice is ``ESMF_Grid``.  For unstructured grids, use an ``ESMF_Mesh``.
 
 For the sake a simplicity, a 10x100 Cartesian grid is created on lines
 15-16 using the NUOPC auxiliary function ``NUOPC_GridCreateSimpleXY``.  
 This object is assigned to ``gridIn``.  
 
-Lines 25-26 show how to create an ``ESMF_Field`` by passing in the field
-short name (should be the same as advertised), the grid, and the
-data type of the field to ``ESMF_FieldCreate``.
+Lines 24-25 show how to create an ``ESMF_Field`` by passing in the field
+name (should be the same as advertised), the grid, and the data type of the 
+field to ``ESMF_FieldCreate``.
 
-Finally, the field is put into the state by calling ``NUOPC_StateRealizeField``
-as on line 31.  The example code realizes three fields in total, one
-import and two export, and all three share the same grid.
+Finally, the field is put into the state by calling ``NUOPC_Realize``
+as on lines 30, 43, and 56 (highlighted).  The example code realizes three 
+fields in total, one import and two export, and all three share the same grid.
 
 .. literalinclude:: include/atm.F90
     :language: fortran
-    :lines: 107-170
+    :lines: 101-162
     :linenos:
-    :emphasize-lines: 31,45,58
+    :emphasize-lines: 30,43,56
 
 
 Model Advance Specialization
 ----------------------------
 
-Recall that the subroutine ``ModelAdvance`` (shown below) has been 
+As described in the :ref:`ex_setservices` section, 
+the subroutine ``ModelAdvance`` (shown below) has been 
 registered to the specialization point with the label 
 ``model_label_Advance`` in the ``SetServices`` subroutine. This
 specialization point subroutine is called within the generic ``NUOPC_Model``

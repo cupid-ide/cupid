@@ -51,7 +51,7 @@ each initialization phase listed in the table has several labels
 associated with it.  Your NUOPC Model cap should stick with only
 one of the IPD versions.  **It is recommended that
 you use the latest version (currently IPDv04) as it is the most
-flexible and ecompasses all earlier versions.**  
+flexible and encompasses all earlier versions.**  
 
 You are responsible for implementing in your NUOPC Model cap any 
 required phase where the Provider is listed as User.  Clicking

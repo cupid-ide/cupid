@@ -4,7 +4,7 @@
    contain the root `toctree` directive.
 
 Building a NUOPC Model
-=================================
+======================
 
 Contents:
 
@@ -17,11 +17,10 @@ Contents:
    cap
    generic
    approach
-   test
+   glossary
    
-Indices and tables
-==================
+Search
+======
 
-* :ref:`genindex`
 * :ref:`search`
 

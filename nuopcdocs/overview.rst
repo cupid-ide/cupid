@@ -1,24 +1,82 @@
 Overview
-===================================================
+=========
 
-NUOPC is a software layer included with ESMF that ensures interoperability
-of models in coupled applications.  In most cases, NUOPC interfaces are to
-be added to an existing model codebase in order to make the model NUOPC-compliant
-and therefore able to communicate with other NUOPC components in a coupled system.
+.. image:: images/NUOPC.jpg
+    :scale: 70%
 
-This documentation will help you understand the steps required to add a 
-NUOPC Model cap to an existing model.  The NUOPC Model *cap* is 
-simply a Fortran module with certain required subroutines.  We call it a 
-"cap" because it sits on top of your model code and mediates interactions 
-of your model with the coupling infrastructure.
+The :term:`National Unified Operational Prediction Capability` (NUOPC) is an 
+inter-agency agreement and technical specification for interoperable
+components used in coupled Earth science models.   The :term:`NUOPC Layer` is 
+a software layer build on top of the 
+:term:`Earth System Modeling Framework` (ESMF).  
+ESMF is a high-performance modeling framework that provides
+data structures, interfaces, and operations suited for building coupled models
+from a set of components.  **NUOPC refines the capabilities of
+ESMF by providing a more precise definition of what it means for a model
+to be a component and how components should interact and share data
+in a coupled system.**  The NUOPC Layer software is designed to work
+with typical high-performance models in the Earth sciences domain, most
+of which are written in Fortran and are based on a distributed memory 
+model of parallelism (MPI).  
 
-The tasks covered in this document include:
+The NUOPC Layer implements a set of :term:`generic component`\ s that 
+serve as building blocks that can be assembled together in different ways
+to build up a :term:`coupled modeling application`.  In some cases, a generic
+component can be used as is, and in other cases the generic component
+must be :term:`specialized <specialization>` (customized) for a particular model or application.
+Additionally, the NUOPC Layer defines a set of technical rules for how components
+should behave and interact with each other.  These technical rules form the
+backbone of component interoperability.  In other words, a
+level of technical interoperability among two or more components can be
+guaranteed if each component follows the technical rules defined by the NUOPC Layer.  
+A component that follows the NUOPC Layer technical rules is considered to 
+be :term:`NUOPC Layer compliant`.
 
- #.  Setting up your build environment
- 
- #.  Writing the NUOPC Model cap code
- 
- #.  Testing the NUOPC Model cap
+..  note:: **A Note on Terminology**
 
-Additionally, we provide some considerations for making it easier to 
-obtain and link against your NUOPC-compliant model in coupled systems.
+    For brevity, throughout this document we will often use the
+    term "NUOPC" to refer to the "NUOPC Layer software" that is
+    the current technical implemenation of the NUOPC specification.
+    
+    Also, the term "NUOPC component" is shorthand for a component
+    that is NUOPC Layer compliant and can be used in NUOPC-based
+    systems.
+
+**This document is intended to be a starting point for model developers
+and technical managers who are new to the NUOPC Layer software
+and need to understand the steps involved in making an existing
+model codebase NUOPC Layer compliant.**  This document is not
+exhaustive, but should help you navigate the process of creating
+a NUOPC component from your model.  As such this document is a companion 
+to other NUOPC resources available:
+
+    * `The NUOPC website <https://www.earthsystemcog.org/projects/nuopc>`_
+      is the main source of information on NUOPC, including instructions
+      for acquiring and using the NUOPC Layer software.
+      
+    * `The NUOPC Reference Manual <https://www.earthsystemcog.org/projects/nuopc/refmans>`_
+      is the primary technical reference for the NUOPC API and includes
+      a detailed description of the NUOPC generic components.   
+    
+    * `The NUOPC Prototype Codes page <https://www.earthsystemcog.org/projects/nuopc/proto_codes>`_
+      and `Subversion repository <https://sourceforge.net/p/esmfcontrib/svn/HEAD/tree/NUOPC/tags/ESMF_7_0_0_beta_snapshot_58/>`_
+      include a set of prototype applications that use the NUOPC Layer software. These
+      applications are architetural skeletons that represent typical
+      configurations of NUOPC components and provide numerous examples
+      of using the NUOPC API.
+             
+    * Several `Compliance Testing Tools <https://www.earthsystemcog.org/projects/nuopc/compliance_testing>`_
+      are provided to help you test your code to determine if is NUOPC 
+      Layer compliant.
+    
+    * `Cupid <https://www.earthsystemcog.org/projects/cupid/>`_
+      is a plugin for the `Eclipse Integrated Development Environment <https://eclipse.org/>`_
+      that automatically generates NUOPC Layer compliant code and checks existing
+      source code for compliance.
+      
+    * A `BAMS <https://www2.ametsoc.org/ams/index.cfm/publications/bulletin-of-the-american-meteorological-society-bams/>`_ 
+      article entited `The Earth System Prediction Suite: 
+      Toward a Coordinated U.S. Modeling Capability <https://www.earthsystemcog.org/site_media/projects/esps/paper_1506_esps_final_revised_submitted2.docx>`_ describes NUOPC and how
+      NUOPC Layer compliant components are being used in several coupled modeling
+      systems across U.S. agencies.
+   

@@ -1,5 +1,5 @@
-Writing a NUOPC Cap for Your Model
-==================================
+Writing and Testing a NUOPC Cap for Your Model
+==============================================
 
 While there is no one right way to write the NUOPC cap code, the following
 recommended steps represent an incremental approach to developing the cap.
@@ -135,7 +135,7 @@ explains how to use these variables in your Makefile.
 
 .. _genmakefrag:
 
-Modify Your Buid to Generate a NUOPC Makefile Fragment
+Modify Your Build to Generate a NUOPC Makefile Fragment
 ------------------------------------------------------
 
 The goal of adding a NUOPC cap to your model is so that it can be used
@@ -289,8 +289,13 @@ while running the Component Explorer.  The
 Compliance Checker produces additional output in the ESMF log
 files that is useful for debugging.  It also produces WARNINGS
 in the logs if a compliance issue is identified.  When running with
-the basic cap, you should not expect to have all compliance issues
+the basic cap, you should not necessarily expect to have all compliance issues
 resolved.  
+
+**To validate that the NUOPC cap is faithfully reproducing your model's
+behavior when run in non-NUOPC mode, you should compare your model's
+output when run with the NUOPC cap against a baseline run.**  
+This is the best test to ensure that the cap is working correctly.
 
 
 
@@ -302,12 +307,12 @@ Split Up the Initialization Phases
 Once the basic cap described above can be executed using the Component Explorer,
 you should modify the cap to implement the required initialization sequence
 as described in the :ref:`Generic NUOPC Model <initseq>` documentation. This
-include advertising fields with standard names and realizing fields by creating
+includes advertising fields with standard names and realizing fields by creating
 ``ESMF_Field`` objects to wrap your model variables.  As part of this process,
 you will need to describe your model's grid structure using the ESMF geometric
 classes, e.g., ``ESMF_Grid`` and ``ESMF_Mesh``.
 
-After splitting up the phases, rebuild your model and execute again using
+After splitting up the phases, rebuild your model and execute it again using
 the Component Explorer with the Compliance Checker turned on.  Ideally, you
 should see no compliance WARNINGS in the generated log files.  At this point
 you are ready to integrate your NUOPC Model cap into a coupled system with
