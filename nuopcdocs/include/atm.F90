@@ -70,22 +70,16 @@ module ATM
     
     rc = ESMF_SUCCESS
     
-    ! Disabling the following macro, e.g. renaming to WITHIMPORTFIELDS_disable,
-    ! will result in a model component that does not advertise any importable
-    ! Fields. Use this if you want to drive the model independently.
-#define WITHIMPORTFIELDS
-#ifdef WITHIMPORTFIELDS
     ! importable field: sea_surface_temperature
-    call NUOPC_StateAdvertiseField(importState, &
+    call NUOPC_Advertise(importState, &
       StandardName="sea_surface_temperature", name="sst", rc=rc)
     if (ESMF_LogFoundError(rcToCheck=rc, msg=ESMF_LOGERR_PASSTHRU, &
       line=LINE, &
       file=FILE)) &
       return  ! bail out
-#endif
     
     ! exportable field: air_pressure_at_sea_level
-    call NUOPC_StateAdvertiseField(exportState, &
+    call NUOPC_Advertise(exportState, &
       StandardName="air_pressure_at_sea_level", name="pmsl", rc=rc)
     if (ESMF_LogFoundError(rcToCheck=rc, msg=ESMF_LOGERR_PASSTHRU, &
       line=LINE, &
@@ -93,7 +87,7 @@ module ATM
       return  ! bail out
     
     ! exportable field: surface_net_downward_shortwave_flux
-    call NUOPC_StateAdvertiseField(exportState, &
+    call NUOPC_Advertise(exportState, &
       StandardName="surface_net_downward_shortwave_flux", name="rsns", rc=rc)
     if (ESMF_LogFoundError(rcToCheck=rc, msg=ESMF_LOGERR_PASSTHRU, &
       line=LINE, &
@@ -126,7 +120,6 @@ module ATM
       return  ! bail out
     gridOut = gridIn ! for now out same as in
 
-#ifdef WITHIMPORTFIELDS
     ! importable field: sea_surface_temperature
     field = ESMF_FieldCreate(name="sst", grid=gridIn, &
       typekind=ESMF_TYPEKIND_R8, rc=rc)
@@ -139,7 +132,6 @@ module ATM
       line=LINE, &
       file=FILE)) &
       return  ! bail out
-#endif
 
     ! exportable field: air_pressure_at_sea_level
     field = ESMF_FieldCreate(name="pmsl", grid=gridOut, &
