@@ -14,9 +14,9 @@ Contents:
 
    overview
    idea
+   approach
    cap
    generic
-   approach
    glossary
    
 Search

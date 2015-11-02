@@ -42,10 +42,37 @@ be :term:`NUOPC Layer compliant`.
     that is NUOPC Layer compliant and can be used in NUOPC-based
     systems.
 
-**This document is intended to be a starting point for model developers
+
+
+
+Document Roadmap
+----------------
+
+**This document is a starting point for model developers
 and technical managers who are new to the NUOPC Layer software
 and need to understand the steps involved in making an existing
-model codebase NUOPC Layer compliant.**  This document is not
+model codebase NUOPC Layer compliant.**  
+
+The document is divided into the following sections:
+
+* The section  :ref:`bigidea` describes important parts of the NUOPC design that
+  is critical for anyone panning to write code using the NUOPC API.
+
+* The section :ref:`writecap` describes the development steps involved
+  making your model code NUOPC Layer compliant.  
+  
+* In :ref:`atmexample`, we walk through the code of a basic example cap, describing each part in detail.
+
+* Finally, there is an :ref:`appendix <appendixgeneric>` included as
+  a reference that details the :term:`initialization sequence` and the set
+  of available :term:`specialization point`\ s for NUOPC Model components.
+
+
+
+Additional NUOPC Resources
+--------------------------
+
+This document is not
 exhaustive, but should help you navigate the process of creating
 a NUOPC component from your model.  As such this document is a companion 
 to other NUOPC resources available:
@@ -61,7 +88,7 @@ to other NUOPC resources available:
     * `The NUOPC Prototype Codes page <https://www.earthsystemcog.org/projects/nuopc/proto_codes>`_
       and `Subversion repository <https://sourceforge.net/p/esmfcontrib/svn/HEAD/tree/NUOPC/tags/ESMF_7_0_0_beta_snapshot_58/>`_
       include a set of prototype applications that use the NUOPC Layer software. These
-      applications are architetural skeletons that represent typical
+      applications are architectural skeletons that represent typical
       configurations of NUOPC components and provide numerous examples
       of using the NUOPC API.
              
@@ -77,6 +104,6 @@ to other NUOPC resources available:
     * A `BAMS <https://www2.ametsoc.org/ams/index.cfm/publications/bulletin-of-the-american-meteorological-society-bams/>`_ 
       article entited `The Earth System Prediction Suite: 
       Toward a Coordinated U.S. Modeling Capability <https://www.earthsystemcog.org/site_media/projects/esps/paper_1506_esps_final_revised_submitted2.docx>`_ describes NUOPC and how
-      NUOPC Layer compliant components are being used in several coupled modeling
+      NUOPC Layer compliant components are being used in coupled modeling
       systems across U.S. agencies.
    

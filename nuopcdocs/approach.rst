@@ -1,10 +1,13 @@
+.. _writecap:
+
 Writing and Testing a NUOPC Cap for Your Model
 ==============================================
 
-While there is no one right way to write the NUOPC cap code, the following
+While there is no one right way to write the :term:`NUOPC Model cap` code, the following
 recommended steps represent an incremental approach to developing the cap.
 
  #.  :ref:`installesmf`
+ #.  :ref:`preparemodel`
  #.  :ref:`chooseconfig`
  #.  :ref:`integratecap`
  #.  :ref:`genmakefrag`
@@ -12,6 +15,7 @@ recommended steps represent an incremental approach to developing the cap.
  #.  :ref:`callrunfromcap`
  #.  :ref:`runcapwithdriver`
  #.  :ref:`splitinit`
+ #.  :ref:`validatecap`
  
  
  
@@ -20,7 +24,7 @@ recommended steps represent an incremental approach to developing the cap.
 Install ESMF and NUOPC on the Target Machine
 --------------------------------------------
 
-Before writing any code, you need to ensure the prerequisite 
+First, you need to ensure the prerequisite 
 software is available on the target system.
 
 The primary prerequisite software is the NUOPC library, which is
@@ -59,6 +63,38 @@ for one particular system is outlined below.
  $ gmake
  $ gmake check
  $ gmake install
+
+
+.. _preparemodel:
+
+Prepare Your Model Code
+-----------------------
+
+Before starting a NUOPC cap implementation, your model must already
+be modularized such that it can be built by itself and does not
+contain hard dependencies to other model components.  For example,
+if the model targeted for NUOPC compliance is a subsystem embedded
+in a larger application, the model will first need to be extracted
+such that it can be built by itself, preferably as a library.
+
+The model also needs to be roughly divided into several execution
+methods: initialize, run, and finalize.  Each of these methods may
+contain several phases.  The run method should allow the model to take
+a single timestep, or accept a parameter defining the number of
+timesteps or a "run until" time.  
+
+Although not strictly necessary, your NUOPC cap code will
+be cleanest if your model exposes data structures, such as derived types,
+for input and output variables with clear, well-documented naming conventions.
+This will simplify the process of hooking up fields in the
+NUOPC cap to your model's data structures.
+
+Finally, the model should not use the global MPI_WORLD_COMM communicator
+explicitly, but should accept a communicator at some point during
+startup.  A global search and replace can be used to replace
+all uses of MPI_WORLD_COMM with a different communicator defined
+as a global variable in your model.
+
 
 
 .. _chooseconfig:
@@ -136,7 +172,7 @@ explains how to use these variables in your Makefile.
 .. _genmakefrag:
 
 Modify Your Build to Generate a NUOPC Makefile Fragment
-------------------------------------------------------
+--------------------------------------------------------
 
 The goal of adding a NUOPC cap to your model is so that it can be used
 with other NUOPC-compliant models in a coupled system.  From a technical
@@ -235,12 +271,25 @@ Initialize Your Model from the Cap
 ----------------------------------
 
 The cap template you placed in your source tree is in no way connected
-to your model.  Instead of tackling the full set of NUOPC initialization
-phases up front, we recommend that you start by adding calls in the cap's 
-first initialization phase to your model's existing initialization routine(s).  
+to your model.  You should now add a call into your model's existing
+initialization subroutine(s).  
+
+NUOPC defines a precise initialization sequence--i.e., a series of 
+steps that all NUOPC components are expected to take when starting
+up.  This initialization sequence is encoded in the :term:`Initialize Phase
+Definition` (IPD), which includes several different versions in 
+order to allow for extension of the initialization sequence for
+future releases of NUOPC and to support backward compatibility.
+See the :ref:`initseq` section for more information.
+
+Instead of tackling the full NUOPC initialization sequence at this point in 
+developing your cap, we recommend that you start by adding calls in your cap's 
+first initialization phase to your model's existing initialization subroutine(s).  
 A good place to do this is within the Advertise Fields initialization phase.
-You will need to add ``use`` statements at the top to import the relevant
+You will need to add ``use`` statements at the top if your cap to import the relevant
 initialization subroutines from your model into the NUOPC cap module.
+See the code below for an example of where to add the call to your
+model's initialization subroutine(s).
 
 
 .. _callrunfromcap:
@@ -292,11 +341,6 @@ in the logs if a compliance issue is identified.  When running with
 the basic cap, you should not necessarily expect to have all compliance issues
 resolved.  
 
-**To validate that the NUOPC cap is faithfully reproducing your model's
-behavior when run in non-NUOPC mode, you should compare your model's
-output when run with the NUOPC cap against a baseline run.**  
-This is the best test to ensure that the cap is working correctly.
-
 
 
 .. _splitinit:
@@ -312,9 +356,19 @@ includes advertising fields with standard names and realizing fields by creating
 you will need to describe your model's grid structure using the ESMF geometric
 classes, e.g., ``ESMF_Grid`` and ``ESMF_Mesh``.
 
-After splitting up the phases, rebuild your model and execute it again using
-the Component Explorer with the Compliance Checker turned on.  Ideally, you
-should see no compliance WARNINGS in the generated log files.  At this point
-you are ready to integrate your NUOPC Model cap into a coupled system with
-other NUOPC components.
 
+.. _validatecap:
+
+Test and Validate Your Cap
+--------------------------
+
+After splitting up the initilization phases, rebuild your model and execute it again using
+the Component Explorer with the Compliance Checker turned on.  Ideally, you
+should see no compliance WARNINGS in the generated log files.  
+
+**To validate that the NUOPC cap is faithfully reproducing your model's
+behavior when run in non-NUOPC mode, you should compare your model's
+output when run with the NUOPC cap against a baseline run.**  
+This is the best test to ensure that the cap is working correctly.
+If the NUOPC cap reproduces your baseline run, you are ready to integrate 
+your NUOPC Model cap into a coupled system with other NUOPC components.

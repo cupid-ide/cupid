@@ -1,12 +1,12 @@
-The Generic NUOPC Model
-=======================
+.. _appendixgeneric:
 
-This section describes in detail how the generic ``NUOPC_Model`` component
-works.  It will help you understand:
+Appendix: The Generic NUOPC Model
+=================================
 
-    1.  what is the generic behavior that I get "for free", and
-    2.  when and how to specialize the generic ``NUOPC_Model`` 
-        for my particular model.
+This appendix describes technical details of the generic 
+``NUOPC_Model`` component and should be used as a reference
+for the initialize and run behaviors of the generic ``NUOPC_Model``
+as well as a description of the available specialization point.
     
 The generic ``NUOPC_Model`` component wraps your model so that it can be
 plugged into a ``NUOPC_Driver``.  The generic component is *used* in your code 
@@ -61,9 +61,11 @@ of the phase.
 ====================================================  ============================================  ========= ========
 Phase Label                                           Description                                   Provider  Required
 ====================================================  ============================================  ========= ========
+IPDv00p0, IPDv01p0, IPDv02p0, IPDv03p0, IPDv04p0      :ref:`setipdversion`                          User      No
+
 IPDv00p1, IPDv01p1, IPDv02p1, IPDv03p1, IPDv04p1      :ref:`advertise_fields`                       User      Yes
                                                             
-IPDv01p2, IPDv02p2, IPDv03p2, IPDv04p2                *Unspecific by NUOPC*  
+IPDv01p2, IPDv02p2, IPDv03p2, IPDv04p2                *Unspecified by NUOPC*  
 
 IPDv00p2, IPDv01p3, IPDv02p3, IPDv03p3, IPDv04p3      :ref:`realize_fields_providing`               User      Yes [#f1]_
 
@@ -85,6 +87,21 @@ IPDv00p4, IPDv01p5, IPDv02p5, IPDv03p7, IPDv04p7      :ref:`init_export`        
     will provide its own geometric object.
 
 
+.. _setipdversion:
+
+Set Initialize Phase Definition Version
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+**IPDv00p0, IPDv01p0, IPDv02p0, IPDv03p0, IPDv04p0** 
+
+*(Optional, User Provided)*
+
+During this optional phase, the component can set the Initialize Phase
+Definition version that is uses.  This is done by filtering the
+component's internal phase map by calling ``NUOPC_CompFilterPhaseMap``
+and passing in the first part of the phase label string, e.g., 
+``"IPDv02p"`` for version 2.
+
+
 .. _advertise_fields:
 
 Advertise fields in import and export states
@@ -93,12 +110,11 @@ Advertise fields in import and export states
 
 *(Required, User Provided)*
 
-Advertise fields in import/export states using ``NUOPC_StateAdvertiseField`` 
-and/or ``NUOPC_StateAdvertiseFields``.  These methods require a Standard Name 
-for the field, and the Standard Name must appear in the NUOPC Field Dictionary 
+Advertise fields in import/export states using ``NUOPC_Advertise``.  This method requires 
+a Standard Name for the field, and the Standard Name must appear in the NUOPC Field Dictionary 
 or a runtime error is generated. 
 
-``NUOPC_StateAdvertiseField`` accepts a ``TransferOfferGeomObject`` argument which may be one of:
+``NUOPC_Advertise`` accepts a ``TransferOfferGeomObject`` argument which may be one of:
 
     * "will provide" (default) - The field will provide its own geom object 
       (Grid/Mesh/XGrid/LocStream)
@@ -123,7 +139,7 @@ Realize connected import and export fields that have their ``TransferActionGeomO
 attribute set to "provide", i.e., that will provide their own geometric object
 (e.g., grid or mesh).  ("provide" is the default value of ``TransferActionGeomObject``.) 
 
-The method ``NUOPC_StateRealizeField`` is used to realize a field. Only previously 
+The method ``NUOPC_Realize`` is used to realize a field. Only previously 
 advertised fields can be realized and the field's name is used to search the 
 state for the previously advertised field.
 
@@ -164,7 +180,7 @@ If the generic ``NUOPC_Connector`` is used, at this point the full geom object (
 has already been set in the field and only a call to ``ESMF_FieldEmptyComplete`` 
 is required to allocate memory for the field. 
 
-The method ``NUOPC_StateRealizeField`` is used to realize a field. Only previously 
+The method ``NUOPC_Realize`` is used to realize a field. Only previously 
 advertised fields can be realized and the field's name is used to search the 
 state for the previously advertised field.
 

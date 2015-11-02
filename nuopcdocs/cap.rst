@@ -1,16 +1,33 @@
 .. _atmexample:
 
-An Example 
-==========
+An Example Cap
+==============
 
 In this section we'll look at code for an example NUOPC Model cap.
-The example shows basic structure of a NUOPC Model cap for a fictitious 
+The example shows the basic structure of a NUOPC Model cap for a fictitious 
 atmosphere model called ATM. It is slightly simpler than a "real" cap, 
-but has enough detail to show the basic coding structures you'll need to write.
+but has enough detail to show the basic coding structures.
 Each section of the example cap code will be broken down and described separately.  
 You can also download the full :download:`atm.F90 <include/atm.F90>` file,
 which contains the entire example cap.
 
+.. seealso:: **Finding More NUOPC Code Examples**
+
+    In addition to the example code in this section, the 
+    `NUOPC Prototypes Subversion <https://sourceforge.net/p/esmfcontrib/svn/HEAD/tree/NUOPC/tags/ESMF_7_0_0_beta_snapshot_58/>`_ 
+    repository contains many small example applications that are helpful 
+    for understanding the architecture of NUOPC applications and showing
+    example uses of the NUOPC API.  These example applications can be
+    compiled and executed on your system.
+    
+    A good starting point is the 
+    `SingleModelProto application <https://sourceforge.net/p/esmfcontrib/svn/HEAD/tree/NUOPC/tags/ESMF_7_0_0_beta_snapshot_58/SingleModelProto>`_, 
+    which includes a single Model with a Driver and the
+    `AtmOcnProto application <https://sourceforge.net/p/esmfcontrib/svn/HEAD/tree/NUOPC/tags/ESMF_7_0_0_beta_snapshot_58/AtmOcnProto>`_
+    which includes two Models, a Connector, and a Driver.
+    
+    
+    
 
 Module Imports
 --------------
@@ -49,8 +66,8 @@ for a specific model.
 The calls to ``NUOPC_CompSetEntryPoint``  on lines 15-16 and and 21-22 register 
 subroutines that are implemented in the cap.  These are initialization phases
 that are not provided by the generic NUOPC Model.
-The ``phaseLabelList`` parameter lists a NUOPC-defined label from the Initialize Phase
-Definition (or IPD -- more on that later).  NUOPC defines explicitly what happens in each phase of model
+The ``phaseLabelList`` parameter lists a NUOPC-defined label from the :ref:`Initialize Phase
+Definition <initseq>`.  NUOPC defines explicitly what happens in each phase of model
 initialization and these labels uniquely define each phase.  For example, on line
 16, ``"IPDv00p1"`` stands for "Initialize Phase Definition version 00 phase 1". The
 value for the parameter ``userRoutine`` is the name of the subroutine that should
@@ -99,7 +116,7 @@ Initialize Phase - Advertise Fields
 -----------------------------------
 
 Here we see the implementation of the ``InitializeP1`` subroutine, which
-you should recall was registered for the initialize phase with label IPDv00p1.  
+is registered for the initialize phase with label IPDv00p1.  
 Later, we'll see a more detailed look at the full list of initialization phases,
 how they are ordered, and what happens during each phase.
 For now you should notice a few things:
@@ -221,19 +238,19 @@ Model Advance Specialization
 
 As described in the :ref:`ex_setservices` section, 
 the subroutine ``ModelAdvance`` (shown below) has been 
-registered to the specialization point with the label 
+registered to the :term:`specialization point` with the label 
 ``model_label_Advance`` in the ``SetServices`` subroutine. This
 specialization point subroutine is called within the generic ``NUOPC_Model``
 run phase in order to request that your model take a timestep
-forward.  The code to do this is model depedent, so it does not appear 
+forward.  The code to do this is model dependent, so it does not appear 
 in the subroutine below.  
 
 **Each NUOPC component maintains its own clock** (an ``ESMF_Clock`` object).  
-The clock is used here
-to indicate the current model time and the timestep size. When the 
-subroutine finishes, your model should be moved ahead in time
-from the current time by one timestep.  NUOPC will automatically
-advance the clock for you, so there is no explicit call to do that here.
+The clock is used here to indicate the current model time and the 
+timestep size. When the subroutine finishes, your model should be 
+moved ahead in time from the current time by one timestep.  NUOPC will 
+automatically advance the clock for you, so there is no explicit call 
+to do that here.
 
 Since there is no actual model for us to advance in this example,
 the code below simply prints the current time and stop time (current time + timestep) 
@@ -254,7 +271,7 @@ With respect to specialization point subroutines in general, note that:
 
 .. literalinclude:: include/atm.F90
     :language: fortran
-    :lines: 174-215
+    :lines: 166-205
     :linenos:
     
     

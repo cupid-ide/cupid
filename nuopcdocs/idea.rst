@@ -1,10 +1,12 @@
+.. _bigidea:
+
 The Big Idea
 ============
 
 This section should help you understand key aspects of the NUOPC Layer
 design that are critical for writing the code to make your model 
 NUOPC Layer compliant.  The NUOPC Layer includes four kinds of
-generic component, each with a different purpose in a
+generic components, each with a different purpose in a
 coupled application.  One kind of generic component is the 
 :term:`NUOPC Model`,  a component that wraps a model
 code (such as an atmopshere, ocean, or ice model) such that it
@@ -12,11 +14,11 @@ exposes the set of interfaces defined by the NUOPC specification.
 You will work primarily with the NUOPC Model generic component
 in order to make your model NUOPC Layer compliant.
 
-.. note:: **Four types of NUOPC Components**
+.. note:: **Four Kinds of NUOPC Components**
     
     This documentation focuses primarily on the NUOPC **Model** Component.
     However, you should be aware that there are four kinds of generic 
-    component implemented in the NUOPC Layer:
+    components implemented in the NUOPC Layer:
     
         Model
             Wraps a model code, such as an atmosphere, ocean, or ice model
@@ -77,36 +79,21 @@ back into the cap.  Sometimes we say just "cap" or "NUOPC cap"
 because it's quicker than saying "NUOPC Model cap."
 
 
-How Much Code Changes?
-----------------------
+How Much of My Code Do I Need to Change?
+----------------------------------------
 
-Depending on how your code is already structured, there are often 
-little or no changes required to your model's internals.  The cap 
-primarily acts as a separate software layer, and your model otherwise 
+The amount of code that your need to change depends on how your
+model is structured and the degree to which it is already an
+independent component.  The NUOPC cap itself does not usually require
+changes to your model's internals.  Instead, the cap primarily 
+acts as a separate software layer, and your model otherwise 
 operates in its usual way. 
 
-.. note::  **Assumptions**
-
-    We make the following assumptions about your model codebase. 
-
-        * Your model needs to build by itself, preferably as a library
-          that other applications can link to.  If the model is currently
-          embedded as a subsystem in a bigger application, then it will
-          need to be extracted and a standalone build system put in place.
-
-        * Your model code needs to be divided into separate initialize,
-          run, and finalize parts that can be called individually.  The actual
-          subroutine signatures (parameter lists) are less important.
-
-        * The model should not use MPI_WORLD_COMM, but should accept an MPI
-          communicator at some point during startup.
-
-        * The model should expose its input and output data structures in a
-          clear manner, such as through derived type(s) with a clear, well-documented
-          internal naming convention.
-
-    If these assumptions do not hold for your model, then some initial 
-    modularization steps are necessary before starting the NUOPC implementation.
+However, as detailed in the :ref:`preparemodel` section,
+if your model is currently embedded as a subsystem in a larger
+application and cannot be built independently, you must first take
+steps to modularize the code and remove dependencies to other
+models before beginning the NUOPC implementation.
 
 **The addition of NUOPC code to your model does not imply that your 
 model must be run as a NUOPC component in all cases.**  Existing models 
@@ -143,7 +130,8 @@ the same output is reproduced. In most cases the output matches bit-for-bit
 so a simple file-based comparison will be sufficient.
 
 We also provide tools to help you check whether your cap is NUOPC-compliant.
-These tools will be discussed in the Testing section.
+More information is provided in the :ref:`runcapwithdriver` and
+:ref:`validatecap` sections.
 
 
             

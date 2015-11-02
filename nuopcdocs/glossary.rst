@@ -26,6 +26,19 @@ Glossary
         generic component must be specialized (customized) for a particular
         application.
 
+   initialization sequence
+        The sequence of events that all NUOPC components execute during
+        the first part of a NUOPC application run.  This sequence of
+        events is prescribed by the :term:`Initialize Phase Definition` (IPD).
+        
+   Initialize Phase Definition
+   IPD
+        Prescribes the order of execution of the initialization phases
+        for NUOPC components, and assigns specific meaning to each phase.
+        Each IPD has a version number and higher numbered versions are
+        backward compatible with all previous versions.
+   
+   
    National Unified Operational Prediction Capability
    NUOPC
         An inter-agency agreement and technical specification among 
@@ -55,13 +68,16 @@ Glossary
    
    NUOPC Model cap
    Cap
-	    A Fortran module containing code that specializes the 
-        generic NUOPC Model component for a particular model. The cap sits "on top of" a model code, calling into the model and exposing an interface to other NUOPC components.
+	    A Fortran module containing code that specializes the generic NUOPC Model component for a particular model. The cap sits "on top of" a model code, calling into the model and exposing an interface to other NUOPC components.
 
    specialization
         In NUOPC, the process of customizing a generic component by implementing
         specific subroutines associated with pre-defined specialization points.
         Behaviors not implemented via specialization are inherited from the
         generic component.
-   
+        
+   specialization point
+        A pre-defined place within a generic component where a custom implementation
+        can be registered.  Each specialization point is identified by a label
+        provided by the generic component.  
    
