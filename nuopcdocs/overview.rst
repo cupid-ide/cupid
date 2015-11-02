@@ -1,14 +1,14 @@
 Overview
-=========
+========
 
 .. image:: images/NUOPC.jpg
     :scale: 70%
 
-The :term:`National Unified Operational Prediction Capability` (NUOPC) is an 
-inter-agency agreement and technical specification for interoperable
-components used in coupled Earth science models.   The :term:`NUOPC Layer` is 
+The `National Unified Operational Prediction Capability <https://www.earthsystemcog.org/projects/nuopc/>`_ (NUOPC) is an 
+interagency agreement and technical specification for interoperable
+components used in coupled Earth science models.  The :term:`NUOPC Layer` is 
 a software layer build on top of the 
-:term:`Earth System Modeling Framework` (ESMF).  
+`Earth System Modeling Framework <https://www.earthsystemcog.org/projects/esmf/>`_ (ESMF).  
 ESMF is a high-performance modeling framework that provides
 data structures, interfaces, and operations suited for building coupled models
 from a set of components.  **NUOPC refines the capabilities of
@@ -21,7 +21,7 @@ model of parallelism (MPI).
 
 The NUOPC Layer implements a set of :term:`generic component`\ s that 
 serve as building blocks that can be assembled together in different ways
-to build up a :term:`coupled modeling application`.  In some cases, a generic
+to build up a coupled modeling application.  In some cases, a generic
 component can be used as is, and in other cases the generic component
 must be :term:`specialized <specialization>` (customized) for a particular model or application.
 Additionally, the NUOPC Layer defines a set of technical rules for how components
@@ -30,13 +30,13 @@ backbone of component interoperability.  In other words, a
 level of technical interoperability among two or more components can be
 guaranteed if each component follows the technical rules defined by the NUOPC Layer.  
 A component that follows the NUOPC Layer technical rules is considered to 
-be :term:`NUOPC Layer compliant`.
+be NUOPC Layer compliant.
 
 ..  note:: **A Note on Terminology**
 
     For brevity, throughout this document we will often use the
     term "NUOPC" to refer to the "NUOPC Layer software" that is
-    the current technical implemenation of the NUOPC specification.
+    the current technical implementation of the NUOPC specification.
     
     Also, the term "NUOPC component" is shorthand for a component
     that is NUOPC Layer compliant and can be used in NUOPC-based
@@ -56,10 +56,10 @@ model codebase NUOPC Layer compliant.**
 The document is divided into the following sections:
 
 * The section  :ref:`bigidea` describes important parts of the NUOPC design that
-  is critical for anyone panning to write code using the NUOPC API.
+  are critical for anyone planning to write code using the NUOPC API.
 
 * The section :ref:`writecap` describes the development steps involved
-  making your model code NUOPC Layer compliant.  
+  in making your model code NUOPC Layer compliant.  
   
 * In :ref:`atmexample`, we walk through the code of a basic example cap, describing each part in detail.
 
@@ -93,7 +93,7 @@ to other NUOPC resources available:
       of using the NUOPC API.
              
     * Several `Compliance Testing Tools <https://www.earthsystemcog.org/projects/nuopc/compliance_testing>`_
-      are provided to help you test your code to determine if is NUOPC 
+      are provided to help you test your code to determine if it is NUOPC 
       Layer compliant.
     
     * `Cupid <https://www.earthsystemcog.org/projects/cupid/>`_
@@ -102,7 +102,7 @@ to other NUOPC resources available:
       source code for compliance.
       
     * A `BAMS <https://www2.ametsoc.org/ams/index.cfm/publications/bulletin-of-the-american-meteorological-society-bams/>`_ 
-      article entited `The Earth System Prediction Suite: 
+      article entitled `The Earth System Prediction Suite: 
       Toward a Coordinated U.S. Modeling Capability <https://www.earthsystemcog.org/site_media/projects/esps/paper_1506_esps_final_revised_submitted2.docx>`_ describes NUOPC and how
       NUOPC Layer compliant components are being used in coupled modeling
       systems across U.S. agencies.

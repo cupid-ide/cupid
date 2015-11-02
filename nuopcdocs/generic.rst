@@ -6,7 +6,7 @@ Appendix: The Generic NUOPC Model
 This appendix describes technical details of the generic 
 ``NUOPC_Model`` component and should be used as a reference
 for the initialize and run behaviors of the generic ``NUOPC_Model``
-as well as a description of the available specialization point.
+as well as a description of the available specialization points.
     
 The generic ``NUOPC_Model`` component wraps your model so that it can be
 plugged into a ``NUOPC_Driver``.  The generic component is *used* in your code 
@@ -130,7 +130,7 @@ can provide and/or consume the advertised field.
 .. _realize_fields_providing:
 
 Realize fields *providing* a geom object
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 **IPDv00p2, IPDv01p3, IPDv02p3, IPDv03p3, IPDv04p3**
 
 *(Required, User Provided)*
@@ -167,7 +167,7 @@ needs to be set based on the current processor count.
 .. _realize_fields_accepting:
 
 Realize fields *accepting* a geom object
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 **IPDv03p5, IPDv04p5**
 
 *(Required, User Provided)*
@@ -294,7 +294,7 @@ SetRunClock
 *(Required, NUOPC Provided)*
 
 A specialization method to check and set the internal clock against the incoming clock. 
-This method is called by the default run phase. 
+This method is called by the default run phase.  
 
 If not overridden, the default method will check that the internal clock and incoming clock agree 
 on the current time and that the time step of the incoming clock is a multiple of the internal 
@@ -337,7 +337,7 @@ TimestampExport
 
 A specialization method to set the timestamp on export fields after the model has advanced. 
 If not overridden, the default method sets the timestamp on all export fields to the stop
-time on the internal clock (which is also now the current model time).
+time on the internal clock (which is also now the current model time). 
 
 
 

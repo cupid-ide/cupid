@@ -9,7 +9,7 @@ NUOPC Layer compliant.  The NUOPC Layer includes four kinds of
 generic components, each with a different purpose in a
 coupled application.  One kind of generic component is the 
 :term:`NUOPC Model`,  a component that wraps a model
-code (such as an atmopshere, ocean, or ice model) such that it
+code (such as an atmosphere, ocean, or ice model) such that it
 exposes the set of interfaces defined by the NUOPC specification.
 You will work primarily with the NUOPC Model generic component
 in order to make your model NUOPC Layer compliant.
@@ -28,8 +28,8 @@ in order to make your model NUOPC Layer compliant.
             or regridding) between two components in a single direction 
                         
         Mediator
-            Contains custom coupling code (flux calculations, averaging)
-            between Models; Unlike the Connector, a Mediator can handle
+            Contains custom coupling code (e.g., flux calculations, averaging)
+            between Models; unlike the Connector, a Mediator can handle
             data from multiple Models with data flowing in multiple ways
             
         Driver
@@ -43,9 +43,9 @@ Specializing Generic Components
 .. sidebar:: Technical Note on Inheritance in NUOPC
 
     Those familiar with object-oriented programming will recognize
-    the ideas of specialization and inheritance.  The NUOPC Layer
-    is written in Fortran 90, before object-oriented concepts were
-    introduced into Fortran, so your specialization code is
+    the ideas of specialization and inheritance.  Since the NUOPC Layer
+    is written mostly in Fortran 90, which has limited support for
+    object-oriented programming, your specialization code is
     provided in Fortran subroutines which are registered with
     NUOPC using function pointers.  NUOPC makes callbacks into
     your code when required to execute the specialization code.
@@ -54,8 +54,7 @@ A key design idea behind NUOPC is that a lot of code (and therefore
 behavior) is provided for you.  This code is provided via the
 four generic components included with the NUOPC library, plus 
 some additional utility routines.
-However, NUOPC components cannot be 100% generic, or you would not
-need to write any code yourself!  The :term:`NUOPC Model` generic component 
+The :term:`NUOPC Model` generic component 
 implements most of the initialization and run behavior for you, but you
 have to supply some key parts of the implementation that are specific
 to your model.  **The process of supplying your custom code that completes
@@ -95,8 +94,8 @@ application and cannot be built independently, you must first take
 steps to modularize the code and remove dependencies to other
 models before beginning the NUOPC implementation.
 
-**The addition of NUOPC code to your model does not imply that your 
-model must be run as a NUOPC component in all cases.**  Existing models 
+**The creation of a NUOPC cap does not mean that your 
+model must always be run as a NUOPC component.**  Existing models can
 retain their native modes of operation, and running your model in 
 NUOPC mode becomes a configuration option.
 
@@ -130,6 +129,8 @@ the same output is reproduced. In most cases the output matches bit-for-bit
 so a simple file-based comparison will be sufficient.
 
 We also provide tools to help you check whether your cap is NUOPC-compliant.
+**NUOPC Compliance can be evaluated using a combination of two tools, the Component
+Explorer and the Compliance Checker, included in the ESMF/NUOPC software distribution.**
 More information is provided in the :ref:`runcapwithdriver` and
 :ref:`validatecap` sections.
 

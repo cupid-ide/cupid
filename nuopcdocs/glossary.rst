@@ -4,11 +4,6 @@ Glossary
 .. glossary::
    :sorted:
    
-   coupled modeling application
-        A set of model components that interact together in a common system 
-        for a particular purpose such as medium-range forecasting or
-        climate prediction.
-   
    Earth System Modeling Framework
    ESMF
         A high-performance modeling framework that provides data structures, 
@@ -19,7 +14,7 @@ Glossary
 
    generic component
         In the NUOPC Layer, a generic component is an implementation of an
-        ESMF component with certain pre-defined behaviors that fills a
+        ESMF component with certain pre-defined behaviors that each fulfill a
         certain purpose.  There are four generic components in the NUOPC
         Layer:  Model, Mediator, Driver, and Connector.  In some cases, a
         generic component can be used as is, and in other cases, the
