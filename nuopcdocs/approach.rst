@@ -36,7 +36,7 @@ You can acquire a recent version of ESMF from SourceForge:
 .. code-block:: bash
 
   $ git archive --remote=git://git.code.sf.net/p/esmf/esmf \ 
-    --format=tar --prefix=esmf/ ESMF_7_0_0_beta_snapshot_58| tar xf - 
+    --format=tar --prefix=esmf/ ESMF_7_0_0_beta_snapshot_59| tar xf - 
 
 
 **Compile and install ESMF.**  Full installation details can be found in the `ESMF
@@ -75,7 +75,7 @@ be modularized such that it can be built by itself and does not
 contain hard dependencies to other model components.  For example,
 if the model targeted for NUOPC compliance is a subsystem embedded
 in a larger application, the model will first need to be extracted
-such that it can be built by itself, preferably as a library.
+such that it can be built by itself as a library.
 
 The model also needs to be roughly divided into several execution
 methods: initialize, run, and finalize.  Each of these methods may
@@ -83,11 +83,13 @@ contain several phases.  The run method should allow the model to take
 a single timestep, or accept a parameter defining the number of
 timesteps or a "run until" time.  
 
-Although not strictly necessary, your NUOPC cap code will
-be cleanest if your model exposes data structures, such as derived types,
-for input and output variables with clear, well-documented naming conventions.
-This will simplify the process of hooking up fields in the
-NUOPC cap to your model's data structures.
+
+Your NUOPC cap code will be cleanest if your model exposes data 
+structures for input and output variables with clear, well-documented
+naming conventions. This will simplify the process of hooking up fields
+in the NUOPC cap to your model’s data structures.  The NUOPC Field 
+Dictionary uses the `Climate and Forecast conventions <http://cfconventions.org/>`_ 
+for defining field standard names, but can support field name aliases. 
 
 Finally, the model should not use the global MPI_WORLD_COMM communicator
 explicitly, but should accept a communicator at some point during
@@ -129,9 +131,9 @@ model is used in a coupled system, roundoff error may occur due to slight
 differences introduced when grid interpolation is used between models.)
 
 If your model is already using ESMF, **you will need to
-update your build to link against the latest version of ESMF.** We
-highly recommend doing this step first, before beginning any NUOPC
-development.
+update your build to link against ESMF version 7.0.0 beta snapshot 59 
+or later.**  Instructions for checking out this version of ESMF
+appear in the section above entitled :ref:`installesmf`.
 
 
 .. _integratecap:
@@ -157,7 +159,14 @@ To acquire a cap template you can:
 
     * use the cap template below,
     * copy code from one of the `NUOPC Prototype Applications <https://sourceforge.net/p/esmfcontrib/svn/HEAD/tree/NUOPC/tags/ESMF_7_0_0_beta_snapshot_58/>`_ or
-    * use the `Cupid plugin for Eclipse <https://www.earthsystemcog.org/projects/cupid/>`_ to generate code.
+    * use the `Cupid plugin for Eclipse <https://www.earthsystemcog.org/projects/cupid/>`_ 
+      to generate code.  Cupid automatically generates NUOPC compliant
+      code fragments for specialization points and presents NUOPC API reference
+      documentation based on where you are in your NUOPC cap code.
+      `Installation instructions <https://www.earthsystemcog.org/projects/cupid/installationmars/eclipse>`_
+      are provided on the Cupid website, 
+      and for additional support please
+      `email the ESMF support list <mailto:esmf_support@list.woc.noaa.gov>`_.
     
 Put the initial cap code into your model source tree.  Then, modify
 your Makefile or build scripts so that the cap is compiled with the
@@ -172,7 +181,7 @@ explains how to use these variables in your Makefile.
 .. _genmakefrag:
 
 Modify Your Build to Generate a NUOPC Makefile Fragment
---------------------------------------------------------
+-------------------------------------------------------
 
 The goal of adding a NUOPC cap to your model is so that it can be used
 with other NUOPC-compliant models in a coupled system.  From a technical
@@ -239,7 +248,7 @@ Makefile to include a new target:
 
 .. seealso ::
 
- `Standardized Component Dependences <http://www.earthsystemmodeling.org/esmf_releases/last_built/NUOPC_refdoc/node5.html>`_
+ `Standardized Component Dependencies <http://www.earthsystemmodeling.org/esmf_releases/last_built/NUOPC_refdoc/node5.html>`_
   This section of the NUOPC Reference Manual contains more details
   on setting up NUOPC makefile fragments.
 
@@ -258,10 +267,10 @@ will be linked to your cap and it will be the locus of control
  two special targets that build your model and also compile the NUOPC
  code you will write.
  
- | # this target builds your model + the nuopc code
+ | # this target builds your model and your NUOPC cap
  | $ make nuopc
  |
- | # this target installs your NUOPC-compliant to a particular directory
+ | # this target installs your NUOPC-compliant model to a particular directory
  | $ make nuopcinstall DESTDIR=/path/to/install
 
 
@@ -270,26 +279,33 @@ will be linked to your cap and it will be the locus of control
 Initialize Your Model from the Cap
 ----------------------------------
 
-The cap template you placed in your source tree is in no way connected
-to your model.  You should now add a call into your model's existing
+The cap template you placed in your source tree is not yet connected
+to your model.  You now need to add a call into your model's existing
 initialization subroutine(s).  
 
 NUOPC defines a precise initialization sequence--i.e., a series of 
 steps that all NUOPC components are expected to take when starting
-up.  This initialization sequence is encoded in the :term:`Initialize Phase
+up.  Some of the steps are optional and some are required.
+This initialization sequence is encoded in the :term:`Initialize Phase
 Definition` (IPD), which includes several different versions in 
 order to allow for extension of the initialization sequence for
 future releases of NUOPC and to support backward compatibility.
-See the :ref:`initseq` section for more information.
 
 Instead of tackling the full NUOPC initialization sequence at this point in 
 developing your cap, we recommend that you start by adding calls in your cap's 
 first initialization phase to your model's existing initialization subroutine(s).  
 A good place to do this is within the Advertise Fields initialization phase.
+This is the phase where each component "advertises" the fields it 
+requires and can potentially provide.  In the cap code below, the Avertise
+Field phase appears in lines 68-82.
+
 You will need to add ``use`` statements at the top if your cap to import the relevant
 initialization subroutines from your model into the NUOPC cap module.
 See the code below for an example of where to add the call to your
 model's initialization subroutine(s).
+
+In the next section you will add another call into your model code
+before attempting to execute your NUOPC cap.
 
 
 .. _callrunfromcap:
@@ -297,10 +313,17 @@ model's initialization subroutine(s).
 Call Your Model's Run Subroutine from the Cap
 ---------------------------------------------
 
-Inside the Advance specialization subroutine, add a call to your
-model's timestep subroutine.  This call should only move the
-model forward a single timestep, not the full run length.  If the
-routine requires a parameter such as the timestep length or
+The Advance specialization point provided by the NUOPC Model
+generic component is the place where you will call your
+model's timestep subroutine.  You should add this call now.
+In the example code, the subroutine
+registered for the Advance specialization point is shown
+in lines 101-146 and an example call to your model's timestep
+subroutine is shown on line 143. 
+
+This call should only move the model forward a single timestep, 
+not the full run length.  If the
+subroutine requires a parameter such as the timestep length or
 the time to stop, then these parameters can be retrieved from
 the cap's ``ESMF_Clock`` object.
 
@@ -317,7 +340,7 @@ When you are done, your cap should look something like this:
 .. _runcapwithdriver:
 
 Run the Cap with a NUOPC Driver
----------------------------------------
+-------------------------------
 
 Now you should test the basic cap you have implemented. First, 
 build your model along with the cap code using your model's build 
