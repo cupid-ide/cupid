@@ -207,7 +207,7 @@ Initialize export fields
 
 *(Required, NUOPC Provided)*
 
-Call the :ref:`datainit` specialization method if it exists, which initializes all export fields. 
+Call the :ref:`specialization_datainitialize` specialization method if it exists, which initializes all export fields. 
 Set the timestamp in export fields to the internal clock's time.
 
 
@@ -215,7 +215,7 @@ Initialization Specialization Points
 ------------------------------------
 
 The following specialization points are used during the ``NUOPC_Model``
-intitalization sequence.
+initialization sequence.
 
 
 .. _setclock:
@@ -237,7 +237,7 @@ time ensure that the timeStep of the external clock is a multiple of the
 timeStep of the internal clock. If the stabilityTimeStep argument is not 
 provided then the internal clock will simply be set as a copy of the external clock.
 
-.. _datainit:
+.. _specialization_datainitialize:
 
 DataInitialize
 ^^^^^^^^^^^^^^

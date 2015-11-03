@@ -4,10 +4,12 @@ Overview
 .. image:: images/NUOPC.jpg
     :scale: 70%
 
-The `National Unified Operational Prediction Capability <https://www.earthsystemcog.org/projects/nuopc/>`_ (NUOPC) is an 
-interagency agreement and technical specification for interoperable
-components used in coupled Earth science models.  The :term:`NUOPC Layer` is 
-a software layer build on top of the 
+The `National Unified Operational Prediction Capability <http://www.nws.noaa.gov/nuopc/>`_ 
+(NUOPC) a strategic initiative to fundamentally advance the nation's computational 
+weather prediction systems and improve forecast models used by National Weather Service, 
+Air Force and Navy meteorologists, mission planners, and decision makers.  The 
+`NUOPC Layer <https://www.earthsystemcog.org/projects/nuopc/>`_ is 
+a software layer built on top of the 
 `Earth System Modeling Framework <https://www.earthsystemcog.org/projects/esmf/>`_ (ESMF).  
 ESMF is a high-performance modeling framework that provides
 data structures, interfaces, and operations suited for building coupled models
@@ -26,11 +28,11 @@ component can be used as is, and in other cases the generic component
 must be :term:`specialized <specialization>` (customized) for a particular model or application.
 Additionally, the NUOPC Layer defines a set of technical rules for how components
 should behave and interact with each other.  These technical rules form the
-backbone of component interoperability.  In other words, a
-level of technical interoperability among two or more components can be
-guaranteed if each component follows the technical rules defined by the NUOPC Layer.  
-A component that follows the NUOPC Layer technical rules is considered to 
-be NUOPC Layer compliant.
+backbone of component interoperability.  NUOPC defines this effective interoperability
+as the ability of a model component to execute without code changes in a driver that 
+provides the fields that it requires, and to return with informative messages if its 
+input requirements are not met. A component that follows the NUOPC Layer technical 
+rules is considered to be NUOPC Layer compliant.
 
 ..  note:: **A Note on Terminology**
 
