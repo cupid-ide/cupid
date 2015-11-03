@@ -2,6 +2,14 @@
     max-width: 900px
 }
 
+/* makes version number appear white */
+.wy-side-nav-search>div.version {
+    margin-top: -0.4045em;
+    margin-bottom: 0.809em;
+    font-weight: normal;
+    color: rgba(255,255,255,1.0);
+}
+
 .wy-table-responsive table td, .wy-table-responsive table th {
     white-space: normal !important;
 }

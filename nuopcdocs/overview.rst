@@ -105,7 +105,7 @@ to other NUOPC resources available:
       
     * A `BAMS <https://www2.ametsoc.org/ams/index.cfm/publications/bulletin-of-the-american-meteorological-society-bams/>`_ 
       article entitled `The Earth System Prediction Suite: 
-      Toward a Coordinated U.S. Modeling Capability <https://www.earthsystemcog.org/site_media/projects/esps/paper_1506_esps_final_revised_submitted2.docx>`_ describes NUOPC and how
-      NUOPC Layer compliant components are being used in coupled modeling
+      Toward a Coordinated U.S. Modeling Capability <http://www.earthsystemcog.org/site_media/projects/esps/paper_1509_esps_final_revised_submitted3.docx>`_ 
+      describes NUOPC and how NUOPC Layer compliant components are being used in coupled modeling
       systems across U.S. agencies.
    
