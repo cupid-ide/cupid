@@ -31,12 +31,12 @@ The primary prerequisite software is the NUOPC library, which is
 included with the ESMF distribution, and your model, including
 any of its dependencies.
 
-You can acquire a recent version of ESMF from SourceForge:
+Acquire ESMF version 7 beta snapshot 58 (or a later version) from SourceForge:
 
 .. code-block:: bash
 
   $ git archive --remote=git://git.code.sf.net/p/esmf/esmf \ 
-    --format=tar --prefix=esmf/ ESMF_7_0_0_beta_snapshot_59| tar xf - 
+    --format=tar --prefix=esmf/ ESMF_7_0_0_beta_snapshot_58 | tar xf - 
 
 
 **Compile and install ESMF.**  Full installation details can be found in the `ESMF
@@ -131,7 +131,7 @@ model is used in a coupled system, roundoff error may occur due to slight
 differences introduced when grid interpolation is used between models.)
 
 If your model is already using ESMF, **you will need to
-update your build to link against ESMF version 7.0.0 beta snapshot 59 
+update your build to link against ESMF version 7 beta snapshot 58 
 or later.**  Instructions for checking out this version of ESMF
 appear in the section above entitled :ref:`installesmf`.
 
@@ -373,7 +373,7 @@ Split Up the Initialization Phases
 
 Once the basic cap described above can be executed using the Component Explorer,
 you should modify the cap to implement the required initialization sequence
-as described in the :ref:`Generic NUOPC Model <initseq>` documentation. This
+as described in the :ref:`Generic NUOPC Model <model_initseq>` documentation. This
 includes advertising fields with standard names and realizing fields by creating
 ``ESMF_Field`` objects to wrap your model variables.  As part of this process,
 you will need to describe your model's grid structure using the ESMF geometric

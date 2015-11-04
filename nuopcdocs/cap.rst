@@ -67,7 +67,7 @@ The calls to ``NUOPC_CompSetEntryPoint``  on lines 15-16 and and 21-22 register
 subroutines that are implemented in the cap.  These are initialization phases
 that are not provided by the generic NUOPC Model.
 The ``phaseLabelList`` parameter lists a NUOPC-defined label from the :ref:`Initialize Phase
-Definition <initseq>`.  NUOPC defines explicitly what happens in each phase of model
+Definition <model_initseq>`.  NUOPC defines explicitly what happens in each phase of model
 initialization and these labels uniquely define each phase.  For example, on line
 16, ``"IPDv00p1"`` stands for "Initialize Phase Definition version 00 phase 1". The
 value for the parameter ``userRoutine`` is the name of the subroutine that should

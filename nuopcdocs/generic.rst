@@ -1,4 +1,4 @@
-.. _appendixgeneric:
+.. _model_top:
 
 Appendix: The Generic NUOPC Model
 =================================
@@ -38,7 +38,7 @@ implemented by the generic component.
     3.  In some cases, the generic component can be specialized by setting a
         particular parameter that affects the generic component's behavior.
 
-.. _initseq:
+.. _model_initseq:
 
 Initialization Sequence
 -----------------------
@@ -61,21 +61,21 @@ of the phase.
 ====================================================  ============================================  ========= ========
 Phase Label                                           Description                                   Provider  Required
 ====================================================  ============================================  ========= ========
-IPDv00p0, IPDv01p0, IPDv02p0, IPDv03p0, IPDv04p0      :ref:`setipdversion`                          User      No
+IPDv00p0, IPDv01p0, IPDv02p0, IPDv03p0, IPDv04p0      :ref:`model_phase_setipdversion`              User      No
 
-IPDv00p1, IPDv01p1, IPDv02p1, IPDv03p1, IPDv04p1      :ref:`advertise_fields`                       User      Yes
+IPDv00p1, IPDv01p1, IPDv02p1, IPDv03p1, IPDv04p1      :ref:`model_phase_advertisefields`            User      Yes
                                                             
 IPDv01p2, IPDv02p2, IPDv03p2, IPDv04p2                *Unspecified by NUOPC*  
 
-IPDv00p2, IPDv01p3, IPDv02p3, IPDv03p3, IPDv04p3      :ref:`realize_fields_providing`               User      Yes [#f1]_
+IPDv00p2, IPDv01p3, IPDv02p3, IPDv03p3, IPDv04p3      :ref:`model_phase_realizefieldsproviding`     User      Yes [#f1]_
 
-IPDv03p4, IPDv04p4                                    :ref:`modify_decomp`                          User      No
+IPDv03p4, IPDv04p4                                    :ref:`model_phase_modifydecomp`               User      No
 
-IPDv03p5, IPDv04p5                                    :ref:`realize_fields_accepting`               User      Yes [#f1]_
+IPDv03p5, IPDv04p5                                    :ref:`model_phase_realizefieldsaccepting`     User      Yes [#f1]_
 
-IPDv00p3, IPDv01p4, IPDv02p4, IPDv03p6, IPDv04p6      :ref:`verify_imports`                         NUOPC     Yes                                                     
+IPDv00p3, IPDv01p4, IPDv02p4, IPDv03p6, IPDv04p6      :ref:`model_phase_verifyimports`                         NUOPC     Yes                                                     
 
-IPDv00p4, IPDv01p5, IPDv02p5, IPDv03p7, IPDv04p7      :ref:`init_export`                            NUOPC     Yes
+IPDv00p4, IPDv01p5, IPDv02p5, IPDv03p7, IPDv04p7      :ref:`model_phase_initexport`                 NUOPC     Yes
                                                       
 ====================================================  ============================================  ========= ========
 
@@ -87,7 +87,7 @@ IPDv00p4, IPDv01p5, IPDv02p5, IPDv03p7, IPDv04p7      :ref:`init_export`        
     will provide its own geometric object.
 
 
-.. _setipdversion:
+.. _model_phase_setipdversion:
 
 Set Initialize Phase Definition Version
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
@@ -102,7 +102,7 @@ and passing in the first part of the phase label string, e.g.,
 ``"IPDv02p"`` for version 2.
 
 
-.. _advertise_fields:
+.. _model_phase_advertisefields:
 
 Advertise fields in import and export states
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
@@ -127,7 +127,7 @@ Memory is not allocated for advertised Fields, but attributes are set on the fie
 which can be used in later phases, especially for determining if another component 
 can provide and/or consume the advertised field.
 
-.. _realize_fields_providing:
+.. _model_phase_realizefieldsproviding:
 
 Realize fields *providing* a geom object
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
@@ -145,7 +145,7 @@ state for the previously advertised field.
 
 
 
-.. _modify_decomp:
+.. _model_phase_modifydecomp:
 
 Modify decomposition of accepted geom object
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
@@ -164,7 +164,7 @@ the processor (PET) counts differ between components.  In this case, a new distr
 needs to be set based on the current processor count.
 
 
-.. _realize_fields_accepting:
+.. _model_phase_realizefieldsaccepting:
 
 Realize fields *accepting* a geom object
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
@@ -186,7 +186,7 @@ state for the previously advertised field.
 
 
 
-.. _verify_imports:
+.. _model_phase_verifyimports:
 
 Verify import fields connected and set clock
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
@@ -195,19 +195,19 @@ Verify import fields connected and set clock
 *(Required, NUOPC Provided)*
 
 If the model's internal clock has not been set, set as a copy of the parent clock. 
-Call the :ref:`setclock` specialization subroutine (if present). 
+Call the :ref:`model_specialization_setclock` specialization subroutine (if present). 
 Verify all import fields are connected and set error code if not.
 
 
-.. _init_export:
+.. _model_phase_initexport:
 
 Initialize export fields
 ^^^^^^^^^^^^^^^^^^^^^^^^
-**IPDv00p4, IPDv01p5, IPDv02p5, IPDv03p7, IPDv04p6**
+**IPDv00p4, IPDv01p5, IPDv02p5, IPDv03p7, IPDv04p7**
 
 *(Required, NUOPC Provided)*
 
-Call the :ref:`specialization_datainitialize` specialization method if it exists, which initializes all export fields. 
+Call the :ref:`model_specialization_datainitialize` specialization method if it exists, which initializes all export fields. 
 Set the timestamp in export fields to the internal clock's time.
 
 
@@ -218,7 +218,7 @@ The following specialization points are used during the ``NUOPC_Model``
 initialization sequence.
 
 
-.. _setclock:
+.. _model_specialization_setclock:
 
 SetClock
 ^^^^^^^^
@@ -237,7 +237,7 @@ time ensure that the timeStep of the external clock is a multiple of the
 timeStep of the internal clock. If the stabilityTimeStep argument is not 
 provided then the internal clock will simply be set as a copy of the external clock.
 
-.. _specialization_datainitialize:
+.. _model_specialization_datainitialize:
 
 DataInitialize
 ^^^^^^^^^^^^^^
@@ -250,6 +250,8 @@ Fields in the export state will be timestamped automatically by the calling phas
 so there is no need to do it here.
 
 
+.. _model_phase_run:
+
 Run Sequence
 ------------
 
@@ -258,24 +260,24 @@ is to move the model forward in time from the current time to the stop time on t
 internal clock.  Keep in mind that the ``NUOPC_Driver`` sitting above this component
 is responsible for setting the stop time of this component's clock.
 
-#. Call the :ref:`setrunclock` specialization method to check and set the internal clock against the incoming clock. 
+#. Call the :ref:`model_specialization_setrunclock` specialization method to check and set the internal clock against the incoming clock. 
    If no specialization exists, the default method will check that internal clock and incoming clock agree 
    on current time and that the time step of the incoming clock is a multiple of the internal clock time step. 
    Under these conditions set the internal stop time to one time step interval of the incoming clock. 
    Otherwise exit with error, flagging an incompatibility.
   
-#. Call the :ref:`checkimport` specialization method to check import fields. If no specialization exists, 
+#. Call the :ref:`model_specialization_checkimport` specialization method to check import fields. If no specialization exists, 
    the default method verifies that all import fields are at the current time of the internal clock.
   
 #. Time stepping loop: starting at current time, running to stop time of the internal clock:
 
     #. Timestamp the fields in the export state according to the current time of the internal clock.
 
-    #. Call the :ref:`advance` specialization routine.
+    #. Call the :ref:`model_specialization_advance` specialization routine.
 
     #. Advance the current time of the internal clock according to the time step of the internal clock.
 
-#. Call the :ref:`timestampexport` specialization method to set the timestamp on export fields. 
+#. Call the :ref:`model_specialization_timestampexport` specialization method to set the timestamp on export fields. 
    If no specialization exists, the default method will timestamp all fields in the export state 
    according to the current	time of the internal clock, which now is identical to the 
    stop time of the internal clock.
@@ -285,7 +287,7 @@ is responsible for setting the stop time of this component's clock.
 Run Specialization Points
 -------------------------
 
-.. _setrunclock:
+.. _model_specialization_setrunclock:
 
 SetRunClock
 ^^^^^^^^^^^
@@ -302,7 +304,7 @@ clock time step. Under these conditions set the internal stop time to one time s
 of the incoming clock. Otherwise exit with error, flagging an incompatibility.
 
 
-.. _checkimport:
+.. _model_specialization_checkimport:
 
 CheckImport
 ^^^^^^^^^^^
@@ -314,7 +316,7 @@ A specialization method to verify import fields before advancing in time. If not
 the default method verifies that all import fields are at the current time of the internal clock.
 
 
-.. _advance:
+.. _model_specialization_advance:
 
 Advance
 ^^^^^^^
@@ -327,7 +329,7 @@ This method will be called iteratively by the default run phase until reaching t
 stop time on the internal clock.
 
 
-.. _timestampexport:
+.. _model_specialization_timestampexport:
 
 TimestampExport
 ^^^^^^^^^^^^^^^
@@ -341,4 +343,27 @@ time on the internal clock (which is also now the current model time).
 
 
 
+
+.. _model_phase_finalize:
+
+Finalize Sequence
+-----------------
+
+The generic ``NUOPC_Model`` component has a single finalize phase.  This phase calls
+into the :ref:`model_specialization_finalize` specialization method if it exists. 
+
+
+Finalize Specialization Points
+------------------------------
+
+.. _model_specialization_finalize:
+
+Finalize
+^^^^^^^^
+**Called from: default finalize phase**
+
+*(Optional, User Provided)*
+
+An optional specialization method for custom finalization code and deallocations
+of user data structures.
    

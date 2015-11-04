@@ -65,7 +65,7 @@ The document is divided into the following sections:
   
 * In :ref:`atmexample`, we walk through the code of a basic example cap, describing each part in detail.
 
-* Finally, there is an :ref:`appendix <appendixgeneric>` included as
+* Finally, there is an :ref:`appendix <model_top>` included as
   a reference that details the :term:`initialization sequence` and the set
   of available :term:`specialization point`\ s for NUOPC Model components.
 
