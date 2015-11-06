@@ -1,84 +1,86 @@
 package org.earthsystemmodeling.cupid.trace;
 
-import java.nio.ByteBuffer;
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
-import org.eclipse.core.resources.IProject;
-import org.eclipse.core.runtime.IStatus;
-import org.eclipse.tracecompass.tmf.core.event.ITmfEvent;
-import org.eclipse.tracecompass.tmf.core.event.TmfEvent;
-import org.eclipse.tracecompass.tmf.core.event.TmfEventField;
-import org.eclipse.tracecompass.tmf.core.event.TmfEventType;
 import org.eclipse.tracecompass.tmf.core.timestamp.TmfTimestamp;
-import org.eclipse.tracecompass.tmf.core.trace.ITmfContext;
-import org.eclipse.tracecompass.tmf.core.trace.TmfContext;
-import org.eclipse.tracecompass.tmf.core.trace.TmfTrace;
-import org.eclipse.tracecompass.tmf.core.trace.TraceValidationStatus;
-import org.eclipse.tracecompass.tmf.core.trace.location.ITmfLocation;
-import org.eclipse.tracecompass.tmf.core.trace.location.TmfLocation;
-import org.eclipse.tracecompass.tmf.core.trace.location.TmfLongLocation;
+import org.eclipse.tracecompass.tmf.core.trace.text.TextTrace;
+import org.eclipse.tracecompass.tmf.core.trace.text.TextTraceEventContent;
+import org.json.simple.JSONArray;
+import org.json.simple.JSONObject;
+import org.json.simple.parser.JSONParser;
 
-public class NUOPCTrace extends TmfTrace {
+public class NUOPCTrace extends TextTrace<NUOPCTraceEvent> {
 
-	private TmfLongLocation fCurLoc;
+	static final DateFormat formatter = new SimpleDateFormat("yyyyMMdd HHmmss.SSS");
+	static final Pattern pattern = Pattern.compile("(\\d{8}\\s\\d{6}\\.\\d{3})\\s+(INFO|WARNING|JSON)\\s+PET(\\d+)\\s+(.*)");
+	static final JSONParser jsonParser = new JSONParser();	
 	
 	@Override
-	public IStatus validate(IProject project, String path) {
-		return new TraceValidationStatus(100, Activator.PLUGIN_ID);
+	protected Pattern getFirstLinePattern() {
+		//System.out.println("getFirstLinePattern()");
+		return pattern;
 	}
 
 	@Override
-	public ITmfLocation getCurrentLocation() {
-		return fCurLoc;
-	}
-
-	@Override
-	public double getLocationRatio(ITmfLocation location) {
-		TmfLongLocation loc = (TmfLongLocation) location;
-		return loc.getLocationInfo() / 3;
-	}
-
-	@Override
-	public ITmfContext seekEvent(ITmfLocation location) {
-		if (location != null) {
-			fCurLoc = (TmfLongLocation) location;
+	protected NUOPCTraceEvent parseFirstLine(Matcher matcher, String line) {
+		//System.out.println("parseFirstLine: " + line);
+				
+		//20151105 195924.670
+		
+		long ts;
+		Date date;
+		try {
+			date = formatter.parse(matcher.group(1));
+			ts = date.getTime();
+		} catch (ParseException e) {
+			ts = 0;
+		}
+		TmfTimestamp timestamp = new TmfTimestamp(ts, TmfTimestamp.MILLISECOND_SCALE);
+		
+		TextTraceEventContent content = null;
+		
+		if (matcher.group(2).equals("JSON")) {
+			JSONObject jo = null;
+			try {
+				jo = (JSONObject) jsonParser.parse(matcher.group(4));
+				String comp = (String) jo.get("component");
+				JSONObject jevent = (JSONObject) jo.get("event");
+				String eventName = (String) jevent.get("name");
+				String phase = (String) jevent.get("phase");
+				
+				content = new TextTraceEventContent(new String[] {"type", "pet", "component", "event", "phase"});
+				content.setFieldValue("type", matcher.group(2));
+				content.setFieldValue("pet", matcher.group(3));
+				content.setFieldValue("component", comp);
+				content.setFieldValue("event", eventName);
+				content.setFieldValue("phase", phase);
+				
+			} catch (org.json.simple.parser.ParseException e) {
+					e.printStackTrace();
+			}
 		}
 		else {
-			fCurLoc = new TmfLongLocation(0);
+			content = new TextTraceEventContent(new String[] {"type", "pet", "data"});
+			content.setFieldValue("type", matcher.group(2));
+			content.setFieldValue("pet", matcher.group(3));
+			content.setFieldValue("data", matcher.group(4));
 		}
-		return new TmfContext(fCurLoc, fCurLoc.getLocationInfo());
+			
+		return new NUOPCTraceEvent(this, timestamp, content);
+		
 	}
 
 	@Override
-	public ITmfContext seekEvent(double ratio) {
-		return seekEvent(new TmfLongLocation((long) (ratio*3)));
+	protected void parseNextLine(NUOPCTraceEvent event, String line) {
+		System.out.println("parseNextLine: " + line);
+		
 	}
 
-	@Override
-	public ITmfEvent parseEvent(ITmfContext context) {
-		//TmfLongLocation loc = (TmfLongLocation) context.getLocation();
-		if (context.getRank() <= 150) {
-			TmfTimestamp ts = new TmfTimestamp(context.getRank(), 1);
-			TmfEventType et = new TmfEventType("MY_EVENT", null);
-			TmfEventField ef = new TmfEventField("Field1", context.getRank(), null);
-			return new TmfEvent(this, 1, ts, et, ef);
-		}
-		else {
-			return null;
-		}
-	}
-
-	/*
-	public NUOPCTrace() {
-		super(getTraceDefinition());
-	}
-	
-	private static CustomTxtTraceDefinition getTraceDefinition() {
-		//org.earthsystemmodeling.cupid.trace/src/org/earthsystemmodeling/cupid/trace
-		URL defnURL = Activator.getFileURL("src/org/earthsystemmodeling/cupid/trace/esmf_trace_defn.xml");
-		CustomTxtTraceDefinition defn = CustomTxtTraceDefinition.loadAll(defnURL.getPath())[0];
-		return defn;
-	}	
-	*/
 	
 	
 	
