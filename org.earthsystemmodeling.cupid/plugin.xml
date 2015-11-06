@@ -587,6 +587,7 @@
             factory="org.earthsystemmodeling.cupid.handlers.FortranSourceViewerConfigurationFactory">
       </sourceViewerConfig>
    </extension>
+   <!--
    <extension
          point="org.eclipse.ui.propertyPages">
       <page
@@ -601,6 +602,7 @@
          </enabledWhen>
       </page>
    </extension>
+   -->
    <extension
          point="org.eclipse.ui.newWizards">
       <category
@@ -692,7 +694,7 @@
       <page
             class="org.earthsystemmodeling.cupid.preferences.CupidPreferencePage"
             id="org.earthsystemmodeling.cupid.preferences.CupidPreferencePage"
-            name="Cupid Preferences">
+            name="Cupid">
       </page>
    </extension>
    <extension

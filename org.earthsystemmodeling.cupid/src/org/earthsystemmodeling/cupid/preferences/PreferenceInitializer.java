@@ -20,8 +20,8 @@ public class PreferenceInitializer extends AbstractPreferenceInitializer {
 		store.setDefault(CupidPreferencePage.CUPID_CODEDB_LOCATION, "~/.cupid/codedb");
 		store.setDefault(CupidPreferencePage.CUPID_AWS_ACCESS_KEY, "");
 		store.setDefault(CupidPreferencePage.CUPID_AWS_SECRET_KEY, "");
-		store.setDefault(CupidPreferencePage.CUPID_LANGUAGE_URI, "platform:/plugin/org.earthsystemmodeling.cupid/cupidmodel/nuopc7.psyche");
-		store.setDefault(CupidPreferencePage.CUPID_LANGUAGE_RELOAD, false);
+		//store.setDefault(CupidPreferencePage.CUPID_LANGUAGE_URI, "platform:/plugin/org.earthsystemmodeling.cupid/cupidmodel/nuopc7.psyche");
+		//store.setDefault(CupidPreferencePage.CUPID_LANGUAGE_RELOAD, false);
 	}
 
 }
