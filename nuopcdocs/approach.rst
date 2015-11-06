@@ -79,8 +79,8 @@ such that it can be built by itself as a library.
 
 The model also needs to be roughly divided into several execution
 methods: initialize, run, and finalize.  Each of these methods may
-contain several phases.  The run method should allow the model to take
-a single timestep, or accept a parameter defining the number of
+contain several phases.  The run method should allow the model to 
+execute a single timestep, or accept a parameter defining the number of
 timesteps or a "run until" time.  
 
 
