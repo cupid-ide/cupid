@@ -1,7 +1,5 @@
 package org.earthsystemmodeling.cupid.views;
 
-import java.io.File;
-import java.net.URISyntaxException;
 import java.net.URL;
 
 import org.earthsystemmodeling.cupid.core.CupidActivator;
@@ -9,14 +7,8 @@ import org.eclipse.core.runtime.Status;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.SWTError;
 import org.eclipse.swt.browser.Browser;
-import org.eclipse.swt.browser.LocationEvent;
-import org.eclipse.swt.browser.LocationListener;
-import org.eclipse.swt.events.MouseEvent;
-import org.eclipse.swt.events.MouseListener;
 import org.eclipse.swt.widgets.Composite;
-import org.eclipse.swt.widgets.Event;
 import org.eclipse.swt.widgets.Label;
-import org.eclipse.swt.widgets.Listener;
 import org.eclipse.ui.part.ViewPart;
 
 public class NUOPCDocView extends ViewPart {

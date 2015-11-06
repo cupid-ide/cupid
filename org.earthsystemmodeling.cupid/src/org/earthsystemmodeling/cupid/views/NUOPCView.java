@@ -428,7 +428,7 @@ public class NUOPCView extends ViewPart {
 						CodeConceptProxy ccp = (CodeConceptProxy) obj;
 						String doc = labelProvider.getNUOPCDoc(ccp);
 						if (doc != null) {
-							if (doc.startsWith("http")) {
+							if (doc.startsWith("http") || doc.startsWith("file:"	)) {
 								ndv.setURL(doc);
 							}
 							else {
@@ -559,8 +559,15 @@ public class NUOPCView extends ViewPart {
             						
             						try {        							
             							Constructor<?>[] cons = fieldClass.getConstructors();
-            							Constructor<?> con = cons[0];
-            							newcc = (CodeConcept<?, ?>) con.newInstance(ccp.codeConcept);           						
+            							for (Constructor<?> con : cons) {
+            								if (con.getParameterCount() == 1) {
+            									newcc = (CodeConcept<?, ?>) con.newInstance(ccp.codeConcept); 
+            									break;
+            								}
+            							}
+            							if (newcc == null) {
+            								throw new InstantiationException("Could not find constructor for code concept");
+            							}
             						} catch (SecurityException | InstantiationException | IllegalAccessException | IllegalArgumentException | InvocationTargetException e) {
             							CupidActivator.log("Exception executing constructor", e);
             							return;

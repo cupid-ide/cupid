@@ -12,6 +12,7 @@ import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
 
+import org.earthsystemmodeling.cupid.annotation.Doc;
 import org.earthsystemmodeling.cupid.annotation.Label;
 import org.earthsystemmodeling.cupid.annotation.Name;
 import org.earthsystemmodeling.cupid.annotation.Prop;
@@ -40,17 +41,16 @@ import org.xml.sax.SAXException;
 class NUOPCViewLabelProvider2 extends StyledCellLabelProvider { //implements ITableLabelProvider {
 
 	private org.jdom.Document docXML;
-	private NUOPCViewContentProvider2 contentProvider;
+	private static final String NUOPC_DOC_FILE = "nuopcdocs/nuopc_v7bs59.xml";
 	
 	public NUOPCViewLabelProvider2(NUOPCViewContentProvider2 contentProvider) {
-		this.contentProvider = contentProvider;
 		loadDocXML();
 	}
 	
 	private void loadDocXML() {
 		DocumentBuilderFactory dbf = DocumentBuilderFactory.newInstance();
 		try {
-			InputStream is = CupidActivator.getInputStream("nuopcdocs/nuopc7.xml");
+			InputStream is = CupidActivator.getInputStream(NUOPC_DOC_FILE);
 			if (is == null) {
 				return;
 			}
@@ -67,6 +67,13 @@ class NUOPCViewLabelProvider2 extends StyledCellLabelProvider { //implements ITa
 	}
 	
 	public String getNUOPCDoc(CodeConceptProxy ccp) {
+		
+		//first see if there is a Doc annotation
+		Doc docAnn = ccp.clazz.getAnnotation(Doc.class);
+		if (docAnn != null) {
+			return docAnn.url() + "#" + docAnn.urlfrag();
+		}
+		
 		if (docXML == null || CupidActivator.getDefault().isDebugging()) {
 			loadDocXML(); //reload every time when debugging
 		}
@@ -85,8 +92,6 @@ class NUOPCViewLabelProvider2 extends StyledCellLabelProvider { //implements ITa
 						}
 						else {
 							XMLOutputter outputter = new XMLOutputter();
-							//xmlElem.g
-							//buf.append(xmlElem.getTextTrim())
 							buf.append(outputter.outputString(xmlElem.getContent()));
 						}
 					}
@@ -135,7 +140,7 @@ class NUOPCViewLabelProvider2 extends StyledCellLabelProvider { //implements ITa
 		}
 		
 		String doc = getNUOPCDoc(ccp);
-		if (doc != null) {
+		if (doc != null  && !doc.startsWith("http") && !doc.startsWith("file:")) {
 			buf.append(doc);
 		}
 		

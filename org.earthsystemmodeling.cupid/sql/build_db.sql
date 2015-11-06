@@ -146,7 +146,8 @@ INNER JOIN param p2 ON p2.parent_id = s.id
 
 
 CREATE OR REPLACE VIEW esmf_regspec AS
-SELECT sm.id,  				-- the id of the specialization subroutine
+SELECT DISTINCT
+    sm.id,  				-- the id of the specialization subroutine
 	ss.mod_id, 
 	argSpecRoutine.name, 	-- the name of the specialization subroutine
 	genericUse.name AS genericUse,
@@ -154,8 +155,8 @@ SELECT sm.id,  				-- the id of the specialization subroutine
 	usesEntity.name as specLabelOrig,    -- spec label in the use statement
 	argSpecPhaseLabel.val as specPhaseLabel,  -- optional phase label for the specialization
 	regCall.id as reg_id,                -- id of call to NUOPC_CompSpecialize
-	ss.param_gcomp, 					 -- name of gcomp parameter in SetServices
-	ss.param_rc	                         -- name of rc parameter in SetServices
+	sm.param_gcomp, 					 -- name of gcomp parameter in SetServices
+	sm.param_rc	                         -- name of rc parameter in SetServices
 FROM esmf_setservices AS ss
 INNER JOIN esmf_specmethod AS sm ON sm.mod_id = ss.mod_id
 INNER JOIN call_ AS regCall ON regCall.parent_id = ss.id 

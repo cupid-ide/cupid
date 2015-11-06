@@ -1,5 +1,9 @@
+<!DOCTYPE doc [
+<!ENTITY refurl "file:///home/rocky/git/cupid/nuopcdocs/_build/html/generic.html">
+]>
+
 <docs>
-	
+
 	<doc class="org.earthsystemmodeling.cupid.nuopc.v7bs50.NUOPCDriver">
 	<div class="content">
 		<div class="container">
@@ -778,6 +782,7 @@
 		</div>
 	</doc>
 	
+	
 	<doc class="org.earthsystemmodeling.cupid.nuopc.v7bs50.NUOPCModel.SetClock">
 	<div class="content">
 		<div class="container">
@@ -802,6 +807,12 @@
 		</div>
 	</div>
 	</doc>
+	
+	
+	<!-- 
+	<doc class="org.earthsystemmodeling.cupid.nuopc.v7bs50.NUOPCModel.SetClock"
+	     url="&refurl;#setclock"/>
+	-->
 	
 	<doc class="org.earthsystemmodeling.cupid.nuopc.v7bs50.NUOPCModel.DataInitialize 
 	            org.earthsystemmodeling.cupid.nuopc.v7bs50.NUOPCMediator.DataInitialize">
