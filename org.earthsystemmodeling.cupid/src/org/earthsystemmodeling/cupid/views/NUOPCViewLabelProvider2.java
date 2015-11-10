@@ -17,6 +17,7 @@ import org.earthsystemmodeling.cupid.annotation.Label;
 import org.earthsystemmodeling.cupid.annotation.Name;
 import org.earthsystemmodeling.cupid.annotation.Prop;
 import org.earthsystemmodeling.cupid.core.CupidActivator;
+import org.earthsystemmodeling.cupid.preferences.CupidPreferencePage;
 import org.earthsystemmodeling.cupid.views.NUOPCViewContentProvider2.CodeConceptProxy;
 import org.eclipse.core.runtime.FileLocator;
 import org.eclipse.core.runtime.Path;
@@ -71,7 +72,22 @@ class NUOPCViewLabelProvider2 extends StyledCellLabelProvider { //implements ITa
 		//first see if there is a Doc annotation
 		Doc docAnn = ccp.clazz.getAnnotation(Doc.class);
 		if (docAnn != null) {
-			return docAnn.url() + "#" + docAnn.urlfrag();
+			
+			String baseURL = "";
+			boolean useInternal = CupidActivator.getDefault().getPreferenceStore().getBoolean(CupidPreferencePage.CUPID_REFDOC_USEINTERNAL);
+			if (useInternal) {
+				URL internalURL = CupidActivator.getFileURL("nuopcdocs/html/indexcupid.html");
+				baseURL = internalURL.toExternalForm();			
+			}
+			else {
+				baseURL = CupidActivator.getDefault().getPreferenceStore().getString(CupidPreferencePage.CUPID_REFDOC_URL);
+				if (baseURL == null || baseURL.length()==0) {
+					baseURL = CupidActivator.getDefault().getPreferenceStore().getDefaultString(CupidPreferencePage.CUPID_REFDOC_URL);  
+				}
+			}
+
+			CupidActivator.debug("ref doc base URL = " + baseURL);
+			return baseURL + docAnn.urlfrag();
 		}
 		
 		if (docXML == null || CupidActivator.getDefault().isDebugging()) {

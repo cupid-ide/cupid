@@ -21,7 +21,7 @@ import org.earthsystemmodeling.cupid.annotation.Doc
 
 @Label(label="NUOPC Model")
 @MappingType("module")
-@Doc(urlfrag="model-top")
+@Doc(urlfrag="#model-top")
 class NUOPCModel extends NUOPCComponent {
 
 	public String modelName
@@ -100,7 +100,7 @@ class NUOPCModel extends NUOPCComponent {
 	
 		@Label(label="IPDv04p1 - Advertise Fields")
 		@MappingType("subroutine")
-		@Doc(urlfrag="model-phase-advertisefields")
+		@Doc(urlfrag="#model-phase-advertisefields")
 		public static class IPDv04p1 extends EntryPointCodeConcept<IPD> {
 
 			@Child(min=0, max=-1)
@@ -140,6 +140,7 @@ class NUOPCModel extends NUOPCComponent {
 		
 		@Label(label="IPDv04p2 - Unspecified by NUOPC")
 		@MappingType("subroutine-inherited")
+		@Doc(urlfrag="#model-initseq")
 		public static class IPDv04p2 extends CodeConcept<IPD, ASTNode> {
 			new(IPD parent) {
 				super(parent)
@@ -148,7 +149,7 @@ class NUOPCModel extends NUOPCComponent {
 
 		@Label(label="IPDv04p3 - Realize Fields Providing Geom Object")
 		@MappingType("subroutine")
-		@Doc(urlfrag="model-phase-realizefieldsproviding")
+		@Doc(urlfrag="#model-phase-realizefieldsproviding")
 		public static class IPDv04p3 extends EntryPointCodeConcept<IPD> {
 
 			@Child(min=0, max=-1)
@@ -188,7 +189,7 @@ class NUOPCModel extends NUOPCComponent {
 		
 		@Label(label="IPDv04p4 - Modify Decomposition of Accepted Geom Object")
 		@MappingType("subroutine")
-		@Doc(urlfrag="model-phase-modifydecomp")
+		@Doc(urlfrag="#model-phase-modifydecomp")
 		public static class IPDv04p4 extends EntryPointCodeConcept<IPD> {
 
 			new(IPD parent) {
@@ -222,7 +223,7 @@ class NUOPCModel extends NUOPCComponent {
 		
 		@Label(label="IPDv04p5 - Realize Fields Accepting Geom Object")
 		@MappingType("subroutine")
-		@Doc(urlfrag="model-phase-realizefieldsaccepting")
+		@Doc(urlfrag="#model-phase-realizefieldsaccepting")
 		public static class IPDv04p5 extends EntryPointCodeConcept<IPD> {
 			
 			@Child(min=0, max=-1)
@@ -258,7 +259,7 @@ class NUOPCModel extends NUOPCComponent {
 		
 		@Label(label="IPDv04p6 - Verify Connected / Set Clock")
 		@MappingType("subroutine-inherited")
-		@Doc(urlfrag="model-phase-verifyimports")
+		@Doc(urlfrag="#model-phase-verifyimports")
 		public static class IPDv04p6 extends CodeConcept<IPD, ASTNode> {
 			new(IPD parent) {
 				super(parent)
@@ -267,7 +268,7 @@ class NUOPCModel extends NUOPCComponent {
 
 		@Label(label="IPDv04p7 - Data Initialize")
 		@MappingType("subroutine-inherited")
-		@Doc(urlfrag="model-phase-initexport")
+		@Doc(urlfrag="#model-phase-initexport")
 		public static class IPDv04p7 extends CodeConcept<IPD, ASTNode> {
 			new(IPD parent) {
 				super(parent)
@@ -395,7 +396,7 @@ if (ESMF_LogFoundError(rcToCheck=«_parent.paramRC», msg=ESMF_LOGERR_PASSTHRU, 
 	
 
 	@Label(label="Initialize Phase Definition (v00)")
-	@Doc(urlfrag="model-initseq")
+	@Doc(urlfrag="#model-initseq")
 	public static class IPDv00 extends IPD {
 
 		@Child(min=1)
@@ -431,7 +432,7 @@ if (ESMF_LogFoundError(rcToCheck=«_parent.paramRC», msg=ESMF_LOGERR_PASSTHRU, 
 	
 	
 	@Label(label="Initialize Phase Definition (v01)")
-	@Doc(urlfrag="model-initseq")
+	@Doc(urlfrag="#model-initseq")
 	public static class IPDv01 extends IPD {
 
 		@Child(min=1)
@@ -471,7 +472,7 @@ if (ESMF_LogFoundError(rcToCheck=«_parent.paramRC», msg=ESMF_LOGERR_PASSTHRU, 
 	}
 		
 	@Label(label="Initialize Phase Definition (v02)")
-	@Doc(urlfrag="model-initseq")
+	@Doc(urlfrag="#model-initseq")
 	public static class IPDv02 extends IPD {
 	
 		new(NUOPCModel.InitPhases parent) {
@@ -512,7 +513,7 @@ if (ESMF_LogFoundError(rcToCheck=«_parent.paramRC», msg=ESMF_LOGERR_PASSTHRU, 
 	}
 	
 	@Label(label="Initialize Phase Definition (v03)")
-	@Doc(urlfrag="model-initseq")
+	@Doc(urlfrag="#model-initseq")
 	public static class IPDv03 extends IPD {
 	
 		new(NUOPCModel.InitPhases parent) {
@@ -568,7 +569,7 @@ if (ESMF_LogFoundError(rcToCheck=«_parent.paramRC», msg=ESMF_LOGERR_PASSTHRU, 
 	}
 	
 	@Label(label="Initialize Phase Definition (v04)")
-	@Doc(urlfrag="model-initseq")
+	@Doc(urlfrag="#model-initseq")
 	public static class IPDv04 extends IPD {
 	
 		new(NUOPCModel.InitPhases parent) {
@@ -709,190 +710,10 @@ if (ESMF_LogFoundError(rcToCheck=«_parent.paramRC», msg=ESMF_LOGERR_PASSTHRU, 
 	}
 	
 
-/*
-
-	@Label(label="Initialize Phase 1")
-	@MappingType("subroutine")
-	public static class InitP1 extends EntryPointCodeConcept<Initialization> {
-
-		@Child(min=0, max=-1)
-		public List<InitP1_AdvertiseField> advertiseFields
-
-		new(Initialization parent) {
-			super(parent, "IPDv00p1")
-			subroutineName = "InitializeP1"
-			methodType = "ESMF_METHOD_INITIALIZE"
-		}
-
-		override reverseChildren() {
-			advertiseFields = new InitP1_AdvertiseField(this).reverseMultiple
-			this
-		}
-
-		override module() {
-			_parent._parent
-		}
-
-		override setServices() {
-			_parent._parent.setServices
-		}
-
-		// testing forward chaining
-		override forward() {
-			var ast = super.forward
-			ast = new InitP1_AdvertiseField(this).forward
-			ast
-		}
-
-	}
-
-	@Label(label="Advertise Field")
-	@MappingType("call")
-	public static class InitP1_AdvertiseField extends CodeConcept<InitP1, ASTCallStmtNode> {
-
-		public String state
-		public String standardName
-
-		new(InitP1 parent) {
-			super(parent)
-			// defaults
-			state = _parent.paramImport
-			standardName = "StandardName"
-		}
-
-		override name() {
-			state + " / " + standardName
-		}
-
-		override List reverseMultiple() {
-			var retList = newArrayList()
-
-			var rs = '''call_(_cid, «parentID», 'NUOPC_StateAdvertiseField'),
-						callArgWithType(_, _cid, 1, _, _, _stateExpr),
-						callArgWithType(_, _cid, 2, _, _, _standardNameExpr).'''.execQuery
-
-			while (rs.next) {
-				var advField = new InitP1_AdvertiseField(_parent);
-				advField._id = rs.getLong("_cid")
-				advField.state = rs.getString("_stateExpr")
-				advField.standardName = rs.getString("_standardNameExpr")
-				retList.add(advField)
-			}
-			rs.close
-
-			retList
-		}
-
-		override forward() {
-			var IFortranAST ast = getAST
-
-			var code = '''
-
-call NUOPC_StateAdvertiseField(«paramch(state)», '«paramch(standardName)»', rc=«_parent.paramRC»)
-if (ESMF_LogFoundError(rcToCheck=«_parent.paramRC», msg=ESMF_LOGERR_PASSTHRU, &
-    line=__LINE__, &
-    file=__FILE__)) &
-    return  ! bail out
-'''
-			val IASTListNode<IBodyConstruct> stmts = parseLiteralStatementSequence(code)
-			var ASTSubroutineSubprogramNode ssn = _parent.ASTRef
-
-			ssn.body.addAll(stmts)
-			// setASTRef(stmts.get(0) as ASTCallStmtNode)
-			ast
-		}
-
-	}
-
-	@Label(label="Initialize Phase 2")
-	@MappingType("subroutine")
-	public static class InitP2 extends EntryPointCodeConcept<Initialization> {
-
-		@Child(min=0, max=-1)
-		public List<InitP2_RealizeField> realizeFields
-
-		new(Initialization parent) {
-			super(parent, "IPDv00p2")
-			subroutineName = "InitializeP2"
-			methodType = "ESMF_METHOD_INITIALIZE"
-		}
-
-		override reverseChildren() {
-			realizeFields = new InitP2_RealizeField(this).reverseMultiple
-			this
-		}
-
-		override module() {
-			_parent._parent
-		}
-
-		override setServices() {
-			_parent._parent.setServices
-		}
-
-	}
-
-	@Label(label="Realize Field")
-	@MappingType("call")
-	public static class InitP2_RealizeField extends CodeConcept<InitP2, ASTCallStmtNode> {
-
-		public String state
-		public String field
-
-		new(InitP2 parent) {
-			super(parent)
-			// defaults
-			state = _parent.paramImport
-			field = "field"
-		}
-
-		override name() {
-			state + " / " + field
-		}
-
-		override List reverseMultiple() {
-			var retList = newArrayList()
-
-			var rs = '''call_(_cid, «parentID», 'NUOPC_StateRealizeField'),
-						callArgWithType(_, _cid, 1, _, _, _stateExpr),
-						callArgWithType(_, _cid, 2, _, _, _fieldExpr).'''.execQuery
-
-			while (rs.next) {
-				var relField = new InitP2_RealizeField(_parent);
-				relField._id = rs.getLong("_cid")
-				relField.state = rs.getString("_stateExpr")
-				relField.field = rs.getString("_fieldExpr")
-				retList.add(relField)
-			}
-			rs.close
-
-			retList
-		}
-
-		override forward() {
-			var IFortranAST ast = getAST
-
-			var code = '''
-
-call NUOPC_StateRealizeField(«paramch(state)», field=«paramch(field)», rc=«_parent.paramRC»)
-if (ESMF_LogFoundError(rcToCheck=«_parent.paramRC», msg=ESMF_LOGERR_PASSTHRU, &
-    line=__LINE__, &
-    file=__FILE__)) &
-    return  ! bail out
-'''
-			val IASTListNode<IBodyConstruct> stmts = parseLiteralStatementSequence(code)
-			var ASTSubroutineSubprogramNode ssn = _parent.ASTRef
-
-			ssn.body.addAll(stmts)
-			ast
-		}
-
-	}
-*/
 
 	@Label(label="SetClock")
 	@MappingType("subroutine")
-	@Doc(urlfrag="model-specialization-setclock")
+	@Doc(urlfrag="#model-specialization-setclock")
 	public static class SetClock extends SpecializationMethodCodeConcept<InitSpecializations> {
 
 		new(InitSpecializations parent) {
@@ -959,7 +780,7 @@ end subroutine
 
 	@Label(label="DataInitialize")
 	@MappingType("subroutine")
-	@Doc(urlfrag="model-specialization-datainitialize")
+	@Doc(urlfrag="#model-specialization-datainitialize")
 	public static class DataInitialize extends SpecializationMethodCodeConcept<InitSpecializations> {
 
 		new(InitSpecializations parent) {
@@ -1071,7 +892,7 @@ end subroutine
 	
 	@Label(label="Run Phase 1")
 	@MappingType("subroutine-inherited")
-	@Doc(urlfrag="model-phase-run")
+	@Doc(urlfrag="#model-phase-run")
 	public static class RunPhase1 extends CodeConcept<RunPhases, ASTNode> {
 		new(RunPhases parent) {
 			super(parent)
@@ -1080,7 +901,7 @@ end subroutine
 
 	@Label(label="Advance")
 	@MappingType("subroutine")
-	@Doc(urlfrag="model-specialization-advance")
+	@Doc(urlfrag="#model-specialization-advance")
 	public static class ModelAdvance extends SpecializationMethodCodeConcept<RunSpecializations> {
 
 		new(RunSpecializations parent) {
@@ -1155,7 +976,7 @@ end subroutine
 
 	@Label(label="SetRunClock")
 	@MappingType("subroutine")
-	@Doc(urlfrag="model-specialization-setrunclock")
+	@Doc(urlfrag="#model-specialization-setrunclock")
 	public static class SetRunClock extends SpecializationMethodCodeConcept<RunSpecializations> {
 
 		new(RunSpecializations parent) {
@@ -1217,7 +1038,7 @@ end subroutine
 
 	@Label(label="CheckImport")
 	@MappingType("subroutine")
-	@Doc(urlfrag="model-specialization-checkimport")
+	@Doc(urlfrag="#model-specialization-checkimport")
 	public static class CheckImport extends SpecializationMethodCodeConcept<RunSpecializations> {
 
 		new(RunSpecializations parent) {
@@ -1303,7 +1124,7 @@ end subroutine
 	
 	@Label(label="Finalize Phase 1")
 	@MappingType("subroutine-inherited")
-	@Doc(urlfrag="model-phase-finalize")
+	@Doc(urlfrag="#model-phase-finalize")
 	public static class FinalizePhase1 extends CodeConcept<FinalizePhases, ASTNode> {
 		new(FinalizePhases parent) {
 			super(parent)
@@ -1337,7 +1158,7 @@ end subroutine
 	
 	@Label(label="FinalizeModel")
 	@MappingType("subroutine")
-	@Doc(urlfrag="model-specialization-finalize")
+	@Doc(urlfrag="#model-specialization-finalize")
 	public static class FinalizeModel extends SpecializationMethodCodeConcept<FinalizeSpecializations> {
 
 		new(FinalizeSpecializations parent) {
