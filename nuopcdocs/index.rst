@@ -16,7 +16,7 @@ Contents:
    idea
    approach
    cap
-   generic
+   nuopc_model
    glossary
    
 Search

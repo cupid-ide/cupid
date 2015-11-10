@@ -1,7 +1,8 @@
-NUOPC_Model Reference
-=====================
+NUOPC Reference
+===============
 
 .. toctree::
    :maxdepth: 2
    
-   generic
+   nuopc_model
+   nuopc_mediator
