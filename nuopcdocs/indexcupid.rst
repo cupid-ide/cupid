@@ -6,3 +6,4 @@ NUOPC Reference
    
    nuopc_model
    nuopc_mediator
+   nuopc_driver

@@ -38,6 +38,19 @@ implemented by the generic component.
     3.  In some cases, the generic component can be specialized by setting a
         particular parameter that affects the generic component's behavior.
 
+
+
+.. _model_setservices:
+
+SetServices
+-----------
+
+All NUOPC components must define a ``SetServices`` method.  The SetServices method is used 
+to define which generic component is being extended (i.e., Driver, Model, Mediator, or Connector), 
+to register entry points, and to register specialization methods.
+
+
+
 .. _model_initseq:
 
 Initialization Sequence

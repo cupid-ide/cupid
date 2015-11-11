@@ -4,6 +4,15 @@ Appendix: The Generic NUOPC Mediator
 ====================================
 
 
+.. _mediator_setservices:
+
+SetServices
+-----------
+
+All NUOPC components must define a ``SetServices`` method.  The SetServices method is used 
+to define which generic component is being extended (i.e., Driver, Model, Mediator, or Connector), 
+to register entry points, and to register specialization methods.
+
 
 .. _mediator_initseq:
 
