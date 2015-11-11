@@ -24,9 +24,11 @@ import org.earthsystemmodeling.cupid.nuopc.v7bs59.NUOPCModel.IPD.AdvertiseField
 import org.earthsystemmodeling.cupid.nuopc.v7bs59.NUOPCModel.IPD.RealizeField
 import org.eclipse.photran.internal.core.parser.ASTModuleNode
 import org.eclipse.photran.internal.core.parser.ASTUseStmtNode
+import org.earthsystemmodeling.cupid.annotation.Doc
 
 @Label(label="NUOPC Driver")
 @MappingType("module")
+@Doc(urlfrag="#driver-top")
 class NUOPCDriver extends NUOPCComponent {
 	
 	public String driverName	
@@ -34,7 +36,7 @@ class NUOPCDriver extends NUOPCComponent {
 	public String path
 	
 	@Child
-	var public SetServicesCodeConcept<NUOPCDriver> setServices
+	var public SetServices setServices
 	
 	@Child
 	var public Initialization initialization
@@ -85,7 +87,7 @@ class NUOPCDriver extends NUOPCComponent {
 	}
 	
 	def reverseChildren() {
-		setServices = new SetServicesCodeConcept(this).reverse
+		setServices = new SetServices(this).reverse as SetServices
 		initialization = new Initialization(this).reverse
 		run = new Run(this).reverse
 		finalize = new Finalize(this).reverse
@@ -97,6 +99,15 @@ class NUOPCDriver extends NUOPCComponent {
 		driverName + " (" + filename + ")"
 	}
 	
+	
+	@Label(label="SetServices")
+	@MappingType("subroutine")
+	@Doc(urlfrag="#driver-setservices")
+	public static class SetServices extends SetServicesCodeConcept<NUOPCDriver> {	
+		new(NUOPCDriver parent) {
+			super(parent)
+		}		
+	}
 	
 	
 	//////////////
@@ -633,6 +644,7 @@ end subroutine
 		
 		@Label(label="Phase 1")
 		@MappingType("subroutine-inherited")
+		@Doc(urlfrag="#driver-phase-init")
 		public static class InitP1 extends CodeConcept<InitPhases, ASTNode> {
 			new(InitPhases parent) {
 				super(parent)
@@ -713,58 +725,10 @@ end subroutine
 		
 	}
 	
-	/*
-	@Label(label="SetModelCount", type="subroutine")
-	public static class SetModelCount extends SpecializationMethodCodeConcept<Initialization> {
-		
-		new(Initialization parent) {
-			super(parent, "NUOPC_Driver", "label_SetModelCount")
-			
-			//defaults
-			subroutineName = "SetModelCount"
-			specLabel = "driver_label_SetModelCount"
-			paramGridComp = "driver"
-			paramRC = "rc"			
-		}
-		
-		override subroutineTemplate() {
-'''
-
-subroutine «subroutineName»(«paramGridComp», «paramRC»)
-    type(ESMF_GridComp)  :: «paramGridComp»
-    integer, intent(out) :: «paramRC»
-
-    rc = ESMF_SUCCESS
-
-    ! set the modelCount 
-    call NUOPC_DriverSet(driver, modelCount=1, rc=rc)
-    if (ESMF_LogFoundError(rcToCheck=rc, msg=ESMF_LOGERR_PASSTHRU, &
-      line=__LINE__, &
-      file=__FILE__)) &
-      return  ! bail out
-
-end subroutine
-'''
-	}
-		
-		override module() {
-			_parent._parent
-		}
-		
-		override setServices() {
-			_parent._parent.setServices
-		}
-		
-		override genericUse() {
-			_parent._parent.importNUOPCGeneric
-		}
-		
-	}
-	*
-	*/
 	
 	@Label(label="SetModelServices")
 	@MappingType("subroutine")
+	@Doc(urlfrag="#driver-specialization-setmodelservices")
 	static class SetModelServices extends SpecializationMethodCodeConcept<InitSpecializations> {
 	
 		@Child(max=-1)
@@ -948,35 +912,7 @@ if (ESMF_LogFoundError(rcToCheck=«paramRC», msg=ESMF_LOGERR_PASSTHRU, &
 			var ASTSubroutineSubprogramNode ssn = _parent.ASTRef			
 			
 			var ASTModuleNode amn = _parent._parent._parent._parent.ASTRef
-
-/*			
-			var code = 
-'''
-						
-use «paramch('MODEL')», only: «paramch('modelSS')» => SetServices
-'''			
-
-			val IASTListNode<IBodyConstruct> useNodes = parseLiteralStatementSequence(code)
-*/
-
-/*
-			var code = 
-'''
-
-type(ESMF_GridComp)            :: child
-'''			
-			val IASTListNode<IBodyConstruct> typeNodes = parseLiteralStatementSequence(code)
-			val ASTTypeDeclarationStmtNode last = ssn.findLast(ASTTypeDeclarationStmtNode);
-			if (last != null) {
-				for (IBodyConstruct typeNode : typeNodes.reverse) {
-					ssn.body.insertAfter(last, typeNode);
-				}
-			}
-			else {
-				ssn.body.addAll(typeNodes);
-			}
-*/					
-			
+		
 			var code = 
 '''
 
@@ -1005,6 +941,7 @@ if (ESMF_LogFoundError(rcToCheck=«_parent.paramRC», msg=ESMF_LOGERR_PASSTHRU, 
 	
 	@Label(label="SetRunSequence")
 	@MappingType("subroutine")
+	@Doc(urlfrag="#driver-specialization-setrunsequence")
 	static class SetRunSequence extends SpecializationMethodCodeConcept<InitSpecializations> {
 	
 		@Label(label="New Run Sequence")
@@ -1204,6 +1141,7 @@ if (ESMF_LogFoundError(rcToCheck=rc, msg=ESMF_LOGERR_PASSTHRU, &
 	
 	@Label(label="ModifyInitializePhaseMap")
 	@MappingType("subroutine")
+	@Doc(urlfrag="#driver-specialization-modifyinitphasemap")
 	static class ModifyInitializePhaseMap extends SpecializationMethodCodeConcept<InitSpecializations> {
 	
 		new(InitSpecializations parent) {
@@ -1269,6 +1207,7 @@ if (ESMF_LogFoundError(rcToCheck=rc, msg=ESMF_LOGERR_PASSTHRU, &
 	
 	@Label(label="Run Phase 1")
 	@MappingType("subroutine-inherited")
+	@Doc(urlfrag="#driver-phase-run")
 	public static class RunPhase1 extends CodeConcept<RunPhases, ASTNode> {
 		new(RunPhases parent) {
 			super(parent)
@@ -1298,6 +1237,7 @@ if (ESMF_LogFoundError(rcToCheck=rc, msg=ESMF_LOGERR_PASSTHRU, &
 	
 	@Label(label="SetRunClock")
 	@MappingType("subroutine")
+	@Doc(urlfrag="#driver-specialization-setrunclock")
 	public static class SetRunClock extends SpecializationMethodCodeConcept<RunSpecializations> {
 
 		new(RunSpecializations parent) {
@@ -1388,6 +1328,7 @@ subroutine «subroutineName»(«paramGridComp», «paramRC»)
 	
 	@Label(label="Finalize Phase 1")
 	@MappingType("subroutine-inherited")
+	@Doc(urlfrag="#driver-phase-finalize")
 	public static class FinalizePhase1 extends CodeConcept<FinalizePhases, ASTNode> {
 		new(FinalizePhases parent) {
 			super(parent)
@@ -1421,6 +1362,7 @@ subroutine «subroutineName»(«paramGridComp», «paramRC»)
 	
 	@Label(label="FinalizeDriver")
 	@MappingType("subroutine")
+	@Doc(urlfrag="#driver-specialization-finalize")
 	public static class FinalizeDriver extends SpecializationMethodCodeConcept<FinalizeSpecializations> {
 
 		new(FinalizeSpecializations parent) {

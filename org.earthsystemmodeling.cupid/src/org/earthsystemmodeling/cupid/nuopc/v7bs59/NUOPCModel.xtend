@@ -29,7 +29,7 @@ class NUOPCModel extends NUOPCComponent {
 	public String path
 
 	@Child
-	public SetServicesCodeConcept<NUOPCModel> setServices
+	public SetServices setServices
 	
 	@Child
 	public Initialization initialization
@@ -79,7 +79,7 @@ class NUOPCModel extends NUOPCComponent {
 	}
 
 	def reverseChildren() {
-		setServices = new SetServicesCodeConcept(this).reverse
+		setServices = new SetServices(this).reverse as SetServices
 		initialization = new Initialization(this).reverse
 		run = new Run(this).reverse
 		finalize = new Finalize(this).reverse
@@ -88,6 +88,15 @@ class NUOPCModel extends NUOPCComponent {
 
 	override name() {
 		modelName + " (" + filename + ")"
+	}
+	
+	@Label(label="SetServices")
+	@MappingType("subroutine")
+	@Doc(urlfrag="#model-setservices")
+	public static class SetServices extends SetServicesCodeConcept<NUOPCModel> {	
+		new(NUOPCModel parent) {
+			super(parent)
+		}		
 	}
 	
 	

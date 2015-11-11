@@ -42,13 +42,17 @@ import org.xml.sax.SAXException;
 class NUOPCViewLabelProvider2 extends StyledCellLabelProvider { //implements ITableLabelProvider {
 
 	private org.jdom.Document docXML;
-	private static final String NUOPC_DOC_FILE = "nuopcdocs/nuopc_v7bs59.xml";
+	private static final String NUOPC_DOC_FILE = null; //"nuopcdocs/nuopc_v7bs59.xml"
+	private static final String NUOPC_REFDOC_BASEURL = "nuopcdocs/html/indexcupid.html";
 	
 	public NUOPCViewLabelProvider2(NUOPCViewContentProvider2 contentProvider) {
 		loadDocXML();
 	}
 	
 	private void loadDocXML() {
+		
+		if (NUOPC_DOC_FILE == null) return;
+		
 		DocumentBuilderFactory dbf = DocumentBuilderFactory.newInstance();
 		try {
 			InputStream is = CupidActivator.getInputStream(NUOPC_DOC_FILE);
@@ -76,7 +80,7 @@ class NUOPCViewLabelProvider2 extends StyledCellLabelProvider { //implements ITa
 			String baseURL = "";
 			boolean useInternal = CupidActivator.getDefault().getPreferenceStore().getBoolean(CupidPreferencePage.CUPID_REFDOC_USEINTERNAL);
 			if (useInternal) {
-				URL internalURL = CupidActivator.getFileURL("nuopcdocs/html/indexcupid.html");
+				URL internalURL = CupidActivator.getFileURL(NUOPC_REFDOC_BASEURL);
 				baseURL = internalURL.toExternalForm();			
 			}
 			else {

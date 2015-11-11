@@ -29,7 +29,7 @@ class NUOPCMediator extends NUOPCComponent {
 	public String path
 
 	@Child
-	public SetServicesCodeConcept<NUOPCMediator> setServices
+	public SetServices setServices
 	
 	@Child
 	public Initialization initialization
@@ -79,7 +79,7 @@ class NUOPCMediator extends NUOPCComponent {
 	}
 
 	def reverseChildren() {
-		setServices = new SetServicesCodeConcept(this).reverse
+		setServices = new SetServices(this).reverse as SetServices
 		initialization = new Initialization(this).reverse
 		run = new Run(this).reverse
 		finalize = new Finalize(this).reverse
@@ -90,6 +90,15 @@ class NUOPCMediator extends NUOPCComponent {
 		mediatorName + " (" + filename + ")"
 	}
 	
+	
+	@Label(label="SetServices")
+	@MappingType("subroutine")
+	@Doc(urlfrag="#mediator-setservices")
+	public static class SetServices extends SetServicesCodeConcept<NUOPCMediator> {	
+		new(NUOPCMediator parent) {
+			super(parent)
+		}		
+	}
 	
 	@Label(label="Initialize Phase Definition")
 	public static abstract class IPD extends CodeConcept<NUOPCMediator.InitPhases, ASTNode> {
