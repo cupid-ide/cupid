@@ -31,12 +31,12 @@ The primary prerequisite software is the NUOPC library, which is
 included with the ESMF distribution, and your model, including
 any of its dependencies.
 
-Acquire ESMF version 7 beta snapshot 58 (or a later version) from SourceForge:
+Acquire ESMF version 7 beta snapshot 59 (or a later version) from SourceForge:
 
 .. code-block:: bash
 
   $ git archive --remote=git://git.code.sf.net/p/esmf/esmf \ 
-    --format=tar --prefix=esmf/ ESMF_7_0_0_beta_snapshot_58 | tar xf - 
+    --format=tar --prefix=esmf/ ESMF_7_0_0_beta_snapshot_59 | tar xf - 
 
 
 **Compile and install ESMF.**  Full installation details can be found in the `ESMF
@@ -131,7 +131,7 @@ model is used in a coupled system, roundoff error may occur due to slight
 differences introduced when grid interpolation is used between models.)
 
 If your model is already using ESMF, **you will need to
-update your build to link against ESMF version 7 beta snapshot 58 
+update your build to link against ESMF version 7 beta snapshot 59 
 or later.**  Instructions for checking out this version of ESMF
 appear in the section above entitled :ref:`installesmf`.
 
@@ -158,7 +158,7 @@ You need not start from scratch.  Instead start with a NUOPC cap template.
 To acquire a cap template you can:
 
     * use the cap template below,
-    * copy code from one of the `NUOPC Prototype Applications <https://sourceforge.net/p/esmfcontrib/svn/HEAD/tree/NUOPC/tags/ESMF_7_0_0_beta_snapshot_58/>`_ or
+    * copy code from one of the `NUOPC Prototype Applications <https://sourceforge.net/p/esmfcontrib/svn/HEAD/tree/NUOPC/tags/ESMF_7_0_0_beta_snapshot_59/>`_ or
     * use the `Cupid plugin for Eclipse <https://www.earthsystemcog.org/projects/cupid/>`_ 
       to generate code.  Cupid automatically generates NUOPC compliant
       code fragments for specialization points and presents NUOPC API reference
