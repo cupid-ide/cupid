@@ -38,6 +38,8 @@
       <requirement
           name="org.eclipse.rcp.feature.group"
           versionRange="[4.5.0,4.6.0)"/>
+      <requirement
+          name="org.eclipse.team.svn.feature.group"/>
       <repository
           url="http://download.eclipse.org/technology/epp/packages/mars"/>
       <repository
@@ -55,6 +57,16 @@
       <repository
           url="http://earthsystemmodeling.org/cupid/mars/"/>
       <description></description>
+    </setupTask>
+    <setupTask
+        xsi:type="setup.p2:P2Task"
+        licenseConfirmationDisabled="true">
+      <requirement
+          name="org.polarion.eclipse.team.svn.connector.feature.group"/>
+      <requirement
+          name="org.polarion.eclipse.team.svn.connector.svnkit18.feature.group"/>
+      <repository
+          url="http://community.polarion.com/projects/subversive/download/eclipse/5.0/update-site/"/>
     </setupTask>
     <setupTask
         xsi:type="setup:VariableTask"
