@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <psf version="2.0">
 <provider id="org.eclipse.team.svn.core.svnnature">
-<project reference="1.0.1,http://svn.code.sf.net/p/esmfcontrib/svn,NUOPC,30e031f13ca800151694fd4c52a11564;http://svn.code.sf.net/p/esmfcontrib/svn/;http://svn.code.sf.net/p/esmfcontrib/svn/;branches;tags;trunk;true;c3fc86fe-82d8-4841-a663-0ee342cebea3;http://svn.code.sf.net/p/esmfcontrib/svn;;false;;;0"/>
+<project reference="1.0.1,http://svn.code.sf.net/p/esmfcontrib/svn/NUOPC/tags/ESMF_7_0_0_beta_snapshot_64,NUOPC,30e031f13ca800151694fd4c52a11564;http://svn.code.sf.net/p/esmfcontrib/svn/;http://svn.code.sf.net/p/esmfcontrib/svn/;branches;tags;trunk;true;c3fc86fe-82d8-4841-a663-0ee342cebea3;http://svn.code.sf.net/p/esmfcontrib/svn;;false;;;0"/>
 </provider>
 </psf>

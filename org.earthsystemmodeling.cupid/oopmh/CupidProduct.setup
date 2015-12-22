@@ -3,8 +3,10 @@
     xmi:version="2.0"
     xmlns:xmi="http://www.omg.org/XMI"
     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns:projectset="http://www.eclipse.org/oomph/setup/projectset/1.0"
     xmlns:setup="http://www.eclipse.org/oomph/setup/1.0"
     xmlns:setup.p2="http://www.eclipse.org/oomph/setup/p2/1.0"
+    xsi:schemaLocation="http://www.eclipse.org/oomph/setup/projectset/1.0 http://git.eclipse.org/c/oomph/org.eclipse.oomph.git/plain/setups/models/ProjectSet.ecore"
     name="cupid"
     label="Cupid">
   <annotation
@@ -19,6 +21,12 @@
     </detail>
   </annotation>
   <setupTask
+      xsi:type="setup:CompoundTask"
+      name="User Preferences">
+    <annotation
+        source="http://www.eclipse.org/oomph/setup/UserPreferences"/>
+  </setupTask>
+  <setupTask
       xsi:type="setup:InstallationTask"
       id="installation">
     <description></description>
@@ -26,6 +34,12 @@
   <version name="mars"
       label="Mars"
       requiredJavaVersion="1.7">
+    <setupTask
+        xsi:type="setup:CompoundTask"
+        name="User Preferences">
+      <annotation
+          source="http://www.eclipse.org/oomph/setup/UserPreferences"/>
+    </setupTask>
     <setupTask
         xsi:type="setup.p2:P2Task"
         label="Eclipse for Parallel Application Developers (Mars)">
@@ -60,6 +74,7 @@
     </setupTask>
     <setupTask
         xsi:type="setup.p2:P2Task"
+        label="SVN Connectors"
         licenseConfirmationDisabled="true">
       <requirement
           name="org.polarion.eclipse.team.svn.connector.feature.group"/>
@@ -67,6 +82,7 @@
           name="org.polarion.eclipse.team.svn.connector.svnkit18.feature.group"/>
       <repository
           url="http://community.polarion.com/projects/subversive/download/eclipse/5.0/update-site/"/>
+      <description>SVN Connector</description>
     </setupTask>
     <setupTask
         xsi:type="setup:VariableTask"
@@ -82,6 +98,44 @@
         xsi:type="setup:EclipseIniTask"
         option="-perspective"
         value="org.earthsystemmodeling.cupid.perspective">
+      <description></description>
+    </setupTask>
+    <setupTask
+        xsi:type="projectset:ProjectSetImportTask"
+        uRL="https://raw.githubusercontent.com/cupid-ide/cupid/v0.2/org.earthsystemmodeling.cupid/oopmh/NUOPCProtos.psf">
+      <description>Import NUOPC Protos SVN</description>
+    </setupTask>
+    <setupTask
+        xsi:type="setup:CompoundTask"
+        name="Theia Connection">
+      <setupTask
+          xsi:type="setup:PreferenceTask"
+          key="/instance/org.eclipse.remote.core/connections/org.eclipse.remote.JSch/Theia/JSCH_ADDRESS_ATTR"
+          value="localhost"/>
+      <setupTask
+          xsi:type="setup:PreferenceTask"
+          key="/instance/org.eclipse.remote.core/connections/org.eclipse.remote.JSch/Theia/JSCH_IS_PASSWORD_ATTR"
+          value="true"/>
+      <setupTask
+          xsi:type="setup:PreferenceTask"
+          key="/instance/org.eclipse.remote.core/connections/org.eclipse.remote.JSch/Theia/JSCH_LOGIN_SHELL_COMMAND_ATTR"
+          value="/bin/bash -l -c '{0}'"/>
+      <setupTask
+          xsi:type="setup:PreferenceTask"
+          key="/instance/org.eclipse.remote.core/connections/org.eclipse.remote.JSch/Theia/JSCH_PORT_ATTR"
+          value="55859"/>
+      <setupTask
+          xsi:type="setup:PreferenceTask"
+          key="/instance/org.eclipse.remote.core/connections/org.eclipse.remote.JSch/Theia/JSCH_TIMEOUT_ATTR"
+          value="0"/>
+      <setupTask
+          xsi:type="setup:PreferenceTask"
+          key="/instance/org.eclipse.remote.core/connections/org.eclipse.remote.JSch/Theia/JSCH_USE_LOGIN_SHELL_ATTR"
+          value="true"/>
+      <setupTask
+          xsi:type="setup:PreferenceTask"
+          key="/instance/org.eclipse.remote.core/connections/org.eclipse.remote.JSch/Theia/JSCH_USERNAME_ATTR"
+          value="Rocky.Dunlap"/>
       <description></description>
     </setupTask>
   </version>
