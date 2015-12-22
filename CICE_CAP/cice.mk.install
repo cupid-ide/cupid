@@ -1,7 +1,0 @@
-# ESMF self-describing build dependency makefile fragment
-# src location Zeus: wd
-
-ESMF_DEP_FRONT     = cice_cap_mod
-ESMF_DEP_INCPATH   = /scratch4/NCEPDEV/nems/noscrub/Rocky.Dunlap/RegionalDev/CICE-INSTALL
-ESMF_DEP_CMPL_OBJS = 
-ESMF_DEP_LINK_OBJS = /scratch4/NCEPDEV/nems/noscrub/Rocky.Dunlap/RegionalDev/CICE-INSTALL/libcice.a /scratch4/NCEPDEV/nems/noscrub/Rocky.Dunlap/RegionalDev/CICE-INSTALL/liblanl_cice.a
