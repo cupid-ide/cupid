@@ -1,9 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <psf version="2.0">
 <provider id="org.eclipse.team.svn.core.svnnature">
-<project reference="1.0.1,http://svn.code.sf.net/p/esmfcontrib/svn/NUOPC/tags/ESMF_7_0_0_beta_snapshot_64,NUOPC,30e031f13ca800151694fd4c52a11564;http://svn.code.sf.net/p/esmfcontrib/svn/;http://svn.code.sf.net/p/esmfcontrib/svn/;branches;tags;trunk;true;c3fc86fe-82d8-4841-a663-0ee342cebea3;http://svn.code.sf.net/p/esmfcontrib/svn;;false;;;0"/>
-</provider>
-<provider id="org.eclipse.egit.core.GitProvider">
-<project reference="1.0,https://rsdunlapiv@github.com/cupid-ide/cupid.git,v0.2,CICE_CAP"/>
+<project reference="1.0.1,https://svnemc.ncep.noaa.gov/projects/rtofs_glo/rtofs0.25cfsr/branches/NUOPC,HYCOM,00068025f1a800151e8bdb04c5739c8c;https://svnemc.ncep.noaa.gov/projects/rtofs_glo/rtofs0.25cfsr/branches/NUOPC;https://svnemc.ncep.noaa.gov/projects/rtofs_glo/rtofs0.25cfsr/branches/NUOPC;branches;tags;trunk;true;281fb692-3a18-0410-826d-9e847983f365;https://svnemc.ncep.noaa.gov/projects;;false;&lt;https://svnemc.ncep.noaa.gov:443&gt; EMC Subversion Repository;;0"/>
 </provider>
 </psf>
