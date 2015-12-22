@@ -1,0 +1,168 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<setup:Index
+    xmi:version="2.0"
+    xmlns:xmi="http://www.omg.org/XMI"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns:projectset="http://www.eclipse.org/oomph/setup/projectset/1.0"
+    xmlns:setup="http://www.eclipse.org/oomph/setup/1.0"
+    xmlns:setup.p2="http://www.eclipse.org/oomph/setup/p2/1.0"
+    xsi:schemaLocation="http://www.eclipse.org/oomph/setup/projectset/1.0 http://git.eclipse.org/c/oomph/org.eclipse.oomph.git/plain/setups/models/ProjectSet.ecore"
+    name="index"
+    label="Index">
+  <productCatalog
+      name="Cupid.products"
+      label="Cupid Products">
+    <product
+        name="cupid"
+        label="Cupid">
+      <annotation
+          source="http://www.eclipse.org/oomph/setup/BrandingInfo">
+        <detail
+            key="folderName">
+          <value>eclipse</value>
+        </detail>
+        <detail
+            key="folderName.macosx">
+          <value>Eclipse</value>
+        </detail>
+      </annotation>
+      <setupTask
+          xsi:type="setup:CompoundTask"
+          name="User Preferences">
+        <annotation
+            source="http://www.eclipse.org/oomph/setup/UserPreferences"/>
+      </setupTask>
+      <setupTask
+          xsi:type="setup:InstallationTask"
+          id="installation">
+        <description></description>
+      </setupTask>
+      <version
+          name="mars"
+          label="Mars"
+          requiredJavaVersion="1.7">
+        <setupTask
+            xsi:type="setup:CompoundTask"
+            name="User Preferences">
+          <annotation
+              source="http://www.eclipse.org/oomph/setup/UserPreferences"/>
+        </setupTask>
+        <setupTask
+            xsi:type="setup:VariableTask"
+            id="noaa.username"
+            name="noaa.username"
+            defaultValue=""
+            label="NOAA Username">
+          <description>NOAA Username</description>
+        </setupTask>
+        <setupTask
+            xsi:type="setup:VariableTask"
+            id="noaa.theia.port"
+            name="noaa.theia.port"
+            defaultValue=""
+            label="NOAA Theia Port">
+          <description>NOAA Theia Port</description>
+        </setupTask>
+        <setupTask
+            xsi:type="setup.p2:P2Task"
+            label="Eclipse for Parallel Application Developers (Mars)">
+          <requirement
+              name="epp.package.parallel"
+              versionRange="[4.5.0,4.6.0)"/>
+          <requirement
+              name="org.eclipse.platform.feature.group"
+              versionRange="[4.5.0,4.6.0)"/>
+          <requirement
+              name="org.eclipse.rcp.feature.group"
+              versionRange="[4.5.0,4.6.0)"/>
+          <requirement
+              name="org.eclipse.team.svn.feature.group"/>
+          <repository
+              url="http://download.eclipse.org/technology/epp/packages/mars"/>
+          <repository
+              url="http://download.eclipse.org/releases/mars/201510021000"/>
+          <repository
+              url="http://download.eclipse.org/releases/mars/201510021000"/>
+        </setupTask>
+        <setupTask
+            xsi:type="setup.p2:P2Task"
+            id=""
+            label="Cupid"
+            licenseConfirmationDisabled="true">
+          <requirement
+              name="org.earthsystemmodeling.cupid.feature.feature.group"/>
+          <repository
+              url="http://earthsystemmodeling.org/cupid/mars/"/>
+          <description></description>
+        </setupTask>
+        <setupTask
+            xsi:type="setup.p2:P2Task"
+            label="SVN Connectors"
+            licenseConfirmationDisabled="true">
+          <requirement
+              name="org.polarion.eclipse.team.svn.connector.feature.group"/>
+          <requirement
+              name="org.polarion.eclipse.team.svn.connector.svnkit18.feature.group"/>
+          <repository
+              url="http://community.polarion.com/projects/subversive/download/eclipse/5.0/update-site/"/>
+          <description>SVN Connector</description>
+        </setupTask>
+        <setupTask
+            xsi:type="setup:VariableTask"
+            name="workspace.location"
+            value="${installation.location}/ws"
+            storageURI="scope://Installation"/>
+        <setupTask
+            xsi:type="setup:ResourceCreationTask"
+            content="MAX_RECENT_WORKSPACES=5&#xA;RECENT_WORKSPACES=${workspace.location|property}&#xA;RECENT_WORKSPACES_PROTOCOL=3&#xA;SHOW_WORKSPACE_SELECTION_DIALOG=false&#xA;eclipse.preferences.version=1&#xA;"
+            targetURL="configuration:/.settings/org.eclipse.ui.ide.prefs"
+            encoding="UTF-8"/>
+        <setupTask
+            xsi:type="setup:EclipseIniTask"
+            option="-perspective"
+            value="org.earthsystemmodeling.cupid.perspective">
+          <description></description>
+        </setupTask>
+        <setupTask
+            xsi:type="projectset:ProjectSetImportTask"
+            uRL="https://raw.githubusercontent.com/cupid-ide/cupid/v0.2/org.earthsystemmodeling.cupid/oopmh/NUOPCProtos.psf">
+          <description>Import NUOPC Protos SVN</description>
+        </setupTask>
+        <setupTask
+            xsi:type="setup:CompoundTask"
+            name="Theia Connection">
+          <setupTask
+              xsi:type="setup:PreferenceTask"
+              key="/instance/org.eclipse.remote.core/connections/org.eclipse.remote.JSch/Theia/JSCH_ADDRESS_ATTR"
+              value="localhost"/>
+          <setupTask
+              xsi:type="setup:PreferenceTask"
+              key="/instance/org.eclipse.remote.core/connections/org.eclipse.remote.JSch/Theia/JSCH_IS_PASSWORD_ATTR"
+              value="true"/>
+          <setupTask
+              xsi:type="setup:PreferenceTask"
+              key="/instance/org.eclipse.remote.core/connections/org.eclipse.remote.JSch/Theia/JSCH_LOGIN_SHELL_COMMAND_ATTR"
+              value="/bin/bash -l -c '{0}'"/>
+          <setupTask
+              xsi:type="setup:PreferenceTask"
+              key="/instance/org.eclipse.remote.core/connections/org.eclipse.remote.JSch/Theia/JSCH_PORT_ATTR"
+              value="${noaa.theia.port}"/>
+          <setupTask
+              xsi:type="setup:PreferenceTask"
+              key="/instance/org.eclipse.remote.core/connections/org.eclipse.remote.JSch/Theia/JSCH_TIMEOUT_ATTR"
+              value="0"/>
+          <setupTask
+              xsi:type="setup:PreferenceTask"
+              key="/instance/org.eclipse.remote.core/connections/org.eclipse.remote.JSch/Theia/JSCH_USE_LOGIN_SHELL_ATTR"
+              value="true"/>
+          <setupTask
+              xsi:type="setup:PreferenceTask"
+              key="/instance/org.eclipse.remote.core/connections/org.eclipse.remote.JSch/Theia/JSCH_USERNAME_ATTR"
+              value="${noaa.username}"/>
+          <description></description>
+        </setupTask>
+      </version>
+      <description>Cupid tools for ESMF/NUOPC development </description>
+    </product>
+  </productCatalog>
+</setup:Index>
