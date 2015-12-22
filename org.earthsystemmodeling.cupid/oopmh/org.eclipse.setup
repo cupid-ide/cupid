@@ -131,11 +131,6 @@
           <description></description>
         </setupTask>
         <setupTask
-            xsi:type="projectset:ProjectSetImportTask"
-            uRL="https://raw.githubusercontent.com/cupid-ide/cupid/v0.2/org.earthsystemmodeling.cupid/oopmh/NUOPCProtos.psf">
-          <description>Import NUOPC Protos SVN</description>
-        </setupTask>
-        <setupTask
             xsi:type="setup:CompoundTask"
             name="Theia Connection">
           <setupTask
@@ -167,6 +162,11 @@
               key="/instance/org.eclipse.remote.core/connections/org.eclipse.remote.JSch/Theia/JSCH_USERNAME_ATTR"
               value="${noaa.username}"/>
           <description></description>
+        </setupTask>
+        <setupTask
+            xsi:type="projectset:ProjectSetImportTask"
+            uRL="https://raw.githubusercontent.com/cupid-ide/cupid/v0.2/org.earthsystemmodeling.cupid/oopmh/NUOPCProtos.psf">
+          <description>Import NUOPC Protos SVN</description>
         </setupTask>
       </version>
       <description>Cupid tools for ESMF/NUOPC development </description>

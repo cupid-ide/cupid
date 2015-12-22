@@ -1,0 +1,9 @@
+# ESMF self-describing build dependency makefile fragment
+# src location Zeus: /home/Fei.Liu/github/
+# CICE github location:  git@github.com:feiliuesmf/lanl_cice.git cice_github_revision
+# CICE CAP github location: git@github.com:feiliuesmf/lanl_cice_cap.git cice_cap_github_revision
+
+ESMF_DEP_FRONT     = cice_cap_mod
+ESMF_DEP_INCPATH   = /home/Fei.Liu/ICE-INSTALLS/timestr
+ESMF_DEP_CMPL_OBJS = 
+ESMF_DEP_LINK_OBJS = /home/Fei.Liu/ICE-INSTALLS/timestr/libcice.a /home/Fei.Liu/noscrub/lanl_cice/liblanl_cice.a
