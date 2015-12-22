@@ -41,6 +41,22 @@
           source="http://www.eclipse.org/oomph/setup/UserPreferences"/>
     </setupTask>
     <setupTask
+        xsi:type="setup:VariableTask"
+        id="noaa.username"
+        name="noaa.username"
+        defaultValue=""
+        label="NOAA Username">
+      <description>NOAA Username</description>
+    </setupTask>
+    <setupTask
+        xsi:type="setup:VariableTask"
+        id="noaa.theia.port"
+        name="noaa.theia.port"
+        defaultValue=""
+        label="NOAA Theia Port">
+      <description>NOAA Theia Port</description>
+    </setupTask>
+    <setupTask
         xsi:type="setup.p2:P2Task"
         label="Eclipse for Parallel Application Developers (Mars)">
       <requirement
@@ -123,7 +139,7 @@
       <setupTask
           xsi:type="setup:PreferenceTask"
           key="/instance/org.eclipse.remote.core/connections/org.eclipse.remote.JSch/Theia/JSCH_PORT_ATTR"
-          value="55859"/>
+          value="${noaa.theia.port}"/>
       <setupTask
           xsi:type="setup:PreferenceTask"
           key="/instance/org.eclipse.remote.core/connections/org.eclipse.remote.JSch/Theia/JSCH_TIMEOUT_ATTR"
@@ -135,7 +151,7 @@
       <setupTask
           xsi:type="setup:PreferenceTask"
           key="/instance/org.eclipse.remote.core/connections/org.eclipse.remote.JSch/Theia/JSCH_USERNAME_ATTR"
-          value="Rocky.Dunlap"/>
+          value="${noaa.username}"/>
       <description></description>
     </setupTask>
   </version>
