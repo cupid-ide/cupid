@@ -154,6 +154,18 @@
           value="${noaa.username}"/>
       <description></description>
     </setupTask>
+    <setupTask
+        xsi:type="setup:CompoundTask"
+        id="syncproject.ugcs.seasonal"
+        name="Sync project - UGCS-Seasonal">
+      <setupTask
+          xsi:type="setup:ResourceCopyTask"
+          sourceURL="https://raw.githubusercontent.com/cupid-ide/setups/master/syncprojects/UGCS-Seasonal/.project"
+          targetURL="${workspace.location}/mytest/.project">
+        <description></description>
+      </setupTask>
+      <description>Sync project - UGCS-Seasonal</description>
+    </setupTask>
   </version>
   <description>Cupid tools for ESMF/NUOPC development </description>
 </setup:Product>
