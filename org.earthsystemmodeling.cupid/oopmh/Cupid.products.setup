@@ -2,8 +2,15 @@
 <setup:ProductCatalog
     xmi:version="2.0"
     xmlns:xmi="http://www.omg.org/XMI"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
     xmlns:setup="http://www.eclipse.org/oomph/setup/1.0"
     name="Cupid.products"
     label="Cupid Products">
+  <setupTask
+      xsi:type="setup:EclipseIniTask"
+      option="-Doomph.redirection.setups"
+      value="http://git.eclipse.org/c/oomph/org.eclipse.oomph.git/plain/setups/->https://raw.githubusercontent.com/cupid-ide/cupid/v0.2/org.earthsystemmodeling.cupid/oomph/">
+    <description>Create catalog redirect</description>
+  </setupTask>
   <product href="CupidProduct.setup#/"/>
 </setup:ProductCatalog>

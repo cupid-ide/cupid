@@ -12,6 +12,12 @@
   <productCatalog
       name="Cupid.products"
       label="Cupid Products">
+    <setupTask
+        xsi:type="setup:EclipseIniTask"
+        option="-Doomph.redirection.setups"
+        value="http://git.eclipse.org/c/oomph/org.eclipse.oomph.git/plain/setups/->https://raw.githubusercontent.com/cupid-ide/cupid/v0.2/org.earthsystemmodeling.cupid/oomph/">
+      <description>Create catalog redirect</description>
+    </setupTask>
     <product
         name="cupid"
         label="Cupid">
