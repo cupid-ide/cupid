@@ -95,8 +95,11 @@
  	<module>../org.earthsystemmodeling.cupid.rcp</module>
  	<module>../org.earthsystemmodeling.cupid.product</module>
  	-->
+ 	 	
  	<module>../org.earthsystemmodeling.cupid.targetplatform</module>
  	<module>../org.earthsystemmodeling.cupid.releng.p2</module>
+ 	
+ 	
  </modules>
  
  <repositories>

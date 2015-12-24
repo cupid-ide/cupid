@@ -3,10 +3,8 @@
     xmi:version="2.0"
     xmlns:xmi="http://www.omg.org/XMI"
     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-    xmlns:projectset="http://www.eclipse.org/oomph/setup/projectset/1.0"
     xmlns:setup="http://www.eclipse.org/oomph/setup/1.0"
     xmlns:setup.p2="http://www.eclipse.org/oomph/setup/p2/1.0"
-    xsi:schemaLocation="http://www.eclipse.org/oomph/setup/projectset/1.0 http://git.eclipse.org/c/oomph/org.eclipse.oomph.git/plain/setups/models/ProjectSet.ecore"
     name="cupid"
     label="Cupid">
   <annotation
@@ -21,12 +19,6 @@
     </detail>
   </annotation>
   <setupTask
-      xsi:type="setup:CompoundTask"
-      name="User Preferences">
-    <annotation
-        source="http://www.eclipse.org/oomph/setup/UserPreferences"/>
-  </setupTask>
-  <setupTask
       xsi:type="setup:InstallationTask"
       id="installation">
     <description></description>
@@ -34,12 +26,6 @@
   <version name="mars"
       label="Mars"
       requiredJavaVersion="1.7">
-    <setupTask
-        xsi:type="setup:CompoundTask"
-        name="User Preferences">
-      <annotation
-          source="http://www.eclipse.org/oomph/setup/UserPreferences"/>
-    </setupTask>
     <setupTask
         xsi:type="setup:VariableTask"
         id="noaa.username"
@@ -70,6 +56,8 @@
           versionRange="[4.5.0,4.6.0)"/>
       <requirement
           name="org.eclipse.team.svn.feature.group"/>
+      <requirement
+          name="org.eclipse.oomph.setup"/>
       <repository
           url="http://download.eclipse.org/technology/epp/packages/mars"/>
       <repository
@@ -84,8 +72,12 @@
         licenseConfirmationDisabled="true">
       <requirement
           name="org.earthsystemmodeling.cupid.feature.feature.group"/>
+      <requirement
+          name="org.earthsystemmodeling.oomph.createsyncproject.feature.group"/>
       <repository
-          url="http://earthsystemmodeling.org/cupid/mars/"/>
+          url="file:/home/rocky/eclipse/cupiddev-v0-2/git/cupid/org.earthsystemmodeling.cupid.releng.p2/target/repository"/>
+      <repository
+          url="file:/home/rocky/eclipse/cupiddev-v0-2/git/oomph/releng/org.earthsystemmodeling.oomph.releng.p2/target/repository"/>
       <description></description>
     </setupTask>
     <setupTask
@@ -115,11 +107,6 @@
         option="-perspective"
         value="org.earthsystemmodeling.cupid.perspective">
       <description></description>
-    </setupTask>
-    <setupTask
-        xsi:type="projectset:ProjectSetImportTask"
-        uRL="https://raw.githubusercontent.com/cupid-ide/cupid/v0.2/org.earthsystemmodeling.cupid/oopmh/NUOPCProtos.psf">
-      <description>Import NUOPC Protos SVN</description>
     </setupTask>
     <setupTask
         xsi:type="setup:CompoundTask"
@@ -153,18 +140,6 @@
           key="/instance/org.eclipse.remote.core/connections/org.eclipse.remote.JSch/Theia/JSCH_USERNAME_ATTR"
           value="${noaa.username}"/>
       <description></description>
-    </setupTask>
-    <setupTask
-        xsi:type="setup:CompoundTask"
-        id="syncproject.ugcs.seasonal"
-        name="Sync project - UGCS-Seasonal">
-      <setupTask
-          xsi:type="setup:ResourceCopyTask"
-          sourceURL="https://raw.githubusercontent.com/cupid-ide/setups/master/syncprojects/UGCS-Seasonal/.project"
-          targetURL="${workspace.location}/mytest/.project">
-        <description></description>
-      </setupTask>
-      <description>Sync project - UGCS-Seasonal</description>
     </setupTask>
   </version>
   <description>Cupid tools for ESMF/NUOPC development </description>
