@@ -55,6 +55,8 @@
         name="org.eclipse.ptp.fortran.feature.group"/>
     <requirement
         name="org.eclipse.remote.feature.group"/>
+    <requirement
+        name="org.eclipse.emf.sdk.feature.group"/>
     <description>Install the tools needed in the IDE to work with the source code for ${scope.project.label}</description>
   </setupTask>
   <setupTask
@@ -107,6 +109,13 @@
     <description></description>
   </setupTask>
   <setupTask
+      xsi:type="setup.p2:P2Task"
+      label="Cupid Local">
+    <repository
+        url="file:/home/rocky/eclipse/cupiddev-v0-2/git/cupid/org.earthsystemmodeling.cupid.releng.p2/target/repository"/>
+    <description></description>
+  </setupTask>
+  <setupTask
       xsi:type="git:GitCloneTask"
       id="git.clone"
       remoteURI="cupid-ide/cupid">
@@ -148,6 +157,9 @@
           name="org.eclipse.tracecompass.tmf.feature.group"/>
       <requirement
           name="org.eclipse.tracecompass.ctf.feature.group"/>
+      <requirement
+          name="org.eclipse.oomph.setup.feature.group"
+          filter=""/>
       <sourceLocator
           rootFolder="${git.clone.location}"
           locateNestedProjects="true"/>
