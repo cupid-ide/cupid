@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<setup:Project
+    xmi:version="2.0"
+    xmlns:xmi="http://www.omg.org/XMI"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns:createsyncproject="http://www.eclipse.org/oomph/setup/createsyncproject/1.0"
+    xmlns:setup="http://www.eclipse.org/oomph/setup/1.0"
+    xsi:schemaLocation="http://www.eclipse.org/oomph/setup/createsyncproject/1.0 https://raw.githubusercontent.com/cupid-ide/oomph/master/plugins/org.earthsystemmodeling.oomph.createsyncproject/model/CreateSyncProject.ecore"
+    name="UGCS_Seasonal"
+    label="UGCS Seasonal">
+  <setupTask
+      xsi:type="setup:VariableTask"
+      name="noaa.username"
+      label="NOAA Username (without @noaa.gov)">
+    <description>NOAA Username (without @noaa.gov)</description>
+  </setupTask>
+  <setupTask
+      xsi:type="setup:VariableTask"
+      name="noaa.port"
+      label="Local port used for port forwarding to Theia">
+    <description>Local port used for port forwarding to Theia</description>
+  </setupTask>
+  <setupTask
+      xsi:type="setup:VariableTask"
+      name="nems.theia.userdir"
+      label="Location of UGCS-Seasonal directory on Theia">
+    <description>Location of UGCS-Seasonal directory on Theia</description>
+  </setupTask>
+  <setupTask
+      xsi:type="createsyncproject:CreateRemoteConnectionTask"
+      id="remoteconn.theia"
+      connectionName="Theia_localhost"
+      host="localhost"
+      username="${noaa.username}"
+      port="${noaa.port}">
+    <description>Create a remote connection to Theia via localhost port forwarding</description>
+  </setupTask>
+  <setupTask
+      xsi:type="createsyncproject:CreateSyncProjectTask"
+      id="syncproj.ugcs_seasonal"
+      projectName="UGCS_Seasonal"
+      remoteConnectionName="${remoteconn.theia.connectionName}"
+      remoteLocation="${nems.theia.userdir}">
+    <filter
+        pattern="*.o"/>
+    <filter
+        pattern="*.mod"/>
+    <description>Create UGCS Seasonal syncronized project</description>
+  </setupTask>
+  <stream name="master"
+      label="Master"/>
+  <logicalProjectContainer
+      xsi:type="setup:Project"
+      href="index:/org.eclipse.setup#//@projectCatalogs[name='org.eclipse']/@projects[name='user.project']"/>
+  <description>Unified Global Coupled System - Seasonal NEMS application</description>
+</setup:Project>
