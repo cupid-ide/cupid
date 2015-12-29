@@ -3,11 +3,23 @@
     xmi:version="2.0"
     xmlns:xmi="http://www.omg.org/XMI"
     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-    xmlns:createsyncproject="http://www.eclipse.org/oomph/setup/createsyncproject/1.0"
     xmlns:setup="http://www.eclipse.org/oomph/setup/1.0"
-    xsi:schemaLocation="http://www.eclipse.org/oomph/setup/createsyncproject/1.0 https://raw.githubusercontent.com/cupid-ide/oomph/master/plugins/org.earthsystemmodeling.oomph.createsyncproject/model/CreateSyncProject.ecore"
     name="Cupid Project Catalog"
     label="Cupid Project Catalog">
+  <setupTask
+      xsi:type="setup:EclipseIniTask"
+      option="-Doomph.redirection.cupidproducts"
+      value="index:/redirectable.products.setup->file:/home/rocky/eclipse/cupiddev-v0-2/git/cupid/org.earthsystemmodeling.cupid/oopmh/CupidProductCatalog.setup"
+      vm="true">
+    <description>Add redirect</description>
+  </setupTask>
+  <setupTask
+      xsi:type="setup:EclipseIniTask"
+      option="-Doomph.redirection.cupidprojects"
+      value="index:/redirectable.projects.setup->file:/home/rocky/eclipse/cupiddev-v0-2/git/cupid/org.earthsystemmodeling.cupid/oopmh/CupidProjectCatalog.setup"
+      vm="true">
+    <description>Add redirect</description>
+  </setupTask>
   <project name="UGCS_Seasonal"
       label="NEMS UGCS Seasonal">
     <setupTask
@@ -27,27 +39,6 @@
         name="nems.theia.userdir"
         label="Location of UGCS-Seasonal directory on Theia">
       <description>Location of UGCS-Seasonal directory on Theia</description>
-    </setupTask>
-    <setupTask
-        xsi:type="createsyncproject:CreateRemoteConnectionTask"
-        id="remoteconn.theia"
-        connectionName="Theia_localhost"
-        host="localhost"
-        username="${noaa.username}"
-        port="${noaa.port}">
-      <description>Create a remote connection to Theia via localhost port forwarding</description>
-    </setupTask>
-    <setupTask
-        xsi:type="createsyncproject:CreateSyncProjectTask"
-        id="syncproj.ugcs_seasonal"
-        projectName="UGCS_Seasonal"
-        remoteConnectionName="${remoteconn.theia.connectionName}"
-        remoteLocation="${nems.theia.userdir}">
-      <filter
-          pattern="*.o"/>
-      <filter
-          pattern="*.mod"/>
-      <description>Create UGCS Seasonal syncronized project</description>
     </setupTask>
     <stream
         name="master"

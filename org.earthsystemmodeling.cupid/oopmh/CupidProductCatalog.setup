@@ -7,6 +7,20 @@
     xmlns:setup.p2="http://www.eclipse.org/oomph/setup/p2/1.0"
     name="CupidProductCatalog"
     label="Cupid Product Catalog">
+  <setupTask
+      xsi:type="setup:EclipseIniTask"
+      option="-Doomph.redirection.cupidproducts"
+      value="index:/redirectable.products.setup->file:/home/rocky/eclipse/cupiddev-v0-2/git/cupid/org.earthsystemmodeling.cupid/oopmh/CupidProductCatalog.setup"
+      vm="true">
+    <description>Add redirect</description>
+  </setupTask>
+  <setupTask
+      xsi:type="setup:EclipseIniTask"
+      option="-Doomph.redirection.cupidprojects"
+      value="index:/redirectable.projects.setup->file:/home/rocky/eclipse/cupiddev-v0-2/git/cupid/org.earthsystemmodeling.cupid/oopmh/CupidProjectCatalog.setup"
+      vm="true">
+    <description>Add redirect</description>
+  </setupTask>
   <product name="cupid"
       label="Cupid">
     <annotation
@@ -51,13 +65,11 @@
         <requirement
             name="org.eclipse.team.svn.feature.group"/>
         <requirement
-            name="org.eclipse.oomph.setup"/>
+            name="org.eclipse.oomph.setup.feature.group"/>
         <repository
             url="http://download.eclipse.org/technology/epp/packages/mars"/>
         <repository
-            url="http://download.eclipse.org/releases/mars/201510021000"/>
-        <repository
-            url="http://download.eclipse.org/releases/mars/201510021000"/>
+            url="http://download.eclipse.org/releases/mars"/>
       </setupTask>
       <setupTask
           xsi:type="setup.p2:P2Task"
