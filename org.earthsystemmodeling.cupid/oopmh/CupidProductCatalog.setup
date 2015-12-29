@@ -9,14 +9,14 @@
     label="Cupid Product Catalog">
   <setupTask
       xsi:type="setup:EclipseIniTask"
-      option="-Doomph.redirection.cupidproducts"
+      option="-Doomph.redirection.cupid_products"
       value="=index:/redirectable.products.setup->file:/home/rocky/eclipse/cupiddev-v0-2/git/cupid/org.earthsystemmodeling.cupid/oopmh/CupidProductCatalog.setup"
       vm="true">
     <description>Add redirect</description>
   </setupTask>
   <setupTask
       xsi:type="setup:EclipseIniTask"
-      option="-Doomph.redirection.cupidprojects"
+      option="-Doomph.redirection.cupid_projects"
       value="=index:/redirectable.projects.setup->file:/home/rocky/eclipse/cupiddev-v0-2/git/cupid/org.earthsystemmodeling.cupid/oopmh/CupidProjectCatalog.setup"
       vm="true">
     <description>Add redirect</description>
@@ -49,7 +49,8 @@
     <setupTask
         xsi:type="setup:EclipseIniTask"
         option="-Doomph.setup"
-        value="=true"/>
+        value="=true"
+        vm="true"/>
     <version
         name="mars"
         label="Mars"

@@ -32,7 +32,7 @@
       connectionName="Theia_localhost"
       host="localhost"
       username="${noaa.username}"
-      port="1234">
+      port="${noaa.port}">
     <description>Create a remote connection to Theia via localhost port forwarding</description>
   </setupTask>
   <setupTask
