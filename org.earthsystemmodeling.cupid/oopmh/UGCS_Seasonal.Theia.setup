@@ -7,7 +7,7 @@
     xmlns:setup="http://www.eclipse.org/oomph/setup/1.0"
     xsi:schemaLocation="http://www.eclipse.org/oomph/setup/createsyncproject/1.0 https://raw.githubusercontent.com/cupid-ide/oomph/master/plugins/org.earthsystemmodeling.oomph.createsyncproject/model/CreateSyncProject.ecore"
     name="UGCS_Seasonal"
-    label="UGCS Seasonal">
+    label="NEMS UGCS Seasonal">
   <setupTask
       xsi:type="setup:VariableTask"
       name="noaa.username"
@@ -32,7 +32,7 @@
       connectionName="Theia_localhost"
       host="localhost"
       username="${noaa.username}"
-      port="${noaa.port}">
+      port="1234">
     <description>Create a remote connection to Theia via localhost port forwarding</description>
   </setupTask>
   <setupTask
@@ -49,8 +49,5 @@
   </setupTask>
   <stream name="master"
       label="Master"/>
-  <logicalProjectContainer
-      xsi:type="setup:Project"
-      href="index:/org.eclipse.setup#//@projectCatalogs[name='org.eclipse']/@projects[name='user.project']"/>
   <description>Unified Global Coupled System - Seasonal NEMS application</description>
 </setup:Project>

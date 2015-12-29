@@ -4,49 +4,22 @@
     xmlns:xmi="http://www.omg.org/XMI"
     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
     xmlns:setup="http://www.eclipse.org/oomph/setup/1.0"
+    xmlns:setup.p2="http://www.eclipse.org/oomph/setup/p2/1.0"
     name="Cupid Project Catalog"
     label="Cupid Project Catalog">
   <setupTask
-      xsi:type="setup:EclipseIniTask"
-      option="-Doomph.redirection.cupidproducts"
-      value="index:/redirectable.products.setup->file:/home/rocky/eclipse/cupiddev-v0-2/git/cupid/org.earthsystemmodeling.cupid/oopmh/CupidProductCatalog.setup"
-      vm="true">
-    <description>Add redirect</description>
-  </setupTask>
-  <setupTask
-      xsi:type="setup:EclipseIniTask"
-      option="-Doomph.redirection.cupidprojects"
-      value="index:/redirectable.projects.setup->file:/home/rocky/eclipse/cupiddev-v0-2/git/cupid/org.earthsystemmodeling.cupid/oopmh/CupidProjectCatalog.setup"
-      vm="true">
-    <description>Add redirect</description>
-  </setupTask>
-  <project name="UGCS_Seasonal"
-      label="NEMS UGCS Seasonal">
+      xsi:type="setup:WorkspaceTask"/>
+  <project href="UGCS_Seasonal.Theia.setup#/"/>
+  <project name="DummyProject">
     <setupTask
-        xsi:type="setup:VariableTask"
-        name="noaa.username"
-        label="NOAA Username (without @noaa.gov)">
-      <description>NOAA Username (without @noaa.gov)</description>
+        xsi:type="setup.p2:P2Task">
+      <repository
+          url="http://123.com/test"/>
     </setupTask>
-    <setupTask
-        xsi:type="setup:VariableTask"
-        name="noaa.port"
-        label="Local port used for port forwarding to Theia">
-      <description>Local port used for port forwarding to Theia</description>
-    </setupTask>
-    <setupTask
-        xsi:type="setup:VariableTask"
-        name="nems.theia.userdir"
-        label="Location of UGCS-Seasonal directory on Theia">
-      <description>Location of UGCS-Seasonal directory on Theia</description>
-    </setupTask>
-    <stream
-        name="master"
-        label="Master"/>
     <logicalProjectContainer
         xsi:type="setup:Project"
         href="index:/org.eclipse.setup#//@projectCatalogs[name='org.eclipse']/@projects[name='user.project']"/>
-    <description>NEMS Unified Global Coupled System - Seasonal application</description>
+    <description></description>
   </project>
   <description>Project setups for use with Cupid</description>
 </setup:ProjectCatalog>

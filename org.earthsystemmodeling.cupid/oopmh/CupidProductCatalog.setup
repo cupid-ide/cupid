@@ -10,14 +10,14 @@
   <setupTask
       xsi:type="setup:EclipseIniTask"
       option="-Doomph.redirection.cupidproducts"
-      value="index:/redirectable.products.setup->file:/home/rocky/eclipse/cupiddev-v0-2/git/cupid/org.earthsystemmodeling.cupid/oopmh/CupidProductCatalog.setup"
+      value="=index:/redirectable.products.setup->file:/home/rocky/eclipse/cupiddev-v0-2/git/cupid/org.earthsystemmodeling.cupid/oopmh/CupidProductCatalog.setup"
       vm="true">
     <description>Add redirect</description>
   </setupTask>
   <setupTask
       xsi:type="setup:EclipseIniTask"
       option="-Doomph.redirection.cupidprojects"
-      value="index:/redirectable.projects.setup->file:/home/rocky/eclipse/cupiddev-v0-2/git/cupid/org.earthsystemmodeling.cupid/oopmh/CupidProjectCatalog.setup"
+      value="=index:/redirectable.projects.setup->file:/home/rocky/eclipse/cupiddev-v0-2/git/cupid/org.earthsystemmodeling.cupid/oopmh/CupidProjectCatalog.setup"
       vm="true">
     <description>Add redirect</description>
   </setupTask>
@@ -46,6 +46,10 @@
         vm="true">
       <description>Set the heap space</description>
     </setupTask>
+    <setupTask
+        xsi:type="setup:EclipseIniTask"
+        option="-Doomph.setup"
+        value="=true"/>
     <version
         name="mars"
         label="Mars"
