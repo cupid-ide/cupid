@@ -21,6 +21,7 @@ import org.earthsystemmodeling.cupid.preferences.CupidPreferencePage;
 import org.earthsystemmodeling.cupid.views.NUOPCViewContentProvider2.CodeConceptProxy;
 import org.eclipse.core.runtime.FileLocator;
 import org.eclipse.core.runtime.Path;
+import org.eclipse.core.runtime.Status;
 import org.eclipse.jface.resource.ImageDescriptor;
 import org.eclipse.jface.viewers.DecorationOverlayIcon;
 import org.eclipse.jface.viewers.ILabelProviderListener;
@@ -81,7 +82,13 @@ class NUOPCViewLabelProvider2 extends StyledCellLabelProvider { //implements ITa
 			boolean useInternal = CupidActivator.getDefault().getPreferenceStore().getBoolean(CupidPreferencePage.CUPID_REFDOC_USEINTERNAL);
 			if (useInternal) {
 				URL internalURL = CupidActivator.getFileURL(NUOPC_REFDOC_BASEURL);
-				baseURL = internalURL.toExternalForm();			
+				if (internalURL != null) {
+					baseURL = internalURL.toExternalForm();
+				}
+				else {
+					CupidActivator.log(Status.ERROR, "Internal base URL of NUOPC docs does not exist: " + NUOPC_REFDOC_BASEURL);
+					return null;
+				}
 			}
 			else {
 				baseURL = CupidActivator.getDefault().getPreferenceStore().getString(CupidPreferencePage.CUPID_REFDOC_URL);
@@ -90,7 +97,7 @@ class NUOPCViewLabelProvider2 extends StyledCellLabelProvider { //implements ITa
 				}
 			}
 
-			CupidActivator.debug("ref doc base URL = " + baseURL);
+			CupidActivator.debug("ref doc URL = " + baseURL+docAnn.urlfrag());
 			return baseURL + docAnn.urlfrag();
 		}
 		
