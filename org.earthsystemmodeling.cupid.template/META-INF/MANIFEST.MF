@@ -1,0 +1,24 @@
+Manifest-Version: 1.0
+Bundle-ManifestVersion: 2
+Bundle-Name: Cupid Templates
+Bundle-SymbolicName: org.earthsystemmodeling.cupid.template;singleton:=true
+Bundle-Version: 0.2.0.qualifier
+Bundle-Activator: org.earthsystemmodeling.cupid.template.Activator
+Require-Bundle: org.eclipse.ui,
+ org.eclipse.core.runtime,
+ org.eclipse.photran.ui,
+ org.eclipse.jface.text;bundle-version="3.10.0",
+ org.eclipse.photran.cdtinterface;bundle-version="9.0.0",
+ org.eclipse.photran.core;bundle-version="9.0.0",
+ org.earthsystemmodeling.cupid;bundle-version="0.2.0",
+ org.eclipse.photran.core.vpg;bundle-version="9.0.0",
+ org.eclipse.photran.ui.vpg,
+ org.eclipse.cdt.ui,
+ org.eclipse.ui.editors;bundle-version="3.9.0",
+ org.eclipse.core.resources,
+ org.eclipse.cdt.core,
+ org.eclipse.jface
+Bundle-RequiredExecutionEnvironment: JavaSE-1.7
+Bundle-ActivationPolicy: lazy
+Bundle-ClassPath: lib/snuggletex/snuggletex-core-1.2.2.jar,
+ .
