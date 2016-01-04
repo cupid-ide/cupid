@@ -321,6 +321,7 @@ IFortranSourceViewerConfigurationFactory {
 
 		@Override
 		public Object getAdditionalProposalInfo(IProgressMonitor monitor) {
+			/*
 			try {
 				getContext().setVariable("params", "PARAMS_SET_VALUE");
 				TemplateBuffer tb = getContext().evaluate(getTemplate());			
@@ -329,8 +330,9 @@ IFortranSourceViewerConfigurationFactory {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
+			*/
 			
-			return "No additional info....";
+			return ProtexStore.getInstance().getAdditionalInfo(getTemplate());
 		}
 		
 		

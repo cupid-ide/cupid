@@ -179,7 +179,7 @@ public class ProtexStore {
 				NodeList children = node.getChildNodes();
 				for (int j= 0; j != children.getLength(); j++) {
 					Node child = children.item(j);
-					if (child.getLocalName().equals("param")) {
+					if (child.getNodeName().equals("param")) {
 						NamedNodeMap pattributes= child.getAttributes();
 						Parameter p = new Parameter();
 						p.name = getNamedString(pattributes, "name");
@@ -212,6 +212,7 @@ public class ProtexStore {
 		for (Subroutine s : subroutines) {
 			Template t = new Template(s.iface, s.shortDesc, contextTypeId, s.iface+"(...)", true);
 			templates.add(t);
+			templateToSubroutine.put(t, s);
 		}
 		templates.sort(new Comparator<Template>() {
 			@Override
@@ -228,6 +229,13 @@ public class ProtexStore {
 		return templates.toArray(new Template[templates.size()]);
 	}
 	
+	public String getAdditionalInfo(Template t) {
+		Subroutine s = templateToSubroutine.get(t);
+		if (s != null) {
+			return s.paramText.replaceAll("\n", "<br/>\n") + "<br/><br/>" + s.longDesc;
+		}
+		return null;
+	}
 	
 	
 	public static class Subroutine {

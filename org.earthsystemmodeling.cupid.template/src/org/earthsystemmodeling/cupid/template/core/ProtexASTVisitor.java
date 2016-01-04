@@ -1,10 +1,13 @@
 package org.earthsystemmodeling.cupid.template.core;
 
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import org.earthsystemmodeling.cupid.core.CupidActivator;
 import org.earthsystemmodeling.cupid.template.core.ProtexStore.Parameter;
 import org.earthsystemmodeling.cupid.template.core.ProtexStore.Subroutine;
 import org.eclipse.photran.internal.core.analysis.binding.Definition;
@@ -12,14 +15,25 @@ import org.eclipse.photran.internal.core.parser.ASTSubroutineParNode;
 import org.eclipse.photran.internal.core.parser.ASTSubroutineSubprogramNode;
 import org.eclipse.photran.internal.core.parser.ASTVisitor;
 
+import uk.ac.ed.ph.snuggletex.SnuggleEngine;
+import uk.ac.ed.ph.snuggletex.SnuggleInput;
+import uk.ac.ed.ph.snuggletex.SnuggleSession;
+import uk.ac.ed.ph.snuggletex.WebPageOutputOptions;
+
 @SuppressWarnings("restriction")
 public class ProtexASTVisitor extends ASTVisitor {
 	
 	private ProtexStore store;
+	private SnuggleEngine snuggleEngine;
+	private WebPageOutputOptions webPageOutputOptions;
 	
 	public ProtexASTVisitor(ProtexStore store) {
 		this.store = store;
+		snuggleEngine = new SnuggleEngine();
 		
+		webPageOutputOptions = new WebPageOutputOptions();
+		webPageOutputOptions.setIncludingStyleElement(true);
+				
 	/*	
 		String latex = "\\begin{itemize}";
 		latex += "\\item\\apiStatusCompatibleVersion{5.2.0r}";
@@ -60,6 +74,18 @@ public class ProtexASTVisitor extends ASTVisitor {
 		*/
 	}
 	
+	private String latexToHTML(String latex) {
+		SnuggleSession session = snuggleEngine.createSession();
+		try {
+			session.parseInput(new SnuggleInput(latex));
+			ByteArrayOutputStream output = new ByteArrayOutputStream();
+			session.writeWebPage(webPageOutputOptions, output);
+			return output.toString();
+		} catch (IOException e) {
+			CupidActivator.debug("Exception converting Protex latex to HTML", e);
+		}		
+		return latex;  //failed to convert		
+	}
 	
 
 	
@@ -126,7 +152,7 @@ public class ProtexASTVisitor extends ASTVisitor {
 		m = PATTERN_DESCRIPTION.matcher(body);
 		if (m.find()) {
 			String longDesc = m.group(1).replaceAll("\\n\\s*!", "\n");
-			sub.longDesc = longDesc;
+			sub.longDesc = latexToHTML(longDesc);
 			//System.out.println("longDesc = \n|" + sub.longDesc + "|");
 		}
 		
