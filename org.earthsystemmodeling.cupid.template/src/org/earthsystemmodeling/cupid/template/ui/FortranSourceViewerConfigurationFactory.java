@@ -1,5 +1,6 @@
 package org.earthsystemmodeling.cupid.template.ui;
 
+import java.awt.Color;
 import java.io.IOException;
 import java.util.ArrayList;
 
@@ -7,6 +8,8 @@ import org.earthsystemmodeling.cupid.core.CupidActivator;
 import org.earthsystemmodeling.cupid.template.core.ProtexStore;
 import org.eclipse.cdt.internal.ui.text.CCompositeReconcilingStrategy;
 import org.eclipse.core.runtime.IProgressMonitor;
+import org.eclipse.jface.internal.text.html.BrowserInformationControl;
+import org.eclipse.jface.resource.JFaceResources;
 import org.eclipse.jface.text.BadLocationException;
 import org.eclipse.jface.text.DefaultInformationControl;
 import org.eclipse.jface.text.IInformationControl;
@@ -47,7 +50,9 @@ import org.eclipse.photran.internal.ui.editor_vpg.FortranVPGReconcilingStrategy;
 import org.eclipse.photran.internal.ui.editor_vpg.contentassist.FortranCompletionProcessor;
 import org.eclipse.photran.internal.ui.editor_vpg.folding.FortranFoldingProvider;
 import org.eclipse.photran.internal.ui.editor_vpg.hover.FortranDeclarationHover;
+import org.eclipse.swt.SWT;
 import org.eclipse.swt.graphics.Image;
+import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Shell;
 
 
@@ -130,11 +135,21 @@ IFortranSourceViewerConfigurationFactory {
                 assistant.enableAutoActivation(false); 
                 assistant.setProposalPopupOrientation(IContentAssistant.CONTEXT_INFO_BELOW);
                 assistant.setContextInformationPopupBackground(WHITE);
-                assistant.setProposalSelectorBackground(WHITE);             
+                assistant.setProposalSelectorBackground(WHITE);        
                 assistant.setInformationControlCreator(new IInformationControlCreator() {				
 					@Override
 					public IInformationControl createInformationControl(Shell parent) {
-						return new DefaultInformationControl(parent, true);
+						IInformationControl d;
+						if (BrowserInformationControl.isAvailable(parent)) {
+							d = new BrowserInformationControl(parent, JFaceResources.DIALOG_FONT, true);
+						}
+						else {
+							d = new DefaultInformationControl(parent, true);
+						}
+						
+						d.setBackgroundColor(Display.getCurrent().getSystemColor(SWT.COLOR_WIDGET_BACKGROUND));
+						d.setForegroundColor(Display.getCurrent().getSystemColor(SWT.COLOR_BLACK));
+						return d;
 					}
 				});
                
@@ -217,16 +232,17 @@ IFortranSourceViewerConfigurationFactory {
 		               .getContextType(FortranTemplateContext.ID);
 		}
 
+		static Image icon = CupidActivator.getImageDescriptor("icons/subroutine.gif").createImage();
 		@Override
 		protected Image getImage(Template template) {
-			return null;
+			return icon;
 		}
 		
 		@Override
 		protected ICompletionProposal createProposal(Template template, TemplateContext context, IRegion region,
 				int relevance) {
 			CupidActivator.debug("creating proposals...");
-			return new ProtexTemplateProposal(template, context, region, null, relevance);
+			return new ProtexTemplateProposal(template, context, region, icon, relevance);
 		}
 		
 		/*

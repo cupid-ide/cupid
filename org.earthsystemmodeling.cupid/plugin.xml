@@ -156,6 +156,8 @@
       </menuContribution>
       
       
+     
+      
      <!--
        <menuContribution
             locationURI="popup:org.eclipse.ui.navigator.ProjectExplorer#PopupMenu?after=additions">
@@ -581,12 +583,14 @@
    </extension>
    -->
    
+   <!--
    <extension
          point="org.eclipse.photran.ui.sourceViewerConfig">
       <sourceViewerConfig
             factory="org.earthsystemmodeling.cupid.handlers.FortranSourceViewerConfigurationFactory">
       </sourceViewerConfig>
    </extension>
+   -->
    <!--
    <extension
          point="org.eclipse.ui.propertyPages">

@@ -69,6 +69,7 @@ public class ProtexStore {
 		//System.out.println(writer.toString());
 		IPreferenceStore prefStore = Activator.getDefault().getPreferenceStore();
 		prefStore.setValue("org.earthsystemmodeling.cupid.protex", writer.toString());
+		//prefStore.
 	}
 	
 	public void load() {
@@ -210,7 +211,28 @@ public class ProtexStore {
 	
 	protected void makeTemplates(String contextTypeId) {
 		for (Subroutine s : subroutines) {
-			Template t = new Template(s.iface, s.shortDesc, contextTypeId, s.iface+"(...)", true);
+			
+			StringBuffer pattern = new StringBuffer();
+			if (s.iface != null) {
+				pattern.append(s.iface);
+			}
+			else {
+				pattern.append(s.name);
+			}
+			pattern.append("(");
+			for (Parameter p : s.params) {
+				pattern.append(p.name);
+				pattern.append("=${");
+				pattern.append(p.name);
+				pattern.append("}, ");
+			}
+			if (s.params.size() > 0) {
+				//chop last ","
+				pattern.setLength(pattern.length()-2);
+			}
+			pattern.append(")");
+			
+			Template t = new Template(s.iface, s.shortDesc, contextTypeId, pattern.toString(), true);
 			templates.add(t);
 			templateToSubroutine.put(t, s);
 		}
@@ -232,7 +254,7 @@ public class ProtexStore {
 	public String getAdditionalInfo(Template t) {
 		Subroutine s = templateToSubroutine.get(t);
 		if (s != null) {
-			return s.paramText.replaceAll("\n", "<br/>\n") + "<br/><br/>" + s.longDesc;
+			return "<b>Parameters:</b><br/><br/>" + s.paramText.replaceAll("\n", "<br/>\n") + "<br/><br/>" + s.longDesc;
 		}
 		return null;
 	}

@@ -32,7 +32,7 @@ public class ProtexASTVisitor extends ASTVisitor {
 		snuggleEngine = new SnuggleEngine();
 		
 		webPageOutputOptions = new WebPageOutputOptions();
-		webPageOutputOptions.setIncludingStyleElement(true);
+		webPageOutputOptions.setIncludingStyleElement(false);
 				
 	/*	
 		String latex = "\\begin{itemize}";
@@ -144,7 +144,7 @@ public class ProtexASTVisitor extends ASTVisitor {
 			}
 			if (endIdx >= 0) {
 				String paramText = body.substring(startIdx+12, endIdx);
-				sub.paramText = paramText;
+				sub.paramText = paramText.replaceAll("\\n\\s*!", "\n");
 			}
 		}
 		//System.out.println("paramText=\n|"+sub.paramText+"|");
