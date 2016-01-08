@@ -5,6 +5,7 @@ import java.lang.reflect.InvocationTargetException;
 import org.earthsystemmodeling.cupid.core.CupidActivator;
 import org.earthsystemmodeling.cupid.template.core.ProtexASTVisitor;
 import org.earthsystemmodeling.cupid.template.core.ProtexStore;
+import org.earthsystemmodeling.cupid.template.core.ProtexStore.ProtexAPI;
 import org.eclipse.cdt.core.model.ICElement;
 import org.eclipse.cdt.core.model.ICElementVisitor;
 import org.eclipse.cdt.core.model.ITranslationUnit;
@@ -71,8 +72,7 @@ public class ProtexHandler extends AbstractHandler {
 						monitor.beginTask("Parsing Protex", fileCount);  
 						
 						PhotranVPG.getInstance().releaseAllASTs();
-						ProtexStore.getInstance().clear();
-						
+						final ProtexAPI protexAPI = new ProtexAPI("my.api" + ProtexStore.getInstance().listAPIs().size());
 						
 						try {
 							celem.accept(new ICElementVisitor() {
@@ -94,7 +94,7 @@ public class ProtexHandler extends AbstractHandler {
 											}
 											else {
 												//System.out.print(".");
-												ast.accept(new ProtexASTVisitor(ProtexStore.getInstance()));
+												ast.accept(new ProtexASTVisitor(protexAPI));
 												PhotranVPG.getInstance().releaseAST(file);
 											}	
 											monitor.worked(1);
@@ -108,6 +108,9 @@ public class ProtexHandler extends AbstractHandler {
 						} catch (CoreException e) {
 							CupidActivator.log("Error retrieving resource for Protex parsing", e);
 						}
+					
+						ProtexStore store = ProtexStore.getInstance();
+						store.save(protexAPI);
 						
 						monitor.done();
 						
@@ -127,10 +130,7 @@ public class ProtexHandler extends AbstractHandler {
 			
 		}
 
-		ProtexStore store = ProtexStore.getInstance();
-		store.save();
-		store.clear();
-		store.load();
+		
 		
 		return null;
 	}

@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.io.StringReader;
 import java.io.StringWriter;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Comparator;
 import java.util.HashMap;
 import java.util.List;
@@ -23,6 +24,7 @@ import javax.xml.transform.stream.StreamResult;
 
 import org.earthsystemmodeling.cupid.core.CupidActivator;
 import org.earthsystemmodeling.cupid.template.Activator;
+import org.earthsystemmodeling.cupid.template.core.ProtexStore.ProtexAPI;
 import org.eclipse.jface.preference.IPreferenceStore;
 import org.eclipse.jface.text.templates.Template;
 import org.w3c.dom.Attr;
@@ -34,12 +36,17 @@ import org.xml.sax.InputSource;
 import org.xml.sax.SAXException;
 import org.xml.sax.helpers.DefaultHandler;
 
+import com.google.common.base.Joiner;
+import com.google.common.base.Splitter;
+
 public class ProtexStore {
 
 	private static ProtexStore instance;
-	private List<Subroutine> subroutines;
-	private Map<Template,Subroutine> templateToSubroutine;
-	private List<Template> templates;
+	private static String PROTEX_STORE_KEY = "org.earthsystemmodeling.cupid.protex";
+	private IPreferenceStore prefStore;
+	
+	private Map<Template, ProtexAPI> templateToAPI;
+	private Map<String, ProtexAPI> protexAPICache;
 	
 	public static ProtexStore getInstance() {
 		if (instance==null)
@@ -48,170 +55,139 @@ public class ProtexStore {
 	}
 	
 	protected ProtexStore() {
-		subroutines = new ArrayList<Subroutine>();
-		templateToSubroutine = new HashMap<Template,Subroutine>();
-		templates = new ArrayList<Template>();
+		prefStore = Activator.getDefault().getPreferenceStore();
+		templateToAPI = new HashMap<Template, ProtexAPI>();
+		protexAPICache = new HashMap<String, ProtexAPI>();
 	}
 	
-	public void addSubroutine(Subroutine toAdd) {
-		subroutines.add(toAdd);
+	public List<String> listAPIs() {
+		String apiListString = prefStore.getString(PROTEX_STORE_KEY);
+		return Splitter.on("|").splitToList(apiListString);
 	}
 	
-	public void clear() {
-		subroutines.clear();
-		templateToSubroutine.clear();
-		templates.clear();
+	private void addAPIToList(String apiid) {
+		List<String> apis = listAPIs();
+		if (!apis.contains(apiid)) {
+			List<String> newList = new ArrayList<String>(apis);
+			newList.add(apiid);
+			String toStore = Joiner.on("|").join(newList);
+			prefStore.setValue(PROTEX_STORE_KEY, toStore);
+		}	
 	}
 	
-	public void save() {
+	public void save(ProtexAPI api) {
 		StringWriter writer = new StringWriter();
-		serialize(new StreamResult(writer));
-		//System.out.println(writer.toString());
-		IPreferenceStore prefStore = Activator.getDefault().getPreferenceStore();
-		prefStore.setValue("org.earthsystemmodeling.cupid.protex", writer.toString());
-		//prefStore.
+		api.serialize(new StreamResult(writer));	
+		prefStore.setValue(getBaseKey(api.getAPIID()), writer.toString());
+		addAPIToList(api.getAPIID());
+		protexAPICache.remove(api.getAPIID());
 	}
 	
-	public void load() {
-		IPreferenceStore prefStore = Activator.getDefault().getPreferenceStore();
-		String xml = prefStore.getString("org.earthsystemmodeling.cupid.protex");
-		deserialize(new InputSource(new StringReader(xml)));
-	}
-	
-	private void serialize(StreamResult result) {
-		
-		try {
-			DocumentBuilderFactory factory= DocumentBuilderFactory.newInstance();
-			DocumentBuilder builder= factory.newDocumentBuilder();
-			Document document= builder.newDocument();
-
-			Node root= document.createElement("protex");
-			document.appendChild(root);
-
-			for (Subroutine s : subroutines) {
-				
-				Node node = document.createElement("subroutine");
-				root.appendChild(node);
-				NamedNodeMap attributes= node.getAttributes();
-				
-				Attr name = document.createAttribute("name");
-				name.setValue(s.name);
-				attributes.setNamedItem(name);
-				
-				Attr iface = document.createAttribute("iface");
-				iface.setValue(s.iface);
-				attributes.setNamedItem(iface);
-				
-				Attr shortDesc = document.createAttribute("shortDesc");
-				shortDesc.setValue(s.shortDesc);
-				attributes.setNamedItem(shortDesc);
-				
-				Attr paramText = document.createAttribute("paramText");
-				paramText.setValue(s.paramText);
-				attributes.setNamedItem(paramText);
-				
-				Attr longDesc = document.createAttribute("longDesc");
-				longDesc.setValue(s.longDesc);
-				attributes.setNamedItem(longDesc);
-				
-				for (Parameter p : s.params) {
-					Node paramNode = document.createElement("param");
-					node.appendChild(paramNode);
-					NamedNodeMap pattributes= paramNode.getAttributes();
-					
-					Attr pname = document.createAttribute("name");
-					pname.setValue(p.name);
-					pattributes.setNamedItem(pname);
-					
-					Attr ptype = document.createAttribute("type");
-					ptype.setValue(p.type);
-					pattributes.setNamedItem(ptype);
-					
-					//TODO: rest of parameter info
-				}
-				
-			}
-			
-			//if (template != null) {
-			//	Text pattern= document.createTextNode(validateXML(template.getPattern()));
-			//	node.appendChild(pattern);
-			
-			Transformer transformer=TransformerFactory.newInstance().newTransformer();
-			transformer.setOutputProperty(OutputKeys.METHOD, "xml"); //$NON-NLS-1$
-			transformer.setOutputProperty(OutputKeys.ENCODING, "UTF-8"); //$NON-NLS-1$
-			DOMSource source = new DOMSource(document);
-
-			transformer.transform(source, result);
-
-		} catch (ParserConfigurationException | TransformerConfigurationException | TransformerFactoryConfigurationError e) {
-			CupidActivator.log("Error configuring parser or transformed", e);
-		} catch (TransformerException e) {
-			CupidActivator.log("Error serializing Protex", e);
-		} 
-		
-	}
-	
-	private void deserialize(InputSource source) {
-		
-		try {
-			
-			DocumentBuilderFactory factory= DocumentBuilderFactory.newInstance();
-			DocumentBuilder parser= factory.newDocumentBuilder();
-			parser.setErrorHandler(new DefaultHandler());
-			Document document= parser.parse(source);
-
-			NodeList elements= document.getElementsByTagName("subroutine");
-
-			int count= elements.getLength();
-			for (int i= 0; i != count; i++) {
-				Node node= elements.item(i);
-				NamedNodeMap attributes= node.getAttributes();
-
-				if (attributes == null)
-					continue;
-
-				Subroutine s = new Subroutine();
-				s.name = getNamedString(attributes, "name");
-				s.iface = getNamedString(attributes, "iface");
-				s.shortDesc = getNamedString(attributes, "shortDesc");
-				s.longDesc = getNamedString(attributes, "longDesc");
-				s.paramText = getNamedString(attributes, "paramText");
-				
-				NodeList children = node.getChildNodes();
-				for (int j= 0; j != children.getLength(); j++) {
-					Node child = children.item(j);
-					if (child.getNodeName().equals("param")) {
-						NamedNodeMap pattributes= child.getAttributes();
-						Parameter p = new Parameter();
-						p.name = getNamedString(pattributes, "name");
-						p.type = getNamedString(pattributes, "type");
-						//TODO: rest of parameter info
-						s.addParameter(p);
-					}
-				}
-				
-				addSubroutine(s);		
-				
-			}
-	
-		} catch (ParserConfigurationException e) {
-			CupidActivator.log("Error instantiating XML parser", e);
-		} catch (IOException | SAXException e) {
-			CupidActivator.log("Error parsing Protex XML", e);
-		} 
-	
-	}
-	
-	private String getNamedString(NamedNodeMap attributes, String name) {
-		if (attributes.getNamedItem(name) != null) {
-			return attributes.getNamedItem(name).getNodeValue();
+	public ProtexAPI load(String apiid) {
+		String id = getBaseKey(apiid);
+		String xml = prefStore.getString(id);		
+		if (xml != null) {
+			ProtexAPI api = new ProtexAPI(apiid);
+			api.deserialize(new InputSource(new StringReader(xml)));
+			protexAPICache.put(apiid, api);
+			return api;
 		}
-		return null;
+		else {
+			return null;
+		}		
 	}
 	
-	protected void makeTemplates(String contextTypeId) {
-		for (Subroutine s : subroutines) {
+	private String getBaseKey(String apiid) {
+		return "protexapi." + apiid;
+	}
+	
+	public Template[] getTemplatesFromActiveAPIs(String contextTypeId) {
+		//for now, collect all templates for all Protex APIs
+		templateToAPI.clear();
+		List<Template> templateList = new ArrayList<Template>();
+		for (String apiid : listAPIs()) {
+			ProtexAPI protexAPI;
+			if (protexAPICache.containsKey(apiid)) {
+				protexAPI = protexAPICache.get(apiid);
+			}
+			else {
+				protexAPI = load(apiid);
+			}
+			for (Template t: protexAPI.getTemplates(contextTypeId)) {
+				templateList.add(t);
+				templateToAPI.put(t, protexAPI);
+			}
+		}
+		templateList.sort(new Comparator<Template>() {
+			@Override
+			public int compare(Template o1, Template o2) {
+				return o1.getName().compareTo(o2.getName());
+			}		
+		});
+		return templateList.toArray(new Template[templateList.size()]);
+	}
+	
+	public Subroutine getSubroutineForTemplate(Template t) {
+		return templateToAPI.get(t).getSubroutineForTemplate(t);
+	}
+	
+	/* represents a set of API methods parsed through Protex */
+	public static class ProtexAPI {
+		
+		private String apiid;
+		private List<Subroutine> subroutines;
+		private Map<Template,Subroutine> templateToSubroutine;
+		private List<Template> templates;
+		private Template[] templateCache = null;
+	
+		public ProtexAPI(String apiid) {
+			this.apiid = apiid;
+			subroutines = new ArrayList<Subroutine>();
+			templateToSubroutine = new HashMap<Template,Subroutine>();
+			templates = new ArrayList<Template>();
+		}
+		
+		public String getAPIID() {
+			return apiid;
+		}
+		
+		public void addSubroutine(Subroutine toAdd) {
+			subroutines.add(toAdd);
+		}
+		
+		public String getAdditionalInfo(Template t) {
+			Subroutine s = templateToSubroutine.get(t);
+			if (s != null) {
+				return "<b>Parameters:</b><br/><br/>" + s.paramText.replaceAll("\n", "<br/>\n") + "<br/><br/>" + s.longDesc;
+			}
+			return null;
+		}
 			
+		public Subroutine getSubroutineForTemplate(Template t) {
+			return templateToSubroutine.get(t);
+		}
+			
+		public Template[] getTemplates(String contextTypeId) {			
+			if (templateCache == null) {
+				for (Subroutine s : subroutines) {
+					Template t = makeTemplate(s, contextTypeId);			
+					templates.add(t);
+					templateToSubroutine.put(t, s);
+				}
+				templates.sort(new Comparator<Template>() {
+					@Override
+					public int compare(Template o1, Template o2) {
+						return o1.getName().compareTo(o2.getName());
+					}		
+				});
+				templateCache = new Template[templates.size()];
+				templates.toArray(templateCache);
+			}
+			return templateCache;
+		}
+		
+		
+		private Template makeTemplate(Subroutine s, String contextTypeId) {
 			StringBuffer pattern = new StringBuffer();
 			if (s.iface != null) {
 				pattern.append(s.iface);
@@ -232,33 +208,140 @@ public class ProtexStore {
 			}
 			pattern.append(")");
 			
-			Template t = new Template(s.iface, s.shortDesc, contextTypeId, pattern.toString(), true);
-			templates.add(t);
-			templateToSubroutine.put(t, s);
+			return new Template(s.iface, s.shortDesc, contextTypeId, pattern.toString(), true);
 		}
-		templates.sort(new Comparator<Template>() {
-			@Override
-			public int compare(Template o1, Template o2) {
-				return o1.getName().compareTo(o2.getName());
-			}		
-		});
-	}
-	
-	public Template[] getTemplates(String contextTypeId) {
-		if (templates.size()==0) {
-			makeTemplates(contextTypeId);
+		
+		private void serialize(StreamResult result) {
+
+			try {
+				DocumentBuilderFactory factory= DocumentBuilderFactory.newInstance();
+				DocumentBuilder builder= factory.newDocumentBuilder();
+				Document document= builder.newDocument();
+
+				Node root= document.createElement("protex");
+				document.appendChild(root);
+
+				for (Subroutine s : subroutines) {
+					
+					Node node = document.createElement("subroutine");
+					root.appendChild(node);
+					NamedNodeMap attributes= node.getAttributes();
+					
+					Attr name = document.createAttribute("name");
+					name.setValue(s.name);
+					attributes.setNamedItem(name);
+					
+					Attr iface = document.createAttribute("iface");
+					iface.setValue(s.iface);
+					attributes.setNamedItem(iface);
+					
+					Attr shortDesc = document.createAttribute("shortDesc");
+					shortDesc.setValue(s.shortDesc);
+					attributes.setNamedItem(shortDesc);
+					
+					Attr paramText = document.createAttribute("paramText");
+					paramText.setValue(s.paramText);
+					attributes.setNamedItem(paramText);
+					
+					Attr longDesc = document.createAttribute("longDesc");
+					longDesc.setValue(s.longDesc);
+					attributes.setNamedItem(longDesc);
+					
+					for (Parameter p : s.params) {
+						Node paramNode = document.createElement("param");
+						node.appendChild(paramNode);
+						NamedNodeMap pattributes= paramNode.getAttributes();
+						
+						Attr pname = document.createAttribute("name");
+						pname.setValue(p.name);
+						pattributes.setNamedItem(pname);
+						
+						Attr ptype = document.createAttribute("type");
+						ptype.setValue(p.type);
+						pattributes.setNamedItem(ptype);
+						
+						//TODO: rest of parameter info
+					}
+					
+				}
+				
+				//if (template != null) {
+				//	Text pattern= document.createTextNode(validateXML(template.getPattern()));
+				//	node.appendChild(pattern);
+				
+				Transformer transformer=TransformerFactory.newInstance().newTransformer();
+				transformer.setOutputProperty(OutputKeys.METHOD, "xml"); //$NON-NLS-1$
+				transformer.setOutputProperty(OutputKeys.ENCODING, "UTF-8"); //$NON-NLS-1$
+				DOMSource source = new DOMSource(document);
+
+				transformer.transform(source, result);
+
+			} catch (ParserConfigurationException | TransformerConfigurationException | TransformerFactoryConfigurationError e) {
+				CupidActivator.log("Error configuring parser or transformed", e);
+			} catch (TransformerException e) {
+				CupidActivator.log("Error serializing Protex", e);
+			} 
+			
 		}
-		return templates.toArray(new Template[templates.size()]);
-	}
-	
-	public String getAdditionalInfo(Template t) {
-		Subroutine s = templateToSubroutine.get(t);
-		if (s != null) {
-			return "<b>Parameters:</b><br/><br/>" + s.paramText.replaceAll("\n", "<br/>\n") + "<br/><br/>" + s.longDesc;
+		
+		private void deserialize(InputSource source) {
+			
+			try {
+				
+				DocumentBuilderFactory factory= DocumentBuilderFactory.newInstance();
+				DocumentBuilder parser= factory.newDocumentBuilder();
+				parser.setErrorHandler(new DefaultHandler());
+				Document document= parser.parse(source);
+
+				NodeList elements= document.getElementsByTagName("subroutine");
+
+				int count= elements.getLength();
+				for (int i= 0; i != count; i++) {
+					Node node= elements.item(i);
+					NamedNodeMap attributes= node.getAttributes();
+
+					if (attributes == null)
+						continue;
+
+					Subroutine s = new Subroutine();
+					s.name = getNamedString(attributes, "name");
+					s.iface = getNamedString(attributes, "iface");
+					s.shortDesc = getNamedString(attributes, "shortDesc");
+					s.longDesc = getNamedString(attributes, "longDesc");
+					s.paramText = getNamedString(attributes, "paramText");
+					
+					NodeList children = node.getChildNodes();
+					for (int j= 0; j != children.getLength(); j++) {
+						Node child = children.item(j);
+						if (child.getNodeName().equals("param")) {
+							NamedNodeMap pattributes= child.getAttributes();
+							Parameter p = new Parameter();
+							p.name = getNamedString(pattributes, "name");
+							p.type = getNamedString(pattributes, "type");
+							//TODO: rest of parameter info
+							s.addParameter(p);
+						}
+					}
+					
+					addSubroutine(s);		
+					
+				}
+		
+			} catch (ParserConfigurationException e) {
+				CupidActivator.log("Error instantiating XML parser", e);
+			} catch (IOException | SAXException e) {
+				CupidActivator.log("Error parsing Protex XML", e);
+			} 
+		
 		}
-		return null;
+		
+		private String getNamedString(NamedNodeMap attributes, String name) {
+			if (attributes.getNamedItem(name) != null) {
+				return attributes.getNamedItem(name).getNodeValue();
+			}
+			return null;
+		}
 	}
-	
 	
 	public static class Subroutine {
 		public String name;

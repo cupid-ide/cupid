@@ -3,9 +3,12 @@ package org.earthsystemmodeling.cupid.template.ui;
 import java.awt.Color;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 
 import org.earthsystemmodeling.cupid.core.CupidActivator;
 import org.earthsystemmodeling.cupid.template.core.ProtexStore;
+import org.earthsystemmodeling.cupid.template.core.ProtexStore.ProtexAPI;
 import org.eclipse.cdt.internal.ui.text.CCompositeReconcilingStrategy;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.jface.internal.text.html.BrowserInformationControl;
@@ -185,45 +188,11 @@ IFortranSourceViewerConfigurationFactory {
 	
 	public static class ProtexTemplateCompletionProcessor extends TemplateCompletionProcessor {
 
-		public ProtexTemplateCompletionProcessor() {
-			
-			/*
-			TemplateStore store = FortranTemplateManager.getInstance().getTemplateStore();
-			try {
-				store.load();
-			} catch (IOException e1) {
-				// TODO Auto-generated catch block
-				e1.printStackTrace();
-			}
-			
-			Template t1 = new Template("NUOPC_Write(state, fieldNameList, fileNamePrefix, overwrite, " + 
-					"status, timeslice, relaxedflag, rc)", "First nuopc template", 
-					FortranTemplateContext.ID, 
-					"NUOPC_Write(${state}, fieldNameList=${fieldNameList}, fileNamePrefix=${fileNamePrefix}, ovewrite=${overwrite}, status=${status}, timeslice=${timeslice}, relaxedflag=${relaxedflag}, rc=${rc})", 
-					false);
-			Template t2 = new Template("NUOPC_Write(${state}, ${another}, ${something_again})", "Second nuopc template", FortranTemplateContext.ID, "NUOPC_Write(${state}, ${another}, ${something_again})", false);
-			
-			TemplatePersistenceData tpd1 = new TemplatePersistenceData(t1, true);
-			TemplatePersistenceData tpd2 = new TemplatePersistenceData(t2, true);
-						
-			store.add(tpd1);
-			store.add(tpd2);
-			
-			try {
-				store.save();
-			} catch (IOException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-			*/
-			
-		}
+		public ProtexTemplateCompletionProcessor() { }
 		
 		@Override
 		protected Template[] getTemplates(String contextTypeId) {		
-			//TemplateStore store = FortranTemplateManager.getInstance().getTemplateStore();
-			//return store.getTemplates(FortranTemplateContext.ID);			
-			return ProtexStore.getInstance().getTemplates(contextTypeId);
+			return ProtexStore.getInstance().getTemplatesFromActiveAPIs(contextTypeId);
 		}
 
 		@Override
@@ -337,18 +306,7 @@ IFortranSourceViewerConfigurationFactory {
 
 		@Override
 		public Object getAdditionalProposalInfo(IProgressMonitor monitor) {
-			/*
-			try {
-				getContext().setVariable("params", "PARAMS_SET_VALUE");
-				TemplateBuffer tb = getContext().evaluate(getTemplate());			
-				return "Additional info: " + tb.getString();
-			} catch (BadLocationException | TemplateException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-			*/
-			
-			return ProtexStore.getInstance().getAdditionalInfo(getTemplate());
+			return ProtexStore.getInstance().getSubroutineForTemplate(getTemplate()).longDesc;
 		}
 		
 		

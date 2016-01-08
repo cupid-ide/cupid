@@ -9,6 +9,7 @@ import java.util.regex.Pattern;
 
 import org.earthsystemmodeling.cupid.core.CupidActivator;
 import org.earthsystemmodeling.cupid.template.core.ProtexStore.Parameter;
+import org.earthsystemmodeling.cupid.template.core.ProtexStore.ProtexAPI;
 import org.earthsystemmodeling.cupid.template.core.ProtexStore.Subroutine;
 import org.eclipse.photran.internal.core.analysis.binding.Definition;
 import org.eclipse.photran.internal.core.parser.ASTSubroutineParNode;
@@ -23,55 +24,15 @@ import uk.ac.ed.ph.snuggletex.WebPageOutputOptions;
 @SuppressWarnings("restriction")
 public class ProtexASTVisitor extends ASTVisitor {
 	
-	private ProtexStore store;
+	private ProtexAPI protexAPI;
 	private SnuggleEngine snuggleEngine;
 	private WebPageOutputOptions webPageOutputOptions;
 	
-	public ProtexASTVisitor(ProtexStore store) {
-		this.store = store;
-		snuggleEngine = new SnuggleEngine();
-		
+	public ProtexASTVisitor(ProtexAPI protexAPI) {
+		this.protexAPI = protexAPI;
+		snuggleEngine = new SnuggleEngine();		
 		webPageOutputOptions = new WebPageOutputOptions();
 		webPageOutputOptions.setIncludingStyleElement(false);
-				
-	/*	
-		String latex = "\\begin{itemize}";
-		latex += "\\item\\apiStatusCompatibleVersion{5.2.0r}";
-		latex += "\\item\\apiStatusModifiedSinceVersion{5.2.0r}";
-		latex += "\\begin{description}";
-		latex += "\\item[6.1.0] Added argument {\\tt srcTermProcessing}.";
-//              Added argument {\tt pipelineDepth}.
-//              The new arguments provide access to the tuning parameters
-//              affecting the sparse matrix execution.
-//\item[7.0.0] Added argument {\tt transposeRoutehandle} to allow a handle to
-//           the transposed matrix operation to be returned.\newline
-//              Added argument {\tt ignoreUnmatchedIndices} to support sparse 
-//                matrices that contain elements with indices that do not have a
-//              match within the source or destination Array.
-		latex += "\\end{description}";
-		latex += "\\end{itemize}";
-		
-		SnuggleEngine engine = new SnuggleEngine();
-		SnuggleSession session = engine.createSession();
-		try {
-			session.parseInput(new SnuggleInput(latex));
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		
-		WebPageOutputOptions wpoo = new WebPageOutputOptions();
-		wpoo.setIncludingStyleElement(false);
-		
-		System.out.println("WEB PAGE OUTPUT START");
-		try {
-			session.writeWebPage(wpoo, System.out);
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		System.out.println("WEB PAGE OUTPUT END");
-		*/
 	}
 	
 	private String latexToHTML(String latex) {
@@ -156,7 +117,7 @@ public class ProtexASTVisitor extends ASTVisitor {
 			//System.out.println("longDesc = \n|" + sub.longDesc + "|");
 		}
 		
-		store.addSubroutine(sub);
+		protexAPI.addSubroutine(sub);
 	}
 	
 	
