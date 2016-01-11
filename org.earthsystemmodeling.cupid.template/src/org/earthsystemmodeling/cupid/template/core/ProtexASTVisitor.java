@@ -8,9 +8,8 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import org.earthsystemmodeling.cupid.core.CupidActivator;
-import org.earthsystemmodeling.cupid.template.core.ProtexStore.Parameter;
-import org.earthsystemmodeling.cupid.template.core.ProtexStore.ProtexAPI;
-import org.earthsystemmodeling.cupid.template.core.ProtexStore.Subroutine;
+import org.earthsystemmodeling.cupid.template.core.ProtexAPI.Parameter;
+import org.earthsystemmodeling.cupid.template.core.ProtexAPI.Subroutine;
 import org.eclipse.photran.internal.core.analysis.binding.Definition;
 import org.eclipse.photran.internal.core.parser.ASTSubroutineParNode;
 import org.eclipse.photran.internal.core.parser.ASTSubroutineSubprogramNode;

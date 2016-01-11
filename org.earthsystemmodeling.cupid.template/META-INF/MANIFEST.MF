@@ -19,7 +19,12 @@ Require-Bundle: org.eclipse.ui,
  org.eclipse.cdt.core,
  org.eclipse.jface,
  org.eclipse.swt,
- com.google.guava
+ com.google.guava,
+ org.eclipse.ui.forms,
+ org.eclipse.ui.workbench.texteditor,
+ org.eclipse.ui.workbench,
+ org.eclipse.ui.ide;bundle-version="3.11.0",
+ org.eclipse.core.jobs
 Bundle-RequiredExecutionEnvironment: JavaSE-1.7
 Bundle-ActivationPolicy: lazy
 Bundle-ClassPath: lib/snuggletex/snuggletex-core-1.2.2.jar,

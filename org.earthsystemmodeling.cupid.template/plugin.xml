@@ -36,9 +36,20 @@
       </sourceViewerConfig>
    </extension>
    
+   <!--
    <extension point="org.eclipse.ui.editors.templates">
       <include
          file="templates/nuopc_api.xml" />
+   </extension>
+   -->
+   
+   <extension
+         point="org.eclipse.ui.preferencePages">
+      <page
+            class="org.earthsystemmodeling.cupid.template.ui.ProtexPreferencePage"
+            id="org.earthsystemmodeling.cupid.template.ui.ProtexPreferencePage"
+            name="Protex">
+      </page>
    </extension>
 
 </plugin>
