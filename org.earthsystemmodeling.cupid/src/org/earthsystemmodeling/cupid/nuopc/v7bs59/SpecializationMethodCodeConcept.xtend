@@ -1,27 +1,25 @@
 package org.earthsystemmodeling.cupid.nuopc.v7bs59
 
-import org.eclipse.photran.internal.core.parser.IASTNode
-import org.earthsystemmodeling.cupid.annotation.Name
-import org.earthsystemmodeling.cupid.annotation.Label
+import java.lang.reflect.Constructor
+import java.sql.PreparedStatement
+import java.util.List
 import org.earthsystemmodeling.cupid.annotation.Child
-import static org.earthsystemmodeling.cupid.nuopc.BasicCodeConcept.newBasicCodeConcept
-import org.eclipse.photran.core.IFortranAST
-import org.eclipse.photran.internal.core.parser.ASTModuleNode
-
-import static org.earthsystemmodeling.cupid.util.CodeExtraction.parseLiteralStatement
-import static org.earthsystemmodeling.cupid.util.CodeExtraction.parseLiteralProgramUnit
-import org.eclipse.photran.internal.core.parser.ASTSubroutineSubprogramNode
-import org.eclipse.photran.internal.core.parser.ASTUseStmtNode
-import org.eclipse.photran.internal.core.parser.ASTCallStmtNode
-import org.eclipse.photran.internal.core.parser.ASTIfStmtNode
+import org.earthsystemmodeling.cupid.annotation.Label
+import org.earthsystemmodeling.cupid.annotation.MappingType
+import org.earthsystemmodeling.cupid.annotation.Prop
 import org.earthsystemmodeling.cupid.nuopc.BasicCodeConcept
 import org.earthsystemmodeling.cupid.nuopc.CodeConcept
 import org.earthsystemmodeling.cupid.nuopc.CodeGenerationException
-import org.earthsystemmodeling.cupid.annotation.MappingType
-import java.util.List
-import org.earthsystemmodeling.cupid.annotation.Prop
-import java.sql.PreparedStatement
-import java.lang.reflect.Constructor
+import org.eclipse.photran.core.IFortranAST
+import org.eclipse.photran.internal.core.parser.ASTCallStmtNode
+import org.eclipse.photran.internal.core.parser.ASTIfStmtNode
+import org.eclipse.photran.internal.core.parser.ASTModuleNode
+import org.eclipse.photran.internal.core.parser.ASTSubroutineSubprogramNode
+import org.eclipse.photran.internal.core.parser.ASTUseStmtNode
+
+import static org.earthsystemmodeling.cupid.nuopc.BasicCodeConcept.newBasicCodeConcept
+import static org.earthsystemmodeling.cupid.util.CodeExtraction.parseLiteralProgramUnit
+import static org.earthsystemmodeling.cupid.util.CodeExtraction.parseLiteralStatement
 
 public abstract class SpecializationMethodCodeConcept<P extends CodeConcept<?, ?>> extends CodeConcept<P, ASTSubroutineSubprogramNode> {
 
@@ -103,7 +101,7 @@ public abstract class SpecializationMethodCodeConcept<P extends CodeConcept<?, ?
 		
 		var rs = stmtRegspec.executeQuery
 		
-		var Constructor<?> con = this.class.constructors.findFirst[parameterCount==1]
+		var Constructor<?> con = this.class.constructors.findFirst[parameterTypes.length==1]
 		while (rs.next) {
 			
 			var SpecializationMethodCodeConcept<P> smcc = 
