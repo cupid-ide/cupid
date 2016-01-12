@@ -2,6 +2,7 @@ package org.earthsystemmodeling.cupid.template.core;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Comparator;
 import java.util.IdentityHashMap;
 import java.util.List;
@@ -72,7 +73,7 @@ public class ProtexAPI {
 				templates.add(t);
 				templateToSubroutine.put(t, s);
 			}
-			templates.sort(new Comparator<Template>() {
+			Collections.sort(templates, new Comparator<Template>() {
 				@Override
 				public int compare(Template o1, Template o2) {
 					return o1.getName().compareTo(o2.getName());

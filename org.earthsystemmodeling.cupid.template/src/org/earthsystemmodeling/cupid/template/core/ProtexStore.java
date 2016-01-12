@@ -3,6 +3,7 @@ package org.earthsystemmodeling.cupid.template.core;
 import java.io.StringReader;
 import java.io.StringWriter;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Comparator;
 import java.util.HashMap;
 import java.util.IdentityHashMap;
@@ -132,7 +133,7 @@ public class ProtexStore {
 				}
 			}
 		}
-		templateList.sort(new Comparator<Template>() {
+		Collections.sort(templateList, new Comparator<Template>() {
 			@Override
 			public int compare(Template o1, Template o2) {
 				return o1.getName().compareTo(o2.getName());

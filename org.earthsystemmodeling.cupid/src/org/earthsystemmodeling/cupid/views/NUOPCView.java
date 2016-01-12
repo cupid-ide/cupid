@@ -560,7 +560,7 @@ public class NUOPCView extends ViewPart {
             						try {        							
             							Constructor<?>[] cons = fieldClass.getConstructors();
             							for (Constructor<?> con : cons) {
-            								if (con.getParameterCount() == 1) {
+            								if (con.getParameterTypes().length == 1) {
             									newcc = (CodeConcept<?, ?>) con.newInstance(ccp.codeConcept); 
             									break;
             								}
