@@ -4,10 +4,12 @@ import java.net.URL;
 
 import org.earthsystemmodeling.cupid.core.CupidActivator;
 import org.eclipse.core.runtime.Status;
+import org.eclipse.jface.dialogs.MessageDialog;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.SWTError;
 import org.eclipse.swt.browser.Browser;
 import org.eclipse.swt.widgets.Composite;
+import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.ui.part.ViewPart;
 
@@ -69,9 +71,12 @@ public class NUOPCDocView extends ViewPart {
 			*/
 		}
 		catch (SWTError se) {
-			CupidActivator.log(Status.WARNING, 	"Error creating NUOPC Doc viewer.  Trying alternative method.");
+			CupidActivator.log("Error creating NUOPC Doc viewer.  Trying alternative method.", se);
 			browser = null;
 			label = new Label(parent, SWT.NONE);
+			MessageDialog.openWarning(Display.getDefault().getActiveShell(), 
+					"Recommend installing libwebgtk", 
+					"The NUOPC Doc viewer relies on an IDE-based browser.  Please install the prerequisite software libwebkitgtk-1.0-0.  The software is in most Linux package manager, e.g., on Ubuntu use:\n\n$ sudo apt-get install libwebkitgtk-1.0-0\n\nPlease restart Eclipse after the installation.");
 		}
 		setDoc("Select an element in the NUOPC View to see relevant documentation.");			
 		
