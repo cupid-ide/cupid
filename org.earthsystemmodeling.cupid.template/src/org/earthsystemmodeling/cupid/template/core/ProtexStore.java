@@ -5,6 +5,7 @@ import java.io.StringWriter;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.HashMap;
+import java.util.IdentityHashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -36,7 +37,7 @@ public class ProtexStore {
 	
 	protected ProtexStore() {
 		prefStore = Activator.getDefault().getPreferenceStore();
-		templateToAPI = new HashMap<Template, ProtexAPI>();
+		templateToAPI = new IdentityHashMap<Template, ProtexAPI>();
 		protexAPICache = new HashMap<String, ProtexAPI>();
 	}
 	
@@ -99,8 +100,7 @@ public class ProtexStore {
 		String id = getBaseKey(apiid);
 		String xml = prefStore.getString(id);		
 		if (xml != null) {
-			ProtexAPI api = new ProtexAPI(apiid);
-			api.deserialize(new InputSource(new StringReader(xml)));
+			ProtexAPI api = ProtexAPI.deserialize(new InputSource(new StringReader(xml)));
 			protexAPICache.put(apiid, api);
 			return api;
 		}

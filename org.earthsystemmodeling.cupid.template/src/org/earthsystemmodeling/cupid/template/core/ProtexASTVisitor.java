@@ -50,6 +50,7 @@ public class ProtexASTVisitor extends ASTVisitor {
 
 	
 	static Pattern PATTERN_IROUTINE = Pattern.compile("!\\s*IROUTINE:\\s*(\\w*)\\s*-\\s*(.*)\\n");
+	static Pattern PATTERN_STATUS = Pattern.compile("!\\s*STATUS:(.*)!\\s*DESCRIPTION:", Pattern.DOTALL);
 	static Pattern PATTERN_DESCRIPTION = Pattern.compile("!\\s*DESCRIPTION:(.*)!\\s*EOP", Pattern.DOTALL);
 	//static Pattern PATTERN_ARGUMENTS = Pattern.compile("!\\s*ARGUMENTS:(.*)!\\s*(!\\s*!DESCRIPTION)", Pattern.DOTALL);
 	
@@ -60,7 +61,11 @@ public class ProtexASTVisitor extends ASTVisitor {
 		sub.name = node.getSubroutineStmt().getSubroutineName().getSubroutineName().getText();
 		
 		String whiteBefore = node.getSubroutineStmt().findFirstToken().getWhiteBefore();
-				
+		
+		if (!whiteBefore.contains("!BOP")) {  //check for public interface
+			return;
+		}
+		
 		//System.out.println("white before = |" + whiteBefore + "|");
 		Matcher m = PATTERN_IROUTINE.matcher(whiteBefore);
 		if (m.find()) {
@@ -87,9 +92,7 @@ public class ProtexASTVisitor extends ASTVisitor {
 				sub.params.add(p);				
 			}
 		}
-		
-		//System.out.println("\n"+sub);	
-		
+				
 		String body = node.getBody().toString();
 		//System.out.println("body=|\n"+body+"\n|\n");
 		//m = PATTERN_ARGUMENTS.matcher(body);
@@ -98,16 +101,27 @@ public class ProtexASTVisitor extends ASTVisitor {
 		//}
 		int startIdx = body.indexOf("!ARGUMENTS:");
 		if (startIdx >= 0) {
-			int endIdx = body.indexOf("!DESCRIPTION:");
+			int endIdx = body.indexOf("!STATUS:");
+			if (endIdx == -1) {
+				endIdx = body.indexOf("!DESCRIPTION:");
+			}
 			if (endIdx == -1) {
 				endIdx = body.indexOf("!EOP");
 			}
 			if (endIdx >= 0) {
 				String paramText = body.substring(startIdx+12, endIdx);
-				sub.paramText = paramText.replaceAll("\\n\\s*!", "\n");
+				paramText = paramText.replaceAll("\\n\\s*!", "\n");
+				paramText = paramText.replaceAll(".*KeywordEnforcer.*\n", "");  //remove entire line
+				sub.paramText = paramText;
 			}
 		}
 		//System.out.println("paramText=\n|"+sub.paramText+"|");
+		
+		m = PATTERN_STATUS.matcher(body);
+		if (m.find()) {
+			String status = m.group(1).replaceAll("\\n\\s*!", "\n");
+			sub.status = latexToHTML(status);
+		}
 		
 		m = PATTERN_DESCRIPTION.matcher(body);
 		if (m.find()) {

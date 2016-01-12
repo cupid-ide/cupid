@@ -1,6 +1,7 @@
 package org.earthsystemmodeling.cupid.template.ui;
 
 import org.earthsystemmodeling.cupid.core.CupidActivator;
+import org.earthsystemmodeling.cupid.template.core.ProtexAPI.Subroutine;
 import org.earthsystemmodeling.cupid.template.core.ProtexStore;
 import org.eclipse.cdt.internal.ui.text.CCompositeReconcilingStrategy;
 import org.eclipse.core.runtime.IProgressMonitor;
@@ -124,7 +125,7 @@ IFortranSourceViewerConfigurationFactory {
 					public IInformationControl createInformationControl(Shell parent) {
 						IInformationControl d;
 						if (BrowserInformationControl.isAvailable(parent)) {
-							d = new BrowserInformationControl(parent, JFaceResources.DIALOG_FONT, true);
+							d = new BrowserInformationControl(parent, JFaceResources.TEXT_FONT, true);
 						}
 						else {
 							d = new DefaultInformationControl(parent, true);
@@ -190,7 +191,6 @@ IFortranSourceViewerConfigurationFactory {
 		@Override
 		protected ICompletionProposal createProposal(Template template, TemplateContext context, IRegion region,
 				int relevance) {
-			CupidActivator.debug("creating proposals...");
 			return new ProtexTemplateProposal(template, context, region, icon, relevance);
 		}
 		
@@ -286,7 +286,25 @@ IFortranSourceViewerConfigurationFactory {
 
 		@Override
 		public Object getAdditionalProposalInfo(IProgressMonitor monitor) {
-			return ProtexStore.getInstance().getSubroutineForTemplate(getTemplate()).longDesc;
+			StringBuffer sb = new StringBuffer();
+			Subroutine s = ProtexStore.getInstance().getSubroutineForTemplate(getTemplate());
+			if (s != null) {
+				if (s.paramText != null && s.paramText.length() > 0) {
+					sb.append("<b>Parameters:</b><br/>");
+					sb.append(s.paramText.replaceAll("\n", "<br/>\n"));
+					sb.append("<br/><br/>");
+				}
+				if (s.longDesc != null && s.longDesc.length() > 0) {
+					sb.append(s.longDesc);
+					sb.append("<br/><br/>");
+				}
+				if (s.status != null && s.status.length() > 0) {
+					sb.append("<b>Status:</b><br/>");
+					sb.append(s.status);
+					sb.append("<br/>");
+				}
+			}
+			return sb.toString();
 		}
 		
 		

@@ -59,6 +59,8 @@ public class SnuggleEngineTester {
 			"     \\begin{description}\n" + 
 			"     \\item[state]\n" + 
 			"       The {\\tt ESMF\\_State} object to which the namespace is added.\n" + 
+			"     \\item has no argument.\n" +
+			"        but has another line\n" + 
 			"     \\item[namespace]\n" + 
 			"       The namespace string.\n" + 
 			"     \\item[{[nestedStateName]}]\n" + 
@@ -76,19 +78,28 @@ public class SnuggleEngineTester {
 			public void handleCommand(DOMBuilder builder, Element parentElement, CommandToken token)
 					throws SnuggleParseException {
 				System.out.println("token = " + token);
+				ArgumentContainerToken act = token.getOptionalArgument();
+				if (act != null) {
+					List<FlowToken> tf = act.getContents();
+					System.out.println(tf.size());
+				}
 			}
 		};
 		
 		
 		SnugglePackage corePackage = CorePackageDefinitions.getPackage();
+		
 		BuiltinCommand bic = corePackage.addComplexCommandSameArgMode("<description item>", false, 1, PARA_MODE_ONLY, new DescriptionEnvironmentHandler(), START_NEW_XHTML_BLOCK);
 		DescriptionEnvironmentHandler.CMD_DESC_ITEM = bic;
 		corePackage.addCommand(bic);
 		corePackage.addEnvironment("description", PARA_MODE_ONLY, null, null, new DescriptionEnvironmentHandler(), START_NEW_XHTML_BLOCK);
 		
-	    BuiltinCommand CMD_ITEM = corePackage.addComplexCommand("item", true, 1, PARA_MODE_ONLY, new LaTeXMode[] {LaTeXMode.PARAGRAPH}, ch, null);
+     	//BuiltinCommand CMD_ITEM = corePackage.addComplexCommandOneArg("item", true, PARA_MODE_ONLY, LaTeXMode.PARAGRAPH, ch, null);
+	    BuiltinCommand CMD_ITEM = corePackage.addComplexCommand("item", true, 0, PARA_MODE_ONLY, new LaTeXMode[] {LaTeXMode.PARAGRAPH}, new DescriptionEnvironmentHandler(), START_NEW_XHTML_BLOCK);
 	    corePackage.addCommand(CMD_ITEM);
-	    	    		
+	    CorePackageDefinitions.CMD_ITEM = CMD_ITEM;
+	    
+	    
 	    //("item", PARA_MODE_ONLY, new ListEnvironmentHandler(), null);
 		/*			
 		sp.addComplexCommand("bigskip", true, 1, 
@@ -101,9 +112,9 @@ public class SnuggleEngineTester {
         
 		
 		SnuggleEngine engine = new SnuggleEngine();
-		//engine.addPackage(sp);
-		
+				
 		SnuggleSession session = engine.createSession();
+		
 		
 		try {
 			//session.parseInput(new SnuggleInput(new File(filepath)));
@@ -175,7 +186,7 @@ public class SnuggleEngineTester {
 	        }
 	    }
 	    
-	   static Pattern ITEM_PATTERN = Pattern.compile("\\[(\\w+)\\](.*)", Pattern.DOTALL);
+	   //static Pattern ITEM_PATTERN = Pattern.compile("\\[(\\w+)\\](.*)", Pattern.DOTALL);
 	    
 	    /**
 	     * Builds list items.
@@ -189,7 +200,15 @@ public class SnuggleEngineTester {
 	             * Make sure we're building a list */
 	            if (builder.isParentElement(parentElement, W3CConstants.XHTML_NAMESPACE, "ul", "ol")) {
 	                Element listItem = builder.appendXHTMLElement(parentElement, "li");
+	                if (itemToken.getOptionalArgument()!=null) {
+	                	Element firstItem = builder.appendXHTMLElement(listItem, "b");
+	                	//firstItem.setTextContent(itemToken.getOptionalArgument().getSlice().extract().toString());
+	                	builder.handleTokens(firstItem, itemToken.getOptionalArgument(), true);
+	                }
+	                
 	                builder.handleTokens(listItem, itemToken.getArguments()[0], true);
+	                
+	                /*
 	                Node firstNode = listItem.getFirstChild();
 	                if (firstNode.getNodeType()==Node.TEXT_NODE) {
 	                	System.out.println(firstNode.getTextContent());
@@ -200,6 +219,7 @@ public class SnuggleEngineTester {
 	                		//listItem.setTextContent(m.group(2));
 	                	}
 	                }
+	                */
 	            }
 	            else {
 	                /* List items should only appear inside list environments. But since they
@@ -236,8 +256,9 @@ public class SnuggleEngineTester {
 	            if (token.isCommand(CorePackageDefinitions.CMD_ITEM)) {
 	                /* Old-style \item. Stop building up content (if appropriate) and replace with
 	                 * new LIST_ITEM command */
-	                if (foundItem) {
-	                    CommandToken itemBefore = buildGroupedCommandToken(environmentToken, getDescItemCommand(), itemBuilder);
+	                
+	            	if (foundItem) {
+	                    CommandToken itemBefore = buildGroupedCommandToken(environmentToken, getDescItemCommand(), itemBuilder, ((CommandToken) token).getOptionalArgument());
 	                    resultBuilder.add(itemBefore);
 	                }
 	                foundItem = true;
@@ -261,7 +282,7 @@ public class SnuggleEngineTester {
 	        }
 	        /* At end, finish off last item */
 	        if (foundItem) {
-	            resultBuilder.add(buildGroupedCommandToken(environmentToken, getDescItemCommand(), itemBuilder));
+	            resultBuilder.add(buildGroupedCommandToken(environmentToken, getDescItemCommand(), itemBuilder, null));
 	        }
 	        
 	        /* Replace content */
@@ -270,7 +291,8 @@ public class SnuggleEngineTester {
 	    }
 	    
 	    private CommandToken buildGroupedCommandToken(final Token parentToken,
-	            final BuiltinCommand command, final List<? extends FlowToken> itemBuilder) {
+	            final BuiltinCommand command, final List<? extends FlowToken> itemBuilder, 
+	            final ArgumentContainerToken optionalArg) {
 	        ArgumentContainerToken contentToken;
 	        if (itemBuilder.isEmpty()) {
 	            contentToken = ArgumentContainerToken.createEmptyContainer(parentToken, parentToken.getLatexMode());
@@ -280,7 +302,7 @@ public class SnuggleEngineTester {
 	        }
 	        CommandToken result = new CommandToken(contentToken.getSlice(), contentToken.getLatexMode(),
 	                command,
-	                null, /* No optional argument */
+	                optionalArg, /* was null - No optional argument */
 	                new ArgumentContainerToken[] { contentToken } /* Single argument containing content */
 	        );
 	        itemBuilder.clear();

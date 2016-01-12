@@ -1,11 +1,19 @@
 package org.earthsystemmodeling.cupid.template.ui;
 
+import java.io.BufferedOutputStream;
 import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.OutputStream;
 import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Iterator;
 import java.util.List;
+
+import javax.xml.transform.stream.StreamResult;
 
 import org.earthsystemmodeling.cupid.core.CupidActivator;
 import org.earthsystemmodeling.cupid.template.core.ProtexAPI;
@@ -69,6 +77,7 @@ import org.eclipse.ui.IWorkbench;
 import org.eclipse.ui.IWorkbenchPreferencePage;
 import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.dialogs.ResourceSelectionDialog;
+import org.xml.sax.InputSource;
 
 public class ProtexPreferencePage extends PreferencePage implements IWorkbenchPreferencePage {
 
@@ -546,65 +555,33 @@ public class ProtexPreferencePage extends PreferencePage implements IWorkbenchPr
 
 	private void import_() {
 		FileDialog dialog= new FileDialog(getShell());
-		dialog.setText("Import");
-		//dialog.setFilterExtensions(new String[] {TemplatesMessages.TemplatePreferencePage_import_extension});
+		dialog.setText("Import Protex");
+		dialog.setFilterExtensions(new String[] {"*.xml"});
 		String path= dialog.open();
 
 		if (path == null)
 			return;
 
-		/*
 		try {
-			TemplateReaderWriter reader= new TemplateReaderWriter();
-			File file= new File(path);
-			if (file.exists()) {
-				InputStream input= new BufferedInputStream(new FileInputStream(file));
-				try {
-					TemplatePersistenceData[] datas= reader.read(input, null);
-					for (int i= 0; i < datas.length; i++) {
-						TemplatePersistenceData data= datas[i];
-						fTemplateStore.add(data);
-					}
-				} finally {
-					try {
-						input.close();
-					} catch (IOException x) {
-						// ignore
-					}
-				}
-			}
-
-			fTableViewer.refresh();
-			fTableViewer.setAllChecked(false);
-			fTableViewer.setCheckedElements(getEnabledTemplates());
-
+			ProtexAPI api = ProtexAPI.deserialize(new InputSource(new FileInputStream(path)));
+			protexStore.save(api);
 		} catch (FileNotFoundException e) {
 			openReadErrorDialog(e);
-		} catch (IOException e) {
-			openReadErrorDialog(e);
 		}
-		 */
+			
+		fTableViewer.refresh();
+		fTableViewer.setCheckedElements(activeProtexAPIs());
+
 	}
 
 	private void export() {
 		IStructuredSelection selection= (IStructuredSelection) fTableViewer.getSelection();
-		Object[] templates= selection.toArray();
+		String apiid = (String) selection.getFirstElement();
 
-		/*
-		TemplatePersistenceData[] datas= new TemplatePersistenceData[templates.length];
-		for (int i= 0; i != templates.length; i++)
-			datas[i]= (TemplatePersistenceData) templates[i];
-
-		export(datas);
-		 */
-	}
-
-	/*
-	private void export(TemplatePersistenceData[] templates) {
 		FileDialog dialog= new FileDialog(getShell(), SWT.SAVE);
-		dialog.setText(TemplatesMessages.TemplatePreferencePage_export_title);
-		dialog.setFilterExtensions(new String[] {TemplatesMessages.TemplatePreferencePage_export_extension});
-		dialog.setFileName(TemplatesMessages.TemplatePreferencePage_export_filename);
+		dialog.setText("Export Protex API");
+		dialog.setFilterExtensions(new String[] {"*.xml"});
+		dialog.setFileName(apiid + ".xml");
 		String path= dialog.open();
 
 		if (path == null)
@@ -612,45 +589,39 @@ public class ProtexPreferencePage extends PreferencePage implements IWorkbenchPr
 
 		File file= new File(path);
 
+		/*
 		if (file.isHidden()) {
 			String title= TemplatesMessages.TemplatePreferencePage_export_error_title;
 			String message= NLSUtility.format(TemplatesMessages.TemplatePreferencePage_export_error_hidden, file.getAbsolutePath());
 			MessageDialog.openError(getShell(), title, message);
 			return;
 		}
+		*/
 
 		if (file.exists() && !file.canWrite()) {
-			String title= TemplatesMessages.TemplatePreferencePage_export_error_title;
-			String message= NLSUtility.format(TemplatesMessages.TemplatePreferencePage_export_error_canNotWrite, file.getAbsolutePath());
+			String title= "Cannot write to file";
+			String message= "Cannot write to file: " + path;
 			MessageDialog.openError(getShell(), title, message);
 			return;
 		}
 
 		if (!file.exists() || confirmOverwrite(file)) {
-			OutputStream output= null;
-			try {
-				output= new BufferedOutputStream(new FileOutputStream(file));
-				TemplateReaderWriter writer= new TemplateReaderWriter();
-				writer.save(templates, output);
-			} catch (IOException e) {
-				openWriteErrorDialog(e);
-			} finally {
-				if (output != null) {
-					try {
-						output.close();
-					} catch (IOException e) {
-						// ignore
-					}
-				}
+			ProtexAPI api = protexStore.load(apiid);
+			if (api != null) {
+				api.serialize(new StreamResult(file));
 			}
 		}
+		
+		fTableViewer.refresh();
+		fTableViewer.setCheckedElements(activeProtexAPIs());
+		
 	}
-	 */
+	 
 
 	private boolean confirmOverwrite(File file) {
 		return MessageDialog.openQuestion(getShell(),
 				"Export file exists",
-				"Export exists message: " + file.getAbsolutePath());
+				"Okay to overwrite this file " + file.getAbsolutePath() + "?");
 	}
 
 	private void remove() {
@@ -737,24 +708,23 @@ public class ProtexPreferencePage extends PreferencePage implements IWorkbenchPr
 		return super.performCancel();
 	}
 
-	/*
+	
+	
 	private void openReadErrorDialog(IOException ex) {
-
-		IStatus status= new Status(IStatus.ERROR, TextEditorPlugin.PLUGIN_ID, IStatus.OK, "Failed to read templates.", ex); //$NON-NLS-1$
-		TextEditorPlugin.getDefault().getLog().log(status);
-		String title= TemplatesMessages.TemplatePreferencePage_error_read_title;
-		String message= TemplatesMessages.TemplatePreferencePage_error_read_message;
+		CupidActivator.log("Exception importing Protex", ex);
+		String title= "Error reading Protex input file";
+		String message= "There was an error reading the Protex input file: \n" + ex.getMessage();
 		MessageDialog.openError(getShell(), title, message);
 	}
-
+	
+	/*
 	private void openWriteErrorDialog(IOException ex) {
-		IStatus status= new Status(IStatus.ERROR, TextEditorPlugin.PLUGIN_ID, IStatus.OK, "Failed to write templates.", ex); //$NON-NLS-1$
-		TextEditorPlugin.getDefault().getLog().log(status);
-		String title= TemplatesMessages.TemplatePreferencePage_error_write_title;
-		String message= TemplatesMessages.TemplatePreferencePage_error_write_message;
+		CupidActivator.log("Exception exporting Protex", ex);
+		String title= "Error writing Protex output file";
+		String message= "There was an error writing the Protex output file: \n" + ex.getMessage();
 		MessageDialog.openError(getShell(), title, message);
 	}
-	 */
+	*/
 
 	protected SourceViewer getViewer() {
 		return fPatternViewer;

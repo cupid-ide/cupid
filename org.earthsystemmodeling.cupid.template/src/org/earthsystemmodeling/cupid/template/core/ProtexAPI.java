@@ -3,7 +3,7 @@ package org.earthsystemmodeling.cupid.template.core;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Comparator;
-import java.util.HashMap;
+import java.util.IdentityHashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -41,7 +41,7 @@ public class ProtexAPI {
 	public ProtexAPI(String apiid) {
 		this.apiid = apiid;
 		subroutines = new ArrayList<Subroutine>();
-		templateToSubroutine = new HashMap<Template,Subroutine>();
+		templateToSubroutine = new IdentityHashMap<Template,Subroutine>();
 		templates = new ArrayList<Template>();
 	}
 	
@@ -95,10 +95,20 @@ public class ProtexAPI {
 		}
 		pattern.append("(");
 		for (Parameter p : s.params) {
+			if (p.type.equalsIgnoreCase("type(esmf_keywordenforcer)")) {
+				continue;
+			}
+			if (p.optional) {
+				pattern.append("[");
+			}
 			pattern.append(p.name);
 			pattern.append("=${");
 			pattern.append(p.name);
-			pattern.append("}, ");
+			pattern.append("}");
+			if (p.optional) {
+				pattern.append("]");
+			}
+			pattern.append(", ");
 		}
 		if (s.params.size() > 0) {
 			//chop last ","
@@ -109,7 +119,7 @@ public class ProtexAPI {
 		return new Template(s.iface, s.shortDesc, contextTypeId, pattern.toString(), true);
 	}
 	
-	protected void serialize(StreamResult result) {
+	public void serialize(StreamResult result) {
 
 		try {
 			DocumentBuilderFactory factory= DocumentBuilderFactory.newInstance();
@@ -118,6 +128,9 @@ public class ProtexAPI {
 
 			Node root= document.createElement("protex");
 			document.appendChild(root);
+			Attr apiid = document.createAttribute("apiid");
+			apiid.setValue(getAPIID());
+			root.getAttributes().setNamedItem(apiid);
 
 			for (Subroutine s : subroutines) {
 				
@@ -145,6 +158,10 @@ public class ProtexAPI {
 				longDesc.setValue(s.longDesc);
 				attributes.setNamedItem(longDesc);
 				
+				Attr status = document.createAttribute("status");
+				status.setValue(s.status);
+				attributes.setNamedItem(status);
+				
 				for (Parameter p : s.params) {
 					Node paramNode = document.createElement("param");
 					node.appendChild(paramNode);
@@ -158,7 +175,18 @@ public class ProtexAPI {
 					ptype.setValue(p.type);
 					pattributes.setNamedItem(ptype);
 					
-					//TODO: rest of parameter info
+					Attr intentIn = document.createAttribute("intentIn");
+					intentIn.setValue(Boolean.toString(p.intentIn));
+					pattributes.setNamedItem(intentIn);
+					
+					Attr intentOut = document.createAttribute("intentOut");
+					intentOut.setValue(Boolean.toString(p.intentOut));
+					pattributes.setNamedItem(intentOut);
+					
+					Attr optional = document.createAttribute("optional");
+					optional.setValue(Boolean.toString(p.optional));
+					pattributes.setNamedItem(optional);
+					
 				}
 				
 			}
@@ -173,6 +201,7 @@ public class ProtexAPI {
 			DOMSource source = new DOMSource(document);
 
 			transformer.transform(source, result);
+			
 
 		} catch (ParserConfigurationException | TransformerConfigurationException | TransformerFactoryConfigurationError e) {
 			CupidActivator.log("Error configuring parser or transformed", e);
@@ -182,7 +211,9 @@ public class ProtexAPI {
 		
 	}
 	
-	protected void deserialize(InputSource source) {
+	public static ProtexAPI deserialize(InputSource source) {
+		
+		ProtexAPI apiToReturn = new ProtexAPI("new");
 		
 		try {
 			
@@ -190,6 +221,9 @@ public class ProtexAPI {
 			DocumentBuilder parser= factory.newDocumentBuilder();
 			parser.setErrorHandler(new DefaultHandler());
 			Document document= parser.parse(source);
+			
+			String apiid = document.getDocumentElement().getAttribute("apiid");
+			apiToReturn.apiid = apiid;
 
 			NodeList elements= document.getElementsByTagName("subroutine");
 
@@ -207,21 +241,24 @@ public class ProtexAPI {
 				s.shortDesc = getNamedString(attributes, "shortDesc");
 				s.longDesc = getNamedString(attributes, "longDesc");
 				s.paramText = getNamedString(attributes, "paramText");
+				s.status = getNamedString(attributes, "status");
 				
 				NodeList children = node.getChildNodes();
 				for (int j= 0; j != children.getLength(); j++) {
 					Node child = children.item(j);
 					if (child.getNodeName().equals("param")) {
-						NamedNodeMap pattributes= child.getAttributes();
+						NamedNodeMap pattributes = child.getAttributes();
 						Parameter p = new Parameter();
 						p.name = getNamedString(pattributes, "name");
 						p.type = getNamedString(pattributes, "type");
-						//TODO: rest of parameter info
+						p.intentIn = getNamedBoolean(pattributes, "intentIn");
+						p.intentOut = getNamedBoolean(pattributes, "intentOut");
+						p.optional = getNamedBoolean(pattributes, "optional");
 						s.addParameter(p);
 					}
 				}
 				
-				addSubroutine(s);		
+				apiToReturn.addSubroutine(s);		
 				
 			}
 	
@@ -230,15 +267,25 @@ public class ProtexAPI {
 		} catch (IOException | SAXException e) {
 			CupidActivator.log("Error parsing Protex XML", e);
 		} 
+		
+		return apiToReturn;
 	
 	}
 	
-	private String getNamedString(NamedNodeMap attributes, String name) {
+	private static String getNamedString(NamedNodeMap attributes, String name) {
 		if (attributes.getNamedItem(name) != null) {
 			return attributes.getNamedItem(name).getNodeValue();
 		}
 		return null;
 	}
+	
+	private static boolean getNamedBoolean(NamedNodeMap attributes, String name) {
+		if (attributes.getNamedItem(name) != null) {
+			return Boolean.valueOf(attributes.getNamedItem(name).getNodeValue());
+		}
+		return false;
+	}
+	
 	
 	public static class Subroutine {
 		public String name;
@@ -247,6 +294,7 @@ public class ProtexAPI {
 		public String longDesc;
 		public String paramText;
 		public List<Parameter> params;
+		public String status;
 		
 		public String toString() {
 			String name = this.name==null ? "NULL" : this.name;
