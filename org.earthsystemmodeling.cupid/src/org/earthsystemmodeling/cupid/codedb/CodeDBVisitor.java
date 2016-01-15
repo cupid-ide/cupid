@@ -367,7 +367,7 @@ public class CodeDBVisitor extends ASTVisitor {
 		currentAcValueIndex++;
 		String expr = "";
 		if (node.getExpr() != null) expr = node.getExpr().toString();
-		addFact("arrayConstructorVal", parentID(), currentAcValueIndex, node.getExpr().toString());
+		addFact("arrayConstructorVal", parentID(), currentAcValueIndex, expr);
 	}
 	
 	

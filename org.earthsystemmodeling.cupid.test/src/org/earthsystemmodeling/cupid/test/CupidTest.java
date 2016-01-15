@@ -14,6 +14,7 @@ import org.earthsystemmodeling.cupid.nuopc.v7bs59.NUOPCDriver;
 import org.eclipse.core.resources.IFile;
 import org.eclipse.core.resources.IProject;
 import org.eclipse.core.resources.IResource;
+import org.eclipse.core.resources.IResourceVisitor;
 import org.eclipse.core.resources.IWorkspaceRoot;
 import org.eclipse.core.resources.ResourcesPlugin;
 import org.eclipse.core.runtime.CoreException;
@@ -33,44 +34,57 @@ public class CupidTest {
 
 	private static Bundle MY_BUNDLE = FrameworkUtil.getBundle(CupidTest.class);
 
-	private static IProject PROJECT_PROJA;
+	private static IProject PROJECT_NUOPC_PROTOTYPES;
 		
 	@BeforeClass
 	public static void setUp() throws CoreException, IOException {
-		PROJECT_PROJA = copyProjectToWorkspace("ProjA");
+		PROJECT_NUOPC_PROTOTYPES = createProjectFromFolder("target/checkout", "NUOPC");
 	}
 	
-	
-	@Test
-	public void something() {
-		assertTrue("1==1", 1==1);
-	}
-	
-	@Test
-	public void checkPhotran() {
-		PhotranVPG.getInstance().clearDatabase();
-	}
 	
 	@Test	
-	public void anotherTest() throws SQLException {
+	public void anotherTest() throws SQLException, CoreException {
 		
 		String dbloc = "~/.cupid/codedb_test";
 		String connString = "jdbc:h2:" + dbloc + ";LOG=0;CACHE_SIZE=65536;LOCK_MODE=0;UNDO_LOG=0";
-		CodeDBIndex codeDB = CodeDBIndex.getInstance();
+		final CodeDBIndex codeDB = CodeDBIndex.getInstance();
 		codeDB.openConnection(connString);
 		codeDB.rebuildDatabase();
-		
 		codeDB.truncateDatabase();
 		
-		IFile file = PROJECT_PROJA.getFile("moduleA.F90");
-		PhotranVPG.getInstance().releaseAST(file);
-		IFortranAST ast = PhotranVPG.getInstance().acquireTransientAST(file);
-		assertNotNull(ast);
-		codeDB.indexAST(ast);
+		class MyResourceVisitor implements IResourceVisitor {
+			
+			public int driverCount = 0;
+			
+			@Override
+			public boolean visit(IResource resource) throws CoreException {
+				if (resource instanceof IFile) {
+					
+					IFile file = (IFile) resource;
+					PhotranVPG.getInstance().releaseAST(file);
+					if (PhotranVPG.getInstance().shouldProcessFile(file)) {
+						IFortranAST ast = PhotranVPG.getInstance().acquireTransientAST(file);
+						assertNotNull(ast);
+						codeDB.truncateDatabase();
+						codeDB.indexAST(ast);
+					
+						NUOPCDriver driver = (NUOPCDriver) new NUOPCDriver(codeDB).reverse();
+						if (driver != null) driverCount++;
+					}
+					
+					//assertNotNull("Driver discovered", driver);
+					//assertNotNull("Driver has set services", driver.setServices);				
+					
+				}
+				return true;
+			}
+		};
 		
-		NUOPCDriver driver = (NUOPCDriver) new NUOPCDriver(codeDB).reverse();
-		assertNotNull("Driver discovered", driver);
-		assertNotNull("Driver has set services", driver.setServices);
+		MyResourceVisitor visitor = new MyResourceVisitor();
+		PROJECT_NUOPC_PROTOTYPES.accept(visitor);
+		
+		assertTrue("Driver count is more than 10", visitor.driverCount > 10);
+		
 		
 	}
 	
@@ -82,8 +96,8 @@ public class CupidTest {
 	 * @throws IOException 
 	 * @throws CoreException 
 	 */
-	private static IProject copyProjectToWorkspace(String projectName) throws IOException, CoreException  {			
-		URL sourceFolder = FileLocator.toFileURL(FileLocator.find(MY_BUNDLE, new Path("workspace/" + projectName), null));	
+	private static IProject createProjectFromFolder(String relativePath, String projectName) throws IOException, CoreException  {			
+		URL sourceFolder = FileLocator.toFileURL(FileLocator.find(MY_BUNDLE, new Path(relativePath), null));	
 		File srcDir = new File(sourceFolder.getFile());
 				
 		IWorkspaceRoot root = ResourcesPlugin.getWorkspace().getRoot();
