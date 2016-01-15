@@ -66,20 +66,20 @@ import alice.tuprolog.lib.JavaLibrary;
 
 @SuppressWarnings("restriction")
 public class CodeDBIndex {
-	
+
 	private static CodeDBIndex instance = null;
-	
+
 	public static CodeDBIndex getInstance() {
 		if (instance == null) {
 			instance = new CodeDBIndex();
 		}
 		return instance;
 	}
-	
+
 	private Connection conn = null;
 	private Prolog prolog = null;
 	private PreparedStatement findTokenRefStmt = null;
-	
+
 	public CodeDBIndex() {
 		/*
 		 * a caveat of having one prolog instance is that you cannot solve
@@ -89,7 +89,7 @@ public class CodeDBIndex {
 		prolog = new Prolog();
 		addDefaultTheory();
 	}
-	
+
 	public void addDefaultTheory() {
 		try {
 			InputStream inputStream = CupidActivator.getInputStream("sql/default.pl");
@@ -99,56 +99,56 @@ public class CodeDBIndex {
 			CupidActivator.log("Error loading default theory into CodeDB", e);
 		}			
 	}
-	
+
 	public void openConnection() throws SQLException {
+		String dbloc = CupidActivator.getDefault().getPreferenceStore().getString(CupidPreferencePage.CUPID_CODEDB_LOCATION);
+
+		if (dbloc.length() < 1) {
+			dbloc = CupidActivator.getDefault().getPreferenceStore().getDefaultString(CupidPreferencePage.CUPID_CODEDB_LOCATION);  
+		}
+
+		String connString = "jdbc:h2:" + dbloc + ";LOG=0;CACHE_SIZE=65536;LOCK_MODE=0;UNDO_LOG=0";
+		openConnection(connString);
+	}
+
+
+	public void openConnection(String connString) throws SQLException {
+
 		try {
 			Class.forName("org.h2.Driver");
 		} catch (ClassNotFoundException e) {
 			CupidActivator.log("H2 database driver class used by code indexer not found.", e);
 			throw new RuntimeException(e);
 		}
-		
-		//try {
-			String dbloc;
-			dbloc = CupidActivator.getDefault().getPreferenceStore().getString(CupidPreferencePage.CUPID_CODEDB_LOCATION);
-			
-			if (dbloc.length() < 1) {
-				dbloc = CupidActivator.getDefault().getPreferenceStore().getDefaultString(CupidPreferencePage.CUPID_CODEDB_LOCATION);  
-			}
-			
-			//String connString = "jdbc:h2:mem:";
-			String connString = "jdbc:h2:" + dbloc + ";LOG=0;CACHE_SIZE=65536;LOCK_MODE=0;UNDO_LOG=0";
-			CupidActivator.log("Code DB connection string: " + connString);
-			conn = DriverManager.getConnection(connString);
-		//} catch (SQLException e3) {
-		//	//TODO: deal with this
-		//	throw new RuntimeException(e3);
-		//}
-		
+
+		CupidActivator.log("Code DB connection string: " + connString);
+		conn = DriverManager.getConnection(connString);
+
 		getProlog().getEngineManager().getClauseStoreManager().getFactories()
-								.add(new H2ClauseStoreFactory(conn, "PROLOG"));
+		.add(new H2ClauseStoreFactory(conn, "PROLOG"));
 	}
-	
+
+
 	public void truncateDatabase() {
 		executeSQL("sql/truncate_db.sql");
 	}
-	
+
 	public void rebuildDatabase() {
 		executeSQL("sql/build_db.sql");
 	}
-	
+
 	protected void executeSQL(String path) {
-		
+
 		String sql = null;
 		try {
 			InputStream inputStream = FileLocator.openStream(
-				    CupidActivator.getDefault().getBundle(), new Path(path), false);
+					CupidActivator.getDefault().getBundle(), new Path(path), false);
 			sql = IOUtils.toString(inputStream);
 		} catch (IOException e) {
 			CupidActivator.log("Error accessing SQL file", e);
 			return;
 		}
-		
+
 		try {
 			Statement stmt = conn.createStatement();
 			stmt.execute(sql);
@@ -156,9 +156,9 @@ public class CodeDBIndex {
 		catch (SQLException e) {
 			CupidActivator.log("Error in SQL file.", e);
 		}
-		
+
 	}
-	
+
 	public boolean isConnected() {
 		try {
 			return (conn !=null && !conn.isClosed());
@@ -166,7 +166,7 @@ public class CodeDBIndex {
 			return false;
 		}
 	}
-	
+
 	public void closeConnection() {
 		try {
 			if (!conn.isClosed()) {
@@ -175,40 +175,40 @@ public class CodeDBIndex {
 		} catch (SQLException e) {
 			CupidActivator.log("Exception closing code index db.", e);
 		}
-		
+
 		if (prolog != null) {
 			prolog = null;
 		}
 	}
-	
-	
+
+
 	ArrayList<Struct> clauseList = new ArrayList<Struct>(1024);
 	Map<Struct, Object> toRegister = new HashMap<Struct, Object>();
-	
+
 	int factID = -1;  //increments each time
-	
+
 	public void indexASTs(Set<IFortranAST> asts) {			
 		//clauseList.clear();
 		for (IFortranAST ast : asts) {
 			indexAST(ast);
-			
+
 			//control flow analysis
 			//ControlFlowAnalysis cfa = ControlFlowAnalysis.analyze(ast.getFile().getName(), ast.getRoot());
 			//Multimap<IASTNode, IASTNode> flowMap = cfa.getFlowMap();
 			//System.out.println(flowMap.size());
 		}
 	}
-	
+
 	public void indexAST(IFortranAST ast) {
 		assert ast != null;
 		ast.accept(new CodeDBVisitor(conn));
 	}
-	
+
 	public <N extends IASTNode> N findASTNode(Struct s) {
 		alice.tuprolog.Long id = (alice.tuprolog.Long) s.getTerm(0);
 		return findASTNode(id.longValue());
 	}
-	
+
 	public PreparedStatement prepareStatement(String query) {
 		try {
 			return conn.prepareStatement(query);
@@ -217,10 +217,10 @@ public class CodeDBIndex {
 			return null;
 		}
 	}
-	
+
 	@SuppressWarnings("unchecked")
 	public <N extends IASTNode> N findASTNode(long id) {
-		
+
 		if (findTokenRefStmt == null) {
 			try {
 				findTokenRefStmt = conn.prepareStatement("SELECT filename, _offset, length, type FROM tokenRef WHERE id=?;");
@@ -229,7 +229,7 @@ public class CodeDBIndex {
 				return null;
 			}
 		}
-		
+
 		try {
 			findTokenRefStmt.setLong(1, id);
 			ResultSet rs = findTokenRefStmt.executeQuery();
@@ -238,10 +238,10 @@ public class CodeDBIndex {
 				int offset = rs.getInt("_offset");
 				int length = rs.getInt("length");
 				String type = rs.getString("type");
-				
+
 				PhotranTokenRef tokenRef = new PhotranTokenRef(filename, offset, length);
 				Token token = tokenRef.findToken();
-				
+
 				Class<? extends IASTNode> astClass = typeToClass(type);
 				if (astClass != null) {
 					return (N) token.findNearestAncestor(astClass);
@@ -254,11 +254,11 @@ public class CodeDBIndex {
 		} catch (SQLException e) {
 			CupidActivator.log("Error retrieving token ref", e);
 		}
-		
+
 		return null;
-		
+
 	}
-	
+
 	public IFortranAST findAST(long id) {
 		IASTNode node = findASTNode(id);
 		Token t = node.findFirstToken();
@@ -269,9 +269,9 @@ public class CodeDBIndex {
 			return null;
 		}
 	}
-	
+
 	protected Map<String, Class<? extends IASTNode>> typeToClassMap = null;
-	
+
 	protected Class<? extends IASTNode> typeToClass(String type) {
 		if (typeToClassMap==null) {
 			typeToClassMap = new HashMap<String, Class<? extends IASTNode>>();
@@ -282,7 +282,7 @@ public class CodeDBIndex {
 		}
 		return typeToClassMap.get(type);
 	}
-	
+
 	public ResultSet query2(String query) throws MalformedGoalException {
 		if (getProlog() != null) {
 			return new PrologResultSet(getProlog(), query);
@@ -291,12 +291,12 @@ public class CodeDBIndex {
 			return null;
 		}
 	}
-	
+
 	public List<Struct> query(String query) throws MalformedGoalException {
-		
+
 		ArrayList<Struct> sols = new ArrayList<Struct>();
 		SolveInfo solveInfo = getProlog().solve(query);
-				
+
 		while (true) {
 			try {
 				sols.add((Struct) solveInfo.getSolution());
@@ -309,26 +309,26 @@ public class CodeDBIndex {
 			//set a hard limit for now
 			if (sols.size() > 10000) break;
 		}
-		
+
 		return sols;
 	}
-	
+
 	public Prolog getProlog() {
 		return prolog;
 	}
-	
+
 	public void clearTheory() {
 		getProlog().clearTheory();
 	}
-	
+
 	public void addTheory(String theory) throws InvalidTheoryException {
 		getProlog().addTheory(new Theory(theory));
 	}
-	
+
 	/*
 	public Prolog getPrologX() {
 		Prolog prolog = new Prolog();
-		
+
 		//java object binding
 		JavaLibrary lib = (JavaLibrary) prolog.getLibrary("alice.tuprolog.lib.JavaLibrary");
 		for (Entry<Struct, Object> e : toRegister.entrySet()) {
@@ -338,17 +338,17 @@ public class CodeDBIndex {
 				e1.printStackTrace();
 			}
 		}
-			
+
 		Theory theory;
 		try {
 			theory = new Theory(new Struct(new Struct("startme", Term.TRUE), new Struct()));
-		
+
 			int i = 0;
 			for (Struct s : clauseList) {
-			
+
 				//buffer 5000 at a time for speed
 				theory.append(new Theory(new Struct(s, new Struct())));
-				
+
 				if (i % 5000 == 0 || i == clauseList.size()-1) {
 					try { 
 						prolog.addTheory(theory);
@@ -358,19 +358,19 @@ public class CodeDBIndex {
 					}
 					theory = new Theory(new Struct(new Struct("startme", Term.TRUE), new Struct()));
 				}
-				
+
 				i++;
 			}
-		
+
 		} catch (InvalidTheoryException e) {
 			e.printStackTrace();
 		}
-		
+
 		return prolog;
-		
+
 	}
-	*/
-	
+	 */
+
 	/*
 	public void printClauseList() {
 		System.out.println("CodeDBIndex clause list:");
@@ -382,42 +382,42 @@ public class CodeDBIndex {
 		}
 		System.out.println("Number of clauses: " + clauseList.size());
 	}
-	
+
 	public void clear() {
 		clauseList.clear();
 	}
-	
+
 	public int size() {
 		return clauseList.size();
 	}
-	*/
-	
+	 */
+
 	class CodeDBIndexVisitor extends ASTVisitor {
-		
+
 		int compilationUnitID = -1;
-		
+
 		IFortranAST ast;
-		
+
 		CodeDBIndexVisitor(IFortranAST ast) {
 			this.ast = ast;
 			//contextStack = new Stack<Entry<IASTNode, Term>>();
 			parentStack = new Stack<Integer>();
-			
+
 			//add compilation unit fact
 			compilationUnitID = addFact("compilationUnit", createStringTerm(ast.getFile().getFullPath().toString()));
 			parentStack.push(compilationUnitID);
 		}
-			
+
 		//Stack<Entry<IASTNode, Term>> contextStack;
 		Stack<Integer> parentStack;
-		
-		
+
+
 		protected void traverseChildren(IASTNode node, int id) {
 			parentStack.push(id);
 			traverseChildren(node);
 			parentStack.pop();
 		}
-		
+
 		protected int addFact(String predicate, int id, Term...termArgs) {
 			Term[] terms = new Term[termArgs.length + 1];
 			try {
@@ -426,27 +426,27 @@ public class CodeDBIndex {
 				throw new RuntimeException(e);
 			}
 			System.arraycopy(termArgs, 0, terms, 1, termArgs.length);
-			
+
 			Struct fact = new Struct(predicate, terms);
 			clauseList.add(fact);
 			return id;
 		}
-		
+
 		protected int addFact(String predicate, Term... termArgs) {		
 			factID++;  //increment global id generator
 			addFact(predicate, factID, termArgs);			
 			return factID;
 		}
-		
+
 		protected int reserveID() {
 			factID++;
 			return factID;
 		}
-		
+
 		protected Term parentID() {
 			return createIntTerm(parentStack.peek());
 		}
-		
+
 		private Struct toList(List<Integer> in) {
 			if (in.size() == 0) {
 				return new Struct(new Term[]{});  //empty list
@@ -464,81 +464,81 @@ public class CodeDBIndex {
 				return new Struct(terms);
 			}
 		}
-		
+
 		private Struct toListTerm(List<Term> in) {
 			return new Struct(in.toArray(new Term[]{}));
 		}
-		
+
 		/*
 		private boolean checkContext(Class<?> c) {
 			if (contextStack.size() == 0) return false;
 			else return c.isInstance(contextStack.peek().getKey());
 		}
-		
+
 		private Term contextId() {
 			return contextId(0);
 		}
-		
-		
+
+
 		private Term contextId(int depth) {
 			if (contextStack.size() == 0) return null;
 			else return contextStack.get(contextStack.size() - 1 - depth).getValue();
 		}
-				
+
 		protected void traverseChildren(IASTNode node, Term id) {
 			contextStack.push(new AbstractMap.SimpleEntry<IASTNode, Term>(node, id));
 			traverseChildren(node);
 			contextStack.pop();
 		}
-		
-		
+
+
 		private Struct offset(Token t) {
 			return new Struct("fileOffset", 
 					createStringTerm(t.getLogicalFile().getFullPath().toString()),
 					Term.createTerm(String.valueOf(t.getFileOffset())), 
 					Term.createTerm(String.valueOf(t.getLength())));
 		}
-		*/
-		
+		 */
+
 		/**
 		 * module(#id, #compilationUnit, name, [#subprogram_1, ...])
 		 */
 		@Override
 		public void visitASTModuleNode(ASTModuleNode node) {
-			
+
 			Term termName = createStringTerm(node.getModuleStmt().getModuleName().getModuleName().getText());
-						
+
 			listSubprogramIDs = new ArrayList<Integer>();
 			int id = reserveID();
 			traverseChildren(node, id);
-			
+
 			addFact("module", id, createIntTerm(compilationUnitID), termName, toList(listSubprogramIDs) );
 		}
-		
+
 		/**
 		 * mainProgram(#id, #compilationUnitID, name, [#subprogram_1, ...])
 		 */
 		public void visitASTMainProgramNode(ASTMainProgramNode node) {
-			
+
 			Term termName;
-			
+
 			if (node.getProgramStmt() != null) {
 				termName= createStringTerm(node.getProgramStmt().getProgramName().getProgramName().getText());
 			}
 			else {
 				termName = createStringTerm("Anonymous");
 			}
-			
+
 			listSubprogramIDs = new ArrayList<Integer>();
 			listExec = new ArrayList<Integer>();
 			int id = reserveID();
-			
+
 			traverseChildren(node, id);
-			
+
 			addFact("mainProgram", id, createIntTerm(compilationUnitID), termName, toList(listSubprogramIDs) );
 		};
-		
-		
+
+
 		/**
 		 * uses(#id, #parent, moduleName)
 		 */
@@ -546,15 +546,15 @@ public class CodeDBIndex {
 		public void visitASTUseStmtNode(ASTUseStmtNode node) {						
 			Term termName = createStringTerm(node.getName().getText());
 			int id = reserveID();									
-			
+
 			listEntity = new ArrayList<Integer>();
 			traverseChildren(node, id);			
-			
+
 			addFact("uses", id, parentID(), termName, toList(listEntity));
 		}
-		
+
 		List<Integer> listEntity = new ArrayList<Integer>();
-		
+
 		/**
 		 * usesEntity(#id, #parent, entity, entity rename, only?)
 		 */
@@ -575,8 +575,8 @@ public class CodeDBIndex {
 				listEntity.add(id);
 			}
 		}
-		
-		
+
+
 		/**
 		 * usesEntity(#id, #parent, entity, entity rename, only?)
 		 */
@@ -584,57 +584,57 @@ public class CodeDBIndex {
 		public void visitASTRenameNode(ASTRenameNode node) {
 			Term termName = createStringTerm(node.getName().getText());
 			Term termNewName = createStringTerm(node.getNewName().getText());
-			
+
 			//last term is true if it's an "only" use
 			int id = addFact("usesEntity", parentID(), termName, termNewName, Term.TRUE);
 			listEntity.add(id);
 		}
-		
-		
+
+
 		int currentParamIndex = 0;
 		List<Integer> listSubprogramIDs = new ArrayList<Integer>();
-		
+
 		/**
 		 * subroutine(#id, #parent, name, [#stmt_1, ...])
 		 */
 		@Override
 		public void visitASTSubroutineSubprogramNode(ASTSubroutineSubprogramNode node) {
-			
+
 			Term termName = createStringTerm(node.getSubroutineStmt().getSubroutineName().getSubroutineName());
-			
+
 			int id = reserveID();
-			
+
 			currentParamIndex = 0;
 			listExec = new ArrayList<Integer>();
 			//listDecl = new ArrayList<Integer>();
 			traverseChildren(node, id);
-			
+
 			addFact("subroutine", id, parentID(), termName, toList(listExec));
 			listSubprogramIDs.add(id);
 		}
-		
+
 		/**
 		 * function(#id, #parent,  name, [#stmt_1, ...])
 		 */
 		public void visitASTFunctionSubprogramNode(ASTFunctionSubprogramNode node) {
-			
+
 			Term termName = createStringTerm(node.getFunctionStmt().getFunctionName().getFunctionName());
 			int id = reserveID();
-			
-			
+
+
 			//TODO: handle params
 			listExec = new ArrayList<Integer>();
 			traverseChildren(node, id);
-			
+
 			addFact("function", id, parentID(), termName, toList(listExec));
 			listSubprogramIDs.add(id);
-			
+
 		};
-		
+
 		List<Integer> listExec;
 		//List<Integer> listDecl;
 		List<Term> listEntityDecl;
-		
+
 		/**
 		 * decl(#id, #parent, 'type', ['entity_1', ...])
 		 */
@@ -647,7 +647,7 @@ public class CodeDBIndex {
 			traverseChildren(node);
 			addFact("decl", parentID(), termType, toListTerm(listEntityDecl));
 		}
-		
+
 		private String toTypeName(ASTTypeSpecNode node) {
 			if (node.isCharacter()) return "character";
 			else if (node.isComplex()) return "complex";
@@ -659,12 +659,12 @@ public class CodeDBIndex {
 			else if (node.isReal()) return "real";
 			else return "UNKNOWN";
 		}
-		
+
 		@Override
 		public void visitASTEntityDeclNode(ASTEntityDeclNode node) {
 			listEntityDecl.add(createStringTerm(node.getObjectName().getObjectName()));
 		}
-		
+
 		/*
 		 * exec(#id, #parent, stmt)
 		 */
@@ -674,7 +674,7 @@ public class CodeDBIndex {
 			int id = addFact(node.getClass().getSimpleName().replaceFirst("AST", "").toLowerCase(), createIntTerm(parentStack.peek()), createStringTerm(node.toString()));
 			listExec.add(id);
 		}
-		
+
 		@Override
 		public void visitIActionStmt(IActionStmt node) {
 			try {
@@ -685,19 +685,19 @@ public class CodeDBIndex {
 				//ignore
 			}
 		}
-		*/
-		
+		 */
+
 		/**
 		 * def(#id, ref(file, offset, length),  type, intentIn?, intentOut?)
 		 */
 		protected int addDefinition(Definition def) {
-			
+
 			//definitions may be added redundantly currently, could cache them and look up
 			Term termFile = createStringTerm(def.getTokenRef().getFilename());
 			Term termOffset = createIntTerm(def.getTokenRef().getOffset());
 			Term termLength = createIntTerm(def.getTokenRef().getLength());
 			Struct structRef  = new Struct("ref", termFile, termOffset, termLength);
-			
+
 			Term termType = createStringTerm(def.getType().toString());
 			/*
 			def.getType().processUsing(new TypeProcessor<Term>() {
@@ -707,15 +707,15 @@ public class CodeDBIndex {
 					functionType.f
 				}
 			});
-			*/
-			
+			 */
+
 			Term termIntentIn = def.isIntentIn() ? Term.TRUE : Term.FALSE;
 			Term termIntentOut = def.isIntentOut() ? Term.TRUE : Term.FALSE;
-			
+
 			return addFact("def", structRef, termType, termIntentIn, termIntentOut);
-			
+
 		}
-		
+
 		protected int addDefinition(Token t) {
 			List<Definition> defs = t.resolveBinding();
 			if (defs.size() > 0) {
@@ -725,70 +725,70 @@ public class CodeDBIndex {
 				return -1;
 			}
 		}
-		
+
 		/**
 		 * subroutineParam(#id, #parent, idx, name, #def)
 		 */		
 		@Override
 		public void visitASTSubroutineParNode(ASTSubroutineParNode node) {
-			
+
 			int defId = addDefinition(node.getVariableName());
-			
+
 			Term termName = createStringTerm(node.getVariableName().getText());
 			Term termIdx = createIntTerm(currentParamIndex);
-							
+
 			int id = addFact("subroutineParam", 
-						parentID(),
-						termIdx, 
-						termName, 
-						createIntTerm(defId));
-											
+					parentID(),
+					termIdx, 
+					termName, 
+					createIntTerm(defId));
+
 			//assumes visitor is in order
 			currentParamIndex++;
-			
+
 		}
-		
-		
+
+
 		/**
 		 * call(#id, #parent, subroutine name)
 		 */
 		@Override
 		public void visitASTCallStmtNode(ASTCallStmtNode node) {
-			
+
 			Term termName = createStringTerm(node.getSubroutineName().getText());
-			
+
 			int id = reserveID();
-			
+
 			currentArgIndex = 0;
 			traverseChildren(node, id);
-						
+
 			addFact("call", id, parentID(), termName);
 			listExec.add(id);
-			
+
 		}
-		
+
 		int currentArgIndex = 0;
 		int childExprId = -1;
-		
+
 		/**
 		 * callArg(#id, #parent, idx, #expr)
 		 */
 		@Override
 		public void visitASTSubroutineArgNode(ASTSubroutineArgNode node) {
-			
+
 			int id = reserveID();
-			
+
 			childExprId = -1;
 			traverseChildren(node, id);
-			
+
 			Term termIdx = createIntTerm(currentArgIndex);
 			Term termExpr = createIntTerm(childExprId);
-			
+
 			addFact("callArg", id, parentID(), termIdx, termExpr);
 			currentArgIndex++;
-			
+
 		}
-		
+
 		/**
 		 * 
 		 * varRef(#id, #parent, name, #def)
@@ -799,7 +799,7 @@ public class CodeDBIndex {
 			Term termName = createStringTerm(node.getName().getName());
 			childExprId = addFact("varRef", parentID(), termName, createIntTerm(defId));
 		}
-		
+
 		/**
 		 * const(#id, #parent, 'string', value)
 		 * type is one of: 'string', 'double', 'integer', 'real', etc. 
@@ -810,40 +810,40 @@ public class CodeDBIndex {
 			Term termType = createStringTerm("string");
 			childExprId = addFact("const", parentID(), termType, termVal);
 		}
-		
+
 		@Override
 		public void visitASTIntConstNode(ASTIntConstNode node) {
 			Term termVal = createStringTerm(node.getIntConst());
 			Term termType = createStringTerm("integer");
 			childExprId = addFact("const", parentID(), termType, termVal);
 		}
-		
+
 		@Override
 		public void visitASTRealConstNode(ASTRealConstNode node) {
 			Term termVal = createStringTerm(node.getRealConst());
 			Term termType = createStringTerm("real");
 			childExprId = addFact("const", parentID(), termType, termVal);
 		}
-		
+
 		@Override
 		public void visitASTDblConstNode(ASTDblConstNode node) {
 			Term termVal = createStringTerm(node.getDblConst());
 			Term termType = createStringTerm("double");
 			childExprId = addFact("const", parentID(), termType, termVal);
 		}
-		
+
 		@Override
 		public void visitASTArrayConstructorNode(ASTArrayConstructorNode node) {
 			Term termVal = createStringTerm(node.toString());  //TODO: fixme
 			Term termType = createStringTerm("array");
 			childExprId = addFact("arrayConstructor", parentID(), termType, termVal);
 		}
-		
-		
-		
+
+
+
 	}
-	
-	
+
+
 	private static Term createIntTerm(int i) {
 		try {
 			return Term.createTerm(String.valueOf(i));
@@ -853,15 +853,15 @@ public class CodeDBIndex {
 			return null;
 		}
 	}
-	
+
 	private static Term createStringTerm(Token t) {
 		return createStringTerm(t.getText());
 	}
-	
+
 	private static Term createStringTerm(String s) {
 		s = s.replaceAll("'", "''");
 		s = s.replaceAll("\n", "\\n");
-		
+
 		try {
 			if (s.contains("'")) {
 				return Term.createTerm("\"" + s + "\"");
@@ -874,6 +874,6 @@ public class CodeDBIndex {
 			return null;
 		}
 	}
-	
-	
+
+
 }

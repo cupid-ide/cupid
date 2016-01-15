@@ -1,12 +1,17 @@
 package org.earthsystemmodeling.cupid.test;
 
 import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertTrue;
 
 import java.io.File;
 import java.io.IOException;
 import java.net.URL;
+import java.sql.SQLException;
 
 import org.apache.commons.io.FileUtils;
+import org.earthsystemmodeling.cupid.codedb.CodeDBIndex;
+import org.earthsystemmodeling.cupid.nuopc.v7bs59.NUOPCDriver;
+import org.eclipse.core.resources.IFile;
 import org.eclipse.core.resources.IProject;
 import org.eclipse.core.resources.IResource;
 import org.eclipse.core.resources.IWorkspaceRoot;
@@ -15,23 +20,60 @@ import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.FileLocator;
 import org.eclipse.core.runtime.NullProgressMonitor;
 import org.eclipse.core.runtime.Path;
+import org.eclipse.photran.core.IFortranAST;
 import org.eclipse.photran.internal.core.vpg.PhotranVPG;
 import org.junit.BeforeClass;
+import org.junit.Test;
 import org.osgi.framework.Bundle;
 import org.osgi.framework.FrameworkUtil;
+
 
 @SuppressWarnings("restriction")
 public class CupidTest {
 
 	private static Bundle MY_BUNDLE = FrameworkUtil.getBundle(CupidTest.class);
 
-	static PhotranVPG vpg;
-	
+	private static IProject PROJECT_PROJA;
+		
 	@BeforeClass
-	public static void setUp() throws CoreException {
-		vpg = PhotranVPG.getInstance();
-		assertNotNull(vpg);
+	public static void setUp() throws CoreException, IOException {
+		PROJECT_PROJA = copyProjectToWorkspace("ProjA");
 	}
+	
+	
+	@Test
+	public void something() {
+		assertTrue("1==1", 1==1);
+	}
+	
+	@Test
+	public void checkPhotran() {
+		PhotranVPG.getInstance().clearDatabase();
+	}
+	
+	@Test	
+	public void anotherTest() throws SQLException {
+		
+		String dbloc = "~/.cupid/codedb_test";
+		String connString = "jdbc:h2:" + dbloc + ";LOG=0;CACHE_SIZE=65536;LOCK_MODE=0;UNDO_LOG=0";
+		CodeDBIndex codeDB = CodeDBIndex.getInstance();
+		codeDB.openConnection(connString);
+		codeDB.rebuildDatabase();
+		
+		codeDB.truncateDatabase();
+		
+		IFile file = PROJECT_PROJA.getFile("moduleA.F90");
+		PhotranVPG.getInstance().releaseAST(file);
+		IFortranAST ast = PhotranVPG.getInstance().acquireTransientAST(file);
+		assertNotNull(ast);
+		codeDB.indexAST(ast);
+		
+		NUOPCDriver driver = (NUOPCDriver) new NUOPCDriver(codeDB).reverse();
+		assertNotNull("Driver discovered", driver);
+		assertNotNull("Driver has set services", driver.setServices);
+		
+	}
+	
 	
 	/**
 	 * Copies a folder from workspace folder in the test project to the testing workspace.
@@ -40,7 +82,7 @@ public class CupidTest {
 	 * @throws IOException 
 	 * @throws CoreException 
 	 */
-	private IProject copyProjectToWorkspace(String projectName) throws IOException, CoreException  {			
+	private static IProject copyProjectToWorkspace(String projectName) throws IOException, CoreException  {			
 		URL sourceFolder = FileLocator.toFileURL(FileLocator.find(MY_BUNDLE, new Path("workspace/" + projectName), null));	
 		File srcDir = new File(sourceFolder.getFile());
 				

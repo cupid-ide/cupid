@@ -1,20 +1,25 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<?pde version="3.8"?><target name="luna-sr1_cupid-0.1" sequenceNumber="80">
+<?pde version="3.8"?><target name="Generated from Cupid Development" sequenceNumber="1">
 <locations>
-<location includeAllPlatforms="false" includeConfigurePhase="false" includeMode="planner" includeSource="true" type="InstallableUnit">
-<unit id="org.eclipse.swtbot.ide.feature.group" version="2.2.1.201402241301"/>
-<unit id="org.eclipse.swtbot.eclipse.feature.group" version="2.2.1.201402241301"/>
-<repository location="http://download.eclipse.org/technology/swtbot/releases/latest/"/>
+<location includeAllPlatforms="false" includeConfigurePhase="true" includeMode="planner" includeSource="true" type="InstallableUnit">
+<unit id="org.eclipse.egit.feature.group" version="4.0.3.201509231615-r"/>
+<unit id="org.eclipse.equinox.executable.feature.group" version="3.6.200.v20150602-1417"/>
+<unit id="org.eclipse.oomph.setup.feature.group" version="1.2.0.v20150915-0926"/>
+<unit id="org.eclipse.ptp.feature.group" version="9.0.1.201509091505"/>
+<unit id="org.eclipse.ptp.fortran.feature.group" version="9.0.1.201509091505"/>
+<unit id="org.eclipse.remote.jsch.core" version="1.0.0.201508262001"/>
+<unit id="org.eclipse.sdk.feature.group" version="4.5.1.v20150904-0345"/>
+<unit id="org.eclipse.swtbot.eclipse.feature.group" version="2.3.0.201506081302"/>
+<unit id="org.eclipse.swtbot.ide.feature.group" version="2.3.0.201506081302"/>
+<unit id="org.eclipse.team.svn.feature.group" version="3.0.1.I20150722-1700"/>
+<unit id="org.eclipse.tracecompass.ctf.feature.group" version="1.1.0.201509141028"/>
+<unit id="org.eclipse.tracecompass.tmf.feature.group" version="1.1.0.201509141028"/>
+<unit id="org.eclipse.xtext.sdk.feature.group" version="2.8.4.v201508050135"/>
+<repository location="http://download.eclipse.org/releases/mars"/>
 </location>
-<location includeAllPlatforms="false" includeConfigurePhase="false" includeMode="planner" includeSource="true" type="InstallableUnit">
-<unit id="org.eclipse.xtend.sdk.feature.group" version="2.7.2.v201409160908"/>
-<unit id="epp.package.parallel" version="4.4.1.20140925-1820"/>
-<unit id="org.eclipse.sdk.ide" version="4.4.1.M20140925-0400"/>
-<unit id="org.eclipse.xtend.feature.group" version="2.0.0.v201406030414"/>
-<repository location="http://download.eclipse.org/releases/luna"/>
+<location includeAllPlatforms="false" includeConfigurePhase="true" includeMode="planner" includeSource="true" type="InstallableUnit">
+<unit id="org.polarion.eclipse.team.svn.connector.svnkit18.feature.group" version="5.0.2.I20151228-1700"/>
+<repository location="http://community.polarion.com/projects/subversive/download/eclipse/5.0/update-site/"/>
 </location>
 </locations>
-<launcherArgs>
-<vmArgs>-Dosgi.requiredJavaVersion=1.7 -Xms512m -Xmx1024m</vmArgs>
-</launcherArgs>
 </target>
