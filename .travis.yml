@@ -9,12 +9,15 @@ addons:
     - openmpi-dev
 
 before_script:
+  - cd $HOME
   - git clone http://git.code.sf.net/p/esmf/esmf esmf
   - cd esmf
   - export ESMF_DIR=`pwd`
   - export ESMF_COMM=openmpi
   - export ESMF_COMPILER=gfortran
+  - export ESMF_INSTALL_PREFIX=$HOME/ESMF-INSTALL
   - make -j4
+  - make install
 
 matrix:
   include:
@@ -27,4 +30,4 @@ matrix:
 #    - os: linux
 #      jdk: openjdk7
 
-script: cd org.earthsystemmodeling.cupid.releng && mvn clean verify
+script: cd $TRAVIS_BUILD_DIR/org.earthsystemmodeling.cupid.releng && mvn clean verify
