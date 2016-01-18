@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<templates>
+	<template autoinsert="true" context="org.eclipse.photran.ui.template.context"
+		deleted="false" description="NUOPC Read function for ESMF fields and arrays"
+		enabled="true" name="NUOPC_Read">call NUOPC_Write(${fieldOrArray}${cursor},
+		rc=${rc})</template>
+	<template autoinsert="true" context="org.eclipse.photran.ui.template.context"
+		deleted="false" description="NUOPC_Read  for just arrays" enabled="true"
+		name="NUOPC_Read">call NUOPC_Write(${array}${cursor}, rc=${rc})</template>
+</templates>
