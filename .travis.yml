@@ -8,6 +8,14 @@ addons:
     - libopenmpi-dev
     - openmpi-dev
 
+before_script:
+  - git clone http://git.code.sf.net/p/esmf/esmf esmf
+  - cd esmf
+  - export ESMF_DIR=`pwd`
+  - export ESMF_COMM=openmpi
+  - export ESMF_COMPILER=gfortran
+  - make
+
 matrix:
   include:
 #    - os: os
