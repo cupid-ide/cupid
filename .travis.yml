@@ -5,7 +5,8 @@ addons:
   apt:
     packages:
     - gfortran
-    - openmpi
+    - libopenmpi-dev
+    - openmpi-dev
 
 matrix:
   include:
