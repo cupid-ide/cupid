@@ -100,12 +100,12 @@ public abstract class CodeConcept<P extends CodeConcept<?, ?>, A extends IASTNod
    * children that are required (min>0) are present and to validate
    * recursively.
    */
-  public boolean validate() {
+  public boolean validate(final List<String> errors) {
     boolean _xblockexpression = false;
     {
       List<Field> _childFields = this.getChildFields();
       for (final Field f : _childFields) {
-        boolean _validate = this.validate(f);
+        boolean _validate = this.validate(f, errors);
         boolean _not = (!_validate);
         if (_not) {
           return false;
@@ -116,11 +116,11 @@ public abstract class CodeConcept<P extends CodeConcept<?, ?>, A extends IASTNod
     return _xblockexpression;
   }
   
-  protected boolean validate(final List<CodeConcept<?, ?>> codeConcepts) {
+  protected boolean validate(final List<CodeConcept<?, ?>> codeConcepts, final List<String> errors) {
     boolean _xblockexpression = false;
     {
       for (final CodeConcept<?, ?> cc : codeConcepts) {
-        boolean _validate = cc.validate();
+        boolean _validate = cc.validate(errors);
         boolean _not = (!_validate);
         if (_not) {
           return false;
@@ -131,7 +131,7 @@ public abstract class CodeConcept<P extends CodeConcept<?, ?>, A extends IASTNod
     return _xblockexpression;
   }
   
-  protected boolean validate(final Field f) {
+  protected boolean validate(final Field f, final List<String> errors) {
     try {
       boolean _xblockexpression = false;
       {
@@ -152,6 +152,9 @@ public abstract class CodeConcept<P extends CodeConcept<?, ?>, A extends IASTNod
             _and = _greaterThan;
           }
           if (_and) {
+            String _name = f.getName();
+            String _plus = ("Min cardinality not satisfied for field " + _name);
+            errors.add(_plus);
             return false;
           } else {
             boolean _and_1 = false;
@@ -165,9 +168,12 @@ public abstract class CodeConcept<P extends CodeConcept<?, ?>, A extends IASTNod
               _and_1 = _lessThan;
             }
             if (_and_1) {
+              String _name_1 = f.getName();
+              String _plus_1 = ("Min cardinality not satisfied for field " + _name_1);
+              errors.add(_plus_1);
               return false;
             } else {
-              return this.validate(lst);
+              return this.validate(lst, errors);
             }
           }
         } else {
@@ -186,12 +192,15 @@ public abstract class CodeConcept<P extends CodeConcept<?, ?>, A extends IASTNod
               _and_2 = _greaterThan_1;
             }
             if (_and_2) {
+              String _name_2 = f.getName();
+              String _plus_2 = ("Min cardinality not satisfied for field " + _name_2);
+              errors.add(_plus_2);
               return false;
             } else {
               boolean _xifexpression_2 = false;
               boolean _notEquals_1 = (!Objects.equal(obj, null));
               if (_notEquals_1) {
-                return obj.validate();
+                return obj.validate(errors);
               } else {
                 _xifexpression_2 = true;
               }

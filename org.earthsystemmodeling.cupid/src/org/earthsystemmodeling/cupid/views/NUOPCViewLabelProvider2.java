@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.lang.reflect.Field;
 import java.net.URL;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -279,7 +280,7 @@ class NUOPCViewLabelProvider2 extends StyledCellLabelProvider { //implements ITa
     			}
     			icon = getFortranImageDescriptor(proxy.type, SWT.IMAGE_GRAY);
     		}
-    		else if (!proxy.codeConcept.validate()) {
+    		else if (!proxy.codeConcept.validate(new ArrayList<String>())) {
     			text.append(proxy.label, redStyler);
 				cell.setForeground(Display.getCurrent().getSystemColor(SWT.COLOR_RED));
 				icon = getFortranImageDescriptor(proxy.type);				

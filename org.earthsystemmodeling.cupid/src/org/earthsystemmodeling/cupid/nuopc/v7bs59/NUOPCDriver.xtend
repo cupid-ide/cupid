@@ -58,7 +58,7 @@ class NUOPCDriver extends NUOPCComponent {
 		  	
      	var rs = '''module(_moduleID, _compUnitID, _driverName), 
 		            compilationUnit(_compUnitID, _filename, _path),
-   					uses(_uid, _mid, 'NUOPC_Driver').'''.execQuery
+   					uses(_uid, _moduleID, 'NUOPC_Driver').'''.execQuery
 		try {
 			if (rs.next) {
 				_id = rs.getLong("_moduleID")
@@ -617,12 +617,12 @@ end subroutine
 			this
 		}
 		
-		override validate() {
-			ipdv00.validate ||
-			ipdv01.validate ||
-			ipdv02.validate ||
-			ipdv03.validate || 
-			ipdv04.validate
+		override validate(List<String> errors) {
+			ipdv00.validate(errors) ||
+			ipdv01.validate(errors) ||
+			ipdv02.validate(errors) ||
+			ipdv03.validate(errors) || 
+			ipdv04.validate(errors)
 		}
 	
 	}
@@ -731,12 +731,12 @@ end subroutine
 	@Doc(urlfrag="#driver-specialization-setmodelservices")
 	static class SetModelServices extends SpecializationMethodCodeConcept<InitSpecializations> {
 	
-		@Child(max=-1)
+		@Child(min=0, max=-1)
 		var public List<SetModelServices_AddComp> addComps
 		
 		@Label(label="SetClock")
 		@MappingType("call")
-		@Child
+		@Child(min=0)
 		var public BasicCodeConcept setClock
 		
 		new(InitSpecializations parent) {
@@ -946,10 +946,10 @@ if (ESMF_LogFoundError(rcToCheck=«_parent.paramRC», msg=ESMF_LOGERR_PASSTHRU, 
 	
 		@Label(label="New Run Sequence")
 		@MappingType("call")
-		@Child(forward=false)
+		@Child(min=0)
 		public BasicCodeConcept newRunSequence
 		
-		@Child(max=-1)
+		@Child(min=0, max=-1)
 		public List<SetRunSequence_AddRunElement> runElements
 		
 		new(InitSpecializations parent) {

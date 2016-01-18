@@ -606,12 +606,12 @@ end subroutine
 			this
 		}
 		
-		override validate() {
-			ipdv00.validate ||
-			ipdv01.validate ||
-			ipdv02.validate ||
-			ipdv03.validate || 
-			ipdv04.validate
+		override validate(List<String> errors) {
+			ipdv00.validate(errors) ||
+			ipdv01.validate(errors) ||
+			ipdv02.validate(errors) ||
+			ipdv03.validate(errors) || 
+			ipdv04.validate(errors)
 		}
 	
 	}

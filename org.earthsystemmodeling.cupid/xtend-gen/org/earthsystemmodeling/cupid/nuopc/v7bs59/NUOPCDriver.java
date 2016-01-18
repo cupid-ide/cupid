@@ -857,34 +857,34 @@ public class NUOPCDriver extends NUOPCComponent {
     }
     
     @Override
-    public boolean validate() {
+    public boolean validate(final List<String> errors) {
       boolean _or = false;
       boolean _or_1 = false;
       boolean _or_2 = false;
       boolean _or_3 = false;
-      boolean _validate = this.ipdv00.validate();
+      boolean _validate = this.ipdv00.validate(errors);
       if (_validate) {
         _or_3 = true;
       } else {
-        boolean _validate_1 = this.ipdv01.validate();
+        boolean _validate_1 = this.ipdv01.validate(errors);
         _or_3 = _validate_1;
       }
       if (_or_3) {
         _or_2 = true;
       } else {
-        boolean _validate_2 = this.ipdv02.validate();
+        boolean _validate_2 = this.ipdv02.validate(errors);
         _or_2 = _validate_2;
       }
       if (_or_2) {
         _or_1 = true;
       } else {
-        boolean _validate_3 = this.ipdv03.validate();
+        boolean _validate_3 = this.ipdv03.validate(errors);
         _or_1 = _validate_3;
       }
       if (_or_1) {
         _or = true;
       } else {
-        boolean _validate_4 = this.ipdv04.validate();
+        boolean _validate_4 = this.ipdv04.validate(errors);
         _or = _validate_4;
       }
       return _or;
@@ -1002,12 +1002,12 @@ public class NUOPCDriver extends NUOPCComponent {
   @MappingType("subroutine")
   @Doc(urlfrag = "#driver-specialization-setmodelservices")
   public static class SetModelServices extends SpecializationMethodCodeConcept<NUOPCDriver.InitSpecializations> {
-    @Child(max = (-1))
+    @Child(min = 0, max = (-1))
     public List<NUOPCDriver.SetModelServices_AddComp> addComps;
     
     @Label(label = "SetClock")
     @MappingType("call")
-    @Child
+    @Child(min = 0)
     public BasicCodeConcept setClock;
     
     public SetModelServices(final NUOPCDriver.InitSpecializations parent) {
@@ -1420,10 +1420,10 @@ public class NUOPCDriver extends NUOPCComponent {
   public static class SetRunSequence extends SpecializationMethodCodeConcept<NUOPCDriver.InitSpecializations> {
     @Label(label = "New Run Sequence")
     @MappingType("call")
-    @Child(forward = false)
+    @Child(min = 0)
     public BasicCodeConcept newRunSequence;
     
-    @Child(max = (-1))
+    @Child(min = 0, max = (-1))
     public List<NUOPCDriver.SetRunSequence_AddRunElement> runElements;
     
     public SetRunSequence(final NUOPCDriver.InitSpecializations parent) {
@@ -2196,7 +2196,7 @@ public class NUOPCDriver extends NUOPCComponent {
       _builder.append("compilationUnit(_compUnitID, _filename, _path),");
       _builder.newLine();
       _builder.append("   \t\t\t\t\t");
-      _builder.append("uses(_uid, _mid, \'NUOPC_Driver\').");
+      _builder.append("uses(_uid, _moduleID, \'NUOPC_Driver\').");
       ResultSet rs = this.execQuery(_builder);
       try {
         boolean _next = rs.next();

@@ -61,41 +61,44 @@ public abstract class CodeConcept<P extends CodeConcept<?,?>, A extends IASTNode
 	 * children that are required (min>0) are present and to validate
 	 * recursively.
 	 */
-	def boolean validate() {	
+	def boolean validate(List<String> errors) {	
 		for (Field f : getChildFields) {
-			if (!validate(f)) return false			
+			if (!validate(f, errors)) return false			
 		}
 		true
 	}
 	
-	def protected boolean validate(List<CodeConcept<?,?>> codeConcepts) {
+	def protected boolean validate(List<CodeConcept<?,?>> codeConcepts, List<String> errors) {
 		for (CodeConcept<?,?> cc : codeConcepts) {
-			if (!cc.validate) return false;
+			if (!cc.validate(errors)) return false;
 		}
 		true
 	}
 	
-	def protected boolean validate(Field f) {
+	def protected boolean validate(Field f, List<String> errors) {
 		val childAnn = f.getAnnotation(Child)
 		if (f.type == List) {
 			var lst = f.get(this) as List<CodeConcept<?,?>>
 			if (lst == null && childAnn.min>0) {
+				errors.add("Min cardinality not satisfied for field " + f.name);
 				return false;
 			}
 			else if (lst !=null && lst.size < childAnn.min) {
+				errors.add("Min cardinality not satisfied for field " + f.name);
 				return false;
 			}
 			else {
-				return validate(lst)	
+				return validate(lst, errors)	
 			}
 		}
 		else {
 			var obj = f.get(this) as CodeConcept<?,?>
 			if (obj==null && childAnn.min>0) {
+				errors.add("Min cardinality not satisfied for field " + f.name);
 				return false;
 			}
 			else if (obj!=null) {
-				return obj.validate
+				return obj.validate(errors)
 			}
 			else {
 				true

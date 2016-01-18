@@ -12,10 +12,17 @@
 		<relativePath>../org.earthsystemmodeling.cupid.releng</relativePath>
 	</parent>
 
+	<!-- 
 	<scm>
 		<connection>scm:svn:http://svn.code.sf.net/p/esmfcontrib/svn/NUOPC/trunk</connection>
 		<url>http://svn.code.sf.net/p/esmfcontrib/svn/NUOPC/trunk</url>
 	</scm>
+	-->
+
+	<properties>
+		<nuopc.url.trunk>scm:svn:http://svn.code.sf.net/p/esmfcontrib/svn/NUOPC/trunk</nuopc.url.trunk>
+		<nuopc.url.tags>scm:svn:http://svn.code.sf.net/p/esmfcontrib/svn/NUOPC/tags</nuopc.url.tags>
+	</properties>
 
 	<build>
 		<plugins>
@@ -32,11 +39,12 @@
 						</goals>
 					</execution>
 				</executions>
-				<!-- 
+				 
 				<configuration>
-					<connectionUrl>${project.scm.connection}</connectionUrl>
+					<connectionUrl>${nuopc.url.tags}/ESMF_7_0_0_beta_snapshot_59</connectionUrl>
+					<checkoutDirectory>${project.build.directory}/ESMF_7_0_0_beta_snapshot_59</checkoutDirectory>
 				</configuration>
-				-->
+				
 			</plugin>
 		</plugins>
 	</build>

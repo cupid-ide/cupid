@@ -730,14 +730,14 @@ public class NUOPCModel extends NUOPCComponent {
     }
     
     @Override
-    public boolean validate() {
+    public boolean validate(final List<String> errors) {
       boolean _and = false;
       boolean _and_1 = false;
       boolean _notEquals = (!Objects.equal(this.ipdv03p1, null));
       if (!_notEquals) {
         _and_1 = false;
       } else {
-        boolean _validate = this.ipdv03p1.validate();
+        boolean _validate = this.ipdv03p1.validate(errors);
         _and_1 = _validate;
       }
       if (!_and_1) {
@@ -749,7 +749,7 @@ public class NUOPCModel extends NUOPCComponent {
         if (!_notEquals_1) {
           _and_2 = false;
         } else {
-          boolean _validate_1 = this.ipdv03p3.validate();
+          boolean _validate_1 = this.ipdv03p3.validate(errors);
           _and_2 = _validate_1;
         }
         if (_and_2) {
@@ -760,7 +760,7 @@ public class NUOPCModel extends NUOPCComponent {
           if (!_notEquals_2) {
             _and_3 = false;
           } else {
-            boolean _validate_2 = this.ipdv03p5.validate();
+            boolean _validate_2 = this.ipdv03p5.validate(errors);
             _and_3 = _validate_2;
           }
           _or = _and_3;
@@ -830,14 +830,14 @@ public class NUOPCModel extends NUOPCComponent {
     }
     
     @Override
-    public boolean validate() {
+    public boolean validate(final List<String> errors) {
       boolean _and = false;
       boolean _and_1 = false;
       boolean _notEquals = (!Objects.equal(this.ipdv04p1, null));
       if (!_notEquals) {
         _and_1 = false;
       } else {
-        boolean _validate = this.ipdv04p1.validate();
+        boolean _validate = this.ipdv04p1.validate(errors);
         _and_1 = _validate;
       }
       if (!_and_1) {
@@ -849,7 +849,7 @@ public class NUOPCModel extends NUOPCComponent {
         if (!_notEquals_1) {
           _and_2 = false;
         } else {
-          boolean _validate_1 = this.ipdv04p3.validate();
+          boolean _validate_1 = this.ipdv04p3.validate(errors);
           _and_2 = _validate_1;
         }
         if (_and_2) {
@@ -860,7 +860,7 @@ public class NUOPCModel extends NUOPCComponent {
           if (!_notEquals_2) {
             _and_3 = false;
           } else {
-            boolean _validate_2 = this.ipdv04p5.validate();
+            boolean _validate_2 = this.ipdv04p5.validate(errors);
             _and_3 = _validate_2;
           }
           _or = _and_3;
@@ -917,34 +917,34 @@ public class NUOPCModel extends NUOPCComponent {
     }
     
     @Override
-    public boolean validate() {
+    public boolean validate(final List<String> errors) {
       boolean _or = false;
       boolean _or_1 = false;
       boolean _or_2 = false;
       boolean _or_3 = false;
-      boolean _validate = this.ipdv00.validate();
+      boolean _validate = this.ipdv00.validate(errors);
       if (_validate) {
         _or_3 = true;
       } else {
-        boolean _validate_1 = this.ipdv01.validate();
+        boolean _validate_1 = this.ipdv01.validate(errors);
         _or_3 = _validate_1;
       }
       if (_or_3) {
         _or_2 = true;
       } else {
-        boolean _validate_2 = this.ipdv02.validate();
+        boolean _validate_2 = this.ipdv02.validate(errors);
         _or_2 = _validate_2;
       }
       if (_or_2) {
         _or_1 = true;
       } else {
-        boolean _validate_3 = this.ipdv03.validate();
+        boolean _validate_3 = this.ipdv03.validate(errors);
         _or_1 = _validate_3;
       }
       if (_or_1) {
         _or = true;
       } else {
-        boolean _validate_4 = this.ipdv04.validate();
+        boolean _validate_4 = this.ipdv04.validate(errors);
         _or = _validate_4;
       }
       return _or;
@@ -1856,7 +1856,7 @@ public class NUOPCModel extends NUOPCComponent {
       _builder.append("compilationUnit(_compUnitID, _filename, _path),");
       _builder.newLine();
       _builder.append("   \t\t\t\t\t");
-      _builder.append("uses(_uid, _mid, \'NUOPC_Model\').");
+      _builder.append("uses(_uid, _moduleID, \'NUOPC_Model\').");
       ResultSet rs = this.execQuery(_builder);
       try {
         boolean _next = rs.next();

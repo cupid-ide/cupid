@@ -51,7 +51,7 @@ class NUOPCMediator extends NUOPCComponent {
 
 		var rs = '''module(_moduleID, _compUnitID, _medName), 
 		            compilationUnit(_compUnitID, _filename, _path),
-   					uses(_uid, _mid, 'NUOPC_Mediator').'''.execQuery
+   					uses(_uid, _moduleID, 'NUOPC_Mediator').'''.execQuery
 		try {
 			if (rs.next) {
 				_id = rs.getLong("_moduleID")
@@ -568,10 +568,10 @@ if (ESMF_LogFoundError(rcToCheck=«_parent.paramRC», msg=ESMF_LOGERR_PASSTHRU, 
 			this
 		}
 		
-		override validate() {
-			(ipdv03p1 != null && ipdv03p1.validate) &&
-			((ipdv03p3 != null && ipdv03p3.validate) ||
-			(ipdv03p5 != null && ipdv03p5.validate))
+		override validate(List<String> errors) {
+			(ipdv03p1 != null && ipdv03p1.validate(errors)) &&
+			((ipdv03p3 != null && ipdv03p3.validate(errors)) ||
+			(ipdv03p5 != null && ipdv03p5.validate(errors)))
 		}
 		
 		
@@ -617,10 +617,10 @@ if (ESMF_LogFoundError(rcToCheck=«_parent.paramRC», msg=ESMF_LOGERR_PASSTHRU, 
 			this
 		}
 		
-		override validate() {
-			(ipdv04p1 != null && ipdv04p1.validate) &&
-			((ipdv04p3 != null && ipdv04p3.validate) ||
-			(ipdv04p5 != null && ipdv04p5.validate))
+		override validate(List<String> errors) {
+			(ipdv04p1 != null && ipdv04p1.validate(errors)) &&
+			((ipdv04p3 != null && ipdv04p3.validate(errors)) ||
+			(ipdv04p5 != null && ipdv04p5.validate(errors)))
 		}
 		
 		
@@ -658,12 +658,12 @@ if (ESMF_LogFoundError(rcToCheck=«_parent.paramRC», msg=ESMF_LOGERR_PASSTHRU, 
 			this
 		}
 		
-		override validate() {
-			ipdv00.validate ||
-			ipdv01.validate ||
-			ipdv02.validate ||
-			ipdv03.validate ||
-			ipdv04.validate	
+		override validate(List<String> errors) {
+			ipdv00.validate(errors)||
+			ipdv01.validate(errors) ||
+			ipdv02.validate(errors) ||
+			ipdv03.validate(errors) ||
+			ipdv04.validate(errors)	
 		}
 		
 	
