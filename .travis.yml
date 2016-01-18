@@ -1,3 +1,11 @@
 language: java
 sudo: false
+os:
+  - linux
+  - osx
+jdk:
+  - oraclejdk8
+  - oraclejdk7
+  - openjdk7
+
 script: cd org.earthsystemmodeling.cupid.releng && mvn clean verify
