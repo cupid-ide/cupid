@@ -1,11 +1,10 @@
 language: java
 sudo: false
 
-os:
-  - osx
-
 matrix:
   include:
+    - os: os
+      env: JAVA_HOME=$(/usr/libexec/java_home)
     - os: linux
       jdk: oraclejdk7
     - os: linux
