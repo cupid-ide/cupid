@@ -37,6 +37,9 @@ public class ProtexASTVisitor extends ASTVisitor {
 	private String latexToHTML(String latex) {
 		SnuggleSession session = snuggleEngine.createSession();
 		try {
+			latex = latex.replace("\\begin{description}", "\\begin{itemize}");
+			latex = latex.replace("\\end{itemize}", "\\end{itemize}");
+			
 			session.parseInput(new SnuggleInput(latex));
 			ByteArrayOutputStream output = new ByteArrayOutputStream();
 			session.writeWebPage(webPageOutputOptions, output);

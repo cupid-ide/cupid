@@ -6,6 +6,8 @@ import java.util.List;
 import org.earthsystemmodeling.cupid.core.CupidActivator;
 import org.earthsystemmodeling.cupid.template.core.ProtexAPI;
 import org.earthsystemmodeling.cupid.template.core.ProtexASTVisitor;
+import org.earthsystemmodeling.cupid.template.core.ProtexParser;
+import org.earthsystemmodeling.cupid.template.core.ProtexParser.ProtexParsingException;
 import org.earthsystemmodeling.cupid.template.core.ProtexStore;
 import org.eclipse.cdt.core.model.ICElement;
 import org.eclipse.cdt.core.model.ICElementVisitor;
@@ -91,6 +93,7 @@ public class ParseProtexJob extends Job {
 				//if (file.getFileExtension()!=null && file.getFileExtension().equalsIgnoreCase("F90") || file.getFileExtension().equalsIgnoreCase("F")) {
 				if (include(file)) {
 					monitor.subTask(file.getName());
+					
 					IFortranAST ast = PhotranVPG.getInstance().acquirePermanentAST(file);
 					if (ast == null) {
 						CupidActivator.debug("Error parsing Fortran in " + file.getFullPath());
@@ -98,7 +101,18 @@ public class ParseProtexJob extends Job {
 					else {
 						ast.accept(new ProtexASTVisitor(protexAPI));
 						PhotranVPG.getInstance().releaseAST(file);
-					}	
+					}
+					
+					/*
+					try {
+						ProtexParser parser = new ProtexParser(file.getContents(), protexAPI);
+						parser.parse();
+					} catch (CoreException e) {
+						CupidActivator.log("Error opening file for Protex Parsing: " + file.getName(), e);
+					} catch (ProtexParsingException e) {
+						CupidActivator.log("Error parsing Protex in file: " + file.getName(), e);
+					}
+					*/
 					monitor.worked(1);
 					if (monitor.isCanceled()) {
 						return Status.CANCEL_STATUS;

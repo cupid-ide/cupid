@@ -141,6 +141,7 @@
 		<module>../org.earthsystemmodeling.cupid.releng.p2</module>
 		<module>../org.earthsystemmodeling.cupid.test</module>
 		<module>../org.earthsystemmodeling.cupid.targetplatform</module>
+		<module>../org.earthsystemmodeling.cupid.template</module>
 	</modules>
 
 	<repositories>

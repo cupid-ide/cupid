@@ -294,7 +294,7 @@ public class ProtexAPI {
 		public String shortDesc;
 		public String longDesc;
 		public String paramText;
-		public List<Parameter> params;
+		public List<Parameter> params = new ArrayList<Parameter>();
 		public String status;
 		
 		public String toString() {

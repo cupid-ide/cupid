@@ -25,6 +25,7 @@ import org.earthsystemmodeling.cupid.nuopc.v7bs59.NUOPCModel.IPD.RealizeField
 import org.eclipse.photran.internal.core.parser.ASTModuleNode
 import org.eclipse.photran.internal.core.parser.ASTUseStmtNode
 import org.earthsystemmodeling.cupid.annotation.Doc
+import org.eclipse.photran.internal.core.vpg.PhotranVPG
 
 @Label(label="NUOPC Driver")
 @MappingType("module")
@@ -59,7 +60,14 @@ class NUOPCDriver extends NUOPCComponent {
      	var rs = '''module(_moduleID, _compUnitID, _driverName), 
 		            compilationUnit(_compUnitID, _filename, _path),
    					uses(_uid, _moduleID, 'NUOPC_Driver').'''.execQuery
-		try {
+   					
+   		/*			
+   		List<ASTModuleNode> modules = VPGQuery.modules().using("NUOPC_Driver").go();
+   		subroutines().declaredIn(module)
+   		
+   		*/
+   		
+   		try {
 			if (rs.next) {
 				_id = rs.getLong("_moduleID")
 				driverName = rs.getString("_driverName")
@@ -746,7 +754,9 @@ end subroutine
 		}
 			
 		override reverse() {
+			
 			if (this == super.reverse) {				
+				
 				var rs = '''call_(_cid, «_id», 'ESMF_GridCompSet'),
 							callArgWithType(_, _cid, _, 'clock', _, _clockExpr).'''.execQuery
 				if (rs.next) {
