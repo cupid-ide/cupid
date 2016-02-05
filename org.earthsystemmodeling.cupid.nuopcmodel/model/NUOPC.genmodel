@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<genmodel:GenModel xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:ecore="http://www.eclipse.org/emf/2002/Ecore"
+    xmlns:genmodel="http://www.eclipse.org/emf/2002/GenModel" modelDirectory="/org.earthsystemmodeling.cupid.nuopcmodel/src"
+    modelPluginID="org.earthsystemmodeling.cupid.nuopcmodel" modelName="NUOPC" rootExtendsClass="org.eclipse.emf.ecore.impl.MinimalEObjectImpl$Container"
+    importerID="org.eclipse.emf.importer.ecore" complianceLevel="8.0" copyrightFields="false"
+    operationReflection="true" importOrganizing="true">
+  <foreignModel>NUOPC.ecore</foreignModel>
+  <genPackages prefix="NUOPC" basePackage="org.earthsystemmodeling.cupid" disposableProviderFactory="true"
+      ecorePackage="NUOPC.ecore#/">
+    <genClasses ecoreClass="NUOPC.ecore#//NUOPCComponent">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute NUOPC.ecore#//NUOPCComponent/name"/>
+    </genClasses>
+    <genClasses image="false" ecoreClass="NUOPC.ecore#//NUOPCBaseModel"/>
+    <genClasses ecoreClass="NUOPC.ecore#//NUOPCDriver">
+      <genFeatures children="true" createChild="true" propertySortChoices="true" ecoreFeature="ecore:EReference NUOPC.ecore#//NUOPCDriver/children"/>
+    </genClasses>
+    <genClasses ecoreClass="NUOPC.ecore#//NUOPCModel"/>
+    <genClasses ecoreClass="NUOPC.ecore#//NUOPCMediator"/>
+    <genClasses ecoreClass="NUOPC.ecore#//NUOPCConnector">
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference NUOPC.ecore#//NUOPCConnector/source"/>
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference NUOPC.ecore#//NUOPCConnector/target"/>
+    </genClasses>
+    <genClasses ecoreClass="NUOPC.ecore#//NUOPCApplication">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference NUOPC.ecore#//NUOPCApplication/children"/>
+    </genClasses>
+  </genPackages>
+</genmodel:GenModel>
