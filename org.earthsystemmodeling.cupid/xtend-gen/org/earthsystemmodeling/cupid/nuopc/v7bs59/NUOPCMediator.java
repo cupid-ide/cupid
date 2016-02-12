@@ -997,7 +997,7 @@ public class NUOPCMediator extends NUOPCComponent {
       NUOPCMediator.InitSpecializations _xblockexpression = null;
       {
         NUOPCMediator.DataInitialize _dataInitialize = new NUOPCMediator.DataInitialize(this);
-        SpecializationMethodCodeConcept<NUOPCMediator.InitSpecializations> _reverse = _dataInitialize.reverse();
+        CodeConcept<NUOPCMediator.InitSpecializations, ASTSubroutineSubprogramNode> _reverse = _dataInitialize.reverse();
         this.dataInitialize = ((NUOPCMediator.DataInitialize) _reverse);
         _xblockexpression = this;
       }
@@ -1719,7 +1719,7 @@ public class NUOPCMediator extends NUOPCComponent {
       NUOPCMediator.FinalizeSpecializations _xblockexpression = null;
       {
         NUOPCMediator.FinalizeMediator _finalizeMediator = new NUOPCMediator.FinalizeMediator(this);
-        SpecializationMethodCodeConcept<NUOPCMediator.FinalizeSpecializations> _reverse = _finalizeMediator.reverse();
+        CodeConcept<NUOPCMediator.FinalizeSpecializations, ASTSubroutineSubprogramNode> _reverse = _finalizeMediator.reverse();
         this.finalize = ((NUOPCMediator.FinalizeMediator) _reverse);
         _xblockexpression = this;
       }

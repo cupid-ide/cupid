@@ -2,11 +2,16 @@ package org.earthsystemmodeling.cupid.nuopc
 import org.earthsystemmodeling.cupid.nuopc.CodeConcept
 import org.eclipse.photran.internal.core.parser.IASTNode
 
-public class BasicCodeConcept extends CodeConcept<CodeConcept<?,?>, IASTNode> {
+public class BasicCodeConcept <A extends IASTNode> extends CodeConcept<CodeConcept<?,?>, A> {
 	
 	new(CodeConcept<?,?> parent, long id) {
 		super(parent)
 		_id = id
+	}
+	
+	new(CodeConcept<?,?> parent, A astRef) {
+		super(parent)
+		_astRef = astRef
 	}
 	
 	override reverse() {
@@ -27,4 +32,8 @@ public class BasicCodeConcept extends CodeConcept<CodeConcept<?,?>, IASTNode> {
 		else
 			null
 	}
+	
+	//def static BasicCodeConcept newBasicCodeConcept(CodeConcept<?,?> parent, IASTNode astRef) {
+	//	new BasicCodeConcept(parent, astRef)
+	//}
 }

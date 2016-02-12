@@ -13,7 +13,7 @@
           </style>
         </edgeMappings>
         <containerMappings name="driverContainer" label="Driver" labelDirectEdit="//@ownedViewpoints[name='nuopcViewport']/@ownedRepresentations[name='nuopcDiagram']/@defaultLayer/@toolSections.0/@ownedTools[name='editName']" domainClass="NUOPC.NUOPCDriver">
-          <subNodeMappings name="driverModel" label="Model" deletionDescription="//@ownedViewpoints[name='nuopcViewport']/@ownedRepresentations[name='nuopcDiagram']/@defaultLayer/@toolSections.0/@ownedTools[name='deleteModel']" labelDirectEdit="//@ownedViewpoints[name='nuopcViewport']/@ownedRepresentations[name='nuopcDiagram']/@defaultLayer/@toolSections.0/@ownedTools[name='editName']" semanticCandidatesExpression="aql:self.children->filter(NUOPC::NUOPCModel)" domainClass="NUOPC:NUOPCModel">
+          <subNodeMappings name="driverModel" label="Model" deletionDescription="//@ownedViewpoints[name='nuopcViewport']/@ownedRepresentations[name='nuopcDiagram']/@defaultLayer/@toolSections.0/@ownedTools[name='deleteModel']" labelDirectEdit="//@ownedViewpoints[name='nuopcViewport']/@ownedRepresentations[name='nuopcDiagram']/@defaultLayer/@toolSections.0/@ownedTools[name='editName']" semanticCandidatesExpression="aql:self.children->filter(NUOPC::NUOPCModel)" domainClass="NUOPC.NUOPCModel">
             <style xsi:type="style:SquareDescription" borderSizeComputationExpression="1" labelSize="10" showIcon="false" sizeComputationExpression="10" labelPosition="node" resizeKind="NSEW">
               <borderColor xsi:type="description:SystemColor" href="environment:/viewpoint#//@systemColors/@entries[name='black']"/>
               <labelFormat>bold</labelFormat>

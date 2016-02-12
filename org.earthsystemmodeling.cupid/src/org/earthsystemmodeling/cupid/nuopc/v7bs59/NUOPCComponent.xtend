@@ -1,5 +1,6 @@
 package org.earthsystemmodeling.cupid.nuopc.v7bs59 
 import org.eclipse.photran.internal.core.parser.ASTModuleNode
+
 import org.earthsystemmodeling.cupid.annotation.Label
 import org.earthsystemmodeling.cupid.annotation.Child
 import org.eclipse.photran.internal.core.parser.ASTUseStmtNode
@@ -9,6 +10,7 @@ import org.earthsystemmodeling.cupid.nuopc.CodeConcept
 import org.earthsystemmodeling.cupid.nuopc.BasicCodeConcept
 import org.earthsystemmodeling.cupid.annotation.MappingType
 
+
 @Label(label="NUOPC Driver")
 @MappingType("module")
 public abstract class NUOPCComponent extends CodeConcept<CodeConcept<?,?>, ASTModuleNode> {
@@ -16,12 +18,12 @@ public abstract class NUOPCComponent extends CodeConcept<CodeConcept<?,?>, ASTMo
 	@Label(label="ESMF Import", sort=1)
 	@Child(forward=false)
 	@MappingType("uses")
-	public BasicCodeConcept importESMF
+	public BasicCodeConcept<ASTUseStmtNode> importESMF
 	
 	@Label(label="NUOPC Import", sort=2)
 	@Child(forward=false)
 	@MappingType("uses")
-	public BasicCodeConcept importNUOPC
+	public BasicCodeConcept<ASTUseStmtNode> importNUOPC
 	
 	@Label(label="Generic Import", sort=3)
 	@Child
@@ -50,7 +52,30 @@ public abstract class NUOPCComponent extends CodeConcept<CodeConcept<?,?>, ASTMo
 			_id = id;
 		}
 		
+		new(NUOPCComponent parent, ASTUseStmtNode astRef) {
+			super(parent)
+			_astRef = astRef
+		}
+		
 		override GenericImport reverse() {
+			genericComp = getASTRef?.name.text
+			var on = getASTRef?.onlyList?.findFirst[it.name.text.equalsIgnoreCase("SetServices")]
+			if (on != null) {
+				routineSetServices = {
+					if (on.renamed) on.newName.text
+					else on.name.text
+				}
+			}
+			else {
+				var rn = getASTRef?.renameList?.findFirst[it.name.text.equalsIgnoreCase("SetServices")]
+				if (rn != null) {
+					routineSetServices = rn.newName.text
+				}
+			}
+			this
+		}
+		
+		def GenericImport reverseOLD() {
 			var rs = '''uses(«_id», _mid, _genericComp),
 						(usesEntity(_, «_id», 'SetServices', _newName, _) ; true).'''.execQuery
 			if (rs.next) {

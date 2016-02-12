@@ -1000,10 +1000,10 @@ public class NUOPCModel extends NUOPCComponent {
       NUOPCModel.InitSpecializations _xblockexpression = null;
       {
         NUOPCModel.SetClock _setClock = new NUOPCModel.SetClock(this);
-        SpecializationMethodCodeConcept<NUOPCModel.InitSpecializations> _reverse = _setClock.reverse();
+        CodeConcept<NUOPCModel.InitSpecializations, ASTSubroutineSubprogramNode> _reverse = _setClock.reverse();
         this.setClock = ((NUOPCModel.SetClock) _reverse);
         NUOPCModel.DataInitialize _dataInitialize = new NUOPCModel.DataInitialize(this);
-        SpecializationMethodCodeConcept<NUOPCModel.InitSpecializations> _reverse_1 = _dataInitialize.reverse();
+        CodeConcept<NUOPCModel.InitSpecializations, ASTSubroutineSubprogramNode> _reverse_1 = _dataInitialize.reverse();
         this.dataInitialize = ((NUOPCModel.DataInitialize) _reverse_1);
         _xblockexpression = this;
       }
@@ -1705,7 +1705,7 @@ public class NUOPCModel extends NUOPCComponent {
       NUOPCModel.FinalizeSpecializations _xblockexpression = null;
       {
         NUOPCModel.FinalizeModel _finalizeModel = new NUOPCModel.FinalizeModel(this);
-        SpecializationMethodCodeConcept<NUOPCModel.FinalizeSpecializations> _reverse = _finalizeModel.reverse();
+        CodeConcept<NUOPCModel.FinalizeSpecializations, ASTSubroutineSubprogramNode> _reverse = _finalizeModel.reverse();
         this.finalize = ((NUOPCModel.FinalizeModel) _reverse);
         _xblockexpression = this;
       }

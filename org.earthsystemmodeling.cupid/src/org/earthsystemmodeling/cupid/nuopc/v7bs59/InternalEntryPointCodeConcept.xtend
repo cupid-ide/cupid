@@ -1,5 +1,6 @@
 package org.earthsystemmodeling.cupid.nuopc.v7bs59
 
+import org.earthsystemmodeling.cupid.nuopc.BasicCodeConcept
 import org.earthsystemmodeling.cupid.nuopc.CodeConcept
 import org.earthsystemmodeling.cupid.nuopc.CodeGenerationException
 import org.eclipse.photran.core.IFortranAST
@@ -8,9 +9,11 @@ import org.eclipse.photran.internal.core.parser.ASTIfStmtNode
 import org.eclipse.photran.internal.core.parser.ASTModuleNode
 import org.eclipse.photran.internal.core.parser.ASTSubroutineSubprogramNode
 
-import static org.earthsystemmodeling.cupid.nuopc.BasicCodeConcept.newBasicCodeConcept
 import static org.earthsystemmodeling.cupid.util.CodeExtraction.parseLiteralProgramUnit
 import static org.earthsystemmodeling.cupid.util.CodeExtraction.parseLiteralStatement
+
+import static extension org.earthsystemmodeling.cupid.nuopc.ASTQuery.*
+import static extension org.earthsystemmodeling.cupid.nuopc.ESMFQuery.*
 
 public abstract class InternalEntryPointCodeConcept<P extends CodeConcept<?, ?>> extends EntryPointCodeConcept<P> {
 
@@ -24,11 +27,42 @@ public abstract class InternalEntryPointCodeConcept<P extends CodeConcept<?, ?>>
 		this(parent, null)
 	}
 
+
+	override reverse() {
+		
+		val setServicesNode = setServices.ASTRef
+		
+		val registrationCall = setServicesNode.body.filter(ASTCallStmtNode).findFirst[
+			it.subroutineName.text.eic("NUOPC_CompSetInternalEntryPoint") &&
+			it.litArgExprByKeyword("phaseLabelList").toLowerCase.contains(phaseLabel.toLowerCase)
+		]
+		
+		if (registrationCall == null) return null
+		
+		val epSubroutine = module.ASTRef.findESMFEntryPoints.findFirst[
+			it.subroutineStmt.subroutineName.subroutineName.eic(registrationCall.litArgExprByKeyword("userRoutine"))
+		]
+		
+		if (epSubroutine == null) return null
+		
+		subroutineName = epSubroutine.subroutineStmt.subroutineName.subroutineName.text
+		registration = new BasicCodeConcept<ASTCallStmtNode>(this, registrationCall)
+		paramGridComp = epSubroutine.subroutineStmt.subroutinePars.get(0).variableName.text
+		paramImport = epSubroutine.subroutineStmt.subroutinePars.get(1).variableName.text
+		paramExport = epSubroutine.subroutineStmt.subroutinePars.get(2).variableName.text
+		paramClock = epSubroutine.subroutineStmt.subroutinePars.get(3).variableName.text
+		paramRC = epSubroutine.subroutineStmt.subroutinePars.get(4).variableName.text
+		
+		reverseChildren
+		
+	}
+
+	/*
 	override reverse() {
 		
 		var rs = '''esmf_reg_intentrypoint(_epId, «module()._id», _epName, '"«phaseLabel»"', _regid).'''.execQuery		
 		
-		if (rs.next) {
+		if (rs != null && rs.next) {
 			_id = rs.getLong("_epId")
 			subroutineName = rs.getString("_epName")
 			registration = newBasicCodeConcept(this, rs.getLong("_regid"))
@@ -46,11 +80,11 @@ public abstract class InternalEntryPointCodeConcept<P extends CodeConcept<?, ?>>
 			reverseChildren
 		} 
 		else {
-			rs.close
+			rs?.close
 			null
 		}	
 	}
-
+	*/
 
 	override forward() {
 

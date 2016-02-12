@@ -1,6 +1,5 @@
 package org.earthsystemmodeling.cupid.nuopc.v7bs59
 
-import java.lang.reflect.Constructor
 import java.sql.PreparedStatement
 import java.util.List
 import org.earthsystemmodeling.cupid.annotation.Child
@@ -17,11 +16,13 @@ import org.eclipse.photran.internal.core.parser.ASTModuleNode
 import org.eclipse.photran.internal.core.parser.ASTSubroutineSubprogramNode
 import org.eclipse.photran.internal.core.parser.ASTUseStmtNode
 
-import static org.earthsystemmodeling.cupid.nuopc.BasicCodeConcept.newBasicCodeConcept
 import static org.earthsystemmodeling.cupid.util.CodeExtraction.parseLiteralProgramUnit
 import static org.earthsystemmodeling.cupid.util.CodeExtraction.parseLiteralStatement
 
-public abstract class SpecializationMethodCodeConcept<P extends CodeConcept<?, ?>> extends CodeConcept<P, ASTSubroutineSubprogramNode> {
+import static extension org.earthsystemmodeling.cupid.nuopc.ASTQuery.*
+import static extension org.earthsystemmodeling.cupid.nuopc.ESMFQuery.*
+
+public abstract class SpecializationMethodCodeConcept<P extends CodeConcept<?,?>> extends CodeConcept<P, ASTSubroutineSubprogramNode> {
 
 	//@Name
 	var public String subroutineName = "SpecializationMethod"  //subclasses should default
@@ -44,6 +45,8 @@ public abstract class SpecializationMethodCodeConcept<P extends CodeConcept<?, ?
 	var String labelComponent
 	var String labelName
 	
+	//var Constructor<?> instanceConstructor;
+	
 	//PreparedStatement
 	static PreparedStatement stmtRegspec = null	
 
@@ -52,7 +55,7 @@ public abstract class SpecializationMethodCodeConcept<P extends CodeConcept<?, ?
 		this.labelComponent = labelComponent
 		this.labelName = labelName
 		
-		if (stmtRegspec == null) {
+		if (stmtRegspec == null && _codeDB != null) {
 			stmtRegspec = _codeDB.prepareStatement('''
 								SELECT * FROM esmf_regspec 
 								WHERE mod_id=? AND genericUse=? AND specLabelOrig=?''')
@@ -65,8 +68,60 @@ public abstract class SpecializationMethodCodeConcept<P extends CodeConcept<?, ?
 		else
 			subroutineName
 	}
+ 
+ 	override reverse() {
+ 		if (reverseMultiple.size() > 0)
+ 			reverseMultiple?.get(0) as CodeConcept<P, ASTSubroutineSubprogramNode>
+ 		else null
+ 	}
 
-	override SpecializationMethodCodeConcept<P> reverse() {
+	override List reverseMultiple() {
+	
+		val moduleNode = module?.ASTRef
+		if (moduleNode == null) return null
+		val setServicesNode = setServices?.ASTRef	
+		if (setServicesNode==null) return null	
+			
+		val esmfMethods = moduleNode.findESMFMethods
+	
+		val resultList = newArrayList()
+		
+		val pGridComp = setServicesNode.subroutineStmt.subroutinePars.get(0).variableName.text
+		val pRC =  setServicesNode.subroutineStmt.subroutinePars.get(1).variableName.text
+		
+		esmfMethods.forEach[m|
+			setServicesNode.body.filter(ASTCallStmtNode).
+				filter[
+						it.subroutineName.eic("NUOPC_CompSpecialize") &&
+						it.litArgExprByKeyword("specRoutine")?.eic(m.subroutineStmt.subroutineName.subroutineName) &&
+						it.litArgExprByKeyword("specLabel")?.eic(moduleNode.localName(labelComponent, labelName))]
+					.forEach[c|
+					
+						var smcc = newInstance() as SpecializationMethodCodeConcept<P> //will be instance of subclass			
+						smcc => [
+							subroutineName = m.subroutineStmt.subroutineName.subroutineName.text
+							specLabel = c.litArgExprByKeyword("specLabel")
+						    specPhaseLabel = c.litArgExprByKeyword("specPhaseLabel")
+							paramGridComp = pGridComp
+							paramRC = pRC
+							registration = new BasicCodeConcept(this, c)
+							setASTRef(m)
+						]					
+				
+						smcc = smcc.reverseChildren
+						if (smcc != null) {
+							resultList.add(smcc)
+						}
+					]
+				]
+				
+		resultList
+	
+	}
+	
+	
+	/*
+	def SpecializationMethodCodeConcept<P> reverseOLD() {
 			
 		stmtRegspec.setLong(1, parentID)
 		stmtRegspec.setString(2, labelComponent)
@@ -90,8 +145,10 @@ public abstract class SpecializationMethodCodeConcept<P extends CodeConcept<?, ?
 			null
 		}
 	}
+	*/
 	
-	override List reverseMultiple() {
+	/*
+	override List reverseMultipleOLD() {
 		
 		var retList = newArrayList()
 		
@@ -124,7 +181,9 @@ public abstract class SpecializationMethodCodeConcept<P extends CodeConcept<?, ?
 				
 		retList
 	}
-
+	
+	*/
+	
 	def reverseChildren() {
 		this
 	}
@@ -206,5 +265,8 @@ if (ESMF_LogFoundError(rcToCheck=«paramRC», msg=ESMF_LOGERR_PASSTHRU, &
 		ast
 
 	}
+	
+		
+	
 
 }

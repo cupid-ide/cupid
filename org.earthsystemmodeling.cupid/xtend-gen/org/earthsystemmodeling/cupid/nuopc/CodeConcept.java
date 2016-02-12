@@ -2,6 +2,8 @@ package org.earthsystemmodeling.cupid.nuopc;
 
 import alice.tuprolog.MalformedGoalException;
 import com.google.common.base.Objects;
+import java.io.ByteArrayInputStream;
+import java.lang.reflect.Constructor;
 import java.lang.reflect.Field;
 import java.sql.ResultSet;
 import java.util.ArrayList;
@@ -10,23 +12,34 @@ import org.earthsystemmodeling.cupid.annotation.Child;
 import org.earthsystemmodeling.cupid.codedb.CodeDBIndex;
 import org.earthsystemmodeling.cupid.core.CupidActivator;
 import org.earthsystemmodeling.cupid.nuopc.CodeGenerationException;
+import org.earthsystemmodeling.cupid.nuopc.ReverseEngineerException;
+import org.eclipse.core.resources.IFile;
+import org.eclipse.core.resources.IResource;
 import org.eclipse.photran.core.IFortranAST;
 import org.eclipse.photran.internal.core.parser.IASTNode;
+import org.eclipse.photran.internal.core.vpg.PhotranVPG;
 import org.eclipse.xtend2.lib.StringConcatenation;
 import org.eclipse.xtext.xbase.lib.CollectionLiterals;
+import org.eclipse.xtext.xbase.lib.Conversions;
 import org.eclipse.xtext.xbase.lib.Exceptions;
+import org.eclipse.xtext.xbase.lib.Functions.Function1;
+import org.eclipse.xtext.xbase.lib.IterableExtensions;
 
 @SuppressWarnings("all")
 public abstract class CodeConcept<P extends CodeConcept<?, ?>, A extends IASTNode> {
   public P _parent;
   
-  public long _id;
+  public long _id = (-1);
   
-  public CodeDBIndex _codeDB;
+  protected CodeDBIndex _codeDB;
   
-  public A _astRef;
+  protected A _astRef;
+  
+  protected IResource _context;
   
   private List<Field> childFields;
+  
+  protected Constructor<?> instanceConstructor;
   
   public CodeConcept(final P parent) {
     this.init(parent);
@@ -224,7 +237,20 @@ public abstract class CodeConcept<P extends CodeConcept<?, ?>, A extends IASTNod
     if (_notEquals) {
       _xifexpression = this._astRef;
     } else {
-      _xifexpression = this._codeDB.<A>findASTNode(this._id);
+      A _xifexpression_1 = null;
+      boolean _and = false;
+      boolean _notEquals_1 = (!Objects.equal(this._codeDB, null));
+      if (!_notEquals_1) {
+        _and = false;
+      } else {
+        _and = (this._id >= 0);
+      }
+      if (_and) {
+        _xifexpression_1 = this._codeDB.<A>findASTNode(this._id);
+      } else {
+        _xifexpression_1 = null;
+      }
+      _xifexpression = _xifexpression_1;
     }
     return _xifexpression;
   }
@@ -235,11 +261,25 @@ public abstract class CodeConcept<P extends CodeConcept<?, ?>, A extends IASTNod
   
   public IFortranAST getAST() {
     IFortranAST _xifexpression = null;
-    if ((this._id > 0)) {
-      _xifexpression = this._codeDB.findAST(this._id);
+    boolean _and = false;
+    boolean _notEquals = (!Objects.equal(this._context, null));
+    if (!_notEquals) {
+      _and = false;
     } else {
-      long _parentID = this.parentID();
-      _xifexpression = this._codeDB.findAST(_parentID);
+      _and = (this._context instanceof IFile);
+    }
+    if (_and) {
+      PhotranVPG _instance = PhotranVPG.getInstance();
+      _xifexpression = _instance.acquireTransientAST(((IFile) this._context));
+    } else {
+      IFortranAST _xifexpression_1 = null;
+      if ((this._id > 0)) {
+        _xifexpression_1 = this._codeDB.findAST(this._id);
+      } else {
+        long _parentID = this.parentID();
+        _xifexpression_1 = this._codeDB.findAST(_parentID);
+      }
+      _xifexpression = _xifexpression_1;
     }
     return _xifexpression;
   }
@@ -254,7 +294,86 @@ public abstract class CodeConcept<P extends CodeConcept<?, ?>, A extends IASTNod
   }
   
   public IFortranAST forward() throws CodeGenerationException {
-    return null;
+    try {
+      Object _xblockexpression = null;
+      {
+        List<Field> _childFields = this.getChildFields();
+        final Function1<Field, Boolean> _function = new Function1<Field, Boolean>() {
+          @Override
+          public Boolean apply(final Field it) {
+            Child _annotation = it.<Child>getAnnotation(Child.class);
+            return Boolean.valueOf(_annotation.forward());
+          }
+        };
+        Iterable<Field> _filter = IterableExtensions.<Field>filter(_childFields, _function);
+        for (final Field field : _filter) {
+          {
+            Object _get = field.get(this);
+            CodeConcept<?, ?> childConcept = ((CodeConcept<?, ?>) _get);
+            boolean _equals = Objects.equal(childConcept, null);
+            if (_equals) {
+              Class<? extends Field> _class = field.getClass();
+              Constructor<?>[] _constructors = _class.getConstructors();
+              final Function1<Constructor<?>, Boolean> _function_1 = new Function1<Constructor<?>, Boolean>() {
+                @Override
+                public Boolean apply(final Constructor<?> it) {
+                  Class<?>[] _parameterTypes = it.getParameterTypes();
+                  int _length = _parameterTypes.length;
+                  return Boolean.valueOf((_length == 1));
+                }
+              };
+              Constructor<?> con = IterableExtensions.<Constructor<?>>findFirst(((Iterable<Constructor<?>>)Conversions.doWrapArray(_constructors)), _function_1);
+              boolean _notEquals = (!Objects.equal(con, null));
+              if (_notEquals) {
+                Object _newInstance = con.newInstance(this);
+                childConcept = ((CodeConcept<?, ?>) _newInstance);
+              } else {
+                Class<? extends Field> _class_1 = field.getClass();
+                String _name = _class_1.getName();
+                String _plus = ("Could not find constructor for class " + _name);
+                throw new CodeGenerationException(_plus);
+              }
+            }
+            childConcept.forward();
+          }
+        }
+        _xblockexpression = null;
+      }
+      return ((IFortranAST)_xblockexpression);
+    } catch (Throwable _e) {
+      throw Exceptions.sneakyThrow(_e);
+    }
+  }
+  
+  public CodeConcept<P, A> newInstance() {
+    try {
+      boolean _equals = Objects.equal(this.instanceConstructor, null);
+      if (_equals) {
+        Class<? extends CodeConcept> _class = this.getClass();
+        Constructor<?>[] _constructors = _class.getConstructors();
+        final Function1<Constructor<?>, Boolean> _function = new Function1<Constructor<?>, Boolean>() {
+          @Override
+          public Boolean apply(final Constructor<?> it) {
+            Class<?>[] _parameterTypes = it.getParameterTypes();
+            int _length = _parameterTypes.length;
+            return Boolean.valueOf((_length == 1));
+          }
+        };
+        Constructor<?> _findFirst = IterableExtensions.<Constructor<?>>findFirst(((Iterable<Constructor<?>>)Conversions.doWrapArray(_constructors)), _function);
+        this.instanceConstructor = _findFirst;
+      }
+      boolean _equals_1 = Objects.equal(this.instanceConstructor, null);
+      if (_equals_1) {
+        Class<? extends CodeConcept> _class_1 = this.getClass();
+        String _name = _class_1.getName();
+        String _plus = ("Cannot find constructor for class: " + _name);
+        throw new ReverseEngineerException(_plus);
+      }
+      Object _newInstance = this.instanceConstructor.newInstance(this._parent);
+      return ((CodeConcept<P, A>) _newInstance);
+    } catch (Throwable _e) {
+      throw Exceptions.sneakyThrow(_e);
+    }
   }
   
   public String name() {
@@ -262,8 +381,9 @@ public abstract class CodeConcept<P extends CodeConcept<?, ?>, A extends IASTNod
   }
   
   public ResultSet execQuery(final CharSequence query) {
-    Object _xblockexpression = null;
-    {
+    Object _xifexpression = null;
+    boolean _notEquals = (!Objects.equal(this._codeDB, null));
+    if (_notEquals) {
       try {
         String _string = query.toString();
         ResultSet rs = this._codeDB.query2(_string);
@@ -276,9 +396,10 @@ public abstract class CodeConcept<P extends CodeConcept<?, ?>, A extends IASTNod
           throw Exceptions.sneakyThrow(_t);
         }
       }
-      _xblockexpression = null;
+    } else {
+      _xifexpression = null;
     }
-    return ((ResultSet)_xblockexpression);
+    return ((ResultSet)_xifexpression);
   }
   
   @Override
@@ -306,5 +427,23 @@ public abstract class CodeConcept<P extends CodeConcept<?, ?>, A extends IASTNod
     _builder.append(defaultVal, "");
     _builder.append("$");
     return _builder;
+  }
+  
+  public void createFile(final String content) {
+    try {
+      IFile file = ((IFile) this._context);
+      byte[] _bytes = content.getBytes();
+      ByteArrayInputStream is = new ByteArrayInputStream(_bytes);
+      boolean _exists = file.exists();
+      boolean _not = (!_exists);
+      if (_not) {
+        file.create(is, true, null);
+      } else {
+        file.setContents(is, true, false, null);
+      }
+      is.close();
+    } catch (Throwable _e) {
+      throw Exceptions.sneakyThrow(_e);
+    }
   }
 }

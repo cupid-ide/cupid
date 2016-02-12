@@ -1,23 +1,31 @@
 package org.earthsystemmodeling.cupid.nuopc.v7bs59;
 
 import com.google.common.base.Objects;
-import java.sql.ResultSet;
+import com.google.common.collect.Iterables;
+import org.earthsystemmodeling.cupid.nuopc.ASTQuery;
 import org.earthsystemmodeling.cupid.nuopc.BasicCodeConcept;
 import org.earthsystemmodeling.cupid.nuopc.CodeConcept;
 import org.earthsystemmodeling.cupid.nuopc.CodeGenerationException;
+import org.earthsystemmodeling.cupid.nuopc.ESMFQuery;
 import org.earthsystemmodeling.cupid.nuopc.v7bs59.EntryPointCodeConcept;
 import org.earthsystemmodeling.cupid.nuopc.v7bs59.SetServicesCodeConcept;
 import org.earthsystemmodeling.cupid.util.CodeExtraction;
 import org.eclipse.photran.core.IFortranAST;
+import org.eclipse.photran.internal.core.lexer.Token;
 import org.eclipse.photran.internal.core.parser.ASTCallStmtNode;
 import org.eclipse.photran.internal.core.parser.ASTIfStmtNode;
 import org.eclipse.photran.internal.core.parser.ASTModuleNode;
+import org.eclipse.photran.internal.core.parser.ASTSubroutineNameNode;
+import org.eclipse.photran.internal.core.parser.ASTSubroutineParNode;
+import org.eclipse.photran.internal.core.parser.ASTSubroutineStmtNode;
 import org.eclipse.photran.internal.core.parser.ASTSubroutineSubprogramNode;
 import org.eclipse.photran.internal.core.parser.IASTListNode;
 import org.eclipse.photran.internal.core.parser.IBodyConstruct;
 import org.eclipse.photran.internal.core.parser.IModuleBodyConstruct;
 import org.eclipse.xtend2.lib.StringConcatenation;
 import org.eclipse.xtext.xbase.lib.Exceptions;
+import org.eclipse.xtext.xbase.lib.Functions.Function1;
+import org.eclipse.xtext.xbase.lib.IterableExtensions;
 
 @SuppressWarnings("all")
 public abstract class InternalEntryPointCodeConcept<P extends CodeConcept<?, ?>> extends EntryPointCodeConcept<P> {
@@ -34,68 +42,124 @@ public abstract class InternalEntryPointCodeConcept<P extends CodeConcept<?, ?>>
   
   @Override
   public CodeConcept<P, ASTSubroutineSubprogramNode> reverse() {
-    try {
-      EntryPointCodeConcept<P> _xblockexpression = null;
-      {
-        StringConcatenation _builder = new StringConcatenation();
-        _builder.append("esmf_reg_intentrypoint(_epId, ");
-        CodeConcept<?, ASTModuleNode> _module = this.module();
-        _builder.append(_module._id, "");
-        _builder.append(", _epName, \'\"");
-        _builder.append(this.phaseLabel, "");
-        _builder.append("\"\', _regid).");
-        ResultSet rs = this.execQuery(_builder);
-        EntryPointCodeConcept<P> _xifexpression = null;
-        boolean _next = rs.next();
-        if (_next) {
-          EntryPointCodeConcept<P> _xblockexpression_1 = null;
-          {
-            long _long = rs.getLong("_epId");
-            this._id = _long;
-            String _string = rs.getString("_epName");
-            this.subroutineName = _string;
-            long _long_1 = rs.getLong("_regid");
-            BasicCodeConcept _newBasicCodeConcept = BasicCodeConcept.newBasicCodeConcept(this, _long_1);
-            this.registration = _newBasicCodeConcept;
-            rs.close();
-            StringConcatenation _builder_1 = new StringConcatenation();
-            _builder_1.append("esmf_entrypoint(_sid, ");
-            long _parentID = this.parentID();
-            _builder_1.append(_parentID, "");
-            _builder_1.append(", _name, _param_gridcomp, _param_import, _param_export, _param_clock, _param_rc).");
-            ResultSet _execQuery = this.execQuery(_builder_1);
-            rs = _execQuery;
-            boolean _next_1 = rs.next();
-            if (_next_1) {
-              String _string_1 = rs.getString("_param_gridcomp");
-              this.paramGridComp = _string_1;
-              String _string_2 = rs.getString("_param_import");
-              this.paramImport = _string_2;
-              String _string_3 = rs.getString("_param_export");
-              this.paramExport = _string_3;
-              String _string_4 = rs.getString("_param_clock");
-              this.paramClock = _string_4;
-            }
-            rs.close();
-            _xblockexpression_1 = this.reverseChildren();
+    EntryPointCodeConcept<P> _xblockexpression = null;
+    {
+      SetServicesCodeConcept<?> _setServices = this.setServices();
+      final ASTSubroutineSubprogramNode setServicesNode = _setServices.getASTRef();
+      IASTListNode<IBodyConstruct> _body = setServicesNode.getBody();
+      Iterable<ASTCallStmtNode> _filter = Iterables.<ASTCallStmtNode>filter(_body, ASTCallStmtNode.class);
+      final Function1<ASTCallStmtNode, Boolean> _function = new Function1<ASTCallStmtNode, Boolean>() {
+        @Override
+        public Boolean apply(final ASTCallStmtNode it) {
+          boolean _and = false;
+          Token _subroutineName = it.getSubroutineName();
+          String _text = _subroutineName.getText();
+          boolean _eic = ASTQuery.eic(_text, "NUOPC_CompSetInternalEntryPoint");
+          if (!_eic) {
+            _and = false;
+          } else {
+            String _litArgExprByKeyword = ASTQuery.litArgExprByKeyword(it, "phaseLabelList");
+            String _lowerCase = _litArgExprByKeyword.toLowerCase();
+            String _lowerCase_1 = InternalEntryPointCodeConcept.this.phaseLabel.toLowerCase();
+            boolean _contains = _lowerCase.contains(_lowerCase_1);
+            _and = _contains;
           }
-          _xifexpression = _xblockexpression_1;
-        } else {
-          Object _xblockexpression_2 = null;
-          {
-            rs.close();
-            _xblockexpression_2 = null;
-          }
-          _xifexpression = ((EntryPointCodeConcept<P>)_xblockexpression_2);
+          return Boolean.valueOf(_and);
         }
-        _xblockexpression = _xifexpression;
+      };
+      final ASTCallStmtNode registrationCall = IterableExtensions.<ASTCallStmtNode>findFirst(_filter, _function);
+      boolean _equals = Objects.equal(registrationCall, null);
+      if (_equals) {
+        return null;
       }
-      return _xblockexpression;
-    } catch (Throwable _e) {
-      throw Exceptions.sneakyThrow(_e);
+      CodeConcept<?, ASTModuleNode> _module = this.module();
+      ASTModuleNode _aSTRef = _module.getASTRef();
+      Iterable<ASTSubroutineSubprogramNode> _findESMFEntryPoints = ESMFQuery.findESMFEntryPoints(_aSTRef);
+      final Function1<ASTSubroutineSubprogramNode, Boolean> _function_1 = new Function1<ASTSubroutineSubprogramNode, Boolean>() {
+        @Override
+        public Boolean apply(final ASTSubroutineSubprogramNode it) {
+          ASTSubroutineStmtNode _subroutineStmt = it.getSubroutineStmt();
+          ASTSubroutineNameNode _subroutineName = _subroutineStmt.getSubroutineName();
+          Token _subroutineName_1 = _subroutineName.getSubroutineName();
+          String _litArgExprByKeyword = ASTQuery.litArgExprByKeyword(registrationCall, "userRoutine");
+          return Boolean.valueOf(ASTQuery.eic(_subroutineName_1, _litArgExprByKeyword));
+        }
+      };
+      final ASTSubroutineSubprogramNode epSubroutine = IterableExtensions.<ASTSubroutineSubprogramNode>findFirst(_findESMFEntryPoints, _function_1);
+      boolean _equals_1 = Objects.equal(epSubroutine, null);
+      if (_equals_1) {
+        return null;
+      }
+      ASTSubroutineStmtNode _subroutineStmt = epSubroutine.getSubroutineStmt();
+      ASTSubroutineNameNode _subroutineName = _subroutineStmt.getSubroutineName();
+      Token _subroutineName_1 = _subroutineName.getSubroutineName();
+      String _text = _subroutineName_1.getText();
+      this.subroutineName = _text;
+      BasicCodeConcept<ASTCallStmtNode> _basicCodeConcept = new BasicCodeConcept<ASTCallStmtNode>(this, registrationCall);
+      this.registration = _basicCodeConcept;
+      ASTSubroutineStmtNode _subroutineStmt_1 = epSubroutine.getSubroutineStmt();
+      IASTListNode<ASTSubroutineParNode> _subroutinePars = _subroutineStmt_1.getSubroutinePars();
+      ASTSubroutineParNode _get = _subroutinePars.get(0);
+      Token _variableName = _get.getVariableName();
+      String _text_1 = _variableName.getText();
+      this.paramGridComp = _text_1;
+      ASTSubroutineStmtNode _subroutineStmt_2 = epSubroutine.getSubroutineStmt();
+      IASTListNode<ASTSubroutineParNode> _subroutinePars_1 = _subroutineStmt_2.getSubroutinePars();
+      ASTSubroutineParNode _get_1 = _subroutinePars_1.get(1);
+      Token _variableName_1 = _get_1.getVariableName();
+      String _text_2 = _variableName_1.getText();
+      this.paramImport = _text_2;
+      ASTSubroutineStmtNode _subroutineStmt_3 = epSubroutine.getSubroutineStmt();
+      IASTListNode<ASTSubroutineParNode> _subroutinePars_2 = _subroutineStmt_3.getSubroutinePars();
+      ASTSubroutineParNode _get_2 = _subroutinePars_2.get(2);
+      Token _variableName_2 = _get_2.getVariableName();
+      String _text_3 = _variableName_2.getText();
+      this.paramExport = _text_3;
+      ASTSubroutineStmtNode _subroutineStmt_4 = epSubroutine.getSubroutineStmt();
+      IASTListNode<ASTSubroutineParNode> _subroutinePars_3 = _subroutineStmt_4.getSubroutinePars();
+      ASTSubroutineParNode _get_3 = _subroutinePars_3.get(3);
+      Token _variableName_3 = _get_3.getVariableName();
+      String _text_4 = _variableName_3.getText();
+      this.paramClock = _text_4;
+      ASTSubroutineStmtNode _subroutineStmt_5 = epSubroutine.getSubroutineStmt();
+      IASTListNode<ASTSubroutineParNode> _subroutinePars_4 = _subroutineStmt_5.getSubroutinePars();
+      ASTSubroutineParNode _get_4 = _subroutinePars_4.get(4);
+      Token _variableName_4 = _get_4.getVariableName();
+      String _text_5 = _variableName_4.getText();
+      this.paramRC = _text_5;
+      _xblockexpression = this.reverseChildren();
     }
+    return _xblockexpression;
   }
   
+  /**
+   * override reverse() {
+   * 
+   * var rs = '''esmf_reg_intentrypoint(_epId, «module()._id», _epName, '"«phaseLabel»"', _regid).'''.execQuery
+   * 
+   * if (rs != null && rs.next) {
+   * _id = rs.getLong("_epId")
+   * subroutineName = rs.getString("_epName")
+   * registration = newBasicCodeConcept(this, rs.getLong("_regid"))
+   * rs.close
+   * 
+   * rs = '''esmf_entrypoint(_sid, «parentID», _name, _param_gridcomp, _param_import, _param_export, _param_clock, _param_rc).'''.execQuery
+   * if (rs.next) {
+   * paramGridComp = rs.getString("_param_gridcomp")
+   * paramImport = rs.getString("_param_import")
+   * paramExport = rs.getString("_param_export")
+   * paramClock = rs.getString("_param_clock")
+   * }
+   * rs.close
+   * 
+   * reverseChildren
+   * }
+   * else {
+   * rs?.close
+   * null
+   * }
+   * }
+   */
   @Override
   public IFortranAST forward() {
     try {

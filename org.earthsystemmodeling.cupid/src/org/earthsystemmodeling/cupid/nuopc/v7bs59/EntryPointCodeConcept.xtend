@@ -1,8 +1,8 @@
 package org.earthsystemmodeling.cupid.nuopc.v7bs59
 
-import java.util.List
 import org.earthsystemmodeling.cupid.annotation.Child
 import org.earthsystemmodeling.cupid.annotation.Label
+import org.earthsystemmodeling.cupid.annotation.MappingType
 import org.earthsystemmodeling.cupid.annotation.Name
 import org.earthsystemmodeling.cupid.nuopc.BasicCodeConcept
 import org.earthsystemmodeling.cupid.nuopc.CodeConcept
@@ -13,10 +13,11 @@ import org.eclipse.photran.internal.core.parser.ASTIfStmtNode
 import org.eclipse.photran.internal.core.parser.ASTModuleNode
 import org.eclipse.photran.internal.core.parser.ASTSubroutineSubprogramNode
 
-import static org.earthsystemmodeling.cupid.nuopc.BasicCodeConcept.newBasicCodeConcept
 import static org.earthsystemmodeling.cupid.util.CodeExtraction.parseLiteralProgramUnit
 import static org.earthsystemmodeling.cupid.util.CodeExtraction.parseLiteralStatement
-import org.earthsystemmodeling.cupid.annotation.MappingType
+
+import static extension org.earthsystemmodeling.cupid.nuopc.ASTQuery.*
+import static extension org.earthsystemmodeling.cupid.nuopc.ESMFQuery.*
 
 public abstract class EntryPointCodeConcept<P extends CodeConcept<?, ?>> extends CodeConcept<P, ASTSubroutineSubprogramNode> {
 
@@ -26,7 +27,7 @@ public abstract class EntryPointCodeConcept<P extends CodeConcept<?, ?>> extends
 	@Label(label="Registration")
 	@MappingType("call")
 	@Child
-	public BasicCodeConcept registration
+	public BasicCodeConcept<ASTCallStmtNode> registration
 
 	public String paramGridComp = "gcomp"	//subclasses should default
 	public String paramRC = "rc" //subclasses should default
@@ -36,7 +37,7 @@ public abstract class EntryPointCodeConcept<P extends CodeConcept<?, ?>> extends
 	
 	public String methodType = "ESMF_METHOD_INITIALIZE"
 	
-	public List<String> phaseLabelList
+	//public List<String> phaseLabelList
 	
 	public String phaseLabel
 
@@ -44,7 +45,7 @@ public abstract class EntryPointCodeConcept<P extends CodeConcept<?, ?>> extends
 
 	new(P parent, String phaseLabel) {
 		super(parent)
-		phaseLabelList = newArrayList()
+		//phaseLabelList = newArrayList()
 		this.phaseLabel = phaseLabel
 	}
 	
@@ -52,8 +53,38 @@ public abstract class EntryPointCodeConcept<P extends CodeConcept<?, ?>> extends
 	new(P parent) {
 		this(parent, null)
 	}
-
+	
 	override reverse() {
+		
+		val setServicesNode = setServices.ASTRef
+		
+		val registrationCall = setServicesNode.body.filter(ASTCallStmtNode).findFirst[
+			it.subroutineName.text.eic("NUOPC_CompSetEntryPoint") &&
+			it.litArgExprByKeyword("phaseLabelList").toLowerCase.contains(phaseLabel.toLowerCase)
+		]
+		
+		if (registrationCall == null) return null
+		
+		val epSubroutine = module.ASTRef.findESMFEntryPoints.findFirst[
+			it.subroutineStmt.subroutineName.subroutineName.eic(registrationCall.litArgExprByKeyword("userRoutine"))
+		]
+		
+		if (epSubroutine == null) return null
+		
+		subroutineName = epSubroutine.subroutineStmt.subroutineName.subroutineName.text
+		registration = new BasicCodeConcept<ASTCallStmtNode>(this, registrationCall)
+		paramGridComp = epSubroutine.subroutineStmt.subroutinePars.get(0).variableName.text
+		paramImport = epSubroutine.subroutineStmt.subroutinePars.get(1).variableName.text
+		paramExport = epSubroutine.subroutineStmt.subroutinePars.get(2).variableName.text
+		paramClock = epSubroutine.subroutineStmt.subroutinePars.get(3).variableName.text
+		paramRC = epSubroutine.subroutineStmt.subroutinePars.get(4).variableName.text
+		
+		reverseChildren
+		
+	}
+
+	/*
+	def reverseOLD() {
 		
 		var rs = '''esmf_reg_entrypoint(_epId, «module()._id», _epName, '"«phaseLabel»"', _regid).'''.execQuery		
 		
@@ -79,7 +110,8 @@ public abstract class EntryPointCodeConcept<P extends CodeConcept<?, ?>> extends
 			null
 		}	
 	}
-
+	*/
+	
 	def reverseChildren() {
 		this
 	}
@@ -105,8 +137,6 @@ end subroutine
 	def abstract CodeConcept<?, ASTModuleNode> module()
 
 	def abstract SetServicesCodeConcept<?> setServices()
-
-	//def abstract BasicCodeConcept genericUse()
 
 	override forward() {
 

@@ -1,29 +1,33 @@
 package org.earthsystemmodeling.cupid.nuopc.v7bs59;
 
 import com.google.common.base.Objects;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import java.util.Set;
 import org.earthsystemmodeling.cupid.annotation.Child;
 import org.earthsystemmodeling.cupid.annotation.Label;
 import org.earthsystemmodeling.cupid.annotation.MappingType;
 import org.earthsystemmodeling.cupid.annotation.Name;
-import org.earthsystemmodeling.cupid.core.CupidActivator;
 import org.earthsystemmodeling.cupid.nuopc.BasicCodeConcept;
 import org.earthsystemmodeling.cupid.nuopc.CodeConcept;
 import org.earthsystemmodeling.cupid.nuopc.v7bs59.NUOPCComponent;
 import org.earthsystemmodeling.cupid.util.CodeExtraction;
 import org.eclipse.photran.core.IFortranAST;
+import org.eclipse.photran.internal.core.lexer.Token;
 import org.eclipse.photran.internal.core.parser.ASTAccessStmtNode;
+import org.eclipse.photran.internal.core.parser.ASTCallStmtNode;
 import org.eclipse.photran.internal.core.parser.ASTContainsStmtNode;
 import org.eclipse.photran.internal.core.parser.ASTImplicitStmtNode;
 import org.eclipse.photran.internal.core.parser.ASTModuleNode;
+import org.eclipse.photran.internal.core.parser.ASTSubroutineNameNode;
+import org.eclipse.photran.internal.core.parser.ASTSubroutineParNode;
+import org.eclipse.photran.internal.core.parser.ASTSubroutineStmtNode;
 import org.eclipse.photran.internal.core.parser.ASTSubroutineSubprogramNode;
 import org.eclipse.photran.internal.core.parser.ASTUseStmtNode;
 import org.eclipse.photran.internal.core.parser.IASTListNode;
 import org.eclipse.photran.internal.core.parser.IBodyConstruct;
 import org.eclipse.photran.internal.core.parser.IModuleBodyConstruct;
 import org.eclipse.xtend2.lib.StringConcatenation;
-import org.eclipse.xtext.xbase.lib.Exceptions;
+import org.eclipse.xtext.xbase.lib.Functions.Function1;
+import org.eclipse.xtext.xbase.lib.IterableExtensions;
 
 @Label(label = "SetServices")
 @MappingType("subroutine")
@@ -39,7 +43,7 @@ public class SetServicesCodeConcept<P extends NUOPCComponent> extends CodeConcep
   @Label(label = "NUOPC_CompDerive")
   @MappingType("call")
   @Child
-  public BasicCodeConcept callsCompDeriveID;
+  public BasicCodeConcept<ASTCallStmtNode> callsCompDeriveID;
   
   public SetServicesCodeConcept(final P parent) {
     super(parent);
@@ -47,52 +51,151 @@ public class SetServicesCodeConcept<P extends NUOPCComponent> extends CodeConcep
   
   @Override
   public SetServicesCodeConcept<P> reverse() {
-    Object _xblockexpression = null;
+    SetServicesCodeConcept<P> _xblockexpression = null;
     {
-      StringConcatenation _builder = new StringConcatenation();
-      _builder.append("esmf_setservices(_sid, ");
-      long _parentID = this.parentID();
-      _builder.append(_parentID, "");
-      _builder.append(", _sname, _param_gcomp, _param_rc), ");
-      _builder.newLineIfNotEmpty();
-      _builder.append("\t\t\t\t\t");
-      _builder.append("( call_(_cid, _sid, \'NUOPC_CompDerive\') ; true).");
-      ResultSet rs = this.execQuery(_builder);
-      try {
-        boolean _next = rs.next();
-        if (_next) {
-          long _long = rs.getLong("_sid");
-          this._id = _long;
-          String _string = rs.getString("_sname");
-          this.subroutineName = _string;
-          long _long_1 = rs.getLong("_cid");
-          BasicCodeConcept _newBasicCodeConcept = BasicCodeConcept.newBasicCodeConcept(this, _long_1);
-          this.callsCompDeriveID = _newBasicCodeConcept;
-          String _string_1 = rs.getString("_param_gcomp");
-          this.paramGridComp = _string_1;
-          String _string_2 = rs.getString("_param_rc");
-          this.paramRC = _string_2;
-          rs.close();
-          return this;
-        }
-      } catch (final Throwable _t) {
-        if (_t instanceof SQLException) {
-          final SQLException e = (SQLException)_t;
-          CupidActivator.log("SQL error", e);
-        } else {
-          throw Exceptions.sneakyThrow(_t);
-        }
+      ASTModuleNode _aSTRef = this._parent.getASTRef();
+      IASTListNode<IModuleBodyConstruct> _moduleBody = _aSTRef.getModuleBody();
+      Set<ASTSubroutineSubprogramNode> _findAll = null;
+      if (_moduleBody!=null) {
+        _findAll=_moduleBody.<ASTSubroutineSubprogramNode>findAll(ASTSubroutineSubprogramNode.class);
       }
-      _xblockexpression = null;
+      final Function1<ASTSubroutineSubprogramNode, Boolean> _function = new Function1<ASTSubroutineSubprogramNode, Boolean>() {
+        @Override
+        public Boolean apply(final ASTSubroutineSubprogramNode it) {
+          boolean _or = false;
+          ASTSubroutineStmtNode _subroutineStmt = it.getSubroutineStmt();
+          ASTSubroutineNameNode _subroutineName = null;
+          if (_subroutineStmt!=null) {
+            _subroutineName=_subroutineStmt.getSubroutineName();
+          }
+          Token _subroutineName_1 = _subroutineName.getSubroutineName();
+          String _text = _subroutineName_1.getText();
+          boolean _equalsIgnoreCase = _text.equalsIgnoreCase("SetServices");
+          if (_equalsIgnoreCase) {
+            _or = true;
+          } else {
+            IASTListNode<IBodyConstruct> _body = it.getBody();
+            Set<ASTCallStmtNode> _findAll = _body.<ASTCallStmtNode>findAll(ASTCallStmtNode.class);
+            final Function1<ASTCallStmtNode, Boolean> _function = new Function1<ASTCallStmtNode, Boolean>() {
+              @Override
+              public Boolean apply(final ASTCallStmtNode it) {
+                Token _subroutineName = it.getSubroutineName();
+                String _text = _subroutineName.getText();
+                return Boolean.valueOf(_text.equalsIgnoreCase("NUOPC_CompDerive"));
+              }
+            };
+            boolean _exists = IterableExtensions.<ASTCallStmtNode>exists(_findAll, _function);
+            _or = _exists;
+          }
+          return Boolean.valueOf(_or);
+        }
+      };
+      ASTSubroutineSubprogramNode node = IterableExtensions.<ASTSubroutineSubprogramNode>findFirst(_findAll, _function);
+      SetServicesCodeConcept<P> _xifexpression = null;
+      boolean _notEquals = (!Objects.equal(node, null));
+      if (_notEquals) {
+        SetServicesCodeConcept<P> _xblockexpression_1 = null;
+        {
+          ASTSubroutineStmtNode _subroutineStmt = node.getSubroutineStmt();
+          ASTSubroutineNameNode _subroutineName = null;
+          if (_subroutineStmt!=null) {
+            _subroutineName=_subroutineStmt.getSubroutineName();
+          }
+          Token _subroutineName_1 = _subroutineName.getSubroutineName();
+          String _text = _subroutineName_1.getText();
+          this.subroutineName = _text;
+          ASTSubroutineStmtNode _subroutineStmt_1 = node.getSubroutineStmt();
+          IASTListNode<ASTSubroutineParNode> _subroutinePars = null;
+          if (_subroutineStmt_1!=null) {
+            _subroutinePars=_subroutineStmt_1.getSubroutinePars();
+          }
+          ASTSubroutineParNode _get = null;
+          if (_subroutinePars!=null) {
+            _get=_subroutinePars.get(0);
+          }
+          Token _variableName = null;
+          if (_get!=null) {
+            _variableName=_get.getVariableName();
+          }
+          String _text_1 = _variableName.getText();
+          this.paramGridComp = _text_1;
+          ASTSubroutineStmtNode _subroutineStmt_2 = node.getSubroutineStmt();
+          IASTListNode<ASTSubroutineParNode> _subroutinePars_1 = null;
+          if (_subroutineStmt_2!=null) {
+            _subroutinePars_1=_subroutineStmt_2.getSubroutinePars();
+          }
+          ASTSubroutineParNode _get_1 = null;
+          if (_subroutinePars_1!=null) {
+            _get_1=_subroutinePars_1.get(1);
+          }
+          Token _variableName_1 = null;
+          if (_get_1!=null) {
+            _variableName_1=_get_1.getVariableName();
+          }
+          String _text_2 = _variableName_1.getText();
+          this.paramRC = _text_2;
+          BasicCodeConcept<ASTCallStmtNode> _xblockexpression_2 = null;
+          {
+            IASTListNode<IBodyConstruct> _body = node.getBody();
+            Set<ASTCallStmtNode> _findAll_1 = _body.<ASTCallStmtNode>findAll(ASTCallStmtNode.class);
+            final Function1<ASTCallStmtNode, Boolean> _function_1 = new Function1<ASTCallStmtNode, Boolean>() {
+              @Override
+              public Boolean apply(final ASTCallStmtNode it) {
+                Token _subroutineName = it.getSubroutineName();
+                String _text = _subroutineName.getText();
+                return Boolean.valueOf(_text.equalsIgnoreCase("NUOPC_CompDerive"));
+              }
+            };
+            ASTCallStmtNode csn = IterableExtensions.<ASTCallStmtNode>findFirst(_findAll_1, _function_1);
+            BasicCodeConcept<ASTCallStmtNode> _xifexpression_1 = null;
+            boolean _notEquals_1 = (!Objects.equal(csn, null));
+            if (_notEquals_1) {
+              _xifexpression_1 = new BasicCodeConcept<ASTCallStmtNode>(this, csn);
+            }
+            _xblockexpression_2 = _xifexpression_1;
+          }
+          this.callsCompDeriveID = _xblockexpression_2;
+          this.setASTRef(node);
+          _xblockexpression_1 = this;
+        }
+        _xifexpression = _xblockexpression_1;
+      } else {
+        _xifexpression = null;
+      }
+      _xblockexpression = _xifexpression;
     }
-    return ((SetServicesCodeConcept<P>)_xblockexpression);
+    return _xblockexpression;
   }
   
+  /**
+   * def SetServicesCodeConcept<P> reverseOLD() {
+   * 
+   * var rs = '''esmf_setservices(_sid, «parentID», _sname, _param_gcomp, _param_rc),
+   * ( call_(_cid, _sid, 'NUOPC_CompDerive') ; true).'''.execQuery
+   * 
+   * //change to SQL?
+   * try {
+   * if (rs.next) {
+   * _id = rs.getLong("_sid")
+   * subroutineName = rs.getString("_sname")
+   * callsCompDeriveID = newBasicCodeConcept(this, rs.getLong("_cid"))
+   * paramGridComp = rs.getString("_param_gcomp")
+   * paramRC = rs.getString("_param_rc")
+   * rs.close
+   * return this
+   * }
+   * } catch (SQLException e) {
+   * log("SQL error", e);
+   * }
+   * 
+   * null
+   * 
+   * }
+   */
   @Override
   public IFortranAST forward() {
-    IFortranAST _xblockexpression = null;
+    Object _xblockexpression = null;
     {
-      final IFortranAST ast = this.getAST();
       String routineSetServices = this._parent.importNUOPCGeneric.routineSetServices;
       boolean _equals = Objects.equal(routineSetServices, null);
       if (_equals) {
@@ -199,8 +302,8 @@ public class SetServicesCodeConcept<P extends NUOPCComponent> extends CodeConcep
           _moduleBody_5.add(tempNode_1);
         }
       }
-      _xblockexpression = ast;
+      _xblockexpression = null;
     }
-    return _xblockexpression;
+    return ((IFortranAST)_xblockexpression);
   }
 }

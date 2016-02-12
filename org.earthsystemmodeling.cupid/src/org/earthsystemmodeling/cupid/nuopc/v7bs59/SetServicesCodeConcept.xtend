@@ -1,24 +1,21 @@
 package org.earthsystemmodeling.cupid.nuopc.v7bs59
 
-import java.sql.SQLException
 import org.earthsystemmodeling.cupid.annotation.Child
 import org.earthsystemmodeling.cupid.annotation.Label
+import org.earthsystemmodeling.cupid.annotation.MappingType
 import org.earthsystemmodeling.cupid.annotation.Name
 import org.earthsystemmodeling.cupid.nuopc.BasicCodeConcept
 import org.earthsystemmodeling.cupid.nuopc.CodeConcept
-import org.eclipse.photran.core.IFortranAST
 import org.eclipse.photran.internal.core.parser.ASTAccessStmtNode
+import org.eclipse.photran.internal.core.parser.ASTCallStmtNode
 import org.eclipse.photran.internal.core.parser.ASTContainsStmtNode
 import org.eclipse.photran.internal.core.parser.ASTImplicitStmtNode
 import org.eclipse.photran.internal.core.parser.ASTModuleNode
 import org.eclipse.photran.internal.core.parser.ASTSubroutineSubprogramNode
 import org.eclipse.photran.internal.core.parser.ASTUseStmtNode
 
-import static org.earthsystemmodeling.cupid.core.CupidActivator.log
-import static org.earthsystemmodeling.cupid.nuopc.BasicCodeConcept.newBasicCodeConcept
 import static org.earthsystemmodeling.cupid.util.CodeExtraction.parseLiteralProgramUnit
 import static org.earthsystemmodeling.cupid.util.CodeExtraction.parseLiteralStatement
-import org.earthsystemmodeling.cupid.annotation.MappingType
 
 @Label(label="SetServices")
 @MappingType("subroutine")
@@ -33,13 +30,42 @@ public class SetServicesCodeConcept<P extends NUOPCComponent> extends CodeConcep
 	@Label(label="NUOPC_CompDerive")
 	@MappingType("call")
 	@Child
-	var public BasicCodeConcept callsCompDeriveID
+	var public BasicCodeConcept<ASTCallStmtNode> callsCompDeriveID
 
 	new(P parent) {
 		super(parent)
 	}
 
 	override SetServicesCodeConcept<P> reverse() {
+		
+		//can be optimized by splitting this into two queries
+		//because the second more expensive OR condition is checked on each node
+		var node = _parent.ASTRef.moduleBody?.findAll(ASTSubroutineSubprogramNode).findFirst[
+			it.subroutineStmt?.subroutineName.subroutineName.text.equalsIgnoreCase("SetServices") ||
+			//also accept if a subroutine calls NUOPC_CompDerive
+			it.body.findAll(ASTCallStmtNode).exists[
+				it.subroutineName.text.equalsIgnoreCase("NUOPC_CompDerive")
+			]
+		]
+		
+		if (node != null) {
+			subroutineName = node.subroutineStmt?.subroutineName.subroutineName.text
+			paramGridComp = node.subroutineStmt?.subroutinePars?.get(0)?.variableName.text
+			paramRC = node.subroutineStmt?.subroutinePars?.get(1)?.variableName.text
+			callsCompDeriveID = {
+				var csn = node.body.findAll(ASTCallStmtNode).findFirst[
+					it.subroutineName.text.equalsIgnoreCase("NUOPC_CompDerive")
+				]
+				if (csn != null) new BasicCodeConcept(this, csn)
+			}
+			setASTRef(node)
+			this
+		}
+		else null	
+	}
+	
+	/*
+	def SetServicesCodeConcept<P> reverseOLD() {
 
 		var rs = '''esmf_setservices(_sid, «parentID», _sname, _param_gcomp, _param_rc), 
 					( call_(_cid, _sid, 'NUOPC_CompDerive') ; true).'''.execQuery
@@ -62,10 +88,11 @@ public class SetServicesCodeConcept<P extends NUOPCComponent> extends CodeConcep
 		null
 
 	}
+	*/
 	
 	override forward() {
 		
-		val IFortranAST ast = getAST()
+		//val IFortranAST ast = getAST()
 		
 		//add to generic import if necessary
 		//TODO: is there a cleaner way to do this?
@@ -128,7 +155,7 @@ public SetServices
 			}
 		}
 		
-		ast
+		null
 	}
 
 

@@ -3,36 +3,40 @@ package org.earthsystemmodeling.cupid.nuopc.v7bs59
 import java.sql.SQLException
 import java.util.List
 import org.earthsystemmodeling.cupid.annotation.Child
+import org.earthsystemmodeling.cupid.annotation.Doc
 import org.earthsystemmodeling.cupid.annotation.Label
+import org.earthsystemmodeling.cupid.annotation.MappingType
 import org.earthsystemmodeling.cupid.annotation.Prop
 import org.earthsystemmodeling.cupid.codedb.CodeDBIndex
 import org.earthsystemmodeling.cupid.nuopc.BasicCodeConcept
 import org.earthsystemmodeling.cupid.nuopc.CodeConcept
+import org.earthsystemmodeling.cupid.nuopc.CodeGenerationException
+import org.earthsystemmodeling.cupid.nuopc.v7bs59.NUOPCModel.IPD.AdvertiseField
+import org.earthsystemmodeling.cupid.nuopc.v7bs59.NUOPCModel.IPD.RealizeField
+import org.eclipse.core.resources.IResource
 import org.eclipse.photran.core.IFortranAST
 import org.eclipse.photran.internal.core.parser.ASTCallStmtNode
+import org.eclipse.photran.internal.core.parser.ASTModuleNode
 import org.eclipse.photran.internal.core.parser.ASTNode
 import org.eclipse.photran.internal.core.parser.ASTSubroutineSubprogramNode
 import org.eclipse.photran.internal.core.parser.ASTTypeDeclarationStmtNode
+import org.eclipse.photran.internal.core.parser.ASTUseStmtNode
 import org.eclipse.photran.internal.core.parser.IASTListNode
 import org.eclipse.photran.internal.core.parser.IBodyConstruct
 
 import static org.earthsystemmodeling.cupid.core.CupidActivator.log
 import static org.earthsystemmodeling.cupid.nuopc.BasicCodeConcept.newBasicCodeConcept
 import static org.earthsystemmodeling.cupid.util.CodeExtraction.parseLiteralStatementSequence
-import org.earthsystemmodeling.cupid.annotation.MappingType
-import org.earthsystemmodeling.cupid.nuopc.v7bs59.NUOPCModel.IPD.AdvertiseField
-import org.earthsystemmodeling.cupid.nuopc.v7bs59.NUOPCModel.IPD.RealizeField
-import org.eclipse.photran.internal.core.parser.ASTModuleNode
-import org.eclipse.photran.internal.core.parser.ASTUseStmtNode
-import org.earthsystemmodeling.cupid.annotation.Doc
-import org.eclipse.photran.internal.core.vpg.PhotranVPG
+
+import static extension org.earthsystemmodeling.cupid.nuopc.ASTQuery.*
+import org.eclipse.photran.internal.core.parser.ASTVarOrFnRefNode
 
 @Label(label="NUOPC Driver")
 @MappingType("module")
 @Doc(urlfrag="#driver-top")
 class NUOPCDriver extends NUOPCComponent {
 	
-	public String driverName	
+	public String driverName = "driver"
 	public String filename
 	public String path
 	
@@ -53,20 +57,55 @@ class NUOPCDriver extends NUOPCComponent {
 		_codeDB = codeDB
 	}
 	
+	
+	new(IResource context, CodeDBIndex codeDB) {
+		super(null)
+		_context = context
+		_codeDB = codeDB
+	}
+	
+	
 	override prefix() {"driver"}
 
-	override reverse() {
+
+	override NUOPCDriver reverse() {
+		
+		var ast = getAST()
+				
+		_astRef = ast.root?.programUnitList?.filter(ASTModuleNode).findFirst[
+			it.moduleBody?.filter(ASTUseStmtNode).exists[it.name.text.eic("NUOPC_Driver")]
+		]
+		
+		if (_astRef != null) {
+			driverName = _astRef.moduleStmt.moduleName.moduleName.text
+			
+			_astRef.moduleBody.filter(ASTUseStmtNode).forEach[
+				if (it.name.text.eic("ESMF")) {
+					importESMF = new BasicCodeConcept(this, it)
+				}
+				else if (it.name.text.eic("NUOPC")) {
+					importNUOPC = new BasicCodeConcept(this, it)
+				}
+				else if (it.name.text.eic("NUOPC_Driver")) {
+					importNUOPCGeneric = new GenericImport(this, it).reverse
+				}
+			]
+						
+			reverseChildren
+			
+		}
+		else null
+	}
+	
+		
+	/*
+	def reverseOLD() {
 		  	
      	var rs = '''module(_moduleID, _compUnitID, _driverName), 
 		            compilationUnit(_compUnitID, _filename, _path),
    					uses(_uid, _moduleID, 'NUOPC_Driver').'''.execQuery
    					
-   		/*			
-   		List<ASTModuleNode> modules = VPGQuery.modules().using("NUOPC_Driver").go();
-   		subroutines().declaredIn(module)
-   		
-   		*/
-   		
+   	   		
    		try {
 			if (rs.next) {
 				_id = rs.getLong("_moduleID")
@@ -93,6 +132,7 @@ class NUOPCDriver extends NUOPCComponent {
 				
 		null
 	}
+	*/
 	
 	def reverseChildren() {
 		setServices = new SetServices(this).reverse as SetServices
@@ -100,6 +140,38 @@ class NUOPCDriver extends NUOPCComponent {
 		run = new Run(this).reverse
 		finalize = new Finalize(this).reverse
 		this
+	}
+
+	override forward() {
+		
+		if (getASTRef == null) {
+			
+			if (driverName==null) throw new CodeGenerationException("No driver name specified")
+			
+			//create module
+			var code = '''
+module «driverName»
+	
+	use ESMF
+	use NUOPC
+	use NUOPC_Driver
+	
+	implicit none
+	
+	contains
+	
+end module
+			'''
+			
+			createFile(code)
+			
+			//reverse engineer to populate AST refs
+			reverse()
+						
+		}
+		
+		super.forward
+		
 	}
 
 	
@@ -745,7 +817,7 @@ end subroutine
 		@Label(label="SetClock")
 		@MappingType("call")
 		@Child(min=0)
-		var public BasicCodeConcept setClock
+		var public BasicCodeConcept<ASTCallStmtNode> setClock
 		
 		new(InitSpecializations parent) {
 			super(parent, "NUOPC_Driver", "label_SetModelServices")
@@ -755,18 +827,25 @@ end subroutine
 			
 		override reverse() {
 			
-			if (this == super.reverse) {				
-				
+			var ret = super.reverse as SetModelServices
+			if (ret != null) {							
+				/*
 				var rs = '''call_(_cid, «_id», 'ESMF_GridCompSet'),
 							callArgWithType(_, _cid, _, 'clock', _, _clockExpr).'''.execQuery
 				if (rs.next) {
 					setClock = newBasicCodeConcept(this, rs.getLong("_cid"))
 				}
-				this
+				*
+				*/				
+				val setClockCall = ret.ASTRef.body.filter(ASTCallStmtNode).findFirst[
+					it.subroutineName.eic("ESMF_GridCompSet") &&
+					it.argList?.exists[it.name?.eic("clock")]
+				]
+				if (setClockCall != null) ret.setClock = new BasicCodeConcept<ASTCallStmtNode>(ret, setClockCall)
+				ret
 			}
-			else {
-				null
-			}
+			else null
+			
 		}	
 			
 		override reverseChildren() {
@@ -887,6 +966,32 @@ if (ESMF_LogFoundError(rcToCheck=«paramRC», msg=ESMF_LOGERR_PASSTHRU, &
 		}
 		
 		override List reverseMultiple() {
+			
+			val retList = newArrayList()
+			
+			_parent.ASTRef.body.filter(ASTCallStmtNode).filter[
+				it.subroutineName.eic("NUOPC_DriverAddComp")].forEach[c|
+					var smsac = newInstance() as SetModelServices_AddComp
+					if (c.argList.get(1).name?.eic("srcCompLabel")) {
+						//connector
+						smsac.srcCompLabel = c.argList.get(1).expr.literal
+						smsac.dstCompLabel = c.argList.get(2).expr.literal
+						smsac.compSetServices = c.argList.get(3).expr.literal
+					}
+					else {
+						//component
+						smsac.compLabel = c.argList.get(1).expr.literal
+						smsac.compSetServices = c.argList.get(2).expr.literal
+					}
+					retList.add(smsac)
+				]
+			
+			retList
+			
+		}
+		
+		/*
+		override List reverseMultiple() {
 			var retList = newArrayList()
 			
 			var rs = '''call_(_cid, «parentID», 'NUOPC_DriverAddComp'),
@@ -915,6 +1020,7 @@ if (ESMF_LogFoundError(rcToCheck=«paramRC», msg=ESMF_LOGERR_PASSTHRU, &
 			
 			retList
 		}
+		*/
 		
 		override forward() {
 			
@@ -957,7 +1063,7 @@ if (ESMF_LogFoundError(rcToCheck=«_parent.paramRC», msg=ESMF_LOGERR_PASSTHRU, 
 		@Label(label="New Run Sequence")
 		@MappingType("call")
 		@Child(min=0)
-		public BasicCodeConcept newRunSequence
+		public BasicCodeConcept<ASTCallStmtNode> newRunSequence
 		
 		@Child(min=0, max=-1)
 		public List<SetRunSequence_AddRunElement> runElements
@@ -969,6 +1075,21 @@ if (ESMF_LogFoundError(rcToCheck=«_parent.paramRC», msg=ESMF_LOGERR_PASSTHRU, 
 			specLabel = "driver_label_SetRunSequence"
 		}
 			
+		override reverse() {
+			
+			var ret = super.reverse as SetRunSequence
+			if (ret != null) {							
+				val newRunSequence = ret.ASTRef.body.filter(ASTCallStmtNode).findFirst[
+					it.subroutineName.eic("NUOPC_DriverNewRunSequence")
+				]
+				if (newRunSequence != null) ret.newRunSequence = new BasicCodeConcept<ASTCallStmtNode>(ret, newRunSequence)
+				ret.runElements = new SetRunSequence_AddRunElement(ret).reverseMultiple() as List<SetRunSequence_AddRunElement>
+				ret
+			}
+			else null
+			
+		}	
+		/*	
 		override reverse() {
 			if (this == super.reverse) {				
 				var rs = '''call_(_cid, «_id», 'NUOPC_DriverNewRunSequence'),
@@ -985,6 +1106,9 @@ if (ESMF_LogFoundError(rcToCheck=«_parent.paramRC», msg=ESMF_LOGERR_PASSTHRU, 
 			}
 	
 		}
+		* 
+		*/
+		
 		
 		override subroutineTemplate() {
 '''
@@ -1050,16 +1174,38 @@ end subroutine
 		}
 		
 		override List reverseMultiple() {
+			val retList = newArrayList()
+			
+			_parent.ASTRef.body.filter(ASTCallStmtNode).filter[
+				it.subroutineName.eic("NUOPC_DriverAddRunElement")].forEach[c|
+					var srsare = newInstance() as SetRunSequence_AddRunElement
+					if (c.argList.get(2).name?.eic("srcCompLabel")) {
+						srsare.srcCompLabel = c.argList.get(2).expr.literal
+						srsare.dstCompLabel = c.argList.get(3).expr.literal
+						srsare.slot = c.argList.get(1).expr.literal
+					}
+					else if (c.argList.get(2).name?.eic("compLabel")) {
+						srsare.compLabel = c.argList.get(2).expr.literal
+						srsare.slot = c.argList.get(1).expr.literal
+					}
+					else if (c.argList.get(2).name?.eic("linkSlot")) {
+						srsare.slot = c.argList.get(1).expr.literal
+						srsare.linkSlot = c.argList.get(2).expr.literal
+					}
+					retList.add(srsare)
+				]
+			
+			retList
+		}
+		
+		/*
+		override List reverseMultiple() {
 			
 			var retList = newArrayList()
 			
 			var rs = '''call_(_cid, «parentID», 'NUOPC_DriverAddRunElement').'''.execQuery
 			
-			/*
-			 * due to limitation with CodeDB (using one instance of prolog)
-			 * we cannot nest queries - therefore first go through the outer
-			 * query and store in a list, then go back through the list
-			 */
+			
 			while (rs.next) {
 				var addComp = new SetRunSequence_AddRunElement(_parent)
 				addComp._id = rs.getLong("_cid")
@@ -1102,6 +1248,9 @@ end subroutine
 			retList
 			
 		}
+		
+		* 
+		*/
 		
 		override forward() {
 			var IFortranAST ast = getAST			

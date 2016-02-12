@@ -163,7 +163,8 @@ class NUOPCViewContentProvider2 implements IStructuredContentProvider, ITreeCont
 		//with the below as children
 		long startIndex = System.currentTimeMillis();
 		
-		codeConcept = new NUOPCDriver(codeDB).reverse();
+		//codeConcept = new NUOPCDriver(codeDB).reverse();
+		codeConcept = new NUOPCDriver(file, codeDB).reverse();
 		if (codeConcept == null) {
 			codeConcept = new NUOPCModel(codeDB).reverse();
 		}

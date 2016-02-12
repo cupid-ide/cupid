@@ -27,7 +27,7 @@ import sphinx_bootstrap_theme
 # If generating docs for the Cupid IDE (which uses a 
 # different style), then set the variable below to True
 # and run "make clean html"
-is_cupid = False
+is_cupid = True
 
 # If your documentation needs a minimal Sphinx version, state it here.
 #needs_sphinx = '1.0'
@@ -65,7 +65,7 @@ else:
 
 # General information about the project.
 project = u'NUOPC'
-copyright = u'''02-2015 University Corporation for Atmospheric Research,
+copyright = u'''2002-2015 University Corporation for Atmospheric Research,
 Massachusetts Institute of Technology, Geophysical Fluid Dynamics Laboratory,
 University of Michigan, National Centers for Environmental Prediction,
 Los Alamos National Laboratory, Argonne National Laboratory,

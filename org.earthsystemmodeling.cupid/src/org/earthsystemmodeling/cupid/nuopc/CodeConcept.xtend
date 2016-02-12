@@ -9,18 +9,34 @@ import org.earthsystemmodeling.cupid.codedb.CodeDBIndex
 import org.earthsystemmodeling.cupid.core.CupidActivator
 import org.eclipse.photran.core.IFortranAST
 import org.eclipse.photran.internal.core.parser.IASTNode
+import org.eclipse.photran.internal.core.vpg.PhotranTokenRef
+import java.lang.reflect.ParameterizedType
+import java.lang.reflect.Constructor
+import org.eclipse.core.resources.IResource
+import org.eclipse.core.resources.IFile
+import org.eclipse.photran.internal.core.vpg.PhotranVPG
+import java.io.ByteArrayInputStream
+import org.earthsystemmodeling.cupid.codedb.PrologResultSet
 
 public abstract class CodeConcept<P extends CodeConcept<?,?>, A extends IASTNode> {
 	
 	var public P _parent
-	var public long _id  
-	var public CodeDBIndex _codeDB
-	var public A _astRef
+	var public long _id = -1
+	var protected CodeDBIndex _codeDB
+	var protected A _astRef
+	//var protected Class<A> _astClass
+	var protected IResource _context
 	
 	var private List<Field> childFields;
 	
+	var protected Constructor<?> instanceConstructor;
+	
 	new(P parent) {
 		init(parent)
+		
+		//use reflection to get class instance from generic type
+		//var parameterizedType = getClass().getGenericSuperclass() as ParameterizedType
+		//_astClass = parameterizedType.actualTypeArguments.get(1) as Class<A>
 	}
 	
 	def init(P parent) {
@@ -110,8 +126,11 @@ public abstract class CodeConcept<P extends CodeConcept<?,?>, A extends IASTNode
 		if (_astRef != null) {
 			_astRef
 		}
-		else {
+		else if (_codeDB != null && _id >= 0) {
 			_codeDB.findASTNode(_id);
+		}
+		else {
+			null
 		}
 	}
 	
@@ -120,7 +139,10 @@ public abstract class CodeConcept<P extends CodeConcept<?,?>, A extends IASTNode
 	}
 	
 	def getAST() {
-		if (_id > 0)
+		if (_context != null && _context instanceof IFile) {
+			PhotranVPG.instance.acquireTransientAST(_context as IFile)
+		}
+		else if (_id > 0)
 			_codeDB.findAST(_id)
 		else
 			_codeDB.findAST(parentID)
@@ -129,18 +151,47 @@ public abstract class CodeConcept<P extends CodeConcept<?,?>, A extends IASTNode
 	def CodeConcept<P,A> reverse() {this}
 	def List<CodeConcept<P,A>> reverseMultiple() {newArrayList(reverse)}
 	
-	def IFortranAST forward() throws CodeGenerationException {null}
+	def IFortranAST forward() throws CodeGenerationException {
+		//default behavior is to forward all children
+		//with forward annotation set to true
+		
+		for (Field field : getChildFields.filter[it.getAnnotation(Child).forward]) {
+			var CodeConcept<?,?> childConcept = field.get(this) as CodeConcept<?,?>
+			if (childConcept == null) {
+				//create new instance
+				var con = field.class.constructors.findFirst[it.parameterTypes.length==1]
+				if (con != null) {
+					childConcept = con.newInstance(this) as CodeConcept<?,?>
+				}
+				else {
+        			throw new CodeGenerationException("Could not find constructor for class " + field.class.name);
+        		}
+			}
+			childConcept.forward
+		}
+		
+		null
+	}
+	
+	def newInstance() {
+		if (instanceConstructor == null)
+			instanceConstructor = this.class.constructors.findFirst[parameterTypes.length==1]
+		if (instanceConstructor == null) throw new ReverseEngineerException("Cannot find constructor for class: " + this.class.name)
+		return instanceConstructor.newInstance(_parent) as CodeConcept<P,A>
+	}
 	
 	def String name() {null}
 	
 	def execQuery(CharSequence query) {
-		try {
-			var rs = _codeDB.query2(query.toString)
-			return rs
-		} catch (MalformedGoalException e) {
-			CupidActivator.log("Bad query", e)
+		if (_codeDB != null) {
+			try {
+				var rs = _codeDB.query2(query.toString)
+				return rs
+			} catch (MalformedGoalException e) {
+				CupidActivator.log("Bad query", e)
+			}
 		}
-		null
+		else null
 	}
 	
 	override toString() {
@@ -155,4 +206,16 @@ public abstract class CodeConcept<P extends CodeConcept<?,?>, A extends IASTNode
 		'''CUPIDPARAM$INT$«defaultVal»$'''
 	}
 	
+		
+	def createFile(String content) {
+		var file = _context as IFile
+		var is = new ByteArrayInputStream(content.bytes)
+		if (!file.exists) {
+			file.create(is, true, null)
+		}
+		else {
+			file.setContents(is, true, false, null)
+		}
+		is.close
+	}
 }

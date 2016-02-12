@@ -1,25 +1,30 @@
 package org.earthsystemmodeling.cupid.nuopc.v7bs59;
 
 import com.google.common.base.Objects;
-import java.lang.reflect.Constructor;
+import com.google.common.collect.Iterables;
 import java.sql.PreparedStatement;
-import java.sql.ResultSet;
 import java.util.ArrayList;
 import java.util.List;
 import org.earthsystemmodeling.cupid.annotation.Child;
 import org.earthsystemmodeling.cupid.annotation.Label;
 import org.earthsystemmodeling.cupid.annotation.MappingType;
 import org.earthsystemmodeling.cupid.annotation.Prop;
+import org.earthsystemmodeling.cupid.nuopc.ASTQuery;
 import org.earthsystemmodeling.cupid.nuopc.BasicCodeConcept;
 import org.earthsystemmodeling.cupid.nuopc.CodeConcept;
 import org.earthsystemmodeling.cupid.nuopc.CodeGenerationException;
+import org.earthsystemmodeling.cupid.nuopc.ESMFQuery;
 import org.earthsystemmodeling.cupid.nuopc.v7bs59.NUOPCComponent;
 import org.earthsystemmodeling.cupid.nuopc.v7bs59.SetServicesCodeConcept;
 import org.earthsystemmodeling.cupid.util.CodeExtraction;
 import org.eclipse.photran.core.IFortranAST;
+import org.eclipse.photran.internal.core.lexer.Token;
 import org.eclipse.photran.internal.core.parser.ASTCallStmtNode;
 import org.eclipse.photran.internal.core.parser.ASTIfStmtNode;
 import org.eclipse.photran.internal.core.parser.ASTModuleNode;
+import org.eclipse.photran.internal.core.parser.ASTSubroutineNameNode;
+import org.eclipse.photran.internal.core.parser.ASTSubroutineParNode;
+import org.eclipse.photran.internal.core.parser.ASTSubroutineStmtNode;
 import org.eclipse.photran.internal.core.parser.ASTSubroutineSubprogramNode;
 import org.eclipse.photran.internal.core.parser.ASTUseStmtNode;
 import org.eclipse.photran.internal.core.parser.IASTListNode;
@@ -27,10 +32,11 @@ import org.eclipse.photran.internal.core.parser.IBodyConstruct;
 import org.eclipse.photran.internal.core.parser.IModuleBodyConstruct;
 import org.eclipse.xtend2.lib.StringConcatenation;
 import org.eclipse.xtext.xbase.lib.CollectionLiterals;
-import org.eclipse.xtext.xbase.lib.Conversions;
 import org.eclipse.xtext.xbase.lib.Exceptions;
 import org.eclipse.xtext.xbase.lib.Functions.Function1;
 import org.eclipse.xtext.xbase.lib.IterableExtensions;
+import org.eclipse.xtext.xbase.lib.ObjectExtensions;
+import org.eclipse.xtext.xbase.lib.Procedures.Procedure1;
 
 @SuppressWarnings("all")
 public abstract class SpecializationMethodCodeConcept<P extends CodeConcept<?, ?>> extends CodeConcept<P, ASTSubroutineSubprogramNode> {
@@ -61,8 +67,15 @@ public abstract class SpecializationMethodCodeConcept<P extends CodeConcept<?, ?
     super(parent);
     this.labelComponent = labelComponent;
     this.labelName = labelName;
+    boolean _and = false;
     boolean _equals = Objects.equal(SpecializationMethodCodeConcept.stmtRegspec, null);
-    if (_equals) {
+    if (!_equals) {
+      _and = false;
+    } else {
+      boolean _notEquals = (!Objects.equal(this._codeDB, null));
+      _and = _notEquals;
+    }
+    if (_and) {
       StringConcatenation _builder = new StringConcatenation();
       _builder.append("SELECT * FROM esmf_regspec ");
       _builder.newLine();
@@ -85,113 +98,177 @@ public abstract class SpecializationMethodCodeConcept<P extends CodeConcept<?, ?
   }
   
   @Override
-  public SpecializationMethodCodeConcept<P> reverse() {
-    try {
-      SpecializationMethodCodeConcept<P> _xblockexpression = null;
-      {
-        long _parentID = this.parentID();
-        SpecializationMethodCodeConcept.stmtRegspec.setLong(1, _parentID);
-        SpecializationMethodCodeConcept.stmtRegspec.setString(2, this.labelComponent);
-        SpecializationMethodCodeConcept.stmtRegspec.setString(3, this.labelName);
-        ResultSet rs = SpecializationMethodCodeConcept.stmtRegspec.executeQuery();
-        SpecializationMethodCodeConcept<P> _xifexpression = null;
-        boolean _next = rs.next();
-        if (_next) {
-          SpecializationMethodCodeConcept<P> _xblockexpression_1 = null;
-          {
-            long _long = rs.getLong("id");
-            this._id = _long;
-            String _string = rs.getString("name");
-            this.subroutineName = _string;
-            String _string_1 = rs.getString("specLabelExpr");
-            this.specLabel = _string_1;
-            String _string_2 = rs.getString("specPhaseLabel");
-            this.specPhaseLabel = _string_2;
-            String _string_3 = rs.getString("param_gcomp");
-            this.paramGridComp = _string_3;
-            String _string_4 = rs.getString("param_rc");
-            this.paramRC = _string_4;
-            long _long_1 = rs.getLong("reg_id");
-            BasicCodeConcept _newBasicCodeConcept = BasicCodeConcept.newBasicCodeConcept(this, _long_1);
-            this.registration = _newBasicCodeConcept;
-            rs.close();
-            _xblockexpression_1 = this.reverseChildren();
-          }
-          _xifexpression = _xblockexpression_1;
-        } else {
-          Object _xblockexpression_2 = null;
-          {
-            rs.close();
-            _xblockexpression_2 = null;
-          }
-          _xifexpression = ((SpecializationMethodCodeConcept<P>)_xblockexpression_2);
-        }
-        _xblockexpression = _xifexpression;
+  public CodeConcept<P, ASTSubroutineSubprogramNode> reverse() {
+    CodeConcept<P, ASTSubroutineSubprogramNode> _xifexpression = null;
+    List _reverseMultiple = this.reverseMultiple();
+    int _size = _reverseMultiple.size();
+    boolean _greaterThan = (_size > 0);
+    if (_greaterThan) {
+      List _reverseMultiple_1 = this.reverseMultiple();
+      Object _get = null;
+      if (_reverseMultiple_1!=null) {
+        _get=_reverseMultiple_1.get(0);
       }
-      return _xblockexpression;
-    } catch (Throwable _e) {
-      throw Exceptions.sneakyThrow(_e);
+      _xifexpression = ((CodeConcept<P, ASTSubroutineSubprogramNode>) _get);
+    } else {
+      _xifexpression = null;
     }
+    return _xifexpression;
   }
   
   @Override
   public List reverseMultiple() {
-    try {
-      ArrayList<SpecializationMethodCodeConcept<P>> _xblockexpression = null;
-      {
-        ArrayList<SpecializationMethodCodeConcept<P>> retList = CollectionLiterals.<SpecializationMethodCodeConcept<P>>newArrayList();
-        long _parentID = this.parentID();
-        SpecializationMethodCodeConcept.stmtRegspec.setLong(1, _parentID);
-        SpecializationMethodCodeConcept.stmtRegspec.setString(2, this.labelComponent);
-        SpecializationMethodCodeConcept.stmtRegspec.setString(3, this.labelName);
-        ResultSet rs = SpecializationMethodCodeConcept.stmtRegspec.executeQuery();
-        Class<? extends SpecializationMethodCodeConcept> _class = this.getClass();
-        Constructor<?>[] _constructors = _class.getConstructors();
-        final Function1<Constructor<?>, Boolean> _function = new Function1<Constructor<?>, Boolean>() {
-          @Override
-          public Boolean apply(final Constructor<?> it) {
-            Class<?>[] _parameterTypes = it.getParameterTypes();
-            int _length = _parameterTypes.length;
-            return Boolean.valueOf((_length == 1));
-          }
-        };
-        Constructor<?> con = IterableExtensions.<Constructor<?>>findFirst(((Iterable<Constructor<?>>)Conversions.doWrapArray(_constructors)), _function);
-        while (rs.next()) {
-          {
-            Object _newInstance = con.newInstance(this._parent);
-            SpecializationMethodCodeConcept<P> smcc = ((SpecializationMethodCodeConcept<P>) _newInstance);
-            long _long = rs.getLong("id");
-            smcc._id = _long;
-            String _string = rs.getString("name");
-            smcc.subroutineName = _string;
-            String _string_1 = rs.getString("specLabelExpr");
-            smcc.specLabel = _string_1;
-            String _string_2 = rs.getString("specPhaseLabel");
-            smcc.specPhaseLabel = _string_2;
-            String _string_3 = rs.getString("param_gcomp");
-            smcc.paramGridComp = _string_3;
-            String _string_4 = rs.getString("param_rc");
-            smcc.paramRC = _string_4;
-            long _long_1 = rs.getLong("reg_id");
-            BasicCodeConcept _newBasicCodeConcept = BasicCodeConcept.newBasicCodeConcept(this, _long_1);
-            smcc.registration = _newBasicCodeConcept;
-            SpecializationMethodCodeConcept<P> _reverseChildren = smcc.reverseChildren();
-            smcc = _reverseChildren;
-            boolean _notEquals = (!Objects.equal(smcc, null));
-            if (_notEquals) {
-              retList.add(smcc);
-            }
-          }
-        }
-        rs.close();
-        _xblockexpression = retList;
+    ArrayList<SpecializationMethodCodeConcept<P>> _xblockexpression = null;
+    {
+      CodeConcept<?, ASTModuleNode> _module = this.module();
+      ASTModuleNode _aSTRef = null;
+      if (_module!=null) {
+        _aSTRef=_module.getASTRef();
       }
-      return _xblockexpression;
-    } catch (Throwable _e) {
-      throw Exceptions.sneakyThrow(_e);
+      final ASTModuleNode moduleNode = _aSTRef;
+      boolean _equals = Objects.equal(moduleNode, null);
+      if (_equals) {
+        return null;
+      }
+      SetServicesCodeConcept<?> _setServices = this.setServices();
+      ASTSubroutineSubprogramNode _aSTRef_1 = null;
+      if (_setServices!=null) {
+        _aSTRef_1=_setServices.getASTRef();
+      }
+      final ASTSubroutineSubprogramNode setServicesNode = _aSTRef_1;
+      boolean _equals_1 = Objects.equal(setServicesNode, null);
+      if (_equals_1) {
+        return null;
+      }
+      final Iterable<ASTSubroutineSubprogramNode> esmfMethods = ESMFQuery.findESMFMethods(moduleNode);
+      final ArrayList<SpecializationMethodCodeConcept<P>> resultList = CollectionLiterals.<SpecializationMethodCodeConcept<P>>newArrayList();
+      ASTSubroutineStmtNode _subroutineStmt = setServicesNode.getSubroutineStmt();
+      IASTListNode<ASTSubroutineParNode> _subroutinePars = _subroutineStmt.getSubroutinePars();
+      ASTSubroutineParNode _get = _subroutinePars.get(0);
+      Token _variableName = _get.getVariableName();
+      final String pGridComp = _variableName.getText();
+      ASTSubroutineStmtNode _subroutineStmt_1 = setServicesNode.getSubroutineStmt();
+      IASTListNode<ASTSubroutineParNode> _subroutinePars_1 = _subroutineStmt_1.getSubroutinePars();
+      ASTSubroutineParNode _get_1 = _subroutinePars_1.get(1);
+      Token _variableName_1 = _get_1.getVariableName();
+      final String pRC = _variableName_1.getText();
+      final Procedure1<ASTSubroutineSubprogramNode> _function = new Procedure1<ASTSubroutineSubprogramNode>() {
+        @Override
+        public void apply(final ASTSubroutineSubprogramNode m) {
+          IASTListNode<IBodyConstruct> _body = setServicesNode.getBody();
+          Iterable<ASTCallStmtNode> _filter = Iterables.<ASTCallStmtNode>filter(_body, ASTCallStmtNode.class);
+          final Function1<ASTCallStmtNode, Boolean> _function = new Function1<ASTCallStmtNode, Boolean>() {
+            @Override
+            public Boolean apply(final ASTCallStmtNode it) {
+              boolean _and = false;
+              boolean _and_1 = false;
+              Token _subroutineName = it.getSubroutineName();
+              boolean _eic = ASTQuery.eic(_subroutineName, "NUOPC_CompSpecialize");
+              if (!_eic) {
+                _and_1 = false;
+              } else {
+                String _litArgExprByKeyword = ASTQuery.litArgExprByKeyword(it, "specRoutine");
+                boolean _eic_1 = false;
+                if (_litArgExprByKeyword!=null) {
+                  ASTSubroutineStmtNode _subroutineStmt = m.getSubroutineStmt();
+                  ASTSubroutineNameNode _subroutineName_1 = _subroutineStmt.getSubroutineName();
+                  Token _subroutineName_2 = _subroutineName_1.getSubroutineName();
+                  _eic_1=ASTQuery.eic(_litArgExprByKeyword, _subroutineName_2);
+                }
+                _and_1 = _eic_1;
+              }
+              if (!_and_1) {
+                _and = false;
+              } else {
+                String _litArgExprByKeyword_1 = ASTQuery.litArgExprByKeyword(it, "specLabel");
+                boolean _eic_2 = false;
+                if (_litArgExprByKeyword_1!=null) {
+                  String _localName = ASTQuery.localName(moduleNode, SpecializationMethodCodeConcept.this.labelComponent, SpecializationMethodCodeConcept.this.labelName);
+                  _eic_2=ASTQuery.eic(_litArgExprByKeyword_1, _localName);
+                }
+                _and = _eic_2;
+              }
+              return Boolean.valueOf(_and);
+            }
+          };
+          Iterable<ASTCallStmtNode> _filter_1 = IterableExtensions.<ASTCallStmtNode>filter(_filter, _function);
+          final Procedure1<ASTCallStmtNode> _function_1 = new Procedure1<ASTCallStmtNode>() {
+            @Override
+            public void apply(final ASTCallStmtNode c) {
+              CodeConcept<P, ASTSubroutineSubprogramNode> _newInstance = SpecializationMethodCodeConcept.this.newInstance();
+              SpecializationMethodCodeConcept<P> smcc = ((SpecializationMethodCodeConcept<P>) _newInstance);
+              final Procedure1<SpecializationMethodCodeConcept<P>> _function = new Procedure1<SpecializationMethodCodeConcept<P>>() {
+                @Override
+                public void apply(final SpecializationMethodCodeConcept<P> it) {
+                  ASTSubroutineStmtNode _subroutineStmt = m.getSubroutineStmt();
+                  ASTSubroutineNameNode _subroutineName = _subroutineStmt.getSubroutineName();
+                  Token _subroutineName_1 = _subroutineName.getSubroutineName();
+                  String _text = _subroutineName_1.getText();
+                  it.subroutineName = _text;
+                  String _litArgExprByKeyword = ASTQuery.litArgExprByKeyword(c, "specLabel");
+                  it.specLabel = _litArgExprByKeyword;
+                  String _litArgExprByKeyword_1 = ASTQuery.litArgExprByKeyword(c, "specPhaseLabel");
+                  it.specPhaseLabel = _litArgExprByKeyword_1;
+                  it.paramGridComp = pGridComp;
+                  it.paramRC = pRC;
+                  BasicCodeConcept<ASTCallStmtNode> _basicCodeConcept = new BasicCodeConcept<ASTCallStmtNode>(SpecializationMethodCodeConcept.this, c);
+                  it.registration = _basicCodeConcept;
+                  it.setASTRef(m);
+                }
+              };
+              ObjectExtensions.<SpecializationMethodCodeConcept<P>>operator_doubleArrow(smcc, _function);
+              SpecializationMethodCodeConcept<P> _reverseChildren = smcc.reverseChildren();
+              smcc = _reverseChildren;
+              boolean _notEquals = (!Objects.equal(smcc, null));
+              if (_notEquals) {
+                resultList.add(smcc);
+              }
+            }
+          };
+          IterableExtensions.<ASTCallStmtNode>forEach(_filter_1, _function_1);
+        }
+      };
+      IterableExtensions.<ASTSubroutineSubprogramNode>forEach(esmfMethods, _function);
+      _xblockexpression = resultList;
     }
+    return _xblockexpression;
   }
   
+  /**
+   * override List reverseMultipleOLD() {
+   * 
+   * var retList = newArrayList()
+   * 
+   * stmtRegspec.setLong(1, parentID)
+   * stmtRegspec.setString(2, labelComponent)
+   * stmtRegspec.setString(3, labelName)
+   * 
+   * var rs = stmtRegspec.executeQuery
+   * 
+   * var Constructor<?> con = this.class.constructors.findFirst[parameterTypes.length==1]
+   * while (rs.next) {
+   * 
+   * var SpecializationMethodCodeConcept<P> smcc =
+   * con.newInstance(_parent) as SpecializationMethodCodeConcept<P>
+   * 
+   * smcc._id = rs.getLong("id")
+   * smcc.subroutineName = rs.getString("name")
+   * smcc.specLabel = rs.getString("specLabelExpr")
+   * smcc.specPhaseLabel = rs.getString("specPhaseLabel")
+   * smcc.paramGridComp = rs.getString("param_gcomp")
+   * smcc.paramRC = rs.getString("param_rc")
+   * smcc.registration = newBasicCodeConcept(this, rs.getLong("reg_id"))
+   * 
+   * smcc = smcc.reverseChildren
+   * if (smcc != null) {
+   * retList.add(smcc)
+   * }
+   * }
+   * rs.close
+   * 
+   * retList
+   * }
+   */
   public SpecializationMethodCodeConcept<P> reverseChildren() {
     return this;
   }
