@@ -36,7 +36,7 @@ public abstract class SpecializationMethodCodeConcept<P extends CodeConcept<?,?>
 	@Label(label="Registration")
 	@MappingType("call")
 	@Child
-	var public BasicCodeConcept registration
+	var public BasicCodeConcept<ASTCallStmtNode> registration
 
 	var public String paramGridComp = "driver"	//subclasses should default
 
@@ -70,7 +70,7 @@ public abstract class SpecializationMethodCodeConcept<P extends CodeConcept<?,?>
 	}
  
  	override reverse() {
- 		if (reverseMultiple.size() > 0)
+ 		if (reverseMultiple?.size() > 0) 
  			reverseMultiple?.get(0) as CodeConcept<P, ASTSubroutineSubprogramNode>
  		else null
  	}
@@ -225,7 +225,7 @@ end subroutine
 		var ASTSubroutineSubprogramNode ssn = parseLiteralProgramUnit(code)
 
 		mn.getModuleBody().add(ssn)
-		setASTRef(ssn)
+		//setASTRef(ssn)
 
 		//add label import
 		var usesNUOPCDriver = genericUse.getASTRef as ASTUseStmtNode
@@ -266,7 +266,68 @@ if (ESMF_LogFoundError(rcToCheck=«paramRC», msg=ESMF_LOGERR_PASSTHRU, &
 
 	}
 	
+	
+	override fward() {
+
+		if (setServices() == null) {
+			throw new CodeGenerationException("A SetServices subroutine must exist first.")	
+		}
 		
+		//add specialization subroutine itself			
+		var code = subroutineTemplate()
+
+		var ASTModuleNode mn = module.getASTRef
+		var ASTSubroutineSubprogramNode ssn = parseLiteralProgramUnit(code)
+
+		mn.getModuleBody().add(ssn)
+		setASTRef(ssn)
+
+		//add label import
+		var usesNUOPCDriver = genericUse.getASTRef as ASTUseStmtNode
+		var tempCode = usesNUOPCDriver.toString.trim
+		tempCode += ''', &
+		«IF !specLabel.equals(labelName)»«specLabel» => «ENDIF»«labelName»'''
+
+		var tempNode = parseLiteralStatement(tempCode) as ASTUseStmtNode;
+		try {
+			usesNUOPCDriver.replaceWith(tempNode)
+		}
+		catch(IllegalStateException e) {
+			e.printStackTrace
+		}
+		genericUse.setASTRef(tempNode)
+
+		//add call in setservices
+		var ASTSubroutineSubprogramNode setServicesNode = setServices().getASTRef
+		if (setServicesNode != null) {
+
+			code = 
+'''
+
+call NUOPC_CompSpecialize(«setServices().paramGridComp», specLabel=«specLabel», &
+	specRoutine=«subroutineName», rc=«setServices().paramRC»)
+'''
+
+			var ASTCallStmtNode regCall = parseLiteralStatement(code) as ASTCallStmtNode
+			setServicesNode.body.add(regCall)
+			this.registration = new BasicCodeConcept<ASTCallStmtNode>(this, regCall)
+		
+			code = 
+'''
+if (ESMF_LogFoundError(rcToCheck=«paramRC», msg=ESMF_LOGERR_PASSTHRU, &
+            line=__LINE__, &
+            file=__FILE__)) &
+            return  ! bail out
+'''
+			var ASTIfStmtNode ifNode = parseLiteralStatement(code) as ASTIfStmtNode
+			setServicesNode.body.add(ifNode)
+		
+		}
+
+		super.fward
+
+	}
+	
 	
 
 }

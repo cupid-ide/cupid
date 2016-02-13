@@ -30,7 +30,8 @@ public abstract class InternalEntryPointCodeConcept<P extends CodeConcept<?, ?>>
 
 	override reverse() {
 		
-		val setServicesNode = setServices.ASTRef
+		val setServicesNode = setServices?.ASTRef
+		if (setServicesNode == null) return null
 		
 		val registrationCall = setServicesNode.body.filter(ASTCallStmtNode).findFirst[
 			it.subroutineName.text.eic("NUOPC_CompSetInternalEntryPoint") &&
@@ -139,6 +140,62 @@ if (ESMF_LogFoundError(rcToCheck=«paramRC», msg=ESMF_LOGERR_PASSTHRU, &
 		}
 
 		ast
+
+	}
+	
+	
+		override fward() {
+
+		if (setServices() == null) {
+			throw new CodeGenerationException("A SetServices subroutine must exist first.")	
+		}
+		
+		//add specialization subroutine itself			
+		var code = subroutineTemplate()
+
+		var ASTModuleNode mn = module.getASTRef
+		var ASTSubroutineSubprogramNode ssn = parseLiteralProgramUnit(code)
+
+		mn.getModuleBody().add(ssn)
+		setASTRef(ssn)
+
+		//add label import
+		//var usesNUOPCDriver = genericUse.getASTRef as ASTUseStmtNode
+		//var tempCode = usesNUOPCDriver.toString.trim
+		//tempCode += ''', &
+		//«IF !specLabel.equals(labelName)»«specLabel» => «ENDIF»«labelName»'''
+
+		//var tempNode = parseLiteralStatement(tempCode) as ASTUseStmtNode;
+		//usesNUOPCDriver.replaceWith(tempNode)
+
+		//add call in setservices
+		var ASTSubroutineSubprogramNode setServicesNode = setServices().getASTRef
+		if (setServicesNode != null) {
+
+			code = 
+'''
+
+call NUOPC_CompSetInternalEntryPoint(«setServices().paramGridComp», «methodType», &
+	«IF phaseLabel!=null»phaseLabelList=(/"«phaseLabel»"/),«ENDIF» userRoutine=«subroutineName», rc=«setServices().paramRC»)
+'''
+
+			var ASTCallStmtNode regCall = parseLiteralStatement(code) as ASTCallStmtNode
+			setServicesNode.body.add(regCall)
+			registration = new BasicCodeConcept<ASTCallStmtNode>(this, regCall)
+		
+			code = 
+'''
+if (ESMF_LogFoundError(rcToCheck=«paramRC», msg=ESMF_LOGERR_PASSTHRU, &
+            line=__LINE__, &
+            file=__FILE__)) &
+            return  ! bail out
+'''
+			var ASTIfStmtNode ifNode = parseLiteralStatement(code) as ASTIfStmtNode
+			setServicesNode.body.add(ifNode)
+		
+		}
+
+		this
 
 	}
 

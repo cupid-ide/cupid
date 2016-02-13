@@ -16,7 +16,9 @@ import org.earthsystemmodeling.cupid.nuopc.ReverseEngineerException;
 import org.eclipse.core.resources.IFile;
 import org.eclipse.core.resources.IResource;
 import org.eclipse.photran.core.IFortranAST;
+import org.eclipse.photran.internal.core.parser.ASTExecutableProgramNode;
 import org.eclipse.photran.internal.core.parser.IASTNode;
+import org.eclipse.photran.internal.core.reindenter.Reindenter;
 import org.eclipse.photran.internal.core.vpg.PhotranVPG;
 import org.eclipse.xtend2.lib.StringConcatenation;
 import org.eclipse.xtext.xbase.lib.CollectionLiterals;
@@ -36,6 +38,8 @@ public abstract class CodeConcept<P extends CodeConcept<?, ?>, A extends IASTNod
   protected A _astRef;
   
   protected IResource _context;
+  
+  protected IFortranAST _ast;
   
   private List<Field> childFields;
   
@@ -261,23 +265,36 @@ public abstract class CodeConcept<P extends CodeConcept<?, ?>, A extends IASTNod
   
   public IFortranAST getAST() {
     IFortranAST _xifexpression = null;
-    boolean _and = false;
-    boolean _notEquals = (!Objects.equal(this._context, null));
-    if (!_notEquals) {
-      _and = false;
-    } else {
-      _and = (this._context instanceof IFile);
-    }
-    if (_and) {
-      PhotranVPG _instance = PhotranVPG.getInstance();
-      _xifexpression = _instance.acquireTransientAST(((IFile) this._context));
+    boolean _notEquals = (!Objects.equal(this._ast, null));
+    if (_notEquals) {
+      _xifexpression = this._ast;
     } else {
       IFortranAST _xifexpression_1 = null;
-      if ((this._id > 0)) {
-        _xifexpression_1 = this._codeDB.findAST(this._id);
+      boolean _and = false;
+      boolean _notEquals_1 = (!Objects.equal(this._context, null));
+      if (!_notEquals_1) {
+        _and = false;
       } else {
-        long _parentID = this.parentID();
-        _xifexpression_1 = this._codeDB.findAST(_parentID);
+        _and = (this._context instanceof IFile);
+      }
+      if (_and) {
+        IFortranAST _xblockexpression = null;
+        {
+          PhotranVPG _instance = PhotranVPG.getInstance();
+          IFortranAST _acquireTransientAST = _instance.acquireTransientAST(((IFile) this._context));
+          this._ast = _acquireTransientAST;
+          _xblockexpression = this._ast;
+        }
+        _xifexpression_1 = _xblockexpression;
+      } else {
+        IFortranAST _xifexpression_2 = null;
+        if ((this._id > 0)) {
+          _xifexpression_2 = this._codeDB.findAST(this._id);
+        } else {
+          long _parentID = this.parentID();
+          _xifexpression_2 = this._codeDB.findAST(_parentID);
+        }
+        _xifexpression_1 = _xifexpression_2;
       }
       _xifexpression = _xifexpression_1;
     }
@@ -294,15 +311,29 @@ public abstract class CodeConcept<P extends CodeConcept<?, ?>, A extends IASTNod
   }
   
   public IFortranAST forward() throws CodeGenerationException {
+    return null;
+  }
+  
+  public CodeConcept<P, A> fward() throws CodeGenerationException {
     try {
-      Object _xblockexpression = null;
+      CodeConcept<P, A> _xblockexpression = null;
       {
         List<Field> _childFields = this.getChildFields();
         final Function1<Field, Boolean> _function = new Function1<Field, Boolean>() {
           @Override
           public Boolean apply(final Field it) {
+            boolean _and = false;
             Child _annotation = it.<Child>getAnnotation(Child.class);
-            return Boolean.valueOf(_annotation.forward());
+            boolean _forward = _annotation.forward();
+            if (!_forward) {
+              _and = false;
+            } else {
+              Class<?> _type = it.getType();
+              boolean _isAssignableFrom = List.class.isAssignableFrom(_type);
+              boolean _not = (!_isAssignableFrom);
+              _and = _not;
+            }
+            return Boolean.valueOf(_and);
           }
         };
         Iterable<Field> _filter = IterableExtensions.<Field>filter(_childFields, _function);
@@ -312,8 +343,11 @@ public abstract class CodeConcept<P extends CodeConcept<?, ?>, A extends IASTNod
             CodeConcept<?, ?> childConcept = ((CodeConcept<?, ?>) _get);
             boolean _equals = Objects.equal(childConcept, null);
             if (_equals) {
-              Class<? extends Field> _class = field.getClass();
-              Constructor<?>[] _constructors = _class.getConstructors();
+              String _name = field.getName();
+              String _plus = ("FORWARDING: " + _name);
+              System.out.println(_plus);
+              Class<?> _type = field.getType();
+              Constructor<?>[] _constructors = _type.getConstructors();
               final Function1<Constructor<?>, Boolean> _function_1 = new Function1<Constructor<?>, Boolean>() {
                 @Override
                 public Boolean apply(final Constructor<?> it) {
@@ -328,18 +362,59 @@ public abstract class CodeConcept<P extends CodeConcept<?, ?>, A extends IASTNod
                 Object _newInstance = con.newInstance(this);
                 childConcept = ((CodeConcept<?, ?>) _newInstance);
               } else {
-                Class<? extends Field> _class_1 = field.getClass();
-                String _name = _class_1.getName();
-                String _plus = ("Could not find constructor for class " + _name);
-                throw new CodeGenerationException(_plus);
+                String _name_1 = field.getName();
+                String _plus_1 = ("Could not find constructor for field " + _name_1);
+                String _plus_2 = (_plus_1 + " with class ");
+                Class<?> _type_1 = field.getType();
+                String _name_2 = _type_1.getName();
+                String _plus_3 = (_plus_2 + _name_2);
+                throw new CodeGenerationException(_plus_3);
               }
             }
-            childConcept.forward();
+            CodeConcept<? extends CodeConcept<?, ?>, ? extends IASTNode> _fward = childConcept.fward();
+            field.set(this, _fward);
           }
         }
-        _xblockexpression = null;
+        _xblockexpression = this;
       }
-      return ((IFortranAST)_xblockexpression);
+      return _xblockexpression;
+    } catch (Throwable _e) {
+      throw Exceptions.sneakyThrow(_e);
+    }
+  }
+  
+  public void commit() {
+    try {
+      if ((this._context instanceof IFile)) {
+        String _string = this._astRef.toString();
+        this.writeToFile(_string);
+        IFortranAST _aST = this.getAST();
+        ASTExecutableProgramNode _root = _aST.getRoot();
+        IFortranAST _aST_1 = this.getAST();
+        Reindenter.reindent(_root, _aST_1, Reindenter.Strategy.REINDENT_EACH_LINE);
+        String _string_1 = this._astRef.toString();
+        this.writeToFile(_string_1);
+      } else {
+        throw new CodeGenerationException("Can only commit to file resources");
+      }
+    } catch (Throwable _e) {
+      throw Exceptions.sneakyThrow(_e);
+    }
+  }
+  
+  public void writeToFile(final String content) {
+    try {
+      IFile file = ((IFile) this._context);
+      byte[] _bytes = content.getBytes();
+      ByteArrayInputStream is = new ByteArrayInputStream(_bytes);
+      boolean _exists = file.exists();
+      boolean _not = (!_exists);
+      if (_not) {
+        file.create(is, true, null);
+      } else {
+        file.setContents(is, true, false, null);
+      }
+      is.close();
     } catch (Throwable _e) {
       throw Exceptions.sneakyThrow(_e);
     }
@@ -427,23 +502,5 @@ public abstract class CodeConcept<P extends CodeConcept<?, ?>, A extends IASTNod
     _builder.append(defaultVal, "");
     _builder.append("$");
     return _builder;
-  }
-  
-  public void createFile(final String content) {
-    try {
-      IFile file = ((IFile) this._context);
-      byte[] _bytes = content.getBytes();
-      ByteArrayInputStream is = new ByteArrayInputStream(_bytes);
-      boolean _exists = file.exists();
-      boolean _not = (!_exists);
-      if (_not) {
-        file.create(is, true, null);
-      } else {
-        file.setContents(is, true, false, null);
-      }
-      is.close();
-    } catch (Throwable _e) {
-      throw Exceptions.sneakyThrow(_e);
-    }
   }
 }

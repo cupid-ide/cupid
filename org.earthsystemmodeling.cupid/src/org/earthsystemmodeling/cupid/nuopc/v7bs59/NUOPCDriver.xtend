@@ -1,6 +1,5 @@
 package org.earthsystemmodeling.cupid.nuopc.v7bs59
 
-import java.sql.SQLException
 import java.util.List
 import org.earthsystemmodeling.cupid.annotation.Child
 import org.earthsystemmodeling.cupid.annotation.Doc
@@ -24,12 +23,9 @@ import org.eclipse.photran.internal.core.parser.ASTUseStmtNode
 import org.eclipse.photran.internal.core.parser.IASTListNode
 import org.eclipse.photran.internal.core.parser.IBodyConstruct
 
-import static org.earthsystemmodeling.cupid.core.CupidActivator.log
-import static org.earthsystemmodeling.cupid.nuopc.BasicCodeConcept.newBasicCodeConcept
-import static org.earthsystemmodeling.cupid.util.CodeExtraction.parseLiteralStatementSequence
+import static org.earthsystemmodeling.cupid.util.CodeExtraction.*
 
 import static extension org.earthsystemmodeling.cupid.nuopc.ASTQuery.*
-import org.eclipse.photran.internal.core.parser.ASTVarOrFnRefNode
 
 @Label(label="NUOPC Driver")
 @MappingType("module")
@@ -40,7 +36,7 @@ class NUOPCDriver extends NUOPCComponent {
 	public String filename
 	public String path
 	
-	@Child
+	@Child(forward=true)
 	var public SetServices setServices
 	
 	@Child
@@ -54,14 +50,14 @@ class NUOPCDriver extends NUOPCComponent {
 	
 	new(CodeDBIndex codeDB) {
 		super(null)
-		_codeDB = codeDB
+		_codeDB = null
 	}
 	
 	
-	new(IResource context, CodeDBIndex codeDB) {
+	new(IResource context) {
 		super(null)
 		_context = context
-		_codeDB = codeDB
+		_codeDB = null
 	}
 	
 	
@@ -79,6 +75,7 @@ class NUOPCDriver extends NUOPCComponent {
 		if (_astRef != null) {
 			driverName = _astRef.moduleStmt.moduleName.moduleName.text
 			
+			//move some or all of these to NUOPCComponent
 			_astRef.moduleBody.filter(ASTUseStmtNode).forEach[
 				if (it.name.text.eic("ESMF")) {
 					importESMF = new BasicCodeConcept(this, it)
@@ -142,7 +139,7 @@ class NUOPCDriver extends NUOPCComponent {
 		this
 	}
 
-	override forward() {
+	override NUOPCDriver fward() {
 		
 		if (getASTRef == null) {
 			
@@ -154,23 +151,39 @@ module «driverName»
 	
 	use ESMF
 	use NUOPC
-	use NUOPC_Driver
-	
+	use NUOPC_Driver, only: &
+		driver_SetServices => SetServices
+		
 	implicit none
 	
 	contains
 	
 end module
 			'''
+	
+			var ASTModuleNode moduleNode = parseLiteralProgramUnit(code)
+			setASTRef(moduleNode)
 			
-			createFile(code)
+			moduleNode.moduleBody.filter(ASTUseStmtNode).forEach[
+				if (it.name.text.eic("ESMF")) {
+					importESMF = new BasicCodeConcept(this, it)
+				}
+				else if (it.name.text.eic("NUOPC")) {
+					importNUOPC = new BasicCodeConcept(this, it)
+				}
+				else if (it.name.text.eic("NUOPC_Driver")) {
+					importNUOPCGeneric = new GenericImport(this, it).reverse
+				}
+			]
+			
+			//createFile(code)
 			
 			//reverse engineer to populate AST refs
-			reverse()
-						
+			//reverse()
+									
 		}
 		
-		super.forward
+		super.fward as NUOPCDriver
 		
 	}
 
@@ -1089,26 +1102,7 @@ if (ESMF_LogFoundError(rcToCheck=«_parent.paramRC», msg=ESMF_LOGERR_PASSTHRU, 
 			else null
 			
 		}	
-		/*	
-		override reverse() {
-			if (this == super.reverse) {				
-				var rs = '''call_(_cid, «_id», 'NUOPC_DriverNewRunSequence'),
-							callArgWithType(_, _cid, _, 'slotCount', _, _slotExpr).'''.execQuery
-				if (rs.next) {
-					newRunSequence = newBasicCodeConcept(this, rs.getLong("_cid"))
-				}
-				
-				runElements = new SetRunSequence_AddRunElement(this).reverseMultiple() as List<SetRunSequence_AddRunElement>
-				this
-			}
-			else {
-				null
-			}
-	
-		}
-		* 
-		*/
-		
+			
 		
 		override subroutineTemplate() {
 '''
@@ -1197,61 +1191,7 @@ end subroutine
 			
 			retList
 		}
-		
-		/*
-		override List reverseMultiple() {
-			
-			var retList = newArrayList()
-			
-			var rs = '''call_(_cid, «parentID», 'NUOPC_DriverAddRunElement').'''.execQuery
-			
-			
-			while (rs.next) {
-				var addComp = new SetRunSequence_AddRunElement(_parent)
-				addComp._id = rs.getLong("_cid")
-				retList.add(addComp)
-			}
-			rs.close
-			
-			for (SetRunSequence_AddRunElement addComp : retList) {
-				rs = '''callArgWithType(_, «addComp._id», _, 'srcCompLabel', _, _srcCompExpr),
-							 callArgWithType(_, «addComp._id», _, 'dstCompLabel', _, _dstCompExpr),
-							 callArgWithType(_, «addComp._id», _, 'slot', _, _slotExpr).'''.execQuery
 				
-				if (rs.next) {
-					addComp.srcCompLabel = rs.getString("_srcCompExpr")
-					addComp.dstCompLabel = rs.getString("_dstCompExpr")
-					addComp.slot = rs.getString("_slotExpr")
-					rs.close
-				}
-				else {
-					rs = '''callArgWithType(_, «addComp._id», _, 'compLabel', _, _compExpr),
-							 callArgWithType(_, «addComp._id», _, 'slot', _, _slotExpr).'''.execQuery
-					if (rs.next) {
-						addComp.compLabel = rs.getString("_compExpr")
-						addComp.slot = rs.getString("_slotExpr")
-						rs.close
-					}
-					else {
-						//call NUOPC_DriverAddRunElement(driver, slot=1, linkSlot=2, rc=rc)
-						rs = '''callArgWithType(_, «addComp._id», _, 'slot', _, _slotExpr),
-							 callArgWithType(_, «addComp._id», _, 'linkSlot', _, _linkSlotExpr).'''.execQuery
-						if (rs.next) {
-							addComp.linkSlot = rs.getString("_linkSlotExpr")
-							addComp.slot = rs.getString("_slotExpr")
-							rs.close
-						}
-					}
-				}
-			}
-			
-			retList
-			
-		}
-		
-		* 
-		*/
-		
 		override forward() {
 			var IFortranAST ast = getAST			
 			

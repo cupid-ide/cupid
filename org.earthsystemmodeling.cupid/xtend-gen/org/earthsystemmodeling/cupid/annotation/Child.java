@@ -8,5 +8,5 @@ public @interface Child {
   public Class<?> astRef() default Void.class;
   public int min() default 1;
   public int max() default 1;
-  public boolean forward() default true;
+  public boolean forward() default false;
 }

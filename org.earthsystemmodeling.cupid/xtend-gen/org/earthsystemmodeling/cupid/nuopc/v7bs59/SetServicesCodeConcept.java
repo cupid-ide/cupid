@@ -306,4 +306,119 @@ public class SetServicesCodeConcept<P extends NUOPCComponent> extends CodeConcep
     }
     return ((IFortranAST)_xblockexpression);
   }
+  
+  @Override
+  public CodeConcept<P, ASTSubroutineSubprogramNode> fward() {
+    SetServicesCodeConcept<P> _xblockexpression = null;
+    {
+      String routineSetServices = this._parent.importNUOPCGeneric.routineSetServices;
+      boolean _equals = Objects.equal(routineSetServices, null);
+      if (_equals) {
+        String _prefix = this._parent.prefix();
+        String _plus = (_prefix + "_SetServices");
+        routineSetServices = _plus;
+        ASTUseStmtNode _aSTRef = this._parent.importNUOPCGeneric.getASTRef();
+        final ASTUseStmtNode genericUse = ((ASTUseStmtNode) _aSTRef);
+        String _string = genericUse.toString();
+        String tempCode = _string.trim();
+        String _tempCode = tempCode;
+        StringConcatenation _builder = new StringConcatenation();
+        _builder.append(", &");
+        _builder.newLine();
+        _builder.append("\t\t\t\t\t\t");
+        _builder.append(routineSetServices, "\t\t\t\t\t\t");
+        _builder.append(" => SetServices");
+        tempCode = (_tempCode + _builder);
+        IBodyConstruct _parseLiteralStatement = CodeExtraction.parseLiteralStatement(tempCode);
+        ASTUseStmtNode tempNode = ((ASTUseStmtNode) _parseLiteralStatement);
+        genericUse.replaceWith(tempNode);
+      }
+      StringConcatenation _builder_1 = new StringConcatenation();
+      _builder_1.newLine();
+      _builder_1.append("subroutine SetServices(");
+      _builder_1.append(this.paramGridComp, "");
+      _builder_1.append(", ");
+      _builder_1.append(this.paramRC, "");
+      _builder_1.append(")");
+      _builder_1.newLineIfNotEmpty();
+      _builder_1.append("    ");
+      _builder_1.append("type(ESMF_GridComp)  :: ");
+      _builder_1.append(this.paramGridComp, "    ");
+      _builder_1.newLineIfNotEmpty();
+      _builder_1.append("    ");
+      _builder_1.append("integer, intent(out) :: ");
+      _builder_1.append(this.paramRC, "    ");
+      _builder_1.newLineIfNotEmpty();
+      _builder_1.append("    ");
+      _builder_1.newLine();
+      _builder_1.append("    ");
+      _builder_1.append("rc = ESMF_SUCCESS");
+      _builder_1.newLine();
+      _builder_1.append("    ");
+      _builder_1.newLine();
+      _builder_1.append("    ");
+      _builder_1.append("! NUOPC_Driver registers the generic methods");
+      _builder_1.newLine();
+      _builder_1.append("    ");
+      _builder_1.append("call NUOPC_CompDerive(");
+      _builder_1.append(this.paramGridComp, "    ");
+      _builder_1.append(", ");
+      _builder_1.append(routineSetServices, "    ");
+      _builder_1.append(", rc=");
+      _builder_1.append(this.paramRC, "    ");
+      _builder_1.append(")");
+      _builder_1.newLineIfNotEmpty();
+      _builder_1.append("    ");
+      _builder_1.append("if (ESMF_LogFoundError(rcToCheck=");
+      _builder_1.append(this.paramRC, "    ");
+      _builder_1.append(", msg=ESMF_LOGERR_PASSTHRU, &");
+      _builder_1.newLineIfNotEmpty();
+      _builder_1.append("      ");
+      _builder_1.append("line=__LINE__, &");
+      _builder_1.newLine();
+      _builder_1.append("      ");
+      _builder_1.append("file=__FILE__)) &");
+      _builder_1.newLine();
+      _builder_1.append("      ");
+      _builder_1.append("return  ! bail out");
+      _builder_1.newLine();
+      _builder_1.append("      ");
+      _builder_1.newLine();
+      _builder_1.append("end subroutine");
+      _builder_1.newLine();
+      String code = _builder_1.toString();
+      ASTModuleNode mn = this._parent.getASTRef();
+      ASTSubroutineSubprogramNode ssn = CodeExtraction.<ASTSubroutineSubprogramNode>parseLiteralProgramUnit(code);
+      IASTListNode<IModuleBodyConstruct> _moduleBody = mn.getModuleBody();
+      _moduleBody.add(ssn);
+      this.setASTRef(ssn);
+      StringConcatenation _builder_2 = new StringConcatenation();
+      _builder_2.newLine();
+      _builder_2.append("public SetServices");
+      _builder_2.newLine();
+      code = _builder_2.toString();
+      IBodyConstruct _parseLiteralStatement_1 = CodeExtraction.parseLiteralStatement(code);
+      ASTAccessStmtNode tempNode_1 = ((ASTAccessStmtNode) _parseLiteralStatement_1);
+      IASTListNode<IModuleBodyConstruct> _moduleBody_1 = mn.getModuleBody();
+      ASTContainsStmtNode csn = _moduleBody_1.<ASTContainsStmtNode>findLast(ASTContainsStmtNode.class);
+      boolean _notEquals = (!Objects.equal(csn, null));
+      if (_notEquals) {
+        IASTListNode<IModuleBodyConstruct> _moduleBody_2 = mn.getModuleBody();
+        _moduleBody_2.insertBefore(csn, tempNode_1);
+      } else {
+        IASTListNode<IModuleBodyConstruct> _moduleBody_3 = mn.getModuleBody();
+        ASTImplicitStmtNode isn = _moduleBody_3.<ASTImplicitStmtNode>findLast(ASTImplicitStmtNode.class);
+        boolean _notEquals_1 = (!Objects.equal(isn, null));
+        if (_notEquals_1) {
+          IASTListNode<IModuleBodyConstruct> _moduleBody_4 = mn.getModuleBody();
+          _moduleBody_4.insertAfter(isn, tempNode_1);
+        } else {
+          IASTListNode<IModuleBodyConstruct> _moduleBody_5 = mn.getModuleBody();
+          _moduleBody_5.add(tempNode_1);
+        }
+      }
+      _xblockexpression = this.reverse();
+    }
+    return _xblockexpression;
+  }
 }

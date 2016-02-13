@@ -51,7 +51,7 @@ public abstract class SpecializationMethodCodeConcept<P extends CodeConcept<?, ?
   @Label(label = "Registration")
   @MappingType("call")
   @Child
-  public BasicCodeConcept registration;
+  public BasicCodeConcept<ASTCallStmtNode> registration;
   
   public String paramGridComp = "driver";
   
@@ -101,7 +101,10 @@ public abstract class SpecializationMethodCodeConcept<P extends CodeConcept<?, ?
   public CodeConcept<P, ASTSubroutineSubprogramNode> reverse() {
     CodeConcept<P, ASTSubroutineSubprogramNode> _xifexpression = null;
     List _reverseMultiple = this.reverseMultiple();
-    int _size = _reverseMultiple.size();
+    int _size = 0;
+    if (_reverseMultiple!=null) {
+      _size=_reverseMultiple.size();
+    }
     boolean _greaterThan = (_size > 0);
     if (_greaterThan) {
       List _reverseMultiple_1 = this.reverseMultiple();
@@ -328,7 +331,6 @@ public abstract class SpecializationMethodCodeConcept<P extends CodeConcept<?, ?
         ASTSubroutineSubprogramNode ssn = CodeExtraction.<ASTSubroutineSubprogramNode>parseLiteralProgramUnit(code);
         IASTListNode<IModuleBodyConstruct> _moduleBody = mn.getModuleBody();
         _moduleBody.add(ssn);
-        this.setASTRef(ssn);
         NUOPCComponent.GenericImport _genericUse = this.genericUse();
         ASTUseStmtNode _aSTRef = _genericUse.getASTRef();
         ASTUseStmtNode usesNUOPCDriver = ((ASTUseStmtNode) _aSTRef);
@@ -399,6 +401,113 @@ public abstract class SpecializationMethodCodeConcept<P extends CodeConcept<?, ?
           _body_1.add(ifNode);
         }
         _xblockexpression = ast;
+      }
+      return _xblockexpression;
+    } catch (Throwable _e) {
+      throw Exceptions.sneakyThrow(_e);
+    }
+  }
+  
+  @Override
+  public CodeConcept<P, ASTSubroutineSubprogramNode> fward() {
+    try {
+      CodeConcept<P, ASTSubroutineSubprogramNode> _xblockexpression = null;
+      {
+        SetServicesCodeConcept<?> _setServices = this.setServices();
+        boolean _equals = Objects.equal(_setServices, null);
+        if (_equals) {
+          throw new CodeGenerationException("A SetServices subroutine must exist first.");
+        }
+        String code = this.subroutineTemplate();
+        CodeConcept<?, ASTModuleNode> _module = this.module();
+        ASTModuleNode mn = _module.getASTRef();
+        ASTSubroutineSubprogramNode ssn = CodeExtraction.<ASTSubroutineSubprogramNode>parseLiteralProgramUnit(code);
+        IASTListNode<IModuleBodyConstruct> _moduleBody = mn.getModuleBody();
+        _moduleBody.add(ssn);
+        this.setASTRef(ssn);
+        NUOPCComponent.GenericImport _genericUse = this.genericUse();
+        ASTUseStmtNode _aSTRef = _genericUse.getASTRef();
+        ASTUseStmtNode usesNUOPCDriver = ((ASTUseStmtNode) _aSTRef);
+        String _string = usesNUOPCDriver.toString();
+        String tempCode = _string.trim();
+        String _tempCode = tempCode;
+        StringConcatenation _builder = new StringConcatenation();
+        _builder.append(", &");
+        _builder.newLine();
+        _builder.append("\t\t");
+        {
+          boolean _equals_1 = this.specLabel.equals(this.labelName);
+          boolean _not = (!_equals_1);
+          if (_not) {
+            _builder.append(this.specLabel, "\t\t");
+            _builder.append(" => ");
+          }
+        }
+        _builder.append(this.labelName, "\t\t");
+        tempCode = (_tempCode + _builder);
+        IBodyConstruct _parseLiteralStatement = CodeExtraction.parseLiteralStatement(tempCode);
+        ASTUseStmtNode tempNode = ((ASTUseStmtNode) _parseLiteralStatement);
+        try {
+          usesNUOPCDriver.replaceWith(tempNode);
+        } catch (final Throwable _t) {
+          if (_t instanceof IllegalStateException) {
+            final IllegalStateException e = (IllegalStateException)_t;
+            e.printStackTrace();
+          } else {
+            throw Exceptions.sneakyThrow(_t);
+          }
+        }
+        NUOPCComponent.GenericImport _genericUse_1 = this.genericUse();
+        _genericUse_1.setASTRef(tempNode);
+        SetServicesCodeConcept<?> _setServices_1 = this.setServices();
+        ASTSubroutineSubprogramNode setServicesNode = _setServices_1.getASTRef();
+        boolean _notEquals = (!Objects.equal(setServicesNode, null));
+        if (_notEquals) {
+          StringConcatenation _builder_1 = new StringConcatenation();
+          _builder_1.newLine();
+          _builder_1.append("call NUOPC_CompSpecialize(");
+          SetServicesCodeConcept<?> _setServices_2 = this.setServices();
+          _builder_1.append(_setServices_2.paramGridComp, "");
+          _builder_1.append(", specLabel=");
+          _builder_1.append(this.specLabel, "");
+          _builder_1.append(", &");
+          _builder_1.newLineIfNotEmpty();
+          _builder_1.append("\t");
+          _builder_1.append("specRoutine=");
+          _builder_1.append(this.subroutineName, "\t");
+          _builder_1.append(", rc=");
+          SetServicesCodeConcept<?> _setServices_3 = this.setServices();
+          _builder_1.append(_setServices_3.paramRC, "\t");
+          _builder_1.append(")");
+          _builder_1.newLineIfNotEmpty();
+          code = _builder_1.toString();
+          IBodyConstruct _parseLiteralStatement_1 = CodeExtraction.parseLiteralStatement(code);
+          ASTCallStmtNode regCall = ((ASTCallStmtNode) _parseLiteralStatement_1);
+          IASTListNode<IBodyConstruct> _body = setServicesNode.getBody();
+          _body.add(regCall);
+          BasicCodeConcept<ASTCallStmtNode> _basicCodeConcept = new BasicCodeConcept<ASTCallStmtNode>(this, regCall);
+          this.registration = _basicCodeConcept;
+          StringConcatenation _builder_2 = new StringConcatenation();
+          _builder_2.append("if (ESMF_LogFoundError(rcToCheck=");
+          _builder_2.append(this.paramRC, "");
+          _builder_2.append(", msg=ESMF_LOGERR_PASSTHRU, &");
+          _builder_2.newLineIfNotEmpty();
+          _builder_2.append("            ");
+          _builder_2.append("line=__LINE__, &");
+          _builder_2.newLine();
+          _builder_2.append("            ");
+          _builder_2.append("file=__FILE__)) &");
+          _builder_2.newLine();
+          _builder_2.append("            ");
+          _builder_2.append("return  ! bail out");
+          _builder_2.newLine();
+          code = _builder_2.toString();
+          IBodyConstruct _parseLiteralStatement_2 = CodeExtraction.parseLiteralStatement(code);
+          ASTIfStmtNode ifNode = ((ASTIfStmtNode) _parseLiteralStatement_2);
+          IASTListNode<IBodyConstruct> _body_1 = setServicesNode.getBody();
+          _body_1.add(ifNode);
+        }
+        _xblockexpression = super.fward();
       }
       return _xblockexpression;
     } catch (Throwable _e) {

@@ -17,6 +17,10 @@ public class BasicCodeConcept<A extends IASTNode> extends CodeConcept<CodeConcep
     this._astRef = astRef;
   }
   
+  public BasicCodeConcept(final CodeConcept<?, ?> parent) {
+    super(parent);
+  }
+  
   @Override
   public CodeConcept<CodeConcept<?, ?>, A> reverse() {
     return this;

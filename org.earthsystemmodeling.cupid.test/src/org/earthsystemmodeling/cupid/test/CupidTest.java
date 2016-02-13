@@ -1,9 +1,11 @@
 package org.earthsystemmodeling.cupid.test;
 
+import static org.hamcrest.MatcherAssert.assertThat;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertNull;
+import static org.junit.Assert.assertThat;
 import static org.junit.Assert.fail;
 
 import java.io.IOException;
@@ -15,6 +17,7 @@ import java.util.List;
 import org.apache.commons.io.IOUtils;
 import org.apache.commons.io.LineIterator;
 import org.earthsystemmodeling.cupid.codedb.CodeDBIndex;
+import org.earthsystemmodeling.cupid.handlers.RewriteASTRunnable;
 import org.earthsystemmodeling.cupid.nuopc.BasicCodeConcept;
 import org.earthsystemmodeling.cupid.nuopc.CodeConcept;
 import org.earthsystemmodeling.cupid.nuopc.v7bs59.EntryPointCodeConcept;
@@ -33,10 +36,14 @@ import org.eclipse.core.resources.IProject;
 import org.eclipse.core.resources.IResource;
 import org.eclipse.core.resources.IResourceVisitor;
 import org.eclipse.core.runtime.CoreException;
+import org.eclipse.core.runtime.NullProgressMonitor;
 import org.eclipse.photran.core.IFortranAST;
 import org.eclipse.photran.internal.core.parser.ASTModuleNode;
 import org.eclipse.photran.internal.core.parser.ASTSubroutineSubprogramNode;
+import org.eclipse.photran.internal.core.reindenter.Reindenter;
+import org.eclipse.photran.internal.core.reindenter.Reindenter.Strategy;
 import org.eclipse.photran.internal.core.vpg.PhotranVPG;
+import org.eclipse.ui.PlatformUI;
 import org.junit.AfterClass;
 import org.junit.BeforeClass;
 import org.junit.Ignore;
@@ -476,7 +483,7 @@ public class CupidTest {
 		IFile f;
 		f = PROJECT_NUOPC_PROTOTYPES.getFolder("AtmOcnProto").getFile("esm.F90");
 				
-		NUOPCDriver driver = new NUOPCDriver(f, null);
+		NUOPCDriver driver = new NUOPCDriver(f);
 		driver = driver.reverse();
 		assertNotNull(driver);
 		assertEquals("ESM", driver.driverName);
@@ -490,7 +497,7 @@ public class CupidTest {
 		assertEquals(4, driver.initialization.initSpecs.setModelServices.addComps.size());
 		
 		f = PROJECT_NUOPC_PROTOTYPES.getFolder("AtmOcnMedPetListTimescalesProto").getFile("esm.F90");
-		driver = new NUOPCDriver(f, null).reverse();
+		driver = new NUOPCDriver(f).reverse();
 		assertNotNull(driver);
 		assertEquals("ESM", driver.driverName);
 		assertNotNull(driver.setServices);
@@ -540,18 +547,66 @@ public class CupidTest {
 		assertNull(srsare.compLabel);
 	}
 	
+	@Test
+	public void Generated() throws IOException, CoreException {
+		IProject p = TestHelpers.createProjectFromFolder("workspace/Generated", "Generated");
+		p.open(null);
+		
+		IFile f = p.getFile("MyDriver1.F90");
+		assertThat("Driver file exists", f.exists());
+		NUOPCDriver driver = new NUOPCDriver(f).reverse();
+		
+		assertNotNull(driver);
+		assertEquals("MyDriver", driver.driverName);
+		assertNotNull(driver.setServices);
+		assertEquals("SetServices", driver.setServices.subroutineName);
+		assertNotNull(driver.importESMF);
+		assertNotNull(driver.importNUOPC);
+		assertNotNull(driver.importNUOPCGeneric);
+		
+	}
 	
 	@Test
-	@Ignore
 	public void GenerateNUOPCDriver() throws CoreException {
 		IProject p = TestHelpers.createEmptyProject("TestGenerateNUOPCDriver");
 		p.open(null);
 		
 		IFile f1 = p.getFile("MyDriver1.F90");
-		NUOPCDriver driver = new NUOPCDriver(f1, null);
-		driver.forward();
-				
+		NUOPCDriver driver = new NUOPCDriver(f1);
+		driver.driverName = "MyDriver";
+		driver = driver.fward();
+		driver.commit();
+		
+		//if (1==1) return;
+		
+		//Reindenter.reindent(driver.getASTRef(), driver.getAST(), Strategy.REINDENT_EACH_LINE);      								
+		//RewriteASTRunnable rewriter = new RewriteASTRunnable(driver.getAST());
+		//rewriter.run(new NullProgressMonitor());
+		
 		System.out.println("GENERATED DRIVER:\n\n" + driver.getAST().getRoot().toString());
+		
+		//PhotranVPG.getInstance().commitChangesFromInMemoryASTs(new NullProgressMonitor(), 0, f1);
+		PhotranVPG.getInstance().releaseAST(f1);
+		
+		//read in same driver just generated
+		//f1 = p.getFile("MyDriver1.F90");
+		driver = new NUOPCDriver(f1).reverse();
+		
+		assertNotNull(driver);
+		assertEquals("MyDriver", driver.driverName);
+		assertNotNull(driver.setServices);
+		assertEquals("SetServices", driver.setServices.subroutineName);
+		assertNotNull(driver.importESMF);
+		assertNotNull(driver.importNUOPC);
+		assertNotNull(driver.importNUOPCGeneric);
+		
+		
+		//assertNull(driver.initialization);
+		
+		//assertNotNull(driver.initialization.initSpecs.setModelServices);
+		//assertNotNull(driver.initialization.initSpecs.setModelServices.addComps);
+		//assertEquals(4, driver.initialization.initSpecs.setModelServices.addComps.size());
+		
 		
 		//p.delete(true, true, null);
 	}
@@ -610,7 +665,7 @@ public class CupidTest {
 							while (li.hasNext()) {
 								String line = li.nextLine();
 								if (line.contains("use NUOPC_Driver")) {
-									NUOPCDriver driver = (NUOPCDriver) new NUOPCDriver(file, codeDB).reverse();
+									NUOPCDriver driver = new NUOPCDriver(file).reverse();
 									assertNotNull(driver);
 									assertNotNull("No SetServices: " + file.getFullPath(), driver.setServices);
 									assertNotNull(driver.importESMF);

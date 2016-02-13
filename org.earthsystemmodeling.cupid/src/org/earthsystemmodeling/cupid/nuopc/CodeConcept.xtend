@@ -17,6 +17,9 @@ import org.eclipse.core.resources.IFile
 import org.eclipse.photran.internal.core.vpg.PhotranVPG
 import java.io.ByteArrayInputStream
 import org.earthsystemmodeling.cupid.codedb.PrologResultSet
+import org.eclipse.core.runtime.NullProgressMonitor
+import org.eclipse.photran.internal.core.reindenter.Reindenter
+import org.eclipse.photran.internal.core.reindenter.Reindenter.Strategy
 
 public abstract class CodeConcept<P extends CodeConcept<?,?>, A extends IASTNode> {
 	
@@ -26,6 +29,7 @@ public abstract class CodeConcept<P extends CodeConcept<?,?>, A extends IASTNode
 	var protected A _astRef
 	//var protected Class<A> _astClass
 	var protected IResource _context
+	var protected IFortranAST _ast
 	
 	var private List<Field> childFields;
 	
@@ -139,8 +143,11 @@ public abstract class CodeConcept<P extends CodeConcept<?,?>, A extends IASTNode
 	}
 	
 	def getAST() {
-		if (_context != null && _context instanceof IFile) {
-			PhotranVPG.instance.acquireTransientAST(_context as IFile)
+		if (_ast != null)
+			_ast
+		else if (_context != null && _context instanceof IFile) {
+			_ast = PhotranVPG.instance.acquireTransientAST(_context as IFile)
+			_ast
 		}
 		else if (_id > 0)
 			_codeDB.findAST(_id)
@@ -152,25 +159,57 @@ public abstract class CodeConcept<P extends CodeConcept<?,?>, A extends IASTNode
 	def List<CodeConcept<P,A>> reverseMultiple() {newArrayList(reverse)}
 	
 	def IFortranAST forward() throws CodeGenerationException {
+		null
+	}
+	
+	//temporarily in place to change return type
+	def CodeConcept<P,A> fward() throws CodeGenerationException {
 		//default behavior is to forward all children
 		//with forward annotation set to true
 		
-		for (Field field : getChildFields.filter[it.getAnnotation(Child).forward]) {
+		for (Field field : getChildFields.filter[
+			it.getAnnotation(Child).forward
+			&& !List.isAssignableFrom(it.type)  //exclude list types for now
+		]) {
 			var CodeConcept<?,?> childConcept = field.get(this) as CodeConcept<?,?>
 			if (childConcept == null) {
+				System.out.println("FORWARDING: " + field.name)
 				//create new instance
-				var con = field.class.constructors.findFirst[it.parameterTypes.length==1]
+				var con = field.type.constructors.findFirst[it.parameterTypes.length==1]
 				if (con != null) {
 					childConcept = con.newInstance(this) as CodeConcept<?,?>
 				}
 				else {
-        			throw new CodeGenerationException("Could not find constructor for class " + field.class.name);
+        			throw new CodeGenerationException("Could not find constructor for field " 
+        					+ field.name + " with class " + field.type.name);
         		}
 			}
-			childConcept.forward
+			field.set(this, childConcept.fward)
+		}		
+		this
+	}
+	
+	def commit() {
+		if (_context instanceof IFile) {
+			//this won't work because AST does not yet exist for new files
+			//PhotranVPG.getInstance().commitChangesFromInMemoryASTs(new NullProgressMonitor(), 0, _context);
+			writeToFile(_astRef.toString)
+			Reindenter.reindent(getAST.root, getAST, Strategy.REINDENT_EACH_LINE);  //reindent entire file
+			writeToFile(_astRef.toString)  //write reindented file
 		}
-		
-		null
+		else throw new CodeGenerationException("Can only commit to file resources")
+	}
+	
+	def writeToFile(String content) {
+		var file = _context as IFile
+		var is = new ByteArrayInputStream(content.bytes)
+		if (!file.exists) {
+			file.create(is, true, null)
+		}
+		else {
+			file.setContents(is, true, false, null)
+		}
+		is.close
 	}
 	
 	def newInstance() {
@@ -207,15 +246,5 @@ public abstract class CodeConcept<P extends CodeConcept<?,?>, A extends IASTNode
 	}
 	
 		
-	def createFile(String content) {
-		var file = _context as IFile
-		var is = new ByteArrayInputStream(content.bytes)
-		if (!file.exists) {
-			file.create(is, true, null)
-		}
-		else {
-			file.setContents(is, true, false, null)
-		}
-		is.close
-	}
+	
 }

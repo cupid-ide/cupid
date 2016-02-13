@@ -25,14 +25,25 @@ class ESMFQuery {
 			it.subroutineStmt.subroutinePars?.size == 2 
 			&&
 			{
-			var par1 = it.subroutineStmt.subroutinePars?.get(0)?.variableName.resolveBinding.get(0)
-			if (par1?.type.toString.eic("type(esmf_gridcomp)")) {
-				var par2 = it.subroutineStmt.subroutinePars?.get(1)?.variableName.resolveBinding.get(0)
-				par2.type.toString.eic("integer") &&
-				!par2.intentIn && 
-				par2.intentOut
+				
+			if (it.subroutineStmt.subroutinePars?.get(0) != null &&
+				it.subroutineStmt.subroutinePars?.get(0)?.variableName.resolveBinding.size() == 0) {
+				System.out.println("Cannot resolve binding for variable")
+				var vn = it.subroutineStmt.subroutinePars?.get(0)?.variableName
+				var lst = vn.resolveBinding
+				false
+			}
+			else {
+				var par1 = it.subroutineStmt.subroutinePars?.get(0)?.variableName.resolveBinding.get(0)
+				if (par1?.type.toString.eic("type(esmf_gridcomp)")) {
+					var par2 = it.subroutineStmt.subroutinePars?.get(1)?.variableName.resolveBinding.get(0)
+					par2.type.toString.eic("integer") &&
+					!par2.intentIn && 
+					par2.intentOut
+					}
 				}
 			}
+				
 		]
 	}
 	
@@ -50,23 +61,31 @@ class ESMFQuery {
 		node.body.filter(ASTSubroutineSubprogramNode).filter[
 			it.subroutineStmt.subroutinePars?.size == 5 
 			&&
-			{
-			var par1 = it.subroutineStmt.subroutinePars?.get(0)?.variableName.resolveBinding.get(0)
-			if (par1?.type.toString.eic("type(esmf_gridcomp)")) {
-				var par2 = it.subroutineStmt.subroutinePars?.get(1)?.variableName.resolveBinding.get(0)
-				if (par2.type.toString.eic("type(esmf_state)")) {
-					var par3 = it.subroutineStmt.subroutinePars?.get(2)?.variableName.resolveBinding.get(0)
-					if (par3.type.toString.eic("type(esmf_state)")) {
-						var par4 = it.subroutineStmt.subroutinePars?.get(3)?.variableName.resolveBinding.get(0)
-						if (par4.type.toString.eic("type(esmf_clock)")) {
-							var par5 = it.subroutineStmt.subroutinePars?.get(4)?.variableName.resolveBinding.get(0)
-							par5.type.toString.eic("integer") &&
-							!par5.intentIn &&
-							par5.intentOut
+			{	
+			if (it.subroutineStmt.subroutinePars?.get(0) != null &&
+				it.subroutineStmt.subroutinePars?.get(0)?.variableName.resolveBinding.size() == 0) {
+				System.out.println("Cannot resolve binding for variable")
+				false
+			}
+			else {
+				var par1 = it.subroutineStmt.subroutinePars?.get(0)?.variableName.resolveBinding.get(0)
+				if (par1?.type.toString.eic("type(esmf_gridcomp)")) {
+					var par2 = it.subroutineStmt.subroutinePars?.get(1)?.variableName.resolveBinding.get(0)
+					if (par2.type.toString.eic("type(esmf_state)")) {
+						var par3 = it.subroutineStmt.subroutinePars?.get(2)?.variableName.resolveBinding.get(0)
+						if (par3.type.toString.eic("type(esmf_state)")) {
+							var par4 = it.subroutineStmt.subroutinePars?.get(3)?.variableName.resolveBinding.get(0)
+							if (par4.type.toString.eic("type(esmf_clock)")) {
+								var par5 = it.subroutineStmt.subroutinePars?.get(4)?.variableName.resolveBinding.get(0)
+								par5.type.toString.eic("integer") &&
+								!par5.intentIn &&
+								par5.intentOut
+							}
 						}
 					}
 				}
-			}
+				
+				}
 			}
 		]
 	}

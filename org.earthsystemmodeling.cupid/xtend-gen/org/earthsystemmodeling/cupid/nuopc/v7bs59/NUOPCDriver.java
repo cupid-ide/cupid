@@ -1561,24 +1561,6 @@ public class NUOPCDriver extends NUOPCComponent {
       return _xblockexpression;
     }
     
-    /**
-     * override reverse() {
-     * if (this == super.reverse) {
-     * var rs = '''call_(_cid, «_id», 'NUOPC_DriverNewRunSequence'),
-     * callArgWithType(_, _cid, _, 'slotCount', _, _slotExpr).'''.execQuery
-     * if (rs.next) {
-     * newRunSequence = newBasicCodeConcept(this, rs.getLong("_cid"))
-     * }
-     * 
-     * runElements = new SetRunSequence_AddRunElement(this).reverseMultiple() as List<SetRunSequence_AddRunElement>
-     * this
-     * }
-     * else {
-     * null
-     * }
-     * 
-     * }
-     */
     @Override
     public String subroutineTemplate() {
       StringConcatenation _builder = new StringConcatenation();
@@ -1788,57 +1770,6 @@ public class NUOPCDriver extends NUOPCComponent {
       return _xblockexpression;
     }
     
-    /**
-     * override List reverseMultiple() {
-     * 
-     * var retList = newArrayList()
-     * 
-     * var rs = '''call_(_cid, «parentID», 'NUOPC_DriverAddRunElement').'''.execQuery
-     * 
-     * 
-     * while (rs.next) {
-     * var addComp = new SetRunSequence_AddRunElement(_parent)
-     * addComp._id = rs.getLong("_cid")
-     * retList.add(addComp)
-     * }
-     * rs.close
-     * 
-     * for (SetRunSequence_AddRunElement addComp : retList) {
-     * rs = '''callArgWithType(_, «addComp._id», _, 'srcCompLabel', _, _srcCompExpr),
-     * callArgWithType(_, «addComp._id», _, 'dstCompLabel', _, _dstCompExpr),
-     * callArgWithType(_, «addComp._id», _, 'slot', _, _slotExpr).'''.execQuery
-     * 
-     * if (rs.next) {
-     * addComp.srcCompLabel = rs.getString("_srcCompExpr")
-     * addComp.dstCompLabel = rs.getString("_dstCompExpr")
-     * addComp.slot = rs.getString("_slotExpr")
-     * rs.close
-     * }
-     * else {
-     * rs = '''callArgWithType(_, «addComp._id», _, 'compLabel', _, _compExpr),
-     * callArgWithType(_, «addComp._id», _, 'slot', _, _slotExpr).'''.execQuery
-     * if (rs.next) {
-     * addComp.compLabel = rs.getString("_compExpr")
-     * addComp.slot = rs.getString("_slotExpr")
-     * rs.close
-     * }
-     * else {
-     * //call NUOPC_DriverAddRunElement(driver, slot=1, linkSlot=2, rc=rc)
-     * rs = '''callArgWithType(_, «addComp._id», _, 'slot', _, _slotExpr),
-     * callArgWithType(_, «addComp._id», _, 'linkSlot', _, _linkSlotExpr).'''.execQuery
-     * if (rs.next) {
-     * addComp.linkSlot = rs.getString("_linkSlotExpr")
-     * addComp.slot = rs.getString("_slotExpr")
-     * rs.close
-     * }
-     * }
-     * }
-     * }
-     * 
-     * retList
-     * 
-     * }
-     */
     @Override
     public IFortranAST forward() {
       IFortranAST _xblockexpression = null;
@@ -2318,7 +2249,7 @@ public class NUOPCDriver extends NUOPCComponent {
   
   public String path;
   
-  @Child
+  @Child(forward = true)
   public NUOPCDriver.SetServices setServices;
   
   @Child
@@ -2332,13 +2263,13 @@ public class NUOPCDriver extends NUOPCComponent {
   
   public NUOPCDriver(final CodeDBIndex codeDB) {
     super(null);
-    this._codeDB = codeDB;
+    this._codeDB = null;
   }
   
-  public NUOPCDriver(final IResource context, final CodeDBIndex codeDB) {
+  public NUOPCDriver(final IResource context) {
     super(null);
     this._context = context;
-    this._codeDB = codeDB;
+    this._codeDB = null;
   }
   
   @Override
@@ -2490,9 +2421,9 @@ public class NUOPCDriver extends NUOPCComponent {
   }
   
   @Override
-  public IFortranAST forward() {
+  public NUOPCDriver fward() {
     try {
-      IFortranAST _xblockexpression = null;
+      NUOPCDriver _xblockexpression = null;
       {
         ASTModuleNode _aSTRef = this.getASTRef();
         boolean _equals = Objects.equal(_aSTRef, null);
@@ -2514,9 +2445,12 @@ public class NUOPCDriver extends NUOPCComponent {
           _builder.append("use NUOPC");
           _builder.newLine();
           _builder.append("\t");
-          _builder.append("use NUOPC_Driver");
+          _builder.append("use NUOPC_Driver, only: &");
           _builder.newLine();
-          _builder.append("\t");
+          _builder.append("\t\t");
+          _builder.append("driver_SetServices => SetServices");
+          _builder.newLine();
+          _builder.append("\t\t");
           _builder.newLine();
           _builder.append("\t");
           _builder.append("implicit none");
@@ -2531,10 +2465,43 @@ public class NUOPCDriver extends NUOPCComponent {
           _builder.append("end module");
           _builder.newLine();
           String code = _builder.toString();
-          this.createFile(code);
-          this.reverse();
+          ASTModuleNode moduleNode = CodeExtraction.<ASTModuleNode>parseLiteralProgramUnit(code);
+          this.setASTRef(moduleNode);
+          IASTListNode<IModuleBodyConstruct> _moduleBody = moduleNode.getModuleBody();
+          Iterable<ASTUseStmtNode> _filter = Iterables.<ASTUseStmtNode>filter(_moduleBody, ASTUseStmtNode.class);
+          final Procedure1<ASTUseStmtNode> _function = new Procedure1<ASTUseStmtNode>() {
+            @Override
+            public void apply(final ASTUseStmtNode it) {
+              Token _name = it.getName();
+              String _text = _name.getText();
+              boolean _eic = ASTQuery.eic(_text, "ESMF");
+              if (_eic) {
+                BasicCodeConcept<ASTUseStmtNode> _basicCodeConcept = new BasicCodeConcept<ASTUseStmtNode>(NUOPCDriver.this, it);
+                NUOPCDriver.this.importESMF = _basicCodeConcept;
+              } else {
+                Token _name_1 = it.getName();
+                String _text_1 = _name_1.getText();
+                boolean _eic_1 = ASTQuery.eic(_text_1, "NUOPC");
+                if (_eic_1) {
+                  BasicCodeConcept<ASTUseStmtNode> _basicCodeConcept_1 = new BasicCodeConcept<ASTUseStmtNode>(NUOPCDriver.this, it);
+                  NUOPCDriver.this.importNUOPC = _basicCodeConcept_1;
+                } else {
+                  Token _name_2 = it.getName();
+                  String _text_2 = _name_2.getText();
+                  boolean _eic_2 = ASTQuery.eic(_text_2, "NUOPC_Driver");
+                  if (_eic_2) {
+                    NUOPCComponent.GenericImport _genericImport = new NUOPCComponent.GenericImport(NUOPCDriver.this, it);
+                    NUOPCComponent.GenericImport _reverse = _genericImport.reverse();
+                    NUOPCDriver.this.importNUOPCGeneric = _reverse;
+                  }
+                }
+              }
+            }
+          };
+          IterableExtensions.<ASTUseStmtNode>forEach(_filter, _function);
         }
-        _xblockexpression = super.forward();
+        CodeConcept<CodeConcept<?, ?>, ASTModuleNode> _fward = super.fward();
+        _xblockexpression = ((NUOPCDriver) _fward);
       }
       return _xblockexpression;
     } catch (Throwable _e) {
