@@ -26,23 +26,29 @@ public class TestHelpers {
 	 * @param projectName
 	 * @throws IOException 
 	 * @throws CoreException 
+	 * @throws InterruptedException 
 	 */
-	public static IProject createProjectFromFolder(String relativePath, String projectName) throws IOException, CoreException  {			
+	public static IProject createProjectFromFolder(String relativePath, String projectName) throws IOException, CoreException, InterruptedException  {			
 		URL sourceFolder = FileLocator.toFileURL(FileLocator.find(MY_BUNDLE, new Path(relativePath), null));	
 		File srcDir = new File(sourceFolder.getFile());
 				
 		IWorkspaceRoot root = ResourcesPlugin.getWorkspace().getRoot();
 		IProject p = root.getProject(projectName);
 		if (p.exists()) {
+			File dstDir = p.getLocation().toFile();
+			dstDir.delete();
 			p.delete(true, true, new NullProgressMonitor());
 		}
+		
+		p = root.getProject(projectName);
 		p.create(new NullProgressMonitor());
+		p.open(new NullProgressMonitor());
 		File dstDir = p.getLocation().toFile();
 		
 		//System.out.println("Copy from: " + srcDir + " =====> " + dstDir);
 		FileUtils.copyDirectory(srcDir, dstDir);
 		p.refreshLocal(IResource.DEPTH_INFINITE, new NullProgressMonitor());
-		p.open(new NullProgressMonitor());
+		//p.open(new NullProgressMonitor());
 		return p;
 	}
 	

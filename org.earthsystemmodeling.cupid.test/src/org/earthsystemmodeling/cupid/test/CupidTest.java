@@ -52,7 +52,7 @@ public class CupidTest {
 	private static IProject PROJECT_NUOPC_PROTOTYPES;
 		
 	@BeforeClass
-	public static void setUp() throws CoreException, IOException {
+	public static void setUp() throws CoreException, IOException, InterruptedException {
 		PROJECT_NUOPC_PROTOTYPES = TestHelpers.createProjectFromFolder("target/ESMF_7_0_0_beta_snapshot_59", "ESMF_7_0_0_beta_snapshot_59");
 	}
 	
@@ -545,7 +545,8 @@ public class CupidTest {
 	}
 	
 	@Test
-	public void Generated() throws IOException, CoreException {
+	@Ignore
+	public void Generated() throws IOException, CoreException, InterruptedException {
 		IProject p = TestHelpers.createProjectFromFolder("workspace/Generated", "Generated");
 		p.open(null);
 		
@@ -610,7 +611,7 @@ public class CupidTest {
 	}
 	
 	@Test
-	public void ChangeNUOPCDriver() throws IOException, CoreException {
+	public void ChangeNUOPCDriver() throws IOException, CoreException, InterruptedException {
 		
 		IProject p = TestHelpers.createProjectFromFolder("target/ESMF_7_0_0_beta_snapshot_59/AtmOcnProto", "ChangeNUOPCDriver");
 		IFile f = p.getFile("esm.F90");
@@ -645,6 +646,52 @@ public class CupidTest {
 		srsare = srsare.fward();
 		srsare.commit();
 		
+		//re-reverse
+		driver = new NUOPCDriver(f).reverse();
+		assertNotNull(driver);
+		assertEquals("ESM", driver.driverName);
+		assertNotNull(driver.setServices);
+		assertEquals("SetServices", driver.setServices.subroutineName);
+		assertNotNull(driver.initialization.initSpecs.setRunSequence);
+		assertEquals(sname, driver.initialization.initSpecs.setRunSequence.subroutineName);
+		assertNotNull(driver.initialization.initSpecs.setRunSequence.runElements);
+		assertEquals(1, driver.initialization.initSpecs.setRunSequence.runElements.size());
+		
+		SetRunSequence_AddRunElement re = driver.initialization.initSpecs.setRunSequence.runElements.get(0);
+		assertEquals("MyCompLabel", re.compLabel);
+		assertEquals("1", re.slot);
+		
+		//f = null;
+		//p.delete(true, true, new NullProgressMonitor());
+	}
+	
+	@Test
+	public void ChangeNUOPCDriver2() throws IOException, CoreException, InterruptedException {
+		
+		IProject p = TestHelpers.createProjectFromFolder("target/ESMF_7_0_0_beta_snapshot_59/AtmOcnProto", "ChangeNUOPCDriver2");
+		IFile f = p.getFile("esm.F90");
+		
+		NUOPCDriver driver = new NUOPCDriver(f).reverse();
+		assertNotNull(driver);
+		assertEquals("ESM", driver.driverName);
+		assertNotNull(driver.setServices);
+		assertEquals("SetServices", driver.setServices.subroutineName);
+		assertNull(driver.initialization.initSpecs.setRunSequence);
+		
+		//add SetRunSequence specialization and a run element
+		final String sname = "NewSetRunSequence";
+		SetRunSequence srs = new SetRunSequence(driver.initialization.initSpecs);
+		srs.subroutineName = sname;
+		
+		SetRunSequence_AddRunElement srsare = new SetRunSequence_AddRunElement(srs);
+		srsare.compLabel = "MyCompLabel";
+		srsare.slot = "1";
+		//srsare = srsare.fward();
+		//srsare.commit();
+		
+		srs = (SetRunSequence) srs.fward();
+		srs.commit();
+				
 		//re-reverse
 		driver = new NUOPCDriver(f).reverse();
 		assertNotNull(driver);

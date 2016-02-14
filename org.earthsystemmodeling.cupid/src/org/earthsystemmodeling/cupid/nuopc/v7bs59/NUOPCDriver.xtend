@@ -1086,7 +1086,8 @@ if (ESMF_LogFoundError(rcToCheck=«_parent.paramRC», msg=ESMF_LOGERR_PASSTHRU, 
 			//defaults
 			subroutineName = "SetRunSequence"
 			specLabel = "driver_label_SetRunSequence"
-			//parent.setRunSequence = this
+			parent.setRunSequence = this
+			runElements = newArrayList()
 		}
 			
 		override reverse() {
@@ -1166,6 +1167,7 @@ end subroutine
 		
 		new(SetRunSequence parent) {
 			super(parent)
+			parent.runElements.add(this)
 		}
 		
 		override List reverseMultiple() {

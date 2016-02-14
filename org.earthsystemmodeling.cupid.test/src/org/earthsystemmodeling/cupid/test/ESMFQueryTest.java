@@ -27,7 +27,7 @@ public class ESMFQueryTest {
 	private static IProject PROJECT_NUOPC_PROTOTYPES;
 	
 	@BeforeClass
-	public static void setUp() throws CoreException, IOException {
+	public static void setUp() throws CoreException, IOException, InterruptedException {
 		PROJECT_NUOPC_PROTOTYPES = TestHelpers.createProjectFromFolder("target/ESMF_7_0_0_beta_snapshot_59", "ESMF_7_0_0_beta_snapshot_59");
 	}
 	

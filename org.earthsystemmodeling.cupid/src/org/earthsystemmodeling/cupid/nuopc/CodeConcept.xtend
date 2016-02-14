@@ -168,24 +168,46 @@ public abstract class CodeConcept<P extends CodeConcept<?,?>, A extends IASTNode
 		//default behavior is to forward all children
 		//with forward annotation set to true
 		
-		for (Field field : getChildFields.filter[
-			it.getAnnotation(Child).forward
-			&& !List.isAssignableFrom(it.type)  //exclude list types for now
-		]) {
-			var CodeConcept<?,?> childConcept = field.get(this) as CodeConcept<?,?>
-			if (childConcept == null) {
-				System.out.println("FORWARDING: " + field.name)
-				//create new instance
-				var con = field.type.constructors.findFirst[it.parameterTypes.length==1]
-				if (con != null) {
-					childConcept = con.newInstance(this) as CodeConcept<?,?>
+		for (Field field : getChildFields) {
+			
+			//deal with lists
+			if (List.isAssignableFrom(field.type)) {
+				
+				//use reflection to get type of CodeConcept stored in the list
+				//var pt = field.type.genericSuperclass as ParameterizedType
+				//var clazz = pt.actualTypeArguments.get(0) as Class<?>
+				//var con = clazz.constructors.findFirst[it.parameterTypes.length==1]
+				
+				var theList = field.get(this) as List<CodeConcept<?,?>>
+				if (theList != null) {
+					for (var i=0; i<theList.size(); i++) {
+						theList.set(i, theList.get(i).fward)
+					}
 				}
-				else {
-        			throw new CodeGenerationException("Could not find constructor for field " 
-        					+ field.name + " with class " + field.type.name);
-        		}
+				
 			}
-			field.set(this, childConcept.fward)
+			//deal with single element
+			else {
+				var CodeConcept<?,?> childConcept = field.get(this) as CodeConcept<?,?>
+				if (childConcept == null 
+					//annotation determines if a child should be created automatically
+					&& field.getAnnotation(Child).forward   
+				) {
+					//System.out.println("FORWARDING: " + field.name)
+					//create new instance
+					var con = field.type.constructors.findFirst[it.parameterTypes.length==1]
+					if (con != null) {
+						childConcept = con.newInstance(this) as CodeConcept<?,?>
+					}
+					else {
+	        			throw new CodeGenerationException("Could not find constructor for field " 
+	        					+ field.name + " with class " + field.type.name);
+	        		}
+				}
+				if (childConcept != null) {
+					field.set(this, childConcept.fward)
+				}
+			}
 		}		
 		this
 	}

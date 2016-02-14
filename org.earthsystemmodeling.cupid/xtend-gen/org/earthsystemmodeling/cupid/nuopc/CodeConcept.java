@@ -321,36 +321,36 @@ public abstract class CodeConcept<P extends CodeConcept<?, ?>, A extends IASTNod
       CodeConcept<P, A> _xblockexpression = null;
       {
         List<Field> _childFields = this.getChildFields();
-        final Function1<Field, Boolean> _function = new Function1<Field, Boolean>() {
-          @Override
-          public Boolean apply(final Field it) {
+        for (final Field field : _childFields) {
+          Class<?> _type = field.getType();
+          boolean _isAssignableFrom = List.class.isAssignableFrom(_type);
+          if (_isAssignableFrom) {
+            Object _get = field.get(this);
+            List<CodeConcept<?, ?>> theList = ((List<CodeConcept<?, ?>>) _get);
+            boolean _notEquals = (!Objects.equal(theList, null));
+            if (_notEquals) {
+              for (int i = 0; (i < theList.size()); i++) {
+                CodeConcept<?, ?> _get_1 = theList.get(i);
+                CodeConcept<? extends CodeConcept<?, ?>, ? extends IASTNode> _fward = _get_1.fward();
+                theList.set(i, _fward);
+              }
+            }
+          } else {
+            Object _get_1 = field.get(this);
+            CodeConcept<?, ?> childConcept = ((CodeConcept<?, ?>) _get_1);
             boolean _and = false;
-            Child _annotation = it.<Child>getAnnotation(Child.class);
-            boolean _forward = _annotation.forward();
-            if (!_forward) {
+            boolean _equals = Objects.equal(childConcept, null);
+            if (!_equals) {
               _and = false;
             } else {
-              Class<?> _type = it.getType();
-              boolean _isAssignableFrom = List.class.isAssignableFrom(_type);
-              boolean _not = (!_isAssignableFrom);
-              _and = _not;
+              Child _annotation = field.<Child>getAnnotation(Child.class);
+              boolean _forward = _annotation.forward();
+              _and = _forward;
             }
-            return Boolean.valueOf(_and);
-          }
-        };
-        Iterable<Field> _filter = IterableExtensions.<Field>filter(_childFields, _function);
-        for (final Field field : _filter) {
-          {
-            Object _get = field.get(this);
-            CodeConcept<?, ?> childConcept = ((CodeConcept<?, ?>) _get);
-            boolean _equals = Objects.equal(childConcept, null);
-            if (_equals) {
-              String _name = field.getName();
-              String _plus = ("FORWARDING: " + _name);
-              System.out.println(_plus);
-              Class<?> _type = field.getType();
-              Constructor<?>[] _constructors = _type.getConstructors();
-              final Function1<Constructor<?>, Boolean> _function_1 = new Function1<Constructor<?>, Boolean>() {
+            if (_and) {
+              Class<?> _type_1 = field.getType();
+              Constructor<?>[] _constructors = _type_1.getConstructors();
+              final Function1<Constructor<?>, Boolean> _function = new Function1<Constructor<?>, Boolean>() {
                 @Override
                 public Boolean apply(final Constructor<?> it) {
                   Class<?>[] _parameterTypes = it.getParameterTypes();
@@ -358,23 +358,26 @@ public abstract class CodeConcept<P extends CodeConcept<?, ?>, A extends IASTNod
                   return Boolean.valueOf((_length == 1));
                 }
               };
-              Constructor<?> con = IterableExtensions.<Constructor<?>>findFirst(((Iterable<Constructor<?>>)Conversions.doWrapArray(_constructors)), _function_1);
-              boolean _notEquals = (!Objects.equal(con, null));
-              if (_notEquals) {
+              Constructor<?> con = IterableExtensions.<Constructor<?>>findFirst(((Iterable<Constructor<?>>)Conversions.doWrapArray(_constructors)), _function);
+              boolean _notEquals_1 = (!Objects.equal(con, null));
+              if (_notEquals_1) {
                 Object _newInstance = con.newInstance(this);
                 childConcept = ((CodeConcept<?, ?>) _newInstance);
               } else {
-                String _name_1 = field.getName();
-                String _plus_1 = ("Could not find constructor for field " + _name_1);
-                String _plus_2 = (_plus_1 + " with class ");
-                Class<?> _type_1 = field.getType();
-                String _name_2 = _type_1.getName();
-                String _plus_3 = (_plus_2 + _name_2);
-                throw new CodeGenerationException(_plus_3);
+                String _name = field.getName();
+                String _plus = ("Could not find constructor for field " + _name);
+                String _plus_1 = (_plus + " with class ");
+                Class<?> _type_2 = field.getType();
+                String _name_1 = _type_2.getName();
+                String _plus_2 = (_plus_1 + _name_1);
+                throw new CodeGenerationException(_plus_2);
               }
             }
-            CodeConcept<? extends CodeConcept<?, ?>, ? extends IASTNode> _fward = childConcept.fward();
-            field.set(this, _fward);
+            boolean _notEquals_2 = (!Objects.equal(childConcept, null));
+            if (_notEquals_2) {
+              CodeConcept<? extends CodeConcept<?, ?>, ? extends IASTNode> _fward = childConcept.fward();
+              field.set(this, _fward);
+            }
           }
         }
         _xblockexpression = this;

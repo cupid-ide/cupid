@@ -1518,6 +1518,9 @@ public class NUOPCDriver extends NUOPCComponent {
       super(parent, "NUOPC_Driver", "label_SetRunSequence");
       this.subroutineName = "SetRunSequence";
       this.specLabel = "driver_label_SetRunSequence";
+      parent.setRunSequence = this;
+      ArrayList<NUOPCDriver.SetRunSequence_AddRunElement> _newArrayList = CollectionLiterals.<NUOPCDriver.SetRunSequence_AddRunElement>newArrayList();
+      this.runElements = _newArrayList;
     }
     
     @Override
@@ -1674,6 +1677,7 @@ public class NUOPCDriver extends NUOPCComponent {
     
     public SetRunSequence_AddRunElement(final NUOPCDriver.SetRunSequence parent) {
       super(parent);
+      parent.runElements.add(this);
     }
     
     @Override
