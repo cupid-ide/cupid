@@ -14,6 +14,7 @@ import org.earthsystemmodeling.cupid.nuopc.ASTQuery;
 import org.earthsystemmodeling.cupid.nuopc.BasicCodeConcept;
 import org.earthsystemmodeling.cupid.nuopc.CodeConcept;
 import org.earthsystemmodeling.cupid.nuopc.CodeGenerationException;
+import org.earthsystemmodeling.cupid.nuopc.ESMFCodeTemplates;
 import org.earthsystemmodeling.cupid.nuopc.v7bs59.EntryPointCodeConcept;
 import org.earthsystemmodeling.cupid.nuopc.v7bs59.InternalEntryPointCodeConcept;
 import org.earthsystemmodeling.cupid.nuopc.v7bs59.NUOPCComponent;
@@ -1916,22 +1917,80 @@ public class NUOPCDriver extends NUOPCComponent {
             _builder.append(this._parent.paramRC, "    ");
             _builder.append(")");
             _builder.newLineIfNotEmpty();
-            _builder.append("if (ESMF_LogFoundError(rcToCheck=");
-            _builder.append(this._parent.paramRC, "");
-            _builder.append(", msg=ESMF_LOGERR_PASSTHRU, &");
+            CharSequence _ESMFErrorCheck = ESMFCodeTemplates.ESMFErrorCheck(this._parent.paramRC);
+            _builder.append(_ESMFErrorCheck, "");
             _builder.newLineIfNotEmpty();
-            _builder.append("    ");
-            _builder.append("line=__LINE__, &");
-            _builder.newLine();
-            _builder.append("    ");
-            _builder.append("file=__FILE__)) &");
-            _builder.newLine();
-            _builder.append("    ");
-            _builder.append("return  ! bail out");
-            _builder.newLine();
             code = _builder.toString();
           } else {
-            throw new CodeGenerationException("Need to implement");
+            boolean _and = false;
+            boolean _notEquals_1 = (!Objects.equal(this.srcCompLabel, null));
+            if (!_notEquals_1) {
+              _and = false;
+            } else {
+              boolean _notEquals_2 = (!Objects.equal(this.dstCompLabel, null));
+              _and = _notEquals_2;
+            }
+            if (_and) {
+              StringConcatenation _builder_1 = new StringConcatenation();
+              _builder_1.newLine();
+              _builder_1.append("! add a run sequence element for a Connector   ");
+              _builder_1.newLine();
+              _builder_1.append("call NUOPC_DriverAddRunElement(");
+              _builder_1.append(this._parent.paramGridComp, "");
+              _builder_1.append(", slot=");
+              CharSequence _paramint_1 = this.paramint(this.slot);
+              _builder_1.append(_paramint_1, "");
+              _builder_1.append(", &");
+              _builder_1.newLineIfNotEmpty();
+              _builder_1.append("    ");
+              _builder_1.append("srcCompLabel=");
+              CharSequence _paramch_2 = this.paramch(this.srcCompLabel);
+              _builder_1.append(_paramch_2, "    ");
+              _builder_1.append(", dstCompLabel=");
+              CharSequence _paramch_3 = this.paramch(this.dstCompLabel);
+              _builder_1.append(_paramch_3, "    ");
+              _builder_1.append(", rc=");
+              _builder_1.append(this._parent.paramRC, "    ");
+              _builder_1.append(")");
+              _builder_1.newLineIfNotEmpty();
+              CharSequence _ESMFErrorCheck_1 = ESMFCodeTemplates.ESMFErrorCheck(this._parent.paramRC);
+              _builder_1.append(_ESMFErrorCheck_1, "");
+              _builder_1.newLineIfNotEmpty();
+              code = _builder_1.toString();
+            } else {
+              boolean _and_1 = false;
+              boolean _notEquals_3 = (!Objects.equal(this.slot, null));
+              if (!_notEquals_3) {
+                _and_1 = false;
+              } else {
+                boolean _notEquals_4 = (!Objects.equal(this.linkSlot, null));
+                _and_1 = _notEquals_4;
+              }
+              if (_and_1) {
+                StringConcatenation _builder_2 = new StringConcatenation();
+                _builder_2.newLine();
+                _builder_2.append("! add a run sequence element to link between slots    ");
+                _builder_2.newLine();
+                _builder_2.append("call NUOPC_DriverAddRunElement(");
+                _builder_2.append(this._parent.paramGridComp, "");
+                _builder_2.append(", slot=");
+                CharSequence _paramint_2 = this.paramint(this.slot);
+                _builder_2.append(_paramint_2, "");
+                _builder_2.append(", linkSlot=");
+                CharSequence _paramint_3 = this.paramint(this.linkSlot);
+                _builder_2.append(_paramint_3, "");
+                _builder_2.append(", rc=");
+                _builder_2.append(this._parent.paramRC, "");
+                _builder_2.append(")");
+                _builder_2.newLineIfNotEmpty();
+                CharSequence _ESMFErrorCheck_2 = ESMFCodeTemplates.ESMFErrorCheck(this._parent.paramRC);
+                _builder_2.append(_ESMFErrorCheck_2, "");
+                _builder_2.newLineIfNotEmpty();
+                code = _builder_2.toString();
+              } else {
+                throw new CodeGenerationException("Missing required parameters to generate run sequence element");
+              }
+            }
           }
           final IASTListNode<IBodyConstruct> stmts = CodeExtraction.parseLiteralStatementSequence(code);
           final ASTSubroutineSubprogramNode ssn = this._parent.getASTRef();

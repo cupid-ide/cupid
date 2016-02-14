@@ -212,7 +212,7 @@ public abstract class CodeConcept<P extends CodeConcept<?,?>, A extends IASTNode
 		this
 	}
 	
-	def commit() {
+	def void commit() {
 		if (_context != null) {
 			if (_ast == null) {
 				//if ast does not exist yet, then write out the code
@@ -225,8 +225,8 @@ public abstract class CodeConcept<P extends CodeConcept<?,?>, A extends IASTNode
 			var rewriter = new RewriteASTRunnable(getAST);
 			rewriter.run(new NullProgressMonitor());
 			
-			//PhotranVPG.instance.commitChangesFromInMemoryASTs(
-			//			new NullProgressMonitor(), 0, _context as IFile)
+			PhotranVPG.instance.commitChangesFromInMemoryASTs(
+						new NullProgressMonitor(), 0, _context as IFile)
 			_ast = null
 			PhotranVPG.instance.releaseAST(_context as IFile)
 			

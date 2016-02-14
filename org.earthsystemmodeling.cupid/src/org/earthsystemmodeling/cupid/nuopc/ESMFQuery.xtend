@@ -5,6 +5,7 @@ import org.eclipse.photran.internal.core.parser.ASTSubroutineSubprogramNode
 import org.eclipse.photran.internal.core.parser.ASTCallStmtNode
 
 import static extension org.earthsystemmodeling.cupid.nuopc.ASTQuery.*
+import org.eclipse.photran.internal.core.lexer.Token
 
 class ESMFQuery {
 	
@@ -24,73 +25,67 @@ class ESMFQuery {
 		node.body.filter(ASTSubroutineSubprogramNode).filter[
 			it.subroutineStmt.subroutinePars?.size == 2 
 			&&
-			{
-				
-			if (it.subroutineStmt.subroutinePars?.get(0) != null &&
-				it.subroutineStmt.subroutinePars?.get(0)?.variableName.resolveBinding.size() == 0) {
-				System.out.println("Cannot resolve binding for variable")
-				var vn = it.subroutineStmt.subroutinePars?.get(0)?.variableName
-				var lst = vn.resolveBinding
-				false
-			}
-			else {
-				var par1 = it.subroutineStmt.subroutinePars?.get(0)?.variableName.resolveBinding.get(0)
+			{			
+//			if (it.subroutineStmt.subroutinePars?.get(0) != null &&
+//				it.subroutineStmt.subroutinePars?.get(0)?.variableName.resolveBinding.size() == 0) {
+//				System.out.println("Cannot resolve binding for variable")
+//				var vn = it.subroutineStmt.subroutinePars?.get(0)?.variableName
+//				var lst = vn.resolveBinding
+//				throw new ReverseEngineerException("Cannot resolve binding for variable")
+//			}
+//			else {
+				var par1 = it.subroutineStmt.subroutinePars?.get(0)?.variableName.resolveOrDie
 				if (par1?.type.toString.eic("type(esmf_gridcomp)")) {
-					var par2 = it.subroutineStmt.subroutinePars?.get(1)?.variableName.resolveBinding.get(0)
+					var par2 = it.subroutineStmt.subroutinePars?.get(1)?.variableName.resolveOrDie
 					par2.type.toString.eic("integer") &&
 					!par2.intentIn && 
 					par2.intentOut
 					}
 				}
-			}
+//			}
 				
 		]
 	}
-	
-	/*
-	esmf_entrypoint(_id, _parentid, _name, _param_gridcomp, _param_import, _param_export, _param_clock, _param_rc) :- 
-  	subroutine(_id, _parentid, _name),
-  	param(_pid1, _id, 1, _param_gridcomp, 'type(esmf_gridcomp)', _, _),
-  	param(_pid2, _id, 2, _param_import,   'type(esmf_state)',    _, _),
-  	param(_pid3, _id, 3, _param_export,   'type(esmf_state)',    _, _),
-  	param(_pid4, _id, 4, _param_clock,    'type(esmf_clock)',    _, _),
-  	param(_pid5, _id, 5, _param_rc,       'integer',             false, true).
-	*/
 	
 	def static findESMFEntryPoints(ASTModuleNode node) {
 		node.body.filter(ASTSubroutineSubprogramNode).filter[
 			it.subroutineStmt.subroutinePars?.size == 5 
 			&&
 			{	
-			if (it.subroutineStmt.subroutinePars?.get(0) != null &&
-				it.subroutineStmt.subroutinePars?.get(0)?.variableName.resolveBinding.size() == 0) {
-				System.out.println("Cannot resolve binding for variable")
-				false
-			}
-			else {
-				var par1 = it.subroutineStmt.subroutinePars?.get(0)?.variableName.resolveBinding.get(0)
+//			if (it.subroutineStmt.subroutinePars?.get(0) != null &&
+//				it.subroutineStmt.subroutinePars?.get(0)?.variableName.resolveBinding.size() == 0) {
+//				System.out.println("Cannot resolve binding for variable")
+//				false
+//			}
+//			else {
+				var par1 = it.subroutineStmt.subroutinePars?.get(0)?.variableName.resolveOrDie
 				if (par1?.type.toString.eic("type(esmf_gridcomp)")) {
-					var par2 = it.subroutineStmt.subroutinePars?.get(1)?.variableName.resolveBinding.get(0)
+					var par2 = it.subroutineStmt.subroutinePars?.get(1)?.variableName.resolveOrDie
 					if (par2.type.toString.eic("type(esmf_state)")) {
-						var par3 = it.subroutineStmt.subroutinePars?.get(2)?.variableName.resolveBinding.get(0)
+						var par3 = it.subroutineStmt.subroutinePars?.get(2)?.variableName.resolveOrDie
 						if (par3.type.toString.eic("type(esmf_state)")) {
-							var par4 = it.subroutineStmt.subroutinePars?.get(3)?.variableName.resolveBinding.get(0)
+							var par4 = it.subroutineStmt.subroutinePars?.get(3)?.variableName.resolveOrDie
 							if (par4.type.toString.eic("type(esmf_clock)")) {
-								var par5 = it.subroutineStmt.subroutinePars?.get(4)?.variableName.resolveBinding.get(0)
+								var par5 = it.subroutineStmt.subroutinePars?.get(4)?.variableName.resolveOrDie
 								par5.type.toString.eic("integer") &&
 								!par5.intentIn &&
 								par5.intentOut
 							}
 						}
 					}
-				}
-				
-				}
+				}			
+//				}
 			}
 		]
 	}
 	
-		
+	def static resolveOrDie(Token toResolve) {
+		var defs = toResolve.resolveBinding
+		if (defs == null || defs.size() == 0) throw new ReverseEngineerException("Cannot resolve binding for token: " + toResolve.text)
+		else if (defs.size() > 1) throw new ReverseEngineerException("Ambiguous definition binding for token: " + toResolve.text)
+		else defs.get(0)
+	}	
+	
 	
 	
 }

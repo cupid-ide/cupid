@@ -26,6 +26,7 @@ import org.eclipse.photran.internal.core.parser.IBodyConstruct
 import static org.earthsystemmodeling.cupid.util.CodeExtraction.*
 
 import static extension org.earthsystemmodeling.cupid.nuopc.ASTQuery.*
+import static org.earthsystemmodeling.cupid.nuopc.ESMFCodeTemplates.*
 
 @Label(label="NUOPC Driver")
 @MappingType("module")
@@ -1248,14 +1249,32 @@ if (ESMF_LogFoundError(rcToCheck=rc, msg=ESMF_LOGERR_PASSTHRU, &
 ! add a run sequence element for a Model, Mediator, or Driver       
 call NUOPC_DriverAddRunElement(«_parent.paramGridComp», slot=«paramint(slot)», &
     compLabel=«paramch(compLabel)», phaseLabel="«paramch('optionalPhaseLabel')»", rc=«_parent.paramRC»)
-if (ESMF_LogFoundError(rcToCheck=«_parent.paramRC», msg=ESMF_LOGERR_PASSTHRU, &
-    line=__LINE__, &
-    file=__FILE__)) &
-    return  ! bail out
+«ESMFErrorCheck(_parent.paramRC)»
 '''			
 		}
-		else throw new CodeGenerationException("Need to implement") //for now			
+		else if (srcCompLabel != null && dstCompLabel != null) {
+			code = 
+'''
 
+! add a run sequence element for a Connector   
+call NUOPC_DriverAddRunElement(«_parent.paramGridComp», slot=«paramint(slot)», &
+    srcCompLabel=«paramch(srcCompLabel)», dstCompLabel=«paramch(dstCompLabel)», rc=«_parent.paramRC»)
+«ESMFErrorCheck(_parent.paramRC)»
+'''				
+		}
+		else if (slot != null && linkSlot != null) {
+			code = 
+'''	
+
+! add a run sequence element to link between slots    
+call NUOPC_DriverAddRunElement(«_parent.paramGridComp», slot=«paramint(slot)», linkSlot=«paramint(linkSlot)», rc=«_parent.paramRC»)
+«ESMFErrorCheck(_parent.paramRC)»
+'''    
+		}
+		else {
+			throw new CodeGenerationException("Missing required parameters to generate run sequence element")	
+		}	
+	
 		val IASTListNode<IBodyConstruct> stmts = parseLiteralStatementSequence(code)
 		val ASTSubroutineSubprogramNode ssn = _parent.ASTRef
 		ssn.body.addAll(stmts)

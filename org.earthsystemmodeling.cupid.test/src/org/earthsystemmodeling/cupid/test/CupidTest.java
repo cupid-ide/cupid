@@ -611,9 +611,9 @@ public class CupidTest {
 	}
 	
 	@Test
-	public void ChangeNUOPCDriver() throws IOException, CoreException, InterruptedException {
+	public void NUOPCDriverAddRunSequence() throws IOException, CoreException, InterruptedException {
 		
-		IProject p = TestHelpers.createProjectFromFolder("target/ESMF_7_0_0_beta_snapshot_59/AtmOcnProto", "ChangeNUOPCDriver");
+		IProject p = TestHelpers.createProjectFromFolder("target/ESMF_7_0_0_beta_snapshot_59/AtmOcnProto", "NUOPCDriverAddRunSequence");
 		IFile f = p.getFile("esm.F90");
 		
 		NUOPCDriver driver = new NUOPCDriver(f).reverse();
@@ -666,9 +666,9 @@ public class CupidTest {
 	}
 	
 	@Test
-	public void ChangeNUOPCDriver2() throws IOException, CoreException, InterruptedException {
+	public void NUOPCDriverAddRunSequence2() throws IOException, CoreException, InterruptedException {
 		
-		IProject p = TestHelpers.createProjectFromFolder("target/ESMF_7_0_0_beta_snapshot_59/AtmOcnProto", "ChangeNUOPCDriver2");
+		IProject p = TestHelpers.createProjectFromFolder("target/ESMF_7_0_0_beta_snapshot_59/AtmOcnProto", "NUOPCDriverAddRunSequence2");
 		IFile f = p.getFile("esm.F90");
 		
 		NUOPCDriver driver = new NUOPCDriver(f).reverse();
@@ -678,7 +678,7 @@ public class CupidTest {
 		assertEquals("SetServices", driver.setServices.subroutineName);
 		assertNull(driver.initialization.initSpecs.setRunSequence);
 		
-		//add SetRunSequence specialization and a run element
+		//add SetRunSequence specialization and two run element
 		final String sname = "NewSetRunSequence";
 		SetRunSequence srs = new SetRunSequence(driver.initialization.initSpecs);
 		srs.subroutineName = sname;
@@ -686,9 +686,10 @@ public class CupidTest {
 		SetRunSequence_AddRunElement srsare = new SetRunSequence_AddRunElement(srs);
 		srsare.compLabel = "MyCompLabel";
 		srsare.slot = "1";
-		//srsare = srsare.fward();
-		//srsare.commit();
-		
+		SetRunSequence_AddRunElement srsare2 = new SetRunSequence_AddRunElement(srs);
+		srsare2.compLabel = "AnotherCompLabel";
+		srsare2.slot = "1";
+			
 		srs = (SetRunSequence) srs.fward();
 		srs.commit();
 				
@@ -701,14 +702,50 @@ public class CupidTest {
 		assertNotNull(driver.initialization.initSpecs.setRunSequence);
 		assertEquals(sname, driver.initialization.initSpecs.setRunSequence.subroutineName);
 		assertNotNull(driver.initialization.initSpecs.setRunSequence.runElements);
-		assertEquals(1, driver.initialization.initSpecs.setRunSequence.runElements.size());
+		assertEquals(2, driver.initialization.initSpecs.setRunSequence.runElements.size());
 		
-		SetRunSequence_AddRunElement re = driver.initialization.initSpecs.setRunSequence.runElements.get(0);
+		SetRunSequence_AddRunElement re;
+		re = driver.initialization.initSpecs.setRunSequence.runElements.get(0);
 		assertEquals("MyCompLabel", re.compLabel);
 		assertEquals("1", re.slot);
+		re = driver.initialization.initSpecs.setRunSequence.runElements.get(1);
+		assertEquals("AnotherCompLabel", re.compLabel);
+		assertEquals("1", re.slot);
 		
-		//f = null;
-		//p.delete(true, true, new NullProgressMonitor());
+		srs = driver.initialization.initSpecs.setRunSequence;
+		
+		//add connector run sequence element
+		SetRunSequence_AddRunElement connElem = 
+				new SetRunSequence_AddRunElement(srs);
+		connElem.srcCompLabel = "ConnSrc";
+		connElem.dstCompLabel = "ConnDst";
+		connElem.slot = "1";
+		
+		//add link slot run sequence element
+		SetRunSequence_AddRunElement slotLinkElem = 
+				new SetRunSequence_AddRunElement(srs);
+		slotLinkElem.slot = "1";
+		slotLinkElem.linkSlot = "2";
+		
+		connElem.fward();
+		slotLinkElem.fward();
+		srs.commit();
+		
+		//re-reverse
+		driver = new NUOPCDriver(f).reverse();
+		assertEquals(4, driver.initialization.initSpecs.setRunSequence.runElements.size());
+		
+		re = driver.initialization.initSpecs.setRunSequence.runElements.get(2);
+		assertEquals("ConnSrc", re.srcCompLabel);
+		assertEquals("ConnDst", re.dstCompLabel);
+		assertEquals("1", re.slot);
+		
+		re = driver.initialization.initSpecs.setRunSequence.runElements.get(3);
+		assertEquals("1", re.slot);
+		assertEquals("2", re.linkSlot);
+				
+		
+		
 	}
 	
 	

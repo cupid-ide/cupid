@@ -155,7 +155,14 @@ public abstract class SpecializationMethodCodeConcept<P extends CodeConcept<?, ?
       ASTSubroutineParNode _get_1 = _subroutinePars_1.get(1);
       Token _variableName_1 = _get_1.getVariableName();
       final String pRC = _variableName_1.getText();
-      final Procedure1<ASTSubroutineSubprogramNode> _function = new Procedure1<ASTSubroutineSubprogramNode>() {
+      final Function1<ASTSubroutineSubprogramNode, Boolean> _function = new Function1<ASTSubroutineSubprogramNode, Boolean>() {
+        @Override
+        public Boolean apply(final ASTSubroutineSubprogramNode it) {
+          return Boolean.valueOf((!Objects.equal(it, setServicesNode)));
+        }
+      };
+      Iterable<ASTSubroutineSubprogramNode> _filter = IterableExtensions.<ASTSubroutineSubprogramNode>filter(esmfMethods, _function);
+      final Procedure1<ASTSubroutineSubprogramNode> _function_1 = new Procedure1<ASTSubroutineSubprogramNode>() {
         @Override
         public void apply(final ASTSubroutineSubprogramNode m) {
           IASTListNode<IBodyConstruct> _body = setServicesNode.getBody();
@@ -231,7 +238,7 @@ public abstract class SpecializationMethodCodeConcept<P extends CodeConcept<?, ?
           IterableExtensions.<ASTCallStmtNode>forEach(_filter_1, _function_1);
         }
       };
-      IterableExtensions.<ASTSubroutineSubprogramNode>forEach(esmfMethods, _function);
+      IterableExtensions.<ASTSubroutineSubprogramNode>forEach(_filter, _function_1);
       _xblockexpression = resultList;
     }
     return _xblockexpression;

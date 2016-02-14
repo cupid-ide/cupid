@@ -388,9 +388,8 @@ public abstract class CodeConcept<P extends CodeConcept<?, ?>, A extends IASTNod
     }
   }
   
-  public Object commit() {
+  public void commit() {
     try {
-      Object _xifexpression = null;
       boolean _notEquals = (!Objects.equal(this._context, null));
       if (_notEquals) {
         boolean _equals = Objects.equal(this._ast, null);
@@ -406,20 +405,20 @@ public abstract class CodeConcept<P extends CodeConcept<?, ?>, A extends IASTNod
         RewriteASTRunnable rewriter = new RewriteASTRunnable(_aST_2);
         NullProgressMonitor _nullProgressMonitor = new NullProgressMonitor();
         rewriter.run(_nullProgressMonitor);
-        this._ast = null;
         PhotranVPG _instance = PhotranVPG.getInstance();
-        _instance.releaseAST(((IFile) this._context));
+        NullProgressMonitor _nullProgressMonitor_1 = new NullProgressMonitor();
+        _instance.commitChangesFromInMemoryASTs(_nullProgressMonitor_1, 0, ((IFile) this._context));
+        this._ast = null;
+        PhotranVPG _instance_1 = PhotranVPG.getInstance();
+        _instance_1.releaseAST(((IFile) this._context));
       } else {
-        Object _xifexpression_1 = null;
         boolean _notEquals_1 = (!Objects.equal(this._parent, null));
         if (_notEquals_1) {
-          _xifexpression_1 = this._parent.commit();
+          this._parent.commit();
         } else {
           throw new CodeGenerationException("Cannot commit change because no file provided");
         }
-        _xifexpression = _xifexpression_1;
       }
-      return _xifexpression;
     } catch (Throwable _e) {
       throw Exceptions.sneakyThrow(_e);
     }

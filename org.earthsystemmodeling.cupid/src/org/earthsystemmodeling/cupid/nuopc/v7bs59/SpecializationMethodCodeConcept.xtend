@@ -89,7 +89,7 @@ public abstract class SpecializationMethodCodeConcept<P extends CodeConcept<?,?>
 		val pGridComp = setServicesNode.subroutineStmt.subroutinePars.get(0).variableName.text
 		val pRC =  setServicesNode.subroutineStmt.subroutinePars.get(1).variableName.text
 		
-		esmfMethods.forEach[m|
+		esmfMethods.filter[it != setServicesNode].forEach[m|
 			setServicesNode.body.filter(ASTCallStmtNode).
 				filter[
 						it.subroutineName.eic("NUOPC_CompSpecialize") &&
