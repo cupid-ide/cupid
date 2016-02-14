@@ -59,6 +59,7 @@ public class TestHelpers {
 			p.delete(true, true, new NullProgressMonitor());
 		}
 		p.create(new NullProgressMonitor());
+		p.open(new NullProgressMonitor());
 		return p;
 	}
 	

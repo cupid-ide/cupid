@@ -938,13 +938,13 @@ public class NUOPCDriver extends NUOPCComponent {
   
   @Label(label = "Initialize")
   public static class Initialization extends CodeConcept<NUOPCDriver, ASTNode> {
-    @Child
+    @Child(forward = true)
     public NUOPCDriver.InitPhases initPhases;
     
     @Child
     public NUOPCDriver.InternalInitPhases internalInitPhases;
     
-    @Child
+    @Child(forward = true)
     public NUOPCDriver.InitSpecializations initSpecs;
     
     public Initialization(final NUOPCDriver parent) {
@@ -1028,6 +1028,9 @@ public class NUOPCDriver extends NUOPCComponent {
       super(parent, "NUOPC_Driver", "label_SetModelServices");
       this.subroutineName = "SetModelServices";
       this.specLabel = "driver_label_SetModelServices";
+      parent.setModelServices = this;
+      ArrayList<NUOPCDriver.SetModelServices_AddComp> _newArrayList = CollectionLiterals.<NUOPCDriver.SetModelServices_AddComp>newArrayList();
+      this.addComps = _newArrayList;
     }
     
     @Override
@@ -1311,6 +1314,7 @@ public class NUOPCDriver extends NUOPCComponent {
     
     public SetModelServices_AddComp(final NUOPCDriver.SetModelServices parent) {
       super(parent);
+      parent.addComps.add(this);
     }
     
     @Override
@@ -1501,6 +1505,103 @@ public class NUOPCDriver extends NUOPCComponent {
       }
       return _xblockexpression;
     }
+    
+    @Override
+    public CodeConcept<NUOPCDriver.SetModelServices, ASTCallStmtNode> fward() {
+      try {
+        NUOPCDriver.SetModelServices_AddComp _xblockexpression = null;
+        {
+          ASTSubroutineSubprogramNode ssn = this._parent.getASTRef();
+          CodeConcept<?, ASTModuleNode> _module = this._parent.module();
+          ASTModuleNode amn = _module.getASTRef();
+          String code = null;
+          boolean _and = false;
+          boolean _notEquals = (!Objects.equal(this.compLabel, null));
+          if (!_notEquals) {
+            _and = false;
+          } else {
+            boolean _notEquals_1 = (!Objects.equal(this.compSetServices, null));
+            _and = _notEquals_1;
+          }
+          if (_and) {
+            StringConcatenation _builder = new StringConcatenation();
+            _builder.newLine();
+            _builder.append("call NUOPC_DriverAddComp(");
+            _builder.append(this._parent.paramGridComp, "");
+            _builder.append(", compLabel=");
+            CharSequence _paramch = this.paramch(this.compLabel);
+            _builder.append(_paramch, "");
+            _builder.append(", & ");
+            _builder.newLineIfNotEmpty();
+            _builder.append("\t");
+            _builder.append("compSetServicesRoutine=");
+            CharSequence _paramch_1 = this.paramch(this.compSetServices);
+            _builder.append(_paramch_1, "\t");
+            _builder.append(", rc=");
+            _builder.append(this._parent.paramRC, "\t");
+            _builder.append(")");
+            _builder.newLineIfNotEmpty();
+            CharSequence _ESMFErrorCheck = ESMFCodeTemplates.ESMFErrorCheck(this._parent.paramRC);
+            _builder.append(_ESMFErrorCheck, "");
+            _builder.newLineIfNotEmpty();
+            code = _builder.toString();
+          } else {
+            boolean _and_1 = false;
+            boolean _and_2 = false;
+            boolean _notEquals_2 = (!Objects.equal(this.srcCompLabel, null));
+            if (!_notEquals_2) {
+              _and_2 = false;
+            } else {
+              boolean _notEquals_3 = (!Objects.equal(this.dstCompLabel, null));
+              _and_2 = _notEquals_3;
+            }
+            if (!_and_2) {
+              _and_1 = false;
+            } else {
+              boolean _notEquals_4 = (!Objects.equal(this.compSetServices, null));
+              _and_1 = _notEquals_4;
+            }
+            if (_and_1) {
+              StringConcatenation _builder_1 = new StringConcatenation();
+              _builder_1.newLine();
+              _builder_1.append("call NUOPC_DriverAddComp(");
+              _builder_1.append(this._parent.paramGridComp, "");
+              _builder_1.append(", srcCompLabel=");
+              CharSequence _paramch_2 = this.paramch(this.srcCompLabel);
+              _builder_1.append(_paramch_2, "");
+              _builder_1.append(", & ");
+              _builder_1.newLineIfNotEmpty();
+              _builder_1.append("\t");
+              _builder_1.append("dstCompLabel=");
+              CharSequence _paramch_3 = this.paramch(this.dstCompLabel);
+              _builder_1.append(_paramch_3, "\t");
+              _builder_1.append(", compSetServicesRoutine=");
+              CharSequence _paramch_4 = this.paramch(this.compSetServices);
+              _builder_1.append(_paramch_4, "\t");
+              _builder_1.append(", rc=");
+              _builder_1.append(this._parent.paramRC, "\t");
+              _builder_1.append(")");
+              _builder_1.newLineIfNotEmpty();
+              CharSequence _ESMFErrorCheck_1 = ESMFCodeTemplates.ESMFErrorCheck(this._parent.paramRC);
+              _builder_1.append(_ESMFErrorCheck_1, "");
+              _builder_1.newLineIfNotEmpty();
+              code = _builder_1.toString();
+            } else {
+              throw new CodeGenerationException("Missing required parameters to generate NUOPC_DriverAddComp");
+            }
+          }
+          final IASTListNode<IBodyConstruct> stmts = CodeExtraction.parseLiteralStatementSequence(code);
+          IASTListNode<IBodyConstruct> _body = ssn.getBody();
+          _body.addAll(stmts);
+          IBodyConstruct _get = stmts.get(0);
+          this.setASTRef(((ASTCallStmtNode) _get));
+          _xblockexpression = this;
+        }
+        return _xblockexpression;
+      } catch (Throwable _e) {
+        throw Exceptions.sneakyThrow(_e);
+      }
+    }
   }
   
   @Label(label = "SetRunSequence")
@@ -1653,6 +1754,8 @@ public class NUOPCDriver extends NUOPCComponent {
     
     public String compLabel;
     
+    public String phaseLabel;
+    
     public String srcCompLabel;
     
     public String dstCompLabel;
@@ -1744,6 +1847,8 @@ public class NUOPCDriver extends NUOPCComponent {
                 IExpr _expr_4 = _get_6.getExpr();
                 String _literal_4 = ASTQuery.literal(_expr_4);
                 srsare.slot = _literal_4;
+                String _litArgExprByKeyword = ASTQuery.litArgExprByKeyword(c, "phaseLabel");
+                srsare.phaseLabel = _litArgExprByKeyword;
               } else {
                 IASTListNode<ASTSubroutineArgNode> _argList_7 = c.getArgList();
                 ASTSubroutineArgNode _get_7 = _argList_7.get(2);
@@ -1910,10 +2015,17 @@ public class NUOPCDriver extends NUOPCComponent {
             _builder.append("compLabel=");
             CharSequence _paramch = this.paramch(this.compLabel);
             _builder.append(_paramch, "    ");
-            _builder.append(", phaseLabel=\"");
-            CharSequence _paramch_1 = this.paramch("optionalPhaseLabel");
-            _builder.append(_paramch_1, "    ");
-            _builder.append("\", rc=");
+            _builder.append(", ");
+            {
+              boolean _notEquals_1 = (!Objects.equal(this.phaseLabel, null));
+              if (_notEquals_1) {
+                _builder.append("phaseLabel=");
+                CharSequence _paramch_1 = this.paramch(this.phaseLabel);
+                _builder.append(_paramch_1, "    ");
+                _builder.append(",");
+              }
+            }
+            _builder.append(" rc=");
             _builder.append(this._parent.paramRC, "    ");
             _builder.append(")");
             _builder.newLineIfNotEmpty();
@@ -1923,12 +2035,12 @@ public class NUOPCDriver extends NUOPCComponent {
             code = _builder.toString();
           } else {
             boolean _and = false;
-            boolean _notEquals_1 = (!Objects.equal(this.srcCompLabel, null));
-            if (!_notEquals_1) {
+            boolean _notEquals_2 = (!Objects.equal(this.srcCompLabel, null));
+            if (!_notEquals_2) {
               _and = false;
             } else {
-              boolean _notEquals_2 = (!Objects.equal(this.dstCompLabel, null));
-              _and = _notEquals_2;
+              boolean _notEquals_3 = (!Objects.equal(this.dstCompLabel, null));
+              _and = _notEquals_3;
             }
             if (_and) {
               StringConcatenation _builder_1 = new StringConcatenation();
@@ -1959,12 +2071,12 @@ public class NUOPCDriver extends NUOPCComponent {
               code = _builder_1.toString();
             } else {
               boolean _and_1 = false;
-              boolean _notEquals_3 = (!Objects.equal(this.slot, null));
-              if (!_notEquals_3) {
+              boolean _notEquals_4 = (!Objects.equal(this.slot, null));
+              if (!_notEquals_4) {
                 _and_1 = false;
               } else {
-                boolean _notEquals_4 = (!Objects.equal(this.linkSlot, null));
-                _and_1 = _notEquals_4;
+                boolean _notEquals_5 = (!Objects.equal(this.linkSlot, null));
+                _and_1 = _notEquals_5;
               }
               if (_and_1) {
                 StringConcatenation _builder_2 = new StringConcatenation();
@@ -2376,13 +2488,13 @@ public class NUOPCDriver extends NUOPCComponent {
   @Child(forward = true)
   public NUOPCDriver.SetServices setServices;
   
-  @Child
+  @Child(forward = true)
   public NUOPCDriver.Initialization initialization;
   
-  @Child
+  @Child(forward = true)
   public NUOPCDriver.Run run;
   
-  @Child
+  @Child(forward = true)
   public NUOPCDriver.Finalize finalize;
   
   public NUOPCDriver(final CodeDBIndex codeDB) {

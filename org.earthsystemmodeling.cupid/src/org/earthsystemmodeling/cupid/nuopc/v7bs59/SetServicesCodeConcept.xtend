@@ -161,8 +161,6 @@ public SetServices
 	
 	override fward() {
 		
-		//val IFortranAST ast = getAST()
-		
 		//add to generic import if necessary
 		//TODO: is there a cleaner way to do this?
 		var routineSetServices = _parent.importNUOPCGeneric.routineSetServices

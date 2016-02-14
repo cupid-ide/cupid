@@ -40,13 +40,13 @@ class NUOPCDriver extends NUOPCComponent {
 	@Child(forward=true)
 	var public SetServices setServices
 	
-	@Child
+	@Child(forward=true)
 	var public Initialization initialization
 	
-	@Child
+	@Child(forward=true)
 	var public Run run
 	
-	@Child
+	@Child(forward=true)
 	var public Finalize finalize
 	
 	new(CodeDBIndex codeDB) {
@@ -751,13 +751,13 @@ end subroutine
 	@Label(label="Initialize")
 	public static class Initialization extends CodeConcept<NUOPCDriver, ASTNode> {
 
-		@Child
+		@Child(forward=true)
 		public InitPhases initPhases
 		
 		@Child
 		public InternalInitPhases internalInitPhases
 		
-		@Child
+		@Child(forward=true)
 		public InitSpecializations initSpecs
 		
 		new(NUOPCDriver parent) {
@@ -837,20 +837,13 @@ end subroutine
 			super(parent, "NUOPC_Driver", "label_SetModelServices")
 			subroutineName = "SetModelServices"
 			specLabel = "driver_label_SetModelServices"
+			parent.setModelServices = this
+			addComps = newArrayList()
 		}
 			
-		override reverse() {
-			
+		override reverse() {		
 			var ret = super.reverse as SetModelServices
 			if (ret != null) {							
-				/*
-				var rs = '''call_(_cid, «_id», 'ESMF_GridCompSet'),
-							callArgWithType(_, _cid, _, 'clock', _, _clockExpr).'''.execQuery
-				if (rs.next) {
-					setClock = newBasicCodeConcept(this, rs.getLong("_cid"))
-				}
-				*
-				*/				
 				val setClockCall = ret.ASTRef.body.filter(ASTCallStmtNode).findFirst[
 					it.subroutineName.eic("ESMF_GridCompSet") &&
 					it.argList?.exists[it.name?.eic("clock")]
@@ -859,7 +852,6 @@ end subroutine
 				ret
 			}
 			else null
-			
 		}	
 			
 		override reverseChildren() {
@@ -971,6 +963,7 @@ if (ESMF_LogFoundError(rcToCheck=«paramRC», msg=ESMF_LOGERR_PASSTHRU, &
 			
 		new(SetModelServices parent) {
 			super(parent)
+			parent.addComps.add(this)
 		}
 		
 		override name() {
@@ -1066,6 +1059,42 @@ if (ESMF_LogFoundError(rcToCheck=«_parent.paramRC», msg=ESMF_LOGERR_PASSTHRU, 
 	
 			ast
 		}
+		
+		
+		override fward() {
+			
+			var ASTSubroutineSubprogramNode ssn = _parent.ASTRef			
+			var ASTModuleNode amn = _parent.module.ASTRef
+			
+			var String code
+			
+			if (compLabel != null && compSetServices != null) {
+				code = 
+'''
+
+call NUOPC_DriverAddComp(«_parent.paramGridComp», compLabel=«paramch(compLabel)», & 
+	compSetServicesRoutine=«paramch(compSetServices)», rc=«_parent.paramRC»)
+«ESMFErrorCheck(_parent.paramRC)»
+'''
+			}
+			else if (srcCompLabel != null && dstCompLabel != null && compSetServices != null) {
+				code = 
+'''
+
+call NUOPC_DriverAddComp(«_parent.paramGridComp», srcCompLabel=«paramch(srcCompLabel)», & 
+	dstCompLabel=«paramch(dstCompLabel)», compSetServicesRoutine=«paramch(compSetServices)», rc=«_parent.paramRC»)
+«ESMFErrorCheck(_parent.paramRC)»
+'''					
+			}
+			else throw new CodeGenerationException("Missing required parameters to generate NUOPC_DriverAddComp")
+
+			val IASTListNode<IBodyConstruct> stmts = parseLiteralStatementSequence(code)
+						
+			ssn.body.addAll(stmts)
+			setASTRef(stmts.get(0) as ASTCallStmtNode)
+	
+			this
+		}
 	
 	}
 	
@@ -1155,6 +1184,7 @@ end subroutine
 		public String linkSlot
 		
 		public String compLabel
+		public String phaseLabel
 		
 		public String srcCompLabel
 		public String dstCompLabel
@@ -1185,6 +1215,7 @@ end subroutine
 					else if (c.argList.get(2).name?.eic("compLabel")) {
 						srsare.compLabel = c.argList.get(2).expr.literal
 						srsare.slot = c.argList.get(1).expr.literal
+						srsare.phaseLabel = c.litArgExprByKeyword("phaseLabel")
 					}
 					else if (c.argList.get(2).name?.eic("linkSlot")) {
 						srsare.slot = c.argList.get(1).expr.literal
@@ -1248,7 +1279,7 @@ if (ESMF_LogFoundError(rcToCheck=rc, msg=ESMF_LOGERR_PASSTHRU, &
 
 ! add a run sequence element for a Model, Mediator, or Driver       
 call NUOPC_DriverAddRunElement(«_parent.paramGridComp», slot=«paramint(slot)», &
-    compLabel=«paramch(compLabel)», phaseLabel="«paramch('optionalPhaseLabel')»", rc=«_parent.paramRC»)
+    compLabel=«paramch(compLabel)», «IF phaseLabel!=null»phaseLabel=«paramch(phaseLabel)»,«ENDIF» rc=«_parent.paramRC»)
 «ESMFErrorCheck(_parent.paramRC)»
 '''			
 		}
