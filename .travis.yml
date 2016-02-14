@@ -1,6 +1,10 @@
 language: java
 sudo: false
 
+cache:
+  directories:
+  - $HOME/.m2
+
 addons:
   apt:
     packages:
@@ -8,7 +12,11 @@ addons:
     - libopenmpi-dev
 #    - openmpi-dev
 
-#before_script:
+before_script:
+  - export DISPLAY=:99.0
+  - sh -e /etc/init.d/xvfb start
+  - sleep 3 # give xvfb some time to start
+
 #  - cd $HOME
 #  - git clone http://git.code.sf.net/p/esmf/esmf esmf
 #  - cd esmf
