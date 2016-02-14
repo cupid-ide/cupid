@@ -1881,6 +1881,67 @@ public class NUOPCDriver extends NUOPCComponent {
       }
       return _xblockexpression;
     }
+    
+    @Override
+    public NUOPCDriver.SetRunSequence_AddRunElement fward() {
+      try {
+        NUOPCDriver.SetRunSequence_AddRunElement _xblockexpression = null;
+        {
+          String code = null;
+          boolean _notEquals = (!Objects.equal(this.compLabel, null));
+          if (_notEquals) {
+            StringConcatenation _builder = new StringConcatenation();
+            _builder.newLine();
+            _builder.append("! add a run sequence element for a Model, Mediator, or Driver       ");
+            _builder.newLine();
+            _builder.append("call NUOPC_DriverAddRunElement(");
+            _builder.append(this._parent.paramGridComp, "");
+            _builder.append(", slot=");
+            CharSequence _paramint = this.paramint(this.slot);
+            _builder.append(_paramint, "");
+            _builder.append(", &");
+            _builder.newLineIfNotEmpty();
+            _builder.append("    ");
+            _builder.append("compLabel=");
+            CharSequence _paramch = this.paramch(this.compLabel);
+            _builder.append(_paramch, "    ");
+            _builder.append(", phaseLabel=\"");
+            CharSequence _paramch_1 = this.paramch("optionalPhaseLabel");
+            _builder.append(_paramch_1, "    ");
+            _builder.append("\", rc=");
+            _builder.append(this._parent.paramRC, "    ");
+            _builder.append(")");
+            _builder.newLineIfNotEmpty();
+            _builder.append("if (ESMF_LogFoundError(rcToCheck=");
+            _builder.append(this._parent.paramRC, "");
+            _builder.append(", msg=ESMF_LOGERR_PASSTHRU, &");
+            _builder.newLineIfNotEmpty();
+            _builder.append("    ");
+            _builder.append("line=__LINE__, &");
+            _builder.newLine();
+            _builder.append("    ");
+            _builder.append("file=__FILE__)) &");
+            _builder.newLine();
+            _builder.append("    ");
+            _builder.append("return  ! bail out");
+            _builder.newLine();
+            code = _builder.toString();
+          } else {
+            throw new CodeGenerationException("Need to implement");
+          }
+          final IASTListNode<IBodyConstruct> stmts = CodeExtraction.parseLiteralStatementSequence(code);
+          final ASTSubroutineSubprogramNode ssn = this._parent.getASTRef();
+          IASTListNode<IBodyConstruct> _body = ssn.getBody();
+          _body.addAll(stmts);
+          IBodyConstruct _get = stmts.get(0);
+          this.setASTRef(((ASTCallStmtNode) _get));
+          _xblockexpression = this;
+        }
+        return _xblockexpression;
+      } catch (Throwable _e) {
+        throw Exceptions.sneakyThrow(_e);
+      }
+    }
   }
   
   @Label(label = "ModifyInitializePhaseMap")

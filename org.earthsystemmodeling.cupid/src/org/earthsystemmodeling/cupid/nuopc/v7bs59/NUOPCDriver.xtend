@@ -1086,6 +1086,7 @@ if (ESMF_LogFoundError(rcToCheck=«_parent.paramRC», msg=ESMF_LOGERR_PASSTHRU, 
 			//defaults
 			subroutineName = "SetRunSequence"
 			specLabel = "driver_label_SetRunSequence"
+			//parent.setRunSequence = this
 		}
 			
 		override reverse() {
@@ -1233,6 +1234,34 @@ if (ESMF_LogFoundError(rcToCheck=rc, msg=ESMF_LOGERR_PASSTHRU, &
 	
 			ast
 		}
+		
+	override SetRunSequence_AddRunElement fward() {
+		
+		var String code
+				
+		if (compLabel != null) {			
+			code = 
+'''
+
+! add a run sequence element for a Model, Mediator, or Driver       
+call NUOPC_DriverAddRunElement(«_parent.paramGridComp», slot=«paramint(slot)», &
+    compLabel=«paramch(compLabel)», phaseLabel="«paramch('optionalPhaseLabel')»", rc=«_parent.paramRC»)
+if (ESMF_LogFoundError(rcToCheck=«_parent.paramRC», msg=ESMF_LOGERR_PASSTHRU, &
+    line=__LINE__, &
+    file=__FILE__)) &
+    return  ! bail out
+'''			
+		}
+		else throw new CodeGenerationException("Need to implement") //for now			
+
+		val IASTListNode<IBodyConstruct> stmts = parseLiteralStatementSequence(code)
+		val ASTSubroutineSubprogramNode ssn = _parent.ASTRef
+		ssn.body.addAll(stmts)
+
+		setASTRef(stmts.get(0) as ASTCallStmtNode)
+	
+		this
+	}
 		
 		
 		

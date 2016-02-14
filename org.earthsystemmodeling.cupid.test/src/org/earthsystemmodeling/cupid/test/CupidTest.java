@@ -5,7 +5,7 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertNull;
-import static org.junit.Assert.assertThat;
+import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
 
 import java.io.IOException;
@@ -17,7 +17,6 @@ import java.util.List;
 import org.apache.commons.io.IOUtils;
 import org.apache.commons.io.LineIterator;
 import org.earthsystemmodeling.cupid.codedb.CodeDBIndex;
-import org.earthsystemmodeling.cupid.handlers.RewriteASTRunnable;
 import org.earthsystemmodeling.cupid.nuopc.BasicCodeConcept;
 import org.earthsystemmodeling.cupid.nuopc.CodeConcept;
 import org.earthsystemmodeling.cupid.nuopc.v7bs59.EntryPointCodeConcept;
@@ -26,6 +25,7 @@ import org.earthsystemmodeling.cupid.nuopc.v7bs59.NUOPCComponent;
 import org.earthsystemmodeling.cupid.nuopc.v7bs59.NUOPCComponent.GenericImport;
 import org.earthsystemmodeling.cupid.nuopc.v7bs59.NUOPCDriver;
 import org.earthsystemmodeling.cupid.nuopc.v7bs59.NUOPCDriver.SetModelServices_AddComp;
+import org.earthsystemmodeling.cupid.nuopc.v7bs59.NUOPCDriver.SetRunSequence;
 import org.earthsystemmodeling.cupid.nuopc.v7bs59.NUOPCDriver.SetRunSequence_AddRunElement;
 import org.earthsystemmodeling.cupid.nuopc.v7bs59.NUOPCMediator;
 import org.earthsystemmodeling.cupid.nuopc.v7bs59.NUOPCModel;
@@ -40,10 +40,7 @@ import org.eclipse.core.runtime.NullProgressMonitor;
 import org.eclipse.photran.core.IFortranAST;
 import org.eclipse.photran.internal.core.parser.ASTModuleNode;
 import org.eclipse.photran.internal.core.parser.ASTSubroutineSubprogramNode;
-import org.eclipse.photran.internal.core.reindenter.Reindenter;
-import org.eclipse.photran.internal.core.reindenter.Reindenter.Strategy;
 import org.eclipse.photran.internal.core.vpg.PhotranVPG;
-import org.eclipse.ui.PlatformUI;
 import org.junit.AfterClass;
 import org.junit.BeforeClass;
 import org.junit.Ignore;
@@ -226,7 +223,7 @@ public class CupidTest {
 		assertNotNull(setServicesNode);
 		setServices.setASTRef(setServicesNode);
 		
-		EntryPointCodeConcept<?> epcc = new EntryPointCodeConcept(parent) {
+		EntryPointCodeConcept<?> epcc = new EntryPointCodeConcept<NUOPCComponent>(parent) {
 
 			@Override
 			public CodeConcept module() {
@@ -567,7 +564,7 @@ public class CupidTest {
 	}
 	
 	@Test
-	public void GenerateNUOPCDriver() throws CoreException {
+	public void GenerateNUOPCDriverFromScratch() throws CoreException {
 		IProject p = TestHelpers.createEmptyProject("TestGenerateNUOPCDriver");
 		p.open(null);
 		
@@ -575,9 +572,10 @@ public class CupidTest {
 		NUOPCDriver driver = new NUOPCDriver(f1);
 		driver.driverName = "MyDriver";
 		driver = driver.fward();
-		driver.commit();
 		
-		//if (1==1) return;
+		assertFalse("Forward changes not committed yet", f1.exists());
+		driver.commit();
+		assertTrue("Forward changes committed", f1.exists());
 		
 		//Reindenter.reindent(driver.getASTRef(), driver.getAST(), Strategy.REINDENT_EACH_LINE);      								
 		//RewriteASTRunnable rewriter = new RewriteASTRunnable(driver.getAST());
@@ -586,7 +584,7 @@ public class CupidTest {
 		System.out.println("GENERATED DRIVER:\n\n" + driver.getAST().getRoot().toString());
 		
 		//PhotranVPG.getInstance().commitChangesFromInMemoryASTs(new NullProgressMonitor(), 0, f1);
-		PhotranVPG.getInstance().releaseAST(f1);
+		//PhotranVPG.getInstance().releaseAST(f1);
 		
 		//read in same driver just generated
 		//f1 = p.getFile("MyDriver1.F90");
@@ -609,6 +607,61 @@ public class CupidTest {
 		
 		
 		//p.delete(true, true, null);
+	}
+	
+	@Test
+	public void ChangeNUOPCDriver() throws IOException, CoreException {
+		
+		IProject p = TestHelpers.createProjectFromFolder("target/ESMF_7_0_0_beta_snapshot_59/AtmOcnProto", "ChangeNUOPCDriver");
+		IFile f = p.getFile("esm.F90");
+		
+		NUOPCDriver driver = new NUOPCDriver(f).reverse();
+		assertNotNull(driver);
+		assertEquals("ESM", driver.driverName);
+		assertNotNull(driver.setServices);
+		assertEquals("SetServices", driver.setServices.subroutineName);
+		assertNull(driver.initialization.initSpecs.setRunSequence);
+		
+		//add SetRunSequence specialization
+		final String sname = "NewSetRunSequence";
+		SetRunSequence srs = new SetRunSequence(driver.initialization.initSpecs);
+		srs.subroutineName = sname;
+		srs = (SetRunSequence) srs.fward();
+		srs.commit();
+				
+		//re-reverse
+		driver = new NUOPCDriver(f).reverse();
+		assertNotNull(driver);
+		assertEquals("ESM", driver.driverName);
+		assertNotNull(driver.setServices);
+		assertEquals("SetServices", driver.setServices.subroutineName);
+		assertNotNull(driver.initialization.initSpecs.setRunSequence);
+		assertEquals(sname, driver.initialization.initSpecs.setRunSequence.subroutineName);
+		
+		//add RunElement
+		SetRunSequence_AddRunElement srsare = new SetRunSequence_AddRunElement(driver.initialization.initSpecs.setRunSequence);
+		srsare.compLabel = "MyCompLabel";
+		srsare.slot = "1";
+		srsare = srsare.fward();
+		srsare.commit();
+		
+		//re-reverse
+		driver = new NUOPCDriver(f).reverse();
+		assertNotNull(driver);
+		assertEquals("ESM", driver.driverName);
+		assertNotNull(driver.setServices);
+		assertEquals("SetServices", driver.setServices.subroutineName);
+		assertNotNull(driver.initialization.initSpecs.setRunSequence);
+		assertEquals(sname, driver.initialization.initSpecs.setRunSequence.subroutineName);
+		assertNotNull(driver.initialization.initSpecs.setRunSequence.runElements);
+		assertEquals(1, driver.initialization.initSpecs.setRunSequence.runElements.size());
+		
+		SetRunSequence_AddRunElement re = driver.initialization.initSpecs.setRunSequence.runElements.get(0);
+		assertEquals("MyCompLabel", re.compLabel);
+		assertEquals("1", re.slot);
+		
+		//f = null;
+		//p.delete(true, true, new NullProgressMonitor());
 	}
 	
 	

@@ -20,6 +20,7 @@ import org.earthsystemmodeling.cupid.codedb.PrologResultSet
 import org.eclipse.core.runtime.NullProgressMonitor
 import org.eclipse.photran.internal.core.reindenter.Reindenter
 import org.eclipse.photran.internal.core.reindenter.Reindenter.Strategy
+import org.earthsystemmodeling.cupid.handlers.RewriteASTRunnable
 
 public abstract class CodeConcept<P extends CodeConcept<?,?>, A extends IASTNode> {
 	
@@ -190,14 +191,30 @@ public abstract class CodeConcept<P extends CodeConcept<?,?>, A extends IASTNode
 	}
 	
 	def commit() {
-		if (_context instanceof IFile) {
-			//this won't work because AST does not yet exist for new files
-			//PhotranVPG.getInstance().commitChangesFromInMemoryASTs(new NullProgressMonitor(), 0, _context);
-			writeToFile(_astRef.toString)
+		if (_context != null) {
+			if (_ast == null) {
+				//if ast does not exist yet, then write out the code
+				//and the ast will be acquired for the reindenter
+				writeToFile(_astRef.toString)
+			}
+			
 			Reindenter.reindent(getAST.root, getAST, Strategy.REINDENT_EACH_LINE);  //reindent entire file
-			writeToFile(_astRef.toString)  //write reindented file
+			//writeToFile(_astRef.toString)  
+			var rewriter = new RewriteASTRunnable(getAST);
+			rewriter.run(new NullProgressMonitor());
+			
+			//PhotranVPG.instance.commitChangesFromInMemoryASTs(
+			//			new NullProgressMonitor(), 0, _context as IFile)
+			_ast = null
+			PhotranVPG.instance.releaseAST(_context as IFile)
+			
 		}
-		else throw new CodeGenerationException("Can only commit to file resources")
+		else if (_parent != null) {
+			_parent.commit
+		}
+		else {
+			throw new CodeGenerationException("Cannot commit change because no file provided")
+		}
 	}
 	
 	def writeToFile(String content) {
@@ -245,6 +262,9 @@ public abstract class CodeConcept<P extends CodeConcept<?,?>, A extends IASTNode
 		'''CUPIDPARAM$INT$«defaultVal»$'''
 	}
 	
+	def paramint(String defaultVal) {
+		'''CUPIDPARAM$INT$«defaultVal»$'''
+	}
 		
 	
 }

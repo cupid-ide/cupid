@@ -11,10 +11,12 @@ import java.util.List;
 import org.earthsystemmodeling.cupid.annotation.Child;
 import org.earthsystemmodeling.cupid.codedb.CodeDBIndex;
 import org.earthsystemmodeling.cupid.core.CupidActivator;
+import org.earthsystemmodeling.cupid.handlers.RewriteASTRunnable;
 import org.earthsystemmodeling.cupid.nuopc.CodeGenerationException;
 import org.earthsystemmodeling.cupid.nuopc.ReverseEngineerException;
 import org.eclipse.core.resources.IFile;
 import org.eclipse.core.resources.IResource;
+import org.eclipse.core.runtime.NullProgressMonitor;
 import org.eclipse.photran.core.IFortranAST;
 import org.eclipse.photran.internal.core.parser.ASTExecutableProgramNode;
 import org.eclipse.photran.internal.core.parser.IASTNode;
@@ -383,20 +385,38 @@ public abstract class CodeConcept<P extends CodeConcept<?, ?>, A extends IASTNod
     }
   }
   
-  public void commit() {
+  public Object commit() {
     try {
-      if ((this._context instanceof IFile)) {
-        String _string = this._astRef.toString();
-        this.writeToFile(_string);
+      Object _xifexpression = null;
+      boolean _notEquals = (!Objects.equal(this._context, null));
+      if (_notEquals) {
+        boolean _equals = Objects.equal(this._ast, null);
+        if (_equals) {
+          String _string = this._astRef.toString();
+          this.writeToFile(_string);
+        }
         IFortranAST _aST = this.getAST();
         ASTExecutableProgramNode _root = _aST.getRoot();
         IFortranAST _aST_1 = this.getAST();
         Reindenter.reindent(_root, _aST_1, Reindenter.Strategy.REINDENT_EACH_LINE);
-        String _string_1 = this._astRef.toString();
-        this.writeToFile(_string_1);
+        IFortranAST _aST_2 = this.getAST();
+        RewriteASTRunnable rewriter = new RewriteASTRunnable(_aST_2);
+        NullProgressMonitor _nullProgressMonitor = new NullProgressMonitor();
+        rewriter.run(_nullProgressMonitor);
+        this._ast = null;
+        PhotranVPG _instance = PhotranVPG.getInstance();
+        _instance.releaseAST(((IFile) this._context));
       } else {
-        throw new CodeGenerationException("Can only commit to file resources");
+        Object _xifexpression_1 = null;
+        boolean _notEquals_1 = (!Objects.equal(this._parent, null));
+        if (_notEquals_1) {
+          _xifexpression_1 = this._parent.commit();
+        } else {
+          throw new CodeGenerationException("Cannot commit change because no file provided");
+        }
+        _xifexpression = _xifexpression_1;
       }
+      return _xifexpression;
     } catch (Throwable _e) {
       throw Exceptions.sneakyThrow(_e);
     }
@@ -497,6 +517,14 @@ public abstract class CodeConcept<P extends CodeConcept<?, ?>, A extends IASTNod
   }
   
   public CharSequence paramint(final int defaultVal) {
+    StringConcatenation _builder = new StringConcatenation();
+    _builder.append("CUPIDPARAM$INT$");
+    _builder.append(defaultVal, "");
+    _builder.append("$");
+    return _builder;
+  }
+  
+  public CharSequence paramint(final String defaultVal) {
     StringConcatenation _builder = new StringConcatenation();
     _builder.append("CUPIDPARAM$INT$");
     _builder.append(defaultVal, "");
