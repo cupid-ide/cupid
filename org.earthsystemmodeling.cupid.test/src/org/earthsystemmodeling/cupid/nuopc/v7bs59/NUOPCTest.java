@@ -34,7 +34,7 @@ import org.junit.Ignore;
 import org.junit.Test;
 
 @SuppressWarnings("restriction")
-public class NUOPCTests {
+public class NUOPCTest {
 	
 	private static IProject PROJECT_NUOPC_PROTOTYPES;
 	

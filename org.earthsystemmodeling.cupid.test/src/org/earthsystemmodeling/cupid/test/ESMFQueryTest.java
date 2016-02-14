@@ -23,7 +23,6 @@ import com.google.common.collect.Lists;
 @SuppressWarnings("restriction")
 public class ESMFQueryTest {
 
-	
 	private static IProject PROJECT_NUOPC_PROTOTYPES;
 	
 	@BeforeClass
