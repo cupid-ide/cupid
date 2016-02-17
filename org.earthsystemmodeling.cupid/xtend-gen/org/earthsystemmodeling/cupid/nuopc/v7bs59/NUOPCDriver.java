@@ -27,6 +27,7 @@ import org.eclipse.photran.core.IFortranAST;
 import org.eclipse.photran.internal.core.lexer.Token;
 import org.eclipse.photran.internal.core.parser.ASTCallStmtNode;
 import org.eclipse.photran.internal.core.parser.ASTExecutableProgramNode;
+import org.eclipse.photran.internal.core.parser.ASTListNode;
 import org.eclipse.photran.internal.core.parser.ASTModuleNameNode;
 import org.eclipse.photran.internal.core.parser.ASTModuleNode;
 import org.eclipse.photran.internal.core.parser.ASTModuleStmtNode;
@@ -921,6 +922,7 @@ public class NUOPCDriver extends NUOPCComponent {
     
     public InitPhases(final NUOPCDriver.Initialization parent) {
       super(parent);
+      parent.initPhases = this;
     }
     
     @Override
@@ -949,6 +951,7 @@ public class NUOPCDriver extends NUOPCComponent {
     
     public Initialization(final NUOPCDriver parent) {
       super(parent);
+      parent.initialization = this;
     }
     
     @Override
@@ -987,6 +990,7 @@ public class NUOPCDriver extends NUOPCComponent {
     
     public InitSpecializations(final NUOPCDriver.Initialization parent) {
       super(parent);
+      parent.initSpecs = this;
     }
     
     @Override
@@ -1122,10 +1126,10 @@ public class NUOPCDriver extends NUOPCComponent {
     }
     
     @Override
-    public IFortranAST forward() {
-      IFortranAST _xblockexpression = null;
+    public CodeConcept<NUOPCDriver.InitSpecializations, ASTSubroutineSubprogramNode> fward() {
+      NUOPCDriver.SetModelServices _xblockexpression = null;
       {
-        final IFortranAST ast = super.forward();
+        super.fward();
         final ASTSubroutineSubprogramNode ssn = this.getASTRef();
         StringConcatenation _builder = new StringConcatenation();
         _builder.newLine();
@@ -1294,7 +1298,10 @@ public class NUOPCDriver extends NUOPCComponent {
         final IASTListNode<IBodyConstruct> stmts = CodeExtraction.parseLiteralStatementSequence(code);
         IASTListNode<IBodyConstruct> _body_2 = ssn.getBody();
         _body_2.addAll(stmts);
-        _xblockexpression = ast;
+        IBodyConstruct _get = stmts.get(8);
+        BasicCodeConcept<ASTCallStmtNode> _basicCodeConcept = new BasicCodeConcept<ASTCallStmtNode>(this, ((ASTCallStmtNode) _get));
+        this.setClock = _basicCodeConcept;
+        _xblockexpression = this;
       }
       return _xblockexpression;
     }
@@ -1871,6 +1878,7 @@ public class NUOPCDriver extends NUOPCComponent {
                 }
               }
             }
+            srsare.setASTRef(c);
             retList.add(srsare);
           }
         };
@@ -2155,6 +2163,7 @@ public class NUOPCDriver extends NUOPCComponent {
     
     public Run(final NUOPCDriver parent) {
       super(parent);
+      parent.run = this;
     }
     
     @Override
@@ -2180,6 +2189,7 @@ public class NUOPCDriver extends NUOPCComponent {
     
     public RunPhases(final NUOPCDriver.Run parent) {
       super(parent);
+      parent.runPhases = this;
     }
     
     @Override
@@ -2201,6 +2211,7 @@ public class NUOPCDriver extends NUOPCComponent {
   public static class RunPhase1 extends CodeConcept<NUOPCDriver.RunPhases, ASTNode> {
     public RunPhase1(final NUOPCDriver.RunPhases parent) {
       super(parent);
+      parent.p1 = this;
     }
   }
   
@@ -2211,6 +2222,7 @@ public class NUOPCDriver extends NUOPCComponent {
     
     public RunSpecializations(final NUOPCDriver.Run parent) {
       super(parent);
+      parent.runSpecs = this;
     }
     
     @Override
@@ -2240,6 +2252,7 @@ public class NUOPCDriver extends NUOPCComponent {
       this.specLabel = "driver_label_SetRunClock";
       this.paramGridComp = "driver";
       this.paramRC = "rc";
+      parent.setRunClock = this;
     }
     
     @Override
@@ -2334,6 +2347,7 @@ public class NUOPCDriver extends NUOPCComponent {
     
     public FinalizePhases(final NUOPCDriver.Finalize parent) {
       super(parent);
+      parent.finalPhases = this;
     }
     
     @Override
@@ -2356,6 +2370,7 @@ public class NUOPCDriver extends NUOPCComponent {
     
     public FinalizeSpecializations(final NUOPCDriver.Finalize parent) {
       super(parent);
+      parent.finalSpecs = this;
     }
     
     @Override
@@ -2381,6 +2396,7 @@ public class NUOPCDriver extends NUOPCComponent {
   public static class FinalizePhase1 extends CodeConcept<NUOPCDriver.FinalizePhases, ASTNode> {
     public FinalizePhase1(final NUOPCDriver.FinalizePhases parent) {
       super(parent);
+      parent.p1 = this;
     }
   }
   
@@ -2394,6 +2410,7 @@ public class NUOPCDriver extends NUOPCComponent {
     
     public Finalize(final NUOPCDriver parent) {
       super(parent);
+      parent.finalize = this;
     }
     
     @Override
@@ -2426,6 +2443,7 @@ public class NUOPCDriver extends NUOPCComponent {
       this.specLabel = "driver_label_Finalize";
       this.paramGridComp = "driver";
       this.paramRC = "rc";
+      parent.finalize = this;
     }
     
     @Override
@@ -2661,81 +2679,82 @@ public class NUOPCDriver extends NUOPCComponent {
     try {
       NUOPCDriver _xblockexpression = null;
       {
-        ASTModuleNode _aSTRef = this.getASTRef();
-        boolean _equals = Objects.equal(_aSTRef, null);
+        boolean _equals = Objects.equal(this.driverName, null);
         if (_equals) {
-          boolean _equals_1 = Objects.equal(this.driverName, null);
-          if (_equals_1) {
-            throw new CodeGenerationException("No driver name specified");
-          }
-          StringConcatenation _builder = new StringConcatenation();
-          _builder.append("module ");
-          _builder.append(this.driverName, "");
-          _builder.newLineIfNotEmpty();
-          _builder.append("\t");
-          _builder.newLine();
-          _builder.append("\t");
-          _builder.append("use ESMF");
-          _builder.newLine();
-          _builder.append("\t");
-          _builder.append("use NUOPC");
-          _builder.newLine();
-          _builder.append("\t");
-          _builder.append("use NUOPC_Driver, only: &");
-          _builder.newLine();
-          _builder.append("\t\t");
-          _builder.append("driver_SetServices => SetServices");
-          _builder.newLine();
-          _builder.append("\t\t");
-          _builder.newLine();
-          _builder.append("\t");
-          _builder.append("implicit none");
-          _builder.newLine();
-          _builder.append("\t");
-          _builder.newLine();
-          _builder.append("\t");
-          _builder.append("contains");
-          _builder.newLine();
-          _builder.append("\t");
-          _builder.newLine();
-          _builder.append("end module");
-          _builder.newLine();
-          String code = _builder.toString();
-          ASTModuleNode moduleNode = CodeExtraction.<ASTModuleNode>parseLiteralProgramUnit(code);
-          this.setASTRef(moduleNode);
-          IASTListNode<IModuleBodyConstruct> _moduleBody = moduleNode.getModuleBody();
-          Iterable<ASTUseStmtNode> _filter = Iterables.<ASTUseStmtNode>filter(_moduleBody, ASTUseStmtNode.class);
-          final Procedure1<ASTUseStmtNode> _function = new Procedure1<ASTUseStmtNode>() {
-            @Override
-            public void apply(final ASTUseStmtNode it) {
-              Token _name = it.getName();
-              String _text = _name.getText();
-              boolean _eic = ASTQuery.eic(_text, "ESMF");
-              if (_eic) {
-                BasicCodeConcept<ASTUseStmtNode> _basicCodeConcept = new BasicCodeConcept<ASTUseStmtNode>(NUOPCDriver.this, it);
-                NUOPCDriver.this.importESMF = _basicCodeConcept;
+          throw new CodeGenerationException("No driver name specified");
+        }
+        StringConcatenation _builder = new StringConcatenation();
+        _builder.append("module ");
+        _builder.append(this.driverName, "");
+        _builder.newLineIfNotEmpty();
+        _builder.append("\t");
+        _builder.newLine();
+        _builder.append("\t");
+        _builder.append("use ESMF");
+        _builder.newLine();
+        _builder.append("\t");
+        _builder.append("use NUOPC");
+        _builder.newLine();
+        _builder.append("\t");
+        _builder.append("use NUOPC_Driver, only: &");
+        _builder.newLine();
+        _builder.append("\t\t");
+        _builder.append("driver_SetServices => SetServices");
+        _builder.newLine();
+        _builder.append("\t\t");
+        _builder.newLine();
+        _builder.append("\t");
+        _builder.append("implicit none");
+        _builder.newLine();
+        _builder.append("\t");
+        _builder.newLine();
+        _builder.append("\t");
+        _builder.append("contains");
+        _builder.newLine();
+        _builder.append("\t");
+        _builder.newLine();
+        _builder.append("end module");
+        _builder.newLine();
+        String code = _builder.toString();
+        ASTModuleNode moduleNode = CodeExtraction.<ASTModuleNode>parseLiteralProgramUnit(code);
+        this.setASTRef(moduleNode);
+        ASTListNode<IProgramUnit> pul = new ASTListNode<IProgramUnit>();
+        pul.add(moduleNode);
+        IFortranAST _aST = this.getAST();
+        ASTExecutableProgramNode _root = _aST.getRoot();
+        _root.setProgramUnitList(pul);
+        IASTListNode<IModuleBodyConstruct> _moduleBody = moduleNode.getModuleBody();
+        Iterable<ASTUseStmtNode> _filter = Iterables.<ASTUseStmtNode>filter(_moduleBody, ASTUseStmtNode.class);
+        final Procedure1<ASTUseStmtNode> _function = new Procedure1<ASTUseStmtNode>() {
+          @Override
+          public void apply(final ASTUseStmtNode it) {
+            Token _name = it.getName();
+            String _text = _name.getText();
+            boolean _eic = ASTQuery.eic(_text, "ESMF");
+            if (_eic) {
+              BasicCodeConcept<ASTUseStmtNode> _basicCodeConcept = new BasicCodeConcept<ASTUseStmtNode>(NUOPCDriver.this, it);
+              NUOPCDriver.this.importESMF = _basicCodeConcept;
+            } else {
+              Token _name_1 = it.getName();
+              String _text_1 = _name_1.getText();
+              boolean _eic_1 = ASTQuery.eic(_text_1, "NUOPC");
+              if (_eic_1) {
+                BasicCodeConcept<ASTUseStmtNode> _basicCodeConcept_1 = new BasicCodeConcept<ASTUseStmtNode>(NUOPCDriver.this, it);
+                NUOPCDriver.this.importNUOPC = _basicCodeConcept_1;
               } else {
-                Token _name_1 = it.getName();
-                String _text_1 = _name_1.getText();
-                boolean _eic_1 = ASTQuery.eic(_text_1, "NUOPC");
-                if (_eic_1) {
-                  BasicCodeConcept<ASTUseStmtNode> _basicCodeConcept_1 = new BasicCodeConcept<ASTUseStmtNode>(NUOPCDriver.this, it);
-                  NUOPCDriver.this.importNUOPC = _basicCodeConcept_1;
-                } else {
-                  Token _name_2 = it.getName();
-                  String _text_2 = _name_2.getText();
-                  boolean _eic_2 = ASTQuery.eic(_text_2, "NUOPC_Driver");
-                  if (_eic_2) {
-                    NUOPCComponent.GenericImport _genericImport = new NUOPCComponent.GenericImport(NUOPCDriver.this, it);
-                    NUOPCComponent.GenericImport _reverse = _genericImport.reverse();
-                    NUOPCDriver.this.importNUOPCGeneric = _reverse;
-                  }
+                Token _name_2 = it.getName();
+                String _text_2 = _name_2.getText();
+                boolean _eic_2 = ASTQuery.eic(_text_2, "NUOPC_Driver");
+                if (_eic_2) {
+                  NUOPCComponent.GenericImport _genericImport = new NUOPCComponent.GenericImport(NUOPCDriver.this, it);
+                  NUOPCComponent.GenericImport _reverse = _genericImport.reverse();
+                  NUOPCDriver.this.importNUOPCGeneric = _reverse;
                 }
               }
             }
-          };
-          IterableExtensions.<ASTUseStmtNode>forEach(_filter, _function);
-        }
+          }
+        };
+        IterableExtensions.<ASTUseStmtNode>forEach(_filter, _function);
         CodeConcept<CodeConcept<?, ?>, ASTModuleNode> _fward = super.fward();
         _xblockexpression = ((NUOPCDriver) _fward);
       }

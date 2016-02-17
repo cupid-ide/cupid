@@ -9,6 +9,7 @@ import java.net.URL;
 import org.earthsystemmodeling.cupid.annotation.Child;
 import org.earthsystemmodeling.cupid.annotation.Label;
 import org.earthsystemmodeling.cupid.core.CupidActivator;
+import org.earthsystemmodeling.cupid.handlers.ApplyCodeConceptChanges;
 import org.earthsystemmodeling.cupid.handlers.RewriteASTRunnable;
 import org.earthsystemmodeling.cupid.nuopc.CodeConcept;
 import org.earthsystemmodeling.cupid.nuopc.CodeGenerationException;
@@ -530,7 +531,7 @@ public class NUOPCView extends ViewPart {
 							//ignore
 						}
             			
-            			if (childAnn != null && childAnn.forward() && !(childAnn.max()==1 && childPresent)) {
+            			if (childAnn != null /*&& childAnn.forward()*/ && !(childAnn.max()==1 && childPresent)) {
             				
             				IAction actionToAdd = new Action() {
             					
@@ -573,7 +574,27 @@ public class NUOPCView extends ViewPart {
             							return;
             						}
             						
-            						//TextFileChange tfc = newcc.forward();
+            						try {
+										newcc = newcc.fward();
+									} catch (CodeGenerationException cge) {
+										MessageDialog.openError(
+            									viewer.getControl().getShell(),
+            									"Code generation failed",
+            									cge.getMessage());
+            							return;
+									}
+            						
+            						ApplyCodeConceptChanges applyRunnable = new ApplyCodeConceptChanges(newcc);
+    								try {
+										PlatformUI.getWorkbench().getProgressService().run(true, false, applyRunnable);
+									} catch (InvocationTargetException | InterruptedException e) {
+										CupidActivator.log("Exception executing code generation", e);
+									}
+    								
+    								viewer.refresh(ccp);
+        							viewer.expandToLevel(ccp, 1);
+            						
+            						/*
             						IFortranAST ast = null;
 									try {
 										ast = newcc.forward();
@@ -619,7 +640,7 @@ public class NUOPCView extends ViewPart {
         							
             							
             						}
-            						
+            						*/
             						
             					};
             					

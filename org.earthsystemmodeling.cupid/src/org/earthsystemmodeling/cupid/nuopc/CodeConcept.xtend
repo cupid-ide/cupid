@@ -1,26 +1,28 @@
 package org.earthsystemmodeling.cupid.nuopc;
 
 import alice.tuprolog.MalformedGoalException
+import java.io.ByteArrayInputStream
+import java.lang.reflect.Constructor
 import java.lang.reflect.Field
 import java.util.ArrayList
 import java.util.List
+import java.util.regex.Pattern
 import org.earthsystemmodeling.cupid.annotation.Child
 import org.earthsystemmodeling.cupid.codedb.CodeDBIndex
 import org.earthsystemmodeling.cupid.core.CupidActivator
+import org.eclipse.core.resources.IFile
+import org.eclipse.core.resources.IResource
+import org.eclipse.core.runtime.NullProgressMonitor
 import org.eclipse.photran.core.IFortranAST
 import org.eclipse.photran.internal.core.parser.IASTNode
-import org.eclipse.photran.internal.core.vpg.PhotranTokenRef
-import java.lang.reflect.ParameterizedType
-import java.lang.reflect.Constructor
-import org.eclipse.core.resources.IResource
-import org.eclipse.core.resources.IFile
-import org.eclipse.photran.internal.core.vpg.PhotranVPG
-import java.io.ByteArrayInputStream
-import org.earthsystemmodeling.cupid.codedb.PrologResultSet
-import org.eclipse.core.runtime.NullProgressMonitor
 import org.eclipse.photran.internal.core.reindenter.Reindenter
 import org.eclipse.photran.internal.core.reindenter.Reindenter.Strategy
-import org.earthsystemmodeling.cupid.handlers.RewriteASTRunnable
+import org.eclipse.photran.internal.core.vpg.PhotranVPG
+import org.eclipse.xtend.lib.annotations.Accessors
+import org.eclipse.ltk.core.refactoring.Change
+import org.apache.commons.io.IOUtils
+import org.eclipse.ltk.core.refactoring.TextFileChange
+import org.eclipse.text.edits.ReplaceEdit
 
 public abstract class CodeConcept<P extends CodeConcept<?,?>, A extends IASTNode> {
 	
@@ -36,9 +38,12 @@ public abstract class CodeConcept<P extends CodeConcept<?,?>, A extends IASTNode
 	
 	var protected Constructor<?> instanceConstructor;
 	
+	@Accessors(PUBLIC_GETTER)
+	var protected List<MarkerLoc> paramMarkers;
+	
 	new(P parent) {
 		init(parent)
-		
+		paramMarkers = newArrayList()
 		//use reflection to get class instance from generic type
 		//var parameterizedType = getClass().getGenericSuperclass() as ParameterizedType
 		//_astClass = parameterizedType.actualTypeArguments.get(1) as Class<A>
@@ -212,43 +217,59 @@ public abstract class CodeConcept<P extends CodeConcept<?,?>, A extends IASTNode
 		this
 	}
 	
-	def void commit() {
-		if (_context != null) {
-			if (_ast == null) {
-				//if ast does not exist yet, then write out the code
-				//and the ast will be acquired for the reindenter
-				writeToFile(_astRef.toString)
-			}
+	def Change generateChange() {
+		
+		if (_context == null) {
+			return _parent.generateChange
+		}
+		else if (_context instanceof IFile) {
 			
-			Reindenter.reindent(getAST.root, getAST, Strategy.REINDENT_EACH_LINE);  //reindent entire file
-			//writeToFile(_astRef.toString)  
-			var rewriter = new RewriteASTRunnable(getAST);
-			rewriter.run(new NullProgressMonitor());
+			Reindenter.reindent(getAST.root, getAST, Strategy.REINDENT_EACH_LINE);
+			
+			val fileContentsBefore = IOUtils.toString(_context.getContents(false))
+			val fileContentsAfter = replaceParameters(getAST.root.toString)
+			val charsInFile = fileContentsBefore.length
 			
 			PhotranVPG.instance.commitChangesFromInMemoryASTs(
 						new NullProgressMonitor(), 0, _context as IFile)
-			_ast = null
+			_ast = null  //force recompute of ast
 			PhotranVPG.instance.releaseAST(_context as IFile)
 			
+			if (!fileContentsAfter.equals(fileContentsBefore)) {
+				val textFileChange = new TextFileChange("Cupid code generation: " + _context.getFullPath().toOSString(), _context)
+	            textFileChange.setEdit(new ReplaceEdit(0, charsInFile, fileContentsAfter));
+	            return textFileChange	
+			}
 		}
-		else if (_parent != null) {
-			_parent.commit
-		}
-		else {
-			throw new CodeGenerationException("Cannot commit change because no file provided")
+		
+	}
+	
+	static String PARAM_REGEX = "CUPIDPARAM\\$(CHAR|INT)\\$([^\\$]*)\\$";
+	static Pattern PARAM_PATTERN = Pattern.compile(PARAM_REGEX);
+	
+	static class MarkerLoc {	
+		public int start
+		public int end
+		
+		new(int start, int end) {
+			this.start = start;
+			this.end = end;
 		}
 	}
 	
-	def writeToFile(String content) {
-		var file = _context as IFile
-		var is = new ByteArrayInputStream(content.bytes)
-		if (!file.exists) {
-			file.create(is, true, null)
-		}
-		else {
-			file.setContents(is, true, false, null)
-		}
-		is.close
+	def replaceParameters(String content) {
+		val matcher = PARAM_PATTERN.matcher(content);
+    	val sb = new StringBuffer();
+        
+        while (matcher.find()) {
+        	matcher.appendReplacement(sb, "$2");
+        	val endLoc = sb.length();
+        	val startLoc = endLoc - matcher.group(2).length();
+        	paramMarkers.add(new MarkerLoc(startLoc, endLoc));
+        }
+        
+        matcher.appendTail(sb);
+		sb.toString
 	}
 	
 	def newInstance() {

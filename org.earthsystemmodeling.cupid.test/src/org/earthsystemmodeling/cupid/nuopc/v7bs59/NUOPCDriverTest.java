@@ -1,29 +1,32 @@
 package org.earthsystemmodeling.cupid.nuopc.v7bs59;
 
 import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertNull;
-import static org.junit.Assert.assertTrue;
 
+import java.io.ByteArrayInputStream;
 import java.io.IOException;
 
+import org.earthsystemmodeling.cupid.nuopc.v7bs59.NUOPCDriver.ModifyInitializePhaseMap;
 import org.earthsystemmodeling.cupid.nuopc.v7bs59.NUOPCDriver.SetModelServices;
 import org.earthsystemmodeling.cupid.nuopc.v7bs59.NUOPCDriver.SetModelServices_AddComp;
+import org.earthsystemmodeling.cupid.nuopc.v7bs59.NUOPCDriver.SetRunClock;
 import org.earthsystemmodeling.cupid.nuopc.v7bs59.NUOPCDriver.SetRunSequence;
 import org.earthsystemmodeling.cupid.nuopc.v7bs59.NUOPCDriver.SetRunSequence_AddRunElement;
 import org.earthsystemmodeling.cupid.test.TestHelpers;
 import org.eclipse.core.resources.IFile;
 import org.eclipse.core.resources.IProject;
 import org.eclipse.core.runtime.CoreException;
+import org.eclipse.core.runtime.NullProgressMonitor;
+import org.eclipse.ltk.core.refactoring.Change;
 import org.junit.AfterClass;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
-@SuppressWarnings("restriction")
 public class NUOPCDriverTest {
 	
 	private static IProject PROJECT_NUOPC_PROTOTYPES;
+	private static NullProgressMonitor NPM = new NullProgressMonitor();
 	
 	@BeforeClass
 	public static void setUp() throws CoreException, IOException, InterruptedException {
@@ -34,33 +37,22 @@ public class NUOPCDriverTest {
 	public static void tearDown() throws CoreException {
 		PROJECT_NUOPC_PROTOTYPES.delete(true, true, null);
 	}
-	
-	
+
 	@Test
 	public void GenerateNUOPCDriverFromScratch() throws CoreException {
-		IProject p = TestHelpers.createEmptyProject("TestGenerateNUOPCDriver");
-		p.open(null);
+		IProject p = TestHelpers.createEmptyProject("GenerateNUOPCDriverFromScratch");
+		IFile f = p.getFile("MyDriver1.F90");
+		f.create(new ByteArrayInputStream(new byte[0]), true, new NullProgressMonitor());
 		
-		IFile f1 = p.getFile("MyDriver1.F90");
-		NUOPCDriver driver = new NUOPCDriver(f1);
+		NUOPCDriver driver = new NUOPCDriver(f);
 		driver.driverName = "MyDriver";
 		driver = driver.fward();
 		
-		assertFalse("Forward changes not committed yet", f1.exists());
-		driver.commit();
-		assertTrue("Forward changes committed", f1.exists());
-		
-		//Reindenter.reindent(driver.getASTRef(), driver.getAST(), Strategy.REINDENT_EACH_LINE);      								
-		//RewriteASTRunnable rewriter = new RewriteASTRunnable(driver.getAST());
-		//rewriter.run(new NullProgressMonitor());
-		
-		//System.out.println("GENERATED DRIVER:\n\n" + driver.getAST().getRoot().toString());
-		
-		//PhotranVPG.getInstance().commitChangesFromInMemoryASTs(new NullProgressMonitor(), 0, f1);
-		//PhotranVPG.getInstance().releaseAST(f1);
+		Change chg = driver.generateChange();
+		chg.perform(NPM);
 		
 		//read in same driver just generated
-		driver = new NUOPCDriver(f1).reverse();
+		driver = new NUOPCDriver(f).reverse();
 		
 		assertNotNull(driver);
 		assertEquals("MyDriver", driver.driverName);
@@ -90,7 +82,7 @@ public class NUOPCDriverTest {
 		SetRunSequence srs = new SetRunSequence(driver.initialization.initSpecs);
 		srs.subroutineName = sname;
 		srs = (SetRunSequence) srs.fward();
-		srs.commit();
+		srs.generateChange().perform(NPM);
 				
 		//re-reverse
 		driver = new NUOPCDriver(f).reverse();
@@ -106,7 +98,7 @@ public class NUOPCDriverTest {
 		srsare.compLabel = "MyCompLabel";
 		srsare.slot = "1";
 		srsare = srsare.fward();
-		srsare.commit();
+		srsare.generateChange().perform(NPM);
 		
 		//re-reverse
 		driver = new NUOPCDriver(f).reverse();
@@ -123,8 +115,6 @@ public class NUOPCDriverTest {
 		assertEquals("MyCompLabel", re.compLabel);
 		assertEquals("1", re.slot);
 		
-		//f = null;
-		//p.delete(true, true, new NullProgressMonitor());
 	}
 
 	@Test
@@ -154,7 +144,7 @@ public class NUOPCDriverTest {
 		srsare2.phaseLabel = "ThisIsThePhase";
 			
 		srs = (SetRunSequence) srs.fward();
-		srs.commit();
+		srs.generateChange().perform(NPM);
 				
 		//re-reverse
 		driver = new NUOPCDriver(f).reverse();
@@ -172,10 +162,12 @@ public class NUOPCDriverTest {
 		assertEquals("MyCompLabel", re.compLabel);
 		assertEquals("1", re.slot);
 		assertNull(re.phaseLabel);
+		assertNotNull(re.getASTRef());
 		re = driver.initialization.initSpecs.setRunSequence.runElements.get(1);
 		assertEquals("AnotherCompLabel", re.compLabel);
 		assertEquals("1", re.slot);
 		assertEquals("ThisIsThePhase", re.phaseLabel);
+		assertNotNull(re.getASTRef());
 		
 		srs = driver.initialization.initSpecs.setRunSequence;
 		
@@ -194,7 +186,7 @@ public class NUOPCDriverTest {
 		
 		connElem.fward();
 		slotLinkElem.fward();
-		srs.commit();
+		srs.generateChange().perform(NPM);
 		
 		//re-reverse
 		driver = new NUOPCDriver(f).reverse();
@@ -204,10 +196,12 @@ public class NUOPCDriverTest {
 		assertEquals("ConnSrc", re.srcCompLabel);
 		assertEquals("ConnDst", re.dstCompLabel);
 		assertEquals("1", re.slot);
+		assertNotNull(re.getASTRef());
 		
 		re = driver.initialization.initSpecs.setRunSequence.runElements.get(3);
 		assertEquals("1", re.slot);
 		assertEquals("2", re.linkSlot);
+		assertNotNull(re.getASTRef());
 		
 	}
 
@@ -215,8 +209,8 @@ public class NUOPCDriverTest {
 	public void NUOPCDriverAddSetModelServices() throws CoreException {
 		
 		IProject p = TestHelpers.createEmptyProject("NUOPCDriverAddSetModelServices");
-				
-		IFile f = p.getFile("NewDriver.F90");
+		IFile f = TestHelpers.createBlankFile(p, "NewDriver.F90"); 
+		
 		NUOPCDriver driver = new NUOPCDriver(f);
 		driver.driverName = "NewDriver";
 		driver = driver.fward();  //generates basic implementation
@@ -246,9 +240,7 @@ public class NUOPCDriverTest {
 		smsac3.compSetServices = "cplSS";
 				
 		sms.fward();
-		sms.commit();
-		
-		assertTrue("Forward changes committed", f.exists());
+		sms.generateChange().perform(NPM);
 		
 		driver = new NUOPCDriver(f).reverse();
 		
@@ -263,6 +255,7 @@ public class NUOPCDriverTest {
 		assertNotNull(driver.initialization.initPhases);
 		assertNotNull(driver.initialization.initSpecs);
 		assertNotNull(driver.initialization.initSpecs.setModelServices);
+		assertNotNull(driver.initialization.initSpecs.setModelServices.setClock);
 		assertNotNull(driver.initialization.initSpecs.setModelServices.addComps);
 		assertEquals(3, driver.initialization.initSpecs.setModelServices.addComps.size());
 		
@@ -279,6 +272,58 @@ public class NUOPCDriverTest {
 		assertEquals("FirstComp", ac.srcCompLabel);
 		assertEquals("SecondComp", ac.dstCompLabel);
 		assertEquals("cplSS", ac.compSetServices);
+		
+	}
+	
+	@Test
+	public void NUOPCDriverAddModifyIPM() throws IOException, CoreException {
+		
+		IProject p = TestHelpers.createProjectFromFolder("target/ESMF_7_0_0_beta_snapshot_59/AtmOcnProto", "NUOPCDriverAddModifyIPM");
+		IFile f = p.getFile("esm.F90");
+		
+		NUOPCDriver driver = new NUOPCDriver(f).reverse();
+		assertNotNull(driver);
+		assertNotNull(driver.initialization);
+		assertNotNull(driver.initialization.initSpecs);
+		assertNull(driver.initialization.initSpecs.modifyInitializePhaseMap);
+		
+		ModifyInitializePhaseMap mipm = new ModifyInitializePhaseMap(driver.initialization.initSpecs);
+		mipm.subroutineName = "ModifyInitializePhaseMap";
+		mipm.fward();
+		mipm.generateChange().perform(NPM);
+		
+		driver = driver.reverse();
+		assertNotNull(driver);
+		assertNotNull(driver.initialization);
+		assertNotNull(driver.initialization.initSpecs);
+		assertNotNull(driver.initialization.initSpecs.modifyInitializePhaseMap);
+		assertEquals("ModifyInitializePhaseMap", driver.initialization.initSpecs.modifyInitializePhaseMap.subroutineName);
+		
+	}
+	
+	@Test
+	public void NUOPCDriverAddSetRunClock() throws IOException, CoreException {
+		
+		IProject p = TestHelpers.createProjectFromFolder("target/ESMF_7_0_0_beta_snapshot_59/AtmOcnProto", "NUOPCDriverAddSetRunClock");
+		IFile f = p.getFile("esm.F90");
+		
+		NUOPCDriver driver = new NUOPCDriver(f).reverse();
+		assertNotNull(driver);
+		assertNotNull(driver.run);
+		assertNotNull(driver.run.runSpecs);
+		assertNull(driver.run.runSpecs.setRunClock);
+		
+		SetRunClock src = new SetRunClock(driver.run.runSpecs);
+		src.subroutineName = "SetRunClock";
+		src.fward();
+		src.generateChange().perform(NPM);
+		
+		driver = driver.reverse();
+		assertNotNull(driver);
+		assertNotNull(driver.run);
+		assertNotNull(driver.run.runSpecs);
+		assertNotNull(driver.run.runSpecs.setRunClock);
+		assertEquals("SetRunClock", driver.run.runSpecs.setRunClock.subroutineName);
 		
 	}
 

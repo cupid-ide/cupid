@@ -63,6 +63,7 @@ public class RewriteASTRunnable implements IRunnableWithProgress {
 			
 			if (!fileContentsAfter.equals(fileContentsBefore)) {
 	    		
+				
 				Matcher matcher = paramPattern.matcher(fileContentsAfter);
     		        
 				StringBuffer sb = new StringBuffer();
@@ -76,6 +77,7 @@ public class RewriteASTRunnable implements IRunnableWithProgress {
 		        matcher.appendTail(sb);
 		        
 			    fileContentsAfter = sb.toString();
+				
 				
 				textFileChange = new TextFileChange("Cupid code generation: " + file.getFullPath().toOSString(), file);
 	            //changeThisFile.initializeValidationData(monitor);	            

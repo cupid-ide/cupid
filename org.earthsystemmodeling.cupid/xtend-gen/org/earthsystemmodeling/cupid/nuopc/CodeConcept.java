@@ -2,35 +2,55 @@ package org.earthsystemmodeling.cupid.nuopc;
 
 import alice.tuprolog.MalformedGoalException;
 import com.google.common.base.Objects;
-import java.io.ByteArrayInputStream;
+import java.io.InputStream;
 import java.lang.reflect.Constructor;
 import java.lang.reflect.Field;
 import java.sql.ResultSet;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+import org.apache.commons.io.IOUtils;
 import org.earthsystemmodeling.cupid.annotation.Child;
 import org.earthsystemmodeling.cupid.codedb.CodeDBIndex;
 import org.earthsystemmodeling.cupid.core.CupidActivator;
-import org.earthsystemmodeling.cupid.handlers.RewriteASTRunnable;
 import org.earthsystemmodeling.cupid.nuopc.CodeGenerationException;
 import org.earthsystemmodeling.cupid.nuopc.ReverseEngineerException;
 import org.eclipse.core.resources.IFile;
 import org.eclipse.core.resources.IResource;
+import org.eclipse.core.runtime.IPath;
 import org.eclipse.core.runtime.NullProgressMonitor;
+import org.eclipse.ltk.core.refactoring.Change;
+import org.eclipse.ltk.core.refactoring.TextFileChange;
 import org.eclipse.photran.core.IFortranAST;
 import org.eclipse.photran.internal.core.parser.ASTExecutableProgramNode;
 import org.eclipse.photran.internal.core.parser.IASTNode;
 import org.eclipse.photran.internal.core.reindenter.Reindenter;
 import org.eclipse.photran.internal.core.vpg.PhotranVPG;
+import org.eclipse.text.edits.ReplaceEdit;
+import org.eclipse.xtend.lib.annotations.AccessorType;
+import org.eclipse.xtend.lib.annotations.Accessors;
 import org.eclipse.xtend2.lib.StringConcatenation;
 import org.eclipse.xtext.xbase.lib.CollectionLiterals;
 import org.eclipse.xtext.xbase.lib.Conversions;
 import org.eclipse.xtext.xbase.lib.Exceptions;
 import org.eclipse.xtext.xbase.lib.Functions.Function1;
 import org.eclipse.xtext.xbase.lib.IterableExtensions;
+import org.eclipse.xtext.xbase.lib.Pure;
 
 @SuppressWarnings("all")
 public abstract class CodeConcept<P extends CodeConcept<?, ?>, A extends IASTNode> {
+  public static class MarkerLoc {
+    public int start;
+    
+    public int end;
+    
+    public MarkerLoc(final int start, final int end) {
+      this.start = start;
+      this.end = end;
+    }
+  }
+  
   public P _parent;
   
   public long _id = (-1);
@@ -47,8 +67,13 @@ public abstract class CodeConcept<P extends CodeConcept<?, ?>, A extends IASTNod
   
   protected Constructor<?> instanceConstructor;
   
+  @Accessors(AccessorType.PUBLIC_GETTER)
+  protected List<CodeConcept.MarkerLoc> paramMarkers;
+  
   public CodeConcept(final P parent) {
     this.init(parent);
+    ArrayList<CodeConcept.MarkerLoc> _newArrayList = CollectionLiterals.<CodeConcept.MarkerLoc>newArrayList();
+    this.paramMarkers = _newArrayList;
   }
   
   public CodeDBIndex init(final P parent) {
@@ -388,58 +413,73 @@ public abstract class CodeConcept<P extends CodeConcept<?, ?>, A extends IASTNod
     }
   }
   
-  public void commit() {
+  public Change generateChange() {
     try {
-      boolean _notEquals = (!Objects.equal(this._context, null));
-      if (_notEquals) {
-        boolean _equals = Objects.equal(this._ast, null);
-        if (_equals) {
-          String _string = this._astRef.toString();
-          this.writeToFile(_string);
-        }
-        IFortranAST _aST = this.getAST();
-        ASTExecutableProgramNode _root = _aST.getRoot();
-        IFortranAST _aST_1 = this.getAST();
-        Reindenter.reindent(_root, _aST_1, Reindenter.Strategy.REINDENT_EACH_LINE);
-        IFortranAST _aST_2 = this.getAST();
-        RewriteASTRunnable rewriter = new RewriteASTRunnable(_aST_2);
-        NullProgressMonitor _nullProgressMonitor = new NullProgressMonitor();
-        rewriter.run(_nullProgressMonitor);
-        PhotranVPG _instance = PhotranVPG.getInstance();
-        NullProgressMonitor _nullProgressMonitor_1 = new NullProgressMonitor();
-        _instance.commitChangesFromInMemoryASTs(_nullProgressMonitor_1, 0, ((IFile) this._context));
-        this._ast = null;
-        PhotranVPG _instance_1 = PhotranVPG.getInstance();
-        _instance_1.releaseAST(((IFile) this._context));
+      boolean _equals = Objects.equal(this._context, null);
+      if (_equals) {
+        return this._parent.generateChange();
       } else {
-        boolean _notEquals_1 = (!Objects.equal(this._parent, null));
-        if (_notEquals_1) {
-          this._parent.commit();
-        } else {
-          throw new CodeGenerationException("Cannot commit change because no file provided");
+        if ((this._context instanceof IFile)) {
+          IFortranAST _aST = this.getAST();
+          ASTExecutableProgramNode _root = _aST.getRoot();
+          IFortranAST _aST_1 = this.getAST();
+          Reindenter.reindent(_root, _aST_1, Reindenter.Strategy.REINDENT_EACH_LINE);
+          InputStream _contents = ((IFile)this._context).getContents(false);
+          final String fileContentsBefore = IOUtils.toString(_contents);
+          IFortranAST _aST_2 = this.getAST();
+          ASTExecutableProgramNode _root_1 = _aST_2.getRoot();
+          String _string = _root_1.toString();
+          final String fileContentsAfter = this.replaceParameters(_string);
+          final int charsInFile = fileContentsBefore.length();
+          PhotranVPG _instance = PhotranVPG.getInstance();
+          NullProgressMonitor _nullProgressMonitor = new NullProgressMonitor();
+          _instance.commitChangesFromInMemoryASTs(_nullProgressMonitor, 0, ((IFile) this._context));
+          this._ast = null;
+          PhotranVPG _instance_1 = PhotranVPG.getInstance();
+          _instance_1.releaseAST(((IFile) this._context));
+          boolean _equals_1 = fileContentsAfter.equals(fileContentsBefore);
+          boolean _not = (!_equals_1);
+          if (_not) {
+            IPath _fullPath = ((IFile)this._context).getFullPath();
+            String _oSString = _fullPath.toOSString();
+            String _plus = ("Cupid code generation: " + _oSString);
+            final TextFileChange textFileChange = new TextFileChange(_plus, ((IFile)this._context));
+            ReplaceEdit _replaceEdit = new ReplaceEdit(0, charsInFile, fileContentsAfter);
+            textFileChange.setEdit(_replaceEdit);
+            return textFileChange;
+          }
         }
       }
+      return null;
     } catch (Throwable _e) {
       throw Exceptions.sneakyThrow(_e);
     }
   }
   
-  public void writeToFile(final String content) {
-    try {
-      IFile file = ((IFile) this._context);
-      byte[] _bytes = content.getBytes();
-      ByteArrayInputStream is = new ByteArrayInputStream(_bytes);
-      boolean _exists = file.exists();
-      boolean _not = (!_exists);
-      if (_not) {
-        file.create(is, true, null);
-      } else {
-        file.setContents(is, true, false, null);
+  private static String PARAM_REGEX = "CUPIDPARAM\\$(CHAR|INT)\\$([^\\$]*)\\$";
+  
+  private static Pattern PARAM_PATTERN = Pattern.compile(CodeConcept.PARAM_REGEX);
+  
+  public String replaceParameters(final String content) {
+    String _xblockexpression = null;
+    {
+      final Matcher matcher = CodeConcept.PARAM_PATTERN.matcher(content);
+      final StringBuffer sb = new StringBuffer();
+      while (matcher.find()) {
+        {
+          matcher.appendReplacement(sb, "$2");
+          final int endLoc = sb.length();
+          String _group = matcher.group(2);
+          int _length = _group.length();
+          final int startLoc = (endLoc - _length);
+          CodeConcept.MarkerLoc _markerLoc = new CodeConcept.MarkerLoc(startLoc, endLoc);
+          this.paramMarkers.add(_markerLoc);
+        }
       }
-      is.close();
-    } catch (Throwable _e) {
-      throw Exceptions.sneakyThrow(_e);
+      matcher.appendTail(sb);
+      _xblockexpression = sb.toString();
     }
+    return _xblockexpression;
   }
   
   public CodeConcept<P, A> newInstance() {
@@ -532,5 +572,10 @@ public abstract class CodeConcept<P extends CodeConcept<?, ?>, A extends IASTNod
     _builder.append(defaultVal, "");
     _builder.append("$");
     return _builder;
+  }
+  
+  @Pure
+  public List<CodeConcept.MarkerLoc> getParamMarkers() {
+    return this.paramMarkers;
   }
 }

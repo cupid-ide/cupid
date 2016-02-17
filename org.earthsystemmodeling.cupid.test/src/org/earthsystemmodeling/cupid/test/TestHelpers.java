@@ -1,10 +1,12 @@
 package org.earthsystemmodeling.cupid.test;
 
+import java.io.ByteArrayInputStream;
 import java.io.File;
 import java.io.IOException;
 import java.net.URL;
 
 import org.apache.commons.io.FileUtils;
+import org.eclipse.core.resources.IFile;
 import org.eclipse.core.resources.IProject;
 import org.eclipse.core.resources.IResource;
 import org.eclipse.core.resources.IWorkspaceRoot;
@@ -28,7 +30,7 @@ public class TestHelpers {
 	 * @throws CoreException 
 	 * @throws InterruptedException 
 	 */
-	public static IProject createProjectFromFolder(String relativePath, String projectName) throws IOException, CoreException, InterruptedException  {			
+	public static IProject createProjectFromFolder(String relativePath, String projectName) throws IOException, CoreException  {			
 		URL sourceFolder = FileLocator.toFileURL(FileLocator.find(MY_BUNDLE, new Path(relativePath), null));	
 		File srcDir = new File(sourceFolder.getFile());
 				
@@ -61,6 +63,12 @@ public class TestHelpers {
 		p.create(new NullProgressMonitor());
 		p.open(new NullProgressMonitor());
 		return p;
+	}
+	
+	public static IFile createBlankFile(IProject p, String filename) throws CoreException {
+		IFile f = p.getFile(filename);
+		f.create(new ByteArrayInputStream(new byte[0]), true, new NullProgressMonitor());
+		return f;
 	}
 	
 }

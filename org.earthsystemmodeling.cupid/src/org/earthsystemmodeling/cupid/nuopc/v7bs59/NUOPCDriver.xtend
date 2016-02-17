@@ -27,6 +27,8 @@ import static org.earthsystemmodeling.cupid.util.CodeExtraction.*
 
 import static extension org.earthsystemmodeling.cupid.nuopc.ASTQuery.*
 import static org.earthsystemmodeling.cupid.nuopc.ESMFCodeTemplates.*
+import org.eclipse.photran.internal.core.parser.ASTListNode
+import org.eclipse.photran.internal.core.parser.IProgramUnit
 
 @Label(label="NUOPC Driver")
 @MappingType("module")
@@ -141,13 +143,12 @@ class NUOPCDriver extends NUOPCComponent {
 	}
 
 	override NUOPCDriver fward() {
+				
+		if (driverName == null) throw new CodeGenerationException("No driver name specified")
 		
-		if (getASTRef == null) {
-			
-			if (driverName==null) throw new CodeGenerationException("No driver name specified")
-			
-			//create module
-			var code = '''
+		//create module
+		var code = 
+'''
 module «driverName»
 	
 	use ESMF
@@ -160,29 +161,26 @@ module «driverName»
 	contains
 	
 end module
-			'''
+'''
 	
-			var ASTModuleNode moduleNode = parseLiteralProgramUnit(code)
-			setASTRef(moduleNode)
-			
-			moduleNode.moduleBody.filter(ASTUseStmtNode).forEach[
-				if (it.name.text.eic("ESMF")) {
-					importESMF = new BasicCodeConcept(this, it)
-				}
-				else if (it.name.text.eic("NUOPC")) {
-					importNUOPC = new BasicCodeConcept(this, it)
-				}
-				else if (it.name.text.eic("NUOPC_Driver")) {
-					importNUOPCGeneric = new GenericImport(this, it).reverse
-				}
-			]
-			
-			//createFile(code)
-			
-			//reverse engineer to populate AST refs
-			//reverse()
-									
-		}
+		var ASTModuleNode moduleNode = parseLiteralProgramUnit(code)
+		setASTRef(moduleNode)
+		
+		var pul = new ASTListNode<IProgramUnit>()
+		pul.add(moduleNode)
+		getAST.root.programUnitList = pul
+		
+		moduleNode.moduleBody.filter(ASTUseStmtNode).forEach[
+			if (it.name.text.eic("ESMF")) {
+				importESMF = new BasicCodeConcept(this, it)
+			}
+			else if (it.name.text.eic("NUOPC")) {
+				importNUOPC = new BasicCodeConcept(this, it)
+			}
+			else if (it.name.text.eic("NUOPC_Driver")) {
+				importNUOPCGeneric = new GenericImport(this, it).reverse
+			}
+		]	
 		
 		super.fward as NUOPCDriver
 		
@@ -729,6 +727,7 @@ end subroutine
 	
 		new(Initialization parent) {
 			super(parent)
+			parent.initPhases = this
 		}
 		
 		override reverse() {
@@ -762,6 +761,7 @@ end subroutine
 		
 		new(NUOPCDriver parent) {
 			super(parent)
+			parent.initialization = this
 		}
 
 		override Initialization reverse() {
@@ -802,6 +802,7 @@ end subroutine
 	
 		new(Initialization parent) {
 			super(parent)
+			parent.initSpecs = this
 		}
 		
 		override InitSpecializations reverse() {
@@ -871,8 +872,9 @@ end subroutine
 			_parent._parent._parent.importNUOPCGeneric
 		}
 		
-		override forward() {
-			val IFortranAST ast = super.forward
+		override fward() {
+			//val IFortranAST ast = super.forward
+			super.fward
 			
 			val ASTSubroutineSubprogramNode ssn = getASTRef
 
@@ -941,7 +943,10 @@ if (ESMF_LogFoundError(rcToCheck=«paramRC», msg=ESMF_LOGERR_PASSTHRU, &
 			val IASTListNode<IBodyConstruct> stmts = parseLiteralStatementSequence(code)
 			ssn.body.addAll(stmts)
 			
-			ast
+			setClock = new BasicCodeConcept<ASTCallStmtNode>(this, stmts.get(8) as ASTCallStmtNode)
+			
+			this
+			//ast
 		}
 		
 	}
@@ -1221,6 +1226,7 @@ end subroutine
 						srsare.slot = c.argList.get(1).expr.literal
 						srsare.linkSlot = c.argList.get(2).expr.literal
 					}
+					srsare.setASTRef(c)
 					retList.add(srsare)
 				]
 			
@@ -1357,6 +1363,7 @@ call NUOPC_DriverAddRunElement(«_parent.paramGridComp», slot=«paramint(slot)�
 	
 		new(NUOPCDriver parent) {
 			super(parent)
+			parent.run = this
 		}
 		
 		override Run reverse() {
@@ -1376,6 +1383,7 @@ call NUOPC_DriverAddRunElement(«_parent.paramGridComp», slot=«paramint(slot)�
 		
 		new(Run parent) {
 			super(parent)
+			parent.runPhases = this
 		}
 		
 		override RunPhases reverse() {
@@ -1391,7 +1399,8 @@ call NUOPC_DriverAddRunElement(«_parent.paramGridComp», slot=«paramint(slot)�
 	public static class RunPhase1 extends CodeConcept<RunPhases, ASTNode> {
 		new(RunPhases parent) {
 			super(parent)
-		}
+			parent.p1 = this
+		}		
 	}	
 	
 	@Label(label="Specializations")
@@ -1402,6 +1411,7 @@ call NUOPC_DriverAddRunElement(«_parent.paramGridComp», slot=«paramint(slot)�
 
 		new(Run parent) {
 			super(parent)
+			parent.runSpecs = this
 		}
 
 		override reverse() {
@@ -1428,6 +1438,7 @@ call NUOPC_DriverAddRunElement(«_parent.paramGridComp», slot=«paramint(slot)�
 			specLabel = "driver_label_SetRunClock"
 			paramGridComp = "driver"
 			paramRC = "rc"
+			parent.setRunClock = this
 		}
 
 		override subroutineTemplate() {
@@ -1476,6 +1487,7 @@ subroutine «subroutineName»(«paramGridComp», «paramRC»)
 		
 		new(Finalize parent) {
 			super(parent)
+			parent.finalPhases = this
 		}
 		
 		override FinalizePhases reverse() {
@@ -1493,6 +1505,7 @@ subroutine «subroutineName»(«paramGridComp», «paramRC»)
 
 		new(Finalize parent) {
 			super(parent)
+			parent.finalSpecs = this
 		}
 
 		override reverse() {
@@ -1512,6 +1525,7 @@ subroutine «subroutineName»(«paramGridComp», «paramRC»)
 	public static class FinalizePhase1 extends CodeConcept<FinalizePhases, ASTNode> {
 		new(FinalizePhases parent) {
 			super(parent)
+			parent.p1 = this
 		}
 	}	
 
@@ -1526,6 +1540,7 @@ subroutine «subroutineName»(«paramGridComp», «paramRC»)
 
 		new(NUOPCDriver parent) {
 			super(parent)
+			parent.finalize = this
 		}
 
 		override Finalize reverse() {
@@ -1553,6 +1568,7 @@ subroutine «subroutineName»(«paramGridComp», «paramRC»)
 			specLabel = "driver_label_Finalize"
 			paramGridComp = "driver"
 			paramRC = "rc"
+			parent.finalize = this
 		}
 
 		override subroutineTemplate() {
