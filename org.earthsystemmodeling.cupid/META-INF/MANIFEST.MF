@@ -57,8 +57,8 @@ Require-Bundle: org.eclipse.core.runtime,
  org.eclipse.emf.ecore,
  org.eclipse.emf.common,
  org.eclipse.emf.ecore.xmi;bundle-version="2.11.1",
- org.earthsystemmodeling.cupid.nuopcmodel.edit;bundle-version="1.0.0",
- org.earthsystemmodeling.cupid.nuopcmodel.editor;bundle-version="1.0.0"
+ org.earthsystemmodeling.cupid.nuopcmodel.edit,
+ org.earthsystemmodeling.cupid.nuopcmodel.editor
 Bundle-ActivationPolicy: lazy
 Bundle-Activator: org.earthsystemmodeling.cupid.core.CupidActivator
 Export-Package: org.earthsystemmodeling.cupid.core
