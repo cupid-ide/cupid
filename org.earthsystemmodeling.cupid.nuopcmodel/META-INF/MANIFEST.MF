@@ -6,7 +6,7 @@ Bundle-Version: 0.1.0.qualifier
 Bundle-ClassPath: .
 Bundle-Vendor: %providerName
 Bundle-Localization: plugin
-Bundle-RequiredExecutionEnvironment: JavaSE-1.8
+Bundle-RequiredExecutionEnvironment: JavaSE-1.7
 Export-Package: org.earthsystemmodeling.cupid.NUOPC,
  org.earthsystemmodeling.cupid.NUOPC.impl,
  org.earthsystemmodeling.cupid.NUOPC.util

@@ -81,10 +81,10 @@ class NUOPCDriver extends NUOPCComponent {
 			//move some or all of these to NUOPCComponent
 			_astRef.moduleBody.filter(ASTUseStmtNode).forEach[
 				if (it.name.text.eic("ESMF")) {
-					importESMF = new BasicCodeConcept(this, it)
+					importESMF = new BasicCodeConcept<ASTUseStmtNode>(this, it)
 				}
 				else if (it.name.text.eic("NUOPC")) {
-					importNUOPC = new BasicCodeConcept(this, it)
+					importNUOPC = new BasicCodeConcept<ASTUseStmtNode>(this, it)
 				}
 				else if (it.name.text.eic("NUOPC_Driver")) {
 					importNUOPCGeneric = new GenericImport(this, it).reverse

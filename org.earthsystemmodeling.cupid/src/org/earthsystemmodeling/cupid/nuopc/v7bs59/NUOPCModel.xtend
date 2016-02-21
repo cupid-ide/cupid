@@ -1,23 +1,26 @@
 package org.earthsystemmodeling.cupid.nuopc.v7bs59
 
-import java.sql.SQLException
 import java.util.List
 import org.earthsystemmodeling.cupid.annotation.Child
+import org.earthsystemmodeling.cupid.annotation.Doc
 import org.earthsystemmodeling.cupid.annotation.Label
 import org.earthsystemmodeling.cupid.annotation.MappingType
 import org.earthsystemmodeling.cupid.codedb.CodeDBIndex
+import org.earthsystemmodeling.cupid.nuopc.BasicCodeConcept
 import org.earthsystemmodeling.cupid.nuopc.CodeConcept
+import org.eclipse.core.resources.IResource
 import org.eclipse.photran.core.IFortranAST
 import org.eclipse.photran.internal.core.parser.ASTCallStmtNode
+import org.eclipse.photran.internal.core.parser.ASTModuleNode
 import org.eclipse.photran.internal.core.parser.ASTNode
 import org.eclipse.photran.internal.core.parser.ASTSubroutineSubprogramNode
+import org.eclipse.photran.internal.core.parser.ASTUseStmtNode
 import org.eclipse.photran.internal.core.parser.IASTListNode
 import org.eclipse.photran.internal.core.parser.IBodyConstruct
 
-import static org.earthsystemmodeling.cupid.core.CupidActivator.log
-import static org.earthsystemmodeling.cupid.nuopc.BasicCodeConcept.newBasicCodeConcept
 import static org.earthsystemmodeling.cupid.util.CodeExtraction.parseLiteralStatementSequence
-import org.earthsystemmodeling.cupid.annotation.Doc
+
+import static extension org.earthsystemmodeling.cupid.nuopc.ASTQuery.*
 
 @Label(label="NUOPC Model")
 @MappingType("module")
@@ -44,10 +47,47 @@ class NUOPCModel extends NUOPCComponent {
 		super(null)
 		_codeDB = codeDB
 	}
+	
+	new(IResource context) {
+		super(null)
+		_context = context
+		_codeDB = null
+	}
 
 	override prefix() { "model" }
 
-	override reverse() {
+	override NUOPCModel reverse() {
+		
+		var ast = getAST()
+				
+		_astRef = ast.root?.programUnitList?.filter(ASTModuleNode).findFirst[
+			it.moduleBody?.filter(ASTUseStmtNode).exists[it.name.text.eic("NUOPC_Model")]
+		]
+		
+		if (_astRef != null) {
+			modelName = _astRef.moduleStmt.moduleName.moduleName.text
+			
+			//move some or all of these to NUOPCComponent
+			_astRef.moduleBody.filter(ASTUseStmtNode).forEach[
+				if (it.name.text.eic("ESMF")) {
+					importESMF = new BasicCodeConcept<ASTUseStmtNode>(this, it)
+				}
+				else if (it.name.text.eic("NUOPC")) {
+					importNUOPC = new BasicCodeConcept<ASTUseStmtNode>(this, it)
+				}
+				else if (it.name.text.eic("NUOPC_Model")) {
+					importNUOPCGeneric = new GenericImport(this, it).reverse
+				}
+			]
+						
+			reverseChildren
+			
+		}
+		else null
+	}
+
+	/*
+	override NUOPCModel reverse() {
 
 		var rs = '''module(_moduleID, _compUnitID, _driverName), 
 		            compilationUnit(_compUnitID, _filename, _path),
@@ -77,6 +117,8 @@ class NUOPCModel extends NUOPCComponent {
 
 		null
 	}
+	* 
+	*/
 
 	def reverseChildren() {
 		setServices = new SetServices(this).reverse as SetServices
@@ -301,8 +343,30 @@ class NUOPCModel extends NUOPCComponent {
 			override name() {
 				state + " / " + standardName
 			}
-	
+			
 			override List reverseMultiple() {
+				
+				val retList = newArrayList()
+				
+				_parent.ASTRef.body.filter(ASTCallStmtNode).filter[c|
+					c.subroutineName.eic("NUOPC_Advertise")].forEach[
+						var advField = new AdvertiseField(_parent)
+						advField.state = it.litArgExprByIdx(0)
+						advField.standardName = it.litArgExprByIdx(1)
+						advField.setASTRef(it)
+						retList.add(advField)	
+					]
+				
+				retList
+				
+			}
+			
+			/*
+			override List reverseMultiple() {
+				
+				//call NUOPC_Advertise(importState, &
+      			//StandardName="sea_surface_temperature", name="sst", rc=rc)
+				
 				var retList = newArrayList()
 	
 				var rs = '''call_(_cid, «parentID», 'NUOPC_Advertise'),
@@ -320,7 +384,8 @@ class NUOPCModel extends NUOPCComponent {
 	
 				retList
 			}
-	
+			*/
+			
 			override forward() {
 				var IFortranAST ast = getAST
 	
@@ -361,6 +426,24 @@ class NUOPCModel extends NUOPCComponent {
 		}
 
 		override List reverseMultiple() {
+			
+			val retList = newArrayList()
+				
+			_parent.ASTRef.body.filter(ASTCallStmtNode).filter[c|
+				c.subroutineName.eic("NUOPC_Realize")].forEach[
+					var relField = new RealizeField(_parent)
+					relField.state = it.litArgExprByIdx(0)
+					relField.field = it.litArgExprByIdx(1)
+					relField.setASTRef(it)
+					retList.add(relField)	
+				]
+			
+			retList
+			
+		}
+
+		/*
+		override List reverseMultiple() {
 			var retList = newArrayList()
 
 			var rs = '''call_(_cid, «parentID», 'NUOPC_Realize'),
@@ -378,6 +461,8 @@ class NUOPCModel extends NUOPCComponent {
 
 			retList
 		}
+		* 
+		*/
 
 		override forward() {
 			var IFortranAST ast = getAST

@@ -1,8 +1,7 @@
 package org.earthsystemmodeling.cupid.nuopc.v7bs59;
 
 import com.google.common.base.Objects;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import com.google.common.collect.Iterables;
 import java.util.ArrayList;
 import java.util.List;
 import org.earthsystemmodeling.cupid.annotation.Child;
@@ -10,7 +9,7 @@ import org.earthsystemmodeling.cupid.annotation.Doc;
 import org.earthsystemmodeling.cupid.annotation.Label;
 import org.earthsystemmodeling.cupid.annotation.MappingType;
 import org.earthsystemmodeling.cupid.codedb.CodeDBIndex;
-import org.earthsystemmodeling.cupid.core.CupidActivator;
+import org.earthsystemmodeling.cupid.nuopc.ASTQuery;
 import org.earthsystemmodeling.cupid.nuopc.BasicCodeConcept;
 import org.earthsystemmodeling.cupid.nuopc.CodeConcept;
 import org.earthsystemmodeling.cupid.nuopc.v7bs59.EntryPointCodeConcept;
@@ -18,16 +17,26 @@ import org.earthsystemmodeling.cupid.nuopc.v7bs59.NUOPCComponent;
 import org.earthsystemmodeling.cupid.nuopc.v7bs59.SetServicesCodeConcept;
 import org.earthsystemmodeling.cupid.nuopc.v7bs59.SpecializationMethodCodeConcept;
 import org.earthsystemmodeling.cupid.util.CodeExtraction;
+import org.eclipse.core.resources.IResource;
 import org.eclipse.photran.core.IFortranAST;
+import org.eclipse.photran.internal.core.lexer.Token;
 import org.eclipse.photran.internal.core.parser.ASTCallStmtNode;
+import org.eclipse.photran.internal.core.parser.ASTExecutableProgramNode;
+import org.eclipse.photran.internal.core.parser.ASTModuleNameNode;
 import org.eclipse.photran.internal.core.parser.ASTModuleNode;
+import org.eclipse.photran.internal.core.parser.ASTModuleStmtNode;
 import org.eclipse.photran.internal.core.parser.ASTNode;
 import org.eclipse.photran.internal.core.parser.ASTSubroutineSubprogramNode;
+import org.eclipse.photran.internal.core.parser.ASTUseStmtNode;
 import org.eclipse.photran.internal.core.parser.IASTListNode;
 import org.eclipse.photran.internal.core.parser.IBodyConstruct;
+import org.eclipse.photran.internal.core.parser.IModuleBodyConstruct;
+import org.eclipse.photran.internal.core.parser.IProgramUnit;
 import org.eclipse.xtend2.lib.StringConcatenation;
 import org.eclipse.xtext.xbase.lib.CollectionLiterals;
-import org.eclipse.xtext.xbase.lib.Exceptions;
+import org.eclipse.xtext.xbase.lib.Functions.Function1;
+import org.eclipse.xtext.xbase.lib.IterableExtensions;
+import org.eclipse.xtext.xbase.lib.Procedures.Procedure1;
 
 @Label(label = "NUOPC Model")
 @MappingType("module")
@@ -334,43 +343,62 @@ public class NUOPCModel extends NUOPCComponent {
       
       @Override
       public List reverseMultiple() {
-        try {
-          ArrayList<NUOPCModel.IPD.AdvertiseField> _xblockexpression = null;
-          {
-            ArrayList<NUOPCModel.IPD.AdvertiseField> retList = CollectionLiterals.<NUOPCModel.IPD.AdvertiseField>newArrayList();
-            StringConcatenation _builder = new StringConcatenation();
-            _builder.append("call_(_cid, ");
-            long _parentID = this.parentID();
-            _builder.append(_parentID, "");
-            _builder.append(", \'NUOPC_Advertise\'),");
-            _builder.newLineIfNotEmpty();
-            _builder.append("\t\t\t\t\t\t\t");
-            _builder.append("callArgWithType(_, _cid, 1, _, _, _stateExpr),");
-            _builder.newLine();
-            _builder.append("\t\t\t\t\t\t\t");
-            _builder.append("callArgWithType(_, _cid, 2, _, _, _standardNameExpr).");
-            ResultSet rs = this.execQuery(_builder);
-            while (rs.next()) {
-              {
-                NUOPCModel.IPD.AdvertiseField advField = new NUOPCModel.IPD.AdvertiseField(this._parent);
-                long _long = rs.getLong("_cid");
-                advField._id = _long;
-                String _string = rs.getString("_stateExpr");
-                advField.state = _string;
-                String _string_1 = rs.getString("_standardNameExpr");
-                advField.standardName = _string_1;
-                retList.add(advField);
-              }
+        ArrayList<NUOPCModel.IPD.AdvertiseField> _xblockexpression = null;
+        {
+          final ArrayList<NUOPCModel.IPD.AdvertiseField> retList = CollectionLiterals.<NUOPCModel.IPD.AdvertiseField>newArrayList();
+          ASTSubroutineSubprogramNode _aSTRef = this._parent.getASTRef();
+          IASTListNode<IBodyConstruct> _body = _aSTRef.getBody();
+          Iterable<ASTCallStmtNode> _filter = Iterables.<ASTCallStmtNode>filter(_body, ASTCallStmtNode.class);
+          final Function1<ASTCallStmtNode, Boolean> _function = new Function1<ASTCallStmtNode, Boolean>() {
+            @Override
+            public Boolean apply(final ASTCallStmtNode c) {
+              Token _subroutineName = c.getSubroutineName();
+              return Boolean.valueOf(ASTQuery.eic(_subroutineName, "NUOPC_Advertise"));
             }
-            rs.close();
-            _xblockexpression = retList;
-          }
-          return _xblockexpression;
-        } catch (Throwable _e) {
-          throw Exceptions.sneakyThrow(_e);
+          };
+          Iterable<ASTCallStmtNode> _filter_1 = IterableExtensions.<ASTCallStmtNode>filter(_filter, _function);
+          final Procedure1<ASTCallStmtNode> _function_1 = new Procedure1<ASTCallStmtNode>() {
+            @Override
+            public void apply(final ASTCallStmtNode it) {
+              NUOPCModel.IPD.AdvertiseField advField = new NUOPCModel.IPD.AdvertiseField(AdvertiseField.this._parent);
+              String _litArgExprByIdx = ASTQuery.litArgExprByIdx(it, 0);
+              advField.state = _litArgExprByIdx;
+              String _litArgExprByIdx_1 = ASTQuery.litArgExprByIdx(it, 1);
+              advField.standardName = _litArgExprByIdx_1;
+              advField.setASTRef(it);
+              retList.add(advField);
+            }
+          };
+          IterableExtensions.<ASTCallStmtNode>forEach(_filter_1, _function_1);
+          _xblockexpression = retList;
         }
+        return _xblockexpression;
       }
       
+      /**
+       * override List reverseMultiple() {
+       * 
+       * //call NUOPC_Advertise(importState, &
+       * //StandardName="sea_surface_temperature", name="sst", rc=rc)
+       * 
+       * var retList = newArrayList()
+       * 
+       * var rs = '''call_(_cid, «parentID», 'NUOPC_Advertise'),
+       * callArgWithType(_, _cid, 1, _, _, _stateExpr),
+       * callArgWithType(_, _cid, 2, _, _, _standardNameExpr).'''.execQuery
+       * 
+       * while (rs.next) {
+       * var advField = new AdvertiseField(_parent);
+       * advField._id = rs.getLong("_cid")
+       * advField.state = rs.getString("_stateExpr")
+       * advField.standardName = rs.getString("_standardNameExpr")
+       * retList.add(advField)
+       * }
+       * rs.close
+       * 
+       * retList
+       * }
+       */
       @Override
       public IFortranAST forward() {
         IFortranAST _xblockexpression = null;
@@ -432,43 +460,58 @@ public class NUOPCModel extends NUOPCComponent {
       
       @Override
       public List reverseMultiple() {
-        try {
-          ArrayList<NUOPCModel.IPD.RealizeField> _xblockexpression = null;
-          {
-            ArrayList<NUOPCModel.IPD.RealizeField> retList = CollectionLiterals.<NUOPCModel.IPD.RealizeField>newArrayList();
-            StringConcatenation _builder = new StringConcatenation();
-            _builder.append("call_(_cid, ");
-            long _parentID = this.parentID();
-            _builder.append(_parentID, "");
-            _builder.append(", \'NUOPC_Realize\'),");
-            _builder.newLineIfNotEmpty();
-            _builder.append("\t\t\t\t\t\t");
-            _builder.append("callArgWithType(_, _cid, 1, _, _, _stateExpr),");
-            _builder.newLine();
-            _builder.append("\t\t\t\t\t\t");
-            _builder.append("callArgWithType(_, _cid, 2, _, _, _fieldExpr).");
-            ResultSet rs = this.execQuery(_builder);
-            while (rs.next()) {
-              {
-                NUOPCModel.IPD.RealizeField relField = new NUOPCModel.IPD.RealizeField(this._parent);
-                long _long = rs.getLong("_cid");
-                relField._id = _long;
-                String _string = rs.getString("_stateExpr");
-                relField.state = _string;
-                String _string_1 = rs.getString("_fieldExpr");
-                relField.field = _string_1;
-                retList.add(relField);
-              }
+        ArrayList<NUOPCModel.IPD.RealizeField> _xblockexpression = null;
+        {
+          final ArrayList<NUOPCModel.IPD.RealizeField> retList = CollectionLiterals.<NUOPCModel.IPD.RealizeField>newArrayList();
+          ASTSubroutineSubprogramNode _aSTRef = this._parent.getASTRef();
+          IASTListNode<IBodyConstruct> _body = _aSTRef.getBody();
+          Iterable<ASTCallStmtNode> _filter = Iterables.<ASTCallStmtNode>filter(_body, ASTCallStmtNode.class);
+          final Function1<ASTCallStmtNode, Boolean> _function = new Function1<ASTCallStmtNode, Boolean>() {
+            @Override
+            public Boolean apply(final ASTCallStmtNode c) {
+              Token _subroutineName = c.getSubroutineName();
+              return Boolean.valueOf(ASTQuery.eic(_subroutineName, "NUOPC_Realize"));
             }
-            rs.close();
-            _xblockexpression = retList;
-          }
-          return _xblockexpression;
-        } catch (Throwable _e) {
-          throw Exceptions.sneakyThrow(_e);
+          };
+          Iterable<ASTCallStmtNode> _filter_1 = IterableExtensions.<ASTCallStmtNode>filter(_filter, _function);
+          final Procedure1<ASTCallStmtNode> _function_1 = new Procedure1<ASTCallStmtNode>() {
+            @Override
+            public void apply(final ASTCallStmtNode it) {
+              NUOPCModel.IPD.RealizeField relField = new NUOPCModel.IPD.RealizeField(RealizeField.this._parent);
+              String _litArgExprByIdx = ASTQuery.litArgExprByIdx(it, 0);
+              relField.state = _litArgExprByIdx;
+              String _litArgExprByIdx_1 = ASTQuery.litArgExprByIdx(it, 1);
+              relField.field = _litArgExprByIdx_1;
+              relField.setASTRef(it);
+              retList.add(relField);
+            }
+          };
+          IterableExtensions.<ASTCallStmtNode>forEach(_filter_1, _function_1);
+          _xblockexpression = retList;
         }
+        return _xblockexpression;
       }
       
+      /**
+       * override List reverseMultiple() {
+       * var retList = newArrayList()
+       * 
+       * var rs = '''call_(_cid, «parentID», 'NUOPC_Realize'),
+       * callArgWithType(_, _cid, 1, _, _, _stateExpr),
+       * callArgWithType(_, _cid, 2, _, _, _fieldExpr).'''.execQuery
+       * 
+       * while (rs.next) {
+       * var relField = new RealizeField(_parent);
+       * relField._id = rs.getLong("_cid")
+       * relField.state = rs.getString("_stateExpr")
+       * relField.field = rs.getString("_fieldExpr")
+       * retList.add(relField)
+       * }
+       * rs.close
+       * 
+       * retList
+       * }
+       */
       @Override
       public IFortranAST forward() {
         IFortranAST _xblockexpression = null;
@@ -1840,81 +1883,137 @@ public class NUOPCModel extends NUOPCComponent {
     this._codeDB = codeDB;
   }
   
+  public NUOPCModel(final IResource context) {
+    super(null);
+    this._context = context;
+    this._codeDB = null;
+  }
+  
   @Override
   public String prefix() {
     return "model";
   }
   
   @Override
-  public CodeConcept<CodeConcept<?, ?>, ASTModuleNode> reverse() {
-    Object _xblockexpression = null;
+  public NUOPCModel reverse() {
+    NUOPCModel _xblockexpression = null;
     {
-      StringConcatenation _builder = new StringConcatenation();
-      _builder.append("module(_moduleID, _compUnitID, _driverName), ");
-      _builder.newLine();
-      _builder.append("\t\t            ");
-      _builder.append("compilationUnit(_compUnitID, _filename, _path),");
-      _builder.newLine();
-      _builder.append("   \t\t\t\t\t");
-      _builder.append("uses(_uid, _moduleID, \'NUOPC_Model\').");
-      ResultSet rs = this.execQuery(_builder);
-      try {
-        boolean _next = rs.next();
-        if (_next) {
-          long _long = rs.getLong("_moduleID");
-          this._id = _long;
-          String _string = rs.getString("_driverName");
-          this.modelName = _string;
-          String _string_1 = rs.getString("_filename");
-          this.filename = _string_1;
-          String _string_2 = rs.getString("_path");
-          this.path = _string_2;
-          long _long_1 = rs.getLong("_uid");
-          NUOPCComponent.GenericImport _genericImport = new NUOPCComponent.GenericImport(this, _long_1);
-          NUOPCComponent.GenericImport _reverse = _genericImport.reverse();
-          this.importNUOPCGeneric = _reverse;
-          rs.close();
-          StringConcatenation _builder_1 = new StringConcatenation();
-          _builder_1.append("uses(_uid, ");
-          _builder_1.append(this._id, "");
-          _builder_1.append(", \'ESMF\').");
-          ResultSet _execQuery = this.execQuery(_builder_1);
-          rs = _execQuery;
-          boolean _next_1 = rs.next();
-          if (_next_1) {
-            long _long_2 = rs.getLong("_uid");
-            BasicCodeConcept _newBasicCodeConcept = BasicCodeConcept.newBasicCodeConcept(this, _long_2);
-            this.importESMF = _newBasicCodeConcept;
-          }
-          rs.close();
-          StringConcatenation _builder_2 = new StringConcatenation();
-          _builder_2.append("uses(_uid, ");
-          _builder_2.append(this._id, "");
-          _builder_2.append(", \'NUOPC\').");
-          ResultSet _execQuery_1 = this.execQuery(_builder_2);
-          rs = _execQuery_1;
-          boolean _next_2 = rs.next();
-          if (_next_2) {
-            long _long_3 = rs.getLong("_uid");
-            BasicCodeConcept _newBasicCodeConcept_1 = BasicCodeConcept.newBasicCodeConcept(this, _long_3);
-            this.importNUOPC = _newBasicCodeConcept_1;
-          }
-          rs.close();
-          return this.reverseChildren();
-        }
-      } catch (final Throwable _t) {
-        if (_t instanceof SQLException) {
-          final SQLException e = (SQLException)_t;
-          CupidActivator.log("SQL error", e);
-        } else {
-          throw Exceptions.sneakyThrow(_t);
-        }
+      IFortranAST ast = this.getAST();
+      ASTExecutableProgramNode _root = ast.getRoot();
+      IASTListNode<IProgramUnit> _programUnitList = null;
+      if (_root!=null) {
+        _programUnitList=_root.getProgramUnitList();
       }
-      _xblockexpression = null;
+      Iterable<ASTModuleNode> _filter = null;
+      if (_programUnitList!=null) {
+        _filter=Iterables.<ASTModuleNode>filter(_programUnitList, ASTModuleNode.class);
+      }
+      final Function1<ASTModuleNode, Boolean> _function = new Function1<ASTModuleNode, Boolean>() {
+        @Override
+        public Boolean apply(final ASTModuleNode it) {
+          IASTListNode<IModuleBodyConstruct> _moduleBody = it.getModuleBody();
+          Iterable<ASTUseStmtNode> _filter = null;
+          if (_moduleBody!=null) {
+            _filter=Iterables.<ASTUseStmtNode>filter(_moduleBody, ASTUseStmtNode.class);
+          }
+          final Function1<ASTUseStmtNode, Boolean> _function = new Function1<ASTUseStmtNode, Boolean>() {
+            @Override
+            public Boolean apply(final ASTUseStmtNode it) {
+              Token _name = it.getName();
+              String _text = _name.getText();
+              return Boolean.valueOf(ASTQuery.eic(_text, "NUOPC_Model"));
+            }
+          };
+          return Boolean.valueOf(IterableExtensions.<ASTUseStmtNode>exists(_filter, _function));
+        }
+      };
+      ASTModuleNode _findFirst = IterableExtensions.<ASTModuleNode>findFirst(_filter, _function);
+      this._astRef = _findFirst;
+      NUOPCModel _xifexpression = null;
+      boolean _notEquals = (!Objects.equal(this._astRef, null));
+      if (_notEquals) {
+        NUOPCModel _xblockexpression_1 = null;
+        {
+          ASTModuleStmtNode _moduleStmt = this._astRef.getModuleStmt();
+          ASTModuleNameNode _moduleName = _moduleStmt.getModuleName();
+          Token _moduleName_1 = _moduleName.getModuleName();
+          String _text = _moduleName_1.getText();
+          this.modelName = _text;
+          IASTListNode<IModuleBodyConstruct> _moduleBody = this._astRef.getModuleBody();
+          Iterable<ASTUseStmtNode> _filter_1 = Iterables.<ASTUseStmtNode>filter(_moduleBody, ASTUseStmtNode.class);
+          final Procedure1<ASTUseStmtNode> _function_1 = new Procedure1<ASTUseStmtNode>() {
+            @Override
+            public void apply(final ASTUseStmtNode it) {
+              Token _name = it.getName();
+              String _text = _name.getText();
+              boolean _eic = ASTQuery.eic(_text, "ESMF");
+              if (_eic) {
+                BasicCodeConcept<ASTUseStmtNode> _basicCodeConcept = new BasicCodeConcept<ASTUseStmtNode>(NUOPCModel.this, it);
+                NUOPCModel.this.importESMF = _basicCodeConcept;
+              } else {
+                Token _name_1 = it.getName();
+                String _text_1 = _name_1.getText();
+                boolean _eic_1 = ASTQuery.eic(_text_1, "NUOPC");
+                if (_eic_1) {
+                  BasicCodeConcept<ASTUseStmtNode> _basicCodeConcept_1 = new BasicCodeConcept<ASTUseStmtNode>(NUOPCModel.this, it);
+                  NUOPCModel.this.importNUOPC = _basicCodeConcept_1;
+                } else {
+                  Token _name_2 = it.getName();
+                  String _text_2 = _name_2.getText();
+                  boolean _eic_2 = ASTQuery.eic(_text_2, "NUOPC_Model");
+                  if (_eic_2) {
+                    NUOPCComponent.GenericImport _genericImport = new NUOPCComponent.GenericImport(NUOPCModel.this, it);
+                    NUOPCComponent.GenericImport _reverse = _genericImport.reverse();
+                    NUOPCModel.this.importNUOPCGeneric = _reverse;
+                  }
+                }
+              }
+            }
+          };
+          IterableExtensions.<ASTUseStmtNode>forEach(_filter_1, _function_1);
+          _xblockexpression_1 = this.reverseChildren();
+        }
+        _xifexpression = _xblockexpression_1;
+      } else {
+        _xifexpression = null;
+      }
+      _xblockexpression = _xifexpression;
     }
-    return ((CodeConcept<CodeConcept<?, ?>, ASTModuleNode>)_xblockexpression);
+    return _xblockexpression;
   }
   
+  /**
+   * override NUOPCModel reverse() {
+   * 
+   * var rs = '''module(_moduleID, _compUnitID, _driverName),
+   * compilationUnit(_compUnitID, _filename, _path),
+   * uses(_uid, _moduleID, 'NUOPC_Model').'''.execQuery
+   * try {
+   * if (rs.next) {
+   * _id = rs.getLong("_moduleID")
+   * modelName = rs.getString("_driverName")
+   * filename = rs.getString("_filename")
+   * path = rs.getString("_path")
+   * importNUOPCGeneric = new GenericImport(this, rs.getLong("_uid")).reverse
+   * rs.close
+   * 
+   * rs = '''uses(_uid, «_id», 'ESMF').'''.execQuery
+   * if(rs.next) importESMF = newBasicCodeConcept(this, rs.getLong("_uid"))
+   * rs.close
+   * 
+   * rs = '''uses(_uid, «_id», 'NUOPC').'''.execQuery
+   * if(rs.next) importNUOPC = newBasicCodeConcept(this, rs.getLong("_uid"))
+   * rs.close
+   * 
+   * return reverseChildren
+   * }
+   * } catch (SQLException e) {
+   * log("SQL error", e);
+   * }
+   * 
+   * null
+   * }
+   */
   public NUOPCModel reverseChildren() {
     NUOPCModel _xblockexpression = null;
     {

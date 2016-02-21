@@ -67,6 +67,23 @@ public class ASTQuery {
     return _string;
   }
   
+  public static String litArgExprByIdx(final ASTCallStmtNode node, final int idx) {
+    IASTListNode<ASTSubroutineArgNode> _argList = node.getArgList();
+    ASTSubroutineArgNode _get = null;
+    if (_argList!=null) {
+      _get=_argList.get(idx);
+    }
+    IExpr _expr = null;
+    if (_get!=null) {
+      _expr=_get.getExpr();
+    }
+    String _string = null;
+    if (_expr!=null) {
+      _string=_expr.toString();
+    }
+    return _string;
+  }
+  
   public static String localName(final ASTModuleNode moduleNode, final String usedModule, final String usedEntity) {
     String _xblockexpression = null;
     {

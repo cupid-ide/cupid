@@ -116,6 +116,7 @@ public abstract class EntryPointCodeConcept<P extends CodeConcept<?, ?>> extends
       if (_equals_1) {
         return null;
       }
+      this.setASTRef(epSubroutine);
       ASTSubroutineStmtNode _subroutineStmt = epSubroutine.getSubroutineStmt();
       ASTSubroutineNameNode _subroutineName = _subroutineStmt.getSubroutineName();
       Token _subroutineName_1 = _subroutineName.getSubroutineName();

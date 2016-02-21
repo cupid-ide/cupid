@@ -28,6 +28,10 @@ class ASTQuery {
 		nodes.findArgNodeByKeyword(keyword)?.expr?.toString
 	}
 	
+	def static litArgExprByIdx(ASTCallStmtNode node, int idx) {
+		node.argList?.get(idx)?.expr?.toString
+	}
+	
 	def static localName(ASTModuleNode moduleNode, String usedModule, String usedEntity) {
 		var node = moduleNode.body.filter(ASTUseStmtNode).findFirst[
 			it.name.eic(usedModule)

@@ -45,6 +45,11 @@
             id="org.earthsystemmodeling.cupid.showNUOPCDocView"
             name="Show NUOPC Doc View">
       </command>
+      <command
+            categoryId="org.earthsystemmodeling.cupid.commands"
+            id="org.earthsystemmodeling.cupid.generateCode"
+            name="Generate NUOPC Code">
+      </command>
    </extension>
    <extension
          point="org.eclipse.ui.handlers">
@@ -73,6 +78,10 @@
       <handler
             class="org.earthsystemmodeling.cupid.handlers.ShowNUOPCDocView"
             commandId="org.earthsystemmodeling.cupid.showNUOPCDocView">
+      </handler>
+      <handler
+            class="org.earthsystemmodeling.cupid.handlers.GenerateCodeHandler"
+            commandId="org.earthsystemmodeling.cupid.generateCode">
       </handler>
    </extension>
   
@@ -155,8 +164,28 @@
          </toolbar>
       </menuContribution>
       
+      <menuContribution
+            locationURI="popup:org.eclipse.ui.navigator.ProjectExplorer#PopupMenu?after=additions">
+         <command
+               commandId="org.earthsystemmodeling.cupid.generateCode"
+               id="org.earthsystemmodeling.cupid.menus.generateCode">
+            <!--
+            <visibleWhen
+                  checkEnabled="false">
+               <with
+                     variable="selection">
+                  <iterate
+                        operator="and">
+                     <instanceof
+                           value="org.eclipse.core.resources.IFile">
+                     </instanceof>
+                  </iterate>
+               </with>
+            </visibleWhen>
+            -->
+         </command>
+      </menuContribution>
       
-     
       
      <!--
        <menuContribution
