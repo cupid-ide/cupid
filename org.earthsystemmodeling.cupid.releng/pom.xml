@@ -142,6 +142,16 @@
 		<module>../org.earthsystemmodeling.cupid.test</module>
 		<module>../org.earthsystemmodeling.cupid.targetplatform</module>
 		<module>../org.earthsystemmodeling.cupid.template</module>
+		<module>../org.earthsystemmodeling.cupid.nuopcmodel</module>
+		<module>
+			../org.earthsystemmodeling.cupid.nuopcmodel.design
+		</module>
+		<module>
+			../org.earthsystemmodeling.cupid.nuopcmodel.edit
+		</module>
+		<module>
+			../org.earthsystemmodeling.cupid.nuopcmodel.editor
+		</module>
 	</modules>
 
 	<repositories>
