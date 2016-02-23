@@ -23,6 +23,7 @@ module ATM
   contains
   !-----------------------------------------------------------------------------
   
+  !BOC SetServices
   subroutine SetServices(model, rc)
     type(ESMF_GridComp)  :: model
     integer, intent(out) :: rc
@@ -59,7 +60,8 @@ module ATM
       return  ! bail out
     
   end subroutine
-  
+  !EOC SetServices  
+
   !-----------------------------------------------------------------------------
 
   subroutine InitializeP1(model, importState, exportState, clock, rc)
