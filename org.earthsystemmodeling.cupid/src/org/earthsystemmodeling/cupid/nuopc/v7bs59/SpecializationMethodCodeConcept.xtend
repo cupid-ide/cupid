@@ -70,8 +70,9 @@ public abstract class SpecializationMethodCodeConcept<P extends CodeConcept<?,?>
 	}
  
  	override reverse() {
- 		if (reverseMultiple?.size() > 0) 
- 			reverseMultiple?.get(0) as CodeConcept<P, ASTSubroutineSubprogramNode>
+ 		val lst = reverseMultiple
+ 		if (lst?.size() > 0) 
+ 			lst?.get(0) as CodeConcept<P, ASTSubroutineSubprogramNode>
  		else null
  	}
 

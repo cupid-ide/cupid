@@ -18,9 +18,12 @@ import org.eclipse.photran.internal.core.parser.ASTUseStmtNode
 import org.eclipse.photran.internal.core.parser.IASTListNode
 import org.eclipse.photran.internal.core.parser.IBodyConstruct
 
-import static org.earthsystemmodeling.cupid.util.CodeExtraction.parseLiteralStatementSequence
+import static org.earthsystemmodeling.cupid.util.CodeExtraction.*
 
 import static extension org.earthsystemmodeling.cupid.nuopc.ASTQuery.*
+import org.earthsystemmodeling.cupid.nuopc.CodeGenerationException
+import org.eclipse.photran.internal.core.parser.IProgramUnit
+import org.eclipse.photran.internal.core.parser.ASTListNode
 
 @Label(label="NUOPC Model")
 @MappingType("module")
@@ -31,7 +34,7 @@ class NUOPCModel extends NUOPCComponent {
 	public String filename
 	public String path
 
-	@Child
+	@Child(forward=true)
 	public SetServices setServices
 	
 	@Child
@@ -127,6 +130,52 @@ class NUOPCModel extends NUOPCComponent {
 		finalize = new Finalize(this).reverse
 		this
 	}
+
+
+	override NUOPCModel fward() {
+				
+		if (modelName == null) throw new CodeGenerationException("No model name specified")
+		
+		//create module
+		var code = 
+'''
+module «modelName»
+	
+	use ESMF
+	use NUOPC
+	use NUOPC_Model, only: &
+		model_SetServices => SetServices
+		
+	implicit none
+	
+	contains
+	
+end module
+'''
+	
+		var ASTModuleNode moduleNode = parseLiteralProgramUnit(code)
+		setASTRef(moduleNode)
+		
+		var pul = new ASTListNode<IProgramUnit>()
+		pul.add(moduleNode)
+		getAST.root.programUnitList = pul
+		
+		moduleNode.moduleBody.filter(ASTUseStmtNode).forEach[
+			if (it.name.text.eic("ESMF")) {
+				importESMF = new BasicCodeConcept(this, it)
+			}
+			else if (it.name.text.eic("NUOPC")) {
+				importNUOPC = new BasicCodeConcept(this, it)
+			}
+			else if (it.name.text.eic("NUOPC_Model")) {
+				importNUOPCGeneric = new GenericImport(this, it).reverse
+			}
+		]	
+		
+		super.fward as NUOPCModel
+		
+	}
+
 
 	override name() {
 		modelName + " (" + filename + ")"

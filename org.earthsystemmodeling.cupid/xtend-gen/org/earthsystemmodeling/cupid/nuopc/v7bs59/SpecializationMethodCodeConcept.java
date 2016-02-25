@@ -99,24 +99,27 @@ public abstract class SpecializationMethodCodeConcept<P extends CodeConcept<?, ?
   
   @Override
   public CodeConcept<P, ASTSubroutineSubprogramNode> reverse() {
-    CodeConcept<P, ASTSubroutineSubprogramNode> _xifexpression = null;
-    List _reverseMultiple = this.reverseMultiple();
-    int _size = 0;
-    if (_reverseMultiple!=null) {
-      _size=_reverseMultiple.size();
-    }
-    boolean _greaterThan = (_size > 0);
-    if (_greaterThan) {
-      List _reverseMultiple_1 = this.reverseMultiple();
-      Object _get = null;
-      if (_reverseMultiple_1!=null) {
-        _get=_reverseMultiple_1.get(0);
+    CodeConcept<P, ASTSubroutineSubprogramNode> _xblockexpression = null;
+    {
+      final List lst = this.reverseMultiple();
+      CodeConcept<P, ASTSubroutineSubprogramNode> _xifexpression = null;
+      int _size = 0;
+      if (lst!=null) {
+        _size=lst.size();
       }
-      _xifexpression = ((CodeConcept<P, ASTSubroutineSubprogramNode>) _get);
-    } else {
-      _xifexpression = null;
+      boolean _greaterThan = (_size > 0);
+      if (_greaterThan) {
+        Object _get = null;
+        if (lst!=null) {
+          _get=lst.get(0);
+        }
+        _xifexpression = ((CodeConcept<P, ASTSubroutineSubprogramNode>) _get);
+      } else {
+        _xifexpression = null;
+      }
+      _xblockexpression = _xifexpression;
     }
-    return _xifexpression;
+    return _xblockexpression;
   }
   
   @Override
