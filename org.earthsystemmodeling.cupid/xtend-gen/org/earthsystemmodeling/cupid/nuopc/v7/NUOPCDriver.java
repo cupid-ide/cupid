@@ -884,7 +884,7 @@ public class NUOPCDriver extends NUOPCComponent {
   }
   
   @Override
-  public CodeConcept<CodeConcept<?, ?>, ASTModuleNode> reverse() {
+  public CodeConcept<?, ?> reverse() {
     Object _xblockexpression = null;
     {
       StringConcatenation _builder = new StringConcatenation();
@@ -950,7 +950,7 @@ public class NUOPCDriver extends NUOPCComponent {
       }
       _xblockexpression = null;
     }
-    return ((CodeConcept<CodeConcept<?, ?>, ASTModuleNode>)_xblockexpression);
+    return ((CodeConcept<?, ?>)_xblockexpression);
   }
   
   public NUOPCDriver reverseChildren() {

@@ -33,7 +33,7 @@ public abstract class InternalEntryPointCodeConcept<P extends CodeConcept<?, ?>>
   }
   
   @Override
-  public CodeConcept<P, ASTSubroutineSubprogramNode> reverse() {
+  public CodeConcept<?, ?> reverse() {
     try {
       EntryPointCodeConcept<P> _xblockexpression = null;
       {

@@ -6,6 +6,8 @@ import java.io.ByteArrayInputStream;
 import java.io.IOException;
 
 import org.earthsystemmodeling.cupid.nuopc.v7bs59.NUOPCModel.IPD.AdvertiseField;
+import org.earthsystemmodeling.cupid.nuopc.v7bs59.NUOPCModel.IPD.IPDv04p1;
+import org.earthsystemmodeling.cupid.nuopc.v7bs59.NUOPCModel.IPD.IPDv04p3;
 import org.earthsystemmodeling.cupid.nuopc.v7bs59.NUOPCModel.IPD.RealizeField;
 import org.earthsystemmodeling.cupid.nuopc.v7bs59.NUOPCModel.SetRunClock;
 import org.earthsystemmodeling.cupid.test.TestHelpers;
@@ -41,7 +43,7 @@ public class NUOPCModelTest {
 				
 		NUOPCModel model = new NUOPCModel(f).reverse();
 		assertNotNull(model);
-		assertEquals("ATM", model.modelName);
+		assertEquals("ATM", model.name);
 		assertNotNull(model.setServices);
 		assertEquals("SetServices", model.setServices.subroutineName);
 		assertNotNull(model.importESMF);
@@ -86,7 +88,7 @@ public class NUOPCModelTest {
 		
 		model = new NUOPCModel(f).reverse();
 		assertNotNull(model);
-		assertEquals("OCN", model.modelName);
+		assertEquals("OCN", model.name);
 		assertNotNull(model.setServices);
 		assertEquals("SetServices", model.setServices.subroutineName);
 		assertNotNull(model.importESMF);
@@ -122,7 +124,7 @@ public class NUOPCModelTest {
 
 		model = new NUOPCModel(f).reverse();
 		assertNotNull(model);
-		assertEquals("ATM", model.modelName);
+		assertEquals("ATM", model.name);
 		assertNotNull(model.setServices);
 		assertNotNull(model.importESMF);
 		assertNotNull(model.importNUOPC);
@@ -152,7 +154,7 @@ public class NUOPCModelTest {
 		
 		model = new NUOPCModel(f).reverse();
 		assertNotNull(model);
-		assertEquals("ATM", model.modelName);
+		assertEquals("ATM", model.name);
 		assertNotNull(model.setServices);
 		assertNotNull(model.importESMF);
 		assertNotNull(model.importNUOPC);
@@ -171,12 +173,25 @@ public class NUOPCModelTest {
 	@Test
 	public void GenerateNUOPCModelFromScratch() throws CoreException {
 		IProject p = TestHelpers.createEmptyProject("GenerateNUOPCModelFromScratch");
-		IFile f = p.getFile("MyModel.F90");
-		f.create(new ByteArrayInputStream(new byte[0]), true, new NullProgressMonitor());
-		
+		IFile f = TestHelpers.createBlankFile(p, "MyModel.F90"); 
+				
 		NUOPCModel model = new NUOPCModel(f);
-		model.modelName = "MyModel";
+		model.name = "MyModel";
 		model = model.fward();
+		
+		assertNotNull(model.setServices);
+		assertEquals("SetServices", model.setServices.subroutineName);
+		assertNotNull(model.importESMF);
+		assertNotNull(model.importNUOPC);
+		assertNotNull(model.importNUOPCGeneric);
+		assertNotNull(model.initialization);
+		assertNotNull(model.initialization.initPhases);
+		assertNotNull(model.initialization.initSpecs);
+		assertNotNull(model.initialization.initPhases.ipdv00);
+		assertNotNull(model.initialization.initPhases.ipdv01);
+		assertNotNull(model.initialization.initPhases.ipdv02);
+		assertNotNull(model.initialization.initPhases.ipdv03);
+		assertNotNull(model.initialization.initPhases.ipdv04);
 		
 		Change chg = model.generateChange();
 		chg.perform(NPM);
@@ -185,13 +200,73 @@ public class NUOPCModelTest {
 		model = new NUOPCModel(f).reverse();
 		
 		assertNotNull(model);
-		assertEquals("MyModel", model.modelName);
+		assertEquals("MyModel", model.name);
 		assertNotNull(model.setServices);
 		assertEquals("SetServices", model.setServices.subroutineName);
 		assertNotNull(model.importESMF);
 		assertNotNull(model.importNUOPC);
 		assertNotNull(model.importNUOPCGeneric);
+		assertNotNull(model.initialization);
+		assertNotNull(model.initialization.initPhases);
+		assertNotNull(model.initialization.initSpecs);
+		assertNotNull(model.initialization.initPhases.ipdv00);
+		assertNotNull(model.initialization.initPhases.ipdv01);
+		assertNotNull(model.initialization.initPhases.ipdv02);
+		assertNotNull(model.initialization.initPhases.ipdv03);
+		assertNotNull(model.initialization.initPhases.ipdv04);
+		
+		IPDv04p1 ipdv04p1 = new IPDv04p1(model.initialization.initPhases.ipdv04);
+		assertNotNull(model.initialization.initPhases.ipdv04.ipdv04p1);
+		
+		AdvertiseField af = new AdvertiseField(ipdv04p1);
+		assertEquals(af, ipdv04p1.advertiseFields.get(0));
+		af.standardName = "\"donkey\"";
+		af.state = "importState";
+		
+		af = new AdvertiseField(ipdv04p1);
+		assertEquals(af, ipdv04p1.advertiseFields.get(1));
+		af.standardName = "\"sea_surface_temperature\"";
+		af.state = "exportState";
+		
+		ipdv04p1.fward();
+		chg = ipdv04p1.generateChange();
+		chg.perform(NPM);
+		
+		model = new NUOPCModel(f).reverse();
+		assertNotNull(model);
+		assertEquals(2, model.initialization.initPhases.ipdv04.ipdv04p1.advertiseFields.size());
+		assertEquals("\"donkey\"", model.initialization.initPhases.ipdv04.ipdv04p1.advertiseFields.get(0).standardName);
+		assertEquals("importState", model.initialization.initPhases.ipdv04.ipdv04p1.advertiseFields.get(0).state);
+		assertEquals("\"sea_surface_temperature\"", model.initialization.initPhases.ipdv04.ipdv04p1.advertiseFields.get(1).standardName);
+		assertEquals("exportState", model.initialization.initPhases.ipdv04.ipdv04p1.advertiseFields.get(1).state);
 
+		IPDv04p3 ipdv04p3 = new IPDv04p3(model.initialization.initPhases.ipdv04);
+		assertNotNull(model.initialization.initPhases.ipdv04.ipdv04p3);
+		
+		RealizeField rf = new RealizeField(ipdv04p3);
+		assertEquals(rf, ipdv04p3.realizeFields.get(0));
+		rf.field = "myfield1";
+		rf.state = "importState";
+		
+		rf = new RealizeField(ipdv04p3);
+		assertEquals(rf, ipdv04p3.realizeFields.get(1));
+		rf.field = "myfield2";
+		rf.state = "exportState";
+		
+		ipdv04p3.fward();
+		chg = ipdv04p3.generateChange();
+		chg.perform(NPM);
+		
+		model = new NUOPCModel(f).reverse();
+		assertNotNull(model);
+		assertEquals(2, model.initialization.initPhases.ipdv04.ipdv04p3.realizeFields.size());
+		assertEquals("myfield1", model.initialization.initPhases.ipdv04.ipdv04p3.realizeFields.get(0).field);
+		assertEquals("importState", model.initialization.initPhases.ipdv04.ipdv04p3.realizeFields.get(0).state);
+		assertEquals("myfield2", model.initialization.initPhases.ipdv04.ipdv04p3.realizeFields.get(1).field);
+		assertEquals("exportState", model.initialization.initPhases.ipdv04.ipdv04p3.realizeFields.get(1).state);
+
+		
+		
 	}
 	
 	

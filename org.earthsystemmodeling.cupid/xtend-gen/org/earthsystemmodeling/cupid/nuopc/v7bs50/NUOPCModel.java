@@ -514,16 +514,16 @@ public class NUOPCModel extends NUOPCComponent {
       NUOPCModel.IPDv00 _xblockexpression = null;
       {
         NUOPCModel.IPD.IPDv04p1 _iPDv04p1 = new NUOPCModel.IPD.IPDv04p1(this);
-        CodeConcept<NUOPCModel.IPD, ASTSubroutineSubprogramNode> _reverse = _iPDv04p1.reverse();
+        CodeConcept<?, ?> _reverse = _iPDv04p1.reverse();
         this.ipdv00p1 = ((NUOPCModel.IPD.IPDv04p1) _reverse);
         NUOPCModel.IPD.IPDv04p3 _iPDv04p3 = new NUOPCModel.IPD.IPDv04p3(this);
-        CodeConcept<NUOPCModel.IPD, ASTSubroutineSubprogramNode> _reverse_1 = _iPDv04p3.reverse();
+        CodeConcept<?, ?> _reverse_1 = _iPDv04p3.reverse();
         this.ipdv00p2 = ((NUOPCModel.IPD.IPDv04p3) _reverse_1);
         NUOPCModel.IPD.IPDv04p6 _iPDv04p6 = new NUOPCModel.IPD.IPDv04p6(this);
-        CodeConcept<NUOPCModel.IPD, ASTNode> _reverse_2 = _iPDv04p6.reverse();
+        CodeConcept<?, ?> _reverse_2 = _iPDv04p6.<CodeConcept<?, ?>>reverse();
         this.ipdv00p3 = ((NUOPCModel.IPD.IPDv04p6) _reverse_2);
         NUOPCModel.IPD.IPDv04p7 _iPDv04p7 = new NUOPCModel.IPD.IPDv04p7(this);
-        CodeConcept<NUOPCModel.IPD, ASTNode> _reverse_3 = _iPDv04p7.reverse();
+        CodeConcept<?, ?> _reverse_3 = _iPDv04p7.<CodeConcept<?, ?>>reverse();
         this.ipdv00p4 = ((NUOPCModel.IPD.IPDv04p7) _reverse_3);
         _xblockexpression = this;
       }
@@ -562,19 +562,19 @@ public class NUOPCModel extends NUOPCComponent {
       NUOPCModel.IPDv01 _xblockexpression = null;
       {
         NUOPCModel.IPD.IPDv04p1 _iPDv04p1 = new NUOPCModel.IPD.IPDv04p1(this);
-        CodeConcept<NUOPCModel.IPD, ASTSubroutineSubprogramNode> _reverse = _iPDv04p1.reverse();
+        CodeConcept<?, ?> _reverse = _iPDv04p1.reverse();
         this.ipdv01p1 = ((NUOPCModel.IPD.IPDv04p1) _reverse);
         NUOPCModel.IPD.IPDv04p2 _iPDv04p2 = new NUOPCModel.IPD.IPDv04p2(this);
-        CodeConcept<NUOPCModel.IPD, ASTNode> _reverse_1 = _iPDv04p2.reverse();
+        CodeConcept<?, ?> _reverse_1 = _iPDv04p2.<CodeConcept<?, ?>>reverse();
         this.ipdv01p2 = ((NUOPCModel.IPD.IPDv04p2) _reverse_1);
         NUOPCModel.IPD.IPDv04p3 _iPDv04p3 = new NUOPCModel.IPD.IPDv04p3(this);
-        CodeConcept<NUOPCModel.IPD, ASTSubroutineSubprogramNode> _reverse_2 = _iPDv04p3.reverse();
+        CodeConcept<?, ?> _reverse_2 = _iPDv04p3.reverse();
         this.ipdv01p3 = ((NUOPCModel.IPD.IPDv04p3) _reverse_2);
         NUOPCModel.IPD.IPDv04p6 _iPDv04p6 = new NUOPCModel.IPD.IPDv04p6(this);
-        CodeConcept<NUOPCModel.IPD, ASTNode> _reverse_3 = _iPDv04p6.reverse();
+        CodeConcept<?, ?> _reverse_3 = _iPDv04p6.<CodeConcept<?, ?>>reverse();
         this.ipdv01p4 = ((NUOPCModel.IPD.IPDv04p6) _reverse_3);
         NUOPCModel.IPD.IPDv04p7 _iPDv04p7 = new NUOPCModel.IPD.IPDv04p7(this);
-        CodeConcept<NUOPCModel.IPD, ASTNode> _reverse_4 = _iPDv04p7.reverse();
+        CodeConcept<?, ?> _reverse_4 = _iPDv04p7.<CodeConcept<?, ?>>reverse();
         this.ipdv01p5 = ((NUOPCModel.IPD.IPDv04p7) _reverse_4);
         _xblockexpression = this;
       }
@@ -613,19 +613,19 @@ public class NUOPCModel extends NUOPCComponent {
       NUOPCModel.IPDv02 _xblockexpression = null;
       {
         NUOPCModel.IPD.IPDv04p1 _iPDv04p1 = new NUOPCModel.IPD.IPDv04p1(this);
-        CodeConcept<NUOPCModel.IPD, ASTSubroutineSubprogramNode> _reverse = _iPDv04p1.reverse();
+        CodeConcept<?, ?> _reverse = _iPDv04p1.reverse();
         this.ipdv02p1 = ((NUOPCModel.IPD.IPDv04p1) _reverse);
         NUOPCModel.IPD.IPDv04p2 _iPDv04p2 = new NUOPCModel.IPD.IPDv04p2(this);
-        CodeConcept<NUOPCModel.IPD, ASTNode> _reverse_1 = _iPDv04p2.reverse();
+        CodeConcept<?, ?> _reverse_1 = _iPDv04p2.<CodeConcept<?, ?>>reverse();
         this.ipdv02p2 = ((NUOPCModel.IPD.IPDv04p2) _reverse_1);
         NUOPCModel.IPD.IPDv04p3 _iPDv04p3 = new NUOPCModel.IPD.IPDv04p3(this);
-        CodeConcept<NUOPCModel.IPD, ASTSubroutineSubprogramNode> _reverse_2 = _iPDv04p3.reverse();
+        CodeConcept<?, ?> _reverse_2 = _iPDv04p3.reverse();
         this.ipdv02p3 = ((NUOPCModel.IPD.IPDv04p3) _reverse_2);
         NUOPCModel.IPD.IPDv04p6 _iPDv04p6 = new NUOPCModel.IPD.IPDv04p6(this);
-        CodeConcept<NUOPCModel.IPD, ASTNode> _reverse_3 = _iPDv04p6.reverse();
+        CodeConcept<?, ?> _reverse_3 = _iPDv04p6.<CodeConcept<?, ?>>reverse();
         this.ipdv02p4 = ((NUOPCModel.IPD.IPDv04p6) _reverse_3);
         NUOPCModel.IPD.IPDv04p7 _iPDv04p7 = new NUOPCModel.IPD.IPDv04p7(this);
-        CodeConcept<NUOPCModel.IPD, ASTNode> _reverse_4 = _iPDv04p7.reverse();
+        CodeConcept<?, ?> _reverse_4 = _iPDv04p7.<CodeConcept<?, ?>>reverse();
         this.ipdv02p5 = ((NUOPCModel.IPD.IPDv04p7) _reverse_4);
         _xblockexpression = this;
       }
@@ -672,25 +672,25 @@ public class NUOPCModel extends NUOPCComponent {
       NUOPCModel.IPDv03 _xblockexpression = null;
       {
         NUOPCModel.IPD.IPDv04p1 _iPDv04p1 = new NUOPCModel.IPD.IPDv04p1(this);
-        CodeConcept<NUOPCModel.IPD, ASTSubroutineSubprogramNode> _reverse = _iPDv04p1.reverse();
+        CodeConcept<?, ?> _reverse = _iPDv04p1.reverse();
         this.ipdv03p1 = ((NUOPCModel.IPD.IPDv04p1) _reverse);
         NUOPCModel.IPD.IPDv04p2 _iPDv04p2 = new NUOPCModel.IPD.IPDv04p2(this);
-        CodeConcept<NUOPCModel.IPD, ASTNode> _reverse_1 = _iPDv04p2.reverse();
+        CodeConcept<?, ?> _reverse_1 = _iPDv04p2.<CodeConcept<?, ?>>reverse();
         this.ipdv03p2 = ((NUOPCModel.IPD.IPDv04p2) _reverse_1);
         NUOPCModel.IPD.IPDv04p3 _iPDv04p3 = new NUOPCModel.IPD.IPDv04p3(this);
-        CodeConcept<NUOPCModel.IPD, ASTSubroutineSubprogramNode> _reverse_2 = _iPDv04p3.reverse();
+        CodeConcept<?, ?> _reverse_2 = _iPDv04p3.reverse();
         this.ipdv03p3 = ((NUOPCModel.IPD.IPDv04p3) _reverse_2);
         NUOPCModel.IPD.IPDv04p4 _iPDv04p4 = new NUOPCModel.IPD.IPDv04p4(this);
-        CodeConcept<NUOPCModel.IPD, ASTSubroutineSubprogramNode> _reverse_3 = _iPDv04p4.reverse();
+        CodeConcept<?, ?> _reverse_3 = _iPDv04p4.reverse();
         this.ipdv03p4 = ((NUOPCModel.IPD.IPDv04p4) _reverse_3);
         NUOPCModel.IPD.IPDv04p5 _iPDv04p5 = new NUOPCModel.IPD.IPDv04p5(this);
-        CodeConcept<NUOPCModel.IPD, ASTSubroutineSubprogramNode> _reverse_4 = _iPDv04p5.reverse();
+        CodeConcept<?, ?> _reverse_4 = _iPDv04p5.reverse();
         this.ipdv03p5 = ((NUOPCModel.IPD.IPDv04p5) _reverse_4);
         NUOPCModel.IPD.IPDv04p6 _iPDv04p6 = new NUOPCModel.IPD.IPDv04p6(this);
-        CodeConcept<NUOPCModel.IPD, ASTNode> _reverse_5 = _iPDv04p6.reverse();
+        CodeConcept<?, ?> _reverse_5 = _iPDv04p6.<CodeConcept<?, ?>>reverse();
         this.ipdv03p6 = ((NUOPCModel.IPD.IPDv04p6) _reverse_5);
         NUOPCModel.IPD.IPDv04p7 _iPDv04p7 = new NUOPCModel.IPD.IPDv04p7(this);
-        CodeConcept<NUOPCModel.IPD, ASTNode> _reverse_6 = _iPDv04p7.reverse();
+        CodeConcept<?, ?> _reverse_6 = _iPDv04p7.<CodeConcept<?, ?>>reverse();
         this.ipdv03p7 = ((NUOPCModel.IPD.IPDv04p7) _reverse_6);
         _xblockexpression = this;
       }
@@ -771,25 +771,25 @@ public class NUOPCModel extends NUOPCComponent {
       NUOPCModel.IPDv04 _xblockexpression = null;
       {
         NUOPCModel.IPD.IPDv04p1 _iPDv04p1 = new NUOPCModel.IPD.IPDv04p1(this);
-        CodeConcept<NUOPCModel.IPD, ASTSubroutineSubprogramNode> _reverse = _iPDv04p1.reverse();
+        CodeConcept<?, ?> _reverse = _iPDv04p1.reverse();
         this.ipdv04p1 = ((NUOPCModel.IPD.IPDv04p1) _reverse);
         NUOPCModel.IPD.IPDv04p2 _iPDv04p2 = new NUOPCModel.IPD.IPDv04p2(this);
-        CodeConcept<NUOPCModel.IPD, ASTNode> _reverse_1 = _iPDv04p2.reverse();
+        CodeConcept<?, ?> _reverse_1 = _iPDv04p2.<CodeConcept<?, ?>>reverse();
         this.ipdv04p2 = ((NUOPCModel.IPD.IPDv04p2) _reverse_1);
         NUOPCModel.IPD.IPDv04p3 _iPDv04p3 = new NUOPCModel.IPD.IPDv04p3(this);
-        CodeConcept<NUOPCModel.IPD, ASTSubroutineSubprogramNode> _reverse_2 = _iPDv04p3.reverse();
+        CodeConcept<?, ?> _reverse_2 = _iPDv04p3.reverse();
         this.ipdv04p3 = ((NUOPCModel.IPD.IPDv04p3) _reverse_2);
         NUOPCModel.IPD.IPDv04p4 _iPDv04p4 = new NUOPCModel.IPD.IPDv04p4(this);
-        CodeConcept<NUOPCModel.IPD, ASTSubroutineSubprogramNode> _reverse_3 = _iPDv04p4.reverse();
+        CodeConcept<?, ?> _reverse_3 = _iPDv04p4.reverse();
         this.ipdv04p4 = ((NUOPCModel.IPD.IPDv04p4) _reverse_3);
         NUOPCModel.IPD.IPDv04p5 _iPDv04p5 = new NUOPCModel.IPD.IPDv04p5(this);
-        CodeConcept<NUOPCModel.IPD, ASTSubroutineSubprogramNode> _reverse_4 = _iPDv04p5.reverse();
+        CodeConcept<?, ?> _reverse_4 = _iPDv04p5.reverse();
         this.ipdv04p5 = ((NUOPCModel.IPD.IPDv04p5) _reverse_4);
         NUOPCModel.IPD.IPDv04p6 _iPDv04p6 = new NUOPCModel.IPD.IPDv04p6(this);
-        CodeConcept<NUOPCModel.IPD, ASTNode> _reverse_5 = _iPDv04p6.reverse();
+        CodeConcept<?, ?> _reverse_5 = _iPDv04p6.<CodeConcept<?, ?>>reverse();
         this.ipdv04p6 = ((NUOPCModel.IPD.IPDv04p6) _reverse_5);
         NUOPCModel.IPD.IPDv04p7 _iPDv04p7 = new NUOPCModel.IPD.IPDv04p7(this);
-        CodeConcept<NUOPCModel.IPD, ASTNode> _reverse_6 = _iPDv04p7.reverse();
+        CodeConcept<?, ?> _reverse_6 = _iPDv04p7.<CodeConcept<?, ?>>reverse();
         this.ipdv04p7 = ((NUOPCModel.IPD.IPDv04p7) _reverse_6);
         _xblockexpression = this;
       }
@@ -860,7 +860,7 @@ public class NUOPCModel extends NUOPCComponent {
     }
     
     @Override
-    public CodeConcept<NUOPCModel.Initialization, ASTNode> reverse() {
+    public CodeConcept<?, ?> reverse() {
       NUOPCModel.InitPhases _xblockexpression = null;
       {
         NUOPCModel.IPDv00 _iPDv00 = new NUOPCModel.IPDv00(this);
@@ -939,10 +939,10 @@ public class NUOPCModel extends NUOPCComponent {
       NUOPCModel.Initialization _xblockexpression = null;
       {
         NUOPCModel.InitPhases _initPhases = new NUOPCModel.InitPhases(this);
-        CodeConcept<NUOPCModel.Initialization, ASTNode> _reverse = _initPhases.reverse();
+        CodeConcept<?, ?> _reverse = _initPhases.reverse();
         this.initPhases = ((NUOPCModel.InitPhases) _reverse);
         NUOPCModel.InitSpecializations _initSpecializations = new NUOPCModel.InitSpecializations(this);
-        CodeConcept<NUOPCModel.Initialization, ASTNode> _reverse_1 = _initSpecializations.reverse();
+        CodeConcept<?, ?> _reverse_1 = _initSpecializations.reverse();
         this.initSpecs = ((NUOPCModel.InitSpecializations) _reverse_1);
         _xblockexpression = this;
       }
@@ -963,7 +963,7 @@ public class NUOPCModel extends NUOPCComponent {
     }
     
     @Override
-    public CodeConcept<NUOPCModel.Initialization, ASTNode> reverse() {
+    public CodeConcept<?, ?> reverse() {
       NUOPCModel.InitSpecializations _xblockexpression = null;
       {
         NUOPCModel.SetClock _setClock = new NUOPCModel.SetClock(this);
@@ -1369,7 +1369,7 @@ public class NUOPCModel extends NUOPCComponent {
         NUOPCModel.RunPhases _reverse = _runPhases.reverse();
         this.runPhases = ((NUOPCModel.RunPhases) _reverse);
         NUOPCModel.RunSpecializations _runSpecializations = new NUOPCModel.RunSpecializations(this);
-        CodeConcept<NUOPCModel.Run, ASTNode> _reverse_1 = _runSpecializations.reverse();
+        CodeConcept<?, ?> _reverse_1 = _runSpecializations.reverse();
         this.runSpecs = ((NUOPCModel.RunSpecializations) _reverse_1);
         _xblockexpression = this;
       }
@@ -1393,7 +1393,7 @@ public class NUOPCModel extends NUOPCComponent {
     }
     
     @Override
-    public CodeConcept<NUOPCModel.Run, ASTNode> reverse() {
+    public CodeConcept<?, ?> reverse() {
       return this.reverseChildren();
     }
     
@@ -1429,7 +1429,7 @@ public class NUOPCModel extends NUOPCComponent {
       NUOPCModel.RunPhases _xblockexpression = null;
       {
         NUOPCModel.RunPhase1 _runPhase1 = new NUOPCModel.RunPhase1(this);
-        CodeConcept<NUOPCModel.RunPhases, ASTNode> _reverse = _runPhase1.reverse();
+        CodeConcept<?, ?> _reverse = _runPhase1.<CodeConcept<?, ?>>reverse();
         this.p1 = ((NUOPCModel.RunPhase1) _reverse);
         _xblockexpression = this;
       }
@@ -1811,7 +1811,7 @@ public class NUOPCModel extends NUOPCComponent {
       NUOPCModel.FinalizePhases _xblockexpression = null;
       {
         NUOPCModel.FinalizePhase1 _finalizePhase1 = new NUOPCModel.FinalizePhase1(this);
-        CodeConcept<NUOPCModel.FinalizePhases, ASTNode> _reverse = _finalizePhase1.reverse();
+        CodeConcept<?, ?> _reverse = _finalizePhase1.<CodeConcept<?, ?>>reverse();
         this.p1 = ((NUOPCModel.FinalizePhase1) _reverse);
         _xblockexpression = this;
       }
@@ -1829,7 +1829,7 @@ public class NUOPCModel extends NUOPCComponent {
     }
     
     @Override
-    public CodeConcept<NUOPCModel.Finalize, ASTNode> reverse() {
+    public CodeConcept<?, ?> reverse() {
       return this.reverseChildren();
     }
     
@@ -1877,7 +1877,7 @@ public class NUOPCModel extends NUOPCComponent {
         NUOPCModel.FinalizePhases _reverse = _finalizePhases.reverse();
         this.finalPhases = ((NUOPCModel.FinalizePhases) _reverse);
         NUOPCModel.FinalizeSpecializations _finalizeSpecializations = new NUOPCModel.FinalizeSpecializations(this);
-        CodeConcept<NUOPCModel.Finalize, ASTNode> _reverse_1 = _finalizeSpecializations.reverse();
+        CodeConcept<?, ?> _reverse_1 = _finalizeSpecializations.reverse();
         this.finalSpecs = ((NUOPCModel.FinalizeSpecializations) _reverse_1);
         _xblockexpression = this;
       }
@@ -1976,7 +1976,7 @@ public class NUOPCModel extends NUOPCComponent {
   }
   
   @Override
-  public CodeConcept<CodeConcept<?, ?>, ASTModuleNode> reverse() {
+  public CodeConcept<?, ?> reverse() {
     Object _xblockexpression = null;
     {
       StringConcatenation _builder = new StringConcatenation();
@@ -2042,7 +2042,7 @@ public class NUOPCModel extends NUOPCComponent {
       }
       _xblockexpression = null;
     }
-    return ((CodeConcept<CodeConcept<?, ?>, ASTModuleNode>)_xblockexpression);
+    return ((CodeConcept<?, ?>)_xblockexpression);
   }
   
   public NUOPCModel reverseChildren() {

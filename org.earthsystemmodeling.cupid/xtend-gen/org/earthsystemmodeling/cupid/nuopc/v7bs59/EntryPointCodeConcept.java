@@ -11,6 +11,7 @@ import org.earthsystemmodeling.cupid.nuopc.BasicCodeConcept;
 import org.earthsystemmodeling.cupid.nuopc.CodeConcept;
 import org.earthsystemmodeling.cupid.nuopc.CodeGenerationException;
 import org.earthsystemmodeling.cupid.nuopc.ESMFQuery;
+import org.earthsystemmodeling.cupid.nuopc.ReverseEngineerException;
 import org.earthsystemmodeling.cupid.nuopc.v7bs59.SetServicesCodeConcept;
 import org.earthsystemmodeling.cupid.util.CodeExtraction;
 import org.eclipse.photran.core.IFortranAST;
@@ -67,96 +68,108 @@ public abstract class EntryPointCodeConcept<P extends CodeConcept<?, ?>> extends
   }
   
   @Override
-  public CodeConcept<P, ASTSubroutineSubprogramNode> reverse() {
-    EntryPointCodeConcept<P> _xblockexpression = null;
-    {
-      SetServicesCodeConcept<?> _setServices = this.setServices();
-      final ASTSubroutineSubprogramNode setServicesNode = _setServices.getASTRef();
-      IASTListNode<IBodyConstruct> _body = setServicesNode.getBody();
-      Iterable<ASTCallStmtNode> _filter = Iterables.<ASTCallStmtNode>filter(_body, ASTCallStmtNode.class);
-      final Function1<ASTCallStmtNode, Boolean> _function = new Function1<ASTCallStmtNode, Boolean>() {
-        @Override
-        public Boolean apply(final ASTCallStmtNode it) {
-          boolean _and = false;
-          Token _subroutineName = it.getSubroutineName();
-          String _text = _subroutineName.getText();
-          boolean _eic = ASTQuery.eic(_text, "NUOPC_CompSetEntryPoint");
-          if (!_eic) {
-            _and = false;
-          } else {
-            String _litArgExprByKeyword = ASTQuery.litArgExprByKeyword(it, "phaseLabelList");
-            String _lowerCase = _litArgExprByKeyword.toLowerCase();
-            String _lowerCase_1 = EntryPointCodeConcept.this.phaseLabel.toLowerCase();
-            boolean _contains = _lowerCase.contains(_lowerCase_1);
-            _and = _contains;
+  public CodeConcept<?, ?> reverse() {
+    try {
+      EntryPointCodeConcept<P> _xblockexpression = null;
+      {
+        SetServicesCodeConcept<?> _setServices = this.setServices();
+        ASTSubroutineSubprogramNode _aSTRef = null;
+        if (_setServices!=null) {
+          _aSTRef=_setServices.getASTRef();
+        }
+        final ASTSubroutineSubprogramNode setServicesNode = _aSTRef;
+        boolean _equals = Objects.equal(setServicesNode, null);
+        if (_equals) {
+          throw new ReverseEngineerException("No SetServices method found");
+        }
+        IASTListNode<IBodyConstruct> _body = setServicesNode.getBody();
+        Iterable<ASTCallStmtNode> _filter = Iterables.<ASTCallStmtNode>filter(_body, ASTCallStmtNode.class);
+        final Function1<ASTCallStmtNode, Boolean> _function = new Function1<ASTCallStmtNode, Boolean>() {
+          @Override
+          public Boolean apply(final ASTCallStmtNode it) {
+            boolean _and = false;
+            Token _subroutineName = it.getSubroutineName();
+            String _text = _subroutineName.getText();
+            boolean _eic = ASTQuery.eic(_text, "NUOPC_CompSetEntryPoint");
+            if (!_eic) {
+              _and = false;
+            } else {
+              String _litArgExprByKeyword = ASTQuery.litArgExprByKeyword(it, "phaseLabelList");
+              String _lowerCase = _litArgExprByKeyword.toLowerCase();
+              String _lowerCase_1 = EntryPointCodeConcept.this.phaseLabel.toLowerCase();
+              boolean _contains = _lowerCase.contains(_lowerCase_1);
+              _and = _contains;
+            }
+            return Boolean.valueOf(_and);
           }
-          return Boolean.valueOf(_and);
+        };
+        final ASTCallStmtNode registrationCall = IterableExtensions.<ASTCallStmtNode>findFirst(_filter, _function);
+        boolean _equals_1 = Objects.equal(registrationCall, null);
+        if (_equals_1) {
+          return null;
         }
-      };
-      final ASTCallStmtNode registrationCall = IterableExtensions.<ASTCallStmtNode>findFirst(_filter, _function);
-      boolean _equals = Objects.equal(registrationCall, null);
-      if (_equals) {
-        return null;
-      }
-      CodeConcept<?, ASTModuleNode> _module = this.module();
-      ASTModuleNode _aSTRef = _module.getASTRef();
-      Iterable<ASTSubroutineSubprogramNode> _findESMFEntryPoints = ESMFQuery.findESMFEntryPoints(_aSTRef);
-      final Function1<ASTSubroutineSubprogramNode, Boolean> _function_1 = new Function1<ASTSubroutineSubprogramNode, Boolean>() {
-        @Override
-        public Boolean apply(final ASTSubroutineSubprogramNode it) {
-          ASTSubroutineStmtNode _subroutineStmt = it.getSubroutineStmt();
-          ASTSubroutineNameNode _subroutineName = _subroutineStmt.getSubroutineName();
-          Token _subroutineName_1 = _subroutineName.getSubroutineName();
-          String _litArgExprByKeyword = ASTQuery.litArgExprByKeyword(registrationCall, "userRoutine");
-          return Boolean.valueOf(ASTQuery.eic(_subroutineName_1, _litArgExprByKeyword));
+        CodeConcept<?, ASTModuleNode> _module = this.module();
+        ASTModuleNode _aSTRef_1 = _module.getASTRef();
+        Iterable<ASTSubroutineSubprogramNode> _findESMFEntryPoints = ESMFQuery.findESMFEntryPoints(_aSTRef_1);
+        final Function1<ASTSubroutineSubprogramNode, Boolean> _function_1 = new Function1<ASTSubroutineSubprogramNode, Boolean>() {
+          @Override
+          public Boolean apply(final ASTSubroutineSubprogramNode it) {
+            ASTSubroutineStmtNode _subroutineStmt = it.getSubroutineStmt();
+            ASTSubroutineNameNode _subroutineName = _subroutineStmt.getSubroutineName();
+            Token _subroutineName_1 = _subroutineName.getSubroutineName();
+            String _litArgExprByKeyword = ASTQuery.litArgExprByKeyword(registrationCall, "userRoutine");
+            return Boolean.valueOf(ASTQuery.eic(_subroutineName_1, _litArgExprByKeyword));
+          }
+        };
+        final ASTSubroutineSubprogramNode epSubroutine = IterableExtensions.<ASTSubroutineSubprogramNode>findFirst(_findESMFEntryPoints, _function_1);
+        boolean _equals_2 = Objects.equal(epSubroutine, null);
+        if (_equals_2) {
+          return null;
         }
-      };
-      final ASTSubroutineSubprogramNode epSubroutine = IterableExtensions.<ASTSubroutineSubprogramNode>findFirst(_findESMFEntryPoints, _function_1);
-      boolean _equals_1 = Objects.equal(epSubroutine, null);
-      if (_equals_1) {
-        return null;
+        this.setASTRef(epSubroutine);
+        ASTSubroutineStmtNode _subroutineStmt = epSubroutine.getSubroutineStmt();
+        ASTSubroutineNameNode _subroutineName = _subroutineStmt.getSubroutineName();
+        Token _subroutineName_1 = _subroutineName.getSubroutineName();
+        String _text = _subroutineName_1.getText();
+        this.subroutineName = _text;
+        BasicCodeConcept<ASTCallStmtNode> _basicCodeConcept = new BasicCodeConcept<ASTCallStmtNode>(this, registrationCall);
+        this.registration = _basicCodeConcept;
+        ASTSubroutineStmtNode _subroutineStmt_1 = epSubroutine.getSubroutineStmt();
+        IASTListNode<ASTSubroutineParNode> _subroutinePars = _subroutineStmt_1.getSubroutinePars();
+        ASTSubroutineParNode _get = _subroutinePars.get(0);
+        Token _variableName = _get.getVariableName();
+        String _text_1 = _variableName.getText();
+        this.paramGridComp = _text_1;
+        ASTSubroutineStmtNode _subroutineStmt_2 = epSubroutine.getSubroutineStmt();
+        IASTListNode<ASTSubroutineParNode> _subroutinePars_1 = _subroutineStmt_2.getSubroutinePars();
+        ASTSubroutineParNode _get_1 = _subroutinePars_1.get(1);
+        Token _variableName_1 = _get_1.getVariableName();
+        String _text_2 = _variableName_1.getText();
+        this.paramImport = _text_2;
+        ASTSubroutineStmtNode _subroutineStmt_3 = epSubroutine.getSubroutineStmt();
+        IASTListNode<ASTSubroutineParNode> _subroutinePars_2 = _subroutineStmt_3.getSubroutinePars();
+        ASTSubroutineParNode _get_2 = _subroutinePars_2.get(2);
+        Token _variableName_2 = _get_2.getVariableName();
+        String _text_3 = _variableName_2.getText();
+        this.paramExport = _text_3;
+        ASTSubroutineStmtNode _subroutineStmt_4 = epSubroutine.getSubroutineStmt();
+        IASTListNode<ASTSubroutineParNode> _subroutinePars_3 = _subroutineStmt_4.getSubroutinePars();
+        ASTSubroutineParNode _get_3 = _subroutinePars_3.get(3);
+        Token _variableName_3 = _get_3.getVariableName();
+        String _text_4 = _variableName_3.getText();
+        this.paramClock = _text_4;
+        ASTSubroutineStmtNode _subroutineStmt_5 = epSubroutine.getSubroutineStmt();
+        IASTListNode<ASTSubroutineParNode> _subroutinePars_4 = _subroutineStmt_5.getSubroutinePars();
+        ASTSubroutineParNode _get_4 = _subroutinePars_4.get(4);
+        Token _variableName_4 = _get_4.getVariableName();
+        String _text_5 = _variableName_4.getText();
+        this.paramRC = _text_5;
+        _xblockexpression = this.reverseChildren();
       }
-      this.setASTRef(epSubroutine);
-      ASTSubroutineStmtNode _subroutineStmt = epSubroutine.getSubroutineStmt();
-      ASTSubroutineNameNode _subroutineName = _subroutineStmt.getSubroutineName();
-      Token _subroutineName_1 = _subroutineName.getSubroutineName();
-      String _text = _subroutineName_1.getText();
-      this.subroutineName = _text;
-      BasicCodeConcept<ASTCallStmtNode> _basicCodeConcept = new BasicCodeConcept<ASTCallStmtNode>(this, registrationCall);
-      this.registration = _basicCodeConcept;
-      ASTSubroutineStmtNode _subroutineStmt_1 = epSubroutine.getSubroutineStmt();
-      IASTListNode<ASTSubroutineParNode> _subroutinePars = _subroutineStmt_1.getSubroutinePars();
-      ASTSubroutineParNode _get = _subroutinePars.get(0);
-      Token _variableName = _get.getVariableName();
-      String _text_1 = _variableName.getText();
-      this.paramGridComp = _text_1;
-      ASTSubroutineStmtNode _subroutineStmt_2 = epSubroutine.getSubroutineStmt();
-      IASTListNode<ASTSubroutineParNode> _subroutinePars_1 = _subroutineStmt_2.getSubroutinePars();
-      ASTSubroutineParNode _get_1 = _subroutinePars_1.get(1);
-      Token _variableName_1 = _get_1.getVariableName();
-      String _text_2 = _variableName_1.getText();
-      this.paramImport = _text_2;
-      ASTSubroutineStmtNode _subroutineStmt_3 = epSubroutine.getSubroutineStmt();
-      IASTListNode<ASTSubroutineParNode> _subroutinePars_2 = _subroutineStmt_3.getSubroutinePars();
-      ASTSubroutineParNode _get_2 = _subroutinePars_2.get(2);
-      Token _variableName_2 = _get_2.getVariableName();
-      String _text_3 = _variableName_2.getText();
-      this.paramExport = _text_3;
-      ASTSubroutineStmtNode _subroutineStmt_4 = epSubroutine.getSubroutineStmt();
-      IASTListNode<ASTSubroutineParNode> _subroutinePars_3 = _subroutineStmt_4.getSubroutinePars();
-      ASTSubroutineParNode _get_3 = _subroutinePars_3.get(3);
-      Token _variableName_3 = _get_3.getVariableName();
-      String _text_4 = _variableName_3.getText();
-      this.paramClock = _text_4;
-      ASTSubroutineStmtNode _subroutineStmt_5 = epSubroutine.getSubroutineStmt();
-      IASTListNode<ASTSubroutineParNode> _subroutinePars_4 = _subroutineStmt_5.getSubroutinePars();
-      ASTSubroutineParNode _get_4 = _subroutinePars_4.get(4);
-      Token _variableName_4 = _get_4.getVariableName();
-      String _text_5 = _variableName_4.getText();
-      this.paramRC = _text_5;
-      _xblockexpression = this.reverseChildren();
+      return _xblockexpression;
+    } catch (Throwable _e) {
+      throw Exceptions.sneakyThrow(_e);
     }
-    return _xblockexpression;
   }
   
   /**
@@ -326,9 +339,9 @@ public abstract class EntryPointCodeConcept<P extends CodeConcept<?, ?>> extends
   }
   
   @Override
-  public CodeConcept<P, ASTSubroutineSubprogramNode> fward() {
+  public CodeConcept<?, ?> fward() {
     try {
-      EntryPointCodeConcept<P> _xblockexpression = null;
+      CodeConcept<?, ?> _xblockexpression = null;
       {
         SetServicesCodeConcept<?> _setServices = this.setServices();
         boolean _equals = Objects.equal(_setServices, null);
@@ -398,7 +411,7 @@ public abstract class EntryPointCodeConcept<P extends CodeConcept<?, ?>> extends
           IASTListNode<IBodyConstruct> _body_1 = setServicesNode.getBody();
           _body_1.add(ifNode);
         }
-        _xblockexpression = this;
+        _xblockexpression = super.<CodeConcept<?, ?>>fward();
       }
       return _xblockexpression;
     } catch (Throwable _e) {

@@ -21,15 +21,15 @@ class ASTQuery {
 	}
 	
 	def static litArgExprByKeyword(ASTCallStmtNode node, String keyword) {
-		node.findArgNodeByKeyword(keyword)?.expr?.toString
+		node.findArgNodeByKeyword(keyword)?.expr?.literal
 	}
 	
 	def static litArgExprByKeyword(IASTListNode<ASTSubroutineArgNode> nodes, String keyword) {
-		nodes.findArgNodeByKeyword(keyword)?.expr?.toString
+		nodes.findArgNodeByKeyword(keyword)?.expr?.literal
 	}
 	
 	def static litArgExprByIdx(ASTCallStmtNode node, int idx) {
-		node.argList?.get(idx)?.expr?.toString
+		node.argList?.get(idx)?.expr?.literal
 	}
 	
 	def static localName(ASTModuleNode moduleNode, String usedModule, String usedEntity) {

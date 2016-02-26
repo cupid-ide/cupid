@@ -14,7 +14,6 @@ import java.util.List;
 
 import org.apache.commons.io.IOUtils;
 import org.apache.commons.io.LineIterator;
-import org.earthsystemmodeling.cupid.codedb.CodeDBIndex;
 import org.earthsystemmodeling.cupid.nuopc.BasicCodeConcept;
 import org.earthsystemmodeling.cupid.nuopc.CodeConcept;
 import org.earthsystemmodeling.cupid.nuopc.v7bs59.NUOPCComponent.GenericImport;
@@ -60,7 +59,7 @@ public class NUOPCTest {
 		ast = PhotranVPG.getInstance().acquireTransientAST(f);
 		
 		//mock
-		final NUOPCComponent parent = new NUOPCComponent(null) {
+		final NUOPCComponent parent = new NUOPCComponent(null, "mock") {
 			@Override
 			public String prefix() {
 				return null;
@@ -117,7 +116,7 @@ public class NUOPCTest {
 		ast = PhotranVPG.getInstance().acquireTransientAST(f);
 		
 		//mock
-		final NUOPCComponent parent2 = new NUOPCComponent(null) {
+		final NUOPCComponent parent2 = new NUOPCComponent(null, "mock") {
 			@Override
 			public String prefix() {
 				return null;
@@ -193,7 +192,7 @@ public class NUOPCTest {
 		ast = PhotranVPG.getInstance().acquireTransientAST(f);
 		
 		//mock
-		NUOPCComponent parent = new NUOPCComponent(null) {
+		NUOPCComponent parent = new NUOPCComponent(null, "mock") {
 			@Override
 			public String prefix() {
 				return null;
@@ -293,7 +292,7 @@ public class NUOPCTest {
 		ast = PhotranVPG.getInstance().acquireTransientAST(f);
 		
 		//mock
-		final NUOPCComponent parent = new NUOPCComponent(null) {
+		final NUOPCComponent parent = new NUOPCComponent(null, "mock") {
 			@Override
 			public String prefix() {
 				return null;
@@ -348,7 +347,7 @@ public class NUOPCTest {
 		ast = PhotranVPG.getInstance().acquireTransientAST(f);
 		
 		//mock
-		final NUOPCComponent parent2 = new NUOPCComponent(null) {
+		final NUOPCComponent parent2 = new NUOPCComponent(null, "mock") {
 			@Override
 			public String prefix() {
 				return null;
@@ -434,12 +433,12 @@ public class NUOPCTest {
 	@Ignore
 	public void NUOPCProtos_bs59() throws SQLException, CoreException {
 		
-		String dbloc = "~/.cupid/codedb_test";
-		String connString = "jdbc:h2:" + dbloc + ";LOG=0;CACHE_SIZE=65536;LOCK_MODE=0;UNDO_LOG=0";
-		final CodeDBIndex codeDB = CodeDBIndex.getInstance();
-		codeDB.openConnection(connString);
-		codeDB.rebuildDatabase();
-		codeDB.truncateDatabase();
+		//String dbloc = "~/.cupid/codedb_test";
+		//String connString = "jdbc:h2:" + dbloc + ";LOG=0;CACHE_SIZE=65536;LOCK_MODE=0;UNDO_LOG=0";
+		//final CodeDBIndex codeDB = CodeDBIndex.getInstance();
+		//codeDB.openConnection(connString);
+		//codeDB.rebuildDatabase();
+		//codeDB.truncateDatabase();
 		
 		//skip validation for these files
 		final List<String> skipVal = new ArrayList<String>();
@@ -474,8 +473,8 @@ public class NUOPCTest {
 						
 						IFortranAST ast = PhotranVPG.getInstance().acquireTransientAST(file);
 						assertNotNull(ast);
-						codeDB.truncateDatabase();
-						codeDB.indexAST(ast);
+						//codeDB.truncateDatabase();
+						//codeDB.indexAST(ast);
 						
 						InputStream is = file.getContents();
 						try {
@@ -501,7 +500,7 @@ public class NUOPCTest {
 									return true;
 								}
 								else if (line.contains("use NUOPC_Model")){
-									NUOPCModel model = (NUOPCModel) new NUOPCModel(codeDB).reverse();
+									NUOPCModel model = (NUOPCModel) new NUOPCModel(file).reverse();
 									assertNotNull(model);
 									assertNotNull(model.setServices);
 									assertNotNull(model.importESMF);
@@ -519,7 +518,7 @@ public class NUOPCTest {
 									return true;
 								}
 								else if (line.contains("use NUOPC_Mediator")) {
-									NUOPCMediator mediator = (NUOPCMediator) new NUOPCMediator(codeDB).reverse();
+									NUOPCMediator mediator = (NUOPCMediator) new NUOPCMediator(file).reverse();
 									assertNotNull(mediator);
 									assertNotNull(mediator.setServices);
 									assertNotNull(mediator.importESMF);

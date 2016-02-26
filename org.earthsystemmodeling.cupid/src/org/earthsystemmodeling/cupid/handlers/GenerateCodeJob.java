@@ -41,7 +41,7 @@ public class GenerateCodeJob extends Job {
 				
 				org.earthsystemmodeling.cupid.nuopc.v7bs59.NUOPCDriver d = 
 						new org.earthsystemmodeling.cupid.nuopc.v7bs59.NUOPCDriver(file);
-				d.driverName = comp.getName();
+				d.name = comp.getName();
 				d = d.fward();
 				
 				ApplyCodeConceptChanges apply = new ApplyCodeConceptChanges(d);

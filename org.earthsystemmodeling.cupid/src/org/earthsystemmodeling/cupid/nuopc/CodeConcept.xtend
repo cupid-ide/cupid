@@ -1,28 +1,28 @@
 package org.earthsystemmodeling.cupid.nuopc;
 
 import alice.tuprolog.MalformedGoalException
-import java.io.ByteArrayInputStream
 import java.lang.reflect.Constructor
 import java.lang.reflect.Field
 import java.util.ArrayList
 import java.util.List
 import java.util.regex.Pattern
+import org.apache.commons.io.IOUtils
 import org.earthsystemmodeling.cupid.annotation.Child
 import org.earthsystemmodeling.cupid.codedb.CodeDBIndex
 import org.earthsystemmodeling.cupid.core.CupidActivator
 import org.eclipse.core.resources.IFile
 import org.eclipse.core.resources.IResource
 import org.eclipse.core.runtime.NullProgressMonitor
+import org.eclipse.ltk.core.refactoring.Change
+import org.eclipse.ltk.core.refactoring.TextFileChange
 import org.eclipse.photran.core.IFortranAST
 import org.eclipse.photran.internal.core.parser.IASTNode
 import org.eclipse.photran.internal.core.reindenter.Reindenter
 import org.eclipse.photran.internal.core.reindenter.Reindenter.Strategy
 import org.eclipse.photran.internal.core.vpg.PhotranVPG
-import org.eclipse.xtend.lib.annotations.Accessors
-import org.eclipse.ltk.core.refactoring.Change
-import org.apache.commons.io.IOUtils
-import org.eclipse.ltk.core.refactoring.TextFileChange
 import org.eclipse.text.edits.ReplaceEdit
+import org.eclipse.xtend.lib.annotations.Accessors
+import java.lang.reflect.ParameterizedType
 
 public abstract class CodeConcept<P extends CodeConcept<?,?>, A extends IASTNode> {
 	
@@ -42,11 +42,15 @@ public abstract class CodeConcept<P extends CodeConcept<?,?>, A extends IASTNode
 	var protected List<MarkerLoc> paramMarkers;
 	
 	new(P parent) {
+		//init(parent)
+		//paramMarkers = newArrayList()
+		this(parent, null)
+	}
+	
+	new(P parent, IResource context) {
+		_context = context
 		init(parent)
 		paramMarkers = newArrayList()
-		//use reflection to get class instance from generic type
-		//var parameterizedType = getClass().getGenericSuperclass() as ParameterizedType
-		//_astClass = parameterizedType.actualTypeArguments.get(1) as Class<A>
 	}
 	
 	def init(P parent) {
@@ -57,6 +61,39 @@ public abstract class CodeConcept<P extends CodeConcept<?,?>, A extends IASTNode
 	def long parentID() {
 		if (_parent?._id > 0) _parent._id
 		else _parent?.parentID()
+	}
+	
+	def void setOrAddChild(CodeConcept<?,?> child) {		
+		//find field of matching type and assign child to it
+		var childField = getChildFields.findFirst[it.type.isInstance(child)]
+		if (childField != null) {
+			childField.set(this, child)
+		}
+		else {
+			childField = getChildFields.findFirst[
+				it.type == List &&
+				{
+					val ptype = it.genericType as ParameterizedType
+					val clazz = ptype.actualTypeArguments.get(0) as Class<?>
+					if (clazz==child.class) true
+					else false
+				}
+//				it.type.genericSuperclass instanceof ParameterizedType &&
+//				((it.type.genericSuperclass as ParameterizedType).actualTypeArguments?.get(0) as Class<?>)?.isInstance(child)
+			]
+			if (childField != null) {
+				val lst = childField.get(this) as List;
+				if (lst != null) {
+					lst.add(child);
+				}
+				else {
+					throw new CodeGenerationException("Cannot add child to null list")
+				}
+			}
+			else {
+				throw new CodeGenerationException("Error finding child field")
+			}
+		}
 	}
 	
 	/*
@@ -161,7 +198,7 @@ public abstract class CodeConcept<P extends CodeConcept<?,?>, A extends IASTNode
 			_codeDB.findAST(parentID)
 	}
 		
-	def CodeConcept<P,A> reverse() {this}
+	def <T extends CodeConcept<?,?>> T reverse() {this as T}
 	def List<CodeConcept<P,A>> reverseMultiple() {newArrayList(reverse)}
 	
 	def IFortranAST forward() throws CodeGenerationException {
@@ -169,7 +206,7 @@ public abstract class CodeConcept<P extends CodeConcept<?,?>, A extends IASTNode
 	}
 	
 	//temporarily in place to change return type
-	def CodeConcept<P,A> fward() throws CodeGenerationException {
+	def <T extends CodeConcept<?,?>> T fward() throws CodeGenerationException {
 		//default behavior is to forward all children
 		//with forward annotation set to true
 		
@@ -214,7 +251,7 @@ public abstract class CodeConcept<P extends CodeConcept<?,?>, A extends IASTNode
 				}
 			}
 		}		
-		this
+		this as T
 	}
 	
 	def Change generateChange() {
@@ -262,7 +299,15 @@ public abstract class CodeConcept<P extends CodeConcept<?,?>, A extends IASTNode
     	val sb = new StringBuffer();
         
         while (matcher.find()) {
-        	matcher.appendReplacement(sb, "$2");
+        	//if (matcher.group(1).equals("CHARLITD")) {
+        	//	matcher.appendReplacement(sb, "\"$2\"")
+        	//}
+        	//else if (matcher.group(1).equals("CHARLITS")) {
+        	//	matcher.appendReplacement(sb, "'$2'")
+        	//}
+        	//else {
+        		matcher.appendReplacement(sb, "$2");
+        	//}
         	val endLoc = sb.length();
         	val startLoc = endLoc - matcher.group(2).length();
         	paramMarkers.add(new MarkerLoc(startLoc, endLoc));
@@ -298,7 +343,15 @@ public abstract class CodeConcept<P extends CodeConcept<?,?>, A extends IASTNode
 	}
 	
 	def paramch(String defaultVal) {
+		if (defaultVal.startsWith("'") && defaultVal.endsWith("'")) {
+			return ''''CUPIDPARAM$CHAR$«defaultVal.subSequence(1, defaultVal.length-1)+"$'"»'''
+		}
+		else if (defaultVal.startsWith("\"") && defaultVal.endsWith("\"")) {
+			return '''"CUPIDPARAM$CHAR$«defaultVal.subSequence(1, defaultVal.length-1)»$"'''
+		}
+		else {
 		'''CUPIDPARAM$CHAR$«defaultVal»$'''
+		}
 	}
 	
 	def paramint(int defaultVal) {

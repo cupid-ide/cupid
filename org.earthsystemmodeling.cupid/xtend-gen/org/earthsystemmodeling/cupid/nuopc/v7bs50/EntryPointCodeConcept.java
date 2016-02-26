@@ -66,7 +66,7 @@ public abstract class EntryPointCodeConcept<P extends CodeConcept<?, ?>> extends
   }
   
   @Override
-  public CodeConcept<P, ASTSubroutineSubprogramNode> reverse() {
+  public CodeConcept<?, ?> reverse() {
     try {
       EntryPointCodeConcept<P> _xblockexpression = null;
       {

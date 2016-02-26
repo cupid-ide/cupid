@@ -56,10 +56,10 @@ public class NUOPCModel extends NUOPCComponent {
       NUOPCModel.Initialization _xblockexpression = null;
       {
         NUOPCModel.InitP1 _initP1 = new NUOPCModel.InitP1(this);
-        CodeConcept<NUOPCModel.Initialization, ASTSubroutineSubprogramNode> _reverse = _initP1.reverse();
+        CodeConcept<?, ?> _reverse = _initP1.reverse();
         this.initP1 = ((NUOPCModel.InitP1) _reverse);
         NUOPCModel.InitP2 _initP2 = new NUOPCModel.InitP2(this);
-        CodeConcept<NUOPCModel.Initialization, ASTSubroutineSubprogramNode> _reverse_1 = _initP2.reverse();
+        CodeConcept<?, ?> _reverse_1 = _initP2.reverse();
         this.initP2 = ((NUOPCModel.InitP2) _reverse_1);
         NUOPCModel.SetClock _setClock = new NUOPCModel.SetClock(this);
         SpecializationMethodCodeConcept<NUOPCModel.Initialization> _reverse_2 = _setClock.reverse();
@@ -931,7 +931,7 @@ public class NUOPCModel extends NUOPCComponent {
       NUOPCModel.Finalize _xblockexpression = null;
       {
         NUOPCModel.FinalizeP1 _finalizeP1 = new NUOPCModel.FinalizeP1(this);
-        CodeConcept<NUOPCModel.Finalize, ASTSubroutineSubprogramNode> _reverse = _finalizeP1.reverse();
+        CodeConcept<?, ?> _reverse = _finalizeP1.reverse();
         this.finalizeP1 = ((NUOPCModel.FinalizeP1) _reverse);
         _xblockexpression = this;
       }
@@ -992,7 +992,7 @@ public class NUOPCModel extends NUOPCComponent {
   }
   
   @Override
-  public CodeConcept<CodeConcept<?, ?>, ASTModuleNode> reverse() {
+  public CodeConcept<?, ?> reverse() {
     Object _xblockexpression = null;
     {
       StringConcatenation _builder = new StringConcatenation();
@@ -1058,7 +1058,7 @@ public class NUOPCModel extends NUOPCComponent {
       }
       _xblockexpression = null;
     }
-    return ((CodeConcept<CodeConcept<?, ?>, ASTModuleNode>)_xblockexpression);
+    return ((CodeConcept<?, ?>)_xblockexpression);
   }
   
   public NUOPCModel reverseChildren() {

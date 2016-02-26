@@ -308,7 +308,7 @@ public class SetServicesCodeConcept<P extends NUOPCComponent> extends CodeConcep
   }
   
   @Override
-  public CodeConcept<P, ASTSubroutineSubprogramNode> fward() {
+  public CodeConcept<?, ?> fward() {
     SetServicesCodeConcept<P> _xblockexpression = null;
     {
       String routineSetServices = this._parent.importNUOPCGeneric.routineSetServices;

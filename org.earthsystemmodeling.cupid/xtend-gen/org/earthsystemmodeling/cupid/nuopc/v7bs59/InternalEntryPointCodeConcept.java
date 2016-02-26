@@ -41,7 +41,7 @@ public abstract class InternalEntryPointCodeConcept<P extends CodeConcept<?, ?>>
   }
   
   @Override
-  public CodeConcept<P, ASTSubroutineSubprogramNode> reverse() {
+  public CodeConcept<?, ?> reverse() {
     EntryPointCodeConcept<P> _xblockexpression = null;
     {
       SetServicesCodeConcept<?> _setServices = this.setServices();
@@ -249,7 +249,7 @@ public abstract class InternalEntryPointCodeConcept<P extends CodeConcept<?, ?>>
   }
   
   @Override
-  public CodeConcept<P, ASTSubroutineSubprogramNode> fward() {
+  public CodeConcept<?, ?> fward() {
     try {
       InternalEntryPointCodeConcept<P> _xblockexpression = null;
       {

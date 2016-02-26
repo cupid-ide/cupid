@@ -10,8 +10,6 @@ import org.earthsystemmodeling.cupid.codedb.CodeDBIndex
 import org.earthsystemmodeling.cupid.nuopc.BasicCodeConcept
 import org.earthsystemmodeling.cupid.nuopc.CodeConcept
 import org.earthsystemmodeling.cupid.nuopc.CodeGenerationException
-import org.earthsystemmodeling.cupid.nuopc.v7bs59.NUOPCModel.IPD.AdvertiseField
-import org.earthsystemmodeling.cupid.nuopc.v7bs59.NUOPCModel.IPD.RealizeField
 import org.eclipse.core.resources.IResource
 import org.eclipse.photran.core.IFortranAST
 import org.eclipse.photran.internal.core.parser.ASTCallStmtNode
@@ -35,9 +33,9 @@ import org.eclipse.photran.internal.core.parser.IProgramUnit
 @Doc(urlfrag="#driver-top")
 class NUOPCDriver extends NUOPCComponent {
 	
-	public String driverName = "driver"
-	public String filename
-	public String path
+	//public String driverName = "driver"
+	//public String filename
+	//public String path
 	
 	@Child(forward=true)
 	var public SetServices setServices
@@ -51,22 +49,24 @@ class NUOPCDriver extends NUOPCComponent {
 	@Child(forward=true)
 	var public Finalize finalize
 	
-	new(CodeDBIndex codeDB) {
-		super(null)
-		_codeDB = null
-	}
+	//new(CodeDBIndex codeDB) {
+	//	super(null)
+	//	_codeDB = null
+	//}
 	
 	
 	new(IResource context) {
-		super(null)
-		_context = context
-		_codeDB = null
+		super(null, context, "NUOPC_Driver")
 	}
 	
 	
 	override prefix() {"driver"}
 
+	override NUOPCDriver reverse() {
+		super.reverse as NUOPCDriver
+	}
 
+	/*
 	override NUOPCDriver reverse() {
 		
 		var ast = getAST()
@@ -96,7 +96,7 @@ class NUOPCDriver extends NUOPCComponent {
 		}
 		else null
 	}
-	
+	*/
 		
 	/*
 	def reverseOLD() {
@@ -134,7 +134,7 @@ class NUOPCDriver extends NUOPCComponent {
 	}
 	*/
 	
-	def reverseChildren() {
+	override reverseChildren() {
 		setServices = new SetServices(this).reverse as SetServices
 		initialization = new Initialization(this).reverse
 		run = new Run(this).reverse
@@ -143,54 +143,9 @@ class NUOPCDriver extends NUOPCComponent {
 	}
 
 	override NUOPCDriver fward() {
-				
-		if (driverName == null) throw new CodeGenerationException("No driver name specified")
-		
-		//create module
-		var code = 
-'''
-module «driverName»
-	
-	use ESMF
-	use NUOPC
-	use NUOPC_Driver, only: &
-		driver_SetServices => SetServices
-		
-	implicit none
-	
-	contains
-	
-end module
-'''
-	
-		var ASTModuleNode moduleNode = parseLiteralProgramUnit(code)
-		setASTRef(moduleNode)
-		
-		var pul = new ASTListNode<IProgramUnit>()
-		pul.add(moduleNode)
-		getAST.root.programUnitList = pul
-		
-		moduleNode.moduleBody.filter(ASTUseStmtNode).forEach[
-			if (it.name.text.eic("ESMF")) {
-				importESMF = new BasicCodeConcept(this, it)
-			}
-			else if (it.name.text.eic("NUOPC")) {
-				importNUOPC = new BasicCodeConcept(this, it)
-			}
-			else if (it.name.text.eic("NUOPC_Driver")) {
-				importNUOPCGeneric = new GenericImport(this, it).reverse
-			}
-		]	
-		
 		super.fward as NUOPCDriver
-		
 	}
 
-	
-	override name() {
-		driverName + " (" + filename + ")"
-	}
-	
 	
 	@Label(label="SetServices")
 	@MappingType("subroutine")
@@ -217,7 +172,7 @@ end module
 		public static class IPDv04p1 extends InternalEntryPointCodeConcept<IPD> {
 
 			@Child(min=0, max=-1)
-			public List<NUOPCModel.IPD.AdvertiseField> advertiseFields
+			public List<AdvertiseField> advertiseFields
 		
 			new(IPD parent) {
 				super(parent)
@@ -467,6 +422,165 @@ end subroutine
 				super(parent)
 			}
 		}
+		
+		@Label(label="Advertise Field")
+		@MappingType("call")
+		public static class AdvertiseField extends CodeConcept<IPDv04p1, ASTCallStmtNode> {
+	
+			public String state
+			public String standardName
+	
+			new(IPDv04p1 parent) {
+				super(parent)
+				// defaults
+				state = _parent.paramImport
+				standardName = "StandardName"
+				parent.advertiseFields.add(this)
+			}
+	
+			override name() {
+				state + " / " + standardName
+			}
+			
+			override List reverseMultiple() {
+				
+				val retList = newArrayList()
+				
+				_parent.ASTRef.body.filter(ASTCallStmtNode).filter[c|
+					c.subroutineName.eic("NUOPC_Advertise")].forEach[
+						var advField = new AdvertiseField(_parent)
+						advField.state = it.litArgExprByIdx(0)
+						advField.standardName = it.litArgExprByIdx(1)
+						advField.setASTRef(it)
+						retList.add(advField)	
+					]
+				
+				retList
+				
+			}
+			
+			/*
+			override List reverseMultiple() {
+				
+				//call NUOPC_Advertise(importState, &
+      			//StandardName="sea_surface_temperature", name="sst", rc=rc)
+				
+				var retList = newArrayList()
+	
+				var rs = '''call_(_cid, «parentID», 'NUOPC_Advertise'),
+							callArgWithType(_, _cid, 1, _, _, _stateExpr),
+							callArgWithType(_, _cid, 2, _, _, _standardNameExpr).'''.execQuery
+	
+				while (rs.next) {
+					var advField = new AdvertiseField(_parent);
+					advField._id = rs.getLong("_cid")
+					advField.state = rs.getString("_stateExpr")
+					advField.standardName = rs.getString("_standardNameExpr")
+					retList.add(advField)
+				}
+				rs.close
+	
+				retList
+			}
+			*/
+			
+			override forward() {
+				var IFortranAST ast = getAST
+	
+				var code = '''
+	
+	call NUOPC_Advertise(«paramch(state)», '«paramch(standardName)»', rc=«_parent.paramRC»)
+	if (ESMF_LogFoundError(rcToCheck=«_parent.paramRC», msg=ESMF_LOGERR_PASSTHRU, &
+	    line=__LINE__, &
+	    file=__FILE__)) &
+	    return  ! bail out
+	'''
+				val IASTListNode<IBodyConstruct> stmts = parseLiteralStatementSequence(code)
+				var ASTSubroutineSubprogramNode ssn = _parent.ASTRef
+	
+				ssn.body.addAll(stmts)
+				// setASTRef(stmts.get(0) as ASTCallStmtNode)
+				ast
+			}
+	
+		}
+		
+		@Label(label="Realize Field")
+		@MappingType("call")
+		public static class RealizeField extends CodeConcept<EntryPointCodeConcept<?>, ASTCallStmtNode> {
+
+		public String state
+		public String field
+
+		new(EntryPointCodeConcept<?> parent) {
+			super(parent)
+			// defaults
+			state = _parent.paramImport
+			field = "field"
+		}
+
+		override name() {
+			state + " / " + field
+		}
+
+		override List reverseMultiple() {
+			
+			val retList = newArrayList()
+				
+			_parent.ASTRef.body.filter(ASTCallStmtNode).filter[c|
+				c.subroutineName.eic("NUOPC_Realize")].forEach[
+					var relField = new RealizeField(_parent)
+					relField.state = it.litArgExprByIdx(0)
+					relField.field = it.litArgExprByIdx(1)
+					relField.setASTRef(it)
+					retList.add(relField)	
+				]
+			
+			retList
+			
+		}
+
+		/*
+		override List reverseMultiple() {
+			var retList = newArrayList()
+
+			var rs = '''call_(_cid, «parentID», 'NUOPC_Realize'),
+						callArgWithType(_, _cid, 1, _, _, _stateExpr),
+						callArgWithType(_, _cid, 2, _, _, _fieldExpr).'''.execQuery
+
+			while (rs.next) {
+				var relField = new RealizeField(_parent);
+				relField._id = rs.getLong("_cid")
+				relField.state = rs.getString("_stateExpr")
+				relField.field = rs.getString("_fieldExpr")
+				retList.add(relField)
+			}
+			rs.close
+
+			retList
+		}
+		* 
+		*/
+
+		override forward() {
+			var IFortranAST ast = getAST
+
+			var code = '''
+
+call NUOPC_Realize(«paramch(state)», field=«paramch(field)», rc=«_parent.paramRC»)
+if (ESMF_LogFoundError(rcToCheck=«_parent.paramRC», msg=ESMF_LOGERR_PASSTHRU, &
+    line=__LINE__, &
+    file=__FILE__)) &
+    return  ! bail out
+'''
+			val IASTListNode<IBodyConstruct> stmts = parseLiteralStatementSequence(code)
+			var ASTSubroutineSubprogramNode ssn = _parent.ASTRef
+
+			ssn.body.addAll(stmts)
+			ast
+		}
+
+	}
 		
 
 	}

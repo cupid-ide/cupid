@@ -558,16 +558,16 @@ public class NUOPCDriver extends NUOPCComponent {
       NUOPCDriver.IPDv00 _xblockexpression = null;
       {
         NUOPCDriver.IPD.IPDv04p1 _iPDv04p1 = new NUOPCDriver.IPD.IPDv04p1(this);
-        CodeConcept<NUOPCDriver.IPD, ASTSubroutineSubprogramNode> _reverse = _iPDv04p1.reverse();
+        CodeConcept<?, ?> _reverse = _iPDv04p1.reverse();
         this.ipdv00p1 = ((NUOPCDriver.IPD.IPDv04p1) _reverse);
         NUOPCDriver.IPD.IPDv04p3 _iPDv04p3 = new NUOPCDriver.IPD.IPDv04p3(this);
-        CodeConcept<NUOPCDriver.IPD, ASTSubroutineSubprogramNode> _reverse_1 = _iPDv04p3.reverse();
+        CodeConcept<?, ?> _reverse_1 = _iPDv04p3.reverse();
         this.ipdv00p2 = ((NUOPCDriver.IPD.IPDv04p3) _reverse_1);
         NUOPCDriver.IPD.IPDv04p6 _iPDv04p6 = new NUOPCDriver.IPD.IPDv04p6(this);
-        CodeConcept<NUOPCDriver.IPD, ASTNode> _reverse_2 = _iPDv04p6.reverse();
+        CodeConcept<?, ?> _reverse_2 = _iPDv04p6.<CodeConcept<?, ?>>reverse();
         this.ipdv00p3 = ((NUOPCDriver.IPD.IPDv04p6) _reverse_2);
         NUOPCDriver.IPD.IPDv04p7 _iPDv04p7 = new NUOPCDriver.IPD.IPDv04p7(this);
-        CodeConcept<NUOPCDriver.IPD, ASTNode> _reverse_3 = _iPDv04p7.reverse();
+        CodeConcept<?, ?> _reverse_3 = _iPDv04p7.<CodeConcept<?, ?>>reverse();
         this.ipdv00p4 = ((NUOPCDriver.IPD.IPDv04p7) _reverse_3);
         _xblockexpression = this;
       }
@@ -606,19 +606,19 @@ public class NUOPCDriver extends NUOPCComponent {
       NUOPCDriver.IPDv01 _xblockexpression = null;
       {
         NUOPCDriver.IPD.IPDv04p1 _iPDv04p1 = new NUOPCDriver.IPD.IPDv04p1(this);
-        CodeConcept<NUOPCDriver.IPD, ASTSubroutineSubprogramNode> _reverse = _iPDv04p1.reverse();
+        CodeConcept<?, ?> _reverse = _iPDv04p1.reverse();
         this.ipdv01p1 = ((NUOPCDriver.IPD.IPDv04p1) _reverse);
         NUOPCDriver.IPD.IPDv04p2 _iPDv04p2 = new NUOPCDriver.IPD.IPDv04p2(this);
-        CodeConcept<NUOPCDriver.IPD, ASTSubroutineSubprogramNode> _reverse_1 = _iPDv04p2.reverse();
+        CodeConcept<?, ?> _reverse_1 = _iPDv04p2.reverse();
         this.ipdv01p2 = ((NUOPCDriver.IPD.IPDv04p2) _reverse_1);
         NUOPCDriver.IPD.IPDv04p3 _iPDv04p3 = new NUOPCDriver.IPD.IPDv04p3(this);
-        CodeConcept<NUOPCDriver.IPD, ASTSubroutineSubprogramNode> _reverse_2 = _iPDv04p3.reverse();
+        CodeConcept<?, ?> _reverse_2 = _iPDv04p3.reverse();
         this.ipdv01p3 = ((NUOPCDriver.IPD.IPDv04p3) _reverse_2);
         NUOPCDriver.IPD.IPDv04p6 _iPDv04p6 = new NUOPCDriver.IPD.IPDv04p6(this);
-        CodeConcept<NUOPCDriver.IPD, ASTNode> _reverse_3 = _iPDv04p6.reverse();
+        CodeConcept<?, ?> _reverse_3 = _iPDv04p6.<CodeConcept<?, ?>>reverse();
         this.ipdv01p4 = ((NUOPCDriver.IPD.IPDv04p6) _reverse_3);
         NUOPCDriver.IPD.IPDv04p7 _iPDv04p7 = new NUOPCDriver.IPD.IPDv04p7(this);
-        CodeConcept<NUOPCDriver.IPD, ASTNode> _reverse_4 = _iPDv04p7.reverse();
+        CodeConcept<?, ?> _reverse_4 = _iPDv04p7.<CodeConcept<?, ?>>reverse();
         this.ipdv01p5 = ((NUOPCDriver.IPD.IPDv04p7) _reverse_4);
         _xblockexpression = this;
       }
@@ -657,19 +657,19 @@ public class NUOPCDriver extends NUOPCComponent {
       NUOPCDriver.IPDv02 _xblockexpression = null;
       {
         NUOPCDriver.IPD.IPDv04p1 _iPDv04p1 = new NUOPCDriver.IPD.IPDv04p1(this);
-        CodeConcept<NUOPCDriver.IPD, ASTSubroutineSubprogramNode> _reverse = _iPDv04p1.reverse();
+        CodeConcept<?, ?> _reverse = _iPDv04p1.reverse();
         this.ipdv02p1 = ((NUOPCDriver.IPD.IPDv04p1) _reverse);
         NUOPCDriver.IPD.IPDv04p2 _iPDv04p2 = new NUOPCDriver.IPD.IPDv04p2(this);
-        CodeConcept<NUOPCDriver.IPD, ASTSubroutineSubprogramNode> _reverse_1 = _iPDv04p2.reverse();
+        CodeConcept<?, ?> _reverse_1 = _iPDv04p2.reverse();
         this.ipdv02p2 = ((NUOPCDriver.IPD.IPDv04p2) _reverse_1);
         NUOPCDriver.IPD.IPDv04p3 _iPDv04p3 = new NUOPCDriver.IPD.IPDv04p3(this);
-        CodeConcept<NUOPCDriver.IPD, ASTSubroutineSubprogramNode> _reverse_2 = _iPDv04p3.reverse();
+        CodeConcept<?, ?> _reverse_2 = _iPDv04p3.reverse();
         this.ipdv02p3 = ((NUOPCDriver.IPD.IPDv04p3) _reverse_2);
         NUOPCDriver.IPD.IPDv04p6 _iPDv04p6 = new NUOPCDriver.IPD.IPDv04p6(this);
-        CodeConcept<NUOPCDriver.IPD, ASTNode> _reverse_3 = _iPDv04p6.reverse();
+        CodeConcept<?, ?> _reverse_3 = _iPDv04p6.<CodeConcept<?, ?>>reverse();
         this.ipdv02p4 = ((NUOPCDriver.IPD.IPDv04p6) _reverse_3);
         NUOPCDriver.IPD.IPDv04p7 _iPDv04p7 = new NUOPCDriver.IPD.IPDv04p7(this);
-        CodeConcept<NUOPCDriver.IPD, ASTNode> _reverse_4 = _iPDv04p7.reverse();
+        CodeConcept<?, ?> _reverse_4 = _iPDv04p7.<CodeConcept<?, ?>>reverse();
         this.ipdv02p5 = ((NUOPCDriver.IPD.IPDv04p7) _reverse_4);
         _xblockexpression = this;
       }
@@ -716,25 +716,25 @@ public class NUOPCDriver extends NUOPCComponent {
       NUOPCDriver.IPDv03 _xblockexpression = null;
       {
         NUOPCDriver.IPD.IPDv04p1 _iPDv04p1 = new NUOPCDriver.IPD.IPDv04p1(this);
-        CodeConcept<NUOPCDriver.IPD, ASTSubroutineSubprogramNode> _reverse = _iPDv04p1.reverse();
+        CodeConcept<?, ?> _reverse = _iPDv04p1.reverse();
         this.ipdv03p1 = ((NUOPCDriver.IPD.IPDv04p1) _reverse);
         NUOPCDriver.IPD.IPDv04p2 _iPDv04p2 = new NUOPCDriver.IPD.IPDv04p2(this);
-        CodeConcept<NUOPCDriver.IPD, ASTSubroutineSubprogramNode> _reverse_1 = _iPDv04p2.reverse();
+        CodeConcept<?, ?> _reverse_1 = _iPDv04p2.reverse();
         this.ipdv03p2 = ((NUOPCDriver.IPD.IPDv04p2) _reverse_1);
         NUOPCDriver.IPD.IPDv04p3 _iPDv04p3 = new NUOPCDriver.IPD.IPDv04p3(this);
-        CodeConcept<NUOPCDriver.IPD, ASTSubroutineSubprogramNode> _reverse_2 = _iPDv04p3.reverse();
+        CodeConcept<?, ?> _reverse_2 = _iPDv04p3.reverse();
         this.ipdv03p3 = ((NUOPCDriver.IPD.IPDv04p3) _reverse_2);
         NUOPCDriver.IPD.IPDv04p4 _iPDv04p4 = new NUOPCDriver.IPD.IPDv04p4(this);
-        CodeConcept<NUOPCDriver.IPD, ASTSubroutineSubprogramNode> _reverse_3 = _iPDv04p4.reverse();
+        CodeConcept<?, ?> _reverse_3 = _iPDv04p4.reverse();
         this.ipdv03p4 = ((NUOPCDriver.IPD.IPDv04p4) _reverse_3);
         NUOPCDriver.IPD.IPDv04p5 _iPDv04p5 = new NUOPCDriver.IPD.IPDv04p5(this);
-        CodeConcept<NUOPCDriver.IPD, ASTSubroutineSubprogramNode> _reverse_4 = _iPDv04p5.reverse();
+        CodeConcept<?, ?> _reverse_4 = _iPDv04p5.reverse();
         this.ipdv03p5 = ((NUOPCDriver.IPD.IPDv04p5) _reverse_4);
         NUOPCDriver.IPD.IPDv04p6 _iPDv04p6 = new NUOPCDriver.IPD.IPDv04p6(this);
-        CodeConcept<NUOPCDriver.IPD, ASTNode> _reverse_5 = _iPDv04p6.reverse();
+        CodeConcept<?, ?> _reverse_5 = _iPDv04p6.<CodeConcept<?, ?>>reverse();
         this.ipdv03p6 = ((NUOPCDriver.IPD.IPDv04p6) _reverse_5);
         NUOPCDriver.IPD.IPDv04p7 _iPDv04p7 = new NUOPCDriver.IPD.IPDv04p7(this);
-        CodeConcept<NUOPCDriver.IPD, ASTNode> _reverse_6 = _iPDv04p7.reverse();
+        CodeConcept<?, ?> _reverse_6 = _iPDv04p7.<CodeConcept<?, ?>>reverse();
         this.ipdv03p7 = ((NUOPCDriver.IPD.IPDv04p7) _reverse_6);
         _xblockexpression = this;
       }
@@ -774,25 +774,25 @@ public class NUOPCDriver extends NUOPCComponent {
       NUOPCDriver.IPDv04 _xblockexpression = null;
       {
         NUOPCDriver.IPD.IPDv04p1 _iPDv04p1 = new NUOPCDriver.IPD.IPDv04p1(this);
-        CodeConcept<NUOPCDriver.IPD, ASTSubroutineSubprogramNode> _reverse = _iPDv04p1.reverse();
+        CodeConcept<?, ?> _reverse = _iPDv04p1.reverse();
         this.ipdv04p1 = ((NUOPCDriver.IPD.IPDv04p1) _reverse);
         NUOPCDriver.IPD.IPDv04p2 _iPDv04p2 = new NUOPCDriver.IPD.IPDv04p2(this);
-        CodeConcept<NUOPCDriver.IPD, ASTSubroutineSubprogramNode> _reverse_1 = _iPDv04p2.reverse();
+        CodeConcept<?, ?> _reverse_1 = _iPDv04p2.reverse();
         this.ipdv04p2 = ((NUOPCDriver.IPD.IPDv04p2) _reverse_1);
         NUOPCDriver.IPD.IPDv04p3 _iPDv04p3 = new NUOPCDriver.IPD.IPDv04p3(this);
-        CodeConcept<NUOPCDriver.IPD, ASTSubroutineSubprogramNode> _reverse_2 = _iPDv04p3.reverse();
+        CodeConcept<?, ?> _reverse_2 = _iPDv04p3.reverse();
         this.ipdv04p3 = ((NUOPCDriver.IPD.IPDv04p3) _reverse_2);
         NUOPCDriver.IPD.IPDv04p4 _iPDv04p4 = new NUOPCDriver.IPD.IPDv04p4(this);
-        CodeConcept<NUOPCDriver.IPD, ASTSubroutineSubprogramNode> _reverse_3 = _iPDv04p4.reverse();
+        CodeConcept<?, ?> _reverse_3 = _iPDv04p4.reverse();
         this.ipdv04p4 = ((NUOPCDriver.IPD.IPDv04p4) _reverse_3);
         NUOPCDriver.IPD.IPDv04p5 _iPDv04p5 = new NUOPCDriver.IPD.IPDv04p5(this);
-        CodeConcept<NUOPCDriver.IPD, ASTSubroutineSubprogramNode> _reverse_4 = _iPDv04p5.reverse();
+        CodeConcept<?, ?> _reverse_4 = _iPDv04p5.reverse();
         this.ipdv04p5 = ((NUOPCDriver.IPD.IPDv04p5) _reverse_4);
         NUOPCDriver.IPD.IPDv04p6 _iPDv04p6 = new NUOPCDriver.IPD.IPDv04p6(this);
-        CodeConcept<NUOPCDriver.IPD, ASTNode> _reverse_5 = _iPDv04p6.reverse();
+        CodeConcept<?, ?> _reverse_5 = _iPDv04p6.<CodeConcept<?, ?>>reverse();
         this.ipdv04p6 = ((NUOPCDriver.IPD.IPDv04p6) _reverse_5);
         NUOPCDriver.IPD.IPDv04p7 _iPDv04p7 = new NUOPCDriver.IPD.IPDv04p7(this);
-        CodeConcept<NUOPCDriver.IPD, ASTNode> _reverse_6 = _iPDv04p7.reverse();
+        CodeConcept<?, ?> _reverse_6 = _iPDv04p7.<CodeConcept<?, ?>>reverse();
         this.ipdv04p7 = ((NUOPCDriver.IPD.IPDv04p7) _reverse_6);
         _xblockexpression = this;
       }
@@ -822,7 +822,7 @@ public class NUOPCDriver extends NUOPCComponent {
     }
     
     @Override
-    public CodeConcept<NUOPCDriver.Initialization, ASTNode> reverse() {
+    public CodeConcept<?, ?> reverse() {
       NUOPCDriver.InternalInitPhases _xblockexpression = null;
       {
         NUOPCDriver.IPDv00 _iPDv00 = new NUOPCDriver.IPDv00(this);
@@ -898,11 +898,11 @@ public class NUOPCDriver extends NUOPCComponent {
     }
     
     @Override
-    public CodeConcept<NUOPCDriver.Initialization, ASTNode> reverse() {
+    public CodeConcept<?, ?> reverse() {
       NUOPCDriver.InitPhases _xblockexpression = null;
       {
         NUOPCDriver.InitPhases.InitP1 _initP1 = new NUOPCDriver.InitPhases.InitP1(this);
-        CodeConcept<NUOPCDriver.InitPhases, ASTNode> _reverse = _initP1.reverse();
+        CodeConcept<?, ?> _reverse = _initP1.<CodeConcept<?, ?>>reverse();
         this.initP1 = ((NUOPCDriver.InitPhases.InitP1) _reverse);
         _xblockexpression = this;
       }
@@ -934,10 +934,10 @@ public class NUOPCDriver extends NUOPCComponent {
       NUOPCDriver.Initialization _xblockexpression = null;
       {
         NUOPCDriver.InitPhases _initPhases = new NUOPCDriver.InitPhases(this);
-        CodeConcept<NUOPCDriver.Initialization, ASTNode> _reverse = _initPhases.reverse();
+        CodeConcept<?, ?> _reverse = _initPhases.reverse();
         this.initPhases = ((NUOPCDriver.InitPhases) _reverse);
         NUOPCDriver.InternalInitPhases _internalInitPhases = new NUOPCDriver.InternalInitPhases(this);
-        CodeConcept<NUOPCDriver.Initialization, ASTNode> _reverse_1 = _internalInitPhases.reverse();
+        CodeConcept<?, ?> _reverse_1 = _internalInitPhases.reverse();
         this.internalInitPhases = ((NUOPCDriver.InternalInitPhases) _reverse_1);
         NUOPCDriver.InitSpecializations _initSpecializations = new NUOPCDriver.InitSpecializations(this);
         NUOPCDriver.InitSpecializations _reverse_2 = _initSpecializations.reverse();
@@ -1874,7 +1874,7 @@ public class NUOPCDriver extends NUOPCComponent {
         NUOPCDriver.RunPhases _reverse = _runPhases.reverse();
         this.runPhases = ((NUOPCDriver.RunPhases) _reverse);
         NUOPCDriver.RunSpecializations _runSpecializations = new NUOPCDriver.RunSpecializations(this);
-        CodeConcept<NUOPCDriver.Run, ASTNode> _reverse_1 = _runSpecializations.reverse();
+        CodeConcept<?, ?> _reverse_1 = _runSpecializations.reverse();
         this.runSpecs = ((NUOPCDriver.RunSpecializations) _reverse_1);
         _xblockexpression = this;
       }
@@ -1896,7 +1896,7 @@ public class NUOPCDriver extends NUOPCComponent {
       NUOPCDriver.RunPhases _xblockexpression = null;
       {
         NUOPCDriver.RunPhase1 _runPhase1 = new NUOPCDriver.RunPhase1(this);
-        CodeConcept<NUOPCDriver.RunPhases, ASTNode> _reverse = _runPhase1.reverse();
+        CodeConcept<?, ?> _reverse = _runPhase1.<CodeConcept<?, ?>>reverse();
         this.p1 = ((NUOPCDriver.RunPhase1) _reverse);
         _xblockexpression = this;
       }
@@ -1922,7 +1922,7 @@ public class NUOPCDriver extends NUOPCComponent {
     }
     
     @Override
-    public CodeConcept<NUOPCDriver.Run, ASTNode> reverse() {
+    public CodeConcept<?, ?> reverse() {
       return this.reverseChildren();
     }
     
@@ -2048,7 +2048,7 @@ public class NUOPCDriver extends NUOPCComponent {
       NUOPCDriver.FinalizePhases _xblockexpression = null;
       {
         NUOPCDriver.FinalizePhase1 _finalizePhase1 = new NUOPCDriver.FinalizePhase1(this);
-        CodeConcept<NUOPCDriver.FinalizePhases, ASTNode> _reverse = _finalizePhase1.reverse();
+        CodeConcept<?, ?> _reverse = _finalizePhase1.<CodeConcept<?, ?>>reverse();
         this.p1 = ((NUOPCDriver.FinalizePhase1) _reverse);
         _xblockexpression = this;
       }
@@ -2066,7 +2066,7 @@ public class NUOPCDriver extends NUOPCComponent {
     }
     
     @Override
-    public CodeConcept<NUOPCDriver.Finalize, ASTNode> reverse() {
+    public CodeConcept<?, ?> reverse() {
       return this.reverseChildren();
     }
     
@@ -2114,7 +2114,7 @@ public class NUOPCDriver extends NUOPCComponent {
         NUOPCDriver.FinalizePhases _reverse = _finalizePhases.reverse();
         this.finalPhases = ((NUOPCDriver.FinalizePhases) _reverse);
         NUOPCDriver.FinalizeSpecializations _finalizeSpecializations = new NUOPCDriver.FinalizeSpecializations(this);
-        CodeConcept<NUOPCDriver.Finalize, ASTNode> _reverse_1 = _finalizeSpecializations.reverse();
+        CodeConcept<?, ?> _reverse_1 = _finalizeSpecializations.reverse();
         this.finalSpecs = ((NUOPCDriver.FinalizeSpecializations) _reverse_1);
         _xblockexpression = this;
       }
@@ -2213,7 +2213,7 @@ public class NUOPCDriver extends NUOPCComponent {
   }
   
   @Override
-  public CodeConcept<CodeConcept<?, ?>, ASTModuleNode> reverse() {
+  public CodeConcept<?, ?> reverse() {
     Object _xblockexpression = null;
     {
       StringConcatenation _builder = new StringConcatenation();
@@ -2279,7 +2279,7 @@ public class NUOPCDriver extends NUOPCComponent {
       }
       _xblockexpression = null;
     }
-    return ((CodeConcept<CodeConcept<?, ?>, ASTModuleNode>)_xblockexpression);
+    return ((CodeConcept<?, ?>)_xblockexpression);
   }
   
   public NUOPCDriver reverseChildren() {

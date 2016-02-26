@@ -1,12 +1,12 @@
 package org.earthsystemmodeling.cupid.nuopc.v7bs59
 
-import java.sql.SQLException
 import java.util.List
 import org.earthsystemmodeling.cupid.annotation.Child
+import org.earthsystemmodeling.cupid.annotation.Doc
 import org.earthsystemmodeling.cupid.annotation.Label
 import org.earthsystemmodeling.cupid.annotation.MappingType
-import org.earthsystemmodeling.cupid.codedb.CodeDBIndex
 import org.earthsystemmodeling.cupid.nuopc.CodeConcept
+import org.eclipse.core.resources.IResource
 import org.eclipse.photran.core.IFortranAST
 import org.eclipse.photran.internal.core.parser.ASTCallStmtNode
 import org.eclipse.photran.internal.core.parser.ASTNode
@@ -14,39 +14,39 @@ import org.eclipse.photran.internal.core.parser.ASTSubroutineSubprogramNode
 import org.eclipse.photran.internal.core.parser.IASTListNode
 import org.eclipse.photran.internal.core.parser.IBodyConstruct
 
-import static org.earthsystemmodeling.cupid.core.CupidActivator.log
-import static org.earthsystemmodeling.cupid.nuopc.BasicCodeConcept.newBasicCodeConcept
-import static org.earthsystemmodeling.cupid.util.CodeExtraction.parseLiteralStatementSequence
-import org.earthsystemmodeling.cupid.annotation.Doc
+import static org.earthsystemmodeling.cupid.util.CodeExtraction.*
+import static extension org.earthsystemmodeling.cupid.nuopc.ASTQuery.*
+import static org.earthsystemmodeling.cupid.nuopc.ESMFCodeTemplates.*
+
 
 @Label(label="NUOPC Mediator")
 @MappingType("module")
 @Doc(urlfrag="#mediator-top")
 class NUOPCMediator extends NUOPCComponent {
 
-	public String mediatorName
-	public String filename
-	public String path
-
-	@Child
+	@Child(forward=true)
 	public SetServices setServices
 	
-	@Child
+	@Child(forward=true)
 	public Initialization initialization
 
-	@Child
+	@Child(forward=true)
 	public Run run
 
-	@Child
+	@Child(forward=true)
 	public Finalize finalize
 
-	new(CodeDBIndex codeDB) {
-		super(null)
-		_codeDB = codeDB
+	new(IResource context) {
+		super(null, context, "NUOPC_Mediator")
 	}
 
 	override prefix() { "mediator" }
 
+	override NUOPCMediator reverse() {
+		super.reverse as NUOPCMediator
+	}
+
+	/*
 	override reverse() {
 
 		var rs = '''module(_moduleID, _compUnitID, _medName), 
@@ -77,8 +77,10 @@ class NUOPCMediator extends NUOPCComponent {
 
 		null
 	}
+	* 
+	*/
 
-	def reverseChildren() {
+	override reverseChildren() {
 		setServices = new SetServices(this).reverse as SetServices
 		initialization = new Initialization(this).reverse
 		run = new Run(this).reverse
@@ -86,10 +88,10 @@ class NUOPCMediator extends NUOPCComponent {
 		this
 	}
 
-	override name() {
-		mediatorName + " (" + filename + ")"
+	override NUOPCMediator fward() {
+		super.fward as NUOPCMediator
 	}
-	
+		
 	
 	@Label(label="SetServices")
 	@MappingType("subroutine")
@@ -120,6 +122,8 @@ class NUOPCMediator extends NUOPCComponent {
 				phaseLabel = getPhaseLabel()
 				subroutineName = "AdvertiseFields"
 				methodType = "ESMF_METHOD_INITIALIZE"
+				parent.setOrAddChild(this)
+				advertiseFields = newArrayList()
 			}
 			
 			def getPhaseLabel() {
@@ -169,6 +173,8 @@ class NUOPCMediator extends NUOPCComponent {
 				phaseLabel = getPhaseLabel()
 				subroutineName = "RealizeFieldsProvidingGrid"
 				methodType = "ESMF_METHOD_INITIALIZE"
+				parent.setOrAddChild(this)
+				realizeFields = newArrayList()
 			}
 			
 			def getPhaseLabel() {
@@ -206,6 +212,7 @@ class NUOPCMediator extends NUOPCComponent {
 				phaseLabel = getPhaseLabel()
 				subroutineName = "ModifyDistGrid"
 				methodType = "ESMF_METHOD_INITIALIZE"
+				parent.setOrAddChild(this)
 			}
 			
 			def getPhaseLabel() {
@@ -243,6 +250,7 @@ class NUOPCMediator extends NUOPCComponent {
 				phaseLabel = getPhaseLabel()
 				subroutineName = "RealizeFieldsAcceptingGrid"
 				methodType = "ESMF_METHOD_INITIALIZE"
+				parent.setOrAddChild(this)
 			}
 			
 			def getPhaseLabel() {
@@ -296,6 +304,7 @@ class NUOPCMediator extends NUOPCComponent {
 				// defaults
 				state = _parent.paramImport
 				standardName = "StandardName"
+				parent.setOrAddChild(this)
 			}
 	
 			override name() {
@@ -303,41 +312,32 @@ class NUOPCMediator extends NUOPCComponent {
 			}
 	
 			override List reverseMultiple() {
-				var retList = newArrayList()
-	
-				var rs = '''call_(_cid, «parentID», 'NUOPC_Advertise'),
-							callArgWithType(_, _cid, 1, _, _, _stateExpr),
-							callArgWithType(_, _cid, 2, _, _, _standardNameExpr).'''.execQuery
-	
-				while (rs.next) {
-					var advField = new AdvertiseField(_parent);
-					advField._id = rs.getLong("_cid")
-					advField.state = rs.getString("_stateExpr")
-					advField.standardName = rs.getString("_standardNameExpr")
-					retList.add(advField)
-				}
-				rs.close
-	
+				val retList = newArrayList()
+				_parent.ASTRef.body.filter(ASTCallStmtNode).filter[c|
+					c.subroutineName.eic("NUOPC_Advertise")].forEach[
+						var advField = new AdvertiseField(_parent)
+						advField.state = it.litArgExprByIdx(0)
+						advField.standardName = it.litArgExprByIdx(1)
+						advField.setASTRef(it)
+						retList.add(advField)	
+					]
 				retList
 			}
 	
-			override forward() {
-				var IFortranAST ast = getAST
+			override fward() {
 	
-				var code = '''
-	
-	call NUOPC_Advertise(«paramch(state)», '«paramch(standardName)»', rc=«_parent.paramRC»)
-	if (ESMF_LogFoundError(rcToCheck=«_parent.paramRC», msg=ESMF_LOGERR_PASSTHRU, &
-	    line=__LINE__, &
-	    file=__FILE__)) &
-	    return  ! bail out
-	'''
+				var code = 
+'''
+
+call NUOPC_Advertise(«paramch(state)», «paramch(standardName)», rc=«_parent.paramRC»)
+«ESMFErrorCheck(_parent.paramRC)»
+'''
 				val IASTListNode<IBodyConstruct> stmts = parseLiteralStatementSequence(code)
-				var ASTSubroutineSubprogramNode ssn = _parent.ASTRef
+				val ASTSubroutineSubprogramNode ssn = _parent.ASTRef
 	
 				ssn.body.addAll(stmts)
-				// setASTRef(stmts.get(0) as ASTCallStmtNode)
-				ast
+				setASTRef(stmts.get(0) as ASTCallStmtNode)
+				this
 			}
 	
 		}
@@ -346,56 +346,47 @@ class NUOPCMediator extends NUOPCComponent {
 		@MappingType("call")
 		public static class RealizeField extends CodeConcept<EntryPointCodeConcept<?>, ASTCallStmtNode> {
 
-		public String state
-		public String field
-
-		new(EntryPointCodeConcept<?> parent) {
-			super(parent)
-			// defaults
-			state = _parent.paramImport
-			field = "field"
-		}
-
-		override name() {
-			state + " / " + field
-		}
-
-		override List reverseMultiple() {
-			var retList = newArrayList()
-
-			var rs = '''call_(_cid, «parentID», 'NUOPC_Realize'),
-						callArgWithType(_, _cid, 1, _, _, _stateExpr),
-						callArgWithType(_, _cid, 2, _, _, _fieldExpr).'''.execQuery
-
-			while (rs.next) {
-				var relField = new RealizeField(_parent);
-				relField._id = rs.getLong("_cid")
-				relField.state = rs.getString("_stateExpr")
-				relField.field = rs.getString("_fieldExpr")
-				retList.add(relField)
+			public String state
+			public String field
+	
+			new(EntryPointCodeConcept<?> parent) {
+				super(parent)
+				// defaults
+				state = _parent.paramImport
+				field = "field"
+				parent.setOrAddChild(this)
 			}
-			rs.close
-
-			retList
-		}
-
-		override forward() {
-			var IFortranAST ast = getAST
-
-			var code = '''
-
-call NUOPC_Realize(«paramch(state)», field=«paramch(field)», rc=«_parent.paramRC»)
-if (ESMF_LogFoundError(rcToCheck=«_parent.paramRC», msg=ESMF_LOGERR_PASSTHRU, &
-    line=__LINE__, &
-    file=__FILE__)) &
-    return  ! bail out
+	
+			override name() {
+				state + " / " + field
+			}
+	
+			override List reverseMultiple() {
+				val retList = newArrayList()
+				_parent.ASTRef.body.filter(ASTCallStmtNode).filter[c|
+					c.subroutineName.eic("NUOPC_Realize")].forEach[
+						var relField = new RealizeField(_parent)
+						relField.state = it.litArgExprByIdx(0)
+						relField.field = it.litArgExprByIdx(1)
+						relField.setASTRef(it)
+						retList.add(relField)	
+					]
+				retList
+			}
+	
+			override fward() {	
+				var code = 
 '''
-			val IASTListNode<IBodyConstruct> stmts = parseLiteralStatementSequence(code)
-			var ASTSubroutineSubprogramNode ssn = _parent.ASTRef
-
-			ssn.body.addAll(stmts)
-			ast
-		}
+	
+call NUOPC_Realize(«paramch(state)», field=«paramch(field)», rc=«_parent.paramRC»)
+«ESMFErrorCheck(_parent.paramRC)»
+'''
+				val IASTListNode<IBodyConstruct> stmts = parseLiteralStatementSequence(code)
+				val ASTSubroutineSubprogramNode ssn = _parent.ASTRef
+	
+				ssn.body.addAll(stmts)
+				super.fward
+			}
 
 	}
 		
@@ -888,7 +879,7 @@ subroutine «subroutineName»(«paramGridComp», «paramRC»)
     ! advance the mediator: currTime -> currTime + timeStep
 
     call ESMF_ClockPrint(clock, options="currTime", &
-      preString="------>Advancing «_parent._parent._parent.mediatorName» from: ", rc=«paramRC»)
+      preString="------>Advancing «_parent._parent._parent.name» from: ", rc=«paramRC»)
     if (ESMF_LogFoundError(rcToCheck=«paramRC», msg=ESMF_LOGERR_PASSTHRU, &
         line=__LINE__, &
         file=__FILE__)) &

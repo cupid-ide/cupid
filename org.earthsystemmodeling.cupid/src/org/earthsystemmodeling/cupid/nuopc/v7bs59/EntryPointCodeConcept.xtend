@@ -18,6 +18,7 @@ import static org.earthsystemmodeling.cupid.util.CodeExtraction.parseLiteralStat
 
 import static extension org.earthsystemmodeling.cupid.nuopc.ASTQuery.*
 import static extension org.earthsystemmodeling.cupid.nuopc.ESMFQuery.*
+import org.earthsystemmodeling.cupid.nuopc.ReverseEngineerException
 
 public abstract class EntryPointCodeConcept<P extends CodeConcept<?, ?>> extends CodeConcept<P, ASTSubroutineSubprogramNode> {
 
@@ -56,7 +57,8 @@ public abstract class EntryPointCodeConcept<P extends CodeConcept<?, ?>> extends
 	
 	override reverse() {
 		
-		val setServicesNode = setServices.ASTRef
+		val setServicesNode = setServices?.ASTRef
+		if (setServicesNode == null) throw new ReverseEngineerException("No SetServices method found")
 		
 		val registrationCall = setServicesNode.body.filter(ASTCallStmtNode).findFirst[
 			it.subroutineName.text.eic("NUOPC_CompSetEntryPoint") &&
@@ -246,7 +248,7 @@ if (ESMF_LogFoundError(rcToCheck=«paramRC», msg=ESMF_LOGERR_PASSTHRU, &
 		
 		}
 
-		this
+		super.fward
 
 	}
 

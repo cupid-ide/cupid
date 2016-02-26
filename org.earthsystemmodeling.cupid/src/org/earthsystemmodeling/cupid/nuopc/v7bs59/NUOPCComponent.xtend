@@ -9,11 +9,21 @@ import org.earthsystemmodeling.cupid.annotation.Prop
 import org.earthsystemmodeling.cupid.nuopc.CodeConcept
 import org.earthsystemmodeling.cupid.nuopc.BasicCodeConcept
 import org.earthsystemmodeling.cupid.annotation.MappingType
+import org.eclipse.core.resources.IResource
 
+import static extension org.earthsystemmodeling.cupid.nuopc.ASTQuery.*
+import org.earthsystemmodeling.cupid.nuopc.CodeGenerationException
+import static org.earthsystemmodeling.cupid.util.CodeExtraction.*
+import org.eclipse.photran.internal.core.parser.ASTListNode
+import org.eclipse.photran.internal.core.parser.IProgramUnit
 
 @Label(label="NUOPC Driver")
 @MappingType("module")
 public abstract class NUOPCComponent extends CodeConcept<CodeConcept<?,?>, ASTModuleNode> {
+	
+	protected String genericImport
+	
+	public String name
 	
 	@Label(label="ESMF Import", sort=1)
 	@Child(forward=false)
@@ -30,11 +40,101 @@ public abstract class NUOPCComponent extends CodeConcept<CodeConcept<?,?>, ASTMo
 	@MappingType("uses")
 	public GenericImport importNUOPCGeneric
 	
-	new(CodeConcept<?, ?> parent) {
-		super(parent)
+	new(CodeConcept<?, ?> parent, String genericImport) {
+		this(parent, null, genericImport)
+	}
+	
+	new(CodeConcept<?,?> parent, IResource context, String genericImport) {
+		super(parent, context)
+		this.genericImport = genericImport
+		if (genericImport==null) throw new CodeGenerationException("Name of generic import of component cannot be null")
 	}
 	
 	def abstract String prefix() 
+	
+	override name() {
+		name + " (" + _context?.name + ")"
+	}
+		
+	override reverse() {
+		
+		var ast = getAST()
+				
+		_astRef = ast.root?.programUnitList?.filter(ASTModuleNode).findFirst[
+			it.moduleBody?.filter(ASTUseStmtNode).exists[it.name.text.eic(genericImport)]
+		]
+		
+		if (_astRef != null) {
+			name = _astRef.moduleStmt.moduleName.moduleName.text
+			
+			//move some or all of these to NUOPCComponent
+			_astRef.moduleBody.filter(ASTUseStmtNode).forEach[
+				if (it.name.text.eic("ESMF")) {
+					importESMF = new BasicCodeConcept<ASTUseStmtNode>(this, it)
+				}
+				else if (it.name.text.eic("NUOPC")) {
+					importNUOPC = new BasicCodeConcept<ASTUseStmtNode>(this, it)
+				}
+				else if (it.name.text.eic(genericImport)) {
+					importNUOPCGeneric = new GenericImport(this, it).reverse
+				}
+			]
+						
+			reverseChildren
+			
+		}
+		else null
+	}
+	
+	//subclasses should override
+	def <T extends NUOPCComponent> T reverseChildren() {this as T}
+	
+	
+	override fward() {
+				
+		if (name == null) throw new CodeGenerationException("No component name specified")
+		
+		//create module
+		var code = 
+'''
+module «name»
+	
+	use ESMF
+	use NUOPC
+	use «genericImport», only: &
+		«prefix»_SetServices => SetServices
+		
+	implicit none
+	
+	contains
+	
+end module
+'''
+	
+		var ASTModuleNode moduleNode = parseLiteralProgramUnit(code)
+		setASTRef(moduleNode)
+		
+		var pul = new ASTListNode<IProgramUnit>()
+		pul.add(moduleNode)
+		getAST.root.programUnitList = pul
+		
+		moduleNode.moduleBody.filter(ASTUseStmtNode).forEach[
+			if (it.name.text.eic("ESMF")) {
+				importESMF = new BasicCodeConcept(this, it)
+			}
+			else if (it.name.text.eic("NUOPC")) {
+				importNUOPC = new BasicCodeConcept(this, it)
+			}
+			else if (it.name.text.eic(genericImport)) {
+				importNUOPCGeneric = new GenericImport(this, it).reverse
+			}
+		]	
+		
+		super.fward
+		
+	}
+	
+	
 	
 	@Label(label="Generic Import")
 	@MappingType("uses")
@@ -75,6 +175,7 @@ public abstract class NUOPCComponent extends CodeConcept<CodeConcept<?,?>, ASTMo
 			this
 		}
 		
+		/*
 		def GenericImport reverseOLD() {
 			var rs = '''uses(«_id», _mid, _genericComp),
 						(usesEntity(_, «_id», 'SetServices', _newName, _) ; true).'''.execQuery
@@ -89,7 +190,7 @@ public abstract class NUOPCComponent extends CodeConcept<CodeConcept<?,?>, ASTMo
 				null
 			}
 		}
-		
+		*/
 		
 		
 		

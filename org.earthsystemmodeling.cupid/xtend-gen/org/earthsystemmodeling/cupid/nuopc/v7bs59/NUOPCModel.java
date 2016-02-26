@@ -8,32 +8,22 @@ import org.earthsystemmodeling.cupid.annotation.Child;
 import org.earthsystemmodeling.cupid.annotation.Doc;
 import org.earthsystemmodeling.cupid.annotation.Label;
 import org.earthsystemmodeling.cupid.annotation.MappingType;
-import org.earthsystemmodeling.cupid.codedb.CodeDBIndex;
 import org.earthsystemmodeling.cupid.nuopc.ASTQuery;
-import org.earthsystemmodeling.cupid.nuopc.BasicCodeConcept;
 import org.earthsystemmodeling.cupid.nuopc.CodeConcept;
-import org.earthsystemmodeling.cupid.nuopc.CodeGenerationException;
+import org.earthsystemmodeling.cupid.nuopc.ESMFCodeTemplates;
 import org.earthsystemmodeling.cupid.nuopc.v7bs59.EntryPointCodeConcept;
 import org.earthsystemmodeling.cupid.nuopc.v7bs59.NUOPCComponent;
 import org.earthsystemmodeling.cupid.nuopc.v7bs59.SetServicesCodeConcept;
 import org.earthsystemmodeling.cupid.nuopc.v7bs59.SpecializationMethodCodeConcept;
 import org.earthsystemmodeling.cupid.util.CodeExtraction;
 import org.eclipse.core.resources.IResource;
-import org.eclipse.photran.core.IFortranAST;
 import org.eclipse.photran.internal.core.lexer.Token;
 import org.eclipse.photran.internal.core.parser.ASTCallStmtNode;
-import org.eclipse.photran.internal.core.parser.ASTExecutableProgramNode;
-import org.eclipse.photran.internal.core.parser.ASTListNode;
-import org.eclipse.photran.internal.core.parser.ASTModuleNameNode;
 import org.eclipse.photran.internal.core.parser.ASTModuleNode;
-import org.eclipse.photran.internal.core.parser.ASTModuleStmtNode;
 import org.eclipse.photran.internal.core.parser.ASTNode;
 import org.eclipse.photran.internal.core.parser.ASTSubroutineSubprogramNode;
-import org.eclipse.photran.internal.core.parser.ASTUseStmtNode;
 import org.eclipse.photran.internal.core.parser.IASTListNode;
 import org.eclipse.photran.internal.core.parser.IBodyConstruct;
-import org.eclipse.photran.internal.core.parser.IModuleBodyConstruct;
-import org.eclipse.photran.internal.core.parser.IProgramUnit;
 import org.eclipse.xtend2.lib.StringConcatenation;
 import org.eclipse.xtext.xbase.lib.CollectionLiterals;
 import org.eclipse.xtext.xbase.lib.Exceptions;
@@ -46,6 +36,51 @@ import org.eclipse.xtext.xbase.lib.Procedures.Procedure1;
 @Doc(urlfrag = "#model-top")
 @SuppressWarnings("all")
 public class NUOPCModel extends NUOPCComponent {
+  /**
+   * override NUOPCModel fward() {
+   * 
+   * if (name == null) throw new CodeGenerationException("No model name specified")
+   * 
+   * //create module
+   * var code =
+   * '''
+   * module «name»
+   * 
+   * use ESMF
+   * use NUOPC
+   * use NUOPC_Model, only: &
+   * model_SetServices => SetServices
+   * 
+   * implicit none
+   * 
+   * contains
+   * 
+   * end module
+   * '''
+   * 
+   * var ASTModuleNode moduleNode = parseLiteralProgramUnit(code)
+   * setASTRef(moduleNode)
+   * 
+   * var pul = new ASTListNode<IProgramUnit>()
+   * pul.add(moduleNode)
+   * getAST.root.programUnitList = pul
+   * 
+   * moduleNode.moduleBody.filter(ASTUseStmtNode).forEach[
+   * if (it.name.text.eic("ESMF")) {
+   * importESMF = new BasicCodeConcept(this, it)
+   * }
+   * else if (it.name.text.eic("NUOPC")) {
+   * importNUOPC = new BasicCodeConcept(this, it)
+   * }
+   * else if (it.name.text.eic("NUOPC_Model")) {
+   * importNUOPCGeneric = new GenericImport(this, it).reverse
+   * }
+   * ]
+   * 
+   * super.fward as NUOPCModel
+   * 
+   * }
+   */
   @Label(label = "SetServices")
   @MappingType("subroutine")
   @Doc(urlfrag = "#model-setservices")
@@ -57,6 +92,15 @@ public class NUOPCModel extends NUOPCComponent {
   
   @Label(label = "Initialize Phase Definition")
   public static abstract class IPD extends CodeConcept<NUOPCModel.InitPhases, ASTNode> {
+    /**
+     * def void setChildPhase(EntryPointCodeConcept<IPD> child) {
+     * //find field of matching type and assign child to it
+     * val childField = this.class.fields.findFirst[it.type.isInstance(child)]
+     * if (childField != null) {
+     * childField.set(this, child)
+     * }
+     * }
+     */
     @Label(label = "IPDv04p1 - Advertise Fields")
     @MappingType("subroutine")
     @Doc(urlfrag = "#model-phase-advertisefields")
@@ -70,6 +114,9 @@ public class NUOPCModel extends NUOPCComponent {
         this.phaseLabel = _phaseLabel;
         this.subroutineName = "AdvertiseFields";
         this.methodType = "ESMF_METHOD_INITIALIZE";
+        parent.setOrAddChild(this);
+        ArrayList<NUOPCModel.IPD.AdvertiseField> _newArrayList = CollectionLiterals.<NUOPCModel.IPD.AdvertiseField>newArrayList();
+        this.advertiseFields = _newArrayList;
       }
       
       public String getPhaseLabel() {
@@ -151,6 +198,9 @@ public class NUOPCModel extends NUOPCComponent {
         this.phaseLabel = _phaseLabel;
         this.subroutineName = "RealizeFieldsProvidingGrid";
         this.methodType = "ESMF_METHOD_INITIALIZE";
+        parent.setOrAddChild(this);
+        ArrayList<NUOPCModel.IPD.RealizeField> _newArrayList = CollectionLiterals.<NUOPCModel.IPD.RealizeField>newArrayList();
+        this.realizeFields = _newArrayList;
       }
       
       public String getPhaseLabel() {
@@ -220,6 +270,7 @@ public class NUOPCModel extends NUOPCComponent {
         this.phaseLabel = _phaseLabel;
         this.subroutineName = "ModifyDistGrid";
         this.methodType = "ESMF_METHOD_INITIALIZE";
+        parent.setOrAddChild(this);
       }
       
       public String getPhaseLabel() {
@@ -267,6 +318,9 @@ public class NUOPCModel extends NUOPCComponent {
         this.phaseLabel = _phaseLabel;
         this.subroutineName = "RealizeFieldsAcceptingGrid";
         this.methodType = "ESMF_METHOD_INITIALIZE";
+        parent.setOrAddChild(this);
+        ArrayList<NUOPCModel.IPD.RealizeField> _newArrayList = CollectionLiterals.<NUOPCModel.IPD.RealizeField>newArrayList();
+        this.realizeFields = _newArrayList;
       }
       
       public String getPhaseLabel() {
@@ -337,6 +391,7 @@ public class NUOPCModel extends NUOPCComponent {
         super(parent);
         this.state = this._parent.paramImport;
         this.standardName = "StandardName";
+        parent.setOrAddChild(this);
       }
       
       @Override
@@ -403,41 +458,32 @@ public class NUOPCModel extends NUOPCComponent {
        * }
        */
       @Override
-      public IFortranAST forward() {
-        IFortranAST _xblockexpression = null;
+      public CodeConcept<?, ?> fward() {
+        NUOPCModel.IPD.AdvertiseField _xblockexpression = null;
         {
-          IFortranAST ast = this.getAST();
           StringConcatenation _builder = new StringConcatenation();
           _builder.newLine();
           _builder.append("call NUOPC_Advertise(");
           CharSequence _paramch = this.paramch(this.state);
           _builder.append(_paramch, "");
-          _builder.append(", \'");
+          _builder.append(", ");
           CharSequence _paramch_1 = this.paramch(this.standardName);
           _builder.append(_paramch_1, "");
-          _builder.append("\', rc=");
+          _builder.append(", rc=");
           _builder.append(this._parent.paramRC, "");
           _builder.append(")");
           _builder.newLineIfNotEmpty();
-          _builder.append("if (ESMF_LogFoundError(rcToCheck=");
-          _builder.append(this._parent.paramRC, "");
-          _builder.append(", msg=ESMF_LOGERR_PASSTHRU, &");
+          CharSequence _ESMFErrorCheck = ESMFCodeTemplates.ESMFErrorCheck(this._parent.paramRC);
+          _builder.append(_ESMFErrorCheck, "");
           _builder.newLineIfNotEmpty();
-          _builder.append("    ");
-          _builder.append("line=__LINE__, &");
-          _builder.newLine();
-          _builder.append("    ");
-          _builder.append("file=__FILE__)) &");
-          _builder.newLine();
-          _builder.append("    ");
-          _builder.append("return  ! bail out");
-          _builder.newLine();
           String code = _builder.toString();
           final IASTListNode<IBodyConstruct> stmts = CodeExtraction.parseLiteralStatementSequence(code);
-          ASTSubroutineSubprogramNode ssn = this._parent.getASTRef();
+          final ASTSubroutineSubprogramNode ssn = this._parent.getASTRef();
           IASTListNode<IBodyConstruct> _body = ssn.getBody();
           _body.addAll(stmts);
-          _xblockexpression = ast;
+          IBodyConstruct _get = stmts.get(0);
+          this.setASTRef(((ASTCallStmtNode) _get));
+          _xblockexpression = this;
         }
         return _xblockexpression;
       }
@@ -454,6 +500,7 @@ public class NUOPCModel extends NUOPCComponent {
         super(parent);
         this.state = this._parent.paramImport;
         this.field = "field";
+        parent.setOrAddChild(this);
       }
       
       @Override
@@ -516,43 +563,37 @@ public class NUOPCModel extends NUOPCComponent {
        * }
        */
       @Override
-      public IFortranAST forward() {
-        IFortranAST _xblockexpression = null;
-        {
-          IFortranAST ast = this.getAST();
-          StringConcatenation _builder = new StringConcatenation();
-          _builder.newLine();
-          _builder.append("call NUOPC_Realize(");
-          CharSequence _paramch = this.paramch(this.state);
-          _builder.append(_paramch, "");
-          _builder.append(", field=");
-          CharSequence _paramch_1 = this.paramch(this.field);
-          _builder.append(_paramch_1, "");
-          _builder.append(", rc=");
-          _builder.append(this._parent.paramRC, "");
-          _builder.append(")");
-          _builder.newLineIfNotEmpty();
-          _builder.append("if (ESMF_LogFoundError(rcToCheck=");
-          _builder.append(this._parent.paramRC, "");
-          _builder.append(", msg=ESMF_LOGERR_PASSTHRU, &");
-          _builder.newLineIfNotEmpty();
-          _builder.append("    ");
-          _builder.append("line=__LINE__, &");
-          _builder.newLine();
-          _builder.append("    ");
-          _builder.append("file=__FILE__)) &");
-          _builder.newLine();
-          _builder.append("    ");
-          _builder.append("return  ! bail out");
-          _builder.newLine();
-          String code = _builder.toString();
-          final IASTListNode<IBodyConstruct> stmts = CodeExtraction.parseLiteralStatementSequence(code);
-          ASTSubroutineSubprogramNode ssn = this._parent.getASTRef();
-          IASTListNode<IBodyConstruct> _body = ssn.getBody();
-          _body.addAll(stmts);
-          _xblockexpression = ast;
+      public CodeConcept<?, ?> fward() {
+        try {
+          CodeConcept<?, ?> _xblockexpression = null;
+          {
+            StringConcatenation _builder = new StringConcatenation();
+            _builder.append("\t");
+            _builder.newLine();
+            _builder.append("call NUOPC_Realize(");
+            CharSequence _paramch = this.paramch(this.state);
+            _builder.append(_paramch, "");
+            _builder.append(", field=");
+            CharSequence _paramch_1 = this.paramch(this.field);
+            _builder.append(_paramch_1, "");
+            _builder.append(", rc=");
+            _builder.append(this._parent.paramRC, "");
+            _builder.append(")");
+            _builder.newLineIfNotEmpty();
+            CharSequence _ESMFErrorCheck = ESMFCodeTemplates.ESMFErrorCheck(this._parent.paramRC);
+            _builder.append(_ESMFErrorCheck, "");
+            _builder.newLineIfNotEmpty();
+            String code = _builder.toString();
+            final IASTListNode<IBodyConstruct> stmts = CodeExtraction.parseLiteralStatementSequence(code);
+            final ASTSubroutineSubprogramNode ssn = this._parent.getASTRef();
+            IASTListNode<IBodyConstruct> _body = ssn.getBody();
+            _body.addAll(stmts);
+            _xblockexpression = super.<CodeConcept<?, ?>>fward();
+          }
+          return _xblockexpression;
+        } catch (Throwable _e) {
+          throw Exceptions.sneakyThrow(_e);
         }
-        return _xblockexpression;
       }
     }
     
@@ -589,16 +630,16 @@ public class NUOPCModel extends NUOPCComponent {
       NUOPCModel.IPDv00 _xblockexpression = null;
       {
         NUOPCModel.IPD.IPDv04p1 _iPDv04p1 = new NUOPCModel.IPD.IPDv04p1(this);
-        CodeConcept<NUOPCModel.IPD, ASTSubroutineSubprogramNode> _reverse = _iPDv04p1.reverse();
+        CodeConcept<?, ?> _reverse = _iPDv04p1.reverse();
         this.ipdv00p1 = ((NUOPCModel.IPD.IPDv04p1) _reverse);
         NUOPCModel.IPD.IPDv04p3 _iPDv04p3 = new NUOPCModel.IPD.IPDv04p3(this);
-        CodeConcept<NUOPCModel.IPD, ASTSubroutineSubprogramNode> _reverse_1 = _iPDv04p3.reverse();
+        CodeConcept<?, ?> _reverse_1 = _iPDv04p3.reverse();
         this.ipdv00p2 = ((NUOPCModel.IPD.IPDv04p3) _reverse_1);
         NUOPCModel.IPD.IPDv04p6 _iPDv04p6 = new NUOPCModel.IPD.IPDv04p6(this);
-        CodeConcept<NUOPCModel.IPD, ASTNode> _reverse_2 = _iPDv04p6.reverse();
+        CodeConcept<?, ?> _reverse_2 = _iPDv04p6.<CodeConcept<?, ?>>reverse();
         this.ipdv00p3 = ((NUOPCModel.IPD.IPDv04p6) _reverse_2);
         NUOPCModel.IPD.IPDv04p7 _iPDv04p7 = new NUOPCModel.IPD.IPDv04p7(this);
-        CodeConcept<NUOPCModel.IPD, ASTNode> _reverse_3 = _iPDv04p7.reverse();
+        CodeConcept<?, ?> _reverse_3 = _iPDv04p7.<CodeConcept<?, ?>>reverse();
         this.ipdv00p4 = ((NUOPCModel.IPD.IPDv04p7) _reverse_3);
         _xblockexpression = this;
       }
@@ -638,19 +679,19 @@ public class NUOPCModel extends NUOPCComponent {
       NUOPCModel.IPDv01 _xblockexpression = null;
       {
         NUOPCModel.IPD.IPDv04p1 _iPDv04p1 = new NUOPCModel.IPD.IPDv04p1(this);
-        CodeConcept<NUOPCModel.IPD, ASTSubroutineSubprogramNode> _reverse = _iPDv04p1.reverse();
+        CodeConcept<?, ?> _reverse = _iPDv04p1.reverse();
         this.ipdv01p1 = ((NUOPCModel.IPD.IPDv04p1) _reverse);
         NUOPCModel.IPD.IPDv04p2 _iPDv04p2 = new NUOPCModel.IPD.IPDv04p2(this);
-        CodeConcept<NUOPCModel.IPD, ASTNode> _reverse_1 = _iPDv04p2.reverse();
+        CodeConcept<?, ?> _reverse_1 = _iPDv04p2.<CodeConcept<?, ?>>reverse();
         this.ipdv01p2 = ((NUOPCModel.IPD.IPDv04p2) _reverse_1);
         NUOPCModel.IPD.IPDv04p3 _iPDv04p3 = new NUOPCModel.IPD.IPDv04p3(this);
-        CodeConcept<NUOPCModel.IPD, ASTSubroutineSubprogramNode> _reverse_2 = _iPDv04p3.reverse();
+        CodeConcept<?, ?> _reverse_2 = _iPDv04p3.reverse();
         this.ipdv01p3 = ((NUOPCModel.IPD.IPDv04p3) _reverse_2);
         NUOPCModel.IPD.IPDv04p6 _iPDv04p6 = new NUOPCModel.IPD.IPDv04p6(this);
-        CodeConcept<NUOPCModel.IPD, ASTNode> _reverse_3 = _iPDv04p6.reverse();
+        CodeConcept<?, ?> _reverse_3 = _iPDv04p6.<CodeConcept<?, ?>>reverse();
         this.ipdv01p4 = ((NUOPCModel.IPD.IPDv04p6) _reverse_3);
         NUOPCModel.IPD.IPDv04p7 _iPDv04p7 = new NUOPCModel.IPD.IPDv04p7(this);
-        CodeConcept<NUOPCModel.IPD, ASTNode> _reverse_4 = _iPDv04p7.reverse();
+        CodeConcept<?, ?> _reverse_4 = _iPDv04p7.<CodeConcept<?, ?>>reverse();
         this.ipdv01p5 = ((NUOPCModel.IPD.IPDv04p7) _reverse_4);
         _xblockexpression = this;
       }
@@ -690,19 +731,19 @@ public class NUOPCModel extends NUOPCComponent {
       NUOPCModel.IPDv02 _xblockexpression = null;
       {
         NUOPCModel.IPD.IPDv04p1 _iPDv04p1 = new NUOPCModel.IPD.IPDv04p1(this);
-        CodeConcept<NUOPCModel.IPD, ASTSubroutineSubprogramNode> _reverse = _iPDv04p1.reverse();
+        CodeConcept<?, ?> _reverse = _iPDv04p1.reverse();
         this.ipdv02p1 = ((NUOPCModel.IPD.IPDv04p1) _reverse);
         NUOPCModel.IPD.IPDv04p2 _iPDv04p2 = new NUOPCModel.IPD.IPDv04p2(this);
-        CodeConcept<NUOPCModel.IPD, ASTNode> _reverse_1 = _iPDv04p2.reverse();
+        CodeConcept<?, ?> _reverse_1 = _iPDv04p2.<CodeConcept<?, ?>>reverse();
         this.ipdv02p2 = ((NUOPCModel.IPD.IPDv04p2) _reverse_1);
         NUOPCModel.IPD.IPDv04p3 _iPDv04p3 = new NUOPCModel.IPD.IPDv04p3(this);
-        CodeConcept<NUOPCModel.IPD, ASTSubroutineSubprogramNode> _reverse_2 = _iPDv04p3.reverse();
+        CodeConcept<?, ?> _reverse_2 = _iPDv04p3.reverse();
         this.ipdv02p3 = ((NUOPCModel.IPD.IPDv04p3) _reverse_2);
         NUOPCModel.IPD.IPDv04p6 _iPDv04p6 = new NUOPCModel.IPD.IPDv04p6(this);
-        CodeConcept<NUOPCModel.IPD, ASTNode> _reverse_3 = _iPDv04p6.reverse();
+        CodeConcept<?, ?> _reverse_3 = _iPDv04p6.<CodeConcept<?, ?>>reverse();
         this.ipdv02p4 = ((NUOPCModel.IPD.IPDv04p6) _reverse_3);
         NUOPCModel.IPD.IPDv04p7 _iPDv04p7 = new NUOPCModel.IPD.IPDv04p7(this);
-        CodeConcept<NUOPCModel.IPD, ASTNode> _reverse_4 = _iPDv04p7.reverse();
+        CodeConcept<?, ?> _reverse_4 = _iPDv04p7.<CodeConcept<?, ?>>reverse();
         this.ipdv02p5 = ((NUOPCModel.IPD.IPDv04p7) _reverse_4);
         _xblockexpression = this;
       }
@@ -750,25 +791,25 @@ public class NUOPCModel extends NUOPCComponent {
       NUOPCModel.IPDv03 _xblockexpression = null;
       {
         NUOPCModel.IPD.IPDv04p1 _iPDv04p1 = new NUOPCModel.IPD.IPDv04p1(this);
-        CodeConcept<NUOPCModel.IPD, ASTSubroutineSubprogramNode> _reverse = _iPDv04p1.reverse();
+        CodeConcept<?, ?> _reverse = _iPDv04p1.reverse();
         this.ipdv03p1 = ((NUOPCModel.IPD.IPDv04p1) _reverse);
         NUOPCModel.IPD.IPDv04p2 _iPDv04p2 = new NUOPCModel.IPD.IPDv04p2(this);
-        CodeConcept<NUOPCModel.IPD, ASTNode> _reverse_1 = _iPDv04p2.reverse();
+        CodeConcept<?, ?> _reverse_1 = _iPDv04p2.<CodeConcept<?, ?>>reverse();
         this.ipdv03p2 = ((NUOPCModel.IPD.IPDv04p2) _reverse_1);
         NUOPCModel.IPD.IPDv04p3 _iPDv04p3 = new NUOPCModel.IPD.IPDv04p3(this);
-        CodeConcept<NUOPCModel.IPD, ASTSubroutineSubprogramNode> _reverse_2 = _iPDv04p3.reverse();
+        CodeConcept<?, ?> _reverse_2 = _iPDv04p3.reverse();
         this.ipdv03p3 = ((NUOPCModel.IPD.IPDv04p3) _reverse_2);
         NUOPCModel.IPD.IPDv04p4 _iPDv04p4 = new NUOPCModel.IPD.IPDv04p4(this);
-        CodeConcept<NUOPCModel.IPD, ASTSubroutineSubprogramNode> _reverse_3 = _iPDv04p4.reverse();
+        CodeConcept<?, ?> _reverse_3 = _iPDv04p4.reverse();
         this.ipdv03p4 = ((NUOPCModel.IPD.IPDv04p4) _reverse_3);
         NUOPCModel.IPD.IPDv04p5 _iPDv04p5 = new NUOPCModel.IPD.IPDv04p5(this);
-        CodeConcept<NUOPCModel.IPD, ASTSubroutineSubprogramNode> _reverse_4 = _iPDv04p5.reverse();
+        CodeConcept<?, ?> _reverse_4 = _iPDv04p5.reverse();
         this.ipdv03p5 = ((NUOPCModel.IPD.IPDv04p5) _reverse_4);
         NUOPCModel.IPD.IPDv04p6 _iPDv04p6 = new NUOPCModel.IPD.IPDv04p6(this);
-        CodeConcept<NUOPCModel.IPD, ASTNode> _reverse_5 = _iPDv04p6.reverse();
+        CodeConcept<?, ?> _reverse_5 = _iPDv04p6.<CodeConcept<?, ?>>reverse();
         this.ipdv03p6 = ((NUOPCModel.IPD.IPDv04p6) _reverse_5);
         NUOPCModel.IPD.IPDv04p7 _iPDv04p7 = new NUOPCModel.IPD.IPDv04p7(this);
-        CodeConcept<NUOPCModel.IPD, ASTNode> _reverse_6 = _iPDv04p7.reverse();
+        CodeConcept<?, ?> _reverse_6 = _iPDv04p7.<CodeConcept<?, ?>>reverse();
         this.ipdv03p7 = ((NUOPCModel.IPD.IPDv04p7) _reverse_6);
         _xblockexpression = this;
       }
@@ -850,25 +891,25 @@ public class NUOPCModel extends NUOPCComponent {
       NUOPCModel.IPDv04 _xblockexpression = null;
       {
         NUOPCModel.IPD.IPDv04p1 _iPDv04p1 = new NUOPCModel.IPD.IPDv04p1(this);
-        CodeConcept<NUOPCModel.IPD, ASTSubroutineSubprogramNode> _reverse = _iPDv04p1.reverse();
+        CodeConcept<?, ?> _reverse = _iPDv04p1.reverse();
         this.ipdv04p1 = ((NUOPCModel.IPD.IPDv04p1) _reverse);
         NUOPCModel.IPD.IPDv04p2 _iPDv04p2 = new NUOPCModel.IPD.IPDv04p2(this);
-        CodeConcept<NUOPCModel.IPD, ASTNode> _reverse_1 = _iPDv04p2.reverse();
+        CodeConcept<?, ?> _reverse_1 = _iPDv04p2.<CodeConcept<?, ?>>reverse();
         this.ipdv04p2 = ((NUOPCModel.IPD.IPDv04p2) _reverse_1);
         NUOPCModel.IPD.IPDv04p3 _iPDv04p3 = new NUOPCModel.IPD.IPDv04p3(this);
-        CodeConcept<NUOPCModel.IPD, ASTSubroutineSubprogramNode> _reverse_2 = _iPDv04p3.reverse();
+        CodeConcept<?, ?> _reverse_2 = _iPDv04p3.reverse();
         this.ipdv04p3 = ((NUOPCModel.IPD.IPDv04p3) _reverse_2);
         NUOPCModel.IPD.IPDv04p4 _iPDv04p4 = new NUOPCModel.IPD.IPDv04p4(this);
-        CodeConcept<NUOPCModel.IPD, ASTSubroutineSubprogramNode> _reverse_3 = _iPDv04p4.reverse();
+        CodeConcept<?, ?> _reverse_3 = _iPDv04p4.reverse();
         this.ipdv04p4 = ((NUOPCModel.IPD.IPDv04p4) _reverse_3);
         NUOPCModel.IPD.IPDv04p5 _iPDv04p5 = new NUOPCModel.IPD.IPDv04p5(this);
-        CodeConcept<NUOPCModel.IPD, ASTSubroutineSubprogramNode> _reverse_4 = _iPDv04p5.reverse();
+        CodeConcept<?, ?> _reverse_4 = _iPDv04p5.reverse();
         this.ipdv04p5 = ((NUOPCModel.IPD.IPDv04p5) _reverse_4);
         NUOPCModel.IPD.IPDv04p6 _iPDv04p6 = new NUOPCModel.IPD.IPDv04p6(this);
-        CodeConcept<NUOPCModel.IPD, ASTNode> _reverse_5 = _iPDv04p6.reverse();
+        CodeConcept<?, ?> _reverse_5 = _iPDv04p6.<CodeConcept<?, ?>>reverse();
         this.ipdv04p6 = ((NUOPCModel.IPD.IPDv04p6) _reverse_5);
         NUOPCModel.IPD.IPDv04p7 _iPDv04p7 = new NUOPCModel.IPD.IPDv04p7(this);
-        CodeConcept<NUOPCModel.IPD, ASTNode> _reverse_6 = _iPDv04p7.reverse();
+        CodeConcept<?, ?> _reverse_6 = _iPDv04p7.<CodeConcept<?, ?>>reverse();
         this.ipdv04p7 = ((NUOPCModel.IPD.IPDv04p7) _reverse_6);
         _xblockexpression = this;
       }
@@ -919,19 +960,19 @@ public class NUOPCModel extends NUOPCComponent {
   
   @Label(label = "Phases")
   public static class InitPhases extends CodeConcept<NUOPCModel.Initialization, ASTNode> {
-    @Child
+    @Child(forward = true)
     public NUOPCModel.IPDv00 ipdv00;
     
-    @Child
+    @Child(forward = true)
     public NUOPCModel.IPDv01 ipdv01;
     
-    @Child
+    @Child(forward = true)
     public NUOPCModel.IPDv02 ipdv02;
     
-    @Child
+    @Child(forward = true)
     public NUOPCModel.IPDv03 ipdv03;
     
-    @Child
+    @Child(forward = true)
     public NUOPCModel.IPDv04 ipdv04;
     
     public InitPhases(final NUOPCModel.Initialization parent) {
@@ -939,7 +980,7 @@ public class NUOPCModel extends NUOPCComponent {
     }
     
     @Override
-    public CodeConcept<NUOPCModel.Initialization, ASTNode> reverse() {
+    public CodeConcept<?, ?> reverse() {
       NUOPCModel.InitPhases _xblockexpression = null;
       {
         NUOPCModel.IPDv00 _iPDv00 = new NUOPCModel.IPDv00(this);
@@ -999,10 +1040,10 @@ public class NUOPCModel extends NUOPCComponent {
   
   @Label(label = "Initialize")
   public static class Initialization extends CodeConcept<NUOPCModel, ASTNode> {
-    @Child
+    @Child(forward = true)
     public NUOPCModel.InitPhases initPhases;
     
-    @Child
+    @Child(forward = true)
     public NUOPCModel.InitSpecializations initSpecs;
     
     public Initialization(final NUOPCModel parent) {
@@ -1018,10 +1059,10 @@ public class NUOPCModel extends NUOPCComponent {
       NUOPCModel.Initialization _xblockexpression = null;
       {
         NUOPCModel.InitPhases _initPhases = new NUOPCModel.InitPhases(this);
-        CodeConcept<NUOPCModel.Initialization, ASTNode> _reverse = _initPhases.reverse();
+        CodeConcept<?, ?> _reverse = _initPhases.reverse();
         this.initPhases = ((NUOPCModel.InitPhases) _reverse);
         NUOPCModel.InitSpecializations _initSpecializations = new NUOPCModel.InitSpecializations(this);
-        CodeConcept<NUOPCModel.Initialization, ASTNode> _reverse_1 = _initSpecializations.reverse();
+        CodeConcept<?, ?> _reverse_1 = _initSpecializations.reverse();
         this.initSpecs = ((NUOPCModel.InitSpecializations) _reverse_1);
         _xblockexpression = this;
       }
@@ -1042,14 +1083,14 @@ public class NUOPCModel extends NUOPCComponent {
     }
     
     @Override
-    public CodeConcept<NUOPCModel.Initialization, ASTNode> reverse() {
+    public CodeConcept<?, ?> reverse() {
       NUOPCModel.InitSpecializations _xblockexpression = null;
       {
         NUOPCModel.SetClock _setClock = new NUOPCModel.SetClock(this);
-        CodeConcept<NUOPCModel.InitSpecializations, ASTSubroutineSubprogramNode> _reverse = _setClock.reverse();
+        CodeConcept<?, ?> _reverse = _setClock.reverse();
         this.setClock = ((NUOPCModel.SetClock) _reverse);
         NUOPCModel.DataInitialize _dataInitialize = new NUOPCModel.DataInitialize(this);
-        CodeConcept<NUOPCModel.InitSpecializations, ASTSubroutineSubprogramNode> _reverse_1 = _dataInitialize.reverse();
+        CodeConcept<?, ?> _reverse_1 = _dataInitialize.reverse();
         this.dataInitialize = ((NUOPCModel.DataInitialize) _reverse_1);
         _xblockexpression = this;
       }
@@ -1271,7 +1312,7 @@ public class NUOPCModel extends NUOPCComponent {
         NUOPCModel.RunPhases _reverse = _runPhases.reverse();
         this.runPhases = ((NUOPCModel.RunPhases) _reverse);
         NUOPCModel.RunSpecializations _runSpecializations = new NUOPCModel.RunSpecializations(this);
-        CodeConcept<NUOPCModel.Run, ASTNode> _reverse_1 = _runSpecializations.reverse();
+        CodeConcept<?, ?> _reverse_1 = _runSpecializations.reverse();
         this.runSpecs = ((NUOPCModel.RunSpecializations) _reverse_1);
         _xblockexpression = this;
       }
@@ -1295,7 +1336,7 @@ public class NUOPCModel extends NUOPCComponent {
     }
     
     @Override
-    public CodeConcept<NUOPCModel.Run, ASTNode> reverse() {
+    public CodeConcept<?, ?> reverse() {
       return this.reverseChildren();
     }
     
@@ -1331,7 +1372,7 @@ public class NUOPCModel extends NUOPCComponent {
       NUOPCModel.RunPhases _xblockexpression = null;
       {
         NUOPCModel.RunPhase1 _runPhase1 = new NUOPCModel.RunPhase1(this);
-        CodeConcept<NUOPCModel.RunPhases, ASTNode> _reverse = _runPhase1.reverse();
+        CodeConcept<?, ?> _reverse = _runPhase1.<CodeConcept<?, ?>>reverse();
         this.p1 = ((NUOPCModel.RunPhase1) _reverse);
         _xblockexpression = this;
       }
@@ -1450,7 +1491,7 @@ public class NUOPCModel extends NUOPCComponent {
       _builder.newLine();
       _builder.append("      ");
       _builder.append("preString=\"------>Advancing ");
-      _builder.append(this._parent._parent._parent.modelName, "      ");
+      _builder.append(this._parent._parent._parent.name, "      ");
       _builder.append(" from: \", rc=");
       _builder.append(this.paramRC, "      ");
       _builder.append(")");
@@ -1725,7 +1766,7 @@ public class NUOPCModel extends NUOPCComponent {
       NUOPCModel.FinalizePhases _xblockexpression = null;
       {
         NUOPCModel.FinalizePhase1 _finalizePhase1 = new NUOPCModel.FinalizePhase1(this);
-        CodeConcept<NUOPCModel.FinalizePhases, ASTNode> _reverse = _finalizePhase1.reverse();
+        CodeConcept<?, ?> _reverse = _finalizePhase1.<CodeConcept<?, ?>>reverse();
         this.p1 = ((NUOPCModel.FinalizePhase1) _reverse);
         _xblockexpression = this;
       }
@@ -1743,7 +1784,7 @@ public class NUOPCModel extends NUOPCComponent {
     }
     
     @Override
-    public CodeConcept<NUOPCModel.Finalize, ASTNode> reverse() {
+    public CodeConcept<?, ?> reverse() {
       return this.reverseChildren();
     }
     
@@ -1751,7 +1792,7 @@ public class NUOPCModel extends NUOPCComponent {
       NUOPCModel.FinalizeSpecializations _xblockexpression = null;
       {
         NUOPCModel.FinalizeModel _finalizeModel = new NUOPCModel.FinalizeModel(this);
-        CodeConcept<NUOPCModel.FinalizeSpecializations, ASTSubroutineSubprogramNode> _reverse = _finalizeModel.reverse();
+        CodeConcept<?, ?> _reverse = _finalizeModel.reverse();
         this.finalize = ((NUOPCModel.FinalizeModel) _reverse);
         _xblockexpression = this;
       }
@@ -1792,7 +1833,7 @@ public class NUOPCModel extends NUOPCComponent {
         NUOPCModel.FinalizePhases _reverse = _finalizePhases.reverse();
         this.finalPhases = ((NUOPCModel.FinalizePhases) _reverse);
         NUOPCModel.FinalizeSpecializations _finalizeSpecializations = new NUOPCModel.FinalizeSpecializations(this);
-        CodeConcept<NUOPCModel.Finalize, ASTNode> _reverse_1 = _finalizeSpecializations.reverse();
+        CodeConcept<?, ?> _reverse_1 = _finalizeSpecializations.reverse();
         this.finalSpecs = ((NUOPCModel.FinalizeSpecializations) _reverse_1);
         _xblockexpression = this;
       }
@@ -1863,16 +1904,10 @@ public class NUOPCModel extends NUOPCComponent {
     }
   }
   
-  public String modelName;
-  
-  public String filename;
-  
-  public String path;
-  
   @Child(forward = true)
   public NUOPCModel.SetServices setServices;
   
-  @Child
+  @Child(forward = true)
   public NUOPCModel.Initialization initialization;
   
   @Child
@@ -1881,15 +1916,8 @@ public class NUOPCModel extends NUOPCComponent {
   @Child
   public NUOPCModel.Finalize finalize;
   
-  public NUOPCModel(final CodeDBIndex codeDB) {
-    super(null);
-    this._codeDB = codeDB;
-  }
-  
   public NUOPCModel(final IResource context) {
-    super(null);
-    this._context = context;
-    this._codeDB = null;
+    super(null, context, "NUOPC_Model");
   }
   
   @Override
@@ -1899,90 +1927,8 @@ public class NUOPCModel extends NUOPCComponent {
   
   @Override
   public NUOPCModel reverse() {
-    NUOPCModel _xblockexpression = null;
-    {
-      IFortranAST ast = this.getAST();
-      ASTExecutableProgramNode _root = ast.getRoot();
-      IASTListNode<IProgramUnit> _programUnitList = null;
-      if (_root!=null) {
-        _programUnitList=_root.getProgramUnitList();
-      }
-      Iterable<ASTModuleNode> _filter = null;
-      if (_programUnitList!=null) {
-        _filter=Iterables.<ASTModuleNode>filter(_programUnitList, ASTModuleNode.class);
-      }
-      final Function1<ASTModuleNode, Boolean> _function = new Function1<ASTModuleNode, Boolean>() {
-        @Override
-        public Boolean apply(final ASTModuleNode it) {
-          IASTListNode<IModuleBodyConstruct> _moduleBody = it.getModuleBody();
-          Iterable<ASTUseStmtNode> _filter = null;
-          if (_moduleBody!=null) {
-            _filter=Iterables.<ASTUseStmtNode>filter(_moduleBody, ASTUseStmtNode.class);
-          }
-          final Function1<ASTUseStmtNode, Boolean> _function = new Function1<ASTUseStmtNode, Boolean>() {
-            @Override
-            public Boolean apply(final ASTUseStmtNode it) {
-              Token _name = it.getName();
-              String _text = _name.getText();
-              return Boolean.valueOf(ASTQuery.eic(_text, "NUOPC_Model"));
-            }
-          };
-          return Boolean.valueOf(IterableExtensions.<ASTUseStmtNode>exists(_filter, _function));
-        }
-      };
-      ASTModuleNode _findFirst = IterableExtensions.<ASTModuleNode>findFirst(_filter, _function);
-      this._astRef = _findFirst;
-      NUOPCModel _xifexpression = null;
-      boolean _notEquals = (!Objects.equal(this._astRef, null));
-      if (_notEquals) {
-        NUOPCModel _xblockexpression_1 = null;
-        {
-          ASTModuleStmtNode _moduleStmt = this._astRef.getModuleStmt();
-          ASTModuleNameNode _moduleName = _moduleStmt.getModuleName();
-          Token _moduleName_1 = _moduleName.getModuleName();
-          String _text = _moduleName_1.getText();
-          this.modelName = _text;
-          IASTListNode<IModuleBodyConstruct> _moduleBody = this._astRef.getModuleBody();
-          Iterable<ASTUseStmtNode> _filter_1 = Iterables.<ASTUseStmtNode>filter(_moduleBody, ASTUseStmtNode.class);
-          final Procedure1<ASTUseStmtNode> _function_1 = new Procedure1<ASTUseStmtNode>() {
-            @Override
-            public void apply(final ASTUseStmtNode it) {
-              Token _name = it.getName();
-              String _text = _name.getText();
-              boolean _eic = ASTQuery.eic(_text, "ESMF");
-              if (_eic) {
-                BasicCodeConcept<ASTUseStmtNode> _basicCodeConcept = new BasicCodeConcept<ASTUseStmtNode>(NUOPCModel.this, it);
-                NUOPCModel.this.importESMF = _basicCodeConcept;
-              } else {
-                Token _name_1 = it.getName();
-                String _text_1 = _name_1.getText();
-                boolean _eic_1 = ASTQuery.eic(_text_1, "NUOPC");
-                if (_eic_1) {
-                  BasicCodeConcept<ASTUseStmtNode> _basicCodeConcept_1 = new BasicCodeConcept<ASTUseStmtNode>(NUOPCModel.this, it);
-                  NUOPCModel.this.importNUOPC = _basicCodeConcept_1;
-                } else {
-                  Token _name_2 = it.getName();
-                  String _text_2 = _name_2.getText();
-                  boolean _eic_2 = ASTQuery.eic(_text_2, "NUOPC_Model");
-                  if (_eic_2) {
-                    NUOPCComponent.GenericImport _genericImport = new NUOPCComponent.GenericImport(NUOPCModel.this, it);
-                    NUOPCComponent.GenericImport _reverse = _genericImport.reverse();
-                    NUOPCModel.this.importNUOPCGeneric = _reverse;
-                  }
-                }
-              }
-            }
-          };
-          IterableExtensions.<ASTUseStmtNode>forEach(_filter_1, _function_1);
-          _xblockexpression_1 = this.reverseChildren();
-        }
-        _xifexpression = _xblockexpression_1;
-      } else {
-        _xifexpression = null;
-      }
-      _xblockexpression = _xifexpression;
-    }
-    return _xblockexpression;
+    CodeConcept<?, ?> _reverse = super.reverse();
+    return ((NUOPCModel) _reverse);
   }
   
   /**
@@ -2017,7 +1963,8 @@ public class NUOPCModel extends NUOPCComponent {
    * null
    * }
    */
-  public NUOPCModel reverseChildren() {
+  @Override
+  public NUOPCComponent reverseChildren() {
     NUOPCModel _xblockexpression = null;
     {
       NUOPCModel.SetServices _setServices = new NUOPCModel.SetServices(this);
@@ -2039,96 +1986,7 @@ public class NUOPCModel extends NUOPCComponent {
   
   @Override
   public NUOPCModel fward() {
-    try {
-      NUOPCModel _xblockexpression = null;
-      {
-        boolean _equals = Objects.equal(this.modelName, null);
-        if (_equals) {
-          throw new CodeGenerationException("No model name specified");
-        }
-        StringConcatenation _builder = new StringConcatenation();
-        _builder.append("module ");
-        _builder.append(this.modelName, "");
-        _builder.newLineIfNotEmpty();
-        _builder.append("\t");
-        _builder.newLine();
-        _builder.append("\t");
-        _builder.append("use ESMF");
-        _builder.newLine();
-        _builder.append("\t");
-        _builder.append("use NUOPC");
-        _builder.newLine();
-        _builder.append("\t");
-        _builder.append("use NUOPC_Model, only: &");
-        _builder.newLine();
-        _builder.append("\t\t");
-        _builder.append("model_SetServices => SetServices");
-        _builder.newLine();
-        _builder.append("\t\t");
-        _builder.newLine();
-        _builder.append("\t");
-        _builder.append("implicit none");
-        _builder.newLine();
-        _builder.append("\t");
-        _builder.newLine();
-        _builder.append("\t");
-        _builder.append("contains");
-        _builder.newLine();
-        _builder.append("\t");
-        _builder.newLine();
-        _builder.append("end module");
-        _builder.newLine();
-        String code = _builder.toString();
-        ASTModuleNode moduleNode = CodeExtraction.<ASTModuleNode>parseLiteralProgramUnit(code);
-        this.setASTRef(moduleNode);
-        ASTListNode<IProgramUnit> pul = new ASTListNode<IProgramUnit>();
-        pul.add(moduleNode);
-        IFortranAST _aST = this.getAST();
-        ASTExecutableProgramNode _root = _aST.getRoot();
-        _root.setProgramUnitList(pul);
-        IASTListNode<IModuleBodyConstruct> _moduleBody = moduleNode.getModuleBody();
-        Iterable<ASTUseStmtNode> _filter = Iterables.<ASTUseStmtNode>filter(_moduleBody, ASTUseStmtNode.class);
-        final Procedure1<ASTUseStmtNode> _function = new Procedure1<ASTUseStmtNode>() {
-          @Override
-          public void apply(final ASTUseStmtNode it) {
-            Token _name = it.getName();
-            String _text = _name.getText();
-            boolean _eic = ASTQuery.eic(_text, "ESMF");
-            if (_eic) {
-              BasicCodeConcept<ASTUseStmtNode> _basicCodeConcept = new BasicCodeConcept<ASTUseStmtNode>(NUOPCModel.this, it);
-              NUOPCModel.this.importESMF = _basicCodeConcept;
-            } else {
-              Token _name_1 = it.getName();
-              String _text_1 = _name_1.getText();
-              boolean _eic_1 = ASTQuery.eic(_text_1, "NUOPC");
-              if (_eic_1) {
-                BasicCodeConcept<ASTUseStmtNode> _basicCodeConcept_1 = new BasicCodeConcept<ASTUseStmtNode>(NUOPCModel.this, it);
-                NUOPCModel.this.importNUOPC = _basicCodeConcept_1;
-              } else {
-                Token _name_2 = it.getName();
-                String _text_2 = _name_2.getText();
-                boolean _eic_2 = ASTQuery.eic(_text_2, "NUOPC_Model");
-                if (_eic_2) {
-                  NUOPCComponent.GenericImport _genericImport = new NUOPCComponent.GenericImport(NUOPCModel.this, it);
-                  NUOPCComponent.GenericImport _reverse = _genericImport.reverse();
-                  NUOPCModel.this.importNUOPCGeneric = _reverse;
-                }
-              }
-            }
-          }
-        };
-        IterableExtensions.<ASTUseStmtNode>forEach(_filter, _function);
-        CodeConcept<CodeConcept<?, ?>, ASTModuleNode> _fward = super.fward();
-        _xblockexpression = ((NUOPCModel) _fward);
-      }
-      return _xblockexpression;
-    } catch (Throwable _e) {
-      throw Exceptions.sneakyThrow(_e);
-    }
-  }
-  
-  @Override
-  public String name() {
-    return (((this.modelName + " (") + this.filename) + ")");
+    CodeConcept<?, ?> _fward = super.fward();
+    return ((NUOPCModel) _fward);
   }
 }

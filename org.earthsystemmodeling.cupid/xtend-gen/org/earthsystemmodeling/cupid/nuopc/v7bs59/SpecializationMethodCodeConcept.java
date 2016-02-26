@@ -98,7 +98,7 @@ public abstract class SpecializationMethodCodeConcept<P extends CodeConcept<?, ?
   }
   
   @Override
-  public CodeConcept<P, ASTSubroutineSubprogramNode> reverse() {
+  public CodeConcept<?, ?> reverse() {
     CodeConcept<P, ASTSubroutineSubprogramNode> _xblockexpression = null;
     {
       final List lst = this.reverseMultiple();
@@ -419,9 +419,9 @@ public abstract class SpecializationMethodCodeConcept<P extends CodeConcept<?, ?
   }
   
   @Override
-  public CodeConcept<P, ASTSubroutineSubprogramNode> fward() {
+  public CodeConcept<?, ?> fward() {
     try {
-      CodeConcept<P, ASTSubroutineSubprogramNode> _xblockexpression = null;
+      CodeConcept<?, ?> _xblockexpression = null;
       {
         SetServicesCodeConcept<?> _setServices = this.setServices();
         boolean _equals = Objects.equal(_setServices, null);
@@ -517,7 +517,7 @@ public abstract class SpecializationMethodCodeConcept<P extends CodeConcept<?, ?
           IASTListNode<IBodyConstruct> _body_1 = setServicesNode.getBody();
           _body_1.add(ifNode);
         }
-        _xblockexpression = super.fward();
+        _xblockexpression = super.<CodeConcept<?, ?>>fward();
       }
       return _xblockexpression;
     } catch (Throwable _e) {

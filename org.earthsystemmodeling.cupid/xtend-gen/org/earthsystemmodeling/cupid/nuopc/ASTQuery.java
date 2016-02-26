@@ -47,11 +47,11 @@ public class ASTQuery {
     if (_findArgNodeByKeyword!=null) {
       _expr=_findArgNodeByKeyword.getExpr();
     }
-    String _string = null;
+    String _literal = null;
     if (_expr!=null) {
-      _string=_expr.toString();
+      _literal=ASTQuery.literal(_expr);
     }
-    return _string;
+    return _literal;
   }
   
   public static String litArgExprByKeyword(final IASTListNode<ASTSubroutineArgNode> nodes, final String keyword) {
@@ -60,11 +60,11 @@ public class ASTQuery {
     if (_findArgNodeByKeyword!=null) {
       _expr=_findArgNodeByKeyword.getExpr();
     }
-    String _string = null;
+    String _literal = null;
     if (_expr!=null) {
-      _string=_expr.toString();
+      _literal=ASTQuery.literal(_expr);
     }
-    return _string;
+    return _literal;
   }
   
   public static String litArgExprByIdx(final ASTCallStmtNode node, final int idx) {
@@ -77,11 +77,11 @@ public class ASTQuery {
     if (_get!=null) {
       _expr=_get.getExpr();
     }
-    String _string = null;
+    String _literal = null;
     if (_expr!=null) {
-      _string=_expr.toString();
+      _literal=ASTQuery.literal(_expr);
     }
-    return _string;
+    return _literal;
   }
   
   public static String localName(final ASTModuleNode moduleNode, final String usedModule, final String usedEntity) {

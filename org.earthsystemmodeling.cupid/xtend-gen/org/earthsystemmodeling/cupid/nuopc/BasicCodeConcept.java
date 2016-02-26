@@ -22,7 +22,7 @@ public class BasicCodeConcept<A extends IASTNode> extends CodeConcept<CodeConcep
   }
   
   @Override
-  public CodeConcept<CodeConcept<?, ?>, A> reverse() {
+  public CodeConcept<?, ?> reverse() {
     return this;
   }
   

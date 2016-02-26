@@ -5,6 +5,8 @@ import com.google.common.base.Objects;
 import java.io.InputStream;
 import java.lang.reflect.Constructor;
 import java.lang.reflect.Field;
+import java.lang.reflect.ParameterizedType;
+import java.lang.reflect.Type;
 import java.sql.ResultSet;
 import java.util.ArrayList;
 import java.util.List;
@@ -71,6 +73,11 @@ public abstract class CodeConcept<P extends CodeConcept<?, ?>, A extends IASTNod
   protected List<CodeConcept.MarkerLoc> paramMarkers;
   
   public CodeConcept(final P parent) {
+    this(parent, null);
+  }
+  
+  public CodeConcept(final P parent, final IResource context) {
+    this._context = context;
     this.init(parent);
     ArrayList<CodeConcept.MarkerLoc> _newArrayList = CollectionLiterals.<CodeConcept.MarkerLoc>newArrayList();
     this.paramMarkers = _newArrayList;
@@ -106,6 +113,74 @@ public abstract class CodeConcept<P extends CodeConcept<?, ?>, A extends IASTNod
       _xifexpression = _parentID;
     }
     return _xifexpression;
+  }
+  
+  public void setOrAddChild(final CodeConcept<?, ?> child) {
+    try {
+      List<Field> _childFields = this.getChildFields();
+      final Function1<Field, Boolean> _function = new Function1<Field, Boolean>() {
+        @Override
+        public Boolean apply(final Field it) {
+          Class<?> _type = it.getType();
+          return Boolean.valueOf(_type.isInstance(child));
+        }
+      };
+      Field childField = IterableExtensions.<Field>findFirst(_childFields, _function);
+      boolean _notEquals = (!Objects.equal(childField, null));
+      if (_notEquals) {
+        childField.set(this, child);
+      } else {
+        List<Field> _childFields_1 = this.getChildFields();
+        final Function1<Field, Boolean> _function_1 = new Function1<Field, Boolean>() {
+          @Override
+          public Boolean apply(final Field it) {
+            boolean _and = false;
+            Class<?> _type = it.getType();
+            boolean _equals = Objects.equal(_type, List.class);
+            if (!_equals) {
+              _and = false;
+            } else {
+              boolean _xblockexpression = false;
+              {
+                Type _genericType = it.getGenericType();
+                final ParameterizedType ptype = ((ParameterizedType) _genericType);
+                Type[] _actualTypeArguments = ptype.getActualTypeArguments();
+                Type _get = _actualTypeArguments[0];
+                final Class<?> clazz = ((Class<?>) _get);
+                boolean _xifexpression = false;
+                Class<? extends CodeConcept> _class = child.getClass();
+                boolean _equals_1 = Objects.equal(clazz, _class);
+                if (_equals_1) {
+                  _xifexpression = true;
+                } else {
+                  _xifexpression = false;
+                }
+                _xblockexpression = _xifexpression;
+              }
+              _and = _xblockexpression;
+            }
+            return Boolean.valueOf(_and);
+          }
+        };
+        Field _findFirst = IterableExtensions.<Field>findFirst(_childFields_1, _function_1);
+        childField = _findFirst;
+        boolean _notEquals_1 = (!Objects.equal(childField, null));
+        if (_notEquals_1) {
+          Object _get = childField.get(this);
+          final List lst = ((List) _get);
+          boolean _notEquals_2 = (!Objects.equal(lst, null));
+          if (_notEquals_2) {
+            lst.add(child);
+          } else {
+            throw new CodeGenerationException("Cannot add child to null list");
+          }
+        } else {
+          throw new CodeGenerationException("Error finding child field");
+        }
+      }
+    } catch (Throwable _e) {
+      throw Exceptions.sneakyThrow(_e);
+    }
   }
   
   /**
@@ -328,12 +403,12 @@ public abstract class CodeConcept<P extends CodeConcept<?, ?>, A extends IASTNod
     return _xifexpression;
   }
   
-  public CodeConcept<P, A> reverse() {
-    return this;
+  public <T extends CodeConcept<?, ?>> T reverse() {
+    return ((T) this);
   }
   
   public List<CodeConcept<P, A>> reverseMultiple() {
-    CodeConcept<P, A> _reverse = this.reverse();
+    CodeConcept<P, A> _reverse = this.<CodeConcept<P, A>>reverse();
     return CollectionLiterals.<CodeConcept<P, A>>newArrayList(_reverse);
   }
   
@@ -341,9 +416,9 @@ public abstract class CodeConcept<P extends CodeConcept<?, ?>, A extends IASTNod
     return null;
   }
   
-  public CodeConcept<P, A> fward() throws CodeGenerationException {
+  public <T extends CodeConcept<?, ?>> T fward() throws CodeGenerationException {
     try {
-      CodeConcept<P, A> _xblockexpression = null;
+      T _xblockexpression = null;
       {
         List<Field> _childFields = this.getChildFields();
         for (final Field field : _childFields) {
@@ -356,7 +431,7 @@ public abstract class CodeConcept<P extends CodeConcept<?, ?>, A extends IASTNod
             if (_notEquals) {
               for (int i = 0; (i < theList.size()); i++) {
                 CodeConcept<?, ?> _get_1 = theList.get(i);
-                CodeConcept<? extends CodeConcept<?, ?>, ? extends IASTNode> _fward = _get_1.fward();
+                CodeConcept<?, ?> _fward = _get_1.<CodeConcept<?, ?>>fward();
                 theList.set(i, _fward);
               }
             }
@@ -400,12 +475,12 @@ public abstract class CodeConcept<P extends CodeConcept<?, ?>, A extends IASTNod
             }
             boolean _notEquals_2 = (!Objects.equal(childConcept, null));
             if (_notEquals_2) {
-              CodeConcept<? extends CodeConcept<?, ?>, ? extends IASTNode> _fward = childConcept.fward();
+              CodeConcept<?, ?> _fward = childConcept.<CodeConcept<?, ?>>fward();
               field.set(this, _fward);
             }
           }
         }
-        _xblockexpression = this;
+        _xblockexpression = ((T) this);
       }
       return _xblockexpression;
     } catch (Throwable _e) {
@@ -551,11 +626,53 @@ public abstract class CodeConcept<P extends CodeConcept<?, ?>, A extends IASTNod
   }
   
   public CharSequence paramch(final String defaultVal) {
-    StringConcatenation _builder = new StringConcatenation();
-    _builder.append("CUPIDPARAM$CHAR$");
-    _builder.append(defaultVal, "");
-    _builder.append("$");
-    return _builder;
+    CharSequence _xifexpression = null;
+    boolean _and = false;
+    boolean _startsWith = defaultVal.startsWith("\'");
+    if (!_startsWith) {
+      _and = false;
+    } else {
+      boolean _endsWith = defaultVal.endsWith("\'");
+      _and = _endsWith;
+    }
+    if (_and) {
+      StringConcatenation _builder = new StringConcatenation();
+      _builder.append("\'CUPIDPARAM$CHAR$");
+      int _length = defaultVal.length();
+      int _minus = (_length - 1);
+      CharSequence _subSequence = defaultVal.subSequence(1, _minus);
+      String _plus = (_subSequence + "$\'");
+      _builder.append(_plus, "");
+      return _builder.toString();
+    } else {
+      CharSequence _xifexpression_1 = null;
+      boolean _and_1 = false;
+      boolean _startsWith_1 = defaultVal.startsWith("\"");
+      if (!_startsWith_1) {
+        _and_1 = false;
+      } else {
+        boolean _endsWith_1 = defaultVal.endsWith("\"");
+        _and_1 = _endsWith_1;
+      }
+      if (_and_1) {
+        StringConcatenation _builder_1 = new StringConcatenation();
+        _builder_1.append("\"CUPIDPARAM$CHAR$");
+        int _length_1 = defaultVal.length();
+        int _minus_1 = (_length_1 - 1);
+        CharSequence _subSequence_1 = defaultVal.subSequence(1, _minus_1);
+        _builder_1.append(_subSequence_1, "");
+        _builder_1.append("$\"");
+        return _builder_1.toString();
+      } else {
+        StringConcatenation _builder_2 = new StringConcatenation();
+        _builder_2.append("CUPIDPARAM$CHAR$");
+        _builder_2.append(defaultVal, "");
+        _builder_2.append("$");
+        _xifexpression_1 = _builder_2;
+      }
+      _xifexpression = _xifexpression_1;
+    }
+    return _xifexpression;
   }
   
   public CharSequence paramint(final int defaultVal) {

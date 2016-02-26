@@ -514,16 +514,16 @@ public class NUOPCMediator extends NUOPCComponent {
       NUOPCMediator.IPDv00 _xblockexpression = null;
       {
         NUOPCMediator.IPD.IPDv04p1 _iPDv04p1 = new NUOPCMediator.IPD.IPDv04p1(this);
-        CodeConcept<NUOPCMediator.IPD, ASTSubroutineSubprogramNode> _reverse = _iPDv04p1.reverse();
+        CodeConcept<?, ?> _reverse = _iPDv04p1.reverse();
         this.ipdv00p1 = ((NUOPCMediator.IPD.IPDv04p1) _reverse);
         NUOPCMediator.IPD.IPDv04p3 _iPDv04p3 = new NUOPCMediator.IPD.IPDv04p3(this);
-        CodeConcept<NUOPCMediator.IPD, ASTSubroutineSubprogramNode> _reverse_1 = _iPDv04p3.reverse();
+        CodeConcept<?, ?> _reverse_1 = _iPDv04p3.reverse();
         this.ipdv00p2 = ((NUOPCMediator.IPD.IPDv04p3) _reverse_1);
         NUOPCMediator.IPD.IPDv04p6 _iPDv04p6 = new NUOPCMediator.IPD.IPDv04p6(this);
-        CodeConcept<NUOPCMediator.IPD, ASTNode> _reverse_2 = _iPDv04p6.reverse();
+        CodeConcept<?, ?> _reverse_2 = _iPDv04p6.<CodeConcept<?, ?>>reverse();
         this.ipdv00p3 = ((NUOPCMediator.IPD.IPDv04p6) _reverse_2);
         NUOPCMediator.IPD.IPDv04p7 _iPDv04p7 = new NUOPCMediator.IPD.IPDv04p7(this);
-        CodeConcept<NUOPCMediator.IPD, ASTNode> _reverse_3 = _iPDv04p7.reverse();
+        CodeConcept<?, ?> _reverse_3 = _iPDv04p7.<CodeConcept<?, ?>>reverse();
         this.ipdv00p4 = ((NUOPCMediator.IPD.IPDv04p7) _reverse_3);
         _xblockexpression = this;
       }
@@ -562,19 +562,19 @@ public class NUOPCMediator extends NUOPCComponent {
       NUOPCMediator.IPDv01 _xblockexpression = null;
       {
         NUOPCMediator.IPD.IPDv04p1 _iPDv04p1 = new NUOPCMediator.IPD.IPDv04p1(this);
-        CodeConcept<NUOPCMediator.IPD, ASTSubroutineSubprogramNode> _reverse = _iPDv04p1.reverse();
+        CodeConcept<?, ?> _reverse = _iPDv04p1.reverse();
         this.ipdv01p1 = ((NUOPCMediator.IPD.IPDv04p1) _reverse);
         NUOPCMediator.IPD.IPDv04p2 _iPDv04p2 = new NUOPCMediator.IPD.IPDv04p2(this);
-        CodeConcept<NUOPCMediator.IPD, ASTNode> _reverse_1 = _iPDv04p2.reverse();
+        CodeConcept<?, ?> _reverse_1 = _iPDv04p2.<CodeConcept<?, ?>>reverse();
         this.ipdv01p2 = ((NUOPCMediator.IPD.IPDv04p2) _reverse_1);
         NUOPCMediator.IPD.IPDv04p3 _iPDv04p3 = new NUOPCMediator.IPD.IPDv04p3(this);
-        CodeConcept<NUOPCMediator.IPD, ASTSubroutineSubprogramNode> _reverse_2 = _iPDv04p3.reverse();
+        CodeConcept<?, ?> _reverse_2 = _iPDv04p3.reverse();
         this.ipdv01p3 = ((NUOPCMediator.IPD.IPDv04p3) _reverse_2);
         NUOPCMediator.IPD.IPDv04p6 _iPDv04p6 = new NUOPCMediator.IPD.IPDv04p6(this);
-        CodeConcept<NUOPCMediator.IPD, ASTNode> _reverse_3 = _iPDv04p6.reverse();
+        CodeConcept<?, ?> _reverse_3 = _iPDv04p6.<CodeConcept<?, ?>>reverse();
         this.ipdv01p4 = ((NUOPCMediator.IPD.IPDv04p6) _reverse_3);
         NUOPCMediator.IPD.IPDv04p7 _iPDv04p7 = new NUOPCMediator.IPD.IPDv04p7(this);
-        CodeConcept<NUOPCMediator.IPD, ASTNode> _reverse_4 = _iPDv04p7.reverse();
+        CodeConcept<?, ?> _reverse_4 = _iPDv04p7.<CodeConcept<?, ?>>reverse();
         this.ipdv01p5 = ((NUOPCMediator.IPD.IPDv04p7) _reverse_4);
         _xblockexpression = this;
       }
@@ -613,19 +613,19 @@ public class NUOPCMediator extends NUOPCComponent {
       NUOPCMediator.IPDv02 _xblockexpression = null;
       {
         NUOPCMediator.IPD.IPDv04p1 _iPDv04p1 = new NUOPCMediator.IPD.IPDv04p1(this);
-        CodeConcept<NUOPCMediator.IPD, ASTSubroutineSubprogramNode> _reverse = _iPDv04p1.reverse();
+        CodeConcept<?, ?> _reverse = _iPDv04p1.reverse();
         this.ipdv02p1 = ((NUOPCMediator.IPD.IPDv04p1) _reverse);
         NUOPCMediator.IPD.IPDv04p2 _iPDv04p2 = new NUOPCMediator.IPD.IPDv04p2(this);
-        CodeConcept<NUOPCMediator.IPD, ASTNode> _reverse_1 = _iPDv04p2.reverse();
+        CodeConcept<?, ?> _reverse_1 = _iPDv04p2.<CodeConcept<?, ?>>reverse();
         this.ipdv02p2 = ((NUOPCMediator.IPD.IPDv04p2) _reverse_1);
         NUOPCMediator.IPD.IPDv04p3 _iPDv04p3 = new NUOPCMediator.IPD.IPDv04p3(this);
-        CodeConcept<NUOPCMediator.IPD, ASTSubroutineSubprogramNode> _reverse_2 = _iPDv04p3.reverse();
+        CodeConcept<?, ?> _reverse_2 = _iPDv04p3.reverse();
         this.ipdv02p3 = ((NUOPCMediator.IPD.IPDv04p3) _reverse_2);
         NUOPCMediator.IPD.IPDv04p6 _iPDv04p6 = new NUOPCMediator.IPD.IPDv04p6(this);
-        CodeConcept<NUOPCMediator.IPD, ASTNode> _reverse_3 = _iPDv04p6.reverse();
+        CodeConcept<?, ?> _reverse_3 = _iPDv04p6.<CodeConcept<?, ?>>reverse();
         this.ipdv02p4 = ((NUOPCMediator.IPD.IPDv04p6) _reverse_3);
         NUOPCMediator.IPD.IPDv04p7 _iPDv04p7 = new NUOPCMediator.IPD.IPDv04p7(this);
-        CodeConcept<NUOPCMediator.IPD, ASTNode> _reverse_4 = _iPDv04p7.reverse();
+        CodeConcept<?, ?> _reverse_4 = _iPDv04p7.<CodeConcept<?, ?>>reverse();
         this.ipdv02p5 = ((NUOPCMediator.IPD.IPDv04p7) _reverse_4);
         _xblockexpression = this;
       }
@@ -672,25 +672,25 @@ public class NUOPCMediator extends NUOPCComponent {
       NUOPCMediator.IPDv03 _xblockexpression = null;
       {
         NUOPCMediator.IPD.IPDv04p1 _iPDv04p1 = new NUOPCMediator.IPD.IPDv04p1(this);
-        CodeConcept<NUOPCMediator.IPD, ASTSubroutineSubprogramNode> _reverse = _iPDv04p1.reverse();
+        CodeConcept<?, ?> _reverse = _iPDv04p1.reverse();
         this.ipdv03p1 = ((NUOPCMediator.IPD.IPDv04p1) _reverse);
         NUOPCMediator.IPD.IPDv04p2 _iPDv04p2 = new NUOPCMediator.IPD.IPDv04p2(this);
-        CodeConcept<NUOPCMediator.IPD, ASTNode> _reverse_1 = _iPDv04p2.reverse();
+        CodeConcept<?, ?> _reverse_1 = _iPDv04p2.<CodeConcept<?, ?>>reverse();
         this.ipdv03p2 = ((NUOPCMediator.IPD.IPDv04p2) _reverse_1);
         NUOPCMediator.IPD.IPDv04p3 _iPDv04p3 = new NUOPCMediator.IPD.IPDv04p3(this);
-        CodeConcept<NUOPCMediator.IPD, ASTSubroutineSubprogramNode> _reverse_2 = _iPDv04p3.reverse();
+        CodeConcept<?, ?> _reverse_2 = _iPDv04p3.reverse();
         this.ipdv03p3 = ((NUOPCMediator.IPD.IPDv04p3) _reverse_2);
         NUOPCMediator.IPD.IPDv04p4 _iPDv04p4 = new NUOPCMediator.IPD.IPDv04p4(this);
-        CodeConcept<NUOPCMediator.IPD, ASTSubroutineSubprogramNode> _reverse_3 = _iPDv04p4.reverse();
+        CodeConcept<?, ?> _reverse_3 = _iPDv04p4.reverse();
         this.ipdv03p4 = ((NUOPCMediator.IPD.IPDv04p4) _reverse_3);
         NUOPCMediator.IPD.IPDv04p5 _iPDv04p5 = new NUOPCMediator.IPD.IPDv04p5(this);
-        CodeConcept<NUOPCMediator.IPD, ASTSubroutineSubprogramNode> _reverse_4 = _iPDv04p5.reverse();
+        CodeConcept<?, ?> _reverse_4 = _iPDv04p5.reverse();
         this.ipdv03p5 = ((NUOPCMediator.IPD.IPDv04p5) _reverse_4);
         NUOPCMediator.IPD.IPDv04p6 _iPDv04p6 = new NUOPCMediator.IPD.IPDv04p6(this);
-        CodeConcept<NUOPCMediator.IPD, ASTNode> _reverse_5 = _iPDv04p6.reverse();
+        CodeConcept<?, ?> _reverse_5 = _iPDv04p6.<CodeConcept<?, ?>>reverse();
         this.ipdv03p6 = ((NUOPCMediator.IPD.IPDv04p6) _reverse_5);
         NUOPCMediator.IPD.IPDv04p7 _iPDv04p7 = new NUOPCMediator.IPD.IPDv04p7(this);
-        CodeConcept<NUOPCMediator.IPD, ASTNode> _reverse_6 = _iPDv04p7.reverse();
+        CodeConcept<?, ?> _reverse_6 = _iPDv04p7.<CodeConcept<?, ?>>reverse();
         this.ipdv03p7 = ((NUOPCMediator.IPD.IPDv04p7) _reverse_6);
         _xblockexpression = this;
       }
@@ -771,25 +771,25 @@ public class NUOPCMediator extends NUOPCComponent {
       NUOPCMediator.IPDv04 _xblockexpression = null;
       {
         NUOPCMediator.IPD.IPDv04p1 _iPDv04p1 = new NUOPCMediator.IPD.IPDv04p1(this);
-        CodeConcept<NUOPCMediator.IPD, ASTSubroutineSubprogramNode> _reverse = _iPDv04p1.reverse();
+        CodeConcept<?, ?> _reverse = _iPDv04p1.reverse();
         this.ipdv04p1 = ((NUOPCMediator.IPD.IPDv04p1) _reverse);
         NUOPCMediator.IPD.IPDv04p2 _iPDv04p2 = new NUOPCMediator.IPD.IPDv04p2(this);
-        CodeConcept<NUOPCMediator.IPD, ASTNode> _reverse_1 = _iPDv04p2.reverse();
+        CodeConcept<?, ?> _reverse_1 = _iPDv04p2.<CodeConcept<?, ?>>reverse();
         this.ipdv04p2 = ((NUOPCMediator.IPD.IPDv04p2) _reverse_1);
         NUOPCMediator.IPD.IPDv04p3 _iPDv04p3 = new NUOPCMediator.IPD.IPDv04p3(this);
-        CodeConcept<NUOPCMediator.IPD, ASTSubroutineSubprogramNode> _reverse_2 = _iPDv04p3.reverse();
+        CodeConcept<?, ?> _reverse_2 = _iPDv04p3.reverse();
         this.ipdv04p3 = ((NUOPCMediator.IPD.IPDv04p3) _reverse_2);
         NUOPCMediator.IPD.IPDv04p4 _iPDv04p4 = new NUOPCMediator.IPD.IPDv04p4(this);
-        CodeConcept<NUOPCMediator.IPD, ASTSubroutineSubprogramNode> _reverse_3 = _iPDv04p4.reverse();
+        CodeConcept<?, ?> _reverse_3 = _iPDv04p4.reverse();
         this.ipdv04p4 = ((NUOPCMediator.IPD.IPDv04p4) _reverse_3);
         NUOPCMediator.IPD.IPDv04p5 _iPDv04p5 = new NUOPCMediator.IPD.IPDv04p5(this);
-        CodeConcept<NUOPCMediator.IPD, ASTSubroutineSubprogramNode> _reverse_4 = _iPDv04p5.reverse();
+        CodeConcept<?, ?> _reverse_4 = _iPDv04p5.reverse();
         this.ipdv04p5 = ((NUOPCMediator.IPD.IPDv04p5) _reverse_4);
         NUOPCMediator.IPD.IPDv04p6 _iPDv04p6 = new NUOPCMediator.IPD.IPDv04p6(this);
-        CodeConcept<NUOPCMediator.IPD, ASTNode> _reverse_5 = _iPDv04p6.reverse();
+        CodeConcept<?, ?> _reverse_5 = _iPDv04p6.<CodeConcept<?, ?>>reverse();
         this.ipdv04p6 = ((NUOPCMediator.IPD.IPDv04p6) _reverse_5);
         NUOPCMediator.IPD.IPDv04p7 _iPDv04p7 = new NUOPCMediator.IPD.IPDv04p7(this);
-        CodeConcept<NUOPCMediator.IPD, ASTNode> _reverse_6 = _iPDv04p7.reverse();
+        CodeConcept<?, ?> _reverse_6 = _iPDv04p7.<CodeConcept<?, ?>>reverse();
         this.ipdv04p7 = ((NUOPCMediator.IPD.IPDv04p7) _reverse_6);
         _xblockexpression = this;
       }
@@ -860,7 +860,7 @@ public class NUOPCMediator extends NUOPCComponent {
     }
     
     @Override
-    public CodeConcept<NUOPCMediator.Initialization, ASTNode> reverse() {
+    public CodeConcept<?, ?> reverse() {
       NUOPCMediator.InitPhases _xblockexpression = null;
       {
         NUOPCMediator.IPDv00 _iPDv00 = new NUOPCMediator.IPDv00(this);
@@ -939,10 +939,10 @@ public class NUOPCMediator extends NUOPCComponent {
       NUOPCMediator.Initialization _xblockexpression = null;
       {
         NUOPCMediator.InitPhases _initPhases = new NUOPCMediator.InitPhases(this);
-        CodeConcept<NUOPCMediator.Initialization, ASTNode> _reverse = _initPhases.reverse();
+        CodeConcept<?, ?> _reverse = _initPhases.reverse();
         this.initPhases = ((NUOPCMediator.InitPhases) _reverse);
         NUOPCMediator.InitSpecializations _initSpecializations = new NUOPCMediator.InitSpecializations(this);
-        CodeConcept<NUOPCMediator.Initialization, ASTNode> _reverse_1 = _initSpecializations.reverse();
+        CodeConcept<?, ?> _reverse_1 = _initSpecializations.reverse();
         this.initSpecs = ((NUOPCMediator.InitSpecializations) _reverse_1);
         _xblockexpression = this;
       }
@@ -960,7 +960,7 @@ public class NUOPCMediator extends NUOPCComponent {
     }
     
     @Override
-    public CodeConcept<NUOPCMediator.Initialization, ASTNode> reverse() {
+    public CodeConcept<?, ?> reverse() {
       NUOPCMediator.InitSpecializations _xblockexpression = null;
       {
         NUOPCMediator.DataInitialize _dataInitialize = new NUOPCMediator.DataInitialize(this);
@@ -1121,7 +1121,7 @@ public class NUOPCMediator extends NUOPCComponent {
         NUOPCMediator.RunPhases _reverse = _runPhases.reverse();
         this.runPhases = ((NUOPCMediator.RunPhases) _reverse);
         NUOPCMediator.RunSpecializations _runSpecializations = new NUOPCMediator.RunSpecializations(this);
-        CodeConcept<NUOPCMediator.Run, ASTNode> _reverse_1 = _runSpecializations.reverse();
+        CodeConcept<?, ?> _reverse_1 = _runSpecializations.reverse();
         this.runSpecs = ((NUOPCMediator.RunSpecializations) _reverse_1);
         _xblockexpression = this;
       }
@@ -1148,7 +1148,7 @@ public class NUOPCMediator extends NUOPCComponent {
     }
     
     @Override
-    public CodeConcept<NUOPCMediator.Run, ASTNode> reverse() {
+    public CodeConcept<?, ?> reverse() {
       return this.reverseChildren();
     }
     
@@ -1187,7 +1187,7 @@ public class NUOPCMediator extends NUOPCComponent {
       NUOPCMediator.RunPhases _xblockexpression = null;
       {
         NUOPCMediator.RunPhase1 _runPhase1 = new NUOPCMediator.RunPhase1(this);
-        CodeConcept<NUOPCMediator.RunPhases, ASTNode> _reverse = _runPhase1.reverse();
+        CodeConcept<?, ?> _reverse = _runPhase1.<CodeConcept<?, ?>>reverse();
         this.p1 = ((NUOPCMediator.RunPhase1) _reverse);
         _xblockexpression = this;
       }
@@ -1709,7 +1709,7 @@ public class NUOPCMediator extends NUOPCComponent {
       NUOPCMediator.FinalizePhases _xblockexpression = null;
       {
         NUOPCMediator.FinalizePhase1 _finalizePhase1 = new NUOPCMediator.FinalizePhase1(this);
-        CodeConcept<NUOPCMediator.FinalizePhases, ASTNode> _reverse = _finalizePhase1.reverse();
+        CodeConcept<?, ?> _reverse = _finalizePhase1.<CodeConcept<?, ?>>reverse();
         this.p1 = ((NUOPCMediator.FinalizePhase1) _reverse);
         _xblockexpression = this;
       }
@@ -1727,7 +1727,7 @@ public class NUOPCMediator extends NUOPCComponent {
     }
     
     @Override
-    public CodeConcept<NUOPCMediator.Finalize, ASTNode> reverse() {
+    public CodeConcept<?, ?> reverse() {
       return this.reverseChildren();
     }
     
@@ -1775,7 +1775,7 @@ public class NUOPCMediator extends NUOPCComponent {
         NUOPCMediator.FinalizePhases _reverse = _finalizePhases.reverse();
         this.finalPhases = ((NUOPCMediator.FinalizePhases) _reverse);
         NUOPCMediator.FinalizeSpecializations _finalizeSpecializations = new NUOPCMediator.FinalizeSpecializations(this);
-        CodeConcept<NUOPCMediator.Finalize, ASTNode> _reverse_1 = _finalizeSpecializations.reverse();
+        CodeConcept<?, ?> _reverse_1 = _finalizeSpecializations.reverse();
         this.finalSpecs = ((NUOPCMediator.FinalizeSpecializations) _reverse_1);
         _xblockexpression = this;
       }
@@ -1874,7 +1874,7 @@ public class NUOPCMediator extends NUOPCComponent {
   }
   
   @Override
-  public CodeConcept<CodeConcept<?, ?>, ASTModuleNode> reverse() {
+  public CodeConcept<?, ?> reverse() {
     Object _xblockexpression = null;
     {
       StringConcatenation _builder = new StringConcatenation();
@@ -1940,7 +1940,7 @@ public class NUOPCMediator extends NUOPCComponent {
       }
       _xblockexpression = null;
     }
-    return ((CodeConcept<CodeConcept<?, ?>, ASTModuleNode>)_xblockexpression);
+    return ((CodeConcept<?, ?>)_xblockexpression);
   }
   
   public NUOPCMediator reverseChildren() {

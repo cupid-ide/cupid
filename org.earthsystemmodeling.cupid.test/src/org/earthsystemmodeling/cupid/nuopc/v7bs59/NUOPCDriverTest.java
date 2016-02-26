@@ -45,7 +45,7 @@ public class NUOPCDriverTest {
 		f.create(new ByteArrayInputStream(new byte[0]), true, new NullProgressMonitor());
 		
 		NUOPCDriver driver = new NUOPCDriver(f);
-		driver.driverName = "MyDriver";
+		driver.name = "MyDriver";
 		driver = driver.fward();
 		
 		Change chg = driver.generateChange();
@@ -55,7 +55,7 @@ public class NUOPCDriverTest {
 		driver = new NUOPCDriver(f).reverse();
 		
 		assertNotNull(driver);
-		assertEquals("MyDriver", driver.driverName);
+		assertEquals("MyDriver", driver.name);
 		assertNotNull(driver.setServices);
 		assertEquals("SetServices", driver.setServices.subroutineName);
 		assertNotNull(driver.importESMF);
@@ -72,7 +72,7 @@ public class NUOPCDriverTest {
 		
 		NUOPCDriver driver = new NUOPCDriver(f).reverse();
 		assertNotNull(driver);
-		assertEquals("ESM", driver.driverName);
+		assertEquals("ESM", driver.name);
 		assertNotNull(driver.setServices);
 		assertEquals("SetServices", driver.setServices.subroutineName);
 		assertNull(driver.initialization.initSpecs.setRunSequence);
@@ -87,7 +87,7 @@ public class NUOPCDriverTest {
 		//re-reverse
 		driver = new NUOPCDriver(f).reverse();
 		assertNotNull(driver);
-		assertEquals("ESM", driver.driverName);
+		assertEquals("ESM", driver.name);
 		assertNotNull(driver.setServices);
 		assertEquals("SetServices", driver.setServices.subroutineName);
 		assertNotNull(driver.initialization.initSpecs.setRunSequence);
@@ -103,7 +103,7 @@ public class NUOPCDriverTest {
 		//re-reverse
 		driver = new NUOPCDriver(f).reverse();
 		assertNotNull(driver);
-		assertEquals("ESM", driver.driverName);
+		assertEquals("ESM", driver.name);
 		assertNotNull(driver.setServices);
 		assertEquals("SetServices", driver.setServices.subroutineName);
 		assertNotNull(driver.initialization.initSpecs.setRunSequence);
@@ -125,7 +125,7 @@ public class NUOPCDriverTest {
 		
 		NUOPCDriver driver = new NUOPCDriver(f).reverse();
 		assertNotNull(driver);
-		assertEquals("ESM", driver.driverName);
+		assertEquals("ESM", driver.name);
 		assertNotNull(driver.setServices);
 		assertEquals("SetServices", driver.setServices.subroutineName);
 		assertNull(driver.initialization.initSpecs.setRunSequence);
@@ -149,7 +149,7 @@ public class NUOPCDriverTest {
 		//re-reverse
 		driver = new NUOPCDriver(f).reverse();
 		assertNotNull(driver);
-		assertEquals("ESM", driver.driverName);
+		assertEquals("ESM", driver.name);
 		assertNotNull(driver.setServices);
 		assertEquals("SetServices", driver.setServices.subroutineName);
 		assertNotNull(driver.initialization.initSpecs.setRunSequence);
@@ -212,7 +212,7 @@ public class NUOPCDriverTest {
 		IFile f = TestHelpers.createBlankFile(p, "NewDriver.F90"); 
 		
 		NUOPCDriver driver = new NUOPCDriver(f);
-		driver.driverName = "NewDriver";
+		driver.name = "NewDriver";
 		driver = driver.fward();  //generates basic implementation
 		
 		assertNotNull(driver.setServices);
@@ -245,7 +245,7 @@ public class NUOPCDriverTest {
 		driver = new NUOPCDriver(f).reverse();
 		
 		assertNotNull(driver);
-		assertEquals("NewDriver", driver.driverName);
+		assertEquals("NewDriver", driver.name);
 		assertNotNull(driver.setServices);
 		assertEquals("SetServices", driver.setServices.subroutineName);
 		assertNotNull(driver.importESMF);
@@ -336,7 +336,7 @@ public class NUOPCDriverTest {
 		NUOPCDriver driver = new NUOPCDriver(f);
 		driver = driver.reverse();
 		assertNotNull(driver);
-		assertEquals("ESM", driver.driverName);
+		assertEquals("ESM", driver.name);
 		assertNotNull(driver.setServices);
 		assertEquals("SetServices", driver.setServices.subroutineName);
 		assertNotNull(driver.importESMF);
@@ -349,7 +349,7 @@ public class NUOPCDriverTest {
 		f = PROJECT_NUOPC_PROTOTYPES.getFolder("AtmOcnMedPetListTimescalesProto").getFile("esm.F90");
 		driver = new NUOPCDriver(f).reverse();
 		assertNotNull(driver);
-		assertEquals("ESM", driver.driverName);
+		assertEquals("ESM", driver.name);
 		assertNotNull(driver.setServices);
 		assertEquals("SetServices", driver.setServices.subroutineName);
 		assertNotNull(driver.importESMF);

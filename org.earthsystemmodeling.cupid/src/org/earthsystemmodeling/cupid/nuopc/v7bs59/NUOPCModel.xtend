@@ -5,39 +5,32 @@ import org.earthsystemmodeling.cupid.annotation.Child
 import org.earthsystemmodeling.cupid.annotation.Doc
 import org.earthsystemmodeling.cupid.annotation.Label
 import org.earthsystemmodeling.cupid.annotation.MappingType
-import org.earthsystemmodeling.cupid.codedb.CodeDBIndex
-import org.earthsystemmodeling.cupid.nuopc.BasicCodeConcept
 import org.earthsystemmodeling.cupid.nuopc.CodeConcept
 import org.eclipse.core.resources.IResource
-import org.eclipse.photran.core.IFortranAST
 import org.eclipse.photran.internal.core.parser.ASTCallStmtNode
-import org.eclipse.photran.internal.core.parser.ASTModuleNode
 import org.eclipse.photran.internal.core.parser.ASTNode
 import org.eclipse.photran.internal.core.parser.ASTSubroutineSubprogramNode
-import org.eclipse.photran.internal.core.parser.ASTUseStmtNode
 import org.eclipse.photran.internal.core.parser.IASTListNode
 import org.eclipse.photran.internal.core.parser.IBodyConstruct
 
+import static org.earthsystemmodeling.cupid.nuopc.ESMFCodeTemplates.*
 import static org.earthsystemmodeling.cupid.util.CodeExtraction.*
 
 import static extension org.earthsystemmodeling.cupid.nuopc.ASTQuery.*
-import org.earthsystemmodeling.cupid.nuopc.CodeGenerationException
-import org.eclipse.photran.internal.core.parser.IProgramUnit
-import org.eclipse.photran.internal.core.parser.ASTListNode
 
 @Label(label="NUOPC Model")
 @MappingType("module")
 @Doc(urlfrag="#model-top")
 class NUOPCModel extends NUOPCComponent {
 
-	public String modelName
-	public String filename
-	public String path
+	//public String modelName
+	//public String filename
+	//public String path
 
 	@Child(forward=true)
 	public SetServices setServices
 	
-	@Child
+	@Child(forward=true)
 	public Initialization initialization
 
 	@Child
@@ -46,19 +39,22 @@ class NUOPCModel extends NUOPCComponent {
 	@Child
 	public Finalize finalize
 
-	new(CodeDBIndex codeDB) {
-		super(null)
-		_codeDB = codeDB
-	}
+	//new(CodeDBIndex codeDB) {
+	//	super(null)
+	//	_codeDB = codeDB
+	//}
 	
 	new(IResource context) {
-		super(null)
-		_context = context
-		_codeDB = null
+		super(null, context, "NUOPC_Model")
 	}
 
 	override prefix() { "model" }
 
+	override NUOPCModel reverse() {
+		super.reverse as NUOPCModel
+	}
+
+	/*
 	override NUOPCModel reverse() {
 		
 		var ast = getAST()
@@ -87,7 +83,10 @@ class NUOPCModel extends NUOPCComponent {
 			
 		}
 		else null
+		* 
 	}
+	* 
+	*/
 
 	/*
 	override NUOPCModel reverse() {
@@ -123,7 +122,7 @@ class NUOPCModel extends NUOPCComponent {
 	* 
 	*/
 
-	def reverseChildren() {
+	override reverseChildren() {
 		setServices = new SetServices(this).reverse as SetServices
 		initialization = new Initialization(this).reverse
 		run = new Run(this).reverse
@@ -131,15 +130,19 @@ class NUOPCModel extends NUOPCComponent {
 		this
 	}
 
+	override NUOPCModel fward() {
+		super.fward as NUOPCModel
+	}
 
+/*
 	override NUOPCModel fward() {
 				
-		if (modelName == null) throw new CodeGenerationException("No model name specified")
+		if (name == null) throw new CodeGenerationException("No model name specified")
 		
 		//create module
 		var code = 
 '''
-module «modelName»
+module «name»
 	
 	use ESMF
 	use NUOPC
@@ -175,11 +178,9 @@ end module
 		super.fward as NUOPCModel
 		
 	}
+*/
 
-
-	override name() {
-		modelName + " (" + filename + ")"
-	}
+	
 	
 	@Label(label="SetServices")
 	@MappingType("subroutine")
@@ -197,6 +198,16 @@ end module
 		new(NUOPCModel.InitPhases parent) {
 			super(parent)
 		}
+		
+		/*
+		def void setChildPhase(EntryPointCodeConcept<IPD> child) {		
+			//find field of matching type and assign child to it
+			val childField = this.class.fields.findFirst[it.type.isInstance(child)]
+			if (childField != null) {
+				childField.set(this, child)
+			}		
+		}
+		*/
 	
 		@Label(label="IPDv04p1 - Advertise Fields")
 		@MappingType("subroutine")
@@ -211,6 +222,8 @@ end module
 				phaseLabel = getPhaseLabel()
 				subroutineName = "AdvertiseFields"
 				methodType = "ESMF_METHOD_INITIALIZE"
+				parent.setOrAddChild(this)
+				advertiseFields = newArrayList()
 			}
 			
 			def getPhaseLabel() {
@@ -260,6 +273,8 @@ end module
 				phaseLabel = getPhaseLabel()
 				subroutineName = "RealizeFieldsProvidingGrid"
 				methodType = "ESMF_METHOD_INITIALIZE"
+				parent.setOrAddChild(this)
+				realizeFields = newArrayList()
 			}
 			
 			def getPhaseLabel() {
@@ -297,6 +312,7 @@ end module
 				phaseLabel = getPhaseLabel()
 				subroutineName = "ModifyDistGrid"
 				methodType = "ESMF_METHOD_INITIALIZE"
+				parent.setOrAddChild(this)
 			}
 			
 			def getPhaseLabel() {
@@ -334,6 +350,8 @@ end module
 				phaseLabel = getPhaseLabel()
 				subroutineName = "RealizeFieldsAcceptingGrid"
 				methodType = "ESMF_METHOD_INITIALIZE"
+				parent.setOrAddChild(this)
+				realizeFields = newArrayList()
 			}
 			
 			def getPhaseLabel() {
@@ -387,6 +405,7 @@ end module
 				// defaults
 				state = _parent.paramImport
 				standardName = "StandardName"
+				parent.setOrAddChild(this)
 			}
 	
 			override name() {
@@ -435,23 +454,20 @@ end module
 			}
 			*/
 			
-			override forward() {
-				var IFortranAST ast = getAST
+			override fward() {
 	
-				var code = '''
-	
-	call NUOPC_Advertise(«paramch(state)», '«paramch(standardName)»', rc=«_parent.paramRC»)
-	if (ESMF_LogFoundError(rcToCheck=«_parent.paramRC», msg=ESMF_LOGERR_PASSTHRU, &
-	    line=__LINE__, &
-	    file=__FILE__)) &
-	    return  ! bail out
-	'''
+				var code = 
+'''
+
+call NUOPC_Advertise(«paramch(state)», «paramch(standardName)», rc=«_parent.paramRC»)
+«ESMFErrorCheck(_parent.paramRC)»
+'''
 				val IASTListNode<IBodyConstruct> stmts = parseLiteralStatementSequence(code)
-				var ASTSubroutineSubprogramNode ssn = _parent.ASTRef
+				val ASTSubroutineSubprogramNode ssn = _parent.ASTRef
 	
 				ssn.body.addAll(stmts)
-				// setASTRef(stmts.get(0) as ASTCallStmtNode)
-				ast
+				setASTRef(stmts.get(0) as ASTCallStmtNode)
+				this
 			}
 	
 		}
@@ -460,78 +476,75 @@ end module
 		@MappingType("call")
 		public static class RealizeField extends CodeConcept<EntryPointCodeConcept<?>, ASTCallStmtNode> {
 
-		public String state
-		public String field
-
-		new(EntryPointCodeConcept<?> parent) {
-			super(parent)
-			// defaults
-			state = _parent.paramImport
-			field = "field"
-		}
-
-		override name() {
-			state + " / " + field
-		}
-
-		override List reverseMultiple() {
-			
-			val retList = newArrayList()
-				
-			_parent.ASTRef.body.filter(ASTCallStmtNode).filter[c|
-				c.subroutineName.eic("NUOPC_Realize")].forEach[
-					var relField = new RealizeField(_parent)
-					relField.state = it.litArgExprByIdx(0)
-					relField.field = it.litArgExprByIdx(1)
-					relField.setASTRef(it)
-					retList.add(relField)	
-				]
-			
-			retList
-			
-		}
-
-		/*
-		override List reverseMultiple() {
-			var retList = newArrayList()
-
-			var rs = '''call_(_cid, «parentID», 'NUOPC_Realize'),
-						callArgWithType(_, _cid, 1, _, _, _stateExpr),
-						callArgWithType(_, _cid, 2, _, _, _fieldExpr).'''.execQuery
-
-			while (rs.next) {
-				var relField = new RealizeField(_parent);
-				relField._id = rs.getLong("_cid")
-				relField.state = rs.getString("_stateExpr")
-				relField.field = rs.getString("_fieldExpr")
-				retList.add(relField)
+			public String state
+			public String field
+	
+			new(EntryPointCodeConcept<?> parent) {
+				super(parent)
+				// defaults
+				state = _parent.paramImport
+				field = "field"
+				parent.setOrAddChild(this)
 			}
-			rs.close
-
-			retList
-		}
-		* 
-		*/
-
-		override forward() {
-			var IFortranAST ast = getAST
-
-			var code = '''
-
-call NUOPC_Realize(«paramch(state)», field=«paramch(field)», rc=«_parent.paramRC»)
-if (ESMF_LogFoundError(rcToCheck=«_parent.paramRC», msg=ESMF_LOGERR_PASSTHRU, &
-    line=__LINE__, &
-    file=__FILE__)) &
-    return  ! bail out
+	
+			override name() {
+				state + " / " + field
+			}
+	
+			override List reverseMultiple() {
+				
+				val retList = newArrayList()
+					
+				_parent.ASTRef.body.filter(ASTCallStmtNode).filter[c|
+					c.subroutineName.eic("NUOPC_Realize")].forEach[
+						var relField = new RealizeField(_parent)
+						relField.state = it.litArgExprByIdx(0)
+						relField.field = it.litArgExprByIdx(1)
+						relField.setASTRef(it)
+						retList.add(relField)	
+					]
+				
+				retList
+				
+			}
+	
+			/*
+			override List reverseMultiple() {
+				var retList = newArrayList()
+	
+				var rs = '''call_(_cid, «parentID», 'NUOPC_Realize'),
+							callArgWithType(_, _cid, 1, _, _, _stateExpr),
+							callArgWithType(_, _cid, 2, _, _, _fieldExpr).'''.execQuery
+	
+				while (rs.next) {
+					var relField = new RealizeField(_parent);
+					relField._id = rs.getLong("_cid")
+					relField.state = rs.getString("_stateExpr")
+					relField.field = rs.getString("_fieldExpr")
+					retList.add(relField)
+				}
+				rs.close
+	
+				retList
+			}
+			* 
+			*/
+	
+			override fward() {	
+				var code = 
 '''
-			val IASTListNode<IBodyConstruct> stmts = parseLiteralStatementSequence(code)
-			var ASTSubroutineSubprogramNode ssn = _parent.ASTRef
-
-			ssn.body.addAll(stmts)
-			ast
+	
+call NUOPC_Realize(«paramch(state)», field=«paramch(field)», rc=«_parent.paramRC»)
+«ESMFErrorCheck(_parent.paramRC)»
+'''
+				val IASTListNode<IBodyConstruct> stmts = parseLiteralStatementSequence(code)
+				val ASTSubroutineSubprogramNode ssn = _parent.ASTRef
+	
+				ssn.body.addAll(stmts)
+				super.fward
+			}
+	
 		}
-
-	}
 		
 			
 
@@ -764,19 +777,19 @@ if (ESMF_LogFoundError(rcToCheck=«_parent.paramRC», msg=ESMF_LOGERR_PASSTHRU, 
 	@Label(label="Phases")
 	public static class InitPhases extends CodeConcept<Initialization, ASTNode> {
 	
-		@Child
+		@Child(forward=true)
 		public IPDv00 ipdv00
 		
-		@Child
+		@Child(forward=true)
 		public IPDv01 ipdv01
 		
-		@Child
+		@Child(forward=true)
 		public IPDv02 ipdv02
 		
-		@Child
+		@Child(forward=true)
 		public IPDv03 ipdv03
 		
-		@Child
+		@Child(forward=true)
 		public IPDv04 ipdv04
 	
 		new(Initialization parent) {
@@ -808,10 +821,10 @@ if (ESMF_LogFoundError(rcToCheck=«_parent.paramRC», msg=ESMF_LOGERR_PASSTHRU, 
 	@Label(label="Initialize")
 	public static class Initialization extends CodeConcept<NUOPCModel, ASTNode> {
 
-		@Child
+		@Child(forward=true)
 		public InitPhases initPhases
 		
-		@Child
+		@Child(forward=true)
 		public InitSpecializations initSpecs
 		
 		new(NUOPCModel parent) {
@@ -1086,7 +1099,7 @@ subroutine «subroutineName»(«paramGridComp», «paramRC»)
     ! advance the model: currTime -> currTime + timeStep
 
 	call ESMF_ClockPrint(clock, options="currTime", &
-      preString="------>Advancing «_parent._parent._parent.modelName» from: ", rc=«paramRC»)
+      preString="------>Advancing «_parent._parent._parent.name» from: ", rc=«paramRC»)
     if (ESMF_LogFoundError(rcToCheck=«paramRC», msg=ESMF_LOGERR_PASSTHRU, &
         line=__LINE__, &
         file=__FILE__)) &
