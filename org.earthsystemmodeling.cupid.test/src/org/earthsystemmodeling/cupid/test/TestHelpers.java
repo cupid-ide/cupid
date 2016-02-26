@@ -1,11 +1,16 @@
 package org.earthsystemmodeling.cupid.test;
 
+import java.io.BufferedReader;
 import java.io.ByteArrayInputStream;
 import java.io.File;
 import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.net.URL;
+import java.util.Map;
 
 import org.apache.commons.io.FileUtils;
+import org.apache.commons.io.IOUtils;
 import org.eclipse.core.resources.IFile;
 import org.eclipse.core.resources.IProject;
 import org.eclipse.core.resources.IResource;
@@ -69,6 +74,43 @@ public class TestHelpers {
 		IFile f = p.getFile(filename);
 		f.create(new ByteArrayInputStream(new byte[0]), true, new NullProgressMonitor());
 		return f;
+	}
+	
+	public static IFile copyFileIntoProject(IProject p, String filename) throws IOException, CoreException {
+		URL sourceFile = FileLocator.toFileURL(FileLocator.find(MY_BUNDLE, new Path(filename), null));	
+		File srcFile = new File(sourceFile.getFile());
+		File dstDir = p.getLocation().toFile();
+		FileUtils.copyFileToDirectory(srcFile, dstDir);
+		p.refreshLocal(IResource.DEPTH_INFINITE, new NullProgressMonitor());
+		return p.getFile(srcFile.getName());
+	}
+	
+	public static boolean compileProject(IProject p, String makeTarget) throws IOException, InterruptedException {
+		
+		ProcessBuilder pb = new ProcessBuilder("make", makeTarget);
+		Map<String, String> env = pb.environment();
+		//env.put("ESMFMKFILE", "/home/rocky/ESMF-INSTALLS/v7bs59/lib/libO/Linux.gfortran.64.openmpi.default/esmf.mk");
+		if (System.getProperty("ESMFMKFILE") != null) {
+			env.put("ESMFMKFILE", System.getProperty("ESMFMKFILE"));
+		}
+		pb.directory(p.getLocation().toFile());
+		
+		Process compileProc = pb.start();
+		
+		String stdout = IOUtils.toString(compileProc.getInputStream());
+		String stderr = IOUtils.toString(compileProc.getErrorStream());
+		compileProc.waitFor();
+		
+		if (compileProc.exitValue() != 0) {
+			System.out.println("\n\n********\nFAILED TO COMPILE GENERATED COD\n*********\n");
+			System.out.println("STDOUT:\n\n" + stdout);
+			System.out.println("\nSTDERR:\n\n" + stderr);
+			return false;
+		}
+		else {
+			return true;
+		}
+		
 	}
 	
 }

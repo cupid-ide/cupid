@@ -5,28 +5,28 @@ cache:
   directories:
   - $HOME/.m2
 
-#addons:
-#  apt:
-#    packages:
-#    - gfortran
-#    - libopenmpi-dev
-#    - openmpi-dev
+addons:
+  apt:
+    packages:
+    - gfortran
+    - libopenmpi-dev
+    - openmpi-dev
 
 before_script:
   - if [[ "$TRAVIS_OS_NAME" == "linux" ]]; then export DISPLAY=:99.0  ;fi
   - if [[ "$TRAVIS_OS_NAME" == "linux" ]]; then sh -e /etc/init.d/xvfb start  ;fi
   - if [[ "$TRAVIS_OS_NAME" == "linux" ]]; then sleep 3 ;fi
-
-#  - cd $HOME
-#  - git clone http://git.code.sf.net/p/esmf/esmf esmf
-#  - cd esmf
-#  - export ESMF_DIR=`pwd`
-#  - export ESMF_COMM=openmpi
-#  - export ESMF_COMPILER=gfortran
-#  - export ESMF_INSTALL_PREFIX=$HOME/ESMF-INSTALL
-#  - make -j4
-#  - make install
-#  - export ESMFMKFILE=$ESMF_INSTALL_PREFIX/lib/libO/Linux.gfortran.64.openmpi.default/esmf.mk
+  - cd $HOME
+  - git clone http://git.code.sf.net/p/esmf/esmf esmf
+  - cd esmf
+  - git checkout ESMF_7_0_0_beta_snapshot_59
+  - export ESMF_DIR=`pwd`
+  - export ESMF_COMM=openmpi
+  - export ESMF_COMPILER=gfortran
+  - export ESMF_INSTALL_PREFIX=$HOME/ESMF-INSTALL
+  - make -j4
+  - make install
+  - export ESMFMKFILE=$ESMF_INSTALL_PREFIX/lib/libO/Linux.gfortran.64.openmpi.default/esmf.mk
 
 matrix:
   include:

@@ -3,8 +3,14 @@ package org.earthsystemmodeling.cupid.nuopc.v7bs59;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertNull;
+import static org.junit.Assert.assertTrue;
 
+import java.io.BufferedReader;
 import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.io.OutputStream;
+import java.util.Map;
 
 import org.earthsystemmodeling.cupid.nuopc.v7bs59.NUOPCMediator.IPD.AdvertiseField;
 import org.earthsystemmodeling.cupid.nuopc.v7bs59.NUOPCMediator.IPD.IPDv04p1;
@@ -183,7 +189,7 @@ public class NUOPCMediatorTest {
 	}
 	
 	@Test
-	public void GenerateNUOPCMediatorFromScratch() throws CoreException {
+	public void GenerateNUOPCMediatorFromScratch() throws CoreException, IOException, InterruptedException {
 		IProject p = TestHelpers.createEmptyProject("GenerateNUOPCMediatorFromScratch");
 		IFile f = TestHelpers.createBlankFile(p, "MyMediator.F90"); 
 		
@@ -255,7 +261,11 @@ public class NUOPCMediatorTest {
 		assertEquals("importState", mediator.initialization.initPhases.ipdv04.ipdv04p3.realizeFields.get(0).state);
 		assertEquals("myfield2", mediator.initialization.initPhases.ipdv04.ipdv04p3.realizeFields.get(1).field);
 		assertEquals("exportState", mediator.initialization.initPhases.ipdv04.ipdv04p3.realizeFields.get(1).state);
-
+		
+		
+		///try to compile
+		TestHelpers.copyFileIntoProject(p, "workspace/Makefile");
+		assertTrue(TestHelpers.compileProject(p, "MyMediator.o"));
 	}
 	
 	

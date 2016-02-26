@@ -175,24 +175,6 @@ end module
 			this
 		}
 		
-		/*
-		def GenericImport reverseOLD() {
-			var rs = '''uses(«_id», _mid, _genericComp),
-						(usesEntity(_, «_id», 'SetServices', _newName, _) ; true).'''.execQuery
-			if (rs.next) {
-				genericComp = rs.getString("_genericComp")
-				routineSetServices = rs.getString("_newName")
-				rs.close
-				this
-			}
-			else {
-				rs.close
-				null
-			}
-		}
-		*/
-		
-		
 		
 	}
 	

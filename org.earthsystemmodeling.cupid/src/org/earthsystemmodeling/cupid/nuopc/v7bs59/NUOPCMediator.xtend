@@ -7,17 +7,16 @@ import org.earthsystemmodeling.cupid.annotation.Label
 import org.earthsystemmodeling.cupid.annotation.MappingType
 import org.earthsystemmodeling.cupid.nuopc.CodeConcept
 import org.eclipse.core.resources.IResource
-import org.eclipse.photran.core.IFortranAST
 import org.eclipse.photran.internal.core.parser.ASTCallStmtNode
 import org.eclipse.photran.internal.core.parser.ASTNode
 import org.eclipse.photran.internal.core.parser.ASTSubroutineSubprogramNode
 import org.eclipse.photran.internal.core.parser.IASTListNode
 import org.eclipse.photran.internal.core.parser.IBodyConstruct
 
-import static org.earthsystemmodeling.cupid.util.CodeExtraction.*
-import static extension org.earthsystemmodeling.cupid.nuopc.ASTQuery.*
 import static org.earthsystemmodeling.cupid.nuopc.ESMFCodeTemplates.*
+import static org.earthsystemmodeling.cupid.util.CodeExtraction.*
 
+import static extension org.earthsystemmodeling.cupid.nuopc.ASTQuery.*
 
 @Label(label="NUOPC Mediator")
 @MappingType("module")
