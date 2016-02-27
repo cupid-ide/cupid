@@ -73,7 +73,7 @@ public class TestHelpers {
 		return f;
 	}
 	
-	public static IFile copyFileIntoProject(IProject p, String filename) throws IOException, CoreException {
+	public static synchronized IFile copyFileIntoProject(IProject p, String filename) throws IOException, CoreException {
 		URL sourceFile = FileLocator.toFileURL(FileLocator.find(MY_BUNDLE, new Path(filename), null));	
 		File srcFile = new File(sourceFile.getFile());
 		File dstDir = p.getLocation().toFile();

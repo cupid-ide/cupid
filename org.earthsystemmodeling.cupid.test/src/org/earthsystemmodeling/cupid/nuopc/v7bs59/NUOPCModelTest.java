@@ -267,10 +267,9 @@ public class NUOPCModelTest {
 		assertEquals("myfield2", model.initialization.initPhases.ipdv04.ipdv04p3.realizeFields.get(1).field);
 		assertEquals("exportState", model.initialization.initPhases.ipdv04.ipdv04p3.realizeFields.get(1).state);
 
-		///try to compile
+		///compile check
 		TestHelpers.copyFileIntoProject(p, "workspace/Makefile");
-		assertTrue(TestHelpers.compileProject(p, TestHelpers.getMakefileFragmentLoc(NUOPCTest.NUOPC_TAG), "*.o"));
-		
+		assertTrue("Compile check", TestHelpers.compileProject(p, TestHelpers.getMakefileFragmentLoc(NUOPCTest.NUOPC_TAG), "*.o"));
 	}
 	
 	

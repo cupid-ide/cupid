@@ -3,6 +3,7 @@ package org.earthsystemmodeling.cupid.nuopc.v7bs59;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertNull;
+import static org.junit.Assert.assertTrue;
 
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
@@ -39,7 +40,7 @@ public class NUOPCDriverTest {
 	}
 
 	@Test
-	public void GenerateNUOPCDriverFromScratch() throws CoreException {
+	public void GenerateNUOPCDriverFromScratch() throws CoreException, IOException, InterruptedException {
 		IProject p = TestHelpers.createEmptyProject("GenerateNUOPCDriverFromScratch");
 		IFile f = p.getFile("MyDriver1.F90");
 		f.create(new ByteArrayInputStream(new byte[0]), true, new NullProgressMonitor());
@@ -61,6 +62,10 @@ public class NUOPCDriverTest {
 		assertNotNull(driver.importESMF);
 		assertNotNull(driver.importNUOPC);
 		assertNotNull(driver.importNUOPCGeneric);
+		
+		///compile check
+		TestHelpers.copyFileIntoProject(p, "workspace/Makefile");
+		assertTrue("Compile check", TestHelpers.compileProject(p, TestHelpers.getMakefileFragmentLoc(NUOPCTest.NUOPC_TAG), "*.o"));
 
 	}
 
@@ -95,7 +100,7 @@ public class NUOPCDriverTest {
 		
 		//add RunElement
 		SetRunSequence_AddRunElement srsare = new SetRunSequence_AddRunElement(driver.initialization.initSpecs.setRunSequence);
-		srsare.compLabel = "MyCompLabel";
+		srsare.compLabel = "\"MyCompLabel\"";
 		srsare.slot = "1";
 		srsare = srsare.fward();
 		srsare.generateChange().perform(NPM);
@@ -112,8 +117,11 @@ public class NUOPCDriverTest {
 		assertEquals(1, driver.initialization.initSpecs.setRunSequence.runElements.size());
 		
 		SetRunSequence_AddRunElement re = driver.initialization.initSpecs.setRunSequence.runElements.get(0);
-		assertEquals("MyCompLabel", re.compLabel);
+		assertEquals("\"MyCompLabel\"", re.compLabel);
 		assertEquals("1", re.slot);
+		
+		///compile check
+		assertTrue("Compile check", TestHelpers.compileProject(p, TestHelpers.getMakefileFragmentLoc(NUOPCTest.NUOPC_TAG), "esmApp"));
 		
 	}
 
@@ -136,12 +144,12 @@ public class NUOPCDriverTest {
 		srs.subroutineName = sname;
 		
 		SetRunSequence_AddRunElement srsare = new SetRunSequence_AddRunElement(srs);
-		srsare.compLabel = "MyCompLabel";
+		srsare.compLabel = "\"MyCompLabel\"";
 		srsare.slot = "1";
 		SetRunSequence_AddRunElement srsare2 = new SetRunSequence_AddRunElement(srs);
-		srsare2.compLabel = "AnotherCompLabel";
+		srsare2.compLabel = "\"AnotherCompLabel\"";
 		srsare2.slot = "1";
-		srsare2.phaseLabel = "ThisIsThePhase";
+		srsare2.phaseLabel = "\"ThisIsThePhase\"";
 			
 		srs = (SetRunSequence) srs.fward();
 		srs.generateChange().perform(NPM);
@@ -159,14 +167,14 @@ public class NUOPCDriverTest {
 		
 		SetRunSequence_AddRunElement re;
 		re = driver.initialization.initSpecs.setRunSequence.runElements.get(0);
-		assertEquals("MyCompLabel", re.compLabel);
+		assertEquals("\"MyCompLabel\"", re.compLabel);
 		assertEquals("1", re.slot);
 		assertNull(re.phaseLabel);
 		assertNotNull(re.getASTRef());
 		re = driver.initialization.initSpecs.setRunSequence.runElements.get(1);
-		assertEquals("AnotherCompLabel", re.compLabel);
+		assertEquals("\"AnotherCompLabel\"", re.compLabel);
 		assertEquals("1", re.slot);
-		assertEquals("ThisIsThePhase", re.phaseLabel);
+		assertEquals("\"ThisIsThePhase\"", re.phaseLabel);
 		assertNotNull(re.getASTRef());
 		
 		srs = driver.initialization.initSpecs.setRunSequence;
@@ -174,8 +182,8 @@ public class NUOPCDriverTest {
 		//add connector run sequence element
 		SetRunSequence_AddRunElement connElem = 
 				new SetRunSequence_AddRunElement(srs);
-		connElem.srcCompLabel = "ConnSrc";
-		connElem.dstCompLabel = "ConnDst";
+		connElem.srcCompLabel = "\"ConnSrc\"";
+		connElem.dstCompLabel = "\"ConnDst\"";
 		connElem.slot = "1";
 		
 		//add link slot run sequence element
@@ -193,8 +201,8 @@ public class NUOPCDriverTest {
 		assertEquals(4, driver.initialization.initSpecs.setRunSequence.runElements.size());
 		
 		re = driver.initialization.initSpecs.setRunSequence.runElements.get(2);
-		assertEquals("ConnSrc", re.srcCompLabel);
-		assertEquals("ConnDst", re.dstCompLabel);
+		assertEquals("\"ConnSrc\"", re.srcCompLabel);
+		assertEquals("\"ConnDst\"", re.dstCompLabel);
 		assertEquals("1", re.slot);
 		assertNotNull(re.getASTRef());
 		
@@ -203,10 +211,14 @@ public class NUOPCDriverTest {
 		assertEquals("2", re.linkSlot);
 		assertNotNull(re.getASTRef());
 		
+		///compile check
+		assertTrue("Compile check", TestHelpers.compileProject(p, TestHelpers.getMakefileFragmentLoc(NUOPCTest.NUOPC_TAG), "esmApp"));
+
+		
 	}
 
 	@Test
-	public void NUOPCDriverAddSetModelServices() throws CoreException {
+	public void NUOPCDriverAddSetModelServices() throws CoreException, IOException, InterruptedException {
 		
 		IProject p = TestHelpers.createEmptyProject("NUOPCDriverAddSetModelServices");
 		IFile f = TestHelpers.createBlankFile(p, "NewDriver.F90"); 
@@ -227,16 +239,16 @@ public class NUOPCDriverTest {
 		sms.subroutineName = "NewDriverSetModelServices";
 		
 		SetModelServices_AddComp smsac = new SetModelServices_AddComp(sms);
-		smsac.compLabel = "FirstComp";
+		smsac.compLabel = "\"FirstComp\"";
 		smsac.compSetServices = "FirstCompSS";
 		
 		SetModelServices_AddComp smsac2 = new SetModelServices_AddComp(sms);
-		smsac2.compLabel = "SecondComp";
+		smsac2.compLabel = "\"SecondComp\"";
 		smsac2.compSetServices = "SecondCompSS";
 		
 		SetModelServices_AddComp smsac3 = new SetModelServices_AddComp(sms);
-		smsac3.srcCompLabel = "FirstComp";
-		smsac3.dstCompLabel = "SecondComp";
+		smsac3.srcCompLabel = "\"FirstComp\"";
+		smsac3.dstCompLabel = "\"SecondComp\"";
 		smsac3.compSetServices = "cplSS";
 				
 		sms.fward();
@@ -261,22 +273,27 @@ public class NUOPCDriverTest {
 		
 		SetModelServices_AddComp ac;
 		ac = driver.initialization.initSpecs.setModelServices.addComps.get(0);
-		assertEquals("FirstComp", ac.compLabel);
+		assertEquals("\"FirstComp\"", ac.compLabel);
 		assertEquals("FirstCompSS", ac.compSetServices);
 		
 		ac = driver.initialization.initSpecs.setModelServices.addComps.get(1);
-		assertEquals("SecondComp", ac.compLabel);
+		assertEquals("\"SecondComp\"", ac.compLabel);
 		assertEquals("SecondCompSS", ac.compSetServices);
 		
 		ac = driver.initialization.initSpecs.setModelServices.addComps.get(2);
-		assertEquals("FirstComp", ac.srcCompLabel);
-		assertEquals("SecondComp", ac.dstCompLabel);
+		assertEquals("\"FirstComp\"", ac.srcCompLabel);
+		assertEquals("\"SecondComp\"", ac.dstCompLabel);
 		assertEquals("cplSS", ac.compSetServices);
+		
+		///compile check
+		//compile fails b/c of SetServices routines
+		//TestHelpers.copyFileIntoProject(p, "workspace/Makefile");
+		//assertTrue("Compile check", TestHelpers.compileProject(p, TestHelpers.getMakefileFragmentLoc(NUOPCTest.NUOPC_TAG), "*.o"));
 		
 	}
 	
 	@Test
-	public void NUOPCDriverAddModifyIPM() throws IOException, CoreException {
+	public void NUOPCDriverAddModifyIPM() throws IOException, CoreException, InterruptedException {
 		
 		IProject p = TestHelpers.createProjectFromFolder("target/ESMF_7_0_0_beta_snapshot_59/AtmOcnProto", "NUOPCDriverAddModifyIPM");
 		IFile f = p.getFile("esm.F90");
@@ -299,10 +316,12 @@ public class NUOPCDriverTest {
 		assertNotNull(driver.initialization.initSpecs.modifyInitializePhaseMap);
 		assertEquals("ModifyInitializePhaseMap", driver.initialization.initSpecs.modifyInitializePhaseMap.subroutineName);
 		
+		assertTrue("Compile check", TestHelpers.compileProject(p, TestHelpers.getMakefileFragmentLoc(NUOPCTest.NUOPC_TAG), "esmApp"));
+
 	}
 	
 	@Test
-	public void NUOPCDriverAddSetRunClock() throws IOException, CoreException {
+	public void NUOPCDriverAddSetRunClock() throws IOException, CoreException, InterruptedException {
 		
 		IProject p = TestHelpers.createProjectFromFolder("target/ESMF_7_0_0_beta_snapshot_59/AtmOcnProto", "NUOPCDriverAddSetRunClock");
 		IFile f = p.getFile("esm.F90");
@@ -325,6 +344,8 @@ public class NUOPCDriverTest {
 		assertNotNull(driver.run.runSpecs.setRunClock);
 		assertEquals("SetRunClock", driver.run.runSpecs.setRunClock.subroutineName);
 		
+		assertTrue("Compile check", TestHelpers.compileProject(p, TestHelpers.getMakefileFragmentLoc(NUOPCTest.NUOPC_TAG), "esmApp"));
+
 	}
 
 	@Test
