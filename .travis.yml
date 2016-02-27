@@ -16,21 +16,9 @@ addons:
 before_script:
   - if [[ "$TRAVIS_OS_NAME" == "linux" ]]; then export DISPLAY=:99.0  ;fi
   - if [[ "$TRAVIS_OS_NAME" == "linux" ]]; then sh -e /etc/init.d/xvfb start  ;fi
-  - if [[ "$TRAVIS_OS_NAME" == "linux" ]]; then sleep 3 ;fi
-  - if [ ! -d "$HOME/ESMF-INSTALL/lib"  ]; then $TRAVIS_BUILD_DIR/build_esmf.sh  ;fi
-  - export ESMF_INSTALL_PREFIX=$HOME/ESMF-INSTALL
+  - if [ ! -d "$HOME/ESMF-INSTALL/ESMF_7_0_0_beta_snapshot_59"  ]; then $TRAVIS_BUILD_DIR/build_esmf.sh ESMF_7_0_0_beta_snapshot_59 ;fi
+  - export ESMF_INSTALL_PREFIX=$HOME/ESMF-INSTALL/ESMF_7_0_0_beta_snapshot_59
   - export ESMFMKFILE=$ESMF_INSTALL_PREFIX/lib/libO/Linux.gfortran.64.openmpi.default/esmf.mk
-
-#  - cd $HOME
-#  - git clone http://git.code.sf.net/p/esmf/esmf esmf
-#  - cd esmf
-#  - git checkout ESMF_7_0_0_beta_snapshot_59
-#  - export ESMF_DIR=`pwd`
-#  - export ESMF_COMM=openmpi
-#  - export ESMF_COMPILER=gfortran
-#  - make -j4
-#  - make install
-
 
 matrix:
   include:

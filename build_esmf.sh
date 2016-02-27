@@ -1,13 +1,17 @@
 #!/bin/bash
+# usage:  ./build_esmf.sh <git_tag>
 
 cd $HOME
-git clone http://git.code.sf.net/p/esmf/esmf esmf
+if [ ! -d "$HOME/esmf"  ]; then 
+    git clone http://git.code.sf.net/p/esmf/esmf esmf    
+fi
 cd esmf
-git checkout ESMF_7_0_0_beta_snapshot_59
+git pull
+git checkout $1
 export ESMF_DIR=`pwd`
 export ESMF_COMM=openmpi
 export ESMF_COMPILER=gfortran
-export ESMF_INSTALL_PREFIX=$HOME/ESMF-INSTALL
-make -j4
+export ESMF_INSTALL_PREFIX=$HOME/ESMF-INSTALL/$1
+make -j8
 make install
-export ESMFMKFILE=$ESMF_INSTALL_PREFIX/lib/libO/Linux.gfortran.64.openmpi.default/esmf.mk
+
