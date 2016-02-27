@@ -35,6 +35,8 @@ import org.junit.Test;
 @SuppressWarnings("restriction")
 public class NUOPCTest {
 	
+	public static final String NUOPC_TAG = "ESMF_7_0_0_beta_snapshot_59";
+	
 	private static IProject PROJECT_NUOPC_PROTOTYPES;
 	
 	@BeforeClass

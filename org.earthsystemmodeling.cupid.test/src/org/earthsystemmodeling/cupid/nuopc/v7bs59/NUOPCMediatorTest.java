@@ -260,7 +260,7 @@ public class NUOPCMediatorTest {
 		
 		///try to compile
 		TestHelpers.copyFileIntoProject(p, "workspace/Makefile");
-		assertTrue(TestHelpers.compileProject(p, "*.o"));
+		assertTrue(TestHelpers.compileProject(p, TestHelpers.getMakefileFragmentLoc(NUOPCTest.NUOPC_TAG), "*.o"));
 	}
 	
 	

@@ -82,13 +82,14 @@ public class TestHelpers {
 		return p.getFile(srcFile.getName());
 	}
 	
-	public static boolean compileProject(IProject p, String makeTarget) throws IOException, InterruptedException {
+	public static boolean compileProject(IProject p, String ESMFMKFILE, String makeTarget) throws IOException, InterruptedException {
 		
 		ProcessBuilder pb = new ProcessBuilder("make", makeTarget);
 		Map<String, String> env = pb.environment();
-		if (System.getProperty("ESMFMKFILE") != null) {
-			env.put("ESMFMKFILE", System.getProperty("ESMFMKFILE"));
-		}
+		//if (System.getProperty("ESMFMKFILE") != null) {
+		//	env.put("ESMFMKFILE", System.getProperty("ESMFMKFILE"));
+		//}
+		env.put("ESMFMKFILE", ESMFMKFILE);
 		pb.directory(p.getLocation().toFile());
 		
 		Process compileProc = pb.start();
@@ -109,6 +110,15 @@ public class TestHelpers {
 			return true;
 		}
 		
+	}
+	
+	public static String getMakefileFragmentLoc(String esmfTag) {
+		if (System.getenv("ESMF_INSTALL_ROOT") == null) {
+			throw new RuntimeException("Environment variables ESMF_INSTALL_ROOT must be defined.");
+		}
+		else {
+			return System.getenv("ESMF_INSTALL_ROOT") + "/" + esmfTag + "/lib/libO/Linux.gfortran.64.openmpi.default/esmf.mk";
+		}
 	}
 	
 }
