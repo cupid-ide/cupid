@@ -1,8 +1,10 @@
 package org.earthsystemmodeling.cupid.nuopc.v7bs59;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertNull;
+import static org.junit.Assert.assertTrue;
 
-import java.io.ByteArrayInputStream;
 import java.io.IOException;
 
 import org.earthsystemmodeling.cupid.nuopc.v7bs59.NUOPCModel.IPD.AdvertiseField;
@@ -171,7 +173,7 @@ public class NUOPCModelTest {
 	}
 	
 	@Test
-	public void GenerateNUOPCModelFromScratch() throws CoreException {
+	public void GenerateNUOPCModelFromScratch() throws CoreException, IOException, InterruptedException {
 		IProject p = TestHelpers.createEmptyProject("GenerateNUOPCModelFromScratch");
 		IFile f = TestHelpers.createBlankFile(p, "MyModel.F90"); 
 				
@@ -265,7 +267,9 @@ public class NUOPCModelTest {
 		assertEquals("myfield2", model.initialization.initPhases.ipdv04.ipdv04p3.realizeFields.get(1).field);
 		assertEquals("exportState", model.initialization.initPhases.ipdv04.ipdv04p3.realizeFields.get(1).state);
 
-		
+		///try to compile
+		TestHelpers.copyFileIntoProject(p, "workspace/Makefile");
+		assertTrue(TestHelpers.compileProject(p, "*.o"));
 		
 	}
 	

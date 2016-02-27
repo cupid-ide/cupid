@@ -5,12 +5,7 @@ import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertTrue;
 
-import java.io.BufferedReader;
 import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.io.OutputStream;
-import java.util.Map;
 
 import org.earthsystemmodeling.cupid.nuopc.v7bs59.NUOPCMediator.IPD.AdvertiseField;
 import org.earthsystemmodeling.cupid.nuopc.v7bs59.NUOPCMediator.IPD.IPDv04p1;
@@ -265,7 +260,7 @@ public class NUOPCMediatorTest {
 		
 		///try to compile
 		TestHelpers.copyFileIntoProject(p, "workspace/Makefile");
-		assertTrue(TestHelpers.compileProject(p, "MyMediator.o"));
+		assertTrue(TestHelpers.compileProject(p, "*.o"));
 	}
 	
 	

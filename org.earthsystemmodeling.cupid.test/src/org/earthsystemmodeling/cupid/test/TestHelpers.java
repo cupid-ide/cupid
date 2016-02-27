@@ -1,11 +1,8 @@
 package org.earthsystemmodeling.cupid.test;
 
-import java.io.BufferedReader;
 import java.io.ByteArrayInputStream;
 import java.io.File;
 import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
 import java.net.URL;
 import java.util.Map;
 
@@ -89,7 +86,6 @@ public class TestHelpers {
 		
 		ProcessBuilder pb = new ProcessBuilder("make", makeTarget);
 		Map<String, String> env = pb.environment();
-		//env.put("ESMFMKFILE", "/home/rocky/ESMF-INSTALLS/v7bs59/lib/libO/Linux.gfortran.64.openmpi.default/esmf.mk");
 		if (System.getProperty("ESMFMKFILE") != null) {
 			env.put("ESMFMKFILE", System.getProperty("ESMFMKFILE"));
 		}
@@ -102,9 +98,11 @@ public class TestHelpers {
 		compileProc.waitFor();
 		
 		if (compileProc.exitValue() != 0) {
-			System.out.println("\n\n********\nFAILED TO COMPILE GENERATED COD\n*********\n");
-			System.out.println("STDOUT:\n\n" + stdout);
-			System.out.println("\nSTDERR:\n\n" + stderr);
+			System.out.println("\n\n*******************************");
+			System.out.println("FAILED TO COMPILE GENERATED CODE");
+			System.out.println("********************************");
+			System.out.println("\nSTDOUT:\n****************************\n\n" + stdout);
+			System.out.println("\nSTDERR:\n****************************\n\n" + stderr);
 			return false;
 		}
 		else {
