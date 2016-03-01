@@ -30,11 +30,13 @@
             id="org.earthsystemmodeling.cupid.commands"
             name="Cupid Commands">
       </category>
+      <!--
       <command
             categoryId="org.earthsystemmodeling.cupid.commands"
             id="org.earthsystemmodeling.cupid.populateCodeDB"
             name="Populate CodeDB">
       </command>
+      -->
       <command
             categoryId="org.earthsystemmodeling.cupid.commands"
             id="org.earthsystemmodeling.cupid.showNUOPCView"
@@ -66,11 +68,11 @@
             class="org.earthsystemmodeling.cupid.handlers.CompareHandler"
             commandId="org.earthsystemmodeling.cupid.commands.compareCommand">
       </handler>
-      -->
       <handler
             class="org.earthsystemmodeling.cupid.handlers.PopulateCodeDBHandler"
             commandId="org.earthsystemmodeling.cupid.populateCodeDB">
       </handler>
+     -->
       <handler
             class="org.earthsystemmodeling.cupid.handlers.ShowNUOPCView"
             commandId="org.earthsystemmodeling.cupid.showNUOPCView">
@@ -443,6 +445,7 @@
             id="org.earthsystemmodeling.cupid.views.NUOPCDocView"
             name="NUOPC Doc">
       </view>
+      <!--
       <category
             id="org.earthsystemmodeling.codequery"
             name="Code Query">
@@ -454,6 +457,7 @@
             id="org.earthsystemmodeling.cupid.views.CodeQueryView"
             name="Code Query View">
       </view>
+      -->
    </extension>
    <extension
          point="org.eclipse.help.contexts">

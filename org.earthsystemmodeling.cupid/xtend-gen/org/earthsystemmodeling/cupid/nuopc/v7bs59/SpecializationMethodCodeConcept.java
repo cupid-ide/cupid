@@ -2,7 +2,6 @@ package org.earthsystemmodeling.cupid.nuopc.v7bs59;
 
 import com.google.common.base.Objects;
 import com.google.common.collect.Iterables;
-import java.sql.PreparedStatement;
 import java.util.ArrayList;
 import java.util.List;
 import org.earthsystemmodeling.cupid.annotation.Child;
@@ -61,28 +60,10 @@ public abstract class SpecializationMethodCodeConcept<P extends CodeConcept<?, ?
   
   private String labelName;
   
-  private static PreparedStatement stmtRegspec = null;
-  
   public SpecializationMethodCodeConcept(final P parent, final String labelComponent, final String labelName) {
     super(parent);
     this.labelComponent = labelComponent;
     this.labelName = labelName;
-    boolean _and = false;
-    boolean _equals = Objects.equal(SpecializationMethodCodeConcept.stmtRegspec, null);
-    if (!_equals) {
-      _and = false;
-    } else {
-      boolean _notEquals = (!Objects.equal(this._codeDB, null));
-      _and = _notEquals;
-    }
-    if (_and) {
-      StringConcatenation _builder = new StringConcatenation();
-      _builder.append("SELECT * FROM esmf_regspec ");
-      _builder.newLine();
-      _builder.append("WHERE mod_id=? AND genericUse=? AND specLabelOrig=?");
-      PreparedStatement _prepareStatement = this._codeDB.prepareStatement(_builder.toString());
-      SpecializationMethodCodeConcept.stmtRegspec = _prepareStatement;
-    }
   }
   
   @Override

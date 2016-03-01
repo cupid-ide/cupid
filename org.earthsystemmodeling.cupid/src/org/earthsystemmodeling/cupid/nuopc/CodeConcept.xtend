@@ -1,15 +1,13 @@
 package org.earthsystemmodeling.cupid.nuopc;
 
-import alice.tuprolog.MalformedGoalException
 import java.lang.reflect.Constructor
 import java.lang.reflect.Field
+import java.lang.reflect.ParameterizedType
 import java.util.ArrayList
 import java.util.List
 import java.util.regex.Pattern
 import org.apache.commons.io.IOUtils
 import org.earthsystemmodeling.cupid.annotation.Child
-import org.earthsystemmodeling.cupid.codedb.CodeDBIndex
-import org.earthsystemmodeling.cupid.core.CupidActivator
 import org.eclipse.core.resources.IFile
 import org.eclipse.core.resources.IResource
 import org.eclipse.core.runtime.NullProgressMonitor
@@ -22,13 +20,12 @@ import org.eclipse.photran.internal.core.reindenter.Reindenter.Strategy
 import org.eclipse.photran.internal.core.vpg.PhotranVPG
 import org.eclipse.text.edits.ReplaceEdit
 import org.eclipse.xtend.lib.annotations.Accessors
-import java.lang.reflect.ParameterizedType
 
 public abstract class CodeConcept<P extends CodeConcept<?,?>, A extends IASTNode> {
 	
 	var public P _parent
 	var public long _id = -1
-	var protected CodeDBIndex _codeDB
+	//var protected CodeDBIndex _codeDB
 	var protected A _astRef
 	//var protected Class<A> _astClass
 	var protected IResource _context
@@ -55,7 +52,7 @@ public abstract class CodeConcept<P extends CodeConcept<?,?>, A extends IASTNode
 	
 	def init(P parent) {
 		_parent = parent
-		_codeDB = parent?._codeDB
+		//_codeDB = parent?._codeDB
 	}
 	
 	def long parentID() {
@@ -173,9 +170,9 @@ public abstract class CodeConcept<P extends CodeConcept<?,?>, A extends IASTNode
 		if (_astRef != null) {
 			_astRef
 		}
-		else if (_codeDB != null && _id >= 0) {
-			_codeDB.findASTNode(_id);
-		}
+		//else if (_codeDB != null && _id >= 0) {
+		//	_codeDB.findASTNode(_id);
+		//}
 		else {
 			null
 		}
@@ -193,10 +190,11 @@ public abstract class CodeConcept<P extends CodeConcept<?,?>, A extends IASTNode
 			_ast = PhotranVPG.instance.acquireTransientAST(_context as IFile)
 			_ast
 		}
-		else if (_id > 0)
-			_codeDB.findAST(_id)
-		else
-			_codeDB.findAST(parentID)
+		else null
+		//else if (_id > 0)
+		//	_codeDB.findAST(_id)
+		//else
+		//	_codeDB.findAST(parentID)
 	}
 		
 	def <T extends CodeConcept<?,?>> T reverse() {this as T}
@@ -327,6 +325,7 @@ public abstract class CodeConcept<P extends CodeConcept<?,?>, A extends IASTNode
 	
 	def String name() {null}
 	
+	/*
 	def execQuery(CharSequence query) {
 		if (_codeDB != null) {
 			try {
@@ -338,6 +337,7 @@ public abstract class CodeConcept<P extends CodeConcept<?,?>, A extends IASTNode
 		}
 		else null
 	}
+	*/
 	
 	override toString() {
 		'''«this.class.simpleName» : «_id»'''

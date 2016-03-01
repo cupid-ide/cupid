@@ -1,21 +1,17 @@
 package org.earthsystemmodeling.cupid.nuopc;
 
-import alice.tuprolog.MalformedGoalException;
 import com.google.common.base.Objects;
 import java.io.InputStream;
 import java.lang.reflect.Constructor;
 import java.lang.reflect.Field;
 import java.lang.reflect.ParameterizedType;
 import java.lang.reflect.Type;
-import java.sql.ResultSet;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import org.apache.commons.io.IOUtils;
 import org.earthsystemmodeling.cupid.annotation.Child;
-import org.earthsystemmodeling.cupid.codedb.CodeDBIndex;
-import org.earthsystemmodeling.cupid.core.CupidActivator;
 import org.earthsystemmodeling.cupid.nuopc.CodeGenerationException;
 import org.earthsystemmodeling.cupid.nuopc.ReverseEngineerException;
 import org.eclipse.core.resources.IFile;
@@ -57,8 +53,6 @@ public abstract class CodeConcept<P extends CodeConcept<?, ?>, A extends IASTNod
   
   public long _id = (-1);
   
-  protected CodeDBIndex _codeDB;
-  
   protected A _astRef;
   
   protected IResource _context;
@@ -83,17 +77,8 @@ public abstract class CodeConcept<P extends CodeConcept<?, ?>, A extends IASTNod
     this.paramMarkers = _newArrayList;
   }
   
-  public CodeDBIndex init(final P parent) {
-    CodeDBIndex _xblockexpression = null;
-    {
-      this._parent = parent;
-      CodeDBIndex __codeDB = null;
-      if (parent!=null) {
-        __codeDB=parent._codeDB;
-      }
-      _xblockexpression = this._codeDB = __codeDB;
-    }
-    return _xblockexpression;
+  public P init(final P parent) {
+    return this._parent = parent;
   }
   
   public long parentID() {
@@ -343,20 +328,7 @@ public abstract class CodeConcept<P extends CodeConcept<?, ?>, A extends IASTNod
     if (_notEquals) {
       _xifexpression = this._astRef;
     } else {
-      A _xifexpression_1 = null;
-      boolean _and = false;
-      boolean _notEquals_1 = (!Objects.equal(this._codeDB, null));
-      if (!_notEquals_1) {
-        _and = false;
-      } else {
-        _and = (this._id >= 0);
-      }
-      if (_and) {
-        _xifexpression_1 = this._codeDB.<A>findASTNode(this._id);
-      } else {
-        _xifexpression_1 = null;
-      }
-      _xifexpression = _xifexpression_1;
+      _xifexpression = null;
     }
     return _xifexpression;
   }
@@ -391,14 +363,7 @@ public abstract class CodeConcept<P extends CodeConcept<?, ?>, A extends IASTNod
         }
         _xifexpression_1 = _xblockexpression;
       } else {
-        IFortranAST _xifexpression_2 = null;
-        if ((this._id > 0)) {
-          _xifexpression_2 = this._codeDB.findAST(this._id);
-        } else {
-          long _parentID = this.parentID();
-          _xifexpression_2 = this._codeDB.findAST(_parentID);
-        }
-        _xifexpression_1 = _xifexpression_2;
+        _xifexpression_1 = null;
       }
       _xifexpression = _xifexpression_1;
     }
@@ -594,28 +559,19 @@ public abstract class CodeConcept<P extends CodeConcept<?, ?>, A extends IASTNod
     return null;
   }
   
-  public ResultSet execQuery(final CharSequence query) {
-    Object _xifexpression = null;
-    boolean _notEquals = (!Objects.equal(this._codeDB, null));
-    if (_notEquals) {
-      try {
-        String _string = query.toString();
-        ResultSet rs = this._codeDB.query2(_string);
-        return rs;
-      } catch (final Throwable _t) {
-        if (_t instanceof MalformedGoalException) {
-          final MalformedGoalException e = (MalformedGoalException)_t;
-          CupidActivator.log("Bad query", e);
-        } else {
-          throw Exceptions.sneakyThrow(_t);
-        }
-      }
-    } else {
-      _xifexpression = null;
-    }
-    return ((ResultSet)_xifexpression);
-  }
-  
+  /**
+   * def execQuery(CharSequence query) {
+   * if (_codeDB != null) {
+   * try {
+   * var rs = _codeDB.query2(query.toString)
+   * return rs
+   * } catch (MalformedGoalException e) {
+   * CupidActivator.log("Bad query", e)
+   * }
+   * }
+   * else null
+   * }
+   */
   @Override
   public String toString() {
     StringConcatenation _builder = new StringConcatenation();

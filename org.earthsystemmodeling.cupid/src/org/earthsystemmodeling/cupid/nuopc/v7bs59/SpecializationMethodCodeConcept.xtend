@@ -1,6 +1,5 @@
 package org.earthsystemmodeling.cupid.nuopc.v7bs59
 
-import java.sql.PreparedStatement
 import java.util.List
 import org.earthsystemmodeling.cupid.annotation.Child
 import org.earthsystemmodeling.cupid.annotation.Label
@@ -48,18 +47,20 @@ public abstract class SpecializationMethodCodeConcept<P extends CodeConcept<?,?>
 	//var Constructor<?> instanceConstructor;
 	
 	//PreparedStatement
-	static PreparedStatement stmtRegspec = null	
+	//static PreparedStatement stmtRegspec = null	
 
 	new(P parent, String labelComponent, String labelName) {
 		super(parent)
 		this.labelComponent = labelComponent
 		this.labelName = labelName
-		
+		/*
 		if (stmtRegspec == null && _codeDB != null) {
 			stmtRegspec = _codeDB.prepareStatement('''
 								SELECT * FROM esmf_regspec 
 								WHERE mod_id=? AND genericUse=? AND specLabelOrig=?''')
 		}
+		* 
+		*/
 	}
 	
 	override name() {

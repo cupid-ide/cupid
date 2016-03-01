@@ -6,7 +6,6 @@ import org.earthsystemmodeling.cupid.annotation.Doc
 import org.earthsystemmodeling.cupid.annotation.Label
 import org.earthsystemmodeling.cupid.annotation.MappingType
 import org.earthsystemmodeling.cupid.annotation.Prop
-import org.earthsystemmodeling.cupid.codedb.CodeDBIndex
 import org.earthsystemmodeling.cupid.nuopc.BasicCodeConcept
 import org.earthsystemmodeling.cupid.nuopc.CodeConcept
 import org.earthsystemmodeling.cupid.nuopc.CodeGenerationException

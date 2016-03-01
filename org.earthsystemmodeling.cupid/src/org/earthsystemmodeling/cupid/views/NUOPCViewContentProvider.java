@@ -2,7 +2,6 @@ package org.earthsystemmodeling.cupid.views;
 
 import java.lang.reflect.Field;
 import java.lang.reflect.ParameterizedType;
-import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Comparator;
@@ -13,7 +12,6 @@ import java.util.Map;
 import org.earthsystemmodeling.cupid.annotation.Child;
 import org.earthsystemmodeling.cupid.annotation.Label;
 import org.earthsystemmodeling.cupid.annotation.MappingType;
-import org.earthsystemmodeling.cupid.codedb.CodeDBIndex;
 import org.earthsystemmodeling.cupid.core.CupidActivator;
 import org.earthsystemmodeling.cupid.nuopc.CodeConcept;
 import org.earthsystemmodeling.cupid.nuopc.v7bs59.NUOPCDriver;
@@ -21,18 +19,12 @@ import org.earthsystemmodeling.cupid.nuopc.v7bs59.NUOPCMediator;
 import org.earthsystemmodeling.cupid.nuopc.v7bs59.NUOPCModel;
 import org.eclipse.core.resources.IFile;
 import org.eclipse.core.runtime.IStatus;
-import org.eclipse.core.runtime.Status;
-import org.eclipse.jface.dialogs.MessageDialog;
 import org.eclipse.jface.viewers.IStructuredContentProvider;
 import org.eclipse.jface.viewers.ITreeContentProvider;
 import org.eclipse.jface.viewers.Viewer;
-import org.eclipse.photran.core.IFortranAST;
-import org.eclipse.photran.internal.core.vpg.PhotranVPG;
 import org.eclipse.photran.internal.ui.editor.FortranEditor;
 
-import alice.tuprolog.event.OutputEvent;
 import alice.tuprolog.event.OutputListener;
-import alice.tuprolog.event.WarningEvent;
 import alice.tuprolog.event.WarningListener;
 
 @SuppressWarnings("restriction")
