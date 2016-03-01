@@ -179,6 +179,8 @@ class NUOPCDriver extends NUOPCComponent {
 				phaseLabel = getPhaseLabel()
 				subroutineName = "AdvertiseFields"
 				methodType = "ESMF_METHOD_INITIALIZE"
+				parent.setOrAddChild(this)
+				advertiseFields = newArrayList()
 			}
 			
 			def getPhaseLabel() {
@@ -316,6 +318,8 @@ end subroutine
 				phaseLabel = getPhaseLabel()
 				subroutineName = "RealizeFieldsProvidingGrid"
 				methodType = "ESMF_METHOD_INITIALIZE"
+				parent.setOrAddChild(this)
+				realizeFields = newArrayList()
 			}
 			
 			def getPhaseLabel() {
@@ -352,6 +356,7 @@ end subroutine
 				phaseLabel = getPhaseLabel()
 				subroutineName = "ModifyDistGrid"
 				methodType = "ESMF_METHOD_INITIALIZE"
+				parent.setOrAddChild(this)
 			}
 			
 			def getPhaseLabel() {
@@ -385,6 +390,7 @@ end subroutine
 				phaseLabel = getPhaseLabel()
 				subroutineName = "RealizeFieldsAcceptingGrid"
 				methodType = "ESMF_METHOD_INITIALIZE"
+				parent.setOrAddChild(this)
 			}
 			
 			def getPhaseLabel() {
@@ -435,7 +441,7 @@ end subroutine
 				// defaults
 				state = _parent.paramImport
 				standardName = "StandardName"
-				parent.advertiseFields.add(this)
+				parent.setOrAddChild(this)
 			}
 	
 			override name() {
@@ -484,24 +490,23 @@ end subroutine
 			}
 			*/
 			
-			override forward() {
-				var IFortranAST ast = getAST
+			override fward() {
 	
-				var code = '''
-	
-	call NUOPC_Advertise(«paramch(state)», '«paramch(standardName)»', rc=«_parent.paramRC»)
-	if (ESMF_LogFoundError(rcToCheck=«_parent.paramRC», msg=ESMF_LOGERR_PASSTHRU, &
-	    line=__LINE__, &
-	    file=__FILE__)) &
-	    return  ! bail out
-	'''
+				var code = 
+'''
+
+call NUOPC_Advertise(«paramch(state)», «paramch(standardName)», rc=«_parent.paramRC»)
+«ESMFErrorCheck(_parent.paramRC)»
+'''
 				val IASTListNode<IBodyConstruct> stmts = parseLiteralStatementSequence(code)
-				var ASTSubroutineSubprogramNode ssn = _parent.ASTRef
+				val ASTSubroutineSubprogramNode ssn = _parent.ASTRef
 	
 				ssn.body.addAll(stmts)
-				// setASTRef(stmts.get(0) as ASTCallStmtNode)
-				ast
+				setASTRef(stmts.get(0) as ASTCallStmtNode)
+				this
 			}
+	
+		
 	
 		}
 		
@@ -517,6 +522,7 @@ end subroutine
 			// defaults
 			state = _parent.paramImport
 			field = "field"
+			parent.setOrAddChild(this)
 		}
 
 		override name() {
@@ -562,25 +568,21 @@ end subroutine
 		* 
 		*/
 
-		override forward() {
-			var IFortranAST ast = getAST
-
-			var code = '''
-
-call NUOPC_Realize(«paramch(state)», field=«paramch(field)», rc=«_parent.paramRC»)
-if (ESMF_LogFoundError(rcToCheck=«_parent.paramRC», msg=ESMF_LOGERR_PASSTHRU, &
-    line=__LINE__, &
-    file=__FILE__)) &
-    return  ! bail out
+		override fward() {	
+				var code = 
 '''
-			val IASTListNode<IBodyConstruct> stmts = parseLiteralStatementSequence(code)
-			var ASTSubroutineSubprogramNode ssn = _parent.ASTRef
+	
+call NUOPC_Realize(«paramch(state)», field=«paramch(field)», rc=«_parent.paramRC»)
+«ESMFErrorCheck(_parent.paramRC)»
+'''
+				val IASTListNode<IBodyConstruct> stmts = parseLiteralStatementSequence(code)
+				val ASTSubroutineSubprogramNode ssn = _parent.ASTRef
+	
+				ssn.body.addAll(stmts)
+				super.fward
+			}
 
-			ssn.body.addAll(stmts)
-			ast
 		}
-
-	}
 		
 
 	}

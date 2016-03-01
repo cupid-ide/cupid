@@ -46,6 +46,7 @@ public abstract class InternalEntryPointCodeConcept<P extends CodeConcept<?, ?>>
 		
 		if (epSubroutine == null) return null
 		
+		setASTRef(epSubroutine)
 		subroutineName = epSubroutine.subroutineStmt.subroutineName.subroutineName.text
 		registration = new BasicCodeConcept<ASTCallStmtNode>(this, registrationCall)
 		paramGridComp = epSubroutine.subroutineStmt.subroutinePars.get(0).variableName.text

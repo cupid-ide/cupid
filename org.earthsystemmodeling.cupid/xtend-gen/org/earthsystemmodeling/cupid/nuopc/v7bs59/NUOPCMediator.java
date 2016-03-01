@@ -264,6 +264,8 @@ public class NUOPCMediator extends NUOPCComponent {
         this.phaseLabel = _phaseLabel;
         this.subroutineName = "RealizeFieldsAcceptingGrid";
         this.methodType = "ESMF_METHOD_INITIALIZE";
+        ArrayList<NUOPCMediator.IPD.RealizeField> _newArrayList = CollectionLiterals.<NUOPCMediator.IPD.RealizeField>newArrayList();
+        this.realizeFields = _newArrayList;
         parent.setOrAddChild(this);
       }
       

@@ -98,6 +98,7 @@ public abstract class InternalEntryPointCodeConcept<P extends CodeConcept<?, ?>>
       if (_equals_2) {
         return null;
       }
+      this.setASTRef(epSubroutine);
       ASTSubroutineStmtNode _subroutineStmt = epSubroutine.getSubroutineStmt();
       ASTSubroutineNameNode _subroutineName = _subroutineStmt.getSubroutineName();
       Token _subroutineName_1 = _subroutineName.getSubroutineName();

@@ -249,6 +249,7 @@ class NUOPCMediator extends NUOPCComponent {
 				phaseLabel = getPhaseLabel()
 				subroutineName = "RealizeFieldsAcceptingGrid"
 				methodType = "ESMF_METHOD_INITIALIZE"
+				realizeFields = newArrayList()
 				parent.setOrAddChild(this)
 			}
 			

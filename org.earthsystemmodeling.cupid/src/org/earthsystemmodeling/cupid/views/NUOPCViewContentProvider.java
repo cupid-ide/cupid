@@ -36,18 +36,19 @@ import alice.tuprolog.event.WarningEvent;
 import alice.tuprolog.event.WarningListener;
 
 @SuppressWarnings("restriction")
-class NUOPCViewContentProvider2 implements IStructuredContentProvider, ITreeContentProvider {
+class NUOPCViewContentProvider implements IStructuredContentProvider, ITreeContentProvider {
 	
 	private IFile file;
 	private FortranEditor editor;
 	
-	private CodeDBIndex codeDB = CodeDBIndex.getInstance();
+	//private CodeDBIndex codeDB = CodeDBIndex.getInstance();
 	private WarningListener warningListener;
 	private OutputListener outputListener;
 	
 	static Map<Class<?>, Field[]> fieldCache = new HashMap<Class<?>, Field[]>();
 	
-	public NUOPCViewContentProvider2() {
+	/*
+	public NUOPCViewContentProvider() {
 		
 		try {
 			codeDB.openConnection();
@@ -83,6 +84,7 @@ class NUOPCViewContentProvider2 implements IStructuredContentProvider, ITreeCont
 		}
 		
 	}
+	*/
 	
 	public boolean editorIsDirty() {
 		if (editor != null) {
@@ -99,9 +101,9 @@ class NUOPCViewContentProvider2 implements IStructuredContentProvider, ITreeCont
 			return;
 		}
 		
-		if (!codeDB.isConnected()) {
-			return;
-		}
+		//if (!codeDB.isConnected()) {
+		//	return;
+		//}
 		
 		if (newInput instanceof FortranEditor) {
 			editor = (FortranEditor) newInput;
@@ -113,47 +115,50 @@ class NUOPCViewContentProvider2 implements IStructuredContentProvider, ITreeCont
 		
 		//input = (IFile) newInput;
 			
-		long startRebuild = System.currentTimeMillis();
-		codeDB.truncateDatabase();
-		long endRebuild = System.currentTimeMillis();
+		//long startRebuild = System.currentTimeMillis();
+		//codeDB.truncateDatabase();
+		//long endRebuild = System.currentTimeMillis();
 		
-		String filename = PhotranVPG.getFilenameForIFile(file);
-		long startParse = System.currentTimeMillis();
-		//IFortranAST ast = PhotranVPG.getInstance().parse(filename);
-		PhotranVPG.getInstance().releaseAST(filename);
-		IFortranAST ast = null;
-		try {
-			ast = PhotranVPG.getInstance().acquireTransientAST(filename);
-		}
-		catch (NullPointerException npe) {
+		//String filename = PhotranVPG.getFilenameForIFile(file);
+		//long startParse = System.currentTimeMillis();
+		//PhotranVPG.getInstance().releaseAST(filename);
+		//IFortranAST ast = null;
+		//try {
+		//	ast = PhotranVPG.getInstance().acquireTransientAST(filename);
+		//}
+		//catch (NullPointerException npe) {
 			//there is a bug in PhotranVPG when opening a file directly from the SVN view
 			//because it is not a "real" Eclipse file
-			return;
-		}
-		long endParse = System.currentTimeMillis();
+		//	return;
+		//}
+		//long endParse = System.currentTimeMillis();
 		
-		long startIndex = System.currentTimeMillis();
-		if (ast != null) {
-			codeDB.indexAST(ast);
-		}
-		long endIndex = System.currentTimeMillis();
+		//long startIndex = System.currentTimeMillis();
+		//if (ast != null) {
+		//	codeDB.indexAST(ast);
+		//}
+		//long endIndex = System.currentTimeMillis();
 		
-		if (CupidActivator.getDefault().isDebugging()) {
-			CupidActivator.log(IStatus.INFO, "Rebuild DB time: " + (endRebuild-startRebuild));
-			CupidActivator.log(IStatus.INFO, "Parse time: " + (endParse-startParse));
-			CupidActivator.log(IStatus.INFO, "Index DB time: " + (endIndex-startIndex));
-		}
+		//if (CupidActivator.getDefault().isDebugging()) {
+		//	CupidActivator.log(IStatus.INFO, "Rebuild DB time: " + (endRebuild-startRebuild));
+		//	CupidActivator.log(IStatus.INFO, "Parse time: " + (endParse-startParse));
+		//	CupidActivator.log(IStatus.INFO, "Index DB time: " + (endIndex-startIndex));
+		//}
 		
 	}
-		
+	
+	
 	public void dispose() {
+		/*
 		if (warningListener != null && codeDB != null) {
 			codeDB.getProlog().removeWarningListener(warningListener);
 		}
 		if (outputListener != null && codeDB != null) {
 			codeDB.getProlog().removeOutputListener(outputListener);
 		}
+		*/
 	}
+	
 	
 	public Object[] getElements(Object parent) {	
 		
@@ -175,7 +180,7 @@ class NUOPCViewContentProvider2 implements IStructuredContentProvider, ITreeCont
 		long endIndex = System.currentTimeMillis();
 		
 		if (CupidActivator.getDefault().isDebugging()) {
-			CupidActivator.log(IStatus.INFO, "Code query time: " + (endIndex-startIndex));
+			CupidActivator.log(IStatus.INFO, "Time to reverse engineer: " + (endIndex-startIndex));
 		}
 		
 		if (codeConcept != null) {

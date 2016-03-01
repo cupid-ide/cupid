@@ -68,6 +68,9 @@ public class NUOPCDriver extends NUOPCComponent {
         this.phaseLabel = _phaseLabel;
         this.subroutineName = "AdvertiseFields";
         this.methodType = "ESMF_METHOD_INITIALIZE";
+        parent.setOrAddChild(this);
+        ArrayList<NUOPCDriver.IPD.AdvertiseField> _newArrayList = CollectionLiterals.<NUOPCDriver.IPD.AdvertiseField>newArrayList();
+        this.advertiseFields = _newArrayList;
       }
       
       public String getPhaseLabel() {
@@ -382,6 +385,9 @@ public class NUOPCDriver extends NUOPCComponent {
         this.phaseLabel = _phaseLabel;
         this.subroutineName = "RealizeFieldsProvidingGrid";
         this.methodType = "ESMF_METHOD_INITIALIZE";
+        parent.setOrAddChild(this);
+        ArrayList<NUOPCDriver.IPD.RealizeField> _newArrayList = CollectionLiterals.<NUOPCDriver.IPD.RealizeField>newArrayList();
+        this.realizeFields = _newArrayList;
       }
       
       public String getPhaseLabel() {
@@ -450,6 +456,7 @@ public class NUOPCDriver extends NUOPCComponent {
         this.phaseLabel = _phaseLabel;
         this.subroutineName = "ModifyDistGrid";
         this.methodType = "ESMF_METHOD_INITIALIZE";
+        parent.setOrAddChild(this);
       }
       
       public String getPhaseLabel() {
@@ -493,6 +500,7 @@ public class NUOPCDriver extends NUOPCComponent {
         this.phaseLabel = _phaseLabel;
         this.subroutineName = "RealizeFieldsAcceptingGrid";
         this.methodType = "ESMF_METHOD_INITIALIZE";
+        parent.setOrAddChild(this);
       }
       
       public String getPhaseLabel() {
@@ -554,7 +562,7 @@ public class NUOPCDriver extends NUOPCComponent {
         super(parent);
         this.state = this._parent.paramImport;
         this.standardName = "StandardName";
-        parent.advertiseFields.add(this);
+        parent.setOrAddChild(this);
       }
       
       @Override
@@ -621,41 +629,32 @@ public class NUOPCDriver extends NUOPCComponent {
        * }
        */
       @Override
-      public IFortranAST forward() {
-        IFortranAST _xblockexpression = null;
+      public CodeConcept<?, ?> fward() {
+        NUOPCDriver.IPD.AdvertiseField _xblockexpression = null;
         {
-          IFortranAST ast = this.getAST();
           StringConcatenation _builder = new StringConcatenation();
           _builder.newLine();
           _builder.append("call NUOPC_Advertise(");
           CharSequence _paramch = this.paramch(this.state);
           _builder.append(_paramch, "");
-          _builder.append(", \'");
+          _builder.append(", ");
           CharSequence _paramch_1 = this.paramch(this.standardName);
           _builder.append(_paramch_1, "");
-          _builder.append("\', rc=");
+          _builder.append(", rc=");
           _builder.append(this._parent.paramRC, "");
           _builder.append(")");
           _builder.newLineIfNotEmpty();
-          _builder.append("if (ESMF_LogFoundError(rcToCheck=");
-          _builder.append(this._parent.paramRC, "");
-          _builder.append(", msg=ESMF_LOGERR_PASSTHRU, &");
+          CharSequence _ESMFErrorCheck = ESMFCodeTemplates.ESMFErrorCheck(this._parent.paramRC);
+          _builder.append(_ESMFErrorCheck, "");
           _builder.newLineIfNotEmpty();
-          _builder.append("    ");
-          _builder.append("line=__LINE__, &");
-          _builder.newLine();
-          _builder.append("    ");
-          _builder.append("file=__FILE__)) &");
-          _builder.newLine();
-          _builder.append("    ");
-          _builder.append("return  ! bail out");
-          _builder.newLine();
           String code = _builder.toString();
           final IASTListNode<IBodyConstruct> stmts = CodeExtraction.parseLiteralStatementSequence(code);
-          ASTSubroutineSubprogramNode ssn = this._parent.getASTRef();
+          final ASTSubroutineSubprogramNode ssn = this._parent.getASTRef();
           IASTListNode<IBodyConstruct> _body = ssn.getBody();
           _body.addAll(stmts);
-          _xblockexpression = ast;
+          IBodyConstruct _get = stmts.get(0);
+          this.setASTRef(((ASTCallStmtNode) _get));
+          _xblockexpression = this;
         }
         return _xblockexpression;
       }
@@ -672,6 +671,7 @@ public class NUOPCDriver extends NUOPCComponent {
         super(parent);
         this.state = this._parent.paramImport;
         this.field = "field";
+        parent.setOrAddChild(this);
       }
       
       @Override
@@ -734,43 +734,37 @@ public class NUOPCDriver extends NUOPCComponent {
        * }
        */
       @Override
-      public IFortranAST forward() {
-        IFortranAST _xblockexpression = null;
-        {
-          IFortranAST ast = this.getAST();
-          StringConcatenation _builder = new StringConcatenation();
-          _builder.newLine();
-          _builder.append("call NUOPC_Realize(");
-          CharSequence _paramch = this.paramch(this.state);
-          _builder.append(_paramch, "");
-          _builder.append(", field=");
-          CharSequence _paramch_1 = this.paramch(this.field);
-          _builder.append(_paramch_1, "");
-          _builder.append(", rc=");
-          _builder.append(this._parent.paramRC, "");
-          _builder.append(")");
-          _builder.newLineIfNotEmpty();
-          _builder.append("if (ESMF_LogFoundError(rcToCheck=");
-          _builder.append(this._parent.paramRC, "");
-          _builder.append(", msg=ESMF_LOGERR_PASSTHRU, &");
-          _builder.newLineIfNotEmpty();
-          _builder.append("    ");
-          _builder.append("line=__LINE__, &");
-          _builder.newLine();
-          _builder.append("    ");
-          _builder.append("file=__FILE__)) &");
-          _builder.newLine();
-          _builder.append("    ");
-          _builder.append("return  ! bail out");
-          _builder.newLine();
-          String code = _builder.toString();
-          final IASTListNode<IBodyConstruct> stmts = CodeExtraction.parseLiteralStatementSequence(code);
-          ASTSubroutineSubprogramNode ssn = this._parent.getASTRef();
-          IASTListNode<IBodyConstruct> _body = ssn.getBody();
-          _body.addAll(stmts);
-          _xblockexpression = ast;
+      public CodeConcept<?, ?> fward() {
+        try {
+          CodeConcept<?, ?> _xblockexpression = null;
+          {
+            StringConcatenation _builder = new StringConcatenation();
+            _builder.append("\t");
+            _builder.newLine();
+            _builder.append("call NUOPC_Realize(");
+            CharSequence _paramch = this.paramch(this.state);
+            _builder.append(_paramch, "");
+            _builder.append(", field=");
+            CharSequence _paramch_1 = this.paramch(this.field);
+            _builder.append(_paramch_1, "");
+            _builder.append(", rc=");
+            _builder.append(this._parent.paramRC, "");
+            _builder.append(")");
+            _builder.newLineIfNotEmpty();
+            CharSequence _ESMFErrorCheck = ESMFCodeTemplates.ESMFErrorCheck(this._parent.paramRC);
+            _builder.append(_ESMFErrorCheck, "");
+            _builder.newLineIfNotEmpty();
+            String code = _builder.toString();
+            final IASTListNode<IBodyConstruct> stmts = CodeExtraction.parseLiteralStatementSequence(code);
+            final ASTSubroutineSubprogramNode ssn = this._parent.getASTRef();
+            IASTListNode<IBodyConstruct> _body = ssn.getBody();
+            _body.addAll(stmts);
+            _xblockexpression = super.<CodeConcept<?, ?>>fward();
+          }
+          return _xblockexpression;
+        } catch (Throwable _e) {
+          throw Exceptions.sneakyThrow(_e);
         }
-        return _xblockexpression;
       }
     }
     

@@ -19,7 +19,7 @@ import org.earthsystemmodeling.cupid.annotation.Name;
 import org.earthsystemmodeling.cupid.annotation.Prop;
 import org.earthsystemmodeling.cupid.core.CupidActivator;
 import org.earthsystemmodeling.cupid.preferences.CupidPreferencePage;
-import org.earthsystemmodeling.cupid.views.NUOPCViewContentProvider2.CodeConceptProxy;
+import org.earthsystemmodeling.cupid.views.NUOPCViewContentProvider.CodeConceptProxy;
 import org.eclipse.core.runtime.FileLocator;
 import org.eclipse.core.runtime.Path;
 import org.eclipse.core.runtime.Status;
@@ -41,13 +41,13 @@ import org.osgi.framework.FrameworkUtil;
 import org.w3c.dom.Document;
 import org.xml.sax.SAXException;
 
-class NUOPCViewLabelProvider2 extends StyledCellLabelProvider { //implements ITableLabelProvider {
+class NUOPCViewLabelProvider extends StyledCellLabelProvider { //implements ITableLabelProvider {
 
 	private org.jdom.Document docXML;
 	private static final String NUOPC_DOC_FILE = null; //"nuopcdocs/nuopc_v7bs59.xml"
 	private static final String NUOPC_REFDOC_BASEURL = "nuopcdocs/html/indexcupid.html";
 	
-	public NUOPCViewLabelProvider2(NUOPCViewContentProvider2 contentProvider) {
+	public NUOPCViewLabelProvider(NUOPCViewContentProvider contentProvider) {
 		loadDocXML();
 	}
 	
@@ -422,7 +422,7 @@ class NUOPCViewLabelProvider2 extends StyledCellLabelProvider { //implements ITa
 	}
 	
 	
-	private static Bundle MY_BUNDLE = FrameworkUtil.getBundle(NUOPCViewLabelProvider2.class);
+	private static Bundle MY_BUNDLE = FrameworkUtil.getBundle(NUOPCViewLabelProvider.class);
 	
 	private static ImageDescriptor getImageDescriptor(String file, String topOverlay, String bottomOverlay, int SWT_PROPS) {
 	    //URL url = FileLocator.find(MY_BUNDLE, new Path("icons/" + file), null);

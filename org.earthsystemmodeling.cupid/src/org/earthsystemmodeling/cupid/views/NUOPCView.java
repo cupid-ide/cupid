@@ -13,7 +13,7 @@ import org.earthsystemmodeling.cupid.handlers.ApplyCodeConceptChanges;
 import org.earthsystemmodeling.cupid.handlers.RewriteASTRunnable;
 import org.earthsystemmodeling.cupid.nuopc.CodeConcept;
 import org.earthsystemmodeling.cupid.nuopc.CodeGenerationException;
-import org.earthsystemmodeling.cupid.views.NUOPCViewContentProvider2.CodeConceptProxy;
+import org.earthsystemmodeling.cupid.views.NUOPCViewContentProvider.CodeConceptProxy;
 import org.eclipse.core.resources.IMarker;
 import org.eclipse.core.resources.IResourceChangeListener;
 import org.eclipse.core.resources.ResourcesPlugin;
@@ -85,8 +85,8 @@ public class NUOPCView extends ViewPart {
 	
 	private TreeColumn tc2;
 	
-	private NUOPCViewContentProvider2 contentProvider;
-	private NUOPCViewLabelProvider2 labelProvider;
+	private NUOPCViewContentProvider contentProvider;
+	private NUOPCViewLabelProvider labelProvider;
 	
 	//private boolean projectIsDirty = false;
 
@@ -312,10 +312,10 @@ public class NUOPCView extends ViewPart {
 		viewer.getTree().setLinesVisible(true);
 		
 		drillDownAdapter = new DrillDownAdapter(viewer);		
-		contentProvider = new NUOPCViewContentProvider2();
+		contentProvider = new NUOPCViewContentProvider();
 		viewer.setContentProvider(contentProvider);
 		
-		labelProvider = new NUOPCViewLabelProvider2(contentProvider);
+		labelProvider = new NUOPCViewLabelProvider(contentProvider);
 		viewer.setLabelProvider(labelProvider);
 		viewer.setSorter(null);
 		viewer.setAutoExpandLevel(4);
@@ -521,8 +521,8 @@ public class NUOPCView extends ViewPart {
             		for (final Field field : parentClass.getFields()) {
             			
             			final Child childAnn = field.getAnnotation(Child.class);
-            			final Label labelAnn = NUOPCViewContentProvider2.getLabelFromField(field);
-            			final Class<?> fieldClass = NUOPCViewContentProvider2.getTypeFromField(field);
+            			final Label labelAnn = NUOPCViewContentProvider.getLabelFromField(field);
+            			final Class<?> fieldClass = NUOPCViewContentProvider.getTypeFromField(field);
             			
             			boolean childPresent = true;
             			try {
@@ -567,9 +567,9 @@ public class NUOPCView extends ViewPart {
             								}
             							}
             							if (newcc == null) {
-            								throw new InstantiationException("Could not find constructor for code concept");
+            								throw new CodeGenerationException("Could not find constructor for code concept");
             							}
-            						} catch (SecurityException | InstantiationException | IllegalAccessException | IllegalArgumentException | InvocationTargetException e) {
+            						} catch (SecurityException | InstantiationException | IllegalAccessException | IllegalArgumentException | InvocationTargetException | CodeGenerationException e) {
             							CupidActivator.log("Exception executing constructor", e);
             							return;
             						}

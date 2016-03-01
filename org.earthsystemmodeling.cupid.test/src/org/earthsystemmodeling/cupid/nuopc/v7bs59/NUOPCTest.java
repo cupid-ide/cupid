@@ -432,15 +432,7 @@ public class NUOPCTest {
 	}
 	
 	@Test
-	@Ignore
 	public void NUOPCProtos_bs59() throws SQLException, CoreException {
-		
-		//String dbloc = "~/.cupid/codedb_test";
-		//String connString = "jdbc:h2:" + dbloc + ";LOG=0;CACHE_SIZE=65536;LOCK_MODE=0;UNDO_LOG=0";
-		//final CodeDBIndex codeDB = CodeDBIndex.getInstance();
-		//codeDB.openConnection(connString);
-		//codeDB.rebuildDatabase();
-		//codeDB.truncateDatabase();
 		
 		//skip validation for these files
 		final List<String> skipVal = new ArrayList<String>();
@@ -459,24 +451,18 @@ public class NUOPCTest {
 			public int modelCount = 0;
 			
 			public boolean fails = false;
+			public Exception exception = null;
 			
 			@Override
 			public boolean visit(IResource resource) throws CoreException {
 				if (resource instanceof IFile) {
 					
-					IFile file = (IFile) resource;
-					//if (skip.contains(file.getFullPath().toString())) {
-					//	System.out.println("Skipping " + file.getFullPath());
-					//	return true;
-					//}
-					
-					PhotranVPG.getInstance().releaseAST(file);
+					IFile file = (IFile) resource;			
+					//PhotranVPG.getInstance().releaseAST(file);
 					if (PhotranVPG.getInstance().shouldProcessFile(file)) {
 						
-						IFortranAST ast = PhotranVPG.getInstance().acquireTransientAST(file);
-						assertNotNull(ast);
-						//codeDB.truncateDatabase();
-						//codeDB.indexAST(ast);
+						//IFortranAST ast = PhotranVPG.getInstance().acquireTransientAST(file);
+						//assertNotNull(ast);
 						
 						InputStream is = file.getContents();
 						try {
@@ -502,7 +488,7 @@ public class NUOPCTest {
 									return true;
 								}
 								else if (line.contains("use NUOPC_Model")){
-									NUOPCModel model = (NUOPCModel) new NUOPCModel(file).reverse();
+									NUOPCModel model = new NUOPCModel(file).reverse();
 									assertNotNull(model);
 									assertNotNull(model.setServices);
 									assertNotNull(model.importESMF);
@@ -520,7 +506,7 @@ public class NUOPCTest {
 									return true;
 								}
 								else if (line.contains("use NUOPC_Mediator")) {
-									NUOPCMediator mediator = (NUOPCMediator) new NUOPCMediator(file).reverse();
+									NUOPCMediator mediator = new NUOPCMediator(file).reverse();
 									assertNotNull(mediator);
 									assertNotNull(mediator.setServices);
 									assertNotNull(mediator.importESMF);
@@ -542,6 +528,7 @@ public class NUOPCTest {
 							
 						} catch (IOException e) {
 							fails = true;
+							exception = e;
 							return false;
 						}
 					
@@ -557,13 +544,11 @@ public class NUOPCTest {
 		MyResourceVisitor visitor = new MyResourceVisitor();
 		PROJECT_NUOPC_PROTOTYPES.accept(visitor);
 		
-		assertFalse(visitor.fails);
+		assertFalse("Exception: " + visitor.exception, visitor.fails);
 		System.out.println("Driver count = " + visitor.driverCount);
 		System.out.println("Model count = " + visitor.modelCount);
 		System.out.println("Mediator count = " + visitor.mediatorCount);
 	
-		//assertTrue("Driver count is more than 10", visitor.driverCount > 10);
-		
 		
 	}
 
