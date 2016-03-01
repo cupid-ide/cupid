@@ -60,8 +60,8 @@ public abstract class NUOPCComponent extends CodeConcept<CodeConcept<?,?>, ASTMo
 		
 		var ast = getAST()
 				
-		_astRef = ast.root?.programUnitList?.filter(ASTModuleNode).findFirst[
-			it.moduleBody?.filter(ASTUseStmtNode).exists[it.name.text.eic(genericImport)]
+		_astRef = ast.root?.programUnitList?.filter(ASTModuleNode)?.findFirst[
+			it.moduleBody?.filter(ASTUseStmtNode)?.exists[it.name.text.eic(genericImport)]
 		]
 		
 		if (_astRef != null) {

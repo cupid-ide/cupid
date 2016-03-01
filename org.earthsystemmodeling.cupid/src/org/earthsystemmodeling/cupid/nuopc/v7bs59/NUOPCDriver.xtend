@@ -1111,6 +1111,7 @@ if (ESMF_LogFoundError(rcToCheck=«paramRC», msg=ESMF_LOGERR_PASSTHRU, &
 						smsac.compLabel = c.argList.get(1).expr.literal
 						smsac.compSetServices = c.argList.get(2).expr.literal
 					}
+					smsac.setASTRef(c)
 					retList.add(smsac)
 				]
 			

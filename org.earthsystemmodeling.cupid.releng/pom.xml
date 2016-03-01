@@ -16,7 +16,7 @@
 		<eclipse-site>http://download.eclipse.org/releases/mars</eclipse-site>
 		<!-- <ptp-site>file:/data/git/org.eclipse.ptp/releng/org.eclipse.ptp.repo/target/repository</ptp-site> 
 			<remote-site>file:/data/git/org.eclipse.remote/releng/org.eclipse.remote.repo/target/repository</remote-site> -->
-		<xtext.version>2.9.0</xtext.version>
+		<xtext.version>2.8.4</xtext.version>
 	</properties>
 
 	<!-- <repositories> <repository> <id>eclipse-p2-repo</id> <url>${eclipse-p2-repo.url}</url> 
@@ -38,12 +38,9 @@
 
 	<build>
 
+<!-- 
 		<pluginManagement>
 			<plugins>
-				<!-- xtend-maven-plugin is in pluginManagement instead of in plugins 
-					so that it doesn't run before the exec-maven-plugin's *.mwe2 gen; this way 
-					we can list it after. -->
-
 				<plugin>
 					<groupId>org.eclipse.xtend</groupId>
 					<artifactId>xtend-maven-plugin</artifactId>
@@ -84,6 +81,7 @@
 				</plugin>
 			</plugins>
 		</pluginManagement>
+-->
 
 		<plugins>
 			<plugin>
@@ -97,7 +95,6 @@
 				<artifactId>tycho-surefire-plugin</artifactId>
 				<version>${tycho-version}</version>
 			</plugin>
-
 			<plugin>
 				<groupId>org.eclipse.tycho</groupId>
 				<artifactId>target-platform-configuration</artifactId>

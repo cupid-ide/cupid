@@ -383,7 +383,9 @@ public abstract class CodeConcept<P extends CodeConcept<?, ?>, A extends IASTNod
         IFortranAST _xblockexpression = null;
         {
           PhotranVPG _instance = PhotranVPG.getInstance();
-          IFortranAST _acquireTransientAST = _instance.acquireTransientAST(((IFile) this._context));
+          _instance.releaseAST(((IFile) this._context));
+          PhotranVPG _instance_1 = PhotranVPG.getInstance();
+          IFortranAST _acquireTransientAST = _instance_1.acquireTransientAST(((IFile) this._context));
           this._ast = _acquireTransientAST;
           _xblockexpression = this._ast;
         }

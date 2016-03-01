@@ -1622,6 +1622,7 @@ public class NUOPCDriver extends NUOPCComponent {
               String _literal_4 = ASTQuery.literal(_expr_4);
               smsac.compSetServices = _literal_4;
             }
+            smsac.setASTRef(c);
             retList.add(smsac);
           }
         };

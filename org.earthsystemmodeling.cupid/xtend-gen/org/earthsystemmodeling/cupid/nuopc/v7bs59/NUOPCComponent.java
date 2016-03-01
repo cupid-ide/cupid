@@ -191,26 +191,33 @@ public abstract class NUOPCComponent extends CodeConcept<CodeConcept<?, ?>, ASTM
       if (_programUnitList!=null) {
         _filter=Iterables.<ASTModuleNode>filter(_programUnitList, ASTModuleNode.class);
       }
-      final Function1<ASTModuleNode, Boolean> _function = new Function1<ASTModuleNode, Boolean>() {
-        @Override
-        public Boolean apply(final ASTModuleNode it) {
-          IASTListNode<IModuleBodyConstruct> _moduleBody = it.getModuleBody();
-          Iterable<ASTUseStmtNode> _filter = null;
-          if (_moduleBody!=null) {
-            _filter=Iterables.<ASTUseStmtNode>filter(_moduleBody, ASTUseStmtNode.class);
-          }
-          final Function1<ASTUseStmtNode, Boolean> _function = new Function1<ASTUseStmtNode, Boolean>() {
-            @Override
-            public Boolean apply(final ASTUseStmtNode it) {
-              Token _name = it.getName();
-              String _text = _name.getText();
-              return Boolean.valueOf(ASTQuery.eic(_text, NUOPCComponent.this.genericImport));
+      ASTModuleNode _findFirst = null;
+      if (_filter!=null) {
+        final Function1<ASTModuleNode, Boolean> _function = new Function1<ASTModuleNode, Boolean>() {
+          @Override
+          public Boolean apply(final ASTModuleNode it) {
+            IASTListNode<IModuleBodyConstruct> _moduleBody = it.getModuleBody();
+            Iterable<ASTUseStmtNode> _filter = null;
+            if (_moduleBody!=null) {
+              _filter=Iterables.<ASTUseStmtNode>filter(_moduleBody, ASTUseStmtNode.class);
             }
-          };
-          return Boolean.valueOf(IterableExtensions.<ASTUseStmtNode>exists(_filter, _function));
-        }
-      };
-      ASTModuleNode _findFirst = IterableExtensions.<ASTModuleNode>findFirst(_filter, _function);
+            boolean _exists = false;
+            if (_filter!=null) {
+              final Function1<ASTUseStmtNode, Boolean> _function = new Function1<ASTUseStmtNode, Boolean>() {
+                @Override
+                public Boolean apply(final ASTUseStmtNode it) {
+                  Token _name = it.getName();
+                  String _text = _name.getText();
+                  return Boolean.valueOf(ASTQuery.eic(_text, NUOPCComponent.this.genericImport));
+                }
+              };
+              _exists=IterableExtensions.<ASTUseStmtNode>exists(_filter, _function);
+            }
+            return Boolean.valueOf(_exists);
+          }
+        };
+        _findFirst=IterableExtensions.<ASTModuleNode>findFirst(_filter, _function);
+      }
       this._astRef = _findFirst;
       NUOPCComponent _xifexpression = null;
       boolean _notEquals = (!Objects.equal(this._astRef, null));

@@ -189,6 +189,7 @@ public abstract class CodeConcept<P extends CodeConcept<?,?>, A extends IASTNode
 		if (_ast != null)
 			_ast
 		else if (_context != null && _context instanceof IFile) {
+			PhotranVPG.instance.releaseAST(_context as IFile) //force re-parse
 			_ast = PhotranVPG.instance.acquireTransientAST(_context as IFile)
 			_ast
 		}

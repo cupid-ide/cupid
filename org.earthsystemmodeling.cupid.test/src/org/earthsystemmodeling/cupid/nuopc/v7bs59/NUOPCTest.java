@@ -464,6 +464,13 @@ public class NUOPCTest {
 						//IFortranAST ast = PhotranVPG.getInstance().acquireTransientAST(file);
 						//assertNotNull(ast);
 						
+						System.out.println("NUOPCProtos_bs59: Processing file: " + file.getProjectRelativePath());
+						if (file.getProjectRelativePath().toString().equalsIgnoreCase("AtmOcnSelectExternalProto/esm.F90")) {
+							IFortranAST ast = PhotranVPG.getInstance().acquireTransientAST(file);
+							System.out.println("\n\n" + ast.getRoot().toString() + "\n\n");
+							PhotranVPG.getInstance().releaseAST(file);
+						}
+						
 						InputStream is = file.getContents();
 						try {
 							LineIterator li = IOUtils.lineIterator(is, "UTF-8");
