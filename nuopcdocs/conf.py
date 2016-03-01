@@ -27,7 +27,7 @@ import sphinx_bootstrap_theme
 # If generating docs for the Cupid IDE (which uses a 
 # different style), then set the variable below to True
 # and run "make clean html"
-is_cupid = True
+is_cupid = False
 
 # If your documentation needs a minimal Sphinx version, state it here.
 #needs_sphinx = '1.0'

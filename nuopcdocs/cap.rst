@@ -39,6 +39,7 @@ as well to import subroutines and variables from your model code. The module
 exposes only a single public entry point (subroutine) called ``SetServices``.  
 This should be true for all NUOPC Model caps.
 
+
 .. literalinclude:: include/atm.F90
     :language: fortran
     :lines: 1-23
@@ -84,7 +85,9 @@ by you.  In the example code:
 
 .. literalinclude:: include/atm.F90
     :language: fortran
-    :lines: 26-61
+    :start-after: !BOC SetServices
+    :end-before: !EOC SetServices
+..    :lines: 26-61
     :linenos:
  
 In addition to providing subroutines for entire phases, sometimes *part* of
