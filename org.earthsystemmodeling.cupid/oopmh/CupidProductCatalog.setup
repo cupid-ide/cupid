@@ -1,0 +1,120 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<setup:ProductCatalog
+    xmi:version="2.0"
+    xmlns:xmi="http://www.omg.org/XMI"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns:setup="http://www.eclipse.org/oomph/setup/1.0"
+    xmlns:setup.p2="http://www.eclipse.org/oomph/setup/p2/1.0"
+    name="CupidProductCatalog"
+    label="Cupid Product Catalog">
+  <setupTask
+      xsi:type="setup:EclipseIniTask"
+      option="-Doomph.redirection.cupid_products"
+      value="=index:/redirectable.products.setup->file:/home/rocky/eclipse/cupiddev-v0-2/git/cupid/org.earthsystemmodeling.cupid/oopmh/CupidProductCatalog.setup"
+      vm="true">
+    <description>Add redirect</description>
+  </setupTask>
+  <setupTask
+      xsi:type="setup:EclipseIniTask"
+      option="-Doomph.redirection.cupid_projects"
+      value="=index:/redirectable.projects.setup->file:/home/rocky/eclipse/cupiddev-v0-2/git/cupid/org.earthsystemmodeling.cupid/oopmh/CupidProjectCatalog.setup"
+      vm="true">
+    <description>Add redirect</description>
+  </setupTask>
+  <product name="cupid"
+      label="Cupid">
+    <annotation
+        source="http://www.eclipse.org/oomph/setup/BrandingInfo">
+      <detail
+          key="folderName">
+        <value>eclipse</value>
+      </detail>
+      <detail
+          key="folderName.macosx">
+        <value>Eclipse</value>
+      </detail>
+    </annotation>
+    <setupTask
+        xsi:type="setup:InstallationTask"
+        id="installation">
+      <description></description>
+    </setupTask>
+    <setupTask
+        xsi:type="setup:EclipseIniTask"
+        option="-Xmx"
+        value="1024m"
+        vm="true">
+      <description>Set the heap space</description>
+    </setupTask>
+    <setupTask
+        xsi:type="setup:EclipseIniTask"
+        option="-Doomph.setup"
+        value="=true"
+        vm="true"/>
+    <version
+        name="mars"
+        label="Mars"
+        requiredJavaVersion="1.7">
+      <setupTask
+          xsi:type="setup.p2:P2Task"
+          label="Eclipse for Parallel Application Developers (Mars)">
+        <requirement
+            name="epp.package.parallel"
+            versionRange="[4.5.0,4.6.0)"/>
+        <requirement
+            name="org.eclipse.platform.feature.group"
+            versionRange="[4.5.0,4.6.0)"/>
+        <requirement
+            name="org.eclipse.rcp.feature.group"
+            versionRange="[4.5.0,4.6.0)"/>
+        <requirement
+            name="org.eclipse.team.svn.feature.group"/>
+        <requirement
+            name="org.eclipse.oomph.setup.feature.group"/>
+        <repository
+            url="http://download.eclipse.org/technology/epp/packages/mars"/>
+        <repository
+            url="http://download.eclipse.org/releases/mars"/>
+      </setupTask>
+      <setupTask
+          xsi:type="setup.p2:P2Task"
+          id=""
+          label="Cupid"
+          licenseConfirmationDisabled="true">
+        <requirement
+            name="org.earthsystemmodeling.cupid.feature.feature.group"/>
+        <requirement
+            name="org.earthsystemmodeling.oomph.createsyncproject.feature.group"/>
+        <repository
+            url="file:/home/rocky/eclipse/cupiddev-v0-2/git/cupid/org.earthsystemmodeling.cupid.releng.p2/target/repository"/>
+        <repository
+            url="file:/home/rocky/eclipse/cupiddev-v0-2/git/oomph/releng/org.earthsystemmodeling.oomph.releng.p2/target/repository"/>
+        <description></description>
+      </setupTask>
+      <setupTask
+          xsi:type="setup.p2:P2Task"
+          label="SVN Connectors"
+          licenseConfirmationDisabled="true">
+        <requirement
+            name="org.polarion.eclipse.team.svn.connector.feature.group"/>
+        <requirement
+            name="org.polarion.eclipse.team.svn.connector.svnkit18.feature.group"/>
+        <repository
+            url="http://community.polarion.com/projects/subversive/download/eclipse/5.0/update-site/"/>
+        <description>SVN Connector</description>
+      </setupTask>
+      <setupTask
+          xsi:type="setup:VariableTask"
+          name="workspace.location"
+          value="${installation.location}/ws"
+          storageURI="scope://Installation"/>
+      <setupTask
+          xsi:type="setup:ResourceCreationTask"
+          content="MAX_RECENT_WORKSPACES=5&#xA;RECENT_WORKSPACES=${workspace.location|property}&#xA;RECENT_WORKSPACES_PROTOCOL=3&#xA;SHOW_WORKSPACE_SELECTION_DIALOG=false&#xA;eclipse.preferences.version=1&#xA;"
+          targetURL="configuration:/.settings/org.eclipse.ui.ide.prefs"
+          encoding="UTF-8"/>
+    </version>
+    <description>Cupid tools for ESMF/NUOPC development </description>
+  </product>
+  <description></description>
+</setup:ProductCatalog>

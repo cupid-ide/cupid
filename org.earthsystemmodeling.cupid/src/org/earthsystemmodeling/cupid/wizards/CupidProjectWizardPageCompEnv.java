@@ -1,26 +1,22 @@
 package org.earthsystemmodeling.cupid.wizards;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Map.Entry;
 
-import org.eclipse.core.runtime.NullProgressMonitor;
 import org.eclipse.jface.layout.GridDataFactory;
 import org.eclipse.jface.layout.GridLayoutFactory;
 import org.eclipse.jface.wizard.WizardPage;
 import org.eclipse.remote.core.IRemoteConnection;
-import org.eclipse.remote.core.IRemoteConnectionManager;
-import org.eclipse.remote.core.IRemoteServices;
-import org.eclipse.remote.core.RemoteServices;
+import org.eclipse.remote.core.IRemoteConnectionType;
+import org.eclipse.remote.core.IRemoteServicesManager;
+import org.eclipse.remote.internal.core.RemoteServicesManager;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.ModifyEvent;
 import org.eclipse.swt.events.ModifyListener;
 import org.eclipse.swt.widgets.Combo;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Label;
-import org.eclipse.swt.widgets.Text;
 
 public class CupidProjectWizardPageCompEnv extends WizardPage {
 	
@@ -49,17 +45,21 @@ public class CupidProjectWizardPageCompEnv extends WizardPage {
 		
 		//get existing remote connections
 		List<IRemoteConnection> connList = new ArrayList<IRemoteConnection>();
-		IRemoteServices remoteServices = RemoteServices.getRemoteServices("org.eclipse.ptp.remote.RemoteTools", new NullProgressMonitor());
-		if (remoteServices != null) {
-			IRemoteConnectionManager connManager = remoteServices.getConnectionManager();
+		//IRemoteServices remoteServices = RemoteServices.getRemoteServices("org.eclipse.ptp.remote.RemoteTools", new NullProgressMonitor());
+		
+		IRemoteServicesManager remoteServicesManager = new RemoteServicesManager();
+		IRemoteConnectionType remoteConnType = remoteServicesManager.getConnectionType("org.eclipse.remote.JSch");			
+		
+		if (remoteConnType != null) {
+			//IRemoteConnectionManager connManager = remoteServices.getConnectionManager();
 			
-			for (IRemoteConnection rc : connManager.getConnections()) {
+			for (IRemoteConnection rc : remoteConnType.getConnections()) {
 				//System.out.println("\n==> Remote connection:  " + rc.getName() + " : " + rc.getAddress());
 				//for (Entry<String, String> att : rc.getAttributes().entrySet()) {
 				//	System.out.println("\t" + att.getKey() + " --> " + att.getValue());
 				//}
-				if (rc.getAttributes().get("org.earthsystemmodeling.cupid.ready") != null &&
-					rc.getAttributes().get("org.earthsystemmodeling.cupid.ready").equals("true")) {
+				if (rc.getAttribute("org.earthsystemmodeling.cupid.ready") != null &&
+					rc.getAttribute("org.earthsystemmodeling.cupid.ready").equals("true")) {
 					connList.add(rc);
 					//remoteConnCombo.add(rc.getName());
 				}

@@ -27,18 +27,30 @@ public class CupidActivator extends AbstractUIPlugin {
 		super.start(context);		
 		instance = this;
 		
-		//instance.setDebugging(true);  //comment out before release
+		instance.setDebugging(true);  //comment out before release
 	}	
 	
 	public static CupidActivator getDefault() {
 		return instance;
 	}
 	
+	public static void debug(String msg, Throwable e) {
+		if (getDefault().isDebugging()) {
+			log(Status.INFO, msg, e);
+		}
+	}
+	
+	public static void debug(String msg) {
+		if (getDefault().isDebugging()) {
+			log(Status.INFO, msg);
+		}
+	}
+	
 	public static void log(String msg) {
 		log(msg, null);
 	}
 	
-	public static void log(String msg, Exception e) {
+	public static void log(String msg, Throwable e) {
 		log(Status.INFO, msg, e);
 	}
 	
@@ -46,7 +58,7 @@ public class CupidActivator extends AbstractUIPlugin {
 		log(severity, msg, null);
 	}
 	
-	public static void log(int severity, String msg, Exception e) {
+	public static void log(int severity, String msg, Throwable e) {
 		if (getDefault()==null) return;
 		
 		if (PLUGIN_ID == null) {
@@ -60,6 +72,18 @@ public class CupidActivator extends AbstractUIPlugin {
 		URL url = FileLocator.find(getDefault().getBundle(), new Path(file), null);
 	    ImageDescriptor image = ImageDescriptor.createFromURL(url);
 	    return image;
+	}
+	
+	public static URL getFileURL(String relative) {
+		URL url = FileLocator.find(getDefault().getBundle(), new Path(relative), null);
+		if (url != null) {
+			try {
+				return FileLocator.toFileURL(url);
+			} catch (IOException e) {
+				return null;
+			}
+		}
+		return null;
 	}
 	
 	public static InputStream getInputStream(String path) {

@@ -1,14 +1,61 @@
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
-  <modelVersion>4.0.0</modelVersion>
-  <artifactId>org.earthsystemmodeling.cupid.releng.p2</artifactId>
-  <packaging>eclipse-repository</packaging>
-  
-     
- 	<parent>
- 		<groupId>org.earthsystemmodeling.cupid</groupId>
- 		<artifactId>org.earthsystemmodeling.cupid.releng</artifactId>
- 		<version>0.1.0-SNAPSHOT</version>
- 		<relativePath>../org.earthsystemmodeling.cupid.releng</relativePath>
- 	</parent>
- 	<version>0.1.0-SNAPSHOT</version>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+	<artifactId>org.earthsystemmodeling.cupid.releng.p2</artifactId>
+	<packaging>eclipse-repository</packaging>
+
+
+	<parent>
+		<groupId>org.earthsystemmodeling.cupid</groupId>
+		<artifactId>org.earthsystemmodeling.cupid.releng</artifactId>
+		<version>0.2.0-SNAPSHOT</version>
+		<relativePath>../org.earthsystemmodeling.cupid.releng</relativePath>
+	</parent>
+	
+	<build>
+		<extensions>
+			<extension>
+				<groupId>org.apache.maven.wagon</groupId>
+				<artifactId>wagon-ssh</artifactId>
+				<version>2.8</version>
+			</extension>
+		</extensions>
+	</build>
+
+	<profiles>
+		<!-- This profile is used to upload the repo -->
+		<profile>
+			<id>uploadRepo</id>
+			<properties>
+				<deploy.remote.url>scp://radu0450@esmf-cu.colorado.edu/</deploy.remote.url>
+				<deploy.remote.dir>/data/web/htdocs/esmf-cu/cupid/mars</deploy.remote.dir>
+			</properties>
+			<build>
+				<plugins>
+					<plugin>
+						<groupId>org.codehaus.mojo</groupId>
+						<artifactId>wagon-maven-plugin</artifactId>
+						<version>1.0</version>
+						<executions>
+							<execution>
+								<id>upload-repo</id>
+								<phase>install</phase>
+								<goals>
+									<goal>upload</goal>
+								</goals>
+								<configuration>
+									<fromDir>${project.build.directory}/repository/</fromDir>
+									<includes>**</includes>
+									<url>${deploy.remote.url}</url>
+									<toDir>${deploy.remote.dir}</toDir>
+								</configuration>
+							</execution>
+						</executions>
+					</plugin>
+				</plugins>
+			</build>
+		</profile>
+	</profiles>
+	
+	
 </project>

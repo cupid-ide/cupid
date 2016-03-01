@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="3.4"?>
+<plugin>
+
+	<extension point="org.eclipse.ui.commands">
+	 <command
+            categoryId="org.earthsystemmodeling.cupid.commands"
+            id="org.earthsystemmodeling.cupid.parseProtex"
+            name="Parse Protex">
+      </command>
+	</extension>
+	
+	<extension point="org.eclipse.ui.handlers">     
+      <handler
+            class="org.earthsystemmodeling.cupid.template.ui.ProtexHandler"
+            commandId="org.earthsystemmodeling.cupid.parseProtex">
+      </handler>
+   </extension>
+   
+   <extension point="org.eclipse.ui.menus">
+    <menuContribution locationURI="popup:org.eclipse.ui.navigator.ProjectExplorer#PopupMenu?after=additions">
+         <command
+               commandId="org.earthsystemmodeling.cupid.parseProtex"
+               id="org.earthsystemmodeling.cupid.menus.parseProtex">
+            <visibleWhen
+                  checkEnabled="true">
+            </visibleWhen>
+         </command>
+      </menuContribution>
+   </extension>
+	
+   <extension
+         point="org.eclipse.photran.ui.sourceViewerConfig">
+      <sourceViewerConfig
+            factory="org.earthsystemmodeling.cupid.template.ui.FortranSourceViewerConfigurationFactory">
+      </sourceViewerConfig>
+   </extension>
+   
+   <!--
+   <extension point="org.eclipse.ui.editors.templates">
+      <include
+         file="templates/nuopc_api.xml" />
+   </extension>
+   -->
+   
+   <extension
+         point="org.eclipse.ui.preferencePages">
+      <page
+            class="org.earthsystemmodeling.cupid.template.ui.ProtexPreferencePage"
+            id="org.earthsystemmodeling.cupid.template.ui.ProtexPreferencePage"
+            name="Protex">
+      </page>
+   </extension>
+
+</plugin>

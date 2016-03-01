@@ -1,0 +1,35 @@
+language: java
+sudo: false
+
+cache:
+  directories:
+  - $HOME/.m2
+  - $HOME/ESMF-INSTALL
+
+addons:
+  apt:
+    packages:
+    - gfortran
+    - libopenmpi-dev
+#    - openmpi-dev
+
+before_script:
+  - if [[ "$TRAVIS_OS_NAME" == "linux" ]]; then export DISPLAY=:99.0  ;fi
+  - if [[ "$TRAVIS_OS_NAME" == "linux" ]]; then sh -e /etc/init.d/xvfb start  ;fi
+  - if [ ! -d "$HOME/ESMF-INSTALL/ESMF_7_0_0_beta_snapshot_59"  ]; then $TRAVIS_BUILD_DIR/build_esmf.sh ESMF_7_0_0_beta_snapshot_59 ;fi
+#  - export ESMF_INSTALL_PREFIX=$HOME/ESMF-INSTALL/ESMF_7_0_0_beta_snapshot_59
+#  - export ESMFMKFILE=$ESMF_INSTALL_PREFIX/lib/libO/Linux.gfortran.64.openmpi.default/esmf.mk
+  - export ESMF_INSTALL_ROOT=$HOME/ESMF-INSTALL
+
+matrix:
+  include:
+    - os: osx
+      env: JAVA_HOME=$(/usr/libexec/java_home)
+    - os: linux
+      jdk: oraclejdk7
+    - os: linux
+      jdk: oraclejdk8
+    - os: linux
+      jdk: openjdk7
+
+script: cd $TRAVIS_BUILD_DIR/org.earthsystemmodeling.cupid.releng && mvn clean verify

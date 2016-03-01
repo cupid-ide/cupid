@@ -1,0 +1,15 @@
+Manifest-Version: 1.0
+Bundle-ManifestVersion: 2
+Bundle-Name: %pluginName
+Bundle-SymbolicName: org.earthsystemmodeling.cupid.nuopcmodel.edit;singleton:=true
+Bundle-Version: 0.2.0.qualifier
+Bundle-ClassPath: .
+Bundle-Activator: org.earthsystemmodeling.cupid.NUOPC.provider.NUOPCEditPlugin$Implementation
+Bundle-Vendor: %providerName
+Bundle-Localization: plugin
+Bundle-RequiredExecutionEnvironment: JavaSE-1.7
+Export-Package: org.earthsystemmodeling.cupid.NUOPC.provider
+Require-Bundle: org.eclipse.core.runtime,
+ org.earthsystemmodeling.cupid.nuopcmodel;visibility:=reexport,
+ org.eclipse.emf.edit;visibility:=reexport
+Bundle-ActivationPolicy: lazy

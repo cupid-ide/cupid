@@ -1,118 +1,175 @@
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
-  <modelVersion>4.0.0</modelVersion>
-  <groupId>org.earthsystemmodeling.cupid</groupId>
-  <artifactId>org.earthsystemmodeling.cupid.releng</artifactId>
-  <version>0.1.0-SNAPSHOT</version>
-  <packaging>pom</packaging>
-  
-   <properties>  
-  	<tycho-version>0.22.0</tycho-version> 
-  	<!--  WARNING: if you change the version above, also change it in:
-  		/org.earthsystemmodeling.cupid.product/pom.xml
-  		For some reason I had to hard code it there.
-  	 -->
-     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding> 
-     <eclipse-p2-repo.url>http://download.eclipse.org/releases/luna</eclipse-p2-repo.url> 
-     	<eclipse-release>luna</eclipse-release>
-		<eclipse-site>http://download.eclipse.org/releases/luna</eclipse-site>
-		<ptp-site>file:/data/git/org.eclipse.ptp/releng/org.eclipse.ptp.repo/target/repository</ptp-site>
-		<remote-site>file:/data/git/org.eclipse.remote/releng/org.eclipse.remote.repo/target/repository</remote-site>
- 	</properties> 
- 	
- <!-- 
- 	<repositories>
-        <repository>
-            <id>eclipse-p2-repo</id>
-            <url>${eclipse-p2-repo.url}</url>
-            <layout>p2</layout>
-        </repository>
-    </repositories>
-    --> 
-    
-    <profiles>
-        <profile>
-            <id>build-individual-bundles</id>
-            <repositories>
-                <repository>
-                    <id>eclipse-p2-repo</id>
-                    <url>${eclipse-p2-repo.url}</url>
-                    <layout>p2</layout>
-                </repository>
-            </repositories>
-        </profile>
-    </profiles>
-    
-  
- <build>  
-  <plugins>  
-   <plugin>  
-    <!-- enable tycho build extension -->  
-    <groupId>org.eclipse.tycho</groupId>  
-    <artifactId>tycho-maven-plugin</artifactId>  
-    <version>${tycho-version}</version>  
-    <extensions>true</extensions>  
-   </plugin> 
-   
-   <plugin>  
-       <groupId>org.eclipse.tycho</groupId>  
-       <artifactId>target-platform-configuration</artifactId>  
-       <version>${tycho-version}</version>  
-       <configuration> 
-       <!-- 
-       <target>
-               <artifact>
-                   <groupId>org.earthsystemmodeling.cupid</groupId>
-                   <artifactId>org.earthsystemmodeling.cupid.targetplatform</artifactId>
-					<version>0.1.0-SNAPSHOT</version>
-               </artifact>
-         </target> 
-         -->
-        <environments>  
-         <environment>  
-          <os>win32</os>  
-          <ws>win32</ws>  
-          <arch>x86</arch>  
-         </environment>
-         <environment>  
-          <os>win32</os>  
-          <ws>win32</ws>  
-          <arch>x86_64</arch>  
-         </environment> 
-        </environments>  
-       </configuration>  
-      </plugin> 
-      
-  </plugins>  
- </build> 
- 
-   
- <modules>
- 	<module>../org.earthsystemmodeling.cupid</module>
- 	<module>../org.earthsystemmodeling.cupid.feature</module>
- 	<!-- 
- 	<module>../org.earthsystemmodeling.cupid.rcp</module>
- 	<module>../org.earthsystemmodeling.cupid.product</module>
- 	-->
- 	<module>../org.earthsystemmodeling.cupid.targetplatform</module>
- 	<module>../org.earthsystemmodeling.cupid.releng.p2</module>
- </modules>
- 
- <repositories>
-		<!--  CUPID - copied from org.eclipse.ptp.master/pom.xml -->
-		<repository>
-			<id>ptp-${eclipse-release}</id>
-			<url>${ptp-site}</url>
-			<layout>p2</layout>
-		</repository>
-		<repository>
-			<id>remote-${eclipse-release}</id>
-			<url>${remote-site}</url>
-			<layout>p2</layout>
-		</repository>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+	<groupId>org.earthsystemmodeling.cupid</groupId>
+	<artifactId>org.earthsystemmodeling.cupid.releng</artifactId>
+	<version>0.2.0-SNAPSHOT</version>
+	<packaging>pom</packaging>
+
+	<properties>
+		<tycho-version>0.24.0</tycho-version>
+		<!-- WARNING: if you change the version above, also change it in: /org.earthsystemmodeling.cupid.product/pom.xml 
+			For some reason I had to hard code it there. -->
+		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+		<eclipse-p2-repo.url>http://download.eclipse.org/releases/mars</eclipse-p2-repo.url>
+		<eclipse-release>mars</eclipse-release>
+		<eclipse-site>http://download.eclipse.org/releases/mars</eclipse-site>
+		<!-- <ptp-site>file:/data/git/org.eclipse.ptp/releng/org.eclipse.ptp.repo/target/repository</ptp-site> 
+			<remote-site>file:/data/git/org.eclipse.remote/releng/org.eclipse.remote.repo/target/repository</remote-site> -->
+		<xtext.version>2.8.4</xtext.version>
+	</properties>
+
+	<!-- <repositories> <repository> <id>eclipse-p2-repo</id> <url>${eclipse-p2-repo.url}</url> 
+		<layout>p2</layout> </repository> </repositories> -->
+
+	<profiles>
+		<profile>
+			<id>build-individual-bundles</id>
+			<repositories>
+				<repository>
+					<id>eclipse-p2-repo</id>
+					<url>${eclipse-p2-repo.url}</url>
+					<layout>p2</layout>
+				</repository>
+			</repositories>
+		</profile>
+	</profiles>
+
+
+	<build>
+
+<!-- 
+		<pluginManagement>
+			<plugins>
+				<plugin>
+					<groupId>org.eclipse.xtend</groupId>
+					<artifactId>xtend-maven-plugin</artifactId>
+					<version>${xtext.version}</version>
+					<executions>
+						<execution>
+							<goals>
+								<goal>compile</goal>
+								<goal>xtend-install-debug-info</goal>
+								<goal>testCompile</goal>
+								<goal>xtend-test-install-debug-info</goal>
+							</goals>
+						</execution>
+					</executions>
+					<configuration>
+						<outputDirectory>xtend-gen</outputDirectory>
+					</configuration>
+				</plugin>
+				<plugin>
+					<groupId>org.apache.maven.plugins</groupId>
+					<artifactId>maven-clean-plugin</artifactId>
+					<version>2.5</version>
+					<executions>
+						<execution>
+							<id>gen-clean</id>
+							<goals>
+								<goal>clean</goal>
+							</goals>
+							<configuration>
+								<filesets>
+									<fileset>
+										<directory>${basedir}/xtend-gen</directory>
+									</fileset>
+								</filesets>
+							</configuration>
+						</execution>
+					</executions>
+				</plugin>
+			</plugins>
+		</pluginManagement>
+-->
+
+		<plugins>
+			<plugin>
+				<groupId>org.eclipse.tycho</groupId>
+				<artifactId>tycho-maven-plugin</artifactId>
+				<version>${tycho-version}</version>
+				<extensions>true</extensions>
+			</plugin>
+			<plugin>
+				<groupId>org.eclipse.tycho</groupId>
+				<artifactId>tycho-surefire-plugin</artifactId>
+				<version>${tycho-version}</version>
+			</plugin>
+			<plugin>
+				<groupId>org.eclipse.tycho</groupId>
+				<artifactId>target-platform-configuration</artifactId>
+				<version>${tycho-version}</version>
+				<configuration>
+					<target>
+						<artifact>
+							<groupId>org.earthsystemmodeling.cupid</groupId>
+							<artifactId>org.earthsystemmodeling.cupid.targetplatform</artifactId>
+							<version>0.2.0-SNAPSHOT</version>
+						</artifact>
+					</target>
+					<environments>
+						<environment>
+							<os>win32</os>
+							<ws>win32</ws>
+							<arch>x86</arch>
+						</environment>
+						<environment>
+							<os>linux</os>
+							<ws>gtk</ws>
+							<arch>x86_64</arch>
+						</environment>
+						<environment>
+							<os>macosx</os>
+							<ws>cocoa</ws>
+							<arch>x86_64</arch>
+						</environment>
+					</environments>
+				</configuration>
+			</plugin>
+		</plugins>
+
+	</build>
+
+
+	<modules>
+		<module>../org.earthsystemmodeling.cupid</module>
+		<module>../org.earthsystemmodeling.cupid.feature</module>
+		<!-- <module>../org.earthsystemmodeling.cupid.targetplatform</module> -->
+		<module>../org.earthsystemmodeling.cupid.releng.p2</module>
+		<module>../org.earthsystemmodeling.cupid.test</module>
+		<module>../org.earthsystemmodeling.cupid.targetplatform</module>
+		<module>../org.earthsystemmodeling.cupid.template</module>
+		<module>../org.earthsystemmodeling.cupid.nuopcmodel</module>
+		<module>
+			../org.earthsystemmodeling.cupid.nuopcmodel.design
+		</module>
+		<module>
+			../org.earthsystemmodeling.cupid.nuopcmodel.edit
+		</module>
+		<module>
+			../org.earthsystemmodeling.cupid.nuopcmodel.editor
+		</module>
+	</modules>
+
+	<repositories>
+		<!-- CUPID - copied from org.eclipse.ptp.master/pom.xml -->
+		<!-- <repository> <id>ptp-${eclipse-release}</id> <url>${ptp-site}</url> 
+			<layout>p2</layout> </repository> <repository> <id>remote-${eclipse-release}</id> 
+			<url>${remote-site}</url> <layout>p2</layout> </repository> -->
 		<repository>
 			<id>eclipse-${eclipse-release}</id>
 			<url>${eclipse-site}</url>
 			<layout>p2</layout>
-		</repository>	
+		</repository>
 	</repositories>
+
+	<dependencies>
+		<dependency>
+			<groupId>junit</groupId>
+			<artifactId>junit</artifactId>
+			<version>4.12</version>
+			<scope>test</scope>
+		</dependency>
+	</dependencies>
+
 </project>

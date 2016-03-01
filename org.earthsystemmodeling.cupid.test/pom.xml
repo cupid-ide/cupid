@@ -1,0 +1,52 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+
+	<modelVersion>4.0.0</modelVersion>
+	<artifactId>org.earthsystemmodeling.cupid.test</artifactId>
+	<packaging>eclipse-test-plugin</packaging>
+
+	<parent>
+		<groupId>org.earthsystemmodeling.cupid</groupId>
+		<artifactId>org.earthsystemmodeling.cupid.releng</artifactId>
+		<version>0.2.0-SNAPSHOT</version>
+		<relativePath>../org.earthsystemmodeling.cupid.releng</relativePath>
+	</parent>
+
+	<!-- 
+	<scm>
+		<connection>scm:svn:http://svn.code.sf.net/p/esmfcontrib/svn/NUOPC/trunk</connection>
+		<url>http://svn.code.sf.net/p/esmfcontrib/svn/NUOPC/trunk</url>
+	</scm>
+	-->
+
+	<properties>
+		<nuopc.url.trunk>scm:svn:http://svn.code.sf.net/p/esmfcontrib/svn/NUOPC/trunk</nuopc.url.trunk>
+		<nuopc.url.tags>scm:svn:http://svn.code.sf.net/p/esmfcontrib/svn/NUOPC/tags</nuopc.url.tags>
+	</properties>
+
+	<build>
+		<plugins>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-scm-plugin</artifactId>
+				<version>1.9.4</version>
+				<executions>
+					<execution>
+						<id>checkout-nuopc-prototypes</id>
+						<phase>pre-integration-test</phase>
+						<goals>
+							<goal>checkout</goal>
+						</goals>
+					</execution>
+				</executions>
+				 
+				<configuration>
+					<connectionUrl>${nuopc.url.tags}/ESMF_7_0_0_beta_snapshot_59</connectionUrl>
+					<checkoutDirectory>${project.build.directory}/ESMF_7_0_0_beta_snapshot_59</checkoutDirectory>
+				</configuration>
+				
+			</plugin>
+		</plugins>
+	</build>
+
+</project>

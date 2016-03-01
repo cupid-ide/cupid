@@ -1,0 +1,14 @@
+Manifest-Version: 1.0
+Bundle-ManifestVersion: 2
+Bundle-Name: org.earthsystemmodeling.cupid.nuopcmodel.design
+Bundle-SymbolicName: org.earthsystemmodeling.cupid.nuopcmodel.design;singleton:=true
+Bundle-Version: 0.2.0.qualifier
+Bundle-Activator: org.earthsystemmodeling.cupid.nuopcmodel.design.Activator
+Require-Bundle: org.eclipse.ui,
+ org.eclipse.core.runtime,
+ org.eclipse.core.resources,
+ org.eclipse.sirius,
+ org.eclipse.sirius.common.acceleo.aql,
+ org.earthsystemmodeling.cupid.nuopcmodel;bundle-version="0.1.0"
+Bundle-ActivationPolicy: lazy
+Bundle-RequiredExecutionEnvironment: JavaSE-1.6

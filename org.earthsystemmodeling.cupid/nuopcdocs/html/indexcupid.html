@@ -1,0 +1,867 @@
+<!DOCTYPE html>
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>NUOPC 7.0 beta snapshot 59 documentation</title>
+    
+    <link rel="stylesheet" href="_static/basic.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" href="_static/bootswatch-3.3.4/united/bootstrap.min.css" type="text/css" />
+    <link rel="stylesheet" href="_static/bootstrap-sphinx.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    './',
+        VERSION:     '7.0 beta snapshot 59',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <script type="text/javascript" src="_static/js/jquery-1.11.0.min.js"></script>
+    <script type="text/javascript" src="_static/js/jquery-fix.js"></script>
+    <script type="text/javascript" src="_static/bootstrap-3.3.4/js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="_static/bootstrap-sphinx.js"></script>
+    <link rel="top" title="None" href="indexcupid.html#document-indexcupid" />
+<meta charset='utf-8'>
+<meta http-equiv='X-UA-Compatible' content='IE=edge,chrome=1'>
+<meta name='viewport' content='width=device-width, initial-scale=1.0, maximum-scale=1'>
+<meta name="apple-mobile-web-app-capable" content="yes">
+
+  </head>
+  <body role="document">
+
+  <div id="navbar" class="navbar navbar-default ">
+    <div class="container">
+      <div class="navbar-header">
+        <!-- .btn-navbar is used as the toggle for collapsed navbar content -->
+        <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".nav-collapse">
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+        </button>
+        <a class="navbar-brand" href="indexcupid.html#document-indexcupid">
+          NUOPC</a>
+        <span class="navbar-text navbar-version pull-left"><b>7.0 beta snapshot 59</b></span>
+      </div>
+
+        <div class="collapse navbar-collapse nav-collapse">
+          <ul class="nav navbar-nav">
+            
+            
+              <li class="dropdown globaltoc-container">
+  <a role="button"
+     id="dLabelGlobalToc"
+     data-toggle="dropdown"
+     data-target="#"
+     href="indexcupid.html#document-indexcupid">Site <b class="caret"></b></a>
+  <ul class="dropdown-menu globaltoc"
+      role="menu"
+      aria-labelledby="dLabelGlobalToc"><ul>
+<li class="toctree-l1"><a class="reference internal" href="indexcupid.html#document-nuopc_model">Appendix: The Generic NUOPC Model</a></li>
+<li class="toctree-l1"><a class="reference internal" href="indexcupid.html#document-nuopc_mediator">Appendix: The Generic NUOPC Mediator</a></li>
+<li class="toctree-l1"><a class="reference internal" href="indexcupid.html#document-nuopc_driver">Appendix: The Generic NUOPC Driver</a></li>
+</ul>
+</ul>
+</li>
+              
+                <li class="dropdown">
+  <a role="button"
+     id="dLabelLocalToc"
+     data-toggle="dropdown"
+     data-target="#"
+     href="#">Page <b class="caret"></b></a>
+  <ul class="dropdown-menu localtoc"
+      role="menu"
+      aria-labelledby="dLabelLocalToc"><ul>
+<li class="toctree-l1"><a class="reference internal" href="indexcupid.html#document-nuopc_model">Appendix: The Generic NUOPC Model</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="indexcupid.html#setservices">SetServices</a></li>
+<li class="toctree-l2"><a class="reference internal" href="indexcupid.html#initialization-sequence">Initialization Sequence</a></li>
+<li class="toctree-l2"><a class="reference internal" href="indexcupid.html#initialization-specialization-points">Initialization Specialization Points</a></li>
+<li class="toctree-l2"><a class="reference internal" href="indexcupid.html#run-sequence">Run Sequence</a></li>
+<li class="toctree-l2"><a class="reference internal" href="indexcupid.html#run-specialization-points">Run Specialization Points</a></li>
+<li class="toctree-l2"><a class="reference internal" href="indexcupid.html#finalize-sequence">Finalize Sequence</a></li>
+<li class="toctree-l2"><a class="reference internal" href="indexcupid.html#finalize-specialization-points">Finalize Specialization Points</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="indexcupid.html#document-nuopc_mediator">Appendix: The Generic NUOPC Mediator</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="indexcupid.html#setservices">SetServices</a></li>
+<li class="toctree-l2"><a class="reference internal" href="indexcupid.html#initialization-sequence">Initialization Sequence</a></li>
+<li class="toctree-l2"><a class="reference internal" href="indexcupid.html#initialization-specialization-points">Initialization Specialization Points</a></li>
+<li class="toctree-l2"><a class="reference internal" href="indexcupid.html#run-sequence">Run Sequence</a></li>
+<li class="toctree-l2"><a class="reference internal" href="indexcupid.html#run-specialization-points">Run Specialization Points</a></li>
+<li class="toctree-l2"><a class="reference internal" href="indexcupid.html#finalize-sequence">Finalize Sequence</a></li>
+<li class="toctree-l2"><a class="reference internal" href="indexcupid.html#finalize-specialization-points">Finalize Specialization Points</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="indexcupid.html#document-nuopc_driver">Appendix: The Generic NUOPC Driver</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="indexcupid.html#setservices">SetServices</a></li>
+<li class="toctree-l2"><a class="reference internal" href="indexcupid.html#initialization-sequence">Initialization Sequence</a></li>
+<li class="toctree-l2"><a class="reference internal" href="indexcupid.html#initialization-specialization-points">Initialization Specialization Points</a></li>
+<li class="toctree-l2"><a class="reference internal" href="indexcupid.html#run-sequence">Run Sequence</a></li>
+<li class="toctree-l2"><a class="reference internal" href="indexcupid.html#run-specialization-points">Run Specialization Points</a></li>
+<li class="toctree-l2"><a class="reference internal" href="indexcupid.html#finalize-sequence">Finalize Sequence</a></li>
+<li class="toctree-l2"><a class="reference internal" href="indexcupid.html#finalize-specialization-points">Finalize Specialization Points</a></li>
+</ul>
+</li>
+</ul>
+</ul>
+</li>
+              
+            
+            
+              
+                
+              
+            
+            
+            
+            
+              <li class="hidden-sm"></li>
+            
+          </ul>
+
+          
+            
+<form class="navbar-form navbar-right" action="search.html" method="get">
+ <div class="form-group">
+  <input type="text" name="q" class="form-control" placeholder="Search" />
+ </div>
+  <input type="hidden" name="check_keywords" value="yes" />
+  <input type="hidden" name="area" value="default" />
+</form>
+          
+        </div>
+    </div>
+  </div>
+
+<div class="container">
+  <div class="row">
+    <div class="col-md-12 content">
+      
+  <div class="section" id="nuopc-reference">
+<h1>NUOPC Reference<a class="headerlink" href="#nuopc-reference" title="Permalink to this headline">¶</a></h1>
+<div class="toctree-wrapper compound">
+<span id="document-nuopc_model"></span><div class="section" id="appendix-the-generic-nuopc-model">
+<span id="model-top"></span><h2>Appendix: The Generic NUOPC Model<a class="headerlink" href="#appendix-the-generic-nuopc-model" title="Permalink to this headline">¶</a></h2>
+<p>This appendix describes technical details of the generic
+<code class="docutils literal"><span class="pre">NUOPC_Model</span></code> component and should be used as a reference
+for the initialize and run behaviors of the generic <code class="docutils literal"><span class="pre">NUOPC_Model</span></code>
+as well as a description of the available specialization points.</p>
+<p>The generic <code class="docutils literal"><span class="pre">NUOPC_Model</span></code> component wraps your model so that it can be
+plugged into a <code class="docutils literal"><span class="pre">NUOPC_Driver</span></code>.  The generic component is <em>used</em> in your code
+to implement a specialized version of the generic component&#8211;this is
+the NUOPC cap for your model. Your component
+derives from the generic component code by implementing its own public
+<code class="docutils literal"><span class="pre">SetServices</span></code> routine that calls into the <code class="docutils literal"><span class="pre">NUOPC_CompDerive</span></code> routine before
+doing anything else, passing it a reference to the generic <code class="docutils literal"><span class="pre">NUOPC_Model</span></code>
+<code class="docutils literal"><span class="pre">SetServices</span></code>.  It is through this mechanism that your NUOPC cap
+<em>inherits</em> functionality that is implemented in the generic component.</p>
+<p>In general, <strong>there are three mechanisms through which your code specializes the generic component.</strong>
+The first two methods specialize through call-back mechanisms into subroutines
+you implement. The third method specializes by setting the values of parameters
+implemented by the generic component.</p>
+<blockquote>
+<div><ol class="arabic simple">
+<li>Your code sets entry points for standard component methods not implemented
+by the generic component by calling <code class="docutils literal"><span class="pre">NUOPC_CompSetEntryPoint</span></code> inside
+your <code class="docutils literal"><span class="pre">SetServices</span></code> routine.  In this
+case you are implementing an entire initialization or run phase.</li>
+<li>Your code implements a specialization subroutine and it is attached to the
+component by calling <code class="docutils literal"><span class="pre">NUOPC_CompDerive</span></code> inside your <code class="docutils literal"><span class="pre">SetServices</span></code> routine.
+In this case, the generic
+component exposes a set of labels that identify the particular
+specialization points available.  The purpose of each specialization point
+is documented so you how to implement the specialization point subroutine.</li>
+<li>In some cases, the generic component can be specialized by setting a
+particular parameter that affects the generic component&#8217;s behavior.</li>
+</ol>
+</div></blockquote>
+<div class="section" id="setservices">
+<span id="model-setservices"></span><h3>SetServices<a class="headerlink" href="#setservices" title="Permalink to this headline">¶</a></h3>
+<p>All NUOPC components must define a <code class="docutils literal"><span class="pre">SetServices</span></code> method.  The SetServices method is used
+to define which generic component is being extended (i.e., Driver, Model, Mediator, or Connector),
+to register entry points, and to register specialization methods.</p>
+</div>
+<div class="section" id="initialization-sequence">
+<span id="model-initseq"></span><h3>Initialization Sequence<a class="headerlink" href="#initialization-sequence" title="Permalink to this headline">¶</a></h3>
+<p>The generic <code class="docutils literal"><span class="pre">NUOPC_Model</span></code> executes the following initialization
+sequence in the order shown.  There are multiple versions of the
+Initialize Phase Definition (IPD) so that new phases can be added
+while still retaining backward compatibility.  For this reason,
+each initialization phase listed in the table has several labels
+associated with it.  Your NUOPC Model cap should stick with only
+one of the IPD versions.  <strong>It is recommended that
+you use the latest version (currently IPDv04) as it is the most
+flexible and encompasses all earlier versions.</strong></p>
+<p>You are responsible for implementing in your NUOPC Model cap any
+required phase where the Provider is listed as User.  Clicking
+on a phase&#8217;s description will take you to a detailed description
+of the phase.</p>
+<table border="1" class="docutils">
+<colgroup>
+<col width="44%" />
+<col width="37%" />
+<col width="8%" />
+<col width="12%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">Phase Label</th>
+<th class="head">Description</th>
+<th class="head">Provider</th>
+<th class="head">Required</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td>IPDv00p0, IPDv01p0, IPDv02p0, IPDv03p0, IPDv04p0</td>
+<td><a class="reference internal" href="#model-phase-setipdversion"><span>Set Initialize Phase Definition Version</span></a></td>
+<td>User</td>
+<td>No</td>
+</tr>
+<tr class="row-odd"><td>IPDv00p1, IPDv01p1, IPDv02p1, IPDv03p1, IPDv04p1</td>
+<td><a class="reference internal" href="#model-phase-advertisefields"><span>Advertise fields in import and export states</span></a></td>
+<td>User</td>
+<td>Yes</td>
+</tr>
+<tr class="row-even"><td>IPDv01p2, IPDv02p2, IPDv03p2, IPDv04p2</td>
+<td><em>Unspecified by NUOPC</em></td>
+<td>&nbsp;</td>
+<td>&nbsp;</td>
+</tr>
+<tr class="row-odd"><td>IPDv00p2, IPDv01p3, IPDv02p3, IPDv03p3, IPDv04p3</td>
+<td><a class="reference internal" href="#model-phase-realizefieldsproviding"><span>Realize fields providing a geom object</span></a></td>
+<td>User</td>
+<td>Yes <a class="footnote-reference" href="#f1" id="id1">[1]</a></td>
+</tr>
+<tr class="row-even"><td>IPDv03p4, IPDv04p4</td>
+<td><a class="reference internal" href="#model-phase-modifydecomp"><span>Modify decomposition of accepted geom object</span></a></td>
+<td>User</td>
+<td>No</td>
+</tr>
+<tr class="row-odd"><td>IPDv03p5, IPDv04p5</td>
+<td><a class="reference internal" href="#model-phase-realizefieldsaccepting"><span>Realize fields accepting a geom object</span></a></td>
+<td>User</td>
+<td>Yes <a class="footnote-reference" href="#f1" id="id2">[1]</a></td>
+</tr>
+<tr class="row-even"><td>IPDv00p3, IPDv01p4, IPDv02p4, IPDv03p6, IPDv04p6</td>
+<td><a class="reference internal" href="#model-phase-verifyimports"><span>Verify import fields connected and set clock</span></a></td>
+<td>&nbsp;</td>
+<td>NUOPC     Yes</td>
+</tr>
+<tr class="row-odd"><td>IPDv00p4, IPDv01p5, IPDv02p5, IPDv03p7, IPDv04p7</td>
+<td><a class="reference internal" href="#model-phase-initexport"><span>Initialize export fields</span></a></td>
+<td>NUOPC</td>
+<td>Yes</td>
+</tr>
+</tbody>
+</table>
+<table class="docutils footnote" frame="void" id="f1" rules="none">
+<colgroup><col class="label" /><col /></colgroup>
+<tbody valign="top">
+<tr><td class="label">[1]</td><td><em>(<a class="fn-backref" href="#id1">1</a>, <a class="fn-backref" href="#id2">2</a>)</em> Note that there are two phases dedicated to realizing fields, the first
+for models that are providing their own geometric object (e.g., grid)
+and the second for models that are accepting a geometric object. Only
+one of these phases needs to be implemented. In most cases your component
+will provide its own geometric object.</td></tr>
+</tbody>
+</table>
+<div class="section" id="set-initialize-phase-definition-version">
+<span id="model-phase-setipdversion"></span><h4>Set Initialize Phase Definition Version<a class="headerlink" href="#set-initialize-phase-definition-version" title="Permalink to this headline">¶</a></h4>
+<p><strong>IPDv00p0, IPDv01p0, IPDv02p0, IPDv03p0, IPDv04p0</strong></p>
+<p><em>(Optional, User Provided)</em></p>
+<p>During this optional phase, the component can set the Initialize Phase
+Definition version that is uses.  This is done by filtering the
+component&#8217;s internal phase map by calling <code class="docutils literal"><span class="pre">NUOPC_CompFilterPhaseMap</span></code>
+and passing in the first part of the phase label string, e.g.,
+<code class="docutils literal"><span class="pre">&quot;IPDv02p&quot;</span></code> for version 2.</p>
+</div>
+<div class="section" id="advertise-fields-in-import-and-export-states">
+<span id="model-phase-advertisefields"></span><h4>Advertise fields in import and export states<a class="headerlink" href="#advertise-fields-in-import-and-export-states" title="Permalink to this headline">¶</a></h4>
+<p><strong>IPDv00p1, IPDv01p1, IPDv02p1, IPDv03p1, IPDv04p1</strong></p>
+<p><em>(Required, User Provided)</em></p>
+<p>Advertise fields in import/export states using <code class="docutils literal"><span class="pre">NUOPC_Advertise</span></code>.  This method requires
+a Standard Name for the field, and the Standard Name must appear in the NUOPC Field Dictionary
+or a runtime error is generated.</p>
+<p><code class="docutils literal"><span class="pre">NUOPC_Advertise</span></code> accepts a <code class="docutils literal"><span class="pre">TransferOfferGeomObject</span></code> argument which may be one of:</p>
+<blockquote>
+<div><ul class="simple">
+<li>&#8220;will provide&#8221; (default) - The field will provide its own geom object
+(Grid/Mesh/XGrid/LocStream)</li>
+<li>&#8220;can provide&#8221; - The field can provide its own geom object, but only
+if the connected field in the other component will not provide it</li>
+<li>&#8220;cannot provide&#8221; - The field cannot provide its own geom object.
+It must accept a geom object from a connected field.</li>
+</ul>
+</div></blockquote>
+<p>Memory is not allocated for advertised Fields, but attributes are set on the field
+which can be used in later phases, especially for determining if another component
+can provide and/or consume the advertised field.</p>
+</div>
+<div class="section" id="realize-fields-providing-a-geom-object">
+<span id="model-phase-realizefieldsproviding"></span><h4>Realize fields <em>providing</em> a geom object<a class="headerlink" href="#realize-fields-providing-a-geom-object" title="Permalink to this headline">¶</a></h4>
+<p><strong>IPDv00p2, IPDv01p3, IPDv02p3, IPDv03p3, IPDv04p3</strong></p>
+<p><em>(Required, User Provided)</em></p>
+<p>Realize connected import and export fields that have their <code class="docutils literal"><span class="pre">TransferActionGeomObject</span></code>
+attribute set to &#8220;provide&#8221;, i.e., that will provide their own geometric object
+(e.g., grid or mesh).  (&#8220;provide&#8221; is the default value of <code class="docutils literal"><span class="pre">TransferActionGeomObject</span></code>.)</p>
+<p>The method <code class="docutils literal"><span class="pre">NUOPC_Realize</span></code> is used to realize a field. Only previously
+advertised fields can be realized and the field&#8217;s name is used to search the
+state for the previously advertised field.</p>
+</div>
+<div class="section" id="modify-decomposition-of-accepted-geom-object">
+<span id="model-phase-modifydecomp"></span><h4>Modify decomposition of accepted geom object<a class="headerlink" href="#modify-decomposition-of-accepted-geom-object" title="Permalink to this headline">¶</a></h4>
+<p><strong>IPDv03p4, IPDv04p4</strong></p>
+<p><em>(Optional, User Provided)</em></p>
+<p>Optionally modify the decomposition and distribution information of any accepted
+geometric object (e.g., grid or mesh) by replacing the <code class="docutils literal"><span class="pre">DistGrid</span></code>. This can be accomplished
+by retrieving the <code class="docutils literal"><span class="pre">Grid</span></code> (and its <code class="docutils literal"><span class="pre">DistGrid</span></code>) from the <code class="docutils literal"><span class="pre">Field</span></code>, creating a new <code class="docutils literal"><span class="pre">DistGrid</span></code> with
+modified decomposition, creating a new <code class="docutils literal"><span class="pre">Grid</span></code> on that <code class="docutils literal"><span class="pre">DistGrid</span></code>, and then using <code class="docutils literal"><span class="pre">ESMF_FieldEmptySet</span></code>
+to replace the existing <code class="docutils literal"><span class="pre">Grid</span></code> with the new one.</p>
+<p>This phase is useful when accepting a grid from another component, but when
+the processor (PET) counts differ between components.  In this case, a new distribution
+needs to be set based on the current processor count.</p>
+</div>
+<div class="section" id="realize-fields-accepting-a-geom-object">
+<span id="model-phase-realizefieldsaccepting"></span><h4>Realize fields <em>accepting</em> a geom object<a class="headerlink" href="#realize-fields-accepting-a-geom-object" title="Permalink to this headline">¶</a></h4>
+<p><strong>IPDv03p5, IPDv04p5</strong></p>
+<p><em>(Required, User Provided)</em></p>
+<p>Realize connected import and export fields that have their <code class="docutils literal"><span class="pre">TransferActionGeomObject</span></code>
+attribute set to &#8220;accept&#8221;, i.e., that will accept a geom object from a connected
+field in another component.</p>
+<p>If the generic <code class="docutils literal"><span class="pre">NUOPC_Connector</span></code> is used, at this point the full geom object (e.g., grid or mesh)
+has already been set in the field and only a call to <code class="docutils literal"><span class="pre">ESMF_FieldEmptyComplete</span></code>
+is required to allocate memory for the field.</p>
+<p>The method <code class="docutils literal"><span class="pre">NUOPC_Realize</span></code> is used to realize a field. Only previously
+advertised fields can be realized and the field&#8217;s name is used to search the
+state for the previously advertised field.</p>
+</div>
+<div class="section" id="verify-import-fields-connected-and-set-clock">
+<span id="model-phase-verifyimports"></span><h4>Verify import fields connected and set clock<a class="headerlink" href="#verify-import-fields-connected-and-set-clock" title="Permalink to this headline">¶</a></h4>
+<p><strong>IPDv00p3, IPDv01p4, IPDv02p4, IPDv03p6, IPDv04p6</strong></p>
+<p><em>(Required, NUOPC Provided)</em></p>
+<p>If the model&#8217;s internal clock has not been set, set as a copy of the parent clock.
+Call the <a class="reference internal" href="#model-specialization-setclock"><span>SetClock</span></a> specialization subroutine (if present).
+Verify all import fields are connected and set error code if not.</p>
+</div>
+<div class="section" id="initialize-export-fields">
+<span id="model-phase-initexport"></span><h4>Initialize export fields<a class="headerlink" href="#initialize-export-fields" title="Permalink to this headline">¶</a></h4>
+<p><strong>IPDv00p4, IPDv01p5, IPDv02p5, IPDv03p7, IPDv04p7</strong></p>
+<p><em>(Required, NUOPC Provided)</em></p>
+<p>Call the <a class="reference internal" href="#model-specialization-datainitialize"><span>DataInitialize</span></a> specialization method if it exists, which initializes all export fields.
+Set the timestamp in export fields to the internal clock&#8217;s time.</p>
+</div>
+</div>
+<div class="section" id="initialization-specialization-points">
+<h3>Initialization Specialization Points<a class="headerlink" href="#initialization-specialization-points" title="Permalink to this headline">¶</a></h3>
+<p>The following specialization points are used during the <code class="docutils literal"><span class="pre">NUOPC_Model</span></code>
+initialization sequence.</p>
+<div class="section" id="setclock">
+<span id="model-specialization-setclock"></span><h4>SetClock<a class="headerlink" href="#setclock" title="Permalink to this headline">¶</a></h4>
+<p><strong>Called from: IPDv00p3, IPDv01p4, IPDv02p4, IPDv03p6, IPDv04p6</strong></p>
+<p><em>(Optional, User Provided)</em></p>
+<p>The specialization method can change aspects of the internal clock, which
+defaults to a copy of the incoming parent clock. For example, the timeStep
+size may be changed and/or Alarms may be set on the clock.</p>
+<p>The method <code class="docutils literal"><span class="pre">NUOPC_CompSetClock(comp,</span> <span class="pre">externalClock,</span> <span class="pre">stabilityTimeStep,</span> <span class="pre">rc)</span></code>
+can be used to set the internal clock as a copy of externalClock, but with a
+timeStep that is less than or equal to the stabilityTimeStep. At the same
+time ensure that the timeStep of the external clock is a multiple of the
+timeStep of the internal clock. If the stabilityTimeStep argument is not
+provided then the internal clock will simply be set as a copy of the external clock.</p>
+</div>
+<div class="section" id="datainitialize">
+<span id="model-specialization-datainitialize"></span><h4>DataInitialize<a class="headerlink" href="#datainitialize" title="Permalink to this headline">¶</a></h4>
+<p><strong>Called from:  IPDv00p4, IPDv01p5, IPDv02p5, IPDv03p7, IPDv04p7</strong></p>
+<p><em>(Optional, User Provided)</em></p>
+<p>The specialization method should initialize field data in the export state.
+Fields in the export state will be timestamped automatically by the calling phase,
+so there is no need to do it here.</p>
+</div>
+</div>
+<div class="section" id="run-sequence">
+<span id="model-phase-run"></span><h3>Run Sequence<a class="headerlink" href="#run-sequence" title="Permalink to this headline">¶</a></h3>
+<p>The generic <code class="docutils literal"><span class="pre">NUOPC_Model</span></code> component has a single run phase.  The purpose of the run phase
+is to move the model forward in time from the current time to the stop time on the
+internal clock.  Keep in mind that the <code class="docutils literal"><span class="pre">NUOPC_Driver</span></code> sitting above this component
+is responsible for setting the stop time of this component&#8217;s clock.</p>
+<ol class="arabic">
+<li><p class="first">Call the <a class="reference internal" href="#model-specialization-setrunclock"><span>SetRunClock</span></a> specialization method to check and set the internal clock against the incoming clock.
+If no specialization exists, the default method will check that internal clock and incoming clock agree
+on current time and that the time step of the incoming clock is a multiple of the internal clock time step.
+Under these conditions set the internal stop time to one time step interval of the incoming clock.
+Otherwise exit with error, flagging an incompatibility.</p>
+</li>
+<li><p class="first">Call the <a class="reference internal" href="#model-specialization-checkimport"><span>CheckImport</span></a> specialization method to check import fields. If no specialization exists,
+the default method verifies that all import fields are at the current time of the internal clock.</p>
+</li>
+<li><p class="first">Time stepping loop: starting at current time, running to stop time of the internal clock:</p>
+<blockquote>
+<div><ol class="arabic simple">
+<li>Timestamp the fields in the export state according to the current time of the internal clock.</li>
+<li>Call the <a class="reference internal" href="#model-specialization-advance"><span>Advance</span></a> specialization routine.</li>
+<li>Advance the current time of the internal clock according to the time step of the internal clock.</li>
+</ol>
+</div></blockquote>
+</li>
+<li><p class="first">Call the <a class="reference internal" href="#model-specialization-timestampexport"><span>TimestampExport</span></a> specialization method to set the timestamp on export fields.
+If no specialization exists, the default method will timestamp all fields in the export state
+according to the current     time of the internal clock, which now is identical to the
+stop time of the internal clock.</p>
+</li>
+</ol>
+</div>
+<div class="section" id="run-specialization-points">
+<h3>Run Specialization Points<a class="headerlink" href="#run-specialization-points" title="Permalink to this headline">¶</a></h3>
+<div class="section" id="setrunclock">
+<span id="model-specialization-setrunclock"></span><h4>SetRunClock<a class="headerlink" href="#setrunclock" title="Permalink to this headline">¶</a></h4>
+<p><strong>Called from: default run phase</strong></p>
+<p><em>(Required, NUOPC Provided)</em></p>
+<p>A specialization method to check and set the internal clock against the incoming clock.
+This method is called by the default run phase.</p>
+<p>If not overridden, the default method will check that the internal clock and incoming clock agree
+on the current time and that the time step of the incoming clock is a multiple of the internal
+clock time step. Under these conditions set the internal stop time to one time step interval
+of the incoming clock. Otherwise exit with error, flagging an incompatibility.</p>
+</div>
+<div class="section" id="checkimport">
+<span id="model-specialization-checkimport"></span><h4>CheckImport<a class="headerlink" href="#checkimport" title="Permalink to this headline">¶</a></h4>
+<p><strong>Called from: default run phase</strong></p>
+<p><em>(Required, NUOPC Provided)</em></p>
+<p>A specialization method to verify import fields before advancing in time. If not overridden,
+the default method verifies that all import fields are at the current time of the internal clock.</p>
+</div>
+<div class="section" id="advance">
+<span id="model-specialization-advance"></span><h4>Advance<a class="headerlink" href="#advance" title="Permalink to this headline">¶</a></h4>
+<p><strong>Called from: default run phase</strong></p>
+<p><em>(Required, User Provided)</em></p>
+<p>A specialization method that advances the model forward in time by one timestep of the internal clock.
+This method will be called iteratively by the default run phase until reaching the
+stop time on the internal clock.</p>
+</div>
+<div class="section" id="timestampexport">
+<span id="model-specialization-timestampexport"></span><h4>TimestampExport<a class="headerlink" href="#timestampexport" title="Permalink to this headline">¶</a></h4>
+<p><strong>Called from: default run phase</strong></p>
+<p><em>(Required, NUOPC Provided)</em></p>
+<p>A specialization method to set the timestamp on export fields after the model has advanced.
+If not overridden, the default method sets the timestamp on all export fields to the stop
+time on the internal clock (which is also now the current model time).</p>
+</div>
+</div>
+<div class="section" id="finalize-sequence">
+<span id="model-phase-finalize"></span><h3>Finalize Sequence<a class="headerlink" href="#finalize-sequence" title="Permalink to this headline">¶</a></h3>
+<p>The generic <code class="docutils literal"><span class="pre">NUOPC_Model</span></code> component has a single finalize phase.  This phase calls
+into the <a class="reference internal" href="#model-specialization-finalize"><span>Finalize</span></a> specialization method if it exists.</p>
+</div>
+<div class="section" id="finalize-specialization-points">
+<h3>Finalize Specialization Points<a class="headerlink" href="#finalize-specialization-points" title="Permalink to this headline">¶</a></h3>
+<div class="section" id="finalize">
+<span id="model-specialization-finalize"></span><h4>Finalize<a class="headerlink" href="#finalize" title="Permalink to this headline">¶</a></h4>
+<p><strong>Called from: default finalize phase</strong></p>
+<p><em>(Optional, User Provided)</em></p>
+<p>An optional specialization method for custom finalization code and deallocations
+of user data structures.</p>
+</div>
+</div>
+</div>
+<span id="document-nuopc_mediator"></span><div class="section" id="appendix-the-generic-nuopc-mediator">
+<span id="mediator-top"></span><h2>Appendix: The Generic NUOPC Mediator<a class="headerlink" href="#appendix-the-generic-nuopc-mediator" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="setservices">
+<span id="mediator-setservices"></span><h3>SetServices<a class="headerlink" href="#setservices" title="Permalink to this headline">¶</a></h3>
+<p>All NUOPC components must define a <code class="docutils literal"><span class="pre">SetServices</span></code> method.  The SetServices method is used
+to define which generic component is being extended (i.e., Driver, Model, Mediator, or Connector),
+to register entry points, and to register specialization methods.</p>
+</div>
+<div class="section" id="initialization-sequence">
+<span id="mediator-initseq"></span><h3>Initialization Sequence<a class="headerlink" href="#initialization-sequence" title="Permalink to this headline">¶</a></h3>
+<p>The generic <code class="docutils literal"><span class="pre">NUOPC_Mediator</span></code> executes the following initialization
+sequence in the order shown.  There are multiple versions of the
+Initialize Phase Definition (IPD) so that new phases can be added
+while still retaining backward compatibility.  For this reason,
+each initialization phase listed in the table has several labels
+associated with it.</p>
+<table border="1" class="docutils">
+<colgroup>
+<col width="44%" />
+<col width="37%" />
+<col width="8%" />
+<col width="11%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">Phase Label</th>
+<th class="head">Description</th>
+<th class="head">Provider</th>
+<th class="head">Required</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td>IPDv00p0, IPDv01p0, IPDv02p0, IPDv03p0, IPDv04p0</td>
+<td><a class="reference internal" href="#mediator-phase-setipdversion"><span>Set Initialize Phase Definition Version</span></a></td>
+<td>User</td>
+<td>No</td>
+</tr>
+<tr class="row-odd"><td>IPDv00p1, IPDv01p1, IPDv02p1, IPDv03p1, IPDv04p1</td>
+<td><a class="reference internal" href="#mediator-phase-advertisefields"><span>Advertise fields in import and export states</span></a></td>
+<td>User</td>
+<td>Yes</td>
+</tr>
+<tr class="row-even"><td>IPDv01p2, IPDv02p2, IPDv03p2, IPDv04p2</td>
+<td><em>Unspecified by NUOPC</em></td>
+<td>&nbsp;</td>
+<td>&nbsp;</td>
+</tr>
+<tr class="row-odd"><td>IPDv00p2, IPDv01p3, IPDv02p3, IPDv03p3, IPDv04p3</td>
+<td><a class="reference internal" href="#mediator-phase-realizefieldsproviding"><span>Realize fields providing a geom object</span></a></td>
+<td>User</td>
+<td>Yes <a class="footnote-reference" href="#f1" id="id1">[1]</a></td>
+</tr>
+<tr class="row-even"><td>IPDv03p4, IPDv04p4</td>
+<td><a class="reference internal" href="#mediator-phase-modifydecomp"><span>Modify decomposition of accepted geom object</span></a></td>
+<td>User</td>
+<td>No</td>
+</tr>
+<tr class="row-odd"><td>IPDv03p5, IPDv04p5</td>
+<td><a class="reference internal" href="#mediator-phase-realizefieldsaccepting"><span>Realize fields accepting a geom object</span></a></td>
+<td>User</td>
+<td>Yes <a class="footnote-reference" href="#f1" id="id2">[1]</a></td>
+</tr>
+<tr class="row-even"><td>IPDv00p3, IPDv01p4, IPDv02p4, IPDv03p6, IPDv04p6</td>
+<td><a class="reference internal" href="#mediator-phase-verifyimports"><span>Verify import fields connected and set clock</span></a></td>
+<td>NUOPC</td>
+<td>Yes</td>
+</tr>
+<tr class="row-odd"><td>IPDv00p4, IPDv01p5, IPDv02p5, IPDv03p7, IPDv04p7</td>
+<td><a class="reference internal" href="#mediator-phase-initexport"><span>Initialize export fields</span></a></td>
+<td>NUOPC</td>
+<td>Yes</td>
+</tr>
+</tbody>
+</table>
+<table class="docutils footnote" frame="void" id="f1" rules="none">
+<colgroup><col class="label" /><col /></colgroup>
+<tbody valign="top">
+<tr><td class="label">[1]</td><td><em>(<a class="fn-backref" href="#id1">1</a>, <a class="fn-backref" href="#id2">2</a>)</em> Note that there are two phases dedicated to realizing fields, the first
+for models that are providing their own geometric object (e.g., grid)
+and the second for models that are accepting a geometric object. Only
+one of these phases needs to be implemented. In most cases your component
+will provide its own geometric object.</td></tr>
+</tbody>
+</table>
+<div class="section" id="set-initialize-phase-definition-version">
+<span id="mediator-phase-setipdversion"></span><h4>Set Initialize Phase Definition Version<a class="headerlink" href="#set-initialize-phase-definition-version" title="Permalink to this headline">¶</a></h4>
+<p><strong>IPDv00p0, IPDv01p0, IPDv02p0, IPDv03p0, IPDv04p0</strong></p>
+<p><em>(Optional, User Provided)</em></p>
+<p>During this optional phase, the component can set the Initialize Phase
+Definition version that is uses.  This is done by filtering the
+component&#8217;s internal phase map by calling <code class="docutils literal"><span class="pre">NUOPC_CompFilterPhaseMap</span></code>
+and passing in the first part of the phase label string, e.g.,
+<code class="docutils literal"><span class="pre">&quot;IPDv02p&quot;</span></code> for version 2.</p>
+</div>
+<div class="section" id="advertise-fields-in-import-and-export-states">
+<span id="mediator-phase-advertisefields"></span><h4>Advertise fields in import and export states<a class="headerlink" href="#advertise-fields-in-import-and-export-states" title="Permalink to this headline">¶</a></h4>
+<p><strong>IPDv00p1, IPDv01p1, IPDv02p1, IPDv03p1, IPDv04p1</strong></p>
+<p><em>(Required, User Provided)</em></p>
+<p>Advertise fields in import/export states using <code class="docutils literal"><span class="pre">NUOPC_Advertise</span></code>.  This method requires
+a Standard Name for the field, and the Standard Name must appear in the NUOPC Field Dictionary
+or a runtime error is generated.</p>
+<p><code class="docutils literal"><span class="pre">NUOPC_Advertise</span></code> accepts a <code class="docutils literal"><span class="pre">TransferOfferGeomObject</span></code> argument which may be one of:</p>
+<blockquote>
+<div><ul class="simple">
+<li>&#8220;will provide&#8221; (default) - The field will provide its own geom object
+(Grid/Mesh/XGrid/LocStream)</li>
+<li>&#8220;can provide&#8221; - The field can provide its own geom object, but only
+if the connected field in the other component will not provide it</li>
+<li>&#8220;cannot provide&#8221; - The field cannot provide its own geom object.
+It must accept a geom object from a connected field.</li>
+</ul>
+</div></blockquote>
+<p>Memory is not allocated for advertised Fields, but attributes are set on the field
+which can be used in later phases, especially for determining if another component
+can provide and/or consume the advertised field.</p>
+</div>
+<div class="section" id="realize-fields-providing-a-geom-object">
+<span id="mediator-phase-realizefieldsproviding"></span><h4>Realize fields <em>providing</em> a geom object<a class="headerlink" href="#realize-fields-providing-a-geom-object" title="Permalink to this headline">¶</a></h4>
+<p><strong>IPDv00p2, IPDv01p3, IPDv02p3, IPDv03p3, IPDv04p3</strong></p>
+<p><em>(Required, User Provided)</em></p>
+<p>Realize connected import and export fields that have their <code class="docutils literal"><span class="pre">TransferActionGeomObject</span></code>
+attribute set to &#8220;provide&#8221;, i.e., that will provide their own geometric object
+(e.g., grid or mesh).  (&#8220;provide&#8221; is the default value of <code class="docutils literal"><span class="pre">TransferActionGeomObject</span></code>.)</p>
+<p>The method <code class="docutils literal"><span class="pre">NUOPC_Realize</span></code> is used to realize a field. Only previously
+advertised fields can be realized and the field&#8217;s name is used to search the
+state for the previously advertised field.</p>
+</div>
+<div class="section" id="modify-decomposition-of-accepted-geom-object">
+<span id="mediator-phase-modifydecomp"></span><h4>Modify decomposition of accepted geom object<a class="headerlink" href="#modify-decomposition-of-accepted-geom-object" title="Permalink to this headline">¶</a></h4>
+<p><strong>IPDv03p4, IPDv04p4</strong></p>
+<p><em>(Optional, User Provided)</em></p>
+<p>Optionally modify the decomposition and distribution information of any accepted
+geometric object (e.g., grid or mesh) by replacing the <code class="docutils literal"><span class="pre">DistGrid</span></code>. This can be accomplished
+by retrieving the <code class="docutils literal"><span class="pre">Grid</span></code> (and its <code class="docutils literal"><span class="pre">DistGrid</span></code>) from the <code class="docutils literal"><span class="pre">Field</span></code>, creating a new <code class="docutils literal"><span class="pre">DistGrid</span></code> with
+modified decomposition, creating a new <code class="docutils literal"><span class="pre">Grid</span></code> on that <code class="docutils literal"><span class="pre">DistGrid</span></code>, and then using <code class="docutils literal"><span class="pre">ESMF_FieldEmptySet</span></code>
+to replace the existing <code class="docutils literal"><span class="pre">Grid</span></code> with the new one.</p>
+<p>This phase is useful when accepting a grid from another component, but when
+the processor (PET) counts differ between components.  In this case, a new distribution
+needs to be set based on the current processor count.</p>
+</div>
+<div class="section" id="realize-fields-accepting-a-geom-object">
+<span id="mediator-phase-realizefieldsaccepting"></span><h4>Realize fields <em>accepting</em> a geom object<a class="headerlink" href="#realize-fields-accepting-a-geom-object" title="Permalink to this headline">¶</a></h4>
+<p><strong>IPDv03p5, IPDv04p5</strong></p>
+<p><em>(Required, User Provided)</em></p>
+<p>Realize connected import and export fields that have their <code class="docutils literal"><span class="pre">TransferActionGeomObject</span></code>
+attribute set to &#8220;accept&#8221;, i.e., that will accept a geom object from a connected
+field in another component.</p>
+<p>If the generic <code class="docutils literal"><span class="pre">NUOPC_Connector</span></code> is used, at this point the full geom object (e.g., grid or mesh)
+has already been set in the field and only a call to <code class="docutils literal"><span class="pre">ESMF_FieldEmptyComplete</span></code>
+is required to allocate memory for the field.</p>
+<p>The method <code class="docutils literal"><span class="pre">NUOPC_Realize</span></code> is used to realize a field. Only previously
+advertised fields can be realized and the field&#8217;s name is used to search the
+state for the previously advertised field.</p>
+</div>
+<div class="section" id="verify-import-fields-connected-and-set-clock">
+<span id="mediator-phase-verifyimports"></span><h4>Verify import fields connected and set clock<a class="headerlink" href="#verify-import-fields-connected-and-set-clock" title="Permalink to this headline">¶</a></h4>
+<p><strong>IPDv00p3, IPDv01p4, IPDv02p4, IPDv03p6, IPDv04p6</strong></p>
+<p><em>(Required, NUOPC Provided)</em></p>
+<p>If the model&#8217;s internal clock has not been set, set as a copy of the parent clock.
+Verify all import fields are connected and set error code if not.</p>
+</div>
+<div class="section" id="initialize-export-fields">
+<span id="mediator-phase-initexport"></span><h4>Initialize export fields<a class="headerlink" href="#initialize-export-fields" title="Permalink to this headline">¶</a></h4>
+<p><strong>IPDv00p4, IPDv01p5, IPDv02p5, IPDv03p7, IPDv04p7</strong></p>
+<p><em>(Required, NUOPC Provided)</em></p>
+<p>Call the <a class="reference internal" href="#mediator-specialization-datainitialize"><span>DataInitialize</span></a> specialization method if it exists, which initializes all export fields.
+Set the timestamp in export fields to the internal clock&#8217;s time.</p>
+</div>
+</div>
+<div class="section" id="initialization-specialization-points">
+<h3>Initialization Specialization Points<a class="headerlink" href="#initialization-specialization-points" title="Permalink to this headline">¶</a></h3>
+<p>The following specialization points are used during the <code class="docutils literal"><span class="pre">NUOPC_Mediator</span></code>
+initialization sequence.</p>
+<div class="section" id="datainitialize">
+<span id="mediator-specialization-datainitialize"></span><h4>DataInitialize<a class="headerlink" href="#datainitialize" title="Permalink to this headline">¶</a></h4>
+<p><strong>Called from:  IPDv00p4, IPDv01p5, IPDv02p5, IPDv03p7, IPDv04p7</strong></p>
+<p><em>(Optional, User Provided)</em></p>
+<p>The specialization method should initialize field data in the export state.
+Fields in the export state will be timestamped automatically by the calling phase,
+so there is no need to do it here.</p>
+</div>
+</div>
+<div class="section" id="run-sequence">
+<span id="mediator-phase-run"></span><h3>Run Sequence<a class="headerlink" href="#run-sequence" title="Permalink to this headline">¶</a></h3>
+<p>The generic <code class="docutils literal"><span class="pre">NUOPC_Mediator</span></code> component has a single run phase with the following behavior:</p>
+<ol class="arabic">
+<li><p class="first">Call the <a class="reference internal" href="#mediator-specialization-setrunclock"><span>SetRunClock</span></a> specialization method to check and set the internal clock against the incoming clock.
+If no specialization exists, the default method will check that internal clock and incoming clock agree
+on current time and that the time step of the incoming clock is a multiple of the internal clock time step.
+Under these conditions set the internal stop time to one time step interval of the incoming clock.
+Otherwise exit with error, flagging an incompatibility.</p>
+</li>
+<li><p class="first">Call the <a class="reference internal" href="#mediator-specialization-checkimport"><span>CheckImport</span></a> specialization method to check import fields. If no specialization exists,
+the default method verifies that all import fields are at the current time of the internal clock.</p>
+</li>
+<li><p class="first">Time stepping loop: starting at current time, running to stop time of the internal clock:</p>
+<blockquote>
+<div><ol class="arabic simple">
+<li>Timestamp the fields in the export state according to the current time of the internal clock.</li>
+<li>Call the <a class="reference internal" href="#mediator-specialization-advance"><span>Advance</span></a> specialization routine.</li>
+<li>Advance the current time of the internal clock according to the time step of the internal clock.</li>
+</ol>
+</div></blockquote>
+</li>
+<li><p class="first">Call the <a class="reference internal" href="#mediator-specialization-timestampexport"><span>TimestampExport</span></a> specialization method to set the timestamp on export fields.
+If no specialization exists, then export field timestamps are left unchanged from the
+timestamping that occurs during the timestepping loop above.</p>
+</li>
+</ol>
+</div>
+<div class="section" id="run-specialization-points">
+<h3>Run Specialization Points<a class="headerlink" href="#run-specialization-points" title="Permalink to this headline">¶</a></h3>
+<div class="section" id="setrunclock">
+<span id="mediator-specialization-setrunclock"></span><h4>SetRunClock<a class="headerlink" href="#setrunclock" title="Permalink to this headline">¶</a></h4>
+<p><strong>Called from: default run phase</strong></p>
+<p><em>(Required, NUOPC Provided)</em></p>
+<p>A specialization method to check and set the internal clock against the incoming clock.
+This method is called by the default run phase.</p>
+<p>If not overridden, the default method will check that the internal clock and incoming clock agree
+on the current time and that the time step of the incoming clock is a multiple of the internal
+clock time step. Under these conditions set the internal stop time to one time step interval
+of the incoming clock. Otherwise exit with error, flagging an incompatibility.</p>
+</div>
+<div class="section" id="checkimport">
+<span id="mediator-specialization-checkimport"></span><h4>CheckImport<a class="headerlink" href="#checkimport" title="Permalink to this headline">¶</a></h4>
+<p><strong>Called from: default run phase</strong></p>
+<p><em>(Required, NUOPC Provided)</em></p>
+<p>A specialization method to verify import fields before advancing in time. If not overridden,
+the default method verifies that all import fields are at the current time of the internal clock.</p>
+</div>
+<div class="section" id="advance">
+<span id="mediator-specialization-advance"></span><h4>Advance<a class="headerlink" href="#advance" title="Permalink to this headline">¶</a></h4>
+<p><strong>Called from: default run phase</strong></p>
+<p><em>(Required, User Provided)</em></p>
+<p>A specialization method that advances the mediator forward in time by one timestep of the internal clock.
+This method will be called iteratively by the default run phase until reaching the
+stop time on the internal clock.</p>
+</div>
+<div class="section" id="timestampexport">
+<span id="mediator-specialization-timestampexport"></span><h4>TimestampExport<a class="headerlink" href="#timestampexport" title="Permalink to this headline">¶</a></h4>
+<p><strong>Called from: default run phase</strong></p>
+<p><em>(Required, NUOPC Provided)</em></p>
+<p>A specialization method to set the timestamp on export fields after the model has advanced.
+If not overridden, the there is no default implementation, so the timestamp of fields in the
+export state remains unchanged.</p>
+</div>
+</div>
+<div class="section" id="finalize-sequence">
+<span id="mediator-phase-finalize"></span><h3>Finalize Sequence<a class="headerlink" href="#finalize-sequence" title="Permalink to this headline">¶</a></h3>
+<p>The generic <code class="docutils literal"><span class="pre">NUOPC_Mediator</span></code> component has a single finalize phase.  This phase calls
+into the <a class="reference internal" href="#mediator-specialization-finalize"><span>Finalize</span></a> specialization method if it exists.</p>
+</div>
+<div class="section" id="finalize-specialization-points">
+<h3>Finalize Specialization Points<a class="headerlink" href="#finalize-specialization-points" title="Permalink to this headline">¶</a></h3>
+<div class="section" id="finalize">
+<span id="mediator-specialization-finalize"></span><h4>Finalize<a class="headerlink" href="#finalize" title="Permalink to this headline">¶</a></h4>
+<p><strong>Called from: default finalize phase</strong></p>
+<p><em>(Optional, User Provided)</em></p>
+<p>An optional specialization method for custom finalization code and deallocations
+of user data structures.</p>
+</div>
+</div>
+</div>
+<span id="document-nuopc_driver"></span><div class="section" id="appendix-the-generic-nuopc-driver">
+<span id="driver-top"></span><h2>Appendix: The Generic NUOPC Driver<a class="headerlink" href="#appendix-the-generic-nuopc-driver" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="setservices">
+<span id="driver-setservices"></span><h3>SetServices<a class="headerlink" href="#setservices" title="Permalink to this headline">¶</a></h3>
+<p>All NUOPC components must define a <code class="docutils literal"><span class="pre">SetServices</span></code> method.  The SetServices method is used
+to define which generic component is being extended (i.e., Driver, Model, Mediator, or Connector),
+to register entry points, and to register specialization methods.</p>
+</div>
+<div class="section" id="initialization-sequence">
+<span id="driver-phase-init"></span><h3>Initialization Sequence<a class="headerlink" href="#initialization-sequence" title="Permalink to this headline">¶</a></h3>
+<p>The generic <code class="docutils literal"><span class="pre">NUOPC_Driver</span></code> component has a single initialize phase with the following behavior:</p>
+<ol class="arabic simple">
+<li>If the internal clock is not yet set, set the default internal clock to be a copy of the
+incoming clock, but only if the incoming clock is valid.</li>
+<li>Call the required specialization <a class="reference internal" href="#driver-specialization-setmodelservices"><span>SetModelServices</span></a> which
+adds all child Model, Mediator, and Connector components to the Driver.</li>
+<li>Call the optional specialization <a class="reference internal" href="#driver-specialization-setrunsequence"><span>SetRunSequence</span></a> to modify the
+default run sequence. The default run sequence established is:<ol class="arabic">
+<li>Run Connectors from Driver -&gt; Models/Mediators</li>
+<li>Run Connectors between Models/Mediators</li>
+<li>Run Models/Mediators</li>
+<li>Run Connectors from Models/Mediators -&gt; Driver</li>
+</ol>
+</li>
+<li>Execute Initialize phase=0 for all Model, Mediator, and Connector components. This is the
+method where each component is required to initialize its InitializePhaseMap attribute.</li>
+<li>Call the optional specialization <a class="reference internal" href="#driver-specialization-modifyinitphasemap"><span>ModifyInitializePhaseMap</span></a> to analyze
+and modify the InitializePhaseMap attribute of child components before the Driver uses it.</li>
+<li>Drive the initialize sequence for the child components.</li>
+</ol>
+</div>
+<div class="section" id="initialization-specialization-points">
+<h3>Initialization Specialization Points<a class="headerlink" href="#initialization-specialization-points" title="Permalink to this headline">¶</a></h3>
+<p>The following specialization points are used during the <code class="docutils literal"><span class="pre">NUOPC_Driver</span></code> initialization
+sequence.</p>
+<div class="section" id="setmodelservices">
+<span id="driver-specialization-setmodelservices"></span><h4>SetModelServices<a class="headerlink" href="#setmodelservices" title="Permalink to this headline">¶</a></h4>
+<p><strong>Called from: default initialize phase</strong></p>
+<p><em>(Required, User Provided)</em></p>
+<p>A specialization method to add Model, Mediator, and Connector child components to the
+Driver. The method <code class="docutils literal"><span class="pre">NUOPC_DriverAddComp()</span></code> is used to add child Components.</p>
+<p>This method may also optionally replace the default clock.</p>
+</div>
+<div class="section" id="setrunsequence">
+<span id="driver-specialization-setrunsequence"></span><h4>SetRunSequence<a class="headerlink" href="#setrunsequence" title="Permalink to this headline">¶</a></h4>
+<p><strong>Called from: default initialize phase</strong></p>
+<p><em>(Required, NUOPC Provided)</em></p>
+<p>A specialization method to replace the default run sequence. If not specialized,
+the default run sequence established by the Driver is:</p>
+<ol class="arabic simple">
+<li>Run Connectors from Driver -&gt; Models/Mediators</li>
+<li>Run Connectors between Models/Mediators</li>
+<li>Run Models/Mediators</li>
+<li>Run Connectors from Models/Mediators -&gt; Driver</li>
+</ol>
+<p>The method <code class="docutils literal"><span class="pre">NUOPC_DriverNewRunSequence()</span></code> is used to add a new run sequence
+with a specified number of slots. New run sequence elements are added using
+<code class="docutils literal"><span class="pre">NUOPC_DriverAddRunElement()</span></code>.</p>
+</div>
+<div class="section" id="modifyinitializephasemap">
+<span id="driver-specialization-modifyinitphasemap"></span><h4>ModifyInitializePhaseMap<a class="headerlink" href="#modifyinitializephasemap" title="Permalink to this headline">¶</a></h4>
+<p><strong>Called from: default initialize phase</strong></p>
+<p><em>(Optional, User Provided)</em></p>
+<p>A specialization in which the Driver can analyze and modify the InitializePhaseMap
+attribute of its child components.</p>
+</div>
+</div>
+<div class="section" id="run-sequence">
+<span id="driver-phase-run"></span><h3>Run Sequence<a class="headerlink" href="#run-sequence" title="Permalink to this headline">¶</a></h3>
+<p>The generic <code class="docutils literal"><span class="pre">NUOPC_Driver</span></code> component has a single run phase with the following behavior:</p>
+<ol class="arabic simple">
+<li>Call the <a class="reference internal" href="#driver-specialization-setrunclock"><span>SetRunClock</span></a> specialization. If not overridden the
+default behavior is:
+If the incoming clock is valid, set the internal stop time to one time step interval on
+the incoming clock. Otherwise, leave the internal clock stop time unchanged.</li>
+<li>Drive the time stepping loop, from current time to stop time, incrementing by time step.
+For each step iteration, call child components according to the run sequence.</li>
+</ol>
+</div>
+<div class="section" id="run-specialization-points">
+<h3>Run Specialization Points<a class="headerlink" href="#run-specialization-points" title="Permalink to this headline">¶</a></h3>
+<div class="section" id="setrunclock">
+<span id="driver-specialization-setrunclock"></span><h4>SetRunClock<a class="headerlink" href="#setrunclock" title="Permalink to this headline">¶</a></h4>
+<p><strong>Called from: default run phase</strong></p>
+<p><em>(Required, NUOPC Provided)</em></p>
+<p>A specialization method to check and set the internal clock against the incoming clock. If
+not overridden, the default method will check that the internal clock and incoming clock
+agree on current time and that the time step of the incoming clock is a multiple of the
+internal clock time step. Under these conditions set the internal stop time to one time
+step interval of the incoming clock. Otherwise exit with error, flagging an incompatibility.</p>
+</div>
+</div>
+<div class="section" id="finalize-sequence">
+<span id="driver-phase-finalize"></span><h3>Finalize Sequence<a class="headerlink" href="#finalize-sequence" title="Permalink to this headline">¶</a></h3>
+<p>The generic <code class="docutils literal"><span class="pre">NUOPC_Driver</span></code> component has a single finalize phase.  This phase calls
+into the <a class="reference internal" href="#driver-specialization-finalize"><span>Finalize</span></a> specialization method if it exists.</p>
+</div>
+<div class="section" id="finalize-specialization-points">
+<h3>Finalize Specialization Points<a class="headerlink" href="#finalize-specialization-points" title="Permalink to this headline">¶</a></h3>
+<div class="section" id="finalize">
+<span id="driver-specialization-finalize"></span><h4>Finalize<a class="headerlink" href="#finalize" title="Permalink to this headline">¶</a></h4>
+<p><strong>Called from: default finalize phase</strong></p>
+<p><em>(Optional, User Provided)</em></p>
+<p>An optional specialization method for custom finalization code and deallocations
+of user data structures.</p>
+</div>
+</div>
+</div>
+</div>
+</div>
+
+
+    </div>
+      
+  </div>
+</div>
+<footer class="footer">
+  <div class="container">
+    <p class="pull-right">
+      <a href="#">Back to top</a>
+      
+    </p>
+    <p>
+        &copy; Copyright 2002-2015 University Corporation for Atmospheric Research,
+Massachusetts Institute of Technology, Geophysical Fluid Dynamics Laboratory,
+University of Michigan, National Centers for Environmental Prediction,
+Los Alamos National Laboratory, Argonne National Laboratory,
+NASA Goddard Space Flight Center.  All rights reserved..<br/>
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.3.3.<br/>
+    </p>
+  </div>
+</footer>
+  </body>
+</html>

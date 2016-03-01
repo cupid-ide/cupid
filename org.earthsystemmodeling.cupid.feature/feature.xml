@@ -2,7 +2,7 @@
 <feature
       id="org.earthsystemmodeling.cupid.feature"
       label="Cupid"
-      version="0.1.0.qualifier">
+      version="0.2.0.qualifier">
    <install-handler handler=""/>
 
    <description url="http://www.earthsystemcog.org/projects/cupid">
@@ -10,12 +10,12 @@
    </description>
 
    <copyright>
-      Copyright 2013 by the Georgia Tech Research Corporation
+      Copyright 2015 NASA/NOAA/Univerisity of Colorado
    </copyright>
 
    <license url="http://opensource.org/licenses/MIT">
       The MIT License (MIT)
-Copyright (C) 2013  Georgia Tech Research Corporation
+Copyright (C) 2015  NASA/NOAA/University of Colorado
 Author: Rocky Dunlap
 
 Permission is hereby granted, free of charge, to any person obtaining a copy of this software 
@@ -33,6 +33,10 @@ NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FO
 DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, 
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
    </license>
+
+   <url>
+      <update url="http://www.earthsystemmodeling.org/cupid/mars"/>
+   </url>
 
    <requires>
       <import plugin="org.eclipse.core.runtime"/>
@@ -61,6 +65,12 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SO
 
    <plugin
          id="org.earthsystemmodeling.cupid"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"/>
+
+   <plugin
+         id="org.earthsystemmodeling.cupid.template"
          download-size="0"
          install-size="0"
          version="0.0.0"
