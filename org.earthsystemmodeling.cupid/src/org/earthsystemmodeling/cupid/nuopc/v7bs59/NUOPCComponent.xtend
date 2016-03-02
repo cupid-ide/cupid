@@ -90,7 +90,7 @@ public abstract class NUOPCComponent extends CodeConcept<CodeConcept<?,?>, ASTMo
 	def <T extends NUOPCComponent> T reverseChildren() {this as T}
 	
 	
-	override fward() {
+	override NUOPCComponent fward() {
 				
 		if (name == null) throw new CodeGenerationException("No component name specified")
 		

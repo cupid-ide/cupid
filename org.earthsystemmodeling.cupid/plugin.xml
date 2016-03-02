@@ -1,42 +1,16 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <?eclipse version="3.0"?>
 
-<!--
--->
-
 <plugin>
 
 
    <extension
          point="org.eclipse.ui.commands">
-      <!--
-      <command
-            categoryId="org.earthsystemmodeling.cupid.commands"
-            id="org.earthsystemmodeling.cupid.commands.reverseCommand"
-            name="Reverse Engineer">
-      </command>
-      <command
-            categoryId="org.earthsystemmodeling.cupid.commands"
-            id="org.earthsystemmodeling.cupid.commands.forwardCommand"
-            name="Forward Engineer">
-      </command>
-      <command
-            categoryId="org.earthsystemmodeling.cupid.commands"
-            id="org.earthsystemmodeling.cupid.commands.compareCommand"
-            name="Compare">
-      </command>
-      -->
+     
       <category
             id="org.earthsystemmodeling.cupid.commands"
             name="Cupid Commands">
       </category>
-      <!--
-      <command
-            categoryId="org.earthsystemmodeling.cupid.commands"
-            id="org.earthsystemmodeling.cupid.populateCodeDB"
-            name="Populate CodeDB">
-      </command>
-      -->
       <command
             categoryId="org.earthsystemmodeling.cupid.commands"
             id="org.earthsystemmodeling.cupid.showNUOPCView"
@@ -52,27 +26,21 @@
             id="org.earthsystemmodeling.cupid.generateCode"
             name="Generate NUOPC Code">
       </command>
+      <command
+            categoryId="org.earthsystemmodeling.cupid.commands"
+            id="org.earthsystemmodeling.cupid.generateNUOPCComp"
+            name="Generate NUOPC Component">
+         <commandParameter
+               id="org.earthsystemmodeling.cupid.generateNUOPCComp.componentType"
+               name="Component Type"
+               optional="true">
+         </commandParameter>
+      </command>
+      
    </extension>
+   
    <extension
          point="org.eclipse.ui.handlers">
-      <!--
-      <handler
-            class="org.earthsystemmodeling.cupid.handlers.ReverseHandler"
-            commandId="org.earthsystemmodeling.cupid.commands.reverseCommand">
-      </handler>
-      <handler
-            class="org.earthsystemmodeling.cupid.handlers.ForwardHandler"
-            commandId="org.earthsystemmodeling.cupid.commands.forwardCommand">
-      </handler>
-      <handler
-            class="org.earthsystemmodeling.cupid.handlers.CompareHandler"
-            commandId="org.earthsystemmodeling.cupid.commands.compareCommand">
-      </handler>
-      <handler
-            class="org.earthsystemmodeling.cupid.handlers.PopulateCodeDBHandler"
-            commandId="org.earthsystemmodeling.cupid.populateCodeDB">
-      </handler>
-     -->
       <handler
             class="org.earthsystemmodeling.cupid.handlers.ShowNUOPCView"
             commandId="org.earthsystemmodeling.cupid.showNUOPCView">
@@ -85,9 +53,13 @@
             class="org.earthsystemmodeling.cupid.handlers.GenerateCodeHandler"
             commandId="org.earthsystemmodeling.cupid.generateCode">
       </handler>
+      <handler
+            class="org.earthsystemmodeling.cupid.handlers.GenerateNUOPCComponent"
+            commandId="org.earthsystemmodeling.cupid.generateNUOPCComp">
+      </handler>
    </extension>
   
-  -
+  
    <extension
          point="org.eclipse.ui.menus">
       
@@ -130,27 +102,6 @@
          <toolbar
                id="org.earthsystemmodeling.cupid.toolbars.sampleToolbar"
                label="Cupid">
-            <!--
-            <command
-                  commandId="org.earthsystemmodeling.cupid.commands.reverseCommand"
-                  icon="icons/arrow_right.png"
-                  id="org.earthsystemmodeling.cupid.toolbars.reverseCommand"
-                  tooltip="Reverse engineer">
-            </command>
-           
-            <command
-                  commandId="org.earthsystemmodeling.cupid.commands.forwardCommand"
-                  icon="icons/arrow_left.png"
-                  id="org.earthsystemmodeling.cupid.toolbars.forwardCommand"
-                  tooltip="Forward engineer (generate code)">
-            </command>
-            <command
-                  commandId="org.earthsystemmodeling.cupid.commands.compareCommand"
-                  icon="icons/sample.gif"
-                  id="org.earthsystemmodeling.cupid.toolbars.compareCommand"
-                  tooltip="Compare">
-            </command>
-           	-->
            	<command
                   commandId="org.earthsystemmodeling.cupid.showNUOPCView"
                   icon="icons/hierarchy.png"
@@ -168,24 +119,66 @@
       
       <menuContribution
             locationURI="popup:org.eclipse.ui.navigator.ProjectExplorer#PopupMenu?after=additions">
-         <command
+          <menu
+                icon="icons/hierarchy.png"
+                label="NUOPC"
+                mnemonic="N">
+            <command
                commandId="org.earthsystemmodeling.cupid.generateCode"
                id="org.earthsystemmodeling.cupid.menus.generateCode">
-            <!--
-            <visibleWhen
-                  checkEnabled="false">
-               <with
-                     variable="selection">
-                  <iterate
-                        operator="and">
-                     <instanceof
-                           value="org.eclipse.core.resources.IFile">
-                     </instanceof>
-                  </iterate>
-               </with>
-            </visibleWhen>
-            -->
-         </command>
+         	</command>
+            <command
+                  commandId="org.earthsystemmodeling.cupid.generateNUOPCComp"
+                  label="Generate Driver..."
+                  mnemonic="D"
+                  style="push">
+               <parameter
+                     name="org.earthsystemmodeling.cupid.generateNUOPCComp.componentType"
+                     value="driver">
+               </parameter>             
+               <visibleWhen checkEnabled="false">
+         			<with variable="selection">
+         				<iterate ifEmpty="false">
+         					 <adapt type="org.eclipse.core.resources.IContainer"/>
+         				</iterate>
+         			</with>         			         			
+         		</visibleWhen>
+            </command>
+            <command
+                  commandId="org.earthsystemmodeling.cupid.generateNUOPCComp"
+                  label="Generate Model..."
+                  mnemonic="M"
+                  style="push">
+               <parameter
+                     name="org.earthsystemmodeling.cupid.generateNUOPCComp.componentType"
+                     value="model">
+               </parameter>
+               <visibleWhen checkEnabled="false">
+         			<with variable="selection">
+         				<iterate ifEmpty="false">
+         					 <adapt type="org.eclipse.core.resources.IContainer"/>
+         				</iterate>
+         			</with>         			         			
+         		</visibleWhen>
+            </command>
+            <command
+                  commandId="org.earthsystemmodeling.cupid.generateNUOPCComp"
+                  label="Generate Mediator..."
+                  mnemonic="e"
+                  style="push">
+               <parameter
+                     name="org.earthsystemmodeling.cupid.generateNUOPCComp.componentType"
+                     value="mediator">
+               </parameter>
+               <visibleWhen checkEnabled="false">
+         			<with variable="selection">
+         				<iterate ifEmpty="false">
+         					 <adapt type="org.eclipse.core.resources.IContainer"/>
+         				</iterate>
+         			</with>         			         			
+         		</visibleWhen>
+            </command>
+         </menu>
       </menuContribution>
       
       
@@ -288,27 +281,7 @@
          </command>
       </menuContribution>
      
-      
-      <menuContribution
-            allPopups="true"
-            locationURI="toolbar:org.earthsystemmodeling.cupid.views.NUOPCView.toolbar">
-         <command
-               commandId="org.earthsystemmodeling.cupid.commands.reverseCommand"
-               id="org.earthsystemmodeling.cupid.toolbars.reverseCommand"
-               label="Reverse engineer"
-               style="push"
-               tooltip="Reverse engineer">
-         </command>
-         
-         <command
-               commandId="org.earthsystemmodeling.cupid.commands.forwardCommand"
-               icon="icons/arrow_left.png"
-               id="org.earthsystemmodeling.cupid.toolbars.forwardCommand"
-               tooltip="Forward engineer (generate code)">
-         </command>
-        
-      </menuContribution>
-      
+            
       <menuContribution
             locationURI="popup:org.eclipse.ui.navigator.ProjectExplorer#PopupMenu?after=additions">
          <command
@@ -445,19 +418,6 @@
             id="org.earthsystemmodeling.cupid.views.NUOPCDocView"
             name="NUOPC Doc">
       </view>
-      <!--
-      <category
-            id="org.earthsystemmodeling.codequery"
-            name="Code Query">
-      </category>
-      <view
-            category="org.earthsystemmodeling.codequery"
-            class="org.earthsystemmodeling.cupid.views.CodeQueryView"
-            icon="icons/sample.gif"
-            id="org.earthsystemmodeling.cupid.views.CodeQueryView"
-            name="Code Query View">
-      </view>
-      -->
    </extension>
    <extension
          point="org.eclipse.help.contexts">
@@ -657,6 +617,8 @@
             project="true">
       </wizard>
    </extension>
+   
+   <!--
    <extension
          point="org.eclipse.ui.cheatsheets.cheatSheetContent">
       <category
@@ -693,6 +655,8 @@
             id="org.earthsystemmodeling.cupid.cheatsheet.taskEditor">
       </taskEditor>
    </extension>
+   -->
+   
    <extension
          point="org.eclipse.ui.perspectives">
       <perspective

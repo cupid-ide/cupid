@@ -34,7 +34,7 @@ public class ApplyCodeConceptChanges implements IRunnableWithProgress {
 	}
 		
 	@Override
-	public void run(IProgressMonitor monitor) throws InvocationTargetException, InterruptedException {
+	public void run(IProgressMonitor monitor) {
 		
 		try {
 			

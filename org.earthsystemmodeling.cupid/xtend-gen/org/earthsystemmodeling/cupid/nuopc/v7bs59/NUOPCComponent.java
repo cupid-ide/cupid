@@ -277,9 +277,9 @@ public abstract class NUOPCComponent extends CodeConcept<CodeConcept<?, ?>, ASTM
   }
   
   @Override
-  public CodeConcept<?, ?> fward() {
+  public NUOPCComponent fward() {
     try {
-      CodeConcept<?, ?> _xblockexpression = null;
+      NUOPCComponent _xblockexpression = null;
       {
         boolean _equals = Objects.equal(this.name, null);
         if (_equals) {
@@ -361,7 +361,7 @@ public abstract class NUOPCComponent extends CodeConcept<CodeConcept<?, ?>, ASTM
           }
         };
         IterableExtensions.<ASTUseStmtNode>forEach(_filter, _function);
-        _xblockexpression = super.<CodeConcept<?, ?>>fward();
+        _xblockexpression = super.<NUOPCComponent>fward();
       }
       return _xblockexpression;
     } catch (Throwable _e) {

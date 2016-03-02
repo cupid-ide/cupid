@@ -1902,7 +1902,7 @@ public class NUOPCMediator extends NUOPCComponent {
   
   @Override
   public NUOPCMediator fward() {
-    CodeConcept<?, ?> _fward = super.fward();
+    NUOPCComponent _fward = super.fward();
     return ((NUOPCMediator) _fward);
   }
 }

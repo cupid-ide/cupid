@@ -1986,7 +1986,7 @@ public class NUOPCModel extends NUOPCComponent {
   
   @Override
   public NUOPCModel fward() {
-    CodeConcept<?, ?> _fward = super.fward();
+    NUOPCComponent _fward = super.fward();
     return ((NUOPCModel) _fward);
   }
 }

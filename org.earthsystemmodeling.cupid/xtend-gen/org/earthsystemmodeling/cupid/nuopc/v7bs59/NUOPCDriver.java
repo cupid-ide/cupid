@@ -2799,7 +2799,7 @@ public class NUOPCDriver extends NUOPCComponent {
   
   @Override
   public NUOPCDriver fward() {
-    CodeConcept<?, ?> _fward = super.fward();
+    NUOPCComponent _fward = super.fward();
     return ((NUOPCDriver) _fward);
   }
 }
