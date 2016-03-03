@@ -1,4 +1,4 @@
-package org.earthsystemmodeling.cupid.nuopc.v7bs59 
+package org.earthsystemmodeling.cupid.nuopc.v7r 
 import org.eclipse.photran.internal.core.parser.ASTModuleNode
 
 import org.earthsystemmodeling.cupid.annotation.Label

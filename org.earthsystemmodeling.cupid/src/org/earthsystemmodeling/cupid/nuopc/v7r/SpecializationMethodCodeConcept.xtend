@@ -1,4 +1,4 @@
-package org.earthsystemmodeling.cupid.nuopc.v7bs59
+package org.earthsystemmodeling.cupid.nuopc.v7r
 
 import java.util.List
 import org.earthsystemmodeling.cupid.annotation.Child

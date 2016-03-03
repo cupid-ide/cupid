@@ -99,9 +99,10 @@ public class TestHelpers {
 		compileProc.waitFor();
 		
 		if (compileProc.exitValue() != 0) {
-			System.out.println("\n\n*******************************");
+			System.out.println("\n\n*****************************************");
 			System.out.println("FAILED TO COMPILE GENERATED CODE");
-			System.out.println("********************************");
+			System.out.println("Working directory: " + p.getLocation().toFile().getPath());
+			System.out.println("******************************************");
 			System.out.println("\nSTDOUT:\n****************************\n\n" + stdout);
 			System.out.println("\nSTDERR:\n****************************\n\n" + stderr);
 			return false;

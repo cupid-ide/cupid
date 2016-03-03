@@ -380,7 +380,7 @@ public class NUOPCMediator extends NUOPCComponent {
       }
       
       @Override
-      public CodeConcept<?, ?> fward() {
+      public CodeConcept<?, ?> forward() {
         NUOPCMediator.IPD.AdvertiseField _xblockexpression = null;
         {
           StringConcatenation _builder = new StringConcatenation();
@@ -465,7 +465,7 @@ public class NUOPCMediator extends NUOPCComponent {
       }
       
       @Override
-      public CodeConcept<?, ?> fward() {
+      public CodeConcept<?, ?> forward() {
         try {
           CodeConcept<?, ?> _xblockexpression = null;
           {
@@ -490,7 +490,7 @@ public class NUOPCMediator extends NUOPCComponent {
             final ASTSubroutineSubprogramNode ssn = this._parent.getASTRef();
             IASTListNode<IBodyConstruct> _body = ssn.getBody();
             _body.addAll(stmts);
-            _xblockexpression = super.<CodeConcept<?, ?>>fward();
+            _xblockexpression = super.<CodeConcept<?, ?>>forward();
           }
           return _xblockexpression;
         } catch (Throwable _e) {
@@ -1847,38 +1847,6 @@ public class NUOPCMediator extends NUOPCComponent {
     return ((NUOPCMediator) _reverse);
   }
   
-  /**
-   * override reverse() {
-   * 
-   * var rs = '''module(_moduleID, _compUnitID, _medName),
-   * compilationUnit(_compUnitID, _filename, _path),
-   * uses(_uid, _moduleID, 'NUOPC_Mediator').'''.execQuery
-   * try {
-   * if (rs.next) {
-   * _id = rs.getLong("_moduleID")
-   * mediatorName = rs.getString("_medName")
-   * filename = rs.getString("_filename")
-   * path = rs.getString("_path")
-   * importNUOPCGeneric = new GenericImport(this, rs.getLong("_uid")).reverse
-   * rs.close
-   * 
-   * rs = '''uses(_uid, «_id», 'ESMF').'''.execQuery
-   * if(rs.next) importESMF = newBasicCodeConcept(this, rs.getLong("_uid"))
-   * rs.close
-   * 
-   * rs = '''uses(_uid, «_id», 'NUOPC').'''.execQuery
-   * if(rs.next) importNUOPC = newBasicCodeConcept(this, rs.getLong("_uid"))
-   * rs.close
-   * 
-   * return reverseChildren
-   * }
-   * } catch (SQLException e) {
-   * log("SQL error", e);
-   * }
-   * 
-   * null
-   * }
-   */
   @Override
   public NUOPCComponent reverseChildren() {
     NUOPCMediator _xblockexpression = null;
@@ -1901,8 +1869,8 @@ public class NUOPCMediator extends NUOPCComponent {
   }
   
   @Override
-  public NUOPCMediator fward() {
-    NUOPCComponent _fward = super.fward();
-    return ((NUOPCMediator) _fward);
+  public NUOPCMediator forward() {
+    NUOPCComponent _forward = super.forward();
+    return ((NUOPCMediator) _forward);
   }
 }

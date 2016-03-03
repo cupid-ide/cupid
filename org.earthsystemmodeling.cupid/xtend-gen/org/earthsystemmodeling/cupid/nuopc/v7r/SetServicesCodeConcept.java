@@ -1,4 +1,4 @@
-package org.earthsystemmodeling.cupid.nuopc.v7bs59;
+package org.earthsystemmodeling.cupid.nuopc.v7r;
 
 import com.google.common.base.Objects;
 import java.util.Set;
@@ -8,7 +8,7 @@ import org.earthsystemmodeling.cupid.annotation.MappingType;
 import org.earthsystemmodeling.cupid.annotation.Name;
 import org.earthsystemmodeling.cupid.nuopc.BasicCodeConcept;
 import org.earthsystemmodeling.cupid.nuopc.CodeConcept;
-import org.earthsystemmodeling.cupid.nuopc.v7bs59.NUOPCComponent;
+import org.earthsystemmodeling.cupid.nuopc.v7r.NUOPCComponent;
 import org.earthsystemmodeling.cupid.util.CodeExtraction;
 import org.eclipse.photran.internal.core.lexer.Token;
 import org.eclipse.photran.internal.core.parser.ASTAccessStmtNode;

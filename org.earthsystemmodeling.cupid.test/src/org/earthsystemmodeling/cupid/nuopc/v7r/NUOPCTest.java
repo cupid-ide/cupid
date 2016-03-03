@@ -1,4 +1,4 @@
-package org.earthsystemmodeling.cupid.nuopc.v7bs59;
+package org.earthsystemmodeling.cupid.nuopc.v7r;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
@@ -16,7 +16,7 @@ import org.apache.commons.io.IOUtils;
 import org.apache.commons.io.LineIterator;
 import org.earthsystemmodeling.cupid.nuopc.BasicCodeConcept;
 import org.earthsystemmodeling.cupid.nuopc.CodeConcept;
-import org.earthsystemmodeling.cupid.nuopc.v7bs59.NUOPCComponent.GenericImport;
+import org.earthsystemmodeling.cupid.nuopc.v7r.NUOPCComponent.GenericImport;
 import org.earthsystemmodeling.cupid.test.TestHelpers;
 import org.eclipse.core.resources.IFile;
 import org.eclipse.core.resources.IProject;
@@ -34,7 +34,7 @@ import org.junit.Test;
 @SuppressWarnings("restriction")
 public class NUOPCTest {
 	
-	public static final String NUOPC_TAG = "ESMF_7_0_0_beta_snapshot_59";
+	public static final String NUOPC_TAG = "ESMF_7_0_0";
 	
 	private static IProject PROJECT_NUOPC_PROTOTYPES;
 	
@@ -431,7 +431,7 @@ public class NUOPCTest {
 	}
 	
 	@Test
-	public void NUOPCProtos_bs59() throws SQLException, CoreException {
+	public void NUOPCProtos_v7() throws SQLException, CoreException {
 		
 		//skip validation for these files
 		final List<String> skipVal = new ArrayList<String>();
@@ -463,7 +463,7 @@ public class NUOPCTest {
 						//IFortranAST ast = PhotranVPG.getInstance().acquireTransientAST(file);
 						//assertNotNull(ast);
 						
-						System.out.println("NUOPCProtos_bs59: Processing file: " + file.getProjectRelativePath());
+						System.out.println("NUOPCProtos_v7: Processing file: " + file.getProjectRelativePath());
 						//if (file.getProjectRelativePath().toString().equalsIgnoreCase("AtmOcnSelectExternalProto/esm.F90")) {
 						//	IFortranAST ast = PhotranVPG.getInstance().acquireTransientAST(file);
 						//	System.out.println("\n\n" + ast.getRoot().toString() + "\n\n");

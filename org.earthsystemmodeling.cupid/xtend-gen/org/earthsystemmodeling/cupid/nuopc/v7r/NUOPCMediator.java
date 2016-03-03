@@ -1,4 +1,4 @@
-package org.earthsystemmodeling.cupid.nuopc.v7bs59;
+package org.earthsystemmodeling.cupid.nuopc.v7r;
 
 import com.google.common.base.Objects;
 import com.google.common.collect.Iterables;
@@ -11,10 +11,10 @@ import org.earthsystemmodeling.cupid.annotation.MappingType;
 import org.earthsystemmodeling.cupid.nuopc.ASTQuery;
 import org.earthsystemmodeling.cupid.nuopc.CodeConcept;
 import org.earthsystemmodeling.cupid.nuopc.ESMFCodeTemplates;
-import org.earthsystemmodeling.cupid.nuopc.v7bs59.EntryPointCodeConcept;
-import org.earthsystemmodeling.cupid.nuopc.v7bs59.NUOPCComponent;
-import org.earthsystemmodeling.cupid.nuopc.v7bs59.SetServicesCodeConcept;
-import org.earthsystemmodeling.cupid.nuopc.v7bs59.SpecializationMethodCodeConcept;
+import org.earthsystemmodeling.cupid.nuopc.v7r.EntryPointCodeConcept;
+import org.earthsystemmodeling.cupid.nuopc.v7r.NUOPCComponent;
+import org.earthsystemmodeling.cupid.nuopc.v7r.SetServicesCodeConcept;
+import org.earthsystemmodeling.cupid.nuopc.v7r.SpecializationMethodCodeConcept;
 import org.earthsystemmodeling.cupid.util.CodeExtraction;
 import org.eclipse.core.resources.IResource;
 import org.eclipse.photran.internal.core.lexer.Token;
@@ -31,73 +31,64 @@ import org.eclipse.xtext.xbase.lib.Functions.Function1;
 import org.eclipse.xtext.xbase.lib.IterableExtensions;
 import org.eclipse.xtext.xbase.lib.Procedures.Procedure1;
 
-@Label(label = "NUOPC Model")
+@Label(label = "NUOPC Mediator")
 @MappingType("module")
-@Doc(urlfrag = "#model-top")
+@Doc(urlfrag = "#mediator-top")
 @SuppressWarnings("all")
-public class NUOPCModel extends NUOPCComponent {
+public class NUOPCMediator extends NUOPCComponent {
   @Label(label = "SetServices")
   @MappingType("subroutine")
-  @Doc(urlfrag = "#model-setservices")
-  public static class SetServices extends SetServicesCodeConcept<NUOPCModel> {
-    public SetServices(final NUOPCModel parent) {
+  @Doc(urlfrag = "#mediator-setservices")
+  public static class SetServices extends SetServicesCodeConcept<NUOPCMediator> {
+    public SetServices(final NUOPCMediator parent) {
       super(parent);
     }
   }
   
   @Label(label = "Initialize Phase Definition")
-  public static abstract class IPD extends CodeConcept<NUOPCModel.InitPhases, ASTNode> {
-    /**
-     * def void setChildPhase(EntryPointCodeConcept<IPD> child) {
-     * //find field of matching type and assign child to it
-     * val childField = this.class.fields.findFirst[it.type.isInstance(child)]
-     * if (childField != null) {
-     * childField.set(this, child)
-     * }
-     * }
-     */
+  public static abstract class IPD extends CodeConcept<NUOPCMediator.InitPhases, ASTNode> {
     @Label(label = "IPDv04p1 - Advertise Fields")
     @MappingType("subroutine")
-    @Doc(urlfrag = "#model-phase-advertisefields")
-    public static class IPDv04p1 extends EntryPointCodeConcept<NUOPCModel.IPD> {
+    @Doc(urlfrag = "#mediator-phase-advertisefields")
+    public static class IPDv04p1 extends EntryPointCodeConcept<NUOPCMediator.IPD> {
       @Child(min = 0, max = (-1))
-      public List<NUOPCModel.IPD.AdvertiseField> advertiseFields;
+      public List<NUOPCMediator.IPD.AdvertiseField> advertiseFields;
       
-      public IPDv04p1(final NUOPCModel.IPD parent) {
+      public IPDv04p1(final NUOPCMediator.IPD parent) {
         super(parent);
         String _phaseLabel = this.getPhaseLabel();
         this.phaseLabel = _phaseLabel;
         this.subroutineName = "AdvertiseFields";
         this.methodType = "ESMF_METHOD_INITIALIZE";
         parent.setOrAddChild(this);
-        ArrayList<NUOPCModel.IPD.AdvertiseField> _newArrayList = CollectionLiterals.<NUOPCModel.IPD.AdvertiseField>newArrayList();
+        ArrayList<NUOPCMediator.IPD.AdvertiseField> _newArrayList = CollectionLiterals.<NUOPCMediator.IPD.AdvertiseField>newArrayList();
         this.advertiseFields = _newArrayList;
       }
       
       public String getPhaseLabel() {
         String _switchResult = null;
-        final NUOPCModel.IPD _parent = this._parent;
+        final NUOPCMediator.IPD _parent = this._parent;
         boolean _matched = false;
         if (!_matched) {
-          if (_parent instanceof NUOPCModel.IPDv00) {
+          if (_parent instanceof NUOPCMediator.IPDv00) {
             _matched=true;
             _switchResult = "IPDv00p1";
           }
         }
         if (!_matched) {
-          if (_parent instanceof NUOPCModel.IPDv01) {
+          if (_parent instanceof NUOPCMediator.IPDv01) {
             _matched=true;
             _switchResult = "IPDv01p1";
           }
         }
         if (!_matched) {
-          if (_parent instanceof NUOPCModel.IPDv02) {
+          if (_parent instanceof NUOPCMediator.IPDv02) {
             _matched=true;
             _switchResult = "IPDv02p1";
           }
         }
         if (!_matched) {
-          if (_parent instanceof NUOPCModel.IPDv03) {
+          if (_parent instanceof NUOPCMediator.IPDv03) {
             _matched=true;
             _switchResult = "IPDv03p1";
           }
@@ -109,10 +100,10 @@ public class NUOPCModel extends NUOPCComponent {
       }
       
       @Override
-      public EntryPointCodeConcept<NUOPCModel.IPD> reverseChildren() {
-        NUOPCModel.IPD.IPDv04p1 _xblockexpression = null;
+      public EntryPointCodeConcept<NUOPCMediator.IPD> reverseChildren() {
+        NUOPCMediator.IPD.IPDv04p1 _xblockexpression = null;
         {
-          NUOPCModel.IPD.AdvertiseField _advertiseField = new NUOPCModel.IPD.AdvertiseField(this);
+          NUOPCMediator.IPD.AdvertiseField _advertiseField = new NUOPCMediator.IPD.AdvertiseField(this);
           List _reverseMultiple = _advertiseField.reverseMultiple();
           this.advertiseFields = _reverseMultiple;
           _xblockexpression = this;
@@ -133,55 +124,55 @@ public class NUOPCModel extends NUOPCComponent {
     
     @Label(label = "IPDv04p2 - Unspecified by NUOPC")
     @MappingType("subroutine-inherited")
-    @Doc(urlfrag = "#model-initseq")
-    public static class IPDv04p2 extends CodeConcept<NUOPCModel.IPD, ASTNode> {
-      public IPDv04p2(final NUOPCModel.IPD parent) {
+    @Doc(urlfrag = "#mediator-initseq")
+    public static class IPDv04p2 extends CodeConcept<NUOPCMediator.IPD, ASTNode> {
+      public IPDv04p2(final NUOPCMediator.IPD parent) {
         super(parent);
       }
     }
     
     @Label(label = "IPDv04p3 - Realize Fields Providing Geom Object")
     @MappingType("subroutine")
-    @Doc(urlfrag = "#model-phase-realizefieldsproviding")
-    public static class IPDv04p3 extends EntryPointCodeConcept<NUOPCModel.IPD> {
+    @Doc(urlfrag = "#mediator-phase-realizefieldsproviding")
+    public static class IPDv04p3 extends EntryPointCodeConcept<NUOPCMediator.IPD> {
       @Child(min = 0, max = (-1))
-      public List<NUOPCModel.IPD.RealizeField> realizeFields;
+      public List<NUOPCMediator.IPD.RealizeField> realizeFields;
       
-      public IPDv04p3(final NUOPCModel.IPD parent) {
+      public IPDv04p3(final NUOPCMediator.IPD parent) {
         super(parent);
         String _phaseLabel = this.getPhaseLabel();
         this.phaseLabel = _phaseLabel;
         this.subroutineName = "RealizeFieldsProvidingGrid";
         this.methodType = "ESMF_METHOD_INITIALIZE";
         parent.setOrAddChild(this);
-        ArrayList<NUOPCModel.IPD.RealizeField> _newArrayList = CollectionLiterals.<NUOPCModel.IPD.RealizeField>newArrayList();
+        ArrayList<NUOPCMediator.IPD.RealizeField> _newArrayList = CollectionLiterals.<NUOPCMediator.IPD.RealizeField>newArrayList();
         this.realizeFields = _newArrayList;
       }
       
       public String getPhaseLabel() {
         String _switchResult = null;
-        final NUOPCModel.IPD _parent = this._parent;
+        final NUOPCMediator.IPD _parent = this._parent;
         boolean _matched = false;
         if (!_matched) {
-          if (_parent instanceof NUOPCModel.IPDv00) {
+          if (_parent instanceof NUOPCMediator.IPDv00) {
             _matched=true;
             _switchResult = "IPDv00p2";
           }
         }
         if (!_matched) {
-          if (_parent instanceof NUOPCModel.IPDv01) {
+          if (_parent instanceof NUOPCMediator.IPDv01) {
             _matched=true;
             _switchResult = "IPDv01p3";
           }
         }
         if (!_matched) {
-          if (_parent instanceof NUOPCModel.IPDv02) {
+          if (_parent instanceof NUOPCMediator.IPDv02) {
             _matched=true;
             _switchResult = "IPDv02p3";
           }
         }
         if (!_matched) {
-          if (_parent instanceof NUOPCModel.IPDv03) {
+          if (_parent instanceof NUOPCMediator.IPDv03) {
             _matched=true;
             _switchResult = "IPDv03p3";
           }
@@ -193,10 +184,10 @@ public class NUOPCModel extends NUOPCComponent {
       }
       
       @Override
-      public EntryPointCodeConcept<NUOPCModel.IPD> reverseChildren() {
-        NUOPCModel.IPD.IPDv04p3 _xblockexpression = null;
+      public EntryPointCodeConcept<NUOPCMediator.IPD> reverseChildren() {
+        NUOPCMediator.IPD.IPDv04p3 _xblockexpression = null;
         {
-          NUOPCModel.IPD.RealizeField _realizeField = new NUOPCModel.IPD.RealizeField(this);
+          NUOPCMediator.IPD.RealizeField _realizeField = new NUOPCMediator.IPD.RealizeField(this);
           List _reverseMultiple = _realizeField.reverseMultiple();
           this.realizeFields = _reverseMultiple;
           _xblockexpression = this;
@@ -217,9 +208,9 @@ public class NUOPCModel extends NUOPCComponent {
     
     @Label(label = "IPDv04p4 - Modify Decomposition of Accepted Geom Object")
     @MappingType("subroutine")
-    @Doc(urlfrag = "#model-phase-modifydecomp")
-    public static class IPDv04p4 extends EntryPointCodeConcept<NUOPCModel.IPD> {
-      public IPDv04p4(final NUOPCModel.IPD parent) {
+    @Doc(urlfrag = "#mediator-phase-modifydecomp")
+    public static class IPDv04p4 extends EntryPointCodeConcept<NUOPCMediator.IPD> {
+      public IPDv04p4(final NUOPCMediator.IPD parent) {
         super(parent);
         String _phaseLabel = this.getPhaseLabel();
         this.phaseLabel = _phaseLabel;
@@ -230,10 +221,10 @@ public class NUOPCModel extends NUOPCComponent {
       
       public String getPhaseLabel() {
         String _switchResult = null;
-        final NUOPCModel.IPD _parent = this._parent;
+        final NUOPCMediator.IPD _parent = this._parent;
         boolean _matched = false;
         if (!_matched) {
-          if (_parent instanceof NUOPCModel.IPDv03) {
+          if (_parent instanceof NUOPCMediator.IPDv03) {
             _matched=true;
             _switchResult = "IPDv03p4";
           }
@@ -245,7 +236,7 @@ public class NUOPCModel extends NUOPCComponent {
       }
       
       @Override
-      public EntryPointCodeConcept<NUOPCModel.IPD> reverseChildren() {
+      public EntryPointCodeConcept<NUOPCMediator.IPD> reverseChildren() {
         return this;
       }
       
@@ -263,27 +254,27 @@ public class NUOPCModel extends NUOPCComponent {
     @Label(label = "IPDv04p5 - Realize Fields Accepting Geom Object")
     @MappingType("subroutine")
     @Doc(urlfrag = "#model-phase-realizefieldsaccepting")
-    public static class IPDv04p5 extends EntryPointCodeConcept<NUOPCModel.IPD> {
+    public static class IPDv04p5 extends EntryPointCodeConcept<NUOPCMediator.IPD> {
       @Child(min = 0, max = (-1))
-      public List<NUOPCModel.IPD.RealizeField> realizeFields;
+      public List<NUOPCMediator.IPD.RealizeField> realizeFields;
       
-      public IPDv04p5(final NUOPCModel.IPD parent) {
+      public IPDv04p5(final NUOPCMediator.IPD parent) {
         super(parent);
         String _phaseLabel = this.getPhaseLabel();
         this.phaseLabel = _phaseLabel;
         this.subroutineName = "RealizeFieldsAcceptingGrid";
         this.methodType = "ESMF_METHOD_INITIALIZE";
-        parent.setOrAddChild(this);
-        ArrayList<NUOPCModel.IPD.RealizeField> _newArrayList = CollectionLiterals.<NUOPCModel.IPD.RealizeField>newArrayList();
+        ArrayList<NUOPCMediator.IPD.RealizeField> _newArrayList = CollectionLiterals.<NUOPCMediator.IPD.RealizeField>newArrayList();
         this.realizeFields = _newArrayList;
+        parent.setOrAddChild(this);
       }
       
       public String getPhaseLabel() {
         String _switchResult = null;
-        final NUOPCModel.IPD _parent = this._parent;
+        final NUOPCMediator.IPD _parent = this._parent;
         boolean _matched = false;
         if (!_matched) {
-          if (_parent instanceof NUOPCModel.IPDv03) {
+          if (_parent instanceof NUOPCMediator.IPDv03) {
             _matched=true;
             _switchResult = "IPDv03p5";
           }
@@ -295,10 +286,10 @@ public class NUOPCModel extends NUOPCComponent {
       }
       
       @Override
-      public EntryPointCodeConcept<NUOPCModel.IPD> reverseChildren() {
-        NUOPCModel.IPD.IPDv04p5 _xblockexpression = null;
+      public EntryPointCodeConcept<NUOPCMediator.IPD> reverseChildren() {
+        NUOPCMediator.IPD.IPDv04p5 _xblockexpression = null;
         {
-          NUOPCModel.IPD.RealizeField _realizeField = new NUOPCModel.IPD.RealizeField(this);
+          NUOPCMediator.IPD.RealizeField _realizeField = new NUOPCMediator.IPD.RealizeField(this);
           List _reverseMultiple = _realizeField.reverseMultiple();
           this.realizeFields = _reverseMultiple;
           _xblockexpression = this;
@@ -319,18 +310,18 @@ public class NUOPCModel extends NUOPCComponent {
     
     @Label(label = "IPDv04p6 - Verify Connected / Set Clock")
     @MappingType("subroutine-inherited")
-    @Doc(urlfrag = "#model-phase-verifyimports")
-    public static class IPDv04p6 extends CodeConcept<NUOPCModel.IPD, ASTNode> {
-      public IPDv04p6(final NUOPCModel.IPD parent) {
+    @Doc(urlfrag = "#mediator-phase-verifyimports")
+    public static class IPDv04p6 extends CodeConcept<NUOPCMediator.IPD, ASTNode> {
+      public IPDv04p6(final NUOPCMediator.IPD parent) {
         super(parent);
       }
     }
     
     @Label(label = "IPDv04p7 - Data Initialize")
     @MappingType("subroutine-inherited")
-    @Doc(urlfrag = "#model-phase-initexport")
-    public static class IPDv04p7 extends CodeConcept<NUOPCModel.IPD, ASTNode> {
-      public IPDv04p7(final NUOPCModel.IPD parent) {
+    @Doc(urlfrag = "#mediator-phase-initexport")
+    public static class IPDv04p7 extends CodeConcept<NUOPCMediator.IPD, ASTNode> {
+      public IPDv04p7(final NUOPCMediator.IPD parent) {
         super(parent);
       }
     }
@@ -356,9 +347,9 @@ public class NUOPCModel extends NUOPCComponent {
       
       @Override
       public List reverseMultiple() {
-        ArrayList<NUOPCModel.IPD.AdvertiseField> _xblockexpression = null;
+        ArrayList<NUOPCMediator.IPD.AdvertiseField> _xblockexpression = null;
         {
-          final ArrayList<NUOPCModel.IPD.AdvertiseField> retList = CollectionLiterals.<NUOPCModel.IPD.AdvertiseField>newArrayList();
+          final ArrayList<NUOPCMediator.IPD.AdvertiseField> retList = CollectionLiterals.<NUOPCMediator.IPD.AdvertiseField>newArrayList();
           ASTSubroutineSubprogramNode _aSTRef = this._parent.getASTRef();
           IASTListNode<IBodyConstruct> _body = _aSTRef.getBody();
           Iterable<ASTCallStmtNode> _filter = Iterables.<ASTCallStmtNode>filter(_body, ASTCallStmtNode.class);
@@ -373,7 +364,7 @@ public class NUOPCModel extends NUOPCComponent {
           final Procedure1<ASTCallStmtNode> _function_1 = new Procedure1<ASTCallStmtNode>() {
             @Override
             public void apply(final ASTCallStmtNode it) {
-              NUOPCModel.IPD.AdvertiseField advField = new NUOPCModel.IPD.AdvertiseField(AdvertiseField.this._parent);
+              NUOPCMediator.IPD.AdvertiseField advField = new NUOPCMediator.IPD.AdvertiseField(AdvertiseField.this._parent);
               String _litArgExprByIdx = ASTQuery.litArgExprByIdx(it, 0);
               advField.state = _litArgExprByIdx;
               String _litArgExprByIdx_1 = ASTQuery.litArgExprByIdx(it, 1);
@@ -390,7 +381,7 @@ public class NUOPCModel extends NUOPCComponent {
       
       @Override
       public CodeConcept<?, ?> forward() {
-        NUOPCModel.IPD.AdvertiseField _xblockexpression = null;
+        NUOPCMediator.IPD.AdvertiseField _xblockexpression = null;
         {
           StringConcatenation _builder = new StringConcatenation();
           _builder.newLine();
@@ -441,9 +432,9 @@ public class NUOPCModel extends NUOPCComponent {
       
       @Override
       public List reverseMultiple() {
-        ArrayList<NUOPCModel.IPD.RealizeField> _xblockexpression = null;
+        ArrayList<NUOPCMediator.IPD.RealizeField> _xblockexpression = null;
         {
-          final ArrayList<NUOPCModel.IPD.RealizeField> retList = CollectionLiterals.<NUOPCModel.IPD.RealizeField>newArrayList();
+          final ArrayList<NUOPCMediator.IPD.RealizeField> retList = CollectionLiterals.<NUOPCMediator.IPD.RealizeField>newArrayList();
           ASTSubroutineSubprogramNode _aSTRef = this._parent.getASTRef();
           IASTListNode<IBodyConstruct> _body = _aSTRef.getBody();
           Iterable<ASTCallStmtNode> _filter = Iterables.<ASTCallStmtNode>filter(_body, ASTCallStmtNode.class);
@@ -458,7 +449,7 @@ public class NUOPCModel extends NUOPCComponent {
           final Procedure1<ASTCallStmtNode> _function_1 = new Procedure1<ASTCallStmtNode>() {
             @Override
             public void apply(final ASTCallStmtNode it) {
-              NUOPCModel.IPD.RealizeField relField = new NUOPCModel.IPD.RealizeField(RealizeField.this._parent);
+              NUOPCMediator.IPD.RealizeField relField = new NUOPCMediator.IPD.RealizeField(RealizeField.this._parent);
               String _litArgExprByIdx = ASTQuery.litArgExprByIdx(it, 0);
               relField.state = _litArgExprByIdx;
               String _litArgExprByIdx_1 = ASTQuery.litArgExprByIdx(it, 1);
@@ -508,50 +499,50 @@ public class NUOPCModel extends NUOPCComponent {
       }
     }
     
-    public IPD(final NUOPCModel.InitPhases parent) {
+    public IPD(final NUOPCMediator.InitPhases parent) {
       super(parent);
     }
   }
   
   @Label(label = "Initialize Phase Definition (v00)")
-  @Doc(urlfrag = "#model-initseq")
-  public static class IPDv00 extends NUOPCModel.IPD {
+  @Doc(urlfrag = "#mediator-initseq")
+  public static class IPDv00 extends NUOPCMediator.IPD {
     @Child(min = 1)
     @Label(label = "IPDv00p1 - Advertise Fields")
-    public NUOPCModel.IPD.IPDv04p1 ipdv00p1;
+    public NUOPCMediator.IPD.IPDv04p1 ipdv00p1;
     
     @Child(min = 1)
     @Label(label = "IPDv00p2 - Realize Fields")
-    public NUOPCModel.IPD.IPDv04p3 ipdv00p2;
+    public NUOPCMediator.IPD.IPDv04p3 ipdv00p2;
     
     @Child
     @Label(label = "IPDv00p3 - Verify All Connected & Set Clock")
-    public NUOPCModel.IPD.IPDv04p6 ipdv00p3;
+    public NUOPCMediator.IPD.IPDv04p6 ipdv00p3;
     
     @Child
     @Label(label = "IPDv00p4 - Initialize Fields")
-    public NUOPCModel.IPD.IPDv04p7 ipdv00p4;
+    public NUOPCMediator.IPD.IPDv04p7 ipdv00p4;
     
-    public IPDv00(final NUOPCModel.InitPhases parent) {
+    public IPDv00(final NUOPCMediator.InitPhases parent) {
       super(parent);
     }
     
     @Override
-    public NUOPCModel.IPDv00 reverse() {
-      NUOPCModel.IPDv00 _xblockexpression = null;
+    public NUOPCMediator.IPDv00 reverse() {
+      NUOPCMediator.IPDv00 _xblockexpression = null;
       {
-        NUOPCModel.IPD.IPDv04p1 _iPDv04p1 = new NUOPCModel.IPD.IPDv04p1(this);
+        NUOPCMediator.IPD.IPDv04p1 _iPDv04p1 = new NUOPCMediator.IPD.IPDv04p1(this);
         CodeConcept<?, ?> _reverse = _iPDv04p1.reverse();
-        this.ipdv00p1 = ((NUOPCModel.IPD.IPDv04p1) _reverse);
-        NUOPCModel.IPD.IPDv04p3 _iPDv04p3 = new NUOPCModel.IPD.IPDv04p3(this);
+        this.ipdv00p1 = ((NUOPCMediator.IPD.IPDv04p1) _reverse);
+        NUOPCMediator.IPD.IPDv04p3 _iPDv04p3 = new NUOPCMediator.IPD.IPDv04p3(this);
         CodeConcept<?, ?> _reverse_1 = _iPDv04p3.reverse();
-        this.ipdv00p2 = ((NUOPCModel.IPD.IPDv04p3) _reverse_1);
-        NUOPCModel.IPD.IPDv04p6 _iPDv04p6 = new NUOPCModel.IPD.IPDv04p6(this);
+        this.ipdv00p2 = ((NUOPCMediator.IPD.IPDv04p3) _reverse_1);
+        NUOPCMediator.IPD.IPDv04p6 _iPDv04p6 = new NUOPCMediator.IPD.IPDv04p6(this);
         CodeConcept<?, ?> _reverse_2 = _iPDv04p6.<CodeConcept<?, ?>>reverse();
-        this.ipdv00p3 = ((NUOPCModel.IPD.IPDv04p6) _reverse_2);
-        NUOPCModel.IPD.IPDv04p7 _iPDv04p7 = new NUOPCModel.IPD.IPDv04p7(this);
+        this.ipdv00p3 = ((NUOPCMediator.IPD.IPDv04p6) _reverse_2);
+        NUOPCMediator.IPD.IPDv04p7 _iPDv04p7 = new NUOPCMediator.IPD.IPDv04p7(this);
         CodeConcept<?, ?> _reverse_3 = _iPDv04p7.<CodeConcept<?, ?>>reverse();
-        this.ipdv00p4 = ((NUOPCModel.IPD.IPDv04p7) _reverse_3);
+        this.ipdv00p4 = ((NUOPCMediator.IPD.IPDv04p7) _reverse_3);
         _xblockexpression = this;
       }
       return _xblockexpression;
@@ -559,51 +550,51 @@ public class NUOPCModel extends NUOPCComponent {
   }
   
   @Label(label = "Initialize Phase Definition (v01)")
-  @Doc(urlfrag = "#model-initseq")
-  public static class IPDv01 extends NUOPCModel.IPD {
+  @Doc(urlfrag = "#mediator-initseq")
+  public static class IPDv01 extends NUOPCMediator.IPD {
     @Child(min = 1)
     @Label(label = "IPDv01p1 - Advertise Fields")
-    public NUOPCModel.IPD.IPDv04p1 ipdv01p1;
+    public NUOPCMediator.IPD.IPDv04p1 ipdv01p1;
     
     @Child
     @Label(label = "IPDv01p2 - (unspecified by NUOPC)")
-    public NUOPCModel.IPD.IPDv04p2 ipdv01p2;
+    public NUOPCMediator.IPD.IPDv04p2 ipdv01p2;
     
     @Child(min = 1)
     @Label(label = "IPDv01p3 - Realize Fields")
-    public NUOPCModel.IPD.IPDv04p3 ipdv01p3;
+    public NUOPCMediator.IPD.IPDv04p3 ipdv01p3;
     
     @Child
     @Label(label = "IPDv01p4 - Verify All Connected & Set Clock")
-    public NUOPCModel.IPD.IPDv04p6 ipdv01p4;
+    public NUOPCMediator.IPD.IPDv04p6 ipdv01p4;
     
     @Child
     @Label(label = "IPDv01p5 - Initialize Fields")
-    public NUOPCModel.IPD.IPDv04p7 ipdv01p5;
+    public NUOPCMediator.IPD.IPDv04p7 ipdv01p5;
     
-    public IPDv01(final NUOPCModel.InitPhases parent) {
+    public IPDv01(final NUOPCMediator.InitPhases parent) {
       super(parent);
     }
     
     @Override
-    public NUOPCModel.IPDv01 reverse() {
-      NUOPCModel.IPDv01 _xblockexpression = null;
+    public NUOPCMediator.IPDv01 reverse() {
+      NUOPCMediator.IPDv01 _xblockexpression = null;
       {
-        NUOPCModel.IPD.IPDv04p1 _iPDv04p1 = new NUOPCModel.IPD.IPDv04p1(this);
+        NUOPCMediator.IPD.IPDv04p1 _iPDv04p1 = new NUOPCMediator.IPD.IPDv04p1(this);
         CodeConcept<?, ?> _reverse = _iPDv04p1.reverse();
-        this.ipdv01p1 = ((NUOPCModel.IPD.IPDv04p1) _reverse);
-        NUOPCModel.IPD.IPDv04p2 _iPDv04p2 = new NUOPCModel.IPD.IPDv04p2(this);
+        this.ipdv01p1 = ((NUOPCMediator.IPD.IPDv04p1) _reverse);
+        NUOPCMediator.IPD.IPDv04p2 _iPDv04p2 = new NUOPCMediator.IPD.IPDv04p2(this);
         CodeConcept<?, ?> _reverse_1 = _iPDv04p2.<CodeConcept<?, ?>>reverse();
-        this.ipdv01p2 = ((NUOPCModel.IPD.IPDv04p2) _reverse_1);
-        NUOPCModel.IPD.IPDv04p3 _iPDv04p3 = new NUOPCModel.IPD.IPDv04p3(this);
+        this.ipdv01p2 = ((NUOPCMediator.IPD.IPDv04p2) _reverse_1);
+        NUOPCMediator.IPD.IPDv04p3 _iPDv04p3 = new NUOPCMediator.IPD.IPDv04p3(this);
         CodeConcept<?, ?> _reverse_2 = _iPDv04p3.reverse();
-        this.ipdv01p3 = ((NUOPCModel.IPD.IPDv04p3) _reverse_2);
-        NUOPCModel.IPD.IPDv04p6 _iPDv04p6 = new NUOPCModel.IPD.IPDv04p6(this);
+        this.ipdv01p3 = ((NUOPCMediator.IPD.IPDv04p3) _reverse_2);
+        NUOPCMediator.IPD.IPDv04p6 _iPDv04p6 = new NUOPCMediator.IPD.IPDv04p6(this);
         CodeConcept<?, ?> _reverse_3 = _iPDv04p6.<CodeConcept<?, ?>>reverse();
-        this.ipdv01p4 = ((NUOPCModel.IPD.IPDv04p6) _reverse_3);
-        NUOPCModel.IPD.IPDv04p7 _iPDv04p7 = new NUOPCModel.IPD.IPDv04p7(this);
+        this.ipdv01p4 = ((NUOPCMediator.IPD.IPDv04p6) _reverse_3);
+        NUOPCMediator.IPD.IPDv04p7 _iPDv04p7 = new NUOPCMediator.IPD.IPDv04p7(this);
         CodeConcept<?, ?> _reverse_4 = _iPDv04p7.<CodeConcept<?, ?>>reverse();
-        this.ipdv01p5 = ((NUOPCModel.IPD.IPDv04p7) _reverse_4);
+        this.ipdv01p5 = ((NUOPCMediator.IPD.IPDv04p7) _reverse_4);
         _xblockexpression = this;
       }
       return _xblockexpression;
@@ -611,51 +602,51 @@ public class NUOPCModel extends NUOPCComponent {
   }
   
   @Label(label = "Initialize Phase Definition (v02)")
-  @Doc(urlfrag = "#model-initseq")
-  public static class IPDv02 extends NUOPCModel.IPD {
-    public IPDv02(final NUOPCModel.InitPhases parent) {
+  @Doc(urlfrag = "#mediator-initseq")
+  public static class IPDv02 extends NUOPCMediator.IPD {
+    public IPDv02(final NUOPCMediator.InitPhases parent) {
       super(parent);
     }
     
     @Child(min = 1)
     @Label(label = "IPDv02p1 - Advertise Fields")
-    public NUOPCModel.IPD.IPDv04p1 ipdv02p1;
+    public NUOPCMediator.IPD.IPDv04p1 ipdv02p1;
     
     @Child
     @Label(label = "IPDv02p2 - Unspecified by NUOPC")
-    public NUOPCModel.IPD.IPDv04p2 ipdv02p2;
+    public NUOPCMediator.IPD.IPDv04p2 ipdv02p2;
     
     @Child(min = 1)
     @Label(label = "IPDv02p3 - Realize Fields Providing Geom Object")
-    public NUOPCModel.IPD.IPDv04p3 ipdv02p3;
+    public NUOPCMediator.IPD.IPDv04p3 ipdv02p3;
     
     @Child
     @Label(label = "IPDv02p4 - Verify Connected / Set Clock")
-    public NUOPCModel.IPD.IPDv04p6 ipdv02p4;
+    public NUOPCMediator.IPD.IPDv04p6 ipdv02p4;
     
     @Child
     @Label(label = "IPDv02p5 - Data Initialize")
-    public NUOPCModel.IPD.IPDv04p7 ipdv02p5;
+    public NUOPCMediator.IPD.IPDv04p7 ipdv02p5;
     
     @Override
-    public NUOPCModel.IPDv02 reverse() {
-      NUOPCModel.IPDv02 _xblockexpression = null;
+    public NUOPCMediator.IPDv02 reverse() {
+      NUOPCMediator.IPDv02 _xblockexpression = null;
       {
-        NUOPCModel.IPD.IPDv04p1 _iPDv04p1 = new NUOPCModel.IPD.IPDv04p1(this);
+        NUOPCMediator.IPD.IPDv04p1 _iPDv04p1 = new NUOPCMediator.IPD.IPDv04p1(this);
         CodeConcept<?, ?> _reverse = _iPDv04p1.reverse();
-        this.ipdv02p1 = ((NUOPCModel.IPD.IPDv04p1) _reverse);
-        NUOPCModel.IPD.IPDv04p2 _iPDv04p2 = new NUOPCModel.IPD.IPDv04p2(this);
+        this.ipdv02p1 = ((NUOPCMediator.IPD.IPDv04p1) _reverse);
+        NUOPCMediator.IPD.IPDv04p2 _iPDv04p2 = new NUOPCMediator.IPD.IPDv04p2(this);
         CodeConcept<?, ?> _reverse_1 = _iPDv04p2.<CodeConcept<?, ?>>reverse();
-        this.ipdv02p2 = ((NUOPCModel.IPD.IPDv04p2) _reverse_1);
-        NUOPCModel.IPD.IPDv04p3 _iPDv04p3 = new NUOPCModel.IPD.IPDv04p3(this);
+        this.ipdv02p2 = ((NUOPCMediator.IPD.IPDv04p2) _reverse_1);
+        NUOPCMediator.IPD.IPDv04p3 _iPDv04p3 = new NUOPCMediator.IPD.IPDv04p3(this);
         CodeConcept<?, ?> _reverse_2 = _iPDv04p3.reverse();
-        this.ipdv02p3 = ((NUOPCModel.IPD.IPDv04p3) _reverse_2);
-        NUOPCModel.IPD.IPDv04p6 _iPDv04p6 = new NUOPCModel.IPD.IPDv04p6(this);
+        this.ipdv02p3 = ((NUOPCMediator.IPD.IPDv04p3) _reverse_2);
+        NUOPCMediator.IPD.IPDv04p6 _iPDv04p6 = new NUOPCMediator.IPD.IPDv04p6(this);
         CodeConcept<?, ?> _reverse_3 = _iPDv04p6.<CodeConcept<?, ?>>reverse();
-        this.ipdv02p4 = ((NUOPCModel.IPD.IPDv04p6) _reverse_3);
-        NUOPCModel.IPD.IPDv04p7 _iPDv04p7 = new NUOPCModel.IPD.IPDv04p7(this);
+        this.ipdv02p4 = ((NUOPCMediator.IPD.IPDv04p6) _reverse_3);
+        NUOPCMediator.IPD.IPDv04p7 _iPDv04p7 = new NUOPCMediator.IPD.IPDv04p7(this);
         CodeConcept<?, ?> _reverse_4 = _iPDv04p7.<CodeConcept<?, ?>>reverse();
-        this.ipdv02p5 = ((NUOPCModel.IPD.IPDv04p7) _reverse_4);
+        this.ipdv02p5 = ((NUOPCMediator.IPD.IPDv04p7) _reverse_4);
         _xblockexpression = this;
       }
       return _xblockexpression;
@@ -663,65 +654,65 @@ public class NUOPCModel extends NUOPCComponent {
   }
   
   @Label(label = "Initialize Phase Definition (v03)")
-  @Doc(urlfrag = "#model-initseq")
-  public static class IPDv03 extends NUOPCModel.IPD {
-    public IPDv03(final NUOPCModel.InitPhases parent) {
+  @Doc(urlfrag = "#mediator-initseq")
+  public static class IPDv03 extends NUOPCMediator.IPD {
+    public IPDv03(final NUOPCMediator.InitPhases parent) {
       super(parent);
     }
     
     @Child(min = 1)
     @Label(label = "IPDv03p1 - Advertise Fields")
-    public NUOPCModel.IPD.IPDv04p1 ipdv03p1;
+    public NUOPCMediator.IPD.IPDv04p1 ipdv03p1;
     
     @Child
     @Label(label = "IPDv03p2 - Unspecified by NUOPC")
-    public NUOPCModel.IPD.IPDv04p2 ipdv03p2;
+    public NUOPCMediator.IPD.IPDv04p2 ipdv03p2;
     
     @Child(min = 1)
     @Label(label = "IPDv03p3 - Realize Fields Providing Geom Object")
-    public NUOPCModel.IPD.IPDv04p3 ipdv03p3;
+    public NUOPCMediator.IPD.IPDv04p3 ipdv03p3;
     
     @Child(min = 0)
     @Label(label = "IPDv03p4 - Modify Decomposition of Accepted Geom Object")
-    public NUOPCModel.IPD.IPDv04p4 ipdv03p4;
+    public NUOPCMediator.IPD.IPDv04p4 ipdv03p4;
     
     @Child(min = 1)
     @Label(label = "IPDv03p5 - Realize Fields Accepting Geom Object")
-    public NUOPCModel.IPD.IPDv04p5 ipdv03p5;
+    public NUOPCMediator.IPD.IPDv04p5 ipdv03p5;
     
     @Child
     @Label(label = "IPDv03p6 - Verify Connected / Set Clock")
-    public NUOPCModel.IPD.IPDv04p6 ipdv03p6;
+    public NUOPCMediator.IPD.IPDv04p6 ipdv03p6;
     
     @Child
     @Label(label = "IPDv03p7 - Data Initialize")
-    public NUOPCModel.IPD.IPDv04p7 ipdv03p7;
+    public NUOPCMediator.IPD.IPDv04p7 ipdv03p7;
     
     @Override
-    public NUOPCModel.IPDv03 reverse() {
-      NUOPCModel.IPDv03 _xblockexpression = null;
+    public NUOPCMediator.IPDv03 reverse() {
+      NUOPCMediator.IPDv03 _xblockexpression = null;
       {
-        NUOPCModel.IPD.IPDv04p1 _iPDv04p1 = new NUOPCModel.IPD.IPDv04p1(this);
+        NUOPCMediator.IPD.IPDv04p1 _iPDv04p1 = new NUOPCMediator.IPD.IPDv04p1(this);
         CodeConcept<?, ?> _reverse = _iPDv04p1.reverse();
-        this.ipdv03p1 = ((NUOPCModel.IPD.IPDv04p1) _reverse);
-        NUOPCModel.IPD.IPDv04p2 _iPDv04p2 = new NUOPCModel.IPD.IPDv04p2(this);
+        this.ipdv03p1 = ((NUOPCMediator.IPD.IPDv04p1) _reverse);
+        NUOPCMediator.IPD.IPDv04p2 _iPDv04p2 = new NUOPCMediator.IPD.IPDv04p2(this);
         CodeConcept<?, ?> _reverse_1 = _iPDv04p2.<CodeConcept<?, ?>>reverse();
-        this.ipdv03p2 = ((NUOPCModel.IPD.IPDv04p2) _reverse_1);
-        NUOPCModel.IPD.IPDv04p3 _iPDv04p3 = new NUOPCModel.IPD.IPDv04p3(this);
+        this.ipdv03p2 = ((NUOPCMediator.IPD.IPDv04p2) _reverse_1);
+        NUOPCMediator.IPD.IPDv04p3 _iPDv04p3 = new NUOPCMediator.IPD.IPDv04p3(this);
         CodeConcept<?, ?> _reverse_2 = _iPDv04p3.reverse();
-        this.ipdv03p3 = ((NUOPCModel.IPD.IPDv04p3) _reverse_2);
-        NUOPCModel.IPD.IPDv04p4 _iPDv04p4 = new NUOPCModel.IPD.IPDv04p4(this);
+        this.ipdv03p3 = ((NUOPCMediator.IPD.IPDv04p3) _reverse_2);
+        NUOPCMediator.IPD.IPDv04p4 _iPDv04p4 = new NUOPCMediator.IPD.IPDv04p4(this);
         CodeConcept<?, ?> _reverse_3 = _iPDv04p4.reverse();
-        this.ipdv03p4 = ((NUOPCModel.IPD.IPDv04p4) _reverse_3);
-        NUOPCModel.IPD.IPDv04p5 _iPDv04p5 = new NUOPCModel.IPD.IPDv04p5(this);
+        this.ipdv03p4 = ((NUOPCMediator.IPD.IPDv04p4) _reverse_3);
+        NUOPCMediator.IPD.IPDv04p5 _iPDv04p5 = new NUOPCMediator.IPD.IPDv04p5(this);
         CodeConcept<?, ?> _reverse_4 = _iPDv04p5.reverse();
-        this.ipdv03p5 = ((NUOPCModel.IPD.IPDv04p5) _reverse_4);
-        NUOPCModel.IPD.IPDv04p6 _iPDv04p6 = new NUOPCModel.IPD.IPDv04p6(this);
+        this.ipdv03p5 = ((NUOPCMediator.IPD.IPDv04p5) _reverse_4);
+        NUOPCMediator.IPD.IPDv04p6 _iPDv04p6 = new NUOPCMediator.IPD.IPDv04p6(this);
         CodeConcept<?, ?> _reverse_5 = _iPDv04p6.<CodeConcept<?, ?>>reverse();
-        this.ipdv03p6 = ((NUOPCModel.IPD.IPDv04p6) _reverse_5);
-        NUOPCModel.IPD.IPDv04p7 _iPDv04p7 = new NUOPCModel.IPD.IPDv04p7(this);
+        this.ipdv03p6 = ((NUOPCMediator.IPD.IPDv04p6) _reverse_5);
+        NUOPCMediator.IPD.IPDv04p7 _iPDv04p7 = new NUOPCMediator.IPD.IPDv04p7(this);
         CodeConcept<?, ?> _reverse_6 = _iPDv04p7.<CodeConcept<?, ?>>reverse();
-        this.ipdv03p7 = ((NUOPCModel.IPD.IPDv04p7) _reverse_6);
+        this.ipdv03p7 = ((NUOPCMediator.IPD.IPDv04p7) _reverse_6);
         _xblockexpression = this;
       }
       return _xblockexpression;
@@ -770,58 +761,58 @@ public class NUOPCModel extends NUOPCComponent {
   }
   
   @Label(label = "Initialize Phase Definition (v04)")
-  @Doc(urlfrag = "#model-initseq")
-  public static class IPDv04 extends NUOPCModel.IPD {
-    public IPDv04(final NUOPCModel.InitPhases parent) {
+  @Doc(urlfrag = "#mediator-initseq")
+  public static class IPDv04 extends NUOPCMediator.IPD {
+    public IPDv04(final NUOPCMediator.InitPhases parent) {
       super(parent);
     }
     
     @Child(min = 1)
-    public NUOPCModel.IPD.IPDv04p1 ipdv04p1;
+    public NUOPCMediator.IPD.IPDv04p1 ipdv04p1;
     
     @Child
-    public NUOPCModel.IPD.IPDv04p2 ipdv04p2;
+    public NUOPCMediator.IPD.IPDv04p2 ipdv04p2;
     
     @Child(min = 1)
-    public NUOPCModel.IPD.IPDv04p3 ipdv04p3;
+    public NUOPCMediator.IPD.IPDv04p3 ipdv04p3;
     
     @Child(min = 0)
-    public NUOPCModel.IPD.IPDv04p4 ipdv04p4;
+    public NUOPCMediator.IPD.IPDv04p4 ipdv04p4;
     
     @Child(min = 1)
-    public NUOPCModel.IPD.IPDv04p5 ipdv04p5;
+    public NUOPCMediator.IPD.IPDv04p5 ipdv04p5;
     
     @Child
-    public NUOPCModel.IPD.IPDv04p6 ipdv04p6;
+    public NUOPCMediator.IPD.IPDv04p6 ipdv04p6;
     
     @Child
-    public NUOPCModel.IPD.IPDv04p7 ipdv04p7;
+    public NUOPCMediator.IPD.IPDv04p7 ipdv04p7;
     
     @Override
-    public NUOPCModel.IPDv04 reverse() {
-      NUOPCModel.IPDv04 _xblockexpression = null;
+    public NUOPCMediator.IPDv04 reverse() {
+      NUOPCMediator.IPDv04 _xblockexpression = null;
       {
-        NUOPCModel.IPD.IPDv04p1 _iPDv04p1 = new NUOPCModel.IPD.IPDv04p1(this);
+        NUOPCMediator.IPD.IPDv04p1 _iPDv04p1 = new NUOPCMediator.IPD.IPDv04p1(this);
         CodeConcept<?, ?> _reverse = _iPDv04p1.reverse();
-        this.ipdv04p1 = ((NUOPCModel.IPD.IPDv04p1) _reverse);
-        NUOPCModel.IPD.IPDv04p2 _iPDv04p2 = new NUOPCModel.IPD.IPDv04p2(this);
+        this.ipdv04p1 = ((NUOPCMediator.IPD.IPDv04p1) _reverse);
+        NUOPCMediator.IPD.IPDv04p2 _iPDv04p2 = new NUOPCMediator.IPD.IPDv04p2(this);
         CodeConcept<?, ?> _reverse_1 = _iPDv04p2.<CodeConcept<?, ?>>reverse();
-        this.ipdv04p2 = ((NUOPCModel.IPD.IPDv04p2) _reverse_1);
-        NUOPCModel.IPD.IPDv04p3 _iPDv04p3 = new NUOPCModel.IPD.IPDv04p3(this);
+        this.ipdv04p2 = ((NUOPCMediator.IPD.IPDv04p2) _reverse_1);
+        NUOPCMediator.IPD.IPDv04p3 _iPDv04p3 = new NUOPCMediator.IPD.IPDv04p3(this);
         CodeConcept<?, ?> _reverse_2 = _iPDv04p3.reverse();
-        this.ipdv04p3 = ((NUOPCModel.IPD.IPDv04p3) _reverse_2);
-        NUOPCModel.IPD.IPDv04p4 _iPDv04p4 = new NUOPCModel.IPD.IPDv04p4(this);
+        this.ipdv04p3 = ((NUOPCMediator.IPD.IPDv04p3) _reverse_2);
+        NUOPCMediator.IPD.IPDv04p4 _iPDv04p4 = new NUOPCMediator.IPD.IPDv04p4(this);
         CodeConcept<?, ?> _reverse_3 = _iPDv04p4.reverse();
-        this.ipdv04p4 = ((NUOPCModel.IPD.IPDv04p4) _reverse_3);
-        NUOPCModel.IPD.IPDv04p5 _iPDv04p5 = new NUOPCModel.IPD.IPDv04p5(this);
+        this.ipdv04p4 = ((NUOPCMediator.IPD.IPDv04p4) _reverse_3);
+        NUOPCMediator.IPD.IPDv04p5 _iPDv04p5 = new NUOPCMediator.IPD.IPDv04p5(this);
         CodeConcept<?, ?> _reverse_4 = _iPDv04p5.reverse();
-        this.ipdv04p5 = ((NUOPCModel.IPD.IPDv04p5) _reverse_4);
-        NUOPCModel.IPD.IPDv04p6 _iPDv04p6 = new NUOPCModel.IPD.IPDv04p6(this);
+        this.ipdv04p5 = ((NUOPCMediator.IPD.IPDv04p5) _reverse_4);
+        NUOPCMediator.IPD.IPDv04p6 _iPDv04p6 = new NUOPCMediator.IPD.IPDv04p6(this);
         CodeConcept<?, ?> _reverse_5 = _iPDv04p6.<CodeConcept<?, ?>>reverse();
-        this.ipdv04p6 = ((NUOPCModel.IPD.IPDv04p6) _reverse_5);
-        NUOPCModel.IPD.IPDv04p7 _iPDv04p7 = new NUOPCModel.IPD.IPDv04p7(this);
+        this.ipdv04p6 = ((NUOPCMediator.IPD.IPDv04p6) _reverse_5);
+        NUOPCMediator.IPD.IPDv04p7 _iPDv04p7 = new NUOPCMediator.IPD.IPDv04p7(this);
         CodeConcept<?, ?> _reverse_6 = _iPDv04p7.<CodeConcept<?, ?>>reverse();
-        this.ipdv04p7 = ((NUOPCModel.IPD.IPDv04p7) _reverse_6);
+        this.ipdv04p7 = ((NUOPCMediator.IPD.IPDv04p7) _reverse_6);
         _xblockexpression = this;
       }
       return _xblockexpression;
@@ -870,44 +861,44 @@ public class NUOPCModel extends NUOPCComponent {
   }
   
   @Label(label = "Phases")
-  public static class InitPhases extends CodeConcept<NUOPCModel.Initialization, ASTNode> {
-    @Child(forward = true)
-    public NUOPCModel.IPDv00 ipdv00;
+  public static class InitPhases extends CodeConcept<NUOPCMediator.Initialization, ASTNode> {
+    @Child
+    public NUOPCMediator.IPDv00 ipdv00;
     
-    @Child(forward = true)
-    public NUOPCModel.IPDv01 ipdv01;
+    @Child
+    public NUOPCMediator.IPDv01 ipdv01;
     
-    @Child(forward = true)
-    public NUOPCModel.IPDv02 ipdv02;
+    @Child
+    public NUOPCMediator.IPDv02 ipdv02;
     
-    @Child(forward = true)
-    public NUOPCModel.IPDv03 ipdv03;
+    @Child
+    public NUOPCMediator.IPDv03 ipdv03;
     
-    @Child(forward = true)
-    public NUOPCModel.IPDv04 ipdv04;
+    @Child
+    public NUOPCMediator.IPDv04 ipdv04;
     
-    public InitPhases(final NUOPCModel.Initialization parent) {
+    public InitPhases(final NUOPCMediator.Initialization parent) {
       super(parent);
     }
     
     @Override
     public CodeConcept<?, ?> reverse() {
-      NUOPCModel.InitPhases _xblockexpression = null;
+      NUOPCMediator.InitPhases _xblockexpression = null;
       {
-        NUOPCModel.IPDv00 _iPDv00 = new NUOPCModel.IPDv00(this);
-        NUOPCModel.IPDv00 _reverse = _iPDv00.reverse();
+        NUOPCMediator.IPDv00 _iPDv00 = new NUOPCMediator.IPDv00(this);
+        NUOPCMediator.IPDv00 _reverse = _iPDv00.reverse();
         this.ipdv00 = _reverse;
-        NUOPCModel.IPDv01 _iPDv01 = new NUOPCModel.IPDv01(this);
-        NUOPCModel.IPDv01 _reverse_1 = _iPDv01.reverse();
+        NUOPCMediator.IPDv01 _iPDv01 = new NUOPCMediator.IPDv01(this);
+        NUOPCMediator.IPDv01 _reverse_1 = _iPDv01.reverse();
         this.ipdv01 = _reverse_1;
-        NUOPCModel.IPDv02 _iPDv02 = new NUOPCModel.IPDv02(this);
-        NUOPCModel.IPDv02 _reverse_2 = _iPDv02.reverse();
+        NUOPCMediator.IPDv02 _iPDv02 = new NUOPCMediator.IPDv02(this);
+        NUOPCMediator.IPDv02 _reverse_2 = _iPDv02.reverse();
         this.ipdv02 = _reverse_2;
-        NUOPCModel.IPDv03 _iPDv03 = new NUOPCModel.IPDv03(this);
-        NUOPCModel.IPDv03 _reverse_3 = _iPDv03.reverse();
+        NUOPCMediator.IPDv03 _iPDv03 = new NUOPCMediator.IPDv03(this);
+        NUOPCMediator.IPDv03 _reverse_3 = _iPDv03.reverse();
         this.ipdv03 = _reverse_3;
-        NUOPCModel.IPDv04 _iPDv04 = new NUOPCModel.IPDv04(this);
-        NUOPCModel.IPDv04 _reverse_4 = _iPDv04.reverse();
+        NUOPCMediator.IPDv04 _iPDv04 = new NUOPCMediator.IPDv04(this);
+        NUOPCMediator.IPDv04 _reverse_4 = _iPDv04.reverse();
         this.ipdv04 = _reverse_4;
         _xblockexpression = this;
       }
@@ -950,31 +941,31 @@ public class NUOPCModel extends NUOPCComponent {
   }
   
   @Label(label = "Initialize")
-  public static class Initialization extends CodeConcept<NUOPCModel, ASTNode> {
-    @Child(forward = true)
-    public NUOPCModel.InitPhases initPhases;
+  public static class Initialization extends CodeConcept<NUOPCMediator, ASTNode> {
+    @Child
+    public NUOPCMediator.InitPhases initPhases;
     
-    @Child(forward = true)
-    public NUOPCModel.InitSpecializations initSpecs;
+    @Child
+    public NUOPCMediator.InitSpecializations initSpecs;
     
-    public Initialization(final NUOPCModel parent) {
+    public Initialization(final NUOPCMediator parent) {
       super(parent);
     }
     
     @Override
-    public NUOPCModel.Initialization reverse() {
+    public NUOPCMediator.Initialization reverse() {
       return this.reverseChildren();
     }
     
-    public NUOPCModel.Initialization reverseChildren() {
-      NUOPCModel.Initialization _xblockexpression = null;
+    public NUOPCMediator.Initialization reverseChildren() {
+      NUOPCMediator.Initialization _xblockexpression = null;
       {
-        NUOPCModel.InitPhases _initPhases = new NUOPCModel.InitPhases(this);
+        NUOPCMediator.InitPhases _initPhases = new NUOPCMediator.InitPhases(this);
         CodeConcept<?, ?> _reverse = _initPhases.reverse();
-        this.initPhases = ((NUOPCModel.InitPhases) _reverse);
-        NUOPCModel.InitSpecializations _initSpecializations = new NUOPCModel.InitSpecializations(this);
+        this.initPhases = ((NUOPCMediator.InitPhases) _reverse);
+        NUOPCMediator.InitSpecializations _initSpecializations = new NUOPCMediator.InitSpecializations(this);
         CodeConcept<?, ?> _reverse_1 = _initSpecializations.reverse();
-        this.initSpecs = ((NUOPCModel.InitSpecializations) _reverse_1);
+        this.initSpecs = ((NUOPCMediator.InitSpecializations) _reverse_1);
         _xblockexpression = this;
       }
       return _xblockexpression;
@@ -982,172 +973,35 @@ public class NUOPCModel extends NUOPCComponent {
   }
   
   @Label(label = "Specializations")
-  public static class InitSpecializations extends CodeConcept<NUOPCModel.Initialization, ASTNode> {
+  public static class InitSpecializations extends CodeConcept<NUOPCMediator.Initialization, ASTNode> {
     @Child(min = 0)
-    public NUOPCModel.SetClock setClock;
+    public NUOPCMediator.DataInitialize dataInitialize;
     
-    @Child(min = 0)
-    public NUOPCModel.DataInitialize dataInitialize;
-    
-    public InitSpecializations(final NUOPCModel.Initialization parent) {
+    public InitSpecializations(final NUOPCMediator.Initialization parent) {
       super(parent);
     }
     
     @Override
     public CodeConcept<?, ?> reverse() {
-      NUOPCModel.InitSpecializations _xblockexpression = null;
+      NUOPCMediator.InitSpecializations _xblockexpression = null;
       {
-        NUOPCModel.SetClock _setClock = new NUOPCModel.SetClock(this);
-        CodeConcept<?, ?> _reverse = _setClock.reverse();
-        this.setClock = ((NUOPCModel.SetClock) _reverse);
-        NUOPCModel.DataInitialize _dataInitialize = new NUOPCModel.DataInitialize(this);
-        CodeConcept<?, ?> _reverse_1 = _dataInitialize.reverse();
-        this.dataInitialize = ((NUOPCModel.DataInitialize) _reverse_1);
+        NUOPCMediator.DataInitialize _dataInitialize = new NUOPCMediator.DataInitialize(this);
+        CodeConcept<?, ?> _reverse = _dataInitialize.reverse();
+        this.dataInitialize = ((NUOPCMediator.DataInitialize) _reverse);
         _xblockexpression = this;
       }
       return _xblockexpression;
     }
   }
   
-  @Label(label = "SetClock")
-  @MappingType("subroutine")
-  @Doc(urlfrag = "#model-specialization-setclock")
-  public static class SetClock extends SpecializationMethodCodeConcept<NUOPCModel.InitSpecializations> {
-    public SetClock(final NUOPCModel.InitSpecializations parent) {
-      super(parent, "NUOPC_Model", "label_SetClock");
-      this.subroutineName = "SetClock";
-      this.specLabel = "model_label_SetClock";
-      this.paramGridComp = "gcomp";
-      this.paramRC = "rc";
-    }
-    
-    @Override
-    public String subroutineTemplate() {
-      StringConcatenation _builder = new StringConcatenation();
-      _builder.newLine();
-      _builder.append("subroutine ");
-      _builder.append(this.subroutineName, "");
-      _builder.append("(");
-      _builder.append(this.paramGridComp, "");
-      _builder.append(", ");
-      _builder.append(this.paramRC, "");
-      _builder.append(")");
-      _builder.newLineIfNotEmpty();
-      _builder.append("    ");
-      _builder.append("type(ESMF_GridComp)  :: ");
-      _builder.append(this.paramGridComp, "    ");
-      _builder.newLineIfNotEmpty();
-      _builder.append("    ");
-      _builder.append("integer, intent(out) :: ");
-      _builder.append(this.paramRC, "    ");
-      _builder.newLineIfNotEmpty();
-      _builder.newLine();
-      _builder.append("    ");
-      _builder.append("! local variables");
-      _builder.newLine();
-      _builder.append("    ");
-      _builder.append("type(ESMF_Clock)              :: clock");
-      _builder.newLine();
-      _builder.append("    ");
-      _builder.append("type(ESMF_TimeInterval)       :: stabilityTimeStep");
-      _builder.newLine();
-      _builder.newLine();
-      _builder.append("    ");
-      _builder.append("rc = ESMF_SUCCESS");
-      _builder.newLine();
-      _builder.append("    ");
-      _builder.newLine();
-      _builder.append("    ");
-      _builder.append("! query the Component for its clock, importState and exportState");
-      _builder.newLine();
-      _builder.append("    ");
-      _builder.append("call ESMF_GridCompGet(gcomp, clock=clock, rc=rc)");
-      _builder.newLine();
-      _builder.append("    ");
-      _builder.append("if (ESMF_LogFoundError(rcToCheck=rc, msg=ESMF_LOGERR_PASSTHRU, &");
-      _builder.newLine();
-      _builder.append("      ");
-      _builder.append("line=__LINE__, &");
-      _builder.newLine();
-      _builder.append("      ");
-      _builder.append("file=__FILE__)) &");
-      _builder.newLine();
-      _builder.append("      ");
-      _builder.append("return  ! bail out");
-      _builder.newLine();
-      _builder.append("      ");
-      _builder.newLine();
-      _builder.append("    ");
-      _builder.append("! initialize internal clock");
-      _builder.newLine();
-      _builder.append("    ");
-      _builder.append("! here: parent Clock and stability timeStep determine actual model timeStep");
-      _builder.newLine();
-      _builder.append("    ");
-      _builder.append("call ESMF_TimeIntervalSet(stabilityTimeStep, m=");
-      CharSequence _paramint = this.paramint(5);
-      _builder.append(_paramint, "    ");
-      _builder.append(", rc=rc)");
-      _builder.newLineIfNotEmpty();
-      _builder.append("    ");
-      _builder.append("if (ESMF_LogFoundError(rcToCheck=rc, msg=ESMF_LOGERR_PASSTHRU, &");
-      _builder.newLine();
-      _builder.append("      ");
-      _builder.append("line=__LINE__, &");
-      _builder.newLine();
-      _builder.append("      ");
-      _builder.append("file=__FILE__)) &");
-      _builder.newLine();
-      _builder.append("      ");
-      _builder.append("return  ! bail out");
-      _builder.newLine();
-      _builder.append("    ");
-      _builder.newLine();
-      _builder.append("    ");
-      _builder.append("call NUOPC_CompSetClock(gcomp, clock, stabilityTimeStep, rc=rc)");
-      _builder.newLine();
-      _builder.append("    ");
-      _builder.append("if (ESMF_LogFoundError(rcToCheck=rc, msg=ESMF_LOGERR_PASSTHRU, &");
-      _builder.newLine();
-      _builder.append("      ");
-      _builder.append("line=__LINE__, &");
-      _builder.newLine();
-      _builder.append("      ");
-      _builder.append("file=__FILE__)) &");
-      _builder.newLine();
-      _builder.append("      ");
-      _builder.append("return  ! bail out");
-      _builder.newLine();
-      _builder.newLine();
-      _builder.append("end subroutine");
-      _builder.newLine();
-      return _builder.toString();
-    }
-    
-    @Override
-    public CodeConcept<?, ASTModuleNode> module() {
-      return this._parent._parent._parent;
-    }
-    
-    @Override
-    public SetServicesCodeConcept<?> setServices() {
-      return this._parent._parent._parent.setServices;
-    }
-    
-    @Override
-    public NUOPCComponent.GenericImport genericUse() {
-      return this._parent._parent._parent.importNUOPCGeneric;
-    }
-  }
-  
   @Label(label = "DataInitialize")
   @MappingType("subroutine")
-  @Doc(urlfrag = "#model-specialization-datainitialize")
-  public static class DataInitialize extends SpecializationMethodCodeConcept<NUOPCModel.InitSpecializations> {
-    public DataInitialize(final NUOPCModel.InitSpecializations parent) {
-      super(parent, "NUOPC_Model", "label_DataInitialize");
+  @Doc(urlfrag = "#mediator-specialization-datainitialize")
+  public static class DataInitialize extends SpecializationMethodCodeConcept<NUOPCMediator.InitSpecializations> {
+    public DataInitialize(final NUOPCMediator.InitSpecializations parent) {
+      super(parent, "NUOPC_Mediator", "label_DataInitialize");
       this.subroutineName = "DataInitialize";
-      this.specLabel = "model_label_DataInitialize";
+      this.specLabel = "mediator_label_DataInitialize";
       this.paramGridComp = "gcomp";
       this.paramRC = "rc";
     }
@@ -1204,27 +1058,27 @@ public class NUOPCModel extends NUOPCComponent {
   }
   
   @Label(label = "Run")
-  public static class Run extends CodeConcept<NUOPCModel, ASTNode> {
+  public static class Run extends CodeConcept<NUOPCMediator, ASTNode> {
     @Child
-    public NUOPCModel.RunPhases runPhases;
+    public NUOPCMediator.RunPhases runPhases;
     
     @Child
-    public NUOPCModel.RunSpecializations runSpecs;
+    public NUOPCMediator.RunSpecializations runSpecs;
     
-    public Run(final NUOPCModel parent) {
+    public Run(final NUOPCMediator parent) {
       super(parent);
     }
     
     @Override
-    public NUOPCModel.Run reverse() {
-      NUOPCModel.Run _xblockexpression = null;
+    public NUOPCMediator.Run reverse() {
+      NUOPCMediator.Run _xblockexpression = null;
       {
-        NUOPCModel.RunPhases _runPhases = new NUOPCModel.RunPhases(this);
-        NUOPCModel.RunPhases _reverse = _runPhases.reverse();
-        this.runPhases = ((NUOPCModel.RunPhases) _reverse);
-        NUOPCModel.RunSpecializations _runSpecializations = new NUOPCModel.RunSpecializations(this);
+        NUOPCMediator.RunPhases _runPhases = new NUOPCMediator.RunPhases(this);
+        NUOPCMediator.RunPhases _reverse = _runPhases.reverse();
+        this.runPhases = ((NUOPCMediator.RunPhases) _reverse);
+        NUOPCMediator.RunSpecializations _runSpecializations = new NUOPCMediator.RunSpecializations(this);
         CodeConcept<?, ?> _reverse_1 = _runSpecializations.reverse();
-        this.runSpecs = ((NUOPCModel.RunSpecializations) _reverse_1);
+        this.runSpecs = ((NUOPCMediator.RunSpecializations) _reverse_1);
         _xblockexpression = this;
       }
       return _xblockexpression;
@@ -1232,17 +1086,20 @@ public class NUOPCModel extends NUOPCComponent {
   }
   
   @Label(label = "Specializations")
-  public static class RunSpecializations extends CodeConcept<NUOPCModel.Run, ASTNode> {
+  public static class RunSpecializations extends CodeConcept<NUOPCMediator.Run, ASTNode> {
     @Child(min = 0, max = (-1))
-    public List<NUOPCModel.SetRunClock> setRunClock;
+    public List<NUOPCMediator.SetRunClock> setRunClock;
     
     @Child(min = 0, max = (-1))
-    public List<NUOPCModel.CheckImport> checkImport;
+    public List<NUOPCMediator.CheckImport> checkImport;
     
     @Child(min = 1, max = (-1))
-    public List<NUOPCModel.ModelAdvance> modelAdvance;
+    public List<NUOPCMediator.MediatorAdvance> mediatorAdvance;
     
-    public RunSpecializations(final NUOPCModel.Run parent) {
+    @Child(min = 0, max = (-1))
+    public List<NUOPCMediator.TimestampExport> timestampExport;
+    
+    public RunSpecializations(final NUOPCMediator.Run parent) {
       super(parent);
     }
     
@@ -1251,18 +1108,21 @@ public class NUOPCModel extends NUOPCComponent {
       return this.reverseChildren();
     }
     
-    public NUOPCModel.RunSpecializations reverseChildren() {
-      NUOPCModel.RunSpecializations _xblockexpression = null;
+    public NUOPCMediator.RunSpecializations reverseChildren() {
+      NUOPCMediator.RunSpecializations _xblockexpression = null;
       {
-        NUOPCModel.ModelAdvance _modelAdvance = new NUOPCModel.ModelAdvance(this);
-        List _reverseMultiple = _modelAdvance.reverseMultiple();
-        this.modelAdvance = _reverseMultiple;
-        NUOPCModel.SetRunClock _setRunClock = new NUOPCModel.SetRunClock(this);
+        NUOPCMediator.MediatorAdvance _mediatorAdvance = new NUOPCMediator.MediatorAdvance(this);
+        List _reverseMultiple = _mediatorAdvance.reverseMultiple();
+        this.mediatorAdvance = _reverseMultiple;
+        NUOPCMediator.SetRunClock _setRunClock = new NUOPCMediator.SetRunClock(this);
         List _reverseMultiple_1 = _setRunClock.reverseMultiple();
         this.setRunClock = _reverseMultiple_1;
-        NUOPCModel.CheckImport _checkImport = new NUOPCModel.CheckImport(this);
+        NUOPCMediator.CheckImport _checkImport = new NUOPCMediator.CheckImport(this);
         List _reverseMultiple_2 = _checkImport.reverseMultiple();
         this.checkImport = _reverseMultiple_2;
+        NUOPCMediator.TimestampExport _timestampExport = new NUOPCMediator.TimestampExport(this);
+        List _reverseMultiple_3 = _timestampExport.reverseMultiple();
+        this.timestampExport = _reverseMultiple_3;
         _xblockexpression = this;
       }
       return _xblockexpression;
@@ -1270,21 +1130,21 @@ public class NUOPCModel extends NUOPCComponent {
   }
   
   @Label(label = "Phases")
-  public static class RunPhases extends CodeConcept<NUOPCModel.Run, ASTNode> {
+  public static class RunPhases extends CodeConcept<NUOPCMediator.Run, ASTNode> {
     @Child
-    public NUOPCModel.RunPhase1 p1;
+    public NUOPCMediator.RunPhase1 p1;
     
-    public RunPhases(final NUOPCModel.Run parent) {
+    public RunPhases(final NUOPCMediator.Run parent) {
       super(parent);
     }
     
     @Override
-    public NUOPCModel.RunPhases reverse() {
-      NUOPCModel.RunPhases _xblockexpression = null;
+    public NUOPCMediator.RunPhases reverse() {
+      NUOPCMediator.RunPhases _xblockexpression = null;
       {
-        NUOPCModel.RunPhase1 _runPhase1 = new NUOPCModel.RunPhase1(this);
+        NUOPCMediator.RunPhase1 _runPhase1 = new NUOPCMediator.RunPhase1(this);
         CodeConcept<?, ?> _reverse = _runPhase1.<CodeConcept<?, ?>>reverse();
-        this.p1 = ((NUOPCModel.RunPhase1) _reverse);
+        this.p1 = ((NUOPCMediator.RunPhase1) _reverse);
         _xblockexpression = this;
       }
       return _xblockexpression;
@@ -1293,33 +1153,33 @@ public class NUOPCModel extends NUOPCComponent {
   
   @Label(label = "Run Phase 1")
   @MappingType("subroutine-inherited")
-  @Doc(urlfrag = "#model-phase-run")
-  public static class RunPhase1 extends CodeConcept<NUOPCModel.RunPhases, ASTNode> {
-    public RunPhase1(final NUOPCModel.RunPhases parent) {
+  @Doc(urlfrag = "#mediator-phase-run")
+  public static class RunPhase1 extends CodeConcept<NUOPCMediator.RunPhases, ASTNode> {
+    public RunPhase1(final NUOPCMediator.RunPhases parent) {
       super(parent);
     }
   }
   
   @Label(label = "Advance")
   @MappingType("subroutine")
-  @Doc(urlfrag = "#model-specialization-advance")
-  public static class ModelAdvance extends SpecializationMethodCodeConcept<NUOPCModel.RunSpecializations> {
-    public ModelAdvance(final NUOPCModel.RunSpecializations parent) {
-      super(parent, "NUOPC_Model", "label_Advance");
-      this.subroutineName = "ModelAdvance";
-      List<NUOPCModel.ModelAdvance> _modelAdvance = parent.modelAdvance;
+  @Doc(urlfrag = "#mediator-specialization-advance")
+  public static class MediatorAdvance extends SpecializationMethodCodeConcept<NUOPCMediator.RunSpecializations> {
+    public MediatorAdvance(final NUOPCMediator.RunSpecializations parent) {
+      super(parent, "NUOPC_Mediator", "label_Advance");
+      this.subroutineName = "MediatorAdvance";
+      List<NUOPCMediator.MediatorAdvance> _mediatorAdvance = parent.mediatorAdvance;
       int _size = 0;
-      if (_modelAdvance!=null) {
-        _size=_modelAdvance.size();
+      if (_mediatorAdvance!=null) {
+        _size=_mediatorAdvance.size();
       }
       boolean _greaterThan = (_size > 0);
       if (_greaterThan) {
         String _subroutineName = this.subroutineName;
-        int _size_1 = parent.modelAdvance.size();
+        int _size_1 = parent.mediatorAdvance.size();
         int _plus = (_size_1 + 1);
         this.subroutineName = (_subroutineName + Integer.valueOf(_plus));
       }
-      this.specLabel = "model_label_Advance";
+      this.specLabel = "mediator_label_Advance";
       this.paramGridComp = "gcomp";
       this.paramRC = "rc";
     }
@@ -1394,10 +1254,10 @@ public class NUOPCModel extends NUOPCComponent {
       _builder.newLine();
       _builder.newLine();
       _builder.append("    ");
-      _builder.append("! advance the model: currTime -> currTime + timeStep");
+      _builder.append("! advance the mediator: currTime -> currTime + timeStep");
       _builder.newLine();
       _builder.newLine();
-      _builder.append("\t");
+      _builder.append("    ");
       _builder.append("call ESMF_ClockPrint(clock, options=\"currTime\", &");
       _builder.newLine();
       _builder.append("      ");
@@ -1468,12 +1328,12 @@ public class NUOPCModel extends NUOPCComponent {
   
   @Label(label = "SetRunClock")
   @MappingType("subroutine")
-  @Doc(urlfrag = "#model-specialization-setrunclock")
-  public static class SetRunClock extends SpecializationMethodCodeConcept<NUOPCModel.RunSpecializations> {
-    public SetRunClock(final NUOPCModel.RunSpecializations parent) {
-      super(parent, "NUOPC_Model", "label_SetRunClock");
+  @Doc(urlfrag = "#mediator-specialization-setrunclock")
+  public static class SetRunClock extends SpecializationMethodCodeConcept<NUOPCMediator.RunSpecializations> {
+    public SetRunClock(final NUOPCMediator.RunSpecializations parent) {
+      super(parent, "NUOPC_Mediator", "label_SetRunClock");
       this.subroutineName = "SetRunClock";
-      List<NUOPCModel.SetRunClock> _setRunClock = parent.setRunClock;
+      List<NUOPCMediator.SetRunClock> _setRunClock = parent.setRunClock;
       int _size = 0;
       if (_setRunClock!=null) {
         _size=_setRunClock.size();
@@ -1485,7 +1345,7 @@ public class NUOPCModel extends NUOPCComponent {
         int _plus = (_size_1 + 1);
         this.subroutineName = (_subroutineName + Integer.valueOf(_plus));
       }
-      this.specLabel = "model_label_SetRunClock";
+      this.specLabel = "mediator_label_SetRunClock";
       this.paramGridComp = "gcomp";
       this.paramRC = "rc";
     }
@@ -1533,8 +1393,10 @@ public class NUOPCModel extends NUOPCComponent {
       _builder.append(")");
       _builder.newLineIfNotEmpty();
       _builder.append("    ");
-      _builder.append("if (ESMF_LogFoundError(rcToCheck=rc, msg=ESMF_LOGERR_PASSTHRU, &");
-      _builder.newLine();
+      _builder.append("if (ESMF_LogFoundError(rcToCheck=");
+      _builder.append(this.paramRC, "    ");
+      _builder.append(", msg=ESMF_LOGERR_PASSTHRU, &");
+      _builder.newLineIfNotEmpty();
       _builder.append("      ");
       _builder.append("line=__LINE__, &");
       _builder.newLine();
@@ -1555,8 +1417,10 @@ public class NUOPCModel extends NUOPCComponent {
       _builder.append(")");
       _builder.newLineIfNotEmpty();
       _builder.append("    ");
-      _builder.append("if (ESMF_LogFoundError(rcToCheck=rc, msg=ESMF_LOGERR_PASSTHRU, &");
-      _builder.newLine();
+      _builder.append("if (ESMF_LogFoundError(rcToCheck=");
+      _builder.append(this.paramRC, "    ");
+      _builder.append(", msg=ESMF_LOGERR_PASSTHRU, &");
+      _builder.newLineIfNotEmpty();
       _builder.append("      ");
       _builder.append("line=__LINE__, &");
       _builder.newLine();
@@ -1590,12 +1454,12 @@ public class NUOPCModel extends NUOPCComponent {
   
   @Label(label = "CheckImport")
   @MappingType("subroutine")
-  @Doc(urlfrag = "#model-specialization-checkimport")
-  public static class CheckImport extends SpecializationMethodCodeConcept<NUOPCModel.RunSpecializations> {
-    public CheckImport(final NUOPCModel.RunSpecializations parent) {
-      super(parent, "NUOPC_Model", "label_CheckImport");
+  @Doc(urlfrag = "#mediator-specialization-checkimport")
+  public static class CheckImport extends SpecializationMethodCodeConcept<NUOPCMediator.RunSpecializations> {
+    public CheckImport(final NUOPCMediator.RunSpecializations parent) {
+      super(parent, "NUOPC_Mediator", "label_CheckImport");
       this.subroutineName = "CheckImport";
-      List<NUOPCModel.CheckImport> _checkImport = parent.checkImport;
+      List<NUOPCMediator.CheckImport> _checkImport = parent.checkImport;
       int _size = 0;
       if (_checkImport!=null) {
         _size=_checkImport.size();
@@ -1607,7 +1471,7 @@ public class NUOPCModel extends NUOPCComponent {
         int _plus = (_size_1 + 1);
         this.subroutineName = (_subroutineName + Integer.valueOf(_plus));
       }
-      this.specLabel = "model_label_CheckImport";
+      this.specLabel = "mediator_label_CheckImport";
       this.paramGridComp = "gcomp";
       this.paramRC = "rc";
     }
@@ -1663,22 +1527,163 @@ public class NUOPCModel extends NUOPCComponent {
     }
   }
   
-  @Label(label = "Phases")
-  public static class FinalizePhases extends CodeConcept<NUOPCModel.Finalize, ASTNode> {
-    @Child
-    public NUOPCModel.FinalizePhase1 p1;
+  @Label(label = "TimestampExport")
+  @MappingType("subroutine")
+  @Doc(urlfrag = "#mediator-specialization-timestampexport")
+  public static class TimestampExport extends SpecializationMethodCodeConcept<NUOPCMediator.RunSpecializations> {
+    public TimestampExport(final NUOPCMediator.RunSpecializations parent) {
+      super(parent, "NUOPC_Mediator", "label_TimestampExport");
+      this.subroutineName = "TimestampExport";
+      List<NUOPCMediator.TimestampExport> _timestampExport = parent.timestampExport;
+      int _size = 0;
+      if (_timestampExport!=null) {
+        _size=_timestampExport.size();
+      }
+      boolean _greaterThan = (_size > 0);
+      if (_greaterThan) {
+        String _subroutineName = this.subroutineName;
+        int _size_1 = parent.timestampExport.size();
+        int _plus = (_size_1 + 1);
+        this.subroutineName = (_subroutineName + Integer.valueOf(_plus));
+      }
+      this.specLabel = "mediator_label_TimestampExport";
+      this.paramGridComp = "gcomp";
+      this.paramRC = "rc";
+    }
     
-    public FinalizePhases(final NUOPCModel.Finalize parent) {
+    @Override
+    public String subroutineTemplate() {
+      StringConcatenation _builder = new StringConcatenation();
+      _builder.newLine();
+      _builder.append("subroutine ");
+      _builder.append(this.subroutineName, "");
+      _builder.append("(");
+      _builder.append(this.paramGridComp, "");
+      _builder.append(", ");
+      _builder.append(this.paramRC, "");
+      _builder.append(")");
+      _builder.newLineIfNotEmpty();
+      _builder.append("    ");
+      _builder.append("type(ESMF_GridComp)  :: ");
+      _builder.append(this.paramGridComp, "    ");
+      _builder.newLineIfNotEmpty();
+      _builder.append("    ");
+      _builder.append("integer, intent(out) :: ");
+      _builder.append(this.paramRC, "    ");
+      _builder.newLineIfNotEmpty();
+      _builder.append("    ");
+      _builder.newLine();
+      _builder.append("    ");
+      _builder.append("! local variables");
+      _builder.newLine();
+      _builder.append("    ");
+      _builder.append("type(ESMF_Clock)      :: clock");
+      _builder.newLine();
+      _builder.append("    ");
+      _builder.append("type(ESMF_State)      :: exportState");
+      _builder.newLine();
+      _builder.newLine();
+      _builder.append("    ");
+      _builder.append("rc = ESMF_SUCCESS");
+      _builder.newLine();
+      _builder.append("    ");
+      _builder.newLine();
+      _builder.append("    ");
+      _builder.append("! The default behavior is to timestamp export fields");
+      _builder.newLine();
+      _builder.append("    ");
+      _builder.append("! to the current time on the clock");
+      _builder.newLine();
+      _builder.append("    ");
+      _builder.newLine();
+      _builder.append("    ");
+      _builder.append("! query the Component for info");
+      _builder.newLine();
+      _builder.append("    ");
+      _builder.append("call ESMF_GridCompGet(");
+      _builder.append(this.paramGridComp, "    ");
+      _builder.append(", clock=clock, &");
+      _builder.newLineIfNotEmpty();
+      _builder.append("      ");
+      _builder.append("exportState=exportState, rc=");
+      _builder.append(this.paramRC, "      ");
+      _builder.append(")");
+      _builder.newLineIfNotEmpty();
+      _builder.append("    ");
+      _builder.append("if (ESMF_LogFoundError(rcToCheck=");
+      _builder.append(this.paramRC, "    ");
+      _builder.append(", msg=ESMF_LOGERR_PASSTHRU, &");
+      _builder.newLineIfNotEmpty();
+      _builder.append("      ");
+      _builder.append("line=__LINE__, &");
+      _builder.newLine();
+      _builder.append("      ");
+      _builder.append("file=__FILE__)) &");
+      _builder.newLine();
+      _builder.append("      ");
+      _builder.append("return  ! bail out");
+      _builder.newLine();
+      _builder.newLine();
+      _builder.append("    ");
+      _builder.append("! update timestamp on export Fields");
+      _builder.newLine();
+      _builder.append("    ");
+      _builder.append("call NUOPC_UpdateTimestamp(exportState, clock, rc=");
+      _builder.append(this.paramRC, "    ");
+      _builder.append(")");
+      _builder.newLineIfNotEmpty();
+      _builder.append("    ");
+      _builder.append("if (ESMF_LogFoundError(rcToCheck=");
+      _builder.append(this.paramRC, "    ");
+      _builder.append(", msg=ESMF_LOGERR_PASSTHRU, &");
+      _builder.newLineIfNotEmpty();
+      _builder.append("      ");
+      _builder.append("line=__LINE__, &");
+      _builder.newLine();
+      _builder.append("      ");
+      _builder.append("file=__FILE__)) &");
+      _builder.newLine();
+      _builder.append("      ");
+      _builder.append("return  ! bail out");
+      _builder.newLine();
+      _builder.newLine();
+      _builder.append("end subroutine");
+      _builder.newLine();
+      return _builder.toString();
+    }
+    
+    @Override
+    public CodeConcept<?, ASTModuleNode> module() {
+      return this._parent._parent._parent;
+    }
+    
+    @Override
+    public SetServicesCodeConcept<?> setServices() {
+      return this._parent._parent._parent.setServices;
+    }
+    
+    @Override
+    public NUOPCComponent.GenericImport genericUse() {
+      return this._parent._parent._parent.importNUOPCGeneric;
+    }
+  }
+  
+  @Label(label = "Phases")
+  public static class FinalizePhases extends CodeConcept<NUOPCMediator.Finalize, ASTNode> {
+    @Child
+    public NUOPCMediator.FinalizePhase1 p1;
+    
+    public FinalizePhases(final NUOPCMediator.Finalize parent) {
       super(parent);
     }
     
     @Override
-    public NUOPCModel.FinalizePhases reverse() {
-      NUOPCModel.FinalizePhases _xblockexpression = null;
+    public NUOPCMediator.FinalizePhases reverse() {
+      NUOPCMediator.FinalizePhases _xblockexpression = null;
       {
-        NUOPCModel.FinalizePhase1 _finalizePhase1 = new NUOPCModel.FinalizePhase1(this);
+        NUOPCMediator.FinalizePhase1 _finalizePhase1 = new NUOPCMediator.FinalizePhase1(this);
         CodeConcept<?, ?> _reverse = _finalizePhase1.<CodeConcept<?, ?>>reverse();
-        this.p1 = ((NUOPCModel.FinalizePhase1) _reverse);
+        this.p1 = ((NUOPCMediator.FinalizePhase1) _reverse);
         _xblockexpression = this;
       }
       return _xblockexpression;
@@ -1686,11 +1691,11 @@ public class NUOPCModel extends NUOPCComponent {
   }
   
   @Label(label = "Specializations")
-  public static class FinalizeSpecializations extends CodeConcept<NUOPCModel.Finalize, ASTNode> {
+  public static class FinalizeSpecializations extends CodeConcept<NUOPCMediator.Finalize, ASTNode> {
     @Child(min = 0)
-    public NUOPCModel.FinalizeModel finalize;
+    public NUOPCMediator.FinalizeMediator finalize;
     
-    public FinalizeSpecializations(final NUOPCModel.Finalize parent) {
+    public FinalizeSpecializations(final NUOPCMediator.Finalize parent) {
       super(parent);
     }
     
@@ -1699,12 +1704,12 @@ public class NUOPCModel extends NUOPCComponent {
       return this.reverseChildren();
     }
     
-    public NUOPCModel.FinalizeSpecializations reverseChildren() {
-      NUOPCModel.FinalizeSpecializations _xblockexpression = null;
+    public NUOPCMediator.FinalizeSpecializations reverseChildren() {
+      NUOPCMediator.FinalizeSpecializations _xblockexpression = null;
       {
-        NUOPCModel.FinalizeModel _finalizeModel = new NUOPCModel.FinalizeModel(this);
-        CodeConcept<?, ?> _reverse = _finalizeModel.reverse();
-        this.finalize = ((NUOPCModel.FinalizeModel) _reverse);
+        NUOPCMediator.FinalizeMediator _finalizeMediator = new NUOPCMediator.FinalizeMediator(this);
+        CodeConcept<?, ?> _reverse = _finalizeMediator.reverse();
+        this.finalize = ((NUOPCMediator.FinalizeMediator) _reverse);
         _xblockexpression = this;
       }
       return _xblockexpression;
@@ -1713,53 +1718,53 @@ public class NUOPCModel extends NUOPCComponent {
   
   @Label(label = "Finalize Phase 1")
   @MappingType("subroutine-inherited")
-  @Doc(urlfrag = "#model-phase-finalize")
-  public static class FinalizePhase1 extends CodeConcept<NUOPCModel.FinalizePhases, ASTNode> {
-    public FinalizePhase1(final NUOPCModel.FinalizePhases parent) {
+  @Doc(urlfrag = "#mediator-phase-finalize")
+  public static class FinalizePhase1 extends CodeConcept<NUOPCMediator.FinalizePhases, ASTNode> {
+    public FinalizePhase1(final NUOPCMediator.FinalizePhases parent) {
       super(parent);
     }
   }
   
   @Label(label = "Finalize")
-  public static class Finalize extends CodeConcept<NUOPCModel, ASTNode> {
+  public static class Finalize extends CodeConcept<NUOPCMediator, ASTNode> {
     @Child
-    public NUOPCModel.FinalizePhases finalPhases;
+    public NUOPCMediator.FinalizePhases finalPhases;
     
     @Child
-    public NUOPCModel.FinalizeSpecializations finalSpecs;
+    public NUOPCMediator.FinalizeSpecializations finalSpecs;
     
-    public Finalize(final NUOPCModel parent) {
+    public Finalize(final NUOPCMediator parent) {
       super(parent);
     }
     
     @Override
-    public NUOPCModel.Finalize reverse() {
+    public NUOPCMediator.Finalize reverse() {
       return this.reverseChildren();
     }
     
-    public NUOPCModel.Finalize reverseChildren() {
-      NUOPCModel.Finalize _xblockexpression = null;
+    public NUOPCMediator.Finalize reverseChildren() {
+      NUOPCMediator.Finalize _xblockexpression = null;
       {
-        NUOPCModel.FinalizePhases _finalizePhases = new NUOPCModel.FinalizePhases(this);
-        NUOPCModel.FinalizePhases _reverse = _finalizePhases.reverse();
-        this.finalPhases = ((NUOPCModel.FinalizePhases) _reverse);
-        NUOPCModel.FinalizeSpecializations _finalizeSpecializations = new NUOPCModel.FinalizeSpecializations(this);
+        NUOPCMediator.FinalizePhases _finalizePhases = new NUOPCMediator.FinalizePhases(this);
+        NUOPCMediator.FinalizePhases _reverse = _finalizePhases.reverse();
+        this.finalPhases = ((NUOPCMediator.FinalizePhases) _reverse);
+        NUOPCMediator.FinalizeSpecializations _finalizeSpecializations = new NUOPCMediator.FinalizeSpecializations(this);
         CodeConcept<?, ?> _reverse_1 = _finalizeSpecializations.reverse();
-        this.finalSpecs = ((NUOPCModel.FinalizeSpecializations) _reverse_1);
+        this.finalSpecs = ((NUOPCMediator.FinalizeSpecializations) _reverse_1);
         _xblockexpression = this;
       }
       return _xblockexpression;
     }
   }
   
-  @Label(label = "FinalizeModel")
+  @Label(label = "FinalizeMediator")
   @MappingType("subroutine")
-  @Doc(urlfrag = "#model-specialization-finalize")
-  public static class FinalizeModel extends SpecializationMethodCodeConcept<NUOPCModel.FinalizeSpecializations> {
-    public FinalizeModel(final NUOPCModel.FinalizeSpecializations parent) {
-      super(parent, "NUOPC_Model", "label_Finalize");
-      this.subroutineName = "FinalizeModel";
-      this.specLabel = "model_label_Finalize";
+  @Doc(urlfrag = "#mediator-specialization-finalize")
+  public static class FinalizeMediator extends SpecializationMethodCodeConcept<NUOPCMediator.FinalizeSpecializations> {
+    public FinalizeMediator(final NUOPCMediator.FinalizeSpecializations parent) {
+      super(parent, "NUOPC_Mediator", "label_Finalize");
+      this.subroutineName = "FinalizeMediator";
+      this.specLabel = "mediator_label_Finalize";
       this.paramGridComp = "gcomp";
       this.paramRC = "rc";
     }
@@ -1816,47 +1821,47 @@ public class NUOPCModel extends NUOPCComponent {
   }
   
   @Child(forward = true)
-  public NUOPCModel.SetServices setServices;
+  public NUOPCMediator.SetServices setServices;
   
   @Child(forward = true)
-  public NUOPCModel.Initialization initialization;
+  public NUOPCMediator.Initialization initialization;
   
-  @Child
-  public NUOPCModel.Run run;
+  @Child(forward = true)
+  public NUOPCMediator.Run run;
   
-  @Child
-  public NUOPCModel.Finalize finalize;
+  @Child(forward = true)
+  public NUOPCMediator.Finalize finalize;
   
-  public NUOPCModel(final IResource context) {
-    super(null, context, "NUOPC_Model");
+  public NUOPCMediator(final IResource context) {
+    super(null, context, "NUOPC_Mediator");
   }
   
   @Override
   public String prefix() {
-    return "model";
+    return "mediator";
   }
   
   @Override
-  public NUOPCModel reverse() {
+  public NUOPCMediator reverse() {
     CodeConcept<?, ?> _reverse = super.reverse();
-    return ((NUOPCModel) _reverse);
+    return ((NUOPCMediator) _reverse);
   }
   
   @Override
   public NUOPCComponent reverseChildren() {
-    NUOPCModel _xblockexpression = null;
+    NUOPCMediator _xblockexpression = null;
     {
-      NUOPCModel.SetServices _setServices = new NUOPCModel.SetServices(this);
-      SetServicesCodeConcept<NUOPCModel> _reverse = _setServices.reverse();
-      this.setServices = ((NUOPCModel.SetServices) _reverse);
-      NUOPCModel.Initialization _initialization = new NUOPCModel.Initialization(this);
-      NUOPCModel.Initialization _reverse_1 = _initialization.reverse();
+      NUOPCMediator.SetServices _setServices = new NUOPCMediator.SetServices(this);
+      SetServicesCodeConcept<NUOPCMediator> _reverse = _setServices.reverse();
+      this.setServices = ((NUOPCMediator.SetServices) _reverse);
+      NUOPCMediator.Initialization _initialization = new NUOPCMediator.Initialization(this);
+      NUOPCMediator.Initialization _reverse_1 = _initialization.reverse();
       this.initialization = _reverse_1;
-      NUOPCModel.Run _run = new NUOPCModel.Run(this);
-      NUOPCModel.Run _reverse_2 = _run.reverse();
+      NUOPCMediator.Run _run = new NUOPCMediator.Run(this);
+      NUOPCMediator.Run _reverse_2 = _run.reverse();
       this.run = _reverse_2;
-      NUOPCModel.Finalize _finalize = new NUOPCModel.Finalize(this);
-      NUOPCModel.Finalize _reverse_3 = _finalize.reverse();
+      NUOPCMediator.Finalize _finalize = new NUOPCMediator.Finalize(this);
+      NUOPCMediator.Finalize _reverse_3 = _finalize.reverse();
       this.finalize = _reverse_3;
       _xblockexpression = this;
     }
@@ -1864,8 +1869,8 @@ public class NUOPCModel extends NUOPCComponent {
   }
   
   @Override
-  public NUOPCModel forward() {
+  public NUOPCMediator forward() {
     NUOPCComponent _forward = super.forward();
-    return ((NUOPCModel) _forward);
+    return ((NUOPCMediator) _forward);
   }
 }

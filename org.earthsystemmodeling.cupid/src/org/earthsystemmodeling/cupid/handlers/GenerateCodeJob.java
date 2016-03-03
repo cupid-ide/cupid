@@ -54,7 +54,7 @@ public class GenerateCodeJob extends Job {
 			}
 			
 			newComp.name = comp.getName();
-			newComp = newComp.fward();
+			newComp = newComp.forward();
 			new ApplyCodeConceptChanges(newComp).run(monitor);
 		}
 		

@@ -32,18 +32,28 @@
 				<version>1.9.4</version>
 				<executions>
 					<execution>
-						<id>checkout-nuopc-prototypes</id>
+						<id>checkout-ESMF_7_0_0_beta_snapshot_59</id>
 						<phase>pre-integration-test</phase>
 						<goals>
 							<goal>checkout</goal>
 						</goals>
+						<configuration>
+							<connectionUrl>${nuopc.url.tags}/ESMF_7_0_0_beta_snapshot_59</connectionUrl>
+							<checkoutDirectory>${project.build.directory}/ESMF_7_0_0_beta_snapshot_59</checkoutDirectory>
+						</configuration>
+					</execution>
+					<execution>
+						<id>checkout-ESMF_7_0_0</id>
+						<phase>pre-integration-test</phase>
+						<goals>
+							<goal>checkout</goal>
+						</goals>
+						<configuration>
+							<connectionUrl>${nuopc.url.tags}/ESMF_7_0_0</connectionUrl>
+							<checkoutDirectory>${project.build.directory}/ESMF_7_0_0</checkoutDirectory>
+						</configuration>
 					</execution>
 				</executions>
-				 
-				<configuration>
-					<connectionUrl>${nuopc.url.tags}/ESMF_7_0_0_beta_snapshot_59</connectionUrl>
-					<checkoutDirectory>${project.build.directory}/ESMF_7_0_0_beta_snapshot_59</checkoutDirectory>
-				</configuration>
 				
 			</plugin>
 		</plugins>

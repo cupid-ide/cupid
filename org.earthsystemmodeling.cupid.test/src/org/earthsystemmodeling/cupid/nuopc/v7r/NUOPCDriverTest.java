@@ -1,4 +1,4 @@
-package org.earthsystemmodeling.cupid.nuopc.v7bs59;
+package org.earthsystemmodeling.cupid.nuopc.v7r;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
@@ -8,12 +8,12 @@ import static org.junit.Assert.assertTrue;
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
 
-import org.earthsystemmodeling.cupid.nuopc.v7bs59.NUOPCDriver.ModifyInitializePhaseMap;
-import org.earthsystemmodeling.cupid.nuopc.v7bs59.NUOPCDriver.SetModelServices;
-import org.earthsystemmodeling.cupid.nuopc.v7bs59.NUOPCDriver.SetModelServices_AddComp;
-import org.earthsystemmodeling.cupid.nuopc.v7bs59.NUOPCDriver.SetRunClock;
-import org.earthsystemmodeling.cupid.nuopc.v7bs59.NUOPCDriver.SetRunSequence;
-import org.earthsystemmodeling.cupid.nuopc.v7bs59.NUOPCDriver.SetRunSequence_AddRunElement;
+import org.earthsystemmodeling.cupid.nuopc.v7r.NUOPCDriver.ModifyInitializePhaseMap;
+import org.earthsystemmodeling.cupid.nuopc.v7r.NUOPCDriver.SetModelServices;
+import org.earthsystemmodeling.cupid.nuopc.v7r.NUOPCDriver.SetModelServices_AddComp;
+import org.earthsystemmodeling.cupid.nuopc.v7r.NUOPCDriver.SetRunClock;
+import org.earthsystemmodeling.cupid.nuopc.v7r.NUOPCDriver.SetRunSequence;
+import org.earthsystemmodeling.cupid.nuopc.v7r.NUOPCDriver.SetRunSequence_AddRunElement;
 import org.earthsystemmodeling.cupid.test.TestHelpers;
 import org.eclipse.core.resources.IFile;
 import org.eclipse.core.resources.IProject;
@@ -128,7 +128,7 @@ public class NUOPCDriverTest {
 	@Test
 	public void NUOPCDriverAddRunSequence2() throws IOException, CoreException, InterruptedException {
 		
-		IProject p = TestHelpers.createProjectFromFolder("target/" + NUOPCTest.NUOPC_TAG + "/AtmOcnProto", NUOPCTest.NUOPC_TAG  + "_NUOPCDriverAddRunSequence2");
+		IProject p = TestHelpers.createProjectFromFolder("target/" + NUOPCTest.NUOPC_TAG + "/AtmOcnProto", NUOPCTest.NUOPC_TAG + "_NUOPCDriverAddRunSequence2");
 		IFile f = p.getFile("esm.F90");
 		
 		NUOPCDriver driver = new NUOPCDriver(f).reverse();
@@ -345,7 +345,7 @@ public class NUOPCDriverTest {
 		assertEquals("SetRunClock", driver.run.runSpecs.setRunClock.subroutineName);
 		
 		assertTrue("Compile check", TestHelpers.compileProject(p, TestHelpers.getMakefileFragmentLoc(NUOPCTest.NUOPC_TAG), "esmApp"));
-
+		
 	}
 
 	@Test
@@ -354,8 +354,7 @@ public class NUOPCDriverTest {
 		IFile f;
 		f = PROJECT_NUOPC_PROTOTYPES.getFolder("AtmOcnProto").getFile("esm.F90");
 				
-		NUOPCDriver driver = new NUOPCDriver(f);
-		driver = driver.reverse();
+		NUOPCDriver driver = new NUOPCDriver(f).reverse();
 		assertNotNull(driver);
 		assertEquals("ESM", driver.name);
 		assertNotNull(driver.setServices);

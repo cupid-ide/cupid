@@ -1,4 +1,4 @@
-package org.earthsystemmodeling.cupid.nuopc.v7bs59;
+package org.earthsystemmodeling.cupid.nuopc.v7r;
 
 import com.google.common.base.Objects;
 import com.google.common.collect.Iterables;
@@ -11,10 +11,10 @@ import org.earthsystemmodeling.cupid.annotation.MappingType;
 import org.earthsystemmodeling.cupid.nuopc.ASTQuery;
 import org.earthsystemmodeling.cupid.nuopc.CodeConcept;
 import org.earthsystemmodeling.cupid.nuopc.ESMFCodeTemplates;
-import org.earthsystemmodeling.cupid.nuopc.v7bs59.EntryPointCodeConcept;
-import org.earthsystemmodeling.cupid.nuopc.v7bs59.NUOPCComponent;
-import org.earthsystemmodeling.cupid.nuopc.v7bs59.SetServicesCodeConcept;
-import org.earthsystemmodeling.cupid.nuopc.v7bs59.SpecializationMethodCodeConcept;
+import org.earthsystemmodeling.cupid.nuopc.v7r.EntryPointCodeConcept;
+import org.earthsystemmodeling.cupid.nuopc.v7r.NUOPCComponent;
+import org.earthsystemmodeling.cupid.nuopc.v7r.SetServicesCodeConcept;
+import org.earthsystemmodeling.cupid.nuopc.v7r.SpecializationMethodCodeConcept;
 import org.earthsystemmodeling.cupid.util.CodeExtraction;
 import org.eclipse.core.resources.IResource;
 import org.eclipse.photran.internal.core.lexer.Token;

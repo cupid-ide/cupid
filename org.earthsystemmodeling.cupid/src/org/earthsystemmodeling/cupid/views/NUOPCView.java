@@ -568,7 +568,7 @@ public class NUOPCView extends ViewPart {
             						}
             						
             						try {
-										newcc = newcc.fward();
+										newcc = newcc.forward();
 									} catch (CodeGenerationException cge) {
 										MessageDialog.openError(
             									viewer.getControl().getShell(),

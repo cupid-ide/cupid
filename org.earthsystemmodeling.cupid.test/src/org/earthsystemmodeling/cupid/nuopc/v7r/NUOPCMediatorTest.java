@@ -1,4 +1,4 @@
-package org.earthsystemmodeling.cupid.nuopc.v7bs59;
+package org.earthsystemmodeling.cupid.nuopc.v7r;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
@@ -7,10 +7,10 @@ import static org.junit.Assert.assertTrue;
 
 import java.io.IOException;
 
-import org.earthsystemmodeling.cupid.nuopc.v7bs59.NUOPCMediator.IPD.AdvertiseField;
-import org.earthsystemmodeling.cupid.nuopc.v7bs59.NUOPCMediator.IPD.IPDv04p1;
-import org.earthsystemmodeling.cupid.nuopc.v7bs59.NUOPCMediator.IPD.IPDv04p3;
-import org.earthsystemmodeling.cupid.nuopc.v7bs59.NUOPCMediator.IPD.RealizeField;
+import org.earthsystemmodeling.cupid.nuopc.v7r.NUOPCMediator.IPD.AdvertiseField;
+import org.earthsystemmodeling.cupid.nuopc.v7r.NUOPCMediator.IPD.IPDv04p1;
+import org.earthsystemmodeling.cupid.nuopc.v7r.NUOPCMediator.IPD.IPDv04p3;
+import org.earthsystemmodeling.cupid.nuopc.v7r.NUOPCMediator.IPD.RealizeField;
 import org.earthsystemmodeling.cupid.test.TestHelpers;
 import org.eclipse.core.resources.IFile;
 import org.eclipse.core.resources.IProject;

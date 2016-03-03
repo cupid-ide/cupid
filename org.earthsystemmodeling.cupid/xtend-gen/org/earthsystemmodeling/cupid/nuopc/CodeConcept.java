@@ -51,8 +51,6 @@ public abstract class CodeConcept<P extends CodeConcept<?, ?>, A extends IASTNod
   
   public P _parent;
   
-  public long _id = (-1);
-  
   protected A _astRef;
   
   protected IResource _context;
@@ -72,32 +70,9 @@ public abstract class CodeConcept<P extends CodeConcept<?, ?>, A extends IASTNod
   
   public CodeConcept(final P parent, final IResource context) {
     this._context = context;
-    this.init(parent);
+    this._parent = parent;
     ArrayList<CodeConcept.MarkerLoc> _newArrayList = CollectionLiterals.<CodeConcept.MarkerLoc>newArrayList();
     this.paramMarkers = _newArrayList;
-  }
-  
-  public P init(final P parent) {
-    return this._parent = parent;
-  }
-  
-  public long parentID() {
-    long _xifexpression = (long) 0;
-    long __id = 0l;
-    if (this._parent!=null) {
-      __id=this._parent._id;
-    }
-    boolean _greaterThan = (__id > 0);
-    if (_greaterThan) {
-      _xifexpression = this._parent._id;
-    } else {
-      long _parentID = 0l;
-      if (this._parent!=null) {
-        _parentID=this._parent.parentID();
-      }
-      _xifexpression = _parentID;
-    }
-    return _xifexpression;
   }
   
   public void setOrAddChild(final CodeConcept<?, ?> child) {
@@ -168,15 +143,6 @@ public abstract class CodeConcept<P extends CodeConcept<?, ?>, A extends IASTNod
     }
   }
   
-  /**
-   * def CodeConcept<?,?> nearestAncestor(Class<?> c) {
-   * var CodeConcept<?,?> cur = _parent;
-   * while (cur != null) {
-   * if (c.isInstance(cur)) return cur;
-   * }
-   * null;
-   * }
-   */
   protected List<Field> getChildFields() {
     List<Field> _xblockexpression = null;
     {
@@ -379,11 +345,7 @@ public abstract class CodeConcept<P extends CodeConcept<?, ?>, A extends IASTNod
     return CollectionLiterals.<CodeConcept<P, A>>newArrayList(_reverse);
   }
   
-  public IFortranAST forward() throws CodeGenerationException {
-    return null;
-  }
-  
-  public <T extends CodeConcept<?, ?>> T fward() throws CodeGenerationException {
+  public <T extends CodeConcept<?, ?>> T forward() throws CodeGenerationException {
     try {
       T _xblockexpression = null;
       {
@@ -398,8 +360,8 @@ public abstract class CodeConcept<P extends CodeConcept<?, ?>, A extends IASTNod
             if (_notEquals) {
               for (int i = 0; (i < theList.size()); i++) {
                 CodeConcept<?, ?> _get_1 = theList.get(i);
-                CodeConcept<?, ?> _fward = _get_1.<CodeConcept<?, ?>>fward();
-                theList.set(i, _fward);
+                CodeConcept<?, ?> _forward = _get_1.<CodeConcept<?, ?>>forward();
+                theList.set(i, _forward);
               }
             }
           } else {
@@ -442,8 +404,8 @@ public abstract class CodeConcept<P extends CodeConcept<?, ?>, A extends IASTNod
             }
             boolean _notEquals_2 = (!Objects.equal(childConcept, null));
             if (_notEquals_2) {
-              CodeConcept<?, ?> _fward = childConcept.<CodeConcept<?, ?>>fward();
-              field.set(this, _fward);
+              CodeConcept<?, ?> _forward_1 = childConcept.<CodeConcept<?, ?>>forward();
+              field.set(this, _forward_1);
             }
           }
         }
@@ -557,30 +519,6 @@ public abstract class CodeConcept<P extends CodeConcept<?, ?>, A extends IASTNod
   
   public String name() {
     return null;
-  }
-  
-  /**
-   * def execQuery(CharSequence query) {
-   * if (_codeDB != null) {
-   * try {
-   * var rs = _codeDB.query2(query.toString)
-   * return rs
-   * } catch (MalformedGoalException e) {
-   * CupidActivator.log("Bad query", e)
-   * }
-   * }
-   * else null
-   * }
-   */
-  @Override
-  public String toString() {
-    StringConcatenation _builder = new StringConcatenation();
-    Class<? extends CodeConcept> _class = this.getClass();
-    String _simpleName = _class.getSimpleName();
-    _builder.append(_simpleName, "");
-    _builder.append(" : ");
-    _builder.append(this._id, "");
-    return _builder.toString();
   }
   
   public CharSequence paramch(final String defaultVal) {

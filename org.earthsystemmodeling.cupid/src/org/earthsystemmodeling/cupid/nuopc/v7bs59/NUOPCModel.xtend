@@ -23,10 +23,6 @@ import static extension org.earthsystemmodeling.cupid.nuopc.ASTQuery.*
 @Doc(urlfrag="#model-top")
 class NUOPCModel extends NUOPCComponent {
 
-	//public String modelName
-	//public String filename
-	//public String path
-
 	@Child(forward=true)
 	public SetServices setServices
 	
@@ -38,11 +34,6 @@ class NUOPCModel extends NUOPCComponent {
 
 	@Child
 	public Finalize finalize
-
-	//new(CodeDBIndex codeDB) {
-	//	super(null)
-	//	_codeDB = codeDB
-	//}
 	
 	new(IResource context) {
 		super(null, context, "NUOPC_Model")
@@ -54,74 +45,6 @@ class NUOPCModel extends NUOPCComponent {
 		super.reverse as NUOPCModel
 	}
 
-	/*
-	override NUOPCModel reverse() {
-		
-		var ast = getAST()
-				
-		_astRef = ast.root?.programUnitList?.filter(ASTModuleNode).findFirst[
-			it.moduleBody?.filter(ASTUseStmtNode).exists[it.name.text.eic("NUOPC_Model")]
-		]
-		
-		if (_astRef != null) {
-			modelName = _astRef.moduleStmt.moduleName.moduleName.text
-			
-			//move some or all of these to NUOPCComponent
-			_astRef.moduleBody.filter(ASTUseStmtNode).forEach[
-				if (it.name.text.eic("ESMF")) {
-					importESMF = new BasicCodeConcept<ASTUseStmtNode>(this, it)
-				}
-				else if (it.name.text.eic("NUOPC")) {
-					importNUOPC = new BasicCodeConcept<ASTUseStmtNode>(this, it)
-				}
-				else if (it.name.text.eic("NUOPC_Model")) {
-					importNUOPCGeneric = new GenericImport(this, it).reverse
-				}
-			]
-						
-			reverseChildren
-			
-		}
-		else null
-		* 
-	}
-	* 
-	*/
-
-	/*
-	override NUOPCModel reverse() {
-
-		var rs = '''module(_moduleID, _compUnitID, _driverName), 
-		            compilationUnit(_compUnitID, _filename, _path),
-   					uses(_uid, _moduleID, 'NUOPC_Model').'''.execQuery
-		try {
-			if (rs.next) {
-				_id = rs.getLong("_moduleID")
-				modelName = rs.getString("_driverName")
-				filename = rs.getString("_filename")
-				path = rs.getString("_path")
-				importNUOPCGeneric = new GenericImport(this, rs.getLong("_uid")).reverse
-				rs.close
-
-				rs = '''uses(_uid, «_id», 'ESMF').'''.execQuery
-				if(rs.next) importESMF = newBasicCodeConcept(this, rs.getLong("_uid"))
-				rs.close
-
-				rs = '''uses(_uid, «_id», 'NUOPC').'''.execQuery
-				if(rs.next) importNUOPC = newBasicCodeConcept(this, rs.getLong("_uid"))
-				rs.close
-
-				return reverseChildren
-			}
-		} catch (SQLException e) {
-			log("SQL error", e);
-		}
-
-		null
-	}
-	* 
-	*/
-
 	override reverseChildren() {
 		setServices = new SetServices(this).reverse as SetServices
 		initialization = new Initialization(this).reverse
@@ -130,58 +53,10 @@ class NUOPCModel extends NUOPCComponent {
 		this
 	}
 
-	override NUOPCModel fward() {
-		super.fward as NUOPCModel
+	override NUOPCModel forward() {
+		super.forward as NUOPCModel
 	}
 
-/*
-	override NUOPCModel fward() {
-				
-		if (name == null) throw new CodeGenerationException("No model name specified")
-		
-		//create module
-		var code = 
-'''
-module «name»
-	
-	use ESMF
-	use NUOPC
-	use NUOPC_Model, only: &
-		model_SetServices => SetServices
-		
-	implicit none
-	
-	contains
-	
-end module
-'''
-	
-		var ASTModuleNode moduleNode = parseLiteralProgramUnit(code)
-		setASTRef(moduleNode)
-		
-		var pul = new ASTListNode<IProgramUnit>()
-		pul.add(moduleNode)
-		getAST.root.programUnitList = pul
-		
-		moduleNode.moduleBody.filter(ASTUseStmtNode).forEach[
-			if (it.name.text.eic("ESMF")) {
-				importESMF = new BasicCodeConcept(this, it)
-			}
-			else if (it.name.text.eic("NUOPC")) {
-				importNUOPC = new BasicCodeConcept(this, it)
-			}
-			else if (it.name.text.eic("NUOPC_Model")) {
-				importNUOPCGeneric = new GenericImport(this, it).reverse
-			}
-		]	
-		
-		super.fward as NUOPCModel
-		
-	}
-*/
-
-	
-	
 	@Label(label="SetServices")
 	@MappingType("subroutine")
 	@Doc(urlfrag="#model-setservices")
@@ -429,32 +304,7 @@ end module
 				
 			}
 			
-			/*
-			override List reverseMultiple() {
-				
-				//call NUOPC_Advertise(importState, &
-      			//StandardName="sea_surface_temperature", name="sst", rc=rc)
-				
-				var retList = newArrayList()
-	
-				var rs = '''call_(_cid, «parentID», 'NUOPC_Advertise'),
-							callArgWithType(_, _cid, 1, _, _, _stateExpr),
-							callArgWithType(_, _cid, 2, _, _, _standardNameExpr).'''.execQuery
-	
-				while (rs.next) {
-					var advField = new AdvertiseField(_parent);
-					advField._id = rs.getLong("_cid")
-					advField.state = rs.getString("_stateExpr")
-					advField.standardName = rs.getString("_standardNameExpr")
-					retList.add(advField)
-				}
-				rs.close
-	
-				retList
-			}
-			*/
-			
-			override fward() {
+			override forward() {
 	
 				var code = 
 '''
@@ -508,29 +358,7 @@ call NUOPC_Advertise(«paramch(state)», «paramch(standardName)», rc=«_parent
 				
 			}
 	
-			/*
-			override List reverseMultiple() {
-				var retList = newArrayList()
-	
-				var rs = '''call_(_cid, «parentID», 'NUOPC_Realize'),
-							callArgWithType(_, _cid, 1, _, _, _stateExpr),
-							callArgWithType(_, _cid, 2, _, _, _fieldExpr).'''.execQuery
-	
-				while (rs.next) {
-					var relField = new RealizeField(_parent);
-					relField._id = rs.getLong("_cid")
-					relField.state = rs.getString("_stateExpr")
-					relField.field = rs.getString("_fieldExpr")
-					retList.add(relField)
-				}
-				rs.close
-	
-				retList
-			}
-			* 
-			*/
-	
-			override fward() {	
+			override forward() {	
 				var code = 
 '''
 	
@@ -541,7 +369,7 @@ call NUOPC_Realize(«paramch(state)», field=«paramch(field)», rc=«_parent.pa
 				val ASTSubroutineSubprogramNode ssn = _parent.ASTRef
 	
 				ssn.body.addAll(stmts)
-				super.fward
+				super.forward
 			}
 	
 		}

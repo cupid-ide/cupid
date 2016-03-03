@@ -147,62 +147,6 @@ end subroutine
 			throw new CodeGenerationException("A SetServices subroutine must exist first.")	
 		}
 		
-		val IFortranAST ast = getAST()
-
-		//add specialization subroutine itself			
-		var code = subroutineTemplate()
-
-		var ASTModuleNode mn = module.getASTRef
-		var ASTSubroutineSubprogramNode ssn = parseLiteralProgramUnit(code)
-
-		mn.getModuleBody().add(ssn)
-		setASTRef(ssn)
-
-		//add label import
-		//var usesNUOPCDriver = genericUse.getASTRef as ASTUseStmtNode
-		//var tempCode = usesNUOPCDriver.toString.trim
-		//tempCode += ''', &
-		//«IF !specLabel.equals(labelName)»«specLabel» => «ENDIF»«labelName»'''
-
-		//var tempNode = parseLiteralStatement(tempCode) as ASTUseStmtNode;
-		//usesNUOPCDriver.replaceWith(tempNode)
-
-		//add call in setservices
-		var ASTSubroutineSubprogramNode setServicesNode = setServices().getASTRef
-		if (setServicesNode != null) {
-
-			code = 
-'''
-
-call NUOPC_CompSetEntryPoint(«setServices().paramGridComp», «methodType», &
-	«IF phaseLabel!=null»phaseLabelList=(/"«phaseLabel»"/),«ENDIF» userRoutine=«subroutineName», rc=«setServices().paramRC»)
-'''
-
-			var ASTCallStmtNode regCall = parseLiteralStatement(code) as ASTCallStmtNode
-			setServicesNode.body.add(regCall)
-		
-			code = 
-'''
-if (ESMF_LogFoundError(rcToCheck=«paramRC», msg=ESMF_LOGERR_PASSTHRU, &
-            line=__LINE__, &
-            file=__FILE__)) &
-            return  ! bail out
-'''
-			var ASTIfStmtNode ifNode = parseLiteralStatement(code) as ASTIfStmtNode
-			setServicesNode.body.add(ifNode)
-		
-		}
-
-		ast
-
-	}
-	
-	override fward() {
-
-		if (setServices() == null) {
-			throw new CodeGenerationException("A SetServices subroutine must exist first.")	
-		}
-		
 		//add specialization subroutine itself			
 		var code = subroutineTemplate()
 
@@ -248,7 +192,7 @@ if (ESMF_LogFoundError(rcToCheck=«paramRC», msg=ESMF_LOGERR_PASSTHRU, &
 		
 		}
 
-		super.fward
+		super.forward
 
 	}
 

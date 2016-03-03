@@ -1,4 +1,4 @@
-package org.earthsystemmodeling.cupid.nuopc.v7bs59
+package org.earthsystemmodeling.cupid.nuopc.v7r
 
 import java.util.List
 import org.earthsystemmodeling.cupid.annotation.Child
@@ -18,10 +18,10 @@ import static org.earthsystemmodeling.cupid.util.CodeExtraction.*
 
 import static extension org.earthsystemmodeling.cupid.nuopc.ASTQuery.*
 
-@Label(label="NUOPC Mediator")
+@Label(label="NUOPC Model")
 @MappingType("module")
-@Doc(urlfrag="#mediator-top")
-class NUOPCMediator extends NUOPCComponent {
+@Doc(urlfrag="#model-top")
+class NUOPCModel extends NUOPCComponent {
 
 	@Child(forward=true)
 	public SetServices setServices
@@ -29,20 +29,20 @@ class NUOPCMediator extends NUOPCComponent {
 	@Child(forward=true)
 	public Initialization initialization
 
-	@Child(forward=true)
+	@Child
 	public Run run
 
-	@Child(forward=true)
+	@Child
 	public Finalize finalize
-
+	
 	new(IResource context) {
-		super(null, context, "NUOPC_Mediator")
+		super(null, context, "NUOPC_Model")
 	}
 
-	override prefix() { "mediator" }
+	override prefix() { "model" }
 
-	override NUOPCMediator reverse() {
-		super.reverse as NUOPCMediator
+	override NUOPCModel reverse() {
+		super.reverse as NUOPCModel
 	}
 
 	override reverseChildren() {
@@ -53,30 +53,40 @@ class NUOPCMediator extends NUOPCComponent {
 		this
 	}
 
-	override NUOPCMediator forward() {
-		super.forward as NUOPCMediator
+	override NUOPCModel forward() {
+		super.forward as NUOPCModel
 	}
-		
-	
+
 	@Label(label="SetServices")
 	@MappingType("subroutine")
-	@Doc(urlfrag="#mediator-setservices")
-	public static class SetServices extends SetServicesCodeConcept<NUOPCMediator> {	
-		new(NUOPCMediator parent) {
+	@Doc(urlfrag="#model-setservices")
+	public static class SetServices extends SetServicesCodeConcept<NUOPCModel> {	
+		new(NUOPCModel parent) {
 			super(parent)
 		}		
 	}
 	
+	
 	@Label(label="Initialize Phase Definition")
-	public static abstract class IPD extends CodeConcept<NUOPCMediator.InitPhases, ASTNode> {
+	public static abstract class IPD extends CodeConcept<NUOPCModel.InitPhases, ASTNode> {
 
-		new(NUOPCMediator.InitPhases parent) {
+		new(NUOPCModel.InitPhases parent) {
 			super(parent)
 		}
+		
+		/*
+		def void setChildPhase(EntryPointCodeConcept<IPD> child) {		
+			//find field of matching type and assign child to it
+			val childField = this.class.fields.findFirst[it.type.isInstance(child)]
+			if (childField != null) {
+				childField.set(this, child)
+			}		
+		}
+		*/
 	
 		@Label(label="IPDv04p1 - Advertise Fields")
 		@MappingType("subroutine")
-		@Doc(urlfrag="#mediator-phase-advertisefields")
+		@Doc(urlfrag="#model-phase-advertisefields")
 		public static class IPDv04p1 extends EntryPointCodeConcept<IPD> {
 
 			@Child(min=0, max=-1)
@@ -118,7 +128,7 @@ class NUOPCMediator extends NUOPCComponent {
 		
 		@Label(label="IPDv04p2 - Unspecified by NUOPC")
 		@MappingType("subroutine-inherited")
-		@Doc(urlfrag="#mediator-initseq")
+		@Doc(urlfrag="#model-initseq")
 		public static class IPDv04p2 extends CodeConcept<IPD, ASTNode> {
 			new(IPD parent) {
 				super(parent)
@@ -127,7 +137,7 @@ class NUOPCMediator extends NUOPCComponent {
 
 		@Label(label="IPDv04p3 - Realize Fields Providing Geom Object")
 		@MappingType("subroutine")
-		@Doc(urlfrag="#mediator-phase-realizefieldsproviding")
+		@Doc(urlfrag="#model-phase-realizefieldsproviding")
 		public static class IPDv04p3 extends EntryPointCodeConcept<IPD> {
 
 			@Child(min=0, max=-1)
@@ -169,7 +179,7 @@ class NUOPCMediator extends NUOPCComponent {
 		
 		@Label(label="IPDv04p4 - Modify Decomposition of Accepted Geom Object")
 		@MappingType("subroutine")
-		@Doc(urlfrag="#mediator-phase-modifydecomp")
+		@Doc(urlfrag="#model-phase-modifydecomp")
 		public static class IPDv04p4 extends EntryPointCodeConcept<IPD> {
 
 			new(IPD parent) {
@@ -215,8 +225,8 @@ class NUOPCMediator extends NUOPCComponent {
 				phaseLabel = getPhaseLabel()
 				subroutineName = "RealizeFieldsAcceptingGrid"
 				methodType = "ESMF_METHOD_INITIALIZE"
-				realizeFields = newArrayList()
 				parent.setOrAddChild(this)
+				realizeFields = newArrayList()
 			}
 			
 			def getPhaseLabel() {
@@ -242,7 +252,7 @@ class NUOPCMediator extends NUOPCComponent {
 		
 		@Label(label="IPDv04p6 - Verify Connected / Set Clock")
 		@MappingType("subroutine-inherited")
-		@Doc(urlfrag="#mediator-phase-verifyimports")
+		@Doc(urlfrag="#model-phase-verifyimports")
 		public static class IPDv04p6 extends CodeConcept<IPD, ASTNode> {
 			new(IPD parent) {
 				super(parent)
@@ -251,7 +261,7 @@ class NUOPCMediator extends NUOPCComponent {
 
 		@Label(label="IPDv04p7 - Data Initialize")
 		@MappingType("subroutine-inherited")
-		@Doc(urlfrag="#mediator-phase-initexport")
+		@Doc(urlfrag="#model-phase-initexport")
 		public static class IPDv04p7 extends CodeConcept<IPD, ASTNode> {
 			new(IPD parent) {
 				super(parent)
@@ -276,9 +286,11 @@ class NUOPCMediator extends NUOPCComponent {
 			override name() {
 				state + " / " + standardName
 			}
-	
+			
 			override List reverseMultiple() {
+				
 				val retList = newArrayList()
+				
 				_parent.ASTRef.body.filter(ASTCallStmtNode).filter[c|
 					c.subroutineName.eic("NUOPC_Advertise")].forEach[
 						var advField = new AdvertiseField(_parent)
@@ -287,9 +299,11 @@ class NUOPCMediator extends NUOPCComponent {
 						advField.setASTRef(it)
 						retList.add(advField)	
 					]
+				
 				retList
+				
 			}
-	
+			
 			override forward() {
 	
 				var code = 
@@ -328,7 +342,9 @@ call NUOPC_Advertise(«paramch(state)», «paramch(standardName)», rc=«_parent
 			}
 	
 			override List reverseMultiple() {
+				
 				val retList = newArrayList()
+					
 				_parent.ASTRef.body.filter(ASTCallStmtNode).filter[c|
 					c.subroutineName.eic("NUOPC_Realize")].forEach[
 						var relField = new RealizeField(_parent)
@@ -337,7 +353,9 @@ call NUOPC_Advertise(«paramch(state)», «paramch(standardName)», rc=«_parent
 						relField.setASTRef(it)
 						retList.add(relField)	
 					]
+				
 				retList
+				
 			}
 	
 			override forward() {	
@@ -353,8 +371,8 @@ call NUOPC_Realize(«paramch(state)», field=«paramch(field)», rc=«_parent.pa
 				ssn.body.addAll(stmts)
 				super.forward
 			}
-
-	}
+	
+		}
 		
 			
 
@@ -362,7 +380,7 @@ call NUOPC_Realize(«paramch(state)», field=«paramch(field)», rc=«_parent.pa
 	
 
 	@Label(label="Initialize Phase Definition (v00)")
-	@Doc(urlfrag="#mediator-initseq")
+	@Doc(urlfrag="#model-initseq")
 	public static class IPDv00 extends IPD {
 
 		@Child(min=1)
@@ -381,7 +399,7 @@ call NUOPC_Realize(«paramch(state)», field=«paramch(field)», rc=«_parent.pa
 		@Label(label="IPDv00p4 - Initialize Fields")
 		public IPD.IPDv04p7 ipdv00p4
 
-		new(NUOPCMediator.InitPhases parent) {
+		new(NUOPCModel.InitPhases parent) {
 			super(parent)
 		}
 
@@ -398,7 +416,7 @@ call NUOPC_Realize(«paramch(state)», field=«paramch(field)», rc=«_parent.pa
 	
 	
 	@Label(label="Initialize Phase Definition (v01)")
-	@Doc(urlfrag="#mediator-initseq")
+	@Doc(urlfrag="#model-initseq")
 	public static class IPDv01 extends IPD {
 
 		@Child(min=1)
@@ -421,7 +439,7 @@ call NUOPC_Realize(«paramch(state)», field=«paramch(field)», rc=«_parent.pa
 		@Label(label="IPDv01p5 - Initialize Fields")
 		public IPD.IPDv04p7 ipdv01p5
 
-		new(NUOPCMediator.InitPhases parent) {
+		new(NUOPCModel.InitPhases parent) {
 			super(parent)
 		}
 
@@ -438,10 +456,10 @@ call NUOPC_Realize(«paramch(state)», field=«paramch(field)», rc=«_parent.pa
 	}
 		
 	@Label(label="Initialize Phase Definition (v02)")
-	@Doc(urlfrag="#mediator-initseq")
+	@Doc(urlfrag="#model-initseq")
 	public static class IPDv02 extends IPD {
 	
-		new(NUOPCMediator.InitPhases parent) {
+		new(NUOPCModel.InitPhases parent) {
 			super(parent)
 		}
 		
@@ -479,10 +497,10 @@ call NUOPC_Realize(«paramch(state)», field=«paramch(field)», rc=«_parent.pa
 	}
 	
 	@Label(label="Initialize Phase Definition (v03)")
-	@Doc(urlfrag="#mediator-initseq")
+	@Doc(urlfrag="#model-initseq")
 	public static class IPDv03 extends IPD {
 	
-		new(NUOPCMediator.InitPhases parent) {
+		new(NUOPCModel.InitPhases parent) {
 			super(parent)
 		}
 		
@@ -535,10 +553,10 @@ call NUOPC_Realize(«paramch(state)», field=«paramch(field)», rc=«_parent.pa
 	}
 	
 	@Label(label="Initialize Phase Definition (v04)")
-	@Doc(urlfrag="#mediator-initseq")
+	@Doc(urlfrag="#model-initseq")
 	public static class IPDv04 extends IPD {
 	
-		new(NUOPCMediator.InitPhases parent) {
+		new(NUOPCModel.InitPhases parent) {
 			super(parent)
 		}
 		
@@ -587,19 +605,19 @@ call NUOPC_Realize(«paramch(state)», field=«paramch(field)», rc=«_parent.pa
 	@Label(label="Phases")
 	public static class InitPhases extends CodeConcept<Initialization, ASTNode> {
 	
-		@Child
+		@Child(forward=true)
 		public IPDv00 ipdv00
 		
-		@Child
+		@Child(forward=true)
 		public IPDv01 ipdv01
 		
-		@Child
+		@Child(forward=true)
 		public IPDv02 ipdv02
 		
-		@Child
+		@Child(forward=true)
 		public IPDv03 ipdv03
 		
-		@Child
+		@Child(forward=true)
 		public IPDv04 ipdv04
 	
 		new(Initialization parent) {
@@ -616,7 +634,7 @@ call NUOPC_Realize(«paramch(state)», field=«paramch(field)», rc=«_parent.pa
 		}
 		
 		override validate(List<String> errors) {
-			ipdv00.validate(errors)||
+			ipdv00.validate(errors) ||
 			ipdv01.validate(errors) ||
 			ipdv02.validate(errors) ||
 			ipdv03.validate(errors) ||
@@ -629,15 +647,15 @@ call NUOPC_Realize(«paramch(state)», field=«paramch(field)», rc=«_parent.pa
 	
 
 	@Label(label="Initialize")
-	public static class Initialization extends CodeConcept<NUOPCMediator, ASTNode> {
+	public static class Initialization extends CodeConcept<NUOPCModel, ASTNode> {
 
-		@Child
+		@Child(forward=true)
 		public InitPhases initPhases
 		
-		@Child
+		@Child(forward=true)
 		public InitSpecializations initSpecs
 		
-		new(NUOPCMediator parent) {
+		new(NUOPCModel parent) {
 			super(parent)
 		}
 
@@ -656,8 +674,8 @@ call NUOPC_Realize(«paramch(state)», field=«paramch(field)», rc=«_parent.pa
 	@Label(label="Specializations")
 	public static class InitSpecializations extends CodeConcept<Initialization, ASTNode> {
 	
-		//@Child(min=0)
-		//public SetClock setClock
+		@Child(min=0)
+		public SetClock setClock
 
 		@Child(min=0)
 		public DataInitialize dataInitialize
@@ -668,7 +686,7 @@ call NUOPC_Realize(«paramch(state)», field=«paramch(field)», rc=«_parent.pa
 		}
 		
 		override reverse() {
-			//setClock = new SetClock(this).reverse as SetClock
+			setClock = new SetClock(this).reverse as SetClock
 			dataInitialize = new DataInitialize(this).reverse as DataInitialize
 			this
 		}
@@ -676,17 +694,85 @@ call NUOPC_Realize(«paramch(state)», field=«paramch(field)», rc=«_parent.pa
 	}
 	
 
+
+	@Label(label="SetClock")
+	@MappingType("subroutine")
+	@Doc(urlfrag="#model-specialization-setclock")
+	public static class SetClock extends SpecializationMethodCodeConcept<InitSpecializations> {
+
+		new(InitSpecializations parent) {
+			super(parent, "NUOPC_Model", "label_SetClock")
+
+			// defaults
+			subroutineName = "SetClock"
+			specLabel = "model_label_SetClock"
+			paramGridComp = "gcomp"
+			paramRC = "rc"
+		}
+
+		override subroutineTemplate() {
+			'''
+
+subroutine «subroutineName»(«paramGridComp», «paramRC»)
+    type(ESMF_GridComp)  :: «paramGridComp»
+    integer, intent(out) :: «paramRC»
+
+    ! local variables
+    type(ESMF_Clock)              :: clock
+    type(ESMF_TimeInterval)       :: stabilityTimeStep
+
+    rc = ESMF_SUCCESS
+    
+    ! query the Component for its clock, importState and exportState
+    call ESMF_GridCompGet(gcomp, clock=clock, rc=rc)
+    if (ESMF_LogFoundError(rcToCheck=rc, msg=ESMF_LOGERR_PASSTHRU, &
+      line=__LINE__, &
+      file=__FILE__)) &
+      return  ! bail out
+      
+    ! initialize internal clock
+    ! here: parent Clock and stability timeStep determine actual model timeStep
+    call ESMF_TimeIntervalSet(stabilityTimeStep, m=«paramint(5)», rc=rc)
+    if (ESMF_LogFoundError(rcToCheck=rc, msg=ESMF_LOGERR_PASSTHRU, &
+      line=__LINE__, &
+      file=__FILE__)) &
+      return  ! bail out
+    
+    call NUOPC_CompSetClock(gcomp, clock, stabilityTimeStep, rc=rc)
+    if (ESMF_LogFoundError(rcToCheck=rc, msg=ESMF_LOGERR_PASSTHRU, &
+      line=__LINE__, &
+      file=__FILE__)) &
+      return  ! bail out
+
+end subroutine
+'''
+		}
+
+		override module() {
+			_parent._parent._parent
+		}
+
+		override setServices() {
+			_parent._parent._parent.setServices
+		}
+
+		override genericUse() {
+			_parent._parent._parent.importNUOPCGeneric
+		}
+
+	}
+
 	@Label(label="DataInitialize")
 	@MappingType("subroutine")
-	@Doc(urlfrag="#mediator-specialization-datainitialize")
+	@Doc(urlfrag="#model-specialization-datainitialize")
 	public static class DataInitialize extends SpecializationMethodCodeConcept<InitSpecializations> {
 
 		new(InitSpecializations parent) {
-			super(parent, "NUOPC_Mediator", "label_DataInitialize")
+			super(parent, "NUOPC_Model", "label_DataInitialize")
 
 			// defaults
 			subroutineName = "DataInitialize"
-			specLabel = "mediator_label_DataInitialize"
+			specLabel = "model_label_DataInitialize"
 			paramGridComp = "gcomp"
 			paramRC = "rc"
 		}
@@ -721,7 +807,7 @@ end subroutine
 	}
 
 	@Label(label="Run")
-	public static class Run extends CodeConcept<NUOPCMediator, ASTNode> {
+	public static class Run extends CodeConcept<NUOPCModel, ASTNode> {
 
 		@Child
 		public RunPhases runPhases
@@ -729,7 +815,7 @@ end subroutine
 		@Child
 		public RunSpecializations runSpecs
 	
-		new(NUOPCMediator parent) {
+		new(NUOPCModel parent) {
 			super(parent)
 		}
 		
@@ -752,10 +838,7 @@ end subroutine
 		public List<CheckImport> checkImport
 
 		@Child(min=1, max=-1)
-		public List<MediatorAdvance> mediatorAdvance
-		
-		@Child(min=0, max=-1)
-		public List<TimestampExport> timestampExport
+		public List<ModelAdvance> modelAdvance
 
 		new(Run parent) {
 			super(parent)
@@ -766,10 +849,9 @@ end subroutine
 		}
 
 		def reverseChildren() {
-			mediatorAdvance = new MediatorAdvance(this).reverseMultiple
+			modelAdvance = new ModelAdvance(this).reverseMultiple
 			setRunClock = new SetRunClock(this).reverseMultiple
 			checkImport = new CheckImport(this).reverseMultiple
-			timestampExport = new TimestampExport(this).reverseMultiple
 			this
 		}
 
@@ -794,7 +876,7 @@ end subroutine
 	
 	@Label(label="Run Phase 1")
 	@MappingType("subroutine-inherited")
-	@Doc(urlfrag="#mediator-phase-run")
+	@Doc(urlfrag="#model-phase-run")
 	public static class RunPhase1 extends CodeConcept<RunPhases, ASTNode> {
 		new(RunPhases parent) {
 			super(parent)
@@ -803,18 +885,18 @@ end subroutine
 
 	@Label(label="Advance")
 	@MappingType("subroutine")
-	@Doc(urlfrag="#mediator-specialization-advance")
-	public static class MediatorAdvance extends SpecializationMethodCodeConcept<RunSpecializations> {
+	@Doc(urlfrag="#model-specialization-advance")
+	public static class ModelAdvance extends SpecializationMethodCodeConcept<RunSpecializations> {
 
 		new(RunSpecializations parent) {
-			super(parent, "NUOPC_Mediator", "label_Advance")
+			super(parent, "NUOPC_Model", "label_Advance")
 
 			// defaults
-			subroutineName = "MediatorAdvance"
-			if (parent.mediatorAdvance?.size > 0) {
-				subroutineName += parent.mediatorAdvance.size+1
+			subroutineName = "ModelAdvance"
+			if (parent.modelAdvance?.size > 0) {
+				subroutineName += parent.modelAdvance.size+1
 			}
-			specLabel = "mediator_label_Advance"
+			specLabel = "model_label_Advance"
 			paramGridComp = "gcomp"
 			paramRC = "rc"
 		}
@@ -842,9 +924,9 @@ subroutine «subroutineName»(«paramGridComp», «paramRC»)
         file=__FILE__)) &
         return  ! bail out
 
-    ! advance the mediator: currTime -> currTime + timeStep
+    ! advance the model: currTime -> currTime + timeStep
 
-    call ESMF_ClockPrint(clock, options="currTime", &
+	call ESMF_ClockPrint(clock, options="currTime", &
       preString="------>Advancing «_parent._parent._parent.name» from: ", rc=«paramRC»)
     if (ESMF_LogFoundError(rcToCheck=«paramRC», msg=ESMF_LOGERR_PASSTHRU, &
         line=__LINE__, &
@@ -878,18 +960,18 @@ end subroutine
 
 	@Label(label="SetRunClock")
 	@MappingType("subroutine")
-	@Doc(urlfrag="#mediator-specialization-setrunclock")
+	@Doc(urlfrag="#model-specialization-setrunclock")
 	public static class SetRunClock extends SpecializationMethodCodeConcept<RunSpecializations> {
-	
+
 		new(RunSpecializations parent) {
-			super(parent, "NUOPC_Mediator", "label_SetRunClock")
+			super(parent, "NUOPC_Model", "label_SetRunClock")
 
 			// defaults
 			subroutineName = "SetRunClock"
 			if (parent.setRunClock?.size > 0) {
 				subroutineName += parent.setRunClock.size+1
 			}
-			specLabel = "mediator_label_SetRunClock"
+			specLabel = "model_label_SetRunClock"
 			paramGridComp = "gcomp"
 			paramRC = "rc"
 		}
@@ -908,14 +990,14 @@ subroutine «subroutineName»(«paramGridComp», «paramRC»)
     
     ! query the component for its clock
     call ESMF_GridCompGet(gcomp, clock=clock, rc=«paramRC»)
-    if (ESMF_LogFoundError(rcToCheck=«paramRC», msg=ESMF_LOGERR_PASSTHRU, &
+    if (ESMF_LogFoundError(rcToCheck=rc, msg=ESMF_LOGERR_PASSTHRU, &
       line=__LINE__, &
       file=__FILE__)) &
       return  ! bail out
       
     ! set the component's clock 
     call NUOPC_CompSetClock(gcomp, externalClock=clock, rc=«paramRC»)
-    if (ESMF_LogFoundError(rcToCheck=«paramRC», msg=ESMF_LOGERR_PASSTHRU, &
+    if (ESMF_LogFoundError(rcToCheck=rc, msg=ESMF_LOGERR_PASSTHRU, &
       line=__LINE__, &
       file=__FILE__)) &
       return  ! bail out
@@ -940,18 +1022,18 @@ end subroutine
 
 	@Label(label="CheckImport")
 	@MappingType("subroutine")
-	@Doc(urlfrag="#mediator-specialization-checkimport")
+	@Doc(urlfrag="#model-specialization-checkimport")
 	public static class CheckImport extends SpecializationMethodCodeConcept<RunSpecializations> {
-	
+
 		new(RunSpecializations parent) {
-			super(parent, "NUOPC_Mediator", "label_CheckImport")
+			super(parent, "NUOPC_Model", "label_CheckImport")
 
 			// defaults
 			subroutineName = "CheckImport"
 			if (parent.checkImport?.size > 0) {
 				subroutineName += parent.checkImport.size+1
 			}
-			specLabel = "mediator_label_CheckImport"
+			specLabel = "model_label_CheckImport"
 			paramGridComp = "gcomp"
 			paramRC = "rc"
 		}
@@ -985,74 +1067,7 @@ end subroutine
 
 	}
 	
-	@Label(label="TimestampExport")
-	@MappingType("subroutine")
-	@Doc(urlfrag="#mediator-specialization-timestampexport")
-	public static class TimestampExport extends SpecializationMethodCodeConcept<RunSpecializations> {
 
-		new(RunSpecializations parent) {
-			super(parent, "NUOPC_Mediator", "label_TimestampExport")
-
-			// defaults
-			subroutineName = "TimestampExport"
-			if (parent.timestampExport?.size > 0) {
-				subroutineName += parent.timestampExport.size+1
-			}
-			specLabel = "mediator_label_TimestampExport"
-			paramGridComp = "gcomp"
-			paramRC = "rc"
-		}
-
-		override subroutineTemplate() {
-			'''
-
-subroutine «subroutineName»(«paramGridComp», «paramRC»)
-    type(ESMF_GridComp)  :: «paramGridComp»
-    integer, intent(out) :: «paramRC»
-    
-    ! local variables
-    type(ESMF_Clock)      :: clock
-    type(ESMF_State)      :: exportState
-
-    rc = ESMF_SUCCESS
-    
-    ! The default behavior is to timestamp export fields
-    ! to the current time on the clock
-    
-    ! query the Component for info
-    call ESMF_GridCompGet(«paramGridComp», clock=clock, &
-      exportState=exportState, rc=«paramRC»)
-    if (ESMF_LogFoundError(rcToCheck=«paramRC», msg=ESMF_LOGERR_PASSTHRU, &
-      line=__LINE__, &
-      file=__FILE__)) &
-      return  ! bail out
-
-    ! update timestamp on export Fields
-    call NUOPC_UpdateTimestamp(exportState, clock, rc=«paramRC»)
-    if (ESMF_LogFoundError(rcToCheck=«paramRC», msg=ESMF_LOGERR_PASSTHRU, &
-      line=__LINE__, &
-      file=__FILE__)) &
-      return  ! bail out
-
-end subroutine
-'''
-		}
-
-		override module() {
-			_parent._parent._parent
-		}
-
-		override setServices() {
-			_parent._parent._parent.setServices
-		}
-
-		override genericUse() {
-			_parent._parent._parent.importNUOPCGeneric
-		}
-
-	}
-	
-	
 	@Label(label="Phases")
 	public static class FinalizePhases extends CodeConcept<Finalize, ASTNode> {
 	
@@ -1074,7 +1089,7 @@ end subroutine
 	public static class FinalizeSpecializations extends CodeConcept<Finalize, ASTNode> {
 
 		@Child(min=0)
-		public FinalizeMediator finalize
+		public FinalizeModel finalize
 
 		new(Finalize parent) {
 			super(parent)
@@ -1085,7 +1100,7 @@ end subroutine
 		}
 
 		def reverseChildren() {
-			finalize = new FinalizeMediator(this).reverse as FinalizeMediator
+			finalize = new FinalizeModel(this).reverse as FinalizeModel
 			this
 		}
 
@@ -1093,7 +1108,7 @@ end subroutine
 	
 	@Label(label="Finalize Phase 1")
 	@MappingType("subroutine-inherited")
-	@Doc(urlfrag="#mediator-phase-finalize")
+	@Doc(urlfrag="#model-phase-finalize")
 	public static class FinalizePhase1 extends CodeConcept<FinalizePhases, ASTNode> {
 		new(FinalizePhases parent) {
 			super(parent)
@@ -1101,7 +1116,7 @@ end subroutine
 	}	
 
 	@Label(label="Finalize")
-	public static class Finalize extends CodeConcept<NUOPCMediator, ASTNode> {
+	public static class Finalize extends CodeConcept<NUOPCModel, ASTNode> {
 
 		@Child
 		public FinalizePhases finalPhases
@@ -1109,7 +1124,7 @@ end subroutine
 		@Child
 		public FinalizeSpecializations finalSpecs
 
-		new(NUOPCMediator parent) {
+		new(NUOPCModel parent) {
 			super(parent)
 		}
 
@@ -1125,17 +1140,17 @@ end subroutine
 
 	}
 	
-	@Label(label="FinalizeMediator")
+	@Label(label="FinalizeModel")
 	@MappingType("subroutine")
-	@Doc(urlfrag="#mediator-specialization-finalize")
-	public static class FinalizeMediator extends SpecializationMethodCodeConcept<FinalizeSpecializations> {
+	@Doc(urlfrag="#model-specialization-finalize")
+	public static class FinalizeModel extends SpecializationMethodCodeConcept<FinalizeSpecializations> {
 
 		new(FinalizeSpecializations parent) {
-			super(parent, "NUOPC_Mediator", "label_Finalize")
+			super(parent, "NUOPC_Model", "label_Finalize")
 
 			// defaults
-			subroutineName = "FinalizeMediator"
-			specLabel = "mediator_label_Finalize"
+			subroutineName = "FinalizeModel"
+			specLabel = "model_label_Finalize"
 			paramGridComp = "gcomp"
 			paramRC = "rc"
 		}

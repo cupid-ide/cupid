@@ -1,4 +1,4 @@
-package org.earthsystemmodeling.cupid.nuopc.v7bs59
+package org.earthsystemmodeling.cupid.nuopc.v7r
 
 import org.earthsystemmodeling.cupid.nuopc.BasicCodeConcept
 import org.earthsystemmodeling.cupid.nuopc.CodeConcept

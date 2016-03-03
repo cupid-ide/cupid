@@ -24,10 +24,7 @@ import org.eclipse.xtend.lib.annotations.Accessors
 public abstract class CodeConcept<P extends CodeConcept<?,?>, A extends IASTNode> {
 	
 	var public P _parent
-	var public long _id = -1
-	//var protected CodeDBIndex _codeDB
 	var protected A _astRef
-	//var protected Class<A> _astClass
 	var protected IResource _context
 	var protected IFortranAST _ast
 	
@@ -39,27 +36,15 @@ public abstract class CodeConcept<P extends CodeConcept<?,?>, A extends IASTNode
 	var protected List<MarkerLoc> paramMarkers;
 	
 	new(P parent) {
-		//init(parent)
-		//paramMarkers = newArrayList()
 		this(parent, null)
 	}
 	
 	new(P parent, IResource context) {
 		_context = context
-		init(parent)
+		_parent = parent
 		paramMarkers = newArrayList()
 	}
-	
-	def init(P parent) {
-		_parent = parent
-		//_codeDB = parent?._codeDB
-	}
-	
-	def long parentID() {
-		if (_parent?._id > 0) _parent._id
-		else _parent?.parentID()
-	}
-	
+		
 	def void setOrAddChild(CodeConcept<?,?> child) {		
 		//find field of matching type and assign child to it
 		var childField = getChildFields.findFirst[it.type.isInstance(child)]
@@ -75,8 +60,6 @@ public abstract class CodeConcept<P extends CodeConcept<?,?>, A extends IASTNode
 					if (clazz==child.class) true
 					else false
 				}
-//				it.type.genericSuperclass instanceof ParameterizedType &&
-//				((it.type.genericSuperclass as ParameterizedType).actualTypeArguments?.get(0) as Class<?>)?.isInstance(child)
 			]
 			if (childField != null) {
 				val lst = childField.get(this) as List;
@@ -92,17 +75,6 @@ public abstract class CodeConcept<P extends CodeConcept<?,?>, A extends IASTNode
 			}
 		}
 	}
-	
-	/*
-	def CodeConcept<?,?> nearestAncestor(Class<?> c) {
-		var CodeConcept<?,?> cur = _parent;
-		while (cur != null) {
-			if (c.isInstance(cur)) return cur;
-		}
-		null;
-	}
-	* 
-	*/
 	
 	def protected List<Field> getChildFields() {
 		if (childFields == null) {
@@ -170,12 +142,7 @@ public abstract class CodeConcept<P extends CodeConcept<?,?>, A extends IASTNode
 		if (_astRef != null) {
 			_astRef
 		}
-		//else if (_codeDB != null && _id >= 0) {
-		//	_codeDB.findASTNode(_id);
-		//}
-		else {
-			null
-		}
+		else null
 	}
 	
 	def setASTRef(A astRef) {
@@ -191,21 +158,13 @@ public abstract class CodeConcept<P extends CodeConcept<?,?>, A extends IASTNode
 			_ast
 		}
 		else null
-		//else if (_id > 0)
-		//	_codeDB.findAST(_id)
-		//else
-		//	_codeDB.findAST(parentID)
 	}
 		
 	def <T extends CodeConcept<?,?>> T reverse() {this as T}
 	def List<CodeConcept<P,A>> reverseMultiple() {newArrayList(reverse)}
 	
-	def IFortranAST forward() throws CodeGenerationException {
-		null
-	}
-	
-	//temporarily in place to change return type
-	def <T extends CodeConcept<?,?>> T fward() throws CodeGenerationException {
+		
+	def <T extends CodeConcept<?,?>> T forward() throws CodeGenerationException {
 		//default behavior is to forward all children
 		//with forward annotation set to true
 		
@@ -213,19 +172,12 @@ public abstract class CodeConcept<P extends CodeConcept<?,?>, A extends IASTNode
 			
 			//deal with lists
 			if (List.isAssignableFrom(field.type)) {
-				
-				//use reflection to get type of CodeConcept stored in the list
-				//var pt = field.type.genericSuperclass as ParameterizedType
-				//var clazz = pt.actualTypeArguments.get(0) as Class<?>
-				//var con = clazz.constructors.findFirst[it.parameterTypes.length==1]
-				
 				var theList = field.get(this) as List<CodeConcept<?,?>>
 				if (theList != null) {
 					for (var i=0; i<theList.size(); i++) {
-						theList.set(i, theList.get(i).fward)
+						theList.set(i, theList.get(i).forward)
 					}
 				}
-				
 			}
 			//deal with single element
 			else {
@@ -234,7 +186,6 @@ public abstract class CodeConcept<P extends CodeConcept<?,?>, A extends IASTNode
 					//annotation determines if a child should be created automatically
 					&& field.getAnnotation(Child).forward   
 				) {
-					//System.out.println("FORWARDING: " + field.name)
 					//create new instance
 					var con = field.type.constructors.findFirst[it.parameterTypes.length==1]
 					if (con != null) {
@@ -246,7 +197,7 @@ public abstract class CodeConcept<P extends CodeConcept<?,?>, A extends IASTNode
 	        		}
 				}
 				if (childConcept != null) {
-					field.set(this, childConcept.fward)
+					field.set(this, childConcept.forward)
 				}
 			}
 		}		
@@ -298,15 +249,7 @@ public abstract class CodeConcept<P extends CodeConcept<?,?>, A extends IASTNode
     	val sb = new StringBuffer();
         
         while (matcher.find()) {
-        	//if (matcher.group(1).equals("CHARLITD")) {
-        	//	matcher.appendReplacement(sb, "\"$2\"")
-        	//}
-        	//else if (matcher.group(1).equals("CHARLITS")) {
-        	//	matcher.appendReplacement(sb, "'$2'")
-        	//}
-        	//else {
-        		matcher.appendReplacement(sb, "$2");
-        	//}
+       		matcher.appendReplacement(sb, "$2");
         	val endLoc = sb.length();
         	val startLoc = endLoc - matcher.group(2).length();
         	paramMarkers.add(new MarkerLoc(startLoc, endLoc));
@@ -325,23 +268,6 @@ public abstract class CodeConcept<P extends CodeConcept<?,?>, A extends IASTNode
 	
 	def String name() {null}
 	
-	/*
-	def execQuery(CharSequence query) {
-		if (_codeDB != null) {
-			try {
-				var rs = _codeDB.query2(query.toString)
-				return rs
-			} catch (MalformedGoalException e) {
-				CupidActivator.log("Bad query", e)
-			}
-		}
-		else null
-	}
-	*/
-	
-	override toString() {
-		'''«this.class.simpleName» : «_id»'''
-	}
 	
 	def paramch(String defaultVal) {
 		if (defaultVal.startsWith("'") && defaultVal.endsWith("'")) {
