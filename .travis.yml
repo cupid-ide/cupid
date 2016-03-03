@@ -17,6 +17,7 @@ before_script:
   - if [[ "$TRAVIS_OS_NAME" == "linux" ]]; then export DISPLAY=:99.0  ;fi
   - if [[ "$TRAVIS_OS_NAME" == "linux" ]]; then sh -e /etc/init.d/xvfb start  ;fi
   - if [ ! -d "$HOME/ESMF-INSTALL/ESMF_7_0_0_beta_snapshot_59"  ]; then $TRAVIS_BUILD_DIR/build_esmf.sh ESMF_7_0_0_beta_snapshot_59 ;fi
+  - if [ ! -d "$HOME/ESMF-INSTALL/ESMF_7_0_0"  ]; then $TRAVIS_BUILD_DIR/build_esmf.sh ESMF_7_0_0 ;fi
   - export ESMF_INSTALL_ROOT=$HOME/ESMF-INSTALL
 
 matrix:
