@@ -14,6 +14,7 @@ import org.apache.commons.io.IOUtils;
 import org.earthsystemmodeling.cupid.annotation.Child;
 import org.earthsystemmodeling.cupid.nuopc.CodeGenerationException;
 import org.earthsystemmodeling.cupid.nuopc.ReverseEngineerException;
+import org.earthsystemmodeling.cupid.util.CodeExtraction;
 import org.eclipse.core.resources.IFile;
 import org.eclipse.core.resources.IResource;
 import org.eclipse.core.runtime.IPath;
@@ -23,7 +24,12 @@ import org.eclipse.ltk.core.refactoring.Change;
 import org.eclipse.ltk.core.refactoring.TextFileChange;
 import org.eclipse.photran.core.IFortranAST;
 import org.eclipse.photran.internal.core.parser.ASTExecutableProgramNode;
+import org.eclipse.photran.internal.core.parser.ASTSubroutineSubprogramNode;
+import org.eclipse.photran.internal.core.parser.ASTTypeDeclarationStmtNode;
+import org.eclipse.photran.internal.core.parser.IASTListNode;
 import org.eclipse.photran.internal.core.parser.IASTNode;
+import org.eclipse.photran.internal.core.parser.IBodyConstruct;
+import org.eclipse.photran.internal.core.parser.IDeclarationConstruct;
 import org.eclipse.photran.internal.core.reindenter.Reindenter;
 import org.eclipse.photran.internal.core.vpg.PhotranVPG;
 import org.eclipse.text.edits.ReplaceEdit;
@@ -611,6 +617,21 @@ public abstract class CodeConcept<P extends CodeConcept<?, ?>, A extends IASTNod
     _builder.append(defaultVal, "");
     _builder.append("$");
     return _builder;
+  }
+  
+  public static void addTypeDeclaration(final String code, final ASTSubroutineSubprogramNode ssn) {
+    IBodyConstruct _parseLiteralStatement = CodeExtraction.parseLiteralStatement(code);
+    final ASTTypeDeclarationStmtNode tds = ((ASTTypeDeclarationStmtNode) _parseLiteralStatement);
+    IASTListNode<IBodyConstruct> _body = ssn.getBody();
+    final IDeclarationConstruct last = _body.<IDeclarationConstruct>findLast(IDeclarationConstruct.class);
+    boolean _notEquals = (!Objects.equal(last, null));
+    if (_notEquals) {
+      IASTListNode<IBodyConstruct> _body_1 = ssn.getBody();
+      ((IASTListNode<IBodyConstruct>) _body_1).insertAfter(last, tds);
+    } else {
+      IASTListNode<IBodyConstruct> _body_2 = ssn.getBody();
+      _body_2.add(0, tds);
+    }
   }
   
   @Pure

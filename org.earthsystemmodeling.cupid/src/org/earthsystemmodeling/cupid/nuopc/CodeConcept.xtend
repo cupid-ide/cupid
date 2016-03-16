@@ -21,6 +21,12 @@ import org.eclipse.photran.internal.core.vpg.PhotranVPG
 import org.eclipse.text.edits.ReplaceEdit
 import org.eclipse.xtend.lib.annotations.Accessors
 import org.eclipse.core.runtime.IProgressMonitor
+import org.eclipse.photran.internal.core.parser.ASTSubroutineSubprogramNode
+import org.eclipse.photran.internal.core.parser.ASTTypeDeclarationStmtNode
+import org.eclipse.photran.internal.core.parser.IDeclarationConstruct
+import org.eclipse.photran.internal.core.parser.IBodyConstruct
+import org.eclipse.photran.internal.core.parser.IASTListNode
+import static org.earthsystemmodeling.cupid.util.CodeExtraction.*
 
 public abstract class CodeConcept<P extends CodeConcept<?,?>, A extends IASTNode> {
 	
@@ -299,6 +305,17 @@ public abstract class CodeConcept<P extends CodeConcept<?,?>, A extends IASTNode
 	
 	def paramint(String defaultVal) {
 		'''CUPIDPARAM$INT$«defaultVal»$'''
+	}
+	
+	def static addTypeDeclaration(String code, ASTSubroutineSubprogramNode ssn) {
+		val ASTTypeDeclarationStmtNode tds = parseLiteralStatement(code) as ASTTypeDeclarationStmtNode
+		val last = ssn.body.findLast(IDeclarationConstruct)
+		if (last != null) {
+			(ssn.body as IASTListNode<IBodyConstruct>).insertAfter(last, tds)
+		}
+		else {
+			ssn.body.add(0, tds)
+		}
 	}
 		
 	

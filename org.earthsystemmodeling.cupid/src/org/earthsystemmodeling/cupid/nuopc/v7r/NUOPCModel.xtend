@@ -26,6 +26,9 @@ import static org.earthsystemmodeling.cupid.util.CodeExtraction.*
 
 import static extension org.earthsystemmodeling.cupid.nuopc.ASTQuery.*
 import static extension org.earthsystemmodeling.cupid.nuopc.v7r.NUOPCModel.*
+import org.earthsystemmodeling.cupid.nuopc.CodeGenerationException
+import org.eclipse.xtend.lib.annotations.Accessors
+import org.earthsystemmodeling.cupid.NUOPC.Grid
 
 @Label(label="NUOPC Model")
 @MappingType("module")
@@ -182,6 +185,9 @@ class NUOPCModel extends NUOPCComponent {
 			@Child(min=0, max=-1)
 			public List<RealizeField> realizeFields
 			
+			@Accessors
+			List<String> grids
+			
 			new(IPD parent) {
 				super(parent)
 				phaseLabel = getPhaseLabel()
@@ -189,20 +195,77 @@ class NUOPCModel extends NUOPCComponent {
 				methodType = "ESMF_METHOD_INITIALIZE"
 				parent.setOrAddChild(this)
 				realizeFields = newArrayList()
+				grids = newArrayList()
 			}
+			
 			
 			def forward(Model high) {
 				for (Field f : high.importFields) {
-					val rf = new RealizeField(this)
-					rf.field = f.standardName
-					rf.state = paramImport
+					new RealizeField(this).forward(f, paramImport)				
 				}
 				for (Field f : high.exportFields) {
-					val rf = new RealizeField(this)
-					rf.field = f.standardName
-					rf.state = paramExport
+					new RealizeField(this).forward(f, paramExport)
+				}
+				for (Grid g : high.grids) {
+					grids.add(g.name)
 				}
 			}
+			
+			
+			override subroutineTemplate() {
+			'''
+			
+			subroutine «subroutineName»(«paramGridComp», «paramImport», «paramExport», «paramClock», «paramRC»)
+			    type(ESMF_GridComp)  :: «paramGridComp»
+			    type(ESMF_State)     :: «paramImport», «paramExport»
+			    type(ESMF_Clock)     :: «paramClock»
+			    integer, intent(out) :: «paramRC»
+			    
+			    «FOR g : grids»
+			    type(ESMF_Grid) :: «g»
+			    «ENDFOR»
+			    
+			    rc = ESMF_SUCCESS
+			    
+			    «FOR g : grids»
+			    «g» = CreateGrid_«g»(rc=«paramRC»)
+			    «ESMFErrorCheck(paramRC)»
+			    «ENDFOR»
+			    
+			    
+			    
+			end subroutine
+			'''
+			}
+				
+			
+			
+			/*
+			override IPDv04p3 forward() {
+				
+				//generate subroutine template
+				super.forward
+				
+				for (String gridName : grids) {
+					addTypeDeclaration('''type(ESMF_Grid) :: «gridName»''', getASTRef)
+				}
+
+				for (String gridName : grids) {
+					val code = '''
+					
+					«gridName» = CreateGrid_«gridName»(rc=«paramRC»)
+					«ESMFErrorCheck(paramRC)»
+					'''
+					val IASTListNode<IBodyConstruct> stmts = parseLiteralStatementSequence(code)
+					getASTRef.body.addAll(stmts)
+				}
+				
+				this
+				
+			}
+			*/
+			
+			
 			
 			def getPhaseLabel() {
 				switch _parent {
@@ -380,17 +443,20 @@ call NUOPC_Advertise(«paramch(state)», «paramch(standardName)», rc=«_parent
 
 			public String state
 			public String field
+			public String grid
+			public String fieldName
 	
 			new(EntryPointCodeConcept<?> parent) {
 				super(parent)
-				// defaults
+				parent.setOrAddChild(this)
 				state = _parent.paramImport
 				field = "field"
-				parent.setOrAddChild(this)
+				grid = "grid"
+				fieldName = "\"field_name\""
 			}
 	
 			override name() {
-				state + " / " + field
+				state + " / " + fieldName
 			}
 	
 			override List reverseMultiple() {
@@ -412,26 +478,21 @@ call NUOPC_Advertise(«paramch(state)», «paramch(standardName)», rc=«_parent
 	
 			override forward() {	
 				
-				val ASTSubroutineSubprogramNode ssn = _parent.ASTRef
+				if (field == null || fieldName == null || grid == null || state == null) {
+					throw new CodeGenerationException("Missing parameters required to generate Realize Field.")
+				}
 				
+				val ASTSubroutineSubprogramNode ssn = _parent.ASTRef
+								
+				addTypeDeclaration('''type(ESMF_Field) :: «field»''', ssn)
+								
 				var code = 
 '''
-type(ESMF_Field) :: «field»
-'''
-				
-				//TODO: see if it's already in scope before adding
-				val ASTTypeDeclarationStmtNode tds = parseLiteralStatement(code) as ASTTypeDeclarationStmtNode
-				
-				val last = ssn.body.findLast(IDeclarationConstruct)
-				if (last != null) {
-					(ssn.body as IASTListNode<IBodyConstruct>).insertAfter(last, tds)
-				}
-				else {
-					ssn.body.add(0, tds)
-				}
-				
-				code = 
-'''
+
+! field «fieldName»
+«field» = ESMF_FieldCreate(name=«fieldName», grid=«grid», &
+      typekind=ESMF_TYPEKIND_R8, rc=«_parent.paramRC»)
+«ESMFErrorCheck(_parent.paramRC)»
 	
 call NUOPC_Realize(«paramch(state)», field=«paramch(field)», rc=«_parent.paramRC»)
 «ESMFErrorCheck(_parent.paramRC)»
@@ -441,8 +502,17 @@ call NUOPC_Realize(«paramch(state)», field=«paramch(field)», rc=«_parent.pa
 				ssn.body.addAll(stmts)
 				super.forward
 			}
+			
+			def forward(Field high, String state) {
+				fieldName = "\"" + high.standardName + "\""
+				field = high.name
+				grid = high.grid.name
+				this.state = state
+			}
 	
 		}
+		
+		
 		
 			
 

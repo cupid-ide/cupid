@@ -29,7 +29,7 @@ class GridCodeConcept {
 		
 		override CreateUniformGrid forward() {
 			
-			// find nearest parent with an associated ast ref
+			// find nearest parent that references an ASTModuleNode
 			val ancestorConcept = findNearestAncestor(ASTModuleNode)
 			val moduleNode = ancestorConcept?.ASTRef as ASTModuleNode
 			
@@ -50,12 +50,6 @@ function «functionName»(rc)
     	minCornerCoord=«minCornerCoord.litArrayR8», &
     	maxCornerCoord=«maxCornerCoord.litArrayR8», &
     	rc=rc)
-    	
-    !	ESMF_GridCreateNoPeriDimUfrm(maxIndex=(/10, 100/), &
-    !  minCornerCoord=(/10._ESMF_KIND_R8, 20._ESMF_KIND_R8/), &
-    !  maxCornerCoord=(/100._ESMF_KIND_R8, 200._ESMF_KIND_R8/), &
-    !  coordSys=ESMF_COORDSYS_CART, staggerLocList=(/ESMF_STAGGERLOC_CENTER/), &
-    !  rc=rc)
     
 end function    
 

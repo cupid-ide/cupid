@@ -434,13 +434,22 @@ public interface NUOPCPackage extends EPackage {
 	int FIELD = 7;
 
 	/**
+	 * The feature id for the '<em><b>Name</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int FIELD__NAME = 0;
+
+	/**
 	 * The feature id for the '<em><b>Standard Name</b></em>' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int FIELD__STANDARD_NAME = 0;
+	int FIELD__STANDARD_NAME = 1;
 
 	/**
 	 * The feature id for the '<em><b>Grid</b></em>' reference.
@@ -449,7 +458,7 @@ public interface NUOPCPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int FIELD__GRID = 1;
+	int FIELD__GRID = 2;
 
 	/**
 	 * The number of structural features of the '<em>Field</em>' class.
@@ -458,7 +467,7 @@ public interface NUOPCPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int FIELD_FEATURE_COUNT = 2;
+	int FIELD_FEATURE_COUNT = 3;
 
 	/**
 	 * The number of operations of the '<em>Field</em>' class.
@@ -766,6 +775,17 @@ public interface NUOPCPackage extends EPackage {
 	EClass getField();
 
 	/**
+	 * Returns the meta object for the attribute '{@link org.earthsystemmodeling.cupid.NUOPC.Field#getName <em>Name</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the attribute '<em>Name</em>'.
+	 * @see org.earthsystemmodeling.cupid.NUOPC.Field#getName()
+	 * @see #getField()
+	 * @generated
+	 */
+	EAttribute getField_Name();
+
+	/**
 	 * Returns the meta object for the attribute '{@link org.earthsystemmodeling.cupid.NUOPC.Field#getStandardName <em>Standard Name</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -1028,6 +1048,14 @@ public interface NUOPCPackage extends EPackage {
 		 * @generated
 		 */
 		EClass FIELD = eINSTANCE.getField();
+
+		/**
+		 * The meta object literal for the '<em><b>Name</b></em>' attribute feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EAttribute FIELD__NAME = eINSTANCE.getField_Name();
 
 		/**
 		 * The meta object literal for the '<em><b>Standard Name</b></em>' attribute feature.

@@ -14,6 +14,7 @@ import org.earthsystemmodeling.cupid.annotation.Label;
 import org.earthsystemmodeling.cupid.annotation.MappingType;
 import org.earthsystemmodeling.cupid.nuopc.ASTQuery;
 import org.earthsystemmodeling.cupid.nuopc.CodeConcept;
+import org.earthsystemmodeling.cupid.nuopc.CodeGenerationException;
 import org.earthsystemmodeling.cupid.nuopc.ESMFCodeTemplates;
 import org.earthsystemmodeling.cupid.nuopc.v7r.EntryPointCodeConcept;
 import org.earthsystemmodeling.cupid.nuopc.v7r.GridCodeConcept;
@@ -28,16 +29,16 @@ import org.eclipse.photran.internal.core.parser.ASTCallStmtNode;
 import org.eclipse.photran.internal.core.parser.ASTModuleNode;
 import org.eclipse.photran.internal.core.parser.ASTNode;
 import org.eclipse.photran.internal.core.parser.ASTSubroutineSubprogramNode;
-import org.eclipse.photran.internal.core.parser.ASTTypeDeclarationStmtNode;
 import org.eclipse.photran.internal.core.parser.IASTListNode;
 import org.eclipse.photran.internal.core.parser.IBodyConstruct;
-import org.eclipse.photran.internal.core.parser.IDeclarationConstruct;
+import org.eclipse.xtend.lib.annotations.Accessors;
 import org.eclipse.xtend2.lib.StringConcatenation;
 import org.eclipse.xtext.xbase.lib.CollectionLiterals;
 import org.eclipse.xtext.xbase.lib.Exceptions;
 import org.eclipse.xtext.xbase.lib.Functions.Function1;
 import org.eclipse.xtext.xbase.lib.IterableExtensions;
 import org.eclipse.xtext.xbase.lib.Procedures.Procedure1;
+import org.eclipse.xtext.xbase.lib.Pure;
 
 @Label(label = "NUOPC Model")
 @MappingType("module")
@@ -175,6 +176,9 @@ public class NUOPCModel extends NUOPCComponent {
       @Child(min = 0, max = (-1))
       public List<NUOPCModel.IPD.RealizeField> realizeFields;
       
+      @Accessors
+      private List<String> grids;
+      
       public IPDv04p3(final NUOPCModel.IPD parent) {
         super(parent);
         String _phaseLabel = this.getPhaseLabel();
@@ -184,29 +188,132 @@ public class NUOPCModel extends NUOPCComponent {
         parent.setOrAddChild(this);
         ArrayList<NUOPCModel.IPD.RealizeField> _newArrayList = CollectionLiterals.<NUOPCModel.IPD.RealizeField>newArrayList();
         this.realizeFields = _newArrayList;
+        ArrayList<String> _newArrayList_1 = CollectionLiterals.<String>newArrayList();
+        this.grids = _newArrayList_1;
       }
       
       public void forward(final Model high) {
         EList<Field> _importFields = high.getImportFields();
         for (final Field f : _importFields) {
-          {
-            final NUOPCModel.IPD.RealizeField rf = new NUOPCModel.IPD.RealizeField(this);
-            String _standardName = f.getStandardName();
-            rf.field = _standardName;
-            rf.state = this.paramImport;
-          }
+          NUOPCModel.IPD.RealizeField _realizeField = new NUOPCModel.IPD.RealizeField(this);
+          _realizeField.forward(f, this.paramImport);
         }
         EList<Field> _exportFields = high.getExportFields();
         for (final Field f_1 : _exportFields) {
-          {
-            final NUOPCModel.IPD.RealizeField rf = new NUOPCModel.IPD.RealizeField(this);
-            String _standardName = f_1.getStandardName();
-            rf.field = _standardName;
-            rf.state = this.paramExport;
-          }
+          NUOPCModel.IPD.RealizeField _realizeField_1 = new NUOPCModel.IPD.RealizeField(this);
+          _realizeField_1.forward(f_1, this.paramExport);
+        }
+        EList<Grid> _grids = high.getGrids();
+        for (final Grid g : _grids) {
+          String _name = g.getName();
+          this.grids.add(_name);
         }
       }
       
+      @Override
+      public String subroutineTemplate() {
+        StringConcatenation _builder = new StringConcatenation();
+        _builder.newLine();
+        _builder.append("subroutine ");
+        _builder.append(this.subroutineName, "");
+        _builder.append("(");
+        _builder.append(this.paramGridComp, "");
+        _builder.append(", ");
+        _builder.append(this.paramImport, "");
+        _builder.append(", ");
+        _builder.append(this.paramExport, "");
+        _builder.append(", ");
+        _builder.append(this.paramClock, "");
+        _builder.append(", ");
+        _builder.append(this.paramRC, "");
+        _builder.append(")");
+        _builder.newLineIfNotEmpty();
+        _builder.append("    ");
+        _builder.append("type(ESMF_GridComp)  :: ");
+        _builder.append(this.paramGridComp, "    ");
+        _builder.newLineIfNotEmpty();
+        _builder.append("    ");
+        _builder.append("type(ESMF_State)     :: ");
+        _builder.append(this.paramImport, "    ");
+        _builder.append(", ");
+        _builder.append(this.paramExport, "    ");
+        _builder.newLineIfNotEmpty();
+        _builder.append("    ");
+        _builder.append("type(ESMF_Clock)     :: ");
+        _builder.append(this.paramClock, "    ");
+        _builder.newLineIfNotEmpty();
+        _builder.append("    ");
+        _builder.append("integer, intent(out) :: ");
+        _builder.append(this.paramRC, "    ");
+        _builder.newLineIfNotEmpty();
+        _builder.append("    ");
+        _builder.newLine();
+        {
+          for(final String g : this.grids) {
+            _builder.append("    ");
+            _builder.append("type(ESMF_Grid) :: ");
+            _builder.append(g, "    ");
+            _builder.newLineIfNotEmpty();
+          }
+        }
+        _builder.append("    ");
+        _builder.newLine();
+        _builder.append("    ");
+        _builder.append("rc = ESMF_SUCCESS");
+        _builder.newLine();
+        _builder.append("    ");
+        _builder.newLine();
+        {
+          for(final String g_1 : this.grids) {
+            _builder.append("    ");
+            _builder.append(g_1, "    ");
+            _builder.append(" = CreateGrid_");
+            _builder.append(g_1, "    ");
+            _builder.append("(rc=");
+            _builder.append(this.paramRC, "    ");
+            _builder.append(")");
+            _builder.newLineIfNotEmpty();
+            _builder.append("    ");
+            CharSequence _ESMFErrorCheck = ESMFCodeTemplates.ESMFErrorCheck(this.paramRC);
+            _builder.append(_ESMFErrorCheck, "    ");
+            _builder.newLineIfNotEmpty();
+          }
+        }
+        _builder.append("    ");
+        _builder.newLine();
+        _builder.append("    ");
+        _builder.newLine();
+        _builder.append("    ");
+        _builder.newLine();
+        _builder.append("end subroutine");
+        _builder.newLine();
+        return _builder.toString();
+      }
+      
+      /**
+       * override IPDv04p3 forward() {
+       * 
+       * //generate subroutine template
+       * super.forward
+       * 
+       * for (String gridName : grids) {
+       * addTypeDeclaration('''type(ESMF_Grid) :: «gridName»''', getASTRef)
+       * }
+       * 
+       * for (String gridName : grids) {
+       * val code = '''
+       * 
+       * «gridName» = CreateGrid_«gridName»(rc=«paramRC»)
+       * «ESMFErrorCheck(paramRC)»
+       * '''
+       * val IASTListNode<IBodyConstruct> stmts = parseLiteralStatementSequence(code)
+       * getASTRef.body.addAll(stmts)
+       * }
+       * 
+       * this
+       * 
+       * }
+       */
       public String getPhaseLabel() {
         String _switchResult = null;
         final NUOPCModel.IPD _parent = this._parent;
@@ -261,6 +368,15 @@ public class NUOPCModel extends NUOPCComponent {
       @Override
       public SetServicesCodeConcept<?> setServices() {
         return this._parent._parent._parent._parent.setServices;
+      }
+      
+      @Pure
+      public List<String> getGrids() {
+        return this.grids;
+      }
+      
+      public void setGrids(final List<String> grids) {
+        this.grids = grids;
       }
     }
     
@@ -476,16 +592,22 @@ public class NUOPCModel extends NUOPCComponent {
       
       public String field;
       
+      public String grid;
+      
+      public String fieldName;
+      
       public RealizeField(final EntryPointCodeConcept<?> parent) {
         super(parent);
+        parent.setOrAddChild(this);
         this.state = this._parent.paramImport;
         this.field = "field";
-        parent.setOrAddChild(this);
+        this.grid = "grid";
+        this.fieldName = "\"field_name\"";
       }
       
       @Override
       public String name() {
-        return ((this.state + " / ") + this.field);
+        return ((this.state + " / ") + this.fieldName);
       }
       
       @Override
@@ -527,25 +649,56 @@ public class NUOPCModel extends NUOPCComponent {
         try {
           CodeConcept<?, ?> _xblockexpression = null;
           {
+            boolean _or = false;
+            boolean _or_1 = false;
+            boolean _or_2 = false;
+            boolean _equals = Objects.equal(this.field, null);
+            if (_equals) {
+              _or_2 = true;
+            } else {
+              boolean _equals_1 = Objects.equal(this.fieldName, null);
+              _or_2 = _equals_1;
+            }
+            if (_or_2) {
+              _or_1 = true;
+            } else {
+              boolean _equals_2 = Objects.equal(this.grid, null);
+              _or_1 = _equals_2;
+            }
+            if (_or_1) {
+              _or = true;
+            } else {
+              boolean _equals_3 = Objects.equal(this.state, null);
+              _or = _equals_3;
+            }
+            if (_or) {
+              throw new CodeGenerationException("Missing parameters required to generate Realize Field.");
+            }
             final ASTSubroutineSubprogramNode ssn = this._parent.getASTRef();
             StringConcatenation _builder = new StringConcatenation();
             _builder.append("type(ESMF_Field) :: ");
             _builder.append(this.field, "");
-            _builder.newLineIfNotEmpty();
-            String code = _builder.toString();
-            IBodyConstruct _parseLiteralStatement = CodeExtraction.parseLiteralStatement(code);
-            final ASTTypeDeclarationStmtNode tds = ((ASTTypeDeclarationStmtNode) _parseLiteralStatement);
-            IASTListNode<IBodyConstruct> _body = ssn.getBody();
-            final IDeclarationConstruct last = _body.<IDeclarationConstruct>findLast(IDeclarationConstruct.class);
-            boolean _notEquals = (!Objects.equal(last, null));
-            if (_notEquals) {
-              IASTListNode<IBodyConstruct> _body_1 = ssn.getBody();
-              ((IASTListNode<IBodyConstruct>) _body_1).insertAfter(last, tds);
-            } else {
-              IASTListNode<IBodyConstruct> _body_2 = ssn.getBody();
-              _body_2.add(0, tds);
-            }
+            CodeConcept.addTypeDeclaration(_builder.toString(), ssn);
             StringConcatenation _builder_1 = new StringConcatenation();
+            _builder_1.newLine();
+            _builder_1.append("! field ");
+            _builder_1.append(this.fieldName, "");
+            _builder_1.newLineIfNotEmpty();
+            _builder_1.append(this.field, "");
+            _builder_1.append(" = ESMF_FieldCreate(name=");
+            _builder_1.append(this.fieldName, "");
+            _builder_1.append(", grid=");
+            _builder_1.append(this.grid, "");
+            _builder_1.append(", &");
+            _builder_1.newLineIfNotEmpty();
+            _builder_1.append("      ");
+            _builder_1.append("typekind=ESMF_TYPEKIND_R8, rc=");
+            _builder_1.append(this._parent.paramRC, "      ");
+            _builder_1.append(")");
+            _builder_1.newLineIfNotEmpty();
+            CharSequence _ESMFErrorCheck = ESMFCodeTemplates.ESMFErrorCheck(this._parent.paramRC);
+            _builder_1.append(_ESMFErrorCheck, "");
+            _builder_1.newLineIfNotEmpty();
             _builder_1.append("\t");
             _builder_1.newLine();
             _builder_1.append("call NUOPC_Realize(");
@@ -558,19 +711,36 @@ public class NUOPCModel extends NUOPCComponent {
             _builder_1.append(this._parent.paramRC, "");
             _builder_1.append(")");
             _builder_1.newLineIfNotEmpty();
-            CharSequence _ESMFErrorCheck = ESMFCodeTemplates.ESMFErrorCheck(this._parent.paramRC);
-            _builder_1.append(_ESMFErrorCheck, "");
+            CharSequence _ESMFErrorCheck_1 = ESMFCodeTemplates.ESMFErrorCheck(this._parent.paramRC);
+            _builder_1.append(_ESMFErrorCheck_1, "");
             _builder_1.newLineIfNotEmpty();
-            code = _builder_1.toString();
+            String code = _builder_1.toString();
             final IASTListNode<IBodyConstruct> stmts = CodeExtraction.parseLiteralStatementSequence(code);
-            IASTListNode<IBodyConstruct> _body_3 = ssn.getBody();
-            _body_3.addAll(stmts);
+            IASTListNode<IBodyConstruct> _body = ssn.getBody();
+            _body.addAll(stmts);
             _xblockexpression = super.<CodeConcept<?, ?>>forward();
           }
           return _xblockexpression;
         } catch (Throwable _e) {
           throw Exceptions.sneakyThrow(_e);
         }
+      }
+      
+      public String forward(final Field high, final String state) {
+        String _xblockexpression = null;
+        {
+          String _standardName = high.getStandardName();
+          String _plus = ("\"" + _standardName);
+          String _plus_1 = (_plus + "\"");
+          this.fieldName = _plus_1;
+          String _name = high.getName();
+          this.field = _name;
+          Grid _grid = high.getGrid();
+          String _name_1 = _grid.getName();
+          this.grid = _name_1;
+          _xblockexpression = this.state = state;
+        }
+        return _xblockexpression;
       }
     }
     

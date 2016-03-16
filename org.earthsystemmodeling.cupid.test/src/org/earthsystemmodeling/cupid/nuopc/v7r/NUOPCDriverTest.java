@@ -118,16 +118,19 @@ public class NUOPCDriverTest {
 		
 		//Model A fields
 		f = factory.createField();
+		f.setName("FieldImportA1");
 		f.setStandardName("FieldImportA1");
 		f.setGrid(grid);
 		modelA.getImportFields().add(f);
 		
 		f = factory.createField();
+		f.setName("FieldImportA2");
 		f.setStandardName("FieldImportA2");
 		f.setGrid(grid);
 		modelA.getImportFields().add(f);
 		
 		f = factory.createField();
+		f.setName("FieldExportA1");
 		f.setStandardName("FieldExportA1");
 		f.setGrid(grid);
 		modelA.getExportFields().add(f);

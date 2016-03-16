@@ -22,6 +22,7 @@ import org.eclipse.emf.ecore.impl.MinimalEObjectImpl;
  * The following features are implemented:
  * </p>
  * <ul>
+ *   <li>{@link org.earthsystemmodeling.cupid.NUOPC.impl.FieldImpl#getName <em>Name</em>}</li>
  *   <li>{@link org.earthsystemmodeling.cupid.NUOPC.impl.FieldImpl#getStandardName <em>Standard Name</em>}</li>
  *   <li>{@link org.earthsystemmodeling.cupid.NUOPC.impl.FieldImpl#getGrid <em>Grid</em>}</li>
  * </ul>
@@ -29,6 +30,26 @@ import org.eclipse.emf.ecore.impl.MinimalEObjectImpl;
  * @generated
  */
 public class FieldImpl extends MinimalEObjectImpl.Container implements Field {
+	/**
+	 * The default value of the '{@link #getName() <em>Name</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #getName()
+	 * @generated
+	 * @ordered
+	 */
+	protected static final String NAME_EDEFAULT = null;
+
+	/**
+	 * The cached value of the '{@link #getName() <em>Name</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #getName()
+	 * @generated
+	 * @ordered
+	 */
+	protected String name = NAME_EDEFAULT;
+
 	/**
 	 * The default value of the '{@link #getStandardName() <em>Standard Name</em>}' attribute.
 	 * <!-- begin-user-doc -->
@@ -76,6 +97,27 @@ public class FieldImpl extends MinimalEObjectImpl.Container implements Field {
 	@Override
 	protected EClass eStaticClass() {
 		return NUOPCPackage.Literals.FIELD;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public String getName() {
+		return name;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public void setName(String newName) {
+		String oldName = name;
+		name = newName;
+		if (eNotificationRequired())
+			eNotify(new ENotificationImpl(this, Notification.SET, NUOPCPackage.FIELD__NAME, oldName, name));
 	}
 
 	/**
@@ -145,6 +187,8 @@ public class FieldImpl extends MinimalEObjectImpl.Container implements Field {
 	@Override
 	public Object eGet(int featureID, boolean resolve, boolean coreType) {
 		switch (featureID) {
+			case NUOPCPackage.FIELD__NAME:
+				return getName();
 			case NUOPCPackage.FIELD__STANDARD_NAME:
 				return getStandardName();
 			case NUOPCPackage.FIELD__GRID:
@@ -162,6 +206,9 @@ public class FieldImpl extends MinimalEObjectImpl.Container implements Field {
 	@Override
 	public void eSet(int featureID, Object newValue) {
 		switch (featureID) {
+			case NUOPCPackage.FIELD__NAME:
+				setName((String)newValue);
+				return;
 			case NUOPCPackage.FIELD__STANDARD_NAME:
 				setStandardName((String)newValue);
 				return;
@@ -180,6 +227,9 @@ public class FieldImpl extends MinimalEObjectImpl.Container implements Field {
 	@Override
 	public void eUnset(int featureID) {
 		switch (featureID) {
+			case NUOPCPackage.FIELD__NAME:
+				setName(NAME_EDEFAULT);
+				return;
 			case NUOPCPackage.FIELD__STANDARD_NAME:
 				setStandardName(STANDARD_NAME_EDEFAULT);
 				return;
@@ -198,6 +248,8 @@ public class FieldImpl extends MinimalEObjectImpl.Container implements Field {
 	@Override
 	public boolean eIsSet(int featureID) {
 		switch (featureID) {
+			case NUOPCPackage.FIELD__NAME:
+				return NAME_EDEFAULT == null ? name != null : !NAME_EDEFAULT.equals(name);
 			case NUOPCPackage.FIELD__STANDARD_NAME:
 				return STANDARD_NAME_EDEFAULT == null ? standardName != null : !STANDARD_NAME_EDEFAULT.equals(standardName);
 			case NUOPCPackage.FIELD__GRID:
@@ -216,7 +268,9 @@ public class FieldImpl extends MinimalEObjectImpl.Container implements Field {
 		if (eIsProxy()) return super.toString();
 
 		StringBuffer result = new StringBuffer(super.toString());
-		result.append(" (standardName: ");
+		result.append(" (name: ");
+		result.append(name);
+		result.append(", standardName: ");
 		result.append(standardName);
 		result.append(')');
 		return result.toString();

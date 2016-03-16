@@ -308,7 +308,7 @@ public class NUOPCPackageImpl extends EPackageImpl implements NUOPCPackage {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EAttribute getField_StandardName() {
+	public EAttribute getField_Name() {
 		return (EAttribute)fieldEClass.getEStructuralFeatures().get(0);
 	}
 
@@ -317,8 +317,17 @@ public class NUOPCPackageImpl extends EPackageImpl implements NUOPCPackage {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	public EAttribute getField_StandardName() {
+		return (EAttribute)fieldEClass.getEStructuralFeatures().get(1);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
 	public EReference getField_Grid() {
-		return (EReference)fieldEClass.getEStructuralFeatures().get(1);
+		return (EReference)fieldEClass.getEStructuralFeatures().get(2);
 	}
 
 	/**
@@ -435,6 +444,7 @@ public class NUOPCPackageImpl extends EPackageImpl implements NUOPCPackage {
 		createEReference(applicationEClass, APPLICATION__CHILDREN);
 
 		fieldEClass = createEClass(FIELD);
+		createEAttribute(fieldEClass, FIELD__NAME);
 		createEAttribute(fieldEClass, FIELD__STANDARD_NAME);
 		createEReference(fieldEClass, FIELD__GRID);
 
@@ -507,6 +517,7 @@ public class NUOPCPackageImpl extends EPackageImpl implements NUOPCPackage {
 		initEReference(getApplication_Children(), this.getComponent(), null, "children", null, 0, -1, Application.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
 		initEClass(fieldEClass, Field.class, "Field", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+		initEAttribute(getField_Name(), ecorePackage.getEString(), "name", null, 1, 1, Field.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEAttribute(getField_StandardName(), ecorePackage.getEString(), "standardName", null, 1, 1, Field.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEReference(getField_Grid(), this.getGrid(), null, "grid", null, 1, 1, Field.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
