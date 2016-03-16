@@ -1,7 +1,6 @@
 package org.earthsystemmodeling.cupid.handlers;
 
 import java.io.IOException;
-import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -27,7 +26,8 @@ public class ApplyCodeConceptChanges implements IRunnableWithProgress {
 
 	private CodeConcept<?,?> codeConcept;
 	private List<IMarker> markers;
-	
+	private Change change;
+		
 	public ApplyCodeConceptChanges(CodeConcept<?,?> codeConcept) {
 		this.codeConcept = codeConcept;
 		this.markers = new ArrayList<IMarker>();
@@ -38,7 +38,7 @@ public class ApplyCodeConceptChanges implements IRunnableWithProgress {
 		
 		try {
 			
-			Change change = codeConcept.generateChange();
+			change = codeConcept.generateChange();
 			TextFileChange textFileChange = (TextFileChange) change;  //assumed for now
 			IFile file = textFileChange.getFile();
 			
@@ -74,8 +74,7 @@ public class ApplyCodeConceptChanges implements IRunnableWithProgress {
         		marker.setAttribute(IMarker.CHAR_START, ml.start);
         		marker.setAttribute(IMarker.CHAR_END, ml.end);
         		marker.setAttribute(IMarker.MESSAGE, "Generated parameter");
-        	}		        
-	     
+        	}	
 	
 		} catch (CoreException | IOException e) {
 			CupidActivator.log("Error executing code generation", e);
@@ -85,6 +84,10 @@ public class ApplyCodeConceptChanges implements IRunnableWithProgress {
 
 	public List<IMarker> getMarkers() {
 		return this.markers;
+	}
+	
+	public Change getChange() {
+		return change;
 	}
 
 }

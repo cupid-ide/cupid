@@ -2,24 +2,49 @@
 <ecore:EPackage xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
     xmlns:ecore="http://www.eclipse.org/emf/2002/Ecore" name="NUOPC" nsURI="http://www.earthsystemcog.org/projects/nuopc"
     nsPrefix="nuopc">
-  <eClassifiers xsi:type="ecore:EClass" name="NUOPCComponent" abstract="true">
+  <eClassifiers xsi:type="ecore:EClass" name="Component" abstract="true">
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="name" lowerBound="1" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
   </eClassifiers>
-  <eClassifiers xsi:type="ecore:EClass" name="NUOPCBaseModel" abstract="true" eSuperTypes="#//NUOPCComponent"/>
-  <eClassifiers xsi:type="ecore:EClass" name="NUOPCDriver" eSuperTypes="#//NUOPCComponent">
-    <eStructuralFeatures xsi:type="ecore:EReference" name="children" upperBound="-1"
-        eType="#//NUOPCComponent" containment="true"/>
+  <eClassifiers xsi:type="ecore:EClass" name="BaseModel" abstract="true" eSuperTypes="#//Component">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="grids" upperBound="-1"
+        eType="#//Grid" containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="importFields" upperBound="-1"
+        eType="#//Field" containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="exportFields" upperBound="-1"
+        eType="#//Field" containment="true"/>
   </eClassifiers>
-  <eClassifiers xsi:type="ecore:EClass" name="NUOPCModel" eSuperTypes="#//NUOPCBaseModel"/>
-  <eClassifiers xsi:type="ecore:EClass" name="NUOPCMediator" eSuperTypes="#//NUOPCBaseModel"/>
-  <eClassifiers xsi:type="ecore:EClass" name="NUOPCConnector" eSuperTypes="#//NUOPCComponent">
+  <eClassifiers xsi:type="ecore:EClass" name="Driver" eSuperTypes="#//Component">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="children" upperBound="-1"
+        eType="#//Component" containment="true"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="Model" eSuperTypes="#//BaseModel"/>
+  <eClassifiers xsi:type="ecore:EClass" name="Mediator" eSuperTypes="#//BaseModel"/>
+  <eClassifiers xsi:type="ecore:EClass" name="Connector" eSuperTypes="#//Component">
     <eStructuralFeatures xsi:type="ecore:EReference" name="source" lowerBound="1"
-        eType="#//NUOPCBaseModel"/>
+        eType="#//BaseModel"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="target" lowerBound="1"
-        eType="#//NUOPCBaseModel"/>
+        eType="#//BaseModel"/>
   </eClassifiers>
-  <eClassifiers xsi:type="ecore:EClass" name="NUOPCApplication">
+  <eClassifiers xsi:type="ecore:EClass" name="Application">
     <eStructuralFeatures xsi:type="ecore:EReference" name="children" upperBound="-1"
-        eType="#//NUOPCComponent" containment="true"/>
+        eType="#//Component" containment="true"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="Field">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="standardName" lowerBound="1"
+        eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="grid" lowerBound="1" eType="#//Grid"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="Grid" abstract="true">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="name" lowerBound="1" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="minIndex" unique="false"
+        lowerBound="1" upperBound="3" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EInt"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="maxIndex" unique="false"
+        lowerBound="1" upperBound="3" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EInt"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="UniformGrid" eSuperTypes="#//Grid">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="minCornerCoord" unique="false"
+        lowerBound="1" upperBound="3" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EDouble"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="maxCornerCoord" unique="false"
+        lowerBound="1" upperBound="3" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EDouble"/>
   </eClassifiers>
 </ecore:EPackage>

@@ -11,5 +11,12 @@ Export-Package: org.earthsystemmodeling.cupid.NUOPC,
  org.earthsystemmodeling.cupid.NUOPC.impl,
  org.earthsystemmodeling.cupid.NUOPC.util
 Require-Bundle: org.eclipse.core.runtime,
- org.eclipse.emf.ecore;visibility:=reexport
+ org.eclipse.emf.ecore;visibility:=reexport,
+ com.google.guava,
+ org.eclipse.xtext.xbase.lib,
+ org.eclipse.xtend.lib,
+ org.eclipse.xtend.lib.macro,
+ org.eclipse.photran.core;bundle-version="9.0.0",
+ org.eclipse.photran.core.vpg;bundle-version="9.0.0"
 Bundle-ActivationPolicy: lazy
+

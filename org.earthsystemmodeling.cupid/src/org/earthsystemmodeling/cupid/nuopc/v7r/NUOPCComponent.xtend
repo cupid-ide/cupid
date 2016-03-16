@@ -16,6 +16,10 @@ import org.earthsystemmodeling.cupid.nuopc.CodeGenerationException
 import static org.earthsystemmodeling.cupid.util.CodeExtraction.*
 import org.eclipse.photran.internal.core.parser.ASTListNode
 import org.eclipse.photran.internal.core.parser.IProgramUnit
+import java.util.List
+import org.eclipse.xtend.lib.annotations.Accessors
+import java.util.Set
+import java.util.LinkedHashSet
 
 @Label(label="NUOPC Driver")
 @MappingType("module")
@@ -40,6 +44,7 @@ public abstract class NUOPCComponent extends CodeConcept<CodeConcept<?,?>, ASTMo
 	@MappingType("uses")
 	public GenericImport importNUOPCGeneric
 	
+	
 	new(CodeConcept<?, ?> parent, String genericImport) {
 		this(parent, null, genericImport)
 	}
@@ -47,6 +52,7 @@ public abstract class NUOPCComponent extends CodeConcept<CodeConcept<?,?>, ASTMo
 	new(CodeConcept<?,?> parent, IResource context, String genericImport) {
 		super(parent, context)
 		this.genericImport = genericImport
+		//importSetServices = new LinkedHashSet<NUOPCComponent>(4)
 		if (genericImport==null) throw new CodeGenerationException("Name of generic import of component cannot be null")
 	}
 	
@@ -94,14 +100,16 @@ public abstract class NUOPCComponent extends CodeConcept<CodeConcept<?,?>, ASTMo
 				
 		if (name == null) throw new CodeGenerationException("No component name specified")
 		
-		//create module
-		var code = 
+		if (_astRef == null) {
+		
+			//create module
+			var code = 
 '''
 module «name»
 	
 	use ESMF
 	use NUOPC
-	use «genericImport», only: &
+	use «genericImport», &
 		«prefix»_SetServices => SetServices
 		
 	implicit none
@@ -110,25 +118,26 @@ module «name»
 	
 end module
 '''
-	
-		var ASTModuleNode moduleNode = parseLiteralProgramUnit(code)
-		setASTRef(moduleNode)
 		
-		var pul = new ASTListNode<IProgramUnit>()
-		pul.add(moduleNode)
-		getAST.root.programUnitList = pul
-		
-		moduleNode.moduleBody.filter(ASTUseStmtNode).forEach[
-			if (it.name.text.eic("ESMF")) {
-				importESMF = new BasicCodeConcept(this, it)
-			}
-			else if (it.name.text.eic("NUOPC")) {
-				importNUOPC = new BasicCodeConcept(this, it)
-			}
-			else if (it.name.text.eic(genericImport)) {
-				importNUOPCGeneric = new GenericImport(this, it).reverse
-			}
-		]	
+			var ASTModuleNode moduleNode = parseLiteralProgramUnit(code)
+			setASTRef(moduleNode)
+			
+			var pul = new ASTListNode<IProgramUnit>()
+			pul.add(moduleNode)
+			getAST.root.programUnitList = pul
+			
+			moduleNode.moduleBody.filter(ASTUseStmtNode).forEach[
+				if (it.name.text.eic("ESMF")) {
+					importESMF = new BasicCodeConcept(this, it)
+				}
+				else if (it.name.text.eic("NUOPC")) {
+					importNUOPC = new BasicCodeConcept(this, it)
+				}
+				else if (it.name.text.eic(genericImport)) {
+					importNUOPCGeneric = new GenericImport(this, it).reverse
+				}
+			]	
+		}
 		
 		super.forward
 		

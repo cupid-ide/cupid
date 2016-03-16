@@ -7,7 +7,14 @@ import static org.junit.Assert.assertTrue;
 
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
+import java.util.List;
 
+import org.earthsystemmodeling.cupid.NUOPC.Driver;
+import org.earthsystemmodeling.cupid.NUOPC.Field;
+import org.earthsystemmodeling.cupid.NUOPC.Grid;
+import org.earthsystemmodeling.cupid.NUOPC.Model;
+import org.earthsystemmodeling.cupid.NUOPC.NUOPCFactory;
+import org.earthsystemmodeling.cupid.NUOPC.UniformGrid;
 import org.earthsystemmodeling.cupid.nuopc.v7r.NUOPCDriver.ModifyInitializePhaseMap;
 import org.earthsystemmodeling.cupid.nuopc.v7r.NUOPCDriver.SetModelServices;
 import org.earthsystemmodeling.cupid.nuopc.v7r.NUOPCDriver.SetModelServices_AddComp;
@@ -20,6 +27,13 @@ import org.eclipse.core.resources.IProject;
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.NullProgressMonitor;
 import org.eclipse.ltk.core.refactoring.Change;
+import org.eclipse.photran.internal.core.analysis.binding.Definition;
+import org.eclipse.photran.internal.core.analysis.binding.ScopingNode;
+import org.eclipse.photran.internal.core.lexer.Token;
+import org.eclipse.photran.internal.core.parser.ASTVarOrFnRefNode;
+import org.eclipse.photran.internal.core.vpg.EdgeType;
+import org.eclipse.photran.internal.core.vpg.PhotranTokenRef;
+import org.eclipse.photran.internal.core.vpg.PhotranVPG;
 import org.junit.AfterClass;
 import org.junit.BeforeClass;
 import org.junit.Test;
@@ -28,6 +42,8 @@ public class NUOPCDriverTest {
 	
 	private static IProject PROJECT_NUOPC_PROTOTYPES;
 	private static NullProgressMonitor NPM = new NullProgressMonitor();
+	private static String ESMFMKFILE = TestHelpers.getMakefileFragmentLoc(NUOPCTest.NUOPC_TAG);
+	private static NUOPCFactory factory = NUOPCFactory.eINSTANCE;
 	
 	@BeforeClass
 	public static void setUp() throws CoreException, IOException, InterruptedException {
@@ -36,15 +52,14 @@ public class NUOPCDriverTest {
 	
 	@AfterClass
 	public static void tearDown() throws CoreException {
-		PROJECT_NUOPC_PROTOTYPES.delete(true, true, null);
+		PROJECT_NUOPC_PROTOTYPES.delete(true, true, NPM);
 	}
 
 	@Test
 	public void GenerateNUOPCDriverFromScratch() throws CoreException, IOException, InterruptedException {
 		IProject p = TestHelpers.createEmptyProject(NUOPCTest.NUOPC_TAG + "_GenerateNUOPCDriverFromScratch");
-		IFile f = p.getFile("MyDriver1.F90");
-		f.create(new ByteArrayInputStream(new byte[0]), true, new NullProgressMonitor());
-		
+		IFile f = TestHelpers.createBlankFile(p, "MyDriver1.F90");
+				
 		NUOPCDriver driver = new NUOPCDriver(f);
 		driver.name = "MyDriver";
 		driver = driver.forward();
@@ -66,6 +81,75 @@ public class NUOPCDriverTest {
 		///compile check
 		TestHelpers.copyFileIntoProject(p, "workspace/Makefile");
 		assertTrue("Compile check", TestHelpers.compileProject(p, TestHelpers.getMakefileFragmentLoc(NUOPCTest.NUOPC_TAG), "*.o"));
+
+	}
+	
+	@Test
+	public void GenerateNUOPCDriverWithChildren() throws CoreException, IOException, InterruptedException {
+		
+		IProject p = TestHelpers.createEmptyFortranProject(NUOPCTest.NUOPC_TAG + "_GenerateNUOPCDriverWithChildren");
+		IFile fDriver = TestHelpers.createBlankFile(p, "MyDriver.F90");
+		IFile fModelA = TestHelpers.createBlankFile(p, "ModelA.F90");
+		IFile fModelB = TestHelpers.createBlankFile(p, "ModelB.F90");
+		
+		Driver driver = factory.createDriver(); 
+		Model modelA = factory.createModel();
+		Model modelB = factory.createModel();
+		
+		driver.setName("MyDriver");
+		modelA.setName("ModelA");
+		modelB.setName("ModelB");
+		
+		Field f;
+		UniformGrid grid;
+		
+		grid = factory.createUniformGrid();
+		grid.setName("ModelAGrid");
+		grid.getMinIndex().add(1);
+		grid.getMinIndex().add(1);
+		grid.getMaxIndex().add(100);
+		grid.getMaxIndex().add(200);
+		grid.getMinCornerCoord().add(10.0);
+		grid.getMinCornerCoord().add(10.0);
+		grid.getMaxCornerCoord().add(1000.0);
+		grid.getMaxCornerCoord().add(2000.0);
+		
+		modelA.getGrids().add(grid);
+		
+		//Model A fields
+		f = factory.createField();
+		f.setStandardName("FieldImportA1");
+		f.setGrid(grid);
+		modelA.getImportFields().add(f);
+		
+		f = factory.createField();
+		f.setStandardName("FieldImportA2");
+		f.setGrid(grid);
+		modelA.getImportFields().add(f);
+		
+		f = factory.createField();
+		f.setStandardName("FieldExportA1");
+		f.setGrid(grid);
+		modelA.getExportFields().add(f);
+						
+		driver.getChildren().add(modelA);
+		driver.getChildren().add(modelB);
+		
+		NUOPCModel modelACodeConcept = NUOPCModel.newModel(fModelA, modelA);
+		NUOPCModel modelBCodeConcept = NUOPCModel.newModel(fModelB, modelB);
+		NUOPCDriver driverCodeConcept = NUOPCDriver.newDriver(fDriver, driver);
+		
+		modelACodeConcept.forward(NPM);
+		modelBCodeConcept.forward(NPM);
+		driverCodeConcept.forward(NPM);
+				
+		System.out.println(modelACodeConcept.getAST().getRoot().toString() + "\n\n========================\n\n");
+		System.out.println(modelBCodeConcept.getAST().getRoot().toString() + "\n\n========================\n\n");
+		System.out.println(driverCodeConcept.getAST().getRoot().toString());
+		
+		TestHelpers.copyFileIntoProject(p, "workspace/Makefile");
+		String makeTargets[] = {"ModelA.o", "ModelB.o", "MyDriver.o"};
+		assertTrue("Compile check", TestHelpers.compileProject(p, ESMFMKFILE, makeTargets));
 
 	}
 
@@ -121,7 +205,7 @@ public class NUOPCDriverTest {
 		assertEquals("1", re.slot);
 		
 		///compile check
-		assertTrue("Compile check", TestHelpers.compileProject(p, TestHelpers.getMakefileFragmentLoc(NUOPCTest.NUOPC_TAG), "esmApp"));
+		assertTrue("Compile check", TestHelpers.compileProject(p, ESMFMKFILE, "esmApp"));
 		
 	}
 
@@ -212,7 +296,7 @@ public class NUOPCDriverTest {
 		assertNotNull(re.getASTRef());
 		
 		///compile check
-		assertTrue("Compile check", TestHelpers.compileProject(p, TestHelpers.getMakefileFragmentLoc(NUOPCTest.NUOPC_TAG), "esmApp"));
+		assertTrue("Compile check", TestHelpers.compileProject(p, ESMFMKFILE, "esmApp"));
 
 		
 	}
@@ -316,7 +400,7 @@ public class NUOPCDriverTest {
 		assertNotNull(driver.initialization.initSpecs.modifyInitializePhaseMap);
 		assertEquals("ModifyInitializePhaseMap", driver.initialization.initSpecs.modifyInitializePhaseMap.subroutineName);
 		
-		assertTrue("Compile check", TestHelpers.compileProject(p, TestHelpers.getMakefileFragmentLoc(NUOPCTest.NUOPC_TAG), "esmApp"));
+		assertTrue("Compile check", TestHelpers.compileProject(p, ESMFMKFILE, "esmApp"));
 
 	}
 	
@@ -344,15 +428,20 @@ public class NUOPCDriverTest {
 		assertNotNull(driver.run.runSpecs.setRunClock);
 		assertEquals("SetRunClock", driver.run.runSpecs.setRunClock.subroutineName);
 		
-		assertTrue("Compile check", TestHelpers.compileProject(p, TestHelpers.getMakefileFragmentLoc(NUOPCTest.NUOPC_TAG), "esmApp"));
+		assertTrue("Compile check", TestHelpers.compileProject(p, ESMFMKFILE, "esmApp"));
 		
 	}
 
+	@SuppressWarnings("restriction")
 	@Test
-	public void NUOPCDriverReverse() {
+	public void NUOPCDriverReverse() throws CoreException, IOException {
+
+		//bring in to introduce ambiguity
+		IProject p2 = TestHelpers.createFortranProjectFromFolder("target/" + NUOPCTest.NUOPC_TAG + "/AtmOcnLndProto", NUOPCTest.NUOPC_TAG + "_AtmOcnLndProto");
 		
-		IFile f;
-		f = PROJECT_NUOPC_PROTOTYPES.getFolder("AtmOcnProto").getFile("esm.F90");
+		IProject p = TestHelpers.createFortranProjectFromFolder("target/" + NUOPCTest.NUOPC_TAG + "/AtmOcnProto", NUOPCTest.NUOPC_TAG + "_AtmOcnProto");
+		IFile f = p.getFile("esm.F90");
+		PhotranVPG.getInstance().ensureVPGIsUpToDate(NPM);
 				
 		NUOPCDriver driver = new NUOPCDriver(f).reverse();
 		assertNotNull(driver);
@@ -365,6 +454,60 @@ public class NUOPCDriverTest {
 		assertNotNull(driver.initialization.initSpecs.setModelServices);
 		assertNotNull(driver.initialization.initSpecs.setModelServices.addComps);
 		assertEquals(4, driver.initialization.initSpecs.setModelServices.addComps.size());
+		
+		List<SetModelServices_AddComp> addComps = driver.initialization.initSpecs.setModelServices.addComps;
+		assertTrue(addComps.get(0).getCompSetServicesExpr() instanceof ASTVarOrFnRefNode);
+		assertTrue(addComps.get(1).getCompSetServicesExpr() instanceof ASTVarOrFnRefNode);
+		assertTrue(addComps.get(2).getCompSetServicesExpr() instanceof ASTVarOrFnRefNode);
+		assertTrue(addComps.get(3).getCompSetServicesExpr() instanceof ASTVarOrFnRefNode);
+		
+		ASTVarOrFnRefNode ssRef = (ASTVarOrFnRefNode) addComps.get(0).getCompSetServicesExpr();
+		Token ssRefName = ssRef.getName().getName();
+		System.out.println("ssRef token ref = " + ssRefName.getTokenRef());
+		
+		ScopingNode moduleScope = null;
+		
+		for (PhotranTokenRef ref : ssRefName.getTokenRef().followOutgoing(EdgeType.BINDING_EDGE_TYPE)) {
+			System.out.println(ref.findToken() + " " + ref);
+			//follow again
+			//for (PhotranTokenRef ref2 : ref.followOutgoing(EdgeType.BINDING_EDGE_TYPE)) {
+			//	System.out.println("===> " + ref2.findToken());
+			//}
+			for (PhotranTokenRef ref2 : ref.followOutgoing(EdgeType.RENAMED_BINDING_EDGE_TYPE)) {
+				System.out.println("===> " + ref2.findToken() + " " + ref2);
+				Token renamed = ref2.findToken();
+				List<Definition> defs = renamed.resolveBinding();
+				for (Definition d : defs) {
+					System.out.println("===>: " + d);
+				}
+				for (PhotranTokenRef ref3 : ref2.followOutgoing(EdgeType.DEFINED_IN_SCOPE_EDGE_TYPE)) {
+					moduleScope = ScopingNode.getLocalScope(ref3.findToken());
+					//ref3.findToken().
+					System.out.println("=======> " + ref3.findToken() + "(" + ref3.getFilename() + ")");
+					System.out.println("=======> scope = " + moduleScope.getName());
+				}
+				
+			}
+			for (PhotranTokenRef ref2 : ref.followOutgoing(EdgeType.DEFINED_IN_SCOPE_EDGE_TYPE)) {
+				System.out.println("====> " + ref2.findToken());
+			}
+			
+		}
+		
+		List<IFile> scopeFiles = PhotranVPG.getInstance().findFilesThatExportModule(moduleScope.getName());
+		for (IFile sf : scopeFiles) {
+			System.out.println("scope file: " + sf);
+		}
+		
+		List<Definition> defs = ssRefName.resolveBinding();
+		List<PhotranTokenRef> bindings = ssRefName.manuallyResolveBinding();
+		for (Definition d : defs) {
+			System.out.println(d);
+			System.out.println("def token ref = " + d.getTokenRef());
+			ScopingNode scope = ssRefName.findScopeDeclaringOrImporting(d);
+			System.out.println(scope);
+		}
+		
 		
 		f = PROJECT_NUOPC_PROTOTYPES.getFolder("AtmOcnMedPetListTimescalesProto").getFile("esm.F90");
 		driver = new NUOPCDriver(f).reverse();
@@ -417,5 +560,39 @@ public class NUOPCDriverTest {
 		assertNull(srsare.compLabel);
 	}
 	
+	
+	@SuppressWarnings("restriction")
+	@Test
+	public void NUOPCDriverReverseHigh() throws CoreException, IOException {
+
+		IProject p = TestHelpers.createFortranProjectFromFolder("target/" + NUOPCTest.NUOPC_TAG + "/AtmOcnProto", NUOPCTest.NUOPC_TAG + "_NUOPCDriverReverseHigh");
+		IFile f = p.getFile("esm.F90");
+		PhotranVPG.getInstance().ensureVPGIsUpToDate(NPM);
+				
+		NUOPCDriver driverCodeConcept = new NUOPCDriver(f).reverse();
+		assertNotNull(driverCodeConcept);
+		
+		Driver driver = NUOPCDriver.reverseDriver(driverCodeConcept);
+		assertNotNull(driver);
+		assertEquals("ESM", driver.getName());
+		
+		NUOPCFactory factory = NUOPCFactory.eINSTANCE;
+		Model modelA = factory.createModel();
+		Model modelB = factory.createModel();
+		modelA.setName("ATM");
+		modelB.setName("modelB");
+		
+		driver.getChildren().add(modelA);
+		driver.getChildren().add(modelB);
+		
+		driverCodeConcept.forward(driver);   //from driver to driverCodeConcept
+		driverCodeConcept.forward(NPM);         //from driverCodeConcept to AST/code
+				
+		System.out.println(driverCodeConcept.getAST().getRoot().toString());
+		
+	}
+		
+	
+
 	
 }

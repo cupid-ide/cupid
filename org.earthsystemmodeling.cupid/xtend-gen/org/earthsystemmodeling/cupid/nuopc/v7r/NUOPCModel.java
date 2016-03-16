@@ -4,6 +4,10 @@ import com.google.common.base.Objects;
 import com.google.common.collect.Iterables;
 import java.util.ArrayList;
 import java.util.List;
+import org.earthsystemmodeling.cupid.NUOPC.Field;
+import org.earthsystemmodeling.cupid.NUOPC.Grid;
+import org.earthsystemmodeling.cupid.NUOPC.Model;
+import org.earthsystemmodeling.cupid.NUOPC.UniformGrid;
 import org.earthsystemmodeling.cupid.annotation.Child;
 import org.earthsystemmodeling.cupid.annotation.Doc;
 import org.earthsystemmodeling.cupid.annotation.Label;
@@ -12,18 +16,22 @@ import org.earthsystemmodeling.cupid.nuopc.ASTQuery;
 import org.earthsystemmodeling.cupid.nuopc.CodeConcept;
 import org.earthsystemmodeling.cupid.nuopc.ESMFCodeTemplates;
 import org.earthsystemmodeling.cupid.nuopc.v7r.EntryPointCodeConcept;
+import org.earthsystemmodeling.cupid.nuopc.v7r.GridCodeConcept;
 import org.earthsystemmodeling.cupid.nuopc.v7r.NUOPCComponent;
 import org.earthsystemmodeling.cupid.nuopc.v7r.SetServicesCodeConcept;
 import org.earthsystemmodeling.cupid.nuopc.v7r.SpecializationMethodCodeConcept;
 import org.earthsystemmodeling.cupid.util.CodeExtraction;
 import org.eclipse.core.resources.IResource;
+import org.eclipse.emf.common.util.EList;
 import org.eclipse.photran.internal.core.lexer.Token;
 import org.eclipse.photran.internal.core.parser.ASTCallStmtNode;
 import org.eclipse.photran.internal.core.parser.ASTModuleNode;
 import org.eclipse.photran.internal.core.parser.ASTNode;
 import org.eclipse.photran.internal.core.parser.ASTSubroutineSubprogramNode;
+import org.eclipse.photran.internal.core.parser.ASTTypeDeclarationStmtNode;
 import org.eclipse.photran.internal.core.parser.IASTListNode;
 import org.eclipse.photran.internal.core.parser.IBodyConstruct;
+import org.eclipse.photran.internal.core.parser.IDeclarationConstruct;
 import org.eclipse.xtend2.lib.StringConcatenation;
 import org.eclipse.xtext.xbase.lib.CollectionLiterals;
 import org.eclipse.xtext.xbase.lib.Exceptions;
@@ -47,15 +55,6 @@ public class NUOPCModel extends NUOPCComponent {
   
   @Label(label = "Initialize Phase Definition")
   public static abstract class IPD extends CodeConcept<NUOPCModel.InitPhases, ASTNode> {
-    /**
-     * def void setChildPhase(EntryPointCodeConcept<IPD> child) {
-     * //find field of matching type and assign child to it
-     * val childField = this.class.fields.findFirst[it.type.isInstance(child)]
-     * if (childField != null) {
-     * childField.set(this, child)
-     * }
-     * }
-     */
     @Label(label = "IPDv04p1 - Advertise Fields")
     @MappingType("subroutine")
     @Doc(urlfrag = "#model-phase-advertisefields")
@@ -72,6 +71,35 @@ public class NUOPCModel extends NUOPCComponent {
         parent.setOrAddChild(this);
         ArrayList<NUOPCModel.IPD.AdvertiseField> _newArrayList = CollectionLiterals.<NUOPCModel.IPD.AdvertiseField>newArrayList();
         this.advertiseFields = _newArrayList;
+      }
+      
+      public void forward(final Model high) {
+        EList<Field> _importFields = high.getImportFields();
+        for (final Field f : _importFields) {
+          {
+            final NUOPCModel.IPD.AdvertiseField af = new NUOPCModel.IPD.AdvertiseField(this);
+            StringConcatenation _builder = new StringConcatenation();
+            _builder.append("\"");
+            String _standardName = f.getStandardName();
+            _builder.append(_standardName, "");
+            _builder.append("\"");
+            af.standardName = _builder.toString();
+            af.state = this.paramImport;
+          }
+        }
+        EList<Field> _exportFields = high.getExportFields();
+        for (final Field f_1 : _exportFields) {
+          {
+            final NUOPCModel.IPD.AdvertiseField af = new NUOPCModel.IPD.AdvertiseField(this);
+            StringConcatenation _builder = new StringConcatenation();
+            _builder.append("\"");
+            String _standardName = f_1.getStandardName();
+            _builder.append(_standardName, "");
+            _builder.append("\"");
+            af.standardName = _builder.toString();
+            af.state = this.paramExport;
+          }
+        }
       }
       
       public String getPhaseLabel() {
@@ -156,6 +184,27 @@ public class NUOPCModel extends NUOPCComponent {
         parent.setOrAddChild(this);
         ArrayList<NUOPCModel.IPD.RealizeField> _newArrayList = CollectionLiterals.<NUOPCModel.IPD.RealizeField>newArrayList();
         this.realizeFields = _newArrayList;
+      }
+      
+      public void forward(final Model high) {
+        EList<Field> _importFields = high.getImportFields();
+        for (final Field f : _importFields) {
+          {
+            final NUOPCModel.IPD.RealizeField rf = new NUOPCModel.IPD.RealizeField(this);
+            String _standardName = f.getStandardName();
+            rf.field = _standardName;
+            rf.state = this.paramImport;
+          }
+        }
+        EList<Field> _exportFields = high.getExportFields();
+        for (final Field f_1 : _exportFields) {
+          {
+            final NUOPCModel.IPD.RealizeField rf = new NUOPCModel.IPD.RealizeField(this);
+            String _standardName = f_1.getStandardName();
+            rf.field = _standardName;
+            rf.state = this.paramExport;
+          }
+        }
       }
       
       public String getPhaseLabel() {
@@ -478,27 +527,44 @@ public class NUOPCModel extends NUOPCComponent {
         try {
           CodeConcept<?, ?> _xblockexpression = null;
           {
+            final ASTSubroutineSubprogramNode ssn = this._parent.getASTRef();
             StringConcatenation _builder = new StringConcatenation();
-            _builder.append("\t");
-            _builder.newLine();
-            _builder.append("call NUOPC_Realize(");
-            CharSequence _paramch = this.paramch(this.state);
-            _builder.append(_paramch, "");
-            _builder.append(", field=");
-            CharSequence _paramch_1 = this.paramch(this.field);
-            _builder.append(_paramch_1, "");
-            _builder.append(", rc=");
-            _builder.append(this._parent.paramRC, "");
-            _builder.append(")");
-            _builder.newLineIfNotEmpty();
-            CharSequence _ESMFErrorCheck = ESMFCodeTemplates.ESMFErrorCheck(this._parent.paramRC);
-            _builder.append(_ESMFErrorCheck, "");
+            _builder.append("type(ESMF_Field) :: ");
+            _builder.append(this.field, "");
             _builder.newLineIfNotEmpty();
             String code = _builder.toString();
-            final IASTListNode<IBodyConstruct> stmts = CodeExtraction.parseLiteralStatementSequence(code);
-            final ASTSubroutineSubprogramNode ssn = this._parent.getASTRef();
+            IBodyConstruct _parseLiteralStatement = CodeExtraction.parseLiteralStatement(code);
+            final ASTTypeDeclarationStmtNode tds = ((ASTTypeDeclarationStmtNode) _parseLiteralStatement);
             IASTListNode<IBodyConstruct> _body = ssn.getBody();
-            _body.addAll(stmts);
+            final IDeclarationConstruct last = _body.<IDeclarationConstruct>findLast(IDeclarationConstruct.class);
+            boolean _notEquals = (!Objects.equal(last, null));
+            if (_notEquals) {
+              IASTListNode<IBodyConstruct> _body_1 = ssn.getBody();
+              ((IASTListNode<IBodyConstruct>) _body_1).insertAfter(last, tds);
+            } else {
+              IASTListNode<IBodyConstruct> _body_2 = ssn.getBody();
+              _body_2.add(0, tds);
+            }
+            StringConcatenation _builder_1 = new StringConcatenation();
+            _builder_1.append("\t");
+            _builder_1.newLine();
+            _builder_1.append("call NUOPC_Realize(");
+            CharSequence _paramch = this.paramch(this.state);
+            _builder_1.append(_paramch, "");
+            _builder_1.append(", field=");
+            CharSequence _paramch_1 = this.paramch(this.field);
+            _builder_1.append(_paramch_1, "");
+            _builder_1.append(", rc=");
+            _builder_1.append(this._parent.paramRC, "");
+            _builder_1.append(")");
+            _builder_1.newLineIfNotEmpty();
+            CharSequence _ESMFErrorCheck = ESMFCodeTemplates.ESMFErrorCheck(this._parent.paramRC);
+            _builder_1.append(_ESMFErrorCheck, "");
+            _builder_1.newLineIfNotEmpty();
+            code = _builder_1.toString();
+            final IASTListNode<IBodyConstruct> stmts = CodeExtraction.parseLiteralStatementSequence(code);
+            IASTListNode<IBodyConstruct> _body_3 = ssn.getBody();
+            _body_3.addAll(stmts);
             _xblockexpression = super.<CodeConcept<?, ?>>forward();
           }
           return _xblockexpression;
@@ -510,6 +576,7 @@ public class NUOPCModel extends NUOPCComponent {
     
     public IPD(final NUOPCModel.InitPhases parent) {
       super(parent);
+      parent.setOrAddChild(this);
     }
   }
   
@@ -888,10 +955,11 @@ public class NUOPCModel extends NUOPCComponent {
     
     public InitPhases(final NUOPCModel.Initialization parent) {
       super(parent);
+      parent.setOrAddChild(this);
     }
     
     @Override
-    public CodeConcept<?, ?> reverse() {
+    public NUOPCModel.InitPhases reverse() {
       NUOPCModel.InitPhases _xblockexpression = null;
       {
         NUOPCModel.IPDv00 _iPDv00 = new NUOPCModel.IPDv00(this);
@@ -957,8 +1025,14 @@ public class NUOPCModel extends NUOPCComponent {
     @Child(forward = true)
     public NUOPCModel.InitSpecializations initSpecs;
     
+    @Child
+    public List<GridCodeConcept.CreateUniformGrid> createUniformGrid;
+    
     public Initialization(final NUOPCModel parent) {
       super(parent);
+      parent.setOrAddChild(this);
+      ArrayList<GridCodeConcept.CreateUniformGrid> _newArrayList = CollectionLiterals.<GridCodeConcept.CreateUniformGrid>newArrayList();
+      this.createUniformGrid = _newArrayList;
     }
     
     @Override
@@ -970,14 +1044,63 @@ public class NUOPCModel extends NUOPCComponent {
       NUOPCModel.Initialization _xblockexpression = null;
       {
         NUOPCModel.InitPhases _initPhases = new NUOPCModel.InitPhases(this);
-        CodeConcept<?, ?> _reverse = _initPhases.reverse();
-        this.initPhases = ((NUOPCModel.InitPhases) _reverse);
+        NUOPCModel.InitPhases _reverse = _initPhases.reverse();
+        this.initPhases = _reverse;
         NUOPCModel.InitSpecializations _initSpecializations = new NUOPCModel.InitSpecializations(this);
-        CodeConcept<?, ?> _reverse_1 = _initSpecializations.reverse();
-        this.initSpecs = ((NUOPCModel.InitSpecializations) _reverse_1);
+        NUOPCModel.InitSpecializations _reverse_1 = _initSpecializations.reverse();
+        this.initSpecs = _reverse_1;
         _xblockexpression = this;
       }
       return _xblockexpression;
+    }
+    
+    public void forward(final Model high) {
+      EList<Grid> _grids = high.getGrids();
+      Iterable<UniformGrid> _filter = Iterables.<UniformGrid>filter(_grids, UniformGrid.class);
+      final Procedure1<UniformGrid> _function = new Procedure1<UniformGrid>() {
+        @Override
+        public void apply(final UniformGrid g) {
+          final GridCodeConcept.CreateUniformGrid cug = new GridCodeConcept.CreateUniformGrid(Initialization.this);
+          StringConcatenation _builder = new StringConcatenation();
+          _builder.append("\"");
+          String _name = g.getName();
+          _builder.append(_name, "");
+          _builder.append("\"");
+          cug.setName(_builder.toString());
+          EList<Integer> _minIndex = g.getMinIndex();
+          int[] _intArray = NUOPCModel.toIntArray(_minIndex);
+          cug.setMinIndex(_intArray);
+          EList<Integer> _maxIndex = g.getMaxIndex();
+          int[] _intArray_1 = NUOPCModel.toIntArray(_maxIndex);
+          cug.setMaxIndex(_intArray_1);
+          EList<Double> _minCornerCoord = g.getMinCornerCoord();
+          double[] _doubleArray = NUOPCModel.toDoubleArray(_minCornerCoord);
+          cug.setMinCornerCoord(_doubleArray);
+          EList<Double> _maxCornerCoord = g.getMaxCornerCoord();
+          double[] _doubleArray_1 = NUOPCModel.toDoubleArray(_maxCornerCoord);
+          cug.setMaxCornerCoord(_doubleArray_1);
+        }
+      };
+      IterableExtensions.<UniformGrid>forEach(_filter, _function);
+      boolean _or = false;
+      EList<Field> _importFields = high.getImportFields();
+      int _size = _importFields.size();
+      boolean _greaterThan = (_size > 0);
+      if (_greaterThan) {
+        _or = true;
+      } else {
+        EList<Field> _exportFields = high.getExportFields();
+        int _size_1 = _exportFields.size();
+        boolean _greaterThan_1 = (_size_1 > 0);
+        _or = _greaterThan_1;
+      }
+      if (_or) {
+        final NUOPCModel.IPDv04 ipdv04 = new NUOPCModel.IPDv04(this.initPhases);
+        final NUOPCModel.IPD.IPDv04p1 ipdv04p1 = new NUOPCModel.IPD.IPDv04p1(ipdv04);
+        ipdv04p1.forward(high);
+        final NUOPCModel.IPD.IPDv04p3 ipdv04p3 = new NUOPCModel.IPD.IPDv04p3(ipdv04);
+        ipdv04p3.forward(high);
+      }
     }
   }
   
@@ -994,7 +1117,7 @@ public class NUOPCModel extends NUOPCComponent {
     }
     
     @Override
-    public CodeConcept<?, ?> reverse() {
+    public NUOPCModel.InitSpecializations reverse() {
       NUOPCModel.InitSpecializations _xblockexpression = null;
       {
         NUOPCModel.SetClock _setClock = new NUOPCModel.SetClock(this);
@@ -1831,6 +1954,41 @@ public class NUOPCModel extends NUOPCComponent {
     super(null, context, "NUOPC_Model");
   }
   
+  public static NUOPCModel newModel(final IResource context, final Model high) {
+    NUOPCModel _xblockexpression = null;
+    {
+      final NUOPCModel m = NUOPCModel.newBasicModel(context);
+      m.forward(high);
+      _xblockexpression = m;
+    }
+    return _xblockexpression;
+  }
+  
+  public static NUOPCModel newBasicModel(final IResource context) {
+    NUOPCModel _xblockexpression = null;
+    {
+      final NUOPCModel model = new NUOPCModel(context);
+      new NUOPCModel.SetServices(model);
+      new NUOPCModel.Initialization(model);
+      new NUOPCModel.InitPhases(model.initialization);
+      new NUOPCModel.InitSpecializations(model.initialization);
+      new NUOPCModel.Run(model);
+      new NUOPCModel.RunPhases(model.run);
+      new NUOPCModel.RunSpecializations(model.run);
+      new NUOPCModel.Finalize(model);
+      new NUOPCModel.FinalizePhases(model.finalize);
+      new NUOPCModel.FinalizeSpecializations(model.finalize);
+      _xblockexpression = model;
+    }
+    return _xblockexpression;
+  }
+  
+  public void forward(final Model high) {
+    String _name = high.getName();
+    this.name = _name;
+    this.initialization.forward(high);
+  }
+  
   @Override
   public String prefix() {
     return "model";
@@ -1867,5 +2025,33 @@ public class NUOPCModel extends NUOPCComponent {
   public NUOPCModel forward() {
     NUOPCComponent _forward = super.forward();
     return ((NUOPCModel) _forward);
+  }
+  
+  public static int[] toIntArray(final List<Integer> intList) {
+    int[] _xblockexpression = null;
+    {
+      int _size = intList.size();
+      final int[] toRet = new int[_size];
+      for (int i = 0; (i < intList.size()); i++) {
+        Integer _get = intList.get(i);
+        toRet[i] = (_get).intValue();
+      }
+      _xblockexpression = toRet;
+    }
+    return _xblockexpression;
+  }
+  
+  public static double[] toDoubleArray(final List<Double> dblList) {
+    double[] _xblockexpression = null;
+    {
+      int _size = dblList.size();
+      double[] toRet = new double[_size];
+      for (int i = 0; (i < dblList.size()); i++) {
+        Double _get = dblList.get(i);
+        toRet[i] = (_get).doubleValue();
+      }
+      _xblockexpression = toRet;
+    }
+    return _xblockexpression;
   }
 }

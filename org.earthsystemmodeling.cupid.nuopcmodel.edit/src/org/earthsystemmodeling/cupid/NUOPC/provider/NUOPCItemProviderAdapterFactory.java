@@ -72,118 +72,164 @@ public class NUOPCItemProviderAdapterFactory extends NUOPCAdapterFactory impleme
 	}
 
 	/**
-	 * This keeps track of the one adapter used for all {@link org.earthsystemmodeling.cupid.NUOPC.NUOPCDriver} instances.
+	 * This keeps track of the one adapter used for all {@link org.earthsystemmodeling.cupid.NUOPC.Driver} instances.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	protected NUOPCDriverItemProvider nuopcDriverItemProvider;
+	protected DriverItemProvider driverItemProvider;
 
 	/**
-	 * This creates an adapter for a {@link org.earthsystemmodeling.cupid.NUOPC.NUOPCDriver}.
+	 * This creates an adapter for a {@link org.earthsystemmodeling.cupid.NUOPC.Driver}.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
 	@Override
-	public Adapter createNUOPCDriverAdapter() {
-		if (nuopcDriverItemProvider == null) {
-			nuopcDriverItemProvider = new NUOPCDriverItemProvider(this);
+	public Adapter createDriverAdapter() {
+		if (driverItemProvider == null) {
+			driverItemProvider = new DriverItemProvider(this);
 		}
 
-		return nuopcDriverItemProvider;
+		return driverItemProvider;
 	}
 
 	/**
-	 * This keeps track of the one adapter used for all {@link org.earthsystemmodeling.cupid.NUOPC.NUOPCModel} instances.
+	 * This keeps track of the one adapter used for all {@link org.earthsystemmodeling.cupid.NUOPC.Model} instances.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	protected NUOPCModelItemProvider nuopcModelItemProvider;
+	protected ModelItemProvider modelItemProvider;
 
 	/**
-	 * This creates an adapter for a {@link org.earthsystemmodeling.cupid.NUOPC.NUOPCModel}.
+	 * This creates an adapter for a {@link org.earthsystemmodeling.cupid.NUOPC.Model}.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
 	@Override
-	public Adapter createNUOPCModelAdapter() {
-		if (nuopcModelItemProvider == null) {
-			nuopcModelItemProvider = new NUOPCModelItemProvider(this);
+	public Adapter createModelAdapter() {
+		if (modelItemProvider == null) {
+			modelItemProvider = new ModelItemProvider(this);
 		}
 
-		return nuopcModelItemProvider;
+		return modelItemProvider;
 	}
 
 	/**
-	 * This keeps track of the one adapter used for all {@link org.earthsystemmodeling.cupid.NUOPC.NUOPCMediator} instances.
+	 * This keeps track of the one adapter used for all {@link org.earthsystemmodeling.cupid.NUOPC.Mediator} instances.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	protected NUOPCMediatorItemProvider nuopcMediatorItemProvider;
+	protected MediatorItemProvider mediatorItemProvider;
 
 	/**
-	 * This creates an adapter for a {@link org.earthsystemmodeling.cupid.NUOPC.NUOPCMediator}.
+	 * This creates an adapter for a {@link org.earthsystemmodeling.cupid.NUOPC.Mediator}.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
 	@Override
-	public Adapter createNUOPCMediatorAdapter() {
-		if (nuopcMediatorItemProvider == null) {
-			nuopcMediatorItemProvider = new NUOPCMediatorItemProvider(this);
+	public Adapter createMediatorAdapter() {
+		if (mediatorItemProvider == null) {
+			mediatorItemProvider = new MediatorItemProvider(this);
 		}
 
-		return nuopcMediatorItemProvider;
+		return mediatorItemProvider;
 	}
 
 	/**
-	 * This keeps track of the one adapter used for all {@link org.earthsystemmodeling.cupid.NUOPC.NUOPCConnector} instances.
+	 * This keeps track of the one adapter used for all {@link org.earthsystemmodeling.cupid.NUOPC.Connector} instances.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	protected NUOPCConnectorItemProvider nuopcConnectorItemProvider;
+	protected ConnectorItemProvider connectorItemProvider;
 
 	/**
-	 * This creates an adapter for a {@link org.earthsystemmodeling.cupid.NUOPC.NUOPCConnector}.
+	 * This creates an adapter for a {@link org.earthsystemmodeling.cupid.NUOPC.Connector}.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
 	@Override
-	public Adapter createNUOPCConnectorAdapter() {
-		if (nuopcConnectorItemProvider == null) {
-			nuopcConnectorItemProvider = new NUOPCConnectorItemProvider(this);
+	public Adapter createConnectorAdapter() {
+		if (connectorItemProvider == null) {
+			connectorItemProvider = new ConnectorItemProvider(this);
 		}
 
-		return nuopcConnectorItemProvider;
+		return connectorItemProvider;
 	}
 
 	/**
-	 * This keeps track of the one adapter used for all {@link org.earthsystemmodeling.cupid.NUOPC.NUOPCApplication} instances.
+	 * This keeps track of the one adapter used for all {@link org.earthsystemmodeling.cupid.NUOPC.Application} instances.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	protected NUOPCApplicationItemProvider nuopcApplicationItemProvider;
+	protected ApplicationItemProvider applicationItemProvider;
 
 	/**
-	 * This creates an adapter for a {@link org.earthsystemmodeling.cupid.NUOPC.NUOPCApplication}.
+	 * This creates an adapter for a {@link org.earthsystemmodeling.cupid.NUOPC.Application}.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
 	@Override
-	public Adapter createNUOPCApplicationAdapter() {
-		if (nuopcApplicationItemProvider == null) {
-			nuopcApplicationItemProvider = new NUOPCApplicationItemProvider(this);
+	public Adapter createApplicationAdapter() {
+		if (applicationItemProvider == null) {
+			applicationItemProvider = new ApplicationItemProvider(this);
 		}
 
-		return nuopcApplicationItemProvider;
+		return applicationItemProvider;
+	}
+
+	/**
+	 * This keeps track of the one adapter used for all {@link org.earthsystemmodeling.cupid.NUOPC.Field} instances.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	protected FieldItemProvider fieldItemProvider;
+
+	/**
+	 * This creates an adapter for a {@link org.earthsystemmodeling.cupid.NUOPC.Field}.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	@Override
+	public Adapter createFieldAdapter() {
+		if (fieldItemProvider == null) {
+			fieldItemProvider = new FieldItemProvider(this);
+		}
+
+		return fieldItemProvider;
+	}
+
+	/**
+	 * This keeps track of the one adapter used for all {@link org.earthsystemmodeling.cupid.NUOPC.UniformGrid} instances.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	protected UniformGridItemProvider uniformGridItemProvider;
+
+	/**
+	 * This creates an adapter for a {@link org.earthsystemmodeling.cupid.NUOPC.UniformGrid}.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	@Override
+	public Adapter createUniformGridAdapter() {
+		if (uniformGridItemProvider == null) {
+			uniformGridItemProvider = new UniformGridItemProvider(this);
+		}
+
+		return uniformGridItemProvider;
 	}
 
 	/**
@@ -285,11 +331,13 @@ public class NUOPCItemProviderAdapterFactory extends NUOPCAdapterFactory impleme
 	 * @generated
 	 */
 	public void dispose() {
-		if (nuopcDriverItemProvider != null) nuopcDriverItemProvider.dispose();
-		if (nuopcModelItemProvider != null) nuopcModelItemProvider.dispose();
-		if (nuopcMediatorItemProvider != null) nuopcMediatorItemProvider.dispose();
-		if (nuopcConnectorItemProvider != null) nuopcConnectorItemProvider.dispose();
-		if (nuopcApplicationItemProvider != null) nuopcApplicationItemProvider.dispose();
+		if (driverItemProvider != null) driverItemProvider.dispose();
+		if (modelItemProvider != null) modelItemProvider.dispose();
+		if (mediatorItemProvider != null) mediatorItemProvider.dispose();
+		if (connectorItemProvider != null) connectorItemProvider.dispose();
+		if (applicationItemProvider != null) applicationItemProvider.dispose();
+		if (fieldItemProvider != null) fieldItemProvider.dispose();
+		if (uniformGridItemProvider != null) uniformGridItemProvider.dispose();
 	}
 
 }

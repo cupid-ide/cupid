@@ -28,7 +28,7 @@ public interface NUOPCFactory extends EFactory {
 	 * @return a new object of class '<em>Driver</em>'.
 	 * @generated
 	 */
-	NUOPCDriver createNUOPCDriver();
+	Driver createDriver();
 
 	/**
 	 * Returns a new object of class '<em>Model</em>'.
@@ -37,7 +37,7 @@ public interface NUOPCFactory extends EFactory {
 	 * @return a new object of class '<em>Model</em>'.
 	 * @generated
 	 */
-	NUOPCModel createNUOPCModel();
+	Model createModel();
 
 	/**
 	 * Returns a new object of class '<em>Mediator</em>'.
@@ -46,7 +46,7 @@ public interface NUOPCFactory extends EFactory {
 	 * @return a new object of class '<em>Mediator</em>'.
 	 * @generated
 	 */
-	NUOPCMediator createNUOPCMediator();
+	Mediator createMediator();
 
 	/**
 	 * Returns a new object of class '<em>Connector</em>'.
@@ -55,7 +55,7 @@ public interface NUOPCFactory extends EFactory {
 	 * @return a new object of class '<em>Connector</em>'.
 	 * @generated
 	 */
-	NUOPCConnector createNUOPCConnector();
+	Connector createConnector();
 
 	/**
 	 * Returns a new object of class '<em>Application</em>'.
@@ -64,7 +64,25 @@ public interface NUOPCFactory extends EFactory {
 	 * @return a new object of class '<em>Application</em>'.
 	 * @generated
 	 */
-	NUOPCApplication createNUOPCApplication();
+	Application createApplication();
+
+	/**
+	 * Returns a new object of class '<em>Field</em>'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return a new object of class '<em>Field</em>'.
+	 * @generated
+	 */
+	Field createField();
+
+	/**
+	 * Returns a new object of class '<em>Uniform Grid</em>'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return a new object of class '<em>Uniform Grid</em>'.
+	 * @generated
+	 */
+	UniformGrid createUniformGrid();
 
 	/**
 	 * Returns the package supported by this factory.

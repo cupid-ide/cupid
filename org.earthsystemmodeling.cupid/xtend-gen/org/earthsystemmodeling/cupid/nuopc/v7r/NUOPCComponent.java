@@ -280,82 +280,85 @@ public abstract class NUOPCComponent extends CodeConcept<CodeConcept<?, ?>, ASTM
         if (_equals) {
           throw new CodeGenerationException("No component name specified");
         }
-        StringConcatenation _builder = new StringConcatenation();
-        _builder.append("module ");
-        _builder.append(this.name, "");
-        _builder.newLineIfNotEmpty();
-        _builder.append("\t");
-        _builder.newLine();
-        _builder.append("\t");
-        _builder.append("use ESMF");
-        _builder.newLine();
-        _builder.append("\t");
-        _builder.append("use NUOPC");
-        _builder.newLine();
-        _builder.append("\t");
-        _builder.append("use ");
-        _builder.append(this.genericImport, "\t");
-        _builder.append(", only: &");
-        _builder.newLineIfNotEmpty();
-        _builder.append("\t\t");
-        String _prefix = this.prefix();
-        _builder.append(_prefix, "\t\t");
-        _builder.append("_SetServices => SetServices");
-        _builder.newLineIfNotEmpty();
-        _builder.append("\t\t");
-        _builder.newLine();
-        _builder.append("\t");
-        _builder.append("implicit none");
-        _builder.newLine();
-        _builder.append("\t");
-        _builder.newLine();
-        _builder.append("\t");
-        _builder.append("contains");
-        _builder.newLine();
-        _builder.append("\t");
-        _builder.newLine();
-        _builder.append("end module");
-        _builder.newLine();
-        String code = _builder.toString();
-        ASTModuleNode moduleNode = CodeExtraction.<ASTModuleNode>parseLiteralProgramUnit(code);
-        this.setASTRef(moduleNode);
-        ASTListNode<IProgramUnit> pul = new ASTListNode<IProgramUnit>();
-        pul.add(moduleNode);
-        IFortranAST _aST = this.getAST();
-        ASTExecutableProgramNode _root = _aST.getRoot();
-        _root.setProgramUnitList(pul);
-        IASTListNode<IModuleBodyConstruct> _moduleBody = moduleNode.getModuleBody();
-        Iterable<ASTUseStmtNode> _filter = Iterables.<ASTUseStmtNode>filter(_moduleBody, ASTUseStmtNode.class);
-        final Procedure1<ASTUseStmtNode> _function = new Procedure1<ASTUseStmtNode>() {
-          @Override
-          public void apply(final ASTUseStmtNode it) {
-            Token _name = it.getName();
-            String _text = _name.getText();
-            boolean _eic = ASTQuery.eic(_text, "ESMF");
-            if (_eic) {
-              BasicCodeConcept<ASTUseStmtNode> _basicCodeConcept = new BasicCodeConcept<ASTUseStmtNode>(NUOPCComponent.this, it);
-              NUOPCComponent.this.importESMF = _basicCodeConcept;
-            } else {
-              Token _name_1 = it.getName();
-              String _text_1 = _name_1.getText();
-              boolean _eic_1 = ASTQuery.eic(_text_1, "NUOPC");
-              if (_eic_1) {
-                BasicCodeConcept<ASTUseStmtNode> _basicCodeConcept_1 = new BasicCodeConcept<ASTUseStmtNode>(NUOPCComponent.this, it);
-                NUOPCComponent.this.importNUOPC = _basicCodeConcept_1;
+        boolean _equals_1 = Objects.equal(this._astRef, null);
+        if (_equals_1) {
+          StringConcatenation _builder = new StringConcatenation();
+          _builder.append("module ");
+          _builder.append(this.name, "");
+          _builder.newLineIfNotEmpty();
+          _builder.append("\t");
+          _builder.newLine();
+          _builder.append("\t");
+          _builder.append("use ESMF");
+          _builder.newLine();
+          _builder.append("\t");
+          _builder.append("use NUOPC");
+          _builder.newLine();
+          _builder.append("\t");
+          _builder.append("use ");
+          _builder.append(this.genericImport, "\t");
+          _builder.append(", &");
+          _builder.newLineIfNotEmpty();
+          _builder.append("\t\t");
+          String _prefix = this.prefix();
+          _builder.append(_prefix, "\t\t");
+          _builder.append("_SetServices => SetServices");
+          _builder.newLineIfNotEmpty();
+          _builder.append("\t\t");
+          _builder.newLine();
+          _builder.append("\t");
+          _builder.append("implicit none");
+          _builder.newLine();
+          _builder.append("\t");
+          _builder.newLine();
+          _builder.append("\t");
+          _builder.append("contains");
+          _builder.newLine();
+          _builder.append("\t");
+          _builder.newLine();
+          _builder.append("end module");
+          _builder.newLine();
+          String code = _builder.toString();
+          ASTModuleNode moduleNode = CodeExtraction.<ASTModuleNode>parseLiteralProgramUnit(code);
+          this.setASTRef(moduleNode);
+          ASTListNode<IProgramUnit> pul = new ASTListNode<IProgramUnit>();
+          pul.add(moduleNode);
+          IFortranAST _aST = this.getAST();
+          ASTExecutableProgramNode _root = _aST.getRoot();
+          _root.setProgramUnitList(pul);
+          IASTListNode<IModuleBodyConstruct> _moduleBody = moduleNode.getModuleBody();
+          Iterable<ASTUseStmtNode> _filter = Iterables.<ASTUseStmtNode>filter(_moduleBody, ASTUseStmtNode.class);
+          final Procedure1<ASTUseStmtNode> _function = new Procedure1<ASTUseStmtNode>() {
+            @Override
+            public void apply(final ASTUseStmtNode it) {
+              Token _name = it.getName();
+              String _text = _name.getText();
+              boolean _eic = ASTQuery.eic(_text, "ESMF");
+              if (_eic) {
+                BasicCodeConcept<ASTUseStmtNode> _basicCodeConcept = new BasicCodeConcept<ASTUseStmtNode>(NUOPCComponent.this, it);
+                NUOPCComponent.this.importESMF = _basicCodeConcept;
               } else {
-                Token _name_2 = it.getName();
-                String _text_2 = _name_2.getText();
-                boolean _eic_2 = ASTQuery.eic(_text_2, NUOPCComponent.this.genericImport);
-                if (_eic_2) {
-                  NUOPCComponent.GenericImport _genericImport = new NUOPCComponent.GenericImport(NUOPCComponent.this, it);
-                  NUOPCComponent.GenericImport _reverse = _genericImport.reverse();
-                  NUOPCComponent.this.importNUOPCGeneric = _reverse;
+                Token _name_1 = it.getName();
+                String _text_1 = _name_1.getText();
+                boolean _eic_1 = ASTQuery.eic(_text_1, "NUOPC");
+                if (_eic_1) {
+                  BasicCodeConcept<ASTUseStmtNode> _basicCodeConcept_1 = new BasicCodeConcept<ASTUseStmtNode>(NUOPCComponent.this, it);
+                  NUOPCComponent.this.importNUOPC = _basicCodeConcept_1;
+                } else {
+                  Token _name_2 = it.getName();
+                  String _text_2 = _name_2.getText();
+                  boolean _eic_2 = ASTQuery.eic(_text_2, NUOPCComponent.this.genericImport);
+                  if (_eic_2) {
+                    NUOPCComponent.GenericImport _genericImport = new NUOPCComponent.GenericImport(NUOPCComponent.this, it);
+                    NUOPCComponent.GenericImport _reverse = _genericImport.reverse();
+                    NUOPCComponent.this.importNUOPCGeneric = _reverse;
+                  }
                 }
               }
             }
-          }
-        };
-        IterableExtensions.<ASTUseStmtNode>forEach(_filter, _function);
+          };
+          IterableExtensions.<ASTUseStmtNode>forEach(_filter, _function);
+        }
         _xblockexpression = super.<NUOPCComponent>forward();
       }
       return _xblockexpression;

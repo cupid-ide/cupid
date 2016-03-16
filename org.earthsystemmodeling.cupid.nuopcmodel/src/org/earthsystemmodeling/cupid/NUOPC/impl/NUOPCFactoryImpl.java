@@ -56,11 +56,13 @@ public class NUOPCFactoryImpl extends EFactoryImpl implements NUOPCFactory {
 	@Override
 	public EObject create(EClass eClass) {
 		switch (eClass.getClassifierID()) {
-			case NUOPCPackage.NUOPC_DRIVER: return createNUOPCDriver();
-			case NUOPCPackage.NUOPC_MODEL: return createNUOPCModel();
-			case NUOPCPackage.NUOPC_MEDIATOR: return createNUOPCMediator();
-			case NUOPCPackage.NUOPC_CONNECTOR: return createNUOPCConnector();
-			case NUOPCPackage.NUOPC_APPLICATION: return createNUOPCApplication();
+			case NUOPCPackage.DRIVER: return createDriver();
+			case NUOPCPackage.MODEL: return createModel();
+			case NUOPCPackage.MEDIATOR: return createMediator();
+			case NUOPCPackage.CONNECTOR: return createConnector();
+			case NUOPCPackage.APPLICATION: return createApplication();
+			case NUOPCPackage.FIELD: return createField();
+			case NUOPCPackage.UNIFORM_GRID: return createUniformGrid();
 			default:
 				throw new IllegalArgumentException("The class '" + eClass.getName() + "' is not a valid classifier");
 		}
@@ -71,9 +73,9 @@ public class NUOPCFactoryImpl extends EFactoryImpl implements NUOPCFactory {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public NUOPCDriver createNUOPCDriver() {
-		NUOPCDriverImpl nuopcDriver = new NUOPCDriverImpl();
-		return nuopcDriver;
+	public Driver createDriver() {
+		DriverImpl driver = new DriverImpl();
+		return driver;
 	}
 
 	/**
@@ -81,9 +83,9 @@ public class NUOPCFactoryImpl extends EFactoryImpl implements NUOPCFactory {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public NUOPCModel createNUOPCModel() {
-		NUOPCModelImpl nuopcModel = new NUOPCModelImpl();
-		return nuopcModel;
+	public Model createModel() {
+		ModelImpl model = new ModelImpl();
+		return model;
 	}
 
 	/**
@@ -91,9 +93,9 @@ public class NUOPCFactoryImpl extends EFactoryImpl implements NUOPCFactory {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public NUOPCMediator createNUOPCMediator() {
-		NUOPCMediatorImpl nuopcMediator = new NUOPCMediatorImpl();
-		return nuopcMediator;
+	public Mediator createMediator() {
+		MediatorImpl mediator = new MediatorImpl();
+		return mediator;
 	}
 
 	/**
@@ -101,9 +103,9 @@ public class NUOPCFactoryImpl extends EFactoryImpl implements NUOPCFactory {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public NUOPCConnector createNUOPCConnector() {
-		NUOPCConnectorImpl nuopcConnector = new NUOPCConnectorImpl();
-		return nuopcConnector;
+	public Connector createConnector() {
+		ConnectorImpl connector = new ConnectorImpl();
+		return connector;
 	}
 
 	/**
@@ -111,9 +113,29 @@ public class NUOPCFactoryImpl extends EFactoryImpl implements NUOPCFactory {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public NUOPCApplication createNUOPCApplication() {
-		NUOPCApplicationImpl nuopcApplication = new NUOPCApplicationImpl();
-		return nuopcApplication;
+	public Application createApplication() {
+		ApplicationImpl application = new ApplicationImpl();
+		return application;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public Field createField() {
+		FieldImpl field = new FieldImpl();
+		return field;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public UniformGrid createUniformGrid() {
+		UniformGridImpl uniformGrid = new UniformGridImpl();
+		return uniformGrid;
 	}
 
 	/**

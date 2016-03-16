@@ -20,6 +20,7 @@ import org.eclipse.photran.internal.core.reindenter.Reindenter.Strategy
 import org.eclipse.photran.internal.core.vpg.PhotranVPG
 import org.eclipse.text.edits.ReplaceEdit
 import org.eclipse.xtend.lib.annotations.Accessors
+import org.eclipse.core.runtime.IProgressMonitor
 
 public abstract class CodeConcept<P extends CodeConcept<?,?>, A extends IASTNode> {
 	
@@ -145,8 +146,14 @@ public abstract class CodeConcept<P extends CodeConcept<?,?>, A extends IASTNode
 		else null
 	}
 	
+		
 	def setASTRef(A astRef) {
 		_astRef = astRef
+	}
+	
+	def <T extends CodeConcept<?,?>> T findNearestAncestor(Class<? extends IASTNode> classToFind) {
+		if (classToFind.isInstance(_astRef)) this as T
+		else _parent?.findNearestAncestor(classToFind) 
 	}
 	
 	def getAST() {
@@ -229,6 +236,11 @@ public abstract class CodeConcept<P extends CodeConcept<?,?>, A extends IASTNode
 			}
 		}
 		
+	}
+	
+	def void forward(IProgressMonitor pm) {
+		forward
+		generateChange.perform(pm)
 	}
 	
 	static String PARAM_REGEX = "CUPIDPARAM\\$(CHAR|INT)\\$([^\\$]*)\\$";

@@ -2,13 +2,19 @@
 <genmodel:GenModel xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:ecore="http://www.eclipse.org/emf/2002/Ecore"
     xmlns:genmodel="http://www.eclipse.org/emf/2002/GenModel" modelDirectory="/org.earthsystemmodeling.cupid.nuopcmodel/src"
     modelPluginID="org.earthsystemmodeling.cupid.nuopcmodel" modelName="NUOPC" rootExtendsClass="org.eclipse.emf.ecore.impl.MinimalEObjectImpl$Container"
-    importerID="org.eclipse.emf.importer.ecore" complianceLevel="8.0" copyrightFields="false"
-    operationReflection="true" importOrganizing="true">
+    featureMapWrapperInterface="" featureMapWrapperClass="" importerID="org.eclipse.emf.importer.ecore"
+    complianceLevel="8.0" copyrightFields="false" classNamePattern="" operationReflection="true"
+    importOrganizing="true">
   <foreignModel>NUOPC.ecore</foreignModel>
   <genPackages prefix="NUOPC" basePackage="org.earthsystemmodeling.cupid" disposableProviderFactory="true"
-      ecorePackage="NUOPC.ecore#/">
+      ecorePackage="NUOPC.ecore#/" publicationLocation="">
+    <genDataTypes ecoreDataType="NUOPC.ecore#//ASTModuleNode"/>
+    <genDataTypes ecoreDataType="NUOPC.ecore#//IASTNode"/>
     <genClasses ecoreClass="NUOPC.ecore#//NUOPCComponent">
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute NUOPC.ecore#//NUOPCComponent/name"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference NUOPC.ecore#//NUOPCComponent/setServices"/>
+      <genOperations ecoreOperation="NUOPC.ecore#//NUOPCComponent/forward"/>
+      <genOperations ecoreOperation="NUOPC.ecore#//NUOPCComponent/reverse"/>
     </genClasses>
     <genClasses image="false" ecoreClass="NUOPC.ecore#//NUOPCBaseModel"/>
     <genClasses ecoreClass="NUOPC.ecore#//NUOPCDriver">
@@ -22,6 +28,11 @@
     </genClasses>
     <genClasses ecoreClass="NUOPC.ecore#//NUOPCApplication">
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference NUOPC.ecore#//NUOPCApplication/children"/>
+    </genClasses>
+    <genClasses ecoreClass="NUOPC.ecore#//SetServices"/>
+    <genClasses ecoreClass="NUOPC.ecore#//CodeConcept">
+      <genTypeParameters ecoreTypeParameter="NUOPC.ecore#//CodeConcept/NodeType"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute NUOPC.ecore#//CodeConcept/ASTRef"/>
     </genClasses>
   </genPackages>
 </genmodel:GenModel>

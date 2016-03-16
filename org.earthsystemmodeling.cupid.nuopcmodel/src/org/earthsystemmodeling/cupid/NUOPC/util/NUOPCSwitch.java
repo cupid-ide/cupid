@@ -66,52 +66,71 @@ public class NUOPCSwitch<T> extends Switch<T> {
 	@Override
 	protected T doSwitch(int classifierID, EObject theEObject) {
 		switch (classifierID) {
-			case NUOPCPackage.NUOPC_COMPONENT: {
-				NUOPCComponent nuopcComponent = (NUOPCComponent)theEObject;
-				T result = caseNUOPCComponent(nuopcComponent);
+			case NUOPCPackage.COMPONENT: {
+				Component component = (Component)theEObject;
+				T result = caseComponent(component);
 				if (result == null) result = defaultCase(theEObject);
 				return result;
 			}
-			case NUOPCPackage.NUOPC_BASE_MODEL: {
-				NUOPCBaseModel nuopcBaseModel = (NUOPCBaseModel)theEObject;
-				T result = caseNUOPCBaseModel(nuopcBaseModel);
-				if (result == null) result = caseNUOPCComponent(nuopcBaseModel);
+			case NUOPCPackage.BASE_MODEL: {
+				BaseModel baseModel = (BaseModel)theEObject;
+				T result = caseBaseModel(baseModel);
+				if (result == null) result = caseComponent(baseModel);
 				if (result == null) result = defaultCase(theEObject);
 				return result;
 			}
-			case NUOPCPackage.NUOPC_DRIVER: {
-				NUOPCDriver nuopcDriver = (NUOPCDriver)theEObject;
-				T result = caseNUOPCDriver(nuopcDriver);
-				if (result == null) result = caseNUOPCComponent(nuopcDriver);
+			case NUOPCPackage.DRIVER: {
+				Driver driver = (Driver)theEObject;
+				T result = caseDriver(driver);
+				if (result == null) result = caseComponent(driver);
 				if (result == null) result = defaultCase(theEObject);
 				return result;
 			}
-			case NUOPCPackage.NUOPC_MODEL: {
-				NUOPCModel nuopcModel = (NUOPCModel)theEObject;
-				T result = caseNUOPCModel(nuopcModel);
-				if (result == null) result = caseNUOPCBaseModel(nuopcModel);
-				if (result == null) result = caseNUOPCComponent(nuopcModel);
+			case NUOPCPackage.MODEL: {
+				Model model = (Model)theEObject;
+				T result = caseModel(model);
+				if (result == null) result = caseBaseModel(model);
+				if (result == null) result = caseComponent(model);
 				if (result == null) result = defaultCase(theEObject);
 				return result;
 			}
-			case NUOPCPackage.NUOPC_MEDIATOR: {
-				NUOPCMediator nuopcMediator = (NUOPCMediator)theEObject;
-				T result = caseNUOPCMediator(nuopcMediator);
-				if (result == null) result = caseNUOPCBaseModel(nuopcMediator);
-				if (result == null) result = caseNUOPCComponent(nuopcMediator);
+			case NUOPCPackage.MEDIATOR: {
+				Mediator mediator = (Mediator)theEObject;
+				T result = caseMediator(mediator);
+				if (result == null) result = caseBaseModel(mediator);
+				if (result == null) result = caseComponent(mediator);
 				if (result == null) result = defaultCase(theEObject);
 				return result;
 			}
-			case NUOPCPackage.NUOPC_CONNECTOR: {
-				NUOPCConnector nuopcConnector = (NUOPCConnector)theEObject;
-				T result = caseNUOPCConnector(nuopcConnector);
-				if (result == null) result = caseNUOPCComponent(nuopcConnector);
+			case NUOPCPackage.CONNECTOR: {
+				Connector connector = (Connector)theEObject;
+				T result = caseConnector(connector);
+				if (result == null) result = caseComponent(connector);
 				if (result == null) result = defaultCase(theEObject);
 				return result;
 			}
-			case NUOPCPackage.NUOPC_APPLICATION: {
-				NUOPCApplication nuopcApplication = (NUOPCApplication)theEObject;
-				T result = caseNUOPCApplication(nuopcApplication);
+			case NUOPCPackage.APPLICATION: {
+				Application application = (Application)theEObject;
+				T result = caseApplication(application);
+				if (result == null) result = defaultCase(theEObject);
+				return result;
+			}
+			case NUOPCPackage.FIELD: {
+				Field field = (Field)theEObject;
+				T result = caseField(field);
+				if (result == null) result = defaultCase(theEObject);
+				return result;
+			}
+			case NUOPCPackage.GRID: {
+				Grid grid = (Grid)theEObject;
+				T result = caseGrid(grid);
+				if (result == null) result = defaultCase(theEObject);
+				return result;
+			}
+			case NUOPCPackage.UNIFORM_GRID: {
+				UniformGrid uniformGrid = (UniformGrid)theEObject;
+				T result = caseUniformGrid(uniformGrid);
+				if (result == null) result = caseGrid(uniformGrid);
 				if (result == null) result = defaultCase(theEObject);
 				return result;
 			}
@@ -130,7 +149,7 @@ public class NUOPCSwitch<T> extends Switch<T> {
 	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
 	 * @generated
 	 */
-	public T caseNUOPCComponent(NUOPCComponent object) {
+	public T caseComponent(Component object) {
 		return null;
 	}
 
@@ -145,7 +164,7 @@ public class NUOPCSwitch<T> extends Switch<T> {
 	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
 	 * @generated
 	 */
-	public T caseNUOPCBaseModel(NUOPCBaseModel object) {
+	public T caseBaseModel(BaseModel object) {
 		return null;
 	}
 
@@ -160,7 +179,7 @@ public class NUOPCSwitch<T> extends Switch<T> {
 	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
 	 * @generated
 	 */
-	public T caseNUOPCDriver(NUOPCDriver object) {
+	public T caseDriver(Driver object) {
 		return null;
 	}
 
@@ -175,7 +194,7 @@ public class NUOPCSwitch<T> extends Switch<T> {
 	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
 	 * @generated
 	 */
-	public T caseNUOPCModel(NUOPCModel object) {
+	public T caseModel(Model object) {
 		return null;
 	}
 
@@ -190,7 +209,7 @@ public class NUOPCSwitch<T> extends Switch<T> {
 	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
 	 * @generated
 	 */
-	public T caseNUOPCMediator(NUOPCMediator object) {
+	public T caseMediator(Mediator object) {
 		return null;
 	}
 
@@ -205,7 +224,7 @@ public class NUOPCSwitch<T> extends Switch<T> {
 	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
 	 * @generated
 	 */
-	public T caseNUOPCConnector(NUOPCConnector object) {
+	public T caseConnector(Connector object) {
 		return null;
 	}
 
@@ -220,7 +239,52 @@ public class NUOPCSwitch<T> extends Switch<T> {
 	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
 	 * @generated
 	 */
-	public T caseNUOPCApplication(NUOPCApplication object) {
+	public T caseApplication(Application object) {
+		return null;
+	}
+
+	/**
+	 * Returns the result of interpreting the object as an instance of '<em>Field</em>'.
+	 * <!-- begin-user-doc -->
+	 * This implementation returns null;
+	 * returning a non-null result will terminate the switch.
+	 * <!-- end-user-doc -->
+	 * @param object the target of the switch.
+	 * @return the result of interpreting the object as an instance of '<em>Field</em>'.
+	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+	 * @generated
+	 */
+	public T caseField(Field object) {
+		return null;
+	}
+
+	/**
+	 * Returns the result of interpreting the object as an instance of '<em>Grid</em>'.
+	 * <!-- begin-user-doc -->
+	 * This implementation returns null;
+	 * returning a non-null result will terminate the switch.
+	 * <!-- end-user-doc -->
+	 * @param object the target of the switch.
+	 * @return the result of interpreting the object as an instance of '<em>Grid</em>'.
+	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+	 * @generated
+	 */
+	public T caseGrid(Grid object) {
+		return null;
+	}
+
+	/**
+	 * Returns the result of interpreting the object as an instance of '<em>Uniform Grid</em>'.
+	 * <!-- begin-user-doc -->
+	 * This implementation returns null;
+	 * returning a non-null result will terminate the switch.
+	 * <!-- end-user-doc -->
+	 * @param object the target of the switch.
+	 * @return the result of interpreting the object as an instance of '<em>Uniform Grid</em>'.
+	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+	 * @generated
+	 */
+	public T caseUniformGrid(UniformGrid object) {
 		return null;
 	}
 

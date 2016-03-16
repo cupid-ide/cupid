@@ -68,32 +68,44 @@ public class NUOPCAdapterFactory extends AdapterFactoryImpl {
 	protected NUOPCSwitch<Adapter> modelSwitch =
 		new NUOPCSwitch<Adapter>() {
 			@Override
-			public Adapter caseNUOPCComponent(NUOPCComponent object) {
-				return createNUOPCComponentAdapter();
+			public Adapter caseComponent(Component object) {
+				return createComponentAdapter();
 			}
 			@Override
-			public Adapter caseNUOPCBaseModel(NUOPCBaseModel object) {
-				return createNUOPCBaseModelAdapter();
+			public Adapter caseBaseModel(BaseModel object) {
+				return createBaseModelAdapter();
 			}
 			@Override
-			public Adapter caseNUOPCDriver(NUOPCDriver object) {
-				return createNUOPCDriverAdapter();
+			public Adapter caseDriver(Driver object) {
+				return createDriverAdapter();
 			}
 			@Override
-			public Adapter caseNUOPCModel(NUOPCModel object) {
-				return createNUOPCModelAdapter();
+			public Adapter caseModel(Model object) {
+				return createModelAdapter();
 			}
 			@Override
-			public Adapter caseNUOPCMediator(NUOPCMediator object) {
-				return createNUOPCMediatorAdapter();
+			public Adapter caseMediator(Mediator object) {
+				return createMediatorAdapter();
 			}
 			@Override
-			public Adapter caseNUOPCConnector(NUOPCConnector object) {
-				return createNUOPCConnectorAdapter();
+			public Adapter caseConnector(Connector object) {
+				return createConnectorAdapter();
 			}
 			@Override
-			public Adapter caseNUOPCApplication(NUOPCApplication object) {
-				return createNUOPCApplicationAdapter();
+			public Adapter caseApplication(Application object) {
+				return createApplicationAdapter();
+			}
+			@Override
+			public Adapter caseField(Field object) {
+				return createFieldAdapter();
+			}
+			@Override
+			public Adapter caseGrid(Grid object) {
+				return createGridAdapter();
+			}
+			@Override
+			public Adapter caseUniformGrid(UniformGrid object) {
+				return createUniformGridAdapter();
 			}
 			@Override
 			public Adapter defaultCase(EObject object) {
@@ -116,100 +128,142 @@ public class NUOPCAdapterFactory extends AdapterFactoryImpl {
 
 
 	/**
-	 * Creates a new adapter for an object of class '{@link org.earthsystemmodeling.cupid.NUOPC.NUOPCComponent <em>Component</em>}'.
+	 * Creates a new adapter for an object of class '{@link org.earthsystemmodeling.cupid.NUOPC.Component <em>Component</em>}'.
 	 * <!-- begin-user-doc -->
 	 * This default implementation returns null so that we can easily ignore cases;
 	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
 	 * <!-- end-user-doc -->
 	 * @return the new adapter.
-	 * @see org.earthsystemmodeling.cupid.NUOPC.NUOPCComponent
+	 * @see org.earthsystemmodeling.cupid.NUOPC.Component
 	 * @generated
 	 */
-	public Adapter createNUOPCComponentAdapter() {
+	public Adapter createComponentAdapter() {
 		return null;
 	}
 
 	/**
-	 * Creates a new adapter for an object of class '{@link org.earthsystemmodeling.cupid.NUOPC.NUOPCBaseModel <em>Base Model</em>}'.
+	 * Creates a new adapter for an object of class '{@link org.earthsystemmodeling.cupid.NUOPC.BaseModel <em>Base Model</em>}'.
 	 * <!-- begin-user-doc -->
 	 * This default implementation returns null so that we can easily ignore cases;
 	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
 	 * <!-- end-user-doc -->
 	 * @return the new adapter.
-	 * @see org.earthsystemmodeling.cupid.NUOPC.NUOPCBaseModel
+	 * @see org.earthsystemmodeling.cupid.NUOPC.BaseModel
 	 * @generated
 	 */
-	public Adapter createNUOPCBaseModelAdapter() {
+	public Adapter createBaseModelAdapter() {
 		return null;
 	}
 
 	/**
-	 * Creates a new adapter for an object of class '{@link org.earthsystemmodeling.cupid.NUOPC.NUOPCDriver <em>Driver</em>}'.
+	 * Creates a new adapter for an object of class '{@link org.earthsystemmodeling.cupid.NUOPC.Driver <em>Driver</em>}'.
 	 * <!-- begin-user-doc -->
 	 * This default implementation returns null so that we can easily ignore cases;
 	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
 	 * <!-- end-user-doc -->
 	 * @return the new adapter.
-	 * @see org.earthsystemmodeling.cupid.NUOPC.NUOPCDriver
+	 * @see org.earthsystemmodeling.cupid.NUOPC.Driver
 	 * @generated
 	 */
-	public Adapter createNUOPCDriverAdapter() {
+	public Adapter createDriverAdapter() {
 		return null;
 	}
 
 	/**
-	 * Creates a new adapter for an object of class '{@link org.earthsystemmodeling.cupid.NUOPC.NUOPCModel <em>Model</em>}'.
+	 * Creates a new adapter for an object of class '{@link org.earthsystemmodeling.cupid.NUOPC.Model <em>Model</em>}'.
 	 * <!-- begin-user-doc -->
 	 * This default implementation returns null so that we can easily ignore cases;
 	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
 	 * <!-- end-user-doc -->
 	 * @return the new adapter.
-	 * @see org.earthsystemmodeling.cupid.NUOPC.NUOPCModel
+	 * @see org.earthsystemmodeling.cupid.NUOPC.Model
 	 * @generated
 	 */
-	public Adapter createNUOPCModelAdapter() {
+	public Adapter createModelAdapter() {
 		return null;
 	}
 
 	/**
-	 * Creates a new adapter for an object of class '{@link org.earthsystemmodeling.cupid.NUOPC.NUOPCMediator <em>Mediator</em>}'.
+	 * Creates a new adapter for an object of class '{@link org.earthsystemmodeling.cupid.NUOPC.Mediator <em>Mediator</em>}'.
 	 * <!-- begin-user-doc -->
 	 * This default implementation returns null so that we can easily ignore cases;
 	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
 	 * <!-- end-user-doc -->
 	 * @return the new adapter.
-	 * @see org.earthsystemmodeling.cupid.NUOPC.NUOPCMediator
+	 * @see org.earthsystemmodeling.cupid.NUOPC.Mediator
 	 * @generated
 	 */
-	public Adapter createNUOPCMediatorAdapter() {
+	public Adapter createMediatorAdapter() {
 		return null;
 	}
 
 	/**
-	 * Creates a new adapter for an object of class '{@link org.earthsystemmodeling.cupid.NUOPC.NUOPCConnector <em>Connector</em>}'.
+	 * Creates a new adapter for an object of class '{@link org.earthsystemmodeling.cupid.NUOPC.Connector <em>Connector</em>}'.
 	 * <!-- begin-user-doc -->
 	 * This default implementation returns null so that we can easily ignore cases;
 	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
 	 * <!-- end-user-doc -->
 	 * @return the new adapter.
-	 * @see org.earthsystemmodeling.cupid.NUOPC.NUOPCConnector
+	 * @see org.earthsystemmodeling.cupid.NUOPC.Connector
 	 * @generated
 	 */
-	public Adapter createNUOPCConnectorAdapter() {
+	public Adapter createConnectorAdapter() {
 		return null;
 	}
 
 	/**
-	 * Creates a new adapter for an object of class '{@link org.earthsystemmodeling.cupid.NUOPC.NUOPCApplication <em>Application</em>}'.
+	 * Creates a new adapter for an object of class '{@link org.earthsystemmodeling.cupid.NUOPC.Application <em>Application</em>}'.
 	 * <!-- begin-user-doc -->
 	 * This default implementation returns null so that we can easily ignore cases;
 	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
 	 * <!-- end-user-doc -->
 	 * @return the new adapter.
-	 * @see org.earthsystemmodeling.cupid.NUOPC.NUOPCApplication
+	 * @see org.earthsystemmodeling.cupid.NUOPC.Application
 	 * @generated
 	 */
-	public Adapter createNUOPCApplicationAdapter() {
+	public Adapter createApplicationAdapter() {
+		return null;
+	}
+
+	/**
+	 * Creates a new adapter for an object of class '{@link org.earthsystemmodeling.cupid.NUOPC.Field <em>Field</em>}'.
+	 * <!-- begin-user-doc -->
+	 * This default implementation returns null so that we can easily ignore cases;
+	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
+	 * <!-- end-user-doc -->
+	 * @return the new adapter.
+	 * @see org.earthsystemmodeling.cupid.NUOPC.Field
+	 * @generated
+	 */
+	public Adapter createFieldAdapter() {
+		return null;
+	}
+
+	/**
+	 * Creates a new adapter for an object of class '{@link org.earthsystemmodeling.cupid.NUOPC.Grid <em>Grid</em>}'.
+	 * <!-- begin-user-doc -->
+	 * This default implementation returns null so that we can easily ignore cases;
+	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
+	 * <!-- end-user-doc -->
+	 * @return the new adapter.
+	 * @see org.earthsystemmodeling.cupid.NUOPC.Grid
+	 * @generated
+	 */
+	public Adapter createGridAdapter() {
+		return null;
+	}
+
+	/**
+	 * Creates a new adapter for an object of class '{@link org.earthsystemmodeling.cupid.NUOPC.UniformGrid <em>Uniform Grid</em>}'.
+	 * <!-- begin-user-doc -->
+	 * This default implementation returns null so that we can easily ignore cases;
+	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
+	 * <!-- end-user-doc -->
+	 * @return the new adapter.
+	 * @see org.earthsystemmodeling.cupid.NUOPC.UniformGrid
+	 * @generated
+	 */
+	public Adapter createUniformGridAdapter() {
 		return null;
 	}
 

@@ -17,6 +17,7 @@ import org.earthsystemmodeling.cupid.nuopc.ReverseEngineerException;
 import org.eclipse.core.resources.IFile;
 import org.eclipse.core.resources.IResource;
 import org.eclipse.core.runtime.IPath;
+import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.NullProgressMonitor;
 import org.eclipse.ltk.core.refactoring.Change;
 import org.eclipse.ltk.core.refactoring.TextFileChange;
@@ -303,6 +304,21 @@ public abstract class CodeConcept<P extends CodeConcept<?, ?>, A extends IASTNod
     return this._astRef = astRef;
   }
   
+  public <T extends CodeConcept<?, ?>> T findNearestAncestor(final Class<? extends IASTNode> classToFind) {
+    T _xifexpression = null;
+    boolean _isInstance = classToFind.isInstance(this._astRef);
+    if (_isInstance) {
+      _xifexpression = ((T) this);
+    } else {
+      T _findNearestAncestor = null;
+      if (this._parent!=null) {
+        _findNearestAncestor=this._parent.<T>findNearestAncestor(classToFind);
+      }
+      _xifexpression = _findNearestAncestor;
+    }
+    return _xifexpression;
+  }
+  
   public IFortranAST getAST() {
     IFortranAST _xifexpression = null;
     boolean _notEquals = (!Objects.equal(this._ast, null));
@@ -455,6 +471,16 @@ public abstract class CodeConcept<P extends CodeConcept<?, ?>, A extends IASTNod
         }
       }
       return null;
+    } catch (Throwable _e) {
+      throw Exceptions.sneakyThrow(_e);
+    }
+  }
+  
+  public void forward(final IProgressMonitor pm) {
+    try {
+      this.<CodeConcept<?, ?>>forward();
+      Change _generateChange = this.generateChange();
+      _generateChange.perform(pm);
     } catch (Throwable _e) {
       throw Exceptions.sneakyThrow(_e);
     }

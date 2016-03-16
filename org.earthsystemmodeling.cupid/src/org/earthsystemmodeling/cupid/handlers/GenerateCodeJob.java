@@ -1,12 +1,19 @@
 package org.earthsystemmodeling.cupid.handlers;
 
 import java.io.ByteArrayInputStream;
+import java.util.ArrayList;
+import java.util.List;
 
-import org.earthsystemmodeling.cupid.NUOPC.NUOPCApplication;
-import org.earthsystemmodeling.cupid.NUOPC.NUOPCComponent;
-import org.earthsystemmodeling.cupid.NUOPC.NUOPCDriver;
-import org.earthsystemmodeling.cupid.NUOPC.NUOPCMediator;
-import org.earthsystemmodeling.cupid.NUOPC.NUOPCModel;
+import org.earthsystemmodeling.cupid.NUOPC.Application;
+import org.earthsystemmodeling.cupid.NUOPC.Component;
+import org.earthsystemmodeling.cupid.NUOPC.Driver;
+import org.earthsystemmodeling.cupid.NUOPC.Mediator;
+import org.earthsystemmodeling.cupid.NUOPC.Model;
+import org.earthsystemmodeling.cupid.core.CupidActivator;
+import org.earthsystemmodeling.cupid.nuopc.v7r.NUOPCComponent;
+import org.earthsystemmodeling.cupid.nuopc.v7r.NUOPCDriver;
+import org.earthsystemmodeling.cupid.nuopc.v7r.NUOPCMediator;
+import org.earthsystemmodeling.cupid.nuopc.v7r.NUOPCModel;
 import org.eclipse.core.resources.IContainer;
 import org.eclipse.core.resources.IFile;
 import org.eclipse.core.resources.IFolder;
@@ -17,22 +24,32 @@ import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.NullProgressMonitor;
 import org.eclipse.core.runtime.Status;
 import org.eclipse.core.runtime.jobs.Job;
+import org.eclipse.ui.IWorkbenchPage;
+import org.eclipse.ui.IWorkbenchWindow;
+import org.eclipse.ui.MultiPartInitException;
+import org.eclipse.ui.PlatformUI;
+import org.eclipse.ui.ide.IDE;
+import org.eclipse.ui.progress.UIJob;
 
 public class GenerateCodeJob extends Job {
 
-	NUOPCApplication app;
-	IContainer container;
+	private Application app;
+	private IContainer container;
+	private boolean openEditor;
 	
-	public GenerateCodeJob(String name, NUOPCApplication app, IContainer container) {
+	public GenerateCodeJob(String name, Application app, IContainer container, boolean openEditor) {
 		super(name);
 		this.app = app;
 		this.container = container;
+		this.openEditor = openEditor;
 	}
 	
 	@Override
 	protected IStatus run(IProgressMonitor monitor) {
 		
-		for (NUOPCComponent comp : app.getChildren()) {
+		final List<IFile> changedFiles = new ArrayList<IFile>();
+		
+		for (Component comp : app.getChildren()) {
 			
 			IFile file;
 			try {
@@ -41,21 +58,40 @@ public class GenerateCodeJob extends Job {
 				throw new RuntimeException("Error generating code", e);
 			}
 			
-			org.earthsystemmodeling.cupid.nuopc.v7bs59.NUOPCComponent newComp = null;
+			NUOPCComponent newComp = null;
 			
-			if (comp instanceof NUOPCDriver) {
-				newComp = new org.earthsystemmodeling.cupid.nuopc.v7bs59.NUOPCDriver(file);
+			if (comp instanceof Driver) {
+				newComp = NUOPCDriver.newDriver(file, (Driver) comp);
 			}
-			else if (comp instanceof NUOPCModel) {
-				newComp = new org.earthsystemmodeling.cupid.nuopc.v7bs59.NUOPCModel(file);
+			else if (comp instanceof Model) {
+				newComp = NUOPCModel.newModel(file, (Model) comp);
 			}
-			else if (comp instanceof NUOPCMediator) {
-				newComp = new org.earthsystemmodeling.cupid.nuopc.v7bs59.NUOPCMediator(file);
+			else if (comp instanceof Mediator) {
+				newComp = new NUOPCMediator(file);
 			}
 			
 			newComp.name = comp.getName();
 			newComp = newComp.forward();
 			new ApplyCodeConceptChanges(newComp).run(monitor);
+			changedFiles.add(file);
+			
+		}
+		
+		if (openEditor) {
+			UIJob uijob = new UIJob("Open editor on generated code") {
+				@Override
+				public IStatus runInUIThread(IProgressMonitor monitor) {
+					IWorkbenchWindow window = PlatformUI.getWorkbench().getActiveWorkbenchWindow();
+					IWorkbenchPage page = window.getActivePage();
+					try {
+						IDE.openEditors(page, changedFiles.toArray(new IFile[0]));
+					} catch (MultiPartInitException e) {
+						CupidActivator.log("Error while opening editor(s) on generated file(s)", e);
+					}
+					return Status.OK_STATUS;
+				}
+			};
+			uijob.schedule();
 		}
 		
 		

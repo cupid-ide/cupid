@@ -2,16 +2,18 @@
  */
 package org.earthsystemmodeling.cupid.NUOPC.impl;
 
-import org.earthsystemmodeling.cupid.NUOPC.NUOPCApplication;
-import org.earthsystemmodeling.cupid.NUOPC.NUOPCBaseModel;
-import org.earthsystemmodeling.cupid.NUOPC.NUOPCComponent;
-import org.earthsystemmodeling.cupid.NUOPC.NUOPCConnector;
-import org.earthsystemmodeling.cupid.NUOPC.NUOPCDriver;
+import org.earthsystemmodeling.cupid.NUOPC.Application;
+import org.earthsystemmodeling.cupid.NUOPC.BaseModel;
+import org.earthsystemmodeling.cupid.NUOPC.Component;
+import org.earthsystemmodeling.cupid.NUOPC.Connector;
+import org.earthsystemmodeling.cupid.NUOPC.Driver;
+import org.earthsystemmodeling.cupid.NUOPC.Field;
+import org.earthsystemmodeling.cupid.NUOPC.Grid;
+import org.earthsystemmodeling.cupid.NUOPC.Mediator;
+import org.earthsystemmodeling.cupid.NUOPC.Model;
 import org.earthsystemmodeling.cupid.NUOPC.NUOPCFactory;
-import org.earthsystemmodeling.cupid.NUOPC.NUOPCMediator;
-import org.earthsystemmodeling.cupid.NUOPC.NUOPCModel;
 import org.earthsystemmodeling.cupid.NUOPC.NUOPCPackage;
-
+import org.earthsystemmodeling.cupid.NUOPC.UniformGrid;
 import org.eclipse.emf.ecore.EAttribute;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EPackage;
@@ -31,49 +33,70 @@ public class NUOPCPackageImpl extends EPackageImpl implements NUOPCPackage {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	private EClass nuopcComponentEClass = null;
+	private EClass componentEClass = null;
 
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	private EClass nuopcBaseModelEClass = null;
+	private EClass baseModelEClass = null;
 
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	private EClass nuopcDriverEClass = null;
+	private EClass driverEClass = null;
 
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	private EClass nuopcModelEClass = null;
+	private EClass modelEClass = null;
 
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	private EClass nuopcMediatorEClass = null;
+	private EClass mediatorEClass = null;
 
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	private EClass nuopcConnectorEClass = null;
+	private EClass connectorEClass = null;
 
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	private EClass nuopcApplicationEClass = null;
+	private EClass applicationEClass = null;
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	private EClass fieldEClass = null;
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	private EClass gridEClass = null;
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	private EClass uniformGridEClass = null;
 
 	/**
 	 * Creates an instance of the model <b>Package</b>, registered with
@@ -141,8 +164,8 @@ public class NUOPCPackageImpl extends EPackageImpl implements NUOPCPackage {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EClass getNUOPCComponent() {
-		return nuopcComponentEClass;
+	public EClass getComponent() {
+		return componentEClass;
 	}
 
 	/**
@@ -150,8 +173,8 @@ public class NUOPCPackageImpl extends EPackageImpl implements NUOPCPackage {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EAttribute getNUOPCComponent_Name() {
-		return (EAttribute)nuopcComponentEClass.getEStructuralFeatures().get(0);
+	public EAttribute getComponent_Name() {
+		return (EAttribute)componentEClass.getEStructuralFeatures().get(0);
 	}
 
 	/**
@@ -159,8 +182,8 @@ public class NUOPCPackageImpl extends EPackageImpl implements NUOPCPackage {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EClass getNUOPCBaseModel() {
-		return nuopcBaseModelEClass;
+	public EClass getBaseModel() {
+		return baseModelEClass;
 	}
 
 	/**
@@ -168,8 +191,8 @@ public class NUOPCPackageImpl extends EPackageImpl implements NUOPCPackage {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EClass getNUOPCDriver() {
-		return nuopcDriverEClass;
+	public EReference getBaseModel_Grids() {
+		return (EReference)baseModelEClass.getEStructuralFeatures().get(0);
 	}
 
 	/**
@@ -177,8 +200,8 @@ public class NUOPCPackageImpl extends EPackageImpl implements NUOPCPackage {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EReference getNUOPCDriver_Children() {
-		return (EReference)nuopcDriverEClass.getEStructuralFeatures().get(0);
+	public EReference getBaseModel_ImportFields() {
+		return (EReference)baseModelEClass.getEStructuralFeatures().get(1);
 	}
 
 	/**
@@ -186,8 +209,8 @@ public class NUOPCPackageImpl extends EPackageImpl implements NUOPCPackage {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EClass getNUOPCModel() {
-		return nuopcModelEClass;
+	public EReference getBaseModel_ExportFields() {
+		return (EReference)baseModelEClass.getEStructuralFeatures().get(2);
 	}
 
 	/**
@@ -195,8 +218,8 @@ public class NUOPCPackageImpl extends EPackageImpl implements NUOPCPackage {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EClass getNUOPCMediator() {
-		return nuopcMediatorEClass;
+	public EClass getDriver() {
+		return driverEClass;
 	}
 
 	/**
@@ -204,8 +227,8 @@ public class NUOPCPackageImpl extends EPackageImpl implements NUOPCPackage {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EClass getNUOPCConnector() {
-		return nuopcConnectorEClass;
+	public EReference getDriver_Children() {
+		return (EReference)driverEClass.getEStructuralFeatures().get(0);
 	}
 
 	/**
@@ -213,8 +236,8 @@ public class NUOPCPackageImpl extends EPackageImpl implements NUOPCPackage {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EReference getNUOPCConnector_Source() {
-		return (EReference)nuopcConnectorEClass.getEStructuralFeatures().get(0);
+	public EClass getModel() {
+		return modelEClass;
 	}
 
 	/**
@@ -222,8 +245,8 @@ public class NUOPCPackageImpl extends EPackageImpl implements NUOPCPackage {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EReference getNUOPCConnector_Target() {
-		return (EReference)nuopcConnectorEClass.getEStructuralFeatures().get(1);
+	public EClass getMediator() {
+		return mediatorEClass;
 	}
 
 	/**
@@ -231,8 +254,8 @@ public class NUOPCPackageImpl extends EPackageImpl implements NUOPCPackage {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EClass getNUOPCApplication() {
-		return nuopcApplicationEClass;
+	public EClass getConnector() {
+		return connectorEClass;
 	}
 
 	/**
@@ -240,8 +263,125 @@ public class NUOPCPackageImpl extends EPackageImpl implements NUOPCPackage {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EReference getNUOPCApplication_Children() {
-		return (EReference)nuopcApplicationEClass.getEStructuralFeatures().get(0);
+	public EReference getConnector_Source() {
+		return (EReference)connectorEClass.getEStructuralFeatures().get(0);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EReference getConnector_Target() {
+		return (EReference)connectorEClass.getEStructuralFeatures().get(1);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EClass getApplication() {
+		return applicationEClass;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EReference getApplication_Children() {
+		return (EReference)applicationEClass.getEStructuralFeatures().get(0);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EClass getField() {
+		return fieldEClass;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EAttribute getField_StandardName() {
+		return (EAttribute)fieldEClass.getEStructuralFeatures().get(0);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EReference getField_Grid() {
+		return (EReference)fieldEClass.getEStructuralFeatures().get(1);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EClass getGrid() {
+		return gridEClass;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EAttribute getGrid_Name() {
+		return (EAttribute)gridEClass.getEStructuralFeatures().get(0);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EAttribute getGrid_MinIndex() {
+		return (EAttribute)gridEClass.getEStructuralFeatures().get(1);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EAttribute getGrid_MaxIndex() {
+		return (EAttribute)gridEClass.getEStructuralFeatures().get(2);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EClass getUniformGrid() {
+		return uniformGridEClass;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EAttribute getUniformGrid_MinCornerCoord() {
+		return (EAttribute)uniformGridEClass.getEStructuralFeatures().get(0);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EAttribute getUniformGrid_MaxCornerCoord() {
+		return (EAttribute)uniformGridEClass.getEStructuralFeatures().get(1);
 	}
 
 	/**
@@ -272,24 +412,40 @@ public class NUOPCPackageImpl extends EPackageImpl implements NUOPCPackage {
 		isCreated = true;
 
 		// Create classes and their features
-		nuopcComponentEClass = createEClass(NUOPC_COMPONENT);
-		createEAttribute(nuopcComponentEClass, NUOPC_COMPONENT__NAME);
+		componentEClass = createEClass(COMPONENT);
+		createEAttribute(componentEClass, COMPONENT__NAME);
 
-		nuopcBaseModelEClass = createEClass(NUOPC_BASE_MODEL);
+		baseModelEClass = createEClass(BASE_MODEL);
+		createEReference(baseModelEClass, BASE_MODEL__GRIDS);
+		createEReference(baseModelEClass, BASE_MODEL__IMPORT_FIELDS);
+		createEReference(baseModelEClass, BASE_MODEL__EXPORT_FIELDS);
 
-		nuopcDriverEClass = createEClass(NUOPC_DRIVER);
-		createEReference(nuopcDriverEClass, NUOPC_DRIVER__CHILDREN);
+		driverEClass = createEClass(DRIVER);
+		createEReference(driverEClass, DRIVER__CHILDREN);
 
-		nuopcModelEClass = createEClass(NUOPC_MODEL);
+		modelEClass = createEClass(MODEL);
 
-		nuopcMediatorEClass = createEClass(NUOPC_MEDIATOR);
+		mediatorEClass = createEClass(MEDIATOR);
 
-		nuopcConnectorEClass = createEClass(NUOPC_CONNECTOR);
-		createEReference(nuopcConnectorEClass, NUOPC_CONNECTOR__SOURCE);
-		createEReference(nuopcConnectorEClass, NUOPC_CONNECTOR__TARGET);
+		connectorEClass = createEClass(CONNECTOR);
+		createEReference(connectorEClass, CONNECTOR__SOURCE);
+		createEReference(connectorEClass, CONNECTOR__TARGET);
 
-		nuopcApplicationEClass = createEClass(NUOPC_APPLICATION);
-		createEReference(nuopcApplicationEClass, NUOPC_APPLICATION__CHILDREN);
+		applicationEClass = createEClass(APPLICATION);
+		createEReference(applicationEClass, APPLICATION__CHILDREN);
+
+		fieldEClass = createEClass(FIELD);
+		createEAttribute(fieldEClass, FIELD__STANDARD_NAME);
+		createEReference(fieldEClass, FIELD__GRID);
+
+		gridEClass = createEClass(GRID);
+		createEAttribute(gridEClass, GRID__NAME);
+		createEAttribute(gridEClass, GRID__MIN_INDEX);
+		createEAttribute(gridEClass, GRID__MAX_INDEX);
+
+		uniformGridEClass = createEClass(UNIFORM_GRID);
+		createEAttribute(uniformGridEClass, UNIFORM_GRID__MIN_CORNER_COORD);
+		createEAttribute(uniformGridEClass, UNIFORM_GRID__MAX_CORNER_COORD);
 	}
 
 	/**
@@ -320,31 +476,48 @@ public class NUOPCPackageImpl extends EPackageImpl implements NUOPCPackage {
 		// Set bounds for type parameters
 
 		// Add supertypes to classes
-		nuopcBaseModelEClass.getESuperTypes().add(this.getNUOPCComponent());
-		nuopcDriverEClass.getESuperTypes().add(this.getNUOPCComponent());
-		nuopcModelEClass.getESuperTypes().add(this.getNUOPCBaseModel());
-		nuopcMediatorEClass.getESuperTypes().add(this.getNUOPCBaseModel());
-		nuopcConnectorEClass.getESuperTypes().add(this.getNUOPCComponent());
+		baseModelEClass.getESuperTypes().add(this.getComponent());
+		driverEClass.getESuperTypes().add(this.getComponent());
+		modelEClass.getESuperTypes().add(this.getBaseModel());
+		mediatorEClass.getESuperTypes().add(this.getBaseModel());
+		connectorEClass.getESuperTypes().add(this.getComponent());
+		uniformGridEClass.getESuperTypes().add(this.getGrid());
 
 		// Initialize classes, features, and operations; add parameters
-		initEClass(nuopcComponentEClass, NUOPCComponent.class, "NUOPCComponent", IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
-		initEAttribute(getNUOPCComponent_Name(), ecorePackage.getEString(), "name", null, 1, 1, NUOPCComponent.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEClass(componentEClass, Component.class, "Component", IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+		initEAttribute(getComponent_Name(), ecorePackage.getEString(), "name", null, 1, 1, Component.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
-		initEClass(nuopcBaseModelEClass, NUOPCBaseModel.class, "NUOPCBaseModel", IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+		initEClass(baseModelEClass, BaseModel.class, "BaseModel", IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+		initEReference(getBaseModel_Grids(), this.getGrid(), null, "grids", null, 0, -1, BaseModel.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEReference(getBaseModel_ImportFields(), this.getField(), null, "importFields", null, 0, -1, BaseModel.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEReference(getBaseModel_ExportFields(), this.getField(), null, "exportFields", null, 0, -1, BaseModel.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
-		initEClass(nuopcDriverEClass, NUOPCDriver.class, "NUOPCDriver", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
-		initEReference(getNUOPCDriver_Children(), this.getNUOPCComponent(), null, "children", null, 0, -1, NUOPCDriver.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEClass(driverEClass, Driver.class, "Driver", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+		initEReference(getDriver_Children(), this.getComponent(), null, "children", null, 0, -1, Driver.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
-		initEClass(nuopcModelEClass, NUOPCModel.class, "NUOPCModel", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+		initEClass(modelEClass, Model.class, "Model", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 
-		initEClass(nuopcMediatorEClass, NUOPCMediator.class, "NUOPCMediator", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+		initEClass(mediatorEClass, Mediator.class, "Mediator", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 
-		initEClass(nuopcConnectorEClass, NUOPCConnector.class, "NUOPCConnector", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
-		initEReference(getNUOPCConnector_Source(), this.getNUOPCBaseModel(), null, "source", null, 1, 1, NUOPCConnector.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-		initEReference(getNUOPCConnector_Target(), this.getNUOPCBaseModel(), null, "target", null, 1, 1, NUOPCConnector.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEClass(connectorEClass, Connector.class, "Connector", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+		initEReference(getConnector_Source(), this.getBaseModel(), null, "source", null, 1, 1, Connector.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEReference(getConnector_Target(), this.getBaseModel(), null, "target", null, 1, 1, Connector.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
-		initEClass(nuopcApplicationEClass, NUOPCApplication.class, "NUOPCApplication", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
-		initEReference(getNUOPCApplication_Children(), this.getNUOPCComponent(), null, "children", null, 0, -1, NUOPCApplication.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEClass(applicationEClass, Application.class, "Application", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+		initEReference(getApplication_Children(), this.getComponent(), null, "children", null, 0, -1, Application.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+
+		initEClass(fieldEClass, Field.class, "Field", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+		initEAttribute(getField_StandardName(), ecorePackage.getEString(), "standardName", null, 1, 1, Field.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEReference(getField_Grid(), this.getGrid(), null, "grid", null, 1, 1, Field.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+
+		initEClass(gridEClass, Grid.class, "Grid", IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+		initEAttribute(getGrid_Name(), ecorePackage.getEString(), "name", null, 1, 1, Grid.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEAttribute(getGrid_MinIndex(), ecorePackage.getEInt(), "minIndex", null, 1, 3, Grid.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, !IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEAttribute(getGrid_MaxIndex(), ecorePackage.getEInt(), "maxIndex", null, 1, 3, Grid.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, !IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+
+		initEClass(uniformGridEClass, UniformGrid.class, "UniformGrid", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+		initEAttribute(getUniformGrid_MinCornerCoord(), ecorePackage.getEDouble(), "minCornerCoord", null, 1, 3, UniformGrid.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, !IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEAttribute(getUniformGrid_MaxCornerCoord(), ecorePackage.getEDouble(), "maxCornerCoord", null, 1, 3, UniformGrid.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, !IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
 		// Create resource
 		createResource(eNS_URI);

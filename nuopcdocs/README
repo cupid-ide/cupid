@@ -1,0 +1,15 @@
+- Start with a working Python installation
+- Install Sphinx via pip:
+
+$ pip install Sphinx
+
+- Install the Sphinx Bootstrap Theme via pip:
+
+$ pip install sphinx_bootstrap_theme
+
+- Then, to build the HTML version of the docs:
+
+$ make html
+
+The results will be in _build/html.
+

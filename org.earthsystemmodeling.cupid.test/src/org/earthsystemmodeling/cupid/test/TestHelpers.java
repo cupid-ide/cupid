@@ -4,6 +4,7 @@ import java.io.ByteArrayInputStream;
 import java.io.File;
 import java.io.IOException;
 import java.net.URL;
+import java.nio.channels.ClosedChannelException;
 import java.util.Map;
 
 import org.apache.commons.io.FileUtils;
@@ -15,14 +16,18 @@ import org.eclipse.core.resources.IWorkspaceRoot;
 import org.eclipse.core.resources.ResourcesPlugin;
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.FileLocator;
+import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.NullProgressMonitor;
 import org.eclipse.core.runtime.Path;
+import org.eclipse.photran.internal.core.FProjectNature;
 import org.osgi.framework.Bundle;
 import org.osgi.framework.FrameworkUtil;
 
 public class TestHelpers {
 
 	private static Bundle MY_BUNDLE = FrameworkUtil.getBundle(TestHelpers.class);
+	
+	private static IProgressMonitor NPM = new NullProgressMonitor();
 	
 	/**
 	 * Copies a folder from workspace folder in the test project to the testing workspace.
@@ -32,7 +37,7 @@ public class TestHelpers {
 	 * @throws CoreException 
 	 * @throws InterruptedException 
 	 */
-	public static IProject createProjectFromFolder(String relativePath, String projectName) throws IOException, CoreException  {			
+	public static synchronized IProject createProjectFromFolder(String relativePath, String projectName) throws IOException, CoreException  {			
 		URL sourceFolder = FileLocator.toFileURL(FileLocator.find(MY_BUNDLE, new Path(relativePath), null));	
 		File srcDir = new File(sourceFolder.getFile());
 				
@@ -41,18 +46,33 @@ public class TestHelpers {
 		if (p.exists()) {
 			File dstDir = p.getLocation().toFile();
 			dstDir.delete();
-			p.delete(true, true, new NullProgressMonitor());
+			p.delete(true, true, NPM);
 		}
 		
 		p = root.getProject(projectName);
-		p.create(new NullProgressMonitor());
-		p.open(new NullProgressMonitor());
+		p.create(NPM);
+		p.open(NPM);
 		File dstDir = p.getLocation().toFile();
 		
 		//System.out.println("Copy from: " + srcDir + " =====> " + dstDir);
-		FileUtils.copyDirectory(srcDir, dstDir);
-		p.refreshLocal(IResource.DEPTH_INFINITE, new NullProgressMonitor());
-		//p.open(new NullProgressMonitor());
+		for (int i=0; i<5; i++) {
+			try {
+				FileUtils.copyDirectory(srcDir, dstDir);
+			}
+			catch (ClosedChannelException cce) {
+				continue;
+			}
+			break;
+		}
+		p.refreshLocal(IResource.DEPTH_INFINITE, NPM);
+		//p.open(NPM);
+		return p;
+	}
+	
+	@SuppressWarnings("restriction")
+	public static synchronized IProject createFortranProjectFromFolder(String relativePath, String projectName) throws IOException, CoreException {
+		IProject p = createProjectFromFolder(relativePath, projectName);
+		FProjectNature.addFNature(p, NPM);
 		return p;
 	}
 	
@@ -60,16 +80,23 @@ public class TestHelpers {
 		IWorkspaceRoot root = ResourcesPlugin.getWorkspace().getRoot();
 		IProject p = root.getProject(projectName);
 		if (p.exists()) {
-			p.delete(true, true, new NullProgressMonitor());
+			p.delete(true, true, NPM);
 		}
-		p.create(new NullProgressMonitor());
-		p.open(new NullProgressMonitor());
+		p.create(NPM);
+		p.open(NPM);
+		return p;
+	}
+	
+	@SuppressWarnings("restriction")
+	public static IProject createEmptyFortranProject(String projectName) throws CoreException {
+		IProject p = createEmptyProject(projectName);
+		FProjectNature.addFNature(p, NPM);
 		return p;
 	}
 	
 	public static IFile createBlankFile(IProject p, String filename) throws CoreException {
 		IFile f = p.getFile(filename);
-		f.create(new ByteArrayInputStream(new byte[0]), true, new NullProgressMonitor());
+		f.create(new ByteArrayInputStream(new byte[0]), true, NPM);
 		return f;
 	}
 	
@@ -77,40 +104,46 @@ public class TestHelpers {
 		URL sourceFile = FileLocator.toFileURL(FileLocator.find(MY_BUNDLE, new Path(filename), null));	
 		File srcFile = new File(sourceFile.getFile());
 		File dstDir = p.getLocation().toFile();
-		FileUtils.copyFileToDirectory(srcFile, dstDir);
-		p.refreshLocal(IResource.DEPTH_INFINITE, new NullProgressMonitor());
+		for (int i=0; i<5; i++) {
+			try {
+				FileUtils.copyFileToDirectory(srcFile, dstDir);
+			}
+			catch (ClosedChannelException cce) {
+				continue;
+			}
+			break;
+		}
+		p.refreshLocal(IResource.DEPTH_INFINITE, NPM);
 		return p.getFile(srcFile.getName());
 	}
 	
-	public static boolean compileProject(IProject p, String ESMFMKFILE, String makeTarget) throws IOException, InterruptedException {
+	public static boolean compileProject(IProject p, String ESMFMKFILE, String... makeTarget) throws IOException, InterruptedException {
 		
-		ProcessBuilder pb = new ProcessBuilder("make", makeTarget);
-		Map<String, String> env = pb.environment();
-		//if (System.getProperty("ESMFMKFILE") != null) {
-		//	env.put("ESMFMKFILE", System.getProperty("ESMFMKFILE"));
-		//}
-		env.put("ESMFMKFILE", ESMFMKFILE);
-		pb.directory(p.getLocation().toFile());
-		
-		Process compileProc = pb.start();
-		
-		String stdout = IOUtils.toString(compileProc.getInputStream());
-		String stderr = IOUtils.toString(compileProc.getErrorStream());
-		compileProc.waitFor();
-		
-		if (compileProc.exitValue() != 0) {
-			System.out.println("\n\n*****************************************");
-			System.out.println("FAILED TO COMPILE GENERATED CODE");
-			System.out.println("Working directory: " + p.getLocation().toFile().getPath());
-			System.out.println("******************************************");
-			System.out.println("\nSTDOUT:\n****************************\n\n" + stdout);
-			System.out.println("\nSTDERR:\n****************************\n\n" + stderr);
-			return false;
+		for (String target : makeTarget) {
+			ProcessBuilder pb = new ProcessBuilder("make", target);
+			Map<String, String> env = pb.environment();
+			env.put("ESMFMKFILE", ESMFMKFILE);
+			pb.directory(p.getLocation().toFile());
+			
+			Process compileProc = pb.start();
+			
+			String stdout = IOUtils.toString(compileProc.getInputStream());
+			String stderr = IOUtils.toString(compileProc.getErrorStream());
+			compileProc.waitFor();
+			
+			if (compileProc.exitValue() != 0) {
+				System.out.println("\n\n*****************************************");
+				System.out.println("FAILED TO COMPILE GENERATED CODE");
+				System.out.println("Working directory: " + p.getLocation().toFile().getPath());
+				System.out.println("******************************************");
+				System.out.println("\nSTDOUT:\n****************************\n\n" + stdout);
+				System.out.println("\nSTDERR:\n****************************\n\n" + stderr);
+				return false;
+			}
+			
 		}
-		else {
-			return true;
-		}
-		
+		return true;
+			
 	}
 	
 	public static String getMakefileFragmentLoc(String esmfTag) {

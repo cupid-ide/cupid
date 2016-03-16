@@ -1,6 +1,6 @@
 package org.earthsystemmodeling.cupid.handlers;
 
-import org.earthsystemmodeling.cupid.NUOPC.NUOPCApplication;
+import org.earthsystemmodeling.cupid.NUOPC.Application;
 import org.eclipse.core.commands.AbstractHandler;
 import org.eclipse.core.commands.ExecutionEvent;
 import org.eclipse.core.commands.ExecutionException;
@@ -24,9 +24,9 @@ public class GenerateCodeHandler extends AbstractHandler {
 		if (sel instanceof ITreeSelection) {
 			final Object item = ((ITreeSelection) sel).getFirstElement();
 			
-			if (item instanceof NUOPCApplication) {
+			if (item instanceof Application) {
 
-				NUOPCApplication app = (NUOPCApplication) item;
+				Application app = (Application) item;
 				//IFile file = (IFile) item;
 				//URI fileURI = URI.createPlatformResourceURI(file.getFullPath().toString(), true);
 				
@@ -43,7 +43,7 @@ public class GenerateCodeHandler extends AbstractHandler {
 					}
 				}
 				
-				Job generateCodeJob = new GenerateCodeJob("Generate Code", app, project);
+				Job generateCodeJob = new GenerateCodeJob("Generate Code", app, project, true);
 				generateCodeJob.schedule();
 				
 			}

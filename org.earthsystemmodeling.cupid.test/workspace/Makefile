@@ -50,6 +50,8 @@ include $(ESMFMKFILE)
 #mainApp.o: driver.o
 #driver.o: model.o
 
+#MyDriver.o: ModelA.o ModelB.o
+
 # -----------------------------------------------------------------------------
 # -----------------------------------------------------------------------------
 .PHONY: dust clean distclean info edit

@@ -1,22 +1,31 @@
 package org.earthsystemmodeling.cupid.nuopc.v7r
 
 import java.util.List
+import org.earthsystemmodeling.cupid.NUOPC.Field
+import org.earthsystemmodeling.cupid.NUOPC.Model
+import org.earthsystemmodeling.cupid.NUOPC.UniformGrid
 import org.earthsystemmodeling.cupid.annotation.Child
 import org.earthsystemmodeling.cupid.annotation.Doc
 import org.earthsystemmodeling.cupid.annotation.Label
 import org.earthsystemmodeling.cupid.annotation.MappingType
 import org.earthsystemmodeling.cupid.nuopc.CodeConcept
+import org.earthsystemmodeling.cupid.nuopc.v7r.GridCodeConcept.CreateUniformGrid
+import org.earthsystemmodeling.cupid.nuopc.v7r.NUOPCModel.IPD.IPDv04p1
+import org.earthsystemmodeling.cupid.nuopc.v7r.NUOPCModel.IPD.IPDv04p3
 import org.eclipse.core.resources.IResource
 import org.eclipse.photran.internal.core.parser.ASTCallStmtNode
 import org.eclipse.photran.internal.core.parser.ASTNode
 import org.eclipse.photran.internal.core.parser.ASTSubroutineSubprogramNode
+import org.eclipse.photran.internal.core.parser.ASTTypeDeclarationStmtNode
 import org.eclipse.photran.internal.core.parser.IASTListNode
 import org.eclipse.photran.internal.core.parser.IBodyConstruct
+import org.eclipse.photran.internal.core.parser.IDeclarationConstruct
 
 import static org.earthsystemmodeling.cupid.nuopc.ESMFCodeTemplates.*
 import static org.earthsystemmodeling.cupid.util.CodeExtraction.*
 
 import static extension org.earthsystemmodeling.cupid.nuopc.ASTQuery.*
+import static extension org.earthsystemmodeling.cupid.nuopc.v7r.NUOPCModel.*
 
 @Label(label="NUOPC Model")
 @MappingType("module")
@@ -37,6 +46,32 @@ class NUOPCModel extends NUOPCComponent {
 	
 	new(IResource context) {
 		super(null, context, "NUOPC_Model")
+	}
+
+	static def newModel(IResource context, Model high) {
+		val m = newBasicModel(context)
+		m.forward(high)
+		m
+	}
+	
+	static def newBasicModel(IResource context) {
+		val model = new NUOPCModel(context)
+		new SetServices(model)
+		new Initialization(model)
+		new InitPhases(model.initialization)
+		new InitSpecializations(model.initialization)
+		new Run(model)
+		new RunPhases(model.run)
+		new RunSpecializations(model.run)
+		new Finalize(model)
+		new FinalizePhases(model.finalize)
+		new FinalizeSpecializations(model.finalize)
+		model
+	}
+	
+	def forward(Model high) {
+		name = high.name
+		initialization.forward(high)
 	}
 
 	override prefix() { "model" }
@@ -72,18 +107,9 @@ class NUOPCModel extends NUOPCComponent {
 
 		new(NUOPCModel.InitPhases parent) {
 			super(parent)
+			parent.setOrAddChild(this)
 		}
 		
-		/*
-		def void setChildPhase(EntryPointCodeConcept<IPD> child) {		
-			//find field of matching type and assign child to it
-			val childField = this.class.fields.findFirst[it.type.isInstance(child)]
-			if (childField != null) {
-				childField.set(this, child)
-			}		
-		}
-		*/
-	
 		@Label(label="IPDv04p1 - Advertise Fields")
 		@MappingType("subroutine")
 		@Doc(urlfrag="#model-phase-advertisefields")
@@ -99,6 +125,19 @@ class NUOPCModel extends NUOPCComponent {
 				methodType = "ESMF_METHOD_INITIALIZE"
 				parent.setOrAddChild(this)
 				advertiseFields = newArrayList()
+			}
+			
+			def forward(Model high) {
+				for (Field f : high.importFields) {
+					val af = new AdvertiseField(this)
+					af.standardName = '''"«f.standardName»"'''
+					af.state = paramImport
+				}
+				for (Field f : high.exportFields) {
+					val af = new AdvertiseField(this)
+					af.standardName = '''"«f.standardName»"'''
+					af.state = paramExport
+				}
 			}
 			
 			def getPhaseLabel() {
@@ -150,6 +189,19 @@ class NUOPCModel extends NUOPCComponent {
 				methodType = "ESMF_METHOD_INITIALIZE"
 				parent.setOrAddChild(this)
 				realizeFields = newArrayList()
+			}
+			
+			def forward(Model high) {
+				for (Field f : high.importFields) {
+					val rf = new RealizeField(this)
+					rf.field = f.standardName
+					rf.state = paramImport
+				}
+				for (Field f : high.exportFields) {
+					val rf = new RealizeField(this)
+					rf.field = f.standardName
+					rf.state = paramExport
+				}
 			}
 			
 			def getPhaseLabel() {
@@ -359,15 +411,33 @@ call NUOPC_Advertise(«paramch(state)», «paramch(standardName)», rc=«_parent
 			}
 	
 			override forward() {	
+				
+				val ASTSubroutineSubprogramNode ssn = _parent.ASTRef
+				
 				var code = 
+'''
+type(ESMF_Field) :: «field»
+'''
+				
+				//TODO: see if it's already in scope before adding
+				val ASTTypeDeclarationStmtNode tds = parseLiteralStatement(code) as ASTTypeDeclarationStmtNode
+				
+				val last = ssn.body.findLast(IDeclarationConstruct)
+				if (last != null) {
+					(ssn.body as IASTListNode<IBodyConstruct>).insertAfter(last, tds)
+				}
+				else {
+					ssn.body.add(0, tds)
+				}
+				
+				code = 
 '''
 	
 call NUOPC_Realize(«paramch(state)», field=«paramch(field)», rc=«_parent.paramRC»)
 «ESMFErrorCheck(_parent.paramRC)»
 '''
 				val IASTListNode<IBodyConstruct> stmts = parseLiteralStatementSequence(code)
-				val ASTSubroutineSubprogramNode ssn = _parent.ASTRef
-	
+					
 				ssn.body.addAll(stmts)
 				super.forward
 			}
@@ -622,9 +692,10 @@ call NUOPC_Realize(«paramch(state)», field=«paramch(field)», rc=«_parent.pa
 	
 		new(Initialization parent) {
 			super(parent)
+			parent.setOrAddChild(this)
 		}
 		
-		override reverse() {
+		override InitPhases reverse() {
 			ipdv00 = new IPDv00(this).reverse
 			ipdv01 = new IPDv01(this).reverse
 			ipdv02 = new IPDv02(this).reverse
@@ -655,8 +726,13 @@ call NUOPC_Realize(«paramch(state)», field=«paramch(field)», rc=«_parent.pa
 		@Child(forward=true)
 		public InitSpecializations initSpecs
 		
+		@Child
+		public List<CreateUniformGrid> createUniformGrid
+		
 		new(NUOPCModel parent) {
 			super(parent)
+			parent.setOrAddChild(this)
+			createUniformGrid = newArrayList()
 		}
 
 		override Initialization reverse() {
@@ -664,13 +740,50 @@ call NUOPC_Realize(«paramch(state)», field=«paramch(field)», rc=«_parent.pa
 		}
 
 		def reverseChildren() {
-			initPhases = new InitPhases(this).reverse as InitPhases
-			initSpecs = new InitSpecializations(this).reverse as InitSpecializations
+			initPhases = new InitPhases(this).reverse
+			initSpecs = new InitSpecializations(this).reverse
+			//createUniformGrid = new CreateUniformGrid(this).reverse
 			this
+		}
+		
+		def forward(Model high) {
+			
+			high.grids.filter(UniformGrid).forEach[g|
+				val cug = new CreateUniformGrid(this)
+				cug.name = '''"«g.name»"'''
+				cug.minIndex = g.minIndex.toIntArray
+				cug.maxIndex = g.maxIndex.toIntArray
+				cug.minCornerCoord = g.minCornerCoord.toDoubleArray
+				cug.maxCornerCoord = g.maxCornerCoord.toDoubleArray
+			]
+			
+			if (high.importFields.size > 0 || high.exportFields.size > 0) {
+				val ipdv04 = new IPDv04(initPhases)
+				val ipdv04p1 = new IPDv04p1(ipdv04)
+				ipdv04p1.forward(high)
+				val ipdv04p3 = new IPDv04p3(ipdv04)
+				ipdv04p3.forward(high)
+			}
 		}
 
 	}
 	
+	def static toIntArray(List<Integer> intList) {
+		val toRet = newIntArrayOfSize(intList.size)
+		for (var i=0; i < intList.size; i++) {
+			toRet.set(i, intList.get(i))
+		}
+		toRet
+	}
+	
+	def static toDoubleArray(List<Double> dblList) {
+		var toRet = newDoubleArrayOfSize(dblList.size)
+		for (var i=0; i < dblList.size; i++) {
+			toRet.set(i, dblList.get(i))
+		}
+		toRet
+	}
+		
 	@Label(label="Specializations")
 	public static class InitSpecializations extends CodeConcept<Initialization, ASTNode> {
 	
@@ -685,7 +798,7 @@ call NUOPC_Realize(«paramch(state)», field=«paramch(field)», rc=«_parent.pa
 			super(parent)
 		}
 		
-		override reverse() {
+		override InitSpecializations reverse() {
 			setClock = new SetClock(this).reverse as SetClock
 			dataInitialize = new DataInitialize(this).reverse as DataInitialize
 			this

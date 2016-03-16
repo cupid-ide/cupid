@@ -1,6 +1,7 @@
 package org.earthsystemmodeling.cupid.nuopc.v7r
 
 import java.util.List
+import org.earthsystemmodeling.cupid.NUOPC.NUOPCFactory
 import org.earthsystemmodeling.cupid.annotation.Child
 import org.earthsystemmodeling.cupid.annotation.Doc
 import org.earthsystemmodeling.cupid.annotation.Label
@@ -10,22 +11,26 @@ import org.earthsystemmodeling.cupid.nuopc.BasicCodeConcept
 import org.earthsystemmodeling.cupid.nuopc.CodeConcept
 import org.earthsystemmodeling.cupid.nuopc.CodeGenerationException
 import org.eclipse.core.resources.IResource
-import org.eclipse.photran.core.IFortranAST
 import org.eclipse.photran.internal.core.parser.ASTCallStmtNode
 import org.eclipse.photran.internal.core.parser.ASTModuleNode
 import org.eclipse.photran.internal.core.parser.ASTNode
 import org.eclipse.photran.internal.core.parser.ASTSubroutineSubprogramNode
 import org.eclipse.photran.internal.core.parser.ASTTypeDeclarationStmtNode
-import org.eclipse.photran.internal.core.parser.ASTUseStmtNode
 import org.eclipse.photran.internal.core.parser.IASTListNode
 import org.eclipse.photran.internal.core.parser.IBodyConstruct
+import org.eclipse.photran.internal.core.parser.IExpr
+import org.eclipse.xtend.lib.annotations.Accessors
 
+import static org.earthsystemmodeling.cupid.nuopc.ESMFCodeTemplates.*
 import static org.earthsystemmodeling.cupid.util.CodeExtraction.*
 
 import static extension org.earthsystemmodeling.cupid.nuopc.ASTQuery.*
-import static org.earthsystemmodeling.cupid.nuopc.ESMFCodeTemplates.*
-import org.eclipse.photran.internal.core.parser.ASTListNode
-import org.eclipse.photran.internal.core.parser.IProgramUnit
+import org.eclipse.photran.internal.core.parser.ASTUseStmtNode
+import org.eclipse.photran.internal.core.parser.ASTRenameNode
+import org.eclipse.photran.internal.core.parser.IASTNode
+import org.eclipse.photran.internal.core.parser.ISpecificationPartConstruct
+import org.earthsystemmodeling.cupid.NUOPC.Driver
+import org.earthsystemmodeling.cupid.NUOPC.Model
 
 @Label(label="NUOPC Driver")
 @MappingType("module")
@@ -44,11 +49,49 @@ class NUOPCDriver extends NUOPCComponent {
 	@Child(forward=true)
 	var public Finalize finalize
 	
-	
 	new(IResource context) {
 		super(null, context, "NUOPC_Driver")
 	}
+
+	static def newDriver(IResource context, Driver high) {
+		val d = newBasicDriver(context)
+		d.forward(high)
+		d
+	}
 	
+	static def Driver reverseDriver(IResource context) {
+	 	reverseDriver(new NUOPCDriver(context).reverse)
+	}
+	
+	static def Driver reverseDriver(NUOPCDriver driver) {
+		if (driver != null) {
+			val driverToReturn = NUOPCFactory.eINSTANCE.createDriver;
+			driverToReturn.name = driver.name
+			driverToReturn
+		}
+		else null
+	}
+	
+	def forward(Driver high) {
+		name = high.name
+		initialization.initSpecs.setModelServices.forward(high)
+	}
+	
+	static def newBasicDriver(IResource context) {
+		val driver = new NUOPCDriver(context)
+		new SetServices(driver)
+		new Initialization(driver)
+		new InitPhases(driver.initialization)
+		new InitSpecializations(driver.initialization)
+		new SetModelServices(driver.initialization.initSpecs)
+		new Run(driver)
+		new RunPhases(driver.run)
+		new RunSpecializations(driver.run)
+		new Finalize(driver)
+		new FinalizePhases(driver.finalize)
+		new FinalizeSpecializations(driver.finalize)
+		driver
+	}
 	
 	override prefix() {"driver"}
 
@@ -832,7 +875,7 @@ call NUOPC_Realize(«paramch(state)», field=«paramch(field)», rc=«_parent.pa
 			parent.setModelServices = this
 			addComps = newArrayList()
 		}
-			
+		
 		override reverse() {		
 			var ret = super.reverse as SetModelServices
 			if (ret != null) {							
@@ -851,7 +894,7 @@ call NUOPC_Realize(«paramch(state)», field=«paramch(field)», rc=«_parent.pa
 			this
 		}
 		
-		override module() {
+		override NUOPCDriver module() {
 			_parent._parent._parent
 		}
 		
@@ -940,6 +983,12 @@ if (ESMF_LogFoundError(rcToCheck=«paramRC», msg=ESMF_LOGERR_PASSTHRU, &
 			//ast
 		}
 		
+		def forward(Driver high) {
+			high.children.filter(Model).forEach[m|
+				new SetModelServices_AddComp(this, "\""+m.name+"\"", m.name)
+			]
+		}
+		
 	}
 	
 	@Label(label="DriverAddComp")
@@ -949,17 +998,32 @@ if (ESMF_LogFoundError(rcToCheck=«paramRC», msg=ESMF_LOGERR_PASSTHRU, &
 		//single child component
 		var public String compLabel
 		
+		@Accessors
+		var IExpr compLabelExpr
+		
 		//connector component
 		var public String srcCompLabel
 		var public String dstCompLabel
 		
-		//@Prop
 		@Label(label="Set Services")
 		var public String compSetServices
+		
+		@Accessors
+		var IExpr compSetServicesExpr
+			
+		//name of child model module
+		var String moduleName	
 			
 		new(SetModelServices parent) {
 			super(parent)
 			parent.addComps.add(this)
+		}
+		
+		new(SetModelServices parent, String compLabel, String moduleName) {
+			this(parent)
+			this.compLabel = compLabel
+			this.moduleName = moduleName
+			this.compSetServices = moduleName + "_SetServices"
 		}
 		
 		override name() {
@@ -980,11 +1044,14 @@ if (ESMF_LogFoundError(rcToCheck=«paramRC», msg=ESMF_LOGERR_PASSTHRU, &
 						smsac.srcCompLabel = c.argList.get(1).expr.literal
 						smsac.dstCompLabel = c.argList.get(2).expr.literal
 						smsac.compSetServices = c.argList.get(3).expr.literal
+						smsac.compSetServicesExpr = c.argList.get(3).expr
 					}
 					else {
 						//component
 						smsac.compLabel = c.argList.get(1).expr.literal
+						smsac.compLabelExpr = c.argList.get(1).expr
 						smsac.compSetServices = c.argList.get(2).expr.literal
+						smsac.compSetServicesExpr = c.argList.get(2).expr
 					}
 					smsac.setASTRef(c)
 					retList.add(smsac)
@@ -994,10 +1061,56 @@ if (ESMF_LogFoundError(rcToCheck=«paramRC», msg=ESMF_LOGERR_PASSTHRU, &
 			
 		}
 		
+		def ensureImport(ASTModuleNode amn, String moduleName, String entityName, String localName) {
+			
+			var ASTUseStmtNode usn = amn.body.children.filter(ASTUseStmtNode).findFirst[usn|
+				usn.name.eic(moduleName) &&
+				(
+				usn.findAll(ASTRenameNode)?.exists[rn|
+					rn.name.eic(entityName) &&
+					rn.newName.eic(localName)
+				] ||
+				usn.findAll(ASTRenameNode).nullOrEmpty
+				) 
+			]
+			
+			if (usn == null) {
+				
+				val code = '''use «moduleName», only: «localName» => «entityName»'''
+				usn = parseLiteralStatement(code) as ASTUseStmtNode
+				
+				val last = amn.body.findLast(ASTUseStmtNode)
+				if (last != null) {
+					(amn.body as IASTListNode<IBodyConstruct>).insertAfter(last, usn)
+				}
+				else {
+					val lastSpec = amn.body.findLast(ISpecificationPartConstruct)
+					if (lastSpec != null) {
+						(amn.body as IASTListNode<IBodyConstruct>).insertAfter(lastSpec, usn)
+					}
+					else {
+						throw new CodeGenerationException("Unable to insert use statement")
+					}
+				}
+				
+			}
+			
+		}
+		
 		override forward() {
 			
 			var ASTSubroutineSubprogramNode ssn = _parent.ASTRef			
 			var ASTModuleNode amn = _parent.module.ASTRef
+			
+			//amn.allDefinitions.forEach[d|
+			//	System.out.println(d)
+			//	d.
+			//]
+			
+			//ensure we are importing module
+			if (moduleName!=null) {
+				ensureImport(amn, moduleName, "SetServices", compSetServices)
+			}
 			
 			var String code
 			
