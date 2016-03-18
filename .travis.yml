@@ -1,19 +1,21 @@
 language: java
-sudo: false
+sudo: true
 
 cache:
   directories:
   - $HOME/.m2
   - $HOME/ESMF-INSTALL
 
-addons:
-  apt:
-    packages:
-    - gfortran
-    - libopenmpi-dev
-    - openmpi-dev
+#addons:
+#  apt:
+#    packages:
+#    - gfortran
+#    - libopenmpi-dev
+#    - openmpi-dev
 
 before_script:
+  - sudo apt-get update -q
+  - sudo apt-get install gfortran libopenmpi-dev openmpi-bin openmpi-dev -y
   - if [[ "$TRAVIS_OS_NAME" == "linux" ]]; then export DISPLAY=:99.0  ;fi
   - if [[ "$TRAVIS_OS_NAME" == "linux" ]]; then sh -e /etc/init.d/xvfb start  ;fi
   - if [ ! -d "$HOME/ESMF-INSTALL/ESMF_7_0_0_beta_snapshot_59"  ]; then $TRAVIS_BUILD_DIR/build_esmf.sh ESMF_7_0_0_beta_snapshot_59 ;fi
