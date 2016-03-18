@@ -9,6 +9,7 @@ import java.util.Map;
 
 import org.apache.commons.io.FileUtils;
 import org.apache.commons.io.IOUtils;
+import org.earthsystemmodeling.cupid.nuopc.CodeConcept;
 import org.eclipse.core.resources.IFile;
 import org.eclipse.core.resources.IProject;
 import org.eclipse.core.resources.IResource;
@@ -120,7 +121,13 @@ public class TestHelpers {
 	public static boolean compileProject(IProject p, String ESMFMKFILE, String... makeTarget) throws IOException, InterruptedException {
 		
 		for (String target : makeTarget) {
-			ProcessBuilder pb = new ProcessBuilder("make", target);
+			ProcessBuilder pb;
+			if (target.length() > 0) {
+				pb = new ProcessBuilder("make", target);
+			}
+			else {
+				pb = new ProcessBuilder("make");
+			}
 			Map<String, String> env = pb.environment();
 			env.put("ESMFMKFILE", ESMFMKFILE);
 			pb.directory(p.getLocation().toFile());
@@ -146,6 +153,50 @@ public class TestHelpers {
 			
 	}
 	
+	public static boolean execute(IProject p, String... cmd) throws IOException, InterruptedException {
+		
+		ProcessBuilder pb = new ProcessBuilder(cmd);
+		//Map<String, String> env = pb.environment();
+		//env.put("ESMFMKFILE", ESMFMKFILE);
+		pb.directory(p.getLocation().toFile());
+		
+		Process execProc = pb.start();
+		
+		String stdout = IOUtils.toString(execProc.getInputStream());
+		String stderr = IOUtils.toString(execProc.getErrorStream());
+		execProc.waitFor();
+		
+		if (execProc.exitValue() != 0) {
+			System.out.println("\n\n*****************************************");
+			System.out.println("EXECUTION FAILED");
+			System.out.println("Working directory: " + p.getLocation().toFile().getPath());
+			System.out.println("******************************************");
+			System.out.println("\nSTDOUT:\n****************************\n\n" + stdout);
+			System.out.println("\nSTDERR:\n****************************\n\n" + stderr);
+			return false;
+		}
+		
+		return true;
+			
+	}
+	
+	public static boolean verifyNoLogErrors(IProject p) throws IOException, InterruptedException {
+		ProcessBuilder pb = new ProcessBuilder("/bin/sh", "-c", "grep ERROR PET*.ESMF_LogFile");
+		pb.directory(p.getLocation().toFile());
+		Process execProc = pb.start();
+		String stdout = IOUtils.toString(execProc.getInputStream());
+		String stderr = IOUtils.toString(execProc.getErrorStream());
+		execProc.waitFor();
+		//System.out.println("||"+stdout+"||");
+		//System.out.println("||"+stderr+"||");
+		return stdout.trim().length()==0 && stderr.trim().length()==0;
+	}
+	
+	public static boolean executeMPI(IProject p, String program, int numProcs) throws IOException, InterruptedException {
+		return execute(p, "mpirun", "-np", String.valueOf(numProcs), program);
+	}
+	
+	
 	public static String getMakefileFragmentLoc(String esmfTag) {
 		if (System.getenv("ESMF_INSTALL_ROOT") == null) {
 			throw new RuntimeException("Environment variables ESMF_INSTALL_ROOT must be defined.");
@@ -153,6 +204,13 @@ public class TestHelpers {
 		else {
 			return System.getenv("ESMF_INSTALL_ROOT") + "/" + esmfTag + "/lib/libO/Linux.gfortran.64.openmpi.default/esmf.mk";
 		}
+	}
+	
+	@SuppressWarnings("restriction")
+	public static void printAST(CodeConcept<?,?> cc) {
+		System.out.println("\n==============START GENERATED CODE==============\n");
+		System.out.println(cc.getAST().getRoot().toString());
+		System.out.println("\n==============END GENERATED CODE==============\n");
 	}
 	
 }

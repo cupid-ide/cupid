@@ -68,6 +68,7 @@ class NUOPCModel extends NUOPCComponent {
 		new Run(model)
 		new RunPhases(model.run)
 		new RunSpecializations(model.run)
+		new ModelAdvance(model.run.runSpecs)
 		new Finalize(model)
 		new FinalizePhases(model.finalize)
 		new FinalizeSpecializations(model.finalize)
@@ -1003,6 +1004,7 @@ end subroutine
 	
 		new(NUOPCModel parent) {
 			super(parent)
+			parent.setOrAddChild(this)
 		}
 		
 		override Run reverse() {
@@ -1028,6 +1030,10 @@ end subroutine
 
 		new(Run parent) {
 			super(parent)
+			parent.setOrAddChild(this)
+			setRunClock = newArrayList()
+			checkImport = newArrayList()
+			modelAdvance = newArrayList()
 		}
 
 		override reverse() {
@@ -1076,6 +1082,7 @@ end subroutine
 
 		new(RunSpecializations parent) {
 			super(parent, "NUOPC_Model", "label_Advance")
+			parent.setOrAddChild(this)
 
 			// defaults
 			subroutineName = "ModelAdvance"

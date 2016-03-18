@@ -177,7 +177,7 @@ public interface NUOPCPackage extends EPackage {
 	int DRIVER__NAME = COMPONENT__NAME;
 
 	/**
-	 * The feature id for the '<em><b>Children</b></em>' containment reference list.
+	 * The feature id for the '<em><b>Children</b></em>' reference list.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
@@ -397,13 +397,22 @@ public interface NUOPCPackage extends EPackage {
 	int APPLICATION = 6;
 
 	/**
+	 * The feature id for the '<em><b>Name</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int APPLICATION__NAME = 0;
+
+	/**
 	 * The feature id for the '<em><b>Children</b></em>' containment reference list.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int APPLICATION__CHILDREN = 0;
+	int APPLICATION__CHILDREN = 1;
 
 	/**
 	 * The number of structural features of the '<em>Application</em>' class.
@@ -412,7 +421,7 @@ public interface NUOPCPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int APPLICATION_FEATURE_COUNT = 1;
+	int APPLICATION_FEATURE_COUNT = 2;
 
 	/**
 	 * The number of operations of the '<em>Application</em>' class.
@@ -681,10 +690,10 @@ public interface NUOPCPackage extends EPackage {
 	EClass getDriver();
 
 	/**
-	 * Returns the meta object for the containment reference list '{@link org.earthsystemmodeling.cupid.NUOPC.Driver#getChildren <em>Children</em>}'.
+	 * Returns the meta object for the reference list '{@link org.earthsystemmodeling.cupid.NUOPC.Driver#getChildren <em>Children</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @return the meta object for the containment reference list '<em>Children</em>'.
+	 * @return the meta object for the reference list '<em>Children</em>'.
 	 * @see org.earthsystemmodeling.cupid.NUOPC.Driver#getChildren()
 	 * @see #getDriver()
 	 * @generated
@@ -752,6 +761,17 @@ public interface NUOPCPackage extends EPackage {
 	 * @generated
 	 */
 	EClass getApplication();
+
+	/**
+	 * Returns the meta object for the attribute '{@link org.earthsystemmodeling.cupid.NUOPC.Application#getName <em>Name</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the attribute '<em>Name</em>'.
+	 * @see org.earthsystemmodeling.cupid.NUOPC.Application#getName()
+	 * @see #getApplication()
+	 * @generated
+	 */
+	EAttribute getApplication_Name();
 
 	/**
 	 * Returns the meta object for the containment reference list '{@link org.earthsystemmodeling.cupid.NUOPC.Application#getChildren <em>Children</em>}'.
@@ -968,7 +988,7 @@ public interface NUOPCPackage extends EPackage {
 		EClass DRIVER = eINSTANCE.getDriver();
 
 		/**
-		 * The meta object literal for the '<em><b>Children</b></em>' containment reference list feature.
+		 * The meta object literal for the '<em><b>Children</b></em>' reference list feature.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
 		 * @generated
@@ -1030,6 +1050,14 @@ public interface NUOPCPackage extends EPackage {
 		 * @generated
 		 */
 		EClass APPLICATION = eINSTANCE.getApplication();
+
+		/**
+		 * The meta object literal for the '<em><b>Name</b></em>' attribute feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EAttribute APPLICATION__NAME = eINSTANCE.getApplication_Name();
 
 		/**
 		 * The meta object literal for the '<em><b>Children</b></em>' containment reference list feature.

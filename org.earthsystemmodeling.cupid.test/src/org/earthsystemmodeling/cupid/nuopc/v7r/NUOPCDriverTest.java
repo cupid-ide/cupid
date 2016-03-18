@@ -5,13 +5,12 @@ import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertTrue;
 
-import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.util.List;
 
+import org.earthsystemmodeling.cupid.NUOPC.Application;
 import org.earthsystemmodeling.cupid.NUOPC.Driver;
 import org.earthsystemmodeling.cupid.NUOPC.Field;
-import org.earthsystemmodeling.cupid.NUOPC.Grid;
 import org.earthsystemmodeling.cupid.NUOPC.Model;
 import org.earthsystemmodeling.cupid.NUOPC.NUOPCFactory;
 import org.earthsystemmodeling.cupid.NUOPC.UniformGrid;
@@ -26,24 +25,21 @@ import org.eclipse.core.resources.IFile;
 import org.eclipse.core.resources.IProject;
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.NullProgressMonitor;
+import org.eclipse.emf.ecore.util.EcoreUtil;
 import org.eclipse.ltk.core.refactoring.Change;
-import org.eclipse.photran.internal.core.analysis.binding.Definition;
-import org.eclipse.photran.internal.core.analysis.binding.ScopingNode;
-import org.eclipse.photran.internal.core.lexer.Token;
 import org.eclipse.photran.internal.core.parser.ASTVarOrFnRefNode;
-import org.eclipse.photran.internal.core.vpg.EdgeType;
-import org.eclipse.photran.internal.core.vpg.PhotranTokenRef;
 import org.eclipse.photran.internal.core.vpg.PhotranVPG;
 import org.junit.AfterClass;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
+@SuppressWarnings("restriction")
 public class NUOPCDriverTest {
 	
 	private static IProject PROJECT_NUOPC_PROTOTYPES;
 	private static NullProgressMonitor NPM = new NullProgressMonitor();
-	private static String ESMFMKFILE = TestHelpers.getMakefileFragmentLoc(NUOPCTest.NUOPC_TAG);
 	private static NUOPCFactory factory = NUOPCFactory.eINSTANCE;
+	private static final boolean PRINT_ASTS = true;
 	
 	@BeforeClass
 	public static void setUp() throws CoreException, IOException, InterruptedException {
@@ -85,74 +81,105 @@ public class NUOPCDriverTest {
 	}
 	
 	@Test
-	public void GenerateNUOPCDriverWithChildren() throws CoreException, IOException, InterruptedException {
+	public void GenerateNUOPCDriverFromModel() throws CoreException, IOException, InterruptedException {
 		
-		IProject p = TestHelpers.createEmptyFortranProject(NUOPCTest.NUOPC_TAG + "_GenerateNUOPCDriverWithChildren");
-		IFile fDriver = TestHelpers.createBlankFile(p, "MyDriver.F90");
-		IFile fModelA = TestHelpers.createBlankFile(p, "ModelA.F90");
-		IFile fModelB = TestHelpers.createBlankFile(p, "ModelB.F90");
+		IProject p = TestHelpers.createEmptyFortranProject(NUOPCTest.NUOPC_TAG + "_GenerateNUOPCDriverFromModel");
+		IFile fDriverEsm = TestHelpers.createBlankFile(p, "esm.F90");
+		IFile fModelAtm = TestHelpers.createBlankFile(p, "atm.F90");
+		IFile fModelOcn = TestHelpers.createBlankFile(p, "ocn.F90");
 		
-		Driver driver = factory.createDriver(); 
-		Model modelA = factory.createModel();
-		Model modelB = factory.createModel();
+		Driver esm = factory.createDriver(); 
+		Model atm = factory.createModel();
+		Model ocn = factory.createModel();
+		Application app = factory.createApplication();
 		
-		driver.setName("MyDriver");
-		modelA.setName("ModelA");
-		modelB.setName("ModelB");
+		app.getChildren().add(esm);
+		app.getChildren().add(atm);
+		app.getChildren().add(ocn);
+		
+		esm.setName("MyDriver");
+		atm.setName("ATM");
+		ocn.setName("OCN");
 		
 		Field f;
-		UniformGrid grid;
+		UniformGrid atmgrid;
 		
-		grid = factory.createUniformGrid();
-		grid.setName("ModelAGrid");
-		grid.getMinIndex().add(1);
-		grid.getMinIndex().add(1);
-		grid.getMaxIndex().add(100);
-		grid.getMaxIndex().add(200);
-		grid.getMinCornerCoord().add(10.0);
-		grid.getMinCornerCoord().add(10.0);
-		grid.getMaxCornerCoord().add(1000.0);
-		grid.getMaxCornerCoord().add(2000.0);
+		atmgrid = factory.createUniformGrid();
+		atmgrid.setName("atmgrid");
+		atmgrid.getMinIndex().add(1);
+		atmgrid.getMinIndex().add(1);
+		atmgrid.getMaxIndex().add(100);
+		atmgrid.getMaxIndex().add(200);
+		atmgrid.getMinCornerCoord().add(10.0);
+		atmgrid.getMinCornerCoord().add(10.0);
+		atmgrid.getMaxCornerCoord().add(1000.0);
+		atmgrid.getMaxCornerCoord().add(2000.0);
+		atm.getGrids().add(atmgrid);
 		
-		modelA.getGrids().add(grid);
+		UniformGrid ocngrid = EcoreUtil.copy(atmgrid);
+		ocngrid.setName("ocngrid");
+		ocn.getGrids().add(ocngrid);
 		
-		//Model A fields
+		
+		//ATM fields
 		f = factory.createField();
-		f.setName("FieldImportA1");
-		f.setStandardName("FieldImportA1");
-		f.setGrid(grid);
-		modelA.getImportFields().add(f);
-		
-		f = factory.createField();
-		f.setName("FieldImportA2");
-		f.setStandardName("FieldImportA2");
-		f.setGrid(grid);
-		modelA.getImportFields().add(f);
+		f.setName("sst");
+		f.setStandardName("sea_surface_temperature");
+		f.setGrid(atmgrid);
+		atm.getImportFields().add(f);
 		
 		f = factory.createField();
-		f.setName("FieldExportA1");
-		f.setStandardName("FieldExportA1");
-		f.setGrid(grid);
-		modelA.getExportFields().add(f);
+		f.setName("pmsl");
+		f.setStandardName("air_pressure_at_sea_level");
+		f.setGrid(atmgrid);
+		atm.getExportFields().add(f);
+		
+		f = factory.createField();
+		f.setName("rsns");
+		f.setStandardName("surface_net_downward_shortwave_flux");
+		f.setGrid(atmgrid);
+		atm.getExportFields().add(f);
 						
-		driver.getChildren().add(modelA);
-		driver.getChildren().add(modelB);
 		
-		NUOPCModel modelACodeConcept = NUOPCModel.newModel(fModelA, modelA);
-		NUOPCModel modelBCodeConcept = NUOPCModel.newModel(fModelB, modelB);
-		NUOPCDriver driverCodeConcept = NUOPCDriver.newDriver(fDriver, driver);
+		//OCN fields
+		f = factory.createField();
+		f.setName("sst");
+		f.setStandardName("sea_surface_temperature");
+		f.setGrid(ocngrid);
+		ocn.getExportFields().add(f);
 		
-		modelACodeConcept.forward(NPM);
-		modelBCodeConcept.forward(NPM);
-		driverCodeConcept.forward(NPM);
-				
-		System.out.println(modelACodeConcept.getAST().getRoot().toString() + "\n\n========================\n\n");
-		System.out.println(modelBCodeConcept.getAST().getRoot().toString() + "\n\n========================\n\n");
-		System.out.println(driverCodeConcept.getAST().getRoot().toString());
+		f = factory.createField();
+		f.setName("pmsl");
+		f.setStandardName("air_pressure_at_sea_level");
+		f.setGrid(ocngrid);
+		ocn.getImportFields().add(f);
+		
+		f = factory.createField();
+		f.setName("rsns");
+		f.setStandardName("surface_net_downward_shortwave_flux");
+		f.setGrid(ocngrid);
+		ocn.getImportFields().add(f);
+		
+		esm.getChildren().add(atm);
+		esm.getChildren().add(ocn);
+		
+		NUOPCModel atmCodeConcept = NUOPCModel.newModel(fModelAtm, atm);
+		NUOPCModel ocnCodeConcept = NUOPCModel.newModel(fModelOcn, ocn);
+		NUOPCDriver esmCodeConcept = NUOPCDriver.newDriver(fDriverEsm, esm);
+		
+		atmCodeConcept.forward(NPM);
+		ocnCodeConcept.forward(NPM);
+		esmCodeConcept.forward(NPM);
+		
+		if (PRINT_ASTS) {
+			TestHelpers.printAST(atmCodeConcept);
+			TestHelpers.printAST(ocnCodeConcept);
+			TestHelpers.printAST(esmCodeConcept);
+		}
 		
 		TestHelpers.copyFileIntoProject(p, "workspace/Makefile");
-		String makeTargets[] = {"ModelA.o", "ModelB.o", "MyDriver.o"};
-		assertTrue("Compile check", TestHelpers.compileProject(p, ESMFMKFILE, makeTargets));
+		String makeTargets[] = {"atm.o", "ocn.o", "esm.o"};
+		assertTrue("Compile check", TestHelpers.compileProject(p, NUOPCTest.ESMFMKFILE, makeTargets));
 
 	}
 
@@ -208,7 +235,7 @@ public class NUOPCDriverTest {
 		assertEquals("1", re.slot);
 		
 		///compile check
-		assertTrue("Compile check", TestHelpers.compileProject(p, ESMFMKFILE, "esmApp"));
+		assertTrue("Compile check", TestHelpers.compileProject(p, NUOPCTest.ESMFMKFILE, "esmApp"));
 		
 	}
 
@@ -299,7 +326,7 @@ public class NUOPCDriverTest {
 		assertNotNull(re.getASTRef());
 		
 		///compile check
-		assertTrue("Compile check", TestHelpers.compileProject(p, ESMFMKFILE, "esmApp"));
+		assertTrue("Compile check", TestHelpers.compileProject(p, NUOPCTest.ESMFMKFILE, "esmApp"));
 
 		
 	}
@@ -403,7 +430,7 @@ public class NUOPCDriverTest {
 		assertNotNull(driver.initialization.initSpecs.modifyInitializePhaseMap);
 		assertEquals("ModifyInitializePhaseMap", driver.initialization.initSpecs.modifyInitializePhaseMap.subroutineName);
 		
-		assertTrue("Compile check", TestHelpers.compileProject(p, ESMFMKFILE, "esmApp"));
+		assertTrue("Compile check", TestHelpers.compileProject(p, NUOPCTest.ESMFMKFILE, "esmApp"));
 
 	}
 	
@@ -431,11 +458,10 @@ public class NUOPCDriverTest {
 		assertNotNull(driver.run.runSpecs.setRunClock);
 		assertEquals("SetRunClock", driver.run.runSpecs.setRunClock.subroutineName);
 		
-		assertTrue("Compile check", TestHelpers.compileProject(p, ESMFMKFILE, "esmApp"));
+		assertTrue("Compile check", TestHelpers.compileProject(p, NUOPCTest.ESMFMKFILE, "esmApp"));
 		
 	}
 
-	@SuppressWarnings("restriction")
 	@Test
 	public void NUOPCDriverReverse() throws CoreException, IOException {
 
@@ -565,7 +591,6 @@ public class NUOPCDriverTest {
 	}
 	
 	
-	@SuppressWarnings("restriction")
 	@Test
 	public void NUOPCDriverReverseHigh() throws CoreException, IOException {
 

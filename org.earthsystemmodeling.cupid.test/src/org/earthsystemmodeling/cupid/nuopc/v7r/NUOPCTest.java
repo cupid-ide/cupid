@@ -35,6 +35,7 @@ import org.junit.Test;
 public class NUOPCTest {
 	
 	public static final String NUOPC_TAG = "ESMF_7_0_0";
+	public static final String ESMFMKFILE = TestHelpers.getMakefileFragmentLoc(NUOPCTest.NUOPC_TAG);
 	
 	private static IProject PROJECT_NUOPC_PROTOTYPES;
 	

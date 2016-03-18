@@ -1253,6 +1253,7 @@ public class NUOPCModel extends NUOPCComponent {
     
     public Run(final NUOPCModel parent) {
       super(parent);
+      parent.setOrAddChild(this);
     }
     
     @Override
@@ -1284,6 +1285,13 @@ public class NUOPCModel extends NUOPCComponent {
     
     public RunSpecializations(final NUOPCModel.Run parent) {
       super(parent);
+      parent.setOrAddChild(this);
+      ArrayList<NUOPCModel.SetRunClock> _newArrayList = CollectionLiterals.<NUOPCModel.SetRunClock>newArrayList();
+      this.setRunClock = _newArrayList;
+      ArrayList<NUOPCModel.CheckImport> _newArrayList_1 = CollectionLiterals.<NUOPCModel.CheckImport>newArrayList();
+      this.checkImport = _newArrayList_1;
+      ArrayList<NUOPCModel.ModelAdvance> _newArrayList_2 = CollectionLiterals.<NUOPCModel.ModelAdvance>newArrayList();
+      this.modelAdvance = _newArrayList_2;
     }
     
     @Override
@@ -1346,6 +1354,7 @@ public class NUOPCModel extends NUOPCComponent {
   public static class ModelAdvance extends SpecializationMethodCodeConcept<NUOPCModel.RunSpecializations> {
     public ModelAdvance(final NUOPCModel.RunSpecializations parent) {
       super(parent, "NUOPC_Model", "label_Advance");
+      parent.setOrAddChild(this);
       this.subroutineName = "ModelAdvance";
       List<NUOPCModel.ModelAdvance> _modelAdvance = parent.modelAdvance;
       int _size = 0;
@@ -1892,6 +1901,7 @@ public class NUOPCModel extends NUOPCComponent {
       new NUOPCModel.Run(model);
       new NUOPCModel.RunPhases(model.run);
       new NUOPCModel.RunSpecializations(model.run);
+      new NUOPCModel.ModelAdvance(model.run.runSpecs);
       new NUOPCModel.Finalize(model);
       new NUOPCModel.FinalizePhases(model.finalize);
       new NUOPCModel.FinalizeSpecializations(model.finalize);

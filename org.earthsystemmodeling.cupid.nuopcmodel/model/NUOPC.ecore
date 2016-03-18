@@ -15,7 +15,7 @@
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="Driver" eSuperTypes="#//Component">
     <eStructuralFeatures xsi:type="ecore:EReference" name="children" upperBound="-1"
-        eType="#//Component" containment="true"/>
+        eType="#//Component"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="Model" eSuperTypes="#//BaseModel"/>
   <eClassifiers xsi:type="ecore:EClass" name="Mediator" eSuperTypes="#//BaseModel"/>
@@ -26,6 +26,7 @@
         eType="#//BaseModel"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="Application">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="name" lowerBound="1" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="children" upperBound="-1"
         eType="#//Component" containment="true"/>
   </eClassifiers>

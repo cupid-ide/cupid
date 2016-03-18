@@ -7,6 +7,10 @@ import static org.junit.Assert.assertTrue;
 
 import java.io.IOException;
 
+import org.earthsystemmodeling.cupid.NUOPC.Field;
+import org.earthsystemmodeling.cupid.NUOPC.Model;
+import org.earthsystemmodeling.cupid.NUOPC.NUOPCFactory;
+import org.earthsystemmodeling.cupid.NUOPC.UniformGrid;
 import org.earthsystemmodeling.cupid.nuopc.v7r.GridCodeConcept.CreateUniformGrid;
 import org.earthsystemmodeling.cupid.nuopc.v7r.NUOPCBaseModel.AdvertiseField;
 import org.earthsystemmodeling.cupid.nuopc.v7r.NUOPCBaseModel.RealizeField;
@@ -27,7 +31,9 @@ public class NUOPCModelTest {
 	
 	private static IProject PROJECT_NUOPC_PROTOTYPES;
 	private static NullProgressMonitor NPM = new NullProgressMonitor();
-	
+	private static NUOPCFactory factory = NUOPCFactory.eINSTANCE;	
+	private static final boolean PRINT_ASTS = true;
+		
 	@BeforeClass
 	public static void setUp() throws CoreException, IOException, InterruptedException {
 		PROJECT_NUOPC_PROTOTYPES = TestHelpers.createProjectFromFolder("target/" + NUOPCTest.NUOPC_TAG, NUOPCTest.NUOPC_TAG);
@@ -288,6 +294,63 @@ public class NUOPCModelTest {
 		///compile check
 		TestHelpers.copyFileIntoProject(p, "workspace/Makefile");
 		assertTrue("Compile check", TestHelpers.compileProject(p, TestHelpers.getMakefileFragmentLoc(NUOPCTest.NUOPC_TAG), "*.o"));
+	}
+	
+	@Test
+	public void GenerateNUOPCModelFromModel() throws CoreException, IOException, InterruptedException {
+		
+		IProject p = TestHelpers.createEmptyFortranProject(NUOPCTest.NUOPC_TAG + "_GenerateNUOPCModelFromModel");
+		IFile fModel = TestHelpers.createBlankFile(p, "Model.F90");
+				
+		Model model = factory.createModel();
+		model.setName("Model");
+		
+		Field f;
+		UniformGrid grid;
+		
+		grid = factory.createUniformGrid();
+		grid.setName("ModelGrid");
+		grid.getMinIndex().add(1);
+		grid.getMinIndex().add(1);
+		grid.getMaxIndex().add(100);
+		grid.getMaxIndex().add(200);
+		grid.getMinCornerCoord().add(10.0);
+		grid.getMinCornerCoord().add(10.0);
+		grid.getMaxCornerCoord().add(1000.0);
+		grid.getMaxCornerCoord().add(2000.0);
+		
+		model.getGrids().add(grid);
+		
+		f = factory.createField();
+		f.setName("FieldImport1");
+		f.setStandardName("FieldImport1");
+		f.setGrid(grid);
+		model.getImportFields().add(f);
+		
+		f = factory.createField();
+		f.setName("FieldImport2");
+		f.setStandardName("FieldImport2");
+		f.setGrid(grid);
+		model.getImportFields().add(f);
+		
+		f = factory.createField();
+		f.setName("FieldExport1");
+		f.setStandardName("FieldExport1");
+		f.setGrid(grid);
+		model.getExportFields().add(f);
+						
+		NUOPCModel modelCodeConcept = NUOPCModel.newModel(fModel, model);
+				
+		modelCodeConcept.forward(NPM);
+		
+		if (PRINT_ASTS) {
+			TestHelpers.printAST(modelCodeConcept);
+		}
+			
+		TestHelpers.copyFileIntoProject(p, "workspace/Makefile");
+		String makeTargets[] = {"Model.o"};
+		assertTrue("Compile check", TestHelpers.compileProject(p, NUOPCTest.ESMFMKFILE, makeTargets));
+
 	}
 	
 	

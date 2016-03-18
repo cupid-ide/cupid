@@ -8,6 +8,7 @@ import org.earthsystemmodeling.cupid.NUOPC.Application;
 import org.earthsystemmodeling.cupid.NUOPC.Component;
 import org.earthsystemmodeling.cupid.NUOPC.NUOPCPackage;
 
+import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.common.notify.NotificationChain;
 
 import org.eclipse.emf.common.util.EList;
@@ -15,6 +16,7 @@ import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.InternalEObject;
 
+import org.eclipse.emf.ecore.impl.ENotificationImpl;
 import org.eclipse.emf.ecore.impl.MinimalEObjectImpl;
 
 import org.eclipse.emf.ecore.util.EObjectContainmentEList;
@@ -28,12 +30,31 @@ import org.eclipse.emf.ecore.util.InternalEList;
  * The following features are implemented:
  * </p>
  * <ul>
+ *   <li>{@link org.earthsystemmodeling.cupid.NUOPC.impl.ApplicationImpl#getName <em>Name</em>}</li>
  *   <li>{@link org.earthsystemmodeling.cupid.NUOPC.impl.ApplicationImpl#getChildren <em>Children</em>}</li>
  * </ul>
  *
  * @generated
  */
 public class ApplicationImpl extends MinimalEObjectImpl.Container implements Application {
+	/**
+	 * The default value of the '{@link #getName() <em>Name</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #getName()
+	 * @generated
+	 * @ordered
+	 */
+	protected static final String NAME_EDEFAULT = null;
+	/**
+	 * The cached value of the '{@link #getName() <em>Name</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #getName()
+	 * @generated
+	 * @ordered
+	 */
+	protected String name = NAME_EDEFAULT;
 	/**
 	 * The cached value of the '{@link #getChildren() <em>Children</em>}' containment reference list.
 	 * <!-- begin-user-doc -->
@@ -61,6 +82,27 @@ public class ApplicationImpl extends MinimalEObjectImpl.Container implements App
 	@Override
 	protected EClass eStaticClass() {
 		return NUOPCPackage.Literals.APPLICATION;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public String getName() {
+		return name;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public void setName(String newName) {
+		String oldName = name;
+		name = newName;
+		if (eNotificationRequired())
+			eNotify(new ENotificationImpl(this, Notification.SET, NUOPCPackage.APPLICATION__NAME, oldName, name));
 	}
 
 	/**
@@ -97,6 +139,8 @@ public class ApplicationImpl extends MinimalEObjectImpl.Container implements App
 	@Override
 	public Object eGet(int featureID, boolean resolve, boolean coreType) {
 		switch (featureID) {
+			case NUOPCPackage.APPLICATION__NAME:
+				return getName();
 			case NUOPCPackage.APPLICATION__CHILDREN:
 				return getChildren();
 		}
@@ -112,6 +156,9 @@ public class ApplicationImpl extends MinimalEObjectImpl.Container implements App
 	@Override
 	public void eSet(int featureID, Object newValue) {
 		switch (featureID) {
+			case NUOPCPackage.APPLICATION__NAME:
+				setName((String)newValue);
+				return;
 			case NUOPCPackage.APPLICATION__CHILDREN:
 				getChildren().clear();
 				getChildren().addAll((Collection<? extends Component>)newValue);
@@ -128,6 +175,9 @@ public class ApplicationImpl extends MinimalEObjectImpl.Container implements App
 	@Override
 	public void eUnset(int featureID) {
 		switch (featureID) {
+			case NUOPCPackage.APPLICATION__NAME:
+				setName(NAME_EDEFAULT);
+				return;
 			case NUOPCPackage.APPLICATION__CHILDREN:
 				getChildren().clear();
 				return;
@@ -143,10 +193,28 @@ public class ApplicationImpl extends MinimalEObjectImpl.Container implements App
 	@Override
 	public boolean eIsSet(int featureID) {
 		switch (featureID) {
+			case NUOPCPackage.APPLICATION__NAME:
+				return NAME_EDEFAULT == null ? name != null : !NAME_EDEFAULT.equals(name);
 			case NUOPCPackage.APPLICATION__CHILDREN:
 				return children != null && !children.isEmpty();
 		}
 		return super.eIsSet(featureID);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	@Override
+	public String toString() {
+		if (eIsProxy()) return super.toString();
+
+		StringBuffer result = new StringBuffer(super.toString());
+		result.append(" (name: ");
+		result.append(name);
+		result.append(')');
+		return result.toString();
 	}
 
 } //ApplicationImpl
