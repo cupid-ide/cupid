@@ -464,6 +464,7 @@ public class NUOPCDriverTest {
 		assertTrue(addComps.get(2).getCompSetServicesExpr() instanceof ASTVarOrFnRefNode);
 		assertTrue(addComps.get(3).getCompSetServicesExpr() instanceof ASTVarOrFnRefNode);
 		
+		/*
 		ASTVarOrFnRefNode ssRef = (ASTVarOrFnRefNode) addComps.get(0).getCompSetServicesExpr();
 		Token ssRefName = ssRef.getName().getName();
 		System.out.println("ssRef token ref = " + ssRefName.getTokenRef());
@@ -510,7 +511,7 @@ public class NUOPCDriverTest {
 			ScopingNode scope = ssRefName.findScopeDeclaringOrImporting(d);
 			System.out.println(scope);
 		}
-		
+		*/
 		
 		f = PROJECT_NUOPC_PROTOTYPES.getFolder("AtmOcnMedPetListTimescalesProto").getFile("esm.F90");
 		driver = new NUOPCDriver(f).reverse();
