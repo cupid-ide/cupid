@@ -59,6 +59,7 @@ public class GridCodeConcept {
           String _stripQuotes = GridCodeConcept.stripQuotes(this.name);
           final String functionName = ("CreateGrid_" + _stripQuotes);
           StringConcatenation _builder = new StringConcatenation();
+          _builder.newLine();
           _builder.append("function ");
           _builder.append(functionName, "");
           _builder.append("(rc)");

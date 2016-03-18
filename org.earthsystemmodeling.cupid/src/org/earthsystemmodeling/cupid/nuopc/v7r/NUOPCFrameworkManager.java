@@ -73,25 +73,31 @@ public class NUOPCFrameworkManager {
 				List<IFile> files;
 				files = vpg.findFilesThatImportModule("NUOPC_Driver");
 				for (IFile f : files) {
-					NUOPCDriver driver = new NUOPCDriver(f).reverse();
-					if (driver != null) {
-						driverMap.put(f, driver);
+					if (f != null) {  //TODO: why null?
+						NUOPCDriver driver = new NUOPCDriver(f).reverse();
+						if (driver != null) {
+							driverMap.put(f, driver);
+						}
 					}
 				}
 				
 				files = vpg.findFilesThatImportModule("NUOPC_Model");
 				for (IFile f : files) {
-					NUOPCModel model = new NUOPCModel(f).reverse();
-					if (model != null) {
-						modelMap.put(f, model);
+					if (f != null) {  //TODO: why null?
+						NUOPCModel model = new NUOPCModel(f).reverse();
+						if (model != null) {
+							modelMap.put(f, model);
+						}
 					}
 				}
 				
 				files = vpg.findFilesThatImportModule("NUOPC_Mediator");
 				for (IFile f : files) {
-					NUOPCMediator mediator = new NUOPCMediator(f).reverse();
-					if (mediator != null) {
-						mediatorMap.put(f, mediator);
+					if (f != null) {  //TODO: why null?
+						NUOPCMediator mediator = new NUOPCMediator(f).reverse();
+						if (mediator != null) {
+							mediatorMap.put(f, mediator);
+						}
 					}
 				}
 			

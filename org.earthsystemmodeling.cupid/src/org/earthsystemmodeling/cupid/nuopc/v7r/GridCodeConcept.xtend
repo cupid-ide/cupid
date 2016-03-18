@@ -39,6 +39,7 @@ class GridCodeConcept {
 			
 			val code = 
 '''
+
 function «functionName»(rc)
     type(ESMF_Grid) :: «functionName»
     integer, intent(out), optional :: rc

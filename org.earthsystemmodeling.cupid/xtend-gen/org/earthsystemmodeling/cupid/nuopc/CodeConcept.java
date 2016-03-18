@@ -196,6 +196,10 @@ public abstract class CodeConcept<P extends CodeConcept<?, ?>, A extends IASTNod
   protected boolean validate(final List<CodeConcept<?, ?>> codeConcepts, final List<String> errors) {
     boolean _xblockexpression = false;
     {
+      boolean _equals = Objects.equal(codeConcepts, null);
+      if (_equals) {
+        System.out.println("null list");
+      }
       for (final CodeConcept<?, ?> cc : codeConcepts) {
         boolean _validate = cc.validate(errors);
         boolean _not = (!_validate);

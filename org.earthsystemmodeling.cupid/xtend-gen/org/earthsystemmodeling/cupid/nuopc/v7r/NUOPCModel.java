@@ -12,30 +12,21 @@ import org.earthsystemmodeling.cupid.annotation.Child;
 import org.earthsystemmodeling.cupid.annotation.Doc;
 import org.earthsystemmodeling.cupid.annotation.Label;
 import org.earthsystemmodeling.cupid.annotation.MappingType;
-import org.earthsystemmodeling.cupid.nuopc.ASTQuery;
 import org.earthsystemmodeling.cupid.nuopc.CodeConcept;
-import org.earthsystemmodeling.cupid.nuopc.CodeGenerationException;
 import org.earthsystemmodeling.cupid.nuopc.ESMFCodeTemplates;
 import org.earthsystemmodeling.cupid.nuopc.v7r.EntryPointCodeConcept;
 import org.earthsystemmodeling.cupid.nuopc.v7r.GridCodeConcept;
+import org.earthsystemmodeling.cupid.nuopc.v7r.NUOPCBaseModel;
 import org.earthsystemmodeling.cupid.nuopc.v7r.NUOPCComponent;
 import org.earthsystemmodeling.cupid.nuopc.v7r.SetServicesCodeConcept;
 import org.earthsystemmodeling.cupid.nuopc.v7r.SpecializationMethodCodeConcept;
-import org.earthsystemmodeling.cupid.util.CodeExtraction;
 import org.eclipse.core.resources.IResource;
 import org.eclipse.emf.common.util.EList;
-import org.eclipse.photran.internal.core.lexer.Token;
-import org.eclipse.photran.internal.core.parser.ASTCallStmtNode;
 import org.eclipse.photran.internal.core.parser.ASTModuleNode;
 import org.eclipse.photran.internal.core.parser.ASTNode;
-import org.eclipse.photran.internal.core.parser.ASTSubroutineSubprogramNode;
-import org.eclipse.photran.internal.core.parser.IASTListNode;
-import org.eclipse.photran.internal.core.parser.IBodyConstruct;
 import org.eclipse.xtend.lib.annotations.Accessors;
 import org.eclipse.xtend2.lib.StringConcatenation;
 import org.eclipse.xtext.xbase.lib.CollectionLiterals;
-import org.eclipse.xtext.xbase.lib.Exceptions;
-import org.eclipse.xtext.xbase.lib.Functions.Function1;
 import org.eclipse.xtext.xbase.lib.IterableExtensions;
 import org.eclipse.xtext.xbase.lib.Procedures.Procedure1;
 import org.eclipse.xtext.xbase.lib.Pure;
@@ -61,7 +52,7 @@ public class NUOPCModel extends NUOPCComponent {
     @Doc(urlfrag = "#model-phase-advertisefields")
     public static class IPDv04p1 extends EntryPointCodeConcept<NUOPCModel.IPD> {
       @Child(min = 0, max = (-1))
-      public List<NUOPCModel.IPD.AdvertiseField> advertiseFields;
+      public List<NUOPCBaseModel.AdvertiseField> advertiseFields;
       
       public IPDv04p1(final NUOPCModel.IPD parent) {
         super(parent);
@@ -70,7 +61,7 @@ public class NUOPCModel extends NUOPCComponent {
         this.subroutineName = "AdvertiseFields";
         this.methodType = "ESMF_METHOD_INITIALIZE";
         parent.setOrAddChild(this);
-        ArrayList<NUOPCModel.IPD.AdvertiseField> _newArrayList = CollectionLiterals.<NUOPCModel.IPD.AdvertiseField>newArrayList();
+        ArrayList<NUOPCBaseModel.AdvertiseField> _newArrayList = CollectionLiterals.<NUOPCBaseModel.AdvertiseField>newArrayList();
         this.advertiseFields = _newArrayList;
       }
       
@@ -78,7 +69,7 @@ public class NUOPCModel extends NUOPCComponent {
         EList<Field> _importFields = high.getImportFields();
         for (final Field f : _importFields) {
           {
-            final NUOPCModel.IPD.AdvertiseField af = new NUOPCModel.IPD.AdvertiseField(this);
+            final NUOPCBaseModel.AdvertiseField af = new NUOPCBaseModel.AdvertiseField(this);
             StringConcatenation _builder = new StringConcatenation();
             _builder.append("\"");
             String _standardName = f.getStandardName();
@@ -91,7 +82,7 @@ public class NUOPCModel extends NUOPCComponent {
         EList<Field> _exportFields = high.getExportFields();
         for (final Field f_1 : _exportFields) {
           {
-            final NUOPCModel.IPD.AdvertiseField af = new NUOPCModel.IPD.AdvertiseField(this);
+            final NUOPCBaseModel.AdvertiseField af = new NUOPCBaseModel.AdvertiseField(this);
             StringConcatenation _builder = new StringConcatenation();
             _builder.append("\"");
             String _standardName = f_1.getStandardName();
@@ -141,7 +132,7 @@ public class NUOPCModel extends NUOPCComponent {
       public EntryPointCodeConcept<NUOPCModel.IPD> reverseChildren() {
         NUOPCModel.IPD.IPDv04p1 _xblockexpression = null;
         {
-          NUOPCModel.IPD.AdvertiseField _advertiseField = new NUOPCModel.IPD.AdvertiseField(this);
+          NUOPCBaseModel.AdvertiseField _advertiseField = new NUOPCBaseModel.AdvertiseField(this);
           List _reverseMultiple = _advertiseField.reverseMultiple();
           this.advertiseFields = _reverseMultiple;
           _xblockexpression = this;
@@ -174,7 +165,7 @@ public class NUOPCModel extends NUOPCComponent {
     @Doc(urlfrag = "#model-phase-realizefieldsproviding")
     public static class IPDv04p3 extends EntryPointCodeConcept<NUOPCModel.IPD> {
       @Child(min = 0, max = (-1))
-      public List<NUOPCModel.IPD.RealizeField> realizeFields;
+      public List<NUOPCBaseModel.RealizeField> realizeFields;
       
       @Accessors
       private List<String> grids;
@@ -186,7 +177,7 @@ public class NUOPCModel extends NUOPCComponent {
         this.subroutineName = "RealizeFieldsProvidingGrid";
         this.methodType = "ESMF_METHOD_INITIALIZE";
         parent.setOrAddChild(this);
-        ArrayList<NUOPCModel.IPD.RealizeField> _newArrayList = CollectionLiterals.<NUOPCModel.IPD.RealizeField>newArrayList();
+        ArrayList<NUOPCBaseModel.RealizeField> _newArrayList = CollectionLiterals.<NUOPCBaseModel.RealizeField>newArrayList();
         this.realizeFields = _newArrayList;
         ArrayList<String> _newArrayList_1 = CollectionLiterals.<String>newArrayList();
         this.grids = _newArrayList_1;
@@ -195,12 +186,12 @@ public class NUOPCModel extends NUOPCComponent {
       public void forward(final Model high) {
         EList<Field> _importFields = high.getImportFields();
         for (final Field f : _importFields) {
-          NUOPCModel.IPD.RealizeField _realizeField = new NUOPCModel.IPD.RealizeField(this);
+          NUOPCBaseModel.RealizeField _realizeField = new NUOPCBaseModel.RealizeField(this);
           _realizeField.forward(f, this.paramImport);
         }
         EList<Field> _exportFields = high.getExportFields();
         for (final Field f_1 : _exportFields) {
-          NUOPCModel.IPD.RealizeField _realizeField_1 = new NUOPCModel.IPD.RealizeField(this);
+          NUOPCBaseModel.RealizeField _realizeField_1 = new NUOPCBaseModel.RealizeField(this);
           _realizeField_1.forward(f_1, this.paramExport);
         }
         EList<Grid> _grids = high.getGrids();
@@ -352,7 +343,7 @@ public class NUOPCModel extends NUOPCComponent {
       public EntryPointCodeConcept<NUOPCModel.IPD> reverseChildren() {
         NUOPCModel.IPD.IPDv04p3 _xblockexpression = null;
         {
-          NUOPCModel.IPD.RealizeField _realizeField = new NUOPCModel.IPD.RealizeField(this);
+          NUOPCBaseModel.RealizeField _realizeField = new NUOPCBaseModel.RealizeField(this);
           List _reverseMultiple = _realizeField.reverseMultiple();
           this.realizeFields = _reverseMultiple;
           _xblockexpression = this;
@@ -430,7 +421,7 @@ public class NUOPCModel extends NUOPCComponent {
     @Doc(urlfrag = "#model-phase-realizefieldsaccepting")
     public static class IPDv04p5 extends EntryPointCodeConcept<NUOPCModel.IPD> {
       @Child(min = 0, max = (-1))
-      public List<NUOPCModel.IPD.RealizeField> realizeFields;
+      public List<NUOPCBaseModel.RealizeField> realizeFields;
       
       public IPDv04p5(final NUOPCModel.IPD parent) {
         super(parent);
@@ -439,7 +430,7 @@ public class NUOPCModel extends NUOPCComponent {
         this.subroutineName = "RealizeFieldsAcceptingGrid";
         this.methodType = "ESMF_METHOD_INITIALIZE";
         parent.setOrAddChild(this);
-        ArrayList<NUOPCModel.IPD.RealizeField> _newArrayList = CollectionLiterals.<NUOPCModel.IPD.RealizeField>newArrayList();
+        ArrayList<NUOPCBaseModel.RealizeField> _newArrayList = CollectionLiterals.<NUOPCBaseModel.RealizeField>newArrayList();
         this.realizeFields = _newArrayList;
       }
       
@@ -463,7 +454,7 @@ public class NUOPCModel extends NUOPCComponent {
       public EntryPointCodeConcept<NUOPCModel.IPD> reverseChildren() {
         NUOPCModel.IPD.IPDv04p5 _xblockexpression = null;
         {
-          NUOPCModel.IPD.RealizeField _realizeField = new NUOPCModel.IPD.RealizeField(this);
+          NUOPCBaseModel.RealizeField _realizeField = new NUOPCBaseModel.RealizeField(this);
           List _reverseMultiple = _realizeField.reverseMultiple();
           this.realizeFields = _reverseMultiple;
           _xblockexpression = this;
@@ -497,250 +488,6 @@ public class NUOPCModel extends NUOPCComponent {
     public static class IPDv04p7 extends CodeConcept<NUOPCModel.IPD, ASTNode> {
       public IPDv04p7(final NUOPCModel.IPD parent) {
         super(parent);
-      }
-    }
-    
-    @Label(label = "Advertise Field")
-    @MappingType("call")
-    public static class AdvertiseField extends CodeConcept<EntryPointCodeConcept<?>, ASTCallStmtNode> {
-      public String state;
-      
-      public String standardName;
-      
-      public AdvertiseField(final EntryPointCodeConcept<?> parent) {
-        super(parent);
-        this.state = this._parent.paramImport;
-        this.standardName = "StandardName";
-        parent.setOrAddChild(this);
-      }
-      
-      @Override
-      public String name() {
-        return ((this.state + " / ") + this.standardName);
-      }
-      
-      @Override
-      public List reverseMultiple() {
-        ArrayList<NUOPCModel.IPD.AdvertiseField> _xblockexpression = null;
-        {
-          final ArrayList<NUOPCModel.IPD.AdvertiseField> retList = CollectionLiterals.<NUOPCModel.IPD.AdvertiseField>newArrayList();
-          ASTSubroutineSubprogramNode _aSTRef = this._parent.getASTRef();
-          IASTListNode<IBodyConstruct> _body = _aSTRef.getBody();
-          Iterable<ASTCallStmtNode> _filter = Iterables.<ASTCallStmtNode>filter(_body, ASTCallStmtNode.class);
-          final Function1<ASTCallStmtNode, Boolean> _function = new Function1<ASTCallStmtNode, Boolean>() {
-            @Override
-            public Boolean apply(final ASTCallStmtNode c) {
-              Token _subroutineName = c.getSubroutineName();
-              return Boolean.valueOf(ASTQuery.eic(_subroutineName, "NUOPC_Advertise"));
-            }
-          };
-          Iterable<ASTCallStmtNode> _filter_1 = IterableExtensions.<ASTCallStmtNode>filter(_filter, _function);
-          final Procedure1<ASTCallStmtNode> _function_1 = new Procedure1<ASTCallStmtNode>() {
-            @Override
-            public void apply(final ASTCallStmtNode it) {
-              NUOPCModel.IPD.AdvertiseField advField = new NUOPCModel.IPD.AdvertiseField(AdvertiseField.this._parent);
-              String _litArgExprByIdx = ASTQuery.litArgExprByIdx(it, 0);
-              advField.state = _litArgExprByIdx;
-              String _litArgExprByIdx_1 = ASTQuery.litArgExprByIdx(it, 1);
-              advField.standardName = _litArgExprByIdx_1;
-              advField.setASTRef(it);
-              retList.add(advField);
-            }
-          };
-          IterableExtensions.<ASTCallStmtNode>forEach(_filter_1, _function_1);
-          _xblockexpression = retList;
-        }
-        return _xblockexpression;
-      }
-      
-      @Override
-      public CodeConcept<?, ?> forward() {
-        NUOPCModel.IPD.AdvertiseField _xblockexpression = null;
-        {
-          StringConcatenation _builder = new StringConcatenation();
-          _builder.newLine();
-          _builder.append("call NUOPC_Advertise(");
-          CharSequence _paramch = this.paramch(this.state);
-          _builder.append(_paramch, "");
-          _builder.append(", ");
-          CharSequence _paramch_1 = this.paramch(this.standardName);
-          _builder.append(_paramch_1, "");
-          _builder.append(", rc=");
-          _builder.append(this._parent.paramRC, "");
-          _builder.append(")");
-          _builder.newLineIfNotEmpty();
-          CharSequence _ESMFErrorCheck = ESMFCodeTemplates.ESMFErrorCheck(this._parent.paramRC);
-          _builder.append(_ESMFErrorCheck, "");
-          _builder.newLineIfNotEmpty();
-          String code = _builder.toString();
-          final IASTListNode<IBodyConstruct> stmts = CodeExtraction.parseLiteralStatementSequence(code);
-          final ASTSubroutineSubprogramNode ssn = this._parent.getASTRef();
-          IASTListNode<IBodyConstruct> _body = ssn.getBody();
-          _body.addAll(stmts);
-          IBodyConstruct _get = stmts.get(0);
-          this.setASTRef(((ASTCallStmtNode) _get));
-          _xblockexpression = this;
-        }
-        return _xblockexpression;
-      }
-    }
-    
-    @Label(label = "Realize Field")
-    @MappingType("call")
-    public static class RealizeField extends CodeConcept<EntryPointCodeConcept<?>, ASTCallStmtNode> {
-      public String state;
-      
-      public String field;
-      
-      public String grid;
-      
-      public String fieldName;
-      
-      public RealizeField(final EntryPointCodeConcept<?> parent) {
-        super(parent);
-        parent.setOrAddChild(this);
-        this.state = this._parent.paramImport;
-        this.field = "field";
-        this.grid = "grid";
-        this.fieldName = "\"field_name\"";
-      }
-      
-      @Override
-      public String name() {
-        return ((this.state + " / ") + this.fieldName);
-      }
-      
-      @Override
-      public List reverseMultiple() {
-        ArrayList<NUOPCModel.IPD.RealizeField> _xblockexpression = null;
-        {
-          final ArrayList<NUOPCModel.IPD.RealizeField> retList = CollectionLiterals.<NUOPCModel.IPD.RealizeField>newArrayList();
-          ASTSubroutineSubprogramNode _aSTRef = this._parent.getASTRef();
-          IASTListNode<IBodyConstruct> _body = _aSTRef.getBody();
-          Iterable<ASTCallStmtNode> _filter = Iterables.<ASTCallStmtNode>filter(_body, ASTCallStmtNode.class);
-          final Function1<ASTCallStmtNode, Boolean> _function = new Function1<ASTCallStmtNode, Boolean>() {
-            @Override
-            public Boolean apply(final ASTCallStmtNode c) {
-              Token _subroutineName = c.getSubroutineName();
-              return Boolean.valueOf(ASTQuery.eic(_subroutineName, "NUOPC_Realize"));
-            }
-          };
-          Iterable<ASTCallStmtNode> _filter_1 = IterableExtensions.<ASTCallStmtNode>filter(_filter, _function);
-          final Procedure1<ASTCallStmtNode> _function_1 = new Procedure1<ASTCallStmtNode>() {
-            @Override
-            public void apply(final ASTCallStmtNode it) {
-              NUOPCModel.IPD.RealizeField relField = new NUOPCModel.IPD.RealizeField(RealizeField.this._parent);
-              String _litArgExprByIdx = ASTQuery.litArgExprByIdx(it, 0);
-              relField.state = _litArgExprByIdx;
-              String _litArgExprByIdx_1 = ASTQuery.litArgExprByIdx(it, 1);
-              relField.field = _litArgExprByIdx_1;
-              relField.setASTRef(it);
-              retList.add(relField);
-            }
-          };
-          IterableExtensions.<ASTCallStmtNode>forEach(_filter_1, _function_1);
-          _xblockexpression = retList;
-        }
-        return _xblockexpression;
-      }
-      
-      @Override
-      public CodeConcept<?, ?> forward() {
-        try {
-          CodeConcept<?, ?> _xblockexpression = null;
-          {
-            boolean _or = false;
-            boolean _or_1 = false;
-            boolean _or_2 = false;
-            boolean _equals = Objects.equal(this.field, null);
-            if (_equals) {
-              _or_2 = true;
-            } else {
-              boolean _equals_1 = Objects.equal(this.fieldName, null);
-              _or_2 = _equals_1;
-            }
-            if (_or_2) {
-              _or_1 = true;
-            } else {
-              boolean _equals_2 = Objects.equal(this.grid, null);
-              _or_1 = _equals_2;
-            }
-            if (_or_1) {
-              _or = true;
-            } else {
-              boolean _equals_3 = Objects.equal(this.state, null);
-              _or = _equals_3;
-            }
-            if (_or) {
-              throw new CodeGenerationException("Missing parameters required to generate Realize Field.");
-            }
-            final ASTSubroutineSubprogramNode ssn = this._parent.getASTRef();
-            StringConcatenation _builder = new StringConcatenation();
-            _builder.append("type(ESMF_Field) :: ");
-            _builder.append(this.field, "");
-            CodeConcept.addTypeDeclaration(_builder.toString(), ssn);
-            StringConcatenation _builder_1 = new StringConcatenation();
-            _builder_1.newLine();
-            _builder_1.append("! field ");
-            _builder_1.append(this.fieldName, "");
-            _builder_1.newLineIfNotEmpty();
-            _builder_1.append(this.field, "");
-            _builder_1.append(" = ESMF_FieldCreate(name=");
-            _builder_1.append(this.fieldName, "");
-            _builder_1.append(", grid=");
-            _builder_1.append(this.grid, "");
-            _builder_1.append(", &");
-            _builder_1.newLineIfNotEmpty();
-            _builder_1.append("      ");
-            _builder_1.append("typekind=ESMF_TYPEKIND_R8, rc=");
-            _builder_1.append(this._parent.paramRC, "      ");
-            _builder_1.append(")");
-            _builder_1.newLineIfNotEmpty();
-            CharSequence _ESMFErrorCheck = ESMFCodeTemplates.ESMFErrorCheck(this._parent.paramRC);
-            _builder_1.append(_ESMFErrorCheck, "");
-            _builder_1.newLineIfNotEmpty();
-            _builder_1.append("\t");
-            _builder_1.newLine();
-            _builder_1.append("call NUOPC_Realize(");
-            CharSequence _paramch = this.paramch(this.state);
-            _builder_1.append(_paramch, "");
-            _builder_1.append(", field=");
-            CharSequence _paramch_1 = this.paramch(this.field);
-            _builder_1.append(_paramch_1, "");
-            _builder_1.append(", rc=");
-            _builder_1.append(this._parent.paramRC, "");
-            _builder_1.append(")");
-            _builder_1.newLineIfNotEmpty();
-            CharSequence _ESMFErrorCheck_1 = ESMFCodeTemplates.ESMFErrorCheck(this._parent.paramRC);
-            _builder_1.append(_ESMFErrorCheck_1, "");
-            _builder_1.newLineIfNotEmpty();
-            String code = _builder_1.toString();
-            final IASTListNode<IBodyConstruct> stmts = CodeExtraction.parseLiteralStatementSequence(code);
-            IASTListNode<IBodyConstruct> _body = ssn.getBody();
-            _body.addAll(stmts);
-            _xblockexpression = super.<CodeConcept<?, ?>>forward();
-          }
-          return _xblockexpression;
-        } catch (Throwable _e) {
-          throw Exceptions.sneakyThrow(_e);
-        }
-      }
-      
-      public String forward(final Field high, final String state) {
-        String _xblockexpression = null;
-        {
-          String _standardName = high.getStandardName();
-          String _plus = ("\"" + _standardName);
-          String _plus_1 = (_plus + "\"");
-          this.fieldName = _plus_1;
-          String _name = high.getName();
-          this.field = _name;
-          Grid _grid = high.getGrid();
-          String _name_1 = _grid.getName();
-          this.grid = _name_1;
-          _xblockexpression = this.state = state;
-        }
-        return _xblockexpression;
       }
     }
     
@@ -1195,7 +942,7 @@ public class NUOPCModel extends NUOPCComponent {
     @Child(forward = true)
     public NUOPCModel.InitSpecializations initSpecs;
     
-    @Child
+    @Child(min = 0)
     public List<GridCodeConcept.CreateUniformGrid> createUniformGrid;
     
     public Initialization(final NUOPCModel parent) {

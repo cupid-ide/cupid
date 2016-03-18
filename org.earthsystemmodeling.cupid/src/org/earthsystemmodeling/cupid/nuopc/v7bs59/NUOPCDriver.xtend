@@ -443,15 +443,19 @@ call NUOPC_Advertise(«paramch(state)», «paramch(standardName)», rc=«_parent
 			
 		}
 
-		override forward() {	
-				var code = 
+		override forward() {
+			
+			val ASTSubroutineSubprogramNode ssn = _parent.ASTRef
+			addTypeDeclaration('''type(ESMF_Field) :: «field»''', ssn)	
+			
+			var code = 
 '''
 	
 call NUOPC_Realize(«paramch(state)», field=«paramch(field)», rc=«_parent.paramRC»)
 «ESMFErrorCheck(_parent.paramRC)»
 '''
 				val IASTListNode<IBodyConstruct> stmts = parseLiteralStatementSequence(code)
-				val ASTSubroutineSubprogramNode ssn = _parent.ASTRef
+				
 	
 				ssn.body.addAll(stmts)
 				super.forward

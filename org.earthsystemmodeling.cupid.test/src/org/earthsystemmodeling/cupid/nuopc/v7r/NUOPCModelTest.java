@@ -7,10 +7,11 @@ import static org.junit.Assert.assertTrue;
 
 import java.io.IOException;
 
-import org.earthsystemmodeling.cupid.nuopc.v7r.NUOPCModel.IPD.AdvertiseField;
+import org.earthsystemmodeling.cupid.nuopc.v7r.GridCodeConcept.CreateUniformGrid;
+import org.earthsystemmodeling.cupid.nuopc.v7r.NUOPCBaseModel.AdvertiseField;
+import org.earthsystemmodeling.cupid.nuopc.v7r.NUOPCBaseModel.RealizeField;
 import org.earthsystemmodeling.cupid.nuopc.v7r.NUOPCModel.IPD.IPDv04p1;
 import org.earthsystemmodeling.cupid.nuopc.v7r.NUOPCModel.IPD.IPDv04p3;
-import org.earthsystemmodeling.cupid.nuopc.v7r.NUOPCModel.IPD.RealizeField;
 import org.earthsystemmodeling.cupid.nuopc.v7r.NUOPCModel.SetRunClock;
 import org.earthsystemmodeling.cupid.test.TestHelpers;
 import org.eclipse.core.resources.IFile;
@@ -242,22 +243,39 @@ public class NUOPCModelTest {
 		assertEquals("\"sea_surface_temperature\"", model.initialization.initPhases.ipdv04.ipdv04p1.advertiseFields.get(1).standardName);
 		assertEquals("exportState", model.initialization.initPhases.ipdv04.ipdv04p1.advertiseFields.get(1).state);
 
+		
+		CreateUniformGrid cuf = new CreateUniformGrid(model.initialization);
+		assertEquals(cuf, model.initialization.createUniformGrid.get(0));
+		cuf.setName("\"grid\"");
+		cuf.setMinIndex(new int[] {1, 1});
+		cuf.setMaxIndex(new int[] {10, 10});
+		cuf.setMinCornerCoord(new double[] {0.0, 0.0});
+		cuf.setMaxCornerCoord(new double[] {100.0, 100.0});
+		
+		
 		IPDv04p3 ipdv04p3 = new IPDv04p3(model.initialization.initPhases.ipdv04);
 		assertNotNull(model.initialization.initPhases.ipdv04.ipdv04p3);
+		ipdv04p3.getGrids().add("grid");
 		
 		RealizeField rf = new RealizeField(ipdv04p3);
 		assertEquals(rf, ipdv04p3.realizeFields.get(0));
 		rf.field = "myfield1";
 		rf.state = "importState";
+		rf.fieldName = "\"myfield1\"";
+		rf.grid = "grid";
 		
 		rf = new RealizeField(ipdv04p3);
 		assertEquals(rf, ipdv04p3.realizeFields.get(1));
 		rf.field = "myfield2";
 		rf.state = "exportState";
+		rf.fieldName = "\"myfield2\"";
+		rf.grid = "grid";
 		
-		ipdv04p3.forward();
-		chg = ipdv04p3.generateChange();
-		chg.perform(NPM);
+		model.initialization.createUniformGrid.get(0).forward();
+		ipdv04p3.forward(NPM);
+		//chg = ipdv04p3.generateChange();
+		//chg.perform(NPM);
+		
 		
 		model = new NUOPCModel(f).reverse();
 		assertNotNull(model);

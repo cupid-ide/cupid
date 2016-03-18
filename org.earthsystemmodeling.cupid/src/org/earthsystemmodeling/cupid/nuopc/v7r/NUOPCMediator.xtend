@@ -17,6 +17,10 @@ import static org.earthsystemmodeling.cupid.nuopc.ESMFCodeTemplates.*
 import static org.earthsystemmodeling.cupid.util.CodeExtraction.*
 
 import static extension org.earthsystemmodeling.cupid.nuopc.ASTQuery.*
+import org.earthsystemmodeling.cupid.nuopc.v7r.NUOPCBaseModel.RealizeField
+import org.earthsystemmodeling.cupid.nuopc.v7r.NUOPCBaseModel.AdvertiseField
+import org.earthsystemmodeling.cupid.nuopc.v7r.GridCodeConcept.CreateUniformGrid
+import org.eclipse.xtend.lib.annotations.Accessors
 
 @Label(label="NUOPC Mediator")
 @MappingType("module")
@@ -133,6 +137,9 @@ class NUOPCMediator extends NUOPCComponent {
 			@Child(min=0, max=-1)
 			public List<RealizeField> realizeFields
 			
+			@Accessors
+			List<String> grids
+			
 			new(IPD parent) {
 				super(parent)
 				phaseLabel = getPhaseLabel()
@@ -140,6 +147,33 @@ class NUOPCMediator extends NUOPCComponent {
 				methodType = "ESMF_METHOD_INITIALIZE"
 				parent.setOrAddChild(this)
 				realizeFields = newArrayList()
+				grids = newArrayList()
+			}
+			
+			override subroutineTemplate() {
+			'''
+			
+			subroutine «subroutineName»(«paramGridComp», «paramImport», «paramExport», «paramClock», «paramRC»)
+			    type(ESMF_GridComp)  :: «paramGridComp»
+			    type(ESMF_State)     :: «paramImport», «paramExport»
+			    type(ESMF_Clock)     :: «paramClock»
+			    integer, intent(out) :: «paramRC»
+			    
+			    «FOR g : grids»
+			    type(ESMF_Grid) :: «g»
+			    «ENDFOR»
+			    
+			    rc = ESMF_SUCCESS
+			    
+			    «FOR g : grids»
+			    «g» = CreateGrid_«g»(rc=«paramRC»)
+			    «ESMFErrorCheck(paramRC)»
+			    «ENDFOR»
+			    
+			    
+			    
+			end subroutine
+			'''
 			}
 			
 			def getPhaseLabel() {
@@ -258,6 +292,7 @@ class NUOPCMediator extends NUOPCComponent {
 			}
 		}
 		
+		/*
 		@Label(label="Advertise Field")
 		@MappingType("call")
 		public static class AdvertiseField extends CodeConcept<EntryPointCodeConcept<?>, ASTCallStmtNode> {
@@ -355,7 +390,7 @@ call NUOPC_Realize(«paramch(state)», field=«paramch(field)», rc=«_parent.pa
 			}
 
 	}
-		
+	*/	
 			
 
 	}
@@ -637,8 +672,12 @@ call NUOPC_Realize(«paramch(state)», field=«paramch(field)», rc=«_parent.pa
 		@Child
 		public InitSpecializations initSpecs
 		
+		@Child(min=0)
+		public List<CreateUniformGrid> createUniformGrid
+		
 		new(NUOPCMediator parent) {
 			super(parent)
+			createUniformGrid = newArrayList()
 		}
 
 		override Initialization reverse() {

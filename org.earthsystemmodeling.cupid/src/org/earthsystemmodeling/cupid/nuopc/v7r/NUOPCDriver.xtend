@@ -31,6 +31,8 @@ import org.eclipse.photran.internal.core.parser.IASTNode
 import org.eclipse.photran.internal.core.parser.ISpecificationPartConstruct
 import org.earthsystemmodeling.cupid.NUOPC.Driver
 import org.earthsystemmodeling.cupid.NUOPC.Model
+import org.earthsystemmodeling.cupid.nuopc.v7r.NUOPCBaseModel.RealizeField
+import org.earthsystemmodeling.cupid.nuopc.v7r.NUOPCBaseModel.AdvertiseField
 
 @Label(label="NUOPC Driver")
 @MappingType("module")
@@ -394,6 +396,7 @@ end subroutine
 			}
 		}
 		
+		/*
 		@Label(label="Advertise Field")
 		@MappingType("call")
 		public static class AdvertiseField extends CodeConcept<IPDv04p1, ASTCallStmtNode> {
@@ -501,7 +504,7 @@ call NUOPC_Realize(«paramch(state)», field=«paramch(field)», rc=«_parent.pa
 			}
 
 		}
-		
+		*/
 
 	}
 	

@@ -108,6 +108,9 @@ public abstract class CodeConcept<P extends CodeConcept<?,?>, A extends IASTNode
 	}
 	
 	def protected boolean validate(List<CodeConcept<?,?>> codeConcepts, List<String> errors) {
+		if (codeConcepts == null) {
+			System.out.println("null list");
+		}
 		for (CodeConcept<?,?> cc : codeConcepts) {
 			if (!cc.validate(errors)) return false;
 		}

@@ -7,10 +7,11 @@ import static org.junit.Assert.assertTrue;
 
 import java.io.IOException;
 
-import org.earthsystemmodeling.cupid.nuopc.v7r.NUOPCMediator.IPD.AdvertiseField;
+import org.earthsystemmodeling.cupid.nuopc.v7r.NUOPCBaseModel.AdvertiseField;
+import org.earthsystemmodeling.cupid.nuopc.v7r.NUOPCBaseModel.RealizeField;
 import org.earthsystemmodeling.cupid.nuopc.v7r.NUOPCMediator.IPD.IPDv04p1;
 import org.earthsystemmodeling.cupid.nuopc.v7r.NUOPCMediator.IPD.IPDv04p3;
-import org.earthsystemmodeling.cupid.nuopc.v7r.NUOPCMediator.IPD.RealizeField;
+import org.earthsystemmodeling.cupid.nuopc.v7r.GridCodeConcept.CreateUniformGrid;
 import org.earthsystemmodeling.cupid.test.TestHelpers;
 import org.eclipse.core.resources.IFile;
 import org.eclipse.core.resources.IProject;
@@ -215,6 +216,7 @@ public class NUOPCMediatorTest {
 		af.standardName = "\"donkey\"";
 		af.state = "importState";
 		
+		
 		af = new AdvertiseField(ipdv04p1);
 		assertEquals(af, ipdv04p1.advertiseFields.get(1));
 		af.standardName = "\"sea_surface_temperature\"";
@@ -234,20 +236,34 @@ public class NUOPCMediatorTest {
 
 		IPDv04p3 ipdv04p3 = new IPDv04p3(mediator.initialization.initPhases.ipdv04);
 		assertNotNull(mediator.initialization.initPhases.ipdv04.ipdv04p3);
+		ipdv04p3.getGrids().add("grid");
+		
+		CreateUniformGrid cuf = new CreateUniformGrid(mediator.initialization);
+		assertEquals(cuf, mediator.initialization.createUniformGrid.get(0));
+		cuf.setName("\"grid\"");
+		cuf.setMinIndex(new int[] {1, 1});
+		cuf.setMaxIndex(new int[] {10, 10});
+		cuf.setMinCornerCoord(new double[] {0.0, 0.0});
+		cuf.setMaxCornerCoord(new double[] {100.0, 100.0});
 		
 		RealizeField rf = new RealizeField(ipdv04p3);
 		assertEquals(rf, ipdv04p3.realizeFields.get(0));
 		rf.field = "myfield1";
 		rf.state = "importState";
+		rf.fieldName = "\"myfield1\"";
+		rf.grid = "grid";
 		
 		rf = new RealizeField(ipdv04p3);
 		assertEquals(rf, ipdv04p3.realizeFields.get(1));
 		rf.field = "myfield2";
 		rf.state = "exportState";
-		
-		ipdv04p3.forward();
-		chg = ipdv04p3.generateChange();
-		chg.perform(NPM);
+		rf.fieldName = "\"myfield2\"";
+		rf.grid = "grid";
+			
+		mediator.initialization.createUniformGrid.get(0).forward();
+		ipdv04p3.forward(NPM);
+		//chg = ipdv04p3.generateChange();
+		//chg.perform(NPM);
 		
 		mediator = new NUOPCMediator(f).reverse();
 		assertNotNull(mediator);

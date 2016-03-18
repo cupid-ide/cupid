@@ -250,6 +250,7 @@ public class NUOPCModelTest {
 		rf.field = "myfield1";
 		rf.state = "importState";
 		
+		
 		rf = new RealizeField(ipdv04p3);
 		assertEquals(rf, ipdv04p3.realizeFields.get(1));
 		rf.field = "myfield2";

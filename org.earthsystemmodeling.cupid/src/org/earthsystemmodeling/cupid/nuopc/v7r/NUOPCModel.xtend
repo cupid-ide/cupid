@@ -29,6 +29,8 @@ import static extension org.earthsystemmodeling.cupid.nuopc.v7r.NUOPCModel.*
 import org.earthsystemmodeling.cupid.nuopc.CodeGenerationException
 import org.eclipse.xtend.lib.annotations.Accessors
 import org.earthsystemmodeling.cupid.NUOPC.Grid
+import org.earthsystemmodeling.cupid.nuopc.v7r.NUOPCBaseModel.RealizeField
+import org.earthsystemmodeling.cupid.nuopc.v7r.NUOPCBaseModel.AdvertiseField
 
 @Label(label="NUOPC Model")
 @MappingType("module")
@@ -383,6 +385,7 @@ class NUOPCModel extends NUOPCComponent {
 			}
 		}
 		
+		/*
 		@Label(label="Advertise Field")
 		@MappingType("call")
 		public static class AdvertiseField extends CodeConcept<EntryPointCodeConcept<?>, ASTCallStmtNode> {
@@ -511,7 +514,7 @@ call NUOPC_Realize(«paramch(state)», field=«paramch(field)», rc=«_parent.pa
 			}
 	
 		}
-		
+		*/
 		
 		
 			
@@ -796,7 +799,7 @@ call NUOPC_Realize(«paramch(state)», field=«paramch(field)», rc=«_parent.pa
 		@Child(forward=true)
 		public InitSpecializations initSpecs
 		
-		@Child
+		@Child(min=0)
 		public List<CreateUniformGrid> createUniformGrid
 		
 		new(NUOPCModel parent) {
