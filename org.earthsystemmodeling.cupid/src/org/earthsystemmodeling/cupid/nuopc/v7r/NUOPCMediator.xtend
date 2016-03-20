@@ -6,21 +6,20 @@ import org.earthsystemmodeling.cupid.annotation.Doc
 import org.earthsystemmodeling.cupid.annotation.Label
 import org.earthsystemmodeling.cupid.annotation.MappingType
 import org.earthsystemmodeling.cupid.nuopc.CodeConcept
+import org.earthsystemmodeling.cupid.nuopc.v7r.GridCodeConcept.CreateUniformGrid
+import org.earthsystemmodeling.cupid.nuopc.v7r.NUOPCBaseModel.AdvertiseField
+import org.earthsystemmodeling.cupid.nuopc.v7r.NUOPCBaseModel.RealizeField
 import org.eclipse.core.resources.IResource
-import org.eclipse.photran.internal.core.parser.ASTCallStmtNode
 import org.eclipse.photran.internal.core.parser.ASTNode
-import org.eclipse.photran.internal.core.parser.ASTSubroutineSubprogramNode
-import org.eclipse.photran.internal.core.parser.IASTListNode
-import org.eclipse.photran.internal.core.parser.IBodyConstruct
+import org.eclipse.xtend.lib.annotations.Accessors
 
 import static org.earthsystemmodeling.cupid.nuopc.ESMFCodeTemplates.*
-import static org.earthsystemmodeling.cupid.util.CodeExtraction.*
-
-import static extension org.earthsystemmodeling.cupid.nuopc.ASTQuery.*
-import org.earthsystemmodeling.cupid.nuopc.v7r.NUOPCBaseModel.RealizeField
-import org.earthsystemmodeling.cupid.nuopc.v7r.NUOPCBaseModel.AdvertiseField
-import org.earthsystemmodeling.cupid.nuopc.v7r.GridCodeConcept.CreateUniformGrid
-import org.eclipse.xtend.lib.annotations.Accessors
+import org.earthsystemmodeling.cupid.NUOPC.Mediator
+import org.earthsystemmodeling.cupid.NUOPC.UniformGrid
+import org.earthsystemmodeling.cupid.nuopc.v7r.NUOPCMediator.IPD.IPDv04p1
+import org.earthsystemmodeling.cupid.nuopc.v7r.NUOPCMediator.IPD.IPDv04p3
+import org.earthsystemmodeling.cupid.NUOPC.Field
+import org.earthsystemmodeling.cupid.NUOPC.Grid
 
 @Label(label="NUOPC Mediator")
 @MappingType("module")
@@ -60,6 +59,34 @@ class NUOPCMediator extends NUOPCComponent {
 	override NUOPCMediator forward() {
 		super.forward as NUOPCMediator
 	}
+		
+		
+	static def newMediator(IResource context, Mediator high) {
+		val m = newBasicMediator(context)
+		m.forward(high)
+		m
+	}
+	
+	static def newBasicMediator(IResource context) {
+		val mediator = new NUOPCMediator(context)
+		new SetServices(mediator)
+		new Initialization(mediator)
+		new InitPhases(mediator.initialization)
+		new InitSpecializations(mediator.initialization)
+		new Run(mediator)
+		new RunPhases(mediator.run)
+		new RunSpecializations(mediator.run)
+		new MediatorAdvance(mediator.run.runSpecs)
+		new Finalize(mediator)
+		new FinalizePhases(mediator.finalize)
+		new FinalizeSpecializations(mediator.finalize)
+		mediator
+	}
+	
+	def forward(Mediator high) {
+		name = high.name
+		initialization.forward(high)
+	}	
 		
 	
 	@Label(label="SetServices")
@@ -117,6 +144,19 @@ class NUOPCMediator extends NUOPCComponent {
 			override setServices() {
 				_parent._parent._parent._parent.setServices
 			}
+			
+			def forward(Mediator high) {
+				for (Field f : high.importFields) {
+					val af = new AdvertiseField(this)
+					af.standardName = '''"«f.standardName»"'''
+					af.state = paramImport
+				}
+				for (Field f : high.exportFields) {
+					val af = new AdvertiseField(this)
+					af.standardName = '''"«f.standardName»"'''
+					af.state = paramExport
+				}
+			}
 
 		}
 		
@@ -149,6 +189,19 @@ class NUOPCMediator extends NUOPCComponent {
 				realizeFields = newArrayList()
 				grids = newArrayList()
 			}
+			
+			def forward(Mediator high) {
+				for (Field f : high.importFields) {
+					new RealizeField(this).forward(f, paramImport)				
+				}
+				for (Field f : high.exportFields) {
+					new RealizeField(this).forward(f, paramExport)
+				}
+				for (Grid g : high.grids) {
+					grids.add(g.name)
+				}
+			}
+			
 			
 			override subroutineTemplate() {
 			'''
@@ -677,6 +730,7 @@ call NUOPC_Realize(«paramch(state)», field=«paramch(field)», rc=«_parent.pa
 		
 		new(NUOPCMediator parent) {
 			super(parent)
+			parent.setOrAddChild(this)
 			createUniformGrid = newArrayList()
 		}
 
@@ -688,6 +742,26 @@ call NUOPC_Realize(«paramch(state)», field=«paramch(field)», rc=«_parent.pa
 			initPhases = new InitPhases(this).reverse as InitPhases
 			initSpecs = new InitSpecializations(this).reverse as InitSpecializations
 			this
+		}
+		
+		def forward(Mediator high) {
+			
+			high.grids.filter(UniformGrid).forEach[g|
+				val cug = new CreateUniformGrid(this)
+				cug.name = '''"«g.name»"'''
+				cug.minIndex = g.minIndex.toIntArray
+				cug.maxIndex = g.maxIndex.toIntArray
+				cug.minCornerCoord = g.minCornerCoord.toDoubleArray
+				cug.maxCornerCoord = g.maxCornerCoord.toDoubleArray
+			]
+			
+			if (high.importFields.size > 0 || high.exportFields.size > 0) {
+				val ipdv04 = new IPDv04(initPhases)
+				val ipdv04p1 = new IPDv04p1(ipdv04)
+				ipdv04p1.forward(high)
+				val ipdv04p3 = new IPDv04p3(ipdv04)
+				ipdv04p3.forward(high)
+			}
 		}
 
 	}
@@ -770,6 +844,7 @@ end subroutine
 	
 		new(NUOPCMediator parent) {
 			super(parent)
+			parent.setOrAddChild(this)
 		}
 		
 		override Run reverse() {
@@ -798,6 +873,11 @@ end subroutine
 
 		new(Run parent) {
 			super(parent)
+			parent.setOrAddChild(this)
+			setRunClock = newArrayList()
+			checkImport = newArrayList()
+			mediatorAdvance = newArrayList()
+			timestampExport = newArrayList()
 		}
 
 		override reverse() {
@@ -822,6 +902,7 @@ end subroutine
 		
 		new(Run parent) {
 			super(parent)
+			parent.setOrAddChild(this)
 		}
 		
 		override RunPhases reverse() {
@@ -850,8 +931,8 @@ end subroutine
 
 			// defaults
 			subroutineName = "MediatorAdvance"
-			if (parent.mediatorAdvance?.size > 0) {
-				subroutineName += parent.mediatorAdvance.size+1
+			if (parent.mediatorAdvance?.size > 1) {
+				subroutineName += parent.mediatorAdvance.size
 			}
 			specLabel = "mediator_label_Advance"
 			paramGridComp = "gcomp"

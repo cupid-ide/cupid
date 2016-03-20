@@ -842,22 +842,7 @@ call NUOPC_Realize(«paramch(state)», field=«paramch(field)», rc=«_parent.pa
 
 	}
 	
-	def static toIntArray(List<Integer> intList) {
-		val toRet = newIntArrayOfSize(intList.size)
-		for (var i=0; i < intList.size; i++) {
-			toRet.set(i, intList.get(i))
-		}
-		toRet
-	}
-	
-	def static toDoubleArray(List<Double> dblList) {
-		var toRet = newDoubleArrayOfSize(dblList.size)
-		for (var i=0; i < dblList.size; i++) {
-			toRet.set(i, dblList.get(i))
-		}
-		toRet
-	}
-		
+			
 	@Label(label="Specializations")
 	public static class InitSpecializations extends CodeConcept<Initialization, ASTNode> {
 	
@@ -1086,8 +1071,8 @@ end subroutine
 
 			// defaults
 			subroutineName = "ModelAdvance"
-			if (parent.modelAdvance?.size > 0) {
-				subroutineName += parent.modelAdvance.size+1
+			if (parent.modelAdvance?.size > 1) {
+				subroutineName += parent.modelAdvance.size
 			}
 			specLabel = "model_label_Advance"
 			paramGridComp = "gcomp"

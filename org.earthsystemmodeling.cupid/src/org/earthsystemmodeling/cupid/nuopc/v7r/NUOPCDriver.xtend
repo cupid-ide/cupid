@@ -1038,7 +1038,7 @@ if (ESMF_LogFoundError(rcToCheck=«paramRC», msg=ESMF_LOGERR_PASSTHRU, &
 			this.srcCompLabel = srcCompLabel
 			this.dstCompLabel = dstCompLabel
 			this.moduleName = moduleName
-			this.compSetServices = "cplSS"
+			this.compSetServices = moduleName + "_SetServices"
 		}
 		
 		override name() {

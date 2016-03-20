@@ -76,7 +76,9 @@ public abstract class CodeConcept<P extends CodeConcept<?,?>, A extends IASTNode
 			if (childField != null) {
 				val lst = childField.get(this) as List;
 				if (lst != null) {
-					lst.add(child);
+					if (!lst.contains(child)) {
+						lst.add(child);
+					}
 				}
 				else {
 					throw new CodeGenerationException("Cannot add child to null list")
@@ -313,6 +315,22 @@ public abstract class CodeConcept<P extends CodeConcept<?,?>, A extends IASTNode
 	
 	def paramint(String defaultVal) {
 		'''CUPIDPARAM$INT$«defaultVal»$'''
+	}
+	
+	def static toIntArray(List<Integer> intList) {
+		val toRet = newIntArrayOfSize(intList.size)
+		for (var i=0; i < intList.size; i++) {
+			toRet.set(i, intList.get(i))
+		}
+		toRet
+	}
+	
+	def static toDoubleArray(List<Double> dblList) {
+		var toRet = newDoubleArrayOfSize(dblList.size)
+		for (var i=0; i < dblList.size; i++) {
+			toRet.set(i, dblList.get(i))
+		}
+		toRet
 	}
 	
 	def static addTypeDeclaration(String code, ASTSubroutineSubprogramNode ssn) {

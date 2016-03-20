@@ -145,7 +145,11 @@ public abstract class CodeConcept<P extends CodeConcept<?, ?>, A extends IASTNod
           final List lst = ((List) _get);
           boolean _notEquals_2 = (!Objects.equal(lst, null));
           if (_notEquals_2) {
-            lst.add(child);
+            boolean _contains = lst.contains(child);
+            boolean _not = (!_contains);
+            if (_not) {
+              lst.add(child);
+            }
           } else {
             throw new CodeGenerationException("Cannot add child to null list");
           }
@@ -629,6 +633,34 @@ public abstract class CodeConcept<P extends CodeConcept<?, ?>, A extends IASTNod
     _builder.append(defaultVal, "");
     _builder.append("$");
     return _builder;
+  }
+  
+  public static int[] toIntArray(final List<Integer> intList) {
+    int[] _xblockexpression = null;
+    {
+      int _size = intList.size();
+      final int[] toRet = new int[_size];
+      for (int i = 0; (i < intList.size()); i++) {
+        Integer _get = intList.get(i);
+        toRet[i] = (_get).intValue();
+      }
+      _xblockexpression = toRet;
+    }
+    return _xblockexpression;
+  }
+  
+  public static double[] toDoubleArray(final List<Double> dblList) {
+    double[] _xblockexpression = null;
+    {
+      int _size = dblList.size();
+      double[] toRet = new double[_size];
+      for (int i = 0; (i < dblList.size()); i++) {
+        Double _get = dblList.get(i);
+        toRet[i] = (_get).doubleValue();
+      }
+      _xblockexpression = toRet;
+    }
+    return _xblockexpression;
   }
   
   public static void addTypeDeclaration(final String code, final ASTSubroutineSubprogramNode ssn) {

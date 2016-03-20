@@ -13,6 +13,7 @@ import org.earthsystemmodeling.cupid.NUOPC.Application;
 import org.earthsystemmodeling.cupid.NUOPC.Connector;
 import org.earthsystemmodeling.cupid.NUOPC.Driver;
 import org.earthsystemmodeling.cupid.NUOPC.Field;
+import org.earthsystemmodeling.cupid.NUOPC.Mediator;
 import org.earthsystemmodeling.cupid.NUOPC.Model;
 import org.earthsystemmodeling.cupid.NUOPC.NUOPCFactory;
 import org.earthsystemmodeling.cupid.NUOPC.UniformGrid;
@@ -89,13 +90,16 @@ public class NUOPCDriverTest {
 		IFile fDriverEsm = TestHelpers.createBlankFile(p, "esm.F90");
 		IFile fModelAtm = TestHelpers.createBlankFile(p, "atm.F90");
 		IFile fModelOcn = TestHelpers.createBlankFile(p, "ocn.F90");
+		IFile fMed = TestHelpers.createBlankFile(p, "med.F90");
 		IFile fMain = TestHelpers.createBlankFile(p, "esmApp.F90");
 		IFile fMakefile = TestHelpers.createBlankFile(p, "Makefile");
 		
 		Driver esm = factory.createDriver(); 
 		Model atm = factory.createModel();
 		Model ocn = factory.createModel();
-		Connector con = factory.createConnector();
+		Mediator med = factory.createMediator();
+		Connector atm2ocn = factory.createConnector();
+		Connector ocn2atm = factory.createConnector();
 		Application app = factory.createApplication();
 		
 		app.setName("esmApp");
@@ -104,6 +108,9 @@ public class NUOPCDriverTest {
 		esm.setName("esm");
 		atm.setName("atm");
 		ocn.setName("ocn");
+		med.setName("med");
+		atm2ocn.setName("NUOPC_Connector");  //generic connector
+		ocn2atm.setName("NUOPC_Connector");
 		
 		Field f;
 		UniformGrid atmgrid;
@@ -164,45 +171,38 @@ public class NUOPCDriverTest {
 		f.setGrid(ocngrid);
 		ocn.getImportFields().add(f);
 		
-		//set up connector
-		con.setSource(atm);
-		con.setDestination(ocn);
+		//set up connectors
+		atm2ocn.setSource(atm);
+		atm2ocn.setDestination(ocn);
+		
+		ocn2atm.setSource(ocn);
+		ocn2atm.setDestination(atm);
 		
 		esm.getChildren().add(atm);
 		esm.getChildren().add(ocn);
-		esm.getChildren().add(con);
+		esm.getChildren().add(med);
+		esm.getChildren().add(atm2ocn);
+		esm.getChildren().add(ocn2atm);
 		
 		NUOPCModel atmCodeConcept = NUOPCModel.newModel(fModelAtm, atm);
 		NUOPCModel ocnCodeConcept = NUOPCModel.newModel(fModelOcn, ocn);
+		NUOPCMediator medCodeConcept = NUOPCMediator.newMediator(fMed, med);
 		NUOPCDriver esmCodeConcept = NUOPCDriver.newDriver(fDriverEsm, esm);
 		
 		atmCodeConcept.forward(NPM);
 		ocnCodeConcept.forward(NPM);
+		medCodeConcept.forward(NPM);
 		esmCodeConcept.forward(NPM);
 		
 		if (PRINT_ASTS) {
 			TestHelpers.printAST(atmCodeConcept);
 			TestHelpers.printAST(ocnCodeConcept);
+			TestHelpers.printAST(medCodeConcept);
 			TestHelpers.printAST(esmCodeConcept);
 		}
 		
-		//TestHelpers.copyFileIntoProject(p, "workspace/Makefile");
-		//String makeTargets[] = {"atm.o", "ocn.o", "esm.o"};
-		//assertTrue("Compile check", TestHelpers.compileProject(p, NUOPCTest.ESMFMKFILE, makeTargets));
-		
 		MakefileGenerator.generateAndWrite(app, fMakefile);
-		String contents = IOUtils.toString(fMakefile.getContents());
-		assertTrue(contents.contains("esm.o"));
-		assertTrue(contents.contains("atm.o"));
-		assertTrue(contents.contains("ocn.o"));
-		
-		//System.out.println(contents);
-		
 		MainGenerator.generateAndWrite(app, fMain);
-		contents = IOUtils.toString(fMain.getContents());
-		assertTrue(contents.contains("ESMF_Initialize"));
-		assertTrue(contents.contains("esmApp"));
-		assertTrue(contents.contains("ESMF_Finalize"));
 		
 		assertTrue("Compile check", TestHelpers.compileProject(p, NUOPCTest.ESMFMKFILE, ""));
 		assertTrue("Execution check", TestHelpers.executeMPI(p, "./esmApp", 4));

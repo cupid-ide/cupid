@@ -985,16 +985,16 @@ public class NUOPCModel extends NUOPCComponent {
           _builder.append("\"");
           cug.setName(_builder.toString());
           EList<Integer> _minIndex = g.getMinIndex();
-          int[] _intArray = NUOPCModel.toIntArray(_minIndex);
+          int[] _intArray = CodeConcept.toIntArray(_minIndex);
           cug.setMinIndex(_intArray);
           EList<Integer> _maxIndex = g.getMaxIndex();
-          int[] _intArray_1 = NUOPCModel.toIntArray(_maxIndex);
+          int[] _intArray_1 = CodeConcept.toIntArray(_maxIndex);
           cug.setMaxIndex(_intArray_1);
           EList<Double> _minCornerCoord = g.getMinCornerCoord();
-          double[] _doubleArray = NUOPCModel.toDoubleArray(_minCornerCoord);
+          double[] _doubleArray = CodeConcept.toDoubleArray(_minCornerCoord);
           cug.setMinCornerCoord(_doubleArray);
           EList<Double> _maxCornerCoord = g.getMaxCornerCoord();
-          double[] _doubleArray_1 = NUOPCModel.toDoubleArray(_maxCornerCoord);
+          double[] _doubleArray_1 = CodeConcept.toDoubleArray(_maxCornerCoord);
           cug.setMaxCornerCoord(_doubleArray_1);
         }
       };
@@ -1361,12 +1361,11 @@ public class NUOPCModel extends NUOPCComponent {
       if (_modelAdvance!=null) {
         _size=_modelAdvance.size();
       }
-      boolean _greaterThan = (_size > 0);
+      boolean _greaterThan = (_size > 1);
       if (_greaterThan) {
         String _subroutineName = this.subroutineName;
         int _size_1 = parent.modelAdvance.size();
-        int _plus = (_size_1 + 1);
-        this.subroutineName = (_subroutineName + Integer.valueOf(_plus));
+        this.subroutineName = (_subroutineName + Integer.valueOf(_size_1));
       }
       this.specLabel = "model_label_Advance";
       this.paramGridComp = "gcomp";
@@ -1952,33 +1951,5 @@ public class NUOPCModel extends NUOPCComponent {
   public NUOPCModel forward() {
     NUOPCComponent _forward = super.forward();
     return ((NUOPCModel) _forward);
-  }
-  
-  public static int[] toIntArray(final List<Integer> intList) {
-    int[] _xblockexpression = null;
-    {
-      int _size = intList.size();
-      final int[] toRet = new int[_size];
-      for (int i = 0; (i < intList.size()); i++) {
-        Integer _get = intList.get(i);
-        toRet[i] = (_get).intValue();
-      }
-      _xblockexpression = toRet;
-    }
-    return _xblockexpression;
-  }
-  
-  public static double[] toDoubleArray(final List<Double> dblList) {
-    double[] _xblockexpression = null;
-    {
-      int _size = dblList.size();
-      double[] toRet = new double[_size];
-      for (int i = 0; (i < dblList.size()); i++) {
-        Double _get = dblList.get(i);
-        toRet[i] = (_get).doubleValue();
-      }
-      _xblockexpression = toRet;
-    }
-    return _xblockexpression;
   }
 }

@@ -1,8 +1,13 @@
 package org.earthsystemmodeling.cupid.nuopc.v7r;
 
 import com.google.common.base.Objects;
+import com.google.common.collect.Iterables;
 import java.util.ArrayList;
 import java.util.List;
+import org.earthsystemmodeling.cupid.NUOPC.Field;
+import org.earthsystemmodeling.cupid.NUOPC.Grid;
+import org.earthsystemmodeling.cupid.NUOPC.Mediator;
+import org.earthsystemmodeling.cupid.NUOPC.UniformGrid;
 import org.earthsystemmodeling.cupid.annotation.Child;
 import org.earthsystemmodeling.cupid.annotation.Doc;
 import org.earthsystemmodeling.cupid.annotation.Label;
@@ -16,11 +21,14 @@ import org.earthsystemmodeling.cupid.nuopc.v7r.NUOPCComponent;
 import org.earthsystemmodeling.cupid.nuopc.v7r.SetServicesCodeConcept;
 import org.earthsystemmodeling.cupid.nuopc.v7r.SpecializationMethodCodeConcept;
 import org.eclipse.core.resources.IResource;
+import org.eclipse.emf.common.util.EList;
 import org.eclipse.photran.internal.core.parser.ASTModuleNode;
 import org.eclipse.photran.internal.core.parser.ASTNode;
 import org.eclipse.xtend.lib.annotations.Accessors;
 import org.eclipse.xtend2.lib.StringConcatenation;
 import org.eclipse.xtext.xbase.lib.CollectionLiterals;
+import org.eclipse.xtext.xbase.lib.IterableExtensions;
+import org.eclipse.xtext.xbase.lib.Procedures.Procedure1;
 import org.eclipse.xtext.xbase.lib.Pure;
 
 @Label(label = "NUOPC Mediator")
@@ -112,6 +120,35 @@ public class NUOPCMediator extends NUOPCComponent {
       public SetServicesCodeConcept<?> setServices() {
         return this._parent._parent._parent._parent.setServices;
       }
+      
+      public void forward(final Mediator high) {
+        EList<Field> _importFields = high.getImportFields();
+        for (final Field f : _importFields) {
+          {
+            final NUOPCBaseModel.AdvertiseField af = new NUOPCBaseModel.AdvertiseField(this);
+            StringConcatenation _builder = new StringConcatenation();
+            _builder.append("\"");
+            String _standardName = f.getStandardName();
+            _builder.append(_standardName, "");
+            _builder.append("\"");
+            af.standardName = _builder.toString();
+            af.state = this.paramImport;
+          }
+        }
+        EList<Field> _exportFields = high.getExportFields();
+        for (final Field f_1 : _exportFields) {
+          {
+            final NUOPCBaseModel.AdvertiseField af = new NUOPCBaseModel.AdvertiseField(this);
+            StringConcatenation _builder = new StringConcatenation();
+            _builder.append("\"");
+            String _standardName = f_1.getStandardName();
+            _builder.append(_standardName, "");
+            _builder.append("\"");
+            af.standardName = _builder.toString();
+            af.state = this.paramExport;
+          }
+        }
+      }
     }
     
     @Label(label = "IPDv04p2 - Unspecified by NUOPC")
@@ -144,6 +181,24 @@ public class NUOPCMediator extends NUOPCComponent {
         this.realizeFields = _newArrayList;
         ArrayList<String> _newArrayList_1 = CollectionLiterals.<String>newArrayList();
         this.grids = _newArrayList_1;
+      }
+      
+      public void forward(final Mediator high) {
+        EList<Field> _importFields = high.getImportFields();
+        for (final Field f : _importFields) {
+          NUOPCBaseModel.RealizeField _realizeField = new NUOPCBaseModel.RealizeField(this);
+          _realizeField.forward(f, this.paramImport);
+        }
+        EList<Field> _exportFields = high.getExportFields();
+        for (final Field f_1 : _exportFields) {
+          NUOPCBaseModel.RealizeField _realizeField_1 = new NUOPCBaseModel.RealizeField(this);
+          _realizeField_1.forward(f_1, this.paramExport);
+        }
+        EList<Grid> _grids = high.getGrids();
+        for (final Grid g : _grids) {
+          String _name = g.getName();
+          this.grids.add(_name);
+        }
       }
       
       @Override
@@ -866,6 +921,7 @@ public class NUOPCMediator extends NUOPCComponent {
     
     public Initialization(final NUOPCMediator parent) {
       super(parent);
+      parent.setOrAddChild(this);
       ArrayList<GridCodeConcept.CreateUniformGrid> _newArrayList = CollectionLiterals.<GridCodeConcept.CreateUniformGrid>newArrayList();
       this.createUniformGrid = _newArrayList;
     }
@@ -887,6 +943,55 @@ public class NUOPCMediator extends NUOPCComponent {
         _xblockexpression = this;
       }
       return _xblockexpression;
+    }
+    
+    public void forward(final Mediator high) {
+      EList<Grid> _grids = high.getGrids();
+      Iterable<UniformGrid> _filter = Iterables.<UniformGrid>filter(_grids, UniformGrid.class);
+      final Procedure1<UniformGrid> _function = new Procedure1<UniformGrid>() {
+        @Override
+        public void apply(final UniformGrid g) {
+          final GridCodeConcept.CreateUniformGrid cug = new GridCodeConcept.CreateUniformGrid(Initialization.this);
+          StringConcatenation _builder = new StringConcatenation();
+          _builder.append("\"");
+          String _name = g.getName();
+          _builder.append(_name, "");
+          _builder.append("\"");
+          cug.setName(_builder.toString());
+          EList<Integer> _minIndex = g.getMinIndex();
+          int[] _intArray = CodeConcept.toIntArray(_minIndex);
+          cug.setMinIndex(_intArray);
+          EList<Integer> _maxIndex = g.getMaxIndex();
+          int[] _intArray_1 = CodeConcept.toIntArray(_maxIndex);
+          cug.setMaxIndex(_intArray_1);
+          EList<Double> _minCornerCoord = g.getMinCornerCoord();
+          double[] _doubleArray = CodeConcept.toDoubleArray(_minCornerCoord);
+          cug.setMinCornerCoord(_doubleArray);
+          EList<Double> _maxCornerCoord = g.getMaxCornerCoord();
+          double[] _doubleArray_1 = CodeConcept.toDoubleArray(_maxCornerCoord);
+          cug.setMaxCornerCoord(_doubleArray_1);
+        }
+      };
+      IterableExtensions.<UniformGrid>forEach(_filter, _function);
+      boolean _or = false;
+      EList<Field> _importFields = high.getImportFields();
+      int _size = _importFields.size();
+      boolean _greaterThan = (_size > 0);
+      if (_greaterThan) {
+        _or = true;
+      } else {
+        EList<Field> _exportFields = high.getExportFields();
+        int _size_1 = _exportFields.size();
+        boolean _greaterThan_1 = (_size_1 > 0);
+        _or = _greaterThan_1;
+      }
+      if (_or) {
+        final NUOPCMediator.IPDv04 ipdv04 = new NUOPCMediator.IPDv04(this.initPhases);
+        final NUOPCMediator.IPD.IPDv04p1 ipdv04p1 = new NUOPCMediator.IPD.IPDv04p1(ipdv04);
+        ipdv04p1.forward(high);
+        final NUOPCMediator.IPD.IPDv04p3 ipdv04p3 = new NUOPCMediator.IPD.IPDv04p3(ipdv04);
+        ipdv04p3.forward(high);
+      }
     }
   }
   
@@ -985,6 +1090,7 @@ public class NUOPCMediator extends NUOPCComponent {
     
     public Run(final NUOPCMediator parent) {
       super(parent);
+      parent.setOrAddChild(this);
     }
     
     @Override
@@ -1019,6 +1125,15 @@ public class NUOPCMediator extends NUOPCComponent {
     
     public RunSpecializations(final NUOPCMediator.Run parent) {
       super(parent);
+      parent.setOrAddChild(this);
+      ArrayList<NUOPCMediator.SetRunClock> _newArrayList = CollectionLiterals.<NUOPCMediator.SetRunClock>newArrayList();
+      this.setRunClock = _newArrayList;
+      ArrayList<NUOPCMediator.CheckImport> _newArrayList_1 = CollectionLiterals.<NUOPCMediator.CheckImport>newArrayList();
+      this.checkImport = _newArrayList_1;
+      ArrayList<NUOPCMediator.MediatorAdvance> _newArrayList_2 = CollectionLiterals.<NUOPCMediator.MediatorAdvance>newArrayList();
+      this.mediatorAdvance = _newArrayList_2;
+      ArrayList<NUOPCMediator.TimestampExport> _newArrayList_3 = CollectionLiterals.<NUOPCMediator.TimestampExport>newArrayList();
+      this.timestampExport = _newArrayList_3;
     }
     
     @Override
@@ -1054,6 +1169,7 @@ public class NUOPCMediator extends NUOPCComponent {
     
     public RunPhases(final NUOPCMediator.Run parent) {
       super(parent);
+      parent.setOrAddChild(this);
     }
     
     @Override
@@ -1090,12 +1206,11 @@ public class NUOPCMediator extends NUOPCComponent {
       if (_mediatorAdvance!=null) {
         _size=_mediatorAdvance.size();
       }
-      boolean _greaterThan = (_size > 0);
+      boolean _greaterThan = (_size > 1);
       if (_greaterThan) {
         String _subroutineName = this.subroutineName;
         int _size_1 = parent.mediatorAdvance.size();
-        int _plus = (_size_1 + 1);
-        this.subroutineName = (_subroutineName + Integer.valueOf(_plus));
+        this.subroutineName = (_subroutineName + Integer.valueOf(_size_1));
       }
       this.specLabel = "mediator_label_Advance";
       this.paramGridComp = "gcomp";
@@ -1790,5 +1905,41 @@ public class NUOPCMediator extends NUOPCComponent {
   public NUOPCMediator forward() {
     NUOPCComponent _forward = super.forward();
     return ((NUOPCMediator) _forward);
+  }
+  
+  public static NUOPCMediator newMediator(final IResource context, final Mediator high) {
+    NUOPCMediator _xblockexpression = null;
+    {
+      final NUOPCMediator m = NUOPCMediator.newBasicMediator(context);
+      m.forward(high);
+      _xblockexpression = m;
+    }
+    return _xblockexpression;
+  }
+  
+  public static NUOPCMediator newBasicMediator(final IResource context) {
+    NUOPCMediator _xblockexpression = null;
+    {
+      final NUOPCMediator mediator = new NUOPCMediator(context);
+      new NUOPCMediator.SetServices(mediator);
+      new NUOPCMediator.Initialization(mediator);
+      new NUOPCMediator.InitPhases(mediator.initialization);
+      new NUOPCMediator.InitSpecializations(mediator.initialization);
+      new NUOPCMediator.Run(mediator);
+      new NUOPCMediator.RunPhases(mediator.run);
+      new NUOPCMediator.RunSpecializations(mediator.run);
+      new NUOPCMediator.MediatorAdvance(mediator.run.runSpecs);
+      new NUOPCMediator.Finalize(mediator);
+      new NUOPCMediator.FinalizePhases(mediator.finalize);
+      new NUOPCMediator.FinalizeSpecializations(mediator.finalize);
+      _xblockexpression = mediator;
+    }
+    return _xblockexpression;
+  }
+  
+  public void forward(final Mediator high) {
+    String _name = high.getName();
+    this.name = _name;
+    this.initialization.forward(high);
   }
 }

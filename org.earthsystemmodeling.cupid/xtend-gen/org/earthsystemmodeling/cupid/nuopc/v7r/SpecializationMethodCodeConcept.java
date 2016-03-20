@@ -61,6 +61,7 @@ public abstract class SpecializationMethodCodeConcept<P extends CodeConcept<?, ?
   
   public SpecializationMethodCodeConcept(final P parent, final String labelComponent, final String labelName) {
     super(parent);
+    parent.setOrAddChild(this);
     this.labelComponent = labelComponent;
     this.labelName = labelName;
   }
