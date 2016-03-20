@@ -15,7 +15,7 @@ cache:
 
 before_script:
   - sudo apt-get update -q
-  - sudo apt-get install gfortran libopenmpi-dev openmpi-bin openmpi-dev -y
+  - sudo apt-get install gfortran libopenmpi-dev openmpi-bin openmpi-dev openjdk-7-jdk -y
   - if [[ "$TRAVIS_OS_NAME" == "linux" ]]; then export DISPLAY=:99.0  ;fi
   - if [[ "$TRAVIS_OS_NAME" == "linux" ]]; then sh -e /etc/init.d/xvfb start  ;fi
   - if [ ! -d "$HOME/ESMF-INSTALL/ESMF_7_0_0_beta_snapshot_59"  ]; then $TRAVIS_BUILD_DIR/build_esmf.sh ESMF_7_0_0_beta_snapshot_59 ;fi
@@ -28,14 +28,11 @@ matrix:
 #      env: JAVA_HOME=$(/usr/libexec/java_home)
     - os: linux
       jdk: oraclejdk7
-      dist: precise
     - os: linux
       jdk: oraclejdk7
-      dist: trusty
     - os: linux
       jdk: oraclejdk8
     - os: linux
-      dist: trusty
       jdk: openjdk7
 
 script: cd $TRAVIS_BUILD_DIR/org.earthsystemmodeling.cupid.releng && mvn clean verify
