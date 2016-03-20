@@ -27,6 +27,11 @@ import org.eclipse.photran.internal.core.parser.IDeclarationConstruct
 import org.eclipse.photran.internal.core.parser.IBodyConstruct
 import org.eclipse.photran.internal.core.parser.IASTListNode
 import static org.earthsystemmodeling.cupid.util.CodeExtraction.*
+import org.eclipse.photran.internal.core.parser.ASTModuleNode
+import org.eclipse.photran.internal.core.parser.ASTUseStmtNode
+import org.eclipse.photran.internal.core.parser.ASTRenameNode
+import org.eclipse.photran.internal.core.parser.ISpecificationPartConstruct
+import static extension org.earthsystemmodeling.cupid.nuopc.ASTQuery.*
 
 public abstract class CodeConcept<P extends CodeConcept<?,?>, A extends IASTNode> {
 	
@@ -320,6 +325,42 @@ public abstract class CodeConcept<P extends CodeConcept<?,?>, A extends IASTNode
 			ssn.body.add(0, tds)
 		}
 	}
+	
+	def static ensureImport(ASTModuleNode amn, String moduleName, String entityName, String localName) {
+			
+			var ASTUseStmtNode usn = amn.body.children.filter(ASTUseStmtNode).findFirst[usn|
+				usn.name.eic(moduleName) &&
+				(
+				usn.findAll(ASTRenameNode)?.exists[rn|
+					rn.name.eic(entityName) &&
+					rn.newName.eic(localName)
+				] ||
+				usn.findAll(ASTRenameNode).nullOrEmpty
+				) 
+			]
+			
+			if (usn == null) {
+				
+				val code = '''use «moduleName», only: «localName» => «entityName»'''
+				usn = parseLiteralStatement(code) as ASTUseStmtNode
+				
+				val last = amn.body.findLast(ASTUseStmtNode)
+				if (last != null) {
+					(amn.body as IASTListNode<IBodyConstruct>).insertAfter(last, usn)
+				}
+				else {
+					val lastSpec = amn.body.findLast(ISpecificationPartConstruct)
+					if (lastSpec != null) {
+						(amn.body as IASTListNode<IBodyConstruct>).insertAfter(lastSpec, usn)
+					}
+					else {
+						throw new CodeGenerationException("Unable to insert use statement")
+					}
+				}
+				
+			}
+			
+		}
 		
 	
 }

@@ -44,7 +44,7 @@ public class ConnectorItemProvider extends ComponentItemProvider {
 			super.getPropertyDescriptors(object);
 
 			addSourcePropertyDescriptor(object);
-			addTargetPropertyDescriptor(object);
+			addDestinationPropertyDescriptor(object);
 		}
 		return itemPropertyDescriptors;
 	}
@@ -72,19 +72,19 @@ public class ConnectorItemProvider extends ComponentItemProvider {
 	}
 
 	/**
-	 * This adds a property descriptor for the Target feature.
+	 * This adds a property descriptor for the Destination feature.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	protected void addTargetPropertyDescriptor(Object object) {
+	protected void addDestinationPropertyDescriptor(Object object) {
 		itemPropertyDescriptors.add
 			(createItemPropertyDescriptor
 				(((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(),
 				 getResourceLocator(),
-				 getString("_UI_Connector_target_feature"),
-				 getString("_UI_PropertyDescriptor_description", "_UI_Connector_target_feature", "_UI_Connector_type"),
-				 NUOPCPackage.Literals.CONNECTOR__TARGET,
+				 getString("_UI_Connector_destination_feature"),
+				 getString("_UI_PropertyDescriptor_description", "_UI_Connector_destination_feature", "_UI_Connector_type"),
+				 NUOPCPackage.Literals.CONNECTOR__DESTINATION,
 				 true,
 				 false,
 				 true,

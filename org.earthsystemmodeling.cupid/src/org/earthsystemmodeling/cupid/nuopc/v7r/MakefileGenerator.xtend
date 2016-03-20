@@ -8,6 +8,8 @@ import org.earthsystemmodeling.cupid.NUOPC.Driver
 import org.eclipse.core.resources.IFile
 import org.eclipse.core.runtime.NullProgressMonitor
 import java.io.ByteArrayInputStream
+import org.earthsystemmodeling.cupid.NUOPC.BaseModel
+import org.earthsystemmodeling.cupid.NUOPC.Connector
 
 class MakefileGenerator {
 	
@@ -72,14 +74,14 @@ class MakefileGenerator {
 		
 		
 		# -----------------------------------------------------------------------------
-		«app.name»: «app.name».o «FOR c : app.children SEPARATOR ' '»«c.name».o«ENDFOR»
+		«app.name»: «app.name».o «FOR c : app.allChildren.filter[!(it instanceof Connector)] SEPARATOR ' '»«c.name».o«ENDFOR»
 			$(ESMF_F90LINKER) $(ESMF_F90LINKOPTS) $(ESMF_F90LINKPATHS) $(ESMF_F90LINKRPATHS) -o $@ $^ $(ESMF_F90ESMFLINKLIBS)
 		
 		# module dependencies:
 		«app.name».o: «FOR d : app.children.filter(Driver) SEPARATOR ' '»«d.name».o«ENDFOR»
 		«FOR d : app.children.filter(Driver)»
 		«IF d.children.size > 0»
-		«d.name».o:  «FOR c : d.children SEPARATOR ' '»«c.name».o«ENDFOR»
+		«d.name».o:  «FOR c : d.children.filter[!(it instanceof Connector)] SEPARATOR ' '»«c.name».o«ENDFOR»
 		«ENDIF»
 		«ENDFOR»
 		

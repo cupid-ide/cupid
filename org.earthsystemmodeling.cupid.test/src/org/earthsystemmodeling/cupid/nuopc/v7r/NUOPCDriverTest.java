@@ -8,7 +8,9 @@ import static org.junit.Assert.assertTrue;
 import java.io.IOException;
 import java.util.List;
 
+import org.apache.commons.io.IOUtils;
 import org.earthsystemmodeling.cupid.NUOPC.Application;
+import org.earthsystemmodeling.cupid.NUOPC.Connector;
 import org.earthsystemmodeling.cupid.NUOPC.Driver;
 import org.earthsystemmodeling.cupid.NUOPC.Field;
 import org.earthsystemmodeling.cupid.NUOPC.Model;
@@ -87,19 +89,21 @@ public class NUOPCDriverTest {
 		IFile fDriverEsm = TestHelpers.createBlankFile(p, "esm.F90");
 		IFile fModelAtm = TestHelpers.createBlankFile(p, "atm.F90");
 		IFile fModelOcn = TestHelpers.createBlankFile(p, "ocn.F90");
+		IFile fMain = TestHelpers.createBlankFile(p, "esmApp.F90");
+		IFile fMakefile = TestHelpers.createBlankFile(p, "Makefile");
 		
 		Driver esm = factory.createDriver(); 
 		Model atm = factory.createModel();
 		Model ocn = factory.createModel();
+		Connector con = factory.createConnector();
 		Application app = factory.createApplication();
 		
+		app.setName("esmApp");
 		app.getChildren().add(esm);
-		app.getChildren().add(atm);
-		app.getChildren().add(ocn);
-		
-		esm.setName("MyDriver");
-		atm.setName("ATM");
-		ocn.setName("OCN");
+				
+		esm.setName("esm");
+		atm.setName("atm");
+		ocn.setName("ocn");
 		
 		Field f;
 		UniformGrid atmgrid;
@@ -160,8 +164,13 @@ public class NUOPCDriverTest {
 		f.setGrid(ocngrid);
 		ocn.getImportFields().add(f);
 		
+		//set up connector
+		con.setSource(atm);
+		con.setDestination(ocn);
+		
 		esm.getChildren().add(atm);
 		esm.getChildren().add(ocn);
+		esm.getChildren().add(con);
 		
 		NUOPCModel atmCodeConcept = NUOPCModel.newModel(fModelAtm, atm);
 		NUOPCModel ocnCodeConcept = NUOPCModel.newModel(fModelOcn, ocn);
@@ -177,10 +186,28 @@ public class NUOPCDriverTest {
 			TestHelpers.printAST(esmCodeConcept);
 		}
 		
-		TestHelpers.copyFileIntoProject(p, "workspace/Makefile");
-		String makeTargets[] = {"atm.o", "ocn.o", "esm.o"};
-		assertTrue("Compile check", TestHelpers.compileProject(p, NUOPCTest.ESMFMKFILE, makeTargets));
-
+		//TestHelpers.copyFileIntoProject(p, "workspace/Makefile");
+		//String makeTargets[] = {"atm.o", "ocn.o", "esm.o"};
+		//assertTrue("Compile check", TestHelpers.compileProject(p, NUOPCTest.ESMFMKFILE, makeTargets));
+		
+		MakefileGenerator.generateAndWrite(app, fMakefile);
+		String contents = IOUtils.toString(fMakefile.getContents());
+		assertTrue(contents.contains("esm.o"));
+		assertTrue(contents.contains("atm.o"));
+		assertTrue(contents.contains("ocn.o"));
+		
+		//System.out.println(contents);
+		
+		MainGenerator.generateAndWrite(app, fMain);
+		contents = IOUtils.toString(fMain.getContents());
+		assertTrue(contents.contains("ESMF_Initialize"));
+		assertTrue(contents.contains("esmApp"));
+		assertTrue(contents.contains("ESMF_Finalize"));
+		
+		assertTrue("Compile check", TestHelpers.compileProject(p, NUOPCTest.ESMFMKFILE, ""));
+		assertTrue("Execution check", TestHelpers.executeMPI(p, "./esmApp", 4));
+		assertTrue("Log Error check", TestHelpers.verifyNoLogErrors(p));
+		
 	}
 
 	@Test

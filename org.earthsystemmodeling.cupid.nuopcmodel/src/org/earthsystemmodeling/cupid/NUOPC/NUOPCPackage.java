@@ -4,6 +4,7 @@ package org.earthsystemmodeling.cupid.NUOPC;
 
 import org.eclipse.emf.ecore.EAttribute;
 import org.eclipse.emf.ecore.EClass;
+import org.eclipse.emf.ecore.EOperation;
 import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.EReference;
 
@@ -177,7 +178,7 @@ public interface NUOPCPackage extends EPackage {
 	int DRIVER__NAME = COMPONENT__NAME;
 
 	/**
-	 * The feature id for the '<em><b>Children</b></em>' reference list.
+	 * The feature id for the '<em><b>Children</b></em>' containment reference list.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
@@ -360,13 +361,13 @@ public interface NUOPCPackage extends EPackage {
 	int CONNECTOR__SOURCE = COMPONENT_FEATURE_COUNT + 0;
 
 	/**
-	 * The feature id for the '<em><b>Target</b></em>' reference.
+	 * The feature id for the '<em><b>Destination</b></em>' reference.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int CONNECTOR__TARGET = COMPONENT_FEATURE_COUNT + 1;
+	int CONNECTOR__DESTINATION = COMPONENT_FEATURE_COUNT + 1;
 
 	/**
 	 * The number of structural features of the '<em>Connector</em>' class.
@@ -424,13 +425,22 @@ public interface NUOPCPackage extends EPackage {
 	int APPLICATION_FEATURE_COUNT = 2;
 
 	/**
+	 * The operation id for the '<em>Get All Children</em>' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int APPLICATION___GET_ALL_CHILDREN = 0;
+
+	/**
 	 * The number of operations of the '<em>Application</em>' class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int APPLICATION_OPERATION_COUNT = 0;
+	int APPLICATION_OPERATION_COUNT = 1;
 
 	/**
 	 * The meta object id for the '{@link org.earthsystemmodeling.cupid.NUOPC.impl.FieldImpl <em>Field</em>}' class.
@@ -690,10 +700,10 @@ public interface NUOPCPackage extends EPackage {
 	EClass getDriver();
 
 	/**
-	 * Returns the meta object for the reference list '{@link org.earthsystemmodeling.cupid.NUOPC.Driver#getChildren <em>Children</em>}'.
+	 * Returns the meta object for the containment reference list '{@link org.earthsystemmodeling.cupid.NUOPC.Driver#getChildren <em>Children</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @return the meta object for the reference list '<em>Children</em>'.
+	 * @return the meta object for the containment reference list '<em>Children</em>'.
 	 * @see org.earthsystemmodeling.cupid.NUOPC.Driver#getChildren()
 	 * @see #getDriver()
 	 * @generated
@@ -742,15 +752,15 @@ public interface NUOPCPackage extends EPackage {
 	EReference getConnector_Source();
 
 	/**
-	 * Returns the meta object for the reference '{@link org.earthsystemmodeling.cupid.NUOPC.Connector#getTarget <em>Target</em>}'.
+	 * Returns the meta object for the reference '{@link org.earthsystemmodeling.cupid.NUOPC.Connector#getDestination <em>Destination</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @return the meta object for the reference '<em>Target</em>'.
-	 * @see org.earthsystemmodeling.cupid.NUOPC.Connector#getTarget()
+	 * @return the meta object for the reference '<em>Destination</em>'.
+	 * @see org.earthsystemmodeling.cupid.NUOPC.Connector#getDestination()
 	 * @see #getConnector()
 	 * @generated
 	 */
-	EReference getConnector_Target();
+	EReference getConnector_Destination();
 
 	/**
 	 * Returns the meta object for class '{@link org.earthsystemmodeling.cupid.NUOPC.Application <em>Application</em>}'.
@@ -783,6 +793,16 @@ public interface NUOPCPackage extends EPackage {
 	 * @generated
 	 */
 	EReference getApplication_Children();
+
+	/**
+	 * Returns the meta object for the '{@link org.earthsystemmodeling.cupid.NUOPC.Application#getAllChildren() <em>Get All Children</em>}' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the '<em>Get All Children</em>' operation.
+	 * @see org.earthsystemmodeling.cupid.NUOPC.Application#getAllChildren()
+	 * @generated
+	 */
+	EOperation getApplication__GetAllChildren();
 
 	/**
 	 * Returns the meta object for class '{@link org.earthsystemmodeling.cupid.NUOPC.Field <em>Field</em>}'.
@@ -988,7 +1008,7 @@ public interface NUOPCPackage extends EPackage {
 		EClass DRIVER = eINSTANCE.getDriver();
 
 		/**
-		 * The meta object literal for the '<em><b>Children</b></em>' reference list feature.
+		 * The meta object literal for the '<em><b>Children</b></em>' containment reference list feature.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
 		 * @generated
@@ -1034,12 +1054,12 @@ public interface NUOPCPackage extends EPackage {
 		EReference CONNECTOR__SOURCE = eINSTANCE.getConnector_Source();
 
 		/**
-		 * The meta object literal for the '<em><b>Target</b></em>' reference feature.
+		 * The meta object literal for the '<em><b>Destination</b></em>' reference feature.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
 		 * @generated
 		 */
-		EReference CONNECTOR__TARGET = eINSTANCE.getConnector_Target();
+		EReference CONNECTOR__DESTINATION = eINSTANCE.getConnector_Destination();
 
 		/**
 		 * The meta object literal for the '{@link org.earthsystemmodeling.cupid.NUOPC.impl.ApplicationImpl <em>Application</em>}' class.
@@ -1066,6 +1086,14 @@ public interface NUOPCPackage extends EPackage {
 		 * @generated
 		 */
 		EReference APPLICATION__CHILDREN = eINSTANCE.getApplication_Children();
+
+		/**
+		 * The meta object literal for the '<em><b>Get All Children</b></em>' operation.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EOperation APPLICATION___GET_ALL_CHILDREN = eINSTANCE.getApplication__GetAllChildren();
 
 		/**
 		 * The meta object literal for the '{@link org.earthsystemmodeling.cupid.NUOPC.impl.FieldImpl <em>Field</em>}' class.

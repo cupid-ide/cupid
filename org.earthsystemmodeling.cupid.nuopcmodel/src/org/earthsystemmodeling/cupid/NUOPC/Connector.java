@@ -13,7 +13,7 @@ package org.earthsystemmodeling.cupid.NUOPC;
  * </p>
  * <ul>
  *   <li>{@link org.earthsystemmodeling.cupid.NUOPC.Connector#getSource <em>Source</em>}</li>
- *   <li>{@link org.earthsystemmodeling.cupid.NUOPC.Connector#getTarget <em>Target</em>}</li>
+ *   <li>{@link org.earthsystemmodeling.cupid.NUOPC.Connector#getDestination <em>Destination</em>}</li>
  * </ul>
  *
  * @see org.earthsystemmodeling.cupid.NUOPC.NUOPCPackage#getConnector()
@@ -48,29 +48,29 @@ public interface Connector extends Component {
 	void setSource(BaseModel value);
 
 	/**
-	 * Returns the value of the '<em><b>Target</b></em>' reference.
+	 * Returns the value of the '<em><b>Destination</b></em>' reference.
 	 * <!-- begin-user-doc -->
 	 * <p>
-	 * If the meaning of the '<em>Target</em>' reference isn't clear,
+	 * If the meaning of the '<em>Destination</em>' reference isn't clear,
 	 * there really should be more of a description here...
 	 * </p>
 	 * <!-- end-user-doc -->
-	 * @return the value of the '<em>Target</em>' reference.
-	 * @see #setTarget(BaseModel)
-	 * @see org.earthsystemmodeling.cupid.NUOPC.NUOPCPackage#getConnector_Target()
+	 * @return the value of the '<em>Destination</em>' reference.
+	 * @see #setDestination(BaseModel)
+	 * @see org.earthsystemmodeling.cupid.NUOPC.NUOPCPackage#getConnector_Destination()
 	 * @model required="true"
 	 * @generated
 	 */
-	BaseModel getTarget();
+	BaseModel getDestination();
 
 	/**
-	 * Sets the value of the '{@link org.earthsystemmodeling.cupid.NUOPC.Connector#getTarget <em>Target</em>}' reference.
+	 * Sets the value of the '{@link org.earthsystemmodeling.cupid.NUOPC.Connector#getDestination <em>Destination</em>}' reference.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @param value the new value of the '<em>Target</em>' reference.
-	 * @see #getTarget()
+	 * @param value the new value of the '<em>Destination</em>' reference.
+	 * @see #getDestination()
 	 * @generated
 	 */
-	void setTarget(BaseModel value);
+	void setDestination(BaseModel value);
 
 } // Connector

@@ -7,10 +7,13 @@ import java.util.Collection;
 import org.earthsystemmodeling.cupid.NUOPC.Component;
 import org.earthsystemmodeling.cupid.NUOPC.Driver;
 import org.earthsystemmodeling.cupid.NUOPC.NUOPCPackage;
+import org.eclipse.emf.common.notify.NotificationChain;
 import org.eclipse.emf.common.util.EList;
 
 import org.eclipse.emf.ecore.EClass;
-import org.eclipse.emf.ecore.util.EObjectResolvingEList;
+import org.eclipse.emf.ecore.InternalEObject;
+import org.eclipse.emf.ecore.util.EObjectContainmentEList;
+import org.eclipse.emf.ecore.util.InternalEList;
 
 /**
  * <!-- begin-user-doc -->
@@ -27,7 +30,7 @@ import org.eclipse.emf.ecore.util.EObjectResolvingEList;
  */
 public class DriverImpl extends ComponentImpl implements Driver {
 	/**
-	 * The cached value of the '{@link #getChildren() <em>Children</em>}' reference list.
+	 * The cached value of the '{@link #getChildren() <em>Children</em>}' containment reference list.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @see #getChildren()
@@ -62,9 +65,23 @@ public class DriverImpl extends ComponentImpl implements Driver {
 	 */
 	public EList<Component> getChildren() {
 		if (children == null) {
-			children = new EObjectResolvingEList<Component>(Component.class, this, NUOPCPackage.DRIVER__CHILDREN);
+			children = new EObjectContainmentEList<Component>(Component.class, this, NUOPCPackage.DRIVER__CHILDREN);
 		}
 		return children;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	@Override
+	public NotificationChain eInverseRemove(InternalEObject otherEnd, int featureID, NotificationChain msgs) {
+		switch (featureID) {
+			case NUOPCPackage.DRIVER__CHILDREN:
+				return ((InternalEList<?>)getChildren()).basicRemove(otherEnd, msgs);
+		}
+		return super.eInverseRemove(otherEnd, featureID, msgs);
 	}
 
 	/**

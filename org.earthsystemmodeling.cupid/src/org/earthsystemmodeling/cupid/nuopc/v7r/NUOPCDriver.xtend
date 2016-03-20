@@ -33,6 +33,8 @@ import org.earthsystemmodeling.cupid.NUOPC.Driver
 import org.earthsystemmodeling.cupid.NUOPC.Model
 import org.earthsystemmodeling.cupid.nuopc.v7r.NUOPCBaseModel.RealizeField
 import org.earthsystemmodeling.cupid.nuopc.v7r.NUOPCBaseModel.AdvertiseField
+import org.earthsystemmodeling.cupid.NUOPC.BaseModel
+import org.earthsystemmodeling.cupid.NUOPC.Connector
 
 @Label(label="NUOPC Driver")
 @MappingType("module")
@@ -941,10 +943,6 @@ type(ESMF_Clock)           :: internalClock
 			code = 			
 '''
 
-! call into SetServices for all Model, Mediator, and Connector components
-
-
-
 ! set the model clock
 call ESMF_TimeIntervalSet(timeStep, m=«paramint(15)», rc=«paramRC») ! 15 minute steps
 if (ESMF_LogFoundError(rcToCheck=«paramRC», msg=ESMF_LOGERR_PASSTHRU, &
@@ -987,8 +985,14 @@ if (ESMF_LogFoundError(rcToCheck=«paramRC», msg=ESMF_LOGERR_PASSTHRU, &
 		}
 		
 		def forward(Driver high) {
-			high.children.filter(Model).forEach[m|
-				new SetModelServices_AddComp(this, "\""+m.name+"\"", m.name)
+			high.children.forEach[c|
+				if (c instanceof BaseModel) {
+					new SetModelServices_AddComp(this, "\""+c.name+"\"", c.name)
+				}
+				else if (c instanceof Connector) {
+					//assumes generic connector
+					new SetModelServices_AddComp(this, "\""+c.source.name+"\"", "\""+c.destination.name+"\"", "NUOPC_Connector");	
+				}
 			]
 		}
 		
@@ -1029,6 +1033,14 @@ if (ESMF_LogFoundError(rcToCheck=«paramRC», msg=ESMF_LOGERR_PASSTHRU, &
 			this.compSetServices = moduleName + "_SetServices"
 		}
 		
+		new(SetModelServices parent, String srcCompLabel, String dstCompLabel, String moduleName) {
+			this(parent)
+			this.srcCompLabel = srcCompLabel
+			this.dstCompLabel = dstCompLabel
+			this.moduleName = moduleName
+			this.compSetServices = "cplSS"
+		}
+		
 		override name() {
 			if (compLabel != null) compLabel
 			else if (srcCompLabel != null && dstCompLabel != null) srcCompLabel + " => " + dstCompLabel
@@ -1064,51 +1076,12 @@ if (ESMF_LogFoundError(rcToCheck=«paramRC», msg=ESMF_LOGERR_PASSTHRU, &
 			
 		}
 		
-		def ensureImport(ASTModuleNode amn, String moduleName, String entityName, String localName) {
-			
-			var ASTUseStmtNode usn = amn.body.children.filter(ASTUseStmtNode).findFirst[usn|
-				usn.name.eic(moduleName) &&
-				(
-				usn.findAll(ASTRenameNode)?.exists[rn|
-					rn.name.eic(entityName) &&
-					rn.newName.eic(localName)
-				] ||
-				usn.findAll(ASTRenameNode).nullOrEmpty
-				) 
-			]
-			
-			if (usn == null) {
-				
-				val code = '''use «moduleName», only: «localName» => «entityName»'''
-				usn = parseLiteralStatement(code) as ASTUseStmtNode
-				
-				val last = amn.body.findLast(ASTUseStmtNode)
-				if (last != null) {
-					(amn.body as IASTListNode<IBodyConstruct>).insertAfter(last, usn)
-				}
-				else {
-					val lastSpec = amn.body.findLast(ISpecificationPartConstruct)
-					if (lastSpec != null) {
-						(amn.body as IASTListNode<IBodyConstruct>).insertAfter(lastSpec, usn)
-					}
-					else {
-						throw new CodeGenerationException("Unable to insert use statement")
-					}
-				}
-				
-			}
-			
-		}
+		
 		
 		override forward() {
 			
 			var ASTSubroutineSubprogramNode ssn = _parent.ASTRef			
 			var ASTModuleNode amn = _parent.module.ASTRef
-			
-			//amn.allDefinitions.forEach[d|
-			//	System.out.println(d)
-			//	d.
-			//]
 			
 			//ensure we are importing module
 			if (moduleName!=null) {

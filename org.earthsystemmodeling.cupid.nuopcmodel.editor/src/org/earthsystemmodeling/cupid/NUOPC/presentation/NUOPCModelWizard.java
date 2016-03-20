@@ -183,11 +183,12 @@ public class NUOPCModelWizard extends Wizard implements INewWizard {
 	 * Returns the names of the types that can be created as the root object.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @generated
+	 * @generated NOT
 	 */
 	protected Collection<String> getInitialObjectNames() {
 		if (initialObjectNames == null) {
 			initialObjectNames = new ArrayList<String>();
+			/*
 			for (EClassifier eClassifier : nuopcPackage.getEClassifiers()) {
 				if (eClassifier instanceof EClass) {
 					EClass eClass = (EClass)eClassifier;
@@ -196,6 +197,9 @@ public class NUOPCModelWizard extends Wizard implements INewWizard {
 					}
 				}
 			}
+			*/
+			//RSD - Application is only root element for now
+			initialObjectNames.add(nuopcPackage.getApplication().getName());
 			Collections.sort(initialObjectNames, CommonPlugin.INSTANCE.getComparator());
 		}
 		return initialObjectNames;

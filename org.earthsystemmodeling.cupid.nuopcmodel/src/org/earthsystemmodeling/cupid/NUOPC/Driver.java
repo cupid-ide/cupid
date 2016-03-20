@@ -22,7 +22,7 @@ import org.eclipse.emf.common.util.EList;
  */
 public interface Driver extends Component {
 	/**
-	 * Returns the value of the '<em><b>Children</b></em>' reference list.
+	 * Returns the value of the '<em><b>Children</b></em>' containment reference list.
 	 * The list contents are of type {@link org.earthsystemmodeling.cupid.NUOPC.Component}.
 	 * <!-- begin-user-doc -->
 	 * <p>
@@ -30,9 +30,9 @@ public interface Driver extends Component {
 	 * there really should be more of a description here...
 	 * </p>
 	 * <!-- end-user-doc -->
-	 * @return the value of the '<em>Children</em>' reference list.
+	 * @return the value of the '<em>Children</em>' containment reference list.
 	 * @see org.earthsystemmodeling.cupid.NUOPC.NUOPCPackage#getDriver_Children()
-	 * @model
+	 * @model containment="true"
 	 * @generated
 	 */
 	EList<Component> getChildren();

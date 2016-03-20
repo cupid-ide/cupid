@@ -8,15 +8,13 @@ import org.eclipse.core.runtime.Path;
 import org.eclipse.core.runtime.Status;
 import org.eclipse.jface.resource.ImageDescriptor;
 import org.eclipse.ui.plugin.AbstractUIPlugin;
-import org.osgi.framework.Bundle;
 import org.osgi.framework.BundleContext;
-import org.osgi.framework.FrameworkUtil;
 
 
 public class CupidActivator extends AbstractUIPlugin {
 
 	private static CupidActivator instance;
-	private static String PLUGIN_ID;
+	public static String PLUGIN_ID;
 	
 	public CupidActivator() {
 		

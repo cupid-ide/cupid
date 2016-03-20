@@ -2,15 +2,16 @@
  */
 package org.earthsystemmodeling.cupid.NUOPC.impl;
 
+import java.lang.reflect.InvocationTargetException;
 import java.util.Collection;
-
 import org.earthsystemmodeling.cupid.NUOPC.Application;
 import org.earthsystemmodeling.cupid.NUOPC.Component;
+import org.earthsystemmodeling.cupid.NUOPC.Driver;
 import org.earthsystemmodeling.cupid.NUOPC.NUOPCPackage;
 
 import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.common.notify.NotificationChain;
-
+import org.eclipse.emf.common.util.BasicEList;
 import org.eclipse.emf.common.util.EList;
 
 import org.eclipse.emf.ecore.EClass;
@@ -120,6 +121,30 @@ public class ApplicationImpl extends MinimalEObjectImpl.Container implements App
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
+	 * @generated NOT
+	 */
+	public EList<Component> getAllChildren() {	
+		EList<Component> children = new BasicEList<Component>();
+		children.addAll(getChildren());
+		for (Component c : getChildren()) {
+			collectChildren(c, children);
+		}
+		return children;
+	}
+
+	protected void collectChildren(Component c, EList<Component> children) {
+		if (c instanceof Driver) {
+			Driver d = (Driver) c;
+			children.addAll(d.getChildren());
+			for (Component child : d.getChildren()) {
+				collectChildren(child, children);
+			}
+		}
+	}
+	
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
 	 * @generated
 	 */
 	@Override
@@ -199,6 +224,20 @@ public class ApplicationImpl extends MinimalEObjectImpl.Container implements App
 				return children != null && !children.isEmpty();
 		}
 		return super.eIsSet(featureID);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	@Override
+	public Object eInvoke(int operationID, EList<?> arguments) throws InvocationTargetException {
+		switch (operationID) {
+			case NUOPCPackage.APPLICATION___GET_ALL_CHILDREN:
+				return getAllChildren();
+		}
+		return super.eInvoke(operationID, arguments);
 	}
 
 	/**

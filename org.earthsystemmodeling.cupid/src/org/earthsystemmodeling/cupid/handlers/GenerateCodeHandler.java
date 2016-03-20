@@ -7,6 +7,10 @@ import org.eclipse.core.commands.ExecutionException;
 import org.eclipse.core.resources.IFile;
 import org.eclipse.core.resources.IProject;
 import org.eclipse.core.runtime.jobs.Job;
+import org.eclipse.emf.common.util.URI;
+import org.eclipse.emf.ecore.resource.Resource;
+import org.eclipse.emf.ecore.resource.ResourceSet;
+import org.eclipse.emf.ecore.resource.impl.ResourceSetImpl;
 import org.eclipse.jface.viewers.ISelection;
 import org.eclipse.jface.viewers.ITreeSelection;
 import org.eclipse.jface.viewers.TreePath;
@@ -24,29 +28,35 @@ public class GenerateCodeHandler extends AbstractHandler {
 		if (sel instanceof ITreeSelection) {
 			final Object item = ((ITreeSelection) sel).getFirstElement();
 			
-			if (item instanceof Application) {
-
-				Application app = (Application) item;
-				//IFile file = (IFile) item;
-				//URI fileURI = URI.createPlatformResourceURI(file.getFullPath().toString(), true);
-				
-				//ResourceSet resSet = new ResourceSetImpl();
-				//Resource res = resSet.getResource(fileURI, false);
-				//NUOPCApplication app = (NUOPCApplication) res.getContents().get(0);
-				
-				IProject project = null;
-				TreePath path = ((ITreeSelection) sel).getPaths()[0];
-				for (int i = 0; i < path.getSegmentCount(); i++) {
-					if (path.getSegment(i) instanceof IProject) {
-						project = (IProject) path.getSegment(i);
-						break;
-					}
+			Application app = null;
+			
+			if (item instanceof IFile) {
+				IFile file = (IFile) item;
+				URI fileURI = URI.createFileURI(file.getLocation().toString());
+			
+				ResourceSet resSet = new ResourceSetImpl();
+				Resource res = resSet.getResource(fileURI, true);
+				app = (Application) res.getContents().get(0);	
+			}
+			else if (item instanceof Application) {
+				app = (Application) item;
+			}
+			
+			IProject project = null;
+			TreePath path = ((ITreeSelection) sel).getPaths()[0];
+			for (int i = 0; i < path.getSegmentCount(); i++) {
+				if (path.getSegment(i) instanceof IProject) {
+					project = (IProject) path.getSegment(i);
+					break;
 				}
+			}
 				
+			if (app != null && project != null) {
 				Job generateCodeJob = new GenerateCodeJob("Generate Code", app, project, true);
 				generateCodeJob.schedule();
-				
 			}
+				
+			
 			
 		}
 		

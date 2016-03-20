@@ -22,7 +22,7 @@ import org.eclipse.emf.ecore.impl.ENotificationImpl;
  * </p>
  * <ul>
  *   <li>{@link org.earthsystemmodeling.cupid.NUOPC.impl.ConnectorImpl#getSource <em>Source</em>}</li>
- *   <li>{@link org.earthsystemmodeling.cupid.NUOPC.impl.ConnectorImpl#getTarget <em>Target</em>}</li>
+ *   <li>{@link org.earthsystemmodeling.cupid.NUOPC.impl.ConnectorImpl#getDestination <em>Destination</em>}</li>
  * </ul>
  *
  * @generated
@@ -39,14 +39,14 @@ public class ConnectorImpl extends ComponentImpl implements Connector {
 	protected BaseModel source;
 
 	/**
-	 * The cached value of the '{@link #getTarget() <em>Target</em>}' reference.
+	 * The cached value of the '{@link #getDestination() <em>Destination</em>}' reference.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @see #getTarget()
+	 * @see #getDestination()
 	 * @generated
 	 * @ordered
 	 */
-	protected BaseModel target;
+	protected BaseModel destination;
 
 	/**
 	 * <!-- begin-user-doc -->
@@ -110,16 +110,16 @@ public class ConnectorImpl extends ComponentImpl implements Connector {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public BaseModel getTarget() {
-		if (target != null && target.eIsProxy()) {
-			InternalEObject oldTarget = (InternalEObject)target;
-			target = (BaseModel)eResolveProxy(oldTarget);
-			if (target != oldTarget) {
+	public BaseModel getDestination() {
+		if (destination != null && destination.eIsProxy()) {
+			InternalEObject oldDestination = (InternalEObject)destination;
+			destination = (BaseModel)eResolveProxy(oldDestination);
+			if (destination != oldDestination) {
 				if (eNotificationRequired())
-					eNotify(new ENotificationImpl(this, Notification.RESOLVE, NUOPCPackage.CONNECTOR__TARGET, oldTarget, target));
+					eNotify(new ENotificationImpl(this, Notification.RESOLVE, NUOPCPackage.CONNECTOR__DESTINATION, oldDestination, destination));
 			}
 		}
-		return target;
+		return destination;
 	}
 
 	/**
@@ -127,8 +127,8 @@ public class ConnectorImpl extends ComponentImpl implements Connector {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public BaseModel basicGetTarget() {
-		return target;
+	public BaseModel basicGetDestination() {
+		return destination;
 	}
 
 	/**
@@ -136,11 +136,11 @@ public class ConnectorImpl extends ComponentImpl implements Connector {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public void setTarget(BaseModel newTarget) {
-		BaseModel oldTarget = target;
-		target = newTarget;
+	public void setDestination(BaseModel newDestination) {
+		BaseModel oldDestination = destination;
+		destination = newDestination;
 		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, NUOPCPackage.CONNECTOR__TARGET, oldTarget, target));
+			eNotify(new ENotificationImpl(this, Notification.SET, NUOPCPackage.CONNECTOR__DESTINATION, oldDestination, destination));
 	}
 
 	/**
@@ -154,9 +154,9 @@ public class ConnectorImpl extends ComponentImpl implements Connector {
 			case NUOPCPackage.CONNECTOR__SOURCE:
 				if (resolve) return getSource();
 				return basicGetSource();
-			case NUOPCPackage.CONNECTOR__TARGET:
-				if (resolve) return getTarget();
-				return basicGetTarget();
+			case NUOPCPackage.CONNECTOR__DESTINATION:
+				if (resolve) return getDestination();
+				return basicGetDestination();
 		}
 		return super.eGet(featureID, resolve, coreType);
 	}
@@ -172,8 +172,8 @@ public class ConnectorImpl extends ComponentImpl implements Connector {
 			case NUOPCPackage.CONNECTOR__SOURCE:
 				setSource((BaseModel)newValue);
 				return;
-			case NUOPCPackage.CONNECTOR__TARGET:
-				setTarget((BaseModel)newValue);
+			case NUOPCPackage.CONNECTOR__DESTINATION:
+				setDestination((BaseModel)newValue);
 				return;
 		}
 		super.eSet(featureID, newValue);
@@ -190,8 +190,8 @@ public class ConnectorImpl extends ComponentImpl implements Connector {
 			case NUOPCPackage.CONNECTOR__SOURCE:
 				setSource((BaseModel)null);
 				return;
-			case NUOPCPackage.CONNECTOR__TARGET:
-				setTarget((BaseModel)null);
+			case NUOPCPackage.CONNECTOR__DESTINATION:
+				setDestination((BaseModel)null);
 				return;
 		}
 		super.eUnset(featureID);
@@ -207,8 +207,8 @@ public class ConnectorImpl extends ComponentImpl implements Connector {
 		switch (featureID) {
 			case NUOPCPackage.CONNECTOR__SOURCE:
 				return source != null;
-			case NUOPCPackage.CONNECTOR__TARGET:
-				return target != null;
+			case NUOPCPackage.CONNECTOR__DESTINATION:
+				return destination != null;
 		}
 		return super.eIsSet(featureID);
 	}

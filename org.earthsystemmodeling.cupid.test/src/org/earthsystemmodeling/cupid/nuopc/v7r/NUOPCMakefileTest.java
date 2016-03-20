@@ -48,7 +48,7 @@ public class NUOPCMakefileTest {
 		esm.getChildren().add(atm);
 		esm.getChildren().add(ocn);
 		
-		assertEquals(3, app.getChildren().size());
+		assertEquals(1, app.getChildren().size());
 		assertEquals(2, esm.getChildren().size());
 		
 		NUOPCModel atmCodeConcept = NUOPCModel.newModel(fModelAtm, atm);

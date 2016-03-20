@@ -8,6 +8,7 @@ import java.util.Calendar;
 import java.util.Date;
 import org.earthsystemmodeling.cupid.NUOPC.Application;
 import org.earthsystemmodeling.cupid.NUOPC.Component;
+import org.earthsystemmodeling.cupid.NUOPC.Connector;
 import org.earthsystemmodeling.cupid.NUOPC.Driver;
 import org.earthsystemmodeling.cupid.nuopc.CodeGenerationException;
 import org.eclipse.core.resources.IFile;
@@ -15,6 +16,8 @@ import org.eclipse.core.runtime.NullProgressMonitor;
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.xtend2.lib.StringConcatenation;
 import org.eclipse.xtext.xbase.lib.Exceptions;
+import org.eclipse.xtext.xbase.lib.Functions.Function1;
+import org.eclipse.xtext.xbase.lib.IterableExtensions;
 
 @SuppressWarnings("all")
 public class MakefileGenerator {
@@ -143,9 +146,16 @@ public class MakefileGenerator {
         _builder.append(_name_3, "");
         _builder.append(".o ");
         {
-          EList<Component> _children = app.getChildren();
+          EList<Component> _allChildren = app.getAllChildren();
+          final Function1<Component, Boolean> _function = new Function1<Component, Boolean>() {
+            @Override
+            public Boolean apply(final Component it) {
+              return Boolean.valueOf((!(it instanceof Connector)));
+            }
+          };
+          Iterable<Component> _filter = IterableExtensions.<Component>filter(_allChildren, _function);
           boolean _hasElements = false;
-          for(final Component c : _children) {
+          for(final Component c : _filter) {
             if (!_hasElements) {
               _hasElements = true;
             } else {
@@ -167,10 +177,10 @@ public class MakefileGenerator {
         _builder.append(_name_5, "");
         _builder.append(".o: ");
         {
-          EList<Component> _children_1 = app.getChildren();
-          Iterable<Driver> _filter = Iterables.<Driver>filter(_children_1, Driver.class);
+          EList<Component> _children = app.getChildren();
+          Iterable<Driver> _filter_1 = Iterables.<Driver>filter(_children, Driver.class);
           boolean _hasElements_1 = false;
-          for(final Driver d : _filter) {
+          for(final Driver d : _filter_1) {
             if (!_hasElements_1) {
               _hasElements_1 = true;
             } else {
@@ -183,21 +193,28 @@ public class MakefileGenerator {
         }
         _builder.newLineIfNotEmpty();
         {
-          EList<Component> _children_2 = app.getChildren();
-          Iterable<Driver> _filter_1 = Iterables.<Driver>filter(_children_2, Driver.class);
-          for(final Driver d_1 : _filter_1) {
+          EList<Component> _children_1 = app.getChildren();
+          Iterable<Driver> _filter_2 = Iterables.<Driver>filter(_children_1, Driver.class);
+          for(final Driver d_1 : _filter_2) {
             {
-              EList<Component> _children_3 = d_1.getChildren();
-              int _size = _children_3.size();
+              EList<Component> _children_2 = d_1.getChildren();
+              int _size = _children_2.size();
               boolean _greaterThan = (_size > 0);
               if (_greaterThan) {
                 String _name_7 = d_1.getName();
                 _builder.append(_name_7, "");
                 _builder.append(".o:  ");
                 {
-                  EList<Component> _children_4 = d_1.getChildren();
+                  EList<Component> _children_3 = d_1.getChildren();
+                  final Function1<Component, Boolean> _function_1 = new Function1<Component, Boolean>() {
+                    @Override
+                    public Boolean apply(final Component it) {
+                      return Boolean.valueOf((!(it instanceof Connector)));
+                    }
+                  };
+                  Iterable<Component> _filter_3 = IterableExtensions.<Component>filter(_children_3, _function_1);
                   boolean _hasElements_2 = false;
-                  for(final Component c_1 : _children_4) {
+                  for(final Component c_1 : _filter_3) {
                     if (!_hasElements_2) {
                       _hasElements_2 = true;
                     } else {

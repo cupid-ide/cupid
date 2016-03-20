@@ -1,6 +1,7 @@
 package org.earthsystemmodeling.cupid.nuopc;
 
 import com.google.common.base.Objects;
+import com.google.common.collect.Iterables;
 import java.io.InputStream;
 import java.lang.reflect.Constructor;
 import java.lang.reflect.Field;
@@ -8,10 +9,12 @@ import java.lang.reflect.ParameterizedType;
 import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import org.apache.commons.io.IOUtils;
 import org.earthsystemmodeling.cupid.annotation.Child;
+import org.earthsystemmodeling.cupid.nuopc.ASTQuery;
 import org.earthsystemmodeling.cupid.nuopc.CodeGenerationException;
 import org.earthsystemmodeling.cupid.nuopc.ReverseEngineerException;
 import org.earthsystemmodeling.cupid.util.CodeExtraction;
@@ -23,13 +26,18 @@ import org.eclipse.core.runtime.NullProgressMonitor;
 import org.eclipse.ltk.core.refactoring.Change;
 import org.eclipse.ltk.core.refactoring.TextFileChange;
 import org.eclipse.photran.core.IFortranAST;
+import org.eclipse.photran.internal.core.lexer.Token;
 import org.eclipse.photran.internal.core.parser.ASTExecutableProgramNode;
+import org.eclipse.photran.internal.core.parser.ASTModuleNode;
+import org.eclipse.photran.internal.core.parser.ASTRenameNode;
 import org.eclipse.photran.internal.core.parser.ASTSubroutineSubprogramNode;
 import org.eclipse.photran.internal.core.parser.ASTTypeDeclarationStmtNode;
+import org.eclipse.photran.internal.core.parser.ASTUseStmtNode;
 import org.eclipse.photran.internal.core.parser.IASTListNode;
 import org.eclipse.photran.internal.core.parser.IASTNode;
 import org.eclipse.photran.internal.core.parser.IBodyConstruct;
 import org.eclipse.photran.internal.core.parser.IDeclarationConstruct;
+import org.eclipse.photran.internal.core.parser.ISpecificationPartConstruct;
 import org.eclipse.photran.internal.core.reindenter.Reindenter;
 import org.eclipse.photran.internal.core.vpg.PhotranVPG;
 import org.eclipse.text.edits.ReplaceEdit;
@@ -635,6 +643,90 @@ public abstract class CodeConcept<P extends CodeConcept<?, ?>, A extends IASTNod
     } else {
       IASTListNode<IBodyConstruct> _body_2 = ssn.getBody();
       _body_2.add(0, tds);
+    }
+  }
+  
+  public static void ensureImport(final ASTModuleNode amn, final String moduleName, final String entityName, final String localName) {
+    try {
+      IASTListNode<? extends IASTNode> _body = amn.getBody();
+      Iterable<? extends IASTNode> _children = _body.getChildren();
+      Iterable<ASTUseStmtNode> _filter = Iterables.<ASTUseStmtNode>filter(_children, ASTUseStmtNode.class);
+      final Function1<ASTUseStmtNode, Boolean> _function = new Function1<ASTUseStmtNode, Boolean>() {
+        @Override
+        public Boolean apply(final ASTUseStmtNode usn) {
+          boolean _and = false;
+          Token _name = usn.getName();
+          boolean _eic = ASTQuery.eic(_name, moduleName);
+          if (!_eic) {
+            _and = false;
+          } else {
+            boolean _or = false;
+            Set<ASTRenameNode> _findAll = usn.<ASTRenameNode>findAll(ASTRenameNode.class);
+            boolean _exists = false;
+            if (_findAll!=null) {
+              final Function1<ASTRenameNode, Boolean> _function = new Function1<ASTRenameNode, Boolean>() {
+                @Override
+                public Boolean apply(final ASTRenameNode rn) {
+                  boolean _and = false;
+                  Token _name = rn.getName();
+                  boolean _eic = ASTQuery.eic(_name, entityName);
+                  if (!_eic) {
+                    _and = false;
+                  } else {
+                    Token _newName = rn.getNewName();
+                    boolean _eic_1 = ASTQuery.eic(_newName, localName);
+                    _and = _eic_1;
+                  }
+                  return Boolean.valueOf(_and);
+                }
+              };
+              _exists=IterableExtensions.<ASTRenameNode>exists(_findAll, _function);
+            }
+            if (_exists) {
+              _or = true;
+            } else {
+              Set<ASTRenameNode> _findAll_1 = usn.<ASTRenameNode>findAll(ASTRenameNode.class);
+              boolean _isNullOrEmpty = IterableExtensions.isNullOrEmpty(_findAll_1);
+              _or = _isNullOrEmpty;
+            }
+            _and = _or;
+          }
+          return Boolean.valueOf(_and);
+        }
+      };
+      ASTUseStmtNode usn = IterableExtensions.<ASTUseStmtNode>findFirst(_filter, _function);
+      boolean _equals = Objects.equal(usn, null);
+      if (_equals) {
+        StringConcatenation _builder = new StringConcatenation();
+        _builder.append("use ");
+        _builder.append(moduleName, "");
+        _builder.append(", only: ");
+        _builder.append(localName, "");
+        _builder.append(" => ");
+        _builder.append(entityName, "");
+        final String code = _builder.toString();
+        IBodyConstruct _parseLiteralStatement = CodeExtraction.parseLiteralStatement(code);
+        usn = ((ASTUseStmtNode) _parseLiteralStatement);
+        IASTListNode<? extends IASTNode> _body_1 = amn.getBody();
+        final ASTUseStmtNode last = _body_1.<ASTUseStmtNode>findLast(ASTUseStmtNode.class);
+        boolean _notEquals = (!Objects.equal(last, null));
+        if (_notEquals) {
+          IASTListNode<? extends IASTNode> _body_2 = amn.getBody();
+          ((IASTListNode<IBodyConstruct>) _body_2).insertAfter(last, usn);
+        } else {
+          IASTListNode<? extends IASTNode> _body_3 = amn.getBody();
+          final ISpecificationPartConstruct lastSpec = _body_3.<ISpecificationPartConstruct>findLast(ISpecificationPartConstruct.class);
+          boolean _notEquals_1 = (!Objects.equal(lastSpec, null));
+          if (_notEquals_1) {
+            IASTListNode<? extends IASTNode> _body_4 = amn.getBody();
+            ((IASTListNode<IBodyConstruct>) _body_4).insertAfter(lastSpec, usn);
+          } else {
+            throw new CodeGenerationException("Unable to insert use statement");
+          }
+        }
+      }
+    } catch (Throwable _e) {
+      throw Exceptions.sneakyThrow(_e);
     }
   }
   

@@ -16,6 +16,7 @@ import org.earthsystemmodeling.cupid.NUOPC.NUOPCPackage;
 import org.earthsystemmodeling.cupid.NUOPC.UniformGrid;
 import org.eclipse.emf.ecore.EAttribute;
 import org.eclipse.emf.ecore.EClass;
+import org.eclipse.emf.ecore.EOperation;
 import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.EReference;
 
@@ -272,7 +273,7 @@ public class NUOPCPackageImpl extends EPackageImpl implements NUOPCPackage {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EReference getConnector_Target() {
+	public EReference getConnector_Destination() {
 		return (EReference)connectorEClass.getEStructuralFeatures().get(1);
 	}
 
@@ -301,6 +302,15 @@ public class NUOPCPackageImpl extends EPackageImpl implements NUOPCPackage {
 	 */
 	public EReference getApplication_Children() {
 		return (EReference)applicationEClass.getEStructuralFeatures().get(1);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EOperation getApplication__GetAllChildren() {
+		return applicationEClass.getEOperations().get(0);
 	}
 
 	/**
@@ -447,11 +457,12 @@ public class NUOPCPackageImpl extends EPackageImpl implements NUOPCPackage {
 
 		connectorEClass = createEClass(CONNECTOR);
 		createEReference(connectorEClass, CONNECTOR__SOURCE);
-		createEReference(connectorEClass, CONNECTOR__TARGET);
+		createEReference(connectorEClass, CONNECTOR__DESTINATION);
 
 		applicationEClass = createEClass(APPLICATION);
 		createEAttribute(applicationEClass, APPLICATION__NAME);
 		createEReference(applicationEClass, APPLICATION__CHILDREN);
+		createEOperation(applicationEClass, APPLICATION___GET_ALL_CHILDREN);
 
 		fieldEClass = createEClass(FIELD);
 		createEAttribute(fieldEClass, FIELD__NAME);
@@ -513,7 +524,7 @@ public class NUOPCPackageImpl extends EPackageImpl implements NUOPCPackage {
 		initEReference(getBaseModel_ExportFields(), this.getField(), null, "exportFields", null, 0, -1, BaseModel.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
 		initEClass(driverEClass, Driver.class, "Driver", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
-		initEReference(getDriver_Children(), this.getComponent(), null, "children", null, 0, -1, Driver.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEReference(getDriver_Children(), this.getComponent(), null, "children", null, 0, -1, Driver.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
 		initEClass(modelEClass, Model.class, "Model", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 
@@ -521,11 +532,13 @@ public class NUOPCPackageImpl extends EPackageImpl implements NUOPCPackage {
 
 		initEClass(connectorEClass, Connector.class, "Connector", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 		initEReference(getConnector_Source(), this.getBaseModel(), null, "source", null, 1, 1, Connector.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-		initEReference(getConnector_Target(), this.getBaseModel(), null, "target", null, 1, 1, Connector.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEReference(getConnector_Destination(), this.getBaseModel(), null, "destination", null, 1, 1, Connector.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
 		initEClass(applicationEClass, Application.class, "Application", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 		initEAttribute(getApplication_Name(), ecorePackage.getEString(), "name", null, 1, 1, Application.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEReference(getApplication_Children(), this.getComponent(), null, "children", null, 0, -1, Application.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+
+		initEOperation(getApplication__GetAllChildren(), this.getComponent(), "getAllChildren", 0, -1, IS_UNIQUE, IS_ORDERED);
 
 		initEClass(fieldEClass, Field.class, "Field", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 		initEAttribute(getField_Name(), ecorePackage.getEString(), "name", null, 1, 1, Field.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
