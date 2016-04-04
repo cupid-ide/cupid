@@ -2,12 +2,11 @@ package org.earthsystemmodeling.cupid.handlers;
 
 import java.io.ByteArrayInputStream;
 import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 
 import org.earthsystemmodeling.cupid.NUOPC.Application;
 import org.earthsystemmodeling.cupid.NUOPC.Component;
+import org.earthsystemmodeling.cupid.NUOPC.Connector;
 import org.earthsystemmodeling.cupid.NUOPC.Driver;
 import org.earthsystemmodeling.cupid.NUOPC.Mediator;
 import org.earthsystemmodeling.cupid.NUOPC.Model;
@@ -26,12 +25,9 @@ import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.NullProgressMonitor;
-import org.eclipse.core.runtime.QualifiedName;
 import org.eclipse.core.runtime.Status;
 import org.eclipse.core.runtime.jobs.Job;
 import org.eclipse.jface.dialogs.MessageDialog;
-import org.eclipse.swt.widgets.Display;
-import org.eclipse.swt.widgets.Shell;
 import org.eclipse.ui.IWorkbenchPage;
 import org.eclipse.ui.IWorkbenchWindow;
 import org.eclipse.ui.MultiPartInitException;
@@ -80,6 +76,10 @@ public class GenerateCodeJob extends Job {
 		
 		for (Component comp : app.getAllChildren()) {
 			
+			if (comp instanceof Connector) {
+				continue;  //for now, custom connectors now supported
+			}
+			
 			IFile file;
 			try {
 				file = createEmptyFile(container, comp.getName() + ".F90");
@@ -99,10 +99,13 @@ public class GenerateCodeJob extends Job {
 				newComp = NUOPCModel.newModel(file, (Model) comp);
 			}
 			else if (comp instanceof Mediator) {
-				newComp = new NUOPCMediator(file);
+				newComp = NUOPCMediator.newMediator(file, (Mediator) comp);
 			}
+			//else if (comp instanceof Connector) {
+			//	continue;  ///custom connectors not yet supported
+			//}
 			
-			newComp.name = comp.getName();
+			//newComp.name = comp.getName();
 			newComp = newComp.forward();
 			new ApplyCodeConceptChanges(newComp).run(monitor);
 			changedFiles.add(file);

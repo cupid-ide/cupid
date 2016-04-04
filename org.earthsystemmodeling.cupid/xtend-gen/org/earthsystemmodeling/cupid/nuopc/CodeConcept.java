@@ -91,6 +91,10 @@ public abstract class CodeConcept<P extends CodeConcept<?, ?>, A extends IASTNod
   }
   
   public void setOrAddChild(final CodeConcept<?, ?> child) {
+    this.setOrAddChild(child, true);
+  }
+  
+  public void setOrAddChild(final CodeConcept<?, ?> child, final boolean failIfMissing) {
     try {
       List<Field> _childFields = this.getChildFields();
       final Function1<Field, Boolean> _function = new Function1<Field, Boolean>() {
@@ -154,7 +158,9 @@ public abstract class CodeConcept<P extends CodeConcept<?, ?>, A extends IASTNod
             throw new CodeGenerationException("Cannot add child to null list");
           }
         } else {
-          throw new CodeGenerationException("Error finding child field");
+          if (failIfMissing) {
+            throw new CodeGenerationException("Error finding child field");
+          }
         }
       }
     } catch (Throwable _e) {

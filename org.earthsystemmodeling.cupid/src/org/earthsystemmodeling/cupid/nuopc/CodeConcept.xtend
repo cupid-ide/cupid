@@ -57,7 +57,11 @@ public abstract class CodeConcept<P extends CodeConcept<?,?>, A extends IASTNode
 		paramMarkers = newArrayList()
 	}
 		
-	def void setOrAddChild(CodeConcept<?,?> child) {		
+	def void setOrAddChild(CodeConcept<?,?> child) {
+		setOrAddChild(child, true)
+	}
+		
+	def void setOrAddChild(CodeConcept<?,?> child, boolean failIfMissing) {		
 		//find field of matching type and assign child to it
 		var childField = getChildFields.findFirst[it.type.isInstance(child)]
 		if (childField != null) {
@@ -84,7 +88,7 @@ public abstract class CodeConcept<P extends CodeConcept<?,?>, A extends IASTNode
 					throw new CodeGenerationException("Cannot add child to null list")
 				}
 			}
-			else {
+			else if (failIfMissing) {
 				throw new CodeGenerationException("Error finding child field")
 			}
 		}

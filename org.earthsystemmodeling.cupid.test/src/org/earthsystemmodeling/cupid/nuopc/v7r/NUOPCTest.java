@@ -14,6 +14,7 @@ import java.util.List;
 
 import org.apache.commons.io.IOUtils;
 import org.apache.commons.io.LineIterator;
+import org.earthsystemmodeling.cupid.annotation.Child;
 import org.earthsystemmodeling.cupid.nuopc.BasicCodeConcept;
 import org.earthsystemmodeling.cupid.nuopc.CodeConcept;
 import org.earthsystemmodeling.cupid.nuopc.v7r.NUOPCComponent.GenericImport;
@@ -221,8 +222,12 @@ public class NUOPCTest {
 		ast = PhotranVPG.getInstance().acquireTransientAST(f);
 		
 		//mock parent
-		CodeConcept<?, ASTModuleNode> parent = 
-				new BasicCodeConcept(null, (ASTModuleNode) ast.getRoot().getProgramUnitList().get(0));
+		//CodeConcept<?, ASTModuleNode> parent = 
+		//		new BasicCodeConcept(null, (ASTModuleNode) ast.getRoot().getProgramUnitList().get(0)) {
+		//};
+
+		CodeConcept<?, ASTModuleNode> parent = new ModuleCodeConcept(null);
+		parent.setASTRef((ASTModuleNode) ast.getRoot().getProgramUnitList().get(0));
 		
 		ASTSubroutineSubprogramNode setServicesNode = null;
 		for (ASTSubroutineSubprogramNode ssn : ast.getRoot().findAll(ASTSubroutineSubprogramNode.class)) {
@@ -256,7 +261,8 @@ public class NUOPCTest {
 		ast = PhotranVPG.getInstance().acquireTransientAST(f);
 		
 		//mock parent
-		parent = new BasicCodeConcept(null, (ASTModuleNode) ast.getRoot().getProgramUnitList().get(0));
+		parent = new ModuleCodeConcept(null);
+		parent.setASTRef((ASTModuleNode) ast.getRoot().getProgramUnitList().get(0));
 		
 		setServicesNode = null;
 		for (ASTSubroutineSubprogramNode ssn : ast.getRoot().findAll(ASTSubroutineSubprogramNode.class)) {
@@ -597,6 +603,19 @@ public class NUOPCTest {
 			return ss;
 		}
 	}
+	
+	//mock parent
+	public static class ModuleCodeConcept extends CodeConcept<CodeConcept<?,?>, ASTModuleNode> { 
+		
+		@Child
+		public SMCC smcc;
+				
+		public ModuleCodeConcept(CodeConcept<?, ?> parent) {
+			super(parent);
+		}
+
+		
+	};
 		
 
 }
