@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<description:Group xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:description="http://www.eclipse.org/sirius/description/1.1.0" xmlns:description_1="http://www.eclipse.org/sirius/diagram/description/1.1.0" xmlns:style="http://www.eclipse.org/sirius/diagram/description/style/1.1.0" xmlns:tool="http://www.eclipse.org/sirius/diagram/description/tool/1.1.0" xmlns:tool_1="http://www.eclipse.org/sirius/description/tool/1.1.0" name="nuopc" version="10.1.0.201507271600">
-  <ownedViewpoints name="nuopcViewport" label="NUOPC Viewport" modelFileExtension="nuopc">
-    <ownedRepresentations xsi:type="description_1:DiagramDescription" name="nuopcDiagram" label="NUOPC Application Diagram" domainClass="NUOPC.Application" enablePopupBars="true">
+<description:Group xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:description="http://www.eclipse.org/sirius/description/1.1.0" xmlns:description_1="http://www.eclipse.org/sirius/diagram/description/1.1.0" xmlns:description_2="http://www.eclipse.org/sirius/table/description/1.1.0" xmlns:style="http://www.eclipse.org/sirius/diagram/description/style/1.1.0" xmlns:tool="http://www.eclipse.org/sirius/diagram/description/tool/1.1.0" xmlns:tool_1="http://www.eclipse.org/sirius/description/tool/1.1.0" name="nuopc" version="10.1.0.201507271600">
+  <ownedViewpoints name="nuopcViewport" label="NUOPC" modelFileExtension="nuopc">
+    <ownedRepresentations xsi:type="description_1:DiagramDescription" name="nuopcDiagram" label="NUOPC Architecture Diagram" titleExpression="aql:self.name + ' Architecture Diagram'" initialisation="true" showOnStartup="true" domainClass="NUOPC.Application" enablePopupBars="true">
       <metamodel href="http://www.earthsystemcog.org/projects/nuopc#/"/>
       <defaultLayer name="Default">
-        <edgeMappings name="connectorEdge" label="Connector" sourceMapping="//@ownedViewpoints[name='nuopcViewport']/@ownedRepresentations[name='nuopcDiagram']/@defaultLayer/@containerMappings[name='driverContainer']/@subNodeMappings[name='driverMediator'] //@ownedViewpoints[name='nuopcViewport']/@ownedRepresentations[name='nuopcDiagram']/@defaultLayer/@containerMappings[name='driverContainer']/@subNodeMappings[name='driverModel']" targetMapping="//@ownedViewpoints[name='nuopcViewport']/@ownedRepresentations[name='nuopcDiagram']/@defaultLayer/@containerMappings[name='driverContainer']/@subNodeMappings[name='driverMediator'] //@ownedViewpoints[name='nuopcViewport']/@ownedRepresentations[name='nuopcDiagram']/@defaultLayer/@containerMappings[name='driverContainer']/@subNodeMappings[name='driverModel']" targetFinderExpression="feature:target" sourceFinderExpression="feature:source" domainClass="NUOPC.Connector" useDomainElement="true" reconnections="//@ownedViewpoints[name='nuopcViewport']/@ownedRepresentations[name='nuopcDiagram']/@defaultLayer/@toolSections.0/@ownedTools[name='reconnectorConnector']">
+        <edgeMappings name="connectorEdge" label="Connector" sourceMapping="//@ownedViewpoints[name='nuopcViewport']/@ownedRepresentations[name='nuopcDiagram']/@defaultLayer/@containerMappings[name='driverContainer']/@subNodeMappings[name='driverMediator'] //@ownedViewpoints[name='nuopcViewport']/@ownedRepresentations[name='nuopcDiagram']/@defaultLayer/@containerMappings[name='driverContainer']/@subNodeMappings[name='driverModel']" targetMapping="//@ownedViewpoints[name='nuopcViewport']/@ownedRepresentations[name='nuopcDiagram']/@defaultLayer/@containerMappings[name='driverContainer']/@subNodeMappings[name='driverMediator'] //@ownedViewpoints[name='nuopcViewport']/@ownedRepresentations[name='nuopcDiagram']/@defaultLayer/@containerMappings[name='driverContainer']/@subNodeMappings[name='driverModel']" targetFinderExpression="feature:destination" sourceFinderExpression="feature:source" domainClass="NUOPC.Connector" useDomainElement="true" reconnections="//@ownedViewpoints[name='nuopcViewport']/@ownedRepresentations[name='nuopcDiagram']/@defaultLayer/@toolSections.0/@ownedTools[name='reconnectorConnector']">
           <style targetArrow="InputFillClosedArrow" sizeComputationExpression="8">
             <strokeColor xsi:type="description:SystemColor" href="environment:/viewpoint#//@systemColors/@entries[name='dark_green']"/>
             <centerLabelStyleDescription>
@@ -13,7 +13,7 @@
           </style>
         </edgeMappings>
         <containerMappings name="driverContainer" label="Driver" labelDirectEdit="//@ownedViewpoints[name='nuopcViewport']/@ownedRepresentations[name='nuopcDiagram']/@defaultLayer/@toolSections.0/@ownedTools[name='editName']" domainClass="NUOPC.Driver">
-          <subNodeMappings name="driverModel" label="Model" deletionDescription="//@ownedViewpoints[name='nuopcViewport']/@ownedRepresentations[name='nuopcDiagram']/@defaultLayer/@toolSections.0/@ownedTools[name='deleteModel']" labelDirectEdit="//@ownedViewpoints[name='nuopcViewport']/@ownedRepresentations[name='nuopcDiagram']/@defaultLayer/@toolSections.0/@ownedTools[name='editName']" semanticCandidatesExpression="aql:self.children->filter(NUOPC::Model)" domainClass="NUOPC.Model">
+          <subNodeMappings name="driverModel" label="Model" detailDescriptions="//@ownedViewpoints[name='nuopcViewport']/@ownedRepresentations[name='tableImpExpFields']/@ownedRepresentationCreationDescriptions[name='tableFieldsCreation']" navigationDescriptions="//@ownedViewpoints[name='nuopcViewport']/@ownedRepresentations[name='tableImpExpFields']/@ownedRepresentationNavigationDescriptions[name='nuopcFieldTableNav']" deletionDescription="//@ownedViewpoints[name='nuopcViewport']/@ownedRepresentations[name='nuopcDiagram']/@defaultLayer/@toolSections.0/@ownedTools[name='deleteModel']" labelDirectEdit="//@ownedViewpoints[name='nuopcViewport']/@ownedRepresentations[name='nuopcDiagram']/@defaultLayer/@toolSections.0/@ownedTools[name='editName']" semanticCandidatesExpression="aql:self.children->filter(NUOPC::Model)" domainClass="NUOPC.Model">
             <style xsi:type="style:SquareDescription" borderSizeComputationExpression="1" labelSize="10" showIcon="false" sizeComputationExpression="10" labelPosition="node" resizeKind="NSEW">
               <borderColor xsi:type="description:SystemColor" href="environment:/viewpoint#//@systemColors/@entries[name='black']"/>
               <labelFormat>bold</labelFormat>
@@ -21,7 +21,7 @@
               <color xsi:type="description:SystemColor" href="environment:/viewpoint#//@systemColors/@entries[name='light_yellow']"/>
             </style>
           </subNodeMappings>
-          <subNodeMappings name="driverMediator" label="Mediator" labelDirectEdit="//@ownedViewpoints[name='nuopcViewport']/@ownedRepresentations[name='nuopcDiagram']/@defaultLayer/@toolSections.0/@ownedTools[name='editName']" semanticCandidatesExpression="aql:self.children->filter(NUOPC::Mediator)" domainClass="NUOPC.Mediator">
+          <subNodeMappings name="driverMediator" label="Mediator" detailDescriptions="//@ownedViewpoints[name='nuopcViewport']/@ownedRepresentations[name='tableImpExpFields']/@ownedRepresentationCreationDescriptions[name='tableFieldsCreation']" navigationDescriptions="//@ownedViewpoints[name='nuopcViewport']/@ownedRepresentations[name='tableImpExpFields']/@ownedRepresentationNavigationDescriptions[name='nuopcFieldTableNav']" labelDirectEdit="//@ownedViewpoints[name='nuopcViewport']/@ownedRepresentations[name='nuopcDiagram']/@defaultLayer/@toolSections.0/@ownedTools[name='editName']" semanticCandidatesExpression="aql:self.children->filter(NUOPC::Mediator)" domainClass="NUOPC.Mediator">
             <style xsi:type="style:SquareDescription" borderSizeComputationExpression="1" labelSize="10" showIcon="false" sizeComputationExpression="10" labelPosition="node" resizeKind="NSEW">
               <borderColor xsi:type="description:SystemColor" href="environment:/viewpoint#//@systemColors/@entries[name='black']"/>
               <labelFormat>bold</labelFormat>
@@ -39,13 +39,24 @@
           </style>
         </containerMappings>
         <toolSections name="nuopcComponentTools" label="NUOPC Components">
+          <ownedTools xsi:type="tool:ContainerCreationDescription" name="createDriver" label="Driver" precondition="aql:not(container.oclAsType(NUOPC::Application).children->filter(NUOPC::Driver)->notEmpty())" containerMappings="//@ownedViewpoints[name='nuopcViewport']/@ownedRepresentations[name='nuopcDiagram']/@defaultLayer/@containerMappings[name='driverContainer']">
+            <variable name="container"/>
+            <viewVariable name="containerView"/>
+            <initialOperation>
+              <firstModelOperations xsi:type="tool_1:ChangeContext" browseExpression="var:container">
+                <subModelOperations xsi:type="tool_1:CreateInstance" typeName="NUOPC.Driver" referenceName="children">
+                  <subModelOperations xsi:type="tool_1:SetValue" featureName="name" valueExpression="Driver"/>
+                </subModelOperations>
+              </firstModelOperations>
+            </initialOperation>
+          </ownedTools>
           <ownedTools xsi:type="tool:NodeCreationDescription" name="createModel" label="Model" nodeMappings="//@ownedViewpoints[name='nuopcViewport']/@ownedRepresentations[name='nuopcDiagram']/@defaultLayer/@containerMappings[name='driverContainer']/@subNodeMappings[name='driverModel']">
             <variable name="container"/>
             <viewVariable name="containerView"/>
             <initialOperation>
               <firstModelOperations xsi:type="tool_1:ChangeContext" browseExpression="var:container">
-                <subModelOperations xsi:type="tool_1:CreateInstance" typeName="NUOPC.NUOPCModel" referenceName="children">
-                  <subModelOperations xsi:type="tool_1:SetValue" featureName="name" valueExpression="aql:'Model ' + container.children->filter(NUOPC::NUOPCModel)->size()"/>
+                <subModelOperations xsi:type="tool_1:CreateInstance" typeName="NUOPC.Model" referenceName="children">
+                  <subModelOperations xsi:type="tool_1:SetValue" featureName="name" valueExpression="aql:'Model ' + container.children->filter(NUOPC::Model)->size()"/>
                 </subModelOperations>
               </firstModelOperations>
             </initialOperation>
@@ -55,8 +66,8 @@
             <viewVariable name="containerView"/>
             <initialOperation>
               <firstModelOperations xsi:type="tool_1:ChangeContext" browseExpression="var:container">
-                <subModelOperations xsi:type="tool_1:CreateInstance" typeName="NUOPC.NUOPCMediator" referenceName="children">
-                  <subModelOperations xsi:type="tool_1:SetValue" featureName="name" valueExpression="aql:'Mediator ' + container.children->filter(NUOPC::NUOPCMediator)->size()"/>
+                <subModelOperations xsi:type="tool_1:CreateInstance" typeName="NUOPC.Mediator" referenceName="children">
+                  <subModelOperations xsi:type="tool_1:SetValue" featureName="name" valueExpression="aql:'Mediator ' + container.children->filter(NUOPC::Mediator)->size()"/>
                 </subModelOperations>
               </firstModelOperations>
             </initialOperation>
@@ -78,9 +89,10 @@
             <targetViewVariable name="targetView"/>
             <initialOperation>
               <firstModelOperations xsi:type="tool_1:ChangeContext" browseExpression="aql:source.eContainer()">
-                <subModelOperations xsi:type="tool_1:CreateInstance" typeName="NUOPC.NUOPCConnector" referenceName="children">
+                <subModelOperations xsi:type="tool_1:CreateInstance" typeName="NUOPC.Connector" referenceName="children">
                   <subModelOperations xsi:type="tool_1:SetValue" featureName="source" valueExpression="var:source"/>
-                  <subModelOperations xsi:type="tool_1:SetValue" featureName="target" valueExpression="var:target"/>
+                  <subModelOperations xsi:type="tool_1:SetValue" featureName="destination" valueExpression="var:target"/>
+                  <subModelOperations xsi:type="tool_1:SetValue" featureName="name" valueExpression="aql:source.name + '2' + target.name"/>
                 </subModelOperations>
               </firstModelOperations>
             </initialOperation>
@@ -93,7 +105,7 @@
             <element name="element"/>
             <initialOperation>
               <firstModelOperations xsi:type="tool_1:ChangeContext" browseExpression="var:element">
-                <subModelOperations xsi:type="tool_1:SetValue" featureName="target" valueExpression="var:target"/>
+                <subModelOperations xsi:type="tool_1:SetValue" featureName="destination" valueExpression="var:target"/>
               </firstModelOperations>
             </initialOperation>
             <edgeView name="edgeView"/>
@@ -106,6 +118,49 @@
           </ownedTools>
         </toolSections>
       </defaultLayer>
+    </ownedRepresentations>
+    <ownedRepresentations xsi:type="description_2:EditionTableDescription" name="tableImpExpFields" label="Import and Export Fields" titleExpression="aql:self.name + ' Fields'" domainClass="NUOPC.BaseModel">
+      <metamodel href="http://www.earthsystemcog.org/projects/nuopc#/"/>
+      <ownedRepresentationCreationDescriptions xsi:type="description_2:TableCreationDescription" name="tableFieldsCreation" label="Import and Export Fields" tableDescription="//@ownedViewpoints[name='nuopcViewport']/@ownedRepresentations[name='tableImpExpFields']">
+        <initialOperation>
+          <firstModelOperations xsi:type="tool_1:ChangeContext" browseExpression="var:container">
+            <subModelOperations xsi:type="tool_1:CreateInstance" typeName="NUOPC.Field" referenceName="importFields">
+              <subModelOperations xsi:type="tool_1:SetValue" featureName="name" valueExpression="NewImportField"/>
+            </subModelOperations>
+            <subModelOperations xsi:type="tool_1:CreateInstance" typeName="NUOPC.Field" referenceName="exportFields">
+              <subModelOperations xsi:type="tool_1:SetValue" featureName="exportFields" valueExpression="NewExportField"/>
+            </subModelOperations>
+          </firstModelOperations>
+        </initialOperation>
+        <containerViewVariable name="containerView"/>
+        <representationNameVariable name="tableName"/>
+      </ownedRepresentationCreationDescriptions>
+      <ownedRepresentationNavigationDescriptions xsi:type="description_2:TableNavigationDescription" name="nuopcFieldTableNav" label="Import and Export Fields" tableDescription="//@ownedViewpoints[name='nuopcViewport']/@ownedRepresentations[name='tableImpExpFields']">
+        <containerViewVariable name="containerView"/>
+        <containerVariable name="container"/>
+        <representationNameVariable name="tableName"/>
+      </ownedRepresentationNavigationDescriptions>
+      <ownedLineMappings name="tableLineImportField" label="Import Field" domainClass="NUOPC.Field" semanticCandidatesExpression="feature:importFields"/>
+      <ownedLineMappings name="tableLineExportField" label="Export Field" domainClass="NUOPC.Field" semanticCandidatesExpression="feature:exportFields"/>
+      <ownedCreateLine name="createLineImportField" label="Add Import Field" mapping="//@ownedViewpoints[name='nuopcViewport']/@ownedRepresentations[name='tableImpExpFields']/@ownedLineMappings[name='tableLineImportField']">
+        <variables name="root" documentation="The semantic root element of the table."/>
+        <variables name="element" documentation="The semantic currently edited element."/>
+        <variables name="container" documentation="The semantic element corresponding to the view container."/>
+        <firstModelOperation xsi:type="tool_1:ChangeContext" browseExpression="var:container">
+          <subModelOperations xsi:type="tool_1:CreateInstance" typeName="NUOPC.Field" referenceName="importFields"/>
+        </firstModelOperation>
+      </ownedCreateLine>
+      <ownedCreateLine name="createLineExportField" label="Add Export Field" mapping="//@ownedViewpoints[name='nuopcViewport']/@ownedRepresentations[name='tableImpExpFields']/@ownedLineMappings[name='tableLineExportField']">
+        <variables name="root" documentation="The semantic root element of the table."/>
+        <variables name="element" documentation="The semantic currently edited element."/>
+        <variables name="container" documentation="The semantic element corresponding to the view container."/>
+        <firstModelOperation xsi:type="tool_1:ChangeContext" browseExpression="var:container">
+          <subModelOperations xsi:type="tool_1:CreateInstance" typeName="NUOPC.Field" referenceName="exportFields"/>
+        </firstModelOperation>
+      </ownedCreateLine>
+      <ownedColumnMappings name="columnFieldName" label="Name" headerLabelExpression="Name" featureName="name"/>
+      <ownedColumnMappings name="columnFieldStandardName" label="Standard Name" headerLabelExpression="Standard Name" featureName="standardName"/>
+      <ownedColumnMappings name="columnFieldGrid" label="Grid" headerLabelExpression="Grid" featureName="grid"/>
     </ownedRepresentations>
   </ownedViewpoints>
 </description:Group>

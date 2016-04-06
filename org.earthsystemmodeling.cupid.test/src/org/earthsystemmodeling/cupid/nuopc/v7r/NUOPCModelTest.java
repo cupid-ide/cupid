@@ -7,6 +7,7 @@ import static org.junit.Assert.assertTrue;
 
 import java.io.IOException;
 
+import org.earthsystemmodeling.cupid.NUOPC.ESMF_STAGGERLOC;
 import org.earthsystemmodeling.cupid.NUOPC.Field;
 import org.earthsystemmodeling.cupid.NUOPC.Model;
 import org.earthsystemmodeling.cupid.NUOPC.NUOPCFactory;
@@ -14,6 +15,7 @@ import org.earthsystemmodeling.cupid.NUOPC.UniformGrid;
 import org.earthsystemmodeling.cupid.nuopc.v7r.GridCodeConcept.CreateUniformGrid;
 import org.earthsystemmodeling.cupid.nuopc.v7r.NUOPCBaseModel.AdvertiseField;
 import org.earthsystemmodeling.cupid.nuopc.v7r.NUOPCBaseModel.RealizeField;
+import org.earthsystemmodeling.cupid.nuopc.v7r.NUOPCModel.IPD.IPDv04p0;
 import org.earthsystemmodeling.cupid.nuopc.v7r.NUOPCModel.IPD.IPDv04p1;
 import org.earthsystemmodeling.cupid.nuopc.v7r.NUOPCModel.IPD.IPDv04p3;
 import org.earthsystemmodeling.cupid.nuopc.v7r.NUOPCModel.SetRunClock;
@@ -71,9 +73,11 @@ public class NUOPCModelTest {
 		assertEquals("importState", af.state);
 		af = model.initialization.initPhases.ipdv00.ipdv00p1.advertiseFields.get(1);
 		assertEquals("\"air_pressure_at_sea_level\"", af.standardName);
+		assertEquals("\"pmsl\"", af.name);
 		assertEquals("exportState", af.state);
 		af = model.initialization.initPhases.ipdv00.ipdv00p1.advertiseFields.get(2);
 		assertEquals("\"surface_net_downward_shortwave_flux\"", af.standardName);
+		assertEquals("\"rsns\"", af.name);
 		assertEquals("exportState", af.state);
 				
 		assertNotNull(model.initialization.initPhases.ipdv00.ipdv00p2);
@@ -177,6 +181,9 @@ public class NUOPCModelTest {
 		
 		assertNull(model.initialization.initSpecs.setClock);
 		
+		assertNotNull(model.initialization.initPhases.ipdv03.ipdv03p0);
+		assertEquals("InitializeP0", model.initialization.initPhases.ipdv03.ipdv03p0.subroutineName);
+		
 	}
 	
 	@Test
@@ -224,6 +231,10 @@ public class NUOPCModelTest {
 		assertNotNull(model.initialization.initPhases.ipdv03);
 		assertNotNull(model.initialization.initPhases.ipdv04);
 		
+		IPDv04p0 ipdv04p0 = new IPDv04p0(model.initialization.initPhases.ipdv04);
+		assertNotNull(model.initialization.initPhases.ipdv04.ipdv04p0);
+		ipdv04p0.subroutineName = "FilterInitPhases";	
+		
 		IPDv04p1 ipdv04p1 = new IPDv04p1(model.initialization.initPhases.ipdv04);
 		assertNotNull(model.initialization.initPhases.ipdv04.ipdv04p1);
 		
@@ -237,12 +248,17 @@ public class NUOPCModelTest {
 		af.standardName = "\"sea_surface_temperature\"";
 		af.state = "exportState";
 		
+		ipdv04p0.forward();
 		ipdv04p1.forward();
 		chg = ipdv04p1.generateChange();
 		chg.perform(NPM);
 		
 		model = new NUOPCModel(f).reverse();
 		assertNotNull(model);
+		assertNotNull(model.initialization.initPhases.ipdv04.ipdv04p0);
+		assertEquals("FilterInitPhases", model.initialization.initPhases.ipdv04.ipdv04p0.subroutineName);
+		assertEquals("0", model.initialization.initPhases.ipdv04.ipdv04p0.phaseNumber);		
+		
 		assertEquals(2, model.initialization.initPhases.ipdv04.ipdv04p1.advertiseFields.size());
 		assertEquals("\"donkey\"", model.initialization.initPhases.ipdv04.ipdv04p1.advertiseFields.get(0).standardName);
 		assertEquals("importState", model.initialization.initPhases.ipdv04.ipdv04p1.advertiseFields.get(0).state);
@@ -312,12 +328,14 @@ public class NUOPCModelTest {
 		grid.setName("ModelGrid");
 		grid.getMinIndex().add(1);
 		grid.getMinIndex().add(1);
-		grid.getMaxIndex().add(100);
-		grid.getMaxIndex().add(200);
-		grid.getMinCornerCoord().add(10.0);
-		grid.getMinCornerCoord().add(10.0);
-		grid.getMaxCornerCoord().add(1000.0);
-		grid.getMaxCornerCoord().add(2000.0);
+		grid.getMaxIndex().add(360);
+		grid.getMaxIndex().add(180);
+		grid.getMinCornerCoord().add(0.0);
+		grid.getMinCornerCoord().add(0.0);
+		grid.getMaxCornerCoord().add(360.0);
+		grid.getMaxCornerCoord().add(180.0);
+		grid.getStaggerLocToFillCoords().add(ESMF_STAGGERLOC.ESMF_STAGGERLOC_CENTER);
+		grid.getStaggerLocToFillCoords().add(ESMF_STAGGERLOC.ESMF_STAGGERLOC_CORNER);
 		
 		model.getGrids().add(grid);
 		

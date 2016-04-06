@@ -47,6 +47,7 @@ public class UniformGridItemProvider extends GridItemProvider {
 
 			addMinCornerCoordPropertyDescriptor(object);
 			addMaxCornerCoordPropertyDescriptor(object);
+			addStaggerLocToFillCoordsPropertyDescriptor(object);
 		}
 		return itemPropertyDescriptors;
 	}
@@ -96,6 +97,28 @@ public class UniformGridItemProvider extends GridItemProvider {
 	}
 
 	/**
+	 * This adds a property descriptor for the Stagger Loc To Fill Coords feature.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	protected void addStaggerLocToFillCoordsPropertyDescriptor(Object object) {
+		itemPropertyDescriptors.add
+			(createItemPropertyDescriptor
+				(((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(),
+				 getResourceLocator(),
+				 getString("_UI_UniformGrid_staggerLocToFillCoords_feature"),
+				 getString("_UI_PropertyDescriptor_description", "_UI_UniformGrid_staggerLocToFillCoords_feature", "_UI_UniformGrid_type"),
+				 NUOPCPackage.Literals.UNIFORM_GRID__STAGGER_LOC_TO_FILL_COORDS,
+				 true,
+				 false,
+				 false,
+				 ItemPropertyDescriptor.GENERIC_VALUE_IMAGE,
+				 null,
+				 null));
+	}
+
+	/**
 	 * This returns UniformGrid.gif.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -135,6 +158,7 @@ public class UniformGridItemProvider extends GridItemProvider {
 		switch (notification.getFeatureID(UniformGrid.class)) {
 			case NUOPCPackage.UNIFORM_GRID__MIN_CORNER_COORD:
 			case NUOPCPackage.UNIFORM_GRID__MAX_CORNER_COORD:
+			case NUOPCPackage.UNIFORM_GRID__STAGGER_LOC_TO_FILL_COORDS:
 				fireNotifyChanged(new ViewerNotification(notification, notification.getNotifier(), false, true));
 				return;
 		}

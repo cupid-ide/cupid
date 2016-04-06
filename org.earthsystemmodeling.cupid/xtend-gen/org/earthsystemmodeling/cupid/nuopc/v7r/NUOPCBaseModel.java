@@ -35,11 +35,14 @@ public class NUOPCBaseModel {
     
     public String standardName;
     
+    public String name;
+    
     public AdvertiseField(final EntryPointCodeConcept<?> parent) {
       super(parent);
       parent.setOrAddChild(this);
       this.state = this._parent.paramImport;
-      this.standardName = "StandardName";
+      this.standardName = "\"StandardName\"";
+      this.name = null;
     }
     
     @Override
@@ -71,6 +74,8 @@ public class NUOPCBaseModel {
             advField.state = _litArgExprByIdx;
             String _litArgExprByIdx_1 = ASTQuery.litArgExprByIdx(it, 1);
             advField.standardName = _litArgExprByIdx_1;
+            String _litArgExprByKeyword = ASTQuery.litArgExprByKeyword(it, "name");
+            advField.name = _litArgExprByKeyword;
             advField.setASTRef(it);
             retList.add(advField);
           }
@@ -90,9 +95,17 @@ public class NUOPCBaseModel {
         _builder.append("call NUOPC_Advertise(");
         CharSequence _paramch = this.paramch(this.state);
         _builder.append(_paramch, "");
-        _builder.append(", ");
+        _builder.append(", StandardName=");
         CharSequence _paramch_1 = this.paramch(this.standardName);
         _builder.append(_paramch_1, "");
+        {
+          boolean _notEquals = (!Objects.equal(this.name, null));
+          if (_notEquals) {
+            _builder.append(", name=");
+            CharSequence _paramch_2 = this.paramch(this.name);
+            _builder.append(_paramch_2, "");
+          }
+        }
         _builder.append(", rc=");
         _builder.append(this._parent.paramRC, "");
         _builder.append(")");
@@ -206,7 +219,7 @@ public class NUOPCBaseModel {
           StringConcatenation _builder = new StringConcatenation();
           _builder.append("type(ESMF_Field) :: ");
           _builder.append(this.field, "");
-          CodeConcept.addTypeDeclaration(_builder.toString(), ssn);
+          CodeConcept.addTypeDeclaration(_builder.toString(), ssn, true);
           StringConcatenation _builder_1 = new StringConcatenation();
           _builder_1.newLine();
           _builder_1.append("! field ");
@@ -257,15 +270,15 @@ public class NUOPCBaseModel {
     public String forward(final Field high, final String state) {
       String _xblockexpression = null;
       {
-        String _standardName = high.getStandardName();
-        String _plus = ("\"" + _standardName);
+        String _name = high.getName();
+        String _plus = ("\"" + _name);
         String _plus_1 = (_plus + "\"");
         this.fieldName = _plus_1;
-        String _name = high.getName();
-        this.field = _name;
+        String _name_1 = high.getName();
+        this.field = _name_1;
         Grid _grid = high.getGrid();
-        String _name_1 = _grid.getName();
-        this.grid = _name_1;
+        String _name_2 = _grid.getName();
+        this.grid = _name_2;
         _xblockexpression = this.state = state;
       }
       return _xblockexpression;

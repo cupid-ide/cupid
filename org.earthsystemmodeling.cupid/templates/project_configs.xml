@@ -10,18 +10,14 @@
 			<image>images/coupling_single.png</image>
 			<desc>There is no coupling in this configuration.</desc>
 		</coupling>
-		<templatedir>SingleModelProto</templatedir>
+		<templatedir>SingleModelWithDriver</templatedir>
 		<make>
-			<target name="mainApp">mainApp</target>
+			<target name="all">all</target>
 			<target name="clean">clean</target>
 			<target name="dust">dust</target>
 		</make>
-		<compenv provider="ec2">
-			<amiid>ami-413f0128</amiid>
-		</compenv>
 	</scenario>
-	
-	
+		
 	
 	<scenario id="NUOPCCoupledAtmOcn">
 		<shortdesc>NUOPC - Coupled Atmosphere-Ocean with Driver</shortdesc>
@@ -35,13 +31,10 @@
 		</coupling>
 		<templatedir>AtmOcnProto</templatedir>
 		<make>
-			<target name="esmApp">esmApp</target>
+			<target name="all">all</target>
 			<target name="clean">clean</target>
 			<target name="dust">dust</target>
 		</make>
-		<compenv provider="ec2">
-			<amiid>ami-413f0128</amiid>
-		</compenv>
 	</scenario>
 	
 			
@@ -57,24 +50,20 @@
 		</coupling>
 		<templatedir>AtmOcnMedProto</templatedir>
 		<make>
-			<target name="esmApp">esmApp</target>
+			<target name="all">all</target>
 			<target name="clean">clean</target>
 			<target name="dust">dust</target>
 		</make>
-		<compenv provider="ec2">
-			<amiid>ami-413f0128</amiid>
-		</compenv>
 	</scenario>
 	
 	
-	<scenario id="ModelEBasic">
+	
+<!-- 	<scenario id="ModelEBasic">
 		<shortdesc>ModelE - Basic Configuration (EM20 rundeck)</shortdesc>
 		<architecture>
-			<!-- <image>images/relationship_single.png</image> -->
 			<desc>The ModelE EM20 run configuraton....</desc>
 		</architecture>
 		<coupling>
-			<!-- <image>images/coupling_single.png</image> -->
 			<desc></desc>
 		</coupling>
 		<remotedir>/home/sgeadmin/modelE</remotedir>
@@ -88,7 +77,7 @@
 		<compenv provider="ec2">
 			<amiid>ami-413f0128</amiid>
 		</compenv>
-	</scenario>
+	</scenario> -->
 
 
 </root>

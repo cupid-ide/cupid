@@ -20,6 +20,7 @@ import org.earthsystemmodeling.cupid.nuopc.v7r.NUOPCMediator.IPD.IPDv04p1
 import org.earthsystemmodeling.cupid.nuopc.v7r.NUOPCMediator.IPD.IPDv04p3
 import org.earthsystemmodeling.cupid.NUOPC.Field
 import org.earthsystemmodeling.cupid.NUOPC.Grid
+import org.earthsystemmodeling.cupid.nuopc.v7r.NUOPCMediator.IPD.IPDv04p0
 
 @Label(label="NUOPC Mediator")
 @MappingType("module")
@@ -103,8 +104,70 @@ class NUOPCMediator extends NUOPCComponent {
 
 		new(NUOPCMediator.InitPhases parent) {
 			super(parent)
+			parent.setOrAddChild(this)
 		}
 	
+		@Label(label="IPDv04p0 - Filter Initialization Phases")
+		@MappingType("subroutine")
+		public static class IPDv04p0 extends EntryPointCodeConcept<IPD> {
+	
+			public String ipdversion
+			
+			new(IPD parent) {
+				super(parent)
+				parent.setOrAddChild(this)
+				subroutineName = "InitializeP0"
+				methodType = "ESMF_METHOD_INITIALIZE"
+				phaseNumber = "0"
+				ipdversion = switch _parent {
+					IPDv00 : "\"IPDv00\""
+					IPDv01 : "\"IPDv01\""
+					IPDv02 : "\"IPDv02\""
+					IPDv03 : "\"IPDv03\""
+					default : "\"IPDv04\""
+				}
+			}
+			
+			def getPhaseLabel() {
+				switch _parent {
+					IPDv00 : "IPDv00p0"
+					IPDv01 : "IPDv01p0"
+					IPDv02 : "IPDv02p0"
+					IPDv03 : "IPDv03p0"
+					default : "IPDv04p0"
+				}
+			}
+			
+			override subroutineTemplate() {
+			'''
+			
+			subroutine «subroutineName»(«paramGridComp», «paramImport», «paramExport», «paramClock», «paramRC»)
+			    type(ESMF_GridComp)  :: «paramGridComp»
+			    type(ESMF_State)     :: «paramImport», «paramExport»
+			    type(ESMF_Clock)     :: «paramClock»
+			    integer, intent(out) :: «paramRC»
+			    
+			     rc = ESMF_SUCCESS
+			     
+			     ! Switch to «ipdversion» by filtering all other phaseMap entries
+			     call NUOPC_CompFilterPhaseMap(«paramGridComp», «methodType», &
+			        acceptStringList=(/«ipdversion»/), rc=«paramRC»)
+			     «ESMFErrorCheck(paramRC)»
+			    
+			end subroutine
+			'''
+			}
+			
+			override module() {
+				_parent._parent._parent._parent
+			}
+
+			override setServices() {
+				_parent._parent._parent._parent.setServices
+			}
+
+		}	
+			
 		@Label(label="IPDv04p1 - Advertise Fields")
 		@MappingType("subroutine")
 		@Doc(urlfrag="#mediator-phase-advertisefields")
@@ -149,11 +212,13 @@ class NUOPCMediator extends NUOPCComponent {
 				for (Field f : high.importFields) {
 					val af = new AdvertiseField(this)
 					af.standardName = '''"«f.standardName»"'''
+					af.name = '''"«f.name»"'''
 					af.state = paramImport
 				}
 				for (Field f : high.exportFields) {
 					val af = new AdvertiseField(this)
 					af.standardName = '''"«f.standardName»"'''
+					af.name = '''"«f.name»"'''
 					af.state = paramExport
 				}
 			}
@@ -453,6 +518,10 @@ call NUOPC_Realize(«paramch(state)», field=«paramch(field)», rc=«_parent.pa
 	@Doc(urlfrag="#mediator-initseq")
 	public static class IPDv00 extends IPD {
 
+		@Child(min=0)
+		@Label(label="IPDv00p0 - Filter Initialization Phases")
+		public IPD.IPDv04p0 ipdv00p0
+		
 		@Child(min=1)
 		@Label(label="IPDv00p1 - Advertise Fields")
 		public IPD.IPDv04p1 ipdv00p1
@@ -474,6 +543,7 @@ call NUOPC_Realize(«paramch(state)», field=«paramch(field)», rc=«_parent.pa
 		}
 
 		override IPDv00 reverse() {
+			ipdv00p0 = new IPD.IPDv04p0(this).reverse as IPD.IPDv04p0
 			ipdv00p1 = new IPD.IPDv04p1(this).reverse as IPD.IPDv04p1
 			ipdv00p2 = new IPD.IPDv04p3(this).reverse as IPD.IPDv04p3
 			ipdv00p3 = new IPD.IPDv04p6(this).reverse as IPD.IPDv04p6
@@ -489,6 +559,10 @@ call NUOPC_Realize(«paramch(state)», field=«paramch(field)», rc=«_parent.pa
 	@Doc(urlfrag="#mediator-initseq")
 	public static class IPDv01 extends IPD {
 
+		@Child(min=0)
+		@Label(label="IPDv01p0 - Filter Initialization Phases")
+		public IPD.IPDv04p0 ipdv01p0
+		
 		@Child(min=1)
 		@Label(label="IPDv01p1 - Advertise Fields")
 		public IPD.IPDv04p1 ipdv01p1
@@ -514,6 +588,7 @@ call NUOPC_Realize(«paramch(state)», field=«paramch(field)», rc=«_parent.pa
 		}
 
 		override IPDv01 reverse() {
+			ipdv01p0 = new IPD.IPDv04p0(this).reverse as IPD.IPDv04p0
 			ipdv01p1 = new IPD.IPDv04p1(this).reverse as IPD.IPDv04p1
 			ipdv01p2 = new IPD.IPDv04p2(this).reverse as IPD.IPDv04p2
 			ipdv01p3 = new IPD.IPDv04p3(this).reverse as IPD.IPDv04p3
@@ -532,6 +607,10 @@ call NUOPC_Realize(«paramch(state)», field=«paramch(field)», rc=«_parent.pa
 		new(NUOPCMediator.InitPhases parent) {
 			super(parent)
 		}
+		
+		@Child(min=0)
+		@Label(label="IPDv02p0 - Filter Initialization Phases")
+		public IPD.IPDv04p0 ipdv02p0
 		
 		@Child(min=1)
 		@Label(label="IPDv02p1 - Advertise Fields")
@@ -554,6 +633,7 @@ call NUOPC_Realize(«paramch(state)», field=«paramch(field)», rc=«_parent.pa
 		public IPD.IPDv04p7 ipdv02p5
 		
 		override IPDv02 reverse() {
+			ipdv02p0 = new IPD.IPDv04p0(this).reverse as IPD.IPDv04p0
 			ipdv02p1 = new IPD.IPDv04p1(this).reverse as IPD.IPDv04p1
 			ipdv02p2 = new IPD.IPDv04p2(this).reverse as IPD.IPDv04p2
 			ipdv02p3 = new IPD.IPDv04p3(this).reverse as IPD.IPDv04p3
@@ -573,6 +653,10 @@ call NUOPC_Realize(«paramch(state)», field=«paramch(field)», rc=«_parent.pa
 		new(NUOPCMediator.InitPhases parent) {
 			super(parent)
 		}
+		
+		@Child(min=0)
+		@Label(label="IPDv03p0 - Filter Initialization Phases")
+		public IPD.IPDv04p0 ipdv03p0
 		
 		@Child(min=1)
 		@Label(label="IPDv03p1 - Advertise Fields")
@@ -603,6 +687,7 @@ call NUOPC_Realize(«paramch(state)», field=«paramch(field)», rc=«_parent.pa
 		public IPD.IPDv04p7 ipdv03p7
 		
 		override IPDv03 reverse() {
+			ipdv03p0 = new IPD.IPDv04p0(this).reverse as IPD.IPDv04p0
 			ipdv03p1 = new IPD.IPDv04p1(this).reverse as IPD.IPDv04p1
 			ipdv03p2 = new IPD.IPDv04p2(this).reverse as IPD.IPDv04p2
 			ipdv03p3 = new IPD.IPDv04p3(this).reverse as IPD.IPDv04p3
@@ -630,6 +715,9 @@ call NUOPC_Realize(«paramch(state)», field=«paramch(field)», rc=«_parent.pa
 			super(parent)
 		}
 		
+		@Child(min=0)
+		public IPD.IPDv04p0 ipdv04p0
+		
 		@Child(min=1)
 		public IPD.IPDv04p1 ipdv04p1
 
@@ -652,6 +740,7 @@ call NUOPC_Realize(«paramch(state)», field=«paramch(field)», rc=«_parent.pa
 		public IPD.IPDv04p7 ipdv04p7
 		
 		override IPDv04 reverse() {
+			ipdv04p0 = new IPD.IPDv04p0(this).reverse as IPD.IPDv04p0
 			ipdv04p1 = new IPD.IPDv04p1(this).reverse as IPD.IPDv04p1
 			ipdv04p2 = new IPD.IPDv04p2(this).reverse as IPD.IPDv04p2
 			ipdv04p3 = new IPD.IPDv04p3(this).reverse as IPD.IPDv04p3
@@ -692,6 +781,7 @@ call NUOPC_Realize(«paramch(state)», field=«paramch(field)», rc=«_parent.pa
 	
 		new(Initialization parent) {
 			super(parent)
+			parent.setOrAddChild(this)
 		}
 		
 		override reverse() {
@@ -753,13 +843,25 @@ call NUOPC_Realize(«paramch(state)», field=«paramch(field)», rc=«_parent.pa
 				cug.maxIndex = g.maxIndex.toIntArray
 				cug.minCornerCoord = g.minCornerCoord.toDoubleArray
 				cug.maxCornerCoord = g.maxCornerCoord.toDoubleArray
+				g.staggerLocToFillCoords.forEach[l|
+					cug.staggerLocs.add(l.literal)
+				]
 			]
 			
+			val IPD ipd = switch (high.IPDVersion) {
+				case IP_DV00: new IPDv00(initPhases)
+				case IP_DV01: new IPDv01(initPhases)
+				case IP_DV02: new IPDv02(initPhases)
+				case IP_DV03: new IPDv03(initPhases)
+				default: new IPDv04(initPhases)
+			}
+			
+			new IPDv04p0(ipd)
+						
 			if (high.importFields.size > 0 || high.exportFields.size > 0) {
-				val ipdv04 = new IPDv04(initPhases)
-				val ipdv04p1 = new IPDv04p1(ipdv04)
+				val ipdv04p1 = new IPDv04p1(ipd)
 				ipdv04p1.forward(high)
-				val ipdv04p3 = new IPDv04p3(ipdv04)
+				val ipdv04p3 = new IPDv04p3(ipd)
 				ipdv04p3.forward(high)
 			}
 		}
@@ -778,6 +880,7 @@ call NUOPC_Realize(«paramch(state)», field=«paramch(field)», rc=«_parent.pa
 		
 		new(Initialization parent) {
 			super(parent)
+			parent.setOrAddChild(this)
 		}
 		
 		override reverse() {
@@ -942,44 +1045,35 @@ end subroutine
 		override subroutineTemplate() {
 			'''
 
-subroutine «subroutineName»(«paramGridComp», «paramRC»)
-    type(ESMF_GridComp)  :: «paramGridComp»
-    integer, intent(out) :: «paramRC»
-
-     ! local variables
-    type(ESMF_Clock)              :: clock
-    type(ESMF_State)              :: importState, exportState
-    type(ESMF_Time)               :: currTime
-    type(ESMF_TimeInterval)       :: timeStep
-
-    rc = ESMF_SUCCESS
-
-    ! query the Component for its clock, importState and exportState
-    call ESMF_GridCompGet(«paramGridComp», clock=clock, importState=importState, &
-        exportState=exportState, rc=«paramRC»)
-    if (ESMF_LogFoundError(rcToCheck=«paramRC», msg=ESMF_LOGERR_PASSTHRU, &
-        line=__LINE__, &
-        file=__FILE__)) &
-        return  ! bail out
-
-    ! advance the mediator: currTime -> currTime + timeStep
-
-    call ESMF_ClockPrint(clock, options="currTime", &
-      preString="------>Advancing «_parent._parent._parent.name» from: ", rc=«paramRC»)
-    if (ESMF_LogFoundError(rcToCheck=«paramRC», msg=ESMF_LOGERR_PASSTHRU, &
-        line=__LINE__, &
-        file=__FILE__)) &
-        return  ! bail out
-
-    call ESMF_ClockPrint(clock, options="stopTime", &
-      preString="--------------------------------> to: ", rc=«paramRC»)
-    if (ESMF_LogFoundError(rcToCheck=«paramRC», msg=ESMF_LOGERR_PASSTHRU, &
-        line=__LINE__, &
-        file=__FILE__)) &
-        return  ! bail out
-
-end subroutine
-'''
+			subroutine «subroutineName»(«paramGridComp», «paramRC»)
+			    type(ESMF_GridComp)  :: «paramGridComp»
+			    integer, intent(out) :: «paramRC»
+			
+			     ! local variables
+			    type(ESMF_Clock)              :: clock
+			    type(ESMF_State)              :: importState, exportState
+			    type(ESMF_Time)               :: currTime
+			    type(ESMF_TimeInterval)       :: timeStep
+			
+			    rc = ESMF_SUCCESS
+			
+			    ! query the Component for its clock, importState and exportState
+			    call NUOPC_MediatorGet(«paramGridComp», mediatorClock=clock, importState=importState, &
+			      exportState=exportState, rc=«paramRC»)
+			    «ESMFErrorCheck(paramRC)»
+			    
+			! advance the mediator
+			
+				call ESMF_ClockPrint(clock, options="currTime", &
+			      preString="------>Advancing «module.name» from: ", rc=«paramRC»)
+			    «ESMFErrorCheck(paramRC)»
+			
+			    call ESMF_ClockPrint(clock, options="stopTime", &
+			      preString="--------------------------------> to: ", rc=«paramRC»)
+			    «ESMFErrorCheck(paramRC)»
+			
+			end subroutine
+			'''
 		}
 
 		override module() {

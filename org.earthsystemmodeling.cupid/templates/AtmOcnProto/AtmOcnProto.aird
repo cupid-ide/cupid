@@ -1,0 +1,138 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<viewpoint:DAnalysis xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:description="http://www.eclipse.org/sirius/description/1.1.0" xmlns:description_1="http://www.eclipse.org/sirius/diagram/description/1.1.0" xmlns:diagram="http://www.eclipse.org/sirius/diagram/1.1.0" xmlns:notation="http://www.eclipse.org/gmf/runtime/1.0.2/notation" xmlns:nuopc="http://www.earthsystemcog.org/projects/nuopc" xmlns:style="http://www.eclipse.org/sirius/diagram/description/style/1.1.0" xmlns:viewpoint="http://www.eclipse.org/sirius/1.1.0" xsi:schemaLocation="http://www.eclipse.org/sirius/description/1.1.0 http://www.eclipse.org/sirius/1.1.0#//description http://www.eclipse.org/sirius/diagram/description/1.1.0 http://www.eclipse.org/sirius/diagram/1.1.0#//description http://www.eclipse.org/sirius/diagram/description/style/1.1.0 http://www.eclipse.org/sirius/diagram/1.1.0#//description/style" xmi:id="_SANy4PtMEeW8E61t5sFVfw" selectedViews="_SX2PwPtMEeW8E61t5sFVfw" version="10.1.0.201509162000">
+  <semanticResources>AtmOcnProto.nuopc</semanticResources>
+  <ownedViews xmi:type="viewpoint:DRepresentationContainer" xmi:id="_SX2PwPtMEeW8E61t5sFVfw">
+    <ownedRepresentations xmi:type="diagram:DSemanticDiagram" xmi:id="_SX89cPtMEeW8E61t5sFVfw" name=" Architecture Diagram">
+      <ownedAnnotationEntries xmi:type="description:AnnotationEntry" xmi:id="_SX89cftMEeW8E61t5sFVfw" source="DANNOTATION_CUSTOMIZATION_KEY">
+        <data xmi:type="diagram:ComputedStyleDescriptionRegistry" xmi:id="_SX89cvtMEeW8E61t5sFVfw"/>
+      </ownedAnnotationEntries>
+      <ownedAnnotationEntries xmi:type="description:AnnotationEntry" xmi:id="_SX9kgPtMEeW8E61t5sFVfw" source="GMF_DIAGRAMS">
+        <data xmi:type="notation:Diagram" xmi:id="_SX9kgftMEeW8E61t5sFVfw" type="Sirius" element="_SX89cPtMEeW8E61t5sFVfw" measurementUnit="Pixel">
+          <children xmi:type="notation:Node" xmi:id="_T-Gb4PtMEeW8E61t5sFVfw" type="2002" element="_T98q4PtMEeW8E61t5sFVfw">
+            <children xmi:type="notation:Node" xmi:id="_T-HC8PtMEeW8E61t5sFVfw" type="5006"/>
+            <children xmi:type="notation:Node" xmi:id="_T-HC8ftMEeW8E61t5sFVfw" type="7001">
+              <children xmi:type="notation:Node" xmi:id="_WcCd8PtMEeW8E61t5sFVfw" type="3007" element="_Wb7wQPtMEeW8E61t5sFVfw">
+                <children xmi:type="notation:Node" xmi:id="_WcCd8_tMEeW8E61t5sFVfw" type="5003">
+                  <layoutConstraint xmi:type="notation:Location" xmi:id="_WcCd9PtMEeW8E61t5sFVfw" y="5"/>
+                </children>
+                <children xmi:type="notation:Node" xmi:id="_WcDFAPtMEeW8E61t5sFVfw" type="3003" element="_Wb8XUPtMEeW8E61t5sFVfw">
+                  <styles xmi:type="notation:ShapeStyle" xmi:id="_WcDFAftMEeW8E61t5sFVfw" fontName="Ubuntu"/>
+                  <layoutConstraint xmi:type="notation:Bounds" xmi:id="_WcDFAvtMEeW8E61t5sFVfw"/>
+                </children>
+                <styles xmi:type="notation:ShapeStyle" xmi:id="_WcCd8ftMEeW8E61t5sFVfw" fontName="Ubuntu" fontHeight="10" bold="true"/>
+                <layoutConstraint xmi:type="notation:Bounds" xmi:id="_WcCd8vtMEeW8E61t5sFVfw" x="79" y="17" width="97" height="97"/>
+              </children>
+              <children xmi:type="notation:Node" xmi:id="_ak04QPtMEeW8E61t5sFVfw" type="3007" element="_aktjgPtMEeW8E61t5sFVfw">
+                <children xmi:type="notation:Node" xmi:id="_ak1fUPtMEeW8E61t5sFVfw" type="5003">
+                  <layoutConstraint xmi:type="notation:Location" xmi:id="_ak1fUftMEeW8E61t5sFVfw" y="5"/>
+                </children>
+                <children xmi:type="notation:Node" xmi:id="_ak2GYPtMEeW8E61t5sFVfw" type="3003" element="_aktjgftMEeW8E61t5sFVfw">
+                  <styles xmi:type="notation:ShapeStyle" xmi:id="_ak2GYftMEeW8E61t5sFVfw" fontName="Ubuntu"/>
+                  <layoutConstraint xmi:type="notation:Bounds" xmi:id="_ak2GYvtMEeW8E61t5sFVfw"/>
+                </children>
+                <styles xmi:type="notation:ShapeStyle" xmi:id="_ak04QftMEeW8E61t5sFVfw" fontName="Ubuntu" fontHeight="10" bold="true"/>
+                <layoutConstraint xmi:type="notation:Bounds" xmi:id="_ak04QvtMEeW8E61t5sFVfw" x="78" y="197" width="100" height="100"/>
+              </children>
+              <styles xmi:type="notation:SortingStyle" xmi:id="_T-HC8vtMEeW8E61t5sFVfw"/>
+              <styles xmi:type="notation:FilteringStyle" xmi:id="_T-HC8_tMEeW8E61t5sFVfw"/>
+            </children>
+            <styles xmi:type="notation:ShapeStyle" xmi:id="_T-Gb4ftMEeW8E61t5sFVfw" fontName="Ubuntu" fontHeight="10" bold="true"/>
+            <layoutConstraint xmi:type="notation:Bounds" xmi:id="_T-Gb4vtMEeW8E61t5sFVfw" x="384" y="60" width="267" height="363"/>
+          </children>
+          <styles xmi:type="notation:DiagramStyle" xmi:id="_SX-LkPtMEeW8E61t5sFVfw"/>
+          <edges xmi:type="notation:Edge" xmi:id="_cUeQ8PtMEeW8E61t5sFVfw" type="4001" element="_cUYxYPtMEeW8E61t5sFVfw" source="_WcCd8PtMEeW8E61t5sFVfw" target="_ak04QPtMEeW8E61t5sFVfw">
+            <children xmi:type="notation:Node" xmi:id="_cUffEPtMEeW8E61t5sFVfw" type="6001">
+              <layoutConstraint xmi:type="notation:Bounds" xmi:id="_fSDcYPtMEeW8E61t5sFVfw" y="-10"/>
+            </children>
+            <children xmi:type="notation:Node" xmi:id="_cUffEvtMEeW8E61t5sFVfw" type="6002">
+              <layoutConstraint xmi:type="notation:Bounds" xmi:id="_fSEDcPtMEeW8E61t5sFVfw" y="9"/>
+            </children>
+            <children xmi:type="notation:Node" xmi:id="_cUgGIPtMEeW8E61t5sFVfw" type="6003">
+              <layoutConstraint xmi:type="notation:Bounds" xmi:id="_fSEDcftMEeW8E61t5sFVfw" x="-1" y="11"/>
+            </children>
+            <styles xmi:type="notation:ConnectorStyle" xmi:id="_cUeQ8ftMEeW8E61t5sFVfw"/>
+            <styles xmi:type="notation:FontStyle" xmi:id="_cUeQ8vtMEeW8E61t5sFVfw" fontName="Ubuntu" fontHeight="8"/>
+            <bendpoints xmi:type="notation:RelativeBendpoints" xmi:id="_cUeQ8_tMEeW8E61t5sFVfw" points="[2, 10, 0, -83]$[2, 93, 0, 0]"/>
+            <sourceAnchor xmi:type="notation:IdentityAnchor" xmi:id="_cUgtMPtMEeW8E61t5sFVfw" id="(0.27835051546391754,0.8969072164948454)"/>
+            <targetAnchor xmi:type="notation:IdentityAnchor" xmi:id="_cUgtMftMEeW8E61t5sFVfw" id="(0.3,0.0)"/>
+          </edges>
+          <edges xmi:type="notation:Edge" xmi:id="_c6jZgPtMEeW8E61t5sFVfw" type="4001" element="_c6fvIPtMEeW8E61t5sFVfw" source="_ak04QPtMEeW8E61t5sFVfw" target="_WcCd8PtMEeW8E61t5sFVfw">
+            <children xmi:type="notation:Node" xmi:id="_c6kAkPtMEeW8E61t5sFVfw" type="6001">
+              <layoutConstraint xmi:type="notation:Bounds" xmi:id="_c6kAkftMEeW8E61t5sFVfw" x="1" y="-11"/>
+            </children>
+            <children xmi:type="notation:Node" xmi:id="_c6kAkvtMEeW8E61t5sFVfw" type="6002">
+              <layoutConstraint xmi:type="notation:Bounds" xmi:id="_c6kAk_tMEeW8E61t5sFVfw" x="1" y="10"/>
+            </children>
+            <children xmi:type="notation:Node" xmi:id="_c6kAlPtMEeW8E61t5sFVfw" type="6003">
+              <layoutConstraint xmi:type="notation:Bounds" xmi:id="_c6kAlftMEeW8E61t5sFVfw" y="9"/>
+            </children>
+            <styles xmi:type="notation:ConnectorStyle" xmi:id="_c6jZgftMEeW8E61t5sFVfw"/>
+            <styles xmi:type="notation:FontStyle" xmi:id="_c6jZgvtMEeW8E61t5sFVfw" fontName="Ubuntu" fontHeight="8"/>
+            <bendpoints xmi:type="notation:RelativeBendpoints" xmi:id="_c6jZg_tMEeW8E61t5sFVfw" points="[4, -6, 1, 87]$[4, -89, 1, 4]"/>
+            <sourceAnchor xmi:type="notation:IdentityAnchor" xmi:id="_c6kAlvtMEeW8E61t5sFVfw" id="(0.64,0.06)"/>
+            <targetAnchor xmi:type="notation:IdentityAnchor" xmi:id="_c6kAl_tMEeW8E61t5sFVfw" id="(0.6804123711340206,0.9587628865979382)"/>
+          </edges>
+        </data>
+      </ownedAnnotationEntries>
+      <ownedDiagramElements xmi:type="diagram:DNodeContainer" xmi:id="_T98q4PtMEeW8E61t5sFVfw" name="ESM">
+        <target xmi:type="nuopc:Driver" href="AtmOcnProto.nuopc#//@children.0"/>
+        <semanticElements xmi:type="nuopc:Driver" href="AtmOcnProto.nuopc#//@children.0"/>
+        <arrangeConstraints>KEEP_LOCATION</arrangeConstraints>
+        <arrangeConstraints>KEEP_SIZE</arrangeConstraints>
+        <arrangeConstraints>KEEP_RATIO</arrangeConstraints>
+        <ownedStyle xmi:type="diagram:FlatContainerStyle" xmi:id="_T995APtMEeW8E61t5sFVfw" labelSize="10" showIcon="false" borderSize="1" borderSizeComputationExpression="1" backgroundColor="114,159,207" foregroundColor="114,159,207">
+          <labelFormat>bold</labelFormat>
+          <description xmi:type="style:FlatContainerStyleDescription" href="platform:/plugin/org.earthsystemmodeling.cupid.nuopcmodel.design/description/nuopc.odesign#//@ownedViewpoints[name='nuopcViewport']/@ownedRepresentations[name='nuopcDiagram']/@defaultLayer/@containerMappings[name='driverContainer']/@style"/>
+        </ownedStyle>
+        <actualMapping xmi:type="description_1:ContainerMapping" href="platform:/plugin/org.earthsystemmodeling.cupid.nuopcmodel.design/description/nuopc.odesign#//@ownedViewpoints[name='nuopcViewport']/@ownedRepresentations[name='nuopcDiagram']/@defaultLayer/@containerMappings[name='driverContainer']"/>
+        <ownedDiagramElements xmi:type="diagram:DNode" xmi:id="_Wb7wQPtMEeW8E61t5sFVfw" name="ATM" outgoingEdges="_cUYxYPtMEeW8E61t5sFVfw" incomingEdges="_c6fvIPtMEeW8E61t5sFVfw" width="10" height="10" resizeKind="NSEW">
+          <target xmi:type="nuopc:Model" href="AtmOcnProto.nuopc#//@children.0/@children.0"/>
+          <semanticElements xmi:type="nuopc:Model" href="AtmOcnProto.nuopc#//@children.0/@children.0"/>
+          <arrangeConstraints>KEEP_LOCATION</arrangeConstraints>
+          <arrangeConstraints>KEEP_SIZE</arrangeConstraints>
+          <arrangeConstraints>KEEP_RATIO</arrangeConstraints>
+          <ownedStyle xmi:type="diagram:Square" xmi:id="_Wb8XUPtMEeW8E61t5sFVfw" labelSize="10" showIcon="false" borderSize="1" borderSizeComputationExpression="1" labelPosition="node" color="255,245,181">
+            <labelFormat>bold</labelFormat>
+            <description xmi:type="style:SquareDescription" href="platform:/plugin/org.earthsystemmodeling.cupid.nuopcmodel.design/description/nuopc.odesign#//@ownedViewpoints[name='nuopcViewport']/@ownedRepresentations[name='nuopcDiagram']/@defaultLayer/@containerMappings[name='driverContainer']/@subNodeMappings[name='driverModel']/@style"/>
+          </ownedStyle>
+          <actualMapping xmi:type="description_1:NodeMapping" href="platform:/plugin/org.earthsystemmodeling.cupid.nuopcmodel.design/description/nuopc.odesign#//@ownedViewpoints[name='nuopcViewport']/@ownedRepresentations[name='nuopcDiagram']/@defaultLayer/@containerMappings[name='driverContainer']/@subNodeMappings[name='driverModel']"/>
+        </ownedDiagramElements>
+        <ownedDiagramElements xmi:type="diagram:DNode" xmi:id="_aktjgPtMEeW8E61t5sFVfw" name="OCN" outgoingEdges="_c6fvIPtMEeW8E61t5sFVfw" incomingEdges="_cUYxYPtMEeW8E61t5sFVfw" width="10" height="10" resizeKind="NSEW">
+          <target xmi:type="nuopc:Model" href="AtmOcnProto.nuopc#//@children.0/@children.1"/>
+          <semanticElements xmi:type="nuopc:Model" href="AtmOcnProto.nuopc#//@children.0/@children.1"/>
+          <arrangeConstraints>KEEP_LOCATION</arrangeConstraints>
+          <arrangeConstraints>KEEP_SIZE</arrangeConstraints>
+          <arrangeConstraints>KEEP_RATIO</arrangeConstraints>
+          <ownedStyle xmi:type="diagram:Square" xmi:id="_aktjgftMEeW8E61t5sFVfw" labelSize="10" showIcon="false" borderSize="1" borderSizeComputationExpression="1" labelPosition="node" color="255,245,181">
+            <labelFormat>bold</labelFormat>
+            <description xmi:type="style:SquareDescription" href="platform:/plugin/org.earthsystemmodeling.cupid.nuopcmodel.design/description/nuopc.odesign#//@ownedViewpoints[name='nuopcViewport']/@ownedRepresentations[name='nuopcDiagram']/@defaultLayer/@containerMappings[name='driverContainer']/@subNodeMappings[name='driverModel']/@style"/>
+          </ownedStyle>
+          <actualMapping xmi:type="description_1:NodeMapping" href="platform:/plugin/org.earthsystemmodeling.cupid.nuopcmodel.design/description/nuopc.odesign#//@ownedViewpoints[name='nuopcViewport']/@ownedRepresentations[name='nuopcDiagram']/@defaultLayer/@containerMappings[name='driverContainer']/@subNodeMappings[name='driverModel']"/>
+        </ownedDiagramElements>
+      </ownedDiagramElements>
+      <ownedDiagramElements xmi:type="diagram:DEdge" xmi:id="_cUYxYPtMEeW8E61t5sFVfw" sourceNode="_Wb7wQPtMEeW8E61t5sFVfw" targetNode="_aktjgPtMEeW8E61t5sFVfw">
+        <target xmi:type="nuopc:Connector" href="AtmOcnProto.nuopc#//@children.0/@children.2"/>
+        <semanticElements xmi:type="nuopc:Connector" href="AtmOcnProto.nuopc#//@children.0/@children.2"/>
+        <ownedStyle xmi:type="diagram:EdgeStyle" xmi:id="_cUYxYftMEeW8E61t5sFVfw" targetArrow="InputFillClosedArrow" size="8" strokeColor="77,137,20">
+          <description xmi:type="style:EdgeStyleDescription" href="platform:/plugin/org.earthsystemmodeling.cupid.nuopcmodel.design/description/nuopc.odesign#//@ownedViewpoints[name='nuopcViewport']/@ownedRepresentations[name='nuopcDiagram']/@defaultLayer/@edgeMappings[name='connectorEdge']/@style"/>
+          <centerLabelStyle xmi:type="diagram:CenterLabelStyle" xmi:id="_cUYxYvtMEeW8E61t5sFVfw"/>
+        </ownedStyle>
+        <actualMapping xmi:type="description_1:EdgeMapping" href="platform:/plugin/org.earthsystemmodeling.cupid.nuopcmodel.design/description/nuopc.odesign#//@ownedViewpoints[name='nuopcViewport']/@ownedRepresentations[name='nuopcDiagram']/@defaultLayer/@edgeMappings[name='connectorEdge']"/>
+      </ownedDiagramElements>
+      <ownedDiagramElements xmi:type="diagram:DEdge" xmi:id="_c6fvIPtMEeW8E61t5sFVfw" sourceNode="_aktjgPtMEeW8E61t5sFVfw" targetNode="_Wb7wQPtMEeW8E61t5sFVfw">
+        <target xmi:type="nuopc:Connector" href="AtmOcnProto.nuopc#//@children.0/@children.3"/>
+        <semanticElements xmi:type="nuopc:Connector" href="AtmOcnProto.nuopc#//@children.0/@children.3"/>
+        <ownedStyle xmi:type="diagram:EdgeStyle" xmi:id="_c6fvIftMEeW8E61t5sFVfw" targetArrow="InputFillClosedArrow" size="8" strokeColor="77,137,20">
+          <description xmi:type="style:EdgeStyleDescription" href="platform:/plugin/org.earthsystemmodeling.cupid.nuopcmodel.design/description/nuopc.odesign#//@ownedViewpoints[name='nuopcViewport']/@ownedRepresentations[name='nuopcDiagram']/@defaultLayer/@edgeMappings[name='connectorEdge']/@style"/>
+          <centerLabelStyle xmi:type="diagram:CenterLabelStyle" xmi:id="_c6fvIvtMEeW8E61t5sFVfw"/>
+        </ownedStyle>
+        <actualMapping xmi:type="description_1:EdgeMapping" href="platform:/plugin/org.earthsystemmodeling.cupid.nuopcmodel.design/description/nuopc.odesign#//@ownedViewpoints[name='nuopcViewport']/@ownedRepresentations[name='nuopcDiagram']/@defaultLayer/@edgeMappings[name='connectorEdge']"/>
+      </ownedDiagramElements>
+      <description xmi:type="description_1:DiagramDescription" href="platform:/plugin/org.earthsystemmodeling.cupid.nuopcmodel.design/description/nuopc.odesign#//@ownedViewpoints[name='nuopcViewport']/@ownedRepresentations[name='nuopcDiagram']"/>
+      <filterVariableHistory xmi:type="diagram:FilterVariableHistory" xmi:id="_SX89c_tMEeW8E61t5sFVfw"/>
+      <activatedLayers xmi:type="description_1:Layer" href="platform:/plugin/org.earthsystemmodeling.cupid.nuopcmodel.design/description/nuopc.odesign#//@ownedViewpoints[name='nuopcViewport']/@ownedRepresentations[name='nuopcDiagram']/@defaultLayer"/>
+      <target xmi:type="nuopc:Application" href="AtmOcnProto.nuopc#/"/>
+    </ownedRepresentations>
+    <viewpoint xmi:type="description:Viewpoint" href="platform:/plugin/org.earthsystemmodeling.cupid.nuopcmodel.design/description/nuopc.odesign#//@ownedViewpoints[name='nuopcViewport']"/>
+  </ownedViews>
+</viewpoint:DAnalysis>

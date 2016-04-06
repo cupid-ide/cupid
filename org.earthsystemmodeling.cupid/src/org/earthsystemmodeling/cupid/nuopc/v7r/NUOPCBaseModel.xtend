@@ -24,12 +24,14 @@ class NUOPCBaseModel {
 
 		public String state
 		public String standardName
+		public String name
 
 		new(EntryPointCodeConcept<?> parent) {
 			super(parent)
 			parent.setOrAddChild(this)
 			state = _parent.paramImport
-			standardName = "StandardName"
+			standardName = "\"StandardName\""
+			name = null
 		}
 
 		override name() {
@@ -45,6 +47,7 @@ class NUOPCBaseModel {
 					var advField = new AdvertiseField(_parent)
 					advField.state = it.litArgExprByIdx(0)
 					advField.standardName = it.litArgExprByIdx(1)
+					advField.name = it.litArgExprByKeyword("name")
 					advField.setASTRef(it)
 					retList.add(advField)	
 				]
@@ -58,7 +61,7 @@ class NUOPCBaseModel {
 			var code = 
 '''
 
-call NUOPC_Advertise(«paramch(state)», «paramch(standardName)», rc=«_parent.paramRC»)
+call NUOPC_Advertise(«paramch(state)», StandardName=«paramch(standardName)»«IF name!=null», name=«paramch(name)»«ENDIF», rc=«_parent.paramRC»)
 «ESMFErrorCheck(_parent.paramRC)»
 '''
 			val IASTListNode<IBodyConstruct> stmts = parseLiteralStatementSequence(code)
@@ -118,7 +121,7 @@ call NUOPC_Advertise(«paramch(state)», «paramch(standardName)», rc=«_parent
 			
 			val ASTSubroutineSubprogramNode ssn = _parent.ASTRef
 							
-			addTypeDeclaration('''type(ESMF_Field) :: «field»''', ssn)
+			addTypeDeclaration('''type(ESMF_Field) :: «field»''', ssn, true)
 							
 			var code = 
 '''
@@ -138,7 +141,7 @@ call NUOPC_Realize(«paramch(state)», field=«paramch(field)», rc=«_parent.pa
 		}
 		
 		def forward(Field high, String state) {
-			fieldName = "\"" + high.standardName + "\""
+			fieldName = "\"" + high.name + "\""
 			field = high.name
 			grid = high.grid.name
 			this.state = state

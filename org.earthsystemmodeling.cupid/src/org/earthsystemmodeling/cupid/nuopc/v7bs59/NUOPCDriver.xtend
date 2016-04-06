@@ -446,7 +446,7 @@ call NUOPC_Advertise(«paramch(state)», «paramch(standardName)», rc=«_parent
 		override forward() {
 			
 			val ASTSubroutineSubprogramNode ssn = _parent.ASTRef
-			addTypeDeclaration('''type(ESMF_Field) :: «field»''', ssn)	
+			addTypeDeclaration('''type(ESMF_Field) :: «field»''', ssn, true)	
 			
 			var code = 
 '''

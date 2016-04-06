@@ -1,6 +1,8 @@
 package org.earthsystemmodeling.cupid.nuopc.v7r;
 
 import com.google.common.base.Objects;
+import java.util.ArrayList;
+import java.util.List;
 import org.earthsystemmodeling.cupid.annotation.Label;
 import org.earthsystemmodeling.cupid.nuopc.CodeConcept;
 import org.earthsystemmodeling.cupid.nuopc.CodeGenerationException;
@@ -13,6 +15,7 @@ import org.eclipse.photran.internal.core.parser.IModuleBodyConstruct;
 import org.eclipse.photran.internal.core.parser.IProgramUnit;
 import org.eclipse.xtend.lib.annotations.Accessors;
 import org.eclipse.xtend2.lib.StringConcatenation;
+import org.eclipse.xtext.xbase.lib.CollectionLiterals;
 import org.eclipse.xtext.xbase.lib.Exceptions;
 import org.eclipse.xtext.xbase.lib.Pure;
 
@@ -31,9 +34,13 @@ public class GridCodeConcept {
     
     private double[] maxCornerCoord;
     
+    private List<String> staggerLocs;
+    
     public CreateUniformGrid(final CodeConcept<?, ?> parent) {
       super(parent);
       parent.setOrAddChild(this);
+      ArrayList<String> _newArrayList = CollectionLiterals.<String>newArrayList();
+      this.staggerLocs = _newArrayList;
     }
     
     @Override
@@ -106,6 +113,18 @@ public class GridCodeConcept {
           _builder.append(_litArrayR8_1, "    \t");
           _builder.append(", &");
           _builder.newLineIfNotEmpty();
+          {
+            int _size = this.staggerLocs.size();
+            boolean _greaterThan = (_size > 0);
+            if (_greaterThan) {
+              _builder.append("    \t");
+              _builder.append("staggerLocList=");
+              CharSequence _litArray_2 = GridCodeConcept.litArray(this.staggerLocs);
+              _builder.append(_litArray_2, "    \t");
+              _builder.append(", &");
+              _builder.newLineIfNotEmpty();
+            }
+          }
           _builder.append("    \t");
           _builder.append("rc=rc)");
           _builder.newLine();
@@ -171,6 +190,33 @@ public class GridCodeConcept {
     public void setMaxCornerCoord(final double[] maxCornerCoord) {
       this.maxCornerCoord = maxCornerCoord;
     }
+    
+    @Pure
+    public List<String> getStaggerLocs() {
+      return this.staggerLocs;
+    }
+    
+    public void setStaggerLocs(final List<String> staggerLocs) {
+      this.staggerLocs = staggerLocs;
+    }
+  }
+  
+  public static CharSequence litArray(final List<String> strArray) {
+    StringConcatenation _builder = new StringConcatenation();
+    _builder.append("(/");
+    {
+      boolean _hasElements = false;
+      for(final String s : strArray) {
+        if (!_hasElements) {
+          _hasElements = true;
+        } else {
+          _builder.appendImmediate(", ", "");
+        }
+        _builder.append(s, "");
+      }
+    }
+    _builder.append("/)");
+    return _builder;
   }
   
   public static CharSequence litArray(final int[] intArray) {

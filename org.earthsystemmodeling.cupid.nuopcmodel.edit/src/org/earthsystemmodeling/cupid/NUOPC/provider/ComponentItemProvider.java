@@ -60,6 +60,7 @@ public class ComponentItemProvider
 			super.getPropertyDescriptors(object);
 
 			addNamePropertyDescriptor(object);
+			addIPDVersionPropertyDescriptor(object);
 		}
 		return itemPropertyDescriptors;
 	}
@@ -78,6 +79,28 @@ public class ComponentItemProvider
 				 getString("_UI_Component_name_feature"),
 				 getString("_UI_PropertyDescriptor_description", "_UI_Component_name_feature", "_UI_Component_type"),
 				 NUOPCPackage.Literals.COMPONENT__NAME,
+				 true,
+				 false,
+				 false,
+				 ItemPropertyDescriptor.GENERIC_VALUE_IMAGE,
+				 null,
+				 null));
+	}
+
+	/**
+	 * This adds a property descriptor for the IPD Version feature.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	protected void addIPDVersionPropertyDescriptor(Object object) {
+		itemPropertyDescriptors.add
+			(createItemPropertyDescriptor
+				(((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(),
+				 getResourceLocator(),
+				 getString("_UI_Component_IPDVersion_feature"),
+				 getString("_UI_PropertyDescriptor_description", "_UI_Component_IPDVersion_feature", "_UI_Component_type"),
+				 NUOPCPackage.Literals.COMPONENT__IPD_VERSION,
 				 true,
 				 false,
 				 false,
@@ -114,6 +137,7 @@ public class ComponentItemProvider
 
 		switch (notification.getFeatureID(Component.class)) {
 			case NUOPCPackage.COMPONENT__NAME:
+			case NUOPCPackage.COMPONENT__IPD_VERSION:
 				fireNotifyChanged(new ViewerNotification(notification, notification.getNotifier(), false, true));
 				return;
 		}

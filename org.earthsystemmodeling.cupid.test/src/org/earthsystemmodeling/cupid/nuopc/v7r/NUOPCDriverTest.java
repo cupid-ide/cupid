@@ -12,6 +12,7 @@ import org.apache.commons.io.IOUtils;
 import org.earthsystemmodeling.cupid.NUOPC.Application;
 import org.earthsystemmodeling.cupid.NUOPC.Connector;
 import org.earthsystemmodeling.cupid.NUOPC.Driver;
+import org.earthsystemmodeling.cupid.NUOPC.ESMF_STAGGERLOC;
 import org.earthsystemmodeling.cupid.NUOPC.Field;
 import org.earthsystemmodeling.cupid.NUOPC.Mediator;
 import org.earthsystemmodeling.cupid.NUOPC.Model;
@@ -125,6 +126,7 @@ public class NUOPCDriverTest {
 		atmgrid.getMinCornerCoord().add(10.0);
 		atmgrid.getMaxCornerCoord().add(1000.0);
 		atmgrid.getMaxCornerCoord().add(2000.0);
+		atmgrid.getStaggerLocToFillCoords().add(ESMF_STAGGERLOC.ESMF_STAGGERLOC_CENTER);
 		atm.getGrids().add(atmgrid);
 		
 		UniformGrid ocngrid = EcoreUtil.copy(atmgrid);

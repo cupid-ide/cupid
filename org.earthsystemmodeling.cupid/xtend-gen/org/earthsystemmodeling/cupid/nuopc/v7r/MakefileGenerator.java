@@ -139,11 +139,15 @@ public class MakefileGenerator {
         _builder.newLine();
         _builder.append("# -----------------------------------------------------------------------------");
         _builder.newLine();
+        _builder.append("all: ");
         String _name_2 = app.getName();
         _builder.append(_name_2, "");
-        _builder.append(": ");
+        _builder.newLineIfNotEmpty();
         String _name_3 = app.getName();
         _builder.append(_name_3, "");
+        _builder.append(": ");
+        String _name_4 = app.getName();
+        _builder.append(_name_4, "");
         _builder.append(".o ");
         {
           EList<Component> _allChildren = app.getAllChildren();
@@ -161,8 +165,8 @@ public class MakefileGenerator {
             } else {
               _builder.appendImmediate(" ", "");
             }
-            String _name_4 = c.getName();
-            _builder.append(_name_4, "");
+            String _name_5 = c.getName();
+            _builder.append(_name_5, "");
             _builder.append(".o");
           }
         }
@@ -173,8 +177,8 @@ public class MakefileGenerator {
         _builder.newLine();
         _builder.append("# module dependencies:");
         _builder.newLine();
-        String _name_5 = app.getName();
-        _builder.append(_name_5, "");
+        String _name_6 = app.getName();
+        _builder.append(_name_6, "");
         _builder.append(".o: ");
         {
           EList<Component> _children = app.getChildren();
@@ -186,8 +190,8 @@ public class MakefileGenerator {
             } else {
               _builder.appendImmediate(" ", "");
             }
-            String _name_6 = d.getName();
-            _builder.append(_name_6, "");
+            String _name_7 = d.getName();
+            _builder.append(_name_7, "");
             _builder.append(".o");
           }
         }
@@ -201,8 +205,8 @@ public class MakefileGenerator {
               int _size = _children_2.size();
               boolean _greaterThan = (_size > 0);
               if (_greaterThan) {
-                String _name_7 = d_1.getName();
-                _builder.append(_name_7, "");
+                String _name_8 = d_1.getName();
+                _builder.append(_name_8, "");
                 _builder.append(".o:  ");
                 {
                   EList<Component> _children_3 = d_1.getChildren();
@@ -220,8 +224,8 @@ public class MakefileGenerator {
                     } else {
                       _builder.appendImmediate(" ", "");
                     }
-                    String _name_8 = c_1.getName();
-                    _builder.append(_name_8, "");
+                    String _name_9 = c_1.getName();
+                    _builder.append(_name_9, "");
                     _builder.append(".o");
                   }
                 }
@@ -247,8 +251,8 @@ public class MakefileGenerator {
         _builder.newLine();
         _builder.append("\t");
         _builder.append("rm -f ");
-        String _name_9 = app.getName();
-        _builder.append(_name_9, "\t");
+        String _name_10 = app.getName();
+        _builder.append(_name_10, "\t");
         _builder.append(" *.o *.mod");
         _builder.newLineIfNotEmpty();
         _builder.append("distclean: dust clean");

@@ -337,8 +337,21 @@ public abstract class CodeConcept<P extends CodeConcept<?,?>, A extends IASTNode
 		toRet
 	}
 	
-	def static addTypeDeclaration(String code, ASTSubroutineSubprogramNode ssn) {
+	def static addTypeDeclaration(String code, ASTSubroutineSubprogramNode ssn, boolean ignoreIfDeclared) {
 		val ASTTypeDeclarationStmtNode tds = parseLiteralStatement(code) as ASTTypeDeclarationStmtNode
+		
+		//check if exists
+		val varName = tds.entityDeclList.get(0).objectName.objectName.text
+		val existing = ssn.body.filter(ASTTypeDeclarationStmtNode).findFirst[t|
+			t.entityDeclList?.exists[e|
+				e.objectName?.objectName?.eic(varName)
+			]
+		]
+		if (existing != null) {
+			if (ignoreIfDeclared) return
+			else throw new CodeGenerationException("Tried to declare same entity multiple times: " + code)
+		}
+		
 		val last = ssn.body.findLast(IDeclarationConstruct)
 		if (last != null) {
 			(ssn.body as IASTListNode<IBodyConstruct>).insertAfter(last, tds)

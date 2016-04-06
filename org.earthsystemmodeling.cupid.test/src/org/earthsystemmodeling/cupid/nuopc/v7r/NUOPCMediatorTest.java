@@ -9,8 +9,15 @@ import java.io.IOException;
 
 import org.earthsystemmodeling.cupid.nuopc.v7r.NUOPCBaseModel.AdvertiseField;
 import org.earthsystemmodeling.cupid.nuopc.v7r.NUOPCBaseModel.RealizeField;
+import org.earthsystemmodeling.cupid.nuopc.v7r.NUOPCMediator.IPD.IPDv04p0;
 import org.earthsystemmodeling.cupid.nuopc.v7r.NUOPCMediator.IPD.IPDv04p1;
 import org.earthsystemmodeling.cupid.nuopc.v7r.NUOPCMediator.IPD.IPDv04p3;
+import org.earthsystemmodeling.cupid.NUOPC.ESMF_STAGGERLOC;
+import org.earthsystemmodeling.cupid.NUOPC.Field;
+import org.earthsystemmodeling.cupid.NUOPC.Mediator;
+import org.earthsystemmodeling.cupid.NUOPC.Model;
+import org.earthsystemmodeling.cupid.NUOPC.NUOPCFactory;
+import org.earthsystemmodeling.cupid.NUOPC.UniformGrid;
 import org.earthsystemmodeling.cupid.nuopc.v7r.GridCodeConcept.CreateUniformGrid;
 import org.earthsystemmodeling.cupid.test.TestHelpers;
 import org.eclipse.core.resources.IFile;
@@ -26,6 +33,8 @@ public class NUOPCMediatorTest {
 	
 	private static IProject PROJECT_NUOPC_PROTOTYPES;
 	private static NullProgressMonitor NPM = new NullProgressMonitor();
+	private static NUOPCFactory factory = NUOPCFactory.eINSTANCE;	
+	private static final boolean PRINT_ASTS = true;
 	
 	@BeforeClass
 	public static void setUp() throws CoreException, IOException, InterruptedException {
@@ -207,6 +216,9 @@ public class NUOPCMediatorTest {
 		assertNotNull(mediator.importNUOPC);
 		assertNotNull(mediator.importNUOPCGeneric);
 		
+		IPDv04p0 ipdv04p0 = new IPDv04p0(mediator.initialization.initPhases.ipdv04);
+		assertNotNull(mediator.initialization.initPhases.ipdv04.ipdv04p0);
+		ipdv04p0.subroutineName = "MedFilterInitPhases";
 		
 		IPDv04p1 ipdv04p1 = new IPDv04p1(mediator.initialization.initPhases.ipdv04);
 		assertNotNull(mediator.initialization.initPhases.ipdv04.ipdv04p1);
@@ -222,18 +234,23 @@ public class NUOPCMediatorTest {
 		af.standardName = "\"sea_surface_temperature\"";
 		af.state = "exportState";
 		
+		ipdv04p0.forward();
 		ipdv04p1.forward();
 		chg = ipdv04p1.generateChange();
 		chg.perform(NPM);
 		
 		mediator = new NUOPCMediator(f).reverse();
 		assertNotNull(mediator);
+		assertNotNull(mediator.initialization.initPhases.ipdv04.ipdv04p0);
+		assertEquals("MedFilterInitPhases", mediator.initialization.initPhases.ipdv04.ipdv04p0.subroutineName);
+		
 		assertEquals(2, mediator.initialization.initPhases.ipdv04.ipdv04p1.advertiseFields.size());
 		assertEquals("\"donkey\"", mediator.initialization.initPhases.ipdv04.ipdv04p1.advertiseFields.get(0).standardName);
 		assertEquals("importState", mediator.initialization.initPhases.ipdv04.ipdv04p1.advertiseFields.get(0).state);
 		assertEquals("\"sea_surface_temperature\"", mediator.initialization.initPhases.ipdv04.ipdv04p1.advertiseFields.get(1).standardName);
-		assertEquals("exportState", mediator.initialization.initPhases.ipdv04.ipdv04p1.advertiseFields.get(1).state);
-
+		assertEquals("exportState", mediator.initialization.initPhases.ipdv04.ipdv04p1.advertiseFields.get(1).state);	
+		
+		
 		IPDv04p3 ipdv04p3 = new IPDv04p3(mediator.initialization.initPhases.ipdv04);
 		assertNotNull(mediator.initialization.initPhases.ipdv04.ipdv04p3);
 		ipdv04p3.getGrids().add("grid");
@@ -277,6 +294,76 @@ public class NUOPCMediatorTest {
 		///compile check
 		TestHelpers.copyFileIntoProject(p, "workspace/Makefile");
 		assertTrue("Compile check", TestHelpers.compileProject(p, TestHelpers.getMakefileFragmentLoc(NUOPCTest.NUOPC_TAG), "*.o"));
+	}
+	
+	@Test
+	public void GenerateNUOPCMediatorFromModel() throws CoreException, IOException, InterruptedException {
+		
+		IProject p = TestHelpers.createEmptyFortranProject(NUOPCTest.NUOPC_TAG + "_GenerateNUOPCMediatorFromModel");
+		IFile fMediator = TestHelpers.createBlankFile(p, "MED.F90");
+				
+		Mediator mediator = factory.createMediator();
+		mediator.setName("MED");
+		
+		Field f;
+		UniformGrid grid;
+		
+		grid = factory.createUniformGrid();
+		grid.setName("MedGrid");
+		grid.getMinIndex().add(1);
+		grid.getMinIndex().add(1);
+		grid.getMaxIndex().add(360);
+		grid.getMaxIndex().add(180);
+		grid.getMinCornerCoord().add(0.0);
+		grid.getMinCornerCoord().add(0.0);
+		grid.getMaxCornerCoord().add(360.0);
+		grid.getMaxCornerCoord().add(180.0);
+		grid.getStaggerLocToFillCoords().add(ESMF_STAGGERLOC.ESMF_STAGGERLOC_CENTER);
+		grid.getStaggerLocToFillCoords().add(ESMF_STAGGERLOC.ESMF_STAGGERLOC_CORNER);
+		
+		mediator.getGrids().add(grid);
+		
+		f = factory.createField();
+		f.setName("sst");
+		f.setStandardName("sst");
+		f.setGrid(grid);
+		mediator.getImportFields().add(f);
+		
+		//same name on import and export
+		f = factory.createField();
+		f.setName("sst");
+		f.setStandardName("sst");
+		f.setGrid(grid);
+		mediator.getExportFields().add(f);
+		
+		f = factory.createField();
+		f.setName("FieldImport2");
+		f.setStandardName("FieldImport2");
+		f.setGrid(grid);
+		mediator.getImportFields().add(f);
+		
+		f = factory.createField();
+		f.setName("FieldExport1");
+		f.setStandardName("FieldExport1");
+		f.setGrid(grid);
+		mediator.getExportFields().add(f);
+						
+		NUOPCMediator mediatorCodeConcept = NUOPCMediator.newMediator(fMediator, mediator);
+		assertNotNull(mediatorCodeConcept.initialization.initPhases);
+		assertNotNull(mediatorCodeConcept.initialization.initPhases.ipdv01);
+		assertNotNull(mediatorCodeConcept.initialization.createUniformGrid);
+		assertEquals("\"MedGrid\"", mediatorCodeConcept.initialization.createUniformGrid.get(0).getName());
+				
+		mediatorCodeConcept.forward(NPM);
+		
+		if (PRINT_ASTS) {
+			TestHelpers.printAST(mediatorCodeConcept);
+		}
+			
+		TestHelpers.copyFileIntoProject(p, "workspace/Makefile");
+		String makeTargets[] = {"MED.o"};
+		assertTrue("Compile check", TestHelpers.compileProject(p, NUOPCTest.ESMFMKFILE, makeTargets));
+
 	}
 	
 	

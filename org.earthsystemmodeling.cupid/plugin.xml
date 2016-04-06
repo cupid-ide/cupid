@@ -603,17 +603,16 @@
    <extension
          point="org.eclipse.ui.newWizards">
       <category
-            id="org.earthsystemmodeling.cupid"
-            name="Cupid">
+            id="org.earthsystemmodeling.cupid.nuopc"
+            name="NUOPC">
       </category>
       <wizard
-            category="org.earthsystemmodeling.cupid"
+            category="org.earthsystemmodeling.cupid.nuopc"
             class="org.earthsystemmodeling.cupid.wizards.CupidProjectWizard"
-            finalPerspective="org.earthsystemmodeling.cupid.perspective"
-            icon="icons/sample.gif"
-            id="org.earthsystemmodeling.cupid.wizards.CupidProjectWizard"
-            name="Cupid Training Project"
-            preferredPerspectives="org.earthsystemmodeling.cupid.perspective"
+            finalPerspective="org.eclipse.photran.ui.FortranPerspective"
+            icon="icons/hierarchy.png"
+            id="org.earthsystemmodeling.cupid.wizards.NUOPCProjectWizard"
+            name="NUOPC Project"
             project="true">
       </wizard>
    </extension>

@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<nuopc:Application xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:nuopc="http://www.earthsystemcog.org/projects/nuopc" name="AtmOcnMedProto">
+  <children xsi:type="nuopc:Driver" name="ESM">
+    <children xsi:type="nuopc:Model" name="ATM">
+      <grids xsi:type="nuopc:UniformGrid" name="AtmGrid">
+        <minIndex>1</minIndex>
+        <minIndex>1</minIndex>
+        <maxIndex>100</maxIndex>
+        <maxIndex>100</maxIndex>
+        <minCornerCoord>1.0</minCornerCoord>
+        <minCornerCoord>1.0</minCornerCoord>
+        <maxCornerCoord>100.0</maxCornerCoord>
+        <maxCornerCoord>100.0</maxCornerCoord>
+        <staggerLocToFillCoords>ESMF_STAGGERLOC_CENTER</staggerLocToFillCoords>
+      </grids>
+      <importFields name="sst" standardName="sea_surface_temperature" grid="//@children.0/@children.0/@grids.0"/>
+      <exportFields name="pmsl" standardName="air_pressure_at_sea_level" grid="//@children.0/@children.0/@grids.0"/>
+      <exportFields name="rsns" standardName="surface_net_downward_shortwave_flux" grid="//@children.0/@children.0/@grids.0"/>
+    </children>
+    <children xsi:type="nuopc:Model" name="OCN">
+      <grids xsi:type="nuopc:UniformGrid" name="OcnGrid">
+        <minIndex>1</minIndex>
+        <minIndex>1</minIndex>
+        <maxIndex>100</maxIndex>
+        <maxIndex>100</maxIndex>
+        <minCornerCoord>1.0</minCornerCoord>
+        <minCornerCoord>1.0</minCornerCoord>
+        <maxCornerCoord>100.0</maxCornerCoord>
+        <maxCornerCoord>100.0</maxCornerCoord>
+        <staggerLocToFillCoords>ESMF_STAGGERLOC_CENTER</staggerLocToFillCoords>
+      </grids>
+      <importFields name="pmsl" standardName="air_pressure_at_sea_level" grid="//@children.0/@children.1/@grids.0"/>
+      <importFields name="rsns" standardName="surface_net_downward_shortwave_flux" grid="//@children.0/@children.1/@grids.0"/>
+      <exportFields name="sst" standardName="sea_surface_temperature" grid="//@children.0/@children.1/@grids.0"/>
+    </children>
+    <children xsi:type="nuopc:Mediator" name="MED">
+      <grids xsi:type="nuopc:UniformGrid" name="MedGrid">
+        <minIndex>1</minIndex>
+        <minIndex>1</minIndex>
+        <maxIndex>100</maxIndex>
+        <maxIndex>100</maxIndex>
+        <minCornerCoord>1.0</minCornerCoord>
+        <minCornerCoord>1.0</minCornerCoord>
+        <maxCornerCoord>100.0</maxCornerCoord>
+        <maxCornerCoord>100.0</maxCornerCoord>
+        <staggerLocToFillCoords>ESMF_STAGGERLOC_CENTER</staggerLocToFillCoords>
+      </grids>
+      <importFields name="sst" standardName="sea_surface_temperature" grid="//@children.0/@children.2/@grids.0"/>
+      <importFields name="pmsl" standardName="air_pressure_at_sea_level" grid="//@children.0/@children.2/@grids.0"/>
+      <importFields name="rsns" standardName="surface_net_downward_shortwave_flux" grid="//@children.0/@children.2/@grids.0"/>
+      <exportFields name="sst" standardName="sea_surface_temperature" grid="//@children.0/@children.2/@grids.0"/>
+      <exportFields name="rsns" standardName="surface_net_downward_shortwave_flux" grid="//@children.0/@children.2/@grids.0"/>
+      <exportFields name="pmsl" standardName="air_pressure_at_sea_level" grid="//@children.0/@children.2/@grids.0"/>
+    </children>
+    <children xsi:type="nuopc:Connector" name="ATM2MED" source="//@children.0/@children.0" destination="//@children.0/@children.2"/>
+    <children xsi:type="nuopc:Connector" name="MED2ATM" source="//@children.0/@children.2" destination="//@children.0/@children.0"/>
+    <children xsi:type="nuopc:Connector" name="OCN2MED" source="//@children.0/@children.1" destination="//@children.0/@children.2"/>
+    <children xsi:type="nuopc:Connector" name="MED2OCN" source="//@children.0/@children.2" destination="//@children.0/@children.1"/>
+  </children>
+</nuopc:Application>

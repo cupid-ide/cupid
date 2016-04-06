@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<viewpoint:DAnalysis xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:description="http://www.eclipse.org/sirius/description/1.1.0" xmlns:description_1="http://www.eclipse.org/sirius/diagram/description/1.1.0" xmlns:diagram="http://www.eclipse.org/sirius/diagram/1.1.0" xmlns:notation="http://www.eclipse.org/gmf/runtime/1.0.2/notation" xmlns:nuopc="http://www.earthsystemcog.org/projects/nuopc" xmlns:style="http://www.eclipse.org/sirius/diagram/description/style/1.1.0" xmlns:viewpoint="http://www.eclipse.org/sirius/1.1.0" xsi:schemaLocation="http://www.eclipse.org/sirius/description/1.1.0 http://www.eclipse.org/sirius/1.1.0#//description http://www.eclipse.org/sirius/diagram/description/1.1.0 http://www.eclipse.org/sirius/diagram/1.1.0#//description http://www.eclipse.org/sirius/diagram/description/style/1.1.0 http://www.eclipse.org/sirius/diagram/1.1.0#//description/style" xmi:id="_4QcegPtKEeW8E61t5sFVfw" selectedViews="_45eNYPtKEeW8E61t5sFVfw" version="10.1.0.201509162000">
+  <semanticResources>SingleModelWithDriver.nuopc</semanticResources>
+  <ownedViews xmi:type="viewpoint:DRepresentationContainer" xmi:id="_45eNYPtKEeW8E61t5sFVfw">
+    <ownedRepresentations xmi:type="diagram:DSemanticDiagram" xmi:id="_45qaoPtKEeW8E61t5sFVfw" name="SingleModelWithDriver Architecture Diagram">
+      <ownedAnnotationEntries xmi:type="description:AnnotationEntry" xmi:id="_45qaoftKEeW8E61t5sFVfw" source="DANNOTATION_CUSTOMIZATION_KEY">
+        <data xmi:type="diagram:ComputedStyleDescriptionRegistry" xmi:id="_45qaovtKEeW8E61t5sFVfw"/>
+      </ownedAnnotationEntries>
+      <ownedAnnotationEntries xmi:type="description:AnnotationEntry" xmi:id="_45rBsPtKEeW8E61t5sFVfw" source="GMF_DIAGRAMS">
+        <data xmi:type="notation:Diagram" xmi:id="_45rBsftKEeW8E61t5sFVfw" type="Sirius" element="_45qaoPtKEeW8E61t5sFVfw" measurementUnit="Pixel">
+          <children xmi:type="notation:Node" xmi:id="_45rBs_tKEeW8E61t5sFVfw" type="2002" element="_45qao_tKEeW8E61t5sFVfw">
+            <children xmi:type="notation:Node" xmi:id="_45rowPtKEeW8E61t5sFVfw" type="5006"/>
+            <children xmi:type="notation:Node" xmi:id="_45rowftKEeW8E61t5sFVfw" type="7001">
+              <children xmi:type="notation:Node" xmi:id="_45roxPtKEeW8E61t5sFVfw" type="3007" element="_45qapftKEeW8E61t5sFVfw">
+                <children xmi:type="notation:Node" xmi:id="_45sP0PtKEeW8E61t5sFVfw" type="5003">
+                  <layoutConstraint xmi:type="notation:Location" xmi:id="_45sP0ftKEeW8E61t5sFVfw" y="5"/>
+                </children>
+                <children xmi:type="notation:Node" xmi:id="_45sP0vtKEeW8E61t5sFVfw" type="3003" element="_45qapvtKEeW8E61t5sFVfw">
+                  <styles xmi:type="notation:ShapeStyle" xmi:id="_45sP0_tKEeW8E61t5sFVfw" fontName="Ubuntu"/>
+                  <layoutConstraint xmi:type="notation:Bounds" xmi:id="_45sP1PtKEeW8E61t5sFVfw"/>
+                </children>
+                <styles xmi:type="notation:ShapeStyle" xmi:id="_45roxftKEeW8E61t5sFVfw" fontName="Ubuntu" fontHeight="10" bold="true"/>
+                <layoutConstraint xmi:type="notation:Bounds" xmi:id="_45roxvtKEeW8E61t5sFVfw" x="55" y="41" width="100" height="100"/>
+              </children>
+              <styles xmi:type="notation:SortingStyle" xmi:id="_45rowvtKEeW8E61t5sFVfw"/>
+              <styles xmi:type="notation:FilteringStyle" xmi:id="_45row_tKEeW8E61t5sFVfw"/>
+            </children>
+            <styles xmi:type="notation:ShapeStyle" xmi:id="_45rBtPtKEeW8E61t5sFVfw" fontName="Ubuntu" fontHeight="10" bold="true"/>
+            <layoutConstraint xmi:type="notation:Bounds" xmi:id="_45rBtftKEeW8E61t5sFVfw" x="324" y="96" width="231" height="231"/>
+          </children>
+          <styles xmi:type="notation:DiagramStyle" xmi:id="_45rBsvtKEeW8E61t5sFVfw"/>
+        </data>
+      </ownedAnnotationEntries>
+      <ownedDiagramElements xmi:type="diagram:DNodeContainer" xmi:id="_45qao_tKEeW8E61t5sFVfw" name="DRV">
+        <target xmi:type="nuopc:Driver" href="SingleModelWithDriver.nuopc#//@children.0"/>
+        <semanticElements xmi:type="nuopc:Driver" href="SingleModelWithDriver.nuopc#//@children.0"/>
+        <arrangeConstraints>KEEP_LOCATION</arrangeConstraints>
+        <arrangeConstraints>KEEP_SIZE</arrangeConstraints>
+        <arrangeConstraints>KEEP_RATIO</arrangeConstraints>
+        <ownedStyle xmi:type="diagram:FlatContainerStyle" xmi:id="_45qapPtKEeW8E61t5sFVfw" labelSize="10" showIcon="false" borderSize="1" borderSizeComputationExpression="1" backgroundColor="114,159,207" foregroundColor="114,159,207">
+          <labelFormat>bold</labelFormat>
+          <description xmi:type="style:FlatContainerStyleDescription" href="platform:/plugin/org.earthsystemmodeling.cupid.nuopcmodel.design/description/nuopc.odesign#//@ownedViewpoints[name='nuopcViewport']/@ownedRepresentations[name='nuopcDiagram']/@defaultLayer/@containerMappings[name='driverContainer']/@style"/>
+        </ownedStyle>
+        <actualMapping xmi:type="description_1:ContainerMapping" href="platform:/plugin/org.earthsystemmodeling.cupid.nuopcmodel.design/description/nuopc.odesign#//@ownedViewpoints[name='nuopcViewport']/@ownedRepresentations[name='nuopcDiagram']/@defaultLayer/@containerMappings[name='driverContainer']"/>
+        <ownedDiagramElements xmi:type="diagram:DNode" xmi:id="_45qapftKEeW8E61t5sFVfw" name="MODEL" width="10" height="10" resizeKind="NSEW">
+          <target xmi:type="nuopc:Model" href="SingleModelWithDriver.nuopc#//@children.0/@children.0"/>
+          <semanticElements xmi:type="nuopc:Model" href="SingleModelWithDriver.nuopc#//@children.0/@children.0"/>
+          <arrangeConstraints>KEEP_LOCATION</arrangeConstraints>
+          <arrangeConstraints>KEEP_SIZE</arrangeConstraints>
+          <arrangeConstraints>KEEP_RATIO</arrangeConstraints>
+          <ownedStyle xmi:type="diagram:Square" xmi:id="_45qapvtKEeW8E61t5sFVfw" labelSize="10" showIcon="false" borderSize="1" borderSizeComputationExpression="1" labelPosition="node" color="255,245,181">
+            <labelFormat>bold</labelFormat>
+            <description xmi:type="style:SquareDescription" href="platform:/plugin/org.earthsystemmodeling.cupid.nuopcmodel.design/description/nuopc.odesign#//@ownedViewpoints[name='nuopcViewport']/@ownedRepresentations[name='nuopcDiagram']/@defaultLayer/@containerMappings[name='driverContainer']/@subNodeMappings[name='driverModel']/@style"/>
+          </ownedStyle>
+          <actualMapping xmi:type="description_1:NodeMapping" href="platform:/plugin/org.earthsystemmodeling.cupid.nuopcmodel.design/description/nuopc.odesign#//@ownedViewpoints[name='nuopcViewport']/@ownedRepresentations[name='nuopcDiagram']/@defaultLayer/@containerMappings[name='driverContainer']/@subNodeMappings[name='driverModel']"/>
+        </ownedDiagramElements>
+      </ownedDiagramElements>
+      <description xmi:type="description_1:DiagramDescription" href="platform:/plugin/org.earthsystemmodeling.cupid.nuopcmodel.design/description/nuopc.odesign#//@ownedViewpoints[name='nuopcViewport']/@ownedRepresentations[name='nuopcDiagram']"/>
+      <filterVariableHistory xmi:type="diagram:FilterVariableHistory" xmi:id="_45qap_tKEeW8E61t5sFVfw"/>
+      <activatedLayers xmi:type="description_1:Layer" href="platform:/plugin/org.earthsystemmodeling.cupid.nuopcmodel.design/description/nuopc.odesign#//@ownedViewpoints[name='nuopcViewport']/@ownedRepresentations[name='nuopcDiagram']/@defaultLayer"/>
+      <target xmi:type="nuopc:Application" href="SingleModelWithDriver.nuopc#/"/>
+    </ownedRepresentations>
+    <viewpoint xmi:type="description:Viewpoint" href="platform:/plugin/org.earthsystemmodeling.cupid.nuopcmodel.design/description/nuopc.odesign#//@ownedViewpoints[name='nuopcViewport']"/>
+  </ownedViews>
+</viewpoint:DAnalysis>

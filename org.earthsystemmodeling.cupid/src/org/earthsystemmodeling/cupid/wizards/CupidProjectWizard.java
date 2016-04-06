@@ -151,7 +151,7 @@ public class CupidProjectWizard extends Wizard implements INewWizard, IExecutabl
 	public CupidProjectWizard() {
 		super();
 		setNeedsProgressMonitor(true);
-		setWindowTitle("Create Cupid Training Project");
+		setWindowTitle("Create NUOPC Project");
 		wizardData = new HashMap<String, String>();
 		parseConfigXML();
 	}
@@ -161,31 +161,24 @@ public class CupidProjectWizard extends Wizard implements INewWizard, IExecutabl
 		DocumentBuilderFactory dbf = DocumentBuilderFactory.newInstance();
 		
 		try {
-			InputStream is = FileLocator.openStream(MY_BUNDLE, new Path("templates/training_configs.xml"), false);
+			InputStream is = FileLocator.openStream(MY_BUNDLE, new Path("templates/project_configs.xml"), false);
 			DocumentBuilder db = dbf.newDocumentBuilder();
 			Document doc = db.parse(is);
 			
 			DOMBuilder domBuilder = new DOMBuilder();
 			configXML = domBuilder.build(doc);
 						
-		} catch (ParserConfigurationException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (SAXException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+		} catch (ParserConfigurationException | IOException | SAXException e) {
+			CupidActivator.log("Error during new NUOPC project wizard startup", e);
 		}
-	
 		
 	}
 	
 
 	@Override
 	public boolean canFinish() {
-		return getContainer().getCurrentPage() == selectCompEnvPage && selectCompEnvPage.isPageComplete();
+		//return getContainer().getCurrentPage() == selectCompEnvPage && selectCompEnvPage.isPageComplete();
+		return getContainer().getCurrentPage() == newProjectPage && newProjectPage.isPageComplete();
 	}
 
 	/**
@@ -198,7 +191,7 @@ public class CupidProjectWizard extends Wizard implements INewWizard, IExecutabl
 		addPage(selectArchPage);
 
 		
-		newProjectPage = new WizardNewProjectCreationPage("Create Cupid Training Project") {
+		newProjectPage = new WizardNewProjectCreationPage("Create NUOPC Project") {
 			@Override
 			public void createControl(Composite parent) {
 				
@@ -210,16 +203,16 @@ public class CupidProjectWizard extends Wizard implements INewWizard, IExecutabl
 			}
 		};
 
-		newProjectPage.setTitle("Create Cupid Training Project");
-		newProjectPage.setDescription("Select a name for the training project");
-		newProjectPage.setInitialProjectName("CupidProject");
+		newProjectPage.setTitle("Create NUOPC Project");
+		newProjectPage.setDescription("Select a name for the NUOPC project");
+		newProjectPage.setInitialProjectName("NUOPCApp");
 		addPage(newProjectPage);
 
-		singleModelProtoPage = new CupidProjectWizardPageSingleModelProto(wizardData);
+		//singleModelProtoPage = new CupidProjectWizardPageSingleModelProto(wizardData);
 		//addPage(singleModelProtoPage);
 
-		selectCompEnvPage = new CupidProjectWizardPageCompEnv(wizardData);
-		addPage(selectCompEnvPage);
+		//selectCompEnvPage = new CupidProjectWizardPageCompEnv(wizardData);
+		//addPage(selectCompEnvPage);
 	
 	}
 
@@ -268,7 +261,7 @@ public class CupidProjectWizard extends Wizard implements INewWizard, IExecutabl
 
 		CupidActivator.log("Creating project: " + projectHandle.getName());
 		
-		monitor.beginTask("Creating Cupid training project", 25);
+		monitor.beginTask("Creating NUOPC project", 25);
 		monitor.subTask("Creating new project");
 		
 		final String scenarioid = wizardData.get("scenarioid");
@@ -327,6 +320,10 @@ public class CupidProjectWizard extends Wizard implements INewWizard, IExecutabl
 		mngr.setProjectDescription(project, des);
 		monitor.worked(1);
 
+		//set default if needed
+		if (!wizardData.containsKey(CupidProjectWizardPageCompEnv.WD_COMP_ENV)) {
+			wizardData.put(CupidProjectWizardPageCompEnv.WD_COMP_ENV, CupidProjectWizardPageCompEnv.WD_COMP_ENV__LOCAL);
+		}
 		
 		IRemoteConnection remoteConn = null;
 		if (wizardData.get(CupidProjectWizardPageCompEnv.WD_COMP_ENV).equals(CupidProjectWizardPageCompEnv.WD_COMP_ENV__CLOUD)) {
@@ -553,7 +550,8 @@ public class CupidProjectWizard extends Wizard implements INewWizard, IExecutabl
 					IFile projectFile = projectHandle.getFile(filename);
 					InputStream stream = openContentStream(contents);
 					projectFile.create(stream, true, new SubProgressMonitor(monitor, 1));
-					filesToOpen.add(projectFile);
+					//don't open files for now
+					//filesToOpen.add(projectFile);
 					stream.close();
 
 				} catch (IOException | SecurityException | IllegalArgumentException e) {				

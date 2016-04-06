@@ -9,6 +9,7 @@ import org.earthsystemmodeling.cupid.NUOPC.Connector;
 import org.earthsystemmodeling.cupid.NUOPC.Driver;
 import org.earthsystemmodeling.cupid.NUOPC.Field;
 import org.earthsystemmodeling.cupid.NUOPC.Grid;
+import org.earthsystemmodeling.cupid.NUOPC.IPDVersion;
 import org.earthsystemmodeling.cupid.NUOPC.Mediator;
 import org.earthsystemmodeling.cupid.NUOPC.Model;
 import org.earthsystemmodeling.cupid.NUOPC.NUOPCFactory;
@@ -16,6 +17,7 @@ import org.earthsystemmodeling.cupid.NUOPC.NUOPCPackage;
 import org.earthsystemmodeling.cupid.NUOPC.UniformGrid;
 import org.eclipse.emf.ecore.EAttribute;
 import org.eclipse.emf.ecore.EClass;
+import org.eclipse.emf.ecore.EEnum;
 import org.eclipse.emf.ecore.EOperation;
 import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.EReference;
@@ -100,6 +102,20 @@ public class NUOPCPackageImpl extends EPackageImpl implements NUOPCPackage {
 	private EClass uniformGridEClass = null;
 
 	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	private EEnum ipdVersionEEnum = null;
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	private EEnum esmF_STAGGERLOCEEnum = null;
+
+	/**
 	 * Creates an instance of the model <b>Package</b>, registered with
 	 * {@link org.eclipse.emf.ecore.EPackage.Registry EPackage.Registry} by the package
 	 * package URI value.
@@ -176,6 +192,15 @@ public class NUOPCPackageImpl extends EPackageImpl implements NUOPCPackage {
 	 */
 	public EAttribute getComponent_Name() {
 		return (EAttribute)componentEClass.getEStructuralFeatures().get(0);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EAttribute getComponent_IPDVersion() {
+		return (EAttribute)componentEClass.getEStructuralFeatures().get(1);
 	}
 
 	/**
@@ -336,8 +361,44 @@ public class NUOPCPackageImpl extends EPackageImpl implements NUOPCPackage {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	public EReference getField_ImportedBy() {
+		return (EReference)fieldEClass.getEStructuralFeatures().get(1);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EReference getField_ExportedBy() {
+		return (EReference)fieldEClass.getEStructuralFeatures().get(2);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EAttribute getField_Import() {
+		return (EAttribute)fieldEClass.getEStructuralFeatures().get(3);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EAttribute getField_Export() {
+		return (EAttribute)fieldEClass.getEStructuralFeatures().get(4);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
 	public EAttribute getField_StandardName() {
-		return (EAttribute)fieldEClass.getEStructuralFeatures().get(1);
+		return (EAttribute)fieldEClass.getEStructuralFeatures().get(5);
 	}
 
 	/**
@@ -346,7 +407,7 @@ public class NUOPCPackageImpl extends EPackageImpl implements NUOPCPackage {
 	 * @generated
 	 */
 	public EReference getField_Grid() {
-		return (EReference)fieldEClass.getEStructuralFeatures().get(2);
+		return (EReference)fieldEClass.getEStructuralFeatures().get(6);
 	}
 
 	/**
@@ -417,6 +478,33 @@ public class NUOPCPackageImpl extends EPackageImpl implements NUOPCPackage {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	public EAttribute getUniformGrid_StaggerLocToFillCoords() {
+		return (EAttribute)uniformGridEClass.getEStructuralFeatures().get(2);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EEnum getIPDVersion() {
+		return ipdVersionEEnum;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EEnum getESMF_STAGGERLOC() {
+		return esmF_STAGGERLOCEEnum;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
 	public NUOPCFactory getNUOPCFactory() {
 		return (NUOPCFactory)getEFactoryInstance();
 	}
@@ -442,6 +530,7 @@ public class NUOPCPackageImpl extends EPackageImpl implements NUOPCPackage {
 		// Create classes and their features
 		componentEClass = createEClass(COMPONENT);
 		createEAttribute(componentEClass, COMPONENT__NAME);
+		createEAttribute(componentEClass, COMPONENT__IPD_VERSION);
 
 		baseModelEClass = createEClass(BASE_MODEL);
 		createEReference(baseModelEClass, BASE_MODEL__GRIDS);
@@ -466,6 +555,10 @@ public class NUOPCPackageImpl extends EPackageImpl implements NUOPCPackage {
 
 		fieldEClass = createEClass(FIELD);
 		createEAttribute(fieldEClass, FIELD__NAME);
+		createEReference(fieldEClass, FIELD__IMPORTED_BY);
+		createEReference(fieldEClass, FIELD__EXPORTED_BY);
+		createEAttribute(fieldEClass, FIELD__IMPORT);
+		createEAttribute(fieldEClass, FIELD__EXPORT);
 		createEAttribute(fieldEClass, FIELD__STANDARD_NAME);
 		createEReference(fieldEClass, FIELD__GRID);
 
@@ -477,6 +570,11 @@ public class NUOPCPackageImpl extends EPackageImpl implements NUOPCPackage {
 		uniformGridEClass = createEClass(UNIFORM_GRID);
 		createEAttribute(uniformGridEClass, UNIFORM_GRID__MIN_CORNER_COORD);
 		createEAttribute(uniformGridEClass, UNIFORM_GRID__MAX_CORNER_COORD);
+		createEAttribute(uniformGridEClass, UNIFORM_GRID__STAGGER_LOC_TO_FILL_COORDS);
+
+		// Create enums
+		ipdVersionEEnum = createEEnum(IPD_VERSION);
+		esmF_STAGGERLOCEEnum = createEEnum(ESMF_STAGGERLOC);
 	}
 
 	/**
@@ -517,11 +615,12 @@ public class NUOPCPackageImpl extends EPackageImpl implements NUOPCPackage {
 		// Initialize classes, features, and operations; add parameters
 		initEClass(componentEClass, Component.class, "Component", IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 		initEAttribute(getComponent_Name(), ecorePackage.getEString(), "name", null, 1, 1, Component.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEAttribute(getComponent_IPDVersion(), this.getIPDVersion(), "IPDVersion", "IPDv01", 1, 1, Component.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
 		initEClass(baseModelEClass, BaseModel.class, "BaseModel", IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 		initEReference(getBaseModel_Grids(), this.getGrid(), null, "grids", null, 0, -1, BaseModel.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-		initEReference(getBaseModel_ImportFields(), this.getField(), null, "importFields", null, 0, -1, BaseModel.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-		initEReference(getBaseModel_ExportFields(), this.getField(), null, "exportFields", null, 0, -1, BaseModel.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEReference(getBaseModel_ImportFields(), this.getField(), this.getField_ImportedBy(), "importFields", null, 0, -1, BaseModel.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEReference(getBaseModel_ExportFields(), this.getField(), this.getField_ExportedBy(), "exportFields", null, 0, -1, BaseModel.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
 		initEClass(driverEClass, Driver.class, "Driver", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 		initEReference(getDriver_Children(), this.getComponent(), null, "children", null, 0, -1, Driver.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
@@ -542,6 +641,10 @@ public class NUOPCPackageImpl extends EPackageImpl implements NUOPCPackage {
 
 		initEClass(fieldEClass, Field.class, "Field", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 		initEAttribute(getField_Name(), ecorePackage.getEString(), "name", null, 1, 1, Field.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEReference(getField_ImportedBy(), this.getBaseModel(), this.getBaseModel_ImportFields(), "importedBy", null, 0, 1, Field.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEReference(getField_ExportedBy(), this.getBaseModel(), this.getBaseModel_ExportFields(), "exportedBy", null, 0, 1, Field.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEAttribute(getField_Import(), ecorePackage.getEBoolean(), "import", null, 1, 1, Field.class, !IS_TRANSIENT, !IS_VOLATILE, !IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, IS_DERIVED, IS_ORDERED);
+		initEAttribute(getField_Export(), ecorePackage.getEBoolean(), "export", null, 1, 1, Field.class, !IS_TRANSIENT, !IS_VOLATILE, !IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, IS_DERIVED, IS_ORDERED);
 		initEAttribute(getField_StandardName(), ecorePackage.getEString(), "standardName", null, 1, 1, Field.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEReference(getField_Grid(), this.getGrid(), null, "grid", null, 1, 1, Field.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
@@ -553,6 +656,19 @@ public class NUOPCPackageImpl extends EPackageImpl implements NUOPCPackage {
 		initEClass(uniformGridEClass, UniformGrid.class, "UniformGrid", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 		initEAttribute(getUniformGrid_MinCornerCoord(), ecorePackage.getEDouble(), "minCornerCoord", null, 1, 3, UniformGrid.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, !IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEAttribute(getUniformGrid_MaxCornerCoord(), ecorePackage.getEDouble(), "maxCornerCoord", null, 1, 3, UniformGrid.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, !IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEAttribute(getUniformGrid_StaggerLocToFillCoords(), this.getESMF_STAGGERLOC(), "staggerLocToFillCoords", null, 0, -1, UniformGrid.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+
+		// Initialize enums and add enum literals
+		initEEnum(ipdVersionEEnum, IPDVersion.class, "IPDVersion");
+		addEEnumLiteral(ipdVersionEEnum, IPDVersion.IP_DV00);
+		addEEnumLiteral(ipdVersionEEnum, IPDVersion.IP_DV01);
+		addEEnumLiteral(ipdVersionEEnum, IPDVersion.IP_DV02);
+		addEEnumLiteral(ipdVersionEEnum, IPDVersion.IP_DV03);
+		addEEnumLiteral(ipdVersionEEnum, IPDVersion.IP_DV04);
+
+		initEEnum(esmF_STAGGERLOCEEnum, org.earthsystemmodeling.cupid.NUOPC.ESMF_STAGGERLOC.class, "ESMF_STAGGERLOC");
+		addEEnumLiteral(esmF_STAGGERLOCEEnum, org.earthsystemmodeling.cupid.NUOPC.ESMF_STAGGERLOC.ESMF_STAGGERLOC_CENTER);
+		addEEnumLiteral(esmF_STAGGERLOCEEnum, org.earthsystemmodeling.cupid.NUOPC.ESMF_STAGGERLOC.ESMF_STAGGERLOC_CORNER);
 
 		// Create resource
 		createResource(eNS_URI);

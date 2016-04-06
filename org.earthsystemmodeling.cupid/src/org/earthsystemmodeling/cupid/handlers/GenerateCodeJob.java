@@ -25,6 +25,7 @@ import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.NullProgressMonitor;
+import org.eclipse.core.runtime.Path;
 import org.eclipse.core.runtime.Status;
 import org.eclipse.core.runtime.jobs.Job;
 import org.eclipse.jface.dialogs.MessageDialog;
@@ -48,31 +49,65 @@ public class GenerateCodeJob extends Job {
 		this.openEditor = openEditor;
 	}
 	
-	/*
-	protected Set<Component> collectChildren(Application app) {
-		HashSet<Component> children = new HashSet<Component>();
-		children.addAll(app.getChildren());
-		for (Component c : app.getChildren()) {
-			collectChildren(c, children);
-		}
-		return children;
-	}
-	
-	protected void collectChildren(Component c, Set<Component> children) {
-		if (c instanceof Driver) {
-			Driver d = (Driver) c;
-			children.addAll(d.getChildren());
-			for (Component child : d.getChildren()) {
-				collectChildren(child, children);
-			}
-		}
-	}
-	*/
-	
 	@Override
 	protected IStatus run(IProgressMonitor monitor) {
 		
 		final List<IFile> changedFiles = new ArrayList<IFile>();
+		IFile file;
+
+		//collect list of files that would be overwritten and confirm
+		for (Component comp : app.getAllChildren()) {			
+			if (comp instanceof Connector) {
+				continue;  //for now, custom connectors now supported
+			}
+			file = container.getFile(new Path(comp.getName() + ".F90"));
+			if (file.exists()) {
+				changedFiles.add(file);
+			}
+		}
+		file = container.getFile(new Path(app.getName() + ".F90"));
+		if (file.exists()) {
+			changedFiles.add(file);
+		}
+		file = container.getFile(new Path("Makefile"));
+		if (file.exists()) {
+			changedFiles.add(file);
+		}
+		
+		if (changedFiles.size() > 0) {
+			UIJob uijob = new UIJob("Confirm") {
+				@Override
+				public IStatus runInUIThread(IProgressMonitor monitor) {
+					
+					String fileList = "";
+					for (IFile f : changedFiles) {
+						fileList += f.getName() + "\n";
+					}
+					
+					boolean overwrite = MessageDialog.openQuestion(null, "Overwrite file?", 
+							"The following files will be overwritten.  Is this okay?\n\n" + fileList);
+					if (overwrite) {
+						return Status.OK_STATUS;
+					}
+					else {
+						return Status.CANCEL_STATUS;
+					}
+				}
+			};
+			
+			uijob.schedule();
+			try {
+				uijob.join();
+			} catch (InterruptedException e) {
+				return null;
+			}			
+			
+			if (!uijob.getResult().isOK()) {
+				return null;
+			}
+		}
+					
+		changedFiles.clear();
 		
 		for (Component comp : app.getAllChildren()) {
 			
@@ -80,9 +115,8 @@ public class GenerateCodeJob extends Job {
 				continue;  //for now, custom connectors now supported
 			}
 			
-			IFile file;
 			try {
-				file = createEmptyFile(container, comp.getName() + ".F90");
+				file = createEmptyFile(container, comp.getName() + ".F90", false);
 			} catch (CoreException e) {
 				CupidActivator.log("Error generating code", e);
 				return new Status(Status.ERROR, CupidActivator.PLUGIN_ID, "Error generating code", e);
@@ -113,13 +147,13 @@ public class GenerateCodeJob extends Job {
 		}
 		
 		try {
-			IFile fMainProgram = createEmptyFile(container, app.getName() + ".F90");
+			IFile fMainProgram = createEmptyFile(container, app.getName() + ".F90", false);
 			if (fMainProgram != null) {
 				MainGenerator.generateAndWrite(app, fMainProgram);
 				changedFiles.add(fMainProgram);
 			}
 			
-			IFile fMakefile = createEmptyFile(container, "Makefile");
+			IFile fMakefile = createEmptyFile(container, "Makefile", false);
 			if (fMakefile != null) {
 				MakefileGenerator.generateAndWrite(app, fMakefile);
 				changedFiles.add(fMakefile);
@@ -153,7 +187,7 @@ public class GenerateCodeJob extends Job {
 		
 	}
 	
-	static IFile createEmptyFile(IContainer container, final String name) throws CoreException {
+	static IFile createEmptyFile(IContainer container, final String name, final boolean confirmInUI) throws CoreException {
 		IFile file = null;
 		if (container instanceof IProject) {
 			file = ((IProject) container).getFile(name);
@@ -167,7 +201,7 @@ public class GenerateCodeJob extends Job {
 		if (!file.exists()) {
 			file.create(new ByteArrayInputStream(new byte[0]), true, new NullProgressMonitor());
 		}
-		else {
+		else if (confirmInUI) {
 			
 			UIJob uijob = new UIJob("Confirm") {
 				@Override
@@ -196,6 +230,10 @@ public class GenerateCodeJob extends Job {
 				return null;
 			}
 			//throw new RuntimeException("Target file for code generation already exists: " + file.getFullPath());
+		}
+		else {
+			// do not confirm, just overwrite
+			file.setContents(new ByteArrayInputStream(new byte[0]), true, true, new NullProgressMonitor());
 		}
 		return file;
 	}

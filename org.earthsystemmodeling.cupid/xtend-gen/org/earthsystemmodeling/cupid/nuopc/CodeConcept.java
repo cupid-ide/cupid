@@ -27,8 +27,10 @@ import org.eclipse.ltk.core.refactoring.Change;
 import org.eclipse.ltk.core.refactoring.TextFileChange;
 import org.eclipse.photran.core.IFortranAST;
 import org.eclipse.photran.internal.core.lexer.Token;
+import org.eclipse.photran.internal.core.parser.ASTEntityDeclNode;
 import org.eclipse.photran.internal.core.parser.ASTExecutableProgramNode;
 import org.eclipse.photran.internal.core.parser.ASTModuleNode;
+import org.eclipse.photran.internal.core.parser.ASTObjectNameNode;
 import org.eclipse.photran.internal.core.parser.ASTRenameNode;
 import org.eclipse.photran.internal.core.parser.ASTSubroutineSubprogramNode;
 import org.eclipse.photran.internal.core.parser.ASTTypeDeclarationStmtNode;
@@ -669,18 +671,64 @@ public abstract class CodeConcept<P extends CodeConcept<?, ?>, A extends IASTNod
     return _xblockexpression;
   }
   
-  public static void addTypeDeclaration(final String code, final ASTSubroutineSubprogramNode ssn) {
-    IBodyConstruct _parseLiteralStatement = CodeExtraction.parseLiteralStatement(code);
-    final ASTTypeDeclarationStmtNode tds = ((ASTTypeDeclarationStmtNode) _parseLiteralStatement);
-    IASTListNode<IBodyConstruct> _body = ssn.getBody();
-    final IDeclarationConstruct last = _body.<IDeclarationConstruct>findLast(IDeclarationConstruct.class);
-    boolean _notEquals = (!Objects.equal(last, null));
-    if (_notEquals) {
+  public static void addTypeDeclaration(final String code, final ASTSubroutineSubprogramNode ssn, final boolean ignoreIfDeclared) {
+    try {
+      IBodyConstruct _parseLiteralStatement = CodeExtraction.parseLiteralStatement(code);
+      final ASTTypeDeclarationStmtNode tds = ((ASTTypeDeclarationStmtNode) _parseLiteralStatement);
+      IASTListNode<ASTEntityDeclNode> _entityDeclList = tds.getEntityDeclList();
+      ASTEntityDeclNode _get = _entityDeclList.get(0);
+      ASTObjectNameNode _objectName = _get.getObjectName();
+      Token _objectName_1 = _objectName.getObjectName();
+      final String varName = _objectName_1.getText();
+      IASTListNode<IBodyConstruct> _body = ssn.getBody();
+      Iterable<ASTTypeDeclarationStmtNode> _filter = Iterables.<ASTTypeDeclarationStmtNode>filter(_body, ASTTypeDeclarationStmtNode.class);
+      final Function1<ASTTypeDeclarationStmtNode, Boolean> _function = new Function1<ASTTypeDeclarationStmtNode, Boolean>() {
+        @Override
+        public Boolean apply(final ASTTypeDeclarationStmtNode t) {
+          IASTListNode<ASTEntityDeclNode> _entityDeclList = t.getEntityDeclList();
+          boolean _exists = false;
+          if (_entityDeclList!=null) {
+            final Function1<ASTEntityDeclNode, Boolean> _function = new Function1<ASTEntityDeclNode, Boolean>() {
+              @Override
+              public Boolean apply(final ASTEntityDeclNode e) {
+                ASTObjectNameNode _objectName = e.getObjectName();
+                Token _objectName_1 = null;
+                if (_objectName!=null) {
+                  _objectName_1=_objectName.getObjectName();
+                }
+                boolean _eic = false;
+                if (_objectName_1!=null) {
+                  _eic=ASTQuery.eic(_objectName_1, varName);
+                }
+                return Boolean.valueOf(_eic);
+              }
+            };
+            _exists=IterableExtensions.<ASTEntityDeclNode>exists(_entityDeclList, _function);
+          }
+          return Boolean.valueOf(_exists);
+        }
+      };
+      final ASTTypeDeclarationStmtNode existing = IterableExtensions.<ASTTypeDeclarationStmtNode>findFirst(_filter, _function);
+      boolean _notEquals = (!Objects.equal(existing, null));
+      if (_notEquals) {
+        if (ignoreIfDeclared) {
+          return;
+        } else {
+          throw new CodeGenerationException(("Tried to declare same entity multiple times: " + code));
+        }
+      }
       IASTListNode<IBodyConstruct> _body_1 = ssn.getBody();
-      ((IASTListNode<IBodyConstruct>) _body_1).insertAfter(last, tds);
-    } else {
-      IASTListNode<IBodyConstruct> _body_2 = ssn.getBody();
-      _body_2.add(0, tds);
+      final IDeclarationConstruct last = _body_1.<IDeclarationConstruct>findLast(IDeclarationConstruct.class);
+      boolean _notEquals_1 = (!Objects.equal(last, null));
+      if (_notEquals_1) {
+        IASTListNode<IBodyConstruct> _body_2 = ssn.getBody();
+        ((IASTListNode<IBodyConstruct>) _body_2).insertAfter(last, tds);
+      } else {
+        IASTListNode<IBodyConstruct> _body_3 = ssn.getBody();
+        _body_3.add(0, tds);
+      }
+    } catch (Throwable _e) {
+      throw Exceptions.sneakyThrow(_e);
     }
   }
   

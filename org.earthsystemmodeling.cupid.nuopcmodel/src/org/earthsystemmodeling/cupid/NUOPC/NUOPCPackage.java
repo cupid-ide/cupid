@@ -4,6 +4,7 @@ package org.earthsystemmodeling.cupid.NUOPC;
 
 import org.eclipse.emf.ecore.EAttribute;
 import org.eclipse.emf.ecore.EClass;
+import org.eclipse.emf.ecore.EEnum;
 import org.eclipse.emf.ecore.EOperation;
 import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.EReference;
@@ -77,13 +78,22 @@ public interface NUOPCPackage extends EPackage {
 	int COMPONENT__NAME = 0;
 
 	/**
+	 * The feature id for the '<em><b>IPD Version</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int COMPONENT__IPD_VERSION = 1;
+
+	/**
 	 * The number of structural features of the '<em>Component</em>' class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int COMPONENT_FEATURE_COUNT = 1;
+	int COMPONENT_FEATURE_COUNT = 2;
 
 	/**
 	 * The number of operations of the '<em>Component</em>' class.
@@ -112,6 +122,15 @@ public interface NUOPCPackage extends EPackage {
 	 * @ordered
 	 */
 	int BASE_MODEL__NAME = COMPONENT__NAME;
+
+	/**
+	 * The feature id for the '<em><b>IPD Version</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int BASE_MODEL__IPD_VERSION = COMPONENT__IPD_VERSION;
 
 	/**
 	 * The feature id for the '<em><b>Grids</b></em>' containment reference list.
@@ -178,6 +197,15 @@ public interface NUOPCPackage extends EPackage {
 	int DRIVER__NAME = COMPONENT__NAME;
 
 	/**
+	 * The feature id for the '<em><b>IPD Version</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int DRIVER__IPD_VERSION = COMPONENT__IPD_VERSION;
+
+	/**
 	 * The feature id for the '<em><b>Children</b></em>' containment reference list.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -222,6 +250,15 @@ public interface NUOPCPackage extends EPackage {
 	 * @ordered
 	 */
 	int MODEL__NAME = BASE_MODEL__NAME;
+
+	/**
+	 * The feature id for the '<em><b>IPD Version</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int MODEL__IPD_VERSION = BASE_MODEL__IPD_VERSION;
 
 	/**
 	 * The feature id for the '<em><b>Grids</b></em>' containment reference list.
@@ -288,6 +325,15 @@ public interface NUOPCPackage extends EPackage {
 	int MEDIATOR__NAME = BASE_MODEL__NAME;
 
 	/**
+	 * The feature id for the '<em><b>IPD Version</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int MEDIATOR__IPD_VERSION = BASE_MODEL__IPD_VERSION;
+
+	/**
 	 * The feature id for the '<em><b>Grids</b></em>' containment reference list.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -350,6 +396,15 @@ public interface NUOPCPackage extends EPackage {
 	 * @ordered
 	 */
 	int CONNECTOR__NAME = COMPONENT__NAME;
+
+	/**
+	 * The feature id for the '<em><b>IPD Version</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int CONNECTOR__IPD_VERSION = COMPONENT__IPD_VERSION;
 
 	/**
 	 * The feature id for the '<em><b>Source</b></em>' reference.
@@ -462,13 +517,49 @@ public interface NUOPCPackage extends EPackage {
 	int FIELD__NAME = 0;
 
 	/**
+	 * The feature id for the '<em><b>Imported By</b></em>' container reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int FIELD__IMPORTED_BY = 1;
+
+	/**
+	 * The feature id for the '<em><b>Exported By</b></em>' container reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int FIELD__EXPORTED_BY = 2;
+
+	/**
+	 * The feature id for the '<em><b>Import</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int FIELD__IMPORT = 3;
+
+	/**
+	 * The feature id for the '<em><b>Export</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int FIELD__EXPORT = 4;
+
+	/**
 	 * The feature id for the '<em><b>Standard Name</b></em>' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int FIELD__STANDARD_NAME = 1;
+	int FIELD__STANDARD_NAME = 5;
 
 	/**
 	 * The feature id for the '<em><b>Grid</b></em>' reference.
@@ -477,7 +568,7 @@ public interface NUOPCPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int FIELD__GRID = 2;
+	int FIELD__GRID = 6;
 
 	/**
 	 * The number of structural features of the '<em>Field</em>' class.
@@ -486,7 +577,7 @@ public interface NUOPCPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int FIELD_FEATURE_COUNT = 3;
+	int FIELD_FEATURE_COUNT = 7;
 
 	/**
 	 * The number of operations of the '<em>Field</em>' class.
@@ -608,13 +699,22 @@ public interface NUOPCPackage extends EPackage {
 	int UNIFORM_GRID__MAX_CORNER_COORD = GRID_FEATURE_COUNT + 1;
 
 	/**
+	 * The feature id for the '<em><b>Stagger Loc To Fill Coords</b></em>' attribute list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int UNIFORM_GRID__STAGGER_LOC_TO_FILL_COORDS = GRID_FEATURE_COUNT + 2;
+
+	/**
 	 * The number of structural features of the '<em>Uniform Grid</em>' class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int UNIFORM_GRID_FEATURE_COUNT = GRID_FEATURE_COUNT + 2;
+	int UNIFORM_GRID_FEATURE_COUNT = GRID_FEATURE_COUNT + 3;
 
 	/**
 	 * The number of operations of the '<em>Uniform Grid</em>' class.
@@ -624,6 +724,26 @@ public interface NUOPCPackage extends EPackage {
 	 * @ordered
 	 */
 	int UNIFORM_GRID_OPERATION_COUNT = GRID_OPERATION_COUNT + 0;
+
+	/**
+	 * The meta object id for the '{@link org.earthsystemmodeling.cupid.NUOPC.IPDVersion <em>IPD Version</em>}' enum.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see org.earthsystemmodeling.cupid.NUOPC.IPDVersion
+	 * @see org.earthsystemmodeling.cupid.NUOPC.impl.NUOPCPackageImpl#getIPDVersion()
+	 * @generated
+	 */
+	int IPD_VERSION = 10;
+
+	/**
+	 * The meta object id for the '{@link org.earthsystemmodeling.cupid.NUOPC.ESMF_STAGGERLOC <em>ESMF STAGGERLOC</em>}' enum.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see org.earthsystemmodeling.cupid.NUOPC.ESMF_STAGGERLOC
+	 * @see org.earthsystemmodeling.cupid.NUOPC.impl.NUOPCPackageImpl#getESMF_STAGGERLOC()
+	 * @generated
+	 */
+	int ESMF_STAGGERLOC = 11;
 
 	/**
 	 * Returns the meta object for class '{@link org.earthsystemmodeling.cupid.NUOPC.Component <em>Component</em>}'.
@@ -645,6 +765,17 @@ public interface NUOPCPackage extends EPackage {
 	 * @generated
 	 */
 	EAttribute getComponent_Name();
+
+	/**
+	 * Returns the meta object for the attribute '{@link org.earthsystemmodeling.cupid.NUOPC.Component#getIPDVersion <em>IPD Version</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the attribute '<em>IPD Version</em>'.
+	 * @see org.earthsystemmodeling.cupid.NUOPC.Component#getIPDVersion()
+	 * @see #getComponent()
+	 * @generated
+	 */
+	EAttribute getComponent_IPDVersion();
 
 	/**
 	 * Returns the meta object for class '{@link org.earthsystemmodeling.cupid.NUOPC.BaseModel <em>Base Model</em>}'.
@@ -826,6 +957,50 @@ public interface NUOPCPackage extends EPackage {
 	EAttribute getField_Name();
 
 	/**
+	 * Returns the meta object for the container reference '{@link org.earthsystemmodeling.cupid.NUOPC.Field#getImportedBy <em>Imported By</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the container reference '<em>Imported By</em>'.
+	 * @see org.earthsystemmodeling.cupid.NUOPC.Field#getImportedBy()
+	 * @see #getField()
+	 * @generated
+	 */
+	EReference getField_ImportedBy();
+
+	/**
+	 * Returns the meta object for the container reference '{@link org.earthsystemmodeling.cupid.NUOPC.Field#getExportedBy <em>Exported By</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the container reference '<em>Exported By</em>'.
+	 * @see org.earthsystemmodeling.cupid.NUOPC.Field#getExportedBy()
+	 * @see #getField()
+	 * @generated
+	 */
+	EReference getField_ExportedBy();
+
+	/**
+	 * Returns the meta object for the attribute '{@link org.earthsystemmodeling.cupid.NUOPC.Field#isImport <em>Import</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the attribute '<em>Import</em>'.
+	 * @see org.earthsystemmodeling.cupid.NUOPC.Field#isImport()
+	 * @see #getField()
+	 * @generated
+	 */
+	EAttribute getField_Import();
+
+	/**
+	 * Returns the meta object for the attribute '{@link org.earthsystemmodeling.cupid.NUOPC.Field#isExport <em>Export</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the attribute '<em>Export</em>'.
+	 * @see org.earthsystemmodeling.cupid.NUOPC.Field#isExport()
+	 * @see #getField()
+	 * @generated
+	 */
+	EAttribute getField_Export();
+
+	/**
 	 * Returns the meta object for the attribute '{@link org.earthsystemmodeling.cupid.NUOPC.Field#getStandardName <em>Standard Name</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -923,6 +1098,37 @@ public interface NUOPCPackage extends EPackage {
 	EAttribute getUniformGrid_MaxCornerCoord();
 
 	/**
+	 * Returns the meta object for the attribute list '{@link org.earthsystemmodeling.cupid.NUOPC.UniformGrid#getStaggerLocToFillCoords <em>Stagger Loc To Fill Coords</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the attribute list '<em>Stagger Loc To Fill Coords</em>'.
+	 * @see org.earthsystemmodeling.cupid.NUOPC.UniformGrid#getStaggerLocToFillCoords()
+	 * @see #getUniformGrid()
+	 * @generated
+	 */
+	EAttribute getUniformGrid_StaggerLocToFillCoords();
+
+	/**
+	 * Returns the meta object for enum '{@link org.earthsystemmodeling.cupid.NUOPC.IPDVersion <em>IPD Version</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for enum '<em>IPD Version</em>'.
+	 * @see org.earthsystemmodeling.cupid.NUOPC.IPDVersion
+	 * @generated
+	 */
+	EEnum getIPDVersion();
+
+	/**
+	 * Returns the meta object for enum '{@link org.earthsystemmodeling.cupid.NUOPC.ESMF_STAGGERLOC <em>ESMF STAGGERLOC</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for enum '<em>ESMF STAGGERLOC</em>'.
+	 * @see org.earthsystemmodeling.cupid.NUOPC.ESMF_STAGGERLOC
+	 * @generated
+	 */
+	EEnum getESMF_STAGGERLOC();
+
+	/**
 	 * Returns the factory that creates the instances of the model.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -962,6 +1168,14 @@ public interface NUOPCPackage extends EPackage {
 		 * @generated
 		 */
 		EAttribute COMPONENT__NAME = eINSTANCE.getComponent_Name();
+
+		/**
+		 * The meta object literal for the '<em><b>IPD Version</b></em>' attribute feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EAttribute COMPONENT__IPD_VERSION = eINSTANCE.getComponent_IPDVersion();
 
 		/**
 		 * The meta object literal for the '{@link org.earthsystemmodeling.cupid.NUOPC.impl.BaseModelImpl <em>Base Model</em>}' class.
@@ -1114,6 +1328,38 @@ public interface NUOPCPackage extends EPackage {
 		EAttribute FIELD__NAME = eINSTANCE.getField_Name();
 
 		/**
+		 * The meta object literal for the '<em><b>Imported By</b></em>' container reference feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EReference FIELD__IMPORTED_BY = eINSTANCE.getField_ImportedBy();
+
+		/**
+		 * The meta object literal for the '<em><b>Exported By</b></em>' container reference feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EReference FIELD__EXPORTED_BY = eINSTANCE.getField_ExportedBy();
+
+		/**
+		 * The meta object literal for the '<em><b>Import</b></em>' attribute feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EAttribute FIELD__IMPORT = eINSTANCE.getField_Import();
+
+		/**
+		 * The meta object literal for the '<em><b>Export</b></em>' attribute feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EAttribute FIELD__EXPORT = eINSTANCE.getField_Export();
+
+		/**
 		 * The meta object literal for the '<em><b>Standard Name</b></em>' attribute feature.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
@@ -1188,6 +1434,34 @@ public interface NUOPCPackage extends EPackage {
 		 * @generated
 		 */
 		EAttribute UNIFORM_GRID__MAX_CORNER_COORD = eINSTANCE.getUniformGrid_MaxCornerCoord();
+
+		/**
+		 * The meta object literal for the '<em><b>Stagger Loc To Fill Coords</b></em>' attribute list feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EAttribute UNIFORM_GRID__STAGGER_LOC_TO_FILL_COORDS = eINSTANCE.getUniformGrid_StaggerLocToFillCoords();
+
+		/**
+		 * The meta object literal for the '{@link org.earthsystemmodeling.cupid.NUOPC.IPDVersion <em>IPD Version</em>}' enum.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @see org.earthsystemmodeling.cupid.NUOPC.IPDVersion
+		 * @see org.earthsystemmodeling.cupid.NUOPC.impl.NUOPCPackageImpl#getIPDVersion()
+		 * @generated
+		 */
+		EEnum IPD_VERSION = eINSTANCE.getIPDVersion();
+
+		/**
+		 * The meta object literal for the '{@link org.earthsystemmodeling.cupid.NUOPC.ESMF_STAGGERLOC <em>ESMF STAGGERLOC</em>}' enum.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @see org.earthsystemmodeling.cupid.NUOPC.ESMF_STAGGERLOC
+		 * @see org.earthsystemmodeling.cupid.NUOPC.impl.NUOPCPackageImpl#getESMF_STAGGERLOC()
+		 * @generated
+		 */
+		EEnum ESMF_STAGGERLOC = eINSTANCE.getESMF_STAGGERLOC();
 
 	}
 

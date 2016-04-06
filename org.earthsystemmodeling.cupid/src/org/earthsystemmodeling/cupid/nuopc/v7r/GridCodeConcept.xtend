@@ -7,6 +7,7 @@ import org.eclipse.photran.internal.core.parser.ASTFunctionSubprogramNode
 import static org.earthsystemmodeling.cupid.util.CodeExtraction.*
 import org.earthsystemmodeling.cupid.nuopc.CodeGenerationException
 import org.earthsystemmodeling.cupid.annotation.Label
+import java.util.List
 
 class GridCodeConcept {
 	
@@ -19,10 +20,12 @@ class GridCodeConcept {
 		int[] maxIndex
 		double[] minCornerCoord
 		double[] maxCornerCoord
+		List<String> staggerLocs
 	
 		new(CodeConcept<?,?> parent) {
 			super(parent)
 			parent.setOrAddChild(this)
+			staggerLocs = newArrayList()
 		}
 		
 		override CreateUniformGrid reverse() {null}
@@ -50,6 +53,9 @@ function «functionName»(rc)
     	maxIndex=«maxIndex.litArray», &
     	minCornerCoord=«minCornerCoord.litArrayR8», &
     	maxCornerCoord=«maxCornerCoord.litArrayR8», &
+    	«IF staggerLocs.size() > 0»
+    	staggerLocList=«staggerLocs.litArray», &
+    	«ENDIF»
     	rc=rc)
     
 end function    
@@ -60,6 +66,10 @@ end function
 			this
 		}
 		
+	}
+	
+	def static litArray(List<String> strArray) {
+		'''(/«FOR s : strArray SEPARATOR ', '»«s»«ENDFOR»/)'''
 	}
 	
 	def static litArray(int[] intArray) {

@@ -14,6 +14,7 @@ import org.eclipse.emf.ecore.EObject;
  * </p>
  * <ul>
  *   <li>{@link org.earthsystemmodeling.cupid.NUOPC.Component#getName <em>Name</em>}</li>
+ *   <li>{@link org.earthsystemmodeling.cupid.NUOPC.Component#getIPDVersion <em>IPD Version</em>}</li>
  * </ul>
  *
  * @see org.earthsystemmodeling.cupid.NUOPC.NUOPCPackage#getComponent()
@@ -46,5 +47,35 @@ public interface Component extends EObject {
 	 * @generated
 	 */
 	void setName(String value);
+
+	/**
+	 * Returns the value of the '<em><b>IPD Version</b></em>' attribute.
+	 * The default value is <code>"IPDv01"</code>.
+	 * The literals are from the enumeration {@link org.earthsystemmodeling.cupid.NUOPC.IPDVersion}.
+	 * <!-- begin-user-doc -->
+	 * <p>
+	 * If the meaning of the '<em>IPD Version</em>' attribute isn't clear,
+	 * there really should be more of a description here...
+	 * </p>
+	 * <!-- end-user-doc -->
+	 * @return the value of the '<em>IPD Version</em>' attribute.
+	 * @see org.earthsystemmodeling.cupid.NUOPC.IPDVersion
+	 * @see #setIPDVersion(IPDVersion)
+	 * @see org.earthsystemmodeling.cupid.NUOPC.NUOPCPackage#getComponent_IPDVersion()
+	 * @model default="IPDv01" required="true"
+	 * @generated
+	 */
+	IPDVersion getIPDVersion();
+
+	/**
+	 * Sets the value of the '{@link org.earthsystemmodeling.cupid.NUOPC.Component#getIPDVersion <em>IPD Version</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @param value the new value of the '<em>IPD Version</em>' attribute.
+	 * @see org.earthsystemmodeling.cupid.NUOPC.IPDVersion
+	 * @see #getIPDVersion()
+	 * @generated
+	 */
+	void setIPDVersion(IPDVersion value);
 
 } // Component

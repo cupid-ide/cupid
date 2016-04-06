@@ -74,6 +74,7 @@ class MakefileGenerator {
 		
 		
 		# -----------------------------------------------------------------------------
+		all: «app.name»
 		«app.name»: «app.name».o «FOR c : app.allChildren.filter[!(it instanceof Connector)] SEPARATOR ' '»«c.name».o«ENDFOR»
 			$(ESMF_F90LINKER) $(ESMF_F90LINKOPTS) $(ESMF_F90LINKPATHS) $(ESMF_F90LINKRPATHS) -o $@ $^ $(ESMF_F90ESMFLINKLIBS)
 		

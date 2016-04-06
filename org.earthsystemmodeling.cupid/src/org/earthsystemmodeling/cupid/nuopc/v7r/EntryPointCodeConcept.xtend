@@ -41,6 +41,10 @@ public abstract class EntryPointCodeConcept<P extends CodeConcept<?, ?>> extends
 	//public List<String> phaseLabelList
 	
 	public String phaseLabel
+	
+	//if this is not null, then use it is for phase=0
+	//and uses an ESMF_GridCompSetEntryPoint instead of the NUOPC call
+	public String phaseNumber
 
 	//var SetServicesCodeConcept<?> setServices
 
@@ -50,7 +54,7 @@ public abstract class EntryPointCodeConcept<P extends CodeConcept<?, ?>> extends
 		this.phaseLabel = phaseLabel
 	}
 	
-	/* subclasses using this must explicitly set the phaseLabel */
+	/* subclasses using this must explicitly set the phaseLabel or phaseNumber */
 	new(P parent) {
 		this(parent, null)
 	}
@@ -60,13 +64,26 @@ public abstract class EntryPointCodeConcept<P extends CodeConcept<?, ?>> extends
 		val setServicesNode = setServices?.ASTRef
 		if (setServicesNode == null) throw new ReverseEngineerException("No SetServices method found")
 		
-		val registrationCall = setServicesNode.body.filter(ASTCallStmtNode).findFirst[
-			it.subroutineName.text.eic("NUOPC_CompSetEntryPoint") &&
-			it.litArgExprByKeyword("phaseLabelList").toLowerCase.contains(phaseLabel.toLowerCase)
-		]
+		var ASTCallStmtNode regCall
 		
-		if (registrationCall == null) return null
+		//call ESMF_GridCompSetEntryPoint(model, ESMF_METHOD_INITIALIZE, &
+        //userRoutine=InitializeP0, phase=0, rc=rc)
+		if (phaseNumber != null) {
+			regCall = setServicesNode.body.filter(ASTCallStmtNode).findFirst[
+				it.subroutineName.text.eic("ESMF_GridCompSetEntryPoint") &&
+				it.litArgExprByKeyword("phase").eic(phaseNumber)
+			]
+		}
+		else {
+			regCall = setServicesNode.body.filter(ASTCallStmtNode).findFirst[
+				it.subroutineName.text.eic("NUOPC_CompSetEntryPoint") &&
+				it.litArgExprByKeyword("phaseLabelList").toLowerCase.contains(phaseLabel.toLowerCase)
+			]
+		}
+			
+		if (regCall == null) return null
 		
+		val registrationCall = regCall
 		val epSubroutine = module.ASTRef.findESMFEntryPoints.findFirst[
 			it.subroutineStmt.subroutineName.subroutineName.eic(registrationCall.litArgExprByKeyword("userRoutine"))
 		]
@@ -86,35 +103,6 @@ public abstract class EntryPointCodeConcept<P extends CodeConcept<?, ?>> extends
 		
 	}
 
-	/*
-	def reverseOLD() {
-		
-		var rs = '''esmf_reg_entrypoint(_epId, «module()._id», _epName, '"«phaseLabel»"', _regid).'''.execQuery		
-		
-		if (rs.next) {
-			_id = rs.getLong("_epId")
-			subroutineName = rs.getString("_epName")
-			registration = newBasicCodeConcept(this, rs.getLong("_regid"))
-			rs.close
-			
-			rs = '''esmf_entrypoint(_sid, «parentID», _name, _param_gridcomp, _param_import, _param_export, _param_clock, _param_rc).'''.execQuery
-			if (rs.next) {
-				paramGridComp = rs.getString("_param_gridcomp")
-				paramImport = rs.getString("_param_import")
-				paramExport = rs.getString("_param_export")
-				paramClock = rs.getString("_param_clock")
-			}
-			rs.close
-							      
-			reverseChildren
-		} 
-		else {
-			rs.close
-			null
-		}	
-	}
-	*/
-	
 	def reverseChildren() {
 		this
 	}
@@ -169,24 +157,35 @@ end subroutine
 		var ASTSubroutineSubprogramNode setServicesNode = setServices().getASTRef
 		if (setServicesNode != null) {
 
-			code = 
-'''
+			if (phaseNumber != null) {
+				//this just used for phase=0
+				code = 
+				'''
 
-call NUOPC_CompSetEntryPoint(«setServices().paramGridComp», «methodType», &
-	«IF phaseLabel!=null»phaseLabelList=(/"«phaseLabel»"/),«ENDIF» userRoutine=«subroutineName», rc=«setServices().paramRC»)
-'''
+				call ESMF_GridCompSetEntryPoint(«setServices().paramGridComp», «methodType», &
+					userRoutine=«subroutineName», phase=«phaseNumber», rc=«setServices().paramRC»)
+				'''
+			}
+			else {
+				code = 
+				'''
+				
+				call NUOPC_CompSetEntryPoint(«setServices().paramGridComp», «methodType», &
+					«IF phaseLabel!=null»phaseLabelList=(/"«phaseLabel»"/),«ENDIF» userRoutine=«subroutineName», rc=«setServices().paramRC»)
+				'''
+			}
 
 			var ASTCallStmtNode regCall = parseLiteralStatement(code) as ASTCallStmtNode
 			setServicesNode.body.add(regCall)
 			registration = new BasicCodeConcept(this, regCall)
 		
 			code = 
-'''
-if (ESMF_LogFoundError(rcToCheck=«paramRC», msg=ESMF_LOGERR_PASSTHRU, &
-            line=__LINE__, &
-            file=__FILE__)) &
-            return  ! bail out
-'''
+			'''
+			if (ESMF_LogFoundError(rcToCheck=«paramRC», msg=ESMF_LOGERR_PASSTHRU, &
+			            line=__LINE__, &
+			            file=__FILE__)) &
+			            return  ! bail out
+			'''
 			var ASTIfStmtNode ifNode = parseLiteralStatement(code) as ASTIfStmtNode
 			setServicesNode.body.add(ifNode)
 		

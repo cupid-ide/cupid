@@ -473,7 +473,7 @@ public class NUOPCMediator extends NUOPCComponent {
             StringConcatenation _builder = new StringConcatenation();
             _builder.append("type(ESMF_Field) :: ");
             _builder.append(this.field, "");
-            CodeConcept.addTypeDeclaration(_builder.toString(), ssn);
+            CodeConcept.addTypeDeclaration(_builder.toString(), ssn, true);
             StringConcatenation _builder_1 = new StringConcatenation();
             _builder_1.append("\t");
             _builder_1.newLine();

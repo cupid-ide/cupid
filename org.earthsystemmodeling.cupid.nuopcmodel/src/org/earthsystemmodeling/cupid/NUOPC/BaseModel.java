@@ -44,6 +44,7 @@ public interface BaseModel extends Component {
 	/**
 	 * Returns the value of the '<em><b>Import Fields</b></em>' containment reference list.
 	 * The list contents are of type {@link org.earthsystemmodeling.cupid.NUOPC.Field}.
+	 * It is bidirectional and its opposite is '{@link org.earthsystemmodeling.cupid.NUOPC.Field#getImportedBy <em>Imported By</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <p>
 	 * If the meaning of the '<em>Import Fields</em>' containment reference list isn't clear,
@@ -52,7 +53,8 @@ public interface BaseModel extends Component {
 	 * <!-- end-user-doc -->
 	 * @return the value of the '<em>Import Fields</em>' containment reference list.
 	 * @see org.earthsystemmodeling.cupid.NUOPC.NUOPCPackage#getBaseModel_ImportFields()
-	 * @model containment="true"
+	 * @see org.earthsystemmodeling.cupid.NUOPC.Field#getImportedBy
+	 * @model opposite="importedBy" containment="true"
 	 * @generated
 	 */
 	EList<Field> getImportFields();
@@ -60,6 +62,7 @@ public interface BaseModel extends Component {
 	/**
 	 * Returns the value of the '<em><b>Export Fields</b></em>' containment reference list.
 	 * The list contents are of type {@link org.earthsystemmodeling.cupid.NUOPC.Field}.
+	 * It is bidirectional and its opposite is '{@link org.earthsystemmodeling.cupid.NUOPC.Field#getExportedBy <em>Exported By</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <p>
 	 * If the meaning of the '<em>Export Fields</em>' containment reference list isn't clear,
@@ -68,7 +71,8 @@ public interface BaseModel extends Component {
 	 * <!-- end-user-doc -->
 	 * @return the value of the '<em>Export Fields</em>' containment reference list.
 	 * @see org.earthsystemmodeling.cupid.NUOPC.NUOPCPackage#getBaseModel_ExportFields()
-	 * @model containment="true"
+	 * @see org.earthsystemmodeling.cupid.NUOPC.Field#getExportedBy
+	 * @model opposite="exportedBy" containment="true"
 	 * @generated
 	 */
 	EList<Field> getExportFields();

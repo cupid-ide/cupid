@@ -4,14 +4,16 @@
     nsPrefix="nuopc">
   <eClassifiers xsi:type="ecore:EClass" name="Component" abstract="true">
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="name" lowerBound="1" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="IPDVersion" lowerBound="1"
+        eType="#//IPDVersion" defaultValueLiteral="IPDv01"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="BaseModel" abstract="true" eSuperTypes="#//Component">
     <eStructuralFeatures xsi:type="ecore:EReference" name="grids" upperBound="-1"
         eType="#//Grid" containment="true"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="importFields" upperBound="-1"
-        eType="#//Field" containment="true"/>
+        eType="#//Field" containment="true" eOpposite="#//Field/importedBy"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="exportFields" upperBound="-1"
-        eType="#//Field" containment="true"/>
+        eType="#//Field" containment="true" eOpposite="#//Field/exportedBy"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="Driver" eSuperTypes="#//Component">
     <eStructuralFeatures xsi:type="ecore:EReference" name="children" upperBound="-1"
@@ -33,6 +35,16 @@
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="Field">
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="name" lowerBound="1" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="importedBy" eType="#//BaseModel"
+        eOpposite="#//BaseModel/importFields"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="exportedBy" eType="#//BaseModel"
+        eOpposite="#//BaseModel/exportFields"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="import" lowerBound="1"
+        eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean" changeable="false"
+        derived="true"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="export" lowerBound="1"
+        eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean" changeable="false"
+        derived="true"/>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="standardName" lowerBound="1"
         eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="grid" lowerBound="1" eType="#//Grid"/>
@@ -49,5 +61,18 @@
         lowerBound="1" upperBound="3" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EDouble"/>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="maxCornerCoord" unique="false"
         lowerBound="1" upperBound="3" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EDouble"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="staggerLocToFillCoords"
+        upperBound="-1" eType="#//ESMF_STAGGERLOC"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EEnum" name="IPDVersion">
+    <eLiterals name="IPDv00"/>
+    <eLiterals name="IPDv01" value="1"/>
+    <eLiterals name="IPDv02" value="2"/>
+    <eLiterals name="IPDv03" value="3"/>
+    <eLiterals name="IPDv04" value="4"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EEnum" name="ESMF_STAGGERLOC">
+    <eLiterals name="ESMF_STAGGERLOC_CENTER"/>
+    <eLiterals name="ESMF_STAGGERLOC_CORNER" value="1"/>
   </eClassifiers>
 </ecore:EPackage>

@@ -13,6 +13,7 @@ import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.InternalEObject;
 import org.eclipse.emf.ecore.util.EObjectContainmentEList;
+import org.eclipse.emf.ecore.util.EObjectContainmentWithInverseEList;
 import org.eclipse.emf.ecore.util.InternalEList;
 
 /**
@@ -97,7 +98,7 @@ public abstract class BaseModelImpl extends ComponentImpl implements BaseModel {
 	 */
 	public EList<Field> getImportFields() {
 		if (importFields == null) {
-			importFields = new EObjectContainmentEList<Field>(Field.class, this, NUOPCPackage.BASE_MODEL__IMPORT_FIELDS);
+			importFields = new EObjectContainmentWithInverseEList<Field>(Field.class, this, NUOPCPackage.BASE_MODEL__IMPORT_FIELDS, NUOPCPackage.FIELD__IMPORTED_BY);
 		}
 		return importFields;
 	}
@@ -109,9 +110,26 @@ public abstract class BaseModelImpl extends ComponentImpl implements BaseModel {
 	 */
 	public EList<Field> getExportFields() {
 		if (exportFields == null) {
-			exportFields = new EObjectContainmentEList<Field>(Field.class, this, NUOPCPackage.BASE_MODEL__EXPORT_FIELDS);
+			exportFields = new EObjectContainmentWithInverseEList<Field>(Field.class, this, NUOPCPackage.BASE_MODEL__EXPORT_FIELDS, NUOPCPackage.FIELD__EXPORTED_BY);
 		}
 		return exportFields;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	@SuppressWarnings("unchecked")
+	@Override
+	public NotificationChain eInverseAdd(InternalEObject otherEnd, int featureID, NotificationChain msgs) {
+		switch (featureID) {
+			case NUOPCPackage.BASE_MODEL__IMPORT_FIELDS:
+				return ((InternalEList<InternalEObject>)(InternalEList<?>)getImportFields()).basicAdd(otherEnd, msgs);
+			case NUOPCPackage.BASE_MODEL__EXPORT_FIELDS:
+				return ((InternalEList<InternalEObject>)(InternalEList<?>)getExportFields()).basicAdd(otherEnd, msgs);
+		}
+		return super.eInverseAdd(otherEnd, featureID, msgs);
 	}
 
 	/**
