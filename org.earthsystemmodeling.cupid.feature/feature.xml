@@ -6,32 +6,35 @@
    <install-handler handler=""/>
 
    <description url="http://www.earthsystemcog.org/projects/cupid">
-      The Cupid IDE and Code Generation tool for Earth System Models
+      The Cupid Plugin is a code generation tool that helps with developing coupled Earth System Models that use the National Unified Operational Prediction Capability (NUOPC) software Layer.
    </description>
 
    <copyright>
-      Copyright 2015 NASA/NOAA/Univerisity of Colorado
+      Copyright 2016 NASA/NOAA/Univerisity of Colorado
    </copyright>
 
    <license url="http://opensource.org/licenses/MIT">
       The MIT License (MIT)
-Copyright (C) 2015  NASA/NOAA/University of Colorado
+Copyright (C) 2016  NASA/NOAA/University of Colorado
 Author: Rocky Dunlap
 
-Permission is hereby granted, free of charge, to any person obtaining a copy of this software 
-and associated documentation files (the &quot;Software&quot;), to deal in the Software without restriction, 
-including without limitation the rights to use, copy, modify, merge, publish, distribute, 
-sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is 
-furnished to do so, subject to the following conditions:
+Permission is hereby granted, free of charge, to any person obtaining a 
+copy of this software and associated documentation files (the &quot;Software&quot;), 
+to deal in the Software without restriction, including without limitation 
+the rights to use, copy, modify, merge, publish, distribute, sublicense, 
+and/or sell copies of the Software, and to permit persons to whom the 
+Software is furnished to do so, subject to the following conditions:
 
-The above copyright notice and this permission notice shall be included in all copies or 
-substantial portions of the Software.
+The above copyright notice and this permission notice shall be included 
+in all copies or substantial portions of the Software.
 
-THE SOFTWARE IS PROVIDED &quot;AS IS&quot;, WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING 
-BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND 
-NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, 
-DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, 
-OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+THE SOFTWARE IS PROVIDED &quot;AS IS&quot;, WITHOUT WARRANTY OF ANY KIND, EXPRESS 
+OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, 
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL 
+THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER 
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING 
+FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER 
+DEALINGS IN THE SOFTWARE.
    </license>
 
    <url>
@@ -71,6 +74,34 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SO
 
    <plugin
          id="org.earthsystemmodeling.cupid.template"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"
+         unpack="false"/>
+
+   <plugin
+         id="org.earthsystemmodeling.cupid.nuopcmodel"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"
+         unpack="false"/>
+
+   <plugin
+         id="org.earthsystemmodeling.cupid.nuopcmodel.design"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"
+         unpack="false"/>
+
+   <plugin
+         id="org.earthsystemmodeling.cupid.nuopcmodel.edit"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"
+         unpack="false"/>
+
+   <plugin
+         id="org.earthsystemmodeling.cupid.nuopcmodel.editor"
          download-size="0"
          install-size="0"
          version="0.0.0"

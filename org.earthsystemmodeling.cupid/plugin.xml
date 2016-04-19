@@ -406,17 +406,17 @@
       </category>
       <view
             category="org.earthsystemmodeling.cupid"
-            class="org.earthsystemmodeling.cupid.views.NUOPCView"
-            icon="icons/hierarchy.png"
-            id="org.earthsystemmodeling.cupid.views.NUOPCView"
-            name="NUOPC View">
-      </view>
-      <view
-            category="org.earthsystemmodeling.cupid"
             class="org.earthsystemmodeling.cupid.views.NUOPCDocView"
             icon="icons/book.gif"
             id="org.earthsystemmodeling.cupid.views.NUOPCDocView"
             name="NUOPC Doc">
+      </view>
+      <view
+            category="org.earthsystemmodeling.cupid"
+            class="org.earthsystemmodeling.cupid.views.NUOPCView"
+            icon="icons/hierarchy.png"
+            id="org.earthsystemmodeling.cupid.views.NUOPCView"
+            name="NUOPC View">
       </view>
    </extension>
    <extension
@@ -656,6 +656,7 @@
    </extension>
    -->
    
+   <!--
    <extension
          point="org.eclipse.ui.perspectives">
       <perspective
@@ -668,8 +669,12 @@
          </description>
       </perspective>
    </extension>
+   -->
+   
    <extension
          point="org.eclipse.ui.perspectiveExtensions">
+   
+   	<!--
       <perspectiveExtension
             targetID="org.earthsystemmodeling.cupid.perspective">
          <hiddenMenuItem
@@ -687,6 +692,25 @@
          <actionSet
                id="org.eclipse.debug.ui.launchActionSet">
          </actionSet>
+      </perspectiveExtension>
+   	-->
+   
+      <perspectiveExtension
+            targetID="org.eclipse.photran.ui.FortranPerspective">
+         <view
+               id="org.earthsystemmodeling.cupid.views.NUOPCView"
+               minimized="false"
+               relationship="stack"
+               relative="org.eclipse.ui.views.ContentOutline"
+               visible="true">
+         </view>
+         <view
+               id="org.earthsystemmodeling.cupid.views.NUOPCDocView"
+               minimized="false"
+               relationship="stack"
+               relative="org.eclipse.ui.console.ConsoleView"
+               visible="true">
+         </view>
       </perspectiveExtension>
    </extension>
    <extension
