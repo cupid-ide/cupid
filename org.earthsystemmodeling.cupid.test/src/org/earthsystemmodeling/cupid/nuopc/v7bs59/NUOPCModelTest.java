@@ -18,6 +18,7 @@ import org.eclipse.core.resources.IProject;
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.NullProgressMonitor;
 import org.eclipse.ltk.core.refactoring.Change;
+import org.eclipse.photran.internal.core.vpg.PhotranVPG;
 import org.junit.AfterClass;
 import org.junit.BeforeClass;
 import org.junit.Test;
@@ -26,10 +27,12 @@ public class NUOPCModelTest {
 	
 	private static IProject PROJECT_NUOPC_PROTOTYPES;
 	private static NullProgressMonitor NPM = new NullProgressMonitor();
+	private static NUOPCFrameworkManager manager = NUOPCFrameworkManager.getInstance();
+	
 	
 	@BeforeClass
 	public static void setUp() throws CoreException, IOException, InterruptedException {
-		PROJECT_NUOPC_PROTOTYPES = TestHelpers.createProjectFromFolder("target/" + NUOPCTest.NUOPC_TAG, NUOPCTest.NUOPC_TAG);
+		PROJECT_NUOPC_PROTOTYPES = TestHelpers.createFortranProjectFromFolder("target/" + NUOPCTest.NUOPC_TAG, NUOPCTest.NUOPC_TAG);
 	}
 	
 	@AfterClass
@@ -43,7 +46,7 @@ public class NUOPCModelTest {
 		IFile f;
 		f = PROJECT_NUOPC_PROTOTYPES.getFolder("AtmOcnProto").getFile("atm.F90");
 				
-		NUOPCModel model = new NUOPCModel(f).reverse();
+		NUOPCModel model = manager.acquireConcept(f);
 		assertNotNull(model);
 		assertEquals("ATM", model.name);
 		assertNotNull(model.setServices);
@@ -88,7 +91,7 @@ public class NUOPCModelTest {
 		
 		f = PROJECT_NUOPC_PROTOTYPES.getFolder("AtmOcnRtmTwoTimescalesProto").getFile("ocn.F90");
 		
-		model = new NUOPCModel(f).reverse();
+		model = manager.acquireConcept(f);
 		assertNotNull(model);
 		assertEquals("OCN", model.name);
 		assertNotNull(model.setServices);
@@ -124,7 +127,7 @@ public class NUOPCModelTest {
 		
 		f = PROJECT_NUOPC_PROTOTYPES.getFolder("AtmOcnImplicitProto").getFile("atm.F90");
 
-		model = new NUOPCModel(f).reverse();
+		model = manager.acquireConcept(f);
 		assertNotNull(model);
 		assertEquals("ATM", model.name);
 		assertNotNull(model.setServices);
@@ -154,7 +157,7 @@ public class NUOPCModelTest {
 				
 		f = PROJECT_NUOPC_PROTOTYPES.getFolder("AtmOcnTransferGridProto").getFile("atm.F90");
 		
-		model = new NUOPCModel(f).reverse();
+		model = manager.acquireConcept(f);
 		assertNotNull(model);
 		assertEquals("ATM", model.name);
 		assertNotNull(model.setServices);
@@ -174,12 +177,12 @@ public class NUOPCModelTest {
 	
 	@Test
 	public void GenerateNUOPCModelFromScratch() throws CoreException, IOException, InterruptedException {
-		IProject p = TestHelpers.createEmptyProject(NUOPCTest.NUOPC_TAG + "_GenerateNUOPCModelFromScratch");
+		IProject p = TestHelpers.createEmptyFortranProject(NUOPCTest.NUOPC_TAG + "_GenerateNUOPCModelFromScratch");
 		IFile f = TestHelpers.createBlankFile(p, "MyModel.F90"); 
 				
 		NUOPCModel model = new NUOPCModel(f);
 		model.name = "MyModel";
-		model = model.forward();
+		model.forward();
 		
 		assertNotNull(model.setServices);
 		assertEquals("SetServices", model.setServices.subroutineName);
@@ -195,11 +198,11 @@ public class NUOPCModelTest {
 		assertNotNull(model.initialization.initPhases.ipdv03);
 		assertNotNull(model.initialization.initPhases.ipdv04);
 		
-		Change chg = model.generateChange();
-		chg.perform(NPM);
+		
+		model.applyChanges(NPM);
 		
 		//read in same driver just generated
-		model = new NUOPCModel(f).reverse();
+		model = manager.acquireConcept(f);
 		
 		assertNotNull(model);
 		assertEquals("MyModel", model.name);
@@ -231,10 +234,9 @@ public class NUOPCModelTest {
 		af.state = "exportState";
 		
 		ipdv04p1.forward();
-		chg = ipdv04p1.generateChange();
-		chg.perform(NPM);
+		model.applyChanges(NPM);
 		
-		model = new NUOPCModel(f).reverse();
+		model = manager.acquireConcept(f);
 		assertNotNull(model);
 		assertEquals(2, model.initialization.initPhases.ipdv04.ipdv04p1.advertiseFields.size());
 		assertEquals("\"donkey\"", model.initialization.initPhases.ipdv04.ipdv04p1.advertiseFields.get(0).standardName);
@@ -257,10 +259,9 @@ public class NUOPCModelTest {
 		rf.state = "exportState";
 		
 		ipdv04p3.forward();
-		chg = ipdv04p3.generateChange();
-		chg.perform(NPM);
+		model.applyChanges(NPM);
 		
-		model = new NUOPCModel(f).reverse();
+		model = manager.acquireConcept(f);
 		assertNotNull(model);
 		assertEquals(2, model.initialization.initPhases.ipdv04.ipdv04p3.realizeFields.size());
 		assertEquals("myfield1", model.initialization.initPhases.ipdv04.ipdv04p3.realizeFields.get(0).field);

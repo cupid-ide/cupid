@@ -116,16 +116,26 @@
             </command>
          </toolbar>
       </menuContribution>
-      
+        
+         
       <menuContribution
             locationURI="popup:org.eclipse.ui.navigator.ProjectExplorer#PopupMenu?after=additions">
-          <menu
+           <menu
                 icon="icons/hierarchy.png"
                 label="NUOPC"
                 mnemonic="N">
-            <command
+             <command
                commandId="org.earthsystemmodeling.cupid.generateCode"
                id="org.earthsystemmodeling.cupid.menus.generateCode">
+	         	<visibleWhen checkEnabled="false">
+	   				<with variable="activeMenuSelection">
+				      <iterate ifEmpty="false">
+				         <adapt type="org.eclipse.core.resources.IResource">
+				              <test property="org.eclipse.core.resources.extension" value="nuopc" />
+				         </adapt>
+				      </iterate>
+				   </with>
+				</visibleWhen>
          	</command>
             <command
                   commandId="org.earthsystemmodeling.cupid.generateNUOPCComp"
@@ -146,7 +156,7 @@
             </command>
             <command
                   commandId="org.earthsystemmodeling.cupid.generateNUOPCComp"
-                  label="Generate Model..."
+                  label="Generate Model cap..."
                   mnemonic="M"
                   style="push">
                <parameter
@@ -178,8 +188,65 @@
          			</with>         			         			
          		</visibleWhen>
             </command>
-         </menu>
+          </menu>
       </menuContribution>
+      
+      
+       <menuContribution
+            locationURI="popup:common.new.menu?after=new">
+            
+            <command
+                  commandId="org.earthsystemmodeling.cupid.generateNUOPCComp"
+                  label="NUOPC Driver"
+                  mnemonic="D"
+                  style="push">
+               <parameter
+                     name="org.earthsystemmodeling.cupid.generateNUOPCComp.componentType"
+                     value="driver">
+               </parameter>             
+               <visibleWhen checkEnabled="false">
+         			<with variable="selection">
+         				<iterate ifEmpty="false">
+         					 <adapt type="org.eclipse.core.resources.IContainer"/>
+         				</iterate>
+         			</with>         			         			
+         		</visibleWhen>
+            </command>
+            <command
+                  commandId="org.earthsystemmodeling.cupid.generateNUOPCComp"
+                  label="NUOPC Model cap"
+                  mnemonic="M"
+                  style="push">
+               <parameter
+                     name="org.earthsystemmodeling.cupid.generateNUOPCComp.componentType"
+                     value="model">
+               </parameter>
+               <visibleWhen checkEnabled="false">
+         			<with variable="selection">
+         				<iterate ifEmpty="false">
+         					 <adapt type="org.eclipse.core.resources.IContainer"/>
+         				</iterate>
+         			</with>         			         			
+         		</visibleWhen>
+            </command>
+            <command
+                  commandId="org.earthsystemmodeling.cupid.generateNUOPCComp"
+                  label="NUOPC Mediator"
+                  mnemonic="e"
+                  style="push">
+               <parameter
+                     name="org.earthsystemmodeling.cupid.generateNUOPCComp.componentType"
+                     value="mediator">
+               </parameter>
+               <visibleWhen checkEnabled="false">
+         			<with variable="selection">
+         				<iterate ifEmpty="false">
+         					 <adapt type="org.eclipse.core.resources.IContainer"/>
+         				</iterate>
+         			</with>         			         			
+         		</visibleWhen>
+            </command>
+       </menuContribution>
       
       
      <!--

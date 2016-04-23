@@ -268,20 +268,29 @@ public class NUOPCBaseModel {
     }
     
     public String forward(final Field high, final String state) {
-      String _xblockexpression = null;
-      {
-        String _name = high.getName();
-        String _plus = ("\"" + _name);
-        String _plus_1 = (_plus + "\"");
-        this.fieldName = _plus_1;
-        String _name_1 = high.getName();
-        this.field = _name_1;
-        Grid _grid = high.getGrid();
-        String _name_2 = _grid.getName();
-        this.grid = _name_2;
-        _xblockexpression = this.state = state;
+      try {
+        String _xblockexpression = null;
+        {
+          Grid _grid = high.getGrid();
+          boolean _equals = Objects.equal(_grid, null);
+          if (_equals) {
+            throw new CodeGenerationException("Field must have associated grid");
+          }
+          String _name = high.getName();
+          String _plus = ("\"" + _name);
+          String _plus_1 = (_plus + "\"");
+          this.fieldName = _plus_1;
+          String _name_1 = high.getName();
+          this.field = _name_1;
+          Grid _grid_1 = high.getGrid();
+          String _name_2 = _grid_1.getName();
+          this.grid = _name_2;
+          _xblockexpression = this.state = state;
+        }
+        return _xblockexpression;
+      } catch (Throwable _e) {
+        throw Exceptions.sneakyThrow(_e);
       }
-      return _xblockexpression;
     }
   }
 }

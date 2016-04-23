@@ -20,6 +20,7 @@ import java.util.List
 import org.eclipse.xtend.lib.annotations.Accessors
 import java.util.Set
 import java.util.LinkedHashSet
+import org.earthsystemmodeling.cupid.nuopc.ReverseEngineerException
 
 @Label(label="NUOPC Driver")
 @MappingType("module")
@@ -62,11 +63,11 @@ public abstract class NUOPCComponent extends CodeConcept<CodeConcept<?,?>, ASTMo
 		name + " (" + _context?.name + ")"
 	}
 		
-	override reverse() {
+	override reverse() throws ReverseEngineerException {
 		
 		var ast = getAST()
 				
-		_astRef = ast.root?.programUnitList?.filter(ASTModuleNode)?.findFirst[
+		_astRef = ast?.root?.programUnitList?.filter(ASTModuleNode)?.findFirst[
 			it.moduleBody?.filter(ASTUseStmtNode)?.exists[it.name.text.eic(genericImport)]
 		]
 		
@@ -99,7 +100,9 @@ public abstract class NUOPCComponent extends CodeConcept<CodeConcept<?,?>, ASTMo
 	override NUOPCComponent forward() {
 				
 		if (name == null) throw new CodeGenerationException("No component name specified")
-		
+		val ast = getAST
+		if (ast == null) throw new CodeGenerationException("Error generating new component")
+				
 		if (_astRef == null) {
 		
 			//create module
@@ -124,7 +127,7 @@ end module
 			
 			var pul = new ASTListNode<IProgramUnit>()
 			pul.add(moduleNode)
-			getAST.root.programUnitList = pul
+			ast.root.programUnitList = pul
 			
 			moduleNode.moduleBody.filter(ASTUseStmtNode).forEach[
 				if (it.name.text.eic("ESMF")) {

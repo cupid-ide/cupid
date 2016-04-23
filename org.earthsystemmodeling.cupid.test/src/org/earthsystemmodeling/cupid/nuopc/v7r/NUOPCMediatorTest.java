@@ -7,24 +7,23 @@ import static org.junit.Assert.assertTrue;
 
 import java.io.IOException;
 
+import org.earthsystemmodeling.cupid.NUOPC.ESMF_STAGGERLOC;
+import org.earthsystemmodeling.cupid.NUOPC.Field;
+import org.earthsystemmodeling.cupid.NUOPC.Mediator;
+import org.earthsystemmodeling.cupid.NUOPC.NUOPCFactory;
+import org.earthsystemmodeling.cupid.NUOPC.UniformGrid;
+import org.earthsystemmodeling.cupid.nuopc.ReverseEngineerException;
+import org.earthsystemmodeling.cupid.nuopc.v7r.GridCodeConcept.CreateUniformGrid;
 import org.earthsystemmodeling.cupid.nuopc.v7r.NUOPCBaseModel.AdvertiseField;
 import org.earthsystemmodeling.cupid.nuopc.v7r.NUOPCBaseModel.RealizeField;
 import org.earthsystemmodeling.cupid.nuopc.v7r.NUOPCMediator.IPD.IPDv04p0;
 import org.earthsystemmodeling.cupid.nuopc.v7r.NUOPCMediator.IPD.IPDv04p1;
 import org.earthsystemmodeling.cupid.nuopc.v7r.NUOPCMediator.IPD.IPDv04p3;
-import org.earthsystemmodeling.cupid.NUOPC.ESMF_STAGGERLOC;
-import org.earthsystemmodeling.cupid.NUOPC.Field;
-import org.earthsystemmodeling.cupid.NUOPC.Mediator;
-import org.earthsystemmodeling.cupid.NUOPC.Model;
-import org.earthsystemmodeling.cupid.NUOPC.NUOPCFactory;
-import org.earthsystemmodeling.cupid.NUOPC.UniformGrid;
-import org.earthsystemmodeling.cupid.nuopc.v7r.GridCodeConcept.CreateUniformGrid;
 import org.earthsystemmodeling.cupid.test.TestHelpers;
 import org.eclipse.core.resources.IFile;
 import org.eclipse.core.resources.IProject;
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.NullProgressMonitor;
-import org.eclipse.ltk.core.refactoring.Change;
 import org.junit.AfterClass;
 import org.junit.BeforeClass;
 import org.junit.Test;
@@ -35,10 +34,11 @@ public class NUOPCMediatorTest {
 	private static NullProgressMonitor NPM = new NullProgressMonitor();
 	private static NUOPCFactory factory = NUOPCFactory.eINSTANCE;	
 	private static final boolean PRINT_ASTS = true;
+	private static NUOPCFrameworkManager manager = NUOPCFrameworkManager.getInstance();
 	
 	@BeforeClass
 	public static void setUp() throws CoreException, IOException, InterruptedException {
-		PROJECT_NUOPC_PROTOTYPES = TestHelpers.createProjectFromFolder("target/" + NUOPCTest.NUOPC_TAG, NUOPCTest.NUOPC_TAG);
+		PROJECT_NUOPC_PROTOTYPES = TestHelpers.createFortranProjectFromFolder("target/" + NUOPCTest.NUOPC_TAG, NUOPCTest.NUOPC_TAG);
 	}
 	
 	@AfterClass
@@ -47,7 +47,7 @@ public class NUOPCMediatorTest {
 	}
 
 	@Test
-	public void NUOPCMediatorReverse() {
+	public void NUOPCMediatorReverse() throws ReverseEngineerException {
 		
 		IFile f;
 		f = PROJECT_NUOPC_PROTOTYPES.getFolder("AtmOcnMedProto").getFile("med.F90");
@@ -194,19 +194,23 @@ public class NUOPCMediatorTest {
 	}
 	
 	@Test
-	public void GenerateNUOPCMediatorFromScratch() throws CoreException, IOException, InterruptedException {
-		IProject p = TestHelpers.createEmptyProject(NUOPCTest.NUOPC_TAG + "_GenerateNUOPCMediatorFromScratch");
+	public void GenerateNUOPCMediatorFromScratch() throws CoreException, IOException, InterruptedException, ReverseEngineerException {
+		IProject p = TestHelpers.createEmptyFortranProject(NUOPCTest.NUOPC_TAG + "_GenerateNUOPCMediatorFromScratch");
 		IFile f = TestHelpers.createBlankFile(p, "MyMediator.F90"); 
+		
+		
 		
 		NUOPCMediator mediator = new NUOPCMediator(f);
 		mediator.name = "MyMediator";
 		mediator = mediator.forward();
 		
-		Change chg = mediator.generateChange();
-		chg.perform(NPM);
+		//Change chg = mediator.generateChange();
+		//chg.perform(NPM);
+		mediator.applyChanges(NPM);
 		
 		//read in same driver just generated
-		mediator = new NUOPCMediator(f).reverse();
+		//mediator = new NUOPCMediator(f).reverse();
+		mediator = manager.acquireConcept(f);
 		
 		assertNotNull(mediator);
 		assertEquals("MyMediator", mediator.name);
@@ -236,10 +240,15 @@ public class NUOPCMediatorTest {
 		
 		ipdv04p0.forward();
 		ipdv04p1.forward();
-		chg = ipdv04p1.generateChange();
-		chg.perform(NPM);
+		mediator.applyChanges(NPM);
+		//chg = ipdv04p1.generateChange();
+		//chg.perform(NPM);
+		//ipdv04p1.forward(NPM);
 		
-		mediator = new NUOPCMediator(f).reverse();
+		
+		//mediator = new NUOPCMediator(f).reverse();
+		mediator = manager.acquireConcept(f);
+		
 		assertNotNull(mediator);
 		assertNotNull(mediator.initialization.initPhases.ipdv04.ipdv04p0);
 		assertEquals("MedFilterInitPhases", mediator.initialization.initPhases.ipdv04.ipdv04p0.subroutineName);
@@ -278,11 +287,14 @@ public class NUOPCMediatorTest {
 		rf.grid = "grid";
 			
 		mediator.initialization.createUniformGrid.get(0).forward();
-		ipdv04p3.forward(NPM);
+		ipdv04p3.forward();
+		mediator.applyChanges(NPM);
 		//chg = ipdv04p3.generateChange();
 		//chg.perform(NPM);
 		
-		mediator = new NUOPCMediator(f).reverse();
+		//mediator = new NUOPCMediator(f).reverse();
+		mediator = manager.acquireConcept(f);
+		
 		assertNotNull(mediator);
 		assertEquals(2, mediator.initialization.initPhases.ipdv04.ipdv04p3.realizeFields.size());
 		assertEquals("myfield1", mediator.initialization.initPhases.ipdv04.ipdv04p3.realizeFields.get(0).field);
@@ -354,7 +366,8 @@ public class NUOPCMediatorTest {
 		assertNotNull(mediatorCodeConcept.initialization.createUniformGrid);
 		assertEquals("\"MedGrid\"", mediatorCodeConcept.initialization.createUniformGrid.get(0).getName());
 				
-		mediatorCodeConcept.forward(NPM);
+		mediatorCodeConcept.forward();
+		mediatorCodeConcept.applyChanges(NPM);
 		
 		if (PRINT_ASTS) {
 			TestHelpers.printAST(mediatorCodeConcept);

@@ -62,7 +62,7 @@ public abstract class EntryPointCodeConcept<P extends CodeConcept<?, ?>> extends
 	override reverse() {
 		
 		val setServicesNode = setServices?.ASTRef
-		if (setServicesNode == null) throw new ReverseEngineerException("No SetServices method found")
+		if (setServicesNode == null) return null //throw new ReverseEngineerException("No SetServices method found")
 		
 		var ASTCallStmtNode regCall
 		

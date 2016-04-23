@@ -141,6 +141,8 @@ call NUOPC_Realize(«paramch(state)», field=«paramch(field)», rc=«_parent.pa
 		}
 		
 		def forward(Field high, String state) {
+			if (high.grid==null) throw new CodeGenerationException("Field must have associated grid")
+			
 			fieldName = "\"" + high.name + "\""
 			field = high.name
 			grid = high.grid.name

@@ -34,6 +34,7 @@ import org.earthsystemmodeling.cupid.nuopc.v7r.NUOPCBaseModel.AdvertiseField
 import org.earthsystemmodeling.cupid.nuopc.v7r.NUOPCModel.IPD
 import org.earthsystemmodeling.cupid.NUOPC.IPDVersion
 import org.earthsystemmodeling.cupid.nuopc.v7r.NUOPCModel.IPD.IPDv04p0
+import org.earthsystemmodeling.cupid.nuopc.ReverseEngineerException
 
 @Label(label="NUOPC Model")
 @MappingType("module")
@@ -85,7 +86,7 @@ class NUOPCModel extends NUOPCComponent {
 
 	override prefix() { "model" }
 
-	override NUOPCModel reverse() {
+	override NUOPCModel reverse() throws ReverseEngineerException {
 		super.reverse as NUOPCModel
 	}
 

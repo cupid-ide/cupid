@@ -19,7 +19,10 @@ import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.jface.operation.IRunnableWithProgress;
 import org.eclipse.jface.text.Document;
 import org.eclipse.ltk.core.refactoring.Change;
+import org.eclipse.ltk.core.refactoring.RefactoringStatus;
+import org.eclipse.ltk.core.refactoring.RefactoringStatusEntry;
 import org.eclipse.ltk.core.refactoring.TextFileChange;
+import org.eclipse.photran.internal.core.vpg.PhotranVPG;
 
 @SuppressWarnings("restriction")
 public class ApplyCodeConceptChanges implements IRunnableWithProgress {
@@ -38,11 +41,19 @@ public class ApplyCodeConceptChanges implements IRunnableWithProgress {
 		
 		try {
 			
-			change = codeConcept.generateChange();
+			//change = codeConcept.generateChange();
 			TextFileChange textFileChange = (TextFileChange) change;  //assumed for now
 			IFile file = textFileChange.getFile();
 			
 			String fileContentsBefore = IOUtils.toString(file.getContents());
+			textFileChange.initializeValidationData(monitor);
+			RefactoringStatus rs = textFileChange.isValid(monitor);
+			if (rs.hasError()) {
+				for (RefactoringStatusEntry e : rs.getEntries()) {
+					CupidActivator.debug(e.getMessage());
+				}
+				return;
+			}
 			textFileChange.perform(monitor);
 			String fileContentsAfter = IOUtils.toString(file.getContents());		
 								
@@ -75,6 +86,11 @@ public class ApplyCodeConceptChanges implements IRunnableWithProgress {
         		marker.setAttribute(IMarker.CHAR_END, ml.end);
         		marker.setAttribute(IMarker.MESSAGE, "Generated parameter");
         	}	
+        	
+        	//recompute edges in vpg
+        	//PhotranVPG.getInstance().forceRecomputationOfEdgesAndAnnotations(PhotranVPG.getFilenameForIFile(file));
+        	//PhotranVPG.getInstance().acquireTransientAST(file);
+        	
 	
 		} catch (CoreException | IOException e) {
 			CupidActivator.log("Error executing code generation", e);

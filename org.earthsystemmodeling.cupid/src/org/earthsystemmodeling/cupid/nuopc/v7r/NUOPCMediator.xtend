@@ -21,6 +21,7 @@ import org.earthsystemmodeling.cupid.nuopc.v7r.NUOPCMediator.IPD.IPDv04p3
 import org.earthsystemmodeling.cupid.NUOPC.Field
 import org.earthsystemmodeling.cupid.NUOPC.Grid
 import org.earthsystemmodeling.cupid.nuopc.v7r.NUOPCMediator.IPD.IPDv04p0
+import org.earthsystemmodeling.cupid.nuopc.ReverseEngineerException
 
 @Label(label="NUOPC Mediator")
 @MappingType("module")
@@ -45,7 +46,7 @@ class NUOPCMediator extends NUOPCComponent {
 
 	override prefix() { "mediator" }
 
-	override NUOPCMediator reverse() {
+	override NUOPCMediator reverse() throws ReverseEngineerException {
 		super.reverse as NUOPCMediator
 	}
 

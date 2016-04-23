@@ -40,7 +40,7 @@ public class NUOPCTest {
 	
 	@BeforeClass
 	public static void setUp() throws CoreException, IOException, InterruptedException {
-		PROJECT_NUOPC_PROTOTYPES = TestHelpers.createProjectFromFolder("target/" + NUOPC_TAG, NUOPC_TAG);
+		PROJECT_NUOPC_PROTOTYPES = TestHelpers.createFortranProjectFromFolder("target/" + NUOPC_TAG, NUOPC_TAG);
 	}
 	
 	@AfterClass

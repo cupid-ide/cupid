@@ -52,7 +52,7 @@ public class GenerateCodeHandler extends AbstractHandler {
 			}
 				
 			if (app != null && project != null) {
-				Job generateCodeJob = new GenerateCodeJob("Generate Code", app, project, true);
+				Job generateCodeJob = new GenerateNUOPCApplicationJob("Generate Code", app, project, true);
 				generateCodeJob.schedule();
 			}
 				

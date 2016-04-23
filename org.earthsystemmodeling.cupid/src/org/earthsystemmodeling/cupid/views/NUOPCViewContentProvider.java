@@ -14,14 +14,22 @@ import org.earthsystemmodeling.cupid.annotation.Label;
 import org.earthsystemmodeling.cupid.annotation.MappingType;
 import org.earthsystemmodeling.cupid.core.CupidActivator;
 import org.earthsystemmodeling.cupid.nuopc.CodeConcept;
+import org.earthsystemmodeling.cupid.nuopc.ReverseEngineerException;
 import org.earthsystemmodeling.cupid.nuopc.v7r.NUOPCDriver;
+import org.earthsystemmodeling.cupid.nuopc.v7r.NUOPCFrameworkManager;
 import org.earthsystemmodeling.cupid.nuopc.v7r.NUOPCMediator;
 import org.earthsystemmodeling.cupid.nuopc.v7r.NUOPCModel;
 import org.eclipse.core.resources.IFile;
+import org.eclipse.core.runtime.CoreException;
+import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.IStatus;
+import org.eclipse.core.runtime.NullProgressMonitor;
+import org.eclipse.core.runtime.Status;
+import org.eclipse.core.runtime.jobs.Job;
 import org.eclipse.jface.viewers.IStructuredContentProvider;
 import org.eclipse.jface.viewers.ITreeContentProvider;
 import org.eclipse.jface.viewers.Viewer;
+import org.eclipse.photran.internal.core.vpg.PhotranVPG;
 import org.eclipse.photran.internal.ui.editor.FortranEditor;
 
 import alice.tuprolog.event.OutputListener;
@@ -87,93 +95,32 @@ class NUOPCViewContentProvider implements IStructuredContentProvider, ITreeConte
 	
 		
 	public void inputChanged(Viewer v, Object oldInput, Object newInput) {
-		
-				
 		if (newInput == null) {
 			return;
 		}
-		
-		//if (!codeDB.isConnected()) {
-		//	return;
-		//}
-		
-		if (newInput instanceof FortranEditor) {
+		else if (newInput instanceof FortranEditor) {
 			editor = (FortranEditor) newInput;
 			file = editor.getIFile();
 		}
-		else {
-			return;
-		}
-		
-		//input = (IFile) newInput;
-			
-		//long startRebuild = System.currentTimeMillis();
-		//codeDB.truncateDatabase();
-		//long endRebuild = System.currentTimeMillis();
-		
-		//String filename = PhotranVPG.getFilenameForIFile(file);
-		//long startParse = System.currentTimeMillis();
-		//PhotranVPG.getInstance().releaseAST(filename);
-		//IFortranAST ast = null;
-		//try {
-		//	ast = PhotranVPG.getInstance().acquireTransientAST(filename);
-		//}
-		//catch (NullPointerException npe) {
-			//there is a bug in PhotranVPG when opening a file directly from the SVN view
-			//because it is not a "real" Eclipse file
-		//	return;
-		//}
-		//long endParse = System.currentTimeMillis();
-		
-		//long startIndex = System.currentTimeMillis();
-		//if (ast != null) {
-		//	codeDB.indexAST(ast);
-		//}
-		//long endIndex = System.currentTimeMillis();
-		
-		//if (CupidActivator.getDefault().isDebugging()) {
-		//	CupidActivator.log(IStatus.INFO, "Rebuild DB time: " + (endRebuild-startRebuild));
-		//	CupidActivator.log(IStatus.INFO, "Parse time: " + (endParse-startParse));
-		//	CupidActivator.log(IStatus.INFO, "Index DB time: " + (endIndex-startIndex));
-		//}
-		
 	}
 	
 	
 	public void dispose() {
-		/*
-		if (warningListener != null && codeDB != null) {
-			codeDB.getProlog().removeWarningListener(warningListener);
-		}
-		if (outputListener != null && codeDB != null) {
-			codeDB.getProlog().removeOutputListener(outputListener);
-		}
-		*/
+		
 	}
 	
 	
+	//private isFortranAnalysisEnabled
+	
 	public Object[] getElements(Object parent) {	
 		
-		CodeConcept<?,?> codeConcept;
+		NUOPCFrameworkManager manager = NUOPCFrameworkManager.getInstance();
 		
-		//TODO: cleaner way to go through these, maybe a new top level concept
-		//with the below as children
 		long startIndex = System.currentTimeMillis();
-		
-		//codeConcept = new NUOPCDriver(codeDB).reverse();
-		codeConcept = new NUOPCDriver(file).reverse();
-		if (codeConcept == null) {
-			codeConcept = new NUOPCModel(file).reverse();
-		}
-		if (codeConcept == null) {
-			codeConcept = new NUOPCMediator(file).reverse();
-		}
-		
+		CodeConcept<?,?> codeConcept = manager.acquireConcept(file);
 		long endIndex = System.currentTimeMillis();
 		
-		if (CupidActivator.getDefault().isDebugging()) {
-			CupidActivator.log(IStatus.INFO, "Time to reverse engineer: " + (endIndex-startIndex));
-		}
+		CupidActivator.debug("Time to reverse engineer: " + (endIndex-startIndex));
 		
 		if (codeConcept != null) {
 			return new Object[] {
@@ -184,9 +131,89 @@ class NUOPCViewContentProvider implements IStructuredContentProvider, ITreeConte
 						codeConcept.getClass().getAnnotation(MappingType.class))
 			};
 		}
+		else if (!PhotranVPG.getInstance().doesProjectHaveRefactoringEnabled(file)) {
+			return new Object[] {
+					"Project must have Fortran analysis enabled\n" +
+					"to use NUOPC tools. To enable, right click\n" +
+					"on project folder, and select Properties.\n" +
+					"In the Fortran General->Analysis/Refactoring\n" +
+					"page enable analyis/refactoring."
+					};
+		}
 		else {
 			return new Object[0];
 		}
+		
+		
+		/*
+		class ReverseEngineerJob extends Job {
+
+			public CodeConcept<?,?> codeConcept;
+			public ReverseEngineerException exception;
+			
+			public ReverseEngineerJob(String name) {
+				super(name);
+			}
+
+			@Override
+			protected IStatus run(IProgressMonitor monitor) {
+				try {
+					codeConcept = new NUOPCDriver(file).reverse();
+					if (codeConcept == null) {
+						codeConcept = new NUOPCModel(file).reverse();
+					}
+					if (codeConcept == null) {
+						codeConcept = new NUOPCMediator(file).reverse();
+					}
+				}
+				catch (ReverseEngineerException ree) {
+					exception = ree;
+					CupidActivator.log("Reverse engineering exception for file: " + file.getName(), ree);
+					codeConcept = null;
+				}
+				if (codeConcept != null) {
+					return Status.OK_STATUS;
+				}
+				else {
+					return Status.CANCEL_STATUS;
+				}
+			}
+			
+		}
+		
+		ReverseEngineerJob rej = new ReverseEngineerJob("Reverse engineer: " + file.getName());
+		rej.schedule();
+		try {
+			rej.join();
+		} catch (InterruptedException e) {
+			return new Object[0];
+		}
+		
+		if (rej.exception != null) {
+			return new Object[] {rej.exception};
+		}
+		
+		codeConcept = rej.codeConcept;
+		*/
+		
+		/*
+		try {
+			codeConcept = new NUOPCDriver(file).reverse();
+			if (codeConcept == null) {
+				codeConcept = new NUOPCModel(file).reverse();
+			}
+			if (codeConcept == null) {
+				codeConcept = new NUOPCMediator(file).reverse();
+			}
+		}
+		catch (ReverseEngineerException ree) {
+			CupidActivator.log("Reverse engineering exception for file: " + file.getName() + " RETRYING");
+		
+				
+		}
+		*/
+		
+		
 			
 	}
 	
@@ -252,18 +279,12 @@ class NUOPCViewContentProvider implements IStructuredContentProvider, ITreeConte
 	
 	public Object [] getChildren(Object p) {
 		
-		ArrayList<Object> children = new ArrayList<Object>();
-		/*
-		if (p instanceof CodeConceptProxyDoc) {
-			return children.toArray();
+		if (!(p instanceof CodeConceptProxy)) {
+			return new Object[0];
 		}
-		else {
-			//add documentation node
-			CodeConceptProxyDoc docNode = new CodeConceptProxyDoc();
-			children.add(docNode);
-		}
-		*/
 		
+		ArrayList<Object> children = new ArrayList<Object>();
+				
 		CodeConceptProxy parent = (CodeConceptProxy) p;
 		Class<?> parentClass = parent.clazz;
 		

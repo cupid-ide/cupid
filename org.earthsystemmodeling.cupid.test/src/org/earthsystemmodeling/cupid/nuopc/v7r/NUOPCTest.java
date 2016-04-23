@@ -17,6 +17,7 @@ import org.apache.commons.io.LineIterator;
 import org.earthsystemmodeling.cupid.annotation.Child;
 import org.earthsystemmodeling.cupid.nuopc.BasicCodeConcept;
 import org.earthsystemmodeling.cupid.nuopc.CodeConcept;
+import org.earthsystemmodeling.cupid.nuopc.ReverseEngineerException;
 import org.earthsystemmodeling.cupid.nuopc.v7r.NUOPCComponent.GenericImport;
 import org.earthsystemmodeling.cupid.test.TestHelpers;
 import org.eclipse.core.resources.IFile;
@@ -42,7 +43,7 @@ public class NUOPCTest {
 	
 	@BeforeClass
 	public static void setUp() throws CoreException, IOException, InterruptedException {
-		PROJECT_NUOPC_PROTOTYPES = TestHelpers.createProjectFromFolder("target/" + NUOPC_TAG, NUOPC_TAG);
+		PROJECT_NUOPC_PROTOTYPES = TestHelpers.createFortranProjectFromFolder("target/" + NUOPC_TAG, NUOPC_TAG);
 	}
 	
 	@AfterClass
@@ -539,7 +540,7 @@ public class NUOPCTest {
 							}
 								
 							
-						} catch (IOException e) {
+						} catch (IOException | ReverseEngineerException e) {
 							fails = true;
 							exception = e;
 							return false;

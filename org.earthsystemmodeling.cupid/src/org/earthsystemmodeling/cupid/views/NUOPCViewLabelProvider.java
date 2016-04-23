@@ -18,6 +18,7 @@ import org.earthsystemmodeling.cupid.annotation.Label;
 import org.earthsystemmodeling.cupid.annotation.Name;
 import org.earthsystemmodeling.cupid.annotation.Prop;
 import org.earthsystemmodeling.cupid.core.CupidActivator;
+import org.earthsystemmodeling.cupid.nuopc.ReverseEngineerException;
 import org.earthsystemmodeling.cupid.preferences.CupidPreferencePage;
 import org.earthsystemmodeling.cupid.views.NUOPCViewContentProvider.CodeConceptProxy;
 import org.eclipse.core.runtime.FileLocator;
@@ -136,6 +137,10 @@ class NUOPCViewLabelProvider extends StyledCellLabelProvider { //implements ITab
 	
 	@Override
 	public String getToolTipText(Object element) {
+		
+		if (!(element instanceof CodeConceptProxy)) {
+			return null;
+		}
 		
 		CodeConceptProxy ccp = (CodeConceptProxy) element;
 		//final String className = ccp.clazz.getCanonicalName();
@@ -264,8 +269,23 @@ class NUOPCViewLabelProvider extends StyledCellLabelProvider { //implements ITab
 		};
 		
 	    ImageDescriptor icon = null;
-	       
-	   	    
+	      
+	    if (element instanceof ReverseEngineerException) {
+	    	if (cell.getColumnIndex()==0) {
+	    		cell.setText("The current file in the editor\ncould not be reverse engineered.\nPlease re-save the file\nand it will be parsed again.");
+	    		super.update(cell);
+	    	}
+	    	return;
+	    }
+	    
+	    if (element instanceof String) {
+	    	if (cell.getColumnIndex()==0) {
+	    		cell.setText(element.toString());
+	    		super.update(cell);
+	    	}
+	    	return;
+	    }
+	     	    
     	CodeConceptProxy proxy = (CodeConceptProxy) element;
     	if (cell.getColumnIndex()==0) {
     		if (proxy.codeConcept == null) {

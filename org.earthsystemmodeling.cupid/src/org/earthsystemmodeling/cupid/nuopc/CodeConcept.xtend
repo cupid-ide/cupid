@@ -32,6 +32,22 @@ import org.eclipse.photran.internal.core.parser.ASTUseStmtNode
 import org.eclipse.photran.internal.core.parser.ASTRenameNode
 import org.eclipse.photran.internal.core.parser.ISpecificationPartConstruct
 import static extension org.earthsystemmodeling.cupid.nuopc.ASTQuery.*
+import org.eclipse.core.runtime.jobs.Job
+import org.eclipse.photran.internal.core.vpg.eclipse.VPGSchedulingRule
+import org.eclipse.photran.internal.ui.actions.VPGWindowActionDelegate
+import org.eclipse.photran.internal.core.vpg.eclipse.EclipseVPG
+import org.eclipse.core.runtime.jobs.MultiRule
+import org.eclipse.core.resources.ResourcesPlugin
+import org.eclipse.core.runtime.Status
+import org.eclipse.compare.internal.DocLineComparator
+import org.eclipse.jface.text.Document
+import org.eclipse.compare.rangedifferencer.RangeDifferencer
+import org.eclipse.compare.rangedifferencer.RangeDifference
+import org.eclipse.core.resources.IMarker
+import java.io.ByteArrayInputStream
+import org.eclipse.core.resources.WorkspaceJob
+import org.eclipse.core.runtime.CoreException
+import org.earthsystemmodeling.cupid.core.CupidActivator
 
 public abstract class CodeConcept<P extends CodeConcept<?,?>, A extends IASTNode> {
 	
@@ -119,11 +135,10 @@ public abstract class CodeConcept<P extends CodeConcept<?,?>, A extends IASTNode
 	}
 	
 	def protected boolean validate(List<CodeConcept<?,?>> codeConcepts, List<String> errors) {
-		if (codeConcepts == null) {
-			System.out.println("null list");
-		}
-		for (CodeConcept<?,?> cc : codeConcepts) {
-			if (!cc.validate(errors)) return false;
+		if (codeConcepts != null) {
+			for (CodeConcept<?,?> cc : codeConcepts) {
+				if (!cc.validate(errors)) return false;
+			}
 		}
 		true
 	}
@@ -176,7 +191,8 @@ public abstract class CodeConcept<P extends CodeConcept<?,?>, A extends IASTNode
 		else _parent?.findNearestAncestor(classToFind) 
 	}
 	
-	def getAST() {
+	def getASTOLD() {
+		/*
 		if (_ast != null)
 			_ast
 		else if (_context != null && _context instanceof IFile) {
@@ -185,9 +201,95 @@ public abstract class CodeConcept<P extends CodeConcept<?,?>, A extends IASTNode
 			_ast
 		}
 		else null
+		* 
+		*/
 	}
+	
+	def getAST() {
+		if (_ast != null) {
+			_ast
+		}
+		else if (_context != null && _context instanceof IFile) {
+			//val astJob = new AccessASTJob(_context as IFile)
+			//astJob.schedule
+			//astJob.join
+			//return astJob.ast
+			//assume we have lock
+			_ast = PhotranVPG.instance.acquireTransientAST(_context as IFile)
+			_ast
+		}
+		else null
+	}
+	
+	/*
+	static class AccessASTJob extends Job {
+	
+		val IFile file
 		
-	def <T extends CodeConcept<?,?>> T reverse() {this as T}
+		@Accessors(PUBLIC_GETTER)
+		var IFortranAST ast
+		
+		new(IFile file) {
+			super("Access Fortran AST")
+			//setRule(MultiRule.combine(VPGSchedulingRule.getInstance(),
+            //        ResourcesPlugin.getWorkspace().getRoot()))
+           	setRule(VPGSchedulingRule.getInstance())
+            
+	        this.file = file
+		}
+		
+		override protected run(IProgressMonitor monitor) {
+			ast = PhotranVPG.instance.acquireTransientAST(file)
+			return Status.OK_STATUS
+		}
+		
+	}
+	*/
+	
+	/*
+	static class ReleaseASTJob extends Job {
+	
+		val IFile file
+		
+		new(IFile file) {
+			super("Release Fortran AST")
+			//setRule(MultiRule.combine(VPGSchedulingRule.getInstance(),
+            //        ResourcesPlugin.getWorkspace().getRoot()))
+            setRule(VPGSchedulingRule.getInstance())
+            this.file = file
+		}
+		
+		override protected run(IProgressMonitor monitor) {
+			PhotranVPG.instance.releaseAST(file)
+			return Status.OK_STATUS
+		}
+		
+	}
+	*/
+	
+	static class ForceReindexJob extends WorkspaceJob {
+	
+		val IFile file
+		
+		new(IFile file) {
+			super("Reindex Fortran AST")
+			//setRule(MultiRule.combine(VPGSchedulingRule.getInstance(),
+            //        ResourcesPlugin.getWorkspace().getRoot()))
+            setRule(VPGSchedulingRule.getInstance())
+            this.file = file
+		}
+		
+		override runInWorkspace(IProgressMonitor monitor) {
+			val filename = PhotranVPG.getFilenameForIFile(file)
+			PhotranVPG.instance.forceRecomputationOfEdgesAndAnnotations(filename)
+			return Status.OK_STATUS
+		}
+		
+		
+	}
+	
+		
+	def <T extends CodeConcept<?,?>> T reverse() throws ReverseEngineerException {this as T}
 	def List<CodeConcept<P,A>> reverseMultiple() {newArrayList(reverse)}
 	
 		
@@ -231,6 +333,7 @@ public abstract class CodeConcept<P extends CodeConcept<?,?>, A extends IASTNode
 		this as T
 	}
 	
+	/*
 	def Change generateChange() {
 		
 		if (_context == null) {
@@ -244,10 +347,15 @@ public abstract class CodeConcept<P extends CodeConcept<?,?>, A extends IASTNode
 			val fileContentsAfter = replaceParameters(getAST.root.toString)
 			val charsInFile = fileContentsBefore.length
 			
-			PhotranVPG.instance.commitChangesFromInMemoryASTs(
-						new NullProgressMonitor(), 0, _context as IFile)
-			_ast = null  //force recompute of ast
-			PhotranVPG.instance.releaseAST(_context as IFile)
+			//PhotranVPG.instance.commitChangesFromInMemoryASTs(
+			//			new NullProgressMonitor(), 0, _context as IFile)
+			
+			//_ast = null  //force recompute of ast
+			//PhotranVPG.instance.releaseAST(_context as IFile)
+			
+			val astJob = new ReleaseASTJob(_context as IFile)
+			astJob.schedule
+			astJob.join
 			
 			if (!fileContentsAfter.equals(fileContentsBefore)) {
 				val textFileChange = new TextFileChange("Cupid code generation: " + _context.getFullPath().toOSString(), _context)
@@ -257,11 +365,86 @@ public abstract class CodeConcept<P extends CodeConcept<?,?>, A extends IASTNode
 		}
 		
 	}
+	*/
 	
+	def void applyChanges(IProgressMonitor monitor) {
+		
+		if (_context == null || !(_context instanceof IFile)) 
+			return
+		
+		val file = _context as IFile
+		val ast = getAST
+		
+		Reindenter.reindent(ast.root, ast, Strategy.REINDENT_EACH_LINE)
+			
+		val fileContentsBefore = IOUtils.toString(file.getContents(false))
+		val fileContentsAfter = replaceParameters(ast.root.toString)
+
+		//System.out.println(file.modificationStamp + " : " + file.localTimeStamp)
+		file.setContents(new ByteArrayInputStream(fileContentsAfter.bytes), true, true, monitor)
+		//System.out.println(file.modificationStamp + " : " + file.localTimeStamp)
+		
+		val reindexJob = new ForceReindexJob(file)
+		reindexJob.schedule
+		val completed = reindexJob.join(2000, monitor)
+		if (!completed) {
+			CupidActivator.debug("Reindex job failed to join in 2 seconds.")
+		}		
+		 
+		//val charsInFile = fileContentsBefore.length
+		//val textFileChange = new TextFileChange("Cupid code generation: " + file.getFullPath().toOSString(), file)
+	    //textFileChange.setEdit(new ReplaceEdit(0, charsInFile, fileContentsAfter));
+	    //textFileChange.setSaveMode(TextFileChange.FORCE_SAVE)
+	       
+	    //System.out.println(file.modificationStamp + " : " + file.localTimeStamp)
+	    //textFileChange.perform(monitor)
+	    //file.refreshLocal(IResource.DEPTH_ZERO, monitor)
+		//System.out.println(file.modificationStamp + " : " + file.localTimeStamp)
+	    
+	    	
+		
+		val left = new DocLineComparator(new Document(fileContentsBefore), null, true);
+		val right = new DocLineComparator(new Document(fileContentsAfter), null, true);					
+	    val diffs = RangeDifferencer.findDifferences(left, right);
+	        
+	    file.deleteMarkers("org.earthsystemmodeling.cupid.cupidmarker", false, IResource.DEPTH_ZERO);
+	    file.deleteMarkers("org.earthsystemmodeling.cupid.cupidparam", false, IResource.DEPTH_ZERO);
+	        
+	    diffs.forEach[rd|
+        	val start = right.getTokenStart(rd.rightStart());
+        	val end = right.getTokenStart(rd.rightEnd()) + right.getTokenLength(rd.rightEnd());
+        	if (end-start > 2) {
+        		val marker = file.createMarker("org.earthsystemmodeling.cupid.cupidmarker");
+        		marker.setAttribute(IMarker.CHAR_START, start);
+        		marker.setAttribute(IMarker.CHAR_END, end);
+        		marker.setAttribute(IMarker.MESSAGE, "Cupid generated code");
+        		marker.setAttribute(IMarker.LOCATION, "Lines " + rd.rightStart() + " to " + rd.rightEnd());
+        		//markers.add(marker);
+        	}	
+        ]
+        
+         paramMarkers.forEach[ml|
+    	 	val marker = file.createMarker("org.earthsystemmodeling.cupid.cupidparam");
+    		marker.setAttribute(IMarker.CHAR_START, ml.start);
+    		marker.setAttribute(IMarker.CHAR_END, ml.end);
+    		marker.setAttribute(IMarker.MESSAGE, "Generated parameter");
+    	]
+  
+		
+	}
+	
+	/*
 	def void forward(IProgressMonitor pm) {
 		forward
 		generateChange.perform(pm)
+		
+		//val f = (generateChange as TextFileChange).file
+		//val fn = PhotranVPG.getFilenameForIFile(f)
+		//PhotranVPG.instance.forceRecomputationOfEdgesAndAnnotations(fn)
+		
 	}
+	* 
+	*/
 	
 	static String PARAM_REGEX = "CUPIDPARAM\\$(CHAR|INT)\\$([^\\$]*)\\$";
 	static Pattern PARAM_PATTERN = Pattern.compile(PARAM_REGEX);

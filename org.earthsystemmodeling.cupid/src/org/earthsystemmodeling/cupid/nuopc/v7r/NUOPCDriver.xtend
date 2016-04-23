@@ -35,6 +35,7 @@ import org.earthsystemmodeling.cupid.nuopc.v7r.NUOPCBaseModel.RealizeField
 import org.earthsystemmodeling.cupid.nuopc.v7r.NUOPCBaseModel.AdvertiseField
 import org.earthsystemmodeling.cupid.NUOPC.BaseModel
 import org.earthsystemmodeling.cupid.NUOPC.Connector
+import org.earthsystemmodeling.cupid.nuopc.ReverseEngineerException
 
 @Label(label="NUOPC Driver")
 @MappingType("module")
@@ -99,7 +100,7 @@ class NUOPCDriver extends NUOPCComponent {
 	
 	override prefix() {"driver"}
 
-	override NUOPCDriver reverse() {
+	override NUOPCDriver reverse() throws ReverseEngineerException {
 		super.reverse as NUOPCDriver
 	}
 

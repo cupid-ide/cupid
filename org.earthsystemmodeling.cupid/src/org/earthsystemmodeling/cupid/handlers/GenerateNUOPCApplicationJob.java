@@ -36,13 +36,13 @@ import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.ide.IDE;
 import org.eclipse.ui.progress.UIJob;
 
-public class GenerateCodeJob extends Job {
+public class GenerateNUOPCApplicationJob extends Job {
 
 	private Application app;
 	private IContainer container;
 	private boolean openEditor;
 	
-	public GenerateCodeJob(String name, Application app, IContainer container, boolean openEditor) {
+	public GenerateNUOPCApplicationJob(String name, Application app, IContainer container, boolean openEditor) {
 		super(name);
 		this.app = app;
 		this.container = container;
@@ -74,6 +74,7 @@ public class GenerateCodeJob extends Job {
 			changedFiles.add(file);
 		}
 		
+		
 		if (changedFiles.size() > 0) {
 			UIJob uijob = new UIJob("Confirm") {
 				@Override
@@ -99,11 +100,11 @@ public class GenerateCodeJob extends Job {
 			try {
 				uijob.join();
 			} catch (InterruptedException e) {
-				return null;
+				return Status.CANCEL_STATUS;
 			}			
 			
 			if (!uijob.getResult().isOK()) {
-				return null;
+				return Status.CANCEL_STATUS;
 			}
 		}
 					
@@ -115,12 +116,15 @@ public class GenerateCodeJob extends Job {
 				continue;  //for now, custom connectors now supported
 			}
 			
+			//file = container.getFile(new Path(comp.getName() + ".F90"));
+			//if (!file.exists()) {
 			try {
 				file = createEmptyFile(container, comp.getName() + ".F90", false);
 			} catch (CoreException e) {
 				CupidActivator.log("Error generating code", e);
 				return new Status(Status.ERROR, CupidActivator.PLUGIN_ID, "Error generating code", e);
 			}
+			//}
 			
 			if (file == null) continue;
 			
@@ -140,8 +144,10 @@ public class GenerateCodeJob extends Job {
 			//}
 			
 			//newComp.name = comp.getName();
-			newComp = newComp.forward();
-			new ApplyCodeConceptChanges(newComp).run(monitor);
+			newComp.forward();
+			newComp.applyChanges(monitor);
+			
+			//new ApplyCodeConceptChanges(newComp).run(monitor);
 			changedFiles.add(file);
 			
 		}

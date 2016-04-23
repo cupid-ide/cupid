@@ -7,7 +7,6 @@ import java.io.IOException;
 import org.apache.commons.io.IOUtils;
 import org.earthsystemmodeling.cupid.NUOPC.Application;
 import org.earthsystemmodeling.cupid.NUOPC.Driver;
-import org.earthsystemmodeling.cupid.NUOPC.Model;
 import org.earthsystemmodeling.cupid.NUOPC.NUOPCFactory;
 import org.earthsystemmodeling.cupid.test.TestHelpers;
 import org.eclipse.core.resources.IFile;

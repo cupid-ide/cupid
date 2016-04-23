@@ -418,7 +418,7 @@ public class NUOPCView extends ViewPart {
 				if (ndv != null) {
 					ISelection selection = viewer.getSelection();
 					Object obj = ((IStructuredSelection)selection).getFirstElement();
-					if (obj != null) {
+					if (obj != null && obj instanceof CodeConceptProxy) {
 						CodeConceptProxy ccp = (CodeConceptProxy) obj;
 						String doc = labelProvider.getNUOPCDoc(ccp);
 						if (doc != null) {
@@ -670,6 +670,7 @@ public class NUOPCView extends ViewPart {
         	
 			@Override
 			public void partActivated(IWorkbenchPartReference partRef) {
+				//CupidActivator.debug("partActivated");
 				if (partRef instanceof IEditorReference) {
 					IEditorReference eref = (IEditorReference) partRef;
 					IEditorPart editor = eref.getEditor(true);
@@ -686,26 +687,7 @@ public class NUOPCView extends ViewPart {
 						if (viewer.getInput() != editor) {							
 							viewer.setInput(editor);
 						}
-					}
-					
-					/*
-					IEditorInput ein;
-					try {
-						ein = eref.getEditorInput();
-						
-					} catch (PartInitException e) {
-						CupidActivator.log("Error listening to activated editor.", e);
-						return;
-					}
-					if (ein instanceof FileEditorInput) {
-						FileEditorInput fein = (FileEditorInput) ein;
-						IFile file = fein.getFile();
-						//if (viewer.getInput() != file) {
-							viewer.setInput(file);
-						//}
-						viewer.expandToLevel(3);
-					}
-					*/
+					}				
 				}
 			}
 
@@ -715,19 +697,31 @@ public class NUOPCView extends ViewPart {
 
 			@Override
 			public void partClosed(IWorkbenchPartReference partRef) {
-			}
-
-			@Override
-			public void partDeactivated(IWorkbenchPartReference partRef) {
-				/*
+				//CupidActivator.debug("partClosed");
 				if (partRef instanceof IEditorReference) {
 					IEditorReference eref = (IEditorReference) partRef;
 					IEditorPart editor = eref.getEditor(true);
 					if (editor != null && editor instanceof FortranEditor) {
 						editor.removePropertyListener(saveListener);
+						viewer.setInput(null);
+						
+						//see if another editor is now visible
+						try {
+				        	IEditorPart editorPart = PlatformUI.getWorkbench().getActiveWorkbenchWindow().getActivePage().getActiveEditor();
+				        	if (editorPart != null && editorPart instanceof FortranEditor) {
+				        		if (viewer.getInput() != editorPart) {							
+									viewer.setInput(editorPart);
+								}
+				        	}
+				        } catch (NullPointerException npe) {
+				        	CupidActivator.debug("Null editor", npe);
+				        }
 					}
 				}
-				*/
+			}
+
+			@Override
+			public void partDeactivated(IWorkbenchPartReference partRef) {
 			}
 
 			@Override
@@ -749,6 +743,20 @@ public class NUOPCView extends ViewPart {
         };
         
         service.addPartListener(partListener);
+        
+        //since we just opened, find active editor and populate
+        try {
+        	IEditorPart editorPart = PlatformUI.getWorkbench().getActiveWorkbenchWindow().getActivePage().getActiveEditor();
+        	if (editorPart != null && editorPart instanceof FortranEditor) {
+        		FortranEditor editor = (FortranEditor) editorPart;
+        		if (viewer.getInput() != editor) {							
+					viewer.setInput(editor);
+				}
+        	}
+        } catch (NullPointerException npe) {
+        	CupidActivator.debug("Null editor", npe);
+        }
+        
         
         
         //listen for resource changes to synchronize
@@ -811,109 +819,7 @@ public class NUOPCView extends ViewPart {
         	return null;
         }
     }
-	
-
-	/*
-	private void hookContextMenu() {
-		MenuManager menuMgr = new MenuManager("#PopupMenu");
-		menuMgr.setRemoveAllWhenShown(true);
-		menuMgr.addMenuListener(new IMenuListener() {
-			public void menuAboutToShow(IMenuManager manager) {
-				NUOPCView.this.fillContextMenu(manager);				
-			}
-		});
-		Menu menu = menuMgr.createContextMenu(viewer.getControl());
-		viewer.getControl().setMenu(menu);
-		getSite().registerContextMenu(menuMgr, viewer);
-	}
-	*/
-	
-	/*
-	private void contributeToActionBars() {
-		IActionBars bars = getViewSite().getActionBars();
-		fillLocalPullDown(bars.getMenuManager());
-		fillLocalToolBar(bars.getToolBarManager());
-	}
-
-	private void fillLocalPullDown(IMenuManager manager) {
-		manager.add(action1);
-		manager.add(new Separator());
-		manager.add(action2);
-	}
-
-	private void fillContextMenu(IMenuManager manager) {
-		manager.add(action1);
-		manager.add(action2);
-		//manager.add(new Separator());
-		//drillDownAdapter.addNavigationActions(manager);
-		// Other plug-ins can contribute there actions here
-		//manager.add(new Separator(IWorkbenchActionConstants.MB_ADDITIONS));
-	}
-	
-	private void fillLocalToolBar(IToolBarManager manager) {
-		manager.add(action1);
-		manager.add(action2);
-		manager.add(new Separator());
-		drillDownAdapter.addNavigationActions(manager);
-	}
-	*/
-	
-	/*
-	private void makeActions() {
-		action1 = new Action() {
-			public void run() {
-				showMessage("Action 1 executed");
-			}
-		};
-		action1.setText("Action 1");
-		action1.setToolTipText("Action 1 tooltip");
-		action1.setImageDescriptor(PlatformUI.getWorkbench().getSharedImages().
-			getImageDescriptor(ISharedImages.IMG_OBJS_INFO_TSK));
 		
-		action2 = new Action() {
-			public void run() {
-				showMessage("Action 2 executed");
-			}
-		};
-		action2.setText("Action 2");
-		action2.setToolTipText("Action 2 tooltip");
-		action2.setImageDescriptor(PlatformUI.getWorkbench().getSharedImages().
-				getImageDescriptor(ISharedImages.IMG_OBJS_INFO_TSK));
-		
-		
-		doubleClickAction = new Action() {
-			public void run() {
-				ISelection selection = viewer.getSelection();
-				Object obj = ((IStructuredSelection)selection).getFirstElement();
-				showMessage("Double-click detected on "+obj.toString());
-			}
-		};
-		
-	}
-	*/
-
-	/*
-	private void hookDoubleClickAction() {
-		viewer.addDoubleClickListener(new IDoubleClickListener() {
-			public void doubleClick(DoubleClickEvent event) {
-				doubleClickAction.run();
-			}
-		});
-	}
-	*/
-	
-	/*
-	private void showMessage(String message) {
-		MessageDialog.openInformation(
-			viewer.getControl().getShell(),
-			"NUOPC View",
-			message);
-	}
-	*/
-
-	/**
-	 * Passing the focus request to the viewer's control.
-	 */
 	public void setFocus() {
 		viewer.getControl().setFocus();
 	}

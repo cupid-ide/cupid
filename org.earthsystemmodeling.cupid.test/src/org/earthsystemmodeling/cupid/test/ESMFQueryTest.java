@@ -29,7 +29,7 @@ public class ESMFQueryTest {
 	
 	@BeforeClass
 	public static void setUp() throws CoreException, IOException, InterruptedException {
-		PROJECT_NUOPC_PROTOTYPES = TestHelpers.createProjectFromFolder("target/ESMF_7_0_0_beta_snapshot_59", "ESMF_7_0_0_beta_snapshot_59");
+		PROJECT_NUOPC_PROTOTYPES = TestHelpers.createFortranProjectFromFolder("target/ESMF_7_0_0_beta_snapshot_59", "ESMF_7_0_0_beta_snapshot_59");
 	}
 	
 	@AfterClass
@@ -39,7 +39,7 @@ public class ESMFQueryTest {
 	
 	@Test
 	public void ASTTest() throws CoreException {
-		IProject p = TestHelpers.createEmptyProject("ASTTest");
+		IProject p = TestHelpers.createEmptyFortranProject("ASTTest");
 		IFile f = p.getFile("blank.F90");
 		f.create(new ByteArrayInputStream(new byte[0]), true, new NullProgressMonitor());
 		

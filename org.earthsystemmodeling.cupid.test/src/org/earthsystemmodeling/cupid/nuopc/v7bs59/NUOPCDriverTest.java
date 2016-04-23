@@ -19,7 +19,6 @@ import org.eclipse.core.resources.IFile;
 import org.eclipse.core.resources.IProject;
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.NullProgressMonitor;
-import org.eclipse.ltk.core.refactoring.Change;
 import org.junit.AfterClass;
 import org.junit.BeforeClass;
 import org.junit.Test;
@@ -28,10 +27,11 @@ public class NUOPCDriverTest {
 	
 	private static IProject PROJECT_NUOPC_PROTOTYPES;
 	private static NullProgressMonitor NPM = new NullProgressMonitor();
+	private static NUOPCFrameworkManager manager = NUOPCFrameworkManager.getInstance();
 	
 	@BeforeClass
 	public static void setUp() throws CoreException, IOException, InterruptedException {
-		PROJECT_NUOPC_PROTOTYPES = TestHelpers.createProjectFromFolder("target/" + NUOPCTest.NUOPC_TAG, NUOPCTest.NUOPC_TAG);
+		PROJECT_NUOPC_PROTOTYPES = TestHelpers.createFortranProjectFromFolder("target/" + NUOPCTest.NUOPC_TAG, NUOPCTest.NUOPC_TAG);
 	}
 	
 	@AfterClass
@@ -41,19 +41,17 @@ public class NUOPCDriverTest {
 
 	@Test
 	public void GenerateNUOPCDriverFromScratch() throws CoreException, IOException, InterruptedException {
-		IProject p = TestHelpers.createEmptyProject(NUOPCTest.NUOPC_TAG + "_GenerateNUOPCDriverFromScratch");
+		IProject p = TestHelpers.createEmptyFortranProject(NUOPCTest.NUOPC_TAG + "_GenerateNUOPCDriverFromScratch");
 		IFile f = p.getFile("MyDriver1.F90");
 		f.create(new ByteArrayInputStream(new byte[0]), true, new NullProgressMonitor());
 		
 		NUOPCDriver driver = new NUOPCDriver(f);
 		driver.name = "MyDriver";
 		driver = driver.forward();
-		
-		Change chg = driver.generateChange();
-		chg.perform(NPM);
+		driver.applyChanges(NPM);
 		
 		//read in same driver just generated
-		driver = new NUOPCDriver(f).reverse();
+		driver = manager.acquireConcept(f);
 		
 		assertNotNull(driver);
 		assertEquals("MyDriver", driver.name);
@@ -72,10 +70,10 @@ public class NUOPCDriverTest {
 	@Test
 	public void NUOPCDriverAddRunSequence() throws IOException, CoreException, InterruptedException {
 		
-		IProject p = TestHelpers.createProjectFromFolder("target/" + NUOPCTest.NUOPC_TAG + "/AtmOcnProto", NUOPCTest.NUOPC_TAG + "_NUOPCDriverAddRunSequence");
+		IProject p = TestHelpers.createFortranProjectFromFolder("target/" + NUOPCTest.NUOPC_TAG + "/AtmOcnProto", NUOPCTest.NUOPC_TAG + "_NUOPCDriverAddRunSequence");
 		IFile f = p.getFile("esm.F90");
 		
-		NUOPCDriver driver = new NUOPCDriver(f).reverse();
+		NUOPCDriver driver = manager.acquireConcept(f);
 		assertNotNull(driver);
 		assertEquals("ESM", driver.name);
 		assertNotNull(driver.setServices);
@@ -87,10 +85,12 @@ public class NUOPCDriverTest {
 		SetRunSequence srs = new SetRunSequence(driver.initialization.initSpecs);
 		srs.subroutineName = sname;
 		srs = (SetRunSequence) srs.forward();
-		srs.generateChange().perform(NPM);
-				
+		//srs.generateChange().perform(NPM);
+		srs.applyChanges(NPM);	
+		
 		//re-reverse
-		driver = new NUOPCDriver(f).reverse();
+		driver = manager.acquireConcept(f);
+		
 		assertNotNull(driver);
 		assertEquals("ESM", driver.name);
 		assertNotNull(driver.setServices);
@@ -103,10 +103,10 @@ public class NUOPCDriverTest {
 		srsare.compLabel = "\"MyCompLabel\"";
 		srsare.slot = "1";
 		srsare = srsare.forward();
-		srsare.generateChange().perform(NPM);
+		srsare.applyChanges(NPM);
 		
 		//re-reverse
-		driver = new NUOPCDriver(f).reverse();
+		driver = manager.acquireConcept(f);
 		assertNotNull(driver);
 		assertEquals("ESM", driver.name);
 		assertNotNull(driver.setServices);
@@ -128,10 +128,10 @@ public class NUOPCDriverTest {
 	@Test
 	public void NUOPCDriverAddRunSequence2() throws IOException, CoreException, InterruptedException {
 		
-		IProject p = TestHelpers.createProjectFromFolder("target/" + NUOPCTest.NUOPC_TAG + "/AtmOcnProto", NUOPCTest.NUOPC_TAG  + "_NUOPCDriverAddRunSequence2");
+		IProject p = TestHelpers.createFortranProjectFromFolder("target/" + NUOPCTest.NUOPC_TAG + "/AtmOcnProto", NUOPCTest.NUOPC_TAG  + "_NUOPCDriverAddRunSequence2");
 		IFile f = p.getFile("esm.F90");
 		
-		NUOPCDriver driver = new NUOPCDriver(f).reverse();
+		NUOPCDriver driver = manager.acquireConcept(f);
 		assertNotNull(driver);
 		assertEquals("ESM", driver.name);
 		assertNotNull(driver.setServices);
@@ -152,10 +152,10 @@ public class NUOPCDriverTest {
 		srsare2.phaseLabel = "\"ThisIsThePhase\"";
 			
 		srs = (SetRunSequence) srs.forward();
-		srs.generateChange().perform(NPM);
+		srs.applyChanges(NPM);
 				
 		//re-reverse
-		driver = new NUOPCDriver(f).reverse();
+		driver = manager.acquireConcept(f);
 		assertNotNull(driver);
 		assertEquals("ESM", driver.name);
 		assertNotNull(driver.setServices);
@@ -194,10 +194,10 @@ public class NUOPCDriverTest {
 		
 		connElem.forward();
 		slotLinkElem.forward();
-		srs.generateChange().perform(NPM);
+		srs.applyChanges(NPM);
 		
 		//re-reverse
-		driver = new NUOPCDriver(f).reverse();
+		driver = manager.acquireConcept(f);
 		assertEquals(4, driver.initialization.initSpecs.setRunSequence.runElements.size());
 		
 		re = driver.initialization.initSpecs.setRunSequence.runElements.get(2);
@@ -220,7 +220,7 @@ public class NUOPCDriverTest {
 	@Test
 	public void NUOPCDriverAddSetModelServices() throws CoreException, IOException, InterruptedException {
 		
-		IProject p = TestHelpers.createEmptyProject(NUOPCTest.NUOPC_TAG + "_NUOPCDriverAddSetModelServices");
+		IProject p = TestHelpers.createEmptyFortranProject(NUOPCTest.NUOPC_TAG + "_NUOPCDriverAddSetModelServices");
 		IFile f = TestHelpers.createBlankFile(p, "NewDriver.F90"); 
 		
 		NUOPCDriver driver = new NUOPCDriver(f);
@@ -252,9 +252,9 @@ public class NUOPCDriverTest {
 		smsac3.compSetServices = "cplSS";
 				
 		sms.forward();
-		sms.generateChange().perform(NPM);
+		driver.applyChanges(NPM);
 		
-		driver = new NUOPCDriver(f).reverse();
+		driver = manager.acquireConcept(f);
 		
 		assertNotNull(driver);
 		assertEquals("NewDriver", driver.name);
@@ -295,10 +295,10 @@ public class NUOPCDriverTest {
 	@Test
 	public void NUOPCDriverAddModifyIPM() throws IOException, CoreException, InterruptedException {
 		
-		IProject p = TestHelpers.createProjectFromFolder("target/" + NUOPCTest.NUOPC_TAG + "/AtmOcnProto", NUOPCTest.NUOPC_TAG + "_NUOPCDriverAddModifyIPM");
+		IProject p = TestHelpers.createFortranProjectFromFolder("target/" + NUOPCTest.NUOPC_TAG + "/AtmOcnProto", NUOPCTest.NUOPC_TAG + "_NUOPCDriverAddModifyIPM");
 		IFile f = p.getFile("esm.F90");
 		
-		NUOPCDriver driver = new NUOPCDriver(f).reverse();
+		NUOPCDriver driver = manager.acquireConcept(f);
 		assertNotNull(driver);
 		assertNotNull(driver.initialization);
 		assertNotNull(driver.initialization.initSpecs);
@@ -307,9 +307,9 @@ public class NUOPCDriverTest {
 		ModifyInitializePhaseMap mipm = new ModifyInitializePhaseMap(driver.initialization.initSpecs);
 		mipm.subroutineName = "ModifyInitializePhaseMap";
 		mipm.forward();
-		mipm.generateChange().perform(NPM);
+		driver.applyChanges(NPM);
 		
-		driver = new NUOPCDriver(f).reverse();
+		driver = manager.acquireConcept(f);
 		assertNotNull(driver);
 		assertNotNull(driver.initialization);
 		assertNotNull(driver.initialization.initSpecs);
@@ -323,10 +323,10 @@ public class NUOPCDriverTest {
 	@Test
 	public void NUOPCDriverAddSetRunClock() throws IOException, CoreException, InterruptedException {
 		
-		IProject p = TestHelpers.createProjectFromFolder("target/" + NUOPCTest.NUOPC_TAG + "/AtmOcnProto", NUOPCTest.NUOPC_TAG + "_NUOPCDriverAddSetRunClock");
+		IProject p = TestHelpers.createFortranProjectFromFolder("target/" + NUOPCTest.NUOPC_TAG + "/AtmOcnProto", NUOPCTest.NUOPC_TAG + "_NUOPCDriverAddSetRunClock");
 		IFile f = p.getFile("esm.F90");
 		
-		NUOPCDriver driver = new NUOPCDriver(f).reverse();
+		NUOPCDriver driver = manager.acquireConcept(f);
 		assertNotNull(driver);
 		assertNotNull(driver.run);
 		assertNotNull(driver.run.runSpecs);
@@ -335,9 +335,9 @@ public class NUOPCDriverTest {
 		SetRunClock src = new SetRunClock(driver.run.runSpecs);
 		src.subroutineName = "SetRunClock";
 		src.forward();
-		src.generateChange().perform(NPM);
+		src.applyChanges(NPM);
 		
-		driver = new NUOPCDriver(f).reverse();
+		driver = manager.acquireConcept(f);
 		assertNotNull(driver);
 		assertNotNull(driver.run);
 		assertNotNull(driver.run.runSpecs);
@@ -354,8 +354,8 @@ public class NUOPCDriverTest {
 		IFile f;
 		f = PROJECT_NUOPC_PROTOTYPES.getFolder("AtmOcnProto").getFile("esm.F90");
 				
-		NUOPCDriver driver = new NUOPCDriver(f);
-		driver = driver.reverse();
+		NUOPCDriver driver = manager.acquireConcept(f);
+		
 		assertNotNull(driver);
 		assertEquals("ESM", driver.name);
 		assertNotNull(driver.setServices);
@@ -368,7 +368,8 @@ public class NUOPCDriverTest {
 		assertEquals(4, driver.initialization.initSpecs.setModelServices.addComps.size());
 		
 		f = PROJECT_NUOPC_PROTOTYPES.getFolder("AtmOcnMedPetListTimescalesProto").getFile("esm.F90");
-		driver = new NUOPCDriver(f).reverse();
+		driver = manager.acquireConcept(f);
+		
 		assertNotNull(driver);
 		assertEquals("ESM", driver.name);
 		assertNotNull(driver.setServices);

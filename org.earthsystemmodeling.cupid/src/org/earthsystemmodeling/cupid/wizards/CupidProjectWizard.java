@@ -61,6 +61,8 @@ import org.eclipse.jface.preference.IPreferenceStore;
 import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.jface.wizard.Wizard;
 import org.eclipse.photran.internal.core.FProjectNature;
+import org.eclipse.photran.internal.core.properties.SearchPathProperties;
+import org.eclipse.photran.internal.core.vpg.PhotranVPG;
 import org.eclipse.ptp.internal.rdt.sync.cdt.ui.wizards.NewRemoteSyncProjectWizardOperation;
 import org.eclipse.ptp.internal.rdt.sync.ui.SynchronizeParticipantRegistry;
 import org.eclipse.ptp.rdt.sync.core.SyncFlag;
@@ -314,6 +316,8 @@ public class CupidProjectWizard extends Wizard implements INewWizard, IExecutabl
 
 		CProjectNature.addCNature(project, new SubProgressMonitor(monitor, 1));
 		FProjectNature.addFNature(project, new SubProgressMonitor(monitor, 1));
+		new SearchPathProperties().setProperty(project, SearchPathProperties.ENABLE_VPG_PROPERTY_NAME, "true");
+		//PhotranVPG.getInstance().shouldProcessProject(project);
 		//NUOPCNature.addNUOPCNature(project, new SubProgressMonitor(monitor, 1));
 
 		// Persist the project description

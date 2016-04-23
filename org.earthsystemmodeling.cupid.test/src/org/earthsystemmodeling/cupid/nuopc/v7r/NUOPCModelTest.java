@@ -12,6 +12,7 @@ import org.earthsystemmodeling.cupid.NUOPC.Field;
 import org.earthsystemmodeling.cupid.NUOPC.Model;
 import org.earthsystemmodeling.cupid.NUOPC.NUOPCFactory;
 import org.earthsystemmodeling.cupid.NUOPC.UniformGrid;
+import org.earthsystemmodeling.cupid.nuopc.ReverseEngineerException;
 import org.earthsystemmodeling.cupid.nuopc.v7r.GridCodeConcept.CreateUniformGrid;
 import org.earthsystemmodeling.cupid.nuopc.v7r.NUOPCBaseModel.AdvertiseField;
 import org.earthsystemmodeling.cupid.nuopc.v7r.NUOPCBaseModel.RealizeField;
@@ -24,7 +25,7 @@ import org.eclipse.core.resources.IFile;
 import org.eclipse.core.resources.IProject;
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.NullProgressMonitor;
-import org.eclipse.ltk.core.refactoring.Change;
+import org.eclipse.photran.internal.core.vpg.PhotranVPG;
 import org.junit.AfterClass;
 import org.junit.BeforeClass;
 import org.junit.Test;
@@ -35,10 +36,14 @@ public class NUOPCModelTest {
 	private static NullProgressMonitor NPM = new NullProgressMonitor();
 	private static NUOPCFactory factory = NUOPCFactory.eINSTANCE;	
 	private static final boolean PRINT_ASTS = true;
+	private static NUOPCFrameworkManager manager = NUOPCFrameworkManager.getInstance();
 		
 	@BeforeClass
 	public static void setUp() throws CoreException, IOException, InterruptedException {
-		PROJECT_NUOPC_PROTOTYPES = TestHelpers.createProjectFromFolder("target/" + NUOPCTest.NUOPC_TAG, NUOPCTest.NUOPC_TAG);
+		//PhotranVPG.getInstance().printDatabaseOn(System.out);
+		PROJECT_NUOPC_PROTOTYPES = TestHelpers.createFortranProjectFromFolder("target/" + NUOPCTest.NUOPC_TAG, NUOPCTest.NUOPC_TAG);
+		//PhotranVPG.getInstance().ensureVPGIsUpToDate(NPM);
+		//PhotranVPG.getInstance().printDatabaseOn(System.out);
 	}
 	
 	@AfterClass
@@ -47,12 +52,12 @@ public class NUOPCModelTest {
 	}
 
 	@Test
-	public void NUOPCModelReverse() {
+	public void NUOPCModelReverse() throws ReverseEngineerException, CoreException {
 		
 		IFile f;
 		f = PROJECT_NUOPC_PROTOTYPES.getFolder("AtmOcnProto").getFile("atm.F90");
 				
-		NUOPCModel model = new NUOPCModel(f).reverse();
+		NUOPCModel model = manager.acquireConcept(f);
 		assertNotNull(model);
 		assertEquals("ATM", model.name);
 		assertNotNull(model.setServices);
@@ -98,8 +103,8 @@ public class NUOPCModelTest {
 		/////////////////
 		
 		f = PROJECT_NUOPC_PROTOTYPES.getFolder("AtmOcnRtmTwoTimescalesProto").getFile("ocn.F90");
-		
-		model = new NUOPCModel(f).reverse();
+				
+		model = manager.acquireConcept(f, true);
 		assertNotNull(model);
 		assertEquals("OCN", model.name);
 		assertNotNull(model.setServices);
@@ -135,7 +140,7 @@ public class NUOPCModelTest {
 		
 		f = PROJECT_NUOPC_PROTOTYPES.getFolder("AtmOcnImplicitProto").getFile("atm.F90");
 
-		model = new NUOPCModel(f).reverse();
+		model = manager.acquireConcept(f);
 		assertNotNull(model);
 		assertEquals("ATM", model.name);
 		assertNotNull(model.setServices);
@@ -165,7 +170,7 @@ public class NUOPCModelTest {
 				
 		f = PROJECT_NUOPC_PROTOTYPES.getFolder("AtmOcnTransferGridProto").getFile("atm.F90");
 		
-		model = new NUOPCModel(f).reverse();
+		model = manager.acquireConcept(f);
 		assertNotNull(model);
 		assertEquals("ATM", model.name);
 		assertNotNull(model.setServices);
@@ -187,13 +192,13 @@ public class NUOPCModelTest {
 	}
 	
 	@Test
-	public void GenerateNUOPCModelFromScratch() throws CoreException, IOException, InterruptedException {
-		IProject p = TestHelpers.createEmptyProject(NUOPCTest.NUOPC_TAG + "_GenerateNUOPCModelFromScratch");
+	public void GenerateNUOPCModelFromScratch() throws CoreException, IOException, InterruptedException, ReverseEngineerException {
+		IProject p = TestHelpers.createEmptyFortranProject(NUOPCTest.NUOPC_TAG + "_GenerateNUOPCModelFromScratch");
 		IFile f = TestHelpers.createBlankFile(p, "MyModel.F90"); 
 				
 		NUOPCModel model = new NUOPCModel(f);
 		model.name = "MyModel";
-		model = model.forward();
+		model.forward();
 		
 		assertNotNull(model.setServices);
 		assertEquals("SetServices", model.setServices.subroutineName);
@@ -209,11 +214,10 @@ public class NUOPCModelTest {
 		assertNotNull(model.initialization.initPhases.ipdv03);
 		assertNotNull(model.initialization.initPhases.ipdv04);
 		
-		Change chg = model.generateChange();
-		chg.perform(NPM);
+		model.applyChanges(NPM);
 		
 		//read in same driver just generated
-		model = new NUOPCModel(f).reverse();
+		model = manager.acquireConcept(f);
 		
 		assertNotNull(model);
 		assertEquals("MyModel", model.name);
@@ -250,10 +254,9 @@ public class NUOPCModelTest {
 		
 		ipdv04p0.forward();
 		ipdv04p1.forward();
-		chg = ipdv04p1.generateChange();
-		chg.perform(NPM);
+		model.applyChanges(NPM);
 		
-		model = new NUOPCModel(f).reverse();
+		model = manager.acquireConcept(f);
 		assertNotNull(model);
 		assertNotNull(model.initialization.initPhases.ipdv04.ipdv04p0);
 		assertEquals("FilterInitPhases", model.initialization.initPhases.ipdv04.ipdv04p0.subroutineName);
@@ -294,12 +297,13 @@ public class NUOPCModelTest {
 		rf.grid = "grid";
 		
 		model.initialization.createUniformGrid.get(0).forward();
-		ipdv04p3.forward(NPM);
+		ipdv04p3.forward();
+		model.applyChanges(NPM);
 		//chg = ipdv04p3.generateChange();
 		//chg.perform(NPM);
 		
 		
-		model = new NUOPCModel(f).reverse();
+		model = manager.acquireConcept(f);
 		assertNotNull(model);
 		assertEquals(2, model.initialization.initPhases.ipdv04.ipdv04p3.realizeFields.size());
 		assertEquals("myfield1", model.initialization.initPhases.ipdv04.ipdv04p3.realizeFields.get(0).field);
@@ -359,7 +363,8 @@ public class NUOPCModelTest {
 						
 		NUOPCModel modelCodeConcept = NUOPCModel.newModel(fModel, model);
 				
-		modelCodeConcept.forward(NPM);
+		modelCodeConcept.forward();
+		modelCodeConcept.applyChanges(NPM);
 		
 		if (PRINT_ASTS) {
 			TestHelpers.printAST(modelCodeConcept);

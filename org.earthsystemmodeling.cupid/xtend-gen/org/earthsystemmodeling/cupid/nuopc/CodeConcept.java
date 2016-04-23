@@ -2,6 +2,7 @@ package org.earthsystemmodeling.cupid.nuopc;
 
 import com.google.common.base.Objects;
 import com.google.common.collect.Iterables;
+import java.io.ByteArrayInputStream;
 import java.io.InputStream;
 import java.lang.reflect.Constructor;
 import java.lang.reflect.Field;
@@ -14,17 +15,22 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import org.apache.commons.io.IOUtils;
 import org.earthsystemmodeling.cupid.annotation.Child;
+import org.earthsystemmodeling.cupid.core.CupidActivator;
 import org.earthsystemmodeling.cupid.nuopc.ASTQuery;
 import org.earthsystemmodeling.cupid.nuopc.CodeGenerationException;
 import org.earthsystemmodeling.cupid.nuopc.ReverseEngineerException;
 import org.earthsystemmodeling.cupid.util.CodeExtraction;
+import org.eclipse.compare.internal.DocLineComparator;
+import org.eclipse.compare.rangedifferencer.RangeDifference;
+import org.eclipse.compare.rangedifferencer.RangeDifferencer;
 import org.eclipse.core.resources.IFile;
+import org.eclipse.core.resources.IMarker;
 import org.eclipse.core.resources.IResource;
-import org.eclipse.core.runtime.IPath;
+import org.eclipse.core.resources.WorkspaceJob;
 import org.eclipse.core.runtime.IProgressMonitor;
-import org.eclipse.core.runtime.NullProgressMonitor;
-import org.eclipse.ltk.core.refactoring.Change;
-import org.eclipse.ltk.core.refactoring.TextFileChange;
+import org.eclipse.core.runtime.IStatus;
+import org.eclipse.core.runtime.Status;
+import org.eclipse.jface.text.Document;
 import org.eclipse.photran.core.IFortranAST;
 import org.eclipse.photran.internal.core.lexer.Token;
 import org.eclipse.photran.internal.core.parser.ASTEntityDeclNode;
@@ -42,7 +48,7 @@ import org.eclipse.photran.internal.core.parser.IDeclarationConstruct;
 import org.eclipse.photran.internal.core.parser.ISpecificationPartConstruct;
 import org.eclipse.photran.internal.core.reindenter.Reindenter;
 import org.eclipse.photran.internal.core.vpg.PhotranVPG;
-import org.eclipse.text.edits.ReplaceEdit;
+import org.eclipse.photran.internal.core.vpg.eclipse.VPGSchedulingRule;
 import org.eclipse.xtend.lib.annotations.AccessorType;
 import org.eclipse.xtend.lib.annotations.Accessors;
 import org.eclipse.xtend2.lib.StringConcatenation;
@@ -51,10 +57,50 @@ import org.eclipse.xtext.xbase.lib.Conversions;
 import org.eclipse.xtext.xbase.lib.Exceptions;
 import org.eclipse.xtext.xbase.lib.Functions.Function1;
 import org.eclipse.xtext.xbase.lib.IterableExtensions;
+import org.eclipse.xtext.xbase.lib.Procedures.Procedure1;
 import org.eclipse.xtext.xbase.lib.Pure;
 
 @SuppressWarnings("all")
 public abstract class CodeConcept<P extends CodeConcept<?, ?>, A extends IASTNode> {
+  /**
+   * static class ReleaseASTJob extends Job {
+   * 
+   * val IFile file
+   * 
+   * new(IFile file) {
+   * super("Release Fortran AST")
+   * //setRule(MultiRule.combine(VPGSchedulingRule.getInstance(),
+   * //        ResourcesPlugin.getWorkspace().getRoot()))
+   * setRule(VPGSchedulingRule.getInstance())
+   * this.file = file
+   * }
+   * 
+   * override protected run(IProgressMonitor monitor) {
+   * PhotranVPG.instance.releaseAST(file)
+   * return Status.OK_STATUS
+   * }
+   * 
+   * }
+   */
+  public static class ForceReindexJob extends WorkspaceJob {
+    private final IFile file;
+    
+    public ForceReindexJob(final IFile file) {
+      super("Reindex Fortran AST");
+      VPGSchedulingRule _instance = VPGSchedulingRule.getInstance();
+      this.setRule(_instance);
+      this.file = file;
+    }
+    
+    @Override
+    public IStatus runInWorkspace(final IProgressMonitor monitor) {
+      final String filename = PhotranVPG.getFilenameForIFile(this.file);
+      PhotranVPG _instance = PhotranVPG.getInstance();
+      _instance.forceRecomputationOfEdgesAndAnnotations(filename);
+      return Status.OK_STATUS;
+    }
+  }
+  
   public static class MarkerLoc {
     public int start;
     
@@ -216,15 +262,14 @@ public abstract class CodeConcept<P extends CodeConcept<?, ?>, A extends IASTNod
   protected boolean validate(final List<CodeConcept<?, ?>> codeConcepts, final List<String> errors) {
     boolean _xblockexpression = false;
     {
-      boolean _equals = Objects.equal(codeConcepts, null);
-      if (_equals) {
-        System.out.println("null list");
-      }
-      for (final CodeConcept<?, ?> cc : codeConcepts) {
-        boolean _validate = cc.validate(errors);
-        boolean _not = (!_validate);
-        if (_not) {
-          return false;
+      boolean _notEquals = (!Objects.equal(codeConcepts, null));
+      if (_notEquals) {
+        for (final CodeConcept<?, ?> cc : codeConcepts) {
+          boolean _validate = cc.validate(errors);
+          boolean _not = (!_validate);
+          if (_not) {
+            return false;
+          }
         }
       }
       _xblockexpression = true;
@@ -349,6 +394,10 @@ public abstract class CodeConcept<P extends CodeConcept<?, ?>, A extends IASTNod
     return _xifexpression;
   }
   
+  public Object getASTOLD() {
+    return null;
+  }
+  
   public IFortranAST getAST() {
     IFortranAST _xifexpression = null;
     boolean _notEquals = (!Objects.equal(this._ast, null));
@@ -367,9 +416,7 @@ public abstract class CodeConcept<P extends CodeConcept<?, ?>, A extends IASTNod
         IFortranAST _xblockexpression = null;
         {
           PhotranVPG _instance = PhotranVPG.getInstance();
-          _instance.releaseAST(((IFile) this._context));
-          PhotranVPG _instance_1 = PhotranVPG.getInstance();
-          IFortranAST _acquireTransientAST = _instance_1.acquireTransientAST(((IFile) this._context));
+          IFortranAST _acquireTransientAST = _instance.acquireTransientAST(((IFile) this._context));
           this._ast = _acquireTransientAST;
           _xblockexpression = this._ast;
         }
@@ -382,13 +429,17 @@ public abstract class CodeConcept<P extends CodeConcept<?, ?>, A extends IASTNod
     return _xifexpression;
   }
   
-  public <T extends CodeConcept<?, ?>> T reverse() {
+  public <T extends CodeConcept<?, ?>> T reverse() throws ReverseEngineerException {
     return ((T) this);
   }
   
   public List<CodeConcept<P, A>> reverseMultiple() {
-    CodeConcept<P, A> _reverse = this.<CodeConcept<P, A>>reverse();
-    return CollectionLiterals.<CodeConcept<P, A>>newArrayList(_reverse);
+    try {
+      CodeConcept<P, A> _reverse = this.<CodeConcept<P, A>>reverse();
+      return CollectionLiterals.<CodeConcept<P, A>>newArrayList(_reverse);
+    } catch (Throwable _e) {
+      throw Exceptions.sneakyThrow(_e);
+    }
   }
   
   public <T extends CodeConcept<?, ?>> T forward() throws CodeGenerationException {
@@ -463,59 +514,135 @@ public abstract class CodeConcept<P extends CodeConcept<?, ?>, A extends IASTNod
     }
   }
   
-  public Change generateChange() {
+  /**
+   * def Change generateChange() {
+   * 
+   * if (_context == null) {
+   * return _parent.generateChange
+   * }
+   * else if (_context instanceof IFile) {
+   * 
+   * Reindenter.reindent(getAST.root, getAST, Strategy.REINDENT_EACH_LINE);
+   * 
+   * val fileContentsBefore = IOUtils.toString(_context.getContents(false))
+   * val fileContentsAfter = replaceParameters(getAST.root.toString)
+   * val charsInFile = fileContentsBefore.length
+   * 
+   * //PhotranVPG.instance.commitChangesFromInMemoryASTs(
+   * //			new NullProgressMonitor(), 0, _context as IFile)
+   * 
+   * //_ast = null  //force recompute of ast
+   * //PhotranVPG.instance.releaseAST(_context as IFile)
+   * 
+   * val astJob = new ReleaseASTJob(_context as IFile)
+   * astJob.schedule
+   * astJob.join
+   * 
+   * if (!fileContentsAfter.equals(fileContentsBefore)) {
+   * val textFileChange = new TextFileChange("Cupid code generation: " + _context.getFullPath().toOSString(), _context)
+   * textFileChange.setEdit(new ReplaceEdit(0, charsInFile, fileContentsAfter));
+   * return textFileChange
+   * }
+   * }
+   * 
+   * }
+   */
+  public void applyChanges(final IProgressMonitor monitor) {
     try {
+      boolean _or = false;
       boolean _equals = Objects.equal(this._context, null);
       if (_equals) {
-        return this._parent.generateChange();
+        _or = true;
       } else {
-        if ((this._context instanceof IFile)) {
-          IFortranAST _aST = this.getAST();
-          ASTExecutableProgramNode _root = _aST.getRoot();
-          IFortranAST _aST_1 = this.getAST();
-          Reindenter.reindent(_root, _aST_1, Reindenter.Strategy.REINDENT_EACH_LINE);
-          InputStream _contents = ((IFile)this._context).getContents(false);
-          final String fileContentsBefore = IOUtils.toString(_contents);
-          IFortranAST _aST_2 = this.getAST();
-          ASTExecutableProgramNode _root_1 = _aST_2.getRoot();
-          String _string = _root_1.toString();
-          final String fileContentsAfter = this.replaceParameters(_string);
-          final int charsInFile = fileContentsBefore.length();
-          PhotranVPG _instance = PhotranVPG.getInstance();
-          NullProgressMonitor _nullProgressMonitor = new NullProgressMonitor();
-          _instance.commitChangesFromInMemoryASTs(_nullProgressMonitor, 0, ((IFile) this._context));
-          this._ast = null;
-          PhotranVPG _instance_1 = PhotranVPG.getInstance();
-          _instance_1.releaseAST(((IFile) this._context));
-          boolean _equals_1 = fileContentsAfter.equals(fileContentsBefore);
-          boolean _not = (!_equals_1);
-          if (_not) {
-            IPath _fullPath = ((IFile)this._context).getFullPath();
-            String _oSString = _fullPath.toOSString();
-            String _plus = ("Cupid code generation: " + _oSString);
-            final TextFileChange textFileChange = new TextFileChange(_plus, ((IFile)this._context));
-            ReplaceEdit _replaceEdit = new ReplaceEdit(0, charsInFile, fileContentsAfter);
-            textFileChange.setEdit(_replaceEdit);
-            return textFileChange;
+        _or = (!(this._context instanceof IFile));
+      }
+      if (_or) {
+        return;
+      }
+      final IFile file = ((IFile) this._context);
+      final IFortranAST ast = this.getAST();
+      ASTExecutableProgramNode _root = ast.getRoot();
+      Reindenter.reindent(_root, ast, Reindenter.Strategy.REINDENT_EACH_LINE);
+      InputStream _contents = file.getContents(false);
+      final String fileContentsBefore = IOUtils.toString(_contents);
+      ASTExecutableProgramNode _root_1 = ast.getRoot();
+      String _string = _root_1.toString();
+      final String fileContentsAfter = this.replaceParameters(_string);
+      byte[] _bytes = fileContentsAfter.getBytes();
+      ByteArrayInputStream _byteArrayInputStream = new ByteArrayInputStream(_bytes);
+      file.setContents(_byteArrayInputStream, true, true, monitor);
+      final CodeConcept.ForceReindexJob reindexJob = new CodeConcept.ForceReindexJob(file);
+      reindexJob.schedule();
+      final boolean completed = reindexJob.join(2000, monitor);
+      if ((!completed)) {
+        CupidActivator.debug("Reindex job failed to join in 2 seconds.");
+      }
+      Document _document = new Document(fileContentsBefore);
+      final DocLineComparator left = new DocLineComparator(_document, null, true);
+      Document _document_1 = new Document(fileContentsAfter);
+      final DocLineComparator right = new DocLineComparator(_document_1, null, true);
+      final RangeDifference[] diffs = RangeDifferencer.findDifferences(left, right);
+      file.deleteMarkers("org.earthsystemmodeling.cupid.cupidmarker", false, IResource.DEPTH_ZERO);
+      file.deleteMarkers("org.earthsystemmodeling.cupid.cupidparam", false, IResource.DEPTH_ZERO);
+      final Procedure1<RangeDifference> _function = new Procedure1<RangeDifference>() {
+        @Override
+        public void apply(final RangeDifference rd) {
+          try {
+            int _rightStart = rd.rightStart();
+            final int start = right.getTokenStart(_rightStart);
+            int _rightEnd = rd.rightEnd();
+            int _tokenStart = right.getTokenStart(_rightEnd);
+            int _rightEnd_1 = rd.rightEnd();
+            int _tokenLength = right.getTokenLength(_rightEnd_1);
+            final int end = (_tokenStart + _tokenLength);
+            if (((end - start) > 2)) {
+              final IMarker marker = file.createMarker("org.earthsystemmodeling.cupid.cupidmarker");
+              marker.setAttribute(IMarker.CHAR_START, start);
+              marker.setAttribute(IMarker.CHAR_END, end);
+              marker.setAttribute(IMarker.MESSAGE, "Cupid generated code");
+              int _rightStart_1 = rd.rightStart();
+              String _plus = ("Lines " + Integer.valueOf(_rightStart_1));
+              String _plus_1 = (_plus + " to ");
+              int _rightEnd_2 = rd.rightEnd();
+              String _plus_2 = (_plus_1 + Integer.valueOf(_rightEnd_2));
+              marker.setAttribute(IMarker.LOCATION, _plus_2);
+            }
+          } catch (Throwable _e) {
+            throw Exceptions.sneakyThrow(_e);
           }
         }
-      }
-      return null;
+      };
+      IterableExtensions.<RangeDifference>forEach(((Iterable<RangeDifference>)Conversions.doWrapArray(diffs)), _function);
+      final Procedure1<CodeConcept.MarkerLoc> _function_1 = new Procedure1<CodeConcept.MarkerLoc>() {
+        @Override
+        public void apply(final CodeConcept.MarkerLoc ml) {
+          try {
+            final IMarker marker = file.createMarker("org.earthsystemmodeling.cupid.cupidparam");
+            marker.setAttribute(IMarker.CHAR_START, ml.start);
+            marker.setAttribute(IMarker.CHAR_END, ml.end);
+            marker.setAttribute(IMarker.MESSAGE, "Generated parameter");
+          } catch (Throwable _e) {
+            throw Exceptions.sneakyThrow(_e);
+          }
+        }
+      };
+      IterableExtensions.<CodeConcept.MarkerLoc>forEach(this.paramMarkers, _function_1);
     } catch (Throwable _e) {
       throw Exceptions.sneakyThrow(_e);
     }
   }
   
-  public void forward(final IProgressMonitor pm) {
-    try {
-      this.<CodeConcept<?, ?>>forward();
-      Change _generateChange = this.generateChange();
-      _generateChange.perform(pm);
-    } catch (Throwable _e) {
-      throw Exceptions.sneakyThrow(_e);
-    }
-  }
-  
+  /**
+   * def void forward(IProgressMonitor pm) {
+   * forward
+   * generateChange.perform(pm)
+   * 
+   * //val f = (generateChange as TextFileChange).file
+   * //val fn = PhotranVPG.getFilenameForIFile(f)
+   * //PhotranVPG.instance.forceRecomputationOfEdgesAndAnnotations(fn)
+   * 
+   * }
+   */
   private static String PARAM_REGEX = "CUPIDPARAM\\$(CHAR|INT)\\$([^\\$]*)\\$";
   
   private static Pattern PARAM_PATTERN = Pattern.compile(CodeConcept.PARAM_REGEX);

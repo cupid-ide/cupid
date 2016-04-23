@@ -81,7 +81,10 @@ class ESMFQuery {
 	
 	def static resolveOrDie(Token toResolve) {
 		var defs = toResolve.resolveBinding
-		if (defs == null || defs.size() == 0) throw new ReverseEngineerException("Cannot resolve binding for token: " + toResolve.text)
+		if (defs == null || defs.size() == 0) {
+			//val tokenRefs = toResolve.manuallyResolveBinding
+			throw new ReverseEngineerException("Cannot resolve binding for token: " + toResolve.text)
+		}
 		else if (defs.size() > 1) throw new ReverseEngineerException("Ambiguous definition binding for token: " + toResolve.text)
 		else defs.get(0)
 	}	

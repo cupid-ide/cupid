@@ -55,9 +55,15 @@ public class NUOPCMakefileTest {
 		NUOPCModel ocnCodeConcept = NUOPCModel.newModel(fModelOcn, ocn);
 		NUOPCDriver esmCodeConcept = NUOPCDriver.newDriver(fDriverEsm, esm);
 		
-		atmCodeConcept.forward(NPM);
-		ocnCodeConcept.forward(NPM);
-		esmCodeConcept.forward(NPM);
+		atmCodeConcept.forward();
+		atmCodeConcept.applyChanges(NPM);
+		
+		ocnCodeConcept.forward();
+		ocnCodeConcept.applyChanges(NPM);
+		
+		esmCodeConcept.forward();
+		esmCodeConcept.applyChanges(NPM);
+		
 		
 		MakefileGenerator.generateAndWrite(app, fMakefile);
 		String contents = IOUtils.toString(fMakefile.getContents());

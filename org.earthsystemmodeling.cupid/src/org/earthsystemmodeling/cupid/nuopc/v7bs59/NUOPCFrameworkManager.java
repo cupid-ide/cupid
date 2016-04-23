@@ -1,4 +1,4 @@
-package org.earthsystemmodeling.cupid.nuopc.v7r;
+package org.earthsystemmodeling.cupid.nuopc.v7bs59;
 
 import java.util.List;
 
@@ -7,13 +7,10 @@ import org.earthsystemmodeling.cupid.nuopc.CodeConcept;
 import org.earthsystemmodeling.cupid.nuopc.NUOPCFrameworkDB;
 import org.earthsystemmodeling.cupid.nuopc.ReverseEngineerException;
 import org.eclipse.core.resources.IFile;
-import org.eclipse.core.resources.ResourcesPlugin;
-import org.eclipse.core.resources.WorkspaceJob;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.Status;
 import org.eclipse.core.runtime.jobs.Job;
-import org.eclipse.core.runtime.jobs.MultiRule;
 import org.eclipse.photran.internal.core.vpg.PhotranVPG;
 import org.eclipse.photran.internal.core.vpg.eclipse.VPGSchedulingRule;
 
@@ -39,14 +36,6 @@ public class NUOPCFrameworkManager {
 	public <C extends CodeConcept<?,?>> C acquireConcept(IFile file) {
 		ensureDBIsUpToDate();
 		return (C) db.retrieve(file);
-	}
-	
-	public <C extends CodeConcept<?,?>> C acquireConcept(IFile file, boolean throwException) throws ReverseEngineerException {
-		C concept = acquireConcept(file);
-		if (concept == null) {
-			throw new ReverseEngineerException("Expected concept not present");
-		}
-		return concept;
 	}
 	
 	/*
@@ -101,12 +90,7 @@ public class NUOPCFrameworkManager {
 					if (f != null) {  //TODO: why null?					
 						if (db.isOutOfDate(f)) {
 							NUOPCDriver driver;
-							try {
-								driver = new NUOPCDriver(f).reverse();
-							} catch (ReverseEngineerException e) {
-								CupidActivator.debug("", e);
-								continue;
-							}
+							driver = new NUOPCDriver(f).reverse();
 							if (driver != null) {
 								db.store(f, driver);
 								db.markToKeep(f);
@@ -123,12 +107,7 @@ public class NUOPCFrameworkManager {
 					if (f != null) {  //TODO: why null?
 						if (db.isOutOfDate(f)) {
 							NUOPCModel model;
-							try {
-								model = new NUOPCModel(f).reverse();
-							} catch (ReverseEngineerException e) {
-								CupidActivator.debug("", e);
-								continue;
-							}
+							model = new NUOPCModel(f).reverse();
 							if (model != null) {
 								db.store(f, model);
 								db.markToKeep(f);
@@ -145,12 +124,7 @@ public class NUOPCFrameworkManager {
 					if (f != null) {  //TODO: why null?
 						if (db.isOutOfDate(f)) {
 							NUOPCMediator mediator;
-							try {
-								mediator = new NUOPCMediator(f).reverse();
-							} catch (ReverseEngineerException e) {
-								CupidActivator.debug("", e);
-								continue;
-							}
+							mediator = new NUOPCMediator(f).reverse();
 							if (mediator != null) {
 								db.store(f, mediator);
 								db.markToKeep(f);

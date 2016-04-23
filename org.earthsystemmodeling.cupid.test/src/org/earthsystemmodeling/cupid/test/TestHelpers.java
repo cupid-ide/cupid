@@ -21,6 +21,7 @@ import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.NullProgressMonitor;
 import org.eclipse.core.runtime.Path;
 import org.eclipse.photran.internal.core.FProjectNature;
+import org.eclipse.photran.internal.core.properties.SearchPathProperties;
 import org.osgi.framework.Bundle;
 import org.osgi.framework.FrameworkUtil;
 
@@ -38,7 +39,7 @@ public class TestHelpers {
 	 * @throws CoreException 
 	 * @throws InterruptedException 
 	 */
-	public static synchronized IProject createProjectFromFolder(String relativePath, String projectName) throws IOException, CoreException  {			
+	private static synchronized IProject createProjectFromFolder(String relativePath, String projectName) throws IOException, CoreException  {			
 		URL sourceFolder = FileLocator.toFileURL(FileLocator.find(MY_BUNDLE, new Path(relativePath), null));	
 		File srcDir = new File(sourceFolder.getFile());
 				
@@ -74,10 +75,11 @@ public class TestHelpers {
 	public static synchronized IProject createFortranProjectFromFolder(String relativePath, String projectName) throws IOException, CoreException {
 		IProject p = createProjectFromFolder(relativePath, projectName);
 		FProjectNature.addFNature(p, NPM);
+		new SearchPathProperties().setProperty(p, SearchPathProperties.ENABLE_VPG_PROPERTY_NAME, "true");
 		return p;
 	}
 	
-	public static IProject createEmptyProject(String projectName) throws CoreException {
+	private static IProject createEmptyProject(String projectName) throws CoreException {
 		IWorkspaceRoot root = ResourcesPlugin.getWorkspace().getRoot();
 		IProject p = root.getProject(projectName);
 		if (p.exists()) {
@@ -92,6 +94,7 @@ public class TestHelpers {
 	public static IProject createEmptyFortranProject(String projectName) throws CoreException {
 		IProject p = createEmptyProject(projectName);
 		FProjectNature.addFNature(p, NPM);
+		new SearchPathProperties().setProperty(p, SearchPathProperties.ENABLE_VPG_PROPERTY_NAME, "true");
 		return p;
 	}
 	

@@ -2,11 +2,12 @@ package org.earthsystemmodeling.cupid.handlers;
 
 import java.util.regex.Pattern;
 
-import org.earthsystemmodeling.cupid.NUOPC.Application;
 import org.earthsystemmodeling.cupid.NUOPC.Component;
 import org.earthsystemmodeling.cupid.NUOPC.Driver;
-import org.earthsystemmodeling.cupid.NUOPC.NUOPCFactory;
+import org.earthsystemmodeling.cupid.NUOPC.Field;
 import org.earthsystemmodeling.cupid.NUOPC.Model;
+import org.earthsystemmodeling.cupid.NUOPC.NUOPCFactory;
+import org.earthsystemmodeling.cupid.NUOPC.UniformGrid;
 import org.eclipse.core.commands.AbstractHandler;
 import org.eclipse.core.commands.ExecutionEvent;
 import org.eclipse.core.commands.ExecutionException;
@@ -33,7 +34,7 @@ public class GenerateNUOPCComponent extends AbstractHandler {
 			final IContainer container = (IContainer) item;
 			
 			final NUOPCFactory factory = NUOPCFactory.eINSTANCE;
-			final Application app = factory.createApplication();
+			//final Application app = factory.createApplication();
 			Component comp = null;
 			
 			String prompt = null;
@@ -41,28 +42,41 @@ public class GenerateNUOPCComponent extends AbstractHandler {
 			
 			String compType = event.getParameter("org.earthsystemmodeling.cupid.generateNUOPCComp.componentType");
 			if (compType.equals("driver")) {
-				
 				Driver driver = factory.createDriver();
 				comp = driver;
 				prompt = "Please enter a name for the NUOPC Driver component.";
 				initVal = "Driver";
-				
-				//testing add some children
-				Model m;
-				m = factory.createModel();
-				m.setName("FirstModel");
-				driver.getChildren().add(m);
-				m = factory.createModel();
-				m.setName("SecondModel");
-				driver.getChildren().add(m);
-				m = factory.createModel();
-				m.setName("ThirdModel");
-				driver.getChildren().add(m);
-				
-				
 			}
 			else if (compType.equals("model")) {
-				comp = factory.createModel();
+				Model model = factory.createModel();
+				comp = model;
+				
+				UniformGrid grid = factory.createUniformGrid();
+				grid.setName("ModelGrid");
+				grid.getMinIndex().add(1);
+				grid.getMinIndex().add(1);
+				grid.getMaxIndex().add(100);
+				grid.getMaxIndex().add(100);
+				grid.getMinCornerCoord().add(1.0);
+				grid.getMinCornerCoord().add(1.0);
+				grid.getMaxCornerCoord().add(100.0);
+				grid.getMaxCornerCoord().add(100.0);
+				
+				model.getGrids().add(grid);
+				
+				Field iField = factory.createField();
+				iField.setName("ImportField");
+				iField.setStandardName("ImportField");
+				iField.setGrid(grid);
+				
+				Field eField = factory.createField();
+				eField.setName("ExportField");
+				eField.setStandardName("ExportField");
+				eField.setGrid(grid);
+				
+				model.getImportFields().add(iField);
+				model.getExportFields().add(eField);
+				
 				prompt = "Please enter a name for the NUOPC Model component.";
 				initVal = "Model";
 			}
@@ -81,9 +95,9 @@ public class GenerateNUOPCComponent extends AbstractHandler {
 			}
 			
 			comp.setName(nameFromUser);
-			app.getChildren().add(comp);
+			//app.getChildren().add(comp);
 					
-			Job generateCodeJob = new GenerateCodeJob("Generate NUOPC Code", app, container, true);
+			Job generateCodeJob = new GenerateNUOPCComponentJob("Generate NUOPC Component", comp, container, true);
 			generateCodeJob.schedule();
 			
 		}

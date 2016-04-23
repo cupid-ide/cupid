@@ -11,6 +11,7 @@ import org.earthsystemmodeling.cupid.nuopc.ASTQuery;
 import org.earthsystemmodeling.cupid.nuopc.BasicCodeConcept;
 import org.earthsystemmodeling.cupid.nuopc.CodeConcept;
 import org.earthsystemmodeling.cupid.nuopc.CodeGenerationException;
+import org.earthsystemmodeling.cupid.nuopc.ReverseEngineerException;
 import org.earthsystemmodeling.cupid.util.CodeExtraction;
 import org.eclipse.core.resources.IResource;
 import org.eclipse.photran.core.IFortranAST;
@@ -173,11 +174,14 @@ public abstract class NUOPCComponent extends CodeConcept<CodeConcept<?, ?>, ASTM
   }
   
   @Override
-  public CodeConcept<?, ?> reverse() {
+  public CodeConcept<?, ?> reverse() throws ReverseEngineerException {
     NUOPCComponent _xblockexpression = null;
     {
       IFortranAST ast = this.getAST();
-      ASTExecutableProgramNode _root = ast.getRoot();
+      ASTExecutableProgramNode _root = null;
+      if (ast!=null) {
+        _root=ast.getRoot();
+      }
       IASTListNode<IProgramUnit> _programUnitList = null;
       if (_root!=null) {
         _programUnitList=_root.getProgramUnitList();
@@ -280,8 +284,13 @@ public abstract class NUOPCComponent extends CodeConcept<CodeConcept<?, ?>, ASTM
         if (_equals) {
           throw new CodeGenerationException("No component name specified");
         }
-        boolean _equals_1 = Objects.equal(this._astRef, null);
+        final IFortranAST ast = this.getAST();
+        boolean _equals_1 = Objects.equal(ast, null);
         if (_equals_1) {
+          throw new CodeGenerationException("Error generating new component");
+        }
+        boolean _equals_2 = Objects.equal(this._astRef, null);
+        if (_equals_2) {
           StringConcatenation _builder = new StringConcatenation();
           _builder.append("module ");
           _builder.append(this.name, "");
@@ -323,8 +332,7 @@ public abstract class NUOPCComponent extends CodeConcept<CodeConcept<?, ?>, ASTM
           this.setASTRef(moduleNode);
           ASTListNode<IProgramUnit> pul = new ASTListNode<IProgramUnit>();
           pul.add(moduleNode);
-          IFortranAST _aST = this.getAST();
-          ASTExecutableProgramNode _root = _aST.getRoot();
+          ASTExecutableProgramNode _root = ast.getRoot();
           _root.setProgramUnitList(pul);
           IASTListNode<IModuleBodyConstruct> _moduleBody = moduleNode.getModuleBody();
           Iterable<ASTUseStmtNode> _filter = Iterables.<ASTUseStmtNode>filter(_moduleBody, ASTUseStmtNode.class);
