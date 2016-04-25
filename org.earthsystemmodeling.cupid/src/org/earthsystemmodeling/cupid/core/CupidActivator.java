@@ -207,9 +207,10 @@ public class CupidActivator extends AbstractUIPlugin {
         	
         };
         
-        IPartService service = PlatformUI.getWorkbench().getActiveWorkbenchWindow().getPartService();
-        service.addPartListener(editorListener);
-		
+        if (PlatformUI.isWorkbenchRunning()) {
+        	IPartService service = PlatformUI.getWorkbench().getActiveWorkbenchWindow().getPartService();
+        	service.addPartListener(editorListener);
+        }
 		
 	}
 
