@@ -1385,6 +1385,8 @@ public class NUOPCDriver extends NUOPCComponent {
     
     public SetModelServices_AddComp(final NUOPCDriver.SetModelServices parent) {
       super(parent);
+      this.compLabel = "MODEL";
+      this.compSetServices = "MODEL_SetServices";
       parent.addComps.add(this);
     }
     

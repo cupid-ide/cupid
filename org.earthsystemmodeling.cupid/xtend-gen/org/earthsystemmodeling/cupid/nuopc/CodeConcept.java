@@ -557,6 +557,7 @@ public abstract class CodeConcept<P extends CodeConcept<?, ?>, A extends IASTNod
         _or = (!(this._context instanceof IFile));
       }
       if (_or) {
+        this._parent.applyChanges(monitor);
         return;
       }
       final IFile file = ((IFile) this._context);

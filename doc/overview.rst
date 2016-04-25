@@ -12,6 +12,14 @@ in the code with potential errors before the code is compiled.  To accomplish th
 relies heavily on Fortran static analysis capabilities provided by `Photran <http://www.eclipse.org/photran/>`_, 
 the Eclipse plugin that provides Fortran language tooling.
 
+.. note:: 
+   
+   The name *Cupid* is not an acronym.  It originates from a Ph.D. project aimed
+   at generating couplers for Earth System Models.  Cupid, in classical mythology,
+   is the god of desire and attraction.  Since this software is designed to build
+   couplers for linking models, the name Cupid seemed appropriate.
+   
+
 Cupid is intended for model developers who have prior experience with model development, 
 but are new to developing with NUOPC and have a need to work with existing NUOPC-compliant software
 or write code to make a Fortran-based model code NUOPC compliant.  Specifically, Cupid can

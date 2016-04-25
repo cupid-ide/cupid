@@ -16,6 +16,11 @@ import org.eclipse.core.resources.IMarker;
 import org.eclipse.core.resources.IResourceChangeListener;
 import org.eclipse.core.resources.ResourcesPlugin;
 import org.eclipse.core.runtime.CoreException;
+import org.eclipse.core.runtime.IProgressMonitor;
+import org.eclipse.core.runtime.IStatus;
+import org.eclipse.core.runtime.NullProgressMonitor;
+import org.eclipse.core.runtime.Status;
+import org.eclipse.core.runtime.jobs.Job;
 import org.eclipse.jface.action.Action;
 import org.eclipse.jface.action.IAction;
 import org.eclipse.jface.action.IMenuListener;
@@ -23,6 +28,7 @@ import org.eclipse.jface.action.IMenuManager;
 import org.eclipse.jface.action.MenuManager;
 import org.eclipse.jface.dialogs.MessageDialog;
 import org.eclipse.jface.layout.TreeColumnLayout;
+import org.eclipse.jface.operation.IRunnableWithProgress;
 import org.eclipse.jface.viewers.ColumnViewer;
 import org.eclipse.jface.viewers.ColumnViewerToolTipSupport;
 import org.eclipse.jface.viewers.ColumnWeightData;
@@ -63,6 +69,7 @@ import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.ide.IDE;
 import org.eclipse.ui.part.DrillDownAdapter;
 import org.eclipse.ui.part.ViewPart;
+import org.eclipse.ui.progress.UIJob;
 
 @SuppressWarnings("restriction")
 public class NUOPCView extends ViewPart {
@@ -567,6 +574,7 @@ public class NUOPCView extends ViewPart {
             							return;
             						}
             						
+            						
             						try {
 										newcc = newcc.forward();
 									} catch (CodeGenerationException cge) {
@@ -577,12 +585,27 @@ public class NUOPCView extends ViewPart {
             							return;
 									}
             						
-            						ApplyCodeConceptChanges applyRunnable = new ApplyCodeConceptChanges(newcc);
+            						final CodeConcept<?,?> cc = newcc;
+            						
+            						IRunnableWithProgress applyRunnable = new IRunnableWithProgress() {
+
+										@Override
+										public void run(IProgressMonitor monitor)
+												throws InvocationTargetException, InterruptedException {
+											cc.applyChanges(monitor);
+										}
+            							
+            						};
+            						
+            						
+            						//ApplyCodeConceptChanges applyRunnable = new ApplyCodeConceptChanges(newcc);
+    								
     								try {
 										PlatformUI.getWorkbench().getProgressService().run(true, false, applyRunnable);
 									} catch (InvocationTargetException | InterruptedException e) {
 										CupidActivator.log("Exception executing code generation", e);
 									}
+    								
     								
     								viewer.refresh(ccp);
         							viewer.expandToLevel(ccp, 1);
@@ -744,18 +767,26 @@ public class NUOPCView extends ViewPart {
         
         service.addPartListener(partListener);
         
-        //since we just opened, find active editor and populate
-        try {
-        	IEditorPart editorPart = PlatformUI.getWorkbench().getActiveWorkbenchWindow().getActivePage().getActiveEditor();
-        	if (editorPart != null && editorPart instanceof FortranEditor) {
-        		FortranEditor editor = (FortranEditor) editorPart;
-        		if (viewer.getInput() != editor) {							
-					viewer.setInput(editor);
-				}
-        	}
-        } catch (NullPointerException npe) {
-        	CupidActivator.debug("Null editor", npe);
-        }
+        
+        UIJob initJob = new UIJob("Initialize NUOPC view") {
+			@Override
+			public IStatus runInUIThread(IProgressMonitor monitor) {
+			    //since we just opened, find active editor and populate
+		        try {
+		        	IEditorPart editorPart = PlatformUI.getWorkbench().getActiveWorkbenchWindow().getActivePage().getActiveEditor();
+		        	if (editorPart != null && editorPart instanceof FortranEditor) {
+		        		FortranEditor editor = (FortranEditor) editorPart;
+						viewer.setInput(editor);
+		        	}
+		        } catch (NullPointerException npe) {
+		        	CupidActivator.debug("Null editor", npe);
+		        }
+		        return Status.OK_STATUS;
+			}    	
+        };
+        initJob.schedule(500);
+        
+       
         
         
         

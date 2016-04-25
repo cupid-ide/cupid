@@ -1024,6 +1024,9 @@ if (ESMF_LogFoundError(rcToCheck=«paramRC», msg=ESMF_LOGERR_PASSTHRU, &
 			
 		new(SetModelServices parent) {
 			super(parent)
+			//defaults
+			compLabel = "MODEL"  
+			compSetServices = "MODEL_SetServices"
 			parent.addComps.add(this)
 		}
 		

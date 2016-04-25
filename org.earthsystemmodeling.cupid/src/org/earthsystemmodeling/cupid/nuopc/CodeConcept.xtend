@@ -369,8 +369,10 @@ public abstract class CodeConcept<P extends CodeConcept<?,?>, A extends IASTNode
 	
 	def void applyChanges(IProgressMonitor monitor) {
 		
-		if (_context == null || !(_context instanceof IFile)) 
+		if (_context == null || !(_context instanceof IFile)) {
+			_parent.applyChanges(monitor)
 			return
+		}
 		
 		val file = _context as IFile
 		val ast = getAST
