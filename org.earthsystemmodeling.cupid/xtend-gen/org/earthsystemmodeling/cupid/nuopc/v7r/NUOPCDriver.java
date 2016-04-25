@@ -1403,6 +1403,7 @@ public class NUOPCDriver extends NUOPCComponent {
       this.dstCompLabel = dstCompLabel;
       this.moduleName = moduleName;
       this.compSetServices = (moduleName + "_SetServices");
+      this.compLabel = null;
     }
     
     @Override

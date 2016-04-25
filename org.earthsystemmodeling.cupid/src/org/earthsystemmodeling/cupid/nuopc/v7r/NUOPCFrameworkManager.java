@@ -171,16 +171,16 @@ public class NUOPCFrameworkManager {
 		
 		updateJob.setRule(VPGSchedulingRule.getInstance());
 		updateJob.schedule();
-		boolean completed = false;
+		//boolean completed = false;
 		try {
-			completed = updateJob.join(2000, null);
+			updateJob.join();
 		} catch (InterruptedException e) {
 			CupidActivator.debug("", e);
 		}
 		
-		if (!completed) {
-			CupidActivator.debug("Failed to update Fortran database.");
-		}
+		//if (!completed) {
+		//	CupidActivator.debug("Failed to update Fortran database.");
+		//}
 		
 		
 	}

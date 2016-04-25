@@ -399,10 +399,10 @@ public class NUOPCDriverTest {
 		smsac2.compLabel = "\"SecondComp\"";
 		smsac2.compSetServices = "SecondCompSS";
 		
-		SetModelServices_AddComp smsac3 = new SetModelServices_AddComp(sms);
-		smsac3.srcCompLabel = "\"FirstComp\"";
-		smsac3.dstCompLabel = "\"SecondComp\"";
-		smsac3.compSetServices = "cplSS";
+		SetModelServices_AddComp smsac3 = new SetModelServices_AddComp(sms, "\"FirstComp\"", "\"SecondComp\"", "NUOPC_Connector");
+		//smsac3.srcCompLabel = "\"FirstComp\"";
+		//smsac3.dstCompLabel = "\"SecondComp\"";
+		//smsac3.compSetServices = "cplSS";
 				
 		sms.forward();
 		driver.applyChanges(NPM);
@@ -436,7 +436,7 @@ public class NUOPCDriverTest {
 		ac = driver.initialization.initSpecs.setModelServices.addComps.get(2);
 		assertEquals("\"FirstComp\"", ac.srcCompLabel);
 		assertEquals("\"SecondComp\"", ac.dstCompLabel);
-		assertEquals("cplSS", ac.compSetServices);
+		assertEquals("NUOPC_Connector_SetServices", ac.compSetServices);
 		
 		///compile check
 		//compile fails b/c of SetServices routines
