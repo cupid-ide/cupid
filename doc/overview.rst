@@ -19,7 +19,7 @@ the Eclipse plugin that provides Fortran language tooling.
    The name *Cupid* is not an acronym.  It originates from a Ph.D. project aimed
    at generating couplers for Earth System Models.  Cupid, in classical mythology,
    is the god of desire and attraction.  Since this software is designed to build
-   couplers for linking models, the name Cupid seemed appropriate.
+   couplers for "bringing models together," the name Cupid seemed appropriate.
    
 
 Cupid is intended for model developers who have prior experience with model development, 
@@ -34,13 +34,13 @@ for improving development productivity.
 
 The key features of Cupid include:
 
-  * A **reverse engineering function** that reads existing NUOPC cap code and presents relevant initialize,
+  * A **reverse engineering engine** that reads existing NUOPC cap code and presents relevant initialize,
     run, finalize phases and specialization points in an outline view.  The outline is synchronized
     automatically as the code changes.  The tool indicates code-level compliance issues that may
     result in runtime errors.  (The compliance checking is limited to code errors than can be
     determined by static analysis.)
   
-  * A **code generation function** that outputs NUOPC-compliant code fragments (i.e., initialization phases
+  * A **code generation engine** that outputs NUOPC-compliant code fragments (i.e., initialization phases
     and specialization points). The generated code can often be used as is, although further customization 
     of the generated code is suported. The generated code is inserted into the user's existing code at the 
     appropriate places, keeping the existing code structure intact.  The code generation feature helps the 

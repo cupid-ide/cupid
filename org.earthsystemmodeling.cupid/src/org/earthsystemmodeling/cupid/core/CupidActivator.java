@@ -128,8 +128,6 @@ public class CupidActivator extends AbstractUIPlugin {
         	
         	@Override
 			public void partActivated(IWorkbenchPartReference partRef) {
-				
-        		
 			}
 
 			@Override

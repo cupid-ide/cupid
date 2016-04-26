@@ -860,7 +860,56 @@ public abstract class CodeConcept<P extends CodeConcept<?, ?>, A extends IASTNod
     }
   }
   
-  public static void ensureImport(final ASTModuleNode amn, final String moduleName, final String entityName, final String localName) {
+  public static ASTUseStmtNode ensureImport(final ASTUseStmtNode usn, final String entityName, final String localName) {
+    boolean _or = false;
+    Set<ASTRenameNode> _findAll = usn.<ASTRenameNode>findAll(ASTRenameNode.class);
+    boolean _exists = false;
+    if (_findAll!=null) {
+      final Function1<ASTRenameNode, Boolean> _function = new Function1<ASTRenameNode, Boolean>() {
+        @Override
+        public Boolean apply(final ASTRenameNode rn) {
+          boolean _and = false;
+          Token _name = rn.getName();
+          boolean _eic = ASTQuery.eic(_name, entityName);
+          if (!_eic) {
+            _and = false;
+          } else {
+            Token _newName = rn.getNewName();
+            boolean _eic_1 = ASTQuery.eic(_newName, localName);
+            _and = _eic_1;
+          }
+          return Boolean.valueOf(_and);
+        }
+      };
+      _exists=IterableExtensions.<ASTRenameNode>exists(_findAll, _function);
+    }
+    if (_exists) {
+      _or = true;
+    } else {
+      Set<ASTRenameNode> _findAll_1 = usn.<ASTRenameNode>findAll(ASTRenameNode.class);
+      boolean _isNullOrEmpty = IterableExtensions.isNullOrEmpty(_findAll_1);
+      _or = _isNullOrEmpty;
+    }
+    final boolean exists = _or;
+    if ((!exists)) {
+      String _string = usn.toString();
+      String _trim = _string.trim();
+      String _plus = (_trim + ", &\n");
+      StringConcatenation _builder = new StringConcatenation();
+      _builder.append(localName, "");
+      _builder.append(" => ");
+      _builder.append(entityName, "");
+      final String code = (_plus + _builder);
+      IBodyConstruct _parseLiteralStatement = CodeExtraction.parseLiteralStatement(code);
+      final ASTUseStmtNode newNode = ((ASTUseStmtNode) _parseLiteralStatement);
+      usn.replaceWith(newNode);
+      return newNode;
+    } else {
+      return usn;
+    }
+  }
+  
+  public static ASTUseStmtNode ensureImport(final ASTModuleNode amn, final String moduleName, final String entityName, final String localName) {
     try {
       IASTListNode<? extends IASTNode> _body = amn.getBody();
       Iterable<? extends IASTNode> _children = _body.getChildren();
@@ -868,49 +917,15 @@ public abstract class CodeConcept<P extends CodeConcept<?, ?>, A extends IASTNod
       final Function1<ASTUseStmtNode, Boolean> _function = new Function1<ASTUseStmtNode, Boolean>() {
         @Override
         public Boolean apply(final ASTUseStmtNode usn) {
-          boolean _and = false;
           Token _name = usn.getName();
-          boolean _eic = ASTQuery.eic(_name, moduleName);
-          if (!_eic) {
-            _and = false;
-          } else {
-            boolean _or = false;
-            Set<ASTRenameNode> _findAll = usn.<ASTRenameNode>findAll(ASTRenameNode.class);
-            boolean _exists = false;
-            if (_findAll!=null) {
-              final Function1<ASTRenameNode, Boolean> _function = new Function1<ASTRenameNode, Boolean>() {
-                @Override
-                public Boolean apply(final ASTRenameNode rn) {
-                  boolean _and = false;
-                  Token _name = rn.getName();
-                  boolean _eic = ASTQuery.eic(_name, entityName);
-                  if (!_eic) {
-                    _and = false;
-                  } else {
-                    Token _newName = rn.getNewName();
-                    boolean _eic_1 = ASTQuery.eic(_newName, localName);
-                    _and = _eic_1;
-                  }
-                  return Boolean.valueOf(_and);
-                }
-              };
-              _exists=IterableExtensions.<ASTRenameNode>exists(_findAll, _function);
-            }
-            if (_exists) {
-              _or = true;
-            } else {
-              Set<ASTRenameNode> _findAll_1 = usn.<ASTRenameNode>findAll(ASTRenameNode.class);
-              boolean _isNullOrEmpty = IterableExtensions.isNullOrEmpty(_findAll_1);
-              _or = _isNullOrEmpty;
-            }
-            _and = _or;
-          }
-          return Boolean.valueOf(_and);
+          return Boolean.valueOf(ASTQuery.eic(_name, moduleName));
         }
       };
       ASTUseStmtNode usn = IterableExtensions.<ASTUseStmtNode>findFirst(_filter, _function);
-      boolean _equals = Objects.equal(usn, null);
-      if (_equals) {
+      boolean _notEquals = (!Objects.equal(usn, null));
+      if (_notEquals) {
+        return CodeConcept.ensureImport(usn, entityName, localName);
+      } else {
         StringConcatenation _builder = new StringConcatenation();
         _builder.append("use ");
         _builder.append(moduleName, "");
@@ -923,21 +938,22 @@ public abstract class CodeConcept<P extends CodeConcept<?, ?>, A extends IASTNod
         usn = ((ASTUseStmtNode) _parseLiteralStatement);
         IASTListNode<? extends IASTNode> _body_1 = amn.getBody();
         final ASTUseStmtNode last = _body_1.<ASTUseStmtNode>findLast(ASTUseStmtNode.class);
-        boolean _notEquals = (!Objects.equal(last, null));
-        if (_notEquals) {
+        boolean _notEquals_1 = (!Objects.equal(last, null));
+        if (_notEquals_1) {
           IASTListNode<? extends IASTNode> _body_2 = amn.getBody();
           ((IASTListNode<IBodyConstruct>) _body_2).insertAfter(last, usn);
         } else {
           IASTListNode<? extends IASTNode> _body_3 = amn.getBody();
           final ISpecificationPartConstruct lastSpec = _body_3.<ISpecificationPartConstruct>findLast(ISpecificationPartConstruct.class);
-          boolean _notEquals_1 = (!Objects.equal(lastSpec, null));
-          if (_notEquals_1) {
+          boolean _notEquals_2 = (!Objects.equal(lastSpec, null));
+          if (_notEquals_2) {
             IASTListNode<? extends IASTNode> _body_4 = amn.getBody();
             ((IASTListNode<IBodyConstruct>) _body_4).insertAfter(lastSpec, usn);
           } else {
             throw new CodeGenerationException("Unable to insert use statement");
           }
         }
+        return usn;
       }
     } catch (Throwable _e) {
       throw Exceptions.sneakyThrow(_e);

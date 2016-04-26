@@ -12,6 +12,7 @@ import org.earthsystemmodeling.cupid.nuopc.ASTQuery;
 import org.earthsystemmodeling.cupid.nuopc.BasicCodeConcept;
 import org.earthsystemmodeling.cupid.nuopc.CodeConcept;
 import org.earthsystemmodeling.cupid.nuopc.CodeGenerationException;
+import org.earthsystemmodeling.cupid.nuopc.ESMFCodeTemplates;
 import org.earthsystemmodeling.cupid.nuopc.ESMFQuery;
 import org.earthsystemmodeling.cupid.nuopc.v7r.NUOPCComponent;
 import org.earthsystemmodeling.cupid.nuopc.v7r.SetServicesCodeConcept;
@@ -289,83 +290,43 @@ public abstract class SpecializationMethodCodeConcept<P extends CodeConcept<?, ?
         this.setASTRef(ssn);
         NUOPCComponent.GenericImport _genericUse = this.genericUse();
         ASTUseStmtNode _aSTRef = _genericUse.getASTRef();
-        ASTUseStmtNode usesNUOPCDriver = ((ASTUseStmtNode) _aSTRef);
-        String _string = usesNUOPCDriver.toString();
-        String tempCode = _string.trim();
-        String _tempCode = tempCode;
-        StringConcatenation _builder = new StringConcatenation();
-        _builder.append(", &");
-        _builder.newLine();
-        _builder.append("\t\t");
-        {
-          boolean _equals_1 = this.specLabel.equals(this.labelName);
-          boolean _not = (!_equals_1);
-          if (_not) {
-            _builder.append(this.specLabel, "\t\t");
-            _builder.append(" => ");
-          }
-        }
-        _builder.append(this.labelName, "\t\t");
-        tempCode = (_tempCode + _builder);
-        IBodyConstruct _parseLiteralStatement = CodeExtraction.parseLiteralStatement(tempCode);
-        ASTUseStmtNode tempNode = ((ASTUseStmtNode) _parseLiteralStatement);
-        try {
-          usesNUOPCDriver.replaceWith(tempNode);
-        } catch (final Throwable _t) {
-          if (_t instanceof IllegalStateException) {
-            final IllegalStateException e = (IllegalStateException)_t;
-            e.printStackTrace();
-          } else {
-            throw Exceptions.sneakyThrow(_t);
-          }
-        }
+        ASTUseStmtNode usn = CodeConcept.ensureImport(_aSTRef, this.labelName, this.specLabel);
         NUOPCComponent.GenericImport _genericUse_1 = this.genericUse();
-        _genericUse_1.setASTRef(tempNode);
+        _genericUse_1.setASTRef(usn);
         SetServicesCodeConcept<?> _setServices_1 = this.setServices();
         ASTSubroutineSubprogramNode setServicesNode = _setServices_1.getASTRef();
         boolean _notEquals = (!Objects.equal(setServicesNode, null));
         if (_notEquals) {
-          StringConcatenation _builder_1 = new StringConcatenation();
-          _builder_1.newLine();
-          _builder_1.append("call NUOPC_CompSpecialize(");
+          StringConcatenation _builder = new StringConcatenation();
+          _builder.newLine();
+          _builder.append("call NUOPC_CompSpecialize(");
           SetServicesCodeConcept<?> _setServices_2 = this.setServices();
-          _builder_1.append(_setServices_2.paramGridComp, "");
-          _builder_1.append(", specLabel=");
-          _builder_1.append(this.specLabel, "");
-          _builder_1.append(", &");
-          _builder_1.newLineIfNotEmpty();
-          _builder_1.append("\t");
-          _builder_1.append("specRoutine=");
-          _builder_1.append(this.subroutineName, "\t");
-          _builder_1.append(", rc=");
+          _builder.append(_setServices_2.paramGridComp, "");
+          _builder.append(", specLabel=");
+          _builder.append(this.specLabel, "");
+          _builder.append(", &");
+          _builder.newLineIfNotEmpty();
+          _builder.append("\t");
+          _builder.append("specRoutine=");
+          _builder.append(this.subroutineName, "\t");
+          _builder.append(", rc=");
           SetServicesCodeConcept<?> _setServices_3 = this.setServices();
-          _builder_1.append(_setServices_3.paramRC, "\t");
-          _builder_1.append(")");
-          _builder_1.newLineIfNotEmpty();
-          code = _builder_1.toString();
-          IBodyConstruct _parseLiteralStatement_1 = CodeExtraction.parseLiteralStatement(code);
-          ASTCallStmtNode regCall = ((ASTCallStmtNode) _parseLiteralStatement_1);
+          _builder.append(_setServices_3.paramRC, "\t");
+          _builder.append(")");
+          _builder.newLineIfNotEmpty();
+          code = _builder.toString();
+          IBodyConstruct _parseLiteralStatement = CodeExtraction.parseLiteralStatement(code);
+          ASTCallStmtNode regCall = ((ASTCallStmtNode) _parseLiteralStatement);
           IASTListNode<IBodyConstruct> _body = setServicesNode.getBody();
           _body.add(regCall);
           BasicCodeConcept<ASTCallStmtNode> _basicCodeConcept = new BasicCodeConcept<ASTCallStmtNode>(this, regCall);
           this.registration = _basicCodeConcept;
-          StringConcatenation _builder_2 = new StringConcatenation();
-          _builder_2.append("if (ESMF_LogFoundError(rcToCheck=");
-          _builder_2.append(this.paramRC, "");
-          _builder_2.append(", msg=ESMF_LOGERR_PASSTHRU, &");
-          _builder_2.newLineIfNotEmpty();
-          _builder_2.append("            ");
-          _builder_2.append("line=__LINE__, &");
-          _builder_2.newLine();
-          _builder_2.append("            ");
-          _builder_2.append("file=__FILE__)) &");
-          _builder_2.newLine();
-          _builder_2.append("            ");
-          _builder_2.append("return  ! bail out");
-          _builder_2.newLine();
-          code = _builder_2.toString();
-          IBodyConstruct _parseLiteralStatement_2 = CodeExtraction.parseLiteralStatement(code);
-          ASTIfStmtNode ifNode = ((ASTIfStmtNode) _parseLiteralStatement_2);
+          StringConcatenation _builder_1 = new StringConcatenation();
+          CharSequence _ESMFErrorCheck = ESMFCodeTemplates.ESMFErrorCheck(this.paramRC);
+          _builder_1.append(_ESMFErrorCheck, "");
+          code = _builder_1.toString();
+          IBodyConstruct _parseLiteralStatement_1 = CodeExtraction.parseLiteralStatement(code);
+          ASTIfStmtNode ifNode = ((ASTIfStmtNode) _parseLiteralStatement_1);
           IASTListNode<IBodyConstruct> _body_1 = setServicesNode.getBody();
           _body_1.add(ifNode);
         }

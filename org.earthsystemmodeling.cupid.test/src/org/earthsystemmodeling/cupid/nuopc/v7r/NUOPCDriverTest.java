@@ -389,6 +389,7 @@ public class NUOPCDriverTest {
 		assertNotNull(driver.initialization.initSpecs);
 		
 		SetModelServices sms = new SetModelServices(driver.initialization.initSpecs);
+		assertNotNull(driver.initialization.initSpecs.setModelServices);
 		sms.subroutineName = "NewDriverSetModelServices";
 		
 		SetModelServices_AddComp smsac = new SetModelServices_AddComp(sms);

@@ -546,41 +546,63 @@ public abstract class CodeConcept<P extends CodeConcept<?,?>, A extends IASTNode
 		}
 	}
 	
-	def static ensureImport(ASTModuleNode amn, String moduleName, String entityName, String localName) {
+	def static ASTUseStmtNode ensureImport(ASTUseStmtNode usn, String entityName, String localName) {
+		
+		val exists = 
+			usn.findAll(ASTRenameNode)?.exists[rn|
+				rn.name.eic(entityName) &&
+				rn.newName.eic(localName)
+			] 
+			||
+			usn.findAll(ASTRenameNode).nullOrEmpty
 			
-			var ASTUseStmtNode usn = amn.body.children.filter(ASTUseStmtNode).findFirst[usn|
-				usn.name.eic(moduleName) &&
-				(
-				usn.findAll(ASTRenameNode)?.exists[rn|
-					rn.name.eic(entityName) &&
-					rn.newName.eic(localName)
-				] ||
-				usn.findAll(ASTRenameNode).nullOrEmpty
-				) 
-			]
+		if (!exists) {
+			//need to add entity to list of imports
+			val code = usn.toString.trim + ", &\n" + '''«localName» => «entityName»'''
+			val newNode = parseLiteralStatement(code) as ASTUseStmtNode
+			usn.replaceWith(newNode)
+			return newNode
+		}
+		else {
+			return usn
+		}
+		
+	}
+	
+	def static ASTUseStmtNode ensureImport(ASTModuleNode amn, String moduleName, String entityName, String localName) {
+		
+		//var String code	= null
+		var ASTUseStmtNode usn = amn.body.children.filter(ASTUseStmtNode).findFirst[usn|
+			usn.name.eic(moduleName)]
 			
-			if (usn == null) {
-				
-				val code = '''use «moduleName», only: «localName» => «entityName»'''
-				usn = parseLiteralStatement(code) as ASTUseStmtNode
-				
-				val last = amn.body.findLast(ASTUseStmtNode)
-				if (last != null) {
-					(amn.body as IASTListNode<IBodyConstruct>).insertAfter(last, usn)
+		if (usn != null) {
+			return ensureImport(usn, entityName, localName)
+		}
+		else {
+			val code = '''use «moduleName», only: «localName» => «entityName»'''
+			usn = parseLiteralStatement(code) as ASTUseStmtNode
+			
+			val last = amn.body.findLast(ASTUseStmtNode)
+			if (last != null) {
+				(amn.body as IASTListNode<IBodyConstruct>).insertAfter(last, usn)
+			}
+			else {
+				val lastSpec = amn.body.findLast(ISpecificationPartConstruct)
+				if (lastSpec != null) {
+					(amn.body as IASTListNode<IBodyConstruct>).insertAfter(lastSpec, usn)
 				}
 				else {
-					val lastSpec = amn.body.findLast(ISpecificationPartConstruct)
-					if (lastSpec != null) {
-						(amn.body as IASTListNode<IBodyConstruct>).insertAfter(lastSpec, usn)
-					}
-					else {
-						throw new CodeGenerationException("Unable to insert use statement")
-					}
+					throw new CodeGenerationException("Unable to insert use statement")
 				}
-				
 			}
-			
+			return usn
 		}
+				
+		
+		
+	}
+		
+	
 		
 	
 }

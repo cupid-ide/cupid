@@ -20,6 +20,7 @@ import static org.earthsystemmodeling.cupid.util.CodeExtraction.parseLiteralStat
 
 import static extension org.earthsystemmodeling.cupid.nuopc.ASTQuery.*
 import static extension org.earthsystemmodeling.cupid.nuopc.ESMFQuery.*
+import org.earthsystemmodeling.cupid.nuopc.ESMFCodeTemplates
 
 public abstract class SpecializationMethodCodeConcept<P extends CodeConcept<?,?>> extends CodeConcept<P, ASTSubroutineSubprogramNode> {
 
@@ -152,6 +153,8 @@ end subroutine
 		setASTRef(ssn)
 
 		//add label import
+		var usn = ensureImport(genericUse.ASTRef, labelName, specLabel)
+		/*
 		var usesNUOPCDriver = genericUse.getASTRef as ASTUseStmtNode
 		var tempCode = usesNUOPCDriver.toString.trim
 		tempCode += ''', &
@@ -162,9 +165,12 @@ end subroutine
 			usesNUOPCDriver.replaceWith(tempNode)
 		}
 		catch(IllegalStateException e) {
-			e.printStackTrace
+			throw new CodeGenerationException("Error generating use statement", e)
 		}
-		genericUse.setASTRef(tempNode)
+		* 
+		*/
+		
+		genericUse.setASTRef(usn)
 
 		//add call in setservices
 		var ASTSubroutineSubprogramNode setServicesNode = setServices().getASTRef
@@ -181,13 +187,8 @@ call NUOPC_CompSpecialize(«setServices().paramGridComp», specLabel=«specLabel
 			setServicesNode.body.add(regCall)
 			this.registration = new BasicCodeConcept<ASTCallStmtNode>(this, regCall)
 		
-			code = 
-'''
-if (ESMF_LogFoundError(rcToCheck=«paramRC», msg=ESMF_LOGERR_PASSTHRU, &
-            line=__LINE__, &
-            file=__FILE__)) &
-            return  ! bail out
-'''
+			code = '''«ESMFCodeTemplates.ESMFErrorCheck(paramRC)»'''
+			
 			var ASTIfStmtNode ifNode = parseLiteralStatement(code) as ASTIfStmtNode
 			setServicesNode.body.add(ifNode)
 		
