@@ -15,7 +15,7 @@ of installed software.
 Import NUOPC Code
 -----------------
 
-
+.. _reverse-engineer:
 
 Reverse Engineer a NUOPC Cap
 ----------------------------
@@ -185,9 +185,7 @@ to use Cupid to generate skeleton code for missing elements.
    with a fair amount of boilerplate code, so we expect that most codes
    will be correctly reverse engineered.   
    
- 
- 
- 
+  
 
 
 .. _generate-code:
@@ -195,8 +193,117 @@ to use Cupid to generate skeleton code for missing elements.
 Generate NUOPC-compliant Code
 -----------------------------
 
+Cupid's code generation facilities make it easier to write the code for
+a NUOPC cap.  A *NUOPC cap* acts as a kind of translation layer between your
+model code and the coupling infrastructure.  A NUOPC cap is implemented as 
+a Fortran module containing a set of subroutines.  Cupid is capable of generating
+NUOPC Model caps, NUOPC Drivers, and NUOPC Mediators.  The code generator
+can create new Fortran modules for each of these components in new files, or
+the code generator can insert snippits of code into an existing file after
+it has been reverse engineered.
+
+There are several options for generating code:
+
+  * If there is an existing NUOPC component cap, it should be reverse
+    engineered first as described in :ref:`reverse-engineer`.  Then, using
+    context menus in the NUOPC View, new code can be generated and inserted
+    in-place.  This is the right procedure to use, for example, if you
+    need to add an additional specialization point subroutine to an existing
+    cap.
+    
+  * If there is no existing NUOPC code, a template can be generated for
+    NUOPC Model caps, NUOPC Drivers, and NUOPC Mediators.  This is the best
+    option if you have an existing model and need to create a cap so that
+    it can be used in NUOPC-based coupled systems.
+    
+  * An entire skeleton NUOPC coupled application can be
+    generated, including a main program and Makefile.  This is covered in the
+    :ref:`generate-complete-skeleton` section.
+    
+The sections below describe the first two generation options above.
+
+.. seealso::
+   
+   This user guide is not a comprehensive guide to what comprises a NUOPC
+   cap.  For a gentle introduction to NUOPC and what is required in a 
+   NUOPC cap, please see the `Building a NUOPC Model`_ document.
+
+Generate Code In-Place in an Existing NUOPC component
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+If you need to modify code in an existing NUOPC component (Model cap, Driver, or 
+Mediator), you should first open up the file so that the reverse engineered
+outline is shown in the NUOPC View.  In the following scenario, let's assume
+you have an existing NUOPC Model cap for a atmospheric model, but it is 
+missing the required Advance specialization point.  This is the subroutine
+that should call into your model's run phase to take a time step. In the
+NUOPC View, right-click (CTRL-click on Mac) on the *parent* element of the
+element you would like to generate.  The context menu will show you all code
+generation options currently available.
+
+.. figure:: images/gen_code_contextmenu.png
+   
+   Right-clicking on an element shows a context menu with the available
+   options for code generation.
+   
+In the context menu, select the element to generate, in this case 
+**Generate Advance**.  The requested element will be added to the
+outline and the corresponding code generated in the editor.  Often, the
+addition of one element results in inserting several code fragments.
+In the case of the Advance element, a new subroutine is added, a new
+import is added to the ``NUOPC_Model`` use statement, and a call to
+``NUOPC_CompSpecialize`` is added in the ``SetServices`` subroutine.
+After the code generator runs, yellow markers are added to the vertical bar
+to the right of the code editor to indicate where new code was added.
+Clicking on one of the markers highlights the generated code.
+
+.. figure:: images/gen_code_vertical.png
+   
+   Yellow markers in the vertical bar next to the code editor indicate
+   which code was generated during the *last* code generation action.
+   
+The generated code will compile as is, although it almost always 
+requires additional customization to complete the implementation.
+In the case of the Advance subroutine just generated, additional code
+is needed to call into the underlying model's time step routine.
+This clearly cannot be generated automatically because it is model-dependent.
+Therefore a typical workflow will start with a code generation action
+as just described, followed by filling in any model-specific implementation.
+This will continue until all required initialization phases are complete
+and all specialization points have been implemented. 
 
 
+Generate a NUOPC Model cap, NUOPC Driver, or NUOPC Mediator from Scratch
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Templates for NUOPC Model caps, NUOPC Drivers, NUOPC Mediators can
+be generated from scratch.  This option is available from the context
+menu in the Project Explorer.  Right-click (CTRL-click on Mac) on a folder
+in a Fortran project and select **New** from the context menu and you will
+see the three options as shown below.
+
+.. figure:: images/new_component_menu.png
+   
+   The Project Explorer context menu with options for generating a NUOPC Model
+   cap, a NUOPC Driver, or a NUOPC Mediator.
+
+You will be prompted to enter the name of the component.  Click OK and
+a new Fortran file named <COMPONENT>.F90 will appear in the folder (where <COMPONENT>
+is the name you provided).  The file will also automatically open in the
+editor and you will see the outline in the NUOPC View.  At this point the
+template can be customized by manually adding code and/or generating code
+fragments from the NUOPC View outline as described above.
+
+.. figure:: images/gen_code_template.png
+   
+   A NUOPC Model cap template.
+
+To compile the code, you will need to modify your model's existing build
+system to include the new .F90 file.  
+
+
+
+.. _generate-complete-skeleton:
 
 Generate Skeleton Code for a Complete NUOPC Coupled Application
 ---------------------------------------------------------------
@@ -305,4 +412,5 @@ context menu.
 
 
 .. _NUOPC Reference Manual: http://www.earthsystemmodeling.org/esmf_releases/non_public/ESMF_7_0_0/NUOPC_refdoc/
-    
+
+.. _Building a NUOPC Model: http://www.earthsystemmodeling.org/esmf_releases/non_public/ESMF_7_0_0/NUOPC_howtodoc/    

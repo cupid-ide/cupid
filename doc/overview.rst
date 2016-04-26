@@ -1,6 +1,8 @@
 Overview
 ========
 
+**Cupid version 0.2 is compatible with ESMF version 7.0.**
+
 `Cupid <https://www.earthsystemcog.org/projects/cupid/>`_ is a plugin for the 
 `Eclipse Integrated Development Environment (IDE) <https://www.eclipse.org/>`_ 
 and provides developers with assistance in writing code compliant with the `National Unified 
