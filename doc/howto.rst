@@ -20,6 +20,64 @@ Import NUOPC Code
 Reverse Engineer a NUOPC Cap
 ----------------------------
 
+Cupid's reverse engineering function is capable of analyzing the source 
+code of a NUOPC component to create a representation at a higher level
+of abstraction.  The reverse engineering analysis is limited to only the 
+NUOPC cap of a component, which is typically a single Fortran module.
+The analysis does not descend into the model code itself.
+Once the higher level representation is obtained, Cupid
+is able to provide NUOPC-aware capabilities, such as basic validation
+of correct API usage and in-place code generation--i.e., weaving new code
+into the correct places of an existing source file.
+
+
+The reverse engineering analysis phase happens automatically as a background
+process when a file is opened that contains code for a NUOPC component.  A basic
+check is done to determine if the file is likely to be a NUOPC component. The
+check is to see that if the file contains Fortran code and if so that it
+imports (uses) one of the generic NUOPC modules (``NUOPC_Model``, 
+``NUOPC_Mediator``, or ``NUOPC_Driver``). 
+
+The results of the reverse engineered code can be seen in outline form 
+in the NUOPC View.  
+
+.. figure:: images/nuopc_view.png
+   :scale: 70 %
+ 
+   The NUOPC View (to the right of the source code) shows an outline
+   of a reverse engineered NUOPC component.
+
+The NUOPC View is set up to show whenever the Fortran perspective is selected.
+The current perspective is shown in the upper right-hand corner of Eclipse.
+There is also an Open Perspective button which can be used to select the
+Fortran perspective if it is not already shown.
+
+.. figure:: images/perspectives.png
+   
+   The NUOPC View is set to appear automatically from the Fortran perspective
+   (circled in blue).  Click the Open Perspective button (circled in green)
+   to open a new perspective.
+   
+There are other ways to show the NUOPC View:
+
+  * If the NUOPC View is not visible and you open a file with NUOPC
+    code, a dialog will ask you if you would like to open the
+    NUOPC View.  This behavior can be turned off in the Cupid
+    preferences (select **Window -> Preferences** from the menu and
+    select Cupid in the list on the left).
+    
+  * The main toolbar contains a Show NUOPC View button, circled in
+    green below
+  
+    .. image:: images/nuopc_toolbar.png
+  
+  * The NUOPC View can be accessed from the 
+    **Window -> Show View -> Other** menu
+        
+The NUOPC View will automatically synchronize with the editor that
+has the focus.  It will also refresh whenever you save the file
+active in the editor.  (The file will be re-analyzed in the background.)  
+If a file does not contain a NUOPC component, the NUOPC View will be blank.
 
 
 
