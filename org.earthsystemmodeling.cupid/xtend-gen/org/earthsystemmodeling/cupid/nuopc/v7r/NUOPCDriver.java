@@ -51,12 +51,11 @@ import org.eclipse.xtext.xbase.lib.Pure;
 
 @Label(label = "NUOPC Driver")
 @MappingType("module")
-@Doc(urlfrag = "#driver-top")
+@Doc(urlfrag = "node4.html#SECTION00041000000000000000")
 @SuppressWarnings("all")
 public class NUOPCDriver extends NUOPCComponent {
   @Label(label = "SetServices")
   @MappingType("subroutine")
-  @Doc(urlfrag = "#driver-setservices")
   public static class SetServices extends SetServicesCodeConcept<NUOPCDriver> {
     public SetServices(final NUOPCDriver parent) {
       super(parent);
@@ -938,7 +937,6 @@ public class NUOPCDriver extends NUOPCComponent {
   public static class InitPhases extends CodeConcept<NUOPCDriver.Initialization, ASTNode> {
     @Label(label = "Phase 1")
     @MappingType("subroutine-inherited")
-    @Doc(urlfrag = "#driver-phase-init")
     public static class InitP1 extends CodeConcept<NUOPCDriver.InitPhases, ASTNode> {
       public InitP1(final NUOPCDriver.InitPhases parent) {
         super(parent);
@@ -1050,7 +1048,6 @@ public class NUOPCDriver extends NUOPCComponent {
   
   @Label(label = "SetModelServices")
   @MappingType("subroutine")
-  @Doc(urlfrag = "#driver-specialization-setmodelservices")
   public static class SetModelServices extends SpecializationMethodCodeConcept<NUOPCDriver.InitSpecializations> {
     @Child(min = 0, max = (-1))
     public List<NUOPCDriver.SetModelServices_AddComp> addComps;
@@ -1632,7 +1629,6 @@ public class NUOPCDriver extends NUOPCComponent {
   
   @Label(label = "SetRunSequence")
   @MappingType("subroutine")
-  @Doc(urlfrag = "#driver-specialization-setrunsequence")
   public static class SetRunSequence extends SpecializationMethodCodeConcept<NUOPCDriver.InitSpecializations> {
     @Label(label = "New Run Sequence")
     @MappingType("call")
@@ -2036,7 +2032,6 @@ public class NUOPCDriver extends NUOPCComponent {
   
   @Label(label = "ModifyInitializePhaseMap")
   @MappingType("subroutine")
-  @Doc(urlfrag = "#driver-specialization-modifyinitphasemap")
   public static class ModifyInitializePhaseMap extends SpecializationMethodCodeConcept<NUOPCDriver.InitSpecializations> {
     public ModifyInitializePhaseMap(final NUOPCDriver.InitSpecializations parent) {
       super(parent, "NUOPC_Driver", "label_ModifyInitializePhaseMap");
@@ -2118,7 +2113,6 @@ public class NUOPCDriver extends NUOPCComponent {
   
   @Label(label = "Run Phase 1")
   @MappingType("subroutine-inherited")
-  @Doc(urlfrag = "#driver-phase-run")
   public static class RunPhase1 extends CodeConcept<NUOPCDriver.RunPhases, ASTNode> {
     public RunPhase1(final NUOPCDriver.RunPhases parent) {
       super(parent);
@@ -2155,7 +2149,6 @@ public class NUOPCDriver extends NUOPCComponent {
   
   @Label(label = "SetRunClock")
   @MappingType("subroutine")
-  @Doc(urlfrag = "#driver-specialization-setrunclock")
   public static class SetRunClock extends SpecializationMethodCodeConcept<NUOPCDriver.RunSpecializations> {
     public SetRunClock(final NUOPCDriver.RunSpecializations parent) {
       super(parent, "NUOPC_Driver", "label_SetRunClock");
@@ -2307,7 +2300,6 @@ public class NUOPCDriver extends NUOPCComponent {
   
   @Label(label = "Finalize Phase 1")
   @MappingType("subroutine-inherited")
-  @Doc(urlfrag = "#driver-phase-finalize")
   public static class FinalizePhase1 extends CodeConcept<NUOPCDriver.FinalizePhases, ASTNode> {
     public FinalizePhase1(final NUOPCDriver.FinalizePhases parent) {
       super(parent);
@@ -2350,7 +2342,6 @@ public class NUOPCDriver extends NUOPCComponent {
   
   @Label(label = "FinalizeDriver")
   @MappingType("subroutine")
-  @Doc(urlfrag = "#driver-specialization-finalize")
   public static class FinalizeDriver extends SpecializationMethodCodeConcept<NUOPCDriver.FinalizeSpecializations> {
     public FinalizeDriver(final NUOPCDriver.FinalizeSpecializations parent) {
       super(parent, "NUOPC_Driver", "label_Finalize");

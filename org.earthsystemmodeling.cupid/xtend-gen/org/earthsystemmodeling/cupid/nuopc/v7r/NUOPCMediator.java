@@ -37,12 +37,11 @@ import org.eclipse.xtext.xbase.lib.Pure;
 
 @Label(label = "NUOPC Mediator")
 @MappingType("module")
-@Doc(urlfrag = "#mediator-top")
+@Doc(urlfrag = "node4.html#SECTION00044000000000000000")
 @SuppressWarnings("all")
 public class NUOPCMediator extends NUOPCComponent {
   @Label(label = "SetServices")
   @MappingType("subroutine")
-  @Doc(urlfrag = "#mediator-setservices")
   public static class SetServices extends SetServicesCodeConcept<NUOPCMediator> {
     public SetServices(final NUOPCMediator parent) {
       super(parent);
@@ -215,7 +214,6 @@ public class NUOPCMediator extends NUOPCComponent {
     
     @Label(label = "IPDv04p1 - Advertise Fields")
     @MappingType("subroutine")
-    @Doc(urlfrag = "#mediator-phase-advertisefields")
     public static class IPDv04p1 extends EntryPointCodeConcept<NUOPCMediator.IPD> {
       @Child(min = 0, max = (-1))
       public List<NUOPCBaseModel.AdvertiseField> advertiseFields;
@@ -331,7 +329,6 @@ public class NUOPCMediator extends NUOPCComponent {
     
     @Label(label = "IPDv04p2 - Unspecified by NUOPC")
     @MappingType("subroutine-inherited")
-    @Doc(urlfrag = "#mediator-initseq")
     public static class IPDv04p2 extends CodeConcept<NUOPCMediator.IPD, ASTNode> {
       public IPDv04p2(final NUOPCMediator.IPD parent) {
         super(parent);
@@ -340,7 +337,6 @@ public class NUOPCMediator extends NUOPCComponent {
     
     @Label(label = "IPDv04p3 - Realize Fields Providing Geom Object")
     @MappingType("subroutine")
-    @Doc(urlfrag = "#mediator-phase-realizefieldsproviding")
     public static class IPDv04p3 extends EntryPointCodeConcept<NUOPCMediator.IPD> {
       @Child(min = 0, max = (-1))
       public List<NUOPCBaseModel.RealizeField> realizeFields;
@@ -527,7 +523,6 @@ public class NUOPCMediator extends NUOPCComponent {
     
     @Label(label = "IPDv04p4 - Modify Decomposition of Accepted Geom Object")
     @MappingType("subroutine")
-    @Doc(urlfrag = "#mediator-phase-modifydecomp")
     public static class IPDv04p4 extends EntryPointCodeConcept<NUOPCMediator.IPD> {
       public IPDv04p4(final NUOPCMediator.IPD parent) {
         super(parent);
@@ -572,7 +567,6 @@ public class NUOPCMediator extends NUOPCComponent {
     
     @Label(label = "IPDv04p5 - Realize Fields Accepting Geom Object")
     @MappingType("subroutine")
-    @Doc(urlfrag = "#model-phase-realizefieldsaccepting")
     public static class IPDv04p5 extends EntryPointCodeConcept<NUOPCMediator.IPD> {
       @Child(min = 0, max = (-1))
       public List<NUOPCBaseModel.RealizeField> realizeFields;
@@ -629,7 +623,6 @@ public class NUOPCMediator extends NUOPCComponent {
     
     @Label(label = "IPDv04p6 - Verify Connected / Set Clock")
     @MappingType("subroutine-inherited")
-    @Doc(urlfrag = "#mediator-phase-verifyimports")
     public static class IPDv04p6 extends CodeConcept<NUOPCMediator.IPD, ASTNode> {
       public IPDv04p6(final NUOPCMediator.IPD parent) {
         super(parent);
@@ -638,7 +631,6 @@ public class NUOPCMediator extends NUOPCComponent {
     
     @Label(label = "IPDv04p7 - Data Initialize")
     @MappingType("subroutine-inherited")
-    @Doc(urlfrag = "#mediator-phase-initexport")
     public static class IPDv04p7 extends CodeConcept<NUOPCMediator.IPD, ASTNode> {
       public IPDv04p7(final NUOPCMediator.IPD parent) {
         super(parent);
@@ -652,7 +644,6 @@ public class NUOPCMediator extends NUOPCComponent {
   }
   
   @Label(label = "Initialize Phase Definition (v00)")
-  @Doc(urlfrag = "#mediator-initseq")
   public static class IPDv00 extends NUOPCMediator.IPD {
     @Child(min = 0)
     @Label(label = "IPDv00p0 - Filter Initialization Phases")
@@ -708,7 +699,6 @@ public class NUOPCMediator extends NUOPCComponent {
   }
   
   @Label(label = "Initialize Phase Definition (v01)")
-  @Doc(urlfrag = "#mediator-initseq")
   public static class IPDv01 extends NUOPCMediator.IPD {
     @Child(min = 0)
     @Label(label = "IPDv01p0 - Filter Initialization Phases")
@@ -771,7 +761,6 @@ public class NUOPCMediator extends NUOPCComponent {
   }
   
   @Label(label = "Initialize Phase Definition (v02)")
-  @Doc(urlfrag = "#mediator-initseq")
   public static class IPDv02 extends NUOPCMediator.IPD {
     public IPDv02(final NUOPCMediator.InitPhases parent) {
       super(parent);
@@ -834,7 +823,6 @@ public class NUOPCMediator extends NUOPCComponent {
   }
   
   @Label(label = "Initialize Phase Definition (v03)")
-  @Doc(urlfrag = "#mediator-initseq")
   public static class IPDv03 extends NUOPCMediator.IPD {
     public IPDv03(final NUOPCMediator.InitPhases parent) {
       super(parent);
@@ -952,7 +940,6 @@ public class NUOPCMediator extends NUOPCComponent {
   }
   
   @Label(label = "Initialize Phase Definition (v04)")
-  @Doc(urlfrag = "#mediator-initseq")
   public static class IPDv04 extends NUOPCMediator.IPD {
     public IPDv04(final NUOPCMediator.InitPhases parent) {
       super(parent);
@@ -1288,7 +1275,6 @@ public class NUOPCMediator extends NUOPCComponent {
   
   @Label(label = "DataInitialize")
   @MappingType("subroutine")
-  @Doc(urlfrag = "#mediator-specialization-datainitialize")
   public static class DataInitialize extends SpecializationMethodCodeConcept<NUOPCMediator.InitSpecializations> {
     public DataInitialize(final NUOPCMediator.InitSpecializations parent) {
       super(parent, "NUOPC_Mediator", "label_DataInitialize");
@@ -1460,7 +1446,6 @@ public class NUOPCMediator extends NUOPCComponent {
   
   @Label(label = "Run Phase 1")
   @MappingType("subroutine-inherited")
-  @Doc(urlfrag = "#mediator-phase-run")
   public static class RunPhase1 extends CodeConcept<NUOPCMediator.RunPhases, ASTNode> {
     public RunPhase1(final NUOPCMediator.RunPhases parent) {
       super(parent);
@@ -1469,7 +1454,6 @@ public class NUOPCMediator extends NUOPCComponent {
   
   @Label(label = "Advance")
   @MappingType("subroutine")
-  @Doc(urlfrag = "#mediator-specialization-advance")
   public static class MediatorAdvance extends SpecializationMethodCodeConcept<NUOPCMediator.RunSpecializations> {
     public MediatorAdvance(final NUOPCMediator.RunSpecializations parent) {
       super(parent, "NUOPC_Mediator", "label_Advance");
@@ -1606,7 +1590,6 @@ public class NUOPCMediator extends NUOPCComponent {
   
   @Label(label = "SetRunClock")
   @MappingType("subroutine")
-  @Doc(urlfrag = "#mediator-specialization-setrunclock")
   public static class SetRunClock extends SpecializationMethodCodeConcept<NUOPCMediator.RunSpecializations> {
     public SetRunClock(final NUOPCMediator.RunSpecializations parent) {
       super(parent, "NUOPC_Mediator", "label_SetRunClock");
@@ -1732,7 +1715,6 @@ public class NUOPCMediator extends NUOPCComponent {
   
   @Label(label = "CheckImport")
   @MappingType("subroutine")
-  @Doc(urlfrag = "#mediator-specialization-checkimport")
   public static class CheckImport extends SpecializationMethodCodeConcept<NUOPCMediator.RunSpecializations> {
     public CheckImport(final NUOPCMediator.RunSpecializations parent) {
       super(parent, "NUOPC_Mediator", "label_CheckImport");
@@ -1807,7 +1789,6 @@ public class NUOPCMediator extends NUOPCComponent {
   
   @Label(label = "TimestampExport")
   @MappingType("subroutine")
-  @Doc(urlfrag = "#mediator-specialization-timestampexport")
   public static class TimestampExport extends SpecializationMethodCodeConcept<NUOPCMediator.RunSpecializations> {
     public TimestampExport(final NUOPCMediator.RunSpecializations parent) {
       super(parent, "NUOPC_Mediator", "label_TimestampExport");
@@ -2000,7 +1981,6 @@ public class NUOPCMediator extends NUOPCComponent {
   
   @Label(label = "Finalize Phase 1")
   @MappingType("subroutine-inherited")
-  @Doc(urlfrag = "#mediator-phase-finalize")
   public static class FinalizePhase1 extends CodeConcept<NUOPCMediator.FinalizePhases, ASTNode> {
     public FinalizePhase1(final NUOPCMediator.FinalizePhases parent) {
       super(parent);
@@ -2041,7 +2021,6 @@ public class NUOPCMediator extends NUOPCComponent {
   
   @Label(label = "FinalizeMediator")
   @MappingType("subroutine")
-  @Doc(urlfrag = "#mediator-specialization-finalize")
   public static class FinalizeMediator extends SpecializationMethodCodeConcept<NUOPCMediator.FinalizeSpecializations> {
     public FinalizeMediator(final NUOPCMediator.FinalizeSpecializations parent) {
       super(parent, "NUOPC_Mediator", "label_Finalize");

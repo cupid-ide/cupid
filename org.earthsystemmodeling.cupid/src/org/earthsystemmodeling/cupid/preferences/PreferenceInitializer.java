@@ -20,8 +20,8 @@ public class PreferenceInitializer extends AbstractPreferenceInitializer {
 		//store.setDefault(CupidPreferencePage.CUPID_CODEDB_LOCATION, "~/.cupid/codedb");
 		store.setDefault(CupidPreferencePage.CUPID_AWS_ACCESS_KEY, "");
 		store.setDefault(CupidPreferencePage.CUPID_AWS_SECRET_KEY, "");
-		store.setDefault(CupidPreferencePage.CUPID_REFDOC_USEINTERNAL, true);
-		store.setDefault(CupidPreferencePage.CUPID_REFDOC_URL, "");
+		//store.setDefault(CupidPreferencePage.CUPID_REFDOC_USEINTERNAL, true);
+		store.setDefault(CupidPreferencePage.CUPID_REFDOC_URL, "http://www.earthsystemmodeling.org/esmf_releases/non_public/ESMF_7_0_0/NUOPC_refdoc/");
 		store.setDefault(CupidPreferencePage.CUPID_CHECK_FILES_ON_OPEN, true);
 		
 		//store.setDefault(CupidPreferencePage.CUPID_LANGUAGE_URI, "platform:/plugin/org.earthsystemmodeling.cupid/cupidmodel/nuopc7.psyche");

@@ -19,6 +19,7 @@ import org.earthsystemmodeling.cupid.nuopc.v7r.NUOPCDriver;
 import org.earthsystemmodeling.cupid.nuopc.v7r.NUOPCFrameworkManager;
 import org.earthsystemmodeling.cupid.nuopc.v7r.NUOPCMediator;
 import org.earthsystemmodeling.cupid.nuopc.v7r.NUOPCModel;
+import org.earthsystemmodeling.cupid.views.NUOPCViewContentProvider.CodeConceptProxy;
 import org.eclipse.core.resources.IFile;
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IProgressMonitor;
@@ -31,6 +32,8 @@ import org.eclipse.jface.viewers.ITreeContentProvider;
 import org.eclipse.jface.viewers.Viewer;
 import org.eclipse.photran.internal.core.vpg.PhotranVPG;
 import org.eclipse.photran.internal.ui.editor.FortranEditor;
+import org.eclipse.swt.widgets.TreeItem;
+import org.eclipse.ui.PlatformUI;
 
 import alice.tuprolog.event.OutputListener;
 import alice.tuprolog.event.WarningListener;
@@ -122,16 +125,7 @@ class NUOPCViewContentProvider implements IStructuredContentProvider, ITreeConte
 		
 		CupidActivator.debug("Time to reverse engineer: " + (endIndex-startIndex));
 		
-		if (codeConcept != null) {
-			return new Object[] {
-				new CodeConceptProxy(codeConcept.getClass(), 
-						codeConcept, 
-						codeConcept.getClass().getAnnotation(Label.class), 
-						null,
-						codeConcept.getClass().getAnnotation(MappingType.class))
-			};
-		}
-		else if (!PhotranVPG.getInstance().doesProjectHaveRefactoringEnabled(file)) {
+		if (!PhotranVPG.getInstance().doesProjectHaveRefactoringEnabled(file)) {
 			return new Object[] {
 					"Project must have Fortran analysis enabled\n" +
 					"to use NUOPC tools. To enable, right click\n" +
@@ -139,6 +133,15 @@ class NUOPCViewContentProvider implements IStructuredContentProvider, ITreeConte
 					"In the Fortran General->Analysis/Refactoring\n" +
 					"page enable analyis/refactoring."
 					};
+		}
+		else if (codeConcept != null) {
+			CodeConceptProxy ccp = new CodeConceptProxy(codeConcept.getClass(), 
+					codeConcept, 
+					codeConcept.getClass().getAnnotation(Label.class), 
+					null,
+					codeConcept.getClass().getAnnotation(MappingType.class));
+			updateNUOPCDocViewer(ccp);
+			return new Object[] {ccp};
 		}
 		else {
 			return new Object[0];
@@ -215,6 +218,22 @@ class NUOPCViewContentProvider implements IStructuredContentProvider, ITreeConte
 		
 		
 			
+	}
+	
+	private void updateNUOPCDocViewer(CodeConceptProxy ccp) {
+		NUOPCDocView ndv = (NUOPCDocView) PlatformUI.getWorkbench().
+				getActiveWorkbenchWindow().getActivePage().findView(NUOPCDocView.ID);
+		if (ndv != null) {
+			String doc = NUOPCViewLabelProvider.getNUOPCDoc(ccp);
+			if (doc != null) {
+				if (doc.startsWith("http") || doc.startsWith("file:")) {
+					ndv.setURL(doc);
+				}
+				else {
+					ndv.setDoc(doc);
+				}
+			}
+		}
 	}
 	
 	public Object getParent(Object child) {

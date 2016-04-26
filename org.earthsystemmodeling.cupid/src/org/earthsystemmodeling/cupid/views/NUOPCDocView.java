@@ -3,7 +3,7 @@ package org.earthsystemmodeling.cupid.views;
 import java.net.URL;
 
 import org.earthsystemmodeling.cupid.core.CupidActivator;
-import org.eclipse.core.runtime.Status;
+import org.earthsystemmodeling.cupid.preferences.CupidPreferencePage;
 import org.eclipse.jface.dialogs.MessageDialog;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.SWTError;
@@ -78,7 +78,10 @@ public class NUOPCDocView extends ViewPart {
 					"Recommend installing libwebgtk", 
 					"The NUOPC Doc viewer relies on an IDE-based browser.  Please install the prerequisite software libwebkitgtk-1.0-0.  The software is in most Linux package manager, e.g., on Ubuntu use:\n\n$ sudo apt-get install libwebkitgtk-1.0-0\n\nPlease restart Eclipse after the installation.");
 		}
-		setDoc("Select an element in the NUOPC View to see relevant documentation.");			
+		//setDoc("Select an element in the NUOPC View to see relevant documentation.");	
+		//initialize
+		String initURL = CupidActivator.getDefault().getPreferenceStore().getString(CupidPreferencePage.CUPID_REFDOC_URL);
+		setURL(initURL);
 		
 	}
 	

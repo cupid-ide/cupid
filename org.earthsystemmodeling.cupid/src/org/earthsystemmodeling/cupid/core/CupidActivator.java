@@ -129,7 +129,25 @@ public class CupidActivator extends AbstractUIPlugin {
         	@Override
 			public void partActivated(IWorkbenchPartReference partRef) {
 				
-        		IPreferenceStore store = CupidActivator.getDefault().getPreferenceStore();
+        		
+			}
+
+			@Override
+			public void partBroughtToTop(IWorkbenchPartReference partRef) {
+			}
+
+			@Override
+			public void partClosed(IWorkbenchPartReference partRef) {
+			}
+
+			@Override
+			public void partDeactivated(IWorkbenchPartReference partRef) {
+			}
+
+			@Override
+			public void partOpened(IWorkbenchPartReference partRef) {
+				
+				IPreferenceStore store = CupidActivator.getDefault().getPreferenceStore();
         		boolean doCheck = store.getBoolean(CupidPreferencePage.CUPID_CHECK_FILES_ON_OPEN);
         		if (!doCheck) return;
         		
@@ -171,26 +189,9 @@ public class CupidActivator extends AbstractUIPlugin {
 							}
 						}
 						
-						
-						
 					}				
 				}
-			}
-
-			@Override
-			public void partBroughtToTop(IWorkbenchPartReference partRef) {
-			}
-
-			@Override
-			public void partClosed(IWorkbenchPartReference partRef) {
-			}
-
-			@Override
-			public void partDeactivated(IWorkbenchPartReference partRef) {
-			}
-
-			@Override
-			public void partOpened(IWorkbenchPartReference partRef) {
+				
 			}
 
 			@Override

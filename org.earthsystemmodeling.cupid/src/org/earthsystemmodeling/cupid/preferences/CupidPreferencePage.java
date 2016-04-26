@@ -16,7 +16,7 @@ public class CupidPreferencePage
 	//public static final String CUPID_LANGUAGE_URI = "CUPID_LANGUAGE_URI";
 	//public static final String CUPID_LANGUAGE_RELOAD = "CUPID_LANGUAGE_RELOAD";
 	//public static final String CUPID_CODEDB_LOCATION = "CUPID_CODEDB_LOCATION";
-	public static final String CUPID_REFDOC_USEINTERNAL = "CUPID_REFDOC_USEINTERNAL";
+	//public static final String CUPID_REFDOC_USEINTERNAL = "CUPID_REFDOC_USEINTERNAL";
 	public static final String CUPID_REFDOC_URL = "CUPID_REFDOC_URL";
 	public static final String CUPID_CHECK_FILES_ON_OPEN = "CUPID_CHECK_FILES_ON_OPEN";
 	
@@ -33,11 +33,11 @@ public class CupidPreferencePage
 		//addField(new StringFieldEditor(CUPID_LANGUAGE_URI, "Language definition URI", getFieldEditorParent()));
 		//addField(new BooleanFieldEditor(CUPID_LANGUAGE_RELOAD, "Reload language every time (debugging)", getFieldEditorParent()));	
 
-		addField(new PasswordStringFieldEditor(CUPID_AWS_ACCESS_KEY, "Amazon AWS Access Key:", getFieldEditorParent()));
-		addField(new PasswordStringFieldEditor(CUPID_AWS_SECRET_KEY, "Amazon AWS Secret Key:", getFieldEditorParent()));
+		//addField(new PasswordStringFieldEditor(CUPID_AWS_ACCESS_KEY, "Amazon AWS Access Key:", getFieldEditorParent()));
+		//addField(new PasswordStringFieldEditor(CUPID_AWS_SECRET_KEY, "Amazon AWS Secret Key:", getFieldEditorParent()));
 	
-		addField(new BooleanFieldEditor(CUPID_REFDOC_USEINTERNAL, "Use internal reference docs", getFieldEditorParent()));
-		addField(new StringFieldEditor(CUPID_REFDOC_URL, "Base URL of reference documentation\n(if not using internal docs above)", getFieldEditorParent()));
+		//addField(new BooleanFieldEditor(CUPID_REFDOC_USEINTERNAL, "Use internal reference docs", getFieldEditorParent()));
+		addField(new StringFieldEditor(CUPID_REFDOC_URL, "Base URL of reference documentation", getFieldEditorParent()));
 	
 		addField(new BooleanFieldEditor(CUPID_CHECK_FILES_ON_OPEN , "Check files when opened to see if they contain NUOPC code and prompt user to open outline?", getFieldEditorParent()));
 		

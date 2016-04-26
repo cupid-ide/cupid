@@ -2,6 +2,7 @@ package org.earthsystemmodeling.cupid.nuopc.v7r
 
 import java.util.List
 import org.earthsystemmodeling.cupid.NUOPC.Field
+import org.earthsystemmodeling.cupid.NUOPC.Grid
 import org.earthsystemmodeling.cupid.NUOPC.Model
 import org.earthsystemmodeling.cupid.NUOPC.UniformGrid
 import org.earthsystemmodeling.cupid.annotation.Child
@@ -9,36 +10,23 @@ import org.earthsystemmodeling.cupid.annotation.Doc
 import org.earthsystemmodeling.cupid.annotation.Label
 import org.earthsystemmodeling.cupid.annotation.MappingType
 import org.earthsystemmodeling.cupid.nuopc.CodeConcept
+import org.earthsystemmodeling.cupid.nuopc.ReverseEngineerException
 import org.earthsystemmodeling.cupid.nuopc.v7r.GridCodeConcept.CreateUniformGrid
+import org.earthsystemmodeling.cupid.nuopc.v7r.NUOPCBaseModel.AdvertiseField
+import org.earthsystemmodeling.cupid.nuopc.v7r.NUOPCBaseModel.RealizeField
+import org.earthsystemmodeling.cupid.nuopc.v7r.NUOPCModel.IPD.IPDv04p0
 import org.earthsystemmodeling.cupid.nuopc.v7r.NUOPCModel.IPD.IPDv04p1
 import org.earthsystemmodeling.cupid.nuopc.v7r.NUOPCModel.IPD.IPDv04p3
 import org.eclipse.core.resources.IResource
-import org.eclipse.photran.internal.core.parser.ASTCallStmtNode
 import org.eclipse.photran.internal.core.parser.ASTNode
-import org.eclipse.photran.internal.core.parser.ASTSubroutineSubprogramNode
-import org.eclipse.photran.internal.core.parser.ASTTypeDeclarationStmtNode
-import org.eclipse.photran.internal.core.parser.IASTListNode
-import org.eclipse.photran.internal.core.parser.IBodyConstruct
-import org.eclipse.photran.internal.core.parser.IDeclarationConstruct
+import org.eclipse.xtend.lib.annotations.Accessors
 
 import static org.earthsystemmodeling.cupid.nuopc.ESMFCodeTemplates.*
-import static org.earthsystemmodeling.cupid.util.CodeExtraction.*
-
-import static extension org.earthsystemmodeling.cupid.nuopc.ASTQuery.*
-import static extension org.earthsystemmodeling.cupid.nuopc.v7r.NUOPCModel.*
-import org.earthsystemmodeling.cupid.nuopc.CodeGenerationException
-import org.eclipse.xtend.lib.annotations.Accessors
-import org.earthsystemmodeling.cupid.NUOPC.Grid
-import org.earthsystemmodeling.cupid.nuopc.v7r.NUOPCBaseModel.RealizeField
-import org.earthsystemmodeling.cupid.nuopc.v7r.NUOPCBaseModel.AdvertiseField
-import org.earthsystemmodeling.cupid.nuopc.v7r.NUOPCModel.IPD
-import org.earthsystemmodeling.cupid.NUOPC.IPDVersion
-import org.earthsystemmodeling.cupid.nuopc.v7r.NUOPCModel.IPD.IPDv04p0
-import org.earthsystemmodeling.cupid.nuopc.ReverseEngineerException
 
 @Label(label="NUOPC Model")
 @MappingType("module")
-@Doc(urlfrag="#model-top")
+//@Doc(urlfrag="#model-top")
+@Doc(urlfrag="node4.html#SECTION00043000000000000000")
 class NUOPCModel extends NUOPCComponent {
 
 	@Child(forward=true)
@@ -104,7 +92,7 @@ class NUOPCModel extends NUOPCComponent {
 
 	@Label(label="SetServices")
 	@MappingType("subroutine")
-	@Doc(urlfrag="#model-setservices")
+	//@Doc(urlfrag="#model-setservices")
 	public static class SetServices extends SetServicesCodeConcept<NUOPCModel> {	
 		new(NUOPCModel parent) {
 			super(parent)
@@ -183,7 +171,7 @@ class NUOPCModel extends NUOPCComponent {
 		
 		@Label(label="IPDv04p1 - Advertise Fields")
 		@MappingType("subroutine")
-		@Doc(urlfrag="#model-phase-advertisefields")
+		//@Doc(urlfrag="#model-phase-advertisefields")
 		public static class IPDv04p1 extends EntryPointCodeConcept<IPD> {
 
 			@Child(min=0, max=-1)
@@ -240,7 +228,7 @@ class NUOPCModel extends NUOPCComponent {
 		
 		@Label(label="IPDv04p2 - Unspecified by NUOPC")
 		@MappingType("subroutine-inherited")
-		@Doc(urlfrag="#model-initseq")
+		//@Doc(urlfrag="#model-initseq")
 		public static class IPDv04p2 extends CodeConcept<IPD, ASTNode> {
 			new(IPD parent) {
 				super(parent)
@@ -249,7 +237,7 @@ class NUOPCModel extends NUOPCComponent {
 
 		@Label(label="IPDv04p3 - Realize Fields Providing Geom Object")
 		@MappingType("subroutine")
-		@Doc(urlfrag="#model-phase-realizefieldsproviding")
+		//@Doc(urlfrag="#model-phase-realizefieldsproviding")
 		public static class IPDv04p3 extends EntryPointCodeConcept<IPD> {
 
 			@Child(min=0, max=-1)
@@ -335,7 +323,7 @@ class NUOPCModel extends NUOPCComponent {
 		
 		@Label(label="IPDv04p4 - Modify Decomposition of Accepted Geom Object")
 		@MappingType("subroutine")
-		@Doc(urlfrag="#model-phase-modifydecomp")
+		//@Doc(urlfrag="#model-phase-modifydecomp")
 		public static class IPDv04p4 extends EntryPointCodeConcept<IPD> {
 
 			new(IPD parent) {
@@ -370,7 +358,7 @@ class NUOPCModel extends NUOPCComponent {
 		
 		@Label(label="IPDv04p5 - Realize Fields Accepting Geom Object")
 		@MappingType("subroutine")
-		@Doc(urlfrag="#model-phase-realizefieldsaccepting")
+		//@Doc(urlfrag="#model-phase-realizefieldsaccepting")
 		public static class IPDv04p5 extends EntryPointCodeConcept<IPD> {
 			
 			@Child(min=0, max=-1)
@@ -408,7 +396,7 @@ class NUOPCModel extends NUOPCComponent {
 		
 		@Label(label="IPDv04p6 - Verify Connected / Set Clock")
 		@MappingType("subroutine-inherited")
-		@Doc(urlfrag="#model-phase-verifyimports")
+		//@Doc(urlfrag="#model-phase-verifyimports")
 		public static class IPDv04p6 extends CodeConcept<IPD, ASTNode> {
 			new(IPD parent) {
 				super(parent)
@@ -417,7 +405,7 @@ class NUOPCModel extends NUOPCComponent {
 
 		@Label(label="IPDv04p7 - Data Initialize")
 		@MappingType("subroutine-inherited")
-		@Doc(urlfrag="#model-phase-initexport")
+		//@Doc(urlfrag="#model-phase-initexport")
 		public static class IPDv04p7 extends CodeConcept<IPD, ASTNode> {
 			new(IPD parent) {
 				super(parent)
@@ -428,7 +416,7 @@ class NUOPCModel extends NUOPCComponent {
 	
 
 	@Label(label="Initialize Phase Definition (v00)")
-	@Doc(urlfrag="#model-initseq")
+	//@Doc(urlfrag="#model-initseq")
 	public static class IPDv00 extends IPD {
 
 		@Child(min=0)
@@ -469,7 +457,7 @@ class NUOPCModel extends NUOPCComponent {
 	
 	
 	@Label(label="Initialize Phase Definition (v01)")
-	@Doc(urlfrag="#model-initseq")
+	//@Doc(urlfrag="#model-initseq")
 	public static class IPDv01 extends IPD {
 
 		@Child(min=0)
@@ -514,7 +502,7 @@ class NUOPCModel extends NUOPCComponent {
 	}
 		
 	@Label(label="Initialize Phase Definition (v02)")
-	@Doc(urlfrag="#model-initseq")
+	//@Doc(urlfrag="#model-initseq")
 	public static class IPDv02 extends IPD {
 	
 		new(NUOPCModel.InitPhases parent) {
@@ -560,7 +548,7 @@ class NUOPCModel extends NUOPCComponent {
 	}
 	
 	@Label(label="Initialize Phase Definition (v03)")
-	@Doc(urlfrag="#model-initseq")
+	//@Doc(urlfrag="#model-initseq")
 	public static class IPDv03 extends IPD {
 	
 		new(NUOPCModel.InitPhases parent) {
@@ -621,7 +609,7 @@ class NUOPCModel extends NUOPCComponent {
 	}
 	
 	@Label(label="Initialize Phase Definition (v04)")
-	@Doc(urlfrag="#model-initseq")
+	//@Doc(urlfrag="#model-initseq")
 	public static class IPDv04 extends IPD {
 	
 		new(NUOPCModel.InitPhases parent) {
@@ -813,7 +801,7 @@ class NUOPCModel extends NUOPCComponent {
 
 	@Label(label="SetClock")
 	@MappingType("subroutine")
-	@Doc(urlfrag="#model-specialization-setclock")
+	//@Doc(urlfrag="#model-specialization-setclock")
 	public static class SetClock extends SpecializationMethodCodeConcept<InitSpecializations> {
 
 		new(InitSpecializations parent) {
@@ -880,7 +868,7 @@ end subroutine
 
 	@Label(label="DataInitialize")
 	@MappingType("subroutine")
-	@Doc(urlfrag="#model-specialization-datainitialize")
+	//@Doc(urlfrag="#model-specialization-datainitialize")
 	public static class DataInitialize extends SpecializationMethodCodeConcept<InitSpecializations> {
 
 		new(InitSpecializations parent) {
@@ -997,7 +985,7 @@ end subroutine
 	
 	@Label(label="Run Phase 1")
 	@MappingType("subroutine-inherited")
-	@Doc(urlfrag="#model-phase-run")
+	//@Doc(urlfrag="#model-phase-run")
 	public static class RunPhase1 extends CodeConcept<RunPhases, ASTNode> {
 		new(RunPhases parent) {
 			super(parent)
@@ -1006,7 +994,7 @@ end subroutine
 
 	@Label(label="Advance")
 	@MappingType("subroutine")
-	@Doc(urlfrag="#model-specialization-advance")
+	//@Doc(urlfrag="#model-specialization-advance")
 	public static class ModelAdvance extends SpecializationMethodCodeConcept<RunSpecializations> {
 
 		new(RunSpecializations parent) {
@@ -1073,7 +1061,7 @@ end subroutine
 
 	@Label(label="SetRunClock")
 	@MappingType("subroutine")
-	@Doc(urlfrag="#model-specialization-setrunclock")
+	//@Doc(urlfrag="#model-specialization-setrunclock")
 	public static class SetRunClock extends SpecializationMethodCodeConcept<RunSpecializations> {
 
 		new(RunSpecializations parent) {
@@ -1135,7 +1123,7 @@ end subroutine
 
 	@Label(label="CheckImport")
 	@MappingType("subroutine")
-	@Doc(urlfrag="#model-specialization-checkimport")
+	//@Doc(urlfrag="#model-specialization-checkimport")
 	public static class CheckImport extends SpecializationMethodCodeConcept<RunSpecializations> {
 
 		new(RunSpecializations parent) {
@@ -1221,7 +1209,7 @@ end subroutine
 	
 	@Label(label="Finalize Phase 1")
 	@MappingType("subroutine-inherited")
-	@Doc(urlfrag="#model-phase-finalize")
+	//@Doc(urlfrag="#model-phase-finalize")
 	public static class FinalizePhase1 extends CodeConcept<FinalizePhases, ASTNode> {
 		new(FinalizePhases parent) {
 			super(parent)
@@ -1255,7 +1243,7 @@ end subroutine
 	
 	@Label(label="FinalizeModel")
 	@MappingType("subroutine")
-	@Doc(urlfrag="#model-specialization-finalize")
+	//@Doc(urlfrag="#model-specialization-finalize")
 	public static class FinalizeModel extends SpecializationMethodCodeConcept<FinalizeSpecializations> {
 
 		new(FinalizeSpecializations parent) {

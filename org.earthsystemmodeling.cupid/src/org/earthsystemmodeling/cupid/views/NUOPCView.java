@@ -8,7 +8,6 @@ import java.net.URL;
 import org.earthsystemmodeling.cupid.annotation.Child;
 import org.earthsystemmodeling.cupid.annotation.Label;
 import org.earthsystemmodeling.cupid.core.CupidActivator;
-import org.earthsystemmodeling.cupid.handlers.ApplyCodeConceptChanges;
 import org.earthsystemmodeling.cupid.nuopc.CodeConcept;
 import org.earthsystemmodeling.cupid.nuopc.CodeGenerationException;
 import org.earthsystemmodeling.cupid.views.NUOPCViewContentProvider.CodeConceptProxy;
@@ -18,9 +17,7 @@ import org.eclipse.core.resources.ResourcesPlugin;
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.IStatus;
-import org.eclipse.core.runtime.NullProgressMonitor;
 import org.eclipse.core.runtime.Status;
-import org.eclipse.core.runtime.jobs.Job;
 import org.eclipse.jface.action.Action;
 import org.eclipse.jface.action.IAction;
 import org.eclipse.jface.action.IMenuListener;
@@ -35,9 +32,7 @@ import org.eclipse.jface.viewers.ColumnWeightData;
 import org.eclipse.jface.viewers.DoubleClickEvent;
 import org.eclipse.jface.viewers.IDoubleClickListener;
 import org.eclipse.jface.viewers.ISelection;
-import org.eclipse.jface.viewers.ISelectionChangedListener;
 import org.eclipse.jface.viewers.IStructuredSelection;
-import org.eclipse.jface.viewers.SelectionChangedEvent;
 import org.eclipse.jface.viewers.TreeViewer;
 import org.eclipse.jface.window.ToolTip;
 import org.eclipse.photran.internal.core.analysis.binding.ScopingNode;
@@ -88,10 +83,7 @@ public class NUOPCView extends ViewPart {
 	private NUOPCViewContentProvider contentProvider;
 	private NUOPCViewLabelProvider labelProvider;
 	
-	//private boolean projectIsDirty = false;
-
 	private IPartListener2 partListener;
-	private IResourceChangeListener resourceChangeListener;
 	
 	private static String stylePath;
 	
@@ -106,36 +98,9 @@ public class NUOPCView extends ViewPart {
 		}
 	}
 	
-	/**
-	 * The constructor.
-	 */
 	public NUOPCView() {
 		
 	}
-	
-	
-	/*
-	public void updateView(IProject project) {
-		viewer.setInput(project);
-		viewer.expandToLevel(2);
-		//setProjectIsDirty(false);
-		labelProvider.setFSM(contentProvider.getCurrentFSM());
-	}
-	*/
-	
-	/*
-	protected void setProjectIsDirty(boolean dirty) {
-		projectIsDirty = dirty;
-		if (projectIsDirty) {
-			this.setPartName("*NUOPC View");
-		}
-		else {
-			this.setPartName("NUOPC View");
-		}
-	}
-	*/
-	
-	
 	
 	private static class FancyToolTipSupport extends ColumnViewerToolTipSupport {
 
@@ -205,12 +170,7 @@ public class NUOPCView extends ViewPart {
 				label.setLayoutData(new GridData(400, height));
 				
 			}
-			
-			
-			
-			
-			
-			
+					
 
 			return comp;
 		}
@@ -227,67 +187,8 @@ public class NUOPCView extends ViewPart {
 		}
 	}
 	
-	/*
-	private class AddElementAction extends Action {
-		
-		private FSM<?> fsm;
-		private NUOPCModelElem me;
-		private SubconceptOrAttribute soa;
-		private boolean addAll;
-		
-		public AddElementAction(FSM<?> fsm, NUOPCModelElem me, SubconceptOrAttribute soa, boolean addAll) {
-			this.fsm = fsm;
-			this.me = me;
-			this.soa = soa;
-			this.addAll = addAll;
-		}
-		
-		public void run() {
 	
-			EObject newElem = fsm.forwardAdd(me.elem, soa, true, addAll);
-			IFortranAST ast = fsm.getASTForElement(newElem);
-			
-			//TODO: in the case of NUOPCApplication, there is no AST above
-			Reindenter.reindent(ast.getRoot(), ast, Strategy.REINDENT_EACH_LINE);      								
-			
-			try {
-				IWorkbenchWindow window = PlatformUI.getWorkbench().getActiveWorkbenchWindow();
-				//running in UI thread for now so we can set focus to generated code
-				PlatformUI.getWorkbench().getProgressService().run(false, false, new RewriteASTRunnable(ast));
-			} catch (InvocationTargetException e) {
-				e.printStackTrace();
-			} catch (InterruptedException e) {
-				e.printStackTrace();
-			}
-			                   					
-			viewer.refresh(me);
-			viewer.expandToLevel(me, 1);
-				
-		}      
-	}
-	*/
-	
-	/**
-	 * This is a callback that will allow us
-	 * to create the viewer and initialize it.
-	 */
 	public void createPartControl(Composite parent) {
-		
-		/*
-		GridLayout gridLayout = new GridLayout(1,true);
-		gridLayout.marginHeight = 0;
-		gridLayout.marginWidth = 0;
-		gridLayout.verticalSpacing = 4;
-		parent.setLayout(gridLayout);
-		
-		//SashForm sashForm = new SashForm(parent, SWT.VERTICAL);
-		Composite composite = new Composite(parent, SWT.NONE);
-		GridData gd = new GridData(GridData.FILL_BOTH);
-		//GridData gd = new GridData(SWT.FILL, SWT.FILL, true, true);
-		//gd.heightHint = (int) (parent.getBounds().height * .50);
-		//gd.heightHint = 100;
-		composite.setLayoutData(gd);
-		*/
 		
 		viewer = new TreeViewer(parent, SWT.H_SCROLL | SWT.V_SCROLL | SWT.FULL_SELECTION);
 		
@@ -322,22 +223,6 @@ public class NUOPCView extends ViewPart {
 	
 		FancyToolTipSupport.enableFor(viewer, ToolTip.NO_RECREATE);
 		
-		
-		/* documentation viewer */
-		/*
-		try {
-			Browser browser = new Browser(parent, SWT.V_SCROLL);
-			gd = new GridData(GridData.FILL_HORIZONTAL);
-			gd.heightHint = 200;
-			//gd = new GridData(SWT.FILL, SWT.FILL, true, false);
-			browser.setLayoutData(gd);
-			String docText = "<html><body bgcolor=\"#FFFFE0\" style=\"margin-top:2pt;overflow:auto;font-size:13px;font-family:Helvetica;\">" + "Here is some documentaiton" + "</body></html>";
-			browser.setText(docText);
-		}
-		catch (SWTError se) {
-			CupidActivator.log("Error rendering documentation in NUOPC view", se);
-		}
-		*/
 		
 		doubleClickAction = new Action() {
 			
@@ -417,6 +302,7 @@ public class NUOPCView extends ViewPart {
 			}
 		});
 		
+		/*
 		viewer.addSelectionChangedListener(new ISelectionChangedListener() {
 
 			@Override
@@ -444,7 +330,7 @@ public class NUOPCView extends ViewPart {
 			}
 			
 		});
-		
+		*/
 		
 		/*
 		IActionBars bars = getViewSite().getActionBars();
@@ -596,8 +482,7 @@ public class NUOPCView extends ViewPart {
 										}
             							
             						};
-            						
-            						
+   
             						//ApplyCodeConceptChanges applyRunnable = new ApplyCodeConceptChanges(newcc);
     								
     								try {
@@ -605,59 +490,10 @@ public class NUOPCView extends ViewPart {
 									} catch (InvocationTargetException | InterruptedException e) {
 										CupidActivator.log("Exception executing code generation", e);
 									}
-    								
-    								
+  
     								viewer.refresh(ccp);
         							viewer.expandToLevel(ccp, 1);
-            						
-            						/*
-            						IFortranAST ast = null;
-									try {
-										ast = newcc.forward();
-									} catch (CodeGenerationException cge) {
-										MessageDialog.openError(
-            									viewer.getControl().getShell(),
-            									"Code generation failed",
-            									cge.getMessage());
-            							return;
-									}
-            						
-            						if (ast != null) {
-            							
-            							Reindenter.reindent(ast.getRoot(), ast, Strategy.REINDENT_EACH_LINE);      								
-            							
-            							try {
-            								     
-            								RewriteASTRunnable rewriter = new RewriteASTRunnable(ast);
-            								PlatformUI.getWorkbench().getProgressService().run(true, false, rewriter);
-            								
-            								IWorkbenchWindow window = PlatformUI.getWorkbench().getActiveWorkbenchWindow();
-            								//open editor on last marker generated
-            						        
-            								if (rewriter.getMarkers().size() > 0 &&
-            										window != null) {
-            								
-            									IWorkbenchPage page = window.getActivePage();
-	            								try {
-	            									IDE.openEditor(page, rewriter.getMarkers().get(0), true);
-	            									//marker.delete();
-	            								} catch (PartInitException e) {
-	            									e.printStackTrace();						
-	            								}
-	            								
-            								}
-	            						        
-            							} catch (InvocationTargetException | InterruptedException e) {
-            								CupidActivator.log("Exception executing code generation", e);
-            							}
-            							                   					
-            							viewer.refresh(ccp);
-            							viewer.expandToLevel(ccp, 1);
-        							
-            							
-            						}
-            						*/
-            						
+             						
             					};
             					
             				};
@@ -786,50 +622,6 @@ public class NUOPCView extends ViewPart {
         };
         initJob.schedule(500);
         
-       
-        
-        
-        
-        //listen for resource changes to synchronize
-        /*
-        resourceChangeListener = new IResourceChangeListener() {
-        	public void resourceChanged(final IResourceChangeEvent event) {
-        		
-         		if (viewer.getInput() != null && event.getDelta() != null) {
-        			Display.getDefault().syncExec(new Runnable() {
-        				public void run() {
-        					try {
-        						event.getDelta().accept(new IResourceDeltaVisitor() {
-        							@Override
-        							public boolean visit(IResourceDelta delta) throws CoreException {
-        								//System.out.println("delta resource = " + delta.getResource());
-        								if ((delta.getFlags() & IResourceDelta.CONTENT) == IResourceDelta.CONTENT) {
-	        								if (viewer.getInput().equals(delta.getResource())) {
-	    										//System.out.println("Refreshing viewer");
-	    										viewer.setInput(delta.getResource());
-	        									//viewer.refresh();
-	    										viewer.expandToLevel(3);
-	    										return false;
-	        								}
-        								}
-        								return true;
-        							}
-        						});
-        					} catch (CoreException e) {        		
-        						CupidActivator.log("Error visting resource change delta", e);
-        					}
-
-        				}
-        			});
-					
-        		} 
-        	}
-        };
-
-        ResourcesPlugin.getWorkspace().addResourceChangeListener(
-        		resourceChangeListener, 
-        		IResourceChangeEvent.POST_CHANGE);     
-        */   
         
 	}
 	
@@ -862,9 +654,6 @@ public class NUOPCView extends ViewPart {
 		if (partListener != null) {
 			IPartService service = PlatformUI.getWorkbench().getActiveWorkbenchWindow().getPartService();
 			service.removePartListener(partListener);
-		}
-		if (resourceChangeListener != null) {
-			 ResourcesPlugin.getWorkspace().removeResourceChangeListener(resourceChangeListener);
 		}
 	}
 	

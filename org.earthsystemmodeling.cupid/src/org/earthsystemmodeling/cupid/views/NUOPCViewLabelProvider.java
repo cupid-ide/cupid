@@ -74,14 +74,14 @@ class NUOPCViewLabelProvider extends StyledCellLabelProvider { //implements ITab
 		}
 	}
 	
-	public String getNUOPCDoc(CodeConceptProxy ccp) {
+	public static String getNUOPCDoc(CodeConceptProxy ccp) {
 		
 		//first see if there is a Doc annotation
 		Doc docAnn = ccp.clazz.getAnnotation(Doc.class);
 		if (docAnn != null) {
 			
 			String baseURL = "";
-			boolean useInternal = CupidActivator.getDefault().getPreferenceStore().getBoolean(CupidPreferencePage.CUPID_REFDOC_USEINTERNAL);
+			boolean useInternal = false; //CupidActivator.getDefault().getPreferenceStore().getBoolean(CupidPreferencePage.CUPID_REFDOC_USEINTERNAL);
 			if (useInternal) {
 				URL internalURL = CupidActivator.getFileURL(NUOPC_REFDOC_BASEURL);
 				if (internalURL != null) {
@@ -99,10 +99,13 @@ class NUOPCViewLabelProvider extends StyledCellLabelProvider { //implements ITab
 				}
 			}
 
-			CupidActivator.debug("ref doc URL = " + baseURL+docAnn.urlfrag());
+			//CupidActivator.debug("ref doc URL = " + baseURL+docAnn.urlfrag());
 			return baseURL + docAnn.urlfrag();
 		}
 		
+		return null;
+		
+		/*
 		if (docXML == null || CupidActivator.getDefault().isDebugging()) {
 			loadDocXML(); //reload every time when debugging
 		}
@@ -133,6 +136,7 @@ class NUOPCViewLabelProvider extends StyledCellLabelProvider { //implements ITab
 		else {
 			return null;
 		}
+		*/
 	}
 	
 	@Override
@@ -234,6 +238,8 @@ class NUOPCViewLabelProvider extends StyledCellLabelProvider { //implements ITab
 	*/
 	
 	//boolean grayState = false;
+	
+	
 	
 	@Override
 	public void update(final ViewerCell cell) {
