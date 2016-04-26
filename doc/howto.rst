@@ -30,13 +30,15 @@ is able to provide NUOPC-aware capabilities, such as basic validation
 of correct API usage and in-place code generation--i.e., weaving new code
 into the correct places of an existing source file.
 
-
 The reverse engineering analysis phase happens automatically as a background
 process when a file is opened that contains code for a NUOPC component.  A basic
 check is done to determine if the file is likely to be a NUOPC component. The
 check is to see that if the file contains Fortran code and if so that it
 imports (uses) one of the generic NUOPC modules (``NUOPC_Model``, 
 ``NUOPC_Mediator``, or ``NUOPC_Driver``). 
+
+Show the NUOPC View
+^^^^^^^^^^^^^^^^^^^
 
 The results of the reverse engineered code can be seen in outline form 
 in the NUOPC View.  
@@ -79,7 +81,116 @@ has the focus.  It will also refresh whenever you save the file
 active in the editor.  (The file will be re-analyzed in the background.)  
 If a file does not contain a NUOPC component, the NUOPC View will be blank.
 
+Elements in the NUOPC View outline
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
+The outline shown in the NUOPC View in a tree where each element
+represents something in the source code, such as a SetServices subroutine,
+a NUOPC initialization subroutine, a specialization point subroutine,
+imports of NUOPC generic modules, or calls into the NUOPC API. Many
+of the elements have small icons: a blue circle with an M maps to a
+Fortran module, a green circle maps to subroutine, and a yellow arrow 
+pointing to the right represents a subroutine or function call. If
+a green circle has a small upward triangle in the corner, it indicates
+that the subroutine is not in the current module, but is inherited
+from a NUOPC generic component.  Grayed out items do not map to any
+source code element, but represent subroutines or API calls that
+can be generated.  Red items indicate that there is a validation
+problem rooted at that element.  Some elements indicate a cardinality
+such as [1..n], which indicates that one or more elements of that type
+can exist, or [0..1], which indicates the element is optional.  
+
+The outline is divided into several major sections:
+
+  * module imports (only specific ones are shown)
+  * SetServices
+  * initialization phases and specialization points
+  * run phases and specialization points
+  * finalize phases and specialization points
+
+
+.. figure:: images/nuopc_view_errors.png
+   
+   The NUOPC View showing an outline of a NUOPC Model cap.
+
+The NUOPC View is linked to the source code in the active editor.
+To navigate to the source code related to the element, double-click
+the element.  The relevant code segment will be brought into
+focus.  If the element maps to a subroutine definition, the name of 
+the subroutine will be highlighted.  If the element maps to an API
+call, the call will be highlighted.  If an element represents an
+inherited subroutine (a green circle with small triangle), then
+it does not appear in the current file, so no code will be highlighted
+when double-clicking the element.
+
+.. figure:: images/nuopc_view_nav.png
+   
+   Double-clicking on an element in the NUOPC View outline brings
+   the relevant code segment into focus in the editor.
+   
+   
+Validation Errors in the NUOPC View
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Elements in red in the NUOPC View indicate a validation error.
+Currently, the validations performed are to check for
+missing subroutines and API calls required by NUOPC, e.g., a missing initialization
+phase or a missing specialization point.  The `NUOPC Reference Manual`_
+details, for each type of component, which subroutines are required
+and which are optional.  Red elements do not indicate a Fortran
+compilation issue, but indicate that NUOPC expects the
+element to be present and a runtime error will occur without it.
+The figure below indicates that the *Advance* specialization point
+could not be found during the reverse engineering procedure. Within
+NUOPC, *specialization points* are user-provided subroutines that are
+called by NUOPC.  Notice also that parent elements are red 
+all the way to the root of the tree.  Therefore, if the root of the
+tree is red, it indicates a validation issue somewhere below.
+
+To address the issue of the missing Advance element, a new subroutine
+needs to be added to the code and that subroutine registered in the
+``SetServices`` subroutine.  When this is done, the reverse
+engineering engine will pick up this code and the red elements
+will disappear.  The section :ref:`generate-code` explains how
+to use Cupid to generate skeleton code for missing elements.
+
+.. figure:: images/nuopc_view_error_zoom.png
+   
+   The Advance element is red because it could not be found by
+   the reverse engineering engine.
+
+
+.. note:: 
+
+   Cupid's reverse engineering and validation engineer are based on
+   static source code analysis.  The engine depends on an internal program database
+   (Virtual Program Graph or VPG) provided by the Photran plugin for Eclipse. 
+   If a source file does not contain correct Fortran code, the internal
+   parser will fail and the reverse engineering analysis will not
+   be executed at all, resulting in a blank NUOPC View outline.
+   
+   There are limitations to static analysis giving rise to false negatives--i.e.,
+   reporting a validation issue when in fact the NUOPC component will behave
+   correctly.  For example, in some cases the reverse engineering engine 
+   expects NUOPC API calls to appear
+   within a given subroutine, say SetServices.  In reality, the required API
+   call may appear in a different subroutine called by SetServices or even
+   several levels down in the call tree. Cupid does not currently perform a 
+   full control flow analysis to find NUOPC calls because it is an expensive
+   operation.  And, even control flow analysis is limited due to conditional
+   logic in the code that depends on the state of the program at runtime.
+   
+   Cupid, therefore, is fundamentally limited by the realities of
+   static analysis.  However, most NUOPC caps have a very similar structure
+   with a fair amount of boilerplate code, so we expect that most codes
+   will be correctly reverse engineered.   
+   
+ 
+ 
+ 
+
+
+.. _generate-code:
 
 Generate NUOPC-compliant Code
 -----------------------------
@@ -134,6 +245,9 @@ This includes:
 .. image:: images/gen_code_explorer.png
     :scale: 70%
 
+Build the Skeleton Application Locally
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
 The generated code can now be built using make and the generated Makefile.
 To build on the same system that Eclipse is running (this is the easiest
 way), first `ensure that ESMF v7 is installed <http://www.earthsystemmodeling.org/esmf_releases/non_public/ESMF_7_0_0/ESMF_usrdoc/node9.html>`_.
@@ -166,6 +280,9 @@ project itself.
 .. image:: images/console_view.png
     :scale: 70%
 
+Set up a Parallel Application run and  Execute Locally
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
 To execute the application on the same system on which Eclipse is running (again,
 this is the easiest way), set up a Parallel Application run configuration by 
 selecting **Run -> Run Configurations...** from the menu.  The configuration
@@ -184,4 +301,8 @@ context menu.
     
 .. image:: images/console_run.png
     :scale: 70%
+ 
+
+
+.. _NUOPC Reference Manual: http://www.earthsystemmodeling.org/esmf_releases/non_public/ESMF_7_0_0/NUOPC_refdoc/
     
