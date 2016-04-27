@@ -47,6 +47,7 @@ import org.eclipse.swt.browser.Browser;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Composite;
+import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Event;
 import org.eclipse.swt.widgets.Menu;
 import org.eclipse.swt.widgets.Text;
@@ -80,7 +81,7 @@ public class NUOPCView extends ViewPart {
 	
 	private TreeColumn tc2;
 	
-	private NUOPCViewContentProvider contentProvider;
+	private NUOPCViewAsyncContentProvider contentProvider;
 	private NUOPCViewLabelProvider labelProvider;
 	
 	private IPartListener2 partListener;
@@ -213,10 +214,10 @@ public class NUOPCView extends ViewPart {
 		viewer.getTree().setLinesVisible(true);
 		
 		drillDownAdapter = new DrillDownAdapter(viewer);		
-		contentProvider = new NUOPCViewContentProvider();
+		contentProvider = new NUOPCViewAsyncContentProvider(Display.getCurrent(), viewer);
 		viewer.setContentProvider(contentProvider);
 		
-		labelProvider = new NUOPCViewLabelProvider(contentProvider);
+		labelProvider = new NUOPCViewLabelProvider();
 		viewer.setLabelProvider(labelProvider);
 		viewer.setSorter(null);
 		viewer.setAutoExpandLevel(4);
@@ -544,7 +545,7 @@ public class NUOPCView extends ViewPart {
 						editor.addPropertyListener(saveListener);
 						
 						if (viewer.getInput() != editor) {							
-							viewer.setInput(editor);
+							viewer.setInput(editor);	
 						}
 					}				
 				}

@@ -85,14 +85,7 @@ public class NUOPCFrameworkManager {
 				
 				PhotranVPG vpg = PhotranVPG.getInstance();
 				vpg.ensureVPGIsUpToDate(monitor);
-				
-				//WorkspaceJob job = vpg.queueJobToEnsureVPGIsUpToDate();
-				//try {
-				//	job.join();
-				//} catch (InterruptedException ie) {
-				//	CupidActivator.log("", ie);
-				//}
-				
+						
 				db.clearMarksToKeep();
 				
 				List<IFile> files;

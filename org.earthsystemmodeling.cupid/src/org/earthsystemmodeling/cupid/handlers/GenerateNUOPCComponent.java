@@ -8,6 +8,7 @@ import org.earthsystemmodeling.cupid.NUOPC.Field;
 import org.earthsystemmodeling.cupid.NUOPC.Model;
 import org.earthsystemmodeling.cupid.NUOPC.NUOPCFactory;
 import org.earthsystemmodeling.cupid.NUOPC.UniformGrid;
+import org.eclipse.cdt.core.model.ICContainer;
 import org.eclipse.core.commands.AbstractHandler;
 import org.eclipse.core.commands.ExecutionEvent;
 import org.eclipse.core.commands.ExecutionException;
@@ -31,7 +32,17 @@ public class GenerateNUOPCComponent extends AbstractHandler {
 		if (sel instanceof ITreeSelection) {
 			
 			final Object item = ((ITreeSelection) sel).getFirstElement();
-			final IContainer container = (IContainer) item;
+			final IContainer container;
+			
+			if (item instanceof IContainer) {
+				container = (IContainer) item;
+			}
+			else if (item instanceof ICContainer) {
+				container = ((ICContainer) item).getResource();
+			}
+			else {
+				throw new ExecutionException("NUOPC components should be created within a Fortran project folder");
+			}
 			
 			final NUOPCFactory factory = NUOPCFactory.eINSTANCE;
 			//final Application app = factory.createApplication();

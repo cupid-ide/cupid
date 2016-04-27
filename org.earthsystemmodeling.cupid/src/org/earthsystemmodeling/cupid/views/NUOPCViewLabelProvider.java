@@ -6,7 +6,6 @@ import java.lang.reflect.Field;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 import javax.xml.parsers.DocumentBuilder;
@@ -21,6 +20,7 @@ import org.earthsystemmodeling.cupid.core.CupidActivator;
 import org.earthsystemmodeling.cupid.nuopc.ReverseEngineerException;
 import org.earthsystemmodeling.cupid.preferences.CupidPreferencePage;
 import org.earthsystemmodeling.cupid.views.NUOPCViewContentProvider.CodeConceptProxy;
+import org.eclipse.cdt.internal.ui.viewsupport.AsyncTreeWorkInProgressNode;
 import org.eclipse.core.runtime.FileLocator;
 import org.eclipse.core.runtime.Path;
 import org.eclipse.core.runtime.Status;
@@ -34,9 +34,7 @@ import org.eclipse.swt.SWT;
 import org.eclipse.swt.custom.StyleRange;
 import org.eclipse.swt.graphics.TextStyle;
 import org.eclipse.swt.widgets.Display;
-import org.jdom.Element;
 import org.jdom.input.DOMBuilder;
-import org.jdom.output.XMLOutputter;
 import org.osgi.framework.Bundle;
 import org.osgi.framework.FrameworkUtil;
 import org.w3c.dom.Document;
@@ -48,7 +46,7 @@ class NUOPCViewLabelProvider extends StyledCellLabelProvider { //implements ITab
 	private static final String NUOPC_DOC_FILE = null; //"nuopcdocs/nuopc_v7bs59.xml"
 	private static final String NUOPC_REFDOC_BASEURL = "nuopcdocs/html/indexcupid.html";
 	
-	public NUOPCViewLabelProvider(NUOPCViewContentProvider contentProvider) {
+	public NUOPCViewLabelProvider() {
 		loadDocXML();
 	}
 	
@@ -245,8 +243,33 @@ class NUOPCViewLabelProvider extends StyledCellLabelProvider { //implements ITab
 	public void update(final ViewerCell cell) {
 	
 		Object element = cell.getElement();
-					
-	    StyledString text = new StyledString();		    	    
+		
+		if (element instanceof ReverseEngineerException) {
+	    	if (cell.getColumnIndex()==0) {
+	    		cell.setText("The current file in the editor\ncould not be reverse engineered.\nPlease re-save the file\nand it will be parsed again.");
+	    		super.update(cell);
+	    	}
+	    	return;
+	    }
+	    
+	    if (element instanceof String) {
+	    	if (cell.getColumnIndex()==0) {
+	    		cell.setText(element.toString());
+	    		super.update(cell);
+	    	}
+	    	return;
+	    }
+	    
+	    if (element instanceof AsyncTreeWorkInProgressNode) {
+	    	if (cell.getColumnIndex()==0) {
+	    		cell.setText("Working...");
+	    		super.update(cell);
+	    	}
+	    	return;
+	    }
+		
+		
+		StyledString text = new StyledString();		    	    
 	   
 	    StyledString.Styler grayStyler = new StyledString.Styler() {			
 			@Override
@@ -274,23 +297,7 @@ class NUOPCViewLabelProvider extends StyledCellLabelProvider { //implements ITab
 			}						
 		};
 		
-	    ImageDescriptor icon = null;
-	      
-	    if (element instanceof ReverseEngineerException) {
-	    	if (cell.getColumnIndex()==0) {
-	    		cell.setText("The current file in the editor\ncould not be reverse engineered.\nPlease re-save the file\nand it will be parsed again.");
-	    		super.update(cell);
-	    	}
-	    	return;
-	    }
-	    
-	    if (element instanceof String) {
-	    	if (cell.getColumnIndex()==0) {
-	    		cell.setText(element.toString());
-	    		super.update(cell);
-	    	}
-	    	return;
-	    }
+	    ImageDescriptor icon = null;	    
 	     	    
     	CodeConceptProxy proxy = (CodeConceptProxy) element;
     	if (cell.getColumnIndex()==0) {
