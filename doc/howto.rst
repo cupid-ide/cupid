@@ -285,7 +285,7 @@ to use Cupid to generate skeleton code for missing elements.
 
 .. note:: 
 
-   Cupid's reverse engineering and validation engineer are based on
+   Cupid's reverse engineering and validation engines are based on
    static source code analysis.  The engine depends on an internal program database
    (Virtual Program Graph or VPG) provided by the Photran plugin for Eclipse. 
    If a source file does not contain correct Fortran code, the internal
