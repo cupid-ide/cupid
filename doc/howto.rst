@@ -12,8 +12,131 @@ of installed software.
     :scale: 70%
 
 
-Import NUOPC Code
------------------
+Create a Fortran Project with Your Model Code
+---------------------------------------------
+
+There are two options for creating a Fortran project in Eclipse based on whether
+the source code you are importing is local or on a remote machine.  The simplest
+approach is to have the source code available locally.  However, that is not always
+practical so Eclipse provides a synchronization capability with files on a remote
+system accessible via SSH.  The sections below describe briefly how to create
+these two kinds of projects.
+
+.. seealso::
+
+   This user guide provides only high level guidance in setting up local and
+   remote Fortran projects.  More details can be found on the `Parallel Tools
+   Platform documentation site <http://www.eclipse.org/ptp/doc.php>`_.
+
+Projects with Local Files
+^^^^^^^^^^^^^^^^^^^^^^^^^
+
+To create a new Fortran project with local files, right-click (CTRL-click on Mac)
+on the Project Explorer and select **New -> Fortran Project**.  On the New Project
+screen you can un-check *Use default location* and browse to the location of
+the files.  If you use the default location, the project folder will be in the
+Eclipse workspace folder and you will need to import files manually by selecting
+**File -> Import...** from the menu after creating the project.  
+
+Under *Project type*, it is recommended that you select Empty Project under the
+Makefile project folder.  (The project will not actually be empty if you selected the
+location of your local files.)  Click Finish and the new project will be created
+and will appear in the Project Explorer.
+
+.. figure:: images/new_project_local.png
+   
+   The New Fortran Project wizard.
+
+
+Synchronized Projects with Remote Files
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+A synchronized Fortran project will copy files from a remote file system and
+ensure that the remote and local copies stay synchronized.  This is convenient
+if the code will be built and executed on a remote system.  The disadvantage
+of this approach is that the initial synchronization can take multiple minutes
+if the size of the source tree is large.  However, once the initial synchronization
+is complete, only changed files need be communicated over the network.
+
+The first step is set up the connection with the remote machine.  Open the
+Connections view by selecting **Window -> Show View -> Other**. In the list
+of views, filter for "Connections" and click OK to show the view.
+
+.. figure:: images/connections_view.png
+
+   The Connections view.
+
+Create a new connection by clicking the New Connection button (with a small yellow +) 
+in the toolbar on the Connections view.   Choose SSH connection on the following
+screen and click next.  On the next screen fill in the details about the connection.
+The password can be left blank and you will be prompted at each login.  In some
+cases you may need to create multiple connections and use one as the proxy for
+another, for example, if you must first authenticate through a login node. Click
+Finish when you are done and you will see the new connection in Connetions view.
+
+.. figure:: images/new_remote_conn.png
+
+   The New Connection wizard.
+
+Now create a new synchronized Fortran project right-click in the Project Explorer
+and select **New -> Synchronized Fortran Project**.  Fill in the project name, select
+the remote connection you created and fill in the file path to the root of the
+source code on the remote system.
+
+You can optionally filter which files are synchronized by clicking **Modify file
+filtering...** and choosing certain directories to exclude.  In particular, directories
+containing large data files and other non-source code should be excluded to speed
+up the synchronization.
+
+Under *Project Type* select Empty Project under Makefile project.  Selecting
+local and remote toolchains is not required unless you plan to use the Eclipse
+build system.  Click Finish and the new project will appear in the Project
+Explorer.
+
+.. figure:: images/new_sync_project.png
+
+   The New Synchronized Fortran Project wizard.
+
+The project will initially be empty and you will need to manually kick off the
+first synchronization.  Do this by clicking the synchronize button in the toolbar
+or by right-clicking (CTRL-click on mac) the project folder and selecting
+**Synchronize -> Sync Active Now**.  Remote files will be copied to the local
+workspace.  By default, future synchronizations will happen automatically when changes
+are made to local files.  If the remote files change, or if you notice that
+changes have not been propagated to the remote system, force a sync using the
+procedure above.
+
+.. figure:: images/toolbar_sync.png
+
+   After selecting a project, click the Synchronize button on the toolbar 
+   (circled in blue) to kick off the first synchronization.  Remote files
+   will be copied to the local workspace.
+
+.. figure:: images/after_sync.png
+
+   After the synchronization process, files will be visible in the
+   Project Explorer.
+   
+   
+
+Ensure Fortran Analysis is Enabled
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+.. important:: 
+
+   **Turning on the Fortran analysis/refactoring engine is required for 	
+   Cupid to work properly.**
+
+Cupid depends on the Fortran analysis engine being activated for
+projects containing NUOPC code.  By default it is turned off.  To turn
+it on for a project, right-click (CTRL-click on Mac) on the project folder and
+select **Properties**.  Under **Fortran General -> Analysis/Refactoring**
+check the first box, *Enable Fortran analysis/refactoring*. 
+
+.. figure:: images/enable_analysis.png
+
+   Enable Fortran analysis/refactoring on in the project properties.
+   
+
 
 .. _reverse-engineer:
 
@@ -322,29 +445,24 @@ option under the NUOPC folder and click Next.
 On the next screen, select a starting configuration for the skeleton
 NUOPC application.  Ideally, you should find a configuration that 
 looks something like the actual coupled application you are building.  
-But, the selected configuration is a starting point -- you will be able to 
-modify the architecture, e.g., by adding new components or rearranging
-the connections between components.
 
 .. image:: images/new_project_p1.png
     :scale: 70%
 
 On the final screen of the wizard, type in a project name and click
 Finish.  The new project will be created.  Initially, the project will
-contain a .nuopc file and a .aird file.  The .nuopc file is a configuration
-file describing the coupled system.  The .aird file is a representation
-file that shows a graphical representation of the coupled system.  
+contain a .nuopc file which  is a configuration file describing the coupled system.  
 
 .. image:: images/new_project_explorer.png
     :scale: 70%
 
-However, before exploring or modifying these files, let's generate all the NUOPC 
-code for the system as it stands. Right click on the .nuopc file and select 
-**NUOPC -> Generate NUOPC code** from the context menu.  The code for the NUOPC
-skeleton application will be generated based on the contents of the .nuopc file.
+To generate all the NUOPC code for the system, right-click (CTRL-click on Mac)
+on the .nuopc file and select **NUOPC -> Generate NUOPC code** from the context menu.  
+The code for the NUOPC skeleton application will be generated.
 This includes:
 
-  * A NUOPC "cap" for each Model and Mediator component
+  * A NUOPC cap for each Model component
+  * A NUOPC Mediator, if present in the configuration
   * A NUOPC Driver
   * A top-level main program
   * A makefile
@@ -409,6 +527,30 @@ context menu.
 .. image:: images/console_run.png
     :scale: 70%
  
+
+Show the NUOPC Reference Manual
+-------------------------------
+
+The NUOPC Reference Manual can be shown directly within Eclipse so that you
+do not need to leave the tool to read API documentation.  To open the NUOPC
+documentation viewer, either click on the Show NUOPC Doc View button in the
+toolbar or from the menu select **Window -> Show View -> Other** and select
+the *NUOPC Doc* view in the list.
+
+The documentation viewer will automatically synchronize with the current outline
+in the NUOPC View.  For example, if the current component in the NUOPC View
+outline is a NUOPC Mediator component, the documentation viewer will bring that
+part of the Reference Manual into focus.
+
+.. figure:: images/toolbar_docs.png
+
+   Click the blue book in the toolbar to show the NUOPC Reference Manual.
+
+.. figure:: images/nuopc_doc_view.png
+
+   The NUOPC Reference Manual is opened in a small browser built into Eclipse.
+
+
 
 
 .. _NUOPC Reference Manual: http://www.earthsystemmodeling.org/esmf_releases/non_public/ESMF_7_0_0/NUOPC_refdoc/
