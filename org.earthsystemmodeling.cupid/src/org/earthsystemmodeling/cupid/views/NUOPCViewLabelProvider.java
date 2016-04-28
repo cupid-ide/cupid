@@ -32,8 +32,11 @@ import org.eclipse.jface.viewers.StyledString;
 import org.eclipse.jface.viewers.ViewerCell;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.custom.StyleRange;
+import org.eclipse.swt.graphics.Point;
+import org.eclipse.swt.graphics.Rectangle;
 import org.eclipse.swt.graphics.TextStyle;
 import org.eclipse.swt.widgets.Display;
+import org.eclipse.swt.widgets.Event;
 import org.jdom.input.DOMBuilder;
 import org.osgi.framework.Bundle;
 import org.osgi.framework.FrameworkUtil;
@@ -382,6 +385,15 @@ class NUOPCViewLabelProvider extends StyledCellLabelProvider { //implements ITab
 		super.update(cell);
 	}
 	
+	/*
+	@Override
+	protected void measure(Event event, Object element) {
+		// TODO Auto-generated method stub
+		super.measure(event, element);
+		event.height = 15;
+	}
+	*/
+			
 	/*
 	private String stripQuotes(String s) {
 		if (s.startsWith("'") && s.endsWith("'")) {

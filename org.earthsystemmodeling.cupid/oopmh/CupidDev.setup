@@ -57,6 +57,8 @@
         name="org.eclipse.remote.feature.group"/>
     <requirement
         name="org.eclipse.emf.sdk.feature.group"/>
+    <requirement
+        name="org.eclipse.team.svn.feature.group"/>
     <description>Install the tools needed in the IDE to work with the source code for ${scope.project.label}</description>
   </setupTask>
   <setupTask
@@ -105,14 +107,61 @@
     <requirement
         name="org.eclipse.tracecompass.tmf.pcap.feature.group"/>
     <repository
-        url="http://download.eclipse.org/tracecompass/releases/1.1.0/repository/"/>
+        url="http://download.eclipse.org/tracecompass/releases/1.2.1/repository/"/>
     <description></description>
   </setupTask>
   <setupTask
       xsi:type="setup.p2:P2Task"
-      label="Cupid Local">
+      label="Sirius">
+    <requirement
+        name="org.eclipse.sirius.runtime.feature.group"
+        filter=""/>
+    <requirement
+        name="org.eclipse.sirius.runtime.ide.ui.feature.group"
+        filter=""/>
+    <requirement
+        name="org.eclipse.sirius.aql.feature.group"
+        filter=""/>
+    <requirement
+        name="org.eclipse.sirius.runtime.ide.eef.feature.group"
+        filter=""/>
+    <requirement
+        name="org.eclipse.sirius.runtime.ide.ui.acceleo.feature.group"
+        filter=""/>
+    <requirement
+        name="org.eclipse.sirius.runtime.ide.xtext.feature.group"
+        filter=""/>
+    <requirement
+        name="org.eclipse.sirius.runtime.ocl.feature.group"
+        filter=""/>
+    <requirement
+        name="org.eclipse.sirius.specifier.ide.ui.acceleo.feature.group"
+        filter=""/>
+    <requirement
+        name="org.eclipse.sirius.specifier.ide.ui.aql.feature.group"
+        filter=""/>
+    <requirement
+        name="org.eclipse.sirius.specifier.feature.group"
+        filter=""/>
+    <requirement
+        name="org.eclipse.sirius.tests.support.feature.group"
+        filter=""/>
+    <requirement
+        name="org.eclipse.sirius.runtime.acceleo.feature.group"
+        filter=""/>
     <repository
-        url="file:/home/rocky/eclipse/cupiddev-v0-2/git/cupid/org.earthsystemmodeling.cupid.releng.p2/target/repository"/>
+        url="http://download.eclipse.org/sirius/updates/releases/3.1.1/mars"/>
+  </setupTask>
+  <setupTask
+      xsi:type="setup.p2:P2Task"
+      id=""
+      label="SVN Connector">
+    <requirement
+        name="org.polarion.eclipse.team.svn.connector.feature.group"/>
+    <requirement
+        name="org.polarion.eclipse.team.svn.connector.svnkit18.feature.group"/>
+    <repository
+        url="http://community.polarion.com/projects/subversive/download/eclipse/5.0/update-site/"/>
     <description></description>
   </setupTask>
   <setupTask
@@ -160,6 +209,22 @@
       <requirement
           name="org.eclipse.oomph.setup.feature.group"
           filter=""/>
+      <requirement
+          name="org.eclipse.sirius"/>
+      <requirement
+          name="org.eclipse.sirius.common.acceleo.aql"/>
+      <requirement
+          name="org.eclipse.remote.feature.group"/>
+      <requirement
+          name="org.eclipse.ptp.rdt.sync.fortran.feature.group"/>
+      <requirement
+          name="org.eclipse.ptp.feature.group"/>
+      <requirement
+          name="org.eclipse.ptp.fortran.feature.group"/>
+      <requirement
+          name="org.eclipse.photran.feature.group"/>
+      <requirement
+          name="org.eclipse.ptp.pldt.fortran.feature.group"/>
       <sourceLocator
           rootFolder="${git.clone.location}"
           locateNestedProjects="true"/>
@@ -198,7 +263,7 @@
   <setupTask
       xsi:type="setup.workingsets:WorkingSetTask">
     <workingSet
-        name="${scope.project.name}">
+        name="Cupid">
       <predicate
           xsi:type="predicates:AndPredicate">
         <operand
@@ -215,8 +280,8 @@
       encoding="UTF-8">
     <description>Create m2e lifecycle mapping - ignore certain goals</description>
   </setupTask>
-  <stream name="v0.2"
-      label="v0.2"/>
+  <stream name="master"
+      label="master"/>
   <logicalProjectContainer
       xsi:type="setup:ProjectCatalog"
       href="index:/org.eclipse.setup#//@projectCatalogs[name='com.github']"/>

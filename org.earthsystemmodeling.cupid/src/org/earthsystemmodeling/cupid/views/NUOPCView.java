@@ -49,9 +49,14 @@ import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Event;
+import org.eclipse.swt.widgets.Listener;
 import org.eclipse.swt.widgets.Menu;
+import org.eclipse.swt.widgets.TableItem;
 import org.eclipse.swt.widgets.Text;
+import org.eclipse.swt.widgets.Tree;
 import org.eclipse.swt.widgets.TreeColumn;
+import org.eclipse.swt.widgets.TreeItem;
+import org.eclipse.swt.graphics.Point;
 import org.eclipse.ui.IEditorPart;
 import org.eclipse.ui.IEditorReference;
 import org.eclipse.ui.IPartListener2;
@@ -210,17 +215,44 @@ public class NUOPCView extends ViewPart {
 		tcl.setColumnData(tc2, new ColumnWeightData(1));
 		parent.setLayout(tcl);
 				
-		viewer.getTree().setHeaderVisible(true);
-		viewer.getTree().setLinesVisible(true);
+		Tree tree = viewer.getTree();
+		tree.setHeaderVisible(true);
+		tree.setLinesVisible(true);
+		
+		/*
+		tree.addListener(SWT.MeasureItem, new Listener() {
+		   public void handleEvent(Event event) {
+			   TreeItem item = (TreeItem) event.item;
+			   String text = item.getText(event.index);
+		       Point size = event.gc.textExtent(text);
+		       event.width = size.x;
+		       event.height = size.y;
+		   }
+		});
+		*/
+		
+		
+		/*
+		tree.addListener(SWT.PaintItem, new Listener() {
+		   public void handleEvent(Event event) {
+			  TreeItem item = (TreeItem) event.item;
+			  String text = item.getText(event.index);
+	          Point size = event.gc.textExtent(text);
+	          int offset2 = event.index == 0 ? Math.max(0, (event.height - size.y) / 2) : 0;
+	          event.gc.drawText(text, event.x, event.y + offset2, true);
+		   }
+		});
+		*/
 		
 		drillDownAdapter = new DrillDownAdapter(viewer);		
 		contentProvider = new NUOPCViewAsyncContentProvider(Display.getCurrent(), viewer);
+		//contentProvider = new NUOPCViewContentProvider();
 		viewer.setContentProvider(contentProvider);
 		
 		labelProvider = new NUOPCViewLabelProvider();
 		viewer.setLabelProvider(labelProvider);
 		viewer.setSorter(null);
-		viewer.setAutoExpandLevel(4);
+		//viewer.setAutoExpandLevel(4);
 	
 		FancyToolTipSupport.enableFor(viewer, ToolTip.NO_RECREATE);
 		
@@ -523,7 +555,10 @@ public class NUOPCView extends ViewPart {
 				public void propertyChanged(Object source, int propId) {
 					if (propId == IWorkbenchPartConstants.PROP_DIRTY &&
 							!((FortranEditor)source).isDirty()) {
-						viewer.setInput(source);
+						contentProvider.clear();
+						if (viewer.getControl() != null && !viewer.getControl().isDisposed()) {
+							viewer.setInput(source);
+						}
 					}
 				}	
 			};

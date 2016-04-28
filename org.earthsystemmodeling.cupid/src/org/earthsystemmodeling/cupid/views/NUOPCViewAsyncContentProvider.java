@@ -21,7 +21,9 @@ import org.eclipse.core.resources.IFile;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.Status;
+import org.eclipse.jface.dialogs.MessageDialog;
 import org.eclipse.jface.viewers.TreeViewer;
+import org.eclipse.photran.internal.core.properties.SearchPathProperties;
 import org.eclipse.photran.internal.core.vpg.PhotranVPG;
 import org.eclipse.photran.internal.ui.editor.FortranEditor;
 import org.eclipse.swt.widgets.Display;
@@ -45,6 +47,12 @@ class NUOPCViewAsyncContentProvider extends AsyncTreeContentProvider { //impleme
 		return false;
 	}
 		
+	@Override
+	public void clear() {
+		// TODO Auto-generated method stub
+		super.clear();
+	}
+	
 	public NUOPCViewAsyncContentProvider(Display disp, TreeViewer viewer) {
 		super(disp);
 		this.viewer = viewer;
@@ -57,6 +65,22 @@ class NUOPCViewAsyncContentProvider extends AsyncTreeContentProvider { //impleme
 			editor = (FortranEditor) parentElement;
 			IFile file = editor.getIFile();
 			
+			/*
+			if (!PhotranVPG.getInstance().doesProjectHaveRefactoringEnabled(file)) {
+				boolean turnon = MessageDialog.openQuestion(null, 
+						"Turn on Fortran analysis?",
+						"To see the NUOPC View outline, Fortran analysis/refactoring"
+						+ "must be turned on.  Turn on for this project?\n\n"
+					    + "This check can be turned off in the Cupid preferences "
+					    + "(select Window -> Preferences from the menu.)");
+				
+				if (turnon) {
+					new SearchPathProperties().setProperty(file.getProject(), SearchPathProperties.ENABLE_VPG_PROPERTY_NAME, "true");
+				}
+				return new Object[] {"Fortran analysis disabled"};
+			}
+			*/
+			
 			NUOPCFrameworkManager manager = NUOPCFrameworkManager.getInstance();
 			
 			//long startIndex = System.currentTimeMillis();
@@ -67,10 +91,10 @@ class NUOPCViewAsyncContentProvider extends AsyncTreeContentProvider { //impleme
 			
 			if (!PhotranVPG.getInstance().doesProjectHaveRefactoringEnabled(file)) {
 				return new Object[] {
-						"Project must have Fortran analysis enabled\n" +
-						"to use NUOPC tools. To enable, right click\n" +
-						"on project folder, and select Properties.\n" +
-						"In the Fortran General->Analysis/Refactoring\n" +
+						"Project must have Fortran analysis enabled",
+						"to use NUOPC tools. To enable, right click",
+						"on the project folder, and select Properties.",
+						"On the Fortran General -> Analysis/Refactoring",
 						"page enable Fortran analyis/refactoring."
 						};
 			}
