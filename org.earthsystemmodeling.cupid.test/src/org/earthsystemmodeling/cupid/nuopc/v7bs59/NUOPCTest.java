@@ -29,9 +29,11 @@ import org.eclipse.photran.internal.core.parser.ASTSubroutineSubprogramNode;
 import org.eclipse.photran.internal.core.vpg.PhotranVPG;
 import org.junit.AfterClass;
 import org.junit.BeforeClass;
+import org.junit.Ignore;
 import org.junit.Test;
 
 @SuppressWarnings("restriction")
+@Ignore
 public class NUOPCTest {
 	
 	public static final String NUOPC_TAG = "ESMF_7_0_0_beta_snapshot_59";

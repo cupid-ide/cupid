@@ -25,6 +25,7 @@ import org.eclipse.photran.internal.core.properties.SearchPathProperties;
 import org.osgi.framework.Bundle;
 import org.osgi.framework.FrameworkUtil;
 
+@SuppressWarnings("restriction")
 public class TestHelpers {
 
 	private static Bundle MY_BUNDLE = FrameworkUtil.getBundle(TestHelpers.class);
@@ -123,6 +124,8 @@ public class TestHelpers {
 	
 	public static boolean compileProject(IProject p, String ESMFMKFILE, String... makeTarget) throws IOException, InterruptedException {
 		
+		if (isWindows()) return true;
+		
 		for (String target : makeTarget) {
 			ProcessBuilder pb;
 			if (target.length() > 0) {
@@ -156,7 +159,29 @@ public class TestHelpers {
 			
 	}
 	
+	public static boolean isWindows() {
+		String os = System.getProperty("os.name");
+		if (os != null && os.toLowerCase().contains("windows")) {
+			return true;
+		}
+		else {
+			return false;
+		}
+	}
+	
+	public static boolean isOSX() {
+		String os = System.getProperty("os.name");
+		if (os != null && os.toLowerCase().contains("os x")) {
+			return true;
+		}
+		else {
+			return false;
+		}
+	}
+	
 	public static boolean execute(IProject p, String... cmd) throws IOException, InterruptedException {
+		
+		
 		
 		ProcessBuilder pb = new ProcessBuilder(cmd);
 		//Map<String, String> env = pb.environment();
@@ -184,6 +209,9 @@ public class TestHelpers {
 	}
 	
 	public static boolean verifyNoLogErrors(IProject p) throws IOException, InterruptedException {
+		
+		if (isWindows()) return true;
+		
 		ProcessBuilder pb = new ProcessBuilder("/bin/sh", "-c", "grep ERROR PET*.ESMF_LogFile");
 		pb.directory(p.getLocation().toFile());
 		Process execProc = pb.start();
@@ -196,7 +224,12 @@ public class TestHelpers {
 	}
 	
 	public static boolean executeMPI(IProject p, String program, int numProcs) throws IOException, InterruptedException {
-		return execute(p, "mpirun", "-np", String.valueOf(numProcs), program);
+		if (isWindows()) {
+			return true; 
+		}
+		else {
+			return execute(p, "mpirun", "-np", String.valueOf(numProcs), program);
+		}
 	}
 	
 	
@@ -205,11 +238,14 @@ public class TestHelpers {
 			throw new RuntimeException("Environment variables ESMF_INSTALL_ROOT must be defined.");
 		}
 		else {
-			return System.getenv("ESMF_INSTALL_ROOT") + "/" + esmfTag + "/lib/libO/Linux.gfortran.64.openmpi.default/esmf.mk";
+			String installPostfix = "/lib/libO/Linux.gfortran.64.openmpi.default";
+			if (isOSX()) {
+				installPostfix = "/lib/libO/Darwin.gfortran.64.openmpi.default";
+			}
+			return System.getenv("ESMF_INSTALL_ROOT") + "/" + esmfTag + installPostfix + "/esmf.mk";
 		}
 	}
 	
-	@SuppressWarnings("restriction")
 	public static void printAST(CodeConcept<?,?> cc) {
 		System.out.println("\n==============START GENERATED CODE==============\n");
 		System.out.println(cc.getAST().getRoot().toString());

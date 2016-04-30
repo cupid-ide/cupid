@@ -25,6 +25,8 @@ import org.eclipse.core.resources.IProject;
 import org.eclipse.core.resources.IResource;
 import org.eclipse.core.resources.IResourceVisitor;
 import org.eclipse.core.runtime.CoreException;
+import org.eclipse.core.runtime.IProgressMonitor;
+import org.eclipse.core.runtime.NullProgressMonitor;
 import org.eclipse.photran.core.IFortranAST;
 import org.eclipse.photran.internal.core.parser.ASTModuleNode;
 import org.eclipse.photran.internal.core.parser.ASTSubroutineSubprogramNode;
@@ -38,6 +40,7 @@ public class NUOPCTest {
 	
 	public static final String NUOPC_TAG = "ESMF_7_0_0";
 	public static final String ESMFMKFILE = TestHelpers.getMakefileFragmentLoc(NUOPCTest.NUOPC_TAG);
+	private static final IProgressMonitor NPM = new NullProgressMonitor();
 	
 	private static IProject PROJECT_NUOPC_PROTOTYPES;
 	
@@ -48,6 +51,7 @@ public class NUOPCTest {
 	
 	@AfterClass
 	public static void tearDown() throws CoreException {
+		PROJECT_NUOPC_PROTOTYPES.refreshLocal(IResource.DEPTH_INFINITE, NPM);
 		PROJECT_NUOPC_PROTOTYPES.delete(true, true, null);
 	}
 	
