@@ -6,6 +6,7 @@ import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertNull;
 import static org.junit.Assert.fail;
 
+import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.sql.SQLException;
@@ -20,10 +21,13 @@ import org.earthsystemmodeling.cupid.nuopc.CodeConcept;
 import org.earthsystemmodeling.cupid.nuopc.ReverseEngineerException;
 import org.earthsystemmodeling.cupid.nuopc.v7r.NUOPCComponent.GenericImport;
 import org.earthsystemmodeling.cupid.test.TestHelpers;
+import org.eclipse.core.internal.resources.ResourceException;
 import org.eclipse.core.resources.IFile;
 import org.eclipse.core.resources.IProject;
 import org.eclipse.core.resources.IResource;
 import org.eclipse.core.resources.IResourceVisitor;
+import org.eclipse.core.resources.IWorkspace;
+import org.eclipse.core.resources.ResourcesPlugin;
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.NullProgressMonitor;
@@ -31,6 +35,7 @@ import org.eclipse.photran.core.IFortranAST;
 import org.eclipse.photran.internal.core.parser.ASTModuleNode;
 import org.eclipse.photran.internal.core.parser.ASTSubroutineSubprogramNode;
 import org.eclipse.photran.internal.core.vpg.PhotranVPG;
+import org.eclipse.ui.PlatformUI;
 import org.junit.AfterClass;
 import org.junit.BeforeClass;
 import org.junit.Test;
@@ -46,13 +51,18 @@ public class NUOPCTest {
 	
 	@BeforeClass
 	public static void setUp() throws CoreException, IOException, InterruptedException {
-		PROJECT_NUOPC_PROTOTYPES = TestHelpers.createFortranProjectFromFolder("target/" + NUOPC_TAG, NUOPC_TAG);
+		PROJECT_NUOPC_PROTOTYPES = TestHelpers.createFortranProjectFromFolder("target/" + NUOPC_TAG, "NUOPCTest_"+NUOPC_TAG);
 	}
 	
 	@AfterClass
-	public static void tearDown() throws CoreException {
-		PROJECT_NUOPC_PROTOTYPES.refreshLocal(IResource.DEPTH_INFINITE, NPM);
-		PROJECT_NUOPC_PROTOTYPES.delete(true, true, null);
+	public static void tearDown() throws CoreException, InterruptedException {
+		try {
+			PROJECT_NUOPC_PROTOTYPES.delete(true, true, NPM);
+		}
+		catch (ResourceException re) {
+			System.out.println("WARNING:  Ignoring Resource Exception");
+			re.printStackTrace();
+		}
 	}
 	
 
@@ -446,14 +456,15 @@ public class NUOPCTest {
 	public void NUOPCProtos_v7() throws SQLException, CoreException {
 		
 		//skip validation for these files
+		String prjName = PROJECT_NUOPC_PROTOTYPES.getName();
 		final List<String> skipVal = new ArrayList<String>();
-		skipVal.add("/"+NUOPC_TAG+"/AtmOcnSelectExternalProto/esm.F90"); //use of ESMF_MethodAdd
-		skipVal.add("/"+NUOPC_TAG+"/AtmOcnSelectProto/esm.F90"); //use if ESMF_MethodAdd
-		skipVal.add("/"+NUOPC_TAG+"/AtmOcnIceSimpleImplicitProto/ice.F90"); //use of wrong ipdv02p2 (should be p3)
-		skipVal.add("/"+NUOPC_TAG+"/AtmOcnIceSimpleImplicitProto/ocn.F90"); //use of wrong ipdv02p2 (should be p3)
-		skipVal.add("/"+NUOPC_TAG+"/AtmOcnSimpleImplicitProto/ocn.F90"); //same as above
-		skipVal.add("/"+NUOPC_TAG+"/AtmOcnSelectExternalProto/OcnModelB/OcnSub/ocnSub.F90"); // calls set service directory, not compderive
-		skipVal.add("/"+NUOPC_TAG+"/AtmOcnSelectExternalProto/OcnModelC/OcnSub/ocnSub.F90"); // same as above
+		skipVal.add("/"+prjName+"/AtmOcnSelectExternalProto/esm.F90"); //use of ESMF_MethodAdd
+		skipVal.add("/"+prjName+"/AtmOcnSelectProto/esm.F90"); //use if ESMF_MethodAdd
+		skipVal.add("/"+prjName+"/AtmOcnIceSimpleImplicitProto/ice.F90"); //use of wrong ipdv02p2 (should be p3)
+		skipVal.add("/"+prjName+"/AtmOcnIceSimpleImplicitProto/ocn.F90"); //use of wrong ipdv02p2 (should be p3)
+		skipVal.add("/"+prjName+"/AtmOcnSimpleImplicitProto/ocn.F90"); //same as above
+		skipVal.add("/"+prjName+"/AtmOcnSelectExternalProto/OcnModelB/OcnSub/ocnSub.F90"); // calls set service directory, not compderive
+		skipVal.add("/"+prjName+"/AtmOcnSelectExternalProto/OcnModelC/OcnSub/ocnSub.F90"); // same as above
 		
 		class MyResourceVisitor implements IResourceVisitor {
 			

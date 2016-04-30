@@ -31,6 +31,7 @@
 				<artifactId>maven-scm-plugin</artifactId>
 				<version>1.9.4</version>
 				<executions>
+					<!-- 
 					<execution>
 						<id>checkout-ESMF_7_0_0_beta_snapshot_59</id>
 						<phase>pre-integration-test</phase>
@@ -42,6 +43,7 @@
 							<checkoutDirectory>${project.build.directory}/ESMF_7_0_0_beta_snapshot_59</checkoutDirectory>
 						</configuration>
 					</execution>
+					-->
 					<execution>
 						<id>checkout-ESMF_7_0_0</id>
 						<phase>pre-integration-test</phase>
