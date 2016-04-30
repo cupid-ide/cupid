@@ -21,7 +21,7 @@ before_script:
   - if [[ "$TRAVIS_OS_NAME" == "linux" ]]; then sh -e /etc/init.d/xvfb start  ;fi
 # OSX
   - if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then brew update ;fi
-  - if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then brew install gcc open-mpi ;fi
+  - if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then brew install open-mpi ;fi
 # common
 #  - if [ ! -d "$HOME/ESMF-INSTALL/ESMF_7_0_0_beta_snapshot_59"  ]; then $TRAVIS_BUILD_DIR/build_esmf.sh ESMF_7_0_0_beta_snapshot_59 ;fi
   - if [ ! -d "$HOME/ESMF-INSTALL/ESMF_7_0_0"  ]; then $TRAVIS_BUILD_DIR/build_esmf.sh ESMF_7_0_0 ;fi
