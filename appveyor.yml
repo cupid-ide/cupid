@@ -25,3 +25,4 @@ test_script:
   - mvn verify
 cache:
   - C:\maven
+  - C:\Users\appveyor\.m2\
