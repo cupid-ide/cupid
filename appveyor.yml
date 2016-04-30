@@ -19,7 +19,7 @@ install:
   - cmd: mvn --version
   - cmd: java -version
 build_script:
-  - cd c:\projects\cupid
+  - cd c:\projects\cupid\org.earthsystemmodeling.cupid.releng
   - mvn clean package
 test_script:
   - mvn verify
