@@ -51,7 +51,7 @@
 							<goal>checkout</goal>
 						</goals>
 						<configuration>
-							<connectionUrl>${nuopc.url.tags}/ESMF_7_0_0</connectionUrl>
+							<connectionUrl>${nuopc.url.tags}/ESMF_7_0_0_win</connectionUrl>
 							<checkoutDirectory>${project.build.directory}/ESMF_7_0_0</checkoutDirectory>
 						</configuration>
 					</execution>
