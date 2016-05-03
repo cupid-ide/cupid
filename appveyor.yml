@@ -16,6 +16,7 @@ install:
   - cmd: SET PATH=C:\maven\apache-maven-3.2.5\bin;%JAVA_HOME%\bin;%PATH:C:\Ruby193\bin;=%
   - cmd: SET MAVEN_OPTS=-XX:MaxPermSize=1g -Xmx2g
   - cmd: SET JAVA_OPTS=-XX:MaxPermSize=1g -Xmx2g
+  - cmd: SET ESMF_INSTALL_ROOT=not_used
   - cmd: mvn --version
   - cmd: java -version
 build_script:
