@@ -7,6 +7,16 @@ Overview
 `Eclipse Integrated Development Environment (IDE) <https://www.eclipse.org/>`_ 
 and provides developers with assistance in writing code compliant with the `National Unified 
 Operational Prediction Capability (NUOPC) software Layer <https://earthsystemcog.org/projects/nuopc/>`_.  
+
+NUOPC is a consortium of Navy, NOAA, and Air Force modelers and their research partners. It aims to advance the weather prediction modeling systems used by meteorologists, mission planners, and decision makers. NUOPC partners are working toward a common model architecture - a standard way of building models - in order to make it easier to collaboratively build modeling systems.  To this end, they have developed a NUOPC Layer that defines conventions and templates for using the `Earth System Modeling Framework (ESMF) <https://earthsystemcog.org/projects/esmf/>`_.
+
+.. note:: 
+    **New to NUOPC??** The following resources are a good starting point for learning about the NUOPC Layer.
+    
+    * The NUOPC home page:  https://www.earthsystemcog.org/projects/nuopc
+    
+    * The NUOPC reference manual and how to guide: https://www.earthsystemcog.org/projects/nuopc/refmans
+
 Eclipse is a graphical user interface for writing software and Cupid acts as a *framework-aware*
 code editing environment.  This means that the requirements of writing NUOPC-compliant code
 are built into the tool so that it can automatically generate code fragments and indicate places
@@ -21,6 +31,7 @@ the Eclipse plugin that provides Fortran language tooling.
    is the god of desire and attraction.  Since this software is designed to build
    couplers for "bringing models together," the name Cupid seemed appropriate.
    
+**Target Audience**
 
 Cupid is intended for model developers who have prior experience with model development, 
 but are new to developing with NUOPC and have a need to work with existing NUOPC-compliant software
@@ -32,7 +43,7 @@ a coupled system with other NUOPC components.
 Cupid is also aimed at developers interested in exploring the benefits of using the Eclipse IDE 
 for improving development productivity.
 
-The key features of Cupid include:
+**Key Features**
 
   * A **reverse engineering engine** that reads existing NUOPC cap code and presents relevant initialize,
     run, finalize phases and specialization points in an outline view.  The outline is synchronized
@@ -47,14 +58,7 @@ The key features of Cupid include:
     developer understand what framework code is required and where it should be located. 
   
 
-.. seealso:: **Additional Resource about NUOPC**
 
-    This manual is not the primary guide to the NUOPC software layer itself.  The
-    following resources are a good starting point for learning about NUOPC.
-    
-    * The NUOPC home page:  https://www.earthsystemcog.org/projects/nuopc
-    
-    * The NUOPC reference manual and how to guide: https://www.earthsystemcog.org/projects/nuopc/refmans
     
     
 
