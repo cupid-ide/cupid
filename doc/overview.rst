@@ -1,28 +1,9 @@
 Overview
 ========
-
-**Cupid version 0.2 is compatible with ESMF version 7.0.**
-
 `Cupid <https://www.earthsystemcog.org/projects/cupid/>`_ is a plugin for the 
 `Eclipse Integrated Development Environment (IDE) <https://www.eclipse.org/>`_ 
 and provides developers with assistance in writing code compliant with the `National Unified 
-Operational Prediction Capability (NUOPC) software Layer <https://earthsystemcog.org/projects/nuopc/>`_.  
-
-NUOPC is a consortium of Navy, NOAA, and Air Force modelers and their research partners. It aims to advance the weather prediction modeling systems used by meteorologists, mission planners, and decision makers. NUOPC partners are working toward a common model architecture - a standard way of building models - in order to make it easier to collaboratively build modeling systems.  To this end, they have developed a NUOPC Layer that defines conventions and templates for using the `Earth System Modeling Framework (ESMF) <https://earthsystemcog.org/projects/esmf/>`_.
-
-.. note:: 
-    **New to NUOPC??** The following resources are a good starting point for learning about the NUOPC Layer.
-    
-    * The NUOPC home page:  https://www.earthsystemcog.org/projects/nuopc
-    
-    * The NUOPC reference manual and how to guide: https://www.earthsystemcog.org/projects/nuopc/refmans
-
-Eclipse is a graphical user interface for writing software and Cupid acts as a *framework-aware*
-code editing environment.  This means that the requirements of writing NUOPC-compliant code
-are built into the tool so that it can automatically generate code fragments and indicate places
-in the code with potential errors before the code is compiled.  To accomplish this, Cupid
-relies heavily on Fortran static analysis capabilities provided by `Photran <http://www.eclipse.org/photran/>`_, 
-the Eclipse plugin that provides Fortran language tooling.
+Operational Prediction Capability (NUOPC) software Layer <https://earthsystemcog.org/projects/nuopc/>`_. 
 
 .. note:: 
    
@@ -30,7 +11,26 @@ the Eclipse plugin that provides Fortran language tooling.
    at generating couplers for Earth System Models.  Cupid, in classical mythology,
    is the god of desire and attraction.  Since this software is designed to build
    couplers for "bringing models together," the name Cupid seemed appropriate.
-   
+
+**What is NUOPC?**
+
+NUOPC is a consortium of Navy, NOAA, and Air Force modelers and their research partners. It aims to advance the weather prediction modeling systems used by meteorologists, mission planners, and decision makers. NUOPC partners are working toward a common model architecture - a standard way of building models - in order to make it easier to collaboratively build modeling systems.  To this end, they have developed a NUOPC Layer that defines conventions and templates for using the `Earth System Modeling Framework (ESMF) <https://earthsystemcog.org/projects/esmf/>`_. **Cupid version 0.2 is compatible with ESMF version 7.0.**
+
+.. note:: 
+    The following resources are a good starting point for learning about the NUOPC Layer.
+    
+    * The NUOPC home page:  https://www.earthsystemcog.org/projects/nuopc
+    
+    * The NUOPC reference manual and how to guide: https://www.earthsystemcog.org/projects/nuopc/refmans
+
+**What is Eclipse?**
+Eclipse is a graphical user interface for writing software and Cupid acts as a *framework-aware*
+code editing environment.  This means that the requirements of writing NUOPC-compliant code
+are built into the tool so that it can automatically generate code fragments and indicate places
+in the code with potential errors before the code is compiled.  To accomplish this, Cupid
+relies heavily on Fortran static analysis capabilities provided by `Photran <http://www.eclipse.org/photran/>`_, 
+the Eclipse plugin that provides Fortran language tooling.
+
 **Target Audience**
 
 Cupid is intended for model developers who have prior experience with model development, 
