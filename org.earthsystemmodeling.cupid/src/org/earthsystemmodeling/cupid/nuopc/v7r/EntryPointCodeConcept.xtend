@@ -71,13 +71,15 @@ public abstract class EntryPointCodeConcept<P extends CodeConcept<?, ?>> extends
 		if (phaseNumber != null) {
 			regCall = setServicesNode.body.filter(ASTCallStmtNode).findFirst[
 				it.subroutineName.text.eic("ESMF_GridCompSetEntryPoint") &&
-				it.litArgExprByKeyword("phase").eic(phaseNumber)
+				it.litArgExprByKeyword("phase")?.eic(phaseNumber)
 			]
 		}
 		else {
 			regCall = setServicesNode.body.filter(ASTCallStmtNode).findFirst[
 				it.subroutineName.text.eic("NUOPC_CompSetEntryPoint") &&
-				it.litArgExprByKeyword("phaseLabelList").toLowerCase.contains(phaseLabel.toLowerCase)
+				( it.litArgExprByKeyword("phaseLabelList")?.toLowerCase?.contains(phaseLabel.toLowerCase) ||
+				  it.litArgExprByIdx(2)?.toLowerCase?.contains(phaseLabel.toLowerCase)	
+				)
 			]
 		}
 			

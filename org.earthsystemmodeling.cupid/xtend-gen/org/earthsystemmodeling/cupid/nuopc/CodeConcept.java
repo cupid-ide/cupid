@@ -11,6 +11,7 @@ import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
+import java.util.function.Consumer;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import org.apache.commons.io.IOUtils;
@@ -57,7 +58,6 @@ import org.eclipse.xtext.xbase.lib.Conversions;
 import org.eclipse.xtext.xbase.lib.Exceptions;
 import org.eclipse.xtext.xbase.lib.Functions.Function1;
 import org.eclipse.xtext.xbase.lib.IterableExtensions;
-import org.eclipse.xtext.xbase.lib.Procedures.Procedure1;
 import org.eclipse.xtext.xbase.lib.Pure;
 
 @SuppressWarnings("all")
@@ -585,9 +585,9 @@ public abstract class CodeConcept<P extends CodeConcept<?, ?>, A extends IASTNod
       final RangeDifference[] diffs = RangeDifferencer.findDifferences(left, right);
       file.deleteMarkers("org.earthsystemmodeling.cupid.cupidmarker", false, IResource.DEPTH_ZERO);
       file.deleteMarkers("org.earthsystemmodeling.cupid.cupidparam", false, IResource.DEPTH_ZERO);
-      final Procedure1<RangeDifference> _function = new Procedure1<RangeDifference>() {
+      final Consumer<RangeDifference> _function = new Consumer<RangeDifference>() {
         @Override
-        public void apply(final RangeDifference rd) {
+        public void accept(final RangeDifference rd) {
           try {
             int _rightStart = rd.rightStart();
             final int start = right.getTokenStart(_rightStart);
@@ -613,10 +613,10 @@ public abstract class CodeConcept<P extends CodeConcept<?, ?>, A extends IASTNod
           }
         }
       };
-      IterableExtensions.<RangeDifference>forEach(((Iterable<RangeDifference>)Conversions.doWrapArray(diffs)), _function);
-      final Procedure1<CodeConcept.MarkerLoc> _function_1 = new Procedure1<CodeConcept.MarkerLoc>() {
+      ((List<RangeDifference>)Conversions.doWrapArray(diffs)).forEach(_function);
+      final Consumer<CodeConcept.MarkerLoc> _function_1 = new Consumer<CodeConcept.MarkerLoc>() {
         @Override
-        public void apply(final CodeConcept.MarkerLoc ml) {
+        public void accept(final CodeConcept.MarkerLoc ml) {
           try {
             final IMarker marker = file.createMarker("org.earthsystemmodeling.cupid.cupidparam");
             marker.setAttribute(IMarker.CHAR_START, ml.start);
@@ -627,7 +627,7 @@ public abstract class CodeConcept<P extends CodeConcept<?, ?>, A extends IASTNod
           }
         }
       };
-      IterableExtensions.<CodeConcept.MarkerLoc>forEach(this.paramMarkers, _function_1);
+      this.paramMarkers.forEach(_function_1);
     } catch (Throwable _e) {
       throw Exceptions.sneakyThrow(_e);
     }

@@ -2,6 +2,7 @@ package org.earthsystemmodeling.cupid.nuopc.v7bs59;
 
 import com.google.common.base.Objects;
 import com.google.common.collect.Iterables;
+import java.util.function.Consumer;
 import org.earthsystemmodeling.cupid.annotation.Child;
 import org.earthsystemmodeling.cupid.annotation.Label;
 import org.earthsystemmodeling.cupid.annotation.MappingType;
@@ -30,7 +31,6 @@ import org.eclipse.xtend2.lib.StringConcatenation;
 import org.eclipse.xtext.xbase.lib.Exceptions;
 import org.eclipse.xtext.xbase.lib.Functions.Function1;
 import org.eclipse.xtext.xbase.lib.IterableExtensions;
-import org.eclipse.xtext.xbase.lib.Procedures.Procedure1;
 
 @Label(label = "NUOPC Driver")
 @MappingType("module")
@@ -226,9 +226,9 @@ public abstract class NUOPCComponent extends CodeConcept<CodeConcept<?, ?>, ASTM
           this.name = _text;
           IASTListNode<IModuleBodyConstruct> _moduleBody = this._astRef.getModuleBody();
           Iterable<ASTUseStmtNode> _filter_1 = Iterables.<ASTUseStmtNode>filter(_moduleBody, ASTUseStmtNode.class);
-          final Procedure1<ASTUseStmtNode> _function_1 = new Procedure1<ASTUseStmtNode>() {
+          final Consumer<ASTUseStmtNode> _function_1 = new Consumer<ASTUseStmtNode>() {
             @Override
-            public void apply(final ASTUseStmtNode it) {
+            public void accept(final ASTUseStmtNode it) {
               Token _name = it.getName();
               String _text = _name.getText();
               boolean _eic = ASTQuery.eic(_text, "ESMF");
@@ -255,7 +255,7 @@ public abstract class NUOPCComponent extends CodeConcept<CodeConcept<?, ?>, ASTM
               }
             }
           };
-          IterableExtensions.<ASTUseStmtNode>forEach(_filter_1, _function_1);
+          _filter_1.forEach(_function_1);
           _xblockexpression_1 = this.<NUOPCComponent>reverseChildren();
         }
         _xifexpression = _xblockexpression_1;
@@ -326,9 +326,9 @@ public abstract class NUOPCComponent extends CodeConcept<CodeConcept<?, ?>, ASTM
         _root.setProgramUnitList(pul);
         IASTListNode<IModuleBodyConstruct> _moduleBody = moduleNode.getModuleBody();
         Iterable<ASTUseStmtNode> _filter = Iterables.<ASTUseStmtNode>filter(_moduleBody, ASTUseStmtNode.class);
-        final Procedure1<ASTUseStmtNode> _function = new Procedure1<ASTUseStmtNode>() {
+        final Consumer<ASTUseStmtNode> _function = new Consumer<ASTUseStmtNode>() {
           @Override
-          public void apply(final ASTUseStmtNode it) {
+          public void accept(final ASTUseStmtNode it) {
             Token _name = it.getName();
             String _text = _name.getText();
             boolean _eic = ASTQuery.eic(_text, "ESMF");
@@ -355,7 +355,7 @@ public abstract class NUOPCComponent extends CodeConcept<CodeConcept<?, ?>, ASTM
             }
           }
         };
-        IterableExtensions.<ASTUseStmtNode>forEach(_filter, _function);
+        _filter.forEach(_function);
         _xblockexpression = super.<NUOPCComponent>forward();
       }
       return _xblockexpression;

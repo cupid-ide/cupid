@@ -4,6 +4,7 @@ import com.google.common.base.Objects;
 import com.google.common.collect.Iterables;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.function.Consumer;
 import org.earthsystemmodeling.cupid.annotation.Child;
 import org.earthsystemmodeling.cupid.annotation.Doc;
 import org.earthsystemmodeling.cupid.annotation.Label;
@@ -37,7 +38,6 @@ import org.eclipse.xtext.xbase.lib.Exceptions;
 import org.eclipse.xtext.xbase.lib.Functions.Function1;
 import org.eclipse.xtext.xbase.lib.IterableExtensions;
 import org.eclipse.xtext.xbase.lib.ListExtensions;
-import org.eclipse.xtext.xbase.lib.Procedures.Procedure1;
 
 @Label(label = "NUOPC Driver")
 @MappingType("module")
@@ -585,9 +585,9 @@ public class NUOPCDriver extends NUOPCComponent {
             }
           };
           Iterable<ASTCallStmtNode> _filter_1 = IterableExtensions.<ASTCallStmtNode>filter(_filter, _function);
-          final Procedure1<ASTCallStmtNode> _function_1 = new Procedure1<ASTCallStmtNode>() {
+          final Consumer<ASTCallStmtNode> _function_1 = new Consumer<ASTCallStmtNode>() {
             @Override
-            public void apply(final ASTCallStmtNode it) {
+            public void accept(final ASTCallStmtNode it) {
               NUOPCDriver.IPD.AdvertiseField advField = new NUOPCDriver.IPD.AdvertiseField(AdvertiseField.this._parent);
               String _litArgExprByIdx = ASTQuery.litArgExprByIdx(it, 0);
               advField.state = _litArgExprByIdx;
@@ -597,7 +597,7 @@ public class NUOPCDriver extends NUOPCComponent {
               retList.add(advField);
             }
           };
-          IterableExtensions.<ASTCallStmtNode>forEach(_filter_1, _function_1);
+          _filter_1.forEach(_function_1);
           _xblockexpression = retList;
         }
         return _xblockexpression;
@@ -670,9 +670,9 @@ public class NUOPCDriver extends NUOPCComponent {
             }
           };
           Iterable<ASTCallStmtNode> _filter_1 = IterableExtensions.<ASTCallStmtNode>filter(_filter, _function);
-          final Procedure1<ASTCallStmtNode> _function_1 = new Procedure1<ASTCallStmtNode>() {
+          final Consumer<ASTCallStmtNode> _function_1 = new Consumer<ASTCallStmtNode>() {
             @Override
-            public void apply(final ASTCallStmtNode it) {
+            public void accept(final ASTCallStmtNode it) {
               NUOPCDriver.IPD.RealizeField relField = new NUOPCDriver.IPD.RealizeField(RealizeField.this._parent);
               String _litArgExprByIdx = ASTQuery.litArgExprByIdx(it, 0);
               relField.state = _litArgExprByIdx;
@@ -682,7 +682,7 @@ public class NUOPCDriver extends NUOPCComponent {
               retList.add(relField);
             }
           };
-          IterableExtensions.<ASTCallStmtNode>forEach(_filter_1, _function_1);
+          _filter_1.forEach(_function_1);
           _xblockexpression = retList;
         }
         return _xblockexpression;
@@ -1565,9 +1565,9 @@ public class NUOPCDriver extends NUOPCComponent {
           }
         };
         Iterable<ASTCallStmtNode> _filter_1 = IterableExtensions.<ASTCallStmtNode>filter(_filter, _function);
-        final Procedure1<ASTCallStmtNode> _function_1 = new Procedure1<ASTCallStmtNode>() {
+        final Consumer<ASTCallStmtNode> _function_1 = new Consumer<ASTCallStmtNode>() {
           @Override
-          public void apply(final ASTCallStmtNode c) {
+          public void accept(final ASTCallStmtNode c) {
             CodeConcept<NUOPCDriver.SetModelServices, ASTCallStmtNode> _newInstance = SetModelServices_AddComp.this.newInstance();
             NUOPCDriver.SetModelServices_AddComp smsac = ((NUOPCDriver.SetModelServices_AddComp) _newInstance);
             IASTListNode<ASTSubroutineArgNode> _argList = c.getArgList();
@@ -1609,7 +1609,7 @@ public class NUOPCDriver extends NUOPCComponent {
             retList.add(smsac);
           }
         };
-        IterableExtensions.<ASTCallStmtNode>forEach(_filter_1, _function_1);
+        _filter_1.forEach(_function_1);
         _xblockexpression = retList;
       }
       return _xblockexpression;
@@ -1909,9 +1909,9 @@ public class NUOPCDriver extends NUOPCComponent {
           }
         };
         Iterable<ASTCallStmtNode> _filter_1 = IterableExtensions.<ASTCallStmtNode>filter(_filter, _function);
-        final Procedure1<ASTCallStmtNode> _function_1 = new Procedure1<ASTCallStmtNode>() {
+        final Consumer<ASTCallStmtNode> _function_1 = new Consumer<ASTCallStmtNode>() {
           @Override
-          public void apply(final ASTCallStmtNode c) {
+          public void accept(final ASTCallStmtNode c) {
             CodeConcept<NUOPCDriver.SetRunSequence, ASTCallStmtNode> _newInstance = SetRunSequence_AddRunElement.this.newInstance();
             NUOPCDriver.SetRunSequence_AddRunElement srsare = ((NUOPCDriver.SetRunSequence_AddRunElement) _newInstance);
             IASTListNode<ASTSubroutineArgNode> _argList = c.getArgList();
@@ -1984,7 +1984,7 @@ public class NUOPCDriver extends NUOPCComponent {
             retList.add(srsare);
           }
         };
-        IterableExtensions.<ASTCallStmtNode>forEach(_filter_1, _function_1);
+        _filter_1.forEach(_function_1);
         _xblockexpression = retList;
       }
       return _xblockexpression;

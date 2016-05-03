@@ -97,7 +97,10 @@ public abstract class EntryPointCodeConcept<P extends CodeConcept<?, ?>> extends
               _and = false;
             } else {
               String _litArgExprByKeyword = ASTQuery.litArgExprByKeyword(it, "phase");
-              boolean _eic_1 = ASTQuery.eic(_litArgExprByKeyword, EntryPointCodeConcept.this.phaseNumber);
+              boolean _eic_1 = false;
+              if (_litArgExprByKeyword!=null) {
+                _eic_1=ASTQuery.eic(_litArgExprByKeyword, EntryPointCodeConcept.this.phaseNumber);
+              }
               _and = _eic_1;
             }
             return Boolean.valueOf(_and);
@@ -118,11 +121,33 @@ public abstract class EntryPointCodeConcept<P extends CodeConcept<?, ?>> extends
             if (!_eic) {
               _and = false;
             } else {
+              boolean _or = false;
               String _litArgExprByKeyword = ASTQuery.litArgExprByKeyword(it, "phaseLabelList");
-              String _lowerCase = _litArgExprByKeyword.toLowerCase();
-              String _lowerCase_1 = EntryPointCodeConcept.this.phaseLabel.toLowerCase();
-              boolean _contains = _lowerCase.contains(_lowerCase_1);
-              _and = _contains;
+              String _lowerCase = null;
+              if (_litArgExprByKeyword!=null) {
+                _lowerCase=_litArgExprByKeyword.toLowerCase();
+              }
+              boolean _contains = false;
+              if (_lowerCase!=null) {
+                String _lowerCase_1 = EntryPointCodeConcept.this.phaseLabel.toLowerCase();
+                _contains=_lowerCase.contains(_lowerCase_1);
+              }
+              if (_contains) {
+                _or = true;
+              } else {
+                String _litArgExprByIdx = ASTQuery.litArgExprByIdx(it, 2);
+                String _lowerCase_2 = null;
+                if (_litArgExprByIdx!=null) {
+                  _lowerCase_2=_litArgExprByIdx.toLowerCase();
+                }
+                boolean _contains_1 = false;
+                if (_lowerCase_2!=null) {
+                  String _lowerCase_3 = EntryPointCodeConcept.this.phaseLabel.toLowerCase();
+                  _contains_1=_lowerCase_2.contains(_lowerCase_3);
+                }
+                _or = _contains_1;
+              }
+              _and = _or;
             }
             return Boolean.valueOf(_and);
           }
