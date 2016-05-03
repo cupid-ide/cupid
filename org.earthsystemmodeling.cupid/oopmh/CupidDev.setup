@@ -59,6 +59,8 @@
         name="org.eclipse.emf.sdk.feature.group"/>
     <requirement
         name="org.eclipse.team.svn.feature.group"/>
+    <requirement
+        name="org.eclipse.egit.feature.group"/>
     <description>Install the tools needed in the IDE to work with the source code for ${scope.project.label}</description>
   </setupTask>
   <setupTask
@@ -225,6 +227,8 @@
           name="org.eclipse.photran.feature.group"/>
       <requirement
           name="org.eclipse.ptp.pldt.fortran.feature.group"/>
+      <requirement
+          name="org.eclipse.egit.feature.group"/>
       <sourceLocator
           rootFolder="${git.clone.location}"
           locateNestedProjects="true"/>
