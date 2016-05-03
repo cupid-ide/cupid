@@ -24,6 +24,7 @@ NUOPC is a consortium of Navy, NOAA, and Air Force modelers and their research p
     * The NUOPC reference manual and how to guide: https://www.earthsystemcog.org/projects/nuopc/refmans
 
 **What is Eclipse?**
+
 Eclipse is a graphical user interface for writing software and Cupid acts as a *framework-aware*
 code editing environment.  This means that the requirements of writing NUOPC-compliant code
 are built into the tool so that it can automatically generate code fragments and indicate places
