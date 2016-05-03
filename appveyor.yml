@@ -22,7 +22,7 @@ build_script:
   - cd c:\projects\cupid\org.earthsystemmodeling.cupid.releng
   - mvn clean package
 test_script:
-  - mvn verify
+  - mvn clean
 cache:
   - C:\maven
   - C:\Users\appveyor\.m2\
