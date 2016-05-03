@@ -27,7 +27,12 @@ NUOPC is a consortium of Navy, NOAA, and Air Force modelers and their research p
 What is Eclipse?
 ----------------
 
-Eclipse is a graphical user interface for writing software and Cupid acts as a *framework-aware*
+Eclipse is a graphical user interface or integrated development environment (IDE) used in computer programming for writing software. It contains a base workspace and an extensible plugin system for customizing the environment. Eclipse is written mostly in Java and its primary use is for developing Java applications, but it may also be used to develop applications in other programming languages through the use of plugins
+
+The basic premise behind Cupid
+------------------------------
+
+Cupid acts as a *framework-aware*
 code editing environment.  This means that the requirements of writing NUOPC-compliant code
 are built into the tool so that it can automatically generate code fragments and indicate places
 in the code with potential errors before the code is compiled.  To accomplish this, Cupid
