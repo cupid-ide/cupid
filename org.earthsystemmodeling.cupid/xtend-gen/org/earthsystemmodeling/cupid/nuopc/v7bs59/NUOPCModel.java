@@ -4,7 +4,6 @@ import com.google.common.base.Objects;
 import com.google.common.collect.Iterables;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.function.Consumer;
 import org.earthsystemmodeling.cupid.annotation.Child;
 import org.earthsystemmodeling.cupid.annotation.Doc;
 import org.earthsystemmodeling.cupid.annotation.Label;
@@ -30,6 +29,7 @@ import org.eclipse.xtext.xbase.lib.CollectionLiterals;
 import org.eclipse.xtext.xbase.lib.Exceptions;
 import org.eclipse.xtext.xbase.lib.Functions.Function1;
 import org.eclipse.xtext.xbase.lib.IterableExtensions;
+import org.eclipse.xtext.xbase.lib.Procedures.Procedure1;
 
 @Label(label = "NUOPC Model")
 @MappingType("module")
@@ -370,9 +370,9 @@ public class NUOPCModel extends NUOPCComponent {
             }
           };
           Iterable<ASTCallStmtNode> _filter_1 = IterableExtensions.<ASTCallStmtNode>filter(_filter, _function);
-          final Consumer<ASTCallStmtNode> _function_1 = new Consumer<ASTCallStmtNode>() {
+          final Procedure1<ASTCallStmtNode> _function_1 = new Procedure1<ASTCallStmtNode>() {
             @Override
-            public void accept(final ASTCallStmtNode it) {
+            public void apply(final ASTCallStmtNode it) {
               NUOPCModel.IPD.AdvertiseField advField = new NUOPCModel.IPD.AdvertiseField(AdvertiseField.this._parent);
               String _litArgExprByIdx = ASTQuery.litArgExprByIdx(it, 0);
               advField.state = _litArgExprByIdx;
@@ -382,7 +382,7 @@ public class NUOPCModel extends NUOPCComponent {
               retList.add(advField);
             }
           };
-          _filter_1.forEach(_function_1);
+          IterableExtensions.<ASTCallStmtNode>forEach(_filter_1, _function_1);
           _xblockexpression = retList;
         }
         return _xblockexpression;
@@ -455,9 +455,9 @@ public class NUOPCModel extends NUOPCComponent {
             }
           };
           Iterable<ASTCallStmtNode> _filter_1 = IterableExtensions.<ASTCallStmtNode>filter(_filter, _function);
-          final Consumer<ASTCallStmtNode> _function_1 = new Consumer<ASTCallStmtNode>() {
+          final Procedure1<ASTCallStmtNode> _function_1 = new Procedure1<ASTCallStmtNode>() {
             @Override
-            public void accept(final ASTCallStmtNode it) {
+            public void apply(final ASTCallStmtNode it) {
               NUOPCModel.IPD.RealizeField relField = new NUOPCModel.IPD.RealizeField(RealizeField.this._parent);
               String _litArgExprByIdx = ASTQuery.litArgExprByIdx(it, 0);
               relField.state = _litArgExprByIdx;
@@ -467,7 +467,7 @@ public class NUOPCModel extends NUOPCComponent {
               retList.add(relField);
             }
           };
-          _filter_1.forEach(_function_1);
+          IterableExtensions.<ASTCallStmtNode>forEach(_filter_1, _function_1);
           _xblockexpression = retList;
         }
         return _xblockexpression;

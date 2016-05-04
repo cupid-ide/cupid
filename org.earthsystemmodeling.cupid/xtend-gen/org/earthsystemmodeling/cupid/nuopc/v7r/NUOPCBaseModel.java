@@ -4,7 +4,6 @@ import com.google.common.base.Objects;
 import com.google.common.collect.Iterables;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.function.Consumer;
 import org.earthsystemmodeling.cupid.NUOPC.Field;
 import org.earthsystemmodeling.cupid.NUOPC.Grid;
 import org.earthsystemmodeling.cupid.annotation.Label;
@@ -25,6 +24,7 @@ import org.eclipse.xtext.xbase.lib.CollectionLiterals;
 import org.eclipse.xtext.xbase.lib.Exceptions;
 import org.eclipse.xtext.xbase.lib.Functions.Function1;
 import org.eclipse.xtext.xbase.lib.IterableExtensions;
+import org.eclipse.xtext.xbase.lib.Procedures.Procedure1;
 
 @SuppressWarnings("all")
 public class NUOPCBaseModel {
@@ -66,9 +66,9 @@ public class NUOPCBaseModel {
           }
         };
         Iterable<ASTCallStmtNode> _filter_1 = IterableExtensions.<ASTCallStmtNode>filter(_filter, _function);
-        final Consumer<ASTCallStmtNode> _function_1 = new Consumer<ASTCallStmtNode>() {
+        final Procedure1<ASTCallStmtNode> _function_1 = new Procedure1<ASTCallStmtNode>() {
           @Override
-          public void accept(final ASTCallStmtNode it) {
+          public void apply(final ASTCallStmtNode it) {
             NUOPCBaseModel.AdvertiseField advField = new NUOPCBaseModel.AdvertiseField(AdvertiseField.this._parent);
             String _litArgExprByIdx = ASTQuery.litArgExprByIdx(it, 0);
             advField.state = _litArgExprByIdx;
@@ -80,7 +80,7 @@ public class NUOPCBaseModel {
             retList.add(advField);
           }
         };
-        _filter_1.forEach(_function_1);
+        IterableExtensions.<ASTCallStmtNode>forEach(_filter_1, _function_1);
         _xblockexpression = retList;
       }
       return _xblockexpression;
@@ -167,9 +167,9 @@ public class NUOPCBaseModel {
           }
         };
         Iterable<ASTCallStmtNode> _filter_1 = IterableExtensions.<ASTCallStmtNode>filter(_filter, _function);
-        final Consumer<ASTCallStmtNode> _function_1 = new Consumer<ASTCallStmtNode>() {
+        final Procedure1<ASTCallStmtNode> _function_1 = new Procedure1<ASTCallStmtNode>() {
           @Override
-          public void accept(final ASTCallStmtNode it) {
+          public void apply(final ASTCallStmtNode it) {
             NUOPCBaseModel.RealizeField relField = new NUOPCBaseModel.RealizeField(RealizeField.this._parent);
             String _litArgExprByIdx = ASTQuery.litArgExprByIdx(it, 0);
             relField.state = _litArgExprByIdx;
@@ -179,7 +179,7 @@ public class NUOPCBaseModel {
             retList.add(relField);
           }
         };
-        _filter_1.forEach(_function_1);
+        IterableExtensions.<ASTCallStmtNode>forEach(_filter_1, _function_1);
         _xblockexpression = retList;
       }
       return _xblockexpression;

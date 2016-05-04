@@ -4,7 +4,6 @@ import com.google.common.base.Objects;
 import com.google.common.collect.Iterables;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.function.Consumer;
 import org.earthsystemmodeling.cupid.NUOPC.ESMF_STAGGERLOC;
 import org.earthsystemmodeling.cupid.NUOPC.Field;
 import org.earthsystemmodeling.cupid.NUOPC.Grid;
@@ -32,6 +31,8 @@ import org.eclipse.xtend.lib.annotations.Accessors;
 import org.eclipse.xtend2.lib.StringConcatenation;
 import org.eclipse.xtext.xbase.lib.CollectionLiterals;
 import org.eclipse.xtext.xbase.lib.Exceptions;
+import org.eclipse.xtext.xbase.lib.IterableExtensions;
+import org.eclipse.xtext.xbase.lib.Procedures.Procedure1;
 import org.eclipse.xtext.xbase.lib.Pure;
 
 @Label(label = "NUOPC Mediator")
@@ -1168,9 +1169,9 @@ public class NUOPCMediator extends NUOPCComponent {
     public void forward(final Mediator high) {
       EList<Grid> _grids = high.getGrids();
       Iterable<UniformGrid> _filter = Iterables.<UniformGrid>filter(_grids, UniformGrid.class);
-      final Consumer<UniformGrid> _function = new Consumer<UniformGrid>() {
+      final Procedure1<UniformGrid> _function = new Procedure1<UniformGrid>() {
         @Override
-        public void accept(final UniformGrid g) {
+        public void apply(final UniformGrid g) {
           final GridCodeConcept.CreateUniformGrid cug = new GridCodeConcept.CreateUniformGrid(Initialization.this);
           StringConcatenation _builder = new StringConcatenation();
           _builder.append("\"");
@@ -1191,18 +1192,18 @@ public class NUOPCMediator extends NUOPCComponent {
           double[] _doubleArray_1 = CodeConcept.toDoubleArray(_maxCornerCoord);
           cug.setMaxCornerCoord(_doubleArray_1);
           EList<ESMF_STAGGERLOC> _staggerLocToFillCoords = g.getStaggerLocToFillCoords();
-          final Consumer<ESMF_STAGGERLOC> _function = new Consumer<ESMF_STAGGERLOC>() {
+          final Procedure1<ESMF_STAGGERLOC> _function = new Procedure1<ESMF_STAGGERLOC>() {
             @Override
-            public void accept(final ESMF_STAGGERLOC l) {
+            public void apply(final ESMF_STAGGERLOC l) {
               List<String> _staggerLocs = cug.getStaggerLocs();
               String _literal = l.getLiteral();
               _staggerLocs.add(_literal);
             }
           };
-          _staggerLocToFillCoords.forEach(_function);
+          IterableExtensions.<ESMF_STAGGERLOC>forEach(_staggerLocToFillCoords, _function);
         }
       };
-      _filter.forEach(_function);
+      IterableExtensions.<UniformGrid>forEach(_filter, _function);
       NUOPCMediator.IPD _switchResult = null;
       IPDVersion _iPDVersion = high.getIPDVersion();
       if (_iPDVersion != null) {

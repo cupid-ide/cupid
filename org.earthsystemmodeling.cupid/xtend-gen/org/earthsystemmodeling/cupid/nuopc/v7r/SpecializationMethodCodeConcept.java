@@ -4,7 +4,6 @@ import com.google.common.base.Objects;
 import com.google.common.collect.Iterables;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.function.Consumer;
 import org.earthsystemmodeling.cupid.annotation.Child;
 import org.earthsystemmodeling.cupid.annotation.Label;
 import org.earthsystemmodeling.cupid.annotation.MappingType;
@@ -148,9 +147,9 @@ public abstract class SpecializationMethodCodeConcept<P extends CodeConcept<?, ?
         }
       };
       Iterable<ASTSubroutineSubprogramNode> _filter = IterableExtensions.<ASTSubroutineSubprogramNode>filter(esmfMethods, _function);
-      final Consumer<ASTSubroutineSubprogramNode> _function_1 = new Consumer<ASTSubroutineSubprogramNode>() {
+      final Procedure1<ASTSubroutineSubprogramNode> _function_1 = new Procedure1<ASTSubroutineSubprogramNode>() {
         @Override
-        public void accept(final ASTSubroutineSubprogramNode m) {
+        public void apply(final ASTSubroutineSubprogramNode m) {
           IASTListNode<IBodyConstruct> _body = setServicesNode.getBody();
           Iterable<ASTCallStmtNode> _filter = Iterables.<ASTCallStmtNode>filter(_body, ASTCallStmtNode.class);
           final Function1<ASTCallStmtNode, Boolean> _function = new Function1<ASTCallStmtNode, Boolean>() {
@@ -188,9 +187,9 @@ public abstract class SpecializationMethodCodeConcept<P extends CodeConcept<?, ?
             }
           };
           Iterable<ASTCallStmtNode> _filter_1 = IterableExtensions.<ASTCallStmtNode>filter(_filter, _function);
-          final Consumer<ASTCallStmtNode> _function_1 = new Consumer<ASTCallStmtNode>() {
+          final Procedure1<ASTCallStmtNode> _function_1 = new Procedure1<ASTCallStmtNode>() {
             @Override
-            public void accept(final ASTCallStmtNode c) {
+            public void apply(final ASTCallStmtNode c) {
               CodeConcept<P, ASTSubroutineSubprogramNode> _newInstance = SpecializationMethodCodeConcept.this.newInstance();
               SpecializationMethodCodeConcept<P> smcc = ((SpecializationMethodCodeConcept<P>) _newInstance);
               final Procedure1<SpecializationMethodCodeConcept<P>> _function = new Procedure1<SpecializationMethodCodeConcept<P>>() {
@@ -221,10 +220,10 @@ public abstract class SpecializationMethodCodeConcept<P extends CodeConcept<?, ?
               }
             }
           };
-          _filter_1.forEach(_function_1);
+          IterableExtensions.<ASTCallStmtNode>forEach(_filter_1, _function_1);
         }
       };
-      _filter.forEach(_function_1);
+      IterableExtensions.<ASTSubroutineSubprogramNode>forEach(_filter, _function_1);
       _xblockexpression = resultList;
     }
     return _xblockexpression;
