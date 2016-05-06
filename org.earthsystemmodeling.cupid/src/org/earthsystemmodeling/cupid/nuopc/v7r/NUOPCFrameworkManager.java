@@ -85,8 +85,9 @@ public class NUOPCFrameworkManager {
 				
 				PhotranVPG vpg = PhotranVPG.getInstance();
 				vpg.ensureVPGIsUpToDate(monitor);
-						
-				db.clearMarksToKeep();
+				
+				db.clear();
+				//db.clearMarksToKeep();
 				
 				List<IFile> files;
 				files = vpg.findFilesThatImportModule("NUOPC_Driver");
@@ -102,11 +103,11 @@ public class NUOPCFrameworkManager {
 							}
 							if (driver != null) {
 								db.store(f, driver);
-								db.markToKeep(f);
+								//db.markToKeep(f);
 							}
 						}
 						else {
-							db.markToKeep(f);
+						//db.markToKeep(f);
 						}
 					}
 				}
@@ -124,11 +125,11 @@ public class NUOPCFrameworkManager {
 							}
 							if (model != null) {
 								db.store(f, model);
-								db.markToKeep(f);
+								//db.markToKeep(f);
 							}
 						}
 						else {
-							db.markToKeep(f);
+							//db.markToKeep(f);
 						}
 					}
 				}
@@ -146,16 +147,16 @@ public class NUOPCFrameworkManager {
 							}
 							if (mediator != null) {
 								db.store(f, mediator);
-								db.markToKeep(f);
+								//db.markToKeep(f);
 							}
 						}
 						else {
-							db.markToKeep(f);
+							//db.markToKeep(f);
 						}
 					}
 				}
 			
-				db.removeUnmarked();
+				//db.removeUnmarked();
 				
 				return Status.OK_STATUS;
 			}

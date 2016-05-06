@@ -64,6 +64,11 @@ public class NUOPCFrameworkDB {
 		}
 	}
 	
+	public void clear() {
+		fileToTimestamp.clear();
+		fileToConcept.clear();
+	}
+	
 	public void markToKeep(IFile file) {
 		markToKeep.add(file);
 	}
