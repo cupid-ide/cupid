@@ -17,6 +17,7 @@ import org.eclipse.emf.common.util.EList;
  *   <li>{@link org.earthsystemmodeling.cupid.NUOPC.BaseModel#getGrids <em>Grids</em>}</li>
  *   <li>{@link org.earthsystemmodeling.cupid.NUOPC.BaseModel#getImportFields <em>Import Fields</em>}</li>
  *   <li>{@link org.earthsystemmodeling.cupid.NUOPC.BaseModel#getExportFields <em>Export Fields</em>}</li>
+ *   <li>{@link org.earthsystemmodeling.cupid.NUOPC.BaseModel#getAdvance <em>Advance</em>}</li>
  * </ul>
  *
  * @see org.earthsystemmodeling.cupid.NUOPC.NUOPCPackage#getBaseModel()
@@ -76,4 +77,20 @@ public interface BaseModel extends Component {
 	 * @generated
 	 */
 	EList<Field> getExportFields();
+
+	/**
+	 * Returns the value of the '<em><b>Advance</b></em>' containment reference list.
+	 * The list contents are of type {@link org.earthsystemmodeling.cupid.NUOPC.Advance}.
+	 * <!-- begin-user-doc -->
+	 * <p>
+	 * If the meaning of the '<em>Advance</em>' containment reference list isn't clear,
+	 * there really should be more of a description here...
+	 * </p>
+	 * <!-- end-user-doc -->
+	 * @return the value of the '<em>Advance</em>' containment reference list.
+	 * @see org.earthsystemmodeling.cupid.NUOPC.NUOPCPackage#getBaseModel_Advance()
+	 * @model containment="true" required="true"
+	 * @generated
+	 */
+	EList<Advance> getAdvance();
 } // BaseModel

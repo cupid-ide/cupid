@@ -1,17 +1,29 @@
 package org.earthsystemmodeling.cupid.nuopc.v7r;
 
 import com.google.common.base.Objects;
+import com.google.common.collect.Iterables;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Set;
+import org.earthsystemmodeling.cupid.NUOPC.Advance;
+import org.earthsystemmodeling.cupid.NUOPC.BaseModel;
 import org.earthsystemmodeling.cupid.annotation.Child;
 import org.earthsystemmodeling.cupid.annotation.Label;
 import org.earthsystemmodeling.cupid.annotation.MappingType;
 import org.earthsystemmodeling.cupid.annotation.Name;
+import org.earthsystemmodeling.cupid.nuopc.ASTQuery;
 import org.earthsystemmodeling.cupid.nuopc.BasicCodeConcept;
 import org.earthsystemmodeling.cupid.nuopc.CodeConcept;
+import org.earthsystemmodeling.cupid.nuopc.CodeGenerationException;
+import org.earthsystemmodeling.cupid.nuopc.ESMFCodeTemplates;
+import org.earthsystemmodeling.cupid.nuopc.ReverseEngineerException;
 import org.earthsystemmodeling.cupid.nuopc.v7r.NUOPCComponent;
 import org.earthsystemmodeling.cupid.util.CodeExtraction;
+import org.eclipse.emf.common.util.EList;
 import org.eclipse.photran.internal.core.lexer.Token;
+import org.eclipse.photran.internal.core.parser.ASTAcValueNode;
 import org.eclipse.photran.internal.core.parser.ASTAccessStmtNode;
+import org.eclipse.photran.internal.core.parser.ASTArrayConstructorNode;
 import org.eclipse.photran.internal.core.parser.ASTCallStmtNode;
 import org.eclipse.photran.internal.core.parser.ASTContainsStmtNode;
 import org.eclipse.photran.internal.core.parser.ASTImplicitStmtNode;
@@ -22,16 +34,208 @@ import org.eclipse.photran.internal.core.parser.ASTSubroutineStmtNode;
 import org.eclipse.photran.internal.core.parser.ASTSubroutineSubprogramNode;
 import org.eclipse.photran.internal.core.parser.ASTUseStmtNode;
 import org.eclipse.photran.internal.core.parser.IASTListNode;
+import org.eclipse.photran.internal.core.parser.IASTNode;
 import org.eclipse.photran.internal.core.parser.IBodyConstruct;
+import org.eclipse.photran.internal.core.parser.IExpr;
 import org.eclipse.photran.internal.core.parser.IModuleBodyConstruct;
 import org.eclipse.xtend2.lib.StringConcatenation;
+import org.eclipse.xtext.xbase.lib.CollectionLiterals;
+import org.eclipse.xtext.xbase.lib.Exceptions;
 import org.eclipse.xtext.xbase.lib.Functions.Function1;
 import org.eclipse.xtext.xbase.lib.IterableExtensions;
+import org.eclipse.xtext.xbase.lib.Procedures.Procedure1;
 
 @Label(label = "SetServices")
 @MappingType("subroutine")
 @SuppressWarnings("all")
 public class SetServicesCodeConcept<P extends NUOPCComponent> extends CodeConcept<P, ASTSubroutineSubprogramNode> {
+  @Label(label = "Set Entry Point")
+  @MappingType("call")
+  public static class MethodRegistration extends CodeConcept<SetServicesCodeConcept, ASTCallStmtNode> {
+    public String methodType;
+    
+    public List<String> phaseLabelList;
+    
+    public String userRoutine;
+    
+    public boolean internal;
+    
+    public MethodRegistration(final SetServicesCodeConcept parent) {
+      super(parent);
+      parent.setOrAddChild(this);
+      ArrayList<String> _newArrayList = CollectionLiterals.<String>newArrayList();
+      this.phaseLabelList = _newArrayList;
+      this.methodType = "ESMF_METHOD_INITIALIZE";
+      this.phaseLabelList.add("\"phaseLabel\"");
+      this.userRoutine = "userRoutine";
+      this.internal = false;
+    }
+    
+    @Override
+    public String name() {
+      String _xifexpression = null;
+      int _size = this.phaseLabelList.size();
+      boolean _greaterThan = (_size > 0);
+      if (_greaterThan) {
+        String _get = this.phaseLabelList.get(0);
+        _xifexpression = ((this.userRoutine + " / ") + _get);
+      } else {
+        _xifexpression = this.userRoutine;
+      }
+      return _xifexpression;
+    }
+    
+    @Override
+    public CodeConcept<?, ?> forward() {
+      try {
+        SetServicesCodeConcept.MethodRegistration _xblockexpression = null;
+        {
+          IASTNode _aSTRef = this._parent.getASTRef();
+          final ASTSubroutineSubprogramNode setServicesNode = ((ASTSubroutineSubprogramNode) _aSTRef);
+          boolean _equals = Objects.equal(setServicesNode, null);
+          if (_equals) {
+            throw new CodeGenerationException("No SetServices found");
+          }
+          String _xifexpression = null;
+          if (this.internal) {
+            _xifexpression = "NUOPC_CompSetInternalEntryPoint";
+          } else {
+            _xifexpression = "NUOPC_CompSetEntryPoint";
+          }
+          final String subroutineToCall = _xifexpression;
+          StringConcatenation _builder = new StringConcatenation();
+          _builder.newLine();
+          _builder.append("call ");
+          _builder.append(subroutineToCall, "");
+          _builder.append("(");
+          _builder.append(this._parent.paramGridComp, "");
+          _builder.append(", ");
+          _builder.append(this.methodType, "");
+          _builder.append(", &");
+          _builder.newLineIfNotEmpty();
+          _builder.append("      ");
+          _builder.append("phaseLabelList=(/");
+          {
+            boolean _hasElements = false;
+            for(final String pl : this.phaseLabelList) {
+              if (!_hasElements) {
+                _hasElements = true;
+              } else {
+                _builder.appendImmediate(", ", "      ");
+              }
+              _builder.append(pl, "      ");
+            }
+          }
+          _builder.append("/), &");
+          _builder.newLineIfNotEmpty();
+          _builder.append("      ");
+          _builder.append("userRoutine=");
+          _builder.append(this.userRoutine, "      ");
+          _builder.append(", rc=");
+          _builder.append(this._parent.paramRC, "      ");
+          _builder.append(")");
+          _builder.newLineIfNotEmpty();
+          String code = _builder.toString();
+          IBodyConstruct _parseLiteralStatement = CodeExtraction.parseLiteralStatement(code);
+          ASTCallStmtNode regCall = ((ASTCallStmtNode) _parseLiteralStatement);
+          IASTListNode<IBodyConstruct> _body = setServicesNode.getBody();
+          _body.add(regCall);
+          this.setASTRef(regCall);
+          StringConcatenation _builder_1 = new StringConcatenation();
+          CharSequence _ESMFErrorCheck = ESMFCodeTemplates.ESMFErrorCheck(this._parent.paramRC);
+          _builder_1.append(_ESMFErrorCheck, "");
+          code = _builder_1.toString();
+          IBodyConstruct ifNode = CodeExtraction.parseLiteralStatement(code);
+          IASTListNode<IBodyConstruct> _body_1 = setServicesNode.getBody();
+          _body_1.add(ifNode);
+          _xblockexpression = this;
+        }
+        return _xblockexpression;
+      } catch (Throwable _e) {
+        throw Exceptions.sneakyThrow(_e);
+      }
+    }
+    
+    @Override
+    public List reverseMultiple() {
+      try {
+        ArrayList<SetServicesCodeConcept.MethodRegistration> _xblockexpression = null;
+        {
+          IASTNode _aSTRef = this._parent.getASTRef();
+          final ASTSubroutineSubprogramNode setServicesNode = ((ASTSubroutineSubprogramNode) _aSTRef);
+          boolean _equals = Objects.equal(setServicesNode, null);
+          if (_equals) {
+            throw new ReverseEngineerException("No SetServices found");
+          }
+          final ArrayList<SetServicesCodeConcept.MethodRegistration> retList = CollectionLiterals.<SetServicesCodeConcept.MethodRegistration>newArrayList();
+          IASTListNode<IBodyConstruct> _body = setServicesNode.getBody();
+          Iterable<ASTCallStmtNode> _filter = Iterables.<ASTCallStmtNode>filter(_body, ASTCallStmtNode.class);
+          final Function1<ASTCallStmtNode, Boolean> _function = new Function1<ASTCallStmtNode, Boolean>() {
+            @Override
+            public Boolean apply(final ASTCallStmtNode it) {
+              boolean _or = false;
+              Token _subroutineName = it.getSubroutineName();
+              String _text = _subroutineName.getText();
+              boolean _eic = ASTQuery.eic(_text, "NUOPC_CompSetEntryPoint");
+              if (_eic) {
+                _or = true;
+              } else {
+                Token _subroutineName_1 = it.getSubroutineName();
+                String _text_1 = _subroutineName_1.getText();
+                boolean _eic_1 = ASTQuery.eic(_text_1, "NUOPC_CompSetInternalEntryPoint");
+                _or = _eic_1;
+              }
+              return Boolean.valueOf(_or);
+            }
+          };
+          Iterable<ASTCallStmtNode> _filter_1 = IterableExtensions.<ASTCallStmtNode>filter(_filter, _function);
+          final Procedure1<ASTCallStmtNode> _function_1 = new Procedure1<ASTCallStmtNode>() {
+            @Override
+            public void apply(final ASTCallStmtNode c) {
+              final SetServicesCodeConcept.MethodRegistration mr = new SetServicesCodeConcept.MethodRegistration(MethodRegistration.this._parent);
+              String _litArgExprByIdx = ASTQuery.litArgExprByIdx(c, 1);
+              mr.methodType = _litArgExprByIdx;
+              final ASTArrayConstructorNode pll = ASTQuery.<ASTArrayConstructorNode>argExprByKeywordElseIdx(c, "phaseLabelList", 2);
+              mr.phaseLabelList.clear();
+              IASTListNode<ASTAcValueNode> _acValueList = null;
+              if (pll!=null) {
+                _acValueList=pll.getAcValueList();
+              }
+              if (_acValueList!=null) {
+                final Procedure1<ASTAcValueNode> _function = new Procedure1<ASTAcValueNode>() {
+                  @Override
+                  public void apply(final ASTAcValueNode v) {
+                    IExpr _expr = v.getExpr();
+                    String _literal = ASTQuery.literal(_expr);
+                    mr.phaseLabelList.add(_literal);
+                  }
+                };
+                IterableExtensions.<ASTAcValueNode>forEach(_acValueList, _function);
+              }
+              String _litArgExprByKeywordElseIdx = ASTQuery.litArgExprByKeywordElseIdx(c, "userRoutine", 3);
+              mr.userRoutine = _litArgExprByKeywordElseIdx;
+              Token _subroutineName = c.getSubroutineName();
+              String _text = _subroutineName.getText();
+              boolean _eic = ASTQuery.eic(_text, "NUOPC_CompSetInternalEntryPoint");
+              if (_eic) {
+                mr.internal = true;
+              } else {
+                mr.internal = false;
+              }
+              mr.setASTRef(c);
+              retList.add(mr);
+            }
+          };
+          IterableExtensions.<ASTCallStmtNode>forEach(_filter_1, _function_1);
+          _xblockexpression = retList;
+        }
+        return _xblockexpression;
+      } catch (Throwable _e) {
+        throw Exceptions.sneakyThrow(_e);
+      }
+    }
+  }
+  
   @Name
   public String subroutineName = "SetServices";
   
@@ -44,8 +248,13 @@ public class SetServicesCodeConcept<P extends NUOPCComponent> extends CodeConcep
   @Child
   public BasicCodeConcept<ASTCallStmtNode> callsCompDeriveID;
   
+  @Child(min = 0, max = (-1), forward = true)
+  public List<SetServicesCodeConcept.MethodRegistration> registrations;
+  
   public SetServicesCodeConcept(final P parent) {
     super(parent);
+    ArrayList<SetServicesCodeConcept.MethodRegistration> _newArrayList = CollectionLiterals.<SetServicesCodeConcept.MethodRegistration>newArrayList();
+    this.registrations = _newArrayList;
   }
   
   @Override
@@ -155,6 +364,9 @@ public class SetServicesCodeConcept<P extends NUOPCComponent> extends CodeConcep
           }
           this.callsCompDeriveID = _xblockexpression_2;
           this.setASTRef(node);
+          SetServicesCodeConcept.MethodRegistration _methodRegistration = new SetServicesCodeConcept.MethodRegistration(this);
+          List _reverseMultiple = _methodRegistration.reverseMultiple();
+          this.registrations = _reverseMultiple;
           _xblockexpression_1 = this;
         }
         _xifexpression = _xblockexpression_1;
@@ -166,118 +378,124 @@ public class SetServicesCodeConcept<P extends NUOPCComponent> extends CodeConcep
     return _xblockexpression;
   }
   
-  @Override
-  public CodeConcept<?, ?> forward() {
-    SetServicesCodeConcept<P> _xblockexpression = null;
-    {
-      String routineSetServices = this._parent.importNUOPCGeneric.routineSetServices;
-      boolean _equals = Objects.equal(routineSetServices, null);
-      if (_equals) {
-        String _prefix = this._parent.prefix();
-        String _plus = (_prefix + "_SetServices");
-        routineSetServices = _plus;
-        ASTUseStmtNode _aSTRef = this._parent.importNUOPCGeneric.getASTRef();
-        final ASTUseStmtNode genericUse = ((ASTUseStmtNode) _aSTRef);
-        String _string = genericUse.toString();
-        String tempCode = _string.trim();
-        String _tempCode = tempCode;
-        StringConcatenation _builder = new StringConcatenation();
-        _builder.append(", &");
-        _builder.newLine();
-        _builder.append("\t\t\t\t\t\t");
-        _builder.append(routineSetServices, "\t\t\t\t\t\t");
-        _builder.append(" => SetServices");
-        tempCode = (_tempCode + _builder);
-        IBodyConstruct _parseLiteralStatement = CodeExtraction.parseLiteralStatement(tempCode);
-        ASTUseStmtNode tempNode = ((ASTUseStmtNode) _parseLiteralStatement);
-        genericUse.replaceWith(tempNode);
-      }
-      StringConcatenation _builder_1 = new StringConcatenation();
-      _builder_1.newLine();
-      _builder_1.append("subroutine SetServices(");
-      _builder_1.append(this.paramGridComp, "");
-      _builder_1.append(", ");
-      _builder_1.append(this.paramRC, "");
-      _builder_1.append(")");
-      _builder_1.newLineIfNotEmpty();
-      _builder_1.append("    ");
-      _builder_1.append("type(ESMF_GridComp)  :: ");
-      _builder_1.append(this.paramGridComp, "    ");
-      _builder_1.newLineIfNotEmpty();
-      _builder_1.append("    ");
-      _builder_1.append("integer, intent(out) :: ");
-      _builder_1.append(this.paramRC, "    ");
-      _builder_1.newLineIfNotEmpty();
-      _builder_1.append("    ");
-      _builder_1.newLine();
-      _builder_1.append("    ");
-      _builder_1.append("rc = ESMF_SUCCESS");
-      _builder_1.newLine();
-      _builder_1.append("    ");
-      _builder_1.newLine();
-      _builder_1.append("    ");
-      _builder_1.append("! NUOPC_Driver registers the generic methods");
-      _builder_1.newLine();
-      _builder_1.append("    ");
-      _builder_1.append("call NUOPC_CompDerive(");
-      _builder_1.append(this.paramGridComp, "    ");
-      _builder_1.append(", ");
-      _builder_1.append(routineSetServices, "    ");
-      _builder_1.append(", rc=");
-      _builder_1.append(this.paramRC, "    ");
-      _builder_1.append(")");
-      _builder_1.newLineIfNotEmpty();
-      _builder_1.append("    ");
-      _builder_1.append("if (ESMF_LogFoundError(rcToCheck=");
-      _builder_1.append(this.paramRC, "    ");
-      _builder_1.append(", msg=ESMF_LOGERR_PASSTHRU, &");
-      _builder_1.newLineIfNotEmpty();
-      _builder_1.append("      ");
-      _builder_1.append("line=__LINE__, &");
-      _builder_1.newLine();
-      _builder_1.append("      ");
-      _builder_1.append("file=__FILE__)) &");
-      _builder_1.newLine();
-      _builder_1.append("      ");
-      _builder_1.append("return  ! bail out");
-      _builder_1.newLine();
-      _builder_1.append("      ");
-      _builder_1.newLine();
-      _builder_1.append("end subroutine");
-      _builder_1.newLine();
-      String code = _builder_1.toString();
-      ASTModuleNode mn = this._parent.getASTRef();
-      ASTSubroutineSubprogramNode ssn = CodeExtraction.<ASTSubroutineSubprogramNode>parseLiteralProgramUnit(code);
-      IASTListNode<IModuleBodyConstruct> _moduleBody = mn.getModuleBody();
-      _moduleBody.add(ssn);
-      this.setASTRef(ssn);
-      StringConcatenation _builder_2 = new StringConcatenation();
-      _builder_2.newLine();
-      _builder_2.append("public SetServices");
-      _builder_2.newLine();
-      code = _builder_2.toString();
-      IBodyConstruct _parseLiteralStatement_1 = CodeExtraction.parseLiteralStatement(code);
-      ASTAccessStmtNode tempNode_1 = ((ASTAccessStmtNode) _parseLiteralStatement_1);
-      IASTListNode<IModuleBodyConstruct> _moduleBody_1 = mn.getModuleBody();
-      ASTContainsStmtNode csn = _moduleBody_1.<ASTContainsStmtNode>findLast(ASTContainsStmtNode.class);
-      boolean _notEquals = (!Objects.equal(csn, null));
-      if (_notEquals) {
-        IASTListNode<IModuleBodyConstruct> _moduleBody_2 = mn.getModuleBody();
-        _moduleBody_2.insertBefore(csn, tempNode_1);
-      } else {
-        IASTListNode<IModuleBodyConstruct> _moduleBody_3 = mn.getModuleBody();
-        ASTImplicitStmtNode isn = _moduleBody_3.<ASTImplicitStmtNode>findLast(ASTImplicitStmtNode.class);
-        boolean _notEquals_1 = (!Objects.equal(isn, null));
-        if (_notEquals_1) {
-          IASTListNode<IModuleBodyConstruct> _moduleBody_4 = mn.getModuleBody();
-          _moduleBody_4.insertAfter(isn, tempNode_1);
-        } else {
-          IASTListNode<IModuleBodyConstruct> _moduleBody_5 = mn.getModuleBody();
-          _moduleBody_5.add(tempNode_1);
+  public void forward(final BaseModel high) {
+    EList<Advance> _advance = high.getAdvance();
+    final Procedure1<Advance> _function = new Procedure1<Advance>() {
+      @Override
+      public void apply(final Advance a) {
+        String _phaseLabel = a.getPhaseLabel();
+        boolean _notEquals = (!Objects.equal(_phaseLabel, null));
+        if (_notEquals) {
+          final SetServicesCodeConcept.MethodRegistration mr = new SetServicesCodeConcept.MethodRegistration(SetServicesCodeConcept.this);
+          mr.internal = false;
+          mr.methodType = "ESMF_METHOD_RUN";
+          mr.phaseLabelList.clear();
+          String _phaseLabel_1 = a.getPhaseLabel();
+          String _plus = ("\"" + _phaseLabel_1);
+          String _plus_1 = (_plus + "\"");
+          mr.phaseLabelList.add(_plus_1);
+          String _prefix = SetServicesCodeConcept.this._parent.prefix();
+          String _plus_2 = (_prefix + "_routine_Run");
+          mr.userRoutine = _plus_2;
         }
       }
-      _xblockexpression = this.reverse();
+    };
+    IterableExtensions.<Advance>forEach(_advance, _function);
+  }
+  
+  @Override
+  public CodeConcept<?, ?> forward() {
+    try {
+      CodeConcept<?, ?> _xblockexpression = null;
+      {
+        String routineSetServices = this._parent.importNUOPCGeneric.routineSetServices;
+        boolean _equals = Objects.equal(routineSetServices, null);
+        if (_equals) {
+          String _prefix = this._parent.prefix();
+          String _plus = (_prefix + "_SetServices");
+          routineSetServices = _plus;
+          ASTUseStmtNode _aSTRef = this._parent.importNUOPCGeneric.getASTRef();
+          CodeConcept.ensureImport(_aSTRef, "SetServices", routineSetServices);
+        }
+        StringConcatenation _builder = new StringConcatenation();
+        _builder.newLine();
+        _builder.append("subroutine SetServices(");
+        _builder.append(this.paramGridComp, "");
+        _builder.append(", ");
+        _builder.append(this.paramRC, "");
+        _builder.append(")");
+        _builder.newLineIfNotEmpty();
+        _builder.append("    ");
+        _builder.append("type(ESMF_GridComp)  :: ");
+        _builder.append(this.paramGridComp, "    ");
+        _builder.newLineIfNotEmpty();
+        _builder.append("    ");
+        _builder.append("integer, intent(out) :: ");
+        _builder.append(this.paramRC, "    ");
+        _builder.newLineIfNotEmpty();
+        _builder.append("    ");
+        _builder.newLine();
+        _builder.append("    ");
+        _builder.append("rc = ESMF_SUCCESS");
+        _builder.newLine();
+        _builder.append("    ");
+        _builder.newLine();
+        _builder.append("    ");
+        _builder.append("! NUOPC_Driver registers the generic methods");
+        _builder.newLine();
+        _builder.append("    ");
+        _builder.append("call NUOPC_CompDerive(");
+        _builder.append(this.paramGridComp, "    ");
+        _builder.append(", ");
+        _builder.append(routineSetServices, "    ");
+        _builder.append(", rc=");
+        _builder.append(this.paramRC, "    ");
+        _builder.append(")");
+        _builder.newLineIfNotEmpty();
+        _builder.append("    ");
+        CharSequence _ESMFErrorCheck = ESMFCodeTemplates.ESMFErrorCheck(this.paramRC);
+        _builder.append(_ESMFErrorCheck, "    ");
+        _builder.newLineIfNotEmpty();
+        _builder.append("    ");
+        _builder.newLine();
+        _builder.append("end subroutine");
+        _builder.newLine();
+        String code = _builder.toString();
+        ASTModuleNode mn = this._parent.getASTRef();
+        ASTSubroutineSubprogramNode ssn = CodeExtraction.<ASTSubroutineSubprogramNode>parseLiteralProgramUnit(code);
+        IASTListNode<IModuleBodyConstruct> _moduleBody = mn.getModuleBody();
+        _moduleBody.add(ssn);
+        this.setASTRef(ssn);
+        StringConcatenation _builder_1 = new StringConcatenation();
+        _builder_1.newLine();
+        _builder_1.append("public SetServices");
+        _builder_1.newLine();
+        code = _builder_1.toString();
+        IBodyConstruct _parseLiteralStatement = CodeExtraction.parseLiteralStatement(code);
+        ASTAccessStmtNode tempNode = ((ASTAccessStmtNode) _parseLiteralStatement);
+        IASTListNode<IModuleBodyConstruct> _moduleBody_1 = mn.getModuleBody();
+        ASTContainsStmtNode csn = _moduleBody_1.<ASTContainsStmtNode>findLast(ASTContainsStmtNode.class);
+        boolean _notEquals = (!Objects.equal(csn, null));
+        if (_notEquals) {
+          IASTListNode<IModuleBodyConstruct> _moduleBody_2 = mn.getModuleBody();
+          _moduleBody_2.insertBefore(csn, tempNode);
+        } else {
+          IASTListNode<IModuleBodyConstruct> _moduleBody_3 = mn.getModuleBody();
+          ASTImplicitStmtNode isn = _moduleBody_3.<ASTImplicitStmtNode>findLast(ASTImplicitStmtNode.class);
+          boolean _notEquals_1 = (!Objects.equal(isn, null));
+          if (_notEquals_1) {
+            IASTListNode<IModuleBodyConstruct> _moduleBody_4 = mn.getModuleBody();
+            _moduleBody_4.insertAfter(isn, tempNode);
+          } else {
+            IASTListNode<IModuleBodyConstruct> _moduleBody_5 = mn.getModuleBody();
+            _moduleBody_5.add(tempNode);
+          }
+        }
+        _xblockexpression = super.<CodeConcept<?, ?>>forward();
+      }
+      return _xblockexpression;
+    } catch (Throwable _e) {
+      throw Exceptions.sneakyThrow(_e);
     }
-    return _xblockexpression;
   }
 }

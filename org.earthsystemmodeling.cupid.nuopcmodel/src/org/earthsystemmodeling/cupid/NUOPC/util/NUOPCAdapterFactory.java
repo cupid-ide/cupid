@@ -108,6 +108,14 @@ public class NUOPCAdapterFactory extends AdapterFactoryImpl {
 				return createUniformGridAdapter();
 			}
 			@Override
+			public Adapter caseSpecialization(Specialization object) {
+				return createSpecializationAdapter();
+			}
+			@Override
+			public Adapter caseAdvance(Advance object) {
+				return createAdvanceAdapter();
+			}
+			@Override
 			public Adapter defaultCase(EObject object) {
 				return createEObjectAdapter();
 			}
@@ -264,6 +272,34 @@ public class NUOPCAdapterFactory extends AdapterFactoryImpl {
 	 * @generated
 	 */
 	public Adapter createUniformGridAdapter() {
+		return null;
+	}
+
+	/**
+	 * Creates a new adapter for an object of class '{@link org.earthsystemmodeling.cupid.NUOPC.Specialization <em>Specialization</em>}'.
+	 * <!-- begin-user-doc -->
+	 * This default implementation returns null so that we can easily ignore cases;
+	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
+	 * <!-- end-user-doc -->
+	 * @return the new adapter.
+	 * @see org.earthsystemmodeling.cupid.NUOPC.Specialization
+	 * @generated
+	 */
+	public Adapter createSpecializationAdapter() {
+		return null;
+	}
+
+	/**
+	 * Creates a new adapter for an object of class '{@link org.earthsystemmodeling.cupid.NUOPC.Advance <em>Advance</em>}'.
+	 * <!-- begin-user-doc -->
+	 * This default implementation returns null so that we can easily ignore cases;
+	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
+	 * <!-- end-user-doc -->
+	 * @return the new adapter.
+	 * @see org.earthsystemmodeling.cupid.NUOPC.Advance
+	 * @generated
+	 */
+	public Adapter createAdvanceAdapter() {
 		return null;
 	}
 

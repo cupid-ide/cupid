@@ -60,7 +60,7 @@ class NUOPCModel extends NUOPCComponent {
 		new Run(model)
 		new RunPhases(model.run)
 		new RunSpecializations(model.run)
-		new ModelAdvance(model.run.runSpecs)
+		//new ModelAdvance(model.run.runSpecs)
 		new Finalize(model)
 		new FinalizePhases(model.finalize)
 		new FinalizeSpecializations(model.finalize)
@@ -69,7 +69,9 @@ class NUOPCModel extends NUOPCComponent {
 	
 	def forward(Model high) {
 		name = high.name
+		setServices.forward(high)
 		initialization.forward(high)
+		run.forward(high)
 	}
 
 	override prefix() { "model" }
@@ -96,6 +98,7 @@ class NUOPCModel extends NUOPCComponent {
 	public static class SetServices extends SetServicesCodeConcept<NUOPCModel> {	
 		new(NUOPCModel parent) {
 			super(parent)
+			parent.setOrAddChild(this)
 		}		
 	}
 	
@@ -929,6 +932,10 @@ end subroutine
 			runSpecs = new RunSpecializations(this).reverse as RunSpecializations
 			this
 		}
+		
+		def forward(Model high) {
+			runSpecs.forward(high)
+		}
 	
 	}
 	
@@ -963,6 +970,15 @@ end subroutine
 			checkImport = new CheckImport(this).reverseMultiple
 			this
 		}
+		
+		def forward(Model high) {
+			high.advance.forEach[a|
+				val adv = new ModelAdvance(this)
+				if (a.phaseLabel != null) {
+					adv.specPhaseLabel = "\"" + a.phaseLabel + "\"";
+				}
+			]
+		}
 
 	}
 	
@@ -971,7 +987,7 @@ end subroutine
 	
 		@Child
 		public RunPhase1 p1
-		
+				
 		new(Run parent) {
 			super(parent)
 		}
@@ -991,6 +1007,7 @@ end subroutine
 			super(parent)
 		}
 	}	
+	
 
 	@Label(label="Advance")
 	@MappingType("subroutine")
@@ -1056,7 +1073,7 @@ end subroutine
 		override genericUse() {
 			_parent._parent._parent.importNUOPCGeneric
 		}
-
+		
 	}
 
 	@Label(label="SetRunClock")

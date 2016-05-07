@@ -14,6 +14,8 @@
         eType="#//Field" containment="true" eOpposite="#//Field/importedBy"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="exportFields" upperBound="-1"
         eType="#//Field" containment="true" eOpposite="#//Field/exportedBy"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="advance" lowerBound="1"
+        upperBound="-1" eType="#//Advance" containment="true"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="Driver" eSuperTypes="#//Component">
     <eStructuralFeatures xsi:type="ecore:EReference" name="children" upperBound="-1"
@@ -75,4 +77,8 @@
     <eLiterals name="ESMF_STAGGERLOC_CENTER"/>
     <eLiterals name="ESMF_STAGGERLOC_CORNER" value="1"/>
   </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="Specialization">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="phaseLabel" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="Advance" eSuperTypes="#//Specialization"/>
 </ecore:EPackage>

@@ -47,6 +47,9 @@ public abstract class NUOPCComponent extends CodeConcept<CodeConcept<?, ?>, ASTM
     @Label(label = "routineSetServices")
     public String routineSetServices;
     
+    @Label(label = "routineRun")
+    public String routineRun;
+    
     public GenericImport(final NUOPCComponent parent, final ASTUseStmtNode astRef) {
       super(parent);
       this._astRef = astRef;
@@ -117,6 +120,62 @@ public abstract class NUOPCComponent extends CodeConcept<CodeConcept<?, ?>, ASTM
             Token _newName_1 = rn.getNewName();
             String _text_1 = _newName_1.getText();
             this.routineSetServices = _text_1;
+          }
+        }
+        ASTUseStmtNode _aSTRef_3 = this.getASTRef();
+        IASTListNode<ASTOnlyNode> _onlyList_1 = null;
+        if (_aSTRef_3!=null) {
+          _onlyList_1=_aSTRef_3.getOnlyList();
+        }
+        ASTOnlyNode _findFirst_2 = null;
+        if (_onlyList_1!=null) {
+          final Function1<ASTOnlyNode, Boolean> _function_2 = new Function1<ASTOnlyNode, Boolean>() {
+            @Override
+            public Boolean apply(final ASTOnlyNode it) {
+              Token _name = it.getName();
+              String _text = _name.getText();
+              return Boolean.valueOf(_text.equalsIgnoreCase("routine_Run"));
+            }
+          };
+          _findFirst_2=IterableExtensions.<ASTOnlyNode>findFirst(_onlyList_1, _function_2);
+        }
+        on = _findFirst_2;
+        boolean _notEquals_2 = (!Objects.equal(on, null));
+        if (_notEquals_2) {
+          String _xifexpression_1 = null;
+          boolean _isRenamed_1 = on.isRenamed();
+          if (_isRenamed_1) {
+            Token _newName_2 = on.getNewName();
+            _xifexpression_1 = _newName_2.getText();
+          } else {
+            Token _name_2 = on.getName();
+            _xifexpression_1 = _name_2.getText();
+          }
+          this.routineRun = _xifexpression_1;
+        } else {
+          ASTUseStmtNode _aSTRef_4 = this.getASTRef();
+          IASTListNode<ASTRenameNode> _renameList_1 = null;
+          if (_aSTRef_4!=null) {
+            _renameList_1=_aSTRef_4.getRenameList();
+          }
+          ASTRenameNode _findFirst_3 = null;
+          if (_renameList_1!=null) {
+            final Function1<ASTRenameNode, Boolean> _function_3 = new Function1<ASTRenameNode, Boolean>() {
+              @Override
+              public Boolean apply(final ASTRenameNode it) {
+                Token _name = it.getName();
+                String _text = _name.getText();
+                return Boolean.valueOf(_text.equalsIgnoreCase("routine_Run"));
+              }
+            };
+            _findFirst_3=IterableExtensions.<ASTRenameNode>findFirst(_renameList_1, _function_3);
+          }
+          ASTRenameNode rn_1 = _findFirst_3;
+          boolean _notEquals_3 = (!Objects.equal(rn_1, null));
+          if (_notEquals_3) {
+            Token _newName_3 = rn_1.getNewName();
+            String _text_2 = _newName_3.getText();
+            this.routineRun = _text_2;
           }
         }
         _xblockexpression = this;

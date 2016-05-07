@@ -20,6 +20,7 @@ import org.earthsystemmodeling.cupid.nuopc.BasicCodeConcept;
 import org.earthsystemmodeling.cupid.nuopc.CodeConcept;
 import org.earthsystemmodeling.cupid.nuopc.ReverseEngineerException;
 import org.earthsystemmodeling.cupid.nuopc.v7r.NUOPCComponent.GenericImport;
+import org.earthsystemmodeling.cupid.nuopc.v7r.SetServicesCodeConcept.MethodRegistration;
 import org.earthsystemmodeling.cupid.test.TestHelpers;
 import org.eclipse.core.internal.resources.ResourceException;
 import org.eclipse.core.resources.IFile;
@@ -224,6 +225,54 @@ public class NUOPCTest {
 		assertEquals("SetServices", setServices.subroutineName);
 		assertEquals("model", setServices.paramGridComp);
 		assertEquals("rc", setServices.paramRC);
+		
+		assertEquals(2, setServices.registrations.size());
+		
+		MethodRegistration initp1, initp2;
+		
+		if (setServices.registrations.get(0).userRoutine.equals("InitializeP1")) {
+			initp1 = setServices.registrations.get(0);
+			initp2 = setServices.registrations.get(1);
+		}
+		else {
+			initp1 = setServices.registrations.get(1);
+			initp2 = setServices.registrations.get(0);
+		}
+		
+		assertEquals("ESMF_METHOD_INITIALIZE", initp1.methodType);
+		assertEquals("InitializeP1", initp1.userRoutine);
+		assertEquals(1, initp1.phaseLabelList.size());
+		assertEquals("\"IPDv00p1\"", initp1.phaseLabelList.get(0));
+		assertEquals(false, initp1.internal);
+		
+		assertEquals("ESMF_METHOD_INITIALIZE", initp2.methodType);
+		assertEquals("InitializeP2", initp2.userRoutine);
+		assertEquals(1, initp2.phaseLabelList.size());
+		assertEquals("\"IPDv00p2\"", initp2.phaseLabelList.get(0));
+		assertEquals(false, initp2.internal);
+		
+	
+		//////////////////////
+		
+		
+		f = PROJECT_NUOPC_PROTOTYPES.getFolder("AsyncIOBlockingProto").getFile("asyncIODriver.F90");
+		ast = PhotranVPG.getInstance().acquireTransientAST(f);
+		
+		parent.setASTRef((ASTModuleNode) ast.getRoot().getProgramUnitList().get(0));
+		
+		setServices = new SetServicesCodeConcept(parent);
+		setServices = setServices.reverse();
+		assertNotNull("Find SetServices", setServices);
+		assertEquals("SetServices", setServices.subroutineName);
+		assertEquals("driver", setServices.paramGridComp);
+		assertEquals("rc", setServices.paramRC);
+		
+		assertEquals(1, setServices.registrations.size());
+		assertEquals("ESMF_METHOD_INITIALIZE", setServices.registrations.get(0).methodType);
+		assertEquals("ModifyCplLists", setServices.registrations.get(0).userRoutine);
+		assertEquals(1, setServices.registrations.get(0).phaseLabelList.size());
+		assertEquals("\"IPDv04p2\"", setServices.registrations.get(0).phaseLabelList.get(0));
+		assertEquals(true, setServices.registrations.get(0).internal);		
 		
 	}
 

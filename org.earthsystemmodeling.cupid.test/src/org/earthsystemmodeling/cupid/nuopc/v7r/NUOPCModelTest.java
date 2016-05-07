@@ -19,6 +19,7 @@ import org.earthsystemmodeling.cupid.nuopc.v7r.NUOPCBaseModel.RealizeField;
 import org.earthsystemmodeling.cupid.nuopc.v7r.NUOPCModel.IPD.IPDv04p0;
 import org.earthsystemmodeling.cupid.nuopc.v7r.NUOPCModel.IPD.IPDv04p1;
 import org.earthsystemmodeling.cupid.nuopc.v7r.NUOPCModel.IPD.IPDv04p3;
+import org.earthsystemmodeling.cupid.nuopc.v7r.NUOPCModel.ModelAdvance;
 import org.earthsystemmodeling.cupid.nuopc.v7r.NUOPCModel.SetRunClock;
 import org.earthsystemmodeling.cupid.test.TestHelpers;
 import org.eclipse.core.resources.IFile;
@@ -311,6 +312,16 @@ public class NUOPCModelTest {
 		assertEquals("myfield2", model.initialization.initPhases.ipdv04.ipdv04p3.realizeFields.get(1).field);
 		assertEquals("exportState", model.initialization.initPhases.ipdv04.ipdv04p3.realizeFields.get(1).state);
 
+		ModelAdvance adv = new ModelAdvance(model.run.runSpecs);
+		assertEquals(1, model.run.runSpecs.modelAdvance.size());
+		adv.specPhaseLabel = "\"FirstPhaseLabel\"";
+		adv.forward();
+		model.applyChanges(NPM);
+		
+		if (PRINT_ASTS) {
+			TestHelpers.printAST(model);
+		}
+		
 		///compile check
 		TestHelpers.copyFileIntoProject(p, "workspace/Makefile");
 		assertTrue("Compile check", TestHelpers.compileProject(p, TestHelpers.getMakefileFragmentLoc(NUOPCTest.NUOPC_TAG), "*.o"));

@@ -7,6 +7,7 @@ import org.eclipse.photran.internal.core.lexer.Token
 import org.eclipse.photran.internal.core.parser.ASTModuleNode
 import org.eclipse.photran.internal.core.parser.ASTUseStmtNode
 import org.eclipse.photran.internal.core.parser.IExpr
+import org.eclipse.photran.internal.core.parser.ASTVarOrFnRefNode
 
 class ASTQuery {
 	
@@ -20,6 +21,20 @@ class ASTQuery {
 		]
 	}
 	
+	def static <E extends IExpr> E argExprByKeyword(ASTCallStmtNode node, String keyword) {
+		node.findArgNodeByKeyword(keyword)?.expr as E
+	}
+	
+	def static <E extends IExpr> E argExprByIdx(ASTCallStmtNode node, int idx) {
+		node.argList?.get(idx)?.expr as E
+	}
+	
+	def static <E extends IExpr> E argExprByKeywordElseIdx(ASTCallStmtNode node, String keyword, int idx) {
+		val ret = argExprByKeyword(node, keyword)
+		if (ret != null) ret as E
+		else argExprByIdx(node, idx)
+	}
+	
 	def static litArgExprByKeyword(ASTCallStmtNode node, String keyword) {
 		node.findArgNodeByKeyword(keyword)?.expr?.literal
 	}
@@ -29,7 +44,13 @@ class ASTQuery {
 	}
 	
 	def static litArgExprByIdx(ASTCallStmtNode node, int idx) {
-		node.argList?.get(idx)?.expr?.literal
+		argExprByIdx(node, idx)?.literal
+	}
+	
+	def static litArgExprByKeywordElseIdx(ASTCallStmtNode node, String keyword, int idx) {
+		val ret = litArgExprByKeyword(node, keyword)
+		if (ret != null) ret
+		else litArgExprByIdx(node, idx)
 	}
 	
 	def static localName(ASTModuleNode moduleNode, String usedModule, String usedEntity) {
@@ -62,6 +83,10 @@ class ASTQuery {
 	
 	def static literal(IExpr expr) {
 		expr.toString.trim
+		//switch expr {
+		//	ASTVarOrFnRefNode : expr.name.name.text
+		//	default : expr.toString.trim
+		//}
 	}
 	
 }

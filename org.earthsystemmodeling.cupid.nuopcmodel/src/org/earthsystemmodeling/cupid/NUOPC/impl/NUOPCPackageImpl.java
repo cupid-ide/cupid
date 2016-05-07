@@ -2,6 +2,7 @@
  */
 package org.earthsystemmodeling.cupid.NUOPC.impl;
 
+import org.earthsystemmodeling.cupid.NUOPC.Advance;
 import org.earthsystemmodeling.cupid.NUOPC.Application;
 import org.earthsystemmodeling.cupid.NUOPC.BaseModel;
 import org.earthsystemmodeling.cupid.NUOPC.Component;
@@ -14,6 +15,7 @@ import org.earthsystemmodeling.cupid.NUOPC.Mediator;
 import org.earthsystemmodeling.cupid.NUOPC.Model;
 import org.earthsystemmodeling.cupid.NUOPC.NUOPCFactory;
 import org.earthsystemmodeling.cupid.NUOPC.NUOPCPackage;
+import org.earthsystemmodeling.cupid.NUOPC.Specialization;
 import org.earthsystemmodeling.cupid.NUOPC.UniformGrid;
 import org.eclipse.emf.ecore.EAttribute;
 import org.eclipse.emf.ecore.EClass;
@@ -100,6 +102,20 @@ public class NUOPCPackageImpl extends EPackageImpl implements NUOPCPackage {
 	 * @generated
 	 */
 	private EClass uniformGridEClass = null;
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	private EClass specializationEClass = null;
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	private EClass advanceEClass = null;
 
 	/**
 	 * <!-- begin-user-doc -->
@@ -237,6 +253,15 @@ public class NUOPCPackageImpl extends EPackageImpl implements NUOPCPackage {
 	 */
 	public EReference getBaseModel_ExportFields() {
 		return (EReference)baseModelEClass.getEStructuralFeatures().get(2);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EReference getBaseModel_Advance() {
+		return (EReference)baseModelEClass.getEStructuralFeatures().get(3);
 	}
 
 	/**
@@ -487,6 +512,33 @@ public class NUOPCPackageImpl extends EPackageImpl implements NUOPCPackage {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	public EClass getSpecialization() {
+		return specializationEClass;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EAttribute getSpecialization_PhaseLabel() {
+		return (EAttribute)specializationEClass.getEStructuralFeatures().get(0);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EClass getAdvance() {
+		return advanceEClass;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
 	public EEnum getIPDVersion() {
 		return ipdVersionEEnum;
 	}
@@ -536,6 +588,7 @@ public class NUOPCPackageImpl extends EPackageImpl implements NUOPCPackage {
 		createEReference(baseModelEClass, BASE_MODEL__GRIDS);
 		createEReference(baseModelEClass, BASE_MODEL__IMPORT_FIELDS);
 		createEReference(baseModelEClass, BASE_MODEL__EXPORT_FIELDS);
+		createEReference(baseModelEClass, BASE_MODEL__ADVANCE);
 
 		driverEClass = createEClass(DRIVER);
 		createEReference(driverEClass, DRIVER__CHILDREN);
@@ -571,6 +624,11 @@ public class NUOPCPackageImpl extends EPackageImpl implements NUOPCPackage {
 		createEAttribute(uniformGridEClass, UNIFORM_GRID__MIN_CORNER_COORD);
 		createEAttribute(uniformGridEClass, UNIFORM_GRID__MAX_CORNER_COORD);
 		createEAttribute(uniformGridEClass, UNIFORM_GRID__STAGGER_LOC_TO_FILL_COORDS);
+
+		specializationEClass = createEClass(SPECIALIZATION);
+		createEAttribute(specializationEClass, SPECIALIZATION__PHASE_LABEL);
+
+		advanceEClass = createEClass(ADVANCE);
 
 		// Create enums
 		ipdVersionEEnum = createEEnum(IPD_VERSION);
@@ -611,6 +669,7 @@ public class NUOPCPackageImpl extends EPackageImpl implements NUOPCPackage {
 		mediatorEClass.getESuperTypes().add(this.getBaseModel());
 		connectorEClass.getESuperTypes().add(this.getComponent());
 		uniformGridEClass.getESuperTypes().add(this.getGrid());
+		advanceEClass.getESuperTypes().add(this.getSpecialization());
 
 		// Initialize classes, features, and operations; add parameters
 		initEClass(componentEClass, Component.class, "Component", IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
@@ -621,6 +680,7 @@ public class NUOPCPackageImpl extends EPackageImpl implements NUOPCPackage {
 		initEReference(getBaseModel_Grids(), this.getGrid(), null, "grids", null, 0, -1, BaseModel.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEReference(getBaseModel_ImportFields(), this.getField(), this.getField_ImportedBy(), "importFields", null, 0, -1, BaseModel.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEReference(getBaseModel_ExportFields(), this.getField(), this.getField_ExportedBy(), "exportFields", null, 0, -1, BaseModel.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEReference(getBaseModel_Advance(), this.getAdvance(), null, "advance", null, 1, -1, BaseModel.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
 		initEClass(driverEClass, Driver.class, "Driver", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 		initEReference(getDriver_Children(), this.getComponent(), null, "children", null, 0, -1, Driver.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
@@ -657,6 +717,11 @@ public class NUOPCPackageImpl extends EPackageImpl implements NUOPCPackage {
 		initEAttribute(getUniformGrid_MinCornerCoord(), ecorePackage.getEDouble(), "minCornerCoord", null, 1, 3, UniformGrid.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, !IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEAttribute(getUniformGrid_MaxCornerCoord(), ecorePackage.getEDouble(), "maxCornerCoord", null, 1, 3, UniformGrid.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, !IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEAttribute(getUniformGrid_StaggerLocToFillCoords(), this.getESMF_STAGGERLOC(), "staggerLocToFillCoords", null, 0, -1, UniformGrid.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+
+		initEClass(specializationEClass, Specialization.class, "Specialization", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+		initEAttribute(getSpecialization_PhaseLabel(), ecorePackage.getEString(), "phaseLabel", null, 0, 1, Specialization.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+
+		initEClass(advanceEClass, Advance.class, "Advance", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 
 		// Initialize enums and add enum literals
 		initEEnum(ipdVersionEEnum, IPDVersion.class, "IPDVersion");

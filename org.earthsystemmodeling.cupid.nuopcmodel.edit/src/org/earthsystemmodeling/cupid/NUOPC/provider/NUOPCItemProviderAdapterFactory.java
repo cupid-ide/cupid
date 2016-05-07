@@ -233,6 +233,52 @@ public class NUOPCItemProviderAdapterFactory extends NUOPCAdapterFactory impleme
 	}
 
 	/**
+	 * This keeps track of the one adapter used for all {@link org.earthsystemmodeling.cupid.NUOPC.Specialization} instances.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	protected SpecializationItemProvider specializationItemProvider;
+
+	/**
+	 * This creates an adapter for a {@link org.earthsystemmodeling.cupid.NUOPC.Specialization}.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	@Override
+	public Adapter createSpecializationAdapter() {
+		if (specializationItemProvider == null) {
+			specializationItemProvider = new SpecializationItemProvider(this);
+		}
+
+		return specializationItemProvider;
+	}
+
+	/**
+	 * This keeps track of the one adapter used for all {@link org.earthsystemmodeling.cupid.NUOPC.Advance} instances.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	protected AdvanceItemProvider advanceItemProvider;
+
+	/**
+	 * This creates an adapter for a {@link org.earthsystemmodeling.cupid.NUOPC.Advance}.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	@Override
+	public Adapter createAdvanceAdapter() {
+		if (advanceItemProvider == null) {
+			advanceItemProvider = new AdvanceItemProvider(this);
+		}
+
+		return advanceItemProvider;
+	}
+
+	/**
 	 * This returns the root adapter factory that contains this factory.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -338,6 +384,8 @@ public class NUOPCItemProviderAdapterFactory extends NUOPCAdapterFactory impleme
 		if (applicationItemProvider != null) applicationItemProvider.dispose();
 		if (fieldItemProvider != null) fieldItemProvider.dispose();
 		if (uniformGridItemProvider != null) uniformGridItemProvider.dispose();
+		if (specializationItemProvider != null) specializationItemProvider.dispose();
+		if (advanceItemProvider != null) advanceItemProvider.dispose();
 	}
 
 }

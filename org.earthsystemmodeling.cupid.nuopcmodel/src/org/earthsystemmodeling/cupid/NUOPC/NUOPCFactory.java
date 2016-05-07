@@ -85,6 +85,24 @@ public interface NUOPCFactory extends EFactory {
 	UniformGrid createUniformGrid();
 
 	/**
+	 * Returns a new object of class '<em>Specialization</em>'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return a new object of class '<em>Specialization</em>'.
+	 * @generated
+	 */
+	Specialization createSpecialization();
+
+	/**
+	 * Returns a new object of class '<em>Advance</em>'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return a new object of class '<em>Advance</em>'.
+	 * @generated
+	 */
+	Advance createAdvance();
+
+	/**
 	 * Returns the package supported by this factory.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->

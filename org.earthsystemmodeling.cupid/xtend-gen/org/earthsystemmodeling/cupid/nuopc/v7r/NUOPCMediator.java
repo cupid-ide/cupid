@@ -4,6 +4,7 @@ import com.google.common.base.Objects;
 import com.google.common.collect.Iterables;
 import java.util.ArrayList;
 import java.util.List;
+import org.earthsystemmodeling.cupid.NUOPC.Advance;
 import org.earthsystemmodeling.cupid.NUOPC.ESMF_STAGGERLOC;
 import org.earthsystemmodeling.cupid.NUOPC.Field;
 import org.earthsystemmodeling.cupid.NUOPC.Grid;
@@ -45,6 +46,7 @@ public class NUOPCMediator extends NUOPCComponent {
   public static class SetServices extends SetServicesCodeConcept<NUOPCMediator> {
     public SetServices(final NUOPCMediator parent) {
       super(parent);
+      parent.setOrAddChild(this);
     }
   }
   
@@ -1362,6 +1364,10 @@ public class NUOPCMediator extends NUOPCComponent {
       }
       return _xblockexpression;
     }
+    
+    public void forward(final Mediator high) {
+      this.runSpecs.forward(high);
+    }
   }
   
   @Label(label = "Specializations")
@@ -1414,6 +1420,25 @@ public class NUOPCMediator extends NUOPCComponent {
         _xblockexpression = this;
       }
       return _xblockexpression;
+    }
+    
+    public void forward(final Mediator high) {
+      EList<Advance> _advance = high.getAdvance();
+      final Procedure1<Advance> _function = new Procedure1<Advance>() {
+        @Override
+        public void apply(final Advance m) {
+          final NUOPCMediator.MediatorAdvance adv = new NUOPCMediator.MediatorAdvance(RunSpecializations.this);
+          String _phaseLabel = m.getPhaseLabel();
+          boolean _notEquals = (!Objects.equal(_phaseLabel, null));
+          if (_notEquals) {
+            String _phaseLabel_1 = m.getPhaseLabel();
+            String _plus = ("\"" + _phaseLabel_1);
+            String _plus_1 = (_plus + "\"");
+            adv.specPhaseLabel = _plus_1;
+          }
+        }
+      };
+      IterableExtensions.<Advance>forEach(_advance, _function);
     }
   }
   
@@ -1472,6 +1497,11 @@ public class NUOPCMediator extends NUOPCComponent {
       this.specLabel = "mediator_label_Advance";
       this.paramGridComp = "gcomp";
       this.paramRC = "rc";
+    }
+    
+    @Override
+    public CodeConcept<?, ?> reverse() {
+      return super.reverse();
     }
     
     @Override
@@ -2156,7 +2186,6 @@ public class NUOPCMediator extends NUOPCComponent {
       new NUOPCMediator.Run(mediator);
       new NUOPCMediator.RunPhases(mediator.run);
       new NUOPCMediator.RunSpecializations(mediator.run);
-      new NUOPCMediator.MediatorAdvance(mediator.run.runSpecs);
       new NUOPCMediator.Finalize(mediator);
       new NUOPCMediator.FinalizePhases(mediator.finalize);
       new NUOPCMediator.FinalizeSpecializations(mediator.finalize);
@@ -2168,6 +2197,8 @@ public class NUOPCMediator extends NUOPCComponent {
   public void forward(final Mediator high) {
     String _name = high.getName();
     this.name = _name;
+    this.setServices.forward(high);
     this.initialization.forward(high);
+    this.run.forward(high);
   }
 }

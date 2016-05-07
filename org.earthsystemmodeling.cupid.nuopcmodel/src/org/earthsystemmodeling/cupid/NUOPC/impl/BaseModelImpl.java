@@ -3,6 +3,7 @@
 package org.earthsystemmodeling.cupid.NUOPC.impl;
 
 import java.util.Collection;
+import org.earthsystemmodeling.cupid.NUOPC.Advance;
 import org.earthsystemmodeling.cupid.NUOPC.BaseModel;
 import org.earthsystemmodeling.cupid.NUOPC.Field;
 import org.earthsystemmodeling.cupid.NUOPC.Grid;
@@ -27,6 +28,7 @@ import org.eclipse.emf.ecore.util.InternalEList;
  *   <li>{@link org.earthsystemmodeling.cupid.NUOPC.impl.BaseModelImpl#getGrids <em>Grids</em>}</li>
  *   <li>{@link org.earthsystemmodeling.cupid.NUOPC.impl.BaseModelImpl#getImportFields <em>Import Fields</em>}</li>
  *   <li>{@link org.earthsystemmodeling.cupid.NUOPC.impl.BaseModelImpl#getExportFields <em>Export Fields</em>}</li>
+ *   <li>{@link org.earthsystemmodeling.cupid.NUOPC.impl.BaseModelImpl#getAdvance <em>Advance</em>}</li>
  * </ul>
  *
  * @generated
@@ -59,6 +61,16 @@ public abstract class BaseModelImpl extends ComponentImpl implements BaseModel {
 	 * @ordered
 	 */
 	protected EList<Field> exportFields;
+
+	/**
+	 * The cached value of the '{@link #getAdvance() <em>Advance</em>}' containment reference list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #getAdvance()
+	 * @generated
+	 * @ordered
+	 */
+	protected EList<Advance> advance;
 
 	/**
 	 * <!-- begin-user-doc -->
@@ -120,6 +132,18 @@ public abstract class BaseModelImpl extends ComponentImpl implements BaseModel {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	public EList<Advance> getAdvance() {
+		if (advance == null) {
+			advance = new EObjectContainmentEList<Advance>(Advance.class, this, NUOPCPackage.BASE_MODEL__ADVANCE);
+		}
+		return advance;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
 	@SuppressWarnings("unchecked")
 	@Override
 	public NotificationChain eInverseAdd(InternalEObject otherEnd, int featureID, NotificationChain msgs) {
@@ -146,6 +170,8 @@ public abstract class BaseModelImpl extends ComponentImpl implements BaseModel {
 				return ((InternalEList<?>)getImportFields()).basicRemove(otherEnd, msgs);
 			case NUOPCPackage.BASE_MODEL__EXPORT_FIELDS:
 				return ((InternalEList<?>)getExportFields()).basicRemove(otherEnd, msgs);
+			case NUOPCPackage.BASE_MODEL__ADVANCE:
+				return ((InternalEList<?>)getAdvance()).basicRemove(otherEnd, msgs);
 		}
 		return super.eInverseRemove(otherEnd, featureID, msgs);
 	}
@@ -164,6 +190,8 @@ public abstract class BaseModelImpl extends ComponentImpl implements BaseModel {
 				return getImportFields();
 			case NUOPCPackage.BASE_MODEL__EXPORT_FIELDS:
 				return getExportFields();
+			case NUOPCPackage.BASE_MODEL__ADVANCE:
+				return getAdvance();
 		}
 		return super.eGet(featureID, resolve, coreType);
 	}
@@ -189,6 +217,10 @@ public abstract class BaseModelImpl extends ComponentImpl implements BaseModel {
 				getExportFields().clear();
 				getExportFields().addAll((Collection<? extends Field>)newValue);
 				return;
+			case NUOPCPackage.BASE_MODEL__ADVANCE:
+				getAdvance().clear();
+				getAdvance().addAll((Collection<? extends Advance>)newValue);
+				return;
 		}
 		super.eSet(featureID, newValue);
 	}
@@ -210,6 +242,9 @@ public abstract class BaseModelImpl extends ComponentImpl implements BaseModel {
 			case NUOPCPackage.BASE_MODEL__EXPORT_FIELDS:
 				getExportFields().clear();
 				return;
+			case NUOPCPackage.BASE_MODEL__ADVANCE:
+				getAdvance().clear();
+				return;
 		}
 		super.eUnset(featureID);
 	}
@@ -228,6 +263,8 @@ public abstract class BaseModelImpl extends ComponentImpl implements BaseModel {
 				return importFields != null && !importFields.isEmpty();
 			case NUOPCPackage.BASE_MODEL__EXPORT_FIELDS:
 				return exportFields != null && !exportFields.isEmpty();
+			case NUOPCPackage.BASE_MODEL__ADVANCE:
+				return advance != null && !advance.isEmpty();
 		}
 		return super.eIsSet(featureID);
 	}

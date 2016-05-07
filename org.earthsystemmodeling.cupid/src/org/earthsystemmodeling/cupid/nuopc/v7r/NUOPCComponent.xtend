@@ -159,6 +159,9 @@ end module
 		@Label(label="routineSetServices")
 		public String routineSetServices
 		
+		@Label(label="routineRun")
+		public String routineRun
+		
 		new(NUOPCComponent parent, ASTUseStmtNode astRef) {
 			super(parent)
 			_astRef = astRef
@@ -166,6 +169,7 @@ end module
 		
 		override GenericImport reverse() {
 			genericComp = getASTRef?.name.text
+			
 			var on = getASTRef?.onlyList?.findFirst[it.name.text.equalsIgnoreCase("SetServices")]
 			if (on != null) {
 				routineSetServices = {
@@ -177,6 +181,20 @@ end module
 				var rn = getASTRef?.renameList?.findFirst[it.name.text.equalsIgnoreCase("SetServices")]
 				if (rn != null) {
 					routineSetServices = rn.newName.text
+				}
+			}
+			
+			on = getASTRef?.onlyList?.findFirst[it.name.text.equalsIgnoreCase("routine_Run")]
+			if (on != null) {
+				routineRun = {
+					if (on.renamed) on.newName.text
+					else on.name.text
+				}
+			}
+			else {
+				var rn = getASTRef?.renameList?.findFirst[it.name.text.equalsIgnoreCase("routine_Run")]
+				if (rn != null) {
+					routineRun = rn.newName.text
 				}
 			}
 			this

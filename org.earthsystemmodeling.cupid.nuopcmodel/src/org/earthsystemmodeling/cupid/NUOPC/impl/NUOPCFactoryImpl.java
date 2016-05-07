@@ -64,6 +64,8 @@ public class NUOPCFactoryImpl extends EFactoryImpl implements NUOPCFactory {
 			case NUOPCPackage.APPLICATION: return createApplication();
 			case NUOPCPackage.FIELD: return createField();
 			case NUOPCPackage.UNIFORM_GRID: return createUniformGrid();
+			case NUOPCPackage.SPECIALIZATION: return createSpecialization();
+			case NUOPCPackage.ADVANCE: return createAdvance();
 			default:
 				throw new IllegalArgumentException("The class '" + eClass.getName() + "' is not a valid classifier");
 		}
@@ -171,6 +173,26 @@ public class NUOPCFactoryImpl extends EFactoryImpl implements NUOPCFactory {
 	public UniformGrid createUniformGrid() {
 		UniformGridImpl uniformGrid = new UniformGridImpl();
 		return uniformGrid;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public Specialization createSpecialization() {
+		SpecializationImpl specialization = new SpecializationImpl();
+		return specialization;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public Advance createAdvance() {
+		AdvanceImpl advance = new AdvanceImpl();
+		return advance;
 	}
 
 	/**

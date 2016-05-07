@@ -41,6 +41,44 @@ public class ASTQuery {
     return IterableExtensions.<ASTSubroutineArgNode>findFirst(nodes, _function);
   }
   
+  public static <E extends IExpr> E argExprByKeyword(final ASTCallStmtNode node, final String keyword) {
+    ASTSubroutineArgNode _findArgNodeByKeyword = ASTQuery.findArgNodeByKeyword(node, keyword);
+    IExpr _expr = null;
+    if (_findArgNodeByKeyword!=null) {
+      _expr=_findArgNodeByKeyword.getExpr();
+    }
+    return ((E) _expr);
+  }
+  
+  public static <E extends IExpr> E argExprByIdx(final ASTCallStmtNode node, final int idx) {
+    IASTListNode<ASTSubroutineArgNode> _argList = node.getArgList();
+    ASTSubroutineArgNode _get = null;
+    if (_argList!=null) {
+      _get=_argList.get(idx);
+    }
+    IExpr _expr = null;
+    if (_get!=null) {
+      _expr=_get.getExpr();
+    }
+    return ((E) _expr);
+  }
+  
+  public static <E extends IExpr> E argExprByKeywordElseIdx(final ASTCallStmtNode node, final String keyword, final int idx) {
+    E _xblockexpression = null;
+    {
+      final IExpr ret = ASTQuery.<IExpr>argExprByKeyword(node, keyword);
+      E _xifexpression = null;
+      boolean _notEquals = (!Objects.equal(ret, null));
+      if (_notEquals) {
+        _xifexpression = ((E) ret);
+      } else {
+        _xifexpression = ASTQuery.<E>argExprByIdx(node, idx);
+      }
+      _xblockexpression = _xifexpression;
+    }
+    return _xblockexpression;
+  }
+  
   public static String litArgExprByKeyword(final ASTCallStmtNode node, final String keyword) {
     ASTSubroutineArgNode _findArgNodeByKeyword = ASTQuery.findArgNodeByKeyword(node, keyword);
     IExpr _expr = null;
@@ -68,20 +106,28 @@ public class ASTQuery {
   }
   
   public static String litArgExprByIdx(final ASTCallStmtNode node, final int idx) {
-    IASTListNode<ASTSubroutineArgNode> _argList = node.getArgList();
-    ASTSubroutineArgNode _get = null;
-    if (_argList!=null) {
-      _get=_argList.get(idx);
-    }
-    IExpr _expr = null;
-    if (_get!=null) {
-      _expr=_get.getExpr();
-    }
+    IExpr _argExprByIdx = ASTQuery.<IExpr>argExprByIdx(node, idx);
     String _literal = null;
-    if (_expr!=null) {
-      _literal=ASTQuery.literal(_expr);
+    if (_argExprByIdx!=null) {
+      _literal=ASTQuery.literal(_argExprByIdx);
     }
     return _literal;
+  }
+  
+  public static String litArgExprByKeywordElseIdx(final ASTCallStmtNode node, final String keyword, final int idx) {
+    String _xblockexpression = null;
+    {
+      final String ret = ASTQuery.litArgExprByKeyword(node, keyword);
+      String _xifexpression = null;
+      boolean _notEquals = (!Objects.equal(ret, null));
+      if (_notEquals) {
+        _xifexpression = ret;
+      } else {
+        _xifexpression = ASTQuery.litArgExprByIdx(node, idx);
+      }
+      _xblockexpression = _xifexpression;
+    }
+    return _xblockexpression;
   }
   
   public static String localName(final ASTModuleNode moduleNode, final String usedModule, final String usedEntity) {

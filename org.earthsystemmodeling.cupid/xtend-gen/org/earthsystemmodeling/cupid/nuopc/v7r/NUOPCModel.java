@@ -4,6 +4,7 @@ import com.google.common.base.Objects;
 import com.google.common.collect.Iterables;
 import java.util.ArrayList;
 import java.util.List;
+import org.earthsystemmodeling.cupid.NUOPC.Advance;
 import org.earthsystemmodeling.cupid.NUOPC.ESMF_STAGGERLOC;
 import org.earthsystemmodeling.cupid.NUOPC.Field;
 import org.earthsystemmodeling.cupid.NUOPC.Grid;
@@ -45,6 +46,7 @@ public class NUOPCModel extends NUOPCComponent {
   public static class SetServices extends SetServicesCodeConcept<NUOPCModel> {
     public SetServices(final NUOPCModel parent) {
       super(parent);
+      parent.setOrAddChild(this);
     }
   }
   
@@ -1497,6 +1499,10 @@ public class NUOPCModel extends NUOPCComponent {
       }
       return _xblockexpression;
     }
+    
+    public void forward(final Model high) {
+      this.runSpecs.forward(high);
+    }
   }
   
   @Label(label = "Specializations")
@@ -1541,6 +1547,25 @@ public class NUOPCModel extends NUOPCComponent {
         _xblockexpression = this;
       }
       return _xblockexpression;
+    }
+    
+    public void forward(final Model high) {
+      EList<Advance> _advance = high.getAdvance();
+      final Procedure1<Advance> _function = new Procedure1<Advance>() {
+        @Override
+        public void apply(final Advance a) {
+          final NUOPCModel.ModelAdvance adv = new NUOPCModel.ModelAdvance(RunSpecializations.this);
+          String _phaseLabel = a.getPhaseLabel();
+          boolean _notEquals = (!Objects.equal(_phaseLabel, null));
+          if (_notEquals) {
+            String _phaseLabel_1 = a.getPhaseLabel();
+            String _plus = ("\"" + _phaseLabel_1);
+            String _plus_1 = (_plus + "\"");
+            adv.specPhaseLabel = _plus_1;
+          }
+        }
+      };
+      IterableExtensions.<Advance>forEach(_advance, _function);
     }
   }
   
@@ -2100,7 +2125,6 @@ public class NUOPCModel extends NUOPCComponent {
       new NUOPCModel.Run(model);
       new NUOPCModel.RunPhases(model.run);
       new NUOPCModel.RunSpecializations(model.run);
-      new NUOPCModel.ModelAdvance(model.run.runSpecs);
       new NUOPCModel.Finalize(model);
       new NUOPCModel.FinalizePhases(model.finalize);
       new NUOPCModel.FinalizeSpecializations(model.finalize);
@@ -2112,7 +2136,9 @@ public class NUOPCModel extends NUOPCComponent {
   public void forward(final Model high) {
     String _name = high.getName();
     this.name = _name;
+    this.setServices.forward(high);
     this.initialization.forward(high);
+    this.run.forward(high);
   }
   
   @Override

@@ -79,7 +79,7 @@ class NUOPCMediator extends NUOPCComponent {
 		new Run(mediator)
 		new RunPhases(mediator.run)
 		new RunSpecializations(mediator.run)
-		new MediatorAdvance(mediator.run.runSpecs)
+		//new MediatorAdvance(mediator.run.runSpecs)
 		new Finalize(mediator)
 		new FinalizePhases(mediator.finalize)
 		new FinalizeSpecializations(mediator.finalize)
@@ -88,7 +88,9 @@ class NUOPCMediator extends NUOPCComponent {
 	
 	def forward(Mediator high) {
 		name = high.name
+		setServices.forward(high)
 		initialization.forward(high)
+		run.forward(high)
 	}	
 		
 	
@@ -98,6 +100,7 @@ class NUOPCMediator extends NUOPCComponent {
 	public static class SetServices extends SetServicesCodeConcept<NUOPCMediator> {	
 		new(NUOPCMediator parent) {
 			super(parent)
+			parent.setOrAddChild(this)
 		}		
 	}
 	
@@ -957,6 +960,10 @@ end subroutine
 			runSpecs = new RunSpecializations(this).reverse as RunSpecializations
 			this
 		}
+		
+		def forward(Mediator high) {
+			runSpecs.forward(high)
+		}
 	
 	}
 	
@@ -995,6 +1002,15 @@ end subroutine
 			checkImport = new CheckImport(this).reverseMultiple
 			timestampExport = new TimestampExport(this).reverseMultiple
 			this
+		}
+		
+		def forward(Mediator high) {
+			high.advance.forEach[m|
+				val adv = new MediatorAdvance(this)
+				if (m.phaseLabel != null) {
+					adv.specPhaseLabel = "\"" + m.phaseLabel + "\"";
+				}
+			]
 		}
 
 	}
@@ -1042,6 +1058,10 @@ end subroutine
 			specLabel = "mediator_label_Advance"
 			paramGridComp = "gcomp"
 			paramRC = "rc"
+		}
+
+		override reverse() {
+			super.reverse()
 		}
 
 		override subroutineTemplate() {

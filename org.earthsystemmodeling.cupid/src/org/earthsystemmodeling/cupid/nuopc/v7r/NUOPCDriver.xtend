@@ -124,6 +124,7 @@ class NUOPCDriver extends NUOPCComponent {
 	public static class SetServices extends SetServicesCodeConcept<NUOPCDriver> {	
 		new(NUOPCDriver parent) {
 			super(parent)
+			parent.setOrAddChild(this)
 		}		
 	}
 	

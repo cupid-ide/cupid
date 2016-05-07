@@ -154,22 +154,6 @@ end subroutine
 
 		//add label import
 		var usn = ensureImport(genericUse.ASTRef, labelName, specLabel)
-		/*
-		var usesNUOPCDriver = genericUse.getASTRef as ASTUseStmtNode
-		var tempCode = usesNUOPCDriver.toString.trim
-		tempCode += ''', &
-		«IF !specLabel.equals(labelName)»«specLabel» => «ENDIF»«labelName»'''
-
-		var tempNode = parseLiteralStatement(tempCode) as ASTUseStmtNode;
-		try {
-			usesNUOPCDriver.replaceWith(tempNode)
-		}
-		catch(IllegalStateException e) {
-			throw new CodeGenerationException("Error generating use statement", e)
-		}
-		* 
-		*/
-		
 		genericUse.setASTRef(usn)
 
 		//add call in setservices
@@ -180,7 +164,7 @@ end subroutine
 '''
 
 call NUOPC_CompSpecialize(«setServices().paramGridComp», specLabel=«specLabel», &
-	specRoutine=«subroutineName», rc=«setServices().paramRC»)
+	«IF specPhaseLabel!=null»specPhaseLabel=«specPhaseLabel», «ENDIF»specRoutine=«subroutineName», rc=«setServices().paramRC»)
 '''
 
 			var ASTCallStmtNode regCall = parseLiteralStatement(code) as ASTCallStmtNode

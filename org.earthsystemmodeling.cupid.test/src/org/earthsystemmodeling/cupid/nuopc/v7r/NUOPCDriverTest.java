@@ -8,6 +8,7 @@ import static org.junit.Assert.assertTrue;
 import java.io.IOException;
 import java.util.List;
 
+import org.earthsystemmodeling.cupid.NUOPC.Advance;
 import org.earthsystemmodeling.cupid.NUOPC.Application;
 import org.earthsystemmodeling.cupid.NUOPC.Connector;
 import org.earthsystemmodeling.cupid.NUOPC.Driver;
@@ -111,6 +112,17 @@ public class NUOPCDriverTest {
 		atm2ocn.setName("NUOPC_Connector");  //generic connector
 		ocn2atm.setName("NUOPC_Connector");
 		
+		Advance atmAdvance1 = factory.createAdvance();
+		atmAdvance1.setPhaseLabel("AtmPhaseLabel1");
+		atm.getAdvance().add(atmAdvance1);
+		
+		Advance ocnAdvance1 = factory.createAdvance();
+		ocnAdvance1.setPhaseLabel("OcnPhaseLabel1");
+		ocn.getAdvance().add(ocnAdvance1);
+		
+		Advance medAdvance = factory.createAdvance();
+		med.getAdvance().add(medAdvance);
+		
 		Field f;
 		UniformGrid atmgrid;
 		
@@ -212,7 +224,7 @@ public class NUOPCDriverTest {
 		MainGenerator.generateAndWrite(app, fMain);
 		
 		assertTrue("Compile check", TestHelpers.compileProject(p, NUOPCTest.ESMFMKFILE, ""));
-		assertTrue("Execution check", TestHelpers.executeMPI(p, "./esmApp", 4));
+		assertTrue("Execution check: " + p.getLocationURI(), TestHelpers.executeMPI(p, "./esmApp", 4));
 		assertTrue("Log Error check", TestHelpers.verifyNoLogErrors(p));
 		
 	}
