@@ -48,38 +48,38 @@ public class NUOPCFrameworkManagerTest {
 		assertTrue(db.isOutOfDate(p2.getFile("lnd.F90")));
 		
 		CodeConcept<?,?> concept;
-		concept = manager.acquireConcept(p1.getFile("esm.F90"));
+		concept = manager.acquireConcept(p1.getFile("esm.F90"), true);
 		assertFalse(db.isOutOfDate(p1.getFile("esm.F90")));
 		assertTrue(concept instanceof NUOPCDriver);
 		
-		concept = manager.acquireConcept(p2.getFile("esm.F90"));
+		concept = manager.acquireConcept(p2.getFile("esm.F90"), true);
 		assertFalse(db.isOutOfDate(p2.getFile("esm.F90")));
 		assertTrue(concept instanceof NUOPCDriver);
 		
 		p2.getFile("esm.F90").touch(NPM);
 		assertTrue(db.isOutOfDate(p2.getFile("esm.F90")));
 		
-		concept = manager.acquireConcept(p2.getFile("esm.F90"));
+		concept = manager.acquireConcept(p2.getFile("esm.F90"), true);
 		assertFalse(db.isOutOfDate(p2.getFile("esm.F90")));
 		assertTrue(concept instanceof NUOPCDriver);
 			
-		concept = manager.acquireConcept(p1.getFile("atm.F90"));
+		concept = manager.acquireConcept(p1.getFile("atm.F90"), true);
 		assertFalse(db.isOutOfDate(p1.getFile("atm.F90")));
 		assertTrue(concept instanceof NUOPCModel);
 		
-		concept = manager.acquireConcept(p1.getFile("ocn.F90"));
+		concept = manager.acquireConcept(p1.getFile("ocn.F90"), true);
 		assertFalse(db.isOutOfDate(p1.getFile("ocn.F90")));
 		assertTrue(concept instanceof NUOPCModel);
 		
-		concept = manager.acquireConcept(p2.getFile("atm.F90"));
+		concept = manager.acquireConcept(p2.getFile("atm.F90"), true);
 		assertFalse(db.isOutOfDate(p2.getFile("atm.F90")));
 		assertTrue(concept instanceof NUOPCModel);
 		
-		concept = manager.acquireConcept(p2.getFile("ocn.F90"));
+		concept = manager.acquireConcept(p2.getFile("ocn.F90"), true);
 		assertFalse(db.isOutOfDate(p2.getFile("ocn.F90")));
 		assertTrue(concept instanceof NUOPCModel);
 		
-		concept = manager.acquireConcept(p2.getFile("lnd.F90"));
+		concept = manager.acquireConcept(p2.getFile("lnd.F90"), true);
 		assertFalse(db.isOutOfDate(p2.getFile("lnd.F90")));
 		assertTrue(concept instanceof NUOPCModel);
 				

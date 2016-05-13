@@ -2,6 +2,9 @@ package org.earthsystemmodeling.cupid.nuopc;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
+import java.util.Map.Entry;
+import java.util.Set;
 
 import org.earthsystemmodeling.cupid.nuopc.CodeConcept;
 import org.eclipse.core.resources.IFile;
@@ -34,6 +37,20 @@ public class NUOPCFrameworkDB {
 	
 	public CodeConcept<?,?> retrieve(IFile file) {
 		return fileToConcept.get(file);
+	}
+	
+	public <C extends CodeConcept<?,?>> List<C> retrieveAll(Class<? extends CodeConcept> type) {
+		ArrayList<C> toReturn = new ArrayList<C>();
+		for (CodeConcept c : fileToConcept.values()) {
+			if (type.isInstance(c)) {
+				toReturn.add((C) c);
+			}
+		}
+		return toReturn;
+	}
+	
+	public Set<Entry<IFile, CodeConcept<?, ?>>> retrieveAll() {
+		return fileToConcept.entrySet();
 	}
 	
 	public boolean isOutOfDate(IFile file) {

@@ -32,7 +32,6 @@ import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.NullProgressMonitor;
 import org.eclipse.emf.ecore.util.EcoreUtil;
 import org.eclipse.photran.internal.core.parser.ASTVarOrFnRefNode;
-import org.eclipse.photran.internal.core.vpg.PhotranVPG;
 import org.junit.AfterClass;
 import org.junit.BeforeClass;
 import org.junit.Test;
@@ -48,7 +47,7 @@ public class NUOPCDriverTest {
 	
 	@BeforeClass
 	public static void setUp() throws CoreException, IOException, InterruptedException {
-		PROJECT_NUOPC_PROTOTYPES = TestHelpers.createFortranProjectFromFolder("target/" + NUOPCTest.NUOPC_TAG, NUOPCTest.NUOPC_TAG);
+		PROJECT_NUOPC_PROTOTYPES = TestHelpers.createFortranProjectFromFolder("target/" + NUOPCTest.NUOPC_TAG, NUOPCTest.NUOPC_TAG);	
 	}
 	
 	@AfterClass
@@ -67,7 +66,7 @@ public class NUOPCDriverTest {
 		driver.applyChanges(NPM);
 	
 		//read in same driver just generated
-		driver = manager.acquireConcept(f);
+		driver = manager.acquireConcept(f, true);
 		
 		assertNotNull(driver);
 		assertEquals("MyDriver", driver.name);
@@ -112,6 +111,12 @@ public class NUOPCDriverTest {
 		atm2ocn.setName("NUOPC_Connector");  //generic connector
 		ocn2atm.setName("NUOPC_Connector");
 		
+		Advance atm2ocnAdvance = factory.createAdvance();
+		atm2ocn.getAdvance().add(atm2ocnAdvance);
+		
+		Advance ocn2atmAdvance = factory.createAdvance();
+		ocn2atm.getAdvance().add(ocn2atmAdvance);
+				
 		Advance atmAdvance1 = factory.createAdvance();
 		atmAdvance1.setPhaseLabel("AtmPhaseLabel1");
 		atm.getAdvance().add(atmAdvance1);
@@ -122,6 +127,12 @@ public class NUOPCDriverTest {
 		
 		Advance medAdvance = factory.createAdvance();
 		med.getAdvance().add(medAdvance);
+		
+		esm.getRunSequence().add(atm2ocnAdvance);
+		esm.getRunSequence().add(ocn2atmAdvance);
+		esm.getRunSequence().add(atmAdvance1);
+		esm.getRunSequence().add(ocnAdvance1);
+		esm.getRunSequence().add(medAdvance);
 		
 		Field f;
 		UniformGrid atmgrid;
@@ -235,7 +246,7 @@ public class NUOPCDriverTest {
 		IProject p = TestHelpers.createFortranProjectFromFolder("target/" + NUOPCTest.NUOPC_TAG + "/AtmOcnProto", NUOPCTest.NUOPC_TAG + "_NUOPCDriverAddRunSequence");
 		IFile f = p.getFile("esm.F90");
 		
-		NUOPCDriver driver = manager.acquireConcept(f);
+		NUOPCDriver driver = manager.acquireConcept(f, true);
 		assertNotNull(driver);
 		assertEquals("ESM", driver.name);
 		assertNotNull(driver.setServices);
@@ -250,7 +261,7 @@ public class NUOPCDriverTest {
 		driver.applyChanges(NPM);
 				
 		//re-reverse
-		driver = manager.acquireConcept(f);
+		driver = manager.acquireConcept(f, true);
 		assertNotNull(driver);
 		assertEquals("ESM", driver.name);
 		assertNotNull(driver.setServices);
@@ -267,7 +278,7 @@ public class NUOPCDriverTest {
 		
 		
 		//re-reverse
-		driver = manager.acquireConcept(f);
+		driver = manager.acquireConcept(f, true);
 		assertNotNull(driver);
 		assertEquals("ESM", driver.name);
 		assertNotNull(driver.setServices);
@@ -292,7 +303,7 @@ public class NUOPCDriverTest {
 		IProject p = TestHelpers.createFortranProjectFromFolder("target/" + NUOPCTest.NUOPC_TAG + "/AtmOcnProto", NUOPCTest.NUOPC_TAG + "_NUOPCDriverAddRunSequence2");
 		IFile f = p.getFile("esm.F90");
 		
-		NUOPCDriver driver = manager.acquireConcept(f);
+		NUOPCDriver driver = manager.acquireConcept(f, true);
 		assertNotNull(driver);
 		assertEquals("ESM", driver.name);
 		assertNotNull(driver.setServices);
@@ -316,7 +327,7 @@ public class NUOPCDriverTest {
 		driver.applyChanges(NPM);
 				
 		//re-reverse
-		driver = manager.acquireConcept(f);
+		driver = manager.acquireConcept(f, true);
 		
 		assertNotNull(driver);
 		assertEquals("ESM", driver.name);
@@ -360,7 +371,7 @@ public class NUOPCDriverTest {
 		
 		
 		//re-reverse
-		driver = manager.acquireConcept(f);
+		driver = manager.acquireConcept(f, true);
 		assertEquals(4, driver.initialization.initSpecs.setRunSequence.runElements.size());
 		
 		re = driver.initialization.initSpecs.setRunSequence.runElements.get(2);
@@ -418,7 +429,7 @@ public class NUOPCDriverTest {
 		sms.forward();
 		driver.applyChanges(NPM);
 		
-		driver = manager.acquireConcept(f);
+		driver = manager.acquireConcept(f, true);
 		
 		assertNotNull(driver);
 		assertEquals("NewDriver", driver.name);
@@ -462,7 +473,7 @@ public class NUOPCDriverTest {
 		IProject p = TestHelpers.createFortranProjectFromFolder("target/" + NUOPCTest.NUOPC_TAG + "/AtmOcnProto", NUOPCTest.NUOPC_TAG + "_NUOPCDriverAddModifyIPM");
 		IFile f = p.getFile("esm.F90");
 		
-		NUOPCDriver driver = manager.acquireConcept(f);
+		NUOPCDriver driver = manager.acquireConcept(f, true);
 		assertNotNull(driver);
 		assertNotNull(driver.initialization);
 		assertNotNull(driver.initialization.initSpecs);
@@ -473,7 +484,7 @@ public class NUOPCDriverTest {
 		mipm.forward();
 		driver.applyChanges(NPM);
 		
-		driver = manager.acquireConcept(f);
+		driver = manager.acquireConcept(f, true);
 		assertNotNull(driver);
 		assertNotNull(driver.initialization);
 		assertNotNull(driver.initialization.initSpecs);
@@ -490,7 +501,7 @@ public class NUOPCDriverTest {
 		IProject p = TestHelpers.createFortranProjectFromFolder("target/" + NUOPCTest.NUOPC_TAG + "/AtmOcnProto", NUOPCTest.NUOPC_TAG + "_NUOPCDriverAddSetRunClock");
 		IFile f = p.getFile("esm.F90");
 		
-		NUOPCDriver driver = new NUOPCDriver(f).reverse();
+		NUOPCDriver driver = manager.acquireConcept(f, true);
 		assertNotNull(driver);
 		assertNotNull(driver.run);
 		assertNotNull(driver.run.runSpecs);
@@ -501,7 +512,7 @@ public class NUOPCDriverTest {
 		src.forward();
 		driver.applyChanges(NPM);
 		
-		driver = manager.acquireConcept(f);
+		driver = manager.acquireConcept(f, true);
 		assertNotNull(driver);
 		assertNotNull(driver.run);
 		assertNotNull(driver.run.runSpecs);
@@ -520,9 +531,9 @@ public class NUOPCDriverTest {
 		
 		IProject p = TestHelpers.createFortranProjectFromFolder("target/" + NUOPCTest.NUOPC_TAG + "/AtmOcnProto", NUOPCTest.NUOPC_TAG + "_AtmOcnProto");
 		IFile f = p.getFile("esm.F90");
-		PhotranVPG.getInstance().ensureVPGIsUpToDate(NPM);
+		//PhotranVPG.getInstance().ensureVPGIsUpToDate(NPM);
 				
-		NUOPCDriver driver = new NUOPCDriver(f).reverse();
+		NUOPCDriver driver = manager.acquireConcept(f, true);
 		assertNotNull(driver);
 		assertEquals("ESM", driver.name);
 		assertNotNull(driver.setServices);
@@ -646,9 +657,8 @@ public class NUOPCDriverTest {
 
 		IProject p = TestHelpers.createFortranProjectFromFolder("target/" + NUOPCTest.NUOPC_TAG + "/AtmOcnProto", NUOPCTest.NUOPC_TAG + "_NUOPCDriverReverseHigh");
 		IFile f = p.getFile("esm.F90");
-		PhotranVPG.getInstance().ensureVPGIsUpToDate(NPM);
-				
-		NUOPCDriver driverCodeConcept = manager.acquireConcept(f);
+						
+		NUOPCDriver driverCodeConcept = manager.acquireConcept(f, true);
 		assertNotNull(driverCodeConcept);
 		
 		Driver driver = NUOPCDriver.reverseDriver(driverCodeConcept);

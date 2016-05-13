@@ -224,6 +224,15 @@ public class NUOPCPackageImpl extends EPackageImpl implements NUOPCPackage {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	public EReference getComponent_Advance() {
+		return (EReference)componentEClass.getEStructuralFeatures().get(2);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
 	public EClass getBaseModel() {
 		return baseModelEClass;
 	}
@@ -260,15 +269,6 @@ public class NUOPCPackageImpl extends EPackageImpl implements NUOPCPackage {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EReference getBaseModel_Advance() {
-		return (EReference)baseModelEClass.getEStructuralFeatures().get(3);
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
 	public EClass getDriver() {
 		return driverEClass;
 	}
@@ -280,6 +280,15 @@ public class NUOPCPackageImpl extends EPackageImpl implements NUOPCPackage {
 	 */
 	public EReference getDriver_Children() {
 		return (EReference)driverEClass.getEStructuralFeatures().get(0);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EReference getDriver_RunSequence() {
+		return (EReference)driverEClass.getEStructuralFeatures().get(1);
 	}
 
 	/**
@@ -539,6 +548,15 @@ public class NUOPCPackageImpl extends EPackageImpl implements NUOPCPackage {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	public EReference getAdvance_Component() {
+		return (EReference)advanceEClass.getEStructuralFeatures().get(0);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
 	public EEnum getIPDVersion() {
 		return ipdVersionEEnum;
 	}
@@ -583,15 +601,16 @@ public class NUOPCPackageImpl extends EPackageImpl implements NUOPCPackage {
 		componentEClass = createEClass(COMPONENT);
 		createEAttribute(componentEClass, COMPONENT__NAME);
 		createEAttribute(componentEClass, COMPONENT__IPD_VERSION);
+		createEReference(componentEClass, COMPONENT__ADVANCE);
 
 		baseModelEClass = createEClass(BASE_MODEL);
 		createEReference(baseModelEClass, BASE_MODEL__GRIDS);
 		createEReference(baseModelEClass, BASE_MODEL__IMPORT_FIELDS);
 		createEReference(baseModelEClass, BASE_MODEL__EXPORT_FIELDS);
-		createEReference(baseModelEClass, BASE_MODEL__ADVANCE);
 
 		driverEClass = createEClass(DRIVER);
 		createEReference(driverEClass, DRIVER__CHILDREN);
+		createEReference(driverEClass, DRIVER__RUN_SEQUENCE);
 
 		modelEClass = createEClass(MODEL);
 
@@ -629,6 +648,7 @@ public class NUOPCPackageImpl extends EPackageImpl implements NUOPCPackage {
 		createEAttribute(specializationEClass, SPECIALIZATION__PHASE_LABEL);
 
 		advanceEClass = createEClass(ADVANCE);
+		createEReference(advanceEClass, ADVANCE__COMPONENT);
 
 		// Create enums
 		ipdVersionEEnum = createEEnum(IPD_VERSION);
@@ -675,15 +695,16 @@ public class NUOPCPackageImpl extends EPackageImpl implements NUOPCPackage {
 		initEClass(componentEClass, Component.class, "Component", IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 		initEAttribute(getComponent_Name(), ecorePackage.getEString(), "name", null, 1, 1, Component.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEAttribute(getComponent_IPDVersion(), this.getIPDVersion(), "IPDVersion", "IPDv01", 1, 1, Component.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEReference(getComponent_Advance(), this.getAdvance(), this.getAdvance_Component(), "advance", null, 1, -1, Component.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
 		initEClass(baseModelEClass, BaseModel.class, "BaseModel", IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 		initEReference(getBaseModel_Grids(), this.getGrid(), null, "grids", null, 0, -1, BaseModel.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEReference(getBaseModel_ImportFields(), this.getField(), this.getField_ImportedBy(), "importFields", null, 0, -1, BaseModel.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEReference(getBaseModel_ExportFields(), this.getField(), this.getField_ExportedBy(), "exportFields", null, 0, -1, BaseModel.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-		initEReference(getBaseModel_Advance(), this.getAdvance(), null, "advance", null, 1, -1, BaseModel.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
 		initEClass(driverEClass, Driver.class, "Driver", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 		initEReference(getDriver_Children(), this.getComponent(), null, "children", null, 0, -1, Driver.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEReference(getDriver_RunSequence(), this.getAdvance(), null, "runSequence", null, 0, -1, Driver.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
 		initEClass(modelEClass, Model.class, "Model", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 
@@ -722,6 +743,7 @@ public class NUOPCPackageImpl extends EPackageImpl implements NUOPCPackage {
 		initEAttribute(getSpecialization_PhaseLabel(), ecorePackage.getEString(), "phaseLabel", null, 0, 1, Specialization.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
 		initEClass(advanceEClass, Advance.class, "Advance", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+		initEReference(getAdvance_Component(), this.getComponent(), this.getComponent_Advance(), "component", null, 1, 1, Advance.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
 		// Initialize enums and add enum literals
 		initEEnum(ipdVersionEEnum, IPDVersion.class, "IPDVersion");

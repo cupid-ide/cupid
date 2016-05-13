@@ -37,6 +37,9 @@ public class NUOPCMakefileTest {
 		Application app = factory.createApplication();
 		app.setName("esmApp");
 		
+		atm.getAdvance().add(factory.createAdvance());
+		ocn.getAdvance().add(factory.createAdvance());
+		
 		app.getChildren().add(esm);
 		app.getChildren().add(atm);
 		app.getChildren().add(ocn);

@@ -26,7 +26,6 @@ import org.eclipse.core.resources.IFile;
 import org.eclipse.core.resources.IProject;
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.NullProgressMonitor;
-import org.eclipse.photran.internal.core.vpg.PhotranVPG;
 import org.junit.AfterClass;
 import org.junit.BeforeClass;
 import org.junit.Test;
@@ -41,10 +40,7 @@ public class NUOPCModelTest {
 		
 	@BeforeClass
 	public static void setUp() throws CoreException, IOException, InterruptedException {
-		//PhotranVPG.getInstance().printDatabaseOn(System.out);
 		PROJECT_NUOPC_PROTOTYPES = TestHelpers.createFortranProjectFromFolder("target/" + NUOPCTest.NUOPC_TAG, NUOPCTest.NUOPC_TAG);
-		//PhotranVPG.getInstance().ensureVPGIsUpToDate(NPM);
-		//PhotranVPG.getInstance().printDatabaseOn(System.out);
 	}
 	
 	@AfterClass
@@ -58,7 +54,7 @@ public class NUOPCModelTest {
 		IFile f;
 		f = PROJECT_NUOPC_PROTOTYPES.getFolder("AtmOcnProto").getFile("atm.F90");
 				
-		NUOPCModel model = manager.acquireConcept(f);
+		NUOPCModel model = manager.acquireConcept(f, true);
 		assertNotNull(model);
 		assertEquals("ATM", model.name);
 		assertNotNull(model.setServices);
@@ -141,7 +137,7 @@ public class NUOPCModelTest {
 		
 		f = PROJECT_NUOPC_PROTOTYPES.getFolder("AtmOcnImplicitProto").getFile("atm.F90");
 
-		model = manager.acquireConcept(f);
+		model = manager.acquireConcept(f, true);
 		assertNotNull(model);
 		assertEquals("ATM", model.name);
 		assertNotNull(model.setServices);
@@ -171,7 +167,7 @@ public class NUOPCModelTest {
 				
 		f = PROJECT_NUOPC_PROTOTYPES.getFolder("AtmOcnTransferGridProto").getFile("atm.F90");
 		
-		model = manager.acquireConcept(f);
+		model = manager.acquireConcept(f, true);
 		assertNotNull(model);
 		assertEquals("ATM", model.name);
 		assertNotNull(model.setServices);
@@ -218,7 +214,7 @@ public class NUOPCModelTest {
 		model.applyChanges(NPM);
 		
 		//read in same driver just generated
-		model = manager.acquireConcept(f);
+		model = manager.acquireConcept(f, true);
 		
 		assertNotNull(model);
 		assertEquals("MyModel", model.name);
@@ -257,7 +253,7 @@ public class NUOPCModelTest {
 		ipdv04p1.forward();
 		model.applyChanges(NPM);
 		
-		model = manager.acquireConcept(f);
+		model = manager.acquireConcept(f, true);
 		assertNotNull(model);
 		assertNotNull(model.initialization.initPhases.ipdv04.ipdv04p0);
 		assertEquals("FilterInitPhases", model.initialization.initPhases.ipdv04.ipdv04p0.subroutineName);
@@ -299,12 +295,9 @@ public class NUOPCModelTest {
 		
 		model.initialization.createUniformGrid.get(0).forward();
 		ipdv04p3.forward();
-		model.applyChanges(NPM);
-		//chg = ipdv04p3.generateChange();
-		//chg.perform(NPM);
+		model.applyChanges(NPM);	
 		
-		
-		model = manager.acquireConcept(f);
+		model = manager.acquireConcept(f, true);
 		assertNotNull(model);
 		assertEquals(2, model.initialization.initPhases.ipdv04.ipdv04p3.realizeFields.size());
 		assertEquals("myfield1", model.initialization.initPhases.ipdv04.ipdv04p3.realizeFields.get(0).field);

@@ -23,12 +23,12 @@ public class AddComponentToDriver extends DesignFragment {
   
   @Override
   public String name() {
-    return "Add component to Driver";
+    return "Add Model to a Driver";
   }
   
   @Override
   public String goal() {
-    return "Add a child Model to a Driver";
+    return "Add a Model component to the list of child components in a Driver";
   }
   
   @Override

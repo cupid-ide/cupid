@@ -64,7 +64,6 @@ public class BaseModelItemProvider extends ComponentItemProvider {
 			childrenFeatures.add(NUOPCPackage.Literals.BASE_MODEL__GRIDS);
 			childrenFeatures.add(NUOPCPackage.Literals.BASE_MODEL__IMPORT_FIELDS);
 			childrenFeatures.add(NUOPCPackage.Literals.BASE_MODEL__EXPORT_FIELDS);
-			childrenFeatures.add(NUOPCPackage.Literals.BASE_MODEL__ADVANCE);
 		}
 		return childrenFeatures;
 	}
@@ -112,7 +111,6 @@ public class BaseModelItemProvider extends ComponentItemProvider {
 			case NUOPCPackage.BASE_MODEL__GRIDS:
 			case NUOPCPackage.BASE_MODEL__IMPORT_FIELDS:
 			case NUOPCPackage.BASE_MODEL__EXPORT_FIELDS:
-			case NUOPCPackage.BASE_MODEL__ADVANCE:
 				fireNotifyChanged(new ViewerNotification(notification, notification.getNotifier(), true, false));
 				return;
 		}
@@ -144,11 +142,6 @@ public class BaseModelItemProvider extends ComponentItemProvider {
 			(createChildParameter
 				(NUOPCPackage.Literals.BASE_MODEL__EXPORT_FIELDS,
 				 NUOPCFactory.eINSTANCE.createField()));
-
-		newChildDescriptors.add
-			(createChildParameter
-				(NUOPCPackage.Literals.BASE_MODEL__ADVANCE,
-				 NUOPCFactory.eINSTANCE.createAdvance()));
 	}
 
 	/**

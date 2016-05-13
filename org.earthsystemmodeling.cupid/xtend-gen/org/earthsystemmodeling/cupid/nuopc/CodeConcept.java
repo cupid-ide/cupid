@@ -37,6 +37,7 @@ import org.eclipse.photran.internal.core.parser.ASTEntityDeclNode;
 import org.eclipse.photran.internal.core.parser.ASTExecutableProgramNode;
 import org.eclipse.photran.internal.core.parser.ASTModuleNode;
 import org.eclipse.photran.internal.core.parser.ASTObjectNameNode;
+import org.eclipse.photran.internal.core.parser.ASTOnlyNode;
 import org.eclipse.photran.internal.core.parser.ASTRenameNode;
 import org.eclipse.photran.internal.core.parser.ASTSubroutineSubprogramNode;
 import org.eclipse.photran.internal.core.parser.ASTTypeDeclarationStmtNode;
@@ -136,6 +137,20 @@ public abstract class CodeConcept<P extends CodeConcept<?, ?>, A extends IASTNod
     this._parent = parent;
     ArrayList<CodeConcept.MarkerLoc> _newArrayList = CollectionLiterals.<CodeConcept.MarkerLoc>newArrayList();
     this.paramMarkers = _newArrayList;
+  }
+  
+  public IResource getContext() {
+    boolean _notEquals = (!Objects.equal(this._context, null));
+    if (_notEquals) {
+      return this._context;
+    } else {
+      boolean _notEquals_1 = (!Objects.equal(this._parent, null));
+      if (_notEquals_1) {
+        return this._parent.getContext();
+      } else {
+        return null;
+      }
+    }
   }
   
   public void setOrAddChild(final CodeConcept<?, ?> child) {
@@ -862,6 +877,7 @@ public abstract class CodeConcept<P extends CodeConcept<?, ?>, A extends IASTNod
   
   public static ASTUseStmtNode ensureImport(final ASTUseStmtNode usn, final String entityName, final String localName) {
     boolean _or = false;
+    boolean _or_1 = false;
     Set<ASTRenameNode> _findAll = usn.<ASTRenameNode>findAll(ASTRenameNode.class);
     boolean _exists = false;
     if (_findAll!=null) {
@@ -884,11 +900,45 @@ public abstract class CodeConcept<P extends CodeConcept<?, ?>, A extends IASTNod
       _exists=IterableExtensions.<ASTRenameNode>exists(_findAll, _function);
     }
     if (_exists) {
+      _or_1 = true;
+    } else {
+      Set<ASTOnlyNode> _findAll_1 = usn.<ASTOnlyNode>findAll(ASTOnlyNode.class);
+      boolean _exists_1 = false;
+      if (_findAll_1!=null) {
+        final Function1<ASTOnlyNode, Boolean> _function_1 = new Function1<ASTOnlyNode, Boolean>() {
+          @Override
+          public Boolean apply(final ASTOnlyNode on) {
+            boolean _and = false;
+            Token _name = on.getName();
+            boolean _eic = ASTQuery.eic(_name, entityName);
+            if (!_eic) {
+              _and = false;
+            } else {
+              Token _newName = on.getNewName();
+              boolean _eic_1 = ASTQuery.eic(_newName, localName);
+              _and = _eic_1;
+            }
+            return Boolean.valueOf(_and);
+          }
+        };
+        _exists_1=IterableExtensions.<ASTOnlyNode>exists(_findAll_1, _function_1);
+      }
+      _or_1 = _exists_1;
+    }
+    if (_or_1) {
       _or = true;
     } else {
-      Set<ASTRenameNode> _findAll_1 = usn.<ASTRenameNode>findAll(ASTRenameNode.class);
-      boolean _isNullOrEmpty = IterableExtensions.isNullOrEmpty(_findAll_1);
-      _or = _isNullOrEmpty;
+      boolean _and = false;
+      Set<ASTRenameNode> _findAll_2 = usn.<ASTRenameNode>findAll(ASTRenameNode.class);
+      boolean _isNullOrEmpty = IterableExtensions.isNullOrEmpty(_findAll_2);
+      if (!_isNullOrEmpty) {
+        _and = false;
+      } else {
+        Set<ASTOnlyNode> _findAll_3 = usn.<ASTOnlyNode>findAll(ASTOnlyNode.class);
+        boolean _isNullOrEmpty_1 = IterableExtensions.isNullOrEmpty(_findAll_3);
+        _and = _isNullOrEmpty_1;
+      }
+      _or = _and;
     }
     final boolean exists = _or;
     if ((!exists)) {
@@ -907,6 +957,10 @@ public abstract class CodeConcept<P extends CodeConcept<?, ?>, A extends IASTNod
     } else {
       return usn;
     }
+  }
+  
+  public static ASTUseStmtNode ensureImport(final ASTModuleNode amn, final String moduleName) {
+    return CodeConcept.ensureImport(amn, moduleName, null, null);
   }
   
   public static ASTUseStmtNode ensureImport(final ASTModuleNode amn, final String moduleName, final String entityName, final String localName) {
@@ -929,24 +983,36 @@ public abstract class CodeConcept<P extends CodeConcept<?, ?>, A extends IASTNod
         StringConcatenation _builder = new StringConcatenation();
         _builder.append("use ");
         _builder.append(moduleName, "");
-        _builder.append(", only: ");
-        _builder.append(localName, "");
-        _builder.append(" => ");
-        _builder.append(entityName, "");
+        {
+          boolean _and = false;
+          boolean _notEquals_1 = (!Objects.equal(localName, null));
+          if (!_notEquals_1) {
+            _and = false;
+          } else {
+            boolean _notEquals_2 = (!Objects.equal(entityName, null));
+            _and = _notEquals_2;
+          }
+          if (_and) {
+            _builder.append(", ");
+            _builder.append(localName, "");
+            _builder.append(" => ");
+            _builder.append(entityName, "");
+          }
+        }
         final String code = _builder.toString();
         IBodyConstruct _parseLiteralStatement = CodeExtraction.parseLiteralStatement(code);
         usn = ((ASTUseStmtNode) _parseLiteralStatement);
         IASTListNode<? extends IASTNode> _body_1 = amn.getBody();
         final ASTUseStmtNode last = _body_1.<ASTUseStmtNode>findLast(ASTUseStmtNode.class);
-        boolean _notEquals_1 = (!Objects.equal(last, null));
-        if (_notEquals_1) {
+        boolean _notEquals_3 = (!Objects.equal(last, null));
+        if (_notEquals_3) {
           IASTListNode<? extends IASTNode> _body_2 = amn.getBody();
           ((IASTListNode<IBodyConstruct>) _body_2).insertAfter(last, usn);
         } else {
           IASTListNode<? extends IASTNode> _body_3 = amn.getBody();
           final ISpecificationPartConstruct lastSpec = _body_3.<ISpecificationPartConstruct>findLast(ISpecificationPartConstruct.class);
-          boolean _notEquals_2 = (!Objects.equal(lastSpec, null));
-          if (_notEquals_2) {
+          boolean _notEquals_4 = (!Objects.equal(lastSpec, null));
+          if (_notEquals_4) {
             IASTListNode<? extends IASTNode> _body_4 = amn.getBody();
             ((IASTListNode<IBodyConstruct>) _body_4).insertAfter(lastSpec, usn);
           } else {

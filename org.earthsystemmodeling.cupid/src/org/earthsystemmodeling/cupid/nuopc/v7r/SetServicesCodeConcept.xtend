@@ -85,6 +85,8 @@ public class SetServicesCodeConcept<P extends NUOPCComponent> extends CodeConcep
 				//if (_parent.importNUOPCGeneric.routineRun == null)
 				//	_parent.importNUOPCGeneric.routineRun = _parent.prefix + "_routine_Run" 
 				
+				_parent.importNUOPCGeneric.imports.put("routine_Run", _parent.prefix + "_routine_Run")
+				
 				val mr = new MethodRegistration(this)
 				mr.internal = false
 				mr.methodType = "ESMF_METHOD_RUN"
@@ -101,14 +103,6 @@ public class SetServicesCodeConcept<P extends NUOPCComponent> extends CodeConcep
 		var routineSetServices = _parent.importNUOPCGeneric.routineSetServices
 		if (routineSetServices == null) {
 			routineSetServices = _parent.prefix + "_SetServices";
-			/*
-			val ASTUseStmtNode genericUse = _parent.importNUOPCGeneric.ASTRef as ASTUseStmtNode
-			var tempCode = genericUse.toString.trim
-			tempCode += ''', &
-						«routineSetServices» => SetServices'''
-			var tempNode = parseLiteralStatement(tempCode) as ASTUseStmtNode;
-			genericUse.replaceWith(tempNode)
-			*/
 			ensureImport(_parent.importNUOPCGeneric.ASTRef, "SetServices", routineSetServices)
 		}
 		

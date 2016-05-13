@@ -26,9 +26,9 @@ class AddComponentToDriver extends DesignFragment {
 	@Binding
 	var NUOPCModel model
 	
-	override name() {"Add component to Driver"}
+	override name() {"Add Model to a Driver"}
 	
-	override goal() {"Add a child Model to a Driver"}
+	override goal() {"Add a Model component to the list of child components in a Driver"}
 	
 	override description() {
 		'''

@@ -10,9 +10,12 @@ import org.earthsystemmodeling.cupid.annotation.Label;
 import org.earthsystemmodeling.cupid.core.CupidActivator;
 import org.earthsystemmodeling.cupid.nuopc.CodeConcept;
 import org.earthsystemmodeling.cupid.nuopc.CodeGenerationException;
+import org.earthsystemmodeling.cupid.nuopc.v7r.NUOPCFrameworkManager;
+import org.earthsystemmodeling.cupid.nuopc.v7r.NUOPCFrameworkManager.INUOPCDatabaseListener;
 import org.earthsystemmodeling.cupid.views.NUOPCViewContentProvider.CodeConceptProxy;
 import org.eclipse.core.resources.IMarker;
 import org.eclipse.core.resources.IResourceChangeListener;
+import org.eclipse.core.resources.IWorkspace;
 import org.eclipse.core.resources.ResourcesPlugin;
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IProgressMonitor;
@@ -23,9 +26,11 @@ import org.eclipse.jface.action.IAction;
 import org.eclipse.jface.action.IMenuListener;
 import org.eclipse.jface.action.IMenuManager;
 import org.eclipse.jface.action.MenuManager;
+import org.eclipse.jface.action.ToolBarManager;
 import org.eclipse.jface.dialogs.MessageDialog;
 import org.eclipse.jface.layout.TreeColumnLayout;
 import org.eclipse.jface.operation.IRunnableWithProgress;
+import org.eclipse.jface.resource.ImageDescriptor;
 import org.eclipse.jface.viewers.ColumnViewer;
 import org.eclipse.jface.viewers.ColumnViewerToolTipSupport;
 import org.eclipse.jface.viewers.ColumnWeightData;
@@ -49,14 +54,11 @@ import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Event;
-import org.eclipse.swt.widgets.Listener;
 import org.eclipse.swt.widgets.Menu;
-import org.eclipse.swt.widgets.TableItem;
 import org.eclipse.swt.widgets.Text;
 import org.eclipse.swt.widgets.Tree;
 import org.eclipse.swt.widgets.TreeColumn;
-import org.eclipse.swt.widgets.TreeItem;
-import org.eclipse.swt.graphics.Point;
+import org.eclipse.ui.IActionBars;
 import org.eclipse.ui.IEditorPart;
 import org.eclipse.ui.IEditorReference;
 import org.eclipse.ui.IPartListener2;
@@ -86,10 +88,11 @@ public class NUOPCView extends ViewPart {
 	
 	private TreeColumn tc2;
 	
-	private NUOPCViewAsyncContentProvider contentProvider;
+	private NUOPCViewAsyncWorkspaceContentProvider contentProvider;
 	private NUOPCViewLabelProvider labelProvider;
 	
 	private IPartListener2 partListener;
+	private IResourceChangeListener resourceChangeListener;
 	
 	private static String stylePath;
 	
@@ -245,16 +248,83 @@ public class NUOPCView extends ViewPart {
 		*/
 		
 		drillDownAdapter = new DrillDownAdapter(viewer);		
-		contentProvider = new NUOPCViewAsyncContentProvider(Display.getCurrent(), viewer);
+		//contentProvider = new NUOPCViewAsyncContentProvider(Display.getCurrent(), viewer);
+		contentProvider = new NUOPCViewAsyncWorkspaceContentProvider(Display.getCurrent(), viewer);
 		//contentProvider = new NUOPCViewContentProvider();
 		viewer.setContentProvider(contentProvider);
 		
 		labelProvider = new NUOPCViewLabelProvider();
 		viewer.setLabelProvider(labelProvider);
 		viewer.setSorter(null);
-		//viewer.setAutoExpandLevel(4);
-	
+		
 		FancyToolTipSupport.enableFor(viewer, ToolTip.NO_RECREATE);
+		
+		final IWorkspace workspace = ResourcesPlugin.getWorkspace();
+		viewer.setInput(workspace);
+		
+		NUOPCFrameworkManager.getInstance().addDBListener(new INUOPCDatabaseListener() {
+			@Override
+			public void updated() {
+				 UIJob refreshJob = new UIJob("Refresh NUOPC view") {
+         			@Override
+         			public IStatus runInUIThread(IProgressMonitor monitor) {
+         				contentProvider.recompute();
+         		        return Status.OK_STATUS;
+         			}    	
+                 };
+                 refreshJob.schedule();
+			}
+		});
+		
+		
+		
+		
+		/*
+		final IWorkspace workspace = ResourcesPlugin.getWorkspace();
+		viewer.setInput(workspace);
+		resourceChangeListener = new IResourceChangeListener() {
+		      public void resourceChanged(IResourceChangeEvent event) {
+		    	  if (event.getDelta() == null) {
+		    		  return;
+		    	  }
+		    	  IResourceDeltaVisitor visitor = new IResourceDeltaVisitor() {
+		              public boolean visit(final IResourceDelta delta) {
+		                 //only interested in content changes
+		                 if ((delta.getFlags() & IResourceDelta.CONTENT) == 0) {
+		                    return true;
+		                 }
+		                 else if (delta.getResource() instanceof IFile){
+		                	 contentProvider.clear();
+		                	 UIJob refreshJob = new UIJob("Refresh NUOPC view") {
+		             			@Override
+		             			public IStatus runInUIThread(IProgressMonitor monitor) {
+		             				
+		             				Object[] expandedElements = viewer.getExpandedElements();
+		             				TreePath[] expandedTreePaths = viewer.getExpandedTreePaths();
+		             				viewer.setInput(workspace);
+		             				viewer.setExpandedElements(expandedElements);
+		             				viewer.setExpandedTreePaths(expandedTreePaths);		             				
+		             				
+		             				//viewer.refresh();
+		             		        return Status.OK_STATUS;
+		             			}    	
+		                     };
+		                     refreshJob.schedule();
+		                     return false;
+		                 }
+		                 return true;
+		              }
+		           };
+		           try {
+		              event.getDelta().accept(visitor);
+		           } catch (CoreException e) {
+		              CupidActivator.debug("", e);
+		           }
+		      }
+		   };
+		workspace.addResourceChangeListener(resourceChangeListener, IResourceChangeEvent.POST_CHANGE);
+		*/
+		
 		
 		
 		doubleClickAction = new Action() {
@@ -365,40 +435,27 @@ public class NUOPCView extends ViewPart {
 		});
 		*/
 		
-		/*
+		
 		IActionBars bars = getViewSite().getActionBars();
-		
-		//Since the Luna update, the populated contributions (from plugin.xml) are not showing
-		//so I am adding an explicit action below
-		
-		//IServiceLocator workbench = PlatformUI.getWorkbench();
-		//IMenuService menuService = (IMenuService) getViewSite().getService(IMenuService.class); //(IMenuService) workbench.getService(IMenuService.class);
 		ToolBarManager toolbarManager = (ToolBarManager) bars.getToolBarManager();
-		toolbarManager.removeAll();
-		
-		//menuService.populateContributionManager((ContributionManager) bars.getToolBarManager(), "toolbar:org.earthsystemmodeling.cupid.views.NUOPCView.toolbar");
-		//menuService.populateContributionManager(toolbarManager, "toolbar:org.earthsystemmodeling.cupid.views.NUOPCView.toolbar");
-				
+		toolbarManager.removeAll();			
+
 		toolbarManager.add(new Action() {
-			
-			
+
 			@Override
 			public void run() {
-				ReverseHandler rh = new ReverseHandler();
-				try {
-					rh.execute(null);
-				} catch (ExecutionException e) {
-					CupidActivator.log(Status.ERROR, "Error executing reverse engineer command", e);
-				}
+				//starts a job
+				NUOPCFrameworkManager.getInstance().ensureDBIsUpToDate();
 			}
 			
 			@Override
 			public String getId() {
-				return "org.earthsystemmodeling.cupid.reverseEngineer.toolbar";
+				return "org.earthsystemmodeling.cupid.refreshnuopcview";
 			}
+			
 			@Override
 			public String getText() {
-				return "Reverse engineer";
+				return "Refresh";
 			}
 			
 			@Override
@@ -408,14 +465,9 @@ public class NUOPCView extends ViewPart {
 			
 		});
 		
-		//for (IContributionItem i : toolbarManager.getItems()) {
-		//	System.out.println("item: " + i.getId() + " - " + i.isVisible() + " - " + i.isEnabled());
-		//}
-		
 		toolbarManager.update(true);
 		bars.updateActionBars();
-		*/	
-						
+							
 		MenuManager menuMgr = new MenuManager();
 
         Menu menu = menuMgr.createContextMenu(viewer.getControl());
@@ -518,14 +570,18 @@ public class NUOPCView extends ViewPart {
    
             						//ApplyCodeConceptChanges applyRunnable = new ApplyCodeConceptChanges(newcc);
     								
+            						//final IWorkspace workspace = ResourcesPlugin.getWorkspace();
+            						//workspace.removeResourceChangeListener(resourceChangeListener);
     								try {
-										PlatformUI.getWorkbench().getProgressService().run(true, false, applyRunnable);
+										PlatformUI.getWorkbench().getProgressService().run(false, false, applyRunnable);
 									} catch (InvocationTargetException | InterruptedException e) {
 										CupidActivator.log("Exception executing code generation", e);
 									}
   
-    								viewer.refresh(ccp);
-        							viewer.expandToLevel(ccp, 1);
+    								//contentProvider.clear();
+    								//viewer.refresh(ccp);
+        							//viewer.expandToLevel(ccp, 1);
+        							//workspace.addResourceChangeListener(resourceChangeListener, IResourceChangeEvent.POST_CHANGE);
              						
             					};
             					
@@ -637,9 +693,9 @@ public class NUOPCView extends ViewPart {
         	
         };
         
+        /*
         service.addPartListener(partListener);
-        
-        
+                
         UIJob initJob = new UIJob("Initialize NUOPC view") {
 			@Override
 			public IStatus runInUIThread(IProgressMonitor monitor) {
@@ -657,7 +713,7 @@ public class NUOPCView extends ViewPart {
 			}    	
         };
         initJob.schedule(500);
-        
+        */
         
 	}
 	
@@ -690,6 +746,10 @@ public class NUOPCView extends ViewPart {
 		if (partListener != null) {
 			IPartService service = PlatformUI.getWorkbench().getActiveWorkbenchWindow().getPartService();
 			service.removePartListener(partListener);
+		}
+		if (resourceChangeListener != null) {
+			final IWorkspace workspace = ResourcesPlugin.getWorkspace();
+			workspace.removeResourceChangeListener(resourceChangeListener);
 		}
 	}
 	

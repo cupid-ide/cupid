@@ -4,6 +4,7 @@ package org.earthsystemmodeling.cupid.NUOPC.impl;
 
 import java.util.Collection;
 
+import org.earthsystemmodeling.cupid.NUOPC.Advance;
 import org.earthsystemmodeling.cupid.NUOPC.Component;
 import org.earthsystemmodeling.cupid.NUOPC.Driver;
 import org.earthsystemmodeling.cupid.NUOPC.NUOPCPackage;
@@ -13,6 +14,7 @@ import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.InternalEObject;
 import org.eclipse.emf.ecore.util.EObjectContainmentEList;
+import org.eclipse.emf.ecore.util.EObjectResolvingEList;
 import org.eclipse.emf.ecore.util.InternalEList;
 
 /**
@@ -24,6 +26,7 @@ import org.eclipse.emf.ecore.util.InternalEList;
  * </p>
  * <ul>
  *   <li>{@link org.earthsystemmodeling.cupid.NUOPC.impl.DriverImpl#getChildren <em>Children</em>}</li>
+ *   <li>{@link org.earthsystemmodeling.cupid.NUOPC.impl.DriverImpl#getRunSequence <em>Run Sequence</em>}</li>
  * </ul>
  *
  * @generated
@@ -38,6 +41,16 @@ public class DriverImpl extends ComponentImpl implements Driver {
 	 * @ordered
 	 */
 	protected EList<Component> children;
+
+	/**
+	 * The cached value of the '{@link #getRunSequence() <em>Run Sequence</em>}' reference list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #getRunSequence()
+	 * @generated
+	 * @ordered
+	 */
+	protected EList<Advance> runSequence;
 
 	/**
 	 * <!-- begin-user-doc -->
@@ -75,6 +88,18 @@ public class DriverImpl extends ComponentImpl implements Driver {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	public EList<Advance> getRunSequence() {
+		if (runSequence == null) {
+			runSequence = new EObjectResolvingEList<Advance>(Advance.class, this, NUOPCPackage.DRIVER__RUN_SEQUENCE);
+		}
+		return runSequence;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
 	@Override
 	public NotificationChain eInverseRemove(InternalEObject otherEnd, int featureID, NotificationChain msgs) {
 		switch (featureID) {
@@ -94,6 +119,8 @@ public class DriverImpl extends ComponentImpl implements Driver {
 		switch (featureID) {
 			case NUOPCPackage.DRIVER__CHILDREN:
 				return getChildren();
+			case NUOPCPackage.DRIVER__RUN_SEQUENCE:
+				return getRunSequence();
 		}
 		return super.eGet(featureID, resolve, coreType);
 	}
@@ -111,6 +138,10 @@ public class DriverImpl extends ComponentImpl implements Driver {
 				getChildren().clear();
 				getChildren().addAll((Collection<? extends Component>)newValue);
 				return;
+			case NUOPCPackage.DRIVER__RUN_SEQUENCE:
+				getRunSequence().clear();
+				getRunSequence().addAll((Collection<? extends Advance>)newValue);
+				return;
 		}
 		super.eSet(featureID, newValue);
 	}
@@ -126,6 +157,9 @@ public class DriverImpl extends ComponentImpl implements Driver {
 			case NUOPCPackage.DRIVER__CHILDREN:
 				getChildren().clear();
 				return;
+			case NUOPCPackage.DRIVER__RUN_SEQUENCE:
+				getRunSequence().clear();
+				return;
 		}
 		super.eUnset(featureID);
 	}
@@ -140,6 +174,8 @@ public class DriverImpl extends ComponentImpl implements Driver {
 		switch (featureID) {
 			case NUOPCPackage.DRIVER__CHILDREN:
 				return children != null && !children.isEmpty();
+			case NUOPCPackage.DRIVER__RUN_SEQUENCE:
+				return runSequence != null && !runSequence.isEmpty();
 		}
 		return super.eIsSet(featureID);
 	}

@@ -81,6 +81,9 @@ class NUOPCDriver extends NUOPCComponent {
 	def forward(Driver high) {
 		name = high.name
 		initialization.initSpecs.setModelServices.forward(high)
+		if (high.runSequence.size > 0) {
+			new SetRunSequence(initialization.initSpecs).forward(high)
+		}
 	}
 	
 	static def newBasicDriver(IResource context) {
@@ -1149,6 +1152,24 @@ call NUOPC_DriverAddComp(«_parent.paramGridComp», srcCompLabel=«paramch(srcCo
 			runElements = newArrayList()
 		}
 			
+		def forward(Driver high) {
+			high.runSequence.forEach[e|
+				val addElem = new SetRunSequence_AddRunElement(this)
+				addElem.slot = "1"
+				if (e.component instanceof BaseModel) {
+					addElem.compLabel = "\"" + e.component.name + "\""
+					if (e.phaseLabel != null) {
+						addElem.phaseLabel = "\"" + e.phaseLabel + "\""
+					}
+				}
+				else {
+					val conn = e.component as Connector
+					addElem.srcCompLabel = "\"" + conn.source.name + "\""
+					addElem.dstCompLabel = "\"" + conn.destination.name + "\""
+				}
+			]	
+		}
+		
 		override reverse() {
 			
 			var ret = super.reverse as SetRunSequence
@@ -1266,7 +1287,6 @@ end subroutine
 			code = 
 '''
 
-! add a run sequence element for a Model, Mediator, or Driver       
 call NUOPC_DriverAddRunElement(«_parent.paramGridComp», slot=«paramint(slot)», &
     compLabel=«paramch(compLabel)», «IF phaseLabel!=null»phaseLabel=«paramch(phaseLabel)»,«ENDIF» rc=«_parent.paramRC»)
 «ESMFErrorCheck(_parent.paramRC)»
@@ -1276,7 +1296,6 @@ call NUOPC_DriverAddRunElement(«_parent.paramGridComp», slot=«paramint(slot)�
 			code = 
 '''
 
-! add a run sequence element for a Connector   
 call NUOPC_DriverAddRunElement(«_parent.paramGridComp», slot=«paramint(slot)», &
     srcCompLabel=«paramch(srcCompLabel)», dstCompLabel=«paramch(dstCompLabel)», rc=«_parent.paramRC»)
 «ESMFErrorCheck(_parent.paramRC)»

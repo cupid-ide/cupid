@@ -4,7 +4,9 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.net.URL;
+import java.util.Map.Entry;
 
+import org.earthsystemmodeling.cupid.nuopc.v7r.NUOPCFrameworkManager;
 import org.earthsystemmodeling.cupid.preferences.CupidPreferencePage;
 import org.earthsystemmodeling.cupid.views.NUOPCView;
 import org.eclipse.core.resources.IFile;
@@ -24,7 +26,6 @@ import org.eclipse.ui.IPartService;
 import org.eclipse.ui.IViewPart;
 import org.eclipse.ui.IWorkbenchPage;
 import org.eclipse.ui.IWorkbenchPartReference;
-import org.eclipse.ui.PartInitException;
 import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.part.FileEditorInput;
 import org.eclipse.ui.plugin.AbstractUIPlugin;
@@ -51,8 +52,30 @@ public class CupidActivator extends AbstractUIPlugin {
 		instance.setDebugging(true);  //comment out before release
 		
 		addEditorListener();
+		
+		if (!inTestingMode()) {
+			NUOPCFrameworkManager.getInstance().start();
+		}
+		else {
+			System.out.println("CUPID RUNNING IN TESTING MODE");
+		}
+		
 			
 	}	
+	
+	public static boolean inTestingMode() {
+		
+		//System.out.println("======== SYSTEM PROPERTIES =========");
+		//for (Entry<Object, Object> e : System.getProperties().entrySet()) {
+		//	System.out.println(e.getKey() + " ==> [[" + e.getValue() + "]]");
+		//}
+		//System.out.println("======== SYSTEM PROPERTIES =========");
+		
+        String app = System.getProperty("eclipse.application"); 
+        return app != null && (
+        		app.toLowerCase().contains("junit") ||
+        		app.toLowerCase().contains("tycho.surefire.osgibooter.headlesstest"));
+	}
 	
 	public static CupidActivator getDefault() {
 		return instance;

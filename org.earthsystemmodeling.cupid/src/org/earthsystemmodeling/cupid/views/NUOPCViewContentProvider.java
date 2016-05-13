@@ -14,25 +14,13 @@ import org.earthsystemmodeling.cupid.annotation.Label;
 import org.earthsystemmodeling.cupid.annotation.MappingType;
 import org.earthsystemmodeling.cupid.core.CupidActivator;
 import org.earthsystemmodeling.cupid.nuopc.CodeConcept;
-import org.earthsystemmodeling.cupid.nuopc.ReverseEngineerException;
-import org.earthsystemmodeling.cupid.nuopc.v7r.NUOPCDriver;
 import org.earthsystemmodeling.cupid.nuopc.v7r.NUOPCFrameworkManager;
-import org.earthsystemmodeling.cupid.nuopc.v7r.NUOPCMediator;
-import org.earthsystemmodeling.cupid.nuopc.v7r.NUOPCModel;
-import org.earthsystemmodeling.cupid.views.NUOPCViewContentProvider.CodeConceptProxy;
 import org.eclipse.core.resources.IFile;
-import org.eclipse.core.runtime.CoreException;
-import org.eclipse.core.runtime.IProgressMonitor;
-import org.eclipse.core.runtime.IStatus;
-import org.eclipse.core.runtime.NullProgressMonitor;
-import org.eclipse.core.runtime.Status;
-import org.eclipse.core.runtime.jobs.Job;
 import org.eclipse.jface.viewers.IStructuredContentProvider;
 import org.eclipse.jface.viewers.ITreeContentProvider;
 import org.eclipse.jface.viewers.Viewer;
 import org.eclipse.photran.internal.core.vpg.PhotranVPG;
 import org.eclipse.photran.internal.ui.editor.FortranEditor;
-import org.eclipse.swt.widgets.TreeItem;
 import org.eclipse.ui.PlatformUI;
 
 import alice.tuprolog.event.OutputListener;
@@ -383,6 +371,26 @@ class NUOPCViewContentProvider implements IStructuredContentProvider, ITreeConte
 		public int max=1;
 		public CodeConceptProxy() {}
 
+		@Override
+		public boolean equals(Object obj) {
+			if (obj instanceof CodeConceptProxy) {
+				CodeConceptProxy other = (CodeConceptProxy) obj;
+				return clazz.equals(other.clazz) &&
+					   label.equals(other.label) &&
+					(  (codeConcept==null && other.codeConcept==null) ||
+						(codeConcept!=null && other.codeConcept!=null && codeConcept.getContext()!= null 
+							&& codeConcept.getContext().getFullPath().equals(other.codeConcept.getContext().getFullPath()))) &&
+					( (value==null && other.value==null) ||
+						   (value != null && other.value != null && value.equals(other.value)));
+			}
+			return false;
+		};
+		
+		@Override
+		public int hashCode() {
+			return clazz.hashCode() + label.hashCode();
+		};
+		
 		public CodeConceptProxy(Class<?> clazz, CodeConcept<?,?> codeConcept, Label lbl, Child child, MappingType mt) {
 			this.codeConcept = codeConcept;
 			this.clazz = clazz;

@@ -21,6 +21,7 @@ import org.eclipse.xtend.lib.annotations.Accessors
 import java.util.Set
 import java.util.LinkedHashSet
 import org.earthsystemmodeling.cupid.nuopc.ReverseEngineerException
+import java.util.Map
 
 @Label(label="NUOPC Driver")
 @MappingType("module")
@@ -41,7 +42,7 @@ public abstract class NUOPCComponent extends CodeConcept<CodeConcept<?,?>, ASTMo
 	public BasicCodeConcept<ASTUseStmtNode> importNUOPC
 	
 	@Label(label="Generic Import", sort=3)
-	@Child
+	@Child(forward=true)
 	@MappingType("uses")
 	public GenericImport importNUOPCGeneric
 	
@@ -53,14 +54,14 @@ public abstract class NUOPCComponent extends CodeConcept<CodeConcept<?,?>, ASTMo
 	new(CodeConcept<?,?> parent, IResource context, String genericImport) {
 		super(parent, context)
 		this.genericImport = genericImport
-		//importSetServices = new LinkedHashSet<NUOPCComponent>(4)
 		if (genericImport==null) throw new CodeGenerationException("Name of generic import of component cannot be null")
+		this.importNUOPCGeneric = new GenericImport(this, genericImport)
 	}
 	
 	def abstract String prefix() 
 	
 	override name() {
-		name + " (" + _context?.name + ")"
+		name //+ " (" + _context?.name + ")"
 	}
 		
 	override reverse() throws ReverseEngineerException {
@@ -83,7 +84,7 @@ public abstract class NUOPCComponent extends CodeConcept<CodeConcept<?,?>, ASTMo
 					importNUOPC = new BasicCodeConcept<ASTUseStmtNode>(this, it)
 				}
 				else if (it.name.text.eic(genericImport)) {
-					importNUOPCGeneric = new GenericImport(this, it).reverse
+					importNUOPCGeneric = new GenericImport(this, genericImport).reverse
 				}
 			]
 						
@@ -94,7 +95,10 @@ public abstract class NUOPCComponent extends CodeConcept<CodeConcept<?,?>, ASTMo
 	}
 	
 	//subclasses should override
-	def <T extends NUOPCComponent> T reverseChildren() {this as T}
+	def <T extends NUOPCComponent> T reverseChildren() {
+		//importNUOPCGeneric = new GenericImport(this).reverse
+		this as T
+	}
 	
 	
 	override NUOPCComponent forward() {
@@ -112,8 +116,6 @@ module «name»
 	
 	use ESMF
 	use NUOPC
-	use «genericImport», &
-		«prefix»_SetServices => SetServices
 		
 	implicit none
 	
@@ -136,11 +138,13 @@ end module
 				else if (it.name.text.eic("NUOPC")) {
 					importNUOPC = new BasicCodeConcept(this, it)
 				}
-				else if (it.name.text.eic(genericImport)) {
-					importNUOPCGeneric = new GenericImport(this, it).reverse
-				}
+				//else if (it.name.text.eic(genericImport)) {
+				//	importNUOPCGeneric = new GenericImport(this, it).reverse
+				//}
 			]	
 		}
+		
+		importNUOPCGeneric.forward
 		
 		super.forward
 		
@@ -159,18 +163,41 @@ end module
 		@Label(label="routineSetServices")
 		public String routineSetServices
 		
-		@Label(label="routineRun")
-		public String routineRun
+		public Map<String, String> imports
 		
-		new(NUOPCComponent parent, ASTUseStmtNode astRef) {
+		new(NUOPCComponent parent, String genericComp) {
 			super(parent)
-			_astRef = astRef
+			this.genericComp = genericComp
+			this.routineSetServices = _parent.prefix + "_SetServices"
+			imports = newHashMap
+		}
+			
+		override forward() {
+			val usn = ensureImport(_parent.getASTRef, genericComp, "SetServices", routineSetServices)
+			setASTRef(usn)
+			
+			imports.forEach[k,v|
+				setASTRef(ensureImport(getASTRef, k, v))
+			]
+
+			this
 		}
 		
 		override GenericImport reverse() {
-			genericComp = getASTRef?.name.text
 			
-			var on = getASTRef?.onlyList?.findFirst[it.name.text.equalsIgnoreCase("SetServices")]
+			val moduleNode = _parent.ASTRef
+			val usn = moduleNode.moduleBody.filter(ASTUseStmtNode)?.findFirst[
+				it.name.eic(genericComp)
+			]
+			setASTRef(usn)
+			
+			if (usn == null) {
+				return null
+			}		
+
+			genericComp = usn.name.text
+			
+			var on = usn.onlyList?.findFirst[it.name.text.equalsIgnoreCase("SetServices")]
 			if (on != null) {
 				routineSetServices = {
 					if (on.renamed) on.newName.text
@@ -178,25 +205,12 @@ end module
 				}
 			}
 			else {
-				var rn = getASTRef?.renameList?.findFirst[it.name.text.equalsIgnoreCase("SetServices")]
+				var rn = usn.renameList?.findFirst[it.name.text.equalsIgnoreCase("SetServices")]
 				if (rn != null) {
 					routineSetServices = rn.newName.text
 				}
 			}
 			
-			on = getASTRef?.onlyList?.findFirst[it.name.text.equalsIgnoreCase("routine_Run")]
-			if (on != null) {
-				routineRun = {
-					if (on.renamed) on.newName.text
-					else on.name.text
-				}
-			}
-			else {
-				var rn = getASTRef?.renameList?.findFirst[it.name.text.equalsIgnoreCase("routine_Run")]
-				if (rn != null) {
-					routineRun = rn.newName.text
-				}
-			}
 			this
 		}
 		

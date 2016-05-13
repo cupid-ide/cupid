@@ -21,6 +21,7 @@ import org.earthsystemmodeling.cupid.nuopc.ReverseEngineerException;
 import org.earthsystemmodeling.cupid.preferences.CupidPreferencePage;
 import org.earthsystemmodeling.cupid.views.NUOPCViewContentProvider.CodeConceptProxy;
 import org.eclipse.cdt.internal.ui.viewsupport.AsyncTreeWorkInProgressNode;
+import org.eclipse.core.resources.IFile;
 import org.eclipse.core.runtime.FileLocator;
 import org.eclipse.core.runtime.Path;
 import org.eclipse.core.runtime.Status;
@@ -32,6 +33,7 @@ import org.eclipse.jface.viewers.StyledString;
 import org.eclipse.jface.viewers.ViewerCell;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.custom.StyleRange;
+import org.eclipse.swt.graphics.Image;
 import org.eclipse.swt.graphics.Point;
 import org.eclipse.swt.graphics.Rectangle;
 import org.eclipse.swt.graphics.TextStyle;
@@ -143,6 +145,11 @@ class NUOPCViewLabelProvider extends StyledCellLabelProvider { //implements ITab
 	@Override
 	public String getToolTipText(Object element) {
 		
+		if (element instanceof IFile) {
+			IFile f = (IFile) element;
+			return f.getProject().getName() + "/" + f.getProjectRelativePath().toString();
+		}
+		
 		if (!(element instanceof CodeConceptProxy)) {
 			return null;
 		}
@@ -240,7 +247,7 @@ class NUOPCViewLabelProvider extends StyledCellLabelProvider { //implements ITab
 	
 	//boolean grayState = false;
 	
-	
+	static Image ICON_FILE = CupidActivator.getImageDescriptor("icons/file.png").createImage();
 	
 	@Override
 	public void update(final ViewerCell cell) {
@@ -265,12 +272,22 @@ class NUOPCViewLabelProvider extends StyledCellLabelProvider { //implements ITab
 	    
 	    if (element instanceof AsyncTreeWorkInProgressNode) {
 	    	if (cell.getColumnIndex()==0) {
-	    		cell.setText("Working...");
+	    		cell.setText("Waiting on indexing to finish...");
 	    		super.update(cell);
 	    	}
 	    	return;
 	    }
 		
+	    if (element instanceof IFile) {
+	    	IFile f = (IFile) element;
+	    	if (cell.getColumnIndex()==0) {
+	    		cell.setText(f.getProject().getName() + "/" + f.getProjectRelativePath().toString());
+	    		cell.setImage(ICON_FILE);
+	    		super.update(cell);
+	    	}
+	    	return;
+	    }
+	    
 		
 		StyledString text = new StyledString();		    	    
 	   

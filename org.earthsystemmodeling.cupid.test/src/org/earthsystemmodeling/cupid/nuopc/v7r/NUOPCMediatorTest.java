@@ -38,7 +38,7 @@ public class NUOPCMediatorTest {
 	
 	@BeforeClass
 	public static void setUp() throws CoreException, IOException, InterruptedException {
-		PROJECT_NUOPC_PROTOTYPES = TestHelpers.createFortranProjectFromFolder("target/" + NUOPCTest.NUOPC_TAG, NUOPCTest.NUOPC_TAG);
+		PROJECT_NUOPC_PROTOTYPES = TestHelpers.createFortranProjectFromFolder("target/" + NUOPCTest.NUOPC_TAG, NUOPCTest.NUOPC_TAG);	
 	}
 	
 	@AfterClass
@@ -52,7 +52,7 @@ public class NUOPCMediatorTest {
 		IFile f;
 		f = PROJECT_NUOPC_PROTOTYPES.getFolder("AtmOcnMedProto").getFile("med.F90");
 				
-		NUOPCMediator mediator = new NUOPCMediator(f).reverse();
+		NUOPCMediator mediator = manager.acquireConcept(f, true);
 		assertNotNull(mediator);
 		assertEquals("MED", mediator.name);
 		assertNotNull(mediator.setServices);
@@ -122,7 +122,7 @@ public class NUOPCMediatorTest {
 		
 		f = PROJECT_NUOPC_PROTOTYPES.getFolder("AtmOcnMedPetListTimescalesSplitFastProto").getFile("med.F90");
 		
-		mediator = new NUOPCMediator(f).reverse();
+		mediator = manager.acquireConcept(f, true);
 		assertNotNull(mediator);
 		assertEquals("MED", mediator.name);
 		assertNotNull(mediator.setServices);
@@ -198,19 +198,12 @@ public class NUOPCMediatorTest {
 		IProject p = TestHelpers.createEmptyFortranProject(NUOPCTest.NUOPC_TAG + "_GenerateNUOPCMediatorFromScratch");
 		IFile f = TestHelpers.createBlankFile(p, "MyMediator.F90"); 
 		
-		
-		
 		NUOPCMediator mediator = new NUOPCMediator(f);
 		mediator.name = "MyMediator";
 		mediator = mediator.forward();
-		
-		//Change chg = mediator.generateChange();
-		//chg.perform(NPM);
 		mediator.applyChanges(NPM);
 		
-		//read in same driver just generated
-		//mediator = new NUOPCMediator(f).reverse();
-		mediator = manager.acquireConcept(f);
+		mediator = manager.acquireConcept(f, true);
 		
 		assertNotNull(mediator);
 		assertEquals("MyMediator", mediator.name);
@@ -232,7 +225,6 @@ public class NUOPCMediatorTest {
 		af.standardName = "\"donkey\"";
 		af.state = "importState";
 		
-		
 		af = new AdvertiseField(ipdv04p1);
 		assertEquals(af, ipdv04p1.advertiseFields.get(1));
 		af.standardName = "\"sea_surface_temperature\"";
@@ -241,13 +233,8 @@ public class NUOPCMediatorTest {
 		ipdv04p0.forward();
 		ipdv04p1.forward();
 		mediator.applyChanges(NPM);
-		//chg = ipdv04p1.generateChange();
-		//chg.perform(NPM);
-		//ipdv04p1.forward(NPM);
-		
-		
-		//mediator = new NUOPCMediator(f).reverse();
-		mediator = manager.acquireConcept(f);
+
+		mediator = manager.acquireConcept(f, true);
 		
 		assertNotNull(mediator);
 		assertNotNull(mediator.initialization.initPhases.ipdv04.ipdv04p0);
@@ -258,8 +245,7 @@ public class NUOPCMediatorTest {
 		assertEquals("importState", mediator.initialization.initPhases.ipdv04.ipdv04p1.advertiseFields.get(0).state);
 		assertEquals("\"sea_surface_temperature\"", mediator.initialization.initPhases.ipdv04.ipdv04p1.advertiseFields.get(1).standardName);
 		assertEquals("exportState", mediator.initialization.initPhases.ipdv04.ipdv04p1.advertiseFields.get(1).state);	
-		
-		
+				
 		IPDv04p3 ipdv04p3 = new IPDv04p3(mediator.initialization.initPhases.ipdv04);
 		assertNotNull(mediator.initialization.initPhases.ipdv04.ipdv04p3);
 		ipdv04p3.getGrids().add("grid");
@@ -289,11 +275,8 @@ public class NUOPCMediatorTest {
 		mediator.initialization.createUniformGrid.get(0).forward();
 		ipdv04p3.forward();
 		mediator.applyChanges(NPM);
-		//chg = ipdv04p3.generateChange();
-		//chg.perform(NPM);
-		
-		//mediator = new NUOPCMediator(f).reverse();
-		mediator = manager.acquireConcept(f);
+
+		mediator = manager.acquireConcept(f, true);
 		
 		assertNotNull(mediator);
 		assertEquals(2, mediator.initialization.initPhases.ipdv04.ipdv04p3.realizeFields.size());
@@ -301,8 +284,7 @@ public class NUOPCMediatorTest {
 		assertEquals("importState", mediator.initialization.initPhases.ipdv04.ipdv04p3.realizeFields.get(0).state);
 		assertEquals("myfield2", mediator.initialization.initPhases.ipdv04.ipdv04p3.realizeFields.get(1).field);
 		assertEquals("exportState", mediator.initialization.initPhases.ipdv04.ipdv04p3.realizeFields.get(1).state);
-		
-		
+				
 		///compile check
 		TestHelpers.copyFileIntoProject(p, "workspace/Makefile");
 		assertTrue("Compile check", TestHelpers.compileProject(p, TestHelpers.getMakefileFragmentLoc(NUOPCTest.NUOPC_TAG), "*.o"));

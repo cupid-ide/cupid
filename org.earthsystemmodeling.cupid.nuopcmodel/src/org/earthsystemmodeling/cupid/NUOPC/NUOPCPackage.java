@@ -87,13 +87,22 @@ public interface NUOPCPackage extends EPackage {
 	int COMPONENT__IPD_VERSION = 1;
 
 	/**
+	 * The feature id for the '<em><b>Advance</b></em>' containment reference list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int COMPONENT__ADVANCE = 2;
+
+	/**
 	 * The number of structural features of the '<em>Component</em>' class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int COMPONENT_FEATURE_COUNT = 2;
+	int COMPONENT_FEATURE_COUNT = 3;
 
 	/**
 	 * The number of operations of the '<em>Component</em>' class.
@@ -133,6 +142,15 @@ public interface NUOPCPackage extends EPackage {
 	int BASE_MODEL__IPD_VERSION = COMPONENT__IPD_VERSION;
 
 	/**
+	 * The feature id for the '<em><b>Advance</b></em>' containment reference list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int BASE_MODEL__ADVANCE = COMPONENT__ADVANCE;
+
+	/**
 	 * The feature id for the '<em><b>Grids</b></em>' containment reference list.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -160,22 +178,13 @@ public interface NUOPCPackage extends EPackage {
 	int BASE_MODEL__EXPORT_FIELDS = COMPONENT_FEATURE_COUNT + 2;
 
 	/**
-	 * The feature id for the '<em><b>Advance</b></em>' containment reference list.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int BASE_MODEL__ADVANCE = COMPONENT_FEATURE_COUNT + 3;
-
-	/**
 	 * The number of structural features of the '<em>Base Model</em>' class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int BASE_MODEL_FEATURE_COUNT = COMPONENT_FEATURE_COUNT + 4;
+	int BASE_MODEL_FEATURE_COUNT = COMPONENT_FEATURE_COUNT + 3;
 
 	/**
 	 * The number of operations of the '<em>Base Model</em>' class.
@@ -215,6 +224,15 @@ public interface NUOPCPackage extends EPackage {
 	int DRIVER__IPD_VERSION = COMPONENT__IPD_VERSION;
 
 	/**
+	 * The feature id for the '<em><b>Advance</b></em>' containment reference list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int DRIVER__ADVANCE = COMPONENT__ADVANCE;
+
+	/**
 	 * The feature id for the '<em><b>Children</b></em>' containment reference list.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -224,13 +242,22 @@ public interface NUOPCPackage extends EPackage {
 	int DRIVER__CHILDREN = COMPONENT_FEATURE_COUNT + 0;
 
 	/**
+	 * The feature id for the '<em><b>Run Sequence</b></em>' reference list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int DRIVER__RUN_SEQUENCE = COMPONENT_FEATURE_COUNT + 1;
+
+	/**
 	 * The number of structural features of the '<em>Driver</em>' class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int DRIVER_FEATURE_COUNT = COMPONENT_FEATURE_COUNT + 1;
+	int DRIVER_FEATURE_COUNT = COMPONENT_FEATURE_COUNT + 2;
 
 	/**
 	 * The number of operations of the '<em>Driver</em>' class.
@@ -270,6 +297,15 @@ public interface NUOPCPackage extends EPackage {
 	int MODEL__IPD_VERSION = BASE_MODEL__IPD_VERSION;
 
 	/**
+	 * The feature id for the '<em><b>Advance</b></em>' containment reference list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int MODEL__ADVANCE = BASE_MODEL__ADVANCE;
+
+	/**
 	 * The feature id for the '<em><b>Grids</b></em>' containment reference list.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -295,15 +331,6 @@ public interface NUOPCPackage extends EPackage {
 	 * @ordered
 	 */
 	int MODEL__EXPORT_FIELDS = BASE_MODEL__EXPORT_FIELDS;
-
-	/**
-	 * The feature id for the '<em><b>Advance</b></em>' containment reference list.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int MODEL__ADVANCE = BASE_MODEL__ADVANCE;
 
 	/**
 	 * The number of structural features of the '<em>Model</em>' class.
@@ -352,6 +379,15 @@ public interface NUOPCPackage extends EPackage {
 	int MEDIATOR__IPD_VERSION = BASE_MODEL__IPD_VERSION;
 
 	/**
+	 * The feature id for the '<em><b>Advance</b></em>' containment reference list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int MEDIATOR__ADVANCE = BASE_MODEL__ADVANCE;
+
+	/**
 	 * The feature id for the '<em><b>Grids</b></em>' containment reference list.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -377,15 +413,6 @@ public interface NUOPCPackage extends EPackage {
 	 * @ordered
 	 */
 	int MEDIATOR__EXPORT_FIELDS = BASE_MODEL__EXPORT_FIELDS;
-
-	/**
-	 * The feature id for the '<em><b>Advance</b></em>' containment reference list.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int MEDIATOR__ADVANCE = BASE_MODEL__ADVANCE;
 
 	/**
 	 * The number of structural features of the '<em>Mediator</em>' class.
@@ -432,6 +459,15 @@ public interface NUOPCPackage extends EPackage {
 	 * @ordered
 	 */
 	int CONNECTOR__IPD_VERSION = COMPONENT__IPD_VERSION;
+
+	/**
+	 * The feature id for the '<em><b>Advance</b></em>' containment reference list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int CONNECTOR__ADVANCE = COMPONENT__ADVANCE;
 
 	/**
 	 * The feature id for the '<em><b>Source</b></em>' reference.
@@ -809,13 +845,22 @@ public interface NUOPCPackage extends EPackage {
 	int ADVANCE__PHASE_LABEL = SPECIALIZATION__PHASE_LABEL;
 
 	/**
+	 * The feature id for the '<em><b>Component</b></em>' container reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int ADVANCE__COMPONENT = SPECIALIZATION_FEATURE_COUNT + 0;
+
+	/**
 	 * The number of structural features of the '<em>Advance</em>' class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int ADVANCE_FEATURE_COUNT = SPECIALIZATION_FEATURE_COUNT + 0;
+	int ADVANCE_FEATURE_COUNT = SPECIALIZATION_FEATURE_COUNT + 1;
 
 	/**
 	 * The number of operations of the '<em>Advance</em>' class.
@@ -879,6 +924,17 @@ public interface NUOPCPackage extends EPackage {
 	EAttribute getComponent_IPDVersion();
 
 	/**
+	 * Returns the meta object for the containment reference list '{@link org.earthsystemmodeling.cupid.NUOPC.Component#getAdvance <em>Advance</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the containment reference list '<em>Advance</em>'.
+	 * @see org.earthsystemmodeling.cupid.NUOPC.Component#getAdvance()
+	 * @see #getComponent()
+	 * @generated
+	 */
+	EReference getComponent_Advance();
+
+	/**
 	 * Returns the meta object for class '{@link org.earthsystemmodeling.cupid.NUOPC.BaseModel <em>Base Model</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -922,17 +978,6 @@ public interface NUOPCPackage extends EPackage {
 	EReference getBaseModel_ExportFields();
 
 	/**
-	 * Returns the meta object for the containment reference list '{@link org.earthsystemmodeling.cupid.NUOPC.BaseModel#getAdvance <em>Advance</em>}'.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @return the meta object for the containment reference list '<em>Advance</em>'.
-	 * @see org.earthsystemmodeling.cupid.NUOPC.BaseModel#getAdvance()
-	 * @see #getBaseModel()
-	 * @generated
-	 */
-	EReference getBaseModel_Advance();
-
-	/**
 	 * Returns the meta object for class '{@link org.earthsystemmodeling.cupid.NUOPC.Driver <em>Driver</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -952,6 +997,17 @@ public interface NUOPCPackage extends EPackage {
 	 * @generated
 	 */
 	EReference getDriver_Children();
+
+	/**
+	 * Returns the meta object for the reference list '{@link org.earthsystemmodeling.cupid.NUOPC.Driver#getRunSequence <em>Run Sequence</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the reference list '<em>Run Sequence</em>'.
+	 * @see org.earthsystemmodeling.cupid.NUOPC.Driver#getRunSequence()
+	 * @see #getDriver()
+	 * @generated
+	 */
+	EReference getDriver_RunSequence();
 
 	/**
 	 * Returns the meta object for class '{@link org.earthsystemmodeling.cupid.NUOPC.Model <em>Model</em>}'.
@@ -1252,6 +1308,17 @@ public interface NUOPCPackage extends EPackage {
 	EClass getAdvance();
 
 	/**
+	 * Returns the meta object for the container reference '{@link org.earthsystemmodeling.cupid.NUOPC.Advance#getComponent <em>Component</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the container reference '<em>Component</em>'.
+	 * @see org.earthsystemmodeling.cupid.NUOPC.Advance#getComponent()
+	 * @see #getAdvance()
+	 * @generated
+	 */
+	EReference getAdvance_Component();
+
+	/**
 	 * Returns the meta object for enum '{@link org.earthsystemmodeling.cupid.NUOPC.IPDVersion <em>IPD Version</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -1321,6 +1388,14 @@ public interface NUOPCPackage extends EPackage {
 		EAttribute COMPONENT__IPD_VERSION = eINSTANCE.getComponent_IPDVersion();
 
 		/**
+		 * The meta object literal for the '<em><b>Advance</b></em>' containment reference list feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EReference COMPONENT__ADVANCE = eINSTANCE.getComponent_Advance();
+
+		/**
 		 * The meta object literal for the '{@link org.earthsystemmodeling.cupid.NUOPC.impl.BaseModelImpl <em>Base Model</em>}' class.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
@@ -1355,14 +1430,6 @@ public interface NUOPCPackage extends EPackage {
 		EReference BASE_MODEL__EXPORT_FIELDS = eINSTANCE.getBaseModel_ExportFields();
 
 		/**
-		 * The meta object literal for the '<em><b>Advance</b></em>' containment reference list feature.
-		 * <!-- begin-user-doc -->
-		 * <!-- end-user-doc -->
-		 * @generated
-		 */
-		EReference BASE_MODEL__ADVANCE = eINSTANCE.getBaseModel_Advance();
-
-		/**
 		 * The meta object literal for the '{@link org.earthsystemmodeling.cupid.NUOPC.impl.DriverImpl <em>Driver</em>}' class.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
@@ -1379,6 +1446,14 @@ public interface NUOPCPackage extends EPackage {
 		 * @generated
 		 */
 		EReference DRIVER__CHILDREN = eINSTANCE.getDriver_Children();
+
+		/**
+		 * The meta object literal for the '<em><b>Run Sequence</b></em>' reference list feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EReference DRIVER__RUN_SEQUENCE = eINSTANCE.getDriver_RunSequence();
 
 		/**
 		 * The meta object literal for the '{@link org.earthsystemmodeling.cupid.NUOPC.impl.ModelImpl <em>Model</em>}' class.
@@ -1621,6 +1696,14 @@ public interface NUOPCPackage extends EPackage {
 		 * @generated
 		 */
 		EClass ADVANCE = eINSTANCE.getAdvance();
+
+		/**
+		 * The meta object literal for the '<em><b>Component</b></em>' container reference feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EReference ADVANCE__COMPONENT = eINSTANCE.getAdvance_Component();
 
 		/**
 		 * The meta object literal for the '{@link org.earthsystemmodeling.cupid.NUOPC.IPDVersion <em>IPD Version</em>}' enum.

@@ -6,6 +6,8 @@
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="name" lowerBound="1" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="IPDVersion" lowerBound="1"
         eType="#//IPDVersion" defaultValueLiteral="IPDv01"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="advance" lowerBound="1"
+        upperBound="-1" eType="#//Advance" containment="true" eOpposite="#//Advance/component"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="BaseModel" abstract="true" eSuperTypes="#//Component">
     <eStructuralFeatures xsi:type="ecore:EReference" name="grids" upperBound="-1"
@@ -14,12 +16,12 @@
         eType="#//Field" containment="true" eOpposite="#//Field/importedBy"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="exportFields" upperBound="-1"
         eType="#//Field" containment="true" eOpposite="#//Field/exportedBy"/>
-    <eStructuralFeatures xsi:type="ecore:EReference" name="advance" lowerBound="1"
-        upperBound="-1" eType="#//Advance" containment="true"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="Driver" eSuperTypes="#//Component">
     <eStructuralFeatures xsi:type="ecore:EReference" name="children" upperBound="-1"
         eType="#//Component" containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="runSequence" upperBound="-1"
+        eType="#//Advance"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="Model" eSuperTypes="#//BaseModel"/>
   <eClassifiers xsi:type="ecore:EClass" name="Mediator" eSuperTypes="#//BaseModel"/>
@@ -80,5 +82,8 @@
   <eClassifiers xsi:type="ecore:EClass" name="Specialization">
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="phaseLabel" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
   </eClassifiers>
-  <eClassifiers xsi:type="ecore:EClass" name="Advance" eSuperTypes="#//Specialization"/>
+  <eClassifiers xsi:type="ecore:EClass" name="Advance" eSuperTypes="#//Specialization">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="component" lowerBound="1"
+        eType="#//Component" eOpposite="#//Component/advance"/>
+  </eClassifiers>
 </ecore:EPackage>

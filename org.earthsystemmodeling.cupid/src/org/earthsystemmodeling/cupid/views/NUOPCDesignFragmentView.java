@@ -1,10 +1,15 @@
 package org.earthsystemmodeling.cupid.views;
 
+import org.earthsystemmodeling.cupid.views.NUOPCDesignFragmentContentProvider.BindingNode;
 import org.eclipse.jface.action.Action;
+import org.eclipse.jface.action.IAction;
+import org.eclipse.jface.action.IMenuCreator;
 import org.eclipse.jface.action.IMenuListener;
 import org.eclipse.jface.action.IMenuManager;
 import org.eclipse.jface.action.MenuManager;
 import org.eclipse.jface.layout.TreeColumnLayout;
+import org.eclipse.jface.resource.ImageDescriptor;
+import org.eclipse.jface.util.IPropertyChangeListener;
 import org.eclipse.jface.viewers.ColumnViewer;
 import org.eclipse.jface.viewers.ColumnViewerToolTipSupport;
 import org.eclipse.jface.viewers.ColumnWeightData;
@@ -17,6 +22,7 @@ import org.eclipse.jface.window.ToolTip;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.SWTError;
 import org.eclipse.swt.browser.Browser;
+import org.eclipse.swt.events.HelpListener;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Composite;
@@ -198,7 +204,18 @@ public class NUOPCDesignFragmentView extends ViewPart {
 
                 if (viewer.getSelection() instanceof IStructuredSelection) {
                     IStructuredSelection selection = (IStructuredSelection) viewer.getSelection();
-                    //final CodeConceptProxy ccp = (CodeConceptProxy) selection.getFirstElement();
+                    if (selection.getFirstElement() instanceof BindingNode) {
+                    	manager.add(new Action() {
+                    		@Override
+                    		public String getText() {
+                    			return "Bind to ...";
+                    		}
+                    		@Override
+                    		public void run() {
+                    			
+                    		};
+                    	});
+                    }
                 }
         	}
         });

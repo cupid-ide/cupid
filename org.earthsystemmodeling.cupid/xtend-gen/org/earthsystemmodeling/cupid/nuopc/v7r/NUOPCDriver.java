@@ -4,6 +4,7 @@ import com.google.common.base.Objects;
 import com.google.common.collect.Iterables;
 import java.util.ArrayList;
 import java.util.List;
+import org.earthsystemmodeling.cupid.NUOPC.Advance;
 import org.earthsystemmodeling.cupid.NUOPC.BaseModel;
 import org.earthsystemmodeling.cupid.NUOPC.Component;
 import org.earthsystemmodeling.cupid.NUOPC.Connector;
@@ -1648,6 +1649,47 @@ public class NUOPCDriver extends NUOPCComponent {
       this.runElements = _newArrayList;
     }
     
+    public void forward(final Driver high) {
+      EList<Advance> _runSequence = high.getRunSequence();
+      final Procedure1<Advance> _function = new Procedure1<Advance>() {
+        @Override
+        public void apply(final Advance e) {
+          final NUOPCDriver.SetRunSequence_AddRunElement addElem = new NUOPCDriver.SetRunSequence_AddRunElement(SetRunSequence.this);
+          addElem.slot = "1";
+          Component _component = e.getComponent();
+          if ((_component instanceof BaseModel)) {
+            Component _component_1 = e.getComponent();
+            String _name = _component_1.getName();
+            String _plus = ("\"" + _name);
+            String _plus_1 = (_plus + "\"");
+            addElem.compLabel = _plus_1;
+            String _phaseLabel = e.getPhaseLabel();
+            boolean _notEquals = (!Objects.equal(_phaseLabel, null));
+            if (_notEquals) {
+              String _phaseLabel_1 = e.getPhaseLabel();
+              String _plus_2 = ("\"" + _phaseLabel_1);
+              String _plus_3 = (_plus_2 + "\"");
+              addElem.phaseLabel = _plus_3;
+            }
+          } else {
+            Component _component_2 = e.getComponent();
+            final Connector conn = ((Connector) _component_2);
+            BaseModel _source = conn.getSource();
+            String _name_1 = _source.getName();
+            String _plus_4 = ("\"" + _name_1);
+            String _plus_5 = (_plus_4 + "\"");
+            addElem.srcCompLabel = _plus_5;
+            BaseModel _destination = conn.getDestination();
+            String _name_2 = _destination.getName();
+            String _plus_6 = ("\"" + _name_2);
+            String _plus_7 = (_plus_6 + "\"");
+            addElem.dstCompLabel = _plus_7;
+          }
+        }
+      };
+      IterableExtensions.<Advance>forEach(_runSequence, _function);
+    }
+    
     @Override
     public CodeConcept<?, ?> reverse() {
       NUOPCDriver.SetRunSequence _xblockexpression = null;
@@ -1914,8 +1956,6 @@ public class NUOPCDriver extends NUOPCComponent {
           if (_notEquals) {
             StringConcatenation _builder = new StringConcatenation();
             _builder.newLine();
-            _builder.append("! add a run sequence element for a Model, Mediator, or Driver       ");
-            _builder.newLine();
             _builder.append("call NUOPC_DriverAddRunElement(");
             _builder.append(this._parent.paramGridComp, "");
             _builder.append(", slot=");
@@ -1956,8 +1996,6 @@ public class NUOPCDriver extends NUOPCComponent {
             }
             if (_and) {
               StringConcatenation _builder_1 = new StringConcatenation();
-              _builder_1.newLine();
-              _builder_1.append("! add a run sequence element for a Connector   ");
               _builder_1.newLine();
               _builder_1.append("call NUOPC_DriverAddRunElement(");
               _builder_1.append(this._parent.paramGridComp, "");
@@ -2461,6 +2499,13 @@ public class NUOPCDriver extends NUOPCComponent {
     String _name = high.getName();
     this.name = _name;
     this.initialization.initSpecs.setModelServices.forward(high);
+    EList<Advance> _runSequence = high.getRunSequence();
+    int _size = _runSequence.size();
+    boolean _greaterThan = (_size > 0);
+    if (_greaterThan) {
+      NUOPCDriver.SetRunSequence _setRunSequence = new NUOPCDriver.SetRunSequence(this.initialization.initSpecs);
+      _setRunSequence.forward(high);
+    }
   }
   
   public static NUOPCDriver newBasicDriver(final IResource context) {

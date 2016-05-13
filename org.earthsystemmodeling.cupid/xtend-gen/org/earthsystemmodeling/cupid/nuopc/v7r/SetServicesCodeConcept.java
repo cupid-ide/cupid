@@ -386,17 +386,20 @@ public class SetServicesCodeConcept<P extends NUOPCComponent> extends CodeConcep
         String _phaseLabel = a.getPhaseLabel();
         boolean _notEquals = (!Objects.equal(_phaseLabel, null));
         if (_notEquals) {
+          String _prefix = SetServicesCodeConcept.this._parent.prefix();
+          String _plus = (_prefix + "_routine_Run");
+          SetServicesCodeConcept.this._parent.importNUOPCGeneric.imports.put("routine_Run", _plus);
           final SetServicesCodeConcept.MethodRegistration mr = new SetServicesCodeConcept.MethodRegistration(SetServicesCodeConcept.this);
           mr.internal = false;
           mr.methodType = "ESMF_METHOD_RUN";
           mr.phaseLabelList.clear();
           String _phaseLabel_1 = a.getPhaseLabel();
-          String _plus = ("\"" + _phaseLabel_1);
-          String _plus_1 = (_plus + "\"");
-          mr.phaseLabelList.add(_plus_1);
-          String _prefix = SetServicesCodeConcept.this._parent.prefix();
-          String _plus_2 = (_prefix + "_routine_Run");
-          mr.userRoutine = _plus_2;
+          String _plus_1 = ("\"" + _phaseLabel_1);
+          String _plus_2 = (_plus_1 + "\"");
+          mr.phaseLabelList.add(_plus_2);
+          String _prefix_1 = SetServicesCodeConcept.this._parent.prefix();
+          String _plus_3 = (_prefix_1 + "_routine_Run");
+          mr.userRoutine = _plus_3;
         }
       }
     };

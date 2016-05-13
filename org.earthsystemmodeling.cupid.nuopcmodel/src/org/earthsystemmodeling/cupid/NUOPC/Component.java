@@ -2,6 +2,7 @@
  */
 package org.earthsystemmodeling.cupid.NUOPC;
 
+import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.ecore.EObject;
 
 /**
@@ -15,6 +16,7 @@ import org.eclipse.emf.ecore.EObject;
  * <ul>
  *   <li>{@link org.earthsystemmodeling.cupid.NUOPC.Component#getName <em>Name</em>}</li>
  *   <li>{@link org.earthsystemmodeling.cupid.NUOPC.Component#getIPDVersion <em>IPD Version</em>}</li>
+ *   <li>{@link org.earthsystemmodeling.cupid.NUOPC.Component#getAdvance <em>Advance</em>}</li>
  * </ul>
  *
  * @see org.earthsystemmodeling.cupid.NUOPC.NUOPCPackage#getComponent()
@@ -77,5 +79,23 @@ public interface Component extends EObject {
 	 * @generated
 	 */
 	void setIPDVersion(IPDVersion value);
+
+	/**
+	 * Returns the value of the '<em><b>Advance</b></em>' containment reference list.
+	 * The list contents are of type {@link org.earthsystemmodeling.cupid.NUOPC.Advance}.
+	 * It is bidirectional and its opposite is '{@link org.earthsystemmodeling.cupid.NUOPC.Advance#getComponent <em>Component</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <p>
+	 * If the meaning of the '<em>Advance</em>' containment reference list isn't clear,
+	 * there really should be more of a description here...
+	 * </p>
+	 * <!-- end-user-doc -->
+	 * @return the value of the '<em>Advance</em>' containment reference list.
+	 * @see org.earthsystemmodeling.cupid.NUOPC.NUOPCPackage#getComponent_Advance()
+	 * @see org.earthsystemmodeling.cupid.NUOPC.Advance#getComponent
+	 * @model opposite="component" containment="true" required="true"
+	 * @generated
+	 */
+	EList<Advance> getAdvance();
 
 } // Component

@@ -48,6 +48,7 @@ import java.io.ByteArrayInputStream
 import org.eclipse.core.resources.WorkspaceJob
 import org.eclipse.core.runtime.CoreException
 import org.earthsystemmodeling.cupid.core.CupidActivator
+import org.eclipse.photran.internal.core.parser.ASTOnlyNode
 
 public abstract class CodeConcept<P extends CodeConcept<?,?>, A extends IASTNode> {
 	
@@ -72,6 +73,12 @@ public abstract class CodeConcept<P extends CodeConcept<?,?>, A extends IASTNode
 		_parent = parent
 		paramMarkers = newArrayList()
 	}
+		
+	def IResource getContext() {
+		if (_context != null) return _context
+		else if (_parent != null) return _parent.getContext
+		else return null
+	}	
 		
 	def void setOrAddChild(CodeConcept<?,?> child) {
 		setOrAddChild(child, true)
@@ -267,6 +274,7 @@ public abstract class CodeConcept<P extends CodeConcept<?,?>, A extends IASTNode
 	}
 	*/
 	
+	
 	static class ForceReindexJob extends WorkspaceJob {
 	
 		val IFile file
@@ -284,10 +292,8 @@ public abstract class CodeConcept<P extends CodeConcept<?,?>, A extends IASTNode
 			PhotranVPG.instance.forceRecomputationOfEdgesAndAnnotations(filename)
 			return Status.OK_STATUS
 		}
-		
-		
+			
 	}
-	
 		
 	def <T extends CodeConcept<?,?>> T reverse() throws ReverseEngineerException {this as T}
 	def List<CodeConcept<P,A>> reverseMultiple() {newArrayList(reverse)}
@@ -384,6 +390,18 @@ public abstract class CodeConcept<P extends CodeConcept<?,?>, A extends IASTNode
 
 		//System.out.println(file.modificationStamp + " : " + file.localTimeStamp)
 		file.setContents(new ByteArrayInputStream(fileContentsAfter.bytes), true, true, monitor)
+		
+		//val filename = PhotranVPG.getFilenameForIFile(file)
+		//PhotranVPG.instance.forceRecomputationOfEdgesAndAnnotations(filename)
+		//PhotranVPG.instance.deleteAllEntriesFor(filename)
+		
+		//if (!PhotranVPG.instance.isOutOfDate(filename)) {
+		//	throw new RuntimeException("File should be out of date!")
+		//}
+		
+		//file.touch(monitor)
+		//val filename = PhotranVPG.getFilenameForIFile(file)
+		//PhotranVPG.instance.forceRecomputationOfEdgesAndAnnotations(filename)
 		//System.out.println(file.modificationStamp + " : " + file.localTimeStamp)
 		
 		val reindexJob = new ForceReindexJob(file)
@@ -402,8 +420,6 @@ public abstract class CodeConcept<P extends CodeConcept<?,?>, A extends IASTNode
 	    //textFileChange.perform(monitor)
 	    //file.refreshLocal(IResource.DEPTH_ZERO, monitor)
 		//System.out.println(file.modificationStamp + " : " + file.localTimeStamp)
-	    
-	    	
 		
 		val left = new DocLineComparator(new Document(fileContentsBefore), null, true);
 		val right = new DocLineComparator(new Document(fileContentsAfter), null, true);					
@@ -554,7 +570,14 @@ public abstract class CodeConcept<P extends CodeConcept<?,?>, A extends IASTNode
 				rn.newName.eic(localName)
 			] 
 			||
-			usn.findAll(ASTRenameNode).nullOrEmpty
+			usn.findAll(ASTOnlyNode)?.exists[on|
+				on.name.eic(entityName) &&
+				on.newName.eic(localName)
+			]
+			||
+			(usn.findAll(ASTRenameNode).nullOrEmpty &&
+		     usn.findAll(ASTOnlyNode).nullOrEmpty
+			)
 			
 		if (!exists) {
 			//need to add entity to list of imports
@@ -569,6 +592,10 @@ public abstract class CodeConcept<P extends CodeConcept<?,?>, A extends IASTNode
 		
 	}
 	
+	def static ASTUseStmtNode ensureImport(ASTModuleNode amn, String moduleName) {
+		ensureImport(amn, moduleName, null, null)
+	}
+	
 	def static ASTUseStmtNode ensureImport(ASTModuleNode amn, String moduleName, String entityName, String localName) {
 		
 		//var String code	= null
@@ -579,7 +606,7 @@ public abstract class CodeConcept<P extends CodeConcept<?,?>, A extends IASTNode
 			return ensureImport(usn, entityName, localName)
 		}
 		else {
-			val code = '''use «moduleName», only: «localName» => «entityName»'''
+			val code = '''use «moduleName»«IF localName!=null && entityName!=null», «localName» => «entityName»«ENDIF»'''
 			usn = parseLiteralStatement(code) as ASTUseStmtNode
 			
 			val last = amn.body.findLast(ASTUseStmtNode)
