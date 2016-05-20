@@ -1750,12 +1750,11 @@ public class NUOPCModel extends NUOPCComponent {
       if (_setRunClock!=null) {
         _size=_setRunClock.size();
       }
-      boolean _greaterThan = (_size > 0);
+      boolean _greaterThan = (_size > 1);
       if (_greaterThan) {
         String _subroutineName = this.subroutineName;
         int _size_1 = parent.setRunClock.size();
-        int _plus = (_size_1 + 1);
-        this.subroutineName = (_subroutineName + Integer.valueOf(_plus));
+        this.subroutineName = (_subroutineName + Integer.valueOf(_size_1));
       }
       this.specLabel = "model_label_SetRunClock";
       this.paramGridComp = "gcomp";
@@ -1871,12 +1870,11 @@ public class NUOPCModel extends NUOPCComponent {
       if (_checkImport!=null) {
         _size=_checkImport.size();
       }
-      boolean _greaterThan = (_size > 0);
+      boolean _greaterThan = (_size > 1);
       if (_greaterThan) {
         String _subroutineName = this.subroutineName;
         int _size_1 = parent.checkImport.size();
-        int _plus = (_size_1 + 1);
-        this.subroutineName = (_subroutineName + Integer.valueOf(_plus));
+        this.subroutineName = (_subroutineName + Integer.valueOf(_size_1));
       }
       this.specLabel = "model_label_CheckImport";
       this.paramGridComp = "gcomp";

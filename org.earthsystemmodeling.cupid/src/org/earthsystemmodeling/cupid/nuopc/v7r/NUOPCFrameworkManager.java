@@ -87,6 +87,7 @@ public class NUOPCFrameworkManager {
             super("NUOPC database indexer");
         	this.delta = delta;
         	setRule(VPGSchedulingRule.getInstance());
+        	
         }
 
         @Override 

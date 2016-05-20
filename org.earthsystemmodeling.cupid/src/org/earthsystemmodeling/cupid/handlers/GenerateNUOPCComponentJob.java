@@ -4,15 +4,11 @@ import java.io.ByteArrayInputStream;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.earthsystemmodeling.cupid.NUOPC.Application;
 import org.earthsystemmodeling.cupid.NUOPC.Component;
-import org.earthsystemmodeling.cupid.NUOPC.Connector;
 import org.earthsystemmodeling.cupid.NUOPC.Driver;
 import org.earthsystemmodeling.cupid.NUOPC.Mediator;
 import org.earthsystemmodeling.cupid.NUOPC.Model;
 import org.earthsystemmodeling.cupid.core.CupidActivator;
-import org.earthsystemmodeling.cupid.nuopc.v7r.MainGenerator;
-import org.earthsystemmodeling.cupid.nuopc.v7r.MakefileGenerator;
 import org.earthsystemmodeling.cupid.nuopc.v7r.NUOPCComponent;
 import org.earthsystemmodeling.cupid.nuopc.v7r.NUOPCDriver;
 import org.earthsystemmodeling.cupid.nuopc.v7r.NUOPCMediator;
@@ -21,6 +17,7 @@ import org.eclipse.core.resources.IContainer;
 import org.eclipse.core.resources.IFile;
 import org.eclipse.core.resources.IFolder;
 import org.eclipse.core.resources.IProject;
+import org.eclipse.core.resources.ResourcesPlugin;
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.IStatus;
@@ -28,7 +25,9 @@ import org.eclipse.core.runtime.NullProgressMonitor;
 import org.eclipse.core.runtime.Path;
 import org.eclipse.core.runtime.Status;
 import org.eclipse.core.runtime.jobs.Job;
+import org.eclipse.core.runtime.jobs.MultiRule;
 import org.eclipse.jface.dialogs.MessageDialog;
+import org.eclipse.photran.internal.core.vpg.eclipse.VPGSchedulingRule;
 import org.eclipse.ui.IWorkbenchPage;
 import org.eclipse.ui.IWorkbenchWindow;
 import org.eclipse.ui.MultiPartInitException;
@@ -42,11 +41,15 @@ public class GenerateNUOPCComponentJob extends Job {
 	private IContainer container;
 	private boolean openEditor;
 	
+	@SuppressWarnings("restriction")
 	public GenerateNUOPCComponentJob(String name, Component component, IContainer container, boolean openEditor) {
 		super(name);
 		this.component = component;
 		this.container = container;
 		this.openEditor = openEditor;
+		//setRule(MultiRule.combine(
+        //        VPGSchedulingRule.getInstance(),
+        //        ResourcesPlugin.getWorkspace().getRoot()));
 	}
 	
 	@Override

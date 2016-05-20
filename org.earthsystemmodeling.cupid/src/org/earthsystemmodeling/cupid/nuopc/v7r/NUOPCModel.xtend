@@ -1086,8 +1086,8 @@ end subroutine
 
 			// defaults
 			subroutineName = "SetRunClock"
-			if (parent.setRunClock?.size > 0) {
-				subroutineName += parent.setRunClock.size+1
+			if (parent.setRunClock?.size > 1) {
+				subroutineName += parent.setRunClock.size
 			}
 			specLabel = "model_label_SetRunClock"
 			paramGridComp = "gcomp"
@@ -1148,8 +1148,8 @@ end subroutine
 
 			// defaults
 			subroutineName = "CheckImport"
-			if (parent.checkImport?.size > 0) {
-				subroutineName += parent.checkImport.size+1
+			if (parent.checkImport?.size > 1) {
+				subroutineName += parent.checkImport.size
 			}
 			specLabel = "model_label_CheckImport"
 			paramGridComp = "gcomp"

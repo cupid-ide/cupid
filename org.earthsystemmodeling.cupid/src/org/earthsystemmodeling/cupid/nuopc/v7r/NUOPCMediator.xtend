@@ -1122,8 +1122,8 @@ end subroutine
 
 			// defaults
 			subroutineName = "SetRunClock"
-			if (parent.setRunClock?.size > 0) {
-				subroutineName += parent.setRunClock.size+1
+			if (parent.setRunClock?.size > 1) {
+				subroutineName += parent.setRunClock.size
 			}
 			specLabel = "mediator_label_SetRunClock"
 			paramGridComp = "gcomp"
@@ -1184,8 +1184,8 @@ end subroutine
 
 			// defaults
 			subroutineName = "CheckImport"
-			if (parent.checkImport?.size > 0) {
-				subroutineName += parent.checkImport.size+1
+			if (parent.checkImport?.size > 1) {
+				subroutineName += parent.checkImport.size
 			}
 			specLabel = "mediator_label_CheckImport"
 			paramGridComp = "gcomp"
@@ -1231,8 +1231,8 @@ end subroutine
 
 			// defaults
 			subroutineName = "TimestampExport"
-			if (parent.timestampExport?.size > 0) {
-				subroutineName += parent.timestampExport.size+1
+			if (parent.timestampExport?.size > 1) {
+				subroutineName += parent.timestampExport.size
 			}
 			specLabel = "mediator_label_TimestampExport"
 			paramGridComp = "gcomp"
