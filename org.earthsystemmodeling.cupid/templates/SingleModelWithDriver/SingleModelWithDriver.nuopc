@@ -1,6 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <nuopc:Application xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:nuopc="http://www.earthsystemcog.org/projects/nuopc" name="SingleModelWithDriver">
   <children xsi:type="nuopc:Driver" name="DRV">
-    <children xsi:type="nuopc:Model" name="MODEL"/>
+    <children xsi:type="nuopc:Model" name="MODEL">
+      <advance/>
+    </children>
   </children>
 </nuopc:Application>

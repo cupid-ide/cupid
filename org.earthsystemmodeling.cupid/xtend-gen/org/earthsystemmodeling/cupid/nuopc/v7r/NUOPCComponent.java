@@ -69,7 +69,7 @@ public abstract class NUOPCComponent extends CodeConcept<CodeConcept<?, ?>, ASTM
       NUOPCComponent.GenericImport _xblockexpression = null;
       {
         ASTModuleNode _aSTRef = this._parent.getASTRef();
-        final ASTUseStmtNode usn = CodeConcept.ensureImport(_aSTRef, this.genericComp, "SetServices", this.routineSetServices);
+        final ASTUseStmtNode usn = CodeConcept.ensureImport(_aSTRef, this.genericComp, "SetServices", this.routineSetServices, false);
         this.setASTRef(usn);
         final Procedure2<String, String> _function = new Procedure2<String, String>() {
           @Override

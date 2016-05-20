@@ -1519,7 +1519,7 @@ public class NUOPCDriver extends NUOPCComponent {
           ASTModuleNode amn = _module.getASTRef();
           boolean _notEquals = (!Objects.equal(this.moduleName, null));
           if (_notEquals) {
-            CodeConcept.ensureImport(amn, this.moduleName, "SetServices", this.compSetServices);
+            CodeConcept.ensureImport(amn, this.moduleName, "SetServices", this.compSetServices, true);
           }
           String code = null;
           boolean _and = false;

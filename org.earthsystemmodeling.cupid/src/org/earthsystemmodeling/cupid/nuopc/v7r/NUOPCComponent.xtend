@@ -173,7 +173,7 @@ end module
 		}
 			
 		override forward() {
-			val usn = ensureImport(_parent.getASTRef, genericComp, "SetServices", routineSetServices)
+			val usn = ensureImport(_parent.getASTRef, genericComp, "SetServices", routineSetServices, false)
 			setASTRef(usn)
 			
 			imports.forEach[k,v|

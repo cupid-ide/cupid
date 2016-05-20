@@ -2,6 +2,7 @@
 <nuopc:Application xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:nuopc="http://www.earthsystemcog.org/projects/nuopc" name="AtmOcnProto">
   <children xsi:type="nuopc:Driver" name="ESM">
     <children xsi:type="nuopc:Model" name="ATM">
+      <advance/>
       <grids xsi:type="nuopc:UniformGrid" name="AtmGrid">
         <minIndex>1</minIndex>
         <minIndex>1</minIndex>
@@ -18,6 +19,7 @@
       <exportFields name="rsns" standardName="surface_net_downward_shortwave_flux" grid="//@children.0/@children.0/@grids.0"/>
     </children>
     <children xsi:type="nuopc:Model" name="OCN">
+      <advance/>
       <grids xsi:type="nuopc:UniformGrid" name="OcnGrid">
         <minIndex>1</minIndex>
         <minIndex>1</minIndex>

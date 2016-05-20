@@ -1095,7 +1095,7 @@ if (ESMF_LogFoundError(rcToCheck=«paramRC», msg=ESMF_LOGERR_PASSTHRU, &
 			
 			//ensure we are importing module
 			if (moduleName!=null) {
-				ensureImport(amn, moduleName, "SetServices", compSetServices)
+				ensureImport(amn, moduleName, "SetServices", compSetServices, true)
 			}
 			
 			var String code

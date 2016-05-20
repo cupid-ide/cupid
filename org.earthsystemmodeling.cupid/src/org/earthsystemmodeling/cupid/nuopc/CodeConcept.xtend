@@ -593,10 +593,10 @@ public abstract class CodeConcept<P extends CodeConcept<?,?>, A extends IASTNode
 	}
 	
 	def static ASTUseStmtNode ensureImport(ASTModuleNode amn, String moduleName) {
-		ensureImport(amn, moduleName, null, null)
+		ensureImport(amn, moduleName, null, null, false)
 	}
 	
-	def static ASTUseStmtNode ensureImport(ASTModuleNode amn, String moduleName, String entityName, String localName) {
+	def static ASTUseStmtNode ensureImport(ASTModuleNode amn, String moduleName, String entityName, String localName, boolean useOnly) {
 		
 		//var String code	= null
 		var ASTUseStmtNode usn = amn.body.children.filter(ASTUseStmtNode).findFirst[usn|
@@ -606,7 +606,7 @@ public abstract class CodeConcept<P extends CodeConcept<?,?>, A extends IASTNode
 			return ensureImport(usn, entityName, localName)
 		}
 		else {
-			val code = '''use «moduleName»«IF localName!=null && entityName!=null», «localName» => «entityName»«ENDIF»'''
+			val code = '''use «moduleName»«IF localName!=null && entityName!=null», «IF useOnly»only: «ENDIF»«localName» => «entityName»«ENDIF»'''
 			usn = parseLiteralStatement(code) as ASTUseStmtNode
 			
 			val last = amn.body.findLast(ASTUseStmtNode)

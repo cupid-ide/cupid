@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <nuopc:Application xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:nuopc="http://www.earthsystemcog.org/projects/nuopc" name="AtmOcnMedProto">
-  <children xsi:type="nuopc:Driver" name="ESM">
+  <children xsi:type="nuopc:Driver" name="ESM" runSequence="//@children.0/@children.3/@advance.0 //@children.0/@children.5/@advance.0 //@children.0/@children.2/@advance.0 //@children.0/@children.4/@advance.0 //@children.0/@children.6/@advance.0 //@children.0/@children.0/@advance.0 //@children.0/@children.1/@advance.0">
     <children xsi:type="nuopc:Model" name="ATM">
+      <advance/>
       <grids xsi:type="nuopc:UniformGrid" name="AtmGrid">
         <minIndex>1</minIndex>
         <minIndex>1</minIndex>
@@ -18,6 +19,7 @@
       <exportFields name="rsns" standardName="surface_net_downward_shortwave_flux" grid="//@children.0/@children.0/@grids.0"/>
     </children>
     <children xsi:type="nuopc:Model" name="OCN">
+      <advance/>
       <grids xsi:type="nuopc:UniformGrid" name="OcnGrid">
         <minIndex>1</minIndex>
         <minIndex>1</minIndex>
@@ -34,6 +36,7 @@
       <exportFields name="sst" standardName="sea_surface_temperature" grid="//@children.0/@children.1/@grids.0"/>
     </children>
     <children xsi:type="nuopc:Mediator" name="MED">
+      <advance/>
       <grids xsi:type="nuopc:UniformGrid" name="MedGrid">
         <minIndex>1</minIndex>
         <minIndex>1</minIndex>
@@ -52,9 +55,17 @@
       <exportFields name="rsns" standardName="surface_net_downward_shortwave_flux" grid="//@children.0/@children.2/@grids.0"/>
       <exportFields name="pmsl" standardName="air_pressure_at_sea_level" grid="//@children.0/@children.2/@grids.0"/>
     </children>
-    <children xsi:type="nuopc:Connector" name="ATM2MED" source="//@children.0/@children.0" destination="//@children.0/@children.2"/>
-    <children xsi:type="nuopc:Connector" name="MED2ATM" source="//@children.0/@children.2" destination="//@children.0/@children.0"/>
-    <children xsi:type="nuopc:Connector" name="OCN2MED" source="//@children.0/@children.1" destination="//@children.0/@children.2"/>
-    <children xsi:type="nuopc:Connector" name="MED2OCN" source="//@children.0/@children.2" destination="//@children.0/@children.1"/>
+    <children xsi:type="nuopc:Connector" name="ATM2MED" source="//@children.0/@children.0" destination="//@children.0/@children.2">
+      <advance/>
+    </children>
+    <children xsi:type="nuopc:Connector" name="MED2ATM" source="//@children.0/@children.2" destination="//@children.0/@children.0">
+      <advance/>
+    </children>
+    <children xsi:type="nuopc:Connector" name="OCN2MED" source="//@children.0/@children.1" destination="//@children.0/@children.2">
+      <advance/>
+    </children>
+    <children xsi:type="nuopc:Connector" name="MED2OCN" source="//@children.0/@children.2" destination="//@children.0/@children.1">
+      <advance/>
+    </children>
   </children>
 </nuopc:Application>

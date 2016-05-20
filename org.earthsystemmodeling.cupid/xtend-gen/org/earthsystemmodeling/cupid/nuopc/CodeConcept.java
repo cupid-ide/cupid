@@ -960,10 +960,10 @@ public abstract class CodeConcept<P extends CodeConcept<?, ?>, A extends IASTNod
   }
   
   public static ASTUseStmtNode ensureImport(final ASTModuleNode amn, final String moduleName) {
-    return CodeConcept.ensureImport(amn, moduleName, null, null);
+    return CodeConcept.ensureImport(amn, moduleName, null, null, false);
   }
   
-  public static ASTUseStmtNode ensureImport(final ASTModuleNode amn, final String moduleName, final String entityName, final String localName) {
+  public static ASTUseStmtNode ensureImport(final ASTModuleNode amn, final String moduleName, final String entityName, final String localName, final boolean useOnly) {
     try {
       IASTListNode<? extends IASTNode> _body = amn.getBody();
       Iterable<? extends IASTNode> _children = _body.getChildren();
@@ -994,6 +994,11 @@ public abstract class CodeConcept<P extends CodeConcept<?, ?>, A extends IASTNod
           }
           if (_and) {
             _builder.append(", ");
+            {
+              if (useOnly) {
+                _builder.append("only: ");
+              }
+            }
             _builder.append(localName, "");
             _builder.append(" => ");
             _builder.append(entityName, "");

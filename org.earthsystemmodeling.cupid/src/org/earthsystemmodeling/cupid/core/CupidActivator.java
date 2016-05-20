@@ -127,6 +127,7 @@ public class CupidActivator extends AbstractUIPlugin {
 			try {
 				return FileLocator.toFileURL(url);
 			} catch (IOException e) {
+				log("Error getting file URL: " + relative, e);
 				return null;
 			}
 		}
