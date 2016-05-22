@@ -83,7 +83,7 @@ public class NUOPCFrameworkManager {
 
     private final class NUOPCResourceDeltaJob extends WorkspaceJob {
         private final IResourceDelta delta;
-        private static final String FAMILY = "NUOPCResourceDeltaJob.family";
+        //private static final String FAMILY = "NUOPCResourceDeltaJob.family";
 
         private NUOPCResourceDeltaJob(IResourceDelta delta) {
             super("NUOPC database indexer");
@@ -130,12 +130,12 @@ public class NUOPCFrameworkManager {
                 if (!(resource instanceof IFile)) {
                 	return true;
                 }
-                //IFile file = (IFile) resource;
+                IFile file = (IFile) resource;
 
                 switch (delta.getKind()) {
                 case IResourceDelta.ADDED:
                 case IResourceDelta.REMOVED:
-                    updateDB();
+                    updateDB(file, delta);
                     break;	
 
                 case IResourceDelta.CHANGED:
@@ -149,7 +149,7 @@ public class NUOPCFrameworkManager {
 //                		System.out.println(delta.getFlags());
 //                	}
                     if ((delta.getFlags() & (IResourceDelta.CONTENT|IResourceDelta.REPLACED)) != 0) {
-                    	updateDB();
+                    	updateDB(file, delta);
                     }
                     break;
                 
@@ -209,7 +209,67 @@ public class NUOPCFrameworkManager {
 		return db.retrieveAll();
 	}
 	
-	private void updateDB() {
+	
+	private void updateDB(IFile file, IResourceDelta delta) {
+		
+		boolean updated = false;
+		
+		switch (delta.getKind()) {
+        case IResourceDelta.ADDED:
+        case IResourceDelta.CHANGED:
+        	
+        	final PhotranVPG vpg = PhotranVPG.getInstance();
+        	if (vpg.findFilesThatImportModule("NUOPC_Driver").contains(file)) {
+        		try {
+					NUOPCDriver driver = new NUOPCDriver(file).reverse();
+					if (driver != null) {
+						db.store(file, driver);						
+					}
+				} catch (ReverseEngineerException e) {
+					CupidActivator.debug("", e);					
+				}
+        		updated = true;
+        	}
+        	else if (vpg.findFilesThatImportModule("NUOPC_Model").contains(file)) {
+        		try {
+					NUOPCModel model = new NUOPCModel(file).reverse();
+					if (model != null) {
+						db.store(file, model);						
+					}
+				} catch (ReverseEngineerException e) {
+					CupidActivator.debug("", e);					
+				}
+        		updated = true;
+        	}
+        	else if (vpg.findFilesThatImportModule("NUOPC_Mediator").contains(file)) {
+        		try {
+					NUOPCMediator mediator = new NUOPCMediator(file).reverse();
+					if (mediator != null) {
+						db.store(file, mediator);						
+					}
+				} catch (ReverseEngineerException e) {
+					CupidActivator.debug("", e);					
+				}
+        		updated = true;
+        	}      	
+        	break;
+        
+        case IResourceDelta.REMOVED:
+            if (db.retrieve(file) != null) {
+            	db.delete(file);
+            	updated = true;
+            }
+            break;	
+		}
+		
+		if (updated) {
+			for (INUOPCDatabaseListener listener : listeners) {
+				listener.updated();
+			}
+		}
+	}
+	
+	private void refreshDB() {
 		
 		final PhotranVPG vpg = PhotranVPG.getInstance();
 		db.clear();
@@ -302,7 +362,7 @@ public class NUOPCFrameworkManager {
 				monitor.subTask("Photran indexer");
 				vpg.ensureVPGIsUpToDate(new SubProgressMonitor(monitor, 9));
 
-				updateDB();
+				refreshDB();
 				
 				monitor.worked(1);
 				monitor.done();

@@ -32,19 +32,25 @@ public class NUOPCFrameworkDB {
 	}
 	
 	public void store(IFile file, CodeConcept<?,?> concept) {
-		fileToTimestamp.put(file, file.getModificationStamp());
-		fileToConcept.put(file, concept);
+		synchronized(fileToConcept) {
+			fileToTimestamp.put(file, file.getModificationStamp());
+			fileToConcept.put(file, concept);
+		}
 	}
 	
 	public CodeConcept<?,?> retrieve(IFile file) {
-		return fileToConcept.get(file);
+		synchronized(fileToConcept) {
+			return fileToConcept.get(file);
+		}
 	}
 	
 	public <C extends CodeConcept<?,?>> List<C> retrieveAll(Class<? extends CodeConcept> type) {
 		ArrayList<C> toReturn = new ArrayList<C>();
-		for (CodeConcept c : fileToConcept.values()) {
-			if (type.isInstance(c)) {
-				toReturn.add((C) c);
+		synchronized(fileToConcept) {
+			for (CodeConcept c : fileToConcept.values()) {
+				if (type.isInstance(c)) {
+					toReturn.add((C) c);
+				}
 			}
 		}
 		return toReturn;
@@ -52,20 +58,24 @@ public class NUOPCFrameworkDB {
 	
 	public Set<Entry<IFile, CodeConcept<?, ?>>> retrieveAll() {
 		//make a copy to avoid concurrent modification issues
-		Set<Entry<IFile, CodeConcept<?, ?>>> toReturn = new LinkedHashSet<Entry<IFile, CodeConcept<?, ?>>>();
-		toReturn.addAll(fileToConcept.entrySet());
-		return toReturn;
+		synchronized(fileToConcept) {
+			Set<Entry<IFile, CodeConcept<?, ?>>> toReturn = new LinkedHashSet<Entry<IFile, CodeConcept<?, ?>>>();
+			toReturn.addAll(fileToConcept.entrySet());
+			return toReturn;
+		}
 	}
 	
 	public boolean isOutOfDate(IFile file) {
-		if (!fileToTimestamp.containsKey(file)) {
-			return true;
-		}
-		else if (file.getModificationStamp() > fileToTimestamp.get(file).longValue()) {
-			return true;
-		}
-		else {
-			return false;
+		synchronized(fileToConcept) {
+			if (!fileToTimestamp.containsKey(file)) {
+				return true;
+			}
+			else if (file.getModificationStamp() > fileToTimestamp.get(file).longValue()) {
+				return true;
+			}
+			else {
+				return false;
+			}
 		}
 	}
 	
@@ -86,8 +96,17 @@ public class NUOPCFrameworkDB {
 	}
 	
 	public void clear() {
-		fileToTimestamp.clear();
-		fileToConcept.clear();
+		synchronized(fileToConcept) {
+			fileToTimestamp.clear();
+			fileToConcept.clear();
+		}
+	}
+	
+	public void delete(IFile file) {
+		synchronized(fileToConcept) {
+			fileToTimestamp.remove(file);
+			fileToConcept.remove(file);
+		}
 	}
 	
 	public void markToKeep(IFile file) {
