@@ -39,7 +39,9 @@ import org.eclipse.jface.viewers.ColumnWeightData;
 import org.eclipse.jface.viewers.DoubleClickEvent;
 import org.eclipse.jface.viewers.IDoubleClickListener;
 import org.eclipse.jface.viewers.ISelection;
+import org.eclipse.jface.viewers.ISelectionChangedListener;
 import org.eclipse.jface.viewers.IStructuredSelection;
+import org.eclipse.jface.viewers.SelectionChangedEvent;
 import org.eclipse.jface.viewers.TreeViewer;
 import org.eclipse.jface.window.ToolTip;
 import org.eclipse.photran.internal.core.analysis.binding.ScopingNode;
@@ -407,7 +409,7 @@ public class NUOPCView extends ViewPart {
 			}
 		});
 		
-		/*
+		
 		viewer.addSelectionChangedListener(new ISelectionChangedListener() {
 
 			@Override
@@ -418,7 +420,7 @@ public class NUOPCView extends ViewPart {
 					Object obj = ((IStructuredSelection)selection).getFirstElement();
 					if (obj != null && obj instanceof CodeConceptProxy) {
 						CodeConceptProxy ccp = (CodeConceptProxy) obj;
-						String doc = labelProvider.getNUOPCDoc(ccp);
+						String doc = NUOPCViewLabelProvider.getNUOPCDoc(ccp);
 						if (doc != null) {
 							if (doc.startsWith("http") || doc.startsWith("file:"	)) {
 								ndv.setURL(doc);
@@ -435,7 +437,7 @@ public class NUOPCView extends ViewPart {
 			}
 			
 		});
-		*/
+		
 		
 		
 		IActionBars bars = getViewSite().getActionBars();

@@ -28,6 +28,7 @@ import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.NullProgressMonitor;
 import org.eclipse.core.runtime.Path;
 import org.eclipse.core.runtime.Status;
+import org.eclipse.core.runtime.SubProgressMonitor;
 import org.eclipse.jface.dialogs.MessageDialog;
 import org.eclipse.ui.IWorkbenchPage;
 import org.eclipse.ui.IWorkbenchWindow;
@@ -36,7 +37,6 @@ import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.ide.IDE;
 import org.eclipse.ui.progress.UIJob;
 
-@SuppressWarnings("restriction")
 public class GenerateNUOPCApplicationJob extends WorkspaceJob {
 
 	private Application app;
@@ -58,7 +58,9 @@ public class GenerateNUOPCApplicationJob extends WorkspaceJob {
 		
 		final List<IFile> changedFiles = new ArrayList<IFile>();
 		IFile file;
-
+		
+		monitor.beginTask("Generating code", 10);
+		
 		//collect list of files that would be overwritten and confirm
 		for (Component comp : app.getAllChildren()) {			
 			if (comp instanceof Connector) {
@@ -77,7 +79,7 @@ public class GenerateNUOPCApplicationJob extends WorkspaceJob {
 		if (file.exists()) {
 			changedFiles.add(file);
 		}
-		
+		monitor.worked(1);
 		
 		if (changedFiles.size() > 0) {
 			UIJob uijob = new UIJob("Confirm") {
@@ -111,7 +113,8 @@ public class GenerateNUOPCApplicationJob extends WorkspaceJob {
 				return Status.CANCEL_STATUS;
 			}
 		}
-					
+			
+		monitor.worked(1);
 		changedFiles.clear();
 		
 		// first create all empty files, then ensure VPG is up to date
@@ -125,6 +128,7 @@ public class GenerateNUOPCApplicationJob extends WorkspaceJob {
 				CupidActivator.log("Error generating code", e);
 				return new Status(Status.ERROR, CupidActivator.PLUGIN_ID, "Error generating code", e);
 			}
+			monitor.worked(1);
 		}
 		
 
@@ -151,9 +155,10 @@ public class GenerateNUOPCApplicationJob extends WorkspaceJob {
 			}
 									
 			newComp.forward();
-			newComp.applyChanges(monitor);
+			newComp.applyChanges(new SubProgressMonitor(monitor, 1));
 						
 			changedFiles.add(file);
+			monitor.worked(1);
 			
 		}
 		
@@ -164,12 +169,14 @@ public class GenerateNUOPCApplicationJob extends WorkspaceJob {
 				MainGenerator.generateAndWrite(app, fMainProgram);
 				changedFiles.add(fMainProgram);
 			}
+			monitor.worked(1);
 			
 			IFile fMakefile = createEmptyFile(container, "Makefile", false);
 			if (fMakefile != null) {
 				MakefileGenerator.generateAndWrite(app, fMakefile);
 				changedFiles.add(fMakefile);
 			}
+			monitor.worked(1);
 			
 		} catch (CoreException e) {
 			CupidActivator.log("Error generating code", e);
@@ -193,6 +200,8 @@ public class GenerateNUOPCApplicationJob extends WorkspaceJob {
 			};
 			uijob.schedule();
 		}
+		
+		monitor.done();
 		
 		
 		return Status.OK_STATUS;

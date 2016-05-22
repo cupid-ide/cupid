@@ -119,7 +119,7 @@ class NUOPCViewAsyncWorkspaceContentProvider extends AsyncTreeContentProvider {
 			try {
 				cc = manager.acquireConcept((IFile) parentElement, false, true);
 			} catch (ReverseEngineerException e) {
-				CupidActivator.log("Error retrieving from NUOPC database", e);
+				CupidActivator.log("Error retrieving from NUOPC database: " + ((IFile) parentElement).getFullPath(), e);
 				return null;
 			}
 			

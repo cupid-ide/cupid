@@ -21,6 +21,7 @@ import org.eclipse.core.resources.WorkspaceJob;
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.IStatus;
+import org.eclipse.core.runtime.Platform;
 import org.eclipse.core.runtime.Status;
 import org.eclipse.core.runtime.SubProgressMonitor;
 import org.eclipse.core.runtime.jobs.Job;
@@ -82,6 +83,7 @@ public class NUOPCFrameworkManager {
 
     private final class NUOPCResourceDeltaJob extends WorkspaceJob {
         private final IResourceDelta delta;
+        private static final String FAMILY = "NUOPCResourceDeltaJob.family";
 
         private NUOPCResourceDeltaJob(IResourceDelta delta) {
             super("NUOPC database indexer");
@@ -89,6 +91,18 @@ public class NUOPCFrameworkManager {
         	setRule(VPGSchedulingRule.getInstance());
         	
         }
+        
+        /*
+        @Override
+        public boolean belongsTo(Object family) {
+        	return family == FAMILY;
+        }
+        
+        @Override
+        public boolean shouldSchedule() {
+        	return getJobManager().find(FAMILY).length == 0;
+        }
+		*/
 
         @Override 
         public IStatus runInWorkspace(final IProgressMonitor monitor) {
