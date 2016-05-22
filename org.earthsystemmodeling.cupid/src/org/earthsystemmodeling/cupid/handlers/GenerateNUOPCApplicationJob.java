@@ -21,17 +21,14 @@ import org.eclipse.core.resources.IContainer;
 import org.eclipse.core.resources.IFile;
 import org.eclipse.core.resources.IFolder;
 import org.eclipse.core.resources.IProject;
-import org.eclipse.core.resources.ResourcesPlugin;
+import org.eclipse.core.resources.WorkspaceJob;
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.NullProgressMonitor;
 import org.eclipse.core.runtime.Path;
 import org.eclipse.core.runtime.Status;
-import org.eclipse.core.runtime.jobs.Job;
-import org.eclipse.core.runtime.jobs.MultiRule;
 import org.eclipse.jface.dialogs.MessageDialog;
-import org.eclipse.photran.internal.core.vpg.eclipse.VPGSchedulingRule;
 import org.eclipse.ui.IWorkbenchPage;
 import org.eclipse.ui.IWorkbenchWindow;
 import org.eclipse.ui.MultiPartInitException;
@@ -39,13 +36,13 @@ import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.ide.IDE;
 import org.eclipse.ui.progress.UIJob;
 
-public class GenerateNUOPCApplicationJob extends Job {
+@SuppressWarnings("restriction")
+public class GenerateNUOPCApplicationJob extends WorkspaceJob {
 
 	private Application app;
 	private IContainer container;
 	private boolean openEditor;
 	
-	@SuppressWarnings("restriction")
 	public GenerateNUOPCApplicationJob(String name, Application app, IContainer container, boolean openEditor) {
 		super(name);
 		this.app = app;
@@ -57,7 +54,7 @@ public class GenerateNUOPCApplicationJob extends Job {
 	}
 	
 	@Override
-	protected IStatus run(IProgressMonitor monitor) {
+	public IStatus runInWorkspace(IProgressMonitor monitor) {
 		
 		final List<IFile> changedFiles = new ArrayList<IFile>();
 		IFile file;
@@ -117,24 +114,30 @@ public class GenerateNUOPCApplicationJob extends Job {
 					
 		changedFiles.clear();
 		
+		// first create all empty files, then ensure VPG is up to date
 		for (Component comp : app.getAllChildren()) {
-			
 			if (comp instanceof Connector) {
 				continue;  //for now, custom connectors now supported
 			}
-			
-			//file = container.getFile(new Path(comp.getName() + ".F90"));
-			//if (!file.exists()) {
 			try {
 				file = createEmptyFile(container, comp.getName() + ".F90", false);
 			} catch (CoreException e) {
 				CupidActivator.log("Error generating code", e);
 				return new Status(Status.ERROR, CupidActivator.PLUGIN_ID, "Error generating code", e);
 			}
-			//}
+		}
+		
+
+		
+		for (Component comp : app.getAllChildren()) {
 			
+			if (comp instanceof Connector) {
+				continue;  //for now, custom connectors now supported
+			}
+			
+			file = container.getFile(new Path(comp.getName() + ".F90"));
 			if (file == null) continue;
-			
+						
 			NUOPCComponent newComp = null;
 			
 			if (comp instanceof Driver) {
@@ -146,18 +149,14 @@ public class GenerateNUOPCApplicationJob extends Job {
 			else if (comp instanceof Mediator) {
 				newComp = NUOPCMediator.newMediator(file, (Mediator) comp);
 			}
-			//else if (comp instanceof Connector) {
-			//	continue;  ///custom connectors not yet supported
-			//}
-			
-			//newComp.name = comp.getName();
+									
 			newComp.forward();
 			newComp.applyChanges(monitor);
-			
-			//new ApplyCodeConceptChanges(newComp).run(monitor);
+						
 			changedFiles.add(file);
 			
 		}
+		
 		
 		try {
 			IFile fMainProgram = createEmptyFile(container, app.getName() + ".F90", false);

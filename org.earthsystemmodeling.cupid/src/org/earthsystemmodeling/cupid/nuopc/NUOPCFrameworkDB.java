@@ -2,6 +2,7 @@ package org.earthsystemmodeling.cupid.nuopc;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Map.Entry;
 import java.util.Set;
@@ -50,7 +51,10 @@ public class NUOPCFrameworkDB {
 	}
 	
 	public Set<Entry<IFile, CodeConcept<?, ?>>> retrieveAll() {
-		return fileToConcept.entrySet();
+		//make a copy to avoid concurrent modification issues
+		Set<Entry<IFile, CodeConcept<?, ?>>> toReturn = new LinkedHashSet<Entry<IFile, CodeConcept<?, ?>>>();
+		toReturn.addAll(fileToConcept.entrySet());
+		return toReturn;
 	}
 	
 	public boolean isOutOfDate(IFile file) {

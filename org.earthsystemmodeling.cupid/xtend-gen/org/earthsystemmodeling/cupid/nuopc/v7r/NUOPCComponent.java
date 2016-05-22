@@ -15,9 +15,13 @@ import org.earthsystemmodeling.cupid.nuopc.CodeConcept;
 import org.earthsystemmodeling.cupid.nuopc.CodeGenerationException;
 import org.earthsystemmodeling.cupid.nuopc.ReverseEngineerException;
 import org.earthsystemmodeling.cupid.util.CodeExtraction;
+import org.eclipse.core.resources.IFile;
 import org.eclipse.core.resources.IResource;
 import org.eclipse.photran.core.IFortranAST;
+import org.eclipse.photran.internal.core.FortranAST;
 import org.eclipse.photran.internal.core.lexer.Token;
+import org.eclipse.photran.internal.core.lexer.TokenList;
+import org.eclipse.photran.internal.core.parser.ASTEmptyProgramNode;
 import org.eclipse.photran.internal.core.parser.ASTExecutableProgramNode;
 import org.eclipse.photran.internal.core.parser.ASTListNode;
 import org.eclipse.photran.internal.core.parser.ASTModuleNameNode;
@@ -322,13 +326,16 @@ public abstract class NUOPCComponent extends CodeConcept<CodeConcept<?, ?>, ASTM
         if (_equals) {
           throw new CodeGenerationException("No component name specified");
         }
-        final IFortranAST ast = this.getAST();
-        boolean _equals_1 = Objects.equal(ast, null);
+        final ASTExecutableProgramNode epn = new ASTExecutableProgramNode();
+        ASTEmptyProgramNode _aSTEmptyProgramNode = new ASTEmptyProgramNode();
+        epn.setEmptyProgram(_aSTEmptyProgramNode);
+        IResource _context = this.getContext();
+        TokenList _tokenList = new TokenList();
+        FortranAST _fortranAST = new FortranAST(((IFile) _context), epn, _tokenList);
+        this._ast = _fortranAST;
+        final IFortranAST ast = this._ast;
+        boolean _equals_1 = Objects.equal(this._astRef, null);
         if (_equals_1) {
-          throw new CodeGenerationException("Error generating new component");
-        }
-        boolean _equals_2 = Objects.equal(this._astRef, null);
-        if (_equals_2) {
           StringConcatenation _builder = new StringConcatenation();
           _builder.append("module ");
           _builder.append(this.name, "");

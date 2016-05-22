@@ -22,6 +22,11 @@ import java.util.Set
 import java.util.LinkedHashSet
 import org.earthsystemmodeling.cupid.nuopc.ReverseEngineerException
 import java.util.Map
+import org.eclipse.photran.internal.core.FortranAST
+import org.eclipse.core.resources.IFile
+import org.eclipse.photran.internal.core.parser.ASTExecutableProgramNode
+import org.eclipse.photran.internal.core.parser.ASTEmptyProgramNode
+import org.eclipse.photran.internal.core.lexer.TokenList
 
 @Label(label="NUOPC Driver")
 @MappingType("module")
@@ -104,8 +109,17 @@ public abstract class NUOPCComponent extends CodeConcept<CodeConcept<?,?>, ASTMo
 	override NUOPCComponent forward() {
 				
 		if (name == null) throw new CodeGenerationException("No component name specified")
-		val ast = getAST
-		if (ast == null) throw new CodeGenerationException("Error generating new component")
+		
+		//val ast = getAST
+		//if (ast == null) throw new CodeGenerationException("Error generating new component")
+		
+		//we are now assuming that we need to create our own blank AST
+		//and use that instead of relying on the VPG to be up to date
+		
+		val epn = new ASTExecutableProgramNode()
+		epn.emptyProgram = new ASTEmptyProgramNode()
+		_ast = new FortranAST(context as IFile, epn, new TokenList())
+		val ast = _ast
 				
 		if (_astRef == null) {
 		

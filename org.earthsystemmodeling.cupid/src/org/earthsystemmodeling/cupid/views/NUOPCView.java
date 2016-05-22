@@ -13,10 +13,12 @@ import org.earthsystemmodeling.cupid.nuopc.CodeGenerationException;
 import org.earthsystemmodeling.cupid.nuopc.v7r.NUOPCFrameworkManager;
 import org.earthsystemmodeling.cupid.nuopc.v7r.NUOPCFrameworkManager.INUOPCDatabaseListener;
 import org.earthsystemmodeling.cupid.views.NUOPCViewContentProvider.CodeConceptProxy;
+import org.eclipse.core.resources.IFile;
 import org.eclipse.core.resources.IMarker;
 import org.eclipse.core.resources.IResourceChangeListener;
 import org.eclipse.core.resources.IWorkspace;
 import org.eclipse.core.resources.ResourcesPlugin;
+import org.eclipse.core.resources.WorkspaceJob;
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.IStatus;
@@ -335,8 +337,16 @@ public class NUOPCView extends ViewPart {
 				Object obj = ((IStructuredSelection)selection).getFirstElement();
 				
 				IMarker marker = null;
-				
-				if (obj instanceof CodeConceptProxy) {
+				IWorkbenchPage page = PlatformUI.getWorkbench().getActiveWorkbenchWindow().getActivePage();
+			
+				if (obj instanceof IFile) {
+					try {
+						IDE.openEditor(page, (IFile) obj);
+					} catch (PartInitException e) {
+						CupidActivator.log("Error opening editor on NUOPC code", e);
+					}
+				}
+				else if (obj instanceof CodeConceptProxy) {
 					CodeConceptProxy ccp = (CodeConceptProxy) obj;
 					@SuppressWarnings("unchecked")
 					CodeConcept<?,IASTNode> cc = (CodeConcept<?,IASTNode>) ccp.codeConcept;
@@ -367,21 +377,13 @@ public class NUOPCView extends ViewPart {
 					else if (astNode instanceof ScopingNode) {
 						marker = createMarker( ((ScopingNode) astNode).getRepresentativeToken().findTokenOrReturnNull());							
 					}
-					//else if (astNode instanceof IFortranAST) {
-					//	//try to find module statement
-					//	IProgramUnit ipu = ((IFortranAST)val).getRoot().getProgramUnitList().get(0);
-					//	if (ipu != null && ipu instanceof ASTModuleNode) {
-					//		ASTModuleNode ams = (ASTModuleNode) ipu;
-					//		marker = createMarker(ams.getNameToken());
-					//	}							
-					//}
 					else {
 						marker = createMarker(astNode.findFirstToken());
 					}
 				}
 					
 				if (marker != null) {
-					IWorkbenchPage page = PlatformUI.getWorkbench().getActiveWorkbenchWindow().getActivePage();
+					//IWorkbenchPage page = PlatformUI.getWorkbench().getActiveWorkbenchWindow().getActivePage();
 					try {
 						IDE.openEditor(page, marker, false);
 					} catch (PartInitException e) {

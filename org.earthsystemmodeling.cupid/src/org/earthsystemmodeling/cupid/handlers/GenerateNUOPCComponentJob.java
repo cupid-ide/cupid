@@ -17,17 +17,14 @@ import org.eclipse.core.resources.IContainer;
 import org.eclipse.core.resources.IFile;
 import org.eclipse.core.resources.IFolder;
 import org.eclipse.core.resources.IProject;
-import org.eclipse.core.resources.ResourcesPlugin;
+import org.eclipse.core.resources.WorkspaceJob;
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.NullProgressMonitor;
 import org.eclipse.core.runtime.Path;
 import org.eclipse.core.runtime.Status;
-import org.eclipse.core.runtime.jobs.Job;
-import org.eclipse.core.runtime.jobs.MultiRule;
 import org.eclipse.jface.dialogs.MessageDialog;
-import org.eclipse.photran.internal.core.vpg.eclipse.VPGSchedulingRule;
 import org.eclipse.ui.IWorkbenchPage;
 import org.eclipse.ui.IWorkbenchWindow;
 import org.eclipse.ui.MultiPartInitException;
@@ -35,13 +32,12 @@ import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.ide.IDE;
 import org.eclipse.ui.progress.UIJob;
 
-public class GenerateNUOPCComponentJob extends Job {
+public class GenerateNUOPCComponentJob extends WorkspaceJob {
 
 	private Component component;
 	private IContainer container;
 	private boolean openEditor;
 	
-	@SuppressWarnings("restriction")
 	public GenerateNUOPCComponentJob(String name, Component component, IContainer container, boolean openEditor) {
 		super(name);
 		this.component = component;
@@ -53,7 +49,7 @@ public class GenerateNUOPCComponentJob extends Job {
 	}
 	
 	@Override
-	protected IStatus run(IProgressMonitor monitor) {
+	public IStatus runInWorkspace(IProgressMonitor monitor) {
 		
 		final List<IFile> changedFiles = new ArrayList<IFile>();
 		IFile file;
@@ -120,10 +116,8 @@ public class GenerateNUOPCComponentJob extends Job {
 		//	continue;  ///custom connectors not yet supported
 		//}
 			
-		//newComp.name = comp.getName();
 		newComp.forward();
 		newComp.applyChanges(monitor);
-		//new ApplyCodeConceptChanges(newComp).run(monitor);
 		changedFiles.add(file);
 		
 		if (openEditor && changedFiles.size() > 0) {

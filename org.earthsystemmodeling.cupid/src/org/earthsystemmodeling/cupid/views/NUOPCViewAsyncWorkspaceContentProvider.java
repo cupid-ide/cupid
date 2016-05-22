@@ -7,6 +7,7 @@ import java.util.Arrays;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.HashMap;
+import java.util.LinkedHashSet;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
@@ -71,6 +72,7 @@ class NUOPCViewAsyncWorkspaceContentProvider extends AsyncTreeContentProvider {
 		if (parentElement instanceof IWorkspace) {
 			
 			List<IFile> fileList = new LinkedList<IFile>();
+			
 			Set<Entry<IFile, CodeConcept<?, ?>>> allComps = manager.listAllComponents();
 			for (Entry<IFile, CodeConcept<?,?>> entry : allComps) {
 				fileList.add(entry.getKey());

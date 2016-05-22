@@ -74,7 +74,7 @@ public class NUOPCFrameworkManager {
 
             final IResourceDelta delta = event.getDelta();
             if (delta == null) return;
-
+            
             //wait a bit for VPG update job to start first
             new NUOPCResourceDeltaJob(delta).schedule(500);
         }
@@ -125,6 +125,15 @@ public class NUOPCFrameworkManager {
                     break;	
 
                 case IResourceDelta.CHANGED:
+//                	if ((delta.getFlags() & IResourceDelta.MARKERS) != 0) {
+//                		System.out.println(delta.getFlags());
+//                	}
+//                	if ((delta.getFlags() & IResourceDelta.CONTENT) != 0) {
+//                		System.out.println(delta.getFlags());
+//                	}
+//                	if ((delta.getFlags() & IResourceDelta.REPLACED) != 0) {
+//                		System.out.println(delta.getFlags());
+//                	}
                     if ((delta.getFlags() & (IResourceDelta.CONTENT|IResourceDelta.REPLACED)) != 0) {
                     	updateDB();
                     }
