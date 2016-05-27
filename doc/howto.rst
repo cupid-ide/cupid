@@ -151,14 +151,10 @@ The analysis does not descend into the model code itself.
 Once the higher level representation is obtained, Cupid
 is able to provide NUOPC-aware capabilities, such as basic validation
 of correct API usage and in-place code generation--i.e., weaving new code
-into the correct places of an existing source file.
+into the correct places of an existing source file. The reverse engineering 
+analysis phase happens automatically as a background process and an
+index of NUOPC components in the workspace is maintained.
 
-The reverse engineering analysis phase happens automatically as a background
-process when a file is opened that contains code for a NUOPC component.  A basic
-check is done to determine if the file is likely to be a NUOPC component. The
-check is to see that if the file contains Fortran code and if so that it
-imports (uses) one of the generic NUOPC modules (``NUOPC_Model``, 
-``NUOPC_Mediator``, or ``NUOPC_Driver``). 
 
 Show the NUOPC View
 ^^^^^^^^^^^^^^^^^^^
@@ -199,16 +195,22 @@ There are other ways to show the NUOPC View:
   * The NUOPC View can be accessed from the 
     **Window -> Show View -> Other** menu
         
-The NUOPC View will automatically synchronize with the editor that
-has the focus.  It will also refresh whenever you save the file
-active in the editor.  (The file will be re-analyzed in the background.)  
-If a file does not contain a NUOPC component, the NUOPC View will be blank.
+The NUOPC View will automatically refresh itself as files are changed
+and saved in the workspace.  It is also possible to force a refresh
+of the NUOPC View using the refresh button (blue circular arrow) in the
+top right corner of the NUOPC View.  This will first ensure that the
+Fortran analysis database is up to date and then it will rebuild the
+index of NUOPC components in the workspace.
+
 
 Elements in the NUOPC View outline
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-The outline shown in the NUOPC View in a tree where each element
-represents something in the source code, such as a SetServices subroutine,
+The top-level element in the NUOPC View tree are files in the workspace
+that contain code for a NUOPC component.  The first element under each 
+file indicates that type of component (Model, Driver, or Mediator).
+Sub-elements underneath the component type 
+represent something in the source code, such as a SetServices subroutine,
 a NUOPC initialization subroutine, a specialization point subroutine,
 imports of NUOPC generic modules, or calls into the NUOPC API. Many
 of the elements have small icons: a blue circle with an M maps to a
@@ -288,10 +290,7 @@ to use Cupid to generate skeleton code for missing elements.
    Cupid's reverse engineering and validation engines are based on
    static source code analysis.  The engine depends on an internal program database
    (Virtual Program Graph or VPG) provided by the Photran plugin for Eclipse. 
-   If a source file does not contain correct Fortran code, the internal
-   parser will fail and the reverse engineering analysis will not
-   be executed at all, resulting in a blank NUOPC View outline.
-   
+     
    There are limitations to static analysis giving rise to false negatives--i.e.,
    reporting a validation issue when in fact the NUOPC component will behave
    correctly.  For example, in some cases the reverse engineering engine 
@@ -309,7 +308,6 @@ to use Cupid to generate skeleton code for missing elements.
    will be correctly reverse engineered.   
    
   
-
 
 .. _generate-code:
 
@@ -537,9 +535,9 @@ documentation viewer, either click on the Show NUOPC Doc View button in the
 toolbar or from the menu select **Window -> Show View -> Other** and select
 the *NUOPC Doc* view in the list.
 
-The documentation viewer will automatically synchronize with the current outline
-in the NUOPC View.  For example, if the current component in the NUOPC View
-outline is a NUOPC Mediator component, the documentation viewer will bring that
+If you select a component in the NUOPC View, the documentation viewer will 
+synchronize with the selected item. For example, if a NUOPC Mediator component
+is selected in the NUOPC View outline, the documentation viewer will bring that
 part of the Reference Manual into focus.
 
 .. figure:: images/toolbar_docs.png
