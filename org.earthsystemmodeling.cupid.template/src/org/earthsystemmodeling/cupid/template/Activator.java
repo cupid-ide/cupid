@@ -1,5 +1,8 @@
 package org.earthsystemmodeling.cupid.template;
 
+import org.eclipse.core.runtime.IRegistryChangeEvent;
+import org.eclipse.core.runtime.IRegistryChangeListener;
+import org.eclipse.core.runtime.Platform;
 import org.eclipse.ui.plugin.AbstractUIPlugin;
 import org.osgi.framework.BundleContext;
 
@@ -27,6 +30,25 @@ public class Activator extends AbstractUIPlugin {
 	public void start(BundleContext context) throws Exception {
 		super.start(context);
 		plugin = this;
+		
+		/*
+		Platform.getExtensionRegistry().addRegistryChangeListener(new IRegistryChangeListener() {
+
+			@Override
+			public void registryChanged(IRegistryChangeEvent event) {
+				// TODO Auto-generated method stub
+				
+			});
+		
+		}
+		*/
+		
+	//	IConfigurationElement[] configs = 
+	//			Platform.getExtensionRegistry().getExtensionPoint(FortranEditor.SOURCE_VIEWER_CONFIG_EXTENSION_POINT_ID)
+	//			.getConfigurationElements();
+				
+				
+	      //      getConfigurationElementsFor(FortranEditor.SOURCE_VIEWER_CONFIG_EXTENSION_POINT_ID);
 	}
 
 	/*

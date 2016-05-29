@@ -3,15 +3,19 @@ package org.earthsystemmodeling.cupid.views;
 import org.earthsystemmodeling.cupid.annotation.Label;
 import org.earthsystemmodeling.cupid.annotation.MappingType;
 import org.earthsystemmodeling.cupid.core.CupidActivator;
+import org.earthsystemmodeling.cupid.nuopc.CodeConcept;
 import org.earthsystemmodeling.cupid.nuopc.v7r.df.DesignFragment;
+import org.earthsystemmodeling.cupid.nuopc.v7r.df.Task;
 import org.earthsystemmodeling.cupid.views.NUOPCDesignFragmentContentProvider.BindingNode;
 import org.earthsystemmodeling.cupid.views.NUOPCDesignFragmentContentProvider.BindingsNode;
+import org.earthsystemmodeling.cupid.views.NUOPCDesignFragmentContentProvider.DFTopNode;
 import org.earthsystemmodeling.cupid.views.NUOPCDesignFragmentContentProvider.GoalNode;
 import org.earthsystemmodeling.cupid.views.NUOPCDesignFragmentContentProvider.TaskContextNode;
 import org.earthsystemmodeling.cupid.views.NUOPCDesignFragmentContentProvider.TaskNode;
 import org.earthsystemmodeling.cupid.views.NUOPCDesignFragmentContentProvider.TasksNode;
 import org.eclipse.jface.viewers.StyledCellLabelProvider;
 import org.eclipse.jface.viewers.ViewerCell;
+import org.eclipse.swt.SWT;
 import org.eclipse.swt.graphics.Image;
 
 public class NUOPCDesignFragmentLabelProvider extends StyledCellLabelProvider {
@@ -24,14 +28,15 @@ public class NUOPCDesignFragmentLabelProvider extends StyledCellLabelProvider {
 	
 		if (cell.getColumnIndex() == 0) {
 			
-			if (cell.getElement() instanceof DesignFragment) {
-				DesignFragment df = (DesignFragment) cell.getElement();
-				cell.setText(df.name());
+			if (cell.getElement() instanceof DFTopNode) {
+				DFTopNode topNode = (DFTopNode) cell.getElement();
+				DesignFragment df = (DesignFragment) topNode.df;
+				cell.setText(df.getName());
 				cell.setImage(ICON_SCRIPT);
 			}
 			else if (cell.getElement() instanceof GoalNode) {
 				GoalNode gn = (GoalNode) cell.getElement();
-				cell.setText("Goal: " + gn.df.goal());
+				cell.setText("Goal: " + gn.df.getGoal());
 				cell.setImage(ICON_BULB);
 			}
 			else if (cell.getElement() instanceof BindingsNode) {
@@ -39,17 +44,38 @@ public class NUOPCDesignFragmentLabelProvider extends StyledCellLabelProvider {
 			}
 			else if (cell.getElement() instanceof BindingNode) {
 				BindingNode bn = (BindingNode) cell.getElement();
-				cell.setText(getLabel(bn.field.getType()) + ": (unbound)");
-				cell.setImage(getMappingImage(bn.field.getType()));
+				//String text = bn.binding.getValue().getSimpleName() + " :: " + bn.binding.getKey() + " = ";
+				//CodeConcept<?,?> codeConcept = bn.df.getBindings().get(bn.binding.getKey());
+				String text = bn.df.getBindingType(bn.name).getSimpleName() + " :: " + bn.name + " = ";
+				CodeConcept<?,?> codeConcept = bn.df.getBinding(bn.name);
+				if (codeConcept != null) {
+					text += " " + codeConcept.name();
+				}
+				else {
+					text += " (unbound)";
+				}
+				cell.setText(text);
+				int swtprops = 0;
+				if (codeConcept == null) {
+					swtprops = SWT.IMAGE_GRAY;
+				}
+				cell.setImage(getMappingImage(bn.df.getBindingType(bn.name), swtprops));
 			}
 			else if (cell.getElement() instanceof TasksNode) {
-				//TasksNode tn = (TasksNode) cell.getElement();
-				cell.setText("Tasks");
+				cell.setText("Development Tasks");
 			}
 			else if (cell.getElement() instanceof TaskContextNode) {
 				TaskContextNode tn = (TaskContextNode) cell.getElement();
-				cell.setText(getLabel(tn.task.getContext()));
-				cell.setImage(getMappingImage(tn.task.getContext()));
+				String typeName = tn.task.getBindingType().getSimpleName();
+				cell.setText(typeName);
+				if (tn.task.getBindingType() != null) {
+					if (tn.task.boundTo() == null) {
+						cell.setImage(getMappingImage(tn.task.getBindingType(), SWT.IMAGE_GRAY));
+					}
+					else {
+						cell.setImage(getMappingImage(tn.task.getBindingType(), 0));
+					}
+				}
 			}
 			else if (cell.getElement() instanceof TaskNode) {
 				TaskNode tn = (TaskNode) cell.getElement();
@@ -67,15 +93,25 @@ public class NUOPCDesignFragmentLabelProvider extends StyledCellLabelProvider {
 	@Override
 	public String getToolTipText(Object element) {
 		if (element instanceof DesignFragment) {
-			return ((DesignFragment) element).description();
+			return ((DesignFragment) element).getDescription();
 		}
 		else if (element instanceof GoalNode) {
-			return ((GoalNode) element).df.description();
+			return ((GoalNode) element).df.getDescription();
 		}
-		else {
-			return null;
+		else if (element instanceof BindingNode) {
+			BindingNode bn = (BindingNode) element;
+			//CodeConcept<?,?> codeConcept = bn.df.getBindings().get(bn.binding.getKey());
+			CodeConcept<?,?> codeConcept = bn.df.getBinding(bn.name);
+			if (codeConcept != null) {
+				return "Bound to "  + codeConcept.name() + " in " + codeConcept.getContext().getFullPath().toString();
+			}
 		}
+		return null;
+		
 	}
+	
+	
+	
 	
 	private String getLabel(Class<?> c) {
 		Label lbl = c.getAnnotation(Label.class);
@@ -87,11 +123,11 @@ public class NUOPCDesignFragmentLabelProvider extends StyledCellLabelProvider {
 		}
 	}
 	
-	private Image getMappingImage(Class<?> c) {
+	private Image getMappingImage(Class<?> c, int SWT_PROPS) {
 		MappingType mappingType = c.getAnnotation(MappingType.class);
 		if (mappingType != null) {
 			return NUOPCViewLabelProvider.getFortranImageDescriptor(
-					mappingType.value()).createImage();
+					mappingType.value(), SWT_PROPS).createImage();
 		}
 		return null;
 	}

@@ -1,6 +1,21 @@
 package org.earthsystemmodeling.cupid.views;
 
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.List;
+
+import org.eclipse.jface.viewers.TreePath;
+
+import org.earthsystemmodeling.cupid.core.CupidActivator;
+import org.earthsystemmodeling.cupid.nuopc.CodeConcept;
+import org.earthsystemmodeling.cupid.nuopc.v7r.NUOPCFrameworkManager;
 import org.earthsystemmodeling.cupid.views.NUOPCDesignFragmentContentProvider.BindingNode;
+import org.earthsystemmodeling.cupid.views.NUOPCDesignFragmentContentProvider.TaskContextNode;
+import org.earthsystemmodeling.cupid.views.NUOPCDesignFragmentContentProvider.TasksNode;
+import org.earthsystemmodeling.cupid.views.NUOPCDesignFragmentContentProvider.DFTopNode;
+import org.eclipse.core.resources.IFile;
+import org.eclipse.core.resources.IMarker;
+import org.eclipse.core.runtime.CoreException;
 import org.eclipse.jface.action.Action;
 import org.eclipse.jface.action.IAction;
 import org.eclipse.jface.action.IMenuCreator;
@@ -19,6 +34,11 @@ import org.eclipse.jface.viewers.ISelection;
 import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.jface.viewers.TreeViewer;
 import org.eclipse.jface.window.ToolTip;
+import org.eclipse.photran.internal.core.analysis.binding.ScopingNode;
+import org.eclipse.photran.internal.core.lexer.Token;
+import org.eclipse.photran.internal.core.parser.ASTNode;
+import org.eclipse.photran.internal.core.parser.ASTSubroutineSubprogramNode;
+import org.eclipse.photran.internal.core.parser.ASTUseStmtNode;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.SWTError;
 import org.eclipse.swt.browser.Browser;
@@ -31,6 +51,10 @@ import org.eclipse.swt.widgets.Menu;
 import org.eclipse.swt.widgets.Text;
 import org.eclipse.swt.widgets.Tree;
 import org.eclipse.swt.widgets.TreeColumn;
+import org.eclipse.ui.IWorkbenchPage;
+import org.eclipse.ui.PartInitException;
+import org.eclipse.ui.PlatformUI;
+import org.eclipse.ui.ide.IDE;
 import org.eclipse.ui.part.DrillDownAdapter;
 import org.eclipse.ui.part.ViewPart;
 
@@ -177,20 +201,71 @@ public class NUOPCDesignFragmentView extends ViewPart {
 		//FancyToolTipSupport.enableFor(viewer, ToolTip.NO_RECREATE);
 		ColumnViewerToolTipSupport.enableFor(viewer, ToolTip.NO_RECREATE);
 		
-		doubleClickAction = new Action() {
-			public void run() {
-				ISelection selection = viewer.getSelection();
-				Object obj = ((IStructuredSelection)selection).getFirstElement();
-			}
-		};
-		
 		viewer.addDoubleClickListener(new IDoubleClickListener() {
+			@SuppressWarnings("restriction")
 			public void doubleClick(DoubleClickEvent event) {
-				doubleClickAction.run();
+				ISelection selection = event.getSelection();
+				Object obj = ((IStructuredSelection)selection).getFirstElement();
+				CodeConcept<?,?> codeConcept = null;
+				
+				if (obj instanceof BindingNode) {
+					BindingNode bn = (BindingNode) obj;
+					codeConcept = bn.df.getBinding(bn.name);
+				}
+				else if (obj instanceof TaskContextNode) {
+					TaskContextNode tcn = (TaskContextNode) obj;
+					codeConcept = tcn.task.boundTo();
+				}
+				
+				if (codeConcept != null) {
+					IWorkbenchPage page = PlatformUI.getWorkbench().getActiveWorkbenchWindow().getActivePage();
+					IMarker marker = createMarker((ASTNode) codeConcept.getASTRef());
+					try {
+						if (marker == null) {
+							IDE.openEditor(page, (IFile) codeConcept.getContext());
+						}
+						else {
+							IDE.openEditor(page, marker);
+							marker.delete();
+						}
+					} catch (CoreException e) {
+						CupidActivator.log("Error opening editor on NUOPC code", e);
+					}
+				}
+				
 			}
 		});
 		
+		
+		class BindingAction extends Action {
 			
+			private CodeConcept<?,?> concept;
+			private BindingNode bindingNode;
+			
+			public BindingAction(BindingNode bindingNode, CodeConcept<?,?> concept) {
+				this.bindingNode = bindingNode;
+				this.concept = concept;
+			}
+			
+			@Override
+			public String getText() {
+				return "Bind to " + concept.name() + " (" + concept.getContext().getFullPath().toString() + ")";
+			}
+			
+			@Override
+			public void run() {
+				bindingNode.df.setBinding(bindingNode.name, concept);
+				viewer.update(bindingNode, null);
+				TasksNode tn = ((DFTopNode) bindingNode.parent.parent).tasksNode;
+				Object[] expandedElements = viewer.getExpandedElements();
+				TreePath[] paths = viewer.getExpandedTreePaths();
+				viewer.refresh(tn);
+				viewer.setExpandedElements(expandedElements);
+				viewer.setExpandedTreePaths(paths);
+			}
+			
+		}
+		
 		MenuManager menuMgr = new MenuManager();
 
         Menu menu = menuMgr.createContextMenu(viewer.getControl());
@@ -205,10 +280,46 @@ public class NUOPCDesignFragmentView extends ViewPart {
                 if (viewer.getSelection() instanceof IStructuredSelection) {
                     IStructuredSelection selection = (IStructuredSelection) viewer.getSelection();
                     if (selection.getFirstElement() instanceof BindingNode) {
+                    	
+                    	final BindingNode bn = (BindingNode) selection.getFirstElement();
+                    	NUOPCFrameworkManager nm = NUOPCFrameworkManager.getInstance();
+                    	List<CodeConcept> concepts = nm.listAllComponents(bn.df.getBindingType(bn.name));
+                    	
+                    	Collections.sort(concepts, new Comparator<CodeConcept>() {
+							@Override
+							public int compare(CodeConcept o1, CodeConcept o2) {
+								return o1.name().compareTo(o2.name());
+							}
+                    	});
+                    	
+                    	if (bn.df.getBinding(bn.name) != null) {
+                    		manager.add(new Action() {
+                    			@Override
+                        		public String getText() {
+                        			return "Unbind";
+                        		}
+                        		@Override
+                        		public void run() {
+                        			bn.df.removeBinding(bn.name);
+                        			viewer.update(bn, null);
+                        			TasksNode tn = ((DFTopNode) bn.parent.parent).tasksNode;
+                    				Object[] expandedElements = viewer.getExpandedElements();
+                    				TreePath[] paths = viewer.getExpandedTreePaths();
+                    				viewer.refresh(tn);
+                    				viewer.setExpandedElements(expandedElements);
+                    				viewer.setExpandedTreePaths(paths);
+                        		};
+                    		});
+                    	}
+                    	
+                    	for (CodeConcept<?, ?> cc: concepts) {
+                    		manager.add(new BindingAction(bn, cc));
+                    	}
+                    	
                     	manager.add(new Action() {
                     		@Override
                     		public String getText() {
-                    			return "Bind to ...";
+                    			return "Generate new " + bn.df.getBindingType(bn.name).getSimpleName();
                     		}
                     		@Override
                     		public void run() {
@@ -231,6 +342,45 @@ public class NUOPCDesignFragmentView extends ViewPart {
 		viewer.getControl().setFocus();
 	}
 	
+	
+	@SuppressWarnings("restriction")
+	protected IMarker createMarker(ASTNode astNode) {
+		
+		Token t;
+		if (astNode == null) {
+			return null;
+		}
+		if (astNode instanceof ASTSubroutineSubprogramNode) {
+			ASTSubroutineSubprogramNode ssn = (ASTSubroutineSubprogramNode) astNode;
+			t = ssn.getSubroutineStmt().getSubroutineName().getSubroutineName();				
+		}
+		else if (astNode instanceof ASTUseStmtNode) {
+			t = ((ASTUseStmtNode) astNode).getName();
+		}
+		else if (astNode instanceof ScopingNode) {
+			t = ((ScopingNode) astNode).getRepresentativeToken().findTokenOrReturnNull();							
+		}
+		else {
+			t = astNode.findFirstToken();
+		}
+		
+		if (t == null) return null;
+		
+		try {
+            int startOffset = t.getFileOffset();
+            int endOffset = t.getFileOffset()+t.getLength();
+            
+            IMarker marker = t.getLogicalFile().createMarker(IMarker.BOOKMARK);
+			marker.setAttribute(IMarker.CHAR_START, startOffset);
+			marker.setAttribute(IMarker.CHAR_END, endOffset);
+						
+            return marker;
+        }
+        catch (CoreException e) {
+            CupidActivator.log("Error creating marker", e);
+        	return null;
+        }
+    }
 	
 	
 	

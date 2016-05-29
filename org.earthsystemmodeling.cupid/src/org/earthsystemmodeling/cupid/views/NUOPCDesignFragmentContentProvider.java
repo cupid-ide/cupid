@@ -1,14 +1,13 @@
 package org.earthsystemmodeling.cupid.views;
 
 import java.util.List;
-import java.lang.reflect.Field;
+import java.util.Map.Entry;
 import java.util.ArrayList;
 
+import org.earthsystemmodeling.cupid.nuopc.CodeConcept;
 import org.earthsystemmodeling.cupid.nuopc.v7r.df.AddComponentToDriver;
-import org.earthsystemmodeling.cupid.nuopc.v7r.df.Binding;
 import org.earthsystemmodeling.cupid.nuopc.v7r.df.DesignFragment;
 import org.earthsystemmodeling.cupid.nuopc.v7r.df.Task;
-import org.earthsystemmodeling.cupid.nuopc.v7r.df.TransferGridBetweenComponents;
 import org.eclipse.jface.viewers.IStructuredContentProvider;
 import org.eclipse.jface.viewers.ITreeContentProvider;
 import org.eclipse.jface.viewers.Viewer;
@@ -30,39 +29,40 @@ public class NUOPCDesignFragmentContentProvider implements IStructuredContentPro
 	@Override
 	public Object[] getChildren(Object parentElement) {
 		
-		if (parentElement instanceof DesignFragment) {
-			DesignFragment df = (DesignFragment) parentElement;
+		if (parentElement instanceof DFTopNode) {
+			DFTopNode topNode = (DFTopNode) parentElement;
+			DesignFragment df = topNode.df;
 			return new Object[] {
-						new GoalNode(df), 
-						new BindingsNode(df), 
-						new TasksNode(df)};
+						new GoalNode(topNode, df), 
+						new BindingsNode(topNode, df), 
+						new TasksNode(topNode, df)};
 		}
 		else if (parentElement instanceof BindingsNode) {
-			DesignFragment df = ((BindingsNode) parentElement).df;
+			BindingsNode bn = (BindingsNode) parentElement;
+			DesignFragment df = bn.df;
 			List<BindingNode> bindingList = new ArrayList<BindingNode>();
-			for (Field f : df.getClass().getDeclaredFields()) {
-				if (f.getAnnotation(Binding.class) != null) {
-					bindingList.add(new BindingNode(df, f));
-				}
+			for (String bindingName : df.getBindings()) {
+				bindingList.add(new BindingNode(bn, df, bindingName));
 			}
 			return bindingList.toArray();
 		}
 		else if (parentElement instanceof TasksNode) {
-			DesignFragment df = ((TasksNode) parentElement).df;
-			TaskContextNode[] tasks = new TaskContextNode[df.tasks().size()];
-			for (int i=0; i<df.tasks().size(); i++) {
-				tasks[i] = new TaskContextNode(df, df.tasks().get(i));
+			TasksNode tn = (TasksNode) parentElement;
+			DesignFragment df = tn.df;
+			TaskContextNode[] tasks = new TaskContextNode[df.getTasks().size()];
+			for (int i=0; i<df.getTasks().size(); i++) {
+				tasks[i] = new TaskContextNode(tn, df, df.getTasks().get(i));
 			}
 			return tasks;
 		}
 		else if (parentElement instanceof TaskContextNode) {
 			TaskContextNode tcn = (TaskContextNode) parentElement;
 			List<DFNode> taskList = new ArrayList<DFNode>();
-			taskList.add(new TaskNode(tcn.df, tcn.task)); // the task itself
-
+			TaskNode toAdd = new TaskNode(tcn, tcn.df, tcn.task);
+			taskList.add(toAdd); // the task itself
 			//add any subtasks
-			for (Task st : tcn.task.getSubTasks()) {
-				taskList.add(new TaskContextNode(tcn.df, st));
+			for (Task st : (List<Task<?>>) tcn.task.getSubTasks()) {
+				taskList.add(new TaskContextNode(tcn, tcn.df, st));
 			}
 			return taskList.toArray();
 			
@@ -79,68 +79,119 @@ public class NUOPCDesignFragmentContentProvider implements IStructuredContentPro
 
 	@Override
 	public boolean hasChildren(Object element) {
-		/*
-		if (element instanceof DesignFragment ||
-			element instanceof TasksNode ||
-			element instanceof TaskContextNode) {
-			return true;
-		}
-		return false;
-		*/
 		return getChildren(element) != null;
 	}
 
 	@Override
 	public Object[] getElements(Object inputElement) {
 		return new Object[] {
-				new AddComponentToDriver(),
-				new TransferGridBetweenComponents()
+				new DFTopNode(null, new AddComponentToDriver())
+				//new TransferGridBetweenComponents()
 			};
 	}
 	
-	public static class DFNode {
+	public static abstract class DFNode {
 		public DesignFragment df;
+		public DFNode parent;
+		public DFNode(DFNode parent, DesignFragment df) {
+			this.parent = parent;
+			this.df = df;
+		}
+		
+		@Override
+		public boolean equals(Object obj) {
+			if (obj instanceof DFNode) {
+				DFNode otherNode = (DFNode) obj;
+				return otherNode.parent == this.parent && otherNode.df == this.df;
+			}
+			return false;
+		}
+	}
+	
+	public static class DFTopNode extends DFNode {
+		public TasksNode tasksNode;
+		public DFTopNode(DFNode parent, DesignFragment df) {
+			super(parent, df);
+		}
+		@Override
+		public boolean equals(Object obj) {
+			return obj == this;
+		}	
 	}
 	
 	public static class GoalNode extends DFNode {	
-		public GoalNode(DesignFragment df) {
-			this.df = df;
+		public GoalNode(DFNode parent, DesignFragment df) {
+			super(parent, df);
+		}
+		@Override
+		public boolean equals(Object obj) {
+			return super.equals(obj) &&
+					(obj instanceof GoalNode);
 		}
 	}
 	
 	public static class BindingsNode extends DFNode {
-		public BindingsNode(DesignFragment df) {
-			this.df = df;
+		public BindingsNode(DFNode parent, DesignFragment df) {
+			super(parent, df);
+		}
+		@Override
+		public boolean equals(Object obj) {
+			return super.equals(obj) &&
+					(obj instanceof BindingsNode);
 		}
 	}
 	
 	public static class BindingNode extends DFNode {
-		public Field field;
-		public BindingNode(DesignFragment df, Field field) {
-			this.df = df;
-			this.field = field;
+		public String name;
+		public BindingNode(DFNode parent, DesignFragment df, String name) {
+			super(parent, df);
+			this.name = name;
+		}
+		@Override
+		public boolean equals(Object obj) {
+			return super.equals(obj) &&
+					(obj instanceof BindingNode) &&
+					((BindingNode) obj).name.equals(name);
 		}
 	}
 	
 	public static class TasksNode extends DFNode {
-		public TasksNode(DesignFragment df) {
-			this.df = df;
+		public TasksNode(DFTopNode parent, DesignFragment df) {
+			super(parent, df);
+			parent.tasksNode = this;
+		}
+		@Override
+		public boolean equals(Object obj) {
+			return super.equals(obj) &&
+					(obj instanceof TasksNode);
 		}
 	}
 	
 	public static class TaskNode extends DFNode {
 		public Task task;
-		public TaskNode(DesignFragment df, Task task) {
-			this.df = df;
+		public TaskNode(DFNode parent, DesignFragment df, Task task) {
+			super(parent, df);
 			this.task = task;
+		}
+		@Override
+		public boolean equals(Object obj) {
+			return super.equals(obj) &&
+					(obj instanceof TaskNode) &&
+					((TaskNode) obj).task == task;
 		}
 	}
 	
 	public static class TaskContextNode extends DFNode {
 		public Task task;
-		public TaskContextNode(DesignFragment df, Task task) {
-			this.df = df;
+		public TaskContextNode(DFNode parent, DesignFragment df, Task task) {
+			super(parent, df);
 			this.task = task;
+		}
+		@Override
+		public boolean equals(Object obj) {
+			return super.equals(obj) &&
+					(obj instanceof TaskContextNode) &&
+					((TaskContextNode) obj).task == task;
 		}
 	}
 

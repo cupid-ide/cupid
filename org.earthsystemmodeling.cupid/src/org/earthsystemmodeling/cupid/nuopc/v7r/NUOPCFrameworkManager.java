@@ -209,6 +209,11 @@ public class NUOPCFrameworkManager {
 		return db.retrieveAll();
 	}
 	
+	public <C extends CodeConcept<?,?>> List<C> listAllComponents(Class<? extends CodeConcept<?,?>> clazz) {
+		//ensureDBIsUpToDate();
+		return db.retrieveAll(clazz);
+	}
+	
 	
 	private void updateDB(IFile file, IResourceDelta delta) {
 		
