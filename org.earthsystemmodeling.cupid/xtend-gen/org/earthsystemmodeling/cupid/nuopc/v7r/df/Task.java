@@ -28,22 +28,15 @@ public class Task<C extends CodeConcept<?, ?>> {
   
   protected Function0<C> bindingFunc;
   
-  /**
-   * new(String text, String bindingVar, boolean optional) {
-   * this.text = text
-   * //this.bindingVar = bindingVar
-   * this.optional = optional
-   * subTasks = #[]
-   * }
-   * 
-   * new(String text, String bindingVar) {
-   * this(text, bindingVar, false)
-   * }
-   */
-  public Task(final String text, final Function0<C> bindingFunc) {
+  public Task(final String text, final Function0<C> bindingFunc, final boolean optional) {
     this.text = text;
     this.bindingFunc = bindingFunc;
+    this.optional = optional;
     this.subTasks = Collections.<Task<?>>unmodifiableList(CollectionLiterals.<Task<?>>newArrayList());
+  }
+  
+  public Task(final String text, final Function0<C> bindingFunc) {
+    this(text, bindingFunc, false);
   }
   
   public Task<C> subTasks(final List<Task<?>> subTasks) {

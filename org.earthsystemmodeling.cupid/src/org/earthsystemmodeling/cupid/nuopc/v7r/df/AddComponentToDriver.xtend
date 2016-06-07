@@ -82,29 +82,20 @@ abstract class DesignFragment {
 class Task<C extends CodeConcept<?,?>> {
 	
 	protected DesignFragment designFragment
-	//protected String bindingVar
 	protected String text
 	protected boolean optional
 	protected List<Task<?>> subTasks
 	protected Function0<C> bindingFunc
 	
-	/*
-	new(String text, String bindingVar, boolean optional) {
+	new(String text, Function0<C> bindingFunc, boolean optional) {
 		this.text = text
-		//this.bindingVar = bindingVar
+		this.bindingFunc = bindingFunc
 		this.optional = optional
 		subTasks = #[]
 	}
 	
-	new(String text, String bindingVar) {
-		this(text, bindingVar, false)
-	}
-	*/
-	
 	new(String text, Function0<C> bindingFunc) {
-		this.text = text
-		this.bindingFunc = bindingFunc
-		subTasks = #[]
+		this(text, bindingFunc, false)
 	}
 	
 	def Task<C> subTasks(List<Task<?>> subTasks) {
@@ -123,19 +114,6 @@ class Task<C extends CodeConcept<?,?>> {
 		catch (NullPointerException npe) {
 			return null;
 		}
-		//if (bindingFunc != null) {
-		//bindingFunc.apply
-		//}
-		//else {
-		//	val segments = bindingVar.split("\\.")		
-		//	var curConcept = designFragment.getBindings.get(segments.get(0))
-		//	for (var i=1; curConcept != null && i<segments.length; i++) {
-		//		val idx = i
-		//		val fld = curConcept.class.fields.findFirst[f|f.name.equals(segments.get(idx))]
-		//		curConcept = fld.get(curConcept) as CodeConcept<?,?>
-		//	}
-		//	curConcept
-		//}
 	}
 	
 	def getText() {
@@ -151,31 +129,9 @@ class Task<C extends CodeConcept<?,?>> {
 	}
 	
 	def getBindingType() {
-		//if (bindingFunc != null) {
-			val method = bindingFunc.class.methods.findFirst[m|m.name.equals("apply")]
-			val returnType = method.genericReturnType
-			//val genericReturnType = returnType as ParameterizedType
-			//val gst = this.class.genericSuperclass
-			//val returnType = (this.class.genericSuperclass as ParameterizedType).actualTypeArguments.get(0)
-			//val actualType = genericReturnType.actualTypeArguments.get(0)
-			//System.out.println("returnType = " + actualType.toString)
-			returnType as Class<? extends CodeConcept<?,?>>
-		//}
-		//else {
-		//	val segments = bindingVar.split("\\.")		
-		//	var curConceptType = designFragment.getBindingTypes.get(segments.get(0))
-		//	for (var i=1; i<segments.length; i++) {
-		//		val idx = i
-		//		val fld = curConceptType.fields.findFirst[f|f.name.equals(segments.get(idx))]
-		//		curConceptType = fld.type as Class<? extends CodeConcept<?,?>>
-		//	}
-		//	curConceptType
-		//}
-		//ctx = bindingVar.substring(0, bindingVar.indexOf("."))
-		//val clz = designFragment.getBindingTypes.get(ctx)
-		//val fullClassName = clz.name + "$" + bindingVar.substring(bindingVar.indexOf(".")+1)
-		//val fullClass = this.class.classLoader.loadClass(fullClassName)
-		//fullClass	
+		val method = bindingFunc.class.methods.findFirst[m|m.name.equals("apply")]
+		val returnType = method.genericReturnType
+		returnType as Class<? extends CodeConcept<?,?>>
 	}
 	
 	def static replaceAll(StringBuilder builder, String from, String to) {
@@ -200,13 +156,12 @@ class AddComponentToDriver extends DesignFragment {
 		
 	new() {
 		super("Add Model to a Driver", 
-			  "Add a Model component to the list of child components\nin a Driver",
+			  "Add a Model component to the list of child components in a Driver",
 				'''
 				Use this goal to add a child Model to a Driver so that 
 				it can be executed during the Driver's a run sequence.
 				'''
 		)
-		//bindingTypes = #{"Driver" -> NUOPCDriver, "Model" -> NUOPCModel}
 		setTasks(#[	
 			new Task(
 				"Import {Model} SetServices subroutine (only) into {Driver}",
@@ -224,15 +179,16 @@ class AddComponentToDriver extends DesignFragment {
 					)
 				]),
 				new Task(
-					"Add run sequence element with call to\nNUOPC_DriverAddRunElement",
-					[Driver.initialization.initSpecs.setRunSequence]
-				),
+					"Add run sequence element with call to NUOPC_DriverAddRunElement",
+					[Driver.initialization.initSpecs.setRunSequence],
+					true
+				)/*,
 				new Task(
 					"Test the run sequence element...",
 					[Driver.initialization.initSpecs.setRunSequence.runElements.findFirst[e|
 						e.compLabel.equals(Model.name)
 					]]
-				)
+				)*/
 			])
 		])
 	}

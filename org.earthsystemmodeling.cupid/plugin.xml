@@ -485,6 +485,7 @@
             id="org.earthsystemmodeling.cupid.views.NUOPCView"
             name="NUOPC View">
       </view>
+      <!--
       <view
             category="org.earthsystemmodeling.cupid"
             class="org.earthsystemmodeling.cupid.views.NUOPCDesignFragmentView"
@@ -492,6 +493,7 @@
             id="org.earthsystemmodeling.cupid.views.NUOPCDesignFragmentView"
             name="NUOPC Design Fragments">
       </view>
+      -->
    </extension>
    <extension
          point="org.eclipse.help.contexts">

@@ -167,22 +167,22 @@ public class NUOPCDesignFragmentView extends ViewPart {
 	public void createPartControl(Composite parent) {
 		
 		viewer = new TreeViewer(parent, SWT.H_SCROLL | SWT.V_SCROLL | SWT.FULL_SELECTION);
-		
+				
 		TreeColumn tc1 = new TreeColumn(viewer.getTree(), SWT.LEFT);
 		tc1.setAlignment(SWT.LEFT);
 		tc1.setText("NUOPC Goal Catalog");
 		//tc1.setWidth(100);
 		tc1.setResizable(true);
 		
-		tc2 = new TreeColumn(viewer.getTree(), SWT.MULTI | SWT.RIGHT);
-		tc2.setAlignment(SWT.LEFT);
-		tc2.setText("");
+		//tc2 = new TreeColumn(viewer.getTree(), SWT.MULTI | SWT.RIGHT);
+		//tc2.setAlignment(SWT.LEFT);
+		//tc2.setText("");
 		//tc2.setWidth(100);
-		tc2.setResizable(true);
+		//tc2.setResizable(true);
 		
 		TreeColumnLayout tcl = new TreeColumnLayout();
 		tcl.setColumnData(tc1, new ColumnWeightData(4));
-		tcl.setColumnData(tc2, new ColumnWeightData(1));
+		//tcl.setColumnData(tc2, new ColumnWeightData(1));
 		parent.setLayout(tcl);
 				
 		Tree tree = viewer.getTree();

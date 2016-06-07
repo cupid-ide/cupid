@@ -1,5 +1,6 @@
 package org.earthsystemmodeling.cupid.views;
 
+import org.apache.commons.lang.WordUtils;
 import org.earthsystemmodeling.cupid.annotation.Label;
 import org.earthsystemmodeling.cupid.annotation.MappingType;
 import org.earthsystemmodeling.cupid.core.CupidActivator;
@@ -36,7 +37,7 @@ public class NUOPCDesignFragmentLabelProvider extends StyledCellLabelProvider {
 			}
 			else if (cell.getElement() instanceof GoalNode) {
 				GoalNode gn = (GoalNode) cell.getElement();
-				cell.setText("Goal: " + gn.df.getGoal());
+				cell.setText(WordUtils.wrap("Goal: " + gn.df.getGoal(), 70));
 				cell.setImage(ICON_BULB);
 			}
 			else if (cell.getElement() instanceof BindingsNode) {
@@ -79,12 +80,13 @@ public class NUOPCDesignFragmentLabelProvider extends StyledCellLabelProvider {
 			}
 			else if (cell.getElement() instanceof TaskNode) {
 				TaskNode tn = (TaskNode) cell.getElement();
+				String text = "";
 				if (tn.task.isOptional()) {
-					cell.setText("(optional) " + tn.task.getText());
+					text += "(optional) ";
 				}
-				else {
-					cell.setText(tn.task.getText());
-				}
+				text += tn.task.getText();
+				cell.setText(WordUtils.wrap(text, 70));
+				
 			}
 		}
 		
