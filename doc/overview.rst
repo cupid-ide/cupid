@@ -15,7 +15,7 @@ Operational Prediction Capability (NUOPC) software Layer <https://earthsystemcog
 What is NUOPC?
 --------------
 
-NUOPC is a consortium of Navy, NOAA, and Air Force modelers and their research partners. It aims to advance the weather prediction modeling systems used by meteorologists, mission planners, and decision makers. NUOPC partners are working toward a common model architecture - a standard way of building models - in order to make it easier to collaboratively build modeling systems.  To this end, they have developed a NUOPC Layer that defines conventions and templates for using the `Earth System Modeling Framework (ESMF) <https://earthsystemcog.org/projects/esmf/>`_. **Cupid version 0.2 is compatible with ESMF version 7.0.**
+NUOPC is a consortium of Navy, NOAA, and Air Force modelers and their research partners. It aims to advance the weather prediction modeling systems used by meteorologists, mission planners, and decision makers. NUOPC partners are working toward a common model architecture - a standard way of building models - in order to make it easier to collaboratively build modeling systems.  To this end, they have developed a NUOPC Layer that defines conventions and templates for using the `Earth System Modeling Framework (ESMF) <https://earthsystemcog.org/projects/esmf/>`_. **Cupid version 1.0 is compatible with ESMF version 7.0.**
 
 .. note:: 
     The following resources are a good starting point for learning about the NUOPC Layer.
