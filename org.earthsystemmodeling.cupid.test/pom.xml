@@ -8,7 +8,7 @@
 	<parent>
 		<groupId>org.earthsystemmodeling.cupid</groupId>
 		<artifactId>org.earthsystemmodeling.cupid.releng</artifactId>
-		<version>0.2.0-SNAPSHOT</version>
+		<version>1.0.0-SNAPSHOT</version>
 		<relativePath>../org.earthsystemmodeling.cupid.releng</relativePath>
 	</parent>
 
