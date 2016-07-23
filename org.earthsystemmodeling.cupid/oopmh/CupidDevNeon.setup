@@ -168,6 +168,8 @@
         name="org.polarion.eclipse.team.svn.connector.svnkit18.feature.group"/>
     <repository
         url="http://community.polarion.com/projects/subversive/download/eclipse/5.0/update-site/"/>
+    <repository
+        url="http://community.polarion.com/projects/subversive/download/eclipse/6.0/neon-site/"/>
     <description></description>
   </setupTask>
   <setupTask
