@@ -1,32 +1,15 @@
 package org.earthsystemmodeling.cupid.trace;
 
-import java.util.ArrayList;
-import java.util.Collection;
-
+import org.eclipse.tracecompass.tmf.core.event.ITmfEventField;
 import org.eclipse.tracecompass.tmf.core.event.TmfEventType;
 
 public class NUOPCEventType extends TmfEventType {
-
-	private ArrayList<String> fieldNames = new ArrayList<String>();
 	
-	public NUOPCEventType() {
-		fieldNames = new ArrayList<String>();
-		fieldNames.add("type"); 
-		fieldNames.add("pet");
-		fieldNames.add("data");
+	public static final String EVENT_START_PHASE = "start_phase";
+	public static final String EVENT_STOP_PHASE = "stop_phase";
+	
+	public NUOPCEventType(String name, ITmfEventField content) {
+		super(name, content);
 	}
-	
-	@Override
-	public String getName() {
-		return "NUOPCEventType";
-	}
-	
-	@Override
-	public Collection<String> getFieldNames() {
-		return fieldNames;
-	}
-	
-	
-	
 	
 }

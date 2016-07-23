@@ -17,23 +17,25 @@ public class NUOPCCallStackStateProvider extends CallStackStateProvider {
 		return 0;
 	}
 
+	
 	@Override
 	public NUOPCCallStackStateProvider getNewInstance() {
 		System.out.println("NUOPCCallStackStateProvider.newInstance");
 		return new NUOPCCallStackStateProvider(getTrace());
 	}
-
+	
+	
 	@Override
 	protected boolean considerEvent(ITmfEvent event) {
-		System.out.println("NUOPCCallStackStateProvider.considerEvent");
+		//System.out.println("NUOPCCallStackStateProvider.considerEvent");
 		if (event instanceof NUOPCTraceEvent) {
-			System.out.println("te = " + event.getContent());
+			//System.out.println("te = " + event.getContent());
 			if (event.getContent().getField("event") != null ) {
-				System.out.println("event = " + event.getContent().getField("event"));
-				if (((String) event.getContent().getField("event").getValue()).contains("start") ||
-			        ((String) event.getContent().getField("event").getValue()).contains("stop")) {
+				//System.out.println("event = " + event.getContent().getField("event"));
+				//if (((String) event.getContent().getField("event").getValue()).contains("start") ||
+			     //   ((String) event.getContent().getField("event").getValue()).contains("stop")) {
 					return true;
-				}
+				//}
 			}
 		}
 		return false;
@@ -41,29 +43,37 @@ public class NUOPCCallStackStateProvider extends CallStackStateProvider {
 
 	@Override
 	protected String functionEntry(ITmfEvent event) {
-		return "A";
-		/*
-		if (((String) event.getContent().getField("event").getValue()).contains("start")) {
-			return (String) event.getContent().getField("phase").getValue();
+		if (((String) event.getContent().getField("event").getValue()).equals(NUOPCEventType.EVENT_START_PHASE)) {
+			String phase = (String) event.getContent().getField("phase").getValue();
+			String compName = (String) event.getContent().getField("compName").getValue();
+			return compName + " Init phase " + phase;
 		}
-		*/
-		
+		else {
+			return null;
+		}
 	}
 
 	@Override
 	protected String functionExit(ITmfEvent event) {
-		return "A";
-		/*
-		if (((String) event.getContent().getField("event").getValue()).contains("stop")) {
-			return (String) event.getContent().getField("phase").getValue();
+		if (((String) event.getContent().getField("event").getValue()).equals(NUOPCEventType.EVENT_STOP_PHASE)) {
+			String phase = (String) event.getContent().getField("phase").getValue();
+			String compName = (String) event.getContent().getField("compName").getValue();
+			return compName + " Init phase " + phase;
 		}
-		*/
+		else {
+			return null;
+		}
 		
 	}
 
 	@Override
 	protected String getThreadName(ITmfEvent event) {
-		return "FirstThread";
+		return (String) "PET " + event.getContent().getField("pet").getValue();
+	}
+	
+	@Override
+	protected Long getThreadId(ITmfEvent event) {
+		return Long.valueOf(event.getContent().getField("pet").getValue().toString());
 	}
 
 }
