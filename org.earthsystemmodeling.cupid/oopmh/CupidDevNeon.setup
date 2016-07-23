@@ -194,7 +194,8 @@
     <description>${scope.project.label}</description>
   </setupTask>
   <setupTask
-      xsi:type="setup.targlets:TargletTask">
+      xsi:type="setup.targlets:TargletTask"
+      targetName="Cupid Neon">
     <targlet
         name="${scope.project.label}"
         activeRepositoryList="${eclipse.target.platform}">
