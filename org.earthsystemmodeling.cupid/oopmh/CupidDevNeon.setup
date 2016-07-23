@@ -110,6 +110,8 @@
         name="org.eclipse.tracecompass.tmf.pcap.feature.group"/>
     <repository
         url="http://download.eclipse.org/tracecompass/releases/1.2.1/repository/"/>
+    <repository
+        url="http://download.eclipse.org/tracecompass/releases/2.0.0/repository/"/>
     <description></description>
   </setupTask>
   <setupTask
@@ -153,6 +155,8 @@
         filter=""/>
     <repository
         url="http://download.eclipse.org/sirius/updates/releases/3.1.1/mars"/>
+    <repository
+        url="http://download.eclipse.org/sirius/updates/releases/4.0.0/neon"/>
   </setupTask>
   <setupTask
       xsi:type="setup.p2:P2Task"
