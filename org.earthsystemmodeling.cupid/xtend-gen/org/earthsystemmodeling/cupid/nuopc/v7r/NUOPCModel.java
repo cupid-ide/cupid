@@ -4,6 +4,7 @@ import com.google.common.base.Objects;
 import com.google.common.collect.Iterables;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.function.Consumer;
 import org.earthsystemmodeling.cupid.NUOPC.Advance;
 import org.earthsystemmodeling.cupid.NUOPC.ESMF_STAGGERLOC;
 import org.earthsystemmodeling.cupid.NUOPC.Field;
@@ -32,8 +33,6 @@ import org.eclipse.xtend.lib.annotations.Accessors;
 import org.eclipse.xtend2.lib.StringConcatenation;
 import org.eclipse.xtext.xbase.lib.CollectionLiterals;
 import org.eclipse.xtext.xbase.lib.Exceptions;
-import org.eclipse.xtext.xbase.lib.IterableExtensions;
-import org.eclipse.xtext.xbase.lib.Procedures.Procedure1;
 import org.eclipse.xtext.xbase.lib.Pure;
 
 @Label(label = "NUOPC Model")
@@ -66,11 +65,9 @@ public class NUOPCModel extends NUOPCComponent {
         String _switchResult = null;
         final NUOPCModel.IPD _parent = this._parent;
         boolean _matched = false;
-        if (!_matched) {
-          if (_parent instanceof NUOPCModel.IPDv00) {
-            _matched=true;
-            _switchResult = "\"IPDv00\"";
-          }
+        if (_parent instanceof NUOPCModel.IPDv00) {
+          _matched=true;
+          _switchResult = "\"IPDv00\"";
         }
         if (!_matched) {
           if (_parent instanceof NUOPCModel.IPDv01) {
@@ -100,11 +97,9 @@ public class NUOPCModel extends NUOPCComponent {
         String _switchResult = null;
         final NUOPCModel.IPD _parent = this._parent;
         boolean _matched = false;
-        if (!_matched) {
-          if (_parent instanceof NUOPCModel.IPDv00) {
-            _matched=true;
-            _switchResult = "IPDv00p0";
-          }
+        if (_parent instanceof NUOPCModel.IPDv00) {
+          _matched=true;
+          _switchResult = "IPDv00p0";
         }
         if (!_matched) {
           if (_parent instanceof NUOPCModel.IPDv01) {
@@ -276,11 +271,9 @@ public class NUOPCModel extends NUOPCComponent {
         String _switchResult = null;
         final NUOPCModel.IPD _parent = this._parent;
         boolean _matched = false;
-        if (!_matched) {
-          if (_parent instanceof NUOPCModel.IPDv00) {
-            _matched=true;
-            _switchResult = "IPDv00p1";
-          }
+        if (_parent instanceof NUOPCModel.IPDv00) {
+          _matched=true;
+          _switchResult = "IPDv00p1";
         }
         if (!_matched) {
           if (_parent instanceof NUOPCModel.IPDv01) {
@@ -461,11 +454,9 @@ public class NUOPCModel extends NUOPCComponent {
         String _switchResult = null;
         final NUOPCModel.IPD _parent = this._parent;
         boolean _matched = false;
-        if (!_matched) {
-          if (_parent instanceof NUOPCModel.IPDv00) {
-            _matched=true;
-            _switchResult = "IPDv00p2";
-          }
+        if (_parent instanceof NUOPCModel.IPDv00) {
+          _matched=true;
+          _switchResult = "IPDv00p2";
         }
         if (!_matched) {
           if (_parent instanceof NUOPCModel.IPDv01) {
@@ -539,11 +530,9 @@ public class NUOPCModel extends NUOPCComponent {
         String _switchResult = null;
         final NUOPCModel.IPD _parent = this._parent;
         boolean _matched = false;
-        if (!_matched) {
-          if (_parent instanceof NUOPCModel.IPDv03) {
-            _matched=true;
-            _switchResult = "IPDv03p4";
-          }
+        if (_parent instanceof NUOPCModel.IPDv03) {
+          _matched=true;
+          _switchResult = "IPDv03p4";
         }
         if (!_matched) {
           _switchResult = "IPDv04p4";
@@ -588,11 +577,9 @@ public class NUOPCModel extends NUOPCComponent {
         String _switchResult = null;
         final NUOPCModel.IPD _parent = this._parent;
         boolean _matched = false;
-        if (!_matched) {
-          if (_parent instanceof NUOPCModel.IPDv03) {
-            _matched=true;
-            _switchResult = "IPDv03p5";
-          }
+        if (_parent instanceof NUOPCModel.IPDv03) {
+          _matched=true;
+          _switchResult = "IPDv03p5";
         }
         if (!_matched) {
           _switchResult = "IPDv04p5";
@@ -901,43 +888,7 @@ public class NUOPCModel extends NUOPCComponent {
     
     @Override
     public boolean validate(final List<String> errors) {
-      boolean _and = false;
-      boolean _and_1 = false;
-      boolean _notEquals = (!Objects.equal(this.ipdv03p1, null));
-      if (!_notEquals) {
-        _and_1 = false;
-      } else {
-        boolean _validate = this.ipdv03p1.validate(errors);
-        _and_1 = _validate;
-      }
-      if (!_and_1) {
-        _and = false;
-      } else {
-        boolean _or = false;
-        boolean _and_2 = false;
-        boolean _notEquals_1 = (!Objects.equal(this.ipdv03p3, null));
-        if (!_notEquals_1) {
-          _and_2 = false;
-        } else {
-          boolean _validate_1 = this.ipdv03p3.validate(errors);
-          _and_2 = _validate_1;
-        }
-        if (_and_2) {
-          _or = true;
-        } else {
-          boolean _and_3 = false;
-          boolean _notEquals_2 = (!Objects.equal(this.ipdv03p5, null));
-          if (!_notEquals_2) {
-            _and_3 = false;
-          } else {
-            boolean _validate_2 = this.ipdv03p5.validate(errors);
-            _and_3 = _validate_2;
-          }
-          _or = _and_3;
-        }
-        _and = _or;
-      }
-      return _and;
+      return (((!Objects.equal(this.ipdv03p1, null)) && this.ipdv03p1.validate(errors)) && (((!Objects.equal(this.ipdv03p3, null)) && this.ipdv03p3.validate(errors)) || ((!Objects.equal(this.ipdv03p5, null)) && this.ipdv03p5.validate(errors))));
     }
   }
   
@@ -1010,43 +961,7 @@ public class NUOPCModel extends NUOPCComponent {
     
     @Override
     public boolean validate(final List<String> errors) {
-      boolean _and = false;
-      boolean _and_1 = false;
-      boolean _notEquals = (!Objects.equal(this.ipdv04p1, null));
-      if (!_notEquals) {
-        _and_1 = false;
-      } else {
-        boolean _validate = this.ipdv04p1.validate(errors);
-        _and_1 = _validate;
-      }
-      if (!_and_1) {
-        _and = false;
-      } else {
-        boolean _or = false;
-        boolean _and_2 = false;
-        boolean _notEquals_1 = (!Objects.equal(this.ipdv04p3, null));
-        if (!_notEquals_1) {
-          _and_2 = false;
-        } else {
-          boolean _validate_1 = this.ipdv04p3.validate(errors);
-          _and_2 = _validate_1;
-        }
-        if (_and_2) {
-          _or = true;
-        } else {
-          boolean _and_3 = false;
-          boolean _notEquals_2 = (!Objects.equal(this.ipdv04p5, null));
-          if (!_notEquals_2) {
-            _and_3 = false;
-          } else {
-            boolean _validate_2 = this.ipdv04p5.validate(errors);
-            _and_3 = _validate_2;
-          }
-          _or = _and_3;
-        }
-        _and = _or;
-      }
-      return _and;
+      return (((!Objects.equal(this.ipdv04p1, null)) && this.ipdv04p1.validate(errors)) && (((!Objects.equal(this.ipdv04p3, null)) && this.ipdv04p3.validate(errors)) || ((!Objects.equal(this.ipdv04p5, null)) && this.ipdv04p5.validate(errors))));
     }
   }
   
@@ -1098,36 +1013,11 @@ public class NUOPCModel extends NUOPCComponent {
     
     @Override
     public boolean validate(final List<String> errors) {
-      boolean _or = false;
-      boolean _or_1 = false;
-      boolean _or_2 = false;
-      boolean _or_3 = false;
-      boolean _validate = this.ipdv00.validate(errors);
-      if (_validate) {
-        _or_3 = true;
-      } else {
-        boolean _validate_1 = this.ipdv01.validate(errors);
-        _or_3 = _validate_1;
-      }
-      if (_or_3) {
-        _or_2 = true;
-      } else {
-        boolean _validate_2 = this.ipdv02.validate(errors);
-        _or_2 = _validate_2;
-      }
-      if (_or_2) {
-        _or_1 = true;
-      } else {
-        boolean _validate_3 = this.ipdv03.validate(errors);
-        _or_1 = _validate_3;
-      }
-      if (_or_1) {
-        _or = true;
-      } else {
-        boolean _validate_4 = this.ipdv04.validate(errors);
-        _or = _validate_4;
-      }
-      return _or;
+      return ((((this.ipdv00.validate(errors) || 
+        this.ipdv01.validate(errors)) || 
+        this.ipdv02.validate(errors)) || 
+        this.ipdv03.validate(errors)) || 
+        this.ipdv04.validate(errors));
     }
   }
   
@@ -1171,41 +1061,35 @@ public class NUOPCModel extends NUOPCComponent {
     public void forward(final Model high) {
       EList<Grid> _grids = high.getGrids();
       Iterable<UniformGrid> _filter = Iterables.<UniformGrid>filter(_grids, UniformGrid.class);
-      final Procedure1<UniformGrid> _function = new Procedure1<UniformGrid>() {
-        @Override
-        public void apply(final UniformGrid g) {
-          final GridCodeConcept.CreateUniformGrid cug = new GridCodeConcept.CreateUniformGrid(Initialization.this);
-          StringConcatenation _builder = new StringConcatenation();
-          _builder.append("\"");
-          String _name = g.getName();
-          _builder.append(_name, "");
-          _builder.append("\"");
-          cug.setName(_builder.toString());
-          EList<Integer> _minIndex = g.getMinIndex();
-          int[] _intArray = CodeConcept.toIntArray(_minIndex);
-          cug.setMinIndex(_intArray);
-          EList<Integer> _maxIndex = g.getMaxIndex();
-          int[] _intArray_1 = CodeConcept.toIntArray(_maxIndex);
-          cug.setMaxIndex(_intArray_1);
-          EList<Double> _minCornerCoord = g.getMinCornerCoord();
-          double[] _doubleArray = CodeConcept.toDoubleArray(_minCornerCoord);
-          cug.setMinCornerCoord(_doubleArray);
-          EList<Double> _maxCornerCoord = g.getMaxCornerCoord();
-          double[] _doubleArray_1 = CodeConcept.toDoubleArray(_maxCornerCoord);
-          cug.setMaxCornerCoord(_doubleArray_1);
-          EList<ESMF_STAGGERLOC> _staggerLocToFillCoords = g.getStaggerLocToFillCoords();
-          final Procedure1<ESMF_STAGGERLOC> _function = new Procedure1<ESMF_STAGGERLOC>() {
-            @Override
-            public void apply(final ESMF_STAGGERLOC l) {
-              List<String> _staggerLocs = cug.getStaggerLocs();
-              String _literal = l.getLiteral();
-              _staggerLocs.add(_literal);
-            }
-          };
-          IterableExtensions.<ESMF_STAGGERLOC>forEach(_staggerLocToFillCoords, _function);
-        }
+      final Consumer<UniformGrid> _function = (UniformGrid g) -> {
+        final GridCodeConcept.CreateUniformGrid cug = new GridCodeConcept.CreateUniformGrid(this);
+        StringConcatenation _builder = new StringConcatenation();
+        _builder.append("\"");
+        String _name = g.getName();
+        _builder.append(_name, "");
+        _builder.append("\"");
+        cug.setName(_builder.toString());
+        EList<Integer> _minIndex = g.getMinIndex();
+        int[] _intArray = CodeConcept.toIntArray(_minIndex);
+        cug.setMinIndex(_intArray);
+        EList<Integer> _maxIndex = g.getMaxIndex();
+        int[] _intArray_1 = CodeConcept.toIntArray(_maxIndex);
+        cug.setMaxIndex(_intArray_1);
+        EList<Double> _minCornerCoord = g.getMinCornerCoord();
+        double[] _doubleArray = CodeConcept.toDoubleArray(_minCornerCoord);
+        cug.setMinCornerCoord(_doubleArray);
+        EList<Double> _maxCornerCoord = g.getMaxCornerCoord();
+        double[] _doubleArray_1 = CodeConcept.toDoubleArray(_maxCornerCoord);
+        cug.setMaxCornerCoord(_doubleArray_1);
+        EList<ESMF_STAGGERLOC> _staggerLocToFillCoords = g.getStaggerLocToFillCoords();
+        final Consumer<ESMF_STAGGERLOC> _function_1 = (ESMF_STAGGERLOC l) -> {
+          List<String> _staggerLocs = cug.getStaggerLocs();
+          String _literal = l.getLiteral();
+          _staggerLocs.add(_literal);
+        };
+        _staggerLocToFillCoords.forEach(_function_1);
       };
-      IterableExtensions.<UniformGrid>forEach(_filter, _function);
+      _filter.forEach(_function);
       NUOPCModel.IPD _switchResult = null;
       IPDVersion _iPDVersion = high.getIPDVersion();
       if (_iPDVersion != null) {
@@ -1231,19 +1115,7 @@ public class NUOPCModel extends NUOPCComponent {
       }
       final NUOPCModel.IPD ipd = _switchResult;
       new NUOPCModel.IPD.IPDv04p0(ipd);
-      boolean _or = false;
-      EList<Field> _importFields = high.getImportFields();
-      int _size = _importFields.size();
-      boolean _greaterThan = (_size > 0);
-      if (_greaterThan) {
-        _or = true;
-      } else {
-        EList<Field> _exportFields = high.getExportFields();
-        int _size_1 = _exportFields.size();
-        boolean _greaterThan_1 = (_size_1 > 0);
-        _or = _greaterThan_1;
-      }
-      if (_or) {
+      if (((high.getImportFields().size() > 0) || (high.getExportFields().size() > 0))) {
         final NUOPCModel.IPD.IPDv04p1 ipdv04p1 = new NUOPCModel.IPD.IPDv04p1(ipd);
         ipdv04p1.forward(high);
         final NUOPCModel.IPD.IPDv04p3 ipdv04p3 = new NUOPCModel.IPD.IPDv04p3(ipd);
@@ -1551,21 +1423,18 @@ public class NUOPCModel extends NUOPCComponent {
     
     public void forward(final Model high) {
       EList<Advance> _advance = high.getAdvance();
-      final Procedure1<Advance> _function = new Procedure1<Advance>() {
-        @Override
-        public void apply(final Advance a) {
-          final NUOPCModel.ModelAdvance adv = new NUOPCModel.ModelAdvance(RunSpecializations.this);
-          String _phaseLabel = a.getPhaseLabel();
-          boolean _notEquals = (!Objects.equal(_phaseLabel, null));
-          if (_notEquals) {
-            String _phaseLabel_1 = a.getPhaseLabel();
-            String _plus = ("\"" + _phaseLabel_1);
-            String _plus_1 = (_plus + "\"");
-            adv.specPhaseLabel = _plus_1;
-          }
+      final Consumer<Advance> _function = (Advance a) -> {
+        final NUOPCModel.ModelAdvance adv = new NUOPCModel.ModelAdvance(this);
+        String _phaseLabel = a.getPhaseLabel();
+        boolean _notEquals = (!Objects.equal(_phaseLabel, null));
+        if (_notEquals) {
+          String _phaseLabel_1 = a.getPhaseLabel();
+          String _plus = ("\"" + _phaseLabel_1);
+          String _plus_1 = (_plus + "\"");
+          adv.specPhaseLabel = _plus_1;
         }
       };
-      IterableExtensions.<Advance>forEach(_advance, _function);
+      _advance.forEach(_function);
     }
   }
   

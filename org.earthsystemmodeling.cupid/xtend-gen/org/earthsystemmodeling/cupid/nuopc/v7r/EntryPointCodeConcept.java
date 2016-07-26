@@ -86,71 +86,65 @@ public abstract class EntryPointCodeConcept<P extends CodeConcept<?, ?>> extends
       if (_notEquals) {
         IASTListNode<IBodyConstruct> _body = setServicesNode.getBody();
         Iterable<ASTCallStmtNode> _filter = Iterables.<ASTCallStmtNode>filter(_body, ASTCallStmtNode.class);
-        final Function1<ASTCallStmtNode, Boolean> _function = new Function1<ASTCallStmtNode, Boolean>() {
-          @Override
-          public Boolean apply(final ASTCallStmtNode it) {
-            boolean _and = false;
-            Token _subroutineName = it.getSubroutineName();
-            String _text = _subroutineName.getText();
-            boolean _eic = ASTQuery.eic(_text, "ESMF_GridCompSetEntryPoint");
-            if (!_eic) {
-              _and = false;
-            } else {
-              String _litArgExprByKeyword = ASTQuery.litArgExprByKeyword(it, "phase");
-              boolean _eic_1 = false;
-              if (_litArgExprByKeyword!=null) {
-                _eic_1=ASTQuery.eic(_litArgExprByKeyword, EntryPointCodeConcept.this.phaseNumber);
-              }
-              _and = _eic_1;
+        final Function1<ASTCallStmtNode, Boolean> _function = (ASTCallStmtNode it) -> {
+          boolean _and = false;
+          Token _subroutineName = it.getSubroutineName();
+          String _text = _subroutineName.getText();
+          boolean _eic = ASTQuery.eic(_text, "ESMF_GridCompSetEntryPoint");
+          if (!_eic) {
+            _and = false;
+          } else {
+            String _litArgExprByKeyword = ASTQuery.litArgExprByKeyword(it, "phase");
+            boolean _eic_1 = false;
+            if (_litArgExprByKeyword!=null) {
+              _eic_1=ASTQuery.eic(_litArgExprByKeyword, this.phaseNumber);
             }
-            return Boolean.valueOf(_and);
+            _and = _eic_1;
           }
+          return Boolean.valueOf(_and);
         };
         ASTCallStmtNode _findFirst = IterableExtensions.<ASTCallStmtNode>findFirst(_filter, _function);
         regCall = _findFirst;
       } else {
         IASTListNode<IBodyConstruct> _body_1 = setServicesNode.getBody();
         Iterable<ASTCallStmtNode> _filter_1 = Iterables.<ASTCallStmtNode>filter(_body_1, ASTCallStmtNode.class);
-        final Function1<ASTCallStmtNode, Boolean> _function_1 = new Function1<ASTCallStmtNode, Boolean>() {
-          @Override
-          public Boolean apply(final ASTCallStmtNode it) {
-            boolean _and = false;
-            Token _subroutineName = it.getSubroutineName();
-            String _text = _subroutineName.getText();
-            boolean _eic = ASTQuery.eic(_text, "NUOPC_CompSetEntryPoint");
-            if (!_eic) {
-              _and = false;
-            } else {
-              boolean _or = false;
-              String _litArgExprByKeyword = ASTQuery.litArgExprByKeyword(it, "phaseLabelList");
-              String _lowerCase = null;
-              if (_litArgExprByKeyword!=null) {
-                _lowerCase=_litArgExprByKeyword.toLowerCase();
-              }
-              boolean _contains = false;
-              if (_lowerCase!=null) {
-                String _lowerCase_1 = EntryPointCodeConcept.this.phaseLabel.toLowerCase();
-                _contains=_lowerCase.contains(_lowerCase_1);
-              }
-              if (_contains) {
-                _or = true;
-              } else {
-                String _litArgExprByIdx = ASTQuery.litArgExprByIdx(it, 2);
-                String _lowerCase_2 = null;
-                if (_litArgExprByIdx!=null) {
-                  _lowerCase_2=_litArgExprByIdx.toLowerCase();
-                }
-                boolean _contains_1 = false;
-                if (_lowerCase_2!=null) {
-                  String _lowerCase_3 = EntryPointCodeConcept.this.phaseLabel.toLowerCase();
-                  _contains_1=_lowerCase_2.contains(_lowerCase_3);
-                }
-                _or = _contains_1;
-              }
-              _and = _or;
+        final Function1<ASTCallStmtNode, Boolean> _function_1 = (ASTCallStmtNode it) -> {
+          boolean _and = false;
+          Token _subroutineName = it.getSubroutineName();
+          String _text = _subroutineName.getText();
+          boolean _eic = ASTQuery.eic(_text, "NUOPC_CompSetEntryPoint");
+          if (!_eic) {
+            _and = false;
+          } else {
+            boolean _or = false;
+            String _litArgExprByKeyword = ASTQuery.litArgExprByKeyword(it, "phaseLabelList");
+            String _lowerCase = null;
+            if (_litArgExprByKeyword!=null) {
+              _lowerCase=_litArgExprByKeyword.toLowerCase();
             }
-            return Boolean.valueOf(_and);
+            boolean _contains = false;
+            if (_lowerCase!=null) {
+              String _lowerCase_1 = this.phaseLabel.toLowerCase();
+              _contains=_lowerCase.contains(_lowerCase_1);
+            }
+            if (_contains) {
+              _or = true;
+            } else {
+              String _litArgExprByIdx = ASTQuery.litArgExprByIdx(it, 2);
+              String _lowerCase_2 = null;
+              if (_litArgExprByIdx!=null) {
+                _lowerCase_2=_litArgExprByIdx.toLowerCase();
+              }
+              boolean _contains_1 = false;
+              if (_lowerCase_2!=null) {
+                String _lowerCase_3 = this.phaseLabel.toLowerCase();
+                _contains_1=_lowerCase_2.contains(_lowerCase_3);
+              }
+              _or = _contains_1;
+            }
+            _and = _or;
           }
+          return Boolean.valueOf(_and);
         };
         ASTCallStmtNode _findFirst_1 = IterableExtensions.<ASTCallStmtNode>findFirst(_filter_1, _function_1);
         regCall = _findFirst_1;
@@ -163,15 +157,12 @@ public abstract class EntryPointCodeConcept<P extends CodeConcept<?, ?>> extends
       CodeConcept<?, ASTModuleNode> _module = this.module();
       ASTModuleNode _aSTRef_1 = _module.getASTRef();
       Iterable<ASTSubroutineSubprogramNode> _findESMFEntryPoints = ESMFQuery.findESMFEntryPoints(_aSTRef_1);
-      final Function1<ASTSubroutineSubprogramNode, Boolean> _function_2 = new Function1<ASTSubroutineSubprogramNode, Boolean>() {
-        @Override
-        public Boolean apply(final ASTSubroutineSubprogramNode it) {
-          ASTSubroutineStmtNode _subroutineStmt = it.getSubroutineStmt();
-          ASTSubroutineNameNode _subroutineName = _subroutineStmt.getSubroutineName();
-          Token _subroutineName_1 = _subroutineName.getSubroutineName();
-          String _litArgExprByKeyword = ASTQuery.litArgExprByKeyword(registrationCall, "userRoutine");
-          return Boolean.valueOf(ASTQuery.eic(_subroutineName_1, _litArgExprByKeyword));
-        }
+      final Function1<ASTSubroutineSubprogramNode, Boolean> _function_2 = (ASTSubroutineSubprogramNode it) -> {
+        ASTSubroutineStmtNode _subroutineStmt = it.getSubroutineStmt();
+        ASTSubroutineNameNode _subroutineName = _subroutineStmt.getSubroutineName();
+        Token _subroutineName_1 = _subroutineName.getSubroutineName();
+        String _litArgExprByKeyword = ASTQuery.litArgExprByKeyword(registrationCall, "userRoutine");
+        return Boolean.valueOf(ASTQuery.eic(_subroutineName_1, _litArgExprByKeyword));
       };
       final ASTSubroutineSubprogramNode epSubroutine = IterableExtensions.<ASTSubroutineSubprogramNode>findFirst(_findESMFEntryPoints, _function_2);
       boolean _equals_2 = Objects.equal(epSubroutine, null);

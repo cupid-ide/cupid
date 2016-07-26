@@ -4,6 +4,7 @@ import com.google.common.base.Objects;
 import com.google.common.collect.Iterables;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.function.Consumer;
 import org.earthsystemmodeling.cupid.NUOPC.Field;
 import org.earthsystemmodeling.cupid.NUOPC.Grid;
 import org.earthsystemmodeling.cupid.annotation.Label;
@@ -24,7 +25,6 @@ import org.eclipse.xtext.xbase.lib.CollectionLiterals;
 import org.eclipse.xtext.xbase.lib.Exceptions;
 import org.eclipse.xtext.xbase.lib.Functions.Function1;
 import org.eclipse.xtext.xbase.lib.IterableExtensions;
-import org.eclipse.xtext.xbase.lib.Procedures.Procedure1;
 
 @SuppressWarnings("all")
 public class NUOPCBaseModel {
@@ -58,29 +58,23 @@ public class NUOPCBaseModel {
         ASTSubroutineSubprogramNode _aSTRef = this._parent.getASTRef();
         IASTListNode<IBodyConstruct> _body = _aSTRef.getBody();
         Iterable<ASTCallStmtNode> _filter = Iterables.<ASTCallStmtNode>filter(_body, ASTCallStmtNode.class);
-        final Function1<ASTCallStmtNode, Boolean> _function = new Function1<ASTCallStmtNode, Boolean>() {
-          @Override
-          public Boolean apply(final ASTCallStmtNode c) {
-            Token _subroutineName = c.getSubroutineName();
-            return Boolean.valueOf(ASTQuery.eic(_subroutineName, "NUOPC_Advertise"));
-          }
+        final Function1<ASTCallStmtNode, Boolean> _function = (ASTCallStmtNode c) -> {
+          Token _subroutineName = c.getSubroutineName();
+          return Boolean.valueOf(ASTQuery.eic(_subroutineName, "NUOPC_Advertise"));
         };
         Iterable<ASTCallStmtNode> _filter_1 = IterableExtensions.<ASTCallStmtNode>filter(_filter, _function);
-        final Procedure1<ASTCallStmtNode> _function_1 = new Procedure1<ASTCallStmtNode>() {
-          @Override
-          public void apply(final ASTCallStmtNode it) {
-            NUOPCBaseModel.AdvertiseField advField = new NUOPCBaseModel.AdvertiseField(AdvertiseField.this._parent);
-            String _litArgExprByIdx = ASTQuery.litArgExprByIdx(it, 0);
-            advField.state = _litArgExprByIdx;
-            String _litArgExprByIdx_1 = ASTQuery.litArgExprByIdx(it, 1);
-            advField.standardName = _litArgExprByIdx_1;
-            String _litArgExprByKeyword = ASTQuery.litArgExprByKeyword(it, "name");
-            advField.name = _litArgExprByKeyword;
-            advField.setASTRef(it);
-            retList.add(advField);
-          }
+        final Consumer<ASTCallStmtNode> _function_1 = (ASTCallStmtNode it) -> {
+          NUOPCBaseModel.AdvertiseField advField = new NUOPCBaseModel.AdvertiseField(this._parent);
+          String _litArgExprByIdx = ASTQuery.litArgExprByIdx(it, 0);
+          advField.state = _litArgExprByIdx;
+          String _litArgExprByIdx_1 = ASTQuery.litArgExprByIdx(it, 1);
+          advField.standardName = _litArgExprByIdx_1;
+          String _litArgExprByKeyword = ASTQuery.litArgExprByKeyword(it, "name");
+          advField.name = _litArgExprByKeyword;
+          advField.setASTRef(it);
+          retList.add(advField);
         };
-        IterableExtensions.<ASTCallStmtNode>forEach(_filter_1, _function_1);
+        _filter_1.forEach(_function_1);
         _xblockexpression = retList;
       }
       return _xblockexpression;
@@ -159,27 +153,21 @@ public class NUOPCBaseModel {
         ASTSubroutineSubprogramNode _aSTRef = this._parent.getASTRef();
         IASTListNode<IBodyConstruct> _body = _aSTRef.getBody();
         Iterable<ASTCallStmtNode> _filter = Iterables.<ASTCallStmtNode>filter(_body, ASTCallStmtNode.class);
-        final Function1<ASTCallStmtNode, Boolean> _function = new Function1<ASTCallStmtNode, Boolean>() {
-          @Override
-          public Boolean apply(final ASTCallStmtNode c) {
-            Token _subroutineName = c.getSubroutineName();
-            return Boolean.valueOf(ASTQuery.eic(_subroutineName, "NUOPC_Realize"));
-          }
+        final Function1<ASTCallStmtNode, Boolean> _function = (ASTCallStmtNode c) -> {
+          Token _subroutineName = c.getSubroutineName();
+          return Boolean.valueOf(ASTQuery.eic(_subroutineName, "NUOPC_Realize"));
         };
         Iterable<ASTCallStmtNode> _filter_1 = IterableExtensions.<ASTCallStmtNode>filter(_filter, _function);
-        final Procedure1<ASTCallStmtNode> _function_1 = new Procedure1<ASTCallStmtNode>() {
-          @Override
-          public void apply(final ASTCallStmtNode it) {
-            NUOPCBaseModel.RealizeField relField = new NUOPCBaseModel.RealizeField(RealizeField.this._parent);
-            String _litArgExprByIdx = ASTQuery.litArgExprByIdx(it, 0);
-            relField.state = _litArgExprByIdx;
-            String _litArgExprByIdx_1 = ASTQuery.litArgExprByIdx(it, 1);
-            relField.field = _litArgExprByIdx_1;
-            relField.setASTRef(it);
-            retList.add(relField);
-          }
+        final Consumer<ASTCallStmtNode> _function_1 = (ASTCallStmtNode it) -> {
+          NUOPCBaseModel.RealizeField relField = new NUOPCBaseModel.RealizeField(this._parent);
+          String _litArgExprByIdx = ASTQuery.litArgExprByIdx(it, 0);
+          relField.state = _litArgExprByIdx;
+          String _litArgExprByIdx_1 = ASTQuery.litArgExprByIdx(it, 1);
+          relField.field = _litArgExprByIdx_1;
+          relField.setASTRef(it);
+          retList.add(relField);
         };
-        IterableExtensions.<ASTCallStmtNode>forEach(_filter_1, _function_1);
+        _filter_1.forEach(_function_1);
         _xblockexpression = retList;
       }
       return _xblockexpression;
@@ -190,29 +178,7 @@ public class NUOPCBaseModel {
       try {
         CodeConcept<?, ?> _xblockexpression = null;
         {
-          boolean _or = false;
-          boolean _or_1 = false;
-          boolean _or_2 = false;
-          boolean _equals = Objects.equal(this.field, null);
-          if (_equals) {
-            _or_2 = true;
-          } else {
-            boolean _equals_1 = Objects.equal(this.fieldName, null);
-            _or_2 = _equals_1;
-          }
-          if (_or_2) {
-            _or_1 = true;
-          } else {
-            boolean _equals_2 = Objects.equal(this.grid, null);
-            _or_1 = _equals_2;
-          }
-          if (_or_1) {
-            _or = true;
-          } else {
-            boolean _equals_3 = Objects.equal(this.state, null);
-            _or = _equals_3;
-          }
-          if (_or) {
+          if ((((Objects.equal(this.field, null) || Objects.equal(this.fieldName, null)) || Objects.equal(this.grid, null)) || Objects.equal(this.state, null))) {
             throw new CodeGenerationException("Missing parameters required to generate Realize Field.");
           }
           final ASTSubroutineSubprogramNode ssn = this._parent.getASTRef();

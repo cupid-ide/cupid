@@ -151,11 +151,8 @@ public class MakefileGenerator {
         _builder.append(".o ");
         {
           EList<Component> _allChildren = app.getAllChildren();
-          final Function1<Component, Boolean> _function = new Function1<Component, Boolean>() {
-            @Override
-            public Boolean apply(final Component it) {
-              return Boolean.valueOf((!(it instanceof Connector)));
-            }
+          final Function1<Component, Boolean> _function = (Component it) -> {
+            return Boolean.valueOf((!(it instanceof Connector)));
           };
           Iterable<Component> _filter = IterableExtensions.<Component>filter(_allChildren, _function);
           boolean _hasElements = false;
@@ -210,11 +207,8 @@ public class MakefileGenerator {
                 _builder.append(".o:  ");
                 {
                   EList<Component> _children_3 = d_1.getChildren();
-                  final Function1<Component, Boolean> _function_1 = new Function1<Component, Boolean>() {
-                    @Override
-                    public Boolean apply(final Component it) {
-                      return Boolean.valueOf((!(it instanceof Connector)));
-                    }
+                  final Function1<Component, Boolean> _function_1 = (Component it) -> {
+                    return Boolean.valueOf((!(it instanceof Connector)));
                   };
                   Iterable<Component> _filter_3 = IterableExtensions.<Component>filter(_children_3, _function_1);
                   boolean _hasElements_2 = false;

@@ -81,12 +81,9 @@ public class Task<C extends CodeConcept<?, ?>> {
     {
       Class<? extends Function0> _class = this.bindingFunc.getClass();
       Method[] _methods = _class.getMethods();
-      final Function1<Method, Boolean> _function = new Function1<Method, Boolean>() {
-        @Override
-        public Boolean apply(final Method m) {
-          String _name = m.getName();
-          return Boolean.valueOf(_name.equals("apply"));
-        }
+      final Function1<Method, Boolean> _function = (Method m) -> {
+        String _name = m.getName();
+        return Boolean.valueOf(_name.equals("apply"));
       };
       final Method method = IterableExtensions.<Method>findFirst(((Iterable<Method>)Conversions.doWrapArray(_methods)), _function);
       final Type returnType = method.getGenericReturnType();

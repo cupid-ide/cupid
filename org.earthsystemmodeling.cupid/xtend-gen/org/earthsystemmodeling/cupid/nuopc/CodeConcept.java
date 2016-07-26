@@ -11,6 +11,7 @@ import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
+import java.util.function.Consumer;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import org.apache.commons.io.IOUtils;
@@ -58,7 +59,6 @@ import org.eclipse.xtext.xbase.lib.Conversions;
 import org.eclipse.xtext.xbase.lib.Exceptions;
 import org.eclipse.xtext.xbase.lib.Functions.Function1;
 import org.eclipse.xtext.xbase.lib.IterableExtensions;
-import org.eclipse.xtext.xbase.lib.Procedures.Procedure1;
 import org.eclipse.xtext.xbase.lib.Pure;
 
 @SuppressWarnings("all")
@@ -160,12 +160,9 @@ public abstract class CodeConcept<P extends CodeConcept<?, ?>, A extends IASTNod
   public void setOrAddChild(final CodeConcept<?, ?> child, final boolean failIfMissing) {
     try {
       List<Field> _childFields = this.getChildFields();
-      final Function1<Field, Boolean> _function = new Function1<Field, Boolean>() {
-        @Override
-        public Boolean apply(final Field it) {
-          Class<?> _type = it.getType();
-          return Boolean.valueOf(_type.isInstance(child));
-        }
+      final Function1<Field, Boolean> _function = (Field it) -> {
+        Class<?> _type = it.getType();
+        return Boolean.valueOf(_type.isInstance(child));
       };
       Field childField = IterableExtensions.<Field>findFirst(_childFields, _function);
       boolean _notEquals = (!Objects.equal(childField, null));
@@ -173,36 +170,33 @@ public abstract class CodeConcept<P extends CodeConcept<?, ?>, A extends IASTNod
         childField.set(this, child);
       } else {
         List<Field> _childFields_1 = this.getChildFields();
-        final Function1<Field, Boolean> _function_1 = new Function1<Field, Boolean>() {
-          @Override
-          public Boolean apply(final Field it) {
-            boolean _and = false;
-            Class<?> _type = it.getType();
-            boolean _equals = Objects.equal(_type, List.class);
-            if (!_equals) {
-              _and = false;
-            } else {
-              boolean _xblockexpression = false;
-              {
-                Type _genericType = it.getGenericType();
-                final ParameterizedType ptype = ((ParameterizedType) _genericType);
-                Type[] _actualTypeArguments = ptype.getActualTypeArguments();
-                Type _get = _actualTypeArguments[0];
-                final Class<?> clazz = ((Class<?>) _get);
-                boolean _xifexpression = false;
-                Class<? extends CodeConcept> _class = child.getClass();
-                boolean _equals_1 = Objects.equal(clazz, _class);
-                if (_equals_1) {
-                  _xifexpression = true;
-                } else {
-                  _xifexpression = false;
-                }
-                _xblockexpression = _xifexpression;
+        final Function1<Field, Boolean> _function_1 = (Field it) -> {
+          boolean _and = false;
+          Class<?> _type = it.getType();
+          boolean _equals = Objects.equal(_type, List.class);
+          if (!_equals) {
+            _and = false;
+          } else {
+            boolean _xblockexpression = false;
+            {
+              Type _genericType = it.getGenericType();
+              final ParameterizedType ptype = ((ParameterizedType) _genericType);
+              Type[] _actualTypeArguments = ptype.getActualTypeArguments();
+              Type _get = _actualTypeArguments[0];
+              final Class<?> clazz = ((Class<?>) _get);
+              boolean _xifexpression = false;
+              Class<? extends CodeConcept> _class = child.getClass();
+              boolean _equals_1 = Objects.equal(clazz, _class);
+              if (_equals_1) {
+                _xifexpression = true;
+              } else {
+                _xifexpression = false;
               }
-              _and = _xblockexpression;
+              _xblockexpression = _xifexpression;
             }
-            return Boolean.valueOf(_and);
+            _and = _xblockexpression;
           }
+          return Boolean.valueOf(_and);
         };
         Field _findFirst = IterableExtensions.<Field>findFirst(_childFields_1, _function_1);
         childField = _findFirst;
@@ -303,32 +297,13 @@ public abstract class CodeConcept<P extends CodeConcept<?, ?>, A extends IASTNod
         if (_equals) {
           Object _get = f.get(this);
           List<CodeConcept<?, ?>> lst = ((List<CodeConcept<?, ?>>) _get);
-          boolean _and = false;
-          boolean _equals_1 = Objects.equal(lst, null);
-          if (!_equals_1) {
-            _and = false;
-          } else {
-            int _min = childAnn.min();
-            boolean _greaterThan = (_min > 0);
-            _and = _greaterThan;
-          }
-          if (_and) {
+          if ((Objects.equal(lst, null) && (childAnn.min() > 0))) {
             String _name = f.getName();
             String _plus = ("Min cardinality not satisfied for field " + _name);
             errors.add(_plus);
             return false;
           } else {
-            boolean _and_1 = false;
-            boolean _notEquals = (!Objects.equal(lst, null));
-            if (!_notEquals) {
-              _and_1 = false;
-            } else {
-              int _size = lst.size();
-              int _min_1 = childAnn.min();
-              boolean _lessThan = (_size < _min_1);
-              _and_1 = _lessThan;
-            }
-            if (_and_1) {
+            if (((!Objects.equal(lst, null)) && (lst.size() < childAnn.min()))) {
               String _name_1 = f.getName();
               String _plus_1 = ("Min cardinality not satisfied for field " + _name_1);
               errors.add(_plus_1);
@@ -343,24 +318,15 @@ public abstract class CodeConcept<P extends CodeConcept<?, ?>, A extends IASTNod
             Object _get_1 = f.get(this);
             CodeConcept<?, ?> obj = ((CodeConcept<?, ?>) _get_1);
             boolean _xifexpression_1 = false;
-            boolean _and_2 = false;
-            boolean _equals_2 = Objects.equal(obj, null);
-            if (!_equals_2) {
-              _and_2 = false;
-            } else {
-              int _min_2 = childAnn.min();
-              boolean _greaterThan_1 = (_min_2 > 0);
-              _and_2 = _greaterThan_1;
-            }
-            if (_and_2) {
+            if ((Objects.equal(obj, null) && (childAnn.min() > 0))) {
               String _name_2 = f.getName();
               String _plus_2 = ("Min cardinality not satisfied for field " + _name_2);
               errors.add(_plus_2);
               return false;
             } else {
               boolean _xifexpression_2 = false;
-              boolean _notEquals_1 = (!Objects.equal(obj, null));
-              if (_notEquals_1) {
+              boolean _notEquals = (!Objects.equal(obj, null));
+              if (_notEquals) {
                 return obj.validate(errors);
               } else {
                 _xifexpression_2 = true;
@@ -420,14 +386,7 @@ public abstract class CodeConcept<P extends CodeConcept<?, ?>, A extends IASTNod
       _xifexpression = this._ast;
     } else {
       IFortranAST _xifexpression_1 = null;
-      boolean _and = false;
-      boolean _notEquals_1 = (!Objects.equal(this._context, null));
-      if (!_notEquals_1) {
-        _and = false;
-      } else {
-        _and = (this._context instanceof IFile);
-      }
-      if (_and) {
+      if (((!Objects.equal(this._context, null)) && (this._context instanceof IFile))) {
         IFortranAST _xblockexpression = null;
         {
           PhotranVPG _instance = PhotranVPG.getInstance();
@@ -479,25 +438,13 @@ public abstract class CodeConcept<P extends CodeConcept<?, ?>, A extends IASTNod
           } else {
             Object _get_1 = field.get(this);
             CodeConcept<?, ?> childConcept = ((CodeConcept<?, ?>) _get_1);
-            boolean _and = false;
-            boolean _equals = Objects.equal(childConcept, null);
-            if (!_equals) {
-              _and = false;
-            } else {
-              Child _annotation = field.<Child>getAnnotation(Child.class);
-              boolean _forward = _annotation.forward();
-              _and = _forward;
-            }
-            if (_and) {
+            if ((Objects.equal(childConcept, null) && field.<Child>getAnnotation(Child.class).forward())) {
               Class<?> _type_1 = field.getType();
               Constructor<?>[] _constructors = _type_1.getConstructors();
-              final Function1<Constructor<?>, Boolean> _function = new Function1<Constructor<?>, Boolean>() {
-                @Override
-                public Boolean apply(final Constructor<?> it) {
-                  Class<?>[] _parameterTypes = it.getParameterTypes();
-                  int _length = _parameterTypes.length;
-                  return Boolean.valueOf((_length == 1));
-                }
+              final Function1<Constructor<?>, Boolean> _function = (Constructor<?> it) -> {
+                Class<?>[] _parameterTypes = it.getParameterTypes();
+                int _length = _parameterTypes.length;
+                return Boolean.valueOf((_length == 1));
               };
               Constructor<?> con = IterableExtensions.<Constructor<?>>findFirst(((Iterable<Constructor<?>>)Conversions.doWrapArray(_constructors)), _function);
               boolean _notEquals_1 = (!Objects.equal(con, null));
@@ -516,8 +463,8 @@ public abstract class CodeConcept<P extends CodeConcept<?, ?>, A extends IASTNod
             }
             boolean _notEquals_2 = (!Objects.equal(childConcept, null));
             if (_notEquals_2) {
-              CodeConcept<?, ?> _forward_1 = childConcept.<CodeConcept<?, ?>>forward();
-              field.set(this, _forward_1);
+              CodeConcept<?, ?> _forward = childConcept.<CodeConcept<?, ?>>forward();
+              field.set(this, _forward);
             }
           }
         }
@@ -564,14 +511,7 @@ public abstract class CodeConcept<P extends CodeConcept<?, ?>, A extends IASTNod
    */
   public void applyChanges(final IProgressMonitor monitor) {
     try {
-      boolean _or = false;
-      boolean _equals = Objects.equal(this._context, null);
-      if (_equals) {
-        _or = true;
-      } else {
-        _or = (!(this._context instanceof IFile));
-      }
-      if (_or) {
+      if ((Objects.equal(this._context, null) || (!(this._context instanceof IFile)))) {
         this._parent.applyChanges(monitor);
         return;
       }
@@ -600,49 +540,43 @@ public abstract class CodeConcept<P extends CodeConcept<?, ?>, A extends IASTNod
       final RangeDifference[] diffs = RangeDifferencer.findDifferences(left, right);
       file.deleteMarkers("org.earthsystemmodeling.cupid.cupidmarker", false, IResource.DEPTH_ZERO);
       file.deleteMarkers("org.earthsystemmodeling.cupid.cupidparam", false, IResource.DEPTH_ZERO);
-      final Procedure1<RangeDifference> _function = new Procedure1<RangeDifference>() {
-        @Override
-        public void apply(final RangeDifference rd) {
-          try {
-            int _rightStart = rd.rightStart();
-            final int start = right.getTokenStart(_rightStart);
-            int _rightEnd = rd.rightEnd();
-            int _tokenStart = right.getTokenStart(_rightEnd);
-            int _rightEnd_1 = rd.rightEnd();
-            int _tokenLength = right.getTokenLength(_rightEnd_1);
-            final int end = (_tokenStart + _tokenLength);
-            if (((end - start) > 2)) {
-              final IMarker marker = file.createMarker("org.earthsystemmodeling.cupid.cupidmarker");
-              marker.setAttribute(IMarker.CHAR_START, start);
-              marker.setAttribute(IMarker.CHAR_END, end);
-              marker.setAttribute(IMarker.MESSAGE, "Cupid generated code");
-              int _rightStart_1 = rd.rightStart();
-              String _plus = ("Lines " + Integer.valueOf(_rightStart_1));
-              String _plus_1 = (_plus + " to ");
-              int _rightEnd_2 = rd.rightEnd();
-              String _plus_2 = (_plus_1 + Integer.valueOf(_rightEnd_2));
-              marker.setAttribute(IMarker.LOCATION, _plus_2);
-            }
-          } catch (Throwable _e) {
-            throw Exceptions.sneakyThrow(_e);
+      final Consumer<RangeDifference> _function = (RangeDifference rd) -> {
+        try {
+          int _rightStart = rd.rightStart();
+          final int start = right.getTokenStart(_rightStart);
+          int _rightEnd = rd.rightEnd();
+          int _tokenStart = right.getTokenStart(_rightEnd);
+          int _rightEnd_1 = rd.rightEnd();
+          int _tokenLength = right.getTokenLength(_rightEnd_1);
+          final int end = (_tokenStart + _tokenLength);
+          if (((end - start) > 2)) {
+            final IMarker marker = file.createMarker("org.earthsystemmodeling.cupid.cupidmarker");
+            marker.setAttribute(IMarker.CHAR_START, start);
+            marker.setAttribute(IMarker.CHAR_END, end);
+            marker.setAttribute(IMarker.MESSAGE, "Cupid generated code");
+            int _rightStart_1 = rd.rightStart();
+            String _plus = ("Lines " + Integer.valueOf(_rightStart_1));
+            String _plus_1 = (_plus + " to ");
+            int _rightEnd_2 = rd.rightEnd();
+            String _plus_2 = (_plus_1 + Integer.valueOf(_rightEnd_2));
+            marker.setAttribute(IMarker.LOCATION, _plus_2);
           }
+        } catch (Throwable _e) {
+          throw Exceptions.sneakyThrow(_e);
         }
       };
-      IterableExtensions.<RangeDifference>forEach(((Iterable<RangeDifference>)Conversions.doWrapArray(diffs)), _function);
-      final Procedure1<CodeConcept.MarkerLoc> _function_1 = new Procedure1<CodeConcept.MarkerLoc>() {
-        @Override
-        public void apply(final CodeConcept.MarkerLoc ml) {
-          try {
-            final IMarker marker = file.createMarker("org.earthsystemmodeling.cupid.cupidparam");
-            marker.setAttribute(IMarker.CHAR_START, ml.start);
-            marker.setAttribute(IMarker.CHAR_END, ml.end);
-            marker.setAttribute(IMarker.MESSAGE, "Generated parameter");
-          } catch (Throwable _e) {
-            throw Exceptions.sneakyThrow(_e);
-          }
+      ((List<RangeDifference>)Conversions.doWrapArray(diffs)).forEach(_function);
+      final Consumer<CodeConcept.MarkerLoc> _function_1 = (CodeConcept.MarkerLoc ml) -> {
+        try {
+          final IMarker marker = file.createMarker("org.earthsystemmodeling.cupid.cupidparam");
+          marker.setAttribute(IMarker.CHAR_START, ml.start);
+          marker.setAttribute(IMarker.CHAR_END, ml.end);
+          marker.setAttribute(IMarker.MESSAGE, "Generated parameter");
+        } catch (Throwable _e) {
+          throw Exceptions.sneakyThrow(_e);
         }
       };
-      IterableExtensions.<CodeConcept.MarkerLoc>forEach(this.paramMarkers, _function_1);
+      this.paramMarkers.forEach(_function_1);
     } catch (Throwable _e) {
       throw Exceptions.sneakyThrow(_e);
     }
@@ -691,13 +625,10 @@ public abstract class CodeConcept<P extends CodeConcept<?, ?>, A extends IASTNod
       if (_equals) {
         Class<? extends CodeConcept> _class = this.getClass();
         Constructor<?>[] _constructors = _class.getConstructors();
-        final Function1<Constructor<?>, Boolean> _function = new Function1<Constructor<?>, Boolean>() {
-          @Override
-          public Boolean apply(final Constructor<?> it) {
-            Class<?>[] _parameterTypes = it.getParameterTypes();
-            int _length = _parameterTypes.length;
-            return Boolean.valueOf((_length == 1));
-          }
+        final Function1<Constructor<?>, Boolean> _function = (Constructor<?> it) -> {
+          Class<?>[] _parameterTypes = it.getParameterTypes();
+          int _length = _parameterTypes.length;
+          return Boolean.valueOf((_length == 1));
         };
         Constructor<?> _findFirst = IterableExtensions.<Constructor<?>>findFirst(((Iterable<Constructor<?>>)Conversions.doWrapArray(_constructors)), _function);
         this.instanceConstructor = _findFirst;
@@ -722,15 +653,7 @@ public abstract class CodeConcept<P extends CodeConcept<?, ?>, A extends IASTNod
   
   public CharSequence paramch(final String defaultVal) {
     CharSequence _xifexpression = null;
-    boolean _and = false;
-    boolean _startsWith = defaultVal.startsWith("\'");
-    if (!_startsWith) {
-      _and = false;
-    } else {
-      boolean _endsWith = defaultVal.endsWith("\'");
-      _and = _endsWith;
-    }
-    if (_and) {
+    if ((defaultVal.startsWith("\'") && defaultVal.endsWith("\'"))) {
       StringConcatenation _builder = new StringConcatenation();
       _builder.append("\'CUPIDPARAM$CHAR$");
       int _length = defaultVal.length();
@@ -741,15 +664,7 @@ public abstract class CodeConcept<P extends CodeConcept<?, ?>, A extends IASTNod
       return _builder.toString();
     } else {
       CharSequence _xifexpression_1 = null;
-      boolean _and_1 = false;
-      boolean _startsWith_1 = defaultVal.startsWith("\"");
-      if (!_startsWith_1) {
-        _and_1 = false;
-      } else {
-        boolean _endsWith_1 = defaultVal.endsWith("\"");
-        _and_1 = _endsWith_1;
-      }
-      if (_and_1) {
+      if ((defaultVal.startsWith("\"") && defaultVal.endsWith("\""))) {
         StringConcatenation _builder_1 = new StringConcatenation();
         _builder_1.append("\"CUPIDPARAM$CHAR$");
         int _length_1 = defaultVal.length();
@@ -825,31 +740,25 @@ public abstract class CodeConcept<P extends CodeConcept<?, ?>, A extends IASTNod
       final String varName = _objectName_1.getText();
       IASTListNode<IBodyConstruct> _body = ssn.getBody();
       Iterable<ASTTypeDeclarationStmtNode> _filter = Iterables.<ASTTypeDeclarationStmtNode>filter(_body, ASTTypeDeclarationStmtNode.class);
-      final Function1<ASTTypeDeclarationStmtNode, Boolean> _function = new Function1<ASTTypeDeclarationStmtNode, Boolean>() {
-        @Override
-        public Boolean apply(final ASTTypeDeclarationStmtNode t) {
-          IASTListNode<ASTEntityDeclNode> _entityDeclList = t.getEntityDeclList();
-          boolean _exists = false;
-          if (_entityDeclList!=null) {
-            final Function1<ASTEntityDeclNode, Boolean> _function = new Function1<ASTEntityDeclNode, Boolean>() {
-              @Override
-              public Boolean apply(final ASTEntityDeclNode e) {
-                ASTObjectNameNode _objectName = e.getObjectName();
-                Token _objectName_1 = null;
-                if (_objectName!=null) {
-                  _objectName_1=_objectName.getObjectName();
-                }
-                boolean _eic = false;
-                if (_objectName_1!=null) {
-                  _eic=ASTQuery.eic(_objectName_1, varName);
-                }
-                return Boolean.valueOf(_eic);
-              }
-            };
-            _exists=IterableExtensions.<ASTEntityDeclNode>exists(_entityDeclList, _function);
-          }
-          return Boolean.valueOf(_exists);
+      final Function1<ASTTypeDeclarationStmtNode, Boolean> _function = (ASTTypeDeclarationStmtNode t) -> {
+        IASTListNode<ASTEntityDeclNode> _entityDeclList_1 = t.getEntityDeclList();
+        boolean _exists = false;
+        if (_entityDeclList_1!=null) {
+          final Function1<ASTEntityDeclNode, Boolean> _function_1 = (ASTEntityDeclNode e) -> {
+            ASTObjectNameNode _objectName_2 = e.getObjectName();
+            Token _objectName_3 = null;
+            if (_objectName_2!=null) {
+              _objectName_3=_objectName_2.getObjectName();
+            }
+            boolean _eic = false;
+            if (_objectName_3!=null) {
+              _eic=ASTQuery.eic(_objectName_3, varName);
+            }
+            return Boolean.valueOf(_eic);
+          };
+          _exists=IterableExtensions.<ASTEntityDeclNode>exists(_entityDeclList_1, _function_1);
         }
+        return Boolean.valueOf(_exists);
       };
       final ASTTypeDeclarationStmtNode existing = IterableExtensions.<ASTTypeDeclarationStmtNode>findFirst(_filter, _function);
       boolean _notEquals = (!Objects.equal(existing, null));
@@ -881,21 +790,9 @@ public abstract class CodeConcept<P extends CodeConcept<?, ?>, A extends IASTNod
     Set<ASTRenameNode> _findAll = usn.<ASTRenameNode>findAll(ASTRenameNode.class);
     boolean _exists = false;
     if (_findAll!=null) {
-      final Function1<ASTRenameNode, Boolean> _function = new Function1<ASTRenameNode, Boolean>() {
-        @Override
-        public Boolean apply(final ASTRenameNode rn) {
-          boolean _and = false;
-          Token _name = rn.getName();
-          boolean _eic = ASTQuery.eic(_name, entityName);
-          if (!_eic) {
-            _and = false;
-          } else {
-            Token _newName = rn.getNewName();
-            boolean _eic_1 = ASTQuery.eic(_newName, localName);
-            _and = _eic_1;
-          }
-          return Boolean.valueOf(_and);
-        }
+      final Function1<ASTRenameNode, Boolean> _function = (ASTRenameNode rn) -> {
+        return Boolean.valueOf((ASTQuery.eic(rn.getName(), entityName) && 
+          ASTQuery.eic(rn.getNewName(), localName)));
       };
       _exists=IterableExtensions.<ASTRenameNode>exists(_findAll, _function);
     }
@@ -905,21 +802,9 @@ public abstract class CodeConcept<P extends CodeConcept<?, ?>, A extends IASTNod
       Set<ASTOnlyNode> _findAll_1 = usn.<ASTOnlyNode>findAll(ASTOnlyNode.class);
       boolean _exists_1 = false;
       if (_findAll_1!=null) {
-        final Function1<ASTOnlyNode, Boolean> _function_1 = new Function1<ASTOnlyNode, Boolean>() {
-          @Override
-          public Boolean apply(final ASTOnlyNode on) {
-            boolean _and = false;
-            Token _name = on.getName();
-            boolean _eic = ASTQuery.eic(_name, entityName);
-            if (!_eic) {
-              _and = false;
-            } else {
-              Token _newName = on.getNewName();
-              boolean _eic_1 = ASTQuery.eic(_newName, localName);
-              _and = _eic_1;
-            }
-            return Boolean.valueOf(_and);
-          }
+        final Function1<ASTOnlyNode, Boolean> _function_1 = (ASTOnlyNode on) -> {
+          return Boolean.valueOf((ASTQuery.eic(on.getName(), entityName) && 
+            ASTQuery.eic(on.getNewName(), localName)));
         };
         _exists_1=IterableExtensions.<ASTOnlyNode>exists(_findAll_1, _function_1);
       }
@@ -928,17 +813,8 @@ public abstract class CodeConcept<P extends CodeConcept<?, ?>, A extends IASTNod
     if (_or_1) {
       _or = true;
     } else {
-      boolean _and = false;
-      Set<ASTRenameNode> _findAll_2 = usn.<ASTRenameNode>findAll(ASTRenameNode.class);
-      boolean _isNullOrEmpty = IterableExtensions.isNullOrEmpty(_findAll_2);
-      if (!_isNullOrEmpty) {
-        _and = false;
-      } else {
-        Set<ASTOnlyNode> _findAll_3 = usn.<ASTOnlyNode>findAll(ASTOnlyNode.class);
-        boolean _isNullOrEmpty_1 = IterableExtensions.isNullOrEmpty(_findAll_3);
-        _and = _isNullOrEmpty_1;
-      }
-      _or = _and;
+      _or = (IterableExtensions.isNullOrEmpty(usn.<ASTRenameNode>findAll(ASTRenameNode.class)) && 
+        IterableExtensions.isNullOrEmpty(usn.<ASTOnlyNode>findAll(ASTOnlyNode.class)));
     }
     final boolean exists = _or;
     if ((!exists)) {
@@ -968,12 +844,9 @@ public abstract class CodeConcept<P extends CodeConcept<?, ?>, A extends IASTNod
       IASTListNode<? extends IASTNode> _body = amn.getBody();
       Iterable<? extends IASTNode> _children = _body.getChildren();
       Iterable<ASTUseStmtNode> _filter = Iterables.<ASTUseStmtNode>filter(_children, ASTUseStmtNode.class);
-      final Function1<ASTUseStmtNode, Boolean> _function = new Function1<ASTUseStmtNode, Boolean>() {
-        @Override
-        public Boolean apply(final ASTUseStmtNode usn) {
-          Token _name = usn.getName();
-          return Boolean.valueOf(ASTQuery.eic(_name, moduleName));
-        }
+      final Function1<ASTUseStmtNode, Boolean> _function = (ASTUseStmtNode usn) -> {
+        Token _name = usn.getName();
+        return Boolean.valueOf(ASTQuery.eic(_name, moduleName));
       };
       ASTUseStmtNode usn = IterableExtensions.<ASTUseStmtNode>findFirst(_filter, _function);
       boolean _notEquals = (!Objects.equal(usn, null));
@@ -984,15 +857,7 @@ public abstract class CodeConcept<P extends CodeConcept<?, ?>, A extends IASTNod
         _builder.append("use ");
         _builder.append(moduleName, "");
         {
-          boolean _and = false;
-          boolean _notEquals_1 = (!Objects.equal(localName, null));
-          if (!_notEquals_1) {
-            _and = false;
-          } else {
-            boolean _notEquals_2 = (!Objects.equal(entityName, null));
-            _and = _notEquals_2;
-          }
-          if (_and) {
+          if (((!Objects.equal(localName, null)) && (!Objects.equal(entityName, null)))) {
             _builder.append(", ");
             {
               if (useOnly) {
@@ -1009,15 +874,15 @@ public abstract class CodeConcept<P extends CodeConcept<?, ?>, A extends IASTNod
         usn = ((ASTUseStmtNode) _parseLiteralStatement);
         IASTListNode<? extends IASTNode> _body_1 = amn.getBody();
         final ASTUseStmtNode last = _body_1.<ASTUseStmtNode>findLast(ASTUseStmtNode.class);
-        boolean _notEquals_3 = (!Objects.equal(last, null));
-        if (_notEquals_3) {
+        boolean _notEquals_1 = (!Objects.equal(last, null));
+        if (_notEquals_1) {
           IASTListNode<? extends IASTNode> _body_2 = amn.getBody();
           ((IASTListNode<IBodyConstruct>) _body_2).insertAfter(last, usn);
         } else {
           IASTListNode<? extends IASTNode> _body_3 = amn.getBody();
           final ISpecificationPartConstruct lastSpec = _body_3.<ISpecificationPartConstruct>findLast(ISpecificationPartConstruct.class);
-          boolean _notEquals_4 = (!Objects.equal(lastSpec, null));
-          if (_notEquals_4) {
+          boolean _notEquals_2 = (!Objects.equal(lastSpec, null));
+          if (_notEquals_2) {
             IASTListNode<? extends IASTNode> _body_4 = amn.getBody();
             ((IASTListNode<IBodyConstruct>) _body_4).insertAfter(lastSpec, usn);
           } else {

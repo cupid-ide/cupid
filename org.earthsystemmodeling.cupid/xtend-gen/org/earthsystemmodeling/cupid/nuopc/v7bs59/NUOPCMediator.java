@@ -4,6 +4,7 @@ import com.google.common.base.Objects;
 import com.google.common.collect.Iterables;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.function.Consumer;
 import org.earthsystemmodeling.cupid.annotation.Child;
 import org.earthsystemmodeling.cupid.annotation.Doc;
 import org.earthsystemmodeling.cupid.annotation.Label;
@@ -29,7 +30,6 @@ import org.eclipse.xtext.xbase.lib.CollectionLiterals;
 import org.eclipse.xtext.xbase.lib.Exceptions;
 import org.eclipse.xtext.xbase.lib.Functions.Function1;
 import org.eclipse.xtext.xbase.lib.IterableExtensions;
-import org.eclipse.xtext.xbase.lib.Procedures.Procedure1;
 
 @Label(label = "NUOPC Mediator")
 @MappingType("module")
@@ -69,11 +69,9 @@ public class NUOPCMediator extends NUOPCComponent {
         String _switchResult = null;
         final NUOPCMediator.IPD _parent = this._parent;
         boolean _matched = false;
-        if (!_matched) {
-          if (_parent instanceof NUOPCMediator.IPDv00) {
-            _matched=true;
-            _switchResult = "IPDv00p1";
-          }
+        if (_parent instanceof NUOPCMediator.IPDv00) {
+          _matched=true;
+          _switchResult = "IPDv00p1";
         }
         if (!_matched) {
           if (_parent instanceof NUOPCMediator.IPDv01) {
@@ -153,11 +151,9 @@ public class NUOPCMediator extends NUOPCComponent {
         String _switchResult = null;
         final NUOPCMediator.IPD _parent = this._parent;
         boolean _matched = false;
-        if (!_matched) {
-          if (_parent instanceof NUOPCMediator.IPDv00) {
-            _matched=true;
-            _switchResult = "IPDv00p2";
-          }
+        if (_parent instanceof NUOPCMediator.IPDv00) {
+          _matched=true;
+          _switchResult = "IPDv00p2";
         }
         if (!_matched) {
           if (_parent instanceof NUOPCMediator.IPDv01) {
@@ -223,11 +219,9 @@ public class NUOPCMediator extends NUOPCComponent {
         String _switchResult = null;
         final NUOPCMediator.IPD _parent = this._parent;
         boolean _matched = false;
-        if (!_matched) {
-          if (_parent instanceof NUOPCMediator.IPDv03) {
-            _matched=true;
-            _switchResult = "IPDv03p4";
-          }
+        if (_parent instanceof NUOPCMediator.IPDv03) {
+          _matched=true;
+          _switchResult = "IPDv03p4";
         }
         if (!_matched) {
           _switchResult = "IPDv04p4";
@@ -273,11 +267,9 @@ public class NUOPCMediator extends NUOPCComponent {
         String _switchResult = null;
         final NUOPCMediator.IPD _parent = this._parent;
         boolean _matched = false;
-        if (!_matched) {
-          if (_parent instanceof NUOPCMediator.IPDv03) {
-            _matched=true;
-            _switchResult = "IPDv03p5";
-          }
+        if (_parent instanceof NUOPCMediator.IPDv03) {
+          _matched=true;
+          _switchResult = "IPDv03p5";
         }
         if (!_matched) {
           _switchResult = "IPDv04p5";
@@ -353,27 +345,21 @@ public class NUOPCMediator extends NUOPCComponent {
           ASTSubroutineSubprogramNode _aSTRef = this._parent.getASTRef();
           IASTListNode<IBodyConstruct> _body = _aSTRef.getBody();
           Iterable<ASTCallStmtNode> _filter = Iterables.<ASTCallStmtNode>filter(_body, ASTCallStmtNode.class);
-          final Function1<ASTCallStmtNode, Boolean> _function = new Function1<ASTCallStmtNode, Boolean>() {
-            @Override
-            public Boolean apply(final ASTCallStmtNode c) {
-              Token _subroutineName = c.getSubroutineName();
-              return Boolean.valueOf(ASTQuery.eic(_subroutineName, "NUOPC_Advertise"));
-            }
+          final Function1<ASTCallStmtNode, Boolean> _function = (ASTCallStmtNode c) -> {
+            Token _subroutineName = c.getSubroutineName();
+            return Boolean.valueOf(ASTQuery.eic(_subroutineName, "NUOPC_Advertise"));
           };
           Iterable<ASTCallStmtNode> _filter_1 = IterableExtensions.<ASTCallStmtNode>filter(_filter, _function);
-          final Procedure1<ASTCallStmtNode> _function_1 = new Procedure1<ASTCallStmtNode>() {
-            @Override
-            public void apply(final ASTCallStmtNode it) {
-              NUOPCMediator.IPD.AdvertiseField advField = new NUOPCMediator.IPD.AdvertiseField(AdvertiseField.this._parent);
-              String _litArgExprByIdx = ASTQuery.litArgExprByIdx(it, 0);
-              advField.state = _litArgExprByIdx;
-              String _litArgExprByIdx_1 = ASTQuery.litArgExprByIdx(it, 1);
-              advField.standardName = _litArgExprByIdx_1;
-              advField.setASTRef(it);
-              retList.add(advField);
-            }
+          final Consumer<ASTCallStmtNode> _function_1 = (ASTCallStmtNode it) -> {
+            NUOPCMediator.IPD.AdvertiseField advField = new NUOPCMediator.IPD.AdvertiseField(this._parent);
+            String _litArgExprByIdx = ASTQuery.litArgExprByIdx(it, 0);
+            advField.state = _litArgExprByIdx;
+            String _litArgExprByIdx_1 = ASTQuery.litArgExprByIdx(it, 1);
+            advField.standardName = _litArgExprByIdx_1;
+            advField.setASTRef(it);
+            retList.add(advField);
           };
-          IterableExtensions.<ASTCallStmtNode>forEach(_filter_1, _function_1);
+          _filter_1.forEach(_function_1);
           _xblockexpression = retList;
         }
         return _xblockexpression;
@@ -438,27 +424,21 @@ public class NUOPCMediator extends NUOPCComponent {
           ASTSubroutineSubprogramNode _aSTRef = this._parent.getASTRef();
           IASTListNode<IBodyConstruct> _body = _aSTRef.getBody();
           Iterable<ASTCallStmtNode> _filter = Iterables.<ASTCallStmtNode>filter(_body, ASTCallStmtNode.class);
-          final Function1<ASTCallStmtNode, Boolean> _function = new Function1<ASTCallStmtNode, Boolean>() {
-            @Override
-            public Boolean apply(final ASTCallStmtNode c) {
-              Token _subroutineName = c.getSubroutineName();
-              return Boolean.valueOf(ASTQuery.eic(_subroutineName, "NUOPC_Realize"));
-            }
+          final Function1<ASTCallStmtNode, Boolean> _function = (ASTCallStmtNode c) -> {
+            Token _subroutineName = c.getSubroutineName();
+            return Boolean.valueOf(ASTQuery.eic(_subroutineName, "NUOPC_Realize"));
           };
           Iterable<ASTCallStmtNode> _filter_1 = IterableExtensions.<ASTCallStmtNode>filter(_filter, _function);
-          final Procedure1<ASTCallStmtNode> _function_1 = new Procedure1<ASTCallStmtNode>() {
-            @Override
-            public void apply(final ASTCallStmtNode it) {
-              NUOPCMediator.IPD.RealizeField relField = new NUOPCMediator.IPD.RealizeField(RealizeField.this._parent);
-              String _litArgExprByIdx = ASTQuery.litArgExprByIdx(it, 0);
-              relField.state = _litArgExprByIdx;
-              String _litArgExprByIdx_1 = ASTQuery.litArgExprByIdx(it, 1);
-              relField.field = _litArgExprByIdx_1;
-              relField.setASTRef(it);
-              retList.add(relField);
-            }
+          final Consumer<ASTCallStmtNode> _function_1 = (ASTCallStmtNode it) -> {
+            NUOPCMediator.IPD.RealizeField relField = new NUOPCMediator.IPD.RealizeField(this._parent);
+            String _litArgExprByIdx = ASTQuery.litArgExprByIdx(it, 0);
+            relField.state = _litArgExprByIdx;
+            String _litArgExprByIdx_1 = ASTQuery.litArgExprByIdx(it, 1);
+            relField.field = _litArgExprByIdx_1;
+            relField.setASTRef(it);
+            retList.add(relField);
           };
-          IterableExtensions.<ASTCallStmtNode>forEach(_filter_1, _function_1);
+          _filter_1.forEach(_function_1);
           _xblockexpression = retList;
         }
         return _xblockexpression;
@@ -740,43 +720,7 @@ public class NUOPCMediator extends NUOPCComponent {
     
     @Override
     public boolean validate(final List<String> errors) {
-      boolean _and = false;
-      boolean _and_1 = false;
-      boolean _notEquals = (!Objects.equal(this.ipdv03p1, null));
-      if (!_notEquals) {
-        _and_1 = false;
-      } else {
-        boolean _validate = this.ipdv03p1.validate(errors);
-        _and_1 = _validate;
-      }
-      if (!_and_1) {
-        _and = false;
-      } else {
-        boolean _or = false;
-        boolean _and_2 = false;
-        boolean _notEquals_1 = (!Objects.equal(this.ipdv03p3, null));
-        if (!_notEquals_1) {
-          _and_2 = false;
-        } else {
-          boolean _validate_1 = this.ipdv03p3.validate(errors);
-          _and_2 = _validate_1;
-        }
-        if (_and_2) {
-          _or = true;
-        } else {
-          boolean _and_3 = false;
-          boolean _notEquals_2 = (!Objects.equal(this.ipdv03p5, null));
-          if (!_notEquals_2) {
-            _and_3 = false;
-          } else {
-            boolean _validate_2 = this.ipdv03p5.validate(errors);
-            _and_3 = _validate_2;
-          }
-          _or = _and_3;
-        }
-        _and = _or;
-      }
-      return _and;
+      return (((!Objects.equal(this.ipdv03p1, null)) && this.ipdv03p1.validate(errors)) && (((!Objects.equal(this.ipdv03p3, null)) && this.ipdv03p3.validate(errors)) || ((!Objects.equal(this.ipdv03p5, null)) && this.ipdv03p5.validate(errors))));
     }
   }
   
@@ -844,43 +788,7 @@ public class NUOPCMediator extends NUOPCComponent {
     
     @Override
     public boolean validate(final List<String> errors) {
-      boolean _and = false;
-      boolean _and_1 = false;
-      boolean _notEquals = (!Objects.equal(this.ipdv04p1, null));
-      if (!_notEquals) {
-        _and_1 = false;
-      } else {
-        boolean _validate = this.ipdv04p1.validate(errors);
-        _and_1 = _validate;
-      }
-      if (!_and_1) {
-        _and = false;
-      } else {
-        boolean _or = false;
-        boolean _and_2 = false;
-        boolean _notEquals_1 = (!Objects.equal(this.ipdv04p3, null));
-        if (!_notEquals_1) {
-          _and_2 = false;
-        } else {
-          boolean _validate_1 = this.ipdv04p3.validate(errors);
-          _and_2 = _validate_1;
-        }
-        if (_and_2) {
-          _or = true;
-        } else {
-          boolean _and_3 = false;
-          boolean _notEquals_2 = (!Objects.equal(this.ipdv04p5, null));
-          if (!_notEquals_2) {
-            _and_3 = false;
-          } else {
-            boolean _validate_2 = this.ipdv04p5.validate(errors);
-            _and_3 = _validate_2;
-          }
-          _or = _and_3;
-        }
-        _and = _or;
-      }
-      return _and;
+      return (((!Objects.equal(this.ipdv04p1, null)) && this.ipdv04p1.validate(errors)) && (((!Objects.equal(this.ipdv04p3, null)) && this.ipdv04p3.validate(errors)) || ((!Objects.equal(this.ipdv04p5, null)) && this.ipdv04p5.validate(errors))));
     }
   }
   
@@ -931,36 +839,11 @@ public class NUOPCMediator extends NUOPCComponent {
     
     @Override
     public boolean validate(final List<String> errors) {
-      boolean _or = false;
-      boolean _or_1 = false;
-      boolean _or_2 = false;
-      boolean _or_3 = false;
-      boolean _validate = this.ipdv00.validate(errors);
-      if (_validate) {
-        _or_3 = true;
-      } else {
-        boolean _validate_1 = this.ipdv01.validate(errors);
-        _or_3 = _validate_1;
-      }
-      if (_or_3) {
-        _or_2 = true;
-      } else {
-        boolean _validate_2 = this.ipdv02.validate(errors);
-        _or_2 = _validate_2;
-      }
-      if (_or_2) {
-        _or_1 = true;
-      } else {
-        boolean _validate_3 = this.ipdv03.validate(errors);
-        _or_1 = _validate_3;
-      }
-      if (_or_1) {
-        _or = true;
-      } else {
-        boolean _validate_4 = this.ipdv04.validate(errors);
-        _or = _validate_4;
-      }
-      return _or;
+      return ((((this.ipdv00.validate(errors) || 
+        this.ipdv01.validate(errors)) || 
+        this.ipdv02.validate(errors)) || 
+        this.ipdv03.validate(errors)) || 
+        this.ipdv04.validate(errors));
     }
   }
   

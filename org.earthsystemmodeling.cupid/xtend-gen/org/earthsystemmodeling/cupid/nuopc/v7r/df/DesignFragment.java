@@ -4,6 +4,7 @@ import com.google.common.base.Objects;
 import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.function.Consumer;
 import org.earthsystemmodeling.cupid.nuopc.CodeConcept;
 import org.earthsystemmodeling.cupid.nuopc.v7r.df.Binding;
 import org.earthsystemmodeling.cupid.nuopc.v7r.df.Task;
@@ -13,7 +14,6 @@ import org.eclipse.xtext.xbase.lib.Conversions;
 import org.eclipse.xtext.xbase.lib.Exceptions;
 import org.eclipse.xtext.xbase.lib.Functions.Function1;
 import org.eclipse.xtext.xbase.lib.IterableExtensions;
-import org.eclipse.xtext.xbase.lib.Procedures.Procedure1;
 import org.eclipse.xtext.xbase.lib.Pure;
 
 @Accessors
@@ -38,14 +38,11 @@ public abstract class DesignFragment {
   }
   
   private void setParent(final List<Task> tasks) {
-    final Procedure1<Task> _function = new Procedure1<Task>() {
-      @Override
-      public void apply(final Task t) {
-        t.designFragment = DesignFragment.this;
-        DesignFragment.this.setParent(t.subTasks);
-      }
+    final Consumer<Task> _function = (Task t) -> {
+      t.designFragment = this;
+      this.setParent(t.subTasks);
     };
-    IterableExtensions.<Task>forEach(tasks, _function);
+    tasks.forEach(_function);
     this.tasks = tasks;
   }
   
@@ -53,21 +50,9 @@ public abstract class DesignFragment {
     try {
       Class<? extends DesignFragment> _class = this.getClass();
       Field[] _fields = _class.getFields();
-      final Function1<Field, Boolean> _function = new Function1<Field, Boolean>() {
-        @Override
-        public Boolean apply(final Field f) {
-          boolean _and = false;
-          Binding _annotation = f.<Binding>getAnnotation(Binding.class);
-          boolean _notEquals = (!Objects.equal(_annotation, null));
-          if (!_notEquals) {
-            _and = false;
-          } else {
-            String _name = f.getName();
-            boolean _equals = _name.equals(name);
-            _and = _equals;
-          }
-          return Boolean.valueOf(_and);
-        }
+      final Function1<Field, Boolean> _function = (Field f) -> {
+        return Boolean.valueOf(((!Objects.equal(f.<Binding>getAnnotation(Binding.class), null)) && 
+          f.getName().equals(name)));
       };
       final Field localField = IterableExtensions.<Field>findFirst(((Iterable<Field>)Conversions.doWrapArray(_fields)), _function);
       localField.set(this, concept);
@@ -86,21 +71,9 @@ public abstract class DesignFragment {
       {
         Class<? extends DesignFragment> _class = this.getClass();
         Field[] _fields = _class.getFields();
-        final Function1<Field, Boolean> _function = new Function1<Field, Boolean>() {
-          @Override
-          public Boolean apply(final Field f) {
-            boolean _and = false;
-            Binding _annotation = f.<Binding>getAnnotation(Binding.class);
-            boolean _notEquals = (!Objects.equal(_annotation, null));
-            if (!_notEquals) {
-              _and = false;
-            } else {
-              String _name = f.getName();
-              boolean _equals = _name.equals(name);
-              _and = _equals;
-            }
-            return Boolean.valueOf(_and);
-          }
+        final Function1<Field, Boolean> _function = (Field f) -> {
+          return Boolean.valueOf(((!Objects.equal(f.<Binding>getAnnotation(Binding.class), null)) && 
+            f.getName().equals(name)));
         };
         final Field localField = IterableExtensions.<Field>findFirst(((Iterable<Field>)Conversions.doWrapArray(_fields)), _function);
         Object _get = localField.get(this);
@@ -117,21 +90,9 @@ public abstract class DesignFragment {
     {
       Class<? extends DesignFragment> _class = this.getClass();
       Field[] _fields = _class.getFields();
-      final Function1<Field, Boolean> _function = new Function1<Field, Boolean>() {
-        @Override
-        public Boolean apply(final Field f) {
-          boolean _and = false;
-          Binding _annotation = f.<Binding>getAnnotation(Binding.class);
-          boolean _notEquals = (!Objects.equal(_annotation, null));
-          if (!_notEquals) {
-            _and = false;
-          } else {
-            String _name = f.getName();
-            boolean _equals = _name.equals(name);
-            _and = _equals;
-          }
-          return Boolean.valueOf(_and);
-        }
+      final Function1<Field, Boolean> _function = (Field f) -> {
+        return Boolean.valueOf(((!Objects.equal(f.<Binding>getAnnotation(Binding.class), null)) && 
+          f.getName().equals(name)));
       };
       final Field localField = IterableExtensions.<Field>findFirst(((Iterable<Field>)Conversions.doWrapArray(_fields)), _function);
       Class<?> _type = localField.getType();
@@ -146,22 +107,16 @@ public abstract class DesignFragment {
       final ArrayList<String> listToReturn = CollectionLiterals.<String>newArrayList();
       Class<? extends DesignFragment> _class = this.getClass();
       Field[] _fields = _class.getFields();
-      final Function1<Field, Boolean> _function = new Function1<Field, Boolean>() {
-        @Override
-        public Boolean apply(final Field f) {
-          Binding _annotation = f.<Binding>getAnnotation(Binding.class);
-          return Boolean.valueOf((!Objects.equal(_annotation, null)));
-        }
+      final Function1<Field, Boolean> _function = (Field f) -> {
+        Binding _annotation = f.<Binding>getAnnotation(Binding.class);
+        return Boolean.valueOf((!Objects.equal(_annotation, null)));
       };
       Iterable<Field> _filter = IterableExtensions.<Field>filter(((Iterable<Field>)Conversions.doWrapArray(_fields)), _function);
-      final Procedure1<Field> _function_1 = new Procedure1<Field>() {
-        @Override
-        public void apply(final Field f) {
-          String _name = f.getName();
-          listToReturn.add(_name);
-        }
+      final Consumer<Field> _function_1 = (Field f) -> {
+        String _name = f.getName();
+        listToReturn.add(_name);
       };
-      IterableExtensions.<Field>forEach(_filter, _function_1);
+      _filter.forEach(_function_1);
       _xblockexpression = listToReturn;
     }
     return _xblockexpression;
