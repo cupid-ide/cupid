@@ -203,7 +203,7 @@
           source="http:/www.eclipse.org/oomph/targlets/TargetDefinitionGenerator">
         <detail
             key="location">
-          <value>${git.clone.location/org.earthsystemmodeling.cupid.targetplatform}</value>
+          <value>${git.clone.location/org.earthsystemmodeling.cupid.targetplatform/org.earthsystemmodeling.cupid.targetplatform.target}</value>
         </detail>
         <detail
             key="singleLocation">
