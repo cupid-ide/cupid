@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <?pde version="3.8"?>
-<target name="Generated from Cupid Development Neon" sequenceNumber="3">
+<target name="Generated from Cupid Development Neon" sequenceNumber="4">
   <locations>
     <location includeAllPlatforms="false" includeConfigurePhase="true" includeMode="planner" includeSource="true" type="InstallableUnit">
       <unit id="org.eclipse.egit.feature.group" version="0.0.0"/>
@@ -13,10 +13,14 @@
       <unit id="org.eclipse.sirius.common.acceleo.aql" version="0.0.0"/>
       <unit id="org.eclipse.swtbot.eclipse.feature.group" version="0.0.0"/>
       <unit id="org.eclipse.swtbot.ide.feature.group" version="0.0.0"/>
-      <unit id="org.eclipse.tracecompass.ctf.feature.group" version="0.0.0"/>
-      <unit id="org.eclipse.tracecompass.tmf.feature.group" version="0.0.0"/>
+      <unit id="org.eclipse.tracecompass.btf.feature.group" version="0.0.0"/>
+      <unit id="org.eclipse.tracecompass.gdbtrace.feature.group" version="0.0.0"/>
+      <unit id="org.eclipse.tracecompass.lttng2.kernel.feature.group" version="0.0.0"/>
+      <unit id="org.eclipse.tracecompass.lttng2.ust.feature.group" version="0.0.0"/>
+      <unit id="org.eclipse.tracecompass.tmf.pcap.feature.group" version="0.0.0"/>
       <unit id="org.eclipse.xtext.sdk.feature.group" version="0.0.0"/>
       <repository location="http://download.eclipse.org/releases/neon"/>
+      <repository location="http://download.eclipse.org/tracecompass/releases/2.0.0/repository/"/>
     </location>
   </locations>
 </target>

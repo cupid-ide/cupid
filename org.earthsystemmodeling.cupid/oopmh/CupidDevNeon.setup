@@ -273,6 +273,10 @@
           name="org.eclipse.tracecompass.lttng2.ust.feature.group"/>
       <requirement
           name="org.eclipse.tracecompass.tmf.pcap.feature.group"/>
+      <requirement
+          name="org.eclipse.tracecompass.tmf.core"/>
+      <requirement
+          name="org.eclipse.tracecompass.tmf.ui"/>
       <sourceLocator
           rootFolder="${git.clone.location}"
           locateNestedProjects="true"/>
