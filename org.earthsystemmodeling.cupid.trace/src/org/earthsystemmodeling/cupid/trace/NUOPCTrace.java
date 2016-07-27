@@ -9,6 +9,9 @@ import java.util.regex.Pattern;
 
 import org.eclipse.tracecompass.tmf.core.event.ITmfEvent;
 import org.eclipse.tracecompass.tmf.core.event.aspect.ITmfEventAspect;
+import org.eclipse.tracecompass.tmf.core.event.aspect.TmfBaseAspects;
+import org.eclipse.tracecompass.tmf.core.event.aspect.TmfEventFieldAspect;
+import org.eclipse.tracecompass.tmf.core.timestamp.ITmfTimestamp;
 import org.eclipse.tracecompass.tmf.core.timestamp.TmfTimestamp;
 import org.eclipse.tracecompass.tmf.core.trace.text.TextTrace;
 import org.eclipse.tracecompass.tmf.core.trace.text.TextTraceEventContent;
@@ -29,7 +32,7 @@ public class NUOPCTrace extends TextTrace<NUOPCTraceEvent> {
 		return pattern;
 	}
 
-	ITmfEventAspect ESMF_LOGMSG_TYPE = new ITmfEventAspect() {
+	ITmfEventAspect<String> ESMF_LOGMSG_TYPE = new ITmfEventAspect<String>() {
         @Override
         public String getName() {
             return "Line Type";
@@ -41,19 +44,19 @@ public class NUOPCTrace extends TextTrace<NUOPCTraceEvent> {
         }
 
         @Override
-        public Object resolve(ITmfEvent event) {
-            return ((NUOPCTraceEvent) event).getContent().getField("logmsg_type").getValue();
+        public String resolve(ITmfEvent event) {
+            return ((NUOPCTraceEvent) event).getContent().getField("logmsg_type").getValue().toString();
         }
     };
 	
 	
 	@Override
-	public Iterable<ITmfEventAspect> getEventAspects() {
+	public Iterable<ITmfEventAspect<?>> getEventAspects() {
 		return ImmutableList.of(
-                ITmfEventAspect.BaseAspects.TIMESTAMP,
-                ESMF_LOGMSG_TYPE,
-                ITmfEventAspect.BaseAspects.EVENT_TYPE,
-                ITmfEventAspect.BaseAspects.CONTENTS
+                TmfBaseAspects.getTimestampAspect(),
+				ESMF_LOGMSG_TYPE,
+                TmfBaseAspects.getEventTypeAspect(),
+                TmfBaseAspects.getContentsAspect()
 				);
 	}
 	
@@ -68,7 +71,7 @@ public class NUOPCTrace extends TextTrace<NUOPCTraceEvent> {
 		} catch (ParseException e) {
 			ts = 0;
 		}
-		TmfTimestamp timestamp = new TmfTimestamp(ts, TmfTimestamp.MILLISECOND_SCALE);
+		ITmfTimestamp timestamp = TmfTimestamp.fromMillis(ts); // new TmfTimestamp(ts, TmfTimestamp.MILLISECOND_SCALE);
 		
 		TextTraceEventContent content = null;
 		NUOPCEventType eventType = null;

@@ -259,6 +259,20 @@
           name="org.eclipse.egit.feature.group"/>
       <requirement
           name="org.eclipse.jdt.annotation"/>
+      <requirement
+          name="org.eclipse.tracecompass.tmf.feature.group"/>
+      <requirement
+          name="org.eclipse.tracecompass.ctf.feature.group"/>
+      <requirement
+          name="org.eclipse.tracecompass.btf.feature.group"/>
+      <requirement
+          name="org.eclipse.tracecompass.gdbtrace.feature.group"/>
+      <requirement
+          name="org.eclipse.tracecompass.lttng2.kernel.feature.group"/>
+      <requirement
+          name="org.eclipse.tracecompass.lttng2.ust.feature.group"/>
+      <requirement
+          name="org.eclipse.tracecompass.tmf.pcap.feature.group"/>
       <sourceLocator
           rootFolder="${git.clone.location}"
           locateNestedProjects="true"/>
@@ -286,6 +300,8 @@
           name="Neon">
         <repository
             url="http://download.eclipse.org/releases/neon"/>
+        <repository
+            url="http://download.eclipse.org/tracecompass/releases/2.0.0/repository/"/>
       </repositoryList>
     </targlet>
   </setupTask>

@@ -1,5 +1,8 @@
 package org.earthsystemmodeling.cupid.trace;
 
+import org.eclipse.jdt.annotation.Nullable;
+import org.eclipse.tracecompass.statesystem.core.statevalue.ITmfStateValue;
+import org.eclipse.tracecompass.statesystem.core.statevalue.TmfStateValue;
 import org.eclipse.tracecompass.tmf.core.callstack.CallStackStateProvider;
 import org.eclipse.tracecompass.tmf.core.event.ITmfEvent;
 import org.eclipse.tracecompass.tmf.core.trace.ITmfTrace;
@@ -42,11 +45,11 @@ public class NUOPCCallStackStateProvider extends CallStackStateProvider {
 	}
 
 	@Override
-	protected String functionEntry(ITmfEvent event) {
+	protected @Nullable ITmfStateValue functionEntry(ITmfEvent event) {
 		if (((String) event.getContent().getField("event").getValue()).equals(NUOPCEventType.EVENT_START_PHASE)) {
 			String phase = (String) event.getContent().getField("phase").getValue();
 			String compName = (String) event.getContent().getField("compName").getValue();
-			return compName + " Init phase " + phase;
+			return TmfStateValue.newValueString(compName + " Init phase " + phase);
 		}
 		else {
 			return null;
@@ -54,11 +57,11 @@ public class NUOPCCallStackStateProvider extends CallStackStateProvider {
 	}
 
 	@Override
-	protected String functionExit(ITmfEvent event) {
+	protected @Nullable ITmfStateValue functionExit(ITmfEvent event) {
 		if (((String) event.getContent().getField("event").getValue()).equals(NUOPCEventType.EVENT_STOP_PHASE)) {
 			String phase = (String) event.getContent().getField("phase").getValue();
 			String compName = (String) event.getContent().getField("compName").getValue();
-			return compName + " Init phase " + phase;
+			return TmfStateValue.newValueString(compName + " Init phase " + phase);
 		}
 		else {
 			return null;
@@ -72,8 +75,14 @@ public class NUOPCCallStackStateProvider extends CallStackStateProvider {
 	}
 	
 	@Override
-	protected Long getThreadId(ITmfEvent event) {
+	protected long getThreadId(ITmfEvent event) {
 		return Long.valueOf(event.getContent().getField("pet").getValue().toString());
+	}
+
+	@Override
+	protected int getProcessId(ITmfEvent arg0) {
+		// TODO Auto-generated method stub
+		return 0;
 	}
 
 }
