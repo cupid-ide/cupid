@@ -24,6 +24,16 @@
                class="org.earthsystemmodeling.cupid.trace.NUOPCTrace">
          </tracetype>
       </module>
+      <module
+            analysis_module="org.earthsystemmodeling.cupid.trace.NUOPCStateSystemAnalysisModule"
+            automatic="false"
+            id="org.earthsystemmodeling.cupid.trace.NUOPCStateSystemAnalysisModule"
+            name="NUOPC State System Analysis">
+         <tracetype
+               applies="true"
+               class="org.earthsystemmodeling.cupid.trace.NUOPCTrace">
+         </tracetype>
+      </module>
       
    </extension>
 

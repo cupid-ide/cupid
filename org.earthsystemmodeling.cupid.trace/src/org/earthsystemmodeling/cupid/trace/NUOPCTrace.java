@@ -82,16 +82,24 @@ public class NUOPCTrace extends TextTrace<NUOPCTraceEvent> {
 				jo = (JSONObject) jsonParser.parse(matcher.group(4));
 				
 				String event = null;
-				if (jo.containsKey("field")) {
+				if (jo.containsKey("event")) {
+					jo = (JSONObject) jo.get("event");
+					event = "event";
+				}
+				else if (jo.containsKey("field")) {
 					jo = (JSONObject) jo.get("field");
-					event = "metadata_field";
+					event = "field";
 				}
 				else if (jo.containsKey("comp")) {
 					jo = (JSONObject) jo.get("comp");
-					event = "metadata_comp";
+					event = "comp";
+				}
+				else if (jo.containsKey("state")) {
+					jo = (JSONObject) jo.get("state");
+					event = "state";
 				}
 				else {
-					return null;
+					event = "unknown";
 				}
 				
 				content = new TextTraceEventContent(jo.entrySet().size() + 2);
@@ -100,43 +108,28 @@ public class NUOPCTrace extends TextTrace<NUOPCTraceEvent> {
 				for (Object k : jo.keySet()) {
 					content.addField((String) k, jo.get(k));
 				}
-				//TODO: generically read in key/values?
-				//String compName = (String) jo.get("compName");
-				//String event = (String) jo.get("event");
-				//String method = (String) jo.get("method");
-				//String phase = (String) jo.get("phase");
-				
-				//content = new TextTraceEventContent(new String[] {"logmsg_type", "pet", "compName", "event", "method", "phase"});
-				//content = new TextTraceEventContent(jo.entrySet().size());
-				
-				//content.setFieldValue("logmsg_type", matcher.group(2));
-				//content.setFieldValue("pet", matcher.group(3));
-				//content.setFieldValue("compName", compName);
-				//content.setFieldValue("event", event);
-				//content.setFieldValue("method", method);
-				//content.setFieldValue("phase", phase);
-				
+								
 				eventType = new NUOPCEventType(event, content);
+				return new NUOPCTraceEvent(this, timestamp, eventType, content);
 				
 			} catch (org.json.simple.parser.ParseException e) {
 					throw new RuntimeException("Exeception when parsing JSON log line: " + matcher.group(4), e);
 			}
 		}
-		else {
+		else {	
 			content = new TextTraceEventContent(new String[] {"logmsg_type", "pet", "data"});
 			content.setFieldValue("logmsg_type", matcher.group(2));
 			content.setFieldValue("pet", matcher.group(3));
 			content.setFieldValue("data", matcher.group(4));
 			eventType = new NUOPCEventType("ESMF Log Text", content);
+			return new NUOPCTraceEvent(this, timestamp, eventType, content);
 		}
-		
-		return new NUOPCTraceEvent(this, timestamp, eventType, content);
 		
 	}
 
 	@Override
 	protected void parseNextLine(NUOPCTraceEvent event, String line) {
-		//System.out.println("parseNextLine: " + line);		
+		System.out.println("parseNextLine: " + line);		
 	}
 
 	
