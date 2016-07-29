@@ -42,15 +42,26 @@ public class NUOPCStateProvider extends AbstractTmfStateProvider {
         
         try {
         	
-            if (e.getType().getName().equals("event")) {
+            if (e.getType() == NUOPCEventType.EVENT) {
                 
-                String compName = e.getContent().getFieldValue("compName").toString();
-                String phase = e.getContent().getFieldValue("phase").toString();
-                String eventName = e.getContent().getFieldValue("name").toString();
-                String currTime = e.getContent().getFieldValue("currTime").toString();
+            	//{"event":{"phase":"9","method":"init","name":"end_phase","currTime":"","compName":"OCN-TO-MED"}}
+            	JSONObject jObj = (JSONObject) e.getContent().getFieldValue("json");
+            	JSONObject jEvent = (JSONObject) jObj.get("event");
+            	
+            	String compName = jEvent.get("compName").toString();
+            	String method = jEvent.get("method").toString();
+            	String phase = jEvent.get("phase").toString();
+            	String eventName = jEvent.get("name").toString();
+            	String currTime = jEvent.get("currTime").toString();
                 
-                int quark = ss.getQuarkAbsoluteAndAdd(compName, "currentPhase");
+                int quark;
                 ITmfStateValue value;
+                
+                quark = ss.getQuarkAbsoluteAndAdd(compName, "currentMethod");
+                value = TmfStateValue.newValueString(method);
+                ss.modifyAttribute(ts, value, quark);
+                
+                quark = ss.getQuarkAbsoluteAndAdd(compName, "currentPhase");
                 if (eventName.equals("start_phase")) {
                 	value = TmfStateValue.newValueString(phase);               	
                 }
@@ -63,40 +74,53 @@ public class NUOPCStateProvider extends AbstractTmfStateProvider {
                 value = TmfStateValue.newValueString(currTime);
                 ss.modifyAttribute(ts, value, quark);
             }
-            else if (e.getType().getName().equals("comp")) {
-            	String compName = e.getContent().getFieldValue("CompName$NUOPC$Instance").toString();
-            	for (String n : e.getContent().getFieldNames()) {
-            		String val = e.getContent().getFieldValue(n).toString();
-            		int quark = ss.getQuarkAbsoluteAndAdd(compName, "comp", n);
+            else if (e.getType() == NUOPCEventType.METADATA_COMPONENT) {
+            	
+            	//{"comp":{"CompName$NUOPC$Instance":"ESM","Profiling$NUOPC$Component":"0",
+            	//  "Nestling$NUOPC$Driver":"0","Verbosity$NUOPC$Component":"0",
+            	//  "FinalizePhaseMap$NUOPC$Component":"FinalizePhase1=1",
+            	//  "InitializePhaseMap$NUOPC$Component":["IPDv00p1=1","IPDv01p1=1","IPDv02p1=1","IPDv03p1=1"],
+            	//  "InitializeDataComplete$NUOPC$Driver":"false","NestingGeneration$NUOPC$Driver":"0",
+            	//  "RunPhaseMap$NUOPC$Component":"RunPhase1=1","InitializeDataProgress$NUOPC$Driver":"false",
+            	//  "Kind$NUOPC$Component":"Driver","ESMF_RUNTIME_COMPLIANCEICREGISTER$$":"NUOPC_Driver_ComplianceICR"}}
+
+            	JSONObject jObj = (JSONObject) e.getContent().getFieldValue("json");
+            	JSONObject jComp = (JSONObject) jObj.get("comp");
+            	            	
+            	String compName = jComp.get("CompName$NUOPC$Instance").toString();
+            	
+            	for (Object key : jComp.keySet()) {
+            		String val = jComp.get(key).toString();
+            		int quark = ss.getQuarkAbsoluteAndAdd(compName, "attribute", key.toString());
             		ITmfStateValue value = TmfStateValue.newValueString(val);
             		ss.modifyAttribute(ts, value, quark);
             	}
+
             }
-            else if (e.getType().getName().equals("state")) {
-            	String compName = e.getContent().getFieldValue("Namespace$NUOPC$Instance").toString();
-            	String stateName = e.getContent().getFieldValue("name$NUOPC$Instance").toString();
-            	for (String n : e.getContent().getFieldNames()) {
-            		
-            		Object val = e.getContent().getFieldValue(n);
-            		if (val instanceof JSONArray) {
-            			JSONArray arr = (JSONArray) val;
-            			for (Object item : arr) {
-            				JSONObject jo = (JSONObject) item;
-            				if (jo.containsKey("field")) {
-            					JSONObject jfield = (JSONObject) jo.get("field");
-            					int quark = ss.getQuarkAbsoluteAndAdd(compName, "state", stateName, "fields", jfield.get("StandardName$CF$Extended").toString());
-            					ITmfStateValue value = TmfStateValue.newValueString(jfield.toString());
-                    			ss.modifyAttribute(ts, value, quark);
-            				}
-            			}
+            else if (e.getType() == NUOPCEventType.METADATA_STATE) {
+            	
+            	JSONObject jObj = (JSONObject) e.getContent().getFieldValue("json");
+            	JSONObject jState = (JSONObject) jObj.get("state");
+            	            	
+            	String compName = jState.get("Namespace$NUOPC$Instance").toString();
+            	String stateName = jState.get("name$NUOPC$Instance").toString();
+            	
+            	for (Object key : jState.keySet()) {
+            		String val = jState.get(key).toString();
+            		if (key.equals("linkList")) {
+            			JSONArray jLinkList = (JSONArray) jState.get("linkList");
+            			int quark = ss.getQuarkAbsoluteAndAdd(compName, "state", stateName);
+            			handleLinkList(ts, quark, jLinkList);
             		}
-            		else {		
-            			int quark = ss.getQuarkAbsoluteAndAdd(compName, "state", stateName, n);
-            			ITmfStateValue value = TmfStateValue.newValueString(val.toString());
+            		else {
+            			int quark = ss.getQuarkAbsoluteAndAdd(compName, "state", stateName, "attribute", key.toString());
+            			ITmfStateValue value = TmfStateValue.newValueString(val);
             			ss.modifyAttribute(ts, value, quark);
             		}
             	}
+
             }
+            
 
         } catch (TimeRangeException ex) {
             throw new IllegalStateException(ex);
@@ -105,6 +129,22 @@ public class NUOPCStateProvider extends AbstractTmfStateProvider {
         }
 		
     	
+    }
+    
+    private void handleLinkList(long ts, int parentQuark, JSONArray jLinkList) {
+    	for (Object item : jLinkList) {
+    		JSONObject jItem = (JSONObject) item;
+    		if (jItem.containsKey("field")) {
+    			JSONObject jField = (JSONObject) jItem.get("field");
+    			String fieldName = jField.get("StandardName$CF$Extended").toString();
+    			for (Object key : jField.keySet()) {
+            		String val = jField.get(key).toString();
+            		int quark = getStateSystemBuilder().getQuarkRelativeAndAdd(parentQuark, fieldName, "attribute", key.toString());
+            		ITmfStateValue value = TmfStateValue.newValueString(val);
+            		getStateSystemBuilder().modifyAttribute(ts, value, quark);
+            	}
+    		}
+    	}
     }
 
 }

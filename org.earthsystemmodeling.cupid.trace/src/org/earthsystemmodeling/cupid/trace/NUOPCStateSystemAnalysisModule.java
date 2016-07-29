@@ -19,10 +19,13 @@ public class NUOPCStateSystemAnalysisModule extends TmfStateSystemAnalysisModule
 	
 	@Override
 	protected StateSystemBackendType getBackendType() {
-		// TODO Auto-generated method stub
-		return super.getBackendType();
+		return StateSystemBackendType.INMEM;
 	}
-
+	
+	@Override
+	public String getName() {
+		return "NUOPC State System Analysis";
+	}
 	
 	public ITmfStateValue myQuery(long ts) {
 		int quark;

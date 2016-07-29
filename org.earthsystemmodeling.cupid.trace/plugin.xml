@@ -14,6 +14,8 @@
    
    <extension
          point="org.eclipse.linuxtools.tmf.core.analysis">
+      
+      <!--
       <module
             analysis_module="org.earthsystemmodeling.cupid.trace.NUOPCCallStackAnalysis"
             automatic="false"
@@ -24,6 +26,8 @@
                class="org.earthsystemmodeling.cupid.trace.NUOPCTrace">
          </tracetype>
       </module>
+      -->
+      
       <module
             analysis_module="org.earthsystemmodeling.cupid.trace.NUOPCStateSystemAnalysisModule"
             automatic="false"

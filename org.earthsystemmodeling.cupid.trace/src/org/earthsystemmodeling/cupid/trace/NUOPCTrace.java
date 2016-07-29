@@ -10,7 +10,6 @@ import java.util.regex.Pattern;
 import org.eclipse.tracecompass.tmf.core.event.ITmfEvent;
 import org.eclipse.tracecompass.tmf.core.event.aspect.ITmfEventAspect;
 import org.eclipse.tracecompass.tmf.core.event.aspect.TmfBaseAspects;
-import org.eclipse.tracecompass.tmf.core.event.aspect.TmfEventFieldAspect;
 import org.eclipse.tracecompass.tmf.core.timestamp.ITmfTimestamp;
 import org.eclipse.tracecompass.tmf.core.timestamp.TmfTimestamp;
 import org.eclipse.tracecompass.tmf.core.trace.text.TextTrace;
@@ -22,7 +21,7 @@ import com.google.common.collect.ImmutableList;
 
 public class NUOPCTrace extends TextTrace<NUOPCTraceEvent> {
 
-	static final DateFormat formatter = new SimpleDateFormat("yyyyMMdd HHmmss.SSS");
+	//static final DateFormat formatter = new SimpleDateFormat("yyyyMMdd HHmmss.SSS");
 	static final Pattern pattern = Pattern.compile("(\\d{8}\\s\\d{6}\\.\\d{3})\\s+(INFO|WARNING|ERROR|JSON)\\s+PET(\\d+)\\s+(.*)");
 	static final JSONParser jsonParser = new JSONParser();	
 	
@@ -54,8 +53,7 @@ public class NUOPCTrace extends TextTrace<NUOPCTraceEvent> {
 	public Iterable<ITmfEventAspect<?>> getEventAspects() {
 		return ImmutableList.of(
                 TmfBaseAspects.getTimestampAspect(),
-				ESMF_LOGMSG_TYPE,
-                TmfBaseAspects.getEventTypeAspect(),
+				TmfBaseAspects.getEventTypeAspect(),
                 TmfBaseAspects.getContentsAspect()
 				);
 	}
@@ -63,53 +61,51 @@ public class NUOPCTrace extends TextTrace<NUOPCTraceEvent> {
 	
 	@Override
 	protected NUOPCTraceEvent parseFirstLine(Matcher matcher, String line) {
+		
 		long ts;
-		Date date;
+		final DateFormat formatter = new SimpleDateFormat("yyyyMMdd HHmmss.SSS");
+		
 		try {
-			date = formatter.parse(matcher.group(1));
-			ts = date.getTime();
+			Date date = formatter.parse(matcher.group(1));
+			ts = date.getTime();			
 		} catch (ParseException e) {
-			ts = 0;
+			e.printStackTrace();
+			return null;
 		}
-		ITmfTimestamp timestamp = TmfTimestamp.fromMillis(ts); // new TmfTimestamp(ts, TmfTimestamp.MILLISECOND_SCALE);
+					
+		ITmfTimestamp timestamp = TmfTimestamp.fromMillis(ts);
 		
 		TextTraceEventContent content = null;
-		NUOPCEventType eventType = null;
-		
+				
 		if (matcher.group(2).equals("JSON")) {
 			JSONObject jo = null;
 			try {
 				jo = (JSONObject) jsonParser.parse(matcher.group(4));
 				
-				String event = null;
+				NUOPCEventType eventType = null;
 				if (jo.containsKey("event")) {
-					jo = (JSONObject) jo.get("event");
-					event = "event";
-				}
-				else if (jo.containsKey("field")) {
-					jo = (JSONObject) jo.get("field");
-					event = "field";
+					//jo = (JSONObject) jo.get("event");
+					eventType = NUOPCEventType.EVENT;
 				}
 				else if (jo.containsKey("comp")) {
-					jo = (JSONObject) jo.get("comp");
-					event = "comp";
+					//jo = (JSONObject) jo.get("comp");
+					eventType = NUOPCEventType.METADATA_COMPONENT;
 				}
 				else if (jo.containsKey("state")) {
-					jo = (JSONObject) jo.get("state");
-					event = "state";
+					//jo = (JSONObject) jo.get("state");
+					eventType = NUOPCEventType.METADATA_STATE;
 				}
 				else {
-					event = "unknown";
+					eventType = NUOPCEventType.UNKNOWN;
 				}
 				
-				content = new TextTraceEventContent(jo.entrySet().size() + 2);
-				content.addField("logmsg_type", matcher.group(2));
-				content.addField("pet", matcher.group(3));
-				for (Object k : jo.keySet()) {
-					content.addField((String) k, jo.get(k));
-				}
+				content = new TextTraceEventContent(new String[] {"pet", "json"});
+				content.setFieldValue("pet", matcher.group(3));
+				content.setFieldValue("json", jo);
+				//for (Object k : jo.keySet()) {
+				//	content.addField((String) k, jo.get(k));
+				//}
 								
-				eventType = new NUOPCEventType(event, content);
 				return new NUOPCTraceEvent(this, timestamp, eventType, content);
 				
 			} catch (org.json.simple.parser.ParseException e) {
@@ -117,12 +113,11 @@ public class NUOPCTrace extends TextTrace<NUOPCTraceEvent> {
 			}
 		}
 		else {	
-			content = new TextTraceEventContent(new String[] {"logmsg_type", "pet", "data"});
-			content.setFieldValue("logmsg_type", matcher.group(2));
+			content = new TextTraceEventContent(new String[] {"pet", "logmsg"});
+			//content.setFieldValue("logmsg_type", matcher.group(2));
 			content.setFieldValue("pet", matcher.group(3));
-			content.setFieldValue("data", matcher.group(4));
-			eventType = new NUOPCEventType("ESMF Log Text", content);
-			return new NUOPCTraceEvent(this, timestamp, eventType, content);
+			content.setFieldValue("logmsg", matcher.group(4));
+			return new NUOPCTraceEvent(this, timestamp, NUOPCEventType.from(matcher.group(2)), content);
 		}
 		
 	}
