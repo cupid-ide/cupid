@@ -1,17 +1,16 @@
 package org.earthsystemmodeling.cupid.trace;
 
 import org.eclipse.tracecompass.tmf.core.event.TmfEventType;
+import org.json.simple.JSONObject;
 
 public class NUOPCEventType extends TmfEventType {
-	
-	public static final String EVENT_START_PHASE = "start_phase";
-	public static final String EVENT_STOP_PHASE = "stop_phase";
 	
 	protected NUOPCEventType(String name) {
 		super(name, null);
 	}
 	
-	public static final NUOPCEventType EVENT = new NUOPCEventType("EVENT");
+	public static final NUOPCEventType HEADER = new NUOPCEventType("HEADER");
+	public static final NUOPCEventType CONTROL = new NUOPCEventType("CONTROL");
 	public static final NUOPCEventType METADATA_COMPONENT = new NUOPCEventType("COMP");
 	public static final NUOPCEventType METADATA_STATE = new NUOPCEventType("STATE");
 	public static final NUOPCEventType LOG_INFO = new NUOPCEventType("INFO");
@@ -25,5 +24,24 @@ public class NUOPCEventType extends TmfEventType {
 		else if (msgtype.equals("ERROR")) return LOG_ERROR;
 		else return null;
 	}
+	
+	public static NUOPCEventType from(JSONObject jObj) {
+		if (jObj.containsKey("ctrl")) {
+			return CONTROL;
+		}
+		else if (jObj.containsKey("comp")) {
+			return METADATA_COMPONENT;
+		}
+		else if (jObj.containsKey("state")) {
+			return METADATA_STATE;
+		}
+		else if (jObj.containsKey("esmf_json")) {
+			return HEADER;
+		}
+		else {
+			return UNKNOWN;
+		}
+	}
+	
 		
 }

@@ -42,37 +42,65 @@ public class NUOPCStateProvider extends AbstractTmfStateProvider {
         
         try {
         	
-            if (e.getType() == NUOPCEventType.EVENT) {
+            if (e.getType() == NUOPCEventType.CONTROL) {
                 
-            	//{"event":{"phase":"9","method":"init","name":"end_phase","currTime":"","compName":"OCN-TO-MED"}}
             	JSONObject jObj = (JSONObject) e.getContent().getFieldValue("json");
-            	JSONObject jEvent = (JSONObject) jObj.get("event");
+            	JSONObject jEvent = (JSONObject) jObj.get("ctrl");
             	
             	String compName = jEvent.get("compName").toString();
             	String method = jEvent.get("method").toString();
             	String phase = jEvent.get("phase").toString();
-            	String eventName = jEvent.get("name").toString();
+            	String eventName = jEvent.get("event").toString();
             	String currTime = jEvent.get("currTime").toString();
                 
                 int quark;
-                ITmfStateValue value;
-                
-                quark = ss.getQuarkAbsoluteAndAdd(compName, "currentMethod");
-                value = TmfStateValue.newValueString(method);
-                ss.modifyAttribute(ts, value, quark);
-                
-                quark = ss.getQuarkAbsoluteAndAdd(compName, "currentPhase");
-                if (eventName.equals("start_phase")) {
-                	value = TmfStateValue.newValueString(phase);               	
+                ITmfStateValue phaseValue = TmfStateValue.newValueString(phase);
+                ITmfStateValue methodValue = TmfStateValue.newValueString(method);
+                ITmfStateValue clockValue = TmfStateValue.newValueString(currTime);
+            	
+                if (eventName.equals("start_prologue")) {
+                	quark = ss.getQuarkAbsoluteAndAdd("control", "activeComp");
+                    ss.modifyAttribute(ts, TmfStateValue.newValueString(compName), quark);
+                    quark = ss.getQuarkAbsoluteAndAdd("control", "prologueMethod");
+                    ss.modifyAttribute(ts, methodValue, quark);
+                    quark = ss.getQuarkAbsoluteAndAdd("control", "prologuePhase");
+                    ss.modifyAttribute(ts, phaseValue, quark);
                 }
-                else {  //end_phase
-                	value = TmfStateValue.nullValue();
+                else if (eventName.equals("stop_prologue")) {
+                	quark = ss.getQuarkAbsoluteAndAdd("control", "prologueMethod");
+                    ss.modifyAttribute(ts, TmfStateValue.nullValue(), quark);
+                    quark = ss.getQuarkAbsoluteAndAdd("control", "prologuePhase");
+                    ss.modifyAttribute(ts, TmfStateValue.nullValue(), quark);
                 }
-                ss.modifyAttribute(ts, value, quark);
-                
+                else if (eventName.equals("start_phase")) {
+                    quark = ss.getQuarkAbsoluteAndAdd("control", "activeMethod");
+                    ss.modifyAttribute(ts, methodValue, quark);
+                    quark = ss.getQuarkAbsoluteAndAdd("control", "activePhase");
+                    ss.modifyAttribute(ts, phaseValue, quark);
+                }
+                else if(eventName.equals("stop_phase")) {              	
+                	quark = ss.getQuarkAbsoluteAndAdd("control", "activeMethod");
+                    ss.modifyAttribute(ts, TmfStateValue.nullValue(), quark);
+                    quark = ss.getQuarkAbsoluteAndAdd("control", "activePhase");
+                    ss.modifyAttribute(ts, TmfStateValue.nullValue(), quark);
+                }
+                else if (eventName.equals("start_epilogue")) {
+                    quark = ss.getQuarkAbsoluteAndAdd("control", "epilogueMethod");
+                    ss.modifyAttribute(ts, methodValue, quark);
+                    quark = ss.getQuarkAbsoluteAndAdd("control", "epiloguePhase");
+                    ss.modifyAttribute(ts, phaseValue, quark);
+                }
+                else if (eventName.equals("stop_epilogue")) {
+                	quark = ss.getQuarkAbsoluteAndAdd("control", "epilogueMethod");
+                    ss.modifyAttribute(ts, TmfStateValue.nullValue(), quark);
+                    quark = ss.getQuarkAbsoluteAndAdd("control", "epiloguePhase");
+                    ss.modifyAttribute(ts, TmfStateValue.nullValue(), quark);
+                }
+ 
                 quark = ss.getQuarkAbsoluteAndAdd(compName, "clock");
-                value = TmfStateValue.newValueString(currTime);
-                ss.modifyAttribute(ts, value, quark);
+                clockValue = TmfStateValue.newValueString(currTime);
+                ss.modifyAttribute(ts, clockValue, quark);
+                
             }
             else if (e.getType() == NUOPCEventType.METADATA_COMPONENT) {
             	
@@ -92,7 +120,7 @@ public class NUOPCStateProvider extends AbstractTmfStateProvider {
             	for (Object key : jComp.keySet()) {
             		String val = jComp.get(key).toString();
             		int quark = ss.getQuarkAbsoluteAndAdd(compName, "attribute", key.toString());
-            		ITmfStateValue value = TmfStateValue.newValueString(val);
+            		ITmfStateValue value = newValueString(val);
             		ss.modifyAttribute(ts, value, quark);
             	}
 
@@ -114,7 +142,7 @@ public class NUOPCStateProvider extends AbstractTmfStateProvider {
             		}
             		else {
             			int quark = ss.getQuarkAbsoluteAndAdd(compName, "state", stateName, "attribute", key.toString());
-            			ITmfStateValue value = TmfStateValue.newValueString(val);
+            			ITmfStateValue value = newValueString(val);
             			ss.modifyAttribute(ts, value, quark);
             		}
             	}
@@ -131,6 +159,7 @@ public class NUOPCStateProvider extends AbstractTmfStateProvider {
     	
     }
     
+    //TODO: handle nested states
     private void handleLinkList(long ts, int parentQuark, JSONArray jLinkList) {
     	for (Object item : jLinkList) {
     		JSONObject jItem = (JSONObject) item;
@@ -140,11 +169,18 @@ public class NUOPCStateProvider extends AbstractTmfStateProvider {
     			for (Object key : jField.keySet()) {
             		String val = jField.get(key).toString();
             		int quark = getStateSystemBuilder().getQuarkRelativeAndAdd(parentQuark, fieldName, "attribute", key.toString());
-            		ITmfStateValue value = TmfStateValue.newValueString(val);
+            		ITmfStateValue value = newValueString(val);
             		getStateSystemBuilder().modifyAttribute(ts, value, quark);
             	}
     		}
     	}
+    }
+    
+    private static TmfStateValue newValueString(String str) {
+    	//if (str.length() > 100) {
+    	//	str = str.substring(0, 100);
+    	//}
+    	return TmfStateValue.newValueString(str);
     }
 
 }

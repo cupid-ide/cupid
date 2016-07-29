@@ -17,10 +17,12 @@ public class NUOPCStateSystemAnalysisModule extends TmfStateSystemAnalysisModule
 		return new NUOPCStateProvider((NUOPCTrace) getTrace());
 	}
 	
+	
 	@Override
 	protected StateSystemBackendType getBackendType() {
 		return StateSystemBackendType.INMEM;
 	}
+	
 	
 	@Override
 	public String getName() {

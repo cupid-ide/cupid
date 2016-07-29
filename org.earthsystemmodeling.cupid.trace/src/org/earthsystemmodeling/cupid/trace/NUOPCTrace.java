@@ -21,9 +21,10 @@ import com.google.common.collect.ImmutableList;
 
 public class NUOPCTrace extends TextTrace<NUOPCTraceEvent> {
 
-	//static final DateFormat formatter = new SimpleDateFormat("yyyyMMdd HHmmss.SSS");
 	static final Pattern pattern = Pattern.compile("(\\d{8}\\s\\d{6}\\.\\d{3})\\s+(INFO|WARNING|ERROR|JSON)\\s+PET(\\d+)\\s+(.*)");
 	static final JSONParser jsonParser = new JSONParser();	
+	
+	protected double version = -1;
 	
 	@Override
 	protected Pattern getFirstLinePattern() {
@@ -31,6 +32,7 @@ public class NUOPCTrace extends TextTrace<NUOPCTraceEvent> {
 		return pattern;
 	}
 
+	/*
 	ITmfEventAspect<String> ESMF_LOGMSG_TYPE = new ITmfEventAspect<String>() {
         @Override
         public String getName() {
@@ -47,7 +49,7 @@ public class NUOPCTrace extends TextTrace<NUOPCTraceEvent> {
             return ((NUOPCTraceEvent) event).getContent().getField("logmsg_type").getValue().toString();
         }
     };
-	
+	*/
 	
 	@Override
 	public Iterable<ITmfEventAspect<?>> getEventAspects() {
@@ -58,6 +60,7 @@ public class NUOPCTrace extends TextTrace<NUOPCTraceEvent> {
 				);
 	}
 	
+	//private ITmfTimestamp previousTimestamp = null;
 	
 	@Override
 	protected NUOPCTraceEvent parseFirstLine(Matcher matcher, String line) {
@@ -73,7 +76,19 @@ public class NUOPCTrace extends TextTrace<NUOPCTraceEvent> {
 			return null;
 		}
 					
-		ITmfTimestamp timestamp = TmfTimestamp.fromMillis(ts);
+		ITmfTimestamp timestamp = TmfTimestamp.fromNanos(ts*1000000L);
+		
+		/*
+		if (previousTimestamp != null) {
+			if (previousTimestamp.getValue() - timestamp.getValue() < 1000) {
+				//reset
+			}
+			else if (timestamp.getValue() - previousTimestamp.getValue() <= 1000L) {
+				timestamp = TmfTimestamp.fromNanos(previousTimestamp.getValue() + 1L);
+			}
+		}
+		previousTimestamp = timestamp;
+		*/
 		
 		TextTraceEventContent content = null;
 				
@@ -82,31 +97,16 @@ public class NUOPCTrace extends TextTrace<NUOPCTraceEvent> {
 			try {
 				jo = (JSONObject) jsonParser.parse(matcher.group(4));
 				
-				NUOPCEventType eventType = null;
-				if (jo.containsKey("event")) {
-					//jo = (JSONObject) jo.get("event");
-					eventType = NUOPCEventType.EVENT;
-				}
-				else if (jo.containsKey("comp")) {
-					//jo = (JSONObject) jo.get("comp");
-					eventType = NUOPCEventType.METADATA_COMPONENT;
-				}
-				else if (jo.containsKey("state")) {
-					//jo = (JSONObject) jo.get("state");
-					eventType = NUOPCEventType.METADATA_STATE;
-				}
-				else {
-					eventType = NUOPCEventType.UNKNOWN;
+				NUOPCEventType eventType = NUOPCEventType.from(jo);
+				if (eventType == NUOPCEventType.HEADER) {
+					setJSONVersion(jo);
 				}
 				
 				content = new TextTraceEventContent(new String[] {"pet", "json"});
 				content.setFieldValue("pet", matcher.group(3));
 				content.setFieldValue("json", jo);
-				//for (Object k : jo.keySet()) {
-				//	content.addField((String) k, jo.get(k));
-				//}
-								
-				return new NUOPCTraceEvent(this, timestamp, eventType, content);
+												
+				return new NUOPCTraceEvent(this, timestamp, NUOPCEventType.from(jo), content);
 				
 			} catch (org.json.simple.parser.ParseException e) {
 					throw new RuntimeException("Exeception when parsing JSON log line: " + matcher.group(4), e);
@@ -114,7 +114,6 @@ public class NUOPCTrace extends TextTrace<NUOPCTraceEvent> {
 		}
 		else {	
 			content = new TextTraceEventContent(new String[] {"pet", "logmsg"});
-			//content.setFieldValue("logmsg_type", matcher.group(2));
 			content.setFieldValue("pet", matcher.group(3));
 			content.setFieldValue("logmsg", matcher.group(4));
 			return new NUOPCTraceEvent(this, timestamp, NUOPCEventType.from(matcher.group(2)), content);
@@ -127,6 +126,11 @@ public class NUOPCTrace extends TextTrace<NUOPCTraceEvent> {
 		System.out.println("parseNextLine: " + line);		
 	}
 
+	private void setJSONVersion(JSONObject jObj) {
+		String ver = ((JSONObject) jObj.get("esmf_json")).get("version").toString();
+		version = Double.valueOf(ver);
+	}
+	
 	
 	
 	
