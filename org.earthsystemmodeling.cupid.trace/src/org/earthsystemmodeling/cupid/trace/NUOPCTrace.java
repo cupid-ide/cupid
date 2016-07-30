@@ -22,7 +22,7 @@ import com.google.common.collect.ImmutableList;
 public class NUOPCTrace extends TextTrace<NUOPCTraceEvent> {
 
 	static final Pattern pattern = Pattern.compile("(\\d{8}\\s\\d{6}\\.\\d{3})\\s+(INFO|WARNING|ERROR|JSON)\\s+PET(\\d+)\\s+(.*)");
-	static final JSONParser jsonParser = new JSONParser();	
+	//static final JSONParser jsonParser = new JSONParser();	
 	
 	protected double version = -1;
 	
@@ -93,6 +93,7 @@ public class NUOPCTrace extends TextTrace<NUOPCTraceEvent> {
 		TextTraceEventContent content = null;
 				
 		if (matcher.group(2).equals("JSON")) {
+			final JSONParser jsonParser = new JSONParser();	
 			JSONObject jo = null;
 			try {
 				jo = (JSONObject) jsonParser.parse(matcher.group(4));

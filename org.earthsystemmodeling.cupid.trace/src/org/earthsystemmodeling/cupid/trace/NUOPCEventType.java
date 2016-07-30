@@ -13,6 +13,7 @@ public class NUOPCEventType extends TmfEventType {
 	public static final NUOPCEventType CONTROL = new NUOPCEventType("CONTROL");
 	public static final NUOPCEventType METADATA_COMPONENT = new NUOPCEventType("COMP");
 	public static final NUOPCEventType METADATA_STATE = new NUOPCEventType("STATE");
+	public static final NUOPCEventType STATS = new NUOPCEventType("STATS");
 	public static final NUOPCEventType LOG_INFO = new NUOPCEventType("INFO");
 	public static final NUOPCEventType LOG_WARN = new NUOPCEventType("WARN");
 	public static final NUOPCEventType LOG_ERROR = new NUOPCEventType("ERROR");
@@ -34,6 +35,9 @@ public class NUOPCEventType extends TmfEventType {
 		}
 		else if (jObj.containsKey("state")) {
 			return METADATA_STATE;
+		}
+		else if (jObj.containsKey("stats")) {
+			return STATS;
 		}
 		else if (jObj.containsKey("esmf_json")) {
 			return HEADER;

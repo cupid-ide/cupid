@@ -11,7 +11,8 @@ Require-Bundle: org.eclipse.ui,
  org.eclipse.core.resources,
  com.google.guava,
  org.eclipse.jdt.annotation,
- org.eclipse.tracecompass.statesystem.core
+ org.eclipse.tracecompass.statesystem.core,
+ org.swtchart
 Bundle-RequiredExecutionEnvironment: JavaSE-1.8
 Bundle-ActivationPolicy: lazy
 Bundle-ClassPath: lib/json-simple-1.1.1.jar,

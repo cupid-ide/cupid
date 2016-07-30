@@ -148,6 +148,21 @@ public class NUOPCStateProvider extends AbstractTmfStateProvider {
             	}
 
             }
+            else if (e.getType() == NUOPCEventType.STATS) {
+            	JSONObject jObj = (JSONObject) e.getContent().getFieldValue("json");
+            	JSONObject jStats = (JSONObject) jObj.get("stats");
+            	            	
+            	String virtMemPet = jStats.get("virtMemPet").toString();
+            	String physMemPet = jStats.get("physMemPet").toString();
+            	
+            	int quark = ss.getQuarkAbsoluteAndAdd("stats", "virtMemPet");
+    			ITmfStateValue value = TmfStateValue.newValueLong(Long.valueOf(virtMemPet));
+    			ss.modifyAttribute(ts, value, quark);
+    			
+    			quark = ss.getQuarkAbsoluteAndAdd("stats", "physMemPet");
+    			value = TmfStateValue.newValueLong(Long.valueOf(physMemPet));
+    			ss.modifyAttribute(ts, value, quark);
+            }
             
 
         } catch (TimeRangeException ex) {

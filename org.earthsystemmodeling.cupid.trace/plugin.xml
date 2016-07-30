@@ -40,5 +40,15 @@
       </module>
       
    </extension>
+   <extension
+         point="org.eclipse.ui.views">
+      <view
+            category="org.earthsystemmodeling.cupid"
+            class="org.earthsystemmodeling.cupid.trace.NUOPCRunStatsView"
+            id="org.earthsystemmodeling.cupid.trace.NUOPCRunStats"
+            name="NUOPC Run Statistics"
+            restorable="true">
+      </view>
+   </extension>
 
 </plugin>

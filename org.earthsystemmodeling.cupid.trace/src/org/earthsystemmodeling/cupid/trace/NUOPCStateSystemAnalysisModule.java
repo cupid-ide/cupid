@@ -12,6 +12,8 @@ import org.eclipse.tracecompass.tmf.core.statesystem.TmfStateSystemAnalysisModul
 
 public class NUOPCStateSystemAnalysisModule extends TmfStateSystemAnalysisModule {
 
+	public static final String ID = "org.earthsystemmodeling.cupid.trace.NUOPCStateSystemAnalysisModule";
+	
 	@Override
 	protected ITmfStateProvider createStateProvider() {
 		return new NUOPCStateProvider((NUOPCTrace) getTrace());
