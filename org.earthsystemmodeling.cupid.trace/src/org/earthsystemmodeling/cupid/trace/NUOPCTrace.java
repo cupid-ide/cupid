@@ -7,7 +7,6 @@ import java.util.Date;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import org.eclipse.tracecompass.tmf.core.event.ITmfEvent;
 import org.eclipse.tracecompass.tmf.core.event.aspect.ITmfEventAspect;
 import org.eclipse.tracecompass.tmf.core.event.aspect.TmfBaseAspects;
 import org.eclipse.tracecompass.tmf.core.timestamp.ITmfTimestamp;
@@ -22,7 +21,6 @@ import com.google.common.collect.ImmutableList;
 public class NUOPCTrace extends TextTrace<NUOPCTraceEvent> {
 
 	static final Pattern pattern = Pattern.compile("(\\d{8}\\s\\d{6}\\.\\d{3})\\s+(INFO|WARNING|ERROR|JSON)\\s+PET(\\d+)\\s+(.*)");
-	//static final JSONParser jsonParser = new JSONParser();	
 	
 	protected double version = -1;
 	
@@ -124,9 +122,11 @@ public class NUOPCTrace extends TextTrace<NUOPCTraceEvent> {
 
 	@Override
 	protected void parseNextLine(NUOPCTraceEvent event, String line) {
-		System.out.println("parseNextLine: " + line);		
+		//System.out.println("parseNextLine: " + line);		
 	}
 
+	
+	
 	private void setJSONVersion(JSONObject jObj) {
 		String ver = ((JSONObject) jObj.get("esmf_json")).get("version").toString();
 		version = Double.valueOf(ver);

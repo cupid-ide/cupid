@@ -130,8 +130,8 @@ public class NUOPCStateProvider extends AbstractTmfStateProvider {
             	JSONObject jObj = (JSONObject) e.getContent().getFieldValue("json");
             	JSONObject jState = (JSONObject) jObj.get("state");
             	            	
-            	String compName = jState.get("Namespace$NUOPC$Instance").toString();
-            	String stateName = jState.get("name$NUOPC$Instance").toString();
+            	String compName = jState.getOrDefault("Namespace$NUOPC$Instance", "unknown_comp").toString();
+            	String stateName = jState.getOrDefault("name$NUOPC$Instance", "unknown_state").toString();
             	
             	for (Object key : jState.keySet()) {
             		String val = jState.get(key).toString();
