@@ -31,10 +31,11 @@ public class NUOPCStateSystemAnalysisModule extends TmfStateSystemAnalysisModule
 		return "NUOPC State System Analysis";
 	}
 	
-	public ITmfStateValue myQuery(long ts) {
+	/*
+	public List<ITmfStateInterval> queryFieldState(long ts) {
 		int quark;
 		try {
-			quark = getStateSystem().getQuarkAbsolute("ATM", "currentPhase");
+			quark = getStateSystem().getQuarkAbsolute("component");
 			List<ITmfStateInterval> state = getStateSystem().queryFullState(ts);
 	        ITmfStateValue value = state.get(quark).getStateValue();
 	        return value;
@@ -47,5 +48,5 @@ public class NUOPCStateSystemAnalysisModule extends TmfStateSystemAnalysisModule
 		}
        return TmfStateValue.nullValue();
 	}
-
+	*/
 }

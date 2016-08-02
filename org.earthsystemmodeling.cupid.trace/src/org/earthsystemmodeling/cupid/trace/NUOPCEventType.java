@@ -13,6 +13,7 @@ public class NUOPCEventType extends TmfEventType {
 	public static final NUOPCEventType CONTROL = new NUOPCEventType("CONTROL");
 	public static final NUOPCEventType METADATA_COMPONENT = new NUOPCEventType("COMP");
 	public static final NUOPCEventType METADATA_STATE = new NUOPCEventType("STATE");
+	public static final NUOPCEventType METADATA_FIELD = new NUOPCEventType("FIELD");
 	public static final NUOPCEventType STATS = new NUOPCEventType("STATS");
 	public static final NUOPCEventType LOG_INFO = new NUOPCEventType("INFO");
 	public static final NUOPCEventType LOG_WARN = new NUOPCEventType("WARN");
@@ -35,6 +36,9 @@ public class NUOPCEventType extends TmfEventType {
 		}
 		else if (jObj.containsKey("state")) {
 			return METADATA_STATE;
+		}
+		else if (jObj.containsKey("field")) {
+			return METADATA_FIELD;
 		}
 		else if (jObj.containsKey("stats")) {
 			return STATS;

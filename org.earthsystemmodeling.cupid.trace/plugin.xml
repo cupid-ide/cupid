@@ -49,6 +49,13 @@
             name="NUOPC Run Statistics"
             restorable="true">
       </view>
+      <view
+            category="org.earthsystemmodeling.cupid"
+            class="org.earthsystemmodeling.cupid.trace.NUOPCStateView"
+            id="org.earthsystemmodeling.cupid.trace.NUOPCStateView"
+            name="NUOPC State View"
+            restorable="true">
+      </view>
    </extension>
 
 </plugin>
