@@ -1,10 +1,15 @@
 package org.earthsystemmodeling.cupid.trace;
 
+import java.util.List;
 import java.util.Stack;
 
+import org.eclipse.jdt.annotation.NonNull;
+import org.eclipse.tracecompass.statesystem.core.ITmfStateSystem;
 import org.eclipse.tracecompass.statesystem.core.ITmfStateSystemBuilder;
+import org.eclipse.tracecompass.statesystem.core.exceptions.StateSystemDisposedException;
 import org.eclipse.tracecompass.statesystem.core.exceptions.StateValueTypeException;
 import org.eclipse.tracecompass.statesystem.core.exceptions.TimeRangeException;
+import org.eclipse.tracecompass.statesystem.core.interval.ITmfStateInterval;
 import org.eclipse.tracecompass.statesystem.core.statevalue.ITmfStateValue;
 import org.eclipse.tracecompass.statesystem.core.statevalue.TmfStateValue;
 import org.eclipse.tracecompass.tmf.core.event.ITmfEvent;
@@ -167,7 +172,13 @@ public class NUOPCStateProvider extends AbstractTmfStateProvider {
             	//sanity check
             	if (!stateESMFID.equals(activeState)) {
             		throw new RuntimeException("State context id does not match: " + stateESMFID + ", " + activeState);
-            	}                  	
+            	}
+            	
+            	//TODO: Is there a cleaner way to handle this?
+            	if (jField.containsKey("StandardName$CF$Extended")) {
+            		String standardName = jField.get("StandardName$CF$Extended").toString();
+            		markMatchingFieldsAsReplaced(standardName, fieldESMFID, ts);
+            	}          	
             	            	            	
             	for (Object key : jField.keySet()) {
             		String val = jField.get(key).toString();
@@ -213,7 +224,41 @@ public class NUOPCStateProvider extends AbstractTmfStateProvider {
     	
     }
     
-       
+    
+    private void markMatchingFieldsAsReplaced(String standardName, String fieldESMFID, long ts) {
+    	
+    	//TODO: address this in a cleaner way!
+    	//if there is another field with same standard name, mark it as replaced
+    	//this is to have a way to hide replaced fields in other views
+    	
+    	ITmfStateSystemBuilder ss = getStateSystemBuilder();
+    		
+		int activeFieldQuark = ss.optQuarkRelative(activeStateQuark, "field");
+		int myFieldQuark = ss.optQuarkRelative(activeStateQuark, "field", fieldESMFID);
+		
+		if (activeFieldQuark != ITmfStateSystem.INVALID_ATTRIBUTE && myFieldQuark != ITmfStateSystem.INVALID_ATTRIBUTE) {
+			List<Integer> matches = ss.getSubAttributes(activeFieldQuark, false);
+    		for (int m : matches) {
+    			if (m == myFieldQuark) continue;
+    			int possibleMatch = ss.optQuarkRelative(m, "attribute", "StandardName$CF$Extended");
+    			if (possibleMatch != ITmfStateSystem.INVALID_ATTRIBUTE) {
+    				ITmfStateInterval stateInterval;
+					try {
+						stateInterval = ss.querySingleState(ts, possibleMatch);
+					} catch (StateSystemDisposedException e) {
+						return;
+					}
+    				ITmfStateValue val = stateInterval.getStateValue();
+    				
+    				if (val.unboxStr().equals(standardName)) {
+    					int quarkRepl = ss.getQuarkRelativeAndAdd(m, "replaced");
+    					ss.modifyAttribute(ts, TmfStateValue.newValueString("true"), quarkRepl);
+    				}
+    			}
+    		}
+		}           		  	        
+    	
+    }
     
     //TODO: handle nested states
     private void handleLinkList(long ts, int parentQuark, JSONArray jLinkList) {

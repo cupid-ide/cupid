@@ -45,6 +45,7 @@
       <view
             category="org.earthsystemmodeling.cupid"
             class="org.earthsystemmodeling.cupid.trace.NUOPCRunStatsView"
+            icon="icons/linegraph.png"
             id="org.earthsystemmodeling.cupid.trace.NUOPCRunStats"
             name="NUOPC Run Statistics"
             restorable="true">
@@ -52,8 +53,9 @@
       <view
             category="org.earthsystemmodeling.cupid"
             class="org.earthsystemmodeling.cupid.trace.NUOPCStateView"
+            icon="icons/state.png"
             id="org.earthsystemmodeling.cupid.trace.NUOPCStateView"
-            name="NUOPC State View"
+            name="NUOPC State Explorer"
             restorable="true">
       </view>
    </extension>

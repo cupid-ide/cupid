@@ -20,7 +20,7 @@ import com.google.common.collect.ImmutableList;
 
 public class NUOPCTrace extends TextTrace<NUOPCTraceEvent> {
 
-	static final Pattern pattern = Pattern.compile("(\\d{8}\\s\\d{6}\\.\\d{3})\\s+(INFO|WARNING|ERROR|JSON)\\s+PET(\\d+)\\s+(.*)");
+	static final Pattern pattern = Pattern.compile("(\\d{8}\\s\\d{6}\\.\\d{3})\\s+(INFO|WARNING|ERROR|JSON)\\s+PET(\\d+)\\s+(\\d+\\.\\d+)?(.*)");
 	
 	protected double version = -1;
 	
@@ -64,6 +64,7 @@ public class NUOPCTrace extends TextTrace<NUOPCTraceEvent> {
 	protected NUOPCTraceEvent parseFirstLine(Matcher matcher, String line) {
 		
 		long ts;
+		/*
 		final DateFormat formatter = new SimpleDateFormat("yyyyMMdd HHmmss.SSS");
 		
 		try {
@@ -73,34 +74,58 @@ public class NUOPCTrace extends TextTrace<NUOPCTraceEvent> {
 			e.printStackTrace();
 			return null;
 		}
-					
-		ITmfTimestamp timestamp = TmfTimestamp.fromNanos(ts*1000000L);
 		
-		/*
-		if (previousTimestamp != null) {
-			if (previousTimestamp.getValue() - timestamp.getValue() < 1000) {
-				//reset
-			}
-			else if (timestamp.getValue() - previousTimestamp.getValue() <= 1000L) {
-				timestamp = TmfTimestamp.fromNanos(previousTimestamp.getValue() + 1L);
-			}
-		}
-		previousTimestamp = timestamp;
+		
+		ITmfTimestamp timestamp = TmfTimestamp.fromNanos(ts*1000000L);
 		*/
 		
+		ITmfTimestamp timestamp;
+		String highResTime = matcher.group(4);
+		if (highResTime != null) {
+			double d = Double.valueOf(highResTime);
+			long t = (long) (d*1000000000L);
+			timestamp = TmfTimestamp.fromNanos(t);
+		}
+		else {
+			final DateFormat formatter = new SimpleDateFormat("yyyyMMdd HHmmss.SSS");		
+			try {
+				Date date = formatter.parse(matcher.group(1));
+				ts = date.getTime();			
+			} catch (ParseException e) {
+				e.printStackTrace();
+				return null;
+			}		
+			timestamp = TmfTimestamp.fromNanos(ts*1000000L);
+		}
+				
 		TextTraceEventContent content = null;
 				
 		if (matcher.group(2).equals("JSON")) {
 			final JSONParser jsonParser = new JSONParser();	
 			JSONObject jo = null;
 			try {
-				jo = (JSONObject) jsonParser.parse(matcher.group(4));
+				
+								
+				jo = (JSONObject) jsonParser.parse(matcher.group(5));
 				
 				NUOPCEventType eventType = NUOPCEventType.from(jo);
 				if (eventType == NUOPCEventType.HEADER) {
 					setJSONVersion(jo);
 				}
+				/*
+				else if (eventType == NUOPCEventType.CONTROL) {
 				
+					JSONObject jCtrl = (JSONObject) jo.get("ctrl");
+					String sysTimeStr = (String) jCtrl.get("sysTime");
+					if (sysTimeStr != null) {
+						int idx = sysTimeStr.indexOf(".");
+						sysTimeStr = sysTimeStr.substring(idx+4, idx+7);
+						long increment = Long.valueOf(sysTimeStr) * 1000;
+						timestamp = TmfTimestamp.fromNanos(ts*1000000L + increment);
+					}
+				}
+				*/
+								
 				content = new TextTraceEventContent(new String[] {"pet", "json"});
 				content.setFieldValue("pet", matcher.group(3));
 				content.setFieldValue("json", jo);
@@ -114,7 +139,7 @@ public class NUOPCTrace extends TextTrace<NUOPCTraceEvent> {
 		else {	
 			content = new TextTraceEventContent(new String[] {"pet", "logmsg"});
 			content.setFieldValue("pet", matcher.group(3));
-			content.setFieldValue("logmsg", matcher.group(4));
+			content.setFieldValue("logmsg", matcher.group(5));
 			return new NUOPCTraceEvent(this, timestamp, NUOPCEventType.from(matcher.group(2)), content);
 		}
 		
