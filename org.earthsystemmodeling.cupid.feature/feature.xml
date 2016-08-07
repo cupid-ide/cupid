@@ -64,6 +64,36 @@ DEALINGS IN THE SOFTWARE.
       <import plugin="org.eclipse.compare" version="3.5.501" match="greaterOrEqual"/>
       <import plugin="org.eclipse.ltk.core.refactoring" version="3.6.101" match="greaterOrEqual"/>
       <import feature="org.eclipse.ptp" version="8.0.0" match="greaterOrEqual"/>
+      <import plugin="org.eclipse.jface"/>
+      <import plugin="org.eclipse.ui.workbench.texteditor" version="3.9.100" match="greaterOrEqual"/>
+      <import plugin="org.eclipse.emf.ecore"/>
+      <import plugin="org.eclipse.emf.common"/>
+      <import plugin="org.eclipse.emf.ecore.xmi" version="2.11.1" match="greaterOrEqual"/>
+      <import plugin="org.apache.commons.lang" version="2.6.0" match="greaterOrEqual"/>
+      <import plugin="org.eclipse.jface.text" version="3.10.0" match="greaterOrEqual"/>
+      <import plugin="org.eclipse.photran.cdtinterface" version="9.0.0" match="greaterOrEqual"/>
+      <import plugin="org.eclipse.photran.core" version="9.0.0" match="greaterOrEqual"/>
+      <import plugin="org.earthsystemmodeling.cupid" version="0.2.0" match="greaterOrEqual"/>
+      <import plugin="org.eclipse.photran.core.vpg" version="9.0.0" match="greaterOrEqual"/>
+      <import plugin="org.eclipse.ui.editors" version="3.9.0" match="greaterOrEqual"/>
+      <import plugin="org.eclipse.swt"/>
+      <import plugin="com.google.guava"/>
+      <import plugin="org.eclipse.ui.forms"/>
+      <import plugin="org.eclipse.ui.workbench"/>
+      <import plugin="org.eclipse.ui.ide" version="3.11.0" match="greaterOrEqual"/>
+      <import plugin="org.eclipse.core.jobs"/>
+      <import plugin="org.eclipse.xtext.xbase.lib"/>
+      <import plugin="org.eclipse.xtend.lib.macro"/>
+      <import plugin="org.eclipse.sirius"/>
+      <import plugin="org.eclipse.sirius.common.acceleo.aql"/>
+      <import plugin="org.earthsystemmodeling.cupid.nuopcmodel" version="0.1.0" match="greaterOrEqual"/>
+      <import plugin="org.eclipse.emf.edit"/>
+      <import plugin="org.eclipse.emf.edit.ui"/>
+      <import plugin="org.eclipse.tracecompass.tmf.core"/>
+      <import plugin="org.eclipse.tracecompass.tmf.ui"/>
+      <import plugin="org.eclipse.jdt.annotation"/>
+      <import plugin="org.eclipse.tracecompass.statesystem.core"/>
+      <import plugin="org.swtchart"/>
    </requires>
 
    <plugin
@@ -102,6 +132,13 @@ DEALINGS IN THE SOFTWARE.
 
    <plugin
          id="org.earthsystemmodeling.cupid.nuopcmodel.editor"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"
+         unpack="false"/>
+
+   <plugin
+         id="org.earthsystemmodeling.cupid.trace"
          download-size="0"
          install-size="0"
          version="0.0.0"
