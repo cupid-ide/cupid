@@ -18,7 +18,7 @@
 <repository location="http://download.eclipse.org/releases/mars"/>
 </location>
 <location includeAllPlatforms="false" includeConfigurePhase="true" includeMode="planner" includeSource="true" type="InstallableUnit">
-<unit id="org.polarion.eclipse.team.svn.connector.svnkit18.feature.group" version="5.0.2.I20151228-1700"/>
+<unit id="org.polarion.eclipse.team.svn.connector.svnkit18.feature.group" version="5.0.3.I20160701-1700"/>
 <repository location="http://community.polarion.com/projects/subversive/download/eclipse/5.0/update-site/"/>
 </location>
 </locations>
