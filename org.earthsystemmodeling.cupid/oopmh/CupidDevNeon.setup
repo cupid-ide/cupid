@@ -113,7 +113,7 @@
     <repository
         url="http://download.eclipse.org/tracecompass/releases/1.2.1/repository/"/>
     <repository
-        url=" http://download.eclipse.org/tracecompass/stable/repository"/>
+        url="http://download.eclipse.org/tracecompass/stable/repository"/>
     <description></description>
   </setupTask>
   <setupTask
@@ -305,7 +305,7 @@
         <repository
             url="http://download.eclipse.org/releases/neon"/>
         <repository
-            url=" http://download.eclipse.org/tracecompass/stable/repository"/>
+            url="http://download.eclipse.org/tracecompass/stable/repository"/>
       </repositoryList>
     </targlet>
   </setupTask>
