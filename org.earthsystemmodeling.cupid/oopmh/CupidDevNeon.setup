@@ -97,7 +97,8 @@
       label="Trace Compass"
       licenseConfirmationDisabled="true">
     <requirement
-        name="org.eclipse.tracecompass.tmf.feature.group"/>
+        name="org.eclipse.tracecompass.tmf.feature.group"
+        versionRange="2.0.1"/>
     <requirement
         name="org.eclipse.tracecompass.ctf.feature.group"/>
     <requirement
