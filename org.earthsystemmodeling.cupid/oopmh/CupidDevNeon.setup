@@ -111,8 +111,6 @@
     <requirement
         name="org.eclipse.tracecompass.tmf.pcap.feature.group"/>
     <repository
-        url="http://download.eclipse.org/tracecompass/releases/1.2.1/repository/"/>
-    <repository
         url="http://download.eclipse.org/tracecompass/stable/repository"/>
     <description></description>
   </setupTask>
