@@ -58,6 +58,23 @@
             name="NUOPC State Explorer"
             restorable="true">
       </view>
+      <view
+            category="org.earthsystemmodeling.cupid"
+            class="org.earthsystemmodeling.cupid.trace.NUOPCCallStackView"
+            icon="icons/stack.png"
+            id="org.earthsystemmodeling.cupid.trace.NUOPCCallStackView"
+            name="NUOPC Call Stack View"
+            restorable="true">
+      </view>
+   </extension>
+   
+   <extension
+         point="org.eclipse.tracecompass.tmf.ui.symbolProvider">
+      <providerFactory
+            class="org.earthsystemmodeling.cupid.trace.NUOPCSymbolProviderFactory"
+            id="org.earthsystemmodeling.cupid.trace.NUOPCSymbolProviderFactory"
+            priority="60">
+      </providerFactory>
    </extension>
 
 </plugin>

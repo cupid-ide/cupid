@@ -105,8 +105,13 @@ public class NUOPCTrace extends TextTrace<NUOPCTraceEvent> {
 			JSONObject jo = null;
 			try {
 				
-								
-				jo = (JSONObject) jsonParser.parse(matcher.group(5));
+				//try {			
+					jo = (JSONObject) jsonParser.parse(matcher.group(5));
+				//}
+				//catch(ClassCastException cce) {
+				//	System.out.println(matcher.group(5));
+				//	cce.printStackTrace();
+				//}
 				
 				NUOPCEventType eventType = NUOPCEventType.from(jo);
 				if (eventType == NUOPCEventType.HEADER) {

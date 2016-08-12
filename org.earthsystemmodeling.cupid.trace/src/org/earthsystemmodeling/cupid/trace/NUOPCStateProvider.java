@@ -44,7 +44,8 @@ public class NUOPCStateProvider extends AbstractTmfStateProvider {
         return new NUOPCStateProvider((NUOPCTrace) getTrace());
     }
 
-    @Override
+    @SuppressWarnings("unchecked")
+	@Override
     protected void eventHandle(ITmfEvent event) {
     
     	ITmfStateSystemBuilder ss = getStateSystemBuilder();
@@ -134,6 +135,19 @@ public class NUOPCStateProvider extends AbstractTmfStateProvider {
             		int quark = ss.getQuarkAbsoluteAndAdd("component", esmfid, "attribute", key.toString());
             		ITmfStateValue value = newValueString(val);
             		ss.modifyAttribute(ts, value, quark);
+            		
+            		//handle special cases
+            		if (key.toString().equals("InitializePhaseMap$NUOPC$Component")) {
+            			JSONArray jIPD = (JSONArray) jComp.get(key);
+            			jIPD.forEach(item -> {
+            				String[] keyVal = item.toString().split("=");
+            				int phaseNo = Integer.valueOf(keyVal[1]);
+            				String phaseLabel = keyVal[0];
+            				int phaseQuark = ss.getQuarkAbsoluteAndAdd("component", esmfid, "IPM", phaseLabel);
+            				ss.modifyAttribute(ts, TmfStateValue.newValueInt(phaseNo), phaseQuark);
+            			});
+            		}
+            		
             	}
 
             }

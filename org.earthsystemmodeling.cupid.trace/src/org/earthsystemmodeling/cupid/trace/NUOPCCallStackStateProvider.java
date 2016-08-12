@@ -1,6 +1,9 @@
 package org.earthsystemmodeling.cupid.trace;
 
 import org.eclipse.jdt.annotation.Nullable;
+import org.eclipse.tracecompass.statesystem.core.ITmfStateSystem;
+import org.eclipse.tracecompass.statesystem.core.exceptions.StateSystemDisposedException;
+import org.eclipse.tracecompass.statesystem.core.interval.ITmfStateInterval;
 import org.eclipse.tracecompass.statesystem.core.statevalue.ITmfStateValue;
 import org.eclipse.tracecompass.statesystem.core.statevalue.TmfStateValue;
 import org.eclipse.tracecompass.tmf.core.callstack.CallStackStateProvider;
@@ -53,36 +56,61 @@ public class NUOPCCallStackStateProvider extends CallStackStateProvider {
 	}
 	*/
 	
+	private ITmfStateSystem stateSystem;
+	
+	private String getFunctionName(long ts, String id, String compName, String method, String phase) {
+		
+		String toReturn =  compName + " " + method + " " + phase;
+		
+		if (stateSystem == null) {
+		 
+			NUOPCStateSystemAnalysisModule module = (NUOPCStateSystemAnalysisModule) getTrace().getAnalysisModule(NUOPCStateSystemAnalysisModule.ID);
+			if (module == null) return toReturn;
+			module.schedule();
+		
+			if (!module.waitForInitialization()) {
+				return toReturn;
+			}	
+	        	
+			stateSystem = module.getStateSystem();
+			if (stateSystem == null) return toReturn;
+			stateSystem.waitUntilBuilt(1000);
+	        
+		}
+				
+		if (ts < stateSystem.getStartTime() || ts > stateSystem.getCurrentEndTime()) return toReturn;
 
+		if (method.equals("init")) {
+			int quarkPhaseMap = stateSystem.optQuarkAbsolute("component", id, "IPM");
+			if (quarkPhaseMap != ITmfStateSystem.INVALID_ATTRIBUTE) {
+				StringBuffer phaseLabels = new StringBuffer();
+				stateSystem.getSubAttributes(quarkPhaseMap, false).forEach(q -> {
+					ITmfStateInterval stateItvl;
+					try {
+						stateItvl = stateSystem.querySingleState(ts, q);
+						if (phaseLabels.length() == 0 && !stateItvl.getStateValue().isNull()) {
+							int phaseNo = stateItvl.getStateValue().unboxInt();
+							if (phaseNo == Integer.valueOf(phase)) {
+								phaseLabels.append(stateSystem.getAttributeName(q));							
+							}
+						}
+					} catch (StateSystemDisposedException e) {
+						return;
+					}
+					
+				});
+				if (phaseLabels.length() > 0) return compName + ": " + phaseLabels.toString();
+			}
+		}
+		
+		return toReturn;
+		
+	}
+	
+	private static final boolean includeEpiloguePrologue = true;
+	
 	@Override
 	protected @Nullable ITmfStateValue functionEntry(ITmfEvent event) {
-		
-		/*
-		if (event.getType() == NUOPCEventType.METADATA_COMPONENT) {
-			JSONObject jObj = (JSONObject) event.getContent().getField("json").getValue();
-        	JSONObject jComp = (JSONObject) jObj.get("comp");
-        	            	
-        	String compName = jComp.getOrDefault("CompName$NUOPC$Instance", "").toString();
-        	if (!compName.equals("")) {
-        		
-        		if (phaseLabelMap.containsKey(compName)) return null;  //only process once
-        		
-        		if (jComp.containsKey("InitializePhaseMap$NUOPC$Component")) {
-        			
-        			phaseLabelMap.putIfAbsent(compName, new HashMap<>());
-    				Map<String,String> labelMap = phaseLabelMap.get(compName);
-    				
-        			JSONArray jIMP = (JSONArray) jComp.get("InitializePhaseMap$NUOPC$Component");
-        			jIMP.forEach(entry -> {
-        				String[] keyVal = entry.toString().split("=");
-        				labelMap.put(keyVal[0], keyVal[1]);
-        			});
-        		}
-        	}
-        	return null;
-        	
-		}
-		*/
 		
 		JSONObject jObj = (JSONObject) event.getContent().getField("json").getValue();
 		JSONObject jEvent = (JSONObject) jObj.get("ctrl");
@@ -92,22 +120,26 @@ public class NUOPCCallStackStateProvider extends CallStackStateProvider {
 			String phase = jEvent.get("phase").toString();
 			String compName = jEvent.get("compName").toString();
 			String method = jEvent.get("method").toString();
+			String id = jEvent.get("ESMFID").toString();
 			
-			//if (method.equals("init")) {
-			//	String phaseLabel = findInitPhaseLabel(compName, phase);
-			//	if (phaseLabel != null) phase = phase + "(" + phaseLabel + ")";  //replace number with label
+			String funcName = getFunctionName(event.getTimestamp().toNanos(), id, compName, method, phase);
+			
+			//if (funcName == null) {
+			//	System.out.println(event);
 			//}
 			
 			if (eventName.equals("start_prologue")) {
-				method = method + " prologue";
+				//method = method + " prologue";
+				funcName += " prologue";
+				if (!includeEpiloguePrologue) return null;
 			}
 			else if (eventName.equals("start_epilogue")) {
-				method = method + " epilogue";
+				//method = method + " epilogue";
+				funcName += " epilogue";
+				if (!includeEpiloguePrologue) return null;
 			}
-			
-			
-			
-			return TmfStateValue.newValueString(compName + " " + method + " " + phase);
+									
+			return TmfStateValue.newValueString(funcName);
 		}
 		else {
 			return null;
@@ -129,19 +161,22 @@ public class NUOPCCallStackStateProvider extends CallStackStateProvider {
 			String phase = jEvent.get("phase").toString();
 			String compName = jEvent.get("compName").toString();
 			String method = jEvent.get("method").toString();
+			String id = jEvent.get("ESMFID").toString();
 			
-			//if (method.equals("init")) {
-			//	String phaseLabel = findInitPhaseLabel(compName, phase);
-			//	if (phaseLabel != null) phase = phase + "(" + phaseLabel + ")";  //replace number with label
-			//}
+			String funcName = getFunctionName(event.getTimestamp().toNanos(), id, compName, method, phase);
 			
 			if (eventName.equals("stop_prologue")) {
-				method = method + " prologue";
+				//method = method + " prologue";
+				funcName += " prologue";
+				if (!includeEpiloguePrologue) return null;
 			}
 			else if (eventName.equals("stop_epilogue")) {
-				method = method + " epilogue";
+				//method = method + " epilogue";
+				funcName += " epilogue";
+				if (!includeEpiloguePrologue) return null;
 			}
-			return TmfStateValue.newValueString(compName + " " + method + " " + phase);
+			
+			return TmfStateValue.newValueString(funcName);
 		}
 		else {
 			return null;

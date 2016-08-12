@@ -191,6 +191,15 @@ public class NUOPCStateView extends TmfView {
             	int quarkName = stateSystem.optQuarkRelative(quarkComp, "attribute", "CompName$NUOPC$Instance");
             	compEntry.setName(unboxOrNull(fullState, quarkName));
             	
+            	//add clock, only current time for now
+            	int quarkClock = stateSystem.optQuarkRelative(quarkComp, "clock");
+            	if (quarkClock != ITmfStateSystem.INVALID_ATTRIBUTE) {
+            		NUOPCFieldEntry clockRoot = compEntry.getOrAddChild(NUOPCFieldEntryType.COMPONENT_CLOCK_ROOT);
+            		NUOPCFieldEntry clockCurrTime = clockRoot.getOrAddChild(NUOPCFieldEntryType.GENERAL, quarkClock);
+            		clockCurrTime.setName("current");
+            		clockCurrTime.setValue(unboxOrNull(fullState, quarkClock));
+            	}
+            	
             	if (filterMap.getOrDefault(NUOPCFieldEntryType.COMPONENT_ATTRIBUTE_ROOT, true)) {
             		addESMFAttributes(quarkComp, compEntry, NUOPCFieldEntryType.COMPONENT_ATTRIBUTE_ROOT, fullState);
             	}
@@ -329,53 +338,24 @@ public class NUOPCStateView extends TmfView {
 	            if (element instanceof NUOPCFieldEntry) {
 	            	NUOPCFieldEntry fe = (NUOPCFieldEntry) element;
 	            	if (columnIndex == 0) {
-	            	   	
-	            		//if (fe.getType() == NUOPCFieldEntryType.STATE) {
-	            	   	//	if (fe.getAttribute("intent") != null) {
-	            	   	//		return fe.getAttribute("intent");
-	            	   	//	}
-	            	   	//}
-	            	   	
 	            		if (fe.getName() != null) {
 	            	   		return fe.getName(); 
 	            	   	}
 	            	   	else {
 	            	   		return fe.getType().toString();
 	            	   	}
-	            		
 	            	}
 	            	else if (columnIndex == 1) {
 	            		if (fe.getValue() != null) {
 	            			return fe.getValue();
 	            		}
 	            	}
-	            	/*
-	            	else if (fe.getType() == NUOPCFieldEntryType.FIELD) {
-	            		if (columnIndex == 1) {
-	            			return fe.getAttribute("connected");
-	            		}
-	            		else if (columnIndex == 2) {
-	            			return fe.getAttribute("timestamp");
-	            		}
-	    	            else if (columnIndex == 3) {
-	    	            	return fe.getAttribute("petMinVal");
-	    	            }
-	    	            else if (columnIndex == 4) {
-	    	            	return fe.getAttribute("petMaxVal");
-	    	            }
-	            	}
-	            	*/
 	            }
 	            return super.getColumnText(element, columnIndex);
 	        }
 
 	        @Override
 	        public Color getBackground(Object element, int columnIndex) {
-	            //if (element instanceof StateEntry) {
-	            //    if (((StateEntry) element).isModified()) {
-	            //        return Display.getCurrent().getSystemColor(SWT.COLOR_YELLOW);
-	            //    }
-	            //}
 	            return super.getBackground(element, columnIndex);
 	        }
 	        
@@ -399,6 +379,7 @@ public class NUOPCStateView extends TmfView {
 		COMPONENT("Component", "component.png"),
 		COMPONENT_ATTRIBUTE_ROOT("Attributes", null),
 		COMPONENT_STATE_ROOT("States", null),
+		COMPONENT_CLOCK_ROOT("Clock", "clock.png"),
 				
 		STATE("State", "state.png"),
 		STATE_ATTRIBUTE_ROOT("Attributes", null),
@@ -409,7 +390,8 @@ public class NUOPCStateView extends TmfView {
 		FIELD_STATISTIC_ROOT("Statistics", null),
 		
 		ATTRIBUTE("Attribute", "attribute.png"),
-		STATISTIC("Statistic", null);
+		STATISTIC("Statistic", null),
+		GENERAL("General", null);
 		
 		String kind;
 		String icon;
