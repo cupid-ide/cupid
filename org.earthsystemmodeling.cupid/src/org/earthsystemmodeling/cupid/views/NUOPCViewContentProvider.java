@@ -23,8 +23,8 @@ import org.eclipse.photran.internal.core.vpg.PhotranVPG;
 import org.eclipse.photran.internal.ui.editor.FortranEditor;
 import org.eclipse.ui.PlatformUI;
 
-import alice.tuprolog.event.OutputListener;
-import alice.tuprolog.event.WarningListener;
+//import alice.tuprolog.event.OutputListener;
+//import alice.tuprolog.event.WarningListener;
 
 @SuppressWarnings("restriction")
 class NUOPCViewContentProvider implements IStructuredContentProvider, ITreeContentProvider {
@@ -33,8 +33,8 @@ class NUOPCViewContentProvider implements IStructuredContentProvider, ITreeConte
 	private FortranEditor editor;
 	
 	//private CodeDBIndex codeDB = CodeDBIndex.getInstance();
-	private WarningListener warningListener;
-	private OutputListener outputListener;
+	//private WarningListener warningListener;
+	//private OutputListener outputListener;
 	
 	static Map<Class<?>, Field[]> fieldCache = new HashMap<Class<?>, Field[]>();
 	

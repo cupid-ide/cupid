@@ -20,6 +20,7 @@ import org.eclipse.tracecompass.statesystem.core.statevalue.ITmfStateValue;
 import org.eclipse.tracecompass.tmf.core.signal.TmfTraceSelectedSignal;
 import org.eclipse.tracecompass.tmf.core.trace.ITmfTrace;
 import org.eclipse.tracecompass.tmf.core.trace.TmfTraceManager;
+import org.eclipse.tracecompass.tmf.core.trace.TmfTraceUtils;
 import org.eclipse.tracecompass.tmf.ui.viewers.tree.AbstractTmfTreeViewer;
 import org.eclipse.tracecompass.tmf.ui.viewers.tree.ITmfTreeColumnDataProvider;
 import org.eclipse.tracecompass.tmf.ui.viewers.tree.ITmfTreeViewerEntry;
@@ -144,12 +145,14 @@ public class NUOPCStateView extends TmfView {
 		@Override
 		protected ITmfTreeViewerEntry updateElements(long start, long end, boolean isSelection) {
 			
-	        ITmfTrace trace = getTrace();
+			ITmfTrace trace = getTrace();
 	        if (trace == null) {
 	        	return null;
 	        }
 	        
-	        NUOPCStateSystemAnalysisModule module = (NUOPCStateSystemAnalysisModule) trace.getAnalysisModule(NUOPCStateSystemAnalysisModule.ID);
+	        //NUOPCStateSystemAnalysisModule module = (NUOPCStateSystemAnalysisModule) trace.getAnalysisModule(NUOPCStateSystemAnalysisModule.ID);
+	        NUOPCStateSystemAnalysisModule module = TmfTraceUtils.getAnalysisModuleOfClass(trace, NUOPCStateSystemAnalysisModule.class, NUOPCStateSystemAnalysisModule.ID);
+
 	        if (module == null) return null;
 	        module.schedule();
             if (!module.waitForInitialization()) {
