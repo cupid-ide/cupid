@@ -30,6 +30,8 @@ public class NUOPCTrace extends TextTrace<NUOPCTraceEvent> {
 		return pattern;
 	}
 
+	
+	
 	/*
 	ITmfEventAspect<String> ESMF_LOGMSG_TYPE = new ITmfEventAspect<String>() {
         @Override

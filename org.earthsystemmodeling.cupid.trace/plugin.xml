@@ -19,6 +19,7 @@
       <module
             analysis_module="org.earthsystemmodeling.cupid.trace.NUOPCCallStackAnalysis"
             automatic="false"
+            icon="icons/stack.png"
             id="org.earthsystemmodeling.cupid.trace.NUOPCCallStackAnalysis"
             name="NUOPC Call Stack Analysis">
          <tracetype
@@ -31,6 +32,7 @@
       <module
             analysis_module="org.earthsystemmodeling.cupid.trace.NUOPCStateSystemAnalysisModule"
             automatic="false"
+            icon="icons/state.png"
             id="org.earthsystemmodeling.cupid.trace.NUOPCStateSystemAnalysisModule"
             name="NUOPC State System Analysis">
          <tracetype
@@ -75,6 +77,29 @@
             id="org.earthsystemmodeling.cupid.trace.NUOPCSymbolProviderFactory"
             priority="60">
       </providerFactory>
+   </extension>
+   
+    <extension
+         point="org.eclipse.ui.perspectiveExtensions">
+   
+      
+      <perspectiveExtension
+            targetID="org.eclipse.photran.ui.FortranPerspective">
+         <view
+               id="org.earthsystemmodeling.cupid.trace.NUOPCCallStackView"
+               minimized="false"
+               relationship="stack"
+               relative="org.eclipse.ui.console.ConsoleView"
+               visible="true">
+         </view>
+         <view
+               id="org.earthsystemmodeling.cupid.trace.NUOPCStateView"
+               minimized="false"
+               relationship="stack"
+               relative="org.eclipse.ui.console.ConsoleView"
+               visible="true">
+         </view>
+      </perspectiveExtension>
    </extension>
 
 </plugin>

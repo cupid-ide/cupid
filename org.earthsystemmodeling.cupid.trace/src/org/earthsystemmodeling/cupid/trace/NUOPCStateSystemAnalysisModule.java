@@ -7,6 +7,7 @@ import org.eclipse.tracecompass.statesystem.core.exceptions.StateSystemDisposedE
 import org.eclipse.tracecompass.statesystem.core.interval.ITmfStateInterval;
 import org.eclipse.tracecompass.statesystem.core.statevalue.ITmfStateValue;
 import org.eclipse.tracecompass.statesystem.core.statevalue.TmfStateValue;
+import org.eclipse.tracecompass.tmf.core.analysis.IAnalysisModule;
 import org.eclipse.tracecompass.tmf.core.statesystem.ITmfStateProvider;
 import org.eclipse.tracecompass.tmf.core.statesystem.TmfStateSystemAnalysisModule;
 
@@ -31,6 +32,7 @@ public class NUOPCStateSystemAnalysisModule extends TmfStateSystemAnalysisModule
 		return "NUOPC State System Analysis";
 	}
 	
+		
 	/*
 	public List<ITmfStateInterval> queryFieldState(long ts) {
 		int quark;
