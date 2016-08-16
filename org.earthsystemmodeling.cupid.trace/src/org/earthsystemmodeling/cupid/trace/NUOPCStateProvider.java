@@ -21,13 +21,14 @@ import org.json.simple.JSONObject;
 public class NUOPCStateProvider extends AbstractTmfStateProvider {
 
 	private Stack<String> activeComp;
-	
-	private String activeState;
-	private int activeStateQuark;
+	private Stack<String> activeState;
+	private Stack<Integer> activeStateQuark;
 	
     public NUOPCStateProvider(NUOPCTrace trace) {
         super(trace, "NUOPCStateSystemTraceID"); 
         activeComp = new Stack<>();
+        activeState = new Stack<>();
+        activeStateQuark = new Stack<>();
     }
 
     @Override
@@ -158,17 +159,17 @@ public class NUOPCStateProvider extends AbstractTmfStateProvider {
             	            	
             	String stateESMFID = jState.get("ESMFID$NUOPC$Instance").toString();
             	String compESMFID = activeComp.peek();
-            	activeState = stateESMFID;
-            	activeStateQuark = ss.getQuarkAbsoluteAndAdd("component", compESMFID, "state", stateESMFID);
+            	activeState.push(stateESMFID);
+            	activeStateQuark.push(ss.getQuarkAbsoluteAndAdd("component", compESMFID, "state", stateESMFID));
             	            	            	            	
             	for (Object key : jState.keySet()) {
             		String val = jState.get(key).toString();
             		if (key.equals("linkList")) {
             			JSONArray jLinkList = (JSONArray) jState.get("linkList");
-            			handleLinkList(ts, activeStateQuark, jLinkList);
+            			handleLinkList(ts, activeStateQuark.peek(), jLinkList);
             		}
             		else {
-            			int quark = ss.getQuarkRelativeAndAdd(activeStateQuark, "attribute", key.toString());
+            			int quark = ss.getQuarkRelativeAndAdd(activeStateQuark.peek(), "attribute", key.toString());
             			ITmfStateValue value = newValueString(val);
             			ss.modifyAttribute(ts, value, quark);
             		}
@@ -184,8 +185,15 @@ public class NUOPCStateProvider extends AbstractTmfStateProvider {
             	//String compESMFID = activeComp.peek();
             	
             	//sanity check
-            	if (!stateESMFID.equals(activeState)) {
-            		throw new RuntimeException("State context id does not match: " + stateESMFID + ", " + activeState);
+            	if (!stateESMFID.equals(activeState.peek())) {
+               		while (!activeState.isEmpty()) {
+            			activeState.pop();
+            			activeStateQuark.pop();
+            			if (activeState.peek().equals(stateESMFID)) break;
+            		}
+            		if (activeState.isEmpty()) {          		
+            			throw new RuntimeException("State stack empty before finding state id: " + stateESMFID);
+            		}
             	}
             	
             	//TODO: Is there a cleaner way to handle this?
@@ -199,13 +207,13 @@ public class NUOPCStateProvider extends AbstractTmfStateProvider {
             		
             		if (key.equals("petMinVal$NUOPC$Instance") || key.equals("petMaxVal$NUOPC$Instance")) {
                 		//statistics
-            			int quark = ss.getQuarkRelativeAndAdd(activeStateQuark, "field", fieldESMFID, "stats", key.toString());
+            			int quark = ss.getQuarkRelativeAndAdd(activeStateQuark.peek(), "field", fieldESMFID, "stats", key.toString());
                 		ITmfStateValue value = TmfStateValue.newValueDouble(Double.valueOf(val));
                 		ss.modifyAttribute(ts, value, quark);
             		}
             		else {
             			//standard attribute
-            			int quark = ss.getQuarkRelativeAndAdd(activeStateQuark, "field", fieldESMFID, "attribute", key.toString());
+            			int quark = ss.getQuarkRelativeAndAdd(activeStateQuark.peek(), "field", fieldESMFID, "attribute", key.toString());
             			ITmfStateValue value = newValueString(val);
             			ss.modifyAttribute(ts, value, quark);
             		}
@@ -247,8 +255,8 @@ public class NUOPCStateProvider extends AbstractTmfStateProvider {
     	
     	ITmfStateSystemBuilder ss = getStateSystemBuilder();
     		
-		int activeFieldQuark = ss.optQuarkRelative(activeStateQuark, "field");
-		int myFieldQuark = ss.optQuarkRelative(activeStateQuark, "field", fieldESMFID);
+		int activeFieldQuark = ss.optQuarkRelative(activeStateQuark.peek(), "field");
+		int myFieldQuark = ss.optQuarkRelative(activeStateQuark.peek(), "field", fieldESMFID);
 		
 		if (activeFieldQuark != ITmfStateSystem.INVALID_ATTRIBUTE && myFieldQuark != ITmfStateSystem.INVALID_ATTRIBUTE) {
 			List<Integer> matches = ss.getSubAttributes(activeFieldQuark, false);
