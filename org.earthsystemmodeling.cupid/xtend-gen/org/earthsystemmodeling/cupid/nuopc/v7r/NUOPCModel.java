@@ -1059,6 +1059,7 @@ public class NUOPCModel extends NUOPCComponent {
     }
     
     public void forward(final Model high) {
+      new NUOPCModel.InitSpecializations(this);
       EList<Grid> _grids = high.getGrids();
       Iterable<UniformGrid> _filter = Iterables.<UniformGrid>filter(_grids, UniformGrid.class);
       final Consumer<UniformGrid> _function = (UniformGrid g) -> {
@@ -1121,6 +1122,12 @@ public class NUOPCModel extends NUOPCComponent {
         final NUOPCModel.IPD.IPDv04p3 ipdv04p3 = new NUOPCModel.IPD.IPDv04p3(ipd);
         ipdv04p3.forward(high);
       }
+      if (((Objects.equal(high.getIPDVersion(), IPDVersion.IP_DV02) || 
+        Objects.equal(high.getIPDVersion(), IPDVersion.IP_DV03)) || 
+        Objects.equal(high.getIPDVersion(), IPDVersion.IP_DV04))) {
+        final NUOPCModel.DataInitialize dataInit = new NUOPCModel.DataInitialize(this.initSpecs);
+        dataInit.forward(high);
+      }
     }
   }
   
@@ -1134,6 +1141,7 @@ public class NUOPCModel extends NUOPCComponent {
     
     public InitSpecializations(final NUOPCModel.Initialization parent) {
       super(parent);
+      parent.setOrAddChild(this);
     }
     
     @Override
@@ -1285,12 +1293,25 @@ public class NUOPCModel extends NUOPCComponent {
   @Label(label = "DataInitialize")
   @MappingType("subroutine")
   public static class DataInitialize extends SpecializationMethodCodeConcept<NUOPCModel.InitSpecializations> {
+    private List<String> exportFieldsToInit;
+    
     public DataInitialize(final NUOPCModel.InitSpecializations parent) {
       super(parent, "NUOPC_Model", "label_DataInitialize");
+      ArrayList<String> _newArrayList = CollectionLiterals.<String>newArrayList();
+      this.exportFieldsToInit = _newArrayList;
       this.subroutineName = "DataInitialize";
       this.specLabel = "model_label_DataInitialize";
       this.paramGridComp = "gcomp";
       this.paramRC = "rc";
+    }
+    
+    public void forward(final Model high) {
+      EList<Field> _exportFields = high.getExportFields();
+      final Consumer<Field> _function = (Field f) -> {
+        String _name = f.getName();
+        this.exportFieldsToInit.add(_name);
+      };
+      _exportFields.forEach(_function);
     }
     
     @Override
@@ -1314,14 +1335,94 @@ public class NUOPCModel extends NUOPCComponent {
       _builder.append(this.paramRC, "    ");
       _builder.newLineIfNotEmpty();
       _builder.newLine();
+      _builder.append("\t");
+      _builder.append("type(ESMF_State) :: exportState");
+      _builder.newLine();
+      _builder.append("\t");
+      _builder.append("type(ESMF_Field) :: field");
+      _builder.newLine();
+      _builder.append("\t");
+      _builder.newLine();
       _builder.append("    ");
       _builder.append("rc = ESMF_SUCCESS");
       _builder.newLine();
       _builder.append("    ");
       _builder.newLine();
       _builder.append("    ");
-      _builder.append("! initialize export fields");
+      _builder.append("! query the Component for its clock, importState and exportState");
       _builder.newLine();
+      _builder.append("    ");
+      _builder.append("call NUOPC_ModelGet(");
+      _builder.append(this.paramGridComp, "    ");
+      _builder.append(", exportState=exportState, & ");
+      _builder.newLineIfNotEmpty();
+      _builder.append("        ");
+      _builder.append("rc=");
+      _builder.append(this.paramRC, "        ");
+      _builder.append(")");
+      _builder.newLineIfNotEmpty();
+      _builder.append("    ");
+      CharSequence _ESMFErrorCheck = ESMFCodeTemplates.ESMFErrorCheck(this.paramRC);
+      _builder.append(_ESMFErrorCheck, "    ");
+      _builder.newLineIfNotEmpty();
+      _builder.append("    ");
+      _builder.newLine();
+      _builder.append("    ");
+      _builder.append("! initialize export fields here and mark as updated");
+      _builder.newLine();
+      {
+        boolean _hasElements = false;
+        for(final String f : this.exportFieldsToInit) {
+          if (!_hasElements) {
+            _hasElements = true;
+          } else {
+            _builder.appendImmediate("\n", "    ");
+          }
+          _builder.append("    ");
+          _builder.append("call ESMF_StateGet(exportState, field=field, itemName=\"");
+          _builder.append(f, "    ");
+          _builder.append("\", rc=");
+          _builder.append(this.paramRC, "    ");
+          _builder.append(")");
+          _builder.newLineIfNotEmpty();
+          _builder.append("    ");
+          CharSequence _ESMFErrorCheck_1 = ESMFCodeTemplates.ESMFErrorCheck(this.paramRC);
+          _builder.append(_ESMFErrorCheck_1, "    ");
+          _builder.newLineIfNotEmpty();
+          _builder.append("    ");
+          _builder.append("call NUOPC_SetAttribute(field, name=\"Updated\", & ");
+          _builder.newLine();
+          _builder.append("    ");
+          _builder.append("    ");
+          _builder.append("value=\"true\", rc=");
+          _builder.append(this.paramRC, "        ");
+          _builder.append(")");
+          _builder.newLineIfNotEmpty();
+          _builder.append("    ");
+          CharSequence _ESMFErrorCheck_2 = ESMFCodeTemplates.ESMFErrorCheck(this.paramRC);
+          _builder.append(_ESMFErrorCheck_2, "    ");
+          _builder.newLineIfNotEmpty();
+        }
+      }
+      _builder.append("    ");
+      _builder.newLine();
+      _builder.append("    ");
+      _builder.append("! when all export fields are initialized, mark as complete");
+      _builder.newLine();
+      _builder.append("    ");
+      _builder.append("call NUOPC_CompAttributeSet(");
+      _builder.append(this.paramGridComp, "    ");
+      _builder.append(", name=\"InitializeDataComplete\", &");
+      _builder.newLineIfNotEmpty();
+      _builder.append("    \t");
+      _builder.append("value=\"true\", rc=");
+      _builder.append(this.paramRC, "    \t");
+      _builder.append(")");
+      _builder.newLineIfNotEmpty();
+      _builder.append("    ");
+      CharSequence _ESMFErrorCheck_3 = ESMFCodeTemplates.ESMFErrorCheck(this.paramRC);
+      _builder.append(_ESMFErrorCheck_3, "    ");
+      _builder.newLineIfNotEmpty();
       _builder.newLine();
       _builder.append("end subroutine");
       _builder.newLine();
