@@ -241,6 +241,8 @@
       <requirement
           name="org.eclipse.sirius.runtime.feature.group"/>
       <requirement
+          name="org.eclipse.sirius.runtime.ide.ui.feature.group"/>
+      <requirement
           name="org.eclipse.sirius.common.acceleo.aql"/>
       <requirement
           name="org.eclipse.remote.feature.group"/>
