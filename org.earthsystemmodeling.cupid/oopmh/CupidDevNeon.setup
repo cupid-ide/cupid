@@ -239,7 +239,7 @@
           name="org.eclipse.oomph.setup.feature.group"
           filter=""/>
       <requirement
-          name="org.eclipse.sirius"/>
+          name="org.eclipse.sirius.runtime.feature.group"/>
       <requirement
           name="org.eclipse.sirius.common.acceleo.aql"/>
       <requirement
