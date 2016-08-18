@@ -94,6 +94,7 @@ DEALINGS IN THE SOFTWARE.
       <import plugin="org.eclipse.jdt.annotation"/>
       <import plugin="org.eclipse.tracecompass.statesystem.core"/>
       <import plugin="org.swtchart"/>
+      <import feature="org.eclipse.tracecompass.tmf" version="2.0.1.201608051656" match="greaterOrEqual"/>
    </requires>
 
    <plugin

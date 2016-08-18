@@ -44,6 +44,7 @@ import org.eclipse.xtext.xbase.lib.CollectionLiterals;
 import org.eclipse.xtext.xbase.lib.Exceptions;
 import org.eclipse.xtext.xbase.lib.Functions.Function1;
 import org.eclipse.xtext.xbase.lib.IterableExtensions;
+import org.eclipse.xtext.xbase.lib.StringExtensions;
 
 @Label(label = "SetServices")
 @MappingType("subroutine")
@@ -353,8 +354,9 @@ public class SetServicesCodeConcept<P extends NUOPCComponent> extends CodeConcep
     EList<Advance> _advance = high.getAdvance();
     final Consumer<Advance> _function = (Advance a) -> {
       String _phaseLabel = a.getPhaseLabel();
-      boolean _notEquals = (!Objects.equal(_phaseLabel, null));
-      if (_notEquals) {
+      boolean _isNullOrEmpty = StringExtensions.isNullOrEmpty(_phaseLabel);
+      boolean _not = (!_isNullOrEmpty);
+      if (_not) {
         String _prefix = this._parent.prefix();
         String _plus = (_prefix + "_routine_Run");
         this._parent.importNUOPCGeneric.imports.put("routine_Run", _plus);

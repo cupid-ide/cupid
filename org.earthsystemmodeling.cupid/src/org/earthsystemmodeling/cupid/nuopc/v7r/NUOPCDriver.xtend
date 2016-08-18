@@ -1,6 +1,9 @@
 package org.earthsystemmodeling.cupid.nuopc.v7r
 
 import java.util.List
+import org.earthsystemmodeling.cupid.NUOPC.BaseModel
+import org.earthsystemmodeling.cupid.NUOPC.Connector
+import org.earthsystemmodeling.cupid.NUOPC.Driver
 import org.earthsystemmodeling.cupid.NUOPC.NUOPCFactory
 import org.earthsystemmodeling.cupid.annotation.Child
 import org.earthsystemmodeling.cupid.annotation.Doc
@@ -10,6 +13,9 @@ import org.earthsystemmodeling.cupid.annotation.Prop
 import org.earthsystemmodeling.cupid.nuopc.BasicCodeConcept
 import org.earthsystemmodeling.cupid.nuopc.CodeConcept
 import org.earthsystemmodeling.cupid.nuopc.CodeGenerationException
+import org.earthsystemmodeling.cupid.nuopc.ReverseEngineerException
+import org.earthsystemmodeling.cupid.nuopc.v7r.NUOPCBaseModel.AdvertiseField
+import org.earthsystemmodeling.cupid.nuopc.v7r.NUOPCBaseModel.RealizeField
 import org.eclipse.core.resources.IResource
 import org.eclipse.photran.internal.core.parser.ASTCallStmtNode
 import org.eclipse.photran.internal.core.parser.ASTModuleNode
@@ -25,17 +31,6 @@ import static org.earthsystemmodeling.cupid.nuopc.ESMFCodeTemplates.*
 import static org.earthsystemmodeling.cupid.util.CodeExtraction.*
 
 import static extension org.earthsystemmodeling.cupid.nuopc.ASTQuery.*
-import org.eclipse.photran.internal.core.parser.ASTUseStmtNode
-import org.eclipse.photran.internal.core.parser.ASTRenameNode
-import org.eclipse.photran.internal.core.parser.IASTNode
-import org.eclipse.photran.internal.core.parser.ISpecificationPartConstruct
-import org.earthsystemmodeling.cupid.NUOPC.Driver
-import org.earthsystemmodeling.cupid.NUOPC.Model
-import org.earthsystemmodeling.cupid.nuopc.v7r.NUOPCBaseModel.RealizeField
-import org.earthsystemmodeling.cupid.nuopc.v7r.NUOPCBaseModel.AdvertiseField
-import org.earthsystemmodeling.cupid.NUOPC.BaseModel
-import org.earthsystemmodeling.cupid.NUOPC.Connector
-import org.earthsystemmodeling.cupid.nuopc.ReverseEngineerException
 
 @Label(label="NUOPC Driver")
 @MappingType("module")
@@ -1158,7 +1153,7 @@ call NUOPC_DriverAddComp(«_parent.paramGridComp», srcCompLabel=«paramch(srcCo
 				addElem.slot = "1"
 				if (e.component instanceof BaseModel) {
 					addElem.compLabel = "\"" + e.component.name + "\""
-					if (e.phaseLabel != null) {
+					if (!e.phaseLabel.nullOrEmpty) {
 						addElem.phaseLabel = "\"" + e.phaseLabel + "\""
 					}
 				}

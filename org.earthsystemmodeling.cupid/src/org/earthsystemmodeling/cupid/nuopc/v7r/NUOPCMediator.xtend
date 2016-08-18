@@ -1007,7 +1007,7 @@ end subroutine
 		def forward(Mediator high) {
 			high.advance.forEach[m|
 				val adv = new MediatorAdvance(this)
-				if (m.phaseLabel != null) {
+				if (!m.phaseLabel.nullOrEmpty) {
 					adv.specPhaseLabel = "\"" + m.phaseLabel + "\"";
 				}
 			]

@@ -34,6 +34,7 @@ import org.eclipse.xtend2.lib.StringConcatenation;
 import org.eclipse.xtext.xbase.lib.CollectionLiterals;
 import org.eclipse.xtext.xbase.lib.Exceptions;
 import org.eclipse.xtext.xbase.lib.Pure;
+import org.eclipse.xtext.xbase.lib.StringExtensions;
 
 @Label(label = "NUOPC Mediator")
 @MappingType("module")
@@ -1299,8 +1300,9 @@ public class NUOPCMediator extends NUOPCComponent {
       final Consumer<Advance> _function = (Advance m) -> {
         final NUOPCMediator.MediatorAdvance adv = new NUOPCMediator.MediatorAdvance(this);
         String _phaseLabel = m.getPhaseLabel();
-        boolean _notEquals = (!Objects.equal(_phaseLabel, null));
-        if (_notEquals) {
+        boolean _isNullOrEmpty = StringExtensions.isNullOrEmpty(_phaseLabel);
+        boolean _not = (!_isNullOrEmpty);
+        if (_not) {
           String _phaseLabel_1 = m.getPhaseLabel();
           String _plus = ("\"" + _phaseLabel_1);
           String _plus_1 = (_plus + "\"");

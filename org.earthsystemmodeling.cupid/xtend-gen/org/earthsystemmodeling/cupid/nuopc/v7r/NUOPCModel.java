@@ -34,6 +34,7 @@ import org.eclipse.xtend2.lib.StringConcatenation;
 import org.eclipse.xtext.xbase.lib.CollectionLiterals;
 import org.eclipse.xtext.xbase.lib.Exceptions;
 import org.eclipse.xtext.xbase.lib.Pure;
+import org.eclipse.xtext.xbase.lib.StringExtensions;
 
 @Label(label = "NUOPC Model")
 @MappingType("module")
@@ -1527,8 +1528,9 @@ public class NUOPCModel extends NUOPCComponent {
       final Consumer<Advance> _function = (Advance a) -> {
         final NUOPCModel.ModelAdvance adv = new NUOPCModel.ModelAdvance(this);
         String _phaseLabel = a.getPhaseLabel();
-        boolean _notEquals = (!Objects.equal(_phaseLabel, null));
-        if (_notEquals) {
+        boolean _isNullOrEmpty = StringExtensions.isNullOrEmpty(_phaseLabel);
+        boolean _not = (!_isNullOrEmpty);
+        if (_not) {
           String _phaseLabel_1 = a.getPhaseLabel();
           String _plus = ("\"" + _phaseLabel_1);
           String _plus_1 = (_plus + "\"");

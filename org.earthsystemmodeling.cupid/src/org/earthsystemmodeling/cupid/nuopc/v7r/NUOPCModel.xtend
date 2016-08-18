@@ -1019,7 +1019,7 @@ end subroutine
 		def forward(Model high) {
 			high.advance.forEach[a|
 				val adv = new ModelAdvance(this)
-				if (a.phaseLabel != null) {
+				if (!a.phaseLabel.nullOrEmpty) {
 					adv.specPhaseLabel = "\"" + a.phaseLabel + "\"";
 				}
 			]

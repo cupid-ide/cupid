@@ -49,6 +49,7 @@ import org.eclipse.xtext.xbase.lib.Functions.Function1;
 import org.eclipse.xtext.xbase.lib.IterableExtensions;
 import org.eclipse.xtext.xbase.lib.ListExtensions;
 import org.eclipse.xtext.xbase.lib.Pure;
+import org.eclipse.xtext.xbase.lib.StringExtensions;
 
 @Label(label = "NUOPC Driver")
 @MappingType("module")
@@ -1581,8 +1582,9 @@ public class NUOPCDriver extends NUOPCComponent {
           String _plus_1 = (_plus + "\"");
           addElem.compLabel = _plus_1;
           String _phaseLabel = e.getPhaseLabel();
-          boolean _notEquals = (!Objects.equal(_phaseLabel, null));
-          if (_notEquals) {
+          boolean _isNullOrEmpty = StringExtensions.isNullOrEmpty(_phaseLabel);
+          boolean _not = (!_isNullOrEmpty);
+          if (_not) {
             String _phaseLabel_1 = e.getPhaseLabel();
             String _plus_2 = ("\"" + _phaseLabel_1);
             String _plus_3 = (_plus_2 + "\"");
