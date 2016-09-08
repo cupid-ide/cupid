@@ -338,6 +338,8 @@ program sw
             t_save(i_save) = (n-1) * dt
             i_save = i_save + 1
 
+            !print *, "height min/max = ", minval(h), maxval(h)
+
         end if
 
         !  Compute the accelerations

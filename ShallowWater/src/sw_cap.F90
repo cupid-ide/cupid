@@ -6,11 +6,14 @@ module sw_cap
         model_label_Advance => label_Advance
 		
     use sw_refactor, only: &
-        sw_nx => nx, &
-        sw_ny => ny, &
-        sw_XCoord => XCoord, &
-        sw_YCoord => YCoord, &
-        sw_height => height
+        sw_nx => nx, &          ! size of grid in x
+        sw_ny => ny, &          ! size of grid in y
+        sw_XCoord => XCoord, &  ! x coordinate
+        sw_YCoord => YCoord, &  ! y coordinate
+        sw_height => h, &       ! height field from model
+        sw_init, &              ! initialization subroutine
+        sw_run, &               ! run model a timestep
+        sw_final                ! finalize model
 
     implicit none
 
@@ -134,6 +137,9 @@ contains
             line=__LINE__, &
             file=__FILE__)) &
             return  ! bail out
+
+        ! initialize model itself
+        call sw_init()
     
     end subroutine
 
@@ -208,6 +214,7 @@ contains
         integer(ESMF_KIND_I4)         :: hour, minute
         type(ESMF_Field)              :: height
         integer, save                 :: timeslice = 1
+        real(ESMF_KIND_R8),pointer    :: fptr(:,:)
 
         rc = ESMF_SUCCESS
 
@@ -221,19 +228,23 @@ contains
     
         ! advance the model: currTime -> currTime + timeStep
 
-        call ESMF_ClockPrint(clock, options="currTime", &
-            preString="------>Advancing sw_cap from: ", rc=rc)
-        if (ESMF_LogFoundError(rcToCheck=rc, msg=ESMF_LOGERR_PASSTHRU, &
-            line=__LINE__, &
-            file=__FILE__)) &
-            return  ! bail out
+        !call ESMF_ClockPrint(clock, options="currTime", &
+        !    preString="------>Advancing sw_cap from: ", rc=rc)
+        !if (ESMF_LogFoundError(rcToCheck=rc, msg=ESMF_LOGERR_PASSTHRU, &
+        !    line=__LINE__, &
+        !    file=__FILE__)) &
+        !    return  ! bail out
 
-        call ESMF_ClockPrint(clock, options="stopTime", &
-            preString="--------------------------------> to: ", rc=rc)
-        if (ESMF_LogFoundError(rcToCheck=rc, msg=ESMF_LOGERR_PASSTHRU, &
-            line=__LINE__, &
-            file=__FILE__)) &
-            return  ! bail out
+        !call ESMF_ClockPrint(clock, options="stopTime", &
+        !    preString="--------------------------------> to: ", rc=rc)
+        !if (ESMF_LogFoundError(rcToCheck=rc, msg=ESMF_LOGERR_PASSTHRU, &
+        !    line=__LINE__, &
+        !    file=__FILE__)) &
+        !    return  ! bail out
+
+        ! call into model advance
+        call sw_run()  ! run a timestep
+
 
         call ESMF_ClockGet(clock, currTime=currTime, rc=rc)
         if (ESMF_LogFoundError(rcToCheck=rc, msg=ESMF_LOGERR_PASSTHRU, &
@@ -254,6 +265,14 @@ contains
                 line=__LINE__, &
                 file=__FILE__)) &
                 return  ! bail out
+
+            call ESMF_FieldGet(height, farrayPtr=fptr, rc=rc)
+            if (ESMF_LogFoundError(rcToCheck=rc, msg=ESMF_LOGERR_PASSTHRU, &
+                line=__LINE__, &
+                file=__FILE__)) &
+                return  ! bail out
+
+            print *, "min/max =", minval(fptr), maxval(fptr)
 
             call ESMF_FieldWrite(height, fileName="height.nc", &
                 variableName="height", overwrite=.true., &

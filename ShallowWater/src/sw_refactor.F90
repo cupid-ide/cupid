@@ -137,11 +137,14 @@ module sw_refactor
     integer :: i_save       ! index of saved field data
 
     ! make public what needs to be accessed by the cap
-    public :: nx
-    public :: ny
-    public :: XCoord
-    public :: YCoord
-    public :: height   ! will be exported by cap
+    public :: nx        ! used by cap
+    public :: ny        ! used by cap
+    public :: XCoord    ! used by cap
+    public :: YCoord    ! used by cap
+    public :: h         ! fluid depth, will be exported by cap
+    public :: sw_init   ! called by cap
+    public :: sw_run    ! called by cap
+    public :: sw_final  ! called by cap
 
     contains
 
@@ -352,6 +355,8 @@ module sw_refactor
             h_save(:,:,i_save) = h
             t_save(i_save) = (n-1) * dt
             i_save = i_save + 1
+
+            !print *, "height min/max = ", minval(h), maxval(h)
 
         end if
 
