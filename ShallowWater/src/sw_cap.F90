@@ -3,8 +3,10 @@ module sw_cap
     use ESMF
     use NUOPC
     use NUOPC_Model, model_SetServices => SetServices, &
-        model_label_Advance => label_Advance
-		
+        model_label_Advance => label_Advance, &
+        model_label_Finalize => label_Finalize
+
+    ! import needed parts of the model code
     use sw_refactor, only: &
         sw_nx => nx, &          ! size of grid in x
         sw_ny => ny, &          ! size of grid in y
@@ -57,6 +59,13 @@ contains
 
         call NUOPC_CompSpecialize(gcomp, specLabel=model_label_Advance, &
             specRoutine=ModelAdvance, rc=rc)
+        if (ESMF_LogFoundError(rcToCheck=rc, msg=ESMF_LOGERR_PASSTHRU, &
+            line=__LINE__, &
+            file=__FILE__)) &
+            return  ! bail out
+
+        call NUOPC_CompSpecialize(gcomp, specLabel=model_label_Finalize, &
+            specRoutine=FinalizeModel, rc=rc)
         if (ESMF_LogFoundError(rcToCheck=rc, msg=ESMF_LOGERR_PASSTHRU, &
             line=__LINE__, &
             file=__FILE__)) &
@@ -175,16 +184,16 @@ contains
             return  ! bail out
 
         call ESMF_GridGetCoord(swGrid, coordDim=1, &
-          staggerloc=ESMF_STAGGERLOC_CENTER, &
-          farrayPtr=coordX, rc=rc)
+            staggerloc=ESMF_STAGGERLOC_CENTER, &
+            farrayPtr=coordX, rc=rc)
         if (ESMF_LogFoundError(rcToCheck=rc, msg=ESMF_LOGERR_PASSTHRU, &
             line=__LINE__, &
             file=__FILE__)) &
             return  ! bail out
 
         call ESMF_GridGetCoord(swGrid, coordDim=2, &
-          staggerloc=ESMF_STAGGERLOC_CENTER, &
-          farrayPtr=coordY, rc=rc)
+            staggerloc=ESMF_STAGGERLOC_CENTER, &
+            farrayPtr=coordY, rc=rc)
         if (ESMF_LogFoundError(rcToCheck=rc, msg=ESMF_LOGERR_PASSTHRU, &
             line=__LINE__, &
             file=__FILE__)) &
@@ -228,22 +237,22 @@ contains
     
         ! advance the model: currTime -> currTime + timeStep
 
-        !call ESMF_ClockPrint(clock, options="currTime", &
-        !    preString="------>Advancing sw_cap from: ", rc=rc)
-        !if (ESMF_LogFoundError(rcToCheck=rc, msg=ESMF_LOGERR_PASSTHRU, &
-        !    line=__LINE__, &
-        !    file=__FILE__)) &
-        !    return  ! bail out
+        call ESMF_ClockPrint(clock, options="currTime", &
+            preString="------>Advancing sw_cap from: ", rc=rc)
+        if (ESMF_LogFoundError(rcToCheck=rc, msg=ESMF_LOGERR_PASSTHRU, &
+            line=__LINE__, &
+            file=__FILE__)) &
+            return  ! bail out
 
-        !call ESMF_ClockPrint(clock, options="stopTime", &
-        !    preString="--------------------------------> to: ", rc=rc)
-        !if (ESMF_LogFoundError(rcToCheck=rc, msg=ESMF_LOGERR_PASSTHRU, &
-        !    line=__LINE__, &
-        !    file=__FILE__)) &
-        !    return  ! bail out
+        call ESMF_ClockPrint(clock, options="stopTime", &
+            preString="--------------------------------> to: ", rc=rc)
+        if (ESMF_LogFoundError(rcToCheck=rc, msg=ESMF_LOGERR_PASSTHRU, &
+            line=__LINE__, &
+            file=__FILE__)) &
+            return  ! bail out
 
         ! call into model advance
-        call sw_run()  ! run a timestep
+        call sw_run()  ! run a timestep, currently fixed at 60sec
 
 
         call ESMF_ClockGet(clock, currTime=currTime, rc=rc)
@@ -288,9 +297,19 @@ contains
 
     end subroutine
 
+    subroutine FinalizeModel(gcomp, rc)
+        type(ESMF_GridComp)  :: gcomp
+        integer, intent(out) :: rc
 
+        rc = ESMF_SUCCESS
+    
+        ! finalize model
+        call sw_final()
+
+    end subroutine
 
 	
 end module
+
 
 
