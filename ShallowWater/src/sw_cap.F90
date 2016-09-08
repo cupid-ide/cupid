@@ -5,6 +5,13 @@ module sw_cap
     use NUOPC_Model, model_SetServices => SetServices, &
         model_label_Advance => label_Advance
 		
+    use sw_refactor, only: &
+        sw_nx => nx, &
+        sw_ny => ny, &
+        sw_XCoord => XCoord, &
+        sw_YCoord => YCoord, &
+        sw_height => height
+
     implicit none
 
     public SetServices
@@ -88,23 +95,11 @@ contains
             file=__FILE__)) &
             return  ! bail out
 
-        !call NUOPC_FieldDictionaryAddEntry("vwind", "m-2", rc=rc)
-        ! if (ESMF_LogFoundError(rcToCheck=rc, msg=ESMF_LOGERR_PASSTHRU, &
-        !    line=__LINE__, &
-        !    file=__FILE__)) &
-         !   return  ! bail out
-
         call NUOPC_Advertise(exportState, StandardName="height", name="h", rc=rc)
         if (ESMF_LogFoundError(rcToCheck=rc, msg=ESMF_LOGERR_PASSTHRU, &
             line=__LINE__, &
             file=__FILE__)) &
             return  ! bail out
-
-        !call NUOPC_Advertise(importState, StandardName="vwind", name="vwind", rc=rc)
-        !if (ESMF_LogFoundError(rcToCheck=rc, msg=ESMF_LOGERR_PASSTHRU, &
-        !    line=__LINE__, &
-        !    file=__FILE__)) &
-        !    return  ! bail out
     
     end subroutine
 
@@ -126,10 +121,9 @@ contains
             file=__FILE__)) &
             return  ! bail out
 
-
-        ! field "ExportField"
+        ! field "height"
         height = ESMF_FieldCreate(name="h", grid=ModelGrid, &
-            typekind=ESMF_TYPEKIND_R8, rc=rc)
+            farray=sw_height, indexflag=ESMF_INDEX_DELOCAL, rc=rc)
         if (ESMF_LogFoundError(rcToCheck=rc, msg=ESMF_LOGERR_PASSTHRU, &
             line=__LINE__, &
             file=__FILE__)) &
@@ -141,8 +135,6 @@ contains
             file=__FILE__)) &
             return  ! bail out
     
-    
-    
     end subroutine
 
 
@@ -150,13 +142,57 @@ contains
         type(ESMF_Grid) :: CreateGrid_ModelGrid
         integer, intent(out), optional :: rc
     
+        ! local variable
+        type(ESMF_Grid) :: swGrid
+        real(ESMF_KIND_R8), pointer :: coordX(:,:)
+        real(ESMF_KIND_R8), pointer :: coordY(:,:)
+        integer :: i, j
+
+        ! default to success
         rc = ESMF_SUCCESS
-        CreateGrid_ModelGrid = ESMF_GridCreateNoPeriDimUfrm(name="ModelGrid", &
+
+        swGrid = ESMF_GridCreateNoPeriDim(name="SWGrid", &
             minIndex=(/1, 1/), &
-            maxIndex=(/100, 100/), &
-            minCornerCoord=(/1.0_ESMF_KIND_R8, 1.0_ESMF_KIND_R8/), &
-            maxCornerCoord=(/100.0_ESMF_KIND_R8, 100.0_ESMF_KIND_R8/), &
+            maxIndex=(/sw_nx, sw_ny/), &  ! imported from sw_refactor
             rc=rc)
+        if (ESMF_LogFoundError(rcToCheck=rc, msg=ESMF_LOGERR_PASSTHRU, &
+            line=__LINE__, &
+            file=__FILE__)) &
+            return  ! bail out
+
+        ! add coordinates
+        call ESMF_GridAddCoord(swGrid, &
+            staggerloc=ESMF_STAGGERLOC_CENTER, rc=rc)
+        if (ESMF_LogFoundError(rcToCheck=rc, msg=ESMF_LOGERR_PASSTHRU, &
+            line=__LINE__, &
+            file=__FILE__)) &
+            return  ! bail out
+
+        call ESMF_GridGetCoord(swGrid, coordDim=1, &
+          staggerloc=ESMF_STAGGERLOC_CENTER, &
+          farrayPtr=coordX, rc=rc)
+        if (ESMF_LogFoundError(rcToCheck=rc, msg=ESMF_LOGERR_PASSTHRU, &
+            line=__LINE__, &
+            file=__FILE__)) &
+            return  ! bail out
+
+        call ESMF_GridGetCoord(swGrid, coordDim=2, &
+          staggerloc=ESMF_STAGGERLOC_CENTER, &
+          farrayPtr=coordY, rc=rc)
+        if (ESMF_LogFoundError(rcToCheck=rc, msg=ESMF_LOGERR_PASSTHRU, &
+            line=__LINE__, &
+            file=__FILE__)) &
+            return  ! bail out
+
+        ! set coordinates
+        do i=1,sw_nx
+            do j=1,sw_ny
+                coordX(i,j) = sw_XCoord(i,j)  ! from sw_refactor
+                coordY(i,j) = sw_YCoord(i,j)  ! from sw_refactor
+            enddo
+        enddo
+
+        CreateGrid_ModelGrid = swGrid
     
     end function    
 
@@ -169,6 +205,9 @@ contains
         type(ESMF_State)              :: importState, exportState
         type(ESMF_Time)               :: currTime
         type(ESMF_TimeInterval)       :: timeStep
+        integer(ESMF_KIND_I4)         :: hour, minute
+        type(ESMF_Field)              :: height
+        integer, save                 :: timeslice = 1
 
         rc = ESMF_SUCCESS
 
@@ -195,6 +234,38 @@ contains
             line=__LINE__, &
             file=__FILE__)) &
             return  ! bail out
+
+        call ESMF_ClockGet(clock, currTime=currTime, rc=rc)
+        if (ESMF_LogFoundError(rcToCheck=rc, msg=ESMF_LOGERR_PASSTHRU, &
+            line=__LINE__, &
+            file=__FILE__)) &
+            return  ! bail out
+
+        call ESMF_TimeGet(currTime, h=hour, m=minute, rc=rc)
+        if (ESMF_LogFoundError(rcToCheck=rc, msg=ESMF_LOGERR_PASSTHRU, &
+            line=__LINE__, &
+            file=__FILE__)) &
+            return  ! bail out
+
+        if (mod(hour,6)==0 .and. minute==0) then
+            ! get height from export state
+            call ESMF_StateGet(exportState, "h", height, rc=rc)
+            if (ESMF_LogFoundError(rcToCheck=rc, msg=ESMF_LOGERR_PASSTHRU, &
+                line=__LINE__, &
+                file=__FILE__)) &
+                return  ! bail out
+
+            call ESMF_FieldWrite(height, fileName="height.nc", &
+                variableName="height", overwrite=.true., &
+                timeslice=timeslice, rc=rc)
+            if (ESMF_LogFoundError(rcToCheck=rc, msg=ESMF_LOGERR_PASSTHRU, &
+                line=__LINE__, &
+                file=__FILE__)) &
+                return  ! bail out
+
+            timeslice = timeslice + 1
+        endif
+
 
     end subroutine
 

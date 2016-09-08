@@ -61,13 +61,13 @@ contains
             file=__FILE__)) &
             return
 
-        call ESMF_TimeSet(startTime, s=0, rc=rc)
+        call ESMF_TimeSet(startTime, yy=2016, mm=9, dd=1, h=0, m=0, rc=rc)
         if (ESMF_LogFoundError(rcToCheck=rc, msg=ESMF_LOGERR_PASSTHRU, &
             line=__LINE__, &
             file=__FILE__)) &
             return
 
-        call ESMF_TimeSet(stopTime, s=60*60*24*4, rc=rc)  ! 4 days
+        call ESMF_TimeSet(stopTime, yy=2016, mm=9, dd=5, h=0, m=0, rc=rc)  ! 4 days
         if (ESMF_LogFoundError(rcToCheck=rc, msg=ESMF_LOGERR_PASSTHRU, &
             line=__LINE__, &
             file=__FILE__)) &

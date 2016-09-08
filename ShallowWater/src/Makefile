@@ -60,6 +60,6 @@ sw_cap.o: sw_refactor.o
 dust:
 	rm -f PET*.ESMF_LogFile
 clean:
-	rm -f sw *.o *.mod sw_main
+	rm -f sw *.o *.mod sw_main *.nc
 distclean: dust clean
 		

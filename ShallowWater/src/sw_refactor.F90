@@ -23,6 +23,8 @@ module sw_refactor
 #endif
     implicit none
 
+    private
+
     ! interface for function to find mean of values in an array
     !interface
     !    function mean(arr)
@@ -133,6 +135,13 @@ module sw_refactor
     real(8) :: std_blob     ! Standard deviation of blob (m), orography = GAUSSIAN_BLOB
     real(8) :: max_u        ! max wind velocity
     integer :: i_save       ! index of saved field data
+
+    ! make public what needs to be accessed by the cap
+    public :: nx
+    public :: ny
+    public :: XCoord
+    public :: YCoord
+    public :: height   ! will be exported by cap
 
     contains
 
