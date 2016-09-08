@@ -18,7 +18,9 @@
 
 program sw
 
+#ifdef WITH_NETCDF
     use netcdf
+#endif
     implicit none
 
     ! interface for function to find mean of values in an array
@@ -299,6 +301,7 @@ program sw
     ! Section 2: Main loop  !
     !!!!!!!!!!!!!!!!!!!!!!!!!
 
+#ifdef WITH_NETCDF
     ! set up netcdf
     call check( nf90_create(output_file, NF90_CLOBBER, ncid) )
     call check( nf90_def_dim(ncid, "x", nx, x_dimid) )
@@ -315,6 +318,7 @@ program sw
     call check( nf90_def_var(ncid, "y", NF90_DOUBLE, coord_dimids, y_varid) )
 
     call check( nf90_enddef(ncid) )
+#endif
 
 
     do n=1, nt
@@ -327,7 +331,7 @@ program sw
             v_temp = reshape(v, (/nx*ny/))
             max_u = sqrt(maxval(u_temp*u_temp + v_temp*v_temp))
 
-            print *, "Time = ", (n-1)*dt/3600, " hours (max ", forecast_length_days*24, ") max(|u|) = ", max_u
+            print *, "Time = ", (n-1)*dt/3600, " hours (max ", forecast_length_days*24, ")"
             u_save(:,:,i_save) = u
             v_save(:,:,i_save) = v
             h_save(:,:,i_save) = h
@@ -384,6 +388,7 @@ program sw
 
     end do
 
+#ifdef WITH_NETCDF
     call check( nf90_put_var(ncid, x_varid, XCoord) )
     call check( nf90_put_var(ncid, y_varid, YCoord) )
 
@@ -392,7 +397,7 @@ program sw
     call check( nf90_put_var(ncid, h_varid, h_save) )
 
     call check( nf90_close(ncid) )
-
+#endif
 
     ! DEBUG
     !u_temp = reshape(u, (/nx*ny/))
@@ -506,6 +511,7 @@ subroutine lax_wendroff(nx, ny, dx, dy, dt, g, u, v, h, u_tendency, v_tendency, 
 
 end subroutine
 
+#ifdef WITH_NETCDF
 ! NetCDF status check
 subroutine check(status)
     use netcdf
@@ -516,6 +522,6 @@ subroutine check(status)
       stop "Stopped due to NetCDF error"
     end if
 end subroutine check
-
+#endif
 
 
