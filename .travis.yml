@@ -23,7 +23,7 @@ before_script:
   - if [[ "$TRAVIS_OS_NAME" == "linux" ]]; then sudo apt-get install gfortran libopenmpi-dev openmpi-bin openmpi-dev openjdk-7-jdk -y ;fi
   - if [[ "$TRAVIS_OS_NAME" == "linux" ]]; then export DISPLAY=:99.0  ;fi
   - if [[ "$TRAVIS_OS_NAME" == "linux" ]]; then sh -e /etc/init.d/xvfb start  ;fi
-  - if [[ "$TRAVIS_OS_NAME" == "linux" ] && [! -d "$HOME/ESMF-INSTALL/ESMF_7_0_0"]]; then $TRAVIS_BUILD_DIR/build_esmf.sh ESMF_7_0_0 openmpi ;fi
+  - if [[ "$TRAVIS_OS_NAME" == "linux" && ! -d "$HOME/ESMF-INSTALL/ESMF_7_0_0"]]; then $TRAVIS_BUILD_DIR/build_esmf.sh ESMF_7_0_0 openmpi ;fi
 
 # OSX
   - if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then brew update ;fi
