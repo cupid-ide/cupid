@@ -9,7 +9,7 @@ cd esmf
 git pull
 git checkout $1
 export ESMF_DIR=`pwd`
-export ESMF_COMM=openmpi
+export ESMF_COMM=$2
 export ESMF_COMPILER=gfortran
 export ESMF_INSTALL_PREFIX=$HOME/ESMF-INSTALL/$1
 make -j8
