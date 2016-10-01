@@ -30,6 +30,7 @@ before_script:
   - if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then brew install gcc ;fi
 #  - if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then travis_wait 30 brew install open-mpi --cc=gcc-4.9 --build-from-source ;fi
   - if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then $TRAVIS_BUILD_DIR/build_mpi.sh ;fi
+  - if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then export PATH=$HOME/openmpi-1.8.8-install/bin:$PATH ;fi
   - if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then $TRAVIS_BUILD_DIR/build_esmf.sh ESMF_7_0_0 openmpi ;fi  #always build on osx
 
 # common

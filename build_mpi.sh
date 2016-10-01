@@ -10,5 +10,5 @@ if [ ! -d "$HOME/openmpi-1.8.8-install"  ]; then
     make -j4 all
     make install
 fi
-export PATH=$HOME/openmpi-1.8.8-install/bin:$PATH
+#export PATH=$HOME/openmpi-1.8.8-install/bin:$PATH
 
