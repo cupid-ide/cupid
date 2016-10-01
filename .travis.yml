@@ -26,10 +26,10 @@ before_script:
   - if [[ "$TRAVIS_OS_NAME" == "linux" ]]; then if [[ ! -d "$HOME/ESMF-INSTALL/ESMF_7_0_0" ]]; then $TRAVIS_BUILD_DIR/build_esmf.sh ESMF_7_0_0 openmpi ;fi ;fi
 
 # OSX
-  - if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then brew update ;fi
+#  - if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then brew update ;fi
 #  - if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then travis_wait 30 brew install open-mpi --cc=gcc-4.9 --build-from-source ;fi
-  - if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then brew install mpich ;fi
-  - if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then $TRAVIS_BUILD_DIR/build_esmf.sh ESMF_7_0_0 mpich ;fi  #always build on osx
+  - if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then $TRAVIS_BUILD_DIR/build_mpi.sh ;fi
+  - if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then $TRAVIS_BUILD_DIR/build_esmf.sh ESMF_7_0_0 openmpi ;fi  #always build on osx
 
 # common
   - export ESMF_INSTALL_ROOT=$HOME/ESMF-INSTALL
