@@ -31,7 +31,7 @@ before_script:
 #  - if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then travis_wait 30 brew install open-mpi --cc=gcc-4.9 --build-from-source ;fi
   - if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then $TRAVIS_BUILD_DIR/build_mpi.sh ;fi
   - if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then export PATH=$HOME/openmpi-1.8.8-install/bin:$PATH ;fi
-  - if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then $TRAVIS_BUILD_DIR/build_esmf.sh ESMF_7_0_0 openmpi ;fi  #always build on osx
+#  - if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then $TRAVIS_BUILD_DIR/build_esmf.sh ESMF_7_0_0 openmpi ;fi  #always build on osx
 
 # common
   - export ESMF_INSTALL_ROOT=$HOME/ESMF-INSTALL
@@ -45,4 +45,4 @@ matrix:
     - os: linux
       jdk: oraclejdk8
 
-script: cd $TRAVIS_BUILD_DIR/org.earthsystemmodeling.cupid.releng && mvn clean verify
+script: cd $TRAVIS_BUILD_DIR/org.earthsystemmodeling.cupid.releng && mvn clean
