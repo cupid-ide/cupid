@@ -24,7 +24,6 @@ before_script:
   - if [[ "$TRAVIS_OS_NAME" == "linux" ]]; then sudo apt-get install gfortran libopenmpi-dev openmpi-bin openmpi-dev openjdk-7-jdk -y ;fi
   - if [[ "$TRAVIS_OS_NAME" == "linux" ]]; then export DISPLAY=:99.0  ;fi
   - if [[ "$TRAVIS_OS_NAME" == "linux" ]]; then sh -e /etc/init.d/xvfb start  ;fi
-  - if [[ "$TRAVIS_OS_NAME" == "linux" ]]; then if [[ ! -d "$HOME/ESMF-INSTALL/ESMF_7_0_0" ]]; then $TRAVIS_BUILD_DIR/build_esmf.sh ESMF_7_0_0 openmpi ;fi ;fi
 
 # OSX
   - if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then brew update ;fi
@@ -32,9 +31,9 @@ before_script:
 #  - if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then travis_wait 30 brew install open-mpi --cc=gcc-4.9 --build-from-source ;fi
   - if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then $TRAVIS_BUILD_DIR/build_mpi.sh ;fi
   - if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then export PATH=$HOME/openmpi-1.8.8-install/bin:$PATH ;fi
-  - if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then $TRAVIS_BUILD_DIR/build_esmf.sh ESMF_7_0_0 openmpi ;fi  #always build on osx
 
 # common
+  - if [[ ! -d "$HOME/ESMF-INSTALL/ESMF_7_0_0" ]]; then $TRAVIS_BUILD_DIR/build_esmf.sh ESMF_7_0_0 openmpi ;fi
   - export ESMF_INSTALL_ROOT=$HOME/ESMF-INSTALL
 
 osx_image: xcode8
