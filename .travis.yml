@@ -4,6 +4,7 @@ sudo: true
 cache:
   directories:
   - $HOME/.m2
+  - $HOME/esmf
   - $HOME/ESMF-INSTALL
   - $HOME/openmpi-1.8.8-install
 
