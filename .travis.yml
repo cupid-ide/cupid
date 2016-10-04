@@ -34,8 +34,8 @@ before_script:
   - if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then export PATH=$HOME/openmpi-1.8.8-install/bin:$PATH ;fi
 
 # common
-#  - if [[ ! -d "$HOME/ESMF-INSTALL/ESMF_7_0_0" ]]; then $TRAVIS_BUILD_DIR/build_esmf.sh ESMF_7_0_0 openmpi ;fi
-#  - export ESMF_INSTALL_ROOT=$HOME/ESMF-INSTALL
+  - if [[ ! -d "$HOME/ESMF-INSTALL/ESMF_7_0_0/lib" ]]; then $TRAVIS_BUILD_DIR/build_esmf.sh ESMF_7_0_0 openmpi ;fi
+  - export ESMF_INSTALL_ROOT=$HOME/ESMF-INSTALL
 
 osx_image: xcode8
 
