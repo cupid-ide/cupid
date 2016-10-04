@@ -46,4 +46,4 @@ matrix:
     - os: linux
       jdk: oraclejdk8
 
-script: cd $TRAVIS_BUILD_DIR/org.earthsystemmodeling.cupid.releng && mvn clean
+script: cd $TRAVIS_BUILD_DIR/org.earthsystemmodeling.cupid.releng && mvn clean verify
