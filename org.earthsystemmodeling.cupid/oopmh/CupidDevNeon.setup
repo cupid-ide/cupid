@@ -338,8 +338,6 @@
   </setupTask>
   <stream name="master"
       label="master"/>
-  <stream name="neon"
-      label="neon"/>
   <logicalProjectContainer
       xsi:type="setup:ProjectCatalog"
       href="index:/org.eclipse.setup#//@projectCatalogs[name='com.github']"/>
