@@ -154,14 +154,9 @@
     <requirement
         name="org.eclipse.sirius.runtime.acceleo.feature.group"
         filter=""/>
-    <repository
-        url="http://download.eclipse.org/sirius/updates/releases/3.1.1/mars"/>
-    <repository
-        url="http://download.eclipse.org/sirius/updates/releases/4.0.0/neon"/>
   </setupTask>
   <setupTask
       xsi:type="setup.p2:P2Task"
-      id=""
       label="SVN Connector">
     <requirement
         name="org.polarion.eclipse.team.svn.connector.feature.group"/>
