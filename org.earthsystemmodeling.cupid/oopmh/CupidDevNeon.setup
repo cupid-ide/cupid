@@ -154,6 +154,8 @@
     <requirement
         name="org.eclipse.sirius.runtime.acceleo.feature.group"
         filter=""/>
+    <repository 
+        url="http://download.eclipse.org/sirius/updates/releases/4.0.1/neon"/>
   </setupTask>
   <setupTask
       xsi:type="setup.p2:P2Task"
