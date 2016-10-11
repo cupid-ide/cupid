@@ -3,25 +3,22 @@
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>org.earthsystemmodeling.cupid</groupId>
 	<artifactId>org.earthsystemmodeling.cupid.releng</artifactId>
-	<version>1.0.0-SNAPSHOT</version>
+	<version>1.1.0-SNAPSHOT</version>
 	<packaging>pom</packaging>
 
 	<properties>
 		<tycho-version>0.24.0</tycho-version>
-		<!-- WARNING: if you change the version above, also change it in: /org.earthsystemmodeling.cupid.product/pom.xml 
-			For some reason I had to hard code it there. -->
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-		<eclipse-p2-repo.url>http://download.eclipse.org/releases/mars</eclipse-p2-repo.url>
-		<eclipse-release>mars</eclipse-release>
-		<eclipse-site>http://download.eclipse.org/releases/mars</eclipse-site>
-		<!-- <ptp-site>file:/data/git/org.eclipse.ptp/releng/org.eclipse.ptp.repo/target/repository</ptp-site> 
-			<remote-site>file:/data/git/org.eclipse.remote/releng/org.eclipse.remote.repo/target/repository</remote-site> -->
+		<!-- <eclipse-p2-repo.url>http://download.eclipse.org/releases/mars</eclipse-p2-repo.url> -->
+		<eclipse-release>neon</eclipse-release>
+		<eclipse-site>http://download.eclipse.org/releases/neon</eclipse-site>
 		<xtext.version>2.8.4</xtext.version>
 	</properties>
 
 	<!-- <repositories> <repository> <id>eclipse-p2-repo</id> <url>${eclipse-p2-repo.url}</url> 
 		<layout>p2</layout> </repository> </repositories> -->
 
+	<!-- 
 	<profiles>
 		<profile>
 			<id>build-individual-bundles</id>
@@ -34,7 +31,7 @@
 			</repositories>
 		</profile>
 	</profiles>
-
+	-->
 
 	<build>
 
@@ -109,7 +106,7 @@
 						<artifact>
 							<groupId>org.earthsystemmodeling.cupid</groupId>
 							<artifactId>org.earthsystemmodeling.cupid.targetplatform</artifactId>
-							<version>1.0.0-SNAPSHOT</version>
+							<version>1.1.0-SNAPSHOT</version>
 						</artifact>
 					</target>
 					<environments>
@@ -136,6 +133,19 @@
 					</environments>
 				</configuration>
 			</plugin>
+			
+			<!--  forces inclusion of all dependencies in p2 repo -->
+			<!-- 
+			<plugin>
+         		<groupId>org.eclipse.tycho</groupId>
+         		<artifactId>tycho-p2-repository-plugin</artifactId>
+         		<version>${tycho-version}</version>
+         		<configuration>
+            		<includeAllDependencies>true</includeAllDependencies>
+         		</configuration>
+      		</plugin>
+      		-->
+      		
 		</plugins>
 
 	</build>
@@ -159,13 +169,10 @@
 		<module>
 			../org.earthsystemmodeling.cupid.nuopcmodel.editor
 		</module>
+		<module>../org.earthsystemmodeling.cupid.trace</module>
 	</modules>
 
 	<repositories>
-		<!-- CUPID - copied from org.eclipse.ptp.master/pom.xml -->
-		<!-- <repository> <id>ptp-${eclipse-release}</id> <url>${ptp-site}</url> 
-			<layout>p2</layout> </repository> <repository> <id>remote-${eclipse-release}</id> 
-			<url>${remote-site}</url> <layout>p2</layout> </repository> -->
 		<repository>
 			<id>eclipse-${eclipse-release}</id>
 			<url>${eclipse-site}</url>
@@ -173,13 +180,5 @@
 		</repository>
 	</repositories>
 
-	<dependencies>
-		<dependency>
-			<groupId>junit</groupId>
-			<artifactId>junit</artifactId>
-			<version>4.12</version>
-			<scope>test</scope>
-		</dependency>
-	</dependencies>
-
+	
 </project>

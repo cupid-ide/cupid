@@ -36,43 +36,28 @@ public class AddComponentToDriver extends DesignFragment {
           return _builder.toString();
         }
       }.apply());
-    final Function0<NUOPCDriver> _function = new Function0<NUOPCDriver>() {
-      @Override
-      public NUOPCDriver apply() {
-        return AddComponentToDriver.this.Driver;
-      }
+    final Function0<NUOPCDriver> _function = () -> {
+      return this.Driver;
     };
     Task<NUOPCDriver> _task = new Task<NUOPCDriver>(
       "Import {Model} SetServices subroutine (only) into {Driver}", _function);
-    final Function0<NUOPCDriver.SetModelServices> _function_1 = new Function0<NUOPCDriver.SetModelServices>() {
-      @Override
-      public NUOPCDriver.SetModelServices apply() {
-        return AddComponentToDriver.this.Driver.initialization.initSpecs.setModelServices;
-      }
+    final Function0<NUOPCDriver.SetModelServices> _function_1 = () -> {
+      return this.Driver.initialization.initSpecs.setModelServices;
     };
     Task<NUOPCDriver.SetModelServices> _task_1 = new Task<NUOPCDriver.SetModelServices>(
       "Add call to NUOPC_DriverAddComp passing in the Model SetServices subroutine", _function_1);
-    final Function0<NUOPCDriver.SetModelServices_AddComp> _function_2 = new Function0<NUOPCDriver.SetModelServices_AddComp>() {
-      @Override
-      public NUOPCDriver.SetModelServices_AddComp apply() {
-        final Function1<NUOPCDriver.SetModelServices_AddComp, Boolean> _function = new Function1<NUOPCDriver.SetModelServices_AddComp, Boolean>() {
-          @Override
-          public Boolean apply(final NUOPCDriver.SetModelServices_AddComp it) {
-            return Boolean.valueOf(it.compLabel.equals((("\"" + AddComponentToDriver.this.Model.name) + "\"")));
-          }
-        };
-        return IterableExtensions.<NUOPCDriver.SetModelServices_AddComp>findFirst(AddComponentToDriver.this.Driver.initialization.initSpecs.setModelServices.addComps, _function);
-      }
+    final Function0<NUOPCDriver.SetModelServices_AddComp> _function_2 = () -> {
+      final Function1<NUOPCDriver.SetModelServices_AddComp, Boolean> _function_3 = (NUOPCDriver.SetModelServices_AddComp it) -> {
+        return Boolean.valueOf(it.compLabel.equals((("\"" + this.Model.name) + "\"")));
+      };
+      return IterableExtensions.<NUOPCDriver.SetModelServices_AddComp>findFirst(this.Driver.initialization.initSpecs.setModelServices.addComps, _function_3);
     };
     Task<NUOPCDriver.SetModelServices_AddComp> _task_2 = new Task<NUOPCDriver.SetModelServices_AddComp>(
       "", _function_2);
     Task<NUOPCDriver.SetModelServices> _subTasks = _task_1.subTasks(
       Collections.<Task<?>>unmodifiableList(CollectionLiterals.<Task<?>>newArrayList(_task_2)));
-    final Function0<NUOPCDriver.SetRunSequence> _function_3 = new Function0<NUOPCDriver.SetRunSequence>() {
-      @Override
-      public NUOPCDriver.SetRunSequence apply() {
-        return AddComponentToDriver.this.Driver.initialization.initSpecs.setRunSequence;
-      }
+    final Function0<NUOPCDriver.SetRunSequence> _function_3 = () -> {
+      return this.Driver.initialization.initSpecs.setRunSequence;
     };
     Task<NUOPCDriver.SetRunSequence> _task_3 = new Task<NUOPCDriver.SetRunSequence>(
       "Add run sequence element with call to NUOPC_DriverAddRunElement", _function_3, 

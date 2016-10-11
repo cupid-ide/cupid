@@ -1,0 +1,296 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?pde version="3.5"?>
+
+<product name="Cupid" uid="org.earthsytemmodeling.cupid.product" application="org.eclipse.ui.ide.workbench" version="1.1.0" useFeatures="false" includeLaunchers="true">
+
+
+   <configIni use="default">
+   </configIni>
+
+   <launcherArgs>
+      <programArgs>-consoleLog
+      </programArgs>
+      <vmArgsMac>-XstartOnFirstThread -Dorg.eclipse.swt.internal.carbon.smallFonts
+      </vmArgsMac>
+   </launcherArgs>
+
+   <windowImages/>
+
+
+   <launcher>
+      <solaris/>
+      <win useIco="false">
+         <bmp/>
+      </win>
+   </launcher>
+
+
+   <vm>
+      <linux include="false">org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/JavaSE-1.8</linux>
+   </vm>
+
+
+   <plugins>
+      <plugin id="com.google.guava"/>
+      <plugin id="com.ibm.icu"/>
+      <plugin id="com.jcraft.jsch"/>
+      <plugin id="javaewah"/>
+      <plugin id="javax.inject"/>
+      <plugin id="javax.xml"/>
+      <plugin id="org.antlr.runtime"/>
+      <plugin id="org.apache.batik.css"/>
+      <plugin id="org.apache.batik.util"/>
+      <plugin id="org.apache.batik.util.gui"/>
+      <plugin id="org.apache.commons.jxpath"/>
+      <plugin id="org.apache.commons.lang"/>
+      <plugin id="org.apache.log4j"/>
+      <plugin id="org.earthsystemmodeling.cupid"/>
+      <plugin id="org.earthsystemmodeling.cupid.nuopcmodel"/>
+      <plugin id="org.earthsystemmodeling.cupid.nuopcmodel.design"/>
+      <plugin id="org.earthsystemmodeling.cupid.nuopcmodel.edit"/>
+      <plugin id="org.earthsystemmodeling.cupid.nuopcmodel.editor"/>
+      <plugin id="org.earthsystemmodeling.cupid.template"/>
+      <plugin id="org.earthsystemmodeling.cupid.test" fragment="true"/>
+      <plugin id="org.earthsystemmodeling.cupid.trace"/>
+      <plugin id="org.eclipse.acceleo.annotations"/>
+      <plugin id="org.eclipse.acceleo.query"/>
+      <plugin id="org.eclipse.cdt.core"/>
+      <plugin id="org.eclipse.cdt.core.linux" fragment="true"/>
+      <plugin id="org.eclipse.cdt.core.linux.x86_64" fragment="true"/>
+      <plugin id="org.eclipse.cdt.core.native"/>
+      <plugin id="org.eclipse.cdt.debug.core"/>
+      <plugin id="org.eclipse.cdt.debug.ui"/>
+      <plugin id="org.eclipse.cdt.launch"/>
+      <plugin id="org.eclipse.cdt.make.core"/>
+      <plugin id="org.eclipse.cdt.make.ui"/>
+      <plugin id="org.eclipse.cdt.managedbuilder.core"/>
+      <plugin id="org.eclipse.cdt.managedbuilder.ui"/>
+      <plugin id="org.eclipse.cdt.ui"/>
+      <plugin id="org.eclipse.compare"/>
+      <plugin id="org.eclipse.compare.core"/>
+      <plugin id="org.eclipse.core.commands"/>
+      <plugin id="org.eclipse.core.contenttype"/>
+      <plugin id="org.eclipse.core.databinding"/>
+      <plugin id="org.eclipse.core.databinding.observable"/>
+      <plugin id="org.eclipse.core.databinding.property"/>
+      <plugin id="org.eclipse.core.expressions"/>
+      <plugin id="org.eclipse.core.filebuffers"/>
+      <plugin id="org.eclipse.core.filesystem"/>
+      <plugin id="org.eclipse.core.filesystem.linux.x86_64" fragment="true"/>
+      <plugin id="org.eclipse.core.jobs"/>
+      <plugin id="org.eclipse.core.net"/>
+      <plugin id="org.eclipse.core.net.linux.x86_64" fragment="true"/>
+      <plugin id="org.eclipse.core.resources"/>
+      <plugin id="org.eclipse.core.runtime"/>
+      <plugin id="org.eclipse.core.variables"/>
+      <plugin id="org.eclipse.debug.core"/>
+      <plugin id="org.eclipse.debug.ui"/>
+      <plugin id="org.eclipse.e4.core.commands"/>
+      <plugin id="org.eclipse.e4.core.contexts"/>
+      <plugin id="org.eclipse.e4.core.di"/>
+      <plugin id="org.eclipse.e4.core.di.annotations"/>
+      <plugin id="org.eclipse.e4.core.di.extensions"/>
+      <plugin id="org.eclipse.e4.core.services"/>
+      <plugin id="org.eclipse.e4.emf.xpath"/>
+      <plugin id="org.eclipse.e4.ui.bindings"/>
+      <plugin id="org.eclipse.e4.ui.css.core"/>
+      <plugin id="org.eclipse.e4.ui.css.swt"/>
+      <plugin id="org.eclipse.e4.ui.css.swt.theme"/>
+      <plugin id="org.eclipse.e4.ui.di"/>
+      <plugin id="org.eclipse.e4.ui.model.workbench"/>
+      <plugin id="org.eclipse.e4.ui.services"/>
+      <plugin id="org.eclipse.e4.ui.swt.gtk" fragment="true"/>
+      <plugin id="org.eclipse.e4.ui.widgets"/>
+      <plugin id="org.eclipse.e4.ui.workbench"/>
+      <plugin id="org.eclipse.e4.ui.workbench.addons.swt"/>
+      <plugin id="org.eclipse.e4.ui.workbench.renderers.swt"/>
+      <plugin id="org.eclipse.e4.ui.workbench.swt"/>
+      <plugin id="org.eclipse.e4.ui.workbench3"/>
+      <plugin id="org.eclipse.emf"/>
+      <plugin id="org.eclipse.emf.common"/>
+      <plugin id="org.eclipse.emf.common.ui"/>
+      <plugin id="org.eclipse.emf.ecore"/>
+      <plugin id="org.eclipse.emf.ecore.change"/>
+      <plugin id="org.eclipse.emf.ecore.xmi"/>
+      <plugin id="org.eclipse.emf.edit"/>
+      <plugin id="org.eclipse.emf.edit.ui"/>
+      <plugin id="org.eclipse.emf.emfstore.common"/>
+      <plugin id="org.eclipse.emf.transaction"/>
+      <plugin id="org.eclipse.emf.validation"/>
+      <plugin id="org.eclipse.emf.workspace"/>
+      <plugin id="org.eclipse.equinox.app"/>
+      <plugin id="org.eclipse.equinox.bidi"/>
+      <plugin id="org.eclipse.equinox.common"/>
+      <plugin id="org.eclipse.equinox.ds"/>
+      <plugin id="org.eclipse.equinox.event"/>
+      <plugin id="org.eclipse.equinox.p2.core"/>
+      <plugin id="org.eclipse.equinox.p2.engine"/>
+      <plugin id="org.eclipse.equinox.p2.metadata"/>
+      <plugin id="org.eclipse.equinox.p2.metadata.repository"/>
+      <plugin id="org.eclipse.equinox.p2.repository"/>
+      <plugin id="org.eclipse.equinox.preferences"/>
+      <plugin id="org.eclipse.equinox.registry"/>
+      <plugin id="org.eclipse.equinox.security"/>
+      <plugin id="org.eclipse.equinox.simpleconfigurator"/>
+      <plugin id="org.eclipse.equinox.util"/>
+      <plugin id="org.eclipse.help"/>
+      <plugin id="org.eclipse.jdt.annotation"/>
+      <plugin id="org.eclipse.jface"/>
+      <plugin id="org.eclipse.jface.databinding"/>
+      <plugin id="org.eclipse.jface.text"/>
+      <plugin id="org.eclipse.jgit"/>
+      <plugin id="org.eclipse.jsch.core"/>
+      <plugin id="org.eclipse.linuxtools.dataviewers.piechart"/>
+      <plugin id="org.eclipse.ltk.core.refactoring"/>
+      <plugin id="org.eclipse.ltk.ui.refactoring"/>
+      <plugin id="org.eclipse.osgi"/>
+      <plugin id="org.eclipse.osgi.compatibility.state" fragment="true"/>
+      <plugin id="org.eclipse.osgi.services"/>
+      <plugin id="org.eclipse.photran.cdtinterface"/>
+      <plugin id="org.eclipse.photran.core"/>
+      <plugin id="org.eclipse.photran.core.vpg"/>
+      <plugin id="org.eclipse.photran.ui"/>
+      <plugin id="org.eclipse.photran.ui.vpg"/>
+      <plugin id="org.eclipse.ptp.core"/>
+      <plugin id="org.eclipse.ptp.ems.core"/>
+      <plugin id="org.eclipse.ptp.ems.ui"/>
+      <plugin id="org.eclipse.ptp.rdt.sync.cdt.core"/>
+      <plugin id="org.eclipse.ptp.rdt.sync.cdt.ui"/>
+      <plugin id="org.eclipse.ptp.rdt.sync.core"/>
+      <plugin id="org.eclipse.ptp.rdt.sync.git.core"/>
+      <plugin id="org.eclipse.ptp.rdt.sync.ui"/>
+      <plugin id="org.eclipse.ptp.remote.server.core"/>
+      <plugin id="org.eclipse.ptp.rm.jaxb.control.core"/>
+      <plugin id="org.eclipse.ptp.rm.jaxb.control.ui"/>
+      <plugin id="org.eclipse.ptp.rm.jaxb.core"/>
+      <plugin id="org.eclipse.ptp.rm.jaxb.ui"/>
+      <plugin id="org.eclipse.ptp.rm.lml.da.server"/>
+      <plugin id="org.eclipse.remote.core"/>
+      <plugin id="org.eclipse.remote.jsch.core"/>
+      <plugin id="org.eclipse.remote.ui"/>
+      <plugin id="org.eclipse.search"/>
+      <plugin id="org.eclipse.sirius"/>
+      <plugin id="org.eclipse.sirius.common"/>
+      <plugin id="org.eclipse.sirius.common.acceleo.aql"/>
+      <plugin id="org.eclipse.sirius.ecore.extender"/>
+      <plugin id="org.eclipse.sirius.ext.base"/>
+      <plugin id="org.eclipse.sirius.ext.emf"/>
+      <plugin id="org.eclipse.sirius.ext.emf.tx"/>
+      <plugin id="org.eclipse.swt"/>
+      <plugin id="org.eclipse.swt.gtk.linux.x86_64" fragment="true"/>
+      <plugin id="org.eclipse.team.core"/>
+      <plugin id="org.eclipse.team.ui"/>
+      <plugin id="org.eclipse.text"/>
+      <plugin id="org.eclipse.tracecompass.common.core"/>
+      <plugin id="org.eclipse.tracecompass.segmentstore.core"/>
+      <plugin id="org.eclipse.tracecompass.statesystem.core"/>
+      <plugin id="org.eclipse.tracecompass.tmf.core"/>
+      <plugin id="org.eclipse.tracecompass.tmf.ui"/>
+      <plugin id="org.eclipse.ui"/>
+      <plugin id="org.eclipse.ui.console"/>
+      <plugin id="org.eclipse.ui.editors"/>
+      <plugin id="org.eclipse.ui.forms"/>
+      <plugin id="org.eclipse.ui.ide"/>
+      <plugin id="org.eclipse.ui.ide.application"/>
+      <plugin id="org.eclipse.ui.navigator"/>
+      <plugin id="org.eclipse.ui.navigator.resources"/>
+      <plugin id="org.eclipse.ui.views"/>
+      <plugin id="org.eclipse.ui.views.properties.tabbed"/>
+      <plugin id="org.eclipse.ui.workbench"/>
+      <plugin id="org.eclipse.ui.workbench.texteditor"/>
+      <plugin id="org.eclipse.xtend.lib"/>
+      <plugin id="org.eclipse.xtend.lib.macro"/>
+      <plugin id="org.eclipse.xtext.logging" fragment="true"/>
+      <plugin id="org.eclipse.xtext.xbase.lib"/>
+      <plugin id="org.hamcrest.core"/>
+      <plugin id="org.junit"/>
+      <plugin id="org.slf4j.api"/>
+      <plugin id="org.slf4j.impl.log4j12" fragment="true"/>
+      <plugin id="org.swtchart"/>
+      <plugin id="org.tukaani.xz"/>
+      <plugin id="org.w3c.css.sac"/>
+      <plugin id="org.w3c.dom.events"/>
+      <plugin id="org.w3c.dom.smil"/>
+      <plugin id="org.w3c.dom.svg"/>
+   </plugins>
+
+   <features>
+      <feature id="org.earthsystemmodeling.cupid.feature" version="1.1.0.qualifier"/>
+      <feature id="org.eclipse.tm.terminal.view.feature"/>
+      <feature id="org.eclipse.ptp.rdt.sync"/>
+      <feature id="org.eclipse.ptp.remote.terminal"/>
+      <feature id="org.eclipse.ptp.remote"/>
+      <feature id="org.eclipse.ptp.rm.ibm.ll"/>
+      <feature id="org.eclipse.ptp.core"/>
+      <feature id="org.eclipse.tm.terminal.connector.remote.feature"/>
+      <feature id="org.eclipse.ptp.etfw"/>
+      <feature id="org.eclipse.ptp"/>
+      <feature id="org.eclipse.ptp.rm.ibm.pe"/>
+      <feature id="org.eclipse.ptp.rdt.sync.cdt"/>
+      <feature id="org.eclipse.ptp.pldt"/>
+      <feature id="org.eclipse.tracecompass.tmf"/>
+      <feature id="org.eclipse.ptp.rm.slurm"/>
+      <feature id="org.eclipse.ptp.rm.ibm.platform.lsf"/>
+      <feature id="org.eclipse.tm.terminal.control.feature"/>
+      <feature id="org.eclipse.platform"/>
+      <feature id="org.eclipse.ecf.filetransfer.httpclient4.feature"/>
+      <feature id="org.eclipse.help"/>
+      <feature id="org.eclipse.ecf.filetransfer.httpclient4.ssl.feature"/>
+      <feature id="org.eclipse.emf.common"/>
+      <feature id="org.eclipse.equinox.p2.core.feature"/>
+      <feature id="org.eclipse.ecf.core.ssl.feature"/>
+      <feature id="org.eclipse.ecf.filetransfer.ssl.feature"/>
+      <feature id="org.eclipse.emf.ecore"/>
+      <feature id="org.eclipse.equinox.p2.user.ui"/>
+      <feature id="org.eclipse.equinox.p2.extras.feature"/>
+      <feature id="org.eclipse.rcp"/>
+      <feature id="org.eclipse.ecf.core.feature"/>
+      <feature id="org.eclipse.equinox.p2.rcp.feature"/>
+      <feature id="org.eclipse.ecf.filetransfer.feature"/>
+      <feature id="org.eclipse.e4.rcp"/>
+      <feature id="org.eclipse.ptp.fortran"/>
+      <feature id="org.eclipse.cdt"/>
+      <feature id="org.eclipse.cdt.gnu.dsf"/>
+      <feature id="org.eclipse.cdt.gnu.build"/>
+      <feature id="org.eclipse.photran"/>
+      <feature id="org.eclipse.ptp.etfw.tau.fortran"/>
+      <feature id="org.eclipse.cdt.platform"/>
+      <feature id="org.eclipse.photran.xlf"/>
+      <feature id="org.eclipse.ptp.rdt.sync.fortran"/>
+      <feature id="org.eclipse.ptp.pldt.fortran"/>
+      <feature id="org.eclipse.photran.intel"/>
+      <feature id="org.eclipse.cdt.native"/>
+      <feature id="org.eclipse.cdt.gnu.debug"/>
+      <feature id="org.eclipse.cdt.gdb"/>
+      <feature id="org.eclipse.remote"/>
+      <feature id="org.eclipse.remote.console"/>
+      <feature id="org.eclipse.xtext.runtime"/>
+      <feature id="org.eclipse.xtext.ui"/>
+      <feature id="org.eclipse.xtend.sdk"/>
+      <feature id="org.eclipse.xtext.xbase.lib"/>
+      <feature id="org.eclipse.xtext.xbase.lib.source"/>
+      <feature id="org.eclipse.gmf.runtime.thirdparty"/>
+      <feature id="org.eclipse.sirius.runtime"/>
+      <feature id="org.eclipse.sirius.runtime.ide.ui"/>
+   </features>
+
+   <configurations>
+      <plugin id="org.eclipse.core.runtime" autoStart="true" startLevel="0" />
+      <plugin id="org.eclipse.equinox.common" autoStart="true" startLevel="2" />
+      <plugin id="org.eclipse.equinox.ds" autoStart="true" startLevel="2" />
+      <plugin id="org.eclipse.equinox.event" autoStart="true" startLevel="2" />
+      <plugin id="org.eclipse.equinox.simpleconfigurator" autoStart="true" startLevel="1" />
+   </configurations>
+
+   <repositories>
+      <repository location="http://earthsystemmodeling.org/cupid/neon/" enabled="true" />
+   </repositories>
+
+   <preferencesInfo>
+      <targetfile overwrite="false"/>
+   </preferencesInfo>
+
+   <cssInfo>
+   </cssInfo>
+
+</product>

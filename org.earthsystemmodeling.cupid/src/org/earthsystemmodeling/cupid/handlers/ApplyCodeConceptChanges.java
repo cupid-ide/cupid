@@ -22,7 +22,6 @@ import org.eclipse.ltk.core.refactoring.Change;
 import org.eclipse.ltk.core.refactoring.RefactoringStatus;
 import org.eclipse.ltk.core.refactoring.RefactoringStatusEntry;
 import org.eclipse.ltk.core.refactoring.TextFileChange;
-import org.eclipse.photran.internal.core.vpg.PhotranVPG;
 
 @SuppressWarnings("restriction")
 public class ApplyCodeConceptChanges implements IRunnableWithProgress {

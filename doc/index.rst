@@ -11,7 +11,8 @@ Contents:
 
    overview
    install
-   howto
+   code
+   runtime
 
 
 Search

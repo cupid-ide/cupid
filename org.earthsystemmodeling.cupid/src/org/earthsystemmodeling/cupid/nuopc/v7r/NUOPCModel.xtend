@@ -22,6 +22,7 @@ import org.eclipse.photran.internal.core.parser.ASTNode
 import org.eclipse.xtend.lib.annotations.Accessors
 
 import static org.earthsystemmodeling.cupid.nuopc.ESMFCodeTemplates.*
+import org.earthsystemmodeling.cupid.NUOPC.IPDVersion
 
 @Label(label="NUOPC Model")
 @MappingType("module")
@@ -741,6 +742,8 @@ class NUOPCModel extends NUOPCComponent {
 		
 		def forward(Model high) {
 			
+			new InitSpecializations(this)
+			
 			high.grids.filter(UniformGrid).forEach[g|
 				val cug = new CreateUniformGrid(this)
 				cug.name = '''"«g.name»"'''
@@ -773,6 +776,17 @@ class NUOPCModel extends NUOPCComponent {
 				val ipdv04p3 = new IPDv04p3(ipd)
 				ipdv04p3.forward(high)
 			}
+			
+			//DataInitialize required for IPDv02 or higher
+			if (high.IPDVersion == IPDVersion.IP_DV02 ||
+				high.IPDVersion == IPDVersion.IP_DV03 ||
+				high.IPDVersion == IPDVersion.IP_DV04) {
+			
+				val dataInit = new DataInitialize(initSpecs)
+				dataInit.forward(high)
+					
+			}
+			
 		}
 
 	}
@@ -790,6 +804,7 @@ class NUOPCModel extends NUOPCComponent {
 		
 		new(Initialization parent) {
 			super(parent)
+			parent.setOrAddChild(this)
 		}
 		
 		override InitSpecializations reverse() {
@@ -874,14 +889,24 @@ end subroutine
 	//@Doc(urlfrag="#model-specialization-datainitialize")
 	public static class DataInitialize extends SpecializationMethodCodeConcept<InitSpecializations> {
 
+		List<String> exportFieldsToInit
+		
 		new(InitSpecializations parent) {
 			super(parent, "NUOPC_Model", "label_DataInitialize")
 
+			exportFieldsToInit = newArrayList()
+			
 			// defaults
 			subroutineName = "DataInitialize"
 			specLabel = "model_label_DataInitialize"
 			paramGridComp = "gcomp"
 			paramRC = "rc"
+		}
+	
+		def forward(Model high) {
+			high.exportFields.forEach[f|
+				exportFieldsToInit.add(f.name)
+			]
 		}
 
 		override subroutineTemplate() {
@@ -891,9 +916,29 @@ subroutine «subroutineName»(«paramGridComp», «paramRC»)
     type(ESMF_GridComp)  :: «paramGridComp»
     integer, intent(out) :: «paramRC»
 
+	type(ESMF_State) :: exportState
+	type(ESMF_Field) :: field
+	
     rc = ESMF_SUCCESS
     
-    ! initialize export fields
+    ! query the Component for its clock, importState and exportState
+    call NUOPC_ModelGet(«paramGridComp», exportState=exportState, & 
+        rc=«paramRC»)
+    «ESMFErrorCheck(paramRC)»
+    
+    ! initialize export fields here and mark as updated
+    «FOR f : exportFieldsToInit SEPARATOR '\n'»
+    call ESMF_StateGet(exportState, field=field, itemName="«f»", rc=«paramRC»)
+    «ESMFErrorCheck(paramRC)»
+    call NUOPC_SetAttribute(field, name="Updated", & 
+        value="true", rc=«paramRC»)
+    «ESMFErrorCheck(paramRC)»
+    «ENDFOR»
+    
+    ! when all export fields are initialized, mark as complete
+    call NUOPC_CompAttributeSet(«paramGridComp», name="InitializeDataComplete", &
+    	value="true", rc=«paramRC»)
+    «ESMFErrorCheck(paramRC)»
 
 end subroutine
 '''
@@ -974,7 +1019,7 @@ end subroutine
 		def forward(Model high) {
 			high.advance.forEach[a|
 				val adv = new ModelAdvance(this)
-				if (a.phaseLabel != null) {
+				if (!a.phaseLabel.nullOrEmpty) {
 					adv.specPhaseLabel = "\"" + a.phaseLabel + "\"";
 				}
 			]

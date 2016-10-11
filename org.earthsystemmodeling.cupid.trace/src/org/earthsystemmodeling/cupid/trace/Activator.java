@@ -5,6 +5,7 @@ import java.net.URL;
 
 import org.eclipse.core.runtime.FileLocator;
 import org.eclipse.core.runtime.Path;
+import org.eclipse.jface.resource.ImageDescriptor;
 import org.eclipse.ui.plugin.AbstractUIPlugin;
 import org.osgi.framework.BundleContext;
 
@@ -59,6 +60,12 @@ public class Activator extends AbstractUIPlugin {
 		} catch (IOException e) {
 			return null;
 		}
+	}
+	
+	public static ImageDescriptor getImageDescriptor(String file) {  
+		URL url = FileLocator.find(getDefault().getBundle(), new Path(file), null);
+	    ImageDescriptor image = ImageDescriptor.createFromURL(url);
+	    return image;
 	}
 
 }

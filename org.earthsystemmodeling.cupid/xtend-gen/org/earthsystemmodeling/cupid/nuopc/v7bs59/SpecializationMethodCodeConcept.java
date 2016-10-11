@@ -4,6 +4,7 @@ import com.google.common.base.Objects;
 import com.google.common.collect.Iterables;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.function.Consumer;
 import org.earthsystemmodeling.cupid.annotation.Child;
 import org.earthsystemmodeling.cupid.annotation.Label;
 import org.earthsystemmodeling.cupid.annotation.MappingType;
@@ -138,90 +139,75 @@ public abstract class SpecializationMethodCodeConcept<P extends CodeConcept<?, ?
       ASTSubroutineParNode _get_1 = _subroutinePars_1.get(1);
       Token _variableName_1 = _get_1.getVariableName();
       final String pRC = _variableName_1.getText();
-      final Function1<ASTSubroutineSubprogramNode, Boolean> _function = new Function1<ASTSubroutineSubprogramNode, Boolean>() {
-        @Override
-        public Boolean apply(final ASTSubroutineSubprogramNode it) {
-          return Boolean.valueOf((!Objects.equal(it, setServicesNode)));
-        }
+      final Function1<ASTSubroutineSubprogramNode, Boolean> _function = (ASTSubroutineSubprogramNode it) -> {
+        return Boolean.valueOf((!Objects.equal(it, setServicesNode)));
       };
       Iterable<ASTSubroutineSubprogramNode> _filter = IterableExtensions.<ASTSubroutineSubprogramNode>filter(esmfMethods, _function);
-      final Procedure1<ASTSubroutineSubprogramNode> _function_1 = new Procedure1<ASTSubroutineSubprogramNode>() {
-        @Override
-        public void apply(final ASTSubroutineSubprogramNode m) {
-          IASTListNode<IBodyConstruct> _body = setServicesNode.getBody();
-          Iterable<ASTCallStmtNode> _filter = Iterables.<ASTCallStmtNode>filter(_body, ASTCallStmtNode.class);
-          final Function1<ASTCallStmtNode, Boolean> _function = new Function1<ASTCallStmtNode, Boolean>() {
-            @Override
-            public Boolean apply(final ASTCallStmtNode it) {
-              boolean _and = false;
-              boolean _and_1 = false;
-              Token _subroutineName = it.getSubroutineName();
-              boolean _eic = ASTQuery.eic(_subroutineName, "NUOPC_CompSpecialize");
-              if (!_eic) {
-                _and_1 = false;
-              } else {
-                String _litArgExprByKeyword = ASTQuery.litArgExprByKeyword(it, "specRoutine");
-                boolean _eic_1 = false;
-                if (_litArgExprByKeyword!=null) {
-                  ASTSubroutineStmtNode _subroutineStmt = m.getSubroutineStmt();
-                  ASTSubroutineNameNode _subroutineName_1 = _subroutineStmt.getSubroutineName();
-                  Token _subroutineName_2 = _subroutineName_1.getSubroutineName();
-                  _eic_1=ASTQuery.eic(_litArgExprByKeyword, _subroutineName_2);
-                }
-                _and_1 = _eic_1;
-              }
-              if (!_and_1) {
-                _and = false;
-              } else {
-                String _litArgExprByKeyword_1 = ASTQuery.litArgExprByKeyword(it, "specLabel");
-                boolean _eic_2 = false;
-                if (_litArgExprByKeyword_1!=null) {
-                  String _localName = ASTQuery.localName(moduleNode, SpecializationMethodCodeConcept.this.labelComponent, SpecializationMethodCodeConcept.this.labelName);
-                  _eic_2=ASTQuery.eic(_litArgExprByKeyword_1, _localName);
-                }
-                _and = _eic_2;
-              }
-              return Boolean.valueOf(_and);
+      final Consumer<ASTSubroutineSubprogramNode> _function_1 = (ASTSubroutineSubprogramNode m) -> {
+        IASTListNode<IBodyConstruct> _body = setServicesNode.getBody();
+        Iterable<ASTCallStmtNode> _filter_1 = Iterables.<ASTCallStmtNode>filter(_body, ASTCallStmtNode.class);
+        final Function1<ASTCallStmtNode, Boolean> _function_2 = (ASTCallStmtNode it) -> {
+          boolean _and = false;
+          boolean _and_1 = false;
+          Token _subroutineName = it.getSubroutineName();
+          boolean _eic = ASTQuery.eic(_subroutineName, "NUOPC_CompSpecialize");
+          if (!_eic) {
+            _and_1 = false;
+          } else {
+            String _litArgExprByKeyword = ASTQuery.litArgExprByKeyword(it, "specRoutine");
+            boolean _eic_1 = false;
+            if (_litArgExprByKeyword!=null) {
+              ASTSubroutineStmtNode _subroutineStmt_2 = m.getSubroutineStmt();
+              ASTSubroutineNameNode _subroutineName_1 = _subroutineStmt_2.getSubroutineName();
+              Token _subroutineName_2 = _subroutineName_1.getSubroutineName();
+              _eic_1=ASTQuery.eic(_litArgExprByKeyword, _subroutineName_2);
             }
-          };
-          Iterable<ASTCallStmtNode> _filter_1 = IterableExtensions.<ASTCallStmtNode>filter(_filter, _function);
-          final Procedure1<ASTCallStmtNode> _function_1 = new Procedure1<ASTCallStmtNode>() {
-            @Override
-            public void apply(final ASTCallStmtNode c) {
-              CodeConcept<P, ASTSubroutineSubprogramNode> _newInstance = SpecializationMethodCodeConcept.this.newInstance();
-              SpecializationMethodCodeConcept<P> smcc = ((SpecializationMethodCodeConcept<P>) _newInstance);
-              final Procedure1<SpecializationMethodCodeConcept<P>> _function = new Procedure1<SpecializationMethodCodeConcept<P>>() {
-                @Override
-                public void apply(final SpecializationMethodCodeConcept<P> it) {
-                  ASTSubroutineStmtNode _subroutineStmt = m.getSubroutineStmt();
-                  ASTSubroutineNameNode _subroutineName = _subroutineStmt.getSubroutineName();
-                  Token _subroutineName_1 = _subroutineName.getSubroutineName();
-                  String _text = _subroutineName_1.getText();
-                  it.subroutineName = _text;
-                  String _litArgExprByKeyword = ASTQuery.litArgExprByKeyword(c, "specLabel");
-                  it.specLabel = _litArgExprByKeyword;
-                  String _litArgExprByKeyword_1 = ASTQuery.litArgExprByKeyword(c, "specPhaseLabel");
-                  it.specPhaseLabel = _litArgExprByKeyword_1;
-                  it.paramGridComp = pGridComp;
-                  it.paramRC = pRC;
-                  BasicCodeConcept<ASTCallStmtNode> _basicCodeConcept = new BasicCodeConcept<ASTCallStmtNode>(SpecializationMethodCodeConcept.this, c);
-                  it.registration = _basicCodeConcept;
-                  it.setASTRef(m);
-                }
-              };
-              ObjectExtensions.<SpecializationMethodCodeConcept<P>>operator_doubleArrow(smcc, _function);
-              SpecializationMethodCodeConcept<P> _reverseChildren = smcc.reverseChildren();
-              smcc = _reverseChildren;
-              boolean _notEquals = (!Objects.equal(smcc, null));
-              if (_notEquals) {
-                resultList.add(smcc);
-              }
+            _and_1 = _eic_1;
+          }
+          if (!_and_1) {
+            _and = false;
+          } else {
+            String _litArgExprByKeyword_1 = ASTQuery.litArgExprByKeyword(it, "specLabel");
+            boolean _eic_2 = false;
+            if (_litArgExprByKeyword_1!=null) {
+              String _localName = ASTQuery.localName(moduleNode, this.labelComponent, this.labelName);
+              _eic_2=ASTQuery.eic(_litArgExprByKeyword_1, _localName);
             }
+            _and = _eic_2;
+          }
+          return Boolean.valueOf(_and);
+        };
+        Iterable<ASTCallStmtNode> _filter_2 = IterableExtensions.<ASTCallStmtNode>filter(_filter_1, _function_2);
+        final Consumer<ASTCallStmtNode> _function_3 = (ASTCallStmtNode c) -> {
+          CodeConcept<P, ASTSubroutineSubprogramNode> _newInstance = this.newInstance();
+          SpecializationMethodCodeConcept<P> smcc = ((SpecializationMethodCodeConcept<P>) _newInstance);
+          final Procedure1<SpecializationMethodCodeConcept<P>> _function_4 = (SpecializationMethodCodeConcept<P> it) -> {
+            ASTSubroutineStmtNode _subroutineStmt_2 = m.getSubroutineStmt();
+            ASTSubroutineNameNode _subroutineName = _subroutineStmt_2.getSubroutineName();
+            Token _subroutineName_1 = _subroutineName.getSubroutineName();
+            String _text = _subroutineName_1.getText();
+            it.subroutineName = _text;
+            String _litArgExprByKeyword = ASTQuery.litArgExprByKeyword(c, "specLabel");
+            it.specLabel = _litArgExprByKeyword;
+            String _litArgExprByKeyword_1 = ASTQuery.litArgExprByKeyword(c, "specPhaseLabel");
+            it.specPhaseLabel = _litArgExprByKeyword_1;
+            it.paramGridComp = pGridComp;
+            it.paramRC = pRC;
+            BasicCodeConcept<ASTCallStmtNode> _basicCodeConcept = new BasicCodeConcept<ASTCallStmtNode>(this, c);
+            it.registration = _basicCodeConcept;
+            it.setASTRef(m);
           };
-          IterableExtensions.<ASTCallStmtNode>forEach(_filter_1, _function_1);
-        }
+          ObjectExtensions.<SpecializationMethodCodeConcept<P>>operator_doubleArrow(smcc, _function_4);
+          SpecializationMethodCodeConcept<P> _reverseChildren = smcc.reverseChildren();
+          smcc = _reverseChildren;
+          boolean _notEquals = (!Objects.equal(smcc, null));
+          if (_notEquals) {
+            resultList.add(smcc);
+          }
+        };
+        _filter_2.forEach(_function_3);
       };
-      IterableExtensions.<ASTSubroutineSubprogramNode>forEach(_filter, _function_1);
+      _filter.forEach(_function_1);
       _xblockexpression = resultList;
     }
     return _xblockexpression;

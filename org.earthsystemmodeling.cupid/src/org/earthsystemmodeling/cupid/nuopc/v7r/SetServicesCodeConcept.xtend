@@ -79,7 +79,7 @@ public class SetServicesCodeConcept<P extends NUOPCComponent> extends CodeConcep
 	
 	def forward(BaseModel high) {
 		high.advance.forEach[a|
-			if (a.phaseLabel != null) {
+			if (!a.phaseLabel.nullOrEmpty) {
 				//ensureImport(_parent.importNUOPCGeneric.ASTRef, "label_Advance", _parent.prefix + "_label_Advance")
 				//make sure run routine is there
 				//if (_parent.importNUOPCGeneric.routineRun == null)

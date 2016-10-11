@@ -23,20 +23,17 @@ public class ASTQuery {
   }
   
   public static ASTSubroutineArgNode findArgNodeByKeyword(final IASTListNode<ASTSubroutineArgNode> nodes, final String keyword) {
-    final Function1<ASTSubroutineArgNode, Boolean> _function = new Function1<ASTSubroutineArgNode, Boolean>() {
-      @Override
-      public Boolean apply(final ASTSubroutineArgNode it) {
-        Token _name = it.getName();
-        String _text = null;
-        if (_name!=null) {
-          _text=_name.getText();
-        }
-        boolean _eic = false;
-        if (_text!=null) {
-          _eic=ASTQuery.eic(_text, keyword);
-        }
-        return Boolean.valueOf(_eic);
+    final Function1<ASTSubroutineArgNode, Boolean> _function = (ASTSubroutineArgNode it) -> {
+      Token _name = it.getName();
+      String _text = null;
+      if (_name!=null) {
+        _text=_name.getText();
       }
+      boolean _eic = false;
+      if (_text!=null) {
+        _eic=ASTQuery.eic(_text, keyword);
+      }
+      return Boolean.valueOf(_eic);
     };
     return IterableExtensions.<ASTSubroutineArgNode>findFirst(nodes, _function);
   }
@@ -135,12 +132,9 @@ public class ASTQuery {
     {
       IASTListNode<? extends IASTNode> _body = moduleNode.getBody();
       Iterable<ASTUseStmtNode> _filter = Iterables.<ASTUseStmtNode>filter(_body, ASTUseStmtNode.class);
-      final Function1<ASTUseStmtNode, Boolean> _function = new Function1<ASTUseStmtNode, Boolean>() {
-        @Override
-        public Boolean apply(final ASTUseStmtNode it) {
-          Token _name = it.getName();
-          return Boolean.valueOf(ASTQuery.eic(_name, usedModule));
-        }
+      final Function1<ASTUseStmtNode, Boolean> _function = (ASTUseStmtNode it) -> {
+        Token _name = it.getName();
+        return Boolean.valueOf(ASTQuery.eic(_name, usedModule));
       };
       ASTUseStmtNode node = IterableExtensions.<ASTUseStmtNode>findFirst(_filter, _function);
       String _xifexpression = null;
@@ -151,12 +145,9 @@ public class ASTQuery {
         IASTListNode<ASTRenameNode> _renameList = node.getRenameList();
         ASTRenameNode _findFirst = null;
         if (_renameList!=null) {
-          final Function1<ASTRenameNode, Boolean> _function_1 = new Function1<ASTRenameNode, Boolean>() {
-            @Override
-            public Boolean apply(final ASTRenameNode it) {
-              Token _name = it.getName();
-              return Boolean.valueOf(ASTQuery.eic(_name, usedEntity));
-            }
+          final Function1<ASTRenameNode, Boolean> _function_1 = (ASTRenameNode it) -> {
+            Token _name = it.getName();
+            return Boolean.valueOf(ASTQuery.eic(_name, usedEntity));
           };
           _findFirst=IterableExtensions.<ASTRenameNode>findFirst(_renameList, _function_1);
         }
@@ -174,12 +165,9 @@ public class ASTQuery {
           IASTListNode<ASTOnlyNode> _onlyList = node.getOnlyList();
           ASTOnlyNode _findFirst_1 = null;
           if (_onlyList!=null) {
-            final Function1<ASTOnlyNode, Boolean> _function_2 = new Function1<ASTOnlyNode, Boolean>() {
-              @Override
-              public Boolean apply(final ASTOnlyNode it) {
-                Token _name = it.getName();
-                return Boolean.valueOf(ASTQuery.eic(_name, usedEntity));
-              }
+            final Function1<ASTOnlyNode, Boolean> _function_2 = (ASTOnlyNode it) -> {
+              Token _name = it.getName();
+              return Boolean.valueOf(ASTQuery.eic(_name, usedEntity));
             };
             _findFirst_1=IterableExtensions.<ASTOnlyNode>findFirst(_onlyList, _function_2);
           }
@@ -206,7 +194,11 @@ public class ASTQuery {
   }
   
   public static boolean eic(final String a, final String b) {
-    return a.equalsIgnoreCase(b);
+    boolean _equalsIgnoreCase = false;
+    if (a!=null) {
+      _equalsIgnoreCase=a.equalsIgnoreCase(b);
+    }
+    return _equalsIgnoreCase;
   }
   
   public static boolean eic(final Token t, final String s) {

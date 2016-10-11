@@ -14,9 +14,12 @@
    
    <extension
          point="org.eclipse.linuxtools.tmf.core.analysis">
+      
+      
       <module
             analysis_module="org.earthsystemmodeling.cupid.trace.NUOPCCallStackAnalysis"
             automatic="false"
+            icon="icons/stack.png"
             id="org.earthsystemmodeling.cupid.trace.NUOPCCallStackAnalysis"
             name="NUOPC Call Stack Analysis">
          <tracetype
@@ -25,6 +28,78 @@
          </tracetype>
       </module>
       
+      
+      <module
+            analysis_module="org.earthsystemmodeling.cupid.trace.NUOPCStateSystemAnalysisModule"
+            automatic="false"
+            icon="icons/state.png"
+            id="org.earthsystemmodeling.cupid.trace.NUOPCStateSystemAnalysisModule"
+            name="NUOPC State System Analysis">
+         <tracetype
+               applies="true"
+               class="org.earthsystemmodeling.cupid.trace.NUOPCTrace">
+         </tracetype>
+      </module>
+      
+   </extension>
+   <extension
+         point="org.eclipse.ui.views">
+      <view
+            category="org.earthsystemmodeling.cupid"
+            class="org.earthsystemmodeling.cupid.trace.NUOPCRunStatsView"
+            icon="icons/linegraph.png"
+            id="org.earthsystemmodeling.cupid.trace.NUOPCRunStats"
+            name="NUOPC Run Statistics"
+            restorable="true">
+      </view>
+      <view
+            category="org.earthsystemmodeling.cupid"
+            class="org.earthsystemmodeling.cupid.trace.NUOPCStateView"
+            icon="icons/state.png"
+            id="org.earthsystemmodeling.cupid.trace.NUOPCStateView"
+            name="NUOPC State Explorer"
+            restorable="true">
+      </view>
+      <view
+            category="org.earthsystemmodeling.cupid"
+            class="org.earthsystemmodeling.cupid.trace.NUOPCCallStackView"
+            icon="icons/stack.png"
+            id="org.earthsystemmodeling.cupid.trace.NUOPCCallStackView"
+            name="NUOPC Call Stack View"
+            restorable="true">
+      </view>
+   </extension>
+   
+   <extension
+         point="org.eclipse.tracecompass.tmf.ui.symbolProvider">
+      <providerFactory
+            class="org.earthsystemmodeling.cupid.trace.NUOPCSymbolProviderFactory"
+            id="org.earthsystemmodeling.cupid.trace.NUOPCSymbolProviderFactory"
+            priority="60">
+      </providerFactory>
+   </extension>
+   
+    <extension
+         point="org.eclipse.ui.perspectiveExtensions">
+   
+      
+      <perspectiveExtension
+            targetID="org.eclipse.photran.ui.FortranPerspective">
+         <view
+               id="org.earthsystemmodeling.cupid.trace.NUOPCCallStackView"
+               minimized="false"
+               relationship="stack"
+               relative="org.eclipse.ui.console.ConsoleView"
+               visible="true">
+         </view>
+         <view
+               id="org.earthsystemmodeling.cupid.trace.NUOPCStateView"
+               minimized="false"
+               relationship="stack"
+               relative="org.eclipse.ui.console.ConsoleView"
+               visible="true">
+         </view>
+      </perspectiveExtension>
    </extension>
 
 </plugin>

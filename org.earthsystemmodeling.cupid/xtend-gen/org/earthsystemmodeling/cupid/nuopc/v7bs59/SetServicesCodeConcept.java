@@ -58,36 +58,30 @@ public class SetServicesCodeConcept<P extends NUOPCComponent> extends CodeConcep
       if (_moduleBody!=null) {
         _findAll=_moduleBody.<ASTSubroutineSubprogramNode>findAll(ASTSubroutineSubprogramNode.class);
       }
-      final Function1<ASTSubroutineSubprogramNode, Boolean> _function = new Function1<ASTSubroutineSubprogramNode, Boolean>() {
-        @Override
-        public Boolean apply(final ASTSubroutineSubprogramNode it) {
-          boolean _or = false;
-          ASTSubroutineStmtNode _subroutineStmt = it.getSubroutineStmt();
-          ASTSubroutineNameNode _subroutineName = null;
-          if (_subroutineStmt!=null) {
-            _subroutineName=_subroutineStmt.getSubroutineName();
-          }
-          Token _subroutineName_1 = _subroutineName.getSubroutineName();
-          String _text = _subroutineName_1.getText();
-          boolean _equalsIgnoreCase = _text.equalsIgnoreCase("SetServices");
-          if (_equalsIgnoreCase) {
-            _or = true;
-          } else {
-            IASTListNode<IBodyConstruct> _body = it.getBody();
-            Set<ASTCallStmtNode> _findAll = _body.<ASTCallStmtNode>findAll(ASTCallStmtNode.class);
-            final Function1<ASTCallStmtNode, Boolean> _function = new Function1<ASTCallStmtNode, Boolean>() {
-              @Override
-              public Boolean apply(final ASTCallStmtNode it) {
-                Token _subroutineName = it.getSubroutineName();
-                String _text = _subroutineName.getText();
-                return Boolean.valueOf(_text.equalsIgnoreCase("NUOPC_CompDerive"));
-              }
-            };
-            boolean _exists = IterableExtensions.<ASTCallStmtNode>exists(_findAll, _function);
-            _or = _exists;
-          }
-          return Boolean.valueOf(_or);
+      final Function1<ASTSubroutineSubprogramNode, Boolean> _function = (ASTSubroutineSubprogramNode it) -> {
+        boolean _or = false;
+        ASTSubroutineStmtNode _subroutineStmt = it.getSubroutineStmt();
+        ASTSubroutineNameNode _subroutineName = null;
+        if (_subroutineStmt!=null) {
+          _subroutineName=_subroutineStmt.getSubroutineName();
         }
+        Token _subroutineName_1 = _subroutineName.getSubroutineName();
+        String _text = _subroutineName_1.getText();
+        boolean _equalsIgnoreCase = _text.equalsIgnoreCase("SetServices");
+        if (_equalsIgnoreCase) {
+          _or = true;
+        } else {
+          IASTListNode<IBodyConstruct> _body = it.getBody();
+          Set<ASTCallStmtNode> _findAll_1 = _body.<ASTCallStmtNode>findAll(ASTCallStmtNode.class);
+          final Function1<ASTCallStmtNode, Boolean> _function_1 = (ASTCallStmtNode it_1) -> {
+            Token _subroutineName_2 = it_1.getSubroutineName();
+            String _text_1 = _subroutineName_2.getText();
+            return Boolean.valueOf(_text_1.equalsIgnoreCase("NUOPC_CompDerive"));
+          };
+          boolean _exists = IterableExtensions.<ASTCallStmtNode>exists(_findAll_1, _function_1);
+          _or = _exists;
+        }
+        return Boolean.valueOf(_or);
       };
       ASTSubroutineSubprogramNode node = IterableExtensions.<ASTSubroutineSubprogramNode>findFirst(_findAll, _function);
       SetServicesCodeConcept<P> _xifexpression = null;
@@ -137,13 +131,10 @@ public class SetServicesCodeConcept<P extends NUOPCComponent> extends CodeConcep
           {
             IASTListNode<IBodyConstruct> _body = node.getBody();
             Set<ASTCallStmtNode> _findAll_1 = _body.<ASTCallStmtNode>findAll(ASTCallStmtNode.class);
-            final Function1<ASTCallStmtNode, Boolean> _function_1 = new Function1<ASTCallStmtNode, Boolean>() {
-              @Override
-              public Boolean apply(final ASTCallStmtNode it) {
-                Token _subroutineName = it.getSubroutineName();
-                String _text = _subroutineName.getText();
-                return Boolean.valueOf(_text.equalsIgnoreCase("NUOPC_CompDerive"));
-              }
+            final Function1<ASTCallStmtNode, Boolean> _function_1 = (ASTCallStmtNode it) -> {
+              Token _subroutineName_2 = it.getSubroutineName();
+              String _text_3 = _subroutineName_2.getText();
+              return Boolean.valueOf(_text_3.equalsIgnoreCase("NUOPC_CompDerive"));
             };
             ASTCallStmtNode csn = IterableExtensions.<ASTCallStmtNode>findFirst(_findAll_1, _function_1);
             BasicCodeConcept<ASTCallStmtNode> _xifexpression_1 = null;

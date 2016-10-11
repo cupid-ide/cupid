@@ -4,6 +4,7 @@ import com.google.common.base.Objects;
 import com.google.common.collect.Iterables;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.function.Consumer;
 import org.earthsystemmodeling.cupid.annotation.Child;
 import org.earthsystemmodeling.cupid.annotation.Doc;
 import org.earthsystemmodeling.cupid.annotation.Label;
@@ -37,7 +38,6 @@ import org.eclipse.xtext.xbase.lib.Exceptions;
 import org.eclipse.xtext.xbase.lib.Functions.Function1;
 import org.eclipse.xtext.xbase.lib.IterableExtensions;
 import org.eclipse.xtext.xbase.lib.ListExtensions;
-import org.eclipse.xtext.xbase.lib.Procedures.Procedure1;
 
 @Label(label = "NUOPC Driver")
 @MappingType("module")
@@ -76,11 +76,9 @@ public class NUOPCDriver extends NUOPCComponent {
         String _switchResult = null;
         final NUOPCDriver.IPD _parent = this._parent;
         boolean _matched = false;
-        if (!_matched) {
-          if (_parent instanceof NUOPCDriver.IPDv00) {
-            _matched=true;
-            _switchResult = "IPDv00p1";
-          }
+        if (_parent instanceof NUOPCDriver.IPDv00) {
+          _matched=true;
+          _switchResult = "IPDv00p1";
         }
         if (!_matched) {
           if (_parent instanceof NUOPCDriver.IPDv01) {
@@ -145,11 +143,9 @@ public class NUOPCDriver extends NUOPCComponent {
         String _switchResult = null;
         final NUOPCDriver.IPD _parent = this._parent;
         boolean _matched = false;
-        if (!_matched) {
-          if (_parent instanceof NUOPCDriver.IPDv01) {
-            _matched=true;
-            _switchResult = "IPDv01p2";
-          }
+        if (_parent instanceof NUOPCDriver.IPDv01) {
+          _matched=true;
+          _switchResult = "IPDv01p2";
         }
         if (!_matched) {
           if (_parent instanceof NUOPCDriver.IPDv02) {
@@ -393,11 +389,9 @@ public class NUOPCDriver extends NUOPCComponent {
         String _switchResult = null;
         final NUOPCDriver.IPD _parent = this._parent;
         boolean _matched = false;
-        if (!_matched) {
-          if (_parent instanceof NUOPCDriver.IPDv00) {
-            _matched=true;
-            _switchResult = "IPDv00p2";
-          }
+        if (_parent instanceof NUOPCDriver.IPDv00) {
+          _matched=true;
+          _switchResult = "IPDv00p2";
         }
         if (!_matched) {
           if (_parent instanceof NUOPCDriver.IPDv01) {
@@ -462,11 +456,9 @@ public class NUOPCDriver extends NUOPCComponent {
         String _switchResult = null;
         final NUOPCDriver.IPD _parent = this._parent;
         boolean _matched = false;
-        if (!_matched) {
-          if (_parent instanceof NUOPCDriver.IPDv03) {
-            _matched=true;
-            _switchResult = "IPDv03p4";
-          }
+        if (_parent instanceof NUOPCDriver.IPDv03) {
+          _matched=true;
+          _switchResult = "IPDv03p4";
         }
         if (!_matched) {
           _switchResult = "IPDv04p4";
@@ -506,11 +498,9 @@ public class NUOPCDriver extends NUOPCComponent {
         String _switchResult = null;
         final NUOPCDriver.IPD _parent = this._parent;
         boolean _matched = false;
-        if (!_matched) {
-          if (_parent instanceof NUOPCDriver.IPDv03) {
-            _matched=true;
-            _switchResult = "IPDv03p5";
-          }
+        if (_parent instanceof NUOPCDriver.IPDv03) {
+          _matched=true;
+          _switchResult = "IPDv03p5";
         }
         if (!_matched) {
           _switchResult = "IPDv04p5";
@@ -577,27 +567,21 @@ public class NUOPCDriver extends NUOPCComponent {
           ASTSubroutineSubprogramNode _aSTRef = this._parent.getASTRef();
           IASTListNode<IBodyConstruct> _body = _aSTRef.getBody();
           Iterable<ASTCallStmtNode> _filter = Iterables.<ASTCallStmtNode>filter(_body, ASTCallStmtNode.class);
-          final Function1<ASTCallStmtNode, Boolean> _function = new Function1<ASTCallStmtNode, Boolean>() {
-            @Override
-            public Boolean apply(final ASTCallStmtNode c) {
-              Token _subroutineName = c.getSubroutineName();
-              return Boolean.valueOf(ASTQuery.eic(_subroutineName, "NUOPC_Advertise"));
-            }
+          final Function1<ASTCallStmtNode, Boolean> _function = (ASTCallStmtNode c) -> {
+            Token _subroutineName = c.getSubroutineName();
+            return Boolean.valueOf(ASTQuery.eic(_subroutineName, "NUOPC_Advertise"));
           };
           Iterable<ASTCallStmtNode> _filter_1 = IterableExtensions.<ASTCallStmtNode>filter(_filter, _function);
-          final Procedure1<ASTCallStmtNode> _function_1 = new Procedure1<ASTCallStmtNode>() {
-            @Override
-            public void apply(final ASTCallStmtNode it) {
-              NUOPCDriver.IPD.AdvertiseField advField = new NUOPCDriver.IPD.AdvertiseField(AdvertiseField.this._parent);
-              String _litArgExprByIdx = ASTQuery.litArgExprByIdx(it, 0);
-              advField.state = _litArgExprByIdx;
-              String _litArgExprByIdx_1 = ASTQuery.litArgExprByIdx(it, 1);
-              advField.standardName = _litArgExprByIdx_1;
-              advField.setASTRef(it);
-              retList.add(advField);
-            }
+          final Consumer<ASTCallStmtNode> _function_1 = (ASTCallStmtNode it) -> {
+            NUOPCDriver.IPD.AdvertiseField advField = new NUOPCDriver.IPD.AdvertiseField(this._parent);
+            String _litArgExprByIdx = ASTQuery.litArgExprByIdx(it, 0);
+            advField.state = _litArgExprByIdx;
+            String _litArgExprByIdx_1 = ASTQuery.litArgExprByIdx(it, 1);
+            advField.standardName = _litArgExprByIdx_1;
+            advField.setASTRef(it);
+            retList.add(advField);
           };
-          IterableExtensions.<ASTCallStmtNode>forEach(_filter_1, _function_1);
+          _filter_1.forEach(_function_1);
           _xblockexpression = retList;
         }
         return _xblockexpression;
@@ -662,27 +646,21 @@ public class NUOPCDriver extends NUOPCComponent {
           ASTSubroutineSubprogramNode _aSTRef = this._parent.getASTRef();
           IASTListNode<IBodyConstruct> _body = _aSTRef.getBody();
           Iterable<ASTCallStmtNode> _filter = Iterables.<ASTCallStmtNode>filter(_body, ASTCallStmtNode.class);
-          final Function1<ASTCallStmtNode, Boolean> _function = new Function1<ASTCallStmtNode, Boolean>() {
-            @Override
-            public Boolean apply(final ASTCallStmtNode c) {
-              Token _subroutineName = c.getSubroutineName();
-              return Boolean.valueOf(ASTQuery.eic(_subroutineName, "NUOPC_Realize"));
-            }
+          final Function1<ASTCallStmtNode, Boolean> _function = (ASTCallStmtNode c) -> {
+            Token _subroutineName = c.getSubroutineName();
+            return Boolean.valueOf(ASTQuery.eic(_subroutineName, "NUOPC_Realize"));
           };
           Iterable<ASTCallStmtNode> _filter_1 = IterableExtensions.<ASTCallStmtNode>filter(_filter, _function);
-          final Procedure1<ASTCallStmtNode> _function_1 = new Procedure1<ASTCallStmtNode>() {
-            @Override
-            public void apply(final ASTCallStmtNode it) {
-              NUOPCDriver.IPD.RealizeField relField = new NUOPCDriver.IPD.RealizeField(RealizeField.this._parent);
-              String _litArgExprByIdx = ASTQuery.litArgExprByIdx(it, 0);
-              relField.state = _litArgExprByIdx;
-              String _litArgExprByIdx_1 = ASTQuery.litArgExprByIdx(it, 1);
-              relField.field = _litArgExprByIdx_1;
-              relField.setASTRef(it);
-              retList.add(relField);
-            }
+          final Consumer<ASTCallStmtNode> _function_1 = (ASTCallStmtNode it) -> {
+            NUOPCDriver.IPD.RealizeField relField = new NUOPCDriver.IPD.RealizeField(this._parent);
+            String _litArgExprByIdx = ASTQuery.litArgExprByIdx(it, 0);
+            relField.state = _litArgExprByIdx;
+            String _litArgExprByIdx_1 = ASTQuery.litArgExprByIdx(it, 1);
+            relField.field = _litArgExprByIdx_1;
+            relField.setASTRef(it);
+            retList.add(relField);
           };
-          IterableExtensions.<ASTCallStmtNode>forEach(_filter_1, _function_1);
+          _filter_1.forEach(_function_1);
           _xblockexpression = retList;
         }
         return _xblockexpression;
@@ -1068,36 +1046,11 @@ public class NUOPCDriver extends NUOPCComponent {
     
     @Override
     public boolean validate(final List<String> errors) {
-      boolean _or = false;
-      boolean _or_1 = false;
-      boolean _or_2 = false;
-      boolean _or_3 = false;
-      boolean _validate = this.ipdv00.validate(errors);
-      if (_validate) {
-        _or_3 = true;
-      } else {
-        boolean _validate_1 = this.ipdv01.validate(errors);
-        _or_3 = _validate_1;
-      }
-      if (_or_3) {
-        _or_2 = true;
-      } else {
-        boolean _validate_2 = this.ipdv02.validate(errors);
-        _or_2 = _validate_2;
-      }
-      if (_or_2) {
-        _or_1 = true;
-      } else {
-        boolean _validate_3 = this.ipdv03.validate(errors);
-        _or_1 = _validate_3;
-      }
-      if (_or_1) {
-        _or = true;
-      } else {
-        boolean _validate_4 = this.ipdv04.validate(errors);
-        _or = _validate_4;
-      }
-      return _or;
+      return ((((this.ipdv00.validate(errors) || 
+        this.ipdv01.validate(errors)) || 
+        this.ipdv02.validate(errors)) || 
+        this.ipdv03.validate(errors)) || 
+        this.ipdv04.validate(errors));
     }
   }
   
@@ -1250,35 +1203,29 @@ public class NUOPCDriver extends NUOPCComponent {
             ASTSubroutineSubprogramNode _aSTRef = ret.getASTRef();
             IASTListNode<IBodyConstruct> _body = _aSTRef.getBody();
             Iterable<ASTCallStmtNode> _filter = Iterables.<ASTCallStmtNode>filter(_body, ASTCallStmtNode.class);
-            final Function1<ASTCallStmtNode, Boolean> _function = new Function1<ASTCallStmtNode, Boolean>() {
-              @Override
-              public Boolean apply(final ASTCallStmtNode it) {
-                boolean _and = false;
-                Token _subroutineName = it.getSubroutineName();
-                boolean _eic = ASTQuery.eic(_subroutineName, "ESMF_GridCompSet");
-                if (!_eic) {
-                  _and = false;
-                } else {
-                  IASTListNode<ASTSubroutineArgNode> _argList = it.getArgList();
-                  boolean _exists = false;
-                  if (_argList!=null) {
-                    final Function1<ASTSubroutineArgNode, Boolean> _function = new Function1<ASTSubroutineArgNode, Boolean>() {
-                      @Override
-                      public Boolean apply(final ASTSubroutineArgNode it) {
-                        Token _name = it.getName();
-                        boolean _eic = false;
-                        if (_name!=null) {
-                          _eic=ASTQuery.eic(_name, "clock");
-                        }
-                        return Boolean.valueOf(_eic);
-                      }
-                    };
-                    _exists=IterableExtensions.<ASTSubroutineArgNode>exists(_argList, _function);
-                  }
-                  _and = _exists;
+            final Function1<ASTCallStmtNode, Boolean> _function = (ASTCallStmtNode it) -> {
+              boolean _and = false;
+              Token _subroutineName = it.getSubroutineName();
+              boolean _eic = ASTQuery.eic(_subroutineName, "ESMF_GridCompSet");
+              if (!_eic) {
+                _and = false;
+              } else {
+                IASTListNode<ASTSubroutineArgNode> _argList = it.getArgList();
+                boolean _exists = false;
+                if (_argList!=null) {
+                  final Function1<ASTSubroutineArgNode, Boolean> _function_1 = (ASTSubroutineArgNode it_1) -> {
+                    Token _name = it_1.getName();
+                    boolean _eic_1 = false;
+                    if (_name!=null) {
+                      _eic_1=ASTQuery.eic(_name, "clock");
+                    }
+                    return Boolean.valueOf(_eic_1);
+                  };
+                  _exists=IterableExtensions.<ASTSubroutineArgNode>exists(_argList, _function_1);
                 }
-                return Boolean.valueOf(_and);
+                _and = _exists;
               }
+              return Boolean.valueOf(_and);
             };
             final ASTCallStmtNode setClockCall = IterableExtensions.<ASTCallStmtNode>findFirst(_filter, _function);
             boolean _notEquals_1 = (!Objects.equal(setClockCall, null));
@@ -1531,15 +1478,7 @@ public class NUOPCDriver extends NUOPCComponent {
         _xifexpression = this.compLabel;
       } else {
         String _xifexpression_1 = null;
-        boolean _and = false;
-        boolean _notEquals_1 = (!Objects.equal(this.srcCompLabel, null));
-        if (!_notEquals_1) {
-          _and = false;
-        } else {
-          boolean _notEquals_2 = (!Objects.equal(this.dstCompLabel, null));
-          _and = _notEquals_2;
-        }
-        if (_and) {
+        if (((!Objects.equal(this.srcCompLabel, null)) && (!Objects.equal(this.dstCompLabel, null)))) {
           _xifexpression_1 = ((this.srcCompLabel + " => ") + this.dstCompLabel);
         } else {
           _xifexpression_1 = null;
@@ -1557,59 +1496,53 @@ public class NUOPCDriver extends NUOPCComponent {
         ASTSubroutineSubprogramNode _aSTRef = this._parent.getASTRef();
         IASTListNode<IBodyConstruct> _body = _aSTRef.getBody();
         Iterable<ASTCallStmtNode> _filter = Iterables.<ASTCallStmtNode>filter(_body, ASTCallStmtNode.class);
-        final Function1<ASTCallStmtNode, Boolean> _function = new Function1<ASTCallStmtNode, Boolean>() {
-          @Override
-          public Boolean apply(final ASTCallStmtNode it) {
-            Token _subroutineName = it.getSubroutineName();
-            return Boolean.valueOf(ASTQuery.eic(_subroutineName, "NUOPC_DriverAddComp"));
-          }
+        final Function1<ASTCallStmtNode, Boolean> _function = (ASTCallStmtNode it) -> {
+          Token _subroutineName = it.getSubroutineName();
+          return Boolean.valueOf(ASTQuery.eic(_subroutineName, "NUOPC_DriverAddComp"));
         };
         Iterable<ASTCallStmtNode> _filter_1 = IterableExtensions.<ASTCallStmtNode>filter(_filter, _function);
-        final Procedure1<ASTCallStmtNode> _function_1 = new Procedure1<ASTCallStmtNode>() {
-          @Override
-          public void apply(final ASTCallStmtNode c) {
-            CodeConcept<NUOPCDriver.SetModelServices, ASTCallStmtNode> _newInstance = SetModelServices_AddComp.this.newInstance();
-            NUOPCDriver.SetModelServices_AddComp smsac = ((NUOPCDriver.SetModelServices_AddComp) _newInstance);
-            IASTListNode<ASTSubroutineArgNode> _argList = c.getArgList();
-            ASTSubroutineArgNode _get = _argList.get(1);
-            Token _name = _get.getName();
-            boolean _eic = false;
-            if (_name!=null) {
-              _eic=ASTQuery.eic(_name, "srcCompLabel");
-            }
-            if (_eic) {
-              IASTListNode<ASTSubroutineArgNode> _argList_1 = c.getArgList();
-              ASTSubroutineArgNode _get_1 = _argList_1.get(1);
-              IExpr _expr = _get_1.getExpr();
-              String _literal = ASTQuery.literal(_expr);
-              smsac.srcCompLabel = _literal;
-              IASTListNode<ASTSubroutineArgNode> _argList_2 = c.getArgList();
-              ASTSubroutineArgNode _get_2 = _argList_2.get(2);
-              IExpr _expr_1 = _get_2.getExpr();
-              String _literal_1 = ASTQuery.literal(_expr_1);
-              smsac.dstCompLabel = _literal_1;
-              IASTListNode<ASTSubroutineArgNode> _argList_3 = c.getArgList();
-              ASTSubroutineArgNode _get_3 = _argList_3.get(3);
-              IExpr _expr_2 = _get_3.getExpr();
-              String _literal_2 = ASTQuery.literal(_expr_2);
-              smsac.compSetServices = _literal_2;
-            } else {
-              IASTListNode<ASTSubroutineArgNode> _argList_4 = c.getArgList();
-              ASTSubroutineArgNode _get_4 = _argList_4.get(1);
-              IExpr _expr_3 = _get_4.getExpr();
-              String _literal_3 = ASTQuery.literal(_expr_3);
-              smsac.compLabel = _literal_3;
-              IASTListNode<ASTSubroutineArgNode> _argList_5 = c.getArgList();
-              ASTSubroutineArgNode _get_5 = _argList_5.get(2);
-              IExpr _expr_4 = _get_5.getExpr();
-              String _literal_4 = ASTQuery.literal(_expr_4);
-              smsac.compSetServices = _literal_4;
-            }
-            smsac.setASTRef(c);
-            retList.add(smsac);
+        final Consumer<ASTCallStmtNode> _function_1 = (ASTCallStmtNode c) -> {
+          CodeConcept<NUOPCDriver.SetModelServices, ASTCallStmtNode> _newInstance = this.newInstance();
+          NUOPCDriver.SetModelServices_AddComp smsac = ((NUOPCDriver.SetModelServices_AddComp) _newInstance);
+          IASTListNode<ASTSubroutineArgNode> _argList = c.getArgList();
+          ASTSubroutineArgNode _get = _argList.get(1);
+          Token _name = _get.getName();
+          boolean _eic = false;
+          if (_name!=null) {
+            _eic=ASTQuery.eic(_name, "srcCompLabel");
           }
+          if (_eic) {
+            IASTListNode<ASTSubroutineArgNode> _argList_1 = c.getArgList();
+            ASTSubroutineArgNode _get_1 = _argList_1.get(1);
+            IExpr _expr = _get_1.getExpr();
+            String _literal = ASTQuery.literal(_expr);
+            smsac.srcCompLabel = _literal;
+            IASTListNode<ASTSubroutineArgNode> _argList_2 = c.getArgList();
+            ASTSubroutineArgNode _get_2 = _argList_2.get(2);
+            IExpr _expr_1 = _get_2.getExpr();
+            String _literal_1 = ASTQuery.literal(_expr_1);
+            smsac.dstCompLabel = _literal_1;
+            IASTListNode<ASTSubroutineArgNode> _argList_3 = c.getArgList();
+            ASTSubroutineArgNode _get_3 = _argList_3.get(3);
+            IExpr _expr_2 = _get_3.getExpr();
+            String _literal_2 = ASTQuery.literal(_expr_2);
+            smsac.compSetServices = _literal_2;
+          } else {
+            IASTListNode<ASTSubroutineArgNode> _argList_4 = c.getArgList();
+            ASTSubroutineArgNode _get_4 = _argList_4.get(1);
+            IExpr _expr_3 = _get_4.getExpr();
+            String _literal_3 = ASTQuery.literal(_expr_3);
+            smsac.compLabel = _literal_3;
+            IASTListNode<ASTSubroutineArgNode> _argList_5 = c.getArgList();
+            ASTSubroutineArgNode _get_5 = _argList_5.get(2);
+            IExpr _expr_4 = _get_5.getExpr();
+            String _literal_4 = ASTQuery.literal(_expr_4);
+            smsac.compSetServices = _literal_4;
+          }
+          smsac.setASTRef(c);
+          retList.add(smsac);
         };
-        IterableExtensions.<ASTCallStmtNode>forEach(_filter_1, _function_1);
+        _filter_1.forEach(_function_1);
         _xblockexpression = retList;
       }
       return _xblockexpression;
@@ -1624,15 +1557,7 @@ public class NUOPCDriver extends NUOPCComponent {
           CodeConcept<?, ASTModuleNode> _module = this._parent.module();
           ASTModuleNode amn = _module.getASTRef();
           String code = null;
-          boolean _and = false;
-          boolean _notEquals = (!Objects.equal(this.compLabel, null));
-          if (!_notEquals) {
-            _and = false;
-          } else {
-            boolean _notEquals_1 = (!Objects.equal(this.compSetServices, null));
-            _and = _notEquals_1;
-          }
-          if (_and) {
+          if (((!Objects.equal(this.compLabel, null)) && (!Objects.equal(this.compSetServices, null)))) {
             StringConcatenation _builder = new StringConcatenation();
             _builder.newLine();
             _builder.append("call NUOPC_DriverAddComp(");
@@ -1655,22 +1580,7 @@ public class NUOPCDriver extends NUOPCComponent {
             _builder.newLineIfNotEmpty();
             code = _builder.toString();
           } else {
-            boolean _and_1 = false;
-            boolean _and_2 = false;
-            boolean _notEquals_2 = (!Objects.equal(this.srcCompLabel, null));
-            if (!_notEquals_2) {
-              _and_2 = false;
-            } else {
-              boolean _notEquals_3 = (!Objects.equal(this.dstCompLabel, null));
-              _and_2 = _notEquals_3;
-            }
-            if (!_and_2) {
-              _and_1 = false;
-            } else {
-              boolean _notEquals_4 = (!Objects.equal(this.compSetServices, null));
-              _and_1 = _notEquals_4;
-            }
-            if (_and_1) {
+            if ((((!Objects.equal(this.srcCompLabel, null)) && (!Objects.equal(this.dstCompLabel, null))) && (!Objects.equal(this.compSetServices, null)))) {
               StringConcatenation _builder_1 = new StringConcatenation();
               _builder_1.newLine();
               _builder_1.append("call NUOPC_DriverAddComp(");
@@ -1748,12 +1658,9 @@ public class NUOPCDriver extends NUOPCComponent {
             ASTSubroutineSubprogramNode _aSTRef = ret.getASTRef();
             IASTListNode<IBodyConstruct> _body = _aSTRef.getBody();
             Iterable<ASTCallStmtNode> _filter = Iterables.<ASTCallStmtNode>filter(_body, ASTCallStmtNode.class);
-            final Function1<ASTCallStmtNode, Boolean> _function = new Function1<ASTCallStmtNode, Boolean>() {
-              @Override
-              public Boolean apply(final ASTCallStmtNode it) {
-                Token _subroutineName = it.getSubroutineName();
-                return Boolean.valueOf(ASTQuery.eic(_subroutineName, "NUOPC_DriverNewRunSequence"));
-              }
+            final Function1<ASTCallStmtNode, Boolean> _function = (ASTCallStmtNode it) -> {
+              Token _subroutineName = it.getSubroutineName();
+              return Boolean.valueOf(ASTQuery.eic(_subroutineName, "NUOPC_DriverNewRunSequence"));
             };
             final ASTCallStmtNode newRunSequence = IterableExtensions.<ASTCallStmtNode>findFirst(_filter, _function);
             boolean _notEquals_1 = (!Objects.equal(newRunSequence, null));
@@ -1901,90 +1808,84 @@ public class NUOPCDriver extends NUOPCComponent {
         ASTSubroutineSubprogramNode _aSTRef = this._parent.getASTRef();
         IASTListNode<IBodyConstruct> _body = _aSTRef.getBody();
         Iterable<ASTCallStmtNode> _filter = Iterables.<ASTCallStmtNode>filter(_body, ASTCallStmtNode.class);
-        final Function1<ASTCallStmtNode, Boolean> _function = new Function1<ASTCallStmtNode, Boolean>() {
-          @Override
-          public Boolean apply(final ASTCallStmtNode it) {
-            Token _subroutineName = it.getSubroutineName();
-            return Boolean.valueOf(ASTQuery.eic(_subroutineName, "NUOPC_DriverAddRunElement"));
-          }
+        final Function1<ASTCallStmtNode, Boolean> _function = (ASTCallStmtNode it) -> {
+          Token _subroutineName = it.getSubroutineName();
+          return Boolean.valueOf(ASTQuery.eic(_subroutineName, "NUOPC_DriverAddRunElement"));
         };
         Iterable<ASTCallStmtNode> _filter_1 = IterableExtensions.<ASTCallStmtNode>filter(_filter, _function);
-        final Procedure1<ASTCallStmtNode> _function_1 = new Procedure1<ASTCallStmtNode>() {
-          @Override
-          public void apply(final ASTCallStmtNode c) {
-            CodeConcept<NUOPCDriver.SetRunSequence, ASTCallStmtNode> _newInstance = SetRunSequence_AddRunElement.this.newInstance();
-            NUOPCDriver.SetRunSequence_AddRunElement srsare = ((NUOPCDriver.SetRunSequence_AddRunElement) _newInstance);
-            IASTListNode<ASTSubroutineArgNode> _argList = c.getArgList();
-            ASTSubroutineArgNode _get = _argList.get(2);
-            Token _name = _get.getName();
-            boolean _eic = false;
-            if (_name!=null) {
-              _eic=ASTQuery.eic(_name, "srcCompLabel");
-            }
-            if (_eic) {
-              IASTListNode<ASTSubroutineArgNode> _argList_1 = c.getArgList();
-              ASTSubroutineArgNode _get_1 = _argList_1.get(2);
-              IExpr _expr = _get_1.getExpr();
-              String _literal = ASTQuery.literal(_expr);
-              srsare.srcCompLabel = _literal;
-              IASTListNode<ASTSubroutineArgNode> _argList_2 = c.getArgList();
-              ASTSubroutineArgNode _get_2 = _argList_2.get(3);
-              IExpr _expr_1 = _get_2.getExpr();
-              String _literal_1 = ASTQuery.literal(_expr_1);
-              srsare.dstCompLabel = _literal_1;
-              IASTListNode<ASTSubroutineArgNode> _argList_3 = c.getArgList();
-              ASTSubroutineArgNode _get_3 = _argList_3.get(1);
-              IExpr _expr_2 = _get_3.getExpr();
-              String _literal_2 = ASTQuery.literal(_expr_2);
-              srsare.slot = _literal_2;
-            } else {
-              IASTListNode<ASTSubroutineArgNode> _argList_4 = c.getArgList();
-              ASTSubroutineArgNode _get_4 = _argList_4.get(2);
-              Token _name_1 = _get_4.getName();
-              boolean _eic_1 = false;
-              if (_name_1!=null) {
-                _eic_1=ASTQuery.eic(_name_1, "compLabel");
-              }
-              if (_eic_1) {
-                IASTListNode<ASTSubroutineArgNode> _argList_5 = c.getArgList();
-                ASTSubroutineArgNode _get_5 = _argList_5.get(2);
-                IExpr _expr_3 = _get_5.getExpr();
-                String _literal_3 = ASTQuery.literal(_expr_3);
-                srsare.compLabel = _literal_3;
-                IASTListNode<ASTSubroutineArgNode> _argList_6 = c.getArgList();
-                ASTSubroutineArgNode _get_6 = _argList_6.get(1);
-                IExpr _expr_4 = _get_6.getExpr();
-                String _literal_4 = ASTQuery.literal(_expr_4);
-                srsare.slot = _literal_4;
-                String _litArgExprByKeyword = ASTQuery.litArgExprByKeyword(c, "phaseLabel");
-                srsare.phaseLabel = _litArgExprByKeyword;
-              } else {
-                IASTListNode<ASTSubroutineArgNode> _argList_7 = c.getArgList();
-                ASTSubroutineArgNode _get_7 = _argList_7.get(2);
-                Token _name_2 = _get_7.getName();
-                boolean _eic_2 = false;
-                if (_name_2!=null) {
-                  _eic_2=ASTQuery.eic(_name_2, "linkSlot");
-                }
-                if (_eic_2) {
-                  IASTListNode<ASTSubroutineArgNode> _argList_8 = c.getArgList();
-                  ASTSubroutineArgNode _get_8 = _argList_8.get(1);
-                  IExpr _expr_5 = _get_8.getExpr();
-                  String _literal_5 = ASTQuery.literal(_expr_5);
-                  srsare.slot = _literal_5;
-                  IASTListNode<ASTSubroutineArgNode> _argList_9 = c.getArgList();
-                  ASTSubroutineArgNode _get_9 = _argList_9.get(2);
-                  IExpr _expr_6 = _get_9.getExpr();
-                  String _literal_6 = ASTQuery.literal(_expr_6);
-                  srsare.linkSlot = _literal_6;
-                }
-              }
-            }
-            srsare.setASTRef(c);
-            retList.add(srsare);
+        final Consumer<ASTCallStmtNode> _function_1 = (ASTCallStmtNode c) -> {
+          CodeConcept<NUOPCDriver.SetRunSequence, ASTCallStmtNode> _newInstance = this.newInstance();
+          NUOPCDriver.SetRunSequence_AddRunElement srsare = ((NUOPCDriver.SetRunSequence_AddRunElement) _newInstance);
+          IASTListNode<ASTSubroutineArgNode> _argList = c.getArgList();
+          ASTSubroutineArgNode _get = _argList.get(2);
+          Token _name = _get.getName();
+          boolean _eic = false;
+          if (_name!=null) {
+            _eic=ASTQuery.eic(_name, "srcCompLabel");
           }
+          if (_eic) {
+            IASTListNode<ASTSubroutineArgNode> _argList_1 = c.getArgList();
+            ASTSubroutineArgNode _get_1 = _argList_1.get(2);
+            IExpr _expr = _get_1.getExpr();
+            String _literal = ASTQuery.literal(_expr);
+            srsare.srcCompLabel = _literal;
+            IASTListNode<ASTSubroutineArgNode> _argList_2 = c.getArgList();
+            ASTSubroutineArgNode _get_2 = _argList_2.get(3);
+            IExpr _expr_1 = _get_2.getExpr();
+            String _literal_1 = ASTQuery.literal(_expr_1);
+            srsare.dstCompLabel = _literal_1;
+            IASTListNode<ASTSubroutineArgNode> _argList_3 = c.getArgList();
+            ASTSubroutineArgNode _get_3 = _argList_3.get(1);
+            IExpr _expr_2 = _get_3.getExpr();
+            String _literal_2 = ASTQuery.literal(_expr_2);
+            srsare.slot = _literal_2;
+          } else {
+            IASTListNode<ASTSubroutineArgNode> _argList_4 = c.getArgList();
+            ASTSubroutineArgNode _get_4 = _argList_4.get(2);
+            Token _name_1 = _get_4.getName();
+            boolean _eic_1 = false;
+            if (_name_1!=null) {
+              _eic_1=ASTQuery.eic(_name_1, "compLabel");
+            }
+            if (_eic_1) {
+              IASTListNode<ASTSubroutineArgNode> _argList_5 = c.getArgList();
+              ASTSubroutineArgNode _get_5 = _argList_5.get(2);
+              IExpr _expr_3 = _get_5.getExpr();
+              String _literal_3 = ASTQuery.literal(_expr_3);
+              srsare.compLabel = _literal_3;
+              IASTListNode<ASTSubroutineArgNode> _argList_6 = c.getArgList();
+              ASTSubroutineArgNode _get_6 = _argList_6.get(1);
+              IExpr _expr_4 = _get_6.getExpr();
+              String _literal_4 = ASTQuery.literal(_expr_4);
+              srsare.slot = _literal_4;
+              String _litArgExprByKeyword = ASTQuery.litArgExprByKeyword(c, "phaseLabel");
+              srsare.phaseLabel = _litArgExprByKeyword;
+            } else {
+              IASTListNode<ASTSubroutineArgNode> _argList_7 = c.getArgList();
+              ASTSubroutineArgNode _get_7 = _argList_7.get(2);
+              Token _name_2 = _get_7.getName();
+              boolean _eic_2 = false;
+              if (_name_2!=null) {
+                _eic_2=ASTQuery.eic(_name_2, "linkSlot");
+              }
+              if (_eic_2) {
+                IASTListNode<ASTSubroutineArgNode> _argList_8 = c.getArgList();
+                ASTSubroutineArgNode _get_8 = _argList_8.get(1);
+                IExpr _expr_5 = _get_8.getExpr();
+                String _literal_5 = ASTQuery.literal(_expr_5);
+                srsare.slot = _literal_5;
+                IASTListNode<ASTSubroutineArgNode> _argList_9 = c.getArgList();
+                ASTSubroutineArgNode _get_9 = _argList_9.get(2);
+                IExpr _expr_6 = _get_9.getExpr();
+                String _literal_6 = ASTQuery.literal(_expr_6);
+                srsare.linkSlot = _literal_6;
+              }
+            }
+          }
+          srsare.setASTRef(c);
+          retList.add(srsare);
         };
-        IterableExtensions.<ASTCallStmtNode>forEach(_filter_1, _function_1);
+        _filter_1.forEach(_function_1);
         _xblockexpression = retList;
       }
       return _xblockexpression;
@@ -2032,15 +1933,7 @@ public class NUOPCDriver extends NUOPCComponent {
             _builder.newLineIfNotEmpty();
             code = _builder.toString();
           } else {
-            boolean _and = false;
-            boolean _notEquals_2 = (!Objects.equal(this.srcCompLabel, null));
-            if (!_notEquals_2) {
-              _and = false;
-            } else {
-              boolean _notEquals_3 = (!Objects.equal(this.dstCompLabel, null));
-              _and = _notEquals_3;
-            }
-            if (_and) {
+            if (((!Objects.equal(this.srcCompLabel, null)) && (!Objects.equal(this.dstCompLabel, null)))) {
               StringConcatenation _builder_1 = new StringConcatenation();
               _builder_1.newLine();
               _builder_1.append("! add a run sequence element for a Connector   ");
@@ -2068,15 +1961,7 @@ public class NUOPCDriver extends NUOPCComponent {
               _builder_1.newLineIfNotEmpty();
               code = _builder_1.toString();
             } else {
-              boolean _and_1 = false;
-              boolean _notEquals_4 = (!Objects.equal(this.slot, null));
-              if (!_notEquals_4) {
-                _and_1 = false;
-              } else {
-                boolean _notEquals_5 = (!Objects.equal(this.linkSlot, null));
-                _and_1 = _notEquals_5;
-              }
-              if (_and_1) {
+              if (((!Objects.equal(this.slot, null)) && (!Objects.equal(this.linkSlot, null)))) {
                 StringConcatenation _builder_2 = new StringConcatenation();
                 _builder_2.newLine();
                 _builder_2.append("! add a run sequence element to link between slots    ");

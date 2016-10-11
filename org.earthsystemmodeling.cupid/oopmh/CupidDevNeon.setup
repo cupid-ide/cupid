@@ -61,6 +61,8 @@
         name="org.eclipse.team.svn.feature.group"/>
     <requirement
         name="org.eclipse.egit.feature.group"/>
+    <requirement
+        name="org.eclipse.jdt.feature.group"/>
     <description>Install the tools needed in the IDE to work with the source code for ${scope.project.label}</description>
   </setupTask>
   <setupTask
@@ -95,7 +97,8 @@
       label="Trace Compass"
       licenseConfirmationDisabled="true">
     <requirement
-        name="org.eclipse.tracecompass.tmf.feature.group"/>
+        name="org.eclipse.tracecompass.tmf.feature.group"
+        versionRange="2.0.1"/>
     <requirement
         name="org.eclipse.tracecompass.ctf.feature.group"/>
     <requirement
@@ -109,9 +112,7 @@
     <requirement
         name="org.eclipse.tracecompass.tmf.pcap.feature.group"/>
     <repository
-        url="http://download.eclipse.org/tracecompass/releases/1.2.1/repository/"/>
-    <repository
-        url="http://download.eclipse.org/tracecompass/releases/2.0.0/repository/"/>
+        url="http://download.eclipse.org/tracecompass/stable/repository"/>
     <description></description>
   </setupTask>
   <setupTask
@@ -199,6 +200,25 @@
     <targlet
         name="${scope.project.label}"
         activeRepositoryList="${eclipse.target.platform}">
+      <annotation
+          source="http:/www.eclipse.org/oomph/targlets/TargetDefinitionGenerator">
+        <detail
+            key="location">
+          <value>${git.clone.location/org.earthsystemmodeling.cupid.targetplatform/org.earthsystemmodeling.cupid.targetplatform.target}</value>
+        </detail>
+        <detail
+            key="singleLocation">
+          <value>true</value>
+        </detail>
+        <detail
+            key="includeAllPlatforms">
+          <value>false</value>
+        </detail>
+        <detail
+            key="includeSource">
+          <value>true</value>
+        </detail>
+      </annotation>
       <requirement
           name="org.eclipse.sdk.feature.group"/>
       <requirement
@@ -219,7 +239,9 @@
           name="org.eclipse.oomph.setup.feature.group"
           filter=""/>
       <requirement
-          name="org.eclipse.sirius"/>
+          name="org.eclipse.sirius.runtime.feature.group"/>
+      <requirement
+          name="org.eclipse.sirius.runtime.ide.ui.feature.group"/>
       <requirement
           name="org.eclipse.sirius.common.acceleo.aql"/>
       <requirement
@@ -236,6 +258,27 @@
           name="org.eclipse.ptp.pldt.fortran.feature.group"/>
       <requirement
           name="org.eclipse.egit.feature.group"/>
+      <requirement
+          name="org.eclipse.jdt.annotation"/>
+      <requirement
+          name="org.eclipse.tracecompass.tmf.feature.group"
+          versionRange="2.0.1"/>
+      <requirement
+          name="org.eclipse.tracecompass.ctf.feature.group"/>
+      <requirement
+          name="org.eclipse.tracecompass.btf.feature.group"/>
+      <requirement
+          name="org.eclipse.tracecompass.gdbtrace.feature.group"/>
+      <requirement
+          name="org.eclipse.tracecompass.lttng2.kernel.feature.group"/>
+      <requirement
+          name="org.eclipse.tracecompass.lttng2.ust.feature.group"/>
+      <requirement
+          name="org.eclipse.tracecompass.tmf.pcap.feature.group"/>
+      <requirement
+          name="org.eclipse.tracecompass.tmf.core"/>
+      <requirement
+          name="org.eclipse.tracecompass.tmf.ui"/>
       <sourceLocator
           rootFolder="${git.clone.location}"
           locateNestedProjects="true"/>
@@ -263,6 +306,8 @@
           name="Neon">
         <repository
             url="http://download.eclipse.org/releases/neon"/>
+        <repository
+            url="http://download.eclipse.org/tracecompass/stable/repository"/>
       </repositoryList>
     </targlet>
   </setupTask>
@@ -298,6 +343,8 @@
   </setupTask>
   <stream name="master"
       label="master"/>
+  <stream name="neon"
+      label="neon"/>
   <logicalProjectContainer
       xsi:type="setup:ProjectCatalog"
       href="index:/org.eclipse.setup#//@projectCatalogs[name='com.github']"/>

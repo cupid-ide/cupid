@@ -1,30 +1,30 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <classpath>
-	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/JavaSE-1.7"/>
+	<classpathentry exported="true" kind="lib" path="lib/commons-io-2.5.jar"/>
+	<classpathentry exported="true" kind="lib" path="lib/aws-java-sdk-1.11.26/third-party/lib/aspectjrt-1.8.2.jar"/>
+	<classpathentry exported="true" kind="lib" path="lib/aws-java-sdk-1.11.26/third-party/lib/aspectjweaver.jar"/>
+	<classpathentry exported="true" kind="lib" path="lib/aws-java-sdk-1.11.26/third-party/lib/commons-codec-1.9.jar"/>
+	<classpathentry exported="true" kind="lib" path="lib/aws-java-sdk-1.11.26/third-party/lib/commons-logging-1.1.3.jar"/>
+	<classpathentry exported="true" kind="lib" path="lib/aws-java-sdk-1.11.26/third-party/lib/freemarker-2.3.9.jar"/>
+	<classpathentry exported="true" kind="lib" path="lib/aws-java-sdk-1.11.26/third-party/lib/httpclient-4.5.2.jar"/>
+	<classpathentry exported="true" kind="lib" path="lib/aws-java-sdk-1.11.26/third-party/lib/httpcore-4.4.4.jar"/>
+	<classpathentry exported="true" kind="lib" path="lib/aws-java-sdk-1.11.26/third-party/lib/jackson-annotations-2.6.0.jar"/>
+	<classpathentry exported="true" kind="lib" path="lib/aws-java-sdk-1.11.26/third-party/lib/jackson-core-2.6.6.jar"/>
+	<classpathentry exported="true" kind="lib" path="lib/aws-java-sdk-1.11.26/third-party/lib/jackson-databind-2.6.6.jar"/>
+	<classpathentry exported="true" kind="lib" path="lib/aws-java-sdk-1.11.26/third-party/lib/jackson-dataformat-cbor-2.6.6.jar"/>
+	<classpathentry exported="true" kind="lib" path="lib/aws-java-sdk-1.11.26/third-party/lib/javax.mail-api-1.4.6.jar"/>
+	<classpathentry exported="true" kind="lib" path="lib/aws-java-sdk-1.11.26/third-party/lib/jmespath-java-1.0.jar"/>
+	<classpathentry exported="true" kind="lib" path="lib/aws-java-sdk-1.11.26/third-party/lib/joda-time-2.8.1.jar"/>
+	<classpathentry exported="true" kind="lib" path="lib/aws-java-sdk-1.11.26/third-party/lib/spring-beans-3.0.7.RELEASE.jar"/>
+	<classpathentry exported="true" kind="lib" path="lib/aws-java-sdk-1.11.26/third-party/lib/spring-context-3.0.7.RELEASE.jar"/>
+	<classpathentry exported="true" kind="lib" path="lib/aws-java-sdk-1.11.26/third-party/lib/spring-core-3.0.7.RELEASE.jar"/>
+	<classpathentry exported="true" kind="lib" path="lib/aws-java-sdk-1.11.26/third-party/lib/spring-test-3.0.7.RELEASE.jar"/>
+	<classpathentry exported="true" kind="lib" path="lib/aws-java-sdk-1.11.26/lib/aws-java-sdk-1.11.26.jar"/>
+	<classpathentry exported="true" kind="lib" path="lib/ST-4.0.7.jar"/>
+	<classpathentry exported="true" kind="lib" path="lib/jdom/jdom-1.1.3.jar"/>
+	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/JavaSE-1.8"/>
 	<classpathentry kind="con" path="org.eclipse.pde.core.requiredPlugins"/>
 	<classpathentry kind="src" path="src/"/>
-	<classpathentry kind="src" path="xtend-gen"/>
-	<classpathentry exported="true" kind="lib" path="lib/ST-4.0.7.jar"/>
-	<classpathentry exported="true" kind="lib" path="lib/aws-java-sdk-1.6.10.jar"/>
-	<classpathentry exported="true" kind="lib" path="lib/aws-java-sdk-flow-build-tools-1.6.10.jar"/>
-	<classpathentry exported="true" kind="lib" path="lib/aspectj-1.6/aspectjrt.jar"/>
-	<classpathentry exported="true" kind="lib" path="lib/aspectj-1.6/aspectjweaver.jar"/>
-	<classpathentry exported="true" kind="lib" path="lib/commons-codec-1.3/commons-codec-1.3.jar"/>
-	<classpathentry exported="true" kind="lib" path="lib/commons-logging-1.1.1/commons-logging-1.1.1.jar"/>
-	<classpathentry exported="true" kind="lib" path="lib/freemarker-2.3.18/freemarker-2.3.18.jar"/>
-	<classpathentry exported="true" kind="lib" path="lib/httpcomponents-client-4.2.3/httpclient-4.2.3.jar"/>
-	<classpathentry exported="true" kind="lib" path="lib/httpcomponents-client-4.2.3/httpcore-4.2.jar"/>
-	<classpathentry exported="true" kind="lib" path="lib/jackson-annotations-2.1/jackson-annotations-2.1.1.jar"/>
-	<classpathentry exported="true" kind="lib" path="lib/jackson-core-2.1/jackson-core-2.1.1.jar"/>
-	<classpathentry exported="true" kind="lib" path="lib/jackson-databind-2.1/jackson-databind-2.1.1.jar"/>
-	<classpathentry exported="true" kind="lib" path="lib/java-mail-1.4.3/mail-1.4.3.jar"/>
-	<classpathentry exported="true" kind="lib" path="lib/spring-3.0/spring-beans-3.0.7.jar"/>
-	<classpathentry exported="true" kind="lib" path="lib/spring-3.0/spring-context-3.0.7.jar"/>
-	<classpathentry exported="true" kind="lib" path="lib/spring-3.0/spring-core-3.0.7.jar"/>
-	<classpathentry exported="true" kind="lib" path="lib/stax-api-1.0.1/stax-api-1.0.1.jar"/>
-	<classpathentry exported="true" kind="lib" path="lib/stax-ri-1.2.0/stax-1.2.0.jar"/>
-	<classpathentry exported="true" kind="lib" path="lib/jdom/jdom-1.1.3.jar"/>
-	<classpathentry exported="true" kind="lib" path="lib/hgdbprolog-1.2.jar" sourcepath="/tuprolog/src/java"/>
-	<classpathentry exported="true" kind="lib" path="lib/commons-io-2.4/commons-io-2.4.jar"/>
+	<classpathentry kind="src" path="xtend-gen/"/>
 	<classpathentry kind="output" path="target/classes"/>
 </classpath>
