@@ -24,21 +24,20 @@ Bundle-ClassPath: .,
  lib/aws-java-sdk-1.11.26/third-party/lib/spring-beans-3.0.7.RELEASE.jar,
  lib/aws-java-sdk-1.11.26/third-party/lib/spring-context-3.0.7.RELEASE.jar,
  lib/aws-java-sdk-1.11.26/third-party/lib/spring-core-3.0.7.RELEASE.jar,
- lib/aws-java-sdk-1.11.26/third-party/lib/spring-test-3.0.7.RELEASE.jar
+ lib/aws-java-sdk-1.11.26/third-party/lib/spring-test-3.0.7.RELEASE.jar,
+ lib/commons-io-2.5.jar
 Bundle-Vendor: %providerName
 Bundle-Localization: plugin
 Bundle-RequiredExecutionEnvironment: JavaSE-1.8
 Require-Bundle: org.eclipse.core.runtime,
- org.eclipse.photran.core.vpg;bundle-version="8.0.0",
+ org.eclipse.photran.core.vpg,
  org.eclipse.ui,
  org.eclipse.cdt.core,
  org.eclipse.jface.text;bundle-version="3.8.100",
  org.eclipse.ui.ide;bundle-version="3.9.0",
  org.eclipse.cdt.ui,
- org.eclipse.ui.editors;bundle-version="3.8.100",
+ org.eclipse.ui.editors,
  org.eclipse.photran.ui;bundle-version="8.0.0",
- org.eclipse.photran.cdtinterface;bundle-version="8.0.0",
- org.eclipse.photran.ui.vpg;bundle-version="8.0.0",
  org.eclipse.core.resources;bundle-version="3.9.0",
  org.eclipse.ptp.rdt.sync.ui;bundle-version="2.0.0",
  org.eclipse.ptp.rdt.sync.cdt.ui;bundle-version="1.0.0",
@@ -49,14 +48,10 @@ Require-Bundle: org.eclipse.core.runtime,
  org.eclipse.xtend.lib,
  org.eclipse.compare;bundle-version="3.5.501",
  org.eclipse.ltk.core.refactoring;bundle-version="3.6.101",
- org.eclipse.jface,
- org.eclipse.ui.workbench.texteditor;bundle-version="3.9.100",
- org.eclipse.emf.ecore,
- org.eclipse.emf.common,
- org.eclipse.emf.ecore.xmi;bundle-version="2.11.1",
+ org.eclipse.emf.ecore.xmi,
  org.earthsystemmodeling.cupid.nuopcmodel,
- org.apache.commons.lang;bundle-version="2.6.0",
- org.eclipse.emf.emfstore.common
+ org.apache.commons.lang,
+ org.eclipse.photran.cdtinterface;bundle-version="9.0.0"
 Bundle-ActivationPolicy: lazy
 Bundle-Activator: org.earthsystemmodeling.cupid.core.CupidActivator
 Export-Package: org.earthsystemmodeling.cupid.core

@@ -9,9 +9,9 @@
 	<properties>
 		<tycho-version>0.24.0</tycho-version>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-		<eclipse-p2-repo.url>http://download.eclipse.org/releases/mars</eclipse-p2-repo.url>
-		<eclipse-release>mars</eclipse-release>
-		<eclipse-site>http://download.eclipse.org/releases/mars</eclipse-site>
+		<!-- <eclipse-p2-repo.url>http://download.eclipse.org/releases/mars</eclipse-p2-repo.url> -->
+		<eclipse-release>neon</eclipse-release>
+		<eclipse-site>http://download.eclipse.org/releases/neon</eclipse-site>
 		<xtext.version>2.8.4</xtext.version>
 	</properties>
 
@@ -134,6 +134,8 @@
 				</configuration>
 			</plugin>
 			
+			<!--  forces inclusion of all dependencies in p2 repo -->
+			<!-- 
 			<plugin>
          		<groupId>org.eclipse.tycho</groupId>
          		<artifactId>tycho-p2-repository-plugin</artifactId>
@@ -142,6 +144,8 @@
             		<includeAllDependencies>true</includeAllDependencies>
          		</configuration>
       		</plugin>
+      		-->
+      		
 		</plugins>
 
 	</build>

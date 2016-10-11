@@ -194,7 +194,11 @@ public class ASTQuery {
   }
   
   public static boolean eic(final String a, final String b) {
-    return a.equalsIgnoreCase(b);
+    boolean _equalsIgnoreCase = false;
+    if (a!=null) {
+      _equalsIgnoreCase=a.equalsIgnoreCase(b);
+    }
+    return _equalsIgnoreCase;
   }
   
   public static boolean eic(final Token t, final String s) {

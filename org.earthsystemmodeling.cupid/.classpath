@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <classpath>
+	<classpathentry exported="true" kind="lib" path="lib/commons-io-2.5.jar"/>
 	<classpathentry exported="true" kind="lib" path="lib/aws-java-sdk-1.11.26/third-party/lib/aspectjrt-1.8.2.jar"/>
 	<classpathentry exported="true" kind="lib" path="lib/aws-java-sdk-1.11.26/third-party/lib/aspectjweaver.jar"/>
 	<classpathentry exported="true" kind="lib" path="lib/aws-java-sdk-1.11.26/third-party/lib/commons-codec-1.9.jar"/>

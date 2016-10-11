@@ -1,5 +1,6 @@
 package org.earthsystemmodeling.cupid.nuopc;
 
+import java.io.ByteArrayInputStream
 import java.lang.reflect.Constructor
 import java.lang.reflect.Field
 import java.lang.reflect.ParameterizedType
@@ -8,47 +9,37 @@ import java.util.List
 import java.util.regex.Pattern
 import org.apache.commons.io.IOUtils
 import org.earthsystemmodeling.cupid.annotation.Child
+import org.earthsystemmodeling.cupid.core.CupidActivator
+import org.eclipse.compare.internal.DocLineComparator
+import org.eclipse.compare.rangedifferencer.RangeDifferencer
 import org.eclipse.core.resources.IFile
+import org.eclipse.core.resources.IMarker
 import org.eclipse.core.resources.IResource
-import org.eclipse.core.runtime.NullProgressMonitor
-import org.eclipse.ltk.core.refactoring.Change
-import org.eclipse.ltk.core.refactoring.TextFileChange
+import org.eclipse.core.resources.WorkspaceJob
+import org.eclipse.core.runtime.IProgressMonitor
+import org.eclipse.core.runtime.Status
+import org.eclipse.jface.text.Document
 import org.eclipse.photran.core.IFortranAST
+import org.eclipse.photran.internal.core.parser.ASTModuleNode
+import org.eclipse.photran.internal.core.parser.ASTOnlyNode
+import org.eclipse.photran.internal.core.parser.ASTRenameNode
+import org.eclipse.photran.internal.core.parser.ASTSubroutineSubprogramNode
+import org.eclipse.photran.internal.core.parser.ASTTypeDeclarationStmtNode
+import org.eclipse.photran.internal.core.parser.ASTUseStmtNode
+import org.eclipse.photran.internal.core.parser.IASTListNode
 import org.eclipse.photran.internal.core.parser.IASTNode
+import org.eclipse.photran.internal.core.parser.IBodyConstruct
+import org.eclipse.photran.internal.core.parser.IDeclarationConstruct
+import org.eclipse.photran.internal.core.parser.ISpecificationPartConstruct
 import org.eclipse.photran.internal.core.reindenter.Reindenter
 import org.eclipse.photran.internal.core.reindenter.Reindenter.Strategy
 import org.eclipse.photran.internal.core.vpg.PhotranVPG
-import org.eclipse.text.edits.ReplaceEdit
-import org.eclipse.xtend.lib.annotations.Accessors
-import org.eclipse.core.runtime.IProgressMonitor
-import org.eclipse.photran.internal.core.parser.ASTSubroutineSubprogramNode
-import org.eclipse.photran.internal.core.parser.ASTTypeDeclarationStmtNode
-import org.eclipse.photran.internal.core.parser.IDeclarationConstruct
-import org.eclipse.photran.internal.core.parser.IBodyConstruct
-import org.eclipse.photran.internal.core.parser.IASTListNode
-import static org.earthsystemmodeling.cupid.util.CodeExtraction.*
-import org.eclipse.photran.internal.core.parser.ASTModuleNode
-import org.eclipse.photran.internal.core.parser.ASTUseStmtNode
-import org.eclipse.photran.internal.core.parser.ASTRenameNode
-import org.eclipse.photran.internal.core.parser.ISpecificationPartConstruct
-import static extension org.earthsystemmodeling.cupid.nuopc.ASTQuery.*
-import org.eclipse.core.runtime.jobs.Job
 import org.eclipse.photran.internal.core.vpg.eclipse.VPGSchedulingRule
-import org.eclipse.photran.internal.ui.actions.VPGWindowActionDelegate
-import org.eclipse.photran.internal.core.vpg.eclipse.EclipseVPG
-import org.eclipse.core.runtime.jobs.MultiRule
-import org.eclipse.core.resources.ResourcesPlugin
-import org.eclipse.core.runtime.Status
-import org.eclipse.compare.internal.DocLineComparator
-import org.eclipse.jface.text.Document
-import org.eclipse.compare.rangedifferencer.RangeDifferencer
-import org.eclipse.compare.rangedifferencer.RangeDifference
-import org.eclipse.core.resources.IMarker
-import java.io.ByteArrayInputStream
-import org.eclipse.core.resources.WorkspaceJob
-import org.eclipse.core.runtime.CoreException
-import org.earthsystemmodeling.cupid.core.CupidActivator
-import org.eclipse.photran.internal.core.parser.ASTOnlyNode
+import org.eclipse.xtend.lib.annotations.Accessors
+
+import static org.earthsystemmodeling.cupid.util.CodeExtraction.*
+
+import static extension org.earthsystemmodeling.cupid.nuopc.ASTQuery.*
 
 public abstract class CodeConcept<P extends CodeConcept<?,?>, A extends IASTNode> {
 	

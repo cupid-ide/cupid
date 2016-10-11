@@ -66,7 +66,7 @@ class ASTQuery {
 	
 	
 	def static eic(String a, String b) {
-		a.equalsIgnoreCase(b)
+		a?.equalsIgnoreCase(b)
 	}
 	
 	def static eic(Token t, String s) {
