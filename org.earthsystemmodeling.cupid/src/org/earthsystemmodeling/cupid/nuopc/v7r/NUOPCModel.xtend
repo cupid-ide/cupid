@@ -23,6 +23,11 @@ import org.eclipse.xtend.lib.annotations.Accessors
 
 import static org.earthsystemmodeling.cupid.nuopc.ESMFCodeTemplates.*
 import org.earthsystemmodeling.cupid.NUOPC.IPDVersion
+import org.eclipse.photran.internal.core.parser.ASTModuleNode
+import org.earthsystemmodeling.cupid.nuopc.CodeGenerationException
+import org.earthsystemmodeling.cupid.core.CupidActivator
+import org.apache.commons.io.IOUtils
+import java.nio.charset.StandardCharsets
 
 @Label(label="NUOPC Model")
 @MappingType("module")
@@ -30,6 +35,9 @@ import org.earthsystemmodeling.cupid.NUOPC.IPDVersion
 @Doc(urlfrag="node4.html#SECTION00043000000000000000")
 class NUOPCModel extends NUOPCComponent {
 
+	@Child(min=0)
+	public DoxygenTemplate doc
+	
 	@Child(forward=true)
 	public SetServices setServices
 	
@@ -41,6 +49,7 @@ class NUOPCModel extends NUOPCComponent {
 
 	@Child
 	public Finalize finalize
+
 	
 	new(IResource context) {
 		super(null, context, "NUOPC_Model")
@@ -52,8 +61,9 @@ class NUOPCModel extends NUOPCComponent {
 		m
 	}
 	
-	static def newBasicModel(IResource context) {
+	public static def newBasicModel(IResource context) {
 		val model = new NUOPCModel(context)
+		new DoxygenTemplate(model)
 		new SetServices(model)
 		new Initialization(model)
 		new InitPhases(model.initialization)
@@ -82,6 +92,7 @@ class NUOPCModel extends NUOPCComponent {
 	}
 
 	override reverseChildren() {
+		doc = new DoxygenTemplate(this).reverse
 		setServices = new SetServices(this).reverse as SetServices
 		initialization = new Initialization(this).reverse
 		run = new Run(this).reverse
@@ -91,6 +102,43 @@ class NUOPCModel extends NUOPCComponent {
 
 	override NUOPCModel forward() {
 		super.forward as NUOPCModel
+	}
+
+	@Label(label="Doxygen Template")
+	public static class DoxygenTemplate extends CodeConcept<NUOPCModel, ASTModuleNode> {
+	
+		new(NUOPCModel parent) {
+			super(parent)
+			parent.setOrAddChild(this)
+		}
+		
+		override <T extends CodeConcept<?, ?>> reverse() throws ReverseEngineerException {
+			//super.<T>reverse()
+			val moduleNode =_parent.ASTRef
+			if (moduleNode?.findFirstToken?.whiteBefore.contains("!>")) {
+				this as T
+			}
+			else {
+				null	
+			}	
+		}
+		
+		override <T extends CodeConcept<?, ?>> forward() throws CodeGenerationException {
+			val moduleNode = _parent.ASTRef
+			if (moduleNode == null) return this as T
+			
+			val whiteBefore = moduleNode?.findFirstToken?.whiteBefore
+			var newWhite = ""
+			if (whiteBefore != null) {
+				newWhite = whiteBefore
+			}
+			val is = CupidActivator.getInputStream("templates/doxygen/capdoc.template");
+			val doctemplate = IOUtils.toString(is, StandardCharsets.UTF_8)
+			newWhite += doctemplate			
+			moduleNode.findFirstToken?.setWhiteBefore(newWhite)
+			this as T
+		}
+		
 	}
 
 	@Label(label="SetServices")

@@ -316,7 +316,13 @@ public class CupidProjectWizard extends Wizard implements INewWizard, IExecutabl
 
 		CProjectNature.addCNature(project, new SubProgressMonitor(monitor, 1));
 		FProjectNature.addFNature(project, new SubProgressMonitor(monitor, 1));
-		new SearchPathProperties().setProperty(project, SearchPathProperties.ENABLE_VPG_PROPERTY_NAME, "true");
+		SearchPathProperties spp = new SearchPathProperties();
+		spp.setProperty(project, SearchPathProperties.ENABLE_VPG_PROPERTY_NAME, "true");
+		try {
+			spp.save();
+		} catch (IOException e) {
+			CupidActivator.log("Error saving Fortran project properties", e);
+		}
 		//PhotranVPG.getInstance().shouldProcessProject(project);
 		//NUOPCNature.addNUOPCNature(project, new SubProgressMonitor(monitor, 1));
 

@@ -2,9 +2,12 @@ package org.earthsystemmodeling.cupid.nuopc.v7r;
 
 import com.google.common.base.Objects;
 import com.google.common.collect.Iterables;
+import java.io.InputStream;
+import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.function.Consumer;
+import org.apache.commons.io.IOUtils;
 import org.earthsystemmodeling.cupid.NUOPC.Advance;
 import org.earthsystemmodeling.cupid.NUOPC.ESMF_STAGGERLOC;
 import org.earthsystemmodeling.cupid.NUOPC.Field;
@@ -16,7 +19,9 @@ import org.earthsystemmodeling.cupid.annotation.Child;
 import org.earthsystemmodeling.cupid.annotation.Doc;
 import org.earthsystemmodeling.cupid.annotation.Label;
 import org.earthsystemmodeling.cupid.annotation.MappingType;
+import org.earthsystemmodeling.cupid.core.CupidActivator;
 import org.earthsystemmodeling.cupid.nuopc.CodeConcept;
+import org.earthsystemmodeling.cupid.nuopc.CodeGenerationException;
 import org.earthsystemmodeling.cupid.nuopc.ESMFCodeTemplates;
 import org.earthsystemmodeling.cupid.nuopc.ReverseEngineerException;
 import org.earthsystemmodeling.cupid.nuopc.v7r.EntryPointCodeConcept;
@@ -27,6 +32,7 @@ import org.earthsystemmodeling.cupid.nuopc.v7r.SetServicesCodeConcept;
 import org.earthsystemmodeling.cupid.nuopc.v7r.SpecializationMethodCodeConcept;
 import org.eclipse.core.resources.IResource;
 import org.eclipse.emf.common.util.EList;
+import org.eclipse.photran.internal.core.lexer.Token;
 import org.eclipse.photran.internal.core.parser.ASTModuleNode;
 import org.eclipse.photran.internal.core.parser.ASTNode;
 import org.eclipse.xtend.lib.annotations.Accessors;
@@ -41,6 +47,79 @@ import org.eclipse.xtext.xbase.lib.StringExtensions;
 @Doc(urlfrag = "node4.html#SECTION00043000000000000000")
 @SuppressWarnings("all")
 public class NUOPCModel extends NUOPCComponent {
+  @Label(label = "Doxygen Template")
+  public static class DoxygenTemplate extends CodeConcept<NUOPCModel, ASTModuleNode> {
+    public DoxygenTemplate(final NUOPCModel parent) {
+      super(parent);
+      parent.setOrAddChild(this);
+    }
+    
+    @Override
+    public <T extends CodeConcept<?, ?>> T reverse() throws ReverseEngineerException {
+      T _xblockexpression = null;
+      {
+        final ASTModuleNode moduleNode = this._parent.getASTRef();
+        T _xifexpression = null;
+        Token _findFirstToken = null;
+        if (moduleNode!=null) {
+          _findFirstToken=moduleNode.findFirstToken();
+        }
+        String _whiteBefore = null;
+        if (_findFirstToken!=null) {
+          _whiteBefore=_findFirstToken.getWhiteBefore();
+        }
+        boolean _contains = _whiteBefore.contains("!>");
+        if (_contains) {
+          _xifexpression = ((T) this);
+        } else {
+          _xifexpression = null;
+        }
+        _xblockexpression = _xifexpression;
+      }
+      return _xblockexpression;
+    }
+    
+    @Override
+    public <T extends CodeConcept<?, ?>> T forward() throws CodeGenerationException {
+      try {
+        T _xblockexpression = null;
+        {
+          final ASTModuleNode moduleNode = this._parent.getASTRef();
+          boolean _equals = Objects.equal(moduleNode, null);
+          if (_equals) {
+            return ((T) this);
+          }
+          Token _findFirstToken = null;
+          if (moduleNode!=null) {
+            _findFirstToken=moduleNode.findFirstToken();
+          }
+          String _whiteBefore = null;
+          if (_findFirstToken!=null) {
+            _whiteBefore=_findFirstToken.getWhiteBefore();
+          }
+          final String whiteBefore = _whiteBefore;
+          String newWhite = "";
+          boolean _notEquals = (!Objects.equal(whiteBefore, null));
+          if (_notEquals) {
+            newWhite = whiteBefore;
+          }
+          final InputStream is = CupidActivator.getInputStream("templates/doxygen/capdoc.template");
+          final String doctemplate = IOUtils.toString(is, StandardCharsets.UTF_8);
+          String _newWhite = newWhite;
+          newWhite = (_newWhite + doctemplate);
+          Token _findFirstToken_1 = moduleNode.findFirstToken();
+          if (_findFirstToken_1!=null) {
+            _findFirstToken_1.setWhiteBefore(newWhite);
+          }
+          _xblockexpression = ((T) this);
+        }
+        return _xblockexpression;
+      } catch (Throwable _e) {
+        throw Exceptions.sneakyThrow(_e);
+      }
+    }
+  }
+  
   @Label(label = "SetServices")
   @MappingType("subroutine")
   public static class SetServices extends SetServicesCodeConcept<NUOPCModel> {
@@ -2058,6 +2137,9 @@ public class NUOPCModel extends NUOPCComponent {
     }
   }
   
+  @Child(min = 0)
+  public NUOPCModel.DoxygenTemplate doc;
+  
   @Child(forward = true)
   public NUOPCModel.SetServices setServices;
   
@@ -2088,6 +2170,7 @@ public class NUOPCModel extends NUOPCComponent {
     NUOPCModel _xblockexpression = null;
     {
       final NUOPCModel model = new NUOPCModel(context);
+      new NUOPCModel.DoxygenTemplate(model);
       new NUOPCModel.SetServices(model);
       new NUOPCModel.Initialization(model);
       new NUOPCModel.InitPhases(model.initialization);
@@ -2124,23 +2207,30 @@ public class NUOPCModel extends NUOPCComponent {
   
   @Override
   public NUOPCComponent reverseChildren() {
-    NUOPCModel _xblockexpression = null;
-    {
-      NUOPCModel.SetServices _setServices = new NUOPCModel.SetServices(this);
-      SetServicesCodeConcept<NUOPCModel> _reverse = _setServices.reverse();
-      this.setServices = ((NUOPCModel.SetServices) _reverse);
-      NUOPCModel.Initialization _initialization = new NUOPCModel.Initialization(this);
-      NUOPCModel.Initialization _reverse_1 = _initialization.reverse();
-      this.initialization = _reverse_1;
-      NUOPCModel.Run _run = new NUOPCModel.Run(this);
-      NUOPCModel.Run _reverse_2 = _run.reverse();
-      this.run = _reverse_2;
-      NUOPCModel.Finalize _finalize = new NUOPCModel.Finalize(this);
-      NUOPCModel.Finalize _reverse_3 = _finalize.reverse();
-      this.finalize = _reverse_3;
-      _xblockexpression = this;
+    try {
+      NUOPCModel _xblockexpression = null;
+      {
+        NUOPCModel.DoxygenTemplate _doxygenTemplate = new NUOPCModel.DoxygenTemplate(this);
+        NUOPCModel.DoxygenTemplate _reverse = _doxygenTemplate.<NUOPCModel.DoxygenTemplate>reverse();
+        this.doc = _reverse;
+        NUOPCModel.SetServices _setServices = new NUOPCModel.SetServices(this);
+        SetServicesCodeConcept<NUOPCModel> _reverse_1 = _setServices.reverse();
+        this.setServices = ((NUOPCModel.SetServices) _reverse_1);
+        NUOPCModel.Initialization _initialization = new NUOPCModel.Initialization(this);
+        NUOPCModel.Initialization _reverse_2 = _initialization.reverse();
+        this.initialization = _reverse_2;
+        NUOPCModel.Run _run = new NUOPCModel.Run(this);
+        NUOPCModel.Run _reverse_3 = _run.reverse();
+        this.run = _reverse_3;
+        NUOPCModel.Finalize _finalize = new NUOPCModel.Finalize(this);
+        NUOPCModel.Finalize _reverse_4 = _finalize.reverse();
+        this.finalize = _reverse_4;
+        _xblockexpression = this;
+      }
+      return _xblockexpression;
+    } catch (Throwable _e) {
+      throw Exceptions.sneakyThrow(_e);
     }
-    return _xblockexpression;
   }
   
   @Override

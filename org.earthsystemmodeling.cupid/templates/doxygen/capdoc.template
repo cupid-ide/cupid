@@ -1,0 +1,77 @@
+!>
+!! @mainpage <Model Name> NUOPC Cap
+!! @author Your Name (your.email)
+!! @date <Date> Initial documentation
+!!
+!! @tableofcontents
+!!
+!! @section Overview Overview
+!!
+!! <Provide an overview of the NUOPC cap>
+!!
+!! The NUOPC Layer is a software layer built on top of the [Earth System Modeling 
+!! Framework] (https://www.earthsystemcog.org/projects/esmf) (ESMF). 
+!! ESMF is a high-performance modeling framework that provides
+!! data structures, interfaces, and operations suited for building coupled models
+!! from a set of components. NUOPC refines the capabilities of ESMF by providing
+!! a more precise definition of what it means for a model to be a component and 
+!! how components should interact and share data in a coupled system. The NUOPC
+!! Layer software is designed to work with typical high-performance models in the
+!! Earth sciences domain, most of which are written in Fortran and are based on a 
+!! distributed memory model of parallelism (MPI). 
+!! A NUOPC "cap" is a Fortran module that serves as the interface to a model 
+!! when it's used in a NUOPC-based coupled system. 
+!! The term "cap" is used because it is a small software layer that sits on top 
+!! of model code, making calls into it and exposing model data structures in a 
+!! standard way. For more information about creating NUOPC caps in general, please
+!! see the [Building a NUOPC Model] 
+!! (http://www.earthsystemmodeling.org/esmf_releases/non_public/ESMF_7_0_0/NUOPC_howtodoc/) 
+!! how-to document.
+!!
+!! @subsection CapSubroutines Cap Subroutines
+!!
+!! <Summary of subroutines in cap>
+!!
+!! Phase    | CICE Cap Subroutine                                                |  Description
+!! ---------|--------------------------------------------------------------------|-------------------------------------------------------------
+!! Init     | <subroutine name>                                                  | <Description>
+!!
+!!
+!! @section UnderlyingModelInterfaces Underlying Model Interfaces
+!!
+!! @subsection DomainCreation Domain Creation
+!!
+!!
+!! @subsection Initialization Initialization
+!!
+!!
+!! @subsection Run Run
+!!
+!!
+!! @subsection Finalization Finalization
+!!
+!!
+!! @section ModelFields Model Fields
+!!
+!! @subsection ImportFields Import Fields 
+!!
+!! Standard Name                     | Units      | Model Variable  | File         | Description                     | Notes
+!! ----------------------------------|------------|-----------------|--------------|---------------------------------|--------------------------------------
+!!
+!! @subsection ExportField Export Fields
+!!
+!! Standard Name                     | Units      | Model Variable  | File          | Description                     | Notes
+!! ----------------------------------|------------|-----------------|---------------|---------------------------------|--------------------------------------
+!!
+!! @section BuildingAndInstalling Building and Installing
+!!
+!!
+!! @subsection Dependencies Dependencies
+!!
+!! 
+!! @section RuntimeConfiguration Runtime Configuration
+!! 
+!! @section Repository
+!!
+!! @section References 
+!! 
