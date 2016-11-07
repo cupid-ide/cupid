@@ -59,12 +59,16 @@ public class NUOPCStateProvider extends AbstractTmfStateProvider {
                 
             	JSONObject jObj = (JSONObject) e.getContent().getFieldValue("json");
             	JSONObject jEvent = (JSONObject) jObj.get("ctrl");
+            	String eventName = jEvent.get("event").toString();
             	
+            	if (eventName.equals("region_enter") || eventName.equals("region_exit")) {
+            		return;  //no additional processing for now
+            	}
+            	            	
             	String esmfid = jEvent.get("ESMFID").toString();
             	String compName = jEvent.get("compName").toString();
             	String method = jEvent.get("method").toString();
             	String phase = jEvent.get("phase").toString();
-            	String eventName = jEvent.get("event").toString();
             	String currTime = jEvent.get("currTime").toString();
                 
                 int quark;

@@ -141,6 +141,10 @@ public class NUOPCCallStackStateProvider extends CallStackStateProvider {
 									
 			return TmfStateValue.newValueString(funcName);
 		}
+		else if (eventName.equals("region_enter")) {
+			String name = jEvent.get("name").toString();
+			return TmfStateValue.newValueString(name);
+		}
 		else {
 			return null;
 		}	
@@ -177,6 +181,10 @@ public class NUOPCCallStackStateProvider extends CallStackStateProvider {
 			}
 			
 			return TmfStateValue.newValueString(funcName);
+		}
+		else if (eventName.equals("region_exit")) {
+			String name = jEvent.get("name").toString();
+			return TmfStateValue.newValueString(name);
 		}
 		else {
 			return null;
