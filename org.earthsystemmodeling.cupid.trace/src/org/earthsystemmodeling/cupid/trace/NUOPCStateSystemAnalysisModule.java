@@ -23,7 +23,7 @@ public class NUOPCStateSystemAnalysisModule extends TmfStateSystemAnalysisModule
 	
 	@Override
 	protected StateSystemBackendType getBackendType() {
-		return StateSystemBackendType.INMEM;
+		return StateSystemBackendType.FULL;
 	}
 	
 	

@@ -55,7 +55,9 @@ Require-Bundle: org.eclipse.core.runtime,
 Bundle-ActivationPolicy: lazy
 Bundle-Activator: org.earthsystemmodeling.cupid.core.CupidActivator
 Export-Package: org.apache.commons.io,
+ org.earthsystemmodeling.cupid.cc,
  org.earthsystemmodeling.cupid.core,
+ org.earthsystemmodeling.cupid.handlers,
  org.earthsystemmodeling.cupid.nuopc,
  org.earthsystemmodeling.cupid.nuopc.v7r
 Eclipse-BundleShape: dir

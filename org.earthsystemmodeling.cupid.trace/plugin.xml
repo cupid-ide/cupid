@@ -40,6 +40,17 @@
                class="org.earthsystemmodeling.cupid.trace.NUOPCTrace">
          </tracetype>
       </module>
+      <module
+            analysis_module="org.earthsystemmodeling.cupid.trace.CtfNUOPCCallStackAnalysis"
+            automatic="false"
+            icon="icons/stack.png"
+            id="org.earthsystemmodeling.cupid.trace.CtfNUOPCCallStackAnalysis"
+            name="CTF NUOPC Call Stack Analysis">
+         <tracetype
+               applies="true"
+               class="org.eclipse.tracecompass.tmf.ctf.core.trace.CtfTmfTrace">
+         </tracetype>
+      </module>
       
    </extension>
    <extension

@@ -1,0 +1,25 @@
+- model:
+    name: ATM
+    
+- model:
+    name: OCN
+   
+- mediator:
+    name: MED
+    imports:
+      ATM: 
+        - {name: uwind, remap: bilnr}
+        - {name: vwind, remap: conservative}
+      OCN:
+        - {name: sea_surface_temperature, remap: bilnr}
+       
+- driver:
+    name: ESM
+    children: [ATM, OCN, MED]
+    runseq:
+      - ATM
+      - OCN
+      - MED
+      - ATM -> OCN
+      - OCN -> ATM
+  
