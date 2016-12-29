@@ -17,8 +17,9 @@ class BootstrapCodeConcept {
         if (ast==null) throw new Exception("NULL AST")
         
         val moduleNode = ast.root?.programUnitList?.filter(ASTModuleNode).head
-        val cci = type.newInstance(moduleNode)
-        type.reverse(cci) 
+        val cci = type.newInstance(null)
+        type.reverse(cci)
+        cci
     }
     
 }

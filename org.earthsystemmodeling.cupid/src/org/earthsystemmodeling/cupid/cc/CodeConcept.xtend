@@ -12,7 +12,7 @@ class CodeConcept {
     @Accessors
     protected CodeConcept refines = null
     
-    //list of formal parameters    
+    //list of formal (static?) parameters    
     protected List<String> parameters = newLinkedList
     
     //parameter values to refine the super type
@@ -20,25 +20,11 @@ class CodeConcept {
     protected Map<String,Object> parameterValues = newLinkedHashMap
     
     protected List<CodeSubconcept> subconcepts = newLinkedList
-    
+           
     @Accessors
-    protected Class<?> mapsTo = null
+    protected MappingType mappingType
     
-    //find an instance of the this concept in the current context
-    //CodeConcept param is ref to calling concept
-    //CodeConceptInstnace param is context (parent)
-    @Accessors
-    protected (CodeConcept, CodeConceptInstance)=>Object find
-    
-    @Accessors
-    protected (CodeConcept, CodeConceptInstance)=>Iterable<?> findAll
-    
-    //given a found source instance, add the annotations to store
-    //Map<String,Object> is map for annotations
-    //Object is the source ref
-    @Accessors
-    protected (Map<String,Object>, Object)=>void annotate = [map,src|/* default - do nothing */]
-    
+        
     new(String name) {
         this(name, null)
     }
@@ -63,66 +49,85 @@ class CodeConcept {
         }
     }
     
-    //consider moving this into CodeSubconcept
+    
     def protected List<CodeConceptInstance> reverseAll(CodeConceptInstance parent) {
-        val sourceMatches = findAll.apply(this, parent)
+        
         val retList = newLinkedList
-        sourceMatches.forEach[match|
-            val cci = reverse(parent, match)
-            if (cci != null) {
-                retList.add(cci)
+        
+        if (mappingType != null) {
+            val resultset = mappingType.doFind()
+            for (res : resultset.results) {
+                val cci = reverse(parent, res)
+                if (cci != null) retList.add(cci)
             }
-        ]
+        }
+        else {
+            //TODO: deal with this case   
+        }
         retList
     }
       
-    def protected CodeConceptInstance reverse(CodeConceptInstance parent) {
-        val sourceRef = find.apply(this, parent)
-        if (sourceRef != null) {
-            reverse(parent, sourceRef)
+    def CodeConceptInstance reverse(CodeConceptInstance parent) {
+        if (mappingType != null) {
+            
+            //will all parameters be bound at this point??
+            
+            //for (p : mappingType.unboundParameters) {
+            //  p.name, p.type
+            //  ctx = parent.nearestMapping(p.type) //find nearest mapped concept
+            //  newParams.put(p.name, ctx)
+            //endif
+            //mappingType.withParams(newParams)
+            
+            val resultset = mappingType.doFind()
+            if (resultset.size() > 0) {
+                reverse(parent, resultset.first)
+            }
         }
     }
     
-    def protected CodeConceptInstance reverse(CodeConceptInstance parent, Object sourceMatch) {
-        val cci = newInstance(sourceMatch)
-        annotate.apply(cci.annotations, sourceMatch)
+    def protected CodeConceptInstance reverse(CodeConceptInstance parent, MappingResult result) {
+        val cci = newInstance(parent)
+        cci.match = result.match
+        //annotate.apply(cci.annotations, sourceMatch)
         try {
-            getSubconcepts.forEach[sc|
+            for (sc : getSubconcepts) {
                 if (sc.max == 1) {
-                    val subconceptInstance = sc.type.reverse(cci)
-                    if (subconceptInstance == null) {
-                        if (sc.min > 0) {
-                            throw new InterruptedException()
+                    val child = sc.type.reverse(cci)
+                    if (child == null) {
+                        if (sc.min > 0 && sc.essential) {
+                            return null  //do not map without essential feature
+                        }
+                        else if (sc.min > 0) {
+                            throw new CodeConceptConstraintViolation("Must be at least " + sc.min + " instances of " + sc.type.getName)
                         }
                     }
                     else {
-                        cci.addSubconceptInstance(sc, subconceptInstance)
+                        sc.type.newInstance(cci)
                     }
                 }
                 else {
-                    val subconceptInstances = sc.type.reverseAll(cci)
-                    if (subconceptInstances.size < sc.min || subconceptInstances.size > sc.max) {
-                        throw new InterruptedException()
+                    val children = sc.type.reverseAll(cci)
+                    if (children.size < sc.min || children.size > sc.max) {
+                        throw new CodeConceptConstraintViolation("Must be at between " + sc.min + " and " + sc.max + " instances of " + sc.type.getName)
                     }
-                    for (subconceptInstance : subconceptInstances) {
-                        cci.addSubconceptInstance(sc, subconceptInstance)
-                    }
-                }
-            ]
+                } 
+            }
         }
-        catch(InterruptedException ie) {
+        catch(CodeConceptConstraintViolation cscv) {
             //required subconcept did not match, so return null
-            return null
+            System.out.println(cscv)
+            //return null
         }                    
         cci 
     }
     
-    def protected CodeConceptInstance newInstance(Object sourceRef) {
+    def protected CodeConceptInstance newInstance(CodeConceptInstance parent) {
         //verify all parameters defined, if not can't instantiate
         if (getParameters.exists[p|getParameterValue(p) == null]) {
             throw new CodeConceptException("Cannot instantiate CodeConcept " + name + " because not all parameters have been defined.")
         }
-        new CodeConceptInstance(this, sourceRef)
+        new CodeConceptInstance(this, parent)
     }
     
     def List<String> getParameters() {
@@ -178,27 +183,65 @@ class CodeConcept {
     
     //single valued subconcept   
     def CodeConcept addSubconcept(CodeConcept type) {
-        subconcepts.add(new CodeSubconcept(type))
-        this
+       addSubconcept(type.name, type)
     }
     
     def CodeConcept addSubconcept(String name, CodeConcept type) {
-       subconcepts.add(new CodeSubconcept(name, type, 1, 1))
+       addSubconcept(name, type, false)
+    }
+    
+    def CodeConcept addSubconcept(String name, CodeConcept type, boolean essential) {
+       subconcepts.add(new CodeSubconcept(this, name, type, essential, 1, 1))
        this 
     }
     
-    def operator_modulo(Map<String,Object> paramValues) {
-        newRefinement(paramValues)
-    }
-        
-    def CodeConcept newRefinement(Map<String,Object> paramValues) {
-        newRefinement(null, paramValues)
+    def CodeConcept addSubconcept(String name, CodeConcept type, boolean essential, int min, int max) {
+       subconcepts.add(new CodeSubconcept(this, name, type, essential, 1, 1))
+       this 
     }
     
-    def CodeConcept newRefinement(String name, Map<String,Object> paramValues) {
+    //add subconcept with anonymous concept type
+    def CodeConcept addSubconcept(String name, MappingType mappingType) {
+        val newcc = new CodeConcept(name)
+        newcc.mappingType = mappingType
+        addSubconcept(newcc)
+        this
+    }
+    
+    def CodeConcept addSubconcept(String name, MappingType mappingType, boolean essential) {
+        val newcc = new CodeConcept(name)
+        newcc.mappingType = mappingType
+        addSubconcept(name, newcc, essential, 1, 1)
+        this
+    }
+    
+    def CodeConcept addSubconcept(String name, MappingType mappingType, boolean essential, int min, int max) {
+        val newcc = new CodeConcept(name)
+        newcc.setMappingType(mappingType)
+        addSubconcept(name, newcc, essential, min, max)
+        this
+    }
+    
+    def void setMappingType(MappingType mt) {
+        mappingType = mt.withParams(#{})  //ensures one instance per concept
+        mappingType.mappedTo = this
+        
+        //could validate parameters here
+    }
+    
+    //def operator_modulo(Map<String,Object> paramValues) {
+    //    refine(paramValues)
+   // }
+        
+    def CodeConcept refine(Map<String,Object> paramValues) {
+        refine(null, paramValues)
+    }
+    
+    def CodeConcept refine(String name, Map<String,Object> paramValues) {
         val newcc = new CodeConcept(name)
         newcc.refines = this
-        newcc.mapsTo = mapsTo
+        newcc.setMappingType(this.mappingType)
+        //newcc.mapsTo = mapsTo
         paramValues.forEach[k, v|
             if (parameters.contains(k)) {
                 newcc.parameterValues.put(k,v)
@@ -209,14 +252,14 @@ class CodeConcept {
         ]
         
         //default is to call my find
-        newcc.find = [me,context|
-            this.find.apply(me, context)
-        ]
+        //newcc.find = [me,context|
+        //    this.find.apply(me, context)
+        //]
         
         //default is to call my annotate
-        newcc.annotate = [map,source|
-            this.annotate.apply(map,source)
-        ]
+        //newcc.annotate = [map,source|
+        //    this.annotate.apply(map,source)
+        //]
         
         newcc
     }

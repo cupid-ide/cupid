@@ -42,8 +42,9 @@ public class BootstrapCodeConcept {
           _filter=Iterables.<ASTModuleNode>filter(_programUnitList, ASTModuleNode.class);
         }
         final ASTModuleNode moduleNode = IterableExtensions.<ASTModuleNode>head(_filter);
-        final CodeConceptInstance cci = this.type.newInstance(moduleNode);
-        _xblockexpression = this.type.reverse(cci);
+        final CodeConceptInstance cci = this.type.newInstance(null);
+        this.type.reverse(cci);
+        _xblockexpression = cci;
       }
       return _xblockexpression;
     } catch (Throwable _e) {
