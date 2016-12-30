@@ -7,8 +7,8 @@ import java.util.Set;
 import java.util.function.Consumer;
 import org.earthsystemmodeling.cupid.cc.BootstrapCodeConcept;
 import org.earthsystemmodeling.cupid.cc.CodeConcept;
-import org.earthsystemmodeling.cupid.cc.MappingResultSet;
-import org.earthsystemmodeling.cupid.cc.MappingType;
+import org.earthsystemmodeling.cupid.cc.mapping.MappingResultSet;
+import org.earthsystemmodeling.cupid.cc.mapping.MappingType;
 import org.earthsystemmodeling.cupid.nuopc.ASTQuery;
 import org.earthsystemmodeling.cupid.nuopc.ESMFQuery;
 import org.eclipse.photran.internal.core.lexer.Token;
@@ -69,14 +69,10 @@ public class NUOPC {
   }
   
   public NUOPC() {
-    Pair<String, Class<ASTModuleNode>> _mappedTo = Pair.<String, Class<ASTModuleNode>>of("module", ASTModuleNode.class);
-    Pair<String, Class<ASTSubroutineSubprogramNode>> _mappedTo_1 = Pair.<String, Class<ASTSubroutineSubprogramNode>>of("match", ASTSubroutineSubprogramNode.class);
-    MappingType _mappingType = new MappingType(
-      Collections.<String, Class<?>>unmodifiableMap(CollectionLiterals.<String, Class<?>>newHashMap(_mappedTo)), 
-      Collections.<String, Class<?>>unmodifiableMap(CollectionLiterals.<String, Class<?>>newHashMap(_mappedTo_1)));
+    MappingType _mappingType = new MappingType("ESMFMethodMT", ASTModuleNode.class, ASTSubroutineSubprogramNode.class);
     final Procedure1<MappingType> _function = (MappingType it) -> {
       final Procedure2<MappingType, MappingResultSet> _function_1 = (MappingType me, MappingResultSet result) -> {
-        final ASTModuleNode module = me.<ASTModuleNode>get("module");
+        final ASTModuleNode module = me.<ASTModuleNode>context();
         Iterable<ASTSubroutineSubprogramNode> _findESMFMethods = ESMFQuery.findESMFMethods(module);
         final Consumer<ASTSubroutineSubprogramNode> _function_2 = (ASTSubroutineSubprogramNode m) -> {
           result.addMatch(m);
@@ -87,15 +83,15 @@ public class NUOPC {
     };
     MappingType _doubleArrow = ObjectExtensions.<MappingType>operator_doubleArrow(_mappingType, _function);
     this.ESMFMethodMT = _doubleArrow;
-    Pair<String, Class<ASTSubroutineSubprogramNode>> _mappedTo_2 = Pair.<String, Class<ASTSubroutineSubprogramNode>>of("setServices", ASTSubroutineSubprogramNode.class);
-    Pair<String, Class<String>> _mappedTo_3 = Pair.<String, Class<String>>of("labelComponent", String.class);
-    Pair<String, Class<String>> _mappedTo_4 = Pair.<String, Class<String>>of("labelName", String.class);
+    Pair<String, Class<ASTSubroutineSubprogramNode>> _mappedTo = Pair.<String, Class<ASTSubroutineSubprogramNode>>of("SetServices", ASTSubroutineSubprogramNode.class);
+    Pair<String, Class<String>> _mappedTo_1 = Pair.<String, Class<String>>of("labelComponent", String.class);
+    Pair<String, Class<String>> _mappedTo_2 = Pair.<String, Class<String>>of("labelName", String.class);
     MappingType _refine = this.ESMFMethodMT.refine(
-      Collections.<String, Class<?>>unmodifiableMap(CollectionLiterals.<String, Class<?>>newHashMap(_mappedTo_2, _mappedTo_3, _mappedTo_4)));
+      Collections.<String, Class<?>>unmodifiableMap(CollectionLiterals.<String, Class<?>>newHashMap(_mappedTo, _mappedTo_1, _mappedTo_2)));
     final Procedure1<MappingType> _function_1 = (MappingType it) -> {
       final Procedure2<MappingType, MappingResultSet> _function_2 = (MappingType me, MappingResultSet result) -> {
-        final ASTModuleNode module = me.<ASTModuleNode>get("module");
-        final ASTSubroutineSubprogramNode setServicesNode = me.<ASTSubroutineSubprogramNode>get("setServices");
+        final ASTModuleNode module = me.<ASTModuleNode>context();
+        final ASTSubroutineSubprogramNode setServicesNode = me.<ASTSubroutineSubprogramNode>get("SetServices");
         final Function1<ASTSubroutineSubprogramNode, Boolean> _function_3 = (ASTSubroutineSubprogramNode m) -> {
           return Boolean.valueOf(Objects.equal(m, setServicesNode));
         };
@@ -144,7 +140,7 @@ public class NUOPC {
     };
     MappingType _doubleArrow_1 = ObjectExtensions.<MappingType>operator_doubleArrow(_refine, _function_1);
     this.SpecializationMethodMT = _doubleArrow_1;
-    MappingType _mappingType_1 = new MappingType(ASTModuleNode.class, ASTSubroutineSubprogramNode.class);
+    MappingType _mappingType_1 = new MappingType("SetServicesMT", ASTModuleNode.class, ASTSubroutineSubprogramNode.class);
     final Procedure1<MappingType> _function_2 = (MappingType it) -> {
       final Procedure2<MappingType, MappingResultSet> _function_3 = (MappingType me, MappingResultSet results) -> {
         final ASTModuleNode module = me.<ASTModuleNode>context();
@@ -184,12 +180,11 @@ public class NUOPC {
     };
     MappingType _doubleArrow_2 = ObjectExtensions.<MappingType>operator_doubleArrow(_mappingType_1, _function_2);
     this.SetServicesMT = _doubleArrow_2;
-    Pair<String, Class<ASTModuleNode>> _mappedTo_5 = Pair.<String, Class<ASTModuleNode>>of("context", ASTModuleNode.class);
-    Pair<String, Class<String>> _mappedTo_6 = Pair.<String, Class<String>>of("uses", String.class);
-    Pair<String, Class<ASTUseStmtNode>> _mappedTo_7 = Pair.<String, Class<ASTUseStmtNode>>of("match", ASTUseStmtNode.class);
-    MappingType _mappingType_2 = new MappingType(
-      Collections.<String, Class<?>>unmodifiableMap(CollectionLiterals.<String, Class<?>>newHashMap(_mappedTo_5, _mappedTo_6)), 
-      Collections.<String, Class<?>>unmodifiableMap(CollectionLiterals.<String, Class<?>>newHashMap(_mappedTo_7)));
+    Pair<String, Class<ASTModuleNode>> _mappedTo_3 = Pair.<String, Class<ASTModuleNode>>of("context", ASTModuleNode.class);
+    Pair<String, Class<String>> _mappedTo_4 = Pair.<String, Class<String>>of("uses", String.class);
+    Pair<String, Class<ASTUseStmtNode>> _mappedTo_5 = Pair.<String, Class<ASTUseStmtNode>>of("match", ASTUseStmtNode.class);
+    MappingType _mappingType_2 = new MappingType("ModuleUseStmtMT", 
+      Collections.<String, Class<?>>unmodifiableMap(CollectionLiterals.<String, Class<?>>newHashMap(_mappedTo_3, _mappedTo_4, _mappedTo_5)));
     final Procedure1<MappingType> _function_3 = (MappingType it) -> {
       final Procedure2<MappingType, MappingResultSet> _function_4 = (MappingType me, MappingResultSet result) -> {
         final ASTModuleNode moduleNode = me.<ASTModuleNode>context();
@@ -210,12 +205,11 @@ public class NUOPC {
     };
     MappingType _doubleArrow_3 = ObjectExtensions.<MappingType>operator_doubleArrow(_mappingType_2, _function_3);
     this.ModuleUseStmtMT = _doubleArrow_3;
-    Pair<String, Class<ASTModuleNode>> _mappedTo_8 = Pair.<String, Class<ASTModuleNode>>of("context", ASTModuleNode.class);
-    Pair<String, Class<String>> _mappedTo_9 = Pair.<String, Class<String>>of("uses", String.class);
-    Pair<String, Class<ASTModuleNode>> _mappedTo_10 = Pair.<String, Class<ASTModuleNode>>of("match", ASTModuleNode.class);
-    MappingType _mappingType_3 = new MappingType(
-      Collections.<String, Class<?>>unmodifiableMap(CollectionLiterals.<String, Class<?>>newHashMap(_mappedTo_8, _mappedTo_9)), 
-      Collections.<String, Class<?>>unmodifiableMap(CollectionLiterals.<String, Class<?>>newHashMap(_mappedTo_10)));
+    Pair<String, Class<ASTModuleNode>> _mappedTo_6 = Pair.<String, Class<ASTModuleNode>>of("context", ASTModuleNode.class);
+    Pair<String, Class<String>> _mappedTo_7 = Pair.<String, Class<String>>of("uses", String.class);
+    Pair<String, Class<ASTModuleNode>> _mappedTo_8 = Pair.<String, Class<ASTModuleNode>>of("match", ASTModuleNode.class);
+    MappingType _mappingType_3 = new MappingType("ModuleThatUsesMT", 
+      Collections.<String, Class<?>>unmodifiableMap(CollectionLiterals.<String, Class<?>>newHashMap(_mappedTo_6, _mappedTo_7, _mappedTo_8)));
     final Procedure1<MappingType> _function_4 = (MappingType it) -> {
       final Procedure2<MappingType, MappingResultSet> _function_5 = (MappingType me, MappingResultSet result) -> {
         final ASTModuleNode moduleNode = me.<ASTModuleNode>context();
@@ -243,31 +237,31 @@ public class NUOPC {
     this.ModuleThatUsesMT = _doubleArrow_4;
     CodeConcept _codeConcept = new CodeConcept("NUOPCComponent", Collections.<String>unmodifiableList(CollectionLiterals.<String>newArrayList("genericImport")));
     final Procedure1<CodeConcept> _function_5 = (CodeConcept it) -> {
-      Pair<String, String> _mappedTo_11 = Pair.<String, String>of("uses", "$genericImport");
-      MappingType _withParams = this.ModuleThatUsesMT.withParams(Collections.<String, Object>unmodifiableMap(CollectionLiterals.<String, Object>newHashMap(_mappedTo_11)));
-      it.setMappingType(_withParams);
-      Pair<String, String> _mappedTo_12 = Pair.<String, String>of("uses", "ESMF");
-      MappingType _withParams_1 = this.ModuleUseStmtMT.withParams(Collections.<String, Object>unmodifiableMap(CollectionLiterals.<String, Object>newHashMap(_mappedTo_12)));
-      it.addSubconcept("UsesESMF", _withParams_1);
-      Pair<String, String> _mappedTo_13 = Pair.<String, String>of("uses", "NUOPC");
-      MappingType _withParams_2 = this.ModuleUseStmtMT.withParams(Collections.<String, Object>unmodifiableMap(CollectionLiterals.<String, Object>newHashMap(_mappedTo_13)));
-      it.addSubconcept("UsesNUOPC", _withParams_2);
-      Pair<String, String> _mappedTo_14 = Pair.<String, String>of("uses", "$genericImport");
-      MappingType _withParams_3 = this.ModuleUseStmtMT.withParams(Collections.<String, Object>unmodifiableMap(CollectionLiterals.<String, Object>newHashMap(_mappedTo_14)));
-      it.addSubconcept("UsesGeneric", _withParams_3);
+      Pair<String, String> _mappedTo_9 = Pair.<String, String>of("uses", "$genericImport");
+      MappingType _define = this.ModuleThatUsesMT.define(Collections.<String, Object>unmodifiableMap(CollectionLiterals.<String, Object>newHashMap(_mappedTo_9)));
+      it.setMappingType(_define);
+      Pair<String, String> _mappedTo_10 = Pair.<String, String>of("uses", "ESMF");
+      MappingType _define_1 = this.ModuleUseStmtMT.define(Collections.<String, Object>unmodifiableMap(CollectionLiterals.<String, Object>newHashMap(_mappedTo_10)));
+      it.addSubconcept("UsesESMF", _define_1);
+      Pair<String, String> _mappedTo_11 = Pair.<String, String>of("uses", "NUOPC");
+      MappingType _define_2 = this.ModuleUseStmtMT.define(Collections.<String, Object>unmodifiableMap(CollectionLiterals.<String, Object>newHashMap(_mappedTo_11)));
+      it.addSubconcept("UsesNUOPC", _define_2);
+      Pair<String, String> _mappedTo_12 = Pair.<String, String>of("uses", "$genericImport");
+      MappingType _define_3 = this.ModuleUseStmtMT.define(Collections.<String, Object>unmodifiableMap(CollectionLiterals.<String, Object>newHashMap(_mappedTo_12)));
+      it.addSubconcept("UsesGeneric", _define_3);
       it.addSubconcept("SetServices", this.SetServicesMT);
     };
     CodeConcept _doubleArrow_5 = ObjectExtensions.<CodeConcept>operator_doubleArrow(_codeConcept, _function_5);
     this.NUOPCComponent = _doubleArrow_5;
-    Pair<String, String> _mappedTo_11 = Pair.<String, String>of("genericImport", "NUOPC_Driver");
-    CodeConcept _refine_1 = this.NUOPCComponent.refine("NUOPCDriver", Collections.<String, Object>unmodifiableMap(CollectionLiterals.<String, Object>newHashMap(_mappedTo_11)));
+    Pair<String, String> _mappedTo_9 = Pair.<String, String>of("genericImport", "NUOPC_Driver");
+    CodeConcept _refine_1 = this.NUOPCComponent.refine("NUOPCDriver", Collections.<String, Object>unmodifiableMap(CollectionLiterals.<String, Object>newHashMap(_mappedTo_9)));
     final Procedure1<CodeConcept> _function_6 = (CodeConcept it) -> {
-      Pair<String, String> _mappedTo_12 = Pair.<String, String>of("SetServices", "../SetServices");
-      Pair<String, String> _mappedTo_13 = Pair.<String, String>of("labelComponent", "NUOPC_Driver");
-      Pair<String, String> _mappedTo_14 = Pair.<String, String>of("labelName", "label_SetModelServices");
-      MappingType _withParams = this.SpecializationMethodMT.withParams(
-        Collections.<String, Object>unmodifiableMap(CollectionLiterals.<String, Object>newHashMap(_mappedTo_12, _mappedTo_13, _mappedTo_14)));
-      it.addSubconcept("SetModelServices", _withParams);
+      Pair<String, String> _mappedTo_10 = Pair.<String, String>of("SetServices", "../SetServices");
+      Pair<String, String> _mappedTo_11 = Pair.<String, String>of("labelComponent", "NUOPC_Driver");
+      Pair<String, String> _mappedTo_12 = Pair.<String, String>of("labelName", "label_SetModelServices");
+      MappingType _define = this.SpecializationMethodMT.define(
+        Collections.<String, Object>unmodifiableMap(CollectionLiterals.<String, Object>newHashMap(_mappedTo_10, _mappedTo_11, _mappedTo_12)));
+      it.addSubconcept("SetModelServices", _define);
     };
     CodeConcept _doubleArrow_6 = ObjectExtensions.<CodeConcept>operator_doubleArrow(_refine_1, _function_6);
     this.NUOPCDriver = _doubleArrow_6;

@@ -1,4 +1,4 @@
-package org.earthsystemmodeling.cupid.cc;
+package org.earthsystemmodeling.cupid.cc.mapping;
 
 import java.util.Map;
 import org.eclipse.xtext.xbase.lib.CollectionLiterals;

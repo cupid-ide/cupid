@@ -31,11 +31,13 @@ class CodeConceptInstance {
         this(type, parent, null)
     }
     
-    
     protected new(CodeConcept type, CodeConceptInstance parent, Object match) {
         this.type = type
         this.parent = parent
         setMatch(match)
+        if (parent != null) {
+            parent.addChild(this)
+        }
     }
     
     def setMatch(Object match) {

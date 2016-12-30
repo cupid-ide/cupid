@@ -1,4 +1,4 @@
-package org.earthsystemmodeling.cupid.cc
+package org.earthsystemmodeling.cupid.cc.mapping
 
 class MappingTypeException extends Exception {
     

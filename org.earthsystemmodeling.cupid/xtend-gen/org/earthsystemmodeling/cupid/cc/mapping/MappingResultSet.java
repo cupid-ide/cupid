@@ -1,9 +1,9 @@
-package org.earthsystemmodeling.cupid.cc;
+package org.earthsystemmodeling.cupid.cc.mapping;
 
 import java.util.List;
 import java.util.function.Predicate;
-import org.earthsystemmodeling.cupid.cc.MappingResult;
-import org.earthsystemmodeling.cupid.cc.MappingType;
+import org.earthsystemmodeling.cupid.cc.mapping.MappingResult;
+import org.earthsystemmodeling.cupid.cc.mapping.MappingType;
 import org.eclipse.xtend.lib.annotations.Accessors;
 import org.eclipse.xtext.xbase.lib.CollectionLiterals;
 import org.eclipse.xtext.xbase.lib.Functions.Function1;

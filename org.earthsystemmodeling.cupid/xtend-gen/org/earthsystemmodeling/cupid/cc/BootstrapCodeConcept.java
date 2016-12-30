@@ -4,6 +4,7 @@ import com.google.common.base.Objects;
 import com.google.common.collect.Iterables;
 import org.earthsystemmodeling.cupid.cc.CodeConcept;
 import org.earthsystemmodeling.cupid.cc.CodeConceptInstance;
+import org.earthsystemmodeling.cupid.cc.mapping.MappingType;
 import org.eclipse.core.resources.IFile;
 import org.eclipse.photran.core.IFortranAST;
 import org.eclipse.photran.internal.core.parser.ASTExecutableProgramNode;
@@ -13,6 +14,8 @@ import org.eclipse.photran.internal.core.parser.IProgramUnit;
 import org.eclipse.photran.internal.core.vpg.PhotranVPG;
 import org.eclipse.xtext.xbase.lib.Exceptions;
 import org.eclipse.xtext.xbase.lib.IterableExtensions;
+import org.eclipse.xtext.xbase.lib.ObjectExtensions;
+import org.eclipse.xtext.xbase.lib.Procedures.Procedure1;
 
 @SuppressWarnings("all")
 public class BootstrapCodeConcept {
@@ -42,7 +45,14 @@ public class BootstrapCodeConcept {
           _filter=Iterables.<ASTModuleNode>filter(_programUnitList, ASTModuleNode.class);
         }
         final ASTModuleNode moduleNode = IterableExtensions.<ASTModuleNode>head(_filter);
-        final CodeConceptInstance cci = this.type.newInstance(null);
+        CodeConcept _codeConcept = new CodeConcept("ConceptRoot");
+        final Procedure1<CodeConcept> _function = (CodeConcept it) -> {
+          MappingType _mappingType = new MappingType("MappingRoot", ASTModuleNode.class, ASTModuleNode.class);
+          it.mappingType = _mappingType;
+          it.addSubconcept(this.type);
+        };
+        final CodeConcept rootConcept = ObjectExtensions.<CodeConcept>operator_doubleArrow(_codeConcept, _function);
+        final CodeConceptInstance cci = rootConcept.newInstance(null, moduleNode);
         this.type.reverse(cci);
         _xblockexpression = cci;
       }

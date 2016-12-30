@@ -3,6 +3,8 @@ package org.earthsystemmodeling.cupid.cc
 import java.util.List
 import java.util.Map
 import org.eclipse.xtend.lib.annotations.Accessors
+import org.earthsystemmodeling.cupid.cc.mapping.MappingType
+import org.earthsystemmodeling.cupid.cc.mapping.MappingResult
 
 class CodeConcept {
     
@@ -69,26 +71,23 @@ class CodeConcept {
       
     def CodeConceptInstance reverse(CodeConceptInstance parent) {
         if (mappingType != null) {
+
+            //should only make changes the first time
+            mappingType.resolveStaticBindings(this)
             
-            //will all parameters be bound at this point??
+            val boundMappingType = mappingType.define
+            boundMappingType.resolveDynamicBindings(parent)
             
-            //for (p : mappingType.unboundParameters) {
-            //  p.name, p.type
-            //  ctx = parent.nearestMapping(p.type) //find nearest mapped concept
-            //  newParams.put(p.name, ctx)
-            //endif
-            //mappingType.withParams(newParams)
-            
-            val resultset = mappingType.doFind()
+            val resultset = boundMappingType.doFind()
             if (resultset.size() > 0) {
                 reverse(parent, resultset.first)
             }
+           
         }
     }
     
     def protected CodeConceptInstance reverse(CodeConceptInstance parent, MappingResult result) {
-        val cci = newInstance(parent)
-        cci.match = result.match
+        val cci = newInstance(parent, result.match)        
         //annotate.apply(cci.annotations, sourceMatch)
         try {
             for (sc : getSubconcepts) {
@@ -101,9 +100,6 @@ class CodeConcept {
                         else if (sc.min > 0) {
                             throw new CodeConceptConstraintViolation("Must be at least " + sc.min + " instances of " + sc.type.getName)
                         }
-                    }
-                    else {
-                        sc.type.newInstance(cci)
                     }
                 }
                 else {
@@ -122,12 +118,12 @@ class CodeConcept {
         cci 
     }
     
-    def protected CodeConceptInstance newInstance(CodeConceptInstance parent) {
+    def protected CodeConceptInstance newInstance(CodeConceptInstance parent, Object match) {
         //verify all parameters defined, if not can't instantiate
         if (getParameters.exists[p|getParameterValue(p) == null]) {
             throw new CodeConceptException("Cannot instantiate CodeConcept " + name + " because not all parameters have been defined.")
         }
-        new CodeConceptInstance(this, parent)
+        new CodeConceptInstance(this, parent, match)
     }
     
     def List<String> getParameters() {
@@ -177,6 +173,10 @@ class CodeConcept {
         }
     }
     
+    def CodeSubconcept getSubconcept(String name) {
+        getSubconcepts().findFirst[sc|sc.name.equals(name)]
+    }
+    
     def getDeclaredSubconcepts() {
         subconcepts
     }
@@ -202,32 +202,25 @@ class CodeConcept {
     
     //add subconcept with anonymous concept type
     def CodeConcept addSubconcept(String name, MappingType mappingType) {
-        val newcc = new CodeConcept(name)
-        newcc.mappingType = mappingType
-        addSubconcept(newcc)
-        this
+        addSubconcept(name, mappingType, false)
     }
     
     def CodeConcept addSubconcept(String name, MappingType mappingType, boolean essential) {
-        val newcc = new CodeConcept(name)
-        newcc.mappingType = mappingType
-        addSubconcept(name, newcc, essential, 1, 1)
-        this
+        addSubconcept(name, mappingType, essential, 1, 1)
     }
     
     def CodeConcept addSubconcept(String name, MappingType mappingType, boolean essential, int min, int max) {
         val newcc = new CodeConcept(name)
-        newcc.setMappingType(mappingType)
+        newcc.setMappingType(mappingType.define)
+        //mappingType.performStaticBinding(this)
         addSubconcept(name, newcc, essential, min, max)
         this
     }
     
-    def void setMappingType(MappingType mt) {
-        mappingType = mt.withParams(#{})  //ensures one instance per concept
-        mappingType.mappedTo = this
-        
-        //could validate parameters here
-    }
+    //def void setMappingType(MappingType mt) {
+    //    mappingType = mt.refine() //ensures one instance per concept
+    //    mappingType.mappingFor = this
+    //}
     
     //def operator_modulo(Map<String,Object> paramValues) {
     //    refine(paramValues)
@@ -241,7 +234,7 @@ class CodeConcept {
         val newcc = new CodeConcept(name)
         newcc.refines = this
         newcc.setMappingType(this.mappingType)
-        //newcc.mapsTo = mapsTo
+       
         paramValues.forEach[k, v|
             if (parameters.contains(k)) {
                 newcc.parameterValues.put(k,v)
@@ -250,17 +243,7 @@ class CodeConcept {
                 throw new CodeConceptException("CodeConcept " + getName + " does not have parameter: " + k)
             }
         ]
-        
-        //default is to call my find
-        //newcc.find = [me,context|
-        //    this.find.apply(me, context)
-        //]
-        
-        //default is to call my annotate
-        //newcc.annotate = [map,source|
-        //    this.annotate.apply(map,source)
-        //]
-        
+  
         newcc
     }
     

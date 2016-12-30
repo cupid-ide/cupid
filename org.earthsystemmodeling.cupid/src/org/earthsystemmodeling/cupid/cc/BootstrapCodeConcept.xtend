@@ -3,6 +3,7 @@ package org.earthsystemmodeling.cupid.cc
 import org.eclipse.core.resources.IFile
 import org.eclipse.photran.internal.core.vpg.PhotranVPG
 import org.eclipse.photran.internal.core.parser.ASTModuleNode
+import org.earthsystemmodeling.cupid.cc.mapping.MappingType
 
 class BootstrapCodeConcept {
     
@@ -17,7 +18,13 @@ class BootstrapCodeConcept {
         if (ast==null) throw new Exception("NULL AST")
         
         val moduleNode = ast.root?.programUnitList?.filter(ASTModuleNode).head
-        val cci = type.newInstance(null)
+        
+        val rootConcept = new CodeConcept("ConceptRoot") => [
+            mappingType = new MappingType("MappingRoot", ASTModuleNode, ASTModuleNode)
+            addSubconcept(type)
+        ]
+        val cci = rootConcept.newInstance(null, moduleNode)       
+        
         type.reverse(cci)
         cci
     }
