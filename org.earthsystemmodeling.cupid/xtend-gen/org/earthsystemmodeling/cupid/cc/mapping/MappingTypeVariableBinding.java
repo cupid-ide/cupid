@@ -1,6 +1,7 @@
 package org.earthsystemmodeling.cupid.cc.mapping;
 
 import org.earthsystemmodeling.cupid.cc.mapping.MappingTypeVariable;
+import org.earthsystemmodeling.cupid.cc.mapping.UnresolvedVariableAccessException;
 import org.eclipse.xtend.lib.annotations.Accessors;
 import org.eclipse.xtext.xbase.lib.Pure;
 
@@ -11,7 +12,10 @@ public abstract class MappingTypeVariableBinding<T extends Object> {
   
   public abstract boolean isResolved();
   
-  public abstract T resolve();
+  public abstract T getValue() throws UnresolvedVariableAccessException;
+  
+  @Override
+  public abstract MappingTypeVariableBinding<T> clone();
   
   @Pure
   public MappingTypeVariable<T> getBoundTo() {

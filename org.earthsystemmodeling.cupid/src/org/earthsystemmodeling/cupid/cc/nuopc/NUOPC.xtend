@@ -10,6 +10,7 @@ import org.eclipse.photran.internal.core.parser.ASTUseStmtNode
 import static extension org.earthsystemmodeling.cupid.nuopc.ASTQuery.*
 import static extension org.earthsystemmodeling.cupid.nuopc.ESMFQuery.*
 import org.earthsystemmodeling.cupid.cc.mapping.MappingType
+import org.earthsystemmodeling.cupid.cc.CodeConceptTemplate
 
 class NUOPC {
     
@@ -23,7 +24,7 @@ class NUOPC {
     public MappingType SpecializationMethodMT
     
     /* concepts */   
-    public CodeConcept NUOPCComponent
+    public CodeConceptTemplate NUOPCComponent
     public CodeConcept NUOPCDriver
     
     public BootstrapCodeConcept NUOPCDriverFromFile
@@ -80,7 +81,7 @@ class NUOPC {
                 
                 //a refinement - result contains result of super mapping type
                 val ASTModuleNode module = me.context
-                val ASTSubroutineSubprogramNode setServicesNode = me.get("SetServices")
+                val ASTSubroutineSubprogramNode setServicesNode = me.getValue("SetServices")
 
                 result.<ASTSubroutineSubprogramNode>removeMatchIf[m|m == setServicesNode]
                 result.<ASTSubroutineSubprogramNode>retainMatchIf[m|
@@ -89,8 +90,8 @@ class NUOPC {
                             it.subroutineName.eic("NUOPC_CompSpecialize") &&
                             it.litArgExprByKeyword("specRoutine")?.eic(m.subroutineStmt.subroutineName.subroutineName) &&
                             it.litArgExprByKeyword("specLabel")?.eic(
-                                module.localName(me.get("labelComponent"), 
-                                                     me.get("labelName"))
+                                module.localName(me.getValue("labelComponent"), 
+                                                     me.getValue("labelName"))
                             )]
                 ]
                 
@@ -156,7 +157,7 @@ class NUOPC {
             find = [me, result|
                 val ASTModuleNode moduleNode = me.context()
                 moduleNode.moduleBody?.filter(ASTUseStmtNode).findFirst[usn|
-                    usn.name.text.eic(me.get("uses") as String)
+                    usn.name.text.eic(me.getValue("uses") as String)
                 ]
             ]
             
@@ -168,21 +169,21 @@ class NUOPC {
            
             find = [me, result|
                 val ASTModuleNode moduleNode = me.context
-                if (moduleNode.moduleBody?.filter(ASTUseStmtNode)?.exists[it.name.eic(me.get("uses") as String)]) {
+                if (moduleNode.moduleBody?.filter(ASTUseStmtNode)?.exists[it.name.eic(me.getValue("uses") as String)]) {
                     result.addMatch(moduleNode)
                 }
             ]
         ]
         
-        NUOPCComponent = new CodeConcept("NUOPCComponent", #["genericImport"]) => [
+        NUOPCComponent = new CodeConceptTemplate("NUOPCComponent", #["genericImport"]) => [
             
             //$ here indicates that the parameter is NOT a literal, but comes in through the concept
-            mappingType = ModuleThatUsesMT.define(#{"uses" -> "$genericImport"})
+            setMappingType(ModuleThatUsesMT, #{"uses" -> "$genericImport"})
             
             //TODO: cardinality constraints
-            addSubconcept("UsesESMF", ModuleUseStmtMT.define(#{"uses" -> "ESMF"}))        
-            addSubconcept("UsesNUOPC", ModuleUseStmtMT.define(#{"uses" -> "NUOPC"}))
-            addSubconcept("UsesGeneric", ModuleUseStmtMT.define(#{"uses" -> "$genericImport"}))
+            addSubconcept("UsesESMF", ModuleUseStmtMT, #{"uses" -> "ESMF"})        
+            addSubconcept("UsesNUOPC", ModuleUseStmtMT, #{"uses" -> "NUOPC"})
+            addSubconcept("UsesGeneric", ModuleUseStmtMT, #{"uses" -> "$genericImport"})
             addSubconcept("SetServices", SetServicesMT)            
             
         ]
@@ -190,14 +191,14 @@ class NUOPC {
         //for statically bound, consider making a copy of the subconcepts into the refinement type, 
         //effectively disconnecting them
         
-        NUOPCDriver = NUOPCComponent.refine("NUOPCDriver", #{"genericImport" -> "NUOPC_Driver"}) => [
+        NUOPCDriver = NUOPCComponent.instantiate("NUOPCDriver", #{"genericImport" -> "NUOPC_Driver"}) => [
                      
             //add a new child with given name
-            addSubconcept("SetModelServices", SpecializationMethodMT.define(
+            addSubconcept("SetModelServices", SpecializationMethodMT, 
                 #{"SetServices" -> "../SetServices", 
                   "labelComponent" -> "NUOPC_Driver",
                   "labelName" -> "label_SetModelServices"}
-            ))
+            )
           
         ]
                

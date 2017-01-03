@@ -6,9 +6,13 @@ abstract class MappingTypeVariableBinding<T> {
     
     @Accessors
     MappingTypeVariable<T> boundTo
-      
+    
     abstract def boolean isResolved()
     
-    abstract def T resolve()
+    abstract def T getValue() throws UnresolvedVariableAccessException
+    
+    abstract override MappingTypeVariableBinding<T> clone()
+        
+    //abstract def T resolve()
     
 }

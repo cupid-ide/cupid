@@ -9,24 +9,14 @@ import org.eclipse.xtext.xbase.lib.Exceptions;
 
 @SuppressWarnings("all")
 public class CodeConceptInstanceReference<T extends Object> extends ReferenceMTVBinding<T> {
-  private T value;
-  
-  public CodeConceptInstanceReference(final String reference) {
+  public CodeConceptInstanceReference(final MappingTypeVariable<T> boundTo, final String reference) {
     super(reference);
+    this.setBoundTo(boundTo);
   }
   
-  @Override
-  public boolean isResolved() {
-    return (!Objects.equal(this.value, null));
-  }
-  
-  @Override
-  public T resolve() {
-    return this.value;
-  }
-  
-  public void bindWith(final CodeConceptInstance instance) {
+  public void resolve(final CodeConceptInstance instance) {
     try {
+      this.value = null;
       MappingTypeVariable<T> _boundTo = this.getBoundTo();
       boolean _equals = _boundTo.name.equals("context");
       if (_equals) {
@@ -47,5 +37,12 @@ public class CodeConceptInstanceReference<T extends Object> extends ReferenceMTV
     } catch (Throwable _e) {
       throw Exceptions.sneakyThrow(_e);
     }
+  }
+  
+  @Override
+  public CodeConceptInstanceReference<T> clone() {
+    MappingTypeVariable<T> _boundTo = this.getBoundTo();
+    String _reference = this.getReference();
+    return new CodeConceptInstanceReference<T>(_boundTo, _reference);
   }
 }

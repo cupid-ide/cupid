@@ -10,10 +10,14 @@ class LiteralMTVBinding<T> extends MappingTypeVariableBinding<T> {
 
     override isResolved() {
         true
-    }
+    }  
     
-    override resolve() {
+    override getValue() {
         value
     }
     
+    override LiteralMTVBinding<T> clone() {
+        new LiteralMTVBinding<T>(this.value)
+    }
+           
 }

@@ -16,7 +16,12 @@ public class LiteralMTVBinding<T extends Object> extends MappingTypeVariableBind
   }
   
   @Override
-  public T resolve() {
+  public T getValue() {
     return this.value;
+  }
+  
+  @Override
+  public LiteralMTVBinding<T> clone() {
+    return new LiteralMTVBinding<T>(this.value);
   }
 }

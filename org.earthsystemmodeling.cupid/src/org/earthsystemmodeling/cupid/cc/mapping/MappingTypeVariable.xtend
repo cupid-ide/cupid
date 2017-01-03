@@ -10,26 +10,27 @@ class MappingTypeVariable<T> {
     @Accessors
     protected Class<T> type
     
-    protected MappingTypeVariableBinding<T> binding
+    //protected MappingTypeVariableBinding<T> binding
     
     new(String name, Class<T> type) {
         this.name = name
         this.type = type
     }
         
-    def boolean isBound() {
-        binding != null
-    }
+    //def boolean isBound() {
+    //    binding != null
+    //}
     
-    def boolean isResolved() {
-        isBound() && binding.isResolved()
-    }
+    //def boolean isResolved() {
+    //    isBound() && binding.isResolved()
+    //}
     
-    def void bind(MappingTypeVariableBinding<T> binding) {
-        this.binding = binding
-        binding.boundTo = this
-    }
+    //def void bind(MappingTypeVariableBinding<T> binding) {
+    //    this.binding = binding
+    //    binding.boundTo = this
+    //}
     
+    /*
     def T resolve() throws UnboundVariableAccessException, UnresolvedVariableAccessException {
         if (!isBound()) {
             throw new UnboundVariableAccessException(name)
@@ -39,5 +40,6 @@ class MappingTypeVariable<T> {
         }
         binding.resolve()
     }
+    */
     
 }

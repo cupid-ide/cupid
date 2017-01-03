@@ -12,18 +12,12 @@ class CodeConceptInstance {
     @Accessors
     private CodeConceptInstance parent
     
-    //traceability links to code patterns
-    //@Accessors
-    //private Map<String, Object> mappings = newLinkedHashMap
-    
     //type of match is type.mappingType.matchType
     @Accessors
     private Object match
        
     @Accessors
     private Map<String, Object> annotations = newLinkedHashMap
-    
-    //private List<CodeSubconceptInstance> subconceptInstances = newLinkedList
     
     private List<CodeConceptInstance> children = newLinkedList
     
@@ -100,13 +94,13 @@ class CodeConceptInstance {
     */
     
     def addChild(CodeConceptInstance child) throws CodeConceptException, CodeConceptConstraintViolation {
-        val subconcept = type.getSubconcepts.findFirst[s|s.type == child.type]
+        val subconcept = type.getSubconcepts.filter(SingleCodeSubconcept).findFirst[s|s.concept == child.type]
         if (subconcept == null) {
-            throw new CodeConceptException("CodeConcept " + type.name + " does not contain subconcept " + child.type.name)
+            throw new CodeConceptException("Code concept " + type.name + " does not contain subconcept " + child.type.name)
         }
-        else if (subconcept.max != -1 && getChildren(child.type).size >= subconcept.max) {
-            throw new CodeConceptConstraintViolation('''Cannot add child of type «child.type.name» to CodeConcept of type «type.name» because it will exceed the maximum allowed («subconcept.max»)''')
-        }
+        //else if (subconcept.max != -1 && getChildren(child.type).size >= subconcept.max) {
+        //    throw new CodeConceptConstraintViolation('''Cannot add child of type «child.type.name» to CodeConcept of type «type.name» because it will exceed the maximum allowed («subconcept.max»)''')
+        //}
         else {
             children.add(child)
         }

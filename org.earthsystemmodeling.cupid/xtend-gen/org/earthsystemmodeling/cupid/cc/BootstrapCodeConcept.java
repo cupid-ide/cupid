@@ -45,10 +45,9 @@ public class BootstrapCodeConcept {
           _filter=Iterables.<ASTModuleNode>filter(_programUnitList, ASTModuleNode.class);
         }
         final ASTModuleNode moduleNode = IterableExtensions.<ASTModuleNode>head(_filter);
-        CodeConcept _codeConcept = new CodeConcept("ConceptRoot");
+        final MappingType rootMappingType = new MappingType("MappingRoot", ASTModuleNode.class, ASTModuleNode.class);
+        CodeConcept _codeConcept = new CodeConcept("ConceptRoot", rootMappingType);
         final Procedure1<CodeConcept> _function = (CodeConcept it) -> {
-          MappingType _mappingType = new MappingType("MappingRoot", ASTModuleNode.class, ASTModuleNode.class);
-          it.mappingType = _mappingType;
           it.addSubconcept(this.type);
         };
         final CodeConcept rootConcept = ObjectExtensions.<CodeConcept>operator_doubleArrow(_codeConcept, _function);
