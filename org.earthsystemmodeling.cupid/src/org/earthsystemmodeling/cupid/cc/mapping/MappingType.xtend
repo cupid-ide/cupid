@@ -88,7 +88,7 @@ class MappingType {
     }
     
     def hasParameter(MappingTypeVariable<?> toCheck) {
-        parameters.contains(toCheck)
+        hasParameter(toCheck.name)
     }
            
     def <T> MappingTypeVariable<T> getParameter(String name) {

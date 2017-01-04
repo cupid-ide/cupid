@@ -2,6 +2,8 @@ package org.earthsystemmodeling.cupid.cc.mapping
 
 import org.eclipse.xtend.lib.annotations.Accessors
 import java.util.Map
+import java.util.List
+import org.earthsystemmodeling.cupid.cc.CodeConceptInstance
 
 class MappingTypeBinding {
     
@@ -9,7 +11,10 @@ class MappingTypeBinding {
     MappingType mappingType
     
     @Accessors
-    Map<MappingTypeVariable<?>, MappingTypeVariableBinding<?>> bindings
+    Map<MappingTypeVariable<?>, MappingTypeVariableBinding<?>> bindings = newLinkedHashMap
+    
+    @Accessors(PROTECTED_GETTER)
+    CodeConceptInstance currentContext
     
     new(MappingType mappingType) {
         this.mappingType = mappingType
@@ -20,7 +25,8 @@ class MappingTypeBinding {
     }
     
     def <T> T getValue(String variable) {
-        bindings.get(variable).value as T
+        val mtv = mappingType.getParameter(variable)
+        bindings.get(mtv).value as T
     }
     
     def <T> MappingTypeVariableBinding<T> get(MappingTypeVariable<T> variable) {
@@ -36,6 +42,7 @@ class MappingTypeBinding {
         if (!mappingType.hasParameter(variable)) {
             throw new MappingTypeException("Mapping type " + mappingType.name + " does not have parameter named: " + variable.name)
         }
+        binding.binding = this
         bindings.put(variable, binding)
     }
     
@@ -47,11 +54,21 @@ class MappingTypeBinding {
     }
     
     def fullyBound() {
-        mappingType.getParameters().forall[p|bindings.containsKey(p)]
+        unbound.size == 0
     }
     
-    def doFind() {
-        mappingType.doFind(this)
+    def List<MappingTypeVariable<?>> unbound() {
+         val retList = newLinkedList
+         //retList.addAll(mappingType.getParameters().filter[p|!bindings.containsKey(p)])
+         retList.addAll(mappingType.getParameters().filter[p|!bindings.containsKey(p) && !(p.name == "context") && !(p.name == "match")])
+         retList
+    }
+    
+    def doFind(CodeConceptInstance parent) {
+        currentContext = parent
+        val resultset = mappingType.doFind(this)
+        currentContext = null
+        return resultset
     }
     
     def <T> T context() {

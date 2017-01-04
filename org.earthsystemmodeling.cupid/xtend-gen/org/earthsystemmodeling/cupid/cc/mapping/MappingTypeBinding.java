@@ -1,15 +1,20 @@
 package org.earthsystemmodeling.cupid.cc.mapping;
 
 import com.google.common.base.Objects;
+import com.google.common.collect.Iterables;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
+import org.earthsystemmodeling.cupid.cc.CodeConceptInstance;
 import org.earthsystemmodeling.cupid.cc.mapping.MappingResultSet;
 import org.earthsystemmodeling.cupid.cc.mapping.MappingType;
 import org.earthsystemmodeling.cupid.cc.mapping.MappingTypeException;
 import org.earthsystemmodeling.cupid.cc.mapping.MappingTypeVariable;
 import org.earthsystemmodeling.cupid.cc.mapping.MappingTypeVariableBinding;
+import org.eclipse.xtend.lib.annotations.AccessorType;
 import org.eclipse.xtend.lib.annotations.Accessors;
+import org.eclipse.xtext.xbase.lib.CollectionLiterals;
 import org.eclipse.xtext.xbase.lib.Exceptions;
 import org.eclipse.xtext.xbase.lib.Functions.Function1;
 import org.eclipse.xtext.xbase.lib.IterableExtensions;
@@ -21,7 +26,10 @@ public class MappingTypeBinding {
   private MappingType mappingType;
   
   @Accessors
-  private Map<MappingTypeVariable<?>, MappingTypeVariableBinding<?>> bindings;
+  private Map<MappingTypeVariable<?>, MappingTypeVariableBinding<?>> bindings = CollectionLiterals.<MappingTypeVariable<?>, MappingTypeVariableBinding<?>>newLinkedHashMap();
+  
+  @Accessors(AccessorType.PROTECTED_GETTER)
+  private CodeConceptInstance currentContext;
   
   public MappingTypeBinding(final MappingType mappingType) {
     this.mappingType = mappingType;
@@ -39,9 +47,14 @@ public class MappingTypeBinding {
   
   public <T extends Object> T getValue(final String variable) {
     try {
-      MappingTypeVariableBinding<?> _get = this.bindings.get(variable);
-      Object _value = _get.getValue();
-      return ((T) _value);
+      T _xblockexpression = null;
+      {
+        final MappingTypeVariable<Object> mtv = this.mappingType.<Object>getParameter(variable);
+        MappingTypeVariableBinding<?> _get = this.bindings.get(mtv);
+        Object _value = _get.getValue();
+        _xblockexpression = ((T) _value);
+      }
+      return _xblockexpression;
     } catch (Throwable _e) {
       throw Exceptions.sneakyThrow(_e);
     }
@@ -79,6 +92,7 @@ public class MappingTypeBinding {
           String _plus_2 = (_plus_1 + variable.name);
           throw new MappingTypeException(_plus_2);
         }
+        binding.setBinding(this);
         _xblockexpression = this.bindings.put(variable, binding);
       }
       return _xblockexpression;
@@ -110,15 +124,31 @@ public class MappingTypeBinding {
   }
   
   public boolean fullyBound() {
-    List<MappingTypeVariable<?>> _parameters = this.mappingType.getParameters();
-    final Function1<MappingTypeVariable<?>, Boolean> _function = (MappingTypeVariable<?> p) -> {
-      return Boolean.valueOf(this.bindings.containsKey(p));
-    };
-    return IterableExtensions.<MappingTypeVariable<?>>forall(_parameters, _function);
+    List<MappingTypeVariable<?>> _unbound = this.unbound();
+    int _size = _unbound.size();
+    return (_size == 0);
   }
   
-  public MappingResultSet doFind() {
-    return this.mappingType.doFind(this);
+  public List<MappingTypeVariable<?>> unbound() {
+    LinkedList<MappingTypeVariable<?>> _xblockexpression = null;
+    {
+      final LinkedList<MappingTypeVariable<?>> retList = CollectionLiterals.<MappingTypeVariable<?>>newLinkedList();
+      List<MappingTypeVariable<?>> _parameters = this.mappingType.getParameters();
+      final Function1<MappingTypeVariable<?>, Boolean> _function = (MappingTypeVariable<?> p) -> {
+        return Boolean.valueOf((((!this.bindings.containsKey(p)) && (!Objects.equal(p.name, "context"))) && (!Objects.equal(p.name, "match"))));
+      };
+      Iterable<MappingTypeVariable<?>> _filter = IterableExtensions.<MappingTypeVariable<?>>filter(_parameters, _function);
+      Iterables.<MappingTypeVariable<?>>addAll(retList, _filter);
+      _xblockexpression = retList;
+    }
+    return _xblockexpression;
+  }
+  
+  public MappingResultSet doFind(final CodeConceptInstance parent) {
+    this.currentContext = parent;
+    final MappingResultSet resultset = this.mappingType.doFind(this);
+    this.currentContext = null;
+    return resultset;
   }
   
   public <T extends Object> T context() {
@@ -141,5 +171,10 @@ public class MappingTypeBinding {
   
   public void setBindings(final Map<MappingTypeVariable<?>, MappingTypeVariableBinding<?>> bindings) {
     this.bindings = bindings;
+  }
+  
+  @Pure
+  protected CodeConceptInstance getCurrentContext() {
+    return this.currentContext;
   }
 }

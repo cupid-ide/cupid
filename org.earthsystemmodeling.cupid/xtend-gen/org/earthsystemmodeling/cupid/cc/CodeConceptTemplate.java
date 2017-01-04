@@ -6,6 +6,8 @@ import java.util.Map;
 import java.util.Set;
 import org.earthsystemmodeling.cupid.cc.CodeConcept;
 import org.earthsystemmodeling.cupid.cc.CodeConceptException;
+import org.earthsystemmodeling.cupid.cc.CodeSubconcept;
+import org.earthsystemmodeling.cupid.cc.SingleCodeSubconcept;
 import org.earthsystemmodeling.cupid.cc.mapping.LiteralMTVBinding;
 import org.earthsystemmodeling.cupid.cc.mapping.MappingType;
 import org.earthsystemmodeling.cupid.cc.mapping.MappingTypeBinding;
@@ -14,6 +16,7 @@ import org.earthsystemmodeling.cupid.cc.mapping.MappingTypeVariableBinding;
 import org.earthsystemmodeling.cupid.cc.mapping.TemplateParameterReference;
 import org.eclipse.xtend.lib.annotations.Accessors;
 import org.eclipse.xtext.xbase.lib.Exceptions;
+import org.eclipse.xtext.xbase.lib.Functions.Function0;
 import org.eclipse.xtext.xbase.lib.Pure;
 
 @SuppressWarnings("all")
@@ -26,11 +29,37 @@ public class CodeConceptTemplate extends CodeConcept {
     this.parameters = parameters;
   }
   
+  public CodeConceptTemplate(final String name, final MappingType mappingType, final Map<String, Object> mappingTypeParameters) {
+    super(name, mappingType, mappingTypeParameters);
+  }
+  
+  public CodeConcept instantiate(final Map<String, Object> parameterValues) {
+    return this.instantiate(null, parameterValues);
+  }
+  
   public CodeConcept instantiate(final String name, final Map<String, Object> parameterValues) {
     try {
       CodeConcept _xblockexpression = null;
       {
-        final CodeConcept concept = new CodeConcept(name);
+        String _xifexpression = null;
+        boolean _equals = Objects.equal(name, null);
+        if (_equals) {
+          _xifexpression = this.name;
+        } else {
+          _xifexpression = name;
+        }
+        final CodeConcept concept = new CodeConcept(new Function0<String>() {
+          public String apply() {
+            String _xifexpression = null;
+            boolean _equals = Objects.equal(name, null);
+            if (_equals) {
+              _xifexpression = CodeConceptTemplate.this.name;
+            } else {
+              _xifexpression = name;
+            }
+            return _xifexpression;
+          }
+        }.apply());
         MappingType _mappingType = this.binding.getMappingType();
         final MappingTypeBinding binding = new MappingTypeBinding(_mappingType);
         Map<MappingTypeVariable<?>, MappingTypeVariableBinding<?>> _bindings = this.binding.getBindings();
@@ -38,38 +67,40 @@ public class CodeConceptTemplate extends CodeConcept {
         for (final Map.Entry<MappingTypeVariable<?>, MappingTypeVariableBinding<?>> e : _entrySet) {
           MappingTypeVariableBinding<?> _value = e.getValue();
           if ((_value instanceof TemplateParameterReference<?>)) {
-            MappingTypeVariable<?> _key = e.getKey();
-            String _name = _key.getName();
-            boolean _containsKey = parameterValues.containsKey(_name);
+            MappingTypeVariableBinding<?> _value_1 = e.getValue();
+            String _reference = ((TemplateParameterReference<?>) _value_1).getReference();
+            final String refVar = _reference.substring(1);
+            boolean _containsKey = parameterValues.containsKey(refVar);
             if (_containsKey) {
-              MappingTypeVariable<?> _key_1 = e.getKey();
-              MappingTypeVariable<?> _key_2 = e.getKey();
-              Object _get = parameterValues.get(_key_2);
+              MappingTypeVariable<?> _key = e.getKey();
+              Object _get = parameterValues.get(refVar);
               LiteralMTVBinding<Object> _literalMTVBinding = new LiteralMTVBinding<Object>(_get);
-              binding.put(_key_1, _literalMTVBinding);
+              binding.put(_key, _literalMTVBinding);
             } else {
-              MappingTypeVariable<?> _key_3 = e.getKey();
-              String _name_1 = _key_3.getName();
-              String _plus = ("Cannot instantiate template due to missing parameter value: " + _name_1);
+              MappingTypeVariable<?> _key_1 = e.getKey();
+              String _name = _key_1.getName();
+              String _plus = ("Cannot instantiate template due to missing parameter value: " + _name);
               throw new CodeConceptException(_plus);
             }
           } else {
-            MappingTypeVariable<?> _key_4 = e.getKey();
-            MappingTypeVariableBinding<?> _value_1 = e.getValue();
-            MappingTypeVariableBinding<?> _clone = _value_1.clone();
-            binding.put(_key_4, _clone);
+            MappingTypeVariable<?> _key_2 = e.getKey();
+            MappingTypeVariableBinding<?> _value_2 = e.getValue();
+            MappingTypeVariableBinding<?> _clone = _value_2.clone();
+            binding.put(_key_2, _clone);
           }
         }
         concept.binding = binding;
-        Set<Map.Entry<String, Object>> _entrySet_1 = parameterValues.entrySet();
-        for (final Map.Entry<String, Object> e_1 : _entrySet_1) {
-          String _key_5 = e_1.getKey();
-          MappingTypeVariableBinding<Object> _get_1 = this.binding.<Object>get(_key_5);
-          boolean _equals = Objects.equal(_get_1, null);
-          if (_equals) {
-            String _key_6 = e_1.getKey();
-            String _plus_1 = ((("Code concept template " + name) + " does not have parameter: ") + _key_6);
-            throw new CodeConceptException(_plus_1);
+        List<CodeSubconcept> _subconcepts = this.getSubconcepts();
+        for (final CodeSubconcept sc : _subconcepts) {
+          {
+            final SingleCodeSubconcept singleSubconcept = ((SingleCodeSubconcept) sc);
+            CodeConcept _concept = singleSubconcept.getConcept();
+            final CodeConcept instantiatedConcept = ((CodeConceptTemplate) _concept).instantiate(parameterValues);
+            String _name_1 = singleSubconcept.getName();
+            boolean _isEssential = sc.isEssential();
+            int _min = sc.getMin();
+            int _max = sc.getMax();
+            concept.addSubconcept(_name_1, instantiatedConcept, _isEssential, _min, _max);
           }
         }
         _xblockexpression = concept;
@@ -78,6 +109,29 @@ public class CodeConceptTemplate extends CodeConcept {
     } catch (Throwable _e) {
       throw Exceptions.sneakyThrow(_e);
     }
+  }
+  
+  @Override
+  public MappingTypeVariableBinding<?> getVariableBindingForParameter(final String paramName, final Object paramValue) {
+    MappingTypeVariableBinding<?> _xifexpression = null;
+    boolean _isStaticReference = CodeConcept.isStaticReference(paramValue);
+    if (_isStaticReference) {
+      _xifexpression = new TemplateParameterReference<Object>(((String) paramValue));
+    } else {
+      _xifexpression = super.getVariableBindingForParameter(paramName, paramValue);
+    }
+    return _xifexpression;
+  }
+  
+  @Override
+  public CodeConcept addSubconcept(final String name, final MappingType mappingType, final boolean essential, final int min, final int max, final Map<String, Object> parameters) {
+    CodeConceptTemplate _xblockexpression = null;
+    {
+      final CodeConceptTemplate concept = new CodeConceptTemplate(name, mappingType, parameters);
+      this.addSubconcept(name, concept, essential, min, max);
+      _xblockexpression = this;
+    }
+    return _xblockexpression;
   }
   
   @Pure

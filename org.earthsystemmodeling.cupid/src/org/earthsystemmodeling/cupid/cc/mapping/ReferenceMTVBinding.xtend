@@ -9,7 +9,8 @@ abstract class ReferenceMTVBinding<T> extends MappingTypeVariableBinding<T> {
     @Accessors
     String reference
     
-    new(String reference) {
+    new(MappingTypeBinding binding, String reference) {
+        this.binding = binding
         this.reference = reference
     }
     

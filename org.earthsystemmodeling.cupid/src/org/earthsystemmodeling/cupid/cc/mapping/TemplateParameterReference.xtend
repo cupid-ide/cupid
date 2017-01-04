@@ -5,7 +5,7 @@ import org.earthsystemmodeling.cupid.cc.CodeConcept
 class TemplateParameterReference<T> extends ReferenceMTVBinding<T> {
     
     new(String reference) {
-        super(reference)
+        super(null, reference)
     }  
     
     def resolve(CodeConcept concept) {
@@ -16,7 +16,7 @@ class TemplateParameterReference<T> extends ReferenceMTVBinding<T> {
     }
     
     override clone() {
-        throw new UnsupportedOperationException()
+        throw new UnsupportedOperationException("TODO: auto-generated method stub")
     }
        
 }

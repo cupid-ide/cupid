@@ -16,6 +16,13 @@ public class MappingTypeVariable<T extends Object> {
     this.type = type;
   }
   
+  @Override
+  public String toString() {
+    String _simpleName = this.type.getSimpleName();
+    String _plus = ((this.name + " (") + _simpleName);
+    return (_plus + ")");
+  }
+  
   @Pure
   public String getName() {
     return this.name;

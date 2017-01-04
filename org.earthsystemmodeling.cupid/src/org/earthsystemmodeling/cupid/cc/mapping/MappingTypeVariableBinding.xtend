@@ -5,6 +5,9 @@ import org.eclipse.xtend.lib.annotations.Accessors
 abstract class MappingTypeVariableBinding<T> {
     
     @Accessors
+    MappingTypeBinding binding
+    
+    @Accessors
     MappingTypeVariable<T> boundTo
     
     abstract def boolean isResolved()

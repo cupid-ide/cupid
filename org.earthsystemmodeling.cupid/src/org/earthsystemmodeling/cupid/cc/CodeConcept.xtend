@@ -8,6 +8,7 @@ import org.earthsystemmodeling.cupid.cc.mapping.MappingResult
 import org.earthsystemmodeling.cupid.cc.mapping.MappingTypeBinding
 import org.earthsystemmodeling.cupid.cc.mapping.CodeConceptInstanceReference
 import org.earthsystemmodeling.cupid.cc.mapping.LiteralMTVBinding
+import org.earthsystemmodeling.cupid.cc.mapping.MappingTypeVariableBinding
 
 class CodeConcept {
     
@@ -41,18 +42,27 @@ class CodeConcept {
         binding = new MappingTypeBinding(mappingType)
         if (parameters != null) {
             for (p : parameters.entrySet) {
-                //static reference disallowed since this is not a template
-                if (isDynamicReference(p.value)) {
-                    val mtv = mappingType.getParameter(p.key)
-                    binding.put(p.key, new CodeConceptInstanceReference(mtv, p.value as String))   
-                }
-                else {
-                    binding.put(p.key, new LiteralMTVBinding(p.value))
-                }
+                binding.put(p.key, getVariableBindingForParameter(p.key, p.value))
             }
         }
+        //implicit binding of context
+        if (mappingType.hasParameter("context") && binding.get("context") == null) {
+            val mtv = mappingType.getParameter("context")
+            binding.put(mtv, new CodeConceptInstanceReference(mtv, null))
+        }
         if (!binding.fullyBound) {
-            throw new CodeConceptException("Missing parameters to mapping type " + mappingType.name + ".")         
+            throw new CodeConceptException("Missing parameters to mapping type " + mappingType.name + ": " + binding.unbound.join(", "))        
+        }
+    }
+    
+    //subclasses can override
+    def MappingTypeVariableBinding<?> getVariableBindingForParameter(String paramName, Object paramValue) {
+        if (isDynamicReference(paramValue)) {
+            val mtv = mappingType.getParameter(paramName)
+            new CodeConceptInstanceReference(mtv, paramValue as String)
+        }
+        else {
+            new LiteralMTVBinding(paramValue)
         }
     }
     
@@ -65,7 +75,7 @@ class CodeConcept {
         val retList = newLinkedList
         
         if (binding != null) {
-            val resultset = binding.doFind()
+            val resultset = binding.doFind(parent)
             for (res : resultset.results) {
                 val cci = reverse(parent, res)
                 if (cci != null) retList.add(cci)
@@ -80,7 +90,7 @@ class CodeConcept {
       
     def CodeConceptInstance reverse(CodeConceptInstance parent) {
         if (binding != null) {
-            val resultset = binding.doFind()
+            val resultset = binding.doFind(parent)
             if (resultset.size() > 0) {
                 reverse(parent, resultset.first)
             }
@@ -148,8 +158,8 @@ class CodeConcept {
         }
         else {
             val toRet = newLinkedList
-            toRet.addAll(subconcepts)
             toRet.addAll(refines.getSubconcepts)
+            toRet.addAll(subconcepts)
             toRet
         }
     }
@@ -193,8 +203,9 @@ class CodeConcept {
         addSubconcept(name, mappingType, essential, 1, 1, parameters)
     }
     
+    //NOTE: subclass overrides to create a CodeConceptTemplate
     def CodeConcept addSubconcept(String name, MappingType mappingType, boolean essential, int min, int max, Map<String, Object> parameters) {
-        val concept = new CodeConcept(name, mappingType)
+        val concept = new CodeConcept(name, mappingType, parameters)
         addSubconcept(name, concept, essential, min, max)
         this
     }

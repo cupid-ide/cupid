@@ -7,7 +7,7 @@ import org.earthsystemmodeling.cupid.cc.mapping.ReferenceMTVBinding;
 @SuppressWarnings("all")
 public class TemplateParameterReference<T extends Object> extends ReferenceMTVBinding<T> {
   public TemplateParameterReference(final String reference) {
-    super(reference);
+    super(null, reference);
   }
   
   public Object resolve(final CodeConcept concept) {
@@ -16,6 +16,6 @@ public class TemplateParameterReference<T extends Object> extends ReferenceMTVBi
   
   @Override
   public MappingTypeVariableBinding<T> clone() {
-    throw new UnsupportedOperationException();
+    throw new UnsupportedOperationException("TODO: auto-generated method stub");
   }
 }

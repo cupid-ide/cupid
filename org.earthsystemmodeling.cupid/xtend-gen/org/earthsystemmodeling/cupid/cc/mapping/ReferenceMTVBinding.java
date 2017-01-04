@@ -1,6 +1,7 @@
 package org.earthsystemmodeling.cupid.cc.mapping;
 
 import com.google.common.base.Objects;
+import org.earthsystemmodeling.cupid.cc.mapping.MappingTypeBinding;
 import org.earthsystemmodeling.cupid.cc.mapping.MappingTypeVariable;
 import org.earthsystemmodeling.cupid.cc.mapping.MappingTypeVariableBinding;
 import org.earthsystemmodeling.cupid.cc.mapping.UnresolvedVariableAccessException;
@@ -15,7 +16,8 @@ public abstract class ReferenceMTVBinding<T extends Object> extends MappingTypeV
   @Accessors
   private String reference;
   
-  public ReferenceMTVBinding(final String reference) {
+  public ReferenceMTVBinding(final MappingTypeBinding binding, final String reference) {
+    this.setBinding(binding);
     this.reference = reference;
   }
   

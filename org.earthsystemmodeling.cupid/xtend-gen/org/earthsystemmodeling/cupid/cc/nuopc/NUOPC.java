@@ -176,7 +176,11 @@ public class NUOPC {
           }
           return Boolean.valueOf(_or);
         };
-        IterableExtensions.<ASTSubroutineSubprogramNode>findFirst(_findAll, _function_4);
+        final ASTSubroutineSubprogramNode ssn = IterableExtensions.<ASTSubroutineSubprogramNode>findFirst(_findAll, _function_4);
+        boolean _notEquals = (!Objects.equal(ssn, null));
+        if (_notEquals) {
+          results.addMatch(ssn);
+        }
       };
       it.setFind(_function_3);
     };
@@ -201,7 +205,11 @@ public class NUOPC {
           Object _value = me.<Object>getValue("uses");
           return Boolean.valueOf(ASTQuery.eic(_text, ((String) _value)));
         };
-        IterableExtensions.<ASTUseStmtNode>findFirst(_filter, _function_5);
+        final ASTUseStmtNode useStmtNode = IterableExtensions.<ASTUseStmtNode>findFirst(_filter, _function_5);
+        boolean _notEquals = (!Objects.equal(useStmtNode, null));
+        if (_notEquals) {
+          result.addMatch(useStmtNode);
+        }
       };
       it.setFind(_function_4);
     };

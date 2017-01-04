@@ -103,7 +103,7 @@ public class MappingType {
   }
   
   public boolean hasParameter(final MappingTypeVariable<?> toCheck) {
-    return this.parameters.contains(toCheck);
+    return this.hasParameter(toCheck.name);
   }
   
   public <T extends Object> MappingTypeVariable<T> getParameter(final String name) {

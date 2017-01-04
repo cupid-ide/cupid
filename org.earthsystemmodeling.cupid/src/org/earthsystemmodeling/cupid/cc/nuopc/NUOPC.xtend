@@ -21,7 +21,7 @@ class NUOPC {
     public MappingType ModuleUseStmtMT
     public MappingType SetServicesMT
     public MappingType ESMFMethodMT
-    public MappingType SpecializationMethodMT
+    public MappingType SpecializationMethodMT  /* refines ESMFMethodMT */
     
     /* concepts */   
     public CodeConceptTemplate NUOPCComponent
@@ -142,13 +142,16 @@ class NUOPC {
         SetServicesMT = new MappingType("SetServicesMT", ASTModuleNode, ASTSubroutineSubprogramNode) => [
             find = [me, results|
                 val ASTModuleNode module = me.context()
-                module.moduleBody?.findAll(ASTSubroutineSubprogramNode).findFirst[
+                val ssn = module.moduleBody?.findAll(ASTSubroutineSubprogramNode).findFirst[
                     it.subroutineStmt?.subroutineName.subroutineName.text.eic("SetServices") ||  
                     //also accept if a subroutine calls NUOPC_CompDerive
                     it.body.findAll(ASTCallStmtNode).exists[
                         it.subroutineName.text.equalsIgnoreCase("NUOPC_CompDerive")
                     ]
                 ]
+                if (ssn != null) {
+                    results.addMatch(ssn)
+                }
             ]
         ]
         
@@ -156,9 +159,12 @@ class NUOPC {
             #{"context" -> ASTModuleNode, "uses" -> String, "match" -> ASTUseStmtNode}) => [
             find = [me, result|
                 val ASTModuleNode moduleNode = me.context()
-                moduleNode.moduleBody?.filter(ASTUseStmtNode).findFirst[usn|
+                val useStmtNode = moduleNode.moduleBody?.filter(ASTUseStmtNode).findFirst[usn|
                     usn.name.text.eic(me.getValue("uses") as String)
                 ]
+                if (useStmtNode != null) {
+                    result.addMatch(useStmtNode)
+                }
             ]
             
             //generate = []

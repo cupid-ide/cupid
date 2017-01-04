@@ -110,6 +110,10 @@ class CodeConceptInstance {
         children.filter[c|c.type == ofType]
     }
     
+    def getChild(String conceptName) {
+        children.findFirst[c|c.type.name == conceptName]
+    }
+    
     def put(String annotationKey, Object annotationValue) {
         annotations.put(annotationKey, annotationValue)
     }
