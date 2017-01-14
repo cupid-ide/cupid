@@ -15,6 +15,10 @@ public class MappingResult {
     return this.results.get(name);
   }
   
+  public Object put(final String name, final Object value) {
+    return this.results.put(name, value);
+  }
+  
   public Object match() {
     return this.results.get("match");
   }

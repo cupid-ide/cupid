@@ -61,7 +61,7 @@ public class CodeConceptTemplate extends CodeConcept {
           }
         }.apply());
         MappingType _mappingType = this.binding.getMappingType();
-        final MappingTypeBinding binding = new MappingTypeBinding(_mappingType);
+        final MappingTypeBinding binding = new MappingTypeBinding(_mappingType, concept);
         Map<MappingTypeVariable<?>, MappingTypeVariableBinding<?>> _bindings = this.binding.getBindings();
         Set<Map.Entry<MappingTypeVariable<?>, MappingTypeVariableBinding<?>>> _entrySet = _bindings.entrySet();
         for (final Map.Entry<MappingTypeVariable<?>, MappingTypeVariableBinding<?>> e : _entrySet) {
@@ -129,7 +129,7 @@ public class CodeConceptTemplate extends CodeConcept {
     {
       final CodeConceptTemplate concept = new CodeConceptTemplate(name, mappingType, parameters);
       this.addSubconcept(name, concept, essential, min, max);
-      _xblockexpression = this;
+      _xblockexpression = concept;
     }
     return _xblockexpression;
   }

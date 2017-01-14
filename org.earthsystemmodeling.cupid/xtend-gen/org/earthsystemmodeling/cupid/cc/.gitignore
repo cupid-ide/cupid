@@ -7,3 +7,10 @@
 /FortranASTRootCodeConcept.java
 /ASTNodeCodeConcept.java
 /CodeConceptException.java
+/BootstrapCodeConcept.java
+/CodeConceptConstraintViolation.java
+/CodeConceptTemplate.java
+/CodeQuery.java
+/CodeSubconceptInstance.java
+/EssentialConstraintViolation.java
+/SingleCodeSubconcept.java

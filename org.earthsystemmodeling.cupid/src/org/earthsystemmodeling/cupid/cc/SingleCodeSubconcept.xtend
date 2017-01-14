@@ -36,6 +36,9 @@ class SingleCodeSubconcept extends CodeSubconcept {
         } 
     }
     
+    override toString() {
+    	'''		- [«min»-«max»] «concept»'''
+    }
     
     
 }

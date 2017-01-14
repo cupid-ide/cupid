@@ -1,6 +1,5 @@
 package org.earthsystemmodeling.cupid.cc.mapping;
 
-import org.earthsystemmodeling.cupid.cc.CodeConcept;
 import org.earthsystemmodeling.cupid.cc.mapping.MappingTypeVariableBinding;
 import org.earthsystemmodeling.cupid.cc.mapping.ReferenceMTVBinding;
 
@@ -10,12 +9,13 @@ public class TemplateParameterReference<T extends Object> extends ReferenceMTVBi
     super(null, reference);
   }
   
-  public Object resolve(final CodeConcept concept) {
-    return null;
+  @Override
+  public MappingTypeVariableBinding<T> clone() {
+    throw new UnsupportedOperationException();
   }
   
   @Override
-  public MappingTypeVariableBinding<T> clone() {
-    throw new UnsupportedOperationException("TODO: auto-generated method stub");
+  public void setValue(final T value) {
+    throw new UnsupportedOperationException();
   }
 }

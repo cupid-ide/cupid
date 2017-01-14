@@ -69,6 +69,21 @@ class ASTQuery {
 		a?.equalsIgnoreCase(b)
 	}
 	
+	
+	/*
+	def static eic(Token t, Object o) {
+		if (o instanceof String) {
+			eic(t, o as String)
+		}
+		else if (o instanceof Token) {
+			eic(t, o as Token)
+		}
+		else {
+			eic(t, o.toString)
+		}
+	}
+	*/
+	
 	def static eic(Token t, String s) {
 		s.eic(t.text)
 	}

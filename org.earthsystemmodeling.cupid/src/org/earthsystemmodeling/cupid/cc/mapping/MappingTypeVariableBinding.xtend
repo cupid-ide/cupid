@@ -14,6 +14,8 @@ abstract class MappingTypeVariableBinding<T> {
     
     abstract def T getValue() throws UnresolvedVariableAccessException
     
+    abstract def void setValue(T value)
+    
     abstract override MappingTypeVariableBinding<T> clone()
         
     //abstract def T resolve()

@@ -2,13 +2,13 @@ package org.earthsystemmodeling.cupid.cc
 
 import java.util.List
 import java.util.Map
-import org.eclipse.xtend.lib.annotations.Accessors
-import org.earthsystemmodeling.cupid.cc.mapping.MappingType
-import org.earthsystemmodeling.cupid.cc.mapping.MappingResult
-import org.earthsystemmodeling.cupid.cc.mapping.MappingTypeBinding
 import org.earthsystemmodeling.cupid.cc.mapping.CodeConceptInstanceReference
 import org.earthsystemmodeling.cupid.cc.mapping.LiteralMTVBinding
+import org.earthsystemmodeling.cupid.cc.mapping.MappingResult
+import org.earthsystemmodeling.cupid.cc.mapping.MappingType
+import org.earthsystemmodeling.cupid.cc.mapping.MappingTypeBinding
 import org.earthsystemmodeling.cupid.cc.mapping.MappingTypeVariableBinding
+import org.eclipse.xtend.lib.annotations.Accessors
 
 class CodeConcept {
     
@@ -22,6 +22,9 @@ class CodeConcept {
         
     @Accessors
     protected MappingTypeBinding binding
+    
+    @Accessors
+    protected Map<String, Class<?>> annotations
     
     new(String name) {
         this(name, null)    
@@ -39,7 +42,7 @@ class CodeConcept {
     }
     
     def setMappingType(MappingType mappingType, Map<String,Object> parameters) {
-        binding = new MappingTypeBinding(mappingType)
+        binding = new MappingTypeBinding(mappingType, this)
         if (parameters != null) {
             for (p : parameters.entrySet) {
                 binding.put(p.key, getVariableBindingForParameter(p.key, p.value))
@@ -110,7 +113,7 @@ class CodeConcept {
         instance
     }
     
-    def protected CodeConceptInstance newInstance(CodeConceptInstance parent, Object match) {
+    def CodeConceptInstance newInstance(CodeConceptInstance parent, Object match) {
         new CodeConceptInstance(this, parent, match)
     }
     
@@ -172,23 +175,22 @@ class CodeConcept {
         subconcepts
     }
     
-    //single valued subconcept   
-    
-    def CodeConcept addSubconcept(CodeConcept type) {
+    /*   
+    def void addSubconcept(CodeConcept type) {
        addSubconcept(type.name, type)
     }
     
-    def CodeConcept addSubconcept(String name, CodeConcept type) {
+    def void addSubconcept(String name, CodeConcept type) {
        addSubconcept(name, type, false)
     }
     
-    def CodeConcept addSubconcept(String name, CodeConcept type, boolean essential) {
+    def void addSubconcept(String name, CodeConcept type, boolean essential) {
        addSubconcept(name, type, essential, 1, 1)
     }
+    */
     
-    def CodeConcept addSubconcept(String name, CodeConcept type, boolean essential, int min, int max) {
-       subconcepts.add(new SingleCodeSubconcept(this, type, essential, min, max))
-       this 
+    def void addSubconcept(String name, CodeConcept type, boolean essential, int min, int max) {
+       subconcepts.add(new SingleCodeSubconcept(this, type, essential, min, max)) 
     }
     
     def CodeConcept addSubconcept(String name, MappingType mappingType) {
@@ -207,8 +209,39 @@ class CodeConcept {
     def CodeConcept addSubconcept(String name, MappingType mappingType, boolean essential, int min, int max, Map<String, Object> parameters) {
         val concept = new CodeConcept(name, mappingType, parameters)
         addSubconcept(name, concept, essential, min, max)
-        this
+        concept
     }
+    
+    def void addSubconcepts(List<Object> toAdd) {
+    	if (toAdd.size() >= 1) {
+	    	if (toAdd.get(0) instanceof List) {
+	    		toAdd.forEach[s|
+    				addSubconcepts(s as List<Object>)
+    			]
+	    	}
+	    	else if (toAdd.size() >= 2 && toAdd.size() <= 5) {
+				val name = toAdd.get(0) as String
+				val mappingType = toAdd.get(1) as MappingType    			
+				val params = { if (toAdd.size() >= 3) toAdd.get(2) as Map<String, Object> else null }
+				val subList = { if (toAdd.size() == 4) toAdd.get(3) as List<Object> else null }
+				val min = { if (toAdd.size() == 5) toAdd.get(3) as Integer else 1}
+				val max = { if (toAdd.size() == 5) toAdd.get(4) as Integer else 1}
+				
+				val subconcept = addSubconcept(name, mappingType, false, min, max, params)
+				if (subList != null) {
+					subconcept.addSubconcepts(subList)
+				}
+			}
+			else {
+				throw new CodeConceptException("Subconcept parameter list must be size 2 to 5.")
+			}
+		}	
+    }
+    
+    def void addSubconcepts(List<Object>... toAdd) {
+    	addSubconcepts(newLinkedList(toAdd))
+    }
+    
     
     static def isStaticReference(Object obj) {
         (obj instanceof String) && ((obj as String).startsWith("$"))
@@ -255,10 +288,8 @@ class CodeConcept {
     override toString() {
         '''
         CodeConcept: «getName»«IF(refines!=null)» refines «refines.getName»«ENDIF»
-        Declared Subconcepts: «FOR s : declaredSubconcepts»
-            - «s.name»«ENDFOR»
-        All Subconcepts: «FOR s : getSubconcepts»
-            - «s.name»«ENDFOR»
+        Subconcepts: «FOR s : getSubconcepts»
+            - «s»«ENDFOR»
         '''    
     }
     

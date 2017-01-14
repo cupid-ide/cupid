@@ -19,5 +19,9 @@ class LiteralMTVBinding<T> extends MappingTypeVariableBinding<T> {
     override clone() {
         new LiteralMTVBinding<T>(this.value)
     }
+				
+	override setValue(T value) {
+		throw new UnsupportedOperationException
+	}
            
 }

@@ -28,7 +28,9 @@ class MappingResultSet {
     }
     
     def addMatch(Object match) {
-        results.add(new MappingResult(match))
+        val r = new MappingResult(match)
+        results.add(r)
+        r
     }
     
     def size() {

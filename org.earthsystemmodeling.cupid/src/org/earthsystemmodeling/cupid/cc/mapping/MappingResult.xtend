@@ -14,6 +14,10 @@ class MappingResult {
         results.get(name)    
     }
     
+    def put(String name, Object value) {
+    	results.put(name, value)
+    }
+    
     def match() {
         results.get("match")
     }

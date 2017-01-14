@@ -201,6 +201,19 @@ public class ASTQuery {
     return _equalsIgnoreCase;
   }
   
+  /**
+   * def static eic(Token t, Object o) {
+   * if (o instanceof String) {
+   * eic(t, o as String)
+   * }
+   * else if (o instanceof Token) {
+   * eic(t, o as Token)
+   * }
+   * else {
+   * eic(t, o.toString)
+   * }
+   * }
+   */
   public static boolean eic(final Token t, final String s) {
     String _text = t.getText();
     return ASTQuery.eic(s, _text);

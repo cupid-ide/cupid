@@ -21,7 +21,7 @@ class BootstrapCodeConcept {
         
         val rootMappingType = new MappingType("MappingRoot", ASTModuleNode, ASTModuleNode)
         val rootConcept = new CodeConcept("ConceptRoot", rootMappingType) => [
-            addSubconcept(type)
+            addSubconcept(type.name, type, true, 1, 1)
         ]
         val cci = rootConcept.newInstance(null, moduleNode)       
         

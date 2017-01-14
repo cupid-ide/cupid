@@ -4,6 +4,7 @@ import org.eclipse.xtend.lib.annotations.Accessors
 import java.util.Map
 import java.util.List
 import org.earthsystemmodeling.cupid.cc.CodeConceptInstance
+import org.earthsystemmodeling.cupid.cc.CodeConcept
 
 class MappingTypeBinding {
     
@@ -11,13 +12,17 @@ class MappingTypeBinding {
     MappingType mappingType
     
     @Accessors
+    CodeConcept concept
+    
+    @Accessors
     Map<MappingTypeVariable<?>, MappingTypeVariableBinding<?>> bindings = newLinkedHashMap
     
     @Accessors(PROTECTED_GETTER)
     CodeConceptInstance currentContext
     
-    new(MappingType mappingType) {
+    new(MappingType mappingType, CodeConcept concept) {
         this.mappingType = mappingType
+        this.concept  = concept
     }
     
     def <T> T getValue(MappingTypeVariable<T> variable) {
@@ -27,6 +32,10 @@ class MappingTypeBinding {
     def <T> T getValue(String variable) {
         val mtv = mappingType.getParameter(variable)
         bindings.get(mtv).value as T
+    }
+    
+    def String getValueString(String variable) {
+    	getValue(variable)	
     }
     
     def <T> MappingTypeVariableBinding<T> get(MappingTypeVariable<T> variable) {
@@ -59,7 +68,6 @@ class MappingTypeBinding {
     
     def List<MappingTypeVariable<?>> unbound() {
          val retList = newLinkedList
-         //retList.addAll(mappingType.getParameters().filter[p|!bindings.containsKey(p)])
          retList.addAll(mappingType.getParameters().filter[p|!bindings.containsKey(p) && !(p.name == "context") && !(p.name == "match")])
          retList
     }
@@ -69,6 +77,14 @@ class MappingTypeBinding {
         val resultset = mappingType.doFind(this)
         currentContext = null
         return resultset
+    }
+    
+    def addResult(Object match) {
+    	if (!mappingType.matchType.isInstance(match)) {
+    		throw new IllegalVariableAssignment("match", mappingType.matchType, match.class)
+    	}
+    	//val cci = concept.reverse(currentContext, match)
+    	
     }
     
     def <T> T context() {

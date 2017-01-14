@@ -30,7 +30,7 @@ class CodeConceptTemplate extends CodeConcept {
     
     def CodeConcept instantiate(String name, Map<String,Object> parameterValues) {
         val concept = new CodeConcept({if (name==null) this.name else name})
-        val binding = new MappingTypeBinding(this.binding.mappingType)
+        val binding = new MappingTypeBinding(this.binding.mappingType, concept)
         for (e : this.binding.bindings.entrySet) {
             if (e.value instanceof TemplateParameterReference<?>) {                
                 //TODO: figure out the $<ref> syntax, extend if needed - this is very basic now
@@ -80,7 +80,7 @@ class CodeConceptTemplate extends CodeConcept {
     override CodeConcept addSubconcept(String name, MappingType mappingType, boolean essential, int min, int max, Map<String, Object> parameters) {
         val concept = new CodeConceptTemplate(name, mappingType, parameters)
         addSubconcept(name, concept, essential, min, max)
-        this
+        concept
     }
     
     

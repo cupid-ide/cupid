@@ -16,6 +16,7 @@ import org.eclipse.xtext.xbase.lib.Exceptions;
 import org.eclipse.xtext.xbase.lib.Functions.Function1;
 import org.eclipse.xtext.xbase.lib.IterableExtensions;
 import org.eclipse.xtext.xbase.lib.Pair;
+import org.eclipse.xtext.xbase.lib.Procedures.Procedure1;
 import org.eclipse.xtext.xbase.lib.Procedures.Procedure2;
 import org.eclipse.xtext.xbase.lib.Pure;
 
@@ -31,6 +32,9 @@ public class MappingType {
   
   @Accessors
   private Procedure2<? super MappingTypeBinding, ? super MappingResultSet> find;
+  
+  @Accessors
+  private Procedure1<? super MappingTypeBinding> forwardAdd;
   
   public MappingType(final String name, final Class<?> contextType, final Class<?> matchType) {
     this(name, Collections.<String, Class<?>>unmodifiableMap(CollectionLiterals.<String, Class<?>>newHashMap(Pair.<String, Class<?>>of("context", contextType), Pair.<String, Class<?>>of("match", matchType))));
@@ -183,5 +187,14 @@ public class MappingType {
   
   public void setFind(final Procedure2<? super MappingTypeBinding, ? super MappingResultSet> find) {
     this.find = find;
+  }
+  
+  @Pure
+  public Procedure1<? super MappingTypeBinding> getForwardAdd() {
+    return this.forwardAdd;
+  }
+  
+  public void setForwardAdd(final Procedure1<? super MappingTypeBinding> forwardAdd) {
+    this.forwardAdd = forwardAdd;
   }
 }

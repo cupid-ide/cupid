@@ -3,6 +3,7 @@ package org.earthsystemmodeling.cupid.cc
 import java.util.Map
 import org.eclipse.xtend.lib.annotations.Accessors
 import java.util.List
+import org.earthsystemmodeling.cupid.cc.mapping.IllegalVariableAssignment
 
 class CodeConceptInstance {
     
@@ -59,40 +60,6 @@ class CodeConceptInstance {
         this.annotations.putAll(annotations)
     }
     
-    /*
-    def putMapping(String name, Object ref) {
-        if (!type.getMappingTypes.containsKey(name)) {
-            throw new CodeConceptException("Code Concept " + type.name + " does not contain a mapping named " + name + ".")
-        }
-        else if (type.getMappingTypes.get(name).isInstance(ref)) {
-            throw new CodeConceptException("Mapping type " + name + " should be of type " + 
-                type.getMappingTypes.get(name).simpleName + " but instead is of type " + ref.class.simpleName + ".")
-        }
-        else {
-            mappings.put(name, ref)
-        }
-    }
-    
-    def <T> T getMapping(String name) {
-        if (!type.getMappingTypes.containsKey(name)) {
-            throw new CodeConceptException("Code Concept " + type.name + " does not contain a mapping named " + name + ".")
-        }
-        //not checking type
-        mappings.get(name) as T
-    }
-    */
-    
-    /*
-    def addSubconceptInstance(CodeSubconceptInstance subconceptInstance) {
-        if (!type.getSubconcepts.contains(subconceptInstance.type)) {
-            throw new CodeConceptException("CodeConcept " + type.name + " does not contain subconcept " + subconceptInstance.type.name)
-        }
-        else {
-            subconceptInstances.add(subconceptInstance)
-        }
-    }
-    */
-    
     def addChild(CodeConceptInstance child) throws CodeConceptException, CodeConceptConstraintViolation {
         val subconcept = type.getSubconcepts.filter(SingleCodeSubconcept).findFirst[s|s.concept == child.type]
         if (subconcept == null) {
@@ -115,7 +82,20 @@ class CodeConceptInstance {
     }
     
     def put(String annotationKey, Object annotationValue) {
+        if (!type.annotations.containsKey(annotationKey)) {
+        	throw new CodeConceptException("Concept " + type.name + " does not have annotation named " + annotationKey)
+        }
+        else if (!type.annotations.get(annotationKey).isInstance(annotationValue)) {
+        	throw new IllegalVariableAssignment(annotationKey, type.annotations.get(annotationKey), annotationValue.class)
+        }
         annotations.put(annotationKey, annotationValue)
+    }
+    
+    def get(String annotationKey) {
+        if (!type.annotations.containsKey(annotationKey)) {
+        	throw new CodeConceptException("Concept " + type.name + " does not have annotation named " + annotationKey)
+        }
+    	annotations.get(annotationKey)
     }
     
     //def <T> T getSourceRef() {

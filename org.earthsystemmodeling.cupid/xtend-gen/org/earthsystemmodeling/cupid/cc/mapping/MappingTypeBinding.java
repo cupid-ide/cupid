@@ -6,7 +6,9 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
+import org.earthsystemmodeling.cupid.cc.CodeConcept;
 import org.earthsystemmodeling.cupid.cc.CodeConceptInstance;
+import org.earthsystemmodeling.cupid.cc.mapping.IllegalVariableAssignment;
 import org.earthsystemmodeling.cupid.cc.mapping.MappingResultSet;
 import org.earthsystemmodeling.cupid.cc.mapping.MappingType;
 import org.earthsystemmodeling.cupid.cc.mapping.MappingTypeException;
@@ -26,13 +28,17 @@ public class MappingTypeBinding {
   private MappingType mappingType;
   
   @Accessors
+  private CodeConcept concept;
+  
+  @Accessors
   private Map<MappingTypeVariable<?>, MappingTypeVariableBinding<?>> bindings = CollectionLiterals.<MappingTypeVariable<?>, MappingTypeVariableBinding<?>>newLinkedHashMap();
   
   @Accessors(AccessorType.PROTECTED_GETTER)
   private CodeConceptInstance currentContext;
   
-  public MappingTypeBinding(final MappingType mappingType) {
+  public MappingTypeBinding(final MappingType mappingType, final CodeConcept concept) {
     this.mappingType = mappingType;
+    this.concept = concept;
   }
   
   public <T extends Object> T getValue(final MappingTypeVariable<T> variable) {
@@ -58,6 +64,10 @@ public class MappingTypeBinding {
     } catch (Throwable _e) {
       throw Exceptions.sneakyThrow(_e);
     }
+  }
+  
+  public String getValueString(final String variable) {
+    return this.<String>getValue(variable);
   }
   
   public <T extends Object> MappingTypeVariableBinding<T> get(final MappingTypeVariable<T> variable) {
@@ -151,6 +161,21 @@ public class MappingTypeBinding {
     return resultset;
   }
   
+  public void addResult(final Object match) {
+    try {
+      Class<?> _matchType = this.mappingType.matchType();
+      boolean _isInstance = _matchType.isInstance(match);
+      boolean _not = (!_isInstance);
+      if (_not) {
+        Class<?> _matchType_1 = this.mappingType.matchType();
+        Class<?> _class = match.getClass();
+        throw new IllegalVariableAssignment("match", _matchType_1, _class);
+      }
+    } catch (Throwable _e) {
+      throw Exceptions.sneakyThrow(_e);
+    }
+  }
+  
   public <T extends Object> T context() {
     return this.<T>getValue("context");
   }
@@ -162,6 +187,15 @@ public class MappingTypeBinding {
   
   public void setMappingType(final MappingType mappingType) {
     this.mappingType = mappingType;
+  }
+  
+  @Pure
+  public CodeConcept getConcept() {
+    return this.concept;
+  }
+  
+  public void setConcept(final CodeConcept concept) {
+    this.concept = concept;
   }
   
   @Pure

@@ -8,6 +8,7 @@ import org.earthsystemmodeling.cupid.cc.CodeSubconcept;
 import org.earthsystemmodeling.cupid.cc.EssentialConstraintViolation;
 import org.eclipse.xtend.lib.annotations.AccessorType;
 import org.eclipse.xtend.lib.annotations.Accessors;
+import org.eclipse.xtend2.lib.StringConcatenation;
 import org.eclipse.xtext.xbase.lib.Exceptions;
 import org.eclipse.xtext.xbase.lib.Pure;
 
@@ -56,6 +57,21 @@ public class SingleCodeSubconcept extends CodeSubconcept {
     } catch (Throwable _e) {
       throw Exceptions.sneakyThrow(_e);
     }
+  }
+  
+  @Override
+  public String toString() {
+    StringConcatenation _builder = new StringConcatenation();
+    _builder.append("\t\t");
+    _builder.append("- [");
+    int _min = this.getMin();
+    _builder.append(_min, "\t\t");
+    _builder.append("-");
+    int _max = this.getMax();
+    _builder.append(_max, "\t\t");
+    _builder.append("] ");
+    _builder.append(this.concept, "\t\t");
+    return _builder.toString();
   }
   
   @Pure

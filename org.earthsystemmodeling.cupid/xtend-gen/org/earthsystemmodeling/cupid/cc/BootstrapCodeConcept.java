@@ -48,7 +48,7 @@ public class BootstrapCodeConcept {
         final MappingType rootMappingType = new MappingType("MappingRoot", ASTModuleNode.class, ASTModuleNode.class);
         CodeConcept _codeConcept = new CodeConcept("ConceptRoot", rootMappingType);
         final Procedure1<CodeConcept> _function = (CodeConcept it) -> {
-          it.addSubconcept(this.type);
+          it.addSubconcept(this.type.name, this.type, true, 1, 1);
         };
         final CodeConcept rootConcept = ObjectExtensions.<CodeConcept>operator_doubleArrow(_codeConcept, _function);
         final CodeConceptInstance cci = rootConcept.newInstance(null, moduleNode);

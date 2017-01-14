@@ -18,6 +18,8 @@ public abstract class MappingTypeVariableBinding<T extends Object> {
   
   public abstract T getValue() throws UnresolvedVariableAccessException;
   
+  public abstract void setValue(final T value);
+  
   @Override
   public abstract MappingTypeVariableBinding<T> clone();
   

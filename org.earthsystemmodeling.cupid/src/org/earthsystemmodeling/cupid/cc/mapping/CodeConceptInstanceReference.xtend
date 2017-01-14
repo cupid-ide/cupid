@@ -1,7 +1,5 @@
 package org.earthsystemmodeling.cupid.cc.mapping
 
-import org.earthsystemmodeling.cupid.cc.CodeConceptException
-
 class CodeConceptInstanceReference<T> extends ReferenceMTVBinding<T> {
     
     new(MappingTypeVariable<T> boundTo, String reference) {
@@ -13,6 +11,15 @@ class CodeConceptInstanceReference<T> extends ReferenceMTVBinding<T> {
         //special case
         if (boundTo.name.equals("context")) {
             value = binding.currentContext.nearestAncestorWithMatch(boundTo.type)
+            return value
+        }
+        else if (reference.startsWith("@")) {
+        	val annotationName = reference.substring(1)
+        	val refVal = binding.currentContext.get(annotationName)
+        	if (!boundTo.type.isInstance(refVal)) {
+                throw new IllegalVariableAssignment(boundTo.name, boundTo.type, refVal.class)
+            }
+            value = refVal as T
             return value
         }
         else if (reference.startsWith("../") && !reference.substring(3).contains("/")) {
@@ -33,5 +40,9 @@ class CodeConceptInstanceReference<T> extends ReferenceMTVBinding<T> {
     override clone() {
         new CodeConceptInstanceReference<T>(boundTo, reference)
     }
+				
+	override setValue(T value) {
+		throw new UnsupportedOperationException("TODO: auto-generated method stub")
+	}
     
 }

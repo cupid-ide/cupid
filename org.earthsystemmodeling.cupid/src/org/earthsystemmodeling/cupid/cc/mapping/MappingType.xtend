@@ -16,6 +16,9 @@ class MappingType {
           
     @Accessors
     private (MappingTypeBinding, MappingResultSet)=>void find
+    
+    @Accessors
+    private (MappingTypeBinding)=>void forwardAdd
            
     //@Accessors
     //private (P1)=>void generate

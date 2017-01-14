@@ -24,4 +24,9 @@ public class LiteralMTVBinding<T extends Object> extends MappingTypeVariableBind
   public MappingTypeVariableBinding<T> clone() {
     return new LiteralMTVBinding<T>(this.value);
   }
+  
+  @Override
+  public void setValue(final T value) {
+    throw new UnsupportedOperationException();
+  }
 }

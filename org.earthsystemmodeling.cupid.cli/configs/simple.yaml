@@ -1,5 +1,11 @@
+- root: /path/to/root/
+
 - model:
     name: ATM
+    imports:
+      - sea_surface_temperature
+      - ocean_current_merid
+      - ocean_current_zonal
     
 - model:
     name: OCN

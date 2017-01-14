@@ -32,9 +32,14 @@ public class MappingResultSet {
     return this.get(0);
   }
   
-  public boolean addMatch(final Object match) {
-    MappingResult _mappingResult = new MappingResult(match);
-    return this.results.add(_mappingResult);
+  public MappingResult addMatch(final Object match) {
+    MappingResult _xblockexpression = null;
+    {
+      final MappingResult r = new MappingResult(match);
+      this.results.add(r);
+      _xblockexpression = r;
+    }
+    return _xblockexpression;
   }
   
   public int size() {
