@@ -8,27 +8,26 @@ class CodeConceptInstanceReference<T> extends ReferenceMTVBinding<T> {
     }
     
     override getValue() {
-        //special case
-        if (boundTo.name.equals("context")) {
-            value = binding.currentContext.nearestAncestorWithMatch(boundTo.type)
-            return value
-        }
-        else if (reference.startsWith("@")) {
+        if (reference != null && reference.startsWith("@")) {
         	val annotationName = reference.substring(1)
-        	val refVal = binding.currentContext.get(annotationName)
-        	if (!boundTo.type.isInstance(refVal)) {
+        	val refVal = binding.currentInstance.get(annotationName)
+        	if (refVal != null && !boundTo.type.isInstance(refVal)) {
                 throw new IllegalVariableAssignment(boundTo.name, boundTo.type, refVal.class)
             }
             value = refVal as T
             return value
         }
-        else if (reference.startsWith("../") && !reference.substring(3).contains("/")) {
+        else if (reference != null && reference.startsWith("../") && !reference.substring(3).contains("/")) {
             val subconceptName = reference.substring(3)
             val refVal = binding.currentContext.getChild(subconceptName)?.match
             if (!boundTo.type.isInstance(refVal)) {
                 throw new IllegalVariableAssignment(boundTo.name, boundTo.type, refVal.class)
             }
             value = refVal as T
+            return value
+        }
+        else if (boundTo.name.equals("context")) {
+            value = binding.currentContext.nearestAncestorWithMatch(boundTo.type)
             return value
         }
         else {

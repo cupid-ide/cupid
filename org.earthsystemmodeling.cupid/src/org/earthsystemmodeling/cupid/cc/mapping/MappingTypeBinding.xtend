@@ -5,6 +5,7 @@ import java.util.Map
 import java.util.List
 import org.earthsystemmodeling.cupid.cc.CodeConceptInstance
 import org.earthsystemmodeling.cupid.cc.CodeConcept
+import java.util.regex.Pattern
 
 class MappingTypeBinding {
     
@@ -17,10 +18,10 @@ class MappingTypeBinding {
     @Accessors
     Map<MappingTypeVariable<?>, MappingTypeVariableBinding<?>> bindings = newLinkedHashMap
     
-    @Accessors(PROTECTED_GETTER)
+    //@Accessors(PROTECTED_GETTER)
     CodeConceptInstance currentContext
     
-    @Accessors(PROTECTED_GETTER)
+    //@Accessors(PROTECTED_GETTER)
     CodeConceptInstance currentInstance
     
     @Accessors(PUBLIC_GETTER)  //can be accessed by refinements of mappingType
@@ -37,6 +38,9 @@ class MappingTypeBinding {
     
     def <T> T getValue(String variable) {
         val mtv = mappingType.getParameter(variable)
+        if (mtv == null) {
+    		throw new MappingTypeException("Mapping type " + mappingType.name + " does not have parameter: " + variable)
+    	}
         bindings.get(mtv).value as T
     }
     
@@ -169,45 +173,37 @@ class MappingTypeBinding {
     		retList.add(instance)
     	]
     	
-    	retList
+    	retList 
     }
-
-	/*
-	def boolean bindXXX(CodeConceptInstance parent) {
-    	
-    	//currentInstance = instance
-    	
-    	//resultSet being null means that we need to
-    	//execute the mapping type first
-    	if (resultSet == null) {
-    		resultSet = new MappingResultSet(mappingType)
-    		mappingType.doFind(this)
-    	}
-    	//at this point, resultSet will be populated
-    	//thanks to callbacks to addResult() methods
-    	
-    	if (resultSet.size() > 0) {
-    		
-    		val res = resultSet.pop()
-    		res.values.forEach[k,v|
-    			if (k.equals("match")) {
-    				currentInstance.match = v
-    			}
-    			else {
-    				setValue(k, v)
-    			}
-    		]
-    		currentInstance = null
-    		true
-    	}
-    	else {
-    		//reset()
-    		currentInstance = null
-    		false
-    	}
-    }
-    */
-    
+	
+	def forwardAdd(CodeConceptInstance instance) {
+		currentInstance = instance
+		mappingType.doForwardAdd(this)
+		currentInstance = null
+	}
+	
+	static Pattern TEMPLATE_VAR = Pattern.compile("\\{\\w+\\}")
+	
+	def fill(String template) {
+		
+		val matcher = TEMPLATE_VAR.matcher(template)
+		val sb = new StringBuffer
+		while (matcher.find()) {
+			var varToReplace = matcher.group
+			varToReplace = varToReplace.substring(1, varToReplace.length-1)
+			val replacement = getValueString(varToReplace)
+			if (replacement != null) {
+				matcher.appendReplacement(sb, replacement)
+			}
+			else {
+				matcher.appendReplacement(sb, matcher.group)  //leave unchanged
+			}
+		}
+		matcher.appendTail(sb)
+		
+		sb.toString
+	}
+	    
     def addResult(Object match) {
     	if (!mappingType.matchType.isInstance(match)) {
     		throw new IllegalVariableAssignment("match", mappingType.matchType, match.class)
@@ -227,6 +223,19 @@ class MappingTypeBinding {
     
     def <T> T context() {
         getValue("context")
-    } 
+    }
+    
+    def CodeConceptInstance getCurrentContext() {
+    	if (currentContext != null) {
+    		currentContext
+    	}
+    	else if (currentInstance != null) {
+    		currentInstance.parent
+    	}
+    }
+    
+    def CodeConceptInstance getCurrentInstance() {
+    	 currentInstance
+    }
     
 }

@@ -5,6 +5,7 @@ import com.google.common.collect.Iterables;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.function.Consumer;
+import org.earthsystemmodeling.cupid.cc.CCIStatus;
 import org.earthsystemmodeling.cupid.cc.CodeConcept;
 import org.earthsystemmodeling.cupid.cc.CodeConceptInstance;
 import org.earthsystemmodeling.cupid.cc.CodeSubconcept;
@@ -243,9 +244,20 @@ public class CodeConceptManager {
    * Forward engineering methods
    */
   public void forward(final CodeConceptInstance instance, final IFile file) {
+    CCIStatus _status = instance.getStatus();
+    boolean _equals = Objects.equal(_status, CCIStatus.ADDED);
+    if (_equals) {
+      this.forwardAdd(instance);
+    }
+    List<CodeConceptInstance> _children = instance.getChildren();
+    for (final CodeConceptInstance c : _children) {
+      this.forward(c, file);
+    }
   }
   
-  public void forwardAdd(final CodeConceptInstance parent, final CodeConceptInstance child) {
+  public void forwardAdd(final CodeConceptInstance instance) {
+    final CodeConcept concept = instance.getType();
+    concept.binding.forwardAdd(instance);
   }
   
   public void forwardDelete(final CodeConceptInstance parent, final CodeConceptInstance child) {

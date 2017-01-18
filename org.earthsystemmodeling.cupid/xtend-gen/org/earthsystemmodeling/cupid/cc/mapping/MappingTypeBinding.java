@@ -8,6 +8,8 @@ import java.util.Map;
 import java.util.Set;
 import java.util.function.BiConsumer;
 import java.util.function.Consumer;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 import org.earthsystemmodeling.cupid.cc.CodeConcept;
 import org.earthsystemmodeling.cupid.cc.CodeConceptInstance;
 import org.earthsystemmodeling.cupid.cc.mapping.IllegalVariableAssignment;
@@ -36,10 +38,8 @@ public class MappingTypeBinding {
   @Accessors
   private Map<MappingTypeVariable<?>, MappingTypeVariableBinding<?>> bindings = CollectionLiterals.<MappingTypeVariable<?>, MappingTypeVariableBinding<?>>newLinkedHashMap();
   
-  @Accessors(AccessorType.PROTECTED_GETTER)
   private CodeConceptInstance currentContext;
   
-  @Accessors(AccessorType.PROTECTED_GETTER)
   private CodeConceptInstance currentInstance;
   
   @Accessors(AccessorType.PUBLIC_GETTER)
@@ -65,6 +65,14 @@ public class MappingTypeBinding {
       T _xblockexpression = null;
       {
         final MappingTypeVariable<Object> mtv = this.mappingType.<Object>getParameter(variable);
+        boolean _equals = Objects.equal(mtv, null);
+        if (_equals) {
+          String _name = this.mappingType.getName();
+          String _plus = ("Mapping type " + _name);
+          String _plus_1 = (_plus + " does not have parameter: ");
+          String _plus_2 = (_plus_1 + variable);
+          throw new MappingTypeException(_plus_2);
+        }
         MappingTypeVariableBinding<?> _get = this.bindings.get(mtv);
         Object _value = _get.getValue();
         _xblockexpression = ((T) _value);
@@ -275,41 +283,46 @@ public class MappingTypeBinding {
     return _xblockexpression;
   }
   
-  /**
-   * def boolean bindXXX(CodeConceptInstance parent) {
-   * 
-   * //currentInstance = instance
-   * 
-   * //resultSet being null means that we need to
-   * //execute the mapping type first
-   * if (resultSet == null) {
-   * resultSet = new MappingResultSet(mappingType)
-   * mappingType.doFind(this)
-   * }
-   * //at this point, resultSet will be populated
-   * //thanks to callbacks to addResult() methods
-   * 
-   * if (resultSet.size() > 0) {
-   * 
-   * val res = resultSet.pop()
-   * res.values.forEach[k,v|
-   * if (k.equals("match")) {
-   * currentInstance.match = v
-   * }
-   * else {
-   * setValue(k, v)
-   * }
-   * ]
-   * currentInstance = null
-   * true
-   * }
-   * else {
-   * //reset()
-   * currentInstance = null
-   * false
-   * }
-   * }
-   */
+  public CodeConceptInstance forwardAdd(final CodeConceptInstance instance) {
+    CodeConceptInstance _xblockexpression = null;
+    {
+      this.currentInstance = instance;
+      this.mappingType.doForwardAdd(this);
+      _xblockexpression = this.currentInstance = null;
+    }
+    return _xblockexpression;
+  }
+  
+  private static Pattern TEMPLATE_VAR = Pattern.compile("\\{\\w+\\}");
+  
+  public String fill(final String template) {
+    String _xblockexpression = null;
+    {
+      final Matcher matcher = MappingTypeBinding.TEMPLATE_VAR.matcher(template);
+      final StringBuffer sb = new StringBuffer();
+      while (matcher.find()) {
+        {
+          String varToReplace = matcher.group();
+          int _length = varToReplace.length();
+          int _minus = (_length - 1);
+          String _substring = varToReplace.substring(1, _minus);
+          varToReplace = _substring;
+          final String replacement = this.getValueString(varToReplace);
+          boolean _notEquals = (!Objects.equal(replacement, null));
+          if (_notEquals) {
+            matcher.appendReplacement(sb, replacement);
+          } else {
+            String _group = matcher.group();
+            matcher.appendReplacement(sb, _group);
+          }
+        }
+      }
+      matcher.appendTail(sb);
+      _xblockexpression = sb.toString();
+    }
+    return _xblockexpression;
+  }
+  
   public MappingResult addResult(final Object match) {
     try {
       MappingResult _xblockexpression = null;
@@ -352,6 +365,26 @@ public class MappingTypeBinding {
     return this.<T>getValue("context");
   }
   
+  public CodeConceptInstance getCurrentContext() {
+    CodeConceptInstance _xifexpression = null;
+    boolean _notEquals = (!Objects.equal(this.currentContext, null));
+    if (_notEquals) {
+      _xifexpression = this.currentContext;
+    } else {
+      CodeConceptInstance _xifexpression_1 = null;
+      boolean _notEquals_1 = (!Objects.equal(this.currentInstance, null));
+      if (_notEquals_1) {
+        _xifexpression_1 = this.currentInstance.getParent();
+      }
+      _xifexpression = _xifexpression_1;
+    }
+    return _xifexpression;
+  }
+  
+  public CodeConceptInstance getCurrentInstance() {
+    return this.currentInstance;
+  }
+  
   @Pure
   public MappingType getMappingType() {
     return this.mappingType;
@@ -377,16 +410,6 @@ public class MappingTypeBinding {
   
   public void setBindings(final Map<MappingTypeVariable<?>, MappingTypeVariableBinding<?>> bindings) {
     this.bindings = bindings;
-  }
-  
-  @Pure
-  protected CodeConceptInstance getCurrentContext() {
-    return this.currentContext;
-  }
-  
-  @Pure
-  protected CodeConceptInstance getCurrentInstance() {
-    return this.currentInstance;
   }
   
   @Pure

@@ -34,6 +34,11 @@ public class MappingType {
   @Accessors
   private Procedure1<? super MappingTypeBinding> forwardAdd;
   
+  public MappingType(final String name, final Class<?> contextType, final Class<?> matchType, final Map<String, Class<?>> additionalParameters) {
+    this(name, contextType, matchType);
+    this.addParameters(additionalParameters);
+  }
+  
   public MappingType(final String name, final Class<?> contextType, final Class<?> matchType) {
     this(name, Collections.<String, Class<?>>unmodifiableMap(CollectionLiterals.<String, Class<?>>newHashMap(Pair.<String, Class<?>>of("context", contextType), Pair.<String, Class<?>>of("match", matchType))));
   }
@@ -48,8 +53,16 @@ public class MappingType {
   }
   
   public MappingType(final MappingType refines, final Map<String, Class<?>> parameters) {
+    this.refines = refines;
+    this.addParameters(parameters);
+    final Procedure1<MappingTypeBinding> _function = (MappingTypeBinding bind) -> {
+      refines.find.apply(bind);
+    };
+    this.find = _function;
+  }
+  
+  protected void addParameters(final Map<String, Class<?>> parameters) {
     try {
-      this.refines = refines;
       boolean _notEquals = (!Objects.equal(parameters, null));
       if (_notEquals) {
         Set<Map.Entry<String, Class<?>>> _entrySet = parameters.entrySet();
@@ -69,10 +82,6 @@ public class MappingType {
           }
         }
       }
-      final Procedure1<MappingTypeBinding> _function = (MappingTypeBinding bind) -> {
-        refines.find.apply(bind);
-      };
-      this.find = _function;
     } catch (Throwable _e) {
       throw Exceptions.sneakyThrow(_e);
     }
@@ -157,6 +166,10 @@ public class MappingType {
       this.refines.find.apply(binding);
     }
     this.find.apply(binding);
+  }
+  
+  public void doForwardAdd(final MappingTypeBinding binding) {
+    this.forwardAdd.apply(binding);
   }
   
   @Pure

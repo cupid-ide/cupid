@@ -134,6 +134,10 @@ class CodeConcept {
         new CodeConceptInstance(this, parent, match)
     }
     
+    def static CodeConceptInstance newInstance(Object match) {
+    	new CodeConceptInstance(null, null, match)
+    }
+    
     /*
     def List<String> getParameters() {
         if (refines == null) {

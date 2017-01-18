@@ -15,8 +15,10 @@ import org.earthsystemmodeling.cupid.cc.mapping.MappingResultSet;
 import org.earthsystemmodeling.cupid.cc.mapping.MappingType;
 import org.earthsystemmodeling.cupid.cc.mapping.MappingTypeBinding;
 import org.earthsystemmodeling.cupid.nuopc.ASTQuery;
+import org.earthsystemmodeling.cupid.nuopc.ESMFCodeTemplates;
 import org.earthsystemmodeling.cupid.nuopc.ESMFQuery;
 import org.earthsystemmodeling.cupid.util.CodeExtraction;
+import org.eclipse.photran.core.IFortranAST;
 import org.eclipse.photran.internal.core.lexer.Token;
 import org.eclipse.photran.internal.core.parser.ASTCallStmtNode;
 import org.eclipse.photran.internal.core.parser.ASTModuleNode;
@@ -252,9 +254,50 @@ public class NUOPC {
         _results.forEach(_function_4);
       };
       it.setFind(_function_3);
+      final Procedure1<MappingTypeBinding> _function_4 = (MappingTypeBinding bind) -> {
+        final String gcomp = bind.getValueString("gcomp");
+        final String rc = bind.getValueString("rc");
+        final String slot = bind.getValueString("slot");
+        final String compLabel = bind.getValueString("compLabel");
+        final String phaseLabel = bind.getValueString("phaseLabel");
+        StringConcatenation _builder = new StringConcatenation();
+        _builder.newLine();
+        _builder.append("call NUOPC_DriverAddRunElement(");
+        _builder.append(gcomp, "");
+        _builder.append(", slot=");
+        _builder.append(slot, "");
+        _builder.append(", &");
+        _builder.newLineIfNotEmpty();
+        _builder.append("    ");
+        _builder.append("compLabel=");
+        _builder.append(compLabel, "    ");
+        _builder.append(", ");
+        {
+          boolean _notEquals = (!Objects.equal(phaseLabel, null));
+          if (_notEquals) {
+            _builder.append("phaseLabel=");
+            _builder.append(phaseLabel, "    ");
+            _builder.append(",");
+          }
+        }
+        _builder.append(" rc=");
+        _builder.append(rc, "    ");
+        _builder.append(")");
+        _builder.newLineIfNotEmpty();
+        final String code = _builder.toString();
+        final IASTListNode<IBodyConstruct> stmts = CodeExtraction.parseLiteralStatementSequence(code);
+        final ASTSubroutineSubprogramNode ssn = bind.<ASTSubroutineSubprogramNode>context();
+        IASTListNode<IBodyConstruct> _body = ssn.getBody();
+        _body.addAll(stmts);
+      };
+      it.setForwardAdd(_function_4);
     };
     final MappingType AddComponentToDriverMT = ObjectExtensions.<MappingType>operator_doubleArrow(_refine_1, _function_2);
-    MappingType _mappingType_1 = new MappingType("SetServicesMT", ASTModuleNode.class, ASTSubroutineSubprogramNode.class);
+    Pair<String, Class<String>> _mappedTo_8 = Pair.<String, Class<String>>of("rc", String.class);
+    Pair<String, Class<String>> _mappedTo_9 = Pair.<String, Class<String>>of("gcomp", String.class);
+    Pair<String, Class<String>> _mappedTo_10 = Pair.<String, Class<String>>of("routineSetServices", String.class);
+    MappingType _mappingType_1 = new MappingType("SetServicesMT", ASTModuleNode.class, ASTSubroutineSubprogramNode.class, 
+      Collections.<String, Class<?>>unmodifiableMap(CollectionLiterals.<String, Class<?>>newHashMap(_mappedTo_8, _mappedTo_9, _mappedTo_10)));
     final Procedure1<MappingType> _function_3 = (MappingType it) -> {
       final Procedure1<MappingTypeBinding> _function_4 = (MappingTypeBinding me) -> {
         final ASTModuleNode module = me.<ASTModuleNode>context();
@@ -295,45 +338,89 @@ public class NUOPC {
         }
       };
       it.setFind(_function_4);
+      final Procedure1<MappingTypeBinding> _function_5 = (MappingTypeBinding bind) -> {
+        StringConcatenation _builder = new StringConcatenation();
+        _builder.newLine();
+        _builder.append("subroutine SetServices({gcomp}, {rc})");
+        _builder.newLine();
+        _builder.append("    ");
+        _builder.append("type(ESMF_GridComp)  :: {gcomp}");
+        _builder.newLine();
+        _builder.append("    ");
+        _builder.append("integer, intent(out) :: {rc}");
+        _builder.newLine();
+        _builder.append("    ");
+        _builder.newLine();
+        _builder.append("    ");
+        _builder.append("rc = ESMF_SUCCESS");
+        _builder.newLine();
+        _builder.append("    ");
+        _builder.newLine();
+        _builder.append("    ");
+        _builder.append("! NUOPC_Driver registers the generic methods");
+        _builder.newLine();
+        _builder.append("    ");
+        _builder.append("call NUOPC_CompDerive({gcomp}, {routineSetServices}, rc={rc})");
+        _builder.newLine();
+        _builder.append("    ");
+        String _valueString = bind.getValueString("rc");
+        CharSequence _ESMFErrorCheck = ESMFCodeTemplates.ESMFErrorCheck(_valueString);
+        _builder.append(_ESMFErrorCheck, "    ");
+        _builder.newLineIfNotEmpty();
+        _builder.append("    ");
+        _builder.newLine();
+        _builder.append("end subroutine");
+        _builder.newLine();
+        final String code = bind.fill(_builder.toString());
+        final ASTSubroutineSubprogramNode ssn = CodeExtraction.<ASTSubroutineSubprogramNode>parseLiteralProgramUnit(code);
+        final ASTModuleNode moduleNode = bind.<ASTModuleNode>context();
+        IASTListNode<IModuleBodyConstruct> _moduleBody = moduleNode.getModuleBody();
+        _moduleBody.add(ssn);
+      };
+      it.setForwardAdd(_function_5);
     };
     MappingType _doubleArrow_2 = ObjectExtensions.<MappingType>operator_doubleArrow(_mappingType_1, _function_3);
     this.SetServicesMT = _doubleArrow_2;
     CodeConceptTemplate _codeConceptTemplate = new CodeConceptTemplate("NUOPCComponent", Collections.<String>unmodifiableList(CollectionLiterals.<String>newArrayList("genericImport")));
     final Procedure1<CodeConceptTemplate> _function_4 = (CodeConceptTemplate it) -> {
+      it.addAnnotation("ast", IFortranAST.class);
       it.addAnnotation("name");
-      Pair<String, String> _mappedTo_8 = Pair.<String, String>of("uses", "$genericImport");
-      Pair<String, String> _mappedTo_9 = Pair.<String, String>of("name", "@name");
-      it.setMappingType(FortranMappingTypes.ModuleThatUsesMT, Collections.<String, Object>unmodifiableMap(CollectionLiterals.<String, Object>newHashMap(_mappedTo_8, _mappedTo_9)));
-      Pair<String, String> _mappedTo_10 = Pair.<String, String>of("uses", "ESMF");
-      Pair<String, String> _mappedTo_11 = Pair.<String, String>of("uses", "NUOPC");
-      Pair<String, String> _mappedTo_12 = Pair.<String, String>of("uses", "$genericImport");
+      Pair<String, String> _mappedTo_11 = Pair.<String, String>of("context", "@ast");
+      Pair<String, String> _mappedTo_12 = Pair.<String, String>of("name", "@name");
+      it.setMappingType(FortranMappingTypes.ModuleMT, Collections.<String, Object>unmodifiableMap(CollectionLiterals.<String, Object>newHashMap(_mappedTo_11, _mappedTo_12)));
+      Pair<String, String> _mappedTo_13 = Pair.<String, String>of("uses", "ESMF");
+      Pair<String, String> _mappedTo_14 = Pair.<String, String>of("uses", "NUOPC");
+      Pair<String, String> _mappedTo_15 = Pair.<String, String>of("uses", "$genericImport");
+      Pair<String, String> _mappedTo_16 = Pair.<String, String>of("rc", "rc");
+      Pair<String, String> _mappedTo_17 = Pair.<String, String>of("gcomp", "gcomp");
+      Pair<String, String> _mappedTo_18 = Pair.<String, String>of("routineSetServices", "ss");
       it.addSubconcepts(
-        Collections.<Object>unmodifiableList(CollectionLiterals.<Object>newArrayList("UsesESMF", FortranMappingTypes.ModuleUseStmtMT, Collections.<String, String>unmodifiableMap(CollectionLiterals.<String, String>newHashMap(_mappedTo_10)))), 
-        Collections.<Object>unmodifiableList(CollectionLiterals.<Object>newArrayList("UsesNUOPC", FortranMappingTypes.ModuleUseStmtMT, Collections.<String, String>unmodifiableMap(CollectionLiterals.<String, String>newHashMap(_mappedTo_11)))), 
-        Collections.<Object>unmodifiableList(CollectionLiterals.<Object>newArrayList("UsesGeneric", FortranMappingTypes.ModuleUseStmtMT, Collections.<String, String>unmodifiableMap(CollectionLiterals.<String, String>newHashMap(_mappedTo_12)))), 
-        Collections.<Object>unmodifiableList(CollectionLiterals.<Object>newArrayList("SetServices", this.SetServicesMT)));
+        Collections.<Object>unmodifiableList(CollectionLiterals.<Object>newArrayList("UsesESMF", FortranMappingTypes.ModuleUseStmtMT, Collections.<String, String>unmodifiableMap(CollectionLiterals.<String, String>newHashMap(_mappedTo_13)))), 
+        Collections.<Object>unmodifiableList(CollectionLiterals.<Object>newArrayList("UsesNUOPC", FortranMappingTypes.ModuleUseStmtMT, Collections.<String, String>unmodifiableMap(CollectionLiterals.<String, String>newHashMap(_mappedTo_14)))), 
+        Collections.<Object>unmodifiableList(CollectionLiterals.<Object>newArrayList("UsesGeneric", FortranMappingTypes.ModuleUseStmtMT, Collections.<String, String>unmodifiableMap(CollectionLiterals.<String, String>newHashMap(_mappedTo_15)))), 
+        Collections.<Object>unmodifiableList(CollectionLiterals.<Object>newArrayList("SetServices", this.SetServicesMT, Collections.<String, String>unmodifiableMap(CollectionLiterals.<String, String>newHashMap(_mappedTo_16, _mappedTo_17, _mappedTo_18)))));
     };
     CodeConceptTemplate _doubleArrow_3 = ObjectExtensions.<CodeConceptTemplate>operator_doubleArrow(_codeConceptTemplate, _function_4);
     this.NUOPCComponent = _doubleArrow_3;
     CodeConcept _codeConcept = new CodeConcept("AddComponent");
     final Procedure1<CodeConcept> _function_5 = (CodeConcept it) -> {
       it.addAnnotations(Collections.<String>unmodifiableList(CollectionLiterals.<String>newArrayList("compLabel", "srcCompLabel", "dstCompLabel")));
-      Pair<String, String> _mappedTo_8 = Pair.<String, String>of("calls", "NUOPC_DriverAddComp");
-      Pair<String, String> _mappedTo_9 = Pair.<String, String>of("compLabel", "@compLabel");
-      Pair<String, String> _mappedTo_10 = Pair.<String, String>of("srcCompLabel", "@srcCompLabel");
-      Pair<String, String> _mappedTo_11 = Pair.<String, String>of("dstCompLabel", "@dstCompLabel");
+      Pair<String, String> _mappedTo_11 = Pair.<String, String>of("calls", "NUOPC_DriverAddComp");
+      Pair<String, String> _mappedTo_12 = Pair.<String, String>of("compLabel", "@compLabel");
+      Pair<String, String> _mappedTo_13 = Pair.<String, String>of("srcCompLabel", "@srcCompLabel");
+      Pair<String, String> _mappedTo_14 = Pair.<String, String>of("dstCompLabel", "@dstCompLabel");
       it.setMappingType(AddComponentToDriverMT, 
-        Collections.<String, Object>unmodifiableMap(CollectionLiterals.<String, Object>newHashMap(_mappedTo_8, _mappedTo_9, _mappedTo_10, _mappedTo_11)));
+        Collections.<String, Object>unmodifiableMap(CollectionLiterals.<String, Object>newHashMap(_mappedTo_11, _mappedTo_12, _mappedTo_13, _mappedTo_14)));
     };
     final CodeConcept SetModelServices_AddComponent = ObjectExtensions.<CodeConcept>operator_doubleArrow(_codeConcept, _function_5);
-    Pair<String, String> _mappedTo_8 = Pair.<String, String>of("genericImport", "NUOPC_Driver");
-    CodeConcept _instantiate = this.NUOPCComponent.instantiate("NUOPCDriver", Collections.<String, Object>unmodifiableMap(CollectionLiterals.<String, Object>newHashMap(_mappedTo_8)));
+    Pair<String, String> _mappedTo_11 = Pair.<String, String>of("genericImport", "NUOPC_Driver");
+    CodeConcept _instantiate = this.NUOPCComponent.instantiate("NUOPCDriver", Collections.<String, Object>unmodifiableMap(CollectionLiterals.<String, Object>newHashMap(_mappedTo_11)));
     final Procedure1<CodeConcept> _function_6 = (CodeConcept it) -> {
-      Pair<String, String> _mappedTo_9 = Pair.<String, String>of("SetServices", "../SetServices");
-      Pair<String, String> _mappedTo_10 = Pair.<String, String>of("labelComponent", "NUOPC_Driver");
-      Pair<String, String> _mappedTo_11 = Pair.<String, String>of("labelName", "label_SetModelServices");
+      Pair<String, String> _mappedTo_12 = Pair.<String, String>of("SetServices", "../SetServices");
+      Pair<String, String> _mappedTo_13 = Pair.<String, String>of("labelComponent", "NUOPC_Driver");
+      Pair<String, String> _mappedTo_14 = Pair.<String, String>of("labelName", "label_SetModelServices");
       it.addSubconcepts(
-        Collections.<Object>unmodifiableList(CollectionLiterals.<Object>newArrayList("SetModelServices", this.SpecializationMethodMT, Collections.<String, String>unmodifiableMap(CollectionLiterals.<String, String>newHashMap(_mappedTo_9, _mappedTo_10, _mappedTo_11)), Collections.<List<Object>>unmodifiableList(CollectionLiterals.<List<Object>>newArrayList(Collections.<Object>unmodifiableList(CollectionLiterals.<Object>newArrayList(SetModelServices_AddComponent, Integer.valueOf(1), Integer.valueOf((-1)))))))));
+        Collections.<Object>unmodifiableList(CollectionLiterals.<Object>newArrayList("SetModelServices", this.SpecializationMethodMT, Collections.<String, String>unmodifiableMap(CollectionLiterals.<String, String>newHashMap(_mappedTo_12, _mappedTo_13, _mappedTo_14)), Collections.<List<Object>>unmodifiableList(CollectionLiterals.<List<Object>>newArrayList(Collections.<Object>unmodifiableList(CollectionLiterals.<Object>newArrayList(SetModelServices_AddComponent, Integer.valueOf(1), Integer.valueOf((-1)))))))));
     };
     CodeConcept _doubleArrow_4 = ObjectExtensions.<CodeConcept>operator_doubleArrow(_instantiate, _function_6);
     this.NUOPCDriver = _doubleArrow_4;

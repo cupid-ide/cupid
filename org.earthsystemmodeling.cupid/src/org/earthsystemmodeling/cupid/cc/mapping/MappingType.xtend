@@ -20,9 +20,14 @@ class MappingType {
     @Accessors
     private (MappingTypeBinding)=>void forwardAdd
            
-    //@Accessors
-    //private (P1)=>void generate
+   //Accessors
+   // private (MappingTypeBinding)=>void generate
 
+    new(String name, Class<?> contextType, Class<?> matchType, Map<String,Class<?>> additionalParameters) {
+    	this(name, contextType, matchType)
+    	addParameters(additionalParameters)
+    }
+    
     new(String name, Class<?> contextType, Class<?> matchType) {
         this(name, #{"context" -> contextType, "match" -> matchType})
     }
@@ -38,7 +43,12 @@ class MappingType {
     
     new(MappingType refines, Map<String, Class<?>> parameters) {
         this.refines = refines
-        if (parameters != null) {
+        addParameters(parameters)
+        this.find = [bind|refines.find.apply(bind)]
+    }
+    
+    protected def addParameters(Map<String, Class<?>> parameters) {
+    	if (parameters != null) {
             for (p : parameters.entrySet) {
                 if (hasParameter(p.key)) {
                     throw new MappingTypeException("Cannot add duplicate parameter: " + p.key)
@@ -47,7 +57,6 @@ class MappingType {
                 this.parameters.add(mtv)
             }
         }
-        this.find = [bind|refines.find.apply(bind)]
     }
     
     def String getName() {
@@ -132,6 +141,9 @@ class MappingType {
         //resultset
     }
     
+    def doForwardAdd(MappingTypeBinding binding) {
+    	forwardAdd.apply(binding)
+    }
        
    
     

@@ -40,7 +40,7 @@ class CodeConceptInstance {
     
     def setMatch(Object match) {
         if (match != null) {
-            if (type.mappingType != null) {
+            if (type?.mappingType != null) {
                 if (!type.mappingType.matchType.isInstance(match)) {
                     throw new CodeConceptException("Match for concept " + type.getName + " must be of type " + type.mappingType.matchType.simpleName + " (given type " + match.class.simpleName + ").")
                 }
@@ -58,22 +58,34 @@ class CodeConceptInstance {
         }
     }
     
-    def putAnnotations(Map<String, Object> annotations) {
-        //TODO; determine if annotations should be restricted by metamodel and check here
-        this.annotations.putAll(annotations)
+    //def putAnnotations(Map<String, Object> annotations) {
+    //    this.annotations.putAll(annotations)
+    //}
+    
+    def addChild(CodeConceptInstance child) {
+    	addChild(child, CCIStatus.RECONCILED)
     }
     
-    def addChild(CodeConceptInstance child) throws CodeConceptException, CodeConceptConstraintViolation {
+    def addChild(CodeConceptInstance child, CCIStatus status) {
+        
+        //if (type != null) {
         val subconcept = type.getSubconcepts.filter(SingleCodeSubconcept).findFirst[s|s.concept == child.type]
         if (subconcept == null) {
             throw new CodeConceptException("Code concept " + type.name + " does not contain subconcept " + child.type.name)
         }
-        //else if (subconcept.max != -1 && getChildren(child.type).size >= subconcept.max) {
-        //    throw new CodeConceptConstraintViolation('''Cannot add child of type «child.type.name» to CodeConcept of type «type.name» because it will exceed the maximum allowed («subconcept.max»)''')
-        //}
-        else {
-            children.add(child)
+	    //}
+        
+        child.status = status
+        if (!children.contains(child)) {
+           	children.add(child)
         }
+        
+        child
+    }
+    
+    def addChildWithDefaults(CodeConcept type) {
+    	val instance = type.newInstance(this)
+    	addChild(instance, CCIStatus.ADDED)
     }
     
     def removeChild(CodeConceptInstance child) {
@@ -81,6 +93,11 @@ class CodeConceptInstance {
     		throw new CodeConceptException("Attempt to remove child not in list: " + child)
     	}
     	children.remove(child)
+    }
+    
+    
+    def getChildren() {
+    	children
     }
     
     def getChildren(CodeConcept ofType) {
@@ -107,12 +124,7 @@ class CodeConceptInstance {
         }
     	annotations.get(annotationKey)
     }
-    
-   	
-   	def addEdit(CCIEdit edit) {
-   		
-   	}
-   
+       
    
     override toString() {
         '''

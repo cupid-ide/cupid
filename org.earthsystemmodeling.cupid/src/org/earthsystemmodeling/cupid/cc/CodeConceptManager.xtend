@@ -154,17 +154,22 @@ class CodeConceptManager {
     }
       
 	
-	
 	/*
 	 *  Forward engineering methods
 	 */
 	
 	def void forward(CodeConceptInstance instance, IFile file) {
-		
+		if (instance.status == CCIStatus.ADDED) {
+			forwardAdd(instance)
+		}
+		for (c : instance.children) {
+			forward(c, file)
+		}
 	}
 	
-	def void forwardAdd(CodeConceptInstance parent, CodeConceptInstance child) {
-		
+	def void forwardAdd(CodeConceptInstance instance) {
+		val concept = instance.type
+		concept.binding.forwardAdd(instance)
 	}
 	
 	def void forwardDelete(CodeConceptInstance parent, CodeConceptInstance child) {
