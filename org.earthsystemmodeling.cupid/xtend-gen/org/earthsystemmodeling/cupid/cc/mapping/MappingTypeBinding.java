@@ -184,7 +184,8 @@ public class MappingTypeBinding {
       final LinkedList<MappingTypeVariable<?>> retList = CollectionLiterals.<MappingTypeVariable<?>>newLinkedList();
       List<MappingTypeVariable<?>> _parameters = this.mappingType.getParameters();
       final Function1<MappingTypeVariable<?>, Boolean> _function = (MappingTypeVariable<?> p) -> {
-        return Boolean.valueOf((((!this.bindings.containsKey(p)) && (!Objects.equal(p.name, "context"))) && (!Objects.equal(p.name, "match"))));
+        boolean _containsKey = this.bindings.containsKey(p);
+        return Boolean.valueOf((!_containsKey));
       };
       Iterable<MappingTypeVariable<?>> _filter = IterableExtensions.<MappingTypeVariable<?>>filter(_parameters, _function);
       Iterables.<MappingTypeVariable<?>>addAll(retList, _filter);
@@ -228,7 +229,15 @@ public class MappingTypeBinding {
             boolean _equals = k.equals("match");
             boolean _not = (!_equals);
             if (_not) {
-              this.<Object>setValue(k, v);
+              try {
+                this.<Object>setValue(k, v);
+              } catch (final Throwable _t) {
+                if (_t instanceof UnsupportedOperationException) {
+                  final UnsupportedOperationException uoe = (UnsupportedOperationException)_t;
+                } else {
+                  throw Exceptions.sneakyThrow(_t);
+                }
+              }
             }
           };
           _values.forEach(_function);
@@ -363,6 +372,10 @@ public class MappingTypeBinding {
   
   public <T extends Object> T context() {
     return this.<T>getValue("context");
+  }
+  
+  public <T extends Object> void setMatch(final T match) {
+    this.<T>setValue("match", match);
   }
   
   public CodeConceptInstance getCurrentContext() {

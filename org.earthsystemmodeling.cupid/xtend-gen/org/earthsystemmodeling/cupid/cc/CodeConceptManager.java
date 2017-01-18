@@ -1,7 +1,6 @@
 package org.earthsystemmodeling.cupid.cc;
 
 import com.google.common.base.Objects;
-import com.google.common.collect.Iterables;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.function.Consumer;
@@ -14,14 +13,9 @@ import org.earthsystemmodeling.cupid.cc.SingleCodeSubconcept;
 import org.earthsystemmodeling.cupid.cc.mapping.MappingType;
 import org.eclipse.core.resources.IFile;
 import org.eclipse.photran.core.IFortranAST;
-import org.eclipse.photran.internal.core.parser.ASTExecutableProgramNode;
-import org.eclipse.photran.internal.core.parser.ASTModuleNode;
-import org.eclipse.photran.internal.core.parser.IASTListNode;
-import org.eclipse.photran.internal.core.parser.IProgramUnit;
 import org.eclipse.photran.internal.core.vpg.PhotranVPG;
 import org.eclipse.xtext.xbase.lib.CollectionLiterals;
 import org.eclipse.xtext.xbase.lib.Exceptions;
-import org.eclipse.xtext.xbase.lib.IterableExtensions;
 import org.eclipse.xtext.xbase.lib.ObjectExtensions;
 import org.eclipse.xtext.xbase.lib.Procedures.Procedure1;
 
@@ -58,23 +52,13 @@ public class CodeConceptManager {
         if (_equals) {
           throw new Exception("NULL AST");
         }
-        ASTExecutableProgramNode _root = ast.getRoot();
-        IASTListNode<IProgramUnit> _programUnitList = null;
-        if (_root!=null) {
-          _programUnitList=_root.getProgramUnitList();
-        }
-        Iterable<ASTModuleNode> _filter = null;
-        if (_programUnitList!=null) {
-          _filter=Iterables.<ASTModuleNode>filter(_programUnitList, ASTModuleNode.class);
-        }
-        final ASTModuleNode moduleNode = IterableExtensions.<ASTModuleNode>head(_filter);
-        final MappingType rootMappingType = new MappingType("MappingRoot", ASTModuleNode.class, ASTModuleNode.class);
+        final MappingType rootMappingType = new MappingType("MappingRoot", IFortranAST.class, IFortranAST.class);
         CodeConcept _codeConcept = new CodeConcept("ConceptRoot", rootMappingType);
         final Procedure1<CodeConcept> _function = (CodeConcept it) -> {
-          it.addSubconcept(concept.name, concept, true, 1, 1);
+          it.addSubconcept(concept.name, concept, true, 1, 1, false);
         };
         final CodeConcept rootConcept = ObjectExtensions.<CodeConcept>operator_doubleArrow(_codeConcept, _function);
-        final CodeConceptInstance cci = rootConcept.newInstance(null, moduleNode);
+        final CodeConceptInstance cci = rootConcept.newInstance(null, ast);
         _xblockexpression = this.reverse(concept, cci);
       }
       return _xblockexpression;

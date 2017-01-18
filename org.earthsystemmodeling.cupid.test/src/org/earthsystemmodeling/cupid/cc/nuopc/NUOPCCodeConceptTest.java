@@ -8,6 +8,7 @@ import org.earthsystemmodeling.cupid.cc.CodeConceptInstance;
 import org.earthsystemmodeling.cupid.cc.CodeConceptManager;
 import org.earthsystemmodeling.cupid.cc.CodeSubconcept;
 import org.earthsystemmodeling.cupid.cc.SingleCodeSubconcept;
+import org.earthsystemmodeling.cupid.cc.mapping.MappingType;
 import org.earthsystemmodeling.cupid.nuopc.v7r.NUOPCTest;
 import org.earthsystemmodeling.cupid.test.TestHelpers;
 import org.eclipse.core.resources.IFile;
@@ -15,6 +16,9 @@ import org.eclipse.core.resources.IProject;
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.NullProgressMonitor;
 import org.eclipse.photran.core.IFortranAST;
+import org.eclipse.photran.internal.core.parser.ASTModuleNode;
+import org.eclipse.photran.internal.core.reindenter.Reindenter;
+import org.eclipse.photran.internal.core.reindenter.Reindenter.Strategy;
 import org.eclipse.photran.internal.core.vpg.PhotranVPG;
 import org.junit.AfterClass;
 import org.junit.BeforeClass;
@@ -35,7 +39,7 @@ public class NUOPCCodeConceptTest {
 		PROJECT_NUOPC_PROTOTYPES.delete(true, true, NPM);
 	}
 	
-	//@Test
+	@Test
 	public void ReverseNUOPCDriver() throws IOException, CoreException {
 		
 		NUOPC NUOPC_DEF = NUOPC.getInstance();
@@ -53,6 +57,7 @@ public class NUOPCCodeConceptTest {
 		
 	}
 	
+	@SuppressWarnings("restriction")
 	@Test
 	public void GenerateNUOPCDriver() throws CoreException {
 		CodeConceptManager manager = CodeConceptManager.getInstance();
@@ -62,17 +67,27 @@ public class NUOPCCodeConceptTest {
 		IFile f = TestHelpers.createBlankFile(p, "MyDriver.F90");
 		IFortranAST ast = PhotranVPG.getInstance().acquireTransientAST(f);
 		
-		CodeConceptInstance driverToGenerate = NUOPCDEF.NUOPCDriver.newInstance(null);
-		driverToGenerate.setStatus(CCIStatus.ADDED);
-		driverToGenerate.put("ast", ast);
+		MappingType topMT = new MappingType("TopMT", IFortranAST.class, IFortranAST.class);
+		CodeConcept root = new CodeConcept("Root", topMT);
+		root.addSubconcept("NUOPCDriver", NUOPCDEF.NUOPCDriver, false, 1, 1, true);
+		
+		CodeConceptInstance dummyParent = root.newInstance(null, ast);
+		CodeConceptInstance driverToGenerate = dummyParent.addChildWithDefaults(NUOPCDEF.NUOPCDriver, true);
+		
+		//CodeConceptInstance driverToGenerate = NUOPCDEF.NUOPCDriver.newInstanceWithDefaults(null, true);
+		//driverToGenerate.setStatus(CCIStatus.ADDED, true);
+		//driverToGenerate.setMatch(ast.getRoot().getProgramUnitList().findFirst(ASTModuleNode.class));
+		//driverToGenerate.put("ast", ast);
 		driverToGenerate.put("name", "MyDriver");
 		
-		SingleCodeSubconcept setServicesCC = 
-				(SingleCodeSubconcept) NUOPCDEF.NUOPCDriver.getSubconcept("SetServices");
+		System.out.println("DRIVER TO GENERATE**********\n"+driverToGenerate.toString()+"\n*************");
 		
-		driverToGenerate.addChildWithDefaults(setServicesCC.getConcept());
-		
+		//driverToGenerate.addChildWithDefaults(NUOPCDEF.NUOPCDriver.getChildConcept("SetServices"));
+		//driverToGenerate.addChildWithDefaults(NUOPCDEF.NUOPCDriver.getChildConcept("UsesESMF"));
+				
 		manager.forward(driverToGenerate, f);
+		
+		Reindenter.reindent(ast.getRoot(), ast, Strategy.REINDENT_EACH_LINE);
 		
 		System.out.println("******************\n" + ast.getRoot().toString() + "********************");
 		

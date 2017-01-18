@@ -38,6 +38,13 @@ class CodeConceptInstance {
         }
     }
     
+    def void setStatus(CCIStatus status, boolean recursive) {
+    	this.status = status
+    	if (recursive) {
+    		children.forEach[c|c.setStatus(status, recursive)]
+    	}
+    }
+    
     def setMatch(Object match) {
         if (match != null) {
             if (type?.mappingType != null) {
@@ -75,7 +82,7 @@ class CodeConceptInstance {
         }
 	    //}
         
-        child.status = status
+        child.setStatus(status, true)
         if (!children.contains(child)) {
            	children.add(child)
         }
@@ -83,8 +90,8 @@ class CodeConceptInstance {
         child
     }
     
-    def addChildWithDefaults(CodeConcept type) {
-    	val instance = type.newInstance(this)
+    def addChildWithDefaults(CodeConcept type, boolean recursive) {
+    	val instance = type.newInstanceWithDefaults(this, recursive)
     	addChild(instance, CCIStatus.ADDED)
     }
     
@@ -128,7 +135,7 @@ class CodeConceptInstance {
    
     override toString() {
         '''
-        CodeConceptInstance of: «type.getName» 
+        CodeConceptInstance of: «type.getName»  (Status = «status»)
             
             Annotations: «FOR a : getAnnotations.entrySet»
                 - «a.key» = «a.value»«ENDFOR»

@@ -95,6 +95,10 @@ public class CodeConceptTemplate extends CodeConcept {
           concept.addAnnotation(k, v);
         };
         this.annotations.forEach(_function);
+        final BiConsumer<String, Object> _function_1 = (String k, Object v) -> {
+          concept.addAnnotationDefault(k, v);
+        };
+        this.annotationDefaults.forEach(_function_1);
         List<CodeSubconcept> _subconcepts = this.getSubconcepts();
         for (final CodeSubconcept sc : _subconcepts) {
           {
@@ -105,7 +109,8 @@ public class CodeConceptTemplate extends CodeConcept {
             boolean _isEssential = sc.isEssential();
             int _min = sc.getMin();
             int _max = sc.getMax();
-            concept.addSubconcept(_name_1, instantiatedConcept, _isEssential, _min, _max);
+            boolean _isIncludeByDefault = singleSubconcept.isIncludeByDefault();
+            concept.addSubconcept(_name_1, instantiatedConcept, _isEssential, _min, _max, _isIncludeByDefault);
           }
         }
         _xblockexpression = concept;
@@ -129,11 +134,11 @@ public class CodeConceptTemplate extends CodeConcept {
   }
   
   @Override
-  public CodeConcept addSubconcept(final String name, final MappingType mappingType, final boolean essential, final int min, final int max, final Map<String, Object> parameters) {
+  public CodeConcept addSubconcept(final String name, final MappingType mappingType, final boolean essential, final int min, final int max, final Map<String, Object> parameters, final boolean includeByDefault) {
     CodeConceptTemplate _xblockexpression = null;
     {
       final CodeConceptTemplate concept = new CodeConceptTemplate(name, mappingType, parameters);
-      this.addSubconcept(name, concept, essential, min, max);
+      this.addSubconcept(name, concept, essential, min, max, includeByDefault);
       _xblockexpression = concept;
     }
     return _xblockexpression;

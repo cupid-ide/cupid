@@ -91,7 +91,8 @@ class MappingTypeBinding {
     
     def List<MappingTypeVariable<?>> unbound() {
          val retList = newLinkedList
-         retList.addAll(mappingType.getParameters().filter[p|!bindings.containsKey(p) && !(p.name == "context") && !(p.name == "match")])
+         //retList.addAll(mappingType.getParameters().filter[p|!bindings.containsKey(p) && !(p.name == "context") && !(p.name == "match")])
+         retList.addAll(mappingType.getParameters().filter[p|!bindings.containsKey(p)])
          retList
     }
     
@@ -134,7 +135,13 @@ class MappingTypeBinding {
     		currentInstance = instance  //used by dynamic bindings
     		res.values.forEach[k,v|
     			if (!k.equals("match")) {
-    				setValue(k, v)
+    				try {
+    					setValue(k, v)
+    				}
+    				catch(UnsupportedOperationException uoe) {
+    					//ignore - this means we tried to set a literal, so
+    					//the concept is not really interested in this value
+    				}
     			}
     		]
     		currentInstance = null
@@ -223,6 +230,10 @@ class MappingTypeBinding {
     
     def <T> T context() {
         getValue("context")
+    }
+    
+    def <T> setMatch(T match) {
+    	setValue("match", match)
     }
     
     def CodeConceptInstance getCurrentContext() {

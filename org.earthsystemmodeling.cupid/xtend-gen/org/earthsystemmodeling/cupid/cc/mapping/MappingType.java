@@ -59,6 +59,10 @@ public class MappingType {
       refines.find.apply(bind);
     };
     this.find = _function;
+    final Procedure1<MappingTypeBinding> _function_1 = (MappingTypeBinding bind) -> {
+      refines.forwardAdd.apply(bind);
+    };
+    this.forwardAdd = _function_1;
   }
   
   protected void addParameters(final Map<String, Class<?>> parameters) {

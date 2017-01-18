@@ -25,6 +25,8 @@ class CodeConcept {
     
     protected Map<String, Class<?>> annotations = newHashMap
     
+    protected Map<String, Object> annotationDefaults = newHashMap
+    
     new(String name) {
         this(name, null)    
     }
@@ -52,6 +54,21 @@ class CodeConcept {
     	names.forEach[n|addAnnotation(n)]
     }
     
+    def void addAnnotationDefault(String name, Object value) {
+    	annotationDefaults.put(name, value)
+    }
+    
+    def void addAnnotationDefaults(Map<String,Object> defaults) {
+    	annotationDefaults.putAll(defaults)
+    }
+    
+    def void addAnnotationsWithDefaults(Map<String,String> defaults) {
+    	defaults.forEach[k,v|
+    		addAnnotation(k)
+    		addAnnotationDefault(k, v)
+    	]
+    }
+    
     def setMappingType(MappingType mappingType, Map<String,Object> parameters) {
         binding = new MappingTypeBinding(mappingType, this)
         if (parameters != null) {
@@ -59,11 +76,18 @@ class CodeConcept {
                 binding.putBinding(p.key, getVariableBindingForParameter(p.key, p.value))
             }
         }
+        
         //implicit binding of context
         if (mappingType.hasParameter("context") && binding.unbound("context")) {
             val mtv = mappingType.getParameter("context")
             binding.putBinding(mtv, new CodeConceptInstanceReference(mtv, null))
         }
+        //implicit binding of match
+        if (mappingType.hasParameter("match") && binding.unbound("match")) {
+            val mtv = mappingType.getParameter("match")
+            binding.putBinding(mtv, new CodeConceptInstanceReference(mtv, null))
+        }
+        
         if (!binding.fullyBound) {
             throw new CodeConceptException("Missing parameters to mapping type " + mappingType.name + ": " + binding.unbound.join(", "))        
         }
@@ -84,48 +108,6 @@ class CodeConcept {
         binding?.mappingType
     }
     
-    /*
-    def protected List<CodeConceptInstance> reverseAll(CodeConceptInstance parent) {
-        
-        val retList = newLinkedList
-        
-        if (binding != null) {
-            val resultset = binding.doFind(parent)
-            for (res : resultset.results) {
-                val cci = reverse(parent, res)
-                if (cci != null) retList.add(cci)
-            }
-        }
-        else {
-            //TODO: deal with this case
-            throw new UnsupportedOperationException()   
-        }
-        retList
-    }
-      
-    def CodeConceptInstance reverse(CodeConceptInstance parent) {
-        if (binding != null) {
-            val resultset = binding.doFind(parent)
-            if (resultset.size() > 0) {
-                reverse(parent, resultset.first)
-            }
-        }
-    }
-    
-    def protected CodeConceptInstance reverse(CodeConceptInstance parent, MappingResult result) {
-        val instance = newInstance(parent, result.match)
-        try {
-            for (sc : getSubconcepts) {               
-                sc.reverse(instance)
-            }
-        }
-        catch(EssentialConstraintViolation ecv) {
-            return null
-        }                    
-        instance
-    }
-    */
-    
     def CodeConceptInstance newInstance(CodeConceptInstance parent) {
     	newInstance(parent, null)
     }
@@ -134,47 +116,22 @@ class CodeConcept {
         new CodeConceptInstance(this, parent, match)
     }
     
-    def static CodeConceptInstance newInstance(Object match) {
-    	new CodeConceptInstance(null, null, match)
+    def CodeConceptInstance newInstanceWithDefaults(CodeConceptInstance parent, boolean recursive) {
+    	val instance = newInstance(parent)
+    	//instance.status = CCIStatus.ADDED
+    	annotationDefaults.forEach[k,v|
+    		instance.put(k, v)
+    	]
+    	if (recursive) {
+	    	getSubconcepts.forEach[sc|
+	    		val ssc = sc as SingleCodeSubconcept
+	    		if (ssc.includeByDefault) {
+	    			ssc.concept.newInstanceWithDefaults(instance, recursive)
+	    		}
+	    	]
+	    }
+    	instance
     }
-    
-    /*
-    def List<String> getParameters() {
-        if (refines == null) {
-            getDeclaredParameters
-        }
-        else {
-            val toRet = newLinkedList
-            toRet.addAll(getDeclaredParameters)
-            toRet.addAll(refines.getParameters)
-            toRet
-        }
-    }
-    
-    
-    def getDeclaredParameters() {
-        parameters
-    }
-    
-    def getParameterValue(String param) {
-        if (!getParameters.exists[it==param]) {
-            throw new CodeConceptException("CodeConcept " + name + " does not contain parameter: " + param)
-        }
-        if (parameterValues.containsKey(param)) {
-            parameterValues.get(param)
-        }
-        else if (refines != null) {
-            refines.getParameterValueString(param)
-        }
-        else {
-            null
-        }
-    }
-    
-    def String getParameterValueString(String param) {
-        getParameterValue(param) as String
-    }
-    */
      
     def List<CodeSubconcept> getSubconcepts() {
         if (refines == null) {
@@ -188,30 +145,20 @@ class CodeConcept {
         }
     }
     
-    def CodeSubconcept getSubconcept(String name) {
+    def getSubconcept(String name) {
         getSubconcepts().findFirst[sc|sc.name.equals(name)]
+    }
+    
+    def getChildConcept(String name) {
+    	(getSubconcept(name) as SingleCodeSubconcept).concept
     }
     
     def getDeclaredSubconcepts() {
         subconcepts
     }
     
-    /*   
-    def void addSubconcept(CodeConcept type) {
-       addSubconcept(type.name, type)
-    }
-    
-    def void addSubconcept(String name, CodeConcept type) {
-       addSubconcept(name, type, false)
-    }
-    
-    def void addSubconcept(String name, CodeConcept type, boolean essential) {
-       addSubconcept(name, type, essential, 1, 1)
-    }
-    */
-    
-    def void addSubconcept(String name, CodeConcept type, boolean essential, int min, int max) {
-       subconcepts.add(new SingleCodeSubconcept(this, type, essential, min, max)) 
+    def void addSubconcept(String name, CodeConcept type, boolean essential, int min, int max, boolean includeByDefault) {
+       subconcepts.add(new SingleCodeSubconcept(this, type, essential, min, max, includeByDefault)) 
     }
     
     def CodeConcept addSubconcept(String name, MappingType mappingType) {
@@ -223,13 +170,15 @@ class CodeConcept {
     }
     
     def CodeConcept addSubconcept(String name, MappingType mappingType, boolean essential, Map<String, Object> parameters) {
-        addSubconcept(name, mappingType, essential, 1, 1, parameters)
+        addSubconcept(name, mappingType, essential, 1, 1, parameters, essential)
     }
     
     //NOTE: subclass overrides to create a CodeConceptTemplate
-    def CodeConcept addSubconcept(String name, MappingType mappingType, boolean essential, int min, int max, Map<String, Object> parameters) {
+    def CodeConcept addSubconcept(String name, MappingType mappingType, boolean essential, 
+    	int min, int max, Map<String, Object> parameters, boolean includeByDefault) {
+        
         val concept = new CodeConcept(name, mappingType, parameters)
-        addSubconcept(name, concept, essential, min, max)
+        addSubconcept(name, concept, essential, min, max, includeByDefault)
         concept
     }
     
@@ -247,7 +196,7 @@ class CodeConcept {
 					val min = toAdd.get(1) as Integer
 					val max = toAdd.get(2) as Integer
 					val subList = { if (toAdd.size() == 4) toAdd.get(3) as List<Object> else null }
-					addSubconcept(concept.name, concept, false, min, max)
+					addSubconcept(concept.name, concept, false, min, max, false)
 					if (subList != null) {
 						concept.addSubconcepts(subList)
 					}	
@@ -260,7 +209,7 @@ class CodeConcept {
 					val min = { if (toAdd.size() == 5) toAdd.get(3) as Integer else 1}
 					val max = { if (toAdd.size() == 5) toAdd.get(4) as Integer else 1}
 					
-					val subconcept = addSubconcept(name, mappingType, false, min, max, params)
+					val subconcept = addSubconcept(name, mappingType, false, min, max, params, false)
 					if (subList != null) {
 						subconcept.addSubconcepts(subList)
 					}					
@@ -285,39 +234,6 @@ class CodeConcept {
         (obj instanceof String) && ((obj as String).startsWith("../") || (obj as String).startsWith("@"))
     }
     
-    //def void setMappingType(MappingType mt) {
-    //    mappingType = mt
-    //    mappingType.setMappingFor(this)
-    //}
-    
-    //def operator_modulo(Map<String,Object> paramValues) {
-    //    refine(paramValues)
-   // }
-    
-    /*    
-    def CodeConcept refine(Map<String,Object> paramValues) {
-        refine(null, paramValues)
-    }
-    
-    def CodeConcept refine(String name, Map<String,Object> paramValues) {
-        val newcc = new CodeConcept(name)
-        newcc.refines = this
-        //ewcc.setMappingType(this.mappingType.define)
-       
-        
-        paramValues.forEach[k, v|
-            if (parameters.contains(k)) {
-                newcc.parameterValues.put(k,v)
-            }
-            else {
-                throw new CodeConceptException("CodeConcept " + getName + " does not have parameter: " + k)
-            }
-        ]
-        
-        
-        newcc
-    }
-    */
     
     override toString() {
         '''

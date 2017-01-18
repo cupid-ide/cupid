@@ -6,6 +6,7 @@ import org.eclipse.photran.internal.core.parser.ASTModuleNode
 import org.earthsystemmodeling.cupid.cc.mapping.MappingType
 import org.earthsystemmodeling.cupid.cc.mapping.MappingResult
 import java.util.List
+import org.eclipse.photran.core.IFortranAST
 
 class CodeConceptManager {
 	
@@ -31,14 +32,22 @@ class CodeConceptManager {
 		val ast = PhotranVPG.instance.acquireTransientAST(file)
         if (ast==null) throw new Exception("NULL AST")
         
-        val moduleNode = ast.root?.programUnitList?.filter(ASTModuleNode).head
+        //val moduleNode = ast.root?.programUnitList?.filter(ASTModuleNode).head
         
-        val rootMappingType = new MappingType("MappingRoot", ASTModuleNode, ASTModuleNode)
+                
+        val rootMappingType = new MappingType("MappingRoot", IFortranAST, IFortranAST)
         val rootConcept = new CodeConcept("ConceptRoot", rootMappingType) => [
-            addSubconcept(concept.name, concept, true, 1, 1)
+            addSubconcept(concept.name, concept, true, 1, 1, false)
         ]
-        val cci = rootConcept.newInstance(null, moduleNode)
+        val cci = rootConcept.newInstance(null, ast)
         reverse(concept, cci)
+        
+        //val instance = concept.newInstance(null)
+        //instance.put("ast", ast);
+        
+        
+        //reverseChildren(instance)
+        
 	}
 	
 	/**

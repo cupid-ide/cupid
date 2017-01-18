@@ -4,6 +4,7 @@ import com.google.common.base.Objects;
 import org.earthsystemmodeling.cupid.cc.CodeConceptInstance;
 import org.earthsystemmodeling.cupid.cc.mapping.IllegalVariableAssignment;
 import org.earthsystemmodeling.cupid.cc.mapping.MappingTypeBinding;
+import org.earthsystemmodeling.cupid.cc.mapping.MappingTypeException;
 import org.earthsystemmodeling.cupid.cc.mapping.MappingTypeVariable;
 import org.earthsystemmodeling.cupid.cc.mapping.MappingTypeVariableBinding;
 import org.earthsystemmodeling.cupid.cc.mapping.ReferenceMTVBinding;
@@ -24,7 +25,13 @@ public class CodeConceptInstanceReference<T extends Object> extends ReferenceMTV
         final String annotationName = _reference.substring(1);
         MappingTypeBinding _binding = this.getBinding();
         CodeConceptInstance _currentInstance = _binding.getCurrentInstance();
-        final Object refVal = _currentInstance.get(annotationName);
+        boolean _equals = Objects.equal(_currentInstance, null);
+        if (_equals) {
+          throw new MappingTypeException("No current instance found");
+        }
+        MappingTypeBinding _binding_1 = this.getBinding();
+        CodeConceptInstance _currentInstance_1 = _binding_1.getCurrentInstance();
+        final Object refVal = _currentInstance_1.get(annotationName);
         if (((!Objects.equal(refVal, null)) && (!this.getBoundTo().type.isInstance(refVal)))) {
           MappingTypeVariable<T> _boundTo = this.getBoundTo();
           MappingTypeVariable<T> _boundTo_1 = this.getBoundTo();
@@ -37,8 +44,8 @@ public class CodeConceptInstanceReference<T extends Object> extends ReferenceMTV
         if ((((!Objects.equal(this.getReference(), null)) && this.getReference().startsWith("../")) && (!this.getReference().substring(3).contains("/")))) {
           String _reference_1 = this.getReference();
           final String subconceptName = _reference_1.substring(3);
-          MappingTypeBinding _binding_1 = this.getBinding();
-          CodeConceptInstance _currentContext = _binding_1.getCurrentContext();
+          MappingTypeBinding _binding_2 = this.getBinding();
+          CodeConceptInstance _currentContext = _binding_2.getCurrentContext();
           CodeConceptInstance _child = _currentContext.getChild(subconceptName);
           Object _match = null;
           if (_child!=null) {
@@ -58,20 +65,31 @@ public class CodeConceptInstanceReference<T extends Object> extends ReferenceMTV
           return this.value;
         } else {
           MappingTypeVariable<T> _boundTo_5 = this.getBoundTo();
-          boolean _equals = _boundTo_5.name.equals("context");
-          if (_equals) {
-            MappingTypeBinding _binding_2 = this.getBinding();
-            CodeConceptInstance _currentContext_1 = _binding_2.getCurrentContext();
-            MappingTypeVariable<T> _boundTo_6 = this.getBoundTo();
-            T _nearestAncestorWithMatch = _currentContext_1.<T>nearestAncestorWithMatch(_boundTo_6.type);
-            this.value = _nearestAncestorWithMatch;
+          boolean _equals_1 = _boundTo_5.name.equals("context");
+          if (_equals_1) {
+            MappingTypeBinding _binding_3 = this.getBinding();
+            CodeConceptInstance _currentInstance_2 = _binding_3.getCurrentInstance();
+            boolean _notEquals = (!Objects.equal(_currentInstance_2, null));
+            if (_notEquals) {
+              MappingTypeBinding _binding_4 = this.getBinding();
+              CodeConceptInstance _currentInstance_3 = _binding_4.getCurrentInstance();
+              MappingTypeVariable<T> _boundTo_6 = this.getBoundTo();
+              T _nearestAncestorWithMatch = _currentInstance_3.<T>nearestAncestorWithMatch(_boundTo_6.type);
+              this.value = _nearestAncestorWithMatch;
+            } else {
+              MappingTypeBinding _binding_5 = this.getBinding();
+              CodeConceptInstance _currentContext_1 = _binding_5.getCurrentContext();
+              MappingTypeVariable<T> _boundTo_7 = this.getBoundTo();
+              T _nearestAncestorWithMatch_1 = _currentContext_1.<T>nearestAncestorWithMatch(_boundTo_7.type);
+              this.value = _nearestAncestorWithMatch_1;
+            }
             return this.value;
           } else {
             String _reference_2 = this.getReference();
             String _plus = ("Cannot handle path expression: " + _reference_2);
             String _plus_1 = (_plus + " [");
-            MappingTypeVariable<T> _boundTo_7 = this.getBoundTo();
-            String _plus_2 = (_plus_1 + _boundTo_7);
+            MappingTypeVariable<T> _boundTo_8 = this.getBoundTo();
+            String _plus_2 = (_plus_1 + _boundTo_8);
             String _plus_3 = (_plus_2 + "].");
             throw new UnsupportedOperationException(_plus_3);
           }
@@ -91,18 +109,24 @@ public class CodeConceptInstanceReference<T extends Object> extends ReferenceMTV
   
   @Override
   public void setValue(final T value) {
-    String _reference = this.getReference();
-    boolean _startsWith = _reference.startsWith("@");
-    if (_startsWith) {
-      String _reference_1 = this.getReference();
-      final String annotationName = _reference_1.substring(1);
+    if (((!Objects.equal(this.getReference(), null)) && this.getReference().startsWith("@"))) {
+      String _reference = this.getReference();
+      final String annotationName = _reference.substring(1);
       MappingTypeBinding _binding = this.getBinding();
       CodeConceptInstance _currentInstance = _binding.getCurrentInstance();
       _currentInstance.put(annotationName, value);
     } else {
-      String _reference_2 = this.getReference();
-      String _plus = ("Cannot set value for reference: " + _reference_2);
-      throw new UnsupportedOperationException(_plus);
+      MappingTypeVariable<T> _boundTo = this.getBoundTo();
+      boolean _equals = _boundTo.name.equals("match");
+      if (_equals) {
+        MappingTypeBinding _binding_1 = this.getBinding();
+        CodeConceptInstance _currentInstance_1 = _binding_1.getCurrentInstance();
+        _currentInstance_1.setMatch(value);
+      } else {
+        String _reference_1 = this.getReference();
+        String _plus = ("Cannot set value for reference: " + _reference_1);
+        throw new UnsupportedOperationException(_plus);
+      }
     }
   }
 }

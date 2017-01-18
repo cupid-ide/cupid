@@ -7,39 +7,21 @@ class SingleCodeSubconcept extends CodeSubconcept {
     @Accessors(PUBLIC_GETTER)
     CodeConcept concept
     
+    @Accessors
+    boolean includeByDefault
+    
     new(CodeConcept parent, CodeConcept concept) {
-        this(parent, concept, false, 1, 1)
+        this(parent, concept, false, 1, 1, false)
     }
     
-    new(CodeConcept parent, CodeConcept concept, boolean essential, int min, int max) {
+    new(CodeConcept parent, CodeConcept concept, boolean essential, int min, int max, boolean includeByDefault) {
         super(parent, concept.name, essential, min, max)
         this.concept = concept
+        this.includeByDefault = includeByDefault
     }
-    
-    /*
-    override reverse(CodeConceptInstance parent) {       
-        if (max == 0 || max == 1) {
-            val cci = concept.reverse(parent)
-            if (essential) {
-                if (cci == null && min > 0) {
-                    throw new EssentialConstraintViolation("Missing essential subconcept")
-                }
-                else if (cci != null && max == 0) {
-                    throw new EssentialConstraintViolation("Prohibited subconcept present")
-                }
-            }            
-        }
-        else {
-            val ccis = concept.reverseAll(parent)
-            if (essential && (ccis.size < min || ccis.size > max)) {
-                throw new EssentialConstraintViolation("Must be at between " + min + " and " + max + " instances of " + concept.name)
-            }           
-        } 
-    }
-    */
     
     override toString() {
-    	'''		- [«min»-«max»] «concept»'''
+    	'''		- [«min»-«max»] (includeByDefault = «includeByDefault») «concept»'''
     }
     
     

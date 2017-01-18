@@ -24,6 +24,10 @@ class CodeConceptTemplate extends CodeConcept {
         super(name, mappingType, mappingTypeParameters)
     }
     
+    //new(CodeConcept toCopy) {
+    //	super(toCopy.name)
+    //}
+    
     def CodeConcept instantiate(Map<String,Object> parameterValues) {
         instantiate(null, parameterValues)    
     }
@@ -54,6 +58,11 @@ class CodeConceptTemplate extends CodeConcept {
         	concept.addAnnotation(k, v)
         ]
         
+        //copy annotation defaults
+        this.annotationDefaults.forEach[k,v|
+        	concept.addAnnotationDefault(k,v)
+        ]
+        
         //validate no extra parameters
         //TODO: consider parameters defined on child templates
         //for (e : parameterValues.entrySet) {
@@ -66,7 +75,7 @@ class CodeConceptTemplate extends CodeConcept {
             //TODO: assuming only SingleCodeSunconcepts
             val singleSubconcept = sc as SingleCodeSubconcept
             val instantiatedConcept = (singleSubconcept.concept as CodeConceptTemplate).instantiate(parameterValues)
-            concept.addSubconcept(singleSubconcept.name, instantiatedConcept, sc.essential, sc.min, sc.max)
+            concept.addSubconcept(singleSubconcept.name, instantiatedConcept, sc.essential, sc.min, sc.max, singleSubconcept.includeByDefault)
         }
                 
         concept
@@ -82,11 +91,15 @@ class CodeConceptTemplate extends CodeConcept {
         }
     }
     
-    override CodeConcept addSubconcept(String name, MappingType mappingType, boolean essential, int min, int max, Map<String, Object> parameters) {
+    override addSubconcept(String name, MappingType mappingType, boolean essential, int min, int max, Map<String, Object> parameters, boolean includeByDefault) {
         val concept = new CodeConceptTemplate(name, mappingType, parameters)
-        addSubconcept(name, concept, essential, min, max)
+        addSubconcept(name, concept, essential, min, max, includeByDefault)
         concept
     }
+    
+    //override addSubconcept(String name, CodeConcept type, boolean essential, int min, int max, boolean includeByDefault) {
+    //   	subconcepts.add(new SingleCodeSubconcept(this, type, essential, min, max, includeByDefault)) 
+    //}
     
     
 }

@@ -1,24 +1,22 @@
 package org.earthsystemmodeling.cupid.cc.nuopc
 
-import org.earthsystemmodeling.cupid.cc.BootstrapCodeConcept
 import org.earthsystemmodeling.cupid.cc.CodeConcept
 import org.earthsystemmodeling.cupid.cc.CodeConceptTemplate
+import org.earthsystemmodeling.cupid.cc.fortran.FortranMappingTypes
 import org.earthsystemmodeling.cupid.cc.mapping.MappingType
+import org.earthsystemmodeling.cupid.nuopc.ESMFCodeTemplates
+import org.eclipse.photran.core.IFortranAST
 import org.eclipse.photran.internal.core.parser.ASTCallStmtNode
 import org.eclipse.photran.internal.core.parser.ASTModuleNode
 import org.eclipse.photran.internal.core.parser.ASTSubroutineSubprogramNode
-
-import static org.earthsystemmodeling.cupid.cc.fortran.FortranMappingTypes.*
-
-import static org.earthsystemmodeling.cupid.util.CodeExtraction.*
-import static extension org.earthsystemmodeling.cupid.nuopc.ASTQuery.*
-import static extension org.earthsystemmodeling.cupid.nuopc.ESMFQuery.*
-import org.earthsystemmodeling.cupid.cc.fortran.FortranMappingTypes
-import org.earthsystemmodeling.cupid.cc.CodeConceptInstance
 import org.eclipse.photran.internal.core.parser.IASTListNode
 import org.eclipse.photran.internal.core.parser.IBodyConstruct
-import org.eclipse.photran.core.IFortranAST
-import org.earthsystemmodeling.cupid.nuopc.ESMFCodeTemplates
+
+import static org.earthsystemmodeling.cupid.cc.fortran.FortranMappingTypes.*
+import static org.earthsystemmodeling.cupid.util.CodeExtraction.*
+
+import static extension org.earthsystemmodeling.cupid.nuopc.ASTQuery.*
+import static extension org.earthsystemmodeling.cupid.nuopc.ESMFQuery.*
 
 class NUOPC {
     
@@ -26,9 +24,6 @@ class NUOPC {
     //static FortranMappingTypes FMT
     
     /* mapping types */
-    //public MappingType CallInSubroutineMT
-    //public MappingType ModuleThatUsesMT
-    //public MappingType ModuleUseStmtMT
     public MappingType SetServicesMT
     public MappingType ESMFMethodMT
     public MappingType SpecializationMethodMT  /* refines ESMFMethodMT */
@@ -36,8 +31,10 @@ class NUOPC {
     /* concepts */   
     public CodeConceptTemplate NUOPCComponent
     public CodeConcept NUOPCDriver
+    public CodeConcept SetServices
     
-    public BootstrapCodeConcept NUOPCDriverFromFile
+    
+    //public BootstrapCodeConcept NUOPCDriverFromFile
     
     def static getInstance() {
         if (instance == null) {
@@ -51,16 +48,9 @@ class NUOPC {
         //required to initialize static members
         FortranMappingTypes.instance
                
-        ESMFMethodMT = new MappingType("ESMFMethodMT", 
-        	#{"context" -> ASTModuleNode, 
-        	  "match" -> ASTSubroutineSubprogramNode
-        	  //"name" -> String,
-        	  //"gcomp" -> String,
-        	  //"import" -> String,
-        	  //"export" -> String,
-        	  //"clock" -> String,
-        	  //"rc" -> String
-        	  }) => [
+        ESMFMethodMT = new MappingType("ESMFMethodMT", ASTModuleNode, ASTSubroutineSubprogramNode,
+        	  #{"name" -> String, "gcomp" -> String, "import" -> String,
+        	  "export" -> String, "clock" -> String, "rc" -> String}) => [
             
             find = [bind|
                 val ASTModuleNode module = bind.context
@@ -72,21 +62,22 @@ class NUOPC {
                        
             forwardAdd = [b|
             	val ASTModuleNode module = b.context
-            	val code = '''
+            	val code = b.fill('''
 					
-					subroutine «b.getValue("name")»(«b.getValue("gcomp")», «b.getValue("import")», «b.getValue("export")», «b.getValue("clock")», «b.getValue("rc")»)
-						type(ESMF_GridComp)  :: «b.getValue("gcomp")»
-						type(ESMF_State)     :: «b.getValue("import")», «b.getValue("export")»
-						type(ESMF_Clock)     :: «b.getValue("clock")»
-						integer, intent(out) :: «b.getValue("rc")»
+					subroutine {name}({gcomp}, {import}, {export}, {clock}, {rc})
+						type(ESMF_GridComp)  :: {gcomp}
+						type(ESMF_State)     :: {import},{export}
+						type(ESMF_Clock)     :: {clock}
+						integer, intent(out) :: {rc}
 					    
 					    rc = ESMF_SUCCESS
 					    
 					end subroutine
-				'''
+				''')
 				
 				var ASTSubroutineSubprogramNode ssn = parseLiteralProgramUnit(code)
 				module.getModuleBody().add(ssn)
+				b.match = ssn
             ]
             
         ]       
@@ -116,7 +107,7 @@ class NUOPC {
                 
             ]
             
-           // generate = [p1|]
+            
             
         ]        
         
@@ -229,21 +220,24 @@ call NUOPC_DriverAddRunElement(«gcomp», slot=«slot», &
         ]
         
         
+        SetServices = new CodeConceptTemplate("SetServices", #[]) => [
+        	addAnnotationsWithDefaults(#{"rc"->"rc", "gcomp"->"gcomp", "routineSetServices"->"fixme"})
+        	setMappingType(SetServicesMT, #{"rc"->"@rc", "gcomp"->"@gcomp", "routineSetServices"->"@routineSetServices"})
+        ]
+        
         
         NUOPCComponent = new CodeConceptTemplate("NUOPCComponent", #["genericImport"]) => [
             
-            addAnnotation("ast", IFortranAST)
+            //addAnnotation("ast", IFortranAST)
             addAnnotation("name")
                        
-            setMappingType(ModuleMT, #{"context"->"@ast", "name" -> "@name"})
-            
-            addSubconcepts(
-            	#["UsesESMF", ModuleUseStmtMT, #{"uses" -> "ESMF"}],     
-            	#["UsesNUOPC", ModuleUseStmtMT, #{"uses" -> "NUOPC"}],
-            	#["UsesGeneric", ModuleUseStmtMT, #{"uses" -> "$genericImport"}],
-            	#["SetServices", SetServicesMT, #{"rc"->"rc", "gcomp"->"gcomp", "routineSetServices"->"ss"}]
-          	)            
-            
+            setMappingType(ModuleMT, #{"name" -> "@name"})
+   
+            addSubconcept("UsesESMF", ModuleUseStmtMT, false, 1, 1, #{"uses" -> "ESMF"}, true)
+            addSubconcept("UsesNUOPC", ModuleUseStmtMT, false, 1, 1, #{"uses" -> "NUOPC"}, true)
+            addSubconcept("UsesGeneric", ModuleUseStmtMT, true, 1, 1, #{"uses" -> "$genericImport"}, true)
+            addSubconcept("SetServices", SetServices, false, 1, 1, true)
+           
         ]
         
        	val SetModelServices_AddComponent = new CodeConcept("AddComponent") => [
@@ -255,25 +249,42 @@ call NUOPC_DriverAddRunElement(«gcomp», slot=«slot», &
         	)
        	]
                 
+        val SetModelServices = new CodeConcept("SetModelServices") => [
+        	setMappingType(SpecializationMethodMT, 
+        			#{"SetServices" -> "../SetServices", 
+                  	  "labelComponent" -> "NUOPC_Driver",
+      	  			  "labelName" -> "label_SetModelServices", 
+      	  			  "name"->"SetModelServices",
+      	  			  "gcomp"->"gcomp",
+      	  			  "rc"->"rc",
+      	  			  "import"->"importState",
+      	  			  "export"->"exportState",
+      	  			  "clock"->"clock"})
+        ]   
+             
         NUOPCDriver = NUOPCComponent.instantiate("NUOPCDriver", #{"genericImport" -> "NUOPC_Driver"}) => [
-                                 
+           
+           	addSubconcept("SetModelServices", SetModelServices, false, 1, 1, true)
+           	
+           	/*                      
             addSubconcepts(
-            	#["SetModelServices", SpecializationMethodMT, #{"SetServices" -> "../SetServices", 
-                  								"labelComponent" -> "NUOPC_Driver",
-      	  										"labelName" -> "label_SetModelServices"},
+            	#["SetModelServices", SpecializationMethodMT, 
+            		#{"SetServices" -> "../SetServices", 
+                  	  "labelComponent" -> "NUOPC_Driver",
+      	  			  "labelName" -> "label_SetModelServices"},
       	  			#[
       	  				#[SetModelServices_AddComponent, 1, -1]
       	  				//#["AddComponent", AddComponentToDriverMT, #{"calls"->"NUOPC_DriverAddComp", "compLabel"->"@compLabel"}, 1, -1]
       	  			 ]							
       	  		 ]
             )
-          
+          */
         ]
  
  		//val cci = NUOPCDriver.newInstance(#{"name"->"MyDriver"})
                
         
-        NUOPCDriverFromFile = new BootstrapCodeConcept(NUOPCDriver)
+        //NUOPCDriverFromFile = new BootstrapCodeConcept(NUOPCDriver)
         
                
         

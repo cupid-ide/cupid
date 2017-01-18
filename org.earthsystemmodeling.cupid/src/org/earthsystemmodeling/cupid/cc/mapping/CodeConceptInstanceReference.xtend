@@ -10,6 +10,9 @@ class CodeConceptInstanceReference<T> extends ReferenceMTVBinding<T> {
     override getValue() {
         if (reference != null && reference.startsWith("@")) {
         	val annotationName = reference.substring(1)
+        	if (binding.currentInstance == null) {
+        		throw new MappingTypeException("No current instance found")
+        	}
         	val refVal = binding.currentInstance.get(annotationName)
         	if (refVal != null && !boundTo.type.isInstance(refVal)) {
                 throw new IllegalVariableAssignment(boundTo.name, boundTo.type, refVal.class)
@@ -27,7 +30,12 @@ class CodeConceptInstanceReference<T> extends ReferenceMTVBinding<T> {
             return value
         }
         else if (boundTo.name.equals("context")) {
-            value = binding.currentContext.nearestAncestorWithMatch(boundTo.type)
+            if (binding.currentInstance != null) {
+            	value = binding.currentInstance.nearestAncestorWithMatch(boundTo.type)
+            }
+            else {
+            	value = binding.currentContext.nearestAncestorWithMatch(boundTo.type)
+            }
             return value
         }
         else {
@@ -41,9 +49,12 @@ class CodeConceptInstanceReference<T> extends ReferenceMTVBinding<T> {
     }
 				
 	override setValue(T value) {
-		if (reference.startsWith("@")) {
+		if (reference != null && reference.startsWith("@")) {
         	val annotationName = reference.substring(1)
         	binding.currentInstance.put(annotationName, value)
+        }
+        else if(boundTo.name.equals("match")) {
+        	binding.currentInstance.match = value
         }
         else {
 			throw new UnsupportedOperationException("Cannot set value for reference: " + reference)

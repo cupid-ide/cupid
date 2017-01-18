@@ -19,9 +19,6 @@ class MappingType {
     
     @Accessors
     private (MappingTypeBinding)=>void forwardAdd
-           
-   //Accessors
-   // private (MappingTypeBinding)=>void generate
 
     new(String name, Class<?> contextType, Class<?> matchType, Map<String,Class<?>> additionalParameters) {
     	this(name, contextType, matchType)
@@ -45,6 +42,7 @@ class MappingType {
         this.refines = refines
         addParameters(parameters)
         this.find = [bind|refines.find.apply(bind)]
+        this.forwardAdd = [bind|refines.forwardAdd.apply(bind)]
     }
     
     protected def addParameters(Map<String, Class<?>> parameters) {
@@ -64,36 +62,11 @@ class MappingType {
         else if (refines != null) "refinement of " + refines.getName
     }
     
-    
-        
-    //def MappingType refine(Map<String, Class<?>> newParameters) {
-    //    refine(newParameters, null)        
-    //}
-          
-    //refine by providing parameter values
-    
+              
+    //refine by providing parameter values    
     def MappingType refine(Map<String, Class<?>> newParameters) {
         new MappingType(this, newParameters)
-        /*
-        //validate inputs
-        if (parameterValues != null) {
-            for (input : parameterValues.entrySet) {
-                if (!hasParameter(input.key)) {
-                    throw new MappingTypeException("Mapping type " + name + " does not have input parameter: " + input.key)
-                }
-
-                val mtv = getParameter(input.key)
-                
-            }
-        }
-        
-        mt.find = [me, result | this.find.apply(me, result)]
-        mt
-        
-        */
     }
-    
-    
     
     def hasParameter(String name) {
         getParameter(name) != null    
@@ -133,15 +106,14 @@ class MappingType {
     }
                 
     def doFind(MappingTypeBinding binding) {
-        //val resultset = new MappingResultSet(this)
         if (refines != null) {
             refines.find.apply(binding)
         }
         find.apply(binding)
-        //resultset
     }
     
     def doForwardAdd(MappingTypeBinding binding) {
+    	//TODO: figure out refinement behavior
     	forwardAdd.apply(binding)
     }
        
