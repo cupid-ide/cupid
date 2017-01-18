@@ -3,9 +3,12 @@
 - model:
     name: ATM
     imports:
-      - sea_surface_temperature
-      - ocean_current_merid
-      - ocean_current_zonal
+      - {name: sea_surface_temperature, grid: will provide}
+      - {name: ocean_current_merid}
+      - {name: ocean_current_zonal}
+    exports:
+      - {name: uwind}
+      - {name: vwind}
     
 - model:
     name: OCN

@@ -15,7 +15,7 @@ class MappingType {
     List<MappingTypeVariable<?>> parameters = newLinkedList
           
     @Accessors
-    private (MappingTypeBinding, MappingResultSet)=>void find
+    private (MappingTypeBinding)=>void find
     
     @Accessors
     private (MappingTypeBinding)=>void forwardAdd
@@ -47,7 +47,7 @@ class MappingType {
                 this.parameters.add(mtv)
             }
         }
-        this.find = [me, result | refines.find.apply(me, result)]
+        this.find = [bind|refines.find.apply(bind)]
     }
     
     def String getName() {
@@ -124,12 +124,12 @@ class MappingType {
     }
                 
     def doFind(MappingTypeBinding binding) {
-        val resultset = new MappingResultSet(this)
+        //val resultset = new MappingResultSet(this)
         if (refines != null) {
-            refines.find.apply(binding, resultset)
+            refines.find.apply(binding)
         }
-        find.apply(binding, resultset)
-        resultset
+        find.apply(binding)
+        //resultset
     }
     
        

@@ -13,6 +13,7 @@ class BootstrapCodeConcept {
         this.type = type    
     }
     
+    /*
     def fromFile(IFile input) {
         val ast = PhotranVPG.instance.acquireTransientAST(input)
         if (ast==null) throw new Exception("NULL AST")
@@ -28,5 +29,6 @@ class BootstrapCodeConcept {
         type.reverse(cci)
         cci
     }
+    */
     
 }

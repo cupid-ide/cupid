@@ -37,17 +37,22 @@ class CodeConceptTemplate extends CodeConcept {
                 //replace template parameter with actual value, remove the "$" first
                 val refVar = (e.value as TemplateParameterReference<?>).reference.substring(1)
                 if (parameterValues.containsKey(refVar)) {
-                    binding.put(e.key, new LiteralMTVBinding(parameterValues.get(refVar)))
+                    binding.putBinding(e.key, new LiteralMTVBinding(parameterValues.get(refVar)))
                 }
                 else {
                     throw new CodeConceptException("Cannot instantiate template due to missing parameter value: " + e.key.name)
                 }
             }
             else {
-                binding.put(e.key, e.value.clone())
+                binding.putBinding(e.key, e.value.clone())
             }
         }
         concept.binding = binding
+        
+        //copy annotations
+        this.annotations.forEach[k,v|
+        	concept.addAnnotation(k, v)
+        ]
         
         //validate no extra parameters
         //TODO: consider parameters defined on child templates

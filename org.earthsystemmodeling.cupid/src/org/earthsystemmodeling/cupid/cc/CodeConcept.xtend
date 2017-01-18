@@ -23,8 +23,7 @@ class CodeConcept {
     @Accessors
     protected MappingTypeBinding binding
     
-    @Accessors
-    protected Map<String, Class<?>> annotations
+    protected Map<String, Class<?>> annotations = newHashMap
     
     new(String name) {
         this(name, null)    
@@ -41,17 +40,29 @@ class CodeConcept {
         }
     }
     
+    def void addAnnotation(String name, Class<?> type) {
+    	annotations.put(name, type)
+    }
+    
+    def void addAnnotation(String name) {
+    	addAnnotation(name, String)
+    }
+    
+    def void addAnnotations(List<String> names) {
+    	names.forEach[n|addAnnotation(n)]
+    }
+    
     def setMappingType(MappingType mappingType, Map<String,Object> parameters) {
         binding = new MappingTypeBinding(mappingType, this)
         if (parameters != null) {
             for (p : parameters.entrySet) {
-                binding.put(p.key, getVariableBindingForParameter(p.key, p.value))
+                binding.putBinding(p.key, getVariableBindingForParameter(p.key, p.value))
             }
         }
         //implicit binding of context
-        if (mappingType.hasParameter("context") && binding.get("context") == null) {
+        if (mappingType.hasParameter("context") && binding.unbound("context")) {
             val mtv = mappingType.getParameter("context")
-            binding.put(mtv, new CodeConceptInstanceReference(mtv, null))
+            binding.putBinding(mtv, new CodeConceptInstanceReference(mtv, null))
         }
         if (!binding.fullyBound) {
             throw new CodeConceptException("Missing parameters to mapping type " + mappingType.name + ": " + binding.unbound.join(", "))        
@@ -59,7 +70,7 @@ class CodeConcept {
     }
     
     //subclasses can override
-    def MappingTypeVariableBinding<?> getVariableBindingForParameter(String paramName, Object paramValue) {
+    protected def MappingTypeVariableBinding<?> getVariableBindingForParameter(String paramName, Object paramValue) {
         if (isDynamicReference(paramValue)) {
             val mtv = mappingType.getParameter(paramName)
             new CodeConceptInstanceReference(mtv, paramValue as String)
@@ -73,6 +84,7 @@ class CodeConcept {
         binding?.mappingType
     }
     
+    /*
     def protected List<CodeConceptInstance> reverseAll(CodeConceptInstance parent) {
         
         val retList = newLinkedList
@@ -111,6 +123,11 @@ class CodeConcept {
             return null
         }                    
         instance
+    }
+    */
+    
+    def CodeConceptInstance newInstance(CodeConceptInstance parent) {
+    	newInstance(parent, null)
     }
     
     def CodeConceptInstance newInstance(CodeConceptInstance parent, Object match) {
@@ -219,17 +236,30 @@ class CodeConcept {
     				addSubconcepts(s as List<Object>)
     			]
 	    	}
+	    	//TODO: handle these parameter lists better
 	    	else if (toAdd.size() >= 2 && toAdd.size() <= 5) {
-				val name = toAdd.get(0) as String
-				val mappingType = toAdd.get(1) as MappingType    			
-				val params = { if (toAdd.size() >= 3) toAdd.get(2) as Map<String, Object> else null }
-				val subList = { if (toAdd.size() == 4) toAdd.get(3) as List<Object> else null }
-				val min = { if (toAdd.size() == 5) toAdd.get(3) as Integer else 1}
-				val max = { if (toAdd.size() == 5) toAdd.get(4) as Integer else 1}
-				
-				val subconcept = addSubconcept(name, mappingType, false, min, max, params)
-				if (subList != null) {
-					subconcept.addSubconcepts(subList)
+				if (toAdd.get(0) instanceof CodeConcept) {
+					val concept = toAdd.get(0) as CodeConcept
+					val min = toAdd.get(1) as Integer
+					val max = toAdd.get(2) as Integer
+					val subList = { if (toAdd.size() == 4) toAdd.get(3) as List<Object> else null }
+					addSubconcept(concept.name, concept, false, min, max)
+					if (subList != null) {
+						concept.addSubconcepts(subList)
+					}	
+				}
+				else {
+					val name = toAdd.get(0) as String
+					val mappingType = toAdd.get(1) as MappingType    			
+					val params = { if (toAdd.size() >= 3) toAdd.get(2) as Map<String, Object> else null }
+					val subList = { if (toAdd.size() == 4) toAdd.get(3) as List<Object> else null }
+					val min = { if (toAdd.size() == 5) toAdd.get(3) as Integer else 1}
+					val max = { if (toAdd.size() == 5) toAdd.get(4) as Integer else 1}
+					
+					val subconcept = addSubconcept(name, mappingType, false, min, max, params)
+					if (subList != null) {
+						subconcept.addSubconcepts(subList)
+					}					
 				}
 			}
 			else {
@@ -248,7 +278,7 @@ class CodeConcept {
     }
     
     static def isDynamicReference(Object obj) {
-        (obj instanceof String) && ((obj as String).startsWith("../"))
+        (obj instanceof String) && ((obj as String).startsWith("../") || (obj as String).startsWith("@"))
     }
     
     //def void setMappingType(MappingType mt) {

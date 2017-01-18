@@ -10,6 +10,8 @@ Require-Bundle: org.eclipse.equinox.app,
  org.earthsystemmodeling.cupid;bundle-version="1.1.0",
  org.eclipse.equinox.common,
  org.earthsystemmodeling.cupid.nuopcmodel;bundle-version="1.1.0",
- org.eclipse.core.jobs
+ org.eclipse.core.jobs,
+ org.eclipse.photran.core.vpg;bundle-version="9.0.0",
+ org.eclipse.cdt.core
 Bundle-ClassPath: lib/yamlbeans-1.11.jar,
  .

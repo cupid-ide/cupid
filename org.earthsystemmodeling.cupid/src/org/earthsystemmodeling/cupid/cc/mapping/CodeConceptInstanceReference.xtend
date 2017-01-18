@@ -42,7 +42,13 @@ class CodeConceptInstanceReference<T> extends ReferenceMTVBinding<T> {
     }
 				
 	override setValue(T value) {
-		throw new UnsupportedOperationException("TODO: auto-generated method stub")
+		if (reference.startsWith("@")) {
+        	val annotationName = reference.substring(1)
+        	binding.currentInstance.put(annotationName, value)
+        }
+        else {
+			throw new UnsupportedOperationException("Cannot set value for reference: " + reference)
+		}
 	}
     
 }

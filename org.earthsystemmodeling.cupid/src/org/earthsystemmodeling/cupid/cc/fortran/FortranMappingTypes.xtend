@@ -28,13 +28,13 @@ class FortranMappingTypes {
     	
     	ModuleUseStmtMT = new MappingType("ModuleUseStmtMT",
             #{"context" -> ASTModuleNode, "uses" -> String, "match" -> ASTUseStmtNode}) => [
-            find = [me, result|
-                val ASTModuleNode moduleNode = me.context()
+            find = [bind|
+                val ASTModuleNode moduleNode = bind.context
                 val useStmtNode = moduleNode.moduleBody?.filter(ASTUseStmtNode).findFirst[usn|
-                    usn.name.text.eic(me.getValue("uses") as String)
+                    usn.name.text.eic(bind.getValue("uses") as String)
                 ]
                 if (useStmtNode != null) {
-                    result.addMatch(useStmtNode)
+                    bind.addResult(useStmtNode)
                 }
             ]
             
@@ -44,10 +44,11 @@ class FortranMappingTypes {
         ModuleThatUsesMT = new MappingType("ModuleThatUsesMT",
             #{"context" -> ASTModuleNode, "uses" -> String, "match" -> ASTModuleNode, "name" -> String}) => [
            
-            find = [me, result|
-                val ASTModuleNode moduleNode = me.context
-                if (moduleNode.moduleBody?.filter(ASTUseStmtNode)?.exists[it.name.eic(me.getValueString("uses"))]) {
-                    result.addMatch(moduleNode)
+            find = [bind|
+                val ASTModuleNode moduleNode = bind.context
+                if (moduleNode.moduleBody?.filter(ASTUseStmtNode)?.exists[it.name.eic(bind.getValueString("uses"))]) {
+                    val r = bind.addResult(moduleNode)
+                    r.put("name", moduleNode.moduleStmt.moduleName.moduleName.text)
                 }
             ]
         ]
@@ -55,11 +56,11 @@ class FortranMappingTypes {
         CallInSubroutineMT = new MappingType("CallInSubroutineMT", 
         	#{"context" -> ASTSubroutineSubprogramNode, "calls" -> String, "match" -> ASTCallStmtNode}) => [
         	
-        	find = [me, result|
-        		val subr = me.context as ASTSubroutineSubprogramNode
+        	find = [bind|
+        		val ASTSubroutineSubprogramNode subr = bind.context
         		subr.body.filter(ASTCallStmtNode).filter[
-					it.subroutineName.eic(me.getValueString("calls"))].forEach[c|
-						result.addMatch(c)
+					it.subroutineName.eic(bind.getValueString("calls"))].forEach[c|
+						bind.addResult(c)
 					]
         	]
         ]

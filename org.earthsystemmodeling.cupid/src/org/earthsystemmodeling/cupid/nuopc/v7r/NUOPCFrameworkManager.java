@@ -25,6 +25,7 @@ import org.eclipse.core.runtime.Platform;
 import org.eclipse.core.runtime.Status;
 import org.eclipse.core.runtime.SubProgressMonitor;
 import org.eclipse.core.runtime.jobs.Job;
+import org.eclipse.core.runtime.jobs.ProgressProvider;
 import org.eclipse.photran.internal.core.vpg.PhotranVPG;
 import org.eclipse.photran.internal.core.vpg.eclipse.VPGSchedulingRule;
 
@@ -373,9 +374,9 @@ public class NUOPCFrameworkManager {
 				monitor.done();
 				return Status.OK_STATUS;
 			}
-			
+						
 		};
-				
+		
 		updateJob.setRule(VPGSchedulingRule.getInstance());
 		updateJob.schedule();
 		return updateJob;

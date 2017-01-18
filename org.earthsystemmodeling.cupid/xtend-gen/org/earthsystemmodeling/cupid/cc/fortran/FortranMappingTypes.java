@@ -4,13 +4,15 @@ import com.google.common.base.Objects;
 import com.google.common.collect.Iterables;
 import java.util.Collections;
 import java.util.function.Consumer;
-import org.earthsystemmodeling.cupid.cc.mapping.MappingResultSet;
+import org.earthsystemmodeling.cupid.cc.mapping.MappingResult;
 import org.earthsystemmodeling.cupid.cc.mapping.MappingType;
 import org.earthsystemmodeling.cupid.cc.mapping.MappingTypeBinding;
 import org.earthsystemmodeling.cupid.nuopc.ASTQuery;
 import org.eclipse.photran.internal.core.lexer.Token;
 import org.eclipse.photran.internal.core.parser.ASTCallStmtNode;
+import org.eclipse.photran.internal.core.parser.ASTModuleNameNode;
 import org.eclipse.photran.internal.core.parser.ASTModuleNode;
+import org.eclipse.photran.internal.core.parser.ASTModuleStmtNode;
 import org.eclipse.photran.internal.core.parser.ASTSubroutineSubprogramNode;
 import org.eclipse.photran.internal.core.parser.ASTUseStmtNode;
 import org.eclipse.photran.internal.core.parser.IASTListNode;
@@ -22,7 +24,6 @@ import org.eclipse.xtext.xbase.lib.IterableExtensions;
 import org.eclipse.xtext.xbase.lib.ObjectExtensions;
 import org.eclipse.xtext.xbase.lib.Pair;
 import org.eclipse.xtext.xbase.lib.Procedures.Procedure1;
-import org.eclipse.xtext.xbase.lib.Procedures.Procedure2;
 
 @SuppressWarnings("all")
 public class FortranMappingTypes {
@@ -54,8 +55,8 @@ public class FortranMappingTypes {
     MappingType _mappingType = new MappingType("ModuleUseStmtMT", 
       Collections.<String, Class<?>>unmodifiableMap(CollectionLiterals.<String, Class<?>>newHashMap(_mappedTo, _mappedTo_1, _mappedTo_2)));
     final Procedure1<MappingType> _function = (MappingType it) -> {
-      final Procedure2<MappingTypeBinding, MappingResultSet> _function_1 = (MappingTypeBinding me, MappingResultSet result) -> {
-        final ASTModuleNode moduleNode = me.<ASTModuleNode>context();
+      final Procedure1<MappingTypeBinding> _function_1 = (MappingTypeBinding bind) -> {
+        final ASTModuleNode moduleNode = bind.<ASTModuleNode>context();
         IASTListNode<IModuleBodyConstruct> _moduleBody = moduleNode.getModuleBody();
         Iterable<ASTUseStmtNode> _filter = null;
         if (_moduleBody!=null) {
@@ -64,13 +65,13 @@ public class FortranMappingTypes {
         final Function1<ASTUseStmtNode, Boolean> _function_2 = (ASTUseStmtNode usn) -> {
           Token _name = usn.getName();
           String _text = _name.getText();
-          Object _value = me.<Object>getValue("uses");
+          Object _value = bind.<Object>getValue("uses");
           return Boolean.valueOf(ASTQuery.eic(_text, ((String) _value)));
         };
         final ASTUseStmtNode useStmtNode = IterableExtensions.<ASTUseStmtNode>findFirst(_filter, _function_2);
         boolean _notEquals = (!Objects.equal(useStmtNode, null));
         if (_notEquals) {
-          result.addMatch(useStmtNode);
+          bind.addResult(useStmtNode);
         }
       };
       it.setFind(_function_1);
@@ -84,8 +85,8 @@ public class FortranMappingTypes {
     MappingType _mappingType_1 = new MappingType("ModuleThatUsesMT", 
       Collections.<String, Class<?>>unmodifiableMap(CollectionLiterals.<String, Class<?>>newHashMap(_mappedTo_3, _mappedTo_4, _mappedTo_5, _mappedTo_6)));
     final Procedure1<MappingType> _function_1 = (MappingType it) -> {
-      final Procedure2<MappingTypeBinding, MappingResultSet> _function_2 = (MappingTypeBinding me, MappingResultSet result) -> {
-        final ASTModuleNode moduleNode = me.<ASTModuleNode>context();
+      final Procedure1<MappingTypeBinding> _function_2 = (MappingTypeBinding bind) -> {
+        final ASTModuleNode moduleNode = bind.<ASTModuleNode>context();
         IASTListNode<IModuleBodyConstruct> _moduleBody = moduleNode.getModuleBody();
         Iterable<ASTUseStmtNode> _filter = null;
         if (_moduleBody!=null) {
@@ -95,13 +96,18 @@ public class FortranMappingTypes {
         if (_filter!=null) {
           final Function1<ASTUseStmtNode, Boolean> _function_3 = (ASTUseStmtNode it_1) -> {
             Token _name = it_1.getName();
-            String _valueString = me.getValueString("uses");
+            String _valueString = bind.getValueString("uses");
             return Boolean.valueOf(ASTQuery.eic(_name, _valueString));
           };
           _exists=IterableExtensions.<ASTUseStmtNode>exists(_filter, _function_3);
         }
         if (_exists) {
-          result.addMatch(moduleNode);
+          final MappingResult r = bind.addResult(moduleNode);
+          ASTModuleStmtNode _moduleStmt = moduleNode.getModuleStmt();
+          ASTModuleNameNode _moduleName = _moduleStmt.getModuleName();
+          Token _moduleName_1 = _moduleName.getModuleName();
+          String _text = _moduleName_1.getText();
+          r.put("name", _text);
         }
       };
       it.setFind(_function_2);
@@ -114,19 +120,18 @@ public class FortranMappingTypes {
     MappingType _mappingType_2 = new MappingType("CallInSubroutineMT", 
       Collections.<String, Class<?>>unmodifiableMap(CollectionLiterals.<String, Class<?>>newHashMap(_mappedTo_7, _mappedTo_8, _mappedTo_9)));
     final Procedure1<MappingType> _function_2 = (MappingType it) -> {
-      final Procedure2<MappingTypeBinding, MappingResultSet> _function_3 = (MappingTypeBinding me, MappingResultSet result) -> {
-        Object _context = me.<Object>context();
-        final ASTSubroutineSubprogramNode subr = ((ASTSubroutineSubprogramNode) _context);
+      final Procedure1<MappingTypeBinding> _function_3 = (MappingTypeBinding bind) -> {
+        final ASTSubroutineSubprogramNode subr = bind.<ASTSubroutineSubprogramNode>context();
         IASTListNode<IBodyConstruct> _body = subr.getBody();
         Iterable<ASTCallStmtNode> _filter = Iterables.<ASTCallStmtNode>filter(_body, ASTCallStmtNode.class);
         final Function1<ASTCallStmtNode, Boolean> _function_4 = (ASTCallStmtNode it_1) -> {
           Token _subroutineName = it_1.getSubroutineName();
-          String _valueString = me.getValueString("calls");
+          String _valueString = bind.getValueString("calls");
           return Boolean.valueOf(ASTQuery.eic(_subroutineName, _valueString));
         };
         Iterable<ASTCallStmtNode> _filter_1 = IterableExtensions.<ASTCallStmtNode>filter(_filter, _function_4);
         final Consumer<ASTCallStmtNode> _function_5 = (ASTCallStmtNode c) -> {
-          result.addMatch(c);
+          bind.addResult(c);
         };
         _filter_1.forEach(_function_5);
       };

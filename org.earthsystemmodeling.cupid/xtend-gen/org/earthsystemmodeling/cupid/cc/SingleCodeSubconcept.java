@@ -1,15 +1,10 @@
 package org.earthsystemmodeling.cupid.cc;
 
-import com.google.common.base.Objects;
-import java.util.List;
 import org.earthsystemmodeling.cupid.cc.CodeConcept;
-import org.earthsystemmodeling.cupid.cc.CodeConceptInstance;
 import org.earthsystemmodeling.cupid.cc.CodeSubconcept;
-import org.earthsystemmodeling.cupid.cc.EssentialConstraintViolation;
 import org.eclipse.xtend.lib.annotations.AccessorType;
 import org.eclipse.xtend.lib.annotations.Accessors;
 import org.eclipse.xtend2.lib.StringConcatenation;
-import org.eclipse.xtext.xbase.lib.Exceptions;
 import org.eclipse.xtext.xbase.lib.Pure;
 
 @SuppressWarnings("all")
@@ -26,39 +21,27 @@ public class SingleCodeSubconcept extends CodeSubconcept {
     this.concept = concept;
   }
   
-  @Override
-  public void reverse(final CodeConceptInstance parent) {
-    try {
-      if (((this.getMax() == 0) || (this.getMax() == 1))) {
-        final CodeConceptInstance cci = this.concept.reverse(parent);
-        boolean _isEssential = this.isEssential();
-        if (_isEssential) {
-          if ((Objects.equal(cci, null) && (this.getMin() > 0))) {
-            throw new EssentialConstraintViolation("Missing essential subconcept");
-          } else {
-            if (((!Objects.equal(cci, null)) && (this.getMax() == 0))) {
-              throw new EssentialConstraintViolation("Prohibited subconcept present");
-            }
-          }
-        }
-      } else {
-        final List<CodeConceptInstance> ccis = this.concept.reverseAll(parent);
-        if ((this.isEssential() && ((ccis.size() < this.getMin()) || (ccis.size() > this.getMax())))) {
-          int _min = this.getMin();
-          String _plus = ("Must be at between " + Integer.valueOf(_min));
-          String _plus_1 = (_plus + " and ");
-          int _max = this.getMax();
-          String _plus_2 = (_plus_1 + Integer.valueOf(_max));
-          String _plus_3 = (_plus_2 + " instances of ");
-          String _plus_4 = (_plus_3 + this.concept.name);
-          throw new EssentialConstraintViolation(_plus_4);
-        }
-      }
-    } catch (Throwable _e) {
-      throw Exceptions.sneakyThrow(_e);
-    }
-  }
-  
+  /**
+   * override reverse(CodeConceptInstance parent) {
+   * if (max == 0 || max == 1) {
+   * val cci = concept.reverse(parent)
+   * if (essential) {
+   * if (cci == null && min > 0) {
+   * throw new EssentialConstraintViolation("Missing essential subconcept")
+   * }
+   * else if (cci != null && max == 0) {
+   * throw new EssentialConstraintViolation("Prohibited subconcept present")
+   * }
+   * }
+   * }
+   * else {
+   * val ccis = concept.reverseAll(parent)
+   * if (essential && (ccis.size < min || ccis.size > max)) {
+   * throw new EssentialConstraintViolation("Must be at between " + min + " and " + max + " instances of " + concept.name)
+   * }
+   * }
+   * }
+   */
   @Override
   public String toString() {
     StringConcatenation _builder = new StringConcatenation();

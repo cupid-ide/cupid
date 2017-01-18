@@ -4,6 +4,7 @@ import com.google.common.base.Objects;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
+import java.util.function.BiConsumer;
 import org.earthsystemmodeling.cupid.cc.CodeConcept;
 import org.earthsystemmodeling.cupid.cc.CodeConceptException;
 import org.earthsystemmodeling.cupid.cc.CodeSubconcept;
@@ -75,7 +76,7 @@ public class CodeConceptTemplate extends CodeConcept {
               MappingTypeVariable<?> _key = e.getKey();
               Object _get = parameterValues.get(refVar);
               LiteralMTVBinding<Object> _literalMTVBinding = new LiteralMTVBinding<Object>(_get);
-              binding.put(_key, _literalMTVBinding);
+              binding.putBinding(_key, _literalMTVBinding);
             } else {
               MappingTypeVariable<?> _key_1 = e.getKey();
               String _name = _key_1.getName();
@@ -86,10 +87,14 @@ public class CodeConceptTemplate extends CodeConcept {
             MappingTypeVariable<?> _key_2 = e.getKey();
             MappingTypeVariableBinding<?> _value_2 = e.getValue();
             MappingTypeVariableBinding<?> _clone = _value_2.clone();
-            binding.put(_key_2, _clone);
+            binding.putBinding(_key_2, _clone);
           }
         }
         concept.binding = binding;
+        final BiConsumer<String, Class<?>> _function = (String k, Class<?> v) -> {
+          concept.addAnnotation(k, v);
+        };
+        this.annotations.forEach(_function);
         List<CodeSubconcept> _subconcepts = this.getSubconcepts();
         for (final CodeSubconcept sc : _subconcepts) {
           {

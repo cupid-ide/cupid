@@ -3,6 +3,7 @@ package org.earthsystemmodeling.cupid.cc.nuopc;
 import java.io.IOException;
 
 import org.earthsystemmodeling.cupid.cc.CodeConceptInstance;
+import org.earthsystemmodeling.cupid.cc.CodeConceptManager;
 import org.earthsystemmodeling.cupid.nuopc.v7r.NUOPCTest;
 import org.earthsystemmodeling.cupid.test.TestHelpers;
 import org.eclipse.core.resources.IFile;
@@ -39,8 +40,10 @@ public class NUOPCCodeConceptTest {
 		IProject p = TestHelpers.createFortranProjectFromFolder("target/" + NUOPCTest.NUOPC_TAG + "/AtmOcnProto", NUOPCTest.NUOPC_TAG + "_AtmOcnProto");
 		IFile f = p.getFile("esm.F90");
 		
-		CodeConceptInstance i = NUOPC_DEF.NUOPCDriverFromFile.fromFile(f);
-		System.out.println(i);
+		//CodeConceptInstance i = NUOPC_DEF.NUOPCDriverFromFile.fromFile(f);
+		CodeConceptManager manager = CodeConceptManager.getInstance();
+		CodeConceptInstance cci = manager.reverse(NUOPC_DEF.NUOPCDriver, f);
+		System.out.println(cci);
 		
 	}
 	

@@ -1,0 +1,18 @@
+
+- model:
+    name: ATM
+    file: ATM.F90
+    grids:
+      atmgrid:
+        type: tripolar
+        minIndex: [1,1]
+        maxIndex: [100,100]        
+    imports:
+      - {name: sea_surface_temperature}
+      - {name: ocean_current_merid}
+      - {name: ocean_current_zonal}
+    exports:
+      - {name: uwind}
+      - {name: vwind}
+    
+  

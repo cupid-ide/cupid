@@ -16,6 +16,7 @@ class SingleCodeSubconcept extends CodeSubconcept {
         this.concept = concept
     }
     
+    /*
     override reverse(CodeConceptInstance parent) {       
         if (max == 0 || max == 1) {
             val cci = concept.reverse(parent)
@@ -35,6 +36,7 @@ class SingleCodeSubconcept extends CodeSubconcept {
             }           
         } 
     }
+    */
     
     override toString() {
     	'''		- [«min»-«max»] «concept»'''

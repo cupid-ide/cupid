@@ -95,6 +95,18 @@ public class CodeConceptInstanceReference<T extends Object> extends ReferenceMTV
   
   @Override
   public void setValue(final T value) {
-    throw new UnsupportedOperationException("TODO: auto-generated method stub");
+    String _reference = this.getReference();
+    boolean _startsWith = _reference.startsWith("@");
+    if (_startsWith) {
+      String _reference_1 = this.getReference();
+      final String annotationName = _reference_1.substring(1);
+      MappingTypeBinding _binding = this.getBinding();
+      CodeConceptInstance _currentInstance = _binding.getCurrentInstance();
+      _currentInstance.put(annotationName, value);
+    } else {
+      String _reference_2 = this.getReference();
+      String _plus = ("Cannot set value for reference: " + _reference_2);
+      throw new UnsupportedOperationException(_plus);
+    }
   }
 }

@@ -6,9 +6,12 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
+import java.util.function.BiConsumer;
+import java.util.function.Consumer;
 import org.earthsystemmodeling.cupid.cc.CodeConcept;
 import org.earthsystemmodeling.cupid.cc.CodeConceptInstance;
 import org.earthsystemmodeling.cupid.cc.mapping.IllegalVariableAssignment;
+import org.earthsystemmodeling.cupid.cc.mapping.MappingResult;
 import org.earthsystemmodeling.cupid.cc.mapping.MappingResultSet;
 import org.earthsystemmodeling.cupid.cc.mapping.MappingType;
 import org.earthsystemmodeling.cupid.cc.mapping.MappingTypeException;
@@ -35,6 +38,12 @@ public class MappingTypeBinding {
   
   @Accessors(AccessorType.PROTECTED_GETTER)
   private CodeConceptInstance currentContext;
+  
+  @Accessors(AccessorType.PROTECTED_GETTER)
+  private CodeConceptInstance currentInstance;
+  
+  @Accessors(AccessorType.PUBLIC_GETTER)
+  private MappingResultSet resultSet;
   
   public MappingTypeBinding(final MappingType mappingType, final CodeConcept concept) {
     this.mappingType = mappingType;
@@ -70,12 +79,34 @@ public class MappingTypeBinding {
     return this.<String>getValue(variable);
   }
   
-  public <T extends Object> MappingTypeVariableBinding<T> get(final MappingTypeVariable<T> variable) {
+  public <T extends Object> void setValue(final MappingTypeVariable<T> variable, final T value) {
+    MappingTypeVariableBinding<?> _get = this.bindings.get(variable);
+    ((MappingTypeVariableBinding<T>) _get).setValue(value);
+  }
+  
+  public <T extends Object> void setValue(final String variable, final T value) {
+    try {
+      final MappingTypeVariable<T> mtv = this.mappingType.<T>getParameter(variable);
+      boolean _equals = Objects.equal(mtv, null);
+      if (_equals) {
+        String _name = this.mappingType.getName();
+        String _plus = ("Mapping type " + _name);
+        String _plus_1 = (_plus + " does not have parameter: ");
+        String _plus_2 = (_plus_1 + variable);
+        throw new MappingTypeException(_plus_2);
+      }
+      this.<T>setValue(mtv, value);
+    } catch (Throwable _e) {
+      throw Exceptions.sneakyThrow(_e);
+    }
+  }
+  
+  public <T extends Object> MappingTypeVariableBinding<T> getBinding(final MappingTypeVariable<T> variable) {
     MappingTypeVariableBinding<?> _get = this.bindings.get(variable);
     return ((MappingTypeVariableBinding<T>) _get);
   }
   
-  public <T extends Object> MappingTypeVariableBinding<T> get(final String variable) {
+  public <T extends Object> MappingTypeVariableBinding<T> getBinding(final String variable) {
     MappingTypeVariableBinding<T> _xblockexpression = null;
     {
       Set<MappingTypeVariable<?>> _keySet = this.bindings.keySet();
@@ -83,13 +114,13 @@ public class MappingTypeBinding {
         return Boolean.valueOf(Objects.equal(v.name, variable));
       };
       final MappingTypeVariable<?> mtv = IterableExtensions.<MappingTypeVariable<?>>findFirst(_keySet, _function);
-      MappingTypeVariableBinding<?> _get = this.bindings.get(mtv);
-      _xblockexpression = ((MappingTypeVariableBinding<T>) _get);
+      MappingTypeVariableBinding<?> _binding = this.getBinding(mtv);
+      _xblockexpression = ((MappingTypeVariableBinding<T>) _binding);
     }
     return _xblockexpression;
   }
   
-  public MappingTypeVariableBinding<?> put(final MappingTypeVariable<?> variable, final MappingTypeVariableBinding<?> binding) {
+  public MappingTypeVariableBinding<?> putBinding(final MappingTypeVariable<?> variable, final MappingTypeVariableBinding<?> binding) {
     try {
       MappingTypeVariableBinding<?> _xblockexpression = null;
       {
@@ -111,7 +142,7 @@ public class MappingTypeBinding {
     }
   }
   
-  public MappingTypeVariableBinding<?> put(final String variable, final MappingTypeVariableBinding<?> binding) {
+  public MappingTypeVariableBinding<?> putBinding(final String variable, final MappingTypeVariableBinding<?> binding) {
     try {
       MappingTypeVariableBinding<?> _xblockexpression = null;
       {
@@ -125,7 +156,7 @@ public class MappingTypeBinding {
           throw new MappingTypeException(_plus_2);
         }
         MappingTypeVariable<Object> _parameter = this.mappingType.<Object>getParameter(variable);
-        _xblockexpression = this.put(_parameter, binding);
+        _xblockexpression = this.putBinding(_parameter, binding);
       }
       return _xblockexpression;
     } catch (Throwable _e) {
@@ -154,26 +185,167 @@ public class MappingTypeBinding {
     return _xblockexpression;
   }
   
-  public MappingResultSet doFind(final CodeConceptInstance parent) {
-    this.currentContext = parent;
-    final MappingResultSet resultset = this.mappingType.doFind(this);
-    this.currentContext = null;
-    return resultset;
+  public boolean unbound(final String variable) {
+    MappingTypeVariableBinding<Object> _binding = this.<Object>getBinding(variable);
+    return Objects.equal(_binding, null);
   }
   
-  public void addResult(final Object match) {
-    try {
-      Class<?> _matchType = this.mappingType.matchType();
-      boolean _isInstance = _matchType.isInstance(match);
-      boolean _not = (!_isInstance);
-      if (_not) {
-        Class<?> _matchType_1 = this.mappingType.matchType();
-        Class<?> _class = match.getClass();
-        throw new IllegalVariableAssignment("match", _matchType_1, _class);
+  /**
+   * Execute the mapping to try to bind a single result. If successful, the returned
+   * instance will be set as a child of the parent.
+   * 
+   * @param parent the parent context
+   * @return an instance of this binding's concept, or null if none found
+   */
+  public CodeConceptInstance bind(final CodeConceptInstance parent) {
+    CodeConceptInstance _xblockexpression = null;
+    {
+      MappingResultSet _mappingResultSet = new MappingResultSet(this.mappingType);
+      this.resultSet = _mappingResultSet;
+      this.currentContext = parent;
+      this.mappingType.doFind(this);
+      this.currentContext = null;
+      CodeConceptInstance _xifexpression = null;
+      int _size = this.resultSet.size();
+      boolean _greaterThan = (_size > 0);
+      if (_greaterThan) {
+        CodeConceptInstance _xblockexpression_1 = null;
+        {
+          final MappingResult res = this.resultSet.first();
+          Object _match = res.match();
+          final CodeConceptInstance instance = this.concept.newInstance(parent, _match);
+          this.currentInstance = instance;
+          Map<String, Object> _values = res.getValues();
+          final BiConsumer<String, Object> _function = (String k, Object v) -> {
+            boolean _equals = k.equals("match");
+            boolean _not = (!_equals);
+            if (_not) {
+              this.<Object>setValue(k, v);
+            }
+          };
+          _values.forEach(_function);
+          this.currentInstance = null;
+          _xblockexpression_1 = instance;
+        }
+        _xifexpression = _xblockexpression_1;
+      } else {
+        _xifexpression = null;
       }
+      _xblockexpression = _xifexpression;
+    }
+    return _xblockexpression;
+  }
+  
+  /**
+   * Execute the mapping to try to bind multiple results. If successful, the returned
+   * instances will be set as a child of the parent.
+   * 
+   * @param parent the parent context
+   * @return a (potentially empty) list of instances of this binding's concept
+   */
+  public List<CodeConceptInstance> bindAll(final CodeConceptInstance parent) {
+    LinkedList<CodeConceptInstance> _xblockexpression = null;
+    {
+      MappingResultSet _mappingResultSet = new MappingResultSet(this.mappingType);
+      this.resultSet = _mappingResultSet;
+      this.currentContext = parent;
+      this.mappingType.doFind(this);
+      this.currentContext = null;
+      final LinkedList<CodeConceptInstance> retList = CollectionLiterals.<CodeConceptInstance>newLinkedList();
+      List<MappingResult> _results = this.resultSet.getResults();
+      final Consumer<MappingResult> _function = (MappingResult r) -> {
+        Object _match = r.match();
+        final CodeConceptInstance instance = this.concept.newInstance(parent, _match);
+        this.currentInstance = instance;
+        Map<String, Object> _values = r.getValues();
+        final BiConsumer<String, Object> _function_1 = (String k, Object v) -> {
+          boolean _equals = k.equals("match");
+          boolean _not = (!_equals);
+          if (_not) {
+            this.<Object>setValue(k, v);
+          }
+        };
+        _values.forEach(_function_1);
+        this.currentInstance = null;
+        retList.add(instance);
+      };
+      _results.forEach(_function);
+      _xblockexpression = retList;
+    }
+    return _xblockexpression;
+  }
+  
+  /**
+   * def boolean bindXXX(CodeConceptInstance parent) {
+   * 
+   * //currentInstance = instance
+   * 
+   * //resultSet being null means that we need to
+   * //execute the mapping type first
+   * if (resultSet == null) {
+   * resultSet = new MappingResultSet(mappingType)
+   * mappingType.doFind(this)
+   * }
+   * //at this point, resultSet will be populated
+   * //thanks to callbacks to addResult() methods
+   * 
+   * if (resultSet.size() > 0) {
+   * 
+   * val res = resultSet.pop()
+   * res.values.forEach[k,v|
+   * if (k.equals("match")) {
+   * currentInstance.match = v
+   * }
+   * else {
+   * setValue(k, v)
+   * }
+   * ]
+   * currentInstance = null
+   * true
+   * }
+   * else {
+   * //reset()
+   * currentInstance = null
+   * false
+   * }
+   * }
+   */
+  public MappingResult addResult(final Object match) {
+    try {
+      MappingResult _xblockexpression = null;
+      {
+        Class<?> _matchType = this.mappingType.matchType();
+        boolean _isInstance = _matchType.isInstance(match);
+        boolean _not = (!_isInstance);
+        if (_not) {
+          Class<?> _matchType_1 = this.mappingType.matchType();
+          Class<?> _class = match.getClass();
+          throw new IllegalVariableAssignment("match", _matchType_1, _class);
+        }
+        _xblockexpression = this.resultSet.addMatch(match);
+      }
+      return _xblockexpression;
     } catch (Throwable _e) {
       throw Exceptions.sneakyThrow(_e);
     }
+  }
+  
+  public MappingResult addResult(final Map<String, Object> params) {
+    MappingResult _xblockexpression = null;
+    {
+      Object _get = params.get("match");
+      final MappingResult result = this.addResult(_get);
+      final BiConsumer<String, Object> _function = (String k, Object v) -> {
+        boolean _equals = k.equals("match");
+        boolean _not = (!_equals);
+        if (_not) {
+          result.put(k, v);
+        }
+      };
+      params.forEach(_function);
+      _xblockexpression = result;
+    }
+    return _xblockexpression;
   }
   
   public <T extends Object> T context() {
@@ -210,5 +382,15 @@ public class MappingTypeBinding {
   @Pure
   protected CodeConceptInstance getCurrentContext() {
     return this.currentContext;
+  }
+  
+  @Pure
+  protected CodeConceptInstance getCurrentInstance() {
+    return this.currentInstance;
+  }
+  
+  @Pure
+  public MappingResultSet getResultSet() {
+    return this.resultSet;
   }
 }

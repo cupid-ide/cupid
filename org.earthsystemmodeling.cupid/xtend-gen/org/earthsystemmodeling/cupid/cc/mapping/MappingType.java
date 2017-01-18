@@ -6,7 +6,6 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
-import org.earthsystemmodeling.cupid.cc.mapping.MappingResultSet;
 import org.earthsystemmodeling.cupid.cc.mapping.MappingTypeBinding;
 import org.earthsystemmodeling.cupid.cc.mapping.MappingTypeException;
 import org.earthsystemmodeling.cupid.cc.mapping.MappingTypeVariable;
@@ -17,7 +16,6 @@ import org.eclipse.xtext.xbase.lib.Functions.Function1;
 import org.eclipse.xtext.xbase.lib.IterableExtensions;
 import org.eclipse.xtext.xbase.lib.Pair;
 import org.eclipse.xtext.xbase.lib.Procedures.Procedure1;
-import org.eclipse.xtext.xbase.lib.Procedures.Procedure2;
 import org.eclipse.xtext.xbase.lib.Pure;
 
 @SuppressWarnings("all")
@@ -31,7 +29,7 @@ public class MappingType {
   private List<MappingTypeVariable<?>> parameters = CollectionLiterals.<MappingTypeVariable<?>>newLinkedList();
   
   @Accessors
-  private Procedure2<? super MappingTypeBinding, ? super MappingResultSet> find;
+  private Procedure1<? super MappingTypeBinding> find;
   
   @Accessors
   private Procedure1<? super MappingTypeBinding> forwardAdd;
@@ -71,8 +69,8 @@ public class MappingType {
           }
         }
       }
-      final Procedure2<MappingTypeBinding, MappingResultSet> _function = (MappingTypeBinding me, MappingResultSet result) -> {
-        refines.find.apply(me, result);
+      final Procedure1<MappingTypeBinding> _function = (MappingTypeBinding bind) -> {
+        refines.find.apply(bind);
       };
       this.find = _function;
     } catch (Throwable _e) {
@@ -153,18 +151,12 @@ public class MappingType {
     return this.getParameterType("match");
   }
   
-  public MappingResultSet doFind(final MappingTypeBinding binding) {
-    MappingResultSet _xblockexpression = null;
-    {
-      final MappingResultSet resultset = new MappingResultSet(this);
-      boolean _notEquals = (!Objects.equal(this.refines, null));
-      if (_notEquals) {
-        this.refines.find.apply(binding, resultset);
-      }
-      this.find.apply(binding, resultset);
-      _xblockexpression = resultset;
+  public void doFind(final MappingTypeBinding binding) {
+    boolean _notEquals = (!Objects.equal(this.refines, null));
+    if (_notEquals) {
+      this.refines.find.apply(binding);
     }
-    return _xblockexpression;
+    this.find.apply(binding);
   }
   
   @Pure
@@ -181,11 +173,11 @@ public class MappingType {
   }
   
   @Pure
-  public Procedure2<? super MappingTypeBinding, ? super MappingResultSet> getFind() {
+  public Procedure1<? super MappingTypeBinding> getFind() {
     return this.find;
   }
   
-  public void setFind(final Procedure2<? super MappingTypeBinding, ? super MappingResultSet> find) {
+  public void setFind(final Procedure1<? super MappingTypeBinding> find) {
     this.find = find;
   }
   

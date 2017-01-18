@@ -49,22 +49,26 @@ class NUOPC {
                
         ESMFMethodMT = new MappingType("ESMFMethodMT", 
         	#{"context" -> ASTModuleNode, 
-        	  "match" -> ASTSubroutineSubprogramNode,
-        	  "name" -> String}) => [
+        	  "match" -> ASTSubroutineSubprogramNode
+        	  //"name" -> String,
+        	  //"gcomp" -> String,
+        	  //"import" -> String,
+        	  //"export" -> String,
+        	  //"clock" -> String,
+        	  //"rc" -> String
+        	  }) => [
             
-            find = [me, result|
-                val ASTModuleNode module = me.context
+            find = [bind|
+                val ASTModuleNode module = bind.context
                 module.findESMFMethods.forEach[m|
                     //result.addMatch(m).put("name", m.subroutineStmt.subroutineName.subroutineName.text)
-                    me.addResult(m)  
+                    bind.addResult(m)  
                 ]
             ]
-            
-            
+                       
             forwardAdd = [b|
             	val ASTModuleNode module = b.context
-            	val code = 
-            		'''
+            	val code = '''
 					
 					subroutine «b.getValue("name")»(«b.getValue("gcomp")», «b.getValue("import")», «b.getValue("export")», «b.getValue("clock")», «b.getValue("rc")»)
 						type(ESMF_GridComp)  :: «b.getValue("gcomp")»
@@ -75,7 +79,8 @@ class NUOPC {
 					    rc = ESMF_SUCCESS
 					    
 					end subroutine
-					'''
+				'''
+				
 				var ASTSubroutineSubprogramNode ssn = parseLiteralProgramUnit(code)
 				module.getModuleBody().add(ssn)
             ]
@@ -87,21 +92,21 @@ class NUOPC {
               "labelComponent" -> String, 
               "labelName" -> String}) => [
             
-            find = [me, result|
+            find = [bind|
                 
                 //a refinement - result contains result of super mapping type
-                val ASTModuleNode module = me.context
-                val ASTSubroutineSubprogramNode setServicesNode = me.getValue("SetServices")
+                val ASTModuleNode module = bind.context
+                val ASTSubroutineSubprogramNode setServicesNode = bind.getValue("SetServices")
 
-                result.<ASTSubroutineSubprogramNode>removeMatchIf[m|m == setServicesNode]
-                result.<ASTSubroutineSubprogramNode>retainMatchIf[m|
+                bind.resultSet.<ASTSubroutineSubprogramNode>removeMatchIf[m|m == setServicesNode]
+                bind.resultSet.<ASTSubroutineSubprogramNode>retainMatchIf[m|
                     setServicesNode.body.filter(ASTCallStmtNode).
                         exists[                        
                             it.subroutineName.eic("NUOPC_CompSpecialize") &&
                             it.litArgExprByKeyword("specRoutine")?.eic(m.subroutineStmt.subroutineName.subroutineName) &&
                             it.litArgExprByKeyword("specLabel")?.eic(
-                                module.localName(me.getValue("labelComponent"), 
-                                                     me.getValue("labelName"))
+                                module.localName(bind.getValue("labelComponent"), 
+                                                     bind.getValue("labelName"))
                             )]
                 ]
                 
@@ -112,9 +117,12 @@ class NUOPC {
         ]        
         
       
-       	val AddComponentToDriverMT = CallInSubroutineMT.refine(#{}) => [
-       		find = [me,results|
-       			results.results.forEach[r|
+       	val AddComponentToDriverMT = CallInSubroutineMT.refine(
+       		#{"compLabel"->String, "srcCompLabel"->String, "dstCompLabel"->String}
+       	) => [
+       		find = [bind|
+       			//here we modify existing results
+       			bind.resultSet.results.forEach[r|
        				val callStmt = r.match as ASTCallStmtNode
        				if (callStmt.argList.get(1).name?.eic("srcCompLabel")) {
        					r.put("srcCompLabel", callStmt.argList.get(1).expr.literal)
@@ -122,7 +130,7 @@ class NUOPC {
        				}
        				else {
        					r.put("compLabel", callStmt.argList.get(1).expr.literal)
-       					r.put("compLabelExpr", callStmt.argList.get(1).expr)
+       					//r.put("compLabelExpr", callStmt.argList.get(1).expr)
        				}
        			]
        		]
@@ -131,7 +139,7 @@ class NUOPC {
        
         
         SetServicesMT = new MappingType("SetServicesMT", ASTModuleNode, ASTSubroutineSubprogramNode) => [
-            find = [me, results|
+            find = [me|
                 val ASTModuleNode module = me.context()
                 val ssn = module.moduleBody?.findAll(ASTSubroutineSubprogramNode).findFirst[
                     it.subroutineStmt?.subroutineName.subroutineName.text.eic("SetServices") ||  
@@ -141,7 +149,7 @@ class NUOPC {
                     ]
                 ]
                 if (ssn != null) {
-                    results.addMatch(ssn)
+                    me.addResult(ssn)
                 }
             ]
         ]
@@ -150,7 +158,7 @@ class NUOPC {
         
         NUOPCComponent = new CodeConceptTemplate("NUOPCComponent", #["genericImport"]) => [
             
-            annotations = #{"name"->String}
+            addAnnotation("name")
             
             //$ here indicates that the parameter is NOT a literal, but comes in through the concept
             setMappingType(ModuleThatUsesMT, #{"uses" -> "$genericImport", "name" -> "@name"})
@@ -169,6 +177,15 @@ class NUOPC {
           	)            
             
         ]
+        
+       	val SetModelServices_AddComponent = new CodeConcept("AddComponent") => [
+        	addAnnotations(#["compLabel", "srcCompLabel", "dstCompLabel"])
+        	setMappingType(AddComponentToDriverMT, 
+        		#{"calls"->"NUOPC_DriverAddComp", "compLabel"->"@compLabel",
+        			"srcCompLabel"->"@srcCompLabel", "dstCompLabel"->"@dstCompLabel"
+        		}
+        	)
+       	]
                 
         NUOPCDriver = NUOPCComponent.instantiate("NUOPCDriver", #{"genericImport" -> "NUOPC_Driver"}) => [
                                  
@@ -177,7 +194,8 @@ class NUOPC {
                   								"labelComponent" -> "NUOPC_Driver",
       	  										"labelName" -> "label_SetModelServices"},
       	  			#[
-      	  				#["AddComponent", AddComponentToDriverMT, #{"calls"->"NUOPC_DriverAddComp"}, 1, -1]
+      	  				#[SetModelServices_AddComponent, 1, -1]
+      	  				//#["AddComponent", AddComponentToDriverMT, #{"calls"->"NUOPC_DriverAddComp", "compLabel"->"@compLabel"}, 1, -1]
       	  			 ]							
       	  		 ]
             )

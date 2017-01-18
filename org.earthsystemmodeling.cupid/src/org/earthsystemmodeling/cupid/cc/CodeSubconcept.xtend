@@ -35,7 +35,7 @@ abstract class CodeSubconcept {
         }
     }
     
-    abstract def void reverse(CodeConceptInstance parent) throws EssentialConstraintViolation
+    //abstract def void reverse(CodeConceptInstance parent) throws EssentialConstraintViolation
     
     //abstract def List<CodeConceptInstance> reverseAll(CodeConceptInstance parent)   
     

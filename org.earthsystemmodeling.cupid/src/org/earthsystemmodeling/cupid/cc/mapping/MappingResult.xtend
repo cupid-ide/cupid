@@ -1,25 +1,27 @@
 package org.earthsystemmodeling.cupid.cc.mapping
 
 import java.util.Map
+import org.eclipse.xtend.lib.annotations.Accessors
 
 class MappingResult {
     
-    Map<String,Object> results = newLinkedHashMap
+    @Accessors(PUBLIC_GETTER)
+    Map<String,Object> values = newLinkedHashMap
     
     new(Object match) {
-        results.put("match", match)
+        values.put("match", match)
     }
     
     def get(String name) {
-        results.get(name)    
+        values.get(name)    
     }
     
     def put(String name, Object value) {
-    	results.put(name, value)
+    	values.put(name, value)
     }
     
     def match() {
-        results.get("match")
+        values.get("match")
     }
     
 }

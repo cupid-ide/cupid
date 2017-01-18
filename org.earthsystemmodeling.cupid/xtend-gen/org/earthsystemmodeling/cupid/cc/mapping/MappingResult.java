@@ -1,25 +1,34 @@
 package org.earthsystemmodeling.cupid.cc.mapping;
 
 import java.util.Map;
+import org.eclipse.xtend.lib.annotations.AccessorType;
+import org.eclipse.xtend.lib.annotations.Accessors;
 import org.eclipse.xtext.xbase.lib.CollectionLiterals;
+import org.eclipse.xtext.xbase.lib.Pure;
 
 @SuppressWarnings("all")
 public class MappingResult {
-  private Map<String, Object> results = CollectionLiterals.<String, Object>newLinkedHashMap();
+  @Accessors(AccessorType.PUBLIC_GETTER)
+  private Map<String, Object> values = CollectionLiterals.<String, Object>newLinkedHashMap();
   
   public MappingResult(final Object match) {
-    this.results.put("match", match);
+    this.values.put("match", match);
   }
   
   public Object get(final String name) {
-    return this.results.get(name);
+    return this.values.get(name);
   }
   
   public Object put(final String name, final Object value) {
-    return this.results.put(name, value);
+    return this.values.put(name, value);
   }
   
   public Object match() {
-    return this.results.get("match");
+    return this.values.get("match");
+  }
+  
+  @Pure
+  public Map<String, Object> getValues() {
+    return this.values;
   }
 }

@@ -8,19 +8,22 @@ import org.earthsystemmodeling.cupid.cc.mapping.IllegalVariableAssignment
 class CodeConceptInstance {
     
     @Accessors
-    private CodeConcept type
+    CodeConcept type
     
     @Accessors
-    private CodeConceptInstance parent
+    CodeConceptInstance parent
+    
+    @Accessors
+    CCIStatus status
     
     //type of match is type.mappingType.matchType
     @Accessors
-    private Object match
+    Object match
        
     @Accessors
-    private Map<String, Object> annotations = newLinkedHashMap
+    Map<String, Object> annotations = newLinkedHashMap
     
-    private List<CodeConceptInstance> children = newLinkedList
+    List<CodeConceptInstance> children = newLinkedList
     
     protected new(CodeConcept type, CodeConceptInstance parent) {
         this(type, parent, null)
@@ -73,6 +76,13 @@ class CodeConceptInstance {
         }
     }
     
+    def removeChild(CodeConceptInstance child) {
+    	if (!children.contains(child)) {
+    		throw new CodeConceptException("Attempt to remove child not in list: " + child)
+    	}
+    	children.remove(child)
+    }
+    
     def getChildren(CodeConcept ofType) {
         children.filter[c|c.type == ofType]
     }
@@ -98,10 +108,12 @@ class CodeConceptInstance {
     	annotations.get(annotationKey)
     }
     
-    //def <T> T getSourceRef() {
-    //    type.mapsTo.cast(sourceRef) as T
-    //}
-    
+   	
+   	def addEdit(CCIEdit edit) {
+   		
+   	}
+   
+   
     override toString() {
         '''
         CodeConceptInstance of: «type.getName» 
@@ -116,5 +128,4 @@ class CodeConceptInstance {
     }
     
     
-}
-					
+}				

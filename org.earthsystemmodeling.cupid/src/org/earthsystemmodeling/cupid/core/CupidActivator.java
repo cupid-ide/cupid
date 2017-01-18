@@ -53,11 +53,14 @@ public class CupidActivator extends AbstractUIPlugin {
 		
 		addEditorListener();
 		
-		if (!inTestingMode()) {
-			NUOPCFrameworkManager.getInstance().start();
+		if (inTestingMode()) {
+			System.out.println("CUPID RUNNING IN TESTING MODE");
+		}
+		else if (inCommandLineMode()) {
+			//System.out.println("CUPID RUNNING IN COMMAND LINE MODE");
 		}
 		else {
-			System.out.println("CUPID RUNNING IN TESTING MODE");
+			NUOPCFrameworkManager.getInstance().start();
 		}
 		
 			
@@ -76,6 +79,13 @@ public class CupidActivator extends AbstractUIPlugin {
         		app.toLowerCase().contains("junit") ||
         		app.toLowerCase().contains("tycho.surefire.osgibooter.headlesstest"));
 	}
+	
+	public static boolean inCommandLineMode() {	
+        String app = System.getProperty("eclipse.application"); 
+        return app != null && (
+        		app.toLowerCase().contains("cupidcli"));
+	}
+	
 	
 	public static CupidActivator getDefault() {
 		return instance;
