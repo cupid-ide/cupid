@@ -179,7 +179,7 @@ public class SetServicesCodeConcept<P extends NUOPCComponent> extends CodeConcep
         _builder.append(routineSetServices, "\t\t\t\t\t\t");
         _builder.append(" => SetServices");
         tempCode = (_tempCode + _builder);
-        IBodyConstruct _parseLiteralStatement = CodeExtraction.parseLiteralStatement(tempCode);
+        IBodyConstruct _parseLiteralStatement = CodeExtraction.<IBodyConstruct>parseLiteralStatement(tempCode);
         ASTUseStmtNode tempNode = ((ASTUseStmtNode) _parseLiteralStatement);
         genericUse.replaceWith(tempNode);
       }
@@ -247,7 +247,7 @@ public class SetServicesCodeConcept<P extends NUOPCComponent> extends CodeConcep
       _builder_2.append("public SetServices");
       _builder_2.newLine();
       code = _builder_2.toString();
-      IBodyConstruct _parseLiteralStatement_1 = CodeExtraction.parseLiteralStatement(code);
+      IBodyConstruct _parseLiteralStatement_1 = CodeExtraction.<IBodyConstruct>parseLiteralStatement(code);
       ASTAccessStmtNode tempNode_1 = ((ASTAccessStmtNode) _parseLiteralStatement_1);
       IASTListNode<IModuleBodyConstruct> _moduleBody_1 = mn.getModuleBody();
       ASTContainsStmtNode csn = _moduleBody_1.<ASTContainsStmtNode>findLast(ASTContainsStmtNode.class);

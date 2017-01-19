@@ -32,6 +32,13 @@ class MappingTypeBinding {
         this.concept  = concept
     }
     
+    new(MappingTypeBinding toClone, CodeConcept concept) {
+    	this(toClone.mappingType, concept)
+    	toClone.bindings.forEach[k,v|
+    		this.bindings.put(k,v.clone(this))
+    	]
+    }
+    
     def <T> T getValue(MappingTypeVariable<T> variable) {
         bindings.get(variable).value as T
     }

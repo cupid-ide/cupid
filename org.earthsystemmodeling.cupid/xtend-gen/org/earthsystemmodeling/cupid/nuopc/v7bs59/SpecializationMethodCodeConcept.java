@@ -292,7 +292,7 @@ public abstract class SpecializationMethodCodeConcept<P extends CodeConcept<?, ?
         }
         _builder.append(this.labelName, "\t\t");
         tempCode = (_tempCode + _builder);
-        IBodyConstruct _parseLiteralStatement = CodeExtraction.parseLiteralStatement(tempCode);
+        IBodyConstruct _parseLiteralStatement = CodeExtraction.<IBodyConstruct>parseLiteralStatement(tempCode);
         ASTUseStmtNode tempNode = ((ASTUseStmtNode) _parseLiteralStatement);
         try {
           usesNUOPCDriver.replaceWith(tempNode);
@@ -328,7 +328,7 @@ public abstract class SpecializationMethodCodeConcept<P extends CodeConcept<?, ?
           _builder_1.append(")");
           _builder_1.newLineIfNotEmpty();
           code = _builder_1.toString();
-          IBodyConstruct _parseLiteralStatement_1 = CodeExtraction.parseLiteralStatement(code);
+          IBodyConstruct _parseLiteralStatement_1 = CodeExtraction.<IBodyConstruct>parseLiteralStatement(code);
           ASTCallStmtNode regCall = ((ASTCallStmtNode) _parseLiteralStatement_1);
           IASTListNode<IBodyConstruct> _body = setServicesNode.getBody();
           _body.add(regCall);
@@ -349,7 +349,7 @@ public abstract class SpecializationMethodCodeConcept<P extends CodeConcept<?, ?
           _builder_2.append("return  ! bail out");
           _builder_2.newLine();
           code = _builder_2.toString();
-          IBodyConstruct _parseLiteralStatement_2 = CodeExtraction.parseLiteralStatement(code);
+          IBodyConstruct _parseLiteralStatement_2 = CodeExtraction.<IBodyConstruct>parseLiteralStatement(code);
           ASTIfStmtNode ifNode = ((ASTIfStmtNode) _parseLiteralStatement_2);
           IASTListNode<IBodyConstruct> _body_1 = setServicesNode.getBody();
           _body_1.add(ifNode);

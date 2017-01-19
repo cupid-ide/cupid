@@ -18,7 +18,11 @@ public abstract class ReferenceMTVBinding<T extends Object> extends MappingTypeV
   
   public ReferenceMTVBinding(final MappingTypeBinding binding, final String reference) {
     this.setBinding(binding);
-    this.reference = reference;
+    String _trim = null;
+    if (reference!=null) {
+      _trim=reference.trim();
+    }
+    this.reference = _trim;
   }
   
   @Override

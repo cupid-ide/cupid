@@ -48,7 +48,7 @@ class CodeConceptTemplate extends CodeConcept {
                 }
             }
             else {
-                binding.putBinding(e.key, e.value.clone())
+                binding.putBinding(e.key, e.value.clone(binding))
             }
         }
         concept.binding = binding

@@ -13,8 +13,16 @@ import org.eclipse.xtext.xbase.lib.Exceptions;
 @SuppressWarnings("all")
 public class CodeConceptInstanceReference<T extends Object> extends ReferenceMTVBinding<T> {
   public CodeConceptInstanceReference(final MappingTypeVariable<T> boundTo, final String reference) {
+    this(boundTo, reference, null);
+  }
+  
+  public CodeConceptInstanceReference(final MappingTypeVariable<T> boundTo, final String reference, final MappingTypeBinding binding) {
     super(null, reference);
     this.setBoundTo(boundTo);
+    boolean _notEquals = (!Objects.equal(binding, null));
+    if (_notEquals) {
+      this.setBinding(binding);
+    }
   }
   
   @Override
@@ -42,54 +50,73 @@ public class CodeConceptInstanceReference<T extends Object> extends ReferenceMTV
         return this.value;
       } else {
         if ((((!Objects.equal(this.getReference(), null)) && this.getReference().startsWith("../")) && (!this.getReference().substring(3).contains("/")))) {
+          Object refVal_1 = null;
           String _reference_1 = this.getReference();
-          final String subconceptName = _reference_1.substring(3);
-          MappingTypeBinding _binding_2 = this.getBinding();
-          CodeConceptInstance _currentContext = _binding_2.getCurrentContext();
-          CodeConceptInstance _child = _currentContext.getChild(subconceptName);
-          Object _match = null;
-          if (_child!=null) {
-            _match=_child.getMatch();
+          boolean _endsWith = _reference_1.endsWith("*");
+          if (_endsWith) {
+            String _reference_2 = this.getReference();
+            String _reference_3 = this.getReference();
+            int _length = _reference_3.length();
+            int _minus = (_length - 1);
+            final String subconceptName = _reference_2.substring(3, _minus);
+            MappingTypeBinding _binding_2 = this.getBinding();
+            CodeConceptInstance _currentContext = _binding_2.getCurrentContext();
+            CodeConceptInstance _child = _currentContext.getChild(subconceptName);
+            Object _match = null;
+            if (_child!=null) {
+              _match=_child.getMatch();
+            }
+            refVal_1 = _match;
+          } else {
+            String _reference_4 = this.getReference();
+            final String subconceptName_1 = _reference_4.substring(3);
+            MappingTypeBinding _binding_3 = this.getBinding();
+            CodeConceptInstance _currentContext_1 = _binding_3.getCurrentContext();
+            CodeConceptInstance _child_1 = _currentContext_1.getChild(subconceptName_1);
+            refVal_1 = _child_1;
           }
-          final Object refVal_1 = _match;
-          MappingTypeVariable<T> _boundTo_2 = this.getBoundTo();
-          boolean _isInstance = _boundTo_2.type.isInstance(refVal_1);
-          boolean _not = (!_isInstance);
-          if (_not) {
+          if (((!Objects.equal(refVal_1, null)) && (!this.getBoundTo().type.isInstance(refVal_1)))) {
+            MappingTypeVariable<T> _boundTo_2 = this.getBoundTo();
             MappingTypeVariable<T> _boundTo_3 = this.getBoundTo();
-            MappingTypeVariable<T> _boundTo_4 = this.getBoundTo();
             Class<?> _class_1 = refVal_1.getClass();
-            throw new IllegalVariableAssignment(_boundTo_3.name, _boundTo_4.type, _class_1);
+            throw new IllegalVariableAssignment(_boundTo_2.name, _boundTo_3.type, _class_1);
           }
           this.value = ((T) refVal_1);
           return this.value;
         } else {
-          MappingTypeVariable<T> _boundTo_5 = this.getBoundTo();
-          boolean _equals_1 = _boundTo_5.name.equals("context");
+          MappingTypeVariable<T> _boundTo_4 = this.getBoundTo();
+          boolean _equals_1 = _boundTo_4.name.equals("context");
           if (_equals_1) {
-            MappingTypeBinding _binding_3 = this.getBinding();
-            CodeConceptInstance _currentInstance_2 = _binding_3.getCurrentInstance();
+            MappingTypeBinding _binding_4 = this.getBinding();
+            CodeConceptInstance _currentInstance_2 = _binding_4.getCurrentInstance();
             boolean _notEquals = (!Objects.equal(_currentInstance_2, null));
             if (_notEquals) {
-              MappingTypeBinding _binding_4 = this.getBinding();
-              CodeConceptInstance _currentInstance_3 = _binding_4.getCurrentInstance();
-              MappingTypeVariable<T> _boundTo_6 = this.getBoundTo();
-              T _nearestAncestorWithMatch = _currentInstance_3.<T>nearestAncestorWithMatch(_boundTo_6.type);
+              MappingTypeBinding _binding_5 = this.getBinding();
+              CodeConceptInstance _currentInstance_3 = _binding_5.getCurrentInstance();
+              MappingTypeVariable<T> _boundTo_5 = this.getBoundTo();
+              T _nearestAncestorWithMatch = _currentInstance_3.<T>nearestAncestorWithMatch(_boundTo_5.type);
               this.value = _nearestAncestorWithMatch;
             } else {
-              MappingTypeBinding _binding_5 = this.getBinding();
-              CodeConceptInstance _currentContext_1 = _binding_5.getCurrentContext();
-              MappingTypeVariable<T> _boundTo_7 = this.getBoundTo();
-              T _nearestAncestorWithMatch_1 = _currentContext_1.<T>nearestAncestorWithMatch(_boundTo_7.type);
-              this.value = _nearestAncestorWithMatch_1;
+              MappingTypeBinding _binding_6 = this.getBinding();
+              CodeConceptInstance _currentContext_2 = _binding_6.getCurrentContext();
+              boolean _notEquals_1 = (!Objects.equal(_currentContext_2, null));
+              if (_notEquals_1) {
+                MappingTypeBinding _binding_7 = this.getBinding();
+                CodeConceptInstance _currentContext_3 = _binding_7.getCurrentContext();
+                MappingTypeVariable<T> _boundTo_6 = this.getBoundTo();
+                T _nearestAncestorWithMatch_1 = _currentContext_3.<T>nearestAncestorWithMatch(_boundTo_6.type);
+                this.value = _nearestAncestorWithMatch_1;
+              } else {
+                throw new MappingTypeException("No context information available");
+              }
             }
             return this.value;
           } else {
-            String _reference_2 = this.getReference();
-            String _plus = ("Cannot handle path expression: " + _reference_2);
+            String _reference_5 = this.getReference();
+            String _plus = ("Cannot handle path expression: " + _reference_5);
             String _plus_1 = (_plus + " [");
-            MappingTypeVariable<T> _boundTo_8 = this.getBoundTo();
-            String _plus_2 = (_plus_1 + _boundTo_8);
+            MappingTypeVariable<T> _boundTo_7 = this.getBoundTo();
+            String _plus_2 = (_plus_1 + _boundTo_7);
             String _plus_3 = (_plus_2 + "].");
             throw new UnsupportedOperationException(_plus_3);
           }
@@ -101,10 +128,10 @@ public class CodeConceptInstanceReference<T extends Object> extends ReferenceMTV
   }
   
   @Override
-  public MappingTypeVariableBinding<T> clone() {
+  public MappingTypeVariableBinding<T> clone(final MappingTypeBinding newBinding) {
     MappingTypeVariable<T> _boundTo = this.getBoundTo();
     String _reference = this.getReference();
-    return new CodeConceptInstanceReference<T>(_boundTo, _reference);
+    return new CodeConceptInstanceReference<T>(_boundTo, _reference, newBinding);
   }
   
   @Override

@@ -137,7 +137,7 @@ public class SetServicesCodeConcept<P extends NUOPCComponent> extends CodeConcep
           _builder.append(")");
           _builder.newLineIfNotEmpty();
           String code = _builder.toString();
-          IBodyConstruct _parseLiteralStatement = CodeExtraction.parseLiteralStatement(code);
+          IBodyConstruct _parseLiteralStatement = CodeExtraction.<IBodyConstruct>parseLiteralStatement(code);
           ASTCallStmtNode regCall = ((ASTCallStmtNode) _parseLiteralStatement);
           IASTListNode<IBodyConstruct> _body = setServicesNode.getBody();
           _body.add(regCall);
@@ -146,7 +146,7 @@ public class SetServicesCodeConcept<P extends NUOPCComponent> extends CodeConcep
           CharSequence _ESMFErrorCheck = ESMFCodeTemplates.ESMFErrorCheck(this._parent.paramRC);
           _builder_1.append(_ESMFErrorCheck, "");
           code = _builder_1.toString();
-          IBodyConstruct ifNode = CodeExtraction.parseLiteralStatement(code);
+          IBodyConstruct ifNode = CodeExtraction.<IBodyConstruct>parseLiteralStatement(code);
           IASTListNode<IBodyConstruct> _body_1 = setServicesNode.getBody();
           _body_1.add(ifNode);
           _xblockexpression = this;
@@ -444,7 +444,7 @@ public class SetServicesCodeConcept<P extends NUOPCComponent> extends CodeConcep
         _builder_1.append("public SetServices");
         _builder_1.newLine();
         code = _builder_1.toString();
-        IBodyConstruct _parseLiteralStatement = CodeExtraction.parseLiteralStatement(code);
+        IBodyConstruct _parseLiteralStatement = CodeExtraction.<IBodyConstruct>parseLiteralStatement(code);
         ASTAccessStmtNode tempNode = ((ASTAccessStmtNode) _parseLiteralStatement);
         IASTListNode<IModuleBodyConstruct> _moduleBody_1 = mn.getModuleBody();
         ASTContainsStmtNode csn = _moduleBody_1.<ASTContainsStmtNode>findLast(ASTContainsStmtNode.class);

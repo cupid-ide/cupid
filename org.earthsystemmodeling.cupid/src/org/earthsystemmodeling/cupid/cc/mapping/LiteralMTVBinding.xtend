@@ -16,8 +16,10 @@ class LiteralMTVBinding<T> extends MappingTypeVariableBinding<T> {
         value
     }
     
-    override clone() {
-        new LiteralMTVBinding<T>(this.value)
+    override clone(MappingTypeBinding newBinding) {
+        val cl = new LiteralMTVBinding<T>(this.value)
+        cl.binding = newBinding
+        cl
     }
 				
 	override setValue(T value) {

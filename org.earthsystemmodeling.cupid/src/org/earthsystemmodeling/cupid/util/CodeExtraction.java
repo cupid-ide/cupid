@@ -45,9 +45,9 @@ public class CodeExtraction {
      * No semantic analysis is done; it is only necessary that the
      * program be syntactically correct.
      */
-    public static IBodyConstruct parseLiteralStatement(String string)
+    public static <T extends IBodyConstruct> T parseLiteralStatement(String string)
     {
-        return parseLiteralStatementSequence(string).get(0);
+        return (T) parseLiteralStatementSequence(string).get(0);
     }
 
     /**

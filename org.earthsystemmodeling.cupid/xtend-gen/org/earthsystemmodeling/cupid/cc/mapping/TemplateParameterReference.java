@@ -1,5 +1,6 @@
 package org.earthsystemmodeling.cupid.cc.mapping;
 
+import org.earthsystemmodeling.cupid.cc.mapping.MappingTypeBinding;
 import org.earthsystemmodeling.cupid.cc.mapping.MappingTypeVariableBinding;
 import org.earthsystemmodeling.cupid.cc.mapping.ReferenceMTVBinding;
 
@@ -10,12 +11,12 @@ public class TemplateParameterReference<T extends Object> extends ReferenceMTVBi
   }
   
   @Override
-  public MappingTypeVariableBinding<T> clone() {
+  public void setValue(final T value) {
     throw new UnsupportedOperationException();
   }
   
   @Override
-  public void setValue(final T value) {
+  public MappingTypeVariableBinding<T> clone(final MappingTypeBinding newBinding) {
     throw new UnsupportedOperationException();
   }
 }

@@ -61,9 +61,11 @@ public class CodeConceptTemplate extends CodeConcept {
             return _xifexpression;
           }
         }.apply());
-        MappingType _mappingType = this.binding.getMappingType();
+        MappingTypeBinding _binding = this.getBinding();
+        MappingType _mappingType = _binding.getMappingType();
         final MappingTypeBinding binding = new MappingTypeBinding(_mappingType, concept);
-        Map<MappingTypeVariable<?>, MappingTypeVariableBinding<?>> _bindings = this.binding.getBindings();
+        MappingTypeBinding _binding_1 = this.getBinding();
+        Map<MappingTypeVariable<?>, MappingTypeVariableBinding<?>> _bindings = _binding_1.getBindings();
         Set<Map.Entry<MappingTypeVariable<?>, MappingTypeVariableBinding<?>>> _entrySet = _bindings.entrySet();
         for (final Map.Entry<MappingTypeVariable<?>, MappingTypeVariableBinding<?>> e : _entrySet) {
           MappingTypeVariableBinding<?> _value = e.getValue();
@@ -86,19 +88,21 @@ public class CodeConceptTemplate extends CodeConcept {
           } else {
             MappingTypeVariable<?> _key_2 = e.getKey();
             MappingTypeVariableBinding<?> _value_2 = e.getValue();
-            MappingTypeVariableBinding<?> _clone = _value_2.clone();
+            MappingTypeVariableBinding<?> _clone = _value_2.clone(binding);
             binding.putBinding(_key_2, _clone);
           }
         }
-        concept.binding = binding;
+        concept.setBinding(binding);
+        Map<String, Class<?>> _annotations = this.getAnnotations();
         final BiConsumer<String, Class<?>> _function = (String k, Class<?> v) -> {
           concept.addAnnotation(k, v);
         };
-        this.annotations.forEach(_function);
+        _annotations.forEach(_function);
+        Map<String, Object> _annotationDefaults = this.getAnnotationDefaults();
         final BiConsumer<String, Object> _function_1 = (String k, Object v) -> {
           concept.addAnnotationDefault(k, v);
         };
-        this.annotationDefaults.forEach(_function_1);
+        _annotationDefaults.forEach(_function_1);
         List<CodeSubconcept> _subconcepts = this.getSubconcepts();
         for (final CodeSubconcept sc : _subconcepts) {
           {

@@ -41,8 +41,8 @@ class MappingType {
     new(MappingType refines, Map<String, Class<?>> parameters) {
         this.refines = refines
         addParameters(parameters)
-        this.find = [bind|refines.find.apply(bind)]
-        this.forwardAdd = [bind|refines.forwardAdd.apply(bind)]
+        //this.find = [bind|refines.find.apply(bind)]
+        //this.forwardAdd = [bind|refines.forwardAdd.apply(bind)]
     }
     
     protected def addParameters(Map<String, Class<?>> parameters) {
@@ -105,15 +105,18 @@ class MappingType {
         getParameterType("match")
     }
                 
-    def doFind(MappingTypeBinding binding) {
+    def void doFind(MappingTypeBinding binding) {
         if (refines != null) {
-            refines.find.apply(binding)
+            //refines.find.apply(binding)
+            refines.doFind(binding)
         }
         find.apply(binding)
     }
     
-    def doForwardAdd(MappingTypeBinding binding) {
-    	//TODO: figure out refinement behavior
+    def void doForwardAdd(MappingTypeBinding binding) {
+    	if (refines != null) {
+    		refines.doForwardAdd(binding)
+    	}
     	forwardAdd.apply(binding)
     }
        

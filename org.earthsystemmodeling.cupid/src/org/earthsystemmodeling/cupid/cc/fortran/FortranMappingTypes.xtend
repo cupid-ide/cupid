@@ -28,6 +28,7 @@ class FortranMappingTypes {
     public static MappingType CallInSubroutineMT
     //public static MappingType ModuleThatUsesMT
     public static MappingType ModuleUseStmtMT
+    public static MappingType ModuleUseEntityMT
     public static MappingType ModuleMT
     
     
@@ -42,7 +43,7 @@ class FortranMappingTypes {
     	
     	
     	ModuleUseStmtMT = new MappingType("ModuleUseStmtMT", ASTModuleNode, ASTUseStmtNode,
-            #{"uses" -> String}) => [
+            #{"uses"->String}) => [
             
             find = [bind|
                 val ASTModuleNode moduleNode = bind.context
@@ -58,6 +59,56 @@ class FortranMappingTypes {
             forwardAdd = [bind|
             	val ASTModuleNode moduleNode = bind.context
             	val usn = ensureImport(moduleNode, bind.getValueString("uses"))
+            	bind.setMatch(usn)
+            ]
+            
+        ]
+        
+        ModuleUseEntityMT = new MappingType("ModuleUseStmtMT", ASTModuleNode, ASTUseStmtNode,
+            #{"uses"->String, "entity"->String, "localName"->String}) => [
+            
+            find = [bind|
+                
+                val ASTModuleNode moduleNode = bind.context
+                val uses = bind.getValueString("uses")
+                val entity = bind.getValueString("entity")
+                val localName = bind.getValueString("localName")
+                
+                val useStmtNode = moduleNode.moduleBody?.filter(ASTUseStmtNode).findFirst[usn|
+                    usn.name.text.eic(uses)
+                ]
+                
+                if (useStmtNode != null) {
+	                val exists = 
+						useStmtNode.findAll(ASTRenameNode)?.exists[rn|
+							rn.name.eic(entity) &&
+							rn.newName.eic(localName)
+						] 
+						||
+						useStmtNode.findAll(ASTOnlyNode)?.exists[on|
+							on.name.eic(entity) &&
+							on.newName.eic(localName)
+						]
+						||
+						(useStmtNode.findAll(ASTRenameNode).nullOrEmpty &&
+					     useStmtNode.findAll(ASTOnlyNode).nullOrEmpty
+						)
+				
+	                if (exists) {
+	                    val r = bind.addResult(useStmtNode)
+	                    //r.put("uses", useStmtNode.name.text)
+	                }	                
+	        	}
+	        	
+            ]
+            
+            forwardAdd = [bind|
+            	val ASTModuleNode moduleNode = bind.context
+            	val uses = bind.getValueString("uses")
+                val entity = bind.getValueString("entity")
+                val localName = bind.getValueString("localName")
+                
+            	val usn = ensureImport(moduleNode, uses, entity, localName, true)
             	bind.setMatch(usn)
             ]
             

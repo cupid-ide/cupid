@@ -341,7 +341,7 @@ public abstract class EntryPointCodeConcept<P extends CodeConcept<?, ?>> extends
             _builder_1.newLineIfNotEmpty();
             code = _builder_1.toString();
           }
-          IBodyConstruct _parseLiteralStatement = CodeExtraction.parseLiteralStatement(code);
+          IBodyConstruct _parseLiteralStatement = CodeExtraction.<IBodyConstruct>parseLiteralStatement(code);
           ASTCallStmtNode regCall = ((ASTCallStmtNode) _parseLiteralStatement);
           IASTListNode<IBodyConstruct> _body = setServicesNode.getBody();
           _body.add(regCall);
@@ -362,7 +362,7 @@ public abstract class EntryPointCodeConcept<P extends CodeConcept<?, ?>> extends
           _builder_2.append("return  ! bail out");
           _builder_2.newLine();
           code = _builder_2.toString();
-          IBodyConstruct _parseLiteralStatement_1 = CodeExtraction.parseLiteralStatement(code);
+          IBodyConstruct _parseLiteralStatement_1 = CodeExtraction.<IBodyConstruct>parseLiteralStatement(code);
           ASTIfStmtNode ifNode = ((ASTIfStmtNode) _parseLiteralStatement_1);
           IASTListNode<IBodyConstruct> _body_1 = setServicesNode.getBody();
           _body_1.add(ifNode);

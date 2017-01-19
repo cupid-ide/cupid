@@ -3,8 +3,15 @@ package org.earthsystemmodeling.cupid.cc.mapping
 class CodeConceptInstanceReference<T> extends ReferenceMTVBinding<T> {
     
     new(MappingTypeVariable<T> boundTo, String reference) {
+    	this(boundTo, reference, null)
+    }
+    
+    new(MappingTypeVariable<T> boundTo, String reference, MappingTypeBinding binding) {
         super(null, reference)
         this.boundTo = boundTo
+        if (binding != null) {
+        	this.binding = binding
+        }
     }
     
     override getValue() {
@@ -21,9 +28,20 @@ class CodeConceptInstanceReference<T> extends ReferenceMTVBinding<T> {
             return value
         }
         else if (reference != null && reference.startsWith("../") && !reference.substring(3).contains("/")) {
-            val subconceptName = reference.substring(3)
-            val refVal = binding.currentContext.getChild(subconceptName)?.match
-            if (!boundTo.type.isInstance(refVal)) {
+            
+            var Object refVal
+            if (reference.endsWith("*")) {
+            	//dereference match
+            	val subconceptName = reference.substring(3, reference.length-1)
+            	refVal = binding.currentContext.getChild(subconceptName)?.match
+            }
+            else {
+            	//concept instance itself
+            	val subconceptName = reference.substring(3)
+            	refVal = binding.currentContext.getChild(subconceptName)
+            }
+                        
+            if (refVal != null && !boundTo.type.isInstance(refVal)) {
                 throw new IllegalVariableAssignment(boundTo.name, boundTo.type, refVal.class)
             }
             value = refVal as T
@@ -33,8 +51,11 @@ class CodeConceptInstanceReference<T> extends ReferenceMTVBinding<T> {
             if (binding.currentInstance != null) {
             	value = binding.currentInstance.nearestAncestorWithMatch(boundTo.type)
             }
-            else {
+            else if (binding.currentContext != null) {
             	value = binding.currentContext.nearestAncestorWithMatch(boundTo.type)
+            }
+            else {
+            	throw new MappingTypeException("No context information available")
             }
             return value
         }
@@ -44,8 +65,8 @@ class CodeConceptInstanceReference<T> extends ReferenceMTVBinding<T> {
         }
     }
     
-    override clone() {
-        new CodeConceptInstanceReference<T>(boundTo, reference)
+    override clone(MappingTypeBinding newBinding) {
+        new CodeConceptInstanceReference<T>(boundTo, reference, newBinding)
     }
 				
 	override setValue(T value) {

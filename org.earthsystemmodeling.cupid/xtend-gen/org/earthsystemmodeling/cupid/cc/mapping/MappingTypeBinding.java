@@ -50,6 +50,15 @@ public class MappingTypeBinding {
     this.concept = concept;
   }
   
+  public MappingTypeBinding(final MappingTypeBinding toClone, final CodeConcept concept) {
+    this(toClone.mappingType, concept);
+    final BiConsumer<MappingTypeVariable<?>, MappingTypeVariableBinding<?>> _function = (MappingTypeVariable<?> k, MappingTypeVariableBinding<?> v) -> {
+      MappingTypeVariableBinding<?> _clone = v.clone(this);
+      this.bindings.put(k, _clone);
+    };
+    toClone.bindings.forEach(_function);
+  }
+  
   public <T extends Object> T getValue(final MappingTypeVariable<T> variable) {
     try {
       MappingTypeVariableBinding<?> _get = this.bindings.get(variable);

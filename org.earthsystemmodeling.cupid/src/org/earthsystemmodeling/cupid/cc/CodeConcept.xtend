@@ -16,16 +16,15 @@ class CodeConcept {
     protected String name = null
         
     @Accessors
-    protected CodeConcept refines = null
+    protected CodeConcept extends_ = null
     
     protected List<CodeSubconcept> subconcepts = newLinkedList
         
-    @Accessors
-    protected MappingTypeBinding binding
+    MappingTypeBinding binding
     
-    protected Map<String, Class<?>> annotations = newHashMap
+    Map<String, Class<?>> annotations = newLinkedHashMap
     
-    protected Map<String, Object> annotationDefaults = newHashMap
+    Map<String, Object> annotationDefaults = newLinkedHashMap
     
     new(String name) {
         this(name, null)    
@@ -40,6 +39,13 @@ class CodeConcept {
         if (mappingType != null) {
             setMappingType(mappingType, parameters)
         }
+    }
+    
+    def extend(String name) {
+    	val concept = new CodeConcept(name)
+    	concept.extends_ = this
+    	concept.binding = new MappingTypeBinding(this.binding, concept)  //clone
+    	concept
     }
     
     def void addAnnotation(String name, Class<?> type) {
@@ -69,7 +75,46 @@ class CodeConcept {
     	]
     }
     
+    def Map<String, Class<?>> getAnnotations() {
+    	val retMap = newLinkedHashMap
+    	if (extends_ != null) {
+    		retMap.putAll(extends_.getAnnotations)
+    	}
+    	retMap.putAll(annotations)
+    	retMap
+    }
+    
+    def boolean hasAnnotation(String name) {
+    	annotations.containsKey(name) || (extends_ != null && extends_.hasAnnotation(name))
+    }
+    
+    def Class<?> getAnnotationType(String name) {
+    	if (annotations.containsKey(name)) {
+    		annotations.get(name)
+    	}
+    	else if (extends_ != null) {
+    		extends_.getAnnotationType(name)
+    	}
+    	else {
+    		null
+    	}
+    }
+    
+    def Map<String, Object> getAnnotationDefaults() {
+    	val retMap = newLinkedHashMap
+    	if (extends_ != null) {
+    		retMap.putAll(extends_.getAnnotationDefaults)
+    	}
+    	retMap.putAll(annotationDefaults)
+    	retMap
+    }
+    
     def setMappingType(MappingType mappingType, Map<String,Object> parameters) {
+        
+        if (extends_ != null) {
+        	throw new CodeConceptException("Cannot set mapping type for concept extension")
+        }
+        
         binding = new MappingTypeBinding(mappingType, this)
         if (parameters != null) {
             for (p : parameters.entrySet) {
@@ -104,8 +149,16 @@ class CodeConcept {
         }
     }
     
+    def MappingTypeBinding getBinding() {
+    	binding   	
+    }
+    
+    protected def void setBinding(MappingTypeBinding binding) {
+    	this.binding = binding
+    }
+    
     def getMappingType() {
-        binding?.mappingType
+        getBinding?.mappingType
     }
     
     def CodeConceptInstance newInstance(CodeConceptInstance parent) {
@@ -118,8 +171,7 @@ class CodeConcept {
     
     def CodeConceptInstance newInstanceWithDefaults(CodeConceptInstance parent, boolean recursive) {
     	val instance = newInstance(parent)
-    	//instance.status = CCIStatus.ADDED
-    	annotationDefaults.forEach[k,v|
+    	getAnnotationDefaults.forEach[k,v|
     		instance.put(k, v)
     	]
     	if (recursive) {
@@ -134,12 +186,12 @@ class CodeConcept {
     }
      
     def List<CodeSubconcept> getSubconcepts() {
-        if (refines == null) {
+        if (extends_ == null) {
             subconcepts
         }
         else {
             val toRet = newLinkedList
-            toRet.addAll(refines.getSubconcepts)
+            toRet.addAll(extends_.getSubconcepts)
             toRet.addAll(subconcepts)
             toRet
         }
@@ -153,9 +205,9 @@ class CodeConcept {
     	(getSubconcept(name) as SingleCodeSubconcept).concept
     }
     
-    def getDeclaredSubconcepts() {
-        subconcepts
-    }
+    //def getDeclaredSubconcepts() {
+    //    subconcepts
+    //}
     
     def void addSubconcept(String name, CodeConcept type, boolean essential, int min, int max, boolean includeByDefault) {
        subconcepts.add(new SingleCodeSubconcept(this, type, essential, min, max, includeByDefault)) 
@@ -237,7 +289,7 @@ class CodeConcept {
     
     override toString() {
         '''
-        CodeConcept: «getName»«IF(refines!=null)» refines «refines.getName»«ENDIF»
+        CodeConcept: «getName»«IF(extends_ != null)» refines «extends_.getName»«ENDIF»
         Subconcepts: «FOR s : getSubconcepts»
             - «s»«ENDFOR»
         '''    

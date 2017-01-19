@@ -144,7 +144,7 @@ class CodeConceptManager {
      */
     def protected List<CodeConceptInstance> reverseAll(CodeConcept concept, CodeConceptInstance parent) {
         val retList = newLinkedList
-        if (concept.binding != null) {
+        if (concept.getBinding != null) {
             val instances = concept.binding.bindAll(parent)
             instances.forEach[i|
             	val cci = reverseChildren(i)
@@ -178,7 +178,7 @@ class CodeConceptManager {
 	
 	def void forwardAdd(CodeConceptInstance instance) {
 		val concept = instance.type
-		concept.binding.forwardAdd(instance)
+		concept.getBinding.forwardAdd(instance)
 	}
 	
 	def void forwardDelete(CodeConceptInstance parent, CodeConceptInstance child) {

@@ -55,14 +55,6 @@ public class MappingType {
   public MappingType(final MappingType refines, final Map<String, Class<?>> parameters) {
     this.refines = refines;
     this.addParameters(parameters);
-    final Procedure1<MappingTypeBinding> _function = (MappingTypeBinding bind) -> {
-      refines.find.apply(bind);
-    };
-    this.find = _function;
-    final Procedure1<MappingTypeBinding> _function_1 = (MappingTypeBinding bind) -> {
-      refines.forwardAdd.apply(bind);
-    };
-    this.forwardAdd = _function_1;
   }
   
   protected void addParameters(final Map<String, Class<?>> parameters) {
@@ -167,12 +159,16 @@ public class MappingType {
   public void doFind(final MappingTypeBinding binding) {
     boolean _notEquals = (!Objects.equal(this.refines, null));
     if (_notEquals) {
-      this.refines.find.apply(binding);
+      this.refines.doFind(binding);
     }
     this.find.apply(binding);
   }
   
   public void doForwardAdd(final MappingTypeBinding binding) {
+    boolean _notEquals = (!Objects.equal(this.refines, null));
+    if (_notEquals) {
+      this.refines.doForwardAdd(binding);
+    }
     this.forwardAdd.apply(binding);
   }
   

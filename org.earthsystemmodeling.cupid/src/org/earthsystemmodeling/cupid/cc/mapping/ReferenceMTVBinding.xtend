@@ -11,7 +11,7 @@ abstract class ReferenceMTVBinding<T> extends MappingTypeVariableBinding<T> {
     
     new(MappingTypeBinding binding, String reference) {
         this.binding = binding
-        this.reference = reference
+        this.reference = reference?.trim()
     }
     
     override isResolved() {

@@ -731,7 +731,7 @@ public abstract class CodeConcept<P extends CodeConcept<?, ?>, A extends IASTNod
   
   public static void addTypeDeclaration(final String code, final ASTSubroutineSubprogramNode ssn, final boolean ignoreIfDeclared) {
     try {
-      IBodyConstruct _parseLiteralStatement = CodeExtraction.parseLiteralStatement(code);
+      IBodyConstruct _parseLiteralStatement = CodeExtraction.<IBodyConstruct>parseLiteralStatement(code);
       final ASTTypeDeclarationStmtNode tds = ((ASTTypeDeclarationStmtNode) _parseLiteralStatement);
       IASTListNode<ASTEntityDeclNode> _entityDeclList = tds.getEntityDeclList();
       ASTEntityDeclNode _get = _entityDeclList.get(0);
@@ -826,7 +826,7 @@ public abstract class CodeConcept<P extends CodeConcept<?, ?>, A extends IASTNod
       _builder.append(" => ");
       _builder.append(entityName, "");
       final String code = (_plus + _builder);
-      IBodyConstruct _parseLiteralStatement = CodeExtraction.parseLiteralStatement(code);
+      IBodyConstruct _parseLiteralStatement = CodeExtraction.<IBodyConstruct>parseLiteralStatement(code);
       final ASTUseStmtNode newNode = ((ASTUseStmtNode) _parseLiteralStatement);
       usn.replaceWith(newNode);
       return newNode;
@@ -870,7 +870,7 @@ public abstract class CodeConcept<P extends CodeConcept<?, ?>, A extends IASTNod
           }
         }
         final String code = _builder.toString();
-        IBodyConstruct _parseLiteralStatement = CodeExtraction.parseLiteralStatement(code);
+        IBodyConstruct _parseLiteralStatement = CodeExtraction.<IBodyConstruct>parseLiteralStatement(code);
         usn = ((ASTUseStmtNode) _parseLiteralStatement);
         IASTListNode<? extends IASTNode> _body_1 = amn.getBody();
         final ASTUseStmtNode last = _body_1.<ASTUseStmtNode>findLast(ASTUseStmtNode.class);

@@ -16,7 +16,7 @@ abstract class MappingTypeVariableBinding<T> {
     
     abstract def void setValue(T value)
     
-    abstract override MappingTypeVariableBinding<T> clone()
+    abstract def MappingTypeVariableBinding<T> clone(MappingTypeBinding newBinding)
         
     //abstract def T resolve()
     

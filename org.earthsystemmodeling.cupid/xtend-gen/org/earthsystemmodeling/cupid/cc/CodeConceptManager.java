@@ -11,6 +11,7 @@ import org.earthsystemmodeling.cupid.cc.CodeSubconcept;
 import org.earthsystemmodeling.cupid.cc.EssentialConstraintViolation;
 import org.earthsystemmodeling.cupid.cc.SingleCodeSubconcept;
 import org.earthsystemmodeling.cupid.cc.mapping.MappingType;
+import org.earthsystemmodeling.cupid.cc.mapping.MappingTypeBinding;
 import org.eclipse.core.resources.IFile;
 import org.eclipse.photran.core.IFortranAST;
 import org.eclipse.photran.internal.core.vpg.PhotranVPG;
@@ -79,11 +80,13 @@ public class CodeConceptManager {
    */
   public CodeConceptInstance reverse(final CodeConcept concept, final CodeConceptInstance parent) {
     Object _xifexpression = null;
-    boolean _notEquals = (!Objects.equal(concept.binding, null));
+    MappingTypeBinding _binding = concept.getBinding();
+    boolean _notEquals = (!Objects.equal(_binding, null));
     if (_notEquals) {
       Object _xblockexpression = null;
       {
-        CodeConceptInstance instance = concept.binding.bind(parent);
+        MappingTypeBinding _binding_1 = concept.getBinding();
+        CodeConceptInstance instance = _binding_1.bind(parent);
         Object _xifexpression_1 = null;
         boolean _notEquals_1 = (!Objects.equal(instance, null));
         if (_notEquals_1) {
@@ -203,9 +206,11 @@ public class CodeConceptManager {
     LinkedList<CodeConceptInstance> _xblockexpression = null;
     {
       final LinkedList<CodeConceptInstance> retList = CollectionLiterals.<CodeConceptInstance>newLinkedList();
-      boolean _notEquals = (!Objects.equal(concept.binding, null));
+      MappingTypeBinding _binding = concept.getBinding();
+      boolean _notEquals = (!Objects.equal(_binding, null));
       if (_notEquals) {
-        final List<CodeConceptInstance> instances = concept.binding.bindAll(parent);
+        MappingTypeBinding _binding_1 = concept.getBinding();
+        final List<CodeConceptInstance> instances = _binding_1.bindAll(parent);
         final Consumer<CodeConceptInstance> _function = (CodeConceptInstance i) -> {
           final CodeConceptInstance cci = this.reverseChildren(i);
           boolean _notEquals_1 = (!Objects.equal(cci, null));
@@ -241,7 +246,8 @@ public class CodeConceptManager {
   
   public void forwardAdd(final CodeConceptInstance instance) {
     final CodeConcept concept = instance.getType();
-    concept.binding.forwardAdd(instance);
+    MappingTypeBinding _binding = concept.getBinding();
+    _binding.forwardAdd(instance);
   }
   
   public void forwardDelete(final CodeConceptInstance parent, final CodeConceptInstance child) {

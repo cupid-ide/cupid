@@ -20,8 +20,7 @@ public abstract class MappingTypeVariableBinding<T extends Object> {
   
   public abstract void setValue(final T value);
   
-  @Override
-  public abstract MappingTypeVariableBinding<T> clone();
+  public abstract MappingTypeVariableBinding<T> clone(final MappingTypeBinding newBinding);
   
   @Pure
   public MappingTypeBinding getBinding() {

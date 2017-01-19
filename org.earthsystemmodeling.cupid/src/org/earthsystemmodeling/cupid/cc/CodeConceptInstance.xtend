@@ -116,17 +116,17 @@ class CodeConceptInstance {
     }
     
     def put(String annotationKey, Object annotationValue) {
-        if (!type.annotations.containsKey(annotationKey)) {
+        if (!type.hasAnnotation(annotationKey)) {
         	throw new CodeConceptException("Concept " + type.name + " does not have annotation named " + annotationKey)
         }
-        else if (!type.annotations.get(annotationKey).isInstance(annotationValue)) {
-        	throw new IllegalVariableAssignment(annotationKey, type.annotations.get(annotationKey), annotationValue.class)
+        else if (!type.getAnnotationType(annotationKey).isInstance(annotationValue)) {
+        	throw new IllegalVariableAssignment(annotationKey, type.getAnnotationType(annotationKey), annotationValue.class)
         }
         annotations.put(annotationKey, annotationValue)
     }
     
     def get(String annotationKey) {
-        if (!type.annotations.containsKey(annotationKey)) {
+        if (!type.hasAnnotation(annotationKey)) {
         	throw new CodeConceptException("Concept " + type.name + " does not have annotation named " + annotationKey)
         }
     	annotations.get(annotationKey)
