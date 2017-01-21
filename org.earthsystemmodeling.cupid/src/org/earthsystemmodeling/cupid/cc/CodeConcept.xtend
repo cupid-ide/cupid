@@ -52,12 +52,12 @@ class CodeConcept {
     	annotations.put(name, type)
     }
     
-    def void addAnnotation(String name) {
-    	addAnnotation(name, String)
+    def void addAnnotations(String... name) {
+    	name.forEach[n|addAnnotation(n, String)]
     }
     
     def void addAnnotations(List<String> names) {
-    	names.forEach[n|addAnnotation(n)]
+    	names.forEach[n|addAnnotations(n)]
     }
     
     def void addAnnotationDefault(String name, Object value) {
@@ -70,7 +70,7 @@ class CodeConcept {
     
     def void addAnnotationsWithDefaults(Map<String,String> defaults) {
     	defaults.forEach[k,v|
-    		addAnnotation(k)
+    		addAnnotations(k)
     		addAnnotationDefault(k, v)
     	]
     }
@@ -109,6 +109,18 @@ class CodeConcept {
     	retMap
     }
     
+    def Object getAnnotationDefault(String name) {
+    	if (annotationDefaults.containsKey(name)) {
+    		annotationDefaults.get(name)
+    	}
+    	else if (extends_ != null) {
+    		extends_.getAnnotationDefault(name)
+    	}
+    	else {
+    		null
+    	}
+    }
+    
     def setMappingType(MappingType mappingType, Map<String,Object> parameters) {
         
         if (extends_ != null) {
@@ -121,6 +133,9 @@ class CodeConcept {
                 binding.putBinding(p.key, getVariableBindingForParameter(p.key, p.value))
             }
         }
+        
+        //TODO: consider automatically creating parameter bindings
+        // for local annotations with matching names
         
         //implicit binding of context
         if (mappingType.hasParameter("context") && binding.unbound("context")) {

@@ -169,7 +169,10 @@ public class MappingType {
     if (_notEquals) {
       this.refines.doForwardAdd(binding);
     }
-    this.forwardAdd.apply(binding);
+    boolean _notEquals_1 = (!Objects.equal(this.forwardAdd, null));
+    if (_notEquals_1) {
+      this.forwardAdd.apply(binding);
+    }
   }
   
   @Pure

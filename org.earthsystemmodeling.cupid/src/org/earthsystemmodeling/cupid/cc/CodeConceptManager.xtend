@@ -62,7 +62,7 @@ class CodeConceptManager {
 	 */
 	def CodeConceptInstance reverse(CodeConcept concept, CodeConceptInstance parent) {
 		if (concept.binding != null) {
-            var instance = concept.binding.bind(parent)
+            var instance = concept.binding.find(parent)
             if (instance != null) {
                 try {
                 	reverseChildren(instance) 
@@ -145,7 +145,7 @@ class CodeConceptManager {
     def protected List<CodeConceptInstance> reverseAll(CodeConcept concept, CodeConceptInstance parent) {
         val retList = newLinkedList
         if (concept.getBinding != null) {
-            val instances = concept.binding.bindAll(parent)
+            val instances = concept.binding.findAll(parent)
             instances.forEach[i|
             	val cci = reverseChildren(i)
             	if (cci != null) {

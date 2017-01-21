@@ -119,7 +119,7 @@ class CodeConceptInstance {
         if (!type.hasAnnotation(annotationKey)) {
         	throw new CodeConceptException("Concept " + type.name + " does not have annotation named " + annotationKey)
         }
-        else if (!type.getAnnotationType(annotationKey).isInstance(annotationValue)) {
+        else if (annotationValue != null && !type.getAnnotationType(annotationKey).isInstance(annotationValue)) {
         	throw new IllegalVariableAssignment(annotationKey, type.getAnnotationType(annotationKey), annotationValue.class)
         }
         annotations.put(annotationKey, annotationValue)
@@ -131,7 +131,18 @@ class CodeConceptInstance {
         }
     	annotations.get(annotationKey)
     }
-       
+  
+  	def Object getAnnotationRecursive(String annotationKey) {
+  		if (annotations.containsKey(annotationKey)) {
+  			annotations.get(annotationKey)
+  		}
+  		else if (parent != null) {
+  			parent.getAnnotationRecursive(annotationKey)
+  		}
+  		else {
+  			throw new CodeConceptException("No annotation in instance tree named " + annotationKey)
+  		}
+  	}   
    
     override toString() {
         '''

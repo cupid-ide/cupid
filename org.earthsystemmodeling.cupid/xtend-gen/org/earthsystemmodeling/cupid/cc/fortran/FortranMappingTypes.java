@@ -42,6 +42,8 @@ import org.eclipse.xtext.xbase.lib.Procedures.Procedure1;
 public class FortranMappingTypes {
   private static FortranMappingTypes instance;
   
+  public static MappingType FortranAstMT;
+  
   public static MappingType CallInSubroutineMT;
   
   public static MappingType ModuleUseStmtMT;
@@ -64,8 +66,10 @@ public class FortranMappingTypes {
   }
   
   protected FortranMappingTypes() {
+    MappingType _mappingType = new MappingType("FortranAstMT", IFortranAST.class, IFortranAST.class);
+    FortranMappingTypes.FortranAstMT = _mappingType;
     Pair<String, Class<String>> _mappedTo = Pair.<String, Class<String>>of("uses", String.class);
-    MappingType _mappingType = new MappingType("ModuleUseStmtMT", ASTModuleNode.class, ASTUseStmtNode.class, 
+    MappingType _mappingType_1 = new MappingType("ModuleUseStmtMT", ASTModuleNode.class, ASTUseStmtNode.class, 
       Collections.<String, Class<?>>unmodifiableMap(CollectionLiterals.<String, Class<?>>newHashMap(_mappedTo)));
     final Procedure1<MappingType> _function = (MappingType it) -> {
       final Procedure1<MappingTypeBinding> _function_1 = (MappingTypeBinding bind) -> {
@@ -99,19 +103,16 @@ public class FortranMappingTypes {
       };
       it.setForwardAdd(_function_2);
     };
-    MappingType _doubleArrow = ObjectExtensions.<MappingType>operator_doubleArrow(_mappingType, _function);
+    MappingType _doubleArrow = ObjectExtensions.<MappingType>operator_doubleArrow(_mappingType_1, _function);
     FortranMappingTypes.ModuleUseStmtMT = _doubleArrow;
     Pair<String, Class<String>> _mappedTo_1 = Pair.<String, Class<String>>of("uses", String.class);
     Pair<String, Class<String>> _mappedTo_2 = Pair.<String, Class<String>>of("entity", String.class);
     Pair<String, Class<String>> _mappedTo_3 = Pair.<String, Class<String>>of("localName", String.class);
-    MappingType _mappingType_1 = new MappingType("ModuleUseStmtMT", ASTModuleNode.class, ASTUseStmtNode.class, 
+    MappingType _mappingType_2 = new MappingType("ModuleUseStmtMT", ASTModuleNode.class, ASTUseStmtNode.class, 
       Collections.<String, Class<?>>unmodifiableMap(CollectionLiterals.<String, Class<?>>newHashMap(_mappedTo_1, _mappedTo_2, _mappedTo_3)));
     final Procedure1<MappingType> _function_1 = (MappingType it) -> {
       final Procedure1<MappingTypeBinding> _function_2 = (MappingTypeBinding bind) -> {
         final ASTModuleNode moduleNode = bind.<ASTModuleNode>context();
-        final String uses = bind.getValueString("uses");
-        final String entity = bind.getValueString("entity");
-        final String localName = bind.getValueString("localName");
         IASTListNode<IModuleBodyConstruct> _moduleBody = moduleNode.getModuleBody();
         Iterable<ASTUseStmtNode> _filter = null;
         if (_moduleBody!=null) {
@@ -119,8 +120,7 @@ public class FortranMappingTypes {
         }
         final Function1<ASTUseStmtNode, Boolean> _function_3 = (ASTUseStmtNode usn) -> {
           Token _name = usn.getName();
-          String _text = _name.getText();
-          return Boolean.valueOf(ASTQuery.eic(_text, uses));
+          return Boolean.valueOf(bind.bindToken("uses", _name));
         };
         final ASTUseStmtNode useStmtNode = IterableExtensions.<ASTUseStmtNode>findFirst(_filter, _function_3);
         boolean _notEquals = (!Objects.equal(useStmtNode, null));
@@ -131,8 +131,8 @@ public class FortranMappingTypes {
           boolean _exists = false;
           if (_findAll!=null) {
             final Function1<ASTRenameNode, Boolean> _function_4 = (ASTRenameNode rn) -> {
-              return Boolean.valueOf((ASTQuery.eic(rn.getName(), entity) && 
-                ASTQuery.eic(rn.getNewName(), localName)));
+              return Boolean.valueOf((bind.bindToken("entity", rn.getName()) && 
+                bind.bindToken("localName", rn.getNewName())));
             };
             _exists=IterableExtensions.<ASTRenameNode>exists(_findAll, _function_4);
           }
@@ -143,8 +143,8 @@ public class FortranMappingTypes {
             boolean _exists_1 = false;
             if (_findAll_1!=null) {
               final Function1<ASTOnlyNode, Boolean> _function_5 = (ASTOnlyNode on) -> {
-                return Boolean.valueOf((ASTQuery.eic(on.getName(), entity) && 
-                  ASTQuery.eic(on.getNewName(), localName)));
+                return Boolean.valueOf((bind.bindToken("entity", on.getName()) && 
+                  bind.bindToken("localName", on.getNewName())));
               };
               _exists_1=IterableExtensions.<ASTOnlyNode>exists(_findAll_1, _function_5);
             }
@@ -158,7 +158,7 @@ public class FortranMappingTypes {
           }
           final boolean exists = _or;
           if (exists) {
-            final MappingResult r = bind.addResult(useStmtNode);
+            bind.addResult(useStmtNode);
           }
         }
       };
@@ -173,12 +173,12 @@ public class FortranMappingTypes {
       };
       it.setForwardAdd(_function_3);
     };
-    MappingType _doubleArrow_1 = ObjectExtensions.<MappingType>operator_doubleArrow(_mappingType_1, _function_1);
+    MappingType _doubleArrow_1 = ObjectExtensions.<MappingType>operator_doubleArrow(_mappingType_2, _function_1);
     FortranMappingTypes.ModuleUseEntityMT = _doubleArrow_1;
     Pair<String, Class<IFortranAST>> _mappedTo_4 = Pair.<String, Class<IFortranAST>>of("context", IFortranAST.class);
     Pair<String, Class<String>> _mappedTo_5 = Pair.<String, Class<String>>of("name", String.class);
     Pair<String, Class<ASTModuleNode>> _mappedTo_6 = Pair.<String, Class<ASTModuleNode>>of("match", ASTModuleNode.class);
-    MappingType _mappingType_2 = new MappingType("ModuleMT", 
+    MappingType _mappingType_3 = new MappingType("ModuleMT", 
       Collections.<String, Class<?>>unmodifiableMap(CollectionLiterals.<String, Class<?>>newHashMap(_mappedTo_4, _mappedTo_5, _mappedTo_6)));
     final Procedure1<MappingType> _function_2 = (MappingType it) -> {
       final Procedure1<MappingTypeBinding> _function_3 = (MappingTypeBinding bind) -> {
@@ -240,13 +240,11 @@ public class FortranMappingTypes {
       };
       it.setForwardAdd(_function_4);
     };
-    MappingType _doubleArrow_2 = ObjectExtensions.<MappingType>operator_doubleArrow(_mappingType_2, _function_2);
+    MappingType _doubleArrow_2 = ObjectExtensions.<MappingType>operator_doubleArrow(_mappingType_3, _function_2);
     FortranMappingTypes.ModuleMT = _doubleArrow_2;
-    Pair<String, Class<ASTSubroutineSubprogramNode>> _mappedTo_7 = Pair.<String, Class<ASTSubroutineSubprogramNode>>of("context", ASTSubroutineSubprogramNode.class);
-    Pair<String, Class<String>> _mappedTo_8 = Pair.<String, Class<String>>of("calls", String.class);
-    Pair<String, Class<ASTCallStmtNode>> _mappedTo_9 = Pair.<String, Class<ASTCallStmtNode>>of("match", ASTCallStmtNode.class);
-    MappingType _mappingType_3 = new MappingType("CallInSubroutineMT", 
-      Collections.<String, Class<?>>unmodifiableMap(CollectionLiterals.<String, Class<?>>newHashMap(_mappedTo_7, _mappedTo_8, _mappedTo_9)));
+    Pair<String, Class<String>> _mappedTo_7 = Pair.<String, Class<String>>of("calls", String.class);
+    MappingType _mappingType_4 = new MappingType("CallInSubroutineMT", 
+      ASTSubroutineSubprogramNode.class, ASTCallStmtNode.class, Collections.<String, Class<?>>unmodifiableMap(CollectionLiterals.<String, Class<?>>newHashMap(_mappedTo_7)));
     final Procedure1<MappingType> _function_3 = (MappingType it) -> {
       final Procedure1<MappingTypeBinding> _function_4 = (MappingTypeBinding bind) -> {
         final ASTSubroutineSubprogramNode subr = bind.<ASTSubroutineSubprogramNode>context();
@@ -265,7 +263,7 @@ public class FortranMappingTypes {
       };
       it.setFind(_function_4);
     };
-    MappingType _doubleArrow_3 = ObjectExtensions.<MappingType>operator_doubleArrow(_mappingType_3, _function_3);
+    MappingType _doubleArrow_3 = ObjectExtensions.<MappingType>operator_doubleArrow(_mappingType_4, _function_3);
     FortranMappingTypes.CallInSubroutineMT = _doubleArrow_3;
   }
   

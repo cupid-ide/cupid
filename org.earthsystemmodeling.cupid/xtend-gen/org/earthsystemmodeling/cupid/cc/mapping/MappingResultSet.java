@@ -32,16 +32,10 @@ public class MappingResultSet {
     return this.get(0);
   }
   
-  /**
-   * def pop() {
-   * if (results.size() > 0) {
-   * return results.remove(0)
-   * }
-   * else {
-   * return null
-   * }
-   * }
-   */
+  public void addResult(final MappingResult result) {
+    this.results.add(result);
+  }
+  
   public MappingResult addMatch(final Object match) {
     MappingResult _xblockexpression = null;
     {

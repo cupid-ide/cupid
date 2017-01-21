@@ -86,7 +86,7 @@ public class CodeConceptManager {
       Object _xblockexpression = null;
       {
         MappingTypeBinding _binding_1 = concept.getBinding();
-        CodeConceptInstance instance = _binding_1.bind(parent);
+        CodeConceptInstance instance = _binding_1.find(parent);
         Object _xifexpression_1 = null;
         boolean _notEquals_1 = (!Objects.equal(instance, null));
         if (_notEquals_1) {
@@ -210,7 +210,7 @@ public class CodeConceptManager {
       boolean _notEquals = (!Objects.equal(_binding, null));
       if (_notEquals) {
         MappingTypeBinding _binding_1 = concept.getBinding();
-        final List<CodeConceptInstance> instances = _binding_1.bindAll(parent);
+        final List<CodeConceptInstance> instances = _binding_1.findAll(parent);
         final Consumer<CodeConceptInstance> _function = (CodeConceptInstance i) -> {
           final CodeConceptInstance cci = this.reverseChildren(i);
           boolean _notEquals_1 = (!Objects.equal(cci, null));

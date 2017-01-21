@@ -19,13 +19,25 @@ import org.earthsystemmodeling.cupid.cc.mapping.MappingType;
 import org.earthsystemmodeling.cupid.cc.mapping.MappingTypeException;
 import org.earthsystemmodeling.cupid.cc.mapping.MappingTypeVariable;
 import org.earthsystemmodeling.cupid.cc.mapping.MappingTypeVariableBinding;
+import org.earthsystemmodeling.cupid.util.CodeExtraction;
+import org.eclipse.photran.internal.core.lexer.Token;
+import org.eclipse.photran.internal.core.parser.IASTListNode;
+import org.eclipse.photran.internal.core.parser.IASTNode;
+import org.eclipse.photran.internal.core.parser.IBodyConstruct;
+import org.eclipse.photran.internal.core.parser.IExpr;
+import org.eclipse.photran.internal.core.parser.IProgramUnit;
 import org.eclipse.xtend.lib.annotations.AccessorType;
 import org.eclipse.xtend.lib.annotations.Accessors;
+import org.eclipse.xtend2.lib.StringConcatenation;
 import org.eclipse.xtext.xbase.lib.CollectionLiterals;
 import org.eclipse.xtext.xbase.lib.Exceptions;
 import org.eclipse.xtext.xbase.lib.Functions.Function1;
 import org.eclipse.xtext.xbase.lib.IterableExtensions;
 import org.eclipse.xtext.xbase.lib.Pure;
+import org.stringtemplate.v4.ST;
+import org.stringtemplate.v4.STErrorListener;
+import org.stringtemplate.v4.STGroupString;
+import org.stringtemplate.v4.misc.STMessage;
 
 @SuppressWarnings("all")
 public class MappingTypeBinding {
@@ -44,6 +56,8 @@ public class MappingTypeBinding {
   
   @Accessors(AccessorType.PUBLIC_GETTER)
   private MappingResultSet resultSet;
+  
+  private MappingResult currentResult;
   
   public MappingTypeBinding(final MappingType mappingType, final CodeConcept concept) {
     this.mappingType = mappingType;
@@ -215,7 +229,7 @@ public class MappingTypeBinding {
    * @param parent the parent context
    * @return an instance of this binding's concept, or null if none found
    */
-  public CodeConceptInstance bind(final CodeConceptInstance parent) {
+  public CodeConceptInstance find(final CodeConceptInstance parent) {
     CodeConceptInstance _xblockexpression = null;
     {
       MappingResultSet _mappingResultSet = new MappingResultSet(this.mappingType);
@@ -269,7 +283,7 @@ public class MappingTypeBinding {
    * @param parent the parent context
    * @return a (potentially empty) list of instances of this binding's concept
    */
-  public List<CodeConceptInstance> bindAll(final CodeConceptInstance parent) {
+  public List<CodeConceptInstance> findAll(final CodeConceptInstance parent) {
     LinkedList<CodeConceptInstance> _xblockexpression = null;
     {
       MappingResultSet _mappingResultSet = new MappingResultSet(this.mappingType);
@@ -314,46 +328,29 @@ public class MappingTypeBinding {
   private static Pattern TEMPLATE_VAR = Pattern.compile("\\{\\w+\\}");
   
   public String fill(final String template) {
-    String _xblockexpression = null;
-    {
-      final Matcher matcher = MappingTypeBinding.TEMPLATE_VAR.matcher(template);
-      final StringBuffer sb = new StringBuffer();
-      while (matcher.find()) {
-        {
-          String varToReplace = matcher.group();
-          int _length = varToReplace.length();
-          int _minus = (_length - 1);
-          String _substring = varToReplace.substring(1, _minus);
-          varToReplace = _substring;
-          final String replacement = this.getValueString(varToReplace);
-          boolean _notEquals = (!Objects.equal(replacement, null));
-          if (_notEquals) {
-            matcher.appendReplacement(sb, replacement);
-          } else {
-            String _group = matcher.group();
-            matcher.appendReplacement(sb, _group);
+    try {
+      String _xblockexpression = null;
+      {
+        final Matcher matcher = MappingTypeBinding.TEMPLATE_VAR.matcher(template);
+        final StringBuffer sb = new StringBuffer();
+        while (matcher.find()) {
+          {
+            String varToReplace = matcher.group();
+            int _length = varToReplace.length();
+            int _minus = (_length - 1);
+            String _substring = varToReplace.substring(1, _minus);
+            varToReplace = _substring;
+            final String replacement = this.getValueString(varToReplace);
+            boolean _notEquals = (!Objects.equal(replacement, null));
+            if (_notEquals) {
+              matcher.appendReplacement(sb, replacement);
+            } else {
+              throw new MappingTypeException((((("Template variable cannot be evaluated: " + varToReplace) + "\n******\n") + template) + "\n******"));
+            }
           }
         }
-      }
-      matcher.appendTail(sb);
-      _xblockexpression = sb.toString();
-    }
-    return _xblockexpression;
-  }
-  
-  public MappingResult addResult(final Object match) {
-    try {
-      MappingResult _xblockexpression = null;
-      {
-        Class<?> _matchType = this.mappingType.matchType();
-        boolean _isInstance = _matchType.isInstance(match);
-        boolean _not = (!_isInstance);
-        if (_not) {
-          Class<?> _matchType_1 = this.mappingType.matchType();
-          Class<?> _class = match.getClass();
-          throw new IllegalVariableAssignment("match", _matchType_1, _class);
-        }
-        _xblockexpression = this.resultSet.addMatch(match);
+        matcher.appendTail(sb);
+        _xblockexpression = sb.toString();
       }
       return _xblockexpression;
     } catch (Throwable _e) {
@@ -361,24 +358,298 @@ public class MappingTypeBinding {
     }
   }
   
-  public MappingResult addResult(final Map<String, Object> params) {
-    MappingResult _xblockexpression = null;
-    {
-      Object _get = params.get("match");
-      final MappingResult result = this.addResult(_get);
-      final BiConsumer<String, Object> _function = (String k, Object v) -> {
-        boolean _equals = k.equals("match");
-        boolean _not = (!_equals);
-        if (_not) {
-          result.put(k, v);
+  private static STErrorListener templateErrorListener = new STErrorListener() {
+    @Override
+    public void IOError(final STMessage m) {
+      try {
+        String _string = m.toString();
+        throw new MappingTypeException(_string);
+      } catch (Throwable _e) {
+        throw Exceptions.sneakyThrow(_e);
+      }
+    }
+    
+    @Override
+    public void compileTimeError(final STMessage m) {
+      try {
+        String _string = m.toString();
+        throw new MappingTypeException(_string);
+      } catch (Throwable _e) {
+        throw Exceptions.sneakyThrow(_e);
+      }
+    }
+    
+    @Override
+    public void internalError(final STMessage m) {
+      try {
+        String _string = m.toString();
+        throw new MappingTypeException(_string);
+      } catch (Throwable _e) {
+        throw Exceptions.sneakyThrow(_e);
+      }
+    }
+    
+    @Override
+    public void runTimeError(final STMessage m) {
+      try {
+        String _string = m.toString();
+        throw new MappingTypeException(_string);
+      } catch (Throwable _e) {
+        throw Exceptions.sneakyThrow(_e);
+      }
+    }
+  };
+  
+  public String fillST(final String template) {
+    try {
+      String _xblockexpression = null;
+      {
+        StringConcatenation _builder = new StringConcatenation();
+        _builder.append("ESMFErrorCheck(rc) ::= <<");
+        _builder.newLine();
+        _builder.append("\t");
+        _builder.append("if (ESMF_LogFoundError(rcToCheck=<rc>, msg=ESMF_LOGERR_PASSTHRU, &");
+        _builder.newLine();
+        _builder.append("\t\t");
+        _builder.append("line=__LINE__, &");
+        _builder.newLine();
+        _builder.append("\t\t");
+        _builder.append("file=__FILE__)) &");
+        _builder.newLine();
+        _builder.append("\t\t");
+        _builder.append("return");
+        _builder.newLine();
+        _builder.append(">>");
+        _builder.newLine();
+        _builder.newLine();
+        _builder.append("thistmp_(");
+        {
+          Set<MappingTypeVariable<?>> _keySet = this.bindings.keySet();
+          final Function1<MappingTypeVariable<?>, Boolean> _function = (MappingTypeVariable<?> k) -> {
+            return Boolean.valueOf(((!Objects.equal(k.name, "match")) && (!Objects.equal(k.name, "context"))));
+          };
+          Iterable<MappingTypeVariable<?>> _filter = IterableExtensions.<MappingTypeVariable<?>>filter(_keySet, _function);
+          boolean _hasElements = false;
+          for(final MappingTypeVariable<?> arg : _filter) {
+            if (!_hasElements) {
+              _hasElements = true;
+            } else {
+              _builder.appendImmediate(", ", "");
+            }
+            _builder.append(arg.name, "");
+          }
         }
-      };
-      params.forEach(_function);
-      _xblockexpression = result;
+        _builder.append(") ::= <<");
+        _builder.newLineIfNotEmpty();
+        _builder.append("\t");
+        _builder.append(template, "\t");
+        _builder.newLineIfNotEmpty();
+        _builder.append(">>");
+        _builder.newLine();
+        final String templateGroup = _builder.toString();
+        final STGroupString stgroup = new STGroupString(templateGroup);
+        stgroup.setListener(MappingTypeBinding.templateErrorListener);
+        final ST st = stgroup.getInstanceOf("thistmp_");
+        boolean _equals = Objects.equal(st, null);
+        if (_equals) {
+          throw new MappingTypeException(("Error in template: " + template));
+        }
+        final BiConsumer<MappingTypeVariable<?>, MappingTypeVariableBinding<?>> _function_1 = (MappingTypeVariable<?> k, MappingTypeVariableBinding<?> v) -> {
+          if (((!Objects.equal(k.name, "match")) && (!Objects.equal(k.name, "context")))) {
+            Object _value = this.getValue(k);
+            st.add(k.name, _value);
+          }
+        };
+        this.bindings.forEach(_function_1);
+        _xblockexpression = st.render();
+      }
+      return _xblockexpression;
+    } catch (Throwable _e) {
+      throw Exceptions.sneakyThrow(_e);
+    }
+  }
+  
+  public <T extends IProgramUnit> T parseProgramUnit(final String template) {
+    T _xblockexpression = null;
+    {
+      final String code = this.fillST(template);
+      _xblockexpression = CodeExtraction.<T>parseLiteralProgramUnit(code);
     }
     return _xblockexpression;
   }
   
+  public <T extends IBodyConstruct> T parseStatement(final String template) {
+    T _xblockexpression = null;
+    {
+      final String code = this.fillST(template);
+      _xblockexpression = CodeExtraction.<T>parseLiteralStatement(code);
+    }
+    return _xblockexpression;
+  }
+  
+  public IASTListNode<IBodyConstruct> parseStatementSeq(final String template) {
+    IASTListNode<IBodyConstruct> _xblockexpression = null;
+    {
+      final String code = this.fillST(template);
+      _xblockexpression = CodeExtraction.parseLiteralStatementSequence(code);
+    }
+    return _xblockexpression;
+  }
+  
+  private void addBindingToResult(final String variable, final Object value) {
+    try {
+      boolean _equals = Objects.equal(this.currentResult, null);
+      if (_equals) {
+        MappingResult _mappingResult = new MappingResult();
+        this.currentResult = _mappingResult;
+      }
+      if (((!Objects.equal(value, null)) && (!this.mappingType.getParameterType(variable).isInstance(value)))) {
+        Class<?> _parameterType = this.mappingType.getParameterType(variable);
+        Class<?> _class = value.getClass();
+        throw new IllegalVariableAssignment(variable, _parameterType, _class);
+      }
+      this.currentResult.put(variable, value);
+    } catch (Throwable _e) {
+      throw Exceptions.sneakyThrow(_e);
+    }
+  }
+  
+  public <T extends IASTNode> boolean bind(final String variable, final T node) {
+    boolean _xblockexpression = false;
+    {
+      final T toMatch = this.<T>getValue(variable);
+      boolean _xifexpression = false;
+      boolean _notEquals = (!Objects.equal(toMatch, null));
+      if (_notEquals) {
+        _xifexpression = toMatch.equals(node);
+      } else {
+        boolean _xblockexpression_1 = false;
+        {
+          this.addBindingToResult(variable, node);
+          _xblockexpression_1 = true;
+        }
+        _xifexpression = _xblockexpression_1;
+      }
+      _xblockexpression = _xifexpression;
+    }
+    return _xblockexpression;
+  }
+  
+  public boolean bindExpr(final String variable, final IExpr expr) {
+    boolean _xblockexpression = false;
+    {
+      final String toMatch = this.getValueString(variable);
+      boolean _xifexpression = false;
+      boolean _notEquals = (!Objects.equal(toMatch, null));
+      if (_notEquals) {
+        String _string = expr.toString();
+        String _trim = _string.trim();
+        _xifexpression = toMatch.equalsIgnoreCase(_trim);
+      } else {
+        boolean _xblockexpression_1 = false;
+        {
+          String _string_1 = expr.toString();
+          String _trim_1 = _string_1.trim();
+          this.addBindingToResult(variable, _trim_1);
+          _xblockexpression_1 = true;
+        }
+        _xifexpression = _xblockexpression_1;
+      }
+      _xblockexpression = _xifexpression;
+    }
+    return _xblockexpression;
+  }
+  
+  public boolean bindExprContains(final String variable, final IExpr expr) {
+    boolean _xblockexpression = false;
+    {
+      final String toMatch = this.getValueString(variable);
+      boolean _xifexpression = false;
+      boolean _notEquals = (!Objects.equal(toMatch, null));
+      if (_notEquals) {
+        String _lowerCase = toMatch.toLowerCase();
+        String _string = expr.toString();
+        String _trim = _string.trim();
+        String _lowerCase_1 = _trim.toLowerCase();
+        _xifexpression = _lowerCase.contains(_lowerCase_1);
+      } else {
+        boolean _xblockexpression_1 = false;
+        {
+          String _string_1 = expr.toString();
+          String _trim_1 = _string_1.trim();
+          this.addBindingToResult(variable, _trim_1);
+          _xblockexpression_1 = true;
+        }
+        _xifexpression = _xblockexpression_1;
+      }
+      _xblockexpression = _xifexpression;
+    }
+    return _xblockexpression;
+  }
+  
+  public boolean bindToken(final String variable, final Token token) {
+    boolean _xblockexpression = false;
+    {
+      final String toMatch = this.getValueString(variable);
+      boolean _xifexpression = false;
+      boolean _notEquals = (!Objects.equal(toMatch, null));
+      if (_notEquals) {
+        String _text = token.getText();
+        _xifexpression = toMatch.equalsIgnoreCase(_text);
+      } else {
+        boolean _xblockexpression_1 = false;
+        {
+          String _text_1 = token.getText();
+          this.addBindingToResult(variable, _text_1);
+          _xblockexpression_1 = true;
+        }
+        _xifexpression = _xblockexpression_1;
+      }
+      _xblockexpression = _xifexpression;
+    }
+    return _xblockexpression;
+  }
+  
+  public MappingResult addResult(final Object match) {
+    try {
+      Class<?> _matchType = this.mappingType.matchType();
+      boolean _isInstance = _matchType.isInstance(match);
+      boolean _not = (!_isInstance);
+      if (_not) {
+        Class<?> _matchType_1 = this.mappingType.matchType();
+        Class<?> _class = match.getClass();
+        throw new IllegalVariableAssignment("match", _matchType_1, _class);
+      }
+      boolean _notEquals = (!Objects.equal(this.currentResult, null));
+      if (_notEquals) {
+        this.currentResult.put("match", match);
+        this.resultSet.addResult(this.currentResult);
+        final MappingResult toRet = this.currentResult;
+        this.currentResult = null;
+        return toRet;
+      } else {
+        return this.resultSet.addMatch(match);
+      }
+    } catch (Throwable _e) {
+      throw Exceptions.sneakyThrow(_e);
+    }
+  }
+  
+  public MappingResult reset() {
+    return this.currentResult = null;
+  }
+  
+  /**
+   * def addResult(Map<String, Object> params) {
+   * val result = addResult(params.get("match"))  //TODO: for now assume there is a match
+   * params.forEach[k, v|
+   * if (!k.equals("match")) {
+   * result.put(k, v)  //TODO: could type check here
+   * }
+   * ]
+   * result
+   * }
+   */
   public <T extends Object> T context() {
     return this.<T>getValue("context");
   }

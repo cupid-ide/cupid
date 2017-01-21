@@ -1,11 +1,9 @@
 package org.earthsystemmodeling.cupid.cc.nuopc
 
 import org.earthsystemmodeling.cupid.cc.CodeConcept
-import org.earthsystemmodeling.cupid.cc.CodeConceptTemplate
+import org.earthsystemmodeling.cupid.cc.CodeConceptInstance
 import org.earthsystemmodeling.cupid.cc.fortran.FortranMappingTypes
 import org.earthsystemmodeling.cupid.cc.mapping.MappingType
-import org.earthsystemmodeling.cupid.nuopc.ESMFCodeTemplates
-import org.eclipse.photran.core.IFortranAST
 import org.eclipse.photran.internal.core.parser.ASTCallStmtNode
 import org.eclipse.photran.internal.core.parser.ASTModuleNode
 import org.eclipse.photran.internal.core.parser.ASTSubroutineSubprogramNode
@@ -17,26 +15,30 @@ import static org.earthsystemmodeling.cupid.util.CodeExtraction.*
 
 import static extension org.earthsystemmodeling.cupid.nuopc.ASTQuery.*
 import static extension org.earthsystemmodeling.cupid.nuopc.ESMFQuery.*
-import org.earthsystemmodeling.cupid.cc.CodeConceptInstance
 
 class NUOPC {
     
     static NUOPC instance
-    //static FortranMappingTypes FMT
     
     /* mapping types */
     public MappingType SetServicesMT
     public MappingType ESMFMethodMT
     public MappingType SpecializationMethodMT  /* refines ESMFMethodMT */
+    public MappingType AddComponentToDriverMT  /* refines CallInSubroutineMT */
+    public MappingType NUOPCEntryPointMT
     
     /* concepts */   
     public CodeConcept NUOPCComponent
+    public CodeConcept NUOPCModel
+    public CodeConcept NUOPCModelRoot
     public CodeConcept NUOPCDriver
+    public CodeConcept NUOPCDriverRoot
     public CodeConcept SetServices
+    public CodeConcept SetModelServices
+    public CodeConcept SetModelServices$AddComponent
+    public CodeConcept ESMFEntryPoint
     
-    
-    //public BootstrapCodeConcept NUOPCDriverFromFile
-    
+            
     def static getInstance() {
         if (instance == null) {
             instance = new NUOPC
@@ -78,10 +80,113 @@ class NUOPC {
 				b.match = ssn
             ]
             
+        ] 
+        
+       NUOPCEntryPointMT = new MappingType("NUOPCEntryPointMT", ASTModuleNode, ASTSubroutineSubprogramNode, 
+        	#{"SetServices"->ASTSubroutineSubprogramNode,
+        	  "Reg"->ASTCallStmtNode, "name"->String,
+        	  "phaseNumber"->String, "phaseLabel"->String,
+        	  "methodType"->String}) => [
+        	  
+        	  //"import"->String, "export"->String,
+        	  //"gcomp"->String, "rc"->String,
+        	        	
+       	
+        	find = [bind|
+        		
+        		val ASTModuleNode module = bind.context
+        		val ASTSubroutineSubprogramNode setServices = bind.getValue("SetServices")  				
+  				
+  				setServices.body.filter(ASTCallStmtNode).forEach[call|
+  					
+  					bind.reset
+  					
+  					if (
+  						((
+  							call.subroutineName.text.eic("ESMF_GridCompSetEntryPoint") &&
+  						 	bind.bindExpr("phaseNumber", call.argExprByKeyword("phase"))
+  						)
+  						||
+  						(
+  							call.subroutineName.text.eic("NUOPC_CompSetEntryPoint") &&
+  						 	bind.bindExprContains("phaseLabel", call.argExprByKeyword("phaseLabelList")) ||
+  						 	bind.bindExprContains("phaseLabel", call.argExprByIdx(2))
+  						))
+  						&&
+  						(bind.bind("Reg", call))
+  						) {
+  						
+  							val epSub = module.findESMFEntryPoints.findFirst[sub|
+  								bind.bindToken("name", sub.subroutineStmt.subroutineName.subroutineName) &&
+								sub.subroutineStmt.subroutineName.subroutineName.eic(call.litArgExprByKeyword("userRoutine"))
+							]
+							if (epSub != null) {
+								bind.addResult(epSub)
+							}
+  							
+  						} 				
+  				]
+  				
+        	]
+        	
+        	forwardAdd = [bind|
+        		
+        		val ASTSubroutineSubprogramNode ssn = bind.parseProgramUnit(
+        			'''
+					
+					subroutine <name>(gcomp, importState, exportState, clock, rc)
+					    type(ESMF_GridComp)  :: gcomp
+					    type(ESMF_State)     :: importState, exportState
+					    type(ESMF_Clock)     :: clock
+					    integer, intent(out) :: rc
+					    
+					    rc = ESMF_SUCCESS
+					    
+					end subroutine
+					''')
+				
+				val ASTModuleNode module = bind.context
+				module.moduleBody.add(ssn)
+				bind.match = ssn
+				
+        		val ASTSubroutineSubprogramNode setServices = bind.getValue("SetServices")
+        		
+        		val regCall = bind.parseStatementSeq(
+					'''					
+					
+					<if(phaseNumber)>
+					call ESMF_GridCompSetEntryPoint(gcomp, <methodType>, &
+												userRoutine=<name>, phase=<phaseNumber>, rc=rc)
+					<else>
+					call NUOPC_CompSetEntryPoint(gcomp, <methodType>, &
+						<if(phaseLabel)>phaseLabelList=(/"<phaseLabel>"/),<endif> userRoutine=<name>, rc=rc)
+					<endif>
+					<ESMFErrorCheck("rc")>
+					''')
+				
+					
+				setServices.body.addAll(regCall)
+				bind.setValue("Reg", regCall.get(0))
+        		
+        		
+        	]
+        	
+        	
+        	
         ]       
         
-        SpecializationMethodMT = ESMFMethodMT.refine(
-            #{"SetServices" -> CodeConceptInstance,
+      	componentDefs()
+      	driverDefs()
+      	modelDefs()
+         
+    }
+    
+    
+    protected def componentDefs() {
+    	
+    	
+    	SpecializationMethodMT = ESMFMethodMT.refine(
+            #{"SetServices" -> ASTSubroutineSubprogramNode,
               "specLabel" -> String,
               "specPhaseLabel" -> String,
               "labelComponent" -> String, 
@@ -91,7 +196,7 @@ class NUOPC {
                 
                 //a refinement - result contains result of super mapping type
                 val ASTModuleNode module = bind.context
-                val ASTSubroutineSubprogramNode setServicesNode = (bind.getValue("SetServices") as CodeConceptInstance).match as ASTSubroutineSubprogramNode
+                val ASTSubroutineSubprogramNode setServicesNode = bind.getValue("SetServices")
 
                 bind.resultSet.<ASTSubroutineSubprogramNode>removeMatchIf[m|m == setServicesNode]
                 bind.resultSet.<ASTSubroutineSubprogramNode>retainMatchIf[m|
@@ -112,12 +217,8 @@ class NUOPC {
             	//has been defined, still need to add registration call
             	
             	val ASTModuleNode moduleNode = bind.context
-            	//TODO: should we allow this?
-            	val CodeConceptInstance setServices = bind.getValue("SetServices")
-            	val gcomp = setServices.get("gcomp")
-            	val rc = setServices.get("rc")
-            	
-            	val name = bind.getValueString("name")
+            	val ASTSubroutineSubprogramNode setServices = bind.getValue("SetServices")
+
             	val labelComponent = bind.getValueString("labelComponent")
             	val labelName = bind.getValueString("labelName")
             	val specLabel = bind.getValueString("specLabel")
@@ -125,89 +226,23 @@ class NUOPC {
             	
             	ensureImport(moduleNode, labelComponent, labelName, specLabel, true)
             	
-            	val code = '''
+            	val code = bind.fill('''
 
-					call NUOPC_CompSpecialize(«gcomp», specLabel=«specLabel», &
-						«IF specPhaseLabel!=null»specPhaseLabel=«specPhaseLabel», «ENDIF»specRoutine=«name», rc=«rc»)
-					'''
-
+					call NUOPC_CompSpecialize({gcomp}, specLabel={specLabel}, &
+						«IF specPhaseLabel!=null»specPhaseLabel={specPhaseLabel}, «ENDIF»specRoutine={name}, rc={rc})
+					«ESMFErrorCheck(bind.getValueString("rc"))»
+					''')
+					
 				var ASTCallStmtNode regCall = parseLiteralStatement(code)
-				(setServices.match as ASTSubroutineSubprogramNode).body.add(regCall)
+				setServices.body.add(regCall)
             	
             ]
             
-            
-        ]        
-        
-      
-       	val AddComponentToDriverMT = CallInSubroutineMT.refine(
-       		#{"compLabel"->String, "srcCompLabel"->String, "dstCompLabel"->String}
-       	) => [
-       		find = [bind|
-       			//here we modify existing results
-       			bind.resultSet.results.forEach[r|
-       				val callStmt = r.match as ASTCallStmtNode
-       				if (callStmt.argList.get(1).name?.eic("srcCompLabel")) {
-       					r.put("srcCompLabel", callStmt.argList.get(1).expr.literal)
-       					r.put("dstCompLabel", callStmt.argList.get(2).expr.literal)
-       				}
-       				else {
-       					r.put("compLabel", callStmt.argList.get(1).expr.literal)
-       					//r.put("compLabelExpr", callStmt.argList.get(1).expr)
-       				}
-       			]
-       		]
-       		
-       		/*
-       		 * 
-       		 * 		if (compLabel != null) {			
-					}
-							else if (srcCompLabel != null && dstCompLabel != null) {
-								code = 
-					'''
-					
-					call NUOPC_DriverAddRunElement(«_parent.paramGridComp», slot=«paramint(slot)», &
-					    srcCompLabel=«paramch(srcCompLabel)», dstCompLabel=«paramch(dstCompLabel)», rc=«_parent.paramRC»)
-					«ESMFErrorCheck(_parent.paramRC)»
-					'''				
-							}
-							else if (slot != null && linkSlot != null) {
-								code = 
-					'''	
-					
-					! add a run sequence element to link between slots    
-					call NUOPC_DriverAddRunElement(«_parent.paramGridComp», slot=«paramint(slot)», linkSlot=«paramint(linkSlot)», rc=«_parent.paramRC»)
-					«ESMFErrorCheck(_parent.paramRC)»
-					'''    
-							}
-       		 */
-       		 
-       		forwardAdd = [bind|
-       			
-       			//TODO: automatically replace parameters with binding values
-       			val gcomp = bind.getValueString("gcomp")
-       			val rc = bind.getValueString("rc")
-       			val slot = bind.getValueString("slot")
-       			val compLabel = bind.getValueString("compLabel")
-       			val phaseLabel = bind.getValueString("phaseLabel")
-       		     			
-       			val code = '''
-
-call NUOPC_DriverAddRunElement(«gcomp», slot=«slot», &
-    compLabel=«compLabel», «IF phaseLabel!=null»phaseLabel=«phaseLabel»,«ENDIF» rc=«rc»)
-'''
-				val IASTListNode<IBodyConstruct> stmts = parseLiteralStatementSequence(code)
-				val ASTSubroutineSubprogramNode ssn = bind.context
-				ssn.body.addAll(stmts)	
-       		]
-       		
-       	]
-       	
-       
-        
-        SetServicesMT = new MappingType("SetServicesMT", ASTModuleNode, ASTSubroutineSubprogramNode,
-        	#{"rc"->String, "gcomp"->String, "routineSetServices"->String}
-        ) => [
+        ]    
+    	
+    	
+    	SetServicesMT = new MappingType("SetServicesMT", ASTModuleNode, ASTSubroutineSubprogramNode,
+        	#{"rc"->String, "gcomp"->String, "genericUse"->CodeConceptInstance}) => [
             
             find = [me|
                 val ASTModuleNode module = me.context()
@@ -225,119 +260,196 @@ call NUOPC_DriverAddRunElement(«gcomp», slot=«slot», &
             
             forwardAdd = [bind|
             	
-            	val code = bind.fill('''
+            	val CodeConceptInstance genericUse = bind.getValue("genericUse")
+            	val routineSS = genericUse.get("genericSS") as String
+            	
+            	val ASTSubroutineSubprogramNode ssn = bind.parseProgramUnit(
+					'''
 
-					subroutine SetServices({gcomp}, {rc})
-					    type(ESMF_GridComp)  :: {gcomp}
-					    integer, intent(out) :: {rc}
+					subroutine SetServices(<gcomp>, <rc>)
+					    type(ESMF_GridComp)  :: <gcomp>
+					    integer, intent(out) :: <rc>
 					    
 					    rc = ESMF_SUCCESS
 					    
-					    ! NUOPC_Driver registers the generic methods
-					    call NUOPC_CompDerive({gcomp}, {routineSetServices}, rc={rc})
-					    «ESMFCodeTemplates.ESMFErrorCheck(bind.getValueString("rc"))»
+					    ! Register the generic methods
+					    call NUOPC_CompDerive(<gcomp>, «routineSS», rc=<rc>)
+					    <ESMFErrorCheck(rc)>
 					    
 					end subroutine
 					''')
 				
-				val ASTSubroutineSubprogramNode ssn = parseLiteralProgramUnit(code)
 				val ASTModuleNode moduleNode = bind.context
 				moduleNode.getModuleBody.add(ssn)
 				bind.match = ssn
 				
             ]
         ]
-        
-        
-        SetServices = new CodeConceptTemplate("SetServices", #[]) => [
-        	addAnnotationsWithDefaults(#{"rc"->"rc", "gcomp"->"gcomp", "routineSetServices"->"fixme"})
-        	setMappingType(SetServicesMT, #{"rc"->"@rc", "gcomp"->"@gcomp", "routineSetServices"->"@routineSetServices"})
+    	
+    	
+    	SetServices = new CodeConcept("SetServices") => [
+        	addAnnotationsWithDefaults(#{"rc"->"rc", "gcomp"->"gcomp"})
+        	setMappingType(SetServicesMT, #{"rc"->"@rc", "gcomp"->"@gcomp", "genericUse"->"../UsesGeneric"})
+        ]
+             
+        ESMFEntryPoint = new CodeConcept("EntryPoint") => [
+        	addAnnotationsWithDefaults(#{"name"->"EntryPoint", "methodType"->"ESMF_METHOD_INITIALIZE"})
+        	addAnnotations("phaseNumber", "phaseLabel")
+        	addAnnotation("Reg", ASTCallStmtNode)
+        	setMappingType(NUOPCEntryPointMT, 
+        			#{"SetServices"->"../SetServices*",
+        	  		  "Reg"->"@Reg", "name"->"@name", "methodType"->"@methodType",
+        	  	      "phaseNumber"->"@phaseNumber", "phaseLabel"->"@phaseLabel"})
         ]
         
-        /*
-        NUOPCComponent = new CodeConceptTemplate("NUOPCComponent", #["genericImport"]) => [
-            
-            //addAnnotation("ast", IFortranAST)
-            addAnnotation("name")
-                       
-            setMappingType(ModuleMT, #{"name" -> "@name"})
-   
-            addSubconcept("UsesESMF", ModuleUseStmtMT, false, 1, 1, #{"uses" -> "ESMF"}, true)
-            addSubconcept("UsesNUOPC", ModuleUseStmtMT, false, 1, 1, #{"uses" -> "NUOPC"}, true)
-            
-            //ModuleUseEntityMT = new MappingType("ModuleUseStmtMT", ASTModuleNode, ASTUseStmtNode,
-            //#{"uses"->String, "entity"->String, "localName"->String}) => [
-            //addSubconcept("UsesGeneric", ModuleUseEntityMT, true, 1, 1, #{"uses"->"$genericImport", "entity"->"SetServices", "localName"->"genericSS"}, true)
-            addSubconcept("SetServices", SetServices, false, 1, 1, true)
-           
-        ]
-        */
-        
+               
         NUOPCComponent = new CodeConcept("NUOPCComponent") => [
             
-            addAnnotation("name")
+            addAnnotations("name")
                        
             setMappingType(ModuleMT, #{"name" -> "@name"})
    
             addSubconcept("UsesESMF", ModuleUseStmtMT, false, 1, 1, #{"uses" -> "ESMF"}, true)
             addSubconcept("UsesNUOPC", ModuleUseStmtMT, false, 1, 1, #{"uses" -> "NUOPC"}, true)
             addSubconcept("SetServices", SetServices, false, 1, 1, true)
+            addSubconcept("ESMFEntryPoint", ESMFEntryPoint, false, 0, -1, true)
+            
+           
+        ]
+    	
+    }
+    
+    protected def modelDefs() {
+    	
+    	NUOPCModel = NUOPCComponent.extend("NUOPCModel") => [
+           
+           	addSubconcept("UsesGeneric", ModuleUseEntityMT, true, 1, 1, 
+           		#{"uses"->"NUOPC_Model", "entity"->"SetServices", "localName"->"@genericSS"}, true) => [
+           			addAnnotationsWithDefaults(#{"genericSS"->"modelSS"})
+           		]
+ 
+           	//addSubconcept("SetModelServices", SetModelServices, false, 1, 1, true)    	
            
         ]
         
-       	val SetModelServices_AddComponent = new CodeConcept("AddComponent") => [
-        	addAnnotations(#["compLabel", "srcCompLabel", "dstCompLabel"])
-        	setMappingType(AddComponentToDriverMT, 
-        		#{"calls"->"NUOPC_DriverAddComp", "compLabel"->"@compLabel",
-        			"srcCompLabel"->"@srcCompLabel", "dstCompLabel"->"@dstCompLabel"
-        		}
-        	)
+        NUOPCModelRoot = new CodeConcept("NUOPCModelRoot", FortranAstMT) => [
+        	addSubconcept("NUOPCModel", NUOPCModel, true, 1, 1, true);
+        ]
+    	
+    }
+    
+    protected def driverDefs() {
+    	
+    	
+    	AddComponentToDriverMT = CallInSubroutineMT.refine(
+       		#{"gcomp"->String, "rc"->String, "slot"->String, "linkSlot"->String,
+       		  "compLabel"->String, "phaseLabel"->String, 
+       		  "srcCompLabel"->String, "dstCompLabel"->String}) => [
+       		
+       		find = [bind|
+       			//here we annotate existing results
+       			bind.resultSet.results.forEach[r|
+       				val callStmt = r.match as ASTCallStmtNode
+       				if (callStmt.argList.get(1).name?.eic("srcCompLabel")) {
+       					r.put("srcCompLabel", callStmt.argList.get(1).expr.literal)
+       					r.put("dstCompLabel", callStmt.argList.get(2).expr.literal)
+       				}
+       				else {
+       					r.put("compLabel", callStmt.argList.get(1).expr.literal)
+       				}
+       			]
+       		]
+       		 
+       		forwardAdd = [bind|       			
+
+	       		val stmts = bind.parseStatementSeq('''
+					
+					<if(compLabel)>
+					call NUOPC_DriverAddRunElement(<gcomp>, slot=<slot>, &
+					    compLabel=<compLabel>, <if(phaseLabel)>phaseLabel=<phaseLabel>,<endif> rc=<rc>)
+					<elseif (srcCompLabel && dstCompLabel)>
+					call NUOPC_DriverAddRunElement(<gcomp>, slot=<slot>, &
+						srcCompLabel=<srcCompLabel>, dstCompLabel=<dstCompLabel>, rc=<rc>)
+					<elseif (slot && linkSlot)>
+					! add a run sequence element to link between slots    
+					call NUOPC_DriverAddRunElement(<gcomp>, slot=<slot>, linkSlot=<linkSlot>, rc=<rc>)
+					<else>
+					! CODE GENERATION ERROR: incomplete information to generate call to NUOPC_DriverAddRunElement	
+					<endif>
+					<ESMFErrorCheck(rc)>
+					''')
+				
+				val ASTSubroutineSubprogramNode ssn = bind.context
+				ssn.body.addAll(stmts)	
+       		]
+       		
        	]
-                
-        val SetModelServices = new CodeConcept("SetModelServices") => [
+       	
+    	
+    	
+    	SetModelServices = new CodeConcept("SetModelServices") => [
+        	
+        	addAnnotationsWithDefaults(
+        		#{"gcomp"->"gcomp", "rc"->"rc",
+        		  "name"->"SetModelServices",
+        		  "specLabel"->"driver_label_SetModelServices",
+        		  "specPhaseLabel"->null
+        		 }
+        	)
+        	
         	setMappingType(SpecializationMethodMT, 
-        			#{"SetServices" -> "../SetServices", 
+        			#{"SetServices" -> "../SetServices*", 
                   	  "labelComponent" -> "NUOPC_Driver",
       	  			  "labelName" -> "label_SetModelServices",
-      	  			  "specLabel" -> "driver_label_SetModelServices",
-      	  			  "specPhaseLabel" -> null,
-      	  			  "name"->"SetModelServices",
-      	  			  "gcomp"->"gcomp",
-      	  			  "rc"->"rc"})
+      	  			  "specLabel" -> "@specLabel",
+      	  			  "specPhaseLabel" -> "@specPhaseLabel",
+      	  			  "name"->"@name",
+      	  			  "gcomp"->"@gcomp",
+      	  			  "rc"->"@rc"})
+      	  			 
+        		  
+      	  	SetModelServices$AddComponent  = 
+      	  		addSubconcept("AddComponent", AddComponentToDriverMT, false, 1, -1, 
+      	  		#{"calls"->"NUOPC_DriverAddComp", "compLabel"->"@compLabel", 
+      	  	      "phaseLabel"->"@phaseLabel", "srcCompLabel"->"@srcCompLabel", 
+      	  	      "dstCompLabel"->"@dstCompLabel", "slot"->"@slot", "linkSlot"->"@linkSlot",
+      	  	      "gcomp"->"@@gcomp", "rc"->"@@rc"}, true) => [
+        				
+        				addAnnotationsWithDefaults(
+        					#{"compLabel"->"\"COMP\"", 
+        					  "srcCompLabel"->"\"SRC\"", "dstCompLabel"->"\"DST\"", 
+        					  "phaseLabel"->"FIXME", "slot"->"1", "linkSlot"->"2"})
+        			]
         ]   
+        
              
         NUOPCDriver = NUOPCComponent.extend("NUOPCDriver") => [
            
-           	addSubconcept("UsesGeneric", ModuleUseEntityMT, true, 1, 1, #{"uses"->"NUOPC_Driver", "entity"->"SetServices", "localName"->"driverSS"}, true)
+           	addSubconcept("UsesGeneric", ModuleUseEntityMT, true, 1, 1, 
+           		#{"uses"->"NUOPC_Driver", "entity"->"SetServices", "localName"->"@genericSS"}, true) => [
+           			addAnnotationsWithDefaults(#{"genericSS"->"driverSS"})
+           		]
  
-           	addSubconcept("SetModelServices", SetModelServices, false, 1, 1, true)
-           	
-           	/*                      
-            addSubconcepts(
-            	#["SetModelServices", SpecializationMethodMT, 
-            		#{"SetServices" -> "../SetServices", 
-                  	  "labelComponent" -> "NUOPC_Driver",
-      	  			  "labelName" -> "label_SetModelServices"},
-      	  			#[
-      	  				#[SetModelServices_AddComponent, 1, -1]
-      	  				//#["AddComponent", AddComponentToDriverMT, #{"calls"->"NUOPC_DriverAddComp", "compLabel"->"@compLabel"}, 1, -1]
-      	  			 ]							
-      	  		 ]
-            )
-          */
+           	addSubconcept("SetModelServices", SetModelServices, false, 1, 1, true)    	
+           
         ]
- 
- 		//val cci = NUOPCDriver.newInstance(#{"name"->"MyDriver"})
-               
         
-        //NUOPCDriverFromFile = new BootstrapCodeConcept(NUOPCDriver)
-        
-               
-        
-                  
-        
+        NUOPCDriverRoot = new CodeConcept("NUOPCDriverRoot", FortranAstMT) => [
+        	addSubconcept("NUOPCDriver", NUOPCDriver, true, 1, 1, true);
+        ]
+    	
+    	
     }
     
+    
+    def static ESMFErrorCheck(String rcToCheck) {
+		'''	
+		if (ESMF_LogFoundError(rcToCheck=«rcToCheck», msg=ESMF_LOGERR_PASSTHRU, &
+			line=__LINE__, &
+			file=__FILE__)) &
+			return  ! bail out
+		'''
+	}	
         
     
 }

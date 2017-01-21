@@ -29,6 +29,9 @@ public class NUOPCCodeConceptTest {
 	private static IProject PROJECT_NUOPC_PROTOTYPES;
 	private static NullProgressMonitor NPM = new NullProgressMonitor();
 	
+	private static CodeConceptManager manager = CodeConceptManager.getInstance();
+	private static NUOPC NUOPCDEF = NUOPC.getInstance();
+	
 	@BeforeClass
 	public static void setUp() throws CoreException, IOException, InterruptedException {
 		PROJECT_NUOPC_PROTOTYPES = TestHelpers.createFortranProjectFromFolder("target/" + NUOPCTest.NUOPC_TAG, NUOPCTest.NUOPC_TAG);	
@@ -41,18 +44,28 @@ public class NUOPCCodeConceptTest {
 	
 	@Test
 	public void ReverseNUOPCDriver() throws IOException, CoreException {
-		
-		NUOPC NUOPC_DEF = NUOPC.getInstance();
-		
-		System.out.println(NUOPC_DEF.NUOPCComponent);
-		System.out.println(NUOPC_DEF.NUOPCDriver);
+				
+		System.out.println(NUOPCDEF.NUOPCComponent);
+		System.out.println(NUOPCDEF.NUOPCDriver);
 		
 		IProject p = TestHelpers.createFortranProjectFromFolder("target/" + NUOPCTest.NUOPC_TAG + "/AtmOcnProto", NUOPCTest.NUOPC_TAG + "_AtmOcnProto");
 		IFile f = p.getFile("esm.F90");
 		
-		//CodeConceptInstance i = NUOPC_DEF.NUOPCDriverFromFile.fromFile(f);
-		CodeConceptManager manager = CodeConceptManager.getInstance();
-		CodeConceptInstance cci = manager.reverse(NUOPC_DEF.NUOPCDriver, f);
+		CodeConceptInstance cci = manager.reverse(NUOPCDEF.NUOPCDriver, f);
+		System.out.println(cci);
+		
+	}
+	
+	@Test
+	public void ReverseNUOPCModel() throws IOException, CoreException {
+				
+		//System.out.println(NUOPCDEF.NUOPCComponent);
+		System.out.println(NUOPCDEF.NUOPCModel);
+		
+		IProject p = TestHelpers.createFortranProjectFromFolder("target/" + NUOPCTest.NUOPC_TAG + "/AtmOcnTransferGridProto", NUOPCTest.NUOPC_TAG + "_AtmOcnTransferGridProto");
+		IFile f = p.getFile("atm.F90");
+		
+		CodeConceptInstance cci = manager.reverse(NUOPCDEF.NUOPCModel, f);
 		System.out.println(cci);
 		
 	}
@@ -60,26 +73,30 @@ public class NUOPCCodeConceptTest {
 	@SuppressWarnings("restriction")
 	@Test
 	public void GenerateNUOPCDriver() throws CoreException {
-		CodeConceptManager manager = CodeConceptManager.getInstance();
-		NUOPC NUOPCDEF = NUOPC.getInstance();
+		
 				
 		IProject p = TestHelpers.createEmptyFortranProject("GenerateNUOPCDriver");
 		IFile f = TestHelpers.createBlankFile(p, "MyDriver.F90");
 		IFortranAST ast = PhotranVPG.getInstance().acquireTransientAST(f);
-		
-		MappingType topMT = new MappingType("TopMT", IFortranAST.class, IFortranAST.class);
-		CodeConcept root = new CodeConcept("Root", topMT);
-		root.addSubconcept("NUOPCDriver", NUOPCDEF.NUOPCDriver, false, 1, 1, true);
-		
-		CodeConceptInstance dummyParent = root.newInstance(null, ast);
+				
+		CodeConceptInstance dummyParent = NUOPCDEF.NUOPCDriverRoot.newInstance(null, ast);
 		CodeConceptInstance driverToGenerate = dummyParent.addChildWithDefaults(NUOPCDEF.NUOPCDriver, true);
-		
-		//CodeConceptInstance driverToGenerate = NUOPCDEF.NUOPCDriver.newInstanceWithDefaults(null, true);
-		//driverToGenerate.setStatus(CCIStatus.ADDED, true);
-		//driverToGenerate.setMatch(ast.getRoot().getProgramUnitList().findFirst(ASTModuleNode.class));
-		//driverToGenerate.put("ast", ast);
 		driverToGenerate.put("name", "MyDriver");
 		
+		CodeConceptInstance sms = driverToGenerate.getChild("SetModelServices");
+		
+		CodeConceptInstance ac1 = NUOPCDEF.SetModelServices$AddComponent.newInstance(sms);
+		ac1.put("srcCompLabel", "\"ATM\"");
+		ac1.put("dstCompLabel", "\"OCN\"");
+		ac1.put("slot", "1");
+		
+		CodeConceptInstance ac2 = NUOPCDEF.SetModelServices$AddComponent.newInstance(sms);
+		ac2.put("slot", "1");
+		ac2.put("linkSlot", "2");
+		
+		sms.addChild(ac1, CCIStatus.ADDED);
+		sms.addChild(ac2, CCIStatus.ADDED);
+				
 		System.out.println("DRIVER TO GENERATE**********\n"+driverToGenerate.toString()+"\n*************");
 		
 		//driverToGenerate.addChildWithDefaults(NUOPCDEF.NUOPCDriver.getChildConcept("SetServices"));
@@ -92,5 +109,30 @@ public class NUOPCCodeConceptTest {
 		System.out.println("******************\n" + ast.getRoot().toString() + "********************");
 		
 	}
+	
+	
+	@SuppressWarnings("restriction")
+	@Test
+	public void GenerateNUOPCModel() throws CoreException {
+				
+		IProject p = TestHelpers.createEmptyFortranProject("GenerateNUOPCModel");
+		IFile f = TestHelpers.createBlankFile(p, "MyModel.F90");
+		IFortranAST ast = PhotranVPG.getInstance().acquireTransientAST(f);
+		
+		CodeConceptInstance root = NUOPCDEF.NUOPCModelRoot.newInstance(null, ast);
+		CodeConceptInstance modelToGenerate = root.addChildWithDefaults(NUOPCDEF.NUOPCModel, true);
+		modelToGenerate.put("name", "MyModel");
+						
+		System.out.println("MODEL TO GENERATE**********\n"+modelToGenerate.toString()+"\n*************");
+							
+		manager.forward(modelToGenerate, f);
+		
+		Reindenter.reindent(ast.getRoot(), ast, Strategy.REINDENT_EACH_LINE);
+		
+		System.out.println("******************\n" + ast.getRoot().toString() + "********************");
+		
+	}
+	
+	
 	
 }

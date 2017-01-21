@@ -8,6 +8,10 @@ class MappingResult {
     @Accessors(PUBLIC_GETTER)
     Map<String,Object> values = newLinkedHashMap
     
+    new() {
+    	
+    }
+    
     new(Object match) {
         values.put("match", match)
     }

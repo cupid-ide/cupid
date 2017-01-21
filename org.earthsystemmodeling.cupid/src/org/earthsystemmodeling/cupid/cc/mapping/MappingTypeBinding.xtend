@@ -1,11 +1,23 @@
 package org.earthsystemmodeling.cupid.cc.mapping
 
-import org.eclipse.xtend.lib.annotations.Accessors
-import java.util.Map
 import java.util.List
-import org.earthsystemmodeling.cupid.cc.CodeConceptInstance
-import org.earthsystemmodeling.cupid.cc.CodeConcept
+import java.util.Map
 import java.util.regex.Pattern
+import org.earthsystemmodeling.cupid.cc.CodeConcept
+import org.earthsystemmodeling.cupid.cc.CodeConceptInstance
+import org.eclipse.photran.internal.core.lexer.Token
+import org.eclipse.photran.internal.core.parser.IASTNode
+import org.eclipse.photran.internal.core.parser.IExpr
+import org.eclipse.xtend.lib.annotations.Accessors
+import org.stringtemplate.v4.ST
+
+import static org.earthsystemmodeling.cupid.util.CodeExtraction.*
+import org.eclipse.photran.internal.core.parser.IProgramUnit
+import org.eclipse.photran.internal.core.parser.IBodyConstruct
+import org.eclipse.photran.internal.core.parser.IASTListNode
+import org.stringtemplate.v4.STGroupString
+import org.stringtemplate.v4.STErrorListener
+import org.stringtemplate.v4.misc.STMessage
 
 class MappingTypeBinding {
     
@@ -23,9 +35,11 @@ class MappingTypeBinding {
     
     //@Accessors(PROTECTED_GETTER)
     CodeConceptInstance currentInstance
-    
+      
     @Accessors(PUBLIC_GETTER)  //can be accessed by refinements of mappingType
     MappingResultSet resultSet
+    
+    MappingResult currentResult
     
     new(MappingType mappingType, CodeConcept concept) {
         this.mappingType = mappingType
@@ -107,21 +121,7 @@ class MappingTypeBinding {
     	getBinding(variable) == null
     }
     
-    /*
-    def doFind(CodeConceptInstance parent) {
-        currentContext = parent
-        val resultset = mappingType.doFind(this)
-        currentContext = null
-        return resultset
-    }
-    */
-    
-    /*
-    private def reset() {
-    	resultSet = null	
-    }
-    */
-    
+        
     /**
      * Execute the mapping to try to bind a single result. If successful, the returned
      * instance will be set as a child of the parent. 
@@ -129,7 +129,7 @@ class MappingTypeBinding {
      * @param parent the parent context
      * @return an instance of this binding's concept, or null if none found
      */
-    def CodeConceptInstance bind(CodeConceptInstance parent) {
+    def CodeConceptInstance find(CodeConceptInstance parent) {
     	
     	resultSet = new MappingResultSet(mappingType)
     	currentContext = parent
@@ -166,7 +166,7 @@ class MappingTypeBinding {
      * @param parent the parent context
      * @return a (potentially empty) list of instances of this binding's concept
      */
-    def List<CodeConceptInstance> bindAll(CodeConceptInstance parent) {
+    def List<CodeConceptInstance> findAll(CodeConceptInstance parent) {
     	
     	resultSet = new MappingResultSet(mappingType)
     	currentContext = parent
@@ -199,7 +199,7 @@ class MappingTypeBinding {
 	static Pattern TEMPLATE_VAR = Pattern.compile("\\{\\w+\\}")
 	
 	def fill(String template) {
-		
+		//TODO: look into StringTemplate
 		val matcher = TEMPLATE_VAR.matcher(template)
 		val sb = new StringBuffer
 		while (matcher.find()) {
@@ -210,21 +210,162 @@ class MappingTypeBinding {
 				matcher.appendReplacement(sb, replacement)
 			}
 			else {
-				matcher.appendReplacement(sb, matcher.group)  //leave unchanged
+				//matcher.appendReplacement(sb, matcher.group)  //leave unchanged
+				throw new MappingTypeException("Template variable cannot be evaluated: " + varToReplace + "\n******\n" + template + "\n******")
 			}
 		}
 		matcher.appendTail(sb)
 		
 		sb.toString
 	}
+	
+	static STErrorListener templateErrorListener = new STErrorListener() {
+		
+		override IOError(STMessage m) {
+			throw new MappingTypeException(m.toString)
+		}
+		
+		override compileTimeError(STMessage m) {
+			throw new MappingTypeException(m.toString)
+		}
+		
+		override internalError(STMessage m) {
+			throw new MappingTypeException(m.toString)
+		}
+		
+		override runTimeError(STMessage m) {
+			throw new MappingTypeException(m.toString)
+		}
+		
+	}
+	
+	def fillST(String template) {
+		
+		val templateGroup = 
+			'''
+				ESMFErrorCheck(rc) ::= <<
+					if (ESMF_LogFoundError(rcToCheck=<rc>, msg=ESMF_LOGERR_PASSTHRU, &
+						line=__LINE__, &
+						file=__FILE__)) &
+						return
+				>>
+				
+				thistmp_(«FOR arg : bindings.keySet.filter[k|k.name != "match" && k.name != "context"] SEPARATOR ', '»«arg.name»«ENDFOR») ::= <<
+					«template»
+				>>
+			'''
+		
+		val stgroup = new STGroupString(templateGroup)
+		stgroup.setListener(templateErrorListener)
+		
+		val st = stgroup.getInstanceOf("thistmp_") //new ST(template)
+		if (st == null) {
+			throw new MappingTypeException("Error in template: " + template)
+		}
+		bindings.forEach[k,v|
+			if (k.name != "match" && k.name != "context") {
+				st.add(k.name, getValue(k))
+			}
+		]
+		//add error check
+		//st.add("ESMFErrorCheck", "blag")
+		
+		st.render
+		
+	}
+	
+	def <T extends IProgramUnit> T parseProgramUnit(String template) {
+		val code = fillST(template)
+		parseLiteralProgramUnit(code)
+	}
+	
+	def <T extends IBodyConstruct> T parseStatement(String template) {
+		val code = fillST(template)
+		parseLiteralStatement(code)
+	}
+	
+	def IASTListNode<IBodyConstruct> parseStatementSeq(String template) {
+		val code = fillST(template)
+		parseLiteralStatementSequence(code)
+	}
+	
+	
+	
+	private def void addBindingToResult(String variable, Object value) {
+		if (currentResult == null) {
+			currentResult = new MappingResult
+		}
+		if (value != null && !mappingType.getParameterType(variable).isInstance(value)) {
+			throw new IllegalVariableAssignment(variable, mappingType.getParameterType(variable), value.class)
+		}
+		currentResult.put(variable, value)
+	}
+	
+	def <T extends IASTNode> boolean bind(String variable, T node) {
+		val T toMatch = getValue(variable)
+		if (toMatch != null) {
+			toMatch.equals(node)
+		}
+		else {
+			addBindingToResult(variable, node)
+			true
+		}
+	}    
+	    
+	def boolean bindExpr(String variable, IExpr expr) {
+		val toMatch = getValueString(variable)
+		if (toMatch != null) {
+			toMatch.equalsIgnoreCase(expr.toString.trim)
+		}
+		else {
+			addBindingToResult(variable, expr.toString.trim)
+			true
+		}
+	}
+	
+	def boolean bindExprContains(String variable, IExpr expr) {
+		val toMatch = getValueString(variable)
+		if (toMatch != null) {
+			toMatch.toLowerCase.contains(expr.toString.trim.toLowerCase)
+		}
+		else {
+			addBindingToResult(variable, expr.toString.trim)
+			true
+		}
+	}
+	
+	def boolean bindToken(String variable, Token token) {
+		val toMatch = getValueString(variable)
+		if (toMatch != null) {
+			toMatch.equalsIgnoreCase(token.text)
+		}
+		else {
+			addBindingToResult(variable, token.text)
+			true
+		}
+	}
 	    
     def addResult(Object match) {
     	if (!mappingType.matchType.isInstance(match)) {
     		throw new IllegalVariableAssignment("match", mappingType.matchType, match.class)
     	}
-    	resultSet.addMatch(match)   	
+    	if (currentResult != null) {
+    		currentResult.put("match", match)
+    		resultSet.addResult(currentResult)
+    		val toRet = currentResult
+    		currentResult = null
+    		return toRet
+    	}
+    	else {
+    		return resultSet.addMatch(match)
+    	} 	
     }
     
+    def reset() {
+    	currentResult = null
+    }
+    
+    /*
     def addResult(Map<String, Object> params) {
     	val result = addResult(params.get("match"))  //TODO: for now assume there is a match
     	params.forEach[k, v|
@@ -234,6 +375,7 @@ class MappingTypeBinding {
     	]
     	result
     }
+    */
     
     def <T> T context() {
         getValue("context")

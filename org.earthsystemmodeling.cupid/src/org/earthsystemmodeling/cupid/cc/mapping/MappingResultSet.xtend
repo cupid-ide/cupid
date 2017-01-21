@@ -27,18 +27,10 @@ class MappingResultSet {
         get(0)
     }
     
-    /*
-    def pop() {
-    	if (results.size() > 0) {
-    		return results.remove(0)
-    	}
-    	else {
-    		return null
-    	}
+    def void addResult(MappingResult result) {
+    	results.add(result)
     }
-    * 
-    */
-    
+        
     def addMatch(Object match) {
         val r = new MappingResult(match)
         results.add(r)

@@ -11,6 +11,9 @@ public class MappingResult {
   @Accessors(AccessorType.PUBLIC_GETTER)
   private Map<String, Object> values = CollectionLiterals.<String, Object>newLinkedHashMap();
   
+  public MappingResult() {
+  }
+  
   public MappingResult(final Object match) {
     this.values.put("match", match);
   }

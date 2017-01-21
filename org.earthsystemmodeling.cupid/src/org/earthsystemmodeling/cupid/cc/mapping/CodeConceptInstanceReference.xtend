@@ -1,5 +1,7 @@
 package org.earthsystemmodeling.cupid.cc.mapping
 
+import org.earthsystemmodeling.cupid.cc.CodeConceptInstance
+
 class CodeConceptInstanceReference<T> extends ReferenceMTVBinding<T> {
     
     new(MappingTypeVariable<T> boundTo, String reference) {
@@ -14,13 +16,123 @@ class CodeConceptInstanceReference<T> extends ReferenceMTVBinding<T> {
         }
     }
     
+    //static val PATH_REGEX = "((\\.\\.)|(\\w+)|(@\\w+))\\/?";
+	//static val Pattern PATH_PATTERN = Pattern.compile(PATH_REGEX);
+
+	//final Matcher matcher = pattern.matcher(string);
+
+    protected def Object resolvePath() {
+    	
+    	var segments = reference.split("/")
+    	var CodeConceptInstance current
+    	if (segments.get(0) == "..") {
+    		current = binding.currentContext
+    		segments = segments.drop(1) //already took care of first segment
+    	}
+    	else {
+    		current = binding.currentInstance
+    	}
+    	    	
+    	for (seg : segments) {
+    		if (seg == "..") {
+    			current = current.parent
+    		}
+    		else if (seg.startsWith("@")) {
+    			if (current != null) {
+    				if (seg.startsWith("@@")) {
+    					return current.getAnnotationRecursive(seg.substring(2))
+    				}
+    				else {
+    					return current.get(seg.substring(1))
+    				}
+    			}
+    			else {
+    				/*
+    				val dflt = current.type.getAnnotationDefault(seg.substring(1))
+    				if (dflt != null) {
+        				return dflt
+        			}
+        			else {
+        				throw new MappingTypeException("No current instance or default defined for annotation: " + reference)
+        			}
+        			* 
+        			*/
+        			return null
+    			}
+    		}
+    		else if (seg.endsWith("*")) {
+    			return current.getChild(seg.substring(0, seg.length-1))?.match         
+    		}
+    		else {
+    			current = current.getChild(seg)
+    		}
+    		
+    	}
+    	
+    	return current
+    	
+    }
+    
     override getValue() {
+        
+        if (reference != null) {
+        	val refVal = resolvePath
+        	if (refVal != null && !boundTo.type.isInstance(refVal)) {
+                throw new IllegalVariableAssignment(boundTo.name, boundTo.type, refVal.class)
+            }
+            else {
+            	value = refVal as T
+            	return value
+            }
+        }
+        else if (boundTo.name.equals("context")) {
+            if (binding.currentInstance != null) {
+            	value = binding.currentInstance.nearestAncestorWithMatch(boundTo.type)
+            }
+            else if (binding.currentContext != null) {
+            	value = binding.currentContext.nearestAncestorWithMatch(boundTo.type)
+            }
+            else {
+            	throw new MappingTypeException("No context information available")
+            }
+            return value
+        }
+        //TODO: handle "match" here??
+        else {
+            //handle everything else, i.e., path
+            throw new UnsupportedOperationException("Cannot handle path expression: " + reference + " [" + boundTo + "].")
+        }
+    }
+    
+    /*
+    def getValueOLD() {
+        
+        if (reference != null) {
+        	resolvePath
+        }
+        
         if (reference != null && reference.startsWith("@")) {
-        	val annotationName = reference.substring(1)
         	if (binding.currentInstance == null) {
-        		throw new MappingTypeException("No current instance found")
+        		//see if there is a default defined
+        		val dflt = binding.concept.getAnnotationDefault(reference.substring(1))
+        		if (dflt != null) {
+        			return dflt as T
+        		}
+        		else {
+        			throw new MappingTypeException("No current instance or default defined for annotation: " + reference)
+        		}
         	}
-        	val refVal = binding.currentInstance.get(annotationName)
+        	
+        	var Object refVal
+        	if (reference.startsWith("@@")) {
+        		val annotationName = reference.substring(2)
+        		refVal = binding.currentInstance.getAnnotationRecursive(annotationName)
+        	}
+        	else {
+        		val annotationName = reference.substring(1)
+        		refVal = binding.currentInstance.get(annotationName)
+        	}
+        	
         	if (refVal != null && !boundTo.type.isInstance(refVal)) {
                 throw new IllegalVariableAssignment(boundTo.name, boundTo.type, refVal.class)
             }
@@ -64,6 +176,7 @@ class CodeConceptInstanceReference<T> extends ReferenceMTVBinding<T> {
             throw new UnsupportedOperationException("Cannot handle path expression: " + reference + " [" + boundTo + "].")
         }
     }
+    */
     
     override clone(MappingTypeBinding newBinding) {
         new CodeConceptInstanceReference<T>(boundTo, reference, newBinding)

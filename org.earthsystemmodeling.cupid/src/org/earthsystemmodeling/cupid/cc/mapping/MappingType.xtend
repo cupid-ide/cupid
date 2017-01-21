@@ -117,7 +117,9 @@ class MappingType {
     	if (refines != null) {
     		refines.doForwardAdd(binding)
     	}
-    	forwardAdd.apply(binding)
+    	if (forwardAdd != null) {
+    		forwardAdd.apply(binding)
+    	}
     }
        
    

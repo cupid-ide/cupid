@@ -5,7 +5,7 @@ import org.earthsystemmodeling.cupid.cc.mapping.MappingTypeException
 class IllegalVariableAssignment extends MappingTypeException {
     
     new(String varName, Class<?> expectedType, Class<?> actualType) {
-        super("Illegal variable assignment: Expected type " + expectedType.simpleName + " but received type " + actualType.simpleName)
+        super("Illegal variable assignment for variable: " + varName + ". Expected type " + expectedType.simpleName + " but received type " + actualType.simpleName)
     }
     
 }

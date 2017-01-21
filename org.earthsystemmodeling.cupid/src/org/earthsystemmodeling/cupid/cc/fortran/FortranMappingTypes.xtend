@@ -1,6 +1,5 @@
 package org.earthsystemmodeling.cupid.cc.fortran
 
-import org.earthsystemmodeling.cupid.cc.CodeConceptTemplate
 import org.earthsystemmodeling.cupid.cc.mapping.MappingType
 import org.earthsystemmodeling.cupid.cc.mapping.MappingTypeException
 import org.eclipse.photran.core.IFortranAST
@@ -24,7 +23,7 @@ class FortranMappingTypes {
 	
 	static FortranMappingTypes instance
     
-   // public static MappingType FileToASTMT
+    public static MappingType FortranAstMT
     public static MappingType CallInSubroutineMT
     //public static MappingType ModuleThatUsesMT
     public static MappingType ModuleUseStmtMT
@@ -41,6 +40,7 @@ class FortranMappingTypes {
        
     protected new() {
     	
+    	FortranAstMT = new MappingType("FortranAstMT", IFortranAST, IFortranAST);
     	
     	ModuleUseStmtMT = new MappingType("ModuleUseStmtMT", ASTModuleNode, ASTUseStmtNode,
             #{"uses"->String}) => [
@@ -70,24 +70,21 @@ class FortranMappingTypes {
             find = [bind|
                 
                 val ASTModuleNode moduleNode = bind.context
-                val uses = bind.getValueString("uses")
-                val entity = bind.getValueString("entity")
-                val localName = bind.getValueString("localName")
-                
+
                 val useStmtNode = moduleNode.moduleBody?.filter(ASTUseStmtNode).findFirst[usn|
-                    usn.name.text.eic(uses)
+                    bind.bindToken("uses", usn.name)
                 ]
                 
                 if (useStmtNode != null) {
 	                val exists = 
 						useStmtNode.findAll(ASTRenameNode)?.exists[rn|
-							rn.name.eic(entity) &&
-							rn.newName.eic(localName)
+							bind.bindToken("entity", rn.name) &&
+							bind.bindToken("localName", rn.newName)
 						] 
 						||
 						useStmtNode.findAll(ASTOnlyNode)?.exists[on|
-							on.name.eic(entity) &&
-							on.newName.eic(localName)
+							bind.bindToken("entity", on.name) &&
+							bind.bindToken("localName", on.newName)
 						]
 						||
 						(useStmtNode.findAll(ASTRenameNode).nullOrEmpty &&
@@ -95,8 +92,7 @@ class FortranMappingTypes {
 						)
 				
 	                if (exists) {
-	                    val r = bind.addResult(useStmtNode)
-	                    //r.put("uses", useStmtNode.name.text)
+	                    bind.addResult(useStmtNode)
 	                }	                
 	        	}
 	        	
@@ -174,7 +170,7 @@ class FortranMappingTypes {
         */
         
         CallInSubroutineMT = new MappingType("CallInSubroutineMT", 
-        	#{"context" -> ASTSubroutineSubprogramNode, "calls" -> String, "match" -> ASTCallStmtNode}) => [
+        	ASTSubroutineSubprogramNode, ASTCallStmtNode, #{"calls" -> String}) => [
         	
         	find = [bind|
         		val ASTSubroutineSubprogramNode subr = bind.context
