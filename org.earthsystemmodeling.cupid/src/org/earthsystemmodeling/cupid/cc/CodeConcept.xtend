@@ -49,6 +49,10 @@ class CodeConcept {
     }
     
     def void addAnnotation(String name, Class<?> type) {
+    	if (annotations.containsKey(name) && annotations.get(name) != type) {
+    		throw new CodeConceptException("Code concept " + getName + " already has annotation " + name + 
+    			" with different type: " + annotations.get(name))
+    	}
     	annotations.put(name, type)
     }
     
@@ -134,9 +138,6 @@ class CodeConcept {
             }
         }
         
-        //TODO: consider automatically creating parameter bindings
-        // for local annotations with matching names
-        
         //implicit binding of context
         if (mappingType.hasParameter("context") && binding.unbound("context")) {
             val mtv = mappingType.getParameter("context")
@@ -147,6 +148,19 @@ class CodeConcept {
             val mtv = mappingType.getParameter("match")
             binding.putBinding(mtv, new CodeConceptInstanceReference(mtv, null))
         }
+        //automatically create bindings for unbound parameters that
+        //that match local annotations
+        //binding.unbound.forEach[v|
+        //	if (getAnnotationType(v.name)==v.type) {
+        //		binding.putBinding(v, new CodeConceptInstanceReference(v, "@"+v.name))
+        //	}
+        //]
+        
+        //automatically create local annotations for remaining unbound parameters
+        binding.unbound.forEach[v|
+        	addAnnotation(v.name, v.type)
+        	binding.putBinding(v, new CodeConceptInstanceReference(v, "@"+v.name))
+        ]
         
         if (!binding.fullyBound) {
             throw new CodeConceptException("Missing parameters to mapping type " + mappingType.name + ": " + binding.unbound.join(", "))        

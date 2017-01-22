@@ -13,12 +13,17 @@ class MappingType {
     
     @Accessors
     List<MappingTypeVariable<?>> parameters = newLinkedList
+    
+    //values fixed in refinement
+    Map<MappingTypeVariable<?>, Object> parameterValues = newLinkedHashMap 
           
     @Accessors
     private (MappingTypeBinding)=>void find
     
     @Accessors
     private (MappingTypeBinding)=>void forwardAdd
+    
+    private Map<String, String> templates = newLinkedHashMap
 
     new(String name, Class<?> contextType, Class<?> matchType, Map<String,Class<?>> additionalParameters) {
     	this(name, contextType, matchType)
@@ -68,6 +73,18 @@ class MappingType {
         new MappingType(this, newParameters)
     }
     
+    def MappingType refine(Map<String, Class<?>> newParameters, Map<String, String> parameterValues) {
+    	val newType = refine(newParameters)
+    	parameterValues.forEach[k,v|
+    		val p = newType.getParameter(k)
+    		if (p == null) {
+    			throw new MappingTypeException("Mapping type " + name + " does not have parameter: " + k)
+    		}
+    		newType.parameterValues.put(p, v)
+    	]
+    	newType
+    }
+    
     def hasParameter(String name) {
         getParameter(name) != null    
     }
@@ -93,6 +110,23 @@ class MappingType {
         retList
     }
     
+    def getParameterValue(MappingTypeVariable<?> variable) {
+    	parameterValues.getOrDefault(variable, refines?.getParameterValue(variable))
+    }
+    
+    def getParameterValue(String name) {
+    	getParameterValue(getParameter(name))
+    }
+    
+    def Map<MappingTypeVariable<?>, Object> getParameterValues() {
+    	val retMap = newLinkedHashMap
+    	if (refines != null) {
+    		retMap.putAll(refines.getParameterValues)
+    	}
+    	retMap.putAll(parameterValues)
+    	retMap
+    }
+    
     def Class<?> getParameterType(String name) {
         getParameter(name)?.type        
     } 
@@ -104,13 +138,32 @@ class MappingType {
     def Class<?> matchType() {
         getParameterType("match")
     }
+          
+    def void addTemplate(String name, String template) {
+    	templates.put(name, template)
+    }  
+      
+    //def String getTemplate(String name) {
+    //	templates.getOrDefault(name, refines?.getTemplate(name))
+    //}
+    
+    def Map<String, String> getTemplates() {
+    	val retMap = newLinkedHashMap
+    	if (refines != null) {
+    		retMap.putAll(refines.getTemplates)
+    	}
+    	retMap.putAll(templates)
+    	retMap
+    }
                 
     def void doFind(MappingTypeBinding binding) {
         if (refines != null) {
             //refines.find.apply(binding)
             refines.doFind(binding)
         }
-        find.apply(binding)
+        if (find != null) {
+        	find.apply(binding)
+        }
     }
     
     def void doForwardAdd(MappingTypeBinding binding) {

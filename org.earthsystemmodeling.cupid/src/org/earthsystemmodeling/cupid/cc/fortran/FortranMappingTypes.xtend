@@ -170,12 +170,12 @@ class FortranMappingTypes {
         */
         
         CallInSubroutineMT = new MappingType("CallInSubroutineMT", 
-        	ASTSubroutineSubprogramNode, ASTCallStmtNode, #{"calls" -> String}) => [
+        	ASTSubroutineSubprogramNode, ASTCallStmtNode, #{"calls"->String}) => [
         	
         	find = [bind|
         		val ASTSubroutineSubprogramNode subr = bind.context
         		subr.body.filter(ASTCallStmtNode).filter[
-					it.subroutineName.eic(bind.getValueString("calls"))].forEach[c|
+					bind.bindToken("calls", it.subroutineName)].forEach[c|
 						bind.addResult(c)
 					]
         	]

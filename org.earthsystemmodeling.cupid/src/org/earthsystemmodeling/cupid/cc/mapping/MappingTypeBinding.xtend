@@ -6,18 +6,17 @@ import java.util.regex.Pattern
 import org.earthsystemmodeling.cupid.cc.CodeConcept
 import org.earthsystemmodeling.cupid.cc.CodeConceptInstance
 import org.eclipse.photran.internal.core.lexer.Token
+import org.eclipse.photran.internal.core.parser.IASTListNode
 import org.eclipse.photran.internal.core.parser.IASTNode
+import org.eclipse.photran.internal.core.parser.IBodyConstruct
 import org.eclipse.photran.internal.core.parser.IExpr
+import org.eclipse.photran.internal.core.parser.IProgramUnit
 import org.eclipse.xtend.lib.annotations.Accessors
-import org.stringtemplate.v4.ST
+import org.stringtemplate.v4.STErrorListener
+import org.stringtemplate.v4.STGroupString
+import org.stringtemplate.v4.misc.STMessage
 
 import static org.earthsystemmodeling.cupid.util.CodeExtraction.*
-import org.eclipse.photran.internal.core.parser.IProgramUnit
-import org.eclipse.photran.internal.core.parser.IBodyConstruct
-import org.eclipse.photran.internal.core.parser.IASTListNode
-import org.stringtemplate.v4.STGroupString
-import org.stringtemplate.v4.STErrorListener
-import org.stringtemplate.v4.misc.STMessage
 
 class MappingTypeBinding {
     
@@ -54,7 +53,14 @@ class MappingTypeBinding {
     }
     
     def <T> T getValue(MappingTypeVariable<T> variable) {
-        bindings.get(variable).value as T
+        //first, see if defined at mappingType level
+        val retVal = mappingType.getParameterValue(variable)
+        if (retVal != null) {
+        	retVal as T
+        }
+        else {
+        	bindings.get(variable).value as T
+        }
     }
     
     def <T> T getValue(String variable) {
@@ -62,7 +68,8 @@ class MappingTypeBinding {
         if (mtv == null) {
     		throw new MappingTypeException("Mapping type " + mappingType.name + " does not have parameter: " + variable)
     	}
-        bindings.get(mtv).value as T
+        //bindings.get(mtv).value as T
+        getValue(mtv)
     }
     
     def String getValueString(String variable) {
@@ -112,8 +119,8 @@ class MappingTypeBinding {
     
     def List<MappingTypeVariable<?>> unbound() {
          val retList = newLinkedList
-         //retList.addAll(mappingType.getParameters().filter[p|!bindings.containsKey(p) && !(p.name == "context") && !(p.name == "match")])
-         retList.addAll(mappingType.getParameters().filter[p|!bindings.containsKey(p)])
+         retList.addAll(mappingType.getParameters().filter[p|
+         	!bindings.containsKey(p) && mappingType.getParameterValue(p) == null])
          retList
     }
     
@@ -219,39 +226,36 @@ class MappingTypeBinding {
 		sb.toString
 	}
 	
-	static STErrorListener templateErrorListener = new STErrorListener() {
 		
-		override IOError(STMessage m) {
-			throw new MappingTypeException(m.toString)
-		}
-		
-		override compileTimeError(STMessage m) {
-			throw new MappingTypeException(m.toString)
-		}
-		
-		override internalError(STMessage m) {
-			throw new MappingTypeException(m.toString)
-		}
-		
-		override runTimeError(STMessage m) {
-			throw new MappingTypeException(m.toString)
-		}
-		
-	}
-	
 	def fillST(String template) {
 		
+		val templateParams = newLinkedList
+		templateParams.addAll(bindings.keySet.filter[k|k.name != "match" && k.name != "context"].map[k|k.name])
+		mappingType.getParameterValues.forEach[k,v|
+			if (!templateParams.contains(k.name)) {
+				templateParams.add(k.name)
+			}
+		]
+		
+		//TODO: consider computing this once and caching, if possible
 		val templateGroup = 
 			'''
 				ESMFErrorCheck(rc) ::= <<
-					if (ESMF_LogFoundError(rcToCheck=<rc>, msg=ESMF_LOGERR_PASSTHRU, &
-						line=__LINE__, &
-						file=__FILE__)) &
-						return
+				if (ESMF_LogFoundError(rcToCheck=<rc>, msg=ESMF_LOGERR_PASSTHRU, &
+					line=__LINE__, &
+					file=__FILE__)) &
+					return
 				>>
 				
-				thistmp_(«FOR arg : bindings.keySet.filter[k|k.name != "match" && k.name != "context"] SEPARATOR ', '»«arg.name»«ENDFOR») ::= <<
-					«template»
+				«FOR e : mappingType.templates.entrySet»
+				«e.key»() ::= <<
+				«e.value»
+				>>
+				«ENDFOR»
+				
+				thistmp_(«FOR arg : templateParams SEPARATOR ', '»«arg»«ENDFOR») ::= <<
+				
+				«template»
 				>>
 			'''
 		
@@ -266,6 +270,9 @@ class MappingTypeBinding {
 			if (k.name != "match" && k.name != "context") {
 				st.add(k.name, getValue(k))
 			}
+		]
+		mappingType.getParameterValues.forEach[k,v|
+			st.add(k.name, getValue(k))
 		]
 		//add error check
 		//st.add("ESMFErrorCheck", "blag")
@@ -397,5 +404,26 @@ class MappingTypeBinding {
     def CodeConceptInstance getCurrentInstance() {
     	 currentInstance
     }
+    
+    
+    static STErrorListener templateErrorListener = new STErrorListener() {
+		
+		override IOError(STMessage m) {
+			throw new MappingTypeException(m.toString)
+		}
+		
+		override compileTimeError(STMessage m) {
+			throw new MappingTypeException(m.toString)
+		}
+		
+		override internalError(STMessage m) {
+			throw new MappingTypeException(m.toString)
+		}
+		
+		override runTimeError(STMessage m) {
+			throw new MappingTypeException(m.toString)
+		}
+		
+	}
     
 }

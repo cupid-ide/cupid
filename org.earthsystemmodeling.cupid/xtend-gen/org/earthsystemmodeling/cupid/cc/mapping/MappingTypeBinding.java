@@ -75,9 +75,21 @@ public class MappingTypeBinding {
   
   public <T extends Object> T getValue(final MappingTypeVariable<T> variable) {
     try {
-      MappingTypeVariableBinding<?> _get = this.bindings.get(variable);
-      Object _value = _get.getValue();
-      return ((T) _value);
+      T _xblockexpression = null;
+      {
+        final Object retVal = this.mappingType.getParameterValue(variable);
+        T _xifexpression = null;
+        boolean _notEquals = (!Objects.equal(retVal, null));
+        if (_notEquals) {
+          _xifexpression = ((T) retVal);
+        } else {
+          MappingTypeVariableBinding<?> _get = this.bindings.get(variable);
+          Object _value = _get.getValue();
+          _xifexpression = ((T) _value);
+        }
+        _xblockexpression = _xifexpression;
+      }
+      return _xblockexpression;
     } catch (Throwable _e) {
       throw Exceptions.sneakyThrow(_e);
     }
@@ -87,7 +99,7 @@ public class MappingTypeBinding {
     try {
       T _xblockexpression = null;
       {
-        final MappingTypeVariable<Object> mtv = this.mappingType.<Object>getParameter(variable);
+        final MappingTypeVariable<T> mtv = this.mappingType.<T>getParameter(variable);
         boolean _equals = Objects.equal(mtv, null);
         if (_equals) {
           String _name = this.mappingType.getName();
@@ -96,9 +108,7 @@ public class MappingTypeBinding {
           String _plus_2 = (_plus_1 + variable);
           throw new MappingTypeException(_plus_2);
         }
-        MappingTypeVariableBinding<?> _get = this.bindings.get(mtv);
-        Object _value = _get.getValue();
-        _xblockexpression = ((T) _value);
+        _xblockexpression = this.<T>getValue(mtv);
       }
       return _xblockexpression;
     } catch (Throwable _e) {
@@ -207,8 +217,7 @@ public class MappingTypeBinding {
       final LinkedList<MappingTypeVariable<?>> retList = CollectionLiterals.<MappingTypeVariable<?>>newLinkedList();
       List<MappingTypeVariable<?>> _parameters = this.mappingType.getParameters();
       final Function1<MappingTypeVariable<?>, Boolean> _function = (MappingTypeVariable<?> p) -> {
-        boolean _containsKey = this.bindings.containsKey(p);
-        return Boolean.valueOf((!_containsKey));
+        return Boolean.valueOf(((!this.bindings.containsKey(p)) && Objects.equal(this.mappingType.getParameterValue(p), null)));
       };
       Iterable<MappingTypeVariable<?>> _filter = IterableExtensions.<MappingTypeVariable<?>>filter(_parameters, _function);
       Iterables.<MappingTypeVariable<?>>addAll(retList, _filter);
@@ -358,91 +367,79 @@ public class MappingTypeBinding {
     }
   }
   
-  private static STErrorListener templateErrorListener = new STErrorListener() {
-    @Override
-    public void IOError(final STMessage m) {
-      try {
-        String _string = m.toString();
-        throw new MappingTypeException(_string);
-      } catch (Throwable _e) {
-        throw Exceptions.sneakyThrow(_e);
-      }
-    }
-    
-    @Override
-    public void compileTimeError(final STMessage m) {
-      try {
-        String _string = m.toString();
-        throw new MappingTypeException(_string);
-      } catch (Throwable _e) {
-        throw Exceptions.sneakyThrow(_e);
-      }
-    }
-    
-    @Override
-    public void internalError(final STMessage m) {
-      try {
-        String _string = m.toString();
-        throw new MappingTypeException(_string);
-      } catch (Throwable _e) {
-        throw Exceptions.sneakyThrow(_e);
-      }
-    }
-    
-    @Override
-    public void runTimeError(final STMessage m) {
-      try {
-        String _string = m.toString();
-        throw new MappingTypeException(_string);
-      } catch (Throwable _e) {
-        throw Exceptions.sneakyThrow(_e);
-      }
-    }
-  };
-  
   public String fillST(final String template) {
     try {
       String _xblockexpression = null;
       {
+        final LinkedList<String> templateParams = CollectionLiterals.<String>newLinkedList();
+        Set<MappingTypeVariable<?>> _keySet = this.bindings.keySet();
+        final Function1<MappingTypeVariable<?>, Boolean> _function = (MappingTypeVariable<?> k) -> {
+          return Boolean.valueOf(((!Objects.equal(k.name, "match")) && (!Objects.equal(k.name, "context"))));
+        };
+        Iterable<MappingTypeVariable<?>> _filter = IterableExtensions.<MappingTypeVariable<?>>filter(_keySet, _function);
+        final Function1<MappingTypeVariable<?>, String> _function_1 = (MappingTypeVariable<?> k) -> {
+          return k.name;
+        };
+        Iterable<String> _map = IterableExtensions.<MappingTypeVariable<?>, String>map(_filter, _function_1);
+        Iterables.<String>addAll(templateParams, _map);
+        Map<MappingTypeVariable<?>, Object> _parameterValues = this.mappingType.getParameterValues();
+        final BiConsumer<MappingTypeVariable<?>, Object> _function_2 = (MappingTypeVariable<?> k, Object v) -> {
+          boolean _contains = templateParams.contains(k.name);
+          boolean _not = (!_contains);
+          if (_not) {
+            templateParams.add(k.name);
+          }
+        };
+        _parameterValues.forEach(_function_2);
         StringConcatenation _builder = new StringConcatenation();
         _builder.append("ESMFErrorCheck(rc) ::= <<");
         _builder.newLine();
-        _builder.append("\t");
         _builder.append("if (ESMF_LogFoundError(rcToCheck=<rc>, msg=ESMF_LOGERR_PASSTHRU, &");
         _builder.newLine();
-        _builder.append("\t\t");
+        _builder.append("\t");
         _builder.append("line=__LINE__, &");
         _builder.newLine();
-        _builder.append("\t\t");
+        _builder.append("\t");
         _builder.append("file=__FILE__)) &");
         _builder.newLine();
-        _builder.append("\t\t");
+        _builder.append("\t");
         _builder.append("return");
         _builder.newLine();
         _builder.append(">>");
         _builder.newLine();
         _builder.newLine();
+        {
+          Map<String, String> _templates = this.mappingType.getTemplates();
+          Set<Map.Entry<String, String>> _entrySet = _templates.entrySet();
+          for(final Map.Entry<String, String> e : _entrySet) {
+            String _key = e.getKey();
+            _builder.append(_key, "");
+            _builder.append("() ::= <<");
+            _builder.newLineIfNotEmpty();
+            String _value = e.getValue();
+            _builder.append(_value, "");
+            _builder.newLineIfNotEmpty();
+            _builder.append(">>");
+            _builder.newLine();
+          }
+        }
+        _builder.newLine();
         _builder.append("thistmp_(");
         {
-          Set<MappingTypeVariable<?>> _keySet = this.bindings.keySet();
-          final Function1<MappingTypeVariable<?>, Boolean> _function = (MappingTypeVariable<?> k) -> {
-            return Boolean.valueOf(((!Objects.equal(k.name, "match")) && (!Objects.equal(k.name, "context"))));
-          };
-          Iterable<MappingTypeVariable<?>> _filter = IterableExtensions.<MappingTypeVariable<?>>filter(_keySet, _function);
           boolean _hasElements = false;
-          for(final MappingTypeVariable<?> arg : _filter) {
+          for(final String arg : templateParams) {
             if (!_hasElements) {
               _hasElements = true;
             } else {
               _builder.appendImmediate(", ", "");
             }
-            _builder.append(arg.name, "");
+            _builder.append(arg, "");
           }
         }
         _builder.append(") ::= <<");
         _builder.newLineIfNotEmpty();
-        _builder.append("\t");
-        _builder.append(template, "\t");
+        _builder.newLine();
+        _builder.append(template, "");
         _builder.newLineIfNotEmpty();
         _builder.append(">>");
         _builder.newLine();
@@ -454,13 +451,19 @@ public class MappingTypeBinding {
         if (_equals) {
           throw new MappingTypeException(("Error in template: " + template));
         }
-        final BiConsumer<MappingTypeVariable<?>, MappingTypeVariableBinding<?>> _function_1 = (MappingTypeVariable<?> k, MappingTypeVariableBinding<?> v) -> {
+        final BiConsumer<MappingTypeVariable<?>, MappingTypeVariableBinding<?>> _function_3 = (MappingTypeVariable<?> k, MappingTypeVariableBinding<?> v) -> {
           if (((!Objects.equal(k.name, "match")) && (!Objects.equal(k.name, "context")))) {
-            Object _value = this.getValue(k);
-            st.add(k.name, _value);
+            Object _value_1 = this.getValue(k);
+            st.add(k.name, _value_1);
           }
         };
-        this.bindings.forEach(_function_1);
+        this.bindings.forEach(_function_3);
+        Map<MappingTypeVariable<?>, Object> _parameterValues_1 = this.mappingType.getParameterValues();
+        final BiConsumer<MappingTypeVariable<?>, Object> _function_4 = (MappingTypeVariable<?> k, Object v) -> {
+          Object _value_1 = this.getValue(k);
+          st.add(k.name, _value_1);
+        };
+        _parameterValues_1.forEach(_function_4);
         _xblockexpression = st.render();
       }
       return _xblockexpression;
@@ -677,6 +680,48 @@ public class MappingTypeBinding {
   public CodeConceptInstance getCurrentInstance() {
     return this.currentInstance;
   }
+  
+  private static STErrorListener templateErrorListener = new STErrorListener() {
+    @Override
+    public void IOError(final STMessage m) {
+      try {
+        String _string = m.toString();
+        throw new MappingTypeException(_string);
+      } catch (Throwable _e) {
+        throw Exceptions.sneakyThrow(_e);
+      }
+    }
+    
+    @Override
+    public void compileTimeError(final STMessage m) {
+      try {
+        String _string = m.toString();
+        throw new MappingTypeException(_string);
+      } catch (Throwable _e) {
+        throw Exceptions.sneakyThrow(_e);
+      }
+    }
+    
+    @Override
+    public void internalError(final STMessage m) {
+      try {
+        String _string = m.toString();
+        throw new MappingTypeException(_string);
+      } catch (Throwable _e) {
+        throw Exceptions.sneakyThrow(_e);
+      }
+    }
+    
+    @Override
+    public void runTimeError(final STMessage m) {
+      try {
+        String _string = m.toString();
+        throw new MappingTypeException(_string);
+      } catch (Throwable _e) {
+        throw Exceptions.sneakyThrow(_e);
+      }
+    }
+  };
   
   @Pure
   public MappingType getMappingType() {

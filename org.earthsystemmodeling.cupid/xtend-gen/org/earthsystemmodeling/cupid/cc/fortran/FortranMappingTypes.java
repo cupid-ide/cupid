@@ -252,8 +252,7 @@ public class FortranMappingTypes {
         Iterable<ASTCallStmtNode> _filter = Iterables.<ASTCallStmtNode>filter(_body, ASTCallStmtNode.class);
         final Function1<ASTCallStmtNode, Boolean> _function_5 = (ASTCallStmtNode it_1) -> {
           Token _subroutineName = it_1.getSubroutineName();
-          String _valueString = bind.getValueString("calls");
-          return Boolean.valueOf(ASTQuery.eic(_subroutineName, _valueString));
+          return Boolean.valueOf(bind.bindToken("calls", _subroutineName));
         };
         Iterable<ASTCallStmtNode> _filter_1 = IterableExtensions.<ASTCallStmtNode>filter(_filter, _function_5);
         final Consumer<ASTCallStmtNode> _function_6 = (ASTCallStmtNode c) -> {

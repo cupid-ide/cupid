@@ -2,10 +2,12 @@ package org.earthsystemmodeling.cupid.cc.mapping;
 
 import com.google.common.base.Objects;
 import java.util.Collections;
+import java.util.LinkedHashMap;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
+import java.util.function.BiConsumer;
 import org.earthsystemmodeling.cupid.cc.mapping.MappingTypeBinding;
 import org.earthsystemmodeling.cupid.cc.mapping.MappingTypeException;
 import org.earthsystemmodeling.cupid.cc.mapping.MappingTypeVariable;
@@ -28,11 +30,15 @@ public class MappingType {
   @Accessors
   private List<MappingTypeVariable<?>> parameters = CollectionLiterals.<MappingTypeVariable<?>>newLinkedList();
   
+  private Map<MappingTypeVariable<?>, Object> parameterValues = CollectionLiterals.<MappingTypeVariable<?>, Object>newLinkedHashMap();
+  
   @Accessors
   private Procedure1<? super MappingTypeBinding> find;
   
   @Accessors
   private Procedure1<? super MappingTypeBinding> forwardAdd;
+  
+  private Map<String, String> templates = CollectionLiterals.<String, String>newLinkedHashMap();
   
   public MappingType(final String name, final Class<?> contextType, final Class<?> matchType, final Map<String, Class<?>> additionalParameters) {
     this(name, contextType, matchType);
@@ -104,6 +110,28 @@ public class MappingType {
     return new MappingType(this, newParameters);
   }
   
+  public MappingType refine(final Map<String, Class<?>> newParameters, final Map<String, String> parameterValues) {
+    MappingType _xblockexpression = null;
+    {
+      final MappingType newType = this.refine(newParameters);
+      final BiConsumer<String, String> _function = (String k, String v) -> {
+        try {
+          final MappingTypeVariable<Object> p = newType.<Object>getParameter(k);
+          boolean _equals = Objects.equal(p, null);
+          if (_equals) {
+            throw new MappingTypeException(((("Mapping type " + this.name) + " does not have parameter: ") + k));
+          }
+          newType.parameterValues.put(p, v);
+        } catch (Throwable _e) {
+          throw Exceptions.sneakyThrow(_e);
+        }
+      };
+      parameterValues.forEach(_function);
+      _xblockexpression = newType;
+    }
+    return _xblockexpression;
+  }
+  
   public boolean hasParameter(final String name) {
     MappingTypeVariable<Object> _parameter = this.<Object>getParameter(name);
     return (!Objects.equal(_parameter, null));
@@ -139,6 +167,34 @@ public class MappingType {
     return _xblockexpression;
   }
   
+  public Object getParameterValue(final MappingTypeVariable<?> variable) {
+    Object _parameterValue = null;
+    if (this.refines!=null) {
+      _parameterValue=this.refines.getParameterValue(variable);
+    }
+    return this.parameterValues.getOrDefault(variable, _parameterValue);
+  }
+  
+  public Object getParameterValue(final String name) {
+    MappingTypeVariable<Object> _parameter = this.<Object>getParameter(name);
+    return this.getParameterValue(_parameter);
+  }
+  
+  public Map<MappingTypeVariable<?>, Object> getParameterValues() {
+    LinkedHashMap<MappingTypeVariable<?>, Object> _xblockexpression = null;
+    {
+      final LinkedHashMap<MappingTypeVariable<?>, Object> retMap = CollectionLiterals.<MappingTypeVariable<?>, Object>newLinkedHashMap();
+      boolean _notEquals = (!Objects.equal(this.refines, null));
+      if (_notEquals) {
+        Map<MappingTypeVariable<?>, Object> _parameterValues = this.refines.getParameterValues();
+        retMap.putAll(_parameterValues);
+      }
+      retMap.putAll(this.parameterValues);
+      _xblockexpression = retMap;
+    }
+    return _xblockexpression;
+  }
+  
   public Class<?> getParameterType(final String name) {
     MappingTypeVariable<Object> _parameter = this.<Object>getParameter(name);
     Class<Object> _type = null;
@@ -156,12 +212,34 @@ public class MappingType {
     return this.getParameterType("match");
   }
   
+  public void addTemplate(final String name, final String template) {
+    this.templates.put(name, template);
+  }
+  
+  public Map<String, String> getTemplates() {
+    LinkedHashMap<String, String> _xblockexpression = null;
+    {
+      final LinkedHashMap<String, String> retMap = CollectionLiterals.<String, String>newLinkedHashMap();
+      boolean _notEquals = (!Objects.equal(this.refines, null));
+      if (_notEquals) {
+        Map<String, String> _templates = this.refines.getTemplates();
+        retMap.putAll(_templates);
+      }
+      retMap.putAll(this.templates);
+      _xblockexpression = retMap;
+    }
+    return _xblockexpression;
+  }
+  
   public void doFind(final MappingTypeBinding binding) {
     boolean _notEquals = (!Objects.equal(this.refines, null));
     if (_notEquals) {
       this.refines.doFind(binding);
     }
-    this.find.apply(binding);
+    boolean _notEquals_1 = (!Objects.equal(this.find, null));
+    if (_notEquals_1) {
+      this.find.apply(binding);
+    }
   }
   
   public void doForwardAdd(final MappingTypeBinding binding) {

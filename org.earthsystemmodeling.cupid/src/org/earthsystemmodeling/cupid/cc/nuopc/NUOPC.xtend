@@ -26,6 +26,7 @@ class NUOPC {
     public MappingType SpecializationMethodMT  /* refines ESMFMethodMT */
     public MappingType AddComponentToDriverMT  /* refines CallInSubroutineMT */
     public MappingType NUOPCEntryPointMT
+    public MappingType AdvertiseFieldsMT
     
     /* concepts */   
     public CodeConcept NUOPCComponent
@@ -82,7 +83,8 @@ class NUOPC {
             
         ] 
         
-       NUOPCEntryPointMT = new MappingType("NUOPCEntryPointMT", ASTModuleNode, ASTSubroutineSubprogramNode, 
+                
+       	NUOPCEntryPointMT = new MappingType("NUOPCEntryPointMT", ASTModuleNode, ASTSubroutineSubprogramNode, 
         	#{"SetServices"->ASTSubroutineSubprogramNode,
         	  "Reg"->ASTCallStmtNode, "name"->String,
         	  "phaseNumber"->String, "phaseLabel"->String,
@@ -129,6 +131,8 @@ class NUOPC {
   				
         	]
         	
+        	addTemplate("body", "")
+        	
         	forwardAdd = [bind|
         		
         		val ASTSubroutineSubprogramNode ssn = bind.parseProgramUnit(
@@ -141,6 +145,8 @@ class NUOPC {
 					    integer, intent(out) :: rc
 					    
 					    rc = ESMF_SUCCESS
+					    
+					    <body()>
 					    
 					end subroutine
 					''')
@@ -173,7 +179,20 @@ class NUOPC {
         	
         	
         	
-        ]       
+        ]  
+        
+        AdvertiseFieldsMT = NUOPCEntryPointMT.refine(#{}, #{"methodType"->"ESMF_METHOD_INITIALIZE"}) => [
+        	
+        	addTemplate("body", "! HERE IS THE BODY")
+        	
+        	/*
+        	forwardAdd = [bind|
+        		val ASTSubroutineSubprogramNode ssn = bind.getValue("match")
+        		ssn.subroutineStmt.subroutineName.subroutineName.whiteBefore = "! ADDED THIS COMMMENT"
+        		
+        	]
+        	*/
+        ]     
         
       	componentDefs()
       	driverDefs()
@@ -328,7 +347,19 @@ class NUOPC {
            			addAnnotationsWithDefaults(#{"genericSS"->"modelSS"})
            		]
  
-           	//addSubconcept("SetModelServices", SetModelServices, false, 1, 1, true)    	
+ 			addSubconcept("InitializeAdvertise", AdvertiseFieldsMT, false, 1, 1,
+ 				#{"SetServices"->"../SetServices*", "phaseLabel"->"IPDv01p1"}, true) => [
+
+        	  		addAnnotationsWithDefaults(#{"name"->"InitializeAdvertise"})
+        		]
+        	  	      
+        	addSubconcept("InitializeRealize", NUOPCEntryPointMT, false, 1, 1,
+ 				#{"SetServices"->"../SetServices*",
+        	  	  "methodType"->"ESMF_METHOD_INITIALIZE", "phaseLabel"->"IPDv01p2"}, true) => [
+        	  	      	
+        	  		addAnnotationsWithDefaults(#{"name"->"InitializeRealize"})
+        	 	]
+ 			
            
         ]
         
@@ -344,7 +375,8 @@ class NUOPC {
     	AddComponentToDriverMT = CallInSubroutineMT.refine(
        		#{"gcomp"->String, "rc"->String, "slot"->String, "linkSlot"->String,
        		  "compLabel"->String, "phaseLabel"->String, 
-       		  "srcCompLabel"->String, "dstCompLabel"->String}) => [
+       		  "srcCompLabel"->String, "dstCompLabel"->String},
+       		#{"calls"->"NUOPC_DriverAddRunElement"}) => [
        		
        		find = [bind|
        			//here we annotate existing results
@@ -392,34 +424,25 @@ class NUOPC {
         	addAnnotationsWithDefaults(
         		#{"gcomp"->"gcomp", "rc"->"rc",
         		  "name"->"SetModelServices",
-        		  "specLabel"->"driver_label_SetModelServices",
-        		  "specPhaseLabel"->null
+        		  "specLabel"->"driver_label_SetModelServices"
         		 }
         	)
         	
         	setMappingType(SpecializationMethodMT, 
         			#{"SetServices" -> "../SetServices*", 
                   	  "labelComponent" -> "NUOPC_Driver",
-      	  			  "labelName" -> "label_SetModelServices",
-      	  			  "specLabel" -> "@specLabel",
-      	  			  "specPhaseLabel" -> "@specPhaseLabel",
-      	  			  "name"->"@name",
-      	  			  "gcomp"->"@gcomp",
-      	  			  "rc"->"@rc"})
+      	  			  "labelName" -> "label_SetModelServices"})
       	  			 
         		  
-      	  	SetModelServices$AddComponent  = 
+      	  	SetModelServices$AddComponent =	  	      	  	
       	  		addSubconcept("AddComponent", AddComponentToDriverMT, false, 1, -1, 
-      	  		#{"calls"->"NUOPC_DriverAddComp", "compLabel"->"@compLabel", 
-      	  	      "phaseLabel"->"@phaseLabel", "srcCompLabel"->"@srcCompLabel", 
-      	  	      "dstCompLabel"->"@dstCompLabel", "slot"->"@slot", "linkSlot"->"@linkSlot",
-      	  	      "gcomp"->"@@gcomp", "rc"->"@@rc"}, true) => [
+      	  		#{"gcomp"->"../@gcomp", "rc"->"../@rc"}, true) => [
         				
-        				addAnnotationsWithDefaults(
-        					#{"compLabel"->"\"COMP\"", 
-        					  "srcCompLabel"->"\"SRC\"", "dstCompLabel"->"\"DST\"", 
-        					  "phaseLabel"->"FIXME", "slot"->"1", "linkSlot"->"2"})
-        			]
+    				addAnnotationsWithDefaults(
+    					#{"compLabel"->"\"COMP\"", 
+    					  "srcCompLabel"->"\"SRC\"", "dstCompLabel"->"\"DST\"", 
+    					  "phaseLabel"->"FIXME", "slot"->"1", "linkSlot"->"2"})
+        		]
         ]   
         
              
