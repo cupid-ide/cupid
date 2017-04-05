@@ -3,6 +3,7 @@ package org.earthsystemmodeling.cupid.cc.mapping
 import java.util.List
 import org.eclipse.xtext.xbase.lib.Functions.Function1
 import org.eclipse.xtend.lib.annotations.Accessors
+import org.earthsystemmodeling.cupid.cc.types.MTPType
 
 class MappingResultSet {
     
@@ -31,7 +32,7 @@ class MappingResultSet {
     	results.add(result)
     }
         
-    def addMatch(Object match) {
+    def addMatch(MTPType<?> match) {
         val r = new MappingResult(match)
         results.add(r)
         r

@@ -4,6 +4,7 @@ import java.util.Map
 import org.eclipse.xtend.lib.annotations.Accessors
 import java.util.List
 import org.earthsystemmodeling.cupid.cc.mapping.IllegalVariableAssignment
+import org.earthsystemmodeling.cupid.cc.types.MTPType
 
 class CodeConceptInstance {
     
@@ -18,10 +19,11 @@ class CodeConceptInstance {
     
     //type of match is type.mappingType.matchType
     @Accessors
-    Object match
+    MTPType<?> match
        
     @Accessors
-    Map<String, Object> annotations = newLinkedHashMap
+    Map<String, MTPType<?>> annotations = newLinkedHashMap
+    //Map<String, Object> annotations = newLinkedHashMap
     
     List<CodeConceptInstance> children = newLinkedList
     
@@ -56,7 +58,7 @@ class CodeConceptInstance {
         this.match = match
     }
     
-    def <T> T nearestAncestorWithMatch(Class<T> typeToFind) {
+    def <T extends MTPType<?>> T nearestAncestorWithMatch(Class<T> typeToFind) {
         if (type.mappingType?.matchType == typeToFind) {
             if (match != null) return match as T
         }
@@ -115,7 +117,7 @@ class CodeConceptInstance {
         children.findFirst[c|c.type.name == conceptName]
     }
     
-    def put(String annotationKey, Object annotationValue) {
+    def put(String annotationKey, MTPType<?> annotationValue) {
         if (!type.hasAnnotation(annotationKey)) {
         	throw new CodeConceptException("Concept " + type.name + " does not have annotation named " + annotationKey)
         }
@@ -132,7 +134,7 @@ class CodeConceptInstance {
     	annotations.get(annotationKey)
     }
   
-  	def Object getAnnotationRecursive(String annotationKey) {
+  	def MTPType<?> getAnnotationRecursive(String annotationKey) {
   		if (annotations.containsKey(annotationKey)) {
   			annotations.get(annotationKey)
   		}

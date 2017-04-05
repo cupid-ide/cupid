@@ -12,9 +12,9 @@ import org.earthsystemmodeling.cupid.cc.SingleCodeSubconcept;
 import org.earthsystemmodeling.cupid.cc.mapping.LiteralMTVBinding;
 import org.earthsystemmodeling.cupid.cc.mapping.MappingType;
 import org.earthsystemmodeling.cupid.cc.mapping.MappingTypeBinding;
-import org.earthsystemmodeling.cupid.cc.mapping.MappingTypeVariable;
-import org.earthsystemmodeling.cupid.cc.mapping.MappingTypeVariableBinding;
+import org.earthsystemmodeling.cupid.cc.mapping.MappingTypeParameterBinding;
 import org.earthsystemmodeling.cupid.cc.mapping.TemplateParameterReference;
+import org.earthsystemmodeling.cupid.cc.types.MTPType;
 import org.eclipse.xtend.lib.annotations.Accessors;
 import org.eclipse.xtext.xbase.lib.Exceptions;
 import org.eclipse.xtext.xbase.lib.Functions.Function0;
@@ -34,11 +34,11 @@ public class CodeConceptTemplate extends CodeConcept {
     super(name, mappingType, mappingTypeParameters);
   }
   
-  public CodeConcept instantiate(final Map<String, Object> parameterValues) {
+  public CodeConcept instantiate(final Map<String, MTPType<?>> parameterValues) {
     return this.instantiate(null, parameterValues);
   }
   
-  public CodeConcept instantiate(final String name, final Map<String, Object> parameterValues) {
+  public CodeConcept instantiate(final String name, final Map<String, MTPType<?>> parameterValues) {
     try {
       CodeConcept _xblockexpression = null;
       {
@@ -65,30 +65,29 @@ public class CodeConceptTemplate extends CodeConcept {
         MappingType _mappingType = _binding.getMappingType();
         final MappingTypeBinding binding = new MappingTypeBinding(_mappingType, concept);
         MappingTypeBinding _binding_1 = this.getBinding();
-        Map<MappingTypeVariable<?>, MappingTypeVariableBinding<?>> _bindings = _binding_1.getBindings();
-        Set<Map.Entry<MappingTypeVariable<?>, MappingTypeVariableBinding<?>>> _entrySet = _bindings.entrySet();
-        for (final Map.Entry<MappingTypeVariable<?>, MappingTypeVariableBinding<?>> e : _entrySet) {
-          MappingTypeVariableBinding<?> _value = e.getValue();
-          if ((_value instanceof TemplateParameterReference<?>)) {
-            MappingTypeVariableBinding<?> _value_1 = e.getValue();
-            String _reference = ((TemplateParameterReference<?>) _value_1).getReference();
+        Map<String, MappingTypeParameterBinding> _bindings = _binding_1.getBindings();
+        Set<Map.Entry<String, MappingTypeParameterBinding>> _entrySet = _bindings.entrySet();
+        for (final Map.Entry<String, MappingTypeParameterBinding> e : _entrySet) {
+          MappingTypeParameterBinding _value = e.getValue();
+          if ((_value instanceof TemplateParameterReference)) {
+            MappingTypeParameterBinding _value_1 = e.getValue();
+            String _reference = ((TemplateParameterReference) _value_1).getReference();
             final String refVar = _reference.substring(1);
             boolean _containsKey = parameterValues.containsKey(refVar);
             if (_containsKey) {
-              MappingTypeVariable<?> _key = e.getKey();
-              Object _get = parameterValues.get(refVar);
-              LiteralMTVBinding<Object> _literalMTVBinding = new LiteralMTVBinding<Object>(_get);
+              String _key = e.getKey();
+              MTPType<?> _get = parameterValues.get(refVar);
+              LiteralMTVBinding _literalMTVBinding = new LiteralMTVBinding(_get);
               binding.putBinding(_key, _literalMTVBinding);
             } else {
-              MappingTypeVariable<?> _key_1 = e.getKey();
-              String _name = _key_1.getName();
-              String _plus = ("Cannot instantiate template due to missing parameter value: " + _name);
+              String _key_1 = e.getKey();
+              String _plus = ("Cannot instantiate template due to missing parameter value: " + _key_1);
               throw new CodeConceptException(_plus);
             }
           } else {
-            MappingTypeVariable<?> _key_2 = e.getKey();
-            MappingTypeVariableBinding<?> _value_2 = e.getValue();
-            MappingTypeVariableBinding<?> _clone = _value_2.clone(binding);
+            String _key_2 = e.getKey();
+            MappingTypeParameterBinding _value_2 = e.getValue();
+            MappingTypeParameterBinding _clone = _value_2.clone(binding);
             binding.putBinding(_key_2, _clone);
           }
         }
@@ -98,8 +97,8 @@ public class CodeConceptTemplate extends CodeConcept {
           concept.addAnnotation(k, v);
         };
         _annotations.forEach(_function);
-        Map<String, Object> _annotationDefaults = this.getAnnotationDefaults();
-        final BiConsumer<String, Object> _function_1 = (String k, Object v) -> {
+        Map<String, MTPType<?>> _annotationDefaults = this.getAnnotationDefaults();
+        final BiConsumer<String, MTPType<?>> _function_1 = (String k, MTPType<?> v) -> {
           concept.addAnnotationDefault(k, v);
         };
         _annotationDefaults.forEach(_function_1);
@@ -109,12 +108,12 @@ public class CodeConceptTemplate extends CodeConcept {
             final SingleCodeSubconcept singleSubconcept = ((SingleCodeSubconcept) sc);
             CodeConcept _concept = singleSubconcept.getConcept();
             final CodeConcept instantiatedConcept = ((CodeConceptTemplate) _concept).instantiate(parameterValues);
-            String _name_1 = singleSubconcept.getName();
+            String _name = singleSubconcept.getName();
             boolean _isEssential = sc.isEssential();
             int _min = sc.getMin();
             int _max = sc.getMax();
             boolean _isIncludeByDefault = singleSubconcept.isIncludeByDefault();
-            concept.addSubconcept(_name_1, instantiatedConcept, _isEssential, _min, _max, _isIncludeByDefault);
+            concept.addSubconcept(_name, instantiatedConcept, _isEssential, _min, _max, _isIncludeByDefault);
           }
         }
         _xblockexpression = concept;
@@ -126,11 +125,11 @@ public class CodeConceptTemplate extends CodeConcept {
   }
   
   @Override
-  public MappingTypeVariableBinding<?> getVariableBindingForParameter(final String paramName, final Object paramValue) {
-    MappingTypeVariableBinding<?> _xifexpression = null;
+  public MappingTypeParameterBinding getVariableBindingForParameter(final String paramName, final Object paramValue) {
+    MappingTypeParameterBinding _xifexpression = null;
     boolean _isStaticReference = CodeConcept.isStaticReference(paramValue);
     if (_isStaticReference) {
-      _xifexpression = new TemplateParameterReference<Object>(((String) paramValue));
+      _xifexpression = new TemplateParameterReference(((String) paramValue));
     } else {
       _xifexpression = super.getVariableBindingForParameter(paramName, paramValue);
     }

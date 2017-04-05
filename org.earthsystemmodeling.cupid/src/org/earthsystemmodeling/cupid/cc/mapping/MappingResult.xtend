@@ -2,17 +2,19 @@ package org.earthsystemmodeling.cupid.cc.mapping
 
 import java.util.Map
 import org.eclipse.xtend.lib.annotations.Accessors
+import org.earthsystemmodeling.cupid.cc.types.MTPType
 
 class MappingResult {
     
     @Accessors(PUBLIC_GETTER)
-    Map<String,Object> values = newLinkedHashMap
+    Map<String,MTPType<?>> values = newLinkedHashMap
+    //Map<String,Object> values = newLinkedHashMap
     
     new() {
     	
     }
     
-    new(Object match) {
+    new(MTPType<?> match) {
         values.put("match", match)
     }
     
@@ -20,7 +22,7 @@ class MappingResult {
         values.get(name)    
     }
     
-    def put(String name, Object value) {
+    def put(String name, MTPType<?> value) {
     	values.put(name, value)
     }
     

@@ -1,17 +1,18 @@
 package org.earthsystemmodeling.cupid.cc.mapping;
 
+import org.earthsystemmodeling.cupid.cc.types.MTPType;
 import org.eclipse.xtend.lib.annotations.Accessors;
 import org.eclipse.xtext.xbase.lib.Pure;
 
 @SuppressWarnings("all")
-public class MappingTypeVariable<T extends Object> {
+public class MappingTypeParameter {
   @Accessors
-  protected String name;
+  private String name;
   
   @Accessors
-  protected Class<T> type;
+  private Class<? extends MTPType<?>> type;
   
-  public MappingTypeVariable(final String name, final Class<T> type) {
+  public MappingTypeParameter(final String name, final Class<? extends MTPType<?>> type) {
     this.name = name;
     this.type = type;
   }
@@ -33,11 +34,11 @@ public class MappingTypeVariable<T extends Object> {
   }
   
   @Pure
-  public Class<T> getType() {
+  public Class<? extends MTPType<?>> getType() {
     return this.type;
   }
   
-  public void setType(final Class<T> type) {
+  public void setType(final Class<? extends MTPType<?>> type) {
     this.type = type;
   }
 }

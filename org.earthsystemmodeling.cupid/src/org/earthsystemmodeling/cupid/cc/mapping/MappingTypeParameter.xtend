@@ -1,16 +1,18 @@
 package org.earthsystemmodeling.cupid.cc.mapping
 
 import org.eclipse.xtend.lib.annotations.Accessors
+import org.earthsystemmodeling.cupid.cc.types.MTPType
 
-class MappingTypeVariable<T> {
+class MappingTypeParameter {
     
     @Accessors
-    protected String name
+    String name
     
     @Accessors
-    protected Class<T> type
+    //MTPType<?> type
+    Class<? extends MTPType<?>> type
         
-    new(String name, Class<T> type) {
+    new(String name, Class<? extends MTPType<?>> type) {
         this.name = name
         this.type = type
     }

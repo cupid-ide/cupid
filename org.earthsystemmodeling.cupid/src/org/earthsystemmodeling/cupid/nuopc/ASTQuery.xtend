@@ -8,6 +8,7 @@ import org.eclipse.photran.internal.core.parser.ASTModuleNode
 import org.eclipse.photran.internal.core.parser.ASTUseStmtNode
 import org.eclipse.photran.internal.core.parser.IExpr
 import org.eclipse.photran.internal.core.parser.ASTVarOrFnRefNode
+import org.eclipse.photran.internal.core.parser.ASTArrayConstructorNode
 
 class ASTQuery {
 	
@@ -33,6 +34,16 @@ class ASTQuery {
 		val ret = argExprByKeyword(node, keyword)
 		if (ret != null) ret as E
 		else argExprByIdx(node, idx)
+	}
+	
+	def static arrayExprs(IExpr e) {
+		if (e instanceof ASTArrayConstructorNode) {
+			val acn = e as ASTArrayConstructorNode
+			acn.acValueList.map[n|n.expr]
+		}
+		else {
+			newArrayList
+		}
 	}
 	
 	def static litArgExprByKeyword(ASTCallStmtNode node, String keyword) {

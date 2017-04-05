@@ -1,16 +1,18 @@
 package org.earthsystemmodeling.cupid.cc.mapping
 
-class TemplateParameterReference<T> extends ReferenceMTVBinding<T> {
+import org.earthsystemmodeling.cupid.cc.types.MTPType
+
+class TemplateParameterReference extends ReferenceMTVBinding {
     
     new(String reference) {
         super(null, reference)
     }  
-        		
-	override setValue(T value) {
+	
+	override clone(MappingTypeBinding newBinding) {
 		throw new UnsupportedOperationException
 	}
 	
-	override clone(MappingTypeBinding newBinding) {
+	override setValue(MTPType<?> value) {
 		throw new UnsupportedOperationException
 	}
        

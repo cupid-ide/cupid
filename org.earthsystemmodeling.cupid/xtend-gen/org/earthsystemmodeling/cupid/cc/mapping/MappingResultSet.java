@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.function.Predicate;
 import org.earthsystemmodeling.cupid.cc.mapping.MappingResult;
 import org.earthsystemmodeling.cupid.cc.mapping.MappingType;
+import org.earthsystemmodeling.cupid.cc.types.MTPType;
 import org.eclipse.xtend.lib.annotations.Accessors;
 import org.eclipse.xtext.xbase.lib.CollectionLiterals;
 import org.eclipse.xtext.xbase.lib.Functions.Function1;
@@ -36,7 +37,7 @@ public class MappingResultSet {
     this.results.add(result);
   }
   
-  public MappingResult addMatch(final Object match) {
+  public MappingResult addMatch(final MTPType<?> match) {
     MappingResult _xblockexpression = null;
     {
       final MappingResult r = new MappingResult(match);
@@ -54,7 +55,7 @@ public class MappingResultSet {
     MappingResultSet _xblockexpression = null;
     {
       final Predicate<MappingResult> _function = (MappingResult r) -> {
-        Object _match = r.match();
+        MTPType<?> _match = r.match();
         return (predicate.apply(((T) _match))).booleanValue();
       };
       this.results.removeIf(_function);
@@ -67,7 +68,7 @@ public class MappingResultSet {
     MappingResultSet _xblockexpression = null;
     {
       final Predicate<MappingResult> _function = (MappingResult r) -> {
-        Object _match = r.match();
+        MTPType<?> _match = r.match();
         Boolean _apply = predicate.apply(((T) _match));
         return (!(_apply).booleanValue());
       };

@@ -1,7 +1,6 @@
 package org.earthsystemmodeling.cupid.cc.mapping;
 
 import com.google.common.base.Objects;
-import java.util.Collections;
 import java.util.LinkedHashMap;
 import java.util.LinkedList;
 import java.util.List;
@@ -10,13 +9,13 @@ import java.util.Set;
 import java.util.function.BiConsumer;
 import org.earthsystemmodeling.cupid.cc.mapping.MappingTypeBinding;
 import org.earthsystemmodeling.cupid.cc.mapping.MappingTypeException;
-import org.earthsystemmodeling.cupid.cc.mapping.MappingTypeVariable;
+import org.earthsystemmodeling.cupid.cc.mapping.MappingTypeParameter;
+import org.earthsystemmodeling.cupid.cc.types.MTPType;
 import org.eclipse.xtend.lib.annotations.Accessors;
 import org.eclipse.xtext.xbase.lib.CollectionLiterals;
 import org.eclipse.xtext.xbase.lib.Exceptions;
 import org.eclipse.xtext.xbase.lib.Functions.Function1;
 import org.eclipse.xtext.xbase.lib.IterableExtensions;
-import org.eclipse.xtext.xbase.lib.Pair;
 import org.eclipse.xtext.xbase.lib.Procedures.Procedure1;
 import org.eclipse.xtext.xbase.lib.Pure;
 
@@ -28,9 +27,9 @@ public class MappingType {
   private MappingType refines;
   
   @Accessors
-  private List<MappingTypeVariable<?>> parameters = CollectionLiterals.<MappingTypeVariable<?>>newLinkedList();
+  private List<MappingTypeParameter> parameters = CollectionLiterals.<MappingTypeParameter>newLinkedList();
   
-  private Map<MappingTypeVariable<?>, Object> parameterValues = CollectionLiterals.<MappingTypeVariable<?>, Object>newLinkedHashMap();
+  private Map<MappingTypeParameter, Object> parameterValues = CollectionLiterals.<MappingTypeParameter, Object>newLinkedHashMap();
   
   @Accessors
   private Procedure1<? super MappingTypeBinding> find;
@@ -40,35 +39,35 @@ public class MappingType {
   
   private Map<String, String> templates = CollectionLiterals.<String, String>newLinkedHashMap();
   
-  public MappingType(final String name, final Class<?> contextType, final Class<?> matchType, final Map<String, Class<?>> additionalParameters) {
-    this(name, contextType, matchType);
+  private Class<?> contextType;
+  
+  private Class<?> matchType;
+  
+  public MappingType(final String name, final Class<?> contextType, final Class<?> matchType, final Map<String, Class<? extends MTPType<?>>> additionalParameters) {
+    this.contextType = contextType;
+    this.matchType = matchType;
     this.addParameters(additionalParameters);
   }
   
   public MappingType(final String name, final Class<?> contextType, final Class<?> matchType) {
-    this(name, Collections.<String, Class<?>>unmodifiableMap(CollectionLiterals.<String, Class<?>>newHashMap(Pair.<String, Class<?>>of("context", contextType), Pair.<String, Class<?>>of("match", matchType))));
-  }
-  
-  public MappingType(final String name, final Map<String, Class<?>> parameters) {
-    this(((MappingType) null), parameters);
-    this.name = name;
+    this(name, contextType, matchType, null);
   }
   
   public MappingType(final MappingType refines) {
     this(refines, null);
   }
   
-  public MappingType(final MappingType refines, final Map<String, Class<?>> parameters) {
+  public MappingType(final MappingType refines, final Map<String, Class<? extends MTPType<?>>> parameters) {
     this.refines = refines;
     this.addParameters(parameters);
   }
   
-  protected void addParameters(final Map<String, Class<?>> parameters) {
+  protected void addParameters(final Map<String, Class<? extends MTPType<?>>> parameters) {
     try {
       boolean _notEquals = (!Objects.equal(parameters, null));
       if (_notEquals) {
-        Set<Map.Entry<String, Class<?>>> _entrySet = parameters.entrySet();
-        for (final Map.Entry<String, Class<?>> p : _entrySet) {
+        Set<Map.Entry<String, Class<? extends MTPType<?>>>> _entrySet = parameters.entrySet();
+        for (final Map.Entry<String, Class<? extends MTPType<?>>> p : _entrySet) {
           {
             String _key = p.getKey();
             boolean _hasParameter = this.hasParameter(_key);
@@ -78,8 +77,8 @@ public class MappingType {
               throw new MappingTypeException(_plus);
             }
             String _key_2 = p.getKey();
-            Class<?> _value = p.getValue();
-            final MappingTypeVariable<?> mtv = new MappingTypeVariable(_key_2, _value);
+            Class<? extends MTPType<?>> _value = p.getValue();
+            final MappingTypeParameter mtv = new MappingTypeParameter(_key_2, _value);
             this.parameters.add(mtv);
           }
         }
@@ -106,17 +105,17 @@ public class MappingType {
     return _xifexpression;
   }
   
-  public MappingType refine(final Map<String, Class<?>> newParameters) {
+  public MappingType refine(final Map<String, Class<? extends MTPType<?>>> newParameters) {
     return new MappingType(this, newParameters);
   }
   
-  public MappingType refine(final Map<String, Class<?>> newParameters, final Map<String, String> parameterValues) {
+  public MappingType refine(final Map<String, Class<? extends MTPType<?>>> newParameters, final Map<String, Object> parameterValues) {
     MappingType _xblockexpression = null;
     {
       final MappingType newType = this.refine(newParameters);
-      final BiConsumer<String, String> _function = (String k, String v) -> {
+      final BiConsumer<String, Object> _function = (String k, Object v) -> {
         try {
-          final MappingTypeVariable<Object> p = newType.<Object>getParameter(k);
+          final MappingTypeParameter p = newType.getParameter(k);
           boolean _equals = Objects.equal(p, null);
           if (_equals) {
             throw new MappingTypeException(((("Mapping type " + this.name) + " does not have parameter: ") + k));
@@ -133,33 +132,35 @@ public class MappingType {
   }
   
   public boolean hasParameter(final String name) {
-    MappingTypeVariable<Object> _parameter = this.<Object>getParameter(name);
+    MappingTypeParameter _parameter = this.getParameter(name);
     return (!Objects.equal(_parameter, null));
   }
   
-  public boolean hasParameter(final MappingTypeVariable<?> toCheck) {
-    return this.hasParameter(toCheck.name);
+  public boolean hasParameter(final MappingTypeParameter toCheck) {
+    String _name = toCheck.getName();
+    return this.hasParameter(_name);
   }
   
-  public <T extends Object> MappingTypeVariable<T> getParameter(final String name) {
-    final Function1<MappingTypeVariable<?>, Boolean> _function = (MappingTypeVariable<?> p) -> {
-      return Boolean.valueOf(p.name.equals(name));
+  public MappingTypeParameter getParameter(final String name) {
+    final Function1<MappingTypeParameter, Boolean> _function = (MappingTypeParameter p) -> {
+      String _name = p.getName();
+      return Boolean.valueOf(_name.equals(name));
     };
-    final MappingTypeVariable<?> p = IterableExtensions.<MappingTypeVariable<?>>findFirst(this.parameters, _function);
+    final MappingTypeParameter p = IterableExtensions.<MappingTypeParameter>findFirst(this.parameters, _function);
     if ((Objects.equal(p, null) && (!Objects.equal(this.refines, null)))) {
-      return this.refines.<T>getParameter(name);
+      return this.refines.getParameter(name);
     }
-    return ((MappingTypeVariable<T>) p);
+    return p;
   }
   
-  public List<MappingTypeVariable<?>> getParameters() {
-    LinkedList<MappingTypeVariable<?>> _xblockexpression = null;
+  public List<MappingTypeParameter> getParameters() {
+    LinkedList<MappingTypeParameter> _xblockexpression = null;
     {
-      final LinkedList<MappingTypeVariable<?>> retList = CollectionLiterals.<MappingTypeVariable<?>>newLinkedList();
+      final LinkedList<MappingTypeParameter> retList = CollectionLiterals.<MappingTypeParameter>newLinkedList();
       retList.addAll(this.parameters);
       boolean _notEquals = (!Objects.equal(this.refines, null));
       if (_notEquals) {
-        List<MappingTypeVariable<?>> _parameters = this.refines.getParameters();
+        List<MappingTypeParameter> _parameters = this.refines.getParameters();
         retList.addAll(_parameters);
       }
       _xblockexpression = retList;
@@ -167,7 +168,7 @@ public class MappingType {
     return _xblockexpression;
   }
   
-  public Object getParameterValue(final MappingTypeVariable<?> variable) {
+  public Object getParameterValue(final MappingTypeParameter variable) {
     Object _parameterValue = null;
     if (this.refines!=null) {
       _parameterValue=this.refines.getParameterValue(variable);
@@ -176,17 +177,17 @@ public class MappingType {
   }
   
   public Object getParameterValue(final String name) {
-    MappingTypeVariable<Object> _parameter = this.<Object>getParameter(name);
+    MappingTypeParameter _parameter = this.getParameter(name);
     return this.getParameterValue(_parameter);
   }
   
-  public Map<MappingTypeVariable<?>, Object> getParameterValues() {
-    LinkedHashMap<MappingTypeVariable<?>, Object> _xblockexpression = null;
+  public Map<MappingTypeParameter, Object> getParameterValues() {
+    LinkedHashMap<MappingTypeParameter, Object> _xblockexpression = null;
     {
-      final LinkedHashMap<MappingTypeVariable<?>, Object> retMap = CollectionLiterals.<MappingTypeVariable<?>, Object>newLinkedHashMap();
+      final LinkedHashMap<MappingTypeParameter, Object> retMap = CollectionLiterals.<MappingTypeParameter, Object>newLinkedHashMap();
       boolean _notEquals = (!Objects.equal(this.refines, null));
       if (_notEquals) {
-        Map<MappingTypeVariable<?>, Object> _parameterValues = this.refines.getParameterValues();
+        Map<MappingTypeParameter, Object> _parameterValues = this.refines.getParameterValues();
         retMap.putAll(_parameterValues);
       }
       retMap.putAll(this.parameterValues);
@@ -196,20 +197,20 @@ public class MappingType {
   }
   
   public Class<?> getParameterType(final String name) {
-    MappingTypeVariable<Object> _parameter = this.<Object>getParameter(name);
-    Class<Object> _type = null;
+    MappingTypeParameter _parameter = this.getParameter(name);
+    Class<? extends MTPType<?>> _type = null;
     if (_parameter!=null) {
-      _type=_parameter.type;
+      _type=_parameter.getType();
     }
     return _type;
   }
   
   public Class<?> contextType() {
-    return this.getParameterType("context");
+    return this.contextType;
   }
   
   public Class<?> matchType() {
-    return this.getParameterType("match");
+    return this.matchType;
   }
   
   public void addTemplate(final String name, final String template) {
@@ -231,6 +232,18 @@ public class MappingType {
     return _xblockexpression;
   }
   
+  /**
+   * A refinement first executes the query of the refined
+   * MappingType and then the refining type is able to:
+   *    (1) provide explicit values for parameters, and/or
+   *    (2) after the refined query runs, further filter the
+   *        results of the query, possibly reducing the
+   *        number of results, and/or
+   *    (3) bind additional parameters to the matches.
+   * 
+   * In general a refining type should not increase the size of
+   * the resultset since that would break subset semantics.
+   */
   public void doFind(final MappingTypeBinding binding) {
     boolean _notEquals = (!Objects.equal(this.refines, null));
     if (_notEquals) {
@@ -262,7 +275,7 @@ public class MappingType {
     this.refines = refines;
   }
   
-  public void setParameters(final List<MappingTypeVariable<?>> parameters) {
+  public void setParameters(final List<MappingTypeParameter> parameters) {
     this.parameters = parameters;
   }
   

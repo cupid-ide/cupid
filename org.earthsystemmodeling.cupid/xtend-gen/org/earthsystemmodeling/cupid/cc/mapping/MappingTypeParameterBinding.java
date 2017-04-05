@@ -1,26 +1,25 @@
 package org.earthsystemmodeling.cupid.cc.mapping;
 
 import org.earthsystemmodeling.cupid.cc.mapping.MappingTypeBinding;
-import org.earthsystemmodeling.cupid.cc.mapping.MappingTypeVariable;
+import org.earthsystemmodeling.cupid.cc.mapping.MappingTypeParameter;
 import org.earthsystemmodeling.cupid.cc.mapping.UnresolvedVariableAccessException;
+import org.earthsystemmodeling.cupid.cc.types.MTPType;
 import org.eclipse.xtend.lib.annotations.Accessors;
 import org.eclipse.xtext.xbase.lib.Pure;
 
 @SuppressWarnings("all")
-public abstract class MappingTypeVariableBinding<T extends Object> {
+public abstract class MappingTypeParameterBinding {
   @Accessors
   private MappingTypeBinding binding;
   
   @Accessors
-  private MappingTypeVariable<T> boundTo;
+  private MappingTypeParameter boundTo;
   
-  public abstract boolean isResolved();
+  public abstract MTPType<?> getValue() throws UnresolvedVariableAccessException;
   
-  public abstract T getValue() throws UnresolvedVariableAccessException;
+  public abstract void setValue(final MTPType<?> value);
   
-  public abstract void setValue(final T value);
-  
-  public abstract MappingTypeVariableBinding<T> clone(final MappingTypeBinding newBinding);
+  public abstract MappingTypeParameterBinding clone(final MappingTypeBinding newBinding);
   
   @Pure
   public MappingTypeBinding getBinding() {
@@ -32,11 +31,11 @@ public abstract class MappingTypeVariableBinding<T extends Object> {
   }
   
   @Pure
-  public MappingTypeVariable<T> getBoundTo() {
+  public MappingTypeParameter getBoundTo() {
     return this.boundTo;
   }
   
-  public void setBoundTo(final MappingTypeVariable<T> boundTo) {
+  public void setBoundTo(final MappingTypeParameter boundTo) {
     this.boundTo = boundTo;
   }
 }

@@ -7,8 +7,9 @@ import java.util.Map
 import org.earthsystemmodeling.cupid.cc.mapping.MappingTypeBinding
 import org.earthsystemmodeling.cupid.cc.mapping.TemplateParameterReference
 import org.earthsystemmodeling.cupid.cc.mapping.LiteralMTVBinding
-import org.earthsystemmodeling.cupid.cc.mapping.MappingTypeVariableBinding
 import org.earthsystemmodeling.cupid.cc.mapping.MappingType
+import org.earthsystemmodeling.cupid.cc.mapping.MappingTypeParameterBinding
+import org.earthsystemmodeling.cupid.cc.types.MTPType
 
 class CodeConceptTemplate extends CodeConcept {
     
@@ -28,23 +29,23 @@ class CodeConceptTemplate extends CodeConcept {
     //	super(toCopy.name)
     //}
     
-    def CodeConcept instantiate(Map<String,Object> parameterValues) {
+    def CodeConcept instantiate(Map<String,MTPType<?>> parameterValues) {
         instantiate(null, parameterValues)    
     }
     
-    def CodeConcept instantiate(String name, Map<String,Object> parameterValues) {
+    def CodeConcept instantiate(String name, Map<String,MTPType<?>> parameterValues) {
         val concept = new CodeConcept({if (name==null) this.name else name})
         val binding = new MappingTypeBinding(this.binding.mappingType, concept)
         for (e : this.binding.bindings.entrySet) {
-            if (e.value instanceof TemplateParameterReference<?>) {                
+            if (e.value instanceof TemplateParameterReference) {                
                 //TODO: figure out the $<ref> syntax, extend if needed - this is very basic now
                 //replace template parameter with actual value, remove the "$" first
-                val refVar = (e.value as TemplateParameterReference<?>).reference.substring(1)
+                val refVar = (e.value as TemplateParameterReference).reference.substring(1)
                 if (parameterValues.containsKey(refVar)) {
                     binding.putBinding(e.key, new LiteralMTVBinding(parameterValues.get(refVar)))
                 }
                 else {
-                    throw new CodeConceptException("Cannot instantiate template due to missing parameter value: " + e.key.name)
+                    throw new CodeConceptException("Cannot instantiate template due to missing parameter value: " + e.key)
                 }
             }
             else {
@@ -82,7 +83,7 @@ class CodeConceptTemplate extends CodeConcept {
         
     }
     
-    override MappingTypeVariableBinding<?> getVariableBindingForParameter(String paramName, Object paramValue) {
+    override MappingTypeParameterBinding getVariableBindingForParameter(String paramName, Object paramValue) {
         if (isStaticReference(paramValue)) {
             new TemplateParameterReference(paramValue as String)
         }

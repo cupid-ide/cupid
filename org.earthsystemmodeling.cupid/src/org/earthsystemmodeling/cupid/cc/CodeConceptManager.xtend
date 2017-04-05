@@ -167,12 +167,12 @@ class CodeConceptManager {
 	 *  Forward engineering methods
 	 */
 	
-	def void forward(CodeConceptInstance instance, IFile file) {
+	def void forward(CodeConceptInstance instance) {
 		if (instance.status == CCIStatus.ADDED) {
 			forwardAdd(instance)
 		}
 		for (c : instance.children) {
-			forward(c, file)
+			forward(c)
 		}
 	}
 	

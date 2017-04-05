@@ -1,28 +1,30 @@
 package org.earthsystemmodeling.cupid.cc.mapping
 
-class LiteralMTVBinding<T> extends MappingTypeVariableBinding<T> {
-   
-    T value
+import org.earthsystemmodeling.cupid.cc.types.MTPType
 
-    new(T value) {
+class LiteralMTVBinding extends MappingTypeParameterBinding {
+   
+    MTPType<?> value
+
+    new(MTPType<?> value) {
         this.value = value
     }
 
-    override isResolved() {
-        true
-    }  
+    //override isResolved() {
+    //    true
+    //}  
     
     override getValue() {
         value
     }
     
     override clone(MappingTypeBinding newBinding) {
-        val cl = new LiteralMTVBinding<T>(this.value)
+        val cl = new LiteralMTVBinding(this.value)
         cl.binding = newBinding
         cl
     }
 				
-	override setValue(T value) {
+	override setValue(MTPType<?> value) {
 		throw new UnsupportedOperationException
 	}
            

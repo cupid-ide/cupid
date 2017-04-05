@@ -1,12 +1,30 @@
 package org.earthsystemmodeling.cupid.cli;
 
+import java.io.ByteArrayInputStream;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
+import org.earthsystemmodeling.cupid.cc.CodeConceptInstance;
+import org.earthsystemmodeling.cupid.cc.CodeConceptManager;
+import org.earthsystemmodeling.cupid.cc.nuopc.NUOPC;
+import org.eclipse.core.resources.IContainer;
+import org.eclipse.core.resources.IFile;
 import org.eclipse.core.resources.IFolder;
+import org.eclipse.core.resources.IResource;
+import org.eclipse.core.runtime.CoreException;
+import org.eclipse.core.runtime.IPath;
+import org.eclipse.core.runtime.IProgressMonitor;
+import org.eclipse.core.runtime.NullProgressMonitor;
+import org.eclipse.core.runtime.Path;
+import org.eclipse.photran.core.IFortranAST;
+import org.eclipse.photran.internal.core.reindenter.Reindenter;
+import org.eclipse.photran.internal.core.reindenter.Reindenter.Strategy;
+import org.eclipse.photran.internal.core.vpg.PhotranVPG;
 
 import com.esotericsoftware.yamlbeans.YamlException;
 import com.esotericsoftware.yamlbeans.YamlReader;
@@ -14,9 +32,14 @@ import com.esotericsoftware.yamlbeans.YamlReader;
 public class ConfigParser {
 
 	private IFolder root;
+	private IProgressMonitor monitor;
 	
-	public ConfigParser(IFolder root) {
+	private static NUOPC NUOPCDEF = NUOPC.getInstance();
+	private static CodeConceptManager manager = CodeConceptManager.getInstance();
+	
+	public ConfigParser(IFolder root, IProgressMonitor monitor) {
 		this.root = root;
+		this.monitor = monitor;
 	}
 	
 	public void generate(File configFile) throws FileNotFoundException, YamlException {
@@ -29,6 +52,7 @@ public class ConfigParser {
 		
 		YamlReader reader = new YamlReader(new FileReader(configFile));
 		
+		@SuppressWarnings("unchecked")
 		List<Map> config = (List<Map>) reader.read();
 		config.forEach((m) -> {
 	    	
@@ -80,43 +104,56 @@ public class ConfigParser {
 		});
 	}
 	
+	@SuppressWarnings("restriction")
 	private void handleBaseModel(String type, Map<String, Object> yaml) {
 		
 		//CupidCLI.console("Found component: " + type);
 		CupidCLI.console("Name = " + yaml.get("name"));
+		CupidCLI.console("File = " + yaml.get("file"));
 		
-		/*
-		final BaseModel m;
-		if (type.equals("model")) {
-			m = factory.createModel();
+		String name = (String) yaml.get("name");
+		String filename = (String) yaml.get("file");
+		
+		IFile f = null;
+		try {
+			f = createBlankFile(root, filename, monitor);
+		} catch (CoreException e) {
+			CupidCLI.console(e.getMessage());
 		}
-		else if (type.equals("mediator")) {
-			m = factory.createMediator();
-		}
-		else {
-			return;
+		IFortranAST ast = PhotranVPG.getInstance().acquireTransientAST(f);
+		
+		CodeConceptInstance root = NUOPCDEF.NUOPCModelRoot.newInstance(null, ast);
+		CodeConceptInstance modelToGenerate = root.addChildWithDefaults(NUOPCDEF.NUOPCModel, true);
+		//modelToGenerate.put("name", name);
+						
+		//System.out.println("MODEL TO GENERATE**********\n"+modelToGenerate.toString()+"\n*************");
+							
+		manager.forward(modelToGenerate);
+		
+		Reindenter.reindent(ast.getRoot(), ast, Strategy.REINDENT_EACH_LINE);
+		try {
+			f.setContents(new ByteArrayInputStream(ast.getRoot().toString().getBytes()), IResource.NONE, monitor);
+		} catch (CoreException e) {
+			CupidCLI.console(e.getMessage());
 		}
 		
-		
-		m.setName((String) yaml.get("name"));
-		compMap.put(m.getName(), m);
-		app.getChildren().add(m);
+		//System.out.println("******************\n" + ast.getRoot().toString() + "********************");
 		
 		
-		//handle advance
-		if (yaml.containsKey("advance")) {
-			List<String> advList = (List<String>) yaml.get("advance");
-			advList.forEach((s) -> {
-				Advance adv = factory.createAdvance();
-				adv.setPhaseLabel(s);
-				m.getAdvance().add(adv);
-			});
+		
+	}
+	
+	static IFile createBlankFile(IContainer container, String filename, IProgressMonitor monitor) throws CoreException {
+		IFile f = container.getFile(new Path(filename));
+		if (f.exists()) {
+			String timestamp = new SimpleDateFormat("yyyy.MM.dd.HH.mm.ss").format(new Date());
+			IPath newPath = f.getFullPath().addFileExtension(timestamp);
+			CupidCLI.console("Renaming existing file: " + f.getFullPath().toOSString() + " -> " + newPath.toOSString());
+			f.move(newPath, IResource.NONE, monitor);
+			f.getProject().refreshLocal(IResource.DEPTH_INFINITE, monitor);
 		}
-		else {
-			//default advance method
-			m.getAdvance().add(factory.createAdvance());
-		}
-		*/
+		f.create(new ByteArrayInputStream(new byte[0]), true, monitor);
+		return f;
 	}
 	
 	

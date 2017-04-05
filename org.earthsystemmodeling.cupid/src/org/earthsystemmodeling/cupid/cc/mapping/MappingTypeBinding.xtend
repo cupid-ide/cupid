@@ -2,9 +2,11 @@ package org.earthsystemmodeling.cupid.cc.mapping
 
 import java.util.List
 import java.util.Map
-import java.util.regex.Pattern
+import java.util.function.Consumer
 import org.earthsystemmodeling.cupid.cc.CodeConcept
 import org.earthsystemmodeling.cupid.cc.CodeConceptInstance
+import org.earthsystemmodeling.cupid.cc.fortran.DefIdentifier
+import org.earthsystemmodeling.cupid.cc.fortran.Expression
 import org.eclipse.photran.internal.core.lexer.Token
 import org.eclipse.photran.internal.core.parser.IASTListNode
 import org.eclipse.photran.internal.core.parser.IASTNode
@@ -12,11 +14,13 @@ import org.eclipse.photran.internal.core.parser.IBodyConstruct
 import org.eclipse.photran.internal.core.parser.IExpr
 import org.eclipse.photran.internal.core.parser.IProgramUnit
 import org.eclipse.xtend.lib.annotations.Accessors
+import org.eclipse.xtext.xbase.lib.Functions.Function1
 import org.stringtemplate.v4.STErrorListener
 import org.stringtemplate.v4.STGroupString
 import org.stringtemplate.v4.misc.STMessage
 
 import static org.earthsystemmodeling.cupid.util.CodeExtraction.*
+import org.earthsystemmodeling.cupid.cc.types.MTPType
 
 class MappingTypeBinding {
     
@@ -27,7 +31,8 @@ class MappingTypeBinding {
     CodeConcept concept
     
     @Accessors
-    Map<MappingTypeVariable<?>, MappingTypeVariableBinding<?>> bindings = newLinkedHashMap
+    Map<String, MappingTypeParameterBinding> bindings = newLinkedHashMap
+    //Map<MappingTypeParameter<?>, MappingTypeParameterBinding<?>> bindings = newLinkedHashMap
     
     //@Accessors(PROTECTED_GETTER)
     CodeConceptInstance currentContext
@@ -35,7 +40,7 @@ class MappingTypeBinding {
     //@Accessors(PROTECTED_GETTER)
     CodeConceptInstance currentInstance
       
-    @Accessors(PUBLIC_GETTER)  //can be accessed by refinements of mappingType
+    //@Accessors(PUBLIC_GETTER) 
     MappingResultSet resultSet
     
     MappingResult currentResult
@@ -52,7 +57,7 @@ class MappingTypeBinding {
     	]
     }
     
-    def <T> T getValue(MappingTypeVariable<T> variable) {
+    def <T> T getValue(MappingTypeParameter variable) {
         //first, see if defined at mappingType level
         val retVal = mappingType.getParameterValue(variable)
         if (retVal != null) {
@@ -76,11 +81,11 @@ class MappingTypeBinding {
     	getValue(variable)	
     }
     
-    def <T> void setValue(MappingTypeVariable<T> variable, T value) {
-    	(bindings.get(variable) as MappingTypeVariableBinding<T>).value = value
+    def <T> void setValue(MappingTypeParameter variable, MTPType<?> value) {
+    	(bindings.get(variable) as MappingTypeParameterBinding).value = value
     }
     
-    def <T> void setValue(String variable, T value) {
+    def <T> void setValue(String variable, MTPType<?> value) {
     	val mtv = mappingType.getParameter(variable)
     	if (mtv == null) {
     		throw new MappingTypeException("Mapping type " + mappingType.name + " does not have parameter: " + variable)
@@ -88,36 +93,40 @@ class MappingTypeBinding {
     	setValue(mtv, value)
     }
     
-    def <T> MappingTypeVariableBinding<T> getBinding(MappingTypeVariable<T> variable) {
-        bindings.get(variable) as MappingTypeVariableBinding<T>
+    //def <T> MappingTypeParameterBinding<T> getBinding(MappingTypeParameter<T> variable) {
+    //    bindings.get(variable) as MappingTypeParameterBinding<T>
+    //}
+    
+    def MappingTypeParameterBinding getBinding(String variable) {
+        //val mtv = bindings.keySet.findFirst[v|v.name==variable]
+        //getBinding(mtv) as MappingTypeParameterBinding<T>
+        bindings.get(variable)
     }
     
-    def <T> MappingTypeVariableBinding<T> getBinding(String variable) {
-        val mtv = bindings.keySet.findFirst[v|v.name==variable]
-        getBinding(mtv) as MappingTypeVariableBinding<T>
-    }
     
-    
-    def putBinding(MappingTypeVariable<?> variable, MappingTypeVariableBinding<?> binding) {
+    /*
+    def putBinding(MappingTypeParameter<?> variable, MappingTypeParameterBinding<?> binding) {
         if (!mappingType.hasParameter(variable)) {
             throw new MappingTypeException("Mapping type " + mappingType.name + " does not have parameter named: " + variable.name)
         }
         binding.binding = this
         bindings.put(variable, binding)
     }
+    */
     
-    def putBinding(String variable, MappingTypeVariableBinding<?> binding) {
+    def putBinding(String variable, MappingTypeParameterBinding binding) {
         if (!mappingType.hasParameter(variable)) {
             throw new MappingTypeException("Mapping type " + mappingType.name + " does not have parameter named: " + variable)
         }
-        putBinding(mappingType.getParameter(variable), binding)
+        binding.binding = this
+        bindings.put(variable, binding)
     }
     
     def fullyBound() {
         unbound.size == 0
     }
     
-    def List<MappingTypeVariable<?>> unbound() {
+    def List<MappingTypeParameter> unbound() {
          val retList = newLinkedList
          retList.addAll(mappingType.getParameters().filter[p|
          	!bindings.containsKey(p) && mappingType.getParameterValue(p) == null])
@@ -203,6 +212,7 @@ class MappingTypeBinding {
 		currentInstance = null
 	}
 	
+	/*
 	static Pattern TEMPLATE_VAR = Pattern.compile("\\{\\w+\\}")
 	
 	def fill(String template) {
@@ -225,12 +235,14 @@ class MappingTypeBinding {
 		
 		sb.toString
 	}
+	*/
 	
 		
 	def fillST(String template) {
 		
 		val templateParams = newLinkedList
-		templateParams.addAll(bindings.keySet.filter[k|k.name != "match" && k.name != "context"].map[k|k.name])
+		//templateParams.addAll(bindings.keySet.filter[k|k.name != "match" && k.name != "context"].map[k|k.name])
+		templateParams.addAll(bindings.keySet.filter[k|k != "match" && k != "context"])
 		mappingType.getParameterValues.forEach[k,v|
 			if (!templateParams.contains(k.name)) {
 				templateParams.add(k.name)
@@ -267,8 +279,8 @@ class MappingTypeBinding {
 			throw new MappingTypeException("Error in template: " + template)
 		}
 		bindings.forEach[k,v|
-			if (k.name != "match" && k.name != "context") {
-				st.add(k.name, getValue(k))
+			if (k != "match" && k != "context") {
+				st.add(k, getValue(k))
 			}
 		]
 		mappingType.getParameterValues.forEach[k,v|
@@ -298,7 +310,7 @@ class MappingTypeBinding {
 	
 	
 	
-	private def void addBindingToResult(String variable, Object value) {
+	private def void addBindingToResult(String variable, MTPType<?> value) {
 		if (currentResult == null) {
 			currentResult = new MappingResult
 		}
@@ -309,7 +321,9 @@ class MappingTypeBinding {
 	}
 	
 	def <T extends IASTNode> boolean bind(String variable, T node) {
-		val T toMatch = getValue(variable)
+		//TODO: fixme
+		/*
+		val toMatch = getValue(variable)
 		if (toMatch != null) {
 			toMatch.equals(node)
 		}
@@ -317,8 +331,91 @@ class MappingTypeBinding {
 			addBindingToResult(variable, node)
 			true
 		}
-	}    
-	    
+		* 
+		*/
+		false
+	}
+	
+	/*
+	def boolean bind(String variable, Token t) {
+		val toMatch = getValue(variable)
+		if (toMatch instanceof DefIdentifier) {
+			val toMatchExpr = toMatch as DefIdentifier
+			val match = toMatchExpr.match(t)
+			if (match != null) {
+				addBindingToResult(variable, match)
+				return true
+			}
+		}
+		else if (toMatch != null) {
+			return toMatch.equals(t.text)
+		}
+		else {
+			addBindingToResult(variable, t.text)
+			true
+		}
+	}
+	*/
+	
+	/*
+	def boolean bind(String variable, Token t) {
+		val binding = getBinding(variable)
+		if (binding?.boundTo?.type == DefIdentifier) {
+			val toMatch = binding.value as DefIdentifier
+			if (toMatch != null) {
+				val match = toMatch.match(t)
+				if (match != null) {
+					addBindingToResult(variable, match)
+					return true
+				}
+				else {
+					return false
+				}
+			}
+			else {
+				addBindingToResult(variable, DefIdentifier.literal(t.text))
+				return true
+			}
+		}
+		else {
+			val toMatch = binding.value
+			if (toMatch != null) {
+				return toMatch.equals(t.text)
+			}
+			else {
+				addBindingToResult(variable, t.text)
+				return true
+			}
+		}
+	}
+	
+	def boolean bind(String variable, IExpr node) {
+		val toMatch = getValue(variable)
+		if (toMatch instanceof Expression) {
+			val toMatchExpr = toMatch as Expression
+			val match = toMatchExpr.match(node)
+			if (match != null) {
+				addBindingToResult(variable, match)
+				return true
+			}
+		}
+		else if (toMatch != null) {
+			return toMatch.equals(node)
+		}
+		else {
+			addBindingToResult(variable, node)
+			true
+		}
+	}  
+	
+	def boolean bindOneOf(String variable, Iterable<IExpr> nodes) {
+		nodes.findFirst[n|bind(variable, n)] != null
+	}  
+	
+	* 
+	*/
+	
+	/*    
 	def boolean bindExpr(String variable, IExpr expr) {
 		val toMatch = getValueString(variable)
 		if (toMatch != null) {
@@ -340,7 +437,23 @@ class MappingTypeBinding {
 			true
 		}
 	}
+	* 
+	*/
 	
+	/*
+	def boolean bindExpr2(String variable, IExpr expr) {
+		val Expression toMatch = getValue(variable)
+		if (toMatch != null) {
+			toMatch.match(expr) != null
+		}
+		else {
+			addBindingToResult(variable, expr.toString.trim)
+			true
+		}
+	}
+	*/
+	
+	/*
 	def boolean bindToken(String variable, Token token) {
 		val toMatch = getValueString(variable)
 		if (toMatch != null) {
@@ -351,8 +464,9 @@ class MappingTypeBinding {
 			true
 		}
 	}
-	    
-    def addResult(Object match) {
+	*/
+	  
+    def addResult(MTPType<?> match) {
     	if (!mappingType.matchType.isInstance(match)) {
     		throw new IllegalVariableAssignment("match", mappingType.matchType, match.class)
     	}
@@ -368,9 +482,34 @@ class MappingTypeBinding {
     	} 	
     }
     
-    def reset() {
+    def boolean reset() {
     	currentResult = null
+    	true
     }
+    
+	/**
+	 * Called by a refining MappingType to filter the results by checking
+	 * the provided predicate against each result's match.
+	 */
+	def <T> void removeMatchIf(Function1<? super T, Boolean> predicate) {
+        resultSet.removeMatchIf(predicate)
+    }
+    
+    /**
+	 * Called by a refining MappingType to filter the results by checking
+	 * the provided predicate against each result's match.
+	 */
+    def <T> void retainMatchIf(Function1<? super T, Boolean> predicate) {
+        resultSet.retainMatchIf(predicate)
+    }  
+    
+    /**
+     * Called by a refining MappingType to apply an action to each of the
+     * results.  This is typically to annotate each of the results.
+     */
+    def void forEachResult(Consumer<? super MappingResult> action) {
+    	resultSet.results.forEach(action)
+    }  
     
     /*
     def addResult(Map<String, Object> params) {
@@ -388,7 +527,7 @@ class MappingTypeBinding {
         getValue("context")
     }
     
-    def <T> setMatch(T match) {
+    def setMatch(MTPType<?> match) {
     	setValue("match", match)
     }
     

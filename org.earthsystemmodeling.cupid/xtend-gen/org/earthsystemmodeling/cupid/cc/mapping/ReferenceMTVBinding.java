@@ -2,16 +2,17 @@ package org.earthsystemmodeling.cupid.cc.mapping;
 
 import com.google.common.base.Objects;
 import org.earthsystemmodeling.cupid.cc.mapping.MappingTypeBinding;
-import org.earthsystemmodeling.cupid.cc.mapping.MappingTypeVariable;
-import org.earthsystemmodeling.cupid.cc.mapping.MappingTypeVariableBinding;
+import org.earthsystemmodeling.cupid.cc.mapping.MappingTypeParameter;
+import org.earthsystemmodeling.cupid.cc.mapping.MappingTypeParameterBinding;
 import org.earthsystemmodeling.cupid.cc.mapping.UnresolvedVariableAccessException;
+import org.earthsystemmodeling.cupid.cc.types.MTPType;
 import org.eclipse.xtend.lib.annotations.Accessors;
 import org.eclipse.xtext.xbase.lib.Exceptions;
 import org.eclipse.xtext.xbase.lib.Pure;
 
 @SuppressWarnings("all")
-public abstract class ReferenceMTVBinding<T extends Object> extends MappingTypeVariableBinding<T> {
-  protected T value;
+public abstract class ReferenceMTVBinding extends MappingTypeParameterBinding {
+  protected MTPType<?> value;
   
   @Accessors
   private String reference;
@@ -26,19 +27,15 @@ public abstract class ReferenceMTVBinding<T extends Object> extends MappingTypeV
   }
   
   @Override
-  public boolean isResolved() {
-    return (!Objects.equal(this.value, null));
-  }
-  
-  @Override
-  public T getValue() {
+  public MTPType<?> getValue() {
     try {
-      T _xblockexpression = null;
+      MTPType<?> _xblockexpression = null;
       {
         boolean _equals = Objects.equal(this.value, null);
         if (_equals) {
-          MappingTypeVariable<T> _boundTo = this.getBoundTo();
-          throw new UnresolvedVariableAccessException(_boundTo.name);
+          MappingTypeParameter _boundTo = this.getBoundTo();
+          String _name = _boundTo.getName();
+          throw new UnresolvedVariableAccessException(_name);
         }
         _xblockexpression = this.value;
       }

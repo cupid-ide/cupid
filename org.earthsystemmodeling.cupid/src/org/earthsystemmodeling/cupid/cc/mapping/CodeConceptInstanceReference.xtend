@@ -1,14 +1,15 @@
 package org.earthsystemmodeling.cupid.cc.mapping
 
 import org.earthsystemmodeling.cupid.cc.CodeConceptInstance
+import org.earthsystemmodeling.cupid.cc.types.MTPType
 
-class CodeConceptInstanceReference<T> extends ReferenceMTVBinding<T> {
+class CodeConceptInstanceReference extends ReferenceMTVBinding {
     
-    new(MappingTypeVariable<T> boundTo, String reference) {
+    new(MappingTypeParameter boundTo, String reference) {
     	this(boundTo, reference, null)
     }
     
-    new(MappingTypeVariable<T> boundTo, String reference, MappingTypeBinding binding) {
+    new(MappingTypeParameter boundTo, String reference, MappingTypeBinding binding) {
         super(null, reference)
         this.boundTo = boundTo
         if (binding != null) {
@@ -21,7 +22,7 @@ class CodeConceptInstanceReference<T> extends ReferenceMTVBinding<T> {
 
 	//final Matcher matcher = pattern.matcher(string);
 
-    protected def Object resolvePath() {
+    protected def MTPType<?> resolvePath() {
     	
     	var segments = reference.split("/")
     	var CodeConceptInstance current
@@ -69,9 +70,11 @@ class CodeConceptInstanceReference<T> extends ReferenceMTVBinding<T> {
     		
     	}
     	
-    	return current
+    	//return current
+    	return null
     	
     }
+    
     
     override getValue() {
         
@@ -81,7 +84,7 @@ class CodeConceptInstanceReference<T> extends ReferenceMTVBinding<T> {
                 throw new IllegalVariableAssignment(boundTo.name, boundTo.type, refVal.class)
             }
             else {
-            	value = refVal as T
+            	value = refVal
             	return value
             }
         }
@@ -179,10 +182,10 @@ class CodeConceptInstanceReference<T> extends ReferenceMTVBinding<T> {
     */
     
     override clone(MappingTypeBinding newBinding) {
-        new CodeConceptInstanceReference<T>(boundTo, reference, newBinding)
+        new CodeConceptInstanceReference(boundTo, reference, newBinding)
     }
 				
-	override setValue(T value) {
+	override setValue(MTPType<?> value) {
 		if (reference != null && reference.startsWith("@")) {
         	val annotationName = reference.substring(1)
         	binding.currentInstance.put(annotationName, value)

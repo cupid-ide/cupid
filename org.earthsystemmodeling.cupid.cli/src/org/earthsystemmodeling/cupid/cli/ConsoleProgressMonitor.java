@@ -14,12 +14,12 @@ public class ConsoleProgressMonitor implements IProgressMonitor {
 	
 	@Override
 	public void beginTask(String name, int totalWork) {
-		out.println("Begin: " + name);
+		out.print(name + ": ");
 	}
 
 	@Override
 	public void done() {
-		out.println("Done");
+		out.println(" - complete");
 	}
 
 	@Override
@@ -48,7 +48,7 @@ public class ConsoleProgressMonitor implements IProgressMonitor {
 
 	@Override
 	public void subTask(String name) {
-		out.println("  - " + name);
+		out.print(" " + name);
 	}
 
 	@Override

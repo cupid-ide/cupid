@@ -232,7 +232,7 @@ public class CodeConceptManager {
   /**
    * Forward engineering methods
    */
-  public void forward(final CodeConceptInstance instance, final IFile file) {
+  public void forward(final CodeConceptInstance instance) {
     CCIStatus _status = instance.getStatus();
     boolean _equals = Objects.equal(_status, CCIStatus.ADDED);
     if (_equals) {
@@ -240,7 +240,7 @@ public class CodeConceptManager {
     }
     List<CodeConceptInstance> _children = instance.getChildren();
     for (final CodeConceptInstance c : _children) {
-      this.forward(c, file);
+      this.forward(c);
     }
   }
   

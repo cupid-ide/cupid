@@ -1,10 +1,11 @@
 package org.earthsystemmodeling.cupid.cc.mapping
 
 import org.eclipse.xtend.lib.annotations.Accessors
+import org.earthsystemmodeling.cupid.cc.types.MTPType
 
-abstract class ReferenceMTVBinding<T> extends MappingTypeVariableBinding<T> {
+abstract class ReferenceMTVBinding extends MappingTypeParameterBinding {
     
-    protected T value
+    protected MTPType<?> value
     
     @Accessors
     String reference
@@ -14,9 +15,9 @@ abstract class ReferenceMTVBinding<T> extends MappingTypeVariableBinding<T> {
         this.reference = reference?.trim()
     }
     
-    override isResolved() {
-        value != null
-    }
+    //override isResolved() {
+    //    value != null
+    //}
     
     override getValue() {
         if (value == null) {

@@ -42,6 +42,7 @@ class FortranMappingTypes {
     	
     	FortranAstMT = new MappingType("FortranAstMT", IFortranAST, IFortranAST);
     	
+    	/*
     	ModuleUseStmtMT = new MappingType("ModuleUseStmtMT", ASTModuleNode, ASTUseStmtNode,
             #{"uses"->String}) => [
             
@@ -72,19 +73,19 @@ class FortranMappingTypes {
                 val ASTModuleNode moduleNode = bind.context
 
                 val useStmtNode = moduleNode.moduleBody?.filter(ASTUseStmtNode).findFirst[usn|
-                    bind.bindToken("uses", usn.name)
+                    bind.bind("uses", usn.name)
                 ]
                 
                 if (useStmtNode != null) {
 	                val exists = 
 						useStmtNode.findAll(ASTRenameNode)?.exists[rn|
-							bind.bindToken("entity", rn.name) &&
-							bind.bindToken("localName", rn.newName)
+							bind.bind("entity", rn.name) &&
+							bind.bind("localName", rn.newName)
 						] 
 						||
 						useStmtNode.findAll(ASTOnlyNode)?.exists[on|
-							bind.bindToken("entity", on.name) &&
-							bind.bindToken("localName", on.newName)
+							bind.bind("entity", on.name) &&
+							bind.bind("localName", on.newName)
 						]
 						||
 						(useStmtNode.findAll(ASTRenameNode).nullOrEmpty &&
@@ -112,26 +113,24 @@ class FortranMappingTypes {
         
         ModuleMT = new MappingType("ModuleMT", 
         	#{"context" -> IFortranAST, 
-        	  "name" -> String, 
+        	  "name" -> DefIdentifier, 
         	  "match" -> ASTModuleNode}
         ) => [
         	
         	find = [bind|
         		val IFortranAST ast = bind.context
         		val moduleNode = ast?.root?.programUnitList?.filter(ASTModuleNode)?.head
-        		if (moduleNode != null) {
-        			//TODO: verify name if it's not null
-        			val r = bind.addResult(moduleNode)
-        			r.put("name", moduleNode.moduleStmt.moduleName.moduleName.text)
+        		if (moduleNode != null && bind.bind("name", moduleNode.moduleStmt.moduleName.moduleName)) {
+        			bind.addResult(moduleNode)
         		}
         	]
         	
         	forwardAdd = [bind|
         		val IFortranAST ast = bind.context
         		        		
-        		val code = bind.fill(
+        		var ASTModuleNode moduleNode = bind.parseProgramUnit(
         		'''
-					module {name}
+					module <name>
 												
 						implicit none
 						
@@ -140,8 +139,6 @@ class FortranMappingTypes {
 					end module
 				''')
 		
-				var ASTModuleNode moduleNode = parseLiteralProgramUnit(code)
-							
 				var pul = new ASTListNode<IProgramUnit>()
 				pul.add(moduleNode)
 				ast.root.programUnitList = pul
@@ -150,6 +147,7 @@ class FortranMappingTypes {
         		        		
         	]
         ]
+        */
         
         /*
         ModuleThatUsesMT = new MappingType("ModuleThatUsesMT",
@@ -169,17 +167,31 @@ class FortranMappingTypes {
         ]
         */
         
+        /*
         CallInSubroutineMT = new MappingType("CallInSubroutineMT", 
         	ASTSubroutineSubprogramNode, ASTCallStmtNode, #{"calls"->String}) => [
         	
         	find = [bind|
         		val ASTSubroutineSubprogramNode subr = bind.context
         		subr.body.filter(ASTCallStmtNode).filter[
-					bind.bindToken("calls", it.subroutineName)].forEach[c|
+					bind.bind("calls", it.subroutineName)].forEach[c|
 						bind.addResult(c)
 					]
         	]
+        	
+        	
+        	forwardAdd = [bind|
+        		
+        		val callStmt = bind.parseStatement("call <calls>()")
+        		
+        		val ASTSubroutineSubprogramNode ssn = bind.context
+        		ssn.body.add(callStmt)
+        		bind.match = callStmt
+        		
+        	]
+        	        	
         ]
+    	*/
     	
     }
     

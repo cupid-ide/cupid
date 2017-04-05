@@ -4,11 +4,11 @@ import java.util.List
 import java.util.Map
 import org.earthsystemmodeling.cupid.cc.mapping.CodeConceptInstanceReference
 import org.earthsystemmodeling.cupid.cc.mapping.LiteralMTVBinding
-import org.earthsystemmodeling.cupid.cc.mapping.MappingResult
 import org.earthsystemmodeling.cupid.cc.mapping.MappingType
 import org.earthsystemmodeling.cupid.cc.mapping.MappingTypeBinding
-import org.earthsystemmodeling.cupid.cc.mapping.MappingTypeVariableBinding
 import org.eclipse.xtend.lib.annotations.Accessors
+import org.earthsystemmodeling.cupid.cc.mapping.MappingTypeParameterBinding
+import org.earthsystemmodeling.cupid.cc.types.MTPType
 
 class CodeConcept {
     
@@ -24,7 +24,7 @@ class CodeConcept {
     
     Map<String, Class<?>> annotations = newLinkedHashMap
     
-    Map<String, Object> annotationDefaults = newLinkedHashMap
+    Map<String, MTPType<?>> annotationDefaults = newLinkedHashMap
     
     new(String name) {
         this(name, null)    
@@ -50,8 +50,9 @@ class CodeConcept {
     
     def void addAnnotation(String name, Class<?> type) {
     	if (annotations.containsKey(name) && annotations.get(name) != type) {
-    		throw new CodeConceptException("Code concept " + getName + " already has annotation " + name + 
-    			" with different type: " + annotations.get(name))
+    		throw new CodeConceptException('''Cannot add annotation "«name»" of type «type.simpleName» 
+    			to concept «getName» because it already has the same annotation with a 
+    			different type: «annotations.get(name)»''')
     	}
     	annotations.put(name, type)
     }
@@ -64,15 +65,23 @@ class CodeConcept {
     	names.forEach[n|addAnnotations(n)]
     }
     
-    def void addAnnotationDefault(String name, Object value) {
-    	annotationDefaults.put(name, value)
+    def void addAnnotationDefault(String name, MTPType<?> value) {
+    	if (getAnnotationType(name)?.isInstance(value)) {
+    		annotationDefaults.put(name, value)
+    	}
+    	else if (getAnnotationType(name) != null) {
+    		throw new CodeConceptException("Type mismatch adding annotation default")
+    	}
+    	else {
+    		throw new CodeConceptException("Cannot add default for undeclared annotation: " + name)
+    	}
     }
     
-    def void addAnnotationDefaults(Map<String,Object> defaults) {
+    def void addAnnotationDefaults(Map<String,MTPType<?>> defaults) {
     	annotationDefaults.putAll(defaults)
     }
     
-    def void addAnnotationsWithDefaults(Map<String,String> defaults) {
+    def void addAnnotationsWithDefaults(Map<String,MTPType<?>> defaults) {
     	defaults.forEach[k,v|
     		addAnnotations(k)
     		addAnnotationDefault(k, v)
@@ -104,7 +113,7 @@ class CodeConcept {
     	}
     }
     
-    def Map<String, Object> getAnnotationDefaults() {
+    def Map<String, MTPType<?>> getAnnotationDefaults() {
     	val retMap = newLinkedHashMap
     	if (extends_ != null) {
     		retMap.putAll(extends_.getAnnotationDefaults)
@@ -125,6 +134,10 @@ class CodeConcept {
     	}
     }
     
+    def setMappingType(MappingType mappingType) {
+    	setMappingType(mappingType, null)
+    }
+    
     def setMappingType(MappingType mappingType, Map<String,Object> parameters) {
         
         if (extends_ != null) {
@@ -141,12 +154,12 @@ class CodeConcept {
         //implicit binding of context
         if (mappingType.hasParameter("context") && binding.unbound("context")) {
             val mtv = mappingType.getParameter("context")
-            binding.putBinding(mtv, new CodeConceptInstanceReference(mtv, null))
+            binding.putBinding("context", new CodeConceptInstanceReference(mtv, null))
         }
         //implicit binding of match
         if (mappingType.hasParameter("match") && binding.unbound("match")) {
             val mtv = mappingType.getParameter("match")
-            binding.putBinding(mtv, new CodeConceptInstanceReference(mtv, null))
+            binding.putBinding("match", new CodeConceptInstanceReference(mtv, null))
         }
         //automatically create bindings for unbound parameters that
         //that match local annotations
@@ -159,7 +172,7 @@ class CodeConcept {
         //automatically create local annotations for remaining unbound parameters
         binding.unbound.forEach[v|
         	addAnnotation(v.name, v.type)
-        	binding.putBinding(v, new CodeConceptInstanceReference(v, "@"+v.name))
+        	binding.putBinding(v.name, new CodeConceptInstanceReference(v, "@"+v.name))
         ]
         
         if (!binding.fullyBound) {
@@ -168,13 +181,13 @@ class CodeConcept {
     }
     
     //subclasses can override
-    protected def MappingTypeVariableBinding<?> getVariableBindingForParameter(String paramName, Object paramValue) {
+    protected def MappingTypeParameterBinding getVariableBindingForParameter(String paramName, Object paramValue) {
         if (isDynamicReference(paramValue)) {
             val mtv = mappingType.getParameter(paramName)
             new CodeConceptInstanceReference(mtv, paramValue as String)
         }
         else {
-            new LiteralMTVBinding(paramValue)
+            new LiteralMTVBinding(paramValue as MTPType<?>)
         }
     }
     
@@ -312,6 +325,7 @@ class CodeConcept {
     }
     
     static def isDynamicReference(Object obj) {
+         //TODO: fix to check for reference path more explicitly
         (obj instanceof String) && ((obj as String).startsWith("../") || (obj as String).startsWith("@"))
     }
     

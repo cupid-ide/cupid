@@ -27,6 +27,7 @@ class MappingTypeTest {
 		
 		//PROJECT_NUOPC_PROTOTYPES = TestHelpers.createFortranProjectFromFolder("target/" + NUOPCTest.NUOPC_TAG, NUOPCTest.NUOPC_TAG);
 		
+		/*
 		ESMFMethodMT = new MappingType("ESMFMethodMT", 
         	#{"context" -> ASTModuleNode, 
         	  "match" -> ASTSubroutineSubprogramNode
@@ -45,7 +46,9 @@ class MappingTypeTest {
                     bind.addResult(m)  
                 ]
             ]
-        ]    
+        ] 
+        * 
+        */   
 	}
 	
 	//@Test
@@ -68,7 +71,7 @@ class MappingTypeTest {
 		
 		//ESMFMethodMT.find.apply(binding)
 		
-		assertEquals(3, binding.resultSet)
+		//assertEquals(3, binding.resultSet)
 		
 	}
 	

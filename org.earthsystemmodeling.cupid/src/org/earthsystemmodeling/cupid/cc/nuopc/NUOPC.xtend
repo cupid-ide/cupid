@@ -1,20 +1,21 @@
 package org.earthsystemmodeling.cupid.cc.nuopc
 
 import org.earthsystemmodeling.cupid.cc.CodeConcept
-import org.earthsystemmodeling.cupid.cc.CodeConceptInstance
 import org.earthsystemmodeling.cupid.cc.fortran.FortranMappingTypes
 import org.earthsystemmodeling.cupid.cc.mapping.MappingType
 import org.eclipse.photran.internal.core.parser.ASTCallStmtNode
 import org.eclipse.photran.internal.core.parser.ASTModuleNode
 import org.eclipse.photran.internal.core.parser.ASTSubroutineSubprogramNode
-import org.eclipse.photran.internal.core.parser.IASTListNode
-import org.eclipse.photran.internal.core.parser.IBodyConstruct
 
 import static org.earthsystemmodeling.cupid.cc.fortran.FortranMappingTypes.*
-import static org.earthsystemmodeling.cupid.util.CodeExtraction.*
 
 import static extension org.earthsystemmodeling.cupid.nuopc.ASTQuery.*
 import static extension org.earthsystemmodeling.cupid.nuopc.ESMFQuery.*
+import org.earthsystemmodeling.cupid.cc.fortran.IntExpression
+import org.earthsystemmodeling.cupid.cc.fortran.IdentExpression
+import org.earthsystemmodeling.cupid.cc.fortran.DefIdentifier
+import org.earthsystemmodeling.cupid.cc.types.StringExpression
+import org.earthsystemmodeling.cupid.cc.types.DeclIdent
 
 class NUOPC {
     
@@ -51,9 +52,10 @@ class NUOPC {
         
         //required to initialize static members
         FortranMappingTypes.instance
-               
+        
+		/*      
         ESMFMethodMT = new MappingType("ESMFMethodMT", ASTModuleNode, ASTSubroutineSubprogramNode,
-        	  #{"name" -> String, "gcomp" -> String, "rc" -> String}) => [
+        	  #{"name" -> DeclIdent, "gcomp" -> DeclIdent, "rc" -> DeclIdent}) => [
             
             find = [bind|
                 val ASTModuleNode module = bind.context
@@ -65,30 +67,36 @@ class NUOPC {
                        
             forwardAdd = [b|
             	val ASTModuleNode module = b.context
-            	val code = b.fill('''
+            	val ASTSubroutineSubprogramNode ssn = b.parseProgramUnit(
+            	'''
 					
-					subroutine {name}({gcomp}, {rc})
-					    type(ESMF_GridComp)  :: {gcomp}
-					    integer, intent(out) :: {rc}
+					subroutine <name>(<gcomp>, <rc>)
+					    type(ESMF_GridComp)  :: <gcomp>
+					    integer, intent(out) :: <rc>
 					
 					    rc = ESMF_SUCCESS
 					
 					end subroutine
 				''')
 				
-				var ASTSubroutineSubprogramNode ssn = parseLiteralProgramUnit(code)
+				
 				module.getModuleBody().add(ssn)
 				b.match = ssn
             ]
             
         ] 
         
-                
+        * 
+        */
+        
+        /*        
        	NUOPCEntryPointMT = new MappingType("NUOPCEntryPointMT", ASTModuleNode, ASTSubroutineSubprogramNode, 
-        	#{"SetServices"->ASTSubroutineSubprogramNode,
-        	  "Reg"->ASTCallStmtNode, "name"->String,
-        	  "phaseNumber"->String, "phaseLabel"->String,
-        	  "methodType"->String}) => [
+        	#{"SetServices" -> ASTSubroutineSubprogramNode,
+        	  "Reg" -> ASTCallStmtNode, 
+        	  "name" -> DefIdentifier,
+        	  "phaseNumber" -> IntExpression, 
+        	  "phaseLabel" -> StringExpression,
+        	  "methodType" -> IdentExpression}) => [
         	  
         	  //"import"->String, "export"->String,
         	  //"gcomp"->String, "rc"->String,
@@ -106,20 +114,20 @@ class NUOPC {
   					if (
   						((
   							call.subroutineName.text.eic("ESMF_GridCompSetEntryPoint") &&
-  						 	bind.bindExpr("phaseNumber", call.argExprByKeyword("phase"))
+  						 	bind.bind("phaseNumber", call.argExprByKeyword("phase")) &&
+  						 	bind.bind("methodType", call.argExprByIdx(1))
   						)
   						||
   						(
   							call.subroutineName.text.eic("NUOPC_CompSetEntryPoint") &&
-  						 	bind.bindExprContains("phaseLabel", call.argExprByKeyword("phaseLabelList")) ||
-  						 	bind.bindExprContains("phaseLabel", call.argExprByIdx(2))
+  						 	bind.bindOneOf("phaseLabel", call.argExprByKeywordElseIdx("phaseLabelList", 2).arrayExprs) &&
+  						 	bind.bind("methodType", call.argExprByIdx(1)) 						 	
   						))
   						&&
   						(bind.bind("Reg", call))
   						) {
-  						
   							val epSub = module.findESMFEntryPoints.findFirst[sub|
-  								bind.bindToken("name", sub.subroutineStmt.subroutineName.subroutineName) &&
+  								bind.bind("name", sub.subroutineStmt.subroutineName.subroutineName) &&
 								sub.subroutineStmt.subroutineName.subroutineName.eic(call.litArgExprByKeyword("userRoutine"))
 							]
 							if (epSub != null) {
@@ -169,8 +177,7 @@ class NUOPC {
 					<endif>
 					<ESMFErrorCheck("rc")>
 					''')
-				
-					
+									
 				setServices.body.addAll(regCall)
 				bind.setValue("Reg", regCall.get(0))
         		
@@ -181,26 +188,40 @@ class NUOPC {
         	
         ]  
         
-        AdvertiseFieldsMT = NUOPCEntryPointMT.refine(#{}, #{"methodType"->"ESMF_METHOD_INITIALIZE"}) => [
+        * 
+        */
+        
+        /*
+        AdvertiseFieldsMT = NUOPCEntryPointMT.refine(#{}, 
+        	#{"methodType" -> "ESMF_METHOD_INITIALIZE",
+              "phaseLabel" -> StringExpression.oneOf("IPDv00p1", "IPDv01p1")}) => [
+        	
+        	//find = [bind|
+        	//	
+        	//	bind.r
+        	//	
+        	//]
         	
         	addTemplate("body", "! HERE IS THE BODY")
         	
-        	/*
+        	
         	forwardAdd = [bind|
         		val ASTSubroutineSubprogramNode ssn = bind.getValue("match")
         		ssn.subroutineStmt.subroutineName.subroutineName.whiteBefore = "! ADDED THIS COMMMENT"
         		
         	]
-        	*/
+        	
         ]     
+        */
         
-      	componentDefs()
-      	driverDefs()
-      	modelDefs()
+      	//componentDefs()
+      	//driverDefs()
+      	//modelDefs()
          
     }
     
     
+    /*
     protected def componentDefs() {
     	
     	
@@ -217,8 +238,8 @@ class NUOPC {
                 val ASTModuleNode module = bind.context
                 val ASTSubroutineSubprogramNode setServicesNode = bind.getValue("SetServices")
 
-                bind.resultSet.<ASTSubroutineSubprogramNode>removeMatchIf[m|m == setServicesNode]
-                bind.resultSet.<ASTSubroutineSubprogramNode>retainMatchIf[m|
+                bind.removeMatchIf[m|m == setServicesNode]
+                bind.<ASTSubroutineSubprogramNode>retainMatchIf[m|
                     setServicesNode.body.filter(ASTCallStmtNode).
                         exists[                        
                             it.subroutineName.eic("NUOPC_CompSpecialize") &&
@@ -241,18 +262,16 @@ class NUOPC {
             	val labelComponent = bind.getValueString("labelComponent")
             	val labelName = bind.getValueString("labelName")
             	val specLabel = bind.getValueString("specLabel")
-            	val specPhaseLabel = bind.getValueString("specPhaseLabel")
-            	
+             	
             	ensureImport(moduleNode, labelComponent, labelName, specLabel, true)
             	
-            	val code = bind.fill('''
+            	var ASTCallStmtNode regCall = bind.parseStatement('''
 
-					call NUOPC_CompSpecialize({gcomp}, specLabel={specLabel}, &
-						«IF specPhaseLabel!=null»specPhaseLabel={specPhaseLabel}, «ENDIF»specRoutine={name}, rc={rc})
-					«ESMFErrorCheck(bind.getValueString("rc"))»
+					call NUOPC_CompSpecialize(<gcomp>, specLabel=<specLabel>, &
+						<if(specPhaseLabel)>specPhaseLabel=<specPhaseLabel>, <endif>specRoutine=<name>, rc=<rc>)
+					<ESMFErrorCheck(rc)>
 					''')
-					
-				var ASTCallStmtNode regCall = parseLiteralStatement(code)
+				
 				setServices.body.add(regCall)
             	
             ]
@@ -261,7 +280,7 @@ class NUOPC {
     	
     	
     	SetServicesMT = new MappingType("SetServicesMT", ASTModuleNode, ASTSubroutineSubprogramNode,
-        	#{"rc"->String, "gcomp"->String, "genericUse"->CodeConceptInstance}) => [
+        	#{"rc"->String, "gcomp"->String, "genericSS"->String}) => [
             
             find = [me|
                 val ASTModuleNode module = me.context()
@@ -278,10 +297,7 @@ class NUOPC {
             ]
             
             forwardAdd = [bind|
-            	
-            	val CodeConceptInstance genericUse = bind.getValue("genericUse")
-            	val routineSS = genericUse.get("genericSS") as String
-            	
+            	            	
             	val ASTSubroutineSubprogramNode ssn = bind.parseProgramUnit(
 					'''
 
@@ -291,9 +307,11 @@ class NUOPC {
 					    
 					    rc = ESMF_SUCCESS
 					    
+					    <if(genericSS)>
 					    ! Register the generic methods
-					    call NUOPC_CompDerive(<gcomp>, «routineSS», rc=<rc>)
+					    call NUOPC_CompDerive(<gcomp>, <genericSS>, rc=<rc>)
 					    <ESMFErrorCheck(rc)>
+					    <endif>
 					    
 					end subroutine
 					''')
@@ -308,31 +326,23 @@ class NUOPC {
     	
     	SetServices = new CodeConcept("SetServices") => [
         	addAnnotationsWithDefaults(#{"rc"->"rc", "gcomp"->"gcomp"})
-        	setMappingType(SetServicesMT, #{"rc"->"@rc", "gcomp"->"@gcomp", "genericUse"->"../UsesGeneric"})
+        	setMappingType(SetServicesMT, #{"genericSS"->"../UsesGeneric/@genericSS"})
         ]
              
         ESMFEntryPoint = new CodeConcept("EntryPoint") => [
-        	addAnnotationsWithDefaults(#{"name"->"EntryPoint", "methodType"->"ESMF_METHOD_INITIALIZE"})
-        	addAnnotations("phaseNumber", "phaseLabel")
-        	addAnnotation("Reg", ASTCallStmtNode)
-        	setMappingType(NUOPCEntryPointMT, 
-        			#{"SetServices"->"../SetServices*",
-        	  		  "Reg"->"@Reg", "name"->"@name", "methodType"->"@methodType",
-        	  	      "phaseNumber"->"@phaseNumber", "phaseLabel"->"@phaseLabel"})
+        	//addAnnotationsWithDefaults(#{"name"->"EntryPoint", "methodType"->"ESMF_METHOD_INITIALIZE"})
+        	setMappingType(NUOPCEntryPointMT, #{"SetServices"->"../SetServices*"})
         ]
         
                
         NUOPCComponent = new CodeConcept("NUOPCComponent") => [
             
-            addAnnotations("name")
-                       
-            setMappingType(ModuleMT, #{"name" -> "@name"})
+            setMappingType(ModuleMT)
    
             addSubconcept("UsesESMF", ModuleUseStmtMT, false, 1, 1, #{"uses" -> "ESMF"}, true)
             addSubconcept("UsesNUOPC", ModuleUseStmtMT, false, 1, 1, #{"uses" -> "NUOPC"}, true)
             addSubconcept("SetServices", SetServices, false, 1, 1, true)
-            addSubconcept("ESMFEntryPoint", ESMFEntryPoint, false, 0, -1, true)
-            
+            addSubconcept("ESMFEntryPoint", ESMFEntryPoint, false, 0, -1, false)           
            
         ]
     	
@@ -348,18 +358,21 @@ class NUOPC {
            		]
  
  			addSubconcept("InitializeAdvertise", AdvertiseFieldsMT, false, 1, 1,
- 				#{"SetServices"->"../SetServices*", "phaseLabel"->"IPDv01p1"}, true) => [
+ 				#{"SetServices"->"../SetServices*", "phaseLabel"->StringExpression.literal("IPDv01p1")}, true) => [
 
-        	  		addAnnotationsWithDefaults(#{"name"->"InitializeAdvertise"})
+        	  		addAnnotationDefaults(#{"name" -> DefIdentifier.literal("InitializeAdvertise")})
+        	  		
         		]
-        	  	      
+        	  	    
+        	
         	addSubconcept("InitializeRealize", NUOPCEntryPointMT, false, 1, 1,
- 				#{"SetServices"->"../SetServices*",
-        	  	  "methodType"->"ESMF_METHOD_INITIALIZE", "phaseLabel"->"IPDv01p2"}, true) => [
+ 				#{"SetServices" -> "../SetServices*",
+        	  	  "methodType" -> IdentExpression.literal("ESMF_METHOD_INITIALIZE"), 
+        	  	  "phaseLabel" -> StringExpression.oneOf("IPDv00p2", "IPDv01p2")}
+        	  	, true) => [
         	  	      	
-        	  		addAnnotationsWithDefaults(#{"name"->"InitializeRealize"})
+        	  		addAnnotationDefaults(#{"name"->DefIdentifier.literal("InitializeRealize")})
         	 	]
- 			
            
         ]
         
@@ -380,7 +393,7 @@ class NUOPC {
        		
        		find = [bind|
        			//here we annotate existing results
-       			bind.resultSet.results.forEach[r|
+       			bind.forEachResult[r|
        				val callStmt = r.match as ASTCallStmtNode
        				if (callStmt.argList.get(1).name?.eic("srcCompLabel")) {
        					r.put("srcCompLabel", callStmt.argList.get(1).expr.literal)
@@ -416,8 +429,7 @@ class NUOPC {
        		]
        		
        	]
-       	
-    	
+       	   	
     	
     	SetModelServices = new CodeConcept("SetModelServices") => [
         	
@@ -463,8 +475,9 @@ class NUOPC {
     	
     	
     }
+    */
     
-    
+    /*
     def static ESMFErrorCheck(String rcToCheck) {
 		'''	
 		if (ESMF_LogFoundError(rcToCheck=«rcToCheck», msg=ESMF_LOGERR_PASSTHRU, &
@@ -473,6 +486,6 @@ class NUOPC {
 			return  ! bail out
 		'''
 	}	
-        
+     */  
     
 }

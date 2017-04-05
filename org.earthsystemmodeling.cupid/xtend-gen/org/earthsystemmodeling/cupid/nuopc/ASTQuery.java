@@ -2,7 +2,10 @@ package org.earthsystemmodeling.cupid.nuopc;
 
 import com.google.common.base.Objects;
 import com.google.common.collect.Iterables;
+import java.util.List;
 import org.eclipse.photran.internal.core.lexer.Token;
+import org.eclipse.photran.internal.core.parser.ASTAcValueNode;
+import org.eclipse.photran.internal.core.parser.ASTArrayConstructorNode;
 import org.eclipse.photran.internal.core.parser.ASTCallStmtNode;
 import org.eclipse.photran.internal.core.parser.ASTModuleNode;
 import org.eclipse.photran.internal.core.parser.ASTOnlyNode;
@@ -12,8 +15,10 @@ import org.eclipse.photran.internal.core.parser.ASTUseStmtNode;
 import org.eclipse.photran.internal.core.parser.IASTListNode;
 import org.eclipse.photran.internal.core.parser.IASTNode;
 import org.eclipse.photran.internal.core.parser.IExpr;
+import org.eclipse.xtext.xbase.lib.CollectionLiterals;
 import org.eclipse.xtext.xbase.lib.Functions.Function1;
 import org.eclipse.xtext.xbase.lib.IterableExtensions;
+import org.eclipse.xtext.xbase.lib.ListExtensions;
 
 @SuppressWarnings("all")
 public class ASTQuery {
@@ -74,6 +79,25 @@ public class ASTQuery {
       _xblockexpression = _xifexpression;
     }
     return _xblockexpression;
+  }
+  
+  public static List<IExpr> arrayExprs(final IExpr e) {
+    List<IExpr> _xifexpression = null;
+    if ((e instanceof ASTArrayConstructorNode)) {
+      List<IExpr> _xblockexpression = null;
+      {
+        final ASTArrayConstructorNode acn = ((ASTArrayConstructorNode) e);
+        IASTListNode<ASTAcValueNode> _acValueList = acn.getAcValueList();
+        final Function1<ASTAcValueNode, IExpr> _function = (ASTAcValueNode n) -> {
+          return n.getExpr();
+        };
+        _xblockexpression = ListExtensions.<ASTAcValueNode, IExpr>map(_acValueList, _function);
+      }
+      _xifexpression = _xblockexpression;
+    } else {
+      _xifexpression = CollectionLiterals.<IExpr>newArrayList();
+    }
+    return _xifexpression;
   }
   
   public static String litArgExprByKeyword(final ASTCallStmtNode node, final String keyword) {

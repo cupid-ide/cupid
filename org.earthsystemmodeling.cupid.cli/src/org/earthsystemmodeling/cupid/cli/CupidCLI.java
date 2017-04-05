@@ -89,7 +89,7 @@ public class CupidCLI implements IApplication {
 				return IApplication.EXIT_OK;
 			}
 			
-			ConfigParser parser = new ConfigParser(root);
+			ConfigParser parser = new ConfigParser(root, monitor);
 			parser.generate(configF);
 			
 		}

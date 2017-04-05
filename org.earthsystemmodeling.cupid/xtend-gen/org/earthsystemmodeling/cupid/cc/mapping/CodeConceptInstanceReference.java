@@ -5,20 +5,21 @@ import org.earthsystemmodeling.cupid.cc.CodeConceptInstance;
 import org.earthsystemmodeling.cupid.cc.mapping.IllegalVariableAssignment;
 import org.earthsystemmodeling.cupid.cc.mapping.MappingTypeBinding;
 import org.earthsystemmodeling.cupid.cc.mapping.MappingTypeException;
-import org.earthsystemmodeling.cupid.cc.mapping.MappingTypeVariable;
-import org.earthsystemmodeling.cupid.cc.mapping.MappingTypeVariableBinding;
+import org.earthsystemmodeling.cupid.cc.mapping.MappingTypeParameter;
+import org.earthsystemmodeling.cupid.cc.mapping.MappingTypeParameterBinding;
 import org.earthsystemmodeling.cupid.cc.mapping.ReferenceMTVBinding;
+import org.earthsystemmodeling.cupid.cc.types.MTPType;
 import org.eclipse.xtext.xbase.lib.Conversions;
 import org.eclipse.xtext.xbase.lib.Exceptions;
 import org.eclipse.xtext.xbase.lib.IterableExtensions;
 
 @SuppressWarnings("all")
-public class CodeConceptInstanceReference<T extends Object> extends ReferenceMTVBinding<T> {
-  public CodeConceptInstanceReference(final MappingTypeVariable<T> boundTo, final String reference) {
+public class CodeConceptInstanceReference extends ReferenceMTVBinding {
+  public CodeConceptInstanceReference(final MappingTypeParameter boundTo, final String reference) {
     this(boundTo, reference, null);
   }
   
-  public CodeConceptInstanceReference(final MappingTypeVariable<T> boundTo, final String reference, final MappingTypeBinding binding) {
+  public CodeConceptInstanceReference(final MappingTypeParameter boundTo, final String reference, final MappingTypeBinding binding) {
     super(null, reference);
     this.setBoundTo(boundTo);
     boolean _notEquals = (!Objects.equal(binding, null));
@@ -27,7 +28,7 @@ public class CodeConceptInstanceReference<T extends Object> extends ReferenceMTV
     }
   }
   
-  protected Object resolvePath() {
+  protected MTPType<?> resolvePath() {
     String _reference = this.getReference();
     String[] segments = _reference.split("/");
     CodeConceptInstance current = null;
@@ -73,7 +74,7 @@ public class CodeConceptInstanceReference<T extends Object> extends ReferenceMTV
             int _minus = (_length - 1);
             String _substring_2 = seg.substring(0, _minus);
             CodeConceptInstance _child = current.getChild(_substring_2);
-            Object _match = null;
+            MTPType<?> _match = null;
             if (_child!=null) {
               _match=_child.getMatch();
             }
@@ -85,28 +86,31 @@ public class CodeConceptInstanceReference<T extends Object> extends ReferenceMTV
         }
       }
     }
-    return current;
+    return null;
   }
   
   @Override
-  public T getValue() {
+  public MTPType<?> getValue() {
     try {
       String _reference = this.getReference();
       boolean _notEquals = (!Objects.equal(_reference, null));
       if (_notEquals) {
-        final Object refVal = this.resolvePath();
-        if (((!Objects.equal(refVal, null)) && (!this.getBoundTo().type.isInstance(refVal)))) {
-          MappingTypeVariable<T> _boundTo = this.getBoundTo();
-          MappingTypeVariable<T> _boundTo_1 = this.getBoundTo();
-          Class<?> _class = refVal.getClass();
-          throw new IllegalVariableAssignment(_boundTo.name, _boundTo_1.type, _class);
+        final MTPType<?> refVal = this.resolvePath();
+        if (((!Objects.equal(refVal, null)) && (!this.getBoundTo().getType().isInstance(refVal)))) {
+          MappingTypeParameter _boundTo = this.getBoundTo();
+          String _name = _boundTo.getName();
+          MappingTypeParameter _boundTo_1 = this.getBoundTo();
+          Class<? extends MTPType<?>> _type = _boundTo_1.getType();
+          Class<? extends MTPType> _class = refVal.getClass();
+          throw new IllegalVariableAssignment(_name, _type, _class);
         } else {
-          this.value = ((T) refVal);
+          this.value = refVal;
           return this.value;
         }
       } else {
-        MappingTypeVariable<T> _boundTo_2 = this.getBoundTo();
-        boolean _equals = _boundTo_2.name.equals("context");
+        MappingTypeParameter _boundTo_2 = this.getBoundTo();
+        String _name_1 = _boundTo_2.getName();
+        boolean _equals = _name_1.equals("context");
         if (_equals) {
           MappingTypeBinding _binding = this.getBinding();
           CodeConceptInstance _currentInstance = _binding.getCurrentInstance();
@@ -114,8 +118,9 @@ public class CodeConceptInstanceReference<T extends Object> extends ReferenceMTV
           if (_notEquals_1) {
             MappingTypeBinding _binding_1 = this.getBinding();
             CodeConceptInstance _currentInstance_1 = _binding_1.getCurrentInstance();
-            MappingTypeVariable<T> _boundTo_3 = this.getBoundTo();
-            T _nearestAncestorWithMatch = _currentInstance_1.<T>nearestAncestorWithMatch(_boundTo_3.type);
+            MappingTypeParameter _boundTo_3 = this.getBoundTo();
+            Class<? extends MTPType<?>> _type_1 = _boundTo_3.getType();
+            MTPType<?> _nearestAncestorWithMatch = _currentInstance_1.nearestAncestorWithMatch(_type_1);
             this.value = _nearestAncestorWithMatch;
           } else {
             MappingTypeBinding _binding_2 = this.getBinding();
@@ -124,8 +129,9 @@ public class CodeConceptInstanceReference<T extends Object> extends ReferenceMTV
             if (_notEquals_2) {
               MappingTypeBinding _binding_3 = this.getBinding();
               CodeConceptInstance _currentContext_1 = _binding_3.getCurrentContext();
-              MappingTypeVariable<T> _boundTo_4 = this.getBoundTo();
-              T _nearestAncestorWithMatch_1 = _currentContext_1.<T>nearestAncestorWithMatch(_boundTo_4.type);
+              MappingTypeParameter _boundTo_4 = this.getBoundTo();
+              Class<? extends MTPType<?>> _type_2 = _boundTo_4.getType();
+              MTPType<?> _nearestAncestorWithMatch_1 = _currentContext_1.nearestAncestorWithMatch(_type_2);
               this.value = _nearestAncestorWithMatch_1;
             } else {
               throw new MappingTypeException("No context information available");
@@ -136,7 +142,7 @@ public class CodeConceptInstanceReference<T extends Object> extends ReferenceMTV
           String _reference_1 = this.getReference();
           String _plus = ("Cannot handle path expression: " + _reference_1);
           String _plus_1 = (_plus + " [");
-          MappingTypeVariable<T> _boundTo_5 = this.getBoundTo();
+          MappingTypeParameter _boundTo_5 = this.getBoundTo();
           String _plus_2 = (_plus_1 + _boundTo_5);
           String _plus_3 = (_plus_2 + "].");
           throw new UnsupportedOperationException(_plus_3);
@@ -221,14 +227,14 @@ public class CodeConceptInstanceReference<T extends Object> extends ReferenceMTV
    * }
    */
   @Override
-  public MappingTypeVariableBinding<T> clone(final MappingTypeBinding newBinding) {
-    MappingTypeVariable<T> _boundTo = this.getBoundTo();
+  public MappingTypeParameterBinding clone(final MappingTypeBinding newBinding) {
+    MappingTypeParameter _boundTo = this.getBoundTo();
     String _reference = this.getReference();
-    return new CodeConceptInstanceReference<T>(_boundTo, _reference, newBinding);
+    return new CodeConceptInstanceReference(_boundTo, _reference, newBinding);
   }
   
   @Override
-  public void setValue(final T value) {
+  public void setValue(final MTPType<?> value) {
     if (((!Objects.equal(this.getReference(), null)) && this.getReference().startsWith("@"))) {
       String _reference = this.getReference();
       final String annotationName = _reference.substring(1);
@@ -236,8 +242,9 @@ public class CodeConceptInstanceReference<T extends Object> extends ReferenceMTV
       CodeConceptInstance _currentInstance = _binding.getCurrentInstance();
       _currentInstance.put(annotationName, value);
     } else {
-      MappingTypeVariable<T> _boundTo = this.getBoundTo();
-      boolean _equals = _boundTo.name.equals("match");
+      MappingTypeParameter _boundTo = this.getBoundTo();
+      String _name = _boundTo.getName();
+      boolean _equals = _name.equals("match");
       if (_equals) {
         MappingTypeBinding _binding_1 = this.getBinding();
         CodeConceptInstance _currentInstance_1 = _binding_1.getCurrentInstance();
