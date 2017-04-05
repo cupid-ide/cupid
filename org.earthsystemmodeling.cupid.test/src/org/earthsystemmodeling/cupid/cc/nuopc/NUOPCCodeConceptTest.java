@@ -114,7 +114,7 @@ public class NUOPCCodeConceptTest {
 	
 	
 	@SuppressWarnings("restriction")
-	@Test
+	//@Test
 	public void GenerateNUOPCModel() throws CoreException {
 				
 		IProject p = TestHelpers.createEmptyFortranProject("GenerateNUOPCModel");
