@@ -51,6 +51,17 @@
                class="org.eclipse.tracecompass.tmf.ctf.core.trace.CtfTmfTrace">
          </tracetype>
       </module>
+      <module
+            analysis_module="org.earthsystemmodeling.cupid.trace.CtfNUOPCStateSystemAnalysisModule"
+            automatic="false"
+            icon="icons/state.png"
+            id="org.earthsystemmodeling.cupid.trace.CtfNUOPCStateSystemAnalysisModule"
+            name="CTF NUOPC State System Analysis">
+         <tracetype
+               applies="true"
+               class="org.eclipse.tracecompass.tmf.ctf.core.trace.CtfTmfTrace">
+         </tracetype>
+      </module>
       
    </extension>
    <extension

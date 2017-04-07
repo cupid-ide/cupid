@@ -38,6 +38,8 @@ public class NUOPCCallStackView extends CallStackView {
 	
 	static class NUOPCCallStackPresentationProvider extends CallStackPresentationProvider {
 		
+		
+		
 		//private Integer fAverageCharWidth;
 		
 		/*
