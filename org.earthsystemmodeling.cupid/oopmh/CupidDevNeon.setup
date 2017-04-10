@@ -274,6 +274,8 @@
           name="org.eclipse.tracecompass.tmf.core"/>
       <requirement
           name="org.eclipse.tracecompass.tmf.ui"/>
+      <requirement
+          name="org.apache.commons.io"/>
       <sourceLocator
           rootFolder="${git.clone.location}"
           locateNestedProjects="true"/>
