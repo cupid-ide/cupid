@@ -97,8 +97,7 @@
       label="Trace Compass"
       licenseConfirmationDisabled="true">
     <requirement
-        name="org.eclipse.tracecompass.tmf.feature.group"
-        versionRange="2.0.1"/>
+        name="org.eclipse.tracecompass.tmf.feature.group"/>
     <requirement
         name="org.eclipse.tracecompass.ctf.feature.group"/>
     <requirement
@@ -154,8 +153,8 @@
     <requirement
         name="org.eclipse.sirius.runtime.acceleo.feature.group"
         filter=""/>
-    <repository 
-        url="http://download.eclipse.org/sirius/updates/releases/4.0.1/neon"/>
+    <repository
+        url="http://download.eclipse.org/sirius/updates/releases/4.1.3/neon"/>
   </setupTask>
   <setupTask
       xsi:type="setup.p2:P2Task"
@@ -258,8 +257,7 @@
       <requirement
           name="org.eclipse.jdt.annotation"/>
       <requirement
-          name="org.eclipse.tracecompass.tmf.feature.group"
-          versionRange="2.0.1"/>
+          name="org.eclipse.tracecompass.tmf.feature.group"/>
       <requirement
           name="org.eclipse.tracecompass.ctf.feature.group"/>
       <requirement
