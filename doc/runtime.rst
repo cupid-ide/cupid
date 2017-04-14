@@ -2,31 +2,67 @@ Runtime Analysis of NUOPC Applications
 ======================================
 
 This section describes Cupid's features for analyzing a NUOPC application
-run.  The analysis is performed after a run is completed by examining the 
-ESMF log files output from a NUOPC application.  These files are usually
-named `PETXXX.ESMF_LogFile` where XXX is the PET number.
+run.  The runtime analysis requires two steps:
 
+  - First, execute a NUOPC application with tracing turned on
+  - Second, import the trace into Cupid to analyze it.
 
-Perform a Run of a NUOPC Application
-------------------------------------
+The current supported analysis shows a multi-process (PET) view of the entry
+and exit points from NUOPC run phases.  This allows for a component-level
+performance analysis and is useful for load balancing a coupled system.
 
-First, make sure you compile your application with **ESMF version 7.1 beta
-snapshot** or later.
+ 
+Perform a Run of a NUOPC Application with Tracing Enabled
+---------------------------------------------------------
+
+First, make sure you compile your application with **ESMF version 7.1 beta snapshot** or later.
 
 In order for the analysis entries to be put into the ESMF log files, you
 must set the following environment variable before the run:
 
 .. code-block:: bash
 		
-	$ export ESMF_RUNTIME_COMPLIANCECHECK=ON:JSON=ON
-	
-Then, execute the NUOPC application in the way you normally do. After the
-run you should notice specialized "JSON" messages in the `PETXXX.ESMF_LogFile`
-files.
+	$ export ESMF_RUNTIME_TRACE=ON
 
-Transfer one or more of the `PETXXX.ESMF_LogFile` files to your local machine
-where Eclipse is installed.  The log files are analyzed one at a time, so in many
-cases you do not need the log file of every PET.
+Optionally, you may set the environment variable `ESMF_RUNTIME_TRACE_PETLIST`
+to limit which PETs are traced.  This is recommended to limit the size of 
+the output trace. If you do not set this environment variable, all PETs will 
+be traced by default. Each PET should be separated by a space, and you can 
+use the notation "X-Y" to indicate a range of PETs.  **A good approach is to
+trace only the root PET of each component in the NUOPC application.**
+
+.. code-block:: bash
+
+	# turn on tracing for PETs 0, 32, and 64 through 72		
+	$ export ESMF_RUNTIME_TRACE_PETLIST="0 32 64-72"
+
+After setting these environment variables execute the NUOPC application in 
+the way you normally do. The trace itself will be placed into the `traceout`
+directory. The directory will contain a "metadata" file and one file per
+PET that was traced.  For example, if PETs 0, 144, and 168 having tracing
+enabled, the `traceout` directory looks like this:
+
+.. code-block:: bash
+
+	[Rocky.Dunlap@tfe04 traceout]$ ls -la
+	total 2320
+	drwx--S--- 2 Rocky.Dunlap stmp    4096 Apr 11 22:20 .
+	drwxr-sr-x 5 Rocky.Dunlap stmp   73728 Apr 11 23:20 ..
+	-rw-r----- 1 Rocky.Dunlap stmp 1048576 Apr 11 22:41 esmf_stream_0
+	-rw-r----- 1 Rocky.Dunlap stmp  229376 Apr 11 22:41 esmf_stream_144
+	-rw-r----- 1 Rocky.Dunlap stmp  163840 Apr 11 22:41 esmf_stream_168
+	-rw-r----- 1 Rocky.Dunlap stmp    3370 Apr 11 22:41 metadata
+
+If the run was performed on a remote machine, the trace directory needs to be 
+transferred to your local machine where Eclipse is installed.  Tar the entire
+directory and copy it to your machine.
+
+.. code-block:: bash
+
+	$ tar cfz traceout.tar.gz traceout
+	$ scp traceout.tar.gz ...  # command to transfer files
+
+
 
 Create Tracing Project and Import ESMF Log Files
 ------------------------------------------------
