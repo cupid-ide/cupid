@@ -74,9 +74,9 @@ In Eclipse, choose "File -> Import..." from the menu and select "Trace Import"
 in the folder "Tracing Project."
 
 .. figure:: images/trace_import_1.png
-    :scale: 85%
+   :scale: 85%
   
-    Import a trace into Eclipse
+   Import a trace into Eclipse
   
 Click Next. On the next screen select the trace to import. You can import a 
 trace by either selecting the root directory of the trace or by selecting
@@ -85,9 +85,9 @@ directory or archive, check the trace root folder in the list (see figure below)
 Then click Finish.
 
 .. figure:: images/trace_import_2.png
-    :scale 85%
+   :scale 85%
   
-    Select trace root directory or trace archive file to import
+   Select trace root directory or trace archive file to import
 
 When complete, you will see a new project in the Project Explorer called
 `Tracing` with a folder called `Traces`.  This folder contains the imported
@@ -109,16 +109,16 @@ in the Project Explorer under the imported trace. It is under Views /
 NUOPC Call Stack Analysis (see figure below).
 
 .. figure:: images/trace_import_3.png
-  :scale 85%
+   :scale 85%
   
-  Double-click "NUOPC Call Stack View" in the Project Explorer
-  to open up the view.
+   Double-click "NUOPC Call Stack View" in the Project Explorer
+   to open up the view.
 
 
 .. figure:: images/call_stack_view.png
-  :scale 85%
+   :scale 85%
   
-  The NUOPC Call Stack View showing three PETs
+   The NUOPC Call Stack View showing three PETs
   
 The NUOPC Call Stack View toolbar allows you to navigate the view.
 
@@ -129,5 +129,3 @@ The NUOPC Call Stack View toolbar allows you to navigate the view.
  - Left-click (CTRL-click on Max), hold, and drag to select a region
    and see the time delta at the bottom of the window.
  
-
-
