@@ -38,7 +38,7 @@ trace only the root PET of each component in the NUOPC application.**
 
 After setting these environment variables execute the NUOPC application in 
 the way you normally do. The trace itself will be placed into the `traceout`
-directory. The directory will contain a "metadata" file and one file per
+directory. The directory will contain a `metadata` file and one file per
 PET that was traced.  For example, if PETs 0, 144, and 168 having tracing
 enabled, the `traceout` directory looks like this:
 
@@ -53,7 +53,9 @@ enabled, the `traceout` directory looks like this:
 	-rw-r----- 1 Rocky.Dunlap stmp  163840 Apr 11 22:41 esmf_stream_168
 	-rw-r----- 1 Rocky.Dunlap stmp    3370 Apr 11 22:41 metadata
 
-If the run was performed on a remote machine, the trace directory needs to be 
+The trace files are in a binary format called 
+`Common Trace Format <http://diamon.org/ctf/>`_ so they cannot be viewed
+directly. If the run was performed on a remote machine, the trace directory needs to be 
 transferred to your local machine where Eclipse is installed.  Tar the entire
 directory and copy it to your machine.
 
@@ -63,52 +65,66 @@ directory and copy it to your machine.
 	$ scp traceout.tar.gz ...  # command to transfer files
 
 
+Import the NUOPC Trace into Eclipse
+-----------------------------------
 
-Create Tracing Project and Import ESMF Log Files
-------------------------------------------------
+In Eclipse, choose "File -> Import..." from the menu and select "Trace Import"
+in the folder "Tracing Project."
 
-In Eclipse, create a new Tracing Project from the menu:  Select File->New->Project...
-In the folder "Tracing" choose "Tracing Project" and click Next.  Give the project
-a name and then click Finish.
+..figure:: images/trace_import_1.png
+  :scale: 85%
+  
+  Import a trace into Eclipse
+  
+Click Next. On the next screen select the trace to import. You can import a 
+trace by either selecting the root directory of the trace or by selecting
+an archive file containing the trace directory. After selecting the root
+directory or archive, check the trace root folder in the list (see figure below).
+Then click Finish.
 
-The new tracing project will appear in the Project Explorer to the left, including
-an `Experiments` folder and a `Traces` folder.  Right-click (CTRL-click on Mac) on the
-`Traces` folder and select Import...  Assuming you have transferred the log files locally,
-select the root directory containing the log files and then check off the log files
-you wish to import.  Then click Finish.
+..figure:: images/trace_import_2.png
+  :scale 85%
+  
+  Select trace root directory or trace archive file to import
 
-.. figure:: images/trace_import.png
-   :scale: 85 % 
-   
-   Import ESMF log files into the trace project.
+When complete, you will see a new project in the Project Explorer called
+`Tracing` with a folder called `Traces`.  This folder contains the imported
+trace. It will have a name that matches the archive file or root directory
+you selected. Double-click to open the trace and see the list of trace events.
+ 
 
-The imported log files will appear in the `Traces` folder of your project.  Double-click
-to open a log file in the viewer.  This will list all of the log events and allow you
-to search/filter at the top.
+Call Stack View for Performance Analysis 
+----------------------------------------
+
+The NUOPC Call Stack view shows visually the entry and exit points of
+each NUOPC/ESMF phase in the traced PETs. The PETs are aligned in time 
+vertically so that it is easy to see concurrency in the system. In other
+words, a vertical slice shows what each PET is doing at the same point
+in time during the execution.
+
+Open the NUOPC Call Stack View by double-clicking "NUOPC Call Stack View"
+in the Project Explorer under the imported trace. It is under Views / 
+NUOPC Call Stack Analysis.
+
+..figure:: images/trace_import_3.png
+  :scale 85%
+  
+  Double-click "NUOPC Call Stack View" in the Project Explorer
+  to open up the view.
 
 
-Supported Analyses
-------------------
-
-Currently, the two supported analyses are the NUOPC Call Stack and the NUOPC State 
-Explorer.  The views should show up in the Fortran perspective.  If not, from the
-menu select Window->Show View->Other... and open the NUOPC folder.  Then you can
-select the views to open.
-
-The NUOPC Call Stack view shows visually when each ESMF method is entered and exited
-and also includes a "prologue" and "epilogue" before and after each method. 
-
-The NUOPC State Explorer shows in a tree view the state of many objects of the
-NUOPC application including information about Components, States, and Fields.
-Typically, during a debug session you'll want to know the state of the system 
-before and after each ESMF method.  Therefore, it is recommended that you stack
-the NUOPC Call Stack view on top of the NUOPC State Explorer view, as shown below.
-When you click on a particular point in the Call Stack, the State Explorer will
-synchronize its state to that time.
-
-.. figure:: images/trace_workbench.png
-   :scale: 95%
-   
-   The ESMF log viewer, NUOPC Call Stack view, and NUOPC State Explorer views.
+..figure:: images/call_stack_view.png
+  :scale 85%
+  
+  The NUOPC Call Stack View showing three PETs
+  
+The NUOPC Call Stack View toolbar allows you to navigate the view.
+ - The house icon zooms out to see the full execution trace.
+ - The + and - magnifying glass will zoom in and out.
+ - Right-click (CTRL-click on Mac), hold, and drag to zoom in on a 
+   particular time window.
+ - Left-click (CTRL-click on Max), hold, and drag to select a region
+   and see the time delta at the bottom of the window.
+ 
 
 
