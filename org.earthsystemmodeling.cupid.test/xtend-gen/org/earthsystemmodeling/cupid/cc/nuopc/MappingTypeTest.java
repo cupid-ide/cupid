@@ -31,8 +31,7 @@ public class MappingTypeTest {
     try {
       final IProject p = TestHelpers.createFortranProjectFromFolder((("target/" + NUOPCTest.NUOPC_TAG) + "/AtmOcnProto"), (NUOPCTest.NUOPC_TAG + "_AtmOcnProto"));
       final IFile f = p.getFile("esm.F90");
-      PhotranVPG _instance = PhotranVPG.getInstance();
-      final IFortranAST ast = _instance.acquireTransientAST(f);
+      final IFortranAST ast = PhotranVPG.getInstance().acquireTransientAST(f);
       ASTExecutableProgramNode _root = ast.getRoot();
       IASTListNode<IProgramUnit> _programUnitList = null;
       if (_root!=null) {

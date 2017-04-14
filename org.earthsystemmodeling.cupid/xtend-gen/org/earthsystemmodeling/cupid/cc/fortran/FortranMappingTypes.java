@@ -8,7 +8,6 @@ import org.earthsystemmodeling.cupid.cc.mapping.MappingTypeException;
 import org.earthsystemmodeling.cupid.nuopc.ASTQuery;
 import org.earthsystemmodeling.cupid.util.CodeExtraction;
 import org.eclipse.photran.core.IFortranAST;
-import org.eclipse.photran.internal.core.lexer.Token;
 import org.eclipse.photran.internal.core.parser.ASTModuleNode;
 import org.eclipse.photran.internal.core.parser.ASTOnlyNode;
 import org.eclipse.photran.internal.core.parser.ASTRenameNode;
@@ -88,13 +87,12 @@ public class FortranMappingTypes {
     }
     final boolean exists = _or;
     if ((!exists)) {
-      String _string = usn.toString();
-      String _trim = _string.trim();
+      String _trim = usn.toString().trim();
       String _plus = (_trim + ", &\n");
       StringConcatenation _builder = new StringConcatenation();
-      _builder.append(localName, "");
+      _builder.append(localName);
       _builder.append(" => ");
-      _builder.append(entityName, "");
+      _builder.append(entityName);
       final String code = (_plus + _builder);
       IBodyConstruct _parseLiteralStatement = CodeExtraction.<IBodyConstruct>parseLiteralStatement(code);
       final ASTUseStmtNode newNode = ((ASTUseStmtNode) _parseLiteralStatement);
@@ -111,21 +109,17 @@ public class FortranMappingTypes {
   
   public static ASTUseStmtNode ensureImport(final ASTModuleNode amn, final String moduleName, final String entityName, final String localName, final boolean useOnly) {
     try {
-      IASTListNode<? extends IASTNode> _body = amn.getBody();
-      Iterable<? extends IASTNode> _children = _body.getChildren();
-      Iterable<ASTUseStmtNode> _filter = Iterables.<ASTUseStmtNode>filter(_children, ASTUseStmtNode.class);
       final Function1<ASTUseStmtNode, Boolean> _function = (ASTUseStmtNode usn) -> {
-        Token _name = usn.getName();
-        return Boolean.valueOf(ASTQuery.eic(_name, moduleName));
+        return Boolean.valueOf(ASTQuery.eic(usn.getName(), moduleName));
       };
-      ASTUseStmtNode usn = IterableExtensions.<ASTUseStmtNode>findFirst(_filter, _function);
+      ASTUseStmtNode usn = IterableExtensions.<ASTUseStmtNode>findFirst(Iterables.<ASTUseStmtNode>filter(amn.getBody().getChildren(), ASTUseStmtNode.class), _function);
       boolean _notEquals = (!Objects.equal(usn, null));
       if (_notEquals) {
         return FortranMappingTypes.ensureImport(usn, entityName, localName);
       } else {
         StringConcatenation _builder = new StringConcatenation();
         _builder.append("use ");
-        _builder.append(moduleName, "");
+        _builder.append(moduleName);
         {
           if (((!Objects.equal(localName, null)) && (!Objects.equal(entityName, null)))) {
             _builder.append(", ");
@@ -134,27 +128,25 @@ public class FortranMappingTypes {
                 _builder.append("only: ");
               }
             }
-            _builder.append(localName, "");
+            _builder.append(localName);
             _builder.append(" => ");
-            _builder.append(entityName, "");
+            _builder.append(entityName);
           }
         }
         final String code = _builder.toString();
         IBodyConstruct _parseLiteralStatement = CodeExtraction.<IBodyConstruct>parseLiteralStatement(code);
         usn = ((ASTUseStmtNode) _parseLiteralStatement);
-        IASTListNode<? extends IASTNode> _body_1 = amn.getBody();
-        final ASTUseStmtNode last = _body_1.<ASTUseStmtNode>findLast(ASTUseStmtNode.class);
+        final ASTUseStmtNode last = amn.getBody().<ASTUseStmtNode>findLast(ASTUseStmtNode.class);
         boolean _notEquals_1 = (!Objects.equal(last, null));
         if (_notEquals_1) {
-          IASTListNode<? extends IASTNode> _body_2 = amn.getBody();
-          ((IASTListNode<IBodyConstruct>) _body_2).insertAfter(last, usn);
+          IASTListNode<? extends IASTNode> _body = amn.getBody();
+          ((IASTListNode<IBodyConstruct>) _body).insertAfter(last, usn);
         } else {
-          IASTListNode<? extends IASTNode> _body_3 = amn.getBody();
-          final ISpecificationPartConstruct firstSpec = _body_3.<ISpecificationPartConstruct>findFirst(ISpecificationPartConstruct.class);
+          final ISpecificationPartConstruct firstSpec = amn.getBody().<ISpecificationPartConstruct>findFirst(ISpecificationPartConstruct.class);
           boolean _notEquals_2 = (!Objects.equal(firstSpec, null));
           if (_notEquals_2) {
-            IASTListNode<? extends IASTNode> _body_4 = amn.getBody();
-            ((IASTListNode<IBodyConstruct>) _body_4).insertBefore(firstSpec, usn);
+            IASTListNode<? extends IASTNode> _body_1 = amn.getBody();
+            ((IASTListNode<IBodyConstruct>) _body_1).insertBefore(firstSpec, usn);
           } else {
             String _string = usn.toString();
             String _plus = ("Unable to insert use statement: " + _string);

@@ -79,13 +79,10 @@ public class Task<C extends CodeConcept<?, ?>> {
   public Class<? extends CodeConcept<?, ?>> getBindingType() {
     Class<? extends CodeConcept<?, ?>> _xblockexpression = null;
     {
-      Class<? extends Function0> _class = this.bindingFunc.getClass();
-      Method[] _methods = _class.getMethods();
       final Function1<Method, Boolean> _function = (Method m) -> {
-        String _name = m.getName();
-        return Boolean.valueOf(_name.equals("apply"));
+        return Boolean.valueOf(m.getName().equals("apply"));
       };
-      final Method method = IterableExtensions.<Method>findFirst(((Iterable<Method>)Conversions.doWrapArray(_methods)), _function);
+      final Method method = IterableExtensions.<Method>findFirst(((Iterable<Method>)Conversions.doWrapArray(this.bindingFunc.getClass().getMethods())), _function);
       final Type returnType = method.getGenericReturnType();
       _xblockexpression = ((Class<? extends CodeConcept<?, ?>>) returnType);
     }
@@ -102,8 +99,7 @@ public class Task<C extends CodeConcept<?, ?>> {
         int _index = index;
         int _length_1 = to.length();
         index = (_index + _length_1);
-        int _indexOf = builder.indexOf(from, index);
-        index = _indexOf;
+        index = builder.indexOf(from, index);
       }
     }
   }

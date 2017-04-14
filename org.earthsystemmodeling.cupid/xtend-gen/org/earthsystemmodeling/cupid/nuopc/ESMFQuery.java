@@ -11,10 +11,8 @@ import org.eclipse.photran.internal.core.lexer.Token;
 import org.eclipse.photran.internal.core.parser.ASTCallStmtNode;
 import org.eclipse.photran.internal.core.parser.ASTModuleNode;
 import org.eclipse.photran.internal.core.parser.ASTSubroutineParNode;
-import org.eclipse.photran.internal.core.parser.ASTSubroutineStmtNode;
 import org.eclipse.photran.internal.core.parser.ASTSubroutineSubprogramNode;
 import org.eclipse.photran.internal.core.parser.IASTListNode;
-import org.eclipse.photran.internal.core.parser.IASTNode;
 import org.eclipse.xtext.xbase.lib.Exceptions;
 import org.eclipse.xtext.xbase.lib.Functions.Function1;
 import org.eclipse.xtext.xbase.lib.IterableExtensions;
@@ -22,8 +20,7 @@ import org.eclipse.xtext.xbase.lib.IterableExtensions;
 @SuppressWarnings("all")
 public class ESMFQuery {
   public static ASTSubroutineSubprogramNode findESMFSetServices(final ASTModuleNode node) {
-    Iterable<ASTSubroutineSubprogramNode> _findESMFMethods = ESMFQuery.findESMFMethods(node);
-    return ESMFQuery.findESMFSetServices(_findESMFMethods);
+    return ESMFQuery.findESMFSetServices(ESMFQuery.findESMFMethods(node));
   }
   
   public static ASTSubroutineSubprogramNode findESMFSetServices(final Iterable<ASTSubroutineSubprogramNode> nodes) {
@@ -31,21 +28,16 @@ public class ESMFQuery {
       return Boolean.valueOf((ASTQuery.eic(it.getName(), "SetServices") || 
         IterableExtensions.<ASTCallStmtNode>exists(Iterables.<ASTCallStmtNode>filter(it.getBody(), ASTCallStmtNode.class), 
           ((Function1<ASTCallStmtNode, Boolean>) (ASTCallStmtNode it_1) -> {
-            Token _subroutineName = it_1.getSubroutineName();
-            String _text = _subroutineName.getText();
-            return Boolean.valueOf(ASTQuery.eic(_text, "NUOPC_CompDerive"));
+            return Boolean.valueOf(ASTQuery.eic(it_1.getSubroutineName().getText(), "NUOPC_CompDerive"));
           }))));
     };
     return IterableExtensions.<ASTSubroutineSubprogramNode>findFirst(nodes, _function);
   }
   
   public static Iterable<ASTSubroutineSubprogramNode> findESMFMethods(final ASTModuleNode node) {
-    IASTListNode<? extends IASTNode> _body = node.getBody();
-    Iterable<ASTSubroutineSubprogramNode> _filter = Iterables.<ASTSubroutineSubprogramNode>filter(_body, ASTSubroutineSubprogramNode.class);
     final Function1<ASTSubroutineSubprogramNode, Boolean> _function = (ASTSubroutineSubprogramNode it) -> {
       boolean _and = false;
-      ASTSubroutineStmtNode _subroutineStmt = it.getSubroutineStmt();
-      IASTListNode<ASTSubroutineParNode> _subroutinePars = _subroutineStmt.getSubroutinePars();
+      IASTListNode<ASTSubroutineParNode> _subroutinePars = it.getSubroutineStmt().getSubroutinePars();
       int _size = 0;
       if (_subroutinePars!=null) {
         _size=_subroutinePars.size();
@@ -56,8 +48,7 @@ public class ESMFQuery {
       } else {
         boolean _xblockexpression = false;
         {
-          ASTSubroutineStmtNode _subroutineStmt_1 = it.getSubroutineStmt();
-          IASTListNode<ASTSubroutineParNode> _subroutinePars_1 = _subroutineStmt_1.getSubroutinePars();
+          IASTListNode<ASTSubroutineParNode> _subroutinePars_1 = it.getSubroutineStmt().getSubroutinePars();
           ASTSubroutineParNode _get = null;
           if (_subroutinePars_1!=null) {
             _get=_subroutinePars_1.get(0);
@@ -72,13 +63,11 @@ public class ESMFQuery {
           if (par1!=null) {
             _type=par1.getType();
           }
-          String _string = _type.toString();
-          boolean _eic = ASTQuery.eic(_string, "type(esmf_gridcomp)");
+          boolean _eic = ASTQuery.eic(_type.toString(), "type(esmf_gridcomp)");
           if (_eic) {
             boolean _xblockexpression_1 = false;
             {
-              ASTSubroutineStmtNode _subroutineStmt_2 = it.getSubroutineStmt();
-              IASTListNode<ASTSubroutineParNode> _subroutinePars_2 = _subroutineStmt_2.getSubroutinePars();
+              IASTListNode<ASTSubroutineParNode> _subroutinePars_2 = it.getSubroutineStmt().getSubroutinePars();
               ASTSubroutineParNode _get_1 = null;
               if (_subroutinePars_2!=null) {
                 _get_1=_subroutinePars_2.get(1);
@@ -100,16 +89,13 @@ public class ESMFQuery {
       }
       return Boolean.valueOf(_and);
     };
-    return IterableExtensions.<ASTSubroutineSubprogramNode>filter(_filter, _function);
+    return IterableExtensions.<ASTSubroutineSubprogramNode>filter(Iterables.<ASTSubroutineSubprogramNode>filter(node.getBody(), ASTSubroutineSubprogramNode.class), _function);
   }
   
   public static Iterable<ASTSubroutineSubprogramNode> findESMFEntryPoints(final ASTModuleNode node) {
-    IASTListNode<? extends IASTNode> _body = node.getBody();
-    Iterable<ASTSubroutineSubprogramNode> _filter = Iterables.<ASTSubroutineSubprogramNode>filter(_body, ASTSubroutineSubprogramNode.class);
     final Function1<ASTSubroutineSubprogramNode, Boolean> _function = (ASTSubroutineSubprogramNode it) -> {
       boolean _and = false;
-      ASTSubroutineStmtNode _subroutineStmt = it.getSubroutineStmt();
-      IASTListNode<ASTSubroutineParNode> _subroutinePars = _subroutineStmt.getSubroutinePars();
+      IASTListNode<ASTSubroutineParNode> _subroutinePars = it.getSubroutineStmt().getSubroutinePars();
       int _size = 0;
       if (_subroutinePars!=null) {
         _size=_subroutinePars.size();
@@ -120,8 +106,7 @@ public class ESMFQuery {
       } else {
         boolean _xblockexpression = false;
         {
-          ASTSubroutineStmtNode _subroutineStmt_1 = it.getSubroutineStmt();
-          IASTListNode<ASTSubroutineParNode> _subroutinePars_1 = _subroutineStmt_1.getSubroutinePars();
+          IASTListNode<ASTSubroutineParNode> _subroutinePars_1 = it.getSubroutineStmt().getSubroutinePars();
           ASTSubroutineParNode _get = null;
           if (_subroutinePars_1!=null) {
             _get=_subroutinePars_1.get(0);
@@ -136,13 +121,11 @@ public class ESMFQuery {
           if (par1!=null) {
             _type=par1.getType();
           }
-          String _string = _type.toString();
-          boolean _eic = ASTQuery.eic(_string, "type(esmf_gridcomp)");
+          boolean _eic = ASTQuery.eic(_type.toString(), "type(esmf_gridcomp)");
           if (_eic) {
             boolean _xblockexpression_1 = false;
             {
-              ASTSubroutineStmtNode _subroutineStmt_2 = it.getSubroutineStmt();
-              IASTListNode<ASTSubroutineParNode> _subroutinePars_2 = _subroutineStmt_2.getSubroutinePars();
+              IASTListNode<ASTSubroutineParNode> _subroutinePars_2 = it.getSubroutineStmt().getSubroutinePars();
               ASTSubroutineParNode _get_1 = null;
               if (_subroutinePars_2!=null) {
                 _get_1=_subroutinePars_2.get(1);
@@ -153,14 +136,11 @@ public class ESMFQuery {
               }
               Definition par2 = ESMFQuery.resolveOrDie(_variableName_1);
               boolean _xifexpression_1 = false;
-              Type _type_1 = par2.getType();
-              String _string_1 = _type_1.toString();
-              boolean _eic_1 = ASTQuery.eic(_string_1, "type(esmf_state)");
+              boolean _eic_1 = ASTQuery.eic(par2.getType().toString(), "type(esmf_state)");
               if (_eic_1) {
                 boolean _xblockexpression_2 = false;
                 {
-                  ASTSubroutineStmtNode _subroutineStmt_3 = it.getSubroutineStmt();
-                  IASTListNode<ASTSubroutineParNode> _subroutinePars_3 = _subroutineStmt_3.getSubroutinePars();
+                  IASTListNode<ASTSubroutineParNode> _subroutinePars_3 = it.getSubroutineStmt().getSubroutinePars();
                   ASTSubroutineParNode _get_2 = null;
                   if (_subroutinePars_3!=null) {
                     _get_2=_subroutinePars_3.get(2);
@@ -171,14 +151,11 @@ public class ESMFQuery {
                   }
                   Definition par3 = ESMFQuery.resolveOrDie(_variableName_2);
                   boolean _xifexpression_2 = false;
-                  Type _type_2 = par3.getType();
-                  String _string_2 = _type_2.toString();
-                  boolean _eic_2 = ASTQuery.eic(_string_2, "type(esmf_state)");
+                  boolean _eic_2 = ASTQuery.eic(par3.getType().toString(), "type(esmf_state)");
                   if (_eic_2) {
                     boolean _xblockexpression_3 = false;
                     {
-                      ASTSubroutineStmtNode _subroutineStmt_4 = it.getSubroutineStmt();
-                      IASTListNode<ASTSubroutineParNode> _subroutinePars_4 = _subroutineStmt_4.getSubroutinePars();
+                      IASTListNode<ASTSubroutineParNode> _subroutinePars_4 = it.getSubroutineStmt().getSubroutinePars();
                       ASTSubroutineParNode _get_3 = null;
                       if (_subroutinePars_4!=null) {
                         _get_3=_subroutinePars_4.get(3);
@@ -189,14 +166,11 @@ public class ESMFQuery {
                       }
                       Definition par4 = ESMFQuery.resolveOrDie(_variableName_3);
                       boolean _xifexpression_3 = false;
-                      Type _type_3 = par4.getType();
-                      String _string_3 = _type_3.toString();
-                      boolean _eic_3 = ASTQuery.eic(_string_3, "type(esmf_clock)");
+                      boolean _eic_3 = ASTQuery.eic(par4.getType().toString(), "type(esmf_clock)");
                       if (_eic_3) {
                         boolean _xblockexpression_4 = false;
                         {
-                          ASTSubroutineStmtNode _subroutineStmt_5 = it.getSubroutineStmt();
-                          IASTListNode<ASTSubroutineParNode> _subroutinePars_5 = _subroutineStmt_5.getSubroutinePars();
+                          IASTListNode<ASTSubroutineParNode> _subroutinePars_5 = it.getSubroutineStmt().getSubroutinePars();
                           ASTSubroutineParNode _get_4 = null;
                           if (_subroutinePars_5!=null) {
                             _get_4=_subroutinePars_5.get(4);
@@ -230,7 +204,7 @@ public class ESMFQuery {
       }
       return Boolean.valueOf(_and);
     };
-    return IterableExtensions.<ASTSubroutineSubprogramNode>filter(_filter, _function);
+    return IterableExtensions.<ASTSubroutineSubprogramNode>filter(Iterables.<ASTSubroutineSubprogramNode>filter(node.getBody(), ASTSubroutineSubprogramNode.class), _function);
   }
   
   public static Definition resolveOrDie(final Token toResolve) {

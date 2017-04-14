@@ -13,7 +13,6 @@ import org.eclipse.photran.internal.core.parser.ASTRenameNode;
 import org.eclipse.photran.internal.core.parser.ASTSubroutineArgNode;
 import org.eclipse.photran.internal.core.parser.ASTUseStmtNode;
 import org.eclipse.photran.internal.core.parser.IASTListNode;
-import org.eclipse.photran.internal.core.parser.IASTNode;
 import org.eclipse.photran.internal.core.parser.IExpr;
 import org.eclipse.xtext.xbase.lib.CollectionLiterals;
 import org.eclipse.xtext.xbase.lib.Functions.Function1;
@@ -23,8 +22,7 @@ import org.eclipse.xtext.xbase.lib.ListExtensions;
 @SuppressWarnings("all")
 public class ASTQuery {
   public static ASTSubroutineArgNode findArgNodeByKeyword(final ASTCallStmtNode node, final String keyword) {
-    IASTListNode<ASTSubroutineArgNode> _argList = node.getArgList();
-    return ASTQuery.findArgNodeByKeyword(_argList, keyword);
+    return ASTQuery.findArgNodeByKeyword(node.getArgList(), keyword);
   }
   
   public static ASTSubroutineArgNode findArgNodeByKeyword(final IASTListNode<ASTSubroutineArgNode> nodes, final String keyword) {
@@ -87,11 +85,10 @@ public class ASTQuery {
       List<IExpr> _xblockexpression = null;
       {
         final ASTArrayConstructorNode acn = ((ASTArrayConstructorNode) e);
-        IASTListNode<ASTAcValueNode> _acValueList = acn.getAcValueList();
         final Function1<ASTAcValueNode, IExpr> _function = (ASTAcValueNode n) -> {
           return n.getExpr();
         };
-        _xblockexpression = ListExtensions.<ASTAcValueNode, IExpr>map(_acValueList, _function);
+        _xblockexpression = ListExtensions.<ASTAcValueNode, IExpr>map(acn.getAcValueList(), _function);
       }
       _xifexpression = _xblockexpression;
     } else {
@@ -154,13 +151,10 @@ public class ASTQuery {
   public static String localName(final ASTModuleNode moduleNode, final String usedModule, final String usedEntity) {
     String _xblockexpression = null;
     {
-      IASTListNode<? extends IASTNode> _body = moduleNode.getBody();
-      Iterable<ASTUseStmtNode> _filter = Iterables.<ASTUseStmtNode>filter(_body, ASTUseStmtNode.class);
       final Function1<ASTUseStmtNode, Boolean> _function = (ASTUseStmtNode it) -> {
-        Token _name = it.getName();
-        return Boolean.valueOf(ASTQuery.eic(_name, usedModule));
+        return Boolean.valueOf(ASTQuery.eic(it.getName(), usedModule));
       };
-      ASTUseStmtNode node = IterableExtensions.<ASTUseStmtNode>findFirst(_filter, _function);
+      ASTUseStmtNode node = IterableExtensions.<ASTUseStmtNode>findFirst(Iterables.<ASTUseStmtNode>filter(moduleNode.getBody(), ASTUseStmtNode.class), _function);
       String _xifexpression = null;
       boolean _notEquals = (!Objects.equal(node, null));
       if (_notEquals) {
@@ -170,8 +164,7 @@ public class ASTQuery {
         ASTRenameNode _findFirst = null;
         if (_renameList!=null) {
           final Function1<ASTRenameNode, Boolean> _function_1 = (ASTRenameNode it) -> {
-            Token _name = it.getName();
-            return Boolean.valueOf(ASTQuery.eic(_name, usedEntity));
+            return Boolean.valueOf(ASTQuery.eic(it.getName(), usedEntity));
           };
           _findFirst=IterableExtensions.<ASTRenameNode>findFirst(_renameList, _function_1);
         }
@@ -190,8 +183,7 @@ public class ASTQuery {
           ASTOnlyNode _findFirst_1 = null;
           if (_onlyList!=null) {
             final Function1<ASTOnlyNode, Boolean> _function_2 = (ASTOnlyNode it) -> {
-              Token _name = it.getName();
-              return Boolean.valueOf(ASTQuery.eic(_name, usedEntity));
+              return Boolean.valueOf(ASTQuery.eic(it.getName(), usedEntity));
             };
             _findFirst_1=IterableExtensions.<ASTOnlyNode>findFirst(_onlyList, _function_2);
           }
@@ -239,23 +231,18 @@ public class ASTQuery {
    * }
    */
   public static boolean eic(final Token t, final String s) {
-    String _text = t.getText();
-    return ASTQuery.eic(s, _text);
+    return ASTQuery.eic(s, t.getText());
   }
   
   public static boolean eic(final String s, final Token t) {
-    String _text = t.getText();
-    return ASTQuery.eic(s, _text);
+    return ASTQuery.eic(s, t.getText());
   }
   
   public static boolean eic(final Token a, final Token b) {
-    String _text = a.getText();
-    String _text_1 = b.getText();
-    return ASTQuery.eic(_text, _text_1);
+    return ASTQuery.eic(a.getText(), b.getText());
   }
   
   public static String literal(final IExpr expr) {
-    String _string = expr.toString();
-    return _string.trim();
+    return expr.toString().trim();
   }
 }

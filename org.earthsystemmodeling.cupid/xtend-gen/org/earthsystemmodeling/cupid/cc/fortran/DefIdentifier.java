@@ -18,8 +18,7 @@ public class DefIdentifier implements MTVType<Token> {
   @Override
   public String match(final Token token) {
     String _xifexpression = null;
-    String _text = token.getText();
-    boolean _equalsIgnoreCase = _text.equalsIgnoreCase(this.literal);
+    boolean _equalsIgnoreCase = token.getText().equalsIgnoreCase(this.literal);
     if (_equalsIgnoreCase) {
       _xifexpression = token.getText();
     } else {

@@ -1,7 +1,6 @@
 package org.earthsystemmodeling.cupid.nuopc.v7r;
 
 import com.google.common.base.Objects;
-import java.util.ArrayList;
 import java.util.List;
 import org.earthsystemmodeling.cupid.annotation.Label;
 import org.earthsystemmodeling.cupid.nuopc.CodeConcept;
@@ -9,9 +8,7 @@ import org.earthsystemmodeling.cupid.nuopc.CodeGenerationException;
 import org.earthsystemmodeling.cupid.util.CodeExtraction;
 import org.eclipse.photran.internal.core.parser.ASTFunctionSubprogramNode;
 import org.eclipse.photran.internal.core.parser.ASTModuleNode;
-import org.eclipse.photran.internal.core.parser.IASTListNode;
 import org.eclipse.photran.internal.core.parser.IASTNode;
-import org.eclipse.photran.internal.core.parser.IModuleBodyConstruct;
 import org.eclipse.photran.internal.core.parser.IProgramUnit;
 import org.eclipse.xtend.lib.annotations.Accessors;
 import org.eclipse.xtend2.lib.StringConcatenation;
@@ -39,8 +36,7 @@ public class GridCodeConcept {
     public CreateUniformGrid(final CodeConcept<?, ?> parent) {
       super(parent);
       parent.setOrAddChild(this);
-      ArrayList<String> _newArrayList = CollectionLiterals.<String>newArrayList();
-      this.staggerLocs = _newArrayList;
+      this.staggerLocs = CollectionLiterals.<String>newArrayList();
     }
     
     @Override
@@ -68,7 +64,7 @@ public class GridCodeConcept {
           StringConcatenation _builder = new StringConcatenation();
           _builder.newLine();
           _builder.append("function ");
-          _builder.append(functionName, "");
+          _builder.append(functionName);
           _builder.append("(rc)");
           _builder.newLineIfNotEmpty();
           _builder.append("    ");
@@ -136,8 +132,7 @@ public class GridCodeConcept {
           final String code = _builder.toString();
           IProgramUnit _parseLiteralProgramUnit = CodeExtraction.<IProgramUnit>parseLiteralProgramUnit(code);
           final ASTFunctionSubprogramNode fsn = ((ASTFunctionSubprogramNode) _parseLiteralProgramUnit);
-          IASTListNode<IModuleBodyConstruct> _moduleBody = moduleNode.getModuleBody();
-          _moduleBody.add(fsn);
+          moduleNode.getModuleBody().add(fsn);
           _xblockexpression = this;
         }
         return _xblockexpression;
@@ -212,7 +207,7 @@ public class GridCodeConcept {
         } else {
           _builder.appendImmediate(", ", "");
         }
-        _builder.append(s, "");
+        _builder.append(s);
       }
     }
     _builder.append("/)");
@@ -230,7 +225,7 @@ public class GridCodeConcept {
         } else {
           _builder.appendImmediate(", ", "");
         }
-        _builder.append(x, "");
+        _builder.append(x);
       }
     }
     _builder.append("/)");
@@ -248,7 +243,7 @@ public class GridCodeConcept {
         } else {
           _builder.appendImmediate(", ", "");
         }
-        _builder.append(x, "");
+        _builder.append(x);
         _builder.append("_ESMF_KIND_R8");
       }
     }
@@ -257,7 +252,6 @@ public class GridCodeConcept {
   }
   
   public static String stripQuotes(final String str) {
-    String _replaceAll = str.replaceAll("\"", "");
-    return _replaceAll.replaceAll("\'", "");
+    return str.replaceAll("\"", "").replaceAll("\'", "");
   }
 }

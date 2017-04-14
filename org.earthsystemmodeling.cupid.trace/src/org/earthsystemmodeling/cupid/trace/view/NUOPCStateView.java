@@ -1,10 +1,12 @@
-package org.earthsystemmodeling.cupid.trace;
+package org.earthsystemmodeling.cupid.trace.view;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.earthsystemmodeling.cupid.trace.Activator;
+import org.earthsystemmodeling.cupid.trace.json.NUOPCStateSystemAnalysisModule;
 import org.eclipse.jface.action.Action;
 import org.eclipse.jface.action.IMenuManager;
 import org.eclipse.jface.action.IToolBarManager;

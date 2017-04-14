@@ -2,7 +2,6 @@ package org.earthsystemmodeling.cupid.cc.mapping;
 
 import com.google.common.base.Objects;
 import org.earthsystemmodeling.cupid.cc.mapping.MappingTypeBinding;
-import org.earthsystemmodeling.cupid.cc.mapping.MappingTypeParameter;
 import org.earthsystemmodeling.cupid.cc.mapping.MappingTypeParameterBinding;
 import org.earthsystemmodeling.cupid.cc.mapping.UnresolvedVariableAccessException;
 import org.earthsystemmodeling.cupid.cc.types.MTPType;
@@ -33,8 +32,7 @@ public abstract class ReferenceMTVBinding extends MappingTypeParameterBinding {
       {
         boolean _equals = Objects.equal(this.value, null);
         if (_equals) {
-          MappingTypeParameter _boundTo = this.getBoundTo();
-          String _name = _boundTo.getName();
+          String _name = this.getBoundTo().getName();
           throw new UnresolvedVariableAccessException(_name);
         }
         _xblockexpression = this.value;

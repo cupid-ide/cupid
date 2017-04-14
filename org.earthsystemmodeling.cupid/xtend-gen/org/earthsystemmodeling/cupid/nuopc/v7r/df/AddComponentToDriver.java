@@ -39,31 +39,29 @@ public class AddComponentToDriver extends DesignFragment {
     final Function0<NUOPCDriver> _function = () -> {
       return this.Driver;
     };
-    Task<NUOPCDriver> _task = new Task<NUOPCDriver>(
-      "Import {Model} SetServices subroutine (only) into {Driver}", _function);
     final Function0<NUOPCDriver.SetModelServices> _function_1 = () -> {
       return this.Driver.initialization.initSpecs.setModelServices;
     };
-    Task<NUOPCDriver.SetModelServices> _task_1 = new Task<NUOPCDriver.SetModelServices>(
-      "Add call to NUOPC_DriverAddComp passing in the Model SetServices subroutine", _function_1);
     final Function0<NUOPCDriver.SetModelServices_AddComp> _function_2 = () -> {
       final Function1<NUOPCDriver.SetModelServices_AddComp, Boolean> _function_3 = (NUOPCDriver.SetModelServices_AddComp it) -> {
         return Boolean.valueOf(it.compLabel.equals((("\"" + this.Model.name) + "\"")));
       };
       return IterableExtensions.<NUOPCDriver.SetModelServices_AddComp>findFirst(this.Driver.initialization.initSpecs.setModelServices.addComps, _function_3);
     };
-    Task<NUOPCDriver.SetModelServices_AddComp> _task_2 = new Task<NUOPCDriver.SetModelServices_AddComp>(
+    Task<NUOPCDriver.SetModelServices_AddComp> _task = new Task<NUOPCDriver.SetModelServices_AddComp>(
       "", _function_2);
-    Task<NUOPCDriver.SetModelServices> _subTasks = _task_1.subTasks(
-      Collections.<Task<?>>unmodifiableList(CollectionLiterals.<Task<?>>newArrayList(_task_2)));
+    Task<NUOPCDriver.SetModelServices> _subTasks = new Task<NUOPCDriver.SetModelServices>(
+      "Add call to NUOPC_DriverAddComp passing in the Model SetServices subroutine", _function_1).subTasks(
+      Collections.<Task<?>>unmodifiableList(CollectionLiterals.<Task<?>>newArrayList(_task)));
     final Function0<NUOPCDriver.SetRunSequence> _function_3 = () -> {
       return this.Driver.initialization.initSpecs.setRunSequence;
     };
-    Task<NUOPCDriver.SetRunSequence> _task_3 = new Task<NUOPCDriver.SetRunSequence>(
+    Task<NUOPCDriver.SetRunSequence> _task_1 = new Task<NUOPCDriver.SetRunSequence>(
       "Add run sequence element with call to NUOPC_DriverAddRunElement", _function_3, 
       true);
-    Task<NUOPCDriver> _subTasks_1 = _task.subTasks(
-      Collections.<Task<?>>unmodifiableList(CollectionLiterals.<Task<?>>newArrayList(_subTasks, _task_3)));
+    Task<NUOPCDriver> _subTasks_1 = new Task<NUOPCDriver>(
+      "Import {Model} SetServices subroutine (only) into {Driver}", _function).subTasks(
+      Collections.<Task<?>>unmodifiableList(CollectionLiterals.<Task<?>>newArrayList(_subTasks, _task_1)));
     this.setTasks(
       Collections.<Task>unmodifiableList(CollectionLiterals.<Task>newArrayList(_subTasks_1)));
   }

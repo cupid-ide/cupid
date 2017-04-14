@@ -52,8 +52,7 @@ public class SetServicesCodeConcept<P extends NUOPCComponent> extends CodeConcep
   public SetServicesCodeConcept<P> reverse() {
     SetServicesCodeConcept<P> _xblockexpression = null;
     {
-      ASTModuleNode _aSTRef = this._parent.getASTRef();
-      IASTListNode<IModuleBodyConstruct> _moduleBody = _aSTRef.getModuleBody();
+      IASTListNode<IModuleBodyConstruct> _moduleBody = this._parent.getASTRef().getModuleBody();
       Set<ASTSubroutineSubprogramNode> _findAll = null;
       if (_moduleBody!=null) {
         _findAll=_moduleBody.<ASTSubroutineSubprogramNode>findAll(ASTSubroutineSubprogramNode.class);
@@ -65,20 +64,14 @@ public class SetServicesCodeConcept<P extends NUOPCComponent> extends CodeConcep
         if (_subroutineStmt!=null) {
           _subroutineName=_subroutineStmt.getSubroutineName();
         }
-        Token _subroutineName_1 = _subroutineName.getSubroutineName();
-        String _text = _subroutineName_1.getText();
-        boolean _equalsIgnoreCase = _text.equalsIgnoreCase("SetServices");
+        boolean _equalsIgnoreCase = _subroutineName.getSubroutineName().getText().equalsIgnoreCase("SetServices");
         if (_equalsIgnoreCase) {
           _or = true;
         } else {
-          IASTListNode<IBodyConstruct> _body = it.getBody();
-          Set<ASTCallStmtNode> _findAll_1 = _body.<ASTCallStmtNode>findAll(ASTCallStmtNode.class);
           final Function1<ASTCallStmtNode, Boolean> _function_1 = (ASTCallStmtNode it_1) -> {
-            Token _subroutineName_2 = it_1.getSubroutineName();
-            String _text_1 = _subroutineName_2.getText();
-            return Boolean.valueOf(_text_1.equalsIgnoreCase("NUOPC_CompDerive"));
+            return Boolean.valueOf(it_1.getSubroutineName().getText().equalsIgnoreCase("NUOPC_CompDerive"));
           };
-          boolean _exists = IterableExtensions.<ASTCallStmtNode>exists(_findAll_1, _function_1);
+          boolean _exists = IterableExtensions.<ASTCallStmtNode>exists(it.getBody().<ASTCallStmtNode>findAll(ASTCallStmtNode.class), _function_1);
           _or = _exists;
         }
         return Boolean.valueOf(_or);
@@ -94,9 +87,7 @@ public class SetServicesCodeConcept<P extends NUOPCComponent> extends CodeConcep
           if (_subroutineStmt!=null) {
             _subroutineName=_subroutineStmt.getSubroutineName();
           }
-          Token _subroutineName_1 = _subroutineName.getSubroutineName();
-          String _text = _subroutineName_1.getText();
-          this.subroutineName = _text;
+          this.subroutineName = _subroutineName.getSubroutineName().getText();
           ASTSubroutineStmtNode _subroutineStmt_1 = node.getSubroutineStmt();
           IASTListNode<ASTSubroutineParNode> _subroutinePars = null;
           if (_subroutineStmt_1!=null) {
@@ -110,8 +101,7 @@ public class SetServicesCodeConcept<P extends NUOPCComponent> extends CodeConcep
           if (_get!=null) {
             _variableName=_get.getVariableName();
           }
-          String _text_1 = _variableName.getText();
-          this.paramGridComp = _text_1;
+          this.paramGridComp = _variableName.getText();
           ASTSubroutineStmtNode _subroutineStmt_2 = node.getSubroutineStmt();
           IASTListNode<ASTSubroutineParNode> _subroutinePars_1 = null;
           if (_subroutineStmt_2!=null) {
@@ -125,18 +115,13 @@ public class SetServicesCodeConcept<P extends NUOPCComponent> extends CodeConcep
           if (_get_1!=null) {
             _variableName_1=_get_1.getVariableName();
           }
-          String _text_2 = _variableName_1.getText();
-          this.paramRC = _text_2;
+          this.paramRC = _variableName_1.getText();
           BasicCodeConcept<ASTCallStmtNode> _xblockexpression_2 = null;
           {
-            IASTListNode<IBodyConstruct> _body = node.getBody();
-            Set<ASTCallStmtNode> _findAll_1 = _body.<ASTCallStmtNode>findAll(ASTCallStmtNode.class);
             final Function1<ASTCallStmtNode, Boolean> _function_1 = (ASTCallStmtNode it) -> {
-              Token _subroutineName_2 = it.getSubroutineName();
-              String _text_3 = _subroutineName_2.getText();
-              return Boolean.valueOf(_text_3.equalsIgnoreCase("NUOPC_CompDerive"));
+              return Boolean.valueOf(it.getSubroutineName().getText().equalsIgnoreCase("NUOPC_CompDerive"));
             };
-            ASTCallStmtNode csn = IterableExtensions.<ASTCallStmtNode>findFirst(_findAll_1, _function_1);
+            ASTCallStmtNode csn = IterableExtensions.<ASTCallStmtNode>findFirst(node.getBody().<ASTCallStmtNode>findAll(ASTCallStmtNode.class), _function_1);
             BasicCodeConcept<ASTCallStmtNode> _xifexpression_1 = null;
             boolean _notEquals_1 = (!Objects.equal(csn, null));
             if (_notEquals_1) {
@@ -169,8 +154,7 @@ public class SetServicesCodeConcept<P extends NUOPCComponent> extends CodeConcep
         routineSetServices = _plus;
         ASTUseStmtNode _aSTRef = this._parent.importNUOPCGeneric.getASTRef();
         final ASTUseStmtNode genericUse = ((ASTUseStmtNode) _aSTRef);
-        String _string = genericUse.toString();
-        String tempCode = _string.trim();
+        String tempCode = genericUse.toString().trim();
         String _tempCode = tempCode;
         StringConcatenation _builder = new StringConcatenation();
         _builder.append(", &");
@@ -186,9 +170,9 @@ public class SetServicesCodeConcept<P extends NUOPCComponent> extends CodeConcep
       StringConcatenation _builder_1 = new StringConcatenation();
       _builder_1.newLine();
       _builder_1.append("subroutine SetServices(");
-      _builder_1.append(this.paramGridComp, "");
+      _builder_1.append(this.paramGridComp);
       _builder_1.append(", ");
-      _builder_1.append(this.paramRC, "");
+      _builder_1.append(this.paramRC);
       _builder_1.append(")");
       _builder_1.newLineIfNotEmpty();
       _builder_1.append("    ");
@@ -239,8 +223,7 @@ public class SetServicesCodeConcept<P extends NUOPCComponent> extends CodeConcep
       String code = _builder_1.toString();
       ASTModuleNode mn = this._parent.getASTRef();
       ASTSubroutineSubprogramNode ssn = CodeExtraction.<ASTSubroutineSubprogramNode>parseLiteralProgramUnit(code);
-      IASTListNode<IModuleBodyConstruct> _moduleBody = mn.getModuleBody();
-      _moduleBody.add(ssn);
+      mn.getModuleBody().add(ssn);
       this.setASTRef(ssn);
       StringConcatenation _builder_2 = new StringConcatenation();
       _builder_2.newLine();
@@ -249,22 +232,17 @@ public class SetServicesCodeConcept<P extends NUOPCComponent> extends CodeConcep
       code = _builder_2.toString();
       IBodyConstruct _parseLiteralStatement_1 = CodeExtraction.<IBodyConstruct>parseLiteralStatement(code);
       ASTAccessStmtNode tempNode_1 = ((ASTAccessStmtNode) _parseLiteralStatement_1);
-      IASTListNode<IModuleBodyConstruct> _moduleBody_1 = mn.getModuleBody();
-      ASTContainsStmtNode csn = _moduleBody_1.<ASTContainsStmtNode>findLast(ASTContainsStmtNode.class);
+      ASTContainsStmtNode csn = mn.getModuleBody().<ASTContainsStmtNode>findLast(ASTContainsStmtNode.class);
       boolean _notEquals = (!Objects.equal(csn, null));
       if (_notEquals) {
-        IASTListNode<IModuleBodyConstruct> _moduleBody_2 = mn.getModuleBody();
-        _moduleBody_2.insertBefore(csn, tempNode_1);
+        mn.getModuleBody().insertBefore(csn, tempNode_1);
       } else {
-        IASTListNode<IModuleBodyConstruct> _moduleBody_3 = mn.getModuleBody();
-        ASTImplicitStmtNode isn = _moduleBody_3.<ASTImplicitStmtNode>findLast(ASTImplicitStmtNode.class);
+        ASTImplicitStmtNode isn = mn.getModuleBody().<ASTImplicitStmtNode>findLast(ASTImplicitStmtNode.class);
         boolean _notEquals_1 = (!Objects.equal(isn, null));
         if (_notEquals_1) {
-          IASTListNode<IModuleBodyConstruct> _moduleBody_4 = mn.getModuleBody();
-          _moduleBody_4.insertAfter(isn, tempNode_1);
+          mn.getModuleBody().insertAfter(isn, tempNode_1);
         } else {
-          IASTListNode<IModuleBodyConstruct> _moduleBody_5 = mn.getModuleBody();
-          _moduleBody_5.add(tempNode_1);
+          mn.getModuleBody().add(tempNode_1);
         }
       }
       _xblockexpression = this.reverse();

@@ -62,8 +62,7 @@ public class MappingTypeBinding {
   public MappingTypeBinding(final MappingTypeBinding toClone, final CodeConcept concept) {
     this(toClone.mappingType, concept);
     final BiConsumer<String, MappingTypeParameterBinding> _function = (String k, MappingTypeParameterBinding v) -> {
-      MappingTypeParameterBinding _clone = v.clone(this);
-      this.bindings.put(k, _clone);
+      this.bindings.put(k, v.clone(this));
     };
     toClone.bindings.forEach(_function);
   }
@@ -78,8 +77,7 @@ public class MappingTypeBinding {
         if (_notEquals) {
           _xifexpression = ((T) retVal);
         } else {
-          MappingTypeParameterBinding _get = this.bindings.get(variable);
-          MTPType<?> _value = _get.getValue();
+          MTPType<?> _value = this.bindings.get(variable).getValue();
           _xifexpression = ((T) _value);
         }
         _xblockexpression = _xifexpression;
@@ -173,8 +171,7 @@ public class MappingTypeBinding {
   }
   
   public boolean fullyBound() {
-    List<MappingTypeParameter> _unbound = this.unbound();
-    int _size = _unbound.size();
+    int _size = this.unbound().size();
     return (_size == 0);
   }
   
@@ -182,12 +179,11 @@ public class MappingTypeBinding {
     LinkedList<MappingTypeParameter> _xblockexpression = null;
     {
       final LinkedList<MappingTypeParameter> retList = CollectionLiterals.<MappingTypeParameter>newLinkedList();
-      List<MappingTypeParameter> _parameters = this.mappingType.getParameters();
       final Function1<MappingTypeParameter, Boolean> _function = (MappingTypeParameter p) -> {
         return Boolean.valueOf(((!this.bindings.containsKey(p)) && Objects.equal(this.mappingType.getParameterValue(p), null)));
       };
-      Iterable<MappingTypeParameter> _filter = IterableExtensions.<MappingTypeParameter>filter(_parameters, _function);
-      Iterables.<MappingTypeParameter>addAll(retList, _filter);
+      Iterables.<MappingTypeParameter>addAll(retList, 
+        IterableExtensions.<MappingTypeParameter>filter(this.mappingType.getParameters(), _function));
       _xblockexpression = retList;
     }
     return _xblockexpression;
@@ -220,10 +216,8 @@ public class MappingTypeBinding {
         CodeConceptInstance _xblockexpression_1 = null;
         {
           final MappingResult res = this.resultSet.first();
-          MTPType<?> _match = res.match();
-          final CodeConceptInstance instance = this.concept.newInstance(parent, _match);
+          final CodeConceptInstance instance = this.concept.newInstance(parent, res.match());
           this.currentInstance = instance;
-          Map<String, MTPType<?>> _values = res.getValues();
           final BiConsumer<String, MTPType<?>> _function = (String k, MTPType<?> v) -> {
             boolean _equals = k.equals("match");
             boolean _not = (!_equals);
@@ -239,7 +233,7 @@ public class MappingTypeBinding {
               }
             }
           };
-          _values.forEach(_function);
+          res.getValues().forEach(_function);
           this.currentInstance = null;
           _xblockexpression_1 = instance;
         }
@@ -268,12 +262,9 @@ public class MappingTypeBinding {
       this.mappingType.doFind(this);
       this.currentContext = null;
       final LinkedList<CodeConceptInstance> retList = CollectionLiterals.<CodeConceptInstance>newLinkedList();
-      List<MappingResult> _results = this.resultSet.getResults();
       final Consumer<MappingResult> _function = (MappingResult r) -> {
-        MTPType<?> _match = r.match();
-        final CodeConceptInstance instance = this.concept.newInstance(parent, _match);
+        final CodeConceptInstance instance = this.concept.newInstance(parent, r.match());
         this.currentInstance = instance;
-        Map<String, MTPType<?>> _values = r.getValues();
         final BiConsumer<String, MTPType<?>> _function_1 = (String k, MTPType<?> v) -> {
           boolean _equals = k.equals("match");
           boolean _not = (!_equals);
@@ -281,11 +272,11 @@ public class MappingTypeBinding {
             this.<Object>setValue(k, v);
           }
         };
-        _values.forEach(_function_1);
+        r.getValues().forEach(_function_1);
         this.currentInstance = null;
         retList.add(instance);
       };
-      _results.forEach(_function);
+      this.resultSet.getResults().forEach(_function);
       _xblockexpression = retList;
     }
     return _xblockexpression;
@@ -330,23 +321,18 @@ public class MappingTypeBinding {
       String _xblockexpression = null;
       {
         final LinkedList<String> templateParams = CollectionLiterals.<String>newLinkedList();
-        Set<String> _keySet = this.bindings.keySet();
         final Function1<String, Boolean> _function = (String k) -> {
           return Boolean.valueOf(((!Objects.equal(k, "match")) && (!Objects.equal(k, "context"))));
         };
-        Iterable<String> _filter = IterableExtensions.<String>filter(_keySet, _function);
-        Iterables.<String>addAll(templateParams, _filter);
-        Map<MappingTypeParameter, Object> _parameterValues = this.mappingType.getParameterValues();
+        Iterables.<String>addAll(templateParams, IterableExtensions.<String>filter(this.bindings.keySet(), _function));
         final BiConsumer<MappingTypeParameter, Object> _function_1 = (MappingTypeParameter k, Object v) -> {
-          String _name = k.getName();
-          boolean _contains = templateParams.contains(_name);
+          boolean _contains = templateParams.contains(k.getName());
           boolean _not = (!_contains);
           if (_not) {
-            String _name_1 = k.getName();
-            templateParams.add(_name_1);
+            templateParams.add(k.getName());
           }
         };
-        _parameterValues.forEach(_function_1);
+        this.mappingType.getParameterValues().forEach(_function_1);
         StringConcatenation _builder = new StringConcatenation();
         _builder.append("ESMFErrorCheck(rc) ::= <<");
         _builder.newLine();
@@ -365,15 +351,14 @@ public class MappingTypeBinding {
         _builder.newLine();
         _builder.newLine();
         {
-          Map<String, String> _templates = this.mappingType.getTemplates();
-          Set<Map.Entry<String, String>> _entrySet = _templates.entrySet();
+          Set<Map.Entry<String, String>> _entrySet = this.mappingType.getTemplates().entrySet();
           for(final Map.Entry<String, String> e : _entrySet) {
             String _key = e.getKey();
-            _builder.append(_key, "");
+            _builder.append(_key);
             _builder.append("() ::= <<");
             _builder.newLineIfNotEmpty();
             String _value = e.getValue();
-            _builder.append(_value, "");
+            _builder.append(_value);
             _builder.newLineIfNotEmpty();
             _builder.append(">>");
             _builder.newLine();
@@ -389,13 +374,13 @@ public class MappingTypeBinding {
             } else {
               _builder.appendImmediate(", ", "");
             }
-            _builder.append(arg, "");
+            _builder.append(arg);
           }
         }
         _builder.append(") ::= <<");
         _builder.newLineIfNotEmpty();
         _builder.newLine();
-        _builder.append(template, "");
+        _builder.append(template);
         _builder.newLineIfNotEmpty();
         _builder.append(">>");
         _builder.newLine();
@@ -409,18 +394,14 @@ public class MappingTypeBinding {
         }
         final BiConsumer<String, MappingTypeParameterBinding> _function_2 = (String k, MappingTypeParameterBinding v) -> {
           if (((!Objects.equal(k, "match")) && (!Objects.equal(k, "context")))) {
-            Object _value_1 = this.<Object>getValue(k);
-            st.add(k, _value_1);
+            st.add(k, this.<Object>getValue(k));
           }
         };
         this.bindings.forEach(_function_2);
-        Map<MappingTypeParameter, Object> _parameterValues_1 = this.mappingType.getParameterValues();
         final BiConsumer<MappingTypeParameter, Object> _function_3 = (MappingTypeParameter k, Object v) -> {
-          String _name = k.getName();
-          Object _value_1 = this.<Object>getValue(k);
-          st.add(_name, _value_1);
+          st.add(k.getName(), this.<Object>getValue(k));
         };
-        _parameterValues_1.forEach(_function_3);
+        this.mappingType.getParameterValues().forEach(_function_3);
         _xblockexpression = st.render();
       }
       return _xblockexpression;
@@ -492,13 +473,12 @@ public class MappingTypeBinding {
    */
   public MappingResult addResult(final MTPType<?> match) {
     try {
-      Class<?> _matchType = this.mappingType.matchType();
-      boolean _isInstance = _matchType.isInstance(match);
+      boolean _isInstance = this.mappingType.matchType().isInstance(match);
       boolean _not = (!_isInstance);
       if (_not) {
-        Class<?> _matchType_1 = this.mappingType.matchType();
+        Class<?> _matchType = this.mappingType.matchType();
         Class<? extends MTPType> _class = match.getClass();
-        throw new IllegalVariableAssignment("match", _matchType_1, _class);
+        throw new IllegalVariableAssignment("match", _matchType, _class);
       }
       boolean _notEquals = (!Objects.equal(this.currentResult, null));
       if (_notEquals) {
@@ -545,8 +525,7 @@ public class MappingTypeBinding {
    * results.  This is typically to annotate each of the results.
    */
   public void forEachResult(final Consumer<? super MappingResult> action) {
-    List<MappingResult> _results = this.resultSet.getResults();
-    _results.forEach(action);
+    this.resultSet.getResults().forEach(action);
   }
   
   /**

@@ -7,7 +7,7 @@ public class ESMFCodeTemplates {
   public static CharSequence ESMFErrorCheck(final String rcToCheck) {
     StringConcatenation _builder = new StringConcatenation();
     _builder.append("if (ESMF_LogFoundError(rcToCheck=");
-    _builder.append(rcToCheck, "");
+    _builder.append(rcToCheck);
     _builder.append(", msg=ESMF_LOGERR_PASSTHRU, &");
     _builder.newLineIfNotEmpty();
     _builder.append("\t");

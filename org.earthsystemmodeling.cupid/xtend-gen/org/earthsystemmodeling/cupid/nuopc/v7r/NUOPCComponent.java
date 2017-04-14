@@ -2,7 +2,6 @@ package org.earthsystemmodeling.cupid.nuopc.v7r;
 
 import com.google.common.base.Objects;
 import com.google.common.collect.Iterables;
-import java.util.HashMap;
 import java.util.Map;
 import java.util.function.BiConsumer;
 import java.util.function.Consumer;
@@ -21,14 +20,11 @@ import org.eclipse.core.resources.IFile;
 import org.eclipse.core.resources.IResource;
 import org.eclipse.photran.core.IFortranAST;
 import org.eclipse.photran.internal.core.FortranAST;
-import org.eclipse.photran.internal.core.lexer.Token;
 import org.eclipse.photran.internal.core.lexer.TokenList;
 import org.eclipse.photran.internal.core.parser.ASTEmptyProgramNode;
 import org.eclipse.photran.internal.core.parser.ASTExecutableProgramNode;
 import org.eclipse.photran.internal.core.parser.ASTListNode;
-import org.eclipse.photran.internal.core.parser.ASTModuleNameNode;
 import org.eclipse.photran.internal.core.parser.ASTModuleNode;
-import org.eclipse.photran.internal.core.parser.ASTModuleStmtNode;
 import org.eclipse.photran.internal.core.parser.ASTOnlyNode;
 import org.eclipse.photran.internal.core.parser.ASTRenameNode;
 import org.eclipse.photran.internal.core.parser.ASTUseStmtNode;
@@ -63,21 +59,17 @@ public abstract class NUOPCComponent extends CodeConcept<CodeConcept<?, ?>, ASTM
       String _prefix = this._parent.prefix();
       String _plus = (_prefix + "_SetServices");
       this.routineSetServices = _plus;
-      HashMap<String, String> _newHashMap = CollectionLiterals.<String, String>newHashMap();
-      this.imports = _newHashMap;
+      this.imports = CollectionLiterals.<String, String>newHashMap();
     }
     
     @Override
     public CodeConcept<?, ?> forward() {
       NUOPCComponent.GenericImport _xblockexpression = null;
       {
-        ASTModuleNode _aSTRef = this._parent.getASTRef();
-        final ASTUseStmtNode usn = CodeConcept.ensureImport(_aSTRef, this.genericComp, "SetServices", this.routineSetServices, false);
+        final ASTUseStmtNode usn = CodeConcept.ensureImport(this._parent.getASTRef(), this.genericComp, "SetServices", this.routineSetServices, false);
         this.setASTRef(usn);
         final BiConsumer<String, String> _function = (String k, String v) -> {
-          ASTUseStmtNode _aSTRef_1 = this.getASTRef();
-          ASTUseStmtNode _ensureImport = CodeConcept.ensureImport(_aSTRef_1, k, v);
-          this.setASTRef(_ensureImport);
+          this.setASTRef(CodeConcept.ensureImport(this.getASTRef(), k, v));
         };
         this.imports.forEach(_function);
         _xblockexpression = this;
@@ -90,13 +82,11 @@ public abstract class NUOPCComponent extends CodeConcept<CodeConcept<?, ?>, ASTM
       NUOPCComponent.GenericImport _xblockexpression = null;
       {
         final ASTModuleNode moduleNode = this._parent.getASTRef();
-        IASTListNode<IModuleBodyConstruct> _moduleBody = moduleNode.getModuleBody();
-        Iterable<ASTUseStmtNode> _filter = Iterables.<ASTUseStmtNode>filter(_moduleBody, ASTUseStmtNode.class);
+        Iterable<ASTUseStmtNode> _filter = Iterables.<ASTUseStmtNode>filter(moduleNode.getModuleBody(), ASTUseStmtNode.class);
         ASTUseStmtNode _findFirst = null;
         if (_filter!=null) {
           final Function1<ASTUseStmtNode, Boolean> _function = (ASTUseStmtNode it) -> {
-            Token _name = it.getName();
-            return Boolean.valueOf(ASTQuery.eic(_name, this.genericComp));
+            return Boolean.valueOf(ASTQuery.eic(it.getName(), this.genericComp));
           };
           _findFirst=IterableExtensions.<ASTUseStmtNode>findFirst(_filter, _function);
         }
@@ -106,16 +96,12 @@ public abstract class NUOPCComponent extends CodeConcept<CodeConcept<?, ?>, ASTM
         if (_equals) {
           return null;
         }
-        Token _name = usn.getName();
-        String _text = _name.getText();
-        this.genericComp = _text;
+        this.genericComp = usn.getName().getText();
         IASTListNode<ASTOnlyNode> _onlyList = usn.getOnlyList();
         ASTOnlyNode _findFirst_1 = null;
         if (_onlyList!=null) {
           final Function1<ASTOnlyNode, Boolean> _function_1 = (ASTOnlyNode it) -> {
-            Token _name_1 = it.getName();
-            String _text_1 = _name_1.getText();
-            return Boolean.valueOf(_text_1.equalsIgnoreCase("SetServices"));
+            return Boolean.valueOf(it.getName().getText().equalsIgnoreCase("SetServices"));
           };
           _findFirst_1=IterableExtensions.<ASTOnlyNode>findFirst(_onlyList, _function_1);
         }
@@ -125,11 +111,9 @@ public abstract class NUOPCComponent extends CodeConcept<CodeConcept<?, ?>, ASTM
           String _xifexpression = null;
           boolean _isRenamed = on.isRenamed();
           if (_isRenamed) {
-            Token _newName = on.getNewName();
-            _xifexpression = _newName.getText();
+            _xifexpression = on.getNewName().getText();
           } else {
-            Token _name_1 = on.getName();
-            _xifexpression = _name_1.getText();
+            _xifexpression = on.getName().getText();
           }
           this.routineSetServices = _xifexpression;
         } else {
@@ -137,18 +121,14 @@ public abstract class NUOPCComponent extends CodeConcept<CodeConcept<?, ?>, ASTM
           ASTRenameNode _findFirst_2 = null;
           if (_renameList!=null) {
             final Function1<ASTRenameNode, Boolean> _function_2 = (ASTRenameNode it) -> {
-              Token _name_2 = it.getName();
-              String _text_1 = _name_2.getText();
-              return Boolean.valueOf(_text_1.equalsIgnoreCase("SetServices"));
+              return Boolean.valueOf(it.getName().getText().equalsIgnoreCase("SetServices"));
             };
             _findFirst_2=IterableExtensions.<ASTRenameNode>findFirst(_renameList, _function_2);
           }
           ASTRenameNode rn = _findFirst_2;
           boolean _notEquals_1 = (!Objects.equal(rn, null));
           if (_notEquals_1) {
-            Token _newName_1 = rn.getNewName();
-            String _text_1 = _newName_1.getText();
-            this.routineSetServices = _text_1;
+            this.routineSetServices = rn.getNewName().getText();
           }
         }
         _xblockexpression = this;
@@ -230,9 +210,7 @@ public abstract class NUOPCComponent extends CodeConcept<CodeConcept<?, ?>, ASTM
           boolean _exists = false;
           if (_filter_1!=null) {
             final Function1<ASTUseStmtNode, Boolean> _function_1 = (ASTUseStmtNode it_1) -> {
-              Token _name = it_1.getName();
-              String _text = _name.getText();
-              return Boolean.valueOf(ASTQuery.eic(_text, this.genericImport));
+              return Boolean.valueOf(ASTQuery.eic(it_1.getName().getText(), this.genericImport));
             };
             _exists=IterableExtensions.<ASTUseStmtNode>exists(_filter_1, _function_1);
           }
@@ -246,40 +224,26 @@ public abstract class NUOPCComponent extends CodeConcept<CodeConcept<?, ?>, ASTM
       if (_notEquals) {
         NUOPCComponent _xblockexpression_1 = null;
         {
-          ASTModuleStmtNode _moduleStmt = this._astRef.getModuleStmt();
-          ASTModuleNameNode _moduleName = _moduleStmt.getModuleName();
-          Token _moduleName_1 = _moduleName.getModuleName();
-          String _text = _moduleName_1.getText();
-          this.name = _text;
-          IASTListNode<IModuleBodyConstruct> _moduleBody = this._astRef.getModuleBody();
-          Iterable<ASTUseStmtNode> _filter_1 = Iterables.<ASTUseStmtNode>filter(_moduleBody, ASTUseStmtNode.class);
+          this.name = this._astRef.getModuleStmt().getModuleName().getModuleName().getText();
           final Consumer<ASTUseStmtNode> _function_1 = (ASTUseStmtNode it) -> {
-            Token _name = it.getName();
-            String _text_1 = _name.getText();
-            boolean _eic = ASTQuery.eic(_text_1, "ESMF");
+            boolean _eic = ASTQuery.eic(it.getName().getText(), "ESMF");
             if (_eic) {
               BasicCodeConcept<ASTUseStmtNode> _basicCodeConcept = new BasicCodeConcept<ASTUseStmtNode>(this, it);
               this.importESMF = _basicCodeConcept;
             } else {
-              Token _name_1 = it.getName();
-              String _text_2 = _name_1.getText();
-              boolean _eic_1 = ASTQuery.eic(_text_2, "NUOPC");
+              boolean _eic_1 = ASTQuery.eic(it.getName().getText(), "NUOPC");
               if (_eic_1) {
                 BasicCodeConcept<ASTUseStmtNode> _basicCodeConcept_1 = new BasicCodeConcept<ASTUseStmtNode>(this, it);
                 this.importNUOPC = _basicCodeConcept_1;
               } else {
-                Token _name_2 = it.getName();
-                String _text_3 = _name_2.getText();
-                boolean _eic_2 = ASTQuery.eic(_text_3, this.genericImport);
+                boolean _eic_2 = ASTQuery.eic(it.getName().getText(), this.genericImport);
                 if (_eic_2) {
-                  NUOPCComponent.GenericImport _genericImport = new NUOPCComponent.GenericImport(this, this.genericImport);
-                  NUOPCComponent.GenericImport _reverse = _genericImport.reverse();
-                  this.importNUOPCGeneric = _reverse;
+                  this.importNUOPCGeneric = new NUOPCComponent.GenericImport(this, this.genericImport).reverse();
                 }
               }
             }
           };
-          _filter_1.forEach(_function_1);
+          Iterables.<ASTUseStmtNode>filter(this._astRef.getModuleBody(), ASTUseStmtNode.class).forEach(_function_1);
           _xblockexpression_1 = this.<NUOPCComponent>reverseChildren();
         }
         _xifexpression = _xblockexpression_1;
@@ -316,7 +280,7 @@ public abstract class NUOPCComponent extends CodeConcept<CodeConcept<?, ?>, ASTM
         if (_equals_1) {
           StringConcatenation _builder = new StringConcatenation();
           _builder.append("module ");
-          _builder.append(this.name, "");
+          _builder.append(this.name);
           _builder.newLineIfNotEmpty();
           _builder.append("\t");
           _builder.newLine();
@@ -347,26 +311,20 @@ public abstract class NUOPCComponent extends CodeConcept<CodeConcept<?, ?>, ASTM
           pul.add(moduleNode);
           ASTExecutableProgramNode _root = ast.getRoot();
           _root.setProgramUnitList(pul);
-          IASTListNode<IModuleBodyConstruct> _moduleBody = moduleNode.getModuleBody();
-          Iterable<ASTUseStmtNode> _filter = Iterables.<ASTUseStmtNode>filter(_moduleBody, ASTUseStmtNode.class);
           final Consumer<ASTUseStmtNode> _function = (ASTUseStmtNode it) -> {
-            Token _name = it.getName();
-            String _text = _name.getText();
-            boolean _eic = ASTQuery.eic(_text, "ESMF");
+            boolean _eic = ASTQuery.eic(it.getName().getText(), "ESMF");
             if (_eic) {
               BasicCodeConcept<ASTUseStmtNode> _basicCodeConcept = new BasicCodeConcept<ASTUseStmtNode>(this, it);
               this.importESMF = _basicCodeConcept;
             } else {
-              Token _name_1 = it.getName();
-              String _text_1 = _name_1.getText();
-              boolean _eic_1 = ASTQuery.eic(_text_1, "NUOPC");
+              boolean _eic_1 = ASTQuery.eic(it.getName().getText(), "NUOPC");
               if (_eic_1) {
                 BasicCodeConcept<ASTUseStmtNode> _basicCodeConcept_1 = new BasicCodeConcept<ASTUseStmtNode>(this, it);
                 this.importNUOPC = _basicCodeConcept_1;
               }
             }
           };
-          _filter.forEach(_function);
+          Iterables.<ASTUseStmtNode>filter(moduleNode.getModuleBody(), ASTUseStmtNode.class).forEach(_function);
         }
         this.importNUOPCGeneric.forward();
         _xblockexpression = super.<NUOPCComponent>forward();

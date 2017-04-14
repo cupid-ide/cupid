@@ -77,10 +77,10 @@ public class CodeConcept {
       if ((this.annotations.containsKey(name) && (!Objects.equal(this.annotations.get(name), type)))) {
         StringConcatenation _builder = new StringConcatenation();
         _builder.append("Cannot add annotation \"");
-        _builder.append(name, "");
+        _builder.append(name);
         _builder.append("\" of type ");
         String _simpleName = type.getSimpleName();
-        _builder.append(_simpleName, "");
+        _builder.append(_simpleName);
         _builder.append(" ");
         _builder.newLineIfNotEmpty();
         _builder.append("    \t\t\t");
@@ -156,8 +156,7 @@ public class CodeConcept {
       final LinkedHashMap<String, Class<?>> retMap = CollectionLiterals.<String, Class<?>>newLinkedHashMap();
       boolean _notEquals = (!Objects.equal(this.extends_, null));
       if (_notEquals) {
-        Map<String, Class<?>> _annotations = this.extends_.getAnnotations();
-        retMap.putAll(_annotations);
+        retMap.putAll(this.extends_.getAnnotations());
       }
       retMap.putAll(this.annotations);
       _xblockexpression = retMap;
@@ -193,8 +192,7 @@ public class CodeConcept {
       final LinkedHashMap<String, MTPType<?>> retMap = CollectionLiterals.<String, MTPType<?>>newLinkedHashMap();
       boolean _notEquals = (!Objects.equal(this.extends_, null));
       if (_notEquals) {
-        Map<String, MTPType<?>> _annotationDefaults = this.extends_.getAnnotationDefaults();
-        retMap.putAll(_annotationDefaults);
+        retMap.putAll(this.extends_.getAnnotationDefaults());
       }
       retMap.putAll(this.annotationDefaults);
       _xblockexpression = retMap;
@@ -236,11 +234,7 @@ public class CodeConcept {
       if (_notEquals_1) {
         Set<Map.Entry<String, Object>> _entrySet = parameters.entrySet();
         for (final Map.Entry<String, Object> p : _entrySet) {
-          String _key = p.getKey();
-          String _key_1 = p.getKey();
-          Object _value = p.getValue();
-          MappingTypeParameterBinding _variableBindingForParameter = this.getVariableBindingForParameter(_key_1, _value);
-          this.binding.putBinding(_key, _variableBindingForParameter);
+          this.binding.putBinding(p.getKey(), this.getVariableBindingForParameter(p.getKey(), p.getValue()));
         }
       }
       if ((mappingType.hasParameter("context") && this.binding.unbound("context"))) {
@@ -253,26 +247,21 @@ public class CodeConcept {
         CodeConceptInstanceReference _codeConceptInstanceReference_1 = new CodeConceptInstanceReference(mtv_1, null);
         this.binding.putBinding("match", _codeConceptInstanceReference_1);
       }
-      List<MappingTypeParameter> _unbound = this.binding.unbound();
       final Consumer<MappingTypeParameter> _function = (MappingTypeParameter v) -> {
+        this.addAnnotation(v.getName(), v.getType());
         String _name = v.getName();
-        Class<? extends MTPType<?>> _type = v.getType();
-        this.addAnnotation(_name, _type);
-        String _name_1 = v.getName();
-        String _name_2 = v.getName();
-        String _plus = ("@" + _name_2);
+        String _plus = ("@" + _name);
         CodeConceptInstanceReference _codeConceptInstanceReference_2 = new CodeConceptInstanceReference(v, _plus);
-        this.binding.putBinding(_name_1, _codeConceptInstanceReference_2);
+        this.binding.putBinding(v.getName(), _codeConceptInstanceReference_2);
       };
-      _unbound.forEach(_function);
+      this.binding.unbound().forEach(_function);
       boolean _fullyBound = this.binding.fullyBound();
       boolean _not = (!_fullyBound);
       if (_not) {
         String _name = mappingType.getName();
         String _plus = ("Missing parameters to mapping type " + _name);
         String _plus_1 = (_plus + ": ");
-        List<MappingTypeParameter> _unbound_1 = this.binding.unbound();
-        String _join = IterableExtensions.join(_unbound_1, ", ");
+        String _join = IterableExtensions.join(this.binding.unbound(), ", ");
         String _plus_2 = (_plus_1 + _join);
         throw new CodeConceptException(_plus_2);
       }
@@ -287,8 +276,7 @@ public class CodeConcept {
     if (_isDynamicReference) {
       CodeConceptInstanceReference _xblockexpression = null;
       {
-        MappingType _mappingType = this.getMappingType();
-        final MappingTypeParameter mtv = _mappingType.getParameter(paramName);
+        final MappingTypeParameter mtv = this.getMappingType().getParameter(paramName);
         _xblockexpression = new CodeConceptInstanceReference(mtv, ((String) paramValue));
       }
       _xifexpression = _xblockexpression;
@@ -327,22 +315,19 @@ public class CodeConcept {
     CodeConceptInstance _xblockexpression = null;
     {
       final CodeConceptInstance instance = this.newInstance(parent);
-      Map<String, MTPType<?>> _annotationDefaults = this.getAnnotationDefaults();
       final BiConsumer<String, MTPType<?>> _function = (String k, MTPType<?> v) -> {
         instance.put(k, v);
       };
-      _annotationDefaults.forEach(_function);
+      this.getAnnotationDefaults().forEach(_function);
       if (recursive) {
-        List<CodeSubconcept> _subconcepts = this.getSubconcepts();
         final Consumer<CodeSubconcept> _function_1 = (CodeSubconcept sc) -> {
           final SingleCodeSubconcept ssc = ((SingleCodeSubconcept) sc);
           boolean _isIncludeByDefault = ssc.isIncludeByDefault();
           if (_isIncludeByDefault) {
-            CodeConcept _concept = ssc.getConcept();
-            _concept.newInstanceWithDefaults(instance, recursive);
+            ssc.getConcept().newInstanceWithDefaults(instance, recursive);
           }
         };
-        _subconcepts.forEach(_function_1);
+        this.getSubconcepts().forEach(_function_1);
       }
       _xblockexpression = instance;
     }
@@ -358,8 +343,7 @@ public class CodeConcept {
       LinkedList<CodeSubconcept> _xblockexpression = null;
       {
         final LinkedList<CodeSubconcept> toRet = CollectionLiterals.<CodeSubconcept>newLinkedList();
-        List<CodeSubconcept> _subconcepts = this.extends_.getSubconcepts();
-        toRet.addAll(_subconcepts);
+        toRet.addAll(this.extends_.getSubconcepts());
         toRet.addAll(this.subconcepts);
         _xblockexpression = toRet;
       }
@@ -369,12 +353,10 @@ public class CodeConcept {
   }
   
   public CodeSubconcept getSubconcept(final String name) {
-    List<CodeSubconcept> _subconcepts = this.getSubconcepts();
     final Function1<CodeSubconcept, Boolean> _function = (CodeSubconcept sc) -> {
-      String _name = sc.getName();
-      return Boolean.valueOf(_name.equals(name));
+      return Boolean.valueOf(sc.getName().equals(name));
     };
-    return IterableExtensions.<CodeSubconcept>findFirst(_subconcepts, _function);
+    return IterableExtensions.<CodeSubconcept>findFirst(this.getSubconcepts(), _function);
   }
   
   public CodeConcept getChildConcept(final String name) {
@@ -507,8 +489,7 @@ public class CodeConcept {
   }
   
   public void addSubconcepts(final List<Object>... toAdd) {
-    LinkedList<Object> _newLinkedList = CollectionLiterals.<Object>newLinkedList(toAdd);
-    this.addSubconcepts(_newLinkedList);
+    this.addSubconcepts(CollectionLiterals.<Object>newLinkedList(toAdd));
   }
   
   public static boolean isStaticReference(final Object obj) {
@@ -524,13 +505,13 @@ public class CodeConcept {
     StringConcatenation _builder = new StringConcatenation();
     _builder.append("CodeConcept: ");
     String _name = this.getName();
-    _builder.append(_name, "");
+    _builder.append(_name);
     {
       boolean _notEquals = (!Objects.equal(this.extends_, null));
       if (_notEquals) {
         _builder.append(" refines ");
         String _name_1 = this.extends_.getName();
-        _builder.append(_name_1, "");
+        _builder.append(_name_1);
       }
     }
     _builder.newLineIfNotEmpty();
@@ -540,7 +521,7 @@ public class CodeConcept {
       for(final CodeSubconcept s : _subconcepts) {
         _builder.newLineIfNotEmpty();
         _builder.append("- ");
-        _builder.append(s, "");
+        _builder.append(s);
       }
     }
     _builder.newLineIfNotEmpty();

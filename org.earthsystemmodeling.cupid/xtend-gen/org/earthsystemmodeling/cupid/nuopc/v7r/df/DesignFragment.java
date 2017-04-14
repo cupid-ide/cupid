@@ -48,13 +48,11 @@ public abstract class DesignFragment {
   
   public void setBinding(final String name, final CodeConcept<?, ?> concept) {
     try {
-      Class<? extends DesignFragment> _class = this.getClass();
-      Field[] _fields = _class.getFields();
       final Function1<Field, Boolean> _function = (Field f) -> {
         return Boolean.valueOf(((!Objects.equal(f.<Binding>getAnnotation(Binding.class), null)) && 
           f.getName().equals(name)));
       };
-      final Field localField = IterableExtensions.<Field>findFirst(((Iterable<Field>)Conversions.doWrapArray(_fields)), _function);
+      final Field localField = IterableExtensions.<Field>findFirst(((Iterable<Field>)Conversions.doWrapArray(this.getClass().getFields())), _function);
       localField.set(this, concept);
     } catch (Throwable _e) {
       throw Exceptions.sneakyThrow(_e);
@@ -69,13 +67,11 @@ public abstract class DesignFragment {
     try {
       CodeConcept<?, ?> _xblockexpression = null;
       {
-        Class<? extends DesignFragment> _class = this.getClass();
-        Field[] _fields = _class.getFields();
         final Function1<Field, Boolean> _function = (Field f) -> {
           return Boolean.valueOf(((!Objects.equal(f.<Binding>getAnnotation(Binding.class), null)) && 
             f.getName().equals(name)));
         };
-        final Field localField = IterableExtensions.<Field>findFirst(((Iterable<Field>)Conversions.doWrapArray(_fields)), _function);
+        final Field localField = IterableExtensions.<Field>findFirst(((Iterable<Field>)Conversions.doWrapArray(this.getClass().getFields())), _function);
         Object _get = localField.get(this);
         _xblockexpression = ((CodeConcept<?, ?>) _get);
       }
@@ -88,13 +84,11 @@ public abstract class DesignFragment {
   public Class<? extends CodeConcept<?, ?>> getBindingType(final String name) {
     Class<? extends CodeConcept<?, ?>> _xblockexpression = null;
     {
-      Class<? extends DesignFragment> _class = this.getClass();
-      Field[] _fields = _class.getFields();
       final Function1<Field, Boolean> _function = (Field f) -> {
         return Boolean.valueOf(((!Objects.equal(f.<Binding>getAnnotation(Binding.class), null)) && 
           f.getName().equals(name)));
       };
-      final Field localField = IterableExtensions.<Field>findFirst(((Iterable<Field>)Conversions.doWrapArray(_fields)), _function);
+      final Field localField = IterableExtensions.<Field>findFirst(((Iterable<Field>)Conversions.doWrapArray(this.getClass().getFields())), _function);
       Class<?> _type = localField.getType();
       _xblockexpression = ((Class<? extends CodeConcept<?, ?>>) _type);
     }
@@ -105,18 +99,14 @@ public abstract class DesignFragment {
     ArrayList<String> _xblockexpression = null;
     {
       final ArrayList<String> listToReturn = CollectionLiterals.<String>newArrayList();
-      Class<? extends DesignFragment> _class = this.getClass();
-      Field[] _fields = _class.getFields();
       final Function1<Field, Boolean> _function = (Field f) -> {
         Binding _annotation = f.<Binding>getAnnotation(Binding.class);
         return Boolean.valueOf((!Objects.equal(_annotation, null)));
       };
-      Iterable<Field> _filter = IterableExtensions.<Field>filter(((Iterable<Field>)Conversions.doWrapArray(_fields)), _function);
       final Consumer<Field> _function_1 = (Field f) -> {
-        String _name = f.getName();
-        listToReturn.add(_name);
+        listToReturn.add(f.getName());
       };
-      _filter.forEach(_function_1);
+      IterableExtensions.<Field>filter(((Iterable<Field>)Conversions.doWrapArray(this.getClass().getFields())), _function).forEach(_function_1);
       _xblockexpression = listToReturn;
     }
     return _xblockexpression;

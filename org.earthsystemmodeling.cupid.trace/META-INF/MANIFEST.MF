@@ -14,8 +14,10 @@ Require-Bundle: org.eclipse.ui,
  org.eclipse.tracecompass.statesystem.core,
  org.swtchart,
  org.eclipse.jface,
- org.eclipse.tracecompass.tmf.ctf.core;bundle-version="2.1.0"
+ org.eclipse.tracecompass.tmf.ctf.core;bundle-version="2.1.0",
+ org.earthsystemmodeling.cupid
 Bundle-RequiredExecutionEnvironment: JavaSE-1.8
 Bundle-ActivationPolicy: lazy
 Bundle-ClassPath: lib/json-simple-1.1.1.jar,
  .
+Import-Package: org.apache.commons.io

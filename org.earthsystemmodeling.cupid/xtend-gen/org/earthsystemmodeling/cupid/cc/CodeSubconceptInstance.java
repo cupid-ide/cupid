@@ -55,13 +55,13 @@ public class CodeSubconceptInstance {
     StringConcatenation _builder = new StringConcatenation();
     _builder.append("CodeSubconceptInstance: ");
     String _name = this.type.getName();
-    _builder.append(_name, "");
+    _builder.append(_name);
     _builder.newLineIfNotEmpty();
     {
       for(final CodeConceptInstance ci : this.instances) {
         _builder.append("- ");
         String _string = ci.toString();
-        _builder.append(_string, "");
+        _builder.append(_string);
         _builder.newLineIfNotEmpty();
       }
     }

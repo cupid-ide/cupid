@@ -1,4 +1,4 @@
-package org.earthsystemmodeling.cupid.trace;
+package org.earthsystemmodeling.cupid.trace.view;
 
 import org.eclipse.tracecompass.tmf.core.event.TmfEventType;
 import org.json.simple.JSONObject;

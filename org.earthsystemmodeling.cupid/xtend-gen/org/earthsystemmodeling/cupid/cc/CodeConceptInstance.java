@@ -9,7 +9,6 @@ import java.util.function.Consumer;
 import org.earthsystemmodeling.cupid.cc.CCIStatus;
 import org.earthsystemmodeling.cupid.cc.CodeConcept;
 import org.earthsystemmodeling.cupid.cc.CodeConceptException;
-import org.earthsystemmodeling.cupid.cc.CodeSubconcept;
 import org.earthsystemmodeling.cupid.cc.SingleCodeSubconcept;
 import org.earthsystemmodeling.cupid.cc.mapping.IllegalVariableAssignment;
 import org.earthsystemmodeling.cupid.cc.mapping.MappingType;
@@ -77,21 +76,16 @@ public class CodeConceptInstance {
           }
           boolean _notEquals_1 = (!Objects.equal(_mappingType, null));
           if (_notEquals_1) {
-            MappingType _mappingType_1 = this.type.getMappingType();
-            Class<?> _matchType = _mappingType_1.matchType();
-            boolean _isInstance = _matchType.isInstance(match);
+            boolean _isInstance = this.type.getMappingType().matchType().isInstance(match);
             boolean _not = (!_isInstance);
             if (_not) {
               String _name = this.type.getName();
               String _plus = ("Match for concept " + _name);
               String _plus_1 = (_plus + " must be of type ");
-              MappingType _mappingType_2 = this.type.getMappingType();
-              Class<?> _matchType_1 = _mappingType_2.matchType();
-              String _simpleName = _matchType_1.getSimpleName();
+              String _simpleName = this.type.getMappingType().matchType().getSimpleName();
               String _plus_2 = (_plus_1 + _simpleName);
               String _plus_3 = (_plus_2 + " (given type ");
-              Class<?> _class = match.getClass();
-              String _simpleName_1 = _class.getSimpleName();
+              String _simpleName_1 = match.getClass().getSimpleName();
               String _plus_4 = (_plus_3 + _simpleName_1);
               String _plus_5 = (_plus_4 + ").");
               throw new CodeConceptException(_plus_5);
@@ -139,13 +133,11 @@ public class CodeConceptInstance {
     try {
       CodeConceptInstance _xblockexpression = null;
       {
-        List<CodeSubconcept> _subconcepts = this.type.getSubconcepts();
-        Iterable<SingleCodeSubconcept> _filter = Iterables.<SingleCodeSubconcept>filter(_subconcepts, SingleCodeSubconcept.class);
         final Function1<SingleCodeSubconcept, Boolean> _function = (SingleCodeSubconcept s) -> {
           CodeConcept _concept = s.getConcept();
           return Boolean.valueOf(Objects.equal(_concept, child.type));
         };
-        final SingleCodeSubconcept subconcept = IterableExtensions.<SingleCodeSubconcept>findFirst(_filter, _function);
+        final SingleCodeSubconcept subconcept = IterableExtensions.<SingleCodeSubconcept>findFirst(Iterables.<SingleCodeSubconcept>filter(this.type.getSubconcepts(), SingleCodeSubconcept.class), _function);
         boolean _equals = Objects.equal(subconcept, null);
         if (_equals) {
           throw new CodeConceptException(((("Code concept " + this.type.name) + " does not contain subconcept ") + child.type.name));
@@ -275,9 +267,9 @@ public class CodeConceptInstance {
     StringConcatenation _builder = new StringConcatenation();
     _builder.append("CodeConceptInstance of: ");
     String _name = this.type.getName();
-    _builder.append(_name, "");
+    _builder.append(_name);
     _builder.append("  (Status = ");
-    _builder.append(this.status, "");
+    _builder.append(this.status);
     _builder.append(")");
     _builder.newLineIfNotEmpty();
     _builder.append("    ");
@@ -285,8 +277,7 @@ public class CodeConceptInstance {
     _builder.append("    ");
     _builder.append("Annotations: ");
     {
-      Map<String, MTPType<?>> _annotations = this.getAnnotations();
-      Set<Map.Entry<String, MTPType<?>>> _entrySet = _annotations.entrySet();
+      Set<Map.Entry<String, MTPType<?>>> _entrySet = this.getAnnotations().entrySet();
       for(final Map.Entry<String, MTPType<?>> a : _entrySet) {
         _builder.newLineIfNotEmpty();
         _builder.append("    ");

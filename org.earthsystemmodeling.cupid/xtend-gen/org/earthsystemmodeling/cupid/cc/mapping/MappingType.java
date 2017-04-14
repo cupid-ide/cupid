@@ -69,16 +69,15 @@ public class MappingType {
         Set<Map.Entry<String, Class<? extends MTPType<?>>>> _entrySet = parameters.entrySet();
         for (final Map.Entry<String, Class<? extends MTPType<?>>> p : _entrySet) {
           {
-            String _key = p.getKey();
-            boolean _hasParameter = this.hasParameter(_key);
+            boolean _hasParameter = this.hasParameter(p.getKey());
             if (_hasParameter) {
-              String _key_1 = p.getKey();
-              String _plus = ("Cannot add duplicate parameter: " + _key_1);
+              String _key = p.getKey();
+              String _plus = ("Cannot add duplicate parameter: " + _key);
               throw new MappingTypeException(_plus);
             }
-            String _key_2 = p.getKey();
+            String _key_1 = p.getKey();
             Class<? extends MTPType<?>> _value = p.getValue();
-            final MappingTypeParameter mtv = new MappingTypeParameter(_key_2, _value);
+            final MappingTypeParameter mtv = new MappingTypeParameter(_key_1, _value);
             this.parameters.add(mtv);
           }
         }
@@ -137,14 +136,12 @@ public class MappingType {
   }
   
   public boolean hasParameter(final MappingTypeParameter toCheck) {
-    String _name = toCheck.getName();
-    return this.hasParameter(_name);
+    return this.hasParameter(toCheck.getName());
   }
   
   public MappingTypeParameter getParameter(final String name) {
     final Function1<MappingTypeParameter, Boolean> _function = (MappingTypeParameter p) -> {
-      String _name = p.getName();
-      return Boolean.valueOf(_name.equals(name));
+      return Boolean.valueOf(p.getName().equals(name));
     };
     final MappingTypeParameter p = IterableExtensions.<MappingTypeParameter>findFirst(this.parameters, _function);
     if ((Objects.equal(p, null) && (!Objects.equal(this.refines, null)))) {
@@ -160,8 +157,7 @@ public class MappingType {
       retList.addAll(this.parameters);
       boolean _notEquals = (!Objects.equal(this.refines, null));
       if (_notEquals) {
-        List<MappingTypeParameter> _parameters = this.refines.getParameters();
-        retList.addAll(_parameters);
+        retList.addAll(this.refines.getParameters());
       }
       _xblockexpression = retList;
     }
@@ -177,8 +173,7 @@ public class MappingType {
   }
   
   public Object getParameterValue(final String name) {
-    MappingTypeParameter _parameter = this.getParameter(name);
-    return this.getParameterValue(_parameter);
+    return this.getParameterValue(this.getParameter(name));
   }
   
   public Map<MappingTypeParameter, Object> getParameterValues() {
@@ -187,8 +182,7 @@ public class MappingType {
       final LinkedHashMap<MappingTypeParameter, Object> retMap = CollectionLiterals.<MappingTypeParameter, Object>newLinkedHashMap();
       boolean _notEquals = (!Objects.equal(this.refines, null));
       if (_notEquals) {
-        Map<MappingTypeParameter, Object> _parameterValues = this.refines.getParameterValues();
-        retMap.putAll(_parameterValues);
+        retMap.putAll(this.refines.getParameterValues());
       }
       retMap.putAll(this.parameterValues);
       _xblockexpression = retMap;
@@ -223,8 +217,7 @@ public class MappingType {
       final LinkedHashMap<String, String> retMap = CollectionLiterals.<String, String>newLinkedHashMap();
       boolean _notEquals = (!Objects.equal(this.refines, null));
       if (_notEquals) {
-        Map<String, String> _templates = this.refines.getTemplates();
-        retMap.putAll(_templates);
+        retMap.putAll(this.refines.getTemplates());
       }
       retMap.putAll(this.templates);
       _xblockexpression = retMap;

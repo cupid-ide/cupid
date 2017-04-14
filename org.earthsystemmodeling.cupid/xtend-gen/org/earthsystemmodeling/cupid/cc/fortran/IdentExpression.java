@@ -1,8 +1,6 @@
 package org.earthsystemmodeling.cupid.cc.fortran;
 
 import org.earthsystemmodeling.cupid.cc.fortran.Expression;
-import org.eclipse.photran.internal.core.lexer.Token;
-import org.eclipse.photran.internal.core.parser.ASTNameNode;
 import org.eclipse.photran.internal.core.parser.ASTVarOrFnRefNode;
 import org.eclipse.photran.internal.core.parser.IExpr;
 
@@ -22,10 +20,7 @@ public class IdentExpression extends Expression {
   public String match(final IExpr expr) {
     if ((expr instanceof ASTVarOrFnRefNode)) {
       final ASTVarOrFnRefNode node = ((ASTVarOrFnRefNode) expr);
-      ASTNameNode _name = node.getName();
-      Token _name_1 = _name.getName();
-      String _text = _name_1.getText();
-      boolean _equals = _text.equals(this.identifier);
+      boolean _equals = node.getName().getName().getText().equals(this.identifier);
       if (_equals) {
         return this.identifier;
       }

@@ -1,8 +1,9 @@
-package org.earthsystemmodeling.cupid.trace;
+package org.earthsystemmodeling.cupid.trace.json;
 
 import java.util.List;
 import java.util.Stack;
 
+import org.earthsystemmodeling.cupid.trace.view.NUOPCEventType;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.tracecompass.statesystem.core.ITmfStateSystem;
 import org.eclipse.tracecompass.statesystem.core.ITmfStateSystemBuilder;

@@ -61,18 +61,14 @@ public class CodeConceptTemplate extends CodeConcept {
             return _xifexpression;
           }
         }.apply());
-        MappingTypeBinding _binding = this.getBinding();
-        MappingType _mappingType = _binding.getMappingType();
+        MappingType _mappingType = this.getBinding().getMappingType();
         final MappingTypeBinding binding = new MappingTypeBinding(_mappingType, concept);
-        MappingTypeBinding _binding_1 = this.getBinding();
-        Map<String, MappingTypeParameterBinding> _bindings = _binding_1.getBindings();
-        Set<Map.Entry<String, MappingTypeParameterBinding>> _entrySet = _bindings.entrySet();
+        Set<Map.Entry<String, MappingTypeParameterBinding>> _entrySet = this.getBinding().getBindings().entrySet();
         for (final Map.Entry<String, MappingTypeParameterBinding> e : _entrySet) {
           MappingTypeParameterBinding _value = e.getValue();
           if ((_value instanceof TemplateParameterReference)) {
             MappingTypeParameterBinding _value_1 = e.getValue();
-            String _reference = ((TemplateParameterReference) _value_1).getReference();
-            final String refVar = _reference.substring(1);
+            final String refVar = ((TemplateParameterReference) _value_1).getReference().substring(1);
             boolean _containsKey = parameterValues.containsKey(refVar);
             if (_containsKey) {
               String _key = e.getKey();
@@ -85,35 +81,25 @@ public class CodeConceptTemplate extends CodeConcept {
               throw new CodeConceptException(_plus);
             }
           } else {
-            String _key_2 = e.getKey();
-            MappingTypeParameterBinding _value_2 = e.getValue();
-            MappingTypeParameterBinding _clone = _value_2.clone(binding);
-            binding.putBinding(_key_2, _clone);
+            binding.putBinding(e.getKey(), e.getValue().clone(binding));
           }
         }
         concept.setBinding(binding);
-        Map<String, Class<?>> _annotations = this.getAnnotations();
         final BiConsumer<String, Class<?>> _function = (String k, Class<?> v) -> {
           concept.addAnnotation(k, v);
         };
-        _annotations.forEach(_function);
-        Map<String, MTPType<?>> _annotationDefaults = this.getAnnotationDefaults();
+        this.getAnnotations().forEach(_function);
         final BiConsumer<String, MTPType<?>> _function_1 = (String k, MTPType<?> v) -> {
           concept.addAnnotationDefault(k, v);
         };
-        _annotationDefaults.forEach(_function_1);
+        this.getAnnotationDefaults().forEach(_function_1);
         List<CodeSubconcept> _subconcepts = this.getSubconcepts();
         for (final CodeSubconcept sc : _subconcepts) {
           {
             final SingleCodeSubconcept singleSubconcept = ((SingleCodeSubconcept) sc);
             CodeConcept _concept = singleSubconcept.getConcept();
             final CodeConcept instantiatedConcept = ((CodeConceptTemplate) _concept).instantiate(parameterValues);
-            String _name = singleSubconcept.getName();
-            boolean _isEssential = sc.isEssential();
-            int _min = sc.getMin();
-            int _max = sc.getMax();
-            boolean _isIncludeByDefault = singleSubconcept.isIncludeByDefault();
-            concept.addSubconcept(_name, instantiatedConcept, _isEssential, _min, _max, _isIncludeByDefault);
+            concept.addSubconcept(singleSubconcept.getName(), instantiatedConcept, sc.isEssential(), sc.getMin(), sc.getMax(), singleSubconcept.isIncludeByDefault());
           }
         }
         _xblockexpression = concept;

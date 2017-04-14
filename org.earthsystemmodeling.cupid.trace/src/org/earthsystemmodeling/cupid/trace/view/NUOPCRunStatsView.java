@@ -1,5 +1,6 @@
-package org.earthsystemmodeling.cupid.trace;
+package org.earthsystemmodeling.cupid.trace.view;
 
+import org.earthsystemmodeling.cupid.trace.json.NUOPCStateSystemAnalysisModule;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.tracecompass.statesystem.core.ITmfStateSystem;

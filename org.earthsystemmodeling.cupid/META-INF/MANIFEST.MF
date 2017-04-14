@@ -54,8 +54,7 @@ Require-Bundle: org.eclipse.core.runtime,
  org.eclipse.photran.cdtinterface;bundle-version="9.0.0"
 Bundle-ActivationPolicy: lazy
 Bundle-Activator: org.earthsystemmodeling.cupid.core.CupidActivator
-Export-Package: org.apache.commons.io,
- org.earthsystemmodeling.cupid.cc,
+Export-Package: org.earthsystemmodeling.cupid.cc,
  org.earthsystemmodeling.cupid.cc.nuopc,
  org.earthsystemmodeling.cupid.core,
  org.earthsystemmodeling.cupid.handlers,

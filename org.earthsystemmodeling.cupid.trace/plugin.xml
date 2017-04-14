@@ -7,8 +7,16 @@
             event_type="org.eclipse.tracecompass.tmf.core.event.TmfEvent"
             id="org.earthsystemmodeling.cupid.trace.nuopc"
             isDirectory="false"
+            name="NUOPC Log-Based Trace"
+            trace_type="org.earthsystemmodeling.cupid.trace.json.NUOPCTrace">
+      </type>
+      <type
+            category="org.eclipse.linuxtools.tmf.ctf.core.category.ctf"
+            event_type="org.eclipse.tracecompass.tmf.ctf.core.event.CtfTmfEvent"
+            id="org.earthsystemmodeling.cupid.trace.nuopcctf"
+            isDirectory="true"
             name="NUOPC Trace"
-            trace_type="org.earthsystemmodeling.cupid.trace.NUOPCTrace">
+            trace_type="org.earthsystemmodeling.cupid.trace.NUOPCCtfTrace">
       </type>
    </extension>
    
@@ -17,49 +25,50 @@
       
       
       <module
-            analysis_module="org.earthsystemmodeling.cupid.trace.NUOPCCallStackAnalysis"
+            analysis_module="org.earthsystemmodeling.cupid.trace.json.NUOPCCallStackAnalysis"
             automatic="false"
             icon="icons/stack.png"
             id="org.earthsystemmodeling.cupid.trace.NUOPCCallStackAnalysis"
-            name="NUOPC Call Stack Analysis">
+            name="NUOPC Log-Based Call Stack Analysis">
          <tracetype
                applies="true"
-               class="org.earthsystemmodeling.cupid.trace.NUOPCTrace">
+               class="org.earthsystemmodeling.cupid.trace.json.NUOPCTrace">
          </tracetype>
       </module>
       
       
       <module
-            analysis_module="org.earthsystemmodeling.cupid.trace.NUOPCStateSystemAnalysisModule"
+            analysis_module="org.earthsystemmodeling.cupid.trace.json.NUOPCStateSystemAnalysisModule"
             automatic="false"
             icon="icons/state.png"
             id="org.earthsystemmodeling.cupid.trace.NUOPCStateSystemAnalysisModule"
+            name="NUOPC Log-Based State System Analysis">
+         <tracetype
+               applies="true"
+               class="org.earthsystemmodeling.cupid.trace.json.NUOPCTrace">
+         </tracetype>
+      </module>
+      
+      <module
+            analysis_module="org.earthsystemmodeling.cupid.trace.NUOPCCtfCallStackAnalysis"
+            automatic="true"
+            icon="icons/stack.png"
+            id="org.earthsystemmodeling.cupid.trace.NUOPCCtfCallStackAnalysis"
+            name="NUOPC Call Stack Analysis">
+         <tracetype
+               applies="true"
+               class="org.earthsystemmodeling.cupid.trace.NUOPCCtfTrace">
+         </tracetype>
+      </module>
+      <module
+            analysis_module="org.earthsystemmodeling.cupid.trace.NUOPCCtfStateSystemAnalysisModule"
+            automatic="true"
+            icon="icons/state.png"
+            id="org.earthsystemmodeling.cupid.trace.NUOPCCtfStateSystemAnalysisModule"
             name="NUOPC State System Analysis">
          <tracetype
                applies="true"
-               class="org.earthsystemmodeling.cupid.trace.NUOPCTrace">
-         </tracetype>
-      </module>
-      <module
-            analysis_module="org.earthsystemmodeling.cupid.trace.CtfNUOPCCallStackAnalysis"
-            automatic="false"
-            icon="icons/stack.png"
-            id="org.earthsystemmodeling.cupid.trace.CtfNUOPCCallStackAnalysis"
-            name="CTF NUOPC Call Stack Analysis">
-         <tracetype
-               applies="true"
-               class="org.eclipse.tracecompass.tmf.ctf.core.trace.CtfTmfTrace">
-         </tracetype>
-      </module>
-      <module
-            analysis_module="org.earthsystemmodeling.cupid.trace.CtfNUOPCStateSystemAnalysisModule"
-            automatic="false"
-            icon="icons/state.png"
-            id="org.earthsystemmodeling.cupid.trace.CtfNUOPCStateSystemAnalysisModule"
-            name="CTF NUOPC State System Analysis">
-         <tracetype
-               applies="true"
-               class="org.eclipse.tracecompass.tmf.ctf.core.trace.CtfTmfTrace">
+               class="org.earthsystemmodeling.cupid.trace.NUOPCCtfTrace">
          </tracetype>
       </module>
       
@@ -68,7 +77,7 @@
          point="org.eclipse.ui.views">
       <view
             category="org.earthsystemmodeling.cupid"
-            class="org.earthsystemmodeling.cupid.trace.NUOPCRunStatsView"
+            class="org.earthsystemmodeling.cupid.trace.view.NUOPCRunStatsView"
             icon="icons/linegraph.png"
             id="org.earthsystemmodeling.cupid.trace.NUOPCRunStats"
             name="NUOPC Run Statistics"
@@ -76,7 +85,7 @@
       </view>
       <view
             category="org.earthsystemmodeling.cupid"
-            class="org.earthsystemmodeling.cupid.trace.NUOPCStateView"
+            class="org.earthsystemmodeling.cupid.trace.view.NUOPCStateView"
             icon="icons/state.png"
             id="org.earthsystemmodeling.cupid.trace.NUOPCStateView"
             name="NUOPC State Explorer"
@@ -84,7 +93,7 @@
       </view>
       <view
             category="org.earthsystemmodeling.cupid"
-            class="org.earthsystemmodeling.cupid.trace.NUOPCCallStackView"
+            class="org.earthsystemmodeling.cupid.trace.view.NUOPCCallStackView"
             icon="icons/stack.png"
             id="org.earthsystemmodeling.cupid.trace.NUOPCCallStackView"
             name="NUOPC Call Stack View"
@@ -92,14 +101,6 @@
       </view>
    </extension>
    
-   <extension
-         point="org.eclipse.tracecompass.tmf.ui.symbolProvider">
-      <providerFactory
-            class="org.earthsystemmodeling.cupid.trace.NUOPCSymbolProviderFactory"
-            id="org.earthsystemmodeling.cupid.trace.NUOPCSymbolProviderFactory"
-            priority="60">
-      </providerFactory>
-   </extension>
    
     <extension
          point="org.eclipse.ui.perspectiveExtensions">
@@ -109,13 +110,6 @@
             targetID="org.eclipse.photran.ui.FortranPerspective">
          <view
                id="org.earthsystemmodeling.cupid.trace.NUOPCCallStackView"
-               minimized="false"
-               relationship="stack"
-               relative="org.eclipse.ui.console.ConsoleView"
-               visible="true">
-         </view>
-         <view
-               id="org.earthsystemmodeling.cupid.trace.NUOPCStateView"
                minimized="false"
                relationship="stack"
                relative="org.eclipse.ui.console.ConsoleView"

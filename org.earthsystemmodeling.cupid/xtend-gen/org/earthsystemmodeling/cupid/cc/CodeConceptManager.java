@@ -47,8 +47,7 @@ public class CodeConceptManager {
     try {
       CodeConceptInstance _xblockexpression = null;
       {
-        PhotranVPG _instance = PhotranVPG.getInstance();
-        final IFortranAST ast = _instance.acquireTransientAST(file);
+        final IFortranAST ast = PhotranVPG.getInstance().acquireTransientAST(file);
         boolean _equals = Objects.equal(ast, null);
         if (_equals) {
           throw new Exception("NULL AST");
@@ -85,8 +84,7 @@ public class CodeConceptManager {
     if (_notEquals) {
       Object _xblockexpression = null;
       {
-        MappingTypeBinding _binding_1 = concept.getBinding();
-        CodeConceptInstance instance = _binding_1.find(parent);
+        CodeConceptInstance instance = concept.getBinding().find(parent);
         Object _xifexpression_1 = null;
         boolean _notEquals_1 = (!Objects.equal(instance, null));
         if (_notEquals_1) {
@@ -126,8 +124,7 @@ public class CodeConceptManager {
     CodeConceptInstance _xblockexpression = null;
     {
       try {
-        CodeConcept _type = instance.getType();
-        List<CodeSubconcept> _subconcepts = _type.getSubconcepts();
+        List<CodeSubconcept> _subconcepts = instance.getType().getSubconcepts();
         for (final CodeSubconcept sc : _subconcepts) {
           this.reverseChild(sc, instance);
         }
@@ -160,8 +157,7 @@ public class CodeConceptManager {
       {
         final SingleCodeSubconcept subconcept = ((SingleCodeSubconcept) codeSubconcept);
         if (((subconcept.getMax() == 0) || (subconcept.getMax() == 1))) {
-          CodeConcept _concept = subconcept.getConcept();
-          final CodeConceptInstance cci = this.reverse(_concept, parent);
+          final CodeConceptInstance cci = this.reverse(subconcept.getConcept(), parent);
           boolean _isEssential = subconcept.isEssential();
           if (_isEssential) {
             if ((Objects.equal(cci, null) && (subconcept.getMin() > 0))) {
@@ -173,8 +169,7 @@ public class CodeConceptManager {
             }
           }
         } else {
-          CodeConcept _concept_1 = subconcept.getConcept();
-          final List<CodeConceptInstance> ccis = this.reverseAll(_concept_1, parent);
+          final List<CodeConceptInstance> ccis = this.reverseAll(subconcept.getConcept(), parent);
           if ((subconcept.isEssential() && ((ccis.size() < subconcept.getMin()) || (ccis.size() > subconcept.getMax())))) {
             int _min = subconcept.getMin();
             String _plus = ("Must be at between " + Integer.valueOf(_min));
@@ -182,8 +177,7 @@ public class CodeConceptManager {
             int _max = subconcept.getMax();
             String _plus_2 = (_plus_1 + Integer.valueOf(_max));
             String _plus_3 = (_plus_2 + " instances of ");
-            CodeConcept _concept_2 = subconcept.getConcept();
-            String _plus_4 = (_plus_3 + _concept_2.name);
+            String _plus_4 = (_plus_3 + subconcept.getConcept().name);
             throw new EssentialConstraintViolation(_plus_4);
           }
         }
@@ -209,8 +203,7 @@ public class CodeConceptManager {
       MappingTypeBinding _binding = concept.getBinding();
       boolean _notEquals = (!Objects.equal(_binding, null));
       if (_notEquals) {
-        MappingTypeBinding _binding_1 = concept.getBinding();
-        final List<CodeConceptInstance> instances = _binding_1.findAll(parent);
+        final List<CodeConceptInstance> instances = concept.getBinding().findAll(parent);
         final Consumer<CodeConceptInstance> _function = (CodeConceptInstance i) -> {
           final CodeConceptInstance cci = this.reverseChildren(i);
           boolean _notEquals_1 = (!Objects.equal(cci, null));
@@ -246,8 +239,7 @@ public class CodeConceptManager {
   
   public void forwardAdd(final CodeConceptInstance instance) {
     final CodeConcept concept = instance.getType();
-    MappingTypeBinding _binding = concept.getBinding();
-    _binding.forwardAdd(instance);
+    concept.getBinding().forwardAdd(instance);
   }
   
   public void forwardDelete(final CodeConceptInstance parent, final CodeConceptInstance child) {

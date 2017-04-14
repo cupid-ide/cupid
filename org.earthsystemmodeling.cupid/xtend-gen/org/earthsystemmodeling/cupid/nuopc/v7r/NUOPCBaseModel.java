@@ -15,7 +15,6 @@ import org.earthsystemmodeling.cupid.nuopc.CodeGenerationException;
 import org.earthsystemmodeling.cupid.nuopc.ESMFCodeTemplates;
 import org.earthsystemmodeling.cupid.nuopc.v7r.EntryPointCodeConcept;
 import org.earthsystemmodeling.cupid.util.CodeExtraction;
-import org.eclipse.photran.internal.core.lexer.Token;
 import org.eclipse.photran.internal.core.parser.ASTCallStmtNode;
 import org.eclipse.photran.internal.core.parser.ASTSubroutineSubprogramNode;
 import org.eclipse.photran.internal.core.parser.IASTListNode;
@@ -55,26 +54,18 @@ public class NUOPCBaseModel {
       ArrayList<NUOPCBaseModel.AdvertiseField> _xblockexpression = null;
       {
         final ArrayList<NUOPCBaseModel.AdvertiseField> retList = CollectionLiterals.<NUOPCBaseModel.AdvertiseField>newArrayList();
-        ASTSubroutineSubprogramNode _aSTRef = this._parent.getASTRef();
-        IASTListNode<IBodyConstruct> _body = _aSTRef.getBody();
-        Iterable<ASTCallStmtNode> _filter = Iterables.<ASTCallStmtNode>filter(_body, ASTCallStmtNode.class);
         final Function1<ASTCallStmtNode, Boolean> _function = (ASTCallStmtNode c) -> {
-          Token _subroutineName = c.getSubroutineName();
-          return Boolean.valueOf(ASTQuery.eic(_subroutineName, "NUOPC_Advertise"));
+          return Boolean.valueOf(ASTQuery.eic(c.getSubroutineName(), "NUOPC_Advertise"));
         };
-        Iterable<ASTCallStmtNode> _filter_1 = IterableExtensions.<ASTCallStmtNode>filter(_filter, _function);
         final Consumer<ASTCallStmtNode> _function_1 = (ASTCallStmtNode it) -> {
           NUOPCBaseModel.AdvertiseField advField = new NUOPCBaseModel.AdvertiseField(this._parent);
-          String _litArgExprByIdx = ASTQuery.litArgExprByIdx(it, 0);
-          advField.state = _litArgExprByIdx;
-          String _litArgExprByIdx_1 = ASTQuery.litArgExprByIdx(it, 1);
-          advField.standardName = _litArgExprByIdx_1;
-          String _litArgExprByKeyword = ASTQuery.litArgExprByKeyword(it, "name");
-          advField.name = _litArgExprByKeyword;
+          advField.state = ASTQuery.litArgExprByIdx(it, 0);
+          advField.standardName = ASTQuery.litArgExprByIdx(it, 1);
+          advField.name = ASTQuery.litArgExprByKeyword(it, "name");
           advField.setASTRef(it);
           retList.add(advField);
         };
-        _filter_1.forEach(_function_1);
+        IterableExtensions.<ASTCallStmtNode>filter(Iterables.<ASTCallStmtNode>filter(this._parent.getASTRef().getBody(), ASTCallStmtNode.class), _function).forEach(_function_1);
         _xblockexpression = retList;
       }
       return _xblockexpression;
@@ -88,30 +79,29 @@ public class NUOPCBaseModel {
         _builder.newLine();
         _builder.append("call NUOPC_Advertise(");
         CharSequence _paramch = this.paramch(this.state);
-        _builder.append(_paramch, "");
+        _builder.append(_paramch);
         _builder.append(", StandardName=");
         CharSequence _paramch_1 = this.paramch(this.standardName);
-        _builder.append(_paramch_1, "");
+        _builder.append(_paramch_1);
         {
           boolean _notEquals = (!Objects.equal(this.name, null));
           if (_notEquals) {
             _builder.append(", name=");
             CharSequence _paramch_2 = this.paramch(this.name);
-            _builder.append(_paramch_2, "");
+            _builder.append(_paramch_2);
           }
         }
         _builder.append(", rc=");
-        _builder.append(this._parent.paramRC, "");
+        _builder.append(this._parent.paramRC);
         _builder.append(")");
         _builder.newLineIfNotEmpty();
         CharSequence _ESMFErrorCheck = ESMFCodeTemplates.ESMFErrorCheck(this._parent.paramRC);
-        _builder.append(_ESMFErrorCheck, "");
+        _builder.append(_ESMFErrorCheck);
         _builder.newLineIfNotEmpty();
         String code = _builder.toString();
         final IASTListNode<IBodyConstruct> stmts = CodeExtraction.parseLiteralStatementSequence(code);
         final ASTSubroutineSubprogramNode ssn = this._parent.getASTRef();
-        IASTListNode<IBodyConstruct> _body = ssn.getBody();
-        _body.addAll(stmts);
+        ssn.getBody().addAll(stmts);
         IBodyConstruct _get = stmts.get(0);
         this.setASTRef(((ASTCallStmtNode) _get));
         _xblockexpression = this;
@@ -150,24 +140,17 @@ public class NUOPCBaseModel {
       ArrayList<NUOPCBaseModel.RealizeField> _xblockexpression = null;
       {
         final ArrayList<NUOPCBaseModel.RealizeField> retList = CollectionLiterals.<NUOPCBaseModel.RealizeField>newArrayList();
-        ASTSubroutineSubprogramNode _aSTRef = this._parent.getASTRef();
-        IASTListNode<IBodyConstruct> _body = _aSTRef.getBody();
-        Iterable<ASTCallStmtNode> _filter = Iterables.<ASTCallStmtNode>filter(_body, ASTCallStmtNode.class);
         final Function1<ASTCallStmtNode, Boolean> _function = (ASTCallStmtNode c) -> {
-          Token _subroutineName = c.getSubroutineName();
-          return Boolean.valueOf(ASTQuery.eic(_subroutineName, "NUOPC_Realize"));
+          return Boolean.valueOf(ASTQuery.eic(c.getSubroutineName(), "NUOPC_Realize"));
         };
-        Iterable<ASTCallStmtNode> _filter_1 = IterableExtensions.<ASTCallStmtNode>filter(_filter, _function);
         final Consumer<ASTCallStmtNode> _function_1 = (ASTCallStmtNode it) -> {
           NUOPCBaseModel.RealizeField relField = new NUOPCBaseModel.RealizeField(this._parent);
-          String _litArgExprByIdx = ASTQuery.litArgExprByIdx(it, 0);
-          relField.state = _litArgExprByIdx;
-          String _litArgExprByIdx_1 = ASTQuery.litArgExprByIdx(it, 1);
-          relField.field = _litArgExprByIdx_1;
+          relField.state = ASTQuery.litArgExprByIdx(it, 0);
+          relField.field = ASTQuery.litArgExprByIdx(it, 1);
           relField.setASTRef(it);
           retList.add(relField);
         };
-        _filter_1.forEach(_function_1);
+        IterableExtensions.<ASTCallStmtNode>filter(Iterables.<ASTCallStmtNode>filter(this._parent.getASTRef().getBody(), ASTCallStmtNode.class), _function).forEach(_function_1);
         _xblockexpression = retList;
       }
       return _xblockexpression;
@@ -184,18 +167,18 @@ public class NUOPCBaseModel {
           final ASTSubroutineSubprogramNode ssn = this._parent.getASTRef();
           StringConcatenation _builder = new StringConcatenation();
           _builder.append("type(ESMF_Field) :: ");
-          _builder.append(this.field, "");
+          _builder.append(this.field);
           CodeConcept.addTypeDeclaration(_builder.toString(), ssn, true);
           StringConcatenation _builder_1 = new StringConcatenation();
           _builder_1.newLine();
           _builder_1.append("! field ");
-          _builder_1.append(this.fieldName, "");
+          _builder_1.append(this.fieldName);
           _builder_1.newLineIfNotEmpty();
-          _builder_1.append(this.field, "");
+          _builder_1.append(this.field);
           _builder_1.append(" = ESMF_FieldCreate(name=");
-          _builder_1.append(this.fieldName, "");
+          _builder_1.append(this.fieldName);
           _builder_1.append(", grid=");
-          _builder_1.append(this.grid, "");
+          _builder_1.append(this.grid);
           _builder_1.append(", &");
           _builder_1.newLineIfNotEmpty();
           _builder_1.append("  ");
@@ -204,27 +187,26 @@ public class NUOPCBaseModel {
           _builder_1.append(")");
           _builder_1.newLineIfNotEmpty();
           CharSequence _ESMFErrorCheck = ESMFCodeTemplates.ESMFErrorCheck(this._parent.paramRC);
-          _builder_1.append(_ESMFErrorCheck, "");
+          _builder_1.append(_ESMFErrorCheck);
           _builder_1.newLineIfNotEmpty();
           _builder_1.append("\t");
           _builder_1.newLine();
           _builder_1.append("call NUOPC_Realize(");
           CharSequence _paramch = this.paramch(this.state);
-          _builder_1.append(_paramch, "");
+          _builder_1.append(_paramch);
           _builder_1.append(", field=");
           CharSequence _paramch_1 = this.paramch(this.field);
-          _builder_1.append(_paramch_1, "");
+          _builder_1.append(_paramch_1);
           _builder_1.append(", rc=");
-          _builder_1.append(this._parent.paramRC, "");
+          _builder_1.append(this._parent.paramRC);
           _builder_1.append(")");
           _builder_1.newLineIfNotEmpty();
           CharSequence _ESMFErrorCheck_1 = ESMFCodeTemplates.ESMFErrorCheck(this._parent.paramRC);
-          _builder_1.append(_ESMFErrorCheck_1, "");
+          _builder_1.append(_ESMFErrorCheck_1);
           _builder_1.newLineIfNotEmpty();
           String code = _builder_1.toString();
           final IASTListNode<IBodyConstruct> stmts = CodeExtraction.parseLiteralStatementSequence(code);
-          IASTListNode<IBodyConstruct> _body = ssn.getBody();
-          _body.addAll(stmts);
+          ssn.getBody().addAll(stmts);
           _xblockexpression = super.<CodeConcept<?, ?>>forward();
         }
         return _xblockexpression;
@@ -246,11 +228,8 @@ public class NUOPCBaseModel {
           String _plus = ("\"" + _name);
           String _plus_1 = (_plus + "\"");
           this.fieldName = _plus_1;
-          String _name_1 = high.getName();
-          this.field = _name_1;
-          Grid _grid_1 = high.getGrid();
-          String _name_2 = _grid_1.getName();
-          this.grid = _name_2;
+          this.field = high.getName();
+          this.grid = high.getGrid().getName();
           _xblockexpression = this.state = state;
         }
         return _xblockexpression;

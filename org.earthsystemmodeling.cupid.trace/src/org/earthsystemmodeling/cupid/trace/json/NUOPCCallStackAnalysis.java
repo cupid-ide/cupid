@@ -1,11 +1,11 @@
-package org.earthsystemmodeling.cupid.trace;
+package org.earthsystemmodeling.cupid.trace.json;
 
+import org.eclipse.tracecompass.tmf.core.callstack.CallStackAnalysis;
 import org.eclipse.tracecompass.tmf.core.exceptions.TmfAnalysisException;
 import org.eclipse.tracecompass.tmf.core.statesystem.ITmfStateProvider;
 import org.eclipse.tracecompass.tmf.core.trace.ITmfTrace;
-import org.eclipse.tracecompass.tmf.ui.views.callstack.AbstractCallStackAnalysis;
 
-public class NUOPCCallStackAnalysis extends AbstractCallStackAnalysis {
+public class NUOPCCallStackAnalysis extends CallStackAnalysis {
 
    
     @Override

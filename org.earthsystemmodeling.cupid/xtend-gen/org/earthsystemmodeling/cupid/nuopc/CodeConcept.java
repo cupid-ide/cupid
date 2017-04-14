@@ -3,7 +3,6 @@ package org.earthsystemmodeling.cupid.nuopc;
 import com.google.common.base.Objects;
 import com.google.common.collect.Iterables;
 import java.io.ByteArrayInputStream;
-import java.io.InputStream;
 import java.lang.reflect.Constructor;
 import java.lang.reflect.Field;
 import java.lang.reflect.ParameterizedType;
@@ -35,7 +34,6 @@ import org.eclipse.jface.text.Document;
 import org.eclipse.photran.core.IFortranAST;
 import org.eclipse.photran.internal.core.lexer.Token;
 import org.eclipse.photran.internal.core.parser.ASTEntityDeclNode;
-import org.eclipse.photran.internal.core.parser.ASTExecutableProgramNode;
 import org.eclipse.photran.internal.core.parser.ASTModuleNode;
 import org.eclipse.photran.internal.core.parser.ASTObjectNameNode;
 import org.eclipse.photran.internal.core.parser.ASTOnlyNode;
@@ -88,16 +86,14 @@ public abstract class CodeConcept<P extends CodeConcept<?, ?>, A extends IASTNod
     
     public ForceReindexJob(final IFile file) {
       super("Reindex Fortran AST");
-      VPGSchedulingRule _instance = VPGSchedulingRule.getInstance();
-      this.setRule(_instance);
+      this.setRule(VPGSchedulingRule.getInstance());
       this.file = file;
     }
     
     @Override
     public IStatus runInWorkspace(final IProgressMonitor monitor) {
       final String filename = PhotranVPG.getFilenameForIFile(this.file);
-      PhotranVPG _instance = PhotranVPG.getInstance();
-      _instance.forceRecomputationOfEdgesAndAnnotations(filename);
+      PhotranVPG.getInstance().forceRecomputationOfEdgesAndAnnotations(filename);
       return Status.OK_STATUS;
     }
   }
@@ -135,8 +131,7 @@ public abstract class CodeConcept<P extends CodeConcept<?, ?>, A extends IASTNod
   public CodeConcept(final P parent, final IResource context) {
     this._context = context;
     this._parent = parent;
-    ArrayList<CodeConcept.MarkerLoc> _newArrayList = CollectionLiterals.<CodeConcept.MarkerLoc>newArrayList();
-    this.paramMarkers = _newArrayList;
+    this.paramMarkers = CollectionLiterals.<CodeConcept.MarkerLoc>newArrayList();
   }
   
   public IResource getContext() {
@@ -159,17 +154,14 @@ public abstract class CodeConcept<P extends CodeConcept<?, ?>, A extends IASTNod
   
   public void setOrAddChild(final CodeConcept<?, ?> child, final boolean failIfMissing) {
     try {
-      List<Field> _childFields = this.getChildFields();
       final Function1<Field, Boolean> _function = (Field it) -> {
-        Class<?> _type = it.getType();
-        return Boolean.valueOf(_type.isInstance(child));
+        return Boolean.valueOf(it.getType().isInstance(child));
       };
-      Field childField = IterableExtensions.<Field>findFirst(_childFields, _function);
+      Field childField = IterableExtensions.<Field>findFirst(this.getChildFields(), _function);
       boolean _notEquals = (!Objects.equal(childField, null));
       if (_notEquals) {
         childField.set(this, child);
       } else {
-        List<Field> _childFields_1 = this.getChildFields();
         final Function1<Field, Boolean> _function_1 = (Field it) -> {
           boolean _and = false;
           Class<?> _type = it.getType();
@@ -181,8 +173,7 @@ public abstract class CodeConcept<P extends CodeConcept<?, ?>, A extends IASTNod
             {
               Type _genericType = it.getGenericType();
               final ParameterizedType ptype = ((ParameterizedType) _genericType);
-              Type[] _actualTypeArguments = ptype.getActualTypeArguments();
-              Type _get = _actualTypeArguments[0];
+              Type _get = ptype.getActualTypeArguments()[0];
               final Class<?> clazz = ((Class<?>) _get);
               boolean _xifexpression = false;
               Class<? extends CodeConcept> _class = child.getClass();
@@ -198,8 +189,7 @@ public abstract class CodeConcept<P extends CodeConcept<?, ?>, A extends IASTNod
           }
           return Boolean.valueOf(_and);
         };
-        Field _findFirst = IterableExtensions.<Field>findFirst(_childFields_1, _function_1);
-        childField = _findFirst;
+        childField = IterableExtensions.<Field>findFirst(this.getChildFields(), _function_1);
         boolean _notEquals_1 = (!Objects.equal(childField, null));
         if (_notEquals_1) {
           Object _get = childField.get(this);
@@ -232,8 +222,7 @@ public abstract class CodeConcept<P extends CodeConcept<?, ?>, A extends IASTNod
       if (_equals) {
         ArrayList<Field> _arrayList = new ArrayList<Field>();
         this.childFields = _arrayList;
-        Class<? extends CodeConcept> _class = this.getClass();
-        Field[] _fields = _class.getFields();
+        Field[] _fields = this.getClass().getFields();
         for (final Field f : _fields) {
           Child _annotation = f.<Child>getAnnotation(Child.class);
           boolean _notEquals = (!Objects.equal(_annotation, null));
@@ -389,9 +378,7 @@ public abstract class CodeConcept<P extends CodeConcept<?, ?>, A extends IASTNod
       if (((!Objects.equal(this._context, null)) && (this._context instanceof IFile))) {
         IFortranAST _xblockexpression = null;
         {
-          PhotranVPG _instance = PhotranVPG.getInstance();
-          IFortranAST _acquireTransientAST = _instance.acquireTransientAST(((IFile) this._context));
-          this._ast = _acquireTransientAST;
+          this._ast = PhotranVPG.getInstance().acquireTransientAST(((IFile) this._context));
           _xblockexpression = this._ast;
         }
         _xifexpression_1 = _xblockexpression;
@@ -409,8 +396,7 @@ public abstract class CodeConcept<P extends CodeConcept<?, ?>, A extends IASTNod
   
   public List<CodeConcept<P, A>> reverseMultiple() {
     try {
-      CodeConcept<P, A> _reverse = this.<CodeConcept<P, A>>reverse();
-      return CollectionLiterals.<CodeConcept<P, A>>newArrayList(_reverse);
+      return CollectionLiterals.<CodeConcept<P, A>>newArrayList(this.<CodeConcept<P, A>>reverse());
     } catch (Throwable _e) {
       throw Exceptions.sneakyThrow(_e);
     }
@@ -422,31 +408,25 @@ public abstract class CodeConcept<P extends CodeConcept<?, ?>, A extends IASTNod
       {
         List<Field> _childFields = this.getChildFields();
         for (final Field field : _childFields) {
-          Class<?> _type = field.getType();
-          boolean _isAssignableFrom = List.class.isAssignableFrom(_type);
+          boolean _isAssignableFrom = List.class.isAssignableFrom(field.getType());
           if (_isAssignableFrom) {
             Object _get = field.get(this);
             List<CodeConcept<?, ?>> theList = ((List<CodeConcept<?, ?>>) _get);
             boolean _notEquals = (!Objects.equal(theList, null));
             if (_notEquals) {
               for (int i = 0; (i < theList.size()); i++) {
-                CodeConcept<?, ?> _get_1 = theList.get(i);
-                CodeConcept<?, ?> _forward = _get_1.<CodeConcept<?, ?>>forward();
-                theList.set(i, _forward);
+                theList.set(i, theList.get(i).<CodeConcept<?, ?>>forward());
               }
             }
           } else {
             Object _get_1 = field.get(this);
             CodeConcept<?, ?> childConcept = ((CodeConcept<?, ?>) _get_1);
             if ((Objects.equal(childConcept, null) && field.<Child>getAnnotation(Child.class).forward())) {
-              Class<?> _type_1 = field.getType();
-              Constructor<?>[] _constructors = _type_1.getConstructors();
               final Function1<Constructor<?>, Boolean> _function = (Constructor<?> it) -> {
-                Class<?>[] _parameterTypes = it.getParameterTypes();
-                int _length = _parameterTypes.length;
+                int _length = it.getParameterTypes().length;
                 return Boolean.valueOf((_length == 1));
               };
-              Constructor<?> con = IterableExtensions.<Constructor<?>>findFirst(((Iterable<Constructor<?>>)Conversions.doWrapArray(_constructors)), _function);
+              Constructor<?> con = IterableExtensions.<Constructor<?>>findFirst(((Iterable<Constructor<?>>)Conversions.doWrapArray(field.getType().getConstructors())), _function);
               boolean _notEquals_1 = (!Objects.equal(con, null));
               if (_notEquals_1) {
                 Object _newInstance = con.newInstance(this);
@@ -455,16 +435,14 @@ public abstract class CodeConcept<P extends CodeConcept<?, ?>, A extends IASTNod
                 String _name = field.getName();
                 String _plus = ("Could not find constructor for field " + _name);
                 String _plus_1 = (_plus + " with class ");
-                Class<?> _type_2 = field.getType();
-                String _name_1 = _type_2.getName();
+                String _name_1 = field.getType().getName();
                 String _plus_2 = (_plus_1 + _name_1);
                 throw new CodeGenerationException(_plus_2);
               }
             }
             boolean _notEquals_2 = (!Objects.equal(childConcept, null));
             if (_notEquals_2) {
-              CodeConcept<?, ?> _forward = childConcept.<CodeConcept<?, ?>>forward();
-              field.set(this, _forward);
+              field.set(this, childConcept.<CodeConcept<?, ?>>forward());
             }
           }
         }
@@ -517,13 +495,9 @@ public abstract class CodeConcept<P extends CodeConcept<?, ?>, A extends IASTNod
       }
       final IFile file = ((IFile) this._context);
       final IFortranAST ast = this.getAST();
-      ASTExecutableProgramNode _root = ast.getRoot();
-      Reindenter.reindent(_root, ast, Reindenter.Strategy.REINDENT_EACH_LINE);
-      InputStream _contents = file.getContents(false);
-      final String fileContentsBefore = IOUtils.toString(_contents);
-      ASTExecutableProgramNode _root_1 = ast.getRoot();
-      String _string = _root_1.toString();
-      final String fileContentsAfter = this.replaceParameters(_string);
+      Reindenter.reindent(ast.getRoot(), ast, Reindenter.Strategy.REINDENT_EACH_LINE);
+      final String fileContentsBefore = IOUtils.toString(file.getContents(false));
+      final String fileContentsAfter = this.replaceParameters(ast.getRoot().toString());
       byte[] _bytes = fileContentsAfter.getBytes();
       ByteArrayInputStream _byteArrayInputStream = new ByteArrayInputStream(_bytes);
       file.setContents(_byteArrayInputStream, true, true, monitor);
@@ -542,23 +516,20 @@ public abstract class CodeConcept<P extends CodeConcept<?, ?>, A extends IASTNod
       file.deleteMarkers("org.earthsystemmodeling.cupid.cupidparam", false, IResource.DEPTH_ZERO);
       final Consumer<RangeDifference> _function = (RangeDifference rd) -> {
         try {
-          int _rightStart = rd.rightStart();
-          final int start = right.getTokenStart(_rightStart);
-          int _rightEnd = rd.rightEnd();
-          int _tokenStart = right.getTokenStart(_rightEnd);
-          int _rightEnd_1 = rd.rightEnd();
-          int _tokenLength = right.getTokenLength(_rightEnd_1);
+          final int start = right.getTokenStart(rd.rightStart());
+          int _tokenStart = right.getTokenStart(rd.rightEnd());
+          int _tokenLength = right.getTokenLength(rd.rightEnd());
           final int end = (_tokenStart + _tokenLength);
           if (((end - start) > 2)) {
             final IMarker marker = file.createMarker("org.earthsystemmodeling.cupid.cupidmarker");
             marker.setAttribute(IMarker.CHAR_START, start);
             marker.setAttribute(IMarker.CHAR_END, end);
             marker.setAttribute(IMarker.MESSAGE, "Cupid generated code");
-            int _rightStart_1 = rd.rightStart();
-            String _plus = ("Lines " + Integer.valueOf(_rightStart_1));
+            int _rightStart = rd.rightStart();
+            String _plus = ("Lines " + Integer.valueOf(_rightStart));
             String _plus_1 = (_plus + " to ");
-            int _rightEnd_2 = rd.rightEnd();
-            String _plus_2 = (_plus_1 + Integer.valueOf(_rightEnd_2));
+            int _rightEnd = rd.rightEnd();
+            String _plus_2 = (_plus_1 + Integer.valueOf(_rightEnd));
             marker.setAttribute(IMarker.LOCATION, _plus_2);
           }
         } catch (Throwable _e) {
@@ -606,8 +577,7 @@ public abstract class CodeConcept<P extends CodeConcept<?, ?>, A extends IASTNod
         {
           matcher.appendReplacement(sb, "$2");
           final int endLoc = sb.length();
-          String _group = matcher.group(2);
-          int _length = _group.length();
+          int _length = matcher.group(2).length();
           final int startLoc = (endLoc - _length);
           CodeConcept.MarkerLoc _markerLoc = new CodeConcept.MarkerLoc(startLoc, endLoc);
           this.paramMarkers.add(_markerLoc);
@@ -623,20 +593,15 @@ public abstract class CodeConcept<P extends CodeConcept<?, ?>, A extends IASTNod
     try {
       boolean _equals = Objects.equal(this.instanceConstructor, null);
       if (_equals) {
-        Class<? extends CodeConcept> _class = this.getClass();
-        Constructor<?>[] _constructors = _class.getConstructors();
         final Function1<Constructor<?>, Boolean> _function = (Constructor<?> it) -> {
-          Class<?>[] _parameterTypes = it.getParameterTypes();
-          int _length = _parameterTypes.length;
+          int _length = it.getParameterTypes().length;
           return Boolean.valueOf((_length == 1));
         };
-        Constructor<?> _findFirst = IterableExtensions.<Constructor<?>>findFirst(((Iterable<Constructor<?>>)Conversions.doWrapArray(_constructors)), _function);
-        this.instanceConstructor = _findFirst;
+        this.instanceConstructor = IterableExtensions.<Constructor<?>>findFirst(((Iterable<Constructor<?>>)Conversions.doWrapArray(this.getClass().getConstructors())), _function);
       }
       boolean _equals_1 = Objects.equal(this.instanceConstructor, null);
       if (_equals_1) {
-        Class<? extends CodeConcept> _class_1 = this.getClass();
-        String _name = _class_1.getName();
+        String _name = this.getClass().getName();
         String _plus = ("Cannot find constructor for class: " + _name);
         throw new ReverseEngineerException(_plus);
       }
@@ -660,7 +625,7 @@ public abstract class CodeConcept<P extends CodeConcept<?, ?>, A extends IASTNod
       int _minus = (_length - 1);
       CharSequence _subSequence = defaultVal.subSequence(1, _minus);
       String _plus = (_subSequence + "$\'");
-      _builder.append(_plus, "");
+      _builder.append(_plus);
       return _builder.toString();
     } else {
       CharSequence _xifexpression_1 = null;
@@ -670,13 +635,13 @@ public abstract class CodeConcept<P extends CodeConcept<?, ?>, A extends IASTNod
         int _length_1 = defaultVal.length();
         int _minus_1 = (_length_1 - 1);
         CharSequence _subSequence_1 = defaultVal.subSequence(1, _minus_1);
-        _builder_1.append(_subSequence_1, "");
+        _builder_1.append(_subSequence_1);
         _builder_1.append("$\"");
         return _builder_1.toString();
       } else {
         StringConcatenation _builder_2 = new StringConcatenation();
         _builder_2.append("CUPIDPARAM$CHAR$");
-        _builder_2.append(defaultVal, "");
+        _builder_2.append(defaultVal);
         _builder_2.append("$");
         _xifexpression_1 = _builder_2;
       }
@@ -688,7 +653,7 @@ public abstract class CodeConcept<P extends CodeConcept<?, ?>, A extends IASTNod
   public CharSequence paramint(final int defaultVal) {
     StringConcatenation _builder = new StringConcatenation();
     _builder.append("CUPIDPARAM$INT$");
-    _builder.append(defaultVal, "");
+    _builder.append(defaultVal);
     _builder.append("$");
     return _builder;
   }
@@ -696,7 +661,7 @@ public abstract class CodeConcept<P extends CodeConcept<?, ?>, A extends IASTNod
   public CharSequence paramint(final String defaultVal) {
     StringConcatenation _builder = new StringConcatenation();
     _builder.append("CUPIDPARAM$INT$");
-    _builder.append(defaultVal, "");
+    _builder.append(defaultVal);
     _builder.append("$");
     return _builder;
   }
@@ -704,11 +669,9 @@ public abstract class CodeConcept<P extends CodeConcept<?, ?>, A extends IASTNod
   public static int[] toIntArray(final List<Integer> intList) {
     int[] _xblockexpression = null;
     {
-      int _size = intList.size();
-      final int[] toRet = new int[_size];
+      final int[] toRet = new int[intList.size()];
       for (int i = 0; (i < intList.size()); i++) {
-        Integer _get = intList.get(i);
-        toRet[i] = (_get).intValue();
+        toRet[i] = (intList.get(i)).intValue();
       }
       _xblockexpression = toRet;
     }
@@ -718,11 +681,9 @@ public abstract class CodeConcept<P extends CodeConcept<?, ?>, A extends IASTNod
   public static double[] toDoubleArray(final List<Double> dblList) {
     double[] _xblockexpression = null;
     {
-      int _size = dblList.size();
-      double[] toRet = new double[_size];
+      double[] toRet = new double[dblList.size()];
       for (int i = 0; (i < dblList.size()); i++) {
-        Double _get = dblList.get(i);
-        toRet[i] = (_get).doubleValue();
+        toRet[i] = (dblList.get(i)).doubleValue();
       }
       _xblockexpression = toRet;
     }
@@ -733,34 +694,28 @@ public abstract class CodeConcept<P extends CodeConcept<?, ?>, A extends IASTNod
     try {
       IBodyConstruct _parseLiteralStatement = CodeExtraction.<IBodyConstruct>parseLiteralStatement(code);
       final ASTTypeDeclarationStmtNode tds = ((ASTTypeDeclarationStmtNode) _parseLiteralStatement);
-      IASTListNode<ASTEntityDeclNode> _entityDeclList = tds.getEntityDeclList();
-      ASTEntityDeclNode _get = _entityDeclList.get(0);
-      ASTObjectNameNode _objectName = _get.getObjectName();
-      Token _objectName_1 = _objectName.getObjectName();
-      final String varName = _objectName_1.getText();
-      IASTListNode<IBodyConstruct> _body = ssn.getBody();
-      Iterable<ASTTypeDeclarationStmtNode> _filter = Iterables.<ASTTypeDeclarationStmtNode>filter(_body, ASTTypeDeclarationStmtNode.class);
+      final String varName = tds.getEntityDeclList().get(0).getObjectName().getObjectName().getText();
       final Function1<ASTTypeDeclarationStmtNode, Boolean> _function = (ASTTypeDeclarationStmtNode t) -> {
-        IASTListNode<ASTEntityDeclNode> _entityDeclList_1 = t.getEntityDeclList();
+        IASTListNode<ASTEntityDeclNode> _entityDeclList = t.getEntityDeclList();
         boolean _exists = false;
-        if (_entityDeclList_1!=null) {
+        if (_entityDeclList!=null) {
           final Function1<ASTEntityDeclNode, Boolean> _function_1 = (ASTEntityDeclNode e) -> {
-            ASTObjectNameNode _objectName_2 = e.getObjectName();
-            Token _objectName_3 = null;
-            if (_objectName_2!=null) {
-              _objectName_3=_objectName_2.getObjectName();
+            ASTObjectNameNode _objectName = e.getObjectName();
+            Token _objectName_1 = null;
+            if (_objectName!=null) {
+              _objectName_1=_objectName.getObjectName();
             }
             boolean _eic = false;
-            if (_objectName_3!=null) {
-              _eic=ASTQuery.eic(_objectName_3, varName);
+            if (_objectName_1!=null) {
+              _eic=ASTQuery.eic(_objectName_1, varName);
             }
             return Boolean.valueOf(_eic);
           };
-          _exists=IterableExtensions.<ASTEntityDeclNode>exists(_entityDeclList_1, _function_1);
+          _exists=IterableExtensions.<ASTEntityDeclNode>exists(_entityDeclList, _function_1);
         }
         return Boolean.valueOf(_exists);
       };
-      final ASTTypeDeclarationStmtNode existing = IterableExtensions.<ASTTypeDeclarationStmtNode>findFirst(_filter, _function);
+      final ASTTypeDeclarationStmtNode existing = IterableExtensions.<ASTTypeDeclarationStmtNode>findFirst(Iterables.<ASTTypeDeclarationStmtNode>filter(ssn.getBody(), ASTTypeDeclarationStmtNode.class), _function);
       boolean _notEquals = (!Objects.equal(existing, null));
       if (_notEquals) {
         if (ignoreIfDeclared) {
@@ -769,15 +724,13 @@ public abstract class CodeConcept<P extends CodeConcept<?, ?>, A extends IASTNod
           throw new CodeGenerationException(("Tried to declare same entity multiple times: " + code));
         }
       }
-      IASTListNode<IBodyConstruct> _body_1 = ssn.getBody();
-      final IDeclarationConstruct last = _body_1.<IDeclarationConstruct>findLast(IDeclarationConstruct.class);
+      final IDeclarationConstruct last = ssn.getBody().<IDeclarationConstruct>findLast(IDeclarationConstruct.class);
       boolean _notEquals_1 = (!Objects.equal(last, null));
       if (_notEquals_1) {
-        IASTListNode<IBodyConstruct> _body_2 = ssn.getBody();
-        ((IASTListNode<IBodyConstruct>) _body_2).insertAfter(last, tds);
+        IASTListNode<IBodyConstruct> _body = ssn.getBody();
+        ((IASTListNode<IBodyConstruct>) _body).insertAfter(last, tds);
       } else {
-        IASTListNode<IBodyConstruct> _body_3 = ssn.getBody();
-        _body_3.add(0, tds);
+        ssn.getBody().add(0, tds);
       }
     } catch (Throwable _e) {
       throw Exceptions.sneakyThrow(_e);
@@ -818,13 +771,12 @@ public abstract class CodeConcept<P extends CodeConcept<?, ?>, A extends IASTNod
     }
     final boolean exists = _or;
     if ((!exists)) {
-      String _string = usn.toString();
-      String _trim = _string.trim();
+      String _trim = usn.toString().trim();
       String _plus = (_trim + ", &\n");
       StringConcatenation _builder = new StringConcatenation();
-      _builder.append(localName, "");
+      _builder.append(localName);
       _builder.append(" => ");
-      _builder.append(entityName, "");
+      _builder.append(entityName);
       final String code = (_plus + _builder);
       IBodyConstruct _parseLiteralStatement = CodeExtraction.<IBodyConstruct>parseLiteralStatement(code);
       final ASTUseStmtNode newNode = ((ASTUseStmtNode) _parseLiteralStatement);
@@ -841,21 +793,17 @@ public abstract class CodeConcept<P extends CodeConcept<?, ?>, A extends IASTNod
   
   public static ASTUseStmtNode ensureImport(final ASTModuleNode amn, final String moduleName, final String entityName, final String localName, final boolean useOnly) {
     try {
-      IASTListNode<? extends IASTNode> _body = amn.getBody();
-      Iterable<? extends IASTNode> _children = _body.getChildren();
-      Iterable<ASTUseStmtNode> _filter = Iterables.<ASTUseStmtNode>filter(_children, ASTUseStmtNode.class);
       final Function1<ASTUseStmtNode, Boolean> _function = (ASTUseStmtNode usn) -> {
-        Token _name = usn.getName();
-        return Boolean.valueOf(ASTQuery.eic(_name, moduleName));
+        return Boolean.valueOf(ASTQuery.eic(usn.getName(), moduleName));
       };
-      ASTUseStmtNode usn = IterableExtensions.<ASTUseStmtNode>findFirst(_filter, _function);
+      ASTUseStmtNode usn = IterableExtensions.<ASTUseStmtNode>findFirst(Iterables.<ASTUseStmtNode>filter(amn.getBody().getChildren(), ASTUseStmtNode.class), _function);
       boolean _notEquals = (!Objects.equal(usn, null));
       if (_notEquals) {
         return CodeConcept.ensureImport(usn, entityName, localName);
       } else {
         StringConcatenation _builder = new StringConcatenation();
         _builder.append("use ");
-        _builder.append(moduleName, "");
+        _builder.append(moduleName);
         {
           if (((!Objects.equal(localName, null)) && (!Objects.equal(entityName, null)))) {
             _builder.append(", ");
@@ -864,27 +812,25 @@ public abstract class CodeConcept<P extends CodeConcept<?, ?>, A extends IASTNod
                 _builder.append("only: ");
               }
             }
-            _builder.append(localName, "");
+            _builder.append(localName);
             _builder.append(" => ");
-            _builder.append(entityName, "");
+            _builder.append(entityName);
           }
         }
         final String code = _builder.toString();
         IBodyConstruct _parseLiteralStatement = CodeExtraction.<IBodyConstruct>parseLiteralStatement(code);
         usn = ((ASTUseStmtNode) _parseLiteralStatement);
-        IASTListNode<? extends IASTNode> _body_1 = amn.getBody();
-        final ASTUseStmtNode last = _body_1.<ASTUseStmtNode>findLast(ASTUseStmtNode.class);
+        final ASTUseStmtNode last = amn.getBody().<ASTUseStmtNode>findLast(ASTUseStmtNode.class);
         boolean _notEquals_1 = (!Objects.equal(last, null));
         if (_notEquals_1) {
-          IASTListNode<? extends IASTNode> _body_2 = amn.getBody();
-          ((IASTListNode<IBodyConstruct>) _body_2).insertAfter(last, usn);
+          IASTListNode<? extends IASTNode> _body = amn.getBody();
+          ((IASTListNode<IBodyConstruct>) _body).insertAfter(last, usn);
         } else {
-          IASTListNode<? extends IASTNode> _body_3 = amn.getBody();
-          final ISpecificationPartConstruct lastSpec = _body_3.<ISpecificationPartConstruct>findLast(ISpecificationPartConstruct.class);
+          final ISpecificationPartConstruct lastSpec = amn.getBody().<ISpecificationPartConstruct>findLast(ISpecificationPartConstruct.class);
           boolean _notEquals_2 = (!Objects.equal(lastSpec, null));
           if (_notEquals_2) {
-            IASTListNode<? extends IASTNode> _body_4 = amn.getBody();
-            ((IASTListNode<IBodyConstruct>) _body_4).insertAfter(lastSpec, usn);
+            IASTListNode<? extends IASTNode> _body_1 = amn.getBody();
+            ((IASTListNode<IBodyConstruct>) _body_1).insertAfter(lastSpec, usn);
           } else {
             throw new CodeGenerationException("Unable to insert use statement");
           }

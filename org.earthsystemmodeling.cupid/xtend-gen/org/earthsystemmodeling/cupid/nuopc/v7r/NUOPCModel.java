@@ -4,7 +4,6 @@ import com.google.common.base.Objects;
 import com.google.common.collect.Iterables;
 import java.io.InputStream;
 import java.nio.charset.StandardCharsets;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.function.Consumer;
 import org.apache.commons.io.IOUtils;
@@ -210,17 +209,17 @@ public class NUOPCModel extends NUOPCComponent {
         StringConcatenation _builder = new StringConcatenation();
         _builder.newLine();
         _builder.append("subroutine ");
-        _builder.append(this.subroutineName, "");
+        _builder.append(this.subroutineName);
         _builder.append("(");
-        _builder.append(this.paramGridComp, "");
+        _builder.append(this.paramGridComp);
         _builder.append(", ");
-        _builder.append(this.paramImport, "");
+        _builder.append(this.paramImport);
         _builder.append(", ");
-        _builder.append(this.paramExport, "");
+        _builder.append(this.paramExport);
         _builder.append(", ");
-        _builder.append(this.paramClock, "");
+        _builder.append(this.paramClock);
         _builder.append(", ");
-        _builder.append(this.paramRC, "");
+        _builder.append(this.paramRC);
         _builder.append(")");
         _builder.newLineIfNotEmpty();
         _builder.append("    ");
@@ -297,13 +296,11 @@ public class NUOPCModel extends NUOPCComponent {
       
       public IPDv04p1(final NUOPCModel.IPD parent) {
         super(parent);
-        String _phaseLabel = this.getPhaseLabel();
-        this.phaseLabel = _phaseLabel;
+        this.phaseLabel = this.getPhaseLabel();
         this.subroutineName = "AdvertiseFields";
         this.methodType = "ESMF_METHOD_INITIALIZE";
         parent.setOrAddChild(this);
-        ArrayList<NUOPCBaseModel.AdvertiseField> _newArrayList = CollectionLiterals.<NUOPCBaseModel.AdvertiseField>newArrayList();
-        this.advertiseFields = _newArrayList;
+        this.advertiseFields = CollectionLiterals.<NUOPCBaseModel.AdvertiseField>newArrayList();
       }
       
       public void forward(final Model high) {
@@ -314,13 +311,13 @@ public class NUOPCModel extends NUOPCComponent {
             StringConcatenation _builder = new StringConcatenation();
             _builder.append("\"");
             String _standardName = f.getStandardName();
-            _builder.append(_standardName, "");
+            _builder.append(_standardName);
             _builder.append("\"");
             af.standardName = _builder.toString();
             StringConcatenation _builder_1 = new StringConcatenation();
             _builder_1.append("\"");
             String _name = f.getName();
-            _builder_1.append(_name, "");
+            _builder_1.append(_name);
             _builder_1.append("\"");
             af.name = _builder_1.toString();
             af.state = this.paramImport;
@@ -333,13 +330,13 @@ public class NUOPCModel extends NUOPCComponent {
             StringConcatenation _builder = new StringConcatenation();
             _builder.append("\"");
             String _standardName = f_1.getStandardName();
-            _builder.append(_standardName, "");
+            _builder.append(_standardName);
             _builder.append("\"");
             af.standardName = _builder.toString();
             StringConcatenation _builder_1 = new StringConcatenation();
             _builder_1.append("\"");
             String _name = f_1.getName();
-            _builder_1.append(_name, "");
+            _builder_1.append(_name);
             _builder_1.append("\"");
             af.name = _builder_1.toString();
             af.state = this.paramExport;
@@ -383,9 +380,7 @@ public class NUOPCModel extends NUOPCComponent {
       public EntryPointCodeConcept<NUOPCModel.IPD> reverseChildren() {
         NUOPCModel.IPD.IPDv04p1 _xblockexpression = null;
         {
-          NUOPCBaseModel.AdvertiseField _advertiseField = new NUOPCBaseModel.AdvertiseField(this);
-          List _reverseMultiple = _advertiseField.reverseMultiple();
-          this.advertiseFields = _reverseMultiple;
+          this.advertiseFields = new NUOPCBaseModel.AdvertiseField(this).reverseMultiple();
           _xblockexpression = this;
         }
         return _xblockexpression;
@@ -421,32 +416,26 @@ public class NUOPCModel extends NUOPCComponent {
       
       public IPDv04p3(final NUOPCModel.IPD parent) {
         super(parent);
-        String _phaseLabel = this.getPhaseLabel();
-        this.phaseLabel = _phaseLabel;
+        this.phaseLabel = this.getPhaseLabel();
         this.subroutineName = "RealizeFieldsProvidingGrid";
         this.methodType = "ESMF_METHOD_INITIALIZE";
         parent.setOrAddChild(this);
-        ArrayList<NUOPCBaseModel.RealizeField> _newArrayList = CollectionLiterals.<NUOPCBaseModel.RealizeField>newArrayList();
-        this.realizeFields = _newArrayList;
-        ArrayList<String> _newArrayList_1 = CollectionLiterals.<String>newArrayList();
-        this.grids = _newArrayList_1;
+        this.realizeFields = CollectionLiterals.<NUOPCBaseModel.RealizeField>newArrayList();
+        this.grids = CollectionLiterals.<String>newArrayList();
       }
       
       public void forward(final Model high) {
         EList<Field> _importFields = high.getImportFields();
         for (final Field f : _importFields) {
-          NUOPCBaseModel.RealizeField _realizeField = new NUOPCBaseModel.RealizeField(this);
-          _realizeField.forward(f, this.paramImport);
+          new NUOPCBaseModel.RealizeField(this).forward(f, this.paramImport);
         }
         EList<Field> _exportFields = high.getExportFields();
         for (final Field f_1 : _exportFields) {
-          NUOPCBaseModel.RealizeField _realizeField_1 = new NUOPCBaseModel.RealizeField(this);
-          _realizeField_1.forward(f_1, this.paramExport);
+          new NUOPCBaseModel.RealizeField(this).forward(f_1, this.paramExport);
         }
         EList<Grid> _grids = high.getGrids();
         for (final Grid g : _grids) {
-          String _name = g.getName();
-          this.grids.add(_name);
+          this.grids.add(g.getName());
         }
       }
       
@@ -455,17 +444,17 @@ public class NUOPCModel extends NUOPCComponent {
         StringConcatenation _builder = new StringConcatenation();
         _builder.newLine();
         _builder.append("subroutine ");
-        _builder.append(this.subroutineName, "");
+        _builder.append(this.subroutineName);
         _builder.append("(");
-        _builder.append(this.paramGridComp, "");
+        _builder.append(this.paramGridComp);
         _builder.append(", ");
-        _builder.append(this.paramImport, "");
+        _builder.append(this.paramImport);
         _builder.append(", ");
-        _builder.append(this.paramExport, "");
+        _builder.append(this.paramExport);
         _builder.append(", ");
-        _builder.append(this.paramClock, "");
+        _builder.append(this.paramClock);
         _builder.append(", ");
-        _builder.append(this.paramRC, "");
+        _builder.append(this.paramRC);
         _builder.append(")");
         _builder.newLineIfNotEmpty();
         _builder.append("    ");
@@ -566,9 +555,7 @@ public class NUOPCModel extends NUOPCComponent {
       public EntryPointCodeConcept<NUOPCModel.IPD> reverseChildren() {
         NUOPCModel.IPD.IPDv04p3 _xblockexpression = null;
         {
-          NUOPCBaseModel.RealizeField _realizeField = new NUOPCBaseModel.RealizeField(this);
-          List _reverseMultiple = _realizeField.reverseMultiple();
-          this.realizeFields = _reverseMultiple;
+          this.realizeFields = new NUOPCBaseModel.RealizeField(this).reverseMultiple();
           _xblockexpression = this;
         }
         return _xblockexpression;
@@ -599,8 +586,7 @@ public class NUOPCModel extends NUOPCComponent {
     public static class IPDv04p4 extends EntryPointCodeConcept<NUOPCModel.IPD> {
       public IPDv04p4(final NUOPCModel.IPD parent) {
         super(parent);
-        String _phaseLabel = this.getPhaseLabel();
-        this.phaseLabel = _phaseLabel;
+        this.phaseLabel = this.getPhaseLabel();
         this.subroutineName = "ModifyDistGrid";
         this.methodType = "ESMF_METHOD_INITIALIZE";
         parent.setOrAddChild(this);
@@ -644,13 +630,11 @@ public class NUOPCModel extends NUOPCComponent {
       
       public IPDv04p5(final NUOPCModel.IPD parent) {
         super(parent);
-        String _phaseLabel = this.getPhaseLabel();
-        this.phaseLabel = _phaseLabel;
+        this.phaseLabel = this.getPhaseLabel();
         this.subroutineName = "RealizeFieldsAcceptingGrid";
         this.methodType = "ESMF_METHOD_INITIALIZE";
         parent.setOrAddChild(this);
-        ArrayList<NUOPCBaseModel.RealizeField> _newArrayList = CollectionLiterals.<NUOPCBaseModel.RealizeField>newArrayList();
-        this.realizeFields = _newArrayList;
+        this.realizeFields = CollectionLiterals.<NUOPCBaseModel.RealizeField>newArrayList();
       }
       
       public String getPhaseLabel() {
@@ -671,9 +655,7 @@ public class NUOPCModel extends NUOPCComponent {
       public EntryPointCodeConcept<NUOPCModel.IPD> reverseChildren() {
         NUOPCModel.IPD.IPDv04p5 _xblockexpression = null;
         {
-          NUOPCBaseModel.RealizeField _realizeField = new NUOPCBaseModel.RealizeField(this);
-          List _reverseMultiple = _realizeField.reverseMultiple();
-          this.realizeFields = _reverseMultiple;
+          this.realizeFields = new NUOPCBaseModel.RealizeField(this).reverseMultiple();
           _xblockexpression = this;
         }
         return _xblockexpression;
@@ -743,20 +725,15 @@ public class NUOPCModel extends NUOPCComponent {
       try {
         NUOPCModel.IPDv00 _xblockexpression = null;
         {
-          NUOPCModel.IPD.IPDv04p0 _iPDv04p0 = new NUOPCModel.IPD.IPDv04p0(this);
-          CodeConcept<?, ?> _reverse = _iPDv04p0.reverse();
+          CodeConcept<?, ?> _reverse = new NUOPCModel.IPD.IPDv04p0(this).reverse();
           this.ipdv00p0 = ((NUOPCModel.IPD.IPDv04p0) _reverse);
-          NUOPCModel.IPD.IPDv04p1 _iPDv04p1 = new NUOPCModel.IPD.IPDv04p1(this);
-          CodeConcept<?, ?> _reverse_1 = _iPDv04p1.reverse();
+          CodeConcept<?, ?> _reverse_1 = new NUOPCModel.IPD.IPDv04p1(this).reverse();
           this.ipdv00p1 = ((NUOPCModel.IPD.IPDv04p1) _reverse_1);
-          NUOPCModel.IPD.IPDv04p3 _iPDv04p3 = new NUOPCModel.IPD.IPDv04p3(this);
-          CodeConcept<?, ?> _reverse_2 = _iPDv04p3.reverse();
+          CodeConcept<?, ?> _reverse_2 = new NUOPCModel.IPD.IPDv04p3(this).reverse();
           this.ipdv00p2 = ((NUOPCModel.IPD.IPDv04p3) _reverse_2);
-          NUOPCModel.IPD.IPDv04p6 _iPDv04p6 = new NUOPCModel.IPD.IPDv04p6(this);
-          CodeConcept<?, ?> _reverse_3 = _iPDv04p6.<CodeConcept<?, ?>>reverse();
+          CodeConcept<?, ?> _reverse_3 = new NUOPCModel.IPD.IPDv04p6(this).<CodeConcept<?, ?>>reverse();
           this.ipdv00p3 = ((NUOPCModel.IPD.IPDv04p6) _reverse_3);
-          NUOPCModel.IPD.IPDv04p7 _iPDv04p7 = new NUOPCModel.IPD.IPDv04p7(this);
-          CodeConcept<?, ?> _reverse_4 = _iPDv04p7.<CodeConcept<?, ?>>reverse();
+          CodeConcept<?, ?> _reverse_4 = new NUOPCModel.IPD.IPDv04p7(this).<CodeConcept<?, ?>>reverse();
           this.ipdv00p4 = ((NUOPCModel.IPD.IPDv04p7) _reverse_4);
           _xblockexpression = this;
         }
@@ -802,23 +779,17 @@ public class NUOPCModel extends NUOPCComponent {
       try {
         NUOPCModel.IPDv01 _xblockexpression = null;
         {
-          NUOPCModel.IPD.IPDv04p0 _iPDv04p0 = new NUOPCModel.IPD.IPDv04p0(this);
-          CodeConcept<?, ?> _reverse = _iPDv04p0.reverse();
+          CodeConcept<?, ?> _reverse = new NUOPCModel.IPD.IPDv04p0(this).reverse();
           this.ipdv01p0 = ((NUOPCModel.IPD.IPDv04p0) _reverse);
-          NUOPCModel.IPD.IPDv04p1 _iPDv04p1 = new NUOPCModel.IPD.IPDv04p1(this);
-          CodeConcept<?, ?> _reverse_1 = _iPDv04p1.reverse();
+          CodeConcept<?, ?> _reverse_1 = new NUOPCModel.IPD.IPDv04p1(this).reverse();
           this.ipdv01p1 = ((NUOPCModel.IPD.IPDv04p1) _reverse_1);
-          NUOPCModel.IPD.IPDv04p2 _iPDv04p2 = new NUOPCModel.IPD.IPDv04p2(this);
-          CodeConcept<?, ?> _reverse_2 = _iPDv04p2.<CodeConcept<?, ?>>reverse();
+          CodeConcept<?, ?> _reverse_2 = new NUOPCModel.IPD.IPDv04p2(this).<CodeConcept<?, ?>>reverse();
           this.ipdv01p2 = ((NUOPCModel.IPD.IPDv04p2) _reverse_2);
-          NUOPCModel.IPD.IPDv04p3 _iPDv04p3 = new NUOPCModel.IPD.IPDv04p3(this);
-          CodeConcept<?, ?> _reverse_3 = _iPDv04p3.reverse();
+          CodeConcept<?, ?> _reverse_3 = new NUOPCModel.IPD.IPDv04p3(this).reverse();
           this.ipdv01p3 = ((NUOPCModel.IPD.IPDv04p3) _reverse_3);
-          NUOPCModel.IPD.IPDv04p6 _iPDv04p6 = new NUOPCModel.IPD.IPDv04p6(this);
-          CodeConcept<?, ?> _reverse_4 = _iPDv04p6.<CodeConcept<?, ?>>reverse();
+          CodeConcept<?, ?> _reverse_4 = new NUOPCModel.IPD.IPDv04p6(this).<CodeConcept<?, ?>>reverse();
           this.ipdv01p4 = ((NUOPCModel.IPD.IPDv04p6) _reverse_4);
-          NUOPCModel.IPD.IPDv04p7 _iPDv04p7 = new NUOPCModel.IPD.IPDv04p7(this);
-          CodeConcept<?, ?> _reverse_5 = _iPDv04p7.<CodeConcept<?, ?>>reverse();
+          CodeConcept<?, ?> _reverse_5 = new NUOPCModel.IPD.IPDv04p7(this).<CodeConcept<?, ?>>reverse();
           this.ipdv01p5 = ((NUOPCModel.IPD.IPDv04p7) _reverse_5);
           _xblockexpression = this;
         }
@@ -864,23 +835,17 @@ public class NUOPCModel extends NUOPCComponent {
       try {
         NUOPCModel.IPDv02 _xblockexpression = null;
         {
-          NUOPCModel.IPD.IPDv04p0 _iPDv04p0 = new NUOPCModel.IPD.IPDv04p0(this);
-          CodeConcept<?, ?> _reverse = _iPDv04p0.reverse();
+          CodeConcept<?, ?> _reverse = new NUOPCModel.IPD.IPDv04p0(this).reverse();
           this.ipdv02p0 = ((NUOPCModel.IPD.IPDv04p0) _reverse);
-          NUOPCModel.IPD.IPDv04p1 _iPDv04p1 = new NUOPCModel.IPD.IPDv04p1(this);
-          CodeConcept<?, ?> _reverse_1 = _iPDv04p1.reverse();
+          CodeConcept<?, ?> _reverse_1 = new NUOPCModel.IPD.IPDv04p1(this).reverse();
           this.ipdv02p1 = ((NUOPCModel.IPD.IPDv04p1) _reverse_1);
-          NUOPCModel.IPD.IPDv04p2 _iPDv04p2 = new NUOPCModel.IPD.IPDv04p2(this);
-          CodeConcept<?, ?> _reverse_2 = _iPDv04p2.<CodeConcept<?, ?>>reverse();
+          CodeConcept<?, ?> _reverse_2 = new NUOPCModel.IPD.IPDv04p2(this).<CodeConcept<?, ?>>reverse();
           this.ipdv02p2 = ((NUOPCModel.IPD.IPDv04p2) _reverse_2);
-          NUOPCModel.IPD.IPDv04p3 _iPDv04p3 = new NUOPCModel.IPD.IPDv04p3(this);
-          CodeConcept<?, ?> _reverse_3 = _iPDv04p3.reverse();
+          CodeConcept<?, ?> _reverse_3 = new NUOPCModel.IPD.IPDv04p3(this).reverse();
           this.ipdv02p3 = ((NUOPCModel.IPD.IPDv04p3) _reverse_3);
-          NUOPCModel.IPD.IPDv04p6 _iPDv04p6 = new NUOPCModel.IPD.IPDv04p6(this);
-          CodeConcept<?, ?> _reverse_4 = _iPDv04p6.<CodeConcept<?, ?>>reverse();
+          CodeConcept<?, ?> _reverse_4 = new NUOPCModel.IPD.IPDv04p6(this).<CodeConcept<?, ?>>reverse();
           this.ipdv02p4 = ((NUOPCModel.IPD.IPDv04p6) _reverse_4);
-          NUOPCModel.IPD.IPDv04p7 _iPDv04p7 = new NUOPCModel.IPD.IPDv04p7(this);
-          CodeConcept<?, ?> _reverse_5 = _iPDv04p7.<CodeConcept<?, ?>>reverse();
+          CodeConcept<?, ?> _reverse_5 = new NUOPCModel.IPD.IPDv04p7(this).<CodeConcept<?, ?>>reverse();
           this.ipdv02p5 = ((NUOPCModel.IPD.IPDv04p7) _reverse_5);
           _xblockexpression = this;
         }
@@ -934,29 +899,21 @@ public class NUOPCModel extends NUOPCComponent {
       try {
         NUOPCModel.IPDv03 _xblockexpression = null;
         {
-          NUOPCModel.IPD.IPDv04p0 _iPDv04p0 = new NUOPCModel.IPD.IPDv04p0(this);
-          CodeConcept<?, ?> _reverse = _iPDv04p0.reverse();
+          CodeConcept<?, ?> _reverse = new NUOPCModel.IPD.IPDv04p0(this).reverse();
           this.ipdv03p0 = ((NUOPCModel.IPD.IPDv04p0) _reverse);
-          NUOPCModel.IPD.IPDv04p1 _iPDv04p1 = new NUOPCModel.IPD.IPDv04p1(this);
-          CodeConcept<?, ?> _reverse_1 = _iPDv04p1.reverse();
+          CodeConcept<?, ?> _reverse_1 = new NUOPCModel.IPD.IPDv04p1(this).reverse();
           this.ipdv03p1 = ((NUOPCModel.IPD.IPDv04p1) _reverse_1);
-          NUOPCModel.IPD.IPDv04p2 _iPDv04p2 = new NUOPCModel.IPD.IPDv04p2(this);
-          CodeConcept<?, ?> _reverse_2 = _iPDv04p2.<CodeConcept<?, ?>>reverse();
+          CodeConcept<?, ?> _reverse_2 = new NUOPCModel.IPD.IPDv04p2(this).<CodeConcept<?, ?>>reverse();
           this.ipdv03p2 = ((NUOPCModel.IPD.IPDv04p2) _reverse_2);
-          NUOPCModel.IPD.IPDv04p3 _iPDv04p3 = new NUOPCModel.IPD.IPDv04p3(this);
-          CodeConcept<?, ?> _reverse_3 = _iPDv04p3.reverse();
+          CodeConcept<?, ?> _reverse_3 = new NUOPCModel.IPD.IPDv04p3(this).reverse();
           this.ipdv03p3 = ((NUOPCModel.IPD.IPDv04p3) _reverse_3);
-          NUOPCModel.IPD.IPDv04p4 _iPDv04p4 = new NUOPCModel.IPD.IPDv04p4(this);
-          CodeConcept<?, ?> _reverse_4 = _iPDv04p4.reverse();
+          CodeConcept<?, ?> _reverse_4 = new NUOPCModel.IPD.IPDv04p4(this).reverse();
           this.ipdv03p4 = ((NUOPCModel.IPD.IPDv04p4) _reverse_4);
-          NUOPCModel.IPD.IPDv04p5 _iPDv04p5 = new NUOPCModel.IPD.IPDv04p5(this);
-          CodeConcept<?, ?> _reverse_5 = _iPDv04p5.reverse();
+          CodeConcept<?, ?> _reverse_5 = new NUOPCModel.IPD.IPDv04p5(this).reverse();
           this.ipdv03p5 = ((NUOPCModel.IPD.IPDv04p5) _reverse_5);
-          NUOPCModel.IPD.IPDv04p6 _iPDv04p6 = new NUOPCModel.IPD.IPDv04p6(this);
-          CodeConcept<?, ?> _reverse_6 = _iPDv04p6.<CodeConcept<?, ?>>reverse();
+          CodeConcept<?, ?> _reverse_6 = new NUOPCModel.IPD.IPDv04p6(this).<CodeConcept<?, ?>>reverse();
           this.ipdv03p6 = ((NUOPCModel.IPD.IPDv04p6) _reverse_6);
-          NUOPCModel.IPD.IPDv04p7 _iPDv04p7 = new NUOPCModel.IPD.IPDv04p7(this);
-          CodeConcept<?, ?> _reverse_7 = _iPDv04p7.<CodeConcept<?, ?>>reverse();
+          CodeConcept<?, ?> _reverse_7 = new NUOPCModel.IPD.IPDv04p7(this).<CodeConcept<?, ?>>reverse();
           this.ipdv03p7 = ((NUOPCModel.IPD.IPDv04p7) _reverse_7);
           _xblockexpression = this;
         }
@@ -1007,29 +964,21 @@ public class NUOPCModel extends NUOPCComponent {
       try {
         NUOPCModel.IPDv04 _xblockexpression = null;
         {
-          NUOPCModel.IPD.IPDv04p0 _iPDv04p0 = new NUOPCModel.IPD.IPDv04p0(this);
-          CodeConcept<?, ?> _reverse = _iPDv04p0.reverse();
+          CodeConcept<?, ?> _reverse = new NUOPCModel.IPD.IPDv04p0(this).reverse();
           this.ipdv04p0 = ((NUOPCModel.IPD.IPDv04p0) _reverse);
-          NUOPCModel.IPD.IPDv04p1 _iPDv04p1 = new NUOPCModel.IPD.IPDv04p1(this);
-          CodeConcept<?, ?> _reverse_1 = _iPDv04p1.reverse();
+          CodeConcept<?, ?> _reverse_1 = new NUOPCModel.IPD.IPDv04p1(this).reverse();
           this.ipdv04p1 = ((NUOPCModel.IPD.IPDv04p1) _reverse_1);
-          NUOPCModel.IPD.IPDv04p2 _iPDv04p2 = new NUOPCModel.IPD.IPDv04p2(this);
-          CodeConcept<?, ?> _reverse_2 = _iPDv04p2.<CodeConcept<?, ?>>reverse();
+          CodeConcept<?, ?> _reverse_2 = new NUOPCModel.IPD.IPDv04p2(this).<CodeConcept<?, ?>>reverse();
           this.ipdv04p2 = ((NUOPCModel.IPD.IPDv04p2) _reverse_2);
-          NUOPCModel.IPD.IPDv04p3 _iPDv04p3 = new NUOPCModel.IPD.IPDv04p3(this);
-          CodeConcept<?, ?> _reverse_3 = _iPDv04p3.reverse();
+          CodeConcept<?, ?> _reverse_3 = new NUOPCModel.IPD.IPDv04p3(this).reverse();
           this.ipdv04p3 = ((NUOPCModel.IPD.IPDv04p3) _reverse_3);
-          NUOPCModel.IPD.IPDv04p4 _iPDv04p4 = new NUOPCModel.IPD.IPDv04p4(this);
-          CodeConcept<?, ?> _reverse_4 = _iPDv04p4.reverse();
+          CodeConcept<?, ?> _reverse_4 = new NUOPCModel.IPD.IPDv04p4(this).reverse();
           this.ipdv04p4 = ((NUOPCModel.IPD.IPDv04p4) _reverse_4);
-          NUOPCModel.IPD.IPDv04p5 _iPDv04p5 = new NUOPCModel.IPD.IPDv04p5(this);
-          CodeConcept<?, ?> _reverse_5 = _iPDv04p5.reverse();
+          CodeConcept<?, ?> _reverse_5 = new NUOPCModel.IPD.IPDv04p5(this).reverse();
           this.ipdv04p5 = ((NUOPCModel.IPD.IPDv04p5) _reverse_5);
-          NUOPCModel.IPD.IPDv04p6 _iPDv04p6 = new NUOPCModel.IPD.IPDv04p6(this);
-          CodeConcept<?, ?> _reverse_6 = _iPDv04p6.<CodeConcept<?, ?>>reverse();
+          CodeConcept<?, ?> _reverse_6 = new NUOPCModel.IPD.IPDv04p6(this).<CodeConcept<?, ?>>reverse();
           this.ipdv04p6 = ((NUOPCModel.IPD.IPDv04p6) _reverse_6);
-          NUOPCModel.IPD.IPDv04p7 _iPDv04p7 = new NUOPCModel.IPD.IPDv04p7(this);
-          CodeConcept<?, ?> _reverse_7 = _iPDv04p7.<CodeConcept<?, ?>>reverse();
+          CodeConcept<?, ?> _reverse_7 = new NUOPCModel.IPD.IPDv04p7(this).<CodeConcept<?, ?>>reverse();
           this.ipdv04p7 = ((NUOPCModel.IPD.IPDv04p7) _reverse_7);
           _xblockexpression = this;
         }
@@ -1071,21 +1020,11 @@ public class NUOPCModel extends NUOPCComponent {
     public NUOPCModel.InitPhases reverse() {
       NUOPCModel.InitPhases _xblockexpression = null;
       {
-        NUOPCModel.IPDv00 _iPDv00 = new NUOPCModel.IPDv00(this);
-        NUOPCModel.IPDv00 _reverse = _iPDv00.reverse();
-        this.ipdv00 = _reverse;
-        NUOPCModel.IPDv01 _iPDv01 = new NUOPCModel.IPDv01(this);
-        NUOPCModel.IPDv01 _reverse_1 = _iPDv01.reverse();
-        this.ipdv01 = _reverse_1;
-        NUOPCModel.IPDv02 _iPDv02 = new NUOPCModel.IPDv02(this);
-        NUOPCModel.IPDv02 _reverse_2 = _iPDv02.reverse();
-        this.ipdv02 = _reverse_2;
-        NUOPCModel.IPDv03 _iPDv03 = new NUOPCModel.IPDv03(this);
-        NUOPCModel.IPDv03 _reverse_3 = _iPDv03.reverse();
-        this.ipdv03 = _reverse_3;
-        NUOPCModel.IPDv04 _iPDv04 = new NUOPCModel.IPDv04(this);
-        NUOPCModel.IPDv04 _reverse_4 = _iPDv04.reverse();
-        this.ipdv04 = _reverse_4;
+        this.ipdv00 = new NUOPCModel.IPDv00(this).reverse();
+        this.ipdv01 = new NUOPCModel.IPDv01(this).reverse();
+        this.ipdv02 = new NUOPCModel.IPDv02(this).reverse();
+        this.ipdv03 = new NUOPCModel.IPDv03(this).reverse();
+        this.ipdv04 = new NUOPCModel.IPDv04(this).reverse();
         _xblockexpression = this;
       }
       return _xblockexpression;
@@ -1115,8 +1054,7 @@ public class NUOPCModel extends NUOPCComponent {
     public Initialization(final NUOPCModel parent) {
       super(parent);
       parent.setOrAddChild(this);
-      ArrayList<GridCodeConcept.CreateUniformGrid> _newArrayList = CollectionLiterals.<GridCodeConcept.CreateUniformGrid>newArrayList();
-      this.createUniformGrid = _newArrayList;
+      this.createUniformGrid = CollectionLiterals.<GridCodeConcept.CreateUniformGrid>newArrayList();
     }
     
     @Override
@@ -1127,12 +1065,8 @@ public class NUOPCModel extends NUOPCComponent {
     public NUOPCModel.Initialization reverseChildren() {
       NUOPCModel.Initialization _xblockexpression = null;
       {
-        NUOPCModel.InitPhases _initPhases = new NUOPCModel.InitPhases(this);
-        NUOPCModel.InitPhases _reverse = _initPhases.reverse();
-        this.initPhases = _reverse;
-        NUOPCModel.InitSpecializations _initSpecializations = new NUOPCModel.InitSpecializations(this);
-        NUOPCModel.InitSpecializations _reverse_1 = _initSpecializations.reverse();
-        this.initSpecs = _reverse_1;
+        this.initPhases = new NUOPCModel.InitPhases(this).reverse();
+        this.initSpecs = new NUOPCModel.InitSpecializations(this).reverse();
         _xblockexpression = this;
       }
       return _xblockexpression;
@@ -1140,37 +1074,24 @@ public class NUOPCModel extends NUOPCComponent {
     
     public void forward(final Model high) {
       new NUOPCModel.InitSpecializations(this);
-      EList<Grid> _grids = high.getGrids();
-      Iterable<UniformGrid> _filter = Iterables.<UniformGrid>filter(_grids, UniformGrid.class);
       final Consumer<UniformGrid> _function = (UniformGrid g) -> {
         final GridCodeConcept.CreateUniformGrid cug = new GridCodeConcept.CreateUniformGrid(this);
         StringConcatenation _builder = new StringConcatenation();
         _builder.append("\"");
         String _name = g.getName();
-        _builder.append(_name, "");
+        _builder.append(_name);
         _builder.append("\"");
         cug.setName(_builder.toString());
-        EList<Integer> _minIndex = g.getMinIndex();
-        int[] _intArray = CodeConcept.toIntArray(_minIndex);
-        cug.setMinIndex(_intArray);
-        EList<Integer> _maxIndex = g.getMaxIndex();
-        int[] _intArray_1 = CodeConcept.toIntArray(_maxIndex);
-        cug.setMaxIndex(_intArray_1);
-        EList<Double> _minCornerCoord = g.getMinCornerCoord();
-        double[] _doubleArray = CodeConcept.toDoubleArray(_minCornerCoord);
-        cug.setMinCornerCoord(_doubleArray);
-        EList<Double> _maxCornerCoord = g.getMaxCornerCoord();
-        double[] _doubleArray_1 = CodeConcept.toDoubleArray(_maxCornerCoord);
-        cug.setMaxCornerCoord(_doubleArray_1);
-        EList<ESMF_STAGGERLOC> _staggerLocToFillCoords = g.getStaggerLocToFillCoords();
+        cug.setMinIndex(CodeConcept.toIntArray(g.getMinIndex()));
+        cug.setMaxIndex(CodeConcept.toIntArray(g.getMaxIndex()));
+        cug.setMinCornerCoord(CodeConcept.toDoubleArray(g.getMinCornerCoord()));
+        cug.setMaxCornerCoord(CodeConcept.toDoubleArray(g.getMaxCornerCoord()));
         final Consumer<ESMF_STAGGERLOC> _function_1 = (ESMF_STAGGERLOC l) -> {
-          List<String> _staggerLocs = cug.getStaggerLocs();
-          String _literal = l.getLiteral();
-          _staggerLocs.add(_literal);
+          cug.getStaggerLocs().add(l.getLiteral());
         };
-        _staggerLocToFillCoords.forEach(_function_1);
+        g.getStaggerLocToFillCoords().forEach(_function_1);
       };
-      _filter.forEach(_function);
+      Iterables.<UniformGrid>filter(high.getGrids(), UniformGrid.class).forEach(_function);
       NUOPCModel.IPD _switchResult = null;
       IPDVersion _iPDVersion = high.getIPDVersion();
       if (_iPDVersion != null) {
@@ -1228,11 +1149,9 @@ public class NUOPCModel extends NUOPCComponent {
     public NUOPCModel.InitSpecializations reverse() {
       NUOPCModel.InitSpecializations _xblockexpression = null;
       {
-        NUOPCModel.SetClock _setClock = new NUOPCModel.SetClock(this);
-        CodeConcept<?, ?> _reverse = _setClock.reverse();
+        CodeConcept<?, ?> _reverse = new NUOPCModel.SetClock(this).reverse();
         this.setClock = ((NUOPCModel.SetClock) _reverse);
-        NUOPCModel.DataInitialize _dataInitialize = new NUOPCModel.DataInitialize(this);
-        CodeConcept<?, ?> _reverse_1 = _dataInitialize.reverse();
+        CodeConcept<?, ?> _reverse_1 = new NUOPCModel.DataInitialize(this).reverse();
         this.dataInitialize = ((NUOPCModel.DataInitialize) _reverse_1);
         _xblockexpression = this;
       }
@@ -1256,11 +1175,11 @@ public class NUOPCModel extends NUOPCComponent {
       StringConcatenation _builder = new StringConcatenation();
       _builder.newLine();
       _builder.append("subroutine ");
-      _builder.append(this.subroutineName, "");
+      _builder.append(this.subroutineName);
       _builder.append("(");
-      _builder.append(this.paramGridComp, "");
+      _builder.append(this.paramGridComp);
       _builder.append(", ");
-      _builder.append(this.paramRC, "");
+      _builder.append(this.paramRC);
       _builder.append(")");
       _builder.newLineIfNotEmpty();
       _builder.append("    ");
@@ -1377,8 +1296,7 @@ public class NUOPCModel extends NUOPCComponent {
     
     public DataInitialize(final NUOPCModel.InitSpecializations parent) {
       super(parent, "NUOPC_Model", "label_DataInitialize");
-      ArrayList<String> _newArrayList = CollectionLiterals.<String>newArrayList();
-      this.exportFieldsToInit = _newArrayList;
+      this.exportFieldsToInit = CollectionLiterals.<String>newArrayList();
       this.subroutineName = "DataInitialize";
       this.specLabel = "model_label_DataInitialize";
       this.paramGridComp = "gcomp";
@@ -1386,12 +1304,10 @@ public class NUOPCModel extends NUOPCComponent {
     }
     
     public void forward(final Model high) {
-      EList<Field> _exportFields = high.getExportFields();
       final Consumer<Field> _function = (Field f) -> {
-        String _name = f.getName();
-        this.exportFieldsToInit.add(_name);
+        this.exportFieldsToInit.add(f.getName());
       };
-      _exportFields.forEach(_function);
+      high.getExportFields().forEach(_function);
     }
     
     @Override
@@ -1399,11 +1315,11 @@ public class NUOPCModel extends NUOPCComponent {
       StringConcatenation _builder = new StringConcatenation();
       _builder.newLine();
       _builder.append("subroutine ");
-      _builder.append(this.subroutineName, "");
+      _builder.append(this.subroutineName);
       _builder.append("(");
-      _builder.append(this.paramGridComp, "");
+      _builder.append(this.paramGridComp);
       _builder.append(", ");
-      _builder.append(this.paramRC, "");
+      _builder.append(this.paramRC);
       _builder.append(")");
       _builder.newLineIfNotEmpty();
       _builder.append("    ");
@@ -1542,11 +1458,9 @@ public class NUOPCModel extends NUOPCComponent {
     public NUOPCModel.Run reverse() {
       NUOPCModel.Run _xblockexpression = null;
       {
-        NUOPCModel.RunPhases _runPhases = new NUOPCModel.RunPhases(this);
-        NUOPCModel.RunPhases _reverse = _runPhases.reverse();
+        NUOPCModel.RunPhases _reverse = new NUOPCModel.RunPhases(this).reverse();
         this.runPhases = ((NUOPCModel.RunPhases) _reverse);
-        NUOPCModel.RunSpecializations _runSpecializations = new NUOPCModel.RunSpecializations(this);
-        CodeConcept<?, ?> _reverse_1 = _runSpecializations.reverse();
+        CodeConcept<?, ?> _reverse_1 = new NUOPCModel.RunSpecializations(this).reverse();
         this.runSpecs = ((NUOPCModel.RunSpecializations) _reverse_1);
         _xblockexpression = this;
       }
@@ -1572,12 +1486,9 @@ public class NUOPCModel extends NUOPCComponent {
     public RunSpecializations(final NUOPCModel.Run parent) {
       super(parent);
       parent.setOrAddChild(this);
-      ArrayList<NUOPCModel.SetRunClock> _newArrayList = CollectionLiterals.<NUOPCModel.SetRunClock>newArrayList();
-      this.setRunClock = _newArrayList;
-      ArrayList<NUOPCModel.CheckImport> _newArrayList_1 = CollectionLiterals.<NUOPCModel.CheckImport>newArrayList();
-      this.checkImport = _newArrayList_1;
-      ArrayList<NUOPCModel.ModelAdvance> _newArrayList_2 = CollectionLiterals.<NUOPCModel.ModelAdvance>newArrayList();
-      this.modelAdvance = _newArrayList_2;
+      this.setRunClock = CollectionLiterals.<NUOPCModel.SetRunClock>newArrayList();
+      this.checkImport = CollectionLiterals.<NUOPCModel.CheckImport>newArrayList();
+      this.modelAdvance = CollectionLiterals.<NUOPCModel.ModelAdvance>newArrayList();
     }
     
     @Override
@@ -1588,35 +1499,27 @@ public class NUOPCModel extends NUOPCComponent {
     public NUOPCModel.RunSpecializations reverseChildren() {
       NUOPCModel.RunSpecializations _xblockexpression = null;
       {
-        NUOPCModel.ModelAdvance _modelAdvance = new NUOPCModel.ModelAdvance(this);
-        List _reverseMultiple = _modelAdvance.reverseMultiple();
-        this.modelAdvance = _reverseMultiple;
-        NUOPCModel.SetRunClock _setRunClock = new NUOPCModel.SetRunClock(this);
-        List _reverseMultiple_1 = _setRunClock.reverseMultiple();
-        this.setRunClock = _reverseMultiple_1;
-        NUOPCModel.CheckImport _checkImport = new NUOPCModel.CheckImport(this);
-        List _reverseMultiple_2 = _checkImport.reverseMultiple();
-        this.checkImport = _reverseMultiple_2;
+        this.modelAdvance = new NUOPCModel.ModelAdvance(this).reverseMultiple();
+        this.setRunClock = new NUOPCModel.SetRunClock(this).reverseMultiple();
+        this.checkImport = new NUOPCModel.CheckImport(this).reverseMultiple();
         _xblockexpression = this;
       }
       return _xblockexpression;
     }
     
     public void forward(final Model high) {
-      EList<Advance> _advance = high.getAdvance();
       final Consumer<Advance> _function = (Advance a) -> {
         final NUOPCModel.ModelAdvance adv = new NUOPCModel.ModelAdvance(this);
-        String _phaseLabel = a.getPhaseLabel();
-        boolean _isNullOrEmpty = StringExtensions.isNullOrEmpty(_phaseLabel);
+        boolean _isNullOrEmpty = StringExtensions.isNullOrEmpty(a.getPhaseLabel());
         boolean _not = (!_isNullOrEmpty);
         if (_not) {
-          String _phaseLabel_1 = a.getPhaseLabel();
-          String _plus = ("\"" + _phaseLabel_1);
+          String _phaseLabel = a.getPhaseLabel();
+          String _plus = ("\"" + _phaseLabel);
           String _plus_1 = (_plus + "\"");
           adv.specPhaseLabel = _plus_1;
         }
       };
-      _advance.forEach(_function);
+      high.getAdvance().forEach(_function);
     }
   }
   
@@ -1634,8 +1537,7 @@ public class NUOPCModel extends NUOPCComponent {
       try {
         NUOPCModel.RunPhases _xblockexpression = null;
         {
-          NUOPCModel.RunPhase1 _runPhase1 = new NUOPCModel.RunPhase1(this);
-          CodeConcept<?, ?> _reverse = _runPhase1.<CodeConcept<?, ?>>reverse();
+          CodeConcept<?, ?> _reverse = new NUOPCModel.RunPhase1(this).<CodeConcept<?, ?>>reverse();
           this.p1 = ((NUOPCModel.RunPhase1) _reverse);
           _xblockexpression = this;
         }
@@ -1682,11 +1584,11 @@ public class NUOPCModel extends NUOPCComponent {
       StringConcatenation _builder = new StringConcatenation();
       _builder.newLine();
       _builder.append("subroutine ");
-      _builder.append(this.subroutineName, "");
+      _builder.append(this.subroutineName);
       _builder.append("(");
-      _builder.append(this.paramGridComp, "");
+      _builder.append(this.paramGridComp);
       _builder.append(", ");
-      _builder.append(this.paramRC, "");
+      _builder.append(this.paramRC);
       _builder.append(")");
       _builder.newLineIfNotEmpty();
       _builder.append("    ");
@@ -1745,8 +1647,7 @@ public class NUOPCModel extends NUOPCComponent {
       _builder.newLine();
       _builder.append("      ");
       _builder.append("preString=\"------>Advancing ");
-      NUOPCComponent _module = this.module();
-      _builder.append(_module.name, "      ");
+      _builder.append(this.module().name, "      ");
       _builder.append(" from: \", rc=");
       _builder.append(this.paramRC, "      ");
       _builder.append(")");
@@ -1817,11 +1718,11 @@ public class NUOPCModel extends NUOPCComponent {
       StringConcatenation _builder = new StringConcatenation();
       _builder.newLine();
       _builder.append("subroutine ");
-      _builder.append(this.subroutineName, "");
+      _builder.append(this.subroutineName);
       _builder.append("(");
-      _builder.append(this.paramGridComp, "");
+      _builder.append(this.paramGridComp);
       _builder.append(", ");
-      _builder.append(this.paramRC, "");
+      _builder.append(this.paramRC);
       _builder.append(")");
       _builder.newLineIfNotEmpty();
       _builder.append("    ");
@@ -1937,11 +1838,11 @@ public class NUOPCModel extends NUOPCComponent {
       StringConcatenation _builder = new StringConcatenation();
       _builder.newLine();
       _builder.append("subroutine ");
-      _builder.append(this.subroutineName, "");
+      _builder.append(this.subroutineName);
       _builder.append("(");
-      _builder.append(this.paramGridComp, "");
+      _builder.append(this.paramGridComp);
       _builder.append(", ");
-      _builder.append(this.paramRC, "");
+      _builder.append(this.paramRC);
       _builder.append(")");
       _builder.newLineIfNotEmpty();
       _builder.append("    ");
@@ -1997,8 +1898,7 @@ public class NUOPCModel extends NUOPCComponent {
       try {
         NUOPCModel.FinalizePhases _xblockexpression = null;
         {
-          NUOPCModel.FinalizePhase1 _finalizePhase1 = new NUOPCModel.FinalizePhase1(this);
-          CodeConcept<?, ?> _reverse = _finalizePhase1.<CodeConcept<?, ?>>reverse();
+          CodeConcept<?, ?> _reverse = new NUOPCModel.FinalizePhase1(this).<CodeConcept<?, ?>>reverse();
           this.p1 = ((NUOPCModel.FinalizePhase1) _reverse);
           _xblockexpression = this;
         }
@@ -2026,8 +1926,7 @@ public class NUOPCModel extends NUOPCComponent {
     public NUOPCModel.FinalizeSpecializations reverseChildren() {
       NUOPCModel.FinalizeSpecializations _xblockexpression = null;
       {
-        NUOPCModel.FinalizeModel _finalizeModel = new NUOPCModel.FinalizeModel(this);
-        CodeConcept<?, ?> _reverse = _finalizeModel.reverse();
+        CodeConcept<?, ?> _reverse = new NUOPCModel.FinalizeModel(this).reverse();
         this.finalize = ((NUOPCModel.FinalizeModel) _reverse);
         _xblockexpression = this;
       }
@@ -2063,11 +1962,9 @@ public class NUOPCModel extends NUOPCComponent {
     public NUOPCModel.Finalize reverseChildren() {
       NUOPCModel.Finalize _xblockexpression = null;
       {
-        NUOPCModel.FinalizePhases _finalizePhases = new NUOPCModel.FinalizePhases(this);
-        NUOPCModel.FinalizePhases _reverse = _finalizePhases.reverse();
+        NUOPCModel.FinalizePhases _reverse = new NUOPCModel.FinalizePhases(this).reverse();
         this.finalPhases = ((NUOPCModel.FinalizePhases) _reverse);
-        NUOPCModel.FinalizeSpecializations _finalizeSpecializations = new NUOPCModel.FinalizeSpecializations(this);
-        CodeConcept<?, ?> _reverse_1 = _finalizeSpecializations.reverse();
+        CodeConcept<?, ?> _reverse_1 = new NUOPCModel.FinalizeSpecializations(this).reverse();
         this.finalSpecs = ((NUOPCModel.FinalizeSpecializations) _reverse_1);
         _xblockexpression = this;
       }
@@ -2091,11 +1988,11 @@ public class NUOPCModel extends NUOPCComponent {
       StringConcatenation _builder = new StringConcatenation();
       _builder.newLine();
       _builder.append("subroutine ");
-      _builder.append(this.subroutineName, "");
+      _builder.append(this.subroutineName);
       _builder.append("(");
-      _builder.append(this.paramGridComp, "");
+      _builder.append(this.paramGridComp);
       _builder.append(", ");
-      _builder.append(this.paramRC, "");
+      _builder.append(this.paramRC);
       _builder.append(")");
       _builder.newLineIfNotEmpty();
       _builder.append("    ");
@@ -2187,8 +2084,7 @@ public class NUOPCModel extends NUOPCComponent {
   }
   
   public void forward(final Model high) {
-    String _name = high.getName();
-    this.name = _name;
+    this.name = high.getName();
     this.setServices.forward(high);
     this.initialization.forward(high);
     this.run.forward(high);
@@ -2210,21 +2106,12 @@ public class NUOPCModel extends NUOPCComponent {
     try {
       NUOPCModel _xblockexpression = null;
       {
-        NUOPCModel.DoxygenTemplate _doxygenTemplate = new NUOPCModel.DoxygenTemplate(this);
-        NUOPCModel.DoxygenTemplate _reverse = _doxygenTemplate.<NUOPCModel.DoxygenTemplate>reverse();
-        this.doc = _reverse;
-        NUOPCModel.SetServices _setServices = new NUOPCModel.SetServices(this);
-        SetServicesCodeConcept<NUOPCModel> _reverse_1 = _setServices.reverse();
-        this.setServices = ((NUOPCModel.SetServices) _reverse_1);
-        NUOPCModel.Initialization _initialization = new NUOPCModel.Initialization(this);
-        NUOPCModel.Initialization _reverse_2 = _initialization.reverse();
-        this.initialization = _reverse_2;
-        NUOPCModel.Run _run = new NUOPCModel.Run(this);
-        NUOPCModel.Run _reverse_3 = _run.reverse();
-        this.run = _reverse_3;
-        NUOPCModel.Finalize _finalize = new NUOPCModel.Finalize(this);
-        NUOPCModel.Finalize _reverse_4 = _finalize.reverse();
-        this.finalize = _reverse_4;
+        this.doc = new NUOPCModel.DoxygenTemplate(this).<NUOPCModel.DoxygenTemplate>reverse();
+        SetServicesCodeConcept<NUOPCModel> _reverse = new NUOPCModel.SetServices(this).reverse();
+        this.setServices = ((NUOPCModel.SetServices) _reverse);
+        this.initialization = new NUOPCModel.Initialization(this).reverse();
+        this.run = new NUOPCModel.Run(this).reverse();
+        this.finalize = new NUOPCModel.Finalize(this).reverse();
         _xblockexpression = this;
       }
       return _xblockexpression;

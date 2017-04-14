@@ -1,7 +1,6 @@
 package org.earthsystemmodeling.cupid.cc.fortran;
 
 import org.earthsystemmodeling.cupid.cc.fortran.Expression;
-import org.eclipse.photran.internal.core.lexer.Token;
 import org.eclipse.photran.internal.core.parser.ASTIntConstNode;
 import org.eclipse.photran.internal.core.parser.IExpr;
 
@@ -21,9 +20,7 @@ public class IntExpression extends Expression {
   public String match(final IExpr expr) {
     if ((expr instanceof ASTIntConstNode)) {
       final ASTIntConstNode node = ((ASTIntConstNode) expr);
-      Token _intConst = node.getIntConst();
-      String _text = _intConst.getText();
-      Integer _valueOf = Integer.valueOf(_text);
+      Integer _valueOf = Integer.valueOf(node.getIntConst().getText());
       boolean _equals = ((_valueOf).intValue() == this.literal);
       if (_equals) {
         return Integer.toString(this.literal);

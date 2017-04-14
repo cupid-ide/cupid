@@ -1,4 +1,4 @@
-package org.earthsystemmodeling.cupid.trace;
+package org.earthsystemmodeling.cupid.trace.json;
 
 import java.util.List;
 
