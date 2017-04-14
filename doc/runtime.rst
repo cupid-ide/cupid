@@ -85,7 +85,7 @@ directory or archive, check the trace root folder in the list (see figure below)
 Then click Finish.
 
 .. figure:: images/trace_import_2.png
-   :scale 85%
+   :scale: 85%
   
    Select trace root directory or trace archive file to import
 
@@ -109,14 +109,14 @@ in the Project Explorer under the imported trace. It is under Views /
 NUOPC Call Stack Analysis (see figure below).
 
 .. figure:: images/trace_import_3.png
-   :scale 85%
+   :scale: 85%
   
    Double-click "NUOPC Call Stack View" in the Project Explorer
    to open up the view.
 
 
 .. figure:: images/call_stack_view.png
-   :scale 85%
+   :scale: 85%
   
    The NUOPC Call Stack View showing three PETs
   
