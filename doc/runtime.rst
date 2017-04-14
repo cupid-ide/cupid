@@ -29,7 +29,9 @@ to limit which PETs are traced.  This is recommended to limit the size of
 the output trace. If you do not set this environment variable, all PETs will 
 be traced by default. Each PET should be separated by a space, and you can 
 use the notation "X-Y" to indicate a range of PETs.  **A good approach is to
-trace only the root PET of each component in the NUOPC application.**
+trace only the root PET of each component in the NUOPC application.** Note that
+PET zero will always be traced, regardless of the `ESMF_RUNTIME_TRACE_PETLIST`
+setting.
 
 .. code-block:: bash
 
@@ -62,7 +64,7 @@ directory and copy it to your machine.
 .. code-block:: bash
 
 	$ tar cfz traceout.tar.gz traceout
-	$ scp traceout.tar.gz ...  # command to transfer files
+	# scp traceout.tar.gz to your local machine where Eclipse is installed
 
 
 Import the NUOPC Trace into Eclipse
@@ -71,10 +73,10 @@ Import the NUOPC Trace into Eclipse
 In Eclipse, choose "File -> Import..." from the menu and select "Trace Import"
 in the folder "Tracing Project."
 
-..figure:: images/trace_import_1.png
-  :scale: 85%
+.. figure:: images/trace_import_1.png
+    :scale: 85%
   
-  Import a trace into Eclipse
+    Import a trace into Eclipse
   
 Click Next. On the next screen select the trace to import. You can import a 
 trace by either selecting the root directory of the trace or by selecting
@@ -82,10 +84,10 @@ an archive file containing the trace directory. After selecting the root
 directory or archive, check the trace root folder in the list (see figure below).
 Then click Finish.
 
-..figure:: images/trace_import_2.png
-  :scale 85%
+.. figure:: images/trace_import_2.png
+    :scale 85%
   
-  Select trace root directory or trace archive file to import
+    Select trace root directory or trace archive file to import
 
 When complete, you will see a new project in the Project Explorer called
 `Tracing` with a folder called `Traces`.  This folder contains the imported
@@ -104,21 +106,22 @@ in time during the execution.
 
 Open the NUOPC Call Stack View by double-clicking "NUOPC Call Stack View"
 in the Project Explorer under the imported trace. It is under Views / 
-NUOPC Call Stack Analysis.
+NUOPC Call Stack Analysis (see figure below).
 
-..figure:: images/trace_import_3.png
+.. figure:: images/trace_import_3.png
   :scale 85%
   
   Double-click "NUOPC Call Stack View" in the Project Explorer
   to open up the view.
 
 
-..figure:: images/call_stack_view.png
+.. figure:: images/call_stack_view.png
   :scale 85%
   
   The NUOPC Call Stack View showing three PETs
   
 The NUOPC Call Stack View toolbar allows you to navigate the view.
+
  - The house icon zooms out to see the full execution trace.
  - The + and - magnifying glass will zoom in and out.
  - Right-click (CTRL-click on Mac), hold, and drag to zoom in on a 
