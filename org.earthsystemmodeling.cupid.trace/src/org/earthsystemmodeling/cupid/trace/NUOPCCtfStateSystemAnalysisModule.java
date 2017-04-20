@@ -1,15 +1,20 @@
 package org.earthsystemmodeling.cupid.trace;
 
+import java.util.LinkedList;
 import java.util.List;
 
+import org.earthsystemmodeling.cupid.trace.view.NUOPCCallStackView;
+import org.earthsystemmodeling.cupid.trace.view.NUOPCMemUsageView;
 import org.eclipse.tracecompass.statesystem.core.ITmfStateSystem;
 import org.eclipse.tracecompass.statesystem.core.exceptions.AttributeNotFoundException;
 import org.eclipse.tracecompass.statesystem.core.exceptions.StateSystemDisposedException;
 import org.eclipse.tracecompass.statesystem.core.interval.ITmfStateInterval;
 import org.eclipse.tracecompass.statesystem.core.statevalue.ITmfStateValue;
+import org.eclipse.tracecompass.tmf.core.analysis.IAnalysisOutput;
 import org.eclipse.tracecompass.tmf.core.statesystem.ITmfStateProvider;
 import org.eclipse.tracecompass.tmf.core.statesystem.TmfStateSystemAnalysisModule;
 import org.eclipse.tracecompass.tmf.ctf.core.trace.CtfTmfTrace;
+import org.eclipse.tracecompass.tmf.ui.analysis.TmfAnalysisViewOutput;
 
 public class NUOPCCtfStateSystemAnalysisModule extends TmfStateSystemAnalysisModule {
 
@@ -124,4 +129,10 @@ public class NUOPCCtfStateSystemAnalysisModule extends TmfStateSystemAnalysisMod
 	}
 	*/
 	
+	@Override
+    public Iterable<IAnalysisOutput> getOutputs() {
+    	List<IAnalysisOutput> toRet = new LinkedList<>();
+    	toRet.add(new TmfAnalysisViewOutput(NUOPCMemUsageView.ID));
+    	return toRet;
+    }
 }

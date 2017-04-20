@@ -55,7 +55,7 @@ public class NUOPCCtfCallStackAnalysis extends CallStackAnalysis {
     
     @Override
     public Iterable<IAnalysisOutput> getOutputs() {
-    	List toRet = new LinkedList<>();
+    	List<IAnalysisOutput> toRet = new LinkedList<>();
     	//toRet.addAll(super.getOutputs());
     	toRet.add(new TmfAnalysisViewOutput(NUOPCCallStackView.ID));
     	return toRet;

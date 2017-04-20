@@ -99,6 +99,14 @@
             name="NUOPC Call Stack View"
             restorable="true">
       </view>
+      <view
+            category="org.earthsystemmodeling.cupid"
+            class="org.earthsystemmodeling.cupid.trace.view.NUOPCMemUsageView"
+            icon="icons/linegraph.png"
+            id="org.earthsystemmodeling.cupid.trace.NUOPCMemUsageView"
+            name="NUOPC Memory Usage"
+            restorable="true">
+      </view>
    </extension>
    
    
@@ -110,6 +118,13 @@
             targetID="org.eclipse.photran.ui.FortranPerspective">
          <view
                id="org.earthsystemmodeling.cupid.trace.NUOPCCallStackView"
+               minimized="false"
+               relationship="stack"
+               relative="org.eclipse.ui.console.ConsoleView"
+               visible="true">
+         </view>
+         <view
+               id="org.earthsystemmodeling.cupid.trace.NUOPCMemUsage"
                minimized="false"
                relationship="stack"
                relative="org.eclipse.ui.console.ConsoleView"

@@ -6,6 +6,7 @@ import org.eclipse.tracecompass.statesystem.core.statevalue.ITmfStateValue;
 import org.eclipse.tracecompass.statesystem.core.statevalue.TmfStateValue;
 import org.eclipse.tracecompass.tmf.core.event.ITmfEvent;
 import org.eclipse.tracecompass.tmf.core.statesystem.AbstractTmfStateProvider;
+import org.eclipse.tracecompass.tmf.ctf.core.event.CtfTmfEvent;
 import org.eclipse.tracecompass.tmf.ctf.core.event.CtfTmfEventField;
 import org.eclipse.tracecompass.tmf.ctf.core.trace.CtfTmfTrace;
 
@@ -114,12 +115,57 @@ public class NUOPCCtfStateProvider extends AbstractTmfStateProvider {
         			}
         		}
         		
-        		//fix up kind attribute (since not recorded correctly by NUOPC yet
+        		//barectf version of trace has explicit phase map field
+        		String IPM = event.getContent().getFieldValue(String.class, "IPM");
+        		if (IPM != null && IPM.length() > 0) {
+        			for (String kv : IPM.split("\\|\\|")) {
+						String[] keyval = kv.split("=");
+						quark = ss.getQuarkAbsoluteAndAdd("component", id, "IPM", keyval[1]);
+						ITmfStateValue phaseLabel = newValueString(keyval[0]);
+						ss.modifyAttribute(ts, phaseLabel, quark);
+					}
+        		}
+        		String RPM = event.getContent().getFieldValue(String.class, "RPM");
+        		if (RPM != null && RPM.length() > 0) {
+        			for (String kv : RPM.split("\\|\\|")) {
+						String[] keyval = kv.split("=");
+						quark = ss.getQuarkAbsoluteAndAdd("component", id, "RPM", keyval[1]);
+						ITmfStateValue phaseLabel = newValueString(keyval[0]);
+						ss.modifyAttribute(ts, phaseLabel, quark);
+					}
+        		}
+        		String FPM = event.getContent().getFieldValue(String.class, "FPM");
+        		if (FPM != null && FPM.length() > 0) {
+        			for (String kv : FPM.split("\\|\\|")) {
+						String[] keyval = kv.split("=");
+						quark = ss.getQuarkAbsoluteAndAdd("component", id, "FPM", keyval[1]);
+						ITmfStateValue phaseLabel = newValueString(keyval[0]);
+						ss.modifyAttribute(ts, phaseLabel, quark);
+					}
+        		}
+        		
+        		//fix up kind attribute (since not recorded correctly by NUOPC yet)
         		if (name != null && name.toUpperCase().contains("-TO-")) {
         			quark = ss.getQuarkAbsoluteAndAdd("component", id, "kind");
         			value = newValueString("Connector");
         			ss.modifyAttribute(ts, value, quark);
         		}
+            }
+            else if (event.getType().getName().equals("mem")) {
+            
+            	CtfTmfEvent e = (CtfTmfEvent) event;
+            	String pet = ((Long) e.getPacketAttributes().get("pet")).toString();
+            	
+            	long virtMem = event.getContent().getFieldValue(Long.class, "virtMem");
+            	long physMem = event.getContent().getFieldValue(Long.class, "physMem");
+            	
+            	int quark = ss.getQuarkAbsoluteAndAdd("mem", pet, "virtMem");
+            	ITmfStateValue value = TmfStateValue.newValueLong(virtMem);
+            	ss.modifyAttribute(ts, value, quark);
+            	
+            	quark = ss.getQuarkAbsoluteAndAdd("mem", pet, "physMem");
+            	value = TmfStateValue.newValueLong(physMem);
+            	ss.modifyAttribute(ts, value, quark);
             }
         	
         } catch (StateValueTypeException ex) {

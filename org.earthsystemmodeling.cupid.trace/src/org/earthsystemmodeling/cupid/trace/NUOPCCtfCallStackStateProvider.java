@@ -21,6 +21,9 @@ public class NUOPCCtfCallStackStateProvider extends CallStackStateProvider {
 	public NUOPCCtfCallStackStateProvider(CtfTmfTrace trace) {
 		super(trace);
 		stateAnalysis = TmfTraceUtils.getAnalysisModuleOfClass(trace, NUOPCCtfStateSystemAnalysisModule.class, NUOPCCtfStateSystemAnalysisModule.ID);
+		if (stateAnalysis == null) {
+			System.out.println("here");
+		}
 	}
 
 	@Override
@@ -78,14 +81,16 @@ public class NUOPCCtfCallStackStateProvider extends CallStackStateProvider {
             //add component id
             Long vmid = event.getContent().getFieldValue(Long.class, "vmid");
             Long baseid = event.getContent().getFieldValue(Long.class, "baseid");
-            String kind = stateAnalysis.queryComponentKind(vmid, baseid);
-            int compkindQuark = ss.getQuarkRelativeAndAdd(threadQuark, "compkind");
-            ITmfStateValue toPush = TmfStateValue.newValueString("Unknown");
-            if (kind != null) {
-            	toPush = TmfStateValue.newValueString(kind);
+            String kind = null;
+            if (vmid != null && baseid != null) {  /* could be a region */
+            	kind = stateAnalysis.queryComponentKind(vmid, baseid);
             }
-            ss.pushAttribute(timestamp, toPush, compkindQuark);
-            
+        	int compkindQuark = ss.getQuarkRelativeAndAdd(threadQuark, "compkind");
+        	ITmfStateValue toPush = TmfStateValue.newValueString("Unknown");
+        	if (kind != null) {
+        		toPush = TmfStateValue.newValueString(kind);
+        	}
+        	ss.pushAttribute(timestamp, toPush, compkindQuark);                       
             return;
         }
 
@@ -109,7 +114,8 @@ public class NUOPCCtfCallStackStateProvider extends CallStackStateProvider {
              * event field, unless the latter is undefined.
              */
             if (!functionExitState.isNull() && !functionExitState.equals(poppedValue)) {
-                CupidActivator.log(Status.WARNING, "Call stack popped value does not match.  Possible missing event.");
+                //TODO: error logging
+            	//CupidActivator.log(Status.WARNING, "Call stack popped value does not match.  Possible missing event.");
             	//Activator.logWarning(NLS.bind(
                 //        Messages.CallStackStateProvider_UnmatchedPoppedValue,
                 //        functionExitState,
@@ -148,14 +154,27 @@ public class NUOPCCtfCallStackStateProvider extends CallStackStateProvider {
 			phaseLabel = stateAnalysis.queryComponentPhaseLabel(vmid, baseid, mp.getLongValue(), phase);
 					
 			if (phaseLabel == null) {
-				phaseLabel = "#" + String.valueOf(phase);
+				String method = "";
+				if (mp.getLongValue() == 0) {
+					method = "init ";
+				}
+				else if (mp.getLongValue() == 1) {
+					method = "run ";
+				}
+				else if (mp.getLongValue() == 2) {
+					method = "final ";
+				}
+				phaseLabel = method + "#" + String.valueOf(phase);
 			}
 	
 			return "[" + compName + "] " + phaseLabel;
 		}
-		else {
+		else if (event.getType().getName().equals("region")) {
 			//user region
 			return event.getContent().getFieldValue(String.class, "name");
+		}
+		else {
+			return null;
 		}
 	}
 	

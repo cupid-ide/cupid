@@ -8,6 +8,10 @@ import java.util.Random;
 
 import org.eclipse.swt.graphics.Color;
 import org.eclipse.swt.graphics.Device;
+import org.earthsystemmodeling.cupid.trace.PETSelectedSignal;
+import org.eclipse.jface.viewers.ISelectionChangedListener;
+import org.eclipse.jface.viewers.IStructuredSelection;
+import org.eclipse.jface.viewers.SelectionChangedEvent;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.graphics.GC;
 import org.eclipse.swt.graphics.Rectangle;
@@ -22,6 +26,7 @@ import org.eclipse.tracecompass.statesystem.core.interval.ITmfStateInterval;
 import org.eclipse.tracecompass.statesystem.core.statevalue.ITmfStateValue;
 import org.eclipse.tracecompass.tmf.core.analysis.IAnalysisModule;
 import org.eclipse.tracecompass.tmf.core.callstack.CallStackStateProvider;
+import org.eclipse.tracecompass.tmf.core.signal.TmfSignalManager;
 import org.eclipse.tracecompass.tmf.core.trace.ITmfTrace;
 import org.eclipse.tracecompass.tmf.core.trace.TmfTraceUtils;
 import org.eclipse.tracecompass.tmf.ui.symbols.SymbolProviderManager;
@@ -29,7 +34,10 @@ import org.eclipse.tracecompass.tmf.ui.views.callstack.CallStackEntry;
 import org.eclipse.tracecompass.tmf.ui.views.callstack.CallStackEvent;
 import org.eclipse.tracecompass.tmf.ui.views.callstack.CallStackPresentationProvider;
 import org.eclipse.tracecompass.tmf.ui.views.callstack.CallStackView;
+import org.eclipse.tracecompass.tmf.ui.widgets.timegraph.ITimeGraphTimeListener;
 import org.eclipse.tracecompass.tmf.ui.widgets.timegraph.StateItem;
+import org.eclipse.tracecompass.tmf.ui.widgets.timegraph.TimeGraphTimeEvent;
+import org.eclipse.tracecompass.tmf.ui.widgets.timegraph.TimeGraphViewer;
 import org.eclipse.tracecompass.tmf.ui.widgets.timegraph.model.ITimeEvent;
 import org.eclipse.tracecompass.tmf.ui.widgets.timegraph.model.ITimeGraphEntry;
 import org.eclipse.tracecompass.tmf.ui.widgets.timegraph.model.TimeGraphEntry;
@@ -52,6 +60,48 @@ public class NUOPCCallStackView extends CallStackView {
 		NUOPCCallStackPresentationProvider pp = new NUOPCCallStackPresentationProvider(getTrace());
 		pp.setCallStackView(this);
 		getTimeGraphViewer().setTimeGraphProvider(pp);
+		
+		/*
+		getTimeGraphViewer().addTimeListener(new ITimeGraphTimeListener() {
+
+			@Override
+			public void timeSelected(TimeGraphTimeEvent event) {
+				if (event.getSource() != null && event.getSource() instanceof TimeGraphViewer) {
+					TimeGraphViewer v = (TimeGraphViewer) event.getSource();
+					CallStackEntry cse = (CallStackEntry) v.getSelection();
+					//System.out.println(cse.getProcessId());
+					TmfSignalManager.dispatchSignal(new PETSelectedSignal(cse.getProcessId()));
+				}
+			}
+			
+		});
+		*/
+		
+		getTimeGraphViewer().addSelectionChangedListener(new ISelectionChangedListener() {
+
+			@Override
+			public void selectionChanged(SelectionChangedEvent event) {
+				//System.out.println(event);
+				
+				if (!event.getSelection().isEmpty()) {
+					if (event.getSelection() instanceof IStructuredSelection) {
+						long pet = -1;
+						IStructuredSelection ss = (IStructuredSelection) event.getSelection();
+						if (ss.getFirstElement() instanceof CallStackEntry) {
+							CallStackEntry cse = (CallStackEntry) ss.getFirstElement();
+							pet = cse.getProcessId();
+							TmfSignalManager.dispatchSignal(new PETSelectedSignal(pet));
+						}
+						//TODO: process and thread entry are private
+						//else if (ss.getFirstElement() instanceof ProcessEntry) {
+						//	
+						//}
+					}
+				}
+				
+			}
+			
+		});
 
 	}
 
