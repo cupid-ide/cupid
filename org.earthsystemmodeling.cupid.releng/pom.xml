@@ -170,6 +170,7 @@
 			../org.earthsystemmodeling.cupid.nuopcmodel.editor
 		</module>
 		<module>../org.earthsystemmodeling.cupid.trace</module>
+		<module>../org.earthsystemmodeling.cupid.trace.test</module>
 	</modules>
 
 	<repositories>
