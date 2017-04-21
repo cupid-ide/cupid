@@ -235,7 +235,7 @@ public class NUOPCDriverTest {
 		MainGenerator.generateAndWrite(app, fMain);
 		
 		assertTrue("Compile check", TestHelpers.compileProject(p, NUOPCTest.ESMFMKFILE, ""));
-		assertTrue("Execution check: " + p.getLocationURI(), TestHelpers.executeMPI(p, "./esmApp", 4));
+		assertTrue("Execution check: " + p.getLocationURI(), TestHelpers.executeMPI(p, "./esmApp", 4, null));
 		assertTrue("Log Error check", TestHelpers.verifyNoLogErrors(p));
 		
 	}

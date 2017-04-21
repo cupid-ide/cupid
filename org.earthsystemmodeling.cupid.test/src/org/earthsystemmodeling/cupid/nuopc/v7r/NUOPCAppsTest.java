@@ -49,7 +49,7 @@ public class NUOPCAppsTest {
 			assertTrue("Wait on app generation", job.join(15*1000, NPM));
 			
 			assertTrue("Compile check: " + p.getLocation(), TestHelpers.compileProject(p, NUOPCTest.ESMFMKFILE, "all"));
-			assertTrue("Execution check: " + p.getLocation(), TestHelpers.executeMPI(p, fileFrag, 4));
+			assertTrue("Execution check: " + p.getLocation(), TestHelpers.executeMPI(p, fileFrag, 4, null));
 			assertTrue("Log check: " + p.getLocation(), TestHelpers.verifyNoLogErrors(p));
 		}
 		

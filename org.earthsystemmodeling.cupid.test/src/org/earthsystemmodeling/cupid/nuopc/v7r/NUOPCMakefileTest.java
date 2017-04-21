@@ -83,7 +83,7 @@ public class NUOPCMakefileTest {
 		assertTrue(contents.contains("ESMF_Finalize"));
 		
 		assertTrue("Compile check", TestHelpers.compileProject(p, NUOPCTest.ESMFMKFILE, ""));
-		assertTrue("Execution check", TestHelpers.executeMPI(p, "./esmApp", 4));
+		assertTrue("Execution check", TestHelpers.executeMPI(p, "./esmApp", 4, null));
 		assertTrue("Log Error check", TestHelpers.verifyNoLogErrors(p));
 
 	}

@@ -11,5 +11,34 @@
 		<version>1.1.0-SNAPSHOT</version>
 		<relativePath>../org.earthsystemmodeling.cupid.releng</relativePath>
 	</parent>
+	
+	<properties>
+		<nuopc.url.trunk>scm:svn:http://svn.code.sf.net/p/esmfcontrib/svn/NUOPC/trunk</nuopc.url.trunk>
+		<nuopc.url.tags>scm:svn:http://svn.code.sf.net/p/esmfcontrib/svn/NUOPC/tags</nuopc.url.tags>
+	</properties>
+
+	<build>
+		<plugins>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-scm-plugin</artifactId>
+				<version>1.9.4</version>
+				<executions>
+					<!--  execution tag can be repeated as needed -->
+					<execution>
+						<id>checkout-ESMF_7_0_0</id>
+						<phase>pre-integration-test</phase>
+						<goals>
+							<goal>checkout</goal>
+						</goals>
+						<configuration>
+							<connectionUrl>${nuopc.url.tags}/ESMF_7_0_0_win</connectionUrl>
+							<checkoutDirectory>${project.build.directory}/ESMF_7_0_0</checkoutDirectory>
+						</configuration>
+					</execution>
+				</executions>			
+			</plugin>
+		</plugins>
+	</build>
 
 </project>

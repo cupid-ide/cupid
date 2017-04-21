@@ -43,7 +43,7 @@ public class NUOPCMainGeneratorTest {
 		assertTrue(contents.contains("myapp"));
 		assertTrue(contents.contains("ESMF_Finalize"));
 		
-		System.out.println(contents);
+		//System.out.println(contents);
 		
 		//String makeTargets[] = {"atm.o", "ocn.o", "esm.o"};
 		//assertTrue("Compile check", TestHelpers.compileProject(p, NUOPCTest.ESMFMKFILE, ""));

@@ -1,4 +1,4 @@
-package org.earthsystemmodeling.cupid.test;
+package org.earthsystemmodeling.cupid.trace;
 
 import java.io.ByteArrayInputStream;
 import java.io.File;
@@ -31,8 +31,6 @@ public class TestHelpers {
 	private static Bundle MY_BUNDLE = FrameworkUtil.getBundle(TestHelpers.class);
 	
 	private static IProgressMonitor NPM = new NullProgressMonitor();
-
-	private static final boolean PRINT_GENERATED_CODE = false;
 	
 	/**
 	 * Copies a folder from workspace folder in the test project to the testing workspace.
@@ -181,7 +179,7 @@ public class TestHelpers {
 		}
 	}
 	
-	public static boolean execute(IProject p, Map<String,String> envMap, String... cmd) throws IOException, InterruptedException {
+public static boolean execute(IProject p, Map<String,String> envMap, String... cmd) throws IOException, InterruptedException {
 		
 		ProcessBuilder pb = new ProcessBuilder(cmd);
 		if (envMap != null) {
@@ -247,12 +245,5 @@ public class TestHelpers {
 		}
 	}
 	
-	public static void printAST(CodeConcept<?,?> cc) {
-		if (PRINT_GENERATED_CODE) {
-			System.out.println("\n==============START GENERATED CODE==============\n");
-			System.out.println(cc.getAST().getRoot().toString());
-			System.out.println("\n==============END GENERATED CODE==============\n");
-		}
-	}
 	
 }
