@@ -237,22 +237,36 @@ public class NUOPCCallStackView extends CallStackView {
 		}
 		 */
 
-		/*
+		
 		@Override
 		public Map<String, String> getEventHoverToolTipInfo(ITimeEvent event) {
+			
 			Map<String,String> retMap = new HashMap<>();
 
-			//CallStackEntry cse = (CallStackEntry) event.getEntry();
-			//cse.getTrace();
+			CallStackEntry cse = (CallStackEntry) event.getEntry();
+			ITmfStateSystem ss = cse.getStateSystem();
+			try {
+				int quarkMe = cse.getQuark();
+				int quarkRef = ss.getParentAttributeQuark(quarkMe);
+				quarkRef = ss.getParentAttributeQuark(quarkRef);
+				quarkRef = ss.getQuarkRelative(quarkRef, "clock");
+				//String[] quarkPath = ss.getFullAttributePathArray(quarkRef);
 
-			//retMap.put("TestVal", "First");
-			//retMap.put("Another", "Second");
+				ITmfStateValue value = ss.querySingleState(event.getTime(), quarkRef).getStateValue();
+				if (!value.isNull()) {
+					retMap.put("Model Clock", value.unboxStr());
+				}
+			}
+			catch (AttributeNotFoundException e) {
+				//ignore
+			} catch (StateSystemDisposedException e) {
+				//ignore
+			}
 			return retMap;
+		
 		}
-		 */
 
-		//private Integer fAverageCharWidth;
-
+		
 		/*
 		@Override
 		public Map<String, String> getEventHoverToolTipInfo(ITimeEvent event) {

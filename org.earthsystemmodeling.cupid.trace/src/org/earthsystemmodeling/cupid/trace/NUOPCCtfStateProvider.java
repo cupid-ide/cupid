@@ -137,6 +137,7 @@ public class NUOPCCtfStateProvider extends AbstractTmfStateProvider {
             	value = TmfStateValue.newValueLong(physMem);
             	ss.modifyAttribute(ts, value, quark);
             }
+            
         	
         } catch (StateValueTypeException ex) {
         	throw new IllegalStateException(ex);

@@ -110,7 +110,18 @@ public abstract class NUOPCCtfCallStackStateProvider extends CallStackStateProvi
         		toPush = TmfStateValue.newValueString(kind);
         	}
         	ss.pushAttribute(timestamp, toPush, compkindQuark);
-        	                      
+        	
+        	//add clock
+        	/*
+        	String currTime = getComponentClock(event);
+        	int compClockQuark = ss.getQuarkRelativeAndAdd(threadQuark, "clock");
+        	toPush = TmfStateValue.newValueString("Unknown");
+        	if (kind != null) {
+        		toPush = TmfStateValue.newValueString(kind);
+        	}
+        	ss.pushAttribute(timestamp, toPush, compkindQuark);
+        	*/
+        	
             return;
         }
 
@@ -393,11 +404,50 @@ public abstract class NUOPCCtfCallStackStateProvider extends CallStackStateProvi
 	            
 	            quark = ss.getQuarkAbsoluteAndAdd(PROCESSES, processName, threadName, "PrologueEpilogue", "phase");	            
 	            poppedValue = ss.popAttribute(timestamp, quark);
-	            if (!poppedValue.isNull() && poppedValue.unboxLong() != mp.getLongValue()) {
+	            if (!poppedValue.isNull() && poppedValue.unboxLong() != phase) {
 	            	Activator.logWarning("Call stack popped value does not match.  Possible missing event.");
 	            }
 	            
 			}
+			else if (event.getType().getName().equals("clk")) {
+            	
+				long timestamp = event.getTimestamp().toNanos();
+	            String processName = getProcessName(event);
+	            if (processName == null) {
+	                int processId = getProcessId(event);
+	                processName = (processId == UNKNOWN_PID) ? UNKNOWN : Integer.toString(processId);
+	            }
+	            String threadName = getThreadName(event);
+	            if (threadName == null) {
+	                threadName = Long.toString(getThreadId(event));
+	            }
+				            	
+            	long year = event.getContent().getFieldValue(Long.class, "year");
+            	long month = event.getContent().getFieldValue(Long.class, "month");
+            	long day = event.getContent().getFieldValue(Long.class, "day");
+            	long hour = event.getContent().getFieldValue(Long.class, "hour");
+            	long minute = event.getContent().getFieldValue(Long.class, "minute");
+            	long second = event.getContent().getFieldValue(Long.class, "second");
+            	String monthStr = String.valueOf(month);
+            	if (monthStr.length() == 1) monthStr = "0"+monthStr;
+            	String dayStr = String.valueOf(day);
+            	if (dayStr.length() == 1) dayStr = "0"+dayStr;
+            	String hourStr = String.valueOf(hour);
+            	if (hourStr.length() == 1) hourStr = "0"+hourStr;
+            	String minuteStr = String.valueOf(minute);
+            	if (minuteStr.length() == 1) minuteStr = "0"+minuteStr;
+            	String secondStr = String.valueOf(second);
+            	if (secondStr.length() == 1) secondStr = "0"+secondStr;
+            	
+            	
+            	String timeStr = "" + year + monthStr + dayStr + "T" + hourStr + ":" + minuteStr + ":" + secondStr;
+            	TmfStateValue.newValueString(timeStr);
+            	
+            	int quark = ss.getQuarkAbsoluteAndAdd(PROCESSES, processName, threadName, "clock");	            
+            	ss.modifyAttribute(timestamp, TmfStateValue.newValueString(timeStr), quark);
+            	//ss.updateOngoingState(TmfStateValue.newValueString(timeStr), quark);
+            	
+            }
 			else {
 				super.eventHandle(event);
 			}
@@ -409,7 +459,8 @@ public abstract class NUOPCCtfCallStackStateProvider extends CallStackStateProvi
 			String ename = event.getType().getName();
 			return ename.equals("prologue") || ename.equals("epilogue") ||
 					ename.equals("phase_start") || ename.equals("phase_end") ||
-					ename.equals("region") || super.considerEvent(event);			
+					ename.equals("region") || ename.equals("clk") || 
+					super.considerEvent(event);			
 		}
 		
 		@Override
