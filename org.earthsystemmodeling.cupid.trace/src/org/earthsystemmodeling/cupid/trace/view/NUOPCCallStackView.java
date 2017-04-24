@@ -127,11 +127,11 @@ public class NUOPCCallStackView extends CallStackView {
 								return Optional.of(value.unboxStr());
 							}
 						} catch (TimeRangeException e) {
-							Activator.getDefault().logError("Error querying state system", e); //$NON-NLS-1$
+							//Activator.getDefault().logError("Error querying state system", e); //$NON-NLS-1$
 						} catch (StateSystemDisposedException e) {
-							Activator.getDefault().logError("Error querying state system", e); //$NON-NLS-1$
+							//Activator.getDefault().logError("Error querying state system", e); //$NON-NLS-1$
 						} catch (AttributeNotFoundException e) {
-							Activator.getDefault().logError("Error querying state system", e); //$NON-NLS-1$
+							//Activator.getDefault().logError("Error querying state system", e); //$NON-NLS-1$
 						}
 						return Optional.empty();
 					}

@@ -7,7 +7,7 @@ import java.util.Date;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import org.earthsystemmodeling.cupid.trace.view.NUOPCEventType;
+import org.earthsystemmodeling.cupid.trace.json.NUOPCEventType;
 import org.eclipse.tracecompass.tmf.core.event.aspect.ITmfEventAspect;
 import org.eclipse.tracecompass.tmf.core.event.aspect.TmfBaseAspects;
 import org.eclipse.tracecompass.tmf.core.timestamp.ITmfTimestamp;

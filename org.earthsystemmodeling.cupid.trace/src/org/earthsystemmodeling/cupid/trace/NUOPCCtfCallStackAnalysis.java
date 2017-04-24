@@ -32,11 +32,10 @@ public class NUOPCCtfCallStackAnalysis extends CallStackAnalysis {
     }
 
     @Override
-    protected ITmfStateProvider createStateProvider() {
-       return new NUOPCCtfCallStackStateProvider(getTrace());
+    protected ITmfStateProvider createStateProvider() {    	
+    	return NUOPCCtfCallStackStateProvider.newInstance(getTrace());
     }
-    
-    
+        
     @Override
     protected Iterable<IAnalysisModule> getDependentAnalyses() {   	
     	List<IAnalysisModule> deps = new LinkedList<>();

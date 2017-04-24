@@ -1,6 +1,6 @@
 package org.earthsystemmodeling.cupid.trace.json;
 
-import org.earthsystemmodeling.cupid.trace.view.NUOPCEventType;
+import org.earthsystemmodeling.cupid.trace.json.NUOPCEventType;
 import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.tracecompass.statesystem.core.ITmfStateSystem;
 import org.eclipse.tracecompass.statesystem.core.exceptions.StateSystemDisposedException;

@@ -5,6 +5,7 @@ import java.net.URL;
 
 import org.eclipse.core.runtime.FileLocator;
 import org.eclipse.core.runtime.Path;
+import org.eclipse.core.runtime.Status;
 import org.eclipse.jface.resource.ImageDescriptor;
 import org.eclipse.ui.plugin.AbstractUIPlugin;
 import org.osgi.framework.BundleContext;
@@ -66,6 +67,27 @@ public class Activator extends AbstractUIPlugin {
 		URL url = FileLocator.find(getDefault().getBundle(), new Path(file), null);
 	    ImageDescriptor image = ImageDescriptor.createFromURL(url);
 	    return image;
+	}
+	
+	public static void log(int severity, String msg, Throwable e) {
+		if (getDefault()==null) return;
+		getDefault().getLog().log(new Status(severity, PLUGIN_ID, Status.OK, msg, e));
+	}
+	
+	public static void logInfo(String msg, Throwable e) {
+		log(Status.INFO, msg, e);
+	}
+	
+	public static void logInfo(String msg) {
+		log(Status.INFO, msg, null);
+	}
+	
+	public static void logWarning(String msg, Throwable e) {
+		log(Status.WARNING, msg, e);
+	}
+	
+	public static void logWarning(String msg) {
+		log(Status.WARNING, msg, null);
 	}
 
 }
