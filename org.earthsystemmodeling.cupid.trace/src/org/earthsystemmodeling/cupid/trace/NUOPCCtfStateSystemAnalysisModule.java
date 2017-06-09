@@ -3,7 +3,6 @@ package org.earthsystemmodeling.cupid.trace;
 import java.util.LinkedList;
 import java.util.List;
 
-import org.earthsystemmodeling.cupid.trace.view.NUOPCCallStackView;
 import org.earthsystemmodeling.cupid.trace.view.NUOPCMemUsageView;
 import org.eclipse.tracecompass.statesystem.core.ITmfStateSystem;
 import org.eclipse.tracecompass.statesystem.core.exceptions.AttributeNotFoundException;

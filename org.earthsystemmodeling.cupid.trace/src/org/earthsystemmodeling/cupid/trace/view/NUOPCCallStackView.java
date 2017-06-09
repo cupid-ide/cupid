@@ -89,7 +89,7 @@ public class NUOPCCallStackView extends CallStackView {
 						IStructuredSelection ss = (IStructuredSelection) event.getSelection();
 						if (ss.getFirstElement() instanceof CallStackEntry) {
 							CallStackEntry cse = (CallStackEntry) ss.getFirstElement();
-							pet = cse.getProcessId();
+							pet = Integer.valueOf(cse.getName()); //cse.getProcessId();
 							TmfSignalManager.dispatchSignal(new PETSelectedSignal(pet));
 						}
 						//TODO: process and thread entry are private
