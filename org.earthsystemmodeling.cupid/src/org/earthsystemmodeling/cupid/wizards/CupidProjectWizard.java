@@ -103,6 +103,7 @@ import org.w3c.dom.Document;
 
 import org.xml.sax.SAXException;
 
+/*
 import com.amazonaws.auth.AWSCredentials;
 import com.amazonaws.auth.BasicAWSCredentials;
 import com.amazonaws.services.cloudwatch.AmazonCloudWatchClient;
@@ -126,6 +127,7 @@ import com.amazonaws.services.ec2.model.RunInstancesRequest;
 import com.amazonaws.services.ec2.model.RunInstancesResult;
 import com.amazonaws.services.ec2.model.SecurityGroup;
 import com.amazonaws.services.ec2.model.ShutdownBehavior;
+*/
 
 //import org.eclipse.remote.internal.jsch.core.JSchConnectionWorkingCopy;
 
@@ -338,6 +340,9 @@ public class CupidProjectWizard extends Wizard implements INewWizard, IExecutabl
 		IRemoteConnection remoteConn = null;
 		if (wizardData.get(CupidProjectWizardPageCompEnv.WD_COMP_ENV).equals(CupidProjectWizardPageCompEnv.WD_COMP_ENV__CLOUD)) {
 			
+			CupidActivator.log("AWS Cloud service not available");
+			
+			/*
 			// make the amazon ec2 compute environment
 			List<String> ec2hosts;
 			try {
@@ -357,7 +362,7 @@ public class CupidProjectWizard extends Wizard implements INewWizard, IExecutabl
 			}
 			
 			CupidActivator.log("Created remote connection");
-		
+			 */
 		}
 		
 		if (wizardData.get(CupidProjectWizardPageCompEnv.WD_COMP_ENV).equals(CupidProjectWizardPageCompEnv.WD_COMP_ENV__REMOTE)) {
@@ -706,173 +711,173 @@ public class CupidProjectWizard extends Wizard implements INewWizard, IExecutabl
 	}
 
 
-	private List<String> createEC2Environment(IProject project, IProgressMonitor monitor) throws IOException, CoreException {
-
-		monitor.beginTask("Creating Amazon EC2 environment", 10);
-
-		AWSCredentials credentials = null;
-		//credentials = new PropertiesCredentials(CupidProjectWizard.class.getResourceAsStream("AwsCredentials.properties"));
-		
-		IPreferenceStore prefStore = CupidActivator.getDefault().getPreferenceStore();
-		String accessKey = prefStore.getString(CupidPreferencePage.CUPID_AWS_ACCESS_KEY);
-		String secretKey = prefStore.getString(CupidPreferencePage.CUPID_AWS_SECRET_KEY);
-		
-		if (accessKey == null || accessKey.length() < 1 || secretKey == null || secretKey.length() < 1) {
-			throw new CoreException(new OperationStatus(IStatus.ERROR, MY_BUNDLE.getSymbolicName(), 0, "Amazon AWS credentials have not been set up.  To add credentials, cancel the wizard, then select Window-->Preferences-->Cupid Preferences from the Eclipse menu bar. After entering the credentials, restart the wizard.", null));
-		}
-		credentials = new BasicAWSCredentials(accessKey, secretKey);
-		
-		AmazonEC2Client amazonEC2Client = new AmazonEC2Client(credentials);
-		amazonEC2Client.setEndpoint("ec2.us-east-1.amazonaws.com");
-
-		//does security group exist?
-		monitor.subTask("Verifying EC2 security group");
-		DescribeSecurityGroupsRequest dsgreq = new DescribeSecurityGroupsRequest();
-		dsgreq.withGroupNames("CupidSecurityGroup");
-
-		boolean createSecurityGroup = true;
-		DescribeSecurityGroupsResult dsgres = amazonEC2Client.describeSecurityGroups(dsgreq);
-		for (SecurityGroup sg : dsgres.getSecurityGroups()) {
-			if (sg.getGroupName().equals("CupidSecurityGroup")) {
-				createSecurityGroup = false;
-			}
-		}
-
-		monitor.worked(1);
-
-		if (createSecurityGroup) {
-
-			monitor.subTask("Adding EC2 security group");
-
-			//does not exist, so create it
-			CreateSecurityGroupRequest createSecurityGroupRequest = new CreateSecurityGroupRequest();
-			createSecurityGroupRequest.withGroupName("CupidSecurityGroup")
-			.withDescription("Cupid Security Group used with Eclipse IDE");
-			CreateSecurityGroupResult createSecurityGroupResult = 
-					amazonEC2Client.createSecurityGroup(createSecurityGroupRequest);
-
-			IpPermission ipPermission = new IpPermission();
-			ipPermission.withIpRanges("0.0.0.0/0")
-			.withIpProtocol("tcp")
-			.withFromPort(22)
-			.withToPort(22);
-
-			AuthorizeSecurityGroupIngressRequest authorizeSecurityGroupIngressRequest =
-					new AuthorizeSecurityGroupIngressRequest();
-
-			authorizeSecurityGroupIngressRequest.withGroupName("CupidSecurityGroup")
-			.withIpPermissions(ipPermission);
-			amazonEC2Client.authorizeSecurityGroupIngress(authorizeSecurityGroupIngressRequest);
-
-		}
-
-		//create key pair
-		/*
-		monitor.subTask("Creating SSH key pair");
-		
-		DeleteKeyPairRequest deleteKeyPairRequest = new DeleteKeyPairRequest();
-		deleteKeyPairRequest.withKeyName("CupidKeyPair");
-		amazonEC2Client.deleteKeyPair(deleteKeyPairRequest);
-
-		CreateKeyPairRequest createKeyPairRequest = new CreateKeyPairRequest();
-		createKeyPairRequest.withKeyName("CupidKeyPair");
-		CreateKeyPairResult createKeyPairResult = amazonEC2Client.createKeyPair(createKeyPairRequest);
-
-		KeyPair keyPair = new KeyPair();
-    	keyPair = createKeyPairResult.getKeyPair();
-		String privateKey = keyPair.getKeyMaterial();
-		*/
-		
-		//write key pair
-		/*
-		monitor.subTask("Writing key pair to local file");
-		IFile keyFile = project.getFile(".cupidkey.rsa");
-		InputStream stream = openContentStream(privateKey);
-		keyFile.create(stream, true, new SubProgressMonitor(monitor, 1));
-		*/
-		
-		monitor.subTask("Starting computational environment...");
-		RunInstancesRequest runInstancesRequest = new RunInstancesRequest();
-
-		//get image id from XML
-		String amiid = null;
-		Element compEnv = selectedElem.getChild("compenv");
-		if (compEnv != null) {
-			amiid = compEnv.getChildTextNormalize("amiid");
-		}
-		if (amiid == null || amiid.length() < 1) {
-			throw new CoreException(new OperationStatus(IStatus.ERROR, MY_BUNDLE.getSymbolicName(), 0, "No machine image identifier found in training scenario configuration XML.", null));
-		}
-		
-	    runInstancesRequest.withImageId(amiid)  //cupid-modele-image
-			.withInstanceType("t1.micro")
-			.withMinCount(1)
-			.withMaxCount(1)
-			.withKeyName("nesiikey")
-			.withInstanceInitiatedShutdownBehavior(ShutdownBehavior.Terminate)
-			.withSecurityGroups("CupidSecurityGroup");
-		
-
-
-		RunInstancesResult runInstancesResult = amazonEC2Client.runInstances(runInstancesRequest);		
-
-		Reservation res = runInstancesResult.getReservation();
-
-		List<String> hostNames = new ArrayList<String>();
-		List<Dimension> dimensions = new ArrayList<Dimension>();
-		List<Instance> instances = res.getInstances();
-		for (Instance i : instances) {
-			//System.out.println("\tInstance: " + i.getInstanceId() + " : " + i.getState().getName() + " : " + i.getPublicDnsName());
-			String curState = "";
-
-			//wait for instance to be in running state
-			monitor.subTask("Waiting on computational environment to start up...");
-			int count = 0;
-			while (!curState.equals("running") && count < 20) {
-
-				try {
-					Thread.sleep(5000);
-					monitor.worked(1);
-				} catch (InterruptedException e) {
-					e.printStackTrace();
-				}
-
-				DescribeInstancesRequest direq = new DescribeInstancesRequest();
-				direq.withInstanceIds(i.getInstanceId());
-				DescribeInstancesResult dires = amazonEC2Client.describeInstances(direq);
-				i = dires.getReservations().get(0).getInstances().get(0);
-				curState = i.getState().getName();
-				count++;
-			}
-			
-			hostNames.add(i.getPublicDnsName());
-			dimensions.add(new Dimension().withName("InstanceId").withValue(i.getInstanceId()));
-		}
-		
-		//add monitoring to terminate idle instances
-		AmazonCloudWatchClient cloudWatchClient = new AmazonCloudWatchClient(credentials);
-		cloudWatchClient.setEndpoint("monitoring.us-east-1.amazonaws.com");
-						
-		PutMetricAlarmRequest alarmRequest = new PutMetricAlarmRequest();
-		alarmRequest.withNamespace("AWS/EC2")
-					.withMetricName("CPUUtilization")
-					.withDimensions(dimensions)
-					.withPeriod(300)
-					.withStatistic(Statistic.Average)
-					.withAlarmName("terminate-idle-" + dimensions.get(0).getValue())
-					.withComparisonOperator(ComparisonOperator.LessThanThreshold)
-					.withThreshold(10.0)
-					.withEvaluationPeriods(10)
-					.withUnit(StandardUnit.Percent)
-					.withAlarmActions("arn:aws:automate:us-east-1:ec2:terminate");
-		
-		cloudWatchClient.putMetricAlarm(alarmRequest);
-		monitor.worked(1);		
-
-		monitor.done();
-		return hostNames;
-
-	}
+//	private List<String> createEC2Environment(IProject project, IProgressMonitor monitor) throws IOException, CoreException {
+//
+//		monitor.beginTask("Creating Amazon EC2 environment", 10);
+//
+//		AWSCredentials credentials = null;
+//		//credentials = new PropertiesCredentials(CupidProjectWizard.class.getResourceAsStream("AwsCredentials.properties"));
+//		
+//		IPreferenceStore prefStore = CupidActivator.getDefault().getPreferenceStore();
+//		String accessKey = prefStore.getString(CupidPreferencePage.CUPID_AWS_ACCESS_KEY);
+//		String secretKey = prefStore.getString(CupidPreferencePage.CUPID_AWS_SECRET_KEY);
+//		
+//		if (accessKey == null || accessKey.length() < 1 || secretKey == null || secretKey.length() < 1) {
+//			throw new CoreException(new OperationStatus(IStatus.ERROR, MY_BUNDLE.getSymbolicName(), 0, "Amazon AWS credentials have not been set up.  To add credentials, cancel the wizard, then select Window-->Preferences-->Cupid Preferences from the Eclipse menu bar. After entering the credentials, restart the wizard.", null));
+//		}
+//		credentials = new BasicAWSCredentials(accessKey, secretKey);
+//		
+//		AmazonEC2Client amazonEC2Client = new AmazonEC2Client(credentials);
+//		amazonEC2Client.setEndpoint("ec2.us-east-1.amazonaws.com");
+//
+//		//does security group exist?
+//		monitor.subTask("Verifying EC2 security group");
+//		DescribeSecurityGroupsRequest dsgreq = new DescribeSecurityGroupsRequest();
+//		dsgreq.withGroupNames("CupidSecurityGroup");
+//
+//		boolean createSecurityGroup = true;
+//		DescribeSecurityGroupsResult dsgres = amazonEC2Client.describeSecurityGroups(dsgreq);
+//		for (SecurityGroup sg : dsgres.getSecurityGroups()) {
+//			if (sg.getGroupName().equals("CupidSecurityGroup")) {
+//				createSecurityGroup = false;
+//			}
+//		}
+//
+//		monitor.worked(1);
+//
+//		if (createSecurityGroup) {
+//
+//			monitor.subTask("Adding EC2 security group");
+//
+//			//does not exist, so create it
+//			CreateSecurityGroupRequest createSecurityGroupRequest = new CreateSecurityGroupRequest();
+//			createSecurityGroupRequest.withGroupName("CupidSecurityGroup")
+//			.withDescription("Cupid Security Group used with Eclipse IDE");
+//			CreateSecurityGroupResult createSecurityGroupResult = 
+//					amazonEC2Client.createSecurityGroup(createSecurityGroupRequest);
+//
+//			IpPermission ipPermission = new IpPermission();
+//			ipPermission.withIpRanges("0.0.0.0/0")
+//			.withIpProtocol("tcp")
+//			.withFromPort(22)
+//			.withToPort(22);
+//
+//			AuthorizeSecurityGroupIngressRequest authorizeSecurityGroupIngressRequest =
+//					new AuthorizeSecurityGroupIngressRequest();
+//
+//			authorizeSecurityGroupIngressRequest.withGroupName("CupidSecurityGroup")
+//			.withIpPermissions(ipPermission);
+//			amazonEC2Client.authorizeSecurityGroupIngress(authorizeSecurityGroupIngressRequest);
+//
+//		}
+//
+//		//create key pair
+//		/*
+//		monitor.subTask("Creating SSH key pair");
+//		
+//		DeleteKeyPairRequest deleteKeyPairRequest = new DeleteKeyPairRequest();
+//		deleteKeyPairRequest.withKeyName("CupidKeyPair");
+//		amazonEC2Client.deleteKeyPair(deleteKeyPairRequest);
+//
+//		CreateKeyPairRequest createKeyPairRequest = new CreateKeyPairRequest();
+//		createKeyPairRequest.withKeyName("CupidKeyPair");
+//		CreateKeyPairResult createKeyPairResult = amazonEC2Client.createKeyPair(createKeyPairRequest);
+//
+//		KeyPair keyPair = new KeyPair();
+//    	keyPair = createKeyPairResult.getKeyPair();
+//		String privateKey = keyPair.getKeyMaterial();
+//		*/
+//		
+//		//write key pair
+//		/*
+//		monitor.subTask("Writing key pair to local file");
+//		IFile keyFile = project.getFile(".cupidkey.rsa");
+//		InputStream stream = openContentStream(privateKey);
+//		keyFile.create(stream, true, new SubProgressMonitor(monitor, 1));
+//		*/
+//		
+//		monitor.subTask("Starting computational environment...");
+//		RunInstancesRequest runInstancesRequest = new RunInstancesRequest();
+//
+//		//get image id from XML
+//		String amiid = null;
+//		Element compEnv = selectedElem.getChild("compenv");
+//		if (compEnv != null) {
+//			amiid = compEnv.getChildTextNormalize("amiid");
+//		}
+//		if (amiid == null || amiid.length() < 1) {
+//			throw new CoreException(new OperationStatus(IStatus.ERROR, MY_BUNDLE.getSymbolicName(), 0, "No machine image identifier found in training scenario configuration XML.", null));
+//		}
+//		
+//	    runInstancesRequest.withImageId(amiid)  //cupid-modele-image
+//			.withInstanceType("t1.micro")
+//			.withMinCount(1)
+//			.withMaxCount(1)
+//			.withKeyName("nesiikey")
+//			.withInstanceInitiatedShutdownBehavior(ShutdownBehavior.Terminate)
+//			.withSecurityGroups("CupidSecurityGroup");
+//		
+//
+//
+//		RunInstancesResult runInstancesResult = amazonEC2Client.runInstances(runInstancesRequest);		
+//
+//		Reservation res = runInstancesResult.getReservation();
+//
+//		List<String> hostNames = new ArrayList<String>();
+//		List<Dimension> dimensions = new ArrayList<Dimension>();
+//		List<Instance> instances = res.getInstances();
+//		for (Instance i : instances) {
+//			//System.out.println("\tInstance: " + i.getInstanceId() + " : " + i.getState().getName() + " : " + i.getPublicDnsName());
+//			String curState = "";
+//
+//			//wait for instance to be in running state
+//			monitor.subTask("Waiting on computational environment to start up...");
+//			int count = 0;
+//			while (!curState.equals("running") && count < 20) {
+//
+//				try {
+//					Thread.sleep(5000);
+//					monitor.worked(1);
+//				} catch (InterruptedException e) {
+//					e.printStackTrace();
+//				}
+//
+//				DescribeInstancesRequest direq = new DescribeInstancesRequest();
+//				direq.withInstanceIds(i.getInstanceId());
+//				DescribeInstancesResult dires = amazonEC2Client.describeInstances(direq);
+//				i = dires.getReservations().get(0).getInstances().get(0);
+//				curState = i.getState().getName();
+//				count++;
+//			}
+//			
+//			hostNames.add(i.getPublicDnsName());
+//			dimensions.add(new Dimension().withName("InstanceId").withValue(i.getInstanceId()));
+//		}
+//		
+//		//add monitoring to terminate idle instances
+//		AmazonCloudWatchClient cloudWatchClient = new AmazonCloudWatchClient(credentials);
+//		cloudWatchClient.setEndpoint("monitoring.us-east-1.amazonaws.com");
+//						
+//		PutMetricAlarmRequest alarmRequest = new PutMetricAlarmRequest();
+//		alarmRequest.withNamespace("AWS/EC2")
+//					.withMetricName("CPUUtilization")
+//					.withDimensions(dimensions)
+//					.withPeriod(300)
+//					.withStatistic(Statistic.Average)
+//					.withAlarmName("terminate-idle-" + dimensions.get(0).getValue())
+//					.withComparisonOperator(ComparisonOperator.LessThanThreshold)
+//					.withThreshold(10.0)
+//					.withEvaluationPeriods(10)
+//					.withUnit(StandardUnit.Percent)
+//					.withAlarmActions("arn:aws:automate:us-east-1:ec2:terminate");
+//		
+//		cloudWatchClient.putMetricAlarm(alarmRequest);
+//		monitor.worked(1);		
+//
+//		monitor.done();
+//		return hostNames;
+//
+//	}
 
 	private void executeCommandOnRemote(IRemoteConnection remoteConn, IProgressMonitor monitor, String... cmd) throws CoreException {
 		
