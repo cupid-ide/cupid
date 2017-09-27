@@ -6,15 +6,15 @@ Bundle-Version: 1.1.0.qualifier
 Bundle-Activator: org.earthsystemmodeling.cupid.trace.Activator
 Require-Bundle: org.eclipse.ui,
  org.eclipse.core.runtime,
- org.eclipse.tracecompass.tmf.core,
- org.eclipse.tracecompass.tmf.ui,
+ org.eclipse.tracecompass.tmf.core;bundle-version="3.1.0",
+ org.eclipse.tracecompass.tmf.ui;bundle-version="3.1.0",
  org.eclipse.core.resources,
  com.google.guava,
  org.eclipse.jdt.annotation,
- org.eclipse.tracecompass.statesystem.core,
+ org.eclipse.tracecompass.statesystem.core;bundle-version="3.1.0",
  org.swtchart,
  org.eclipse.jface,
- org.eclipse.tracecompass.tmf.ctf.core;bundle-version="2.1.0",
+ org.eclipse.tracecompass.tmf.ctf.core;bundle-version="3.0.1",
  org.earthsystemmodeling.cupid
 Bundle-RequiredExecutionEnvironment: JavaSE-1.8
 Bundle-ActivationPolicy: lazy

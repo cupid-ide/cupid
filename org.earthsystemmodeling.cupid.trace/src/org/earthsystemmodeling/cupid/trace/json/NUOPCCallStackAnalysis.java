@@ -17,7 +17,7 @@ public class NUOPCCallStackAnalysis extends CallStackAnalysis {
     }
 
     @Override
-    protected NUOPCTrace getTrace() {
+	public NUOPCTrace getTrace() {
         return (NUOPCTrace) super.getTrace();
     }
 

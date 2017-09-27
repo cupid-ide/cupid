@@ -27,7 +27,7 @@ public class NUOPCCtfCallStackAnalysis extends CallStackAnalysis {
     }
 
     @Override
-    protected CtfTmfTrace getTrace() {
+	public CtfTmfTrace getTrace() {
        return (CtfTmfTrace) super.getTrace();
     }
 
