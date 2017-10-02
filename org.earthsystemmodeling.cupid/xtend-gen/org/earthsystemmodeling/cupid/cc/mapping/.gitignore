@@ -1,0 +1,14 @@
+/CodeConceptInstanceReference.java
+/IllegalVariableAssignment.java
+/LiteralMTVBinding.java
+/MappingResult.java
+/MappingResultSet.java
+/MappingType.java
+/MappingTypeBinding.java
+/MappingTypeException.java
+/MappingTypeParameter.java
+/MappingTypeParameterBinding.java
+/ReferenceMTVBinding.java
+/TemplateParameterReference.java
+/UnboundVariableAccessException.java
+/UnresolvedVariableAccessException.java

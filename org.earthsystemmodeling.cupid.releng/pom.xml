@@ -3,13 +3,13 @@
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>org.earthsystemmodeling.cupid</groupId>
 	<artifactId>org.earthsystemmodeling.cupid.releng</artifactId>
-	<version>1.1.0-SNAPSHOT</version>
+	<version>2.0.0</version>
 	<packaging>pom</packaging>
 
 	<properties>
 		<tycho-version>1.0.0</tycho-version>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-		<eclipse-release>neon</eclipse-release>
+		<eclipse-release>oxygen</eclipse-release>
 		<eclipse-site>http://download.eclipse.org/releases/${eclipse-release}</eclipse-site>		
 	</properties>
 
