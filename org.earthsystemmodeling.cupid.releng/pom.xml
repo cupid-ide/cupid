@@ -41,7 +41,7 @@
 						<artifact>
 							<groupId>org.earthsystemmodeling.cupid</groupId>
 							<artifactId>org.earthsystemmodeling.cupid.targetplatform</artifactId>
-							<version>2.0.0-SNAPSHOT</version>
+							<version>2.0.0</version>
 						</artifact>
 					</target>
 					<environments>
@@ -74,11 +74,11 @@
 
 
 	<modules>
+		<module>../org.earthsystemmodeling.cupid.targetplatform</module>
 		<module>../org.earthsystemmodeling.cupid</module>
 		<module>../org.earthsystemmodeling.cupid.feature</module>
 		<module>../org.earthsystemmodeling.cupid.releng.p2</module>
 		<module>../org.earthsystemmodeling.cupid.test</module>
-		<module>../org.earthsystemmodeling.cupid.targetplatform</module>
 		<module>../org.earthsystemmodeling.cupid.template</module>
 		<module>../org.earthsystemmodeling.cupid.nuopcmodel</module>
 		<module>
