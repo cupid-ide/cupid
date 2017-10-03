@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <site>
-   <feature url="features/org.earthsystemmodeling.cupid.feature_2.0.0.jar" id="org.earthsystemmodeling.cupid.feature" version="2.0.0">
+   <feature url="features/org.earthsystemmodeling.cupid.feature_2.0.0.qualifier.jar" id="org.earthsystemmodeling.cupid.feature" version="2.0.0.qualifier">
       <category name="cupid"/>
    </feature>
    <category-def name="cupid" label="Cupid"/>
