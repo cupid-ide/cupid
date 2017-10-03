@@ -1,6 +1,7 @@
 package org.earthsystemmodeling.cupid.trace;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.Stack;
 
@@ -143,19 +144,38 @@ public abstract class NUOPCCtfCallStackStateProvider extends CallStackStateProvi
 			if (threadName == null) {
 				threadName = Long.toString(getThreadId(event));
 			}
-			int quark = ss.getQuarkAbsoluteAndAdd(PROCESSES, processName, threadName, CALL_STACK);
-			ITmfStateValue poppedValue = ss.popAttribute(timestamp, quark);
+			
+			int quarkCallStack = ss.getQuarkAbsoluteAndAdd(PROCESSES, processName, threadName, CALL_STACK);
+			int quarkCompKind = ss.getQuarkAbsoluteAndAdd(PROCESSES, processName, threadName, "compkind");
+			
+			ITmfStateValue poppedValue = ss.popAttribute(timestamp, quarkCallStack);
+			ss.popAttribute(timestamp, quarkCompKind);
+			
 			/*
-			 * Verify that the value we are popping matches the one in the
-			 * event field, unless the latter is undefined.
+			 * Check for regions that were not closed.
 			 */
-			if (!functionExitState.isNull() && !functionExitState.equals(poppedValue)) {
-				//TODO: error logging
-				Activator.logWarning("Call stack popped value does not match.  Possible missing event.");
+			while (poppedValue!= null && !functionExitState.isNull() && !functionExitState.equals(poppedValue)) {
+			
+				Activator.logWarning("Timing region was not closed: " 
+						+ poppedValue.unboxStr() + ".  Event: " + functionExitState.unboxStr());						
+				
+				poppedValue = ss.popAttribute(timestamp, quarkCallStack);
+				ss.popAttribute(timestamp, quarkCompKind);
+				
+				/*
+				List<Integer> subAttributes = ss.getSubAttributes(quark, true);
+				for (int q : subAttributes) {
+					String fp = ss.getFullAttributePath(q);
+					String val = ss.queryOngoingState(q).unboxStr();
+					System.out.println(fp + " ==> " + val);
+				}
+				*/
+			}
+			if (poppedValue == null) {
+				Activator.logWarning("Ill-formed timer regions for event: " + functionExitState.unboxStr());		
 			}
 
-			quark = ss.getQuarkAbsoluteAndAdd(PROCESSES, processName, threadName, "compkind");
-			ss.popAttribute(timestamp, quark);
+			
 		}
 
 	}
@@ -175,6 +195,7 @@ public abstract class NUOPCCtfCallStackStateProvider extends CallStackStateProvi
 			if (v.getLongValue() == REGION_ENTER) {
 				String name = event.getContent().getFieldValue(String.class, "name");
 				if (name == null) return null;
+				if (name.length()==0) name = "UNNAMED";
 				return TmfStateValue.newValueString(name);
 			}
 		}
@@ -189,6 +210,7 @@ public abstract class NUOPCCtfCallStackStateProvider extends CallStackStateProvi
 			if (v.getLongValue() == REGION_EXIT) {
 				String name = event.getContent().getFieldValue(String.class, "name");
 				if (name == null) return null;
+				if (name.length()==0) name = "UNNAMED";
 				return TmfStateValue.newValueString(name);
 			}			
 		}
@@ -963,6 +985,7 @@ public abstract class NUOPCCtfCallStackStateProvider extends CallStackStateProvi
 			}
 			else if (event.getType().equals(ET_REGION_ENTER)) {
 				String name = event.getContent().getFieldValue(String.class, "name");
+				if (name == null || name.length() == 0) name = "UNNAMED";
 				return TmfStateValue.newValueString(name);
 			}
 			return null;
@@ -981,6 +1004,7 @@ public abstract class NUOPCCtfCallStackStateProvider extends CallStackStateProvi
 			}
 			else if (event.getType().equals(ET_REGION_EXIT)) {
 				String name = event.getContent().getFieldValue(String.class, "name");
+				if (name == null || name.length() == 0) name = "UNNAMED";
 				return TmfStateValue.newValueString(name);
 			}
 			return null;	
