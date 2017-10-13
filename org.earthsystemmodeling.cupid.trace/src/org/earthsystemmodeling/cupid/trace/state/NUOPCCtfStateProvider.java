@@ -1,5 +1,6 @@
-package org.earthsystemmodeling.cupid.trace;
+package org.earthsystemmodeling.cupid.trace.state;
 
+import org.earthsystemmodeling.cupid.trace.NUOPCCtfTrace;
 import org.eclipse.tracecompass.statesystem.core.ITmfStateSystemBuilder;
 import org.eclipse.tracecompass.statesystem.core.exceptions.StateValueTypeException;
 import org.eclipse.tracecompass.statesystem.core.statevalue.ITmfStateValue;
@@ -19,11 +20,7 @@ public class NUOPCCtfStateProvider extends AbstractTmfStateProvider {
 
     @Override
     public int getVersion() {
-        /*
-         * If the version of an existing file doesn't match the version supplied
-         * in the provider, a rebuild of the history will be forced.
-         */
-        return 1;
+        return NUOPCCtfTrace.ANALYSES_VERSION;
     }
 
     @Override

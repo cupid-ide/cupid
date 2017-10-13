@@ -1,20 +1,13 @@
-package org.earthsystemmodeling.cupid.trace;
+package org.earthsystemmodeling.cupid.trace.callstack;
 
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.Stack;
-
-import org.eclipse.core.runtime.Status;
+import org.earthsystemmodeling.cupid.trace.Activator;
+import org.earthsystemmodeling.cupid.trace.NUOPCCtfTrace;
+import org.earthsystemmodeling.cupid.trace.state.NUOPCCtfStateSystemAnalysisModule;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.tracecompass.statesystem.core.ITmfStateSystemBuilder;
-import org.eclipse.tracecompass.statesystem.core.exceptions.AttributeNotFoundException;
-import org.eclipse.tracecompass.statesystem.core.exceptions.StateValueTypeException;
-import org.eclipse.tracecompass.statesystem.core.exceptions.TimeRangeException;
 import org.eclipse.tracecompass.statesystem.core.statevalue.ITmfStateValue;
 import org.eclipse.tracecompass.statesystem.core.statevalue.TmfStateValue;
-import org.eclipse.tracecompass.statesystem.core.statevalue.ITmfStateValue.Type;
 import org.eclipse.tracecompass.tmf.core.callstack.CallStackStateProvider;
 import org.eclipse.tracecompass.tmf.core.event.ITmfEvent;
 import org.eclipse.tracecompass.tmf.core.event.ITmfEventField;
@@ -64,7 +57,7 @@ public abstract class NUOPCCtfCallStackStateProvider extends CallStackStateProvi
 
 	@Override
 	public int getVersion() {
-		return 0;
+		return NUOPCCtfTrace.ANALYSES_VERSION;
 	}
 
 
@@ -1013,12 +1006,13 @@ public abstract class NUOPCCtfCallStackStateProvider extends CallStackStateProvi
 		protected String getFuncName(long vmid, long baseid, long method, long phase) {
 			String compName = stateAnalysis.queryComponentName(vmid, baseid);
 			if (compName == null) {
-				compName = "Unknown";
+				compName = "UNKNOWN";
 			}
 
 			String phaseLabel = null;
 			phaseLabel = stateAnalysis.queryComponentPhaseLabel(vmid, baseid, method, phase);
 
+			/*
 			if (phaseLabel == null) {
 				String methodStr = "";
 				if (method == ESMF_METHOD_INIT) {
@@ -1032,6 +1026,8 @@ public abstract class NUOPCCtfCallStackStateProvider extends CallStackStateProvi
 				}
 				phaseLabel = methodStr + "#" + String.valueOf(phase);
 			}
+			*/
+			if (phaseLabel == null) phaseLabel = "UNKNOWN";
 			return "[" + compName + "] " + phaseLabel;
 		}
 

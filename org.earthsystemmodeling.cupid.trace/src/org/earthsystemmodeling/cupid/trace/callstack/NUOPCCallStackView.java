@@ -1,4 +1,4 @@
-package org.earthsystemmodeling.cupid.trace.view;
+package org.earthsystemmodeling.cupid.trace.callstack;
 
 import java.util.HashMap;
 import java.util.List;
@@ -46,6 +46,7 @@ import org.eclipse.tracecompass.tmf.ui.widgets.timegraph.widgets.Utils;
 
 import com.google.common.cache.CacheBuilder;
 import com.google.common.cache.CacheLoader;
+import com.google.common.cache.CacheStats;
 import com.google.common.cache.LoadingCache;
 
 
@@ -108,9 +109,9 @@ public class NUOPCCallStackView extends CallStackView {
 	static class NUOPCCallStackPresentationProvider extends CallStackPresentationProvider {
 		
 		private final LoadingCache<CallStackEvent, Optional<String>> fTimeEventComponentKinds = CacheBuilder.newBuilder()
-				.maximumSize(1000)
+				.maximumSize(10000)
+				//.recordStats()
 				.build(new CacheLoader<CallStackEvent, Optional<String>>() {
-					@SuppressWarnings("restriction")
 					@Override
 					public Optional<String> load(CallStackEvent event) {
 						CallStackEntry entry = event.getEntry();
@@ -137,6 +138,7 @@ public class NUOPCCallStackView extends CallStackView {
 					}
 				});
 
+				
 		public NUOPCCallStackPresentationProvider(ITmfTrace trace) {
 
 		}
@@ -190,6 +192,10 @@ public class NUOPCCallStackView extends CallStackView {
 		public void postDrawEvent(ITimeEvent event, Rectangle bounds, GC gc) {
 			
 			String kind = getEventComponentKind(event);
+			
+			//CacheStats cacheStats = fTimeEventComponentKinds.stats();
+			//long hitCount = cacheStats.hitCount();
+			//long loadCount = cacheStats.loadCount();
 			
 			if (kind != null && kind.equals("Connector")) {
 				//gc.setAlpha(24);

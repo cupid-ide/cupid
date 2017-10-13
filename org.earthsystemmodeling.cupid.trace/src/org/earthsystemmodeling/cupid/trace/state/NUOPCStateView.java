@@ -1,4 +1,4 @@
-package org.earthsystemmodeling.cupid.trace.view;
+package org.earthsystemmodeling.cupid.trace.state;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -9,13 +9,11 @@ import org.earthsystemmodeling.cupid.trace.Activator;
 import org.earthsystemmodeling.cupid.trace.json.NUOPCStateSystemAnalysisModule;
 import org.eclipse.jface.action.Action;
 import org.eclipse.jface.action.IMenuManager;
-import org.eclipse.jface.action.IToolBarManager;
 import org.eclipse.jface.resource.ImageDescriptor;
 import org.eclipse.swt.graphics.Color;
 import org.eclipse.swt.graphics.Image;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.tracecompass.statesystem.core.ITmfStateSystem;
-import org.eclipse.tracecompass.statesystem.core.exceptions.AttributeNotFoundException;
 import org.eclipse.tracecompass.statesystem.core.exceptions.StateSystemDisposedException;
 import org.eclipse.tracecompass.statesystem.core.interval.ITmfStateInterval;
 import org.eclipse.tracecompass.statesystem.core.statevalue.ITmfStateValue;

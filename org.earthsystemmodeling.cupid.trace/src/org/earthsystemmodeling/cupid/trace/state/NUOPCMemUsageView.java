@@ -1,22 +1,28 @@
-package org.earthsystemmodeling.cupid.trace.view;
+package org.earthsystemmodeling.cupid.trace.state;
 
-import org.earthsystemmodeling.cupid.trace.json.NUOPCStateSystemAnalysisModule;
+import org.earthsystemmodeling.cupid.trace.PETSelectedSignal;
 import org.eclipse.core.runtime.IProgressMonitor;
+import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.tracecompass.statesystem.core.ITmfStateSystem;
 import org.eclipse.tracecompass.statesystem.core.exceptions.AttributeNotFoundException;
 import org.eclipse.tracecompass.statesystem.core.exceptions.StateSystemDisposedException;
 import org.eclipse.tracecompass.statesystem.core.interval.ITmfStateInterval;
+import org.eclipse.tracecompass.tmf.core.signal.TmfSignalHandler;
+import org.eclipse.tracecompass.tmf.core.signal.TmfTraceSelectedSignal;
 import org.eclipse.tracecompass.tmf.core.trace.ITmfTrace;
 import org.eclipse.tracecompass.tmf.core.trace.TmfTraceUtils;
+import org.eclipse.tracecompass.tmf.ctf.core.trace.CtfTmfTrace;
 import org.eclipse.tracecompass.tmf.ui.viewers.xycharts.TmfXYChartViewer;
 import org.eclipse.tracecompass.tmf.ui.viewers.xycharts.linecharts.TmfCommonXLineChartViewer;
 import org.eclipse.tracecompass.tmf.ui.views.TmfChartView;
 
-public class NUOPCRunStatsView extends TmfChartView {
+public class NUOPCMemUsageView extends TmfChartView {
 
-	public NUOPCRunStatsView() {
-		super("NUOPC Run Statistics View");
+	public static final String ID = "org.earthsystemmodeling.cupid.trace.NUOPCMemUsageView";
+	
+	public NUOPCMemUsageView() {
+		super("NUOPC Memory Usage View");
 		
 	}
 
@@ -28,19 +34,29 @@ public class NUOPCRunStatsView extends TmfChartView {
 
 	public class NUOPCStatsChartViewer extends TmfCommonXLineChartViewer {
 
-		private NUOPCStateSystemAnalysisModule analysisModule;
+		private NUOPCCtfStateSystemAnalysisModule analysisModule;
+		private long currentPet = 0;
 		
 		public NUOPCStatsChartViewer(Composite parent) {
-			super(parent, "NUOPC Run Statistics", "Time", "Memory Usage (MB)");
-			
-						
+			super(parent, "Memory Usage", "Time", "Memory Usage (MB)");
 		}
-
+		
+		@TmfSignalHandler
+		public void handleSignal(PETSelectedSignal signal) {
+			//System.out.println(signal.getPet());
+			if (currentPet != signal.getPet()) {
+				currentPet = signal.getPet();
+				setPartName("PET " + currentPet + " Memory Usage");
+				refresh();
+			}
+			//refresh();
+		}
+		
 		@Override
 	    protected void initializeDataSource() {
 	        ITmfTrace trace = getTrace();
 	        if (trace != null) {
-	            analysisModule = TmfTraceUtils.getAnalysisModuleOfClass(trace, NUOPCStateSystemAnalysisModule.class, NUOPCStateSystemAnalysisModule.ID);
+	            analysisModule = TmfTraceUtils.getAnalysisModuleOfClass(trace, NUOPCCtfStateSystemAnalysisModule.class, NUOPCCtfStateSystemAnalysisModule.ID);
 	            if (analysisModule == null) {
 	                return;
 	            }
@@ -70,8 +86,9 @@ public class NUOPCRunStatsView extends TmfChartView {
 
             final int quarkPhysMemPet, quarkVirtMemPet;
 			try {
-				quarkPhysMemPet = ss.getQuarkAbsolute("stats", "physMemPet");
-				quarkVirtMemPet = ss.getQuarkAbsolute("stats", "virtMemPet");
+				String pet = String.valueOf(currentPet);
+				quarkPhysMemPet = ss.getQuarkAbsolute("mem", pet, "physMem");
+				quarkVirtMemPet = ss.getQuarkAbsolute("mem", pet, "virtMem");
 			} catch (AttributeNotFoundException e1) {
 				return;
 			}
@@ -85,6 +102,9 @@ public class NUOPCRunStatsView extends TmfChartView {
                 long traceStart = getStartTime();
                 long traceEnd = getEndTime();
                 long offset = this.getTimeOffset();
+                
+                //CtfTmfTrace t = (CtfTmfTrace) getTrace();
+                
                 
                 double yPhysMemPet[] = new double[xvalues.length];
                 double yVirtMemPet[] = new double[xvalues.length];
@@ -116,7 +136,7 @@ public class NUOPCRunStatsView extends TmfChartView {
                     
                 }
                 setSeries("Phys Mem Usage (MB)", yPhysMemPet);
-                setSeries("Virtual Mem Usage (MB)", yVirtMemPet);
+                setSeries("Virt Mem Usage (MB)", yVirtMemPet);
                 
                 if (monitor != null && monitor.isCanceled()) {
                     return;
