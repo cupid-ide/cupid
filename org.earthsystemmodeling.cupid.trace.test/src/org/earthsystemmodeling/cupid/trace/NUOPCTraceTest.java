@@ -65,6 +65,8 @@ public class NUOPCTraceTest {
 		IProject p = TestHelpers.createFortranProjectFromFolder("target/ESMF_7_1_0_beta_snapshot_34/AtmOcnMedProto", "Trace_AtmOcnMedProto");
 		String esmfmkfile = TestHelpers.getMakefileFragmentLoc("ESMF_7_1_0_beta_snapshot_34");
 		
+		if (TestHelpers.isWindows()) return;
+		
 		assertTrue("Compile trace project", TestHelpers.compileProject(p, esmfmkfile, "esmApp"));
 		Map<String,String> envMap = new HashMap<>();
 		envMap.put("ESMF_RUNTIME_TRACE", "ON");
@@ -117,6 +119,8 @@ public class NUOPCTraceTest {
 		
 		IProject p = TestHelpers.createFortranProjectFromFolder("target/ESMF_7_1_0_beta_snapshot_34/AtmOcnLndProto", "Trace_TimingTest");
 		String esmfmkfile = TestHelpers.getMakefileFragmentLoc("ESMF_7_1_0_beta_snapshot_34");
+		
+		if (TestHelpers.isWindows()) return;
 		
 		assertTrue("Compile trace project", TestHelpers.compileProject(p, esmfmkfile, "esmApp"));
 		Map<String,String> envMap = new HashMap<>();
@@ -178,8 +182,10 @@ public class NUOPCTraceTest {
         assertNotNull(result);
         context.dispose();
         
-        NUOPCCtfStateSystemAnalysisModule analysis =  new NUOPCCtfStateSystemAnalysisModule();
-        assertTrue(analysis.setTrace(trace));
+        trace.traceOpened(new TmfTraceOpenedSignal(this, trace, null));
+		
+		NUOPCCtfStateSystemAnalysisModule analysis = 
+				TmfTraceUtils.getAnalysisModuleOfClass(trace, NUOPCCtfStateSystemAnalysisModule.class, NUOPCCtfStateSystemAnalysisModule.ID);
         
         analysis.schedule();
         assertTrue(analysis.waitForCompletion());
