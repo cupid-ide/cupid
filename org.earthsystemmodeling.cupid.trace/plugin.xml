@@ -3,6 +3,8 @@
 <plugin>
    <extension
          point="org.eclipse.linuxtools.tmf.core.tracetype">
+      
+      <!--
       <type
             event_type="org.eclipse.tracecompass.tmf.core.event.TmfEvent"
             id="org.earthsystemmodeling.cupid.trace.nuopc"
@@ -10,6 +12,8 @@
             name="NUOPC Log-Based Trace"
             trace_type="org.earthsystemmodeling.cupid.trace.json.NUOPCTrace">
       </type>
+      -->
+      
       <type
             category="org.eclipse.linuxtools.tmf.ctf.core.category.ctf"
             event_type="org.eclipse.tracecompass.tmf.ctf.core.event.CtfTmfEvent"
@@ -23,7 +27,7 @@
    <extension
          point="org.eclipse.linuxtools.tmf.core.analysis">
       
-      
+      <!--
       <module
             analysis_module="org.earthsystemmodeling.cupid.trace.json.NUOPCCallStackAnalysis"
             automatic="false"
@@ -48,11 +52,12 @@
                class="org.earthsystemmodeling.cupid.trace.json.NUOPCTrace">
          </tracetype>
       </module>
+      -->
       
       <module
             analysis_module="org.earthsystemmodeling.cupid.trace.callstack.NUOPCCtfCallStackAnalysis"
             automatic="false"
-            icon="icons/stack.png"
+            icon="icons/hierarchy.png"
             id="org.earthsystemmodeling.cupid.trace.NUOPCCtfCallStackAnalysis"
             name="NUOPC Call Stack Analysis">
          <tracetype
@@ -60,18 +65,8 @@
                class="org.earthsystemmodeling.cupid.trace.NUOPCCtfTrace">
          </tracetype>
       </module>
-      <module
-            analysis_module="org.earthsystemmodeling.cupid.trace.state.NUOPCCtfStateSystemAnalysisModule"
-            automatic="false"
-            icon="icons/state.png"
-            id="org.earthsystemmodeling.cupid.trace.NUOPCCtfStateSystemAnalysisModule"
-            name="NUOPC State System Analysis">
-         <tracetype
-               applies="true"
-               class="org.earthsystemmodeling.cupid.trace.NUOPCCtfTrace">
-         </tracetype>
-      </module>
      
+     <!--
       <module
             analysis_module="org.earthsystemmodeling.cupid.trace.timing.NUOPCCtfComponentTimingAnalysis"
             automatic="false"
@@ -95,31 +90,35 @@
                class="org.earthsystemmodeling.cupid.trace.NUOPCCtfTrace">
          </tracetype>
       </module>
+      -->
+      
       <module
             analysis_module="org.earthsystemmodeling.cupid.trace.callgraph.NUOPCCtfCallGraphAnalysis"
-            icon="icons/hierarchy.png"
+            icon="icons/clock.png"
             id="org.earthsystemmodeling.cupid.trace.CallGraphAnalysis"
-            name="NUOPC Call Graph Analysis">
+            name="NUOPC Timing Analysis">
          <tracetype
                applies="true"
                class="org.earthsystemmodeling.cupid.trace.NUOPCCtfTrace">
          </tracetype>
       </module>
-      
-      
-     
-      
+      <module
+            analysis_module="org.earthsystemmodeling.cupid.trace.state.NUOPCCtfStateSystemAnalysisModule"
+            automatic="false"
+            icon="icons/state.png"
+            id="org.earthsystemmodeling.cupid.trace.NUOPCCtfStateSystemAnalysisModule"
+            name="NUOPC System Analysis">
+         <tracetype
+               applies="true"
+               class="org.earthsystemmodeling.cupid.trace.NUOPCCtfTrace">
+         </tracetype>
+      </module>
+        
    </extension>
    <extension
          point="org.eclipse.ui.views">
-      <view
-            category="org.earthsystemmodeling.cupid"
-            class="org.earthsystemmodeling.cupid.trace.view.NUOPCRunStatsView"
-            icon="icons/linegraph.png"
-            id="org.earthsystemmodeling.cupid.trace.NUOPCRunStats"
-            name="NUOPC Run Statistics"
-            restorable="true">
-      </view>
+      
+      <!--
       <view
             category="org.earthsystemmodeling.cupid"
             class="org.earthsystemmodeling.cupid.trace.state.NUOPCStateView"
@@ -128,10 +127,12 @@
             name="NUOPC State Explorer"
             restorable="true">
       </view>
+      -->
+      
       <view
             category="org.earthsystemmodeling.cupid"
             class="org.earthsystemmodeling.cupid.trace.callstack.NUOPCCallStackView"
-            icon="icons/stack.png"
+            icon="icons/hierarchy.png"
             id="org.earthsystemmodeling.cupid.trace.NUOPCCallStackView"
             name="NUOPC Call Stack View"
             restorable="true">
@@ -144,6 +145,7 @@
             name="NUOPC Memory Usage"
             restorable="true">
       </view>
+      <!--
       <view
             category="org.eclipse.linuxtools.tmf.ui.views.category"
             class="org.earthsystemmodeling.cupid.trace.timing.ComponentSegStoreTableView"
@@ -160,10 +162,12 @@
             name="Component Timing Statistics View"
             restorable="true">
       </view>
+      -->
+      
       <view
             category="org.earthsystemmodeling.cupid"
             class="org.earthsystemmodeling.cupid.trace.callgraph.NUOPCFlameGraphTreeView"
-            icon="icons/hierarchy.png"
+            icon="icons/clock.png"
             id="org.earthsystemmodeling.cupid.trace.NUOPCFlameGraphTreeView"
             name="Component Timing Tree"
             restorable="true">

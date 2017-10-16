@@ -145,7 +145,6 @@ public class NUOPCFlameGraphTreeView extends TmfView {
 
 		private final Format FORMATTER = new SubSecondTimeWithUnitFormat();
 		
-		//private NUOPCCtfCallGraphAnalysis fModule;
 		private List<ThreadNode> fThreadNodes;
 		
 		public NUOPCFlameGraphTreeViewer(Composite parent) {
@@ -153,10 +152,6 @@ public class NUOPCFlameGraphTreeView extends TmfView {
 			super(parent, true);
 			setLabelProvider(new FlameGraphTreeLabelProvider());
 	        getTreeViewer().setAutoExpandLevel(2);
-	       
-			
-			//getTreeViewer().setAutoExpandLevel(2);
-	        //filterMap = new HashMap<>();
 	        
 	        //IActionBars bars = getViewSite().getActionBars();
 	        //IToolBarManager toolbarManager = bars.getToolBarManager();
