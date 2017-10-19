@@ -1,14 +1,14 @@
 package org.earthsystemmodeling.cupid.trace.callstack;
 
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 import java.util.Optional;
-import java.util.Random;
 
-import org.eclipse.swt.graphics.Color;
-import org.eclipse.swt.graphics.Device;
 import org.earthsystemmodeling.cupid.trace.PETSelectedSignal;
+import org.earthsystemmodeling.cupid.trace.state.NUOPCCtfStateSystemAnalysisModule;
+import org.earthsystemmodeling.cupid.trace.timing.NUOPCCtfComponentTimingAnalysis;
+import org.eclipse.jface.action.IToolBarManager;
+import org.eclipse.jface.action.Separator;
 import org.eclipse.jface.viewers.ISelectionChangedListener;
 import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.jface.viewers.SelectionChangedEvent;
@@ -16,44 +16,29 @@ import org.eclipse.swt.SWT;
 import org.eclipse.swt.graphics.GC;
 import org.eclipse.swt.graphics.Rectangle;
 import org.eclipse.swt.widgets.Composite;
-import org.eclipse.swt.widgets.Display;
-import org.eclipse.tracecompass.internal.tmf.ui.Activator;
 import org.eclipse.tracecompass.statesystem.core.ITmfStateSystem;
 import org.eclipse.tracecompass.statesystem.core.exceptions.AttributeNotFoundException;
 import org.eclipse.tracecompass.statesystem.core.exceptions.StateSystemDisposedException;
 import org.eclipse.tracecompass.statesystem.core.exceptions.TimeRangeException;
-import org.eclipse.tracecompass.statesystem.core.interval.ITmfStateInterval;
 import org.eclipse.tracecompass.statesystem.core.statevalue.ITmfStateValue;
-import org.eclipse.tracecompass.tmf.core.analysis.IAnalysisModule;
-import org.eclipse.tracecompass.tmf.core.callstack.CallStackStateProvider;
 import org.eclipse.tracecompass.tmf.core.signal.TmfSignalManager;
 import org.eclipse.tracecompass.tmf.core.trace.ITmfTrace;
 import org.eclipse.tracecompass.tmf.core.trace.TmfTraceUtils;
-import org.eclipse.tracecompass.tmf.ui.symbols.SymbolProviderManager;
 import org.eclipse.tracecompass.tmf.ui.views.callstack.CallStackEntry;
 import org.eclipse.tracecompass.tmf.ui.views.callstack.CallStackEvent;
 import org.eclipse.tracecompass.tmf.ui.views.callstack.CallStackPresentationProvider;
 import org.eclipse.tracecompass.tmf.ui.views.callstack.CallStackView;
-import org.eclipse.tracecompass.tmf.ui.widgets.timegraph.ITimeGraphTimeListener;
-import org.eclipse.tracecompass.tmf.ui.widgets.timegraph.StateItem;
-import org.eclipse.tracecompass.tmf.ui.widgets.timegraph.TimeGraphTimeEvent;
-import org.eclipse.tracecompass.tmf.ui.widgets.timegraph.TimeGraphViewer;
 import org.eclipse.tracecompass.tmf.ui.widgets.timegraph.model.ITimeEvent;
-import org.eclipse.tracecompass.tmf.ui.widgets.timegraph.model.ITimeGraphEntry;
-import org.eclipse.tracecompass.tmf.ui.widgets.timegraph.model.TimeGraphEntry;
-import org.eclipse.tracecompass.tmf.ui.widgets.timegraph.widgets.ITmfTimeGraphDrawingHelper;
-import org.eclipse.tracecompass.tmf.ui.widgets.timegraph.widgets.Utils;
 
 import com.google.common.cache.CacheBuilder;
 import com.google.common.cache.CacheLoader;
-import com.google.common.cache.CacheStats;
 import com.google.common.cache.LoadingCache;
 
 
 public class NUOPCCallStackView extends CallStackView {
 
 	public static final String ID = "org.earthsystemmodeling.cupid.trace.NUOPCCallStackView";
-
+		
 	@Override
 	public void createPartControl(Composite parent) {
 		super.createPartControl(parent);
@@ -61,6 +46,8 @@ public class NUOPCCallStackView extends CallStackView {
 		NUOPCCallStackPresentationProvider pp = new NUOPCCallStackPresentationProvider(getTrace());
 		pp.setCallStackView(this);
 		getTimeGraphViewer().setTimeGraphProvider(pp);
+		
+		
 		
 		/*
 		getTimeGraphViewer().addTimeListener(new ITimeGraphTimeListener() {
@@ -105,6 +92,8 @@ public class NUOPCCallStackView extends CallStackView {
 		});
 
 	}
+	
+	
 
 	static class NUOPCCallStackPresentationProvider extends CallStackPresentationProvider {
 		
@@ -137,10 +126,7 @@ public class NUOPCCallStackView extends CallStackView {
 						return Optional.empty();
 					}
 				});
-
-				
 		public NUOPCCallStackPresentationProvider(ITmfTrace trace) {
-
 		}
 
 		public String getEventComponentKind(ITimeEvent event) {
@@ -150,44 +136,7 @@ public class NUOPCCallStackView extends CallStackView {
 			return null;
 		}		
 
-		/*
-		 public String getEventComponentKind(ITimeEvent event) {
-
-			 CallStackEntry entry = (CallStackEntry) event.getEntry();
-			 ITmfStateSystem ss = entry.getStateSystem();
-
-			 int quarkMe = entry.getQuark();
-			 int quarkRef = ss.getParentAttributeQuark(quarkMe);
-			 quarkRef = ss.getParentAttributeQuark(quarkRef);
-			 try {
-				quarkRef = ss.getQuarkRelative(quarkRef, "compkind", String.valueOf(entry.getStackLevel()));
-			} catch (AttributeNotFoundException e1) {
-				// TODO Auto-generated catch block
-				e1.printStackTrace();
-			}
-
-			 String[] quarkPath = ss.getFullAttributePathArray(quarkRef);
-
-			 //int quark = ss.getQuarkAbsolute(CallStackStateProvider.PROCESSES, 
-			 //		String.valueOf(pet), "0", "compkind", String.valueOf(e.getStackLevel()));
-
-			 ITmfStateValue value;
-			try {
-				value = ss.querySingleState(event.getTime(), quarkRef).getStateValue();
-				if (!value.isNull()) {
-					 return value.unboxStr();
-				}
-			} catch (StateSystemDisposedException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-			 //return Optional.of("Model");
-
-			return null;
-
-		 }
-		 */
-	
+		
 		@Override
 		public void postDrawEvent(ITimeEvent event, Rectangle bounds, GC gc) {
 			
