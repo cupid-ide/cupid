@@ -1,22 +1,24 @@
 Installation
 ============
 
-Information about installing Cupid is maintained on the Cupid website:
-https://www.earthsystemcog.org/projects/cupid/
+Cupid is available for installation in the 
+`Eclipse Marketplace <https://marketplace.eclipse.org/content/cupid>`_. 
+To install Cupid, follow these steps:
 
-.. note::
-
-   * Prerequisites: https://www.earthsystemcog.org/projects/cupid/installation/prerequisites
-   * Installation from the Eclipse marketplace: https://www.earthsystemcog.org/projects/cupid/installation/marketplace
-   * Installation with the Eclipse installer: https://www.earthsystemcog.org/projects/cupid/installation/eclipseinstaller
+ - If you don't already have it, install Java 8.
+ - Download and install **Eclipse for Parallel Application Developers** from 
+   `eclipse.org <https://www.eclipse.org/downloads/>`_.
+   You can use the Eclipse Installer which helps to manage multiple installations of Eclipse.
+ - Start Eclipse and select Help-->Eclipse Marketplace from the menu.
+ - In the Marketplace window, search for "Cupid". Click the "Install" button to install Cupid.  Once installed, you will be prompted to restart Eclipse.
 
 
 Verify that Cupid is Installed
 ------------------------------
 
 To verify that Cupid is installed, view the Eclipse Installation Details by selecting
-**Help -> Installation Details** from the Eclipse menu.  You should see Cupid in the list
-of installed software.
+**Help -> About Eclipse** from the Eclipse menu and clicking **Installation Details.**  
+You should see Cupid in the list of installed software.
 
 .. image:: images/install_details.png
     :scale: 70%

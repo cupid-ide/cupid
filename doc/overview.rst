@@ -2,20 +2,46 @@ Overview
 ========
 `Cupid <https://www.earthsystemcog.org/projects/cupid/>`_ is a plugin for the 
 `Eclipse Integrated Development Environment (IDE) <https://www.eclipse.org/>`_ 
-and provides developers with assistance in writing code compliant with the `National Unified 
-Operational Prediction Capability (NUOPC) software Layer <https://earthsystemcog.org/projects/nuopc/>`_. 
+and provides development tools for building and analyzing applications based on the 
+`National Unified Operational Prediction Capability (NUOPC) software Layer <https://earthsystemcog.org/projects/nuopc/>`_.
+The main features include analysis of traces for debugging and profiling coupled systems, 
+and generation of NUOPC-compliant code. 
 
-.. note:: 
-   
-   The name *Cupid* is not an acronym.  It originates from a Ph.D. project aimed
-   at generating couplers for Earth System Models.  Cupid, in classical mythology,
-   is the god of desire and attraction.  Since this software is designed to build
-   couplers for "bringing models together," the name Cupid seemed appropriate.
+Key Features
+------------
+
+Cupid is as a *framework-aware* development environment with a set of tools specific to ESMF and NUOPC.
+The key features include: 
+
+  * Tools to **profile and debug NUOPC applications** through trace analysis and visualization.
+    ESMF has a built-in tracing capability that automatically instruments model components to collect
+    timing, memory, and component metadata. Once a trace has been generated, it can be imported into
+    Cupid for analysis of component execution times, timing of user-defined regions, load balancing,
+    and basic memory usage. 
+
+  * A **reverse engineering engine** that reads existing NUOPC cap code and presents relevant initialize,
+    run, finalize phases and specialization points in an outline view.  The outline is synchronized
+    automatically as the code changes.  The tool indicates code-level compliance issues that may
+    result in runtime errors.  (The compliance checking is limited to code errors than can be
+    determined by static analysis.)
+  
+  * A **code generation engine** that outputs NUOPC-compliant code fragments (i.e., initialization phases
+    and specialization points). The generated code can often be used as is, although further customization 
+    of the generated code is supported. The generated code is inserted into the user's existing code at the 
+    appropriate places, keeping the existing code structure intact.  The code generation feature helps the 
+    developer understand what framework code is required and where it should be located. 
+  
+
 
 What is NUOPC?
 --------------
 
-NUOPC is a consortium of Navy, NOAA, and Air Force modelers and their research partners. It aims to advance the weather prediction modeling systems used by meteorologists, mission planners, and decision makers. NUOPC partners are working toward a common model architecture - a standard way of building models - in order to make it easier to collaboratively build modeling systems.  To this end, they have developed a NUOPC Layer that defines conventions and templates for using the `Earth System Modeling Framework (ESMF) <https://earthsystemcog.org/projects/esmf/>`_. **Cupid version 1.0 is compatible with ESMF version 7.0.**
+NUOPC is a consortium of Navy, NOAA, and Air Force modelers and their research partners. 
+It aims to advance the weather prediction modeling systems used by meteorologists, mission planners, 
+and decision makers. NUOPC partners are working toward a common model architecture - 
+a standard way of building models - in order to make it easier to collaboratively build 
+modeling systems.  To this end, they have developed a NUOPC Layer that defines conventions and 
+templates for using the `Earth System Modeling Framework (ESMF) <https://earthsystemcog.org/projects/esmf/>`_. 
 
 .. note:: 
     The following resources are a good starting point for learning about the NUOPC Layer.
@@ -27,46 +53,14 @@ NUOPC is a consortium of Navy, NOAA, and Air Force modelers and their research p
 What is Eclipse?
 ----------------
 
-Eclipse is a graphical user interface or integrated development environment (IDE) used in computer programming for writing software. It contains a base workspace and an extensible plugin system for customizing the environment. Eclipse is written mostly in Java and its primary use is for developing Java applications, but it may also be used to develop applications in other programming languages through the use of plugins
+Eclipse is a graphical user interface or integrated development environment (IDE) used in 
+computer programming for writing software. It contains a base workspace and an extensible 
+plugin system for customizing the environment. Eclipse supports development in a variety of
+programming languages through the use of plugins. Many of these are found in the 
+`Eclipse Marketplace <https://marketplace.eclipse.org/>`_, a kind of "app store" for Eclipse.
 
-The basic premise behind Cupid
-------------------------------
 
-Cupid acts as a *framework-aware*
-code editing environment.  This means that the requirements of writing NUOPC-compliant code
-are built into the tool so that it can automatically generate code fragments and indicate places
-in the code with potential errors before the code is compiled.  To accomplish this, Cupid
-relies heavily on Fortran static analysis capabilities provided by `Photran <http://www.eclipse.org/photran/>`_, 
-the Eclipse plugin that provides Fortran language tooling.
 
-Target Audience
----------------
-
-Cupid is intended for model developers who have prior experience with model development, 
-but are new to developing with NUOPC and have a need to work with existing NUOPC-compliant software
-or write code to make a Fortran-based model code NUOPC compliant.  Specifically, Cupid can
-help write a NUOPC "cap" for a model, i.e., the interface layer that translates a model's
-init/run/finalize methods and data types so that they can be understood by NUOPC and used in
-a coupled system with other NUOPC components.
-
-Cupid is also aimed at developers interested in exploring the benefits of using the Eclipse IDE 
-for improving development productivity.
-
-Key Features
-------------
-
-  * A **reverse engineering engine** that reads existing NUOPC cap code and presents relevant initialize,
-    run, finalize phases and specialization points in an outline view.  The outline is synchronized
-    automatically as the code changes.  The tool indicates code-level compliance issues that may
-    result in runtime errors.  (The compliance checking is limited to code errors than can be
-    determined by static analysis.)
-  
-  * A **code generation engine** that outputs NUOPC-compliant code fragments (i.e., initialization phases
-    and specialization points). The generated code can often be used as is, although further customization 
-    of the generated code is suported. The generated code is inserted into the user's existing code at the 
-    appropriate places, keeping the existing code structure intact.  The code generation feature helps the 
-    developer understand what framework code is required and where it should be located. 
-  
 
 
     

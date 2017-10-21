@@ -1,8 +1,6 @@
 Cupid User's Guide - |release|
 ==============================
 
-**This version of Cupid is compatible with ESMF version 7.0.**
-
 Contents:
 
 .. toctree::
@@ -11,8 +9,8 @@ Contents:
 
    overview
    install
-   code
    runtime
+   code   
 
 
 Search
