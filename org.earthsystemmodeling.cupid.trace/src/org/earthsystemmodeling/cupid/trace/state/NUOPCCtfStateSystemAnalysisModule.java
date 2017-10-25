@@ -259,8 +259,8 @@ public class NUOPCCtfStateSystemAnalysisModule extends TmfStateSystemAnalysisMod
 	}
 	*/
 	
-	@Override
-    public Iterable<IAnalysisOutput> getOutputs() {
-		return ImmutableList.of(new TmfAnalysisViewOutput(NUOPCMemUsageView.ID));  		
-    }
+	//@Override
+    //public Iterable<IAnalysisOutput> getOutputs() {
+	//	return ImmutableList.of(new TmfAnalysisViewOutput(NUOPCMemUsageView.ID));  		
+    //}
 }
