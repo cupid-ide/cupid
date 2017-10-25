@@ -137,6 +137,8 @@
             name="NUOPC Call Stack View"
             restorable="true">
       </view>
+      
+      <!--
       <view
             category="org.earthsystemmodeling.cupid"
             class="org.earthsystemmodeling.cupid.trace.state.NUOPCMemUsageView"
@@ -145,6 +147,8 @@
             name="NUOPC Memory Usage"
             restorable="true">
       </view>
+      -->
+      
       <!--
       <view
             category="org.eclipse.linuxtools.tmf.ui.views.category"
