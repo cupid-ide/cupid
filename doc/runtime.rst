@@ -3,8 +3,22 @@ NUOPC Trace Analysis
 
 .. important:: 
     These features require a new tracing capability available in a development
-    snapshot of ESMF.  **You must use at least ESMF 7.1.0 beta snapshot 31.** For
-    information about acquiring a development snapshot of ESMF, please email:
+    snapshot of ESMF.  **You must use at least ESMF 7.1.0 beta snapshot 31.** 
+    
+    The following command can be used to acquire this development snapshot of
+    ESMF:
+    
+    `git archive --remote=git://git.code.sf.net/p/esmf/esmf --format=tar --prefix=esmf/  ESMF_7_1_0_beta_snapshot_31 | tar xf -`
+    
+    To check out other snapshots, simply replace the *ESMF_7_1_0_beta_snapshot_31* with
+    another tag.
+    
+    Development snapshots are built in the same way as releases. Development snapshots
+    are not formal releases of ESMF and are "use at your own risk."  Efforts are made to ensure
+    that most unit and system tests are passing on typical platforms, but there are no
+    guarantees of the stability of development snapshots.
+        
+    For more information about development snapshots of ESMF, please email:
     `esmf_support@list.woc.noaa.gov <mailto:esmf_support@list.woc.noaa.gov>`_.
 
 This section describes how to use Cupid's features for analyzing a NUOPC application
