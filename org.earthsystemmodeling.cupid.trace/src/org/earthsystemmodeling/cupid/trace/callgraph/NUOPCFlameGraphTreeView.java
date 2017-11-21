@@ -1,7 +1,10 @@
 package org.earthsystemmodeling.cupid.trace.callgraph;
 
+import java.io.OutputStream;
+import java.io.PrintWriter;
 import java.text.Format;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.concurrent.Semaphore;
 
@@ -10,11 +13,20 @@ import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.Status;
 import org.eclipse.core.runtime.jobs.Job;
+import org.eclipse.jdt.annotation.Nullable;
+import org.eclipse.jface.action.Action;
+import org.eclipse.jface.action.IMenuManager;
+import org.eclipse.jface.action.IToolBarManager;
+import org.eclipse.jface.action.MenuManager;
 import org.eclipse.jface.viewers.Viewer;
 import org.eclipse.jface.viewers.ViewerComparator;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Display;
+import org.eclipse.swt.widgets.Shell;
+import org.eclipse.swt.widgets.Tree;
+import org.eclipse.swt.widgets.TreeItem;
 import org.eclipse.tracecompass.analysis.timing.ui.views.segmentstore.SubSecondTimeWithUnitFormat;
+import org.eclipse.tracecompass.analysis.timing.ui.views.segmentstore.statistics.AbstractSegmentsStatisticsView;
 import org.eclipse.tracecompass.internal.analysis.timing.core.callgraph.AggregatedCalledFunction;
 import org.eclipse.tracecompass.internal.analysis.timing.core.callgraph.AggregatedCalledFunctionStatistics;
 import org.eclipse.tracecompass.internal.analysis.timing.core.callgraph.ThreadNode;
@@ -30,6 +42,9 @@ import org.eclipse.tracecompass.tmf.ui.viewers.tree.ITmfTreeViewerEntry;
 import org.eclipse.tracecompass.tmf.ui.viewers.tree.TmfTreeColumnData;
 import org.eclipse.tracecompass.tmf.ui.viewers.tree.TmfTreeViewerEntry;
 import org.eclipse.tracecompass.tmf.ui.views.TmfView;
+import org.eclipse.ui.IActionBars;
+import com.google.common.base.Joiner;
+import com.google.common.collect.Lists;
 
 
 public class NUOPCFlameGraphTreeView extends TmfView {
@@ -42,6 +57,66 @@ public class NUOPCFlameGraphTreeView extends TmfView {
 	
 	private final Semaphore fLock = new Semaphore(1);
     private Job fJob;
+    
+	private final Action fExportAction = new ExportToTsvAction() {
+        @Override
+        protected void exportToTsv(@Nullable OutputStream stream) {
+         
+        	try (PrintWriter pw = new PrintWriter(stream)) {
+                AbstractTmfTreeViewer statsViewer = fViewer;
+                if (statsViewer == null) {
+                    return;
+                }
+                Tree tree = statsViewer.getTreeViewer().getTree();
+                int size = tree.getItemCount();
+                List<String> columns = new ArrayList<>();
+                for (int i = 0; i < tree.getColumnCount(); i++) {
+                    String valueOf = String.valueOf(tree.getColumn(i).getText());
+                    if (valueOf.isEmpty() && i == tree.getColumnCount() - 1) {
+                        // Linux "feature", an invisible column is added at the end
+                        // with gtk2
+                        break;
+                    }
+                    columns.add(valueOf);
+                }
+                String join = Joiner.on('\t').skipNulls().join(columns);
+                pw.println(join);
+                for (int i = 0; i < size; i++) {
+                    TreeItem item = tree.getItem(i);
+                    printItem(pw, columns, item, 0);
+                }
+            }
+        	        
+        }
+        
+        private void printItem(PrintWriter pw, List<String> columns, @Nullable TreeItem item, int depth) {
+            if (item == null) {
+                return;
+            }
+            List<String> data = new ArrayList<>();
+            for (int col = 0; col < columns.size(); col++) {
+            	String prefix = "";
+            	//indent first column
+            	if (col == 0) {
+            		prefix = String.join("", Collections.nCopies(depth, " "));
+            	}            	 
+            	data.add(prefix + String.valueOf(item.getText(col)));
+            }
+            String line = Joiner.on('\t').join(data);
+            if (line.trim().length() > 0) {
+            	pw.println(Joiner.on('\t').join(data));
+            }
+            for (TreeItem child : item.getItems()) {
+                printItem(pw, columns, child, depth+1);
+            }
+        }
+        	
+        @Override
+        protected @Nullable Shell getShell() {
+            return getViewSite().getShell();
+        }
+
+    };
 	
 	public NUOPCFlameGraphTreeView() {
 		super(ID);
@@ -54,6 +129,8 @@ public class NUOPCFlameGraphTreeView extends TmfView {
         if (trace != null) {
            traceSelected(new TmfTraceSelectedSignal(this, trace));
         }
+        
+        getViewSite().getActionBars().getMenuManager().add(fExportAction);
 	}
 	
 	@Override
@@ -141,31 +218,42 @@ public class NUOPCFlameGraphTreeView extends TmfView {
     }
 	
 	
+	protected final String[] COL_LABELS = new String[] {
+			"Level", 
+			"Total time",
+			"Self time",
+			"Count",
+			"Mean",
+			"Min",
+			"Max",
+			"Std Dev"				
+	};
+	
 	public class NUOPCFlameGraphTreeViewer extends AbstractTmfTreeViewer {
 
-		private final Format FORMATTER = new SubSecondTimeWithUnitFormat();
+		private final TimeFormatter FORMATTER = new TimeFormatter();
 		
 		private List<ThreadNode> fThreadNodes;
 		
 		public NUOPCFlameGraphTreeViewer(Composite parent) {
-			
 			super(parent, true);
+			
 			setLabelProvider(new FlameGraphTreeLabelProvider());
 	        getTreeViewer().setAutoExpandLevel(2);
 	        
-	        //IActionBars bars = getViewSite().getActionBars();
+	        IActionBars bars = getViewSite().getActionBars();
 	        //IToolBarManager toolbarManager = bars.getToolBarManager();
-	        	        
-	        //IMenuManager menuManager = bars.getMenuManager();
+	        IMenuManager menuManager = bars.getMenuManager();
 	        
-	        /*
-	        menuManager.add(new FilterAction(NUOPCFieldEntryType.COMPONENT_ATTRIBUTE_ROOT, "Component Attributes"));
-	        menuManager.add(new FilterAction(NUOPCFieldEntryType.STATE, "State"));
-	        menuManager.add(new FilterAction(NUOPCFieldEntryType.STATE_ATTRIBUTE_ROOT, "State Attributes"));
-	        menuManager.add(new FilterAction(NUOPCFieldEntryType.FIELD, "Field"));
-	        menuManager.add(new FilterAction(NUOPCFieldEntryType.FIELD_ATTRIBUTE_ROOT, "Field Attributes"));
-	        menuManager.add(new FilterAction(NUOPCFieldEntryType.FIELD_STATISTIC_ROOT, "Field Statistics"));
-	        */        
+	        IMenuManager timeUnitMenu = new MenuManager("&Time units", null);
+	        timeUnitMenu.add(new TimeFormatAction(TimeFormatter.DYNAMIC, true));
+	        timeUnitMenu.add(new TimeFormatAction(TimeFormatter.SECONDS));
+	        timeUnitMenu.add(new TimeFormatAction(TimeFormatter.MILLISECONDS));
+	        timeUnitMenu.add(new TimeFormatAction(TimeFormatter.MICROSECONDS));
+	        timeUnitMenu.add(new TimeFormatAction(TimeFormatter.NANOSECONDS));
+	        
+	        menuManager.add(timeUnitMenu);
+	       
 		}
 		
 		
@@ -182,6 +270,50 @@ public class NUOPCFlameGraphTreeView extends TmfView {
 			
 	    }
 		*/
+		
+		private class TimeFormatAction extends Action {
+			
+			private String fTimeUnit;
+			
+			public TimeFormatAction(String timeUnit) {
+				this(timeUnit, false);
+			}
+			
+			public TimeFormatAction(String timeUnit, boolean checked) {
+				fTimeUnit = timeUnit;
+				setChecked(checked);
+			}
+			
+			@Override
+			public String getText() {
+				return fTimeUnit;
+			}
+			
+			@Override
+			public int getStyle() {
+				return Action.AS_RADIO_BUTTON;
+			}
+			
+			@Override
+			public void run() {				
+				if (isChecked()) {
+					
+					FORMATTER.setFixedUnit(fTimeUnit);
+					FORMATTER.setIncludeUnits(fTimeUnit.equals(TimeFormatter.DYNAMIC));
+					getTreeViewer().refresh();
+					
+					String postfix = fTimeUnit.equals(TimeFormatter.DYNAMIC) ? "" 
+							: " (" + fTimeUnit + ")"; 
+					
+					Tree tree = getTreeViewer().getTree();
+					for (int i : Lists.newArrayList(1, 2, 4, 5, 6, 7)) {
+						tree.getColumn(i).setText(COL_LABELS[i] + postfix);
+					}
+				}
+			}
+			
+		}
+		
 		
 		/*
 		private class FilterAction extends Action {
@@ -204,7 +336,10 @@ public class NUOPCFlameGraphTreeView extends TmfView {
 			}
 		}
 		*/
-
+		
+		
+					
+		
 		@Override
 		protected ITmfTreeColumnDataProvider getColumnDataProvider() {
 			 return new ITmfTreeColumnDataProvider() {
@@ -214,7 +349,7 @@ public class NUOPCFlameGraphTreeView extends TmfView {
 		                List<TmfTreeColumnData> columns = new ArrayList<>();
 		                TmfTreeColumnData column;
 		                
-		                column = new TmfTreeColumnData("Level");
+		                column = new TmfTreeColumnData(COL_LABELS[0]);		                
 		                column.setWidth(250);
 		                column.setComparator(new ViewerComparator() {
 		                    @Override

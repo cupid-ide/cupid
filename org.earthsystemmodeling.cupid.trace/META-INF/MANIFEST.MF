@@ -20,7 +20,8 @@ Require-Bundle: org.eclipse.ui,
  org.eclipse.tracecompass.segmentstore.core;bundle-version="2.0.0",
  org.eclipse.tracecompass.datastore.core;bundle-version="1.1.1",
  org.eclipse.tracecompass.analysis.timing.ui,
- org.eclipse.tracecompass.common.core
+ org.eclipse.tracecompass.common.core,
+ org.eclipse.ui.ide
 Bundle-RequiredExecutionEnvironment: JavaSE-1.8
 Bundle-ActivationPolicy: lazy
 Bundle-ClassPath: lib/json-simple-1.1.1.jar,
