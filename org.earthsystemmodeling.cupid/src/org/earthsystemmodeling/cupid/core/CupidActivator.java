@@ -77,7 +77,8 @@ public class CupidActivator extends AbstractUIPlugin {
         String app = System.getProperty("eclipse.application"); 
         return app != null && (
         		app.toLowerCase().contains("junit") ||
-        		app.toLowerCase().contains("tycho.surefire.osgibooter.headlesstest"));
+        		app.toLowerCase().contains("tycho.surefire.osgibooter.headlesstest") ||
+        		app.toLowerCase().contains("tycho.surefire.osgibooter.uitest"));
 	}
 	
 	public static boolean inCommandLineMode() {	

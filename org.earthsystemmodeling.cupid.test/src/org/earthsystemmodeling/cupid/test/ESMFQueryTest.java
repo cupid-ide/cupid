@@ -6,6 +6,7 @@ import static org.junit.Assert.*;
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.util.List;
+import java.util.concurrent.TimeUnit;
 
 import org.earthsystemmodeling.cupid.nuopc.ESMFQuery;
 import org.eclipse.core.resources.IFile;
@@ -18,12 +19,17 @@ import org.eclipse.photran.internal.core.parser.ASTSubroutineSubprogramNode;
 import org.eclipse.photran.internal.core.vpg.PhotranVPG;
 import org.junit.AfterClass;
 import org.junit.BeforeClass;
+import org.junit.Rule;
 import org.junit.Test;
+import org.junit.rules.Timeout;
 
 import com.google.common.collect.Lists;
 
 @SuppressWarnings("restriction")
 public class ESMFQueryTest {
+
+	@Rule
+	public Timeout globalTimeout = new Timeout(30, TimeUnit.SECONDS);
 
 	private static IProject PROJECT_NUOPC_PROTOTYPES;
 	
@@ -43,6 +49,7 @@ public class ESMFQueryTest {
 		IFile f = p.getFile("blank.F90");
 		f.create(new ByteArrayInputStream(new byte[0]), true, new NullProgressMonitor());
 		
+		PhotranVPG.getInstance().ensureVPGIsUpToDate(new NullProgressMonitor());
 		IFortranAST ast = PhotranVPG.getInstance().acquireTransientAST(f);
 		assertNotNull(ast);
 		assertNotNull(ast.getRoot());
