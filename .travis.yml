@@ -6,6 +6,7 @@ cache:
   - $HOME/.m2
   - $HOME/esmf
   - $HOME/ESMF-INSTALL
+  - $HOME/openmpi-1.10.7-install
   - $HOME/openmpi-2.1.2-install
 
 # required because of OpenJDK bug https://github.com/travis-ci/travis-ci/issues/5227  
