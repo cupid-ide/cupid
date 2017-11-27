@@ -31,6 +31,12 @@
 				<groupId>org.eclipse.tycho</groupId>
 				<artifactId>tycho-surefire-plugin</artifactId>
 				<version>${tycho-version}</version>
+				<configuration>
+              		<useUIHarness>true</useUIHarness>
+              		<useUIThread>false</useUIThread>
+              		<product>org.eclipse.sdk.ide</product>
+              		<application>org.eclipse.ui.ide.workbench</application>
+            	</configuration>
 			</plugin>
 			<plugin>
 				<groupId>org.eclipse.tycho</groupId>
@@ -98,6 +104,11 @@
 		<repository>
 			<id>eclipse-${eclipse-release}</id>
 			<url>${eclipse-site}</url>
+			<layout>p2</layout>
+		</repository>
+		<repository>
+			<id>swtbot</id>
+			<url>http://download.eclipse.org/technology/swtbot/releases/latest/</url>
 			<layout>p2</layout>
 		</repository>
 	</repositories>
