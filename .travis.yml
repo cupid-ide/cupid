@@ -26,7 +26,7 @@ before_script:
   - if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then $TRAVIS_BUILD_DIR/build_mpi.sh ;fi
   - if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then export PATH=$HOME/openmpi-1.10.7-install/bin:$PATH ;fi
   - if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then ( sudo Xvfb :99 -ac -screen 0 1024x768x8; echo ok )& fi
-  - if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then export JAVA_TOOL_OPTIONS="-XstartOnFirstThread" ;fi
+  - if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then export _JAVA_OPTIONS="-XstartOnFirstThread" ;fi
 
 # common
   - if [[ ! -d "$HOME/ESMF-INSTALL/ESMF_7_0_0/lib" ]]; then $TRAVIS_BUILD_DIR/build_esmf.sh ESMF_7_0_0 openmpi ;fi
