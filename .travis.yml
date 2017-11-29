@@ -33,7 +33,7 @@ before_script:
   - if [[ ! -d "$HOME/ESMF-INSTALL/ESMF_7_1_0_beta_snapshot_34/lib" ]]; then $TRAVIS_BUILD_DIR/build_esmf.sh ESMF_7_1_0_beta_snapshot_34 openmpi ;fi
   - export ESMF_INSTALL_ROOT=$HOME/ESMF-INSTALL
 
-osx_image: xcode8
+osx_image: xcode9.1
 
 matrix:
   include:
