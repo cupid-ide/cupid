@@ -2,34 +2,21 @@ package org.earthsystemmodeling.cupid.trace.callgraph;
 
 import java.io.OutputStream;
 import java.io.PrintWriter;
-import java.text.Format;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
-import java.util.concurrent.Semaphore;
 
-import org.earthsystemmodeling.cupid.trace.Activator;
-import org.eclipse.core.runtime.IProgressMonitor;
-import org.eclipse.core.runtime.IStatus;
-import org.eclipse.core.runtime.Status;
-import org.eclipse.core.runtime.jobs.Job;
 import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.jface.action.Action;
 import org.eclipse.jface.action.IMenuManager;
-import org.eclipse.jface.action.IToolBarManager;
 import org.eclipse.jface.action.MenuManager;
 import org.eclipse.jface.viewers.Viewer;
 import org.eclipse.jface.viewers.ViewerComparator;
 import org.eclipse.swt.widgets.Composite;
-import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Shell;
 import org.eclipse.swt.widgets.Tree;
 import org.eclipse.swt.widgets.TreeItem;
-import org.eclipse.tracecompass.analysis.timing.ui.views.segmentstore.SubSecondTimeWithUnitFormat;
-import org.eclipse.tracecompass.analysis.timing.ui.views.segmentstore.statistics.AbstractSegmentsStatisticsView;
-import org.eclipse.tracecompass.internal.analysis.timing.core.callgraph.AggregatedCalledFunction;
-import org.eclipse.tracecompass.internal.analysis.timing.core.callgraph.AggregatedCalledFunctionStatistics;
-import org.eclipse.tracecompass.internal.analysis.timing.core.callgraph.ThreadNode;
+import org.eclipse.tracecompass.tmf.core.analysis.IAnalysisModule;
 import org.eclipse.tracecompass.tmf.core.signal.TmfSignalHandler;
 import org.eclipse.tracecompass.tmf.core.signal.TmfTraceClosedSignal;
 import org.eclipse.tracecompass.tmf.core.signal.TmfTraceSelectedSignal;
@@ -43,20 +30,25 @@ import org.eclipse.tracecompass.tmf.ui.viewers.tree.TmfTreeColumnData;
 import org.eclipse.tracecompass.tmf.ui.viewers.tree.TmfTreeViewerEntry;
 import org.eclipse.tracecompass.tmf.ui.views.TmfView;
 import org.eclipse.ui.IActionBars;
+
 import com.google.common.base.Joiner;
 import com.google.common.collect.Lists;
 
 
-public class NUOPCFlameGraphTreeView extends TmfView {
-
-	public static final String ID = "org.earthsystemmodeling.cupid.trace.NUOPCFlameGraphTreeView";
+public abstract class AbstractGraphTreeView extends TmfView {
 
 	private ITmfTrace fTrace;
-	private NUOPCFlameGraphTreeViewer fViewer;
-	private NUOPCCtfCallGraphAnalysis fFlamegraphModule = null;
-	
-	private final Semaphore fLock = new Semaphore(1);
-    private Job fJob;
+	private AbstractGraphTreeViewer fViewer;
+   
+    private IAnalysisModule fAnalysisModule;
+    private final Class<? extends IAnalysisModule> fModuleClass;
+    private	final String fModuleId;
+       
+    public <T extends IAnalysisModule> AbstractGraphTreeView(String viewId, Class<T> moduleClass, String moduleId) {
+		super(viewId);
+		fModuleClass = moduleClass;
+		fModuleId = moduleId;
+	}
     
 	private final Action fExportAction = new ExportToTsvAction() {
         @Override
@@ -118,19 +110,23 @@ public class NUOPCFlameGraphTreeView extends TmfView {
 
     };
 	
-	public NUOPCFlameGraphTreeView() {
-		super(ID);
-	}
-		 
+	 
 	@Override
 	public void createPartControl(Composite parent) {
-		fViewer = new NUOPCFlameGraphTreeViewer(parent);
+		//fViewer = new NUOPCFlameGraphTreeViewer(parent);
+		fViewer = createTreeViewer(parent);
         ITmfTrace trace = TmfTraceManager.getInstance().getActiveTrace();
         if (trace != null) {
            traceSelected(new TmfTraceSelectedSignal(this, trace));
         }
         
         getViewSite().getActionBars().getMenuManager().add(fExportAction);
+	}
+	
+	public abstract AbstractGraphTreeViewer createTreeViewer(Composite parent);
+	
+	public AbstractGraphTreeViewer getViewer() {
+		return fViewer;
 	}
 	
 	@Override
@@ -150,65 +146,13 @@ public class NUOPCFlameGraphTreeView extends TmfView {
     public void traceSelected(final TmfTraceSelectedSignal signal) {
         fTrace = signal.getTrace();
         if (fTrace != null) {
-            fFlamegraphModule = TmfTraceUtils.getAnalysisModuleOfClass(fTrace, NUOPCCtfCallGraphAnalysis.class, NUOPCCtfCallGraphAnalysis.ID);
-            buildFlameGraph(fFlamegraphModule);
+            fAnalysisModule = TmfTraceUtils.getAnalysisModuleOfClass(fTrace, fModuleClass, fModuleId);
+            initializeViewer(fAnalysisModule);
         }
     }
 	
-	public void buildFlameGraph(NUOPCCtfCallGraphAnalysis callGraphAnalysis) {
-        /*
-         * Note for synchronization:
-         *
-         * Acquire the lock at entry. then we have 4 places to release it
-         *
-         * 1- if the lock failed
-         *
-         * 2- if the data is null and we have no UI to update
-         *
-         * 3- if the request is cancelled before it gets to the display
-         *
-         * 4- on a clean execution
-         */
-        Job job = fJob;
-        if (job != null) {
-            job.cancel();
-        }
-        try {
-            fLock.acquire();
-        } catch (InterruptedException e) {
-            Activator.logWarning(e.getMessage(), e);
-            fLock.release();
-        }
-        if (callGraphAnalysis == null) {
-            fViewer.setInput(null);
-            fLock.release();
-            return;
-        }
-        fViewer.setInput(callGraphAnalysis.getThreadNodes());
-        callGraphAnalysis.schedule();
-        job = new Job("NUOPC Call Graph Analysis") {
-
-            @Override
-            protected IStatus run(IProgressMonitor monitor) {
-                try {
-                    if (monitor.isCanceled()) {
-                        return Status.CANCEL_STATUS;
-                    }
-                    callGraphAnalysis.waitForCompletion(monitor);
-                    Display.getDefault().asyncExec(() -> {
-                        fViewer.setInput(callGraphAnalysis.getThreadNodes());
-                        //fTimeGraphViewer.resetStartFinishTime();
-                    });
-                    return Status.OK_STATUS;
-                } finally {
-                    fJob = null;
-                    fLock.release();
-                }
-            }
-        };
-        fJob = job;
-        job.schedule();
-    }
+	public abstract void initializeViewer(IAnalysisModule analysisModule);
+	
 	
 	@TmfSignalHandler
     public void traceClosed(final TmfTraceClosedSignal signal) {
@@ -263,14 +207,6 @@ public class NUOPCFlameGraphTreeView extends TmfView {
 		}
 			
 		
-		
-		/*
-		@Override
-	    public void initializeDataSource() {
-			
-	    }
-		*/
-		
 		private class TimeFormatAction extends Action {
 			
 			private String fTimeUnit;
@@ -313,30 +249,6 @@ public class NUOPCFlameGraphTreeView extends TmfView {
 			}
 			
 		}
-		
-		
-		/*
-		private class FilterAction extends Action {
-			//private String label;
-			private NUOPCFieldEntryType type;
-			
-			public FilterAction(NUOPCFieldEntryType type, String label) {
-				this.type = type;
-				setText("Include " + label);
-				setChecked(true);
-			}
-			@Override
-			public int getStyle() {
-				return Action.AS_CHECK_BOX;
-			}
-			@Override
-			public void run() {
-				filterMap.put(type, isChecked());
-				getTreeViewer().setInput(null);				
-			}
-		}
-		*/
-		
 		
 					
 		
@@ -505,7 +417,6 @@ public class NUOPCFlameGraphTreeView extends TmfView {
 		
 		protected class FlameGraphTreeLabelProvider extends TreeLabelProvider {
 
-	        @SuppressWarnings("restriction")
 			@Override
 	        public String getColumnText(Object element, int columnIndex) {
 	            if (element instanceof ThreadEntry) {
@@ -571,7 +482,7 @@ public class NUOPCFlameGraphTreeView extends TmfView {
 		
 	}
 	
-	protected static class RootEntry extends TmfTreeViewerEntry {
+	public static class RootEntry extends TmfTreeViewerEntry {
 
 		public RootEntry(List<ThreadNode> nodes) {
 			super("");
@@ -582,8 +493,7 @@ public class NUOPCFlameGraphTreeView extends TmfView {
 		
 	}
 	
-	@SuppressWarnings("restriction")
-	protected static class ThreadEntry extends TmfTreeViewerEntry {
+	public static class ThreadEntry extends TmfTreeViewerEntry {
 		
 		private ThreadNode fNode;
 		
@@ -601,8 +511,7 @@ public class NUOPCFlameGraphTreeView extends TmfView {
 		
 	}
 
-	@SuppressWarnings("restriction")
-	protected static class AggregatedCalledFunctionEntry extends TmfTreeViewerEntry {
+	public static class AggregatedCalledFunctionEntry extends TmfTreeViewerEntry {
 		
 		private AggregatedCalledFunction fFunc;
 		

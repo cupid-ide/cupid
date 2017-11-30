@@ -12,6 +12,7 @@ import java.util.Map;
 import java.util.concurrent.TimeUnit;
 
 import org.earthsystemmodeling.cupid.trace.callgraph.NUOPCCtfCallGraphAnalysis;
+import org.earthsystemmodeling.cupid.trace.callgraph.ThreadNode;
 import org.earthsystemmodeling.cupid.trace.state.NUOPCCtfStateSystemAnalysisModule;
 import org.eclipse.core.resources.IFolder;
 import org.eclipse.core.resources.IProject;
@@ -21,7 +22,6 @@ import org.eclipse.core.runtime.FileLocator;
 import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.NullProgressMonitor;
 import org.eclipse.core.runtime.Path;
-import org.eclipse.tracecompass.internal.analysis.timing.core.callgraph.ThreadNode;
 import org.eclipse.tracecompass.statesystem.core.ITmfStateSystem;
 import org.eclipse.tracecompass.statesystem.core.exceptions.AttributeNotFoundException;
 import org.eclipse.tracecompass.statesystem.core.exceptions.StateSystemDisposedException;
@@ -127,9 +127,7 @@ public class NUOPCTraceTest {
 		envMap.put("ESMF_RUNTIME_TRACE", "ON");
 		assertTrue("Execute trace project", TestHelpers.executeMPI(p, "esmApp", 4, envMap));
 		assertTrue("Execution has no log errors", TestHelpers.verifyNoLogErrors(p));
-		
-		//TODO: turn on below when we have a snapshot with binary trace on
-		
+			
 		p.refreshLocal(IResource.DEPTH_INFINITE, NPM);
 		
 		IFolder traceFolder = p.getFolder("traceout");

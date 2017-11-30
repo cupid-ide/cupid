@@ -15,7 +15,7 @@ import org.eclipse.tracecompass.tmf.ctf.core.trace.CtfTmfTrace;
 public class NUOPCCtfStateProvider extends AbstractTmfStateProvider {
 	
     public NUOPCCtfStateProvider(CtfTmfTrace trace) {
-        super(trace, "NUOPCCtfStateSystemTraceID"); 
+        super(trace, "NUOPCCtfStateSystemTraceID");         
     }
 
     @Override
