@@ -1,3 +1,5 @@
+package org.earthsystemmodeling.cupid.trace.callgraph;
+
 /*******************************************************************************
  * Copyright (c) 2016 Ericsson
  *
@@ -5,9 +7,7 @@
  * made available under the terms of the Eclipse Public License v1.0 which
  * accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- *******************************************************************************/
-
-package org.earthsystemmodeling.cupid.trace.callgraph;
+ */
 
 import java.util.Collection;
 import java.util.Comparator;
@@ -19,7 +19,6 @@ import org.eclipse.tracecompass.segmentstore.core.ISegment;
 import org.eclipse.tracecompass.tmf.core.segment.ISegmentAspect;
 import org.eclipse.tracecompass.tmf.core.symbols.ISymbolProvider;
 import org.eclipse.tracecompass.tmf.core.symbols.SymbolProviderManager;
-import org.eclipse.tracecompass.tmf.core.symbols.SymbolProviderUtils;
 import org.eclipse.tracecompass.tmf.core.trace.ITmfTrace;
 import org.eclipse.tracecompass.tmf.core.trace.TmfTraceManager;
 
@@ -71,15 +70,32 @@ public final class SymbolAspect implements ISegmentAspect {
             // FIXME work around this trace
             ITmfTrace trace = TmfTraceManager.getInstance().getActiveTrace();
             if (trace != null) {
+                String symbolText = null;
                 Object symbol = calledFunction.getSymbol();
                 if (symbol instanceof Long) {
                     Long longAddress = (Long) symbol;
                     Collection<ISymbolProvider> providers = SymbolProviderManager.getInstance().getSymbolProviders(trace);
-
-                    // look for a symbol for a given process, if available
+                    for (ISymbolProvider provider: providers) {
+                        symbolText = provider.getSymbolText(longAddress);
+                        if (symbolText != null) {
+                            break;
+                        }
+                    }
+                    if (symbolText == null) {
+                        return "0x" + Long.toHexString(longAddress); //$NON-NLS-1$
+                    }
+                    // take the start time in the query for the symbol name
                     long time = segment.getStart();
                     int pid = calledFunction.getProcessId();
-                    return (pid > 0) ? SymbolProviderUtils.getSymbolText(providers, pid, time, longAddress) : SymbolProviderUtils.getSymbolText(providers, longAddress);
+                    if (pid > 0) {
+                        for (ISymbolProvider provider: providers) {
+                            String text = provider.getSymbolText(pid, time, longAddress);
+                            if (text != null) {
+                                return text;
+                            }
+                        }
+                    }
+                    return symbolText;
                 }
                 return String.valueOf(symbol);
             }
