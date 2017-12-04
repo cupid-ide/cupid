@@ -4,7 +4,6 @@ import java.util.ArrayDeque;
 import java.util.Deque;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Stack;
 
 import org.earthsystemmodeling.cupid.trace.Activator;
 import org.earthsystemmodeling.cupid.trace.NUOPCCtfTrace;
@@ -27,8 +26,6 @@ import org.eclipse.tracecompass.tmf.ctf.core.CtfEnumPair;
 import org.eclipse.tracecompass.tmf.ctf.core.event.CtfTmfEvent;
 import org.eclipse.tracecompass.tmf.ctf.core.event.CtfTmfEventType;
 import org.eclipse.tracecompass.tmf.ctf.core.trace.CtfTmfTrace;
-
-import com.sun.jmx.remote.internal.ArrayQueue;
 
 public abstract class NUOPCCtfCallStackStateProvider extends CallStackStateProvider {
 
