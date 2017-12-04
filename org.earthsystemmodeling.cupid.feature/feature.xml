@@ -2,7 +2,7 @@
 <feature
       id="org.earthsystemmodeling.cupid.feature"
       label="Cupid"
-      version="2.0.0.qualifier">
+      version="2.1.0.qualifier">
    <install-handler handler=""/>
 
    <description url="http://www.earthsystemcog.org/projects/cupid">
