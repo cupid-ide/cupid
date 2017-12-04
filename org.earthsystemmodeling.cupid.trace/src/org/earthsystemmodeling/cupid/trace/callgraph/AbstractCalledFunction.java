@@ -30,7 +30,7 @@ import com.google.common.collect.Ordering;
  * @author Matthew Khouzam
  * @author Sonia Farrah
  */
-abstract class AbstractCalledFunction implements ICalledFunction {
+public abstract class AbstractCalledFunction implements ICalledFunction {
 
     static final Comparator<ISegment> COMPARATOR;
     static {
@@ -48,24 +48,36 @@ abstract class AbstractCalledFunction implements ICalledFunction {
     private static final long serialVersionUID = 7992199223906717340L;
 
     protected final long fStart;
-    protected final long fEnd;
+    protected long fEnd = -1;
     protected final int fDepth;
     private final List<ICalledFunction> fChildren = new ArrayList<>();
     private final @Nullable ICalledFunction fParent;
     protected long fSelfTime = 0;
     private final int fProcessId;
 
-    public AbstractCalledFunction(long start, long end, int depth, int processId, @Nullable ICalledFunction parent) {
-        if (start > end) {
-            throw new IllegalArgumentException("Time error:" + "[" + start + "," + end + "]"); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
-        }
-        fStart = start;
-        fEnd = end;
+    //allow creating without knowing end time
+    public AbstractCalledFunction(long start, int depth, int processId, @Nullable ICalledFunction parent) {
+    	fStart = start;
         fDepth = depth;
         fParent = parent;
-        // It'll be modified once we add a child to it
-        fSelfTime = fEnd - fStart;
         fProcessId = processId;
+    }
+    
+    public AbstractCalledFunction(long start, long end, int depth, int processId, @Nullable ICalledFunction parent) {
+        this(start, depth, processId, parent);
+        complete(end);
+    }
+    
+    public void complete(long end) {
+    	if (fStart > end) {
+            throw new IllegalArgumentException("Time error:" + "[" + fStart + "," + end + "]"); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
+        }
+    	fEnd = end;
+    	fSelfTime = fEnd - fStart;
+    }
+    
+    public boolean isComplete() {
+    	return fEnd >= 0;
     }
 
     @Override

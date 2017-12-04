@@ -48,6 +48,11 @@ public class CalledFunction extends AbstractCalledFunction {
         super(start, end, depth, processId, parent);
         fSymbol = symbol;
     }
+    
+    protected CalledFunction(long start, long symbol, int depth, int processId, @Nullable ICalledFunction parent) {
+    	super(start, depth, processId, parent);
+    	fSymbol = symbol;
+    }
 
     @Override
     public @NonNull Long getSymbol() {

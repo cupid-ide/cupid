@@ -50,6 +50,11 @@ public class CalledStringFunction extends AbstractCalledFunction {
         super(start, end, depth, processId, parent);
         fSymbol = symbol;
     }
+    
+    protected CalledStringFunction(long start, String symbol, int depth, int processId, @Nullable ICalledFunction parent) {
+        super(start, depth, processId, parent);
+        fSymbol = symbol;
+    }
 
     @Override
     public @NonNull String getSymbol() {

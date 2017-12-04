@@ -157,6 +157,10 @@ public class AggregatedCalledFunction implements Cloneable {
             fChildren.replace(node.getSymbol(), node);
         }
     }
+    
+    public AggregatedCalledFunction getChild(Object symbol) {
+    	return fChildren.get(symbol);
+    }
 
     @Override
     public @NonNull AggregatedCalledFunction clone() {

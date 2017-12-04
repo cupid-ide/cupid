@@ -111,4 +111,8 @@ public final class CalledFunctionFactory {
         }
         return new CalledStringFunction(start, end, value, depth, processId, parent);
     }
+    
+    public static CalledStringFunction create(long start, int depth, String value, int processId, @Nullable ICalledFunction parent) {
+        return new CalledStringFunction(start, value, depth, processId, parent);
+    }
 }

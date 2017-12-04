@@ -1,7 +1,17 @@
 package org.earthsystemmodeling.cupid.trace.callstack;
 
+import java.util.ArrayDeque;
+import java.util.Deque;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Stack;
+
 import org.earthsystemmodeling.cupid.trace.Activator;
 import org.earthsystemmodeling.cupid.trace.NUOPCCtfTrace;
+import org.earthsystemmodeling.cupid.trace.callgraph.AbstractCalledFunction;
+import org.earthsystemmodeling.cupid.trace.callgraph.AggregatedCalledFunction;
+import org.earthsystemmodeling.cupid.trace.callgraph.CalledFunctionFactory;
+import org.earthsystemmodeling.cupid.trace.callgraph.ThreadNode;
 import org.earthsystemmodeling.cupid.trace.state.NUOPCCtfStateSystemAnalysisModule;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
@@ -18,6 +28,8 @@ import org.eclipse.tracecompass.tmf.ctf.core.event.CtfTmfEvent;
 import org.eclipse.tracecompass.tmf.ctf.core.event.CtfTmfEventType;
 import org.eclipse.tracecompass.tmf.ctf.core.trace.CtfTmfTrace;
 
+import com.sun.jmx.remote.internal.ArrayQueue;
+
 public abstract class NUOPCCtfCallStackStateProvider extends CallStackStateProvider {
 
 	public static final int REGION_ENTER = 0;
@@ -29,6 +41,10 @@ public abstract class NUOPCCtfCallStackStateProvider extends CallStackStateProvi
 
 	protected NUOPCCtfStateSystemAnalysisModule stateAnalysis;
 
+	private static final boolean fDoCallGraph = true;
+	private Map<Long, ThreadNode> fThreadNodes = new HashMap<>();
+	private Map<Long, Deque<AggregatedCalledFunction>> fThreadStacks = new HashMap<>();
+	
 	public NUOPCCtfCallStackStateProvider(CtfTmfTrace trace) {
 		super(trace);
 		stateAnalysis = TmfTraceUtils.getAnalysisModuleOfClass(trace, NUOPCCtfStateSystemAnalysisModule.class, NUOPCCtfStateSystemAnalysisModule.ID);				
@@ -89,17 +105,34 @@ public abstract class NUOPCCtfCallStackStateProvider extends CallStackStateProvi
 			int processQuark = ss.getQuarkAbsoluteAndAdd(PROCESSES, processName);
 			ss.updateOngoingState(TmfStateValue.newValueInt(processId), processQuark);
 
-			String threadName = getThreadName(event);
+			//String threadName = getThreadName(event);
 			long threadId = getThreadId(event);
-			if (threadName == null) {
-				threadName = Long.toString(threadId);
-			}
+			String threadName = Long.toString(threadId);
+			
 			int threadQuark = ss.getQuarkRelativeAndAdd(processQuark, threadName);
 			ss.updateOngoingState(TmfStateValue.newValueLong(threadId), threadQuark);
-
+				
 			int callStackQuark = ss.getQuarkRelativeAndAdd(threadQuark, CALL_STACK);
 			ITmfStateValue value = functionEntryName;
 			ss.pushAttribute(timestamp, value, callStackQuark);
+			
+			if (fDoCallGraph) {
+				if (!fThreadNodes.containsKey(threadId)) {
+					AbstractCalledFunction initSegment = CalledFunctionFactory.create(0, 0, 0, threadName, processId, null);
+		            ThreadNode init = new ThreadNode(initSegment, 0, threadId);
+					fThreadNodes.put(threadId, init);
+					fThreadStacks.put(threadId, new ArrayDeque<AggregatedCalledFunction>(10));
+				}
+				
+				int depth = fThreadStacks.get(threadId).size();
+				
+				AbstractCalledFunction calledFunction = CalledFunctionFactory.create(timestamp, depth, functionEntryName.unboxStr(), processId, null);
+	            
+				//TODO: see if maxDepth matters
+				//AggregatedCalledFunction firstNode = new AggregatedCalledFunction(rootFunction, 0);
+	            //init.addChild(rootFunction, firstNode);
+				
+			}
 
 			//add component kind
 			String kind = getComponentKind(event);
@@ -109,17 +142,6 @@ public abstract class NUOPCCtfCallStackStateProvider extends CallStackStateProvi
 				toPush = TmfStateValue.newValueString(kind);
 			}
 			ss.pushAttribute(timestamp, toPush, compkindQuark);
-
-			//add clock
-			/*
-        	String currTime = getComponentClock(event);
-        	int compClockQuark = ss.getQuarkRelativeAndAdd(threadQuark, "clock");
-        	toPush = TmfStateValue.newValueString("Unknown");
-        	if (kind != null) {
-        		toPush = TmfStateValue.newValueString(kind);
-        	}
-        	ss.pushAttribute(timestamp, toPush, compkindQuark);
-			 */
 
 			return;
 		}
@@ -133,16 +155,25 @@ public abstract class NUOPCCtfCallStackStateProvider extends CallStackStateProvi
 				int processId = getProcessId(event);
 				processName = (processId == UNKNOWN_PID) ? UNKNOWN : Integer.toString(processId);
 			}
-			String threadName = getThreadName(event);
-			if (threadName == null) {
-				threadName = Long.toString(getThreadId(event));
-			}
+			long threadId = getThreadId(event);
+			String threadName = Long.toString(threadId);
 			
 			int quarkCallStack = ss.getQuarkAbsoluteAndAdd(PROCESSES, processName, threadName, CALL_STACK);
 			int quarkCompKind = ss.getQuarkAbsoluteAndAdd(PROCESSES, processName, threadName, "compkind");
 			
 			ITmfStateValue poppedValue = ss.popAttribute(timestamp, quarkCallStack);
 			ss.popAttribute(timestamp, quarkCompKind);
+			
+			/*
+			AbstractCalledFunction rootFunction = CalledFunctionFactory.create(intervalStart, intervalEnd + 1, depth, stateValue, processId, null);
+            fRootFunctions.add(rootFunction);
+            AggregatedCalledFunction firstNode = new AggregatedCalledFunction(rootFunction, currentQuarks.size());
+            if (!findChildren(rootFunction, depth, stateSystem, currentQuarks.size() + currentQuarks.get(depth), firstNode, processId, currentQuarks, monitor)) {
+                return false;
+            }
+            init.addChild(rootFunction, firstNode);
+			*/
+			
 			
 			/*
 			 * Check for regions that were not closed.
@@ -163,6 +194,11 @@ public abstract class NUOPCCtfCallStackStateProvider extends CallStackStateProvi
 					System.out.println(fp + " ==> " + val);
 				}
 				*/
+				
+				if (fDoCallGraph) {
+					fThreadStacks.get(threadId).removeFirst();
+				}
+				
 			}
 			if (poppedValue == null) {
 				Activator.logWarning("Ill-formed timer regions for event: " + functionExitState.unboxStr());		
@@ -1012,21 +1048,6 @@ public abstract class NUOPCCtfCallStackStateProvider extends CallStackStateProvi
 			String phaseLabel = null;
 			phaseLabel = stateAnalysis.queryComponentPhaseLabel(vmid, baseid, method, phase);
 
-			/*
-			if (phaseLabel == null) {
-				String methodStr = "";
-				if (method == ESMF_METHOD_INIT) {
-					methodStr = "init ";
-				}
-				else if (method == ESMF_METHOD_RUN) {
-					methodStr = "run ";
-				}
-				else if (method == ESMF_METHOD_FINAL) {
-					methodStr = "final ";
-				}
-				phaseLabel = methodStr + "#" + String.valueOf(phase);
-			}
-			*/
 			if (phaseLabel == null) phaseLabel = "UNKNOWN";
 			return "[" + compName + "] " + phaseLabel;
 		}
