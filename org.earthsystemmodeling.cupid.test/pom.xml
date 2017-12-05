@@ -67,7 +67,7 @@
             			<configuration>
             				<useUIHarness>false</useUIHarness>
               				<useUIThread>false</useUIThread>
-            				<includes>**/*Test.java</includes>	
+            				<includes>**/*Test.java, **/*Tests.java</includes>	
             			</configuration>
             		</execution>
             	</executions>
