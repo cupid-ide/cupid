@@ -11,8 +11,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.concurrent.TimeUnit;
 
-import org.earthsystemmodeling.cupid.trace.callgraph.NUOPCCtfCallGraphAnalysis;
 import org.earthsystemmodeling.cupid.trace.callgraph.ThreadNode;
+import org.earthsystemmodeling.cupid.trace.callstack.NUOPCCtfCallStackAnalysis;
 import org.earthsystemmodeling.cupid.trace.state.NUOPCCtfStateSystemAnalysisModule;
 import org.eclipse.core.resources.IFolder;
 import org.eclipse.core.resources.IProject;
@@ -42,7 +42,6 @@ import org.junit.rules.Timeout;
 import org.osgi.framework.Bundle;
 import org.osgi.framework.FrameworkUtil;
 
-@SuppressWarnings("restriction")
 public class NUOPCTraceTest {
 
 	private static Bundle MY_BUNDLE = FrameworkUtil.getBundle(NUOPCTraceTest.class);
@@ -138,14 +137,17 @@ public class NUOPCTraceTest {
 		trace.initTrace(null, tracePath, CtfTmfEvent.class);
 		trace.traceOpened(new TmfTraceOpenedSignal(this, trace, null));
 			
-		NUOPCCtfCallGraphAnalysis analysis = 
-				TmfTraceUtils.getAnalysisModuleOfClass(trace, NUOPCCtfCallGraphAnalysis.class, NUOPCCtfCallGraphAnalysis.ID);
+		//NUOPCCtfCallGraphAnalysis analysis = 
+		//		TmfTraceUtils.getAnalysisModuleOfClass(trace, NUOPCCtfCallGraphAnalysis.class, NUOPCCtfCallGraphAnalysis.ID);
 		
+		NUOPCCtfCallStackAnalysis analysis = 
+				TmfTraceUtils.getAnalysisModuleOfClass(trace, NUOPCCtfCallStackAnalysis.class, NUOPCCtfCallStackAnalysis.ID);
+						
 		IStatus status = analysis.schedule();
 		assertTrue(status.isOK());
         assertTrue(analysis.waitForCompletion());
         
-		List<ThreadNode> threadNodes = analysis.getThreadNodes();
+		List<ThreadNode> threadNodes = analysis.getAggregateThreadNodes();
         assertTrue("Four thread nodes", threadNodes.size() == 4);
         
         //all four threads identical

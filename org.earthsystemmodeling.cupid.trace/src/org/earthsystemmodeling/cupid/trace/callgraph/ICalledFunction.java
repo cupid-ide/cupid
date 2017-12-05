@@ -69,4 +69,8 @@ public interface ICalledFunction extends INamedSegment {
      */
     int getProcessId();
 
+	void complete(long end);
+
+	boolean isComplete();
+
 }

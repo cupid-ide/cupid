@@ -68,6 +68,7 @@ public abstract class AbstractCalledFunction implements ICalledFunction {
         complete(end);
     }
     
+    @Override
     public void complete(long end) {
     	if (fStart > end) {
             throw new IllegalArgumentException("Time error:" + "[" + fStart + "," + end + "]"); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
@@ -76,6 +77,7 @@ public abstract class AbstractCalledFunction implements ICalledFunction {
     	fSelfTime = fEnd - fStart;
     }
     
+    @Override
     public boolean isComplete() {
     	return fEnd >= 0;
     }
@@ -87,9 +89,22 @@ public abstract class AbstractCalledFunction implements ICalledFunction {
 
     @Override
     public long getEnd() {
+    	if (!isComplete()) {
+    		throw new IllegalStateException("Cannot get end time of incomplete AbstractCalledFunction.");
+    	}
         return fEnd;
     }
 
+    @Override
+    public long getLength() {
+    	if (!isComplete()) {
+    		throw new IllegalStateException("Cannot get length (duration) of incomplete AbstractCalledFunction.");
+    	}
+    	else {
+    		return getEnd() - getStart();
+    	}
+    }
+    
     @Override
     public List<ICalledFunction> getChildren() {
         return fChildren;
@@ -133,6 +148,9 @@ public abstract class AbstractCalledFunction implements ICalledFunction {
 
     @Override
     public long getSelfTime() {
+    	if (!isComplete()) {
+    		throw new IllegalStateException("Cannot get self time of incomplete AbstractCalledFunction.");
+    	}
         return fSelfTime;
     }
 

@@ -9,6 +9,7 @@
 
 package org.earthsystemmodeling.cupid.trace.callgraph;
 
+import java.io.Serializable;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
@@ -33,20 +34,25 @@ import org.eclipse.tracecompass.common.core.NonNullUtils;
  * @author Sonia Farrah
  *
  */
-public class AggregatedCalledFunction implements Cloneable {
+public class AggregatedCalledFunction implements Cloneable, Serializable {
 
     // ------------------------------------------------------------------------
     // Attributes
     // ------------------------------------------------------------------------
 
-    private final Object fSymbol;
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = 3778416001544176521L;
+	
+	private final Object fSymbol;
     private final int fDepth;
     private final int fMaxDepth;
     private final Map<Object, AggregatedCalledFunction> fChildren = new HashMap<>();
     private final @Nullable AggregatedCalledFunction fParent;
     private final AggregatedCalledFunctionStatistics fStatistics;
-    private long fDuration;
-    private long fSelfTime;
+    private long fDuration = -1;
+    private long fSelfTime= -1;
     private final int fProcessId;
 
     /**
@@ -60,13 +66,14 @@ public class AggregatedCalledFunction implements Cloneable {
      */
     public AggregatedCalledFunction(AbstractCalledFunction calledFunction, AggregatedCalledFunction parent) {
         fSymbol = calledFunction.getSymbol();
-        fDuration = calledFunction.getLength();
-        fSelfTime = calledFunction.getLength();
         fDepth = calledFunction.getDepth();
         fProcessId = calledFunction.getProcessId();
         fMaxDepth = parent.getMaxDepth();
         fParent = parent;
         fStatistics = new AggregatedCalledFunctionStatistics();
+        if (calledFunction.isComplete()) {
+        	complete(calledFunction);
+        }
     }
 
     /**
@@ -79,13 +86,14 @@ public class AggregatedCalledFunction implements Cloneable {
      */
     public AggregatedCalledFunction(AbstractCalledFunction calledFunction, int maxDepth) {
         fSymbol = calledFunction.getSymbol();
-        fDuration = calledFunction.getLength();
-        fSelfTime = calledFunction.getLength();
         fDepth = calledFunction.getDepth();
         fProcessId = calledFunction.getProcessId();
         fMaxDepth = maxDepth;
         fParent = null;
         fStatistics = new AggregatedCalledFunctionStatistics();
+        if (calledFunction.isComplete()) {
+        	complete(calledFunction);
+        }
     }
 
     /**
@@ -135,6 +143,15 @@ public class AggregatedCalledFunction implements Cloneable {
         return fParent;
     }
 
+    public void complete(AbstractCalledFunction calledFunction) {
+    	fDuration = calledFunction.getLength();
+    	fSelfTime += calledFunction.getLength() + 1;
+    }
+    
+    public boolean isComplete() {
+    	return fDuration >= 0;
+    }
+    
     /**
      * Add a new callee into the Callees list. If the function exists in the
      * callees list, the new callee's duration will be added to its duration and
@@ -146,7 +163,10 @@ public class AggregatedCalledFunction implements Cloneable {
      *            The aggregated data of the callee
      */
     public synchronized void addChild(AbstractCalledFunction child, AggregatedCalledFunction aggregatedChild) {
-        // Update the child's statistics with itself
+        if (!child.isComplete() || !aggregatedChild.isComplete()) {
+        	throw new IllegalArgumentException("Error computing statistics: cannot add incomplete child.");
+        }
+    	// Update the child's statistics with itself
         fSelfTime -= aggregatedChild.getDuration();
         aggregatedChild.getFunctionStatistics().update(child);
         AggregatedCalledFunction node = fChildren.get(aggregatedChild.getSymbol());
@@ -226,6 +246,9 @@ public class AggregatedCalledFunction implements Cloneable {
      * @return The duration of the function
      */
     public long getDuration() {
+    	if (!isComplete()) {
+    		throw new IllegalStateException("Cannot get duration of incomplete aggregate function.");
+    	}
         return fDuration;
     }
 
@@ -262,6 +285,9 @@ public class AggregatedCalledFunction implements Cloneable {
      * @return The self time
      */
     public long getSelfTime() {
+    	if (!isComplete()) {
+    		throw new IllegalStateException("Cannot get self time of incomplete aggregate function.");
+    	}
         return fSelfTime;
     }
 

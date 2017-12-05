@@ -3,6 +3,7 @@ package org.earthsystemmodeling.cupid.trace.callgraph;
 import java.util.concurrent.Semaphore;
 
 import org.earthsystemmodeling.cupid.trace.Activator;
+import org.earthsystemmodeling.cupid.trace.callstack.NUOPCCtfCallStackAnalysis;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.Status;
@@ -20,7 +21,7 @@ public class NUOPCPerPETGraphTreeView extends AbstractGraphTreeView {
     private Job fJob;
     
 	public NUOPCPerPETGraphTreeView() {
-		super(ID, NUOPCCtfCallGraphAnalysis.class, NUOPCCtfCallGraphAnalysis.ID);
+		super(ID, NUOPCCtfCallStackAnalysis.class, NUOPCCtfCallStackAnalysis.ID);
 	}
 	
 	@Override
@@ -42,10 +43,10 @@ public class NUOPCPerPETGraphTreeView extends AbstractGraphTreeView {
             return;
         }
         
-        NUOPCCtfCallGraphAnalysis callGraphAnalysis = (NUOPCCtfCallGraphAnalysis) analysisModule;
-        getViewer().setInput(callGraphAnalysis.getThreadNodes());
-        callGraphAnalysis.schedule();
-        job = new Job("NUOPC Call Graph Analysis") {
+        NUOPCCtfCallStackAnalysis callStackAnalysis = (NUOPCCtfCallStackAnalysis) analysisModule;
+        getViewer().setInput(callStackAnalysis.getAggregateThreadNodes());
+        callStackAnalysis.schedule();
+        job = new Job("NUOPC Call Stack Analysis") {
 
             @Override
             protected IStatus run(IProgressMonitor monitor) {
@@ -53,9 +54,9 @@ public class NUOPCPerPETGraphTreeView extends AbstractGraphTreeView {
                     if (monitor.isCanceled()) {
                         return Status.CANCEL_STATUS;
                     }
-                    callGraphAnalysis.waitForCompletion(monitor);
+                    callStackAnalysis.waitForCompletion(monitor);
                     Display.getDefault().asyncExec(() -> {
-                        getViewer().setInput(callGraphAnalysis.getThreadNodes());
+                        getViewer().setInput(callStackAnalysis.getAggregateThreadNodes());
                      });
                     return Status.OK_STATUS;
                 } finally {

@@ -12,7 +12,7 @@ import com.google.common.collect.ImmutableList;
 public class NUOPCCtfTrace extends CtfTmfTrace {
 
 	//some global constants
-	public static final int ANALYSES_VERSION = 2;  //should be bumped each release
+	public static final int ANALYSES_VERSION = 3;  //should be bumped each release
 	
 	private double traceVersion = -1.0;
 	

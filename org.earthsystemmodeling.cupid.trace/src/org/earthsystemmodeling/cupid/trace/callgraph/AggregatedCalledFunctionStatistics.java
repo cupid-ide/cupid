@@ -9,8 +9,8 @@
 
 package org.earthsystemmodeling.cupid.trace.callgraph;
 
-import org.eclipse.tracecompass.analysis.timing.core.statistics.IStatistics;
-import org.eclipse.tracecompass.analysis.timing.core.statistics.Statistics;
+import java.io.Serializable;
+
 
 /**
  * Class to calculate statistics for an aggregated function.
@@ -18,9 +18,14 @@ import org.eclipse.tracecompass.analysis.timing.core.statistics.Statistics;
  * @author Sonia Farrah
  * @author Geneviève Bastien
  */
-public class AggregatedCalledFunctionStatistics {
+public class AggregatedCalledFunctionStatistics implements Serializable {
 
-    // Duration statistics will be kept for all calls of the method, so we make
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = -6295453856973835602L;
+	
+	// Duration statistics will be kept for all calls of the method, so we make
     // them on the called function themselves
     private final IStatistics<ICalledFunction> fDurations;
     // Self time statistics are on aggregated called function because self times

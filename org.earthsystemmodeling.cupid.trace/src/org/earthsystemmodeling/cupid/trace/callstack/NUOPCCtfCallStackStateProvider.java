@@ -1,8 +1,10 @@
 package org.earthsystemmodeling.cupid.trace.callstack;
 
 import java.util.ArrayDeque;
+import java.util.ArrayList;
 import java.util.Deque;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import org.earthsystemmodeling.cupid.trace.Activator;
@@ -37,17 +39,21 @@ public abstract class NUOPCCtfCallStackStateProvider extends CallStackStateProvi
 	public static final int ESMF_METHOD_FINAL = 2;
 
 	protected NUOPCCtfStateSystemAnalysisModule stateAnalysis;
+	protected final NUOPCCtfCallStackAnalysis fAnalysis;
 
 	private static final boolean fDoCallGraph = true;
-	private Map<Long, ThreadNode> fThreadNodes = new HashMap<>();
-	private Map<Long, Deque<AggregatedCalledFunction>> fThreadStacks = new HashMap<>();
+	private long fTimer = 0;
+	private long fEventCount = 0;
+	private Map<Long, Deque<AbstractCalledFunction>> fThreadCallStacks = new HashMap<>();
+	private Map<Long, Deque<AggregatedCalledFunction>> fThreadAggStacks = new HashMap<>();
 	
-	public NUOPCCtfCallStackStateProvider(CtfTmfTrace trace) {
+	public NUOPCCtfCallStackStateProvider(CtfTmfTrace trace, NUOPCCtfCallStackAnalysis analysis) {
 		super(trace);
+		fAnalysis = analysis;
 		stateAnalysis = TmfTraceUtils.getAnalysisModuleOfClass(trace, NUOPCCtfStateSystemAnalysisModule.class, NUOPCCtfStateSystemAnalysisModule.ID);				
 	}
 
-	public static NUOPCCtfCallStackStateProvider newInstance(CtfTmfTrace trace) {
+	public static NUOPCCtfCallStackStateProvider newInstance(CtfTmfTrace trace, NUOPCCtfCallStackAnalysis analysis) {
 
 		NUOPCCtfTrace trc = (NUOPCCtfTrace) trace;
 
@@ -60,7 +66,7 @@ public abstract class NUOPCCtfCallStackStateProvider extends CallStackStateProvi
 		}
 		*/
 		if (trc.getTraceVersion() >= 0.3) {
-			return new Version0P3(trace);
+			return new Version0P3(trace, analysis);
 		}
 		else {
 			Activator.logWarning("Unsupported ESMF trace version:  " + trc.getTraceVersion());
@@ -85,6 +91,8 @@ public abstract class NUOPCCtfCallStackStateProvider extends CallStackStateProvi
 		if (!considerEvent(event)) {
 			return;
 		}
+		
+		fEventCount++;
 
 		ITmfStateSystemBuilder ss = getStateSystemBuilder();
 		if (ss == null) return;
@@ -114,21 +122,31 @@ public abstract class NUOPCCtfCallStackStateProvider extends CallStackStateProvi
 			ss.pushAttribute(timestamp, value, callStackQuark);
 			
 			if (fDoCallGraph) {
-				if (!fThreadNodes.containsKey(threadId)) {
+				long start = System.currentTimeMillis();
+				Deque<AbstractCalledFunction> threadCallStack = fThreadCallStacks.get(threadId);
+				Deque<AggregatedCalledFunction> threadAggStack = fThreadAggStacks.get(threadId);
+				if (threadCallStack == null) {
 					AbstractCalledFunction initSegment = CalledFunctionFactory.create(0, 0, 0, threadName, processId, null);
 		            ThreadNode init = new ThreadNode(initSegment, 0, threadId);
-					fThreadNodes.put(threadId, init);
-					fThreadStacks.put(threadId, new ArrayDeque<AggregatedCalledFunction>(10));
+					fAnalysis.addThreadNode(init);
+		            
+					threadCallStack = new ArrayDeque<AbstractCalledFunction>(10);
+					fThreadCallStacks.put(threadId, threadCallStack);
+					
+					threadAggStack = new ArrayDeque<AggregatedCalledFunction>(10);
+					fThreadAggStacks.put(threadId, threadAggStack);
+					threadAggStack.push(init);
 				}
 				
-				int depth = fThreadStacks.get(threadId).size();
-				
-				AbstractCalledFunction calledFunction = CalledFunctionFactory.create(timestamp, depth, functionEntryName.unboxStr(), processId, null);
+				int depth = threadCallStack.size();
+				AbstractCalledFunction calledFunction = 
+						CalledFunctionFactory.create(timestamp, depth, functionEntryName.unboxStr(), processId, threadCallStack.peek());
+	            threadCallStack.push(calledFunction);
 	            
-				//TODO: see if maxDepth matters
-				//AggregatedCalledFunction firstNode = new AggregatedCalledFunction(rootFunction, 0);
-	            //init.addChild(rootFunction, firstNode);
-				
+	            AggregatedCalledFunction aggFunction = new AggregatedCalledFunction(calledFunction, threadAggStack.peek());
+	            threadAggStack.push(aggFunction);
+	            long end = System.currentTimeMillis();
+	            fTimer += (end-start);
 			}
 
 			//add component kind
@@ -161,16 +179,23 @@ public abstract class NUOPCCtfCallStackStateProvider extends CallStackStateProvi
 			ITmfStateValue poppedValue = ss.popAttribute(timestamp, quarkCallStack);
 			ss.popAttribute(timestamp, quarkCompKind);
 			
-			/*
-			AbstractCalledFunction rootFunction = CalledFunctionFactory.create(intervalStart, intervalEnd + 1, depth, stateValue, processId, null);
-            fRootFunctions.add(rootFunction);
-            AggregatedCalledFunction firstNode = new AggregatedCalledFunction(rootFunction, currentQuarks.size());
-            if (!findChildren(rootFunction, depth, stateSystem, currentQuarks.size() + currentQuarks.get(depth), firstNode, processId, currentQuarks, monitor)) {
-                return false;
-            }
-            init.addChild(rootFunction, firstNode);
-			*/
-			
+			AbstractCalledFunction calledFunction = null;
+			if (fDoCallGraph) {
+				long start = System.currentTimeMillis();
+				calledFunction = fThreadCallStacks.get(threadId).pop();
+				calledFunction.complete(timestamp);
+				AggregatedCalledFunction aggFunction = fThreadAggStacks.get(threadId).pop();
+				aggFunction.complete(calledFunction);
+				if (!calledFunction.getSymbol().equals(aggFunction.getSymbol())) {
+					throw new IllegalStateException("Error computing statistics: called and aggregate functions do not match");
+				}
+				fThreadAggStacks.get(threadId).peek().addChild(calledFunction, aggFunction);
+				long end = System.currentTimeMillis();
+				fTimer += (end-start);
+				if (fEventCount % 100000 == 0) {
+					System.out.println("Time so far (s): " + fTimer / 1000);
+				}
+			}
 			
 			/*
 			 * Check for regions that were not closed.
@@ -193,18 +218,36 @@ public abstract class NUOPCCtfCallStackStateProvider extends CallStackStateProvi
 				*/
 				
 				if (fDoCallGraph) {
-					fThreadStacks.get(threadId).removeFirst();
+					calledFunction = fThreadCallStacks.get(threadId).pop();
+					calledFunction.complete(timestamp);
+					AggregatedCalledFunction aggFunction = fThreadAggStacks.get(threadId).pop();
+					aggFunction.complete(calledFunction);
+					if (!calledFunction.getSymbol().equals(aggFunction.getSymbol())) {
+						throw new IllegalStateException("Error computing statistics: called and aggregate functions do not match");
+					}
+					fThreadAggStacks.get(threadId).peek().addChild(calledFunction, aggFunction);
 				}
 				
 			}
 			if (poppedValue == null) {
 				Activator.logWarning("Ill-formed timer regions for event: " + functionExitState.unboxStr());		
 			}
-
-			
+						
 		}
 
 	}
+	
+	/*
+	@Override
+	public void done() {
+		super.done();
+		if (fDoCallGraph) {
+			
+			
+			
+		}
+	}
+	*/
 
 	protected String getFuncName(ITmfEvent event) {
 		if (event.getType().getName().equals("region")) {
@@ -736,8 +779,8 @@ public abstract class NUOPCCtfCallStackStateProvider extends CallStackStateProvi
 		CtfTmfEventType ET_REGION_EXIT;
 		CtfTmfEventType ET_CLOCK;
 		
-		public Version0P3(CtfTmfTrace trace) {
-			super(trace);
+		public Version0P3(CtfTmfTrace trace, NUOPCCtfCallStackAnalysis analysis) {
+			super(trace, analysis);
 			for (@NonNull CtfTmfEventType et : trace.getContainedEventTypes()) {
 				if (et.getName().equals("prologue_enter")) {
 					ET_PROLOGUE_ENTER = et;
@@ -765,7 +808,7 @@ public abstract class NUOPCCtfCallStackStateProvider extends CallStackStateProvi
 
 		@Override
 		public NUOPCCtfCallStackStateProvider getNewInstance() {
-			return new Version0P3((CtfTmfTrace) getTrace());			
+			return new Version0P3((CtfTmfTrace) getTrace(), fAnalysis);			
 		}
 		
 
