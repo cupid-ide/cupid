@@ -36,8 +36,8 @@ public class Statistics<@NonNull E> implements IStatistics<E>, Serializable {
 	private static final long serialVersionUID = -4064952586740198657L;
 
 	private transient final Function<E, @NonNull Long> fMapper;
-    private transient @Nullable E fMin = null;
-    private transient @Nullable E fMax = null;
+    private @Nullable E fMin = null;
+    private @Nullable E fMax = null;
     private long fMinValue;
     private long fMaxValue;
     private long fNbElements;

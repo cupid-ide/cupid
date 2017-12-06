@@ -11,6 +11,10 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.earthsystemmodeling.cupid.core.CupidActivator;
+import org.earthsystemmodeling.cupid.trace.callgraph.AbstractCalledFunction;
+import org.earthsystemmodeling.cupid.trace.callgraph.AggregatedCalledFunction;
+import org.earthsystemmodeling.cupid.trace.callgraph.CalledFunctionFactory;
+import org.earthsystemmodeling.cupid.trace.callgraph.NUOPCAggGraphTreeView;
 import org.earthsystemmodeling.cupid.trace.callgraph.NUOPCPerPETGraphTreeView;
 import org.earthsystemmodeling.cupid.trace.callgraph.ThreadNode;
 import org.earthsystemmodeling.cupid.trace.state.NUOPCCtfStateSystemAnalysisModule;
@@ -143,8 +147,7 @@ public class NUOPCCtfCallStackAnalysis extends CallStackAnalysis {
         File file = new File(directory + "perpet.stats");
         return file;
     }  
-    
-    
+        
     public List<ThreadNode> getAggregateThreadNodes() {
         return ImmutableList.copyOf(fThreadNodes);
     }
@@ -153,11 +156,23 @@ public class NUOPCCtfCallStackAnalysis extends CallStackAnalysis {
     	fThreadNodes.add(node);
     }
     
+    public List<ThreadNode> getGlobalAggregateThreadNode() {
+    	AbstractCalledFunction initSegment = CalledFunctionFactory.create(0, 0, 0, "root", -1, null);
+        ThreadNode init = new ThreadNode(initSegment, 0, -1);
+        for (ThreadNode node : fThreadNodes) {
+        	for (AggregatedCalledFunction aggFunc : node.getChildren()) {
+        		init.addChild(aggFunc.clone(), node.getId(), true);
+        	}
+        }
+        return ImmutableList.of(init);
+    }
+    
     
     @Override
     public Iterable<IAnalysisOutput> getOutputs() {
     	return ImmutableList.of(new TmfAnalysisViewOutput(NUOPCCallStackView.ID), 
-    							new TmfAnalysisViewOutput(NUOPCPerPETGraphTreeView.ID));    	
+    							new TmfAnalysisViewOutput(NUOPCPerPETGraphTreeView.ID),
+    							new TmfAnalysisViewOutput(NUOPCAggGraphTreeView.ID));    	
     }
     
     

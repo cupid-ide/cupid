@@ -54,6 +54,8 @@ public class AggregatedCalledFunction implements Cloneable, Serializable {
     private long fDuration = -1;
     private long fSelfTime= -1;
     private final int fProcessId;
+    
+    private final Map<Long, AggregatedCalledFunctionStatistics> fChildStatistics = new HashMap<>();
 
     /**
      * Constructor, parent is not null
@@ -163,12 +165,14 @@ public class AggregatedCalledFunction implements Cloneable, Serializable {
      *            The aggregated data of the callee
      */
     public synchronized void addChild(AbstractCalledFunction child, AggregatedCalledFunction aggregatedChild) {
-        if (!child.isComplete() || !aggregatedChild.isComplete()) {
+        if ((child != null && !child.isComplete()) || !aggregatedChild.isComplete()) {
         	throw new IllegalArgumentException("Error computing statistics: cannot add incomplete child.");
         }
     	// Update the child's statistics with itself
         fSelfTime -= aggregatedChild.getDuration();
-        aggregatedChild.getFunctionStatistics().update(child);
+        if (child != null) {
+        	aggregatedChild.getFunctionStatistics().update(child);
+        }
         AggregatedCalledFunction node = fChildren.get(aggregatedChild.getSymbol());
         if (node == null) {
             fChildren.put(aggregatedChild.getSymbol(), aggregatedChild.clone());
@@ -177,6 +181,28 @@ public class AggregatedCalledFunction implements Cloneable, Serializable {
             fChildren.replace(node.getSymbol(), node);
         }
     }
+    
+    /**
+     * Assumes statistics on aggregatedChild are already present so
+     * it does not require an AbstractCalledFunction and does not
+     * update the child's statistics.
+     * 
+     * @param aggregatedChild
+     */
+    public synchronized void addChild(AggregatedCalledFunction aggregatedChild, long threadId, boolean saveChildStats) {
+    	addChild(null, aggregatedChild);
+    	/*
+    	if (saveChildStats) {
+    		if (fChildStatistics.containsKey(threadId)) {
+    			throw new IllegalStateException("Should not replace existing thread statistics");
+    		}
+    		fChildStatistics.put(threadId, aggregatedChild.getFunctionStatistics());
+    	}
+    	*/
+    }
+    
+    
+    
     
     public AggregatedCalledFunction getChild(Object symbol) {
     	return fChildren.get(symbol);

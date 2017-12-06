@@ -3,6 +3,7 @@ package org.earthsystemmodeling.cupid.trace.callgraph;
 import java.util.concurrent.Semaphore;
 
 import org.earthsystemmodeling.cupid.trace.Activator;
+import org.earthsystemmodeling.cupid.trace.callstack.NUOPCCtfCallStackAnalysis;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.Status;
@@ -20,7 +21,7 @@ public class NUOPCAggGraphTreeView extends AbstractGraphTreeView {
     private Job fJob;
     
 	public NUOPCAggGraphTreeView() {
-		super(ID, NUOPCAggGraphAnalysis.class, NUOPCAggGraphAnalysis.ID);
+		super(ID, NUOPCCtfCallStackAnalysis.class, NUOPCCtfCallStackAnalysis.ID);
 	}
 	
 	@Override
@@ -42,10 +43,10 @@ public class NUOPCAggGraphTreeView extends AbstractGraphTreeView {
             return;
         }
         
-        NUOPCAggGraphAnalysis analysis = (NUOPCAggGraphAnalysis) analysisModule;
+        NUOPCCtfCallStackAnalysis analysis = (NUOPCCtfCallStackAnalysis) analysisModule;
         getViewer().setInput(null); //analysis.getThreadNodes());
         analysis.schedule();
-        job = new Job("NUOPC Call Graph Analysis") {
+        job = new Job("NUOPC Call Stack Analysis") {
 
             @Override
             protected IStatus run(IProgressMonitor monitor) {
@@ -55,7 +56,7 @@ public class NUOPCAggGraphTreeView extends AbstractGraphTreeView {
                     }
                     analysis.waitForCompletion(monitor);
                     Display.getDefault().asyncExec(() -> {
-                        getViewer().setInput(null); //analysis.getThreadNodes());
+                        getViewer().setInput(analysis.getGlobalAggregateThreadNode());
                      });
                     return Status.OK_STATUS;
                 } finally {

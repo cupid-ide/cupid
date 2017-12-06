@@ -93,31 +93,11 @@
       -->
       
       <module
-            analysis_module="org.earthsystemmodeling.cupid.trace.callgraph.NUOPCCtfCallGraphAnalysis"
-            icon="icons/clock.png"
-            id="org.earthsystemmodeling.cupid.trace.CallGraphAnalysis"
-            name="NUOPC Timing (Per-PET)">
-         <tracetype
-               applies="true"
-               class="org.earthsystemmodeling.cupid.trace.NUOPCCtfTrace">
-         </tracetype>
-      </module>
-      <module
             analysis_module="org.earthsystemmodeling.cupid.trace.state.NUOPCCtfStateSystemAnalysisModule"
             automatic="true"
             icon="icons/state.png"
             id="org.earthsystemmodeling.cupid.trace.NUOPCCtfStateSystemAnalysisModule"
             name="NUOPC System Analysis">
-         <tracetype
-               applies="true"
-               class="org.earthsystemmodeling.cupid.trace.NUOPCCtfTrace">
-         </tracetype>
-      </module>
-      <module
-            analysis_module="org.earthsystemmodeling.cupid.trace.callgraph.NUOPCAggGraphAnalysis"
-            icon="icons/clock.png"
-            id="org.earthsystemmodeling.cupid.trace.NUOPCAggGraphAnalysis"
-            name="NUOPC Timing (Aggregate)">
          <tracetype
                applies="true"
                class="org.earthsystemmodeling.cupid.trace.NUOPCCtfTrace">
@@ -183,7 +163,7 @@
             class="org.earthsystemmodeling.cupid.trace.callgraph.NUOPCPerPETGraphTreeView"
             icon="icons/clock.png"
             id="org.earthsystemmodeling.cupid.trace.NUOPCPerPETGraphTreeView"
-            name="Component Timing Tree"
+            name="Per-PET Timing Tree"
             restorable="true">
       </view>
       <view
@@ -191,7 +171,7 @@
             class="org.earthsystemmodeling.cupid.trace.callgraph.NUOPCAggGraphTreeView"
             icon="icons/clock.png"
             id="org.earthsystemmodeling.cupid.trace.NUOPCAggGraphTreeView"
-            name="Component Timing Tree"
+            name="Global Timing Tree"
             restorable="true">
       </view>
    </extension>

@@ -192,9 +192,9 @@ public abstract class NUOPCCtfCallStackStateProvider extends CallStackStateProvi
 				fThreadAggStacks.get(threadId).peek().addChild(calledFunction, aggFunction);
 				long end = System.currentTimeMillis();
 				fTimer += (end-start);
-				if (fEventCount % 100000 == 0) {
-					System.out.println("Time so far (s): " + fTimer / 1000);
-				}
+				//if (fEventCount % 100000 == 0) {
+				//	System.out.println("Time so far (s): " + fTimer / 1000);
+				//}
 			}
 			
 			/*
@@ -236,18 +236,6 @@ public abstract class NUOPCCtfCallStackStateProvider extends CallStackStateProvi
 		}
 
 	}
-	
-	/*
-	@Override
-	public void done() {
-		super.done();
-		if (fDoCallGraph) {
-			
-			
-			
-		}
-	}
-	*/
 
 	protected String getFuncName(ITmfEvent event) {
 		if (event.getType().getName().equals("region")) {
