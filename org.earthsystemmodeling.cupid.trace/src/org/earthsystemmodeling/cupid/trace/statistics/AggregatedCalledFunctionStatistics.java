@@ -7,7 +7,7 @@
  * http://www.eclipse.org/legal/epl-v10.html
  *******************************************************************************/
 
-package org.earthsystemmodeling.cupid.trace.callgraph;
+package org.earthsystemmodeling.cupid.trace.statistics;
 
 import java.io.Serializable;
 

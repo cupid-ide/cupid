@@ -160,18 +160,34 @@
       
       <view
             category="org.earthsystemmodeling.cupid"
-            class="org.earthsystemmodeling.cupid.trace.callgraph.NUOPCPerPETGraphTreeView"
+            class="org.earthsystemmodeling.cupid.trace.callgraph.NUOPCPerPETStatisticsTreeView"
             icon="icons/clock.png"
-            id="org.earthsystemmodeling.cupid.trace.NUOPCPerPETGraphTreeView"
+            id="org.earthsystemmodeling.cupid.trace.NUOPCPerPETStatisticsTreeView"
             name="Per-PET Timing Tree"
             restorable="true">
       </view>
       <view
             category="org.earthsystemmodeling.cupid"
-            class="org.earthsystemmodeling.cupid.trace.callgraph.NUOPCAggGraphTreeView"
+            class="org.earthsystemmodeling.cupid.trace.callgraph.NUOPCGlobalStatisticsTreeView"
             icon="icons/clock.png"
-            id="org.earthsystemmodeling.cupid.trace.NUOPCAggGraphTreeView"
+            id="org.earthsystemmodeling.cupid.trace.NUOPCGlobalStatisticsTreeView"
             name="Global Timing Tree"
+            restorable="true">
+      </view>
+      <view
+            category="org.earthsystemmodeling.cupid"
+            class="org.earthsystemmodeling.cupid.trace.callgraph.PerPETDensityView"
+            icon="icons/linegraph.png"
+            id="org.earthsystemmodeling.cupid.trace.PerPETDensityView"
+            name="PET Timing Chart"
+            restorable="true">
+      </view>
+      <view
+            category="org.earthsystemmodeling.cupid"
+            class="org.earthsystemmodeling.cupid.trace.callgraph.NUOPCTimingBalanceView"
+            icon="icons/clock.png"
+            id="org.earthsystemmodeling.cupid.trace.NUOPCTimingBalanceView"
+            name="Timing Balance Chart"
             restorable="true">
       </view>
    </extension>

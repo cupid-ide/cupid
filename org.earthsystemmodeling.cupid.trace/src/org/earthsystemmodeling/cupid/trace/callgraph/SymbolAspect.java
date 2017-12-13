@@ -12,6 +12,7 @@ package org.earthsystemmodeling.cupid.trace.callgraph;
 import java.util.Collection;
 import java.util.Comparator;
 
+import org.earthsystemmodeling.cupid.trace.statistics.ICalledFunction;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.tracecompass.common.core.NonNullUtils;

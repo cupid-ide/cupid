@@ -4,6 +4,7 @@ import java.util.concurrent.Semaphore;
 
 import org.earthsystemmodeling.cupid.trace.Activator;
 import org.earthsystemmodeling.cupid.trace.callstack.NUOPCCtfCallStackAnalysis;
+import org.earthsystemmodeling.cupid.trace.statistics.GlobalNode;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.Status;
@@ -11,16 +12,17 @@ import org.eclipse.core.runtime.jobs.Job;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.tracecompass.tmf.core.analysis.IAnalysisModule;
+import org.eclipse.tracecompass.tmf.ui.viewers.tree.ITmfTreeViewerEntry;
 
 
-public class NUOPCAggGraphTreeView extends AbstractGraphTreeView {
+public class NUOPCGlobalStatisticsTreeView extends AbstractStatisticsTreeView {
 
-	public static final String ID = "org.earthsystemmodeling.cupid.trace.NUOPCAggGraphTreeView";
+	public static final String ID = "org.earthsystemmodeling.cupid.trace.NUOPCGlobalStatisticsTreeView";
 	
 	private final Semaphore fLock = new Semaphore(1);
     private Job fJob;
     
-	public NUOPCAggGraphTreeView() {
+	public NUOPCGlobalStatisticsTreeView() {
 		super(ID, NUOPCCtfCallStackAnalysis.class, NUOPCCtfCallStackAnalysis.ID);
 	}
 	
@@ -56,7 +58,7 @@ public class NUOPCAggGraphTreeView extends AbstractGraphTreeView {
                     }
                     analysis.waitForCompletion(monitor);
                     Display.getDefault().asyncExec(() -> {
-                        getViewer().setInput(analysis.getGlobalAggregateThreadNode());
+                        getViewer().setInput(analysis.getGlobalStatistics());
                      });
                     return Status.OK_STATUS;
                 } finally {
@@ -71,15 +73,11 @@ public class NUOPCAggGraphTreeView extends AbstractGraphTreeView {
 	
 	
 	@Override
-	public AbstractGraphTreeViewer createTreeViewer(Composite parent) {
-		return new NUOPCFlameGraphTreeViewer(parent);
+	public AbstractStatisticsTreeViewer createTreeViewer(Composite parent) {
+		return new NUOPCGlobalStatisticsTreeViewer(parent, this);
 	}
 	
-	public class NUOPCFlameGraphTreeViewer extends AbstractGraphTreeViewer {
-		public NUOPCFlameGraphTreeViewer(Composite parent) {
-			super(parent, NUOPCAggGraphTreeView.this);
-		}
-	}
+	
 
 
 }

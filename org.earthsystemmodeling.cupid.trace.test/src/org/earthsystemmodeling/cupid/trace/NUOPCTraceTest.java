@@ -11,9 +11,9 @@ import java.util.List;
 import java.util.Map;
 import java.util.concurrent.TimeUnit;
 
-import org.earthsystemmodeling.cupid.trace.callgraph.ThreadNode;
 import org.earthsystemmodeling.cupid.trace.callstack.NUOPCCtfCallStackAnalysis;
 import org.earthsystemmodeling.cupid.trace.state.NUOPCCtfStateSystemAnalysisModule;
+import org.earthsystemmodeling.cupid.trace.statistics.ThreadNode;
 import org.eclipse.core.resources.IFolder;
 import org.eclipse.core.resources.IProject;
 import org.eclipse.core.resources.IResource;

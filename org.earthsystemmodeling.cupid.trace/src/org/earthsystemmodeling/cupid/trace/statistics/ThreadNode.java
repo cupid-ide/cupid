@@ -7,7 +7,7 @@
  * http://www.eclipse.org/legal/epl-v10.html
  *******************************************************************************/
 
-package org.earthsystemmodeling.cupid.trace.callgraph;
+package org.earthsystemmodeling.cupid.trace.statistics;
 
 /**
  * This class represents one thread. It's used as a root node for the aggregated
@@ -17,7 +17,12 @@ package org.earthsystemmodeling.cupid.trace.callgraph;
  */
 public class ThreadNode extends AggregatedCalledFunction {
 
-    private final long fId;
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = 3336572274184464687L;
+	
+	private final long fId;
 
     /**
      * @param calledFunction
@@ -40,5 +45,5 @@ public class ThreadNode extends AggregatedCalledFunction {
     public long getId() {
         return fId;
     }
-
+    
 }

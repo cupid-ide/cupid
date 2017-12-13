@@ -14,6 +14,11 @@ import java.util.concurrent.Future;
 import java.util.concurrent.TimeUnit;
 import java.util.stream.Collectors;
 
+import org.earthsystemmodeling.cupid.trace.statistics.AbstractCalledFunction;
+import org.earthsystemmodeling.cupid.trace.statistics.AggregatedCalledFunction;
+import org.earthsystemmodeling.cupid.trace.statistics.CalledFunctionFactory;
+import org.earthsystemmodeling.cupid.trace.statistics.ICalledFunction;
+import org.earthsystemmodeling.cupid.trace.statistics.ThreadNode;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.ListenerList;
 import org.eclipse.jdt.annotation.NonNull;
@@ -652,7 +657,7 @@ public class NUOPCCtfCallGraphAnalysis extends TmfAbstractAnalysisModule impleme
 	
 	@Override
     public Iterable<IAnalysisOutput> getOutputs() {
-    	return ImmutableList.of(new TmfAnalysisViewOutput(NUOPCPerPETGraphTreeView.ID));    	
+    	return ImmutableList.of(new TmfAnalysisViewOutput(NUOPCPerPETStatisticsTreeView.ID));    	
     }
 	
 	

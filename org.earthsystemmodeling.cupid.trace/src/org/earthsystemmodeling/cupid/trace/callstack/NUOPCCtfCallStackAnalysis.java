@@ -11,13 +11,16 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.earthsystemmodeling.cupid.core.CupidActivator;
-import org.earthsystemmodeling.cupid.trace.callgraph.AbstractCalledFunction;
-import org.earthsystemmodeling.cupid.trace.callgraph.AggregatedCalledFunction;
-import org.earthsystemmodeling.cupid.trace.callgraph.CalledFunctionFactory;
-import org.earthsystemmodeling.cupid.trace.callgraph.NUOPCAggGraphTreeView;
-import org.earthsystemmodeling.cupid.trace.callgraph.NUOPCPerPETGraphTreeView;
-import org.earthsystemmodeling.cupid.trace.callgraph.ThreadNode;
+import org.earthsystemmodeling.cupid.trace.callgraph.NUOPCGlobalStatisticsTreeView;
+import org.earthsystemmodeling.cupid.trace.callgraph.NUOPCPerPETStatisticsTreeView;
+import org.earthsystemmodeling.cupid.trace.callgraph.NUOPCTimingBalanceView;
 import org.earthsystemmodeling.cupid.trace.state.NUOPCCtfStateSystemAnalysisModule;
+import org.earthsystemmodeling.cupid.trace.statistics.AbstractCalledFunction;
+import org.earthsystemmodeling.cupid.trace.statistics.AggregatedCalledFunction;
+import org.earthsystemmodeling.cupid.trace.statistics.CalledFunctionFactory;
+import org.earthsystemmodeling.cupid.trace.statistics.GlobalNode;
+import org.earthsystemmodeling.cupid.trace.statistics.IGlobalStatisticsProvider;
+import org.earthsystemmodeling.cupid.trace.statistics.ThreadNode;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.tracecompass.tmf.core.analysis.IAnalysisModule;
@@ -34,7 +37,7 @@ import org.eclipse.tracecompass.tmf.ui.analysis.TmfAnalysisViewOutput;
 import com.google.common.collect.ImmutableList;
 import com.google.common.collect.Lists;
 
-public class NUOPCCtfCallStackAnalysis extends CallStackAnalysis {
+public class NUOPCCtfCallStackAnalysis extends CallStackAnalysis implements IGlobalStatisticsProvider {
 
 	public static final String ID = "org.earthsystemmodeling.cupid.trace.NUOPCCtfCallStackAnalysis";
 	
@@ -155,26 +158,97 @@ public class NUOPCCtfCallStackAnalysis extends CallStackAnalysis {
     protected synchronized void addThreadNode(ThreadNode node) {
     	fThreadNodes.add(node);
     }
-    
-    public List<ThreadNode> getGlobalAggregateThreadNode() {
-    	AbstractCalledFunction initSegment = CalledFunctionFactory.create(0, 0, 0, "root", -1, null);
-        ThreadNode init = new ThreadNode(initSegment, 0, -1);
-        for (ThreadNode node : fThreadNodes) {
-        	for (AggregatedCalledFunction aggFunc : node.getChildren()) {
-        		init.addChild(aggFunc.clone(), node.getId(), true);
-        	}
-        }
-        return ImmutableList.of(init);
-    }
-    
+   
     
     @Override
     public Iterable<IAnalysisOutput> getOutputs() {
     	return ImmutableList.of(new TmfAnalysisViewOutput(NUOPCCallStackView.ID), 
-    							new TmfAnalysisViewOutput(NUOPCPerPETGraphTreeView.ID),
-    							new TmfAnalysisViewOutput(NUOPCAggGraphTreeView.ID));    	
+    							new TmfAnalysisViewOutput(NUOPCPerPETStatisticsTreeView.ID),
+    							new TmfAnalysisViewOutput(NUOPCGlobalStatisticsTreeView.ID), 
+    							new TmfAnalysisViewOutput(NUOPCTimingBalanceView.ID));    	
     }
+
+	@Override
+	public GlobalNode getGlobalStatistics() {
+		AbstractCalledFunction initSegment = CalledFunctionFactory.create(0, 0, 0, "root", -1, null);
+        	GlobalNode init = new GlobalNode(initSegment, 0);
+        	for (ThreadNode node : fThreadNodes) {
+        		for (AggregatedCalledFunction aggFunc : node.getChildren()) {
+        			AggregatedCalledFunction aggFuncClone = aggFunc.clone();
+        			aggFuncClone.saveStatistics(node.getId());
+        			init.addChild(aggFuncClone);
+        		}
+        	}
+        	return init;
+	}
+
+	
     
+    
+  /*  
+	@Override
+	public void removeListener(IAnalysisProgressListener listener) {
+		// TODO Auto-generated method stub
+	}
+
+	@Override
+	public Iterable<ISegmentAspect> getSegmentAspects() {
+		return ImmutableList.of(PETAspect.PET_ASPECT);
+	}
+
+	@Override
+	public @Nullable ISegmentStore<ISegment> getSegmentStore() {
+		ISegmentStore<ISegment> store = SegmentStoreFactory.createSegmentStore(SegmentStoreType.Fast);		
+		for (ThreadNode node : fThreadNodes) {
+			for (AggregatedCalledFunction child : node.getChildren()) {
+				store.add(new AggregatedFunctionSegment(child, node.getId()));
+			}
+		}
+		return store;
+	}
+
+	@Override
+	public void addListener(IAnalysisProgressListener listener) {
+		// TODO Auto-generated method stub
+	}
+	
+	public static class AggregatedFunctionSegment implements INamedSegment {
+
+		private final AggregatedCalledFunction fFunction;
+		private final long fThreadId;
+		
+		private static final long serialVersionUID = 1559969863958229959L;
+		
+		public AggregatedFunctionSegment(AggregatedCalledFunction function, long threadId) {
+			fFunction = function;
+			fThreadId = threadId;
+		}
+
+		@Override
+		public long getStart() {
+			return 0;
+		}
+
+		@Override
+		public long getEnd() {
+			return 0;
+		}
+
+		@Override
+		public String getName() {
+			return fFunction.getSymbol().toString();
+		}
+
+		public AggregatedCalledFunction getFunction() {
+			return fFunction;
+		}
+		
+		public long getThreadId() {
+			return fThreadId;
+		}
+		
+	}
+    */
     
     
 

@@ -3,6 +3,10 @@ package org.earthsystemmodeling.cupid.trace.callgraph;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import org.earthsystemmodeling.cupid.trace.statistics.AbstractCalledFunction;
+import org.earthsystemmodeling.cupid.trace.statistics.AggregatedCalledFunction;
+import org.earthsystemmodeling.cupid.trace.statistics.CalledFunctionFactory;
+import org.earthsystemmodeling.cupid.trace.statistics.ThreadNode;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.tracecompass.common.core.StreamUtils;
 import org.eclipse.tracecompass.statesystem.core.statevalue.TmfStateValue;
@@ -72,7 +76,7 @@ public class NUOPCAggGraphAnalysis extends TmfAbstractAnalysisModule {
 
 	@Override
     public Iterable<IAnalysisOutput> getOutputs() {
-    	return ImmutableList.of(new TmfAnalysisViewOutput(NUOPCAggGraphTreeView.ID));    	
+    	return ImmutableList.of(new TmfAnalysisViewOutput(NUOPCGlobalStatisticsTreeView.ID));    	
     }
 	
 	

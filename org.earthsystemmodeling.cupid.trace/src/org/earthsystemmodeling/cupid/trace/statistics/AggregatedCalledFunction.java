@@ -7,7 +7,7 @@
  * http://www.eclipse.org/legal/epl-v10.html
  *******************************************************************************/
 
-package org.earthsystemmodeling.cupid.trace.callgraph;
+package org.earthsystemmodeling.cupid.trace.statistics;
 
 import java.io.Serializable;
 import java.util.Collection;
@@ -54,8 +54,8 @@ public class AggregatedCalledFunction implements Cloneable, Serializable {
     private long fDuration = -1;
     private long fSelfTime= -1;
     private final int fProcessId;
-    
-    private final Map<Long, AggregatedCalledFunctionStatistics> fChildStatistics = new HashMap<>();
+        
+    private final Map<Long, AggregatedCalledFunctionStatistics> fStatisticsMap = new HashMap<>();
 
     /**
      * Constructor, parent is not null
@@ -106,7 +106,8 @@ public class AggregatedCalledFunction implements Cloneable, Serializable {
     private AggregatedCalledFunction(AggregatedCalledFunction toCopy) {
         fSymbol = toCopy.fSymbol;
         for (Entry<Object, AggregatedCalledFunction> entry : toCopy.fChildren.entrySet()) {
-            fChildren.put(entry.getKey(), entry.getValue().clone());
+          AggregatedCalledFunction child = entry.getValue().clone();
+        	fChildren.put(entry.getKey(), child);
         }
         fParent = toCopy.fParent;
         fMaxDepth = toCopy.fMaxDepth;
@@ -116,8 +117,21 @@ public class AggregatedCalledFunction implements Cloneable, Serializable {
         fProcessId = toCopy.fProcessId;
         fDuration = toCopy.fDuration;
         fSelfTime = toCopy.fSelfTime;
+        toCopy.fStatisticsMap.forEach((t,f) -> {
+        	AggregatedCalledFunctionStatistics s = new AggregatedCalledFunctionStatistics();
+        	s.merge(f);
+        	fStatisticsMap.put(t, s);
+        });
     }
 
+    public void saveStatistics(long threadId) {
+    	fStatisticsMap.put(threadId, fStatistics);
+    	fChildren.values().forEach(c -> {
+    		c.saveStatistics(threadId);
+    	});
+    }
+    
+    
     /**
      * The function's symbol (address or name)
      *
@@ -154,6 +168,7 @@ public class AggregatedCalledFunction implements Cloneable, Serializable {
     	return fDuration >= 0;
     }
     
+   
     /**
      * Add a new callee into the Callees list. If the function exists in the
      * callees list, the new callee's duration will be added to its duration and
@@ -189,19 +204,9 @@ public class AggregatedCalledFunction implements Cloneable, Serializable {
      * 
      * @param aggregatedChild
      */
-    public synchronized void addChild(AggregatedCalledFunction aggregatedChild, long threadId, boolean saveChildStats) {
+    public synchronized void addChild(AggregatedCalledFunction aggregatedChild) {
     	addChild(null, aggregatedChild);
-    	/*
-    	if (saveChildStats) {
-    		if (fChildStatistics.containsKey(threadId)) {
-    			throw new IllegalStateException("Should not replace existing thread statistics");
-    		}
-    		fChildStatistics.put(threadId, aggregatedChild.getFunctionStatistics());
-    	}
-    	*/
     }
-    
-    
     
     
     public AggregatedCalledFunction getChild(Object symbol) {
@@ -211,9 +216,11 @@ public class AggregatedCalledFunction implements Cloneable, Serializable {
     @Override
     public @NonNull AggregatedCalledFunction clone() {
         // We use a constructor instead of super.clone, otherwise some fields cannot be
-        // final
-        return new AggregatedCalledFunction(this);
+        // final 
+    	return new AggregatedCalledFunction(this);
     }
+    
+    
 
     /**
      * Modify the function's duration
@@ -236,6 +243,7 @@ public class AggregatedCalledFunction implements Cloneable, Serializable {
             Object childSymbol = NonNullUtils.checkNotNull(FunctionEntry.getKey());
             AggregatedCalledFunction secondNodeChild = NonNullUtils.checkNotNull(FunctionEntry.getValue());
             AggregatedCalledFunction aggregatedCalledFunction = firstNode.fChildren.get(childSymbol);
+                        
             if (aggregatedCalledFunction == null) {
                 firstNode.fChildren.put(secondNodeChild.getSymbol(), secondNodeChild);
             } else {
@@ -262,6 +270,14 @@ public class AggregatedCalledFunction implements Cloneable, Serializable {
         destination.addToDuration(sourceDuration);
         destination.addToSelfTime(sourceSelfTime);
         destination.getFunctionStatistics().merge(source.getFunctionStatistics());
+        
+        //merge any saved statistics
+        source.fStatisticsMap.forEach((t,f) -> {
+        	AggregatedCalledFunctionStatistics s = new AggregatedCalledFunctionStatistics();
+        	s.merge(f);
+        	destination.fStatisticsMap.put(t, s);
+        });
+        
         // merge the children callees.
         mergeChildren(destination, source);
     }
@@ -352,6 +368,11 @@ public class AggregatedCalledFunction implements Cloneable, Serializable {
     public AggregatedCalledFunctionStatistics getFunctionStatistics() {
         return fStatistics;
     }
+    
+    public Map<Long, AggregatedCalledFunctionStatistics> getFunctionStatisticsMap() {
+    	return fStatisticsMap;
+    }
+    
 
     @Override
     public String toString() {

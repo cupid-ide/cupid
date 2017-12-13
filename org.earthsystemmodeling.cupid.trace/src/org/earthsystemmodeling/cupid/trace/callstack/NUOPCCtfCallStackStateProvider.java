@@ -9,11 +9,11 @@ import java.util.Map;
 
 import org.earthsystemmodeling.cupid.trace.Activator;
 import org.earthsystemmodeling.cupid.trace.NUOPCCtfTrace;
-import org.earthsystemmodeling.cupid.trace.callgraph.AbstractCalledFunction;
-import org.earthsystemmodeling.cupid.trace.callgraph.AggregatedCalledFunction;
-import org.earthsystemmodeling.cupid.trace.callgraph.CalledFunctionFactory;
-import org.earthsystemmodeling.cupid.trace.callgraph.ThreadNode;
 import org.earthsystemmodeling.cupid.trace.state.NUOPCCtfStateSystemAnalysisModule;
+import org.earthsystemmodeling.cupid.trace.statistics.AbstractCalledFunction;
+import org.earthsystemmodeling.cupid.trace.statistics.AggregatedCalledFunction;
+import org.earthsystemmodeling.cupid.trace.statistics.CalledFunctionFactory;
+import org.earthsystemmodeling.cupid.trace.statistics.ThreadNode;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.tracecompass.statesystem.core.ITmfStateSystemBuilder;

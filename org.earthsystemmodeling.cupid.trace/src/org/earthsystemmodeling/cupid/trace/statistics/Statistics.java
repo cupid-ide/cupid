@@ -7,7 +7,7 @@
  * http://www.eclipse.org/legal/epl-v10.html
  *******************************************************************************/
 
-package org.earthsystemmodeling.cupid.trace.callgraph;
+package org.earthsystemmodeling.cupid.trace.statistics;
 
 import java.io.Serializable;
 import java.util.function.Function;
@@ -200,7 +200,7 @@ public class Statistics<@NonNull E> implements IStatistics<E>, Serializable {
         fMax = other.getMax() >= max ? other.getMaxObject() : fMax;
         
         fMinValue = other.getMin() <= min ? other.getMin() : fMinValue;
-        fMaxValue = other.getMax() >= min ? other.getMax() : fMaxValue;
+        fMaxValue = other.getMax() >= max ? other.getMax() : fMaxValue;
 
         long oldNbSeg = fNbElements;
         double oldAverage = fMean;
