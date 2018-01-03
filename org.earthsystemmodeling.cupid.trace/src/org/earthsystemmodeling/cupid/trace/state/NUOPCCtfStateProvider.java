@@ -134,6 +134,19 @@ public class NUOPCCtfStateProvider extends AbstractTmfStateProvider {
             	value = TmfStateValue.newValueLong(physMem);
             	ss.modifyAttribute(ts, value, quark);
             }
+            else if (event.getType().getName().equals("define_region")) {
+            	
+            	CtfTmfEvent e = (CtfTmfEvent) event;
+            	String pet = ((Long) e.getPacketAttributes().get("pet")).toString();
+            	
+            	long regionId = event.getContent().getFieldValue(Long.class, "id");
+            	String regionName = event.getContent().getFieldValue(String.class, "name");
+            	
+            	int quark = ss.getQuarkAbsoluteAndAdd("regions", pet, String.valueOf(regionId));
+            	ITmfStateValue value = TmfStateValue.newValueString(regionName);
+            	ss.modifyAttribute(ts, value, quark);
+            	
+            }
             
         	
         } catch (StateValueTypeException ex) {

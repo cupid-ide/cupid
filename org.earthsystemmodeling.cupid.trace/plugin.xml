@@ -94,7 +94,7 @@
       
       <module
             analysis_module="org.earthsystemmodeling.cupid.trace.state.NUOPCCtfStateSystemAnalysisModule"
-            automatic="true"
+            automatic="false"
             icon="icons/state.png"
             id="org.earthsystemmodeling.cupid.trace.NUOPCCtfStateSystemAnalysisModule"
             name="NUOPC System Analysis">

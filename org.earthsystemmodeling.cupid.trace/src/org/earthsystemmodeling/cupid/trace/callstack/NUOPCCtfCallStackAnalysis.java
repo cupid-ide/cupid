@@ -22,12 +22,15 @@ import org.earthsystemmodeling.cupid.trace.statistics.GlobalNode;
 import org.earthsystemmodeling.cupid.trace.statistics.IGlobalStatisticsProvider;
 import org.earthsystemmodeling.cupid.trace.statistics.ThreadNode;
 import org.eclipse.core.runtime.IProgressMonitor;
+import org.eclipse.core.runtime.IStatus;
+import org.eclipse.core.runtime.NullProgressMonitor;
 import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.tracecompass.tmf.core.analysis.IAnalysisModule;
 import org.eclipse.tracecompass.tmf.core.analysis.IAnalysisOutput;
 import org.eclipse.tracecompass.tmf.core.callstack.CallStackAnalysis;
 import org.eclipse.tracecompass.tmf.core.exceptions.TmfAnalysisException;
 import org.eclipse.tracecompass.tmf.core.statesystem.ITmfStateProvider;
+import org.eclipse.tracecompass.tmf.core.statistics.TmfStatisticsModule;
 import org.eclipse.tracecompass.tmf.core.trace.ITmfTrace;
 import org.eclipse.tracecompass.tmf.core.trace.TmfTraceManager;
 import org.eclipse.tracecompass.tmf.core.trace.TmfTraceUtils;
@@ -42,7 +45,14 @@ public class NUOPCCtfCallStackAnalysis extends CallStackAnalysis implements IGlo
 	public static final String ID = "org.earthsystemmodeling.cupid.trace.NUOPCCtfCallStackAnalysis";
 	
 	private List<ThreadNode> fThreadNodes = new ArrayList<ThreadNode>();
+	private IProgressMonitor fMonitor;
 	
+	@Override
+	public IStatus schedule() {
+		// TODO Auto-generated method stub
+		return super.schedule();
+	}
+		
     @Override
     public boolean setTrace(ITmfTrace trace) throws TmfAnalysisException {
         if (!(trace instanceof CtfTmfTrace)) {
@@ -63,18 +73,32 @@ public class NUOPCCtfCallStackAnalysis extends CallStackAnalysis implements IGlo
         
     @Override
     protected Iterable<IAnalysisModule> getDependentAnalyses() {   	
-    	IAnalysisModule toAdd = 
-    			TmfTraceUtils.getAnalysisModuleOfClass(getTrace(), NUOPCCtfStateSystemAnalysisModule.class, NUOPCCtfStateSystemAnalysisModule.ID);
-    	if (toAdd == null) {
-    		CupidActivator.log("NUOPCCtfCallStackAnalysis: Cannot find NUOPC analysis module.");
+    	return Lists.newArrayList(
+    			TmfTraceUtils.getAnalysisModuleOfClass(getTrace(), NUOPCCtfStateSystemAnalysisModule.class, NUOPCCtfStateSystemAnalysisModule.ID),
+    			TmfTraceUtils.getAnalysisModuleOfClass(getTrace(), TmfStatisticsModule.class, TmfStatisticsModule.ID));
+    }
+    
+    protected long getExpectedNumberOfEvents() {
+    	TmfStatisticsModule module = TmfTraceUtils.getAnalysisModuleOfClass(getTrace(), TmfStatisticsModule.class, TmfStatisticsModule.ID);
+    	if (module != null) {
+    		module.schedule();
+    		if (module.waitForCompletion(fMonitor)) {
+    			return module.getStatistics().getEventsTotal();
+    		}
     	}
-    	return Lists.newArrayList(toAdd);
+    	return 0;
+    }
+    
+    public IProgressMonitor getProgressMonitor() {
+    	return fMonitor != null ? fMonitor : new NullProgressMonitor();
     }
 
     @Override
     protected boolean executeAnalysis(@Nullable IProgressMonitor monitor) {
     	fThreadNodes.clear();
-    	boolean success = super.executeAnalysis(monitor);   	
+    	fMonitor = monitor;
+    	boolean success = super.executeAnalysis(monitor);
+    	fMonitor = null;
     	if (success) {
     		if (getBackendType() == StateSystemBackendType.FULL) {
     			

@@ -1,31 +1,23 @@
 package org.earthsystemmodeling.cupid.trace.state;
 
-import java.util.LinkedList;
-import java.util.List;
 import java.util.Optional;
 
 import org.earthsystemmodeling.cupid.trace.ESMFId;
 import org.earthsystemmodeling.cupid.trace.ESMFPhaseId;
-import org.earthsystemmodeling.cupid.trace.callstack.NUOPCCallStackView;
+import org.earthsystemmodeling.cupid.trace.ESMFRegionId;
+import org.eclipse.core.runtime.IStatus;
 import org.eclipse.tracecompass.statesystem.core.ITmfStateSystem;
 import org.eclipse.tracecompass.statesystem.core.exceptions.AttributeNotFoundException;
 import org.eclipse.tracecompass.statesystem.core.exceptions.StateSystemDisposedException;
-import org.eclipse.tracecompass.statesystem.core.exceptions.TimeRangeException;
 import org.eclipse.tracecompass.statesystem.core.interval.ITmfStateInterval;
 import org.eclipse.tracecompass.statesystem.core.statevalue.ITmfStateValue;
-import org.eclipse.tracecompass.tmf.core.analysis.IAnalysisOutput;
 import org.eclipse.tracecompass.tmf.core.statesystem.ITmfStateProvider;
 import org.eclipse.tracecompass.tmf.core.statesystem.TmfStateSystemAnalysisModule;
 import org.eclipse.tracecompass.tmf.ctf.core.trace.CtfTmfTrace;
-import org.eclipse.tracecompass.tmf.ui.analysis.TmfAnalysisViewOutput;
-import org.eclipse.tracecompass.tmf.ui.views.callstack.CallStackEntry;
-import org.eclipse.tracecompass.tmf.ui.views.callstack.CallStackEvent;
 
 import com.google.common.cache.CacheBuilder;
 import com.google.common.cache.CacheLoader;
-import com.google.common.cache.CacheStats;
 import com.google.common.cache.LoadingCache;
-import com.google.common.collect.ImmutableList;
 
 public class NUOPCCtfStateSystemAnalysisModule extends TmfStateSystemAnalysisModule {
 
@@ -47,6 +39,11 @@ public class NUOPCCtfStateSystemAnalysisModule extends TmfStateSystemAnalysisMod
 	}
 		
 	private static final long TIMEOUT = 20*1000;
+	
+	@Override
+	public IStatus schedule() {		
+		return super.schedule();
+	}
 	
 		
 	public String queryComponentName(long vmid, long baseid) {
@@ -71,6 +68,38 @@ public class NUOPCCtfStateSystemAnalysisModule extends TmfStateSystemAnalysisMod
 		return cacheComponentPhaseLabel.getUnchecked(id).orElse(null);		
 	}
 		
+	public String queryRegionName(ESMFRegionId id) {
+		//CacheStats stats = cacheRegionName.stats();
+		return cacheRegionName.getUnchecked(id).orElse(null);
+	}
+	
+	private final LoadingCache<ESMFRegionId, Optional<String>> cacheRegionName = CacheBuilder.newBuilder()
+			.maximumSize(10000)
+			//.recordStats()
+			.build(new CacheLoader<ESMFRegionId, Optional<String>>() {
+				@Override
+				public Optional<String> load(ESMFRegionId id) {
+					ITmfStateSystem ss = getStateSystem();
+					if (!ss.waitUntilBuilt(TIMEOUT)) {
+						/* ignore */
+					}
+					long endts = ss.getCurrentEndTime();
+					try {
+						int quark = ss.getQuarkAbsolute("regions", 
+								String.valueOf(id.pet), String.valueOf(id.regionid));
+						ITmfStateInterval interval = ss.querySingleState(endts, quark);
+						ITmfStateValue value = interval.getStateValue();
+						//List<ITmfStateInterval> state = ss.queryFullState(endts);
+						//ITmfStateValue value = state.get(quark).getStateValue();
+				        return Optional.ofNullable(value.unboxStr());
+					} catch (AttributeNotFoundException e) {
+						return Optional.empty();
+					} catch (StateSystemDisposedException e) {
+						return Optional.empty();
+					}
+				}
+			});
+	
 	private final LoadingCache<ESMFId, Optional<String>> cacheComponentName = CacheBuilder.newBuilder()
 			.maximumSize(1000)
 			//.recordStats()
@@ -85,8 +114,10 @@ public class NUOPCCtfStateSystemAnalysisModule extends TmfStateSystemAnalysisMod
 					String idStr = id.vmid + "-" + id.baseid;
 					try {
 						int quark = ss.getQuarkAbsolute("component", idStr, "name");
-						List<ITmfStateInterval> state = ss.queryFullState(endts);
-						ITmfStateValue value = state.get(quark).getStateValue();
+						ITmfStateInterval interval = ss.querySingleState(endts, quark);
+						ITmfStateValue value = interval.getStateValue();
+						//List<ITmfStateInterval> state = ss.queryFullState(endts);
+						//ITmfStateValue value = state.get(quark).getStateValue();
 				        return Optional.ofNullable(value.unboxStr());
 					} catch (AttributeNotFoundException e) {
 						return Optional.empty();
@@ -111,8 +142,10 @@ public class NUOPCCtfStateSystemAnalysisModule extends TmfStateSystemAnalysisMod
 					String idStr = id.vmid + "-" + id.baseid;
 					try {
 						int quark = ss.getQuarkAbsolute("component", idStr, "kind");
-						List<ITmfStateInterval> state = ss.queryFullState(endts);
-						ITmfStateValue value = state.get(quark).getStateValue();
+						ITmfStateInterval interval = ss.querySingleState(endts, quark);
+						ITmfStateValue value = interval.getStateValue();
+						//List<ITmfStateInterval> state = ss.queryFullState(endts);
+						//ITmfStateValue value = state.get(quark).getStateValue();
 				        return Optional.ofNullable(value.unboxStr());
 					} catch (AttributeNotFoundException e) {
 						return Optional.empty();
@@ -144,8 +177,10 @@ public class NUOPCCtfStateSystemAnalysisModule extends TmfStateSystemAnalysisMod
 										
 					try {
 						int quark = ss.getQuarkAbsolute("component", idStr, map, String.valueOf(id.phase));
-						List<ITmfStateInterval> state = ss.queryFullState(endts);
-						ITmfStateValue value = state.get(quark).getStateValue();
+						ITmfStateInterval interval = ss.querySingleState(endts, quark);
+						ITmfStateValue value = interval.getStateValue();
+						//List<ITmfStateInterval> state = ss.queryFullState(endts);
+						//ITmfStateValue value = state.get(quark).getStateValue();
 				        return Optional.ofNullable(value.unboxStr());
 					} catch (AttributeNotFoundException e) {
 						String method = "";
@@ -160,107 +195,5 @@ public class NUOPCCtfStateSystemAnalysisModule extends TmfStateSystemAnalysisMod
 			});
 	
 	
-	/*
-	public String queryComponentName(long vmid, long baseid) {	
-		
-		ITmfStateSystem ss = getStateSystem();
-		if (!ss.waitUntilBuilt(TIMEOUT)) {
-			//System.out.println("not built");
-		}
-		
-		long endts = ss.getCurrentEndTime();
-		String id = vmid + "-" + baseid;
-		try {
-			int quark = ss.getQuarkAbsolute("component", id, "name");
-			List<ITmfStateInterval> state = ss.queryFullState(endts);
-			ITmfStateValue value = state.get(quark).getStateValue();
-	        return value.unboxStr();
-		} catch (AttributeNotFoundException e) {
-			return null;
-		} catch (StateSystemDisposedException e) {
-			return null;
-		}
-	}
-	*/
 	
-	
-	/*
-	public String queryComponentKind(long vmid, long baseid) {	
-		
-		ITmfStateSystem ss = getStateSystem();
-		if (!ss.waitUntilBuilt(TIMEOUT)) {
-			// ignore 
-		}
-		
-		long endts = ss.getCurrentEndTime();
-		String id = vmid + "-" + baseid;
-		try {
-			int quark = ss.getQuarkAbsolute("component", id, "kind");
-			List<ITmfStateInterval> state = ss.queryFullState(endts);
-			ITmfStateValue value = state.get(quark).getStateValue();
-	        return value.unboxStr();
-		} catch (AttributeNotFoundException e) {
-			return null;
-		} catch (StateSystemDisposedException e) {
-			return null;
-		}
-	}
-	*/
-	
-	/*
-	public String queryComponentPhaseLabel(long vmid, long baseid, long method, long phase) {	
-		
-		ITmfStateSystem ss = getStateSystem();
-		if (!ss.waitUntilBuilt(TIMEOUT)) {
-			//System.out.println("not built");
-		}
-		
-		long endts = ss.getCurrentEndTime();		
-		
-		String id = vmid + "-" + baseid;
-		String map = null;
-		
-		if (method == 0) map = "IPM";
-		else if (method == 1) map = "RPM";
-		else if (method == 2) map = "FPM";
-		else return null;
-		
-		try {
-			int quark = ss.getQuarkAbsolute("component", id, map, String.valueOf(phase));
-			List<ITmfStateInterval> state = ss.queryFullState(endts);
-			ITmfStateValue value = state.get(quark).getStateValue();
-	        return value.unboxStr();
-		} catch (AttributeNotFoundException e) {
-			return null;
-		} catch (StateSystemDisposedException e) {
-			return null;
-		}
-	}
-	*/
-	
-	/*
-	public String queryActiveComponent(long ts, int pet, int stackLevel) {	
-		
-		ITmfStateSystem ss = getStateSystem();
-		if (!ss.waitUntilBuilt(TIMEOUT)) {
-			
-		}
-				
-		try {
-			int quark = ss.getQuarkAbsolute("active", "component", 
-					String.valueOf(pet), String.valueOf(stackLevel));
-			ITmfStateInterval val = ss.querySingleState(ts, quark);
-			return val.getStateValue().unboxStr();			
-		} catch (AttributeNotFoundException e) {
-			return null;
-		} catch (StateSystemDisposedException e) {
-			return null;
-		}
-	}
-	*/
-	
-	//@Override
-    //public Iterable<IAnalysisOutput> getOutputs() {
-	//	return ImmutableList.of(new TmfAnalysisViewOutput(NUOPCMemUsageView.ID));  		
-    //}
 }

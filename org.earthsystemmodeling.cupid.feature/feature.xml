@@ -10,13 +10,15 @@
    </description>
 
    <copyright>
-      Copyright 2016 NASA/NOAA/Univerisity of Colorado
+      Copyright 2018, University Corporation for Atmospheric Research,
+Massachusetts Institute of Technology, Geophysical Fluid Dynamics
+Laboratory, University of Michigan, National Centers for Environmental
+Prediction, Los Alamos National Laboratory, Argonne National
+Laboratory, NASA Goddard Space Flight Center.
    </copyright>
 
    <license url="http://opensource.org/licenses/MIT">
       The MIT License (MIT)
-Copyright (C) 2016  NASA/NOAA/University of Colorado
-Author: Rocky Dunlap
 
 Permission is hereby granted, free of charge, to any person obtaining a 
 copy of this software and associated documentation files (the &quot;Software&quot;), 
