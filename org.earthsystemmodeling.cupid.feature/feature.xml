@@ -2,19 +2,15 @@
 <feature
       id="org.earthsystemmodeling.cupid.feature"
       label="Cupid"
-      version="2.1.0.qualifier">
+      version="2.0.0.qualifier">
    <install-handler handler=""/>
 
    <description url="http://www.earthsystemcog.org/projects/cupid">
-      The Cupid Plugin is a code generation tool that helps with developing coupled Earth System Models that use the National Unified Operational Prediction Capability (NUOPC) software Layer.
+      Cupid is a development and training environment for models that use the Earth System Modeling Framework (ESMF) and National Unified Operational Capability (NUOPC) Layer infrastructure. Cupid&apos;s trace analysis and code generation tools make it easier to code, profile, and debug coupled models based on NUOPC.
    </description>
 
    <copyright>
-      Copyright 2018, University Corporation for Atmospheric Research,
-Massachusetts Institute of Technology, Geophysical Fluid Dynamics
-Laboratory, University of Michigan, National Centers for Environmental
-Prediction, Los Alamos National Laboratory, Argonne National
-Laboratory, NASA Goddard Space Flight Center.
+      Copyright 2018, NASA Goddard Space Flight Center, National Centers for Environmental Prediction, University of Colorado, and University Corporation for Atmospheric Research.
    </copyright>
 
    <license url="http://opensource.org/licenses/MIT">
