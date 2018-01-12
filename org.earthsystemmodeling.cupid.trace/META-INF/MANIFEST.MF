@@ -27,5 +27,9 @@ Require-Bundle: org.eclipse.ui,
 Bundle-RequiredExecutionEnvironment: JavaSE-1.8
 Bundle-ActivationPolicy: lazy
 Bundle-ClassPath: lib/json-simple-1.1.1.jar,
- .
+ .,
+ lib/jfreechart-1.0.19.jar,
+ lib/jfreechart-swt-1.0.jar,
+ lib/jcommon-1.0.24.jar,
+ lib/swtgraphics2d-1.0.jar
 Import-Package: org.apache.commons.io

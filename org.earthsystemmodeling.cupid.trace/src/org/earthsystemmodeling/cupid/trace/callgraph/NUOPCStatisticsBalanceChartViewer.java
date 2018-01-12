@@ -1,5 +1,6 @@
 package org.earthsystemmodeling.cupid.trace.callgraph;
 
+import java.text.DecimalFormat;
 import java.text.Format;
 import java.util.Arrays;
 import java.util.Collections;
@@ -14,9 +15,9 @@ import org.earthsystemmodeling.cupid.trace.statistics.AggregatedCalledFunctionSt
 import org.earthsystemmodeling.cupid.trace.statistics.IGlobalStatisticsProvider;
 import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.swt.SWT;
-import org.eclipse.swt.graphics.Color;
 import org.eclipse.swt.graphics.RGB;
 import org.eclipse.swt.widgets.Composite;
+import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.tracecompass.analysis.timing.core.segmentstore.IAnalysisProgressListener;
 import org.eclipse.tracecompass.analysis.timing.ui.views.segmentstore.SubSecondTimeWithUnitFormat;
@@ -24,6 +25,28 @@ import org.eclipse.tracecompass.tmf.core.trace.ITmfTrace;
 import org.eclipse.tracecompass.tmf.core.trace.TmfTraceManager;
 import org.eclipse.tracecompass.tmf.core.trace.TmfTraceUtils;
 import org.eclipse.tracecompass.tmf.ui.viewers.TmfViewer;
+import org.jfree.chart.ChartFactory;
+import org.jfree.chart.ChartPanel;
+import org.jfree.chart.JFreeChart;
+import org.jfree.chart.axis.NumberAxis;
+import org.jfree.chart.axis.TickUnitSource;
+import org.jfree.chart.plot.IntervalMarker;
+import org.jfree.chart.plot.PiePlot;
+import org.jfree.chart.plot.PlotOrientation;
+import org.jfree.chart.plot.XYPlot;
+import org.jfree.chart.renderer.category.BarRenderer;
+import org.jfree.chart.renderer.category.StandardBarPainter;
+import org.jfree.chart.renderer.xy.StandardXYBarPainter;
+import org.jfree.chart.renderer.xy.XYBarPainter;
+import org.jfree.chart.renderer.xy.XYBarRenderer;
+import org.jfree.chart.swt.ChartComposite;
+import org.jfree.data.general.DefaultPieDataset;
+import org.jfree.data.statistics.HistogramDataset;
+import org.jfree.data.statistics.HistogramType;
+import org.jfree.data.xy.XYSeries;
+import org.jfree.data.xy.XYSeriesCollection;
+import org.jfree.ui.RectangleAnchor;
+import org.jfree.ui.TextAnchor;
 import org.swtchart.Chart;
 import org.swtchart.IAxis;
 import org.swtchart.IBarSeries;
@@ -37,6 +60,8 @@ import com.google.common.collect.Ordering;
 import org.swtchart.ISeriesSet;
 import org.swtchart.LineStyle;
 import org.swtchart.Range;
+
+import java.awt.Color;
 
 
 public class NUOPCStatisticsBalanceChartViewer extends TmfViewer {
@@ -54,6 +79,8 @@ public class NUOPCStatisticsBalanceChartViewer extends TmfViewer {
 //    private TmfTimeRange fCurrentTimeRange = TmfTimeRange.NULL_RANGE;
     //private List<ISegmentStoreDensityViewerDataListener> fListeners;
 //    private IGlobalStatisticsProvider fStatisticsProvider;
+    
+    private final ChartComposite fChartComposite;
 
     
     /**
@@ -62,9 +89,10 @@ public class NUOPCStatisticsBalanceChartViewer extends TmfViewer {
      * @param parent
      *            the parent of the viewer
      */
+    /*
     public NUOPCStatisticsBalanceChartViewer(Composite parent) {
         super(parent);
-//      fListeners = new ArrayList<>();
+    	//fListeners = new ArrayList<>();
         fChart = new Chart(parent, SWT.NONE);
         fChart.getLegend().setVisible(false);
         fChart.getTitle().setVisible(false);
@@ -84,6 +112,15 @@ public class NUOPCStatisticsBalanceChartViewer extends TmfViewer {
             internalDispose();
         });
     }
+    */
+    
+    public NUOPCStatisticsBalanceChartViewer(Composite parent) {
+        super(parent);
+
+        fChart = null;
+        fChartComposite = new ChartComposite(parent, SWT.NONE);
+                
+    }
 
 //    protected @Nullable IGlobalStatisticsProvider getGlobalStatisticsProvider(ITmfTrace trace) {
 //    	return TmfTraceUtils.getAnalysisModuleOfClass(trace, NUOPCCtfCallStackAnalysis.class, NUOPCCtfCallStackAnalysis.ID);
@@ -94,12 +131,75 @@ public class NUOPCStatisticsBalanceChartViewer extends TmfViewer {
     //    return TmfTraceManager.getInstance().getActiveTrace();
     //}
     
-    
+   
+    private void updateDisplayJFree(AggregatedCalledFunction func) {
+    	
+    	Comparator<Entry<Long, AggregatedCalledFunctionStatistics>> c = 
+    			Comparator.comparingDouble(new ToDoubleFunction<Entry<Long, AggregatedCalledFunctionStatistics>>() {
+			@Override
+			public double applyAsDouble(Entry<Long, AggregatedCalledFunctionStatistics> value) {
+				//return value.getValue().getDurationStatistics().getTotal();
+				return value.getKey();
+			}
+        });
+        
+        List<Entry<Long, AggregatedCalledFunctionStatistics>> entries = 
+        		Ordering.from(c).immutableSortedCopy(func.getFunctionStatisticsMap().entrySet());
+      
+        final int petCount = entries.size();
+        
+        final XYSeries series = new XYSeries("PET Timings");
+        for (int i=0; i < entries.size(); i++) {
+        	series.add((double) entries.get(i).getKey(), entries.get(i).getValue().getDurationStatistics().getTotal());
+        }
+    	final XYSeriesCollection dataset = new XYSeriesCollection(series);
+    	
+    	
+    	final JFreeChart chart = ChartFactory.createXYBarChart(
+    			"PET Timings for " + func.getSymbol() + " (Total)",
+                "PETs", 
+                false,
+                "Time", 
+                dataset,
+                PlotOrientation.VERTICAL,
+                true,
+                true,
+                false
+            );
+    	
+    	chart.removeLegend();
+    	
+    	
+    	XYPlot plot = chart.getXYPlot();
+    	    	
+    	NumberAxis rangeAxis = (NumberAxis) plot.getRangeAxis();
+    	rangeAxis.setNumberFormatOverride(new TimeFormatter(new DecimalFormat()));
+    	
+        plot.setBackgroundPaint(Color.WHITE);
+        //plot.getDomainAxis().setRange(0, petCount-1);
+        plot.getDomainAxis().setStandardTickUnits(NumberAxis.createIntegerTickUnits());
+        
+        plot.setDomainPannable(true);
+        plot.setRangePannable(true);
+        
+        XYBarRenderer renderer = (XYBarRenderer) plot.getRenderer();
+        renderer.setSeriesPaint(0, Color.BLUE);
+        renderer.setBarPainter(new StandardXYBarPainter());
+        renderer.setDrawBarOutline(false);
+        renderer.setShadowVisible(false);
+        renderer.setMargin(0.1);
+                  	    
+        //final ChartPanel panel = new ChartPanel(chart);
+        
+    	fChartComposite.setChart(chart);
+    	fChartComposite.redraw();
+    	
+    }
 
     private void updateDisplay(AggregatedCalledFunction func) {
         //IBarSeries
     	
-    	ISeries series = fChart.getSeriesSet().createSeries(SeriesType.BAR, "My series");
+    	ISeries series = fChart.getSeriesSet().createSeries(SeriesType.BAR, "PET Timings");
         series.setVisible(true);
         
         fChart.getTitle().setText("PET Timings for " + func.getSymbol() + " (Total)");
@@ -116,6 +216,14 @@ public class NUOPCStatisticsBalanceChartViewer extends TmfViewer {
         //Arrays.fill(yOrigSeries, 1.0);
         
         int petCount = func.getFunctionStatisticsMap().size();
+        //String[] petCategories = new String[petCount];
+        //for (int i = 0; i < petCount; i++) {
+        //	petCategories[i] = String.valueOf(i);
+        //}
+        
+        //fChart.getAxisSet().getXAxis(0).enableCategory(true);
+        //fChart.getAxisSet().getXAxis(0).setCategorySeries(petCategories);
+                
         double[] xSeries = new double[petCount];
         double[] ySeries = new double[petCount];
         //double[] ySeriesPlus = new double[petCount];
@@ -211,13 +319,22 @@ public class NUOPCStatisticsBalanceChartViewer extends TmfViewer {
         fChart.redraw();
     }
 
+    
     @Override
-    public Chart getControl() {
-        return fChart;
+    public Control getControl() {
+        return fChartComposite;
     }
     
+    
+    
+    
     public void setInput(AggregatedCalledFunction function) {
-    	updateDisplay(function);
+    	if (function != null) {
+    		updateDisplayJFree(function);
+    	}
+    	else {
+    		clearContent();
+    	}
     }
 
     /*
@@ -299,12 +416,14 @@ public class NUOPCStatisticsBalanceChartViewer extends TmfViewer {
     
     @Override
     public void refresh() {
-        fChart.redraw();
+        //fChart.redraw();
+        fChartComposite.redraw();
     }
 
     @Override
     public void dispose() {
-        fChart.dispose();
+        //fChart.dispose();
+    	fChartComposite.dispose();
     }
 
     private void internalDispose() {
@@ -369,9 +488,7 @@ public class NUOPCStatisticsBalanceChartViewer extends TmfViewer {
     }
     */
 
-    /**
-     * Clears the view content.
-     */
+    /*
     private void clearContent() {
         final Chart chart = fChart;
         if (!chart.isDisposed()) {
@@ -386,7 +503,15 @@ public class NUOPCStatisticsBalanceChartViewer extends TmfViewer {
             chart.redraw();
         }
     }
-
+	*/
+    
+    private void clearContent() {
+    	final ChartComposite chart = fChartComposite;
+    	if (!chart.isDisposed()) {
+    		chart.setChart(null);
+    		chart.redraw();
+    	}
+    }
     
     /*
     public void addDataListener(ISegmentStoreDensityViewerDataListener dataListener) {

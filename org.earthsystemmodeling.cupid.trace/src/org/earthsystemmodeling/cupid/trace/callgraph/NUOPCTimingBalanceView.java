@@ -1,5 +1,10 @@
 package org.earthsystemmodeling.cupid.trace.callgraph;
 
+import java.io.OutputStream;
+import java.io.PrintWriter;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
 import java.util.concurrent.Semaphore;
 
 import org.earthsystemmodeling.cupid.trace.Activator;
@@ -9,16 +14,23 @@ import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.Status;
 import org.eclipse.core.runtime.jobs.Job;
 import org.eclipse.jdt.annotation.Nullable;
+import org.eclipse.jface.action.Action;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.custom.SashForm;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Display;
+import org.eclipse.swt.widgets.Shell;
+import org.eclipse.swt.widgets.Tree;
+import org.eclipse.swt.widgets.TreeItem;
 import org.eclipse.tracecompass.tmf.core.signal.TmfSignalHandler;
 import org.eclipse.tracecompass.tmf.core.signal.TmfTraceSelectedSignal;
 import org.eclipse.tracecompass.tmf.core.trace.ITmfTrace;
 import org.eclipse.tracecompass.tmf.core.trace.TmfTraceManager;
 import org.eclipse.tracecompass.tmf.core.trace.TmfTraceUtils;
+import org.eclipse.tracecompass.tmf.ui.viewers.tree.AbstractTmfTreeViewer;
 import org.eclipse.tracecompass.tmf.ui.views.TmfView;
+
+import com.google.common.base.Joiner;
 
 public class NUOPCTimingBalanceView extends TmfView {
 
@@ -91,6 +103,8 @@ public class NUOPCTimingBalanceView extends TmfView {
             //    fTreeViewer.traceSelected(signal);
             //}
         }
+        
+        getViewSite().getActionBars().getMenuManager().add(fExportAction);
     }
     
     @TmfSignalHandler
@@ -186,4 +200,66 @@ public class NUOPCTimingBalanceView extends TmfView {
     protected AbstractStatisticsTreeViewer getTreeViewer() {
         return fTreeViewer;
     }
+    
+    
+    private final Action fExportAction = new ExportToTsvAction() {
+        @Override
+        protected void exportToTsv(@Nullable OutputStream stream) {
+         
+        	try (PrintWriter pw = new PrintWriter(stream)) {
+                AbstractTmfTreeViewer statsViewer = fTreeViewer;
+                if (statsViewer == null) {
+                    return;
+                }
+                Tree tree = statsViewer.getTreeViewer().getTree();
+                int size = tree.getItemCount();
+                List<String> columns = new ArrayList<>();
+                for (int i = 0; i < tree.getColumnCount(); i++) {
+                    String valueOf = String.valueOf(tree.getColumn(i).getText());
+                    if (valueOf.isEmpty() && i == tree.getColumnCount() - 1) {
+                        // Linux "feature", an invisible column is added at the end
+                        // with gtk2
+                        break;
+                    }
+                    columns.add(valueOf);
+                }
+                String join = Joiner.on('\t').skipNulls().join(columns);
+                pw.println(join);
+                for (int i = 0; i < size; i++) {
+                    TreeItem item = tree.getItem(i);
+                    printItem(pw, columns, item, 0);
+                }
+            }
+        	        
+        }
+        
+        private void printItem(PrintWriter pw, List<String> columns, @Nullable TreeItem item, int depth) {
+            if (item == null) {
+                return;
+            }
+            List<String> data = new ArrayList<>();
+            for (int col = 0; col < columns.size(); col++) {
+            	String prefix = "";
+            	//indent first column
+            	if (col == 0) {
+            		prefix = String.join("", Collections.nCopies(depth, " "));
+            	}            	 
+            	data.add(prefix + String.valueOf(item.getText(col)));
+            }
+            String line = Joiner.on('\t').join(data);
+            if (line.trim().length() > 0) {
+            	pw.println(Joiner.on('\t').join(data));
+            }
+            for (TreeItem child : item.getItems()) {
+                printItem(pw, columns, child, depth+1);
+            }
+        }
+        	
+        @Override
+        protected @Nullable Shell getShell() {
+            return getViewSite().getShell();
+        }
+
+    };
+    
 }

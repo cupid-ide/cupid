@@ -124,7 +124,7 @@
             class="org.earthsystemmodeling.cupid.trace.callstack.NUOPCCallStackView"
             icon="icons/hierarchy.png"
             id="org.earthsystemmodeling.cupid.trace.NUOPCCallStackView"
-            name="NUOPC Call Stack View"
+            name="Call Stack"
             restorable="true">
       </view>
       
@@ -163,23 +163,7 @@
             class="org.earthsystemmodeling.cupid.trace.callgraph.NUOPCPerPETStatisticsTreeView"
             icon="icons/clock.png"
             id="org.earthsystemmodeling.cupid.trace.NUOPCPerPETStatisticsTreeView"
-            name="Per-PET Timing Tree"
-            restorable="true">
-      </view>
-      <view
-            category="org.earthsystemmodeling.cupid"
-            class="org.earthsystemmodeling.cupid.trace.callgraph.NUOPCGlobalStatisticsTreeView"
-            icon="icons/clock.png"
-            id="org.earthsystemmodeling.cupid.trace.NUOPCGlobalStatisticsTreeView"
-            name="Global Timing Tree"
-            restorable="true">
-      </view>
-      <view
-            category="org.earthsystemmodeling.cupid"
-            class="org.earthsystemmodeling.cupid.trace.callgraph.PerPETDensityView"
-            icon="icons/linegraph.png"
-            id="org.earthsystemmodeling.cupid.trace.PerPETDensityView"
-            name="PET Timing Chart"
+            name="Timing Tree (Per PET)"
             restorable="true">
       </view>
       <view
@@ -187,7 +171,7 @@
             class="org.earthsystemmodeling.cupid.trace.callgraph.NUOPCTimingBalanceView"
             icon="icons/clock.png"
             id="org.earthsystemmodeling.cupid.trace.NUOPCTimingBalanceView"
-            name="Timing Balance Chart"
+            name="Timing Tree (Global)"
             restorable="true">
       </view>
    </extension>
@@ -215,5 +199,13 @@
          </view>
       </perspectiveExtension>
    </extension>
+    <extension
+          point="org.eclipse.tracecompass.tmf.core.symbolProvider">
+       <providerFactory
+             class="org.earthsystemmodeling.cupid.trace.NUOPCSymbolProviderFactory"
+             id="org.earthsystemmodeling.cupid.trace.providerFactory"
+             priority="80">
+       </providerFactory>
+    </extension>
 
 </plugin>

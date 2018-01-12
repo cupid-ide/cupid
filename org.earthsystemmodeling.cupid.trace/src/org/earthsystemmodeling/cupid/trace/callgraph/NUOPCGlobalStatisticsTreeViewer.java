@@ -24,7 +24,7 @@ public class NUOPCGlobalStatisticsTreeViewer extends AbstractStatisticsTreeViewe
 			public void selectionChanged(SelectionChangedEvent event) {
 				IStructuredSelection sel = event.getStructuredSelection();
 				if (sel.isEmpty()) {
-					
+					fBalanceViewer.setInput(null);
 				}
 				else {
 					Object elem = sel.getFirstElement();

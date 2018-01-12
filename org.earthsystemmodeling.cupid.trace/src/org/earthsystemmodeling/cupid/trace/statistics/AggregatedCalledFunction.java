@@ -54,6 +54,7 @@ public class AggregatedCalledFunction implements Cloneable, Serializable {
     private long fDuration = -1;
     private long fSelfTime= -1;
     private final int fProcessId;
+    private boolean fForcedToComplete = false;
         
     private final Map<Long, AggregatedCalledFunctionStatistics> fStatisticsMap = new HashMap<>();
 
@@ -96,6 +97,7 @@ public class AggregatedCalledFunction implements Cloneable, Serializable {
         if (calledFunction.isComplete()) {
         	complete(calledFunction);
         }
+        fForcedToComplete = calledFunction.isForcedToComplete();
     }
 
     /**
@@ -122,6 +124,7 @@ public class AggregatedCalledFunction implements Cloneable, Serializable {
         	s.merge(f);
         	fStatisticsMap.put(t, s);
         });
+        fForcedToComplete = toCopy.fForcedToComplete;
     }
 
     public void saveStatistics(long threadId) {
@@ -161,7 +164,8 @@ public class AggregatedCalledFunction implements Cloneable, Serializable {
 
     public void complete(AbstractCalledFunction calledFunction) {
     	fDuration = calledFunction.getLength();
-    	fSelfTime += calledFunction.getLength() + 1;
+    	fSelfTime += calledFunction.getLength() + 1; 
+    	fForcedToComplete = calledFunction.isForcedToComplete();
     }
     
     public boolean isComplete() {
@@ -278,10 +282,19 @@ public class AggregatedCalledFunction implements Cloneable, Serializable {
         	destination.fStatisticsMap.put(t, s);
         });
         
+        //if source was forced to complete, destination is as well
+        if (source.isForcedToComplete()) {
+        	destination.fForcedToComplete = true;
+        }
+        
         // merge the children callees.
         mergeChildren(destination, source);
     }
 
+    public boolean isForcedToComplete() {
+    	return fForcedToComplete;
+    }
+    
     /**
      * The function's duration
      *

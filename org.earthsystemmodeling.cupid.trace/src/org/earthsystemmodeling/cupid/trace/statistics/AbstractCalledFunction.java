@@ -55,6 +55,10 @@ public abstract class AbstractCalledFunction implements ICalledFunction {
     private final @Nullable ICalledFunction fParent;
     protected long fSelfTime = 0;
     private final int fProcessId;
+    
+    //this is true if the original trace was incomplete
+    //and the region was forced to complete
+    private boolean fForcedToComplete = false;
 
     //allow creating without knowing end time
     public AbstractCalledFunction(long start, int depth, int processId, @Nullable ICalledFunction parent) {
@@ -76,6 +80,14 @@ public abstract class AbstractCalledFunction implements ICalledFunction {
         }
     	fEnd = end;
     	fSelfTime = fEnd - fStart;
+    }
+    
+    public void setForcedToComplete(boolean forcedToComplete) {
+    	fForcedToComplete = forcedToComplete;
+    }
+    
+    public boolean isForcedToComplete() {
+    	return fForcedToComplete;
     }
     
     @Override

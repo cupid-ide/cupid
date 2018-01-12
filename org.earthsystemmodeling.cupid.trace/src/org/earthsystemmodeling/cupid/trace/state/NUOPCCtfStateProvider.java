@@ -39,28 +39,19 @@ public class NUOPCCtfStateProvider extends AbstractTmfStateProvider {
         	            
             if (event.getType().getName().equals("comp")) {
             	
-            	long vmid = event.getContent().getFieldValue(Long.class, "vmid");
-            	long baseid = event.getContent().getFieldValue(Long.class, "baseid");
+            	CtfTmfEvent e = (CtfTmfEvent) event;
+            	String pet = ((Long) e.getPacketAttributes().get("pet")).toString();
+            	
+            	long vmid = e.getContent().getFieldValue(Long.class, "vmid");
+            	long baseid = e.getContent().getFieldValue(Long.class, "baseid");
             	String id = vmid + "-" + baseid;
-            	String name = event.getContent().getFieldValue(String.class, "name");
-            	            	
-            	int quark = ss.getQuarkAbsoluteAndAdd("component", id, "name");
+            	String name = e.getContent().getFieldValue(String.class, "name");
+            	           	
+            	int quark = ss.getQuarkAbsoluteAndAdd("component", pet, id, "name");
         		ITmfStateValue value = newValueString(name);
         		ss.modifyAttribute(ts, value, quark);
-        		
+        		   
         		/*
-        		String kind = event.getContent().getFieldValue(String.class, "kind");
-        		quark = ss.getQuarkAbsoluteAndAdd("component", id, "kind");
-        		if (kind != null) {
-        			value = newValueString(kind);
-        			ss.modifyAttribute(ts, value, quark);
-        		}
-        		else if (name != null && name.toUpperCase().contains("-TO-")) {
-        			value = newValueString("connector");
-        			ss.modifyAttribute(ts, value, quark);
-        		}
-        		*/
-        		
         		CtfTmfEventField attributes = (CtfTmfEventField) event.getContent().getField("attributes");
         		if (attributes != null) {
         			CtfTmfEventField[] attrs = (CtfTmfEventField[]) attributes.getValue();
@@ -76,36 +67,37 @@ public class NUOPCCtfStateProvider extends AbstractTmfStateProvider {
         					}
         				}
         				else if (k.equalsIgnoreCase("kind")) {
-        					quark = ss.getQuarkAbsoluteAndAdd("component", id, "kind");
+        					quark = ss.getQuarkAbsoluteAndAdd("component", pet, id, "kind");
         					ss.modifyAttribute(ts, newValueString(v), quark);
         				}
         			}
         		}
+        		*/
         		
         		//barectf version of trace has explicit phase map field
-        		String IPM = event.getContent().getFieldValue(String.class, "IPM");
+        		String IPM = e.getContent().getFieldValue(String.class, "IPM");
         		if (IPM != null && IPM.length() > 0) {
         			for (String kv : IPM.split("\\|\\|")) {
 						String[] keyval = kv.split("=");
-						quark = ss.getQuarkAbsoluteAndAdd("component", id, "IPM", keyval[1]);
+						quark = ss.getQuarkAbsoluteAndAdd("component", pet, id, "IPM", keyval[1]);
 						ITmfStateValue phaseLabel = newValueString(keyval[0]);
 						ss.modifyAttribute(ts, phaseLabel, quark);
 					}
         		}
-        		String RPM = event.getContent().getFieldValue(String.class, "RPM");
+        		String RPM = e.getContent().getFieldValue(String.class, "RPM");
         		if (RPM != null && RPM.length() > 0) {
         			for (String kv : RPM.split("\\|\\|")) {
 						String[] keyval = kv.split("=");
-						quark = ss.getQuarkAbsoluteAndAdd("component", id, "RPM", keyval[1]);
+						quark = ss.getQuarkAbsoluteAndAdd("component", pet, id, "RPM", keyval[1]);
 						ITmfStateValue phaseLabel = newValueString(keyval[0]);
 						ss.modifyAttribute(ts, phaseLabel, quark);
 					}
         		}
-        		String FPM = event.getContent().getFieldValue(String.class, "FPM");
+        		String FPM = e.getContent().getFieldValue(String.class, "FPM");
         		if (FPM != null && FPM.length() > 0) {
         			for (String kv : FPM.split("\\|\\|")) {
 						String[] keyval = kv.split("=");
-						quark = ss.getQuarkAbsoluteAndAdd("component", id, "FPM", keyval[1]);
+						quark = ss.getQuarkAbsoluteAndAdd("component", pet, id, "FPM", keyval[1]);
 						ITmfStateValue phaseLabel = newValueString(keyval[0]);
 						ss.modifyAttribute(ts, phaseLabel, quark);
 					}
@@ -113,7 +105,7 @@ public class NUOPCCtfStateProvider extends AbstractTmfStateProvider {
         		
         		//fix up kind attribute (since not recorded correctly by NUOPC yet)
         		if (name != null && name.toUpperCase().contains("-TO-")) {
-        			quark = ss.getQuarkAbsoluteAndAdd("component", id, "kind");
+        			quark = ss.getQuarkAbsoluteAndAdd("component", pet, id, "kind");
         			value = newValueString("Connector");
         			ss.modifyAttribute(ts, value, quark);
         		}

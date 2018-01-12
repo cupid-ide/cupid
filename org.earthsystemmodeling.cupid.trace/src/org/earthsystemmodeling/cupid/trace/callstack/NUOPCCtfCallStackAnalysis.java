@@ -188,22 +188,22 @@ public class NUOPCCtfCallStackAnalysis extends CallStackAnalysis implements IGlo
     public Iterable<IAnalysisOutput> getOutputs() {
     	return ImmutableList.of(new TmfAnalysisViewOutput(NUOPCCallStackView.ID), 
     							new TmfAnalysisViewOutput(NUOPCPerPETStatisticsTreeView.ID),
-    							new TmfAnalysisViewOutput(NUOPCGlobalStatisticsTreeView.ID), 
+    							//new TmfAnalysisViewOutput(NUOPCGlobalStatisticsTreeView.ID), 
     							new TmfAnalysisViewOutput(NUOPCTimingBalanceView.ID));    	
     }
 
 	@Override
 	public GlobalNode getGlobalStatistics() {
 		AbstractCalledFunction initSegment = CalledFunctionFactory.create(0, 0, 0, "root", -1, null);
-        	GlobalNode init = new GlobalNode(initSegment, 0);
-        	for (ThreadNode node : fThreadNodes) {
-        		for (AggregatedCalledFunction aggFunc : node.getChildren()) {
-        			AggregatedCalledFunction aggFuncClone = aggFunc.clone();
-        			aggFuncClone.saveStatistics(node.getId());
-        			init.addChild(aggFuncClone);
-        		}
-        	}
-        	return init;
+    	GlobalNode init = new GlobalNode(initSegment, 0);
+    	for (ThreadNode node : fThreadNodes) {
+    		for (AggregatedCalledFunction aggFunc : node.getChildren()) {
+    			AggregatedCalledFunction aggFuncClone = aggFunc.clone();
+    			aggFuncClone.saveStatistics(node.getId());
+    			init.addChild(aggFuncClone);
+    		}
+    	}
+    	return init;
 	}
 
 	

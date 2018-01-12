@@ -22,6 +22,7 @@ import org.eclipse.tracecompass.tmf.core.event.ITmfEvent;
 import org.eclipse.tracecompass.tmf.core.segment.ISegmentAspect;
 import org.eclipse.tracecompass.tmf.core.trace.TmfTraceUtils;
 import org.eclipse.tracecompass.tmf.ctf.core.CtfEnumPair;
+import org.eclipse.tracecompass.tmf.ctf.core.event.CtfTmfEvent;
 
 import com.google.common.collect.ImmutableList;
 
@@ -101,9 +102,11 @@ public class NUOPCCtfComponentTimingAnalysis extends AbstractSegmentStoreAnalysi
 				long baseid = event.getContent().getFieldValue(Long.class, "baseid");
 				CtfEnumPair mp = event.getContent().getFieldValue(CtfEnumPair.class, "method");
 				long phase  = event.getContent().getFieldValue(Long.class, "phase");
+				CtfTmfEvent e = (CtfTmfEvent) event;
+				long pet = (Long) e.getPacketAttributes().get("pet");
 				
-				ESMFId id = new ESMFId(vmid, baseid);
-				ESMFPhaseId phaseId = new ESMFPhaseId(vmid, baseid, mp.getLongValue(), phase);
+				ESMFId id = new ESMFId(pet, vmid, baseid);
+				ESMFPhaseId phaseId = new ESMFPhaseId(id, mp.getLongValue(), phase);
 				String name = stateAnalysis.queryComponentName(id);
 				String label = stateAnalysis.queryComponentPhaseLabel(phaseId);
 								
@@ -120,8 +123,11 @@ public class NUOPCCtfComponentTimingAnalysis extends AbstractSegmentStoreAnalysi
 				long baseid = event.getContent().getFieldValue(Long.class, "baseid");
 				CtfEnumPair mp = event.getContent().getFieldValue(CtfEnumPair.class, "method");
 				long phase  = event.getContent().getFieldValue(Long.class, "phase");
+				CtfTmfEvent e = (CtfTmfEvent) event;
+				long pet = (Long) e.getPacketAttributes().get("pet");
 				
-				ESMFPhaseId phaseId = new ESMFPhaseId(vmid, baseid, mp.getLongValue(), phase);
+				ESMFId id = new ESMFId(pet, vmid, baseid);
+				ESMFPhaseId phaseId = new ESMFPhaseId(id, mp.getLongValue(), phase);
 				
 				ComponentPhaseSegment seg = segMap.remove(phaseId);
 				if (seg != null) {

@@ -66,7 +66,7 @@ public class NUOPCTraceTestUI {
 	@Test
 	public void showNUOPCView() {
 		
-		sleep(3*1000);
+		sleep(6*1000);
 		
 		bot.menu().menu("Window", "Show View", "Other...").click();
 		@SuppressWarnings("unused")

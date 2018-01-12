@@ -294,7 +294,12 @@ public abstract class AbstractStatisticsTreeViewer extends AbstractTmfTreeViewer
             else if (element instanceof AggregatedCalledFunctionEntry) {
             	AggregatedCalledFunctionEntry func = (AggregatedCalledFunctionEntry) element;
             	if (columnIndex == 0) {
-            		return func.getName();
+            		if (func.getFunction().isForcedToComplete()) {
+            			return func.getName() + "***";
+            		}
+            		else {
+            			return func.getName();
+            		}
             	}
             	else if (columnIndex == 1) {
             		return String.valueOf(FORMATTER.format(func.getFunction().getDuration()));

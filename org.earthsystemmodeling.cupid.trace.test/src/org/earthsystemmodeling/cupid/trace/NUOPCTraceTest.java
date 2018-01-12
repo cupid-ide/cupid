@@ -13,6 +13,7 @@ import java.util.concurrent.TimeUnit;
 
 import org.earthsystemmodeling.cupid.trace.callstack.NUOPCCtfCallStackAnalysis;
 import org.earthsystemmodeling.cupid.trace.state.NUOPCCtfStateSystemAnalysisModule;
+import org.earthsystemmodeling.cupid.trace.statistics.GlobalNode;
 import org.earthsystemmodeling.cupid.trace.statistics.ThreadNode;
 import org.eclipse.core.resources.IFolder;
 import org.eclipse.core.resources.IProject;
@@ -93,8 +94,10 @@ public class NUOPCTraceTest {
         ITmfStateSystem stateSystem = analysis.getStateSystem();
         assertNotNull(stateSystem);
         
+        
         long end = stateSystem.getCurrentEndTime();
         
+        /*
         int quark = stateSystem.getQuarkAbsolute("component", "1-1", "name");
         ITmfStateInterval state = stateSystem.querySingleState(end, quark);
         assertEquals("OCN", state.getStateValue().unboxStr());
@@ -106,7 +109,8 @@ public class NUOPCTraceTest {
         quark = stateSystem.getQuarkAbsolute("component", "1-2", "name");
         state = stateSystem.querySingleState(end, quark);
         assertEquals("MED", state.getStateValue().unboxStr());
-                  
+        */
+        
         analysis.dispose();
 		trace.dispose();
 		
@@ -135,10 +139,7 @@ public class NUOPCTraceTest {
 		String tracePath = traceFolder.getLocation().toString();
 		NUOPCCtfTrace trace = new NUOPCCtfTrace();
 		trace.initTrace(null, tracePath, CtfTmfEvent.class);
-		trace.traceOpened(new TmfTraceOpenedSignal(this, trace, null));
-			
-		//NUOPCCtfCallGraphAnalysis analysis = 
-		//		TmfTraceUtils.getAnalysisModuleOfClass(trace, NUOPCCtfCallGraphAnalysis.class, NUOPCCtfCallGraphAnalysis.ID);
+		trace.traceOpened(new TmfTraceOpenedSignal(this, trace, null));		
 		
 		NUOPCCtfCallStackAnalysis analysis = 
 				TmfTraceUtils.getAnalysisModuleOfClass(trace, NUOPCCtfCallStackAnalysis.class, NUOPCCtfCallStackAnalysis.ID);
@@ -163,17 +164,74 @@ public class NUOPCTraceTest {
 		
 	}
 	
-	//this is just a sanity check right now
 	@Test
-	public void TestLoadTrace() throws IOException, CoreException, TmfTraceException, TmfAnalysisException, AttributeNotFoundException, StateSystemDisposedException {
+	public void TestLoadTrace1() throws IOException, CoreException, TmfTraceException, TmfAnalysisException, AttributeNotFoundException, StateSystemDisposedException {
 			
-		String tracePath;
-        try {
-        	tracePath = FileLocator.toFileURL(FileLocator.find(MY_BUNDLE, new Path("traces/trace1"), null)).getPath();	            
-        } catch (IOException e) {
-            throw new IllegalStateException();
-        }
+		NUOPCCtfTrace trace = loadTrace("traces/trace1");
+                
+		NUOPCCtfStateSystemAnalysisModule analysis = 
+				TmfTraceUtils.getAnalysisModuleOfClass(trace, 
+						NUOPCCtfStateSystemAnalysisModule.class, 
+						NUOPCCtfStateSystemAnalysisModule.ID);
+        
+        analysis.schedule();
+        assertTrue(analysis.waitForCompletion());
+        
+        ITmfStateSystem stateSystem = analysis.getStateSystem();
+        assertNotNull(stateSystem);
+        
+		NUOPCCtfCallStackAnalysis analysis2 = 
+				TmfTraceUtils.getAnalysisModuleOfClass(trace, 
+						NUOPCCtfCallStackAnalysis.class, 
+						NUOPCCtfCallStackAnalysis.ID);
+
+		analysis2.schedule();
+        assertTrue(analysis2.waitForCompletion());
+        GlobalNode globalNode = analysis2.getGlobalStatistics();
+        assertEquals(3, globalNode.getChildren().size());
+               
+        analysis.dispose();
+        analysis2.dispose();
+        trace.dispose();
 		
+	}
+	
+	@Test
+	public void TestLoadTrace2() throws IOException, CoreException, TmfTraceException, TmfAnalysisException, AttributeNotFoundException, StateSystemDisposedException {
+			
+		NUOPCCtfTrace trace = loadTrace("traces/trace2");
+                
+		NUOPCCtfStateSystemAnalysisModule analysis = 
+				TmfTraceUtils.getAnalysisModuleOfClass(trace, 
+						NUOPCCtfStateSystemAnalysisModule.class, 
+						NUOPCCtfStateSystemAnalysisModule.ID);
+        
+        analysis.schedule();
+        assertTrue(analysis.waitForCompletion());
+        
+        ITmfStateSystem stateSystem = analysis.getStateSystem();
+        assertNotNull(stateSystem);
+        
+		NUOPCCtfCallStackAnalysis analysis2 = 
+				TmfTraceUtils.getAnalysisModuleOfClass(trace, 
+						NUOPCCtfCallStackAnalysis.class, 
+						NUOPCCtfCallStackAnalysis.ID);
+
+		analysis2.schedule();
+        assertTrue(analysis2.waitForCompletion());
+        GlobalNode globalNode = analysis2.getGlobalStatistics();
+        assertEquals(3, globalNode.getChildren().size());
+               
+        analysis.dispose();
+        analysis2.dispose();
+        trace.dispose();
+		
+	}
+	
+	private NUOPCCtfTrace loadTrace(String tracePath) throws IOException, TmfTraceException {
+		
+        tracePath = FileLocator.toFileURL(FileLocator.find(MY_BUNDLE, new Path(tracePath), null)).getPath();	            
+        
 		NUOPCCtfTrace trace = new NUOPCCtfTrace();
 		trace.initTrace(null, tracePath, CtfTmfEvent.class);
 			
@@ -183,25 +241,7 @@ public class NUOPCTraceTest {
         context.dispose();
         
         trace.traceOpened(new TmfTraceOpenedSignal(this, trace, null));
-		
-		NUOPCCtfStateSystemAnalysisModule analysis = 
-				TmfTraceUtils.getAnalysisModuleOfClass(trace, NUOPCCtfStateSystemAnalysisModule.class, NUOPCCtfStateSystemAnalysisModule.ID);
-        
-        analysis.schedule();
-        assertTrue(analysis.waitForCompletion());
-        
-        ITmfStateSystem stateSystem = analysis.getStateSystem();
-        assertNotNull(stateSystem);
-        
-        long end = stateSystem.getCurrentEndTime();
-        int quark = stateSystem.getQuarkAbsolute("component", "1-1", "name");
-        
-        ITmfStateInterval state = stateSystem.querySingleState(end, quark);
-        assertEquals("OCN", state.getStateValue().unboxStr());
-         
-        analysis.dispose();
-        trace.dispose();
-		
+        return trace;
 	}
 	
 	

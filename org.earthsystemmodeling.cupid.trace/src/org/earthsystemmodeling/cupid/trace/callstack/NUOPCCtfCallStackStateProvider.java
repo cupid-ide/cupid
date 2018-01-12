@@ -255,6 +255,37 @@ public abstract class NUOPCCtfCallStackStateProvider extends CallStackStateProvi
 
 	}
 
+	@Override
+	public void done() {
+		super.done();
+		long endtime = getStateSystemBuilder().getCurrentEndTime();
+
+		//handle outstanding calls left in the thread call stacks
+		fThreadCallStacks.entrySet().forEach(e -> {
+			Deque<AbstractCalledFunction> q = e.getValue();
+			if (!q.isEmpty()) {
+				long threadId = e.getKey();
+				
+				Activator.logWarning("Trace is incomplete for PET " + threadId + ".  Closing all timing regions using final timestamp.");
+				
+				AbstractCalledFunction calledFunction = fThreadCallStacks.get(threadId).pop();
+				while (calledFunction != null) {
+					calledFunction.complete(endtime);
+					calledFunction.setForcedToComplete(true);
+					AggregatedCalledFunction aggFunction = fThreadAggStacks.get(threadId).pop();
+					aggFunction.complete(calledFunction);
+					if (!calledFunction.getSymbol().equals(aggFunction.getSymbol())) {
+						throw new IllegalStateException("Error computing statistics: called and aggregate functions do not match");
+					}
+					fThreadAggStacks.get(threadId).peek().addChild(calledFunction, aggFunction);
+					
+					calledFunction = fThreadCallStacks.get(threadId).poll();
+				}
+				
+			}
+		});
+	}
+	
 	protected String getFuncName(ITmfEvent event) {
 		if (event.getType().getName().equals("region")) {
 			return event.getContent().getFieldValue(String.class, "name");
@@ -341,6 +372,7 @@ public abstract class NUOPCCtfCallStackStateProvider extends CallStackStateProvi
 			CtfTmfEvent e = (CtfTmfEvent) event;
 			return ((Long) e.getPacketAttributes().get("pet")).intValue();
 		}
+		
 
 		@Override
 		protected @Nullable String getProcessName(ITmfEvent event) {
@@ -527,10 +559,12 @@ public abstract class NUOPCCtfCallStackStateProvider extends CallStackStateProvi
 				EN_EPILOGUE_EXIT.equals(typeName) ||
 				EN_PHASE_ENTER.equals(typeName) ||
 				EN_PHASE_EXIT.equals(typeName)) {
-					
+				
 				long vmid   = event.getContent().getFieldValue(Long.class, "vmid");
 				long baseid = event.getContent().getFieldValue(Long.class, "baseid");
-				return stateAnalysis.queryComponentKind(vmid, baseid);
+				long pet = getThreadId(event);
+				
+				return stateAnalysis.queryComponentKind(pet, vmid, baseid);
 			}
 			return null;
 		}
@@ -582,8 +616,9 @@ public abstract class NUOPCCtfCallStackStateProvider extends CallStackStateProvi
 				long baseid = event.getContent().getFieldValue(Long.class, "baseid");
 				CtfEnumPair mp = event.getContent().getFieldValue(CtfEnumPair.class, "method");
 				long phase  = event.getContent().getFieldValue(Long.class, "phase");
+				long pet = getThreadId(event);
 				
-				String funcName = getFuncName(vmid, baseid, mp.getLongValue(), phase);
+				String funcName = getFuncName(pet, vmid, baseid, mp.getLongValue(), phase);
 				return TmfStateValue.newValueString(funcName);			
 			}
 			else if (event.getType().getName().equals(EN_REGION_ENTER)) {
@@ -606,8 +641,9 @@ public abstract class NUOPCCtfCallStackStateProvider extends CallStackStateProvi
 				long baseid = event.getContent().getFieldValue(Long.class, "baseid");
 				CtfEnumPair mp = event.getContent().getFieldValue(CtfEnumPair.class, "method");
 				long phase  = event.getContent().getFieldValue(Long.class, "phase");
+				long pet = getThreadId(event);
 				
-				String funcName = getFuncName(vmid, baseid, mp.getLongValue(), phase);
+				String funcName = getFuncName(pet, vmid, baseid, mp.getLongValue(), phase);
 				return TmfStateValue.newValueString(funcName);			
 			}
 			else if (event.getType().getName().equals(EN_REGION_EXIT)) {
@@ -623,14 +659,14 @@ public abstract class NUOPCCtfCallStackStateProvider extends CallStackStateProvi
 			return null;	
 		}
 
-		protected String getFuncName(long vmid, long baseid, long method, long phase) {
-			String compName = stateAnalysis.queryComponentName(vmid, baseid);
+		protected String getFuncName(long pet, long vmid, long baseid, long method, long phase) {
+			String compName = stateAnalysis.queryComponentName(pet, vmid, baseid);
 			if (compName == null) {
 				compName = "UNKNOWN";
 			}
 
 			String phaseLabel = null;
-			phaseLabel = stateAnalysis.queryComponentPhaseLabel(vmid, baseid, method, phase);
+			phaseLabel = stateAnalysis.queryComponentPhaseLabel(pet, vmid, baseid, method, phase);
 
 			if (phaseLabel == null) phaseLabel = "UNKNOWN";
 			return "[" + compName + "] " + phaseLabel;

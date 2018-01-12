@@ -3,6 +3,7 @@ package org.earthsystemmodeling.cupid.trace.callgraph;
 import java.text.DecimalFormat;
 import java.text.FieldPosition;
 import java.text.Format;
+import java.text.NumberFormat;
 import java.text.ParsePosition;
 
 import org.eclipse.jdt.annotation.Nullable;
@@ -20,7 +21,7 @@ import org.eclipse.tracecompass.common.core.NonNullUtils;
  * <li>10000002000000 -> "1000.002 s"</li>
  * </ul>
  */
-public class TimeFormatter extends Format {
+public class TimeFormatter extends NumberFormat {
 	
 	private static final long serialVersionUID = 3536536364492941613L;
 	
@@ -35,7 +36,7 @@ public class TimeFormatter extends Format {
 	private static final int NANOS_PER_MILLI = 1000000;
 	private static final int NANOS_PER_MICRO = 1000;
 
-	private final DecimalFormat fDecimalFormat = new DecimalFormat("#.000"); //$NON-NLS-1$
+	private final DecimalFormat fDecimalFormat;
 	
 	private String fFixedUnit = DYNAMIC;
 	private boolean fIncludeUnits = true;
@@ -48,11 +49,20 @@ public class TimeFormatter extends Format {
 		this.fIncludeUnits = includeUnits;
 	}
 	
-	@Override
-	public Object parseObject(@Nullable String source, @Nullable ParsePosition pos) {
-		return source == null ? "" : source; //$NON-NLS-1$
+	public TimeFormatter() {
+		this (new DecimalFormat("#.000"));
 	}
+	
+	public TimeFormatter(DecimalFormat decimalFormat) {
+		fDecimalFormat = decimalFormat;
+	}
+	
+	//@Override
+	//public Object parseObject(@Nullable String source, @Nullable ParsePosition pos) {
+	//	return source == null ? "" : source; //$NON-NLS-1$
+	//}
 
+	/*
 	@Override
 	public StringBuffer format(@Nullable Object obj, @Nullable StringBuffer toAppendTo, @Nullable FieldPosition pos) {
 		final @Nullable StringBuffer appender = toAppendTo;
@@ -94,6 +104,58 @@ public class TimeFormatter extends Format {
 			return appender == null ? new StringBuffer() : NonNullUtils.checkNotNull(appender.append(timeString).append(' ').append(fIncludeUnits ? unit : ""));
 		}
 		return new StringBuffer();
+	}
+	*/
+	
+	@Override
+	public StringBuffer format(double number, StringBuffer toAppendTo, FieldPosition pos) {
+		
+		final @Nullable StringBuffer appender = toAppendTo;
+		if (Double.isNaN(number)) {
+			return appender == null ? new StringBuffer() : NonNullUtils.checkNotNull(appender.append("---")); //$NON-NLS-1$
+		}
+		
+		String unit;
+		if (fFixedUnit == null || fFixedUnit.equals(DYNAMIC)) {
+			unit = NANOSECONDS;
+			if (number >= NANOS_PER_SEC) {
+				unit = SECONDS;
+			} else if (number >= NANOS_PER_MILLI) {
+				unit = MILLISECONDS;
+			} else if (number >= NANOS_PER_MICRO) {
+				unit = MICROSECONDS;
+			}
+		}
+		else {
+			unit = fFixedUnit;
+		}
+		
+		if (unit == SECONDS) {
+			number /= NANOS_PER_SEC;
+		}
+		else if (unit == MILLISECONDS) {
+			number /= NANOS_PER_MILLI;
+		}
+		else if (unit == MICROSECONDS) {
+			number /= NANOS_PER_MICRO;
+		}
+		
+		if (number == 0) {
+			return appender == null ? new StringBuffer() : NonNullUtils.checkNotNull(appender.append(0));
+		}
+		String timeString = unit.equals(NANOSECONDS) ? Long.toString((long) number) : fDecimalFormat.format(number);
+		return appender == null ? new StringBuffer() : NonNullUtils.checkNotNull(appender.append(timeString).append(' ').append(fIncludeUnits ? unit : ""));
+				
+	}
+
+	@Override
+	public StringBuffer format(long number, StringBuffer toAppendTo, FieldPosition pos) {
+		return format((double) number, toAppendTo, pos);
+	}
+
+	@Override
+	public Number parse(String source, ParsePosition parsePosition) {		
+		return null;
 	}
 }
 
