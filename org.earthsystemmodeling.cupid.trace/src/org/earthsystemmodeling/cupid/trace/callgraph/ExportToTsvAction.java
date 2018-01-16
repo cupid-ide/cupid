@@ -4,12 +4,13 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.OutputStream;
 
+import org.earthsystemmodeling.cupid.trace.Activator;
+import org.eclipse.core.runtime.Status;
 import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.jface.action.Action;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.widgets.FileDialog;
 import org.eclipse.swt.widgets.Shell;
-import org.eclipse.tracecompass.internal.analysis.timing.ui.Activator;
 import org.eclipse.tracecompass.tmf.ui.dialog.TmfFileDialogFactory;
 
 public abstract class ExportToTsvAction extends Action {
@@ -34,6 +35,11 @@ public abstract class ExportToTsvAction extends Action {
     public String getToolTipText() {
         return String.valueOf("Export data to TSV file for import into another program, such as a spreadsheet");
     }
+    
+    public org.eclipse.jface.resource.ImageDescriptor getImageDescriptor() {
+		return Activator.getImageDescriptor("icons/export_to_spreadsheet.gif");
+	};
+
 
     @Override
     public void run() {
@@ -50,7 +56,7 @@ public abstract class ExportToTsvAction extends Action {
         try (FileOutputStream fos = new FileOutputStream(fileName)) {
             exportToTsv(fos);
         } catch (IOException e) {
-            Activator.getDefault().logError("IO Error " + fileName, e); //$NON-NLS-1$
+            Activator.log(Status.ERROR, "IO Error " + fileName, e); //$NON-NLS-1$
         }
     }
 

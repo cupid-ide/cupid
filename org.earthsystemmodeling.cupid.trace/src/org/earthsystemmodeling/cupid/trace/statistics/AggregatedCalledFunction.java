@@ -128,7 +128,9 @@ public class AggregatedCalledFunction implements Cloneable, Serializable {
     }
 
     public void saveStatistics(long threadId) {
-    	fStatisticsMap.put(threadId, fStatistics);
+    	AggregatedCalledFunctionStatistics copyStats = new AggregatedCalledFunctionStatistics();
+    	copyStats.merge(fStatistics);
+    	fStatisticsMap.put(threadId, copyStats);
     	fChildren.values().forEach(c -> {
     		c.saveStatistics(threadId);
     	});

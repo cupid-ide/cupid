@@ -12,10 +12,6 @@ import org.earthsystemmodeling.cupid.trace.statistics.GlobalNode;
 import org.earthsystemmodeling.cupid.trace.statistics.ThreadNode;
 import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.jface.action.Action;
-import org.eclipse.jface.action.IMenuManager;
-import org.eclipse.jface.action.MenuManager;
-import org.eclipse.jface.viewers.Viewer;
-import org.eclipse.jface.viewers.ViewerComparator;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Shell;
 import org.eclipse.swt.widgets.Tree;
@@ -28,15 +24,10 @@ import org.eclipse.tracecompass.tmf.core.trace.ITmfTrace;
 import org.eclipse.tracecompass.tmf.core.trace.TmfTraceManager;
 import org.eclipse.tracecompass.tmf.core.trace.TmfTraceUtils;
 import org.eclipse.tracecompass.tmf.ui.viewers.tree.AbstractTmfTreeViewer;
-import org.eclipse.tracecompass.tmf.ui.viewers.tree.ITmfTreeColumnDataProvider;
-import org.eclipse.tracecompass.tmf.ui.viewers.tree.ITmfTreeViewerEntry;
-import org.eclipse.tracecompass.tmf.ui.viewers.tree.TmfTreeColumnData;
 import org.eclipse.tracecompass.tmf.ui.viewers.tree.TmfTreeViewerEntry;
 import org.eclipse.tracecompass.tmf.ui.views.TmfView;
-import org.eclipse.ui.IActionBars;
 
 import com.google.common.base.Joiner;
-import com.google.common.collect.Lists;
 
 
 public abstract class AbstractStatisticsTreeView extends TmfView {
@@ -124,7 +115,7 @@ public abstract class AbstractStatisticsTreeView extends TmfView {
            traceSelected(new TmfTraceSelectedSignal(this, trace));
         }
         
-        getViewSite().getActionBars().getMenuManager().add(fExportAction);
+        getViewSite().getActionBars().getToolBarManager().add(fExportAction);
 	}
 	
 	public abstract AbstractStatisticsTreeViewer createTreeViewer(Composite parent);

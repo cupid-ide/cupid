@@ -284,6 +284,9 @@ public abstract class NUOPCCtfCallStackStateProvider extends CallStackStateProvi
 				
 			}
 		});
+		
+				
+		
 	}
 	
 	protected String getFuncName(ITmfEvent event) {

@@ -6,19 +6,26 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.concurrent.Semaphore;
+import java.util.function.ToDoubleFunction;
 
 import org.earthsystemmodeling.cupid.trace.Activator;
 import org.earthsystemmodeling.cupid.trace.callstack.NUOPCCtfCallStackAnalysis;
+import org.earthsystemmodeling.cupid.trace.statistics.AggregatedCalledFunctionStatistics;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.Status;
 import org.eclipse.core.runtime.jobs.Job;
 import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.jface.action.Action;
+import org.eclipse.jface.action.IMenuCreator;
+import org.eclipse.jface.action.MenuManager;
+import org.eclipse.jface.resource.ImageDescriptor;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.custom.SashForm;
 import org.eclipse.swt.widgets.Composite;
+import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.Display;
+import org.eclipse.swt.widgets.Menu;
 import org.eclipse.swt.widgets.Shell;
 import org.eclipse.swt.widgets.Tree;
 import org.eclipse.swt.widgets.TreeItem;
@@ -76,6 +83,44 @@ public class NUOPCTimingBalanceView extends TmfView {
     }
 	*/
     
+    
+    private abstract class SetStatisticAction extends Action {
+
+		private String fStatName;
+						
+		public SetStatisticAction(String stat) {
+			this(stat, false);
+		}
+
+		public SetStatisticAction(String stat, boolean checked) {
+			fStatName = stat;
+			setChecked(checked);
+		}
+		
+		public abstract ToDoubleFunction<AggregatedCalledFunctionStatistics> getStatisticFunction();
+
+		@Override
+		public String getText() {
+			return fStatName;
+		}
+
+		@Override
+		public int getStyle() {
+			return Action.AS_RADIO_BUTTON;
+		}
+
+		@Override
+		public void run() {				
+			if (isChecked()) {
+				fBalanceViewer.setStatistic(getStatisticFunction());
+				fBalanceViewer.setStatisticName(fStatName);
+				fBalanceViewer.reload();
+			}
+		}
+
+	}
+    
+    
     @Override
     public void createPartControl(@Nullable Composite parent) {
         super.createPartControl(parent);
@@ -104,7 +149,118 @@ public class NUOPCTimingBalanceView extends TmfView {
             //}
         }
         
-        getViewSite().getActionBars().getMenuManager().add(fExportAction);
+        //getViewSite().getActionBars().getMenuManager().add(fExportAction);
+        
+        getViewSite().getActionBars().getToolBarManager().add(fExportAction);
+        
+        /////////// statistics options
+        
+        final MenuManager statisticMenu = new MenuManager("Statistic", null) {
+			@Override
+			public String getMenuText() {
+				return "Statistic";
+			}
+		};
+		
+		
+        
+		statisticMenu.add(new SetStatisticAction("Total", true) {
+			@Override
+			public ToDoubleFunction<AggregatedCalledFunctionStatistics> getStatisticFunction() {
+				return new ToDoubleFunction<AggregatedCalledFunctionStatistics>() {
+					@Override
+					public double applyAsDouble(AggregatedCalledFunctionStatistics value) {
+						return value.getDurationStatistics().getTotal();
+					}
+				};
+			}
+		});
+		
+		statisticMenu.add(new SetStatisticAction("Mean") {
+			@Override
+			public ToDoubleFunction<AggregatedCalledFunctionStatistics> getStatisticFunction() {
+				return new ToDoubleFunction<AggregatedCalledFunctionStatistics>() {
+					@Override
+					public double applyAsDouble(AggregatedCalledFunctionStatistics value) {
+						return value.getDurationStatistics().getMean();
+					}
+				};
+			}
+		});
+		
+		
+		statisticMenu.add(new SetStatisticAction("Max") {
+			@Override
+			public ToDoubleFunction<AggregatedCalledFunctionStatistics> getStatisticFunction() {
+				return new ToDoubleFunction<AggregatedCalledFunctionStatistics>() {
+					@Override
+					public double applyAsDouble(AggregatedCalledFunctionStatistics value) {
+						return value.getDurationStatistics().getMax();
+					}
+				};
+			}
+		});
+		
+		statisticMenu.add(new SetStatisticAction("Min") {
+			@Override
+			public ToDoubleFunction<AggregatedCalledFunctionStatistics> getStatisticFunction() {
+				return new ToDoubleFunction<AggregatedCalledFunctionStatistics>() {
+					@Override
+					public double applyAsDouble(AggregatedCalledFunctionStatistics value) {
+						return value.getDurationStatistics().getMin();
+					}
+				};
+			}
+		});
+		
+			
+		statisticMenu.add(new SetStatisticAction("Std Dev") {
+			@Override
+			public ToDoubleFunction<AggregatedCalledFunctionStatistics> getStatisticFunction() {
+				return new ToDoubleFunction<AggregatedCalledFunctionStatistics>() {
+					@Override
+					public double applyAsDouble(AggregatedCalledFunctionStatistics value) {
+						return value.getDurationStatistics().getStdDev();
+					}
+				};
+			}
+		});
+		
+		//TODO:  create statistic class with stat function, name, y-axis title, etc.
+		
+		
+		
+		Action setStatistic = new Action("Set statistic", SWT.DROP_DOWN) {
+
+			@Override
+			public ImageDescriptor getImageDescriptor() {
+				return Activator.getImageDescriptor("icons/setstatistic.png");
+			}
+
+			@Override
+			public IMenuCreator getMenuCreator() {
+				return new IMenuCreator() {
+					@Override
+					public void dispose() {
+					}
+					@Override
+					public Menu getMenu(Control parent) {
+						return statisticMenu.createContextMenu(parent);
+					}
+					@Override
+					public Menu getMenu(Menu parent) {
+						return null;
+					}
+				};
+			}
+		};
+		
+		getViewSite().getActionBars().getToolBarManager().add(setStatistic);
+		 
+		//////////// end statistics option
+        
+        
+        
     }
     
     @TmfSignalHandler
@@ -203,7 +359,9 @@ public class NUOPCTimingBalanceView extends TmfView {
     
     
     private final Action fExportAction = new ExportToTsvAction() {
-        @Override
+        
+    		
+    		@Override
         protected void exportToTsv(@Nullable OutputStream stream) {
          
         	try (PrintWriter pw = new PrintWriter(stream)) {

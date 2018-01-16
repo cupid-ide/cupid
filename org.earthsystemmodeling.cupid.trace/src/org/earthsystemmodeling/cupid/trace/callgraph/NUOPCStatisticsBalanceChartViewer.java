@@ -1,74 +1,46 @@
 package org.earthsystemmodeling.cupid.trace.callgraph;
 
+import java.awt.Color;
 import java.text.DecimalFormat;
-import java.text.Format;
-import java.util.Arrays;
-import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 import java.util.Map.Entry;
 import java.util.function.ToDoubleFunction;
 
-import org.earthsystemmodeling.cupid.trace.callstack.NUOPCCtfCallStackAnalysis;
 import org.earthsystemmodeling.cupid.trace.statistics.AggregatedCalledFunction;
 import org.earthsystemmodeling.cupid.trace.statistics.AggregatedCalledFunctionStatistics;
-import org.earthsystemmodeling.cupid.trace.statistics.IGlobalStatisticsProvider;
 import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.graphics.RGB;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
-import org.eclipse.swt.widgets.Display;
 import org.eclipse.tracecompass.analysis.timing.core.segmentstore.IAnalysisProgressListener;
-import org.eclipse.tracecompass.analysis.timing.ui.views.segmentstore.SubSecondTimeWithUnitFormat;
 import org.eclipse.tracecompass.tmf.core.trace.ITmfTrace;
-import org.eclipse.tracecompass.tmf.core.trace.TmfTraceManager;
-import org.eclipse.tracecompass.tmf.core.trace.TmfTraceUtils;
 import org.eclipse.tracecompass.tmf.ui.viewers.TmfViewer;
 import org.jfree.chart.ChartFactory;
-import org.jfree.chart.ChartPanel;
 import org.jfree.chart.JFreeChart;
 import org.jfree.chart.axis.NumberAxis;
-import org.jfree.chart.axis.TickUnitSource;
-import org.jfree.chart.plot.IntervalMarker;
-import org.jfree.chart.plot.PiePlot;
 import org.jfree.chart.plot.PlotOrientation;
 import org.jfree.chart.plot.XYPlot;
-import org.jfree.chart.renderer.category.BarRenderer;
-import org.jfree.chart.renderer.category.StandardBarPainter;
 import org.jfree.chart.renderer.xy.StandardXYBarPainter;
-import org.jfree.chart.renderer.xy.XYBarPainter;
 import org.jfree.chart.renderer.xy.XYBarRenderer;
 import org.jfree.chart.swt.ChartComposite;
-import org.jfree.data.general.DefaultPieDataset;
-import org.jfree.data.statistics.HistogramDataset;
-import org.jfree.data.statistics.HistogramType;
 import org.jfree.data.xy.XYSeries;
 import org.jfree.data.xy.XYSeriesCollection;
-import org.jfree.ui.RectangleAnchor;
-import org.jfree.ui.TextAnchor;
 import org.swtchart.Chart;
 import org.swtchart.IAxis;
-import org.swtchart.IBarSeries;
-import org.swtchart.IErrorBar.ErrorBarType;
 import org.swtchart.ISeries;
 import org.swtchart.ISeries.SeriesType;
 
-import com.google.common.collect.Lists;
 import com.google.common.collect.Ordering;
-
-import org.swtchart.ISeriesSet;
-import org.swtchart.LineStyle;
-import org.swtchart.Range;
-
-import java.awt.Color;
 
 
 public class NUOPCStatisticsBalanceChartViewer extends TmfViewer {
 
     //private static final Format DENSITY_TIME_FORMATTER = new SubSecondTimeWithUnitFormat();
-    private static final RGB BAR_COLOR = new RGB(0x42, 0x85, 0xf4);
-    private final Chart fChart;
+    //private static final RGB BAR_COLOR = new RGB(0x42, 0x85, 0xf4);
+    
+	private final Chart fChart;
 //    private final MouseDragZoomProvider fDragZoomProvider;
 //    private final MouseSelectionProvider fDragProvider;
 //    private final SimpleTooltipProvider fTooltipProvider;
@@ -81,7 +53,9 @@ public class NUOPCStatisticsBalanceChartViewer extends TmfViewer {
 //    private IGlobalStatisticsProvider fStatisticsProvider;
     
     private final ChartComposite fChartComposite;
-
+    private ToDoubleFunction<AggregatedCalledFunctionStatistics> fStatisticFunction;
+    private String fStatisticName;
+    private AggregatedCalledFunction fInput;
     
     /**
      * Constructs a new density viewer.
@@ -119,26 +93,31 @@ public class NUOPCStatisticsBalanceChartViewer extends TmfViewer {
 
         fChart = null;
         fChartComposite = new ChartComposite(parent, SWT.NONE);
+        
+        fStatisticFunction = new ToDoubleFunction<AggregatedCalledFunctionStatistics>() {
+			@Override
+			public double applyAsDouble(AggregatedCalledFunctionStatistics value) {
+				return value.getDurationStatistics().getTotal();
+			}
+        };
+        fStatisticName = "Total";
                 
     }
 
-//    protected @Nullable IGlobalStatisticsProvider getGlobalStatisticsProvider(ITmfTrace trace) {
-//    	return TmfTraceUtils.getAnalysisModuleOfClass(trace, NUOPCCtfCallStackAnalysis.class, NUOPCCtfCallStackAnalysis.ID);
-//    }
-
-    //@Nullable
-    //private static ITmfTrace getTrace() {
-    //    return TmfTraceManager.getInstance().getActiveTrace();
-    //}
+    public void setStatistic(ToDoubleFunction<AggregatedCalledFunctionStatistics> func) {
+    	fStatisticFunction = func;
+    }
     
-   
+    public void setStatisticName(String name) {
+    	fStatisticName = name;
+    }
+       
     private void updateDisplayJFree(AggregatedCalledFunction func) {
     	
     	Comparator<Entry<Long, AggregatedCalledFunctionStatistics>> c = 
     			Comparator.comparingDouble(new ToDoubleFunction<Entry<Long, AggregatedCalledFunctionStatistics>>() {
 			@Override
 			public double applyAsDouble(Entry<Long, AggregatedCalledFunctionStatistics> value) {
-				//return value.getValue().getDurationStatistics().getTotal();
 				return value.getKey();
 			}
         });
@@ -146,17 +125,17 @@ public class NUOPCStatisticsBalanceChartViewer extends TmfViewer {
         List<Entry<Long, AggregatedCalledFunctionStatistics>> entries = 
         		Ordering.from(c).immutableSortedCopy(func.getFunctionStatisticsMap().entrySet());
       
-        final int petCount = entries.size();
+        //final int petCount = entries.size();
         
         final XYSeries series = new XYSeries("PET Timings");
         for (int i=0; i < entries.size(); i++) {
-        	series.add((double) entries.get(i).getKey(), entries.get(i).getValue().getDurationStatistics().getTotal());
+        	series.add((double) entries.get(i).getKey(), fStatisticFunction.applyAsDouble(entries.get(i).getValue()));
         }
     	final XYSeriesCollection dataset = new XYSeriesCollection(series);
     	
     	
     	final JFreeChart chart = ChartFactory.createXYBarChart(
-    			"PET Timings for " + func.getSymbol() + " (Total)",
+    			"PET Timings for " + func.getSymbol() + " (" + fStatisticName + ")", 
                 "PETs", 
                 false,
                 "Time", 
@@ -329,12 +308,17 @@ public class NUOPCStatisticsBalanceChartViewer extends TmfViewer {
     
     
     public void setInput(AggregatedCalledFunction function) {
+    	fInput = function;
     	if (function != null) {
     		updateDisplayJFree(function);
     	}
     	else {
     		clearContent();
     	}
+    }
+    
+    public void reload() {
+    	setInput(fInput);
     }
 
     /*

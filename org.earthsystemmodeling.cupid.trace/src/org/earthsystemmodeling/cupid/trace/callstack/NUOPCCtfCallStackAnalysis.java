@@ -11,7 +11,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.earthsystemmodeling.cupid.core.CupidActivator;
-import org.earthsystemmodeling.cupid.trace.callgraph.NUOPCGlobalStatisticsTreeView;
 import org.earthsystemmodeling.cupid.trace.callgraph.NUOPCPerPETStatisticsTreeView;
 import org.earthsystemmodeling.cupid.trace.callgraph.NUOPCTimingBalanceView;
 import org.earthsystemmodeling.cupid.trace.state.NUOPCCtfStateSystemAnalysisModule;
@@ -193,7 +192,7 @@ public class NUOPCCtfCallStackAnalysis extends CallStackAnalysis implements IGlo
     }
 
 	@Override
-	public GlobalNode getGlobalStatistics() {
+	public synchronized GlobalNode getGlobalStatistics() {
 		AbstractCalledFunction initSegment = CalledFunctionFactory.create(0, 0, 0, "root", -1, null);
     	GlobalNode init = new GlobalNode(initSegment, 0);
     	for (ThreadNode node : fThreadNodes) {
