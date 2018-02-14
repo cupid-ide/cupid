@@ -59,6 +59,23 @@ public class AggregatedCalledFunction implements Cloneable, Serializable {
     private final Map<Long, AggregatedCalledFunctionStatistics> fStatisticsMap = new HashMap<>();
 
     /**
+     * This constructor used when region is already aggregated
+     * so there is no concrete AbstractCalledFunction.
+     * @param parent
+     */
+    public AggregatedCalledFunction(String symbol, IStatistics<ICalledFunction> stats, AggregatedCalledFunction parent) {
+    	fSymbol = symbol;
+    	fDepth = -1;
+    	fMaxDepth = -1;
+    	fProcessId = -1;
+    	fParent = parent;
+    	fDuration = (long) stats.getTotal();
+    	fSelfTime = (long) stats.getTotal();
+    	fStatistics = new AggregatedCalledFunctionStatistics(stats);
+    }
+    
+    
+    /**
      * Constructor, parent is not null
      *
      * @param calledFunction
@@ -73,7 +90,7 @@ public class AggregatedCalledFunction implements Cloneable, Serializable {
         fProcessId = calledFunction.getProcessId();
         fMaxDepth = parent.getMaxDepth();
         fParent = parent;
-        fStatistics = new AggregatedCalledFunctionStatistics("mpi");
+        fStatistics = new AggregatedCalledFunctionStatistics();
         if (calledFunction.isComplete()) {
         	complete(calledFunction);
         }
@@ -93,7 +110,7 @@ public class AggregatedCalledFunction implements Cloneable, Serializable {
         fProcessId = calledFunction.getProcessId();
         fMaxDepth = maxDepth;
         fParent = null;
-        fStatistics = new AggregatedCalledFunctionStatistics("mpi");
+        fStatistics = new AggregatedCalledFunctionStatistics();
         if (calledFunction.isComplete()) {
         	complete(calledFunction);
         }
@@ -114,7 +131,7 @@ public class AggregatedCalledFunction implements Cloneable, Serializable {
         fParent = toCopy.fParent;
         fMaxDepth = toCopy.fMaxDepth;
         fDepth = toCopy.fDepth;
-        fStatistics = new AggregatedCalledFunctionStatistics("mpi");
+        fStatistics = new AggregatedCalledFunctionStatistics();
         fStatistics.merge(toCopy.fStatistics);
         fProcessId = toCopy.fProcessId;
         fDuration = toCopy.fDuration;
@@ -128,7 +145,7 @@ public class AggregatedCalledFunction implements Cloneable, Serializable {
     }
 
     public void saveStatistics(long threadId) {
-    	AggregatedCalledFunctionStatistics copyStats = new AggregatedCalledFunctionStatistics("mpi");
+    	AggregatedCalledFunctionStatistics copyStats = new AggregatedCalledFunctionStatistics();
     	copyStats.merge(fStatistics);
     	fStatisticsMap.put(threadId, copyStats);
     	fChildren.values().forEach(c -> {

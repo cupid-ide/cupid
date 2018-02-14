@@ -307,6 +307,7 @@ public abstract class AbstractStatisticsTreeViewer extends AbstractTmfTreeViewer
 			return getColumnDataProvider().getColumnText(element, columnIndex);
 		}
 		
+		/*
 		public String getColumnTextOLD(Object element, int columnIndex) {
 			if (element instanceof GlobalEntry) {
 				GlobalEntry global = (GlobalEntry) element;
@@ -402,138 +403,8 @@ public abstract class AbstractStatisticsTreeViewer extends AbstractTmfTreeViewer
 			}
 			return null;
 		}
-		
+		*/
 	}
 	
-	/*
-	protected class GraphTreeLabelProvider extends TreeLabelProvider {
-
-		@Override
-		public Color getForeground(Object element, int columnIndex) {
-			if (element instanceof AggregatedCalledFunctionEntry) {
-				AggregatedCalledFunctionEntry func = (AggregatedCalledFunctionEntry) element;
-				if (func.getFunction().isForcedToComplete()) {
-					return Display.getCurrent().getSystemColor(SWT.COLOR_RED);
-				}
-			}
-			return super.getForeground(element, columnIndex);
-		}
-				
-		@Override
-		public String getColumnText(Object element, int columnIndex) {
-			if (element instanceof GlobalEntry) {
-				GlobalEntry global = (GlobalEntry) element;
-				if (columnIndex == 0) {
-					return global.getName();
-				}
-				else {
-					return null;
-				}
-			}
-			else if (element instanceof ThreadEntry) {
-				ThreadEntry thread = (ThreadEntry) element;
-				if (columnIndex == 0) {
-					return thread.getName();
-				}
-				else {
-					return "---";
-				}
-			}
-			else if (element instanceof AggregatedCalledFunctionEntry) {
-				AggregatedCalledFunctionEntry func = (AggregatedCalledFunctionEntry) element;
-				if (columnIndex == 0) {
-					if (func.getFunction().isForcedToComplete()) {
-						return func.getName() + "***";
-					}
-					else {
-						return func.getName();
-					}
-				}
-				else if (columnIndex == 1) {
-					return String.valueOf(fTimeFormatter.format(func.getFunction().getDuration()));
-				}
-				else if (columnIndex == 2) {
-					return String.valueOf(fTimeFormatter.format(func.getFunction().getSelfTime()));
-				}
-				else if (columnIndex == 3) {
-					return String.valueOf(func.getFunction().getNbCalls());	            		
-				}
-				else if (columnIndex == 4) {
-					return String.valueOf(fTimeFormatter.format(func.getFunction().getFunctionStatistics().getDurationStatistics().getMean()));
-				}
-				else if (columnIndex == 5) {
-					return String.valueOf(fTimeFormatter.format(func.getFunction().getFunctionStatistics().getDurationStatistics().getMin()));
-				}
-				else if (columnIndex == 6) {
-					return String.valueOf(fTimeFormatter.format(func.getFunction().getFunctionStatistics().getDurationStatistics().getMax()));
-				}
-				else if (columnIndex == 7) {
-					return String.valueOf(fTimeFormatter.format(func.getFunction().getFunctionStatistics().getDurationStatistics().getStdDev()));
-				}
-			}
-			else if (element instanceof AggregatedFunctionStatisticsRoot) {
-				if (columnIndex == 0) {
-					return ((AggregatedFunctionStatisticsRoot) element).getName();
-				}
-				else {
-					return null;
-				}
-			}
-			else if (element instanceof AggregatedFunctionStatisticsEntry) {
-				AggregatedFunctionStatisticsEntry stats = (AggregatedFunctionStatisticsEntry) element;
-				if (columnIndex == 0) {
-					return stats.getName();
-				}
-				else if (columnIndex == 1) {
-					return String.valueOf(fTimeFormatter.format(stats.getStats().getDurationStatistics().getTotal()));
-				}
-				else if (columnIndex == 2) {
-					return String.valueOf(fTimeFormatter.format(stats.getStats().getSelfTimeStatistics().getTotal()));
-				}
-				else if (columnIndex == 3) {
-					return String.valueOf(stats.getStats().getDurationStatistics().getNbElements());	            		
-				}
-				else if (columnIndex == 4) {
-					return String.valueOf(fTimeFormatter.format(stats.getStats().getDurationStatistics().getMean()));
-				}
-				else if (columnIndex == 5) {
-					return String.valueOf(fTimeFormatter.format(stats.getStats().getDurationStatistics().getMin()));
-				}
-				else if (columnIndex == 6) {
-					return String.valueOf(fTimeFormatter.format(stats.getStats().getDurationStatistics().getMax()));
-				}
-				else if (columnIndex == 7) {
-					return String.valueOf(fTimeFormatter.format(stats.getStats().getDurationStatistics().getStdDev()));
-				}
-
-			}
-			return super.getColumnText(element, columnIndex);
-		}
-
-		
-		private FontRegistry fFontRegistry = new FontRegistry();
-
-		@Override
-		public Font getFont(Object element, int columnIndex) {
-			if (element instanceof AggregatedFunctionStatisticsRoot) {
-				return fFontRegistry.getBold(Display.getCurrent().getSystemFont().getFontData()[0].getName());
-			}
-			else {
-				return super.getFont(element, columnIndex);
-			}
-		}
-
-		@Override
-		public Image getColumnImage(Object element, int columnIndex) {
-			if (element instanceof AggregatedFunctionStatisticsRoot) {
-				if (columnIndex == 0) {
-					ImageDescriptor image = Activator.getImageDescriptor("icons/linegraph.png");
-					return image.createImage();  //createResource?
-				}
-			}
-			return super.getColumnImage(element, columnIndex);
-		}
-
-	}
-	*/
+	
 }

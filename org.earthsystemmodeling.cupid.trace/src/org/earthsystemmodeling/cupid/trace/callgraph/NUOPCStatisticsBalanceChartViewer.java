@@ -139,7 +139,8 @@ public class NUOPCStatisticsBalanceChartViewer extends TmfViewer {
     	
         final XYSeries mpiSeries = new XYSeries("MPI Timings", true, false);
         for (int i=0; i < entries.size(); i++) {
-        	mpiSeries.add((double) entries.get(i).getKey(), entries.get(i).getValue().getSubregionStatistics("mpi").getTotal());
+        	//mpiSeries.add((double) entries.get(i).getKey(), entries.get(i).getValue().getSubregionStatistics("mpi").getTotal());
+        	mpiSeries.add((double) entries.get(i).getKey(), 0);
         }
         dataset.addSeries(mpiSeries);
         

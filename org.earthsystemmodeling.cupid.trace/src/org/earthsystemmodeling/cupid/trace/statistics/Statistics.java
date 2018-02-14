@@ -76,6 +76,19 @@ public class Statistics<@NonNull E> implements IStatistics<E>, Serializable {
         fMaxValue = Long.MIN_VALUE;
         fMapper = mapper;
     }
+    
+    /**
+     * Use this constructor if statistics already known.
+     * This is currently limited to total and count.
+     * @param total
+     * @param count
+     */
+    public Statistics(double total, long count) {
+    	this();
+    	fTotal = total;
+    	fNbElements = count;
+    	fMean = total / count;
+    }
 
     @Override
     public long getMin() {
@@ -176,9 +189,11 @@ public class Statistics<@NonNull E> implements IStatistics<E>, Serializable {
             return;
         } else if (fNbElements == 0) {
             copy(other);
-        } else if (other.fNbElements == 1) {
+        } else if (other.fNbElements == 1 && other.getMaxObject()!= null) {
+        	//ADDED != null check above in case where statistics we don't track this object
             update(NonNullUtils.checkNotNull(other.getMaxObject()));
-        } else if (fNbElements == 1) {
+        } else if (fNbElements == 1 && getMaxObject() != null) {
+        	//ADDED != null check above in case where statistics we don't track this object
             Statistics<E> copyOther = new Statistics<>(fMapper);
             copyOther.copy(other);
             copyOther.update(NonNullUtils.checkNotNull(getMaxObject()));

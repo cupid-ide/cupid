@@ -177,6 +177,8 @@ public class AbstractStatisticsTreeColumnDataProvider implements ITmfTreeColumnD
 		COLUMN_MPI = new TmfTreeColumnDataDouble("MPI Time (Self)", "Total amount of time in MPI_Wait and MPI_Barrier calls, exclusive of sub-regions") {
 			@Override
 			public double getColumnDouble(Object elem) {
+				return -99;
+				/*
 				if (elem instanceof AggregatedCalledFunctionEntry) {
 					return ((AggregatedCalledFunctionEntry) elem).getFunction().getFunctionStatistics().getSubregionStatistics("mpi").getTotal();
 				}
@@ -184,6 +186,7 @@ public class AbstractStatisticsTreeColumnDataProvider implements ITmfTreeColumnD
 					return ((AggregatedFunctionStatisticsEntry) elem).getStats().getSubregionStatistics("mpi").getTotal();
 				}
 				return super.getColumnDouble(elem);
+				*/
 			}
 		};
 		

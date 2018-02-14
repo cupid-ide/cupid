@@ -12,18 +12,20 @@ import org.earthsystemmodeling.cupid.trace.state.NUOPCCtfStateSystemAnalysisModu
 import org.earthsystemmodeling.cupid.trace.statistics.AbstractCalledFunction;
 import org.earthsystemmodeling.cupid.trace.statistics.AggregatedCalledFunction;
 import org.earthsystemmodeling.cupid.trace.statistics.CalledFunctionFactory;
+import org.earthsystemmodeling.cupid.trace.statistics.ICalledFunction;
+import org.earthsystemmodeling.cupid.trace.statistics.IStatistics;
+import org.earthsystemmodeling.cupid.trace.statistics.Statistics;
 import org.earthsystemmodeling.cupid.trace.statistics.ThreadNode;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.SubMonitor;
-import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.tracecompass.statesystem.core.ITmfStateSystemBuilder;
 import org.eclipse.tracecompass.statesystem.core.exceptions.AttributeNotFoundException;
 import org.eclipse.tracecompass.statesystem.core.exceptions.StateValueTypeException;
 import org.eclipse.tracecompass.statesystem.core.exceptions.TimeRangeException;
 import org.eclipse.tracecompass.statesystem.core.statevalue.ITmfStateValue;
-import org.eclipse.tracecompass.statesystem.core.statevalue.TmfStateValue;
 import org.eclipse.tracecompass.statesystem.core.statevalue.ITmfStateValue.Type;
+import org.eclipse.tracecompass.statesystem.core.statevalue.TmfStateValue;
 import org.eclipse.tracecompass.tmf.core.callstack.CallStackStateProvider;
 import org.eclipse.tracecompass.tmf.core.event.ITmfEvent;
 import org.eclipse.tracecompass.tmf.core.event.ITmfEventField;
@@ -31,7 +33,6 @@ import org.eclipse.tracecompass.tmf.core.event.ITmfEventType;
 import org.eclipse.tracecompass.tmf.core.trace.TmfTraceUtils;
 import org.eclipse.tracecompass.tmf.ctf.core.CtfEnumPair;
 import org.eclipse.tracecompass.tmf.ctf.core.event.CtfTmfEvent;
-import org.eclipse.tracecompass.tmf.ctf.core.event.CtfTmfEventType;
 import org.eclipse.tracecompass.tmf.ctf.core.trace.CtfTmfTrace;
 
 public abstract class NUOPCCtfCallStackStateProvider extends CallStackStateProvider {
@@ -217,8 +218,8 @@ public abstract class NUOPCCtfCallStackStateProvider extends CallStackStateProvi
 		if (functionExitState != null) {
 			long timestamp = event.getTimestamp().toNanos();
 			String processName = getProcessName(event);
+			int processId = getProcessId(event);
 			if (processName == null) {
-				int processId = getProcessId(event);
 				processName = (processId == UNKNOWN_PID) ? UNKNOWN : Integer.toString(processId);
 			}
 			long threadId = getThreadId(event);
@@ -243,14 +244,16 @@ public abstract class NUOPCCtfCallStackStateProvider extends CallStackStateProvi
 			
 			//mpi
 			long totalTimeMPI = 0;
+			long totalCountMPI = 0;
+			
 			quark = ss.getQuarkRelativeAndAdd(quarkThread, "mpibarrier", "count");
-			ss.popAttribute(timestamp, quark);
+			totalCountMPI += ss.popAttribute(timestamp, quark).unboxLong();
 			
 			quark = ss.getQuarkRelativeAndAdd(quarkThread, "mpibarrier", "time");
 			totalTimeMPI += ss.popAttribute(timestamp, quark).unboxLong();
 			
 			quark = ss.getQuarkRelativeAndAdd(quarkThread, "mpiwait", "count");
-			ss.popAttribute(timestamp, quark);
+			totalCountMPI += ss.popAttribute(timestamp, quark).unboxLong();
 			
 			quark = ss.getQuarkRelativeAndAdd(quarkThread, "mpiwait", "time");
 			totalTimeMPI += ss.popAttribute(timestamp, quark).unboxLong();
@@ -260,13 +263,21 @@ public abstract class NUOPCCtfCallStackStateProvider extends CallStackStateProvi
 			if (fDoCallGraph) {
 				calledFunction = fThreadCallStacks.get(threadId).pop();
 				calledFunction.complete(timestamp);
-				calledFunction.addToSubregionTime("mpi", totalTimeMPI);
+				//calledFunction.addToSubregionTime("mpi", totalTimeMPI);
 				
 				AggregatedCalledFunction aggFunction = fThreadAggStacks.get(threadId).pop();
 				aggFunction.complete(calledFunction);
 				if (!calledFunction.getSymbol().equals(aggFunction.getSymbol())) {
 					throw new IllegalStateException("Error computing statistics: called and aggregate functions do not match");
 				}
+				
+				///// ADD MPI REGION
+				if (totalTimeMPI > 0) {
+					IStatistics<ICalledFunction> mpiStats = new Statistics<>(totalTimeMPI, totalCountMPI);
+					AggregatedCalledFunction aggMPI = new AggregatedCalledFunction("__MPI", mpiStats, aggFunction);
+					aggFunction.addChild(aggMPI);
+				}
+								
 				fThreadAggStacks.get(threadId).peek().addChild(calledFunction, aggFunction);
 			}
 			
@@ -642,6 +653,7 @@ public abstract class NUOPCCtfCallStackStateProvider extends CallStackStateProvi
 					quarkName = "mpibarrier";
 				}
 				
+				//WARNING:  this assumes only one statistics event per region since it does not add to existing state
 				int quark = ss.getQuarkAbsoluteAndAdd(PROCESSES, processName, threadName, quarkName, "count");
 				peekModifyAttribute(quark, TmfStateValue.newValueLong(count));	
 				
