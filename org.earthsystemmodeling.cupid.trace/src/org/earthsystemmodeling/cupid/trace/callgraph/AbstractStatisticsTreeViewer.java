@@ -1,15 +1,14 @@
 package org.earthsystemmodeling.cupid.trace.callgraph;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import org.earthsystemmodeling.cupid.trace.Activator;
+import org.earthsystemmodeling.cupid.trace.callgraph.AbstractStatisticsTreeColumnDataProvider.TmfTreeColumnData2;
 import org.earthsystemmodeling.cupid.trace.callgraph.AbstractStatisticsTreeView.AggregatedCalledFunctionEntry;
 import org.earthsystemmodeling.cupid.trace.callgraph.AbstractStatisticsTreeView.AggregatedFunctionStatisticsEntry;
 import org.earthsystemmodeling.cupid.trace.callgraph.AbstractStatisticsTreeView.AggregatedFunctionStatisticsRoot;
 import org.earthsystemmodeling.cupid.trace.callgraph.AbstractStatisticsTreeView.GlobalEntry;
 import org.earthsystemmodeling.cupid.trace.callgraph.AbstractStatisticsTreeView.ThreadEntry;
-import org.earthsystemmodeling.cupid.trace.statistics.AggregatedCalledFunctionStatistics;
 import org.eclipse.jface.action.Action;
 import org.eclipse.jface.action.IMenuCreator;
 import org.eclipse.jface.action.MenuManager;
@@ -18,18 +17,15 @@ import org.eclipse.jface.resource.FontRegistry;
 import org.eclipse.jface.resource.ImageDescriptor;
 import org.eclipse.jface.viewers.CellLabelProvider;
 import org.eclipse.jface.viewers.ColumnViewerToolTipSupport;
-import org.eclipse.jface.viewers.Viewer;
+import org.eclipse.jface.viewers.TreePath;
 import org.eclipse.jface.viewers.ViewerCell;
-import org.eclipse.jface.viewers.ViewerComparator;
 import org.eclipse.swt.SWT;
-import org.eclipse.swt.graphics.Color;
-import org.eclipse.swt.graphics.Font;
-import org.eclipse.swt.graphics.Image;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Menu;
 import org.eclipse.swt.widgets.Tree;
+import org.eclipse.swt.widgets.TreeColumn;
 import org.eclipse.tracecompass.tmf.ui.viewers.tree.AbstractTmfTreeViewer;
 import org.eclipse.tracecompass.tmf.ui.viewers.tree.ITmfTreeColumnDataProvider;
 import org.eclipse.tracecompass.tmf.ui.viewers.tree.ITmfTreeViewerEntry;
@@ -40,7 +36,8 @@ import com.google.common.collect.Lists;
 
 public abstract class AbstractStatisticsTreeViewer extends AbstractTmfTreeViewer {
 
-	private final TimeFormatter FORMATTER = new TimeFormatter();
+	private TimeFormatter fTimeFormatter;
+	private AbstractStatisticsTreeColumnDataProvider fColumnDataProvider;
 
 	public AbstractStatisticsTreeViewer(Composite parent, TmfView view) {
 		super(parent, true);
@@ -48,10 +45,11 @@ public abstract class AbstractStatisticsTreeViewer extends AbstractTmfTreeViewer
 		setLabelProvider(new GraphTreeLabelProviderWithTooltips());
 		getTreeViewer().setAutoExpandLevel(2);
 			
-		ColumnViewerToolTipSupport.enableFor(getTreeViewer());
-			
+		ColumnViewerToolTipSupport.enableFor(getTreeViewer());			
 
+		///////////////  Time Units Action //////////////////////
 		final MenuManager timeUnitMenu = new MenuManager("&Time units", null) {
+			@Override
 			public ImageDescriptor getImageDescriptor() {
 				return Activator.getImageDescriptor("icons/export_to_spreadsheet.gif");
 			};
@@ -66,7 +64,7 @@ public abstract class AbstractStatisticsTreeViewer extends AbstractTmfTreeViewer
 		timeUnitMenu.add(new TimeFormatAction(TimeFormatter.MICROSECONDS));
 		timeUnitMenu.add(new TimeFormatAction(TimeFormatter.NANOSECONDS));
 
-		Action setTimeUnit = new Action("Set time units", SWT.DROP_DOWN) {
+		Action setTimeUnit = new Action("Set time units in timing tree", SWT.DROP_DOWN) {
 			
 			@Override
 			public ImageDescriptor getImageDescriptor() {
@@ -91,6 +89,49 @@ public abstract class AbstractStatisticsTreeViewer extends AbstractTmfTreeViewer
 			}
 		};
 
+		//////////////////////////  Columns Actions ////////////////////
+		
+		final MenuManager visibleColumnsMenu = new MenuManager("&Columns", null) {
+			@Override
+			public ImageDescriptor getImageDescriptor() {
+				return Activator.getImageDescriptor("icons/export_to_spreadsheet.gif");
+			};
+			@Override
+			public String getMenuText() {
+				return "Columns to show in timing tree";
+			}
+		};
+		for (int i = 1; i < getColumnDataProvider().COLUMNS.length; i++) {
+			visibleColumnsMenu.add(new ShowColumnAction(getColumnDataProvider().COLUMNS[i]));
+		}
+		
+		Action setVisibleColumns = new Action("Set visible columns in timing tree", SWT.DROP_DOWN) {
+			
+			@Override
+			public ImageDescriptor getImageDescriptor() {
+				return Activator.getImageDescriptor("icons/select_columns.png");
+			}
+
+			@Override
+			public IMenuCreator getMenuCreator() {
+				return new IMenuCreator() {
+					@Override
+					public void dispose() {
+					}
+					@Override
+					public Menu getMenu(Control parent) {
+						return visibleColumnsMenu.createContextMenu(parent);
+					}
+					@Override
+					public Menu getMenu(Menu parent) {
+						return null;
+					}
+				};
+			}
+		};
+		
+				
+		view.getViewSite().getActionBars().getToolBarManager().add(setVisibleColumns);
 		view.getViewSite().getActionBars().getToolBarManager().add(setTimeUnit);
 		view.getViewSite().getActionBars().getToolBarManager().add(new Separator());
 
@@ -126,9 +167,8 @@ public abstract class AbstractStatisticsTreeViewer extends AbstractTmfTreeViewer
 		@Override
 		public void run() {				
 			if (isChecked()) {
-
-				FORMATTER.setFixedUnit(fTimeUnit);
-				FORMATTER.setIncludeUnits(fTimeUnit.equals(TimeFormatter.DYNAMIC));
+				getTimeFormatter().setFixedUnit(fTimeUnit);
+				getTimeFormatter().setIncludeUnits(fTimeUnit.equals(TimeFormatter.DYNAMIC));
 				getTreeViewer().refresh();
 
 				String postfix = fTimeUnit.equals(TimeFormatter.DYNAMIC) ? "" 
@@ -144,161 +184,67 @@ public abstract class AbstractStatisticsTreeViewer extends AbstractTmfTreeViewer
 		}
 
 	}
+	
+	
+	private class ShowColumnAction extends Action {
 
-	private ITmfTreeColumnDataProvider fColumnDataProvider;
+		private TmfTreeColumnData2 fColumn;
+
+		public ShowColumnAction(TmfTreeColumnData2 column) {
+			this(column, true);
+		}
+
+		public ShowColumnAction(TmfTreeColumnData2 column, boolean checked) {
+			fColumn = column;
+			setChecked(checked);
+		}
+
+		@Override
+		public String getText() {
+			return fColumn.getText();
+		}
+
+		@Override
+		public int getStyle() {
+			return Action.AS_CHECK_BOX;
+		}
+
+		@Override
+		public void run() {				
+			fColumn.setVisible(isChecked());
+			
+			Object[] elements = getTreeViewer().getExpandedElements(); 
+			TreePath[] treePaths = getTreeViewer().getExpandedTreePaths(); 
+			getTreeViewer().getTree().setRedraw(false);
+			for (TreeColumn c : getTreeViewer().getTree().getColumns()) {
+				c.dispose();
+			}
+			setTreeColumns(getColumnDataProvider().getColumnData());
+			setLabelProvider(new GraphTreeLabelProviderWithTooltips());
+			getTreeViewer().getTree().setRedraw(true);
+			getTreeViewer().refresh();
+			getTreeViewer().setExpandedElements(elements); 
+			getTreeViewer().setExpandedTreePaths(treePaths); 
+			for (TreeColumn c : getTreeViewer().getTree().getColumns()) {
+				c.pack();
+			}
+		}
+
+	}
 
 	@Override
-	protected ITmfTreeColumnDataProvider getColumnDataProvider() {
-
+	protected AbstractStatisticsTreeColumnDataProvider getColumnDataProvider() {
 		if (fColumnDataProvider == null) {
-			fColumnDataProvider = new ITmfTreeColumnDataProvider() {
-
-				@Override
-				public List<TmfTreeColumnData> getColumnData() {
-					List<TmfTreeColumnData> columns = new ArrayList<>();
-					TmfTreeColumnData column;
-
-					column = new TmfTreeColumnData("Level");		                
-					column.setWidth(250);
-					column.setComparator(new ViewerComparator() {
-						@Override
-						public int compare(Viewer viewer, Object e1, Object e2) {
-							if (e1 instanceof ThreadEntry && e2 instanceof ThreadEntry) {
-								return (int) (((ThreadEntry) e1).getThreadNode().getId() - ((ThreadEntry) e2).getThreadNode().getId());
-							}
-							else if (e1 instanceof AggregatedCalledFunctionEntry && e2 instanceof AggregatedCalledFunctionEntry) {
-								return ((AggregatedCalledFunctionEntry) e1).getName().compareTo(((AggregatedCalledFunctionEntry) e2).getName());
-							}
-							return 0;
-						}		                 
-					});		                
-					columns.add(column);
-
-					column = new TmfTreeColumnData("Total time");
-					column.setComparator(new ViewerComparator() {
-						@Override
-						public int compare(Viewer viewer, Object e1, Object e2) {
-							if (e1 instanceof AggregatedCalledFunctionEntry && e2 instanceof AggregatedCalledFunctionEntry) {
-								if (((AggregatedCalledFunctionEntry) e1).getFunction().getDuration() < ((AggregatedCalledFunctionEntry) e2).getFunction().getDuration()) {
-									return -1;
-								}
-								else return 1;
-							}
-							return 0;
-						}		                 
-					});
-					column.setTooltip("Total time spent, including time spent in sub-regions");
-					columns.add(column);
-
-					column = new TmfTreeColumnData("Self time");
-					column.setComparator(new ViewerComparator() {
-						@Override
-						public int compare(Viewer viewer, Object e1, Object e2) {
-							if (e1 instanceof AggregatedCalledFunctionEntry && e2 instanceof AggregatedCalledFunctionEntry) {
-								if (((AggregatedCalledFunctionEntry) e1).getFunction().getSelfTime() < ((AggregatedCalledFunctionEntry) e2).getFunction().getSelfTime()) {
-									return -1;
-								}
-								else return 1;
-							}
-							return 0;
-						}		                 
-					});
-					column.setTooltip("Total time spent, exclusive of time spent in sub-regions");
-					columns.add(column);
-
-					column = new TmfTreeColumnData("Count");
-					column.setComparator(new ViewerComparator() {
-						@Override
-						public int compare(Viewer viewer, Object e1, Object e2) {
-							if (e1 instanceof AggregatedCalledFunctionEntry && e2 instanceof AggregatedCalledFunctionEntry) {
-								if (((AggregatedCalledFunctionEntry) e1).getFunction().getNbCalls() < ((AggregatedCalledFunctionEntry) e2).getFunction().getNbCalls()) {
-									return -1;
-								}
-								else return 1;
-							}
-							return 0;
-						}		                 
-					});
-					column.setTooltip("Number of times called");
-					columns.add(column);
-
-					column = new TmfTreeColumnData("Mean");
-					column.setComparator(new ViewerComparator() {
-						@Override
-						public int compare(Viewer viewer, Object e1, Object e2) {
-							if (e1 instanceof AggregatedCalledFunctionEntry && e2 instanceof AggregatedCalledFunctionEntry) {
-								AggregatedCalledFunctionStatistics stats1 = ((AggregatedCalledFunctionEntry) e1).getFunction().getFunctionStatistics();
-								AggregatedCalledFunctionStatistics stats2 = ((AggregatedCalledFunctionEntry) e2).getFunction().getFunctionStatistics();
-								if (stats1.getDurationStatistics().getMean() < stats2.getDurationStatistics().getMean()) {
-									return -1;
-								}
-								else return 1;
-							}
-							return 0;
-						}		                 
-					});
-					column.setTooltip("The average time per execution, inclusive of all sub-regions");
-					columns.add(column);
-
-					column = new TmfTreeColumnData("Min");
-					column.setComparator(new ViewerComparator() {
-						@Override
-						public int compare(Viewer viewer, Object e1, Object e2) {
-							if (e1 instanceof AggregatedCalledFunctionEntry && e2 instanceof AggregatedCalledFunctionEntry) {
-								AggregatedCalledFunctionStatistics stats1 = ((AggregatedCalledFunctionEntry) e1).getFunction().getFunctionStatistics();
-								AggregatedCalledFunctionStatistics stats2 = ((AggregatedCalledFunctionEntry) e2).getFunction().getFunctionStatistics();
-								if (stats1.getDurationStatistics().getMin() < stats2.getDurationStatistics().getMin()) {
-									return -1;
-								}
-								else return 1;
-							}
-							return 0;
-						}		                 
-					});
-					column.setTooltip("The minimum execution time among all calls, inclusive of all sub-regions");
-					columns.add(column);
-
-					column = new TmfTreeColumnData("Max");
-					column.setComparator(new ViewerComparator() {
-						@Override
-						public int compare(Viewer viewer, Object e1, Object e2) {
-							if (e1 instanceof AggregatedCalledFunctionEntry && e2 instanceof AggregatedCalledFunctionEntry) {
-								AggregatedCalledFunctionStatistics stats1 = ((AggregatedCalledFunctionEntry) e1).getFunction().getFunctionStatistics();
-								AggregatedCalledFunctionStatistics stats2 = ((AggregatedCalledFunctionEntry) e2).getFunction().getFunctionStatistics();
-								if (stats1.getDurationStatistics().getMax() < stats2.getDurationStatistics().getMax()) {
-									return -1;
-								}
-								else return 1;
-							}
-							return 0;
-						}		                 
-					});
-					column.setTooltip("The maximum execution time among all calls, inclusive of all sub-regions");
-					columns.add(column);
-
-					column = new TmfTreeColumnData("Std Dev");
-					column.setComparator(new ViewerComparator() {
-						@Override
-						public int compare(Viewer viewer, Object e1, Object e2) {
-							if (e1 instanceof AggregatedCalledFunctionEntry && e2 instanceof AggregatedCalledFunctionEntry) {
-								AggregatedCalledFunctionStatistics stats1 = ((AggregatedCalledFunctionEntry) e1).getFunction().getFunctionStatistics();
-								AggregatedCalledFunctionStatistics stats2 = ((AggregatedCalledFunctionEntry) e2).getFunction().getFunctionStatistics();
-								if (stats1.getDurationStatistics().getStdDev() < stats2.getDurationStatistics().getStdDev()) {
-									return -1;
-								}
-								else return 1;
-							}
-							return 0;
-						}		                 
-					});
-					column.setTooltip("The standard deviation among all calls, inclusive of all sub-regions");
-					columns.add(column);
-
-					return columns;
-				}
-			};
+			fColumnDataProvider = new AbstractStatisticsTreeColumnDataProvider(getTimeFormatter());
 		}
 		return fColumnDataProvider;	        
+	}
+	
+	protected TimeFormatter getTimeFormatter() {
+		if (fTimeFormatter == null) {
+			fTimeFormatter = new TimeFormatter();
+		}
+		return fTimeFormatter;
 	}
 
 
@@ -357,8 +303,11 @@ public abstract class AbstractStatisticsTreeViewer extends AbstractTmfTreeViewer
 		}
 		
 				
-		
 		public String getColumnText(Object element, int columnIndex) {
+			return getColumnDataProvider().getColumnText(element, columnIndex);
+		}
+		
+		public String getColumnTextOLD(Object element, int columnIndex) {
 			if (element instanceof GlobalEntry) {
 				GlobalEntry global = (GlobalEntry) element;
 				if (columnIndex == 0) {
@@ -380,33 +329,39 @@ public abstract class AbstractStatisticsTreeViewer extends AbstractTmfTreeViewer
 			else if (element instanceof AggregatedCalledFunctionEntry) {
 				AggregatedCalledFunctionEntry func = (AggregatedCalledFunctionEntry) element;
 				if (columnIndex == 0) {
-					//if (func.getFunction().isForcedToComplete()) {
-					//	return func.getName() + "***";
-					//}
-					//else {
-						return func.getName();
-					//}
+					return func.getName();
 				}
 				else if (columnIndex == 1) {
-					return String.valueOf(FORMATTER.format(func.getFunction().getDuration()));
+					return String.valueOf(fTimeFormatter.format(func.getFunction().getDuration()));
 				}
 				else if (columnIndex == 2) {
-					return String.valueOf(FORMATTER.format(func.getFunction().getSelfTime()));
+					return String.valueOf(fTimeFormatter.format(func.getFunction().getSelfTime())); // + " (" + 
+										 // FORMATTER.format(func.getFunction().getFunctionStatistics().getSelfTimeStatistics().getTotal()) + ")");
+				
+					//TODO:  self time statistics are not right!!!
+				
 				}
 				else if (columnIndex == 3) {
 					return String.valueOf(func.getFunction().getNbCalls());	            		
 				}
 				else if (columnIndex == 4) {
-					return String.valueOf(FORMATTER.format(func.getFunction().getFunctionStatistics().getDurationStatistics().getMean()));
+					//return String.valueOf(FORMATTER.format(func.getFunction().getFunctionStatistics().getDurationStatistics().getMean()));
+					return fTimeFormatter.format(func.getFunction().getFunctionStatistics().getDurationStatistics().getMean()) + " (" + 
+						   fTimeFormatter.format(func.getFunction().getFunctionStatistics().getSelfTimeStatistics().getMean()) + ")";
+
 				}
+				
 				else if (columnIndex == 5) {
-					return String.valueOf(FORMATTER.format(func.getFunction().getFunctionStatistics().getDurationStatistics().getMin()));
+					return String.valueOf(fTimeFormatter.format(func.getFunction().getFunctionStatistics().getDurationStatistics().getMin()));
 				}
 				else if (columnIndex == 6) {
-					return String.valueOf(FORMATTER.format(func.getFunction().getFunctionStatistics().getDurationStatistics().getMax()));
+					return String.valueOf(fTimeFormatter.format(func.getFunction().getFunctionStatistics().getDurationStatistics().getMax()));
 				}
 				else if (columnIndex == 7) {
-					return String.valueOf(FORMATTER.format(func.getFunction().getFunctionStatistics().getDurationStatistics().getStdDev()));
+					return String.valueOf(fTimeFormatter.format(func.getFunction().getFunctionStatistics().getDurationStatistics().getStdDev()));
+				}
+				else if (columnIndex == 8) {
+					return String.valueOf(fTimeFormatter.format(func.getFunction().getFunctionStatistics().getSubregionStatistics("mpi").getTotal()));
 				}
 			}
 			else if (element instanceof AggregatedFunctionStatisticsRoot) {
@@ -423,25 +378,25 @@ public abstract class AbstractStatisticsTreeViewer extends AbstractTmfTreeViewer
 					return stats.getName();
 				}
 				else if (columnIndex == 1) {
-					return String.valueOf(FORMATTER.format(stats.getStats().getDurationStatistics().getTotal()));
+					return String.valueOf(fTimeFormatter.format(stats.getStats().getDurationStatistics().getTotal()));
 				}
 				else if (columnIndex == 2) {
-					return String.valueOf(FORMATTER.format(stats.getStats().getSelfTimeStatistics().getTotal()));
+					return String.valueOf(fTimeFormatter.format(stats.getStats().getSelfTimeStatistics().getTotal()));
 				}
 				else if (columnIndex == 3) {
 					return String.valueOf(stats.getStats().getDurationStatistics().getNbElements());	            		
 				}
 				else if (columnIndex == 4) {
-					return String.valueOf(FORMATTER.format(stats.getStats().getDurationStatistics().getMean()));
+					return String.valueOf(fTimeFormatter.format(stats.getStats().getDurationStatistics().getMean()));
 				}
 				else if (columnIndex == 5) {
-					return String.valueOf(FORMATTER.format(stats.getStats().getDurationStatistics().getMin()));
+					return String.valueOf(fTimeFormatter.format(stats.getStats().getDurationStatistics().getMin()));
 				}
 				else if (columnIndex == 6) {
-					return String.valueOf(FORMATTER.format(stats.getStats().getDurationStatistics().getMax()));
+					return String.valueOf(fTimeFormatter.format(stats.getStats().getDurationStatistics().getMax()));
 				}
 				else if (columnIndex == 7) {
-					return String.valueOf(FORMATTER.format(stats.getStats().getDurationStatistics().getStdDev()));
+					return String.valueOf(fTimeFormatter.format(stats.getStats().getDurationStatistics().getStdDev()));
 				}
 
 			}
@@ -450,6 +405,7 @@ public abstract class AbstractStatisticsTreeViewer extends AbstractTmfTreeViewer
 		
 	}
 	
+	/*
 	protected class GraphTreeLabelProvider extends TreeLabelProvider {
 
 		@Override
@@ -494,25 +450,25 @@ public abstract class AbstractStatisticsTreeViewer extends AbstractTmfTreeViewer
 					}
 				}
 				else if (columnIndex == 1) {
-					return String.valueOf(FORMATTER.format(func.getFunction().getDuration()));
+					return String.valueOf(fTimeFormatter.format(func.getFunction().getDuration()));
 				}
 				else if (columnIndex == 2) {
-					return String.valueOf(FORMATTER.format(func.getFunction().getSelfTime()));
+					return String.valueOf(fTimeFormatter.format(func.getFunction().getSelfTime()));
 				}
 				else if (columnIndex == 3) {
 					return String.valueOf(func.getFunction().getNbCalls());	            		
 				}
 				else if (columnIndex == 4) {
-					return String.valueOf(FORMATTER.format(func.getFunction().getFunctionStatistics().getDurationStatistics().getMean()));
+					return String.valueOf(fTimeFormatter.format(func.getFunction().getFunctionStatistics().getDurationStatistics().getMean()));
 				}
 				else if (columnIndex == 5) {
-					return String.valueOf(FORMATTER.format(func.getFunction().getFunctionStatistics().getDurationStatistics().getMin()));
+					return String.valueOf(fTimeFormatter.format(func.getFunction().getFunctionStatistics().getDurationStatistics().getMin()));
 				}
 				else if (columnIndex == 6) {
-					return String.valueOf(FORMATTER.format(func.getFunction().getFunctionStatistics().getDurationStatistics().getMax()));
+					return String.valueOf(fTimeFormatter.format(func.getFunction().getFunctionStatistics().getDurationStatistics().getMax()));
 				}
 				else if (columnIndex == 7) {
-					return String.valueOf(FORMATTER.format(func.getFunction().getFunctionStatistics().getDurationStatistics().getStdDev()));
+					return String.valueOf(fTimeFormatter.format(func.getFunction().getFunctionStatistics().getDurationStatistics().getStdDev()));
 				}
 			}
 			else if (element instanceof AggregatedFunctionStatisticsRoot) {
@@ -529,38 +485,32 @@ public abstract class AbstractStatisticsTreeViewer extends AbstractTmfTreeViewer
 					return stats.getName();
 				}
 				else if (columnIndex == 1) {
-					return String.valueOf(FORMATTER.format(stats.getStats().getDurationStatistics().getTotal()));
+					return String.valueOf(fTimeFormatter.format(stats.getStats().getDurationStatistics().getTotal()));
 				}
 				else if (columnIndex == 2) {
-					return String.valueOf(FORMATTER.format(stats.getStats().getSelfTimeStatistics().getTotal()));
+					return String.valueOf(fTimeFormatter.format(stats.getStats().getSelfTimeStatistics().getTotal()));
 				}
 				else if (columnIndex == 3) {
 					return String.valueOf(stats.getStats().getDurationStatistics().getNbElements());	            		
 				}
 				else if (columnIndex == 4) {
-					return String.valueOf(FORMATTER.format(stats.getStats().getDurationStatistics().getMean()));
+					return String.valueOf(fTimeFormatter.format(stats.getStats().getDurationStatistics().getMean()));
 				}
 				else if (columnIndex == 5) {
-					return String.valueOf(FORMATTER.format(stats.getStats().getDurationStatistics().getMin()));
+					return String.valueOf(fTimeFormatter.format(stats.getStats().getDurationStatistics().getMin()));
 				}
 				else if (columnIndex == 6) {
-					return String.valueOf(FORMATTER.format(stats.getStats().getDurationStatistics().getMax()));
+					return String.valueOf(fTimeFormatter.format(stats.getStats().getDurationStatistics().getMax()));
 				}
 				else if (columnIndex == 7) {
-					return String.valueOf(FORMATTER.format(stats.getStats().getDurationStatistics().getStdDev()));
+					return String.valueOf(fTimeFormatter.format(stats.getStats().getDurationStatistics().getStdDev()));
 				}
 
 			}
 			return super.getColumnText(element, columnIndex);
 		}
 
-		/*
-        @Override
-        public Color getBackground(Object element, int columnIndex) {
-            return super.getBackground(element, columnIndex);
-        }
-		 */
-
+		
 		private FontRegistry fFontRegistry = new FontRegistry();
 
 		@Override
@@ -585,5 +535,5 @@ public abstract class AbstractStatisticsTreeViewer extends AbstractTmfTreeViewer
 		}
 
 	}
-
+	*/
 }

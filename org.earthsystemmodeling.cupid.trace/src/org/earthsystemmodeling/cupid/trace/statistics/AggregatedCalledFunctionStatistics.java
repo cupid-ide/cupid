@@ -10,6 +10,9 @@
 package org.earthsystemmodeling.cupid.trace.statistics;
 
 import java.io.Serializable;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Map.Entry;
 
 
 /**
@@ -31,13 +34,24 @@ public class AggregatedCalledFunctionStatistics implements Serializable {
     // Self time statistics are on aggregated called function because self times
     // are known only at the end, once the aggregation is over
     private final IStatistics<ICalledFunction> fSelfTimes;
+    
+    private final Map<String, IStatistics<ICalledFunction>> fSubregionTimes;
 
     /**
      * Constructor
      */
     public AggregatedCalledFunctionStatistics() {
-        fDurations = new Statistics<>(f -> f.getLength());
+        this(new String[0]);
+    }
+    
+    public AggregatedCalledFunctionStatistics(String... subregions) {
+    	fDurations = new Statistics<>(f -> f.getLength());
         fSelfTimes = new Statistics<>(f -> f.getSelfTime());
+        fSubregionTimes = new HashMap<String, IStatistics<ICalledFunction>>();
+        for (int i=0; i<subregions.length; i++) {
+        	final int ii = i;
+        	fSubregionTimes.put(subregions[i], new Statistics<ICalledFunction>(f -> f.getSubregionTime(subregions[ii])));
+        }
     }
 
     /**
@@ -52,6 +66,9 @@ public class AggregatedCalledFunctionStatistics implements Serializable {
     public void update(ICalledFunction function) {
         fDurations.update(function);
         fSelfTimes.update(function);
+        for (IStatistics<ICalledFunction> s : fSubregionTimes.values()) {
+        	s.update(function);
+        }
     }
 
     /**
@@ -64,6 +81,13 @@ public class AggregatedCalledFunctionStatistics implements Serializable {
     public void merge(AggregatedCalledFunctionStatistics statisticsNode) {
         fDurations.merge(statisticsNode.fDurations);
         fSelfTimes.merge(statisticsNode.fSelfTimes);
+        for (Entry<String, IStatistics<ICalledFunction>> e : fSubregionTimes.entrySet()) {
+        	String subregion = e.getKey();
+        	//only merge if other node contains subregion
+        	if (statisticsNode.fSubregionTimes.containsKey(subregion)) {        		
+        		e.getValue().merge(statisticsNode.fSubregionTimes.get(subregion));
+        	}
+        }
     }
 
     /**
@@ -82,6 +106,10 @@ public class AggregatedCalledFunctionStatistics implements Serializable {
      */
     public IStatistics<ICalledFunction> getSelfTimeStatistics() {
         return fSelfTimes;
+    }
+    
+    public IStatistics<ICalledFunction> getSubregionStatistics(String subregion) {
+    	return fSubregionTimes.getOrDefault(subregion, new Statistics<>());
     }
 
     @Override

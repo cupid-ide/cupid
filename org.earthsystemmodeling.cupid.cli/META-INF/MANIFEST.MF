@@ -2,7 +2,7 @@ Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
 Bundle-Name: Cupid Command Line Interface
 Bundle-SymbolicName: org.earthsystemmodeling.cupid.cli;singleton:=true
-Bundle-Version: 1.1.0.qualifier
+Bundle-Version: 2.1.0.qualifier
 Bundle-RequiredExecutionEnvironment: JavaSE-1.8
 Require-Bundle: org.eclipse.equinox.app,
  org.eclipse.core.resources;bundle-version="3.11.0",
@@ -12,6 +12,7 @@ Require-Bundle: org.eclipse.equinox.app,
  org.earthsystemmodeling.cupid.nuopcmodel;bundle-version="1.1.0",
  org.eclipse.core.jobs,
  org.eclipse.photran.core.vpg;bundle-version="9.0.0",
- org.eclipse.cdt.core
+ org.eclipse.cdt.core,
+ com.google.guava
 Bundle-ClassPath: lib/yamlbeans-1.11.jar,
  .

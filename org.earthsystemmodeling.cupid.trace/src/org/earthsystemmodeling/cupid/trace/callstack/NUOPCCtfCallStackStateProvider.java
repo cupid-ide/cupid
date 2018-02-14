@@ -18,8 +18,12 @@ import org.eclipse.core.runtime.SubMonitor;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.tracecompass.statesystem.core.ITmfStateSystemBuilder;
+import org.eclipse.tracecompass.statesystem.core.exceptions.AttributeNotFoundException;
+import org.eclipse.tracecompass.statesystem.core.exceptions.StateValueTypeException;
+import org.eclipse.tracecompass.statesystem.core.exceptions.TimeRangeException;
 import org.eclipse.tracecompass.statesystem.core.statevalue.ITmfStateValue;
 import org.eclipse.tracecompass.statesystem.core.statevalue.TmfStateValue;
+import org.eclipse.tracecompass.statesystem.core.statevalue.ITmfStateValue.Type;
 import org.eclipse.tracecompass.tmf.core.callstack.CallStackStateProvider;
 import org.eclipse.tracecompass.tmf.core.event.ITmfEvent;
 import org.eclipse.tracecompass.tmf.core.event.ITmfEventField;
@@ -140,7 +144,6 @@ public abstract class NUOPCCtfCallStackStateProvider extends CallStackStateProvi
 			ss.pushAttribute(timestamp, value, callStackQuark);
 			
 			if (fDoCallGraph) {
-				//long start = System.currentTimeMillis();
 				Deque<AbstractCalledFunction> threadCallStack = fThreadCallStacks.get(threadId);
 				Deque<AggregatedCalledFunction> threadAggStack = fThreadAggStacks.get(threadId);
 				if (threadCallStack == null) {
@@ -163,8 +166,6 @@ public abstract class NUOPCCtfCallStackStateProvider extends CallStackStateProvi
 	            
 	            AggregatedCalledFunction aggFunction = new AggregatedCalledFunction(calledFunction, threadAggStack.peek());
 	            threadAggStack.push(aggFunction);
-	            //long end = System.currentTimeMillis();
-	            //fTimer += (end-start);
 			}
 
 			//add component kind
@@ -176,6 +177,38 @@ public abstract class NUOPCCtfCallStackStateProvider extends CallStackStateProvi
 			}
 			ss.pushAttribute(timestamp, toPush, compkindQuark);
 
+			//add io stats
+			int quark = ss.getQuarkRelativeAndAdd(threadQuark, "ioread", "totalBytes");
+			toPush = TmfStateValue.newValueLong(0);
+			ss.pushAttribute(timestamp, toPush, quark);
+			
+			quark = ss.getQuarkRelativeAndAdd(threadQuark, "ioread", "totalTime");
+			toPush = TmfStateValue.newValueLong(0);
+			ss.pushAttribute(timestamp, toPush, quark);
+			
+			quark = ss.getQuarkRelativeAndAdd(threadQuark, "iowrite", "totalBytes");
+			toPush = TmfStateValue.newValueLong(0);
+			ss.pushAttribute(timestamp, toPush, quark);
+			
+			quark = ss.getQuarkRelativeAndAdd(threadQuark, "iowrite", "totalTime");
+			toPush = TmfStateValue.newValueLong(0);
+			ss.pushAttribute(timestamp, toPush, quark);
+			
+			//add mpi stats
+			quark = ss.getQuarkRelativeAndAdd(threadQuark, "mpibarrier", "count");
+			toPush = TmfStateValue.newValueLong(0);
+			ss.pushAttribute(timestamp, toPush, quark);
+			quark = ss.getQuarkRelativeAndAdd(threadQuark, "mpibarrier", "time");
+			toPush = TmfStateValue.newValueLong(0);
+			ss.pushAttribute(timestamp, toPush, quark);
+			quark = ss.getQuarkRelativeAndAdd(threadQuark, "mpiwait", "count");
+			toPush = TmfStateValue.newValueLong(0);
+			ss.pushAttribute(timestamp, toPush, quark);
+			quark = ss.getQuarkRelativeAndAdd(threadQuark, "mpiwait", "time");
+			toPush = TmfStateValue.newValueLong(0);
+			ss.pushAttribute(timestamp, toPush, quark);
+						
+			
 			return;
 		}
 
@@ -191,28 +224,50 @@ public abstract class NUOPCCtfCallStackStateProvider extends CallStackStateProvi
 			long threadId = getThreadId(event);
 			String threadName = Long.toString(threadId);
 			
-			int quarkCallStack = ss.getQuarkAbsoluteAndAdd(PROCESSES, processName, threadName, CALL_STACK);
-			int quarkCompKind = ss.getQuarkAbsoluteAndAdd(PROCESSES, processName, threadName, "compkind");
-			
+			int quarkThread = ss.getQuarkAbsoluteAndAdd(PROCESSES, processName, threadName);
+			int quarkCallStack = ss.getQuarkRelativeAndAdd(quarkThread, CALL_STACK);
+			int quarkCompKind = ss.getQuarkRelativeAndAdd(quarkThread, "compkind");
+						
 			ITmfStateValue poppedValue = ss.popAttribute(timestamp, quarkCallStack);
 			ss.popAttribute(timestamp, quarkCompKind);
 			
+			//TODO: abstract this
+			int quark = ss.getQuarkRelativeAndAdd(quarkThread, "ioread", "totalBytes");
+			ss.popAttribute(timestamp, quark);
+			quark = ss.getQuarkRelativeAndAdd(quarkThread, "ioread", "totalTime");
+			ss.popAttribute(timestamp, quark);
+			quark = ss.getQuarkRelativeAndAdd(quarkThread, "iowrite", "totalBytes");
+			ss.popAttribute(timestamp, quark);
+			quark = ss.getQuarkRelativeAndAdd(quarkThread, "iowrite", "totalTime");
+			ss.popAttribute(timestamp, quark);
+			
+			//mpi
+			long totalTimeMPI = 0;
+			quark = ss.getQuarkRelativeAndAdd(quarkThread, "mpibarrier", "count");
+			ss.popAttribute(timestamp, quark);
+			
+			quark = ss.getQuarkRelativeAndAdd(quarkThread, "mpibarrier", "time");
+			totalTimeMPI += ss.popAttribute(timestamp, quark).unboxLong();
+			
+			quark = ss.getQuarkRelativeAndAdd(quarkThread, "mpiwait", "count");
+			ss.popAttribute(timestamp, quark);
+			
+			quark = ss.getQuarkRelativeAndAdd(quarkThread, "mpiwait", "time");
+			totalTimeMPI += ss.popAttribute(timestamp, quark).unboxLong();
+			
+			
 			AbstractCalledFunction calledFunction = null;
 			if (fDoCallGraph) {
-				//long start = System.currentTimeMillis();
 				calledFunction = fThreadCallStacks.get(threadId).pop();
 				calledFunction.complete(timestamp);
+				calledFunction.addToSubregionTime("mpi", totalTimeMPI);
+				
 				AggregatedCalledFunction aggFunction = fThreadAggStacks.get(threadId).pop();
 				aggFunction.complete(calledFunction);
 				if (!calledFunction.getSymbol().equals(aggFunction.getSymbol())) {
 					throw new IllegalStateException("Error computing statistics: called and aggregate functions do not match");
 				}
 				fThreadAggStacks.get(threadId).peek().addChild(calledFunction, aggFunction);
-				//long end = System.currentTimeMillis();
-				//fTimer += (end-start);
-				//if (fEventCount % 100000 == 0) {
-				//	System.out.println("Time so far (s): " + fTimer / 1000);
-				//}
 			}
 			
 			/*
@@ -226,18 +281,33 @@ public abstract class NUOPCCtfCallStackStateProvider extends CallStackStateProvi
 				poppedValue = ss.popAttribute(timestamp, quarkCallStack);
 				ss.popAttribute(timestamp, quarkCompKind);
 				
-				/*
-				List<Integer> subAttributes = ss.getSubAttributes(quark, true);
-				for (int q : subAttributes) {
-					String fp = ss.getFullAttributePath(q);
-					String val = ss.queryOngoingState(q).unboxStr();
-					System.out.println(fp + " ==> " + val);
-				}
-				*/
+				quark = ss.getQuarkRelativeAndAdd(quarkThread, "ioread", "totalBytes");
+				ss.popAttribute(timestamp, quark);
+				quark = ss.getQuarkRelativeAndAdd(quarkThread, "ioread", "totalTime");
+				ss.popAttribute(timestamp, quark);
+				quark = ss.getQuarkRelativeAndAdd(quarkThread, "iowrite", "totalBytes");
+				ss.popAttribute(timestamp, quark);
+				quark = ss.getQuarkRelativeAndAdd(quarkThread, "iowrite", "totalTime");
+				ss.popAttribute(timestamp, quark);
 				
+				totalTimeMPI = 0;
+				quark = ss.getQuarkRelativeAndAdd(quarkThread, "mpibarrier", "count");
+				ss.popAttribute(timestamp, quark);
+				
+				quark = ss.getQuarkRelativeAndAdd(quarkThread, "mpibarrier", "time");
+				totalTimeMPI += ss.popAttribute(timestamp, quark).unboxLong();
+				
+				quark = ss.getQuarkRelativeAndAdd(quarkThread, "mpiwait", "count");
+				ss.popAttribute(timestamp, quark);
+				
+				quark = ss.getQuarkRelativeAndAdd(quarkThread, "mpiwait", "time");
+				totalTimeMPI += ss.popAttribute(timestamp, quark).unboxLong();
+								
 				if (fDoCallGraph) {
 					calledFunction = fThreadCallStacks.get(threadId).pop();
 					calledFunction.complete(timestamp);
+					calledFunction.addToSubregionTime("mpi", totalTimeMPI);
+					
 					AggregatedCalledFunction aggFunction = fThreadAggStacks.get(threadId).pop();
 					aggFunction.complete(calledFunction);
 					if (!calledFunction.getSymbol().equals(aggFunction.getSymbol())) {
@@ -351,7 +421,10 @@ public abstract class NUOPCCtfCallStackStateProvider extends CallStackStateProvi
 	public static final String EN_REGIONID_ENTER = "regionid_enter";
 	public static final String EN_REGIONID_EXIT = "regionid_exit";
 	public static final String EN_CLOCK = "clk";
-	
+	public static final String EN_IOREAD = "ioread";
+	public static final String EN_IOWRITE = "iowrite";
+	public static final String EN_MPIBARRIER = "mpibarrier";
+	public static final String EN_MPIWAIT = "mpiwait";
 	
 
 	public static class Version0P3toP4 extends NUOPCCtfCallStackStateProvider {
@@ -522,26 +595,69 @@ public abstract class NUOPCCtfCallStackStateProvider extends CallStackStateProvi
 				//ss.updateOngoingState(TmfStateValue.newValueString(timeStr), quark);
 
 			}
+			else if (type.getName().equals(EN_IOREAD) || type.getName().equals(EN_IOWRITE)) {
+				
+				String processName = getProcessName(event);
+				if (processName == null) {
+					int processId = getProcessId(event);
+					processName = (processId == UNKNOWN_PID) ? UNKNOWN : Integer.toString(processId);
+				}
+				String threadName = getThreadName(event);
+				if (threadName == null) {
+					threadName = Long.toString(getThreadId(event));
+				}
+				
+				long totalBytes = event.getContent().getFieldValue(Long.class, "bytes");
+				long totalTime = event.getContent().getFieldValue(Long.class, "time");
+				
+				String quarkName = "ioread";
+				if (type.getName().equals(EN_IOWRITE)) {
+					quarkName = "iowrite";
+				}
+				
+				int quark = ss.getQuarkAbsoluteAndAdd(PROCESSES, processName, threadName, quarkName, "totalBytes");
+				peekModifyAttribute(quark, TmfStateValue.newValueLong(totalBytes));	
+				
+				quark = ss.getQuarkAbsoluteAndAdd(PROCESSES, processName, threadName, quarkName, "totalTime");
+				peekModifyAttribute(quark, TmfStateValue.newValueLong(totalTime));
+				
+			}
+			else if (type.getName().equals(EN_MPIBARRIER) || type.getName().equals(EN_MPIWAIT)) {
+				
+				String processName = getProcessName(event);
+				if (processName == null) {
+					int processId = getProcessId(event);
+					processName = (processId == UNKNOWN_PID) ? UNKNOWN : Integer.toString(processId);
+				}
+				String threadName = getThreadName(event);
+				if (threadName == null) {
+					threadName = Long.toString(getThreadId(event));
+				}
+				
+				long count = event.getContent().getFieldValue(Long.class, "count");
+				long time = event.getContent().getFieldValue(Long.class, "time");
+				
+				String quarkName = "mpiwait";
+				if (type.getName().equals(EN_MPIBARRIER)) {
+					quarkName = "mpibarrier";
+				}
+				
+				int quark = ss.getQuarkAbsoluteAndAdd(PROCESSES, processName, threadName, quarkName, "count");
+				peekModifyAttribute(quark, TmfStateValue.newValueLong(count));	
+				
+				quark = ss.getQuarkAbsoluteAndAdd(PROCESSES, processName, threadName, quarkName, "time");
+				peekModifyAttribute(quark, TmfStateValue.newValueLong(time));
+				
+			}
 			else {
 				super.internalEventHandle(event);
 			}
 
 		}
-
-		//public static final boolean IGNORE_REGIONS = true;
-		
+	
 		@Override
 		protected boolean considerEvent(ITmfEvent event) {
 			String typeName = event.getType().getName();
-			
-			/*
-			if (IGNORE_REGIONS) {
-				if (ET_REGION_ENTER.equals(type) ||
-				    ET_REGION_EXIT.equals(type)) {
-				    	return false;
-				}
-			}			
-			*/
 			
 			return EN_REGIONID_ENTER.equals(typeName) ||
 					EN_REGIONID_EXIT.equals(typeName) ||
@@ -551,7 +667,11 @@ public abstract class NUOPCCtfCallStackStateProvider extends CallStackStateProvi
 					EN_EPILOGUE_EXIT.equals(typeName) ||
 					EN_PHASE_ENTER.equals(typeName) ||
 					EN_PHASE_EXIT.equals(typeName) ||					
-					EN_CLOCK.equals(typeName);
+					EN_CLOCK.equals(typeName) ||
+					EN_IOREAD.equals(typeName) ||
+					EN_IOWRITE.equals(typeName) ||
+					EN_MPIBARRIER.equals(typeName) ||
+					EN_MPIWAIT.equals(typeName);
 		}
 
 		
@@ -572,19 +692,19 @@ public abstract class NUOPCCtfCallStackStateProvider extends CallStackStateProvi
 			return null;
 		}
 		
-		/*
-		protected ITmfStateValue peekAttribute(int attributeQuark)
+		
+		protected void peekModifyAttribute(int attributeQuark, ITmfStateValue newValue)
 				throws TimeRangeException, StateValueTypeException {
 
 			ITmfStateSystemBuilder ss = getStateSystemBuilder();
-			if (ss == null) return null;
+			if (ss == null) return;
 
 			// These are the state values of the stack-attribute itself 
 			ITmfStateValue previousSV = ss.queryOngoingState(attributeQuark);
 
 			if (previousSV.isNull()) {
 				
-				return null;
+				return;
 			}
 			if (previousSV.getType() != Type.INTEGER) {
 				
@@ -606,10 +726,11 @@ public abstract class NUOPCCtfCallStackStateProvider extends CallStackStateProvi
 				String message = " Stack attribute missing sub-attribute for depth:" + stackDepth; //$NON-NLS-1$
 				throw new IllegalStateException(ss.getSSID() + " Quark:" + attributeQuark + message); //$NON-NLS-1$
 			}
-			ITmfStateValue peekedValue = ss.queryOngoingState(subAttributeQuark);
-			return peekedValue;
+			ss.updateOngoingState(newValue, subAttributeQuark);
+			//ITmfStateValue peekedValue = ss.queryOngoingState(subAttributeQuark);
+			//return peekedValue;
 		}
-		*/
+		
 		
 		
 		@Override
@@ -687,5 +808,7 @@ public abstract class NUOPCCtfCallStackStateProvider extends CallStackStateProvi
 
 
 	}
+	
+	
 
 }

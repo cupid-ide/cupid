@@ -13,7 +13,9 @@ import static org.eclipse.tracecompass.common.core.NonNullUtils.checkNotNull;
 
 import java.util.ArrayList;
 import java.util.Comparator;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Objects;
 
 import org.earthsystemmodeling.cupid.trace.callgraph.SymbolAspect;
@@ -55,6 +57,7 @@ public abstract class AbstractCalledFunction implements ICalledFunction {
     private final @Nullable ICalledFunction fParent;
     protected long fSelfTime = 0;
     private final int fProcessId;
+    private final Map<String, Long> fSubregionMap = new HashMap<>();
     
     //this is true if the original trace was incomplete
     //and the region was forced to complete
@@ -226,6 +229,16 @@ public abstract class AbstractCalledFunction implements ICalledFunction {
             return false;
         }
         return true;
+    }
+    
+    @Override
+    public long getSubregionTime(String subregion) {
+    	return fSubregionMap.getOrDefault(subregion, -1L);
+    }
+    
+    @Override
+    public void addToSubregionTime(String subregion, long time) {
+    	fSubregionMap.put(subregion, time + fSubregionMap.getOrDefault(subregion, 0L));
     }
 
 }

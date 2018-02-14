@@ -73,7 +73,7 @@ public class AggregatedCalledFunction implements Cloneable, Serializable {
         fProcessId = calledFunction.getProcessId();
         fMaxDepth = parent.getMaxDepth();
         fParent = parent;
-        fStatistics = new AggregatedCalledFunctionStatistics();
+        fStatistics = new AggregatedCalledFunctionStatistics("mpi");
         if (calledFunction.isComplete()) {
         	complete(calledFunction);
         }
@@ -93,7 +93,7 @@ public class AggregatedCalledFunction implements Cloneable, Serializable {
         fProcessId = calledFunction.getProcessId();
         fMaxDepth = maxDepth;
         fParent = null;
-        fStatistics = new AggregatedCalledFunctionStatistics();
+        fStatistics = new AggregatedCalledFunctionStatistics("mpi");
         if (calledFunction.isComplete()) {
         	complete(calledFunction);
         }
@@ -114,7 +114,7 @@ public class AggregatedCalledFunction implements Cloneable, Serializable {
         fParent = toCopy.fParent;
         fMaxDepth = toCopy.fMaxDepth;
         fDepth = toCopy.fDepth;
-        fStatistics = new AggregatedCalledFunctionStatistics();
+        fStatistics = new AggregatedCalledFunctionStatistics("mpi");
         fStatistics.merge(toCopy.fStatistics);
         fProcessId = toCopy.fProcessId;
         fDuration = toCopy.fDuration;
@@ -128,7 +128,7 @@ public class AggregatedCalledFunction implements Cloneable, Serializable {
     }
 
     public void saveStatistics(long threadId) {
-    	AggregatedCalledFunctionStatistics copyStats = new AggregatedCalledFunctionStatistics();
+    	AggregatedCalledFunctionStatistics copyStats = new AggregatedCalledFunctionStatistics("mpi");
     	copyStats.merge(fStatistics);
     	fStatisticsMap.put(threadId, copyStats);
     	fChildren.values().forEach(c -> {

@@ -86,6 +86,7 @@
 		</module>
 		<module>../org.earthsystemmodeling.cupid.trace</module>
 		<module>../org.earthsystemmodeling.cupid.trace.test</module>
+		<module>../org.earthsystemmodeling.cupid.cli</module>
 	</modules>
 
 	<repositories>

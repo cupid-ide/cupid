@@ -72,5 +72,9 @@ public interface ICalledFunction extends INamedSegment {
 	void complete(long end);
 
 	boolean isComplete();
+	
+	public long getSubregionTime(String subregion);
+	
+	public void addToSubregionTime(String subregion, long time);
 
 }

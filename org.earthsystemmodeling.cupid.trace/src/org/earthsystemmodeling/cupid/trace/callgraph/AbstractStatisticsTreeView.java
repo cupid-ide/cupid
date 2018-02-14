@@ -228,8 +228,6 @@ public abstract class AbstractStatisticsTreeView extends TmfView {
 				addChild(new AggregatedCalledFunctionEntry(child));
 			}
 		}
-		
-		
 
 		public AggregatedCalledFunction getFunction() {
 			return fFunc;

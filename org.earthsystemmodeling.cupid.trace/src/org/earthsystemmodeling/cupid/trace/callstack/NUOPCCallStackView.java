@@ -1,10 +1,12 @@
 package org.earthsystemmodeling.cupid.trace.callstack;
 
+import java.text.DecimalFormat;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Optional;
 
 import org.earthsystemmodeling.cupid.trace.PETSelectedSignal;
+import org.earthsystemmodeling.cupid.trace.callgraph.TimeFormatter;
 import org.earthsystemmodeling.cupid.trace.state.NUOPCCtfStateSystemAnalysisModule;
 import org.earthsystemmodeling.cupid.trace.timing.NUOPCCtfComponentTimingAnalysis;
 import org.eclipse.jface.action.IToolBarManager;
@@ -193,6 +195,9 @@ public class NUOPCCallStackView extends CallStackView {
 		 */
 
 		
+		static final TimeFormatter fTimeFormatter = new TimeFormatter();
+		static final DecimalFormat fPctFormatter = new DecimalFormat("##.##%");
+		
 		@Override
 		public Map<String, String> getEventHoverToolTipInfo(ITimeEvent event) {
 			
@@ -204,13 +209,74 @@ public class NUOPCCallStackView extends CallStackView {
 				int quarkMe = cse.getQuark();
 				int quarkRef = ss.getParentAttributeQuark(quarkMe);
 				quarkRef = ss.getParentAttributeQuark(quarkRef);
-				quarkRef = ss.getQuarkRelative(quarkRef, "clock");
+				
+				int quarkClock = ss.getQuarkRelative(quarkRef, "clock");
 				//String[] quarkPath = ss.getFullAttributePathArray(quarkRef);
 
-				ITmfStateValue value = ss.querySingleState(event.getTime(), quarkRef).getStateValue();
+				ITmfStateValue value = ss.querySingleState(event.getTime(), quarkClock).getStateValue();
 				if (!value.isNull()) {
 					retMap.put("Model Clock", value.unboxStr());
 				}
+							
+				String stackDepth = ss.getAttributeName(quarkMe);
+				
+				int quarkIO = ss.getQuarkRelative(quarkRef, "ioread", "totalTime", stackDepth);
+				value = ss.querySingleState(event.getTime(), quarkIO).getStateValue();
+				long time = value.unboxLong();
+				double pct = (double) time / event.getDuration();
+				if (time > 0) {
+					retMap.put("Read (time)", fTimeFormatter.format(time) + " (" + fPctFormatter.format(pct) + ")");
+				}
+		
+				quarkIO = ss.getQuarkRelative(quarkRef, "ioread", "totalBytes", stackDepth);
+				value = ss.querySingleState(event.getTime(), quarkIO).getStateValue();
+				if (value.unboxLong() > 0) {
+					retMap.put("Read (bytes)", String.valueOf(value.unboxLong()));
+				}
+				
+				quarkIO = ss.getQuarkRelative(quarkRef, "iowrite", "totalTime", stackDepth);
+				value = ss.querySingleState(event.getTime(), quarkIO).getStateValue();
+				time = value.unboxLong();
+				pct = (double) time / event.getDuration();
+				if (time > 0) {
+					retMap.put("Write (time)", fTimeFormatter.format(time) + " (" + fPctFormatter.format(pct) + ")");
+				}
+				
+				quarkIO = ss.getQuarkRelative(quarkRef, "iowrite", "totalBytes", stackDepth);
+				value = ss.querySingleState(event.getTime(), quarkIO).getStateValue();
+				if (value.unboxLong() > 0) {
+					retMap.put("Write (bytes)", String.valueOf(value.unboxLong()));
+				}
+				
+				int quarkMPI = ss.getQuarkRelative(quarkRef, "mpibarrier", "count", stackDepth);
+				value = ss.querySingleState(event.getTime(), quarkMPI).getStateValue();
+				if (value.unboxLong() > 0) {
+					retMap.put("MPI_Barrier (count)", String.valueOf(value.unboxLong()));
+				}
+				
+				quarkMPI = ss.getQuarkRelative(quarkRef, "mpibarrier", "time", stackDepth);
+				value = ss.querySingleState(event.getTime(), quarkMPI).getStateValue();
+				time = value.unboxLong();
+				pct = (double) time / event.getDuration();
+				if (time > 0) {
+					retMap.put("MPI_Barrier (time)", fTimeFormatter.format(time) + " (" + fPctFormatter.format(pct) + ")");
+				}
+				
+				quarkMPI = ss.getQuarkRelative(quarkRef, "mpiwait", "count", stackDepth);
+				value = ss.querySingleState(event.getTime(), quarkMPI).getStateValue();
+				if (value.unboxLong() > 0) {
+					retMap.put("MPI_Wait (count)", String.valueOf(value.unboxLong()));
+				}
+				
+				quarkMPI = ss.getQuarkRelative(quarkRef, "mpiwait", "time", stackDepth);
+				value = ss.querySingleState(event.getTime(), quarkMPI).getStateValue();
+				time = value.unboxLong();
+				pct = (double) time / event.getDuration();
+				if (time > 0) {
+					retMap.put("MPI_Wait (time)", fTimeFormatter.format(time) + " (" + fPctFormatter.format(pct) + ")");
+				}
+				
+				
 			}
 			catch (AttributeNotFoundException e) {
 				//ignore

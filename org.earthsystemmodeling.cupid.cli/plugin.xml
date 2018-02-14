@@ -13,5 +13,18 @@
          </run>
       </application>
    </extension>
+   <extension
+         id="org.earthsystemmodeling.cupid.cli.AutoInstrument"
+         name="AutoInstrument"
+         point="org.eclipse.core.runtime.applications">
+      <application
+            cardinality="singleton-global"
+            thread="main"
+            visible="true">
+         <run
+               class="org.earthsystemmodeling.cupid.cli.AutoInstrument">
+         </run>
+      </application>
+   </extension>
 
 </plugin>

@@ -22,9 +22,11 @@ import org.jfree.chart.JFreeChart;
 import org.jfree.chart.axis.NumberAxis;
 import org.jfree.chart.plot.PlotOrientation;
 import org.jfree.chart.plot.XYPlot;
+import org.jfree.chart.renderer.xy.StackedXYBarRenderer;
 import org.jfree.chart.renderer.xy.StandardXYBarPainter;
 import org.jfree.chart.renderer.xy.XYBarRenderer;
 import org.jfree.chart.swt.ChartComposite;
+import org.jfree.data.xy.DefaultTableXYDataset;
 import org.jfree.data.xy.XYSeries;
 import org.jfree.data.xy.XYSeriesCollection;
 import org.swtchart.Chart;
@@ -112,6 +114,64 @@ public class NUOPCStatisticsBalanceChartViewer extends TmfViewer {
     	fStatisticName = name;
     }
        
+    
+    private void updateDisplayJFreeMPI(AggregatedCalledFunction func) {
+    	
+    	Comparator<Entry<Long, AggregatedCalledFunctionStatistics>> c = 
+    			Comparator.comparingDouble(new ToDoubleFunction<Entry<Long, AggregatedCalledFunctionStatistics>>() {
+			@Override
+			public double applyAsDouble(Entry<Long, AggregatedCalledFunctionStatistics> value) {
+				return value.getKey();
+			}
+        });
+        
+        List<Entry<Long, AggregatedCalledFunctionStatistics>> entries = 
+        		Ordering.from(c).immutableSortedCopy(func.getFunctionStatisticsMap().entrySet());
+      
+        
+        DefaultTableXYDataset dataset = new DefaultTableXYDataset();
+        
+        final XYSeries series = new XYSeries("PET Timings", true, false);
+        for (int i=0; i < entries.size(); i++) {
+        	series.add((double) entries.get(i).getKey(), fStatisticFunction.applyAsDouble(entries.get(i).getValue()));
+        }
+        dataset.addSeries(series);
+    	
+        final XYSeries mpiSeries = new XYSeries("MPI Timings", true, false);
+        for (int i=0; i < entries.size(); i++) {
+        	mpiSeries.add((double) entries.get(i).getKey(), entries.get(i).getValue().getSubregionStatistics("mpi").getTotal());
+        }
+        dataset.addSeries(mpiSeries);
+        
+        StackedXYBarRenderer renderer = new StackedXYBarRenderer(0.10);
+        renderer.setSeriesPaint(0, Color.BLUE);
+        renderer.setSeriesPaint(1, Color.RED);
+        renderer.setBarPainter(new StandardXYBarPainter());
+        renderer.setDrawBarOutline(false);
+        renderer.setShadowVisible(false);
+        renderer.setMargin(0.1);
+        
+        NumberAxis domainAxis = new NumberAxis("PETs");
+        domainAxis.setStandardTickUnits(NumberAxis.createIntegerTickUnits());
+        NumberAxis rangeAxis = new NumberAxis("Time");
+        rangeAxis.setNumberFormatOverride(new TimeFormatter(new DecimalFormat()));
+        
+        XYPlot plot = new XYPlot(dataset, domainAxis, rangeAxis, renderer);
+        plot.setBackgroundPaint(Color.WHITE);
+        plot.getDomainAxis().setStandardTickUnits(NumberAxis.createIntegerTickUnits());
+        
+        plot.setDomainPannable(true);
+        plot.setRangePannable(true);
+        
+        JFreeChart chart = new JFreeChart("PET Timings for " + func.getSymbol() + " (" + fStatisticName + ")", plot);
+       
+    	chart.removeLegend();
+        
+    	fChartComposite.setChart(chart);
+    	fChartComposite.redraw();
+    	
+    }
+
     private void updateDisplayJFree(AggregatedCalledFunction func) {
     	
     	Comparator<Entry<Long, AggregatedCalledFunctionStatistics>> c = 
@@ -131,8 +191,7 @@ public class NUOPCStatisticsBalanceChartViewer extends TmfViewer {
         for (int i=0; i < entries.size(); i++) {
         	series.add((double) entries.get(i).getKey(), fStatisticFunction.applyAsDouble(entries.get(i).getValue()));
         }
-    	final XYSeriesCollection dataset = new XYSeriesCollection(series);
-    	
+        final XYSeriesCollection dataset = new XYSeriesCollection(series);
     	
     	final JFreeChart chart = ChartFactory.createXYBarChart(
     			"PET Timings for " + func.getSymbol() + " (" + fStatisticName + ")", 
@@ -310,7 +369,8 @@ public class NUOPCStatisticsBalanceChartViewer extends TmfViewer {
     public void setInput(AggregatedCalledFunction function) {
     	fInput = function;
     	if (function != null) {
-    		updateDisplayJFree(function);
+    		//TESTING MPI
+    		updateDisplayJFreeMPI(function);
     	}
     	else {
     		clearContent();

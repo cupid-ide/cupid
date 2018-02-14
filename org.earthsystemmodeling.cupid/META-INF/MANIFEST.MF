@@ -40,6 +40,7 @@ Export-Package: org.earthsystemmodeling.cupid.cc,
  org.earthsystemmodeling.cupid.core,
  org.earthsystemmodeling.cupid.handlers,
  org.earthsystemmodeling.cupid.nuopc,
- org.earthsystemmodeling.cupid.nuopc.v7r
+ org.earthsystemmodeling.cupid.nuopc.v7r,
+ org.earthsystemmodeling.cupid.util
 Eclipse-BundleShape: dir
 

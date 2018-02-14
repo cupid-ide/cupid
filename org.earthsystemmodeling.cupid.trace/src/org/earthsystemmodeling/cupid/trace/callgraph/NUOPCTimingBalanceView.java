@@ -132,7 +132,7 @@ public class NUOPCTimingBalanceView extends TmfView {
         fTreeViewer.setBalanceChartViewer(fBalanceViewer);
         
         sashForm.setWeights(DEFAULT_WEIGHTS);
-
+        
         //Action zoomOut = new ZoomOutAction(this);
         //IToolBarManager toolBar = getViewSite().getActionBars().getToolBarManager();
         //toolBar.add(zoomOut);

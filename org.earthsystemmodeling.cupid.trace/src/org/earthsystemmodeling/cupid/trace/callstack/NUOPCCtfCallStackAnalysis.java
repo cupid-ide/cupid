@@ -193,16 +193,27 @@ public class NUOPCCtfCallStackAnalysis extends CallStackAnalysis implements IGlo
 
 	@Override
 	public synchronized GlobalNode getGlobalStatistics() {
+		
+		//TODO:
+		/*
+		 * java.util.ConcurrentModificationException
+	at java.util.ArrayList$Itr.checkForComodification(ArrayList.java:907)
+	at java.util.ArrayList$Itr.next(ArrayList.java:857)
+	at org.earthsystemmodeling.cupid.trace.callstack.NUOPCCtfCallStackAnalysis.getGlobalStatistics(NUOPCCtfCallStackAnalysis.java:198)
+	at org.earthsystemmodeling.cupid.trace.callgraph.NUOPCTimingBalanceView$9.lambda$0(NUOPCTimingBalanceView.java:306)
+
+		 */
+		
 		AbstractCalledFunction initSegment = CalledFunctionFactory.create(0, 0, 0, "root", -1, null);
-    	GlobalNode init = new GlobalNode(initSegment, 0);
-    	for (ThreadNode node : fThreadNodes) {
-    		for (AggregatedCalledFunction aggFunc : node.getChildren()) {
-    			AggregatedCalledFunction aggFuncClone = aggFunc.clone();
-    			aggFuncClone.saveStatistics(node.getId());
+    		GlobalNode init = new GlobalNode(initSegment, 0);
+    		for (ThreadNode node : fThreadNodes) {
+    			for (AggregatedCalledFunction aggFunc : node.getChildren()) {
+    				AggregatedCalledFunction aggFuncClone = aggFunc.clone();
+    				aggFuncClone.saveStatistics(node.getId());
     			init.addChild(aggFuncClone);
+    			}
     		}
-    	}
-    	return init;
+    		return init;
 	}
 
 	
