@@ -167,6 +167,8 @@
         url="http://community.polarion.com/projects/subversive/download/eclipse/5.0/update-site/"/>
     <repository
         url="http://community.polarion.com/projects/subversive/download/eclipse/6.0/update-site/"/>
+    <repository
+        url="http://download.eclipse.org/releases/neon"/>
     <description></description>
   </setupTask>
   <setupTask
