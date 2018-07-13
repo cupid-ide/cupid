@@ -1,7 +1,5 @@
 package org.earthsystemmodeling.cupid.trace.timing;
 
-import java.io.IOException;
-import java.io.ObjectInputStream;
 import java.util.Collection;
 import java.util.Comparator;
 import java.util.HashMap;
@@ -13,6 +11,7 @@ import org.earthsystemmodeling.cupid.trace.Activator;
 import org.earthsystemmodeling.cupid.trace.ESMFId;
 import org.earthsystemmodeling.cupid.trace.ESMFPhaseId;
 import org.earthsystemmodeling.cupid.trace.state.NUOPCCtfStateSystemAnalysisModule;
+import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.tracecompass.analysis.timing.core.segmentstore.AbstractSegmentStoreAnalysisEventBasedModule;
 import org.eclipse.tracecompass.segmentstore.core.ISegment;
@@ -69,17 +68,14 @@ public class NUOPCCtfComponentTimingAnalysis extends AbstractSegmentStoreAnalysi
     }
     */
         
+	
 	@Override
-	protected AbstractSegmentStoreAnalysisRequest createAnalysisRequest(ISegmentStore<ISegment> segmentStore) {
+	protected AbstractSegmentStoreAnalysisRequest createAnalysisRequest(ISegmentStore<ISegment> segmentStore,
+			IProgressMonitor monitor) {
 		return new TimingAnalysisRequest(segmentStore);
 	}
 
-	@Override
-	protected Object[] readObject(ObjectInputStream ois) throws ClassNotFoundException, IOException {		
-		return null;
-	}
-	
-		
+			
 	private class TimingAnalysisRequest extends AbstractSegmentStoreAnalysisRequest {
 
 		private final Map<ESMFPhaseId, ComponentPhaseSegment> segMap = new HashMap<>();
@@ -204,5 +200,7 @@ public class NUOPCCtfComponentTimingAnalysis extends AbstractSegmentStoreAnalysi
 		}
 
 	}
+
+	
 	
 }

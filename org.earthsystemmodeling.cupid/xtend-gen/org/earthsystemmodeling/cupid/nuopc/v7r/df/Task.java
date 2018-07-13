@@ -58,7 +58,6 @@ public class Task<C extends CodeConcept<?, ?>> {
       _xtrycatchfinallyexpression = this.bindingFunc.apply();
     } catch (final Throwable _t) {
       if (_t instanceof NullPointerException) {
-        final NullPointerException npe = (NullPointerException)_t;
         return null;
       } else {
         throw Exceptions.sneakyThrow(_t);

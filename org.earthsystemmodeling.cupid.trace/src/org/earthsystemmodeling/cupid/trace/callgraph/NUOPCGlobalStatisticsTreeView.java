@@ -19,14 +19,15 @@ public class NUOPCGlobalStatisticsTreeView extends AbstractStatisticsTreeView {
 
 	public static final String ID = "org.earthsystemmodeling.cupid.trace.NUOPCGlobalStatisticsTreeView";
 	
-	private final Semaphore fLock = new Semaphore(1);
-    private Job fJob;
+	//private final Semaphore fLock = new Semaphore(1);
+    //private Job fJob;
     
 	public NUOPCGlobalStatisticsTreeView() {
 		super(ID, NUOPCCtfCallStackAnalysis.class, NUOPCCtfCallStackAnalysis.ID);
 	}
 	
-	@Override
+	//@Override
+	/*
 	public void initializeViewer(IAnalysisModule analysisModule){
         
 		Job job = fJob;
@@ -58,7 +59,7 @@ public class NUOPCGlobalStatisticsTreeView extends AbstractStatisticsTreeView {
                     }
                     analysis.waitForCompletion(monitor);
                     Display.getDefault().asyncExec(() -> {
-                        getViewer().setInput(analysis.getGlobalStatistics());
+                        //getViewer().setInput(analysis.getGlobalStatistics());
                      });
                     return Status.OK_STATUS;
                 } finally {
@@ -70,7 +71,7 @@ public class NUOPCGlobalStatisticsTreeView extends AbstractStatisticsTreeView {
         fJob = job;
         job.schedule();
     }
-	
+	*/
 	
 	@Override
 	public AbstractStatisticsTreeViewer createTreeViewer(Composite parent) {

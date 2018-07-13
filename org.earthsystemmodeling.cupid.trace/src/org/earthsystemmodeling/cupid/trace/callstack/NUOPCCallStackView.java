@@ -1,35 +1,16 @@
 package org.earthsystemmodeling.cupid.trace.callstack;
 
 import java.text.DecimalFormat;
-import java.util.HashMap;
-import java.util.Map;
 import java.util.Optional;
 
-import org.earthsystemmodeling.cupid.trace.PETSelectedSignal;
 import org.earthsystemmodeling.cupid.trace.callgraph.TimeFormatter;
-import org.earthsystemmodeling.cupid.trace.state.NUOPCCtfStateSystemAnalysisModule;
-import org.earthsystemmodeling.cupid.trace.timing.NUOPCCtfComponentTimingAnalysis;
-import org.eclipse.jface.action.IToolBarManager;
-import org.eclipse.jface.action.Separator;
-import org.eclipse.jface.viewers.ISelectionChangedListener;
-import org.eclipse.jface.viewers.IStructuredSelection;
-import org.eclipse.jface.viewers.SelectionChangedEvent;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.graphics.GC;
 import org.eclipse.swt.graphics.Rectangle;
 import org.eclipse.swt.widgets.Composite;
-import org.eclipse.tracecompass.statesystem.core.ITmfStateSystem;
-import org.eclipse.tracecompass.statesystem.core.exceptions.AttributeNotFoundException;
-import org.eclipse.tracecompass.statesystem.core.exceptions.StateSystemDisposedException;
-import org.eclipse.tracecompass.statesystem.core.exceptions.TimeRangeException;
-import org.eclipse.tracecompass.statesystem.core.statevalue.ITmfStateValue;
-import org.eclipse.tracecompass.tmf.core.signal.TmfSignalManager;
+import org.eclipse.tracecompass.analysis.profiling.ui.views.flamechart.CallStackPresentationProvider;
+import org.eclipse.tracecompass.analysis.profiling.ui.views.flamechart.FlameChartView;
 import org.eclipse.tracecompass.tmf.core.trace.ITmfTrace;
-import org.eclipse.tracecompass.tmf.core.trace.TmfTraceUtils;
-import org.eclipse.tracecompass.tmf.ui.views.callstack.CallStackEntry;
-import org.eclipse.tracecompass.tmf.ui.views.callstack.CallStackEvent;
-import org.eclipse.tracecompass.tmf.ui.views.callstack.CallStackPresentationProvider;
-import org.eclipse.tracecompass.tmf.ui.views.callstack.CallStackView;
 import org.eclipse.tracecompass.tmf.ui.widgets.timegraph.model.ITimeEvent;
 
 import com.google.common.cache.CacheBuilder;
@@ -37,18 +18,24 @@ import com.google.common.cache.CacheLoader;
 import com.google.common.cache.LoadingCache;
 
 
-public class NUOPCCallStackView extends CallStackView {
+public class NUOPCCallStackView extends FlameChartView {
 
 	public static final String ID = "org.earthsystemmodeling.cupid.trace.NUOPCCallStackView";
 		
+	//private ITmfStateSystem stateSystem;
+	
 	@Override
 	public void createPartControl(Composite parent) {
 		super.createPartControl(parent);
 
+		//@Nullable NUOPCCtfCallStackAnalysis module = TmfTraceUtils.getAnalysisModuleOfClass(getTrace(), NUOPCCtfCallStackAnalysis.class, NUOPCCtfCallStackAnalysis.ID);
+		//if (module != null) {
+		//	stateSystem = module.getStateSystem();
+		//}
+						
 		NUOPCCallStackPresentationProvider pp = new NUOPCCallStackPresentationProvider(getTrace());
-		pp.setCallStackView(this);
+		//pp.setCallStackView(this);
 		getTimeGraphViewer().setTimeGraphProvider(pp);
-		
 		
 		
 		/*
@@ -67,8 +54,11 @@ public class NUOPCCallStackView extends CallStackView {
 		});
 		*/
 		
+		//TODO fix after Photon update
+		/*
 		getTimeGraphViewer().addSelectionChangedListener(new ISelectionChangedListener() {
 
+			
 			@Override
 			public void selectionChanged(SelectionChangedEvent event) {
 				//System.out.println(event);
@@ -91,22 +81,31 @@ public class NUOPCCallStackView extends CallStackView {
 				
 			}
 			
+			
 		});
-
+		*/
+		
 	}
 	
 	
 
-	static class NUOPCCallStackPresentationProvider extends CallStackPresentationProvider {
+	class NUOPCCallStackPresentationProvider extends CallStackPresentationProvider {
+					
 		
-		private final LoadingCache<CallStackEvent, Optional<String>> fTimeEventComponentKinds = CacheBuilder.newBuilder()
+		private final LoadingCache<ITimeEvent, Optional<String>> fTimeEventComponentKinds = CacheBuilder.newBuilder()
 				.maximumSize(10000)
 				//.recordStats()
-				.build(new CacheLoader<CallStackEvent, Optional<String>>() {
+				.build(new CacheLoader<ITimeEvent, Optional<String>>() {
 					@Override
-					public Optional<String> load(CallStackEvent event) {
-						CallStackEntry entry = event.getEntry();
-						ITmfStateSystem ss = entry.getStateSystem();
+					public Optional<String> load(ITimeEvent event) {
+						
+						//ITimeGraphEntryModel model = ((TimeGraphEntry) entry).getModel();
+			            //if (model instanceof CallStackEntryModel) 
+						
+						//TODO fix after Photon upgrade
+						/*
+						ITimeGraphEntry entry = event.getEntry();
+						ITmfStateSystem ss = entry.getStateSystem(); 
 						try {
 							int quarkMe = entry.getQuark();
 							int quarkRef = ss.getParentAttributeQuark(quarkMe);
@@ -125,17 +124,17 @@ public class NUOPCCallStackView extends CallStackView {
 						} catch (AttributeNotFoundException e) {
 							//Activator.getDefault().logError("Error querying state system", e); //$NON-NLS-1$
 						}
+						*/
+						
 						return Optional.empty();
 					}
 				});
+		
 		public NUOPCCallStackPresentationProvider(ITmfTrace trace) {
 		}
 
 		public String getEventComponentKind(ITimeEvent event) {
-			if (event instanceof CallStackEvent) {
-				return fTimeEventComponentKinds.getUnchecked((CallStackEvent) event).orElse(null);
-			}	
-			return null;
+			return fTimeEventComponentKinds.getUnchecked(event).orElse(null);
 		}		
 
 		
@@ -195,29 +194,45 @@ public class NUOPCCallStackView extends CallStackView {
 		 */
 
 		
-		static final TimeFormatter fTimeFormatter = new TimeFormatter();
-		static final DecimalFormat fPctFormatter = new DecimalFormat("##.##%");
+		final TimeFormatter fTimeFormatter = new TimeFormatter();
+		final DecimalFormat fPctFormatter = new DecimalFormat("##.##%");
 		
+		//TODO fix after Photon update
+		
+		/*
 		@Override
 		public Map<String, String> getEventHoverToolTipInfo(ITimeEvent event) {
 			
+			
 			Map<String,String> retMap = new HashMap<>();
 
-			CallStackEntry cse = (CallStackEntry) event.getEntry();
-			ITmfStateSystem ss = cse.getStateSystem();
+			if (stateSystem == null) return retMap;
+			
+			TimeGraphEntry entry = (TimeGraphEntry) event.getEntry();
+			long stackQuark = ((TimeGraphEntry) entry).getModel().getId();
+			
+			//todo: this needs to be translated into a quark from an id
+			
 			try {
-				int quarkMe = cse.getQuark();
-				int quarkRef = ss.getParentAttributeQuark(quarkMe);
-				quarkRef = ss.getParentAttributeQuark(quarkRef);
 				
-				int quarkClock = ss.getQuarkRelative(quarkRef, "clock");
+				ITmfStateValue value;
+				
+				//int quarkMe = cse.getQuark();
+				int quarkRef = stateSystem.getParentAttributeQuark((int) stackQuark);
+				value = stateSystem.querySingleState(event.getTime(), quarkRef).getStateValue();				
+				
+				quarkRef = stateSystem.getParentAttributeQuark(quarkRef);
+				value = stateSystem.querySingleState(event.getTime(), quarkRef).getStateValue();
+				
+				int quarkClock = stateSystem.getQuarkRelative(quarkRef, "clock");
 				//String[] quarkPath = ss.getFullAttributePathArray(quarkRef);
 
-				ITmfStateValue value = ss.querySingleState(event.getTime(), quarkClock).getStateValue();
+				value = stateSystem.querySingleState(event.getTime(), quarkClock).getStateValue();
 				if (!value.isNull()) {
 					retMap.put("Model Clock", value.unboxStr());
 				}
-							
+				
+				
 				String stackDepth = ss.getAttributeName(quarkMe);
 				
 				int quarkIO = ss.getQuarkRelative(quarkRef, "ioread", "totalTime", stackDepth);
@@ -286,7 +301,7 @@ public class NUOPCCallStackView extends CallStackView {
 			return retMap;
 		
 		}
-
+		*/
 		
 		/*
 		@Override

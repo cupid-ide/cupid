@@ -5,10 +5,8 @@ import java.util.List;
 import org.earthsystemmodeling.cupid.trace.Activator;
 import org.earthsystemmodeling.cupid.trace.callgraph.AbstractStatisticsTreeColumnDataProvider.TmfTreeColumnData2;
 import org.earthsystemmodeling.cupid.trace.callgraph.AbstractStatisticsTreeView.AggregatedCalledFunctionEntry;
-import org.earthsystemmodeling.cupid.trace.callgraph.AbstractStatisticsTreeView.AggregatedFunctionStatisticsEntry;
 import org.earthsystemmodeling.cupid.trace.callgraph.AbstractStatisticsTreeView.AggregatedFunctionStatisticsRoot;
-import org.earthsystemmodeling.cupid.trace.callgraph.AbstractStatisticsTreeView.GlobalEntry;
-import org.earthsystemmodeling.cupid.trace.callgraph.AbstractStatisticsTreeView.ThreadEntry;
+import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jface.action.Action;
 import org.eclipse.jface.action.IMenuCreator;
 import org.eclipse.jface.action.MenuManager;
@@ -26,6 +24,7 @@ import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Menu;
 import org.eclipse.swt.widgets.Tree;
 import org.eclipse.swt.widgets.TreeColumn;
+import org.eclipse.tracecompass.tmf.core.trace.ITmfTrace;
 import org.eclipse.tracecompass.tmf.ui.viewers.tree.AbstractTmfTreeViewer;
 import org.eclipse.tracecompass.tmf.ui.viewers.tree.ITmfTreeColumnDataProvider;
 import org.eclipse.tracecompass.tmf.ui.viewers.tree.ITmfTreeViewerEntry;
@@ -138,7 +137,12 @@ public abstract class AbstractStatisticsTreeViewer extends AbstractTmfTreeViewer
 	}
 
 
-	public abstract void setInput(Object input);
+	public void setInput(ITmfTrace input) {
+		if (input != null) {
+			updateContent(getWindowStartTime(), getWindowEndTime(), false);
+		}
+	}
+	
 
 
 	private class TimeFormatAction extends Action {
@@ -249,7 +253,7 @@ public abstract class AbstractStatisticsTreeViewer extends AbstractTmfTreeViewer
 
 
 	@Override
-	protected abstract ITmfTreeViewerEntry updateElements(long start, long end, boolean isSelection);
+	protected abstract ITmfTreeViewerEntry updateElements(@NonNull ITmfTrace trace, long start, long end, boolean isSelection);
 
 
 	protected class GraphTreeLabelProviderWithTooltips extends CellLabelProvider {

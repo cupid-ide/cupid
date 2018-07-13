@@ -303,7 +303,7 @@ public class NUOPCTimingBalanceView extends TmfView {
                     }
                     analysisModule.waitForCompletion(monitor);
                     Display.getDefault().asyncExec(() -> {
-                        getTreeViewer().setInput(analysisModule.getGlobalStatistics());
+                        //getTreeViewer().setInput(analysisModule.getGlobalStatistics());
                      });
                     return Status.OK_STATUS;
                 } finally {

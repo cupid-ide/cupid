@@ -92,7 +92,6 @@ public class CodeConceptManager {
             this.reverseChildren(instance);
           } catch (final Throwable _t) {
             if (_t instanceof EssentialConstraintViolation) {
-              final EssentialConstraintViolation ecv = (EssentialConstraintViolation)_t;
               parent.removeChild(instance);
               return null;
             } else {
@@ -130,7 +129,6 @@ public class CodeConceptManager {
         }
       } catch (final Throwable _t) {
         if (_t instanceof EssentialConstraintViolation) {
-          final EssentialConstraintViolation ecv = (EssentialConstraintViolation)_t;
           return null;
         } else {
           throw Exceptions.sneakyThrow(_t);

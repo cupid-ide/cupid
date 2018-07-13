@@ -20,6 +20,7 @@ import org.eclipse.tracecompass.segmentstore.core.ISegment;
 import org.eclipse.tracecompass.tmf.core.segment.ISegmentAspect;
 import org.eclipse.tracecompass.tmf.core.symbols.ISymbolProvider;
 import org.eclipse.tracecompass.tmf.core.symbols.SymbolProviderManager;
+import org.eclipse.tracecompass.tmf.core.symbols.TmfResolvedSymbol;
 import org.eclipse.tracecompass.tmf.core.trace.ITmfTrace;
 import org.eclipse.tracecompass.tmf.core.trace.TmfTraceManager;
 
@@ -73,31 +74,36 @@ public final class SymbolAspect implements ISegmentAspect {
             if (trace != null) {
                 String symbolText = null;
                 Object symbol = calledFunction.getSymbol();
+                //TODO after Photon upgrade, need to fix symbol provider for Longs, if needed
+                /*
                 if (symbol instanceof Long) {
                     Long longAddress = (Long) symbol;
                     Collection<ISymbolProvider> providers = SymbolProviderManager.getInstance().getSymbolProviders(trace);
                     for (ISymbolProvider provider: providers) {
-                        symbolText = provider.getSymbolText(longAddress);
-                        if (symbolText != null) {
+                        //symbolText = provider.getSymbolText(longAddress);
+                    	TmfResolvedSymbol resSym = provider.getSymbol(longAddress);
+                    	if (resSym != null) {
                             break;
                         }
                     }
-                    if (symbolText == null) {
-                        return "0x" + Long.toHexString(longAddress); //$NON-NLS-1$
-                    }
+                    //if (symbolText == null) {
+                    //    return "0x" + Long.toHexString(longAddress); //$NON-NLS-1$
+                    //}
                     // take the start time in the query for the symbol name
                     long time = segment.getStart();
                     int pid = calledFunction.getProcessId();
                     if (pid > 0) {
                         for (ISymbolProvider provider: providers) {
-                            String text = provider.getSymbolText(pid, time, longAddress);
-                            if (text != null) {
-                                return text;
-                            }
+                            TmfResolvedSymbol resSym = provider.getSymbol(pid, time, longAddress);
+                            return resSym.getSymbolName();
+                            //if (text != null) {
+                            //    return text;
+                            //}
                         }
                     }
                     return symbolText;
                 }
+                */
                 return String.valueOf(symbol);
             }
         }

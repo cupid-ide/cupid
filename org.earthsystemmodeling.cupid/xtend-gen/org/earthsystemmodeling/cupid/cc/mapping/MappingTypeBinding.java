@@ -226,7 +226,6 @@ public class MappingTypeBinding {
                 this.<Object>setValue(k, v);
               } catch (final Throwable _t) {
                 if (_t instanceof UnsupportedOperationException) {
-                  final UnsupportedOperationException uoe = (UnsupportedOperationException)_t;
                 } else {
                   throw Exceptions.sneakyThrow(_t);
                 }

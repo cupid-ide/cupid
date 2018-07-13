@@ -198,8 +198,8 @@ public class AbstractStatisticsTreeColumnDataProvider implements ITmfTreeColumnD
 				COLUMN_MEAN,
 				COLUMN_MIN,
 				COLUMN_MAX,
-				COLUMN_STD,
-				COLUMN_MPI
+				COLUMN_STD
+				//COLUMN_MPI
 		};
 				
 	}

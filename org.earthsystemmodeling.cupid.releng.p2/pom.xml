@@ -40,7 +40,7 @@
 			<id>uploadRepo</id>
 			<properties>
 				<deploy.remote.url>scp://radu0450@esmf-cu.colorado.edu/</deploy.remote.url>
-				<deploy.remote.dir>/data/web/htdocs/esmf-cu/cupid/master</deploy.remote.dir>
+				<deploy.remote.dir>/data/web/htdocs/esmf-cu/cupid/photon</deploy.remote.dir>
 			</properties>
 			<build>
 				<plugins>

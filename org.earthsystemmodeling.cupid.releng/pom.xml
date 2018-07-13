@@ -9,7 +9,7 @@
 	<properties>
 		<tycho-version>1.0.0</tycho-version>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-		<eclipse-release>oxygen</eclipse-release>
+		<eclipse-release>photon</eclipse-release>
 		<eclipse-site>http://download.eclipse.org/releases/${eclipse-release}</eclipse-site>		
 	</properties>
 

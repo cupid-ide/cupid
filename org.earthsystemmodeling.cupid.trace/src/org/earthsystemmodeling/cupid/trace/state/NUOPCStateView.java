@@ -7,6 +7,7 @@ import java.util.Map;
 
 import org.earthsystemmodeling.cupid.trace.Activator;
 import org.earthsystemmodeling.cupid.trace.json.NUOPCStateSystemAnalysisModule;
+import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jface.action.Action;
 import org.eclipse.jface.action.IMenuManager;
 import org.eclipse.jface.resource.ImageDescriptor;
@@ -143,15 +144,10 @@ public class NUOPCStateView extends TmfView {
 		
 
 		@Override
-		protected ITmfTreeViewerEntry updateElements(long start, long end, boolean isSelection) {
-			
-			ITmfTrace trace = getTrace();
-	        if (trace == null) {
-	        	return null;
-	        }
-	        
-	        //NUOPCStateSystemAnalysisModule module = (NUOPCStateSystemAnalysisModule) trace.getAnalysisModule(NUOPCStateSystemAnalysisModule.ID);
-	        NUOPCStateSystemAnalysisModule module = TmfTraceUtils.getAnalysisModuleOfClass(trace, NUOPCStateSystemAnalysisModule.class, NUOPCStateSystemAnalysisModule.ID);
+		protected ITmfTreeViewerEntry updateElements(@NonNull ITmfTrace trace, long start, long end,
+					boolean isSelection) {
+				
+			NUOPCStateSystemAnalysisModule module = TmfTraceUtils.getAnalysisModuleOfClass(trace, NUOPCStateSystemAnalysisModule.class, NUOPCStateSystemAnalysisModule.ID);
 
 	        if (module == null) return null;
 	        module.schedule();
@@ -374,6 +370,8 @@ public class NUOPCStateView extends TmfView {
 	        	return super.getColumnImage(element, columnIndex);
 	        }
 	    }
+
+
 		
 	}
 	

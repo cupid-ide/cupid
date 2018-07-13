@@ -24,9 +24,9 @@ import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.NullProgressMonitor;
 import org.eclipse.jdt.annotation.Nullable;
+import org.eclipse.tracecompass.analysis.profiling.core.callstack.CallStackAnalysis;
 import org.eclipse.tracecompass.tmf.core.analysis.IAnalysisModule;
 import org.eclipse.tracecompass.tmf.core.analysis.IAnalysisOutput;
-import org.eclipse.tracecompass.tmf.core.callstack.CallStackAnalysis;
 import org.eclipse.tracecompass.tmf.core.exceptions.TmfAnalysisException;
 import org.eclipse.tracecompass.tmf.core.statesystem.ITmfStateProvider;
 import org.eclipse.tracecompass.tmf.core.statistics.TmfStatisticsModule;
@@ -93,7 +93,7 @@ public class NUOPCCtfCallStackAnalysis extends CallStackAnalysis implements IGlo
     }
 
     @Override
-    protected boolean executeAnalysis(@Nullable IProgressMonitor monitor) {
+    protected boolean executeAnalysis(@Nullable IProgressMonitor monitor) {    	
     	fThreadNodes.clear();
     	fMonitor = monitor;
     	boolean success = super.executeAnalysis(monitor);

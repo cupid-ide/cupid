@@ -19,6 +19,7 @@ import org.eclipse.swt.widgets.TreeItem;
 import org.eclipse.tracecompass.tmf.core.analysis.IAnalysisModule;
 import org.eclipse.tracecompass.tmf.core.signal.TmfSignalHandler;
 import org.eclipse.tracecompass.tmf.core.signal.TmfTraceClosedSignal;
+import org.eclipse.tracecompass.tmf.core.signal.TmfTraceOpenedSignal;
 import org.eclipse.tracecompass.tmf.core.signal.TmfTraceSelectedSignal;
 import org.eclipse.tracecompass.tmf.core.trace.ITmfTrace;
 import org.eclipse.tracecompass.tmf.core.trace.TmfTraceManager;
@@ -35,7 +36,7 @@ public abstract class AbstractStatisticsTreeView extends TmfView {
 	private ITmfTrace fTrace;
 	private AbstractStatisticsTreeViewer fViewer;
    
-    private IAnalysisModule fAnalysisModule;
+    //private IAnalysisModule fAnalysisModule;
     private final Class<? extends IAnalysisModule> fModuleClass;
     private	final String fModuleId;
        
@@ -139,21 +140,27 @@ public abstract class AbstractStatisticsTreeView extends TmfView {
 	
 	@TmfSignalHandler
     public void traceSelected(final TmfTraceSelectedSignal signal) {
-        fTrace = signal.getTrace();
-        if (fTrace != null) {
-            fAnalysisModule = TmfTraceUtils.getAnalysisModuleOfClass(fTrace, fModuleClass, fModuleId);
-            initializeViewer(fAnalysisModule);
-        }
+       // fTrace = signal.getTrace();
+        //if (fTrace != null) {
+            //fAnalysisModule = TmfTraceUtils.getAnalysisModuleOfClass(fTrace, fModuleClass, fModuleId);
+            //initializeViewer(fAnalysisModule);
+        //}
+		
+		fViewer.loadTrace(signal.getTrace());
+		//fViewer.setInput(signal.getTrace());
     }
 	
-	public abstract void initializeViewer(IAnalysisModule analysisModule);
+	//public abstract void initializeViewer(IAnalysisModule analysisModule);
 	
 	
 	@TmfSignalHandler
+	public void traceOpened(final TmfTraceOpenedSignal signal) {
+		fViewer.loadTrace(signal.getTrace());
+	}
+	
+	@TmfSignalHandler
     public void traceClosed(final TmfTraceClosedSignal signal) {
-        if (signal.getTrace() == fTrace) {
-            fViewer.setInput(null);
-        }
+       fViewer.setInput(null);
     }
 	
 	

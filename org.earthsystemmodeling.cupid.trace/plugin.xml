@@ -207,5 +207,12 @@
              priority="80">
        </providerFactory>
     </extension>
+    <extension
+          point="org.eclipse.tracecompass.tmf.core.dataprovider">
+       <dataProviderFactory
+             class="org.earthsystemmodeling.cupid.trace.callgraph.PerPETStatsDataProviderFactory"
+             id="org.earthsystemmodeling.cupid.trace.callgraph.PerPETStatsDataProvider">
+       </dataProviderFactory>
+    </extension>
 
 </plugin>
