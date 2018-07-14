@@ -5,16 +5,11 @@ import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
-import java.util.concurrent.Semaphore;
 import java.util.function.ToDoubleFunction;
 
 import org.earthsystemmodeling.cupid.trace.Activator;
 import org.earthsystemmodeling.cupid.trace.callstack.NUOPCCtfCallStackAnalysis;
 import org.earthsystemmodeling.cupid.trace.statistics.AggregatedCalledFunctionStatistics;
-import org.eclipse.core.runtime.IProgressMonitor;
-import org.eclipse.core.runtime.IStatus;
-import org.eclipse.core.runtime.Status;
-import org.eclipse.core.runtime.jobs.Job;
 import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.jface.action.Action;
 import org.eclipse.jface.action.IMenuCreator;
@@ -24,7 +19,6 @@ import org.eclipse.swt.SWT;
 import org.eclipse.swt.custom.SashForm;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
-import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Menu;
 import org.eclipse.swt.widgets.Shell;
 import org.eclipse.swt.widgets.Tree;
@@ -49,8 +43,8 @@ public class NUOPCTimingBalanceView extends TmfView {
     private @Nullable NUOPCStatisticsBalanceChartViewer fBalanceViewer;
     private @Nullable NUOPCGlobalStatisticsTreeViewer fTreeViewer;
     
-    private final Semaphore fLock = new Semaphore(1);
-    private Job fJob;
+    //private final Semaphore fLock = new Semaphore(1);
+    //private Job fJob;
 
     
     public NUOPCTimingBalanceView() {
@@ -268,11 +262,13 @@ public class NUOPCTimingBalanceView extends TmfView {
         fTrace = signal.getTrace();
         if (fTrace != null) {
             NUOPCCtfCallStackAnalysis analysisModule = TmfTraceUtils.getAnalysisModuleOfClass(fTrace, NUOPCCtfCallStackAnalysis.class, NUOPCCtfCallStackAnalysis.ID);
-            initializeTreeViewer(analysisModule);
+            analysisModule.schedule();
         }
+        getTreeViewer().loadTrace(fTrace);
     }
     
     
+    /*
     protected void initializeTreeViewer(NUOPCCtfCallStackAnalysis analysisModule){
         
 		Job job = fJob;
@@ -303,7 +299,7 @@ public class NUOPCTimingBalanceView extends TmfView {
                     }
                     analysisModule.waitForCompletion(monitor);
                     Display.getDefault().asyncExec(() -> {
-                        //getTreeViewer().setInput(analysisModule.getGlobalStatistics());
+                        getTreeViewer().setInput(analysisModule.getTrace());
                      });
                     return Status.OK_STATUS;
                 } finally {
@@ -315,6 +311,7 @@ public class NUOPCTimingBalanceView extends TmfView {
         fJob = job;
         job.schedule();
     }
+    */
 
     protected NUOPCGlobalStatisticsTreeViewer createStatisticsTreeViewer(Composite parent) {
     	return new NUOPCGlobalStatisticsTreeViewer(parent, this);

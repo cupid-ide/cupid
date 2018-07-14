@@ -51,6 +51,7 @@ public class NUOPCCtfCallStackAnalysis extends CallStackAnalysis implements IGlo
 		// TODO Auto-generated method stub
 		return super.schedule();
 	}
+
 		
     @Override
     public boolean setTrace(ITmfTrace trace) throws TmfAnalysisException {
@@ -175,11 +176,15 @@ public class NUOPCCtfCallStackAnalysis extends CallStackAnalysis implements IGlo
     }  
         
     public List<ThreadNode> getAggregateThreadNodes() {
-        return ImmutableList.copyOf(fThreadNodes);
+        synchronized(fThreadNodes) {
+        	return ImmutableList.copyOf(fThreadNodes);
+        }	
     }
     
-    protected synchronized void addThreadNode(ThreadNode node) {
-    	fThreadNodes.add(node);
+    protected void addThreadNode(ThreadNode node) {
+    	synchronized(fThreadNodes) {
+    		fThreadNodes.add(node);
+    	}
     }
    
     
@@ -192,28 +197,19 @@ public class NUOPCCtfCallStackAnalysis extends CallStackAnalysis implements IGlo
     }
 
 	@Override
-	public synchronized GlobalNode getGlobalStatistics() {
-		
-		//TODO:
-		/*
-		 * java.util.ConcurrentModificationException
-	at java.util.ArrayList$Itr.checkForComodification(ArrayList.java:907)
-	at java.util.ArrayList$Itr.next(ArrayList.java:857)
-	at org.earthsystemmodeling.cupid.trace.callstack.NUOPCCtfCallStackAnalysis.getGlobalStatistics(NUOPCCtfCallStackAnalysis.java:198)
-	at org.earthsystemmodeling.cupid.trace.callgraph.NUOPCTimingBalanceView$9.lambda$0(NUOPCTimingBalanceView.java:306)
-
-		 */
-		
-		AbstractCalledFunction initSegment = CalledFunctionFactory.create(0, 0, 0, "root", -1, null);
+	public GlobalNode getGlobalStatistics() {
+		synchronized(fThreadNodes) {
+			AbstractCalledFunction initSegment = CalledFunctionFactory.create(0, 0, 0, "root", -1, null);
     		GlobalNode init = new GlobalNode(initSegment, 0);
     		for (ThreadNode node : fThreadNodes) {
     			for (AggregatedCalledFunction aggFunc : node.getChildren()) {
     				AggregatedCalledFunction aggFuncClone = aggFunc.clone();
     				aggFuncClone.saveStatistics(node.getId());
-    			init.addChild(aggFuncClone);
+    				init.addChild(aggFuncClone);
     			}
     		}
     		return init;
+		}
 	}
 
 	

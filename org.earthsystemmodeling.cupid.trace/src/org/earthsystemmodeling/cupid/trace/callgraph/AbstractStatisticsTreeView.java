@@ -31,9 +31,11 @@ import org.eclipse.tracecompass.tmf.ui.views.TmfView;
 import com.google.common.base.Joiner;
 
 
+
+//TODO:  look into extending org.eclipse.tracecompass.tmf.ui.viewers.tree.AbstractSelectTreeViewer
 public abstract class AbstractStatisticsTreeView extends TmfView {
 
-	private ITmfTrace fTrace;
+	//private ITmfTrace fTrace;
 	private AbstractStatisticsTreeViewer fViewer;
    
     //private IAnalysisModule fAnalysisModule;
@@ -127,7 +129,12 @@ public abstract class AbstractStatisticsTreeView extends TmfView {
 	
 	@Override
 	public void setFocus() {
+		
+		//System.out.println("Setting focus");
+		
 	}
+	
+	
 	
 	@Override
     public void dispose() {
@@ -140,15 +147,13 @@ public abstract class AbstractStatisticsTreeView extends TmfView {
 	
 	@TmfSignalHandler
     public void traceSelected(final TmfTraceSelectedSignal signal) {
-       // fTrace = signal.getTrace();
-        //if (fTrace != null) {
-            //fAnalysisModule = TmfTraceUtils.getAnalysisModuleOfClass(fTrace, fModuleClass, fModuleId);
-            //initializeViewer(fAnalysisModule);
-        //}
-		
-		fViewer.loadTrace(signal.getTrace());
-		//fViewer.setInput(signal.getTrace());
-    }
+		ITmfTrace fTrace = signal.getTrace();
+        if (fTrace != null) {
+            IAnalysisModule fAnalysisModule = TmfTraceUtils.getAnalysisModuleOfClass(fTrace, fModuleClass, fModuleId);
+            fAnalysisModule.schedule();
+        }
+		fViewer.loadTrace(fTrace);
+	}
 	
 	//public abstract void initializeViewer(IAnalysisModule analysisModule);
 	

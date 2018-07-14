@@ -23,7 +23,7 @@ import org.eclipse.tracecompass.tmf.ui.views.TmfView;
 
 public class NUOPCGlobalStatisticsTreeViewer extends AbstractStatisticsTreeViewer {
 	
-	private GlobalNode fGlobalNode;
+	//private GlobalNode fGlobalNode;
 	private @Nullable NUOPCStatisticsBalanceChartViewer fBalanceViewer;
 
 	public NUOPCGlobalStatisticsTreeViewer(Composite parent, TmfView view) {
@@ -82,18 +82,18 @@ public class NUOPCGlobalStatisticsTreeViewer extends AbstractStatisticsTreeViewe
 			return null;
 		}
 
-		ITmfTreeDataProvider<PerPETStatsTreeDataModel> provider = null;
+		ITmfTreeDataProvider<TimingStatsDataModel> provider = null;
 
 		provider = DataProviderManager.getInstance().getDataProvider(trace,
-				PerPETStatsDataProvider.ID + ":" + PerPETStatsDataProvider.GLOBAL, PerPETStatsDataProvider.class);
+				TimingStatsDataProvider.ID + ":" + TimingStatsDataProvider.GLOBAL, TimingStatsDataProvider.class);
 
 		if (provider == null) {
 			return null;
 		}
 
 		FilterTimeQueryFilter filter = new FilterTimeQueryFilter(start, end, 2, isSelection);
-		TmfModelResponse<List<PerPETStatsTreeDataModel>> response = provider.fetchTree(filter, null);
-		@Nullable List<PerPETStatsTreeDataModel> model = response.getModel();
+		TmfModelResponse<List<TimingStatsDataModel>> response = provider.fetchTree(filter, null);
+		@Nullable List<TimingStatsDataModel> model = response.getModel();
 		
 		if (model == null) {
 			return null;

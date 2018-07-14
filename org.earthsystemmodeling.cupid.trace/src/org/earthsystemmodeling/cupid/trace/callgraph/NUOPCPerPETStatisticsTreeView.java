@@ -109,18 +109,18 @@ public class NUOPCPerPETStatisticsTreeView extends AbstractStatisticsTreeView {
 				return null;
 			}
 
-			ITmfTreeDataProvider<PerPETStatsTreeDataModel> provider = null;
+			ITmfTreeDataProvider<TimingStatsDataModel> provider = null;
 
 			provider = DataProviderManager.getInstance().getDataProvider(trace,
-					PerPETStatsDataProvider.ID + ":" + PerPETStatsDataProvider.PERPET, PerPETStatsDataProvider.class);
+					TimingStatsDataProvider.ID + ":" + TimingStatsDataProvider.PERPET, TimingStatsDataProvider.class);
 
 			if (provider == null) {
 				return null;
 			}
 
 			FilterTimeQueryFilter filter = new FilterTimeQueryFilter(start, end, 2, isSelection);
-			TmfModelResponse<List<PerPETStatsTreeDataModel>> response = provider.fetchTree(filter, null);
-			@Nullable List<PerPETStatsTreeDataModel> model = response.getModel();
+			TmfModelResponse<List<TimingStatsDataModel>> response = provider.fetchTree(filter, null);
+			@Nullable List<TimingStatsDataModel> model = response.getModel();
 			
 			if (model == null) {
 				return null;

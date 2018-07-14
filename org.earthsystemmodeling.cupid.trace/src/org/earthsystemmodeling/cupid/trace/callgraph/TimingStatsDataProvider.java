@@ -7,29 +7,29 @@ import org.earthsystemmodeling.cupid.trace.callstack.NUOPCCtfCallStackAnalysis;
 import org.earthsystemmodeling.cupid.trace.statistics.GlobalNode;
 import org.earthsystemmodeling.cupid.trace.statistics.ThreadNode;
 import org.eclipse.core.runtime.IProgressMonitor;
-import org.eclipse.core.runtime.NullProgressMonitor;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.tracecompass.tmf.core.model.CommonStatusMessage;
 import org.eclipse.tracecompass.tmf.core.model.filters.TimeQueryFilter;
 import org.eclipse.tracecompass.tmf.core.model.tree.ITmfTreeDataProvider;
 import org.eclipse.tracecompass.tmf.core.response.ITmfResponse;
+import org.eclipse.tracecompass.tmf.core.response.ITmfResponse.Status;
 import org.eclipse.tracecompass.tmf.core.response.TmfModelResponse;
 import org.eclipse.tracecompass.tmf.core.trace.ITmfTrace;
 
 
-public class PerPETStatsDataProvider implements ITmfTreeDataProvider<PerPETStatsTreeDataModel> {
+public class TimingStatsDataProvider implements ITmfTreeDataProvider<TimingStatsDataModel> {
 
 // extends AbstractTreeDataProvider<NUOPCCtfCallStackAnalysis, PerPETStatsTreeDataModel> {
 
-	public static final String ID = "org.earthsystemmodeling.cupid.trace.callgraph.PerPETStatsDataProvider";
+	public static final String ID = "org.earthsystemmodeling.cupid.trace.callgraph.TimingStatsDataProvider";
 	public static final String PERPET = "perpet";
 	public static final String GLOBAL = "global";
 	
 	private NUOPCCtfCallStackAnalysis fAnalysis;
 	private String fMode;
 	
-	public PerPETStatsDataProvider(ITmfTrace trace, @NonNull NUOPCCtfCallStackAnalysis analysisModule, String mode) {
+	public TimingStatsDataProvider(ITmfTrace trace, @NonNull NUOPCCtfCallStackAnalysis analysisModule, String mode) {
 		fAnalysis = analysisModule;
 		fMode = mode;
 		//super(trace, analysisModule);
@@ -66,28 +66,32 @@ public class PerPETStatsDataProvider implements ITmfTreeDataProvider<PerPETStats
 	*/
 	
 	@Override
-	public TmfModelResponse<List<PerPETStatsTreeDataModel>> fetchTree(TimeQueryFilter filter,
+	public TmfModelResponse<List<TimingStatsDataModel>> fetchTree(TimeQueryFilter filter,
 			@Nullable IProgressMonitor monitor) {
 		
-		if (monitor == null) monitor = new NullProgressMonitor();
+		if (monitor != null) {
+            fAnalysis.waitForCompletion(monitor);
+            if (monitor.isCanceled()) {
+                return new TmfModelResponse<>(null, Status.CANCELLED, CommonStatusMessage.TASK_CANCELLED);
+            }
+        } else {
+            fAnalysis.waitForCompletion();
+        }
 		
-		//TODO: this is not ideal to wait for completion here....
-		if (fAnalysis.waitForCompletion(monitor)) {
-			List<PerPETStatsTreeDataModel> toRet = new ArrayList<>();
-			if (fMode.equals(PERPET)) {
-				List<ThreadNode> threadNodes = fAnalysis.getAggregateThreadNodes();			
-				toRet.add(new PerPETStatsTreeDataModel(-1, -1, "threads", threadNodes));
-			}
-			else if (fMode.equals(GLOBAL)) {
-				GlobalNode gn = fAnalysis.getGlobalStatistics();
-				toRet.add(new PerPETStatsTreeDataModel(-1, -1, "global", gn));
-			}
-			return new TmfModelResponse<>(toRet,
-                    ITmfResponse.Status.COMPLETED, CommonStatusMessage.COMPLETED);
+		List<TimingStatsDataModel> toRet = new ArrayList<>();
+		if (fMode.equals(PERPET)) {
+			List<ThreadNode> threadNodes = fAnalysis.getAggregateThreadNodes();			
+			toRet.add(new TimingStatsDataModel(-1, -1, "threads", threadNodes));
 		}
-		else {
-			 return new TmfModelResponse<>(null, ITmfResponse.Status.FAILED, CommonStatusMessage.STATE_SYSTEM_FAILED);
+		else if (fMode.equals(GLOBAL)) {
+			GlobalNode gn = fAnalysis.getGlobalStatistics();
+			if (gn==null || gn.getChildren().size() < 1) {
+				throw new RuntimeException("No global stats");
+			}
+			toRet.add(new TimingStatsDataModel(-1, -1, "global", gn));
 		}
+		return new TmfModelResponse<>(toRet,
+            ITmfResponse.Status.COMPLETED, CommonStatusMessage.COMPLETED);
 		
 	}
 
