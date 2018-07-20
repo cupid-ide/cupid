@@ -26,10 +26,10 @@ before_script:
 #  - if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then export _JAVA_OPTIONS="-XstartOnFirstThread" ;fi
 
 # common
-  - if [[ ! -d "$HOME/ESMF-INSTALL/ESMF_7_1_0r/lib" ]]; then $TRAVIS_BUILD_DIR/build_esmf.sh ESMF_7_1_0r openmpi ;fi
+#  - if [[ ! -d "$HOME/ESMF-INSTALL/ESMF_7_1_0r/lib" ]]; then $TRAVIS_BUILD_DIR/build_esmf.sh ESMF_7_1_0r openmpi ;fi
   - export ESMF_INSTALL_ROOT=$HOME/ESMF-INSTALL
 
-osx_image: xcode9.4
+osx_image: xcode9.3
 
 matrix:
   include:
