@@ -1,4 +1,4 @@
-package org.earthsystemmodeling.cupid.trace.timing;
+package org.earthsystemmodeling.cupid.trace.timing.unused;
 
 import org.eclipse.tracecompass.segmentstore.core.segment.interfaces.INamedSegment;
 

@@ -1,4 +1,4 @@
-package org.earthsystemmodeling.cupid.trace.callgraph;
+package org.earthsystemmodeling.cupid.trace.callstack.ui;
 
 import java.io.FileOutputStream;
 import java.io.IOException;

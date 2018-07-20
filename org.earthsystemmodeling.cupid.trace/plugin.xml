@@ -68,7 +68,7 @@
      
      <!--
       <module
-            analysis_module="org.earthsystemmodeling.cupid.trace.timing.NUOPCCtfComponentTimingAnalysis"
+            analysis_module="org.earthsystemmodeling.cupid.trace.timing.unused.NUOPCCtfComponentTimingAnalysis"
             automatic="false"
             icon="icons/clock.png"
             id="org.earthsystemmodeling.cupid.trace.NUOPCCtfComponentTimingAnalysisModule"
@@ -80,7 +80,7 @@
       </module>
            
       <module
-            analysis_module="org.earthsystemmodeling.cupid.trace.timing.NUOPCCtfComponentTimingStatsAnalysis"
+            analysis_module="org.earthsystemmodeling.cupid.trace.timing.unused.NUOPCCtfComponentTimingStatsAnalysis"
             automatic="false"
             icon="icons/clock.png"
             id="org.earthsystemmodeling.cupid.trace.NUOPCCtfComponentTimingStatsAnalysisModule"
@@ -142,7 +142,7 @@
       <!--
       <view
             category="org.eclipse.linuxtools.tmf.ui.views.category"
-            class="org.earthsystemmodeling.cupid.trace.timing.ComponentSegStoreTableView"
+            class="org.earthsystemmodeling.cupid.trace.timing.unused.ComponentSegStoreTableView"
             icon="icons/state.png"
             id="org.earthsystemmodeling.cupid.componentsegstoretableview"
             name="Component Seg Store View"
@@ -150,7 +150,7 @@
       </view>
       <view
             category="org.earthsystemmodeling.cupid"
-            class="org.earthsystemmodeling.cupid.trace.timing.ComponentTimingStatisticsView"
+            class="org.earthsystemmodeling.cupid.trace.timing.unused.ComponentTimingStatisticsView"
             icon="icons/clock.png"
             id="org.earthsystemmodeling.cupid.trace.ComponentTimingStatisticsView"
             name="Component Timing Statistics View"
@@ -160,7 +160,7 @@
       
       <view
             category="org.earthsystemmodeling.cupid"
-            class="org.earthsystemmodeling.cupid.trace.callgraph.NUOPCPerPETStatisticsTreeView"
+            class="org.earthsystemmodeling.cupid.trace.callstack.ui.NUOPCPerPETStatisticsTreeView"
             icon="icons/clock.png"
             id="org.earthsystemmodeling.cupid.trace.NUOPCPerPETStatisticsTreeView"
             name="Timing Tree (Per PET)"
@@ -168,7 +168,7 @@
       </view>
       <view
             category="org.earthsystemmodeling.cupid"
-            class="org.earthsystemmodeling.cupid.trace.callgraph.NUOPCTimingBalanceView"
+            class="org.earthsystemmodeling.cupid.trace.callstack.ui.NUOPCTimingBalanceView"
             icon="icons/clock.png"
             id="org.earthsystemmodeling.cupid.trace.NUOPCTimingBalanceView"
             name="Timing Tree (Global)"
@@ -210,7 +210,7 @@
     <extension
           point="org.eclipse.tracecompass.tmf.core.dataprovider">
        <dataProviderFactory
-             class="org.earthsystemmodeling.cupid.trace.callgraph.TimingStatsDataProviderFactory"
+             class="org.earthsystemmodeling.cupid.trace.callstack.timing.TimingStatsDataProviderFactory"
              id="org.earthsystemmodeling.cupid.trace.callgraph.TimingStatsDataProvider">
        </dataProviderFactory>
     </extension>

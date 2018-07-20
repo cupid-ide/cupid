@@ -1,4 +1,4 @@
-package org.earthsystemmodeling.cupid.trace.callgraph;
+package org.earthsystemmodeling.cupid.trace.callstack.ui;
 
 import java.io.OutputStream;
 import java.io.PrintWriter;
@@ -31,14 +31,9 @@ import org.eclipse.tracecompass.tmf.ui.views.TmfView;
 import com.google.common.base.Joiner;
 
 
-
-//TODO:  look into extending org.eclipse.tracecompass.tmf.ui.viewers.tree.AbstractSelectTreeViewer
 public abstract class AbstractStatisticsTreeView extends TmfView {
 
-	//private ITmfTrace fTrace;
 	private AbstractStatisticsTreeViewer fViewer;
-   
-    //private IAnalysisModule fAnalysisModule;
     private final Class<? extends IAnalysisModule> fModuleClass;
     private	final String fModuleId;
        
@@ -111,13 +106,11 @@ public abstract class AbstractStatisticsTreeView extends TmfView {
 	 
 	@Override
 	public void createPartControl(Composite parent) {
-		//fViewer = new NUOPCFlameGraphTreeViewer(parent);
 		fViewer = createTreeViewer(parent);
         ITmfTrace trace = TmfTraceManager.getInstance().getActiveTrace();
         if (trace != null) {
            traceSelected(new TmfTraceSelectedSignal(this, trace));
         }
-        
         getViewSite().getActionBars().getToolBarManager().add(fExportAction);
 	}
 	
@@ -126,16 +119,7 @@ public abstract class AbstractStatisticsTreeView extends TmfView {
 	public AbstractStatisticsTreeViewer getViewer() {
 		return fViewer;
 	}
-	
-	@Override
-	public void setFocus() {
 		
-		//System.out.println("Setting focus");
-		
-	}
-	
-	
-	
 	@Override
     public void dispose() {
         super.dispose();
@@ -154,10 +138,7 @@ public abstract class AbstractStatisticsTreeView extends TmfView {
         }
 		fViewer.loadTrace(fTrace);
 	}
-	
-	//public abstract void initializeViewer(IAnalysisModule analysisModule);
-	
-	
+		
 	@TmfSignalHandler
 	public void traceOpened(final TmfTraceOpenedSignal signal) {
 		fViewer.loadTrace(signal.getTrace());

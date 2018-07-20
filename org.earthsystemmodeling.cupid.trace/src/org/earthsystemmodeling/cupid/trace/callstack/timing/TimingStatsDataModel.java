@@ -1,4 +1,4 @@
-package org.earthsystemmodeling.cupid.trace.callgraph;
+package org.earthsystemmodeling.cupid.trace.callstack.timing;
 
 import java.util.List;
 

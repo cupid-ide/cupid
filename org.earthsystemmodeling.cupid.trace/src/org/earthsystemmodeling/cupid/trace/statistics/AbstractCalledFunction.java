@@ -18,7 +18,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 
-import org.earthsystemmodeling.cupid.trace.callgraph.SymbolAspect;
+import org.earthsystemmodeling.cupid.trace.callstack.ui.SymbolAspect;
 import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.tracecompass.common.core.NonNullUtils;
 import org.eclipse.tracecompass.segmentstore.core.ISegment;

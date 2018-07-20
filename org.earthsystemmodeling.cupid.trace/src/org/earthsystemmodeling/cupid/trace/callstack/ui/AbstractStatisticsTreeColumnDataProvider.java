@@ -1,13 +1,13 @@
-package org.earthsystemmodeling.cupid.trace.callgraph;
+package org.earthsystemmodeling.cupid.trace.callstack.ui;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import org.earthsystemmodeling.cupid.trace.callgraph.AbstractStatisticsTreeView.AggregatedCalledFunctionEntry;
-import org.earthsystemmodeling.cupid.trace.callgraph.AbstractStatisticsTreeView.AggregatedFunctionStatisticsEntry;
-import org.earthsystemmodeling.cupid.trace.callgraph.AbstractStatisticsTreeView.AggregatedFunctionStatisticsRoot;
-import org.earthsystemmodeling.cupid.trace.callgraph.AbstractStatisticsTreeView.GlobalEntry;
-import org.earthsystemmodeling.cupid.trace.callgraph.AbstractStatisticsTreeView.ThreadEntry;
+import org.earthsystemmodeling.cupid.trace.callstack.ui.AbstractStatisticsTreeView.AggregatedCalledFunctionEntry;
+import org.earthsystemmodeling.cupid.trace.callstack.ui.AbstractStatisticsTreeView.AggregatedFunctionStatisticsEntry;
+import org.earthsystemmodeling.cupid.trace.callstack.ui.AbstractStatisticsTreeView.AggregatedFunctionStatisticsRoot;
+import org.earthsystemmodeling.cupid.trace.callstack.ui.AbstractStatisticsTreeView.GlobalEntry;
+import org.earthsystemmodeling.cupid.trace.callstack.ui.AbstractStatisticsTreeView.ThreadEntry;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jface.viewers.Viewer;
 import org.eclipse.jface.viewers.ViewerComparator;

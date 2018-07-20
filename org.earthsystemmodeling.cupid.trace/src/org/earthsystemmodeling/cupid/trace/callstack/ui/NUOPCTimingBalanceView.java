@@ -1,4 +1,4 @@
-package org.earthsystemmodeling.cupid.trace.callgraph;
+package org.earthsystemmodeling.cupid.trace.callstack.ui;
 
 import java.io.OutputStream;
 import java.io.PrintWriter;
@@ -267,6 +267,7 @@ public class NUOPCTimingBalanceView extends TmfView {
         getTreeViewer().loadTrace(fTrace);
     }
     
+        
     
     /*
     protected void initializeTreeViewer(NUOPCCtfCallStackAnalysis analysisModule){

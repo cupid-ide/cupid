@@ -3,7 +3,7 @@ package org.earthsystemmodeling.cupid.trace.callstack;
 import java.text.DecimalFormat;
 import java.util.Optional;
 
-import org.earthsystemmodeling.cupid.trace.callgraph.TimeFormatter;
+import org.earthsystemmodeling.cupid.trace.callstack.ui.TimeFormatter;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.graphics.GC;
 import org.eclipse.swt.graphics.Rectangle;

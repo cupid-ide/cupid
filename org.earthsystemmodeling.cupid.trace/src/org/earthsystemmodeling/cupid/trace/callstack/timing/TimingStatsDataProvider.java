@@ -1,4 +1,4 @@
-package org.earthsystemmodeling.cupid.trace.callgraph;
+package org.earthsystemmodeling.cupid.trace.callstack.timing;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -68,6 +68,7 @@ public class TimingStatsDataProvider implements ITmfTreeDataProvider<TimingStats
 	@Override
 	public TmfModelResponse<List<TimingStatsDataModel>> fetchTree(TimeQueryFilter filter,
 			@Nullable IProgressMonitor monitor) {
+		
 		
 		if (monitor != null) {
             fAnalysis.waitForCompletion(monitor);

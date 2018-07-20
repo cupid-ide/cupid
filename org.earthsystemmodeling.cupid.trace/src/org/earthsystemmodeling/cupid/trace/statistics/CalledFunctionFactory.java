@@ -9,7 +9,7 @@
 
 package org.earthsystemmodeling.cupid.trace.statistics;
 
-import org.earthsystemmodeling.cupid.trace.callgraph.Messages;
+import org.earthsystemmodeling.cupid.trace.callstack.ui.Messages;
 import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.tracecompass.statesystem.core.statevalue.ITmfStateValue;
 

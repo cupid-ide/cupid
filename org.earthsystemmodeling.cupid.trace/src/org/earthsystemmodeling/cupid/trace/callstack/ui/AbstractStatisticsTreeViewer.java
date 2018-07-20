@@ -1,11 +1,11 @@
-package org.earthsystemmodeling.cupid.trace.callgraph;
+package org.earthsystemmodeling.cupid.trace.callstack.ui;
 
 import java.util.List;
 
 import org.earthsystemmodeling.cupid.trace.Activator;
-import org.earthsystemmodeling.cupid.trace.callgraph.AbstractStatisticsTreeColumnDataProvider.TmfTreeColumnData2;
-import org.earthsystemmodeling.cupid.trace.callgraph.AbstractStatisticsTreeView.AggregatedCalledFunctionEntry;
-import org.earthsystemmodeling.cupid.trace.callgraph.AbstractStatisticsTreeView.AggregatedFunctionStatisticsRoot;
+import org.earthsystemmodeling.cupid.trace.callstack.ui.AbstractStatisticsTreeColumnDataProvider.TmfTreeColumnData2;
+import org.earthsystemmodeling.cupid.trace.callstack.ui.AbstractStatisticsTreeView.AggregatedCalledFunctionEntry;
+import org.earthsystemmodeling.cupid.trace.callstack.ui.AbstractStatisticsTreeView.AggregatedFunctionStatisticsRoot;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jface.action.Action;
 import org.eclipse.jface.action.IMenuCreator;

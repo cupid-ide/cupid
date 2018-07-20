@@ -11,8 +11,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.earthsystemmodeling.cupid.core.CupidActivator;
-import org.earthsystemmodeling.cupid.trace.callgraph.NUOPCPerPETStatisticsTreeView;
-import org.earthsystemmodeling.cupid.trace.callgraph.NUOPCTimingBalanceView;
+import org.earthsystemmodeling.cupid.trace.callstack.ui.NUOPCPerPETStatisticsTreeView;
+import org.earthsystemmodeling.cupid.trace.callstack.ui.NUOPCTimingBalanceView;
 import org.earthsystemmodeling.cupid.trace.state.NUOPCCtfStateSystemAnalysisModule;
 import org.earthsystemmodeling.cupid.trace.statistics.AbstractCalledFunction;
 import org.earthsystemmodeling.cupid.trace.statistics.AggregatedCalledFunction;
@@ -46,13 +46,7 @@ public class NUOPCCtfCallStackAnalysis extends CallStackAnalysis implements IGlo
 	private List<ThreadNode> fThreadNodes = new ArrayList<ThreadNode>();
 	private IProgressMonitor fMonitor;
 	
-	@Override
-	public IStatus schedule() {
-		// TODO Auto-generated method stub
-		return super.schedule();
-	}
-
-		
+			
     @Override
     public boolean setTrace(ITmfTrace trace) throws TmfAnalysisException {
         if (!(trace instanceof CtfTmfTrace)) {

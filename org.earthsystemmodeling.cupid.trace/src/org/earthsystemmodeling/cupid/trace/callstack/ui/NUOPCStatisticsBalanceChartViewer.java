@@ -1,4 +1,4 @@
-package org.earthsystemmodeling.cupid.trace.callgraph;
+package org.earthsystemmodeling.cupid.trace.callstack.ui;
 
 import java.awt.Color;
 import java.text.DecimalFormat;
@@ -7,12 +7,10 @@ import java.util.List;
 import java.util.Map.Entry;
 import java.util.function.ToDoubleFunction;
 
-import org.earthsystemmodeling.cupid.trace.statistics.AbstractCalledFunction;
 import org.earthsystemmodeling.cupid.trace.statistics.AggregatedCalledFunction;
 import org.earthsystemmodeling.cupid.trace.statistics.AggregatedCalledFunctionStatistics;
 import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.swt.SWT;
-import org.eclipse.swt.graphics.RGB;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
 import org.eclipse.tracecompass.analysis.timing.core.segmentstore.IAnalysisProgressListener;
@@ -391,83 +389,6 @@ public class NUOPCStatisticsBalanceChartViewer extends TmfViewer {
     public void reload() {
     	setInput(fInput);
     }
-
-    /*
-    public void select(Range durationRange) {
-        computeDataAsync(fCurrentTimeRange, durationRange).thenAccept((data) -> {
-            for (ISegmentStoreDensityViewerDataListener listener : fListeners) {
-                listener.selectedDataChanged(data);
-            }
-        });
-    }
-
-    public void zoom(Range durationRange) {
-        computeDataAsync(fCurrentTimeRange, durationRange).thenAccept((data) -> applyData(data));
-    }
-
-    private CompletableFuture<@Nullable SegmentStoreWithRange<ISegment>> computeDataAsync(final TmfTimeRange timeRange, final Range durationRange) {
-        return CompletableFuture.supplyAsync(() -> computeData(timeRange, durationRange));
-    }
-
-    private @Nullable SegmentStoreWithRange<ISegment> computeData(final TmfTimeRange timeRange, final Range durationRange) {
-        final ISegmentStoreProvider segmentProvider = fSegmentStoreProvider;
-        if (segmentProvider == null) {
-            return null;
-        }
-        final ISegmentStore<ISegment> segStore = segmentProvider.getSegmentStore();
-        if (segStore == null) {
-            return null;
-        }
-
-        // Filter on the segment duration if necessary
-        if (durationRange.lower > Double.MIN_VALUE || durationRange.upper < Double.MAX_VALUE) {
-            Predicate<ISegment> predicate = new Predicate<ISegment>() {
-                @Override
-                public boolean test(@NonNull ISegment segment) {
-                    return segment.getLength() >= durationRange.lower && segment.getLength() <= durationRange.upper;
-                }
-            };
-            return new SegmentStoreWithRange<>(segStore, timeRange, predicate);
-        }
-
-        return new SegmentStoreWithRange<>(segStore, timeRange);
-
-    }
-	
-    
-    private void applyData(final @Nullable SegmentStoreWithRange<ISegment> data) {
-        if (data != null) {
-            data.setComparator(SegmentComparators.INTERVAL_LENGTH_COMPARATOR);
-            Display.getDefault().asyncExec(() -> updateDisplay(data));
-            for (ISegmentStoreDensityViewerDataListener l : fListeners) {
-                l.viewDataChanged(data);
-            }
-        }
-    }
-*/
-    
-    /*
-    @TmfSignalHandler
-    public void windowRangeUpdated(@Nullable TmfWindowRangeUpdatedSignal signal) {
-        if (signal == null) {
-            return;
-        }
-        ITmfTrace trace = getTrace();
-        if (trace == null) {
-            return;
-        }
-        fSegmentStoreProvider = getSegmentStoreProvider(trace);
-        fCurrentTimeRange = NonNullUtils.checkNotNull(signal.getCurrentRange());
-        updateWithRange(fCurrentTimeRange);
-    }
-	*/
-   
-    /*
-    @VisibleForTesting
-    public void updateWithRange(final TmfTimeRange range) {
-        computeDataAsync(range, new Range(Double.MIN_VALUE, Double.MAX_VALUE)).thenAccept((data) -> applyData(data));
-    }
-	*/
     
     @Override
     public void refresh() {
@@ -480,68 +401,6 @@ public class NUOPCStatisticsBalanceChartViewer extends TmfViewer {
         //fChart.dispose();
     	fChartComposite.dispose();
     }
-
-    private void internalDispose() {
-//        if (fSegmentStoreProvider != null && fListener != null) {
-//            fSegmentStoreProvider.removeListener(fListener);
-//        }
-//        fDragZoomProvider.deregister();
-//        fTooltipProvider.deregister();
-//        fDragProvider.deregister();
-        super.dispose();
-    }
-
-//    @TmfSignalHandler
-//    public void traceOpened(TmfTraceOpenedSignal signal) {
-//        fTrace = signal.getTrace();
-//        loadTrace(getTrace());
-//    }
-
-//    @TmfSignalHandler
-//    public void traceSelected(TmfTraceSelectedSignal signal) {
-//        if (fTrace != signal.getTrace()) {
-//            fTrace = signal.getTrace();
-//            loadTrace(getTrace());
-//        }
-//    }
-
-//    public void traceClosed(TmfTraceClosedSignal signal) {
-//
-//       if (signal.getTrace() != fTrace) {
-//            return;
-//        }
-//
-//        fTrace = null;
-//        clearContent();
-//    }
-
- /*
-    protected void loadTrace(@Nullable ITmfTrace trace) {
-        clearContent();
-
-        fTrace = trace;
-        TmfTraceContext ctx = TmfTraceManager.getInstance().getCurrentTraceContext();
-        TmfTimeRange windowRange = ctx.getWindowRange();
-        fCurrentTimeRange = windowRange;
-
-        if (trace != null) {
-            fStatisticsProvider = getGlobalStatisticsProvider(trace);
-            final IGlobalStatisticsProvider provider = fStatisticsProvider;
-            if (provider != null) {
-                
-            	//fListener = (segmentProvider, data) -> updateWithRange(windowRange);
-                //provider.addListener(fListener);
-                
-            	//TODO: see about where to schedule the analysis
-            	//if (provider instanceof IAnalysisModule) {
-                //    ((IAnalysisModule) provider).schedule();
-                //}
-            }
-        }
-        //zoom(new Range(0, Long.MAX_VALUE));
-        
-    }
-    */
 
     /*
     private void clearContent() {
@@ -570,16 +429,5 @@ public class NUOPCStatisticsBalanceChartViewer extends TmfViewer {
     	}
     }
     
-    /*
-    public void addDataListener(ISegmentStoreDensityViewerDataListener dataListener) {
-        fListeners.add(dataListener);
-    }
-	*/
-    
    
-    /*
-    public void removeDataListener(ISegmentStoreDensityViewerDataListener dataListener) {
-        fListeners.remove(dataListener);
-    }
-    */
 }
