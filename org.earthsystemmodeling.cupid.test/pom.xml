@@ -25,14 +25,14 @@
 				<version>1.9.4</version>
 				<executions>
 					<execution>
-						<id>checkout-ESMF_7_0_0</id>
+						<id>checkout-ESMF_7_1_0r</id>
 						<phase>pre-integration-test</phase>
 						<goals>
 							<goal>checkout</goal>
 						</goals>
 						<configuration>
-							<connectionUrl>${nuopc.url.tags}/ESMF_7_0_0_win</connectionUrl>
-							<checkoutDirectory>${project.build.directory}/ESMF_7_0_0</checkoutDirectory>
+							<connectionUrl>${nuopc.url.tags}/ESMF_7_1_0r</connectionUrl>
+							<checkoutDirectory>${project.build.directory}/ESMF_7_1_0r</checkoutDirectory>
 						</configuration>
 					</execution>
 				</executions>

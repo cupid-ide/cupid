@@ -39,7 +39,7 @@ import org.junit.Test;
 @SuppressWarnings("restriction")
 public class NUOPCTest {
 	
-	public static final String NUOPC_TAG = "ESMF_7_0_0";
+	public static final String NUOPC_TAG = "ESMF_7_1_0r";
 	public static final String ESMFMKFILE = TestHelpers.getMakefileFragmentLoc(NUOPCTest.NUOPC_TAG);
 	private static final IProgressMonitor NPM = new NullProgressMonitor();
 	

@@ -62,8 +62,8 @@ public class NUOPCTraceTest {
 	@Test
 	public void TraceAndAnalyzeComponentNames() throws IOException, CoreException, InterruptedException, TmfTraceException, TmfAnalysisException, AttributeNotFoundException, StateSystemDisposedException {
 		
-		IProject p = TestHelpers.createFortranProjectFromFolder("target/ESMF_7_1_0_beta_snapshot_34/AtmOcnMedProto", "Trace_AtmOcnMedProto");
-		String esmfmkfile = TestHelpers.getMakefileFragmentLoc("ESMF_7_1_0_beta_snapshot_34");
+		IProject p = TestHelpers.createFortranProjectFromFolder("target/ESMF_7_1_0r/AtmOcnMedProto", "Trace_AtmOcnMedProto");
+		String esmfmkfile = TestHelpers.getMakefileFragmentLoc("ESMF_7_1_0r");
 		
 		if (TestHelpers.isWindows()) return;
 		
@@ -120,8 +120,8 @@ public class NUOPCTraceTest {
 	@Test
 	public void TraceAndAnalyzeComponentTiming() throws IOException, CoreException, InterruptedException, TmfTraceException, TmfAnalysisException, AttributeNotFoundException, StateSystemDisposedException {
 		
-		IProject p = TestHelpers.createFortranProjectFromFolder("target/ESMF_7_1_0_beta_snapshot_34/AtmOcnLndProto", "Trace_TimingTest");
-		String esmfmkfile = TestHelpers.getMakefileFragmentLoc("ESMF_7_1_0_beta_snapshot_34");
+		IProject p = TestHelpers.createFortranProjectFromFolder("target/ESMF_7_1_0r/AtmOcnLndProto", "Trace_TimingTest");
+		String esmfmkfile = TestHelpers.getMakefileFragmentLoc("ESMF_7_1_0r");
 		
 		if (TestHelpers.isWindows()) return;
 		
