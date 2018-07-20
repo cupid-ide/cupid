@@ -7,6 +7,7 @@ import java.util.List;
 import java.util.Map.Entry;
 import java.util.function.ToDoubleFunction;
 
+import org.earthsystemmodeling.cupid.trace.statistics.AbstractCalledFunction;
 import org.earthsystemmodeling.cupid.trace.statistics.AggregatedCalledFunction;
 import org.earthsystemmodeling.cupid.trace.statistics.AggregatedCalledFunctionStatistics;
 import org.eclipse.jdt.annotation.Nullable;
@@ -95,7 +96,8 @@ public class NUOPCStatisticsBalanceChartViewer extends TmfViewer {
 
         fChart = null;
         fChartComposite = new ChartComposite(parent, SWT.NONE);
-        
+        clearContent();
+                
         fStatisticFunction = new ToDoubleFunction<AggregatedCalledFunctionStatistics>() {
 			@Override
 			public double applyAsDouble(AggregatedCalledFunctionStatistics value) {
@@ -137,12 +139,14 @@ public class NUOPCStatisticsBalanceChartViewer extends TmfViewer {
         }
         dataset.addSeries(series);
     	
+        /*
         final XYSeries mpiSeries = new XYSeries("MPI Timings", true, false);
         for (int i=0; i < entries.size(); i++) {
         	//mpiSeries.add((double) entries.get(i).getKey(), entries.get(i).getValue().getSubregionStatistics("mpi").getTotal());
         	mpiSeries.add((double) entries.get(i).getKey(), 0);
         }
         dataset.addSeries(mpiSeries);
+        */
         
         StackedXYBarRenderer renderer = new StackedXYBarRenderer(0.10);
         renderer.setSeriesPaint(0, Color.BLUE);
@@ -164,12 +168,18 @@ public class NUOPCStatisticsBalanceChartViewer extends TmfViewer {
         plot.setDomainPannable(true);
         plot.setRangePannable(true);
         
+        
         JFreeChart chart = new JFreeChart("PET Timings for " + func.getSymbol() + " (" + fStatisticName + ")", plot);
        
     	chart.removeLegend();
-        
+    	        
     	fChartComposite.setChart(chart);
+    	chart.fireChartChanged();
     	fChartComposite.redraw();
+    	
+    	//fChartComposite.update();
+    	//super.getParent().redraw();
+    	//super.getParent().update();
     	
     }
 
@@ -551,10 +561,12 @@ public class NUOPCStatisticsBalanceChartViewer extends TmfViewer {
 	*/
     
     private void clearContent() {
-    	final ChartComposite chart = fChartComposite;
-    	if (!chart.isDisposed()) {
-    		chart.setChart(null);
-    		chart.redraw();
+    	final ChartComposite chartComposite = fChartComposite;
+    	if (!chartComposite.isDisposed()) {
+    		XYPlot plot = new XYPlot();
+            JFreeChart chart = new JFreeChart("Select a row on the left to plot region timings", plot);
+            chartComposite.setChart(chart);
+    		chart.fireChartChanged();
     	}
     }
     
