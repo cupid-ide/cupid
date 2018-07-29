@@ -2,7 +2,7 @@ package org.earthsystemmodeling.cupid.trace.callstack.ui;
 
 import java.util.List;
 
-import org.earthsystemmodeling.cupid.trace.callstack.NUOPCCtfCallStackAnalysis;
+import org.earthsystemmodeling.cupid.trace.callstack.timing.TimingAnalysis;
 import org.earthsystemmodeling.cupid.trace.callstack.timing.TimingStatsDataModel;
 import org.earthsystemmodeling.cupid.trace.callstack.timing.TimingStatsDataProvider;
 import org.eclipse.jdt.annotation.NonNull;
@@ -21,7 +21,8 @@ public class NUOPCPerPETStatisticsTreeView extends AbstractStatisticsTreeView {
 	public static final String ID = "org.earthsystemmodeling.cupid.trace.NUOPCPerPETStatisticsTreeView";
 		   
 	public NUOPCPerPETStatisticsTreeView() {
-		super(ID, NUOPCCtfCallStackAnalysis.class, NUOPCCtfCallStackAnalysis.ID);
+		//super(ID, NUOPCCtfCallStackAnalysis.class, NUOPCCtfCallStackAnalysis.ID);
+		super(ID, TimingAnalysis.class, TimingAnalysis.ID);
 	}
 	
 	@Override

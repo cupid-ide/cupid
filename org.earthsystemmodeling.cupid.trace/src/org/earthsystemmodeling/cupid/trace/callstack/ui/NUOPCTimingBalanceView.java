@@ -8,7 +8,7 @@ import java.util.List;
 import java.util.function.ToDoubleFunction;
 
 import org.earthsystemmodeling.cupid.trace.Activator;
-import org.earthsystemmodeling.cupid.trace.callstack.NUOPCCtfCallStackAnalysis;
+import org.earthsystemmodeling.cupid.trace.callstack.timing.TimingAnalysis;
 import org.earthsystemmodeling.cupid.trace.statistics.AggregatedCalledFunctionStatistics;
 import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.jface.action.Action;
@@ -261,7 +261,8 @@ public class NUOPCTimingBalanceView extends TmfView {
     public void traceSelected(final TmfTraceSelectedSignal signal) {
         fTrace = signal.getTrace();
         if (fTrace != null) {
-            NUOPCCtfCallStackAnalysis analysisModule = TmfTraceUtils.getAnalysisModuleOfClass(fTrace, NUOPCCtfCallStackAnalysis.class, NUOPCCtfCallStackAnalysis.ID);
+            //NUOPCCtfCallStackAnalysis analysisModule = TmfTraceUtils.getAnalysisModuleOfClass(fTrace, NUOPCCtfCallStackAnalysis.class, NUOPCCtfCallStackAnalysis.ID);
+        	TimingAnalysis analysisModule = TmfTraceUtils.getAnalysisModuleOfClass(fTrace, TimingAnalysis.class, TimingAnalysis.ID);
             analysisModule.schedule();
         }
         getTreeViewer().loadTrace(fTrace);

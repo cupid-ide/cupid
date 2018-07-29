@@ -1,6 +1,5 @@
 package org.earthsystemmodeling.cupid.trace.callstack.timing;
 
-import org.earthsystemmodeling.cupid.trace.callstack.NUOPCCtfCallStackAnalysis;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.tracecompass.tmf.core.dataprovider.IDataProviderFactory;
@@ -15,7 +14,8 @@ public class TimingStatsDataProviderFactory implements IDataProviderFactory {
 	@Override
 	public @Nullable ITmfTreeDataProvider<? extends ITmfTreeDataModel> createProvider(@NonNull ITmfTrace trace,
 			@NonNull String secondaryId) {
-		NUOPCCtfCallStackAnalysis analysis = TmfTraceUtils.getAnalysisModuleOfClass(trace, NUOPCCtfCallStackAnalysis.class, NUOPCCtfCallStackAnalysis.ID);
+		//NUOPCCtfCallStackAnalysis analysis = TmfTraceUtils.getAnalysisModuleOfClass(trace, NUOPCCtfCallStackAnalysis.class, NUOPCCtfCallStackAnalysis.ID);
+		TimingAnalysis analysis = TmfTraceUtils.getAnalysisModuleOfClass(trace, TimingAnalysis.class, TimingAnalysis.ID);
         if (analysis != null) {
         	return new TimingStatsDataProvider(trace, analysis, secondaryId);
         }

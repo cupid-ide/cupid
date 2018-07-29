@@ -184,10 +184,9 @@ public class NUOPCCtfCallStackAnalysis extends CallStackAnalysis implements IGlo
     
     @Override
     public Iterable<IAnalysisOutput> getOutputs() {
-    	return ImmutableList.of(new TmfAnalysisViewOutput(NUOPCCallStackView.ID), 
-    							new TmfAnalysisViewOutput(NUOPCPerPETStatisticsTreeView.ID),
-    							//new TmfAnalysisViewOutput(NUOPCGlobalStatisticsTreeView.ID), 
-    							new TmfAnalysisViewOutput(NUOPCTimingBalanceView.ID));    	
+    	return ImmutableList.of(new TmfAnalysisViewOutput(NUOPCCallStackView.ID));  
+//    							new TmfAnalysisViewOutput(NUOPCPerPETStatisticsTreeView.ID),
+//    							new TmfAnalysisViewOutput(NUOPCTimingBalanceView.ID));    	
     }
 
 	@Override

@@ -103,6 +103,17 @@
                class="org.earthsystemmodeling.cupid.trace.NUOPCCtfTrace">
          </tracetype>
       </module>
+      <module
+            analysis_module="org.earthsystemmodeling.cupid.trace.callstack.timing.TimingAnalysis"
+            automatic="false"
+            icon="icons/clock.png"
+            id="org.earthsystemmodeling.cupid.trace.TimingAnalysis"
+            name="NUOPC Timing Analysis">
+         <tracetype
+               applies="true"
+               class="org.earthsystemmodeling.cupid.trace.NUOPCCtfTrace">
+         </tracetype>
+      </module>
         
    </extension>
    <extension

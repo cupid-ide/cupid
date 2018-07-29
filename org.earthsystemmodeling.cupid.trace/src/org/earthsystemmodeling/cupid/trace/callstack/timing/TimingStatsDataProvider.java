@@ -26,10 +26,10 @@ public class TimingStatsDataProvider implements ITmfTreeDataProvider<TimingStats
 	public static final String PERPET = "perpet";
 	public static final String GLOBAL = "global";
 	
-	private NUOPCCtfCallStackAnalysis fAnalysis;
+	private TimingAnalysis fAnalysis;
 	private String fMode;
 	
-	public TimingStatsDataProvider(ITmfTrace trace, @NonNull NUOPCCtfCallStackAnalysis analysisModule, String mode) {
+	public TimingStatsDataProvider(ITmfTrace trace, @NonNull TimingAnalysis analysisModule, String mode) {
 		fAnalysis = analysisModule;
 		fMode = mode;
 		//super(trace, analysisModule);

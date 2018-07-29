@@ -47,7 +47,7 @@ public abstract class NUOPCCtfCallStackStateProvider extends CallStackStateProvi
 	protected NUOPCCtfStateSystemAnalysisModule stateAnalysis;
 	protected final NUOPCCtfCallStackAnalysis fAnalysis;
 
-	private static final boolean fDoCallGraph = true;
+	private static final boolean fDoCallGraph = false;
 	//private long fTimer = 0;
 	private long fEventCount = 0;
 	private Map<Long, Deque<AbstractCalledFunction>> fThreadCallStacks = new HashMap<>();
