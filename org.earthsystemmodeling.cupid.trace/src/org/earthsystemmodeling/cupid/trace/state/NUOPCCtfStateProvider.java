@@ -8,7 +8,6 @@ import org.eclipse.tracecompass.statesystem.core.statevalue.TmfStateValue;
 import org.eclipse.tracecompass.tmf.core.event.ITmfEvent;
 import org.eclipse.tracecompass.tmf.core.statesystem.AbstractTmfStateProvider;
 import org.eclipse.tracecompass.tmf.ctf.core.event.CtfTmfEvent;
-import org.eclipse.tracecompass.tmf.ctf.core.event.CtfTmfEventField;
 import org.eclipse.tracecompass.tmf.ctf.core.trace.CtfTmfTrace;
 
 
@@ -51,29 +50,7 @@ public class NUOPCCtfStateProvider extends AbstractTmfStateProvider {
         		ITmfStateValue value = newValueString(name);
         		ss.modifyAttribute(ts, value, quark);
         		   
-        		/*
-        		CtfTmfEventField attributes = (CtfTmfEventField) event.getContent().getField("attributes");
-        		if (attributes != null) {
-        			CtfTmfEventField[] attrs = (CtfTmfEventField[]) attributes.getValue();
-        			for (CtfTmfEventField a : attrs) {
-        				String k = a.getFieldValue(String.class, "key");
-        				String v = a.getFieldValue(String.class, "value");
-        				if (k.equalsIgnoreCase("IPM") || k.equalsIgnoreCase("RPM") || k.equalsIgnoreCase("FPM")) {
-        					for (String kv : v.split("\\|\\|")) {
-        						String[] keyval = kv.split("=");
-        						quark = ss.getQuarkAbsoluteAndAdd("component", id, k, keyval[1]);
-        						ITmfStateValue phaseLabel = newValueString(keyval[0]);
-        						ss.modifyAttribute(ts, phaseLabel, quark);
-        					}
-        				}
-        				else if (k.equalsIgnoreCase("kind")) {
-        					quark = ss.getQuarkAbsoluteAndAdd("component", pet, id, "kind");
-        					ss.modifyAttribute(ts, newValueString(v), quark);
-        				}
-        			}
-        		}
-        		*/
-        		
+         		
         		//barectf version of trace has explicit phase map field
         		String IPM = e.getContent().getFieldValue(String.class, "IPM");
         		if (IPM != null && IPM.length() > 0) {
@@ -134,9 +111,15 @@ public class NUOPCCtfStateProvider extends AbstractTmfStateProvider {
             	long regionId = event.getContent().getFieldValue(Long.class, "id");
             	String regionName = event.getContent().getFieldValue(String.class, "name");
             	
+            	//TODO: if needed, we can distinguish here between user regions and comp phases
+            	//final long REGION_TYPE_COMPPHASE = 0;
+            	//final long REGION_TYPE_USER = 1;
+            	//CtfEnumPair regionType = event.getContent().getFieldValue(CtfEnumPair.class, "type");
+            	//can also get vmid, baseid, method, phase if we need it
+            	
             	int quark = ss.getQuarkAbsoluteAndAdd("regions", pet, String.valueOf(regionId));
-            	ITmfStateValue value = TmfStateValue.newValueString(regionName);
-            	ss.modifyAttribute(ts, value, quark);
+            	//ITmfStateValue value = TmfStateValue.newValueString(regionName);
+            	ss.modifyAttribute(ts, regionName, quark);
             	
             }
             

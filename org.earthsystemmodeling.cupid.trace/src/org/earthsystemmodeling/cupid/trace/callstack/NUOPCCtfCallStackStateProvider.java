@@ -12,9 +12,6 @@ import org.earthsystemmodeling.cupid.trace.state.NUOPCCtfStateSystemAnalysisModu
 import org.earthsystemmodeling.cupid.trace.statistics.AbstractCalledFunction;
 import org.earthsystemmodeling.cupid.trace.statistics.AggregatedCalledFunction;
 import org.earthsystemmodeling.cupid.trace.statistics.CalledFunctionFactory;
-import org.earthsystemmodeling.cupid.trace.statistics.ICalledFunction;
-import org.earthsystemmodeling.cupid.trace.statistics.IStatistics;
-import org.earthsystemmodeling.cupid.trace.statistics.Statistics;
 import org.earthsystemmodeling.cupid.trace.statistics.ThreadNode;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.SubMonitor;
@@ -272,11 +269,11 @@ public abstract class NUOPCCtfCallStackStateProvider extends CallStackStateProvi
 				}
 				
 				///// ADD MPI REGION
-				if (totalTimeMPI > 0) {
-					IStatistics<ICalledFunction> mpiStats = new Statistics<>(totalTimeMPI, totalCountMPI);
-					AggregatedCalledFunction aggMPI = new AggregatedCalledFunction("__MPI", mpiStats, aggFunction);
-					aggFunction.addChild(aggMPI);
-				}
+				//if (totalTimeMPI > 0) {
+				//	IStatistics<ICalledFunction> mpiStats = new Statistics<>(totalTimeMPI, totalCountMPI);
+				//	AggregatedCalledFunction aggMPI = new AggregatedCalledFunction("__MPI", mpiStats, aggFunction);
+				//	aggFunction.addChild(aggMPI);
+				//}
 								
 				fThreadAggStacks.get(threadId).peek().addChild(calledFunction, aggFunction);
 			}
@@ -290,6 +287,9 @@ public abstract class NUOPCCtfCallStackStateProvider extends CallStackStateProvi
 						+ poppedValue.unboxStr() + ".  Event: " + functionExitState.unboxStr());						
 				
 				poppedValue = ss.popAttribute(timestamp, quarkCallStack);
+				if (poppedValue == null) {
+					throw new IllegalStateException("Trace regions are not properly nested.");
+				}
 				ss.popAttribute(timestamp, quarkCompKind);
 				
 				quark = ss.getQuarkRelativeAndAdd(quarkThread, "ioread", "totalBytes");
@@ -306,13 +306,19 @@ public abstract class NUOPCCtfCallStackStateProvider extends CallStackStateProvi
 				ss.popAttribute(timestamp, quark);
 				
 				quark = ss.getQuarkRelativeAndAdd(quarkThread, "mpibarrier", "time");
-				totalTimeMPI += ss.popAttribute(timestamp, quark).unboxLong();
+				ITmfStateValue val = ss.popAttribute(timestamp, quark);
+				if (val != null) {
+					totalTimeMPI += val.unboxLong();
+				}
 				
 				quark = ss.getQuarkRelativeAndAdd(quarkThread, "mpiwait", "count");
 				ss.popAttribute(timestamp, quark);
 				
 				quark = ss.getQuarkRelativeAndAdd(quarkThread, "mpiwait", "time");
-				totalTimeMPI += ss.popAttribute(timestamp, quark).unboxLong();
+				val = ss.popAttribute(timestamp, quark);
+				if (val != null) {
+					totalTimeMPI += val.unboxLong();
+				}
 								
 				if (fDoCallGraph) {
 					calledFunction = fThreadCallStacks.get(threadId).pop();
@@ -423,6 +429,7 @@ public abstract class NUOPCCtfCallStackStateProvider extends CallStackStateProvi
 	
 	////////////////////version 0.3-0.4 trace //////////////////////
 
+	//TODO:  move these to NUOPCCtfTrace level
 	public static final String EN_PROLOGUE_ENTER = "prologue_enter";
 	public static final String EN_EPILOGUE_EXIT = "epilogue_exit";
 	public static final String EN_PHASE_ENTER = "phase_enter";
@@ -436,6 +443,7 @@ public abstract class NUOPCCtfCallStackStateProvider extends CallStackStateProvi
 	public static final String EN_IOWRITE = "iowrite";
 	public static final String EN_MPIBARRIER = "mpibarrier";
 	public static final String EN_MPIWAIT = "mpiwait";
+	public static final String EN_REGION_PROFILE = "region_profile";
 	
 
 	public static class Version0P3toP4 extends NUOPCCtfCallStackStateProvider {

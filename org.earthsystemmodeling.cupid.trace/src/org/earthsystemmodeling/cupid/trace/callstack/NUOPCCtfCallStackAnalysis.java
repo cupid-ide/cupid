@@ -11,8 +11,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.earthsystemmodeling.cupid.core.CupidActivator;
-import org.earthsystemmodeling.cupid.trace.callstack.ui.NUOPCPerPETStatisticsTreeView;
-import org.earthsystemmodeling.cupid.trace.callstack.ui.NUOPCTimingBalanceView;
 import org.earthsystemmodeling.cupid.trace.state.NUOPCCtfStateSystemAnalysisModule;
 import org.earthsystemmodeling.cupid.trace.statistics.AbstractCalledFunction;
 import org.earthsystemmodeling.cupid.trace.statistics.AggregatedCalledFunction;
@@ -21,7 +19,6 @@ import org.earthsystemmodeling.cupid.trace.statistics.GlobalNode;
 import org.earthsystemmodeling.cupid.trace.statistics.IGlobalStatisticsProvider;
 import org.earthsystemmodeling.cupid.trace.statistics.ThreadNode;
 import org.eclipse.core.runtime.IProgressMonitor;
-import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.NullProgressMonitor;
 import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.tracecompass.analysis.profiling.core.callstack.CallStackAnalysis;
@@ -40,7 +37,7 @@ import com.google.common.collect.ImmutableList;
 import com.google.common.collect.Lists;
 
 public class NUOPCCtfCallStackAnalysis extends CallStackAnalysis implements IGlobalStatisticsProvider {
-
+	
 	public static final String ID = "org.earthsystemmodeling.cupid.trace.NUOPCCtfCallStackAnalysis";
 	
 	private List<ThreadNode> fThreadNodes = new ArrayList<ThreadNode>();

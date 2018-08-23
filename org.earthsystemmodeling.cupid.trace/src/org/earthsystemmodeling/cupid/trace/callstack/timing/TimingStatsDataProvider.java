@@ -3,7 +3,6 @@ package org.earthsystemmodeling.cupid.trace.callstack.timing;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.earthsystemmodeling.cupid.trace.callstack.NUOPCCtfCallStackAnalysis;
 import org.earthsystemmodeling.cupid.trace.statistics.GlobalNode;
 import org.earthsystemmodeling.cupid.trace.statistics.ThreadNode;
 import org.eclipse.core.runtime.IProgressMonitor;

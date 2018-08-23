@@ -83,11 +83,15 @@ public class Statistics<@NonNull E> implements IStatistics<E>, Serializable {
      * @param total
      * @param count
      */
-    public Statistics(double total, long count) {
+    public Statistics(double total, long count, double mean, 
+    		long min, long max, double variance) {
     	this();
     	fTotal = total;
     	fNbElements = count;
-    	fMean = total / count;
+    	fMean = mean;
+    	fMinValue = min;
+    	fMaxValue = max;
+    	fVariance = variance;
     }
 
     @Override
