@@ -59,7 +59,8 @@ public final class SymbolAspect implements ISegmentAspect {
             // FIXME work around this trace
             ITmfTrace trace = TmfTraceManager.getInstance().getActiveTrace();
             if (trace != null) {
-                String symbolText = null;
+                @SuppressWarnings("unused")
+				String symbolText = null;
                 Object symbol = calledFunction.getSymbol();
                 //TODO after Photon upgrade, need to fix symbol provider for Longs, if needed
                 /*

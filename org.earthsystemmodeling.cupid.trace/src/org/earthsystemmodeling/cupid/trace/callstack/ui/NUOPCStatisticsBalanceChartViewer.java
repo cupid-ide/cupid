@@ -181,7 +181,8 @@ public class NUOPCStatisticsBalanceChartViewer extends TmfViewer {
     	
     }
 
-    private void updateDisplayJFree(AggregatedCalledFunction func) {
+    @SuppressWarnings("unused")
+	private void updateDisplayJFree(AggregatedCalledFunction func) {
     	
     	Comparator<Entry<Long, AggregatedCalledFunctionStatistics>> c = 
     			Comparator.comparingDouble(new ToDoubleFunction<Entry<Long, AggregatedCalledFunctionStatistics>>() {
@@ -243,7 +244,8 @@ public class NUOPCStatisticsBalanceChartViewer extends TmfViewer {
     	
     }
 
-    private void updateDisplay(AggregatedCalledFunction func) {
+    @SuppressWarnings("unused")
+	private void updateDisplay(AggregatedCalledFunction func) {
         //IBarSeries
     	
     	ISeries series = fChart.getSeriesSet().createSeries(SeriesType.BAR, "PET Timings");

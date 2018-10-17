@@ -239,12 +239,12 @@ public abstract class AbstractStatisticsTreeView extends TmfView {
 	
 	public static class AggregatedFunctionStatisticsEntry extends TmfTreeViewerEntry {
 
-		private long fThreadId;
+		//private long fThreadId;
 		private AggregatedCalledFunctionStatistics fStats;
 		
 		public AggregatedFunctionStatisticsEntry(long threadId, AggregatedCalledFunctionStatistics stats) {
 			super("PET " + threadId);
-			fThreadId = threadId;
+			//fThreadId = threadId;
 			fStats = stats;
 		}
 
