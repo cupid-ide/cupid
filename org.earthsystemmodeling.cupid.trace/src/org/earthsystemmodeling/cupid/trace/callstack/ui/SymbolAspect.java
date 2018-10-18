@@ -56,14 +56,18 @@ public final class SymbolAspect implements ISegmentAspect {
     public @Nullable Object resolve(@NonNull ISegment segment) {
         if (segment instanceof ICalledFunction) {
             ICalledFunction calledFunction = (ICalledFunction) segment;
+            return String.valueOf(calledFunction.getSymbol());
+        }
+        return null;
+            
+            /*
             // FIXME work around this trace
-            ITmfTrace trace = TmfTraceManager.getInstance().getActiveTrace();
-            if (trace != null) {
-                @SuppressWarnings("unused")
-				String symbolText = null;
+            //ITmfTrace trace = TmfTraceManager.getInstance().getActiveTrace();
+            //if (trace != null) {
+                String symbolText = null;
                 Object symbol = calledFunction.getSymbol();
                 //TODO after Photon upgrade, need to fix symbol provider for Longs, if needed
-                /*
+                
                 if (symbol instanceof Long) {
                     Long longAddress = (Long) symbol;
                     Collection<ISymbolProvider> providers = SymbolProviderManager.getInstance().getSymbolProviders(trace);
@@ -91,10 +95,11 @@ public final class SymbolAspect implements ISegmentAspect {
                     }
                     return symbolText;
                 }
-                */
+                
                 return String.valueOf(symbol);
             }
         }
         return null;
+        */
     }
 }

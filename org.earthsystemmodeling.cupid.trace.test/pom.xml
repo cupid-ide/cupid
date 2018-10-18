@@ -26,14 +26,14 @@
 				<executions>
 					<!--  execution tag can be repeated as needed -->
 					<execution>
-						<id>checkout-ESMF_7_0_0</id>
+						<id>checkout-ESMF_7_1_0r</id>
 						<phase>pre-integration-test</phase>
 						<goals>
 							<goal>checkout</goal>
 						</goals>
 						<configuration>
-							<connectionUrl>${nuopc.url.tags}/ESMF_7_1_0_beta_snapshot_34</connectionUrl>
-							<checkoutDirectory>${project.build.directory}/ESMF_7_1_0_beta_snapshot_34</checkoutDirectory>
+							<connectionUrl>${nuopc.url.tags}/ESMF_7_1_0r</connectionUrl>
+							<checkoutDirectory>${project.build.directory}/ESMF_7_1_0r</checkoutDirectory>
 						</configuration>
 					</execution>
 				</executions>			
@@ -52,9 +52,10 @@
             			<configuration>
             				<useUIHarness>false</useUIHarness>
               				<useUIThread>false</useUIThread>
-            				<includes>**/*Test.java</includes>	
+            				<includes>**/*TraceTest.java</includes>	
             			</configuration>
             		</execution>
+            		 
 					<execution>
             			<id>ui-test</id>
             			<phase>integration-test</phase>
@@ -66,9 +67,11 @@
               				<useUIThread>false</useUIThread>
               				<product>org.eclipse.sdk.ide</product>
               				<application>org.eclipse.ui.ide.workbench</application>
-              				<includes>**/*TestUI.java</includes>	
+              				<includes>**/*TraceTestUI.java</includes>
+              				<skipTests>true</skipTests>	
             			</configuration>
             		</execution>
+            		
             	</executions>
  			</plugin>
 		</plugins>

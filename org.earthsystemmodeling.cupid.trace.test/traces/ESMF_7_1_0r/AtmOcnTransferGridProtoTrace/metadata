@@ -1,9 +1,10 @@
 /* CTF 1.8 */
+
 trace {
 	major = 1;
 	minor = 8;
 	byte_order = le;
-	uuid = "0c2e063a-2adb-11e7-ac26-34f39aeaad30";
+	uuid = "0f3ce8ba-e1e6-11e7-b5ca-34f39aeaad30";
 	packet.header := struct {
 		integer {
 			size = 32;
@@ -25,13 +26,13 @@ trace {
 };
 
 env {
-	tracer_minor = 2;
-	tracer_patch = 1;
+	esmf_trace_version = "0.4";
 	tracer_name = "barectf";
 	domain = "bare";
+	tracer_minor = 2;
+	tracer_patch = 1;
+	barectf_gen_date = "2017-12-15T15:19:47.248674";
 	tracer_major = 2;
-	barectf_gen_date = "2017-04-26T17:49:54.865574";
-	esmf_trace_version = "0.3";
 };
 
 clock {
@@ -95,8 +96,8 @@ stream {
 	} align(1);
 	event.header := struct {
 		integer {
-			size = 32;
-			align = 32;
+			size = 8;
+			align = 8;
 			signed = false;
 			byte_order = le;
 			base = 10;
@@ -307,8 +308,56 @@ event {
 };
 
 event {
-	name = "comp";
+	name = "define_region";
 	id = 6; /* default */
+	fields := struct {
+		integer {
+			size = 16;
+			align = 16;
+			signed = false;
+			byte_order = le;
+			base = 10;
+			encoding = none;
+		} id;
+		string {
+			encoding = UTF8;
+		} name;
+	} align(1);
+};
+
+event {
+	name = "regionid_enter";
+	id = 7; /* default */
+	fields := struct {
+		integer {
+			size = 16;
+			align = 16;
+			signed = false;
+			byte_order = le;
+			base = 10;
+			encoding = none;
+		} regionid;
+	} align(1);
+};
+
+event {
+	name = "regionid_exit";
+	id = 8; /* default */
+	fields := struct {
+		integer {
+			size = 16;
+			align = 16;
+			signed = false;
+			byte_order = le;
+			base = 10;
+			encoding = none;
+		} regionid;
+	} align(1);
+};
+
+event {
+	name = "comp";
+	id = 9; /* default */
 	fields := struct {
 		integer {
 			size = 16;
@@ -343,7 +392,7 @@ event {
 
 event {
 	name = "mem";
-	id = 7; /* default */
+	id = 10; /* default */
 	fields := struct {
 		integer {
 			size = 32;
@@ -366,7 +415,7 @@ event {
 
 event {
 	name = "clk";
-	id = 8; /* default */
+	id = 11; /* default */
 	fields := struct {
 		integer {
 			size = 16;

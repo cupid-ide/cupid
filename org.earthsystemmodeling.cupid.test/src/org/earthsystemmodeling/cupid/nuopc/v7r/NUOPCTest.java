@@ -57,7 +57,7 @@ public class NUOPCTest {
 		}
 		catch (ResourceException re) {
 			System.out.println("WARNING:  Ignoring Resource Exception");
-			re.printStackTrace();
+			//re.printStackTrace();
 		}
 	}
 	
