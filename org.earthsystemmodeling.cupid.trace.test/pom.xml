@@ -36,6 +36,17 @@
 							<checkoutDirectory>${project.build.directory}/ESMF_7_1_0r</checkoutDirectory>
 						</configuration>
 					</execution>
+					<execution>
+						<id>checkout-trunk</id>
+						<phase>pre-integration-test</phase>
+						<goals>
+							<goal>checkout</goal>
+						</goals>
+						<configuration>
+							<connectionUrl>${nuopc.url.tags}/../trunk</connectionUrl>
+							<checkoutDirectory>${project.build.directory}/NUOPCProtosTrunk</checkoutDirectory>
+						</configuration>
+					</execution>
 				</executions>			
 			</plugin>
 			<plugin>

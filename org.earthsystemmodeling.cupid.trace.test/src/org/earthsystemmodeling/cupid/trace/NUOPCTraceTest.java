@@ -152,6 +152,43 @@ public class NUOPCTraceTest {
 		
 	}
 	
+	@Test
+	public void TraceWithRegionProfiles() throws IOException, CoreException, InterruptedException, TmfTraceException, TmfAnalysisException, AttributeNotFoundException, StateSystemDisposedException {
+		
+		IProject p = TestHelpers.createFortranProjectFromFolder("target/NUOPCProtosTrunk/AtmOcnLndProto", "AtmOcnLndProto_trunk");
+		String esmfmkfile = TestHelpers.getMakefileFragmentLoc("master");
+		
+		if (TestHelpers.isWindows()) return;
+		
+		assertTrue("Compile trace project", TestHelpers.compileProject(p, esmfmkfile, "esmApp"));
+		Map<String,String> envMap = new HashMap<>();
+		envMap.put("ESMF_RUNTIME_PROFILE", "ON");
+		envMap.put("ESMF_RUNTIME_PROFILE_OUTPUT", "binary");
+		assertTrue("Execute trace project", TestHelpers.executeMPI(p, "esmApp", 4, envMap));
+		assertTrue("Execution has no log errors", TestHelpers.verifyNoLogErrors(p));
+			
+		p.refreshLocal(IResource.DEPTH_INFINITE, NPM);
+		
+		IFolder traceFolder = p.getFolder("traceout");
+		assertTrue("Trace output folder exists", traceFolder.exists());
+		
+		String tracePath = traceFolder.getLocation().toString();
+		NUOPCCtfTrace trace = new NUOPCCtfTrace();
+		trace.initTrace(null, tracePath, CtfTmfEvent.class);
+		trace.traceOpened(new TmfTraceOpenedSignal(this, trace, null));		
+		
+		TimingAnalysis ta = doTimingAnalysis(trace);
+		GlobalNode gn = ta.getGlobalStatistics();
+		assertEquals(3, gn.getChildren().size());
+		AggregatedCalledFunction func = gn.getChild("[esm] RunPhase1");
+        assertEquals(7, func.getChildren().size());
+				
+		ta.dispose();
+		trace.dispose();
+		
+	}
+	
+	
 	private TimingAnalysis doTimingAnalysis(NUOPCCtfTrace trace) throws IOException, TmfTraceException {
 		
 		NUOPCCtfStateSystemAnalysisModule analysis = 
