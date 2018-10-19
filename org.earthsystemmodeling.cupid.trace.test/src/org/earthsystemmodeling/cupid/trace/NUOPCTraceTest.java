@@ -39,6 +39,7 @@ import org.eclipse.tracecompass.tmf.core.trace.TmfTraceUtils;
 import org.eclipse.tracecompass.tmf.ctf.core.event.CtfTmfEvent;
 import org.junit.AfterClass;
 import org.junit.BeforeClass;
+import org.junit.Ignore;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.Timeout;
@@ -152,6 +153,7 @@ public class NUOPCTraceTest {
 		
 	}
 	
+	@Ignore
 	@Test
 	public void TraceWithRegionProfiles() throws IOException, CoreException, InterruptedException, TmfTraceException, TmfAnalysisException, AttributeNotFoundException, StateSystemDisposedException {
 		
