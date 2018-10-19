@@ -226,8 +226,11 @@ public static boolean execute(IProject p, Map<String,String> envMap, String... c
 		if (isWindows()) {
 			return true; 
 		}
-		else {
+		else if (isOSX()){
 			return execute(p, envMap, "mpirun", "--oversubscribe", "-np", String.valueOf(numProcs), program);
+		}
+		else {
+			return execute(p, envMap, "mpirun", "-np", String.valueOf(numProcs), program);
 		}
 	}
 	
