@@ -227,7 +227,7 @@ public static boolean execute(IProject p, Map<String,String> envMap, String... c
 			return true; 
 		}
 		else {
-			return execute(p, envMap, "mpirun", "-np", String.valueOf(numProcs), program);
+			return execute(p, envMap, "mpirun", "--oversubscribe", "-np", String.valueOf(numProcs), program);
 		}
 	}
 	
